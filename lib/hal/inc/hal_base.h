@@ -31,8 +31,10 @@
 
 HAL_Status HAL_Init(void);
 HAL_Status HAL_InitTick(uint32_t tickPriority);
+HAL_Status HAL_IncTick(void);
 uint32_t HAL_GetTick(void);
-void HAL_Delay(__IO uint32_t delay);
+HAL_Status HAL_Delay(__IO uint32_t delay);
+__weak __irq HAL_Status HAL_SysTick_Handler(void);
 
 #endif
 

@@ -5,7 +5,25 @@
 
 /**
  * @file  hal_base.c
- */
+ * @brief Common function for the whole HAL layer.
+ *
+ * @defgroup HAL_BASE HAL_BASE
+ *  @{
+ @verbatim
+
+ #### How to use ####
+
+ The HAL_BASE driver can be used as follows:
+
+ (#) Resgister HAL_SysTick_Handler.
+ (#) Initialize the HAL_BASE(HAL_Init):
+    (##) Enable default intterrupt.
+    (##) Define intterrupt priority group:
+    (##) Initial systick
+ (#) call M delay(HAL_Delay)
+
+ @endverbatim
+ ** @} */
 
 #include "hal_base.h"
 
@@ -21,7 +39,7 @@
 
 /********************* Private Variable Definition ***************************/
 
-__IO uint32_t uwTick;
+static __IO uint32_t uwTick;
 
 /********************* Private Function Definition ***************************/
 
@@ -31,9 +49,62 @@ __IO uint32_t uwTick;
  */
 
 /**
+ * @brief  Count plus 1 when interrupt occurs.
+ * @return HAL_Status: HAL_OK.
+ */
+HAL_Status HAL_IncTick(void)
+{
+    uwTick++;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Core internal SysTick handler
+ * @return HAL_Status: HAL_OK.
+ * Count plus 1.
+ */
+__weak __irq HAL_Status HAL_SysTick_Handler(void)
+{
+    HAL_IncTick();
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get SysTick count.
+ * @return uint32_t: sys tick count.
+ */
+uint32_t HAL_GetTick(void)
+{
+    return uwTick;
+}
+
+/**
+ * @brief  SysTick delay.
+ * @param  delay: mdelay count.
+ * @return HAL_Status: HAL_OK.
+ */
+HAL_Status HAL_Delay(__IO uint32_t delay)
+{
+    uint32_t tickStart = HAL_GetTick();
+    uint32_t wait = delay;
+
+    /* Add a period to guarantee minimum wait */
+    if (wait < HAL_MAX_DELAY) {
+        wait++;
+    }
+
+    while ((HAL_GetTick() - tickStart) < wait) {
+    }
+
+    return HAL_OK;
+}
+
+/**
  * @brief  Init SysTick
- * @param  TickPriority: Interrupt priority.
- * @return HAL_Status.
+ * @param  tickPriority: Interrupt priority.
+ * @return HAL_Status: HAL_OK.
  * Set systick to Millisecond count, and it's priority.
  */
 HAL_Status HAL_InitTick(uint32_t tickPriority)
@@ -49,49 +120,30 @@ HAL_Status HAL_InitTick(uint32_t tickPriority)
 }
 
 /**
- * @brief  Get systick count.
- * @param  None.
- * @return None.
- * Enable the specified interrupt in the NVIC Interrupt Controller.
- * Other settings of the interrupt such as priority are not affected.
- */
-uint32_t HAL_GetTick(void)
-{
-    return uwTick;
-}
-
-/**
- * @brief  Init HAL Delay.
- * @param  Delay: mdelay count.
- * @return None.
- */
-void HAL_Delay(__IO uint32_t delay)
-{
-    uint32_t tickStart = HAL_GetTick();
-    uint32_t wait = delay;
-
-    /* Add a period to guarantee minimum wait */
-    if (wait < HAL_MAX_DELAY) {
-        wait++;
-    }
-
-    while ((HAL_GetTick() - tickStart) < wait) {
-    }
-}
-
-/**
  * @brief  Init HAL driver basic code.
- * @param  None.
- * @return HAL_SUCCESS.
- * Init NVIC and systick.
+ * @return HAL_OK.
+ * Init NVIC, set priority group, and init SysTick.
  */
 HAL_Status HAL_Init(void)
 {
     /* Set Interrupt Group Priority */
-    //HAL_NVIC_Init();
+    HAL_NVIC_Init();
 
-    /* Use systick as time base source and configure 1ms tick (default clock after Reset is MSI) */
-    //HAL_InitTick(TICK_INT_PRIORITY);
+    /* Set Interrupt Group Priority */
+    HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_DEFAULT);
+
+    HAL_InitTick(TICK_INT_PRIORITY);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  HAL deinit.
+ * @return HAL_Status: HAL_OK.
+ */
+HAL_Status HAL_DeInit(void)
+{
+    /* TO-DO */
 
     return HAL_OK;
 }
