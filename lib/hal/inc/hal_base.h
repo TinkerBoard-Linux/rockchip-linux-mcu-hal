@@ -11,6 +11,7 @@
 #define _HAL_BASE_H_
 
 #include "hal_conf.h"
+#include "hal_debug.h"
 
 /** @addtogroup RKMCU_HAL_Driver
  *  @{

@@ -16,6 +16,11 @@
 #define HAL_GRF_MODULE_ENABLED
 #define HAL_CRU_MODULE_ENABLED
 
+/* DEG LEVEL */
+#define HAL_DBG_ON 1
+#define HAL_DBG_WRN_ON 1
+#define HAL_DBG_ERR_ON 1
+
 #ifdef HAL_NVIC_MODULE_ENABLED
 #include "hal_nvic.h"
 #endif
