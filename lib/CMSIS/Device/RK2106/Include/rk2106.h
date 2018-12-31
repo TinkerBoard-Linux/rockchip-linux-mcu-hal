@@ -9,7 +9,8 @@
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
-typedef enum {
+typedef enum
+{
     /* -------------------  Processor Exceptions Numbers  ----------------------------- */
     NonMaskableInt_IRQn = -14, /*  2 Non Maskable Interrupt */
     HardFault_IRQn = -13, /*  3 HardFault Interrupt */
@@ -22,8 +23,7 @@ typedef enum {
     SysTick_IRQn = -1, /* 15 System Tick Interrupt */
 
     /* -------------------  Processor Interrupt Numbers  ------------------------------ */
-    Interrupt0_IRQn = 0,
-    INT_ID_SFC,
+    INT_ID_SFC = 0,
     INT_ID_SYNTH,
     INT_ID_EBC,
     INT_ID_EMMC,
@@ -186,10 +186,9 @@ typedef enum {
 #define EMMC_ADDR ((uint32_t)0x60030000)
 #define EMMC_FIFO_ADDR (EMMC_ADDR + 0x200)
 
-/*
- * GPIO struct define
- */
-struct GPIO_REG {
+/* GPIO Register Structure Define */
+struct GPIO_REG
+{
     __IO uint32_t GPIO_SWPORT_DR;
     __IO uint32_t GPIO_SWPORT_DDR;
     __IO uint32_t RESERVED1[(0x30 - 0x04) / 4 - 1];
@@ -208,10 +207,9 @@ struct GPIO_REG {
     __IO uint32_t GPIO_LS_SYNC;
 };
 
-/*
- * CRU struct define
- */
-struct CRU_REG {
+/* CRU Register Structure Define */
+struct CRU_REG
+{
     __IO uint32_t CRU_APLL_CON0;
     __IO uint32_t CRU_APLL_CON1;
     __IO uint32_t CRU_APLL_CON2;
@@ -233,10 +231,9 @@ struct CRU_REG {
     __IO uint32_t CRU_GLB_CNT_TH;
 };
 
-/*
- * UART struct define
- */
-typedef struct UART_REG {
+/* UART Register Structure Define */
+typedef struct UART_REG
+{
     __IO uint32_t UART_RBR;
     __IO uint32_t UART_DLH;
     __IO uint32_t UART_IIR;
@@ -274,10 +271,9 @@ typedef struct UART_REG {
 #define UART_FCR UART_IIR
 #define UART_STHR UART_SRBR
 
-/*
- * GRF struct define
- */
-struct GRF_REG {
+/* GRF Register Structure Define */
+struct GRF_REG
+{
     __IO uint32_t GPIO_IO0MUX[4];
     __IO uint32_t GPIO_IO0PULL[4]; /* 0x10 */
 
@@ -327,14 +323,22 @@ struct GRF_REG {
     __IO uint32_t GRF_CPU_ID;
 };
 
-/*
- * GRF BIT MACRO
- */
+/* TIMER Register Structure Define  */
+struct TIMER_REG
+{
+    __IO uint32_t TimerLoadCount0; /* Load Count Register */
+    __IO uint32_t TimerLoadCount1; /* Load Count Register */
+    __IO uint32_t TimerCurrentValue0; /* Current Value Register */
+    __IO uint32_t TimerCurrentValue1; /* Current Value Register */
+    __IO uint32_t TimerControlReg; /* Control Register */
+    __IO uint32_t Reserved; /* End-of-Interrupt Register */
+    __IO uint32_t TimerIntStatus; /* Interrupt Status Register */
+};
+
+/* GRF Bit Macro Define */
 #define IOMUX_GPIO2A6_IO ((uint32_t)(0))
 
-/*
- * GPIO BIT MACRO
- */
+/* GPIO Bit Macro Define */
 #define UART0_TX_WORK BIT(0)
 #define UART0_RX_WORK BIT(1)
 #define UART1_TX_WORK BIT(2)
@@ -433,5 +437,22 @@ struct GRF_REG {
 #define RX_LEN_PER_INT ((uint32_t)(8))
 
 #define MODE_X_DIV 16
+
+/* TIMER Bit Macro Define */
+/* TIMERN_CONTROLREG */
+#define TIMERN_CONTROLREG_EN_POS 0
+#define TIMERN_CONTROLREG_EN_MSK (1 << TIMERN_CONTROLREG_EN_POS)
+#define TIMERN_CONTROLREG_EN_DISABLE (0 << TIMERN_CONTROLREG_EN_POS)
+#define TIMERN_CONTROLREG_EN_ENABLE (1 << TIMERN_CONTROLREG_EN_POS)
+
+#define TIMERN_CONTROLREG_MODE_POS 1
+#define TIMERN_CONTROLREG_MODE_MSK (1 << TIMERN_CONTROLREG_MODE_POS)
+#define TIMERN_CONTROLREG_MODE_FREE_RUNNING (0 << TIMERN_CONTROLREG_MODE_POS)
+#define TIMERN_CONTROLREG_MODE_USER_DEFINED (0 << TIMERN_CONTROLREG_MODE_POS)
+
+#define TIMERN_CONTROLREG_MASK_POS 2
+#define TIMERN_CONTROLREG_MASK_MSK (1 << TIMERN_CONTROLREG_MASK_POS)
+#define TIMERN_CONTROLREG_MASK_MASK (0 << TIMERN_CONTROLREG_MASK_POS)
+#define TIMERN_CONTROLREG_MASK_UNMASK (1 << TIMERN_CONTROLREG_MASK_POS)
 
 #endif /* _RK2106_H_ */
