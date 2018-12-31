@@ -463,6 +463,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\lib\hal\src\hal_grf.c</FilePath>
             </File>
+            <File>
+              <FileName>hal_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_timer.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

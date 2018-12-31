@@ -19,6 +19,7 @@
 #define HAL_GPIO_MODULE_ENABLED
 #define HAL_GRF_MODULE_ENABLED
 #define HAL_NVIC_MODULE_ENABLED
+#define HAL_TIMER_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 
 #ifdef HAL_CRU_MODULE_ENABLED
@@ -35,6 +36,10 @@
 
 #ifdef HAL_NVIC_MODULE_ENABLED
 #include "hal_nvic.h"
+#endif
+
+#ifdef HAL_TIMER_MODULE_ENABLED
+#include "hal_timer.h"
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED

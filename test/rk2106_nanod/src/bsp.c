@@ -14,6 +14,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/* BSP POWER Init */
 static void BSP_POWER_Init(void)
 {
     HAL_GRF_GPIOMuxSet(GPIO_CH2, GPIOPortA_Pin6, IOMUX_GPIO2A6_IO);
@@ -22,6 +23,7 @@ static void BSP_POWER_Init(void)
     HAL_GPIO_SetPinLevel(GPIO_CH2, GPIOPortA_Pin6, GPIO_HIGH);
 }
 
+/* BSP UART Init */
 static void BSP_UART_Init(void)
 {
     struct CRU_REG *pCRU = (struct CRU_REG *)(CRU_BASE);
