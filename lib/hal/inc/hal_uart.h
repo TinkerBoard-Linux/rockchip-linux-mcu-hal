@@ -23,20 +23,27 @@
  *  @{
  */
 
-typedef enum UART_DEV {
+typedef enum
+{
     UART_DEV0,
     UART_DEV1,
     UART_DEV2,
     UART_DEV3,
     UART_DEV4,
     UART_DEV5,
-
     UART_DEV_MAX
 } eUART_DEV;
 
-typedef enum UART_CH { UART_CHA, UART_CHB, UART_CHC, UART_CH_MAX } eUART_CH;
+typedef enum
+{
+    UART_CHA,
+    UART_CHB,
+    UART_CHC,
+    UART_CH_MAX
+} eUART_CH;
 
-typedef enum UART_BaudRate {
+typedef enum
+{
     UART_BR_110 = 110,
     UART_BR_300 = 300,
     UART_BR_600 = 600,
@@ -55,35 +62,33 @@ typedef enum UART_BaudRate {
     UART_BR_921600 = 921600
 } eUART_BaudRate;
 
-typedef enum UART_dataLen {
+typedef enum
+{
     UART_DATA_5B = 5,
     UART_DATA_6B,
     UART_DATA_7B,
     UART_DATA_8B
 } eUART_dataLen;
 
-typedef enum UART_stopBit {
+typedef enum
+{
     UART_ONE_STOPBIT,
     UART_ONE_AND_HALF_OR_TWO_STOPBIT
 } eUART_stopBit;
 
-typedef enum UART_parity_en {
+typedef enum
+{
     UART_ODD_PARITY,
     UART_EVEN_PARITY,
     UART_PARITY_DISABLE
 } eUART_parityEn;
 
-/**
- * @brief UART initialization parameters
- */
-typedef enum _UART_INT_TYPE {
+typedef enum {
     UART_INT_READ_FIFO_NOT_EMPTY = 2,
     UART_INT_WRITE_FIFO_EMPTY = 4,
     UART_INT_UART_ERR = 8,
     UART_INT_NUM
-
-} UART_INT_TYPE,
-    *P_UART_INT_TYPE;
+} UART_INT_TYPE;
 
 /***************************** Structure Definition **************************/
 

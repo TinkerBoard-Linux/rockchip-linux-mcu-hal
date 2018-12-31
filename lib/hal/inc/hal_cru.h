@@ -4,7 +4,7 @@
  */
 
 /**
- * @file  hal_demo.h
+ * @file  hal_cru.h
  */
 
 #ifndef _HAL_CRU_H_

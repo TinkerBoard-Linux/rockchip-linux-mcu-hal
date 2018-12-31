@@ -40,12 +40,12 @@ const uint32_t GPIO_GROUP[3] = {
 /**
  * @brief  Set gpio pin direction.
  * @param  gpioPort: gpio channel.
- * @param  GPIOPinNum: gpio pin num.
- * @param  gpioPort: gpio direction.
+ * @param  gpioPinNum: gpio pin num.
+ * @param  direction: gpio direction.
  * @return None.
  */
-void HAL_GPIO_SetPinDirection(eGPIO_CHANNEL gpioPort, eGPIOPinNum_t gpioPinNum,
-                              eGPIOPinDirection_t direction)
+void HAL_GPIO_SetPinDirection(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum,
+                              eGPIOPinDirection direction)
 {
     uint8_t pin;
     struct GPIO_REG *pgpio;
@@ -64,11 +64,11 @@ void HAL_GPIO_SetPinDirection(eGPIO_CHANNEL gpioPort, eGPIOPinNum_t gpioPinNum,
 /**
  * @brief  Get gpio pin direction.
  * @param  gpioPort: gpio channel.
- * @param  GPIOPinNum: gpio pin num.
+ * @param  gpioPinNum: gpio pin num.
  * @return uint8_t: direction; value 1 for output, 0 for input.
  */
 uint8_t HAL_GPIO_GetPinDirection(eGPIO_CHANNEL gpioPort,
-                                 eGPIOPinNum_t gpioPinNum)
+                                 eGPIOPinNum gpioPinNum)
 {
     uint8_t pin;
     struct GPIO_REG *pgpio;
@@ -82,12 +82,12 @@ uint8_t HAL_GPIO_GetPinDirection(eGPIO_CHANNEL gpioPort,
 /**
  * @brief  Set gpio pin voltage.
  * @param  gpioPort: gpio channel.
- * @param  GPIOPinNum: gpio pin num.
+ * @param  gpioPinNum: gpio pin num.
  * @param  level: voltage.
  * @return None.
  */
-void HAL_GPIO_SetPinLevel(eGPIO_CHANNEL gpioPort, eGPIOPinNum_t gpioPinNum,
-                          eGPIOPinLevel_t level)
+void HAL_GPIO_SetPinLevel(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum,
+                          eGPIOPinLevel level)
 {
     uint8_t pin;
     struct GPIO_REG *pgpio;
@@ -106,11 +106,10 @@ void HAL_GPIO_SetPinLevel(eGPIO_CHANNEL gpioPort, eGPIOPinNum_t gpioPinNum,
 /**
  * @brief  Get gpio pin voltage.
  * @param  gpioPort: gpio channel.
- * @param  GPIOPinNum: gpio pin num.
- * @param  level: voltage.
+ * @param  gpioPinNum: gpio pin num.
  * @return uint8_t: voltage level; value 1 for high voltage, 0 for low voltage.
  */
-uint8_t HAL_GPIO_GetPinLevel(eGPIO_CHANNEL gpioPort, eGPIOPinNum_t gpioPinNum)
+uint8_t HAL_GPIO_GetPinLevel(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum)
 {
     uint8_t pin;
     struct GPIO_REG *pgpio;

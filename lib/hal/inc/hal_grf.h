@@ -34,7 +34,7 @@
 
 /***************************** Function Declare ******************************/
 
-void HAL_GRF_GPIOMuxSet(eGPIO_CHANNEL gpioPort, eGPIOPinNum_t gpioPinNum,
+void HAL_GRF_GPIOMuxSet(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum,
                         uint32_t data);
 
 #endif

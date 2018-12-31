@@ -6,7 +6,7 @@
 #include "hal_base.h"
 
 /**
- * @file  hal_demo.c
+ * @file  hal_nvic.c
  */
 
 #ifdef HAL_NVIC_MODULE_ENABLED
@@ -45,7 +45,7 @@ NVIC_IRQHandler HAL_NVIC_GetIRQHandler(IRQn_Type IRQn)
     return (NVIC_IRQHandler)(vectors[IRQn + NVIC_PERIPH_IRQ_OFFSET]);
 }
 
-void HAL_NVIC_SetPriorityGrouping(uint32_t priorityGroup)
+void HAL_NVIC_SetPriorityGrouping(eNVIC_PriorityGroup priorityGroup)
 {
     NVIC_SetPriorityGrouping(priorityGroup);
 }
@@ -117,7 +117,6 @@ void HAL_NVIC_ConfigExtIRQ(IRQn_Type IRQn, NVIC_IRQHandler handler,
 
 /**
  * @brief  Init NVIC Interrupt Controller.
- * @param  None.
  * @return None.
  */
 void HAL_NVIC_Init(void)

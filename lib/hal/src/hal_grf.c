@@ -35,11 +35,11 @@ static struct GRF_REG *pGRF = (struct GRF_REG *)(GRF_BASE);
 /**
  * @brief  GRF GPIO IOMUX.
  * @param  gpioPort: gpio port.
- * @param  GPIOPinNum: gpio pin num.
- * @param  GPIOPinNum: iomux value.
+ * @param  gpioPinNum: gpio pin num.
+ * @param  data: iomux value.
  * @return None.
  */
-void HAL_GRF_GPIOMuxSet(eGPIO_CHANNEL gpioPort, eGPIOPinNum_t gpioPinNum,
+void HAL_GRF_GPIOMuxSet(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum,
                         uint32_t data)
 {
     uint8_t Group;
