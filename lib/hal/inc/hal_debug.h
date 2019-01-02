@@ -26,12 +26,13 @@
     do {                                                               \
         if (!(exp)) {                                                  \
             HAL_DBG_ERR("%s %d Assert failed!\n", __func__, __LINE__); \
+            while (1)                                                  \
+                ;                                                      \
         }                                                              \
-    } while (1)
+    } while (0)
 
 /***************************** Structure Definition **************************/
 
 /***************************** Function Declare ******************************/
 
 #endif
-
