@@ -103,7 +103,7 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 │           ├── hal_uart.c
 │           ...
 └── test
-    └── rk2106_nanod
+    └── rk2106
         ├── GCC
         ├── Scatter
         └── src
