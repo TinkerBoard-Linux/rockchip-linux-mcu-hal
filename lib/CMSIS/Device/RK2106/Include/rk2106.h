@@ -157,7 +157,7 @@ typedef enum
 #define TIMER_BASE ((uint32_t)0x400e0000)
 #define PWM0_BASE ((uint32_t)0x400f0000)
 #define PWM1_BASE ((uint32_t)0x40100000)
-#define MAILBOX_BASE ((uint32_t)0x40110000)
+#define MBOX_BASE ((uint32_t)0x40110000)
 #define WDT_BASE ((uint32_t)0x40120000)
 #define UART3_BASE ((uint32_t)0x40130000)
 #define UART4_BASE ((uint32_t)0x40140000)
@@ -454,5 +454,25 @@ struct TIMER_REG
 #define TIMERN_CONTROLREG_MASK_MSK (1 << TIMERN_CONTROLREG_MASK_POS)
 #define TIMERN_CONTROLREG_MASK_MASK (0 << TIMERN_CONTROLREG_MASK_POS)
 #define TIMERN_CONTROLREG_MASK_UNMASK (1 << TIMERN_CONTROLREG_MASK_POS)
+
+/*
+ * Mailbox struct define
+ */
+#define MBOX_GROUP_CNT       1
+#define MBOX_CHAN_CNT        4
+
+struct MBOX_CMD_DAT {
+    __IO uint32_t cmd;
+    __IO uint32_t data;
+};
+
+struct MBOX_REG {
+    __IO uint32_t          A2B_INTEN;
+    __IO uint32_t          A2B_STATUS;
+    struct MBOX_CMD_DAT A2B[MBOX_CHAN_CNT];
+    __IO uint32_t          B2A_INTEN;
+    __IO uint32_t          B2A_STATUS;
+    struct MBOX_CMD_DAT B2A[MBOX_CHAN_CNT];
+};
 
 #endif /* _RK2106_H_ */
