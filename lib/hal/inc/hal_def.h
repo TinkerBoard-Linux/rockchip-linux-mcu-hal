@@ -3,10 +3,6 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_def.h
- */
-
 #ifndef _HAL_DEF_H_
 #define _HAL_DEF_H_
 
@@ -19,17 +15,6 @@
 
 #include "cmsis_compiler.h"
 #include "rksoc.h"
-
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
-
-/***************************** MACRO Definition ******************************/
-
-/** @defgroup HAL_DEF HAL_DEF
- *  Common defination, enum, macro for HAL drivers.
- *  @{
- */
 
 #define HAL_MAX_DELAY 0xFFFFFFFFU
 
@@ -50,7 +35,6 @@
 #define __irq
 
 /***************************** Structure Definition **************************/
-
 typedef enum
 {
     FALSE = 0x00U,
@@ -81,10 +65,6 @@ typedef enum
 
 typedef void (*pFunc)(void);
 
-/** @} */
-
 /***************************** Function Declare ******************************/
 
 #endif
-
-/** @} */

@@ -3,26 +3,12 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_nvic.h
- */
-
 #ifndef _HAL_NVIC_H_
 #define _HAL_NVIC_H_
 
 #include "hal_def.h"
 
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
-
 /***************************** MACRO Definition ******************************/
-
-/** @defgroup NVIC NVIC
- *  NVIC interrupt controller driver
- *  @{
- */
-
 typedef enum
 {
     NVIC_PRIORITYGROUP_0 = (0x7U), /*!< 0 bits pre-emption, 5 bits subpriority*/
@@ -42,9 +28,6 @@ typedef enum
 typedef void (*NVIC_IRQHandler)(void);
 
 /***************************** Structure Definition **************************/
-
-/** @} */
-
 /***************************** Function Declare ******************************/
 
 void HAL_NVIC_SetIRQHandler(IRQn_Type IRQn, NVIC_IRQHandler handler);
@@ -63,5 +46,3 @@ void HAL_NVIC_ConfigExtIRQ(IRQn_Type IRQn, NVIC_IRQHandler handler,
 void HAL_NVIC_Init(void);
 
 #endif
-
-/** @} */

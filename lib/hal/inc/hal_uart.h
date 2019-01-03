@@ -3,25 +3,12 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_uart.h
- */
-
 #ifndef _HAL_UART_H_
 #define _HAL_UART_H_
 
 #include "hal_def.h"
 
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
-
 /***************************** MACRO Definition ******************************/
-
-/** @defgroup UART UART
- *  UART Driver
- *  @{
- */
 
 typedef enum
 {
@@ -83,7 +70,8 @@ typedef enum
     UART_PARITY_DISABLE
 } eUART_parityEn;
 
-typedef enum {
+typedef enum
+{
     UART_INT_READ_FIFO_NOT_EMPTY = 2,
     UART_INT_WRITE_FIFO_EMPTY = 4,
     UART_INT_UART_ERR = 8,
@@ -91,8 +79,6 @@ typedef enum {
 } UART_INT_TYPE;
 
 /***************************** Structure Definition **************************/
-
-/** @} */
 
 /***************************** Function Declare ******************************/
 
@@ -109,5 +95,3 @@ uint32_t HAL_UART_GetCTSState(eUART_CH uartPort);
 void HAL_UART_EnableAutoFlowControl(eUART_CH uartPort);
 
 #endif
-
-/** @} */

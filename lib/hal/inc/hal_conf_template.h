@@ -3,10 +3,6 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_conf_template.h
- */
-
 #ifndef _HAL_CONF_H_
 #define _HAL_CONF_H_
 

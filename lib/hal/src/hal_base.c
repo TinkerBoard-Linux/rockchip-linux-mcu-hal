@@ -3,16 +3,21 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_base.c
- * @brief Common function for the whole HAL layer.
- *
- * @defgroup HAL_BASE HAL_BASE
+/** @addtogroup RKMCU_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup HAL_BASE
+ *  @{
+ */
+
+/** @defgroup How_To_Use How To Use
  *  @{
  @verbatim
 
- #### How to use ####
-
+ ==============================================================================
+                    #### How to use ####
+ ==============================================================================
  The HAL_BASE driver can be used as follows:
 
  (#) Resgister HAL_SysTick_Handler.
@@ -23,13 +28,9 @@
  (#) call M delay(HAL_Delay)
 
  @endverbatim
- ** @} */
+ @} */
 
 #include "hal_base.h"
-
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
 
 /********************* Private MACRO Definition ******************************/
 
@@ -42,9 +43,50 @@
 static __IO uint32_t uwTick;
 
 /********************* Private Function Definition ***************************/
+/** @defgroup HAL_BASE_Exported_Functions_Group4 Init and Deinit Functions
+ @verbatim
 
-/** @defgroup HAL_BASE HAL_BASE
- *  Base apis for HAL driver
+ ===============================================================================
+             #### Init and deinit functions ####
+ ===============================================================================
+ This section provides functions allowing to init and deinit the module:
+
+ @endverbatim
+ *  @{
+ */
+
+/**
+ * @brief  Init HAL driver basic code.
+ * @return HAL_OK.
+ * Init NVIC, set priority group, and init SysTick.
+ */
+HAL_Status HAL_Init(void)
+{
+    /* Set Interrupt Group Priority */
+    HAL_NVIC_Init();
+
+    /* Set Interrupt Group Priority */
+    HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_DEFAULT);
+
+    HAL_InitTick(TICK_INT_PRIORITY);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  HAL deinit.
+ * @return HAL_Status: HAL_OK.
+ */
+HAL_Status HAL_DeInit(void)
+{
+    /* TO-DO */
+
+    return HAL_OK;
+}
+
+/** @} */
+
+/** @defgroup HAL_BASE_Exported_Functions_Group5 Other Functions
  *  @{
  */
 
@@ -119,34 +161,7 @@ HAL_Status HAL_InitTick(uint32_t tickPriority)
     return HAL_OK;
 }
 
-/**
- * @brief  Init HAL driver basic code.
- * @return HAL_OK.
- * Init NVIC, set priority group, and init SysTick.
- */
-HAL_Status HAL_Init(void)
-{
-    /* Set Interrupt Group Priority */
-    HAL_NVIC_Init();
-
-    /* Set Interrupt Group Priority */
-    HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_DEFAULT);
-
-    HAL_InitTick(TICK_INT_PRIORITY);
-
-    return HAL_OK;
-}
-
-/**
- * @brief  HAL deinit.
- * @return HAL_Status: HAL_OK.
- */
-HAL_Status HAL_DeInit(void)
-{
-    /* TO-DO */
-
-    return HAL_OK;
-}
+/** @} */
 
 /** @} */
 

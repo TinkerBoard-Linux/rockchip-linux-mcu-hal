@@ -3,8 +3,12 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_timer.h
+/** @addtogroup RKMCU_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup TIMER
+ *  @{
  */
 
 #ifndef _HAL_TIMER_H_
@@ -12,15 +16,11 @@
 
 #include "hal_def.h"
 
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
-
 /***************************** MACRO Definition ******************************/
-
-/** @defgroup TIMER TIMER
+/** @defgroup TIMER_Exported_Definition_Group1 Basic Definition
  *  @{
  */
+
 typedef enum
 {
     TIMER_FREE_RUNNING = 0,
@@ -38,7 +38,6 @@ typedef enum
 /***************************** Structure Definition **************************/
 
 /** @} */
-
 /***************************** Function Declare ******************************/
 
 uint32_t HAL_TIMER_ClrInt(eTIMER_CH timerNum);
@@ -54,5 +53,7 @@ HAL_Status HAL_TIMER_Init(eTIMER_CH timerNum, eTIMER_MODE mode);
 HAL_Status HAL_TIMER_DeInit(eTIMER_CH timerNum);
 
 #endif
+
+/** @} */
 
 /** @} */

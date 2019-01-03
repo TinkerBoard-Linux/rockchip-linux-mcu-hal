@@ -3,17 +3,9 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_cru.c
- */
-
 #include "hal_base.h"
 
 #ifdef HAL_GRF_MODULE_ENABLED
-
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
 
 /********************* Private MACRO Definition ******************************/
 
@@ -27,13 +19,4 @@ static struct CRU_REG *pCRU = (struct CRU_REG *)(CRU_BASE);
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup CRU CRU
- *  This is CRU Driver
- *  @{
- */
-
-/** @} */
-
 #endif
-
-/** @} */

@@ -3,34 +3,17 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_grf.c
- */
-
 #include "hal_base.h"
-
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
 
 #ifdef HAL_GRF_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-
 /********************* Private Structure Definition **************************/
-
 static struct GRF_REG *pGRF = (struct GRF_REG *)(GRF_BASE);
 
 /********************* Private Variable Definition ***************************/
-
 /********************* Private Function Definition ***************************/
-
 /********************* Public Function Definition ****************************/
-
-/** @defgroup GRF GRF
- *  This is GRF Driver
- *  @{
- */
 
 /**
  * @brief  GRF GPIO IOMUX.
@@ -61,7 +44,3 @@ void HAL_GRF_GPIOMuxSet(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum,
 }
 
 #endif
-
-/** @} */
-
-/** @} */

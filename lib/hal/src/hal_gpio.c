@@ -3,20 +3,11 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_gpio.c
- */
-
 #include "hal_base.h"
 
 #ifdef HAL_GPIO_MODULE_ENABLED
 
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
-
 /********************* Private MACRO Definition ******************************/
-
 const uint32_t GPIO_GROUP[3] = {
     GPIO0_BASE,
     GPIO1_BASE,
@@ -26,16 +17,9 @@ const uint32_t GPIO_GROUP[3] = {
 #define GPIO_PORT(n) ((struct GPIO_REG *)(GPIO_GROUP[n]))
 
 /********************* Private Structure Definition **************************/
-
 /********************* Private Variable Definition ***************************/
-
 /********************* Private Function Definition ***************************/
-
 /********************* Public Function Definition ****************************/
-
-/** @defgroup GPIO GPIO
- *  @{
- */
 
 /**
  * @brief  Set gpio pin direction.
@@ -67,8 +51,7 @@ void HAL_GPIO_SetPinDirection(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum,
  * @param  gpioPinNum: gpio pin num.
  * @return uint8_t: direction; value 1 for output, 0 for input.
  */
-uint8_t HAL_GPIO_GetPinDirection(eGPIO_CHANNEL gpioPort,
-                                 eGPIOPinNum gpioPinNum)
+uint8_t HAL_GPIO_GetPinDirection(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum)
 {
     uint8_t pin;
     struct GPIO_REG *pgpio;
@@ -122,7 +105,3 @@ uint8_t HAL_GPIO_GetPinLevel(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum)
 }
 
 #endif
-
-/** @} */
-
-/** @} */

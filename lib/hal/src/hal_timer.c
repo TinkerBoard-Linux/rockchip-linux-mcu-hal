@@ -3,16 +3,22 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_timer.c
- * @brief TIMER driver.
- *
- * @defgroup TIMER TIMER
+/** @addtogroup RKMCU_HAL_Driver
  *  @{
+ */
+
+/** @addtogroup TIMER
+ *  @{
+ */
+
+/** @defgroup How_To_Use How To Use
+ *  @{
+
  @verbatim
 
- #### How to use ####
-
+ ==============================================================================
+                    #### How to use ####
+ ==============================================================================
  The TIMER driver can be used as follows:
 
  (#) IT mode: Resgister TIMER handler.
@@ -24,31 +30,23 @@
  (#) Stop TIMER(HAL_TIMER_Stop, HAL_TIMER_Stop_IT).
 
  @endverbatim
- ** @} */
+ @} */
 
 #include "hal_base.h"
-
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
 
 #ifdef HAL_TIMER_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-
 #define TIMER_PORT(n) ((struct TIMER_REG *)(TIMER_GROUP[n]))
 
 /********************* Private Structure Definition **************************/
-
 const uint32_t TIMER_GROUP[2] = {
     TIMER_BASE,
     TIMER_BASE + 0x20,
 };
 
 /********************* Private Variable Definition ***************************/
-
 /********************* Private Function Definition ***************************/
-
 static uint32_t TIMER_ClrInt(eTIMER_CH timerNum)
 {
     struct TIMER_REG *timerReg;
@@ -62,8 +60,60 @@ static uint32_t TIMER_ClrInt(eTIMER_CH timerNum)
 }
 
 /********************* Public Function Definition ****************************/
+/** @defgroup TIMER_Exported_Functions_Group4 Init and Deinit Functions
+ @verbatim
 
-/** @defgroup TIMER TIMER
+ ===============================================================================
+             #### Init and deinit functions ####
+ ===============================================================================
+ This section provides functions allowing to init and deinit module as follows:
+
+ @endverbatim
+ *  @{
+ */
+
+/**
+ * @brief  Timer init.
+ * @param  timerNum: Choose TIMER.
+ * @param  mode: Choose TIMER mode.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_TIMER_Init(eTIMER_CH timerNum, eTIMER_MODE mode)
+{
+    struct TIMER_REG *timerReg;
+
+    if ((timerNum >= TIMER_MAX) || (mode >= TIMER_MODE_MAX))
+        return HAL_ERROR;
+
+    timerReg = TIMER_PORT(timerNum);
+    timerReg->TimerControlReg |=
+        TIMERN_CONTROLREG_MASK_MASK | (mode << TIMERN_CONTROLREG_MODE_POS);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Timer deinit.
+ * @param  timerNum: Choose TIMER.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_TIMER_DeInit(eTIMER_CH timerNum)
+{
+    struct TIMER_REG *timerReg;
+
+    if (timerNum >= TIMER_MAX)
+        return HAL_ERROR;
+
+    timerReg = TIMER_PORT(timerNum);
+    timerReg->TimerControlReg |=
+        TIMERN_CONTROLREG_MASK_UNMASK | TIMERN_CONTROLREG_EN_DISABLE;
+
+    return HAL_OK;
+}
+
+/** @} */
+
+/** @defgroup TIMER_Exported_Functions_Group5 Other Functions
  *  @{
  */
 
@@ -211,47 +261,10 @@ HAL_Status HAL_TIMER1_Handler(void)
     return HAL_OK;
 }
 
-/**
- * @brief  Timer init.
- * @param  timerNum: Choose TIMER.
- * @param  mode: Choose TIMER mode.
- * @return HAL_Status.
- */
-HAL_Status HAL_TIMER_Init(eTIMER_CH timerNum, eTIMER_MODE mode)
-{
-    struct TIMER_REG *timerReg;
-
-    if ((timerNum >= TIMER_MAX) || (mode >= TIMER_MODE_MAX))
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerControlReg |=
-        TIMERN_CONTROLREG_MASK_MASK | (mode << TIMERN_CONTROLREG_MODE_POS);
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Timer deinit.
- * @param  timerNum: Choose TIMER.
- * @return HAL_Status.
- */
-HAL_Status HAL_TIMER_DeInit(eTIMER_CH timerNum)
-{
-    struct TIMER_REG *timerReg;
-
-    if (timerNum >= TIMER_MAX)
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerControlReg |=
-        TIMERN_CONTROLREG_MASK_UNMASK | TIMERN_CONTROLREG_EN_DISABLE;
-
-    return HAL_OK;
-}
-
 /** @} */
 
 #endif
+
+/** @} */
 
 /** @} */

@@ -3,30 +3,12 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_gpio.h
- */
-
 #ifndef _HAL_GPIO_H_
 #define _HAL_GPIO_H_
 
 #include "hal_def.h"
 
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
-
 /***************************** MACRO Definition ******************************/
-
-/** @defgroup GPIO GPIO
- *  This is GPIO driver macro definition
- *  @{
- */
-
-/**
-  * @brief GPIO Chanel
-  */
-
 typedef enum
 {
     GPIO_LOW,
@@ -88,9 +70,6 @@ typedef enum
 } eGPIO_CHANNEL;
 
 /***************************** Structure Definition **************************/
-
-/** @} */
-
 /***************************** Function Declare ******************************/
 
 void HAL_GPIO_SetPinDirection(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum,
@@ -101,5 +80,3 @@ void HAL_GPIO_SetPinLevel(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum,
                           eGPIOPinLevel level);
 uint8_t HAL_GPIO_GetPinLevel(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum);
 #endif
-
-/** @} */

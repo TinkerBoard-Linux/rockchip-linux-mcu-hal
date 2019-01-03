@@ -5,16 +5,9 @@
 
 #include "hal_base.h"
 
-/**
- * @file  hal_nvic.c
- */
-
 #ifdef HAL_NVIC_MODULE_ENABLED
-#include "hal_uart.h"
 
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
+#include "hal_uart.h"
 
 /********************* Private MACRO Definition ******************************/
 
@@ -25,11 +18,6 @@
 /********************* Private Function Definition ***************************/
 
 /********************* Public Function Definition ****************************/
-
-/** @defgroup NVIC NVIC
- *  NVIC interrupt controller driver
- *  @{
- */
 
 void HAL_NVIC_SetIRQHandler(IRQn_Type IRQn, NVIC_IRQHandler handler)
 {
@@ -126,8 +114,4 @@ void HAL_NVIC_Init(void)
                   SCB_SHCSR_MEMFAULTENA_Msk;
 }
 
-/** @} */
-
 #endif
-
-/** @} */

@@ -3,32 +3,20 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-/**
- * @file  hal_uart.c
- */
-
 #include "hal_base.h"
-
-/** @addtogroup RKMCU_HAL_Driver
- *  @{
- */
 
 #ifdef HAL_UART_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-
 #define UART_PORT(n) ((struct UART_REG *)(UART_GROUP[n]))
 
 /********************* Private Structure Definition **************************/
-
 static const uint32_t UART_GROUP[6] = {
     UART0_BASE, UART1_BASE, UART2_BASE, UART3_BASE, UART4_BASE, UART5_BASE,
 };
 
 /********************* Private Variable Definition ***************************/
-
 /********************* Private Function Definition ***************************/
-
 static void UART_Rest(eUART_CH uartPort)
 {
     struct UART_REG *pReg = UART_PORT(uartPort);
@@ -127,12 +115,6 @@ static void UART_SetFifoEnabledNumb(eUART_CH uartPort, uint32_t param)
 }
 
 /********************* Public Function Definition ****************************/
-
-/** @defgroup UART UART
- *  UART Driver
- *  @{
- */
-
 /**
   * @brief  UART enable interrupt
   * @param  uartPort: uart port
@@ -224,9 +206,8 @@ uint32_t HAL_UART_GetIntType(eUART_CH uartPort)
     } else if (dwUartIntStaus == UART_IF_C_TIMEOUT) {
         event |= UART_INT_READ_FIFO_NOT_EMPTY;
     } else {
-        if (dwUartIntStaus != 0x01) {
+        if (dwUartIntStaus != 0x01)
             printf("\n uart err = %x = %x", pReg->UART_LSR, dwUartIntStaus);
-        }
     }
 
     return event;
@@ -250,8 +231,4 @@ uint32_t HAL_UART_GetCTSState(eUART_CH uartPort)
     return cts_status;
 }
 
-/** @} */
-
 #endif
-
-/** @} */

@@ -3,8 +3,7 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
-/**
- *  @addtogroup RKMCU_HAL_Driver
+/** @addtogroup RKMCU_HAL_Driver
  *  @{
  */
 
@@ -13,6 +12,7 @@
  */
 
 /** @defgroup How_To_Use How To Use
+ *  @{
  @verbatim
 
  ==============================================================================
@@ -21,7 +21,7 @@
  The DEMO driver can be used as follows:
 
  @endverbatim
- */
+ @} */
 
 #include "hal_base.h"
 
