@@ -291,7 +291,222 @@ int retValue, varNum;
 
 所有需要详细注释的内容，应出现在定义处，如函数API注释在C文件内，宏API注释在头文件内，两边都出现的只需要定义处详细注释即可。
 
-### 代码注释
+### Doxygen注释及其布局
+
+#### Doxygen关键字
+
+| 关键字       | 简介                                                         |
+| ------------ | ------------------------------------------------------------ |
+| @defgroup    | 指示注释块包含一组类、文件或命名空间的文档。可用于对类、文件或命名空间进行分类，并记录这些类别。还可以将组用作其他组的成员，从而构建组的层次结构。与@}成组使用。 |
+| @addtogroup  | 定义组与@defgroup相同，但不同的是，使用相同<name>的命令，多次将不会导致警告，而是一组文档合并。与@}成组使用。 |
+| @verbatim    | 块注释且doxygen关键字无效，与@endverbatim配合使用。          |
+| @endverbatim | 与@verbatim配合使用。                                        |
+| @brief       | 简要描述                                                     |
+| @parm        | 函数参数定义                                                 |
+| @return      | 函数返回值定义                                               |
+
+####RKMCU_HAL_Driver库
+
+文件注释统一输出到RKMCU_HAL_Driver库，用法如下：
+
+```
+/** @addtogroup RKMCU_HAL_Driver
+ *  @{
+ */
+
+...
+
+/** @} */
+```
+
+#### 定义外设模块
+
+```
+/** @addtogroup DEMO
+ *  @{
+ */
+
+/** @} */
+```
+
+#### HOW-TO-USE
+
+每个模块都应有完整、简明的介绍，用以说明如何使用该模块。
+
+```
+/** @defgroup How_To_Use How To Use
+ @verbatim
+
+ ==============================================================================
+                    #### How to use ####
+ ==============================================================================
+ The DEMO driver can be used as follows:
+
+ @endverbatim
+ */
+```
+
+#### 外设驱动公共定义
+
+所有公共的枚举、宏定义、宏定义函数、定义类型、结构体都添加到该组。
+
+```
+/** @defgroup DEMO_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
+
+/** @} */
+```
+
+#### 外设驱动函数子模块
+
+驱动文件接口如果属于以下分组，需添加到相应的子模块：
+
+- 休眠唤醒接口
+
+```
+/** @defgroup DEMO_Exported_Functions_Group1 Suspend and Resume Functions
+ @verbatim
+
+ ===============================================================================
+             #### Suspend and Resume functions ####
+ ===============================================================================
+ This section provides functions allowing to suspend and resume the module:
+
+ ...to do or delete this row
+
+ @endverbatim
+ *  @{
+ */
+
+/** @} */
+```
+
+- 获取状态接口
+
+```
+/** @defgroup DEMO_Exported_Functions_Group2 State and Errors Functions
+ @verbatim
+
+ ===============================================================================
+             #### State and Errors functions ####
+ ===============================================================================
+ This section provides functions allowing to get the status of the module:
+
+ @endverbatim
+ *  @{
+ */
+
+/** @} */
+```
+
+- IO操作
+
+```
+/** @defgroup DEMO_Exported_Functions_Group3 IO Functions
+ @verbatim
+
+ ===============================================================================
+             #### IO functions ####
+ ===============================================================================
+ This section provides functions allowing to IO controlling:
+
+ @endverbatim
+ *  @{
+ */
+
+/** @} */
+```
+
+- 初始化反初始化
+
+```
+/** @defgroup DEMO_Exported_Functions_Group4 Init and Deinit Functions
+ @verbatim
+
+ ===============================================================================
+             #### Init and deinit functions ####
+ ===============================================================================
+ This section provides functions allowing to init and deinit the module:
+
+ ...to do or delete this row
+
+ @endverbatim
+ *  @{
+ */
+
+/** @} */
+```
+
+- 其他接口
+
+```
+/** @defgroup DEMO_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
+/** @} */
+```
+
+- 自定义子模块
+
+```
+/** @defgroup DEMO_Exported_Functions_Group5 XXXX Functions
+ *  @{
+ */
+
+/** @} */
+```
+
+#### 代码注释
+
+单行注释
+
+```
+/** This is a multi line comment */
+```
+
+多行注释
+
+```
+/**
+ *  This is a multi line comment;
+ *  Comment line 2.
+ */
+```
+
+#### 函数注释
+
+函数注释在函数定义处，通常为.c文件中。
+
+```
+/**
+ * @brief  Stop TIMER counter.
+ * @param  timerNum: Choose TIMER.
+ * @return HAL_Status.
+ * Just disable TIMER, and keep TIMER configuration.
+ */
+```
+
+#### Doxygen工具使用
+
+该库HAL驱动文件相应文档由doxygen工具生成，所以需要对文档注释检校是否符合doxygen文档规范。
+
+linux
+
+- 安装doxygen，参考链接 http://www.doxygen.nl/download.html，ubuntu下可以直接使用命令：sudo apt-get install doxygen，如果出现‘sh: 1: dot: not found’，请安装 sudo apt-get install graphviz。
+
+- 当前最新版本 1.8.15
+
+- 执行命令
+
+  ```
+  doxygen ./tools/Doxyfile
+  ```
+
+- 检查是否存在warning和error关键字。
+
+### 通用代码注释
 
 单行注释不接收双斜杠'//'，必须使用如下风格：
 
@@ -306,37 +521,11 @@ int retValue, varNum;
  * This is a multi line comment;
  * Comment line 2.
  */
- ```
-
- 需要利用doxygen文档化的多行注释：
-
-```c
-/**
- * This is a multi line comment;
- * Comment line 2.
- */
 ```
 
-### 函数注释
+### 通用函数注释
 
-Doxygen compliant function comments that provide:
-
-- brief function overview.
-- detailed description of the function.
-- detailed parameter explanation.
-- detailed information about return values.
-
-Doxygen comment example:
-
-```c
-/**
- * @brief  Enable Interrupt in NVIC Interrupt Controller
- * @param  IRQn  interrupt number that specifies the interrupt
- * @return none.
- * Enable the specified interrupt in the NVIC Interrupt Controller.
- * Other settings of the interrupt such as priority are not affected.
- */
-```
+所有函数按照doxygen标准注释，且所有公共api都应有相应注释。
 
 ## 3.5 函数
 
@@ -394,10 +583,16 @@ uint32 memberTest;
 };
 ```
 
-结构定义
+### 3.6.3 枚举类型定义
+
+只用实例好的定义，以“e”开头:
 
 ```c
-struct STRUCT_A *pStruct;
+typedef enum
+{
+    UART_ONE_STOPBIT,
+    UART_ONE_AND_HALF_OR_TWO_STOPBIT
+} eUART_stopBit;
 ```
 
 #### 特殊情况
@@ -519,6 +714,7 @@ enum {
 /*
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
+
 #include "hal_base.h"
 
 /********************* Private MACRO Definition ******************************/
