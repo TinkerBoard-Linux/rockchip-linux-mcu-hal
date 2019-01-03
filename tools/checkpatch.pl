@@ -315,18 +315,7 @@ if ($terse) {
 }
 
 if ($tree) {
-	if (defined $root) {
-		if (!top_of_kernel_tree($root)) {
-			die "$P: $root: --root does not point at a valid tree\n";
-		}
-	} else {
-		if (top_of_kernel_tree('.')) {
-			$root = '.';
-		} elsif ($0 =~ m@(.*)/scripts/[^/]*$@ &&
-						top_of_kernel_tree($1)) {
-			$root = $1;
-		}
-	}
+        $root = '.';
 
 	if (!defined $root) {
 		print "Must be run from the top-level dir. of a kernel tree\n";
@@ -742,10 +731,6 @@ sub read_words {
 
 	return 0;
 }
-
-my $const_structs = "";
-read_words(\$const_structs, $conststructsfile)
-    or warn "No structs that should be const will be found - file '$conststructsfile': $!\n";
 
 my $typeOtherTypedefs = "";
 if (length($typedefsfile)) {
@@ -3037,9 +3022,9 @@ sub process {
 				}
 
 				if ($comment !~ /^$/ &&
-				    $rawline !~ /^\+\Q$comment\E SPDX-License-Identifier: /) {
+				    $rawline !~ /^\+\/\*\sSPDX-License-Identifier: BSD-3-Clause/) {
 					 WARN("SPDX_LICENSE_TAG",
-					      "Missing or malformed SPDX-License-Identifier tag in line $checklicenseline\n" . $herecurr);
+					      "SPDX-License-Identifier tag illegal in line $checklicenseline\n" . $herecurr);
 				} elsif ($rawline =~ /(SPDX-License-Identifier: .*)/) {
 					 my $spdx_license = $1;
 					 if (!is_SPDX_License_valid($spdx_license)) {
@@ -3124,29 +3109,15 @@ sub process {
 # check we are in a valid source file C or perl if not then ignore this hunk
 		next if ($realfile !~ /\.(h|c|pl|dtsi|dts)$/);
 
-# at the beginning of a line any tabs must come first and anything
+# at the beginning of a line any space must come first and anything
 # more than 8 must use tabs.
-		if ($rawline =~ /^\+\s* \t\s*\S/ ||
-		    $rawline =~ /^\+\s*        \s*/) {
+		if ($rawline =~ /^\+\t+\s*\S/) {
 			my $herevet = "$here\n" . cat_vet($rawline) . "\n";
 			$rpt_cleaners = 1;
 			if (ERROR("CODE_INDENT",
-				  "code indent should use tabs where possible\n" . $herevet) &&
+				  "code indent should use space where possible\n" . $herevet) &&
 			    $fix) {
 				$fixed[$fixlinenr] =~ s/^\+([ \t]+)/"\+" . tabify($1)/e;
-			}
-		}
-
-# check for space before tabs.
-		if ($rawline =~ /^\+/ && $rawline =~ / \t/) {
-			my $herevet = "$here\n" . cat_vet($rawline) . "\n";
-			if (WARN("SPACE_BEFORE_TAB",
-				"please, no space before tabs\n" . $herevet) &&
-			    $fix) {
-				while ($fixed[$fixlinenr] =~
-					   s/(^\+.*) {8,8}\t/$1\t\t/) {}
-				while ($fixed[$fixlinenr] =~
-					   s/(^\+.*) +\t/$1\t/) {}
 			}
 		}
 
@@ -3246,6 +3217,7 @@ sub process {
 		if ($rawline !~ m@^\+[ \t]*\*/[ \t]*$@ &&	#trailing */
 		    $rawline !~ m@^\+.*/\*.*\*/[ \t]*$@ &&	#inline /*...*/
 		    $rawline !~ m@^\+.*\*{2,}/[ \t]*$@ &&	#trailing **/
+                    $rawline !~ m@^\+[ \t]*.+\@\}\s+\*\/[ \t]*$@ && #@} */
 		    $rawline =~ m@^\+[ \t]*.+\*\/[ \t]*$@) {	#non blank */
 			WARN("BLOCK_COMMENT_STYLE",
 			     "Block comments use a trailing */ on a separate line\n" . $herecurr);
@@ -3349,15 +3321,15 @@ sub process {
 			}
 		}
 
-# check for spaces at the beginning of a line.
+# check for tab at the beginning of a line.
 # Exceptions:
 #  1) within comments
 #  2) indented preprocessor commands
 #  3) hanging labels
-		if ($rawline =~ /^\+ / && $line !~ /^\+ *(?:$;|#|$Ident:)/)  {
+		if ($rawline =~ /^\+\s* \t/ || $rawline =~ /^\+\t/ )  {
 			my $herevet = "$here\n" . cat_vet($rawline) . "\n";
 			if (WARN("LEADING_SPACE",
-				 "please, no spaces at the start of a line\n" . $herevet) &&
+				 "please, no tab at the start of a line\n" . $herevet) &&
 			    $fix) {
 				$fixed[$fixlinenr] =~ s/^\+([ \t]+)/"\+" . tabify($1)/e;
 			}
@@ -3938,17 +3910,6 @@ sub process {
 			    $fix) {
 				$fixed[$fixlinenr] =~ s/(\b($Type)\s+($Ident))\s*\(\s*\)/$2 $3(void)/;
 			}
-		}
-
-# check for new typedefs, only function parameters and sparse annotations
-# make sense.
-		if ($line =~ /\btypedef\s/ &&
-		    $line !~ /\btypedef\s+$Type\s*\(\s*\*?$Ident\s*\)\s*\(/ &&
-		    $line !~ /\btypedef\s+$Type\s+$Ident\s*\(/ &&
-		    $line !~ /\b$typeTypedefs\b/ &&
-		    $line !~ /\b__bitwise\b/) {
-			WARN("NEW_TYPEDEFS",
-			     "do not add new typedefs\n" . $herecurr);
 		}
 
 # * goes on variable not on type
@@ -6401,14 +6362,6 @@ sub process {
 			my $new_api = $deprecated_apis{$deprecated_api};
 			WARN("DEPRECATED_API",
 			     "Deprecated use of '$deprecated_api', prefer '$new_api' instead\n" . $herecurr);
-		}
-
-# check for various structs that are normally const (ops, kgdb, device_tree)
-# and avoid what seem like struct definitions 'struct foo {'
-		if ($line !~ /\bconst\b/ &&
-		    $line =~ /\bstruct\s+($const_structs)\b(?!\s*\{)/) {
-			WARN("CONST_STRUCT",
-			     "struct $1 should normally be const\n" . $herecurr);
 		}
 
 # use of NR_CPUS is usually wrong
