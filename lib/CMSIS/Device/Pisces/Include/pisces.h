@@ -3593,6 +3593,11 @@ struct PMU_REG {
 /* SYS_REG3 */
 #define PMU_SYS_REG3_PMU_SYS_REG3_SHIFT                    (0U)
 #define PMU_SYS_REG3_PMU_SYS_REG3_MASK                     (0xFFFFFFFFU << PMU_SYS_REG3_PMU_SYS_REG3_SHIFT)             /* 0xFFFFFFFF */
+
+#define PISCES_PD_DSP 0x00000000U
+#define PISCES_PD_LOGIC 0x00011111U
+#define PISCES_PD_SHRM 0x00022222U
+#define PISCES_PD_AUDIO 0x00033333U
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
