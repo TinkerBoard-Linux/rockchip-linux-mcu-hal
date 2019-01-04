@@ -26,9 +26,9 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 CPU		= -mcpu=cortex-m3 -mthumb
 
 ASFLAGS         += $(CPU)
-#CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -include compiler-gcc.h -finput-charset=gbk --specs=nano.specs
+#CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk --specs=nano.specs
 #LDFLAGS	+= $(CPU) -Wl,--gc-sections --specs=nano.specs -u _scanf_float -u _printf_float
-CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -include compiler-gcc.h -finput-charset=gbk
+CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk
 LDFLAGS		+= $(CPU) -Wl,--gc-sections -lm -lgcc
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
@@ -59,6 +59,7 @@ INCLUDES += \
 -I"../../../lib/CMSIS/Device/RK2106/Include" \
 -I"../../../lib/CMSIS/Device/RK2106/Include/hw" \
 -I"../../../lib/CMSIS/Include" \
+-I"../../../lib/CMSIS/Device/" \
 -I"../src" \
 -I"../Scatter" \
 
@@ -78,8 +79,8 @@ SRCS += \
 ../src/bsp.c \
 ../src/interrupt.c \
 ./newlib_hooks.c \
-./startup_rk2106.S \
-../../../lib/CMSIS/Device/RK2106/Source/system_rk2106.c
+../../../lib/CMSIS/Device/RK2106/Source/Template/GCC/startup_rk2106.S \
+../../../lib/CMSIS/Device/RK2106/Source/Template/system_rk2106.c
 
 OBJS := $(addsuffix .o,$(basename $(SRCS)))
 
