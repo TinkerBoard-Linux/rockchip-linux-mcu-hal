@@ -16,12 +16,6 @@
 .extern	main
 .extern	ScatterLoader
 
-.equ	SYSTICK_CONTROL,	0xE000E010
-.equ	VECT_TAB_OFFSET,	0xE000ED08
-.equ	RESET_CONTROL,		0xE000ED0C
-.equ	HANDLER_CONTROL,	0xE000ED24
-.equ	IRQ_DISABLE0,		0xE000E180
-
 /**
  * Vector table
  */
@@ -73,48 +67,6 @@ __Vectors_End:
         .globl   Reset_Handler
         .fnstart
 Reset_Handler:
-        LDR     R0, =0x00000000
-        LDR     R1, =0x00000000
-        LDR     R2, =0x00000000
-        LDR     R3, =0x00000000
-        LDR     R4, =0x00000000
-        LDR     R5, =0x00000000
-        LDR     R6, =0x00000000
-        LDR     R7, =0x00000000
-        /* LDR     R8, =0x00000000 */
-        MOV     R8,R0
-        /* LDR     R9, =0x00000000 */
-        MOV     R9,R0
-        /* LDR     R10, =0x00000000 */
-        MOV     R10,R0
-        /* LDR     R11, =0x00000000 */
-        MOV     R11,R0
-        /* LDR     R12, =0x00000000 */
-        MOV     R12,R0
-
-        LDR     R2, =0x00000000
-        LDR     R1, =HANDLER_CONTROL
-        STR     R2, [R1, #0x00]
-
-	/* Systick Int Disable */
-        LDR     R2, =0x00000000
-        LDR     R1, =SYSTICK_CONTROL
-        STR     R2, [R1, #0x00]
-
-	/* General Int Disable */
-        LDR     R2, =0xFFFFFFFF
-        LDR     R1, =IRQ_DISABLE0
-        STR     R2, [R1, #0x00]
-        STR     R2, [R1, #0x04]
-        STR     R2, [R1, #0x08]
-        STR     R2, [R1, #0x0c]
-        STR     R2, [R1, #0x10]
-        STR     R2, [R1, #0x14]
-        STR     R2, [R1, #0x18]
-        STR     R2, [R1, #0x1c]
-
-;	CPSIE   I
-
         bl       SystemInit
         bl		 main
 
