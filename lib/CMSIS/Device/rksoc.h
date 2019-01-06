@@ -8,8 +8,10 @@
 
 #define RKMCU_RK2106
 
-#ifdef RKMCU_RK2106
+#if defined(RKMCU_RK2106)
 #include "rk2106.h"
+#elif defined(RKMCU_PISCES)
+#include "pisces.h"
 #endif
 
 #define SET_BIT(REG, BIT) ((REG) |= (BIT))
