@@ -395,7 +395,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>..\..\..\lib\CMSIS\Device\RK2106\Source\Template\ARM\ARMCM3_ac5.sct</ScatterFile>
+            <ScatterFile>..\..\..\lib\CMSIS\Device\RK2106\Source\Templates\ARM\ARMCM3_ac5.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -411,12 +411,12 @@
             <File>
               <FileName>system_rk2106.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\lib\CMSIS\Device\RK2106\Source\Template\system_rk2106.c</FilePath>
+              <FilePath>..\..\..\lib\CMSIS\Device\RK2106\Source\Templates\system_rk2106.c</FilePath>
             </File>
             <File>
               <FileName>startup_rk2106.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\lib\CMSIS\Device\RK2106\Source\Template\ARM\startup_rk2106.s</FilePath>
+              <FilePath>..\..\..\lib\CMSIS\Device\RK2106\Source\Templates\ARM\startup_rk2106.s</FilePath>
             </File>
           </Files>
         </Group>

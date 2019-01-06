@@ -79,8 +79,8 @@ SRCS += \
 ../src/bsp.c \
 ../src/interrupt.c \
 ./newlib_hooks.c \
-../../../lib/CMSIS/Device/RK2106/Source/Template/GCC/startup_rk2106.S \
-../../../lib/CMSIS/Device/RK2106/Source/Template/system_rk2106.c
+../../../lib/CMSIS/Device/RK2106/Source/Templates/GCC/startup_rk2106.S \
+../../../lib/CMSIS/Device/RK2106/Source/Templates/system_rk2106.c
 
 OBJS := $(addsuffix .o,$(basename $(SRCS)))
 
