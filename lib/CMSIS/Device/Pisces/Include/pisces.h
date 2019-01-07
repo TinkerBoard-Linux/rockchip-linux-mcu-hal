@@ -79,6 +79,7 @@ typedef enum
 
 #define __CM4_REV                 0x0001U  /* Core revision r0p1                            */
 #define __MPU_PRESENT             1U       /* Pisces provides an MPU                     */
+#define __VTOR_PRESENT            1U       /* VTOR present */
 #define __NVIC_PRIO_BITS          4U       /* Pisces uses 4 Bits for the Priority Levels */
 #define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used  */
 
@@ -129,9 +130,70 @@ struct CACHE_PMU_REG {
     __IO uint32_t WR_LAT_CNT;           /* PMU write latency status, Address offset: 0x28 */
 } ;
 
+#define ICACHE_CTRL       ((struct CACHE_CTRL_REG *) ICACHE_CTRL_BASE)
+#define ICACHE_PMU        ((struct CACHE_PMU_REG *) ICACHE_PMU_BASE)
+#define DCACHE_CTRL       ((struct CACHE_CTRL_REG *) DCACHE_CTRL_BASE)
+#define DCACHE_PMU        ((struct CACHE_PMU_REG *) DCACHE_PMU_BASE)
+
 /******************************************************************************/
 /*                         Peripheral Registers_Bits_Definition               */
 /******************************************************************************/
+
+/***********************  Bit definition for CACHE_CTRL register  ***********************/
+#define CACHE_MPU_MODE_SHIFT            (12U)
+#define CACHE_MPU_MODE                  (0x1U << CACHE_MPU_MODE_SHIFT)
+#define CACHE_ENTRY_THRESH_SHIFT        (8U)
+#define CACHE_ENTRY_THRESH_MASK         (0x7U << CACHE_ENTRY_THRESH_SHIFT)
+#define CACHE_STB_TIMEOUT_EN_SHIFT      (7U)
+#define CACHE_STB_TIMEOUT_EN            (0x1U << CACHE_STB_TIMEOUT_EN_SHIFT)
+#define CACHE_BYPASS_SHIFT              (6U)
+#define CACHE_BYPASS                    (0x1U << CACHE_BYPASS_SHIFT)
+#define CACHE_PMU_EN_SHIFT              (5U)
+#define CACHE_PMU_EN                    (0x1U << CACHE_PMU_EN_SHIFT)
+#define CACHE_FLUSH_SHIFT               (4U)
+#define CACHE_FLUSH                     (0x1U << CACHE_FLUSH_SHIFT)
+#define CACHE_STB_EN_SHIFT              (3U)
+#define CACHE_STB_EN                    (0x1U << CACHE_STB_EN_SHIFT)
+#define CACHE_HB_EN_SHIFT               (2U)
+#define CACHE_HB_EN                     (0x1U << CACHE_HB_EN_SHIFT)
+#define CACHE_WT_EN_SHIFT               (1U)
+#define CACHE_WT_EN                     (0x1U << CACHE_WT_EN_SHIFT)
+#define CACHE_EN_SHIFT                  (0U)
+#define CACHE_EN                        (0x1U << CACHE_EN_SHIFT)
+
+/********************  Bit definition for CACHE_MAINTAIN0 register  *********************/
+#define CACHE_M_ADDR_MASK               0xFFFFFFE0U
+#define CACHE_M_CLEAN                   0x0U
+#define CACHE_M_INVALID                 0x2U
+#define CACHE_M_CLEAN_INVALID           0x4U
+#define CACHE_M_INVALID_ALL             0x6U
+#define CACHE_M_VALID                   0x1U
+#define CACHE_M_STATUS_MASK             0x1U
+
+/********************  Bit definition for CACHE_MAINTAIN1 register  *********************/
+#define CACHE_M_OFFSET_MASK             0xFFFFU
+
+/********************  Bit definition for STB_TIMEOUT_CTRL register  ********************/
+#define CACHE_STB_TIMEOUT_VALUE_MASK    0x7FFFFU
+
+/**********************  Bit definition for CACHE_INT_ST register  **********************/
+#define CACHE_ERR_RECORD_EN             0x1U
+
+/********************  Bit definition for CACHE_ERR_HADDR register  *********************/
+#define CACHE_AHB_ERROR_ST_MASK         0x1U
+
+/**********************  Bit definition for CACHE_STATUS register  **********************/
+#define CACHE_STATUS_FLUSH_DONE_MASK    (0x04U)
+#define CACHE_STATUS_M_BUSY_MASK        (0x02U)
+#define CACHE_STATUS_INIT_FINISH_MASK   (0x01U)
+
+/**********************  definition for CACHE LINE SIZE  **********************/
+#define CACHE_LINE_SHIFT                (5U)
+#define CACHE_LINE_SIZE                 (0x1U << CACHE_LINE_SHIFT)
+#define CACHE_LINE_ADDR_MASK            (0xFFFFFFFFU << CACHE_LINE_SHIFT)
+
+#define CACHE_REVISION                  (0x00000100U)
+
 
 #ifdef __cplusplus
 }

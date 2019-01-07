@@ -99,6 +99,7 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
+#ifdef __NEED_COPY_TO_RAM
 /* Firstly it copies data from read only memory to RAM.
  * There are two schemes to copy. One can copy more than one sections.
  * Another can copy only one section. The former scheme needs more
@@ -159,6 +160,7 @@ Reset_Handler:
                 strlt    r0, [r2], #4
                 blt      .L_loop1
 #endif /*__STARTUP_COPY_MULTIPLE */
+#endif /*__NEED_COPY_TO_RAM */
 
 /* This part of work usually is done in C library startup code.
  * Otherwise, define this macro to enable it in this startup.
