@@ -15,6 +15,7 @@
 #define _HAL_BASE_H_
 
 #include "hal_conf.h"
+#include "hal_driver.h"
 #include "hal_debug.h"
 
 /***************************** MACRO Definition ******************************/
