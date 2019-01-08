@@ -1,38 +1,64 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
+ * Copyright (c) 2018-2019 Rockchip Electronic Co.,Ltd
  */
 
 #ifndef _HAL_DEBUG_H_
 #define _HAL_DEBUG_H_
 
+/** @addtogroup RKMCU_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup DEBUG
+ *  @{
+ */
+
 /***************************** MACRO Definition ******************************/
+
+/** @defgroup DEBUG_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
 
 #define HAL_SYSLOG printf
 
-#define HAL_LOG(flags, fmt, arg...) \
-    do {                            \
-        if (flags)                  \
-            HAL_SYSLOG(fmt, ##arg); \
-    } while (0)
+#if (HAL_DBG_ON && HAL_DBG_INFO_ON)
+#define HAL_DBG(fmt, arg...) HAL_SYSLOG("[HAL INFO] " fmt, ##arg)
+#else
+#define HAL_DBG(fmt, arg...)
+#endif
 
-#define HAL_DBG(fmt, arg...) HAL_LOG(HAL_DBG_ON, "[HAL] " fmt, ##arg)
-#define HAL_DBG_WRN(fmt, arg...) \
-    HAL_LOG(HAL_DBG_ON &&HAL_DBG_WRN_ON, "[HAL WARNING] " fmt, ##arg)
-#define HAL_DBG_ERR(fmt, arg...) \
-    HAL_LOG(HAL_DBG_ON &&HAL_DBG_ERR_ON, "[HAL ERROR] " fmt, ##arg)
+#if (HAL_DBG_ON && HAL_DBG_WRN_ON)
+#define HAL_DBG_WRN(fmt, arg...) HAL_SYSLOG("[HAL WARNING] " fmt, ##arg)
+#else
+#define HAL_DBG_WRN(fmt, arg...)
+#endif
 
-#define HAL_ASSERT(expr)                                               \
-    do {                                                               \
-        if (!(exp)) {                                                  \
-            HAL_DBG_ERR("%s %d Assert failed!\n", __func__, __LINE__); \
-            while (1)                                                  \
-                ;                                                      \
-        }                                                              \
+#if (HAL_DBG_ON && HAL_DBG_ERR_ON)
+#define HAL_DBG_ERR(fmt, arg...) HAL_SYSLOG("[HAL ERROR] " fmt, ##arg)
+#else
+#define HAL_DBG_ERR(fmt, arg...)
+#endif
+
+#if (HAL_DBG_ON && USE_FULL_ASSERT)
+#define HAL_ASSERT(expr)                                    \
+    do {                                                    \
+        if (!(expr))                                        \
+            AssertFailed((const char *)__FILE__, __LINE__); \
     } while (0)
+#else
+#define HAL_ASSERT(expr)
+#endif
 
 /***************************** Structure Definition **************************/
 
+/** @} */
 /***************************** Function Declare ******************************/
 
+extern void AssertFailed(const char *file, uint32_t line);
+
 #endif
+
+/** @} */
+
+/** @} */
