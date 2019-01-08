@@ -672,7 +672,7 @@ struct CRU_REG {
     __IO uint32_t CRU_GLB_CNT_TH;
 };
 
-struct CRU_REG *pCRU = (struct CRU_REG *)CRU_BASE;
+struct CRU_REG *const pCRU = (struct CRU_REG *)CRU_BASE;
 ```
 
 访问寄存器原则上使用结构体指针访问，如有特殊需求可以使用宏定义.
