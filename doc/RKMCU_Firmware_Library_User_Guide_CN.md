@@ -298,14 +298,14 @@ int retValue, varNum;
 | 关键字       | 简介                                                         |
 | ------------ | ------------------------------------------------------------ |
 | @defgroup    | 指示注释块包含一组类、文件或命名空间的文档。可用于对类、文件或命名空间进行分类，并记录这些类别。还可以将组用作其他组的成员，从而构建组的层次结构。与@}成组使用。 |
-| @addtogroup  | 定义组与@defgroup相同，但不同的是，使用相同<name>的命令，多次将不会导致警告，而是一组文档合并。与@}成组使用。 |
+| @addtogroup  | 定义组与@defgroup相同，但不同的是，使用相同名字的命令，多次将不会导致警告，而是一组文档合并。与@}成组使用。 |
 | @verbatim    | 块注释且doxygen关键字无效，与@endverbatim配合使用。          |
 | @endverbatim | 与@verbatim配合使用。                                        |
 | @brief       | 简要描述                                                     |
 | @parm        | 函数参数定义                                                 |
 | @return      | 函数返回值定义                                               |
 
-####RKMCU_HAL_Driver库
+#### RKMCU_HAL_Driver库
 
 文件注释统一输出到RKMCU_HAL_Driver库，用法如下：
 
@@ -494,7 +494,7 @@ int retValue, varNum;
 
 linux
 
-- 安装doxygen，参考链接 http://www.doxygen.nl/download.html，ubuntu下可以直接使用命令：sudo apt-get install doxygen，如果出现‘sh: 1: dot: not found’，请安装 sudo apt-get install graphviz。
+- 安装doxygen，参考链接 <http://www.doxygen.nl/download.html>，ubuntu下可以直接使用命令：sudo apt-get install doxygen，如果出现‘sh: 1: dot: not found’，请安装 sudo apt-get install graphviz。
 
 - 当前最新版本 1.8.15
 
@@ -773,8 +773,8 @@ OS支持(如RT-Thread)部分，利用控制器状态防重入，原子操作可�
 
 - 模块初始化／反初始化
 - IO访问函数
---阻塞
---非阻塞
+  - 阻塞
+  - 非阻塞
 - Suspend/Resume
 - 状态查询
 
@@ -905,12 +905,12 @@ core_<cpu>.h	//如：core_cm3.h
 
 ## clang format工具使用
 
-https://clang.llvm.org/docs/ClangFormat.html
+<https://clang.llvm.org/docs/ClangFormat.html>
 
 ## doxygen工具使用
 
-http://doxygen.nl
+<http://doxygen.nl>
 
 ## CppUTest
 
-https://cpputest.github.io/
+<https://cpputest.github.io>
