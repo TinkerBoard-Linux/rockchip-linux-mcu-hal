@@ -30,6 +30,10 @@
 #include "hal_nvic.h"
 #endif
 
+#ifdef HAL_SDIO_MODULE_ENABLED
+#include "hal_sdio.h"
+#endif
+
 #ifdef HAL_TIMER_MODULE_ENABLED
 #include "hal_timer.h"
 #endif
