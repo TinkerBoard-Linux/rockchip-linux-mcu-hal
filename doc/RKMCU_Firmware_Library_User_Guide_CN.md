@@ -756,7 +756,7 @@ enum {
 
 ![header](RKMCU_Firmware_Library_User_Guide_CN\header_call.jpg)
 
-其中芯片的选择位于rksoc.h, 模块选择位于hal_config.h。
+其中芯片的选择和模块选择统一位于hal_conf.h。
 
 ## 3.8 模块驱动
 
