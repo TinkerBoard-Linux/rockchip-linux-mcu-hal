@@ -6,8 +6,6 @@
 #ifndef _RKSOC_H_
 #define _RKSOC_H_
 
-#define RKMCU_RK2106
-
 #if defined(RKMCU_RK2106)
 #include "rk2106.h"
 #elif defined(RKMCU_PISCES)
