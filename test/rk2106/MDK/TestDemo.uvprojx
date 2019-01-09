@@ -468,6 +468,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\lib\hal\src\hal_timer.c</FilePath>
             </File>
+            <File>
+              <FileName>hal_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_debug.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

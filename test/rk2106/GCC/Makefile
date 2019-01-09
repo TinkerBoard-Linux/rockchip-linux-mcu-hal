@@ -75,6 +75,7 @@ SRCS += \
 ../../../lib/hal/src/hal_cru.c \
 ../../../lib/hal/src/hal_timer.c \
 ../../../lib/hal/src/hal_mbox.c \
+../../../lib/hal/src/hal_debug.c \
 ../Scatter/ScatterLoader.c \
 ../src/main.c \
 ../src/bsp.c \

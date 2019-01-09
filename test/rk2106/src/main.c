@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
+ * Copyright (c) 2018-2019 Rockchip Electronic Co.,Ltd
  */
 
 #include "bsp.h"
@@ -28,12 +28,12 @@ int main(void)
 {
     int32_t i;
 
-    /* BSP Init */
-    BSP_Init();
-
     /* HAL BASE Init */
     HAL_NVIC_SetIRQHandler(SysTick_IRQn, (NVIC_IRQHandler)&HAL_SysTick_Handler);
     HAL_Init();
+
+    /* BSP Init */
+    BSP_Init();
 
     /* HAL UART Init */
     HAL_UART_Init(UART_CHB, UART_BR_115200, UART_DATA_8B, UART_ONE_STOPBIT,
@@ -47,7 +47,6 @@ int main(void)
                               NVIC_PERIPH_PRIO_DEFAULT);
         HAL_TIMER_Init(TIMER0, TIMER_FREE_RUNNING);
         HAL_TIMER_SetCount(TIMER0, SystemCoreClock * 5);
-        HAL_TIMER_IntUnmask(TIMER0);
         HAL_TIMER_Start(TIMER0);
         for (i = 0; i < 10000000; i++) {
             HAL_Delay(1000);
