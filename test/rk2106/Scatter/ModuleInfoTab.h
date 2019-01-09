@@ -13,7 +13,8 @@
 #define EXT extern
 #endif
 
-typedef enum {
+typedef enum
+{
     SEGMENT_ID_SYS,
     SEGMENT_ID_INIT,
     SEGMENT_ID_PMU,
@@ -175,7 +176,8 @@ typedef enum {
 
 } SEGMENT_ID;
 
-typedef struct _SEGMENT_INFO_T {
+typedef struct _SEGMENT_INFO_T
+{
     uint32_t *CodeLoadBase;
     uint32_t *CodeImageBase;
     uint32_t *CodeImageLength;
@@ -189,13 +191,15 @@ typedef struct _SEGMENT_INFO_T {
     uint8_t Name[16];
 } SEGMENT_INFO_T;
 
-typedef struct _SEGMENT_INFO_TABLE {
+typedef struct _SEGMENT_INFO_TABLE
+{
     uint32_t SegmentNum;
     SEGMENT_INFO_T Segment[MAX_SEGMENT_NUM];
 
 } SEGMENT_INFO_TABLE;
 
-typedef struct _SYSTEM_DEFAULT_PARA_T {
+typedef struct _SYSTEM_DEFAULT_PARA_T
+{
     uint32_t SDEnable;
     uint32_t FMEnable;
 
@@ -235,7 +239,8 @@ typedef struct _SYSTEM_DEFAULT_PARA_T {
 
 } SYSTEM_DEFAULT_PARA_T;
 
-typedef struct _FIRMWARE_INFO_T {
+typedef struct _FIRMWARE_INFO_T
+{
     uint32_t *LoadStartBase;
     SEGMENT_INFO_TABLE SegmentInfo;
     SYSTEM_DEFAULT_PARA_T SysDefaultPara;
