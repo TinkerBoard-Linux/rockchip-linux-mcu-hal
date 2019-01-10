@@ -18,6 +18,10 @@
 #include "hal_grf.h"
 #endif
 
+#ifdef HAL_INTC_MODULE_ENABLED
+#include "hal_intc.h"
+#endif
+
 #ifdef HAL_MBOX_MODULE_ENABLED
 #include "hal_mbox.h"
 #endif
