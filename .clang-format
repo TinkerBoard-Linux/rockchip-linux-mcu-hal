@@ -80,7 +80,6 @@ PointerAlignment: Right
 ReflowComments: false
 SortIncludes: false
 SpaceAfterCStyleCast: false
-SpaceAfterTemplateKeyword: true
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
