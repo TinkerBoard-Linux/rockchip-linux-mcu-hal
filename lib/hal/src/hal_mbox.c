@@ -290,7 +290,7 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, eMBOX_ID mbox)
 HAL_Status HAL_MBOX_Init(eMBOX_ID mbox)
 {
     struct MBOX_DEV *pMBox;
-    eMBOX_ID chan;
+    eMBOX_CH chan;
 
     if (mbox >= MBOX_ID_MAX)
         return HAL_INVAL;
