@@ -99,7 +99,9 @@ typedef enum
 #define DCACHE_CTRL_BASE               DCACHE_BASE
 #define DCACHE_PMU_BASE                (DCACHE_BASE + 0x40)
 #define RKIO_UART0_BASE                0x40800000
-
+#define RKIO_MAILBOX0_BASE             0x40100000
+#define RKIO_MAILBOX1_BASE             0x40110000
+#define RKIO_MAILBOX2_BASE             0x40120000
 
 /* CACHE CONTROLLER Register Structure Define  */
 struct CACHE_CTRL_REG {
@@ -194,6 +196,25 @@ struct CACHE_PMU_REG {
 
 #define CACHE_REVISION                  (0x00000100U)
 
+/* MAILBOX Register Structure Define */
+#define MBOX_BASE                      RKIO_MAILBOX0_BASE
+#define MBOX1_BASE                     RKIO_MAILBOX1_BASE
+#define MBOX_GROUP_CNT                 2
+#define MBOX_CHAN_CNT                  4
+
+struct MBOX_CMD_DAT {
+    __IO uint32_t cmd;
+    __IO uint32_t data;
+};
+
+struct MBOX_REG {
+    __IO uint32_t          A2B_INTEN;
+    __IO uint32_t          A2B_STATUS;
+    struct MBOX_CMD_DAT    A2B[MBOX_CHAN_CNT];
+    __IO uint32_t          B2A_INTEN;
+    __IO uint32_t          B2A_STATUS;
+    struct MBOX_CMD_DAT    B2A[MBOX_CHAN_CNT];
+};
 
 #ifdef __cplusplus
 }
