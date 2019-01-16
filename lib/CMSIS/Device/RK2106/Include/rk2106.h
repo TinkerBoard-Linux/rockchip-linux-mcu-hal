@@ -387,6 +387,17 @@ struct TIMER_REG
     __IO uint32_t TimerIntStatus; /* Interrupt Status Register */
 };
 
+/* WDT Register Structure Define */
+struct WDT_REG
+{
+    __IO uint32_t WDT_CR;
+    __IO uint32_t WDT_TORR;
+    __I  uint32_t WDT_CCVR;
+    __IO uint32_t WDT_CRR;
+    __I  uint32_t WDT_STAT;
+    __I  uint32_t WDT_EOI;
+};
+
 /* GRF Bit Macro Define */
 #define IOMUX_GPIO2A6_IO ((uint32_t)(0))
 
