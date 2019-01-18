@@ -1,0 +1,30 @@
+/* SPDX-License-Identifier: BSD-3-Clause */
+/*
+ * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
+ */
+
+/** @addtogroup RKMCU_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup WDT
+ *  @{
+ */
+
+#ifndef _HAL_WDT_H_
+#define _HAL_WDT_H_
+
+#include "hal_def.h"
+
+/***************************** MACRO Definition ******************************/
+/***************************** Structure Definition **************************/
+/***************************** Function Declare ******************************/
+
+HAL_Status HAL_WDT_Init(void);
+HAL_Status HAL_WDT_SetTop(uint32_t top);
+
+#endif
+
+/** @} */
+
+/** @} */

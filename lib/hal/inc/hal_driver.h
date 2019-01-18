@@ -46,4 +46,8 @@
 #include "hal_uart.h"
 #endif
 
+#ifdef HAL_WDT_MODULE_ENABLED
+#include "hal_wdt.h"
+#endif
+
 #endif
