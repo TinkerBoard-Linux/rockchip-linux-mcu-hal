@@ -76,7 +76,7 @@ uint32_t HAL_MMC_GetCardStatus(struct HAL_MMC_HOST *host)
 /**
  * @brief  Get cmd resp.
  * @param  host: private hal host data.
- * @param  resp_num: which resp the caller want.
+ * @param  respNum: which resp the caller want.
  * @return the resp value respectivey.
  */
 uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int32_t respNum)
