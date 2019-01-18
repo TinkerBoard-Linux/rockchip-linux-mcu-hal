@@ -337,7 +337,7 @@ HAL_Status HAL_MMC_InitDescriptors(struct HAL_MMC_HOST *host, uint32_t *buf,
  * @param div: div depends on (src / desired).
  * @return HAL_Status
  */
-HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_tdiv)
+HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
 {
     uint32_t loop = 5000;
     struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
@@ -401,7 +401,7 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_tdiv)
  * @param  width: data width need to be set.
  * @return HAL_Status.
  */
-HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int32_twidth)
+HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int32_t width)
 {
     struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
 
