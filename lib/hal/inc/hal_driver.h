@@ -38,6 +38,10 @@
 #include "hal_sdio.h"
 #endif
 
+#ifdef HAL_SFC_MODULE_ENABLED
+#include "hal_sfc.h"
+#endif
+
 #ifdef HAL_TIMER_MODULE_ENABLED
 #include "hal_timer.h"
 #endif
