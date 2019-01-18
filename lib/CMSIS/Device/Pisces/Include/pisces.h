@@ -103,6 +103,7 @@ typedef enum
 #define RKIO_MAILBOX1_BASE             0x40110000
 #define RKIO_MAILBOX2_BASE             0x40120000
 #define SDIO_BASE                      0x40c90000
+#define WDT_BASE                       0x40a00000
 
 /* CACHE CONTROLLER Register Structure Define  */
 struct CACHE_CTRL_REG {
@@ -269,6 +270,17 @@ struct SDMMC_REG {
     __IO uint32_t FIFO_BASE;                          /* Address Offset: 0x0200 */
 };
 
+/* WDT Register Structure Define */
+struct WDT_REG
+{
+    __IO uint32_t WDT_CR;
+    __IO uint32_t WDT_TORR;
+    __I  uint32_t WDT_CCVR;
+    __IO uint32_t WDT_CRR;
+    __I  uint32_t WDT_STAT;
+    __I  uint32_t WDT_EOI;
+};
+
 /* SDMMC/EMMC/SDIO Macro Define */
 #define MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT (10U)
 #define MMC_STATUS_DATA_STATE_MC_BUSY_MASK (0x1U)
@@ -282,6 +294,10 @@ struct SDMMC_REG {
 #define MMC_FIFOTH_RX_WMARK_MASK (0x7ffU)
 #define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT (28U)
 #define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_8 (0x2U)
+
+/* WDT Macro Define */
+#define WDOG_CONTROL_REG_WDT_EN_MASK (0x1U)
+#define WDOG_TIMEOUT_RANGE_TOPINIT_SHIFT (4U)
 
 #ifdef __cplusplus
 }
