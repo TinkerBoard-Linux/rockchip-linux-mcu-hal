@@ -3,6 +3,7 @@
 # Copyright (c) 2018 Rockchip Electronic Co.,Ltd
 
 ROOT_PATH	:= ../../..
+RKSOC           := RK2106
 
 #############################################################################
 # Cross compiler
@@ -28,8 +29,8 @@ CPU		= -mcpu=cortex-m3 -mthumb
 ASFLAGS         += $(CPU)
 #CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk --specs=nano.specs
 #LDFLAGS	+= $(CPU) -Wl,--gc-sections --specs=nano.specs -u _scanf_float -u _printf_float
-CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk
-LDFLAGS		+= $(CPU) -Wl,--gc-sections -lm -lgcc
+CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk -Wunused-variable -Wformat=2
+LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nano.specs -lm -lgcc
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
 LINKER_SCRIPT	:= ./gcc_arm.ld
@@ -55,35 +56,24 @@ endif
 # Head files
 #############################################################################
 INCLUDES += \
--I"../../../lib/hal/inc" \
--I"../../../lib/CMSIS/Device/RK2106/Include" \
--I"../../../lib/CMSIS/Device/RK2106/Include/hw" \
--I"../../../lib/CMSIS/Include" \
--I"../../../lib/CMSIS/Device/" \
+-I"$(ROOT_PATH)/lib/hal/inc" \
+-I"$(ROOT_PATH)/lib/CMSIS/Device/$(RKSOC)/Include" \
+-I"$(ROOT_PATH)/lib/CMSIS/Include" \
+-I"$(ROOT_PATH)/lib/CMSIS/Device/" \
 -I"../src" \
 -I"../Scatter" \
 
 #############################################################################
 # Source Files
 #############################################################################
-SRCS += \
-../../../lib/hal/src/hal_base.c \
-../../../lib/hal/src/hal_uart.c \
-../../../lib/hal/src/hal_nvic.c \
-../../../lib/hal/src/hal_gpio.c \
-../../../lib/hal/src/hal_grf.c \
-../../../lib/hal/src/hal_cru.c \
-../../../lib/hal/src/hal_timer.c \
-../../../lib/hal/src/hal_mbox.c \
-../../../lib/hal/src/hal_debug.c \
-../../../lib/hal/src/hal_sdio.c \
-../Scatter/ScatterLoader.c \
-../src/main.c \
-../src/bsp.c \
-../src/interrupt.c \
-./newlib_hooks.c \
-../../../lib/CMSIS/Device/RK2106/Source/Templates/GCC/startup_rk2106.S \
-../../../lib/CMSIS/Device/RK2106/Source/Templates/system_rk2106.c
+DIRS := $(ROOT_PATH)/lib/hal/src \
+	$(ROOT_PATH)/lib/CMSIS/Device/$(RKSOC)/Source/Templates/GCC \
+	$(ROOT_PATH)/lib/CMSIS/Device/$(RKSOC)/Source/Templates \
+	../Scatter \
+	../src \
+	. \
+
+SRCS += $(basename $(foreach dir,$(DIRS),$(wildcard $(dir)/*.[cS])))
 
 OBJS := $(addsuffix .o,$(basename $(SRCS)))
 
@@ -92,7 +82,7 @@ CFLAGS	+= $(INCLUDES)
 all: $(BIN)
 
 $(ELF): $(OBJS) $(LINKER_SCRIPT)
-	$(Q) $(CC) $(OBJS) $(LDFLAGS) -T$(LINKER_SCRIPT) -Wl,-Map=$(MAP),-cref -o $@
+	$(Q) $(CC) $(OBJS) $(LDFLAGS) $(CFLAGS) -T$(LINKER_SCRIPT) -Wl,-Map=$(MAP),-cref -o $@
 
 $(BIN): $(ELF)
 	$(Q) $(OBJCOPY) $(OCFLAGS) -O binary $< $@

@@ -35,22 +35,7 @@ caddr_t _sbrk(int incr)
 
 int _write(int fd, char *buf, int nbytes)
 {
-    int i;
-
-    for (i = 0; i < nbytes; ++i, ++buf) {
-        static unsigned char lastchar_was_cr = 0;
-
-        /*
-         * Insert a CR before the LF, unless the previous char in the source
-         * buffer was a CR. This is to prevent converting a CRLF to CRCRLF.
-         */
-        if (*buf == '\n' && !lastchar_was_cr)
-            fputc('\r', NULL);
-
-        /* Send the char out the debug UART. */
-        fputc(*buf, NULL);
-        lastchar_was_cr = (*buf == '\r');
-    }
+    /* TBD */
 
     return nbytes;
 }
