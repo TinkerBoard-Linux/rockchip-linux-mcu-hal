@@ -413,6 +413,8 @@ __STATIC_FORCEINLINE void HAL_DCACHE_CleanInvalidate(void)
     do {
         status = DCACHE_CTRL->STATUS & CACHE_STATUS_FLUSH_DONE_MASK;
     } while (!status);
+
+    DCACHE_CTRL->CTRL &= ~CACHE_FLUSH;
 #endif
 
 #endif

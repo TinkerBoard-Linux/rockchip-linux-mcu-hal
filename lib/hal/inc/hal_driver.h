@@ -38,4 +38,8 @@
 #include "hal_uart.h"
 #endif
 
+#if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
+#include "hal_cache.h"
+#endif
+
 #endif
