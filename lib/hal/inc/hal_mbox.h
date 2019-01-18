@@ -45,7 +45,7 @@ typedef enum
 struct MBOX_CLIENT
 {
     char name[16];
-    void (*RXCallback)(struct MBOX_CMD_DAT *msg, void *data);
+    void (*RXCallback)(struct MBOX_CMD_DAT *msg, void *cbData);
     void *callbackData;
 };
 
@@ -54,7 +54,7 @@ struct MBOX_CLIENT
 /***************************** Function Declare ******************************/
 
 HAL_Status HAL_MBOX_IrqHandler(int irq, eMBOX_ID mbox);
-HAL_Status HAL_MBOX_Init(eMBOX_ID mbox);
+HAL_Status HAL_MBOX_Init(eMBOX_ID mbox, uint8_t isA2B);
 HAL_Status HAL_MBOX_DeInit(eMBOX_ID mbox);
 HAL_Status HAL_MBOX_GetStatus(uint32_t *st, eMBOX_ID mbox, eMBOX_CH chan);
 HAL_Status HAL_MBOX_RecvMsg(eMBOX_ID mbox, eMBOX_CH chan);

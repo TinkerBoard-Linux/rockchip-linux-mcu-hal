@@ -59,6 +59,7 @@ struct MBOX_DEV
 {
     struct MBOX_REG *pReg;
     struct MBOX_CHAN chans[MBOX_CH_MAX];
+    uint8_t A2B;
 };
 
 /********************* Private Variable Definition ***************************/
@@ -67,45 +68,76 @@ static struct MBOX_DEV g_MBoxDevs[MBOX_ID_MAX];
 
 /********************* Private Function Definition ***************************/
 
-static uint32_t MBOX_A2BIntStGet(struct MBOX_REG *reg)
+static uint32_t MBOX_IntStGet(struct MBOX_REG *reg, uint8_t A2B)
 {
-    return reg->A2B_STATUS & 0x0f;
+    if (A2B)
+        return reg->A2B_STATUS & 0x0f;
+
+    return reg->B2A_STATUS & 0x0f;
 }
 
-static void MBOX_ChanEnable(struct MBOX_REG *reg, eMBOX_CH chan)
+static void MBOX_ChanEnable(struct MBOX_REG *reg, eMBOX_CH chan, uint8_t isA2B)
 {
-    reg->B2A_STATUS = 1UL << chan;
-    reg->B2A_INTEN = 1UL << chan;
+    if (isA2B) {
+        reg->B2A_STATUS = 1UL << chan;
+        reg->B2A_INTEN |= 1UL << chan;
+    } else {
+        reg->A2B_STATUS = 1UL << chan;
+        reg->A2B_INTEN |= 1UL << chan;
+    }
 }
 
-static void MBOX_ChanDisable(struct MBOX_REG *reg, eMBOX_CH chan)
+static void MBOX_ChanDisable(struct MBOX_REG *reg, eMBOX_CH chan, uint8_t isA2B)
 {
-    reg->B2A_INTEN = 0UL << chan;
-    reg->B2A_STATUS = 1UL << chan;
+    if (isA2B) {
+        reg->B2A_INTEN &= ~(1UL << chan);
+        reg->B2A_STATUS = 1UL << chan;
+    } else {
+        reg->A2B_INTEN &= ~(1UL << chan);
+        reg->A2B_STATUS = 1UL << chan;
+    }
 }
 
-static uint32_t MBOX_ChanIntStGet(struct MBOX_REG *reg, eMBOX_CH chan)
+static uint32_t MBOX_ChanIntStGet(struct MBOX_REG *reg, eMBOX_CH chan,
+                                  uint8_t isA2B)
 {
-    return reg->B2A_STATUS & (1UL << chan);
+    if (isA2B)
+        return reg->B2A_STATUS & (1UL << chan);
+
+    return reg->A2B_STATUS & (1UL << chan);
 }
 
-static void MBOX_ChanIntStClear(struct MBOX_REG *reg, eMBOX_CH chan)
+static void MBOX_ChanIntStClear(struct MBOX_REG *reg, eMBOX_CH chan,
+                                uint8_t isA2B)
 {
-    reg->B2A_STATUS = 1UL << chan;
+    if (isA2B)
+        reg->B2A_STATUS = 1UL << chan;
+    else
+        reg->A2B_STATUS = 1UL << chan;
 }
 
-static void MBOX_ChanSendMsg(struct MBOX_REG *reg, eMBOX_CH chan,
+static void MBOX_ChanSendMsg(struct MBOX_REG *reg, eMBOX_CH chan, uint8_t isA2B,
                              const struct MBOX_CMD_DAT *msg)
 {
-    reg->B2A[chan].cmd = msg->cmd;
-    reg->B2A[chan].data = msg->data;
+    if (isA2B) {
+        reg->A2B[chan].cmd = msg->cmd;
+        reg->A2B[chan].data = msg->data;
+    } else {
+        reg->B2A[chan].cmd = msg->cmd;
+        reg->B2A[chan].data = msg->data;
+    }
 }
 
 static void MBOX_ChanRecvMsg(struct MBOX_CMD_DAT *msg, struct MBOX_REG *reg,
-                             eMBOX_CH chan)
+                             eMBOX_CH chan, uint8_t isA2B)
 {
-    msg->cmd = reg->A2B[chan].cmd;
-    msg->data = reg->A2B[chan].data;
+    if (isA2B) {
+        msg->cmd = reg->B2A[chan].cmd;
+        msg->data = reg->B2A[chan].data;
+    } else {
+        msg->cmd = reg->A2B[chan].cmd;
+        msg->data = reg->A2B[chan].data;
+    }
 }
 
 /********************* Public Function Definition ****************************/
@@ -165,10 +197,10 @@ HAL_Status HAL_MBOX_SendMsg(eMBOX_ID mbox, eMBOX_CH chan,
         return HAL_INVAL;
 
     pMBox = &g_MBoxDevs[mbox];
-    status = MBOX_A2BIntStGet(pMBox->pReg);
+    status = MBOX_IntStGet(pMBox->pReg, pMBox->A2B);
 
     if (!(status & (1UL << chan))) {
-        MBOX_ChanSendMsg(pMBox->pReg, chan, msg);
+        MBOX_ChanSendMsg(pMBox->pReg, chan, pMBox->A2B, msg);
         return HAL_OK;
     }
 
@@ -194,9 +226,9 @@ HAL_Status HAL_MBOX_RecvMsg(eMBOX_ID mbox, eMBOX_CH chan)
     pMBox = &g_MBoxDevs[mbox];
     cl = pMBox->chans[chan].client;
 
-    MBOX_ChanRecvMsg(&msg, pMBox->pReg, chan);
+    MBOX_ChanRecvMsg(&msg, pMBox->pReg, chan, pMBox->A2B);
 
-    if (cl->RXCallback)
+    if (cl && cl->RXCallback)
         cl->RXCallback(&msg, cl->callbackData);
 
     return HAL_OK;
@@ -217,7 +249,7 @@ HAL_Status HAL_MBOX_GetStatus(uint32_t *st, eMBOX_ID mbox, eMBOX_CH chan)
         return HAL_INVAL;
 
     pMBox = &g_MBoxDevs[mbox];
-    *st = MBOX_ChanIntStGet(pMBox->pReg, chan);
+    *st = MBOX_ChanIntStGet(pMBox->pReg, chan, pMBox->A2B);
 
     return HAL_OK;
 }
@@ -255,11 +287,11 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, eMBOX_ID mbox)
     pMBox = &g_MBoxDevs[mbox];
 
     for (chan = 0; chan < MBOX_CH_MAX; chan++) {
-        if (!MBOX_ChanIntStGet(pMBox->pReg, chan))
+        if (!MBOX_ChanIntStGet(pMBox->pReg, chan, pMBox->A2B))
             continue;
 
         ret = HAL_MBOX_RecvMsg(mbox, chan);
-        MBOX_ChanIntStClear(pMBox->pReg, chan);
+        MBOX_ChanIntStClear(pMBox->pReg, chan, pMBox->A2B);
 
         if (ret)
             break;
@@ -287,7 +319,7 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, eMBOX_ID mbox)
  * @param  mbox: mailbox id
  * @return HAL_Status
  */
-HAL_Status HAL_MBOX_Init(eMBOX_ID mbox)
+HAL_Status HAL_MBOX_Init(eMBOX_ID mbox, uint8_t isA2B)
 {
     struct MBOX_DEV *pMBox;
     eMBOX_CH chan;
@@ -297,6 +329,7 @@ HAL_Status HAL_MBOX_Init(eMBOX_ID mbox)
 
     pMBox = &g_MBoxDevs[mbox];
     pMBox->pReg = MBOX_ID(mbox);
+    pMBox->A2B = isA2B;
 
     for (chan = 0; chan < MBOX_CH_MAX; chan++)
         pMBox->chans[chan].client = NULL;
@@ -359,7 +392,7 @@ HAL_Status HAL_MBOX_RegisterClient(eMBOX_ID mbox, eMBOX_CH chan,
 
     if (!pMBox->chans[chan].client) {
         pMBox->chans[chan].client = cl;
-        MBOX_ChanEnable(pMBox->pReg, chan);
+        MBOX_ChanEnable(pMBox->pReg, chan, pMBox->A2B);
         return HAL_OK;
     }
 
@@ -384,7 +417,7 @@ HAL_Status HAL_MBOX_UnregisterClient(eMBOX_ID mbox, eMBOX_CH chan,
     pMBox = &g_MBoxDevs[mbox];
 
     if (cl == pMBox->chans[chan].client) {
-        MBOX_ChanDisable(pMBox->pReg, chan);
+        MBOX_ChanDisable(pMBox->pReg, chan, pMBox->A2B);
         pMBox->chans[chan].client = NULL;
         return HAL_OK;
     }
