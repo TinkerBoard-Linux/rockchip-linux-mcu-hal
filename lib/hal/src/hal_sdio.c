@@ -79,7 +79,7 @@ uint32_t HAL_MMC_GetCardStatus(struct HAL_MMC_HOST *host)
  * @param  resp_num: which resp the caller want.
  * @return the resp value respectivey.
  */
-uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int respNum)
+uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int32_t respNum)
 {
     struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
 
@@ -228,7 +228,7 @@ uint32_t HAL_MMC_GetStatus(struct HAL_MMC_HOST *host)
 HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
                              uint32_t size)
 {
-    int filled = 0, fifo_available, i, retries;
+    int32_t fifo_available, i, retries;
     struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
 
     for (i = 0; i < size / 4; i++) {
@@ -265,7 +265,7 @@ HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
 HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
                             uint32_t size)
 {
-    int fifo_available, i, retries;
+    int32_t fifo_available, i, retries;
     struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
 
     for (i = 0; i < size / 4; i++) {
@@ -305,7 +305,7 @@ HAL_Status HAL_MMC_InitDescriptors(struct HAL_MMC_HOST *host, uint32_t *buf,
 {
     MMC_DMA_DESCRIPTORS *desc;
     uint32_t len = 0;
-    int i, desc_cnt = 0;
+    int32_t desc_cnt = 0;
 
     desc = host->descriptors;
 
@@ -337,9 +337,9 @@ HAL_Status HAL_MMC_InitDescriptors(struct HAL_MMC_HOST *host, uint32_t *buf,
  * @param div: div depends on (src / desired).
  * @return HAL_Status
  */
-HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int div)
+HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_tdiv)
 {
-    uint32_t loop = 5000, timeout;
+    uint32_t loop = 5000;
     struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
 
     /* Disable clock */
@@ -401,7 +401,7 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int div)
  * @param  width: data width need to be set.
  * @return HAL_Status.
  */
-HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int width)
+HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int32_twidth)
 {
     struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
 
@@ -431,7 +431,7 @@ HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int width)
 HAL_Status HAL_MMC_SendCommand(struct HAL_MMC_HOST *host, uint32_t cmd,
                                uint32_t arg, uint32_t flags)
 {
-    uint32_t reg, loop = 5000;
+    uint32_t loop = 5000;
     struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
 
     WRITE_REG(pReg->CMDARG, arg);

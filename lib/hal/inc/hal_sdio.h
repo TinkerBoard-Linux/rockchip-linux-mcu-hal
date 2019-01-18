@@ -177,8 +177,8 @@ HAL_Status HAL_MMC_DeInit(struct HAL_MMC_HOST *host);
 HAL_Status HAL_MMC_StartDma(struct HAL_MMC_HOST *host);
 HAL_Status HAL_MMC_StopDma(struct HAL_MMC_HOST *host);
 HAL_Status HAL_MMC_ResetFifo(struct HAL_MMC_HOST *host);
-HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int width);
-HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int div);
+HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int32_t width);
+HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div);
 HAL_Status HAL_MMC_SendCommand(struct HAL_MMC_HOST *host, uint32_t cmd,
                                uint32_t arg, uint32_t flags);
 HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
@@ -194,7 +194,7 @@ HAL_Status HAL_MMC_ClearRawInterrupt(struct HAL_MMC_HOST *host,
                                      uint32_t interrupts);
 uint32_t HAL_MMC_GetCardStatus(struct HAL_MMC_HOST *host);
 uint32_t HAL_MMC_GetStatus(struct HAL_MMC_HOST *host);
-uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int respNum);
+uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int32_t respNum);
 uint32_t HAL_MMC_GetRawInterrupt(struct HAL_MMC_HOST *host);
 uint32_t HAL_MMC_GetInterruptMask(struct HAL_MMC_HOST *host);
 uint32_t HAL_MMC_GetUnmaskedInterrupt(struct HAL_MMC_HOST *host);
