@@ -25,7 +25,6 @@
     (##) Enable default intterrupt.
     (##) Define intterrupt priority group:
     (##) Initial systick
- (#) call M delay(HAL_Delay)
 
  @endverbatim
  @} */
@@ -124,10 +123,10 @@ uint32_t HAL_GetTick(void)
 
 /**
  * @brief  SysTick delay.
- * @param  delay: mdelay count.
+ * @param  delay: udelay count.
  * @return HAL_Status: HAL_OK.
  */
-HAL_Status HAL_Delay(__IO uint32_t delay)
+HAL_Status HAL_DelayUs(__IO uint32_t delay)
 {
     uint32_t tickStart = HAL_GetTick();
     uint32_t wait = delay;
@@ -147,12 +146,12 @@ HAL_Status HAL_Delay(__IO uint32_t delay)
  * @brief  Init SysTick
  * @param  tickPriority: Interrupt priority.
  * @return HAL_Status: HAL_OK.
- * Set systick to Millisecond count, and it's priority.
+ * Set systick to microsecond count, and it's priority.
  */
 HAL_Status HAL_InitTick(uint32_t tickPriority)
 {
     /*Configure the SysTick to have interrupt in 1ms time basis*/
-    SysTick_Config(SystemCoreClock / 1000U);
+    SysTick_Config(SystemCoreClock / 500000U);
 
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, tickPriority);

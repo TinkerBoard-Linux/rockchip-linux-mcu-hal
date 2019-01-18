@@ -354,7 +354,7 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
             return HAL_TIMEOUT;
         }
 
-        HAL_Delay(1);
+        HAL_DelayMs(1);
         loop--;
     }
 
@@ -371,7 +371,7 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
             return HAL_TIMEOUT;
         }
 
-        HAL_Delay(1);
+        HAL_DelayMs(1);
         loop--;
     }
 
@@ -388,7 +388,7 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
             return HAL_TIMEOUT;
         }
 
-        HAL_Delay(1);
+        HAL_DelayMs(1);
         loop--;
     }
 
@@ -445,7 +445,7 @@ HAL_Status HAL_MMC_SendCommand(struct HAL_MMC_HOST *host, uint32_t cmd,
             return HAL_TIMEOUT;
         }
 
-        HAL_Delay(1);
+        HAL_DelayMs(1);
         loop--;
     }
 
@@ -474,7 +474,7 @@ HAL_Status HAL_MMC_ResetFifo(struct HAL_MMC_HOST *host)
             return HAL_TIMEOUT;
         }
 
-        HAL_Delay(1);
+        HAL_DelayMs(1);
         loop--;
     }
 
@@ -500,7 +500,7 @@ HAL_Status HAL_MMC_Reset(struct HAL_MMC_HOST *host)
             HAL_DBG_ERR("%s: BMOD Software reset timeout\n", __func__);
             return HAL_TIMEOUT;
         }
-        HAL_Delay(1);
+        HAL_DelayMs(1);
         loop--;
     }
 
@@ -515,7 +515,7 @@ HAL_Status HAL_MMC_Reset(struct HAL_MMC_HOST *host)
             HAL_DBG_ERR("%s: CTRL dma|fifo|ctrl reset timeout\n", __func__);
             return HAL_TIMEOUT;
         }
-        HAL_Delay(1);
+        HAL_DelayMs(1);
         loop--;
     }
     return HAL_OK;
