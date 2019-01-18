@@ -47,11 +47,10 @@ struct CACHE_PMU_CNT
 /***************************** Function Declare ******************************/
 
 /**
- * @brief  enable icache 
- * @param  none
- * @return none
+ * @brief  enable icache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_ICACHE_Enable(void)
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Enable(void)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
 
@@ -69,14 +68,15 @@ __STATIC_FORCEINLINE void HAL_ICACHE_Enable(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  disable icache 
- * @param  none
- * @return none
+ * @brief  disable icache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_ICACHE_Disable(void)
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Disable(void)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
 
@@ -85,14 +85,15 @@ __STATIC_FORCEINLINE void HAL_ICACHE_Disable(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  invalidate all of the icache 
- * @param  none
- * @return none
+ * @brief  invalidate all of the icache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_ICACHE_Invalidate(void)
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Invalidate(void)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
 
@@ -107,17 +108,18 @@ __STATIC_FORCEINLINE void HAL_ICACHE_Invalidate(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  invalidate the specified region of the icache 
- * @param  
- *             -address: the start address of specified region which you want invalidate
- *             -sizeByte: the length in bytes of invalidate range
- * @return none
+ * @brief  invalidate the specified region of the icache.
+ * @param  address: the start address of specified region which you want invalidate.
+ * @param  sizeByte: the length in bytes of invalidate range.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_ICACHE_InvalidateByRange(uint32_t address,
-                                                       uint32_t sizeByte)
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
+                                                             uint32_t sizeByte)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
 
@@ -138,14 +140,15 @@ __STATIC_FORCEINLINE void HAL_ICACHE_InvalidateByRange(uint32_t address,
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  enable icache pmu
- * @param  none
- * @return none
+ * @brief  enable performance measurement unit of icache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_ICACHE_EnablePMU(void)
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_EnablePMU(void)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
 
@@ -154,14 +157,15 @@ __STATIC_FORCEINLINE void HAL_ICACHE_EnablePMU(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  disable icache pmu
- * @param  none
- * @return none
+ * @brief  disable performance measurement unit of icache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_ICACHE_DisablePMU(void)
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_DisablePMU(void)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
 
@@ -170,14 +174,16 @@ __STATIC_FORCEINLINE void HAL_ICACHE_DisablePMU(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  get icache pmu count
- * @param  stat pmu count 
- * @return none
+ * @brief  get current state of performance measurement unit in icache.
+ * @param  stat: return the current state if success.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_ICACHE_GetPMU(struct CACHE_PMU_CNT *stat)
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_GetPMU(struct CACHE_PMU_CNT *stat)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
 
@@ -198,14 +204,15 @@ __STATIC_FORCEINLINE void HAL_ICACHE_GetPMU(struct CACHE_PMU_CNT *stat)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  enable icache mpu
- * @param  none
- * @return none
+ * @brief  enable memory protect unit of icache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_ICACHE_EnableMPU(void)
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_EnableMPU(void)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
 
@@ -214,14 +221,15 @@ __STATIC_FORCEINLINE void HAL_ICACHE_EnableMPU(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  iisable dcache mpu
- * @param  none
- * @return none
+ * @brief  disable memory protect unit of icache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_ICACHE_DisableMPU(void)
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_DisableMPU(void)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
 
@@ -230,16 +238,17 @@ __STATIC_FORCEINLINE void HAL_ICACHE_DisableMPU(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  enable dcache 
- * @param: none 
- * @return: none
- * @note: cache invalidate must be call if the icache is not enable for the first
+ * @brief     enable dcache.
+ * @return    HAL_OK if success.
+ * @attention cache invalidate must be call if the dcache is not enable for the first
  *            time after power-up.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_Enable(void)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Enable(void)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -259,14 +268,15 @@ __STATIC_FORCEINLINE void HAL_DCACHE_Enable(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  disable dcache 
- * @param  none
- * @return none
+ * @brief  disable dcache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_Disable(void)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Disable(void)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -275,14 +285,15 @@ __STATIC_FORCEINLINE void HAL_DCACHE_Disable(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  invalidate all of the dcache 
- * @param  none
- * @return none
+ * @brief  invalidate all of the dcache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_Invalidate(void)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Invalidate(void)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -297,17 +308,18 @@ __STATIC_FORCEINLINE void HAL_DCACHE_Invalidate(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  invalidate the specified region of the dcache 
- * @param  
- *             -address: the start address of specified region which you want invalidate
- *             -sizeByte: the length in bytes of invalidate range
- * @return none
+ * @brief  invalidate the specified region of the dcache.
+ * @param  address: the start address of specified region which you want invalidate.
+ * @param  sizeByte: the length in bytes of invalidate range.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_InvalidateByRange(uint32_t address,
-                                                       uint32_t sizeByte)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
+                                                             uint32_t sizeByte)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -328,18 +340,19 @@ __STATIC_FORCEINLINE void HAL_DCACHE_InvalidateByRange(uint32_t address,
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
  * @brief  clean the specified region of the dcache, it will flush the dirty cache in 
- *            the specified region
- * @param  
- *             -address: the start address of specified region which you want invalidate
- *             -sizeByte: the length in bytes of invalidate range
- * @return none
+ *         the specified region.
+ * @param  address: the start address of specified region which you want invalidate.
+ * @param  sizeByte: the length in bytes of invalidate range.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_CleanByRange(uint32_t address,
-                                                  uint32_t sizeByte)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
+                                                        uint32_t sizeByte)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -360,18 +373,19 @@ __STATIC_FORCEINLINE void HAL_DCACHE_CleanByRange(uint32_t address,
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  clean and invalidate the specified region of the dcache, it will flush the dirty cache in 
- *            the specified region, and set the cache line to invalid state
- * @param  
- *             -address: the start address of specified region which you want invalidate
- *             -sizeByte: the length in bytes of invalidate range
- * @return none
+ * @brief  clean and invalidate the specified region of the dcache, it will flush the dirty
+ *         cache in the specified region, and set the cache line to invalid state.
+ * @param  address: the start address of specified region which you want invalidate.
+ * @param  sizeByte: the length in bytes of invalidate range.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_CleanInvalidateByRange(uint32_t address,
-                                                            uint32_t sizeByte)
+__STATIC_FORCEINLINE HAL_Status
+HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -393,15 +407,16 @@ __STATIC_FORCEINLINE void HAL_DCACHE_CleanInvalidateByRange(uint32_t address,
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
  * @brief  clean and invalidate all of the dcache, the dirty cache line will be flush
- *            to external memory, and all of the cache line will be set invalid.
- * @param none
- * @return none
+ *         to external memory, and all of the cache line will be set invalid.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_CleanInvalidate(void)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanInvalidate(void)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -418,14 +433,15 @@ __STATIC_FORCEINLINE void HAL_DCACHE_CleanInvalidate(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  enable dcache pmu
- * @param  none
- * @return none
+ * @brief  enable performance measurement unit of dcache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_EnablePMU(void)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_EnablePMU(void)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -434,14 +450,15 @@ __STATIC_FORCEINLINE void HAL_DCACHE_EnablePMU(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  disable dcache pmu
- * @param  none
- * @return none
+ * @brief  disable performance measurement unit of dcache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_DisablePMU(void)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_DisablePMU(void)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -450,14 +467,16 @@ __STATIC_FORCEINLINE void HAL_DCACHE_DisablePMU(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  get dcache pmu count
- * @param  stat pmu count 
- * @return 
+ * @brief  get current state of performance measurement unit in icache.
+ * @param  stat: return the current state if success.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_GetPMU(struct CACHE_PMU_CNT *stat)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_GetPMU(struct CACHE_PMU_CNT *stat)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -478,14 +497,15 @@ __STATIC_FORCEINLINE void HAL_DCACHE_GetPMU(struct CACHE_PMU_CNT *stat)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  enable dcache mpu
- * @param  none
- * @return none
+ * @brief  enable memory protect unit of dcache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_EnableMPU(void)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_EnableMPU(void)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -494,14 +514,15 @@ __STATIC_FORCEINLINE void HAL_DCACHE_EnableMPU(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 /**
- * @brief  disable dcache mpu
- * @param  none
- * @return none
+ * @brief  disable memory protect unit of dcache.
+ * @return HAL_OK if success.
  */
-__STATIC_FORCEINLINE void HAL_DCACHE_DisableMPU(void)
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_DisableMPU(void)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
 
@@ -510,6 +531,8 @@ __STATIC_FORCEINLINE void HAL_DCACHE_DisableMPU(void)
 #endif
 
 #endif
+
+    return HAL_OK;
 }
 
 #endif
