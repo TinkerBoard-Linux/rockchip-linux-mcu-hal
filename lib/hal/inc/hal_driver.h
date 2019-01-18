@@ -6,6 +6,10 @@
 #ifndef _HAL_DRIVER_H_
 #define _HAL_DRIVER_H_
 
+#if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
+#include "hal_cache.h"
+#endif
+
 #ifdef HAL_CRU_MODULE_ENABLED
 #include "hal_cru.h"
 #endif
@@ -40,10 +44,6 @@
 
 #ifdef HAL_UART_MODULE_ENABLED
 #include "hal_uart.h"
-#endif
-
-#if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
-#include "hal_cache.h"
 #endif
 
 #endif
