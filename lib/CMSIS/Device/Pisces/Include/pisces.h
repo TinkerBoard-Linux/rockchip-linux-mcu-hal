@@ -102,6 +102,7 @@ typedef enum
 #define RKIO_MAILBOX0_BASE             0x40100000
 #define RKIO_MAILBOX1_BASE             0x40110000
 #define RKIO_MAILBOX2_BASE             0x40120000
+#define SDIO_BASE                      0x40c90000
 
 /* CACHE CONTROLLER Register Structure Define  */
 struct CACHE_CTRL_REG {
@@ -215,6 +216,72 @@ struct MBOX_REG {
     __IO uint32_t          B2A_STATUS;
     struct MBOX_CMD_DAT    B2A[MBOX_CHAN_CNT];
 };
+
+/* SDMMC Register Structure Define */
+struct SDMMC_REG {
+    __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
+    __IO uint32_t PWREN;                              /* Address Offset: 0x0004 */
+    __IO uint32_t CLKDIV;                             /* Address Offset: 0x0008 */
+    __IO uint32_t CLKSRC;                             /* Address Offset: 0x000C */
+    __IO uint32_t CLKENA;                             /* Address Offset: 0x0010 */
+    __IO uint32_t TMOUT;                              /* Address Offset: 0x0014 */
+    __IO uint32_t CTYPE;                              /* Address Offset: 0x0018 */
+    __IO uint32_t BLKSIZ;                             /* Address Offset: 0x001C */
+    __IO uint32_t BYTCNT;                             /* Address Offset: 0x0020 */
+    __IO uint32_t INTMASK;                            /* Address Offset: 0x0024 */
+    __IO uint32_t CMDARG;                             /* Address Offset: 0x0028 */
+    __IO uint32_t CMD;                                /* Address Offset: 0x002C */
+    __I  uint32_t RESP0;                              /* Address Offset: 0x0030 */
+    __I  uint32_t RESP1;                              /* Address Offset: 0x0034 */
+    __I  uint32_t RESP2;                              /* Address Offset: 0x0038 */
+    __I  uint32_t RESP3;                              /* Address Offset: 0x003C */
+    __IO uint32_t MINTSTS;                            /* Address Offset: 0x0040 */
+    __IO uint32_t RINTSTS;                            /* Address Offset: 0x0044 */
+    __I  uint32_t STATUS;                             /* Address Offset: 0x0048 */
+    __IO uint32_t FIFOTH;                             /* Address Offset: 0x004C */
+    __I  uint32_t CDETECT;                            /* Address Offset: 0x0050 */
+    __IO uint32_t WRTPRT;                             /* Address Offset: 0x0054 */
+    __IO uint32_t RESERVED0;                          /* Address Offset: 0x0058 */
+    __I  uint32_t TCBCNT;                             /* Address Offset: 0x005C */
+    __I  uint32_t TBBCNT;                             /* Address Offset: 0x0060 */
+    __IO uint32_t DEBNCE;                             /* Address Offset: 0x0064 */
+    __IO uint32_t USRID;                              /* Address Offset: 0x0068 */
+    __I  uint32_t VERID;                              /* Address Offset: 0x006C */
+    __I  uint32_t HCON;                               /* Address Offset: 0x0070 */
+    __IO uint32_t UHSREG;                             /* Address Offset: 0x0074 */
+    __IO uint32_t RSTN;                               /* Address Offset: 0x0078 */
+    __IO uint32_t RESERVED1;                          /* Address Offset: 0x007C */
+    __IO uint32_t BMOD;                               /* Address Offset: 0x0080 */
+    __O  uint32_t PLDMND;                             /* Address Offset: 0x0084 */
+    __IO uint32_t DBADDR;                             /* Address Offset: 0x0088 */
+    __IO uint32_t IDSTS;                              /* Address Offset: 0x008C */
+    __IO uint32_t IDINTEN;                            /* Address Offset: 0x0090 */
+    __IO uint32_t DSCADDR;                            /* Address Offset: 0x0094 */
+    __IO uint32_t BUFADDR;                            /* Address Offset: 0x0098 */
+    __IO uint32_t RESERVED2[25];                      /* Address Offset: 0x009C */
+    __IO uint32_t CARDTHRCTL;                         /* Address Offset: 0x0100 */
+    __IO uint32_t BACKEND_POWER;                      /* Address Offset: 0x0104 */
+    __IO uint32_t RESERVED3;                          /* Address Offset: 0x0108 */
+    __IO uint32_t EMMCDDR_REG;                        /* Address Offset: 0x010C */
+    __IO uint32_t RESERVED4[4];                       /* Address Offset: 0x0110 */
+    __IO uint32_t RDYINT_GEN;                         /* Address Offset: 0x0120 */
+    __IO uint32_t RESERVED5[55];                      /* Address Offset: 0x0124 */
+    __IO uint32_t FIFO_BASE;                          /* Address Offset: 0x0200 */
+};
+
+/* SDMMC/EMMC/SDIO Macro Define */
+#define MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT (10U)
+#define MMC_STATUS_DATA_STATE_MC_BUSY_MASK (0x1U)
+#define MMC_STATUS_FIFO_COUNT_SHIFT (17U)
+#define MMC_STATUS_FIFO_COUNT_MASK (0x1fffU)
+#define MMC_STATUS_FIFO_EMPTY_SHIFT (2U)
+#define MMC_STATUS_FIFO_EMPTY_MASK (0x1U)
+
+#define MMC_FIFOTH_TX_WMARK_SHIFT (0U)
+#define MMC_FIFOTH_RX_WMARK_SHIFT (16U)
+#define MMC_FIFOTH_RX_WMARK_MASK (0x7ffU)
+#define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT (28U)
+#define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_8 (0x2U)
 
 #ifdef __cplusplus
 }
