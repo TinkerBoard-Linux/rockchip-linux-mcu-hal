@@ -398,6 +398,57 @@ struct WDT_REG
     __I  uint32_t WDT_EOI;
 };
 
+/* MBOX Register struct define */
+#define MBOX_GROUP_CNT       1
+#define MBOX_CHAN_CNT        4
+
+struct MBOX_CMD_DAT {
+    __IO uint32_t cmd;
+    __IO uint32_t data;
+};
+
+struct MBOX_REG {
+    __IO uint32_t          A2B_INTEN;
+    __IO uint32_t          A2B_STATUS;
+    struct MBOX_CMD_DAT A2B[MBOX_CHAN_CNT];
+    __IO uint32_t          B2A_INTEN;
+    __IO uint32_t          B2A_STATUS;
+    struct MBOX_CMD_DAT B2A[MBOX_CHAN_CNT];
+};
+
+/* SFC Register Structure Define */
+struct SFC_REG {
+    __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
+    __IO uint32_t IMR;                                /* Address Offset: 0x0004 */
+    __O  uint32_t ICLR;                               /* Address Offset: 0x0008 */
+    __IO uint32_t FTLR;                               /* Address Offset: 0x000C */
+    __IO uint32_t RCVR;                               /* Address Offset: 0x0010 */
+    __IO uint32_t AX;                                 /* Address Offset: 0x0014 */
+    __IO uint32_t ABIT;                               /* Address Offset: 0x0018 */
+    __IO uint32_t ISR;                                /* Address Offset: 0x001C */
+    __IO uint32_t FSR;                                /* Address Offset: 0x0020 */
+    __IO uint32_t SR;                                 /* Address Offset: 0x0024 */
+    __I  uint32_t RISR;                               /* Address Offset: 0x0028 */
+    __IO uint32_t VER;                                /* Address Offset: 0x002C */
+    __IO uint32_t QOP;                                /* Address Offset: 0x0030 */
+    __IO uint32_t EXT_CTRL;                           /* Address Offset: 0x0034 */
+         uint32_t RESERVED0;                          /* Address Offset: 0x0038 */
+    __IO uint32_t DLL_CTRL;                           /* Address Offset: 0x003C */
+         uint32_t RESERVED1[4];                       /* Address Offset: 0x0040 */
+    __IO uint32_t POLL_CTRL;                          /* Address Offset: 0x0050 */
+    __O  uint32_t FETCH_CMD;                          /* Address Offset: 0x0054 */
+    __IO uint32_t FETCH_CTRL;                         /* Address Offset: 0x0058 */
+    __IO uint32_t XIP_MODE;                           /* Address Offset: 0x005C */
+    __I  uint32_t POLL_DATA;                          /* Address Offset: 0x0060 */
+         uint32_t RESERVED2[7];                       /* Address Offset: 0x0064 */
+    __O  uint32_t DMATR;                              /* Address Offset: 0x0080 */
+    __IO uint32_t DMAADDR;                            /* Address Offset: 0x0084 */
+         uint32_t RESERVED3[30];                      /* Address Offset: 0x0088 */
+    __O  uint32_t CMD;                                /* Address Offset: 0x0100 */
+    __O  uint32_t ADDR;                               /* Address Offset: 0x0104 */
+    __IO uint32_t DATA;                               /* Address Offset: 0x0108 */
+};
+
 /* GRF Bit Macro Define */
 #define IOMUX_GPIO2A6_IO ((uint32_t)(0))
 
@@ -532,24 +583,207 @@ struct WDT_REG
 #define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT (28U)
 #define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_8 (0x2U)
 
-/*
- * Mailbox struct define
- */
-#define MBOX_GROUP_CNT       1
-#define MBOX_CHAN_CNT        4
-
-struct MBOX_CMD_DAT {
-    __IO uint32_t cmd;
-    __IO uint32_t data;
-};
-
-struct MBOX_REG {
-    __IO uint32_t          A2B_INTEN;
-    __IO uint32_t          A2B_STATUS;
-    struct MBOX_CMD_DAT A2B[MBOX_CHAN_CNT];
-    __IO uint32_t          B2A_INTEN;
-    __IO uint32_t          B2A_STATUS;
-    struct MBOX_CMD_DAT B2A[MBOX_CHAN_CNT];
-};
+/******************************************SFC*******************************************/
+/* CTRL */
+#define SFC_CTRL_SPIM_SHIFT                                (0U)
+#define SFC_CTRL_SPIM_MASK                                 (0x1U << SFC_CTRL_SPIM_SHIFT)                                /* 0x00000001 */
+#define SFC_CTRL_SHIFTPHASE_SHIFT                          (1U)
+#define SFC_CTRL_SHIFTPHASE_MASK                           (0x1U << SFC_CTRL_SHIFTPHASE_SHIFT)                          /* 0x00000002 */
+#define SFC_CTRL_IDLE_CYCLE_SHIFT                          (4U)
+#define SFC_CTRL_IDLE_CYCLE_MASK                           (0xFU << SFC_CTRL_IDLE_CYCLE_SHIFT)                          /* 0x000000F0 */
+#define SFC_CTRL_CMDB_SHIFT                                (8U)
+#define SFC_CTRL_CMDB_MASK                                 (0x3U << SFC_CTRL_CMDB_SHIFT)                                /* 0x00000300 */
+#define SFC_CTRL_ADRB_SHIFT                                (10U)
+#define SFC_CTRL_ADRB_MASK                                 (0x3U << SFC_CTRL_ADRB_SHIFT)                                /* 0x00000C00 */
+#define SFC_CTRL_DATB_SHIFT                                (12U)
+#define SFC_CTRL_DATB_MASK                                 (0x3U << SFC_CTRL_DATB_SHIFT)                                /* 0x00003000 */
+/* IMR */
+#define SFC_IMR_RXFM_SHIFT                                 (0U)
+#define SFC_IMR_RXFM_MASK                                  (0x1U << SFC_IMR_RXFM_SHIFT)                                 /* 0x00000001 */
+#define SFC_IMR_RXUM_SHIFT                                 (1U)
+#define SFC_IMR_RXUM_MASK                                  (0x1U << SFC_IMR_RXUM_SHIFT)                                 /* 0x00000002 */
+#define SFC_IMR_TXOM_SHIFT                                 (2U)
+#define SFC_IMR_TXOM_MASK                                  (0x1U << SFC_IMR_TXOM_SHIFT)                                 /* 0x00000004 */
+#define SFC_IMR_TXEM_SHIFT                                 (3U)
+#define SFC_IMR_TXEM_MASK                                  (0x1U << SFC_IMR_TXEM_SHIFT)                                 /* 0x00000008 */
+#define SFC_IMR_TRANSM_SHIFT                               (4U)
+#define SFC_IMR_TRANSM_MASK                                (0x1U << SFC_IMR_TRANSM_SHIFT)                               /* 0x00000010 */
+#define SFC_IMR_AHBM_SHIFT                                 (5U)
+#define SFC_IMR_AHBM_MASK                                  (0x1U << SFC_IMR_AHBM_SHIFT)                                 /* 0x00000020 */
+#define SFC_IMR_NSPIM_SHIFT                                (6U)
+#define SFC_IMR_NSPIM_MASK                                 (0x1U << SFC_IMR_NSPIM_SHIFT)                                /* 0x00000040 */
+#define SFC_IMR_DMAM_SHIFT                                 (7U)
+#define SFC_IMR_DMAM_MASK                                  (0x1U << SFC_IMR_DMAM_SHIFT)                                 /* 0x00000080 */
+#define SFC_IMR_STPOLLM_SHIFT                              (8U)
+#define SFC_IMR_STPOLLM_MASK                               (0x1U << SFC_IMR_STPOLLM_SHIFT)                              /* 0x00000100 */
+/* ICLR */
+#define SFC_ICLR_RXFC_SHIFT                                (0U)
+#define SFC_ICLR_RXFC_MASK                                 (0x1U << SFC_ICLR_RXFC_SHIFT)                                /* 0x00000001 */
+#define SFC_ICLR_RXUC_SHIFT                                (1U)
+#define SFC_ICLR_RXUC_MASK                                 (0x1U << SFC_ICLR_RXUC_SHIFT)                                /* 0x00000002 */
+#define SFC_ICLR_TXOC_SHIFT                                (2U)
+#define SFC_ICLR_TXOC_MASK                                 (0x1U << SFC_ICLR_TXOC_SHIFT)                                /* 0x00000004 */
+#define SFC_ICLR_TXEC_SHIFT                                (3U)
+#define SFC_ICLR_TXEC_MASK                                 (0x1U << SFC_ICLR_TXEC_SHIFT)                                /* 0x00000008 */
+#define SFC_ICLR_TRANSC_SHIFT                              (4U)
+#define SFC_ICLR_TRANSC_MASK                               (0x1U << SFC_ICLR_TRANSC_SHIFT)                              /* 0x00000010 */
+#define SFC_ICLR_AHBC_SHIFT                                (5U)
+#define SFC_ICLR_AHBC_MASK                                 (0x1U << SFC_ICLR_AHBC_SHIFT)                                /* 0x00000020 */
+#define SFC_ICLR_NSPIC_SHIFT                               (6U)
+#define SFC_ICLR_NSPIC_MASK                                (0x1U << SFC_ICLR_NSPIC_SHIFT)                               /* 0x00000040 */
+#define SFC_ICLR_DMAC_SHIFT                                (7U)
+#define SFC_ICLR_DMAC_MASK                                 (0x1U << SFC_ICLR_DMAC_SHIFT)                                /* 0x00000080 */
+#define SFC_ICLR_STPOLLC_SHIFT                             (8U)
+#define SFC_ICLR_STPOLLC_MASK                              (0x1U << SFC_ICLR_STPOLLC_SHIFT)                             /* 0x00000100 */
+/* FTLR */
+#define SFC_FTLR_TXFTLR_SHIFT                              (0U)
+#define SFC_FTLR_TXFTLR_MASK                               (0xFFU << SFC_FTLR_TXFTLR_SHIFT)                             /* 0x000000FF */
+#define SFC_FTLR_RXFTLR_SHIFT                              (8U)
+#define SFC_FTLR_RXFTLR_MASK                               (0xFFU << SFC_FTLR_RXFTLR_SHIFT)                             /* 0x0000FF00 */
+/* RCVR */
+#define SFC_RCVR_RCVR_SHIFT                                (0U)
+#define SFC_RCVR_RCVR_MASK                                 (0x1U << SFC_RCVR_RCVR_SHIFT)                                /* 0x00000001 */
+/* AX */
+#define SFC_AX_AX_SHIFT                                    (0U)
+#define SFC_AX_AX_MASK                                     (0xFFU << SFC_AX_AX_SHIFT)                                   /* 0x000000FF */
+/* ABIT */
+#define SFC_ABIT_ABIT_SHIFT                                (0U)
+#define SFC_ABIT_ABIT_MASK                                 (0x1FU << SFC_ABIT_ABIT_SHIFT)                               /* 0x0000001F */
+/* ISR */
+#define SFC_ISR_RXFS_SHIFT                                 (0U)
+#define SFC_ISR_RXFS_MASK                                  (0x1U << SFC_ISR_RXFS_SHIFT)                                 /* 0x00000001 */
+#define SFC_ISR_RXUS_SHIFT                                 (1U)
+#define SFC_ISR_RXUS_MASK                                  (0x1U << SFC_ISR_RXUS_SHIFT)                                 /* 0x00000002 */
+#define SFC_ISR_TXOS_SHIFT                                 (2U)
+#define SFC_ISR_TXOS_MASK                                  (0x1U << SFC_ISR_TXOS_SHIFT)                                 /* 0x00000004 */
+#define SFC_ISR_TXES_SHIFT                                 (3U)
+#define SFC_ISR_TXES_MASK                                  (0x1U << SFC_ISR_TXES_SHIFT)                                 /* 0x00000008 */
+#define SFC_ISR_TRANSS_SHIFT                               (4U)
+#define SFC_ISR_TRANSS_MASK                                (0x1U << SFC_ISR_TRANSS_SHIFT)                               /* 0x00000010 */
+#define SFC_ISR_AHBS_SHIFT                                 (5U)
+#define SFC_ISR_AHBS_MASK                                  (0x1U << SFC_ISR_AHBS_SHIFT)                                 /* 0x00000020 */
+#define SFC_ISR_NSPIS_SHIFT                                (6U)
+#define SFC_ISR_NSPIS_MASK                                 (0x1U << SFC_ISR_NSPIS_SHIFT)                                /* 0x00000040 */
+#define SFC_ISR_DMAS_SHIFT                                 (7U)
+#define SFC_ISR_DMAS_MASK                                  (0x1U << SFC_ISR_DMAS_SHIFT)                                 /* 0x00000080 */
+#define SFC_ISR_STPOLLS_SHIFT                              (8U)
+#define SFC_ISR_STPOLLS_MASK                               (0x1U << SFC_ISR_STPOLLS_SHIFT)                              /* 0x00000100 */
+/* FSR */
+#define SFC_FSR_TXFS_SHIFT                                 (0U)
+#define SFC_FSR_TXFS_MASK                                  (0x1U << SFC_FSR_TXFS_SHIFT)                                 /* 0x00000001 */
+#define SFC_FSR_TXES_SHIFT                                 (1U)
+#define SFC_FSR_TXES_MASK                                  (0x1U << SFC_FSR_TXES_SHIFT)                                 /* 0x00000002 */
+#define SFC_FSR_RXES_SHIFT                                 (2U)
+#define SFC_FSR_RXES_MASK                                  (0x1U << SFC_FSR_RXES_SHIFT)                                 /* 0x00000004 */
+#define SFC_FSR_RXFS_SHIFT                                 (3U)
+#define SFC_FSR_RXFS_MASK                                  (0x1U << SFC_FSR_RXFS_SHIFT)                                 /* 0x00000008 */
+#define SFC_FSR_TXWLVL_SHIFT                               (8U)
+#define SFC_FSR_TXWLVL_MASK                                (0x1FU << SFC_FSR_TXWLVL_SHIFT)                              /* 0x00001F00 */
+#define SFC_FSR_RXWLVL_SHIFT                               (16U)
+#define SFC_FSR_RXWLVL_MASK                                (0x1FU << SFC_FSR_RXWLVL_SHIFT)                              /* 0x001F0000 */
+/* SR */
+#define SFC_SR_SR_SHIFT                                    (0U)
+#define SFC_SR_SR_MASK                                     (0x1U << SFC_SR_SR_SHIFT)                                    /* 0x00000001 */
+/* RISR */
+#define SFC_RISR_RXFS_SHIFT                                (0U)
+#define SFC_RISR_RXFS_MASK                                 (0x1U << SFC_RISR_RXFS_SHIFT)                                /* 0x00000001 */
+#define SFC_RISR_RXUS_SHIFT                                (1U)
+#define SFC_RISR_RXUS_MASK                                 (0x1U << SFC_RISR_RXUS_SHIFT)                                /* 0x00000002 */
+#define SFC_RISR_TXOS_SHIFT                                (2U)
+#define SFC_RISR_TXOS_MASK                                 (0x1U << SFC_RISR_TXOS_SHIFT)                                /* 0x00000004 */
+#define SFC_RISR_TXES_SHIFT                                (3U)
+#define SFC_RISR_TXES_MASK                                 (0x1U << SFC_RISR_TXES_SHIFT)                                /* 0x00000008 */
+#define SFC_RISR_TRANSS_SHIFT                              (4U)
+#define SFC_RISR_TRANSS_MASK                               (0x1U << SFC_RISR_TRANSS_SHIFT)                              /* 0x00000010 */
+#define SFC_RISR_AHBS_SHIFT                                (5U)
+#define SFC_RISR_AHBS_MASK                                 (0x1U << SFC_RISR_AHBS_SHIFT)                                /* 0x00000020 */
+#define SFC_RISR_NSPIS_SHIFT                               (6U)
+#define SFC_RISR_NSPIS_MASK                                (0x1U << SFC_RISR_NSPIS_SHIFT)                               /* 0x00000040 */
+#define SFC_RISR_DMAS_SHIFT                                (7U)
+#define SFC_RISR_DMAS_MASK                                 (0x1U << SFC_RISR_DMAS_SHIFT)                                /* 0x00000080 */
+#define SFC_RISR_STPOLLS_SHIFT                             (8U)
+#define SFC_RISR_STPOLLS_MASK                              (0x1U << SFC_RISR_STPOLLS_SHIFT)                             /* 0x00000100 */
+/* VER */
+#define SFC_VER_VER_SHIFT                                  (0U)
+#define SFC_VER_VER_MASK                                   (0xFFFFU << SFC_VER_VER_SHIFT)                               /* 0x0000FFFF */
+/* QOP */
+#define SFC_QOP_SO123_SHIFT                                (0U)
+#define SFC_QOP_SO123_MASK                                 (0x1U << SFC_QOP_SO123_SHIFT)                                /* 0x00000001 */
+/* EXT_CTRL */
+#define SFC_EXT_CTRL_DESEL_CS_CTRL_SHIFT                   (0U)
+#define SFC_EXT_CTRL_DESEL_CS_CTRL_MASK                    (0x7U << SFC_EXT_CTRL_DESEL_CS_CTRL_SHIFT)                   /* 0x00000007 */
+#define SFC_EXT_CTRL_SWITCH_IO_DUMM_CNT_SHIFT              (4U)
+#define SFC_EXT_CTRL_SWITCH_IO_DUMM_CNT_MASK               (0xFU << SFC_EXT_CTRL_SWITCH_IO_DUMM_CNT_SHIFT)              /* 0x000000F0 */
+#define SFC_EXT_CTRL_SWITCH_IO_O2I_CNT_SHIFT               (8U)
+#define SFC_EXT_CTRL_SWITCH_IO_O2I_CNT_MASK                (0xFU << SFC_EXT_CTRL_SWITCH_IO_O2I_CNT_SHIFT)               /* 0x00000F00 */
+#define SFC_EXT_CTRL_AX_CANCEL_PAT_SHIFT                   (12U)
+#define SFC_EXT_CTRL_AX_CANCEL_PAT_MASK                    (0xFFU << SFC_EXT_CTRL_AX_CANCEL_PAT_SHIFT)                  /* 0x000FF000 */
+#define SFC_EXT_CTRL_AX_SETUP_PAT_SHIFT                    (20U)
+#define SFC_EXT_CTRL_AX_SETUP_PAT_MASK                     (0xFFU << SFC_EXT_CTRL_AX_SETUP_PAT_SHIFT)                   /* 0x0FF00000 */
+#define SFC_EXT_CTRL_SWITCH_IO_MODE_SHIFT                  (28U)
+#define SFC_EXT_CTRL_SWITCH_IO_MODE_MASK                   (0x1U << SFC_EXT_CTRL_SWITCH_IO_MODE_SHIFT)                  /* 0x10000000 */
+/* DLL_CTRL */
+#define SFC_DLL_CTRL_SMP_DLL_CFG_SHIFT                     (0U)
+#define SFC_DLL_CTRL_SMP_DLL_CFG_MASK                      (0xFFU << SFC_DLL_CTRL_SMP_DLL_CFG_SHIFT)                    /* 0x000000FF */
+#define SFC_DLL_CTRL_SCLK_SCLK_SMP_SEL_SHIFT               (8U)
+#define SFC_DLL_CTRL_SCLK_SCLK_SMP_SEL_MASK                (0x1U << SFC_DLL_CTRL_SCLK_SCLK_SMP_SEL_SHIFT)               /* 0x00000100 */
+/* POLL_CTRL */
+#define SFC_POLL_CTRL_ST_POLL_EN_SHIFT                     (0U)
+#define SFC_POLL_CTRL_ST_POLL_EN_MASK                      (0x1U << SFC_POLL_CTRL_ST_POLL_EN_SHIFT)                     /* 0x00000001 */
+#define SFC_POLL_CTRL_ST_POLL_CMD_PARA_SHIFT               (8U)
+#define SFC_POLL_CTRL_ST_POLL_CMD_PARA_MASK                (0xFFU << SFC_POLL_CTRL_ST_POLL_CMD_PARA_SHIFT)              /* 0x0000FF00 */
+#define SFC_POLL_CTRL_ST_POLL_EXPECT_DATA_SHIFT            (16U)
+#define SFC_POLL_CTRL_ST_POLL_EXPECT_DATA_MASK             (0xFFU << SFC_POLL_CTRL_ST_POLL_EXPECT_DATA_SHIFT)           /* 0x00FF0000 */
+#define SFC_POLL_CTRL_ST_POLL_BIT_COMP_EN_SHIFT            (24U)
+#define SFC_POLL_CTRL_ST_POLL_BIT_COMP_EN_MASK             (0xFFU << SFC_POLL_CTRL_ST_POLL_BIT_COMP_EN_SHIFT)           /* 0xFF000000 */
+/* FETCH_CMD */
+#define SFC_FETCH_CMD_CMD_SHIFT                            (0U)
+#define SFC_FETCH_CMD_CMD_MASK                             (0xFFU << SFC_FETCH_CMD_CMD_SHIFT)                           /* 0x000000FF */
+#define SFC_FETCH_CMD_DUMM_SHIFT                           (8U)
+#define SFC_FETCH_CMD_DUMM_MASK                            (0xFU << SFC_FETCH_CMD_DUMM_SHIFT)                           /* 0x00000F00 */
+#define SFC_FETCH_CMD_CONT_SHIFT                           (13U)
+#define SFC_FETCH_CMD_CONT_MASK                            (0x1U << SFC_FETCH_CMD_CONT_SHIFT)                           /* 0x00002000 */
+#define SFC_FETCH_CMD_ADDRB_SHIFT                          (14U)
+#define SFC_FETCH_CMD_ADDRB_MASK                           (0x3U << SFC_FETCH_CMD_ADDRB_SHIFT)                          /* 0x0000C000 */
+/* FETCH_CTRL */
+#define SFC_FETCH_CTRL_CS_BIT_SEL_SHIFT                    (0U)
+#define SFC_FETCH_CTRL_CS_BIT_SEL_MASK                     (0x1FU << SFC_FETCH_CTRL_CS_BIT_SEL_SHIFT)                   /* 0x0000001F */
+#define SFC_FETCH_CTRL_INCR_LEN_SHIFT                      (8U)
+#define SFC_FETCH_CTRL_INCR_LEN_MASK                       (0xFU << SFC_FETCH_CTRL_INCR_LEN_SHIFT)                      /* 0x00000F00 */
+/* XIP_MODE */
+#define SFC_XIP_MODE_XIP_MODE_EN_SHIFT                     (0U)
+#define SFC_XIP_MODE_XIP_MODE_EN_MASK                      (0x1U << SFC_XIP_MODE_XIP_MODE_EN_SHIFT)                     /* 0x00000001 */
+/* POLL_DATA */
+#define SFC_POLL_DATA_POLL_DATA_SHIFT                      (0U)
+#define SFC_POLL_DATA_POLL_DATA_MASK                       (0xFFU << SFC_POLL_DATA_POLL_DATA_SHIFT)                     /* 0x000000FF */
+#define SFC_POLL_DATA_POLL_BUSY_SHIFT                      (8U)
+#define SFC_POLL_DATA_POLL_BUSY_MASK                       (0x1U << SFC_POLL_DATA_POLL_BUSY_SHIFT)                      /* 0x00000100 */
+/* DMATR */
+#define SFC_DMATR_DMATR_SHIFT                              (0U)
+#define SFC_DMATR_DMATR_MASK                               (0x1U << SFC_DMATR_DMATR_SHIFT)                              /* 0x00000001 */
+/* DMAADDR */
+#define SFC_DMAADDR_DMAADDR_SHIFT                          (0U)
+#define SFC_DMAADDR_DMAADDR_MASK                           (0xFFFFFFFFU << SFC_DMAADDR_DMAADDR_SHIFT)                   /* 0xFFFFFFFF */
+/* CMD */
+#define SFC_CMD_CMD_SHIFT                                  (0U)
+#define SFC_CMD_CMD_MASK                                   (0xFFU << SFC_CMD_CMD_SHIFT)                                 /* 0x000000FF */
+#define SFC_CMD_DUMM_SHIFT                                 (8U)
+#define SFC_CMD_DUMM_MASK                                  (0xFU << SFC_CMD_DUMM_SHIFT)                                 /* 0x00000F00 */
+#define SFC_CMD_WR_SHIFT                                   (12U)
+#define SFC_CMD_WR_MASK                                    (0x1U << SFC_CMD_WR_SHIFT)                                   /* 0x00001000 */
+#define SFC_CMD_CONT_SHIFT                                 (13U)
+#define SFC_CMD_CONT_MASK                                  (0x1U << SFC_CMD_CONT_SHIFT)                                 /* 0x00002000 */
+#define SFC_CMD_ADDRB_SHIFT                                (14U)
+#define SFC_CMD_ADDRB_MASK                                 (0x3U << SFC_CMD_ADDRB_SHIFT)                                /* 0x0000C000 */
+#define SFC_CMD_TRB_SHIFT                                  (16U)
+#define SFC_CMD_TRB_MASK                                   (0x3FFFU << SFC_CMD_TRB_SHIFT)                               /* 0x3FFF0000 */
+#define SFC_CMD_CS_SHIFT                                   (30U)
+#define SFC_CMD_CS_MASK                                    (0x3U << SFC_CMD_CS_SHIFT)                                   /* 0xC0000000 */
+/* ADDR */
+#define SFC_ADDR_ADDR_SHIFT                                (0U)
+#define SFC_ADDR_ADDR_MASK                                 (0xFFFFFFFFU << SFC_ADDR_ADDR_SHIFT)                         /* 0xFFFFFFFF */
+/* DATA */
+#define SFC_DATA_DATA_SHIFT                                (0U)
+#define SFC_DATA_DATA_MASK                                 (0xFFFFFFFFU << SFC_DATA_DATA_SHIFT)                         /* 0xFFFFFFFF */
 
 #endif /* _RK2106_H_ */
