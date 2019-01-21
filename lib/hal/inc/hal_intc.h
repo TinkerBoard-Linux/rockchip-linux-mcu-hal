@@ -244,10 +244,10 @@ __STATIC_INLINE void HAL_INTC_UnmaskAllRQ()
     INTC->INTC_IRQ_INTMASK_H = 0x00000000;
 }
 
-/** @} */
-
-/** @} */
-
 #endif
 
 #endif
+
+/** @} */
+
+/** @} */
