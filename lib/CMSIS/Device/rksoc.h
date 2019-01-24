@@ -23,7 +23,7 @@
 #define POSITION_VAL(VAL) (__CLZ(__RBIT(VAL)))
 
 #define RK_CLRSET_BITS(CLR, SET) ((((CLR) | ((SET))) << 16) | ((SET)))
-#define RK_SET_BITS(set) RK_CLRSET_BITS(0, CLR)
+#define RK_SET_BITS(SET) RK_CLRSET_BITS(0, SET)
 #define RK_CLR_BITS(CLR) RK_CLRSET_BITS(CLR, 0)
 #define RK_CLRSET_REG_BITS(REG, CLR, SET) \
         WRITE_REG(REG, ((CLR) | (SET)) << 16 | ((SET)))
