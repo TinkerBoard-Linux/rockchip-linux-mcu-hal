@@ -41,10 +41,19 @@ static void BSP_UART_Init(void)
     }
 }
 
+/* BSP TIMER Init */
+static void BSP_TIMER_Init(void)
+{
+    struct CRU_REG *pCRU = (struct CRU_REG *)(CRU_BASE);
+
+    pCRU->CRU_CLKSEL_CON[2] = (0xFFFF << 16) | 0; /* 24MHz div 1 */
+}
+
 /********************* Public Function Definition ****************************/
 
 void BSP_Init(void)
 {
     BSP_POWER_Init();
     BSP_UART_Init();
+    BSP_TIMER_Init();
 }

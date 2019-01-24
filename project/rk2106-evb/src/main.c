@@ -5,6 +5,7 @@
 
 #include "bsp.h"
 #include "hal_base.h"
+#include "unity_runner.h"
 
 /********************* Private MACRO Definition ******************************/
 
@@ -37,6 +38,9 @@ int main(void)
     HAL_UART_Init(UART_CHB, UART_BR_115200, UART_DATA_8B, UART_ONE_STOPBIT,
                   UART_PARITY_DISABLE);
     printf("printf test\n");
+
+    /* Unity Test  */
+    test_main();
 
     while (1)
         ;

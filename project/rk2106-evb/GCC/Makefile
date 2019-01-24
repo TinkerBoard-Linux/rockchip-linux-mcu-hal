@@ -30,7 +30,7 @@ ASFLAGS         += $(CPU)
 #CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk --specs=nano.specs
 #LDFLAGS	+= $(CPU) -Wl,--gc-sections --specs=nano.specs -u _scanf_float -u _printf_float
 CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk -Wunused-variable -Wformat=2
-LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nano.specs -lm -lgcc
+LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
 LINKER_SCRIPT	:= ./gcc_arm.ld
@@ -59,7 +59,10 @@ INCLUDES += \
 -I"$(ROOT_PATH)/lib/hal/inc" \
 -I"$(ROOT_PATH)/lib/CMSIS/Device/$(RKSOC)/Include" \
 -I"$(ROOT_PATH)/lib/CMSIS/Include" \
--I"$(ROOT_PATH)/lib/CMSIS/Device/" \
+-I"$(ROOT_PATH)/lib/CMSIS/Device" \
+-I"$(ROOT_PATH)/test/unity/src" \
+-I"$(ROOT_PATH)/test/unity/extras/fixture/src" \
+-I"$(ROOT_PATH)/test" \
 -I"../src" \
 -I"../Scatter" \
 
@@ -69,6 +72,10 @@ INCLUDES += \
 DIRS := $(ROOT_PATH)/lib/hal/src \
 	$(ROOT_PATH)/lib/CMSIS/Device/$(RKSOC)/Source/Templates/GCC \
 	$(ROOT_PATH)/lib/CMSIS/Device/$(RKSOC)/Source/Templates \
+	$(ROOT_PATH)/test/unity/extras/fixture/src \
+	$(ROOT_PATH)/test/unity/src \
+	$(ROOT_PATH)/test/hal \
+	$(ROOT_PATH)/test/ \
 	../Scatter \
 	../src \
 	. \

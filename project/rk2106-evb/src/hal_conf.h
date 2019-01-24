@@ -25,4 +25,7 @@
 #define HAL_DBG_ERR_ON 1
 #define USE_FULL_ASSERT 1
 
+/* UNITY CONFIG */
+#define UNITY_INCLUDE_CONFIG_H
+
 #endif

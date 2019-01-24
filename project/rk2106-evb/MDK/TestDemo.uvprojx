@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Include;..\..\..\lib\CMSIS\Device\RK2106\Include;..\..\..\lib\CMSIS\Device</IncludePath>
+              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Include;..\..\..\lib\CMSIS\Device\RK2106\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -472,6 +472,36 @@
               <FileName>hal_debug.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\lib\hal\src\hal_debug.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>UNITY</GroupName>
+          <Files>
+            <File>
+              <FileName>unity.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\unity\src\unity.c</FilePath>
+            </File>
+            <File>
+              <FileName>unity_fixture.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\unity\extras\fixture\src\unity_fixture.c</FilePath>
+            </File>
+            <File>
+              <FileName>unity_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\unity_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>unity_runner.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\unity_runner.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\hal\test_timer.c</FilePath>
             </File>
           </Files>
         </Group>
