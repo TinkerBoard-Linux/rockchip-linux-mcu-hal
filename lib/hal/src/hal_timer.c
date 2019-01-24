@@ -86,8 +86,8 @@ HAL_Status HAL_TIMER_Init(eTIMER_CH timerNum, eTIMER_MODE mode)
         return HAL_ERROR;
 
     timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerControlReg |=
-        TIMERN_CONTROLREG_MASK_MASK | (mode << TIMERN_CONTROLREG_MODE_POS);
+    timerReg->TimerControlReg =
+        TIMERN_CONTROLREG_MASK_MASK | (mode << TIMERN_CONTROLREG_MODE_SHIFT);
 
     return HAL_OK;
 }
@@ -105,7 +105,7 @@ HAL_Status HAL_TIMER_DeInit(eTIMER_CH timerNum)
         return HAL_ERROR;
 
     timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerControlReg |=
+    timerReg->TimerControlReg =
         TIMERN_CONTROLREG_MASK_UNMASK | TIMERN_CONTROLREG_EN_DISABLE;
 
     return HAL_OK;
