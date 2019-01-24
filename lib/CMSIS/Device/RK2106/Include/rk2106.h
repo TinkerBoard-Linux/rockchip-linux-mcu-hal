@@ -23,47 +23,47 @@ typedef enum
     SysTick_IRQn = -1, /* 15 System Tick Interrupt */
 
     /* -------------------  Processor Interrupt Numbers  ------------------------------ */
-    INT_ID_SFC = 0,
-    INT_ID_SYNTH,
-    INT_ID_EBC,
-    INT_ID_EMMC,
-    INT_ID_SDMMC,
-    INT_ID_USBC,
-    INT_ID_DMA,
-    INT_ID_IMDCT,
-    INT_ID_WDT,
-    INT_ID_MAILBOX0,
-    INT_ID_MAILBOX1,
-    INT_ID_MAILBOX2,
-    INT_ID_MAILBOX3,
-    INT_ID_REV0,
-    INT_ID_REV1,
-    INT_ID_REV2,
-    INT_ID_PWM1,
-    INT_ID_PWM0,
-    INT_ID_TIMER1,
-    INT_ID_TIMER0,
-    INT_ID_SRADC,
-    INT_ID_UART5,
-    INT_ID_UART4,
-    INT_ID_UART3,
-    INT_ID_UART2,
-    INT_ID_UART1,
-    INT_ID_UART0,
-    INT_ID_SPI1,
-    INT_ID_SPI0,
-    INT_ID_I2C2,
-    INT_ID_I2C1,
-    INT_ID_I2C0,
-    INT_ID_I2S1,
-    INT_ID_I2S0,
-    INT_ID_HIFI,
-    INT_ID_PMU,
-    INT_ID_GPIO2,
-    INT_ID_GPIO1,
-    INT_ID_GPIO0,
-    INT_ID_VOP,
-    INT_ID_DMA2,
+    SFC_IRQn = 0,
+    SYNTH_IRQn,
+    EBC_IRQn,
+    EMMC_IRQn,
+    SDMMC_IRQn,
+    USBC_IRQn,
+    DMA_IRQn,
+    IMDCT_IRQn,
+    WDT_IRQn,
+    MAILBOX0_IRQn,
+    MAILBOX1_IRQn,
+    MAILBOX2_IRQn,
+    MAILBOX3_IRQn,
+    REV0_IRQn,
+    REV1_IRQn,
+    REV2_IRQn,
+    PWM1_IRQn,
+    PWM0_IRQn,
+    TIMER1_IRQn,
+    TIMER0_IRQn,
+    SRADC_IRQn,
+    UART5_IRQn,
+    UART4_IRQn,
+    UART3_IRQn,
+    UART2_IRQn,
+    UART1_IRQn,
+    UART0_IRQn,
+    SPI1_IRQn,
+    SPI0_IRQn,
+    I2C2_IRQn,
+    I2C1_IRQn,
+    I2C0_IRQn,
+    I2S1_IRQn,
+    I2S0_IRQn,
+    HIFI_IRQn,
+    PMU_IRQn,
+    GPIO2_IRQn,
+    GPIO1_IRQn,
+    GPIO0_IRQn,
+    VOP_IRQn,
+    DMA2_IRQn,
 
     NUM_INTERRUPTS //Interrupts Total Nums
 
@@ -449,10 +449,10 @@ struct SFC_REG {
     __IO uint32_t DATA;                               /* Address Offset: 0x0108 */
 };
 
-/* GRF Bit Macro Define */
+/******************************************GRF*******************************************/
 #define IOMUX_GPIO2A6_IO ((uint32_t)(0))
 
-/* GPIO Bit Macro Define */
+/*****************************************UART*******************************************/
 #define UART0_TX_WORK BIT(0)
 #define UART0_RX_WORK BIT(1)
 #define UART1_TX_WORK BIT(2)
@@ -552,22 +552,22 @@ struct SFC_REG {
 
 #define MODE_X_DIV 16
 
-/* TIMER Bit Macro Define */
+/************************************TIMER************************************/
 /* TIMERN_CONTROLREG */
-#define TIMERN_CONTROLREG_EN_POS 0
-#define TIMERN_CONTROLREG_EN_MSK (1 << TIMERN_CONTROLREG_EN_POS)
-#define TIMERN_CONTROLREG_EN_DISABLE (0 << TIMERN_CONTROLREG_EN_POS)
-#define TIMERN_CONTROLREG_EN_ENABLE (1 << TIMERN_CONTROLREG_EN_POS)
+#define TIMERN_CONTROLREG_EN_SHIFT 0
+#define TIMERN_CONTROLREG_EN__MASK (1 << TIMERN_CONTROLREG_EN_SHIFT)
+#define TIMERN_CONTROLREG_EN_DISABLE (0 << TIMERN_CONTROLREG_EN_SHIFT)
+#define TIMERN_CONTROLREG_EN_ENABLE (1 << TIMERN_CONTROLREG_EN_SHIFT)
 
-#define TIMERN_CONTROLREG_MODE_POS 1
-#define TIMERN_CONTROLREG_MODE_MSK (1 << TIMERN_CONTROLREG_MODE_POS)
-#define TIMERN_CONTROLREG_MODE_FREE_RUNNING (0 << TIMERN_CONTROLREG_MODE_POS)
-#define TIMERN_CONTROLREG_MODE_USER_DEFINED (0 << TIMERN_CONTROLREG_MODE_POS)
+#define TIMERN_CONTROLREG_MODE_SHIFT 1
+#define TIMERN_CONTROLREG_MODE__MASK (1 << TIMERN_CONTROLREG_MODE_SHIFT)
+#define TIMERN_CONTROLREG_MODE_FREE_RUNNING (0 << TIMERN_CONTROLREG_MODE_SHIFT)
+#define TIMERN_CONTROLREG_MODE_USER_DEFINED (0 << TIMERN_CONTROLREG_MODE_SHIFT)
 
-#define TIMERN_CONTROLREG_MASK_POS 2
-#define TIMERN_CONTROLREG_MASK_MSK (1 << TIMERN_CONTROLREG_MASK_POS)
-#define TIMERN_CONTROLREG_MASK_MASK (0 << TIMERN_CONTROLREG_MASK_POS)
-#define TIMERN_CONTROLREG_MASK_UNMASK (1 << TIMERN_CONTROLREG_MASK_POS)
+#define TIMERN_CONTROLREG_MASK_SHIFT 2
+#define TIMERN_CONTROLREG_MASK__MASK (1 << TIMERN_CONTROLREG_MASK_SHIFT)
+#define TIMERN_CONTROLREG_MASK_MASK (0 << TIMERN_CONTROLREG_MASK_SHIFT)
+#define TIMERN_CONTROLREG_MASK_UNMASK (1 << TIMERN_CONTROLREG_MASK_SHIFT)
 
 /* SDMMC/EMMC/SDIO Macro Define */
 #define MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT (10U)
