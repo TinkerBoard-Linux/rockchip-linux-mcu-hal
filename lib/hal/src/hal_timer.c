@@ -46,20 +46,11 @@ const uint32_t TIMER_GROUP[2] = {
 };
 
 /********************* Private Variable Definition ***************************/
+
 /********************* Private Function Definition ***************************/
-static uint32_t TIMER_ClrInt(eTIMER_CH timerNum)
-{
-    struct TIMER_REG *timerReg;
-
-    if (timerNum >= TIMER_MAX)
-        return (uint32_t)(-1);
-
-    timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerIntStatus = 0x1;
-    return 0;
-}
 
 /********************* Public Function Definition ****************************/
+
 /** @defgroup TIMER_Exported_Functions_Group4 Init and Deinit Functions
  @verbatim
 
@@ -132,7 +123,8 @@ HAL_Status HAL_TIMER_Stop(eTIMER_CH timerNum)
 
     timerReg = TIMER_PORT(timerNum);
 
-    timerReg->TimerControlReg |= TIMERN_CONTROLREG_EN_DISABLE;
+    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
+    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
 
     return HAL_OK;
 }
@@ -151,7 +143,8 @@ HAL_Status HAL_TIMER_Start(eTIMER_CH timerNum)
 
     timerReg = TIMER_PORT(timerNum);
 
-    timerReg->TimerControlReg |= TIMERN_CONTROLREG_EN_ENABLE;
+    SET_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
+    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
 
     return HAL_OK;
 }
@@ -171,8 +164,8 @@ HAL_Status HAL_TIMER_Stop_IT(eTIMER_CH timerNum)
 
     timerReg = TIMER_PORT(timerNum);
 
-    timerReg->TimerControlReg |=
-        TIMERN_CONTROLREG_MASK_MASK | TIMERN_CONTROLREG_EN_DISABLE;
+    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
+    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
 
     return HAL_OK;
 }
@@ -190,8 +183,8 @@ HAL_Status HAL_TIMER_Start_IT(eTIMER_CH timerNum)
         return HAL_ERROR;
 
     timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerControlReg |=
-        TIMERN_CONTROLREG_MASK_UNMASK | TIMERN_CONTROLREG_EN_ENABLE;
+    SET_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
+    SET_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
 
     return HAL_OK;
 }
@@ -238,13 +231,31 @@ uint64_t HAL_TIMER_GetCount(eTIMER_CH timerNum)
 }
 
 /**
+ * @brief  Clear TIMER intterrupt status.
+ * @param  timerNum: Choose TIMER.
+ * @return HAL_Status: HAL_OK.
+ */
+HAL_Status HAL_TIMER_ClrInt(eTIMER_CH timerNum)
+{
+    struct TIMER_REG *timerReg;
+
+    if (timerNum >= TIMER_MAX)
+        return HAL_ERROR;
+
+    timerReg = TIMER_PORT(timerNum);
+    timerReg->TimerIntStatus = 0x1;
+
+    return HAL_OK;
+}
+
+/**
  * @brief  TIMER0 interrupt handler.
  * @return HAL_Status: HAL_OK.
  * Clear interrupt status.
  */
-HAL_Status HAL_TIMER0_Handler(void)
+__weak HAL_Status HAL_TIMER0_Handler(void)
 {
-    TIMER_ClrInt(TIMER0);
+    HAL_TIMER_ClrInt(TIMER0);
 
     return HAL_OK;
 }
@@ -254,9 +265,9 @@ HAL_Status HAL_TIMER0_Handler(void)
  * @return HAL_Status: HAL_OK.
  * Clear interrupt status.
  */
-HAL_Status HAL_TIMER1_Handler(void)
+__weak HAL_Status HAL_TIMER1_Handler(void)
 {
-    TIMER_ClrInt(TIMER1);
+    HAL_TIMER_ClrInt(TIMER1);
 
     return HAL_OK;
 }

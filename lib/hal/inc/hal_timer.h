@@ -17,6 +17,7 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
+
 /** @defgroup TIMER_Exported_Definition_Group1 Basic Definition
  *  @{
  */
@@ -40,9 +41,6 @@ typedef enum
 /** @} */
 /***************************** Function Declare ******************************/
 
-uint32_t HAL_TIMER_ClrInt(eTIMER_CH timerNum);
-HAL_Status HAL_TIMER_IntMask(eTIMER_CH timerNum);
-HAL_Status HAL_TIMER_IntUnmask(eTIMER_CH timerNum);
 HAL_Status HAL_TIMER_Stop(eTIMER_CH timerNum);
 HAL_Status HAL_TIMER_Start(eTIMER_CH timerNum);
 HAL_Status HAL_TIMER_SetCount(eTIMER_CH timerNum, uint64_t usTick);
@@ -51,6 +49,7 @@ HAL_Status HAL_TIMER0_Handler(void);
 HAL_Status HAL_TIMER1_Handler(void);
 HAL_Status HAL_TIMER_Init(eTIMER_CH timerNum, eTIMER_MODE mode);
 HAL_Status HAL_TIMER_DeInit(eTIMER_CH timerNum);
+HAL_Status HAL_TIMER_ClrInt(eTIMER_CH timerNum);
 
 #endif
 
