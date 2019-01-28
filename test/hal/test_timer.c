@@ -25,7 +25,7 @@ static uint64_t TIMER_getReloadNum(eTIMER_CH timerNum)
         return HAL_ERROR;
 
     timerReg = TIMER_PORT(timerNum);
-    loadCount = (timerReg->TimerLoadCount1 << 32) | timerReg->TimerLoadCount0;
+    loadCount = ((uint64_t)timerReg->TimerLoadCount1 << 32) | timerReg->TimerLoadCount0;
 
     return loadCount;
 }
@@ -91,7 +91,6 @@ TEST(HAL_TIMER, TimerInit)
 /* TIMER test case 1 */
 TEST(HAL_TIMER, TimerSetCount)
 {
-    uint32_t ret;
     uint64_t loadCount = 0;
 
     /* test timer0 setcount */
