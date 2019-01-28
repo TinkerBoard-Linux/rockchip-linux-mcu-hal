@@ -10,45 +10,50 @@ uint32_t SystemCoreClock = 30000000;
 /*----------------------------------------------------------------------------
   Externals
  *----------------------------------------------------------------------------*/
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-    extern uint32_t __Vectors;
+#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+extern uint32_t __Vectors;
 #endif
 
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate (void)
+void SystemCoreClockUpdate(void)
 {
 }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit (void)
+void SystemInit(void)
 {
     uint32_t status;
 
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-    SCB->VTOR = (uint32_t) &__Vectors;
+#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+    SCB->VTOR = (uint32_t)&__Vectors;
 #endif
 
     /* config icache: mpu disable, stb disable, write through, hot buffer enable */
-    ICACHE_CTRL->CTRL |= (CACHE_EN | CACHE_WT_EN) & (~CACHE_STB_EN);
+    pICACHE->CACHE_CTRL |=
+        (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK) &
+        (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
 
     do {
-        status = ICACHE_CTRL->STATUS & CACHE_STATUS_INIT_FINISH_MASK;
+        status =
+            pICACHE->CACHE_STATUS & ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK;
     } while (status == 0);
 
-    ICACHE_CTRL->CTRL &= ~CACHE_BYPASS;
+    pICACHE->CACHE_CTRL &= ~ICACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 
     /* stb enable, stb_entry=7, stb_timeout enable, write back */
-    DCACHE_CTRL->CTRL |=
-        CACHE_EN | (7U << CACHE_ENTRY_THRESH_SHIFT) | CACHE_STB_TIMEOUT_EN;
-    DCACHE_CTRL->STB_TIMEOUT_CTRL = 1;
+    pDCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK |
+                           (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
+                           DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK;
+    pDCACHE->STB_TIMEOUT_CTRL = 1;
 
     do {
-        status = DCACHE_CTRL->STATUS & CACHE_STATUS_INIT_FINISH_MASK;
+        status =
+            pDCACHE->CACHE_STATUS & DCACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK;
     } while (status == 0);
 
-    DCACHE_CTRL->CTRL &= ~CACHE_BYPASS;
+    pDCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 }

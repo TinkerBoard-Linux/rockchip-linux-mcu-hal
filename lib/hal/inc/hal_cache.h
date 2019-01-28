@@ -52,19 +52,22 @@ struct CACHE_PMU_CNT
  */
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Enable(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(pICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status;
 
     /* config icache: mpu disable, stb disable, write through, hot buffer enable */
-    ICACHE_CTRL->CTRL |= (CACHE_EN | CACHE_WT_EN) & (~CACHE_STB_EN);
+    pICACHE->CACHE_CTRL |=
+        (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK) &
+        (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
 
     do {
-        status = ICACHE_CTRL->STATUS & CACHE_STATUS_INIT_FINISH_MASK;
+        status =
+            pICACHE->CACHE_STATUS & ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK;
     } while (status == 0);
 
-    ICACHE_CTRL->CTRL &= ~CACHE_BYPASS;
+    pICACHE->CACHE_CTRL &= ~ICACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 #endif
 
 #endif
@@ -78,10 +81,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Enable(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Disable(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(pICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    ICACHE_CTRL->CTRL |= CACHE_BYPASS;
+    pICACHE->CACHE_CTRL |= ICACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 #endif
 
 #endif
@@ -95,15 +98,17 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Disable(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Invalidate(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(pICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status = 0;
 
-    ICACHE_CTRL->MAINTAIN0 = CACHE_M_INVALID_ALL | CACHE_M_VALID;
+    pICACHE->CACHE_MAINTAIN[0] =
+        CACHE_M_INVALID_ALL | ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
     do {
-        status = ICACHE_CTRL->MAINTAIN0 & CACHE_M_STATUS_MASK;
+        status = pICACHE->CACHE_MAINTAIN[0] &
+                 ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
     } while (status);
 #endif
 
@@ -121,7 +126,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Invalidate(void)
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
                                                              uint32_t sizeByte)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(pICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t value = 0;
@@ -129,13 +134,15 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
     uint32_t status = 0;
 
     offset = (sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
-    value = (address & CACHE_M_ADDR_MASK) | CACHE_M_INVALID | CACHE_M_VALID;
+    value = (address & ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
+            CACHE_M_INVALID | ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
-    ICACHE_CTRL->MAINTAIN1 = offset;
-    ICACHE_CTRL->MAINTAIN0 = value;
+    pICACHE->CACHE_MAINTAIN[1] = offset;
+    pICACHE->CACHE_MAINTAIN[0] = value;
 
     do {
-        status = ICACHE_CTRL->MAINTAIN0 & CACHE_M_STATUS_MASK;
+        status = pICACHE->CACHE_MAINTAIN[0] &
+                 ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
     } while (status);
 #endif
 
@@ -150,10 +157,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
  */
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_EnablePMU(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(pICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    ICACHE_CTRL->CTRL |= CACHE_PMU_EN;
+    pICACHE->CACHE_CTRL |= ICACHE_CACHE_CTRL_CACHE_PMU_EN_MASK;
 #endif
 
 #endif
@@ -167,10 +174,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_EnablePMU(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_DisablePMU(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(pICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    ICACHE_CTRL->CTRL &= (~CACHE_PMU_EN);
+    pICACHE->CACHE_CTRL &= (~ICACHE_CACHE_CTRL_CACHE_PMU_EN_MASK);
 #endif
 
 #endif
@@ -185,22 +192,22 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_DisablePMU(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_GetPMU(struct CACHE_PMU_CNT *stat)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(pICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     HAL_ASSERT(stat != NULL);
 
-    stat->rdNum = ICACHE_PMU->RD_NUM_CNT;
-    stat->wrNum = ICACHE_PMU->WR_NUM_CNT;
-    stat->sramRdHit = ICACHE_PMU->SRAM_RD_HIT_CNT;
-    stat->hbRdHit = ICACHE_PMU->HB_RD_HIT_CNT;
-    stat->stbRdHit = ICACHE_PMU->STB_RD_HIT_CNT;
-    stat->rdHit = ICACHE_PMU->RD_HIT_CNT;
-    stat->wrHit = ICACHE_PMU->WR_HIT_CNT;
-    stat->rdMissPenalty = ICACHE_PMU->RD_MISS_PENALTY_CNT;
-    stat->wrMissPenalty = ICACHE_PMU->WR_MISS_PENALTY_CNT;
-    stat->rdLat = ICACHE_PMU->RD_LAT_CNT;
-    stat->wrLat = ICACHE_PMU->WR_LAT_CNT;
+    stat->rdNum = pICACHE->PMU_RD_NUM_CNT;
+    stat->wrNum = pICACHE->PMU_WR_NUM_CNT;
+    stat->sramRdHit = pICACHE->PMU_SRAM_RD_HIT_CNT;
+    stat->hbRdHit = pICACHE->PMU_HB_RD_HIT_CNT;
+    stat->stbRdHit = pICACHE->PMU_STB_RD_HIT_CNT;
+    stat->rdHit = pICACHE->PMU_RD_HIT_CNT;
+    stat->wrHit = pICACHE->PMU_WR_HIT_CNT;
+    stat->rdMissPenalty = pICACHE->PMU_RD_MISS_PENALTY_CNT;
+    stat->wrMissPenalty = pICACHE->PMU_WR_MISS_PENALTY_CNT;
+    stat->rdLat = pICACHE->PMU_RD_LAT_CNT;
+    stat->wrLat = pICACHE->PMU_WR_LAT_CNT;
 #endif
 
 #endif
@@ -214,10 +221,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_GetPMU(struct CACHE_PMU_CNT *stat)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_EnableMPU(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(pICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    ICACHE_CTRL->CTRL |= CACHE_MPU_MODE;
+    pICACHE->CACHE_CTRL |= ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
 #endif
 
 #endif
@@ -231,10 +238,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_EnableMPU(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_DisableMPU(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE_CTRL)
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(pICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    ICACHE_CTRL->CTRL &= (~CACHE_MPU_MODE);
+    pICACHE->CACHE_CTRL &= (~ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK);
 #endif
 
 #endif
@@ -250,21 +257,23 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_DisableMPU(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Enable(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status;
 
     /* stb enable, stb_entry=7, stb_timeout enable, write back */
-    DCACHE_CTRL->CTRL |=
-        CACHE_EN | (7U << CACHE_ENTRY_THRESH_SHIFT) | CACHE_STB_TIMEOUT_EN;
-    DCACHE_CTRL->STB_TIMEOUT_CTRL = 1;
+    pDCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK |
+                           (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
+                           DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK;
+    pDCACHE->STB_TIMEOUT_CTRL = 1;
 
     do {
-        status = DCACHE_CTRL->STATUS & CACHE_STATUS_INIT_FINISH_MASK;
+        status =
+            pDCACHE->CACHE_STATUS & DCACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK;
     } while (status == 0);
 
-    DCACHE_CTRL->CTRL &= ~CACHE_BYPASS;
+    pDCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 #endif
 
 #endif
@@ -278,10 +287,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Enable(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Disable(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    DCACHE_CTRL->CTRL |= CACHE_BYPASS;
+    pDCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 #endif
 
 #endif
@@ -295,15 +304,17 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Disable(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Invalidate(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status = 0;
 
-    DCACHE_CTRL->MAINTAIN0 = CACHE_M_INVALID_ALL | CACHE_M_VALID;
+    pDCACHE->CACHE_MAINTAIN[0] =
+        CACHE_M_INVALID_ALL | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
     do {
-        status = DCACHE_CTRL->MAINTAIN0 & CACHE_M_STATUS_MASK;
+        status = pDCACHE->CACHE_MAINTAIN[0] &
+                 DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
     } while (status);
 #endif
 
@@ -321,7 +332,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Invalidate(void)
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
                                                              uint32_t sizeByte)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t value = 0;
@@ -329,13 +340,15 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
     uint32_t status = 0;
 
     offset = (sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
-    value = (address & CACHE_M_ADDR_MASK) | CACHE_M_INVALID | CACHE_M_VALID;
+    value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
+            CACHE_M_INVALID | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
-    DCACHE_CTRL->MAINTAIN1 = offset;
-    DCACHE_CTRL->MAINTAIN0 = value;
+    pDCACHE->CACHE_MAINTAIN[1] = offset;
+    pDCACHE->CACHE_MAINTAIN[0] = value;
 
     do {
-        status = DCACHE_CTRL->MAINTAIN0 & CACHE_M_STATUS_MASK;
+        status = pDCACHE->CACHE_MAINTAIN[0] &
+                 DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
     } while (status);
 #endif
 
@@ -345,7 +358,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
 }
 
 /**
- * @brief  clean the specified region of the dcache, it will flush the dirty cache in 
+ * @brief  clean the specified region of the dcache, it will flush the dirty cache in
  *         the specified region.
  * @param  address: the start address of specified region which you want invalidate.
  * @param  sizeByte: the length in bytes of invalidate range.
@@ -354,7 +367,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
                                                         uint32_t sizeByte)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t value = 0;
@@ -362,13 +375,15 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
     uint32_t status = 0;
 
     offset = (sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
-    value = (address & CACHE_M_ADDR_MASK) | CACHE_M_CLEAN | CACHE_M_VALID;
+    value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
+            CACHE_M_CLEAN | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
-    DCACHE_CTRL->MAINTAIN1 = offset;
-    DCACHE_CTRL->MAINTAIN0 = value;
+    pDCACHE->CACHE_MAINTAIN[1] = offset;
+    pDCACHE->CACHE_MAINTAIN[0] = value;
 
     do {
-        status = DCACHE_CTRL->MAINTAIN0 & CACHE_M_STATUS_MASK;
+        status = pDCACHE->CACHE_MAINTAIN[0] &
+                 DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
     } while (status);
 #endif
 
@@ -387,7 +402,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
 __STATIC_FORCEINLINE HAL_Status
 HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t value = 0;
@@ -395,14 +410,15 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     uint32_t status = 0;
 
     offset = (sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
-    value =
-        (address & CACHE_M_ADDR_MASK) | CACHE_M_CLEAN_INVALID | CACHE_M_VALID;
+    value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
+            CACHE_M_CLEAN_INVALID | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
-    DCACHE_CTRL->MAINTAIN1 = offset;
-    DCACHE_CTRL->MAINTAIN0 = value;
+    pDCACHE->CACHE_MAINTAIN[1] = offset;
+    pDCACHE->CACHE_MAINTAIN[0] = value;
 
     do {
-        status = DCACHE_CTRL->MAINTAIN0 & CACHE_M_STATUS_MASK;
+        status = pDCACHE->CACHE_MAINTAIN[0] &
+                 DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
     } while (status);
 #endif
 
@@ -418,18 +434,19 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanInvalidate(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status = 0;
 
-    DCACHE_CTRL->CTRL |= CACHE_FLUSH;
+    pDCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_FLUSH_MASK;
 
     do {
-        status = DCACHE_CTRL->STATUS & CACHE_STATUS_FLUSH_DONE_MASK;
+        status =
+            pDCACHE->CACHE_STATUS & DCACHE_CACHE_STATUS_CACHE_FLUSH_DONE_MASK;
     } while (!status);
 
-    DCACHE_CTRL->CTRL &= ~CACHE_FLUSH;
+    pDCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_FLUSH_MASK;
 #endif
 
 #endif
@@ -443,10 +460,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanInvalidate(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_EnablePMU(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    DCACHE_CTRL->CTRL |= CACHE_PMU_EN;
+    pDCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_PMU_EN_MASK;
 #endif
 
 #endif
@@ -460,10 +477,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_EnablePMU(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_DisablePMU(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    DCACHE_CTRL->CTRL &= (~CACHE_PMU_EN);
+    pDCACHE->CACHE_CTRL &= (~DCACHE_CACHE_CTRL_CACHE_PMU_EN_MASK);
 #endif
 
 #endif
@@ -478,22 +495,22 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_DisablePMU(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_GetPMU(struct CACHE_PMU_CNT *stat)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     HAL_ASSERT(stat != NULL);
 
-    stat->rdNum = DCACHE_PMU->RD_NUM_CNT;
-    stat->wrNum = DCACHE_PMU->WR_NUM_CNT;
-    stat->sramRdHit = DCACHE_PMU->SRAM_RD_HIT_CNT;
-    stat->hbRdHit = DCACHE_PMU->HB_RD_HIT_CNT;
-    stat->stbRdHit = DCACHE_PMU->STB_RD_HIT_CNT;
-    stat->rdHit = DCACHE_PMU->RD_HIT_CNT;
-    stat->wrHit = DCACHE_PMU->WR_HIT_CNT;
-    stat->rdMissPenalty = DCACHE_PMU->RD_MISS_PENALTY_CNT;
-    stat->wrMissPenalty = DCACHE_PMU->WR_MISS_PENALTY_CNT;
-    stat->rdLat = DCACHE_PMU->RD_LAT_CNT;
-    stat->wrLat = DCACHE_PMU->WR_LAT_CNT;
+    stat->rdNum = pDCACHE->PMU_RD_NUM_CNT;
+    stat->wrNum = pDCACHE->PMU_WR_NUM_CNT;
+    stat->sramRdHit = pDCACHE->PMU_SRAM_RD_HIT_CNT;
+    stat->hbRdHit = pDCACHE->PMU_HB_RD_HIT_CNT;
+    stat->stbRdHit = pDCACHE->PMU_STB_RD_HIT_CNT;
+    stat->rdHit = pDCACHE->PMU_RD_HIT_CNT;
+    stat->wrHit = pDCACHE->PMU_WR_HIT_CNT;
+    stat->rdMissPenalty = pDCACHE->PMU_RD_MISS_PENALTY_CNT;
+    stat->wrMissPenalty = pDCACHE->PMU_WR_MISS_PENALTY_CNT;
+    stat->rdLat = pDCACHE->PMU_RD_LAT_CNT;
+    stat->wrLat = pDCACHE->PMU_WR_LAT_CNT;
 #endif
 
 #endif
@@ -507,10 +524,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_GetPMU(struct CACHE_PMU_CNT *stat)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_EnableMPU(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    DCACHE_CTRL->CTRL |= CACHE_MPU_MODE;
+    pDCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
 #endif
 
 #endif
@@ -524,10 +541,10 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_EnableMPU(void)
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_DisableMPU(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE_CTRL)
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(pDCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    DCACHE_CTRL->CTRL &= (~CACHE_MPU_MODE);
+    pDCACHE->CACHE_CTRL &= (~DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK);
 #endif
 
 #endif
