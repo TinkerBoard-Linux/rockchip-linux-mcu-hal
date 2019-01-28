@@ -317,6 +317,7 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, eMBOX_ID mbox)
 /**
  * @brief  Mailbox init
  * @param  mbox: mailbox id
+ * @param  isA2B: A2B mode
  * @return HAL_Status
  */
 HAL_Status HAL_MBOX_Init(eMBOX_ID mbox, uint8_t isA2B)
