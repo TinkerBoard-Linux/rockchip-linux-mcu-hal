@@ -96,18 +96,31 @@ typedef enum
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
-#define ICACHE_BASE                    0x40000000
-#define ICACHE_CTRL_BASE               ICACHE_BASE
-#define ICACHE_PMU_BASE                (ICACHE_BASE + 0x40)
-#define DCACHE_BASE                    0x40004000
-#define DCACHE_CTRL_BASE               DCACHE_BASE
-#define DCACHE_PMU_BASE                (DCACHE_BASE + 0x40)
-#define RKIO_UART0_BASE                0x40800000
-#define RKIO_MAILBOX0_BASE             0x40100000
-#define RKIO_MAILBOX1_BASE             0x40110000
-#define RKIO_MAILBOX2_BASE             0x40120000
-#define SDIO_BASE                      0x40c90000
-#define WDT_BASE                       0x40a00000
+#define ICACHE_BASE         0x40000000
+#define ICACHE_CTRL_BASE    ICACHE_BASE
+#define ICACHE_PMU_BASE     (ICACHE_BASE + 0x40)
+#define DCACHE_BASE         0x40004000
+#define DCACHE_CTRL_BASE    DCACHE_BASE
+#define DCACHE_PMU_BASE     (DCACHE_BASE + 0x40)
+#define MBOX0_BASE          0x40100000U /* MAILBOX0 base address */
+#define MBOX1_BASE          0x40110000U /* MAILBOX1 base address */
+#define MBOX2_BASE          0x40120000U /* MAILBOX2 base address */
+#define PMU_BASE            0x40130000U /* PMU base address */
+#define SHAREMEM_BASE       0x40160000U /* SHAREMEM base address */
+#define PWM_BASE            0x40880000U /* PWM base address */
+#define TIMER_BASE          0x40900000U /* TIMER base address */
+#define WDT_BASE            0x40A00000U /* WDT base address */
+#define SPI2APB_BASE        0x40C00000U /* SPI2APB base address */
+#define SPI_BASE            0x40C10000U /* SPI base address */
+#define SFC_BASE            0x40C80000U /* SFC base address */
+#define MMC_BASE            0x40C90000U /* MMC base address */
+#define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
+#define GPIO1_BASE          0x40D10000U /* GPIO1 base address */
+#define PDM0_BASE           0x41000000U /* PDM0 base address */
+#define I2S0_BASE           0x41010000U /* I2S0 base address */
+#define VAD_BASE            0x41020000U /* VAD base address */
+#define I2S1_BASE           0x41030000U /* I2S1 base address */
+#define VOP_BASE            0x41100000U /* VOP base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Structure Section                               */
@@ -159,8 +172,6 @@ struct CACHE_PMU_REG {
 #define DCACHE_PMU        ((struct CACHE_PMU_REG *) DCACHE_PMU_BASE)
 
 /* MAILBOX Register Structure Define */
-#define MBOX_BASE                      RKIO_MAILBOX0_BASE
-#define MBOX1_BASE                     RKIO_MAILBOX1_BASE
 #define MBOX_GROUP_CNT                 2
 #define MBOX_CHAN_CNT                  4
 
@@ -294,6 +305,38 @@ struct SPI_REG {
     __O  uint32_t TXDR;                               /* Address Offset: 0x0400 */
          uint32_t RESERVED1[255];                     /* Address Offset: 0x0404 */
     __IO uint32_t RXDR;                               /* Address Offset: 0x0800 */
+};
+/* SFC Register Structure Define */
+struct SFC_REG {
+    __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
+    __IO uint32_t IMR;                                /* Address Offset: 0x0004 */
+    __O  uint32_t ICLR;                               /* Address Offset: 0x0008 */
+    __IO uint32_t FTLR;                               /* Address Offset: 0x000C */
+    __IO uint32_t RCVR;                               /* Address Offset: 0x0010 */
+    __IO uint32_t AX;                                 /* Address Offset: 0x0014 */
+    __IO uint32_t ABIT;                               /* Address Offset: 0x0018 */
+    __IO uint32_t ISR;                                /* Address Offset: 0x001C */
+    __IO uint32_t FSR;                                /* Address Offset: 0x0020 */
+    __IO uint32_t SR;                                 /* Address Offset: 0x0024 */
+    __I  uint32_t RISR;                               /* Address Offset: 0x0028 */
+    __IO uint32_t VER;                                /* Address Offset: 0x002C */
+    __IO uint32_t QOP;                                /* Address Offset: 0x0030 */
+    __IO uint32_t EXT_CTRL;                           /* Address Offset: 0x0034 */
+         uint32_t RESERVED0;                          /* Address Offset: 0x0038 */
+    __IO uint32_t DLL_CTRL;                           /* Address Offset: 0x003C */
+         uint32_t RESERVED1[4];                       /* Address Offset: 0x0040 */
+    __IO uint32_t POLL_CTRL;                          /* Address Offset: 0x0050 */
+    __O  uint32_t FETCH_CMD;                          /* Address Offset: 0x0054 */
+    __IO uint32_t FETCH_CTRL;                         /* Address Offset: 0x0058 */
+    __IO uint32_t XIP_MODE;                           /* Address Offset: 0x005C */
+    __I  uint32_t POLL_DATA;                          /* Address Offset: 0x0060 */
+         uint32_t RESERVED2[7];                       /* Address Offset: 0x0064 */
+    __O  uint32_t DMATR;                              /* Address Offset: 0x0080 */
+    __IO uint32_t DMAADDR;                            /* Address Offset: 0x0084 */
+         uint32_t RESERVED3[30];                      /* Address Offset: 0x0088 */
+    __O  uint32_t CMD;                                /* Address Offset: 0x0100 */
+    __O  uint32_t ADDR;                               /* Address Offset: 0x0104 */
+    __IO uint32_t DATA;                               /* Address Offset: 0x0108 */
 };
 /* SDMMC Register Structure Define */
 struct MMC_REG {
@@ -566,9 +609,9 @@ struct PMU_REG {
 /* Module Variable Define */
 #define pM4ICACHE            ((struct M4ICACHE_REG *) M4ICACHE_BASE)
 #define pM4DCACHE            ((struct M4DCACHE_REG *) M4DCACHE_BASE)
-#define pMAILBOX0            ((struct MAILBOX_REG *) MAILBOX0_BASE)
-#define pMAILBOX1            ((struct MAILBOX_REG *) MAILBOX1_BASE)
-#define pMAILBOX2            ((struct MAILBOX_REG *) MAILBOX2_BASE)
+#define pMBOX0               ((struct MBOX_REG *) MBOX0_BASE)
+#define pMBOX1               ((struct MBOX_REG *) MBOX1_BASE)
+#define pMBOX2               ((struct MBOX_REG *) MBOX2_BASE)
 #define pPMU                 ((struct PMU_REG *) PMU_BASE)
 #define pSHAREMEM            ((struct SHAREMEM_REG *) SHAREMEM_BASE)
 #define pPWM                 ((struct PWM_REG *) PWM_BASE)
