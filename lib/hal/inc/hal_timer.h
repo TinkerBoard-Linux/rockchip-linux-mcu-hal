@@ -43,6 +43,8 @@ typedef enum
 
 HAL_Status HAL_TIMER_Stop(eTIMER_CH timerNum);
 HAL_Status HAL_TIMER_Start(eTIMER_CH timerNum);
+HAL_Status HAL_TIMER_Stop_IT(eTIMER_CH timerNum);
+HAL_Status HAL_TIMER_Start_IT(eTIMER_CH timerNum);
 HAL_Status HAL_TIMER_SetCount(eTIMER_CH timerNum, uint64_t usTick);
 uint64_t HAL_TIMER_GetCount(eTIMER_CH timerNum);
 HAL_Status HAL_TIMER0_Handler(void);
