@@ -30,7 +30,7 @@
 /********************* Private Function Definition ***************************/
 static inline uint32_t MMC_GetWaterlevel(struct HAL_MMC_HOST *host)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     return (READ_REG(pReg->STATUS) >> MMC_STATUS_FIFO_COUNT_SHIFT) &
            MMC_STATUS_FIFO_COUNT_MASK;
@@ -38,7 +38,7 @@ static inline uint32_t MMC_GetWaterlevel(struct HAL_MMC_HOST *host)
 
 static inline uint32_t MMC_IsFifoEmpty(struct HAL_MMC_HOST *host)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     return (READ_REG(pReg->STATUS) >> MMC_STATUS_FIFO_EMPTY_SHIFT) &
            MMC_STATUS_FIFO_EMPTY_MASK;
@@ -66,7 +66,7 @@ static inline uint32_t MMC_IsFifoEmpty(struct HAL_MMC_HOST *host)
 uint32_t HAL_MMC_GetCardStatus(struct HAL_MMC_HOST *host)
 {
     uint32_t card_status;
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     card_status = READ_REG(pReg->CDETECT);
 
@@ -81,7 +81,7 @@ uint32_t HAL_MMC_GetCardStatus(struct HAL_MMC_HOST *host)
  */
 uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int32_t respNum)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     return READ_REG(pReg->RESP0 + respNum * 4);
 }
@@ -93,7 +93,7 @@ uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int32_t respNum)
  */
 uint32_t HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     return (READ_REG(pReg->STATUS) >> MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT) &
            MMC_STATUS_DATA_STATE_MC_BUSY_MASK;
@@ -121,7 +121,7 @@ uint32_t HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host)
  */
 HAL_Status HAL_MMC_SetInterruptMask(struct HAL_MMC_HOST *host, uint32_t mask)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->INTMASK, mask);
     return HAL_OK;
@@ -136,7 +136,7 @@ HAL_Status HAL_MMC_SetInterruptMask(struct HAL_MMC_HOST *host, uint32_t mask)
 HAL_Status HAL_MMC_ClearRawInterrupt(struct HAL_MMC_HOST *host,
                                      uint32_t interrupts)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->RINTSTS, interrupts);
     return HAL_OK;
@@ -149,7 +149,7 @@ HAL_Status HAL_MMC_ClearRawInterrupt(struct HAL_MMC_HOST *host,
  */
 uint32_t HAL_MMC_GetRawInterrupt(struct HAL_MMC_HOST *host)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     return READ_REG(pReg->RINTSTS);
 }
@@ -161,7 +161,7 @@ uint32_t HAL_MMC_GetRawInterrupt(struct HAL_MMC_HOST *host)
  */
 uint32_t HAL_MMC_GetInterruptMask(struct HAL_MMC_HOST *host)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     return READ_REG(pReg->INTMASK);
 }
@@ -173,7 +173,7 @@ uint32_t HAL_MMC_GetInterruptMask(struct HAL_MMC_HOST *host)
  */
 uint32_t HAL_MMC_GetUnmaskedInterrupt(struct HAL_MMC_HOST *host)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     return READ_REG(pReg->MINTSTS);
 }
@@ -186,7 +186,7 @@ uint32_t HAL_MMC_GetUnmaskedInterrupt(struct HAL_MMC_HOST *host)
  */
 HAL_Status HAL_MMC_SetByteCount(struct HAL_MMC_HOST *host, uint32_t bytes)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->BYTCNT, bytes);
     return HAL_OK;
@@ -200,7 +200,7 @@ HAL_Status HAL_MMC_SetByteCount(struct HAL_MMC_HOST *host, uint32_t bytes)
  */
 HAL_Status HAL_MMC_SetBlockSize(struct HAL_MMC_HOST *host, uint32_t size)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->BLKSIZ, size);
     return HAL_OK;
@@ -213,7 +213,7 @@ HAL_Status HAL_MMC_SetBlockSize(struct HAL_MMC_HOST *host, uint32_t size)
  */
 uint32_t HAL_MMC_GetStatus(struct HAL_MMC_HOST *host)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     return READ_REG(pReg->STATUS);
 }
@@ -229,7 +229,7 @@ HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
                              uint32_t size)
 {
     int32_t fifo_available, i, retries;
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     for (i = 0; i < size / 4; i++) {
         retries = 0;
@@ -266,7 +266,7 @@ HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
                             uint32_t size)
 {
     int32_t fifo_available, i, retries;
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     for (i = 0; i < size / 4; i++) {
         retries = 0;
@@ -340,7 +340,7 @@ HAL_Status HAL_MMC_InitDescriptors(struct HAL_MMC_HOST *host, uint32_t *buf,
 HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
 {
     uint32_t loop = 5000;
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     /* Disable clock */
     WRITE_REG(pReg->CLKENA, 0);
@@ -403,7 +403,7 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
  */
 HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int32_t width)
 {
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     switch (width) {
     case MMC_CARD_WIDTH_1BIT:
@@ -432,7 +432,7 @@ HAL_Status HAL_MMC_SendCommand(struct HAL_MMC_HOST *host, uint32_t cmd,
                                uint32_t arg, uint32_t flags)
 {
     uint32_t loop = 5000;
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->CMDARG, arg);
     flags |= MMC_CMD_USE_HOLD_REG | MMC_CMD_START_CMD | cmd;
@@ -461,7 +461,7 @@ HAL_Status HAL_MMC_SendCommand(struct HAL_MMC_HOST *host, uint32_t cmd,
 HAL_Status HAL_MMC_ResetFifo(struct HAL_MMC_HOST *host)
 {
     uint32_t reg, loop = 5000;
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     reg = READ_REG(pReg->CTRL);
     reg |= MMC_CTRL_FIFO_RESET;
@@ -489,7 +489,7 @@ HAL_Status HAL_MMC_ResetFifo(struct HAL_MMC_HOST *host)
 HAL_Status HAL_MMC_Reset(struct HAL_MMC_HOST *host)
 {
     uint32_t reg, loop = 5000;
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     reg = READ_REG(pReg->BMOD);
     reg |= MMC_BMOD_RESET;
@@ -529,7 +529,7 @@ HAL_Status HAL_MMC_Reset(struct HAL_MMC_HOST *host)
 inline HAL_Status HAL_MMC_StartDma(struct HAL_MMC_HOST *host)
 {
     uint32_t reg;
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->DBADDR, (uint32_t)host->descriptors);
 
@@ -547,7 +547,7 @@ inline HAL_Status HAL_MMC_StartDma(struct HAL_MMC_HOST *host)
 inline HAL_Status HAL_MMC_StopDma(struct HAL_MMC_HOST *host)
 {
     uint32_t reg;
-    struct SDMMC_REG *pReg = ((struct SDMMC_REG *)(host->base));
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     reg = READ_REG(pReg->BMOD);
     reg &= ~BIT(7);
@@ -577,14 +577,14 @@ inline HAL_Status HAL_MMC_StopDma(struct HAL_MMC_HOST *host)
 HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host)
 {
     uint32_t reg;
-    struct SDMMC_REG *pReg;
+    struct MMC_REG *pReg;
 
     if (host->MMC_Reset)
         host->MMC_Reset(host);
 
     HAL_ASSERT(host->base != 0x0);
 
-    pReg = ((struct SDMMC_REG *)(host->base));
+    pReg = ((struct MMC_REG *)(host->base));
 
     HAL_MMC_Reset(host);
 
