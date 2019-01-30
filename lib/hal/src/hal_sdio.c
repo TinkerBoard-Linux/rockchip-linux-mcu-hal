@@ -27,6 +27,9 @@
 
 #ifdef HAL_SDIO_MODULE_ENABLED
 
+/********************* Private MACRO Definition ******************************/
+#define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_8 (0x2U)
+
 /********************* Private Function Definition ***************************/
 static inline uint32_t MMC_GetWaterlevel(struct HAL_MMC_HOST *host)
 {
