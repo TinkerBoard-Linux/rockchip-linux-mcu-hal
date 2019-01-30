@@ -121,6 +121,8 @@ typedef enum
 #define VAD_BASE            0x41020000U /* VAD base address */
 #define I2S1_BASE           0x41030000U /* I2S1 base address */
 #define VOP_BASE            0x41100000U /* VOP base address */
+
+#define MBOX_BASE           MBOX0_BASE
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Structure Section                               */
