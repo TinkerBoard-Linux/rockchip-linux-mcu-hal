@@ -232,7 +232,7 @@ struct CRU_REG
 };
 
 /* SDMMC Register Structure Define */
-struct SDMMC_REG {
+struct MMC_REG {
     __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
     __IO uint32_t PWREN;                              /* Address Offset: 0x0004 */
     __IO uint32_t CLKDIV;                             /* Address Offset: 0x0008 */
