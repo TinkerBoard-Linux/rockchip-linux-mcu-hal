@@ -618,7 +618,7 @@ struct PMU_REG {
 #define pSHAREMEM            ((struct SHAREMEM_REG *) SHAREMEM_BASE)
 #define pPWM                 ((struct PWM_REG *) PWM_BASE)
 #define pTIMER               ((struct TIMER_REG *) TIMER_BASE)
-#define pWDT0                ((struct WDT_REG *) WDT0_BASE)
+#define pWDT0                ((struct WDT_REG *) WDT_BASE)
 #define pSPI2APB             ((struct SPI2APB_REG *) SPI2APB_BASE)
 #define pSPI                 ((struct SPI_REG *) SPI_BASE)
 #define pSFC                 ((struct SFC_REG *) SFC_BASE)
