@@ -60,7 +60,7 @@ static struct WDT_REG *pWDT = (struct WDT_REG *)(WDT_BASE);
 
 __STATIC_INLINE uint32_t WDT_IsEnabled(void)
 {
-    return (pWDT->WDT_CR) & WDOG_CONTROL_REG_WDT_EN_MASK;
+    return (pWDT->WDT_CR) & WDT_WDT_CR_WDT_EN_MASK;
 }
 
 static void WDT_KeepAlive(void)
@@ -108,7 +108,7 @@ static void WDT_SetTop(uint32_t top_s)
      * CP_WDT_DUAL_TOP in WDT_COMP_PARAMS_1).  On those we
      * effectively get a pat of the watchdog right here.
      */
-    pWDT->WDT_TORR = top_Val | top_Val << WDOG_TIMEOUT_RANGE_TOPINIT_SHIFT;
+    pWDT->WDT_TORR = top_Val | top_Val << WDT_WDT_TORR_TIMEOUT_PERIOD_SHIFT;
     WDT_KeepAlive();
 }
 
@@ -142,7 +142,7 @@ HAL_Status HAL_WDT_Init(void)
 
     if (!WDT_IsEnabled()) {
         WDT_SetTop(WDT_DEFAULT_SECONDS);
-        pWDT->WDT_CR = WDOG_CONTROL_REG_WDT_EN_MASK;
+        pWDT->WDT_CR = WDT_WDT_CR_WDT_EN_MASK;
     }
 
     dwWdt.in_Use = 1;
