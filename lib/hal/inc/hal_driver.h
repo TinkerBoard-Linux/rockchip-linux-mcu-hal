@@ -46,6 +46,10 @@
 #include "hal_sfc.h"
 #endif
 
+#ifdef HAL_SNOR_MODULE_ENABLED
+#include "hal_snor.h"
+#endif
+
 #ifdef HAL_TIMER_MODULE_ENABLED
 #include "hal_timer.h"
 #endif
