@@ -99,6 +99,8 @@ typedef enum
 #define ICACHE_BASE         0x40000000U /* Cortex m4 ICache base address */
 #define DCACHE_BASE         0x40004000U /* Cortex m4 DCache base address */
 #define UART0_BASE          0x40800000U /* UART0 base address */
+#define UART1_BASE          0x40810000U /* UART1 base address */
+#define UART2_BASE          0x40820000U /* UART2 base address */
 #define MBOX0_BASE          0x40100000U /* MAILBOX0 base address */
 #define MBOX1_BASE          0x40110000U /* MAILBOX1 base address */
 #define MBOX2_BASE          0x40120000U /* MAILBOX2 base address */
@@ -619,6 +621,45 @@ struct PMU_REG {
     __IO uint32_t DSPTCM_CON[2];                      /* Address Offset: 0x00E8 */
     __IO uint32_t SYS_REG[4];                         /* Address Offset: 0x00F0 */
 };
+/* UART Register Structure Define */
+typedef struct UART_REG
+{
+    __IO uint32_t UART_RBR;
+    __IO uint32_t UART_DLH;
+    __IO uint32_t UART_IIR;
+    __IO uint32_t UART_LCR;
+    __IO uint32_t UART_MCR;
+    __IO uint32_t UART_LSR;
+    __IO uint32_t UART_MSR;
+    __IO uint32_t UART_SCR;
+    __IO uint32_t RESERVED1_UART[(0x30 - 0x20) / 4];
+    __IO uint32_t UART_SRBR[(0x70 - 0x30) / 4];
+    __IO uint32_t UART_FAR;
+    __IO uint32_t UART_TFR;
+    __IO uint32_t UART_RFW;
+    __IO uint32_t UART_USR;
+    __IO uint32_t UART_TFL;
+    __IO uint32_t UART_RFL;
+    __IO uint32_t UART_SRR;
+    __IO uint32_t UART_SRTS;
+    __IO uint32_t UART_SBCR;
+    __IO uint32_t UART_SDMAM;
+    __IO uint32_t UART_SFE;
+    __IO uint32_t UART_SRT;
+    __IO uint32_t UART_STET;
+    __IO uint32_t UART_HTX;
+    __IO uint32_t UART_DMASA;
+    __IO uint32_t RESERVED2_UART[(0xf4 - 0xac) / 4];
+    __IO uint32_t UART_CPR;
+    __IO uint32_t UART_UCV;
+    __IO uint32_t UART_CTR;
+} UART_REG_t;
+
+#define UART_THR UART_RBR
+#define UART_DLL UART_RBR
+#define UART_IER UART_DLH
+#define UART_FCR UART_IIR
+#define UART_STHR UART_SRBR
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -646,6 +687,9 @@ struct PMU_REG {
 #define pVAD                 ((struct VAD_REG *) VAD_BASE)
 #define pI2S1                ((struct I2S_REG *) I2S1_BASE)
 #define pVOP                 ((struct VOP_REG *) VOP_BASE)
+#define pUART0               ((struct UART_REG *) UART0_BASE)
+#define pUART1               ((struct UART_REG *) UART1_BASE)
+#define pUART2               ((struct UART_REG *) UART2_BASE)
 /****************************************SHAREMEM****************************************/
 /* RRA_SLT_LO */
 #define SHAREMEM_RRA_SLT_LO_REQ_SLOT0_SHIFT                (0U)
