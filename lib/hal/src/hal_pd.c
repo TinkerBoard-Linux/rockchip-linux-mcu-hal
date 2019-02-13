@@ -72,14 +72,14 @@ static HAL_Check PD_IsIdle(uint32_t pd)
 {
     uint32_t idleShift = PD_GET_IDLE_SHIFT(pd);
 
-    return (HAL_Check)((pPMU->BUS_IDLE_ST & (1 << idleShift)) >> idleShift);
+    return (HAL_Check)((PMU->BUS_IDLE_ST & (1 << idleShift)) >> idleShift);
 }
 
 static HAL_Check PD_ReadAck(uint32_t pd)
 {
     uint32_t ackShift = PD_GET_ACK_SHIFT(pd);
 
-    return (HAL_Check)((pPMU->BUS_IDLE_ACK & (1 << ackShift)) >> ackShift);
+    return (HAL_Check)((PMU->BUS_IDLE_ACK & (1 << ackShift)) >> ackShift);
 }
 
 static HAL_Check PD_IsOn(uint32_t pd)
@@ -91,7 +91,7 @@ static HAL_Check PD_IsOn(uint32_t pd)
     if (stShift > 16)
         return !PD_IsIdle(pd);
 
-    return (HAL_Check)(!((pPMU->PWRDN_ST & (1 << stShift)) >> stShift));
+    return (HAL_Check)(!((PMU->PWRDN_ST & (1 << stShift)) >> stShift));
 }
 
 static HAL_Status PD_IdleRequest(uint32_t pd, bool idle)
@@ -102,7 +102,7 @@ static HAL_Status PD_IdleRequest(uint32_t pd, bool idle)
     if (reqShift > 16)
         return HAL_INVAL;
     else
-        pPMU->BUS_IDLE_REQ = RK_CLRSET_BITS(1 << reqShift, idle << reqShift);
+        PMU->BUS_IDLE_REQ = RK_CLRSET_BITS(1 << reqShift, idle << reqShift);
 
     /* Wait util idle_ack = 1 */
     while (delay > 0) {
@@ -133,7 +133,7 @@ static HAL_Status PD_PowerOn(uint32_t pd, bool on)
     if (pwrShift > 16)
         return HAL_INVAL;
     else
-        pPMU->PWRDN_CON = RK_CLRSET_BITS(1 << pwrShift, !on << pwrShift);
+        PMU->PWRDN_CON = RK_CLRSET_BITS(1 << pwrShift, !on << pwrShift);
 
     while (delay > 0) {
         if (PD_IsOn(pd) == on)

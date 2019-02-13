@@ -44,7 +44,7 @@
 /********************* Private Structure Definition **************************/
 
 const uint32_t MBOX_GROUP[MBOX_ID_MAX] = {
-    MBOX_BASE,
+    MBOX0_BASE,
 #if MBOX_GROUP_CNT == 2
     MBOX1_BASE,
 #endif

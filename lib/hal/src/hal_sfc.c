@@ -106,12 +106,12 @@ static void SFC_Reset(void)
 {
     int32_t timeout = 10000;
 
-    pSFC->RCVR = SFC_RCVR_RCVR_RESET;
-    while ((pSFC->RCVR == SFC_RCVR_RCVR_RESET) && (timeout > 0)) {
+    SFC->RCVR = SFC_RCVR_RCVR_RESET;
+    while ((SFC->RCVR == SFC_RCVR_RCVR_RESET) && (timeout > 0)) {
         HAL_DelayUs(1);
         timeout--;
     }
-    pSFC->ICLR = 0xFFFFFFFF;
+    SFC->ICLR = 0xFFFFFFFF;
 }
 
 /********************* Public Function Definition ****************************/
@@ -153,32 +153,32 @@ HAL_Status HAL_SFC_Request(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
     cmd.d32 = sfcmd;
     ctrl.d32 = sfctrl;
 
-    if (!(pSFC->FSR & SFC_FSR_TXES_EMPTY) ||
-        !(pSFC->FSR & SFC_FSR_RXES_EMPTY) || (pSFC->SR & SFC_SR_SR_BUSY))
+    if (!(SFC->FSR & SFC_FSR_TXES_EMPTY) || !(SFC->FSR & SFC_FSR_RXES_EMPTY) ||
+        (SFC->SR & SFC_SR_SR_BUSY))
         SFC_Reset();
 
     if (cmd.b.addrbits == SFC_ADDR_XBITS) {
         if (!ctrl.b.addrbits)
             return HAL_INVAL;
-        pSFC->ABIT = ctrl.b.addrbits - 1; /* add 1 inside the controller */
+        SFC->ABIT = ctrl.b.addrbits - 1; /* add 1 inside the controller */
     }
 
     ctrl.d32 |= SFC_CTRL_SHIFTPHASE_NEGEDGE;
-    pSFC->CTRL = ctrl.d32;
-    pSFC->CMD = cmd.d32;
+    SFC->CTRL = ctrl.d32;
+    SFC->CMD = cmd.d32;
     if (cmd.b.addrbits)
-        pSFC->ADDR = addr;
+        SFC->ADDR = addr;
 
     if (cmd.b.datasize) {
         if (cmd.b.rw == SFC_WRITE) {
             words = (cmd.b.datasize + 3) >> 2;
             while (words) {
-                fifostat.d32 = pSFC->FSR;
+                fifostat.d32 = SFC->FSR;
                 if (fifostat.b.txlevel > 0) {
                     uint32_t count = HAL_MIN(words, fifostat.b.txlevel);
 
                     for (i = 0; i < count; i++) {
-                        pSFC->DATA = *pData++;
+                        SFC->DATA = *pData++;
                         words--;
                     }
                     if (words == 0)
@@ -197,12 +197,12 @@ HAL_Status HAL_SFC_Request(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
 
             words = cmd.b.datasize >> 2;
             while (words) {
-                fifostat.d32 = pSFC->FSR;
+                fifostat.d32 = SFC->FSR;
                 if (fifostat.b.rxlevel > 0) {
                     uint32_t count = HAL_MIN(words, fifostat.b.rxlevel);
 
                     for (i = 0; i < count; i++) {
-                        *pData++ = pSFC->DATA;
+                        *pData++ = SFC->DATA;
                         words--;
                     }
                     if (0 == words)
@@ -219,10 +219,10 @@ HAL_Status HAL_SFC_Request(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
 
             timeout = 0;
             while (bytes) {
-                fifostat.d32 = pSFC->FSR;
+                fifostat.d32 = SFC->FSR;
                 if (fifostat.b.rxlevel > 0) {
                     uint8_t *pData1 = (uint8_t *)pData;
-                    words = pSFC->DATA;
+                    words = SFC->DATA;
                     for (i = 0; i < bytes; i++)
                         pData1[i] = (uint8_t)((words >> (i * 8)) & 0xFF);
                     break;
@@ -238,7 +238,7 @@ HAL_Status HAL_SFC_Request(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
     }
 
     timeout = 0; /*wait cmd or data send complete*/
-    while (pSFC->SR & SFC_SR_SR_BUSY) {
+    while (SFC->SR & SFC_SR_SR_BUSY) {
         HAL_DelayUs(1);
         if (timeout++ > 100000) { /*wait 100ms*/
             ret = HAL_TIMEOUT;
@@ -270,26 +270,26 @@ HAL_Status HAL_SFC_Request_DMA(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
     cmd.d32 = sfcmd;
     ctrl.d32 = sfctrl;
 
-    if (!(pSFC->FSR & SFC_FSR_TXES_EMPTY) ||
-        !(pSFC->FSR & SFC_FSR_RXES_EMPTY) || (pSFC->SR & SFC_SR_SR_BUSY))
+    if (!(SFC->FSR & SFC_FSR_TXES_EMPTY) || !(SFC->FSR & SFC_FSR_RXES_EMPTY) ||
+        (SFC->SR & SFC_SR_SR_BUSY))
         SFC_Reset();
 
     if (cmd.b.addrbits == SFC_ADDR_XBITS) {
         if (!ctrl.b.addrbits)
             return HAL_INVAL;
-        pSFC->ABIT = ctrl.b.addrbits - 1; /* add 1 inside the controller */
+        SFC->ABIT = ctrl.b.addrbits - 1; /* add 1 inside the controller */
     }
 
     ctrl.d32 |= SFC_CTRL_SHIFTPHASE_NEGEDGE;
-    pSFC->CTRL = ctrl.d32;
-    pSFC->CMD = cmd.d32;
+    SFC->CTRL = ctrl.d32;
+    SFC->CMD = cmd.d32;
     if (cmd.b.addrbits)
-        pSFC->ADDR = addr;
+        SFC->ADDR = addr;
 
     if (cmd.b.datasize) {
-        pSFC->ICLR = 0xFFFFFFFF;
-        pSFC->DMAADDR = (uint32_t)data;
-        pSFC->DMATR = SFC_DMATR_DMATR_START;
+        SFC->ICLR = 0xFFFFFFFF;
+        SFC->DMAADDR = (uint32_t)data;
+        SFC->DMATR = SFC_DMATR_DMATR_START;
         timeout = cmd.b.datasize * 10;
     }
 
@@ -317,7 +317,7 @@ HAL_Status HAL_SFC_Request_DMA(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
 HAL_Status HAL_SFC_Init(void)
 {
     SFC_Reset();
-    pSFC->CTRL = 0;
+    SFC->CTRL = 0;
     HAL_DBG("SFC vertion %x\n", HAL_SFC_GetCtrlVertion());
 
     return HAL_OK;
@@ -346,7 +346,7 @@ HAL_Status HAL_SFC_Deinit(void)
  */
 uint16_t HAL_SFC_GetCtrlVertion(void)
 {
-    return (uint16_t)(pSFC->VER && SFC_VER_VER_MASK);
+    return (uint16_t)(SFC->VER && SFC_VER_VER_MASK);
 }
 
 /**
@@ -355,7 +355,7 @@ uint16_t HAL_SFC_GetCtrlVertion(void)
  */
 HAL_Status HAL_SFC_MaskTransmInterrupt(void)
 {
-    SET_BIT(pSFC->IMR, SFC_IMR_TRANSM_MASK);
+    SET_BIT(SFC->IMR, SFC_IMR_TRANSM_MASK);
 
     return HAL_OK;
 }
@@ -366,7 +366,7 @@ HAL_Status HAL_SFC_MaskTransmInterrupt(void)
  */
 HAL_Status HAL_SFC_UnMaskTransmInterrupt(void)
 {
-    CLEAR_BIT(pSFC->IMR, SFC_IMR_TRANSM_MASK);
+    CLEAR_BIT(SFC->IMR, SFC_IMR_TRANSM_MASK);
 
     return HAL_OK;
 }
@@ -377,7 +377,7 @@ HAL_Status HAL_SFC_UnMaskTransmInterrupt(void)
  */
 HAL_Check HAL_SFC_IsTransmInterrupt(void)
 {
-    return (HAL_Check)HAL_IS_BIT_SET(pSFC->ISR, SFC_ISR_TRANSS_ACTIVE);
+    return (HAL_Check)HAL_IS_BIT_SET(SFC->ISR, SFC_ISR_TRANSS_ACTIVE);
 }
 
 /**
@@ -386,7 +386,7 @@ HAL_Check HAL_SFC_IsTransmInterrupt(void)
  */
 HAL_Status HAL_SFC_ClearTransmInterrupt(void)
 {
-    pSFC->ICLR = 0xFFFFFFFF;
+    SFC->ICLR = 0xFFFFFFFF;
 
     return HAL_OK;
 }

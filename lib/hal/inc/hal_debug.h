@@ -56,7 +56,7 @@
 /***************************** Function Declare ******************************/
 
 extern void AssertFailed(const char *file, uint32_t line);
-HAL_Status HAL_DBG_HEX(uint8_t *s, void *buf, uint32_t width, uint32_t len);
+HAL_Status HAL_DBG_HEX(char *s, void *buf, uint32_t width, uint32_t len);
 
 #endif
 

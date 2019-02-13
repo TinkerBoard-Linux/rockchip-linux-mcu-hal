@@ -92,38 +92,6 @@ typedef enum
 /* ================================================================================ */
 /****************************************************************************************/
 /*                                                                                      */
-/*                                Module Address Section                                */
-/*                                                                                      */
-/****************************************************************************************/
-/* Memory Base */
-#define ICACHE_BASE         0x40000000U /* Cortex m4 ICache base address */
-#define DCACHE_BASE         0x40004000U /* Cortex m4 DCache base address */
-#define UART0_BASE          0x40800000U /* UART0 base address */
-#define UART1_BASE          0x40810000U /* UART1 base address */
-#define UART2_BASE          0x40820000U /* UART2 base address */
-#define MBOX0_BASE          0x40100000U /* MAILBOX0 base address */
-#define MBOX1_BASE          0x40110000U /* MAILBOX1 base address */
-#define MBOX2_BASE          0x40120000U /* MAILBOX2 base address */
-#define PMU_BASE            0x40130000U /* PMU base address */
-#define SHAREMEM_BASE       0x40160000U /* SHAREMEM base address */
-#define PWM_BASE            0x40880000U /* PWM base address */
-#define TIMER_BASE          0x40900000U /* TIMER base address */
-#define WDT_BASE            0x40A00000U /* WDT base address */
-#define SPI2APB_BASE        0x40C00000U /* SPI2APB base address */
-#define SPI_BASE            0x40C10000U /* SPI base address */
-#define SFC_BASE            0x40C80000U /* SFC base address */
-#define MMC_BASE            0x40C90000U /* MMC base address */
-#define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
-#define GPIO1_BASE          0x40D10000U /* GPIO1 base address */
-#define PDM0_BASE           0x41000000U /* PDM0 base address */
-#define I2S0_BASE           0x41010000U /* I2S0 base address */
-#define VAD_BASE            0x41020000U /* VAD base address */
-#define I2S1_BASE           0x41030000U /* I2S1 base address */
-#define VOP_BASE            0x41100000U /* VOP base address */
-
-#define MBOX_BASE           MBOX0_BASE
-/****************************************************************************************/
-/*                                                                                      */
 /*                               Module Structure Section                               */
 /*                                                                                      */
 /****************************************************************************************/
@@ -662,34 +630,64 @@ typedef struct UART_REG
 #define UART_STHR UART_SRBR
 /****************************************************************************************/
 /*                                                                                      */
+/*                                Module Address Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/* Memory Base */
+#define ICACHE_BASE         0x40000000U /* Cortex m4 ICache base address */
+#define DCACHE_BASE         0x40004000U /* Cortex m4 DCache base address */
+#define UART0_BASE          0x40800000U /* UART0 base address */
+#define UART1_BASE          0x40810000U /* UART1 base address */
+#define UART2_BASE          0x40820000U /* UART2 base address */
+#define MBOX0_BASE          0x40100000U /* MAILBOX0 base address */
+#define MBOX1_BASE          0x40110000U /* MAILBOX1 base address */
+#define MBOX2_BASE          0x40120000U /* MAILBOX2 base address */
+#define PMU_BASE            0x40130000U /* PMU base address */
+#define SHAREMEM_BASE       0x40160000U /* SHAREMEM base address */
+#define PWM0_BASE           0x40880000U /* PWM base address */
+#define TIMER0_BASE         0x40900000U /* TIMER base address */
+#define WDT_BASE            0x40A00000U /* WDT base address */
+#define SPI2APB_BASE        0x40C00000U /* SPI2APB base address */
+#define SPI_BASE            0x40C10000U /* SPI base address */
+#define SFC_BASE            0x40C80000U /* SFC base address */
+#define MMC0_BASE           0x40C90000U /* MMC base address */
+#define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
+#define GPIO1_BASE          0x40D10000U /* GPIO1 base address */
+#define PDM0_BASE           0x41000000U /* PDM0 base address */
+#define I2S0_BASE           0x41010000U /* I2S0 base address */
+#define VAD_BASE            0x41020000U /* VAD base address */
+#define I2S1_BASE           0x41030000U /* I2S1 base address */
+#define VOP_BASE            0x41100000U /* VOP base address */
+/****************************************************************************************/
+/*                                                                                      */
 /*                               Module Variable Section                                */
 /*                                                                                      */
 /****************************************************************************************/
 /* Module Variable Define */
-#define pICACHE              ((struct ICACHE_REG *) ICACHE_BASE)
-#define pDCACHE              ((struct DCACHE_REG *) DCACHE_BASE)
-#define pMBOX0               ((struct MBOX_REG *) MBOX0_BASE)
-#define pMBOX1               ((struct MBOX_REG *) MBOX1_BASE)
-#define pMBOX2               ((struct MBOX_REG *) MBOX2_BASE)
-#define pPMU                 ((struct PMU_REG *) PMU_BASE)
-#define pSHAREMEM            ((struct SHAREMEM_REG *) SHAREMEM_BASE)
-#define pPWM                 ((struct PWM_REG *) PWM_BASE)
-#define pTIMER               ((struct TIMER_REG *) TIMER_BASE)
-#define pWDT0                ((struct WDT_REG *) WDT_BASE)
-#define pSPI2APB             ((struct SPI2APB_REG *) SPI2APB_BASE)
-#define pSPI                 ((struct SPI_REG *) SPI_BASE)
-#define pSFC                 ((struct SFC_REG *) SFC_BASE)
-#define pMMC                 ((struct MMC_REG *) MMC_BASE)
-#define pGPIO0               ((struct GPIO_REG *) GPIO0_BASE)
-#define pGPIO1               ((struct GPIO_REG *) GPIO1_BASE)
-#define pPDM0                ((struct PDM_REG *) PDM0_BASE)
-#define pI2S0                ((struct I2S_REG *) I2S0_BASE)
-#define pVAD                 ((struct VAD_REG *) VAD_BASE)
-#define pI2S1                ((struct I2S_REG *) I2S1_BASE)
-#define pVOP                 ((struct VOP_REG *) VOP_BASE)
-#define pUART0               ((struct UART_REG *) UART0_BASE)
-#define pUART1               ((struct UART_REG *) UART1_BASE)
-#define pUART2               ((struct UART_REG *) UART2_BASE)
+#define ICACHE              ((struct ICACHE_REG *) ICACHE_BASE)
+#define DCACHE              ((struct DCACHE_REG *) DCACHE_BASE)
+#define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
+#define MBOX1               ((struct MBOX_REG *) MBOX1_BASE)
+#define MBOX2               ((struct MBOX_REG *) MBOX2_BASE)
+#define PMU                 ((struct PMU_REG *) PMU_BASE)
+#define SHAREMEM            ((struct SHAREMEM_REG *) SHAREMEM_BASE)
+#define PWM0                ((struct PWM_REG *) PWM0_BASE)
+#define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
+#define WDT                 ((struct WDT_REG *) WDT_BASE)
+#define SPI2APB             ((struct SPI2APB_REG *) SPI2APB_BASE)
+#define SPI0                ((struct SPI_REG *) SPI0_BASE)
+#define SFC                 ((struct SFC_REG *) SFC_BASE)
+#define MMC0                ((struct MMC_REG *) MMC0_BASE)
+#define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
+#define PDM                 ((struct PDM_REG *) PDM_BASE)
+#define I2S0                ((struct I2S_REG *) I2S0_BASE)
+#define VAD                 ((struct VAD_REG *) VAD_BASE)
+#define I2S1                ((struct I2S_REG *) I2S1_BASE)
+#define VOP                 ((struct VOP_REG *) VOP_BASE)
+#define UART0               ((struct UART_REG *) UART0_BASE)
+#define UART1               ((struct UART_REG *) UART1_BASE)
+#define UART2               ((struct UART_REG *) UART2_BASE)
 /****************************************SHAREMEM****************************************/
 /* RRA_SLT_LO */
 #define SHAREMEM_RRA_SLT_LO_REQ_SLOT0_SHIFT                (0U)

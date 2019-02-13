@@ -189,6 +189,8 @@ typedef enum
 #define SDC0_FIFO_ADDR (SDC0_ADDR + 0x200)
 #define EMMC_ADDR ((uint32_t)0x60030000)
 #define EMMC_FIFO_ADDR (EMMC_ADDR + 0x200)
+
+#define MBOX0_BASE MBOX_BASE
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Structure Section                               */
@@ -462,7 +464,7 @@ struct SFC_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Module Variable Define */
-#define pSFC                 ((struct SFC_REG *) SFC_BASE)
+#define SFC                 ((struct SFC_REG *) SFC_BASE)
 /******************************************GRF*******************************************/
 #define IOMUX_GPIO2A6_IO ((uint32_t)(0))
 
