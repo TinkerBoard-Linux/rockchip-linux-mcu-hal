@@ -4,7 +4,7 @@
 
 # **RKMCU_Firmware_Library_User_Guide**
 
-发布版本:1.0
+发布版本:1.1
 
 日期:2018.11
 
@@ -24,6 +24,7 @@ Copyright 2018 @Fuzhou Rockchip Electronics Co., Ltd.
 | -------- | -------- | -------- | ------------ |
 | 2018.11 | V0.1     | Jon Lin  | 提供基础代码结构说明和基本规范 |
 | 2018.11 | V1.0     | Kever Yang | 重构文档并确定编程规范 |
+| 2019.11 | V1.1     | Kever Yang | 新增和完善目录结构，代码规范，单元测试 |
 
 ------
 
@@ -167,8 +168,14 @@ lib/hal目录包含HAL库的代码主体, 其中src目录直接包含所有模�
 | *hal_def.h*    | 常见的HAL资源，如通用定义语句、枚举、结构体和宏定义。        |
 
 ## 1.5 test目录文件
+test目录用于存放HAL的unit test相关实现，其中：
+test/unity:　测试框架Unity的代码实现，　来源于https://github.com/ThrowTheSwitch/Unity.git
+test/hal: HAL驱动的测试代码
+test_runner.c: 测试骨架程序，用于用户主程序调用
 
-test目录包含可运行的用户代码, 主要用于提供main函数调用各模块接口, 进行API测试, 同时作为模块使用的sample代码.
+## 1.6 project目录文件
+
+project目录基于板子或者项目建立工程，包含可运行的用户代码, 主要用于提供main函数调用各模块接口. 如rk2106-evb是针对该板子的工程，里面需要实现所有板子特有的软硬件初始化和模块定义。
 
 | 文件       | 描述                                                         |
 | ---------- | ------------------------------------------------------------ |
@@ -182,7 +189,7 @@ test目录包含可运行的用户代码, 主要用于提供main函数调用各�
 
 ## 2.2 与RTOS集成
 
-### 2.2.1　集成到rt-thread OS
+### 2.2.1 集成到rt-thread OS
 
 ## 2.3 Power Management
 
@@ -217,7 +224,7 @@ HAL_Status HAL_USB_Init(void);
 HAL_Status HAL_USB_RequestEnqueue();
 HAL_Status HAL_RTC_SetTime(eTIMER HAL_TIMER0, int32 time);
 
-* Module internal function */
+/* Module internal function */
 HAL_Status USB_Reset(void);
 HAL_Status USB_StartTransfer();
 ```
@@ -531,7 +538,30 @@ linux
 
 ### API参数要求
 
-参数中用于区分硬件ID的参数，强制使用枚举类型．
+简单IP的API传参可以直接使用结构体指针作为作为控制器ID。
+如
+```c
+/* Define in SoC header */
+#define UART0               ((struct UART_REG *) UART0_BASE)
+
+/* hal_uart.c */
+HAL_Status HAL_UART_WriteByte(void *pUART, uint8_t *pdata, uint32_t cnt);
+
+/* drv_uart.c or other user code */
+HAL_UART_WriteByte(UART0, buf, 1);
+```
+须使用如下参数合法性检查，因改检查代码占用较多代码，只在Init做常规检查，其他入口以Assert形式检查(release时会关闭)。
+
+```c
+#define IS_UART_INSTANCE(INSTANCE) (((INSTANCE) == UART1) || \
+                                    ((INSTANCE) == UART2) || \
+                                    ((INSTANCE) == UART3) || \
+                                    ((INSTANCE) == UART4)
+```
+
+I2C/I2S/SPI/UART/PWM/ADC/DMA建议使用这种模式。
+
+如果硬件信息不足，需要额外变量作为状态辅助，可以使用结构体，如MMC的mmc_host结构体形式；
 
 ### 参数检查
 
@@ -762,7 +792,8 @@ enum {
 
 ### 内容要求
 
-覆盖模块所有功能，如有暂未覆盖内容，请填写todo list；
+覆盖模块硬件所有功能(以公司发布TRM为准)，如有暂未覆盖内容，请填写todo list；
+模块驱动使用的设备ID由外部提供，驱动内部不设定义或限制，仅做合法性检查；
 模块本身独立存在，除base内容(delay, 开关中断等)，不依赖任何其他模块
 跨模块调用内容，属于OS适配层, 如clock初始化，中断注册，互斥锁等，
 OS支持(如RT-Thread)部分，利用控制器状态防重入，原子操作可关中断，锁由OS适配层提供, HAL层不提供。
@@ -788,19 +819,38 @@ OS支持(如RT-Thread)部分，利用控制器状态防重入，原子操作可�
 - Suspend/Resume流程及内容
 - 设备状态，错误，模式描述
 
+### 中断callback
+
+由于中断是由上一层代码做注册，所以HAL层不提供callback(需要记录函数指针和参数)，需要callback的实现形式为：
+上层(如rt-thread driver)须实现一个IrqHandler, 注册到对应模块中断，该IrqHandler包含HAL的IrqHandler用于硬件相关处理，另外加入软件逻辑完成锁，完成量，重复操作等功能。
+
+### 外部引用HAL代码
+
+hal代码对外的头文件引用是统一的'hal_base.h'，不是各个驱动的头文件如'hal_uart.h'，否则可能会有包含错误出现。
+HAL对外的API需出现在各自头文件，如UART对外API出现在hal_uart.h，然后hal_uart.h被hal_base.h包含，参考3.7的包含关系。
+
 # 4 Common资源
 
 ## 4.1 DEBUG相关
 
+代码实现参考lib/hal/inc/hal_debug.h。
+
 ### 4.1.1 打印等级
 
-系统提供分级的PRINTF(), DEBUG()宏，用于日常debug使用，在产品阶段可关闭，不占用空间。
+系统提供下面几个级别的宏，用于日常debug使用，在产品阶段可关闭，不占用空间：
+HAL_DBG(), 对应普通info级别；
+HAL_DBG_WRN()
+HAL_DBG_ERR()
 
 ### 4.1.2 ASSERT()
 
-API入口及其他需要检查参数合法性的地方使用Assert()进行检查，改接口仅在debug模式启用，非debug模式不占用代码空间．
+API入口及其他需要检查参数合法性的地方使用HAL_ASSERT()进行检查，该接口仅在debug模式启用，非debug模式不占用代码空间．
 
-## 4.2 HAL_Delay()
+HAL_ASSERT()使用了weak函数AssertFailed，位于lib/hal/src/hal_debug.c，用户实现代码有不同需求时可以自己实现函数来override.
+
+## 4.2 系统Delay()
+
+HAL base提供基于系统tick的HAL_DelayUs()，可以在HAL driver中直接使用。
 
 ## 4.3 Interrupt
 
@@ -808,7 +858,23 @@ API入口及其他需要检查参数合法性的地方使用Assert()进行检查
 
 # 5 单元测试
 
-每个模块必须按照测试框架要求提交对应的单元测试代码．
+## 5.1 框架
+
+使用Unity框架，具体代码可以看test/hal/test_timer.c，可用接口请查看test/unity/extras/fixture/src/unity_fixture.h和test/unity/src/unity.h
+
+## 5.2 提交
+
+驱动需要提交的测试代码位于test/hal/目录，'test_'作为前缀对应驱动测试代码，
+
+每个驱动只要提供对应的一个c文件并把自己的group添加到test_main.c，里面的测试case会被test_main自动包含和调用，test_main()一般由板级流程(如rk2106-evb)调用；
+
+## 5.3 实现
+
+测试代码文件就只需要包含"hal_base.h"和"unity_fixture.h"，测试目标是HAL driver的所有API.
+
+可参考test/hal目录下已有实现。
+
+测试代码同时作为驱动参考代码使用，后续是否作为对外的参考代码再讨论
 
 # 6 CPAL库
 
@@ -897,7 +963,7 @@ core_<cpu>.h	//如：core_cm3.h
 
 - 核内寄存器访问
 
-# 7 HAL库
+# 7 HAL模块文档
 
 此处填充Doxygen自动生成各模块文档.
 
@@ -911,6 +977,6 @@ core_<cpu>.h	//如：core_cm3.h
 
 <http://doxygen.nl>
 
-## CppUTest
+## Unity
 
-<https://cpputest.github.io>
+<http://www.throwtheswitch.org/unityz>
