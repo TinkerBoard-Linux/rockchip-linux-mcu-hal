@@ -409,7 +409,7 @@ struct WDT_REG
 };
 
 /* MBOX Register struct define */
-#define MBOX_GROUP_CNT       1
+#define MBOX_CNT             1
 #define MBOX_CHAN_CNT        4
 
 struct MBOX_CMD_DAT {

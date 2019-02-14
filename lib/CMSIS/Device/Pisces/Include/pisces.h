@@ -160,7 +160,7 @@ struct DCACHE_REG {
 };
 
 /* MAILBOX Register Structure Define */
-#define MBOX_GROUP_CNT                 2
+#define MBOX_CNT                       2
 #define MBOX_CHAN_CNT                  4
 
 struct MBOX_CMD_DAT {

@@ -24,15 +24,6 @@
 
 typedef enum
 {
-    MBOX_ID_0 = 0,
-#if MBOX_GROUP_CNT == 2
-    MBOX_ID_1,
-#endif
-    MBOX_ID_MAX = MBOX_GROUP_CNT
-} eMBOX_ID;
-
-typedef enum
-{
     MBOX_CH_0 = 0,
     MBOX_CH_1,
     MBOX_CH_2,
@@ -53,17 +44,19 @@ struct MBOX_CLIENT
 
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_MBOX_IrqHandler(int irq, eMBOX_ID mbox);
-HAL_Status HAL_MBOX_Init(eMBOX_ID mbox, uint8_t isA2B);
-HAL_Status HAL_MBOX_DeInit(eMBOX_ID mbox);
-HAL_Status HAL_MBOX_GetStatus(uint32_t *st, eMBOX_ID mbox, eMBOX_CH chan);
-HAL_Status HAL_MBOX_RecvMsg(eMBOX_ID mbox, eMBOX_CH chan);
-HAL_Status HAL_MBOX_SendMsg(eMBOX_ID mbox, eMBOX_CH chan,
+HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *base);
+HAL_Status HAL_MBOX_Init(struct MBOX_REG *base, uint8_t isA2B);
+HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *base);
+HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *base, eMBOX_CH chan);
+HAL_Status HAL_MBOX_SendMsg(struct MBOX_REG *base, eMBOX_CH chan,
                             const struct MBOX_CMD_DAT *msg);
-HAL_Status HAL_MBOX_RegisterClient(eMBOX_ID mbox, eMBOX_CH chan,
+HAL_Status HAL_MBOX_RegisterClient(struct MBOX_REG *base, eMBOX_CH chan,
                                    const struct MBOX_CLIENT *cl);
-HAL_Status HAL_MBOX_UnregisterClient(eMBOX_ID mbox, eMBOX_CH chan,
+HAL_Status HAL_MBOX_UnregisterClient(struct MBOX_REG *base, eMBOX_CH chan,
                                      const struct MBOX_CLIENT *cl);
+HAL_Status HAL_MBOX_Suspend(struct MBOX_REG *base);
+HAL_Status HAL_MBOX_Resume(struct MBOX_REG *base);
+
 #endif
 
 /** @} */
