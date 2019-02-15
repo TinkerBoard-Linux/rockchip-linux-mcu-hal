@@ -61,89 +61,90 @@ static struct MBOX_DEV g_MBoxDevs[MBOX_CNT];
 
 /********************* Private Function Definition ***************************/
 
-static struct MBOX_DEV *MBOX_FindEntry(const struct MBOX_REG *base)
+static struct MBOX_DEV *MBOX_FindEntry(const struct MBOX_REG *pReg)
 {
     int i;
 
     for (i = 0; i < MBOX_CNT; i++) {
-        if (base == g_MBoxDevs[i].pReg)
+        if (pReg == g_MBoxDevs[i].pReg)
             return &g_MBoxDevs[i];
     }
 
     return NULL;
 }
 
-static uint32_t MBOX_A2BIntStGet(struct MBOX_REG *reg)
+static uint32_t MBOX_A2BIntStGet(struct MBOX_REG *pReg)
 {
-    return reg->A2B_STATUS & 0x0f;
+    return pReg->A2B_STATUS & 0x0f;
 }
 
-static uint32_t MBOX_B2AIntStGet(struct MBOX_REG *reg)
+static uint32_t MBOX_B2AIntStGet(struct MBOX_REG *pReg)
 {
-    return reg->B2A_STATUS & 0x0f;
+    return pReg->B2A_STATUS & 0x0f;
 }
 
-static void MBOX_ChanEnable(struct MBOX_REG *reg, eMBOX_CH chan, uint8_t isA2B)
+static void MBOX_ChanEnable(struct MBOX_REG *pReg, eMBOX_CH chan, uint8_t isA2B)
 {
     if (isA2B) {
-        reg->B2A_STATUS = 1UL << chan;
-        reg->B2A_INTEN |= 1UL << chan;
+        pReg->B2A_STATUS = 1UL << chan;
+        pReg->B2A_INTEN |= 1UL << chan;
     } else {
-        reg->A2B_STATUS = 1UL << chan;
-        reg->A2B_INTEN |= 1UL << chan;
+        pReg->A2B_STATUS = 1UL << chan;
+        pReg->A2B_INTEN |= 1UL << chan;
     }
 }
 
-static void MBOX_ChanDisable(struct MBOX_REG *reg, eMBOX_CH chan, uint8_t isA2B)
+static void MBOX_ChanDisable(struct MBOX_REG *pReg, eMBOX_CH chan,
+                             uint8_t isA2B)
 {
     if (isA2B) {
-        reg->B2A_INTEN &= ~(1UL << chan);
-        reg->B2A_STATUS = 1UL << chan;
+        pReg->B2A_INTEN &= ~(1UL << chan);
+        pReg->B2A_STATUS = 1UL << chan;
     } else {
-        reg->A2B_INTEN &= ~(1UL << chan);
-        reg->A2B_STATUS = 1UL << chan;
+        pReg->A2B_INTEN &= ~(1UL << chan);
+        pReg->A2B_STATUS = 1UL << chan;
     }
 }
 
-static uint32_t MBOX_ChanIntStGet(struct MBOX_REG *reg, eMBOX_CH chan,
+static uint32_t MBOX_ChanIntStGet(struct MBOX_REG *pReg, eMBOX_CH chan,
                                   uint8_t isA2B)
 {
     if (isA2B)
-        return reg->B2A_STATUS & (1UL << chan);
+        return pReg->B2A_STATUS & (1UL << chan);
 
-    return reg->A2B_STATUS & (1UL << chan);
+    return pReg->A2B_STATUS & (1UL << chan);
 }
 
-static void MBOX_ChanIntStClear(struct MBOX_REG *reg, eMBOX_CH chan,
+static void MBOX_ChanIntStClear(struct MBOX_REG *pReg, eMBOX_CH chan,
                                 uint8_t isA2B)
 {
     if (isA2B)
-        reg->B2A_STATUS = 1UL << chan;
+        pReg->B2A_STATUS = 1UL << chan;
     else
-        reg->A2B_STATUS = 1UL << chan;
+        pReg->A2B_STATUS = 1UL << chan;
 }
 
-static void MBOX_ChanSendMsg(struct MBOX_REG *reg, eMBOX_CH chan, uint8_t isA2B,
-                             const struct MBOX_CMD_DAT *msg)
+static void MBOX_ChanSendMsg(struct MBOX_REG *pReg, eMBOX_CH chan,
+                             uint8_t isA2B, const struct MBOX_CMD_DAT *msg)
 {
     if (isA2B) {
-        reg->A2B[chan].cmd = msg->cmd;
-        reg->A2B[chan].data = msg->data;
+        pReg->A2B[chan].cmd = msg->cmd;
+        pReg->A2B[chan].data = msg->data;
     } else {
-        reg->B2A[chan].cmd = msg->cmd;
-        reg->B2A[chan].data = msg->data;
+        pReg->B2A[chan].cmd = msg->cmd;
+        pReg->B2A[chan].data = msg->data;
     }
 }
 
-static void MBOX_ChanRecvMsg(struct MBOX_CMD_DAT *msg, struct MBOX_REG *reg,
+static void MBOX_ChanRecvMsg(struct MBOX_CMD_DAT *msg, struct MBOX_REG *pReg,
                              eMBOX_CH chan, uint8_t isA2B)
 {
     if (isA2B) {
-        msg->cmd = reg->B2A[chan].cmd;
-        msg->data = reg->B2A[chan].data;
+        msg->cmd = pReg->B2A[chan].cmd;
+        msg->data = pReg->B2A[chan].data;
     } else {
-        msg->cmd = reg->A2B[chan].cmd;
-        msg->data = reg->A2B[chan].data;
+        msg->cmd = pReg->A2B[chan].cmd;
+        msg->data = pReg->A2B[chan].data;
     }
 }
 
@@ -175,16 +176,16 @@ This section provides functions allowing to suspend and resume the module:
 *  @{
 */
 
-HAL_Status HAL_MBOX_Suspend(struct MBOX_REG *base)
+HAL_Status HAL_MBOX_Suspend(struct MBOX_REG *pReg)
 {
-    HAL_ASSERT(IS_MBOX_INSTANCE(base));
+    HAL_ASSERT(IS_MBOX_INSTANCE(pReg));
 
     return HAL_OK;
 }
 
-HAL_Status HAL_MBOX_Resume(struct MBOX_REG *base)
+HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg)
 {
-    HAL_ASSERT(IS_MBOX_INSTANCE(base));
+    HAL_ASSERT(IS_MBOX_INSTANCE(pReg));
 
     return HAL_OK;
 }
@@ -207,50 +208,50 @@ This section provides functions allowing to send and receive mailbox message:
 
 /**
  * @brief  Mailbox send message API
- * @param  base: mailbox base addr
+ * @param  pReg: mailbox base addr
  * @param  chan: mailbox channel id
  * @param  msg: the message to send
  * @return HAL_Status
  */
-HAL_Status HAL_MBOX_SendMsg(struct MBOX_REG *base, eMBOX_CH chan,
+HAL_Status HAL_MBOX_SendMsg(struct MBOX_REG *pReg, eMBOX_CH chan,
                             const struct MBOX_CMD_DAT *msg)
 {
     struct MBOX_DEV *pMBox;
     uint32_t status;
 
-    HAL_ASSERT(IS_MBOX_INSTANCE(base) && IS_VALID_CHAN(chan) && msg);
+    HAL_ASSERT(IS_MBOX_INSTANCE(pReg) && IS_VALID_CHAN(chan) && msg);
 
-    pMBox = MBOX_FindEntry(base);
+    pMBox = MBOX_FindEntry(pReg);
     if (!pMBox)
         return HAL_NODEV;
 
     if (pMBox->A2B)
-        status = MBOX_A2BIntStGet(pMBox->pReg);
+        status = MBOX_A2BIntStGet(pReg);
     else
-        status = MBOX_B2AIntStGet(pMBox->pReg);
+        status = MBOX_B2AIntStGet(pReg);
 
     /* Previous message has not been consumed. */
     if (status & (1UL << chan))
         return HAL_BUSY;
 
-    MBOX_ChanSendMsg(pMBox->pReg, chan, pMBox->A2B, msg);
+    MBOX_ChanSendMsg(pReg, chan, pMBox->A2B, msg);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Mailbox receive message API
- * @param  base: mailbox base addr
+ * @param  pReg: mailbox base addr
  * @param  chan: mailbox channel id
  * @return HAL_Status
  */
-HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *base, eMBOX_CH chan)
+HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *pReg, eMBOX_CH chan)
 {
     struct MBOX_DEV *pMBox;
 
-    HAL_ASSERT(IS_MBOX_INSTANCE(base) && IS_VALID_CHAN(chan));
+    HAL_ASSERT(IS_MBOX_INSTANCE(pReg) && IS_VALID_CHAN(chan));
 
-    pMBox = MBOX_FindEntry(base);
+    pMBox = MBOX_FindEntry(pReg);
     if (!pMBox)
         return HAL_NODEV;
 
@@ -274,29 +275,29 @@ HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *base, eMBOX_CH chan)
 /**
  * @brief  Common mailbox interrupt handler
  * @param  irq: mailbox irq number
- * @param  base: mailbox base addr
+ * @param  pReg: mailbox base addr
  * @return result of the interrupt handling
  * Common interrupt handler is always wrapped by the driver.
  */
-HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *base)
+HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
 {
     struct MBOX_DEV *pMBox;
     eMBOX_CH chan;
     int ret;
 
-    if (irq < 0 || !IS_MBOX_INSTANCE(base))
+    if (irq < 0 || !IS_MBOX_INSTANCE(pReg))
         return HAL_INVAL;
 
-    pMBox = MBOX_FindEntry(base);
+    pMBox = MBOX_FindEntry(pReg);
     if (!pMBox)
         return HAL_NODEV;
 
     for (chan = 0; chan < MBOX_CHAN_CNT; chan++) {
-        if (!MBOX_ChanIntStGet(pMBox->pReg, chan, pMBox->A2B))
+        if (!MBOX_ChanIntStGet(pReg, chan, pMBox->A2B))
             continue;
 
         ret = MBOX_RecvMsg(pMBox, chan);
-        MBOX_ChanIntStClear(pMBox->pReg, chan, pMBox->A2B);
+        MBOX_ChanIntStClear(pReg, chan, pMBox->A2B);
 
         if (ret)
             break;
@@ -321,17 +322,17 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *base)
 
 /**
  * @brief  Mailbox init
- * @param  base: mailbox base addr
+ * @param  pReg: mailbox base addr
  * @param  isA2B: A2B mode
  * @return HAL_Status
  */
-HAL_Status HAL_MBOX_Init(struct MBOX_REG *base, uint8_t isA2B)
+HAL_Status HAL_MBOX_Init(struct MBOX_REG *pReg, uint8_t isA2B)
 {
     struct MBOX_DEV *pMBox = NULL;
     eMBOX_CH chan;
     int i;
 
-    HAL_ASSERT(IS_MBOX_INSTANCE(base));
+    HAL_ASSERT(IS_MBOX_INSTANCE(pReg));
 
     for (i = 0; i < MBOX_CNT; i++) {
         if (!g_MBoxDevs[i].pReg) {
@@ -343,7 +344,7 @@ HAL_Status HAL_MBOX_Init(struct MBOX_REG *base, uint8_t isA2B)
     if (!pMBox)
         return HAL_INVAL;
 
-    pMBox->pReg = base;
+    pMBox->pReg = pReg;
     pMBox->A2B = isA2B;
 
     for (chan = 0; chan < MBOX_CH_MAX; chan++)
@@ -354,16 +355,16 @@ HAL_Status HAL_MBOX_Init(struct MBOX_REG *base, uint8_t isA2B)
 
 /**
  * @brief  Mailbox deinit
- * @param  base: mailbox base addr
+ * @param  pReg: mailbox base addr
  * @return HAL_Status
  */
-HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *base)
+HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *pReg)
 {
     struct MBOX_DEV *pMBox;
     eMBOX_CH chan;
 
-    HAL_ASSERT(IS_MBOX_INSTANCE(base));
-    pMBox = MBOX_FindEntry(base);
+    HAL_ASSERT(IS_MBOX_INSTANCE(pReg));
+    pMBox = MBOX_FindEntry(pReg);
     if (!pMBox)
         return HAL_NODEV;
 
@@ -391,19 +392,19 @@ HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *base)
 
 /**
  * @brief  Register mailbox client to specified mailbox and channel
- * @param  base: mailbox base addr
+ * @param  pReg: mailbox base addr
  * @param  chan: chan id
  * @param  cl: mailbox client wanna register
  * @return HAL_Status
  */
-HAL_Status HAL_MBOX_RegisterClient(struct MBOX_REG *base, eMBOX_CH chan,
+HAL_Status HAL_MBOX_RegisterClient(struct MBOX_REG *pReg, eMBOX_CH chan,
                                    const struct MBOX_CLIENT *cl)
 {
     struct MBOX_DEV *pMBox;
 
-    HAL_ASSERT(IS_MBOX_INSTANCE(base) && IS_VALID_CHAN(chan) && cl);
+    HAL_ASSERT(IS_MBOX_INSTANCE(pReg) && IS_VALID_CHAN(chan) && cl);
 
-    pMBox = MBOX_FindEntry(base);
+    pMBox = MBOX_FindEntry(pReg);
     if (!pMBox)
         return HAL_NODEV;
 
@@ -411,33 +412,33 @@ HAL_Status HAL_MBOX_RegisterClient(struct MBOX_REG *base, eMBOX_CH chan,
         return HAL_BUSY;
 
     pMBox->chans[chan].client = cl;
-    MBOX_ChanEnable(pMBox->pReg, chan, pMBox->A2B);
+    MBOX_ChanEnable(pReg, chan, pMBox->A2B);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Unregister mailbox client from specified mailbox and channel
- * @param  base: mailbox base addr
+ * @param  pReg: mailbox base addr
  * @param  chan: chan id
  * @param  cl: mailbox client wanna register
  * @return HAL_Status
  */
-HAL_Status HAL_MBOX_UnregisterClient(struct MBOX_REG *base, eMBOX_CH chan,
+HAL_Status HAL_MBOX_UnregisterClient(struct MBOX_REG *pReg, eMBOX_CH chan,
                                      const struct MBOX_CLIENT *cl)
 {
     struct MBOX_DEV *pMBox;
 
-    HAL_ASSERT(IS_MBOX_INSTANCE(base) && IS_VALID_CHAN(chan) && cl);
+    HAL_ASSERT(IS_MBOX_INSTANCE(pReg) && IS_VALID_CHAN(chan) && cl);
 
-    pMBox = MBOX_FindEntry(base);
+    pMBox = MBOX_FindEntry(pReg);
     if (!pMBox)
         return HAL_NODEV;
 
     if (cl != pMBox->chans[chan].client)
         return HAL_ERROR;
 
-    MBOX_ChanDisable(pMBox->pReg, chan, pMBox->A2B);
+    MBOX_ChanDisable(pReg, chan, pMBox->A2B);
     pMBox->chans[chan].client = NULL;
 
     return HAL_OK;

@@ -44,18 +44,18 @@ struct MBOX_CLIENT
 
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *base);
-HAL_Status HAL_MBOX_Init(struct MBOX_REG *base, uint8_t isA2B);
-HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *base);
-HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *base, eMBOX_CH chan);
-HAL_Status HAL_MBOX_SendMsg(struct MBOX_REG *base, eMBOX_CH chan,
+HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg);
+HAL_Status HAL_MBOX_Init(struct MBOX_REG *pReg, uint8_t isA2B);
+HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *pReg);
+HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *pReg, eMBOX_CH chan);
+HAL_Status HAL_MBOX_SendMsg(struct MBOX_REG *pReg, eMBOX_CH chan,
                             const struct MBOX_CMD_DAT *msg);
-HAL_Status HAL_MBOX_RegisterClient(struct MBOX_REG *base, eMBOX_CH chan,
+HAL_Status HAL_MBOX_RegisterClient(struct MBOX_REG *pReg, eMBOX_CH chan,
                                    const struct MBOX_CLIENT *cl);
-HAL_Status HAL_MBOX_UnregisterClient(struct MBOX_REG *base, eMBOX_CH chan,
+HAL_Status HAL_MBOX_UnregisterClient(struct MBOX_REG *pReg, eMBOX_CH chan,
                                      const struct MBOX_CLIENT *cl);
-HAL_Status HAL_MBOX_Suspend(struct MBOX_REG *base);
-HAL_Status HAL_MBOX_Resume(struct MBOX_REG *base);
+HAL_Status HAL_MBOX_Suspend(struct MBOX_REG *pReg);
+HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg);
 
 #endif
 
