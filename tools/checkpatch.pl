@@ -4042,6 +4042,24 @@ sub process {
 			}
 		}
 
+# open braces for enum, union and struct go on the same line.
+		if ($line =~ /^.\s*{/ &&
+		    $prevline =~ /^.\s*(?:typedef\s+)?(enum|union|struct)(?:\s+$Ident)?\s*$/) {
+			if (ERROR("OPEN_BRACE",
+				  "open brace '{' following $1 go on the same line\n" . $hereprev) &&
+			    $fix && $prevline =~ /^\+/ && $line =~ /^\+/) {
+				fix_delete_line($fixlinenr - 1, $prevrawline);
+				fix_delete_line($fixlinenr, $rawline);
+				my $fixedline = rtrim($prevrawline) . " {";
+				fix_insert_line($fixlinenr, $fixedline);
+				$fixedline = $rawline;
+				$fixedline =~ s/^(.\s*)\{\s*/$1\t/;
+				if ($fixedline !~ /^\+\s*$/) {
+					fix_insert_line($fixlinenr, $fixedline);
+				}
+			}
+		}
+
 # missing space after union, struct or enum definition
 		if ($line =~ /^.\s*(?:typedef\s+)?(enum|union|struct)(?:\s+$Ident){1,2}[=\{]/) {
 			if (WARN("SPACING",
