@@ -581,6 +581,7 @@ HAL_Status HAL_SNOR_ProgData(uint32_t addr, void *pData, uint32_t size)
 {
     int32_t ret = HAL_OK;
     uint32_t pageSize, len;
+    struct SFNOR_DEV *pDev = &s_snorDev;
     uint8_t *pBuf = (uint8_t *)pData;
 
     if ((addr + size) > (pDev->capacity << 9))
