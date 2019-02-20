@@ -265,7 +265,6 @@ HAL_Status HAL_SFC_Request_DMA(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
     int32_t ret = HAL_OK;
     SFCCMD_DATA cmd;
     SFCCTRL_DATA ctrl;
-    int32_t timeout = 0;
 
     cmd.d32 = sfcmd;
     ctrl.d32 = sfctrl;
@@ -290,7 +289,6 @@ HAL_Status HAL_SFC_Request_DMA(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
         SFC->ICLR = 0xFFFFFFFF;
         SFC->DMAADDR = (uint32_t)data;
         SFC->DMATR = SFC_DMATR_DMATR_START;
-        timeout = cmd.b.datasize * 10;
     }
 
     return ret;
