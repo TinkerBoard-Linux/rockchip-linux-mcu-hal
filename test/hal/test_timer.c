@@ -9,23 +9,11 @@
 
 static uint32_t isrActive;
 
-#define TIMER_PORT(n) ((struct TIMER_REG *)(TIMER_GROUP_T[n]))
-
-const uint32_t TIMER_GROUP_T[2] = {
-    TIMER_BASE,
-    TIMER_BASE + 0x20,
-};
-
-static uint64_t TIMER_getReloadNum(eTIMER_CH timerNum)
+static uint64_t TIMER_getReloadNum(struct TIMER_REG *pReg)
 {
-    struct TIMER_REG *timerReg;
     uint64_t loadCount = 0;
 
-    if (timerNum >= TIMER_MAX)
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-    loadCount = ((uint64_t)timerReg->TimerLoadCount1 << 32) | timerReg->TimerLoadCount0;
+    loadCount = (((uint64_t)pReg->TimerLoadCount1) << 32) | (pReg->TimerLoadCount0 & 0xffffffff);
 
     return loadCount;
 }
@@ -57,13 +45,13 @@ TEST(HAL_TIMER, TimerInit)
     uint32_t ret;
 
     /* check config para */
-    HAL_TIMER_Init(TIMER0, TIMER_FREE_RUNNING);
+    ret = HAL_TIMER_Init(TIMER0, TIMER_FREE_RUNNING);
     TEST_ASSERT(ret == HAL_OK);
-    HAL_TIMER_Init(TIMER0, TIMER_USER_DEFINED);
+    ret = HAL_TIMER_Init(TIMER0, TIMER_USER_DEFINED);
     TEST_ASSERT(ret == HAL_OK);
-    HAL_TIMER_Init(TIMER1, TIMER_FREE_RUNNING);
+    ret = HAL_TIMER_Init(TIMER1, TIMER_FREE_RUNNING);
     TEST_ASSERT(ret == HAL_OK);
-    HAL_TIMER_Init(TIMER1, TIMER_USER_DEFINED);
+    ret = HAL_TIMER_Init(TIMER1, TIMER_USER_DEFINED);
     TEST_ASSERT(ret == HAL_OK);
 
 
