@@ -59,7 +59,10 @@ INCLUDES += \
 -I"$(ROOT_PATH)/lib/hal/inc" \
 -I"$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Include" \
 -I"$(ROOT_PATH)/lib/CMSIS/Include" \
--I"$(ROOT_PATH)/lib/CMSIS/Device/" \
+-I"$(ROOT_PATH)/lib/CMSIS/Device" \
+-I"$(ROOT_PATH)/test/unity/src" \
+-I"$(ROOT_PATH)/test/unity/extras/fixture/src" \
+-I"$(ROOT_PATH)/test" \
 -I"../src" \
 
 #############################################################################
@@ -67,8 +70,11 @@ INCLUDES += \
 #############################################################################
 DIRS := $(ROOT_PATH)/lib/hal/src \
 	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
-	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/ \
-	../Scatter \
+	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates \
+	$(ROOT_PATH)/test/unity/extras/fixture/src \
+	$(ROOT_PATH)/test/unity/src \
+	$(ROOT_PATH)/test/hal \
+	$(ROOT_PATH)/test \
 	../src \
 	. \
 
