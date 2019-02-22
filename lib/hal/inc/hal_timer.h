@@ -29,29 +29,22 @@ typedef enum
     TIMER_MODE_MAX
 } eTIMER_MODE;
 
-typedef enum
-{
-    TIMER0 = 0,
-    TIMER1,
-    TIMER_MAX
-} eTIMER_CH;
-
 /***************************** Structure Definition **************************/
 
 /** @} */
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_TIMER_Stop(eTIMER_CH timerNum);
-HAL_Status HAL_TIMER_Start(eTIMER_CH timerNum);
-HAL_Status HAL_TIMER_Stop_IT(eTIMER_CH timerNum);
-HAL_Status HAL_TIMER_Start_IT(eTIMER_CH timerNum);
-HAL_Status HAL_TIMER_SetCount(eTIMER_CH timerNum, uint64_t usTick);
-uint64_t HAL_TIMER_GetCount(eTIMER_CH timerNum);
+HAL_Status HAL_TIMER_Stop(struct TIMER_REG *pReg);
+HAL_Status HAL_TIMER_Start(struct TIMER_REG *pReg);
+HAL_Status HAL_TIMER_Stop_IT(struct TIMER_REG *pReg);
+HAL_Status HAL_TIMER_Start_IT(struct TIMER_REG *pReg);
+HAL_Status HAL_TIMER_SetCount(struct TIMER_REG *pReg, uint64_t usTick);
+uint64_t HAL_TIMER_GetCount(struct TIMER_REG *pReg);
 HAL_Status HAL_TIMER0_Handler(void);
 HAL_Status HAL_TIMER1_Handler(void);
-HAL_Status HAL_TIMER_Init(eTIMER_CH timerNum, eTIMER_MODE mode);
-HAL_Status HAL_TIMER_DeInit(eTIMER_CH timerNum);
-HAL_Status HAL_TIMER_ClrInt(eTIMER_CH timerNum);
+HAL_Status HAL_TIMER_Init(struct TIMER_REG *pReg, eTIMER_MODE mode);
+HAL_Status HAL_TIMER_DeInit(struct TIMER_REG *pReg);
+HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg);
 
 #endif
 

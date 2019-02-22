@@ -205,46 +205,19 @@ struct PWM_REG {
     __I  uint32_t PWM3_PWRCAPTURE_VALUE;              /* Address Offset: 0x00CC */
     __IO uint32_t FILTER_CTRL;                        /* Address Offset: 0x00D0 */
 };
-/* TIMER Register Structure Define */
-struct TIMER_REG {
-    __IO uint32_t TIMER0_LOAD_COUNT[2];               /* Address Offset: 0x0000 */
-    __IO uint32_t TIMER0_CURR_VALUE[2];               /* Address Offset: 0x0008 */
-    __IO uint32_t TIMER0_CONTROL;                     /* Address Offset: 0x0010 */
-         uint32_t RESERVED0;                          /* Address Offset: 0x0014 */
-    __O  uint32_t TIMER0_INTSTATUS;                   /* Address Offset: 0x0018 */
-         uint32_t RESERVED1;                          /* Address Offset: 0x001C */
-    __IO uint32_t TIMER1_LOAD_COUNT[2];               /* Address Offset: 0x0020 */
-    __IO uint32_t TIMER1_CURR_VALUE[2];               /* Address Offset: 0x0028 */
-    __IO uint32_t TIMER1_CONTROL;                     /* Address Offset: 0x0030 */
-         uint32_t RESERVED2;                          /* Address Offset: 0x0034 */
-    __O  uint32_t TIMER1_INTSTATUS;                   /* Address Offset: 0x0038 */
-         uint32_t RESERVED3;                          /* Address Offset: 0x003C */
-    __IO uint32_t TIMER2_LOAD_COUNT[2];               /* Address Offset: 0x0040 */
-    __IO uint32_t TIMER2_CURR_VALUE[2];               /* Address Offset: 0x0048 */
-    __IO uint32_t TIMER2_CONTROL;                     /* Address Offset: 0x0050 */
-         uint32_t RESERVED4;                          /* Address Offset: 0x0054 */
-    __O  uint32_t TIMER2_INTSTATUS;                   /* Address Offset: 0x0058 */
-         uint32_t RESERVED5;                          /* Address Offset: 0x005C */
-    __IO uint32_t TIMER3_LOAD_COUNT[2];               /* Address Offset: 0x0060 */
-    __IO uint32_t TIMER3_CURR_VALUE[2];               /* Address Offset: 0x0068 */
-    __IO uint32_t TIMER3_CONTROL;                     /* Address Offset: 0x0070 */
-         uint32_t RESERVED6;                          /* Address Offset: 0x0074 */
-    __O  uint32_t TIMER3_INTSTATUS;                   /* Address Offset: 0x0078 */
-         uint32_t RESERVED7;                          /* Address Offset: 0x007C */
-    __IO uint32_t TIMER4_LOAD_COUNT[2];               /* Address Offset: 0x0080 */
-    __IO uint32_t TIMER4_CURR_VALUE[2];               /* Address Offset: 0x0088 */
-    __IO uint32_t TIMER4_CONTROL;                     /* Address Offset: 0x0090 */
-         uint32_t RESERVED8;                          /* Address Offset: 0x0094 */
-    __O  uint32_t TIMER4_INTSTATUS;                   /* Address Offset: 0x0098 */
-         uint32_t RESERVED9;                          /* Address Offset: 0x009C */
-    __IO uint32_t TIMER5_LOAD_COUNT[2];               /* Address Offset: 0x00A0 */
-    __IO uint32_t TIMER5_CURR_VALUE[2];               /* Address Offset: 0x00A8 */
-    __IO uint32_t TIMER5_CONTROL;                     /* Address Offset: 0x00B0 */
-         uint32_t RESERVED10;                         /* Address Offset: 0x00B4 */
-    __O  uint32_t TIMER5_INTSTATUS;                   /* Address Offset: 0x00B8 */
-         uint32_t RESERVED11[13];                     /* Address Offset: 0x00BC */
-    __I  uint32_t REVISION;                           /* Address Offset: 0x00F0 */
+/* TIMER Register Structure Define  */
+struct TIMER_REG
+{
+    __IO uint32_t TimerLoadCount0; /* Load Count Register */
+    __IO uint32_t TimerLoadCount1; /* Load Count Register */
+    __IO uint32_t TimerCurrentValue0; /* Current Value Register */
+    __IO uint32_t TimerCurrentValue1; /* Current Value Register */
+    __IO uint32_t TimerControlReg; /* Control Register */
+    __IO uint32_t Reserved; /* End-of-Interrupt Register */
+    __IO uint32_t TimerIntStatus; /* Interrupt Status Register */
 };
+
+#define TIMER_CNT   7
 /* WDT Register Structure Define */
 struct WDT_REG
 {
@@ -645,7 +618,7 @@ typedef struct UART_REG
 #define PMU_BASE            0x40130000U /* PMU base address */
 #define SHAREMEM_BASE       0x40160000U /* SHAREMEM base address */
 #define PWM0_BASE           0x40880000U /* PWM base address */
-#define TIMER0_BASE         0x40900000U /* TIMER base address */
+#define TIMER_BASE          0x40900000U /* TIMER base address */
 #define WDT_BASE            0x40A00000U /* WDT base address */
 #define SPI2APB_BASE        0x40C00000U /* SPI2APB base address */
 #define SPI_BASE            0x40C10000U /* SPI base address */
@@ -672,7 +645,12 @@ typedef struct UART_REG
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define SHAREMEM            ((struct SHAREMEM_REG *) SHAREMEM_BASE)
 #define PWM0                ((struct PWM_REG *) PWM0_BASE)
-#define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
+#define TIMER0              ((struct TIMER_REG *) TIMER_BASE)
+#define TIMER1              ((struct TIMER_REG *) (TIMER_BASE + 0x20))
+#define TIMER2              ((struct TIMER_REG *) (TIMER_BASE + 0x40))
+#define TIMER3              ((struct TIMER_REG *) (TIMER_BASE + 0x60))
+#define TIMER4              ((struct TIMER_REG *) (TIMER_BASE + 0x80))
+#define TIMER5              ((struct TIMER_REG *) (TIMER_BASE + 0xA0))
 #define WDT                 ((struct WDT_REG *) WDT_BASE)
 #define SPI2APB             ((struct SPI2APB_REG *) SPI2APB_BASE)
 #define SPI0                ((struct SPI_REG *) SPI0_BASE)
@@ -701,7 +679,7 @@ typedef struct UART_REG
 #define IS_VOP_INSTANCE(instance) ((instance) == VOP)
 #define IS_MBOX_INSTANCE(instance) (((instance) == MBOX0) || ((instance) == MBOX1) || ((instance) == MBOX2))
 #define IS_PWM_INSTANCE(instance) ((instance) == PWM0)
-#define IS_TIMER_INSTANCE(instance) ((instance) == TIMER0)
+#define IS_TIMER_INSTANCE(instance) ((instance) == TIMER0 || (instance) == TIMER1 || (instance) == TIMER2 || (instance) == TIMER3 || (instance) == TIMER4 || (instance) == TIMER5)
 #define IS_SPI_INSTANCE(instance) ((instance) == SPI0)
 #define IS_MMC_INSTANCE(instance) ((instance) == MMC0)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
@@ -1447,143 +1425,20 @@ typedef struct UART_REG
 #define PWM_FILTER_CTRL_FILTER_NUMBER_SHIFT                (4U)
 #define PWM_FILTER_CTRL_FILTER_NUMBER_MASK                 (0x1FFU << PWM_FILTER_CTRL_FILTER_NUMBER_SHIFT)              /* 0x00001FF0 */
 /*****************************************TIMER******************************************/
-/* TIMER0_LOAD_COUNT0 */
-#define TIMER_TIMER0_LOAD_COUNT0_COUNT0_SHIFT              (0U)
-#define TIMER_TIMER0_LOAD_COUNT0_COUNT0_MASK               (0xFFFFFFFFU << TIMER_TIMER0_LOAD_COUNT0_COUNT0_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER0_LOAD_COUNT1 */
-#define TIMER_TIMER0_LOAD_COUNT1_COUNT1_SHIFT              (0U)
-#define TIMER_TIMER0_LOAD_COUNT1_COUNT1_MASK               (0xFFFFFFFFU << TIMER_TIMER0_LOAD_COUNT1_COUNT1_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER0_CURR_VALUE0 */
-#define TIMER_TIMER0_CURR_VALUE0_CURRENT_VALUE0_SHIFT      (0U)
-#define TIMER_TIMER0_CURR_VALUE0_CURRENT_VALUE0_MASK       (0xFFFFFFFFU << TIMER_TIMER0_CURR_VALUE0_CURRENT_VALUE0_SHIFT) /* 0xFFFFFFFF */
-/* TIMER0_CURR_VALUE1 */
-#define TIMER_TIMER0_CURR_VALUE1_CURRENT_VALUE1_SHIFT      (0U)
-#define TIMER_TIMER0_CURR_VALUE1_CURRENT_VALUE1_MASK       (0xFFFFFFFFU << TIMER_TIMER0_CURR_VALUE1_CURRENT_VALUE1_SHIFT) /* 0xFFFFFFFF */
-/* TIMER0_CONTROL */
-#define TIMER_TIMER0_CONTROL_TIMER_EN_SHIFT                (0U)
-#define TIMER_TIMER0_CONTROL_TIMER_EN_MASK                 (0x1U << TIMER_TIMER0_CONTROL_TIMER_EN_SHIFT)                /* 0x00000001 */
-#define TIMER_TIMER0_CONTROL_TIMER_MODE_SHIFT              (1U)
-#define TIMER_TIMER0_CONTROL_TIMER_MODE_MASK               (0x1U << TIMER_TIMER0_CONTROL_TIMER_MODE_SHIFT)              /* 0x00000002 */
-#define TIMER_TIMER0_CONTROL_INT_EN_SHIFT                  (2U)
-#define TIMER_TIMER0_CONTROL_INT_EN_MASK                   (0x1U << TIMER_TIMER0_CONTROL_INT_EN_SHIFT)                  /* 0x00000004 */
-/* TIMER0_INTSTATUS */
-#define TIMER_TIMER0_INTSTATUS_INT_PD_SHIFT                (0U)
-#define TIMER_TIMER0_INTSTATUS_INT_PD_MASK                 (0x1U << TIMER_TIMER0_INTSTATUS_INT_PD_SHIFT)                /* 0x00000001 */
-/* TIMER1_LOAD_COUNT0 */
-#define TIMER_TIMER1_LOAD_COUNT0_COUNT0_SHIFT              (0U)
-#define TIMER_TIMER1_LOAD_COUNT0_COUNT0_MASK               (0xFFFFFFFFU << TIMER_TIMER1_LOAD_COUNT0_COUNT0_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER1_LOAD_COUNT1 */
-#define TIMER_TIMER1_LOAD_COUNT1_COUNT1_SHIFT              (0U)
-#define TIMER_TIMER1_LOAD_COUNT1_COUNT1_MASK               (0xFFFFFFFFU << TIMER_TIMER1_LOAD_COUNT1_COUNT1_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER1_CURR_VALUE0 */
-#define TIMER_TIMER1_CURR_VALUE0_CURRENT_VALUE0_SHIFT      (0U)
-#define TIMER_TIMER1_CURR_VALUE0_CURRENT_VALUE0_MASK       (0xFFFFFFFFU << TIMER_TIMER1_CURR_VALUE0_CURRENT_VALUE0_SHIFT) /* 0xFFFFFFFF */
-/* TIMER1_CURR_VALUE1 */
-#define TIMER_TIMER1_CURR_VALUE1_CURRENT_VALUE1_SHIFT      (0U)
-#define TIMER_TIMER1_CURR_VALUE1_CURRENT_VALUE1_MASK       (0xFFFFFFFFU << TIMER_TIMER1_CURR_VALUE1_CURRENT_VALUE1_SHIFT) /* 0xFFFFFFFF */
-/* TIMER1_CONTROL */
-#define TIMER_TIMER1_CONTROL_TIMER_EN_SHIFT                (0U)
-#define TIMER_TIMER1_CONTROL_TIMER_EN_MASK                 (0x1U << TIMER_TIMER1_CONTROL_TIMER_EN_SHIFT)                /* 0x00000001 */
-#define TIMER_TIMER1_CONTROL_TIMER_MODE_SHIFT              (1U)
-#define TIMER_TIMER1_CONTROL_TIMER_MODE_MASK               (0x1U << TIMER_TIMER1_CONTROL_TIMER_MODE_SHIFT)              /* 0x00000002 */
-#define TIMER_TIMER1_CONTROL_INT_EN_SHIFT                  (2U)
-#define TIMER_TIMER1_CONTROL_INT_EN_MASK                   (0x1U << TIMER_TIMER1_CONTROL_INT_EN_SHIFT)                  /* 0x00000004 */
-/* TIMER1_INTSTATUS */
-#define TIMER_TIMER1_INTSTATUS_INT_PD_SHIFT                (0U)
-#define TIMER_TIMER1_INTSTATUS_INT_PD_MASK                 (0x1U << TIMER_TIMER1_INTSTATUS_INT_PD_SHIFT)                /* 0x00000001 */
-/* TIMER2_LOAD_COUNT0 */
-#define TIMER_TIMER2_LOAD_COUNT0_COUNT0_SHIFT              (0U)
-#define TIMER_TIMER2_LOAD_COUNT0_COUNT0_MASK               (0xFFFFFFFFU << TIMER_TIMER2_LOAD_COUNT0_COUNT0_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER2_LOAD_COUNT1 */
-#define TIMER_TIMER2_LOAD_COUNT1_COUNT1_SHIFT              (0U)
-#define TIMER_TIMER2_LOAD_COUNT1_COUNT1_MASK               (0xFFFFFFFFU << TIMER_TIMER2_LOAD_COUNT1_COUNT1_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER2_CURR_VALUE0 */
-#define TIMER_TIMER2_CURR_VALUE0_CURRENT_VALUE0_SHIFT      (0U)
-#define TIMER_TIMER2_CURR_VALUE0_CURRENT_VALUE0_MASK       (0xFFFFFFFFU << TIMER_TIMER2_CURR_VALUE0_CURRENT_VALUE0_SHIFT) /* 0xFFFFFFFF */
-/* TIMER2_CURR_VALUE1 */
-#define TIMER_TIMER2_CURR_VALUE1_CURRENT_VALUE1_SHIFT      (0U)
-#define TIMER_TIMER2_CURR_VALUE1_CURRENT_VALUE1_MASK       (0xFFFFFFFFU << TIMER_TIMER2_CURR_VALUE1_CURRENT_VALUE1_SHIFT) /* 0xFFFFFFFF */
-/* TIMER2_CONTROL */
-#define TIMER_TIMER2_CONTROL_TIMER_EN_SHIFT                (0U)
-#define TIMER_TIMER2_CONTROL_TIMER_EN_MASK                 (0x1U << TIMER_TIMER2_CONTROL_TIMER_EN_SHIFT)                /* 0x00000001 */
-#define TIMER_TIMER2_CONTROL_TIMER_MODE_SHIFT              (1U)
-#define TIMER_TIMER2_CONTROL_TIMER_MODE_MASK               (0x1U << TIMER_TIMER2_CONTROL_TIMER_MODE_SHIFT)              /* 0x00000002 */
-#define TIMER_TIMER2_CONTROL_INT_EN_SHIFT                  (2U)
-#define TIMER_TIMER2_CONTROL_INT_EN_MASK                   (0x1U << TIMER_TIMER2_CONTROL_INT_EN_SHIFT)                  /* 0x00000004 */
-/* TIMER2_INTSTATUS */
-#define TIMER_TIMER2_INTSTATUS_INT_PD_SHIFT                (0U)
-#define TIMER_TIMER2_INTSTATUS_INT_PD_MASK                 (0x1U << TIMER_TIMER2_INTSTATUS_INT_PD_SHIFT)                /* 0x00000001 */
-/* TIMER3_LOAD_COUNT0 */
-#define TIMER_TIMER3_LOAD_COUNT0_COUNT0_SHIFT              (0U)
-#define TIMER_TIMER3_LOAD_COUNT0_COUNT0_MASK               (0xFFFFFFFFU << TIMER_TIMER3_LOAD_COUNT0_COUNT0_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER3_LOAD_COUNT1 */
-#define TIMER_TIMER3_LOAD_COUNT1_COUNT1_SHIFT              (0U)
-#define TIMER_TIMER3_LOAD_COUNT1_COUNT1_MASK               (0xFFFFFFFFU << TIMER_TIMER3_LOAD_COUNT1_COUNT1_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER3_CURR_VALUE0 */
-#define TIMER_TIMER3_CURR_VALUE0_CURRENT_VALUE0_SHIFT      (0U)
-#define TIMER_TIMER3_CURR_VALUE0_CURRENT_VALUE0_MASK       (0xFFFFFFFFU << TIMER_TIMER3_CURR_VALUE0_CURRENT_VALUE0_SHIFT) /* 0xFFFFFFFF */
-/* TIMER3_CURR_VALUE1 */
-#define TIMER_TIMER3_CURR_VALUE1_CURRENT_VALUE1_SHIFT      (0U)
-#define TIMER_TIMER3_CURR_VALUE1_CURRENT_VALUE1_MASK       (0xFFFFFFFFU << TIMER_TIMER3_CURR_VALUE1_CURRENT_VALUE1_SHIFT) /* 0xFFFFFFFF */
-/* TIMER3_CONTROL */
-#define TIMER_TIMER3_CONTROL_TIMER_EN_SHIFT                (0U)
-#define TIMER_TIMER3_CONTROL_TIMER_EN_MASK                 (0x1U << TIMER_TIMER3_CONTROL_TIMER_EN_SHIFT)                /* 0x00000001 */
-#define TIMER_TIMER3_CONTROL_TIMER_MODE_SHIFT              (1U)
-#define TIMER_TIMER3_CONTROL_TIMER_MODE_MASK               (0x1U << TIMER_TIMER3_CONTROL_TIMER_MODE_SHIFT)              /* 0x00000002 */
-#define TIMER_TIMER3_CONTROL_INT_EN_SHIFT                  (2U)
-#define TIMER_TIMER3_CONTROL_INT_EN_MASK                   (0x1U << TIMER_TIMER3_CONTROL_INT_EN_SHIFT)                  /* 0x00000004 */
-/* TIMER3_INTSTATUS */
-#define TIMER_TIMER3_INTSTATUS_INT_PD_SHIFT                (0U)
-#define TIMER_TIMER3_INTSTATUS_INT_PD_MASK                 (0x1U << TIMER_TIMER3_INTSTATUS_INT_PD_SHIFT)                /* 0x00000001 */
-/* TIMER4_LOAD_COUNT0 */
-#define TIMER_TIMER4_LOAD_COUNT0_COUNT0_SHIFT              (0U)
-#define TIMER_TIMER4_LOAD_COUNT0_COUNT0_MASK               (0xFFFFFFFFU << TIMER_TIMER4_LOAD_COUNT0_COUNT0_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER4_LOAD_COUNT1 */
-#define TIMER_TIMER4_LOAD_COUNT1_COUNT1_SHIFT              (0U)
-#define TIMER_TIMER4_LOAD_COUNT1_COUNT1_MASK               (0xFFFFFFFFU << TIMER_TIMER4_LOAD_COUNT1_COUNT1_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER4_CURR_VALUE1 */
-#define TIMER_TIMER4_CURR_VALUE1_CURRENT_VALUE1_SHIFT      (0U)
-#define TIMER_TIMER4_CURR_VALUE1_CURRENT_VALUE1_MASK       (0xFFFFFFFFU << TIMER_TIMER4_CURR_VALUE1_CURRENT_VALUE1_SHIFT) /* 0xFFFFFFFF */
-/* TIMER4_CURR_VALUE0 */
-#define TIMER_TIMER4_CURR_VALUE0_CURRENT_VALUE0_SHIFT      (0U)
-#define TIMER_TIMER4_CURR_VALUE0_CURRENT_VALUE0_MASK       (0xFFFFFFFFU << TIMER_TIMER4_CURR_VALUE0_CURRENT_VALUE0_SHIFT) /* 0xFFFFFFFF */
-/* TIMER4_CONTROL */
-#define TIMER_TIMER4_CONTROL_TIMER_EN_SHIFT                (0U)
-#define TIMER_TIMER4_CONTROL_TIMER_EN_MASK                 (0x1U << TIMER_TIMER4_CONTROL_TIMER_EN_SHIFT)                /* 0x00000001 */
-#define TIMER_TIMER4_CONTROL_TIMER_MODE_SHIFT              (1U)
-#define TIMER_TIMER4_CONTROL_TIMER_MODE_MASK               (0x1U << TIMER_TIMER4_CONTROL_TIMER_MODE_SHIFT)              /* 0x00000002 */
-#define TIMER_TIMER4_CONTROL_INT_EN_SHIFT                  (2U)
-#define TIMER_TIMER4_CONTROL_INT_EN_MASK                   (0x1U << TIMER_TIMER4_CONTROL_INT_EN_SHIFT)                  /* 0x00000004 */
-/* TIMER4_INTSTATUS */
-#define TIMER_TIMER4_INTSTATUS_INT_PD_SHIFT                (0U)
-#define TIMER_TIMER4_INTSTATUS_INT_PD_MASK                 (0x1U << TIMER_TIMER4_INTSTATUS_INT_PD_SHIFT)                /* 0x00000001 */
-/* TIMER5_LOAD_COUNT0 */
-#define TIMER_TIMER5_LOAD_COUNT0_COUNT0_SHIFT              (0U)
-#define TIMER_TIMER5_LOAD_COUNT0_COUNT0_MASK               (0xFFFFFFFFU << TIMER_TIMER5_LOAD_COUNT0_COUNT0_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER5_LOAD_COUNT1 */
-#define TIMER_TIMER5_LOAD_COUNT1_COUNT1_SHIFT              (0U)
-#define TIMER_TIMER5_LOAD_COUNT1_COUNT1_MASK               (0xFFFFFFFFU << TIMER_TIMER5_LOAD_COUNT1_COUNT1_SHIFT)       /* 0xFFFFFFFF */
-/* TIMER5_CURR_VALUE1 */
-#define TIMER_TIMER5_CURR_VALUE1_CURRENT_VALUE1_SHIFT      (0U)
-#define TIMER_TIMER5_CURR_VALUE1_CURRENT_VALUE1_MASK       (0xFFFFFFFFU << TIMER_TIMER5_CURR_VALUE1_CURRENT_VALUE1_SHIFT) /* 0xFFFFFFFF */
-/* TIMER5_CURR_VALUE0 */
-#define TIMER_TIMER5_CURR_VALUE0_CURRENT_VALUE0_SHIFT      (0U)
-#define TIMER_TIMER5_CURR_VALUE0_CURRENT_VALUE0_MASK       (0xFFFFFFFFU << TIMER_TIMER5_CURR_VALUE0_CURRENT_VALUE0_SHIFT) /* 0xFFFFFFFF */
-/* TIMER5_CONTROL */
-#define TIMER_TIMER5_CONTROL_TIMER_EN_SHIFT                (0U)
-#define TIMER_TIMER5_CONTROL_TIMER_EN_MASK                 (0x1U << TIMER_TIMER5_CONTROL_TIMER_EN_SHIFT)                /* 0x00000001 */
-#define TIMER_TIMER5_CONTROL_TIMER_MODE_SHIFT              (1U)
-#define TIMER_TIMER5_CONTROL_TIMER_MODE_MASK               (0x1U << TIMER_TIMER5_CONTROL_TIMER_MODE_SHIFT)              /* 0x00000002 */
-#define TIMER_TIMER5_CONTROL_INT_EN_SHIFT                  (2U)
-#define TIMER_TIMER5_CONTROL_INT_EN_MASK                   (0x1U << TIMER_TIMER5_CONTROL_INT_EN_SHIFT)                  /* 0x00000004 */
-/* TIMER5_INTSTATUS */
-#define TIMER_TIMER5_INTSTATUS_INT_PD_SHIFT                (0U)
-#define TIMER_TIMER5_INTSTATUS_INT_PD_MASK                 (0x1U << TIMER_TIMER5_INTSTATUS_INT_PD_SHIFT)                /* 0x00000001 */
-/* REVISION */
-#define TIMER_REVISION_IP_FUNCTION_SHIFT                   (0U)
-#define TIMER_REVISION_IP_FUNCTION_MASK                    (0xFFFFU << TIMER_REVISION_IP_FUNCTION_SHIFT)                /* 0x0000FFFF */
-#define TIMER_REVISION_SVN_REVISION_SHIFT                  (16U)
-#define TIMER_REVISION_SVN_REVISION_MASK                   (0xFFFFU << TIMER_REVISION_SVN_REVISION_SHIFT)               /* 0xFFFF0000 */
+#define TIMERN_CONTROLREG_EN_SHIFT                          (0U)
+#define TIMERN_CONTROLREG_EN__MASK                          (0x1U << TIMERN_CONTROLREG_EN_SHIFT)
+#define TIMERN_CONTROLREG_EN_DISABLE                        (0x0U << TIMERN_CONTROLREG_EN_SHIFT)
+#define TIMERN_CONTROLREG_EN_ENABLE                         (0x1U << TIMERN_CONTROLREG_EN_SHIFT)
+
+#define TIMERN_CONTROLREG_MODE_SHIFT                        (1U)
+#define TIMERN_CONTROLREG_MODE__MASK                        (0x1U << TIMERN_CONTROLREG_MODE_SHIFT)
+#define TIMERN_CONTROLREG_MODE_FREE_RUNNING                 (0x0U << TIMERN_CONTROLREG_MODE_SHIFT)
+#define TIMERN_CONTROLREG_MODE_USER_DEFINED                 (0x0U << TIMERN_CONTROLREG_MODE_SHIFT)
+
+#define TIMERN_CONTROLREG_MASK_SHIFT                        (2U)
+#define TIMERN_CONTROLREG_MASK__MASK                        (0x1U << TIMERN_CONTROLREG_MASK_SHIFT)
+#define TIMERN_CONTROLREG_MASK_MASK                         (0x0U << TIMERN_CONTROLREG_MASK_SHIFT)
+#define TIMERN_CONTROLREG_MASK_UNMASK                       (0x1U << TIMERN_CONTROLREG_MASK_SHIFT)
 /******************************************WDT*******************************************/
 /* WDT_CR */
 #define WDT_WDT_CR_WDT_EN_SHIFT                            (0U)

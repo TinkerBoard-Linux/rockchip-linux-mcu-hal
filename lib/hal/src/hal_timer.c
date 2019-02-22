@@ -37,13 +37,8 @@
 #ifdef HAL_TIMER_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-#define TIMER_PORT(n) ((struct TIMER_REG *)(TIMER_GROUP[n]))
 
 /********************* Private Structure Definition **************************/
-const uint32_t TIMER_GROUP[2] = {
-    TIMER_BASE,
-    TIMER_BASE + 0x20,
-};
 
 /********************* Private Variable Definition ***************************/
 
@@ -65,19 +60,15 @@ const uint32_t TIMER_GROUP[2] = {
 
 /**
  * @brief  Timer init.
- * @param  timerNum: Choose TIMER.
+ * @param  pReg: Choose TIMER.
  * @param  mode: Choose TIMER mode.
  * @return HAL_Status.
  */
-HAL_Status HAL_TIMER_Init(eTIMER_CH timerNum, eTIMER_MODE mode)
+HAL_Status HAL_TIMER_Init(struct TIMER_REG *pReg, eTIMER_MODE mode)
 {
-    struct TIMER_REG *timerReg;
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    if ((timerNum >= TIMER_MAX) || (mode >= TIMER_MODE_MAX))
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerControlReg =
+    pReg->TimerControlReg =
         TIMERN_CONTROLREG_MASK_MASK | (mode << TIMERN_CONTROLREG_MODE_SHIFT);
 
     return HAL_OK;
@@ -85,18 +76,14 @@ HAL_Status HAL_TIMER_Init(eTIMER_CH timerNum, eTIMER_MODE mode)
 
 /**
  * @brief  Timer deinit.
- * @param  timerNum: Choose TIMER.
+ * @param  pReg: Choose TIMER.
  * @return HAL_Status.
  */
-HAL_Status HAL_TIMER_DeInit(eTIMER_CH timerNum)
+HAL_Status HAL_TIMER_DeInit(struct TIMER_REG *pReg)
 {
-    struct TIMER_REG *timerReg;
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    if (timerNum >= TIMER_MAX)
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerControlReg =
+    pReg->TimerControlReg =
         TIMERN_CONTROLREG_MASK_UNMASK | TIMERN_CONTROLREG_EN_DISABLE;
 
     return HAL_OK;
@@ -110,140 +97,109 @@ HAL_Status HAL_TIMER_DeInit(eTIMER_CH timerNum)
 
 /**
  * @brief  Stop TIMER counter.
- * @param  timerNum: Choose TIMER.
+ * @param  pReg: Choose TIMER.
  * @return HAL_Status.
  * Just disable TIMER, and keep TIMER configuration.
  */
-HAL_Status HAL_TIMER_Stop(eTIMER_CH timerNum)
+HAL_Status HAL_TIMER_Stop(struct TIMER_REG *pReg)
 {
-    struct TIMER_REG *timerReg;
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    if (timerNum >= TIMER_MAX)
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-
-    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
-    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
+    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
+    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Start TIMER counter.
- * @param  timerNum: Choose TIMER.
+ * @param  pReg: Choose TIMER.
  * @return HAL_Status.
  */
-HAL_Status HAL_TIMER_Start(eTIMER_CH timerNum)
+HAL_Status HAL_TIMER_Start(struct TIMER_REG *pReg)
 {
-    struct TIMER_REG *timerReg;
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    if (timerNum >= TIMER_MAX)
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-
-    SET_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
-    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
+    SET_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
+    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Stop TIMER counter in interrupt mode.
- * @param  timerNum: Choose TIMER.
+ * @param  pReg: Choose TIMER.
  * @return HAL_Status.
  * Just disable TIMER, and keep TIMER configuration.
  */
-HAL_Status HAL_TIMER_Stop_IT(eTIMER_CH timerNum)
+HAL_Status HAL_TIMER_Stop_IT(struct TIMER_REG *pReg)
 {
-    struct TIMER_REG *timerReg;
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    if (timerNum >= TIMER_MAX)
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-
-    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
-    CLEAR_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
+    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
+    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Start TIMER counter in interrupt mode.
- * @param  timerNum: Choose TIMER.
+ * @param  pReg: Choose TIMER.
  * @return HAL_Status.
  */
-HAL_Status HAL_TIMER_Start_IT(eTIMER_CH timerNum)
+HAL_Status HAL_TIMER_Start_IT(struct TIMER_REG *pReg)
 {
-    struct TIMER_REG *timerReg;
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    if (timerNum >= TIMER_MAX)
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-    SET_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
-    SET_BIT(timerReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
+    SET_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
+    SET_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Set TIMER count number.
- * @param  timerNum: Choose TIMER.
+ * @param  pReg: Choose TIMER.
  * @param  usTick: TIMER counter loading number.
  * @return HAL_Status.
  * Set timer count number.
  */
-HAL_Status HAL_TIMER_SetCount(eTIMER_CH timerNum, uint64_t usTick)
+HAL_Status HAL_TIMER_SetCount(struct TIMER_REG *pReg, uint64_t usTick)
 {
-    struct TIMER_REG *timerReg;
     uint64_t loadCount = 0;
 
-    if (timerNum >= TIMER_MAX)
-        return HAL_ERROR;
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
     loadCount = usTick;
-    timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerLoadCount0 = (loadCount & 0xffffffff);
-    timerReg->TimerLoadCount1 = ((loadCount >> 32) & 0xffffffff);
+    pReg->TimerLoadCount0 = (loadCount & 0xffffffff);
+    pReg->TimerLoadCount1 = ((loadCount >> 32) & 0xffffffff);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Get TIMER count number.
- * @param  timerNum: Choose TIMER.
+ * @param  pReg: Choose TIMER.
  * @return uint64_t: Current conut number.
  */
-uint64_t HAL_TIMER_GetCount(eTIMER_CH timerNum)
+uint64_t HAL_TIMER_GetCount(struct TIMER_REG *pReg)
 {
-    struct TIMER_REG *timerReg;
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    if (timerNum >= TIMER_MAX)
-        return (uint64_t)(-1);
-
-    timerReg = TIMER_PORT(timerNum);
-
-    return (uint64_t)(((uint64_t)timerReg->TimerCurrentValue1) << 32) |
-           timerReg->TimerCurrentValue0;
+    return (uint64_t)(((uint64_t)pReg->TimerCurrentValue1) << 32) |
+           pReg->TimerCurrentValue0;
 }
 
 /**
  * @brief  Clear TIMER intterrupt status.
- * @param  timerNum: Choose TIMER.
+ * @param  pReg: Choose TIMER.
  * @return HAL_Status: HAL_OK.
  */
-HAL_Status HAL_TIMER_ClrInt(eTIMER_CH timerNum)
+HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg)
 {
-    struct TIMER_REG *timerReg;
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    if (timerNum >= TIMER_MAX)
-        return HAL_ERROR;
-
-    timerReg = TIMER_PORT(timerNum);
-    timerReg->TimerIntStatus = 0x1;
+    pReg->TimerIntStatus = 0x1;
 
     return HAL_OK;
 }
