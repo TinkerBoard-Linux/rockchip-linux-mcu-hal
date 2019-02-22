@@ -16,6 +16,11 @@
 
 /********************* Public Function Definition ****************************/
 
+static void BSP_UART_Init(void){
+	/* TBD */
+}
+
 void BSP_Init(void)
 {
+    BSP_UART_Init();
 }

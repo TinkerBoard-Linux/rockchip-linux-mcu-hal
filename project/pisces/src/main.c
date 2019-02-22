@@ -16,9 +16,22 @@
 
 /********************* Public Function Definition ****************************/
 
+struct UART_REG *pUart = UART0;
+
 int fputc(int ch, FILE *f)
 {
+    if (ch == '\n') {
+        HAL_UART_SerialOut(pUart, "\r", 1);
+    }
+    HAL_UART_SerialOut(pUart, (uint8_t *)&ch, 1);
+
 }
+
+void UART0_IRQHandler(void)
+{
+    HAL_UART_HandleIrq(pUart);
+}
+
 
 int main(void)
 {
@@ -28,6 +41,14 @@ int main(void)
 
     /* BSP Init */
     BSP_Init();
+
+    /* UART Init */
+    HAL_NVIC_SetIRQHandler(UART0_IRQn, (NVIC_IRQHandler)&UART0_IRQHandler);
+    HAL_NVIC_EnableIRQ(UART0_IRQn);
+    HAL_UART_Init(pUart, UART_BR_115200, UART_DATA_8B, UART_ONE_STOPBIT,
+                  UART_PARITY_DISABLE);
+
+    printf("print test\n");
 
     while (1)
         ;

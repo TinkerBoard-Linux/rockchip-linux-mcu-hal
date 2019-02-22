@@ -81,7 +81,7 @@ CFLAGS	+= $(INCLUDES)
 all: $(BIN)
 
 $(ELF): $(OBJS) $(LINKER_SCRIPT)
-	$(Q) $(CC) $(OBJS) $(LDFLAGS) -T$(LINKER_SCRIPT) -Wl,-Map=$(MAP),-cref -o $@
+	$(Q) $(CC) $(OBJS) $(LDFLAGS) $(CFLAGS) -T$(LINKER_SCRIPT) -Wl,-Map=$(MAP),-cref -o $@
 
 $(BIN): $(ELF)
 	$(Q) $(OBJCOPY) $(OCFLAGS) -O binary $< $@
