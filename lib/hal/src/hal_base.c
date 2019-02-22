@@ -123,34 +123,35 @@ uint32_t HAL_GetTick(void)
 
 /**
  * @brief  SysTick mdelay.
- * @param  delay: mdelay count.
+ * @param  ms: mdelay count.
  * @return HAL_Status: HAL_OK.
  */
-HAL_Status HAL_DelayMs(__IO uint32_t delay)
+__weak HAL_Status HAL_DelayMs(__IO uint32_t ms)
 {
-    uint32_t tickStart = HAL_GetTick();
-    uint32_t wait = delay;
+    uint32_t delay = ms;
 
     /* Add a period to guarantee minimum wait */
-    if (wait < HAL_MAX_DELAY) {
-        wait++;
+    if (delay < HAL_MAX_DELAY) {
+        delay++;
+    } else {
+        delay = HAL_MAX_DELAY;
     }
 
-    while ((HAL_GetTick() - tickStart) < wait) {
-    }
+    HAL_DelayUs(1000 * delay);
 
     return HAL_OK;
 }
 
 /**
  * @brief  SysTick udelay.
- * @param  delay: udelay count.
+ * @param  us: udelay count.
  * @return HAL_Status: HAL_OK.
  * MCU usually runs at low frequencies, so us is not accurate.
  */
 HAL_Status HAL_DelayUs(__IO uint32_t us)
 {
-    __IO uint32_t delay = us * (SystemCoreClock / 8U / 1000000U);
+    __IO uint32_t delay = us * (SystemCoreClock / 20U / 1000000U);
+
     do {
         __NOP();
     } while (delay--);
