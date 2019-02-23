@@ -128,47 +128,56 @@ uint32_t HAL_GetTick(void)
  */
 __weak HAL_Status HAL_DelayMs(__IO uint32_t ms)
 {
-    uint32_t delay = ms;
+    uint32_t tickstart = HAL_GetTick();
+    uint32_t delta = HAL_MAX_DELAY - tickstart;
+    uint32_t wait = ms;
 
     /* Add a period to guarantee minimum wait */
-    if (delay < HAL_MAX_DELAY) {
-        delay++;
-    } else {
-        delay = HAL_MAX_DELAY;
+    if (wait < HAL_MAX_DELAY)
+        wait++;
+
+    if (delta < wait) {
+        while (HAL_GetTick() > tickstart)
+            ;
+        tickstart = 0;
+        wait -= delta;
     }
-
-    HAL_DelayUs(1000 * delay);
-
-    return HAL_OK;
+    while ((HAL_GetTick() - tickstart) < wait)
+        ;
 }
 
 /**
  * @brief  SysTick udelay.
  * @param  us: udelay count.
  * @return HAL_Status: HAL_OK.
- * MCU usually runs at low frequencies, so us is not accurate.
+ * Only 0 to 1000us precision.
  */
 HAL_Status HAL_DelayUs(__IO uint32_t us)
 {
-    __IO uint32_t delay = us * (SystemCoreClock / 20U / 1000000U);
+    uint32_t delta = SysTick->VAL;
 
-    do {
-        __NOP();
-    } while (delay--);
+    if (us > 1000)
+        us = 1000;
 
-    return HAL_OK;
+    us = us * (SysTick->LOAD / 1000); /* Systick->Load 1ms */
+    if (delta < us) {
+        while (SysTick->VAL < us)
+            ;
+        us -= delta;
+        delta = SysTick->LOAD;
+    }
+    while ((delta - SysTick->VAL) < us)
+        ;
 }
 
 /**
  * @brief  Init SysTick
  * @param  tickPriority: Interrupt priority.
  * @return HAL_Status: HAL_OK.
- * Set systick to millisecond count, and it's priority.
  */
 HAL_Status HAL_InitTick(uint32_t tickPriority)
 {
-    /*Configure the SysTick to have interrupt in 1ms time basis*/
-    SysTick_Config(SystemCoreClock / 1000U);
+    SysTick_Config(SystemCoreClock / 1000);
 
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, tickPriority);
