@@ -188,6 +188,8 @@ void HAL_UART_DisableAutoFlowControl(struct UART_REG *pReg)
     pReg->UART_MCR &= ~UART_MCR_AFE;
 }
 
+/** @} */
+
 /** @defgroup UART_Exported_Functions_Group2 get uart status Functions
  @verbatim
 
