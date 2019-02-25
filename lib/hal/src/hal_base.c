@@ -144,6 +144,8 @@ __weak HAL_Status HAL_DelayMs(__IO uint32_t ms)
     }
     while ((HAL_GetTick() - tickstart) < wait)
         ;
+
+    return HAL_OK;
 }
 
 /**
@@ -168,6 +170,8 @@ HAL_Status HAL_DelayUs(__IO uint32_t us)
     }
     while ((delta - SysTick->VAL) < us)
         ;
+
+    return HAL_OK;
 }
 
 /**
