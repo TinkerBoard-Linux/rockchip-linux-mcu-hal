@@ -9,6 +9,7 @@
 static void RunAllTests(void)
 {
     RUN_TEST_GROUP(HAL_TIMER);
+    RUN_TEST_GROUP(HAL_SNOR);
 }
 
 int test_main(void)
