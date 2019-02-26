@@ -158,7 +158,78 @@ struct DCACHE_REG {
          uint32_t RESERVED3[33];                      /* Address Offset: 0x006C */
     __IO uint32_t REVISION;                           /* Address Offset: 0x00F0 */
 };
-
+/* GRF Register Structure Define */
+struct GRF_REG {
+    __IO uint32_t GPIO0A_IOMUX_L;                     /* Address Offset: 0x0000 */
+    __IO uint32_t GPIO0A_IOMUX_H;                     /* Address Offset: 0x0004 */
+    __IO uint32_t GPIO0B_IOMUX_L;                     /* Address Offset: 0x0008 */
+    __IO uint32_t GPIO0B_IOMUX_H;                     /* Address Offset: 0x000C */
+    __IO uint32_t GPIO0C_IOMUX_L;                     /* Address Offset: 0x0010 */
+    __IO uint32_t GPIO0C_IOMUX_H;                     /* Address Offset: 0x0014 */
+    __IO uint32_t GPIO0D_IOMUX_L;                     /* Address Offset: 0x0018 */
+    __IO uint32_t GPIO0D_IOMUX_H;                     /* Address Offset: 0x001C */
+    __IO uint32_t GPIO1A_IOMUX_L;                     /* Address Offset: 0x0020 */
+    __IO uint32_t GPIO1A_IOMUX_H;                     /* Address Offset: 0x0024 */
+    __IO uint32_t GPIO1B_IOMUX_L;                     /* Address Offset: 0x0028 */
+         uint32_t RESERVED0;                          /* Address Offset: 0x002C */
+    __IO uint32_t GPIO1C_IOMUX_L;                     /* Address Offset: 0x0030 */
+    __IO uint32_t GPIO1C_IOMUX_H;                     /* Address Offset: 0x0034 */
+         uint32_t RESERVED1[2];                       /* Address Offset: 0x0038 */
+    __IO uint32_t GPIO0L_SR;                          /* Address Offset: 0x0040 */
+    __IO uint32_t GPIO0H_SR;                          /* Address Offset: 0x0044 */
+    __IO uint32_t GPIO1L_SR;                          /* Address Offset: 0x0048 */
+    __IO uint32_t GPIO1H_SR;                          /* Address Offset: 0x004C */
+         uint32_t RESERVED2[12];                      /* Address Offset: 0x0050 */
+    __IO uint32_t GPIO0A_P;                           /* Address Offset: 0x0080 */
+    __IO uint32_t GPIO0B_P;                           /* Address Offset: 0x0084 */
+    __IO uint32_t GPIO0C_P;                           /* Address Offset: 0x0088 */
+    __IO uint32_t GPIO0D_P;                           /* Address Offset: 0x008C */
+    __IO uint32_t GPIO1A_P;                           /* Address Offset: 0x0090 */
+    __IO uint32_t GPIO1B_P;                           /* Address Offset: 0x0094 */
+    __IO uint32_t GPIO1C_P;                           /* Address Offset: 0x0098 */
+    __IO uint32_t GPIO1D_P;                           /* Address Offset: 0x009C */
+         uint32_t RESERVED3[8];                       /* Address Offset: 0x00A0 */
+    __IO uint32_t GPIO0A_E;                           /* Address Offset: 0x00C0 */
+    __IO uint32_t GPIO0B_E;                           /* Address Offset: 0x00C4 */
+    __IO uint32_t GPIO0C_E;                           /* Address Offset: 0x00C8 */
+    __IO uint32_t GPIO0D_E;                           /* Address Offset: 0x00CC */
+    __IO uint32_t GPIO1A_E;                           /* Address Offset: 0x00D0 */
+    __IO uint32_t GPIO1B_E;                           /* Address Offset: 0x00D4 */
+    __IO uint32_t GPIO1C_E;                           /* Address Offset: 0x00D8 */
+    __IO uint32_t GPIO1D_E;                           /* Address Offset: 0x00DC */
+         uint32_t RESERVED4[8];                       /* Address Offset: 0x00E0 */
+    __IO uint32_t SOC_CON[6];                         /* Address Offset: 0x0100 */
+         uint32_t RESERVED5[10];                      /* Address Offset: 0x0118 */
+    __IO uint32_t SOC_STATUS[2];                      /* Address Offset: 0x0140 */
+         uint32_t RESERVED6[6];                       /* Address Offset: 0x0148 */
+    __IO uint32_t DSP_CON[3];                         /* Address Offset: 0x0160 */
+         uint32_t RESERVED7;                          /* Address Offset: 0x016C */
+    __IO uint32_t DSP_STAT[2];                        /* Address Offset: 0x0170 */
+         uint32_t RESERVED8[2];                       /* Address Offset: 0x0178 */
+    __IO uint32_t PVTM_CON[2];                        /* Address Offset: 0x0180 */
+    __IO uint32_t PVTM_STATUS[2];                     /* Address Offset: 0x0188 */
+         uint32_t RESERVED9[12];                      /* Address Offset: 0x0190 */
+    __IO uint32_t FW_CON[3];                          /* Address Offset: 0x01C0 */
+         uint32_t RESERVED10[13];                     /* Address Offset: 0x01CC */
+    __IO uint32_t MCU_CON[4];                         /* Address Offset: 0x0200 */
+         uint32_t RESERVED11[4];                      /* Address Offset: 0x0210 */
+    __I  uint32_t MCU_STAT0;                          /* Address Offset: 0x0220 */
+         uint32_t RESERVED12[7];                      /* Address Offset: 0x0224 */
+    __IO uint32_t DSI_CON[30];                        /* Address Offset: 0x0240 */
+         uint32_t RESERVED13[2];                      /* Address Offset: 0x02B8 */
+    __IO uint32_t DSI_STATUS[9];                      /* Address Offset: 0x02C0 */
+         uint32_t RESERVED14[7];                      /* Address Offset: 0x02E4 */
+    __IO uint32_t MEM_CON[6];                         /* Address Offset: 0x0300 */
+         uint32_t RESERVED15[26];                     /* Address Offset: 0x0318 */
+    __IO uint32_t DMAC_CON[7];                        /* Address Offset: 0x0380 */
+         uint32_t RESERVED16[9];                      /* Address Offset: 0x039C */
+    __IO uint32_t FAST_BOOT_EN;                       /* Address Offset: 0x03C0 */
+    __IO uint32_t FAST_BOOT_ADDR;                     /* Address Offset: 0x03C4 */
+         uint32_t RESERVED17[14];                     /* Address Offset: 0x03C8 */
+    __IO uint32_t OS_REG[8];                          /* Address Offset: 0x0400 */
+         uint32_t RESERVED18[696];                    /* Address Offset: 0x0420 */
+    __IO uint32_t CHIP_ID;                            /* Address Offset: 0x0F00 */
+};
 /* MAILBOX Register Structure Define */
 #define MBOX_CNT                       2
 #define MBOX_CHAN_CNT                  4
@@ -609,6 +680,7 @@ typedef struct UART_REG
 /* Memory Base */
 #define ICACHE_BASE         0x40000000U /* Cortex m4 ICache base address */
 #define DCACHE_BASE         0x40004000U /* Cortex m4 DCache base address */
+#define GRF_BASE            0x400B0000U /* GRF base address */
 #define UART0_BASE          0x40800000U /* UART0 base address */
 #define UART1_BASE          0x40810000U /* UART1 base address */
 #define UART2_BASE          0x40820000U /* UART2 base address */
@@ -639,6 +711,7 @@ typedef struct UART_REG
 /* Module Variable Define */
 #define ICACHE              ((struct ICACHE_REG *) ICACHE_BASE)
 #define DCACHE              ((struct DCACHE_REG *) DCACHE_BASE)
+#define GRF                 ((struct GRF_REG *) GRF_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
 #define MBOX1               ((struct MBOX_REG *) MBOX1_BASE)
 #define MBOX2               ((struct MBOX_REG *) MBOX2_BASE)
@@ -669,6 +742,7 @@ typedef struct UART_REG
 
 #define IS_ICACHE_INSTANCE(instance) ((instance) == ICACHE)
 #define IS_DCACHE_INSTANCE(instance) ((instance) == DCACHE)
+#define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
 #define IS_SHAREMEM_INSTANCE(instance) ((instance) == SHAREMEM)
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
