@@ -34,6 +34,10 @@
 #include "hal_nvic.h"
 #endif
 
+#ifdef HAL_PL330_MODULE_ENABLED
+#include "hal_pl330.h"
+#endif
+
 #ifdef HAL_PMU_MODULE_ENABLED
 #include "hal_pd.h"
 #endif
