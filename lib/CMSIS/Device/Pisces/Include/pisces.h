@@ -10,6 +10,29 @@
 #endif
 
 /* ================================================================================ */
+/* ================                    DMA REQ                      =============== */
+/* ================================================================================ */
+typedef enum {
+    DMA_REQ_UART0_TX = 0,
+    DMA_REQ_UART0_RX,
+    DMA_REQ_UART1_TX,
+    DMA_REQ_UART1_RX,
+    DMA_REQ_UART2_TX,
+    DMA_REQ_UART2_RX,
+    DMA_REQ_I2S0_TX,
+    DMA_REQ_I2S0_RX,
+    DMA_REQ_I2S1_TX,
+    DMA_REQ_I2S1_RX,
+    DMA_REQ_PDM0,
+    DMA_REQ_SPI1_TX,
+    DMA_REQ_SPI1_RX,
+    DMA_REQ_SPI2_TX,
+    DMA_REQ_SPI2_RX,
+    DMA_REQ_PWM,
+    DMA_REQ_AUDIOPWM,
+} DMA_REQ_Type;
+
+/* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
 typedef enum
