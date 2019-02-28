@@ -23,7 +23,7 @@
 #define HAL_IS_BIT_CLR(REG, BIT) (((REG) & (BIT)) == RESET)
 
 #define HAL_ARRAY_SIZE(a) (sizeof((a)) / sizeof((a)[0]))
-#define HAL_MIN(x, y) ((x) < (y) ? (x) : (y))
+#define HAL_MIN(x, y)     ((x) < (y) ? (x) : (y))
 
 #ifdef __GNUC__
 #ifndef __weak
@@ -37,14 +37,12 @@
 #define __irq
 
 /***************************** Structure Definition **************************/
-typedef enum
-{
+typedef enum {
     FALSE = 0x00U,
     TRUE = 0x01U
 } HAL_Check;
 
-typedef enum
-{
+typedef enum {
     HAL_OK = 0x00U,
     HAL_ERROR = (-1),
     HAL_BUSY = (-16),
@@ -53,14 +51,12 @@ typedef enum
     HAL_TIMEOUT = (-110)
 } HAL_Status;
 
-typedef enum
-{
+typedef enum {
     HAL_DISABLE = 0x00U,
     HAL_ENABLE = 0x01U
 } HAL_FuncStatus;
 
-typedef enum
-{
+typedef enum {
     HAL_UNLOCKED = 0x00U,
     HAL_LOCKED = 0x01U
 } HAL_LockStatus;

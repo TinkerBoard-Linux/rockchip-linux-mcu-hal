@@ -110,6 +110,7 @@ static int32_t UART_SetLcrReg(struct UART_REG *pReg, uint8_t byteSize,
         lcr |= UART_LCR_STOP;
 
     pReg->UART_LCR = lcr;
+
     return (bRet);
 }
 
@@ -308,6 +309,7 @@ int HAL_UART_SerialIn(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
         *pdata++ = (uint8_t)pReg->UART_RBR;
         dwRealSize++;
     }
+
     return dwRealSize;
 }
 
@@ -384,6 +386,7 @@ HAL_Status HAL_UART_Init(struct UART_REG *pReg, eUART_BaudRate baudRate,
         UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_10 | UART_FCR_T_TRIG_10;
     UART_SetLcrReg(pReg, dataBit, parity, stopBit);
     UART_SetBaudRate(pReg, 24000000, baudRate);
+
     return HAL_OK;
 }
 
@@ -395,6 +398,7 @@ HAL_Status HAL_UART_Init(struct UART_REG *pReg, eUART_BaudRate baudRate,
 HAL_Status HAL_UART_DeInit(struct UART_REG *pReg)
 {
     UART_Reset(pReg);
+
     return HAL_OK;
 }
 
@@ -418,6 +422,7 @@ HAL_Status HAL_UART_DeInit(struct UART_REG *pReg)
   */
 HAL_Status HAL_UART_Suspend(struct UART_REG *pReg)
 {
+
     /* ...to do */
     return HAL_OK;
 }
@@ -429,6 +434,7 @@ HAL_Status HAL_UART_Suspend(struct UART_REG *pReg)
   */
 HAL_Status HAL_UART_Resume(struct UART_REG *pReg)
 {
+
     /* ...to do */
     return HAL_OK;
 }

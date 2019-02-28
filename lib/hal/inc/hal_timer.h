@@ -22,8 +22,7 @@
  *  @{
  */
 
-typedef enum
-{
+typedef enum {
     TIMER_FREE_RUNNING = 0,
     TIMER_USER_DEFINED,
     TIMER_MODE_MAX

@@ -28,8 +28,7 @@
  *  performance measurement count for icache & dcache
  *
  */
-struct CACHE_PMU_CNT
-{
+struct CACHE_PMU_CNT {
     uint32_t rdNum; /* PMU read number counter */
     uint32_t wrNum; /* PMU write number counter */
     uint32_t sramRdHit; /* PMU SRAM hit counter */

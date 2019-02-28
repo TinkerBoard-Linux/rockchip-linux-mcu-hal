@@ -23,8 +23,7 @@
 
 /***************************** Structure Definition **************************/
 
-typedef enum
-{
+typedef enum {
     ERASE_SECTOR = 0,
     ERASE_BLOCK64K,
     ERASE_CHIP

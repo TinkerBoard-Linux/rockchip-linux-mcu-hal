@@ -36,17 +36,16 @@ typedef uint32_t eCLOCK_Gate;
 
 /* The maximum TOP (timeout period) value that can be set in the watchdog. */
 
-#define WDT_MAX_TOP 15
+#define WDT_MAX_TOP         15
 #define WDT_DEFAULT_SECONDS 30
-#define WDT_TIMEOUT 500 /* ms */
+#define WDT_TIMEOUT         500 /* ms */
 
 #define WDT_CLOCK_NAME 0x1
 #define WDT_CLOCK_GATE 0x2
 
 /********************* Private Structure Definition **************************/
 
-struct DW_WDT
-{
+struct DW_WDT {
     eCLOCK_Name clk_Name;
     eCLOCK_Gate clk_Gate;
     uint32_t in_Use;

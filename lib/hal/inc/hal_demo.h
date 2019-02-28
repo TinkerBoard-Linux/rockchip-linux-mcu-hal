@@ -30,8 +30,7 @@
  *  Add multi line brief to here
  *  ...
  */
-typedef enum
-{
+typedef enum {
     TEST_ENUM_ONE,
     TEST_ENUM_TWO,
     TEST_ENUM_THREE

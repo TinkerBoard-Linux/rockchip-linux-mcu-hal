@@ -127,6 +127,7 @@ HAL_Status HAL_MMC_SetInterruptMask(struct HAL_MMC_HOST *host, uint32_t mask)
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->INTMASK, mask);
+
     return HAL_OK;
 }
 
@@ -142,6 +143,7 @@ HAL_Status HAL_MMC_ClearRawInterrupt(struct HAL_MMC_HOST *host,
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->RINTSTS, interrupts);
+
     return HAL_OK;
 }
 
@@ -192,6 +194,7 @@ HAL_Status HAL_MMC_SetByteCount(struct HAL_MMC_HOST *host, uint32_t bytes)
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->BYTCNT, bytes);
+
     return HAL_OK;
 }
 
@@ -206,6 +209,7 @@ HAL_Status HAL_MMC_SetBlockSize(struct HAL_MMC_HOST *host, uint32_t size)
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     WRITE_REG(pReg->BLKSIZ, size);
+
     return HAL_OK;
 }
 
@@ -240,6 +244,7 @@ HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
             fifo_available = MMC_FIFO_DEPTH - MMC_GetWaterlevel(host);
             if (retries++ > 10000) {
                 HAL_DBG_ERR("%s: get water level timeout\n", __func__);
+
                 return HAL_TIMEOUT;
             }
         } while (!fifo_available);
@@ -251,6 +256,7 @@ HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
         if (retries++ > 10000) {
             HAL_DBG_ERR("%s: timeout for data line keep being busy\n",
                         __func__);
+
             return HAL_TIMEOUT;
         }
     }
@@ -277,6 +283,7 @@ HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
             fifo_available = MMC_GetWaterlevel(host);
             if (retries++ > 10000) {
                 HAL_DBG_ERR("%s: get water level timeout\n", __func__);
+
                 return HAL_TIMEOUT;
             }
         } while (!fifo_available);
@@ -289,6 +296,7 @@ HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
         if (retries++ > 10000) {
             HAL_DBG_ERR("%s: timeout for data line keep being busy\n",
                         __func__);
+
             return HAL_TIMEOUT;
         }
     }
@@ -354,6 +362,7 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
     while (READ_REG(pReg->CMD) & BIT(31)) {
         if (!loop) {
             HAL_DBG_ERR("%s: update clock timeout\n", __func__);
+
             return HAL_TIMEOUT;
         }
 
@@ -371,6 +380,7 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
     while (READ_REG(pReg->CMD) & BIT(31)) {
         if (!loop) {
             HAL_DBG_ERR("%s: update clock timeout\n", __func__);
+
             return HAL_TIMEOUT;
         }
 
@@ -388,6 +398,7 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
     while (READ_REG(pReg->CMD) & BIT(31)) {
         if (!loop) {
             HAL_DBG_ERR("%s: update clock timeout\n", __func__);
+
             return HAL_TIMEOUT;
         }
 
@@ -417,9 +428,11 @@ HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int32_t width)
         break;
     default:
         HAL_DBG_ERR("%s: card width %ld is not supported\n", __func__, width);
+
         return HAL_INVAL;
         break;
     }
+
     return HAL_OK;
 }
 
@@ -445,6 +458,7 @@ HAL_Status HAL_MMC_SendCommand(struct HAL_MMC_HOST *host, uint32_t cmd,
     while (READ_REG(pReg->CMD) & MMC_CMD_START_CMD) {
         if (!loop) {
             HAL_DBG_ERR("%s: send cmd timeout\n", __func__);
+
             return HAL_TIMEOUT;
         }
 
@@ -474,6 +488,7 @@ HAL_Status HAL_MMC_ResetFifo(struct HAL_MMC_HOST *host)
     while (READ_REG(pReg->CTRL) & MMC_CTRL_FIFO_RESET) {
         if (!loop) {
             HAL_DBG_ERR("%s: FIFO reset timeout\n", __func__);
+
             return HAL_TIMEOUT;
         }
 
@@ -501,6 +516,7 @@ HAL_Status HAL_MMC_Reset(struct HAL_MMC_HOST *host)
     while (READ_REG(pReg->BMOD) & MMC_BMOD_RESET) {
         if (!loop) {
             HAL_DBG_ERR("%s: BMOD Software reset timeout\n", __func__);
+
             return HAL_TIMEOUT;
         }
         HAL_DelayMs(1);
@@ -516,11 +532,13 @@ HAL_Status HAL_MMC_Reset(struct HAL_MMC_HOST *host)
                                    MMC_CTRL_FIFO_RESET | MMC_CTRL_DMA_RESET)) {
         if (!loop) {
             HAL_DBG_ERR("%s: CTRL dma|fifo|ctrl reset timeout\n", __func__);
+
             return HAL_TIMEOUT;
         }
         HAL_DelayMs(1);
         loop--;
     }
+
     return HAL_OK;
 }
 
@@ -539,6 +557,7 @@ inline HAL_Status HAL_MMC_StartDma(struct HAL_MMC_HOST *host)
     reg = READ_REG(pReg->BMOD);
     reg |= BIT(7);
     WRITE_REG(pReg->BMOD, reg);
+
     return HAL_OK;
 }
 
@@ -555,6 +574,7 @@ inline HAL_Status HAL_MMC_StopDma(struct HAL_MMC_HOST *host)
     reg = READ_REG(pReg->BMOD);
     reg &= ~BIT(7);
     WRITE_REG(pReg->BMOD, reg);
+
     return HAL_OK;
 }
 
@@ -630,6 +650,7 @@ HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host)
  */
 HAL_Status HAL_MMC_DeInit(struct HAL_MMC_HOST *host)
 {
+
     /* TBD */
     return HAL_OK;
 }

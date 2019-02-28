@@ -9,22 +9,19 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
-typedef enum
-{
+typedef enum {
     GPIO_LOW,
     GPIO_HIGH
 
 } eGPIOPinLevel;
 
-typedef enum
-{
+typedef enum {
     GPIO_IN,
     GPIO_OUT
 
 } eGPIOPinDirection;
 
-typedef enum
-{
+typedef enum {
     GPIOPortA_Pin0,
     GPIOPortA_Pin1,
     GPIOPortA_Pin2,
@@ -60,8 +57,7 @@ typedef enum
 
 } eGPIOPinNum;
 
-typedef enum
-{
+typedef enum {
     GPIO_CH0,
     GPIO_CH1,
     GPIO_CH2,

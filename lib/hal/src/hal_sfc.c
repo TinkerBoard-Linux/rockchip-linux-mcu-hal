@@ -24,8 +24,8 @@
  (#) DMA mode: Unmask TRANSM interrupt(HAL_SFC_UnMaskTransmInterrupt).
  (#) Initialize SFC controller(HAL_SFC_Init);
  (#) Send SFC request:
- 	(##) Normal mode: (SFC_Request);
- 	(##) DMA mode: (SFC_Request_DMA);
+    (##) Normal mode: (SFC_Request);
+    (##) DMA mode: (SFC_Request_DMA);
  (#) DMA mode: Handling interrupt return in DMA mode SFC request:
 
  @endverbatim
@@ -65,7 +65,7 @@
 /* SFC_FSR */
 #define SFC_FSR_RXFS_EMPTY (1 << SFC_FSR_RXFS_SHIFT) /* Receive FIFO Full */
 #define SFC_FSR_RXES_EMPTY (1 << SFC_FSR_RXES_SHIFT) /* Receive FIFO Empty */
-#define SFC_FSR_TXFS_FULL (1 << SFC_FSR_TXFS_SHIFT) /* Transmit FIFO Full */
+#define SFC_FSR_TXFS_FULL  (1 << SFC_FSR_TXFS_SHIFT) /* Transmit FIFO Full */
 #define SFC_FSR_TXES_EMPTY (1 << SFC_FSR_TXES_SHIFT) /* Transmit FIFO Empty */
 
 /* SFC_SR */
@@ -81,11 +81,9 @@
 
 /********************* Private Structure Definition **************************/
 
-typedef union
-{
+typedef union {
     uint32_t d32;
-    struct
-    {
+    struct {
         unsigned txempty : 1; /* tx fifo empty */
         unsigned txfull : 1; /* tx fifo full */
         unsigned rxempty : 1; /* rx fifo empty */

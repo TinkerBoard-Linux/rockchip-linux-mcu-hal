@@ -21,7 +21,7 @@
 
 /***************************** MACRO Definition ******************************/
 
-#define L32 32
+#define L32  32
 #define INTC ((struct INTC_REG *)INTC_BASE)
 #define IS_VALID_IRQ(n) ((int32_t)(n) >= 0 && (int32_t)(n) < 64)
 

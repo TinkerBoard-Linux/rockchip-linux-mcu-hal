@@ -24,13 +24,13 @@
 #define SFC_MAX_IOSIZE (1024 * 8) /* 8KB */
 
 /** SFC_CMD Bit Value Without Shift */
-#define SFC_ADDR_0BITS (0)
+#define SFC_ADDR_0BITS  (0)
 #define SFC_ADDR_24BITS (1)
 #define SFC_ADDR_32BITS (2)
-#define SFC_ADDR_XBITS (3)
+#define SFC_ADDR_XBITS  (3)
 
 #define SFC_WRITE (1)
-#define SFC_READ (0)
+#define SFC_READ  (0)
 
 /** SFC_CTRL Bit Value Without Shift */
 #define SFC_1BITS_LINE (0)
@@ -46,11 +46,9 @@
 /***************************** Structure Definition **************************/
 
 /** SFC_CTRL bit union */
-typedef union
-{
+typedef union {
     uint32_t d32;
-    struct
-    {
+    struct {
         unsigned mode : 1; /* spi mode select */
         unsigned sps : 1; /* shift in phase at: posedge 1: negedge */
         unsigned reserved3_2 : 2;
@@ -65,11 +63,9 @@ typedef union
 } SFCCTRL_DATA;
 
 /** SFC_CMD bit union */
-typedef union
-{
+typedef union {
     uint32_t d32;
-    struct
-    {
+    struct {
         unsigned cmd : 8; /* command that will send to Serial Flash */
         unsigned dummybits : 4; /* dummy bits number */
         unsigned rw : 1; /* 0:read, 1: write */
@@ -81,8 +77,7 @@ typedef union
 } SFCCMD_DATA;
 
 /** SFC_CTRL datalines value */
-typedef enum
-{
+typedef enum {
     DATA_LINES_X1 = 0,
     DATA_LINES_X2,
     DATA_LINES_X4

@@ -9,8 +9,7 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
-typedef enum
-{
+typedef enum {
     NVIC_PRIORITYGROUP_0 = (0x7U), /*!< 0 bits pre-emption, 5 bits subpriority*/
     NVIC_PRIORITYGROUP_1 = (0x6U), /*!< 1 bits pre-emption, 4 bits subpriority*/
     NVIC_PRIORITYGROUP_2 = (0x5U), /*!< 2 bits pre-emption, 3 bits subpriority*/

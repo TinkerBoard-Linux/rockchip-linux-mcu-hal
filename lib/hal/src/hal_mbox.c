@@ -43,13 +43,11 @@
 
 /********************* Private Structure Definition **************************/
 
-struct MBOX_CHAN
-{
+struct MBOX_CHAN {
     const struct MBOX_CLIENT *client;
 };
 
-struct MBOX_DEV
-{
+struct MBOX_DEV {
     struct MBOX_REG *pReg;
     struct MBOX_CHAN chans[MBOX_CHAN_CNT];
     uint8_t A2B;

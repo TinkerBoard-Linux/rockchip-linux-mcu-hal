@@ -46,22 +46,22 @@
 #ifdef HAL_PMU_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-#define PD_PWR_SHIFT 0U
-#define PD_PWR_MASK 0x0000000FU
-#define PD_ST_SHIFT 4U
-#define PD_ST_MASK 0x000000F0U
-#define PD_REQ_SHIFT 8U
-#define PD_REQ_MASK 0x00000F00U
+#define PD_PWR_SHIFT  0U
+#define PD_PWR_MASK   0x0000000FU
+#define PD_ST_SHIFT   4U
+#define PD_ST_MASK    0x000000F0U
+#define PD_REQ_SHIFT  8U
+#define PD_REQ_MASK   0x00000F00U
 #define PD_IDLE_SHIFT 12U
-#define PD_IDLE_MASK 0x0000F000U
-#define PD_ACK_SHIFT 16U
-#define PD_ACK_MASK 0x000F0000U
+#define PD_IDLE_MASK  0x0000F000U
+#define PD_ACK_SHIFT  16U
+#define PD_ACK_MASK   0x000F0000U
 
-#define PD_GET_PWR_SHIFT(x) (((uint32_t)(x)&PD_PWR_MASK) >> PD_PWR_SHIFT)
-#define PD_GET_ST_SHIFT(x) (((uint32_t)(x)&PD_ST_MASK) >> PD_ST_SHIFT)
-#define PD_GET_REQ_SHIFT(x) (((uint32_t)(x)&PD_REQ_MASK) >> PD_REQ_SHIFT)
+#define PD_GET_PWR_SHIFT(x)  (((uint32_t)(x)&PD_PWR_MASK) >> PD_PWR_SHIFT)
+#define PD_GET_ST_SHIFT(x)   (((uint32_t)(x)&PD_ST_MASK) >> PD_ST_SHIFT)
+#define PD_GET_REQ_SHIFT(x)  (((uint32_t)(x)&PD_REQ_MASK) >> PD_REQ_SHIFT)
 #define PD_GET_IDLE_SHIFT(x) (((uint32_t)(x)&PD_IDLE_MASK) >> PD_IDLE_SHIFT)
-#define PD_GET_ACK_SHIFT(x) (((uint32_t)(x)&PD_ACK_MASK) >> PD_ACK_SHIFT)
+#define PD_GET_ACK_SHIFT(x)  (((uint32_t)(x)&PD_ACK_MASK) >> PD_ACK_SHIFT)
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
@@ -183,6 +183,7 @@ HAL_Status HAL_PD_Setting(uint32_t pd, bool powerOn)
                 return error;
         }
     }
+
     return error;
 }
 

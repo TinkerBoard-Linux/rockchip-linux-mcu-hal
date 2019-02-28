@@ -22,8 +22,7 @@
 
 /***************************** MACRO Definition ******************************/
 
-typedef enum
-{
+typedef enum {
     MBOX_CH_0 = 0,
     MBOX_CH_1,
     MBOX_CH_2,
@@ -33,8 +32,7 @@ typedef enum
 
 /***************************** Structure Definition **************************/
 
-struct MBOX_CLIENT
-{
+struct MBOX_CLIENT {
     char name[16];
     void (*RXCallback)(struct MBOX_CMD_DAT *msg, void *cbData);
     void *callbackData;

@@ -59,6 +59,7 @@ uint8_t HAL_GPIO_GetPinDirection(eGPIO_CHANNEL gpioPort, eGPIOPinNum gpioPinNum)
     pgpio = GPIO_PORT(gpioPort);
 
     pin = gpioPinNum % 32;
+
     return (((pgpio->GPIO_SWPORT_DDR) & (0x1 << pin)) >> pin);
 }
 
