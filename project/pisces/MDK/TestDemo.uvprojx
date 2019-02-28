@@ -78,9 +78,9 @@
             <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name></UserProg1Name>
+            <UserProg1Name>fromELF --bin -o TestDemo.bin  .\Objects\TestDemo.axf</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -147,7 +147,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>1</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -161,7 +161,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile>.\Boot.ini</InitializationFile>
-            <Driver>BIN\UL2CM3.DLL</Driver>
+            <Driver>Segger\JL2CM3.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -239,12 +239,12 @@
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>1</Ir1Chk>
+            <Ir1Chk>0</Ir1Chk>
             <Ir2Chk>0</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>1</Im1Chk>
+            <Im1Chk>0</Im1Chk>
             <Im2Chk>0</Im2Chk>
             <OnChipMemories>
               <Ocm1>
@@ -395,7 +395,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>..\..\..\..\hal-debug\lib\CMSIS\Device\Pisces\Source\Templates\ARM\pisces_ac5.sct</ScatterFile>
+            <ScatterFile>..\..\..\lib\CMSIS\Device\Pisces\Source\Templates\ARM\pisces_ac5.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -512,6 +512,11 @@
               <FileName>unity_fixture.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\test\unity\extras\fixture\src\unity_fixture.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_snor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\hal\test_snor.c</FilePath>
             </File>
           </Files>
         </Group>
