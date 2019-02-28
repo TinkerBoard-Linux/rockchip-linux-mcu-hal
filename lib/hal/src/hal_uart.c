@@ -116,79 +116,40 @@ static int32_t UART_SetLcrReg(struct UART_REG *pReg, uint8_t byteSize,
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup UART_Exported_Functions_Group1 control uart Functions
+/** @defgroup UART_Exported_Functions_Group1 Suspend and Resume Functions
  @verbatim
 
  ===============================================================================
-             #### control uart functions ####
+             #### Suspend and Resume functions ####
  ===============================================================================
- This section provides functions allowing to control uart:
+ This section provides functions allowing to suspend and resume the module:
 
  @endverbatim
  *  @{
  */
 /**
-  * @brief  enable uart sub interrupt
+  * @brief  suspend uart
   * @param  pReg: uart reg base
-  * @param  uartIntNumb: uart irq num, such as UART_IER_RDI
-  * @return none
+  * @return HAL_OK for reserve
   */
-void HAL_UART_EnableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
+HAL_Status HAL_UART_Suspend(struct UART_REG *pReg)
 {
-    pReg->UART_IER |= uartIntNumb;
+
+    /* ...to do */
+    return HAL_OK;
 }
 
 /**
-  * @brief  disable uart sub interrupt
+  * @brief  resume uart
   * @param  pReg: uart reg base
-  * @param  uartIntNumb: uart irq num, such as UART_IER_RDI
-  * @return none
+  * @return HAL_OK for reserve
   */
-void HAL_UART_DisableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
+HAL_Status HAL_UART_Resume(struct UART_REG *pReg)
 {
-    pReg->UART_IER &= ~uartIntNumb;
-}
 
-/**
-  * @brief  enable uart loop back mode
-  * @param  pReg: uart reg base
-  * @return none
-  */
-void HAL_UART_EnableLoopback(struct UART_REG *pReg)
-{
-    pReg->UART_MCR |= UART_MCR_LOOP;
+    /* ...to do */
+    return HAL_OK;
 }
-
-/**
-  * @brief  disable uart loop back mode
-  * @param  pReg: uart reg base
-  * @return none
-  */
-void HAL_UART_DisableLoopback(struct UART_REG *pReg)
-{
-    pReg->UART_MCR &= ~(UART_MCR_LOOP);
-}
-
-/**
-  * @brief  enable uart hardware auto flow control
-  * @param  pReg: uart reg base
-  * @return none
-  */
-void HAL_UART_EnableAutoFlowControl(struct UART_REG *pReg)
-{
-    pReg->UART_MCR = UART_MCR_AFE | 0X02;
-}
-
-/**
-  * @brief  disable uart hardware auto flow control
-  * @param  pReg: uart reg base
-  * @return none
-  */
-void HAL_UART_DisableAutoFlowControl(struct UART_REG *pReg)
-{
-    pReg->UART_MCR &= ~UART_MCR_AFE;
-}
-
 /** @} */
 
 /** @defgroup UART_Exported_Functions_Group2 get uart status Functions
@@ -279,10 +240,7 @@ int HAL_UART_SerialOut(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
     int dwRealSize = 0;
 
     while (cnt--) {
-        if (!(pReg->UART_USR & UART_USR_TX_FIFO_NOT_FULL)) {
-            break;
-        }
-
+        while (!(pReg->UART_USR & UART_USR_TX_FIFO_NOT_FULL));
         pReg->UART_THR = *pdata++;
         dwRealSize++;
     }
@@ -315,49 +273,7 @@ int HAL_UART_SerialIn(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
 
 /** @} */
 
-/** @defgroup UART_Exported_Functions_Group4 interrupt Functions
- @verbatim
-
- ===============================================================================
-             #### interrupt functions ####
- ===============================================================================
- This section provides functions allowing to handler interrupt:
-
- @endverbatim
- *  @{
- */
-/**
-  * @brief  low level irq handler, for msi, busy, rlsi
-  * @param  pReg: uart reg base
-  * @return HAL_OK for reserve
-  */
-HAL_Status HAL_UART_HandleIrq(struct UART_REG *pReg)
-{
-    int iir = 0;
-
-    iir = HAL_UART_GetIrqID(pReg);
-
-    /* Handle the three sub interrupts, so the upper irq handler needn't handle those */
-    switch (iir) {
-    case UART_IIR_MSI:
-        HAL_UART_GetMsr(pReg); /* clear MSI only */
-        break;
-    case UART_IIR_BUSY:
-        HAL_UART_GetUsr(pReg); /* clear BUSY interrupt only */
-        break;
-    case UART_IIR_RLSI:
-        HAL_UART_GetMsr(pReg); /* clear RLSI interrupt only */
-        break;
-    case UART_IIR_NO_INT:
-        break;
-    }
-
-    return HAL_OK;
-}
-
-/** @} */
-
-/** @defgroup UART_Exported_Functions_Group5 Init and Deinit Functions
+/** @defgroup UART_Exported_Functions_Group4 Init and Deinit Functions
  @verbatim
 
  ===============================================================================
@@ -404,40 +320,108 @@ HAL_Status HAL_UART_DeInit(struct UART_REG *pReg)
 
 /** @} */
 
-/** @defgroup UART_Exported_Functions_Group6 Suspend and Resume Functions
+/** @defgroup UART_Exported_Functions_Group5 Other Functions
  @verbatim
 
  ===============================================================================
-             #### Suspend and Resume functions ####
+             #### Other Functions ####
  ===============================================================================
- This section provides functions allowing to suspend and resume the module:
+ This section provides functions allowing to control uart:
 
  @endverbatim
  *  @{
  */
 /**
-  * @brief  suspend uart
+  * @brief  enable uart sub interrupt
   * @param  pReg: uart reg base
-  * @return HAL_OK for reserve
+  * @param  uartIntNumb: uart irq num, such as UART_IER_RDI
+  * @return none
   */
-HAL_Status HAL_UART_Suspend(struct UART_REG *pReg)
+void HAL_UART_EnableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
 {
-
-    /* ...to do */
-    return HAL_OK;
+    pReg->UART_IER |= uartIntNumb;
 }
 
 /**
-  * @brief  resume uart
+  * @brief  disable uart sub interrupt
+  * @param  pReg: uart reg base
+  * @param  uartIntNumb: uart irq num, such as UART_IER_RDI
+  * @return none
+  */
+void HAL_UART_DisableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
+{
+    pReg->UART_IER &= ~uartIntNumb;
+}
+
+/**
+  * @brief  enable uart loop back mode
+  * @param  pReg: uart reg base
+  * @return none
+  */
+void HAL_UART_EnableLoopback(struct UART_REG *pReg)
+{
+    pReg->UART_MCR |= UART_MCR_LOOP;
+}
+
+/**
+  * @brief  disable uart loop back mode
+  * @param  pReg: uart reg base
+  * @return none
+  */
+void HAL_UART_DisableLoopback(struct UART_REG *pReg)
+{
+    pReg->UART_MCR &= ~(UART_MCR_LOOP);
+}
+
+/**
+  * @brief  enable uart hardware auto flow control
+  * @param  pReg: uart reg base
+  * @return none
+  */
+void HAL_UART_EnableAutoFlowControl(struct UART_REG *pReg)
+{
+    pReg->UART_MCR = UART_MCR_AFE | 0X02;
+}
+
+/**
+  * @brief  disable uart hardware auto flow control
+  * @param  pReg: uart reg base
+  * @return none
+  */
+void HAL_UART_DisableAutoFlowControl(struct UART_REG *pReg)
+{
+    pReg->UART_MCR &= ~UART_MCR_AFE;
+}
+
+/**
+  * @brief  low level irq handler, for msi, busy, rlsi
   * @param  pReg: uart reg base
   * @return HAL_OK for reserve
   */
-HAL_Status HAL_UART_Resume(struct UART_REG *pReg)
+HAL_Status HAL_UART_HandleIrq(struct UART_REG *pReg)
 {
+    int iir = 0;
 
-    /* ...to do */
+    iir = HAL_UART_GetIrqID(pReg);
+
+    /* Handle the three sub interrupts, so the upper irq handler needn't handle those */
+    switch (iir) {
+    case UART_IIR_MSI:
+        HAL_UART_GetMsr(pReg); /* clear MSI only */
+        break;
+    case UART_IIR_BUSY:
+        HAL_UART_GetUsr(pReg); /* clear BUSY interrupt only */
+        break;
+    case UART_IIR_RLSI:
+        HAL_UART_GetMsr(pReg); /* clear RLSI interrupt only */
+        break;
+    case UART_IIR_NO_INT:
+        break;
+    }
+
     return HAL_OK;
 }
+
 /** @} */
 
 #endif
