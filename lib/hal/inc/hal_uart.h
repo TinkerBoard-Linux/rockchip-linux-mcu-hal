@@ -57,13 +57,11 @@
 #define UART_FCR6_T_TRIGGER_8  0x10 /* Mask for transmit trigger set at 8 */
 #define UART_FCR6_T_TRIGGER_24 0x20 /* Mask for transmit trigger set at 24 */
 #define UART_FCR6_T_TRIGGER_30 0x30 /* Mask for transmit trigger set at 30 */
-#define UART_FCR7_64BYTE \
-    0x20 /* Go into 64 byte mode (TI16C750 and
-some Freescale UARTs) * /
+#define UART_FCR7_64BYTE       0x20
+/* Go into 64 byte mode (TI16C750 and some Freescale UARTs) */
 
 #define UART_FCR_R_TRIG_SHIFT 6
-#define UART_FCR_R_TRIG_BITS(x) \
-    (((x)&UART_FCR_TRIGGER_MASK) >> UART_FCR_R_TRIG_SHIFT)
+#define UART_FCR_R_TRIG_BITS(x) (((x)&UART_FCR_TRIGGER_MASK) >> UART_FCR_R_TRIG_SHIFT)
 #define UART_FCR_R_TRIG_MAX_STATE 4
 
 /* Out: Line Control Register */
