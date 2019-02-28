@@ -98,6 +98,7 @@ HAL_Status HAL_SFC_UnMaskTransmInterrupt(void);
 HAL_Status HAL_SFC_MaskDmaInterrupt(void);
 HAL_Check HAL_SFC_IsTransmInterrupt(void);
 HAL_Status HAL_SFC_ClearTransmInterrupt(void);
+HAL_Status HAL_SFC_XipConfig(uint32_t sfcmd, uint32_t sfctrl, uint8_t on);
 
 #endif
 

@@ -20,13 +20,17 @@
  ==============================================================================
  The SFC driver can be used as follows:
 
+ This host driver need to be used in conjunction with device flash driver like
+ hal_snor.c
+
  (#) DMA mode: Register handler(HAL_SFC_IRQHandler).
  (#) DMA mode: Unmask TRANSM interrupt(HAL_SFC_UnMaskTransmInterrupt).
  (#) Initialize SFC controller(HAL_SFC_Init);
  (#) Send SFC request:
     (##) Normal mode: (SFC_Request);
     (##) DMA mode: (SFC_Request_DMA);
- (#) DMA mode: Handling interrupt return in DMA mode SFC request:
+ (#) DMA mode: Handling interrupt return in DMA mode SFC request.
+ (#) Configure XIP mode if needed.(HAL_SFC_XipConfig)
 
  @endverbatim
  @} */
@@ -38,29 +42,20 @@
 /********************* Private MACRO Definition ******************************/
 
 /* SFC_CTRL */
-#define SFC_CTRL_SHIFTPHASE_NEGEDGE (1 << SFC_CTRL_SHIFTPHASE_SHIFT)
+#define SFC_CTRL_SHIFTPHASE_NEGEDGE 1
 
 /* SFC_RCVR */
-#define SFC_RCVR_RCVR_RESET \
-    (1 << SFC_RCVR_RCVR_SHIFT) /* Recover The SFC State Machine */
+#define SFC_RCVR_RCVR_RESET (1 << SFC_RCVR_RCVR_SHIFT) /* Recover The SFC State Machine */
 
 /* SFC_ISR */
-#define SFC_ISR_DMAS_ACTIVE \
-    (1 << SFC_ISR_DMAS_SHIFT) /* DMA Finish Interrupt Active */
-#define SFC_ISR_NSPIS_ACTIVE \
-    (1 << SFC_ISR_NSPIS_SHIFT) /* SPI Error Interrupt Active */
-#define SFC_ISR_AHBS_ACTIVE \
-    (1 << SFC_ISR_AHBS_SHIFT) /* AHB Error Interrupt Active */
-#define SFC_ISR_TRANSS_ACTIVE \
-    (1 << SFC_ISR_TRANSS_SHIFT) /* Transfer finish Interrupt Active */
-#define SFC_ISR_TXES_ACTIVE \
-    (1 << SFC_ISR_TXES_SHIFT) /* Transmit FIFO Empty Interrupt Active */
-#define SFC_ISR_TXOS_ACTIVE \
-    (1 << SFC_ISR_TXOS_SHIFT) /* Transmit FIFO Overflow Interrupt Active */
-#define SFC_ISR_RXUS_ACTIVE \
-    (1 << SFC_ISR_RXUS_SHIFT) /* Receive FIFO Underflow Interrupt Active */
-#define SFC_ISR_RXFS_ACTIVE \
-    (1 << SFC_ISR_RXFS_SHIFT) /* Receive FIFO Full Interrupt Active */
+#define SFC_ISR_DMAS_ACTIVE   (1 << SFC_ISR_DMAS_SHIFT) /* DMA Finish Interrupt Active */
+#define SFC_ISR_NSPIS_ACTIVE  (1 << SFC_ISR_NSPIS_SHIFT) /* SPI Error Interrupt Active */
+#define SFC_ISR_AHBS_ACTIVE   (1 << SFC_ISR_AHBS_SHIFT) /* AHB Error Interrupt Active */
+#define SFC_ISR_TRANSS_ACTIVE (1 << SFC_ISR_TRANSS_SHIFT) /* Transfer finish Interrupt Active */
+#define SFC_ISR_TXES_ACTIVE   (1 << SFC_ISR_TXES_SHIFT) /* Transmit FIFO Empty Interrupt Active */
+#define SFC_ISR_TXOS_ACTIVE   (1 << SFC_ISR_TXOS_SHIFT) /* Transmit FIFO Overflow Interrupt Active */
+#define SFC_ISR_RXUS_ACTIVE   (1 << SFC_ISR_RXUS_SHIFT) /* Receive FIFO Underflow Interrupt Active */
+#define SFC_ISR_RXFS_ACTIVE   (1 << SFC_ISR_RXFS_SHIFT) /* Receive FIFO Full Interrupt Active */
 
 /* SFC_FSR */
 #define SFC_FSR_RXFS_EMPTY (1 << SFC_FSR_RXFS_SHIFT) /* Receive FIFO Full */
@@ -69,12 +64,10 @@
 #define SFC_FSR_TXES_EMPTY (1 << SFC_FSR_TXES_SHIFT) /* Transmit FIFO Empty */
 
 /* SFC_SR */
-#define SFC_SR_SR_BUSY \
-    (1 << SFC_SR_SR_SHIFT) /* When busy, don¡¯t set the control register. */
+#define SFC_SR_SR_BUSY (1 << SFC_SR_SR_SHIFT) /* When busy, don¡¯t set the control register. */
 
 /* SFC_DMATR */
-#define SFC_DMATR_DMATR_START \
-    (1 << SFC_DMATR_DMATR_SHIFT) /* Write 1 to start the dma transfer. */
+#define SFC_DMATR_DMATR_START (1 << SFC_DMATR_DMATR_SHIFT) /* Write 1 to start the dma transfer. */
 
 /* SFC_RISR */
 #define SFC_RISR_TRANSS_ACTIVE (1 << SFC_RISR_TRANSS_SHIFT)
@@ -151,8 +144,10 @@ HAL_Status HAL_SFC_Request(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
     cmd.d32 = sfcmd;
     ctrl.d32 = sfctrl;
 
-    if (!(SFC->FSR & SFC_FSR_TXES_EMPTY) || !(SFC->FSR & SFC_FSR_RXES_EMPTY) ||
-        (SFC->SR & SFC_SR_SR_BUSY))
+    if (SFC->XIP_MODE & 0x1)
+        return HAL_BUSY;
+
+    if (!(SFC->FSR & SFC_FSR_TXES_EMPTY) || !(SFC->FSR & SFC_FSR_RXES_EMPTY) || (SFC->SR & SFC_SR_SR_BUSY))
         SFC_Reset();
 
     if (cmd.b.addrbits == SFC_ADDR_XBITS) {
@@ -267,8 +262,10 @@ HAL_Status HAL_SFC_Request_DMA(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
     cmd.d32 = sfcmd;
     ctrl.d32 = sfctrl;
 
-    if (!(SFC->FSR & SFC_FSR_TXES_EMPTY) || !(SFC->FSR & SFC_FSR_RXES_EMPTY) ||
-        (SFC->SR & SFC_SR_SR_BUSY))
+    if (SFC->XIP_MODE & 0x1)
+        return HAL_BUSY;
+
+    if (!(SFC->FSR & SFC_FSR_TXES_EMPTY) || !(SFC->FSR & SFC_FSR_RXES_EMPTY) || (SFC->SR & SFC_SR_SR_BUSY))
         SFC_Reset();
 
     if (cmd.b.addrbits == SFC_ADDR_XBITS) {
@@ -395,6 +392,44 @@ __weak HAL_Status HAL_SFC_IRQHandler(void)
 {
     HAL_ASSERT(HAL_SFC_IsTransmInterrupt()); /* Only support TRANSM IT */
     HAL_SFC_ClearTransmInterrupt();
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Configuration XIP mode.
+ * @param  sfcmd: SFC_FETCH_CMD set.
+ * @param  sfctrl: SFC_CTRL set.
+ * @param  on: 1 enable, 0 disable.
+ * @return HAL_Status.
+ * XIP configuration cannot be modified in XIP mode.
+ */
+HAL_Status HAL_SFC_XipConfig(uint32_t sfcmd, uint32_t sfctrl, uint8_t on)
+{
+    SFCCMD_DATA cmd;
+    SFCCTRL_DATA ctrl;
+
+    if (on) {
+        if (SFC->XIP_MODE & 0x1)
+            return HAL_ERROR;
+
+        ctrl.d32 = sfctrl;
+        cmd.d32 = sfcmd;
+
+        ctrl.b.sps = SFC_CTRL_SHIFTPHASE_NEGEDGE;
+        ctrl.b.mode = 0;
+        ctrl.b.scic = 0;
+        ctrl.b.cmdlines = 0;
+
+        cmd.b.readmode = 0;
+
+        SFC->CTRL = ctrl.d32;
+        SFC->CMD = cmd.d32;
+
+        SFC->XIP_MODE = 1;
+    } else {
+        SFC->XIP_MODE = 0;
+    }
 
     return HAL_OK;
 }
