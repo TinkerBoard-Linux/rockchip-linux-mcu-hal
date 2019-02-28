@@ -42,6 +42,8 @@ HAL_Status HAL_SNOR_Read(uint32_t sec, uint32_t nSec, void *pData);
 HAL_Status HAL_SNOR_Write(uint32_t sec, uint32_t nSec, void *pData);
 HAL_Status HAL_SNOR_Erase(uint32_t addr, NOR_ERASE_TYPE EraseType);
 HAL_Status HAL_SNOR_EraseBlk(uint32_t addr);
+HAL_Status HAL_SNOR_XipEnable(void);
+HAL_Status HAL_SNOR_XipDisable(void);
 
 #endif
 

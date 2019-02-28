@@ -79,15 +79,11 @@
 #define CMD_WRITE_STATUS3 (0x11)
 #define CMD_FAST_READ_X1  (0x0B) /* X1 cmd, X1 addr, X1 data */
 #define CMD_FAST_READ_X2  (0x3B) /* X1 cmd, X1 addr, X2 data */
-#define CMD_FAST_READ_X4 \
-    (0x6B) /* X1 cmd, X1 addr, X4 data SUPPORT GD MARCONIX WINBOND */
-#define CMD_FAST_4READ_X4 \
-    (0x6C) /* X1 cmd, X1 addr, X4 data SUPPORT GD MARCONIX WINBOND */
+#define CMD_FAST_READ_X4  (0x6B) /* X1 cmd, X1 addr, X4 data SUPPORT GD MARCONIX WINBOND */
+#define CMD_FAST_4READ_X4 (0x6C) /* X1 cmd, X1 addr, X4 data SUPPORT GD MARCONIX WINBOND */
 
-#define CMD_FAST_READ_A4 \
-    (0xEB) /* X1 cmd, X4 addr, X4 data SUPPORT EON GD MARCONIX WINBOND */
-#define CMD_PAGE_PROG_X4 \
-    (0x32) /* X1 cmd, X1 addr, X4 data, SUPPORT GD WINBOND */
+#define CMD_FAST_READ_A4 (0xEB) /* X1 cmd, X4 addr, X4 data SUPPORT EON GD MARCONIX WINBOND */
+#define CMD_PAGE_PROG_X4 (0x32) /* X1 cmd, X1 addr, X4 data, SUPPORT GD WINBOND */
 #define CMD_PAGE_PROG_A4 (0x38) /* X1 cmd, X4 addr, X4 data, SUPPORT MARCONIX */
 #define CMD_RESET_NAND   (0xFF)
 
@@ -163,34 +159,20 @@ static HAL_Status SNOR_WaitBusy(int32_t timeout);
 /********************* Private Variable Definition ***************************/
 
 struct FLASH_INFO spiFlashbl[] = {
-    { 0xc84016, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x00, 13, 9,
-      0 }, /* GD25Q32B */
-    { 0xc84017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 14, 9,
-      0 }, /* GD25Q64B */
-    { 0xc84018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9,
-      0 }, /* GD25Q127C and GD25Q128C*/
-    { 0xc84019, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 16, 6,
-      0 }, /* GD25Q256B/C */
-    { 0xc84020, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 17, 6,
-      0 }, /* GD25Q512MC */
-    { 0xef4017, 128, 8, 0x13, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9,
-      0 }, /* 25Q64JVSSIQ */
-    { 0xef4018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9,
-      0 }, /* 25Q128FV and 25Q128JV*/
-    { 0xef4019, 128, 8, 0x13, 0x02, 0x6C, 0x32, 0x20, 0xD8, 0x3C, 16, 9,
-      0 }, /* 25Q256FV */
-    { 0xef6017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9,
-      0 }, /* 25Q64FWSSIG */
-    { 0xc22018, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x00, 15, 6,
-      0 }, /* MX25L12835E/F */
-    { 0xc22019, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x30, 16, 6,
-      0 }, /* MX25L25635E/F */
-    { 0x207017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 0,
-      0 }, /* XM25QH64A */
-    { 0x207018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0,
-      0 }, /* XM25QH128A */
-    { 0x1c7018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0,
-      0 }, /* EN25QH128A */
+    { 0xc84016, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x00, 13, 9, 0 }, /* GD25Q32B */
+    { 0xc84017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 14, 9, 0 }, /* GD25Q64B */
+    { 0xc84018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 }, /* GD25Q127C and GD25Q128C*/
+    { 0xc84019, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 16, 6, 0 }, /* GD25Q256B/C */
+    { 0xc84020, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 17, 6, 0 }, /* GD25Q512MC */
+    { 0xef4017, 128, 8, 0x13, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 }, /* 25Q64JVSSIQ */
+    { 0xef4018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 }, /* 25Q128FV and 25Q128JV*/
+    { 0xef4019, 128, 8, 0x13, 0x02, 0x6C, 0x32, 0x20, 0xD8, 0x3C, 16, 9, 0 }, /* 25Q256FV */
+    { 0xef6017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 }, /* 25Q64FWSSIG */
+    { 0xc22018, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x00, 15, 6, 0 }, /* MX25L12835E/F */
+    { 0xc22019, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x30, 16, 6, 0 }, /* MX25L25635E/F */
+    { 0x207017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 0, 0 }, /* XM25QH64A */
+    { 0x207018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* XM25QH128A */
+    { 0x1c7018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* EN25QH128A */
 };
 
 static struct FLASH_INFO *s_spiFlashInfo;
@@ -887,6 +869,49 @@ uint32_t HAL_SNOR_GetCapacity(void)
     struct SFNOR_DEV *pDev = &s_snorDev;
 
     return pDev->capacity;
+}
+
+/**
+ * @brief  Enable XIP mode
+ * @return HAL_Status
+ */
+HAL_Status HAL_SNOR_XipEnable(void)
+{
+    SFCCMD_DATA sfcmd;
+    SFCCTRL_DATA sfctrl;
+    struct SFNOR_DEV *pDev = &s_snorDev;
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = pDev->readCmd;
+    sfcmd.b.addrbits = SFC_ADDR_24BITS;
+
+    sfctrl.d32 = 0;
+    sfctrl.b.datalines = pDev->readLines;
+
+    if (pDev->readCmd == CMD_FAST_READ_X1 ||
+        pDev->readCmd == CMD_FAST_READ_X4 ||
+        pDev->readCmd == CMD_FAST_READ_X2 ||
+        pDev->readCmd == CMD_FAST_4READ_X4) {
+        sfcmd.b.dummybits = 8;
+    } else if (pDev->readCmd == CMD_FAST_READ_A4) {
+        sfcmd.b.addrbits = SFC_ADDR_32BITS;
+        sfcmd.b.dummybits = 4;
+        sfctrl.b.addrlines = SFC_4BITS_LINE;
+    }
+
+    if (pDev->addrMode == ADDR_MODE_4BYTE)
+        sfcmd.b.addrbits = SFC_ADDR_32BITS;
+
+    return HAL_SFC_XipConfig(sfcmd.d32, sfctrl.d32, 1);
+}
+
+/**
+ * @brief  Disable XIP mode
+ * @return HAL_Status
+ */
+HAL_Status HAL_SNOR_XipDisable(void)
+{
+    return HAL_SFC_XipConfig(0, 0, 0);
 }
 
 /** @} */
