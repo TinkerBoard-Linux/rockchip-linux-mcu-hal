@@ -286,7 +286,32 @@ int retValue, varNum;
 
 ## 3.3 排版
 
-项目使用clang format工具辅助排版, 整体排版风格包括空行，空格，括号等的使用参考Linux kernel的coding style, 本文档仅单独说明不一样的部分.
+项目使用uncrustify工具辅助排版, 整体排版风格包括空行，空格，括号等的使用参考Linux kernel的coding style, 本文档仅单独说明不一样的部分.
+
+```shell
+# Ubuntu/Debian下面直接安装
+sudo apt-get install uncrustify
+
+# 建议使用0.66.1以上版本，如果版本过低，可以使用源码安装
+git clone https://github.com/uncrustify/uncrustify.git
+
+cd uncrustify
+git checkout uncrustify-0.68.1
+mkdir build
+cd build
+
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make
+sudo make install
+
+# 检查版本号
+uncrustify --version
+
+# 运行命令检查coding style合法性
+uncrustify -c .uncrustify.cfg --replace --no-backup files
+```
+
+Jenkins也会使用以上命令进行校验，原则上需要通过校验才合并代码。
 
 ### 缩进
 
@@ -968,10 +993,6 @@ core_<cpu>.h	//如：core_cm3.h
 此处填充Doxygen自动生成各模块文档.
 
 # 附录
-
-## clang format工具使用
-
-<https://clang.llvm.org/docs/ClangFormat.html>
 
 ## doxygen工具使用
 
