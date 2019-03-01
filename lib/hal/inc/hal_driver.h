@@ -63,6 +63,10 @@
 #include "hal_snor.h"
 #endif
 
+#ifdef HAL_SPI_MODULE_ENABLED
+#include "hal_spi.h"
+#endif
+
 #ifdef HAL_TIMER_MODULE_ENABLED
 #include "hal_timer.h"
 #endif
