@@ -88,7 +88,7 @@ typedef enum
     DSP_PFATAL_ERROR_IRQn       = 40,     /* DSP pfatal error                                         */
     PWM_IRQn                    = 41,     /* PWM                                                         */
     PWM_PWR_IRQn                = 42,      /* PWM PWR                                                  */
-
+    SPIMST2_IRQn                = 45,     /* SPI Master 2                                              */
     NUM_INTERRUPTS
 } IRQn_Type;
 
@@ -827,7 +827,8 @@ struct VOP_REG {
 #define I2C1_BASE           0x40B10000U /* I2C1 base address */
 #define I2C2_BASE           0x40B20000U /* I2C2 base address */
 #define SPI2APB_BASE        0x40C00000U /* SPI2APB base address */
-#define SPI0_BASE           0x40C10000U /* SPI0 base address */
+#define SPI1_BASE           0x40C10000U /* SPI1 base address */
+#define SPI2_BASE           0x40c20000U /* SPI2 base address */
 #define SFC_BASE            0x40C80000U /* SFC base address */
 #define MMC0_BASE           0x40C90000U /* MMC0 base address */
 #define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
@@ -868,7 +869,8 @@ struct VOP_REG {
 #define I2C1                ((struct I2C_REG *) I2C1_BASE)
 #define I2C2                ((struct I2C_REG *) I2C2_BASE)
 #define SPI2APB             ((struct SPI2APB_REG *) SPI2APB_BASE)
-#define SPI0                ((struct SPI_REG *) SPI0_BASE)
+#define SPI1                ((struct SPI_REG *) SPI1_BASE)
+#define SPI2                ((struct SPI_REG *) SPI2_BASE)
 #define SFC                 ((struct SFC_REG *) SFC_BASE)
 #define MMC0                ((struct MMC_REG *) MMC0_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
@@ -896,7 +898,7 @@ struct VOP_REG {
 #define IS_PWM_INSTANCE(instance) ((instance) == PWM0)
 #define IS_TIMER_INSTANCE(instance) ((instance) == TIMER0 || (instance) == TIMER1 || (instance) == TIMER2 || (instance) == TIMER3 || (instance) == TIMER4 || (instance) == TIMER5)
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2))
-#define IS_SPI_INSTANCE(instance) ((instance) == SPI0)
+#define IS_SPI_INSTANCE(instance) (((instance) == SPI1) || ((instance) == SPI2))
 #define IS_MMC_INSTANCE(instance) ((instance) == MMC0)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
 #define IS_I2S_INSTANCE(instance) (((instance) == I2S0) || ((instance) == I2S1))
