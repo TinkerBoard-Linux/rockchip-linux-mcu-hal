@@ -63,6 +63,8 @@ INCLUDES += \
 -I"$(ROOT_PATH)/test/unity/src" \
 -I"$(ROOT_PATH)/test/unity/extras/fixture/src" \
 -I"$(ROOT_PATH)/test" \
+-I"$(ROOT_PATH)/test/coremark" \
+-I"$(ROOT_PATH)/test/coremark/barebones" \
 -I"../src" \
 
 #############################################################################
@@ -75,6 +77,8 @@ DIRS := $(ROOT_PATH)/lib/hal/src \
 	$(ROOT_PATH)/test/unity/src \
 	$(ROOT_PATH)/test/hal \
 	$(ROOT_PATH)/test \
+	$(ROOT_PATH)/test/coremark \
+	$(ROOT_PATH)/test/coremark/barebones \
 	../src \
 	. \
 

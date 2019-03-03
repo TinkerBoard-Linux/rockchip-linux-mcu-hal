@@ -239,7 +239,7 @@
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>0</Ir1Chk>
+            <Ir1Chk>1</Ir1Chk>
             <Ir2Chk>0</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
@@ -334,7 +334,7 @@
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x4040000</StartAddress>
+                <StartAddress>0x4020000</StartAddress>
                 <Size>0x20000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Include;..\..\..\lib\CMSIS\Device\Pisces\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test</IncludePath>
+              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Include;..\..\..\lib\CMSIS\Device\Pisces\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test;..\..\..\test\coremark;..\..\..\test\coremark\barebones</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -517,6 +517,51 @@
               <FileName>test_snor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\test\hal\test_snor.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>COREMARK</GroupName>
+          <Files>
+            <File>
+              <FileName>core_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\coremark\core_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>core_state.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\coremark\core_state.c</FilePath>
+            </File>
+            <File>
+              <FileName>core_matrix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\coremark\core_matrix.c</FilePath>
+            </File>
+            <File>
+              <FileName>core_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\coremark\core_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>core_list_join.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\coremark\core_list_join.c</FilePath>
+            </File>
+            <File>
+              <FileName>core_portme.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\coremark\barebones\core_portme.c</FilePath>
+            </File>
+            <File>
+              <FileName>ee_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\coremark\barebones\ee_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>cvt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\coremark\barebones\cvt.c</FilePath>
             </File>
           </Files>
         </Group>

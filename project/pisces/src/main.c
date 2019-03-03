@@ -6,6 +6,7 @@
 #include "bsp.h"
 #include "hal_base.h"
 #include "unity_runner.h"
+#include "coremark.h"
 
 /********************* Private MACRO Definition ******************************/
 
@@ -80,6 +81,10 @@ int main(void)
     HAL_NVIC_EnableIRQ(UART0_IRQn);
     HAL_UART_Init(pUart, UART_BR_115200, UART_DATA_8B, UART_ONE_STOPBIT,
                   UART_PARITY_DISABLE);
+
+    printf("before coremark test\n");
+    coremark_main();
+    printf("after coremark test\n");
 
     /* Unity Test  */
     test_main();
