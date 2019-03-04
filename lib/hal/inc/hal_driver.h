@@ -42,6 +42,10 @@
 #include "hal_pd.h"
 #endif
 
+#ifdef HAL_PM_MODULE_ENABLED
+#include "hal_pm.h"
+#endif
+
 #ifdef HAL_SDIO_MODULE_ENABLED
 #include "hal_sdio.h"
 #endif
