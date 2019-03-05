@@ -46,8 +46,21 @@ struct CACHE_PMU_CNT {
 /***************************** Function Declare ******************************/
 
 /**
+ * @brief  check mpu is enable.
+ * @return HAL_ENABLE if mpu enable.
+ */
+__STATIC_INLINE HAL_FuncStatus HAL_MPU_IsEnable(void)
+{
+    if (MPU->CTRL & MPU_CTRL_ENABLE_Msk)
+        return HAL_ENABLE;
+    else
+        return HAL_DISABLE;
+}
+
+/**
  * @brief  enable icache.
  * @return HAL_OK if success.
+ * @attention The MPU must be configured before cache if you need the function.
  */
 __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Enable(void)
 {
@@ -56,10 +69,16 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Enable(void)
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status;
 
-    /* config icache: mpu disable, stb disable, write through, hot buffer enable */
+    /* config icache: mpu disable, stb disable, write through, hot buffer enable,
+       prefetch enable */
     ICACHE->CACHE_CTRL |=
-        (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK) &
-        (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
+        (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK
+         | ICACHE_CACHE_CTRL_CACHE_PF_EN_MASK)
+        & (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
+
+    /* if mpu has been enable, we will enable cache mpu function */
+    if (HAL_MPU_IsEnable())
+        ICACHE->CACHE_CTRL |= ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
 
     do {
         status =
@@ -215,44 +234,11 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_GetPMU(struct CACHE_PMU_CNT *stat)
 }
 
 /**
- * @brief  enable memory protect unit of icache.
- * @return HAL_OK if success.
- */
-__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_EnableMPU(void)
-{
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
-
-#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    ICACHE->CACHE_CTRL |= ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
-#endif
-
-#endif
-
-    return HAL_OK;
-}
-
-/**
- * @brief  disable memory protect unit of icache.
- * @return HAL_OK if success.
- */
-__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_DisableMPU(void)
-{
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
-
-#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    ICACHE->CACHE_CTRL &= (~ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK);
-#endif
-
-#endif
-
-    return HAL_OK;
-}
-
-/**
  * @brief     enable dcache.
  * @return    HAL_OK if success.
- * @attention cache invalidate must be call if the dcache is not enable for the first
- *            time after power-up.
+ * @attention Cache invalidate must be call if the dcache is not enable for the first
+ * time after power-up. The MPU must be configured before cache if you need the
+ * function.
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Enable(void)
 {
@@ -261,11 +247,16 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Enable(void)
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status;
 
-    /* stb enable, stb_entry=7, stb_timeout enable, write back */
-    DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK |
-                          (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
-                          DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK;
+    /* stb enable, stb_entry=7, stb_timeout enable, write back, prefetch enable */
+    DCACHE->CACHE_CTRL |=
+        DCACHE_CACHE_CTRL_CACHE_EN_MASK | DCACHE_CACHE_CTRL_CACHE_PF_EN_MASK
+        | (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT)
+        | DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK;
     DCACHE->STB_TIMEOUT_CTRL = 1;
+
+    /* if mpu has been enable, we will enable cache mpu function */
+    if (HAL_MPU_IsEnable())
+        DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
 
     do {
         status =
@@ -510,40 +501,6 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_GetPMU(struct CACHE_PMU_CNT *stat)
     stat->wrMissPenalty = DCACHE->PMU_WR_MISS_PENALTY_CNT;
     stat->rdLat = DCACHE->PMU_RD_LAT_CNT;
     stat->wrLat = DCACHE->PMU_WR_LAT_CNT;
-#endif
-
-#endif
-
-    return HAL_OK;
-}
-
-/**
- * @brief  enable memory protect unit of dcache.
- * @return HAL_OK if success.
- */
-__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_EnableMPU(void)
-{
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
-
-#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
-#endif
-
-#endif
-
-    return HAL_OK;
-}
-
-/**
- * @brief  disable memory protect unit of dcache.
- * @return HAL_OK if success.
- */
-__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_DisableMPU(void)
-{
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
-
-#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    DCACHE->CACHE_CTRL &= (~DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK);
 #endif
 
 #endif
