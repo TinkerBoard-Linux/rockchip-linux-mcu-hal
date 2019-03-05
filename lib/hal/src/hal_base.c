@@ -122,9 +122,21 @@ uint32_t HAL_GetTick(void)
 }
 
 /**
+ * @brief  Config systick reload value.
+ * @param  ticksNumb: systick reload value.
+ * @return uint32_t:
+ *
+ */
+HAL_Check HAL_SystickConfig(uint32_t ticksNumb)
+{
+    return (HAL_Check)SysTick_Config(ticksNumb);
+}
+
+/**
  * @brief  SysTick mdelay.
  * @param  ms: mdelay count.
  * @return HAL_Status: HAL_OK.
+ * When the tickPerSec is 1000, the delicate delay is accurate.
  */
 __weak HAL_Status HAL_DelayMs(__IO uint32_t ms)
 {
@@ -152,18 +164,21 @@ __weak HAL_Status HAL_DelayMs(__IO uint32_t ms)
  * @brief  SysTick udelay.
  * @param  us: udelay count.
  * @return HAL_Status: HAL_OK.
- * Only 0 to 1000us precision.
+ * When the tickPerSec is within a certain range, the delicate delay is more
+ * accurate. about (10 10000);
  */
-HAL_Status HAL_DelayUs(__IO uint32_t us)
+HAL_Status HAL_DelayUs(uint32_t us)
 {
     uint32_t delta = SysTick->VAL;
+    uint32_t tickstart = HAL_GetTick();
 
-    if (us > 1000)
-        us = 1000;
+    us = us * (SystemCoreClock / 1000000); /* Systick->Load 1ms */
 
-    us = us * (SysTick->LOAD / 1000); /* Systick->Load 1ms */
+    if (us > SysTick->LOAD)
+        us = SysTick->LOAD;
+
     if (delta < us) {
-        while (SysTick->VAL < us)
+        while (tickstart == HAL_GetTick())
             ;
         us -= delta;
         delta = SysTick->LOAD;
@@ -181,7 +196,7 @@ HAL_Status HAL_DelayUs(__IO uint32_t us)
  */
 HAL_Status HAL_InitTick(uint32_t tickPriority)
 {
-    SysTick_Config(SystemCoreClock / 1000);
+    HAL_SystickConfig(SystemCoreClock / 1000);
 
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, tickPriority);

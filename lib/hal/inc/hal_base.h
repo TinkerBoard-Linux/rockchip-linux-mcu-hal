@@ -31,6 +31,7 @@ uint32_t HAL_GetTick(void);
 HAL_Status HAL_DelayUs(__IO uint32_t delay);
 HAL_Status HAL_DelayMs(__IO uint32_t delay);
 __weak __irq HAL_Status HAL_SysTick_Handler(void);
+HAL_Check HAL_SystickConfig(uint32_t ticksNumb);
 
 #endif
 
