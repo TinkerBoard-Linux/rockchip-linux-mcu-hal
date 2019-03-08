@@ -13,7 +13,7 @@ static uint64_t TIMER_getReloadNum(struct TIMER_REG *pReg)
 {
     uint64_t loadCount = 0;
 
-    loadCount = (((uint64_t)pReg->TimerLoadCount1) << 32) | (pReg->TimerLoadCount0 & 0xffffffff);
+    loadCount = (((uint64_t)pReg->TIMER_LOAD_COUNT[1]) << 32) | (pReg->TIMER_LOAD_COUNT[0] & 0xffffffff);
 
     return loadCount;
 }

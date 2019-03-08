@@ -68,8 +68,7 @@ HAL_Status HAL_TIMER_Init(struct TIMER_REG *pReg, eTIMER_MODE mode)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    pReg->TimerControlReg =
-        TIMERN_CONTROLREG_MASK_MASK | (mode << TIMERN_CONTROLREG_MODE_SHIFT);
+    SET_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_INT_EN_MASK);
 
     return HAL_OK;
 }
@@ -83,8 +82,7 @@ HAL_Status HAL_TIMER_DeInit(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    pReg->TimerControlReg =
-        TIMERN_CONTROLREG_MASK_UNMASK | TIMERN_CONTROLREG_EN_DISABLE;
+    CLEAR_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_INT_EN_MASK);
 
     return HAL_OK;
 }
@@ -105,8 +103,8 @@ HAL_Status HAL_TIMER_Stop(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
-    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
+    CLEAR_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_TIMER_EN_MASK);
+    CLEAR_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_INT_EN_MASK);
 
     return HAL_OK;
 }
@@ -120,8 +118,8 @@ HAL_Status HAL_TIMER_Start(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    SET_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
-    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
+    SET_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_TIMER_EN_MASK);
+    CLEAR_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_INT_EN_MASK);
 
     return HAL_OK;
 }
@@ -136,8 +134,8 @@ HAL_Status HAL_TIMER_Stop_IT(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
-    CLEAR_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
+    CLEAR_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_TIMER_EN_MASK);
+    CLEAR_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_INT_EN_MASK);
 
     return HAL_OK;
 }
@@ -151,8 +149,8 @@ HAL_Status HAL_TIMER_Start_IT(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    SET_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_EN_ENABLE);
-    SET_BIT(pReg->TimerControlReg, TIMERN_CONTROLREG_MASK_UNMASK);
+    SET_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_TIMER_EN_MASK);
+    SET_BIT(pReg->TIMER_CONTROL, TIMER_TIMER0_CONTROL_INT_EN_MASK);
 
     return HAL_OK;
 }
@@ -171,8 +169,8 @@ HAL_Status HAL_TIMER_SetCount(struct TIMER_REG *pReg, uint64_t usTick)
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
     loadCount = usTick;
-    pReg->TimerLoadCount0 = (loadCount & 0xffffffff);
-    pReg->TimerLoadCount1 = ((loadCount >> 32) & 0xffffffff);
+    pReg->TIMER_LOAD_COUNT[0] = (loadCount & 0xffffffff);
+    pReg->TIMER_LOAD_COUNT[1] = ((loadCount >> 32) & 0xffffffff);
 
     return HAL_OK;
 }
@@ -186,8 +184,8 @@ uint64_t HAL_TIMER_GetCount(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    return (uint64_t)(((uint64_t)pReg->TimerCurrentValue1) << 32) |
-           pReg->TimerCurrentValue0;
+    return (uint64_t)(((uint64_t)pReg->TIMER_CURR_VALUE[1]) << 32) |
+           pReg->TIMER_CURR_VALUE[0];
 }
 
 /**
@@ -199,7 +197,7 @@ HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
-    pReg->TimerIntStatus = 0x1;
+    pReg->TIMER_INTSTATUS = 0x1;
 
     return HAL_OK;
 }
