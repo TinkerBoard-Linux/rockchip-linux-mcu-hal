@@ -697,45 +697,45 @@ struct VOP_REG {
     __IO uint32_t INTR_EN;                            /* Address Offset: 0x0034 */
     __IO uint32_t INTR_CLEAR;                         /* Address Offset: 0x0038 */
     __IO uint32_t INTR_STATUS;                        /* Address Offset: 0x003C */
-    __IO uint32_t WIN1_CTRL[2];                       /* Address Offset: 0x0040 */
-    __IO uint32_t WIN1_VIR;                           /* Address Offset: 0x0048 */
+    __IO uint32_t WIN0_CTRL[2];                       /* Address Offset: 0x0040 */
+    __IO uint32_t WIN0_VIR;                           /* Address Offset: 0x0048 */
          uint32_t RESERVED1;                          /* Address Offset: 0x004C */
-    __IO uint32_t WIN1_YRGB_MST;                      /* Address Offset: 0x0050 */
-    __IO uint32_t WIN1_DSP_INFO;                      /* Address Offset: 0x0054 */
-    __IO uint32_t WIN1_DSP_ST;                        /* Address Offset: 0x0058 */
-    __IO uint32_t WIN1_COLOR_KEY;                     /* Address Offset: 0x005C */
+    __IO uint32_t WIN0_YRGB_MST;                      /* Address Offset: 0x0050 */
+    __IO uint32_t WIN0_DSP_INFO;                      /* Address Offset: 0x0054 */
+    __IO uint32_t WIN0_DSP_ST;                        /* Address Offset: 0x0058 */
+    __IO uint32_t WIN0_COLOR_KEY;                     /* Address Offset: 0x005C */
          uint32_t RESERVED2[3];                       /* Address Offset: 0x0060 */
-    __IO uint32_t WIN1_ALPHA_CTRL;                    /* Address Offset: 0x006C */
-    __IO uint32_t WIN1_CBCR_MST;                      /* Address Offset: 0x0070 */
-    __IO uint32_t WIN1_YRGB_MST_RAW;                  /* Address Offset: 0x0074 */
-    __IO uint32_t WIN1_CBCR_MST_RAW;                  /* Address Offset: 0x0078 */
-    __IO uint32_t WIN1_LOOP_OFFSET;                   /* Address Offset: 0x007C */
-    __IO uint32_t WIN2_CTRL[2];                       /* Address Offset: 0x0080 */
-    __IO uint32_t WIN2_VIR;                           /* Address Offset: 0x0088 */
+    __IO uint32_t WIN0_ALPHA_CTRL;                    /* Address Offset: 0x006C */
+    __IO uint32_t WIN0_CBCR_MST;                      /* Address Offset: 0x0070 */
+    __IO uint32_t WIN0_YRGB_MST_RAW;                  /* Address Offset: 0x0074 */
+    __IO uint32_t WIN0_CBCR_MST_RAW;                  /* Address Offset: 0x0078 */
+    __IO uint32_t WIN0_LOOP_OFFSET;                   /* Address Offset: 0x007C */
+    __IO uint32_t WIN1_CTRL[2];                       /* Address Offset: 0x0080 */
+    __IO uint32_t WIN1_VIR;                           /* Address Offset: 0x0088 */
          uint32_t RESERVED3;                          /* Address Offset: 0x008C */
-    __IO uint32_t WIN2_MST;                           /* Address Offset: 0x0090 */
-    __IO uint32_t WIN2_DSP_INFO;                      /* Address Offset: 0x0094 */
-    __IO uint32_t WIN2_DSP_ST;                        /* Address Offset: 0x0098 */
-    __IO uint32_t WIN2_COLOR_KEY;                     /* Address Offset: 0x009C */
+    __IO uint32_t WIN1_YRGB_MST;                      /* Address Offset: 0x0090 */
+    __IO uint32_t WIN1_DSP_INFO;                      /* Address Offset: 0x0094 */
+    __IO uint32_t WIN1_DSP_ST;                        /* Address Offset: 0x0098 */
+    __IO uint32_t WIN1_COLOR_KEY;                     /* Address Offset: 0x009C */
          uint32_t RESERVED4[3];                       /* Address Offset: 0x00A0 */
-    __IO uint32_t WIN2_ALPHA_CTRL;                    /* Address Offset: 0x00AC */
-    __IO uint32_t WIN2_CBCR_MST;                      /* Address Offset: 0x00B0 */
-    __IO uint32_t WIN2_YRGB_MST_RAW;                  /* Address Offset: 0x00B4 */
-    __IO uint32_t WIN2_CBCR_MST_RAW;                  /* Address Offset: 0x00B8 */
-    __IO uint32_t WIN2_LOOP_OFFSET;                   /* Address Offset: 0x00BC */
-    __IO uint32_t WIN3_CTRL[2];                       /* Address Offset: 0x00C0 */
-    __IO uint32_t WIN3_VIR;                           /* Address Offset: 0x00C8 */
+    __IO uint32_t WIN1_ALPHA_CTRL;                    /* Address Offset: 0x00AC */
+    __IO uint32_t WIN1_CBCR_MST;                      /* Address Offset: 0x00B0 */
+    __IO uint32_t WIN1_YRGB_MST_RAW;                  /* Address Offset: 0x00B4 */
+    __IO uint32_t WIN1_CBCR_MST_RAW;                  /* Address Offset: 0x00B8 */
+    __IO uint32_t WIN1_LOOP_OFFSET;                   /* Address Offset: 0x00BC */
+    __IO uint32_t WIN2_CTRL[2];                       /* Address Offset: 0x00C0 */
+    __IO uint32_t WIN2_VIR;                           /* Address Offset: 0x00C8 */
          uint32_t RESERVED5;                          /* Address Offset: 0x00CC */
-    __IO uint32_t WIN3_MST;                           /* Address Offset: 0x00D0 */
-    __IO uint32_t WIN3_DSP_INFO;                      /* Address Offset: 0x00D4 */
-    __IO uint32_t WIN3_DSP_ST;                        /* Address Offset: 0x00D8 */
-    __IO uint32_t WIN3_COLOR_KEY;                     /* Address Offset: 0x00DC */
+    __IO uint32_t WIN2_YRGB_MST;                      /* Address Offset: 0x00D0 */
+    __IO uint32_t WIN2_DSP_INFO;                      /* Address Offset: 0x00D4 */
+    __IO uint32_t WIN2_DSP_ST;                        /* Address Offset: 0x00D8 */
+    __IO uint32_t WIN2_COLOR_KEY;                     /* Address Offset: 0x00DC */
          uint32_t RESERVED6[3];                       /* Address Offset: 0x00E0 */
-    __IO uint32_t WIN3_ALPHA_CTRL;                    /* Address Offset: 0x00EC */
-    __IO uint32_t WIN3_CBCR_MST;                      /* Address Offset: 0x00F0 */
-    __IO uint32_t WIN3_YRGB_MST_RAW;                  /* Address Offset: 0x00F4 */
-    __IO uint32_t WIN3_CBCR_MST_RAW;                  /* Address Offset: 0x00F8 */
-    __IO uint32_t WIN3_LOOP_OFFSET;                   /* Address Offset: 0x00FC */
+    __IO uint32_t WIN2_ALPHA_CTRL;                    /* Address Offset: 0x00EC */
+    __IO uint32_t WIN2_CBCR_MST;                      /* Address Offset: 0x00F0 */
+    __IO uint32_t WIN2_YRGB_MST_RAW;                  /* Address Offset: 0x00F4 */
+    __IO uint32_t WIN2_CBCR_MST_RAW;                  /* Address Offset: 0x00F8 */
+    __IO uint32_t WIN2_LOOP_OFFSET;                   /* Address Offset: 0x00FC */
     __IO uint32_t DSP_HTOTAL_HS_END;                  /* Address Offset: 0x0100 */
     __IO uint32_t DSP_HACT_ST_END;                    /* Address Offset: 0x0104 */
     __IO uint32_t DSP_VTOTAL_VS_END;                  /* Address Offset: 0x0108 */
@@ -754,16 +754,23 @@ struct VOP_REG {
     __IO uint32_t GAMMA_COE_WORD[4];                  /* Address Offset: 0x0170 */
     __IO uint32_t POST_CTRL;                          /* Address Offset: 0x0180 */
     __IO uint32_t COLOR_MATRIX_COE[3];                /* Address Offset: 0x0184 */
-         uint32_t RESERVED8[24];                      /* Address Offset: 0x0190 */
+    __IO uint32_t MCU_WRITE_DATA;                     /* Address Offset: 0x0190 */
+         uint32_t RESERVED8[23];                      /* Address Offset: 0x0194 */
     __I  uint32_t DBG_REG_SCAN_LINE;                  /* Address Offset: 0x01F0 */
     __IO uint32_t BLANKING_VALUE;                     /* Address Offset: 0x01F4 */
     __I  uint32_t FLAG_REG_FRM_VALID;                 /* Address Offset: 0x01F8 */
     __O  uint32_t FLAG_REG;                           /* Address Offset: 0x01FC */
-    __IO uint32_t LUT_WIN[2];                         /* Address Offset: 0x0200 */
-         uint32_t RESERVED9[510];                     /* Address Offset: 0x0208 */
+    __IO uint32_t WIN0_BPP_LUT[256];                  /* Address Offset: 0x0200 */
+    __IO uint32_t WIN1_BPP_LUT[256];                  /* Address Offset: 0x0600 */
     __IO uint32_t DSC_SYS_CTRL0_IMD;                  /* Address Offset: 0x0A00 */
     __IO uint32_t DSC_SYS_CTRL[3];                    /* Address Offset: 0x0A04 */
-    __IO uint32_t DSC_CFG[2];                         /* Address Offset: 0x0A10 */
+    __IO uint32_t DSC_CFG[21];                        /* Address Offset: 0x0A10 */
+         uint32_t RESERVED11[3];                      /* Address Offset: 0x0A64 */
+    __IO uint32_t DSC_INT_EN;                         /* Address Offset: 0x0A70 */
+    __IO uint32_t DSC_INT_CLR;                        /* Address Offset: 0x0A74 */
+    __IO uint32_t DSC_INT_STATUS;                     /* Address Offset: 0x0A78 */
+         uint32_t RESERVED12;                         /* Address Offset: 0x0A7C */
+    __IO uint32_t DSC_DBG_STATUS[3];                  /* Address Offset: 0x0A80 */
 };
 /****************************************************************************************/
 /*                                                                                      */
@@ -5199,6 +5206,8 @@ struct VOP_REG {
 /* VOP_STATUS */
 #define VOP_VOP_STATUS_DSP_BLANKING_EN_ASYNC_AFF2_SHIFT    (0U)
 #define VOP_VOP_STATUS_DSP_BLANKING_EN_ASYNC_AFF2_MASK     (0x1U << VOP_VOP_STATUS_DSP_BLANKING_EN_ASYNC_AFF2_SHIFT)    /* 0x00000001 */
+#define VOP_VOP_STATUS_DPHY_SWITCH_STATUS_SHIFT            (1U)
+#define VOP_VOP_STATUS_DPHY_SWITCH_STATUS_MASK             (0x1U << VOP_VOP_STATUS_DPHY_SWITCH_STATUS_SHIFT)            /* 0x00000002 */
 #define VOP_VOP_STATUS_INT_RAW_DMA_FINISH_SHIFT            (2U)
 #define VOP_VOP_STATUS_INT_RAW_DMA_FINISH_MASK             (0x1U << VOP_VOP_STATUS_INT_RAW_DMA_FINISH_SHIFT)            /* 0x00000004 */
 #define VOP_VOP_STATUS_DMA_STOP_VALID_SHIFT                (4U)
@@ -5227,12 +5236,12 @@ struct VOP_REG {
 #define VOP_INTR_EN_LINE_FLAG1_INTR_EN_MASK                (0x1U << VOP_INTR_EN_LINE_FLAG1_INTR_EN_SHIFT)               /* 0x00000010 */
 #define VOP_INTR_EN_BUS_ERROR_INTR_EN_SHIFT                (5U)
 #define VOP_INTR_EN_BUS_ERROR_INTR_EN_MASK                 (0x1U << VOP_INTR_EN_BUS_ERROR_INTR_EN_SHIFT)                /* 0x00000020 */
-#define VOP_INTR_EN_WIN1_EMPTY_INTR_EN_SHIFT               (7U)
-#define VOP_INTR_EN_WIN1_EMPTY_INTR_EN_MASK                (0x1U << VOP_INTR_EN_WIN1_EMPTY_INTR_EN_SHIFT)               /* 0x00000080 */
-#define VOP_INTR_EN_WIN2_EMPTY_INTR_EN_SHIFT               (8U)
-#define VOP_INTR_EN_WIN2_EMPTY_INTR_EN_MASK                (0x1U << VOP_INTR_EN_WIN2_EMPTY_INTR_EN_SHIFT)               /* 0x00000100 */
-#define VOP_INTR_EN_WIN3_EMPTY_INTR_EN_SHIFT               (9U)
-#define VOP_INTR_EN_WIN3_EMPTY_INTR_EN_MASK                (0x1U << VOP_INTR_EN_WIN3_EMPTY_INTR_EN_SHIFT)               /* 0x00000200 */
+#define VOP_INTR_EN_WIN0_EMPTY_INTR_EN_SHIFT               (7U)
+#define VOP_INTR_EN_WIN0_EMPTY_INTR_EN_MASK                (0x1U << VOP_INTR_EN_WIN0_EMPTY_INTR_EN_SHIFT)               /* 0x00000080 */
+#define VOP_INTR_EN_WIN1_EMPTY_INTR_EN_SHIFT               (8U)
+#define VOP_INTR_EN_WIN1_EMPTY_INTR_EN_MASK                (0x1U << VOP_INTR_EN_WIN1_EMPTY_INTR_EN_SHIFT)               /* 0x00000100 */
+#define VOP_INTR_EN_WIN2_EMPTY_INTR_EN_SHIFT               (9U)
+#define VOP_INTR_EN_WIN2_EMPTY_INTR_EN_MASK                (0x1U << VOP_INTR_EN_WIN2_EMPTY_INTR_EN_SHIFT)               /* 0x00000200 */
 #define VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_SHIFT           (10U)
 #define VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_MASK            (0x1U << VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_SHIFT)           /* 0x00000400 */
 #define VOP_INTR_EN_DMA_FRM_FSH_INTR_EN_SHIFT              (11U)
@@ -5256,14 +5265,12 @@ struct VOP_REG {
 #define VOP_INTR_CLEAR_LINE_FLAG1_INTR_CLR_MASK            (0x1U << VOP_INTR_CLEAR_LINE_FLAG1_INTR_CLR_SHIFT)           /* 0x00000010 */
 #define VOP_INTR_CLEAR_BUS_ERROR_INTR_CLR_SHIFT            (5U)
 #define VOP_INTR_CLEAR_BUS_ERROR_INTR_CLR_MASK             (0x1U << VOP_INTR_CLEAR_BUS_ERROR_INTR_CLR_SHIFT)            /* 0x00000020 */
-#define VOP_INTR_CLEAR_WIN0_EMPTY_INTR_CLR_SHIFT           (6U)
-#define VOP_INTR_CLEAR_WIN0_EMPTY_INTR_CLR_MASK            (0x1U << VOP_INTR_CLEAR_WIN0_EMPTY_INTR_CLR_SHIFT)           /* 0x00000040 */
-#define VOP_INTR_CLEAR_WIN1_EMPTY_INTR_CLR_SHIFT           (7U)
-#define VOP_INTR_CLEAR_WIN1_EMPTY_INTR_CLR_MASK            (0x1U << VOP_INTR_CLEAR_WIN1_EMPTY_INTR_CLR_SHIFT)           /* 0x00000080 */
-#define VOP_INTR_CLEAR_WIN2_EMPTY_INTR_CLR_SHIFT           (8U)
-#define VOP_INTR_CLEAR_WIN2_EMPTY_INTR_CLR_MASK            (0x1U << VOP_INTR_CLEAR_WIN2_EMPTY_INTR_CLR_SHIFT)           /* 0x00000100 */
-#define VOP_INTR_CLEAR_WIN3_EMPTY_INTR_CLR_SHIFT           (9U)
-#define VOP_INTR_CLEAR_WIN3_EMPTY_INTR_CLR_MASK            (0x1U << VOP_INTR_CLEAR_WIN3_EMPTY_INTR_CLR_SHIFT)           /* 0x00000200 */
+#define VOP_INTR_CLEAR_WIN0_EMPTY_INTR_CLR_SHIFT           (7U)
+#define VOP_INTR_CLEAR_WIN0_EMPTY_INTR_CLR_MASK            (0x1U << VOP_INTR_CLEAR_WIN0_EMPTY_INTR_CLR_SHIFT)           /* 0x00000080 */
+#define VOP_INTR_CLEAR_WIN1_EMPTY_INTR_CLR_SHIFT           (8U)
+#define VOP_INTR_CLEAR_WIN1_EMPTY_INTR_CLR_MASK            (0x1U << VOP_INTR_CLEAR_WIN1_EMPTY_INTR_CLR_SHIFT)           /* 0x00000100 */
+#define VOP_INTR_CLEAR_WIN2_EMPTY_INTR_CLR_SHIFT           (9U)
+#define VOP_INTR_CLEAR_WIN2_EMPTY_INTR_CLR_MASK            (0x1U << VOP_INTR_CLEAR_WIN2_EMPTY_INTR_CLR_SHIFT)           /* 0x00000200 */
 #define VOP_INTR_CLEAR_DSP_HOLD_VALID_INTR_CLR_SHIFT       (10U)
 #define VOP_INTR_CLEAR_DSP_HOLD_VALID_INTR_CLR_MASK        (0x1U << VOP_INTR_CLEAR_DSP_HOLD_VALID_INTR_CLR_SHIFT)       /* 0x00000400 */
 #define VOP_INTR_CLEAR_DMA_FRM_FSH_INTR_CLR_SHIFT          (11U)
@@ -5287,14 +5294,12 @@ struct VOP_REG {
 #define VOP_INTR_STATUS_LINE_FLAG1_INTR_STS_MASK           (0x1U << VOP_INTR_STATUS_LINE_FLAG1_INTR_STS_SHIFT)          /* 0x00000010 */
 #define VOP_INTR_STATUS_BUS_ERROR_INTR_STS_SHIFT           (5U)
 #define VOP_INTR_STATUS_BUS_ERROR_INTR_STS_MASK            (0x1U << VOP_INTR_STATUS_BUS_ERROR_INTR_STS_SHIFT)           /* 0x00000020 */
-#define VOP_INTR_STATUS_WIN0_EMPTY_INTR_STS_SHIFT          (6U)
-#define VOP_INTR_STATUS_WIN0_EMPTY_INTR_STS_MASK           (0x1U << VOP_INTR_STATUS_WIN0_EMPTY_INTR_STS_SHIFT)          /* 0x00000040 */
-#define VOP_INTR_STATUS_WIN1_EMPTY_INTR_STS_SHIFT          (7U)
-#define VOP_INTR_STATUS_WIN1_EMPTY_INTR_STS_MASK           (0x1U << VOP_INTR_STATUS_WIN1_EMPTY_INTR_STS_SHIFT)          /* 0x00000080 */
-#define VOP_INTR_STATUS_WIN2_EMPTY_INTR_STS_SHIFT          (8U)
-#define VOP_INTR_STATUS_WIN2_EMPTY_INTR_STS_MASK           (0x1U << VOP_INTR_STATUS_WIN2_EMPTY_INTR_STS_SHIFT)          /* 0x00000100 */
-#define VOP_INTR_STATUS_WIN3_EMPTY_INTR_STS_SHIFT          (9U)
-#define VOP_INTR_STATUS_WIN3_EMPTY_INTR_STS_MASK           (0x1U << VOP_INTR_STATUS_WIN3_EMPTY_INTR_STS_SHIFT)          /* 0x00000200 */
+#define VOP_INTR_STATUS_WIN0_EMPTY_INTR_STS_SHIFT          (7U)
+#define VOP_INTR_STATUS_WIN0_EMPTY_INTR_STS_MASK           (0x1U << VOP_INTR_STATUS_WIN0_EMPTY_INTR_STS_SHIFT)          /* 0x00000080 */
+#define VOP_INTR_STATUS_WIN1_EMPTY_INTR_STS_SHIFT          (8U)
+#define VOP_INTR_STATUS_WIN1_EMPTY_INTR_STS_MASK           (0x1U << VOP_INTR_STATUS_WIN1_EMPTY_INTR_STS_SHIFT)          /* 0x00000100 */
+#define VOP_INTR_STATUS_WIN2_EMPTY_INTR_STS_SHIFT          (9U)
+#define VOP_INTR_STATUS_WIN2_EMPTY_INTR_STS_MASK           (0x1U << VOP_INTR_STATUS_WIN2_EMPTY_INTR_STS_SHIFT)          /* 0x00000200 */
 #define VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_STS_SHIFT      (10U)
 #define VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_STS_MASK       (0x1U << VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_STS_SHIFT)      /* 0x00000400 */
 #define VOP_INTR_STATUS_DMA_FRM_FSH_INTR_STS_SHIFT         (11U)
@@ -5317,14 +5322,12 @@ struct VOP_REG {
 #define VOP_INTR_STATUS_LINE_FLAG1_INTR_RAW_STS_MASK       (0x1U << VOP_INTR_STATUS_LINE_FLAG1_INTR_RAW_STS_SHIFT)      /* 0x00100000 */
 #define VOP_INTR_STATUS_BUS_ERROR_INTR_RAW_STS_SHIFT       (21U)
 #define VOP_INTR_STATUS_BUS_ERROR_INTR_RAW_STS_MASK        (0x1U << VOP_INTR_STATUS_BUS_ERROR_INTR_RAW_STS_SHIFT)       /* 0x00200000 */
-#define VOP_INTR_STATUS_WIN0_EMPTY_INTR_RAW_STS_SHIFT      (22U)
-#define VOP_INTR_STATUS_WIN0_EMPTY_INTR_RAW_STS_MASK       (0x1U << VOP_INTR_STATUS_WIN0_EMPTY_INTR_RAW_STS_SHIFT)      /* 0x00400000 */
-#define VOP_INTR_STATUS_WIN1_EMPTY_INTR_RAW_STS_SHIFT      (23U)
-#define VOP_INTR_STATUS_WIN1_EMPTY_INTR_RAW_STS_MASK       (0x1U << VOP_INTR_STATUS_WIN1_EMPTY_INTR_RAW_STS_SHIFT)      /* 0x00800000 */
-#define VOP_INTR_STATUS_WIN2_EMPTY_INTR_RAW_STS_SHIFT      (24U)
-#define VOP_INTR_STATUS_WIN2_EMPTY_INTR_RAW_STS_MASK       (0x1U << VOP_INTR_STATUS_WIN2_EMPTY_INTR_RAW_STS_SHIFT)      /* 0x01000000 */
-#define VOP_INTR_STATUS_WIN3_EMPTY_INTR_RAW_STS_SHIFT      (25U)
-#define VOP_INTR_STATUS_WIN3_EMPTY_INTR_RAW_STS_MASK       (0x1U << VOP_INTR_STATUS_WIN3_EMPTY_INTR_RAW_STS_SHIFT)      /* 0x02000000 */
+#define VOP_INTR_STATUS_WIN0_EMPTY_INTR_RAW_STS_SHIFT      (23U)
+#define VOP_INTR_STATUS_WIN0_EMPTY_INTR_RAW_STS_MASK       (0x1U << VOP_INTR_STATUS_WIN0_EMPTY_INTR_RAW_STS_SHIFT)      /* 0x00800000 */
+#define VOP_INTR_STATUS_WIN1_EMPTY_INTR_RAW_STS_SHIFT      (24U)
+#define VOP_INTR_STATUS_WIN1_EMPTY_INTR_RAW_STS_MASK       (0x1U << VOP_INTR_STATUS_WIN1_EMPTY_INTR_RAW_STS_SHIFT)      /* 0x01000000 */
+#define VOP_INTR_STATUS_WIN2_EMPTY_INTR_RAW_STS_SHIFT      (25U)
+#define VOP_INTR_STATUS_WIN2_EMPTY_INTR_RAW_STS_MASK       (0x1U << VOP_INTR_STATUS_WIN2_EMPTY_INTR_RAW_STS_SHIFT)      /* 0x02000000 */
 #define VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_RAW_STS_SHIFT  (26U)
 #define VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_RAW_STS_MASK   (0x1U << VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_RAW_STS_SHIFT)  /* 0x04000000 */
 #define VOP_INTR_STATUS_DMA_FRM_FSH_INTR_RAW_STS_SHIFT     (27U)
@@ -5335,6 +5338,100 @@ struct VOP_REG {
 #define VOP_INTR_STATUS_POST_LB_ALMOST_FULL_INTR_RAW_MASK  (0x1U << VOP_INTR_STATUS_POST_LB_ALMOST_FULL_INTR_RAW_SHIFT) /* 0x20000000 */
 #define VOP_INTR_STATUS_POST_LB_ALMOST_EMPTY_INTR_RAW_STS_SHIFT (30U)
 #define VOP_INTR_STATUS_POST_LB_ALMOST_EMPTY_INTR_RAW_STS_MASK (0x1U << VOP_INTR_STATUS_POST_LB_ALMOST_EMPTY_INTR_RAW_STS_SHIFT) /* 0x40000000 */
+/* WIN0_CTRL0 */
+#define VOP_WIN0_CTRL0_WIN0_EN_SHIFT                       (0U)
+#define VOP_WIN0_CTRL0_WIN0_EN_MASK                        (0x1U << VOP_WIN0_CTRL0_WIN0_EN_SHIFT)                       /* 0x00000001 */
+#define VOP_WIN0_CTRL0_WIN0_DATA_FMT_SHIFT                 (4U)
+#define VOP_WIN0_CTRL0_WIN0_DATA_FMT_MASK                  (0xFU << VOP_WIN0_CTRL0_WIN0_DATA_FMT_SHIFT)                 /* 0x000000F0 */
+#define VOP_WIN0_CTRL0_WIN0_BPP_SWAP_SHIFT                 (8U)
+#define VOP_WIN0_CTRL0_WIN0_BPP_SWAP_MASK                  (0x1U << VOP_WIN0_CTRL0_WIN0_BPP_SWAP_SHIFT)                 /* 0x00000100 */
+#define VOP_WIN0_CTRL0_WIN0_NO_OUTSTANDING_SHIFT           (9U)
+#define VOP_WIN0_CTRL0_WIN0_NO_OUTSTANDING_MASK            (0x1U << VOP_WIN0_CTRL0_WIN0_NO_OUTSTANDING_SHIFT)           /* 0x00000200 */
+#define VOP_WIN0_CTRL0_WIN0_YUV_4BIT_EN_SHIFT              (10U)
+#define VOP_WIN0_CTRL0_WIN0_YUV_4BIT_EN_MASK               (0x1U << VOP_WIN0_CTRL0_WIN0_YUV_4BIT_EN_SHIFT)              /* 0x00000400 */
+#define VOP_WIN0_CTRL0_WIN0_BPP_EN_SHIFT                   (11U)
+#define VOP_WIN0_CTRL0_WIN0_BPP_EN_MASK                    (0x1U << VOP_WIN0_CTRL0_WIN0_BPP_EN_SHIFT)                   /* 0x00000800 */
+#define VOP_WIN0_CTRL0_WIN0_RB_SWAP_SHIFT                  (12U)
+#define VOP_WIN0_CTRL0_WIN0_RB_SWAP_MASK                   (0x1U << VOP_WIN0_CTRL0_WIN0_RB_SWAP_SHIFT)                  /* 0x00001000 */
+#define VOP_WIN0_CTRL0_WIN0_ALPHA_SWAP_SHIFT               (13U)
+#define VOP_WIN0_CTRL0_WIN0_ALPHA_SWAP_MASK                (0x1U << VOP_WIN0_CTRL0_WIN0_ALPHA_SWAP_SHIFT)               /* 0x00002000 */
+#define VOP_WIN0_CTRL0_WIN0_ENDIAN_SWAP_SHIFT              (14U)
+#define VOP_WIN0_CTRL0_WIN0_ENDIAN_SWAP_MASK               (0x1U << VOP_WIN0_CTRL0_WIN0_ENDIAN_SWAP_SHIFT)              /* 0x00004000 */
+#define VOP_WIN0_CTRL0_WIN0_UV_SWAP_SHIFT                  (15U)
+#define VOP_WIN0_CTRL0_WIN0_UV_SWAP_MASK                   (0x1U << VOP_WIN0_CTRL0_WIN0_UV_SWAP_SHIFT)                  /* 0x00008000 */
+#define VOP_WIN0_CTRL0_WIN0_R2Y_EN_SHIFT                   (16U)
+#define VOP_WIN0_CTRL0_WIN0_R2Y_EN_MASK                    (0x1U << VOP_WIN0_CTRL0_WIN0_R2Y_EN_SHIFT)                   /* 0x00010000 */
+#define VOP_WIN0_CTRL0_WIN0_Y2R_EN_SHIFT                   (17U)
+#define VOP_WIN0_CTRL0_WIN0_Y2R_EN_MASK                    (0x1U << VOP_WIN0_CTRL0_WIN0_Y2R_EN_SHIFT)                   /* 0x00020000 */
+#define VOP_WIN0_CTRL0_WIN0_CSC_MODE_SHIFT                 (18U)
+#define VOP_WIN0_CTRL0_WIN0_CSC_MODE_MASK                  (0x3U << VOP_WIN0_CTRL0_WIN0_CSC_MODE_SHIFT)                 /* 0x000C0000 */
+/* WIN0_CTRL1 */
+#define VOP_WIN0_CTRL1_WIN0_YRGB_GATHER_EN_SHIFT           (0U)
+#define VOP_WIN0_CTRL1_WIN0_YRGB_GATHER_EN_MASK            (0x1U << VOP_WIN0_CTRL1_WIN0_YRGB_GATHER_EN_SHIFT)           /* 0x00000001 */
+#define VOP_WIN0_CTRL1_WIN0_CBCR_GATHER_EN_SHIFT           (1U)
+#define VOP_WIN0_CTRL1_WIN0_CBCR_GATHER_EN_MASK            (0x1U << VOP_WIN0_CTRL1_WIN0_CBCR_GATHER_EN_SHIFT)           /* 0x00000002 */
+#define VOP_WIN0_CTRL1_WIN0_DMA_BURST_LENGTH_SHIFT         (2U)
+#define VOP_WIN0_CTRL1_WIN0_DMA_BURST_LENGTH_MASK          (0x3U << VOP_WIN0_CTRL1_WIN0_DMA_BURST_LENGTH_SHIFT)         /* 0x0000000C */
+#define VOP_WIN0_CTRL1_WIN0_YRGB_GATHER_NUM_SHIFT          (4U)
+#define VOP_WIN0_CTRL1_WIN0_YRGB_GATHER_NUM_MASK           (0x3U << VOP_WIN0_CTRL1_WIN0_YRGB_GATHER_NUM_SHIFT)          /* 0x00000030 */
+#define VOP_WIN0_CTRL1_WIN0_CBCR_GATHER_NUM_SHIFT          (6U)
+#define VOP_WIN0_CTRL1_WIN0_CBCR_GATHER_NUM_MASK           (0x3U << VOP_WIN0_CTRL1_WIN0_CBCR_GATHER_NUM_SHIFT)          /* 0x000000C0 */
+#define VOP_WIN0_CTRL1_SW_WIN0_YRGB_RID_SHIFT              (8U)
+#define VOP_WIN0_CTRL1_SW_WIN0_YRGB_RID_MASK               (0xFU << VOP_WIN0_CTRL1_SW_WIN0_YRGB_RID_SHIFT)              /* 0x00000F00 */
+#define VOP_WIN0_CTRL1_SW_WIN0_CBCR_RID_SHIFT              (12U)
+#define VOP_WIN0_CTRL1_SW_WIN0_CBCR_RID_MASK               (0xFU << VOP_WIN0_CTRL1_SW_WIN0_CBCR_RID_SHIFT)              /* 0x0000F000 */
+/* WIN0_VIR */
+#define VOP_WIN0_VIR_WIN0_YRGB_VIR_STRIDE_SHIFT            (0U)
+#define VOP_WIN0_VIR_WIN0_YRGB_VIR_STRIDE_MASK             (0xFFFFU << VOP_WIN0_VIR_WIN0_YRGB_VIR_STRIDE_SHIFT)         /* 0x0000FFFF */
+#define VOP_WIN0_VIR_WIN0_CBCR_VIR_STRIDE_SHIFT            (16U)
+#define VOP_WIN0_VIR_WIN0_CBCR_VIR_STRIDE_MASK             (0xFFFFU << VOP_WIN0_VIR_WIN0_CBCR_VIR_STRIDE_SHIFT)         /* 0xFFFF0000 */
+/* WIN0_YRGB_MST */
+#define VOP_WIN0_YRGB_MST_WIN0_YRGB_MST_SHIFT              (0U)
+#define VOP_WIN0_YRGB_MST_WIN0_YRGB_MST_MASK               (0xFFFFFFFFU << VOP_WIN0_YRGB_MST_WIN0_YRGB_MST_SHIFT)       /* 0xFFFFFFFF */
+/* WIN0_DSP_INFO */
+#define VOP_WIN0_DSP_INFO_DSP_WIN0_WIDTH_SHIFT             (0U)
+#define VOP_WIN0_DSP_INFO_DSP_WIN0_WIDTH_MASK              (0x1FFFU << VOP_WIN0_DSP_INFO_DSP_WIN0_WIDTH_SHIFT)          /* 0x00001FFF */
+#define VOP_WIN0_DSP_INFO_DSP_WIN0_HEIGHT_SHIFT            (16U)
+#define VOP_WIN0_DSP_INFO_DSP_WIN0_HEIGHT_MASK             (0x1FFFU << VOP_WIN0_DSP_INFO_DSP_WIN0_HEIGHT_SHIFT)         /* 0x1FFF0000 */
+/* WIN0_DSP_ST */
+#define VOP_WIN0_DSP_ST_DSP_WIN0_XST_SHIFT                 (0U)
+#define VOP_WIN0_DSP_ST_DSP_WIN0_XST_MASK                  (0x1FFFU << VOP_WIN0_DSP_ST_DSP_WIN0_XST_SHIFT)              /* 0x00001FFF */
+#define VOP_WIN0_DSP_ST_DSP_WIN0_YST_SHIFT                 (16U)
+#define VOP_WIN0_DSP_ST_DSP_WIN0_YST_MASK                  (0x1FFFU << VOP_WIN0_DSP_ST_DSP_WIN0_YST_SHIFT)              /* 0x1FFF0000 */
+/* WIN0_COLOR_KEY */
+#define VOP_WIN0_COLOR_KEY_WIN0_KEY_COLOR_SHIFT            (0U)
+#define VOP_WIN0_COLOR_KEY_WIN0_KEY_COLOR_MASK             (0xFFFFFFU << VOP_WIN0_COLOR_KEY_WIN0_KEY_COLOR_SHIFT)       /* 0x00FFFFFF */
+#define VOP_WIN0_COLOR_KEY_WIN0_KEY_EN_SHIFT               (24U)
+#define VOP_WIN0_COLOR_KEY_WIN0_KEY_EN_MASK                (0x1U << VOP_WIN0_COLOR_KEY_WIN0_KEY_EN_SHIFT)               /* 0x01000000 */
+/* WIN0_ALPHA_CTRL */
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_EN_SHIFT            (0U)
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_EN_MASK             (0x1U << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_EN_SHIFT)            /* 0x00000001 */
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_MODE_SHIFT          (1U)
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_MODE_MASK           (0x1U << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_MODE_SHIFT)          /* 0x00000002 */
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_PRE_MUL_SHIFT       (2U)
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_PRE_MUL_MASK        (0x1U << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_PRE_MUL_SHIFT)       /* 0x00000004 */
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_SAT_MODE_SHIFT      (3U)
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_SAT_MODE_MASK       (0x1U << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_SAT_MODE_SHIFT)      /* 0x00000008 */
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_VALUE_SHIFT         (4U)
+#define VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_VALUE_MASK          (0xFFU << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_VALUE_SHIFT)        /* 0x00000FF0 */
+/* WIN0_CBCR_MST */
+#define VOP_WIN0_CBCR_MST_WIN0_CBCR_MST_SHIFT              (0U)
+#define VOP_WIN0_CBCR_MST_WIN0_CBCR_MST_MASK               (0xFFFFFFFFU << VOP_WIN0_CBCR_MST_WIN0_CBCR_MST_SHIFT)       /* 0xFFFFFFFF */
+/* WIN0_YRGB_MST_RAW */
+#define VOP_WIN0_YRGB_MST_RAW_WIN0_YRGB_MST_RAW_SHIFT      (0U)
+#define VOP_WIN0_YRGB_MST_RAW_WIN0_YRGB_MST_RAW_MASK       (0xFFFFFFFFU << VOP_WIN0_YRGB_MST_RAW_WIN0_YRGB_MST_RAW_SHIFT) /* 0xFFFFFFFF */
+/* WIN0_CBCR_MST_RAW */
+#define VOP_WIN0_CBCR_MST_RAW_WIN0_CBCR_MST_RAW_SHIFT      (0U)
+#define VOP_WIN0_CBCR_MST_RAW_WIN0_CBCR_MST_RAW_MASK       (0xFFFFFFFFU << VOP_WIN0_CBCR_MST_RAW_WIN0_CBCR_MST_RAW_SHIFT) /* 0xFFFFFFFF */
+/* WIN0_LOOP_OFFSET */
+#define VOP_WIN0_LOOP_OFFSET_WIN0_XLOOP_OFFSET_SHIFT       (0U)
+#define VOP_WIN0_LOOP_OFFSET_WIN0_XLOOP_OFFSET_MASK        (0x1FFFU << VOP_WIN0_LOOP_OFFSET_WIN0_XLOOP_OFFSET_SHIFT)    /* 0x00001FFF */
+#define VOP_WIN0_LOOP_OFFSET_WIN0_XLOOP_EN_SHIFT           (15U)
+#define VOP_WIN0_LOOP_OFFSET_WIN0_XLOOP_EN_MASK            (0x1U << VOP_WIN0_LOOP_OFFSET_WIN0_XLOOP_EN_SHIFT)           /* 0x00008000 */
+#define VOP_WIN0_LOOP_OFFSET_WIN0_YLOOP_OFFSET_SHIFT       (16U)
+#define VOP_WIN0_LOOP_OFFSET_WIN0_YLOOP_OFFSET_MASK        (0x1FFFU << VOP_WIN0_LOOP_OFFSET_WIN0_YLOOP_OFFSET_SHIFT)    /* 0x1FFF0000 */
+#define VOP_WIN0_LOOP_OFFSET_WIN0_YLOOP_EN_SHIFT           (31U)
+#define VOP_WIN0_LOOP_OFFSET_WIN0_YLOOP_EN_MASK            (0x1U << VOP_WIN0_LOOP_OFFSET_WIN0_YLOOP_EN_SHIFT)           /* 0x80000000 */
 /* WIN1_CTRL0 */
 #define VOP_WIN1_CTRL0_WIN1_EN_SHIFT                       (0U)
 #define VOP_WIN1_CTRL0_WIN1_EN_MASK                        (0x1U << VOP_WIN1_CTRL0_WIN1_EN_SHIFT)                       /* 0x00000001 */
@@ -5433,40 +5530,60 @@ struct VOP_REG {
 #define VOP_WIN2_CTRL0_WIN2_EN_SHIFT                       (0U)
 #define VOP_WIN2_CTRL0_WIN2_EN_MASK                        (0x1U << VOP_WIN2_CTRL0_WIN2_EN_SHIFT)                       /* 0x00000001 */
 #define VOP_WIN2_CTRL0_WIN2_DATA_FMT_SHIFT                 (4U)
-#define VOP_WIN2_CTRL0_WIN2_DATA_FMT_MASK                  (0x7U << VOP_WIN2_CTRL0_WIN2_DATA_FMT_SHIFT)                 /* 0x00000070 */
-#define VOP_WIN2_CTRL0_WIN2_INTERLACE_READ_SHIFT           (8U)
-#define VOP_WIN2_CTRL0_WIN2_INTERLACE_READ_MASK            (0x1U << VOP_WIN2_CTRL0_WIN2_INTERLACE_READ_SHIFT)           /* 0x00000100 */
+#define VOP_WIN2_CTRL0_WIN2_DATA_FMT_MASK                  (0xFU << VOP_WIN2_CTRL0_WIN2_DATA_FMT_SHIFT)                 /* 0x000000F0 */
+#define VOP_WIN2_CTRL0_WIN2_BPP_SWAP_SHIFT                 (8U)
+#define VOP_WIN2_CTRL0_WIN2_BPP_SWAP_MASK                  (0x1U << VOP_WIN2_CTRL0_WIN2_BPP_SWAP_SHIFT)                 /* 0x00000100 */
 #define VOP_WIN2_CTRL0_WIN2_NO_OUTSTANDING_SHIFT           (9U)
 #define VOP_WIN2_CTRL0_WIN2_NO_OUTSTANDING_MASK            (0x1U << VOP_WIN2_CTRL0_WIN2_NO_OUTSTANDING_SHIFT)           /* 0x00000200 */
+#define VOP_WIN2_CTRL0_WIN2_YUV_4BIT_EN_SHIFT              (10U)
+#define VOP_WIN2_CTRL0_WIN2_YUV_4BIT_EN_MASK               (0x1U << VOP_WIN2_CTRL0_WIN2_YUV_4BIT_EN_SHIFT)              /* 0x00000400 */
 #define VOP_WIN2_CTRL0_WIN2_RB_SWAP_SHIFT                  (12U)
 #define VOP_WIN2_CTRL0_WIN2_RB_SWAP_MASK                   (0x1U << VOP_WIN2_CTRL0_WIN2_RB_SWAP_SHIFT)                  /* 0x00001000 */
 #define VOP_WIN2_CTRL0_WIN2_ALPHA_SWAP_SHIFT               (13U)
 #define VOP_WIN2_CTRL0_WIN2_ALPHA_SWAP_MASK                (0x1U << VOP_WIN2_CTRL0_WIN2_ALPHA_SWAP_SHIFT)               /* 0x00002000 */
+#define VOP_WIN2_CTRL0_WIN2_ENDIAN_SWAP_SHIFT              (14U)
+#define VOP_WIN2_CTRL0_WIN2_ENDIAN_SWAP_MASK               (0x1U << VOP_WIN2_CTRL0_WIN2_ENDIAN_SWAP_SHIFT)              /* 0x00004000 */
+#define VOP_WIN2_CTRL0_WIN2_UV_SWAP_SHIFT                  (15U)
+#define VOP_WIN2_CTRL0_WIN2_UV_SWAP_MASK                   (0x1U << VOP_WIN2_CTRL0_WIN2_UV_SWAP_SHIFT)                  /* 0x00008000 */
+#define VOP_WIN2_CTRL0_WIN2_R2Y_EN_SHIFT                   (16U)
+#define VOP_WIN2_CTRL0_WIN2_R2Y_EN_MASK                    (0x1U << VOP_WIN2_CTRL0_WIN2_R2Y_EN_SHIFT)                   /* 0x00010000 */
+#define VOP_WIN2_CTRL0_WIN2_Y2R_EN_SHIFT                   (17U)
+#define VOP_WIN2_CTRL0_WIN2_Y2R_EN_MASK                    (0x1U << VOP_WIN2_CTRL0_WIN2_Y2R_EN_SHIFT)                   /* 0x00020000 */
+#define VOP_WIN2_CTRL0_WIN2_CSC_MODE_SHIFT                 (18U)
+#define VOP_WIN2_CTRL0_WIN2_CSC_MODE_MASK                  (0x3U << VOP_WIN2_CTRL0_WIN2_CSC_MODE_SHIFT)                 /* 0x000C0000 */
 /* WIN2_CTRL1 */
-#define VOP_WIN2_CTRL1_WIN2_AXI_GATHER_EN_SHIFT            (0U)
-#define VOP_WIN2_CTRL1_WIN2_AXI_GATHER_EN_MASK             (0x1U << VOP_WIN2_CTRL1_WIN2_AXI_GATHER_EN_SHIFT)            /* 0x00000001 */
+#define VOP_WIN2_CTRL1_WIN2_YRGB_GATHER_EN_SHIFT           (0U)
+#define VOP_WIN2_CTRL1_WIN2_YRGB_GATHER_EN_MASK            (0x1U << VOP_WIN2_CTRL1_WIN2_YRGB_GATHER_EN_SHIFT)           /* 0x00000001 */
+#define VOP_WIN2_CTRL1_WIN2_CBCR_GATHER_EN_SHIFT           (1U)
+#define VOP_WIN2_CTRL1_WIN2_CBCR_GATHER_EN_MASK            (0x1U << VOP_WIN2_CTRL1_WIN2_CBCR_GATHER_EN_SHIFT)           /* 0x00000002 */
 #define VOP_WIN2_CTRL1_WIN2_DMA_BURST_LENGTH_SHIFT         (2U)
 #define VOP_WIN2_CTRL1_WIN2_DMA_BURST_LENGTH_MASK          (0x3U << VOP_WIN2_CTRL1_WIN2_DMA_BURST_LENGTH_SHIFT)         /* 0x0000000C */
-#define VOP_WIN2_CTRL1_WIN2_AXI_GATHER_NUM_SHIFT           (4U)
-#define VOP_WIN2_CTRL1_WIN2_AXI_GATHER_NUM_MASK            (0xFU << VOP_WIN2_CTRL1_WIN2_AXI_GATHER_NUM_SHIFT)           /* 0x000000F0 */
-#define VOP_WIN2_CTRL1_SW_WIN2_RID_SHIFT                   (8U)
-#define VOP_WIN2_CTRL1_SW_WIN2_RID_MASK                    (0xFU << VOP_WIN2_CTRL1_SW_WIN2_RID_SHIFT)                   /* 0x00000F00 */
+#define VOP_WIN2_CTRL1_WIN2_YRGB_GATHER_NUM_SHIFT          (4U)
+#define VOP_WIN2_CTRL1_WIN2_YRGB_GATHER_NUM_MASK           (0x3U << VOP_WIN2_CTRL1_WIN2_YRGB_GATHER_NUM_SHIFT)          /* 0x00000030 */
+#define VOP_WIN2_CTRL1_WIN2_CBCR_GATHER_NUM_SHIFT          (6U)
+#define VOP_WIN2_CTRL1_WIN2_CBCR_GATHER_NUM_MASK           (0x3U << VOP_WIN2_CTRL1_WIN2_CBCR_GATHER_NUM_SHIFT)          /* 0x000000C0 */
+#define VOP_WIN2_CTRL1_SW_WIN2_YRGB_RID_SHIFT              (8U)
+#define VOP_WIN2_CTRL1_SW_WIN2_YRGB_RID_MASK               (0xFU << VOP_WIN2_CTRL1_SW_WIN2_YRGB_RID_SHIFT)              /* 0x00000F00 */
+#define VOP_WIN2_CTRL1_SW_WIN2_CBCR_RID_SHIFT              (12U)
+#define VOP_WIN2_CTRL1_SW_WIN2_CBCR_RID_MASK               (0xFU << VOP_WIN2_CTRL1_SW_WIN2_CBCR_RID_SHIFT)              /* 0x0000F000 */
 /* WIN2_VIR */
-#define VOP_WIN2_VIR_WIN2_VIR_STRIDE_SHIFT                 (0U)
-#define VOP_WIN2_VIR_WIN2_VIR_STRIDE_MASK                  (0x1FFFU << VOP_WIN2_VIR_WIN2_VIR_STRIDE_SHIFT)              /* 0x00001FFF */
-/* WIN2_MST */
-#define VOP_WIN2_MST_WIN2_MST_SHIFT                        (0U)
-#define VOP_WIN2_MST_WIN2_MST_MASK                         (0xFFFFFFFFU << VOP_WIN2_MST_WIN2_MST_SHIFT)                 /* 0xFFFFFFFF */
+#define VOP_WIN2_VIR_WIN2_YRGB_VIR_STRIDE_SHIFT            (0U)
+#define VOP_WIN2_VIR_WIN2_YRGB_VIR_STRIDE_MASK             (0xFFFFU << VOP_WIN2_VIR_WIN2_YRGB_VIR_STRIDE_SHIFT)         /* 0x0000FFFF */
+#define VOP_WIN2_VIR_WIN2_CBCR_VIR_STRIDE_SHIFT            (16U)
+#define VOP_WIN2_VIR_WIN2_CBCR_VIR_STRIDE_MASK             (0xFFFFU << VOP_WIN2_VIR_WIN2_CBCR_VIR_STRIDE_SHIFT)         /* 0xFFFF0000 */
+/* WIN2_YRGB_MST */
+#define VOP_WIN2_YRGB_MST_WIN2_YRGB_MST_SHIFT              (0U)
+#define VOP_WIN2_YRGB_MST_WIN2_YRGB_MST_MASK               (0xFFFFFFFFU << VOP_WIN2_YRGB_MST_WIN2_YRGB_MST_SHIFT)       /* 0xFFFFFFFF */
 /* WIN2_DSP_INFO */
 #define VOP_WIN2_DSP_INFO_DSP_WIN2_WIDTH_SHIFT             (0U)
-#define VOP_WIN2_DSP_INFO_DSP_WIN2_WIDTH_MASK              (0x7FFU << VOP_WIN2_DSP_INFO_DSP_WIN2_WIDTH_SHIFT)           /* 0x000007FF */
+#define VOP_WIN2_DSP_INFO_DSP_WIN2_WIDTH_MASK              (0x1FFFU << VOP_WIN2_DSP_INFO_DSP_WIN2_WIDTH_SHIFT)          /* 0x00001FFF */
 #define VOP_WIN2_DSP_INFO_DSP_WIN2_HEIGHT_SHIFT            (16U)
-#define VOP_WIN2_DSP_INFO_DSP_WIN2_HEIGHT_MASK             (0x7FFU << VOP_WIN2_DSP_INFO_DSP_WIN2_HEIGHT_SHIFT)          /* 0x07FF0000 */
+#define VOP_WIN2_DSP_INFO_DSP_WIN2_HEIGHT_MASK             (0x1FFFU << VOP_WIN2_DSP_INFO_DSP_WIN2_HEIGHT_SHIFT)         /* 0x1FFF0000 */
 /* WIN2_DSP_ST */
 #define VOP_WIN2_DSP_ST_DSP_WIN2_XST_SHIFT                 (0U)
-#define VOP_WIN2_DSP_ST_DSP_WIN2_XST_MASK                  (0xFFFU << VOP_WIN2_DSP_ST_DSP_WIN2_XST_SHIFT)               /* 0x00000FFF */
+#define VOP_WIN2_DSP_ST_DSP_WIN2_XST_MASK                  (0x1FFFU << VOP_WIN2_DSP_ST_DSP_WIN2_XST_SHIFT)              /* 0x00001FFF */
 #define VOP_WIN2_DSP_ST_DSP_WIN2_YST_SHIFT                 (16U)
-#define VOP_WIN2_DSP_ST_DSP_WIN2_YST_MASK                  (0xFFFU << VOP_WIN2_DSP_ST_DSP_WIN2_YST_SHIFT)               /* 0x0FFF0000 */
+#define VOP_WIN2_DSP_ST_DSP_WIN2_YST_MASK                  (0x1FFFU << VOP_WIN2_DSP_ST_DSP_WIN2_YST_SHIFT)              /* 0x1FFF0000 */
 /* WIN2_COLOR_KEY */
 #define VOP_WIN2_COLOR_KEY_WIN2_KEY_COLOR_SHIFT            (0U)
 #define VOP_WIN2_COLOR_KEY_WIN2_KEY_COLOR_MASK             (0xFFFFFFU << VOP_WIN2_COLOR_KEY_WIN2_KEY_COLOR_SHIFT)       /* 0x00FFFFFF */
@@ -5501,78 +5618,6 @@ struct VOP_REG {
 #define VOP_WIN2_LOOP_OFFSET_WIN2_YLOOP_OFFSET_MASK        (0x1FFFU << VOP_WIN2_LOOP_OFFSET_WIN2_YLOOP_OFFSET_SHIFT)    /* 0x1FFF0000 */
 #define VOP_WIN2_LOOP_OFFSET_WIN2_YLOOP_EN_SHIFT           (31U)
 #define VOP_WIN2_LOOP_OFFSET_WIN2_YLOOP_EN_MASK            (0x1U << VOP_WIN2_LOOP_OFFSET_WIN2_YLOOP_EN_SHIFT)           /* 0x80000000 */
-/* WIN3_CTRL0 */
-#define VOP_WIN3_CTRL0_WIN3_EN_SHIFT                       (0U)
-#define VOP_WIN3_CTRL0_WIN3_EN_MASK                        (0x1U << VOP_WIN3_CTRL0_WIN3_EN_SHIFT)                       /* 0x00000001 */
-#define VOP_WIN3_CTRL0_WIN3_DATA_FMT_SHIFT                 (4U)
-#define VOP_WIN3_CTRL0_WIN3_DATA_FMT_MASK                  (0x7U << VOP_WIN3_CTRL0_WIN3_DATA_FMT_SHIFT)                 /* 0x00000070 */
-#define VOP_WIN3_CTRL0_WIN3_INTERLACE_READ_SHIFT           (8U)
-#define VOP_WIN3_CTRL0_WIN3_INTERLACE_READ_MASK            (0x1U << VOP_WIN3_CTRL0_WIN3_INTERLACE_READ_SHIFT)           /* 0x00000100 */
-#define VOP_WIN3_CTRL0_WIN3_NO_OUTSTANDING_SHIFT           (9U)
-#define VOP_WIN3_CTRL0_WIN3_NO_OUTSTANDING_MASK            (0x1U << VOP_WIN3_CTRL0_WIN3_NO_OUTSTANDING_SHIFT)           /* 0x00000200 */
-#define VOP_WIN3_CTRL0_WIN3_RB_SWAP_SHIFT                  (12U)
-#define VOP_WIN3_CTRL0_WIN3_RB_SWAP_MASK                   (0x1U << VOP_WIN3_CTRL0_WIN3_RB_SWAP_SHIFT)                  /* 0x00001000 */
-#define VOP_WIN3_CTRL0_WIN3_ALPHA_SWAP_SHIFT               (13U)
-#define VOP_WIN3_CTRL0_WIN3_ALPHA_SWAP_MASK                (0x1U << VOP_WIN3_CTRL0_WIN3_ALPHA_SWAP_SHIFT)               /* 0x00002000 */
-/* WIN3_CTRL1 */
-#define VOP_WIN3_CTRL1_WIN3_AXI_GATHER_EN_SHIFT            (0U)
-#define VOP_WIN3_CTRL1_WIN3_AXI_GATHER_EN_MASK             (0x1U << VOP_WIN3_CTRL1_WIN3_AXI_GATHER_EN_SHIFT)            /* 0x00000001 */
-#define VOP_WIN3_CTRL1_WIN3_DMA_BURST_LENGTH_SHIFT         (2U)
-#define VOP_WIN3_CTRL1_WIN3_DMA_BURST_LENGTH_MASK          (0x3U << VOP_WIN3_CTRL1_WIN3_DMA_BURST_LENGTH_SHIFT)         /* 0x0000000C */
-#define VOP_WIN3_CTRL1_WIN3_AXI_GATHER_NUM_SHIFT           (4U)
-#define VOP_WIN3_CTRL1_WIN3_AXI_GATHER_NUM_MASK            (0xFU << VOP_WIN3_CTRL1_WIN3_AXI_GATHER_NUM_SHIFT)           /* 0x000000F0 */
-#define VOP_WIN3_CTRL1_SW_WIN3_RID_SHIFT                   (8U)
-#define VOP_WIN3_CTRL1_SW_WIN3_RID_MASK                    (0xFU << VOP_WIN3_CTRL1_SW_WIN3_RID_SHIFT)                   /* 0x00000F00 */
-/* WIN3_VIR */
-#define VOP_WIN3_VIR_WIN3_VIR_STRIDE_SHIFT                 (0U)
-#define VOP_WIN3_VIR_WIN3_VIR_STRIDE_MASK                  (0x1FFFU << VOP_WIN3_VIR_WIN3_VIR_STRIDE_SHIFT)              /* 0x00001FFF */
-/* WIN3_MST */
-#define VOP_WIN3_MST_WIN3_MST_SHIFT                        (0U)
-#define VOP_WIN3_MST_WIN3_MST_MASK                         (0xFFFFFFFFU << VOP_WIN3_MST_WIN3_MST_SHIFT)                 /* 0xFFFFFFFF */
-/* WIN3_DSP_INFO */
-#define VOP_WIN3_DSP_INFO_DSP_WIN3_WIDTH_SHIFT             (0U)
-#define VOP_WIN3_DSP_INFO_DSP_WIN3_WIDTH_MASK              (0x7FFU << VOP_WIN3_DSP_INFO_DSP_WIN3_WIDTH_SHIFT)           /* 0x000007FF */
-#define VOP_WIN3_DSP_INFO_DSP_WIN3_HEIGHT_SHIFT            (16U)
-#define VOP_WIN3_DSP_INFO_DSP_WIN3_HEIGHT_MASK             (0x7FFU << VOP_WIN3_DSP_INFO_DSP_WIN3_HEIGHT_SHIFT)          /* 0x07FF0000 */
-/* WIN3_DSP_ST */
-#define VOP_WIN3_DSP_ST_DSP_WIN3_XST_SHIFT                 (0U)
-#define VOP_WIN3_DSP_ST_DSP_WIN3_XST_MASK                  (0xFFFU << VOP_WIN3_DSP_ST_DSP_WIN3_XST_SHIFT)               /* 0x00000FFF */
-#define VOP_WIN3_DSP_ST_DSP_WIN3_YST_SHIFT                 (16U)
-#define VOP_WIN3_DSP_ST_DSP_WIN3_YST_MASK                  (0xFFFU << VOP_WIN3_DSP_ST_DSP_WIN3_YST_SHIFT)               /* 0x0FFF0000 */
-/* WIN3_COLOR_KEY */
-#define VOP_WIN3_COLOR_KEY_WIN3_KEY_COLOR_SHIFT            (0U)
-#define VOP_WIN3_COLOR_KEY_WIN3_KEY_COLOR_MASK             (0xFFFFFFU << VOP_WIN3_COLOR_KEY_WIN3_KEY_COLOR_SHIFT)       /* 0x00FFFFFF */
-#define VOP_WIN3_COLOR_KEY_WIN3_KEY_EN_SHIFT               (24U)
-#define VOP_WIN3_COLOR_KEY_WIN3_KEY_EN_MASK                (0x1U << VOP_WIN3_COLOR_KEY_WIN3_KEY_EN_SHIFT)               /* 0x01000000 */
-/* WIN3_ALPHA_CTRL */
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_EN_SHIFT            (0U)
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_EN_MASK             (0x1U << VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_EN_SHIFT)            /* 0x00000001 */
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_MODE_SHIFT          (1U)
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_MODE_MASK           (0x1U << VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_MODE_SHIFT)          /* 0x00000002 */
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_PRE_MUL_SHIFT       (2U)
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_PRE_MUL_MASK        (0x1U << VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_PRE_MUL_SHIFT)       /* 0x00000004 */
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_SAT_MODE_SHIFT      (3U)
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_SAT_MODE_MASK       (0x1U << VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_SAT_MODE_SHIFT)      /* 0x00000008 */
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_VALUE_SHIFT         (4U)
-#define VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_VALUE_MASK          (0xFFU << VOP_WIN3_ALPHA_CTRL_WIN3_ALPHA_VALUE_SHIFT)        /* 0x00000FF0 */
-/* WIN3_CBCR_MST */
-#define VOP_WIN3_CBCR_MST_WIN3_CBCR_MST_SHIFT              (0U)
-#define VOP_WIN3_CBCR_MST_WIN3_CBCR_MST_MASK               (0xFFFFFFFFU << VOP_WIN3_CBCR_MST_WIN3_CBCR_MST_SHIFT)       /* 0xFFFFFFFF */
-/* WIN3_YRGB_MST_RAW */
-#define VOP_WIN3_YRGB_MST_RAW_WIN3_YRGB_MST_RAW_SHIFT      (0U)
-#define VOP_WIN3_YRGB_MST_RAW_WIN3_YRGB_MST_RAW_MASK       (0xFFFFFFFFU << VOP_WIN3_YRGB_MST_RAW_WIN3_YRGB_MST_RAW_SHIFT) /* 0xFFFFFFFF */
-/* WIN3_CBCR_MST_RAW */
-#define VOP_WIN3_CBCR_MST_RAW_WIN3_CBCR_MST_RAW_SHIFT      (0U)
-#define VOP_WIN3_CBCR_MST_RAW_WIN3_CBCR_MST_RAW_MASK       (0xFFFFFFFFU << VOP_WIN3_CBCR_MST_RAW_WIN3_CBCR_MST_RAW_SHIFT) /* 0xFFFFFFFF */
-/* WIN3_LOOP_OFFSET */
-#define VOP_WIN3_LOOP_OFFSET_WIN3_XLOOP_OFFSET_SHIFT       (0U)
-#define VOP_WIN3_LOOP_OFFSET_WIN3_XLOOP_OFFSET_MASK        (0x1FFFU << VOP_WIN3_LOOP_OFFSET_WIN3_XLOOP_OFFSET_SHIFT)    /* 0x00001FFF */
-#define VOP_WIN3_LOOP_OFFSET_WIN3_XLOOP_EN_SHIFT           (15U)
-#define VOP_WIN3_LOOP_OFFSET_WIN3_XLOOP_EN_MASK            (0x1U << VOP_WIN3_LOOP_OFFSET_WIN3_XLOOP_EN_SHIFT)           /* 0x00008000 */
-#define VOP_WIN3_LOOP_OFFSET_WIN3_YLOOP_OFFSET_SHIFT       (16U)
-#define VOP_WIN3_LOOP_OFFSET_WIN3_YLOOP_OFFSET_MASK        (0x1FFFU << VOP_WIN3_LOOP_OFFSET_WIN3_YLOOP_OFFSET_SHIFT)    /* 0x1FFF0000 */
-#define VOP_WIN3_LOOP_OFFSET_WIN3_YLOOP_EN_SHIFT           (31U)
-#define VOP_WIN3_LOOP_OFFSET_WIN3_YLOOP_EN_MASK            (0x1U << VOP_WIN3_LOOP_OFFSET_WIN3_YLOOP_EN_SHIFT)           /* 0x80000000 */
 /* DSP_HTOTAL_HS_END */
 #define VOP_DSP_HTOTAL_HS_END_DSP_HS_END_SHIFT             (0U)
 #define VOP_DSP_HTOTAL_HS_END_DSP_HS_END_MASK              (0xFFFU << VOP_DSP_HTOTAL_HS_END_DSP_HS_END_SHIFT)           /* 0x00000FFF */
@@ -5687,14 +5732,35 @@ struct VOP_REG {
 #define VOP_POST_CTRL_Y_THRES_SHIFT                        (24U)
 #define VOP_POST_CTRL_Y_THRES_MASK                         (0xFFU << VOP_POST_CTRL_Y_THRES_SHIFT)                       /* 0xFF000000 */
 /* COLOR_MATRIX_COE0 */
-#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE0_SHIFT      (0U)
-#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE0_MASK       (0xFFFFFFFFU << VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE0_SHIFT) /* 0xFFFFFFFF */
+#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE00_SHIFT     (0U)
+#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE00_MASK      (0xFFU << VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE00_SHIFT)    /* 0x000000FF */
+#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE01_SHIFT     (8U)
+#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE01_MASK      (0xFFU << VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE01_SHIFT)    /* 0x0000FF00 */
+#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE02_SHIFT     (16U)
+#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE02_MASK      (0xFFU << VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_COE02_SHIFT)    /* 0x00FF0000 */
+#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_OFFSET0_SHIFT   (24U)
+#define VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_OFFSET0_MASK    (0xFFU << VOP_COLOR_MATRIX_COE0_COLOR_MATRIX_OFFSET0_SHIFT)  /* 0xFF000000 */
 /* COLOR_MATRIX_COE1 */
-#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE1_SHIFT      (0U)
-#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE1_MASK       (0xFFFFFFFFU << VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE1_SHIFT) /* 0xFFFFFFFF */
+#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE10_SHIFT     (0U)
+#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE10_MASK      (0xFFU << VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE10_SHIFT)    /* 0x000000FF */
+#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE11_SHIFT     (8U)
+#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE11_MASK      (0xFFU << VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE11_SHIFT)    /* 0x0000FF00 */
+#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE12_SHIFT     (16U)
+#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE12_MASK      (0xFFU << VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_COE12_SHIFT)    /* 0x00FF0000 */
+#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_OFFSET1_SHIFT   (24U)
+#define VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_OFFSET1_MASK    (0xFFU << VOP_COLOR_MATRIX_COE1_COLOR_MATRIX_OFFSET1_SHIFT)  /* 0xFF000000 */
 /* COLOR_MATRIX_COE2 */
-#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE2_SHIFT      (0U)
-#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE2_MASK       (0xFFFFFFFFU << VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE2_SHIFT) /* 0xFFFFFFFF */
+#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE20_SHIFT     (0U)
+#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE20_MASK      (0xFFU << VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE20_SHIFT)    /* 0x000000FF */
+#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE21_SHIFT     (8U)
+#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE21_MASK      (0xFFU << VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE21_SHIFT)    /* 0x0000FF00 */
+#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE22_SHIFT     (16U)
+#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE22_MASK      (0xFFU << VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_COE22_SHIFT)    /* 0x00FF0000 */
+#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_OFFSET2_SHIFT   (24U)
+#define VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_OFFSET2_MASK    (0xFFU << VOP_COLOR_MATRIX_COE2_COLOR_MATRIX_OFFSET2_SHIFT)  /* 0xFF000000 */
+/* MCU_WRITE_DATA */
+#define VOP_MCU_WRITE_DATA_FIELD0000_SHIFT                 (0U)
+#define VOP_MCU_WRITE_DATA_FIELD0000_MASK                  (0x1U << VOP_MCU_WRITE_DATA_FIELD0000_SHIFT)                 /* 0x00000001 */
 /* DBG_REG_SCAN_LINE */
 #define VOP_DBG_REG_SCAN_LINE_SCAN_LINE_NUM_SHIFT          (0U)
 #define VOP_DBG_REG_SCAN_LINE_SCAN_LINE_NUM_MASK           (0xFFFU << VOP_DBG_REG_SCAN_LINE_SCAN_LINE_NUM_SHIFT)        /* 0x00000FFF */
@@ -5709,12 +5775,12 @@ struct VOP_REG {
 /* FLAG_REG */
 #define VOP_FLAG_REG_FLAG_REG_SHIFT                        (0U)
 #define VOP_FLAG_REG_FLAG_REG_MASK                         (0xFFFFFFFFU << VOP_FLAG_REG_FLAG_REG_SHIFT)                 /* 0xFFFFFFFF */
-/* LUT_WIN1 */
-#define VOP_LUT_WIN1_FIELD0000_SHIFT                       (0U)
-#define VOP_LUT_WIN1_FIELD0000_MASK                        (0x1U << VOP_LUT_WIN1_FIELD0000_SHIFT)                       /* 0x00000001 */
-/* LUT_WIN2 */
-#define VOP_LUT_WIN2_FIELD0000_SHIFT                       (0U)
-#define VOP_LUT_WIN2_FIELD0000_MASK                        (0x1U << VOP_LUT_WIN2_FIELD0000_SHIFT)                       /* 0x00000001 */
+/* WIN0_BPP_LUT */
+#define VOP_WIN0_BPP_LUT_FIELD0000_SHIFT                   (0U)
+#define VOP_WIN0_BPP_LUT_FIELD0000_MASK                    (0x1U << VOP_WIN0_BPP_LUT_FIELD0000_SHIFT)                   /* 0x00000001 */
+/* WIN1_BPP_LUT */
+#define VOP_WIN1_BPP_LUT_FIELD0000_SHIFT                   (0U)
+#define VOP_WIN1_BPP_LUT_FIELD0000_MASK                    (0x1U << VOP_WIN1_BPP_LUT_FIELD0000_SHIFT)                   /* 0x00000001 */
 /* DSC_SYS_CTRL0_IMD */
 #define VOP_DSC_SYS_CTRL0_IMD_DSC_CONFIG_EN_SHIFT          (0U)
 #define VOP_DSC_SYS_CTRL0_IMD_DSC_CONFIG_EN_MASK           (0x1U << VOP_DSC_SYS_CTRL0_IMD_DSC_CONFIG_EN_SHIFT)          /* 0x00000001 */
@@ -5756,11 +5822,330 @@ struct VOP_REG {
 #define VOP_DSC_SYS_CTRL3_DSC_OB_MAX_ADDR_SHIFT            (0U)
 #define VOP_DSC_SYS_CTRL3_DSC_OB_MAX_ADDR_MASK             (0x3FFFU << VOP_DSC_SYS_CTRL3_DSC_OB_MAX_ADDR_SHIFT)         /* 0x00003FFF */
 /* DSC_CFG0 */
-#define VOP_DSC_CFG0_DSC_CFG_SHIFT                         (0U)
-#define VOP_DSC_CFG0_DSC_CFG_MASK                          (0xFFFFFFFFU << VOP_DSC_CFG0_DSC_CFG_SHIFT)                  /* 0xFFFFFFFF */
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET0_SHIFT               (0U)
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET0_MASK                (0x3FU << VOP_DSC_CFG0_RANGE_BPG_OFFSET0_SHIFT)              /* 0x0000003F */
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET1_SHIFT               (6U)
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET1_MASK                (0x3FU << VOP_DSC_CFG0_RANGE_BPG_OFFSET1_SHIFT)              /* 0x00000FC0 */
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET2_SHIFT               (12U)
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET2_MASK                (0x3FU << VOP_DSC_CFG0_RANGE_BPG_OFFSET2_SHIFT)              /* 0x0003F000 */
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET3_SHIFT               (18U)
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET3_MASK                (0x3FU << VOP_DSC_CFG0_RANGE_BPG_OFFSET3_SHIFT)              /* 0x00FC0000 */
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET4_SHIFT               (24U)
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET4_MASK                (0x3FU << VOP_DSC_CFG0_RANGE_BPG_OFFSET4_SHIFT)              /* 0x3F000000 */
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET5_LO_SHIFT            (30U)
+#define VOP_DSC_CFG0_RANGE_BPG_OFFSET5_LO_MASK             (0x3U << VOP_DSC_CFG0_RANGE_BPG_OFFSET5_LO_SHIFT)            /* 0xC0000000 */
 /* DSC_CFG1 */
-#define VOP_DSC_CFG1_DSC_CFG_SHIFT                         (0U)
-#define VOP_DSC_CFG1_DSC_CFG_MASK                          (0xFFFFFFFFU << VOP_DSC_CFG1_DSC_CFG_SHIFT)                  /* 0xFFFFFFFF */
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET5_HI_SHIFT            (0U)
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET5_HI_MASK             (0xFU << VOP_DSC_CFG1_RANGE_BPG_OFFSET5_HI_SHIFT)            /* 0x0000000F */
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET6_SHIFT               (4U)
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET6_MASK                (0x3FU << VOP_DSC_CFG1_RANGE_BPG_OFFSET6_SHIFT)              /* 0x000003F0 */
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET7_SHIFT               (10U)
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET7_MASK                (0x3FU << VOP_DSC_CFG1_RANGE_BPG_OFFSET7_SHIFT)              /* 0x0000FC00 */
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET8_SHIFT               (16U)
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET8_MASK                (0x3FU << VOP_DSC_CFG1_RANGE_BPG_OFFSET8_SHIFT)              /* 0x003F0000 */
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET9_SHIFT               (22U)
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET9_MASK                (0x3FU << VOP_DSC_CFG1_RANGE_BPG_OFFSET9_SHIFT)              /* 0x0FC00000 */
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET10_LO_SHIFT           (28U)
+#define VOP_DSC_CFG1_RANGE_BPG_OFFSET10_LO_MASK            (0xFU << VOP_DSC_CFG1_RANGE_BPG_OFFSET10_LO_SHIFT)           /* 0xF0000000 */
+/* DSC_CFG2 */
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET10_HI_SHIFT           (0U)
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET10_HI_MASK            (0x3U << VOP_DSC_CFG2_RANGE_BPG_OFFSET10_HI_SHIFT)           /* 0x00000003 */
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET11_SHIFT              (2U)
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET11_MASK               (0x3FU << VOP_DSC_CFG2_RANGE_BPG_OFFSET11_SHIFT)             /* 0x000000FC */
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET12_SHIFT              (8U)
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET12_MASK               (0x3FU << VOP_DSC_CFG2_RANGE_BPG_OFFSET12_SHIFT)             /* 0x00003F00 */
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET13_SHIFT              (14U)
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET13_MASK               (0x3FU << VOP_DSC_CFG2_RANGE_BPG_OFFSET13_SHIFT)             /* 0x000FC000 */
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET14_SHIFT              (20U)
+#define VOP_DSC_CFG2_RANGE_BPG_OFFSET14_MASK               (0x3FU << VOP_DSC_CFG2_RANGE_BPG_OFFSET14_SHIFT)             /* 0x03F00000 */
+#define VOP_DSC_CFG2_FIELD0000_SHIFT                       (26U)
+#define VOP_DSC_CFG2_FIELD0000_MASK                        (0x1FU << VOP_DSC_CFG2_FIELD0000_SHIFT)                      /* 0x7C000000 */
+#define VOP_DSC_CFG2_FIELD0001_SHIFT                       (31U)
+#define VOP_DSC_CFG2_FIELD0001_MASK                        (0x1U << VOP_DSC_CFG2_FIELD0001_SHIFT)                       /* 0x80000000 */
+/* DSC_CFG3 */
+#define VOP_DSC_CFG3_RANGE_MAX_QP0_SHIFT                   (0U)
+#define VOP_DSC_CFG3_RANGE_MAX_QP0_MASK                    (0xFU << VOP_DSC_CFG3_RANGE_MAX_QP0_SHIFT)                   /* 0x0000000F */
+#define VOP_DSC_CFG3_RANGE_MAX_QP1_SHIFT                   (4U)
+#define VOP_DSC_CFG3_RANGE_MAX_QP1_MASK                    (0x1FU << VOP_DSC_CFG3_RANGE_MAX_QP1_SHIFT)                  /* 0x000001F0 */
+#define VOP_DSC_CFG3_RANGE_MAX_QP2_SHIFT                   (9U)
+#define VOP_DSC_CFG3_RANGE_MAX_QP2_MASK                    (0x1FU << VOP_DSC_CFG3_RANGE_MAX_QP2_SHIFT)                  /* 0x00003E00 */
+#define VOP_DSC_CFG3_RANGE_MAX_QP3_SHIFT                   (14U)
+#define VOP_DSC_CFG3_RANGE_MAX_QP3_MASK                    (0x1FU << VOP_DSC_CFG3_RANGE_MAX_QP3_SHIFT)                  /* 0x0007C000 */
+#define VOP_DSC_CFG3_RANGE_MAX_QP4_SHIFT                   (19U)
+#define VOP_DSC_CFG3_RANGE_MAX_QP4_MASK                    (0x1FU << VOP_DSC_CFG3_RANGE_MAX_QP4_SHIFT)                  /* 0x00F80000 */
+#define VOP_DSC_CFG3_RANGE_MAX_QP5_SHIFT                   (24U)
+#define VOP_DSC_CFG3_RANGE_MAX_QP5_MASK                    (0x1FU << VOP_DSC_CFG3_RANGE_MAX_QP5_SHIFT)                  /* 0x1F000000 */
+#define VOP_DSC_CFG3_RANGE_MAX_QP6_LO_SHIFT                (29U)
+#define VOP_DSC_CFG3_RANGE_MAX_QP6_LO_MASK                 (0x7U << VOP_DSC_CFG3_RANGE_MAX_QP6_LO_SHIFT)                /* 0xE0000000 */
+/* DSC_CFG4 */
+#define VOP_DSC_CFG4_RANGE_MAX_QP6_HI_SHIFT                (0U)
+#define VOP_DSC_CFG4_RANGE_MAX_QP6_HI_MASK                 (0x3U << VOP_DSC_CFG4_RANGE_MAX_QP6_HI_SHIFT)                /* 0x00000003 */
+#define VOP_DSC_CFG4_RANGE_MAX_QP7_SHIFT                   (2U)
+#define VOP_DSC_CFG4_RANGE_MAX_QP7_MASK                    (0x1FU << VOP_DSC_CFG4_RANGE_MAX_QP7_SHIFT)                  /* 0x0000007C */
+#define VOP_DSC_CFG4_RANGE_MAX_QP8_SHIFT                   (7U)
+#define VOP_DSC_CFG4_RANGE_MAX_QP8_MASK                    (0x1FU << VOP_DSC_CFG4_RANGE_MAX_QP8_SHIFT)                  /* 0x00000F80 */
+#define VOP_DSC_CFG4_RANGE_MAX_QP9_SHIFT                   (12U)
+#define VOP_DSC_CFG4_RANGE_MAX_QP9_MASK                    (0x1FU << VOP_DSC_CFG4_RANGE_MAX_QP9_SHIFT)                  /* 0x0001F000 */
+#define VOP_DSC_CFG4_RANGE_MAX_QP10_SHIFT                  (17U)
+#define VOP_DSC_CFG4_RANGE_MAX_QP10_MASK                   (0x1FU << VOP_DSC_CFG4_RANGE_MAX_QP10_SHIFT)                 /* 0x003E0000 */
+#define VOP_DSC_CFG4_RANGE_MAX_QP11_SHIFT                  (22U)
+#define VOP_DSC_CFG4_RANGE_MAX_QP11_MASK                   (0x1FU << VOP_DSC_CFG4_RANGE_MAX_QP11_SHIFT)                 /* 0x07C00000 */
+#define VOP_DSC_CFG4_RANGE_MAX_QP12_LO_SHIFT               (27U)
+#define VOP_DSC_CFG4_RANGE_MAX_QP12_LO_MASK                (0x1FU << VOP_DSC_CFG4_RANGE_MAX_QP12_LO_SHIFT)              /* 0xF8000000 */
+/* DSC_CFG5 */
+#define VOP_DSC_CFG5_RANGE_MAX_QP13_SHIFT                  (0U)
+#define VOP_DSC_CFG5_RANGE_MAX_QP13_MASK                   (0x1FU << VOP_DSC_CFG5_RANGE_MAX_QP13_SHIFT)                 /* 0x0000001F */
+#define VOP_DSC_CFG5_RANGE_MAX_QP14_SHIFT                  (5U)
+#define VOP_DSC_CFG5_RANGE_MAX_QP14_MASK                   (0x1FU << VOP_DSC_CFG5_RANGE_MAX_QP14_SHIFT)                 /* 0x000003E0 */
+#define VOP_DSC_CFG5_RANGE_MIN_QP0_SHIFT                   (10U)
+#define VOP_DSC_CFG5_RANGE_MIN_QP0_MASK                    (0x1FU << VOP_DSC_CFG5_RANGE_MIN_QP0_SHIFT)                  /* 0x00007C00 */
+#define VOP_DSC_CFG5_RANGE_MIN_QP1_SHIFT                   (15U)
+#define VOP_DSC_CFG5_RANGE_MIN_QP1_MASK                    (0x1FU << VOP_DSC_CFG5_RANGE_MIN_QP1_SHIFT)                  /* 0x000F8000 */
+#define VOP_DSC_CFG5_RANGE_MIN_QP2_SHIFT                   (20U)
+#define VOP_DSC_CFG5_RANGE_MIN_QP2_MASK                    (0x1FU << VOP_DSC_CFG5_RANGE_MIN_QP2_SHIFT)                  /* 0x01F00000 */
+#define VOP_DSC_CFG5_RANGE_MIN_QP3_SHIFT                   (25U)
+#define VOP_DSC_CFG5_RANGE_MIN_QP3_MASK                    (0x1FU << VOP_DSC_CFG5_RANGE_MIN_QP3_SHIFT)                  /* 0x3E000000 */
+#define VOP_DSC_CFG5_RANGE_MIN_QP4_LO_SHIFT                (30U)
+#define VOP_DSC_CFG5_RANGE_MIN_QP4_LO_MASK                 (0x3U << VOP_DSC_CFG5_RANGE_MIN_QP4_LO_SHIFT)                /* 0xC0000000 */
+/* DSC_CFG6 */
+#define VOP_DSC_CFG6_RANGE_MIN_QP4_HI_SHIFT                (0U)
+#define VOP_DSC_CFG6_RANGE_MIN_QP4_HI_MASK                 (0x7U << VOP_DSC_CFG6_RANGE_MIN_QP4_HI_SHIFT)                /* 0x00000007 */
+#define VOP_DSC_CFG6_RANGE_MIN_QP5_SHIFT                   (3U)
+#define VOP_DSC_CFG6_RANGE_MIN_QP5_MASK                    (0x1FU << VOP_DSC_CFG6_RANGE_MIN_QP5_SHIFT)                  /* 0x000000F8 */
+#define VOP_DSC_CFG6_RANGE_MIN_QP6_SHIFT                   (8U)
+#define VOP_DSC_CFG6_RANGE_MIN_QP6_MASK                    (0x1FU << VOP_DSC_CFG6_RANGE_MIN_QP6_SHIFT)                  /* 0x00001F00 */
+#define VOP_DSC_CFG6_RANGE_MIN_QP7_SHIFT                   (13U)
+#define VOP_DSC_CFG6_RANGE_MIN_QP7_MASK                    (0x1FU << VOP_DSC_CFG6_RANGE_MIN_QP7_SHIFT)                  /* 0x0003E000 */
+#define VOP_DSC_CFG6_RANGE_MIN_QP8_SHIFT                   (18U)
+#define VOP_DSC_CFG6_RANGE_MIN_QP8_MASK                    (0x1FU << VOP_DSC_CFG6_RANGE_MIN_QP8_SHIFT)                  /* 0x007C0000 */
+#define VOP_DSC_CFG6_RANGE_MIN_QP9_SHIFT                   (23U)
+#define VOP_DSC_CFG6_RANGE_MIN_QP9_MASK                    (0x1FU << VOP_DSC_CFG6_RANGE_MIN_QP9_SHIFT)                  /* 0x0F800000 */
+#define VOP_DSC_CFG6_RANGE_MIN_QP10_SHIFT                  (28U)
+#define VOP_DSC_CFG6_RANGE_MIN_QP10_MASK                   (0xFU << VOP_DSC_CFG6_RANGE_MIN_QP10_SHIFT)                  /* 0xF0000000 */
+/* DSC_CFG7 */
+#define VOP_DSC_CFG7_RANGE_MIN_QP11_SHIFT                  (0U)
+#define VOP_DSC_CFG7_RANGE_MIN_QP11_MASK                   (0x1U << VOP_DSC_CFG7_RANGE_MIN_QP11_SHIFT)                  /* 0x00000001 */
+#define VOP_DSC_CFG7_RANGE_MIN_QP12_SHIFT                  (1U)
+#define VOP_DSC_CFG7_RANGE_MIN_QP12_MASK                   (0x1FU << VOP_DSC_CFG7_RANGE_MIN_QP12_SHIFT)                 /* 0x0000003E */
+#define VOP_DSC_CFG7_RANGE_MIN_QP13_SHIFT                  (6U)
+#define VOP_DSC_CFG7_RANGE_MIN_QP13_MASK                   (0x1FU << VOP_DSC_CFG7_RANGE_MIN_QP13_SHIFT)                 /* 0x000007C0 */
+#define VOP_DSC_CFG7_RANGE_MIN_QP14_SHIFT                  (11U)
+#define VOP_DSC_CFG7_RANGE_MIN_QP14_MASK                   (0x1FU << VOP_DSC_CFG7_RANGE_MIN_QP14_SHIFT)                 /* 0x0000F800 */
+#define VOP_DSC_CFG7_RC_BUF_THRESH0_SHIFT                  (16U)
+#define VOP_DSC_CFG7_RC_BUF_THRESH0_MASK                   (0xFFU << VOP_DSC_CFG7_RC_BUF_THRESH0_SHIFT)                 /* 0x00FF0000 */
+#define VOP_DSC_CFG7_RC_BUF_THRESH1_SHIFT                  (24U)
+#define VOP_DSC_CFG7_RC_BUF_THRESH1_MASK                   (0xFFU << VOP_DSC_CFG7_RC_BUF_THRESH1_SHIFT)                 /* 0xFF000000 */
+/* DSC_CFG8 */
+#define VOP_DSC_CFG8_RC_BUF_THRESH2_SHIFT                  (0U)
+#define VOP_DSC_CFG8_RC_BUF_THRESH2_MASK                   (0xFFU << VOP_DSC_CFG8_RC_BUF_THRESH2_SHIFT)                 /* 0x000000FF */
+#define VOP_DSC_CFG8_RC_BUF_THRESH3_SHIFT                  (8U)
+#define VOP_DSC_CFG8_RC_BUF_THRESH3_MASK                   (0xFFU << VOP_DSC_CFG8_RC_BUF_THRESH3_SHIFT)                 /* 0x0000FF00 */
+#define VOP_DSC_CFG8_RC_BUF_THRESH4_SHIFT                  (16U)
+#define VOP_DSC_CFG8_RC_BUF_THRESH4_MASK                   (0xFFU << VOP_DSC_CFG8_RC_BUF_THRESH4_SHIFT)                 /* 0x00FF0000 */
+#define VOP_DSC_CFG8_RC_BUF_THRESH5_SHIFT                  (24U)
+#define VOP_DSC_CFG8_RC_BUF_THRESH5_MASK                   (0xFFU << VOP_DSC_CFG8_RC_BUF_THRESH5_SHIFT)                 /* 0xFF000000 */
+/* DSC_CFG9 */
+#define VOP_DSC_CFG9_RC_BUF_THRESH6_SHIFT                  (0U)
+#define VOP_DSC_CFG9_RC_BUF_THRESH6_MASK                   (0xFFU << VOP_DSC_CFG9_RC_BUF_THRESH6_SHIFT)                 /* 0x000000FF */
+#define VOP_DSC_CFG9_RC_BUF_THRESH7_SHIFT                  (8U)
+#define VOP_DSC_CFG9_RC_BUF_THRESH7_MASK                   (0xFFU << VOP_DSC_CFG9_RC_BUF_THRESH7_SHIFT)                 /* 0x0000FF00 */
+#define VOP_DSC_CFG9_RC_BUF_THRESH8_SHIFT                  (16U)
+#define VOP_DSC_CFG9_RC_BUF_THRESH8_MASK                   (0xFFU << VOP_DSC_CFG9_RC_BUF_THRESH8_SHIFT)                 /* 0x00FF0000 */
+#define VOP_DSC_CFG9_RC_BUF_THRESH9_SHIFT                  (24U)
+#define VOP_DSC_CFG9_RC_BUF_THRESH9_MASK                   (0xFFU << VOP_DSC_CFG9_RC_BUF_THRESH9_SHIFT)                 /* 0xFF000000 */
+/* DSC_CFG10 */
+#define VOP_DSC_CFG10_RC_BUF_THRESH10_SHIFT                (0U)
+#define VOP_DSC_CFG10_RC_BUF_THRESH10_MASK                 (0xFFU << VOP_DSC_CFG10_RC_BUF_THRESH10_SHIFT)               /* 0x000000FF */
+#define VOP_DSC_CFG10_RC_BUF_THRESH11_SHIFT                (8U)
+#define VOP_DSC_CFG10_RC_BUF_THRESH11_MASK                 (0xFFU << VOP_DSC_CFG10_RC_BUF_THRESH11_SHIFT)               /* 0x0000FF00 */
+#define VOP_DSC_CFG10_RC_BUF_THRESH12_SHIFT                (16U)
+#define VOP_DSC_CFG10_RC_BUF_THRESH12_MASK                 (0xFFU << VOP_DSC_CFG10_RC_BUF_THRESH12_SHIFT)               /* 0x00FF0000 */
+#define VOP_DSC_CFG10_RC_BUF_THRESH13_SHIFT                (24U)
+#define VOP_DSC_CFG10_RC_BUF_THRESH13_MASK                 (0xFFU << VOP_DSC_CFG10_RC_BUF_THRESH13_SHIFT)               /* 0xFF000000 */
+/* DSC_CFG11 */
+#define VOP_DSC_CFG11_RC_TGT_OFFSET_LO_SHIFT               (0U)
+#define VOP_DSC_CFG11_RC_TGT_OFFSET_LO_MASK                (0xFU << VOP_DSC_CFG11_RC_TGT_OFFSET_LO_SHIFT)               /* 0x0000000F */
+#define VOP_DSC_CFG11_RC_TGT_OFFSET_HI_SHIFT               (4U)
+#define VOP_DSC_CFG11_RC_TGT_OFFSET_HI_MASK                (0xFU << VOP_DSC_CFG11_RC_TGT_OFFSET_HI_SHIFT)               /* 0x000000F0 */
+#define VOP_DSC_CFG11_RC_QUANT_INCR_LIMIT1_SHIFT           (8U)
+#define VOP_DSC_CFG11_RC_QUANT_INCR_LIMIT1_MASK            (0x1FU << VOP_DSC_CFG11_RC_QUANT_INCR_LIMIT1_SHIFT)          /* 0x00001F00 */
+#define VOP_DSC_CFG11_RC_QUANT_INCR_LIMIT0_SHIFT           (13U)
+#define VOP_DSC_CFG11_RC_QUANT_INCR_LIMIT0_MASK            (0x1FU << VOP_DSC_CFG11_RC_QUANT_INCR_LIMIT0_SHIFT)          /* 0x0003E000 */
+#define VOP_DSC_CFG11_RC_EDGE_FACTOR_SHIFT                 (18U)
+#define VOP_DSC_CFG11_RC_EDGE_FACTOR_MASK                  (0xFU << VOP_DSC_CFG11_RC_EDGE_FACTOR_SHIFT)                 /* 0x003C0000 */
+#define VOP_DSC_CFG11_RC_MODEL_SIZE_LO_SHIFT               (22U)
+#define VOP_DSC_CFG11_RC_MODEL_SIZE_LO_MASK                (0x3FFU << VOP_DSC_CFG11_RC_MODEL_SIZE_LO_SHIFT)             /* 0xFFC00000 */
+/* DSC_CFG12 */
+#define VOP_DSC_CFG12_RC_MODEL_SIZE_HI_SHIFT               (0U)
+#define VOP_DSC_CFG12_RC_MODEL_SIZE_HI_MASK                (0x3FU << VOP_DSC_CFG12_RC_MODEL_SIZE_HI_SHIFT)              /* 0x0000003F */
+#define VOP_DSC_CFG12_FLATNESS_DET_THRESH_SHIFT            (6U)
+#define VOP_DSC_CFG12_FLATNESS_DET_THRESH_MASK             (0xFFU << VOP_DSC_CFG12_FLATNESS_DET_THRESH_SHIFT)           /* 0x00003FC0 */
+#define VOP_DSC_CFG12_FLATNESS_MAX_QP_SHIFT                (14U)
+#define VOP_DSC_CFG12_FLATNESS_MAX_QP_MASK                 (0x1FU << VOP_DSC_CFG12_FLATNESS_MAX_QP_SHIFT)               /* 0x0007C000 */
+#define VOP_DSC_CFG12_FLATNESS_MIN_QP_SHIFT                (19U)
+#define VOP_DSC_CFG12_FLATNESS_MIN_QP_MASK                 (0x1FU << VOP_DSC_CFG12_FLATNESS_MIN_QP_SHIFT)               /* 0x00F80000 */
+#define VOP_DSC_CFG12_FINAL_OFFSET_LO_SHIFT                (24U)
+#define VOP_DSC_CFG12_FINAL_OFFSET_LO_MASK                 (0xFFU << VOP_DSC_CFG12_FINAL_OFFSET_LO_SHIFT)               /* 0xFF000000 */
+/* DSC_CFG13 */
+#define VOP_DSC_CFG13_FINAL_OFFSET_HI_SHIFT                (0U)
+#define VOP_DSC_CFG13_FINAL_OFFSET_HI_MASK                 (0xFFU << VOP_DSC_CFG13_FINAL_OFFSET_HI_SHIFT)               /* 0x000000FF */
+#define VOP_DSC_CFG13_INITIAL_OFFSET_SHIFT                 (8U)
+#define VOP_DSC_CFG13_INITIAL_OFFSET_MASK                  (0xFFFFU << VOP_DSC_CFG13_INITIAL_OFFSET_SHIFT)              /* 0x00FFFF00 */
+#define VOP_DSC_CFG13_SLICE_BPG_OFFSET_LO_SHIFT            (24U)
+#define VOP_DSC_CFG13_SLICE_BPG_OFFSET_LO_MASK             (0xFFU << VOP_DSC_CFG13_SLICE_BPG_OFFSET_LO_SHIFT)           /* 0xFF000000 */
+/* DSC_CFG14 */
+#define VOP_DSC_CFG14_SLICE_BPG_OFFSET_HI_SHIFT            (0U)
+#define VOP_DSC_CFG14_SLICE_BPG_OFFSET_HI_MASK             (0xFFU << VOP_DSC_CFG14_SLICE_BPG_OFFSET_HI_SHIFT)           /* 0x000000FF */
+#define VOP_DSC_CFG14_NFL_BPG_OFFSET_SHIFT                 (8U)
+#define VOP_DSC_CFG14_NFL_BPG_OFFSET_MASK                  (0xFFFFU << VOP_DSC_CFG14_NFL_BPG_OFFSET_SHIFT)              /* 0x00FFFF00 */
+#define VOP_DSC_CFG14_FIRST_LINE_BPG_OFFSET_SHIFT          (24U)
+#define VOP_DSC_CFG14_FIRST_LINE_BPG_OFFSET_MASK           (0x1FU << VOP_DSC_CFG14_FIRST_LINE_BPG_OFFSET_SHIFT)         /* 0x1F000000 */
+#define VOP_DSC_CFG14_SCALE_DECREMENT_INTERVAL_LO_SHIFT    (29U)
+#define VOP_DSC_CFG14_SCALE_DECREMENT_INTERVAL_LO_MASK     (0x7U << VOP_DSC_CFG14_SCALE_DECREMENT_INTERVAL_LO_SHIFT)    /* 0xE0000000 */
+/* DSC_CFG15 */
+#define VOP_DSC_CFG15_SCALE_DECREMENT_INTERVAL_HI_SHIFT    (0U)
+#define VOP_DSC_CFG15_SCALE_DECREMENT_INTERVAL_HI_MASK     (0x1FFU << VOP_DSC_CFG15_SCALE_DECREMENT_INTERVAL_HI_SHIFT)  /* 0x000001FF */
+#define VOP_DSC_CFG15_SCALE_INCREMENT_INTERVAL_SHIFT       (9U)
+#define VOP_DSC_CFG15_SCALE_INCREMENT_INTERVAL_MASK        (0xFFFFU << VOP_DSC_CFG15_SCALE_INCREMENT_INTERVAL_SHIFT)    /* 0x01FFFE00 */
+#define VOP_DSC_CFG15_INITIAL_SCALE_VALUE_SHIFT            (25U)
+#define VOP_DSC_CFG15_INITIAL_SCALE_VALUE_MASK             (0x3FU << VOP_DSC_CFG15_INITIAL_SCALE_VALUE_SHIFT)           /* 0x7E000000 */
+#define VOP_DSC_CFG15_INITIAL_DEC_DELAY_LO_SHIFT           (31U)
+#define VOP_DSC_CFG15_INITIAL_DEC_DELAY_LO_MASK            (0x1U << VOP_DSC_CFG15_INITIAL_DEC_DELAY_LO_SHIFT)           /* 0x80000000 */
+/* DSC_CFG16 */
+#define VOP_DSC_CFG16_INITIAL_DEC_DELAY_HI_SHIFT           (0U)
+#define VOP_DSC_CFG16_INITIAL_DEC_DELAY_HI_MASK            (0x7FFFU << VOP_DSC_CFG16_INITIAL_DEC_DELAY_HI_SHIFT)        /* 0x00007FFF */
+#define VOP_DSC_CFG16_INITIAL_XMIT_DELAY_SHIFT             (15U)
+#define VOP_DSC_CFG16_INITIAL_XMIT_DELAY_MASK              (0x3FFU << VOP_DSC_CFG16_INITIAL_XMIT_DELAY_SHIFT)           /* 0x01FF8000 */
+#define VOP_DSC_CFG16_CHUNK_SIZE_LO_SHIFT                  (25U)
+#define VOP_DSC_CFG16_CHUNK_SIZE_LO_MASK                   (0x7FU << VOP_DSC_CFG16_CHUNK_SIZE_LO_SHIFT)                 /* 0xFE000000 */
+/* DSC_CFG17 */
+#define VOP_DSC_CFG17_CHUNK_SIZE_HI_SHIFT                  (0U)
+#define VOP_DSC_CFG17_CHUNK_SIZE_HI_MASK                   (0x1FFU << VOP_DSC_CFG17_CHUNK_SIZE_HI_SHIFT)                /* 0x000001FF */
+#define VOP_DSC_CFG17_SLICE_HEIGHT_SHIFT                   (9U)
+#define VOP_DSC_CFG17_SLICE_HEIGHT_MASK                    (0xFFFFU << VOP_DSC_CFG17_SLICE_HEIGHT_SHIFT)                /* 0x01FFFE00 */
+#define VOP_DSC_CFG17_SLICE_WIDTH_LO_SHIFT                 (25U)
+#define VOP_DSC_CFG17_SLICE_WIDTH_LO_MASK                  (0x7FU << VOP_DSC_CFG17_SLICE_WIDTH_LO_SHIFT)                /* 0xFE000000 */
+/* DSC_CFG18 */
+#define VOP_DSC_CFG18_SLICE_WIDTH_HI_SHIFT                 (0U)
+#define VOP_DSC_CFG18_SLICE_WIDTH_HI_MASK                  (0x1FFU << VOP_DSC_CFG18_SLICE_WIDTH_HI_SHIFT)               /* 0x000001FF */
+#define VOP_DSC_CFG18_PICTURE_HEIGHT_SHIFT                 (9U)
+#define VOP_DSC_CFG18_PICTURE_HEIGHT_MASK                  (0xFFFFU << VOP_DSC_CFG18_PICTURE_HEIGHT_SHIFT)              /* 0x01FFFE00 */
+#define VOP_DSC_CFG18_PICTURE_WIDTH_LO_SHIFT               (25U)
+#define VOP_DSC_CFG18_PICTURE_WIDTH_LO_MASK                (0x7FU << VOP_DSC_CFG18_PICTURE_WIDTH_LO_SHIFT)              /* 0xFE000000 */
+/* DSC_CFG19 */
+#define VOP_DSC_CFG19_PICTURE_WIDTH_HI_SHIFT               (0U)
+#define VOP_DSC_CFG19_PICTURE_WIDTH_HI_MASK                (0x1FFU << VOP_DSC_CFG19_PICTURE_WIDTH_HI_SHIFT)             /* 0x000001FF */
+#define VOP_DSC_CFG19_DSC_VERSION_MINOR_SHIFT              (9U)
+#define VOP_DSC_CFG19_DSC_VERSION_MINOR_MASK               (0xFU << VOP_DSC_CFG19_DSC_VERSION_MINOR_SHIFT)              /* 0x00001E00 */
+#define VOP_DSC_CFG19_BITS_PER_PIXEL_SHIFT                 (13U)
+#define VOP_DSC_CFG19_BITS_PER_PIXEL_MASK                  (0x3FFU << VOP_DSC_CFG19_BITS_PER_PIXEL_SHIFT)               /* 0x007FE000 */
+#define VOP_DSC_CFG19_BLOCK_PRED_ENABLE_SHIFT              (23U)
+#define VOP_DSC_CFG19_BLOCK_PRED_ENABLE_MASK               (0x1U << VOP_DSC_CFG19_BLOCK_PRED_ENABLE_SHIFT)              /* 0x00800000 */
+#define VOP_DSC_CFG19_LINEBUF_DEPTH_SHIFT                  (24U)
+#define VOP_DSC_CFG19_LINEBUF_DEPTH_MASK                   (0xFU << VOP_DSC_CFG19_LINEBUF_DEPTH_SHIFT)                  /* 0x0F000000 */
+#define VOP_DSC_CFG19_ENABLE_422_SHIFT                     (28U)
+#define VOP_DSC_CFG19_ENABLE_422_MASK                      (0x1U << VOP_DSC_CFG19_ENABLE_422_SHIFT)                     /* 0x10000000 */
+#define VOP_DSC_CFG19_CONVERT_RGB_SHIFT                    (29U)
+#define VOP_DSC_CFG19_CONVERT_RGB_MASK                     (0x1U << VOP_DSC_CFG19_CONVERT_RGB_SHIFT)                    /* 0x20000000 */
+#define VOP_DSC_CFG19_BITS_PER_COMPONENT_LO_SHIFT          (30U)
+#define VOP_DSC_CFG19_BITS_PER_COMPONENT_LO_MASK           (0x3U << VOP_DSC_CFG19_BITS_PER_COMPONENT_LO_SHIFT)          /* 0xC0000000 */
+/* DSC_CFG20 */
+#define VOP_DSC_CFG20_BITS_PER_COMPONENT_HI_SHIFT          (0U)
+#define VOP_DSC_CFG20_BITS_PER_COMPONENT_HI_MASK           (0x3U << VOP_DSC_CFG20_BITS_PER_COMPONENT_HI_SHIFT)          /* 0x00000003 */
+/* DSC_INT_EN */
+#define VOP_DSC_INT_EN_OUT_BUFF_FULL_CONTEXT_1_SHIFT       (0U)
+#define VOP_DSC_INT_EN_OUT_BUFF_FULL_CONTEXT_1_MASK        (0x1U << VOP_DSC_INT_EN_OUT_BUFF_FULL_CONTEXT_1_SHIFT)       /* 0x00000001 */
+#define VOP_DSC_INT_EN_OUT_BUFF_FULL_CONTEXT_0_SHIFT       (1U)
+#define VOP_DSC_INT_EN_OUT_BUFF_FULL_CONTEXT_0_MASK        (0x1U << VOP_DSC_INT_EN_OUT_BUFF_FULL_CONTEXT_0_SHIFT)       /* 0x00000002 */
+#define VOP_DSC_INT_EN_OUT_BUFF_EMPTY_CONTEXT_1_SHIFT      (2U)
+#define VOP_DSC_INT_EN_OUT_BUFF_EMPTY_CONTEXT_1_MASK       (0x1U << VOP_DSC_INT_EN_OUT_BUFF_EMPTY_CONTEXT_1_SHIFT)      /* 0x00000004 */
+#define VOP_DSC_INT_EN_OUT_BUFF_EMPTY_CONTEXT_0_SHIFT      (3U)
+#define VOP_DSC_INT_EN_OUT_BUFF_EMPTY_CONTEXT_0_MASK       (0x1U << VOP_DSC_INT_EN_OUT_BUFF_EMPTY_CONTEXT_0_SHIFT)      /* 0x00000008 */
+#define VOP_DSC_INT_EN_FRAME_DONE_SHIFT                    (4U)
+#define VOP_DSC_INT_EN_FRAME_DONE_MASK                     (0x1U << VOP_DSC_INT_EN_FRAME_DONE_SHIFT)                    /* 0x00000010 */
+#define VOP_DSC_INT_EN_FRAME_STARTED_SHIFT                 (5U)
+#define VOP_DSC_INT_EN_FRAME_STARTED_MASK                  (0x1U << VOP_DSC_INT_EN_FRAME_STARTED_SHIFT)                 /* 0x00000020 */
+#define VOP_DSC_INT_EN_CE_SHIFT                            (6U)
+#define VOP_DSC_INT_EN_CE_MASK                             (0x1U << VOP_DSC_INT_EN_CE_SHIFT)                            /* 0x00000040 */
+#define VOP_DSC_INT_EN_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_1_SHIFT (7U)
+#define VOP_DSC_INT_EN_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_1_MASK (0x1U << VOP_DSC_INT_EN_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_1_SHIFT) /* 0x00000080 */
+#define VOP_DSC_INT_EN_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_0_SHIFT (8U)
+#define VOP_DSC_INT_EN_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_0_MASK (0x1U << VOP_DSC_INT_EN_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_0_SHIFT) /* 0x00000100 */
+#define VOP_DSC_INT_EN_DSC_UNDERFLOW_CONTEX_1_SHIFT        (9U)
+#define VOP_DSC_INT_EN_DSC_UNDERFLOW_CONTEX_1_MASK         (0x1U << VOP_DSC_INT_EN_DSC_UNDERFLOW_CONTEX_1_SHIFT)        /* 0x00000200 */
+#define VOP_DSC_INT_EN_DSC_UNDERFLOW_CONTEX_0_SHIFT        (10U)
+#define VOP_DSC_INT_EN_DSC_UNDERFLOW_CONTEX_0_MASK         (0x1U << VOP_DSC_INT_EN_DSC_UNDERFLOW_CONTEX_0_SHIFT)        /* 0x00000400 */
+/* DSC_INT_CLR */
+#define VOP_DSC_INT_CLR_OUT_BUFF_FULL_CONTEXT_1_SHIFT      (0U)
+#define VOP_DSC_INT_CLR_OUT_BUFF_FULL_CONTEXT_1_MASK       (0x1U << VOP_DSC_INT_CLR_OUT_BUFF_FULL_CONTEXT_1_SHIFT)      /* 0x00000001 */
+#define VOP_DSC_INT_CLR_OUT_BUFF_FULL_CONTEXT_0_SHIFT      (1U)
+#define VOP_DSC_INT_CLR_OUT_BUFF_FULL_CONTEXT_0_MASK       (0x1U << VOP_DSC_INT_CLR_OUT_BUFF_FULL_CONTEXT_0_SHIFT)      /* 0x00000002 */
+#define VOP_DSC_INT_CLR_OUT_BUFF_EMPTY_CONTEXT_1_SHIFT     (2U)
+#define VOP_DSC_INT_CLR_OUT_BUFF_EMPTY_CONTEXT_1_MASK      (0x1U << VOP_DSC_INT_CLR_OUT_BUFF_EMPTY_CONTEXT_1_SHIFT)     /* 0x00000004 */
+#define VOP_DSC_INT_CLR_OUT_BUFF_EMPTY_CONTEXT_0_SHIFT     (3U)
+#define VOP_DSC_INT_CLR_OUT_BUFF_EMPTY_CONTEXT_0_MASK      (0x1U << VOP_DSC_INT_CLR_OUT_BUFF_EMPTY_CONTEXT_0_SHIFT)     /* 0x00000008 */
+#define VOP_DSC_INT_CLR_FRAME_DONE_SHIFT                   (4U)
+#define VOP_DSC_INT_CLR_FRAME_DONE_MASK                    (0x1U << VOP_DSC_INT_CLR_FRAME_DONE_SHIFT)                   /* 0x00000010 */
+#define VOP_DSC_INT_CLR_FRAME_STARTED_SHIFT                (5U)
+#define VOP_DSC_INT_CLR_FRAME_STARTED_MASK                 (0x1U << VOP_DSC_INT_CLR_FRAME_STARTED_SHIFT)                /* 0x00000020 */
+#define VOP_DSC_INT_CLR_CE_SHIFT                           (6U)
+#define VOP_DSC_INT_CLR_CE_MASK                            (0x1U << VOP_DSC_INT_CLR_CE_SHIFT)                           /* 0x00000040 */
+#define VOP_DSC_INT_CLR_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_1_SHIFT (7U)
+#define VOP_DSC_INT_CLR_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_1_MASK (0x1U << VOP_DSC_INT_CLR_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_1_SHIFT) /* 0x00000080 */
+#define VOP_DSC_INT_CLR_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_0_SHIFT (8U)
+#define VOP_DSC_INT_CLR_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_0_MASK (0x1U << VOP_DSC_INT_CLR_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_0_SHIFT) /* 0x00000100 */
+#define VOP_DSC_INT_CLR_DSC_UNDERFLOW_CONTEX_1_SHIFT       (9U)
+#define VOP_DSC_INT_CLR_DSC_UNDERFLOW_CONTEX_1_MASK        (0x1U << VOP_DSC_INT_CLR_DSC_UNDERFLOW_CONTEX_1_SHIFT)       /* 0x00000200 */
+#define VOP_DSC_INT_CLR_DSC_UNDERFLOW_CONTEX_0_SHIFT       (10U)
+#define VOP_DSC_INT_CLR_DSC_UNDERFLOW_CONTEX_0_MASK        (0x1U << VOP_DSC_INT_CLR_DSC_UNDERFLOW_CONTEX_0_SHIFT)       /* 0x00000400 */
+/* DSC_INT_STATUS */
+#define VOP_DSC_INT_STATUS_OUT_BUFF_FULL_CONTEXT_1_SHIFT   (0U)
+#define VOP_DSC_INT_STATUS_OUT_BUFF_FULL_CONTEXT_1_MASK    (0x1U << VOP_DSC_INT_STATUS_OUT_BUFF_FULL_CONTEXT_1_SHIFT)   /* 0x00000001 */
+#define VOP_DSC_INT_STATUS_OUT_BUFF_FULL_CONTEXT_0_SHIFT   (1U)
+#define VOP_DSC_INT_STATUS_OUT_BUFF_FULL_CONTEXT_0_MASK    (0x1U << VOP_DSC_INT_STATUS_OUT_BUFF_FULL_CONTEXT_0_SHIFT)   /* 0x00000002 */
+#define VOP_DSC_INT_STATUS_OUT_BUFF_EMPTY_CONTEXT_1_SHIFT  (2U)
+#define VOP_DSC_INT_STATUS_OUT_BUFF_EMPTY_CONTEXT_1_MASK   (0x1U << VOP_DSC_INT_STATUS_OUT_BUFF_EMPTY_CONTEXT_1_SHIFT)  /* 0x00000004 */
+#define VOP_DSC_INT_STATUS_OUT_BUFF_EMPTY_CONTEXT_0_SHIFT  (3U)
+#define VOP_DSC_INT_STATUS_OUT_BUFF_EMPTY_CONTEXT_0_MASK   (0x1U << VOP_DSC_INT_STATUS_OUT_BUFF_EMPTY_CONTEXT_0_SHIFT)  /* 0x00000008 */
+#define VOP_DSC_INT_STATUS_FRAME_DONE_SHIFT                (4U)
+#define VOP_DSC_INT_STATUS_FRAME_DONE_MASK                 (0x1U << VOP_DSC_INT_STATUS_FRAME_DONE_SHIFT)                /* 0x00000010 */
+#define VOP_DSC_INT_STATUS_FRAME_STARTED_SHIFT             (5U)
+#define VOP_DSC_INT_STATUS_FRAME_STARTED_MASK              (0x1U << VOP_DSC_INT_STATUS_FRAME_STARTED_SHIFT)             /* 0x00000020 */
+#define VOP_DSC_INT_STATUS_CE_SHIFT                        (6U)
+#define VOP_DSC_INT_STATUS_CE_MASK                         (0x1U << VOP_DSC_INT_STATUS_CE_SHIFT)                        /* 0x00000040 */
+#define VOP_DSC_INT_STATUS_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_1_SHIFT (7U)
+#define VOP_DSC_INT_STATUS_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_1_MASK (0x1U << VOP_DSC_INT_STATUS_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_1_SHIFT) /* 0x00000080 */
+#define VOP_DSC_INT_STATUS_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_0_SHIFT (8U)
+#define VOP_DSC_INT_STATUS_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_0_MASK (0x1U << VOP_DSC_INT_STATUS_RC_MODEL_BUFFER_FULLNESS_OVERFLOW_CONTEXT_0_SHIFT) /* 0x00000100 */
+#define VOP_DSC_INT_STATUS_DSC_UNDERFLOW_CONTEX_1_SHIFT    (9U)
+#define VOP_DSC_INT_STATUS_DSC_UNDERFLOW_CONTEX_1_MASK     (0x1U << VOP_DSC_INT_STATUS_DSC_UNDERFLOW_CONTEX_1_SHIFT)    /* 0x00000200 */
+#define VOP_DSC_INT_STATUS_DSC_UNDERFLOW_CONTEX_0_SHIFT    (10U)
+#define VOP_DSC_INT_STATUS_DSC_UNDERFLOW_CONTEX_0_MASK     (0x1U << VOP_DSC_INT_STATUS_DSC_UNDERFLOW_CONTEX_0_SHIFT)    /* 0x00000400 */
+/* DSC_DBG_STATUS0 */
+#define VOP_DSC_DBG_STATUS0_SLICE_COUNT_OUT_SHIFT          (0U)
+#define VOP_DSC_DBG_STATUS0_SLICE_COUNT_OUT_MASK           (0xFFFFU << VOP_DSC_DBG_STATUS0_SLICE_COUNT_OUT_SHIFT)       /* 0x0000FFFF */
+#define VOP_DSC_DBG_STATUS0_SLICE_LINE_COUNT_OUT_SHIFT     (16U)
+#define VOP_DSC_DBG_STATUS0_SLICE_LINE_COUNT_OUT_MASK      (0xFFFFU << VOP_DSC_DBG_STATUS0_SLICE_LINE_COUNT_OUT_SHIFT)  /* 0xFFFF0000 */
+/* DSC_DBG_STATUS1 */
+#define VOP_DSC_DBG_STATUS1_SLICE_COUNT_ENCODED_SHIFT      (0U)
+#define VOP_DSC_DBG_STATUS1_SLICE_COUNT_ENCODED_MASK       (0xFFFFU << VOP_DSC_DBG_STATUS1_SLICE_COUNT_ENCODED_SHIFT)   /* 0x0000FFFF */
+#define VOP_DSC_DBG_STATUS1_SLICE_LINE_COUNT_ENCODED_SHIFT (16U)
+#define VOP_DSC_DBG_STATUS1_SLICE_LINE_COUNT_ENCODED_MASK  (0xFFFFU << VOP_DSC_DBG_STATUS1_SLICE_LINE_COUNT_ENCODED_SHIFT) /* 0xFFFF0000 */
+/* DSC_DBG_STATUS2 */
+#define VOP_DSC_DBG_STATUS2_OUT_BUFF_FULL_CONTEXT_1_SHIFT  (0U)
+#define VOP_DSC_DBG_STATUS2_OUT_BUFF_FULL_CONTEXT_1_MASK   (0x1U << VOP_DSC_DBG_STATUS2_OUT_BUFF_FULL_CONTEXT_1_SHIFT)  /* 0x00000001 */
+#define VOP_DSC_DBG_STATUS2_OUT_BUFF_FULL_CONTEXT_0_SHIFT  (1U)
+#define VOP_DSC_DBG_STATUS2_OUT_BUFF_FULL_CONTEXT_0_MASK   (0x1U << VOP_DSC_DBG_STATUS2_OUT_BUFF_FULL_CONTEXT_0_SHIFT)  /* 0x00000002 */
+#define VOP_DSC_DBG_STATUS2_OUT_BUFF_EMPTY_CONTEXT_1_SHIFT (2U)
+#define VOP_DSC_DBG_STATUS2_OUT_BUFF_EMPTY_CONTEXT_1_MASK  (0x1U << VOP_DSC_DBG_STATUS2_OUT_BUFF_EMPTY_CONTEXT_1_SHIFT) /* 0x00000004 */
+#define VOP_DSC_DBG_STATUS2_OUT_BUFF_EMPTY_CONTEXT_0_SHIFT (3U)
+#define VOP_DSC_DBG_STATUS2_OUT_BUFF_EMPTY_CONTEXT_0_MASK  (0x1U << VOP_DSC_DBG_STATUS2_OUT_BUFF_EMPTY_CONTEXT_0_SHIFT) /* 0x00000008 */
+#define VOP_DSC_DBG_STATUS2_FRAME_DONE_SHIFT               (4U)
+#define VOP_DSC_DBG_STATUS2_FRAME_DONE_MASK                (0x1U << VOP_DSC_DBG_STATUS2_FRAME_DONE_SHIFT)               /* 0x00000010 */
+#define VOP_DSC_DBG_STATUS2_FRAME_STARTED_SHIFT            (5U)
+#define VOP_DSC_DBG_STATUS2_FRAME_STARTED_MASK             (0x1U << VOP_DSC_DBG_STATUS2_FRAME_STARTED_SHIFT)            /* 0x00000020 */
+#define VOP_DSC_DBG_STATUS2_CE_SHIFT                       (6U)
+#define VOP_DSC_DBG_STATUS2_CE_MASK                        (0x1U << VOP_DSC_DBG_STATUS2_CE_SHIFT)                       /* 0x00000040 */
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
