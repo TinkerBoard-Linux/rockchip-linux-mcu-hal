@@ -55,11 +55,6 @@ __STATIC_INLINE uint32_t WDT_IsEnabled(void)
     return (pWDT->WDT_CR) & WDT_WDT_CR_WDT_EN_MASK;
 }
 
-static void WDT_KeepAlive(void)
-{
-    pWDT->WDT_CRR = WDOG_COUNTER_RESTART_KICK_VALUE;
-}
-
 __STATIC_INLINE uint32_t WDT_TopInSeconds(uint32_t top)
 {
     /*
@@ -91,7 +86,7 @@ static void WDT_SetTop(uint32_t top_s)
      * effectively get a pat of the watchdog right here.
      */
     pWDT->WDT_TORR = top_Val | top_Val << WDT_WDT_TORR_TIMEOUT_PERIOD_SHIFT;
-    WDT_KeepAlive();
+    HAL_WDT_KeepAlive();
 }
 
 /********************* Public Function Definition ****************************/
@@ -150,6 +145,17 @@ HAL_Status HAL_WDT_Init(uint32_t freq)
 HAL_Status HAL_WDT_SetTop(uint32_t top)
 {
     WDT_SetTop(top);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Keep WDT alive
+ * @return HAL_Status
+ */
+HAL_Status HAL_WDT_KeepAlive(void)
+{
+    pWDT->WDT_CRR = WDOG_COUNTER_RESTART_KICK_VALUE;
 
     return HAL_OK;
 }

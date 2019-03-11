@@ -22,6 +22,7 @@
 
 HAL_Status HAL_WDT_Init(uint32_t freq);
 HAL_Status HAL_WDT_SetTop(uint32_t top);
+HAL_Status HAL_WDT_KeepAlive(void);
 
 #endif
 
