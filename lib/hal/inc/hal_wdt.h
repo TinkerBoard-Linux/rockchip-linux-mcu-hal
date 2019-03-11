@@ -20,7 +20,7 @@
 /***************************** Structure Definition **************************/
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_WDT_Init(void);
+HAL_Status HAL_WDT_Init(uint32_t freq);
 HAL_Status HAL_WDT_SetTop(uint32_t top);
 
 #endif

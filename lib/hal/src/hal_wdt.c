@@ -31,28 +31,21 @@
 
 #define WDOG_COUNTER_RESTART_KICK_VALUE 0x76
 
-typedef uint32_t eCLOCK_Name;
-typedef uint32_t eCLOCK_Gate;
-
 /* The maximum TOP (timeout period) value that can be set in the watchdog. */
 
 #define WDT_MAX_TOP         15
 #define WDT_DEFAULT_SECONDS 30
 #define WDT_TIMEOUT         500 /* ms */
 
-#define WDT_CLOCK_NAME 0x1
-#define WDT_CLOCK_GATE 0x2
-
 /********************* Private Structure Definition **************************/
 
 struct DW_WDT {
-    eCLOCK_Name clk_Name;
-    eCLOCK_Gate clk_Gate;
-    uint32_t in_Use;
-} dwWdt;
+    uint32_t freq;
+};
 
 /********************* Private Variable Definition ***************************/
 
+static struct DW_WDT dwWdt;
 static struct WDT_REG *pWDT = (struct WDT_REG *)(WDT_BASE);
 
 /********************* Private Function Definition ***************************/
@@ -67,16 +60,6 @@ static void WDT_KeepAlive(void)
     pWDT->WDT_CRR = WDOG_COUNTER_RESTART_KICK_VALUE;
 }
 
-static void HAL_WDT_ClkEnable(eCLOCK_Gate gate)
-{
-    ;
-}
-
-static uint32_t HAL_WDT_ClkGetFreq(eCLOCK_Name name)
-{
-    return 10000;
-}
-
 __STATIC_INLINE uint32_t WDT_TopInSeconds(uint32_t top)
 {
     /*
@@ -85,7 +68,7 @@ __STATIC_INLINE uint32_t WDT_TopInSeconds(uint32_t top)
      */
     uint32_t cycles = 1 << (16 + top);
 
-    return cycles / HAL_WDT_ClkGetFreq(dwWdt.clk_Name);
+    return cycles / dwWdt.freq;
 }
 
 static void WDT_SetTop(uint32_t top_s)
@@ -129,24 +112,20 @@ static void WDT_SetTop(uint32_t top_s)
  * @brief  WDT enable
  * @return HAL_Status
  */
-HAL_Status HAL_WDT_Init(void)
+HAL_Status HAL_WDT_Init(uint32_t freq)
 {
-    if (dwWdt.in_Use)
-        return HAL_BUSY;
+    HAL_ASSERT(freq != 0);
 
-    dwWdt.clk_Name = WDT_CLOCK_NAME;
-    dwWdt.clk_Gate = WDT_CLOCK_GATE;
-
-    HAL_WDT_ClkEnable(dwWdt.clk_Gate);
+    dwWdt.freq = freq;
 
     if (!WDT_IsEnabled()) {
         WDT_SetTop(WDT_DEFAULT_SECONDS);
         pWDT->WDT_CR = WDT_WDT_CR_WDT_EN_MASK;
+
+        return HAL_OK;
     }
 
-    dwWdt.in_Use = 1;
-
-    return HAL_OK;
+    return HAL_BUSY;
 }
 
 /** @} */
