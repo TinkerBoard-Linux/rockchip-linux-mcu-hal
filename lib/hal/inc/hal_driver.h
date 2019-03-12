@@ -66,6 +66,11 @@
 #include "hal_uart.h"
 #endif
 
+#ifdef HAL_VOP_MODULE_ENABLED
+#include "hal_display.h"
+#include "hal_vop.h"
+#endif
+
 #ifdef HAL_WDT_MODULE_ENABLED
 #include "hal_wdt.h"
 #endif
