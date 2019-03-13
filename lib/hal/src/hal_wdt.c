@@ -139,10 +139,10 @@ HAL_Status HAL_WDT_Init(uint32_t freq)
 
 /**
  * @brief  Set WDT timeout period
- * @param  top: timeout period
+ * @param  top: timeout period in seconds
  * @return HAL_Status
  */
-HAL_Status HAL_WDT_SetTop(uint32_t top)
+HAL_Status HAL_WDT_SetTimeout(uint32_t top)
 {
     WDT_SetTop(top);
 
