@@ -1,0 +1,43 @@
+/* SPDX-License-Identifier: BSD-3-Clause */
+/*
+ * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
+ */
+
+#include "hal_base.h"
+#include "unity.h"
+#include "unity_fixture.h"
+
+static uint32_t isrActive;
+
+TEST_GROUP(HAL_PD);
+
+TEST_SETUP(HAL_PD){
+    isrActive = 0;
+}
+
+TEST_TEAR_DOWN(HAL_PD){
+}
+
+/* PD test case 0 */
+TEST(HAL_PD, PdPowerOff){
+    uint32_t ret;
+
+    /* check config para */
+    ret = HAL_PD_Setting(PISCES_PD_AUDIO, 0);
+    TEST_ASSERT(ret == HAL_OK);
+}
+
+/* PD test case 1 */
+TEST(HAL_PD, PdPowerOn){
+    uint32_t ret;
+
+    /* check config para */
+    ret = HAL_PD_Setting(PISCES_PD_AUDIO, 1);
+    TEST_ASSERT(ret == HAL_OK);
+}
+
+TEST_GROUP_RUNNER(HAL_PD){
+    RUN_TEST_CASE(HAL_PD, PdPowerOn);
+    RUN_TEST_CASE(HAL_PD, PdPowerOff);
+    RUN_TEST_CASE(HAL_PD, PdPowerOn);
+}
