@@ -362,7 +362,7 @@
             <uC99>0</uC99>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--c99</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Include;..\..\..\lib\CMSIS\Device\Pisces\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test;..\..\..\test\coremark;..\..\..\test\coremark\barebones</IncludePath>
@@ -483,6 +483,51 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\lib\hal\src\hal_snor.c</FilePath>
             </File>
+            <File>
+              <FileName>hal_cru.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_cru.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_demo.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_mbox.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_mbox.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_pd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_pd.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_pl330.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_pl330.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_pm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_pm.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_vop.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_vop.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_wdt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\hal\src\hal_wdt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -517,6 +562,11 @@
               <FileName>test_snor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\test\hal\test_snor.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_pl330.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\hal\test_pl330.c</FilePath>
             </File>
           </Files>
         </Group>
