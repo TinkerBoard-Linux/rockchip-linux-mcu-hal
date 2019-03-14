@@ -23,6 +23,9 @@ static void RunAllTests(void)
 #ifdef HAL_PMU_MODULE_ENABLED
     RUN_TEST_GROUP(HAL_PD);
 #endif
+#ifdef HAL_CRU_MODULE_ENABLED
+    RUN_TEST_GROUP(HAL_CRU);
+#endif
 }
 
 int test_main(void)
