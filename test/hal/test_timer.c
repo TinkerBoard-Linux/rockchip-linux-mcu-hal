@@ -28,21 +28,18 @@ HAL_Status HAL_TIMER0_Handler(void)
 
 TEST_GROUP(HAL_TIMER);
 
-TEST_SETUP(HAL_TIMER)
-{
+TEST_SETUP(HAL_TIMER){
     isrActive = 0;
 }
 
-TEST_TEAR_DOWN(HAL_TIMER)
-{
+TEST_TEAR_DOWN(HAL_TIMER){
     HAL_TIMER_DeInit(TIMER0);
     HAL_TIMER_DeInit(TIMER1);
 }
 
 /* TIMER test case 0 */
-TEST(HAL_TIMER, TimerInit)
-{
-    uint32_t ret;
+TEST(HAL_TIMER, TimerInit){
+    uint64_t ret;
 
     /* check config para */
     ret = HAL_TIMER_Init(TIMER0, TIMER_FREE_RUNNING);
@@ -57,7 +54,7 @@ TEST(HAL_TIMER, TimerInit)
 
     /* test timer0 TIMER_FREE_RUNNING mode */
     HAL_TIMER_Init(TIMER0, TIMER_FREE_RUNNING);
-    HAL_TIMER_SetCount(TIMER0, SystemCoreClock / 1000); /* Ms count */
+    HAL_TIMER_SetCount(TIMER0, (uint64_t)SystemCoreClock / 1000); /* Ms count */
     HAL_TIMER_Start(TIMER0);
     HAL_DelayMs(1000);
     ret = HAL_TIMER_GetCount(TIMER0);
@@ -69,7 +66,7 @@ TEST(HAL_TIMER, TimerInit)
 
     /* test timer0 TIMER_USER_DEFINED mode */
     HAL_TIMER_Init(TIMER0, TIMER_USER_DEFINED);
-    HAL_TIMER_SetCount(TIMER0, SystemCoreClock / 1000); /* Ms count */
+    HAL_TIMER_SetCount(TIMER0, (uint64_t)SystemCoreClock / 1000); /* Ms count */
     HAL_TIMER_Start(TIMER0);
     HAL_DelayMs(1000);
     TEST_ASSERT(HAL_TIMER_GetCount(TIMER0) == 0);
@@ -77,34 +74,32 @@ TEST(HAL_TIMER, TimerInit)
 }
 
 /* TIMER test case 1 */
-TEST(HAL_TIMER, TimerSetCount)
-{
+TEST(HAL_TIMER, TimerSetCount){
     uint64_t loadCount = 0;
 
     /* test timer0 setcount */
     HAL_TIMER_Init(TIMER0, TIMER_FREE_RUNNING);
-    HAL_TIMER_SetCount(TIMER0, SystemCoreClock / 1000); /* Ms count */
+    HAL_TIMER_SetCount(TIMER0, (uint64_t)SystemCoreClock / 1000); /* Ms count */
     loadCount = TIMER_getReloadNum(TIMER0);
-    TEST_ASSERT(loadCount == SystemCoreClock / 1000);
+    TEST_ASSERT(loadCount == (uint64_t)SystemCoreClock / 1000);
     HAL_TIMER_Stop(TIMER0);
 
     /* test timer1 setcount */
     loadCount = 0;
     HAL_TIMER_Init(TIMER1, TIMER_FREE_RUNNING);
-    HAL_TIMER_SetCount(TIMER1, SystemCoreClock / 1000); /* Ms count */
+    HAL_TIMER_SetCount(TIMER1, (uint64_t)SystemCoreClock / 1000); /* Ms count */
     loadCount = TIMER_getReloadNum(TIMER1);
-    TEST_ASSERT(loadCount == SystemCoreClock / 1000);
+    TEST_ASSERT(loadCount == (uint64_t)SystemCoreClock / 1000);
     HAL_TIMER_Stop(TIMER1);
 }
 
 /* TIMER test case 2 */
-TEST(HAL_TIMER, TimerStartStop)
-{
+TEST(HAL_TIMER, TimerStartStop){
     uint32_t ret;
 
     /* test timer0 stop in normalc mode */
     HAL_TIMER_Init(TIMER0, TIMER_FREE_RUNNING);
-    HAL_TIMER_SetCount(TIMER0, SystemCoreClock / 1000); /* Ms count */
+    HAL_TIMER_SetCount(TIMER0, (uint64_t)SystemCoreClock / 1000); /* Ms count */
     HAL_TIMER_Start(TIMER0);
     ret = HAL_TIMER_GetCount(TIMER0);
     TEST_ASSERT(ret != HAL_TIMER_GetCount(TIMER0)); /* test start*/
@@ -115,7 +110,7 @@ TEST(HAL_TIMER, TimerStartStop)
     /* test timer0 stop in IT mode */
     isrActive = 0;
     HAL_TIMER_Init(TIMER0, TIMER_FREE_RUNNING);
-    HAL_TIMER_SetCount(TIMER0, SystemCoreClock / 1000); /* Ms count */
+    HAL_TIMER_SetCount(TIMER0, (uint64_t)SystemCoreClock / 1000); /* Ms count */
     HAL_TIMER_Start_IT(TIMER0);
     HAL_DelayMs(1);
     ret = HAL_TIMER_GetCount(TIMER0);
@@ -125,11 +120,10 @@ TEST(HAL_TIMER, TimerStartStop)
     TEST_ASSERT(ret == HAL_TIMER_GetCount(TIMER0)); /* test stop*/
 }
 
-TEST_GROUP_RUNNER(HAL_TIMER)
-{
-    HAL_NVIC_ConfigExtIRQ(TIMER0_IRQn, (NVIC_IRQHandler)&HAL_TIMER0_Handler,
+TEST_GROUP_RUNNER(HAL_TIMER){
+    HAL_NVIC_ConfigExtIRQ(TIMER0_IRQn, (NVIC_IRQHandler) & HAL_TIMER0_Handler,
                           NVIC_PERIPH_PRIO_DEFAULT);
-    HAL_NVIC_ConfigExtIRQ(TIMER1_IRQn, (NVIC_IRQHandler)&HAL_TIMER1_Handler,
+    HAL_NVIC_ConfigExtIRQ(TIMER1_IRQn, (NVIC_IRQHandler) & HAL_TIMER1_Handler,
                           NVIC_PERIPH_PRIO_DEFAULT);
     RUN_TEST_CASE(HAL_TIMER, TimerInit);
     RUN_TEST_CASE(HAL_TIMER, TimerSetCount);
