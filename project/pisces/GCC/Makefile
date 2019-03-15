@@ -24,7 +24,7 @@ STRIP		= $(CROSS_COMPILE)strip
 OBJCOPY		= $(CROSS_COMPILE)objcopy
 OBJDUMP		= $(CROSS_COMPILE)objdump
 
-CPU		= -mcpu=cortex-m3 -mthumb
+CPU		= -mcpu=cortex-m4 -mthumb
 
 ASFLAGS         += $(CPU)
 #CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk --specs=nano.specs
