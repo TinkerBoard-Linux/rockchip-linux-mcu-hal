@@ -14,6 +14,11 @@
 #include "hal_cru.h"
 #endif
 
+#ifdef HAL_DSI_MODULE_ENABLED
+#include "hal_display.h"
+#include "hal_dsi.h"
+#endif
+
 #ifdef HAL_GPIO_MODULE_ENABLED
 #include "hal_gpio.h"
 #endif

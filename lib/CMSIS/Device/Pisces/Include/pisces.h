@@ -386,6 +386,55 @@ struct DMA_REG {
          uint32_t RESERVED11[26];                     /* Address Offset: 0x0E18 */
     __IO uint32_t WD;                                 /* Address Offset: 0x0E80 */
 };
+/* DSI Register Structure Define */
+struct DSI_REG {
+    __I  uint32_t VERSION;                             /* Address Offset: 0x0000 */
+    __IO uint32_t PWR_UP;                              /* Address Offset: 0x0004 */
+    __IO uint32_t CLKMGR_CFG;                          /* Address Offset: 0x0008 */
+    __IO uint32_t DPI_VCID;                            /* Address Offset: 0x000c */
+    __IO uint32_t DPI_COLOR_CODING;                    /* Address Offset: 0x0010 */
+    __IO uint32_t DPI_CFG_POL;                         /* Address Offset: 0x0014 */
+    __IO uint32_t DPI_LP_CMD_TIM;                      /* Address Offset: 0x0018 */
+         uint32_t RESERVED0[4];                        /* Address Offset: 0x001c */
+    __IO uint32_t PCKHDL_CFG;                          /* Address Offset: 0x002c */
+    __IO uint32_t GEN_VCID;                            /* Address Offset: 0x0030 */
+    __IO uint32_t MODE_CFG;                            /* Address Offset: 0x0034 */
+    __IO uint32_t VID_MODE_CFG;                        /* Address Offset: 0x0038 */
+    __IO uint32_t VID_PKT_SIZE;                        /* Address Offset: 0x003c */
+    __IO uint32_t VID_NUM_CHUMKS;                      /* Address Offset: 0x0040 */
+    __IO uint32_t VID_NULL_PKT_SIZE;                   /* Address Offset: 0x0044 */
+    __IO uint32_t VID_HSA_TIME;                        /* Address Offset: 0x0048 */
+    __IO uint32_t VID_HBP_TIME;                        /* Address Offset: 0x004c */
+    __IO uint32_t VID_HLINE_TIME;                      /* Address Offset: 0x0050 */
+    __IO uint32_t VID_VSA_LINES;                       /* Address Offset: 0x0054 */
+    __IO uint32_t VID_VBP_LINES;                       /* Address Offset: 0x0058 */
+    __IO uint32_t VID_VFP_LINES;                       /* Address Offset: 0x005c */
+    __IO uint32_t VID_VACTIVE_LINES;                   /* Address Offset: 0x0060 */
+    __IO uint32_t EDPI_CMD_SIZE;                       /* Address Offset: 0x0064 */
+    __IO uint32_t CMD_MODE_CFG;                        /* Address Offset: 0x0068 */
+    __IO uint32_t GEN_HDR;                             /* Address Offset: 0x006c */
+    __IO uint32_t GEN_PLD_DATA;                        /* Address Offset: 0x0070 */
+    __IO uint32_t CMD_PKT_STATUS;                      /* Address Offset: 0x0074 */
+    __IO uint32_t TO_CNT_CFG;                          /* Address Offset: 0x0078 */
+    __IO uint32_t HS_RD_TO_CNT;                        /* Address Offset: 0x007c */
+    __IO uint32_t LP_RD_TO_CNT;                        /* Address Offset: 0x0080 */
+    __IO uint32_t HS_WR_TO_CNT;                        /* Address Offset: 0x0084 */
+    __IO uint32_t LP_WR_TO_CNT;                        /* Address Offset: 0x0088 */
+    __IO uint32_t BTA_TO_CNT;                          /* Address Offset: 0x008c */
+    __IO uint32_t SDF_3D;                              /* Address Offset: 0x0090 */
+    __IO uint32_t LPCLK_CTRL;                          /* Address Offset: 0x0094 */
+    __IO uint32_t PHY_TMR_LPCLK_CFG;                   /* Address Offset: 0x0098 */
+    __IO uint32_t PHY_TMR_CFG;                         /* Address Offset: 0x009c */
+    __IO uint32_t PHY_RSTZ;                            /* Address Offset: 0x00a0 */
+    __IO uint32_t PHY_IF_CFG;                          /* Address Offset: 0x00a4 */
+         uint32_t RESERVED1[2];                        /* Address Offset: 0x00a8 */
+    __I  uint32_t PHY_STATUS;                          /* Address Offset: 0x00b0 */
+         uint32_t RESERVED2[2];                        /* Address Offset: 0x00b4 */
+    __I  uint32_t INT_ST0;                             /* Address Offset: 0x00bc */
+    __I  uint32_t INT_ST1;                             /* Address Offset: 0x00c0 */
+    __IO uint32_t INT_MSK0;                            /* Address Offset: 0x00c4 */
+    __IO uint32_t INT_MSK1;                            /* Address Offset: 0x00c8 */
+};
 /* UART Register Structure Define */
 typedef struct UART_REG
 {
@@ -817,6 +866,7 @@ struct VOP_REG {
 #define PMU_BASE            0x40130000U /* PMU base address */
 #define SHAREMEM_BASE       0x40160000U /* SHAREMEM base address */
 #define DMA_BASE            0x401C0000U /* DMA base address */
+#define DSI_BASE            0x41110000U /* DSI base address */
 #define UART0_BASE          0x40800000U /* UART0 base address */
 #define UART1_BASE          0x40810000U /* UART1 base address */
 #define UART2_BASE          0x40820000U /* UART2 base address */
@@ -854,6 +904,7 @@ struct VOP_REG {
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define SHAREMEM            ((struct SHAREMEM_REG *) SHAREMEM_BASE)
 #define DMA                 ((struct DMA_REG *) DMA_BASE)
+#define DSI                 ((struct DSI_REG *) DSI_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
@@ -887,6 +938,7 @@ struct VOP_REG {
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
 #define IS_SHAREMEM_INSTANCE(instance) ((instance) == SHAREMEM)
 #define IS_DMA_INSTANCE(instance) ((instance) == DMA)
+#define IS_DSI_INSTANCE(instance) ((instance) == DSI)
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2))
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_SPI2APB_INSTANCE(instance) ((instance) == SPI2APB)
@@ -3081,6 +3133,91 @@ struct VOP_REG {
 /* WD */
 #define DMA_WD_FIELD0000_SHIFT                             (0U)
 #define DMA_WD_FIELD0000_MASK                              (0x1U << DMA_WD_FIELD0000_SHIFT)                             /* 0x00000001 */
+/******************************************DSI*******************************************/
+/* VERSION */
+#define DSI_HOST_VERSION_SHIFT                             (0U)
+#define DSI_HOST_VERSION_MASK                              (0XFFFFFFFFU << DSI_HOST_VERSION_SHIFT)                      /* 0XFFFFFFFF */
+/* PWR_UP */
+#define DSI_HOST_SHUTDOWNZ_SHIFT                           (0U)
+#define DSI_HOST_SHUTDOWNZ_MASK                            (0x1U << DSI_HOST_SHUTDOWNZ_SHIFT)                           /* 0X00000001 */
+/* CLKMGR_CFG */
+#define TX_ESC_CLK_DIVISION_SHIFT                          (0U)
+#define TX_ESC_CLK_DIVISION_MASK                           (0XFFU << TX_ESC_CLK_DIVISION_SHIFT)                         /* 0X000000FF */
+#define TO_CLK_DIVISION_SHIFT                              (8U)
+#define TO_CLK_DIVISION_MASK                               (0XFFU << TO_CLK_DIVISION_SHIFT)                             /* 0X0000FF00 */
+/* DPI_VCID */
+#define DPI_VCID_SHIFT                                     (0U)
+#define DPI_VCID_MASK                                      (0x1U << DPI_VCID_SHIFT)                                     /* 0X00000001 */
+/* DPI_COLOR_CODING */
+#define DPI_COLOR_CODING_SHIFT                             (0U)
+#define DPI_COLOR_CODING_MASK                              (0XFU << DPI_COLOR_CODING_SHIFT)                             /* 0X0000000F */
+#define LOOSELY18_EN_SHIFT                                 (8U)
+#define LOOSELY18_EN_MASK                                  (0x1U << LOOSELY18_EN_SHIFT)                                 /* 0X00000100 */
+/* DPI_CFG_POL */
+#define DATAEN_ACTIVE_LOW_SHIFT                            (0U)
+#define DATAEN_ACTIVE_LOW_MASK                             (0x1U << DATAEN_ACTIVE_LOW_SHIFT)                            /* 0X00000001 */
+#define VSYNC_ACTIVE_LOW_SHIFT                             (1U)
+#define VSYNC_ACTIVE_LOW_MASK                              (0x1U << VSYNC_ACTIVE_LOW_SHIFT)                             /* 0X00000002 */
+#define HSYNC_ACTIVE_LOW_SHIFT                             (2U)
+#define HSYNC_ACTIVE_LOW_MASK                              (0x1U << HSYNC_ACTIVE_LOW_SHIFT)                             /* 0X00000004 */
+/* DPI_LP_CMD_TIM */
+#define INVACT_LPCMD_TIME_SHIFT                            (0U)
+#define INVACT_LPCMD_TIME_MASK                             (0XFFU << INVACT_LPCMD_TIME_SHIFT)                           /* 0X000000FF */
+#define OUTVACT_LPCMD_TIME_SHIFT                           (16U)
+#define OUTVACT_LPCMD_TIME_MASK                            (0XFFU << OUTVACT_LPCMD_TIME_SHIFT)                          /* 0X00FF0000 */
+/* PCKHDL_CFG */
+#define BTA_EN_SHIFT                                       (2U)
+#define BTA_EN_MASK                                        (0x1U << BTA_EN_SHIFT)                                       /* 0X00000004 */
+#define ECC_RX_SHIFT                                       (3U)
+#define ECC_RX_MASK                                        (0x1U << ECC_RX_SHIFT)                                       /* 0X00000008 */
+#define CRC_RX_SHIFT                                       (4U)
+#define CRC_RX_MASK                                        (0x1U << CRC_RX_SHIFT)                                       /* 0X0000000F */
+/* CMD_PKT_STATUS */
+#define GEN_CMD_EMPTY_SHIFT                                (0U)
+#define GEN_CMD_EMPTY_MASK                                 (0x1U << GEN_CMD_EMPTY_SHIFT)                                /* 0X00000001 */
+#define GEN_CMD_FULL_SHIFT                                 (1U)
+#define GEN_CMD_FULL_MASK                                  (0x1U << GEN_CMD_FULL_SHIFT)                                 /* 0X00000002 */
+#define GEN_PLD_W_FULL_SHIFT                               (3U)
+#define GEN_PLD_W_FULL_MASK                                (0x1U << GEN_PLD_W_FULL_SHIFT)                               /* 0X00000008 */
+/* TO_CNT_CFG */
+#define LPRX_TO_CNT_SHIFT                                  (0U)
+#define LPRX_TO_CNT_MASK                                   (0XFFFFU << LPRX_TO_CNT_SHIFT)                               /* 0X0000FFFF */
+#define HSTX_TO_CNT_SHIFT                                  (16U)
+#define HSTX_TO_CNT_MASK                                   (0XFFU << HSTX_TO_CNT_SHIFT)                                 /* 0X00FF0000 */
+/* VID_MODE_CFG */
+#define VID_MODE_TYPE_SHIFT                                (0U)
+#define VID_MODE_TYPE_MASK                                 (0x3U << VID_MODE_TYPE_SHIFT)                                /* 0X00000011 */
+#define LP_CMD_EN_SHIFT                                    (15U)
+#define LP_CMD_EN_MASK                                     (0x1U << LP_CMD_EN_SHIFT)                                    /* 0X00008000 */
+/* MODE_CFG */
+#define CMD_VIDEO_MODE_SHIFT                               (0U)
+#define CMD_VIDEO_MODE_MASK                                (0x1U << CMD_VIDEO_MODE_SHIFT)                               /* 0X00000001 */
+/* LPCLK_CTRL */
+#define PHY_TXREQUESTCLKHS_SHIFT                           (0U)
+#define PHY_TXREQUESTCLKHS_MASK                            (0x1U << PHY_TXREQUESTCLKHS_SHIFT)                           /* 0X00000001 */
+#define AUTO_CLKLANE_CTRL_SHIFT                            (1U)
+#define AUTO_CLKLANE_CTRL_MASK                             (0x1U << AUTO_CLKLANE_CTRL_SHIFT)                            /* 0X00000002 */
+/* TMR_LPCLK_CFG */
+#define PHY_CLKLP2HS_TIME_SHIFT                            (0U)
+#define PHY_CLKLP2HS_TIME_MASK                             (0x3FFU << PHY_CLKLP2HS_TIME_SHIFT)                          /* 0X000003FF */
+#define PHY_CLKHS2LP_TIME_SHIFT                            (16U)
+#define PHY_CLKHS2LP_TIME_MASK                             (0x3FFU << PHY_CLKHS2LP_TIME_SHIFT)                          /* 0X03FF0000 */
+/* PHY_TMR_CFG */
+#define MAX_RD_TIME_SHIFT                                  (0U)
+#define MAX_RD_TIME_MASK                                   (0x7FFFU << MAX_RD_TIME_SHIFT)                               /* 0X00007FFF */
+#define PHY_LP2HS_TIME_SHIFT                               (16U)
+#define PHY_LP2HS_TIME_MASK                                (0xFU << PHY_LP2HS_TIME_SHIFT)                               /* 0X000F0000 */
+#define PHY_HS2LP_TIME_SHIFT                               (24U)
+#define PHY_HS2LP_TIMEMASK                                 (0xFU << PHY_HS2LP_TIME_SHIFT)                               /* 0X00F00000 */
+/* PHY_RSTZ */
+#define DSI_PHY_SHUTDOWNZ_SHIFT                            (0U)
+#define DSI_PHY_SHUTDOWNZ_MASK                             (0x1U << DSI_PHY_SHUTDOWNZ_SHIFT)                            /* 0X00000001 */
+#define DSI_PHY_RSTZ_SHIFT                                 (1U)
+#define DSI_PHY_RSTZ_MASK                                  (0x1U << DSI_PHY_RSTZ_SHIFT)                                 /* 0X00000002 */
+#define DSI_PHY_ENABLECLK_SHIFT                            (2U)
+#define DSI_PHY_ENABLECLK_MASK                             (0x1U << DSI_PHY_ENABLECLK_SHIFT)                            /* 0X00000004 */
+#define DSI_PHY_FORCEPLL_SHIFT                             (3U)
+#define DSI_PHY_FORCEPLL_MASK                              (0x1U << DSI_PHY_FORCEPLL_SHIFT)                             /* 0X00000008 */
 /******************************************PWM*******************************************/
 /* PWM0_CNT */
 #define PWM_PWM0_CNT_CNT_SHIFT                             (0U)

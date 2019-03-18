@@ -27,10 +27,17 @@
 #define RK_DISPLAY_CONNECTOR_DSI    2
 
 /* video mode flag default polarity is positive */
-#define VIDEO_MODE_FLAG_NHSYNC   BIT(0)
-#define VIDEO_MODE_FLAG_NVSYNC   BIT(1)
-#define VIDEO_MODE_FLAG_NPIXDATA BIT(2)
-#define VIDEO_MODE_FLAG_DEN      BIT(3)
+#define VIDEO_MODE_FLAG_NHSYNC    BIT(0)
+#define VIDEO_MODE_FLAG_NVSYNC    BIT(1)
+#define VIDEO_MODE_FLAG_NPIXDATA  BIT(2)
+#define VIDEO_MODE_FLAG_DEN       BIT(3)
+#define DSI_MODE_VIDEO            BIT(4)
+#define DSI_MODE_VIDEO_BURST      BIT(5)
+#define DSI_MODE_VIDEO_SYNC_PULSE BIT(6)
+#define DSI_MODE_VIDEO_AUTO_VERT  BIT(7)
+#define DSI_MODE_EOT_PACKET       BIT(8)
+#define DSI_CLOCK_NON_CONTINUOUS  BIT(9)
+#define DSI_MODE_LPM              BIT(10)
 
 /* media bus format from DRM define */
 #define MEDIA_BUS_FMT_RGB565_1X16        0x1017
@@ -68,7 +75,7 @@ struct DISPLAY_MODE_INFO {
     uint16_t crtcVsyncStart;
     uint16_t crtcVsyncEnd;
     uint16_t crtcVtotal;
-    uint8_t flags;
+    uint16_t flags;
 };
 
 /** @} */
