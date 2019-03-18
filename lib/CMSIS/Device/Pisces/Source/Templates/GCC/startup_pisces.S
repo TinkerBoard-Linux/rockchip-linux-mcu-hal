@@ -99,6 +99,9 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
+#define __NEED_COPY_TO_RAM
+#define __STARTUP_CLEAR_BSS
+
 #ifdef __NEED_COPY_TO_RAM
 /* Firstly it copies data from read only memory to RAM.
  * There are two schemes to copy. One can copy more than one sections.

@@ -11,7 +11,8 @@ uint32_t SystemCoreClock = 30000000;
   Externals
  *----------------------------------------------------------------------------*/
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-extern uint32_t __Vectors;
+extern uint32_t __Vectors[];
+extern const uint32_t __vector_remap__[];
 #endif
 
 /*----------------------------------------------------------------------------
@@ -29,7 +30,16 @@ void SystemInit(void)
     uint32_t status;
 
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-    SCB->VTOR = (uint32_t)&__Vectors;
+#ifdef __vector_remap__
+    uint32_t *ramVector = (uint32_t *)(__vector_remap__);
+
+    for(uint32_t i=0; i<16; i++) {
+        ramVector[i] = __Vectors[i];
+    }
+    SCB->VTOR = (uint32_t)ramVector;
+#else
+    SCB->VTOR = (uint32_t)__Vectors;
+#endif
 #endif
 
     /* config icache: mpu disable, stb disable, write through, hot buffer enable */
