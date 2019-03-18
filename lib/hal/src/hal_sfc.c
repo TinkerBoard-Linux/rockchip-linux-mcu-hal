@@ -424,7 +424,7 @@ HAL_Status HAL_SFC_XipConfig(uint32_t sfcmd, uint32_t sfctrl, uint8_t on)
         cmd.b.readmode = 0;
 
         SFC->CTRL = ctrl.d32;
-        SFC->CMD = cmd.d32;
+        SFC->FETCH_CMD = cmd.d32;
 
         SFC->XIP_MODE = 1;
     } else {
