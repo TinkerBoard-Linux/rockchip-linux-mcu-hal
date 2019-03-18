@@ -358,7 +358,7 @@ static HAL_Status SNOR_ProgDataRaw(uint32_t addr, void *pData, uint32_t size)
     SNOR_WriteEn();
 
     ret = HAL_SFC_Request(sfcmd.d32, sfctrl.d32, addr, pData);
-    HAL_DelayUs(10); //status may be unnormal
+    HAL_DelayUs(20); //status may be unnormal
     if (ret != HAL_OK)
         return ret;
 
