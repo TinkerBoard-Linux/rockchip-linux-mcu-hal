@@ -39,12 +39,8 @@ void SystemCoreClockUpdate (void)
  *----------------------------------------------------------------------------*/
 void SystemInit (void)
 {
-#ifdef  SRAM_BASE
-  SCB->VTOR = SRAM_BASE;
-#else
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
   SCB->VTOR = (uint32_t) &__Vectors;
-#endif
 #endif
   SystemCoreClock = SYSTEM_CLOCK;
 }
