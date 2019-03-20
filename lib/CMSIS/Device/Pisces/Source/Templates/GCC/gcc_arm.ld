@@ -1,8 +1,7 @@
 /* Linker script to configure memory regions. */
 MEMORY
 {
-  FLASH (rx)  : ORIGIN = 0x4000000, LENGTH = 512K
-  RAM   (rwx) : ORIGIN = 0x4040000, LENGTH = 512K
+  RAM   (rwx) : ORIGIN = 0x4000000, LENGTH = 1024K
 }
 
 /* Linker script to place sections and symbol values. Should be used together
@@ -64,18 +63,18 @@ SECTIONS
 		*(.rodata*)
 
 		KEEP(*(.eh_frame*))
-	} > FLASH
+	} > RAM
 
 	.ARM.extab :
 	{
 		*(.ARM.extab* .gnu.linkonce.armextab.*)
-	} > FLASH
+	} > RAM
 
 	__exidx_start = .;
 	.ARM.exidx :
 	{
 		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
-	} > FLASH
+	} > RAM
 	__exidx_end = .;
 
 	/* To copy multiple ROM to RAM sections,
@@ -93,7 +92,7 @@ SECTIONS
 		LONG (__data2_start__)
 		LONG (__data2_end__ - __data2_start__)
 		__copy_table_end__ = .;
-	} > FLASH
+	} > RAM
 	*/
 
 	/* To clear multiple BSS sections,
@@ -109,7 +108,7 @@ SECTIONS
 		LONG (__bss2_start__)
 		LONG (__bss2_end__ - __bss2_start__)
 		__zero_table_end__ = .;
-	} > FLASH
+	} > RAM
 	*/
 
 	/* Location counter can end up 2byte aligned with narrow Thumb code but
