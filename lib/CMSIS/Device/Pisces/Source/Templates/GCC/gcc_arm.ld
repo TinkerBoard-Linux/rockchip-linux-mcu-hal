@@ -1,8 +1,4 @@
 /* Linker script to configure memory regions. */
-MEMORY
-{
-  RAM   (rwx) : ORIGIN = 0x4000000, LENGTH = 1024K
-}
 
 /* Linker script to place sections and symbol values. Should be used together
  * with other linker script that defines memory regions FLASH and RAM.
@@ -36,8 +32,14 @@ MEMORY
  */
 ENTRY(Reset_Handler)
 
+_code_start_addr = 0x04000000;	/* RAM with I-CACHE */
+_data_start_addr = 0x20000000;	/* RAM with D-CACHE */
+_ram_base = _data_start_addr;
+_ram_size = 0x100000;
+
 SECTIONS
 {
+	. = _code_start_addr;
 	.text :
 	{
 		KEEP(*(.vectors))
@@ -54,27 +56,27 @@ SECTIONS
 		*(.ctors)
 
 		/* .dtors */
- 		*crtbegin.o(.dtors)
- 		*crtbegin?.o(.dtors)
- 		*(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
- 		*(SORT(.dtors.*))
- 		*(.dtors)
+		*crtbegin.o(.dtors)
+		*crtbegin?.o(.dtors)
+		*(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+		*(SORT(.dtors.*))
+		*(.dtors)
 
 		*(.rodata*)
 
 		KEEP(*(.eh_frame*))
-	} > RAM
+	}
 
 	.ARM.extab :
 	{
 		*(.ARM.extab* .gnu.linkonce.armextab.*)
-	} > RAM
+	}
 
 	__exidx_start = .;
 	.ARM.exidx :
 	{
 		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
-	} > RAM
+	}
 	__exidx_end = .;
 
 	/* To copy multiple ROM to RAM sections,
@@ -92,7 +94,7 @@ SECTIONS
 		LONG (__data2_start__)
 		LONG (__data2_end__ - __data2_start__)
 		__copy_table_end__ = .;
-	} > RAM
+	}
 	*/
 
 	/* To clear multiple BSS sections,
@@ -108,7 +110,7 @@ SECTIONS
 		LONG (__bss2_start__)
 		LONG (__bss2_end__ - __bss2_start__)
 		__zero_table_end__ = .;
-	} > RAM
+	}
 	*/
 
 	/* Location counter can end up 2byte aligned with narrow Thumb code but
@@ -116,6 +118,7 @@ SECTIONS
 	   which must be 4byte aligned */
 	__etext = ALIGN (4);
 
+	. = _data_start_addr  + . - _code_start_addr;
 	.data : AT (__etext)
 	{
 		__data_start__ = .;
@@ -148,7 +151,7 @@ SECTIONS
 		/* All data end */
 		__data_end__ = .;
 
-	} > RAM
+	}
 
 	.bss :
 	{
@@ -158,7 +161,7 @@ SECTIONS
 		*(COMMON)
 		. = ALIGN(4);
 		__bss_end__ = .;
-	} > RAM
+	}
 
 	.heap (COPY):
 	{
@@ -166,7 +169,7 @@ SECTIONS
 		PROVIDE(end = .);
 		*(.heap*)
 		__HeapLimit = .;
-	} > RAM
+	}
 
 	/* .stack_dummy section doesn't contain any symbols. It is only
 	 * used for linker to calculate size of stack sections, and assign
@@ -174,11 +177,11 @@ SECTIONS
 	.stack_dummy (COPY):
 	{
 		*(.stack*)
-	} > RAM
+	}
 
 	/* Set stack top to end of RAM, and stack limit move down by
 	 * size of stack_dummy section */
-	__StackTop = ORIGIN(RAM) + LENGTH(RAM);
+	__StackTop = _ram_base + _ram_size;
 	__StackLimit = __StackTop - SIZEOF(.stack_dummy);
 	PROVIDE(__stack = __StackTop);
 
