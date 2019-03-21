@@ -24,6 +24,7 @@
  @} */
 
 #include "hal_base.h"
+#include "hal_math.h"
 
 #ifdef HAL_VOP_MODULE_ENABLED
 
@@ -63,6 +64,13 @@ typedef enum {
     OUTPUT_MODE_565,
 } eVOP_OutputMode;
 
+typedef enum {
+    BCSH_BLACK_MODE,
+    BCSH_BLUE_MODE,
+    BCSH_COLOR_BAR_MODE,
+    BCSH_NORMAL_MODE
+} eVOP_BcshVideoMode;
+
 /********************* Private Variable Definition ***************************/
 static struct VOP_REG g_VOP_RegMir;
 static const char * const VOP_IRQs[] = {
@@ -82,6 +90,13 @@ static const char * const VOP_IRQs[] = {
 };
 
 /********************* Private Function Definition ***************************/
+
+static inline int16_t VOP_Interpolate(int16_t x1, int16_t y1, int16_t x2,
+                                      int16_t y2, uint16_t x)
+{
+    return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+}
+
 static uint32_t VOP_MaskRead(__IO uint32_t hwReg,
                              uint32_t shift, uint32_t mask)
 {
@@ -110,6 +125,19 @@ static void VOP_Write(__IO uint32_t *mirReg, __IO uint32_t *hwReg,
     if (mirReg)
         *mirReg = v;
     WRITE_REG(*hwReg, v);
+}
+
+static uint8_t VOP_RbSwap(uint8_t format)
+{
+    switch (format) {
+    case VOP_FMT_ARGB8888:
+    case VOP_FMT_RGB888:
+
+        return 1;
+    default:
+
+        return 0;
+    }
 }
 
 static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
@@ -168,34 +196,6 @@ static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
     return val;
 }
 
-static void VOP_LoadLut(struct VOP_REG *pReg,
-                        struct CRTC_WIN_STATE *pWinState)
-{
-    uint16_t lutLen, i;
-    uint32_t regOffset = pWinState->winId * 0x40 / 4;
-
-    switch (pWinState->format) {
-    case VOP_FMT_1BPP:
-        lutLen = 2;
-        break;
-    case VOP_FMT_2BPP:
-        lutLen = 4;
-        break;
-    case VOP_FMT_4BPP:
-        lutLen = 16;
-        break;
-    case VOP_FMT_8BPP:
-        lutLen = 256;
-        break;
-    }
-
-    for (i = 0; i < lutLen; i++) {
-        VOP_Write(&g_VOP_RegMir.WIN0_BPP_LUT[0] + regOffset,
-                  &pReg->WIN0_BPP_LUT[0] + regOffset,
-                  pWinState->lut[i]);
-    }
-}
-
 static void VOP_SetWinLoop(struct VOP_REG *pReg,
                            struct CRTC_WIN_STATE *pWinState)
 {
@@ -244,8 +244,9 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                        struct DISPLAY_MODE_INFO *pModeInfo)
 {
     uint32_t val, dspInfo, dspSt, dspStx, dspSty, cfgFormat;
-    bool bppFormat, yuv4Format;
+    bool bppFormat, yuv4Format, y2r_en = false, lut_en = false;
     uint32_t regOffset = pWinState->winId * 0x40 / 4;
+    uint32_t yStride, cbcrStride = 0;
 
     VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
                   &pReg->WIN0_CTRL[0] + regOffset,
@@ -264,8 +265,8 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                   VOP_WIN0_CTRL0_WIN0_DATA_FMT_MASK, cfgFormat);
     VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
                   &pReg->WIN0_CTRL[0] + regOffset,
-                  VOP_WIN0_CTRL0_WIN0_BPP_SWAP_SHIFT,
-                  VOP_WIN0_CTRL0_WIN0_BPP_SWAP_MASK, bppFormat);
+                  VOP_WIN0_CTRL0_WIN0_BPP_EN_SHIFT,
+                  VOP_WIN0_CTRL0_WIN0_BPP_EN_MASK, bppFormat);
     VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
                   &pReg->WIN0_CTRL[0] + regOffset,
                   VOP_WIN0_CTRL0_WIN0_YUV_4BIT_EN_SHIFT,
@@ -273,9 +274,15 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
                   &pReg->WIN0_CTRL[0] + regOffset,
                   VOP_WIN0_CTRL0_WIN0_RB_SWAP_SHIFT,
-                  VOP_WIN0_CTRL0_WIN0_RB_SWAP_MASK, pWinState->rbSwap);
+                  VOP_WIN0_CTRL0_WIN0_RB_SWAP_MASK,
+                  VOP_RbSwap(pWinState->format));
+    yStride =  pWinState->xVir / 4;
+
+    if ((pWinState->format == VOP_FMT_YUV444SP) ||
+        (pWinState->format == VOP_FMT_YUV444SP_4))
+        cbcrStride = 2 * yStride;
     VOP_Write(&g_VOP_RegMir.WIN0_VIR + regOffset,
-              &pReg->WIN0_VIR + regOffset, pWinState->xVir >> 2);
+              &pReg->WIN0_VIR + regOffset, cbcrStride << 16 | yStride);
     VOP_Write(&g_VOP_RegMir.WIN0_YRGB_MST + regOffset,
               &pReg->WIN0_YRGB_MST + regOffset, pWinState->yrgbAddr);
     VOP_Write(&g_VOP_RegMir.WIN0_CBCR_MST + regOffset,
@@ -299,6 +306,22 @@ static void VOP_SetWin(struct VOP_REG *pReg,
           pWinState->globalAlphaValue << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_VALUE_SHIFT;
     VOP_Write(&g_VOP_RegMir.WIN0_ALPHA_CTRL + regOffset,
               &pReg->WIN0_ALPHA_CTRL + regOffset, val);
+
+    if (IS_YUV_FORMAT(pWinState->format))
+        y2r_en = true;
+    VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
+                  &pReg->WIN0_CTRL[0] + regOffset,
+                  VOP_WIN0_CTRL0_WIN0_Y2R_EN_SHIFT,
+                  VOP_WIN0_CTRL0_WIN0_Y2R_EN_MASK,
+                  y2r_en);
+
+    if (IS_BPP_FORMAT(pWinState->format))
+        lut_en = true;
+    VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
+                  &pReg->WIN0_CTRL[0] + regOffset,
+                  VOP_WIN0_CTRL0_WIN0_LUT_EN_SHIFT,
+                  VOP_WIN0_CTRL0_WIN0_LUT_EN_MASK,
+                  lut_en);
 }
 
 /********************* Public Function Definition ****************************/
@@ -388,6 +411,27 @@ uint8_t HAL_VOP_CommitPrepare(struct VOP_REG *pReg)
  */
 /**
  * @brief  Set plane state.
+ * @param  winId: VOP win id.
+ * @param  lut: look up table.
+ * @param  lut_size: lut size.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId,
+                           uint32_t *lut, uint16_t lut_size)
+{
+    uint16_t i;
+    uint32_t regOffset = winId * 0x400 / 4;
+
+    for (i = 0; i < lut_size; i++) {
+        VOP_Write(&g_VOP_RegMir.WIN0_BPP_LUT[i] + regOffset,
+                  &pReg->WIN0_BPP_LUT[i] + regOffset,
+                  lut[i]);
+    }
+
+    return HAL_OK;
+}
+/**
+ * @brief  Set plane state.
  * @param  pReg: VOP reg base.
  * @param  pWinState: win state.
  * @param  pModeInfo: VOP output modeinfo.
@@ -404,9 +448,9 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
 
             return HAL_INVAL;
         }
-        VOP_LoadLut(pReg, pWinState);
     }
-
+    pWinState->xVir = pWinState->xVir *
+                      VOP_GetFormatLength(pWinState->format, 0) / 8;
     VOP_SetWin(pReg, pWinState, pModeInfo);
     VOP_SetWinLoop(pReg, pWinState);
 
@@ -590,35 +634,63 @@ HAL_Status HAL_VOP_PostBCSH(struct VOP_REG *pReg,
                             struct VOP_BCSH_INFO *pBCSHInfo)
 {
     uint32_t val;
+    uint16_t brightness, contrast, saturation, hue, sinHue, cosHue;
+    bool bcshEn = false;
 
-    val = pBCSHInfo->brightness << VOP_BCSH_BCS_BRIGHTNESS_SHIFT |
-          pBCSHInfo->contrast << VOP_BCSH_BCS_CONTRAST_SHIFT |
-          pBCSHInfo->satCon << VOP_BCSH_BCS_SAT_CON_SHIFT;
+    if ((pBCSHInfo->brightness != 50) || (pBCSHInfo->contrast != 50) ||
+        (pBCSHInfo->satCon != 50) || (pBCSHInfo->hue != 50))
+        bcshEn = true;
+
+    brightness = VOP_Interpolate(0, -31, 100, 31, pBCSHInfo->brightness);
+    contrast = VOP_Interpolate(0, 0, 100, 511, pBCSHInfo->contrast);
+    saturation = VOP_Interpolate(0, 0, 100, 511, pBCSHInfo->satCon);
+    hue = VOP_Interpolate(0, -30, 100, 30, pBCSHInfo->hue);
+
+    /*
+     *  a:[-30~0):
+     *    sinHue = 0x100 - sin(a)*256;
+     *    cosHue = cos(a)*256;
+     *  a:[0~30]
+     *    sinHue = sin(a)*256;
+     *    cosHue = cos(a)*256;
+     */
+    sinHue = HAL_Sin(hue) >> 23;
+    cosHue = HAL_Cos(hue) >> 23;
+
+    val = brightness << VOP_BCSH_BCS_BRIGHTNESS_SHIFT |
+          contrast << VOP_BCSH_BCS_CONTRAST_SHIFT |
+          saturation << VOP_BCSH_BCS_SAT_CON_SHIFT;
     VOP_Write(&g_VOP_RegMir.BCSH_BCS, &pReg->BCSH_BCS, val);
 
-    val = pBCSHInfo->hueSin << VOP_BCSH_H_SIN_HUE_SHIFT |
-          pBCSHInfo->hueCos << VOP_BCSH_H_COS_HUE_SHIFT;
+    val = sinHue << VOP_BCSH_H_SIN_HUE_SHIFT |
+          cosHue << VOP_BCSH_H_COS_HUE_SHIFT;
     VOP_Write(&g_VOP_RegMir.BCSH_H, &pReg->BCSH_H, val);
-
-    VOP_MaskWrite(&g_VOP_RegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
-                  VOP_BCSH_CTRL_SW_BCSH_Y2R_EN_SHIFT,
-                  VOP_BCSH_CTRL_SW_BCSH_Y2R_EN_MASK,
-                  1);
 
     VOP_MaskWrite(&g_VOP_RegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
                   VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_SHIFT,
                   VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_MASK,
-                  1);
+                  bcshEn);
+
+    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+                  VOP_POST_CTRL_POST_CSC_EN_SHIFT,
+                  VOP_POST_CTRL_POST_CSC_EN_MASK,
+                  bcshEn);
+    VOP_MaskWrite(&g_VOP_RegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
+                  VOP_BCSH_CTRL_VIDEO_MODE_SHIFT,
+                  VOP_BCSH_CTRL_VIDEO_MODE_MASK,
+                  BCSH_NORMAL_MODE);
+
     VOP_MaskWrite(&g_VOP_RegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
                   VOP_BCSH_CTRL_BCSH_EN_SHIFT,
                   VOP_BCSH_CTRL_BCSH_EN_MASK,
-                  1);
+                  bcshEn);
 
     return HAL_OK;
 }
 
 /**
- * @brief  VOP post gamma init.
+ * @brief  VOP post gamma init, the gamma adjust should be in yuv color space,
+           so we need to enable bcsh r2y and post csc en.
  * @param  pReg: VOP reg base.
  * @param  pGammaInfo: VOP gamma info.
  * @return HAL_Status.
@@ -628,34 +700,23 @@ HAL_Status HAL_VOP_PostGammaInit(struct VOP_REG *pReg,
 {
     uint8_t i = 0;
 
+    VOP_MaskWrite(&g_VOP_RegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
+                  VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_SHIFT,
+                  VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_MASK,
+                  pGammaInfo->gammaCoeEnable);
+
     for (i = 0; i < VOP_GAMMA_SIZE; i++)
         VOP_Write(&g_VOP_RegMir.GAMMA_COE_WORD[i], &pReg->GAMMA_COE_WORD[i],
-                  pGammaInfo->gammaCoeWord[i]);
+                  *((uint32_t *)pGammaInfo->gammaCoeWord + i));
     VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_Y_GAMMA_EN_SHIFT,
                   VOP_POST_CTRL_Y_GAMMA_EN_MASK,
                   pGammaInfo->gammaCoeEnable);
 
-    return HAL_OK;
-}
-
-/**
- * @brief  VOP post CSC init.
- * @param  pReg: VOP reg base.
- * @param  pPostCSCInfo: VOP CSC info.
- * @return HAL_Status.
- */
-HAL_Status HAL_VOP_PostCSCInit(struct VOP_REG *pReg,
-                               struct VOP_POST_CSC_INFO *pPostCSCInfo)
-{
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
-                  VOP_POST_CTRL_POST_CSC_MODE_SHIFT,
-                  VOP_POST_CTRL_POST_CSC_MODE_MASK,
-                  pPostCSCInfo->postCscMode);
     VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_POST_CSC_EN_SHIFT,
                   VOP_POST_CTRL_POST_CSC_EN_MASK,
-                  pPostCSCInfo->postCscEn);
+                  pGammaInfo->gammaCoeEnable);
 
     return HAL_OK;
 }
@@ -670,11 +731,19 @@ HAL_Status HAL_VOP_PostColorMatrixInit(struct VOP_REG *pReg,
                                        struct VOP_COLOR_MATRIX_INFO *pColorMatrixInfo)
 {
     uint8_t i = 0;
+    uint32_t val = 0;
+    uint8_t *colorMatrixCoe = pColorMatrixInfo->colorMatrixCoe;
+    uint8_t *colorMatrixOffset = pColorMatrixInfo->colorMatrixOffset;
 
-    for (i = 0; i < VOP_COLOR_MATRIX_SIZE; i++)
+    for (i = 0; i < VOP_COLOR_MATRIX_SIZE; i++) {
+        val = colorMatrixCoe[VOP_COLOR_MATRIX_SIZE * i + 0] |
+              colorMatrixCoe[VOP_COLOR_MATRIX_SIZE * i + 1] << 8 |
+              colorMatrixCoe[VOP_COLOR_MATRIX_SIZE * i + 2] << 16 |
+              colorMatrixOffset[i] << 24;
         VOP_Write(&g_VOP_RegMir.COLOR_MATRIX_COE[i],
                   &pReg->COLOR_MATRIX_COE[i],
-                  pColorMatrixInfo->colorMatrixCoe[i]);
+                  val);
+    }
     VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_COLOR_MATRIX_EN_SHIFT,
                   VOP_POST_CTRL_COLOR_MATRIX_EN_MASK,
@@ -985,6 +1054,41 @@ HAL_Status HAL_VOP_IrqHandler(struct VOP_REG *pReg)
     }
 
     pReg->INTR_CLEAR = val & 0xffff;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  VOP interrupt handler.
+ * @param  pReg: VOP reg base.
+ * @param  type: send cmd or data
+ * @param  val: send value
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val)
+{
+    switch (type) {
+    case MCU_WRCMD:
+        VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RS_SHIFT,
+                      VOP_MCU_MCU_RS_MASK, 0);
+        VOP_Write(&g_VOP_RegMir.MCU_WRITE_DATA, &pReg->MCU_WRITE_DATA,
+                  val);
+        VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RS_SHIFT,
+                      VOP_MCU_MCU_RS_MASK, 1);
+        break;
+    case MCU_WRDATA:
+        VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RS_SHIFT,
+                      VOP_MCU_MCU_RS_MASK, 1);
+        VOP_Write(&g_VOP_RegMir.MCU_WRITE_DATA, &pReg->MCU_WRITE_DATA,
+                  val);
+        break;
+    case MCU_SETBYPASS:
+        VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_BYPASS_SHIFT,
+                      VOP_MCU_MCU_BYPASS_MASK, val ? 1 : 0);
+        break;
+    default:
+        break;
+    }
 
     return HAL_OK;
 }

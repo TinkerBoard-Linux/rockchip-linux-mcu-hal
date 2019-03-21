@@ -40,6 +40,16 @@ typedef enum {
     VOP_POST_CSC_JPEG,
 } eVOP_PostCSCMode;
 
+typedef enum {
+    VOP_ALPHA_MODE_USER_DEFINED = 0,
+    VOP_ALPHA_MODE_PER_PIXEL,
+} eVOP_AlphaMode;
+
+typedef enum {
+    VOP_NON_PREMULT_ALPHA = 0,
+    VOP_PREMULT_ALPHA,
+} eVOP_PreMulAlphaMode;
+
 typedef enum vop_data_format {
     VOP_FMT_ARGB8888 = 0,
     VOP_FMT_RGB888,
@@ -61,6 +71,12 @@ typedef enum vop_data_format {
     VOP_FMT_8BPP,
 } eVOP_DataFormat;
 
+typedef enum VOP_mcu_cmd {
+    MCU_WRCMD = 0,
+    MCU_WRDATA,
+    MCU_SETBYPASS,
+} eVOP_McuCmd;
+
 struct CRTC_WIN_STATE {
     bool winEn;
     uint8_t winId;
@@ -68,7 +84,6 @@ struct CRTC_WIN_STATE {
     uint8_t format;
     uint32_t yrgbAddr;
     uint32_t cbcrAddr;
-    uint8_t rbSwap;
     uint16_t xVir;
     uint16_t crtcX;
     uint16_t crtcY;
@@ -87,16 +102,15 @@ struct CRTC_WIN_STATE {
 };
 
 struct VOP_BCSH_INFO {
-    uint16_t brightness;
-    uint16_t contrast;
-    uint16_t satCon;
-    uint16_t hueSin;
-    uint16_t hueCos;
+    uint8_t brightness;
+    uint8_t contrast;
+    uint8_t satCon;
+    uint8_t hue;
 };
 
 struct VOP_GAMMA_COE_INFO {
     bool gammaCoeEnable;
-    uint32_t gammaCoeWord[VOP_GAMMA_SIZE];
+    uint8_t *gammaCoeWord;
 };
 
 struct VOP_POST_SCALE_INFO {
@@ -121,7 +135,8 @@ struct VOP_POST_CSC_INFO {
 
 struct VOP_COLOR_MATRIX_INFO {
     bool colorMatrixEn;
-    uint32_t colorMatrixCoe[VOP_COLOR_MATRIX_SIZE];
+    uint8_t *colorMatrixCoe;
+    uint8_t *colorMatrixOffset;
 };
 
 struct VOP_POST_CLIP_INFO {
@@ -137,6 +152,8 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
 
 uint32_t HAL_VOP_GetScanLine(struct VOP_REG *pReg);
 uint8_t HAL_VOP_CommitPrepare(struct VOP_REG *pReg);
+HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId, uint32_t *lut,
+                           uint16_t lut_size);
 HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_PowerOn(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_PowerOff(struct VOP_REG *pReg);
@@ -165,8 +182,6 @@ HAL_Status HAL_VOP_PostBCSH(struct VOP_REG *pReg,
                             struct VOP_BCSH_INFO *pBCSHInfo);
 HAL_Status HAL_VOP_PostGammaInit(struct VOP_REG *pReg,
                                  struct VOP_GAMMA_COE_INFO *pGammaInfo);
-HAL_Status HAL_VOP_PostCSCInit(struct VOP_REG *pReg,
-                               struct VOP_POST_CSC_INFO *pPostCSCInfo);
 HAL_Status HAL_VOP_PostColorMatrixInit(struct VOP_REG *pReg,
                                        struct VOP_COLOR_MATRIX_INFO *pColorMatrixInfo);
 HAL_Status HAL_VOP_PostClipInit(struct VOP_REG *pReg,
@@ -177,6 +192,7 @@ HAL_Status HAL_VOP_PolarityInit(struct VOP_REG *pReg,
 HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
                               struct DISPLAY_MODE_INFO *pModeInfo,
                               uint16_t BusFormat);
+HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val);
 #endif
 
 /** @} */
