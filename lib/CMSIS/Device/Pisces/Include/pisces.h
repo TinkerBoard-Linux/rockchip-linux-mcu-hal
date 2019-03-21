@@ -5511,6 +5511,8 @@ struct VOP_REG {
 /* WIN0_CTRL0 */
 #define VOP_WIN0_CTRL0_WIN0_EN_SHIFT                       (0U)
 #define VOP_WIN0_CTRL0_WIN0_EN_MASK                        (0x1U << VOP_WIN0_CTRL0_WIN0_EN_SHIFT)                       /* 0x00000001 */
+#define VOP_WIN0_CTRL0_WIN0_LUT_EN_SHIFT                   (1U)
+#define VOP_WIN0_CTRL0_WIN0_LUT_EN_MASK                    (0x1U << VOP_WIN0_CTRL0_WIN0_LUT_EN_SHIFT)
 #define VOP_WIN0_CTRL0_WIN0_DATA_FMT_SHIFT                 (4U)
 #define VOP_WIN0_CTRL0_WIN0_DATA_FMT_MASK                  (0xFU << VOP_WIN0_CTRL0_WIN0_DATA_FMT_SHIFT)                 /* 0x000000F0 */
 #define VOP_WIN0_CTRL0_WIN0_BPP_SWAP_SHIFT                 (8U)
@@ -5847,8 +5849,6 @@ struct VOP_REG {
 #define VOP_BCSH_CTRL_VIDEO_MODE_MASK                      (0x3U << VOP_BCSH_CTRL_VIDEO_MODE_SHIFT)                     /* 0x0000000C */
 #define VOP_BCSH_CTRL_SW_BCSH_Y2R_CSC_MODE_SHIFT           (4U)
 #define VOP_BCSH_CTRL_SW_BCSH_Y2R_CSC_MODE_MASK            (0x3U << VOP_BCSH_CTRL_SW_BCSH_Y2R_CSC_MODE_SHIFT)           /* 0x00000030 */
-#define VOP_BCSH_CTRL_SW_BCSH_Y2R_EN_SHIFT                 (6U)
-#define VOP_BCSH_CTRL_SW_BCSH_Y2R_EN_MASK                  (0x1U << VOP_BCSH_CTRL_SW_BCSH_Y2R_EN_SHIFT)                 /* 0x00000040 */
 #define VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_SHIFT                 (7U)
 #define VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_MASK                  (0x1U << VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_SHIFT)                 /* 0x00000080 */
 /* BCSH_COL_BAR */
