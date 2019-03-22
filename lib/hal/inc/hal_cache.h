@@ -151,7 +151,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
     uint32_t offset = 0;
     uint32_t status = 0;
 
-    offset = (sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
+    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
     value = (address & ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_INVALID | ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
@@ -329,7 +329,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
     uint32_t offset = 0;
     uint32_t status = 0;
 
-    offset = (sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
+    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_INVALID | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
@@ -364,7 +364,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
     uint32_t offset = 0;
     uint32_t status = 0;
 
-    offset = (sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
+    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_CLEAN | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
@@ -399,7 +399,7 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     uint32_t offset = 0;
     uint32_t status = 0;
 
-    offset = (sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
+    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_CLEAN_INVALID | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
