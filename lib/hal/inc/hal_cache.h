@@ -234,6 +234,103 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_GetPMU(struct CACHE_PMU_CNT *stat)
 }
 
 /**
+ * @brief  Enable the interrupt of icache.
+ * @return HAL_OK if success.
+ */
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_EnableInt(void)
+{
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    ICACHE->CACHE_INT_EN |= ICACHE_CACHE_INT_EN_ERR_RECORD_EN_MASK;
+#endif
+
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable the interrupt of icache.
+ * @return HAL_OK if success.
+ */
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_DisableInt(void)
+{
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    ICACHE->CACHE_INT_EN &= ~ICACHE_CACHE_INT_EN_ERR_RECORD_EN_MASK;
+#endif
+
+#endif
+
+    return HAL_OK;
+}
+
+
+/**
+ * @brief  Get the interrupt status of icache.
+ * @return HAL_TRUE if ahb error occur.
+ */
+__STATIC_FORCEINLINE HAL_Check HAL_ICACHE_GetInt(void)
+{
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    uint32_t status = 0;
+
+    status = ICACHE->CACHE_INT_ST & ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK;
+
+    return status ? TRUE : FALSE;
+#endif
+
+#endif
+
+    return FALSE;
+}
+
+/**
+ * @brief  Get the ahb bus error address of icache.
+ * @return ahb buss error address if success.
+ * @attention The return value is only valid if you get a ahb error from CACHE_INT_ST
+ */
+__STATIC_FORCEINLINE uint32_t HAL_ICACHE_GetErrAddr(void)
+{
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    uint32_t address;
+
+    address = ICACHE->CACHE_ERR_HADDR;
+
+    return address;
+#endif
+
+#endif
+
+    return -1;
+}
+
+
+/**
+ * @brief  Clear the interrupt status of icache.
+ * @return HAL_OK if success.
+ */
+__STATIC_FORCEINLINE HAL_Status HAL_ICACHE_ClearInt(void)
+{
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    ICACHE->CACHE_INT_ST |= ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK;
+#endif
+
+#endif
+
+    return HAL_OK;
+}
+
+
+/**
  * @brief     enable dcache.
  * @return    HAL_OK if success.
  * @attention Cache invalidate must be call if the dcache is not enable for the first
@@ -507,6 +604,102 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_GetPMU(struct CACHE_PMU_CNT *stat)
 
     return HAL_OK;
 }
+
+/**
+ * @brief  Enable the interrupt of dcache.
+ * @return HAL_OK if success.
+ */
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_EnableInt(void)
+{
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    DCACHE->CACHE_INT_EN |= DCACHE_CACHE_INT_EN_ERR_RECORD_EN_MASK;
+#endif
+
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable the interrupt of dcache.
+ * @return HAL_OK if success.
+ */
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_DisableInt(void)
+{
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    DCACHE->CACHE_INT_EN &= ~DCACHE_CACHE_INT_EN_ERR_RECORD_EN_MASK;
+#endif
+
+#endif
+
+    return HAL_OK;
+}
+
+
+/**
+ * @brief  Get the interrupt status of dcache.
+ * @return HAL_TRUE if ahb error occur.
+ */
+__STATIC_FORCEINLINE HAL_Check HAL_DCACHE_GetInt(void)
+{
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    uint32_t status = 0;
+
+    status = DCACHE->CACHE_INT_ST & DCACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK;
+
+    return status ? TRUE : FALSE;
+#endif
+
+#endif
+
+    return FALSE;
+}
+
+/**
+ * @brief  Clear the interrupt status of dcache.
+ * @return HAL_OK if success.
+ */
+__STATIC_FORCEINLINE HAL_Status HAL_DCACHE_ClearInt(void)
+{
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    DCACHE->CACHE_INT_ST |= DCACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK;
+#endif
+
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get the ahb bus error address of dcache.
+ * @return ahb buss error address if success.
+ * @attention The return value is only valid if you get a ahb error from CACHE_INT_ST
+ */
+__STATIC_FORCEINLINE uint32_t HAL_DCACHE_GetErrAddr(void)
+{
+#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+
+#if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
+    uint32_t address;
+
+    address = DCACHE->CACHE_ERR_HADDR;
+
+    return address;
+#endif
+
+#endif
+
+    return -1;
+}
+
 
 #endif
 
