@@ -83,6 +83,10 @@
 #include "hal_spi.h"
 #endif
 
+#ifdef HAL_SPI_MODULE_ENABLED
+#include "hal_spi2apb.h"
+#endif
+
 #ifdef HAL_TIMER_MODULE_ENABLED
 #include "hal_timer.h"
 #endif
