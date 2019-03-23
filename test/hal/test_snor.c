@@ -38,8 +38,8 @@ void SNOR_XipDisable(void)
 }
 
 #define maxest_sector 64
-static uint8_t pwrite[maxest_sector * 512];
-static uint8_t pread[maxest_sector * 512];
+static uint8_t *pwrite;
+static uint8_t *pread;
 static uint32_t *pread32;
 static uint32_t *pwrite32;
 static HAL_Status SNOR_TEST(uint32_t testEndLBA)
@@ -272,6 +272,9 @@ TEST(HAL_SNOR, XipDefaultTest){
 TEST_GROUP_RUNNER(HAL_SNOR){
     uint32_t ret;
 
+    pwrite = malloc(maxest_sector * 512);
+    pread = malloc(maxest_sector * 512);
+
 #if defined(RKMCU_PISCES)
     if (HAL_SNOR_IsInXip()) {
         HAL_DBG("Skip SNOR Test In XIP mode\n");
@@ -288,4 +291,6 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     ret = HAL_SNOR_Deinit();
     TEST_ASSERT(ret == HAL_OK);
 #endif
+    free(pwrite);
+    free(pread);
 }
