@@ -37,14 +37,6 @@ void SNOR_XipDisable(void)
     SFC->XIP_MODE = 0x0;
 }
 
-HAL_Check SNOR_IsInXip(void)
-{
-    if (SFC->XIP_MODE)
-        return TRUE;
-    else
-        return FALSE;
-}
-
 #define maxest_sector 64
 static uint8_t pwrite[maxest_sector * 512];
 static uint8_t pread[maxest_sector * 512];
@@ -233,20 +225,6 @@ TEST_TEAR_DOWN(HAL_SNOR){
 }
 
 /* SNOR test case 0 */
-TEST(HAL_SNOR, SnorInit){
-    uint32_t ret;
-
-    /* Controller init */
-    ret = HAL_SFC_Init();
-    TEST_ASSERT(ret == HAL_OK);
-
-    /* SNOR init */
-    ret = HAL_SNOR_Init();
-    TEST_ASSERT(ret == HAL_OK);
-}
-
-
-/* SNOR test case 1 */
 TEST(HAL_SNOR, SnorStressTest){
     uint32_t ret, testEndLBA;
 
@@ -259,7 +237,7 @@ TEST(HAL_SNOR, SnorStressTest){
     TEST_ASSERT(ret == HAL_OK);
 }
 
-/* SNOR test case 2 */
+/* SNOR test case 1 */
 TEST(HAL_SNOR, XipTest){
     uint32_t ret, testEndLBA;
     uint32_t i;
@@ -292,14 +270,22 @@ TEST(HAL_SNOR, XipDefaultTest){
 }
 
 TEST_GROUP_RUNNER(HAL_SNOR){
+    uint32_t ret;
+
 #if defined(RKMCU_PISCES)
-    if(SNOR_IsInXip()) {
+    if (HAL_SNOR_IsInXip()) {
         HAL_DBG("Skip SNOR Test In XIP mode\n");
+
         return;
     }
-    RUN_TEST_CASE(HAL_SNOR, SnorInit);
+    ret = HAL_SNOR_Init();
+    TEST_ASSERT(ret == HAL_OK);
     RUN_TEST_CASE(HAL_SNOR, SnorStressTest);
     RUN_TEST_CASE(HAL_SNOR, XipDefaultTest);
     RUN_TEST_CASE(HAL_SNOR, XipTest);
+
+    /* SNOR deinit */
+    ret = HAL_SNOR_Deinit();
+    TEST_ASSERT(ret == HAL_OK);
 #endif
 }
