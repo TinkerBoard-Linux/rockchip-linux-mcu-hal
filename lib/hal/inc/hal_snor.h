@@ -44,6 +44,7 @@ HAL_Status HAL_SNOR_Erase(uint32_t addr, NOR_ERASE_TYPE EraseType);
 HAL_Status HAL_SNOR_EraseBlk(uint32_t addr);
 HAL_Status HAL_SNOR_XipEnable(void);
 HAL_Status HAL_SNOR_XipDisable(void);
+HAL_Check HAL_SNOR_IsInXip(void);
 
 #endif
 

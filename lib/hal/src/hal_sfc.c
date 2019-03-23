@@ -322,7 +322,7 @@ HAL_Status HAL_SFC_Init(void)
  */
 HAL_Status HAL_SFC_Deinit(void)
 {
-    /* TBD */
+    SFC_Reset();
 
     return HAL_OK;
 }

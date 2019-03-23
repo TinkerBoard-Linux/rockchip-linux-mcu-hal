@@ -306,6 +306,26 @@ static HAL_Status SNOR_WaitBusy(int32_t timeout)
     return HAL_BUSY;
 }
 
+HAL_Status SNOR_DeviceReset(void)
+{
+    int32_t ret = HAL_OK;
+    SFCCMD_DATA sfcmd;
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = CMD_ENABLE_RESER;
+    HAL_SFC_Request(sfcmd.d32, 0, 0, NULL);
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = CMD_RESET_DEVICE;
+    HAL_SFC_Request(sfcmd.d32, 0, 0, NULL);
+    if (ret != HAL_OK)
+        return ret;
+
+    ret = SNOR_WaitBusy(10000);
+
+    return ret;
+}
+
 static HAL_Status SNOR_EnableQE(void)
 {
     int32_t ret = HAL_OK;
@@ -481,6 +501,28 @@ void *SNOR_flash_info_adjust(struct FLASH_INFO *spi_flash_info)
 
     return 0;
 }
+
+/** @defgroup SNOR_Exported_Functions_Group2 State and Errors Functions
+ @verbatim
+
+ ===============================================================================
+             #### State and Errors functions ####
+ ===============================================================================
+ This section provides functions allowing to get the status of the module:
+
+ @endverbatim
+ *  @{
+ */
+
+HAL_Check HAL_SNOR_IsInXip(void)
+{
+    if (SFC->XIP_MODE)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+/** @} */
 
 /********************* Public Function Definition ****************************/
 /** @defgroup SNOR_Exported_Functions_Group3 IO Functions
@@ -724,6 +766,7 @@ HAL_Status HAL_SNOR_Init(void)
     struct SFNOR_DEV *pDev = &s_snorDev;
     uint8_t idByte[5];
 
+    HAL_SFC_Init();
     memset(pDev, 0, sizeof(struct SFNOR_DEV));
     HAL_SNOR_ReadID(idByte);
     HAL_DBG("sfc nor id: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
@@ -834,9 +877,13 @@ HAL_Status HAL_SNOR_Init(void)
  */
 HAL_Status HAL_SNOR_Deinit(void)
 {
+    uint32_t ret;
 
-    /* TBD */
-    return HAL_OK;
+    ret = SNOR_DeviceReset();
+    if (ret != HAL_OK)
+        return ret;
+
+    return HAL_SFC_Deinit();
 }
 
 /** @} */
