@@ -122,6 +122,9 @@ TEST(HAL_LEAGACY, Bandwidth){
         BandwidthHelper(xipbuf, dstbuf, (void *)&SumTest);
 
         HAL_SNOR_XipDisable();
+    } else {
+        HAL_DBG("Skip XIP Bandwidth Test In XIP mode\n");
+
     }
 #endif
 
@@ -1166,7 +1169,7 @@ TEST(HAL_LEAGACY, CodeThroughPut){
     uint32_t uTick[4], tickVal[4];
     struct CACHE_PMU_CNT pmuStatus[4];
 
-    HAL_DBG("\nCodeThroughPutn");
+    HAL_DBG("\nCodeThroughPut\n");
     HAL_ICACHE_EnablePMU();
     HAL_ICACHE_GetPMU(&pmuStatus[0]);
     uTick[0] = HAL_GetTick();
@@ -1184,7 +1187,7 @@ TEST(HAL_LEAGACY, CodeThroughPut){
     uTick[3] = HAL_GetTick();
     HAL_ICACHE_GetPMU(&pmuStatus[3]);
 
-    HAL_DBG("1st: Internal Ram use cache %f cycle per NOP\n",
+    HAL_DBG("1st: %f cycle per NOP\n",
             ((double)(uTick[1] - uTick[0]) * SysTick->LOAD + tickVal[0] - tickVal[1]) / (1024));  /* SysTick->VAL reciprocal */
     HAL_DBG("PMU read hit/total=%lu/%lu rate= %f\n",
             pmuStatus[1].rdHit - pmuStatus[0].rdHit,
@@ -1192,7 +1195,7 @@ TEST(HAL_LEAGACY, CodeThroughPut){
             (double)(pmuStatus[1].rdHit - pmuStatus[0].rdHit) / (double)(pmuStatus[1].rdNum - pmuStatus[0].rdNum));
     HAL_DBG("PMU read miss penalty %lu\n", pmuStatus[1].rdMissPenalty - pmuStatus[0].rdMissPenalty);
 
-    HAL_DBG("2nd: Internal Ram use cache %f cycle per NOP\n",
+    HAL_DBG("2nd: %f cycle per NOP\n",
             ((double)(uTick[3] - uTick[2]) * SysTick->LOAD + tickVal[2] - tickVal[3]) / (1024));
     HAL_DBG("PMU read hit/total=%lu/%lu rate= %f\n",
             pmuStatus[3].rdHit - pmuStatus[2].rdHit,

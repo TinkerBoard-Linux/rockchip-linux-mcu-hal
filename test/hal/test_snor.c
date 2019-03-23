@@ -279,7 +279,7 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     if (HAL_SNOR_IsInXip()) {
         HAL_DBG("Skip SNOR Test In XIP mode\n");
 
-        return;
+        goto out;
     }
     ret = HAL_SNOR_Init();
     TEST_ASSERT(ret == HAL_OK);
@@ -291,6 +291,8 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     ret = HAL_SNOR_Deinit();
     TEST_ASSERT(ret == HAL_OK);
 #endif
+
+out:
     free(pwrite);
     free(pread);
 }
