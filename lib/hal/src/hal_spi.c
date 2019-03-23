@@ -85,6 +85,9 @@
 #define SPI_CLEAR_INT_RXUI (1 << SPI_ICR_CRFUI_SHIFT)
 #define SPI_CLEAR_INT_RXOI (1 << SPI_ICR_CRFOI_SHIFT)
 #define SPI_CLEAR_INT_TXOI (1 << SPI_ICR_CTFOI_SHIFT)
+#define SPI_CLEAR_INT_TOI  (1 << SPI_ICR_CTOI_SHIFT)
+#define SPI_ICR_SSPI_SHIFT (1 << SPI_ICR_CSSPI_SHIFT)
+#define SPI_CLEAR_INT_TXFI (1 << SPI_ICR_CTXFI_SHIFT)
 
 /* Bit fields in DMACR */
 #define SPI_DMACR_TX_ENABLE (1 << SPI_DMACR_TDE_SHIFT)
@@ -117,7 +120,7 @@
 
 /**
   * @brief  Initialize the SPI according to the specified parameters.
-  * @param  pSPI: pointer to a SPI_HandleTypeDef structure that contains
+  * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
   * @param  base: SPI controller register base address.
   * @param  slave: working at slave or master.
@@ -482,6 +485,7 @@ HAL_Status HAL_SPI_IrqHandler(struct SPI_HANDLE *pSPI)
     }
 
     if ((irqStatus & SPI_INT_TXFIM) && (pSPI->pTxBufferEnd == pSPI->pTxBuffer)) {
+        WRITE_REG(pSPI->pReg->ICR, SPI_CLEAR_INT_TXFI);
         result = HAL_OK;
         goto out;
     }
