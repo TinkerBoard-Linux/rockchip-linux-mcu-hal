@@ -206,6 +206,9 @@ typedef enum {
 } ePL330_DST;
 
 /********************* Private Variable Definition ***************************/
+
+static HAL_LIST_HEAD(sPL330List);
+
 /********************* Private Function Definition ***************************/
 
 __STATIC_INLINE int PL330_Instr_DMAEND(uint8_t dryRun, char *buf)
@@ -1318,6 +1321,37 @@ static int PL330_Exec_DMAGO(uint32_t base, uint32_t channel, uint32_t addr)
     return 0;
 }
 
+/**
+ * @brief  Register a pl330 into system.
+ * @param  pl330: the handle of pl330.
+ * @return HAL_Status
+ */
+static HAL_Status PL330_Register(PL330 *pl330)
+{
+    PL330 *ipl330;
+
+    HAL_LIST_FOR_EACH_ENTRY(ipl330, &sPL330List, list) {
+        if (ipl330->base == pl330->base)
+            return HAL_ERROR;
+    }
+
+    HAL_LIST_InsertAfter(&sPL330List, &pl330->list);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Unregister a pl330 from system.
+ * @param  pl330: the handle of pl330.
+ * @return HAL_Status
+ */
+static HAL_Status PL330_Unregister(PL330 *pl330)
+{
+    HAL_LIST_Remove(&pl330->list);
+
+    return HAL_OK;
+}
+
 /********************* Public Function Definition ****************************/
 
 /** @defgroup PL330_Exported_Functions_Group2 State and Errors Functions
@@ -1417,7 +1451,7 @@ int HAL_PL330_GetPosition(PL330_CHANNEL *chan)
  */
 HAL_Status HAL_PL330_Init(PL330 *pl330, uint32_t base, ePL330_COND cond)
 {
-    int status = HAL_OK;
+    HAL_Status status = HAL_OK;
     uint8_t channel;
     PL330_CHANNEL *chan;
 
@@ -1451,6 +1485,8 @@ HAL_Status HAL_PL330_Init(PL330 *pl330, uint32_t base, ePL330_COND cond)
     PL330_Read_Config(pl330);
     pl330->peripReqType = cond;
     pl330->isReady = 1;
+
+    status = PL330_Register(pl330);
 
     return status;
 }
@@ -1491,6 +1527,8 @@ HAL_Status HAL_PL330_Deinit(PL330 *pl330)
     WRITE_REG(reg->DBGINST[0], dbgInst);
     WRITE_REG(reg->DBGINST[1], 0x0);
     WRITE_REG(reg->DBGCMD, 0x0);
+
+    PL330_Unregister(pl330);
 
     return HAL_OK;
 }
@@ -1967,6 +2005,23 @@ HAL_Status HAL_PL330_PrepDmaMemcpy(PL330_CHANNEL *chan, uint32_t dst,
     desc->cparam = cparam;
 
     return HAL_OK;
+}
+
+/**
+ * @brief  Get pl330 handle by base.
+ * @param  base: the base addr of pl330.
+ * @return pl330
+ */
+PL330 *HAL_PL330_Get(uint32_t base)
+{
+    PL330 *pl330;
+
+    HAL_LIST_FOR_EACH_ENTRY(pl330, &sPL330List, list) {
+        if (pl330->base == base)
+            return pl330;
+    }
+
+    return NULL;
 }
 
 /** @} */

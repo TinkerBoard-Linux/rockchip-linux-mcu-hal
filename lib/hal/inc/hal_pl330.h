@@ -249,6 +249,7 @@ typedef struct _PL330 {
     PL330_CHANNEL chans[PL330_CHANNELS_PER_DEV];
     PL330_CONFIG pcfg;
     ePL330_COND peripReqType;
+    HAL_LIST list;
 } PL330;
 
 /** @} */
@@ -283,6 +284,7 @@ HAL_Status HAL_PL330_IrqHandler(PL330 *pl330);
 uint32_t HAL_PL330_GetRawIrqStatus(PL330 *pl330);
 HAL_Status HAL_PL330_ClearIrq(PL330 *pl330, uint32_t irq);
 int HAL_PL330_GetPosition(PL330_CHANNEL *chan);
+PL330 *HAL_PL330_Get(uint32_t base);
 
 #endif
 
