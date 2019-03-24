@@ -11,7 +11,7 @@
 #define UNITY_OUTPUT_CHAR(a) printf
 
 //#define UNITY_HAL_COREMARK
-//#define UNITY_HAL_BANDWIDTH
+//#define UNITY_HAL_DataAccess
 #define UNITY_HAL_THROUGHPUT
 
 #endif
