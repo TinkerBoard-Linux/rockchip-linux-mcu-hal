@@ -34,10 +34,10 @@
     extern void UNITY_FIXTURE_FREE(void* ptr);
 #endif
 
-#define malloc  unity_malloc
-#define calloc  unity_calloc
-#define realloc unity_realloc
-#define free    unity_free
+//#define malloc  unity_malloc
+//#define calloc  unity_calloc
+//#define realloc unity_realloc
+//#define free    unity_free
 
 void* unity_malloc(size_t size);
 void* unity_calloc(size_t num, size_t size);
