@@ -15,6 +15,7 @@
 
 #include "cmsis_compiler.h"
 #include "rksoc.h"
+#include "hal_list.h"
 
 #define HAL_MAX_DELAY 0xFFFFFFFFU
 
@@ -22,6 +23,7 @@
 #define HAL_IS_BIT_SET(REG, BIT) (((REG) & (BIT)) != RESET)
 #define HAL_IS_BIT_CLR(REG, BIT) (((REG) & (BIT)) == RESET)
 
+#define HAL_BIT(nr)       (1UL << (nr))
 #define HAL_ARRAY_SIZE(a) (sizeof((a)) / sizeof((a)[0]))
 #define HAL_MIN(x, y)     ((x) < (y) ? (x) : (y))
 
