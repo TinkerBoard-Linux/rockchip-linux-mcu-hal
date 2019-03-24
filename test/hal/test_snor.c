@@ -269,18 +269,13 @@ TEST(HAL_SNOR, XipDefaultTest){
     TEST_ASSERT(ret == HAL_OK);
 }
 
+/* Test code should be place in ram */
 TEST_GROUP_RUNNER(HAL_SNOR){
     uint32_t ret;
 
-    pwrite = malloc(maxest_sector * 512);
-    pread = malloc(maxest_sector * 512);
+    pwrite = (uint8_t *)malloc(maxest_sector * 512);
+    pread = (uint8_t *)malloc(maxest_sector * 512);
 
-#if defined(RKMCU_PISCES)
-    if (HAL_SNOR_IsInXip()) {
-        HAL_DBG("Skip SNOR Test In XIP mode\n");
-
-        goto out;
-    }
     ret = HAL_SNOR_Init();
     TEST_ASSERT(ret == HAL_OK);
     RUN_TEST_CASE(HAL_SNOR, SnorStressTest);
@@ -290,9 +285,7 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     /* SNOR deinit */
     ret = HAL_SNOR_Deinit();
     TEST_ASSERT(ret == HAL_OK);
-#endif
 
-out:
     free(pwrite);
     free(pread);
 }
