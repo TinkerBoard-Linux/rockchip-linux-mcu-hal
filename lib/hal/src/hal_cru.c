@@ -419,30 +419,6 @@ static HAL_Status CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     return HAL_OK;
 }
 
-static HAL_Status CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
-                                       uint32_t *numerator,
-                                       uint32_t *denominator)
-{
-    uint32_t gcdVal;
-
-    gcdVal = CRU_Gcd(rate, rateOut);
-    if (!gcdVal) {
-        return HAL_ERROR;
-    }
-
-    *numerator = rateOut / gcdVal;
-    *denominator = rate / gcdVal;
-
-    if (*numerator < 4) {
-        *numerator *= 4;
-        *denominator *= 4;
-    }
-    if (*numerator > 0xffff || *denominator > 0xffff)
-        return HAL_INVAL;
-
-    return HAL_OK;
-}
-
 /********************* Public Function Definition ****************************/
 
 /** @defgroup CRU_Exported_Functions_Group5 Other Functions
@@ -681,6 +657,38 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
 }
 
 /**
+ * @brief  Get frac div config.
+ * @param  rateOut: clk out rate.
+ * @param  rate: clk src rate.
+ * @param  numerator: the returned numerator.
+ * @param  denominator: the returned denominator.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
+                                    uint32_t *numerator,
+                                    uint32_t *denominator)
+{
+    uint32_t gcdVal;
+
+    gcdVal = CRU_Gcd(rate, rateOut);
+    if (!gcdVal) {
+        return HAL_ERROR;
+    }
+
+    *numerator = rateOut / gcdVal;
+    *denominator = rate / gcdVal;
+
+    if (*numerator < 4) {
+        *numerator *= 4;
+        *denominator *= 4;
+    }
+    if (*numerator > 0xffff || *denominator > 0xffff)
+        return HAL_INVAL;
+
+    return HAL_OK;
+}
+
+/**
  * @brief Set frac clk freq.
  * @param  clockName: CLOCK_Name id.
  * @param  rate: clk set rate
@@ -736,7 +744,7 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         HAL_CRU_ClkSetMux(muxSrc, 0);
         HAL_CRU_ClkSetMux(mux, 0);
     } else if (flag || (pRate > 20 * rate)) {
-        CRU_FracdivGetConfig(rate, pRate, &n, &m);
+        HAL_CRU_FracdivGetConfig(rate, pRate, &n, &m);
         HAL_CRU_ClkSetDiv(divSrc, 2);
         HAL_CRU_ClkSetMux(muxSrc, 0);
         CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;

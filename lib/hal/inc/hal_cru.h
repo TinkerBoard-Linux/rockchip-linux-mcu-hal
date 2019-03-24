@@ -59,6 +59,9 @@ HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue);
 uint32_t HAL_CRU_ClkGetDiv(uint32_t divName);
 HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue);
 uint32_t HAL_CRU_ClkGetMux(uint32_t muxName);
+HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
+                                    uint32_t *numerator,
+                                    uint32_t *denominator);
 uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName);
 HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate);
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName);
