@@ -6,6 +6,10 @@
 #ifndef _HAL_DRIVER_H_
 #define _HAL_DRIVER_H_
 
+#ifdef HAL_AUDIO_MODULE_ENABLED
+#include "hal_audio.h"
+#endif
+
 #if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
 #include "hal_cache.h"
 #endif
@@ -27,6 +31,10 @@
 #include "hal_grf.h"
 #endif
 
+#ifdef HAL_I2S_MODULE_ENABLED
+#include "hal_i2s.h"
+#endif
+
 #ifdef HAL_INTC_MODULE_ENABLED
 #include "hal_intc.h"
 #endif
@@ -37,6 +45,14 @@
 
 #ifdef HAL_NVIC_MODULE_ENABLED
 #include "hal_nvic.h"
+#endif
+
+#ifdef HAL_PCM_MODULE_ENABLED
+#include "hal_pcm.h"
+#endif
+
+#ifdef HAL_PDM_MODULE_ENABLED
+#include "hal_pdm.h"
 #endif
 
 #ifdef HAL_PL330_MODULE_ENABLED
@@ -73,6 +89,10 @@
 
 #ifdef HAL_UART_MODULE_ENABLED
 #include "hal_uart.h"
+#endif
+
+#ifdef HAL_VAD_MODULE_ENABLED
+#include "hal_vad.h"
 #endif
 
 #ifdef HAL_VOP_MODULE_ENABLED
