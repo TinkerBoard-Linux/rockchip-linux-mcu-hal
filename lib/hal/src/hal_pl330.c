@@ -1384,6 +1384,7 @@ uint32_t HAL_PL330_GetRawIrqStatus(PL330 *pl330)
  * @brief PL330 Clear Irq
  *
  * @param pl330: the handle of PL330.
+ * @param irq:   the channel irq.
  *
  * @return HAL_Status
  */
