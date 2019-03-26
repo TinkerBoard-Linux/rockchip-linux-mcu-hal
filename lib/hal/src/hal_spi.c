@@ -719,6 +719,8 @@ HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, ui
 
 /** @} */
 
+/** @} */
+
 #endif
 
 /** @} */
