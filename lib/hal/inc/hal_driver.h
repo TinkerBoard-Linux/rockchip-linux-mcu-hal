@@ -87,6 +87,10 @@
 #include "hal_pm.h"
 #endif
 
+#ifdef HAL_PWR_MODULE_ENABLED
+#include "hal_pwr.h"
+#endif
+
 #ifdef HAL_SDIO_MODULE_ENABLED
 #include "hal_sdio.h"
 #endif
