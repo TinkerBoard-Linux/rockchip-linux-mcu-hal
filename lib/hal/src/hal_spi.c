@@ -148,8 +148,8 @@ HAL_Status HAL_SPI_Init(struct SPI_HANDLE *pSPI, uint32_t base, bool slave)
 }
 
 /**
-  * @brief  De Initialize the SPI peripheral.
-  * @param  hspi: pointer to a SPI_Handle structure that contains
+  * @brief  DeInitialize the SPI peripheral.
+  * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
   * @retval HAL status
   */
@@ -211,6 +211,7 @@ static inline HAL_Status HAL_SPI_SetClock(struct SPI_HANDLE *pSPI, uint16_t div)
   * @brief  Configure the cs signal.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
+  * @param select: cs number select.
   * @param  enable: active or inactive the cs signal.
   * @retval HAL status
   */
