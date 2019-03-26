@@ -802,7 +802,7 @@ HAL_Status HAL_VOP_PolarityInit(struct VOP_REG *pReg,
                   polarity << VOP_DSP_CTRL0_MIPI_DCLK_EN_SHIFT);
         break;
     default:
-        HAL_DBG_ERR("Unknow Connector Type: %d\n", ConnectorType);
+        HAL_DBG_ERR("Unknown Connector Type: %d\n", ConnectorType);
         break;
     }
 
@@ -851,7 +851,7 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
                       OUTPUT_MODE_888);
         break;
     default:
-        HAL_DBG_ERR("Unknow Bus Format: %d\n", BusFormat);
+        HAL_DBG_ERR("Unknown Bus Format: %d\n", BusFormat);
         break;
     }
 

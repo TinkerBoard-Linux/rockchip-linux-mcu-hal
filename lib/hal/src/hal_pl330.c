@@ -1402,7 +1402,7 @@ HAL_Status HAL_PL330_ClearIrq(PL330 *pl330, uint32_t irq)
  *
  * @param chan: the specified channel.
  *
- * @return the size dma transfered.
+ * @return the size dma transferred.
  */
 int HAL_PL330_GetPosition(PL330_CHANNEL *chan)
 {
@@ -1410,7 +1410,7 @@ int HAL_PL330_GetPosition(PL330_CHANNEL *chan)
     PL330 *pl330 = chan->pl330;
     PL330_DESC *desc = &chan->desc;
     struct DMA_REG *reg = (struct DMA_REG *)(pl330->base);
-    int transfered;
+    int transferred;
 
     if (desc->rqcfg.srcInc) {
         val = READ_REG(reg->CHAN_CFG[chan->chanId].SAR);
@@ -1420,9 +1420,9 @@ int HAL_PL330_GetPosition(PL330_CHANNEL *chan)
         addr = desc->px.dstAddr;
     }
 
-    transfered = val - addr;
+    transferred = val - addr;
 
-    return transfered;
+    return transferred;
 }
 
 /** @} */

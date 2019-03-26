@@ -28,7 +28,7 @@
 #ifdef HAL_SDIO_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-#define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_8 (0x2U)
+#define MMC_FIFOTH_DMA_MULTIPLE_TRANSACTION_SIZE_8 (0x2U)
 
 /********************* Private Function Definition ***************************/
 static inline uint32_t MMC_GetWaterlevel(struct HAL_MMC_HOST *host)
@@ -229,7 +229,7 @@ uint32_t HAL_MMC_GetStatus(struct HAL_MMC_HOST *host)
  * @brief  It is for data write.
  * @param  host: private hal host data.
  * @param  buf: data buffer.
- * @param  size: size of data to be writen.
+ * @param  size: size of data to be written.
  * @return HAL_Status.
  */
 HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
@@ -634,7 +634,7 @@ HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host)
     /* Set FIFO */
     reg = READ_REG(pReg->FIFOTH);
     reg = (reg >> MMC_FIFOTH_RX_WMARK_SHIFT) & MMC_FIFOTH_RX_WMARK_MASK;
-    reg = ((MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_8
+    reg = ((MMC_FIFOTH_DMA_MULTIPLE_TRANSACTION_SIZE_8
             << MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT) |
            ((reg / 2) << MMC_FIFOTH_RX_WMARK_SHIFT) |
            ((reg / 2 + 1) << MMC_FIFOTH_TX_WMARK_SHIFT));

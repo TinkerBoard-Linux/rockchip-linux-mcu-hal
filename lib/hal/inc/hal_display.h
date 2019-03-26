@@ -22,9 +22,9 @@
 #define BIT(nr) (1UL << (nr))
 
 /* RK display connector type */
-#define RK_DISPLAY_CONNECTOR_UNKNOW 0
-#define RK_DISPLAY_CONNECTOR_RGB    1
-#define RK_DISPLAY_CONNECTOR_DSI    2
+#define RK_DISPLAY_CONNECTOR_UNKNOWN 0
+#define RK_DISPLAY_CONNECTOR_RGB     1
+#define RK_DISPLAY_CONNECTOR_DSI     2
 
 /* video mode flag default polarity is positive */
 #define VIDEO_MODE_FLAG_NHSYNC    BIT(0)

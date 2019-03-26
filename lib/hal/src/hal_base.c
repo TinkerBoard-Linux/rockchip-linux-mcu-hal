@@ -22,8 +22,8 @@
 
  (#) Resgister HAL_SysTick_Handler.
  (#) Initialize the HAL_BASE(HAL_Init):
-    (##) Enable default intterrupt.
-    (##) Define intterrupt priority group:
+    (##) Enable default interrupt.
+    (##) Define interrupt priority group:
     (##) Initial systick
 
  @endverbatim

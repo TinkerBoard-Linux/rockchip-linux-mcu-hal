@@ -161,7 +161,7 @@ typedef enum {
  */
 struct SPI_CONFIG {
     uint32_t opMode;           /* Specifies the SPI operating mode, master or slave. */
-    uint32_t xfmMode;          /* Specifies the SPI bidirectional mode state, tx only, rx ony or trx mode. */
+    uint32_t xfmMode;          /* Specifies the SPI bidirectional mode state, tx only, rx only or trx mode. */
     uint32_t nBytes;           /* Specifies the SPI data size. */
     uint32_t clkPolarity;      /* Specifies the serial clock steady state. */
     uint32_t clkPhase;         /* Specifies the clock active edge for the bit capture. */

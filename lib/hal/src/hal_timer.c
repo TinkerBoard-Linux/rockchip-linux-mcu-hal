@@ -26,8 +26,8 @@
     (##) Mask interrupt.
     (##) Set TIMER mode.
  (#) Set TIMER count(HAL_TIMER_SetCount).
- (#) Start ther TIMER(HAL_TIMER_Start, HAL_TIMER_Start_IT).
- (#) Stop TIMER(HAL_TIMER_Stop, HAL_TIMER_Stop_IT).
+ (#) Start the TIMER(HAL_TIMER_Start, HAL_TIMER_Start_IT).
+ (#) Stop the TIMER(HAL_TIMER_Stop, HAL_TIMER_Stop_IT).
 
  @endverbatim
  @} */
@@ -189,7 +189,7 @@ uint64_t HAL_TIMER_GetCount(struct TIMER_REG *pReg)
 }
 
 /**
- * @brief  Clear TIMER intterrupt status.
+ * @brief  Clear TIMER interrupt status.
  * @param  pReg: Choose TIMER.
  * @return HAL_Status: HAL_OK.
  */

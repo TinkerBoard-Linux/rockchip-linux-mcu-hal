@@ -232,7 +232,7 @@ struct VAD_BUF {
 struct HAL_VAD_DEV {
     uint32_t base; /**< vad controller physical base address */
     uint32_t ramStartAddr; /**< The physical ring buffer start address, double word align */
-    uint32_t ramEndAddr; /**< The physical ring buffer end address, doulbe word align */
+    uint32_t ramEndAddr; /**< The physical ring buffer end address, double word align */
     uint32_t audioSrc; /**< Src 0: from i2s; src 1: from pdm */
     uint32_t audioSrcAddr; /**< Audio src controller's FIFO addr */
     uint32_t audioDetChnl; /**< Indicates which channel data used for vad detection */

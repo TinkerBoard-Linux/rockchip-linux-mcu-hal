@@ -113,7 +113,7 @@ static int SOC_SuspendEnter(uint32_t flag)
  */
 
 /**
- * @brief  it is for saveing cpu's register.
+ * @brief  it is for saving cpu's register.
  * @param  ptr: base addr for saving
  * @param  ptrsz: size of the mem for saving
  * @param  sp: the system stack needed be saved
