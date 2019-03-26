@@ -410,7 +410,8 @@ uint8_t HAL_VOP_CommitPrepare(struct VOP_REG *pReg)
  *  @{
  */
 /**
- * @brief  Set plane state.
+ * @brief  Load VOP bpp format lut.
+ * @param  pReg: VOP reg base.
  * @param  winId: VOP win id.
  * @param  lut: look up table.
  * @param  lut_size: lut size.
@@ -860,6 +861,7 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
 /**
  * @brief  Config VOP NOC QOS value.
  * @param  pReg: VOP reg base.
+ * @param  nocQosValue: NOC qos value.
  * @return HAL_Status.
  */
 HAL_Status HAL_VOP_NocQosInit(struct VOP_REG *pReg, uint32_t nocQosValue)
@@ -877,8 +879,8 @@ HAL_Status HAL_VOP_NocQosInit(struct VOP_REG *pReg, uint32_t nocQosValue)
 /**
  * @brief  Config VOP NOC hurry threshold value.
  * @param  pReg: VOP reg base.
- * @param  HurryValue: hurry value.
- * @param  HurryThreshold: hurry threshold.
+ * @param  hurryValue: hurry value.
+ * @param  hurryThreshold: hurry threshold.
  * @return HAL_Status.
  */
 HAL_Status HAL_VOP_NocHurryInit(struct VOP_REG *pReg, uint32_t hurryValue,
@@ -901,7 +903,7 @@ HAL_Status HAL_VOP_NocHurryInit(struct VOP_REG *pReg, uint32_t hurryValue,
 /**
  * @brief  Config VOP AXI outstand number.
  * @param  pReg: VOP reg base.
- * @param  OutStandNum: AXI outstand number.
+ * @param  outStandNum: AXI outstand number.
  * @return HAL_Status.
  */
 HAL_Status HAL_VOP_AxiOutstandInit(struct VOP_REG *pReg, uint32_t outStandNum)
@@ -958,8 +960,8 @@ HAL_Status HAL_VOP_DisableFsIrq(struct VOP_REG *pReg)
 /**
  * @brief  Enable VOP line flag interrupt.
  * @param  pReg: VOP reg base.
- * @param  LineFlag0: Line flag0 position.
- * @param  LineFlag1: Line flag1 position.
+ * @param  lineFlag0: Line flag0 position.
+ * @param  lineFlag1: Line flag1 position.
  * @return HAL_Status.
  */
 HAL_Status HAL_VOP_EnableLineIrq(struct VOP_REG *pReg,
