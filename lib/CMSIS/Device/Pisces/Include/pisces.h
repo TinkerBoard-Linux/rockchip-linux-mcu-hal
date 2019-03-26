@@ -337,7 +337,7 @@ struct PMU_REG {
     __IO uint32_t DSPTCM_CON[2];                      /* Address Offset: 0x00E8 */
     __IO uint32_t SYS_REG[4];                         /* Address Offset: 0x00F0 */
     __IO uint32_t SHRM_CON1;                          /* Address Offset: 0x0100 */
-    __IO uint32_t DSPTCM_CON[2];                      /* Address Offset: 0x0104 */
+    __IO uint32_t DSPTCM_CON1[2];                      /* Address Offset: 0x0104 */
 };
 /* SHAREMEM Register Structure Define */
 struct SHAREMEM_REG {
