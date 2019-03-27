@@ -22,8 +22,6 @@ typedef enum {
     DMA_REQ_PDM0 = 10,
     DMA_REQ_SPI1_TX = 11,
     DMA_REQ_SPI1_RX = 12,
-    DMA_REQ_SPI2_TX = 13,
-    DMA_REQ_SPI2_RX = 14,
 } DMA_REQ_Type;
 
 /* ================================================================================ */
@@ -754,7 +752,6 @@ struct VOP_REG {
 #define I2C2_BASE           0x40B20000U /* I2C2 base address */
 #define SPI2APB_BASE        0x40C00000U /* SPI2APB base address */
 #define SPI1_BASE           0x40C10000U /* SPI1 base address */
-#define SPI2_BASE           0x40c20000U /* SPI2 base address */
 #define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
 #define GPIO1_BASE          0x40D10000U /* GPIO1 base address */
 #define PDM0_BASE           0x41000000U /* PDM0 base address */
@@ -792,7 +789,6 @@ struct VOP_REG {
 #define I2C2                ((struct I2C_REG *) I2C2_BASE)
 #define SPI2APB             ((struct SPI2APB_REG *) SPI2APB_BASE)
 #define SPI1                ((struct SPI_REG *) SPI1_BASE)
-#define SPI2                ((struct SPI_REG *) SPI2_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define PDM0                 ((struct PDM_REG *) PDM0_BASE)
@@ -816,7 +812,7 @@ struct VOP_REG {
 #define IS_MBOX_INSTANCE(instance) (((instance) == MBOX0) || ((instance) == MBOX1) || ((instance) == MBOX2))
 #define IS_TIMER_INSTANCE(instance) ((instance) == TIMER0 || (instance) == TIMER1 || (instance) == TIMER2 || (instance) == TIMER3 || (instance) == TIMER4 || (instance) == TIMER5)
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2))
-#define IS_SPI_INSTANCE(instance) (((instance) == SPI1) || ((instance) == SPI2))
+#define IS_SPI_INSTANCE(instance) ((instance) == SPI1)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
 #define IS_I2S_INSTANCE(instance) ((instance) == I2S0)
 /****************************************************************************************/
@@ -1763,10 +1759,6 @@ struct VOP_REG {
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI1TX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI1TX_SHIFT) /* 0x00000800 */
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI1RX_SHIFT (12U)
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI1RX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI1RX_SHIFT) /* 0x00001000 */
-#define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI2TX_SHIFT (13U)
-#define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI2TX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI2TX_SHIFT) /* 0x00002000 */
-#define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI2RX_SHIFT (14U)
-#define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI2RX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_SPI2RX_SHIFT) /* 0x00004000 */
 /* DMAC_CON5 */
 #define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART0_TX_SHIFT       (0U)
 #define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART0_TX_MASK        (0x3U << GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART0_TX_SHIFT)       /* 0x00000003 */
@@ -1787,10 +1779,6 @@ struct VOP_REG {
 #define GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI1_TX_MASK         (0x3U << GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI1_TX_SHIFT)        /* 0x000000C0 */
 #define GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI1_RX_SHIFT        (8U)
 #define GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI1_RX_MASK         (0x3U << GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI1_RX_SHIFT)        /* 0x00000300 */
-#define GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI2_TX_SHIFT        (10U)
-#define GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI2_TX_MASK         (0x3U << GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI2_TX_SHIFT)        /* 0x00000C00 */
-#define GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI2_RX_SHIFT        (12U)
-#define GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI2_RX_MASK         (0x3U << GRF_DMAC_CON6_GRF_DRTYPE_DMAC_SPI2_RX_SHIFT)        /* 0x00003000 */
 /* FAST_BOOT_EN */
 #define GRF_FAST_BOOT_EN_GRF_CON_FAST_BOOT_EN_SHIFT        (0U)
 #define GRF_FAST_BOOT_EN_GRF_CON_FAST_BOOT_EN_MASK         (0x1U << GRF_FAST_BOOT_EN_GRF_CON_FAST_BOOT_EN_SHIFT)        /* 0x00000001 */
@@ -5466,7 +5454,6 @@ struct VOP_REG {
 #define SRST_A_LOGIC_NIU    145
 #define SRST_P_SPI2APB_NIU  148
 #define SRST_P_SPI1         150
-#define SRST_P_SPI2         151
 #define SRST_P_SPI2APB      152
 #define SRST_P_MAILBOX0     153
 #define SRST_P_MAILBOX1     154
@@ -5483,7 +5470,6 @@ struct VOP_REG {
 #define SRST_H_CM4_CORE      174
 /********Name=SOFTRST_CON13,Offset=0x234********/
 #define SRST_SPI1       176
-#define SRST_SPI2       177
 
 /********Name=CLKGATE_CON00,Offset=0x180********/
 #define ACLK_DSP_GATE     0
@@ -5583,7 +5569,6 @@ struct VOP_REG {
 #define PCLK_LOGIC_GATE        163
 #define PCLK_SPI2APB_NIU_GATE  164
 #define PCLK_SPI1_GATE         166
-#define PCLK_SPI2_GATE         167
 #define PCLK_SPI2APB_GATE      168
 #define PCLK_MAILBOX0_GATE     169
 #define PCLK_MAILBOX1_GATE     170
@@ -5601,7 +5586,6 @@ struct VOP_REG {
 #define HCLK_CM4_CORE_GATE      190
 /********Name=CLKGATE_CON13,Offset=0x1B4********/
 #define CLK_SPI1_GATE          192
-#define CLK_SPI2_GATE          193
 
 /********Name=CLKSEL_CON00,Offset=0x80********/
 #define ACLK_DSP_S_DIV 0x06000000
@@ -5673,7 +5657,6 @@ struct VOP_REG {
 #define HCLK_M4_DIV  0x0500001E
 #define CLK_SPI1_DIV 0x0508001E
 /********Name=CLKSEL_CON34,Offset=0x108********/
-#define CLK_SPI2_DIV    0x0508001F
 /********Name=CLKSEL_CON35,Offset=0x10C********/
 /********Name=CLKSEL_CON36,Offset=0x110********/
 /********Name=CLKSEL_CON37,Offset=0x114********/
@@ -5804,7 +5787,6 @@ typedef enum CLOCK_Name {
     CLK_MEMSUBSYS = CLK(CLK_MEMSUBSYS_SEL, 0),
     HCLK_M4 = CLK(HCLK_M4_SEL, HCLK_M4_DIV),
     CLK_SPI1 = CLK(0, CLK_SPI1_DIV),
-    CLK_SPI2 = CLK(0, CLK_SPI2_DIV),
     HCLK_LOGIC = CLK(HCLK_LOGIC_SEL, HCLK_LOGIC_DIV),
     PCLK_LOGIC = CLK(PCLK_LOGIC_SEL, PCLK_LOGIC_DIV),
     ACLK_LOGIC = CLK(ACLK_LOGIC_SEL, ACLK_LOGIC_DIV),
