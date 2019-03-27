@@ -59,11 +59,11 @@ HAL_CPU_SuspendEnter:
     mov r2, r5
     ldr r3, = sleepSaveSp
     bl HAL_CPU_SuspendSave
+    adr lr, CpuSuspendAbort
     ldmfd sp !, {r0, pc}
-cpu_SuspendAbort:
+CpuSuspendAbort:
     ldmia sp !, {r1 - r2}
-    teq r0, #0
-    moveq r0, #1
+    mov r0, #1
     mov sp, r2
     ldmfd sp !, {r4 - r12, pc}
 .size HAL_CPU_SuspendEnter, .- HAL_CPU_SuspendEnter
