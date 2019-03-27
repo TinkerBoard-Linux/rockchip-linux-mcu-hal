@@ -1303,8 +1303,6 @@ struct VOP_REG {
 #define GRF_SOC_CON4_GRF_CON_AUDIO_PRO_APP_PDM_MASK        (0x1U << GRF_SOC_CON4_GRF_CON_AUDIO_PRO_APP_PDM_SHIFT)       /* 0x00000100 */
 #define GRF_SOC_CON4_GRF_CON_BT_PCM_I2S0_SHIFT             (11U)
 #define GRF_SOC_CON4_GRF_CON_BT_PCM_I2S0_MASK              (0x1U << GRF_SOC_CON4_GRF_CON_BT_PCM_I2S0_SHIFT)             /* 0x00000800 */
-#define GRF_SOC_CON4_GRF_CON_USB2_SCALEDOWN_MODE_SHIFT     (14U)
-#define GRF_SOC_CON4_GRF_CON_USB2_SCALEDOWN_MODE_MASK      (0x3U << GRF_SOC_CON4_GRF_CON_USB2_SCALEDOWN_MODE_SHIFT)     /* 0x0000C000 */
 /* SOC_CON5 */
 #define GRF_SOC_CON5_GRF_CON_I2CMST0_IOMUX_SEL_SHIFT       (0U)
 #define GRF_SOC_CON5_GRF_CON_I2CMST0_IOMUX_SEL_MASK        (0x3U << GRF_SOC_CON5_GRF_CON_I2CMST0_IOMUX_SEL_SHIFT)       /* 0x00000003 */
@@ -1736,10 +1734,6 @@ struct VOP_REG {
 #define GRF_MEM_CON4_CIF_SP_EMAW_SHIFT                     (10U)
 #define GRF_MEM_CON4_CIF_SP_EMAW_MASK                      (0x3U << GRF_MEM_CON4_CIF_SP_EMAW_SHIFT)                     /* 0x00000C00 */
 /* MEM_CON5 */
-#define GRF_MEM_CON5_USB2_SP_EMA_SHIFT                     (0U)
-#define GRF_MEM_CON5_USB2_SP_EMA_MASK                      (0x7U << GRF_MEM_CON5_USB2_SP_EMA_SHIFT)                     /* 0x00000007 */
-#define GRF_MEM_CON5_USB2_SP_EMAW_SHIFT                    (3U)
-#define GRF_MEM_CON5_USB2_SP_EMAW_MASK                     (0x3U << GRF_MEM_CON5_USB2_SP_EMAW_SHIFT)                    /* 0x00000018 */
 #define GRF_MEM_CON5_VOP_DPRA_EMA_SHIFT                    (5U)
 #define GRF_MEM_CON5_VOP_DPRA_EMA_MASK                     (0x7U << GRF_MEM_CON5_VOP_DPRA_EMA_SHIFT)                    /* 0x000000E0 */
 #define GRF_MEM_CON5_VOP_DPRA_EMAW_SHIFT                   (8U)
@@ -5492,8 +5486,6 @@ struct VOP_REG {
 #define SRST_P_CIF          158
 #define SRST_P_LOGIC_NIU    159
 /********Name=SOFTRST_CON12,Offset=0x230********/
-#define SRST_H_USB2CTRL      161
-#define SRST_H_USB2_NIU      162
 #define SRST_GPIO_DBG0       163
 #define SRST_H_VOP           164
 #define SRST_H_CIF           166
@@ -5616,8 +5608,6 @@ struct VOP_REG {
 #define PCLK_LOGIC_NIU_GATE    175
 /********Name=CLKGATE_CON12,Offset=0x1B0********/
 #define HCLK_M4_GATE            176
-#define HCLK_USB2CTRL_GATE      177
-#define HCLK_USB2_NIU_GATE      178
 #define HCLK_BOOTROM_GATE       179
 #define HCLK_VOP_GATE           180
 #define HCLK_CIF_GATE           182
