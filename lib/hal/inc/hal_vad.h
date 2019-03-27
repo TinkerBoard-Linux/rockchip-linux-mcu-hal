@@ -46,11 +46,12 @@
 #define CFG_ACODE_AFTER_DET_EN       HAL_BIT(22)
 #define VAD_MODE_SHIFT               20
 #define VAD_MODE_MASK                (0x3 << VAD_MODE_SHIFT)
-#define STORE_DATA_VAD_DET_ONLY      0
-#define STORE_DATA_ALL               (1 << VAD_MODE_SHIFT)
-#define NO_STORE_DATA                (2 << VAD_MODE_SHIFT)
-#define ACODE_CFG_REG_NUM_SHIFT      15
-#define ACODE_CFG_REG_NUM_MASK       (0x1f << ACODE_CFG_REG_NUM_SHIFT)
+#define VAD_MODE(x) ((x) << VAD_MODE_SHIFT)
+#define STORE_DATA_VAD_DET_ONLY 0
+#define STORE_DATA_ALL          (1 << VAD_MODE_SHIFT)
+#define NO_STORE_DATA           (2 << VAD_MODE_SHIFT)
+#define ACODE_CFG_REG_NUM_SHIFT 15
+#define ACODE_CFG_REG_NUM_MASK  (0x1f << ACODE_CFG_REG_NUM_SHIFT)
 #define ACODE_CFG_REG_NUM(x) ((x - 1) << ACODE_CFG_REG_NUM_SHIFT)
 #define SRC_ADDR_MODE_SHIFT  14
 #define SRC_ADDR_MODE_MASK   HAL_BIT(14)
@@ -71,33 +72,29 @@
 #define SRC_BURST_INCR16    (7 << SRC_BURST_SHIFT)
 #define AUDIO_SRC_SEL_SHIFT 1
 #define AUDIO_SRC_SEL_MASK  (0x7 << AUDIO_SRC_SEL_SHIFT)
-#define AUDIO_SRC_SEL_I2S0  0
-#define AUDIO_SRC_SEL_I2S1  (1 << AUDIO_SRC_SEL_MASK)
-#define AUDIO_SRC_SEL_I2S2  (2 << AUDIO_SRC_SEL_MASK)
-#define AUDIO_SRC_SEL_I2S3  (3 << AUDIO_SRC_SEL_MASK)
-#define AUDIO_SRC_SEL_PDM   (4 << AUDIO_SRC_SEL_MASK)
-#define VAD_EN_SHIFT        0
-#define VAD_EN_MASK         HAL_BIT(0)
-#define VAD_EN              HAL_BIT(0)
-#define VAD_DISABLE         0
-#define VAD_IS_ADDR         4
-#define VAD_ID_ADDR         8
-#define VAD_OD_ADDR0        0x0c
-#define VAD_OD_ADDR1        0x10
-#define VAD_OD_ADDR2        0x14
-#define VAD_OD_ADDR3        0x18
-#define VAD_OD_ADDR4        0x1c
-#define VAD_OD_ADDR5        0x20
-#define VAD_OD_ADDR6        0x24
-#define VAD_OD_ADDR7        0x28
-#define VAD_D_DATA0         0x2c
-#define VAD_D_DATA1         0x30
-#define VAD_D_DATA2         0x34
-#define VAD_D_DATA3         0x38
-#define VAD_D_DATA4         0x3c
-#define VAD_D_DATA5         0x40
-#define VAD_D_DATA6         0x44
-#define VAD_D_DATA7         0x48
+#define AUDIO_SRC_SEL(x) ((x) << AUDIO_SRC_SEL_SHIFT)
+#define VAD_EN_SHIFT 0
+#define VAD_EN_MASK  HAL_BIT(0)
+#define VAD_EN       HAL_BIT(0)
+#define VAD_DISABLE  0
+#define VAD_IS_ADDR  4
+#define VAD_ID_ADDR  8
+#define VAD_OD_ADDR0 0x0c
+#define VAD_OD_ADDR1 0x10
+#define VAD_OD_ADDR2 0x14
+#define VAD_OD_ADDR3 0x18
+#define VAD_OD_ADDR4 0x1c
+#define VAD_OD_ADDR5 0x20
+#define VAD_OD_ADDR6 0x24
+#define VAD_OD_ADDR7 0x28
+#define VAD_D_DATA0  0x2c
+#define VAD_D_DATA1  0x30
+#define VAD_D_DATA2  0x34
+#define VAD_D_DATA3  0x38
+#define VAD_D_DATA4  0x3c
+#define VAD_D_DATA5  0x40
+#define VAD_D_DATA6  0x44
+#define VAD_D_DATA7  0x48
 
 #define VAD_TIMEOUT            0x4c
 #define WORK_TIMEOUT_EN_MASK   HAL_BIT(31)

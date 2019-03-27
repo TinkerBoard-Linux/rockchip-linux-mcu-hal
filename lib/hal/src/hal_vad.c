@@ -41,7 +41,7 @@ struct AUDIO_SRC_ADDR_MAP {
 
 static const struct AUDIO_SRC_ADDR_MAP addrMaps[] = {
     { 0, 0x41010800 }, /* i2s */
-    { 4, 0x41000400 }, /* pdm */
+    { 2, 0x41000400 }, /* pdm */
 };
 
 /********************* Private Function Definition ***************************/
@@ -236,8 +236,8 @@ HAL_Status HAL_VAD_Init(struct AUDIO_DAI *dai, struct HAL_VAD_DEV *vad)
     vad->vbuf.begin = vad->ramStartAddr;
     WRITE_REG(reg->VS_ADDR, vad->audioSrcAddr);
     val = VAD_DET_CHNL(vad->audioDetChnl);
-    val |= vad->audioSrc;
-    val |= vad->mode << VAD_MODE_SHIFT;
+    val |= AUDIO_SRC_SEL(vad->audioSrc);
+    val |= VAD_MODE(vad->mode);
     val |= SRC_ADDR_MODE_INC | SRC_BURST_INCR;
     mask = VAD_DET_CHNL_MASK | AUDIO_SRC_SEL_MASK |
            VAD_MODE_MASK | SRC_ADDR_MODE_MASK | SRC_BURST_MASK;
