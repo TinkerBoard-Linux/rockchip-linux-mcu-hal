@@ -33,7 +33,7 @@ void SystemInit(void)
 #ifdef __vector_remap__
     uint32_t *ramVector = (uint32_t *)(__vector_remap__);
 
-    for(uint32_t i=0; i<16; i++) {
+    for (uint32_t i = 0; i < 16; i++) {
         ramVector[i] = __Vectors[i];
     }
     SCB->VTOR = (uint32_t)ramVector;
@@ -44,7 +44,8 @@ void SystemInit(void)
 
     /* config icache: mpu disable, stb disable, write through, hot buffer enable */
     ICACHE->CACHE_CTRL |=
-        (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK) &
+        (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK |
+         ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK) &
         (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
 
     do {
@@ -56,8 +57,9 @@ void SystemInit(void)
 
     /* stb enable, stb_entry=7, stb_timeout enable, write back */
     DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK |
-                           (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
-                           DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK;
+                          (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
+                          DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK |
+                          DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
     DCACHE->STB_TIMEOUT_CTRL = 1;
 
     do {
