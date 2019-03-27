@@ -1723,16 +1723,6 @@ struct VOP_REG {
 #define GRF_MEM_CON3_DSPCACHE_MEM_EMAW_SHIFT               (14U)
 #define GRF_MEM_CON3_DSPCACHE_MEM_EMAW_MASK                (0x3U << GRF_MEM_CON3_DSPCACHE_MEM_EMAW_SHIFT)               /* 0x0000C000 */
 /* MEM_CON4 */
-#define GRF_MEM_CON4_CIF_DP_EMAA_SHIFT                     (0U)
-#define GRF_MEM_CON4_CIF_DP_EMAA_MASK                      (0x7U << GRF_MEM_CON4_CIF_DP_EMAA_SHIFT)                     /* 0x00000007 */
-#define GRF_MEM_CON4_CIF_DP_EMASA_SHIFT                    (3U)
-#define GRF_MEM_CON4_CIF_DP_EMASA_MASK                     (0x1U << GRF_MEM_CON4_CIF_DP_EMASA_SHIFT)                    /* 0x00000008 */
-#define GRF_MEM_CON4_CIF_DP_EMAB_SHIFT                     (4U)
-#define GRF_MEM_CON4_CIF_DP_EMAB_MASK                      (0x7U << GRF_MEM_CON4_CIF_DP_EMAB_SHIFT)                     /* 0x00000070 */
-#define GRF_MEM_CON4_CIF_SP_EMA_SHIFT                      (7U)
-#define GRF_MEM_CON4_CIF_SP_EMA_MASK                       (0x7U << GRF_MEM_CON4_CIF_SP_EMA_SHIFT)                      /* 0x00000380 */
-#define GRF_MEM_CON4_CIF_SP_EMAW_SHIFT                     (10U)
-#define GRF_MEM_CON4_CIF_SP_EMAW_MASK                      (0x3U << GRF_MEM_CON4_CIF_SP_EMAW_SHIFT)                     /* 0x00000C00 */
 /* MEM_CON5 */
 #define GRF_MEM_CON5_VOP_DPRA_EMA_SHIFT                    (5U)
 #define GRF_MEM_CON5_VOP_DPRA_EMA_MASK                     (0x7U << GRF_MEM_CON5_VOP_DPRA_EMA_SHIFT)                    /* 0x000000E0 */
@@ -5483,12 +5473,10 @@ struct VOP_REG {
 #define SRST_P_MAILBOX2     155
 #define SRST_P_WDT0         156
 #define SRST_P_MIPIDSI_HOST 157
-#define SRST_P_CIF          158
 #define SRST_P_LOGIC_NIU    159
 /********Name=SOFTRST_CON12,Offset=0x230********/
 #define SRST_GPIO_DBG0       163
 #define SRST_H_VOP           164
-#define SRST_H_CIF           166
 #define SRST_H_LOGIC_NIU     167
 #define SRST_H_LOGIC_AHB_ARB 171
 #define SRST_H_CM4_NIU       173
@@ -5496,8 +5484,6 @@ struct VOP_REG {
 /********Name=SOFTRST_CON13,Offset=0x234********/
 #define SRST_SPI1       176
 #define SRST_SPI2       177
-#define SRST_A_CIF_NIU  181
-#define SRST_A_CIF      191
 
 /********Name=CLKGATE_CON00,Offset=0x180********/
 #define ACLK_DSP_GATE     0
@@ -5604,23 +5590,18 @@ struct VOP_REG {
 #define PCLK_MAILBOX2_GATE     171
 #define PCLK_WDT0_GATE         172
 #define PCLK_MIPIDSI_HOST_GATE 173
-#define PCLK_CIF_GATE          174
 #define PCLK_LOGIC_NIU_GATE    175
 /********Name=CLKGATE_CON12,Offset=0x1B0********/
 #define HCLK_M4_GATE            176
 #define HCLK_BOOTROM_GATE       179
 #define HCLK_VOP_GATE           180
-#define HCLK_CIF_GATE           182
 #define HCLK_LOGIC_NIU_GATE     183
 #define HCLK_LOGIC_AHB_ARB_GATE 187
 #define HCLK_CM4_NIU_GATE       189
 #define HCLK_CM4_CORE_GATE      190
-#define CLK_CIFOUT_GATE         191
 /********Name=CLKGATE_CON13,Offset=0x1B4********/
 #define CLK_SPI1_GATE          192
 #define CLK_SPI2_GATE          193
-#define ACLK_CIF_NIU_GATE      197
-#define ACLK_CIF_GATE          207
 
 /********Name=CLKSEL_CON00,Offset=0x80********/
 #define ACLK_DSP_S_DIV 0x06000000
@@ -5703,7 +5684,6 @@ struct VOP_REG {
 #define PCLK_LOGIC_DIV 0x05000025
 #define ACLK_LOGIC_DIV 0x05080025
 /********Name=CLKSEL_CON41,Offset=0x124********/
-#define CLK_CIFOUT_DIV 0x05000026
 
 /********Name=CLKSEL_CON00,Offset=0x80********/
 #define ACLK_DSP_S_SEL 0x02060000
@@ -5775,7 +5755,6 @@ struct VOP_REG {
 #define PCLK_LOGIC_SEL 0x01070025
 #define ACLK_LOGIC_SEL 0x010F0025
 /********Name=CLKSEL_CON41,Offset=0x124********/
-#define CLK_CIFOUT_SEL 0x02060026
 
 #define CLK(mux, div) \
     ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
@@ -5829,7 +5808,6 @@ typedef enum CLOCK_Name {
     HCLK_LOGIC = CLK(HCLK_LOGIC_SEL, HCLK_LOGIC_DIV),
     PCLK_LOGIC = CLK(PCLK_LOGIC_SEL, PCLK_LOGIC_DIV),
     ACLK_LOGIC = CLK(ACLK_LOGIC_SEL, ACLK_LOGIC_DIV),
-    CLK_CIFOUT = CLK(CLK_CIFOUT_SEL, CLK_CIFOUT_DIV),
 } eCLOCK_Name;
 #ifdef __cplusplus
 }
