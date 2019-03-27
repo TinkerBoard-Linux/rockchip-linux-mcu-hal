@@ -362,7 +362,7 @@
             <uC99>0</uC99>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--c99</MiscControls>
+              <MiscControls>--c99 --gnu</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Include;..\..\..\lib\CMSIS\Device\Pisces\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test;..\..\..\test\coremark;..\..\..\test\coremark\barebones</IncludePath>
@@ -474,16 +474,6 @@
               <FilePath>..\..\..\lib\hal\src\hal_debug.c</FilePath>
             </File>
             <File>
-              <FileName>hal_sfc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\lib\hal\src\hal_sfc.c</FilePath>
-            </File>
-            <File>
-              <FileName>hal_snor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\lib\hal\src\hal_snor.c</FilePath>
-            </File>
-            <File>
               <FileName>hal_cru.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\lib\hal\src\hal_cru.c</FilePath>
@@ -512,11 +502,6 @@
               <FileName>hal_pm.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\lib\hal\src\hal_pm.c</FilePath>
-            </File>
-            <File>
-              <FileName>hal_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\lib\hal\src\hal_sdio.c</FilePath>
             </File>
             <File>
               <FileName>hal_vop.c</FileName>
@@ -567,6 +552,21 @@
               <FileName>test_pl330.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\test\hal\test_pl330.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_cru.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\hal\test_cru.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_leagacy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\hal\test_leagacy.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_pd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\test\hal\test_pd.c</FilePath>
             </File>
           </Files>
         </Group>
