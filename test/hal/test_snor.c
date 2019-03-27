@@ -9,9 +9,7 @@
 
 #ifdef HAL_SNOR_MODULE_ENABLED
 
-#ifdef RKMCU_PISCES
 #define XIP_RAM_BASE 0x60000000
-#endif
 
 struct cmdSet {
     char name[6];
