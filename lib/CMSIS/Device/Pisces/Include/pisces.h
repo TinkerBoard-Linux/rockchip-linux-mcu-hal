@@ -69,7 +69,6 @@ typedef enum
     SPISLV0_IRQn                = 25,     /* SPI Slave 0                                                */
     SPIMST1_IRQn                = 26,     /* SPI Master 1                                              */
     SFC_IRQn                    = 27,     /* SFC                                                           */
-    SDIO_IRQn                   = 28,     /* SDIO                                                         */
     GPIO0_IRQn                  = 29,     /* GPIO 0                                                       */
     GPIO1_IRQn                  = 30,     /* GPIO 1                                                       */
     I2S0_IRQn                   = 32,     /* I2S 0                                                          */
@@ -189,8 +188,6 @@ typedef struct CRU_REG {
     __IO uint32_t GLB_SRST_SND_VALUE;
     __IO uint32_t CRU_GLB_RST_CON;
     __IO uint32_t RESERVED7[3];
-    __IO uint32_t CRU_SDIO_CON0;
-    __IO uint32_t CRU_SDIO_CON1;
 } CRU_REG_t;
 /* GRF Register Structure Define */
 struct GRF_REG {
@@ -612,57 +609,6 @@ struct SFC_REG {
     __O  uint32_t ADDR;                               /* Address Offset: 0x0104 */
     __IO uint32_t DATA;                               /* Address Offset: 0x0108 */
 };
-/* MMC Register Structure Define */
-struct MMC_REG {
-    __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
-    __IO uint32_t PWREN;                              /* Address Offset: 0x0004 */
-    __IO uint32_t CLKDIV;                             /* Address Offset: 0x0008 */
-    __IO uint32_t CLKSRC;                             /* Address Offset: 0x000C */
-    __IO uint32_t CLKENA;                             /* Address Offset: 0x0010 */
-    __IO uint32_t TMOUT;                              /* Address Offset: 0x0014 */
-    __IO uint32_t CTYPE;                              /* Address Offset: 0x0018 */
-    __IO uint32_t BLKSIZ;                             /* Address Offset: 0x001C */
-    __IO uint32_t BYTCNT;                             /* Address Offset: 0x0020 */
-    __IO uint32_t INTMASK;                            /* Address Offset: 0x0024 */
-    __IO uint32_t CMDARG;                             /* Address Offset: 0x0028 */
-    __IO uint32_t CMD;                                /* Address Offset: 0x002C */
-    __I  uint32_t RESP0;                              /* Address Offset: 0x0030 */
-    __I  uint32_t RESP1;                              /* Address Offset: 0x0034 */
-    __I  uint32_t RESP2;                              /* Address Offset: 0x0038 */
-    __I  uint32_t RESP3;                              /* Address Offset: 0x003C */
-    __IO uint32_t MINTSTS;                            /* Address Offset: 0x0040 */
-    __IO uint32_t RINTSTS;                            /* Address Offset: 0x0044 */
-    __I  uint32_t STATUS;                             /* Address Offset: 0x0048 */
-    __IO uint32_t FIFOTH;                             /* Address Offset: 0x004C */
-    __I  uint32_t CDETECT;                            /* Address Offset: 0x0050 */
-    __IO uint32_t WRTPRT;                             /* Address Offset: 0x0054 */
-         uint32_t RESERVED0;                          /* Address Offset: 0x0058 */
-    __I  uint32_t TCBCNT;                             /* Address Offset: 0x005C */
-    __I  uint32_t TBBCNT;                             /* Address Offset: 0x0060 */
-    __IO uint32_t DEBNCE;                             /* Address Offset: 0x0064 */
-    __IO uint32_t USRID;                              /* Address Offset: 0x0068 */
-    __I  uint32_t VERID;                              /* Address Offset: 0x006C */
-    __I  uint32_t HCON;                               /* Address Offset: 0x0070 */
-    __IO uint32_t UHSREG;                             /* Address Offset: 0x0074 */
-    __IO uint32_t RSTN;                               /* Address Offset: 0x0078 */
-         uint32_t RESERVED1;                          /* Address Offset: 0x007C */
-    __IO uint32_t BMOD;                               /* Address Offset: 0x0080 */
-    __O  uint32_t PLDMND;                             /* Address Offset: 0x0084 */
-    __IO uint32_t DBADDR;                             /* Address Offset: 0x0088 */
-    __IO uint32_t IDSTS;                              /* Address Offset: 0x008C */
-    __IO uint32_t IDINTEN;                            /* Address Offset: 0x0090 */
-    __IO uint32_t DSCADDR;                            /* Address Offset: 0x0094 */
-    __IO uint32_t BUFADDR;                            /* Address Offset: 0x0098 */
-         uint32_t RESERVED2[25];                      /* Address Offset: 0x009C */
-    __IO uint32_t CARDTHRCTL;                         /* Address Offset: 0x0100 */
-    __IO uint32_t BACKEND_POWER;                      /* Address Offset: 0x0104 */
-         uint32_t RESERVED3;                          /* Address Offset: 0x0108 */
-    __IO uint32_t EMMCDDR_REG;                        /* Address Offset: 0x010C */
-         uint32_t RESERVED4[4];                       /* Address Offset: 0x0110 */
-    __IO uint32_t RDYINT_GEN;                         /* Address Offset: 0x0120 */
-         uint32_t RESERVED5[55];                      /* Address Offset: 0x0124 */
-    __IO uint32_t FIFO_BASE;                          /* Address Offset: 0x0200 */
-};
 /* GPIO Register Structure Define */
 struct GPIO_REG {
     __IO uint32_t SWPORT_DR_L;                        /* Address Offset: 0x0000 */
@@ -877,7 +823,6 @@ struct VOP_REG {
 #define SPI1_BASE           0x40C10000U /* SPI1 base address */
 #define SPI2_BASE           0x40c20000U /* SPI2 base address */
 #define SFC_BASE            0x40C80000U /* SFC base address */
-#define MMC0_BASE           0x40C90000U /* MMC0 base address */
 #define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
 #define GPIO1_BASE          0x40D10000U /* GPIO1 base address */
 #define PDM0_BASE           0x41000000U /* PDM0 base address */
@@ -918,7 +863,6 @@ struct VOP_REG {
 #define SPI1                ((struct SPI_REG *) SPI1_BASE)
 #define SPI2                ((struct SPI_REG *) SPI2_BASE)
 #define SFC                 ((struct SFC_REG *) SFC_BASE)
-#define MMC0                ((struct MMC_REG *) MMC0_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define PDM0                 ((struct PDM_REG *) PDM0_BASE)
@@ -945,7 +889,6 @@ struct VOP_REG {
 #define IS_TIMER_INSTANCE(instance) ((instance) == TIMER0 || (instance) == TIMER1 || (instance) == TIMER2 || (instance) == TIMER3 || (instance) == TIMER4 || (instance) == TIMER5)
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI1) || ((instance) == SPI2))
-#define IS_MMC_INSTANCE(instance) ((instance) == MMC0)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
 #define IS_I2S_INSTANCE(instance) ((instance) == I2S0)
 /****************************************************************************************/
@@ -1845,12 +1788,6 @@ struct VOP_REG {
 #define GRF_MEM_CON2_ROM_EMA_SHIFT                         (12U)
 #define GRF_MEM_CON2_ROM_EMA_MASK                          (0x7U << GRF_MEM_CON2_ROM_EMA_SHIFT)                         /* 0x00007000 */
 /* MEM_CON3 */
-#define GRF_MEM_CON3_SDIO_MEM_EMA_SHIFT                    (0U)
-#define GRF_MEM_CON3_SDIO_MEM_EMA_MASK                     (0x7U << GRF_MEM_CON3_SDIO_MEM_EMA_SHIFT)                    /* 0x00000007 */
-#define GRF_MEM_CON3_SDIO_MEM_EMAW_SHIFT                   (3U)
-#define GRF_MEM_CON3_SDIO_MEM_EMAW_MASK                    (0x3U << GRF_MEM_CON3_SDIO_MEM_EMAW_SHIFT)                   /* 0x00000018 */
-#define GRF_MEM_CON3_SDIO_MEM_EMAS_SHIFT                   (5U)
-#define GRF_MEM_CON3_SDIO_MEM_EMAS_MASK                    (0x1U << GRF_MEM_CON3_SDIO_MEM_EMAS_SHIFT)                   /* 0x00000020 */
 #define GRF_MEM_CON3_DSPTCM_MEM_EMA_SHIFT                  (6U)
 #define GRF_MEM_CON3_DSPTCM_MEM_EMA_MASK                   (0x7U << GRF_MEM_CON3_DSPTCM_MEM_EMA_SHIFT)                  /* 0x000001C0 */
 #define GRF_MEM_CON3_DSPTCM_MEM_EMAW_SHIFT                 (9U)
@@ -4284,307 +4221,6 @@ struct VOP_REG {
 /* DATA */
 #define SFC_DATA_DATA_SHIFT                                (0U)
 #define SFC_DATA_DATA_MASK                                 (0xFFFFFFFFU << SFC_DATA_DATA_SHIFT)                         /* 0xFFFFFFFF */
-/******************************************MMC*******************************************/
-/* CTRL */
-#define MMC_CTRL_CONTROLLER_RESET_SHIFT                    (0U)
-#define MMC_CTRL_CONTROLLER_RESET_MASK                     (0x1U << MMC_CTRL_CONTROLLER_RESET_SHIFT)                    /* 0x00000001 */
-#define MMC_CTRL_FIFO_RESET_SHIFT                          (1U)
-#define MMC_CTRL_FIFO_RESET_MASK                           (0x1U << MMC_CTRL_FIFO_RESET_SHIFT)                          /* 0x00000002 */
-#define MMC_CTRL_DMA_RESET_SHIFT                           (2U)
-#define MMC_CTRL_DMA_RESET_MASK                            (0x1U << MMC_CTRL_DMA_RESET_SHIFT)                           /* 0x00000004 */
-#define MMC_CTRL_INT_ENABLE_SHIFT                          (4U)
-#define MMC_CTRL_INT_ENABLE_MASK                           (0x1U << MMC_CTRL_INT_ENABLE_SHIFT)                          /* 0x00000010 */
-#define MMC_CTRL_DMA_ENABLE_SHIFT                          (5U)
-#define MMC_CTRL_DMA_ENABLE_MASK                           (0x1U << MMC_CTRL_DMA_ENABLE_SHIFT)                          /* 0x00000020 */
-#define MMC_CTRL_READ_WAIT_SHIFT                           (6U)
-#define MMC_CTRL_READ_WAIT_MASK                            (0x1U << MMC_CTRL_READ_WAIT_SHIFT)                           /* 0x00000040 */
-#define MMC_CTRL_SEND_IRQ_RESPONSE_SHIFT                   (7U)
-#define MMC_CTRL_SEND_IRQ_RESPONSE_MASK                    (0x1U << MMC_CTRL_SEND_IRQ_RESPONSE_SHIFT)                   /* 0x00000080 */
-#define MMC_CTRL_ABORT_READ_DATA_SHIFT                     (8U)
-#define MMC_CTRL_ABORT_READ_DATA_MASK                      (0x1U << MMC_CTRL_ABORT_READ_DATA_SHIFT)                     /* 0x00000100 */
-#define MMC_CTRL_SEND_CCSD_SHIFT                           (9U)
-#define MMC_CTRL_SEND_CCSD_MASK                            (0x1U << MMC_CTRL_SEND_CCSD_SHIFT)                           /* 0x00000200 */
-#define MMC_CTRL_SEND_AUTO_STOP_CCSD_SHIFT                 (10U)
-#define MMC_CTRL_SEND_AUTO_STOP_CCSD_MASK                  (0x1U << MMC_CTRL_SEND_AUTO_STOP_CCSD_SHIFT)                 /* 0x00000400 */
-#define MMC_CTRL_CEATA_DEVICE_INTERRUPT_STATUS_SHIFT       (11U)
-#define MMC_CTRL_CEATA_DEVICE_INTERRUPT_STATUS_MASK        (0x1U << MMC_CTRL_CEATA_DEVICE_INTERRUPT_STATUS_SHIFT)       /* 0x00000800 */
-#define MMC_CTRL_USE_INTERNAL_DMAC_SHIFT                   (25U)
-#define MMC_CTRL_USE_INTERNAL_DMAC_MASK                    (0x1U << MMC_CTRL_USE_INTERNAL_DMAC_SHIFT)                   /* 0x02000000 */
-/* PWREN */
-#define MMC_PWREN_POWER_ENABLE_SHIFT                       (0U)
-#define MMC_PWREN_POWER_ENABLE_MASK                        (0x1U << MMC_PWREN_POWER_ENABLE_SHIFT)                       /* 0x00000001 */
-/* CLKDIV */
-#define MMC_CLKDIV_CLK_DIVIDER0_SHIFT                      (0U)
-#define MMC_CLKDIV_CLK_DIVIDER0_MASK                       (0xFFU << MMC_CLKDIV_CLK_DIVIDER0_SHIFT)                     /* 0x000000FF */
-/* CLKSRC */
-#define MMC_CLKSRC_CLK_SOURCE_SHIFT                        (0U)
-#define MMC_CLKSRC_CLK_SOURCE_MASK                         (0x3U << MMC_CLKSRC_CLK_SOURCE_SHIFT)                        /* 0x00000003 */
-/* CLKENA */
-#define MMC_CLKENA_CCLK_ENABLE_SHIFT                       (0U)
-#define MMC_CLKENA_CCLK_ENABLE_MASK                        (0x1U << MMC_CLKENA_CCLK_ENABLE_SHIFT)                       /* 0x00000001 */
-#define MMC_CLKENA_CCLK_LOW_POWER_SHIFT                    (16U)
-#define MMC_CLKENA_CCLK_LOW_POWER_MASK                     (0x1U << MMC_CLKENA_CCLK_LOW_POWER_SHIFT)                    /* 0x00010000 */
-/* TMOUT */
-#define MMC_TMOUT_RESPONSE_TIMEOUT_SHIFT                   (0U)
-#define MMC_TMOUT_RESPONSE_TIMEOUT_MASK                    (0xFFU << MMC_TMOUT_RESPONSE_TIMEOUT_SHIFT)                  /* 0x000000FF */
-#define MMC_TMOUT_DATA_TIMEOUT_SHIFT                       (8U)
-#define MMC_TMOUT_DATA_TIMEOUT_MASK                        (0xFFFFFFU << MMC_TMOUT_DATA_TIMEOUT_SHIFT)                  /* 0xFFFFFF00 */
-/* CTYPE */
-#define MMC_CTYPE_CARD_WIDTH_SHIFT                         (0U)
-#define MMC_CTYPE_CARD_WIDTH_MASK                          (0x1U << MMC_CTYPE_CARD_WIDTH_SHIFT)                         /* 0x00000001 */
-#define MMC_CTYPE_CARD_WIDTH_8_SHIFT                       (16U)
-#define MMC_CTYPE_CARD_WIDTH_8_MASK                        (0x1U << MMC_CTYPE_CARD_WIDTH_8_SHIFT)                       /* 0x00010000 */
-/* BLKSIZ */
-#define MMC_BLKSIZ_BLOCK_SIZE_SHIFT                        (0U)
-#define MMC_BLKSIZ_BLOCK_SIZE_MASK                         (0xFFFFU << MMC_BLKSIZ_BLOCK_SIZE_SHIFT)                     /* 0x0000FFFF */
-/* BYTCNT */
-#define MMC_BYTCNT_BYTE_COUNT_SHIFT                        (0U)
-#define MMC_BYTCNT_BYTE_COUNT_MASK                         (0xFFFFFFFFU << MMC_BYTCNT_BYTE_COUNT_SHIFT)                 /* 0xFFFFFFFF */
-/* INTMASK */
-#define MMC_INTMASK_INT_MASK_SHIFT                         (0U)
-#define MMC_INTMASK_INT_MASK_MASK                          (0xFFFFU << MMC_INTMASK_INT_MASK_SHIFT)                      /* 0x0000FFFF */
-#define MMC_INTMASK_DATA_NOBUSY_INT_MASK_SHIFT             (16U)
-#define MMC_INTMASK_DATA_NOBUSY_INT_MASK_MASK              (0x1U << MMC_INTMASK_DATA_NOBUSY_INT_MASK_SHIFT)             /* 0x00010000 */
-#define MMC_INTMASK_SDIO_INT_MASK_SHIFT                    (24U)
-#define MMC_INTMASK_SDIO_INT_MASK_MASK                     (0x1U << MMC_INTMASK_SDIO_INT_MASK_SHIFT)                    /* 0x01000000 */
-/* CMDARG */
-#define MMC_CMDARG_CMD_ARG_SHIFT                           (0U)
-#define MMC_CMDARG_CMD_ARG_MASK                            (0xFFFFFFFFU << MMC_CMDARG_CMD_ARG_SHIFT)                    /* 0xFFFFFFFF */
-/* CMD */
-#define MMC_CMD_CMD_INDEX_SHIFT                            (0U)
-#define MMC_CMD_CMD_INDEX_MASK                             (0x3FU << MMC_CMD_CMD_INDEX_SHIFT)                           /* 0x0000003F */
-#define MMC_CMD_RESPONSE_EXPECT_SHIFT                      (6U)
-#define MMC_CMD_RESPONSE_EXPECT_MASK                       (0x1U << MMC_CMD_RESPONSE_EXPECT_SHIFT)                      /* 0x00000040 */
-#define MMC_CMD_RESPONSE_LENGTH_SHIFT                      (7U)
-#define MMC_CMD_RESPONSE_LENGTH_MASK                       (0x1U << MMC_CMD_RESPONSE_LENGTH_SHIFT)                      /* 0x00000080 */
-#define MMC_CMD_CHECK_RESPONSE_CRC_SHIFT                   (8U)
-#define MMC_CMD_CHECK_RESPONSE_CRC_MASK                    (0x1U << MMC_CMD_CHECK_RESPONSE_CRC_SHIFT)                   /* 0x00000100 */
-#define MMC_CMD_DATA_EXPECTED_SHIFT                        (9U)
-#define MMC_CMD_DATA_EXPECTED_MASK                         (0x1U << MMC_CMD_DATA_EXPECTED_SHIFT)                        /* 0x00000200 */
-#define MMC_CMD_WR_SHIFT                                   (10U)
-#define MMC_CMD_WR_MASK                                    (0x1U << MMC_CMD_WR_SHIFT)                                   /* 0x00000400 */
-#define MMC_CMD_TRANSFER_MODE_SHIFT                        (11U)
-#define MMC_CMD_TRANSFER_MODE_MASK                         (0x1U << MMC_CMD_TRANSFER_MODE_SHIFT)                        /* 0x00000800 */
-#define MMC_CMD_SEND_AUTO_STOP_SHIFT                       (12U)
-#define MMC_CMD_SEND_AUTO_STOP_MASK                        (0x1U << MMC_CMD_SEND_AUTO_STOP_SHIFT)                       /* 0x00001000 */
-#define MMC_CMD_WAIT_PRVDATA_COMPLETE_SHIFT                (13U)
-#define MMC_CMD_WAIT_PRVDATA_COMPLETE_MASK                 (0x1U << MMC_CMD_WAIT_PRVDATA_COMPLETE_SHIFT)                /* 0x00002000 */
-#define MMC_CMD_STOP_ABORT_CMD_SHIFT                       (14U)
-#define MMC_CMD_STOP_ABORT_CMD_MASK                        (0x1U << MMC_CMD_STOP_ABORT_CMD_SHIFT)                       /* 0x00004000 */
-#define MMC_CMD_SEND_INITIALIZATION_SHIFT                  (15U)
-#define MMC_CMD_SEND_INITIALIZATION_MASK                   (0x1U << MMC_CMD_SEND_INITIALIZATION_SHIFT)                  /* 0x00008000 */
-#define MMC_CMD_UPDATE_CLOCK_REGS_ONLY_SHIFT               (21U)
-#define MMC_CMD_UPDATE_CLOCK_REGS_ONLY_MASK                (0x1U << MMC_CMD_UPDATE_CLOCK_REGS_ONLY_SHIFT)               /* 0x00200000 */
-#define MMC_CMD_READ_CEATA_DEVICE_SHIFT                    (22U)
-#define MMC_CMD_READ_CEATA_DEVICE_MASK                     (0x1U << MMC_CMD_READ_CEATA_DEVICE_SHIFT)                    /* 0x00400000 */
-#define MMC_CMD_CCS_EXPECTED_SHIFT                         (23U)
-#define MMC_CMD_CCS_EXPECTED_MASK                          (0x1U << MMC_CMD_CCS_EXPECTED_SHIFT)                         /* 0x00800000 */
-#define MMC_CMD_ENABLE_BOOT_SHIFT                          (24U)
-#define MMC_CMD_ENABLE_BOOT_MASK                           (0x1U << MMC_CMD_ENABLE_BOOT_SHIFT)                          /* 0x01000000 */
-#define MMC_CMD_EXPECT_BOOT_ACK_SHIFT                      (25U)
-#define MMC_CMD_EXPECT_BOOT_ACK_MASK                       (0x1U << MMC_CMD_EXPECT_BOOT_ACK_SHIFT)                      /* 0x02000000 */
-#define MMC_CMD_DISABLE_BOOT_SHIFT                         (26U)
-#define MMC_CMD_DISABLE_BOOT_MASK                          (0x1U << MMC_CMD_DISABLE_BOOT_SHIFT)                         /* 0x04000000 */
-#define MMC_CMD_BOOT_MODE_SHIFT                            (27U)
-#define MMC_CMD_BOOT_MODE_MASK                             (0x1U << MMC_CMD_BOOT_MODE_SHIFT)                            /* 0x08000000 */
-#define MMC_CMD_VOLT_SWITCH_SHIFT                          (28U)
-#define MMC_CMD_VOLT_SWITCH_MASK                           (0x1U << MMC_CMD_VOLT_SWITCH_SHIFT)                          /* 0x10000000 */
-#define MMC_CMD_USE_HOLD_REG_SHIFT                         (29U)
-#define MMC_CMD_USE_HOLD_REG_MASK                          (0x1U << MMC_CMD_USE_HOLD_REG_SHIFT)                         /* 0x20000000 */
-#define MMC_CMD_START_CMD_SHIFT                            (31U)
-#define MMC_CMD_START_CMD_MASK                             (0x1U << MMC_CMD_START_CMD_SHIFT)                            /* 0x80000000 */
-/* RESP0 */
-#define MMC_RESP0_RESPONSE0_SHIFT                          (0U)
-#define MMC_RESP0_RESPONSE0_MASK                           (0xFFFFFFFFU << MMC_RESP0_RESPONSE0_SHIFT)                   /* 0xFFFFFFFF */
-/* RESP1 */
-#define MMC_RESP1_RESPONSE_SHIFT                           (0U)
-#define MMC_RESP1_RESPONSE_MASK                            (0xFFFFFFFFU << MMC_RESP1_RESPONSE_SHIFT)                    /* 0xFFFFFFFF */
-/* RESP2 */
-#define MMC_RESP2_RESPONSE2_SHIFT                          (0U)
-#define MMC_RESP2_RESPONSE2_MASK                           (0xFFFFFFFFU << MMC_RESP2_RESPONSE2_SHIFT)                   /* 0xFFFFFFFF */
-/* RESP3 */
-#define MMC_RESP3_RESPONSE3_SHIFT                          (0U)
-#define MMC_RESP3_RESPONSE3_MASK                           (0xFFFFFFFFU << MMC_RESP3_RESPONSE3_SHIFT)                   /* 0xFFFFFFFF */
-/* MINTSTS */
-#define MMC_MINTSTS_INT_STATUS_SHIFT                       (0U)
-#define MMC_MINTSTS_INT_STATUS_MASK                        (0xFFFFU << MMC_MINTSTS_INT_STATUS_SHIFT)                    /* 0x0000FFFF */
-#define MMC_MINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT           (16U)
-#define MMC_MINTSTS_DATA_NOBUSY_INT_STATUS_MASK            (0x1U << MMC_MINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT)           /* 0x00010000 */
-#define MMC_MINTSTS_SDIO_INTERRUPT_SHIFT                   (24U)
-#define MMC_MINTSTS_SDIO_INTERRUPT_MASK                    (0x1U << MMC_MINTSTS_SDIO_INTERRUPT_SHIFT)                   /* 0x01000000 */
-/* RINTSTS */
-#define MMC_RINTSTS_INT_STATUS_SHIFT                       (0U)
-#define MMC_RINTSTS_INT_STATUS_MASK                        (0xFFFFU << MMC_RINTSTS_INT_STATUS_SHIFT)                    /* 0x0000FFFF */
-#define MMC_RINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT           (16U)
-#define MMC_RINTSTS_DATA_NOBUSY_INT_STATUS_MASK            (0x1U << MMC_RINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT)           /* 0x00010000 */
-#define MMC_RINTSTS_SDIO_INTERRUPT_SHIFT                   (24U)
-#define MMC_RINTSTS_SDIO_INTERRUPT_MASK                    (0x1U << MMC_RINTSTS_SDIO_INTERRUPT_SHIFT)                   /* 0x01000000 */
-/* STATUS */
-#define MMC_STATUS_FIFO_RX_WATERMARK_SHIFT                 (0U)
-#define MMC_STATUS_FIFO_RX_WATERMARK_MASK                  (0x1U << MMC_STATUS_FIFO_RX_WATERMARK_SHIFT)                 /* 0x00000001 */
-#define MMC_STATUS_FIFO_TX_WATERMARK_SHIFT                 (1U)
-#define MMC_STATUS_FIFO_TX_WATERMARK_MASK                  (0x1U << MMC_STATUS_FIFO_TX_WATERMARK_SHIFT)                 /* 0x00000002 */
-#define MMC_STATUS_FIFO_EMPTY_SHIFT                        (2U)
-#define MMC_STATUS_FIFO_EMPTY_MASK                         (0x1U << MMC_STATUS_FIFO_EMPTY_SHIFT)                        /* 0x00000004 */
-#define MMC_STATUS_FIFO_FULL_SHIFT                         (3U)
-#define MMC_STATUS_FIFO_FULL_MASK                          (0x1U << MMC_STATUS_FIFO_FULL_SHIFT)                         /* 0x00000008 */
-#define MMC_STATUS_COMMAND_FSM_STATES_SHIFT                (4U)
-#define MMC_STATUS_COMMAND_FSM_STATES_MASK                 (0xFU << MMC_STATUS_COMMAND_FSM_STATES_SHIFT)                /* 0x000000F0 */
-#define MMC_STATUS_DATA_3_STATUS_SHIFT                     (8U)
-#define MMC_STATUS_DATA_3_STATUS_MASK                      (0x1U << MMC_STATUS_DATA_3_STATUS_SHIFT)                     /* 0x00000100 */
-#define MMC_STATUS_DATA_BUSY_SHIFT                         (9U)
-#define MMC_STATUS_DATA_BUSY_MASK                          (0x1U << MMC_STATUS_DATA_BUSY_SHIFT)                         /* 0x00000200 */
-#define MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT                (10U)
-#define MMC_STATUS_DATA_STATE_MC_BUSY_MASK                 (0x1U << MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT)                /* 0x00000400 */
-#define MMC_STATUS_RESPONSE_INDEX_SHIFT                    (11U)
-#define MMC_STATUS_RESPONSE_INDEX_MASK                     (0x3FU << MMC_STATUS_RESPONSE_INDEX_SHIFT)                   /* 0x0001F800 */
-#define MMC_STATUS_FIFO_COUNT_SHIFT                        (17U)
-#define MMC_STATUS_FIFO_COUNT_MASK                         (0x1FFFU << MMC_STATUS_FIFO_COUNT_SHIFT)                     /* 0x3FFE0000 */
-#define MMC_STATUS_DMA_ACK_SHIFT                           (30U)
-#define MMC_STATUS_DMA_ACK_MASK                            (0x1U << MMC_STATUS_DMA_ACK_SHIFT)                           /* 0x40000000 */
-#define MMC_STATUS_DMA_REQ_SHIFT                           (31U)
-#define MMC_STATUS_DMA_REQ_MASK                            (0x1U << MMC_STATUS_DMA_REQ_SHIFT)                           /* 0x80000000 */
-/* FIFOTH */
-#define MMC_FIFOTH_TX_WMARK_SHIFT                          (0U)
-#define MMC_FIFOTH_TX_WMARK_MASK                           (0xFFFU << MMC_FIFOTH_TX_WMARK_SHIFT)                        /* 0x00000FFF */
-#define MMC_FIFOTH_RX_WMARK_SHIFT                          (16U)
-#define MMC_FIFOTH_RX_WMARK_MASK                           (0xFFFU << MMC_FIFOTH_RX_WMARK_SHIFT)                        /* 0x0FFF0000 */
-#define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT      (28U)
-#define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_MASK       (0x7U << MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT)      /* 0x70000000 */
-/* CDETECT */
-#define MMC_CDETECT_CARD_DETECT_N_SHIFT                    (0U)
-#define MMC_CDETECT_CARD_DETECT_N_MASK                     (0x1U << MMC_CDETECT_CARD_DETECT_N_SHIFT)                    /* 0x00000001 */
-/* WRTPRT */
-#define MMC_WRTPRT_WRITE_PROTECT_SHIFT                     (0U)
-#define MMC_WRTPRT_WRITE_PROTECT_MASK                      (0x1U << MMC_WRTPRT_WRITE_PROTECT_SHIFT)                     /* 0x00000001 */
-/* TCBCNT */
-#define MMC_TCBCNT_TRANS_CARD_BYTE_COUNT_SHIFT             (0U)
-#define MMC_TCBCNT_TRANS_CARD_BYTE_COUNT_MASK              (0xFFFFFFFFU << MMC_TCBCNT_TRANS_CARD_BYTE_COUNT_SHIFT)      /* 0xFFFFFFFF */
-/* TBBCNT */
-#define MMC_TBBCNT_TRANS_FIFO_BYTE_COUNT_SHIFT             (0U)
-#define MMC_TBBCNT_TRANS_FIFO_BYTE_COUNT_MASK              (0xFFFFFFFFU << MMC_TBBCNT_TRANS_FIFO_BYTE_COUNT_SHIFT)      /* 0xFFFFFFFF */
-/* DEBNCE */
-#define MMC_DEBNCE_DEBOUNCE_COUNT_SHIFT                    (0U)
-#define MMC_DEBNCE_DEBOUNCE_COUNT_MASK                     (0xFFFFFFU << MMC_DEBNCE_DEBOUNCE_COUNT_SHIFT)               /* 0x00FFFFFF */
-/* USRID */
-#define MMC_USRID_USRID_SHIFT                              (0U)
-#define MMC_USRID_USRID_MASK                               (0xFFFFFFFFU << MMC_USRID_USRID_SHIFT)                       /* 0xFFFFFFFF */
-/* VERID */
-#define MMC_VERID_VERID_SHIFT                              (0U)
-#define MMC_VERID_VERID_MASK                               (0xFFFFFFFFU << MMC_VERID_VERID_SHIFT)                       /* 0xFFFFFFFF */
-/* HCON */
-#define MMC_HCON_CARD_TYPE_SHIFT                           (0U)
-#define MMC_HCON_CARD_TYPE_MASK                            (0x1U << MMC_HCON_CARD_TYPE_SHIFT)                           /* 0x00000001 */
-#define MMC_HCON_CARD_NUM_SHIFT                            (1U)
-#define MMC_HCON_CARD_NUM_MASK                             (0x1FU << MMC_HCON_CARD_NUM_SHIFT)                           /* 0x0000003E */
-#define MMC_HCON_H_BUS_TYPE_SHIFT                          (6U)
-#define MMC_HCON_H_BUS_TYPE_MASK                           (0x1U << MMC_HCON_H_BUS_TYPE_SHIFT)                          /* 0x00000040 */
-#define MMC_HCON_H_DATA_WIDTH_SHIFT                        (7U)
-#define MMC_HCON_H_DATA_WIDTH_MASK                         (0x7U << MMC_HCON_H_DATA_WIDTH_SHIFT)                        /* 0x00000380 */
-#define MMC_HCON_H_ADDR_WIDTH_SHIFT                        (10U)
-#define MMC_HCON_H_ADDR_WIDTH_MASK                         (0x3FU << MMC_HCON_H_ADDR_WIDTH_SHIFT)                       /* 0x0000FC00 */
-#define MMC_HCON_DMA_INTERFACE_SHIFT                       (16U)
-#define MMC_HCON_DMA_INTERFACE_MASK                        (0x3U << MMC_HCON_DMA_INTERFACE_SHIFT)                       /* 0x00030000 */
-#define MMC_HCON_GE_DMA_DATA_WIDTH_SHIFT                   (18U)
-#define MMC_HCON_GE_DMA_DATA_WIDTH_MASK                    (0x7U << MMC_HCON_GE_DMA_DATA_WIDTH_SHIFT)                   /* 0x001C0000 */
-#define MMC_HCON_FIFO_RAM_INSIDE_SHIFT                     (21U)
-#define MMC_HCON_FIFO_RAM_INSIDE_MASK                      (0x1U << MMC_HCON_FIFO_RAM_INSIDE_SHIFT)                     /* 0x00200000 */
-#define MMC_HCON_IMPL_HOLD_REG_SHIFT                       (22U)
-#define MMC_HCON_IMPL_HOLD_REG_MASK                        (0x1U << MMC_HCON_IMPL_HOLD_REG_SHIFT)                       /* 0x00400000 */
-#define MMC_HCON_SET_CLK_FALSE_PATH_SHIFT                  (23U)
-#define MMC_HCON_SET_CLK_FALSE_PATH_MASK                   (0x1U << MMC_HCON_SET_CLK_FALSE_PATH_SHIFT)                  /* 0x00800000 */
-#define MMC_HCON_NUM_CLK_DIV_SHIFT                         (24U)
-#define MMC_HCON_NUM_CLK_DIV_MASK                          (0x3U << MMC_HCON_NUM_CLK_DIV_SHIFT)                         /* 0x03000000 */
-#define MMC_HCON_AREA_OPTIMIZED_SHIFT                      (26U)
-#define MMC_HCON_AREA_OPTIMIZED_MASK                       (0x1U << MMC_HCON_AREA_OPTIMIZED_SHIFT)                      /* 0x04000000 */
-/* UHSREG */
-#define MMC_UHSREG_DDR_REG_SHIFT                           (16U)
-#define MMC_UHSREG_DDR_REG_MASK                            (0x1U << MMC_UHSREG_DDR_REG_SHIFT)                           /* 0x00010000 */
-/* RSTN */
-#define MMC_RSTN_CARD_RESET_SHIFT                          (0U)
-#define MMC_RSTN_CARD_RESET_MASK                           (0x1U << MMC_RSTN_CARD_RESET_SHIFT)                          /* 0x00000001 */
-/* BMOD */
-#define MMC_BMOD_SWR_SHIFT                                 (0U)
-#define MMC_BMOD_SWR_MASK                                  (0x1U << MMC_BMOD_SWR_SHIFT)                                 /* 0x00000001 */
-#define MMC_BMOD_FB_SHIFT                                  (1U)
-#define MMC_BMOD_FB_MASK                                   (0x1U << MMC_BMOD_FB_SHIFT)                                  /* 0x00000002 */
-#define MMC_BMOD_DSL_SHIFT                                 (2U)
-#define MMC_BMOD_DSL_MASK                                  (0x1FU << MMC_BMOD_DSL_SHIFT)                                /* 0x0000007C */
-#define MMC_BMOD_DE_SHIFT                                  (7U)
-#define MMC_BMOD_DE_MASK                                   (0x1U << MMC_BMOD_DE_SHIFT)                                  /* 0x00000080 */
-#define MMC_BMOD_PBL_SHIFT                                 (8U)
-#define MMC_BMOD_PBL_MASK                                  (0x7U << MMC_BMOD_PBL_SHIFT)                                 /* 0x00000700 */
-/* PLDMND */
-#define MMC_PLDMND_PD_SHIFT                                (0U)
-#define MMC_PLDMND_PD_MASK                                 (0xFFFFFFFFU << MMC_PLDMND_PD_SHIFT)                         /* 0xFFFFFFFF */
-/* DBADDR */
-#define MMC_DBADDR_SBL_SHIFT                               (0U)
-#define MMC_DBADDR_SBL_MASK                                (0xFFFFFFFFU << MMC_DBADDR_SBL_SHIFT)                        /* 0xFFFFFFFF */
-/* IDSTS */
-#define MMC_IDSTS_TI_SHIFT                                 (0U)
-#define MMC_IDSTS_TI_MASK                                  (0x1U << MMC_IDSTS_TI_SHIFT)                                 /* 0x00000001 */
-#define MMC_IDSTS_RI_SHIFT                                 (1U)
-#define MMC_IDSTS_RI_MASK                                  (0x1U << MMC_IDSTS_RI_SHIFT)                                 /* 0x00000002 */
-#define MMC_IDSTS_FBE_SHIFT                                (2U)
-#define MMC_IDSTS_FBE_MASK                                 (0x1U << MMC_IDSTS_FBE_SHIFT)                                /* 0x00000004 */
-#define MMC_IDSTS_DUI_SHIFT                                (4U)
-#define MMC_IDSTS_DUI_MASK                                 (0x1U << MMC_IDSTS_DUI_SHIFT)                                /* 0x00000010 */
-#define MMC_IDSTS_CES_SHIFT                                (5U)
-#define MMC_IDSTS_CES_MASK                                 (0x1U << MMC_IDSTS_CES_SHIFT)                                /* 0x00000020 */
-#define MMC_IDSTS_NIS_SHIFT                                (8U)
-#define MMC_IDSTS_NIS_MASK                                 (0x1U << MMC_IDSTS_NIS_SHIFT)                                /* 0x00000100 */
-#define MMC_IDSTS_AIS_SHIFT                                (9U)
-#define MMC_IDSTS_AIS_MASK                                 (0x1U << MMC_IDSTS_AIS_SHIFT)                                /* 0x00000200 */
-#define MMC_IDSTS_EB_SHIFT                                 (10U)
-#define MMC_IDSTS_EB_MASK                                  (0x7U << MMC_IDSTS_EB_SHIFT)                                 /* 0x00001C00 */
-#define MMC_IDSTS_FSM_SHIFT                                (13U)
-#define MMC_IDSTS_FSM_MASK                                 (0xFU << MMC_IDSTS_FSM_SHIFT)                                /* 0x0001E000 */
-/* IDINTEN */
-#define MMC_IDINTEN_TI_SHIFT                               (0U)
-#define MMC_IDINTEN_TI_MASK                                (0x1U << MMC_IDINTEN_TI_SHIFT)                               /* 0x00000001 */
-#define MMC_IDINTEN_RI_SHIFT                               (1U)
-#define MMC_IDINTEN_RI_MASK                                (0x1U << MMC_IDINTEN_RI_SHIFT)                               /* 0x00000002 */
-#define MMC_IDINTEN_FBE_SHIFT                              (2U)
-#define MMC_IDINTEN_FBE_MASK                               (0x1U << MMC_IDINTEN_FBE_SHIFT)                              /* 0x00000004 */
-#define MMC_IDINTEN_DU_SHIFT                               (4U)
-#define MMC_IDINTEN_DU_MASK                                (0x1U << MMC_IDINTEN_DU_SHIFT)                               /* 0x00000010 */
-#define MMC_IDINTEN_CES_SHIFT                              (5U)
-#define MMC_IDINTEN_CES_MASK                               (0x1U << MMC_IDINTEN_CES_SHIFT)                              /* 0x00000020 */
-#define MMC_IDINTEN_NI_SHIFT                               (8U)
-#define MMC_IDINTEN_NI_MASK                                (0x1U << MMC_IDINTEN_NI_SHIFT)                               /* 0x00000100 */
-#define MMC_IDINTEN_AI_SHIFT                               (9U)
-#define MMC_IDINTEN_AI_MASK                                (0x1U << MMC_IDINTEN_AI_SHIFT)                               /* 0x00000200 */
-/* DSCADDR */
-#define MMC_DSCADDR_HDA_SHIFT                              (0U)
-#define MMC_DSCADDR_HDA_MASK                               (0xFFFFFFFFU << MMC_DSCADDR_HDA_SHIFT)                       /* 0xFFFFFFFF */
-/* BUFADDR */
-#define MMC_BUFADDR_HBA_SHIFT                              (0U)
-#define MMC_BUFADDR_HBA_MASK                               (0xFFFFFFFFU << MMC_BUFADDR_HBA_SHIFT)                       /* 0xFFFFFFFF */
-/* CARDTHRCTL */
-#define MMC_CARDTHRCTL_CARD_RD_THRES_EN_SHIFT              (0U)
-#define MMC_CARDTHRCTL_CARD_RD_THRES_EN_MASK               (0x1U << MMC_CARDTHRCTL_CARD_RD_THRES_EN_SHIFT)              /* 0x00000001 */
-#define MMC_CARDTHRCTL_BUSY_CLR_INT_EN_SHIFT               (1U)
-#define MMC_CARDTHRCTL_BUSY_CLR_INT_EN_MASK                (0x1U << MMC_CARDTHRCTL_BUSY_CLR_INT_EN_SHIFT)               /* 0x00000002 */
-#define MMC_CARDTHRCTL_CARD_RD_THRES_SHIFT                 (16U)
-#define MMC_CARDTHRCTL_CARD_RD_THRES_MASK                  (0xFFFU << MMC_CARDTHRCTL_CARD_RD_THRES_SHIFT)               /* 0x0FFF0000 */
-/* BACKEND_POWER */
-#define MMC_BACKEND_POWER_BACK_END_POWER_SHIFT             (0U)
-#define MMC_BACKEND_POWER_BACK_END_POWER_MASK              (0x1U << MMC_BACKEND_POWER_BACK_END_POWER_SHIFT)             /* 0x00000001 */
-/* EMMCDDR_REG */
-#define MMC_EMMCDDR_REG_HALF_START_BIT_SHIFT               (0U)
-#define MMC_EMMCDDR_REG_HALF_START_BIT_MASK                (0x1U << MMC_EMMCDDR_REG_HALF_START_BIT_SHIFT)               /* 0x00000001 */
-/* RDYINT_GEN */
-#define MMC_RDYINT_GEN_RDYINT_GEN_MAXVAL_SHIFT             (0U)
-#define MMC_RDYINT_GEN_RDYINT_GEN_MAXVAL_MASK              (0xFFU << MMC_RDYINT_GEN_RDYINT_GEN_MAXVAL_SHIFT)            /* 0x000000FF */
-#define MMC_RDYINT_GEN_RDYINT_GEN_WORKING_SHIFT            (8U)
-#define MMC_RDYINT_GEN_RDYINT_GEN_WORKING_MASK             (0x1U << MMC_RDYINT_GEN_RDYINT_GEN_WORKING_SHIFT)            /* 0x00000100 */
-#define MMC_RDYINT_GEN_RDYINT_CNT_STATUS_SHIFT             (16U)
-#define MMC_RDYINT_GEN_RDYINT_CNT_STATUS_MASK              (0xFFU << MMC_RDYINT_GEN_RDYINT_CNT_STATUS_SHIFT)            /* 0x00FF0000 */
-#define MMC_RDYINT_GEN_RDYINT_CNT_FINISH_SHIFT             (24U)
-#define MMC_RDYINT_GEN_RDYINT_CNT_FINISH_MASK              (0x1U << MMC_RDYINT_GEN_RDYINT_CNT_FINISH_SHIFT)             /* 0x01000000 */
-/* FIFO_BASE */
-#define MMC_FIFO_BASE_FIFO_BASE_ADDR_SHIFT                 (0U)
-#define MMC_FIFO_BASE_FIFO_BASE_ADDR_MASK                  (0xFFFFFFFFU << MMC_FIFO_BASE_FIFO_BASE_ADDR_SHIFT)          /* 0xFFFFFFFF */
 /******************************************GPIO******************************************/
 /* SWPORT_DR_L */
 #define GPIO_SWPORT_DR_L_GPIO_SWPORT_DR_LOW_SHIFT          (0U)
@@ -6450,7 +6086,6 @@ struct VOP_REG {
 #define SRST_H_LOGIC_NIU     167
 #define SRST_H_SFC           168
 #define SRST_H_XIP_SFC       169
-#define SRST_H_SDIO          170
 #define SRST_H_LOGIC_AHB_ARB 171
 #define SRST_H_CM4_NIU       173
 #define SRST_H_CM4_CORE      174
@@ -6459,7 +6094,6 @@ struct VOP_REG {
 #define SRST_SPI2       177
 #define SRST_S_SFC      180
 #define SRST_A_CIF_NIU  181
-#define SRST_SDIO       184
 #define SRST_PWM        189
 #define SRST_AUDPWM     190
 #define SRST_A_CIF      191
@@ -6583,7 +6217,6 @@ struct VOP_REG {
 #define HCLK_LOGIC_NIU_GATE     183
 #define HCLK_SFC_GATE           184
 #define HCLK_XIP_SFC_GATE       185
-#define HCLK_SDIO_GATE          186
 #define HCLK_LOGIC_AHB_ARB_GATE 187
 #define HCLK_CM4_NIU_GATE       189
 #define HCLK_CM4_CORE_GATE      190
@@ -6595,9 +6228,6 @@ struct VOP_REG {
 #define SCLK_SFC_DT50_GATE     195
 #define SCLK_SFC_GATE          196
 #define ACLK_CIF_NIU_GATE      197
-#define CLK_SDIO_DF_GATE       198
-#define CLK_SDIO_DT50_GATE     199
-#define CLK_SDIO_GATE          200
 #define CLK_PWM_GATE           205
 #define CLK_AUDPWM_GATE        206
 #define ACLK_CIF_GATE          207
@@ -6676,9 +6306,7 @@ struct VOP_REG {
 #define CLK_SPI2_DIV    0x0508001F
 /********Name=CLKSEL_CON35,Offset=0x10C********/
 #define SCLK_SFC_DT50_DIV 0x08000020
-#define CLK_SDIO_DT50_DIV 0x08080020
 /********Name=CLKSEL_CON36,Offset=0x110********/
-#define CLK_SDIO_DF_DIV 0x08000021
 /********Name=CLKSEL_CON37,Offset=0x114********/
 #define CLK_AUDPWM_DIV       0x05000022
 /********Name=CLKSEL_CON38,Offset=0x118********/
@@ -6755,8 +6383,6 @@ struct VOP_REG {
 #define SCLK_SFC_SEL     0x010F001F
 /********Name=CLKSEL_CON35,Offset=0x10C********/
 /********Name=CLKSEL_CON36,Offset=0x110********/
-#define CLK_SDIO_SRC_SEL 0x02080021
-#define CLK_SDIO_SEL     0x010A0021
 /********Name=CLKSEL_CON37,Offset=0x114********/
 /********Name=CLKSEL_CON38,Offset=0x118********/
 /********Name=CLKSEL_CON39,Offset=0x11C********/
@@ -6817,7 +6443,6 @@ typedef enum CLOCK_Name {
     CLK_SPI1 = CLK(0, CLK_SPI1_DIV),
     SCLK_SFC_SRC = CLK(SCLK_SFC_SRC_SEL, SCLK_SFC_DT50_DIV),
     CLK_SPI2 = CLK(0, CLK_SPI2_DIV),
-    CLK_SDIO_SRC = CLK(CLK_SDIO_SRC_SEL, CLK_SDIO_DT50_DIV),
     CLK_AUDPWM = CLK(0, CLK_AUDPWM_DIV),
     CLK_PWM = CLK(0, CLK_PWM_DIV),
     HCLK_LOGIC = CLK(HCLK_LOGIC_SEL, HCLK_LOGIC_DIV),
