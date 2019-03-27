@@ -17,8 +17,6 @@ typedef enum {
     DMA_REQ_UART0_RX = 1,
     DMA_REQ_UART1_TX = 2,
     DMA_REQ_UART1_RX = 3,
-    DMA_REQ_UART2_TX = 4,
-    DMA_REQ_UART2_RX = 5,
     DMA_REQ_I2S0_TX = 6,
     DMA_REQ_I2S0_RX = 7,
     DMA_REQ_I2S1_TX = 8,
@@ -59,7 +57,6 @@ typedef enum
     DMAC_ABORT_IRQn             = 10,     /* DMA Abort                                                  */
     UART0_IRQn                  = 11,     /* UART 0                                                       */
     UART1_IRQn                  = 12,     /* UART 1                                                       */
-    UART2_IRQn                  = 13,     /* UART 2                                                       */
     TIMER0_IRQn                 = 14,     /* Timer 0                                                      */
     TIMER1_IRQn                 = 15,     /* Timer 1                                                      */
     TIMER2_IRQn                 = 16,     /* Timer 2                                                      */
@@ -873,7 +870,6 @@ struct VOP_REG {
 #define DSI_BASE            0x41110000U /* DSI base address */
 #define UART0_BASE          0x40800000U /* UART0 base address */
 #define UART1_BASE          0x40810000U /* UART1 base address */
-#define UART2_BASE          0x40820000U /* UART2 base address */
 #define PWM0_BASE           0x40880000U /* PWM0 base address */
 #define TIMER_BASE          0x40900000U /* TIMER base address */
 #define WDT_BASE            0x40A00000U /* WDT base address */
@@ -911,7 +907,6 @@ struct VOP_REG {
 #define DSI                 ((struct DSI_REG *) DSI_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
-#define UART2               ((struct UART_REG *) UART2_BASE)
 #define PWM0                ((struct PWM_REG *) PWM0_BASE)
 #define TIMER0              ((struct TIMER_REG *) TIMER_BASE)
 #define TIMER1              ((struct TIMER_REG *) (TIMER_BASE + 0x20))
@@ -943,7 +938,7 @@ struct VOP_REG {
 #define IS_SHAREMEM_INSTANCE(instance) ((instance) == SHAREMEM)
 #define IS_DMA_INSTANCE(instance) ((instance) == DMA)
 #define IS_DSI_INSTANCE(instance) ((instance) == DSI)
-#define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2))
+#define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1))
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_SPI2APB_INSTANCE(instance) ((instance) == SPI2APB)
 #define IS_SFC_INSTANCE(instance) ((instance) == SFC)
@@ -1350,10 +1345,6 @@ struct VOP_REG {
 #define GRF_SOC_CON0_UART1_RTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART1_RTS_SEL_SHIFT)                   /* 0x00000400 */
 #define GRF_SOC_CON0_UART1_CTS_SEL_SHIFT                   (11U)
 #define GRF_SOC_CON0_UART1_CTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART1_CTS_SEL_SHIFT)                   /* 0x00000800 */
-#define GRF_SOC_CON0_UART2_RTS_SEL_SHIFT                   (12U)
-#define GRF_SOC_CON0_UART2_RTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART2_RTS_SEL_SHIFT)                   /* 0x00001000 */
-#define GRF_SOC_CON0_UART2_CTS_SEL_SHIFT                   (13U)
-#define GRF_SOC_CON0_UART2_CTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART2_CTS_SEL_SHIFT)                   /* 0x00002000 */
 /* SOC_CON1 */
 #define GRF_SOC_CON1_TOP_FWD_DSP_PWRDISCTARGPWRSTALL_SHIFT (0U)
 #define GRF_SOC_CON1_TOP_FWD_DSP_PWRDISCTARGPWRSTALL_MASK  (0x1U << GRF_SOC_CON1_TOP_FWD_DSP_PWRDISCTARGPWRSTALL_SHIFT) /* 0x00000001 */
@@ -1928,10 +1919,6 @@ struct VOP_REG {
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART1TX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART1TX_SHIFT) /* 0x00000004 */
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART1RX_SHIFT (3U)
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART1RX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART1RX_SHIFT) /* 0x00000008 */
-#define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART2TX_SHIFT (4U)
-#define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART2TX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART2TX_SHIFT) /* 0x00000010 */
-#define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART2RX_SHIFT (5U)
-#define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART2RX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART2RX_SHIFT) /* 0x00000020 */
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_I2STX_SHIFT (6U)
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_I2STX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_I2STX_SHIFT) /* 0x00000040 */
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_I2SRX_SHIFT (7U)
@@ -1961,10 +1948,6 @@ struct VOP_REG {
 #define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART1_TX_MASK        (0x3U << GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART1_TX_SHIFT)       /* 0x00000030 */
 #define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART1_RX_SHIFT       (6U)
 #define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART1_RX_MASK        (0x3U << GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART1_RX_SHIFT)       /* 0x000000C0 */
-#define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART2_TX_SHIFT       (8U)
-#define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART2_TX_MASK        (0x3U << GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART2_TX_SHIFT)       /* 0x00000300 */
-#define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART2_RX_SHIFT       (10U)
-#define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART2_RX_MASK        (0x3U << GRF_DMAC_CON5_GRF_DRTYPE_DMAC_UART2_RX_SHIFT)       /* 0x00000C00 */
 #define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_I2S_TX_SHIFT         (12U)
 #define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_I2S_TX_MASK          (0x3U << GRF_DMAC_CON5_GRF_DRTYPE_DMAC_I2S_TX_SHIFT)         /* 0x00003000 */
 #define GRF_DMAC_CON5_GRF_DRTYPE_DMAC_I2S_RX_SHIFT         (14U)
@@ -6410,10 +6393,8 @@ struct VOP_REG {
 /********Name=SOFTRST_CON02,Offset=0x208********/
 #define SRST_P_UART0 32
 #define SRST_P_UART1 33
-#define SRST_P_UART2 35
 #define SRST_S_UART0 38
 #define SRST_S_UART1 41
-#define SRST_S_UART2 46
 /********Name=SOFTRST_CON04,Offset=0x210********/
 #define SRST_P_TIMER 48
 #define SRST_TIMER0  49
@@ -6520,7 +6501,6 @@ struct VOP_REG {
 /********Name=CLKGATE_CON02,Offset=0x188********/
 #define PCLK_UART0_GATE     32
 #define PCLK_UART1_GATE     33
-#define PCLK_UART2_GATE     34
 #define CLK_UART0_GATE      35
 #define CLK_UART0_FRAC_GATE 36
 #define CLK_UART0_NP5_GATE  37
@@ -6529,10 +6509,6 @@ struct VOP_REG {
 #define CLK_UART1_FRAC_GATE 40
 #define CLK_UART1_NP5_GATE  41
 #define SCLK_UART1_GATE     42
-#define CLK_UART2_GATE      43
-#define CLK_UART2_FRAC_GATE 44
-#define CLK_UART2_NP5_GATE  45
-#define SCLK_UART2_GATE     46
 /********Name=CLKGATE_CON04,Offset=0x190********/
 #define PCLK_TIMER_GATE 48
 #define CLK_TIMER0_GATE 49
@@ -6667,9 +6643,7 @@ struct VOP_REG {
 /********Name=CLKSEL_CON06,Offset=0x98********/
 #define CLK_UART1_FRAC_DIV 0x20000005
 /********Name=CLKSEL_CON07,Offset=0x9C********/
-#define CLK_UART2_SRC_DIV 0x05000006
 /********Name=CLKSEL_CON08,Offset=0xA0********/
-#define CLK_UART2_FRAC_DIV 0x20000007
 /********Name=CLKSEL_CON10,Offset=0xA8********/
 #define CLK_TIMER0_DIV 0x07000008
 #define CLK_TIMER1_DIV 0x07080008
@@ -6758,8 +6732,6 @@ struct VOP_REG {
 #define SCLK_UART1_SEL    0x02060004
 /********Name=CLKSEL_CON06,Offset=0x98********/
 /********Name=CLKSEL_CON07,Offset=0x9C********/
-#define CLK_UART2_SRC_SEL 0x01050006
-#define SCLK_UART2_SEL    0x02060006
 /********Name=CLKSEL_CON08,Offset=0xA0********/
 /********Name=CLKSEL_CON10,Offset=0xA8********/
 #define CLK_TIMER0_SEL 0x01070008
@@ -6842,9 +6814,6 @@ typedef enum CLOCK_Name {
     CLK_UART1_SRC = CLK(CLK_UART1_SRC_SEL, CLK_UART1_SRC_DIV),
     CLK_UART1_FRAC = CLK(0, CLK_UART1_FRAC_DIV),
     CLK_UART1 = CLK(SCLK_UART1_SEL, 0),
-    CLK_UART2_SRC = CLK(CLK_UART2_SRC_SEL, CLK_UART2_SRC_DIV),
-    CLK_UART2_FRAC = CLK(0, CLK_UART2_FRAC_DIV),
-    CLK_UART2 = CLK(SCLK_UART2_SEL, 0),
     CLK_TIMER0 = CLK(CLK_TIMER0_SEL, CLK_TIMER0_DIV),
     CLK_TIMER1 = CLK(CLK_TIMER1_SEL, CLK_TIMER1_DIV),
     CLK_TIMER2 = CLK(CLK_TIMER2_SEL, CLK_TIMER2_DIV),
