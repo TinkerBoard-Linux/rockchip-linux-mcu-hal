@@ -7,6 +7,8 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
+#ifdef HAL_TIMER_MODULE_ENABLED
+
 static uint32_t isrActive;
 
 static uint64_t TIMER_getReloadNum(struct TIMER_REG *pReg)
@@ -129,3 +131,5 @@ TEST_GROUP_RUNNER(HAL_TIMER){
     RUN_TEST_CASE(HAL_TIMER, TimerSetCount);
     RUN_TEST_CASE(HAL_TIMER, TimerStartStop);
 }
+
+#endif

@@ -7,6 +7,8 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
+#ifdef HAL_PL330_MODULE_ENABLED
+
 #define TSIZE 64
 
 static PL330 *pl330;
@@ -121,3 +123,5 @@ TEST_GROUP_RUNNER(HAL_PL330)
     RUN_TEST_CASE(HAL_PL330, PL330InitAndDeinit);
     RUN_TEST_CASE(HAL_PL330, PL330MemcpyTest);
 }
+
+#endif

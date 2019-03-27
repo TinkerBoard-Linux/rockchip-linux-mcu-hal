@@ -7,6 +7,8 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
+#ifdef HAL_SNOR_MODULE_ENABLED
+
 #ifdef RKMCU_PISCES
 #define XIP_RAM_BASE 0x60000000
 #endif
@@ -289,3 +291,5 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     free(pwrite);
     free(pread);
 }
+
+#endif
