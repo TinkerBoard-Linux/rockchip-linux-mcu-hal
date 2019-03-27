@@ -1,0 +1,1 @@
+../../../../Pisces/Source/Templates/ARM/startup_pisces.s

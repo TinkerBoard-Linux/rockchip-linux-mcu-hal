@@ -1,0 +1,1 @@
+../../../../Pisces/Source/Templates/GCC/gcc_arm.ld

@@ -8,6 +8,8 @@
 
 #if defined(RKMCU_RK2106)
 #include "rk2106.h"
+#elif defined(RKMCU_RK2108)
+#include "rk2108.h"
 #elif defined(RKMCU_PISCES)
 #include "pisces.h"
 #endif

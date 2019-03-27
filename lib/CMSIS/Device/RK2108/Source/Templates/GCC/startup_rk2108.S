@@ -1,0 +1,1 @@
+../../../../Pisces/Source/Templates/GCC/startup_pisces.S
