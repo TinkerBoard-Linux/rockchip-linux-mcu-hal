@@ -1405,22 +1405,6 @@ struct VOP_REG {
 /* DSP_STAT1 */
 #define GRF_DSP_STAT1_PFAULTINFO_SHIFT                     (0U)
 #define GRF_DSP_STAT1_PFAULTINFO_MASK                      (0xFFFFFFFFU << GRF_DSP_STAT1_PFAULTINFO_SHIFT)              /* 0xFFFFFFFF */
-/* PVTM_CON0 */
-#define GRF_PVTM_CON0_PVTM_START_SHIFT                     (0U)
-#define GRF_PVTM_CON0_PVTM_START_MASK                      (0x1U << GRF_PVTM_CON0_PVTM_START_SHIFT)                     /* 0x00000001 */
-#define GRF_PVTM_CON0_PVTM_OSC_EN_SHIFT                    (1U)
-#define GRF_PVTM_CON0_PVTM_OSC_EN_MASK                     (0x1U << GRF_PVTM_CON0_PVTM_OSC_EN_SHIFT)                    /* 0x00000002 */
-#define GRF_PVTM_CON0_PVTM_CLKOUT_DIV_SHIFT                (2U)
-#define GRF_PVTM_CON0_PVTM_CLKOUT_DIV_MASK                 (0xFFFU << GRF_PVTM_CON0_PVTM_CLKOUT_DIV_SHIFT)              /* 0x00003FFC */
-/* PVTM_CON1 */
-#define GRF_PVTM_CON1_PVTM_CAL_CNT_SHIFT                   (0U)
-#define GRF_PVTM_CON1_PVTM_CAL_CNT_MASK                    (0xFFFFFFFFU << GRF_PVTM_CON1_PVTM_CAL_CNT_SHIFT)            /* 0xFFFFFFFF */
-/* PVTM_STATUS0 */
-#define GRF_PVTM_STATUS0_PVTM_FREQ_DONE_SHIFT              (0U)
-#define GRF_PVTM_STATUS0_PVTM_FREQ_DONE_MASK               (0x1U << GRF_PVTM_STATUS0_PVTM_FREQ_DONE_SHIFT)              /* 0x00000001 */
-/* PVTM_STATUS1 */
-#define GRF_PVTM_STATUS1_PVTM_FREQ_CNT_SHIFT               (0U)
-#define GRF_PVTM_STATUS1_PVTM_FREQ_CNT_MASK                (0xFFFFFFFFU << GRF_PVTM_STATUS1_PVTM_FREQ_CNT_SHIFT)        /* 0xFFFFFFFF */
 /* FW_CON0 */
 #define GRF_FW_CON0_FWBYPASS_SHIFT                         (0U)
 #define GRF_FW_CON0_FWBYPASS_MASK                          (0x1U << GRF_FW_CON0_FWBYPASS_SHIFT)                         /* 0x00000001 */
@@ -5448,7 +5432,6 @@ struct VOP_REG {
 #define SRST_P_PMU          138
 #define SRST_P_GRF          139
 #define SRST_PMU            140
-#define SRST_PVTM           142
 #define SRST_PDM_SAMP       143
 /********Name=SOFTRST_CON11,Offset=0x22C********/
 #define SRST_A_LOGIC_NIU    145
@@ -5557,7 +5540,6 @@ struct VOP_REG {
 #define PCLK_GRF_GATE          139
 #define CLK_PMU_GATE           140
 #define CLK_TESTOUT_GATE       141
-#define CLK_PVTM_GATE          142
 #define CLK_PDM_SAMP_GATE      143
 /********Name=CLKGATE_CON10,Offset=0x1A8********/
 #define CLK_MEMSUBSYS_GATE  144
@@ -5646,7 +5628,6 @@ struct VOP_REG {
 /********Name=CLKSEL_CON28,Offset=0xF0********/
 #define HCLK_ALIVE_DIV 0x05000019
 /********Name=CLKSEL_CON29,Offset=0xF4********/
-#define CLK_PVTM_DIV 0x0500001A
 #define CLK_PMU_DIV  0x0508001A
 /********Name=CLKSEL_CON30,Offset=0xF8********/
 #define CLK_TESTOUT_DIV 0x0800001B
@@ -5717,7 +5698,6 @@ struct VOP_REG {
 /********Name=CLKSEL_CON27,Offset=0xEC********/
 /********Name=CLKSEL_CON28,Offset=0xF0********/
 /********Name=CLKSEL_CON29,Offset=0xF4********/
-#define CLK_PVTM_SEL 0x0107001A
 #define CLK_PMU_SEL  0x010F001A
 /********Name=CLKSEL_CON30,Offset=0xF8********/
 #define CLK_TESTOUT_SEL 0x0108001B
@@ -5780,7 +5760,6 @@ typedef enum CLOCK_Name {
     CLK_GPIO_DBG2 = CLK(0, CLK_GPIO_DBG2_DIV),
     PCLK_ALIVE = CLK(0, PCLK_ALIVE_DIV),
     HCLK_ALIVE = CLK(0, HCLK_ALIVE_DIV),
-    CLK_PVTM = CLK(CLK_PVTM_SEL, CLK_PVTM_DIV),
     CLK_PMU = CLK(CLK_PMU_SEL, CLK_PMU_DIV),
     CLK_TESTOUT = CLK(CLK_TESTOUT_SEL, CLK_TESTOUT_DIV),
     CLK_PDM_SAMP = CLK(CLK_PDM_SAMP_SEL, CLK_PDM_SAMP_DIV),

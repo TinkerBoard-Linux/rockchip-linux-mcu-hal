@@ -787,7 +787,6 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case CLK_TIMER4:
     case CLK_TIMER5:
     case CLK_PMU:
-    case CLK_PVTM:
         mux = HAL_CRU_ClkGetMux(clkMux);
         if (mux)
             pRate = PLL_INPUT_OSC_RATE;
@@ -868,7 +867,6 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_TIMER4:
     case CLK_TIMER5:
     case CLK_PMU:
-    case CLK_PVTM:
         if (rate == PLL_INPUT_OSC_RATE) {
             mux = 1;
             pRate = PLL_INPUT_OSC_RATE;
