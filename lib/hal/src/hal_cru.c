@@ -618,11 +618,6 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         divSrc = CLK_GET_DIV(CLK_UART1_SRC);
         divFrac = CLK_GET_DIV(CLK_UART1_FRAC);
         break;
-    case MCLK_I2S1_8CH:
-        muxSrc = CLK_GET_MUX(CLK_I2S1_8CH_SRC);
-        divSrc = CLK_GET_DIV(CLK_I2S1_8CH_SRC);
-        divFrac = CLK_GET_DIV(CLK_I2S1_8CH_FRAC);
-        break;
     case I2S_MCLKOUT:
         muxSrc = CLK_GET_MUX(CLK_I2S8CH_SRC);
         divSrc = CLK_GET_DIV(CLK_I2S8CH_SRC);
@@ -711,12 +706,6 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         divFrac = CLK_GET_DIV(CLK_UART1_FRAC);
         flag = 1;
         break;
-    case MCLK_I2S1_8CH:
-        muxSrc = CLK_GET_MUX(CLK_I2S1_8CH_SRC);
-        divSrc = CLK_GET_DIV(CLK_I2S1_8CH_SRC);
-        divFrac = CLK_GET_DIV(CLK_I2S1_8CH_FRAC);
-        mux = CLK_GET_MUX(I2S1_MCLKOUT);
-        break;
     case I2S_MCLKOUT:
         muxSrc = CLK_GET_MUX(CLK_I2S8CH_SRC);
         divSrc = CLK_GET_DIV(CLK_I2S8CH_SRC);
@@ -780,7 +769,6 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         return freq;
     case CLK_UART0:
     case CLK_UART1:
-    case I2S1_MCLKOUT:
     case I2S_MCLKOUT:
         freq = HAL_CRU_ClkFracGetFreq(clockName);
 
@@ -868,7 +856,6 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         return error;
     case CLK_UART0:
     case CLK_UART1:
-    case I2S1_MCLKOUT:
     case I2S_MCLKOUT:
         error = HAL_CRU_ClkFracSetFreq(clockName, rate);
 
