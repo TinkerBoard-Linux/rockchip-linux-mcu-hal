@@ -3,7 +3,7 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
-#include "rk2108.h"
+#include "soc.h"
 
 uint32_t SystemCoreClock = 30000000;
 

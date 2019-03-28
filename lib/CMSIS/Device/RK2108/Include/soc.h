@@ -3,8 +3,8 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
-#ifndef __RK2108_H
-#define __RK2108_H
+#ifndef __SOC_H
+#define __SOC_H
 #ifdef __cplusplus
   extern "C" {
 #endif
@@ -6894,4 +6894,4 @@ typedef enum CLOCK_Name {
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-#endif /* __RK2108_H */
+#endif /* __SOC_H */
