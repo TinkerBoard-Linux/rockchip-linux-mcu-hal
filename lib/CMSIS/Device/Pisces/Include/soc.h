@@ -3012,6 +3012,35 @@ struct VOP_REG {
 #define ECC_RX_MASK                                        (0x1U << ECC_RX_SHIFT)                                       /* 0X00000008 */
 #define CRC_RX_SHIFT                                       (4U)
 #define CRC_RX_MASK                                        (0x1U << CRC_RX_SHIFT)                                       /* 0X0000000F */
+/* CMD_MODE_CFG */
+#define TEAR_FX_EN_SHIFT                                   (0U)
+#define TEAR_FX_EN_MASK                                    (0x1U << TEAR_FX_EN_SHIFT)                                   /* 0X00000001 */
+#define ACK_RQST_EN_SHIFT                                  (1U)
+#define ACK_RQST_EN_MASK                                   (0x1U << ACK_RQST_EN_SHIFT)                                  /* 0X00000002 */
+#define GEN_SW_0P_TX_SHIFT                                 (8U)
+#define GEN_SW_0P_TX_MASK                                  (0x1U << GEN_SW_0P_TX_SHIFT)                                 /* 0X00000100 */
+#define GEN_SW_1P_TX_SHIFT                                 (9U)
+#define GEN_SW_1P_TX_MASK                                  (0x1U << GEN_SW_1P_TX_SHIFT)                                 /* 0X00000200 */
+#define GEN_SW_2P_TX_SHIFT                                 (10U)
+#define GEN_SW_2P_TX_MASK                                  (0x1U << GEN_SW_2P_TX_SHIFT)                                 /* 0X00000400 */
+#define GEN_SR_0P_TX_SHIFT                                 (11U)
+#define GEN_SR_0P_TX_MASK                                  (0x1U << GEN_SR_0P_TX_SHIFT)                                 /* 0X00000800 */
+#define GEN_SR_1P_TX_SHIFT                                 (12U)
+#define GEN_SR_1P_TX_MASK                                  (0x1U << GEN_SR_1P_TX_SHIFT)                                 /* 0X00001000 */
+#define GEN_SR_2P_TX_SHIFT                                 (13U)
+#define GEN_SR_2P_TX_MASK                                  (0x1U << GEN_SR_2P_TX_SHIFT)                                 /* 0X00002000 */
+#define GEN_LW_TX_SHIFT                                    (14U)
+#define GEN_LW_TX_MASK                                     (0x1U << GEN_LW_TX_SHIFT)                                    /* 0X00004000 */
+#define DCS_SW_0P_TX_SHIFT                                 (16U)
+#define DCS_SW_0P_TX_MASK                                  (0x1U << DCS_SW_0P_TX_SHIFT)                                 /* 0X00010000 */
+#define DCS_SW_1P_TX_SHIFT                                 (17U)
+#define DCS_SW_1P_TX_MASK                                  (0x1U << DCS_SW_1P_TX_SHIFT)                                 /* 0X00020000 */
+#define DCS_SR_0P_TX_SHIFT                                 (18U)
+#define DCS_SR_0P_TXL_MASK                                 (0x1U << DCS_SR_0P_TX_SHIFT)                                 /* 0X00040000 */
+#define DCS_LW_TX_SHIFT                                    (19U)
+#define DCS_LW_TX_MASK                                     (0x1U << DCS_LW_TX_SHIFT)                                    /* 0X00080000 */
+#define MAX_RD_PKT_SIZE_SHIFT                              (24U)
+#define MAX_RD_PKT_SIZE_MASK                               (0x1U << MAX_RD_PKT_SIZE_SHIFT)
 /* CMD_PKT_STATUS */
 #define GEN_CMD_EMPTY_SHIFT                                (0U)
 #define GEN_CMD_EMPTY_MASK                                 (0x1U << GEN_CMD_EMPTY_SHIFT)                                /* 0X00000001 */
