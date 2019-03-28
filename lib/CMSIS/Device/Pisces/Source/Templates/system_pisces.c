@@ -3,7 +3,7 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
-#include "pisces.h"
+#include "soc.h"
 
 uint32_t SystemCoreClock = 30000000;
 

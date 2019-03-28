@@ -3,8 +3,8 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
-#ifndef __PISCES_H
-#define __PISCES_H
+#ifndef __SOC_H
+#define __SOC_H
 #ifdef __cplusplus
   extern "C" {
 #endif
@@ -5773,4 +5773,4 @@ typedef enum CLOCK_Name {
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-#endif /* __PISCES_H */
+#endif /* __SOC_H */

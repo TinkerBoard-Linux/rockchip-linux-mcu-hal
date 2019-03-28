@@ -14,9 +14,27 @@
 #include <stdbool.h>
 
 #include "cmsis_compiler.h"
-#include "rksoc.h"
+#include "soc.h"
 #include "hal_list.h"
 
+/* SOC OPS Marco */
+#define SET_BIT(REG, BIT)   ((REG) |= (BIT))
+#define CLEAR_BIT(REG, BIT) ((REG) &= ~(BIT))
+#define READ_BIT(REG, BIT)  ((REG) & (BIT))
+#define CLEAR_REG(REG)      ((REG) = (0x0))
+#define WRITE_REG(REG, VAL) ((REG) = (VAL))
+#define READ_REG(REG)       ((REG))
+#define MODIFY_REG(REG, CLEARMASK, SETMASK) \
+        WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
+#define POSITION_VAL(VAL) (__CLZ(__RBIT(VAL)))
+
+#define RK_CLRSET_BITS(CLR, SET) ((((CLR) | ((SET))) << 16) | ((SET)))
+#define RK_SET_BITS(SET)         RK_CLRSET_BITS(0, SET)
+#define RK_CLR_BITS(CLR)         RK_CLRSET_BITS(CLR, 0)
+#define RK_CLRSET_REG_BITS(REG, CLR, SET) \
+        WRITE_REG(REG, ((CLR) | (SET)) << 16 | ((SET)))
+
+/* Misc OPS Marco */
 #define HAL_MAX_DELAY 0xFFFFFFFFU
 
 #define RESET 0
@@ -27,6 +45,7 @@
 #define HAL_ARRAY_SIZE(a) (sizeof((a)) / sizeof((a)[0]))
 #define HAL_MIN(x, y)     ((x) < (y) ? (x) : (y))
 
+/* Compiller Marco */
 #ifdef __GNUC__
 #ifndef __weak
 #define __weak __attribute__((weak))
