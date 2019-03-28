@@ -155,7 +155,7 @@ HAL_Status HAL_DSI_Resume(struct DSI_REG *pReg)
 HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
                               uint8_t PayloadLen, uint8_t *Payload)
 {
-    uint32_t i, temp, val;
+    uint32_t temp, val;
     HAL_Status ret;
 
     ret = DSI_WaitFifoNotFull(pReg, GEN_CMD_FULL_MASK);
@@ -163,11 +163,11 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
         return ret;
     val = (0x0 << 6) | DataType;
     switch (DataType) {
+    case MIPI_DSI_DCS_SHORT_WRITE:
+    case MIPI_DSI_DCS_SHORT_WRITE_PARAM:
     case MIPI_DSI_GENERIC_SHORT_WRITE_0_PARAM:
     case MIPI_DSI_GENERIC_SHORT_WRITE_1_PARAM:
-    case MIPI_DSI_DCS_SHORT_WRITE:
     case MIPI_DSI_GENERIC_SHORT_WRITE_2_PARAM:
-    case MIPI_DSI_DCS_SHORT_WRITE_PARAM:
     {
         val |= (PayloadLen > 0) ? (Payload[0] << 8) : 0;
         val |= (PayloadLen > 1) ? (Payload[1] << 16) : 0;
@@ -180,11 +180,21 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
         ret = DSI_WaitFifoNotFull(pReg, GEN_PLD_W_FULL_MASK);
         if (ret != HAL_OK)
             return ret;
-        for (i = 0; i < PayloadLen; i = i + 4) {
-            temp = Payload[i] | (Payload[i + 1] << 8) | (Payload[i + 2] << 16) | (Payload[i + 3] << 24);
-            WRITE_REG(pReg->GEN_PLD_DATA, temp);
-        }
+
         val |= (PayloadLen << 8);
+        while (PayloadLen) {
+            if (PayloadLen < 4) {
+                temp = 0;
+                memcpy(&temp, Payload, PayloadLen);
+                WRITE_REG(pReg->GEN_PLD_DATA, temp);
+                PayloadLen = 0;
+            } else {
+                temp = *(uint32_t *)Payload;
+                WRITE_REG(pReg->GEN_PLD_DATA, temp);
+                Payload += 4;
+                PayloadLen -= 4;
+            }
+        }
         break;
     }
     default:
@@ -198,6 +208,35 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
 
     return ret;
 }
+
+/**
+ * @brief  Config DSI Send Message In Lp or Hs Mode.
+ * @param  pReg: DSI reg base.
+ * @param  Enable: LowPower Mode Flag.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
+{
+    uint32_t lp_mask = GEN_SW_0P_TX_MASK | GEN_SW_1P_TX_MASK |
+                       GEN_SW_2P_TX_MASK | GEN_SR_0P_TX_MASK |
+                       GEN_SR_1P_TX_MASK | GEN_SR_2P_TX_MASK |
+                       GEN_LW_TX_MASK | DCS_SW_0P_TX_MASK |
+                       DCS_SW_1P_TX_MASK | DCS_SR_0P_TXL_MASK |
+                       DCS_LW_TX_MASK | MAX_RD_PKT_SIZE_MASK;
+
+    if ( Enable ) {
+        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, LP_CMD_EN_MASK, 1);
+        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 0);
+        DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lp_mask, 1);
+    }else {
+        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, LP_CMD_EN_MASK, 0);
+        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 1);
+        DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lp_mask, 0);
+    }
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /** @defgroup DSI_Exported_Functions_Group3 Init and Deinit Functions
@@ -349,13 +388,7 @@ HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
     if (pModeInfo->flags & DSI_CLOCK_NON_CONTINUOUS)
         DSI_UPDATE_BIT(pReg->LPCLK_CTRL, AUTO_CLKLANE_CTRL_MASK, 1);
 
-    if (pModeInfo->flags & DSI_MODE_LPM) {
-        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, LP_CMD_EN_MASK, 1);
-        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 0);
-    }else {
-        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, LP_CMD_EN_MASK, 0);
-        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 1);
-    }
+    HAL_DSI_MsgLpModeConfig(pReg, pModeInfo->flags & DSI_MODE_LPM);
 
     DSI_UPDATE_BIT(pReg->MODE_CFG, CMD_VIDEO_MODE_MASK, 1);
     WRITE_REG(pReg->PWR_UP, 0x1);
