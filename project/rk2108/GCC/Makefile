@@ -62,7 +62,7 @@ endif
 INCLUDES += \
 -I"$(ROOT_PATH)/lib/hal/inc" \
 -I"$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Include" \
--I"$(ROOT_PATH)/lib/CMSIS/Include" \
+-I"$(ROOT_PATH)/lib/CMSIS/Core/Include" \
 -I"$(ROOT_PATH)/lib/CMSIS/Device" \
 -I"$(ROOT_PATH)/test/unity/src" \
 -I"$(ROOT_PATH)/test/unity/extras/fixture/src" \
