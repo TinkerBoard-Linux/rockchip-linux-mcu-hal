@@ -365,7 +365,7 @@
               <MiscControls>--c99 --gnu</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Include;..\..\..\lib\CMSIS\Device\RK2108\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test;..\..\..\test\coremark;..\..\..\test\coremark\barebones</IncludePath>
+              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Core\Include;..\..\..\lib\CMSIS\Device\RK2108\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test;..\..\..\test\coremark;..\..\..\test\coremark\barebones</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
