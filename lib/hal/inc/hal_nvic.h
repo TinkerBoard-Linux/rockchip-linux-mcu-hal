@@ -45,3 +45,4 @@ void HAL_NVIC_ConfigExtIRQ(IRQn_Type IRQn, NVIC_IRQHandler handler,
 void HAL_NVIC_Init(void);
 
 #endif
+
