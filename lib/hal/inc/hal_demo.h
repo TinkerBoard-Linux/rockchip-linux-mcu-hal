@@ -39,13 +39,13 @@ typedef enum {
 /** @} */
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_DEMO_Supsend(void);
-HAL_Status HAL_DEMO_Resume(void);
-HAL_Status HAL_DEMO_GetXXXState(void);
-HAL_Status HAL_DEMO_WriteByte_DMA(void);
-HAL_Status HAL_DEMO_Init(void);
-HAL_Status HAL_DEMO_Deinit(void);
-HAL_Status HAL_DEMO_CommonFunction(void);
+HAL_Status HAL_DEMO_Supsend(uint32_t inputTest);
+HAL_Status HAL_DEMO_Resume(uint32_t inputTest);
+HAL_Status HAL_DEMO_GetXXXState(uint32_t inputTest);
+HAL_Status HAL_DEMO_WriteByte_DMA(uint32_t inputTest);
+HAL_Status HAL_DEMO_Init(uint32_t inputTest);
+HAL_Status HAL_DEMO_Deinit(uint32_t inputTest);
+HAL_Status HAL_DEMO_CommonFunction(uint32_t inputTest);
 
 #endif
 

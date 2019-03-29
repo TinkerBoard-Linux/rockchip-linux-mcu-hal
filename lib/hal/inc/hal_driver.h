@@ -23,6 +23,10 @@
 #include "hal_dsi.h"
 #endif
 
+#ifdef HAL_DEMO_MODULE_ENABLED
+#include "hal_demo.h"
+#endif
+
 #ifdef HAL_GPIO_MODULE_ENABLED
 #include "hal_gpio.h"
 #endif
