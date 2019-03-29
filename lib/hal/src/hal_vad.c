@@ -40,8 +40,8 @@ struct AUDIO_SRC_ADDR_MAP {
 /********************* Private Variable Definition ***************************/
 
 static const struct AUDIO_SRC_ADDR_MAP addrMaps[] = {
-    { 0, 0x41010800 }, /* i2s */
-    { 2, 0x41000400 }, /* pdm */
+    { 1, I2S0_BASE + 0x800 }, /* i2s */
+    { 2, PDM0_BASE + 0x400 }, /* pdm */
 };
 
 /********************* Private Function Definition ***************************/
@@ -400,7 +400,7 @@ HAL_Status HAL_VAD_SetAudioSource(struct AUDIO_DAI *dai, uint32_t source)
     HAL_ASSERT(ret == HAL_OK);
 
     WRITE_REG(reg->VS_ADDR, vad->audioSrcAddr);
-    MODIFY_REG(reg->CONTROL, AUDIO_SRC_SEL_MASK, vad->audioSrc);
+    MODIFY_REG(reg->CONTROL, AUDIO_SRC_SEL_MASK, AUDIO_SRC_SEL(vad->audioSrc));
 
     return ret;
 }
