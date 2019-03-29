@@ -61,6 +61,9 @@ static __IO uint32_t uwTick;
  */
 HAL_Status HAL_Init(void)
 {
+#ifdef __CORTEX_A
+    /* TBD */
+#else
     /* Set Interrupt Group Priority */
     HAL_NVIC_Init();
 
@@ -68,6 +71,7 @@ HAL_Status HAL_Init(void)
     HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_DEFAULT);
 
     HAL_InitTick(TICK_INT_PRIORITY);
+#endif
 
     return HAL_OK;
 }
@@ -121,6 +125,32 @@ uint32_t HAL_GetTick(void)
     return uwTick;
 }
 
+#ifdef __CORTEX_A
+/**
+ * @brief  SysTick mdelay.
+ * @param  ms: mdelay count.
+ * @return HAL_Status: HAL_OK.
+ */
+__weak HAL_Status HAL_DelayMs(__IO uint32_t ms)
+{
+    return HAL_DelayUs(1000 * ms);
+}
+
+/**
+ * @brief  SysTick udelay.
+ * @param  us: udelay count.
+ * @return HAL_Status: HAL_OK.
+ */
+HAL_Status HAL_DelayUs(uint32_t us)
+{
+    volatile uint32_t len;
+
+    for (; us > 0; us--)
+        for (len = 0; len < 20; len++);
+
+    return HAL_OK;
+}
+#else
 /**
  * @brief  Config systick reload value.
  * @param  ticksNumb: systick reload value.
@@ -204,6 +234,7 @@ HAL_Status HAL_InitTick(uint32_t tickPriority)
     /* Return function status */
     return HAL_OK;
 }
+#endif
 
 /** @} */
 
