@@ -26,7 +26,7 @@
  *  Add multi line brief to here
  *  ...
  */
-enum {
+typedef enum {
     MIPI_DSI_GENERIC_SHORT_WRITE_0_PARAM = 0x03,
     MIPI_DSI_GENERIC_SHORT_WRITE_1_PARAM = 0x13,
     MIPI_DSI_GENERIC_SHORT_WRITE_2_PARAM = 0x23,
@@ -38,7 +38,7 @@ enum {
     MIPI_DSI_DCS_LONG_WRITE              = 0x39,
 }  eDSI_DataType;
 
-enum {
+typedef enum {
     MIPI_DCS_NOP                 = 0x00,
     MIPI_DCS_SOFT_RESET          = 0x01,
     MIPI_DCS_GET_DISPLAY_STATUS  = 0x09,
@@ -72,7 +72,7 @@ enum {
     MIPI_DCS_SET_TEAR_SCANLINE   = 0x44,
 } eDSI_DcsCommand;
 
-enum {
+typedef enum {
     MIPI_DSI_DCS_TEAR_MODE_VBLANK,
     MIPI_DSI_DCS_TEAR_MODE_VHBLANK,
 } eDSI_DcsTearMode;

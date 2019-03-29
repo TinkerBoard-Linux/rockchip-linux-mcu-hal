@@ -34,7 +34,7 @@
 #define CMD_PKT_STATUS_TIMEOUT_RETRIES 10
 
 /********************* Private Structure Definition **************************/
-enum {
+typedef enum {
     DPI_COLOR_CODING_16BIT_1,
     DPI_COLOR_CODING_16BIT_2,
     DPI_COLOR_CODING_16BIT_3,
