@@ -48,6 +48,7 @@ This code is based on a file that contains the following:
 
 static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
 static char *upper_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+#if __POSIX_VISIBLE < 200809
 static size_t strnlen(const char *s, size_t count);
 
 static size_t strnlen(const char *s, size_t count)
@@ -56,7 +57,7 @@ static size_t strnlen(const char *s, size_t count)
   for (sc = s; *sc != '\0' && count--; ++sc);
   return sc - s;
 }
-
+#endif
 static int skip_atoi(const char **s)
 {
   int i = 0;
