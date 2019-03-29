@@ -7,6 +7,8 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
+#ifdef HAL_CRU_MODULE_ENABLED
+
 static uint32_t isrActive;
 
 TEST_GROUP(HAL_CRU);
@@ -75,3 +77,6 @@ TEST_GROUP_RUNNER(HAL_CRU){
     RUN_TEST_CASE(HAL_CRU, ClkGate);
     RUN_TEST_CASE(HAL_CRU, ClkReset);
 }
+
+#endif
+
