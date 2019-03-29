@@ -7,6 +7,8 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
+#ifdef RKMCU_PISCES
+
 #ifdef UNITY_HAL_COREMARK
 #include "coremark.h"
 #endif
@@ -1226,4 +1228,6 @@ TEST_GROUP_RUNNER(HAL_LEAGACY){
     RUN_TEST_CASE(HAL_LEAGACY, CoreMark);
 #endif
 }
+
+#endif
 
