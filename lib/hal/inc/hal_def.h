@@ -53,6 +53,9 @@
 #ifndef __packed
 #define __packed __attribute__((__packed__))
 #endif
+#ifndef __unused
+#define __unused __attribute__((unused))
+#endif
 #endif
 
 #define __irq
