@@ -207,7 +207,7 @@ struct AUDIO_PCM {
 struct AUDIO_CODEC {
     HAL_LIST list; /**< list node */
     uint32_t id; /**< assign from codee base as the unique id. */
-    /* TBD */; /**< audio codec i2c device */
+    /* TBD */ /**< audio codec i2c device */
     const struct AUDIO_OPS *ops; /**< audio ops function */
 };
 
