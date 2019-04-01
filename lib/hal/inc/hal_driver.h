@@ -39,6 +39,10 @@
 #include "hal_grf.h"
 #endif
 
+#ifdef HAL_HCD_MODULE_ENABLED
+#include "hal_hcd.h"
+#endif
+
 #ifdef HAL_I2S_MODULE_ENABLED
 #include "hal_i2s.h"
 #endif
@@ -53,6 +57,10 @@
 
 #ifdef HAL_NVIC_MODULE_ENABLED
 #include "hal_nvic.h"
+#endif
+
+#ifdef HAL_PCD_MODULE_ENABLED
+#include "hal_pcd.h"
 #endif
 
 #ifdef HAL_PCM_MODULE_ENABLED
