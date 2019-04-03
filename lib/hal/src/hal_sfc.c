@@ -144,9 +144,6 @@ HAL_Status HAL_SFC_Request(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
     cmd.d32 = sfcmd;
     ctrl.d32 = sfctrl;
 
-    if (SFC->XIP_MODE & 0x1)
-        return HAL_BUSY;
-
     if (!(SFC->FSR & SFC_FSR_TXES_EMPTY) || !(SFC->FSR & SFC_FSR_RXES_EMPTY) || (SFC->SR & SFC_SR_SR_BUSY))
         SFC_Reset();
 
@@ -261,9 +258,6 @@ HAL_Status HAL_SFC_Request_DMA(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
 
     cmd.d32 = sfcmd;
     ctrl.d32 = sfctrl;
-
-    if (SFC->XIP_MODE & 0x1)
-        return HAL_BUSY;
 
     if (!(SFC->FSR & SFC_FSR_TXES_EMPTY) || !(SFC->FSR & SFC_FSR_RXES_EMPTY) || (SFC->SR & SFC_SR_SR_BUSY))
         SFC_Reset();
@@ -396,6 +390,7 @@ __weak HAL_Status HAL_SFC_IRQHandler(void)
     return HAL_OK;
 }
 
+#ifdef SFC_XIP_MODE_XIP_MODE_EN_SHIFT
 /**
  * @brief  Configuration XIP mode.
  * @param  sfcmd: SFC_FETCH_CMD set.
@@ -433,6 +428,7 @@ HAL_Status HAL_SFC_XipConfig(uint32_t sfcmd, uint32_t sfctrl, uint8_t on)
 
     return HAL_OK;
 }
+#endif
 
 /** @} */
 

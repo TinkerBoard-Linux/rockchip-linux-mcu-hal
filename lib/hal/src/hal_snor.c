@@ -514,6 +514,7 @@ void *SNOR_flash_info_adjust(struct FLASH_INFO *spi_flash_info)
  *  @{
  */
 
+#ifdef SFC_XIP_MODE_XIP_MODE_EN_SHIFT
 HAL_Check HAL_SNOR_IsInXip(void)
 {
     if (SFC->XIP_MODE)
@@ -521,6 +522,7 @@ HAL_Check HAL_SNOR_IsInXip(void)
     else
         return FALSE;
 }
+#endif
 
 /** @} */
 
@@ -919,6 +921,7 @@ uint32_t HAL_SNOR_GetCapacity(void)
     return pDev->capacity;
 }
 
+#ifdef SFC_XIP_MODE_XIP_MODE_EN_SHIFT
 /**
  * @brief  Enable XIP mode
  * @return HAL_Status
@@ -961,7 +964,7 @@ HAL_Status HAL_SNOR_XipDisable(void)
 {
     return HAL_SFC_XipConfig(0, 0, 0);
 }
-
+#endif
 /** @} */
 
 #endif
