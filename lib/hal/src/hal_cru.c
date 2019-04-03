@@ -121,10 +121,9 @@ struct PLL_CONFIG PLL_RATE[4] = {
 };
 
 struct PLL_SETUP GPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->CRU_GPLL_CON0)),
-    .conOffset1 = (uint32_t)(&(CRU->CRU_GPLL_CON1)),
-    .conOffset2 = (uint32_t)(&(CRU->CRU_GPLL_CON2)),
-    .modeOffset = (uint32_t)(&(CRU->CRU_MODE_CON00)),
+    .conOffset0 = 0,
+    .conOffset1 = 1,
+    .conOffset2 = 2,
     .modeShift = 2,
     .lockShift = 10,
     .modeMask = 0x3 << 2,
@@ -132,10 +131,9 @@ struct PLL_SETUP GPLL = {
 };
 
 struct PLL_SETUP CPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->CRU_CPLL_CON0)),
-    .conOffset1 = (uint32_t)(&(CRU->CRU_CPLL_CON1)),
-    .conOffset2 = (uint32_t)(&(CRU->CRU_CPLL_CON2)),
-    .modeOffset = (uint32_t)(&(CRU->CRU_MODE_CON00)),
+    .conOffset0 = 8,
+    .conOffset1 = 9,
+    .conOffset2 = 10,
     .modeShift = 0,
     .lockShift = 10,
     .modeMask = 0x3 << 0,
@@ -314,7 +312,7 @@ static uint32_t CRU_GetPllFreq(struct PLL_SETUP *pSetup)
     uint32_t refDiv, fbDiv, postdDv1, postDiv2, frac, dsmpd;
     uint32_t mode = 0, rate = PLL_INPUT_OSC_RATE;
 
-    mode = PLL_GET_PLLMODE(pSetup->modeOffset, pSetup->modeShift,
+    mode = PLL_GET_PLLMODE(CRU->CRU_MODE_CON00, pSetup->modeShift,
                            pSetup->modeMask);
 
     switch (mode) {
@@ -322,14 +320,13 @@ static uint32_t CRU_GetPllFreq(struct PLL_SETUP *pSetup)
         rate = PLL_INPUT_OSC_RATE;
         break;
     case RK_PLL_MODE_NORMAL:
-        postdDv1 = PLL_GET_POSTDIV1(pSetup->conOffset0);
-        fbDiv = PLL_GET_FBDIV(pSetup->conOffset1);
-        postDiv2 = PLL_GET_POSTDIV2(pSetup->conOffset1);
-        refDiv = PLL_GET_REFDIV(pSetup->conOffset1);
-        dsmpd = PLL_GET_DSMPD(pSetup->conOffset1);
-        frac = PLL_GET_FRAC(pSetup->conOffset2);
+        postdDv1 = PLL_GET_POSTDIV1(CRU->PLL_CON[pSetup->conOffset0]);
+        fbDiv = PLL_GET_FBDIV(CRU->PLL_CON[pSetup->conOffset0]);
+        postDiv2 = PLL_GET_POSTDIV2(CRU->PLL_CON[pSetup->conOffset1]);
+        refDiv = PLL_GET_REFDIV(CRU->PLL_CON[pSetup->conOffset1]);
+        dsmpd = PLL_GET_DSMPD(CRU->PLL_CON[pSetup->conOffset1]);
+        frac = PLL_GET_FRAC(CRU->PLL_CON[pSetup->conOffset2]);
         rate = (rate / refDiv) * fbDiv;
-        rate *= fbDiv;
         if (dsmpd == 0) {
             uint32_t fracRate = PLL_INPUT_OSC_RATE;
 
@@ -380,31 +377,31 @@ static HAL_Status CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
         return HAL_ERROR;
 
     /* Force PLL into slow mode to ensure output stable clock */
-    pSetup->modeOffset =
+    CRU->CRU_MODE_CON00 =
         RK_CLRSET_BITS(pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift);
 
     /* Pll Power down */
-    pSetup->conOffset1 = RK_CLRSET_BITS(PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+    CRU->PLL_CON[pSetup->conOffset1] = RK_CLRSET_BITS(PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
 
     /* Pll Config */
-    pSetup->conOffset1 = RK_CLRSET_BITS(
+    CRU->PLL_CON[pSetup->conOffset1] = RK_CLRSET_BITS(
         PLL_POSTDIV2_MASK, pConfig->postDiv2 << PLL_POSTDIV2_SHIFT);
-    pSetup->conOffset1 =
+    CRU->PLL_CON[pSetup->conOffset1] =
         RK_CLRSET_BITS(PLL_REFDIV_MASK, pConfig->refDiv << PLL_REFDIV_SHIFT);
-    pSetup->conOffset0 = RK_CLRSET_BITS(
+    CRU->PLL_CON[pSetup->conOffset0] = RK_CLRSET_BITS(
         PLL_POSTDIV1_MASK, pConfig->postDiv1 << PLL_POSTDIV1_SHIFT);
-    pSetup->conOffset0 =
+    CRU->PLL_CON[pSetup->conOffset0] =
         RK_CLRSET_BITS(PLL_FBDIV_MASK, pConfig->fbDiv << PLL_FBDIV_SHIFT);
-    pSetup->conOffset1 =
+    CRU->PLL_CON[pSetup->conOffset1] =
         RK_CLRSET_BITS(PLL_DSMPD_MASK, pConfig->dsmpd << PLL_DSMPD_SHIFT);
-    pSetup->conOffset2 = (pSetup->conOffset2 & 0xff000000) | pConfig->frac;
+    CRU->PLL_CON[pSetup->conOffset2] = (pSetup->conOffset2 & 0xff000000) | pConfig->frac;
 
     /* Pll Power up */
-    pSetup->conOffset1 = RK_CLRSET_BITS(PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+    CRU->PLL_CON[pSetup->conOffset1] = RK_CLRSET_BITS(PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
-        if (pSetup->conOffset1 & (1 << pSetup->lockShift))
+        if (CRU->PLL_CON[pSetup->conOffset1] & (1 << pSetup->lockShift))
             break;
         HAL_DelayMs(1);
         delay--;
@@ -413,7 +410,7 @@ static HAL_Status CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
         return HAL_TIMEOUT;
 
     /* Force PLL into normal mode */
-    pSetup->modeOffset = RK_CLRSET_BITS(
+    CRU->CRU_MODE_CON00 = RK_CLRSET_BITS(
         pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift);
 
     return HAL_OK;
@@ -628,18 +625,18 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         return HAL_INVAL;
     }
 
-    n = CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0xffff0000 >> 16;
+    n = (CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0xffff0000) >> 16;
     m = CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0x0000ffff;
 
     if (HAL_CRU_ClkGetMux(muxSrc))
-        pRate = s_cpllFreq / (HAL_CRU_ClkGetDiv(divSrc) + 1);
+        pRate = s_cpllFreq / HAL_CRU_ClkGetDiv(divSrc);
     else
-        pRate = s_gpllFreq / (HAL_CRU_ClkGetDiv(divSrc) + 1);
+        pRate = s_gpllFreq / HAL_CRU_ClkGetDiv(divSrc);
 
     if (HAL_CRU_ClkGetMux(mux) == 0)
         freq = pRate;
     else if (HAL_CRU_ClkGetMux(mux) == 1)
-        freq = pRate * n / m;
+        freq = (pRate / m) * n;
     else if (HAL_CRU_ClkGetMux(mux) == 3)
         freq = PLL_INPUT_OSC_RATE / 2;
 
@@ -691,20 +688,18 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
     uint32_t muxSrc, mux = CLK_GET_MUX(clockName), muxOut = 0;
     uint32_t divSrc, divFrac;
-    uint32_t n = 0, m = 0, pRate = s_gpllFreq / 2, flag = 0;
+    uint32_t n = 0, m = 0, pRate = s_gpllFreq / 2;
 
     switch (clockName) {
     case CLK_UART0:
         muxSrc = CLK_GET_MUX(CLK_UART0_SRC);
         divSrc = CLK_GET_DIV(CLK_UART0_SRC);
         divFrac = CLK_GET_DIV(CLK_UART0_FRAC);
-        flag = 1;
         break;
     case CLK_UART1:
         muxSrc = CLK_GET_MUX(CLK_UART1_SRC);
         divSrc = CLK_GET_DIV(CLK_UART1_SRC);
         divFrac = CLK_GET_DIV(CLK_UART1_FRAC);
-        flag = 1;
         break;
     case I2S_MCLKOUT:
         muxSrc = CLK_GET_MUX(CLK_I2S8CH_SRC);
@@ -717,20 +712,16 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         return HAL_INVAL;
     }
 
-    if (!(s_gpllFreq % rate)) {
+    if ((!(s_gpllFreq % rate)) && ((s_gpllFreq / rate) < 31)) {
         HAL_CRU_ClkSetDiv(divSrc, s_gpllFreq / rate);
         HAL_CRU_ClkSetMux(muxSrc, 0);
         HAL_CRU_ClkSetMux(mux, 0);
-    } else if (flag || (pRate > 20 * rate)) {
+    } else {
         HAL_CRU_FracdivGetConfig(rate, pRate, &n, &m);
         HAL_CRU_ClkSetDiv(divSrc, 2);
         HAL_CRU_ClkSetMux(muxSrc, 0);
         CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
         HAL_CRU_ClkSetMux(mux, 1);
-    } else {
-        HAL_CRU_ClkSetDiv(divSrc, s_gpllFreq / rate);
-        HAL_CRU_ClkSetMux(muxSrc, 0);
-        HAL_CRU_ClkSetMux(mux, 0);
     }
 
     if (muxOut)
@@ -751,9 +742,9 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     uint32_t clkDiv = CLK_GET_DIV(clockName);
     uint32_t pRate = s_gpllFreq;
 
-    if (s_gpllFreq)
+    if (!s_gpllFreq)
         s_gpllFreq = CRU_GetPllFreq(&GPLL);
-    if (s_cpllFreq)
+    if (!s_cpllFreq)
         s_cpllFreq = CRU_GetPllFreq(&CPLL);
 
     switch (clockName) {
@@ -793,7 +784,6 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         break;
     case CLK_GPIO_DBG0:
     case CLK_GPIO_DBG1:
-    case CLK_GPIO_DBG2:
         pRate = PLL_INPUT_OSC_RATE;
         break;
     default:
@@ -804,7 +794,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         return 0;
 
     if (clkDiv)
-        freq = pRate / ((HAL_CRU_ClkGetDiv(clkDiv)) + 1);
+        freq = pRate / (HAL_CRU_ClkGetDiv(clkDiv));
     else
         freq = pRate;
 
@@ -824,9 +814,9 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     uint32_t clkDiv = CLK_GET_DIV(clockName), div = 0;
     uint32_t pRate = s_gpllFreq;
 
-    if (s_gpllFreq)
+    if (!s_gpllFreq)
         s_gpllFreq = CRU_GetPllFreq(&GPLL);
-    if (s_cpllFreq)
+    if (!s_cpllFreq)
         s_cpllFreq = CRU_GetPllFreq(&CPLL);
 
     switch (clockName) {
@@ -874,7 +864,6 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         break;
     case CLK_GPIO_DBG0:
     case CLK_GPIO_DBG1:
-    case CLK_GPIO_DBG2:
         pRate = PLL_INPUT_OSC_RATE;
         break;
     default:
