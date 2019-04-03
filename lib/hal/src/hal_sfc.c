@@ -42,7 +42,7 @@
 /********************* Private MACRO Definition ******************************/
 
 /* SFC_CTRL */
-#define SFC_CTRL_SHIFTPHASE_NEGEDGE 1
+#define SFC_CTRL_SHIFTPHASE_NEGEDGE (1 << 1)
 
 /* SFC_RCVR */
 #define SFC_RCVR_RCVR_RESET (1 << SFC_RCVR_RCVR_SHIFT) /* Recover The SFC State Machine */
