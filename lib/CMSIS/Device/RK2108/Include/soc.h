@@ -170,7 +170,7 @@ struct DCACHE_REG {
     __IO uint32_t REVISION;                           /* Address Offset: 0x00F0 */
 };
 /* CRU Register Structure Define */
-typedef struct CRU_REG {
+struct CRU_REG {
     __IO uint32_t CRU_GPLL_CON0;
     __IO uint32_t CRU_GPLL_CON1;
     __IO uint32_t CRU_GPLL_CON2;
@@ -197,7 +197,7 @@ typedef struct CRU_REG {
     __IO uint32_t RESERVED7[3];
     __IO uint32_t CRU_SDIO_CON0;
     __IO uint32_t CRU_SDIO_CON1;
-} CRU_REG_t;
+};
 /* GRF Register Structure Define */
 struct GRF_REG {
     __IO uint32_t GPIO0A_IOMUX_L;                     /* Address Offset: 0x0000 */
@@ -440,7 +440,7 @@ struct DSI_REG {
     __IO uint32_t INT_MSK1;                            /* Address Offset: 0x00c8 */
 };
 /* UART Register Structure Define */
-typedef struct UART_REG
+struct UART_REG
 {
     __IO uint32_t UART_RBR;
     __IO uint32_t UART_DLH;
@@ -471,7 +471,7 @@ typedef struct UART_REG
     __IO uint32_t UART_CPR;
     __IO uint32_t UART_UCV;
     __IO uint32_t UART_CTR;
-} UART_REG_t;
+};
 
 #define UART_THR UART_RBR
 #define UART_DLL UART_RBR
