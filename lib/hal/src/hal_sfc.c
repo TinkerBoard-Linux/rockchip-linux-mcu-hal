@@ -42,7 +42,7 @@
 /********************* Private MACRO Definition ******************************/
 
 /* SFC_CTRL */
-#define SFC_CTRL_SHIFTPHASE_NEGEDGE (1 << 1)
+#define SFC_CTRL_SHIFTPHASE_NEGEDGE 1
 
 /* SFC_RCVR */
 #define SFC_RCVR_RCVR_RESET (1 << SFC_RCVR_RCVR_SHIFT) /* Recover The SFC State Machine */
@@ -153,7 +153,7 @@ HAL_Status HAL_SFC_Request(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
         SFC->ABIT = ctrl.b.addrbits - 1; /* add 1 inside the controller */
     }
 
-    ctrl.d32 |= SFC_CTRL_SHIFTPHASE_NEGEDGE;
+    ctrl.b.sps = SFC_CTRL_SHIFTPHASE_NEGEDGE;
     SFC->CTRL = ctrl.d32;
     SFC->CMD = cmd.d32;
     if (cmd.b.addrbits)
@@ -268,7 +268,7 @@ HAL_Status HAL_SFC_Request_DMA(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
         SFC->ABIT = ctrl.b.addrbits - 1; /* add 1 inside the controller */
     }
 
-    ctrl.d32 |= SFC_CTRL_SHIFTPHASE_NEGEDGE;
+    ctrl.b.sps = SFC_CTRL_SHIFTPHASE_NEGEDGE;
     SFC->CTRL = ctrl.d32;
     SFC->CMD = cmd.d32;
     if (cmd.b.addrbits)
