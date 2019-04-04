@@ -360,6 +360,7 @@ static HAL_Status SNOR_ProgDataRaw(uint32_t addr, void *pData, uint32_t size)
     SFCCTRL_DATA sfctrl;
     struct SFNOR_DEV *pDev = &s_snorDev;
 
+    /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
     sfcmd.d32 = 0;
     sfcmd.b.cmd = pDev->ProgCmd;
     sfcmd.b.addrbits = SFC_ADDR_24BITS;
@@ -394,6 +395,7 @@ static HAL_Status SNOR_ReadDataRaw(uint32_t addr, void *pData, uint32_t size)
     SFCCTRL_DATA sfctrl;
     struct SFNOR_DEV *pDev = &s_snorDev;
 
+    /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
     sfcmd.d32 = 0;
     sfcmd.b.cmd = pDev->readCmd;
     sfcmd.b.datasize = size;
@@ -552,7 +554,7 @@ HAL_Status HAL_SNOR_Erase(uint32_t addr, NOR_ERASE_TYPE eraseType)
     int32_t timeout[] = { 400, 2000, 40000 };
     struct SFNOR_DEV *pDev = &s_snorDev;
 
-    /* HAL_DBG("SNOR_Erase %x %x\n",addr / 0x200, eraseType); */
+    /* HAL_DBG("%s %lx %x\n", __func__, addr / 0x200, eraseType); */
 
     if (eraseType > ERASE_CHIP)
         return HAL_INVAL;
