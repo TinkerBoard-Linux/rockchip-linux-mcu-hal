@@ -134,7 +134,6 @@ static int32_t UART_SetLcrReg(struct UART_REG *pReg, uint8_t byteSize,
   */
 HAL_Status HAL_UART_Suspend(struct UART_REG *pReg)
 {
-
     /* ...to do */
     return HAL_OK;
 }
@@ -146,7 +145,6 @@ HAL_Status HAL_UART_Suspend(struct UART_REG *pReg)
   */
 HAL_Status HAL_UART_Resume(struct UART_REG *pReg)
 {
-
     /* ...to do */
     return HAL_OK;
 }

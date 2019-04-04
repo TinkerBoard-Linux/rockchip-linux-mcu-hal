@@ -224,11 +224,11 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
                        DCS_SW_1P_TX_MASK | DCS_SR_0P_TXL_MASK |
                        DCS_LW_TX_MASK | MAX_RD_PKT_SIZE_MASK;
 
-    if ( Enable ) {
+    if (Enable) {
         DSI_UPDATE_BIT(pReg->VID_MODE_CFG, LP_CMD_EN_MASK, 1);
         DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 0);
         DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lp_mask, 1);
-    }else {
+    } else {
         DSI_UPDATE_BIT(pReg->VID_MODE_CFG, LP_CMD_EN_MASK, 0);
         DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 1);
         DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lp_mask, 0);
@@ -258,7 +258,6 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
  */
 HAL_Status HAL_DSI_M31DphySetPll(uint32_t rate)
 {
-
     /**
      * TODO:
      */
@@ -379,7 +378,7 @@ HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
 
         WRITE_REG(pReg->VID_MODE_CFG, val);
         WRITE_REG(pReg->VID_PKT_SIZE, pModeInfo->crtcHdisplay);
-    }else {
+    } else {
         WRITE_REG(pReg->TO_CNT_CFG, 1000 << HSTX_TO_CNT_SHIFT |
                   1000 << LPRX_TO_CNT_SHIFT);
         WRITE_REG(pReg->BTA_TO_CNT, 0xd00);

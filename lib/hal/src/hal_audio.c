@@ -31,7 +31,6 @@
 
 /********************* Private Structure Definition **************************/
 
-
 /********************* Private Variable Definition ***************************/
 
 static HAL_LIST_HEAD(sAudioDaiList);
@@ -147,7 +146,6 @@ static int AUDIO_CARD_Ioctl(void *priv, int cmd, void *arg)
 static const struct AUDIO_OPS card_ops = {
     .ioctl = AUDIO_CARD_Ioctl,
 };
-
 
 /********************* Public Function Definition ****************************/
 /** @defgroup AUDIO_Exported_Functions_Group1 Suspend and Resume Functions

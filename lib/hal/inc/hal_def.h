@@ -63,26 +63,26 @@
 /***************************** Structure Definition **************************/
 typedef enum {
     FALSE = 0x00U,
-    TRUE = 0x01U
+    TRUE  = 0x01U
 } HAL_Check;
 
 typedef enum {
-    HAL_OK = 0x00U,
-    HAL_ERROR = (-1),
-    HAL_BUSY = (-16),
-    HAL_NODEV = (-19),
-    HAL_INVAL = (-22),
+    HAL_OK      = 0x00U,
+    HAL_ERROR   = (-1),
+    HAL_BUSY    = (-16),
+    HAL_NODEV   = (-19),
+    HAL_INVAL   = (-22),
     HAL_TIMEOUT = (-110)
 } HAL_Status;
 
 typedef enum {
     HAL_DISABLE = 0x00U,
-    HAL_ENABLE = 0x01U
+    HAL_ENABLE  = 0x01U
 } HAL_FuncStatus;
 
 typedef enum {
     HAL_UNLOCKED = 0x00U,
-    HAL_LOCKED = 0x01U
+    HAL_LOCKED   = 0x01U
 } HAL_LockStatus;
 
 typedef void (*pFunc)(void);

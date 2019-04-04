@@ -107,5 +107,3 @@ HAL_Status HAL_DSI_LineTimerConfig(struct DSI_REG *pReg,
 /** @} */
 
 /** @} */
-
-

@@ -77,7 +77,6 @@ static void NVIC_SuspendSave(void)
         nvicSave.ip[i] = pnvic->IP[i];
 
     nvicSave.pg = NVIC_GetPriorityGrouping();
-
 }
 
 /**
@@ -124,7 +123,7 @@ void HAL_CPU_SuspendSave(uint32_t *ptr, uint32_t ptrsz, uint32_t sp, uint32_t *p
 {
     *ptrSave = (uint32_t)ptr;
     *ptr++ = sp;
-    *ptr++ =   (uint32_t)HAL_CPU_ArchResume + 1;
+    *ptr++ = (uint32_t)HAL_CPU_ArchResume + 1;
     HAL_CPU_ArchSuspend(ptr);
 }
 
@@ -135,7 +134,6 @@ void HAL_CPU_SuspendSave(uint32_t *ptr, uint32_t ptrsz, uint32_t sp, uint32_t *p
  */
 int HAL_SYS_Suspend(uint32_t flag)
 {
-
     NVIC_SuspendSave();
     HAL_CPU_SuspendEnter(flag, SOC_SuspendEnter);
     HAL_DCACHE_Enable();

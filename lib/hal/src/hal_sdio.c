@@ -650,7 +650,6 @@ HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host)
  */
 HAL_Status HAL_MMC_DeInit(struct HAL_MMC_HOST *host)
 {
-
     /* TBD */
     return HAL_OK;
 }

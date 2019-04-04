@@ -97,7 +97,7 @@
 #define SPI_TIMEOUT_ENABLE  (1 << SPI_TIMEOUT_TOE_SHIFT)
 #define SPI_TIMEOUT_DISABLE 0
 
-#define DIV_ROUND_UP(n,d) (((n) + (d) - 1) / (d))
+#define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
 
 /********************* Exported functions ************************************/
 /** @defgroup SPI_Exported_Functions SPI Exported Functions

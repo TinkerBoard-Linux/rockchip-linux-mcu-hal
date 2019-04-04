@@ -12,13 +12,11 @@
 typedef enum {
     GPIO_LOW,
     GPIO_HIGH
-
 } eGPIOPinLevel;
 
 typedef enum {
     GPIO_IN,
     GPIO_OUT
-
 } eGPIOPinDirection;
 
 typedef enum {
@@ -54,7 +52,6 @@ typedef enum {
     GPIOPortD_Pin5,
     GPIOPortD_Pin6,
     GPIOPortD_Pin7
-
 } eGPIOPinNum;
 
 typedef enum {

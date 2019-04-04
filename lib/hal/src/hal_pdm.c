@@ -105,7 +105,6 @@ static HAL_Status PDM_GetClk(uint32_t sr, uint32_t *clkSrc,
     return HAL_OK;
 }
 
-
 static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
                                     struct AUDIO_PARAMS *params)
 {

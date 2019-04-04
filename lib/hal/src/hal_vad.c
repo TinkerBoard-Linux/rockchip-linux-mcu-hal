@@ -182,7 +182,6 @@ HAL_Status HAL_VAD_Resume(struct AUDIO_DAI *dai)
  *  @{
  */
 
-
 /** @} */
 
 /** @defgroup VAD_Exported_Functions_Group3 IO Functions
@@ -196,7 +195,6 @@ HAL_Status HAL_VAD_Resume(struct AUDIO_DAI *dai)
  @endverbatim
  *  @{
  */
-
 
 /** @} */
 

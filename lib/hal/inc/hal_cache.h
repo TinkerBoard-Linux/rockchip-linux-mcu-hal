@@ -267,7 +267,6 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_DisableInt(void)
     return HAL_OK;
 }
 
-
 /**
  * @brief  Get the interrupt status of icache.
  * @return HAL_TRUE if ahb error occur.
@@ -311,7 +310,6 @@ __STATIC_FORCEINLINE uint32_t HAL_ICACHE_GetErrAddr(void)
     return -1;
 }
 
-
 /**
  * @brief  Clear the interrupt status of icache.
  * @return HAL_OK if success.
@@ -328,7 +326,6 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_ClearInt(void)
 
     return HAL_OK;
 }
-
 
 /**
  * @brief     enable dcache.
@@ -639,7 +636,6 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_DisableInt(void)
     return HAL_OK;
 }
 
-
 /**
  * @brief  Get the interrupt status of dcache.
  * @return HAL_TRUE if ahb error occur.
@@ -699,7 +695,6 @@ __STATIC_FORCEINLINE uint32_t HAL_DCACHE_GetErrAddr(void)
 
     return -1;
 }
-
 
 #endif
 

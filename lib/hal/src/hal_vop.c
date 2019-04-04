@@ -276,7 +276,7 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                   VOP_WIN0_CTRL0_WIN0_RB_SWAP_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_RB_SWAP_MASK,
                   VOP_RbSwap(pWinState->format));
-    yStride =  pWinState->xVir / 4;
+    yStride = pWinState->xVir / 4;
 
     if ((pWinState->format == VOP_FMT_YUV444SP) ||
         (pWinState->format == VOP_FMT_YUV444SP_4))
@@ -442,7 +442,6 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
                             struct CRTC_WIN_STATE *pWinState,
                             struct DISPLAY_MODE_INFO *pModeInfo)
 {
-
     if (IS_BPP_FORMAT(pWinState->format)) {
         if (pWinState->winId == VOP_WIN2) {
             HAL_DBG_ERR("win2 unsupport bpp format!\n");
