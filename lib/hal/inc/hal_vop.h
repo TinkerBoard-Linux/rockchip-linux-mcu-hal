@@ -114,13 +114,9 @@ struct VOP_GAMMA_COE_INFO {
 };
 
 struct VOP_POST_SCALE_INFO {
-    uint16_t srcX;
-    uint16_t srcY;
     uint16_t srcW;
     uint16_t srcH;
 
-    uint16_t dstX;
-    uint16_t dstY;
     uint16_t dstW;
     uint16_t dstH;
     bool postScaleEn;
@@ -155,6 +151,7 @@ uint8_t HAL_VOP_CommitPrepare(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId, uint32_t *lut,
                            uint16_t lut_size);
 HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg);
+HAL_Status HAL_VOP_EdpiFrmSt(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_PowerOn(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_PowerOff(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_EnableFsIrq(struct VOP_REG *pReg);
@@ -192,6 +189,7 @@ HAL_Status HAL_VOP_PolarityInit(struct VOP_REG *pReg,
 HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
                               struct DISPLAY_MODE_INFO *pModeInfo,
                               uint16_t BusFormat);
+HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val);
 #endif
 

@@ -103,6 +103,17 @@ static uint32_t VOP_MaskRead(__IO uint32_t hwReg,
     return (READ_REG(hwReg) & mask) >> shift;
 }
 
+static void VOP_MaskWriteNoBackup(__IO uint32_t *mirReg, __IO uint32_t *hwReg,
+                                  uint32_t shift, uint32_t mask,
+                                  uint32_t v)
+{
+    uint32_t mirVal = *mirReg;
+
+    v = (mirVal & ~mask) | ((v << shift) & mask);
+
+    WRITE_REG(*hwReg, v);
+}
+
 static void VOP_MaskWrite(__IO uint32_t *mirReg, __IO uint32_t *hwReg,
                           uint32_t shift, uint32_t mask,
                           uint32_t v)
@@ -464,9 +475,23 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
  */
 HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg)
 {
-    VOP_MaskWrite(NULL, &pReg->REG_CFG_DONE,
-                  VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_SHIFT,
-                  VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_MASK, 1);
+    VOP_MaskWriteNoBackup(&g_VOP_RegMir.REG_CFG_DONE, &pReg->REG_CFG_DONE,
+                          VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_SHIFT,
+                          VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_MASK, 1);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set WMS frame start.
+ * @param  pReg: VOP reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_EdpiFrmSt(struct VOP_REG *pReg)
+{
+    VOP_MaskWriteNoBackup(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
+                          VOP_SYS_CTRL2_IMD_EDPI_WMS_FS_SHIFT,
+                          VOP_SYS_CTRL2_IMD_EDPI_WMS_FS_MASK, 1);
 
     return HAL_OK;
 }
@@ -557,12 +582,12 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
     uint16_t dspVsync, dspVactSt, dspVactEnd, dspVtotal;
 
     preHsync = hsyncLen;
-    preHactSt = preHsync + hbp + pPostScaleInfo->srcX;
+    preHactSt = preHsync + hbp;
     preHactEnd = preHactSt + preHdisplay;
     preHtotal = preHactEnd + hfp;
 
     preVsync = vsyncLen;
-    preVactSt = preVsync + vbp + pPostScaleInfo->srcY;
+    preVactSt = preVsync + vbp;
     preVactEnd = preVactSt + preVdisplay;
     preVtotal = preVactEnd + vfp;
 
@@ -576,12 +601,12 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
               preVactSt << 16 | preVactEnd);
 
     dspHsync = hsyncLen;
-    dspHactSt = dspHsync + hbp + pPostScaleInfo->dstX;
+    dspHactSt = dspHsync + hbp;
     dspHactEnd = dspHactSt + dsp_hdisplay;
     dspHtotal = dspHactEnd + hfp;
 
     dspVsync = vsyncLen;
-    dspVactSt = dspVsync + vbp + pPostScaleInfo->dstY;
+    dspVactSt = dspVsync + vbp;
     dspVactEnd = dspVactSt + dsp_vdisplay;
     dspVtotal = dspVactEnd + vfp;
 
@@ -853,6 +878,29 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
         HAL_DBG_ERR("Unknown Bus Format: %d\n", BusFormat);
         break;
     }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  VOP edpi init.
+ * @param  pReg: VOP reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
+{
+    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
+                  VOP_SYS_CTRL2_IMD_EDPI_TE_EN_SHIFT,
+                  VOP_SYS_CTRL2_IMD_EDPI_TE_EN_MASK,
+                  1);
+    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
+                  VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_SHIFT,
+                  VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_MASK,
+                  1);
+    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
+                  VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT,
+                  VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK,
+                  0x1);
 
     return HAL_OK;
 }

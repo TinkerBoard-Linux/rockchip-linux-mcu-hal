@@ -4302,8 +4302,8 @@ struct VOP_REG {
 #define VOP_SYS_CTRL2_IMD_EDPI_TE_EN_MASK                  (0x1U << VOP_SYS_CTRL2_IMD_EDPI_TE_EN_SHIFT)                 /* 0x00000200 */
 #define VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_SHIFT             (10U)
 #define VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_MASK              (0x1U << VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_SHIFT)             /* 0x00000400 */
-#define VOP_SYS_CTRL2_IMD_EDPI_FRM_ST_SHIFT                (11U)
-#define VOP_SYS_CTRL2_IMD_EDPI_FRM_ST_MASK                 (0x1U << VOP_SYS_CTRL2_IMD_EDPI_FRM_ST_SHIFT)                /* 0x00000800 */
+#define VOP_SYS_CTRL2_IMD_EDPI_WMS_FS_SHIFT                (11U)
+#define VOP_SYS_CTRL2_IMD_EDPI_WMS_FS_MASK                 (0x1U << VOP_SYS_CTRL2_IMD_EDPI_WMS_FS_SHIFT)                /* 0x00000800 */
 #define VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_SHIFT             (12U)
 #define VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_MASK              (0x1U << VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_SHIFT)             /* 0x00001000 */
 #define VOP_SYS_CTRL2_IMD_GLOBAL_REGDONE_EN_SHIFT          (13U)
@@ -4320,8 +4320,8 @@ struct VOP_REG {
 #define VOP_SYS_CTRL2_DSC_BYPASS_EN_MASK                   (0x1U << VOP_SYS_CTRL2_DSC_BYPASS_EN_SHIFT)                  /* 0x20000000 */
 #define VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT             (30U)
 #define VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_MASK              (0x1U << VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT)             /* 0x40000000 */
-#define VOP_SYS_CTRL2_WMS_HOLD_EN_SHIFT                    (31U)
-#define VOP_SYS_CTRL2_WMS_HOLD_EN_MASK                     (0x1U << VOP_SYS_CTRL2_WMS_HOLD_EN_SHIFT)                    /* 0x80000000 */
+#define VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT              (31U)
+#define VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK               (0x1U << VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT)                    /* 0x80000000 */
 /* DSP_CTRL0 */
 #define VOP_DSP_CTRL0_RGB_DCLK_EN_SHIFT                    (0U)
 #define VOP_DSP_CTRL0_RGB_DCLK_EN_MASK                     (0x1U << VOP_DSP_CTRL0_RGB_DCLK_EN_SHIFT)                    /* 0x00000001 */
