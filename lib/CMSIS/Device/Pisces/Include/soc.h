@@ -537,32 +537,22 @@ struct SPI_REG {
 };
 /* GPIO Register Structure Define */
 struct GPIO_REG {
-    __IO uint32_t SWPORT_DR_L;                        /* Address Offset: 0x0000 */
-    __IO uint32_t SWPORT_DR_H;                        /* Address Offset: 0x0004 */
-    __IO uint32_t SWPORT_DDR_L;                       /* Address Offset: 0x0008 */
-    __IO uint32_t SWPORT_DDR_H;                       /* Address Offset: 0x000C */
-    __IO uint32_t INT_EN_L;                           /* Address Offset: 0x0010 */
-    __IO uint32_t INT_EN_H;                           /* Address Offset: 0x0014 */
-    __IO uint32_t INT_MASK_L;                         /* Address Offset: 0x0018 */
-    __IO uint32_t INT_MASK_H;                         /* Address Offset: 0x001C */
-    __IO uint32_t INT_TYPE_L;                         /* Address Offset: 0x0020 */
-    __IO uint32_t INT_TYPE_H;                         /* Address Offset: 0x0024 */
-    __IO uint32_t INT_POLARITY_L;                     /* Address Offset: 0x0028 */
-    __IO uint32_t INT_POLARITY_H;                     /* Address Offset: 0x002C */
-    __IO uint32_t INT_BOTHEDGE_L;                     /* Address Offset: 0x0030 */
-    __IO uint32_t INT_BOTHEDGE_H;                     /* Address Offset: 0x0034 */
-    __IO uint32_t DEBOUNCE_L;                         /* Address Offset: 0x0038 */
-    __IO uint32_t DEBOUNCE_H;                         /* Address Offset: 0x003C */
-    __IO uint32_t DBCLK_DIV_EN_L;                     /* Address Offset: 0x0040 */
-    __IO uint32_t DBCLK_DIV_EN_H;                     /* Address Offset: 0x0044 */
+    __IO uint32_t SWPORT_DR[2];                       /* Address Offset: 0x0000 */
+    __IO uint32_t SWPORT_DDR[2];                      /* Address Offset: 0x0008 */
+    __IO uint32_t INT_EN[2];                          /* Address Offset: 0x0010 */
+    __IO uint32_t INT_MASK[2];                        /* Address Offset: 0x0018 */
+    __IO uint32_t INT_TYPE[2];                        /* Address Offset: 0x0020 */
+    __IO uint32_t INT_POLARITY[2];                    /* Address Offset: 0x0028 */
+    __IO uint32_t INT_BOTHEDGE[2];                    /* Address Offset: 0x0030 */
+    __IO uint32_t DEBOUNCE[2];                        /* Address Offset: 0x0038 */
+    __IO uint32_t DBCLK_DIV_EN[2];                    /* Address Offset: 0x0040 */
     __IO uint32_t DBCLK_DIV_CON;                      /* Address Offset: 0x0048 */
          uint32_t RESERVED0;                          /* Address Offset: 0x004C */
     __I  uint32_t INT_STATUS;                         /* Address Offset: 0x0050 */
          uint32_t RESERVED1;                          /* Address Offset: 0x0054 */
     __I  uint32_t INT_RAWSTATUS;                      /* Address Offset: 0x0058 */
          uint32_t RESERVED2;                          /* Address Offset: 0x005C */
-    __O  uint32_t PORT_EOI_L;                         /* Address Offset: 0x0060 */
-    __O  uint32_t PORT_EOI_H;                         /* Address Offset: 0x0064 */
+    __O  uint32_t PORT_EOI[2];                        /* Address Offset: 0x0060 */
          uint32_t RESERVED3[2];                       /* Address Offset: 0x0068 */
     __I  uint32_t EXT_PORT;                           /* Address Offset: 0x0070 */
          uint32_t RESERVED4;                          /* Address Offset: 0x0074 */
@@ -1100,9 +1090,6 @@ struct VOP_REG {
 #define GRF_GPIO1B_IOMUX_L_GPIO1B1_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_L_GPIO1B1_SEL_SHIFT)               /* 0x00000070 */
 #define GRF_GPIO1B_IOMUX_L_GPIO1B2_SEL_SHIFT               (8U)
 #define GRF_GPIO1B_IOMUX_L_GPIO1B2_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_L_GPIO1B2_SEL_SHIFT)               /* 0x00000700 */
-/* GPIO1B_IOMUX_H */
-/* GPIO1C_IOMUX_L */
-/* GPIO1C_IOMUX_H */
 /* GPIO0L_SR */
 #define GRF_GPIO0L_SR_GPIO0A_SR_SHIFT                      (0U)
 #define GRF_GPIO0L_SR_GPIO0A_SR_MASK                       (0xFFU << GRF_GPIO0L_SR_GPIO0A_SR_SHIFT)                     /* 0x000000FF */
@@ -1118,7 +1105,6 @@ struct VOP_REG {
 #define GRF_GPIO1L_SR_GPIO1A_SR_MASK                       (0xFFU << GRF_GPIO1L_SR_GPIO1A_SR_SHIFT)                     /* 0x000000FF */
 #define GRF_GPIO1L_SR_GPIO1B_SR_SHIFT                      (8U)
 #define GRF_GPIO1L_SR_GPIO1B_SR_MASK                       (0xFFU << GRF_GPIO1L_SR_GPIO1B_SR_SHIFT)                     /* 0x0000FF00 */
-/* GPIO1H_SR */
 /* GPIO0A_P */
 #define GRF_GPIO0A_P_GPIO0A_P_SHIFT                        (0U)
 #define GRF_GPIO0A_P_GPIO0A_P_MASK                         (0xFFFFU << GRF_GPIO0A_P_GPIO0A_P_SHIFT)                     /* 0x0000FFFF */
@@ -1137,8 +1123,6 @@ struct VOP_REG {
 /* GPIO1B_P */
 #define GRF_GPIO1B_P_GPIO1B_P_SHIFT                        (0U)
 #define GRF_GPIO1B_P_GPIO1B_P_MASK                         (0xFFFFU << GRF_GPIO1B_P_GPIO1B_P_SHIFT)                     /* 0x0000FFFF */
-/* GPIO1C_P */
-/* GPIO1D_P */
 /* GPIO0A_E */
 #define GRF_GPIO0A_E_GPIO0A_E_SHIFT                        (0U)
 #define GRF_GPIO0A_E_GPIO0A_E_MASK                         (0xFFFFU << GRF_GPIO0A_E_GPIO0A_E_SHIFT)                     /* 0x0000FFFF */
@@ -1157,8 +1141,6 @@ struct VOP_REG {
 /* GPIO1B_E */
 #define GRF_GPIO1B_E_GPIO1B_E_SHIFT                        (0U)
 #define GRF_GPIO1B_E_GPIO1B_E_MASK                         (0xFFFFU << GRF_GPIO1B_E_GPIO1B_E_SHIFT)                     /* 0x0000FFFF */
-/* GPIO1C_E */
-/* GPIO1D_E */
 /* CHIP_VERSION_ID */
 #define GRF_CHIP_VERSION_ID_CHIP_VERSION_ID_SHIFT          (0U)
 #define GRF_CHIP_VERSION_ID_CHIP_VERSION_ID_MASK           (0xFFFFFFFFU << GRF_CHIP_VERSION_ID_CHIP_VERSION_ID_SHIFT)   /* 0xFFFFFFFF */
@@ -1243,7 +1225,6 @@ struct VOP_REG {
 #define GRF_SOC_CON2_GRF_CON_PDM_COMB_BY_CLK_SEL_MASK      (0x1U << GRF_SOC_CON2_GRF_CON_PDM_COMB_BY_CLK_SEL_SHIFT)     /* 0x00004000 */
 #define GRF_SOC_CON2_GRF_CON_AUDIO_BYPASS_CTRL_SEL_SHIFT   (15U)
 #define GRF_SOC_CON2_GRF_CON_AUDIO_BYPASS_CTRL_SEL_MASK    (0x1U << GRF_SOC_CON2_GRF_CON_AUDIO_BYPASS_CTRL_SEL_SHIFT)   /* 0x00008000 */
-/* SOC_CON3 */
 /* SOC_CON4 */
 #define GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_SHIFT        (0U)
 #define GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK         (0x1U << GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_SHIFT)        /* 0x00000001 */
@@ -1674,7 +1655,6 @@ struct VOP_REG {
 #define GRF_MEM_CON3_DSPCACHE_MEM_EMA_MASK                 (0x7U << GRF_MEM_CON3_DSPCACHE_MEM_EMA_SHIFT)                /* 0x00003800 */
 #define GRF_MEM_CON3_DSPCACHE_MEM_EMAW_SHIFT               (14U)
 #define GRF_MEM_CON3_DSPCACHE_MEM_EMAW_MASK                (0x3U << GRF_MEM_CON3_DSPCACHE_MEM_EMAW_SHIFT)               /* 0x0000C000 */
-/* MEM_CON4 */
 /* MEM_CON5 */
 #define GRF_MEM_CON5_VOP_DPRA_EMA_SHIFT                    (5U)
 #define GRF_MEM_CON5_VOP_DPRA_EMA_MASK                     (0x7U << GRF_MEM_CON5_VOP_DPRA_EMA_SHIFT)                    /* 0x000000E0 */
@@ -1689,6 +1669,7 @@ struct VOP_REG {
 #define GRF_MEM_CON6_ACODEC_SP_EMA_MASK                    (0x7U << GRF_MEM_CON6_ACODEC_SP_EMA_SHIFT)                   /* 0x00000007 */
 #define GRF_MEM_CON6_ACODEC_SP_EMAW_SHIFT                  (3U)
 #define GRF_MEM_CON6_ACODEC_SP_EMAW_MASK                   (0x3U << GRF_MEM_CON6_ACODEC_SP_EMAW_SHIFT)                  /* 0x00000018 */
+/* DMAC_CON4 */
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART0TX_SHIFT (0U)
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART0TX_MASK (0x1U << GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART0TX_SHIFT) /* 0x00000001 */
 #define GRF_DMAC_CON4_GRF_CON_DMAC_REQ_MODIFY_DIS_UART0RX_SHIFT (1U)
@@ -1757,7 +1738,6 @@ struct VOP_REG {
 /* OS_REG7 */
 #define GRF_OS_REG7_OS_REG_SHIFT                           (0U)
 #define GRF_OS_REG7_OS_REG_MASK                            (0xFFFFFFFFU << GRF_OS_REG7_OS_REG_SHIFT)                    /* 0xFFFFFFFF */
-/* CHIP_ID */
 /******************************************MBOX******************************************/
 /* A2B_INTEN */
 #define MBOX_A2B_INTEN_INT0_SHIFT                          (0U)
