@@ -31,7 +31,7 @@
 #define DSI_UPDATE_BIT(REG, SHIFT, VAL) \
                  VAL ? SET_BIT(REG, SHIFT) : CLEAR_BIT(REG, SHIFT)
 #define DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
-#define CMD_PKT_STATUS_TIMEOUT_RETRIES 10
+#define CMD_PKT_STATUS_TIMEOUT_RETRIES 100
 
 /********************* Private Structure Definition **************************/
 typedef enum {
@@ -416,6 +416,32 @@ HAL_Status HAL_DSI_LineTimerConfig(struct DSI_REG *pReg,
     lpcc = DSI_GetHcomponentLbcc(hbp, Lanembps, clk);
     WRITE_REG(pReg->VID_HBP_TIME, lpcc);
     lpcc = DSI_GetHcomponentLbcc(pModeInfo->crtcHtotal, Lanembps, clk);
+    WRITE_REG(pReg->VID_HLINE_TIME, lpcc);
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
+                                   uint16_t Lanembps,
+                                   struct DISPLAY_MODE_INFO *pModeInfo,
+                                   struct DISPLAY_RECT *pDisplayRect)
+{
+    uint16_t hsa = pModeInfo->crtcHsyncEnd - pModeInfo->crtcHsyncStart;
+    uint16_t hbp = pDisplayRect->w - pModeInfo->crtcHsyncEnd;
+    uint16_t clk = pModeInfo->crtcClock;
+    uint32_t lpcc;
+
+    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, TEAR_FX_EN_MASK, 0);
+    WRITE_REG(pReg->EDPI_CMD_SIZE, pDisplayRect->w);
+    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, DCS_LW_TX_MASK, 0);
+    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, TEAR_FX_EN_MASK, 1);
+
+    lpcc = DSI_GetHcomponentLbcc(hsa, Lanembps, clk);
+
+    WRITE_REG(pReg->VID_HSA_TIME, lpcc);
+    lpcc = DSI_GetHcomponentLbcc(hbp, Lanembps, clk);
+    WRITE_REG(pReg->VID_HBP_TIME, lpcc);
+    lpcc = DSI_GetHcomponentLbcc(pDisplayRect->w, Lanembps, clk);
     WRITE_REG(pReg->VID_HLINE_TIME, lpcc);
 
     return HAL_OK;

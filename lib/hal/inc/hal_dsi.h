@@ -100,6 +100,10 @@ HAL_Status HAL_DSI_DpiConfig(struct DSI_REG *pReg,
 HAL_Status HAL_DSI_LineTimerConfig(struct DSI_REG *pReg,
                                    uint16_t Lanembps,
                                    struct DISPLAY_MODE_INFO *pModeInfo);
+HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
+                                   uint16_t Lanembps,
+                                   struct DISPLAY_MODE_INFO *pModeInfo,
+                                   struct DISPLAY_RECT *pDisplayRect);
 #endif
 
 /** @} */
