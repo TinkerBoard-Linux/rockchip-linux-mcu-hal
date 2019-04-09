@@ -81,7 +81,45 @@ HAL_Status BSP_PDM_DeInit(void)
 }
 #endif
 
+#ifdef HAL_VAD_MODULE_ENABLED
+struct HAL_VAD_DEV g_vadDev =
+{
+    .base = VAD_BASE,
+    .hclk = HCLK_VAD_GATE,
+    .irq = VAD_IRQn,
+};
+
+HAL_Status BSP_VAD_Init(void)
+{
+    /* CLK Init */
+
+    return HAL_OK;
+}
+
+HAL_Status BSP_VAD_DeInit(void)
+{
+    /* CLK Init */
+
+    return HAL_OK;
+}
+#endif
+
 void BSP_DeInit(void)
+{
+#ifdef HAL_I2S_MODULE_ENABLED
+    BSP_I2S_DeInit();
+#endif
+
+#ifdef HAL_PDM_MODULE_ENABLED
+    BSP_PDM_DeInit();
+#endif
+
+#ifdef HAL_VAD_MODULE_ENABLED
+    BSP_VAD_DeInit();
+#endif
+}
+
+void BSP_Init(void)
 {
 #ifdef HAL_I2S_MODULE_ENABLED
     BSP_I2S_Init();
@@ -90,15 +128,8 @@ void BSP_DeInit(void)
 #ifdef HAL_PDM_MODULE_ENABLED
     BSP_PDM_Init();
 #endif
-}
 
-void BSP_Init(void)
-{
-#ifdef HAL_I2S_MODULE_ENABLED
-    BSP_I2S_DeInit();
-#endif
-
-#ifdef HAL_PDM_MODULE_ENABLED
-    BSP_PDM_DeInit();
+#ifdef HAL_VAD_MODULE_ENABLED
+    BSP_VAD_Init();
 #endif
 }

@@ -19,6 +19,10 @@ extern struct HAL_I2S_DEV g_i2s0Dev;
 extern struct HAL_PDM_DEV g_pdm0Dev;
 #endif
 
+#ifdef HAL_VAD_MODULE_ENABLED
+extern struct HAL_VAD_DEV g_vadDev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
