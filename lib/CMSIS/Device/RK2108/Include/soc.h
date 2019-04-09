@@ -257,8 +257,8 @@ struct GRF_REG {
 #define MBOX_CHAN_CNT                  4
 
 struct MBOX_CMD_DAT {
-    __IO uint32_t cmd;
-    __IO uint32_t data;
+    __IO uint32_t CMD;
+    __IO uint32_t DATA;
 };
 
 struct MBOX_REG {

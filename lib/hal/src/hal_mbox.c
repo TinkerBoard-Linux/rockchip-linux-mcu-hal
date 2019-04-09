@@ -126,11 +126,11 @@ static void MBOX_ChanSendMsg(struct MBOX_REG *pReg, eMBOX_CH chan,
                              uint8_t isA2B, const struct MBOX_CMD_DAT *msg)
 {
     if (isA2B) {
-        pReg->A2B[chan].cmd = msg->cmd;
-        pReg->A2B[chan].data = msg->data;
+        pReg->A2B[chan].CMD = msg->CMD;
+        pReg->A2B[chan].DATA = msg->DATA;
     } else {
-        pReg->B2A[chan].cmd = msg->cmd;
-        pReg->B2A[chan].data = msg->data;
+        pReg->B2A[chan].CMD = msg->CMD;
+        pReg->B2A[chan].DATA = msg->DATA;
     }
 }
 
@@ -138,11 +138,11 @@ static void MBOX_ChanRecvMsg(struct MBOX_CMD_DAT *msg, struct MBOX_REG *pReg,
                              eMBOX_CH chan, uint8_t isA2B)
 {
     if (isA2B) {
-        msg->cmd = pReg->B2A[chan].cmd;
-        msg->data = pReg->B2A[chan].data;
+        msg->CMD = pReg->B2A[chan].CMD;
+        msg->DATA = pReg->B2A[chan].DATA;
     } else {
-        msg->cmd = pReg->A2B[chan].cmd;
-        msg->data = pReg->A2B[chan].data;
+        msg->CMD = pReg->A2B[chan].CMD;
+        msg->DATA = pReg->A2B[chan].DATA;
     }
 }
 
