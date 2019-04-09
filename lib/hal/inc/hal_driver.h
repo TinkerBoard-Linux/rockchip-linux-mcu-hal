@@ -43,6 +43,10 @@
 #include "hal_hcd.h"
 #endif
 
+#ifdef HAL_I2C_MODULE_ENABLED
+#include "hal_i2c.h"
+#endif
+
 #ifdef HAL_I2S_MODULE_ENABLED
 #include "hal_i2s.h"
 #endif
