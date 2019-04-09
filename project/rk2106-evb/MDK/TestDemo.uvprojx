@@ -147,7 +147,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>1</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -161,7 +161,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile>.\Boot.ini</InitializationFile>
-            <Driver>BIN\UL2CM3.DLL</Driver>
+            <Driver>Segger\JL2CM3.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Include;..\..\..\lib\CMSIS\Device\RK2106\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test</IncludePath>
+              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\CORE\Include;..\..\..\lib\CMSIS\Device\RK2106\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test;..\..\..\lib\bsp\RK2106</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -423,11 +423,6 @@
         <Group>
           <GroupName>USER</GroupName>
           <Files>
-            <File>
-              <FileName>bsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\bsp.c</FilePath>
-            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
@@ -502,6 +497,16 @@
               <FileName>test_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\test\hal\test_timer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>BSP</GroupName>
+          <Files>
+            <File>
+              <FileName>bsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\bsp\RK2106\bsp.c</FilePath>
             </File>
           </Files>
         </Group>
