@@ -11,6 +11,10 @@
 /***************************** MACRO Definition ******************************/
 
 /***************************** Structure Definition **************************/
+#ifdef HAL_AUDIOPWM_MODULE_ENABLED
+extern struct HAL_AUDIOPWM_DEV g_audioPwmDev;
+#endif
+
 #ifdef HAL_I2S_MODULE_ENABLED
 extern struct HAL_I2S_DEV g_i2s0Dev;
 #endif

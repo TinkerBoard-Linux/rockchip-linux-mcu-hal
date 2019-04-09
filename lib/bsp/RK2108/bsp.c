@@ -5,6 +5,39 @@
 
 #include "bsp.h"
 
+#ifdef HAL_AUDIOPWM_MODULE_ENABLED
+struct HAL_AUDIOPWM_DEV g_audioPwmDev =
+{
+    .base = AUDIOPWM_BASE,
+    .mclk = CLK_AUDPWM,
+    .hclk = HCLK_AUDPWM_GATE,
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(AUDIOPWM->FIFO_ENTRY),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_AUDIOPWM,
+        .dmac = DMA_BASE,
+    },
+};
+
+HAL_Status BSP_AUDIOPWM_Init(void)
+{
+    /* CLK Init */
+
+    /* IO Init */
+    return HAL_OK;
+}
+
+HAL_Status BSP_AUDIOPWM_DeInit(void)
+{
+    /* CLK Init */
+
+    /* IO Init */
+    return HAL_OK;
+}
+#endif
+
 #ifdef HAL_I2S_MODULE_ENABLED
 struct HAL_I2S_DEV g_i2s0Dev =
 {
@@ -111,6 +144,10 @@ HAL_Status BSP_VAD_DeInit(void)
 
 void BSP_DeInit(void)
 {
+#ifdef HAL_AUDIOPWM_MODULE_ENABLED
+    BSP_AUDIOPWM_DeInit();
+#endif
+
 #ifdef HAL_I2S_MODULE_ENABLED
     BSP_I2S_DeInit();
 #endif
@@ -126,6 +163,10 @@ void BSP_DeInit(void)
 
 void BSP_Init(void)
 {
+#ifdef HAL_AUDIOPWM_MODULE_ENABLED
+    BSP_AUDIOPWM_Init();
+#endif
+
 #ifdef HAL_I2S_MODULE_ENABLED
     BSP_I2S_Init();
 #endif
