@@ -61,6 +61,7 @@ endif
 #############################################################################
 INCLUDES += \
 -I"$(ROOT_PATH)/lib/hal/inc" \
+-I"$(ROOT_PATH)/lib/bsp/$(PROJECT)" \
 -I"$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Include" \
 -I"$(ROOT_PATH)/lib/CMSIS/Core/Include" \
 -I"$(ROOT_PATH)/lib/CMSIS/Device" \
@@ -75,6 +76,7 @@ INCLUDES += \
 # Source Files
 #############################################################################
 DIRS := $(ROOT_PATH)/lib/hal/src \
+	$(ROOT_PATH)/lib/bsp/$(PROJECT) \
 	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
 	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates \
 	$(ROOT_PATH)/test/unity/extras/fixture/src \
