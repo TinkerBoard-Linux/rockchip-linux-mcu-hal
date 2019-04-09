@@ -3,7 +3,7 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-#include "rk2106.h"
+#include "soc.h"
 
 /*----------------------------------------------------------------------------
   Define clocks

@@ -135,64 +135,6 @@ typedef enum
 /* ================================================================================ */
 /****************************************************************************************/
 /*                                                                                      */
-/*                                Module Address Section                                */
-/*                                                                                      */
-/****************************************************************************************/
-#define SRAM_BASE ((uint32_t)0x03000000)
-
-#define ADC_BASE ((uint32_t)0x400d0000)
-#define EFUSE_BASE ((uint32_t)0x40090000)
-#define RTC_BASE ((uint32_t)0x400b0000)
-#define NANDC_BASE ((uint32_t)0x60080000)
-#define HIFIACC_BASE ((uint32_t)0x01060000)
-
-#define I2S0_BASE ((uint32_t)0x40020000)
-#define I2S1_BASE ((uint32_t)0x40030000)
-#define I2C0_BASE ((uint32_t)0x40040000)
-#define I2C1_BASE ((uint32_t)0x40050000)
-#define I2C2_BASE ((uint32_t)0x40060000)
-#define SPI0_BASE ((uint32_t)0x40070000)
-#define SPI1_BASE ((uint32_t)0x40080000)
-#define ACODEC_BASE ((uint32_t)0x40090000)
-#define UART0_BASE ((uint32_t)0x400a0000)
-#define UART1_BASE ((uint32_t)0x400b0000)
-#define UART2_BASE ((uint32_t)0x400c0000)
-#define SARADC_BASE ((uint32_t)0x400d0000)
-#define TIMER_BASE ((uint32_t)0x400e0000)
-#define PWM0_BASE ((uint32_t)0x400f0000)
-#define PWM1_BASE ((uint32_t)0x40100000)
-#define MBOX_BASE ((uint32_t)0x40110000)
-#define WDT_BASE ((uint32_t)0x40120000)
-#define UART3_BASE ((uint32_t)0x40130000)
-#define UART4_BASE ((uint32_t)0x40140000)
-#define UART5_BASE ((uint32_t)0x40150000)
-
-#define GPIO0_BASE ((uint32_t)0x40160000)
-#define GPIO1_BASE ((uint32_t)0x40170000)
-#define CRU_BASE ((uint32_t)0x40180000)
-
-#define GRF_BASE ((uint32_t)0x50010000)
-#define PMU_BASE ((uint32_t)0x50020000)
-#define GPIO2_BASE ((uint32_t)0x50030000)
-#define DMA_BASE ((uint32_t)0x60000000)
-#define DMA_BASE2 ((uint32_t)0x01070000)
-#define IMDCT_BASE ((uint32_t)0x60010000)
-#define SDMMC_BASE ((uint32_t)0x60020000)
-#define EMMC_BASE ((uint32_t)0x60030000)
-#define EBC_BASE ((uint32_t)0x60040000)
-#define SYNTH_BASE ((uint32_t)0x60050000)
-#define SFC_BASE ((uint32_t)0x60060000)
-#define VOP_BASE ((uint32_t)0x60070000)
-#define USB_BASE ((uint32_t)0x60080000)
-
-#define SDC0_ADDR ((uint32_t)0x60020000)
-#define SDC0_FIFO_ADDR (SDC0_ADDR + 0x200)
-#define EMMC_ADDR ((uint32_t)0x60030000)
-#define EMMC_FIFO_ADDR (EMMC_ADDR + 0x200)
-
-#define MBOX0_BASE MBOX_BASE
-/****************************************************************************************/
-/*                                                                                      */
 /*                               Module Structure Section                               */
 /*                                                                                      */
 /****************************************************************************************/
@@ -384,19 +326,15 @@ struct GRF_REG
     __IO uint32_t GRF_PRJ_ID; /* f8 */
     __IO uint32_t GRF_CPU_ID;
 };
-
 /* TIMER Register Structure Define  */
-struct TIMER_REG
-{
-    __IO uint32_t TimerLoadCount0; /* Load Count Register */
-    __IO uint32_t TimerLoadCount1; /* Load Count Register */
-    __IO uint32_t TimerCurrentValue0; /* Current Value Register */
-    __IO uint32_t TimerCurrentValue1; /* Current Value Register */
-    __IO uint32_t TimerControlReg; /* Control Register */
-    __IO uint32_t Reserved; /* End-of-Interrupt Register */
-    __IO uint32_t TimerIntStatus; /* Interrupt Status Register */
+struct TIMER_REG {
+    __IO uint32_t TIMER_LOAD_COUNT[2];               /* Address Offset: 0x0000 */
+    __IO uint32_t TIMER_CURR_VALUE[2];               /* Address Offset: 0x0008 */
+    __IO uint32_t TIMER_CONTROL;                     /* Address Offset: 0x0010 */
+         uint32_t RESERVED0;                         /* Address Offset: 0x0014 */
+    __O  uint32_t TIMER_INTSTATUS;                   /* Address Offset: 0x0018 */
+         uint32_t RESERVED1;                         /* Address Offset: 0x001C */
 };
-
 /* WDT Register Structure Define */
 struct WDT_REG
 {
@@ -413,8 +351,8 @@ struct WDT_REG
 #define MBOX_CHAN_CNT        4
 
 struct MBOX_CMD_DAT {
-    __IO uint32_t CMD;
-    __IO uint32_t DATA;
+    __IO uint32_t cmd;
+    __IO uint32_t data;
 };
 
 struct MBOX_REG {
@@ -460,11 +398,78 @@ struct SFC_REG {
 };
 /****************************************************************************************/
 /*                                                                                      */
+/*                                Module Address Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+#define SRAM_BASE ((uint32_t)0x03000000)
+
+#define ADC_BASE ((uint32_t)0x400d0000)
+#define EFUSE_BASE ((uint32_t)0x40090000)
+#define RTC_BASE ((uint32_t)0x400b0000)
+#define NANDC_BASE ((uint32_t)0x60080000)
+#define HIFIACC_BASE ((uint32_t)0x01060000)
+
+#define I2S0_BASE ((uint32_t)0x40020000)
+#define I2S1_BASE ((uint32_t)0x40030000)
+#define I2C0_BASE ((uint32_t)0x40040000)
+#define I2C1_BASE ((uint32_t)0x40050000)
+#define I2C2_BASE ((uint32_t)0x40060000)
+#define SPI0_BASE ((uint32_t)0x40070000)
+#define SPI1_BASE ((uint32_t)0x40080000)
+#define ACODEC_BASE ((uint32_t)0x40090000)
+#define UART0_BASE ((uint32_t)0x400a0000)
+#define UART1_BASE ((uint32_t)0x400b0000)
+#define UART2_BASE ((uint32_t)0x400c0000)
+#define SARADC_BASE ((uint32_t)0x400d0000)
+#define TIMER_BASE ((uint32_t)0x400e0000)
+#define PWM0_BASE ((uint32_t)0x400f0000)
+#define PWM1_BASE ((uint32_t)0x40100000)
+#define MBOX_BASE ((uint32_t)0x40110000)
+#define WDT_BASE ((uint32_t)0x40120000)
+#define UART3_BASE ((uint32_t)0x40130000)
+#define UART4_BASE ((uint32_t)0x40140000)
+#define UART5_BASE ((uint32_t)0x40150000)
+
+#define GPIO0_BASE ((uint32_t)0x40160000)
+#define GPIO1_BASE ((uint32_t)0x40170000)
+#define CRU_BASE ((uint32_t)0x40180000)
+
+#define GRF_BASE ((uint32_t)0x50010000)
+#define PMU_BASE ((uint32_t)0x50020000)
+#define GPIO2_BASE ((uint32_t)0x50030000)
+#define DMA_BASE ((uint32_t)0x60000000)
+#define DMA_BASE2 ((uint32_t)0x01070000)
+#define IMDCT_BASE ((uint32_t)0x60010000)
+#define SDMMC_BASE ((uint32_t)0x60020000)
+#define EMMC_BASE ((uint32_t)0x60030000)
+#define EBC_BASE ((uint32_t)0x60040000)
+#define SYNTH_BASE ((uint32_t)0x60050000)
+#define SFC_BASE ((uint32_t)0x60060000)
+#define VOP_BASE ((uint32_t)0x60070000)
+#define USB_BASE ((uint32_t)0x60080000)
+
+#define SDC0_ADDR ((uint32_t)0x60020000)
+#define SDC0_FIFO_ADDR (SDC0_ADDR + 0x200)
+#define EMMC_ADDR ((uint32_t)0x60030000)
+#define EMMC_FIFO_ADDR (EMMC_ADDR + 0x200)
+
+#define MBOX0_BASE MBOX_BASE
+/****************************************************************************************/
+/*                                                                                      */
 /*                               Module Variable Section                                */
 /*                                                                                      */
 /****************************************************************************************/
 /* Module Variable Define */
+#define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
+#define TIMER0              ((struct TIMER_REG *) TIMER_BASE)
+#define TIMER1              ((struct TIMER_REG *) (TIMER_BASE + 0x20))
 #define SFC                 ((struct SFC_REG *) SFC_BASE)
+#define UART0               ((struct UART_REG *) UART0_BASE)
+#define UART1               ((struct UART_REG *) UART1_BASE)
+#define UART2               ((struct UART_REG *) UART2_BASE)
+
+#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1))
+#define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
 /******************************************GRF*******************************************/
 #define IOMUX_GPIO2A6_IO ((uint32_t)(0))
 
@@ -567,24 +572,51 @@ struct SFC_REG {
 #define RX_LEN_PER_INT ((uint32_t)(8))
 
 #define MODE_X_DIV 16
-
-/************************************TIMER************************************/
-/* TIMERN_CONTROLREG */
-#define TIMERN_CONTROLREG_EN_SHIFT 0
-#define TIMERN_CONTROLREG_EN__MASK (1 << TIMERN_CONTROLREG_EN_SHIFT)
-#define TIMERN_CONTROLREG_EN_DISABLE (0 << TIMERN_CONTROLREG_EN_SHIFT)
-#define TIMERN_CONTROLREG_EN_ENABLE (1 << TIMERN_CONTROLREG_EN_SHIFT)
-
-#define TIMERN_CONTROLREG_MODE_SHIFT 1
-#define TIMERN_CONTROLREG_MODE__MASK (1 << TIMERN_CONTROLREG_MODE_SHIFT)
-#define TIMERN_CONTROLREG_MODE_FREE_RUNNING (0 << TIMERN_CONTROLREG_MODE_SHIFT)
-#define TIMERN_CONTROLREG_MODE_USER_DEFINED (0 << TIMERN_CONTROLREG_MODE_SHIFT)
-
-#define TIMERN_CONTROLREG_MASK_SHIFT 2
-#define TIMERN_CONTROLREG_MASK__MASK (1 << TIMERN_CONTROLREG_MASK_SHIFT)
-#define TIMERN_CONTROLREG_MASK_MASK (0 << TIMERN_CONTROLREG_MASK_SHIFT)
-#define TIMERN_CONTROLREG_MASK_UNMASK (1 << TIMERN_CONTROLREG_MASK_SHIFT)
-
+/*****************************************TIMER******************************************/
+/* TIMER0_LOAD_COUNT0 */
+#define TIMER_TIMER0_LOAD_COUNT0_COUNT0_SHIFT              (0U)
+#define TIMER_TIMER0_LOAD_COUNT0_COUNT0_MASK               (0xFFFFFFFFU << TIMER_TIMER0_LOAD_COUNT0_COUNT0_SHIFT)       /* 0xFFFFFFFF */
+/* TIMER0_LOAD_COUNT1 */
+#define TIMER_TIMER0_LOAD_COUNT1_COUNT1_SHIFT              (0U)
+#define TIMER_TIMER0_LOAD_COUNT1_COUNT1_MASK               (0xFFFFFFFFU << TIMER_TIMER0_LOAD_COUNT1_COUNT1_SHIFT)       /* 0xFFFFFFFF */
+/* TIMER0_CURR_VALUE0 */
+#define TIMER_TIMER0_CURR_VALUE0_CURRENT_VALUE0_SHIFT      (0U)
+#define TIMER_TIMER0_CURR_VALUE0_CURRENT_VALUE0_MASK       (0xFFFFFFFFU << TIMER_TIMER0_CURR_VALUE0_CURRENT_VALUE0_SHIFT) /* 0xFFFFFFFF */
+/* TIMER0_CURR_VALUE1 */
+#define TIMER_TIMER0_CURR_VALUE1_CURRENT_VALUE1_SHIFT      (0U)
+#define TIMER_TIMER0_CURR_VALUE1_CURRENT_VALUE1_MASK       (0xFFFFFFFFU << TIMER_TIMER0_CURR_VALUE1_CURRENT_VALUE1_SHIFT) /* 0xFFFFFFFF */
+/* TIMER0_CONTROL */
+#define TIMER_TIMER0_CONTROL_TIMER_EN_SHIFT                (0U)
+#define TIMER_TIMER0_CONTROL_TIMER_EN_MASK                 (0x1U << TIMER_TIMER0_CONTROL_TIMER_EN_SHIFT)                /* 0x00000001 */
+#define TIMER_TIMER0_CONTROL_TIMER_MODE_SHIFT              (1U)
+#define TIMER_TIMER0_CONTROL_TIMER_MODE_MASK               (0x1U << TIMER_TIMER0_CONTROL_TIMER_MODE_SHIFT)              /* 0x00000002 */
+#define TIMER_TIMER0_CONTROL_INT_EN_SHIFT                  (2U)
+#define TIMER_TIMER0_CONTROL_INT_EN_MASK                   (0x1U << TIMER_TIMER0_CONTROL_INT_EN_SHIFT)                  /* 0x00000004 */
+/* TIMER0_INTSTATUS */
+#define TIMER_TIMER0_INTSTATUS_INT_PD_SHIFT                (0U)
+#define TIMER_TIMER0_INTSTATUS_INT_PD_MASK                 (0x1U << TIMER_TIMER0_INTSTATUS_INT_PD_SHIFT)                /* 0x00000001 */
+/* TIMER1_LOAD_COUNT0 */
+#define TIMER_TIMER1_LOAD_COUNT0_COUNT0_SHIFT              (0U)
+#define TIMER_TIMER1_LOAD_COUNT0_COUNT0_MASK               (0xFFFFFFFFU << TIMER_TIMER1_LOAD_COUNT0_COUNT0_SHIFT)       /* 0xFFFFFFFF */
+/* TIMER1_LOAD_COUNT1 */
+#define TIMER_TIMER1_LOAD_COUNT1_COUNT1_SHIFT              (0U)
+#define TIMER_TIMER1_LOAD_COUNT1_COUNT1_MASK               (0xFFFFFFFFU << TIMER_TIMER1_LOAD_COUNT1_COUNT1_SHIFT)       /* 0xFFFFFFFF */
+/* TIMER1_CURR_VALUE0 */
+#define TIMER_TIMER1_CURR_VALUE0_CURRENT_VALUE0_SHIFT      (0U)
+#define TIMER_TIMER1_CURR_VALUE0_CURRENT_VALUE0_MASK       (0xFFFFFFFFU << TIMER_TIMER1_CURR_VALUE0_CURRENT_VALUE0_SHIFT) /* 0xFFFFFFFF */
+/* TIMER1_CURR_VALUE1 */
+#define TIMER_TIMER1_CURR_VALUE1_CURRENT_VALUE1_SHIFT      (0U)
+#define TIMER_TIMER1_CURR_VALUE1_CURRENT_VALUE1_MASK       (0xFFFFFFFFU << TIMER_TIMER1_CURR_VALUE1_CURRENT_VALUE1_SHIFT) /* 0xFFFFFFFF */
+/* TIMER1_CONTROL */
+#define TIMER_TIMER1_CONTROL_TIMER_EN_SHIFT                (0U)
+#define TIMER_TIMER1_CONTROL_TIMER_EN_MASK                 (0x1U << TIMER_TIMER1_CONTROL_TIMER_EN_SHIFT)                /* 0x00000001 */
+#define TIMER_TIMER1_CONTROL_TIMER_MODE_SHIFT              (1U)
+#define TIMER_TIMER1_CONTROL_TIMER_MODE_MASK               (0x1U << TIMER_TIMER1_CONTROL_TIMER_MODE_SHIFT)              /* 0x00000002 */
+#define TIMER_TIMER1_CONTROL_INT_EN_SHIFT                  (2U)
+#define TIMER_TIMER1_CONTROL_INT_EN_MASK                   (0x1U << TIMER_TIMER1_CONTROL_INT_EN_SHIFT)                  /* 0x00000004 */
+/* TIMER1_INTSTATUS */
+#define TIMER_TIMER1_INTSTATUS_INT_PD_SHIFT                (0U)
+#define TIMER_TIMER1_INTSTATUS_INT_PD_MASK                 (0x1U << TIMER_TIMER1_INTSTATUS_INT_PD_SHIFT)                /* 0x00000001 */
 /* SDMMC/EMMC/SDIO Macro Define */
 #define MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT (10U)
 #define MMC_STATUS_DATA_STATE_MC_BUSY_MASK (0x1U)
