@@ -854,7 +854,7 @@ struct VOP_REG {
 #define I2C2_BASE           0x40B20000U /* I2C2 base address */
 #define SPI2APB_BASE        0x40C00000U /* SPI2APB base address */
 #define SPI1_BASE           0x40C10000U /* SPI1 base address */
-#define SPI2_BASE           0x40c20000U /* SPI2 base address */
+#define SPI2_BASE           0x40C20000U /* SPI2 base address */
 #define SFC_BASE            0x40C80000U /* SFC base address */
 #define MMC0_BASE           0x40C90000U /* MMC0 base address */
 #define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
@@ -1334,10 +1334,6 @@ struct VOP_REG {
 #define GRF_SOC_CON0_UART0_RTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART0_RTS_SEL_SHIFT)                   /* 0x00000100 */
 #define GRF_SOC_CON0_UART0_CTS_SEL_SHIFT                   (9U)
 #define GRF_SOC_CON0_UART0_CTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART0_CTS_SEL_SHIFT)                   /* 0x00000200 */
-#define GRF_SOC_CON0_UART1_RTS_SEL_SHIFT                   (10U)
-#define GRF_SOC_CON0_UART1_RTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART1_RTS_SEL_SHIFT)                   /* 0x00000400 */
-#define GRF_SOC_CON0_UART1_CTS_SEL_SHIFT                   (11U)
-#define GRF_SOC_CON0_UART1_CTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART1_CTS_SEL_SHIFT)                   /* 0x00000800 */
 #define GRF_SOC_CON0_UART2_RTS_SEL_SHIFT                   (12U)
 #define GRF_SOC_CON0_UART2_RTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART2_RTS_SEL_SHIFT)                   /* 0x00001000 */
 #define GRF_SOC_CON0_UART2_CTS_SEL_SHIFT                   (13U)
@@ -2398,8 +2394,6 @@ struct VOP_REG {
 #define PMU_SFT_CON_PMU_LF_MODE_CFG_MASK                   (0x1U << PMU_SFT_CON_PMU_LF_MODE_CFG_SHIFT)                  /* 0x00000004 */
 #define PMU_SFT_CON_PWRMODE_EN_SFT_SHIFT                   (3U)
 #define PMU_SFT_CON_PWRMODE_EN_SFT_MASK                    (0x1U << PMU_SFT_CON_PWRMODE_EN_SFT_SHIFT)                   /* 0x00000008 */
-#define PMU_SFT_CON_PMU_DEBUG_SEL_SHIFT                    (6U)
-#define PMU_SFT_CON_PMU_DEBUG_SEL_MASK                     (0x1U << PMU_SFT_CON_PMU_DEBUG_SEL_SHIFT)                    /* 0x00000040 */
 /* LDO_CON0 */
 #define PMU_LDO_CON0_LDO_MIPI_EN_SHIFT                     (0U)
 #define PMU_LDO_CON0_LDO_MIPI_EN_MASK                      (0x1U << PMU_LDO_CON0_LDO_MIPI_EN_SHIFT)                     /* 0x00000001 */
@@ -5514,7 +5508,7 @@ struct VOP_REG {
 #define VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT             (30U)
 #define VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_MASK              (0x1U << VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT)             /* 0x40000000 */
 #define VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT              (31U)
-#define VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK               (0x1U << VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT)                    /* 0x80000000 */
+#define VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK               (0x1U << VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT)              /* 0x80000000 */
 /* DSP_CTRL0 */
 #define VOP_DSP_CTRL0_RGB_DCLK_EN_SHIFT                    (0U)
 #define VOP_DSP_CTRL0_RGB_DCLK_EN_MASK                     (0x1U << VOP_DSP_CTRL0_RGB_DCLK_EN_SHIFT)                    /* 0x00000001 */
