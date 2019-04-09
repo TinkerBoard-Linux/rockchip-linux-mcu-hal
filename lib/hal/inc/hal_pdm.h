@@ -97,12 +97,16 @@
 #define PDM_DMA_RDL_MSK (0x7f << 0)
 #define PDM_DMA_RDL(X) ((X - 1) << 0)
 
+/** PDM CLK RATE */
+#define PDM_FPGA_CLK_RATE (72000000)
+#define PDM_CLK_RATE      (100000000)
 /***************************** Structure Definition **************************/
 
 /** pdm dev struct */
 struct HAL_PDM_DEV {
     uint32_t base;
     uint32_t mclk;
+    uint32_t mclkRate;
     uint32_t hclk;
     uint32_t reset;
 

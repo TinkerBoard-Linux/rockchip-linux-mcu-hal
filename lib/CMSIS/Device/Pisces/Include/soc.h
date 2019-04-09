@@ -3636,12 +3636,14 @@ struct VOP_REG {
 /* CTRL0 */
 #define PDM_CTRL0_DATA_VLD_WIDTH_SHIFT                     (0U)
 #define PDM_CTRL0_DATA_VLD_WIDTH_MASK                      (0x1FU << PDM_CTRL0_DATA_VLD_WIDTH_SHIFT)                    /* 0x0000001F */
+#define PDM_CTRL0_SAMPLE_RATE_SEL_SHIFT                    (5U)
+#define PDM_CTRL0_SAMPLE_RATE_SEL_MASK                     (0x7U << PDM_CTRL0_SAMPLE_RATE_SEL_SHIFT)                    /* 0x000000E0 */
 #define PDM_CTRL0_INT_DIV_CON_SHIFT                        (8U)
 #define PDM_CTRL0_INT_DIV_CON_MASK                         (0xFFU << PDM_CTRL0_INT_DIV_CON_SHIFT)                       /* 0x0000FF00 */
-#define PDM_CTRL0_CLK20X_DIV_CON_SHIFT                     (16U)
-#define PDM_CTRL0_CLK20X_DIV_CON_MASK                      (0xFFU << PDM_CTRL0_CLK20X_DIV_CON_SHIFT)                    /* 0x00FF0000 */
-#define PDM_CTRL0_FILTER_IN_TYPE_SEL_SHIFT                 (24U)
-#define PDM_CTRL0_FILTER_IN_TYPE_SEL_MASK                  (0x1U << PDM_CTRL0_FILTER_IN_TYPE_SEL_SHIFT)                 /* 0x01000000 */
+#define PDM_CTRL0_SIG_SCALE_MODE_SHIFT                     (24U)
+#define PDM_CTRL0_SIG_SCALE_MODE_MASK                      (0x1U << PDM_CTRL0_SIG_SCALE_MODE_SHIFT)                     /* 0x01000000 */
+#define PDM_CTRL0_FILTER_GATE_EN_SHIFT                     (25U)
+#define PDM_CTRL0_FILTER_GATE_EN_MASK                      (0x1U << PDM_CTRL0_FILTER_GATE_EN_SHIFT)                     /* 0x02000000 */
 #define PDM_CTRL0_HWT_EN_SHIFT                             (26U)
 #define PDM_CTRL0_HWT_EN_MASK                              (0x1U << PDM_CTRL0_HWT_EN_SHIFT)                             /* 0x04000000 */
 #define PDM_CTRL0_PATH0_EN_SHIFT                           (27U)
@@ -3660,20 +3662,16 @@ struct VOP_REG {
 #define PDM_CTRL1_FRAC_DIV_NUMERATOR_SHIFT                 (16U)
 #define PDM_CTRL1_FRAC_DIV_NUMERATOR_MASK                  (0xFFFFU << PDM_CTRL1_FRAC_DIV_NUMERATOR_SHIFT)              /* 0xFFFF0000 */
 /* CLK_CTRL */
-#define PDM_CLK_CTRL_PDM_DS_RATIO_SHIFT                    (0U)
-#define PDM_CLK_CTRL_PDM_DS_RATIO_MASK                     (0x7U << PDM_CLK_CTRL_PDM_DS_RATIO_SHIFT)                    /* 0x00000007 */
-#define PDM_CLK_CTRL_CLK_POLAR_SHIFT                       (3U)
-#define PDM_CLK_CTRL_CLK_POLAR_MASK                        (0x1U << PDM_CLK_CTRL_CLK_POLAR_SHIFT)                       /* 0x00000008 */
+#define PDM_CLK_CTRL_CIC_DS_RATIO_SHIFT                    (0U)
+#define PDM_CLK_CTRL_CIC_DS_RATIO_MASK                     (0x3U << PDM_CLK_CTRL_CIC_DS_RATIO_SHIFT)                    /* 0x00000003 */
+#define PDM_CLK_CTRL_FIR_COM_BPS_SHIFT                     (2U)
+#define PDM_CLK_CTRL_FIR_COM_BPS_MASK                      (0x1U << PDM_CLK_CTRL_FIR_COM_BPS_SHIFT)                     /* 0x00000004 */
+#define PDM_CLK_CTRL_LR_CH_EX_SHIFT                        (3U)
+#define PDM_CLK_CTRL_LR_CH_EX_MASK                         (0x1U << PDM_CLK_CTRL_LR_CH_EX_SHIFT)                        /* 0x00000008 */
 #define PDM_CLK_CTRL_DIV_TYPE_SEL_SHIFT                    (4U)
 #define PDM_CLK_CTRL_DIV_TYPE_SEL_MASK                     (0x1U << PDM_CLK_CTRL_DIV_TYPE_SEL_SHIFT)                    /* 0x00000010 */
 #define PDM_CLK_CTRL_PDM_CLK_EN_SHIFT                      (5U)
 #define PDM_CLK_CTRL_PDM_CLK_EN_MASK                       (0x1U << PDM_CLK_CTRL_PDM_CLK_EN_SHIFT)                      /* 0x00000020 */
-#define PDM_CLK_CTRL_DIV_RATIO_SEL_SHIFT                   (6U)
-#define PDM_CLK_CTRL_DIV_RATIO_SEL_MASK                    (0x1U << PDM_CLK_CTRL_DIV_RATIO_SEL_SHIFT)                   /* 0x00000040 */
-#define PDM_CLK_CTRL_FS_SEL_CFG_EN_SHIFT                   (7U)
-#define PDM_CLK_CTRL_FS_SEL_CFG_EN_MASK                    (0x1U << PDM_CLK_CTRL_FS_SEL_CFG_EN_SHIFT)                   /* 0x00000080 */
-#define PDM_CLK_CTRL_FS_SEL_CFG_SHIFT                      (8U)
-#define PDM_CLK_CTRL_FS_SEL_CFG_MASK                       (0x1FU << PDM_CLK_CTRL_FS_SEL_CFG_SHIFT)                     /* 0x00001F00 */
 /* HPF_CTRL */
 #define PDM_HPF_CTRL_HPF_CF_SHIFT                          (0U)
 #define PDM_HPF_CTRL_HPF_CF_MASK                           (0x3U << PDM_HPF_CTRL_HPF_CF_SHIFT)                          /* 0x00000003 */

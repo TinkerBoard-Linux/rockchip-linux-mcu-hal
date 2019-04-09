@@ -29,8 +29,6 @@
 
 /********************* Private MACRO Definition ******************************/
 
-#define PDM_FPGA_TEST /* for fpga test */
-
 #define PDM_DMA_BURST_SIZE   (8) /* size * width: 8*4 = 32 bytes */
 #define PDM_SIGNOFF_CLK_RATE (100000000)
 
@@ -38,7 +36,6 @@
 
 struct RK_PDM_CLKREF {
     uint32_t sr;
-    uint32_t clk;
     uint32_t clkOut;
 };
 
@@ -50,37 +47,17 @@ struct RK_PDM_DS_RATIO {
 /********************* Private Variable Definition ***************************/
 
 static struct RK_PDM_CLKREF clkRef[] = {
-    { 8000, 40960000, 2048000 },
-    { 11025, 56448000, 2822400 },
-    { 12000, 61440000, 3072000 },
-    { 8000, 98304000, 2048000 },
-    { 12000, 98304000, 3072000 },
-};
-
-static struct RK_PDM_DS_RATIO dsRatio[] = {
-    { 0, 192000 },
-    { 0, 176400 },
-    { 0, 128000 },
-    { 1, 96000 },
-    { 1, 88200 },
-    { 1, 64000 },
-    { 2, 48000 },
-    { 2, 44100 },
-    { 2, 32000 },
-    { 3, 24000 },
-    { 3, 22050 },
-    { 3, 16000 },
-    { 4, 12000 },
-    { 4, 11025 },
-    { 4, 8000 },
+    { 8000, 2048000 },
+    { 11025, 2822400 },
+    { 12000, 3072000 },
 };
 
 /********************* Private Function Definition ***************************/
 
-static HAL_Status PDM_GetClk(uint32_t sr, uint32_t *clkSrc,
-                             uint32_t *clkOut)
+static HAL_Status PDM_GetClk(uint32_t sr, uint32_t *clkOut)
 {
-    uint32_t i, count, div;
+    uint32_t i, count, div, found = 0;
+    HAL_Status ret = HAL_OK;
 
     HAL_ASSERT(sr > 0);
 
@@ -91,18 +68,69 @@ static HAL_Status PDM_GetClk(uint32_t sr, uint32_t *clkSrc,
         div = sr / clkRef[i].sr;
         if ((div & (div - 1)) == 0) {
             *clkOut = clkRef[i].clkOut;
-            *clkSrc = clkRef[i].clk;
+            found = 1;
             break;
         }
     }
 
-#ifdef PDM_FPGA_TEST
-    /* fpga clk is 12M, so fake it. */
-    *clkSrc = 12000000;
-    *clkOut = 1024000;
-#endif
+    if (!found) {
+        *clkOut = 0;
+        ret = HAL_INVAL;
+    }
 
-    return HAL_OK;
+    return ret;
+}
+
+static int PDM_SampleRate(uint32_t sampleRate)
+{
+    switch (sampleRate) {
+    case AUDIO_SAMPLERATE_8000:
+    case AUDIO_SAMPLERATE_11025:
+
+        return 0;
+    case AUDIO_SAMPLERATE_16000:
+    case AUDIO_SAMPLERATE_22050:
+
+        return 1;
+    case AUDIO_SAMPLERATE_32000:
+
+        return 2;
+    case AUDIO_SAMPLERATE_44100:
+    case AUDIO_SAMPLERATE_48000:
+
+        return 3;
+    case AUDIO_SAMPLERATE_64000:
+    case AUDIO_SAMPLERATE_88200:
+    case AUDIO_SAMPLERATE_96000:
+
+        return 4;
+    case AUDIO_SAMPLERATE_176400:
+    case AUDIO_SAMPLERATE_192000:
+
+        return 5;
+    default:
+
+        return HAL_INVAL;
+    }
+}
+
+static int PDM_GetCicDsRatio(uint32_t clk)
+{
+    switch (clk) {
+    case 1024000:
+    case 1411000:
+    case 1536000:
+
+        return 2;
+    case 2048000:
+    case 2822000:
+    case 3072000:
+
+        return 1;
+    default:
+
+        return HAL_INVAL;
+    }
 }
 
 static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
@@ -112,9 +140,11 @@ static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
     struct PDM_REG *reg = (struct PDM_REG *)pdm->base;
 
     HAL_Status ret = HAL_OK;
-    uint32_t clkOut, clkSrc, n, m, old, val, mask, clkDiv;
+    uint32_t clkOut, clkSrc, n, m, old, val, mask;
+    int cic;
 
-    ret = PDM_GetClk(params->sampleRate, &clkSrc, &clkOut);
+    clkSrc = pdm->mclkRate;
+    ret = PDM_GetClk(params->sampleRate, &clkOut);
     HAL_ASSERT(ret == HAL_OK);
     HAL_CRU_ClkSetFreq(pdm->mclk, clkSrc);
     HAL_CRU_FracdivGetConfig(clkOut, clkSrc, &n, &m);
@@ -125,6 +155,10 @@ static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
     mask = PDM_FD_NUMERATOR_MSK | PDM_FD_DENOMINATOR_MSK;
     MODIFY_REG(reg->CTRL[1], mask, val);
 
+    cic = PDM_GetCicDsRatio(clkOut);
+    HAL_ASSERT(cic != HAL_INVAL);
+    MODIFY_REG(reg->CLK_CTRL, PDM_CLK_CTRL_CIC_DS_RATIO_MASK, cic);
+
     if (old != val) {
         /* reset */
         HAL_CRU_ClkResetAssert(pdm->reset);
@@ -132,34 +166,7 @@ static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
         HAL_PDM_Disable(dai, AUDIO_STREAM_CAPTURE);
     }
 
-    clkDiv = m / n;
-    if (clkDiv >= 40)
-        val = PDM_CLK_FD_RATIO_40;
-    else if (clkDiv <= 35)
-        val = PDM_CLK_FD_RATIO_35;
-    else
-        ret = HAL_INVAL;
-
-    MODIFY_REG(reg->CLK_CTRL, PDM_CLK_FD_RATIO_MSK, val);
-
     return ret;
-}
-
-static uint32_t PDM_Get_DS_Ratio(uint32_t sr)
-{
-    uint32_t i, count, ratio;
-
-    ratio = 0;
-    if (!sr)
-        return ratio;
-
-    count = HAL_ARRAY_SIZE(dsRatio);
-    for (i = 0; i < count; i++) {
-        if (sr == dsRatio[i].sr)
-            ratio = dsRatio[i].ratio;
-    }
-
-    return ratio;
 }
 
 static int PDM_Ioctl(void *priv, int cmd, void *arg)
@@ -384,6 +391,7 @@ HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,
     struct PDM_REG *reg = (struct PDM_REG *)pdm->base;
     uint32_t val = 0;
     HAL_Status ret = HAL_OK;
+    int rate;
 
     /* pdm only support capture */
     HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
@@ -391,6 +399,11 @@ HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,
     ret = PDM_ChangeClkFreq(dai, params);
     HAL_ASSERT(ret == HAL_OK);
 
+    rate = PDM_SampleRate(params->sampleRate);
+    HAL_ASSERT(rate != HAL_INVAL);
+    MODIFY_REG(reg->CTRL[0],
+               PDM_CTRL0_SAMPLE_RATE_SEL_MASK,
+               rate << PDM_CTRL0_SAMPLE_RATE_SEL_SHIFT);
     MODIFY_REG(reg->CTRL[0],
                PDM_MODE_MSK, PDM_MODE_LJ);
     MODIFY_REG(reg->HPF_CTRL,
@@ -398,9 +411,6 @@ HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,
     MODIFY_REG(reg->HPF_CTRL,
                PDM_HPF_LE | PDM_HPF_RE, PDM_HPF_LE | PDM_HPF_RE);
     MODIFY_REG(reg->CLK_CTRL, PDM_CLK_EN, PDM_CLK_EN);
-
-    val = PDM_Get_DS_Ratio(params->sampleRate);
-    MODIFY_REG(reg->CLK_CTRL, PDM_DS_RATIO_MSK, val);
 
     val = PDM_VDW(params->sampleBits);
     switch (params->channels) {
