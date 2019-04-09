@@ -301,13 +301,13 @@ struct PMU_REG {
     __I  uint32_t BUS_IDLE_ACK;                       /* Address Offset: 0x00AC */
     __I  uint32_t POWER_ST;                           /* Address Offset: 0x00B0 */
     __I  uint32_t CORE_PWR_ST;                        /* Address Offset: 0x00B4 */
-    __IO uint32_t OSC_CNT;                            /* Address Offset: 0x00B8 */
+         uint32_t RESERVED4;                          /* Address Offset: 0x00B8 */
     __IO uint32_t PLLLOCK_CNT;                        /* Address Offset: 0x00BC */
     __IO uint32_t PWRMODE_TIMEOUT_CNT;                /* Address Offset: 0x00C0 */
     __IO uint32_t NOC_AUTO_ENA;                       /* Address Offset: 0x00C4 */
-         uint32_t RESERVED4[2];                       /* Address Offset: 0x00C8 */
+         uint32_t RESERVED5[2];                       /* Address Offset: 0x00C8 */
     __IO uint32_t DSPAPM_CON;                         /* Address Offset: 0x00D0 */
-         uint32_t RESERVED5;                          /* Address Offset: 0x00D4 */
+         uint32_t RESERVED6;                          /* Address Offset: 0x00D4 */
     __IO uint32_t DSP_LDO_ADJ_CNT;                    /* Address Offset: 0x00D8 */
     __IO uint32_t DSP_TIMEOUT_CNT;                    /* Address Offset: 0x00DC */
     __IO uint32_t PWRMODE_LDO_ADJ_CNT;                /* Address Offset: 0x00E0 */
@@ -1981,8 +1981,6 @@ struct VOP_REG {
 /* PWRMODE_CON */
 #define PMU_PWRMODE_CON_POWER_MODE_EN_SHIFT                (0U)
 #define PMU_PWRMODE_CON_POWER_MODE_EN_MASK                 (0x1U << PMU_PWRMODE_CON_POWER_MODE_EN_SHIFT)                /* 0x00000001 */
-#define PMU_PWRMODE_CON_OSC_DISABLE_SHIFT                  (1U)
-#define PMU_PWRMODE_CON_OSC_DISABLE_MASK                   (0x1U << PMU_PWRMODE_CON_OSC_DISABLE_SHIFT)                  /* 0x00000002 */
 #define PMU_PWRMODE_CON_PMU_USE_LF_SHIFT                   (2U)
 #define PMU_PWRMODE_CON_PMU_USE_LF_MASK                    (0x1U << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT)                   /* 0x00000004 */
 #define PMU_PWRMODE_CON_PLL_PD_EN_SHIFT                    (3U)
@@ -2004,8 +2002,6 @@ struct VOP_REG {
 #define PMU_PWRMODE_CON_PLLPD_WAIT_EN_SHIFT                (11U)
 #define PMU_PWRMODE_CON_PLLPD_WAIT_EN_MASK                 (0x1U << PMU_PWRMODE_CON_PLLPD_WAIT_EN_SHIFT)                /* 0x00000800 */
 /* SFT_CON */
-#define PMU_SFT_CON_OSC_DISABLE_CFG_SHIFT                  (0U)
-#define PMU_SFT_CON_OSC_DISABLE_CFG_MASK                   (0x1U << PMU_SFT_CON_OSC_DISABLE_CFG_SHIFT)                  /* 0x00000001 */
 #define PMU_SFT_CON_PMU_LF_ENA_CFG_SHIFT                   (1U)
 #define PMU_SFT_CON_PMU_LF_ENA_CFG_MASK                    (0x1U << PMU_SFT_CON_PMU_LF_ENA_CFG_SHIFT)                   /* 0x00000002 */
 #define PMU_SFT_CON_PMU_LF_MODE_CFG_SHIFT                  (2U)
@@ -2013,8 +2009,6 @@ struct VOP_REG {
 #define PMU_SFT_CON_PWRMODE_EN_SFT_SHIFT                   (3U)
 #define PMU_SFT_CON_PWRMODE_EN_SFT_MASK                    (0x1U << PMU_SFT_CON_PWRMODE_EN_SFT_SHIFT)                   /* 0x00000008 */
 /* LDO_CON0 */
-#define PMU_LDO_CON0_LDO_MIPI_EN_SHIFT                     (0U)
-#define PMU_LDO_CON0_LDO_MIPI_EN_MASK                      (0x1U << PMU_LDO_CON0_LDO_MIPI_EN_SHIFT)                     /* 0x00000001 */
 #define PMU_LDO_CON0_LDO_AUDIO_EN_SHIFT                    (1U)
 #define PMU_LDO_CON0_LDO_AUDIO_EN_MASK                     (0x1U << PMU_LDO_CON0_LDO_AUDIO_EN_SHIFT)                    /* 0x00000002 */
 #define PMU_LDO_CON0_LDO_AUDIO_SFT_SHIFT                   (2U)
@@ -2195,9 +2189,6 @@ struct VOP_REG {
 #define PMU_CORE_PWR_ST_STANDBYWFI_CM4_MASK                (0x1U << PMU_CORE_PWR_ST_STANDBYWFI_CM4_SHIFT)               /* 0x00000001 */
 #define PMU_CORE_PWR_ST_STANDBYWFI_DSP_SHIFT               (1U)
 #define PMU_CORE_PWR_ST_STANDBYWFI_DSP_MASK                (0x1U << PMU_CORE_PWR_ST_STANDBYWFI_DSP_SHIFT)               /* 0x00000002 */
-/* OSC_CNT */
-#define PMU_OSC_CNT_PMU_OSC_CNT_SHIFT                      (0U)
-#define PMU_OSC_CNT_PMU_OSC_CNT_MASK                       (0xFFFFFU << PMU_OSC_CNT_PMU_OSC_CNT_SHIFT)                  /* 0x000FFFFF */
 /* PLLLOCK_CNT */
 #define PMU_PLLLOCK_CNT_PMU_PLLLOCK_CNT_SHIFT              (0U)
 #define PMU_PLLLOCK_CNT_PMU_PLLLOCK_CNT_MASK               (0xFFFFFU << PMU_PLLLOCK_CNT_PMU_PLLLOCK_CNT_SHIFT)          /* 0x000FFFFF */
@@ -4321,7 +4312,7 @@ struct VOP_REG {
 #define VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT             (30U)
 #define VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_MASK              (0x1U << VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT)             /* 0x40000000 */
 #define VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT              (31U)
-#define VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK               (0x1U << VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT)                    /* 0x80000000 */
+#define VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK               (0x1U << VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT)              /* 0x80000000 */
 /* DSP_CTRL0 */
 #define VOP_DSP_CTRL0_RGB_DCLK_EN_SHIFT                    (0U)
 #define VOP_DSP_CTRL0_RGB_DCLK_EN_MASK                     (0x1U << VOP_DSP_CTRL0_RGB_DCLK_EN_SHIFT)                    /* 0x00000001 */
