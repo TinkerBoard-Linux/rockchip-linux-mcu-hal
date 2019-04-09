@@ -109,9 +109,7 @@ void HAL_NVIC_ConfigExtIRQ(IRQn_Type IRQn, NVIC_IRQHandler handler,
  */
 void HAL_NVIC_Init(void)
 {
-    /* Enable some system fault exceptions */
-    SCB->SHCSR |= SCB_SHCSR_USGFAULTENA_Msk | SCB_SHCSR_BUSFAULTENA_Msk |
-                  SCB_SHCSR_MEMFAULTENA_Msk;
+    /* Use HardFault */
 }
 
 #endif
