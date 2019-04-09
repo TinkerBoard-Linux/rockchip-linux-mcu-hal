@@ -45,8 +45,8 @@ void SystemInit(void)
     /* config icache: mpu disable, stb disable, write through, hot buffer enable */
     ICACHE->CACHE_CTRL |=
         (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK |
-         ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK) &
-        (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
+         ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK);
+    ICACHE->CACHE_CTRL &= (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
 
     do {
         status =

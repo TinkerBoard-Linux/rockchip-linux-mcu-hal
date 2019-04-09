@@ -73,8 +73,8 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Enable(void)
        prefetch enable */
     ICACHE->CACHE_CTRL |=
         (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK
-         | ICACHE_CACHE_CTRL_CACHE_PF_EN_MASK)
-        & (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
+         | ICACHE_CACHE_CTRL_CACHE_PF_EN_MASK);
+    ICACHE->CACHE_CTRL &= (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
 
     /* if mpu has been enable, we will enable cache mpu function */
     if (HAL_MPU_IsEnable())
