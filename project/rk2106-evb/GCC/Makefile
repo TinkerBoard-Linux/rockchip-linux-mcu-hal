@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: BSD-3-Clause */
 
-# Copyright (c) 2018 Rockchip Electronic Co.,Ltd
+# Copyright (c) 2018-2019 Rockchip Electronic Co.,Ltd
 
 ROOT_PATH	:= ../../..
-RKSOC           := RK2106
+PROJECT           := RK2106
 
 #############################################################################
 # Cross compiler
@@ -27,10 +27,10 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 CPU		= -mcpu=cortex-m3 -mthumb
 
 ASFLAGS         += $(CPU)
-#CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk --specs=nano.specs
+#CFLAGS		+= $(CPU) -std=c99 -O2 -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk --specs=nano.specs
 #LDFLAGS	+= $(CPU) -Wl,--gc-sections --specs=nano.specs -u _scanf_float -u _printf_float
-CFLAGS		+= $(CPU) -std=c99 -Os -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk -Wunused-variable -Wformat=2
-LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc
+CFLAGS		+= $(CPU) -std=c99 -O2 -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk -Wunused-variable -Wformat=2
+LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc -nostartfiles
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
 LINKER_SCRIPT	:= ./gcc_arm.ld
@@ -57,12 +57,15 @@ endif
 #############################################################################
 INCLUDES += \
 -I"$(ROOT_PATH)/lib/hal/inc" \
--I"$(ROOT_PATH)/lib/CMSIS/Device/$(RKSOC)/Include" \
--I"$(ROOT_PATH)/lib/CMSIS/Include" \
+-I"$(ROOT_PATH)/lib/bsp/$(PROJECT)" \
+-I"$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Include" \
+-I"$(ROOT_PATH)/lib/CMSIS/Core/Include" \
 -I"$(ROOT_PATH)/lib/CMSIS/Device" \
 -I"$(ROOT_PATH)/test/unity/src" \
 -I"$(ROOT_PATH)/test/unity/extras/fixture/src" \
 -I"$(ROOT_PATH)/test" \
+-I"$(ROOT_PATH)/test/coremark" \
+-I"$(ROOT_PATH)/test/coremark/barebones" \
 -I"../src" \
 -I"../Scatter" \
 
@@ -70,12 +73,15 @@ INCLUDES += \
 # Source Files
 #############################################################################
 DIRS := $(ROOT_PATH)/lib/hal/src \
-	$(ROOT_PATH)/lib/CMSIS/Device/$(RKSOC)/Source/Templates/GCC \
-	$(ROOT_PATH)/lib/CMSIS/Device/$(RKSOC)/Source/Templates \
+	$(ROOT_PATH)/lib/bsp/$(PROJECT) \
+	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
+	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates \
 	$(ROOT_PATH)/test/unity/extras/fixture/src \
 	$(ROOT_PATH)/test/unity/src \
 	$(ROOT_PATH)/test/hal \
-	$(ROOT_PATH)/test/ \
+	$(ROOT_PATH)/test \
+	$(ROOT_PATH)/test/coremark \
+	$(ROOT_PATH)/test/coremark/barebones \
 	../Scatter \
 	../src \
 	. \

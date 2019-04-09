@@ -17,13 +17,54 @@
 
 /********************* Public Function Definition ****************************/
 
+struct UART_REG *pUart = UART0;
+
+#ifdef __GNUC__
+int _write(int fd, char *ptr, int len)
+{
+    int i = 0;
+
+    /*
+     * write "len" of char from "ptr" to file id "fd"
+     * Return number of char written.
+     *
+    * Only work for STDOUT, STDIN, and STDERR
+     */
+    if (fd > 2)
+    {
+        return -1;
+    }
+
+    while (*ptr && (i < len))
+    {
+        if (*ptr == '\n')
+        {
+            HAL_UART_SerialOut(pUart, "\r", 1);
+        }
+        HAL_UART_SerialOut(pUart, (uint8_t *)ptr, 1);
+
+        i++;
+        ptr++;
+    }
+
+    return i;
+}
+#else
 int fputc(int ch, FILE *f)
 {
     if (ch == '\n') {
-        HAL_UART_WriteByte(UART_CHB, "\r", 1);
+        HAL_UART_SerialOut(pUart, "\r", 1);
     }
-    HAL_UART_WriteByte(UART_CHB, (uint8_t *)&ch, 1);
+    HAL_UART_SerialOut(pUart, (uint8_t *)&ch, 1);
+
 }
+#endif
+
+void UART_IRQHandler(void)
+{
+    HAL_UART_HandleIrq(pUart);
+}
+
 
 int main(void)
 {
@@ -34,10 +75,11 @@ int main(void)
     /* BSP Init */
     BSP_Init();
 
-    /* HAL UART Init */
-    HAL_UART_Init(UART_CHB, UART_BR_115200, UART_DATA_8B, UART_ONE_STOPBIT,
+    /* UART Init */
+    HAL_NVIC_SetIRQHandler(UART0_IRQn, (NVIC_IRQHandler)&UART_IRQHandler);
+    HAL_NVIC_EnableIRQ(UART0_IRQn);
+    HAL_UART_Init(pUart, UART_BR_115200, UART_DATA_8B, UART_ONE_STOPBIT,
                   UART_PARITY_DISABLE);
-    printf("printf test\n");
 
     /* Unity Test  */
     test_main();
@@ -46,4 +88,9 @@ int main(void)
         ;
 
     return 0;
+}
+
+int _start(void)
+{
+    main();
 }
