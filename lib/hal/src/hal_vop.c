@@ -36,6 +36,12 @@
 #define IS_BPP_FORMAT(x) ((x >= VOP_FMT_1BPP) &&    \
                  (x <= VOP_FMT_8BPP)) ? 1 : 0
 
+#define MCU_CS_STR 2
+#define MCU_CS_END 12
+#define MCU_WR_STR 4
+#define MCU_WR_END 8
+#define MCU_TOTAL  15
+
 /********************* Private Structure Definition **************************/
 typedef enum {
     VOP_WIN0,
@@ -62,6 +68,8 @@ typedef enum {
     OUTPUT_MODE_888,
     OUTPUT_MODE_666,
     OUTPUT_MODE_565,
+    OUT_MODE_S888       = 8,
+    OUT_MODE_S888_DUMMY = 12,
 } eVOP_OutputMode;
 
 typedef enum {
@@ -479,6 +487,11 @@ HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg)
                           VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_SHIFT,
                           VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_MASK, 1);
 
+    VOP_MaskWriteNoBackup(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_FRAME_ST_SHIFT,
+                          VOP_MCU_MCU_FRAME_ST_MASK, 1);
+    VOP_MaskWriteNoBackup(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_FRAME_ST_SHIFT,
+                          VOP_MCU_MCU_FRAME_ST_MASK, 0);
+
     return HAL_OK;
 }
 
@@ -618,6 +631,40 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
               dspVtotal << 16 | dspVsync);
     VOP_Write(&g_VOP_RegMir.DSP_VACT_ST_END, &pReg->DSP_VACT_ST_END,
               dspVactSt << 16 | dspVactEnd);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  VOP MCU mode init.
+ * @param  pReg: VOP reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_McuModeInit(struct VOP_REG *pReg)
+{
+    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_TYPE_SHIFT,
+                  VOP_MCU_MCU_TYPE_MASK, 1);
+
+    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_PIX_TOTAL_SHIFT,
+                  VOP_MCU_MCU_PIX_TOTAL_MASK, MCU_TOTAL);
+
+    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CS_PST_SHIFT,
+                  VOP_MCU_MCU_CS_PST_MASK, MCU_CS_STR);
+
+    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CS_PEND_SHIFT,
+                  VOP_MCU_MCU_CS_PEND_MASK, MCU_CS_END);
+
+    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RW_PST_SHIFT,
+                  VOP_MCU_MCU_RW_PST_MASK, MCU_WR_STR);
+
+    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RW_PEND_SHIFT,
+                  VOP_MCU_MCU_RW_PEND_MASK, MCU_WR_END);
+
+    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CLK_SEL_SHIFT,
+                  VOP_MCU_MCU_CLK_SEL_MASK, 0);
+
+    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_HOLD_MODE_SHIFT,
+                  VOP_MCU_MCU_HOLD_MODE_MASK, 1);
 
     return HAL_OK;
 }
@@ -874,6 +921,25 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
                       OUTPUT_MODE_888);
         break;
+    case MEDIA_BUS_FMT_SRGB888_3X8:
+        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL[2], &pReg->DSP_CTRL[2],
+                      VOP_DSP_CTRL2_DITHER_DOWN_SHIFT,
+                      VOP_DSP_CTRL2_DITHER_DOWN_MASK,
+                      0);
+        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL[2], &pReg->DSP_CTRL[2],
+                      VOP_DSP_CTRL2_DSP_OUT_MODE_SHIFT,
+                      VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
+                      OUT_MODE_S888);
+        break;
+    case MEDIA_BUS_FMT_SRGB888_DUMMY_4X8:
+        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL[2], &pReg->DSP_CTRL[2],
+                      VOP_DSP_CTRL2_DITHER_DOWN_SHIFT,
+                      VOP_DSP_CTRL2_DITHER_DOWN_MASK,
+                      0);
+        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL[2], &pReg->DSP_CTRL[2],
+                      VOP_DSP_CTRL2_DSP_OUT_MODE_SHIFT,
+                      VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
+                      OUT_MODE_S888_DUMMY);
     default:
         HAL_DBG_ERR("Unknown Bus Format: %d\n", BusFormat);
         break;

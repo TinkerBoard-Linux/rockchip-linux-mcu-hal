@@ -58,6 +58,12 @@
 #define MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA 0x1012
 #define MEDIA_BUS_FMT_ARGB8888_1X32      0x100d
 #define MEDIA_BUS_FMT_RGB888_1X32_PADHI  0x100f
+#define MEDIA_BUS_FMT_SRGB888_3X8        0x101c
+#define MEDIA_BUS_FMT_SBGR888_3X8        0x101d
+#define MEDIA_BUS_FMT_SRBG888_3X8        0x101e
+#define MEDIA_BUS_FMT_SRGB888_DUMMY_4X8  0x101f
+#define MEDIA_BUS_FMT_SBGR888_DUMMY_4X8  0x1020
+#define MEDIA_BUS_FMT_SRBG888_DUMMY_4X8  0x1021
 
 /***************************** Structure Definition **************************/
 

@@ -172,6 +172,7 @@ HAL_Status HAL_VOP_DeInit(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
                             struct DISPLAY_MODE_INFO *pModeInfo,
                             struct VOP_POST_SCALE_INFO *pPostScaleInfo);
+HAL_Status HAL_VOP_McuModeInit(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_PostScaleInit(struct VOP_REG *pReg,
                                  struct DISPLAY_MODE_INFO *pModeInfo,
                                  struct VOP_POST_SCALE_INFO *pPostScaleInfo);
