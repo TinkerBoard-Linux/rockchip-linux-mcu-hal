@@ -37,7 +37,7 @@ void SNOR_XipDisable(void)
     SFC->XIP_MODE = 0x0;
 }
 
-#define maxest_sector 64
+#define maxest_sector 16
 static uint8_t *pwrite;
 static uint8_t *pread;
 static uint32_t *pread32;
@@ -215,7 +215,6 @@ static HAL_Status SNOR_XIP_DEFAULT_TEST(uint32_t testEndLBA)
     return HAL_OK;
 }
 
-
 TEST_GROUP(HAL_SNOR);
 
 TEST_SETUP(HAL_SNOR){
@@ -233,7 +232,7 @@ TEST(HAL_SNOR, SnorStressTest){
     testEndLBA = HAL_SNOR_GetCapacity();
     TEST_ASSERT(testEndLBA > 0);
 
-    ret = SNOR_TEST(testEndLBA / 10);
+    ret = SNOR_TEST(testEndLBA / 50);
     TEST_ASSERT(ret == HAL_OK);
 }
 
@@ -264,18 +263,29 @@ TEST(HAL_SNOR, XipDefaultTest){
     testEndLBA = HAL_SNOR_GetCapacity();
     TEST_ASSERT(testEndLBA > 0);
 
-
     ret = SNOR_XIP_DEFAULT_TEST(testEndLBA / 10);
     TEST_ASSERT(ret == HAL_OK);
+}
+
+static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
+{
+    return (uint8_t *)(((uintptr_t)ptr + align - 1) & ~(uintptr_t)(align - 1));
 }
 
 /* Test code should be place in ram */
 TEST_GROUP_RUNNER(HAL_SNOR){
     uint32_t ret;
+    uint8_t *pwrite_t, *pread_t;
 
-    pwrite = (uint8_t *)malloc(maxest_sector * 512);
-    pread = (uint8_t *)malloc(maxest_sector * 512);
-
+    pwrite_t = (uint8_t *)malloc(maxest_sector * 512 + 64);
+    pread_t = (uint8_t *)malloc(maxest_sector * 512 + 64);
+    pwrite = AlignUp(pwrite_t, CACHE_LINE_SIZE);
+    pread = AlignUp(pread_t, CACHE_LINE_SIZE);
+    HAL_DBG("pwrite %p pread %p\n", pwrite, pread);
+    if (!pwrite || !pread) {
+        HAL_DBG("malloc failed\n");
+        while (1);
+    }
     ret = HAL_SNOR_Init();
     TEST_ASSERT(ret == HAL_OK);
     RUN_TEST_CASE(HAL_SNOR, SnorStressTest);
@@ -286,8 +296,8 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     ret = HAL_SNOR_Deinit();
     TEST_ASSERT(ret == HAL_OK);
 
-    free(pwrite);
-    free(pread);
+    free(pwrite_t);
+    free(pread_t);
 }
 
 #endif
