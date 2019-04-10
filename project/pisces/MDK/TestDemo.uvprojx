@@ -365,7 +365,7 @@
               <MiscControls>--c99 --gnu</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Core\Include;..\..\..\lib\CMSIS\Device\Pisces\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test;..\..\..\test\coremark;..\..\..\test\coremark\barebones</IncludePath>
+              <IncludePath>..\src;..\..\..\lib\hal\inc;..\..\..\lib\CMSIS\Core\Include;..\..\..\lib\CMSIS\Device\Pisces\Include;..\..\..\lib\CMSIS\Device;..\..\..\test\unity;..\..\..\test\unity\src;..\..\..\test\unity\extras\fixture\src;..\..\..\test;..\..\..\test\coremark;..\..\..\test\coremark\barebones;..\..\..\lib\bsp\Pisces</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -423,11 +423,6 @@
         <Group>
           <GroupName>USER</GroupName>
           <Files>
-            <File>
-              <FileName>bsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\bsp.c</FilePath>
-            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
@@ -612,6 +607,16 @@
               <FileName>cvt.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\test\coremark\barebones\cvt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>BSP</GroupName>
+          <Files>
+            <File>
+              <FileName>bsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\lib\bsp\Pisces\bsp.c</FilePath>
             </File>
           </Files>
         </Group>
