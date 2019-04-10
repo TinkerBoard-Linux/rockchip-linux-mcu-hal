@@ -33,9 +33,8 @@
 
 /* The maximum TOP (timeout period) value that can be set in the watchdog. */
 
-#define WDT_MAX_TOP         15
-#define WDT_DEFAULT_SECONDS 30
-#define WDT_TIMEOUT         500 /* ms */
+#define WDT_MAX_TOP 15
+#define WDT_TIMEOUT 500 /* ms */
 
 /********************* Private Structure Definition **************************/
 
@@ -49,11 +48,6 @@ static struct DW_WDT dwWdt;
 static struct WDT_REG *pWDT = (struct WDT_REG *)(WDT_BASE);
 
 /********************* Private Function Definition ***************************/
-
-__STATIC_INLINE uint32_t WDT_IsEnabled(void)
-{
-    return (pWDT->WDT_CR) & WDT_WDT_CR_WDT_EN_MASK;
-}
 
 __STATIC_INLINE uint32_t WDT_TopInSeconds(uint32_t top)
 {
@@ -113,29 +107,22 @@ HAL_Status HAL_WDT_Init(uint32_t freq)
 
     dwWdt.freq = freq;
 
-    if (!WDT_IsEnabled()) {
-        WDT_SetTop(WDT_DEFAULT_SECONDS);
-        pWDT->WDT_CR = WDT_WDT_CR_WDT_EN_MASK;
-
-        return HAL_OK;
-    }
-
-    return HAL_BUSY;
+    return HAL_OK;
 }
 
 /** @} */
 
 /** @defgroup WDT_Exported_Functions_Group5 Other Functions
- @verbatim
+  @verbatim
 
- ===============================================================================
+  ===============================================================================
              #### Other functions ####
- ===============================================================================
- This section provides functions allowing to other controlling:
+  ===============================================================================
+  This section provides functions allowing to other controlling:
 
- @endverbatim
- *  @{
- */
+  @endverbatim
+  *  @{
+  */
 
 /**
  * @brief  Set WDT timeout period
@@ -156,6 +143,17 @@ HAL_Status HAL_WDT_SetTimeout(uint32_t top)
 HAL_Status HAL_WDT_KeepAlive(void)
 {
     pWDT->WDT_CRR = WDOG_COUNTER_RESTART_KICK_VALUE;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Start WDT
+ * @return HAL_Status
+ */
+HAL_Status HAL_WDT_Start(void)
+{
+    pWDT->WDT_CR = WDT_WDT_CR_WDT_EN_MASK;
 
     return HAL_OK;
 }
