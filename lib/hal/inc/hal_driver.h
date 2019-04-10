@@ -27,6 +27,10 @@
 #include "hal_demo.h"
 #endif
 
+#ifdef HAL_DSP_MODULE_ENABLED
+#include "hal_dsp.h"
+#endif
+
 #ifdef HAL_GPIO_MODULE_ENABLED
 #include "hal_gpio.h"
 #endif
