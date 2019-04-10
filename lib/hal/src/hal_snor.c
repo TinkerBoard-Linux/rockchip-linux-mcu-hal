@@ -172,7 +172,7 @@ struct FLASH_INFO spiFlashbl[] = {
     { 0xc22019, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x30, 16, 6, 0 }, /* MX25L25635E/F */
     { 0x207017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 0, 0 }, /* XM25QH64A */
     { 0x207018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* XM25QH128A */
-    { 0x1c7018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x04, 15, 0, 0 }, /* EN25QH128A */
+    { 0x1c7018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* EN25QH128A */
 };
 
 static struct FLASH_INFO *s_spiFlashInfo;
@@ -379,7 +379,6 @@ static HAL_Status SNOR_ProgDataRaw(uint32_t addr, void *pData, uint32_t size)
     SNOR_WriteEn();
 
     ret = HAL_SFC_Request(sfcmd.d32, sfctrl.d32, addr, pData);
-    HAL_DelayUs(20); //status may be unnormal
     if (ret != HAL_OK)
         return ret;
 
