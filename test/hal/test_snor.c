@@ -232,7 +232,7 @@ TEST(HAL_SNOR, SnorStressTest){
     testEndLBA = HAL_SNOR_GetCapacity();
     TEST_ASSERT(testEndLBA > 0);
 
-    ret = SNOR_TEST(testEndLBA / 50);
+    ret = SNOR_TEST(testEndLBA / 10);
     TEST_ASSERT(ret == HAL_OK);
 }
 
