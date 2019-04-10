@@ -118,7 +118,7 @@ SECTIONS
 	   which must be 4byte aligned */
 	__etext = ALIGN (32);
 
-	. = _data_start_addr  + . - _code_start_addr;
+	. = _data_start_addr  + __etext - _code_start_addr;
 	.data : AT (__etext)
 	{
 		__data_start__ = .;
