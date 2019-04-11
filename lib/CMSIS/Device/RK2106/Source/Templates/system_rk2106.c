@@ -3,7 +3,7 @@
  * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
  */
 
-#include "soc.h"
+#include "hal_base.h"
 
 /*----------------------------------------------------------------------------
   Define clocks
@@ -43,4 +43,38 @@ void SystemInit (void)
   SCB->VTOR = (uint32_t) &__Vectors;
 #endif
   SystemCoreClock = SYSTEM_CLOCK;
+}
+
+/*----------------------------------------------------------------------------
+  System reset function
+ *----------------------------------------------------------------------------*/
+void SystemReset(eRESET_MODE mode)
+{
+  /* mask cpu interrupt */
+  __disable_fault_irq();
+  __disable_irq();
+
+  if (REST_MASKROM == mode)
+  {
+      /* maskrom */
+      PMU->SYS_REG[3] = RK_CLRSET_BITS(0xFFFF, 0x18BF);
+  }
+  else if (REST_LOADER == mode)
+  {
+      /* loader */
+      PMU->SYS_REG[3] = RK_CLRSET_BITS(0xFFFF, 0x18AF);
+  }
+  else
+  {
+      /* reset */
+  }
+
+  /* Vectortable --> maskrom address 0x0000 */
+  SCB->VTOR = 0x00000000;
+
+  /* Remap, address 0x0 --> maskrom */
+  GRF->GRF_INTER_CON0 = RK_CLRSET_BITS(0x01 << 8, 0x00 << 8);
+
+  /* Software reset */
+  NVIC_SystemReset();
 }

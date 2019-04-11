@@ -10,6 +10,12 @@
 extern "C" {
 #endif
 
+typedef enum {
+    REST_SYSTEM  = 0x00U,
+    REST_MASKROM = 0x01U,
+    REST_LOADER  = 0x02U
+} eRESET_MODE;
+
 extern uint32_t SystemCoreClock; /*!< System Clock Frequency (Core Clock) */
 
 /**
@@ -18,6 +24,13 @@ extern uint32_t SystemCoreClock; /*!< System Clock Frequency (Core Clock) */
    Initialize the System and update the SystemCoreClock variable.
  */
 extern void SystemInit(void);
+
+/**
+  \brief Reset the microcontroller system.
+
+   Reset the microcontroller directly or enter maskrom/loader mode.
+ */
+extern void SystemReset(eRESET_MODE mode);
 
 /**
   \brief  Update SystemCoreClock variable.

@@ -364,6 +364,30 @@ struct MBOX_REG {
     struct MBOX_CMD_DAT B2A[MBOX_CHAN_CNT];
 };
 
+/* PMU Register Structure Define */
+struct PMU_REG {
+    __IO uint32_t WAKEUP_CFG[3];                      /* Address Offset: 0x0000 */
+    __IO uint32_t PWRDN_CON;                          /* Address Offset: 0x000c */
+    __I  uint32_t PWRDN_ST;                           /* Address Offset: 0x0010 */
+    __IO uint32_t PWRMODE_CON;                        /* Address Offset: 0x0014 */
+         uint32_t RESERVED0[1];                       /* Address Offset: 0x0018 */
+    __IO uint32_t OSC_CNT;                            /* Address Offset: 0x001c */
+    __I  uint32_t PWRDN_CNT;                          /* Address Offset: 0x0020 */
+    __I  uint32_t PWRUP_CNT;                          /* Address Offset: 0x0024 */
+    __IO uint32_t SFT_CON;                            /* Address Offset: 0x0028 */
+    __IO uint32_t PLLLOCK_CNT;                        /* Address Offset: 0x002c */
+    __IO uint32_t INT_CON;                            /* Address Offset: 0x0030 */
+    __O  uint32_t INT_ST;                             /* Address Offset: 0x0034 */
+    __O  uint32_t GPIO_POS_INT_ST;                    /* Address Offset: 0x0038 */
+    __O  uint32_t GPIO_NEG_INT_ST;                    /* Address Offset: 0x003C */
+    __IO uint32_t SYS_REG[4];                         /* Address Offset: 0x0040 */
+         uint32_t RESERVED1[4];                       /* Address Offset: 0x0050 */
+    __IO uint32_t GPIO_POS_INT_CON;                   /* Address Offset: 0x0060 */
+    __IO uint32_t GPIO_NEG_INT_CON;                   /* Address Offset: 0x0064 */
+         uint32_t RESERVED2[6];                       /* Address Offset: 0x0068 */
+    __IO uint32_t SOFTRST_CON;                        /* Address Offset: 0x0080 */
+};
+
 /* SFC Register Structure Define */
 struct SFC_REG {
     __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
@@ -461,6 +485,8 @@ struct SFC_REG {
 /****************************************************************************************/
 /* Module Variable Define */
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
+#define PMU                 ((struct PMU_REG *) PMU_BASE)
+#define GRF                 ((struct GRF_REG *) GRF_BASE)
 #define TIMER0              ((struct TIMER_REG *) TIMER_BASE)
 #define TIMER1              ((struct TIMER_REG *) (TIMER_BASE + 0x20))
 #define SFC                 ((struct SFC_REG *) SFC_BASE)
