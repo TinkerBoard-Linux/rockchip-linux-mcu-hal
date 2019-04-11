@@ -163,6 +163,7 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
         return ret;
     val = (0x0 << 6) | DataType;
     switch (DataType) {
+    case MIPI_DSI_DCS_COMPRESSION_MODE:
     case MIPI_DSI_DCS_SHORT_WRITE:
     case MIPI_DSI_DCS_SHORT_WRITE_PARAM:
     case MIPI_DSI_GENERIC_SHORT_WRITE_0_PARAM:
@@ -175,6 +176,7 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
     }
     case MIPI_DSI_DCS_LONG_WRITE:
     case MIPI_DSI_GENERIC_LONG_WRITE:
+    case MIPI_DSI_PPS_LONG_WRITE:
     {
         /* Send payload */
         ret = DSI_WaitFifoNotFull(pReg, GEN_PLD_W_FULL_MASK);

@@ -27,6 +27,7 @@
  *  ...
  */
 typedef enum {
+    MIPI_DSI_DCS_COMPRESSION_MODE        = 0x07,
     MIPI_DSI_GENERIC_SHORT_WRITE_0_PARAM = 0x03,
     MIPI_DSI_GENERIC_SHORT_WRITE_1_PARAM = 0x13,
     MIPI_DSI_GENERIC_SHORT_WRITE_2_PARAM = 0x23,
@@ -36,6 +37,7 @@ typedef enum {
     MIPI_DSI_BLANKING_PACKET             = 0x19,
     MIPI_DSI_GENERIC_LONG_WRITE          = 0x29,
     MIPI_DSI_DCS_LONG_WRITE              = 0x39,
+    MIPI_DSI_PPS_LONG_WRITE              = 0x0A,
 }  eDSI_DataType;
 
 typedef enum {
