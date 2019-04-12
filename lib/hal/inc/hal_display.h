@@ -38,6 +38,7 @@
 #define DSI_MODE_EOT_PACKET       BIT(8)
 #define DSI_CLOCK_NON_CONTINUOUS  BIT(9)
 #define DSI_MODE_LPM              BIT(10)
+#define DSC_ENABLE                BIT(11)
 
 /* media bus format from DRM define */
 #define MEDIA_BUS_FMT_RGB565_1X16        0x1017

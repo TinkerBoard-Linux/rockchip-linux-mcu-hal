@@ -546,10 +546,11 @@ HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
                   VOP_DSP_BG_DSP_BG_BLUE_MASK,
                   0xff);
 
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
-                  VOP_SYS_CTRL2_DSC_BYPASS_EN_SHIFT,
-                  VOP_SYS_CTRL2_DSC_BYPASS_EN_MASK,
-                  0x1);
+    if (!(pModeInfo->flags & DSC_ENABLE))
+        VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
+                      VOP_SYS_CTRL2_DSC_BYPASS_EN_SHIFT,
+                      VOP_SYS_CTRL2_DSC_BYPASS_EN_MASK,
+                      0x1);
 
     return HAL_OK;
 }
