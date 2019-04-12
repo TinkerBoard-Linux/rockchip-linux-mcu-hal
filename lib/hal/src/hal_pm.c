@@ -29,9 +29,8 @@
  @endverbatim
  @} */
 
-#define NVIC_EXTIRQ_NUM   256
-#define NVIC_EXT_ISER_NUM ((NVIC_EXTIRQ_NUM/8) + 1)
-#define NVIC_EXT_IP_NUM   ((NVIC_EXTIRQ_NUM/4) + 1)
+#define NVIC_EXT_ISER_NUM (8)
+#define NVIC_EXT_IP_NUM   (240)
 
 struct NVIC_REGS {
     __IO uint32_t ISER[8];
@@ -52,7 +51,7 @@ struct NVIC_REGS {
 struct NVIC_SAVE_S {
     uint32_t iser[NVIC_EXT_ISER_NUM];/* Interrupt Set Enable Register */
     uint32_t icer[NVIC_EXT_ISER_NUM];/* Interrupt Clear Enable Register */
-    uint32_t ip[NVIC_EXT_IP_NUM]; /* Interrupt Priority Register */
+    uint8_t ip[NVIC_EXT_IP_NUM]; /* Interrupt Priority Register */
     uint32_t pg;  /* Interrupt Priority Group Register */
 };
 
