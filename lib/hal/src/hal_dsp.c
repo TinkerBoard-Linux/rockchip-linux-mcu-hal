@@ -157,15 +157,21 @@ HAL_Status HAL_DSP_Deinit(struct DSP_DEV *dsp)
 /**
  * @brief  Enable dsp.
  * @param  dsp: the handle of dsp.
+ * @param  altAddr: alternate reset vector address.
  * @return HAL_Status
  */
-HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp)
+HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr)
 {
     /* Set dsp stall */
     RK_CLRSET_REG_BITS(dsp->grfReg->DSP_CON[0], GRF_DSP_CON0_RUNSTALL_MASK,
                        GRF_DSP_CON0_RUNSTALL_MASK);
     /* Set dsp reset */
     *((uint32_t *)0x40050200) = 0x00070007;
+    if (altAddr) {
+        RK_CLRSET_REG_BITS(dsp->grfReg->DSP_CON[0], GRF_DSP_CON0_STATVECTORSEL_MASK,
+                           GRF_DSP_CON0_STATVECTORSEL_MASK);
+        WRITE_REG(dsp->grfReg->DSP_CON[1], altAddr);
+    }
     *((uint32_t *)0x40050200) = 0x00070000;
 
     return HAL_OK;
@@ -184,16 +190,10 @@ HAL_Status HAL_DSP_Disable(struct DSP_DEV *dsp)
 /**
  * @brief  Start dsp.
  * @param  dsp: the handle of dsp.
- * @param  altAddr: alternate reset vector address.
  * @return HAL_Status
  */
-HAL_Status HAL_DSP_START(struct DSP_DEV *dsp, uint32_t altAddr)
+HAL_Status HAL_DSP_START(struct DSP_DEV *dsp)
 {
-    if (altAddr) {
-        RK_CLRSET_REG_BITS(dsp->grfReg->DSP_CON[0], GRF_DSP_CON0_STATVECTORSEL_MASK,
-                           GRF_DSP_CON0_STATVECTORSEL_MASK);
-        WRITE_REG(dsp->grfReg->DSP_CON[1], altAddr);
-    }
     RK_CLRSET_REG_BITS(dsp->grfReg->DSP_CON[0], GRF_DSP_CON0_RUNSTALL_MASK, 0);
 
     return HAL_OK;
