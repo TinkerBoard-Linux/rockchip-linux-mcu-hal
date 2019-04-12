@@ -184,7 +184,7 @@ HAL_Status HAL_DSP_Disable(struct DSP_DEV *dsp)
 /**
  * @brief  Start dsp.
  * @param  dsp: the handle of dsp.
- * @param  sel_addr: alternate reset vector address.
+ * @param  altAddr: alternate reset vector address.
  * @return HAL_Status
  */
 HAL_Status HAL_DSP_START(struct DSP_DEV *dsp, uint32_t altAddr)
