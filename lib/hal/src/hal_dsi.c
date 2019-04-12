@@ -509,10 +509,10 @@ HAL_Status HAL_DSI_ClearErr(struct DSI_REG *pReg)
 HAL_Status HAL_DSI_Enable(struct DSI_REG *pReg,
                           struct DISPLAY_MODE_INFO *pModeInfo)
 {
+    DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 1);
     if (pModeInfo->flags & DSI_MODE_VIDEO)
         DSI_UPDATE_BIT(pReg->MODE_CFG, CMD_VIDEO_MODE_MASK, 0);
     else {
-        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 1);
         DSI_UPDATE_BIT(pReg->MODE_CFG, CMD_VIDEO_MODE_MASK, 1);
         WRITE_REG(pReg->EDPI_CMD_SIZE, pModeInfo->crtcHdisplay);
     }
