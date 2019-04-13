@@ -51,7 +51,7 @@ my %ignore_type = ();
 my @ignore = ();
 my $help = 0;
 my $configuration_file = ".checkpatch.conf";
-my $max_line_length = 80;
+my $max_line_length = 160;
 my $ignore_perl_version = 0;
 my $minimum_perl_version = 5.10.0;
 my $min_conf_desc_length = 4;
@@ -3201,16 +3201,6 @@ sub process {
 		    $realline > 2) {
 			WARN("NETWORKING_BLOCK_COMMENT_STYLE",
 			     "networking block comments don't use an empty /* line, use /* Comment...\n" . $hereprev);
-		}
-
-# Block comments use */ on trailing lines
-		if ($rawline !~ m@^\+[ \t]*\*/[ \t]*$@ &&	#trailing */
-		    $rawline !~ m@^\+.*/\*.*\*/[ \t]*$@ &&	#inline /*...*/
-		    $rawline !~ m@^\+.*\*{2,}/[ \t]*$@ &&	#trailing **/
-                    $rawline !~ m@^\+[ \t]*.+\@\}\s+\*\/[ \t]*$@ && #@} */
-		    $rawline =~ m@^\+[ \t]*.+\*\/[ \t]*$@) {	#non blank */
-			WARN("BLOCK_COMMENT_STYLE",
-			     "Block comments use a trailing */ on a separate line\n" . $herecurr);
 		}
 
 # Block comment * alignment
