@@ -37,6 +37,36 @@ void SNOR_XipDisable(void)
     SFC->XIP_MODE = 0x0;
 }
 
+HAL_Status SNOR_SINGLE_TEST(void)
+{
+    uint32_t i, testLba = 0x80;
+    uint8_t pwrite[256];
+    uint8_t pread[256];
+
+    for(i = 0; i < 256; i++) {
+        pwrite[i] = i;
+    }
+    pwrite[0] = 0xa5;
+
+    HAL_SNOR_Erase(testLba << 9, 0);
+    HAL_SNOR_ProgData(testLba << 9, &pwrite, 0x100);
+    memset(&pread, 0, 256);
+    HAL_SNOR_ReadData(testLba << 9, &pread, 0x100);
+    for(int32_t i = 0; i < 256; i++) {
+        if (pwrite[i] != pread[i]) {
+            HAL_DBG_HEX("w", &pwrite, 4, 64);
+            HAL_DBG_HEX("r", &pread, 4, 64);
+            HAL_DBG("SNOR Single test fail\n");
+            //while(1);
+
+            return HAL_ERROR;
+        }
+    }
+    HAL_DBG("SNOR Single test success\n");
+
+    return HAL_OK;
+}
+
 #define maxest_sector 16
 static uint8_t *pwrite;
 static uint8_t *pread;
@@ -61,11 +91,6 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
     HAL_DBG("testLBA = %lx\n", testLBA);
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        if (testLBA == 0) {
-            ret = HAL_SNOR_Erase((testLBA & 0xFFFFFF80) << 9, ERASE_BLOCK64K);
-            if (ret)
-                return ret;
-        }
         ret = HAL_SNOR_Write(testLBA, testSecCount, pwrite);
         if (ret)
             return ret;
@@ -231,6 +256,9 @@ TEST(HAL_SNOR, SnorStressTest){
     testEndLBA = 0;
     testEndLBA = HAL_SNOR_GetCapacity();
     TEST_ASSERT(testEndLBA > 0);
+
+    ret = SNOR_SINGLE_TEST();
+    TEST_ASSERT(ret == HAL_OK);
 
     ret = SNOR_TEST(testEndLBA / 10);
     TEST_ASSERT(ret == HAL_OK);
