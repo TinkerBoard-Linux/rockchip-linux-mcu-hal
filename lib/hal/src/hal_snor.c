@@ -173,6 +173,7 @@ struct FLASH_INFO spiFlashbl[] = {
     { 0x207017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 0, 0 }, /* XM25QH64A */
     { 0x207018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* XM25QH128A */
     { 0x1c7018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* EN25QH128A */
+    { 0xc22814, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x0C, 11, 6, 0 }, /* MX25R8035F */
 };
 
 static struct FLASH_INFO *s_spiFlashInfo;
@@ -195,7 +196,6 @@ const uint32_t snorCapacity[] = {
 };
 
 /********************* Private Function Definition ***************************/
-
 static HAL_Status SNOR_WriteEn(void)
 {
     SFCCMD_DATA sfcmd;
@@ -335,7 +335,8 @@ static HAL_Status SNOR_EnableQE(void)
     struct SFNOR_DEV *pDev = &s_snorDev;
 
     if (pDev->manufacturer == MID_GIGADEV ||
-        pDev->manufacturer == MID_WINBOND) {
+        pDev->manufacturer == MID_WINBOND ||
+        pDev->manufacturer == MID_MACRONIX) {
         regIndex = pDev->QEBits >> 3;
         bitOffset = pDev->QEBits & 0x7;
         ret = SNOR_ReadStatus(regIndex, &status);
@@ -830,9 +831,6 @@ HAL_Status HAL_SNOR_Init(void)
         HAL_DBG("ProgCmd: %x\n", pDev->ProgCmd);
         HAL_DBG("blkEraseCmd: %x\n", pDev->blkEraseCmd);
         HAL_DBG("secEraseCmd: %x\n", pDev->secEraseCmd);
-#if (SNOR_STRESS_TEST_EN)
-        SNOR_TEST();
-#endif
 
         return HAL_OK;
     }
@@ -867,9 +865,6 @@ HAL_Status HAL_SNOR_Init(void)
     HAL_DBG("ProgCmd: %x\n", pDev->ProgCmd);
     HAL_DBG("blkEraseCmd: %x\n", pDev->blkEraseCmd);
     HAL_DBG("secEraseCmd: %x\n", pDev->secEraseCmd);
-#if (SNOR_STRESS_TEST_EN)
-    SNOR_TEST();
-#endif
 
     return HAL_OK;
 }
