@@ -46,35 +46,35 @@ typedef enum
     MAILBOX1_BB_IRQn            = 5,      /* Mailbox1 bb                                                */
     MAILBOX2_AP_IRQn            = 6,      /* Mailbox2 ap                                                */
     MAILBOX2_BB_IRQn            = 7,      /* Mailbox2 bb                                                */
-    PMU_IRQn                    = 8,      /* PMU                                                           */
-    DMAC_IRQn                   = 9,      /* DMAC                                                        */
+    PMU_IRQn                    = 8,      /* PMU                                                        */
+    DMAC_IRQn                   = 9,      /* DMAC                                                       */
     DMAC_ABORT_IRQn             = 10,     /* DMA Abort                                                  */
-    UART0_IRQn                  = 11,     /* UART 0                                                       */
-    UART1_IRQn                  = 12,     /* UART 1                                                       */
-    TIMER0_IRQn                 = 14,     /* Timer 0                                                      */
-    TIMER1_IRQn                 = 15,     /* Timer 1                                                      */
-    TIMER2_IRQn                 = 16,     /* Timer 2                                                      */
-    TIMER3_IRQn                 = 17,     /* Timer 3                                                      */
-    TIMER4_IRQn                 = 18,     /* Timer 4                                                      */
-    TIMER5_IRQn                 = 19,     /* Timer 5                                                      */
-    WDT0_IRQn                   = 20,     /* Watch dog 0                                               */
-    WDT1_IRQn                   = 21,     /* Watch dog 1                                               */
-    I2CMST0_IRQn                = 22,     /* I2C Master 0                                              */
-    I2CMST1_IRQn                = 23,     /* I2C Master 1                                              */
-    I2CMST2_IRQn                = 24,     /* I2C Master 2                                              */
+    UART0_IRQn                  = 11,     /* UART 0                                                     */
+    UART1_IRQn                  = 12,     /* UART 1                                                     */
+    TIMER0_IRQn                 = 14,     /* Timer 0                                                    */
+    TIMER1_IRQn                 = 15,     /* Timer 1                                                    */
+    TIMER2_IRQn                 = 16,     /* Timer 2                                                    */
+    TIMER3_IRQn                 = 17,     /* Timer 3                                                    */
+    TIMER4_IRQn                 = 18,     /* Timer 4                                                    */
+    TIMER5_IRQn                 = 19,     /* Timer 5                                                    */
+    WDT0_IRQn                   = 20,     /* Watch dog 0                                                */
+    WDT1_IRQn                   = 21,     /* Watch dog 1                                                */
+    I2CMST0_IRQn                = 22,     /* I2C Master 0                                               */
+    I2CMST1_IRQn                = 23,     /* I2C Master 1                                               */
+    I2CMST2_IRQn                = 24,     /* I2C Master 2                                               */
     SPISLV0_IRQn                = 25,     /* SPI Slave 0                                                */
-    SPIMST1_IRQn                = 26,     /* SPI Master 1                                              */
-    GPIO0_IRQn                  = 29,     /* GPIO 0                                                       */
-    GPIO1_IRQn                  = 30,     /* GPIO 1                                                       */
-    I2S0_IRQn                   = 32,     /* I2S 0                                                          */
-    PDM0_IRQn                   = 33,     /* PDM 0                                                         */
-    VAD_IRQn                    = 35,     /* VAD                                                           */
-    VOP_IRQn                    = 36,     /* VOP                                                           */
+    SPIMST1_IRQn                = 26,     /* SPI Master 1                                               */
+    GPIO0_IRQn                  = 29,     /* GPIO 0                                                     */
+    GPIO1_IRQn                  = 30,     /* GPIO 1                                                     */
+    I2S0_IRQn                   = 32,     /* I2S 0                                                      */
+    PDM0_IRQn                   = 33,     /* PDM 0                                                      */
+    VAD_IRQn                    = 35,     /* VAD                                                        */
+    VOP_IRQn                    = 36,     /* VOP                                                        */
     VOP_POST_LB_IRQn            = 37,     /* VOP post lb                                                */
     MIPI_DSI_HOST_IRQn          = 38,     /* MIPI dsi host                                              */
-    TP_IRQn                     = 39,     /* TP                                                             */
-    DSP_PFATAL_ERROR_IRQn       = 40,     /* DSP pfatal error                                         */
-    SPIMST2_IRQn                = 45,     /* SPI Master 2                                              */
+    TP_IRQn                     = 39,     /* TP                                                         */
+    DSP_PFATAL_ERROR_IRQn       = 40,     /* DSP pfatal error                                           */
+    SPIMST2_IRQn                = 45,     /* SPI Master 2                                               */
     NUM_INTERRUPTS
 } IRQn_Type;
 
@@ -85,19 +85,14 @@ typedef enum
 /* ================      Processor and Core Peripheral Section     ================ */
 /* ================================================================================ */
 
-#define __CM4_REV                 0x0001U  /* Core revision r0p1                            */
-#define __MPU_PRESENT             1U       /* Pisces provides an MPU                     */
+#define __CM4_REV                 0x0001U  /* Core revision r0p1                    */
+#define __MPU_PRESENT             1U       /* Pisces provides an MPU                */
 #define __VTOR_PRESENT            1U       /* VTOR present */
 #define __NVIC_PRIO_BITS          4U       /* Pisces uses 4 Bits for the Priority Levels */
 #define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used  */
 
-
 #include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
 #include "system_pisces.h"
-
-/* ================================================================================ */
-/* ================            Extend  Peripheral Resource         ================ */
-/* ================================================================================ */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Structure Section                               */
@@ -235,28 +230,27 @@ struct GRF_REG {
          uint32_t RESERVED31;                         /* Address Offset: 0x0354 */
          uint32_t RESERVED32;                         /* Address Offset: 0x0358 */
          uint32_t RESERVED33;                         /* Address Offset: 0x035C */
-         uint32_t RESERVED34[4];                      /* Address Offset: 0x0360 */
+         uint32_t RESERVED34;                         /* Address Offset: 0x0360 */
+         uint32_t RESERVED35[3];                      /* Address Offset: 0x0364 */
     __I  uint32_t USBPHY_STATUS0;                     /* Address Offset: 0x0370 */
-         uint32_t RESERVED35;                         /* Address Offset: 0x0374 */
-         uint32_t RESERVED36[2];                      /* Address Offset: 0x0378 */
+         uint32_t RESERVED36;                         /* Address Offset: 0x0374 */
+         uint32_t RESERVED37[2];                      /* Address Offset: 0x0378 */
     __IO uint32_t DMAC_CON[7];                        /* Address Offset: 0x0380 */
-         uint32_t RESERVED37[9];                      /* Address Offset: 0x039C */
+         uint32_t RESERVED38[9];                      /* Address Offset: 0x039C */
     __IO uint32_t FAST_BOOT_EN;                       /* Address Offset: 0x03C0 */
     __IO uint32_t FAST_BOOT_ADDR;                     /* Address Offset: 0x03C4 */
-         uint32_t RESERVED38[14];                     /* Address Offset: 0x03C8 */
+         uint32_t RESERVED39[14];                     /* Address Offset: 0x03C8 */
     __IO uint32_t OS_REG[8];                          /* Address Offset: 0x0400 */
-         uint32_t RESERVED39[696];                    /* Address Offset: 0x0420 */
+         uint32_t RESERVED40[696];                    /* Address Offset: 0x0420 */
     __I  uint32_t CHIP_ID;                            /* Address Offset: 0x0F00 */
 };
-/* MAILBOX Register Structure Define */
-#define MBOX_CNT                       2
-#define MBOX_CHAN_CNT                  4
-
+/* MBOX Register Structure Define */
+#define MBOX_CNT	     2
+#define MBOX_CHAN_CNT        4
 struct MBOX_CMD_DAT {
     __IO uint32_t CMD;
     __IO uint32_t DATA;
 };
-
 struct MBOX_REG {
     __IO uint32_t A2B_INTEN;                          /* Address Offset: 0x0000 */
     __IO uint32_t A2B_STATUS;                         /* Address Offset: 0x0004 */
