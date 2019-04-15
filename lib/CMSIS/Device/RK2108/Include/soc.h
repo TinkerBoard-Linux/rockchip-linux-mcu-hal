@@ -47,49 +47,49 @@ typedef enum
     PendSV_IRQn                 = -2,     /*!< 14 Cortex-M4 Pend SV Interrupt                                    */
     SysTick_IRQn                = -1,     /*!< 15 Cortex-M4 System Tick Interrupt                                */
     /******  RK2108 specific Interrupt Numbers **********************************************************************/
-    CACHE_IRQn                  = 0,      /* cortex m4 cache                                         */
+    CACHE_IRQn                  = 0,      /* cortex m4 cache                                            */
     MAILBOX0_AP_IRQn            = 2,      /* Mailbox0 ap                                                */
     MAILBOX0_BB_IRQn            = 3,      /* Mailbox0 bb                                                */
     MAILBOX1_AP_IRQn            = 4,      /* Mailbox1 ap                                                */
     MAILBOX1_BB_IRQn            = 5,      /* Mailbox1 bb                                                */
     MAILBOX2_AP_IRQn            = 6,      /* Mailbox2 ap                                                */
     MAILBOX2_BB_IRQn            = 7,      /* Mailbox2 bb                                                */
-    PMU_IRQn                    = 8,      /* PMU                                                           */
-    DMAC_IRQn                   = 9,      /* DMAC                                                        */
+    PMU_IRQn                    = 8,      /* PMU                                                        */
+    DMAC_IRQn                   = 9,      /* DMAC                                                       */
     DMAC_ABORT_IRQn             = 10,     /* DMA Abort                                                  */
-    UART0_IRQn                  = 11,     /* UART 0                                                       */
-    UART1_IRQn                  = 12,     /* UART 1                                                       */
-    UART2_IRQn                  = 13,     /* UART 2                                                       */
-    TIMER0_IRQn                 = 14,     /* Timer 0                                                      */
-    TIMER1_IRQn                 = 15,     /* Timer 1                                                      */
-    TIMER2_IRQn                 = 16,     /* Timer 2                                                      */
-    TIMER3_IRQn                 = 17,     /* Timer 3                                                      */
-    TIMER4_IRQn                 = 18,     /* Timer 4                                                      */
-    TIMER5_IRQn                 = 19,     /* Timer 5                                                      */
-    WDT0_IRQn                   = 20,     /* Watch dog 0                                               */
-    WDT1_IRQn                   = 21,     /* Watch dog 1                                               */
-    I2CMST0_IRQn                = 22,     /* I2C Master 0                                              */
-    I2CMST1_IRQn                = 23,     /* I2C Master 1                                              */
-    I2CMST2_IRQn                = 24,     /* I2C Master 2                                              */
+    UART0_IRQn                  = 11,     /* UART 0                                                     */
+    UART1_IRQn                  = 12,     /* UART 1                                                     */
+    UART2_IRQn                  = 13,     /* UART 2                                                     */
+    TIMER0_IRQn                 = 14,     /* Timer 0                                                    */
+    TIMER1_IRQn                 = 15,     /* Timer 1                                                    */
+    TIMER2_IRQn                 = 16,     /* Timer 2                                                    */
+    TIMER3_IRQn                 = 17,     /* Timer 3                                                    */
+    TIMER4_IRQn                 = 18,     /* Timer 4                                                    */
+    TIMER5_IRQn                 = 19,     /* Timer 5                                                    */
+    WDT0_IRQn                   = 20,     /* Watch dog 0                                                */
+    WDT1_IRQn                   = 21,     /* Watch dog 1                                                */
+    I2CMST0_IRQn                = 22,     /* I2C Master 0                                               */
+    I2CMST1_IRQn                = 23,     /* I2C Master 1                                               */
+    I2CMST2_IRQn                = 24,     /* I2C Master 2                                               */
     SPISLV0_IRQn                = 25,     /* SPI Slave 0                                                */
-    SPIMST1_IRQn                = 26,     /* SPI Master 1                                              */
-    SFC_IRQn                    = 27,     /* SFC                                                           */
-    SDIO_IRQn                   = 28,     /* SDIO                                                         */
-    GPIO0_IRQn                  = 29,     /* GPIO 0                                                       */
-    GPIO1_IRQn                  = 30,     /* GPIO 1                                                       */
-    USB_IRQn                    = 31,     /* USB                                                          */
-    I2S0_IRQn                   = 32,     /* I2S 0                                                          */
-    PDM0_IRQn                   = 33,     /* PDM 0                                                         */
-    I2S1_IRQn                   = 34,     /* I2S 1                                                          */
-    VAD_IRQn                    = 35,     /* VAD                                                           */
-    VOP_IRQn                    = 36,     /* VOP                                                           */
+    SPIMST1_IRQn                = 26,     /* SPI Master 1                                               */
+    SFC_IRQn                    = 27,     /* SFC                                                        */
+    SDIO_IRQn                   = 28,     /* SDIO                                                       */
+    GPIO0_IRQn                  = 29,     /* GPIO 0                                                     */
+    GPIO1_IRQn                  = 30,     /* GPIO 1                                                     */
+    USB_IRQn                    = 31,     /* USB                                                        */
+    I2S0_IRQn                   = 32,     /* I2S 0                                                      */
+    PDM0_IRQn                   = 33,     /* PDM 0                                                      */
+    I2S1_IRQn                   = 34,     /* I2S 1                                                      */
+    VAD_IRQn                    = 35,     /* VAD                                                        */
+    VOP_IRQn                    = 36,     /* VOP                                                        */
     VOP_POST_LB_IRQn            = 37,     /* VOP post lb                                                */
     MIPI_DSI_HOST_IRQn          = 38,     /* MIPI dsi host                                              */
-    TP_IRQn                     = 39,     /* TP                                                             */
-    DSP_PFATAL_ERROR_IRQn       = 40,     /* DSP pfatal error                                         */
-    PWM_IRQn                    = 41,     /* PWM                                                         */
-    PWM_PWR_IRQn                = 42,     /* PWM PWR                                                  */
-    SPIMST2_IRQn                = 45,     /* SPI Master 2                                              */
+    TP_IRQn                     = 39,     /* TP                                                         */
+    DSP_PFATAL_ERROR_IRQn       = 40,     /* DSP pfatal error                                           */
+    PWM_IRQn                    = 41,     /* PWM                                                        */
+    PWM_PWR_IRQn                = 42,     /* PWM PWR                                                    */
+    SPIMST2_IRQn                = 45,     /* SPI Master 2                                               */
     NUM_INTERRUPTS
 } IRQn_Type;
 
@@ -100,19 +100,14 @@ typedef enum
 /* ================      Processor and Core Peripheral Section     ================ */
 /* ================================================================================ */
 
-#define __CM4_REV                 0x0001U  /* Core revision r0p1                            */
-#define __MPU_PRESENT             1U       /* RK2108 provides an MPU                     */
+#define __CM4_REV                 0x0001U  /* Core revision r0p1                    */
+#define __MPU_PRESENT             1U       /* RK2108 provides an MPU                */
 #define __VTOR_PRESENT            1U       /* VTOR present */
 #define __NVIC_PRIO_BITS          4U       /* RK2108 uses 4 Bits for the Priority Levels */
-#define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used  */
-
+#define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used */
 
 #include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
 #include "system_rk2108.h"
-
-/* ================================================================================ */
-/* ================            Extend  Peripheral Resource         ================ */
-/* ================================================================================ */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Structure Section                               */
@@ -240,8 +235,8 @@ struct GRF_REG {
          uint32_t RESERVED14[7];                      /* Address Offset: 0x02E4 */
     __IO uint32_t MEM_CON[7];                         /* Address Offset: 0x0300 */
          uint32_t RESERVED15[9];                      /* Address Offset: 0x031C */
-    __IO uint32_t USBPHY_CON[8];                      /* Address Offset: 0x0340 */
-         uint32_t RESERVED16[4];                      /* Address Offset: 0x0360 */
+    __IO uint32_t USBPHY_CON[9];                      /* Address Offset: 0x0340 */
+         uint32_t RESERVED16[3];                      /* Address Offset: 0x0364 */
     __IO uint32_t USBPHY_STATUS[2];                   /* Address Offset: 0x0370 */
          uint32_t RESERVED17[2];                      /* Address Offset: 0x0378 */
     __IO uint32_t DMAC_CON[7];                        /* Address Offset: 0x0380 */
@@ -253,15 +248,13 @@ struct GRF_REG {
          uint32_t RESERVED20[696];                    /* Address Offset: 0x0420 */
     __I  uint32_t CHIP_ID;                            /* Address Offset: 0x0F00 */
 };
-/* MAILBOX Register Structure Define */
-#define MBOX_CNT                       2
-#define MBOX_CHAN_CNT                  4
-
+/* MBOX Register Structure Define */
+#define MBOX_CNT	     2
+#define MBOX_CHAN_CNT        4
 struct MBOX_CMD_DAT {
     __IO uint32_t CMD;
     __IO uint32_t DATA;
 };
-
 struct MBOX_REG {
     __IO uint32_t A2B_INTEN;                          /* Address Offset: 0x0000 */
     __IO uint32_t A2B_STATUS;                         /* Address Offset: 0x0004 */
@@ -580,26 +573,48 @@ struct SFC_REG {
     __IO uint32_t ABIT;                               /* Address Offset: 0x0018 */
     __IO uint32_t ISR;                                /* Address Offset: 0x001C */
     __IO uint32_t FSR;                                /* Address Offset: 0x0020 */
-    __IO uint32_t SR;                                 /* Address Offset: 0x0024 */
+    __I  uint32_t SR;                                 /* Address Offset: 0x0024 */
     __I  uint32_t RISR;                               /* Address Offset: 0x0028 */
-    __IO uint32_t VER;                                /* Address Offset: 0x002C */
+    __I  uint32_t VER;                                /* Address Offset: 0x002C */
     __IO uint32_t QOP;                                /* Address Offset: 0x0030 */
     __IO uint32_t EXT_CTRL;                           /* Address Offset: 0x0034 */
-         uint32_t RESERVED0;                          /* Address Offset: 0x0038 */
-    __IO uint32_t DLL_CTRL;                           /* Address Offset: 0x003C */
-         uint32_t RESERVED1[4];                       /* Address Offset: 0x0040 */
-    __IO uint32_t POLL_CTRL;                          /* Address Offset: 0x0050 */
-    __O  uint32_t FETCH_CMD;                          /* Address Offset: 0x0054 */
-    __IO uint32_t FETCH_CTRL;                         /* Address Offset: 0x0058 */
-    __IO uint32_t XIP_MODE;                           /* Address Offset: 0x005C */
-    __I  uint32_t POLL_DATA;                          /* Address Offset: 0x0060 */
-         uint32_t RESERVED2[7];                       /* Address Offset: 0x0064 */
+    __IO uint32_t POLL_CTRL;                          /* Address Offset: 0x0038 */
+    __IO uint32_t DLL_CTRL0;                          /* Address Offset: 0x003C */
+    __IO uint32_t HRDYMASK;                           /* Address Offset: 0x0040 */
+    __IO uint32_t EXT_AX;                             /* Address Offset: 0x0044 */
+    __IO uint32_t SCLK_INATM_CNT;                     /* Address Offset: 0x0048 */
+    __IO uint32_t AUTO_RF_CNT;                        /* Address Offset: 0x004C */
+    __O  uint32_t XMMC_WCMD0;                         /* Address Offset: 0x0050 */
+    __O  uint32_t XMMC_RCMD0;                         /* Address Offset: 0x0054 */
+    __IO uint32_t XMMC_CTRL;                          /* Address Offset: 0x0058 */
+    __IO uint32_t MODE;                               /* Address Offset: 0x005C */
+    __IO uint32_t DEVRGN;                             /* Address Offset: 0x0060 */
+    __IO uint32_t DEVSIZE0;                           /* Address Offset: 0x0064 */
+    __IO uint32_t TME0;                               /* Address Offset: 0x0068 */
+    __IO uint32_t POLLDLY_CTRL;                       /* Address Offset: 0x006C */
+         uint32_t RESERVED0[4];                       /* Address Offset: 0x0070 */
     __O  uint32_t DMATR;                              /* Address Offset: 0x0080 */
     __IO uint32_t DMAADDR;                            /* Address Offset: 0x0084 */
-         uint32_t RESERVED3[30];                      /* Address Offset: 0x0088 */
+         uint32_t RESERVED1[2];                       /* Address Offset: 0x0088 */
+    __I  uint32_t POLL_DATA;                          /* Address Offset: 0x0090 */
+    __IO uint32_t XMMCSR;                             /* Address Offset: 0x0094 */
+         uint32_t RESERVED2[26];                      /* Address Offset: 0x0098 */
     __O  uint32_t CMD;                                /* Address Offset: 0x0100 */
     __O  uint32_t ADDR;                               /* Address Offset: 0x0104 */
     __IO uint32_t DATA;                               /* Address Offset: 0x0108 */
+         uint32_t RESERVED3[61];                      /* Address Offset: 0x010C */
+    __IO uint32_t CTRL1;                              /* Address Offset: 0x0200 */
+         uint32_t RESERVED4[4];                       /* Address Offset: 0x0204 */
+    __IO uint32_t AX1;                                /* Address Offset: 0x0214 */
+    __IO uint32_t ABIT1;                              /* Address Offset: 0x0218 */
+         uint32_t RESERVED5[8];                       /* Address Offset: 0x021C */
+    __IO uint32_t DLL_CTRL1;                          /* Address Offset: 0x023C */
+         uint32_t RESERVED6[4];                       /* Address Offset: 0x0240 */
+    __O  uint32_t XMMC_WCMD1;                         /* Address Offset: 0x0250 */
+    __O  uint32_t XMMC_RCMD1;                         /* Address Offset: 0x0254 */
+         uint32_t RESERVED7[3];                       /* Address Offset: 0x0258 */
+    __IO uint32_t DEVSIZE1;                           /* Address Offset: 0x0264 */
+    __IO uint32_t TME1;                               /* Address Offset: 0x0268 */
 };
 /* MMC Register Structure Define */
 struct MMC_REG {
@@ -1434,6 +1449,8 @@ struct USB_HOST_CH_REG {
 #define GRF_SOC_CON0_UART2_RTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART2_RTS_SEL_SHIFT)                   /* 0x00001000 */
 #define GRF_SOC_CON0_UART2_CTS_SEL_SHIFT                   (13U)
 #define GRF_SOC_CON0_UART2_CTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART2_CTS_SEL_SHIFT)                   /* 0x00002000 */
+#define GRF_SOC_CON0_VOP_TE_SEL_SHIFT                      (14U)
+#define GRF_SOC_CON0_VOP_TE_SEL_MASK                       (0x3U << GRF_SOC_CON0_VOP_TE_SEL_SHIFT)                      /* 0x0000C000 */
 /* SOC_CON1 */
 #define GRF_SOC_CON1_TOP_FWD_DSP_PWRDISCTARGPWRSTALL_SHIFT (0U)
 #define GRF_SOC_CON1_TOP_FWD_DSP_PWRDISCTARGPWRSTALL_MASK  (0x1U << GRF_SOC_CON1_TOP_FWD_DSP_PWRDISCTARGPWRSTALL_SHIFT) /* 0x00000001 */
@@ -1457,8 +1474,6 @@ struct USB_HOST_CH_REG {
 #define GRF_SOC_CON1_DSP_FWD_ALIVE_PWRDISCTARGPWRSTALL_MASK (0x1U << GRF_SOC_CON1_DSP_FWD_ALIVE_PWRDISCTARGPWRSTALL_SHIFT) /* 0x00000200 */
 #define GRF_SOC_CON1_DSP_FWD_AUDIO_PWRDISCTARGPWRSTALL_SHIFT (10U)
 #define GRF_SOC_CON1_DSP_FWD_AUDIO_PWRDISCTARGPWRSTALL_MASK (0x1U << GRF_SOC_CON1_DSP_FWD_AUDIO_PWRDISCTARGPWRSTALL_SHIFT) /* 0x00000400 */
-#define GRF_SOC_CON1_VOP_TE_SEL_SHIFT                      (11U)
-#define GRF_SOC_CON1_VOP_TE_SEL_MASK                       (0x1U << GRF_SOC_CON1_VOP_TE_SEL_SHIFT)                      /* 0x00000800 */
 #define GRF_SOC_CON1_DSISHUTDN_SHIFT                       (12U)
 #define GRF_SOC_CON1_DSISHUTDN_MASK                        (0x1U << GRF_SOC_CON1_DSISHUTDN_SHIFT)                       /* 0x00001000 */
 #define GRF_SOC_CON1_DSICOLORM_SHIFT                       (13U)
@@ -1698,8 +1713,12 @@ struct USB_HOST_CH_REG {
 #define GRF_MCU_CON0_M4_MPU_DISABLE_MASK                   (0x1U << GRF_MCU_CON0_M4_MPU_DISABLE_SHIFT)                  /* 0x00000040 */
 #define GRF_MCU_CON0_M4_FPU_DISABLE_SHIFT                  (7U)
 #define GRF_MCU_CON0_M4_FPU_DISABLE_MASK                   (0x1U << GRF_MCU_CON0_M4_FPU_DISABLE_SHIFT)                  /* 0x00000080 */
-#define GRF_MCU_CON0_M4_SLEEP_DELAY_SHIFT                  (8U)
-#define GRF_MCU_CON0_M4_SLEEP_DELAY_MASK                   (0x1U << GRF_MCU_CON0_M4_SLEEP_DELAY_SHIFT)                  /* 0x00000100 */
+#define GRF_MCU_CON0_M4_DAP_FIXMASTER_SHIFT                (8U)
+#define GRF_MCU_CON0_M4_DAP_FIXMASTER_MASK                 (0x1U << GRF_MCU_CON0_M4_DAP_FIXMASTER_SHIFT)                /* 0x00000100 */
+#define GRF_MCU_CON0_M4_DAP_DCACHE_SHIFT                   (9U)
+#define GRF_MCU_CON0_M4_DAP_DCACHE_MASK                    (0x1U << GRF_MCU_CON0_M4_DAP_DCACHE_SHIFT)                   /* 0x00000200 */
+#define GRF_MCU_CON0_M4_SLEEP_DELAY_SHIFT                  (10U)
+#define GRF_MCU_CON0_M4_SLEEP_DELAY_MASK                   (0x1U << GRF_MCU_CON0_M4_SLEEP_DELAY_SHIFT)                  /* 0x00000400 */
 /* MCU_CON1 */
 #define GRF_MCU_CON1_M4_TENMS_SHIFT                        (0U)
 #define GRF_MCU_CON1_M4_TENMS_MASK                         (0xFFFFFFU << GRF_MCU_CON1_M4_TENMS_SHIFT)                   /* 0x00FFFFFF */
@@ -2017,65 +2036,80 @@ struct USB_HOST_CH_REG {
 #define GRF_MEM_CON6_ACODEC_SP_EMAW_SHIFT                  (3U)
 #define GRF_MEM_CON6_ACODEC_SP_EMAW_MASK                   (0x3U << GRF_MEM_CON6_ACODEC_SP_EMAW_SHIFT)                  /* 0x00000018 */
 /* USBPHY_CON0 */
-#define GRF_USBPHY_CON0_DATABUS16_SHIFT                    (0U)
-#define GRF_USBPHY_CON0_DATABUS16_MASK                     (0x1U << GRF_USBPHY_CON0_DATABUS16_SHIFT)                    /* 0x00000001 */
-#define GRF_USBPHY_CON0_TX_ENABLE_N_SHIFT                  (1U)
-#define GRF_USBPHY_CON0_TX_ENABLE_N_MASK                   (0x1U << GRF_USBPHY_CON0_TX_ENABLE_N_SHIFT)                  /* 0x00000002 */
-#define GRF_USBPHY_CON0_TX_DAT_SHIFT                       (2U)
-#define GRF_USBPHY_CON0_TX_DAT_MASK                        (0x1U << GRF_USBPHY_CON0_TX_DAT_SHIFT)                       /* 0x00000004 */
-#define GRF_USBPHY_CON0_TX_SE0_SHIFT                       (3U)
-#define GRF_USBPHY_CON0_TX_SE0_MASK                        (0x1U << GRF_USBPHY_CON0_TX_SE0_SHIFT)                       /* 0x00000008 */
-#define GRF_USBPHY_CON0_VCONTROL_SHIFT                     (4U)
-#define GRF_USBPHY_CON0_VCONTROL_MASK                      (0xFU << GRF_USBPHY_CON0_VCONTROL_SHIFT)                     /* 0x000000F0 */
-#define GRF_USBPHY_CON0_VCONTROLLOADM_SHIFT                (8U)
-#define GRF_USBPHY_CON0_VCONTROLLOADM_MASK                 (0x1U << GRF_USBPHY_CON0_VCONTROLLOADM_SHIFT)                /* 0x00000100 */
-#define GRF_USBPHY_CON0_TXBITSTUFFENABLE_SHIFT             (9U)
-#define GRF_USBPHY_CON0_TXBITSTUFFENABLE_MASK              (0x1U << GRF_USBPHY_CON0_TXBITSTUFFENABLE_SHIFT)             /* 0x00000200 */
-#define GRF_USBPHY_CON0_TXBITSTUFFENABLEH_SHIFT            (10U)
-#define GRF_USBPHY_CON0_TXBITSTUFFENABLEH_MASK             (0x1U << GRF_USBPHY_CON0_TXBITSTUFFENABLEH_SHIFT)            /* 0x00000400 */
-#define GRF_USBPHY_CON0_FSLSSERIALMODE_SHIFT               (11U)
-#define GRF_USBPHY_CON0_FSLSSERIALMODE_MASK                (0x1U << GRF_USBPHY_CON0_FSLSSERIALMODE_SHIFT)               /* 0x00000800 */
-#define GRF_USBPHY_CON0_PLL_EN_SHIFT                       (12U)
-#define GRF_USBPHY_CON0_PLL_EN_MASK                        (0x1U << GRF_USBPHY_CON0_PLL_EN_SHIFT)                       /* 0x00001000 */
-#define GRF_USBPHY_CON0_LPM_ALIVE_SHIFT                    (13U)
-#define GRF_USBPHY_CON0_LPM_ALIVE_MASK                     (0x1U << GRF_USBPHY_CON0_LPM_ALIVE_SHIFT)                    /* 0x00002000 */
-#define GRF_USBPHY_CON0_XTLSEL_SHIFT                       (14U)
-#define GRF_USBPHY_CON0_XTLSEL_MASK                        (0x3U << GRF_USBPHY_CON0_XTLSEL_SHIFT)                       /* 0x0000C000 */
+#define GRF_USBPHY_CON0_UTMI_SEL_SHIFT                     (0U)
+#define GRF_USBPHY_CON0_UTMI_SEL_MASK                      (0x1U << GRF_USBPHY_CON0_UTMI_SEL_SHIFT)                     /* 0x00000001 */
+#define GRF_USBPHY_CON0_UTMI_SUSPEND_N_SHIFT               (1U)
+#define GRF_USBPHY_CON0_UTMI_SUSPEND_N_MASK                (0x1U << GRF_USBPHY_CON0_UTMI_SUSPEND_N_SHIFT)               /* 0x00000002 */
+#define GRF_USBPHY_CON0_UTMI_OPMODE_SHIFT                  (2U)
+#define GRF_USBPHY_CON0_UTMI_OPMODE_MASK                   (0x3U << GRF_USBPHY_CON0_UTMI_OPMODE_SHIFT)                  /* 0x0000000C */
+#define GRF_USBPHY_CON0_UTMI_XCVRSELECT_SHIFT              (4U)
+#define GRF_USBPHY_CON0_UTMI_XCVRSELECT_MASK               (0x3U << GRF_USBPHY_CON0_UTMI_XCVRSELECT_SHIFT)              /* 0x00000030 */
+#define GRF_USBPHY_CON0_UTMI_TERMSELECT_SHIFT              (6U)
+#define GRF_USBPHY_CON0_UTMI_TERMSELECT_MASK               (0x1U << GRF_USBPHY_CON0_UTMI_TERMSELECT_SHIFT)              /* 0x00000040 */
+#define GRF_USBPHY_CON0_UTMI_DPPULLDOWN_SHIFT              (7U)
+#define GRF_USBPHY_CON0_UTMI_DPPULLDOWN_MASK               (0x1U << GRF_USBPHY_CON0_UTMI_DPPULLDOWN_SHIFT)              /* 0x00000080 */
+#define GRF_USBPHY_CON0_UTMI_DMPULLDOWN_SHIFT              (8U)
+#define GRF_USBPHY_CON0_UTMI_DMPULLDOWN_MASK               (0x1U << GRF_USBPHY_CON0_UTMI_DMPULLDOWN_SHIFT)              /* 0x00000100 */
 /* USBPHY_CON1 */
-#define GRF_USBPHY_CON1_DEBUG_SEL_SHIFT                    (0U)
-#define GRF_USBPHY_CON1_DEBUG_SEL_MASK                     (0xFU << GRF_USBPHY_CON1_DEBUG_SEL_SHIFT)                    /* 0x0000000F */
-#define GRF_USBPHY_CON1_LS_EN_SHIFT                        (4U)
-#define GRF_USBPHY_CON1_LS_EN_MASK                         (0x1U << GRF_USBPHY_CON1_LS_EN_SHIFT)                        /* 0x00000010 */
-#define GRF_USBPHY_CON1_HS_BIST_MODE_SHIFT                 (5U)
-#define GRF_USBPHY_CON1_HS_BIST_MODE_MASK                  (0x1U << GRF_USBPHY_CON1_HS_BIST_MODE_SHIFT)                 /* 0x00000020 */
-#define GRF_USBPHY_CON1_USB_LINESTATE_IRQ_EN_SHIFT         (8U)
-#define GRF_USBPHY_CON1_USB_LINESTATE_IRQ_EN_MASK          (0x1U << GRF_USBPHY_CON1_USB_LINESTATE_IRQ_EN_SHIFT)         /* 0x00000100 */
-#define GRF_USBPHY_CON1_USB_DISCONNECT_IRQ_EN_SHIFT        (9U)
-#define GRF_USBPHY_CON1_USB_DISCONNECT_IRQ_EN_MASK         (0x3U << GRF_USBPHY_CON1_USB_DISCONNECT_IRQ_EN_SHIFT)        /* 0x00000600 */
+#define GRF_USBPHY_CON1_DATABUS16_SHIFT                    (0U)
+#define GRF_USBPHY_CON1_DATABUS16_MASK                     (0x1U << GRF_USBPHY_CON1_DATABUS16_SHIFT)                    /* 0x00000001 */
+#define GRF_USBPHY_CON1_TX_ENABLE_N_SHIFT                  (1U)
+#define GRF_USBPHY_CON1_TX_ENABLE_N_MASK                   (0x1U << GRF_USBPHY_CON1_TX_ENABLE_N_SHIFT)                  /* 0x00000002 */
+#define GRF_USBPHY_CON1_TX_DAT_SHIFT                       (2U)
+#define GRF_USBPHY_CON1_TX_DAT_MASK                        (0x1U << GRF_USBPHY_CON1_TX_DAT_SHIFT)                       /* 0x00000004 */
+#define GRF_USBPHY_CON1_TX_SE0_SHIFT                       (3U)
+#define GRF_USBPHY_CON1_TX_SE0_MASK                        (0x1U << GRF_USBPHY_CON1_TX_SE0_SHIFT)                       /* 0x00000008 */
+#define GRF_USBPHY_CON1_VCONTROL_SHIFT                     (4U)
+#define GRF_USBPHY_CON1_VCONTROL_MASK                      (0xFU << GRF_USBPHY_CON1_VCONTROL_SHIFT)                     /* 0x000000F0 */
+#define GRF_USBPHY_CON1_VCONTROLLOADM_SHIFT                (8U)
+#define GRF_USBPHY_CON1_VCONTROLLOADM_MASK                 (0x1U << GRF_USBPHY_CON1_VCONTROLLOADM_SHIFT)                /* 0x00000100 */
+#define GRF_USBPHY_CON1_TXBITSTUFFENABLE_SHIFT             (9U)
+#define GRF_USBPHY_CON1_TXBITSTUFFENABLE_MASK              (0x1U << GRF_USBPHY_CON1_TXBITSTUFFENABLE_SHIFT)             /* 0x00000200 */
+#define GRF_USBPHY_CON1_TXBITSTUFFENABLEH_SHIFT            (10U)
+#define GRF_USBPHY_CON1_TXBITSTUFFENABLEH_MASK             (0x1U << GRF_USBPHY_CON1_TXBITSTUFFENABLEH_SHIFT)            /* 0x00000400 */
+#define GRF_USBPHY_CON1_FSLSSERIALMODE_SHIFT               (11U)
+#define GRF_USBPHY_CON1_FSLSSERIALMODE_MASK                (0x1U << GRF_USBPHY_CON1_FSLSSERIALMODE_SHIFT)               /* 0x00000800 */
+#define GRF_USBPHY_CON1_PLL_EN_SHIFT                       (12U)
+#define GRF_USBPHY_CON1_PLL_EN_MASK                        (0x1U << GRF_USBPHY_CON1_PLL_EN_SHIFT)                       /* 0x00001000 */
+#define GRF_USBPHY_CON1_LPM_ALIVE_SHIFT                    (13U)
+#define GRF_USBPHY_CON1_LPM_ALIVE_MASK                     (0x1U << GRF_USBPHY_CON1_LPM_ALIVE_SHIFT)                    /* 0x00002000 */
+#define GRF_USBPHY_CON1_XTLSEL_SHIFT                       (14U)
+#define GRF_USBPHY_CON1_XTLSEL_MASK                        (0x3U << GRF_USBPHY_CON1_XTLSEL_SHIFT)                       /* 0x0000C000 */
 /* USBPHY_CON2 */
-#define GRF_USBPHY_CON2_XCFG_COARSE_TUNE_NUM_SHIFT         (0U)
-#define GRF_USBPHY_CON2_XCFG_COARSE_TUNE_NUM_MASK          (0x7U << GRF_USBPHY_CON2_XCFG_COARSE_TUNE_NUM_SHIFT)         /* 0x00000007 */
-#define GRF_USBPHY_CON2_XCFG_FINE_TUNE_NUM_SHIFT           (3U)
-#define GRF_USBPHY_CON2_XCFG_FINE_TUNE_NUM_MASK            (0x7U << GRF_USBPHY_CON2_XCFG_FINE_TUNE_NUM_SHIFT)           /* 0x00000038 */
-#define GRF_USBPHY_CON2_XCFG_LOCK_RANGE_MAX_SHIFT          (6U)
-#define GRF_USBPHY_CON2_XCFG_LOCK_RANGE_MAX_MASK           (0x7U << GRF_USBPHY_CON2_XCFG_LOCK_RANGE_MAX_SHIFT)          /* 0x000001C0 */
-#define GRF_USBPHY_CON2_XCFG_LOCK_RANGE_MIN_SHIFT          (9U)
-#define GRF_USBPHY_CON2_XCFG_LOCK_RANGE_MIN_MASK           (0x7U << GRF_USBPHY_CON2_XCFG_LOCK_RANGE_MIN_SHIFT)          /* 0x00000E00 */
+#define GRF_USBPHY_CON2_DEBUG_SEL_SHIFT                    (0U)
+#define GRF_USBPHY_CON2_DEBUG_SEL_MASK                     (0xFU << GRF_USBPHY_CON2_DEBUG_SEL_SHIFT)                    /* 0x0000000F */
+#define GRF_USBPHY_CON2_LS_EN_SHIFT                        (4U)
+#define GRF_USBPHY_CON2_LS_EN_MASK                         (0x1U << GRF_USBPHY_CON2_LS_EN_SHIFT)                        /* 0x00000010 */
+#define GRF_USBPHY_CON2_HS_BIST_MODE_SHIFT                 (5U)
+#define GRF_USBPHY_CON2_HS_BIST_MODE_MASK                  (0x1U << GRF_USBPHY_CON2_HS_BIST_MODE_SHIFT)                 /* 0x00000020 */
+#define GRF_USBPHY_CON2_USB_LINESTATE_IRQ_EN_SHIFT         (8U)
+#define GRF_USBPHY_CON2_USB_LINESTATE_IRQ_EN_MASK          (0x1U << GRF_USBPHY_CON2_USB_LINESTATE_IRQ_EN_SHIFT)         /* 0x00000100 */
+#define GRF_USBPHY_CON2_USB_DISCONNECT_IRQ_EN_SHIFT        (9U)
+#define GRF_USBPHY_CON2_USB_DISCONNECT_IRQ_EN_MASK         (0x3U << GRF_USBPHY_CON2_USB_DISCONNECT_IRQ_EN_SHIFT)        /* 0x00000600 */
 /* USBPHY_CON3 */
-#define GRF_USBPHY_CON3_XCFGI_SHIFT                        (0U)
-#define GRF_USBPHY_CON3_XCFGI_MASK                         (0xFFFFFFFFU << GRF_USBPHY_CON3_XCFGI_SHIFT)                 /* 0xFFFFFFFF */
+#define GRF_USBPHY_CON3_XCFG_COARSE_TUNE_NUM_SHIFT         (0U)
+#define GRF_USBPHY_CON3_XCFG_COARSE_TUNE_NUM_MASK          (0x7U << GRF_USBPHY_CON3_XCFG_COARSE_TUNE_NUM_SHIFT)         /* 0x00000007 */
+#define GRF_USBPHY_CON3_XCFG_FINE_TUNE_NUM_SHIFT           (3U)
+#define GRF_USBPHY_CON3_XCFG_FINE_TUNE_NUM_MASK            (0x7U << GRF_USBPHY_CON3_XCFG_FINE_TUNE_NUM_SHIFT)           /* 0x00000038 */
+#define GRF_USBPHY_CON3_XCFG_LOCK_RANGE_MAX_SHIFT          (6U)
+#define GRF_USBPHY_CON3_XCFG_LOCK_RANGE_MAX_MASK           (0x7U << GRF_USBPHY_CON3_XCFG_LOCK_RANGE_MAX_SHIFT)          /* 0x000001C0 */
+#define GRF_USBPHY_CON3_XCFG_LOCK_RANGE_MIN_SHIFT          (9U)
+#define GRF_USBPHY_CON3_XCFG_LOCK_RANGE_MIN_MASK           (0x7U << GRF_USBPHY_CON3_XCFG_LOCK_RANGE_MIN_SHIFT)          /* 0x00000E00 */
 /* USBPHY_CON4 */
 #define GRF_USBPHY_CON4_XCFGI_SHIFT                        (0U)
 #define GRF_USBPHY_CON4_XCFGI_MASK                         (0xFFFFFFFFU << GRF_USBPHY_CON4_XCFGI_SHIFT)                 /* 0xFFFFFFFF */
 /* USBPHY_CON5 */
 #define GRF_USBPHY_CON5_XCFGI_SHIFT                        (0U)
-#define GRF_USBPHY_CON5_XCFGI_MASK                         (0x3FU << GRF_USBPHY_CON5_XCFGI_SHIFT)                       /* 0x0000003F */
+#define GRF_USBPHY_CON5_XCFGI_MASK                         (0xFFFFFFFFU << GRF_USBPHY_CON5_XCFGI_SHIFT)                 /* 0xFFFFFFFF */
 /* USBPHY_CON6 */
-#define GRF_USBPHY_CON6_LINESTATE_DET_CNT_SHIFT            (0U)
-#define GRF_USBPHY_CON6_LINESTATE_DET_CNT_MASK             (0xFFFFFU << GRF_USBPHY_CON6_LINESTATE_DET_CNT_SHIFT)        /* 0x000FFFFF */
+#define GRF_USBPHY_CON6_XCFGI_SHIFT                        (0U)
+#define GRF_USBPHY_CON6_XCFGI_MASK                         (0x3FU << GRF_USBPHY_CON6_XCFGI_SHIFT)                       /* 0x0000003F */
 /* USBPHY_CON7 */
-#define GRF_USBPHY_CON7_DISCONNECT_DET_CNT_SHIFT           (0U)
-#define GRF_USBPHY_CON7_DISCONNECT_DET_CNT_MASK            (0xFFFFFU << GRF_USBPHY_CON7_DISCONNECT_DET_CNT_SHIFT)       /* 0x000FFFFF */
+#define GRF_USBPHY_CON7_LINESTATE_DET_CNT_SHIFT            (0U)
+#define GRF_USBPHY_CON7_LINESTATE_DET_CNT_MASK             (0xFFFFFU << GRF_USBPHY_CON7_LINESTATE_DET_CNT_SHIFT)        /* 0x000FFFFF */
+/* USBPHY_CON8 */
+#define GRF_USBPHY_CON8_DISCONNECT_DET_CNT_SHIFT           (0U)
+#define GRF_USBPHY_CON8_DISCONNECT_DET_CNT_MASK            (0xFFFFFU << GRF_USBPHY_CON8_DISCONNECT_DET_CNT_SHIFT)       /* 0x000FFFFF */
 /* USBPHY_STATUS0 */
 #define GRF_USBPHY_STATUS0_XCFGO_SHIFT                     (0U)
 #define GRF_USBPHY_STATUS0_XCFGO_MASK                      (0xFFU << GRF_USBPHY_STATUS0_XCFGO_SHIFT)                    /* 0x000000FF */
@@ -2777,7 +2811,6 @@ struct USB_HOST_CH_REG {
 #define PMU_DSPTCM_CON3_DSPAPM_ITCM_RET1N_MASK             (0x1U << PMU_DSPTCM_CON3_DSPAPM_ITCM_RET1N_SHIFT)            /* 0x00000200 */
 #define PMU_DSPTCM_CON3_DSPAPM_ITCM_RET2N_SHIFT            (10U)
 #define PMU_DSPTCM_CON3_DSPAPM_ITCM_RET2N_MASK             (0x1U << PMU_DSPTCM_CON3_DSPAPM_ITCM_RET2N_SHIFT)            /* 0x00000400 */
-
 #define PISCES_PD_DSP 0x00000000U
 #define PISCES_PD_LOGIC 0x00011111U
 #define PISCES_PD_SHRM 0x00022222U
@@ -4468,61 +4501,115 @@ struct USB_HOST_CH_REG {
 /* QOP */
 #define SFC_QOP_SO123_SHIFT                                (0U)
 #define SFC_QOP_SO123_MASK                                 (0x1U << SFC_QOP_SO123_SHIFT)                                /* 0x00000001 */
+#define SFC_QOP_SO123BP_SHIFT                              (1U)
+#define SFC_QOP_SO123BP_MASK                               (0x1U << SFC_QOP_SO123BP_SHIFT)                              /* 0x00000002 */
 /* EXT_CTRL */
-#define SFC_EXT_CTRL_DESEL_CS_CTRL_SHIFT                   (0U)
-#define SFC_EXT_CTRL_DESEL_CS_CTRL_MASK                    (0x7U << SFC_EXT_CTRL_DESEL_CS_CTRL_SHIFT)                   /* 0x00000007 */
+#define SFC_EXT_CTRL_CS_DESEL_CTRL_SHIFT                   (0U)
+#define SFC_EXT_CTRL_CS_DESEL_CTRL_MASK                    (0xFU << SFC_EXT_CTRL_CS_DESEL_CTRL_SHIFT)                   /* 0x0000000F */
 #define SFC_EXT_CTRL_SWITCH_IO_DUMM_CNT_SHIFT              (4U)
 #define SFC_EXT_CTRL_SWITCH_IO_DUMM_CNT_MASK               (0xFU << SFC_EXT_CTRL_SWITCH_IO_DUMM_CNT_SHIFT)              /* 0x000000F0 */
 #define SFC_EXT_CTRL_SWITCH_IO_O2I_CNT_SHIFT               (8U)
 #define SFC_EXT_CTRL_SWITCH_IO_O2I_CNT_MASK                (0xFU << SFC_EXT_CTRL_SWITCH_IO_O2I_CNT_SHIFT)               /* 0x00000F00 */
-#define SFC_EXT_CTRL_AX_CANCEL_PAT_SHIFT                   (12U)
-#define SFC_EXT_CTRL_AX_CANCEL_PAT_MASK                    (0xFFU << SFC_EXT_CTRL_AX_CANCEL_PAT_SHIFT)                  /* 0x000FF000 */
-#define SFC_EXT_CTRL_AX_SETUP_PAT_SHIFT                    (20U)
-#define SFC_EXT_CTRL_AX_SETUP_PAT_MASK                     (0xFFU << SFC_EXT_CTRL_AX_SETUP_PAT_SHIFT)                   /* 0x0FF00000 */
-#define SFC_EXT_CTRL_SWITCH_IO_MODE_SHIFT                  (28U)
-#define SFC_EXT_CTRL_SWITCH_IO_MODE_MASK                   (0x1U << SFC_EXT_CTRL_SWITCH_IO_MODE_SHIFT)                  /* 0x10000000 */
-/* DLL_CTRL */
-#define SFC_DLL_CTRL_SMP_DLL_CFG_SHIFT                     (0U)
-#define SFC_DLL_CTRL_SMP_DLL_CFG_MASK                      (0xFFU << SFC_DLL_CTRL_SMP_DLL_CFG_SHIFT)                    /* 0x000000FF */
-#define SFC_DLL_CTRL_SCLK_SCLK_SMP_SEL_SHIFT               (8U)
-#define SFC_DLL_CTRL_SCLK_SCLK_SMP_SEL_MASK                (0x1U << SFC_DLL_CTRL_SCLK_SCLK_SMP_SEL_SHIFT)               /* 0x00000100 */
+#define SFC_EXT_CTRL_TRANS_INT_MODE_SHIFT                  (13U)
+#define SFC_EXT_CTRL_TRANS_INT_MODE_MASK                   (0x1U << SFC_EXT_CTRL_TRANS_INT_MODE_SHIFT)                  /* 0x00002000 */
 /* POLL_CTRL */
 #define SFC_POLL_CTRL_ST_POLL_EN_SHIFT                     (0U)
 #define SFC_POLL_CTRL_ST_POLL_EN_MASK                      (0x1U << SFC_POLL_CTRL_ST_POLL_EN_SHIFT)                     /* 0x00000001 */
+#define SFC_POLL_CTRL_POLL_DLY_EN_SHIFT                    (1U)
+#define SFC_POLL_CTRL_POLL_DLY_EN_MASK                     (0x1U << SFC_POLL_CTRL_POLL_DLY_EN_SHIFT)                    /* 0x00000002 */
 #define SFC_POLL_CTRL_ST_POLL_CMD_PARA_SHIFT               (8U)
 #define SFC_POLL_CTRL_ST_POLL_CMD_PARA_MASK                (0xFFU << SFC_POLL_CTRL_ST_POLL_CMD_PARA_SHIFT)              /* 0x0000FF00 */
 #define SFC_POLL_CTRL_ST_POLL_EXPECT_DATA_SHIFT            (16U)
 #define SFC_POLL_CTRL_ST_POLL_EXPECT_DATA_MASK             (0xFFU << SFC_POLL_CTRL_ST_POLL_EXPECT_DATA_SHIFT)           /* 0x00FF0000 */
 #define SFC_POLL_CTRL_ST_POLL_BIT_COMP_EN_SHIFT            (24U)
 #define SFC_POLL_CTRL_ST_POLL_BIT_COMP_EN_MASK             (0xFFU << SFC_POLL_CTRL_ST_POLL_BIT_COMP_EN_SHIFT)           /* 0xFF000000 */
-/* FETCH_CMD */
-#define SFC_FETCH_CMD_CMD_SHIFT                            (0U)
-#define SFC_FETCH_CMD_CMD_MASK                             (0xFFU << SFC_FETCH_CMD_CMD_SHIFT)                           /* 0x000000FF */
-#define SFC_FETCH_CMD_DUMM_SHIFT                           (8U)
-#define SFC_FETCH_CMD_DUMM_MASK                            (0xFU << SFC_FETCH_CMD_DUMM_SHIFT)                           /* 0x00000F00 */
-#define SFC_FETCH_CMD_CONT_SHIFT                           (13U)
-#define SFC_FETCH_CMD_CONT_MASK                            (0x1U << SFC_FETCH_CMD_CONT_SHIFT)                           /* 0x00002000 */
-#define SFC_FETCH_CMD_ADDRB_SHIFT                          (14U)
-#define SFC_FETCH_CMD_ADDRB_MASK                           (0x3U << SFC_FETCH_CMD_ADDRB_SHIFT)                          /* 0x0000C000 */
-/* FETCH_CTRL */
-#define SFC_FETCH_CTRL_CS_BIT_SEL_SHIFT                    (0U)
-#define SFC_FETCH_CTRL_CS_BIT_SEL_MASK                     (0x1FU << SFC_FETCH_CTRL_CS_BIT_SEL_SHIFT)                   /* 0x0000001F */
-#define SFC_FETCH_CTRL_INCR_LEN_SHIFT                      (8U)
-#define SFC_FETCH_CTRL_INCR_LEN_MASK                       (0xFU << SFC_FETCH_CTRL_INCR_LEN_SHIFT)                      /* 0x00000F00 */
-/* XIP_MODE */
-#define SFC_XIP_MODE_XIP_MODE_EN_SHIFT                     (0U)
-#define SFC_XIP_MODE_XIP_MODE_EN_MASK                      (0x1U << SFC_XIP_MODE_XIP_MODE_EN_SHIFT)                     /* 0x00000001 */
-/* POLL_DATA */
-#define SFC_POLL_DATA_POLL_DATA_SHIFT                      (0U)
-#define SFC_POLL_DATA_POLL_DATA_MASK                       (0xFFU << SFC_POLL_DATA_POLL_DATA_SHIFT)                     /* 0x000000FF */
-#define SFC_POLL_DATA_POLL_BUSY_SHIFT                      (8U)
-#define SFC_POLL_DATA_POLL_BUSY_MASK                       (0x1U << SFC_POLL_DATA_POLL_BUSY_SHIFT)                      /* 0x00000100 */
+/* DLL_CTRL0 */
+#define SFC_DLL_CTRL0_SMP_DLL_CFG_SHIFT                    (0U)
+#define SFC_DLL_CTRL0_SMP_DLL_CFG_MASK                     (0xFFU << SFC_DLL_CTRL0_SMP_DLL_CFG_SHIFT)                   /* 0x000000FF */
+#define SFC_DLL_CTRL0_SCLK_SMP_SEL_SHIFT                   (8U)
+#define SFC_DLL_CTRL0_SCLK_SMP_SEL_MASK                    (0x1U << SFC_DLL_CTRL0_SCLK_SMP_SEL_SHIFT)                   /* 0x00000100 */
+/* HRDYMASK */
+#define SFC_HRDYMASK_HRDYMASK_SHIFT                        (0U)
+#define SFC_HRDYMASK_HRDYMASK_MASK                         (0x1U << SFC_HRDYMASK_HRDYMASK_SHIFT)                        /* 0x00000001 */
+/* EXT_AX */
+#define SFC_EXT_AX_AX_CANCEL_PAT_SHIFT                     (0U)
+#define SFC_EXT_AX_AX_CANCEL_PAT_MASK                      (0xFFU << SFC_EXT_AX_AX_CANCEL_PAT_SHIFT)                    /* 0x000000FF */
+#define SFC_EXT_AX_AX_SETUP_PAT_SHIFT                      (8U)
+#define SFC_EXT_AX_AX_SETUP_PAT_MASK                       (0xFFU << SFC_EXT_AX_AX_SETUP_PAT_SHIFT)                     /* 0x0000FF00 */
+/* SCLK_INATM_CNT */
+#define SFC_SCLK_INATM_CNT_SCLK_INATM_CNT_SHIFT            (0U)
+#define SFC_SCLK_INATM_CNT_SCLK_INATM_CNT_MASK             (0xFFFFFFFFU << SFC_SCLK_INATM_CNT_SCLK_INATM_CNT_SHIFT)     /* 0xFFFFFFFF */
+/* AUTO_RF_CNT */
+#define SFC_AUTO_RF_CNT_AUTO_RF_CNT_SHIFT                  (0U)
+#define SFC_AUTO_RF_CNT_AUTO_RF_CNT_MASK                   (0xFFFFFFFFU << SFC_AUTO_RF_CNT_AUTO_RF_CNT_SHIFT)           /* 0xFFFFFFFF */
+/* XMMC_WCMD0 */
+#define SFC_XMMC_WCMD0_CMD_SHIFT                           (0U)
+#define SFC_XMMC_WCMD0_CMD_MASK                            (0xFFU << SFC_XMMC_WCMD0_CMD_SHIFT)                          /* 0x000000FF */
+#define SFC_XMMC_WCMD0_DUMM_SHIFT                          (8U)
+#define SFC_XMMC_WCMD0_DUMM_MASK                           (0xFU << SFC_XMMC_WCMD0_DUMM_SHIFT)                          /* 0x00000F00 */
+#define SFC_XMMC_WCMD0_CONT_SHIFT                          (13U)
+#define SFC_XMMC_WCMD0_CONT_MASK                           (0x1U << SFC_XMMC_WCMD0_CONT_SHIFT)                          /* 0x00002000 */
+#define SFC_XMMC_WCMD0_ADDRB_SHIFT                         (14U)
+#define SFC_XMMC_WCMD0_ADDRB_MASK                          (0x3U << SFC_XMMC_WCMD0_ADDRB_SHIFT)                         /* 0x0000C000 */
+/* XMMC_RCMD0 */
+#define SFC_XMMC_RCMD0_CMD_SHIFT                           (0U)
+#define SFC_XMMC_RCMD0_CMD_MASK                            (0xFFU << SFC_XMMC_RCMD0_CMD_SHIFT)                          /* 0x000000FF */
+#define SFC_XMMC_RCMD0_DUMM_SHIFT                          (8U)
+#define SFC_XMMC_RCMD0_DUMM_MASK                           (0xFU << SFC_XMMC_RCMD0_DUMM_SHIFT)                          /* 0x00000F00 */
+#define SFC_XMMC_RCMD0_CONT_SHIFT                          (13U)
+#define SFC_XMMC_RCMD0_CONT_MASK                           (0x1U << SFC_XMMC_RCMD0_CONT_SHIFT)                          /* 0x00002000 */
+#define SFC_XMMC_RCMD0_ADDRB_SHIFT                         (14U)
+#define SFC_XMMC_RCMD0_ADDRB_MASK                          (0x3U << SFC_XMMC_RCMD0_ADDRB_SHIFT)                         /* 0x0000C000 */
+/* XMMC_CTRL */
+#define SFC_XMMC_CTRL_DEV_HWEN_SHIFT                       (5U)
+#define SFC_XMMC_CTRL_DEV_HWEN_MASK                        (0x1U << SFC_XMMC_CTRL_DEV_HWEN_SHIFT)                       /* 0x00000020 */
+#define SFC_XMMC_CTRL_PFT_EN_SHIFT                         (6U)
+#define SFC_XMMC_CTRL_PFT_EN_MASK                          (0x1U << SFC_XMMC_CTRL_PFT_EN_SHIFT)                         /* 0x00000040 */
+#define SFC_XMMC_CTRL_UINCR_PFT_EN_SHIFT                   (7U)
+#define SFC_XMMC_CTRL_UINCR_PFT_EN_MASK                    (0x1U << SFC_XMMC_CTRL_UINCR_PFT_EN_SHIFT)                   /* 0x00000080 */
+#define SFC_XMMC_CTRL_UINCR_LEN_SHIFT                      (8U)
+#define SFC_XMMC_CTRL_UINCR_LEN_MASK                       (0xFU << SFC_XMMC_CTRL_UINCR_LEN_SHIFT)                      /* 0x00000F00 */
+#define SFC_XMMC_CTRL_DEV_WRAP_EN_SHIFT                    (12U)
+#define SFC_XMMC_CTRL_DEV_WRAP_EN_MASK                     (0x1U << SFC_XMMC_CTRL_DEV_WRAP_EN_SHIFT)                    /* 0x00001000 */
+#define SFC_XMMC_CTRL_DEV_INCR_EN_SHIFT                    (13U)
+#define SFC_XMMC_CTRL_DEV_INCR_EN_MASK                     (0x1U << SFC_XMMC_CTRL_DEV_INCR_EN_SHIFT)                    /* 0x00002000 */
+#define SFC_XMMC_CTRL_DEV_UDFINCR_EN_SHIFT                 (14U)
+#define SFC_XMMC_CTRL_DEV_UDFINCR_EN_MASK                  (0x1U << SFC_XMMC_CTRL_DEV_UDFINCR_EN_SHIFT)                 /* 0x00004000 */
+/* MODE */
+#define SFC_MODE_XMMC_MODE_EN_SHIFT                        (0U)
+#define SFC_MODE_XMMC_MODE_EN_MASK                         (0x1U << SFC_MODE_XMMC_MODE_EN_SHIFT)                        /* 0x00000001 */
+/* DEVRGN */
+#define SFC_DEVRGN_RSIZE_SHIFT                             (0U)
+#define SFC_DEVRGN_RSIZE_MASK                              (0x1FU << SFC_DEVRGN_RSIZE_SHIFT)                            /* 0x0000001F */
+/* DEVSIZE0 */
+#define SFC_DEVSIZE0_DSIZE_SHIFT                           (0U)
+#define SFC_DEVSIZE0_DSIZE_MASK                            (0x1FU << SFC_DEVSIZE0_DSIZE_SHIFT)                          /* 0x0000001F */
+/* TME0 */
+#define SFC_TME0_AUTO_RF_EN_SHIFT                          (0U)
+#define SFC_TME0_AUTO_RF_EN_MASK                           (0x1U << SFC_TME0_AUTO_RF_EN_SHIFT)                          /* 0x00000001 */
+#define SFC_TME0_SCLK_INATM_EN_SHIFT                       (1U)
+#define SFC_TME0_SCLK_INATM_EN_MASK                        (0x1U << SFC_TME0_SCLK_INATM_EN_SHIFT)                       /* 0x00000002 */
+/* POLLDLY_CTRL */
+#define SFC_POLLDLY_CTRL_CNT_SHIFT                         (0U)
+#define SFC_POLLDLY_CTRL_CNT_MASK                          (0x7FFFFFFFU << SFC_POLLDLY_CTRL_CNT_SHIFT)                  /* 0x7FFFFFFF */
+#define SFC_POLLDLY_CTRL_POLLDLY_IP_SHIFT                  (31U)
+#define SFC_POLLDLY_CTRL_POLLDLY_IP_MASK                   (0x1U << SFC_POLLDLY_CTRL_POLLDLY_IP_SHIFT)                  /* 0x80000000 */
 /* DMATR */
 #define SFC_DMATR_DMATR_SHIFT                              (0U)
 #define SFC_DMATR_DMATR_MASK                               (0x1U << SFC_DMATR_DMATR_SHIFT)                              /* 0x00000001 */
 /* DMAADDR */
 #define SFC_DMAADDR_DMAADDR_SHIFT                          (0U)
 #define SFC_DMAADDR_DMAADDR_MASK                           (0xFFFFFFFFU << SFC_DMAADDR_DMAADDR_SHIFT)                   /* 0xFFFFFFFF */
+/* POLL_DATA */
+#define SFC_POLL_DATA_POLL_DATA_SHIFT                      (0U)
+#define SFC_POLL_DATA_POLL_DATA_MASK                       (0xFFU << SFC_POLL_DATA_POLL_DATA_SHIFT)                     /* 0x000000FF */
+#define SFC_POLL_DATA_POLL_STA_SHIFT                       (8U)
+#define SFC_POLL_DATA_POLL_STA_MASK                        (0x1U << SFC_POLL_DATA_POLL_STA_SHIFT)                       /* 0x00000100 */
+/* XMMCSR */
+#define SFC_XMMCSR_SLOPOVER0_SHIFT                         (0U)
+#define SFC_XMMCSR_SLOPOVER0_MASK                          (0x1U << SFC_XMMCSR_SLOPOVER0_SHIFT)                         /* 0x00000001 */
+#define SFC_XMMCSR_SLOPOVER1_SHIFT                         (1U)
+#define SFC_XMMCSR_SLOPOVER1_MASK                          (0x1U << SFC_XMMCSR_SLOPOVER1_SHIFT)                         /* 0x00000002 */
 /* CMD */
 #define SFC_CMD_CMD_SHIFT                                  (0U)
 #define SFC_CMD_CMD_MASK                                   (0xFFU << SFC_CMD_CMD_SHIFT)                                 /* 0x000000FF */
@@ -4544,6 +4631,56 @@ struct USB_HOST_CH_REG {
 /* DATA */
 #define SFC_DATA_DATA_SHIFT                                (0U)
 #define SFC_DATA_DATA_MASK                                 (0xFFFFFFFFU << SFC_DATA_DATA_SHIFT)                         /* 0xFFFFFFFF */
+/* CTRL1 */
+#define SFC_CTRL1_SPIM_SHIFT                               (0U)
+#define SFC_CTRL1_SPIM_MASK                                (0x1U << SFC_CTRL1_SPIM_SHIFT)                               /* 0x00000001 */
+#define SFC_CTRL1_SHIFTPHASE_SHIFT                         (1U)
+#define SFC_CTRL1_SHIFTPHASE_MASK                          (0x1U << SFC_CTRL1_SHIFTPHASE_SHIFT)                         /* 0x00000002 */
+#define SFC_CTRL1_IDLE_CYCLE_SHIFT                         (4U)
+#define SFC_CTRL1_IDLE_CYCLE_MASK                          (0xFU << SFC_CTRL1_IDLE_CYCLE_SHIFT)                         /* 0x000000F0 */
+#define SFC_CTRL1_CMDB_SHIFT                               (8U)
+#define SFC_CTRL1_CMDB_MASK                                (0x3U << SFC_CTRL1_CMDB_SHIFT)                               /* 0x00000300 */
+#define SFC_CTRL1_ADRB_SHIFT                               (10U)
+#define SFC_CTRL1_ADRB_MASK                                (0x3U << SFC_CTRL1_ADRB_SHIFT)                               /* 0x00000C00 */
+#define SFC_CTRL1_DATB_SHIFT                               (12U)
+#define SFC_CTRL1_DATB_MASK                                (0x3U << SFC_CTRL1_DATB_SHIFT)                               /* 0x00003000 */
+/* AX1 */
+#define SFC_AX1_AX_SHIFT                                   (0U)
+#define SFC_AX1_AX_MASK                                    (0xFFU << SFC_AX1_AX_SHIFT)                                  /* 0x000000FF */
+/* ABIT1 */
+#define SFC_ABIT1_ABIT_SHIFT                               (0U)
+#define SFC_ABIT1_ABIT_MASK                                (0x1FU << SFC_ABIT1_ABIT_SHIFT)                              /* 0x0000001F */
+/* DLL_CTRL1 */
+#define SFC_DLL_CTRL1_SMP_DLL_CFG_SHIFT                    (0U)
+#define SFC_DLL_CTRL1_SMP_DLL_CFG_MASK                     (0xFFU << SFC_DLL_CTRL1_SMP_DLL_CFG_SHIFT)                   /* 0x000000FF */
+#define SFC_DLL_CTRL1_SCLK_SMP_SEL_SHIFT                   (8U)
+#define SFC_DLL_CTRL1_SCLK_SMP_SEL_MASK                    (0x1U << SFC_DLL_CTRL1_SCLK_SMP_SEL_SHIFT)                   /* 0x00000100 */
+/* XMMC_WCMD1 */
+#define SFC_XMMC_WCMD1_CMD_SHIFT                           (0U)
+#define SFC_XMMC_WCMD1_CMD_MASK                            (0xFFU << SFC_XMMC_WCMD1_CMD_SHIFT)                          /* 0x000000FF */
+#define SFC_XMMC_WCMD1_DUMM_SHIFT                          (8U)
+#define SFC_XMMC_WCMD1_DUMM_MASK                           (0xFU << SFC_XMMC_WCMD1_DUMM_SHIFT)                          /* 0x00000F00 */
+#define SFC_XMMC_WCMD1_CONT_SHIFT                          (13U)
+#define SFC_XMMC_WCMD1_CONT_MASK                           (0x1U << SFC_XMMC_WCMD1_CONT_SHIFT)                          /* 0x00002000 */
+#define SFC_XMMC_WCMD1_ADDRB_SHIFT                         (14U)
+#define SFC_XMMC_WCMD1_ADDRB_MASK                          (0x3U << SFC_XMMC_WCMD1_ADDRB_SHIFT)                         /* 0x0000C000 */
+/* XMMC_RCMD1 */
+#define SFC_XMMC_RCMD1_CMD_SHIFT                           (0U)
+#define SFC_XMMC_RCMD1_CMD_MASK                            (0xFFU << SFC_XMMC_RCMD1_CMD_SHIFT)                          /* 0x000000FF */
+#define SFC_XMMC_RCMD1_DUMM_SHIFT                          (8U)
+#define SFC_XMMC_RCMD1_DUMM_MASK                           (0xFU << SFC_XMMC_RCMD1_DUMM_SHIFT)                          /* 0x00000F00 */
+#define SFC_XMMC_RCMD1_CONT_SHIFT                          (13U)
+#define SFC_XMMC_RCMD1_CONT_MASK                           (0x1U << SFC_XMMC_RCMD1_CONT_SHIFT)                          /* 0x00002000 */
+#define SFC_XMMC_RCMD1_ADDRB_SHIFT                         (14U)
+#define SFC_XMMC_RCMD1_ADDRB_MASK                          (0x3U << SFC_XMMC_RCMD1_ADDRB_SHIFT)                         /* 0x0000C000 */
+/* DEVSIZE1 */
+#define SFC_DEVSIZE1_DSIZE_SHIFT                           (0U)
+#define SFC_DEVSIZE1_DSIZE_MASK                            (0x1FU << SFC_DEVSIZE1_DSIZE_SHIFT)                          /* 0x0000001F */
+/* TME1 */
+#define SFC_TME1_AUTO_RF_EN_SHIFT                          (0U)
+#define SFC_TME1_AUTO_RF_EN_MASK                           (0x1U << SFC_TME1_AUTO_RF_EN_SHIFT)                          /* 0x00000001 */
+#define SFC_TME1_SCLK_INATM_EN_SHIFT                       (1U)
+#define SFC_TME1_SCLK_INATM_EN_MASK                        (0x1U << SFC_TME1_SCLK_INATM_EN_SHIFT)                       /* 0x00000002 */
 /******************************************MMC*******************************************/
 /* CTRL */
 #define MMC_CTRL_CONTROLLER_RESET_SHIFT                    (0U)
