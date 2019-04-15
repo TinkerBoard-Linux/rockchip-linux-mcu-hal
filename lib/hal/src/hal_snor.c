@@ -129,7 +129,7 @@ struct FLASH_INFO {
     uint8_t reserved2;
 };
 
-typedef HAL_Status (*SNOR_WRITE_STATUS)(uint32_t regIndex, uint8_t status);
+typedef HAL_Status (*SNOR_WRITE_STATUS)(struct HAL_SFC_HOST *host, uint32_t regIndex, uint8_t status);
 
 struct SFNOR_DEV {
     uint32_t capacity;
@@ -153,8 +153,6 @@ struct SFNOR_DEV {
 
     SNOR_WRITE_STATUS writeStatus;
 };
-
-static HAL_Status SNOR_WaitBusy(int32_t timeout);
 
 /********************* Private Variable Definition ***************************/
 
@@ -196,92 +194,17 @@ const uint32_t snorCapacity[] = {
 };
 
 /********************* Private Function Definition ***************************/
-static HAL_Status SNOR_WriteEn(void)
+static HAL_Status SNOR_WriteEn(struct HAL_SFC_HOST *host)
 {
     SFCCMD_DATA sfcmd;
 
     sfcmd.d32 = 0;
     sfcmd.b.cmd = CMD_WRITE_EN;
 
-    return HAL_SFC_Request(sfcmd.d32, 0, 0, NULL);
+    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
 }
 
-static HAL_Status SNOR_Enter4ByteMode(void)
-{
-    SFCCMD_DATA sfcmd;
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_ENTER_4BYTE_MODE;
-
-    return HAL_SFC_Request(sfcmd.d32, 0, 0, NULL);
-}
-
-static HAL_Status SNOR_ReadStatus(uint32_t regIndex, uint8_t *status)
-{
-    SFCCMD_DATA sfcmd;
-    uint8_t readStatCmd[] = { CMD_READ_STATUS, CMD_READ_STATUS2,
-                              CMD_READ_STATUS3 };
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = readStatCmd[regIndex];
-    sfcmd.b.datasize = 1;
-
-    return HAL_SFC_Request(sfcmd.d32, 0, 0, status);
-}
-
-static HAL_Status SNOR_writeStatus2(uint32_t regIndex, uint8_t status)
-{
-    int32_t ret;
-    SFCCMD_DATA sfcmd;
-    uint8_t status2[2];
-    uint8_t readIndex;
-
-    status2[regIndex] = status;
-    readIndex = (regIndex == 0) ? 1 : 0;
-    ret = SNOR_ReadStatus(readIndex, &status2[readIndex]);
-    if (ret != HAL_OK)
-        return ret;
-
-    SNOR_WriteEn();
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_WRITE_STATUS;
-    sfcmd.b.datasize = 2;
-    sfcmd.b.rw = SFC_WRITE;
-
-    ret = HAL_SFC_Request(sfcmd.d32, 0, 0, &status2[0]);
-    if (ret != HAL_OK)
-        return ret;
-
-    ret = SNOR_WaitBusy(10000);
-
-    return ret;
-}
-
-static HAL_Status SNOR_writeStatus(uint32_t regIndex, uint8_t status)
-{
-    int32_t ret;
-    SFCCMD_DATA sfcmd;
-    uint8_t writeStatCmd[] = { CMD_WRITE_STATUS, CMD_WRITE_STATUS2,
-                               CMD_WRITE_STATUS3 };
-
-    SNOR_WriteEn();
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = writeStatCmd[regIndex];
-    sfcmd.b.datasize = 1;
-    sfcmd.b.rw = SFC_WRITE;
-
-    ret = HAL_SFC_Request(sfcmd.d32, 0, 0, &status);
-    if (ret != HAL_OK)
-        return ret;
-
-    ret = SNOR_WaitBusy(10000); // 10ms
-
-    return ret;
-}
-
-static HAL_Status SNOR_WaitBusy(int32_t timeout)
+static HAL_Status SNOR_WaitBusy(struct HAL_SFC_HOST *host, int32_t timeout)
 {
     int32_t ret;
     SFCCMD_DATA sfcmd;
@@ -291,8 +214,9 @@ static HAL_Status SNOR_WaitBusy(int32_t timeout)
     sfcmd.b.cmd = CMD_READ_STATUS;
     sfcmd.b.datasize = 1;
 
+    host->data = &status;
     for (i = 0; i < timeout; i++) {
-        ret = HAL_SFC_Request(sfcmd.d32, 0, 0, &status);
+        ret = HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
         if (ret != HAL_OK)
             return ret;
 
@@ -306,27 +230,106 @@ static HAL_Status SNOR_WaitBusy(int32_t timeout)
     return HAL_BUSY;
 }
 
-HAL_Status SNOR_DeviceReset(void)
+static HAL_Status SNOR_Enter4ByteMode(struct HAL_SFC_HOST *host)
+{
+    SFCCMD_DATA sfcmd;
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = CMD_ENTER_4BYTE_MODE;
+
+    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
+}
+
+static HAL_Status SNOR_ReadStatus(struct HAL_SFC_HOST *host, uint32_t regIndex, uint8_t *status)
+{
+    SFCCMD_DATA sfcmd;
+    uint8_t readStatCmd[] = { CMD_READ_STATUS, CMD_READ_STATUS2,
+                              CMD_READ_STATUS3 };
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = readStatCmd[regIndex];
+    sfcmd.b.datasize = 1;
+
+    host->data = status;
+
+    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
+}
+
+static HAL_Status SNOR_writeStatus2(struct HAL_SFC_HOST *host, uint32_t regIndex, uint8_t status)
+{
+    int32_t ret;
+    SFCCMD_DATA sfcmd;
+    uint8_t status2[2];
+    uint8_t readIndex;
+
+    status2[regIndex] = status;
+    readIndex = (regIndex == 0) ? 1 : 0;
+    ret = SNOR_ReadStatus(host, readIndex, &status2[readIndex]);
+    if (ret != HAL_OK)
+        return ret;
+
+    SNOR_WriteEn(host);
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = CMD_WRITE_STATUS;
+    sfcmd.b.datasize = 2;
+    sfcmd.b.rw = SFC_WRITE;
+
+    host->data = &status2[0];
+    ret = HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
+    if (ret != HAL_OK)
+        return ret;
+
+    ret = SNOR_WaitBusy(host, 10000);
+
+    return ret;
+}
+
+static HAL_Status SNOR_writeStatus(struct HAL_SFC_HOST *host, uint32_t regIndex, uint8_t status)
+{
+    int32_t ret;
+    SFCCMD_DATA sfcmd;
+    uint8_t writeStatCmd[] = { CMD_WRITE_STATUS, CMD_WRITE_STATUS2,
+                               CMD_WRITE_STATUS3 };
+
+    SNOR_WriteEn(host);
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = writeStatCmd[regIndex];
+    sfcmd.b.datasize = 1;
+    sfcmd.b.rw = SFC_WRITE;
+
+    host->data = &status;
+    ret = HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
+    if (ret != HAL_OK)
+        return ret;
+
+    ret = SNOR_WaitBusy(host, 10000); // 10ms
+
+    return ret;
+}
+
+HAL_Status SNOR_DeviceReset(struct HAL_SFC_HOST *host)
 {
     int32_t ret = HAL_OK;
     SFCCMD_DATA sfcmd;
 
     sfcmd.d32 = 0;
     sfcmd.b.cmd = CMD_ENABLE_RESER;
-    HAL_SFC_Request(sfcmd.d32, 0, 0, NULL);
+    HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
 
     sfcmd.d32 = 0;
     sfcmd.b.cmd = CMD_RESET_DEVICE;
-    HAL_SFC_Request(sfcmd.d32, 0, 0, NULL);
+    HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
     if (ret != HAL_OK)
         return ret;
 
-    ret = SNOR_WaitBusy(10000);
+    ret = SNOR_WaitBusy(host, 10000);
 
     return ret;
 }
 
-static HAL_Status SNOR_EnableQE(void)
+static HAL_Status SNOR_EnableQE(struct HAL_SFC_HOST *host)
 {
     int32_t ret = HAL_OK;
     int regIndex;
@@ -339,7 +342,7 @@ static HAL_Status SNOR_EnableQE(void)
         pDev->manufacturer == MID_MACRONIX) {
         regIndex = pDev->QEBits >> 3;
         bitOffset = pDev->QEBits & 0x7;
-        ret = SNOR_ReadStatus(regIndex, &status);
+        ret = SNOR_ReadStatus(host, regIndex, &status);
         if (ret != HAL_OK)
             return ret;
 
@@ -348,13 +351,13 @@ static HAL_Status SNOR_EnableQE(void)
 
         status |= (1 << bitOffset);
 
-        return pDev->writeStatus(regIndex, status);
+        return pDev->writeStatus(host, regIndex, status);
     }
 
     return ret;
 }
 
-static HAL_Status SNOR_ProgDataRaw(uint32_t addr, void *pData, uint32_t size)
+static HAL_Status SNOR_ProgDataRaw(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
 {
     int32_t ret;
     SFCCMD_DATA sfcmd;
@@ -362,11 +365,15 @@ static HAL_Status SNOR_ProgDataRaw(uint32_t addr, void *pData, uint32_t size)
     struct SFNOR_DEV *pDev = &s_snorDev;
 
     /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
+    SNOR_WriteEn(host);
+
     sfcmd.d32 = 0;
     sfcmd.b.cmd = pDev->ProgCmd;
     sfcmd.b.addrbits = SFC_ADDR_24BITS;
     sfcmd.b.datasize = size;
     sfcmd.b.rw = SFC_WRITE;
+    if (pDev->addrMode == ADDR_MODE_4BYTE)
+        sfcmd.b.addrbits = SFC_ADDR_32BITS;
 
     sfctrl.d32 = 0;
     sfctrl.b.datalines = pDev->progLines;
@@ -374,21 +381,17 @@ static HAL_Status SNOR_ProgDataRaw(uint32_t addr, void *pData, uint32_t size)
         sfctrl.b.addrlines = SFC_4BITS_LINE;
     ;
 
-    if (pDev->addrMode == ADDR_MODE_4BYTE)
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-
-    SNOR_WriteEn();
-
-    ret = HAL_SFC_Request(sfcmd.d32, sfctrl.d32, addr, pData);
+    host->data = pData;
+    ret = HAL_SFC_XferRequest(host, sfcmd.d32, sfctrl.d32, addr);
     if (ret != HAL_OK)
         return ret;
 
-    ret = SNOR_WaitBusy(10000);
+    ret = SNOR_WaitBusy(host, 10000);
 
     return ret;
 }
 
-static HAL_Status SNOR_ReadDataRaw(uint32_t addr, void *pData, uint32_t size)
+static HAL_Status SNOR_ReadDataRaw(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
 {
     int32_t ret;
     SFCCMD_DATA sfcmd;
@@ -396,6 +399,7 @@ static HAL_Status SNOR_ReadDataRaw(uint32_t addr, void *pData, uint32_t size)
     struct SFNOR_DEV *pDev = &s_snorDev;
 
     /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
+
     sfcmd.d32 = 0;
     sfcmd.b.cmd = pDev->readCmd;
     sfcmd.b.datasize = size;
@@ -419,48 +423,13 @@ static HAL_Status SNOR_ReadDataRaw(uint32_t addr, void *pData, uint32_t size)
     if (pDev->addrMode == ADDR_MODE_4BYTE)
         sfcmd.b.addrbits = SFC_ADDR_32BITS;
 
-    ret = HAL_SFC_Request(sfcmd.d32, sfctrl.d32, addr, pData);
+    host->data = pData;
+    ret = HAL_SFC_XferRequest(host, sfcmd.d32, sfctrl.d32, addr);
 
     return ret;
 }
 
-#if (SNOR_4BIT_DATA_DETECT_EN)
-static HAL_Status SNOR_SetDLines(SFC_DATA_LINES lines)
-{
-    int32_t ret;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-    uint8_t readCmd[] = { CMD_FAST_READ_X1, CMD_FAST_READ_X2,
-                          CMD_FAST_READ_X4 };
-
-    if (lines == DATA_LINES_X4) {
-        ret = SNOR_EnableQE();
-        if (ret != HAL_OK)
-            return ret;
-    }
-
-    pDev->readLines = lines;
-    pDev->readCmd = readCmd[lines];
-
-    if (pDev->manufacturer == MID_GIGADEV ||
-        pDev->manufacturer == MID_WINBOND ||
-        pDev->manufacturer == MID_MACRONIX) {
-        pDev->progLines = (lines != DATA_LINES_X2) ? lines : DATA_LINES_X1;
-        if (lines == DATA_LINES_X1) {
-            pDev->ProgCmd = CMD_PAGE_PROG;
-        } else {
-            if (pDev->manufacturer == MID_GIGADEV ||
-                pDev->manufacturer == MID_WINBOND)
-                pDev->ProgCmd = CMD_PAGE_PROG_X4;
-            else
-                pDev->ProgCmd = CMD_PAGE_PROG_A4;
-        }
-    }
-
-    return HAL_OK;
-}
-#endif
-
-HAL_Status SNOR_Read_Parameter(uint32_t addr, uint8_t *data)
+HAL_Status SNOR_Read_Parameter(struct HAL_SFC_HOST *host, uint32_t addr, uint8_t *data)
 {
     SFCCMD_DATA sfcmd;
 
@@ -470,7 +439,9 @@ HAL_Status SNOR_Read_Parameter(uint32_t addr, uint8_t *data)
     sfcmd.b.addrbits = SFC_ADDR_24BITS;
     sfcmd.b.dummybits = 8;
 
-    return HAL_SFC_Request(sfcmd.d32, 0, addr, data);
+    host->data = data;
+
+    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, addr);
 }
 
 struct FLASH_INFO *SNOR_get_flash_info(uint8_t *flashId)
@@ -487,14 +458,14 @@ struct FLASH_INFO *SNOR_get_flash_info(uint8_t *flashId)
 }
 
 /* Adjust flash info in ram base on parameter */
-void *SNOR_flash_info_adjust(struct FLASH_INFO *spi_flash_info)
+void *SNOR_flash_info_adjust(struct HAL_SFC_HOST *host, struct FLASH_INFO *spi_flash_info)
 {
     uint32_t addr;
     uint8_t paraVersion;
 
     if (s_spiFlashInfo->id == 0xc84019) {
         addr = 0x09;
-        SNOR_Read_Parameter(addr, &paraVersion);
+        SNOR_Read_Parameter(host, addr, &paraVersion);
         if (paraVersion == 0x06) {
             spi_flash_info->QEBits = 9;
             spi_flash_info->progCmd_4 = 0x34;
@@ -504,30 +475,39 @@ void *SNOR_flash_info_adjust(struct FLASH_INFO *spi_flash_info)
     return 0;
 }
 
-/** @defgroup SNOR_Exported_Functions_Group2 State and Errors Functions
- @verbatim
-
- ===============================================================================
-             #### State and Errors functions ####
- ===============================================================================
- This section provides functions allowing to get the status of the module:
-
- @endverbatim
- *  @{
- */
-
-#ifdef SFC_XIP_MODE_XIP_MODE_EN_SHIFT
-HAL_Check HAL_SNOR_IsInXip(void)
+HAL_Status SNOR_XmmcInit(struct HAL_SFC_HOST *host, uint8_t cs)
 {
-    if (SFC->XIP_MODE)
-        return TRUE;
-    else
-        return FALSE;
+    SFCCMD_DATA sfcmd;
+    SFCCTRL_DATA sfctrl;
+    struct SFNOR_DEV *pDev = &s_snorDev;
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = pDev->readCmd;
+    sfcmd.b.addrbits = SFC_ADDR_24BITS;
+
+    sfctrl.d32 = 0;
+    sfctrl.b.datalines = pDev->readLines;
+
+    if (pDev->readCmd == CMD_FAST_READ_X1 ||
+        pDev->readCmd == CMD_FAST_READ_X4 ||
+        pDev->readCmd == CMD_FAST_READ_X2 ||
+        pDev->readCmd == CMD_FAST_4READ_X4) {
+        sfcmd.b.dummybits = 8;
+    } else if (pDev->readCmd == CMD_FAST_READ_A4) {
+        sfcmd.b.addrbits = SFC_ADDR_32BITS;
+        sfcmd.b.dummybits = 4;
+        sfctrl.b.addrlines = SFC_4BITS_LINE;
+    }
+
+    if (pDev->addrMode == ADDR_MODE_4BYTE)
+        sfcmd.b.addrbits = SFC_ADDR_32BITS;
+
+    host->xmmcDev[cs].ctrl = sfctrl.d32;
+    host->xmmcDev[cs].readCmd = sfcmd.d32;
+    host->xmmcDev[cs].writeCmd = 0;
+
+    return HAL_OK;
 }
-#endif
-
-/** @} */
-
 /********************* Public Function Definition ****************************/
 /** @defgroup SNOR_Exported_Functions_Group3 IO Functions
  @verbatim
@@ -543,11 +523,12 @@ HAL_Check HAL_SNOR_IsInXip(void)
 
 /**
  * @brief  Flash erase with erase type.
+ * @param  host: SFC host.
  * @param  addr: byte address.
  * @param  eraseType: erase type.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Erase(uint32_t addr, NOR_ERASE_TYPE eraseType)
+HAL_Status HAL_SNOR_Erase(struct HAL_SFC_HOST *host, uint32_t addr, NOR_ERASE_TYPE eraseType)
 {
     int32_t ret;
     SFCCMD_DATA sfcmd;
@@ -555,9 +536,10 @@ HAL_Status HAL_SNOR_Erase(uint32_t addr, NOR_ERASE_TYPE eraseType)
     struct SFNOR_DEV *pDev = &s_snorDev;
 
     /* HAL_DBG("%s %lx %x\n", __func__, addr / 0x200, eraseType); */
-
     if (eraseType > ERASE_CHIP)
         return HAL_INVAL;
+
+    ret = SNOR_WriteEn(host);
 
     sfcmd.d32 = 0;
     if (eraseType == ERASE_BLOCK64K)
@@ -572,37 +554,38 @@ HAL_Status HAL_SNOR_Erase(uint32_t addr, NOR_ERASE_TYPE eraseType)
     if ((pDev->addrMode == ADDR_MODE_4BYTE) && (eraseType != ERASE_CHIP))
         sfcmd.b.addrbits = SFC_ADDR_32BITS;
 
-    ret = SNOR_WriteEn();
     if (ret != HAL_OK)
         return ret;
 
-    ret = HAL_SFC_Request(sfcmd.d32, 0, addr, NULL);
+    ret = HAL_SFC_XferRequest(host, sfcmd.d32, 0, addr);
     if (ret != HAL_OK)
         return ret;
 
-    ret = SNOR_WaitBusy(timeout[eraseType] * 1000);
+    ret = SNOR_WaitBusy(host, timeout[eraseType] * 1000);
 
     return ret;
 }
 
 /**
  * @brief  Flash block erase.
+ * @param  host: SFC host.
  * @param  addr: byte address.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_EraseBlk(uint32_t addr)
+HAL_Status HAL_SNOR_EraseBlk(struct HAL_SFC_HOST *host, uint32_t addr)
 {
-    return HAL_SNOR_Erase(addr, ERASE_BLOCK64K);
+    return HAL_SNOR_Erase(host, addr, ERASE_BLOCK64K);
 }
 
 /**
  * @brief  Flash continuous writing.
+ * @param  host: SFC host.
  * @param  addr: byte address.
  * @param  pData: source address.
  * @param  size: number of bytes.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_ProgData(uint32_t addr, void *pData, uint32_t size)
+HAL_Status HAL_SNOR_ProgData(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
 {
     int32_t ret = HAL_OK;
     uint32_t pageSize, len;
@@ -615,7 +598,7 @@ HAL_Status HAL_SNOR_ProgData(uint32_t addr, void *pData, uint32_t size)
     pageSize = NOR_PAGE_SIZE;
     while (size) {
         len = HAL_MIN(pageSize, size);
-        ret = SNOR_ProgDataRaw(addr, pBuf, len);
+        ret = SNOR_ProgDataRaw(host, addr, pBuf, len);
         if (ret != HAL_OK) {
             HAL_DBG("%s %lu ret= %ld\n", __func__, addr >> 9, ret);
 
@@ -631,12 +614,13 @@ HAL_Status HAL_SNOR_ProgData(uint32_t addr, void *pData, uint32_t size)
 
 /**
  * @brief  Flash continuous reading.
+ * @param  host: SFC host.
  * @param  addr: byte address.
  * @param  pData: destination address.
  * @param  size: number of bytes.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_ReadData(uint32_t addr, void *pData, uint32_t size)
+HAL_Status HAL_SNOR_ReadData(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
 {
     int32_t ret = HAL_OK;
     uint32_t len;
@@ -648,7 +632,7 @@ HAL_Status HAL_SNOR_ReadData(uint32_t addr, void *pData, uint32_t size)
 
     while (size) {
         len = HAL_MIN(size, SFC_MAX_IOSIZE);
-        ret = SNOR_ReadDataRaw(addr, pBuf, len);
+        ret = SNOR_ReadDataRaw(host, addr, pBuf, len);
         if (ret != HAL_OK) {
             HAL_DBG("%s %lu ret= %ld\n", __func__, addr >> 9, ret);
 
@@ -665,12 +649,13 @@ HAL_Status HAL_SNOR_ReadData(uint32_t addr, void *pData, uint32_t size)
 
 /**
  * @brief  Flash continuous writing according to sectors.
+ * @param  host: SFC host.
  * @param  sec: sector address.
  * @param  nSec: number of sectors.
  * @param  pData: source address.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Write(uint32_t sec, uint32_t nSec, void *pData)
+HAL_Status HAL_SNOR_Write(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t nSec, void *pData)
 {
     int32_t ret = HAL_OK;
     uint32_t len, blockSize, offset;
@@ -688,15 +673,15 @@ HAL_Status HAL_SNOR_Write(uint32_t sec, uint32_t nSec, void *pData)
 
         offset = (sec & (blockSize - 1));
         if (!offset) {
-            ret = HAL_SNOR_Erase(sec << 9, (blockSize == 8) ? ERASE_SECTOR :
-                                                              ERASE_BLOCK64K);
+            ret = HAL_SNOR_Erase(host, sec << 9, (blockSize == 8) ? ERASE_SECTOR :
+                                                                    ERASE_BLOCK64K);
             if (ret != HAL_OK) {
                 HAL_DBG("SNOR_Erase %lu ret= %ld\n", sec, ret);
                 break;
             }
         }
         len = HAL_MIN((blockSize - offset), nSec);
-        ret = HAL_SNOR_ProgData(sec << 9, pBuf, len << 9);
+        ret = HAL_SNOR_ProgData(host, sec << 9, pBuf, len << 9);
         if (ret != HAL_OK) {
             HAL_DBG("SNOR_Erase %lu ret= %ld\n", sec, ret);
             break;
@@ -711,12 +696,13 @@ HAL_Status HAL_SNOR_Write(uint32_t sec, uint32_t nSec, void *pData)
 
 /**
  * @brief  Flash continuous reading according to sectors.
+ * @param  host: SFC host.
  * @param  sec: sector address.
  * @param  nSec: number of sectors.
  * @param  pData: destination address.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Read(uint32_t sec, uint32_t nSec, void *pData)
+HAL_Status HAL_SNOR_Read(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t nSec, void *pData)
 {
     int32_t ret = HAL_OK;
     uint32_t addr, size, len;
@@ -730,7 +716,7 @@ HAL_Status HAL_SNOR_Read(uint32_t sec, uint32_t nSec, void *pData)
     size = nSec << 9;
     while (size) {
         len = HAL_MIN(size, SFC_MAX_IOSIZE);
-        ret = SNOR_ReadDataRaw(addr, pBuf, len);
+        ret = SNOR_ReadDataRaw(host, addr, pBuf, len);
         if (ret != HAL_OK) {
             HAL_DBG("SNOR_ReadData %lu ret= %ld\n", addr >> 9, ret);
             break;
@@ -762,17 +748,18 @@ HAL_Status HAL_SNOR_Read(uint32_t sec, uint32_t nSec, void *pData)
 
 /**
  * @brief  SFC NOR flash module init.
+ * @param  host: SFC host.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Init(void)
+HAL_Status HAL_SNOR_Init(struct HAL_SFC_HOST *host)
 {
     int32_t i;
     struct SFNOR_DEV *pDev = &s_snorDev;
     uint8_t idByte[5];
 
-    HAL_SFC_Init();
+    HAL_SFC_Init(host);
     memset(pDev, 0, sizeof(struct SFNOR_DEV));
-    HAL_SNOR_ReadID(idByte);
+    HAL_SNOR_ReadID(host, idByte);
     HAL_DBG("sfc nor id: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
     if ((idByte[0] == 0xFF) || (idByte[0] == 0x00))
         return HAL_ERROR;
@@ -782,7 +769,7 @@ HAL_Status HAL_SNOR_Init(void)
 
     s_spiFlashInfo = SNOR_get_flash_info(idByte);
     if (s_spiFlashInfo != NULL) {
-        SNOR_flash_info_adjust(s_spiFlashInfo);
+        SNOR_flash_info_adjust(host, s_spiFlashInfo);
         pDev->capacity = 1 << s_spiFlashInfo->density;
         pDev->blockSize = s_spiFlashInfo->block_size;
         pDev->pageSize = NOR_SECS_PAGE;
@@ -799,17 +786,9 @@ HAL_Status HAL_SNOR_Init(void)
             pDev->writeStatus = SNOR_writeStatus;
         else
             pDev->writeStatus = SNOR_writeStatus2;
-#ifdef _USB_PLUG_
-        /* Disable WP */
-        SNOR_ReadStatus(0, &status);
-        if (status)
-            pDev->writeStatus(0, 0);
-        SNOR_ReadStatus(1, &status);
-        if (status)
-            pDev->writeStatus(1, 0);
-#endif
+
         if (s_spiFlashInfo->feature & FEA_4BIT_READ) {
-            if (SNOR_EnableQE() == HAL_OK) {
+            if (SNOR_EnableQE(host) == HAL_OK) {
                 pDev->readLines = DATA_LINES_X4;
                 pDev->readCmd = s_spiFlashInfo->readCmd_4;
             }
@@ -823,7 +802,7 @@ HAL_Status HAL_SNOR_Init(void)
         if (s_spiFlashInfo->feature & FEA_4BYTE_ADDR)
             pDev->addrMode = ADDR_MODE_4BYTE;
         if ((s_spiFlashInfo->feature & FEA_4BYTE_ADDR_MODE))
-            SNOR_Enter4ByteMode();
+            SNOR_Enter4ByteMode(host);
         HAL_DBG("addrMode: %x\n", pDev->addrMode);
         HAL_DBG("readLines: %x\n", pDev->readLines);
         HAL_DBG("progLines: %x\n", pDev->progLines);
@@ -831,6 +810,9 @@ HAL_Status HAL_SNOR_Init(void)
         HAL_DBG("ProgCmd: %x\n", pDev->ProgCmd);
         HAL_DBG("blkEraseCmd: %x\n", pDev->blkEraseCmd);
         HAL_DBG("secEraseCmd: %x\n", pDev->secEraseCmd);
+#ifdef SFC_MODE_XMMC_MODE_EN_SHIFT
+        SNOR_XmmcInit(host, 0);
+#endif
 
         return HAL_OK;
     }
@@ -855,9 +837,6 @@ HAL_Status HAL_SNOR_Init(void)
     pDev->blkEraseCmd = CMD_BLOCK_ERASE;
     pDev->writeStatus = SNOR_writeStatus2;
 
-#if (SNOR_4BIT_DATA_DETECT_EN)
-    SNOR_SetDLines(DATA_LINES_X4);
-#endif
     HAL_DBG("addrMode: %x\n", pDev->addrMode);
     HAL_DBG("readLines: %x\n", pDev->readLines);
     HAL_DBG("progLines: %x\n", pDev->progLines);
@@ -865,23 +844,27 @@ HAL_Status HAL_SNOR_Init(void)
     HAL_DBG("ProgCmd: %x\n", pDev->ProgCmd);
     HAL_DBG("blkEraseCmd: %x\n", pDev->blkEraseCmd);
     HAL_DBG("secEraseCmd: %x\n", pDev->secEraseCmd);
+#ifdef SFC_MODE_XMMC_MODE_EN_SHIFT
+    SNOR_XmmcInit(host, 0);
+#endif
 
     return HAL_OK;
 }
 
 /**
  * @brief  SFC NOR flash module deinit.
+ * @param  host: SFC host.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Deinit(void)
+HAL_Status HAL_SNOR_Deinit(struct HAL_SFC_HOST *host)
 {
     uint32_t ret;
 
-    ret = SNOR_DeviceReset();
+    ret = SNOR_DeviceReset(host);
     if (ret != HAL_OK)
         return ret;
 
-    return HAL_SFC_Deinit();
+    return HAL_SFC_Deinit(host);
 }
 
 /** @} */
@@ -892,10 +875,11 @@ HAL_Status HAL_SNOR_Deinit(void)
 
 /**
  * @brief  Read flash ID.
+ * @param  host: SFC host.
  * @param  data: address to storage flash ID value.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_ReadID(uint8_t *data)
+HAL_Status HAL_SNOR_ReadID(struct HAL_SFC_HOST *host, uint8_t *data)
 {
     SFCCMD_DATA sfcmd;
 
@@ -903,7 +887,9 @@ HAL_Status HAL_SNOR_ReadID(uint8_t *data)
     sfcmd.b.cmd = CMD_READ_JEDECID;
     sfcmd.b.datasize = 3;
 
-    return HAL_SFC_Request(sfcmd.d32, 0, 0, data);
+    host->data = data;
+
+    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
 }
 
 /**
@@ -917,48 +903,25 @@ uint32_t HAL_SNOR_GetCapacity(void)
     return pDev->capacity;
 }
 
-#ifdef SFC_XIP_MODE_XIP_MODE_EN_SHIFT
+#ifdef SFC_MODE_XMMC_MODE_EN_SHIFT
 /**
  * @brief  Enable XIP mode
+ * @param  host: SFC host.
  * @return HAL_Status
  */
-HAL_Status HAL_SNOR_XipEnable(void)
+HAL_Status HAL_SNOR_XipEnable(struct HAL_SFC_HOST *host)
 {
-    SFCCMD_DATA sfcmd;
-    SFCCTRL_DATA sfctrl;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = pDev->readCmd;
-    sfcmd.b.addrbits = SFC_ADDR_24BITS;
-
-    sfctrl.d32 = 0;
-    sfctrl.b.datalines = pDev->readLines;
-
-    if (pDev->readCmd == CMD_FAST_READ_X1 ||
-        pDev->readCmd == CMD_FAST_READ_X4 ||
-        pDev->readCmd == CMD_FAST_READ_X2 ||
-        pDev->readCmd == CMD_FAST_4READ_X4) {
-        sfcmd.b.dummybits = 8;
-    } else if (pDev->readCmd == CMD_FAST_READ_A4) {
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-        sfcmd.b.dummybits = 4;
-        sfctrl.b.addrlines = SFC_4BITS_LINE;
-    }
-
-    if (pDev->addrMode == ADDR_MODE_4BYTE)
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-
-    return HAL_SFC_XipConfig(sfcmd.d32, sfctrl.d32, 1);
+    return HAL_SFC_XmmcRequest(host, 1);
 }
 
 /**
  * @brief  Disable XIP mode
+ * @param  host: SFC host.
  * @return HAL_Status
  */
-HAL_Status HAL_SNOR_XipDisable(void)
+HAL_Status HAL_SNOR_XipDisable(struct HAL_SFC_HOST *host)
 {
-    return HAL_SFC_XipConfig(0, 0, 0);
+    return HAL_SFC_XmmcRequest(host, 0);
 }
 #endif
 /** @} */

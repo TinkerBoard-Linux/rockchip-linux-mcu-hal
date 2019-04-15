@@ -9,6 +9,7 @@
 
 #ifdef HAL_SNOR_MODULE_ENABLED
 
+static struct HAL_SFC_HOST *sfcHost;
 #define XIP_RAM_BASE 0x60000000
 
 struct cmdSet {
@@ -25,17 +26,17 @@ static struct cmdSet cmdSets[5] = {
     { "", 0, 0 }
 };
 
-void SNOR_XipEnable(uint32_t ctrl, uint32_t cmd)
-{
-    SFC->CTRL = ctrl;
-    SFC->FETCH_CMD = cmd;
-    SFC->XIP_MODE = 0x00000001;
-}
+//void SNOR_XipEnable(uint32_t ctrl, uint32_t cmd)
+//{
+//    SFC->CTRL = ctrl;
+//    SFC->FETCH_CMD = cmd;
+//    SFC->XIP_MODE = 0x00000001;
+//}
 
-void SNOR_XipDisable(void)
-{
-    SFC->XIP_MODE = 0x0;
-}
+//void SNOR_XipDisable(void)
+//{
+//    SFC->XIP_MODE = 0x0;
+//}
 
 HAL_Status SNOR_SINGLE_TEST(void)
 {
@@ -48,16 +49,16 @@ HAL_Status SNOR_SINGLE_TEST(void)
     }
     pwrite[0] = 0xa5;
 
-    HAL_SNOR_Erase(testLba << 9, 0);
-    HAL_SNOR_ProgData(testLba << 9, &pwrite, 0x100);
+    HAL_SNOR_Erase(sfcHost, testLba << 9, 0);
+    HAL_SNOR_ProgData(sfcHost, testLba << 9, &pwrite, 0x100);
     memset(&pread, 0, 256);
-    HAL_SNOR_ReadData(testLba << 9, &pread, 0x100);
+    HAL_SNOR_ReadData(sfcHost, testLba << 9, &pread, 0x100);
     for(int32_t i = 0; i < 256; i++) {
         if (pwrite[i] != pread[i]) {
             HAL_DBG_HEX("w", &pwrite, 4, 64);
             HAL_DBG_HEX("r", &pread, 4, 64);
             HAL_DBG("SNOR Single test fail\n");
-            //while(1);
+            while(1);
 
             return HAL_ERROR;
         }
@@ -84,6 +85,7 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
     for (i = 0; i < (maxest_sector * 512); i++)
         pwrite[i] = i;
 
+    while(1) {
     HAL_DBG("---------Test SNOR STRESS TEST---------\n");
     HAL_DBG("---------Test ftl write---------\n");
     testSecCount = 1;
@@ -91,11 +93,11 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
     HAL_DBG("testLBA = %lx\n", testLBA);
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        ret = HAL_SNOR_Write(testLBA, testSecCount, pwrite);
+        ret = HAL_SNOR_Write(sfcHost, testLBA, testSecCount, pwrite);
         if (ret)
             return ret;
         pread[0] = -1;
-        ret = HAL_SNOR_Read(testLBA, testSecCount, pread);
+        ret = HAL_SNOR_Read(sfcHost, testLBA, testSecCount, pread);
         if (ret)
             return ret;
         for (j = 0; j < testSecCount * 512; j++) {
@@ -106,7 +108,7 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
                     "check not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
                     testLBA, j, (uint32_t)pwrite[j], (uint32_t)pread[j]);
 
-                return HAL_ERROR;
+                while(1);//return HAL_ERROR;
             }
         }
         printFlag = testLBA & 0x1FF;
@@ -123,7 +125,7 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
         pread[0] = -1;
-        ret = HAL_SNOR_Read(testLBA, testSecCount, pread);
+        ret = HAL_SNOR_Read(sfcHost, testLBA, testSecCount, pread);
         if (ret)
             return ret;
         for (j = 0; j < testSecCount * 512; j++) {
@@ -134,7 +136,7 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
                     "recheck not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
                     testLBA, j, (uint32_t)pwrite[j], (uint32_t)pread[j]);
 
-                return HAL_ERROR;
+                while(1);//return HAL_ERROR;
             }
         }
         printFlag = testLBA & 0x1FF;
@@ -146,6 +148,7 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
             testSecCount = 1;
     }
     HAL_DBG("---------Test end---------\n");
+    }
 
     return HAL_OK;
 }
@@ -194,7 +197,7 @@ static HAL_Status SNOR_XIP_TEST(uint32_t testEndLBA, uint8_t cmdSetNum)
 
     return HAL_OK;
 }
-
+#if 0
 static HAL_Status SNOR_XIP_DEFAULT_TEST(uint32_t testEndLBA)
 {
     uint32_t i, j;
@@ -239,7 +242,7 @@ static HAL_Status SNOR_XIP_DEFAULT_TEST(uint32_t testEndLBA)
 
     return HAL_OK;
 }
-
+#endif
 TEST_GROUP(HAL_SNOR);
 
 TEST_SETUP(HAL_SNOR){
@@ -260,9 +263,10 @@ TEST(HAL_SNOR, SnorStressTest){
     ret = SNOR_SINGLE_TEST();
     TEST_ASSERT(ret == HAL_OK);
 
-    ret = SNOR_TEST(testEndLBA / 10);
+    ret = SNOR_TEST(testEndLBA);
     TEST_ASSERT(ret == HAL_OK);
 }
+#if 0
 
 /* SNOR test case 1 */
 TEST(HAL_SNOR, XipTest){
@@ -294,6 +298,7 @@ TEST(HAL_SNOR, XipDefaultTest){
     ret = SNOR_XIP_DEFAULT_TEST(testEndLBA / 10);
     TEST_ASSERT(ret == HAL_OK);
 }
+#endif
 
 static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
 {
@@ -305,6 +310,9 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     uint32_t ret;
     uint8_t *pwrite_t, *pread_t;
 
+    sfcHost = (struct HAL_SFC_HOST *)malloc(sizeof(struct HAL_SFC_HOST));
+    sfcHost->instance = SFC;
+
     pwrite_t = (uint8_t *)malloc(maxest_sector * 512 + 64);
     pread_t = (uint8_t *)malloc(maxest_sector * 512 + 64);
     pwrite = AlignUp(pwrite_t, CACHE_LINE_SIZE);
@@ -314,14 +322,14 @@ TEST_GROUP_RUNNER(HAL_SNOR){
         HAL_DBG("malloc failed\n");
         while (1);
     }
-    ret = HAL_SNOR_Init();
+    ret = HAL_SNOR_Init(sfcHost);
     TEST_ASSERT(ret == HAL_OK);
     RUN_TEST_CASE(HAL_SNOR, SnorStressTest);
-    RUN_TEST_CASE(HAL_SNOR, XipDefaultTest);
-    RUN_TEST_CASE(HAL_SNOR, XipTest);
+//    RUN_TEST_CASE(HAL_SNOR, XipDefaultTest);
+//    RUN_TEST_CASE(HAL_SNOR, XipTest);
 
     /* SNOR deinit */
-    ret = HAL_SNOR_Deinit();
+    ret = HAL_SNOR_Deinit(sfcHost);
     TEST_ASSERT(ret == HAL_OK);
 
     free(pwrite_t);

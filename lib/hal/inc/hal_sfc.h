@@ -44,7 +44,6 @@
 #define SFC_VER_VER_3 (3 << SFC_VER_VER_SHIFT)
 
 /***************************** Structure Definition **************************/
-
 /** SFC_CTRL bit union */
 typedef union {
     uint32_t d32;
@@ -83,22 +82,38 @@ typedef enum {
     DATA_LINES_X4
 } SFC_DATA_LINES;
 
+typedef enum {
+    DEV_NOR = 0,
+    DEV_PSRAM,
+} eSFC_devType;
+
+struct HAL_SFC_XMMC_DEV {
+    eSFC_devType type;
+    uint32_t ctrl;
+    uint32_t readCmd;
+    uint32_t writeCmd;
+};
+
+struct HAL_SFC_HOST {
+    struct SFC_REG *instance;
+    HAL_LockStatus status;
+    uint32_t version;
+    void *data;                         /* xfer data buffer */
+    struct HAL_SFC_XMMC_DEV xmmcDev[2];
+};
+
 /** @} */
 /***************************** Function Declare ******************************/
-
-HAL_Status HAL_SFC_Init(void);
-HAL_Status HAL_SFC_Deinit(void);
-HAL_Status HAL_SFC_Request(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
-                           void *data);
-HAL_Status HAL_SFC_Request_DMA(uint32_t sfcmd, uint32_t sfctrl, uint32_t addr,
-                               void *data);
-uint16_t HAL_SFC_GetCtrlVertion(void);
-HAL_Status HAL_SFC_IRQHandler(void);
-HAL_Status HAL_SFC_UnMaskTransmInterrupt(void);
-HAL_Status HAL_SFC_MaskDmaInterrupt(void);
-HAL_Check HAL_SFC_IsTransmInterrupt(void);
-HAL_Status HAL_SFC_ClearTransmInterrupt(void);
-HAL_Status HAL_SFC_XipConfig(uint32_t sfcmd, uint32_t sfctrl, uint8_t on);
+HAL_Status HAL_SFC_Init(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_Deinit(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_XferRequest(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32_t sfctrl, uint32_t addr);
+HAL_Status HAL_SFC_XferRequest_DMA(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32_t sfctrl, uint32_t addr);
+HAL_Status HAL_SFC_IRQHandler(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_UnMaskTransmInterrupt(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_MaskDmaInterrupt(struct HAL_SFC_HOST *host);
+HAL_Check HAL_SFC_IsTransmInterrupt(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_ClearTransmInterrupt(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_XmmcRequest(struct HAL_SFC_HOST *host, uint8_t on);
 
 #endif
 
