@@ -35,10 +35,6 @@
 #include "hal_gpio.h"
 #endif
 
-#ifdef HAL_GPIO_MODULE_ENABLED
-#include "hal_grf.h"
-#endif
-
 #ifdef HAL_HCD_MODULE_ENABLED
 #include "hal_hcd.h"
 #endif
