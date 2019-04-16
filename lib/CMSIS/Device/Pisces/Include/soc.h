@@ -1153,6 +1153,8 @@ struct VOP_REG {
 #define GRF_SOC_CON0_UART0_RTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART0_RTS_SEL_SHIFT)                   /* 0x00000100 */
 #define GRF_SOC_CON0_UART0_CTS_SEL_SHIFT                   (9U)
 #define GRF_SOC_CON0_UART0_CTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART0_CTS_SEL_SHIFT)                   /* 0x00000200 */
+#define GRF_SOC_CON0_VOP_TE_SEL_SHIFT                      (14U)
+#define GRF_SOC_CON0_VOP_TE_SEL_MASK                       (0x3U << GRF_SOC_CON0_VOP_TE_SEL_SHIFT)                      /* 0x0000C000 */
 /* SOC_CON1 */
 #define GRF_SOC_CON1_TOP_FWD_DSP_PWRDISCTARGPWRSTALL_SHIFT (0U)
 #define GRF_SOC_CON1_TOP_FWD_DSP_PWRDISCTARGPWRSTALL_MASK  (0x1U << GRF_SOC_CON1_TOP_FWD_DSP_PWRDISCTARGPWRSTALL_SHIFT) /* 0x00000001 */
@@ -1176,8 +1178,6 @@ struct VOP_REG {
 #define GRF_SOC_CON1_DSP_FWD_ALIVE_PWRDISCTARGPWRSTALL_MASK (0x1U << GRF_SOC_CON1_DSP_FWD_ALIVE_PWRDISCTARGPWRSTALL_SHIFT) /* 0x00000200 */
 #define GRF_SOC_CON1_DSP_FWD_AUDIO_PWRDISCTARGPWRSTALL_SHIFT (10U)
 #define GRF_SOC_CON1_DSP_FWD_AUDIO_PWRDISCTARGPWRSTALL_MASK (0x1U << GRF_SOC_CON1_DSP_FWD_AUDIO_PWRDISCTARGPWRSTALL_SHIFT) /* 0x00000400 */
-#define GRF_SOC_CON1_VOP_TE_SEL_SHIFT                      (11U)
-#define GRF_SOC_CON1_VOP_TE_SEL_MASK                       (0x1U << GRF_SOC_CON1_VOP_TE_SEL_SHIFT)                      /* 0x00000800 */
 #define GRF_SOC_CON1_DSISHUTDN_SHIFT                       (12U)
 #define GRF_SOC_CON1_DSISHUTDN_MASK                        (0x1U << GRF_SOC_CON1_DSISHUTDN_SHIFT)                       /* 0x00001000 */
 #define GRF_SOC_CON1_DSICOLORM_SHIFT                       (13U)
@@ -1366,8 +1366,12 @@ struct VOP_REG {
 #define GRF_MCU_CON0_M4_MPU_DISABLE_MASK                   (0x1U << GRF_MCU_CON0_M4_MPU_DISABLE_SHIFT)                  /* 0x00000040 */
 #define GRF_MCU_CON0_M4_FPU_DISABLE_SHIFT                  (7U)
 #define GRF_MCU_CON0_M4_FPU_DISABLE_MASK                   (0x1U << GRF_MCU_CON0_M4_FPU_DISABLE_SHIFT)                  /* 0x00000080 */
-#define GRF_MCU_CON0_M4_SLEEP_DELAY_SHIFT                  (8U)
-#define GRF_MCU_CON0_M4_SLEEP_DELAY_MASK                   (0x1U << GRF_MCU_CON0_M4_SLEEP_DELAY_SHIFT)                  /* 0x00000100 */
+#define GRF_MCU_CON0_M4_DAP_FIXMASTER_SHIFT                (8U)
+#define GRF_MCU_CON0_M4_DAP_FIXMASTER_MASK                 (0x1U << GRF_MCU_CON0_M4_DAP_FIXMASTER_SHIFT)                /* 0x00000100 */
+#define GRF_MCU_CON0_M4_DAP_DCACHE_SHIFT                   (9U)
+#define GRF_MCU_CON0_M4_DAP_DCACHE_MASK                    (0x1U << GRF_MCU_CON0_M4_DAP_DCACHE_SHIFT)                   /* 0x00000200 */
+#define GRF_MCU_CON0_M4_SLEEP_DELAY_SHIFT                  (10U)
+#define GRF_MCU_CON0_M4_SLEEP_DELAY_MASK                   (0x1U << GRF_MCU_CON0_M4_SLEEP_DELAY_SHIFT)                  /* 0x00000400 */
 /* MCU_CON1 */
 #define GRF_MCU_CON1_M4_TENMS_SHIFT                        (0U)
 #define GRF_MCU_CON1_M4_TENMS_MASK                         (0xFFFFFFU << GRF_MCU_CON1_M4_TENMS_SHIFT)                   /* 0x00FFFFFF */
