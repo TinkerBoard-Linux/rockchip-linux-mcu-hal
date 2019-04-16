@@ -112,14 +112,14 @@
 #define USB_OTG_FIFO_BASE         0x1000U
 #define USB_OTG_FIFO_SIZE         0x1000U
 
-#define USB_PCGCCTL *(__IO uint32_t *)((uint32_t)pUSB + USB_OTG_PCGCCTL_BASE)
-#define USB_HPRT0   *(__IO uint32_t *)((uint32_t)pUSB + USB_OTG_HOST_PORT_BASE)
+#define USB_PCGCCTL (*(__IO uint32_t *)((uint32_t)pUSB + USB_OTG_PCGCCTL_BASE))
+#define USB_HPRT0   (*(__IO uint32_t *)((uint32_t)pUSB + USB_OTG_HOST_PORT_BASE))
 #define USB_DEVICE  ((struct USB_DEVICE_REG *)((uint32_t)pUSB + USB_OTG_DEVICE_BASE))
 #define USB_INEP(i)  ((struct USB_IN_EP_REG *)((uint32_t)pUSB + USB_OTG_IN_ENDPOINT_BASE + (i) * USB_OTG_EP_REG_SIZE))
 #define USB_OUTEP(i) ((struct USB_OUT_EP_REG *)((uint32_t)pUSB + USB_OTG_OUT_ENDPOINT_BASE + (i) * USB_OTG_EP_REG_SIZE))
-#define USB_DFIFO(i) *(__IO uint32_t *)((uint32_t)pUSB + USB_OTG_FIFO_BASE + (i) * USB_OTG_FIFO_SIZE)
+#define USB_DFIFO(i) (*(__IO uint32_t *)((uint32_t)pUSB + USB_OTG_FIFO_BASE + (i) * USB_OTG_FIFO_SIZE))
+#define USB_HC(i)    ((struct USB_HOST_CH_REG *)((uint32_t)pUSB + USB_OTG_HOST_CHANNEL_BASE + (i) * USB_OTG_HOST_CHANNEL_SIZE))
 #define USB_HOST ((struct USB_HOST_REG *)((uint32_t)pUSB + USB_OTG_HOST_BASE))
-#define USB_HC(i)                                         ((struct USB_HOST_CH_REG *)((uint32_t)pUSB + USB_OTG_HOST_CHANNEL_BASE + (i) * USB_OTG_HOST_CHANNEL_SIZE))
 #define USB_MASK_INTERRUPT(__INSTANCE__, __INTERRUPT__)   ((__INSTANCE__)->GINTMSK &= ~(__INTERRUPT__))
 #define USB_UNMASK_INTERRUPT(__INSTANCE__, __INTERRUPT__) ((__INSTANCE__)->GINTMSK |= (__INTERRUPT__))
 #define CLEAR_IN_EP_INTR(__EPNUM__, __INTERRUPT__)        (USB_INEP(__EPNUM__)->DIEPINT = (__INTERRUPT__))

@@ -81,9 +81,8 @@ HAL_Status HAL_PCDEx_SetTxFiFo(struct PCD_HANDLE *pPCD, uint8_t fifo, uint16_t s
         pPCD->pReg->DIEPTXF0_HNPTXFSIZ = (uint32_t)(((uint32_t)size << 16) | txOffset);
     } else {
         txOffset += (pPCD->pReg->DIEPTXF0_HNPTXFSIZ) >> 16;
-        for (i = 0; i < (fifo - 1); i++) {
+        for (i = 0; i < (fifo - 1); i++)
             txOffset += (pPCD->pReg->DIEPTXF[i] >> 16);
-        }
 
         /* Multiply Tx_Size by 2 to get higher performance */
         pPCD->pReg->DIEPTXF[fifo - 1] = (uint32_t)(((uint32_t)size << 16) | txOffset);
