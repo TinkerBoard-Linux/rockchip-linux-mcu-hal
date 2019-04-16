@@ -7,7 +7,7 @@
 
 #ifdef HAL_SPI_MODULE_ENABLED
 
-/** @addtogroup ROCKCHIP_SPI_HAL_Driver
+/** @addtogroup RKMCU_HAL_Driver
   * @{
   */
 /** @defgroup SPI SPI
