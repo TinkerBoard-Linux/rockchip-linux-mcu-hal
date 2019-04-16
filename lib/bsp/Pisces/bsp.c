@@ -52,6 +52,11 @@ struct HAL_PDM_DEV g_pdm0Dev =
 {
     .base = PDM0_BASE,
     .mclk = MCLK_PDM0,
+#ifdef IS_FPGA
+    .mclkRate = PDM_FPGA_CLK_RATE,
+#else
+    .mclkRate = PDM_CLK_RATE,
+#endif
     .hclk = HCLK_PDM0_GATE,
     .reset = SRST_M_PDM0,
     .rxDmaData =
