@@ -48,140 +48,50 @@
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/
-/** @defgroup PCD_Private_Macros PCD Private Macros
- *  @{
- */
-#define PCD_MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define PCD_MAX(a, b) (((a) > (b)) ? (a) : (b))
-/**
- *  @}
- */
+
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
 static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum);
 
 /********************* Public Function Definition ****************************/
-/** @defgroup PCD_Exported_Functions PCD Exported Functions
+/** @defgroup PCD_Exported_Functions_Group2 State and Errors Functions
+ *  @brief    Peripheral State functions
+ *
+ @verbatim
+
+ ==============================================================================
+             #### State and Errors functions ####
+ ===============================================================================
+ This section provides functions allowing to get the status of the module:
+
+ @endverbatim
  *  @{
  */
 
-/** @defgroup PCD_Exported_Functions_Group1 Initialization and de-initialization functions
- *  @brief    Initialization and Configuration functions
- *
- @verbatim
-
- ===============================================================================
-            ##### Initialization and de-initialization functions #####
- ===============================================================================
-    [..]  This section provides functions allowing to:
-
- @endverbatim
- @{ */
-
 /**
- * @brief  Initializes the PCD according to the specified parameters
- *         in the struct USB_OTG_CFG and create the associated handle.
+ * @brief  Return the PCD handle state.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @retval HAL state
  */
-HAL_Status HAL_PCD_Init(struct PCD_HANDLE *pPCD)
+ePCD_state HAL_PCD_GetState(struct PCD_HANDLE *pPCD)
 {
-    uint32_t i = 0;
-
-    /* Check the PCD handle allocation */
-    HAL_ASSERT(pPCD != NULL);
-
-    /* Check the parameters */
-    HAL_ASSERT(IS_PCD_INSTANCE(pPCD->pReg));
-
-    pPCD->pcdState = HAL_PCD_STATE_BUSY;
-
-    /* Disable the Interrupts */
-    __HAL_PCD_DISABLE(pPCD);
-
-    /*Init the Core (common init.) */
-    USB_CoreInit(pPCD->pReg, pPCD->cfg);
-
-    /* Force Device Mode*/
-    USB_SetCurrentMode(pPCD->pReg, USB_OTG_DEVICE_MODE);
-
-    /* Init endpoints structures */
-    for (i = 0; i < 15; i++) {
-        /* Init ep structure */
-        pPCD->inEp[i].isIn = 1;
-        pPCD->inEp[i].num = i;
-        pPCD->inEp[i].txFIFONum = i;
-        /* Control until ep is activated */
-        pPCD->inEp[i].type = EP_TYPE_CTRL;
-        pPCD->inEp[i].maxPacket = 0;
-        pPCD->inEp[i].pxferBuff = 0;
-        pPCD->inEp[i].xferLen = 0;
-    }
-
-    for (i = 0; i < 15; i++) {
-        pPCD->outEp[i].isIn = 0;
-        pPCD->outEp[i].num = i;
-        pPCD->inEp[i].txFIFONum = i;
-        /* Control until ep is activated */
-        pPCD->outEp[i].type = EP_TYPE_CTRL;
-        pPCD->outEp[i].maxPacket = 0;
-        pPCD->outEp[i].pxferBuff = 0;
-        pPCD->outEp[i].xferLen = 0;
-
-        pPCD->pReg->DIEPTXF[i] = 0;
-    }
-
-    /* Init Device */
-    USB_DevInit(pPCD->pReg, pPCD->cfg);
-
-    pPCD->pcdState = HAL_PCD_STATE_READY;
-
-    /* Activate LPM */
-    if (pPCD->cfg.lpmEnable == 1)
-        HAL_PCDEx_ActivateLPM(pPCD);
-
-    USB_DevDisconnect(pPCD->pReg);
-
-    return HAL_OK;
+    return pPCD->pcdState;
 }
-
-/**
- * @brief  DeInitializes the PCD peripheral.
- * @param  pPCD PCD handle
- * @retval HAL status
- */
-HAL_Status HAL_PCD_DeInit(struct PCD_HANDLE *pPCD)
-{
-    /* Check the PCD handle allocation */
-    HAL_ASSERT(pPCD != NULL);
-
-    pPCD->pcdState = HAL_PCD_STATE_BUSY;
-
-    /* Stop Device */
-    HAL_PCD_Stop(pPCD);
-
-    pPCD->pcdState = HAL_PCD_STATE_RESET;
-
-    return HAL_OK;
-}
-
 /** @} */
 
-/** @defgroup PCD_Exported_Functions_Group2 Input and Output operation functions
+/** @defgroup PCD_Exported_Functions_Group3 IO Functions
  *  @brief    Data transfers functions
- *
  @verbatim
 
+ ==============================================================================
+             #### IO functions ####
  ===============================================================================
-                      ##### IO operation functions #####
- ===============================================================================
-    [..]
-    This subsection provides a set of functions allowing to manage the PCD data
-    transfers.
+ This section provides functions allowing to IO controlling:
 
  @endverbatim
- @{ */
+ *  @{
+ */
 
 /**
  * @brief  Start The USB OTG Device.
@@ -654,20 +564,109 @@ __weak void HAL_PCD_DisconnectCallback(struct PCD_HANDLE *pPCD)
 
 /** @} */
 
-/** @defgroup PCD_Exported_Functions_Group3 Peripheral Control functions
- *  @brief   management functions
- *
+/** @defgroup PCD_Exported_Functions_Group4 Init and Deinit Functions
  @verbatim
 
  ===============================================================================
-                      ##### Peripheral Control functions #####
+             #### Init and deinit functions ####
  ===============================================================================
-    [..]
-    This subsection provides a set of functions allowing to control the PCD data
-    transfers.
-
+ This section provides functions allowing to init and deinit the module:
  @endverbatim
- @{ */
+ *  @{
+ */
+
+/**
+ * @brief  Initializes the PCD according to the specified parameters
+ *         in the struct USB_OTG_CFG and create the associated handle.
+ * @param  pPCD PCD handle
+ * @retval HAL status
+ */
+HAL_Status HAL_PCD_Init(struct PCD_HANDLE *pPCD)
+{
+    uint32_t i = 0;
+
+    /* Check the PCD handle allocation */
+    HAL_ASSERT(pPCD != NULL);
+
+    /* Check the parameters */
+    HAL_ASSERT(IS_PCD_INSTANCE(pPCD->pReg));
+
+    pPCD->pcdState = HAL_PCD_STATE_BUSY;
+
+    /* Disable the Interrupts */
+    __HAL_PCD_DISABLE(pPCD);
+
+    /*Init the Core (common init.) */
+    USB_CoreInit(pPCD->pReg, pPCD->cfg);
+
+    /* Force Device Mode*/
+    USB_SetCurrentMode(pPCD->pReg, USB_OTG_DEVICE_MODE);
+
+    /* Init endpoints structures */
+    for (i = 0; i < 15; i++) {
+        /* Init ep structure */
+        pPCD->inEp[i].isIn = 1;
+        pPCD->inEp[i].num = i;
+        pPCD->inEp[i].txFIFONum = i;
+        /* Control until ep is activated */
+        pPCD->inEp[i].type = EP_TYPE_CTRL;
+        pPCD->inEp[i].maxPacket = 0;
+        pPCD->inEp[i].pxferBuff = 0;
+        pPCD->inEp[i].xferLen = 0;
+    }
+
+    for (i = 0; i < 15; i++) {
+        pPCD->outEp[i].isIn = 0;
+        pPCD->outEp[i].num = i;
+        pPCD->inEp[i].txFIFONum = i;
+        /* Control until ep is activated */
+        pPCD->outEp[i].type = EP_TYPE_CTRL;
+        pPCD->outEp[i].maxPacket = 0;
+        pPCD->outEp[i].pxferBuff = 0;
+        pPCD->outEp[i].xferLen = 0;
+
+        pPCD->pReg->DIEPTXF[i] = 0;
+    }
+
+    /* Init Device */
+    USB_DevInit(pPCD->pReg, pPCD->cfg);
+
+    pPCD->pcdState = HAL_PCD_STATE_READY;
+
+    /* Activate LPM */
+    if (pPCD->cfg.lpmEnable == 1)
+        HAL_PCDEx_ActivateLPM(pPCD);
+
+    USB_DevDisconnect(pPCD->pReg);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  DeInitializes the PCD peripheral.
+ * @param  pPCD PCD handle
+ * @retval HAL status
+ */
+HAL_Status HAL_PCD_DeInit(struct PCD_HANDLE *pPCD)
+{
+    /* Check the PCD handle allocation */
+    HAL_ASSERT(pPCD != NULL);
+
+    pPCD->pcdState = HAL_PCD_STATE_BUSY;
+
+    /* Stop Device */
+    HAL_PCD_Stop(pPCD);
+
+    pPCD->pcdState = HAL_PCD_STATE_RESET;
+
+    return HAL_OK;
+}
+
+/** @} */
+
+/** @defgroup PCD_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
 
 /**
  * @brief  Connect the USB device.
@@ -947,37 +946,6 @@ HAL_Status HAL_PCD_DeActivateRemoteWakeup(struct PCD_HANDLE *pPCD)
 }
 /** @} */
 
-/** @defgroup PCD_Exported_Functions_Group4 Peripheral State functions
- *  @brief    Peripheral State functions
- *
- @verbatim
-
- ===============================================================================
-                      ##### Peripheral State functions #####
- ===============================================================================
-    [..]
-    This subsection permits to get in run-time the status of the peripheral
-    and the data flow.
-
- @endverbatim
- @{ */
-
-/**
- * @brief  Return the PCD handle state.
- * @param  pPCD PCD handle
- * @retval HAL state
- */
-ePCD_state HAL_PCD_GetState(struct PCD_HANDLE *pPCD)
-{
-    return pPCD->pcdState;
-}
-/** @} */
-
-/** @} */
-
-/** @defgroup PCD_Private_Functions PCD Private Functions
- *  @{
- */
 /**
  * @brief  Check FIFO for the next packet to be loaded.
  * @param  pPCD PCD handle
@@ -1024,7 +992,6 @@ static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum)
 
     return HAL_OK;
 }
-/** @} */
 
 #endif /* HAL_PCD_MODULE_ENABLED */
 

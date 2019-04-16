@@ -41,21 +41,16 @@
 static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB);
 
 /********************* Public Function Definition ****************************/
-/** @defgroup USB_CORE_Exported_Functions USB CORE Exported Functions
+/** @defgroup USB_CORE_Exported_Functions_Group4 Init and Deinit Functions
+ @verbatim
+
+ ===============================================================================
+             #### Init and deinit functions ####
+ ===============================================================================
+ This section provides functions allowing to init and deinit the module:
+ @endverbatim
  *  @{
  */
-
-/** @defgroup USB_CORE_Group1 Initialization/de-initialization functions
- *  @brief    Initialization and Configuration functions
- *
- @verbatim
- ===============================================================================
-              ##### Initialization/de-initialization functions #####
- ===============================================================================
-    [..]  This section provides functions allowing to:
-
- @endverbatim
- @{ */
 
 /**
  * @brief  Initializes the USB Core
@@ -1435,11 +1430,6 @@ HAL_Status USB_StopHost(struct USB_GLOBAL_REG *pUSB)
 
 /** @} */
 
-/** @} */
-
-/** @defgroup USB_CORE_Private_Functions USB CORE Private Functions
- *  @{
- */
 /**
  * @brief  Reset the USB Core (needed after USB clock settings change)
  * @param  pUSB  Selected device
@@ -1466,7 +1456,6 @@ static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB)
 
     return HAL_OK;
 }
-/** @} */
 
 #endif /* defined (HAL_PCD_MODULE_ENABLED) || defined (HAL_HCD_MODULE_ENABLED) */
 

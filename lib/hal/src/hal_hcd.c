@@ -55,157 +55,113 @@ static void HCD_RXQLVL_IRQHandler(struct HCD_HANDLE *pHCD);
 static void HCD_Port_IRQHandler(struct HCD_HANDLE *pHCD);
 
 /********************* Public Function Definition ****************************/
-/** @defgroup HCD_Exported_Functions HCD Exported Functions
- *  @{
- */
-
-/** @defgroup HCD_Exported_Functions_Group1 Initialization and de-initialization functions
- *  @brief    Initialization and Configuration functions
+/** @defgroup HCD_Exported_Functions_Group2 State and Errors Functions
+ *  @brief    HCD State functions
  *
  @verbatim
 
+ ==============================================================================
+             #### State and Errors functions ####
  ===============================================================================
-          ##### Initialization and de-initialization functions #####
- ===============================================================================
-    [..]  This section provides functions allowing to:
+ This section provides functions allowing to get the status of the module:
 
  @endverbatim
  *  @{
  */
 
 /**
- * @brief  Initialize the host driver.
+ * @brief  Return the HCD handle state.
  * @param  pHCD HCD handle
- * @retval HAL status
+ * @retval HAL state
  */
-HAL_Status HAL_HCD_Init(struct HCD_HANDLE *pHCD)
+eHCD_state HAL_HCD_GetState(struct HCD_HANDLE *pHCD)
 {
-    /* Check the HCD handle allocation */
-    HAL_ASSERT(pHCD != NULL);
-
-    /* Check the parameters */
-    HAL_ASSERT(IS_HCD_INSTANCE(pHCD->pReg));
-
-    pHCD->hcdState = HAL_HCD_STATE_BUSY;
-
-    /* Disable the Interrupts */
-    __HAL_HCD_DISABLE(pHCD);
-
-    /*Init the Core (common init.) */
-    USB_CoreInit(pHCD->pReg, pHCD->cfg);
-
-    /* Force Host Mode*/
-    USB_SetCurrentMode(pHCD->pReg, USB_OTG_HOST_MODE);
-
-    /* Init Host */
-    USB_HostInit(pHCD->pReg, pHCD->cfg);
-
-    pHCD->hcdState = HAL_HCD_STATE_READY;
-
-    return HAL_OK;
+    return pHCD->hcdState;
 }
 
 /**
- * @brief  Initialize a host channel.
+ * @brief  Return URB state for a channel.
  * @param  pHCD HCD handle
  * @param  chNum Channel number.
  *         This parameter can be a value from 1 to 15
- * @param  epNum Endpoint number.
- *         This parameter can be a value from 1 to 15
- * @param  devAddress  Current device address
- *         This parameter can be a value from 0 to 255
- * @param  speed Current device speed.
+ * @retval URB state.
  *         This parameter can be one of these values:
- *            HCD_SPEED_HIGH: High speed mode,
- *            HCD_SPEED_FULL: Full speed mode,
- *            HCD_SPEED_LOW: Low speed mode
- * @param  epType Endpoint Type.
- *         This parameter can be one of these values:
- *            EP_TYPE_CTRL: Control type,
- *            EP_TYPE_ISOC: Isochronous type,
- *            EP_TYPE_BULK: Bulk type,
- *            EP_TYPE_INTR: Interrupt type
- * @param  mps Max Packet Size.
- *         This parameter can be a value from 0 to32K
- * @retval HAL status
+ *            URB_IDLE/
+ *            URB_DONE/
+ *            URB_NOTREADY/
+ *            URB_NYET/
+ *            URB_ERROR/
+ *            URB_STALL
  */
-HAL_Status HAL_HCD_HCInit(struct HCD_HANDLE *pHCD,
-                          uint8_t chNum,
-                          uint8_t epNum,
-                          uint8_t devAddress,
-                          uint8_t speed,
-                          uint8_t epType,
-                          uint16_t mps)
+eUSB_OTG_urbState HAL_HCD_HCGetURBState(struct HCD_HANDLE *pHCD, uint8_t chNum)
 {
-    HAL_Status status = HAL_OK;
-
-    pHCD->hc[chNum].doPing = 0;
-    pHCD->hc[chNum].devAddr = devAddress;
-    pHCD->hc[chNum].maxPacket = mps;
-    pHCD->hc[chNum].chNum = chNum;
-    pHCD->hc[chNum].epType = epType;
-    pHCD->hc[chNum].epNum = epNum & 0x7F;
-    pHCD->hc[chNum].epIsIn = ((epNum & 0x80) == 0x80);
-    pHCD->hc[chNum].speed = speed;
-
-    status = USB_HCInit(pHCD->pReg,
-                        chNum,
-                        epNum,
-                        devAddress,
-                        speed,
-                        epType,
-                        mps);
-
-    return status;
+    return pHCD->hc[chNum].urbState;
 }
 
 /**
- * @brief  Halt a host channel.
+ * @brief  Return the last host transfer size.
  * @param  pHCD HCD handle
  * @param  chNum Channel number.
  *         This parameter can be a value from 1 to 15
- * @retval HAL status
+ * @retval last transfer size in byte
  */
-HAL_Status HAL_HCD_HCHalt(struct HCD_HANDLE *pHCD, uint8_t chNum)
+uint32_t HAL_HCD_HCGetXferCount(struct HCD_HANDLE *pHCD, uint8_t chNum)
 {
-    HAL_Status status = HAL_OK;
-
-    USB_HCHalt(pHCD->pReg, chNum);
-
-    return status;
+    return pHCD->hc[chNum].xferCount;
 }
 
 /**
- * @brief  DeInitialize the host driver.
+ * @brief  Return the Host Channel state.
  * @param  pHCD HCD handle
- * @retval HAL status
+ * @param  chNum Channel number.
+ *         This parameter can be a value from 1 to 15
+ * @retval Host channel state
+ *         This parameter can be one of these values:
+ *            HC_IDLE/
+ *            HC_XFRC/
+ *            HC_HALTED/
+ *            HC_NYET/
+ *            HC_NAK/
+ *            HC_STALL/
+ *            HC_XACTERR/
+ *            HC_BBLERR/
+ *            HC_DATATGLERR
  */
-HAL_Status HAL_HCD_DeInit(struct HCD_HANDLE *pHCD)
+eUSB_OTG_hcState HAL_HCD_HCGetState(struct HCD_HANDLE *pHCD, uint8_t chNum)
 {
-    /* Check the HCD handle allocation */
-    HAL_ASSERT(pHCD != NULL);
+    return pHCD->hc[chNum].hcState;
+}
 
-    pHCD->hcdState = HAL_HCD_STATE_BUSY;
+/**
+ * @brief  Return the current Host frame number.
+ * @param  pHCD HCD handle
+ * @retval Current Host frame number
+ */
+uint32_t HAL_HCD_GetCurrentFrame(struct HCD_HANDLE *pHCD)
+{
+    return USB_GetCurrentFrame(pHCD->pReg);
+}
 
-    __HAL_HCD_DISABLE(pHCD);
-
-    pHCD->hcdState = HAL_HCD_STATE_RESET;
-
-    return HAL_OK;
+/**
+ * @brief  Return the Host enumeration speed.
+ * @param  pHCD HCD handle
+ * @retval Enumeration speed
+ */
+uint32_t HAL_HCD_GetCurrentSpeed(struct HCD_HANDLE *pHCD)
+{
+    return USB_GetHostSpeed(pHCD->pReg);
 }
 
 /** @} */
 
-/** @defgroup HCD_Exported_Functions_Group2 Input and Output operation functions
+/** @defgroup HCD_Exported_Functions_Group3 IO Functions
  *  @brief    HCD IO operation functions
- *
  @verbatim
 
+ ==============================================================================
+             #### IO functions ####
  ===============================================================================
-                      ##### IO operation functions #####
- ===============================================================================
- [..] This subsection provides a set of functions allowing to manage the USB Host Data
-    Transfer
+ This section provides functions allowing to IO controlling:
 
  @endverbatim
  *  @{
@@ -490,18 +446,141 @@ __weak void HAL_HCD_HCNotifyURBChange_Callback(struct HCD_HANDLE *pHCD, uint8_t 
 
 /** @} */
 
-/** @defgroup HCD_Exported_Functions_Group3 Peripheral Control functions
- *  @brief    Management functions
- *
+/** @defgroup HCD_Exported_Functions_Group4 Init and Deinit Functions
  @verbatim
- ===============================================================================
-                      ##### Peripheral Control functions #####
- ===============================================================================
-    [..]
-    This subsection provides a set of functions allowing to control the HCD data
-    transfers.
 
+ ===============================================================================
+             #### Init and deinit functions ####
+ ===============================================================================
+ This section provides functions allowing to init and deinit the module:
  @endverbatim
+ *  @{
+ */
+
+/**
+ * @brief  Initialize the host driver.
+ * @param  pHCD HCD handle
+ * @retval HAL status
+ */
+HAL_Status HAL_HCD_Init(struct HCD_HANDLE *pHCD)
+{
+    /* Check the HCD handle allocation */
+    HAL_ASSERT(pHCD != NULL);
+
+    /* Check the parameters */
+    HAL_ASSERT(IS_HCD_INSTANCE(pHCD->pReg));
+
+    pHCD->hcdState = HAL_HCD_STATE_BUSY;
+
+    /* Disable the Interrupts */
+    __HAL_HCD_DISABLE(pHCD);
+
+    /*Init the Core (common init.) */
+    USB_CoreInit(pHCD->pReg, pHCD->cfg);
+
+    /* Force Host Mode*/
+    USB_SetCurrentMode(pHCD->pReg, USB_OTG_HOST_MODE);
+
+    /* Init Host */
+    USB_HostInit(pHCD->pReg, pHCD->cfg);
+
+    pHCD->hcdState = HAL_HCD_STATE_READY;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Initialize a host channel.
+ * @param  pHCD HCD handle
+ * @param  chNum Channel number.
+ *         This parameter can be a value from 1 to 15
+ * @param  epNum Endpoint number.
+ *         This parameter can be a value from 1 to 15
+ * @param  devAddress  Current device address
+ *         This parameter can be a value from 0 to 255
+ * @param  speed Current device speed.
+ *         This parameter can be one of these values:
+ *            HCD_SPEED_HIGH: High speed mode,
+ *            HCD_SPEED_FULL: Full speed mode,
+ *            HCD_SPEED_LOW: Low speed mode
+ * @param  epType Endpoint Type.
+ *         This parameter can be one of these values:
+ *            EP_TYPE_CTRL: Control type,
+ *            EP_TYPE_ISOC: Isochronous type,
+ *            EP_TYPE_BULK: Bulk type,
+ *            EP_TYPE_INTR: Interrupt type
+ * @param  mps Max Packet Size.
+ *         This parameter can be a value from 0 to32K
+ * @retval HAL status
+ */
+HAL_Status HAL_HCD_HCInit(struct HCD_HANDLE *pHCD,
+                          uint8_t chNum,
+                          uint8_t epNum,
+                          uint8_t devAddress,
+                          uint8_t speed,
+                          uint8_t epType,
+                          uint16_t mps)
+{
+    HAL_Status status = HAL_OK;
+
+    pHCD->hc[chNum].doPing = 0;
+    pHCD->hc[chNum].devAddr = devAddress;
+    pHCD->hc[chNum].maxPacket = mps;
+    pHCD->hc[chNum].chNum = chNum;
+    pHCD->hc[chNum].epType = epType;
+    pHCD->hc[chNum].epNum = epNum & 0x7F;
+    pHCD->hc[chNum].epIsIn = ((epNum & 0x80) == 0x80);
+    pHCD->hc[chNum].speed = speed;
+
+    status = USB_HCInit(pHCD->pReg,
+                        chNum,
+                        epNum,
+                        devAddress,
+                        speed,
+                        epType,
+                        mps);
+
+    return status;
+}
+
+/**
+ * @brief  Halt a host channel.
+ * @param  pHCD HCD handle
+ * @param  chNum Channel number.
+ *         This parameter can be a value from 1 to 15
+ * @retval HAL status
+ */
+HAL_Status HAL_HCD_HCHalt(struct HCD_HANDLE *pHCD, uint8_t chNum)
+{
+    HAL_Status status = HAL_OK;
+
+    USB_HCHalt(pHCD->pReg, chNum);
+
+    return status;
+}
+
+/**
+ * @brief  DeInitialize the host driver.
+ * @param  pHCD HCD handle
+ * @retval HAL status
+ */
+HAL_Status HAL_HCD_DeInit(struct HCD_HANDLE *pHCD)
+{
+    /* Check the HCD handle allocation */
+    HAL_ASSERT(pHCD != NULL);
+
+    pHCD->hcdState = HAL_HCD_STATE_BUSY;
+
+    __HAL_HCD_DISABLE(pHCD);
+
+    pHCD->hcdState = HAL_HCD_STATE_RESET;
+
+    return HAL_OK;
+}
+
+/** @} */
+
+/** @defgroup HCD_Exported_Functions_Group5 Other Functions
  *  @{
  */
 
@@ -542,111 +621,6 @@ HAL_Status HAL_HCD_ResetPort(struct HCD_HANDLE *pHCD)
 
 /** @} */
 
-/** @defgroup HCD_Exported_Functions_Group4 Peripheral State functions
- *  @brief    Peripheral State functions
- *
- @verbatim
- ===============================================================================
-                      ##### Peripheral State functions #####
- ===============================================================================
-    [..]
-    This subsection permits to get in run-time the status of the peripheral
-    and the data flow.
-
- @endverbatim
- *  @{
- */
-
-/**
- * @brief  Return the HCD handle state.
- * @param  pHCD HCD handle
- * @retval HAL state
- */
-eHCD_state HAL_HCD_GetState(struct HCD_HANDLE *pHCD)
-{
-    return pHCD->hcdState;
-}
-
-/**
- * @brief  Return  URB state for a channel.
- * @param  pHCD HCD handle
- * @param  chNum Channel number.
- *         This parameter can be a value from 1 to 15
- * @retval URB state.
- *         This parameter can be one of these values:
- *            URB_IDLE/
- *            URB_DONE/
- *            URB_NOTREADY/
- *            URB_NYET/
- *            URB_ERROR/
- *            URB_STALL
- */
-eUSB_OTG_urbState HAL_HCD_HCGetURBState(struct HCD_HANDLE *pHCD, uint8_t chNum)
-{
-    return pHCD->hc[chNum].urbState;
-}
-
-/**
- * @brief  Return the last host transfer size.
- * @param  pHCD HCD handle
- * @param  chNum Channel number.
- *         This parameter can be a value from 1 to 15
- * @retval last transfer size in byte
- */
-uint32_t HAL_HCD_HCGetXferCount(struct HCD_HANDLE *pHCD, uint8_t chNum)
-{
-    return pHCD->hc[chNum].xferCount;
-}
-
-/**
- * @brief  Return the Host Channel state.
- * @param  pHCD HCD handle
- * @param  chNum Channel number.
- *         This parameter can be a value from 1 to 15
- * @retval Host channel state
- *         This parameter can be one of these values:
- *            HC_IDLE/
- *            HC_XFRC/
- *            HC_HALTED/
- *            HC_NYET/
- *            HC_NAK/
- *            HC_STALL/
- *            HC_XACTERR/
- *            HC_BBLERR/
- *            HC_DATATGLERR
- */
-eUSB_OTG_hcState HAL_HCD_HCGetState(struct HCD_HANDLE *pHCD, uint8_t chNum)
-{
-    return pHCD->hc[chNum].hcState;
-}
-
-/**
- * @brief  Return the current Host frame number.
- * @param  pHCD HCD handle
- * @retval Current Host frame number
- */
-uint32_t HAL_HCD_GetCurrentFrame(struct HCD_HANDLE *pHCD)
-{
-    return USB_GetCurrentFrame(pHCD->pReg);
-}
-
-/**
- * @brief  Return the Host enumeration speed.
- * @param  pHCD HCD handle
- * @retval Enumeration speed
- */
-uint32_t HAL_HCD_GetCurrentSpeed(struct HCD_HANDLE *pHCD)
-{
-    return USB_GetHostSpeed(pHCD->pReg);
-}
-
-/** @} */
-
-/** @} */
-
-/** @defgroup HCD_Private_Functions HCD Private Functions
- *  @{
- */
 /**
  * @brief  Handle Host Channel IN interrupt requests.
  * @param  pHCD HCD handle
@@ -963,10 +937,6 @@ static void HCD_Port_IRQHandler(struct HCD_HANDLE *pHCD)
     /* Clear Port Interrupts */
     USB_HPRT0 = hprt0Modify;
 }
-
-/** @} */
-
-/** @} */
 
 #endif /* HAL_HCD_MODULE_ENABLED */
 

@@ -33,22 +33,7 @@
 /********************* Private Variable Definition ***************************/
 /********************* Private Function Definition ***************************/
 /********************* Public Function Definition ****************************/
-/** @defgroup PCDEx_Exported_Functions PCDEx Exported Functions
- *  @{
- */
-
-/** @defgroup PCDEx_Exported_Functions_Group1 Peripheral Control functions
- *  @brief    PCDEx control functions
- *
- @verbatim
-
- ===============================================================================
-                 ##### Extended features functions #####
- ===============================================================================
-    [..]  This section provides functions allowing to:
-      (+) Update FIFO configuration
-
- @endverbatim
+/** @defgroup PCDEx_Exported_Functions_Group5 Other Function
  *  @{
  */
 
@@ -148,8 +133,6 @@ __weak void HAL_PCDEx_LPM_Callback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg)
      *        the HAL_PCDEx_LPM_Callback could be implemented in the user file
      */
 }
-
-/** @} */
 
 /** @} */
 
