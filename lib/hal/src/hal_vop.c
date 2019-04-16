@@ -546,6 +546,11 @@ HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
                   VOP_DSP_BG_DSP_BG_BLUE_MASK,
                   0xff);
 
+    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
+                  VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_SHIFT,
+                  VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_MASK,
+                  1);
+
     if (!(pModeInfo->flags & DSC_ENABLE))
         VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                       VOP_SYS_CTRL2_DSC_BYPASS_EN_SHIFT,
@@ -959,11 +964,11 @@ HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_MASK,
-                  1);
+                  0);
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_MASK,
-                  1);
+                  0);
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK,
