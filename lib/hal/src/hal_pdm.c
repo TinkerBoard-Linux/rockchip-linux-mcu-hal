@@ -118,12 +118,12 @@ static int PDM_GetCicDsRatio(uint32_t clk)
 {
     switch (clk) {
     case 1024000:
-    case 1411000:
+    case 1411200:
     case 1536000:
 
         return 2;
     case 2048000:
-    case 2822000:
+    case 2822400:
     case 3072000:
 
         return 1;
