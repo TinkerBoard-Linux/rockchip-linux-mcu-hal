@@ -99,7 +99,7 @@ struct HAL_SFC_HOST {
     HAL_LockStatus status;
     uint32_t version;
     void *data;                         /* xfer data buffer */
-    struct HAL_SFC_XMMC_DEV xmmcDev[2];
+    struct HAL_SFC_XMMC_DEV xmmcDev[SFC_CHIP_CNT];
 };
 
 /** @} */
@@ -108,11 +108,12 @@ HAL_Status HAL_SFC_Init(struct HAL_SFC_HOST *host);
 HAL_Status HAL_SFC_Deinit(struct HAL_SFC_HOST *host);
 HAL_Status HAL_SFC_XferRequest(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32_t sfctrl, uint32_t addr);
 HAL_Status HAL_SFC_XferRequest_DMA(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32_t sfctrl, uint32_t addr);
-HAL_Status HAL_SFC_IRQHandler(struct HAL_SFC_HOST *host);
-HAL_Status HAL_SFC_UnMaskTransmInterrupt(struct HAL_SFC_HOST *host);
-HAL_Status HAL_SFC_MaskDmaInterrupt(struct HAL_SFC_HOST *host);
-HAL_Check HAL_SFC_IsTransmInterrupt(struct HAL_SFC_HOST *host);
-HAL_Status HAL_SFC_ClearTransmInterrupt(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_IRQHelper(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_MaskDMAInterrupt(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_UnmaskDMAInterrupt(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_MaskDMAInterrupt(struct HAL_SFC_HOST *host);
+HAL_Check HAL_SFC_IsDMAInterrupt(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_ClearIsr(struct HAL_SFC_HOST *host);
 HAL_Status HAL_SFC_XmmcRequest(struct HAL_SFC_HOST *host, uint8_t on);
 
 #endif

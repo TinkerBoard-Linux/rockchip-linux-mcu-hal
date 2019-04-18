@@ -429,6 +429,74 @@ static HAL_Status SNOR_ReadDataRaw(struct HAL_SFC_HOST *host, uint32_t addr, voi
     return ret;
 }
 
+static HAL_Status SNOR_ProgDataRaw_DMA(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
+{
+    int32_t ret;
+    SFCCMD_DATA sfcmd;
+    SFCCTRL_DATA sfctrl;
+    struct SFNOR_DEV *pDev = &s_snorDev;
+
+    /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
+    SNOR_WriteEn(host);
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = pDev->ProgCmd;
+    sfcmd.b.addrbits = SFC_ADDR_24BITS;
+    sfcmd.b.datasize = size;
+    sfcmd.b.rw = SFC_WRITE;
+    if (pDev->addrMode == ADDR_MODE_4BYTE)
+        sfcmd.b.addrbits = SFC_ADDR_32BITS;
+
+    sfctrl.d32 = 0;
+    sfctrl.b.datalines = pDev->progLines;
+    if (pDev->ProgCmd == CMD_PAGE_PROG_A4)
+        sfctrl.b.addrlines = SFC_4BITS_LINE;
+    ;
+
+    host->data = pData;
+    ret = HAL_SFC_XferRequest_DMA(host, sfcmd.d32, sfctrl.d32, addr);
+
+    return ret;
+}
+
+static HAL_Status SNOR_ReadDataRaw_DMA(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
+{
+    int32_t ret;
+    SFCCMD_DATA sfcmd;
+    SFCCTRL_DATA sfctrl;
+    struct SFNOR_DEV *pDev = &s_snorDev;
+
+    /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
+
+    sfcmd.d32 = 0;
+    sfcmd.b.cmd = pDev->readCmd;
+    sfcmd.b.datasize = size;
+    sfcmd.b.addrbits = SFC_ADDR_24BITS;
+
+    sfctrl.d32 = 0;
+    sfctrl.b.datalines = pDev->readLines;
+
+    if (pDev->readCmd == CMD_FAST_READ_X1 ||
+        pDev->readCmd == CMD_FAST_READ_X4 ||
+        pDev->readCmd == CMD_FAST_READ_X2 ||
+        pDev->readCmd == CMD_FAST_4READ_X4) {
+        sfcmd.b.dummybits = 8;
+    } else if (pDev->readCmd == CMD_FAST_READ_A4) {
+        sfcmd.b.addrbits = SFC_ADDR_32BITS;
+        addr = (addr << 8) | 0xFF; //Set M[7:0] = 0xFF
+        sfcmd.b.dummybits = 4;
+        sfctrl.b.addrlines = SFC_4BITS_LINE;
+    }
+
+    if (pDev->addrMode == ADDR_MODE_4BYTE)
+        sfcmd.b.addrbits = SFC_ADDR_32BITS;
+
+    host->data = pData;
+    ret = HAL_SFC_XferRequest_DMA(host, sfcmd.d32, sfctrl.d32, addr);
+
+    return ret;
+}
+
 HAL_Status SNOR_Read_Parameter(struct HAL_SFC_HOST *host, uint32_t addr, uint8_t *data)
 {
     SFCCMD_DATA sfcmd;
@@ -480,6 +548,8 @@ HAL_Status SNOR_XmmcInit(struct HAL_SFC_HOST *host, uint8_t cs)
     SFCCMD_DATA sfcmd;
     SFCCTRL_DATA sfctrl;
     struct SFNOR_DEV *pDev = &s_snorDev;
+
+    HAL_ASSERT(cs < SFC_CHIP_CNT);
 
     sfcmd.d32 = 0;
     sfcmd.b.cmd = pDev->readCmd;
@@ -638,7 +708,97 @@ HAL_Status HAL_SNOR_ReadData(struct HAL_SFC_HOST *host, uint32_t addr, void *pDa
 
             return ret;
         }
+        size -= len;
+        addr += len;
+        pBuf += len;
+    }
 
+    return ret;
+}
+
+/**
+ * @brief  Flash continuous writing in DMA mode.
+ * @param  host: SFC host.
+ * @param  addr: byte address.
+ * @param  pData: source address.
+ * @param  size: number of bytes.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SNOR_ProgData_DMA(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
+{
+    int32_t ret = HAL_OK;
+    uint32_t pageSize, len;
+    struct SFNOR_DEV *pDev = &s_snorDev;
+    uint8_t *pBuf = (uint8_t *)pData;
+    int32_t timeOut;
+
+    if ((addr + size) > (pDev->capacity << 9))
+        return HAL_INVAL;
+
+    pageSize = NOR_PAGE_SIZE;
+    while (size) {
+        len = HAL_MIN(pageSize, size);
+        ret = SNOR_ProgDataRaw_DMA(host, addr, pBuf, len);
+        if (ret != HAL_OK) {
+            HAL_DBG("%s %lu ret= %ld\n", __func__, addr >> 9, ret);
+
+            return ret;
+        }
+        timeOut = len * 10;
+        while (host->status == HAL_LOCKED && timeOut) {
+            HAL_DelayUs(1);
+            timeOut--;
+        }
+        if (timeOut <= 0) {
+            HAL_DBG("%s %lu ret= %d\n", __func__, addr >> 9, HAL_TIMEOUT);
+
+            return HAL_TIMEOUT;
+        }
+        size -= len;
+        addr += len;
+        pBuf += len;
+    }
+
+    return ret;
+}
+
+/**
+ * @brief  Flash continuous reading in DMA mode.
+ * @param  host: SFC host.
+ * @param  addr: byte address.
+ * @param  pData: destination address.
+ * @param  size: number of bytes.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SNOR_ReadData_DMA(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
+{
+    int32_t ret = HAL_OK;
+    uint32_t len;
+    struct SFNOR_DEV *pDev = &s_snorDev;
+    uint8_t *pBuf = (uint8_t *)pData;
+    int32_t timeOut;
+
+    if ((addr + size) > (pDev->capacity << 9))
+        return HAL_INVAL;
+
+    while (size) {
+        len = HAL_MIN(size, SFC_MAX_IOSIZE);
+        ret = SNOR_ReadDataRaw_DMA(host, addr, pBuf, len);
+        timeOut = len * 10;
+        if (ret != HAL_OK) {
+            HAL_DBG("%s %lu ret= %ld\n", __func__, addr >> 9, ret);
+
+            return ret;
+        }
+        while (host->status == HAL_LOCKED && timeOut) {
+            HAL_DelayUs(1);
+            timeOut--;
+        }
+        if (timeOut <= 0) {
+            HAL_DBG("%s %lu ret= %d\n", __func__, addr >> 9, HAL_TIMEOUT);
+
+            return HAL_TIMEOUT;
+        }
         size -= len;
         addr += len;
         pBuf += len;
@@ -716,7 +876,90 @@ HAL_Status HAL_SNOR_Read(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t nSec,
     size = nSec << 9;
     while (size) {
         len = HAL_MIN(size, SFC_MAX_IOSIZE);
-        ret = SNOR_ReadDataRaw(host, addr, pBuf, len);
+        ret = HAL_SNOR_ReadData(host, addr, pBuf, len);
+        if (ret != HAL_OK) {
+            HAL_DBG("SNOR_ReadData %lu ret= %ld\n", addr >> 9, ret);
+            break;
+        }
+
+        size -= len;
+        addr += len;
+        pBuf += len;
+    }
+
+    return ret;
+}
+
+/**
+ * @brief  Flash continuous writing according to sectors in DMA mode.
+ * @param  host: SFC host.
+ * @param  sec: sector address.
+ * @param  nSec: number of sectors.
+ * @param  pData: source address.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SNOR_Write_DMA(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t nSec, void *pData)
+{
+    int32_t ret = HAL_OK;
+    uint32_t len, blockSize, offset;
+    struct SFNOR_DEV *pDev = &s_snorDev;
+    uint8_t *pBuf = (uint8_t *)pData;
+
+    if ((sec + nSec) > pDev->capacity)
+        return HAL_INVAL;
+
+    while (nSec) {
+        if (sec < 512 || sec >= pDev->capacity - 512)
+            blockSize = 8;
+        else
+            blockSize = pDev->blockSize;
+
+        offset = (sec & (blockSize - 1));
+        if (!offset) {
+            ret = HAL_SNOR_Erase(host, sec << 9, (blockSize == 8) ? ERASE_SECTOR :
+                                                                    ERASE_BLOCK64K);
+            if (ret != HAL_OK) {
+                HAL_DBG("SNOR_Erase %lu ret= %ld\n", sec, ret);
+                break;
+            }
+        }
+        len = HAL_MIN((blockSize - offset), nSec);
+        ret = HAL_SNOR_ProgData_DMA(host, sec << 9, pBuf, len << 9);
+        if (ret != HAL_OK) {
+            HAL_DBG("SNOR_Erase %lu ret= %ld\n", sec, ret);
+            break;
+        }
+        nSec -= len;
+        sec += len;
+        pBuf += len << 9;
+    }
+
+    return ret;
+}
+
+/**
+ * @brief  Flash continuous reading according to sectors in DMA mode.
+ * @param  host: SFC host.
+ * @param  sec: sector address.
+ * @param  nSec: number of sectors.
+ * @param  pData: destination address.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SNOR_Read_DMA(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t nSec, void *pData)
+{
+    int32_t ret = HAL_OK;
+    uint32_t addr, size, len;
+    struct SFNOR_DEV *pDev = &s_snorDev;
+    uint8_t *pBuf = (uint8_t *)pData;
+
+    if ((sec + nSec) > pDev->capacity)
+        return HAL_INVAL;
+
+    addr = sec << 9;
+    size = nSec << 9;
+    while (size) {
+        len = HAL_MIN(size, SFC_MAX_IOSIZE);
+        ret = HAL_SNOR_ReadData_DMA(host, addr, pBuf, len);
         if (ret != HAL_OK) {
             HAL_DBG("SNOR_ReadData %lu ret= %ld\n", addr >> 9, ret);
             break;

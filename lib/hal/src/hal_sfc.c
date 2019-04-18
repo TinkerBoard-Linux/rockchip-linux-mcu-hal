@@ -277,13 +277,14 @@ HAL_Status HAL_SFC_XferRequest(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32
  */
 HAL_Status HAL_SFC_XferRequest_DMA(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32_t sfctrl, uint32_t addr)
 {
-    int32_t ret = HAL_OK;
+    int32_t timeout, ret = HAL_OK;
     SFCCMD_DATA cmd;
     SFCCTRL_DATA ctrl;
     struct SFC_REG *pReg = host->instance;
 
     cmd.d32 = sfcmd;
     ctrl.d32 = sfctrl;
+    host->status = HAL_LOCKED;
 
     if (!(pReg->FSR & SFC_FSR_TXES_EMPTY) || !(pReg->FSR & SFC_FSR_RXES_EMPTY) || (pReg->SR & SFC_SR_SR_BUSY))
         SFC_Reset(pReg);
@@ -364,9 +365,9 @@ HAL_Status HAL_SFC_Deinit(struct HAL_SFC_HOST *host)
  * @param  host: SFC host.
  * @return HAL_Status.
  */
-HAL_Status HAL_SFC_MaskTransmInterrupt(struct HAL_SFC_HOST *host)
+HAL_Status HAL_SFC_MaskDMAInterrupt(struct HAL_SFC_HOST *host)
 {
-    SET_BIT(host->instance->IMR, SFC_IMR_TRANSM_MASK);
+    SET_BIT(host->instance->IMR, SFC_IMR_DMAM_MASK);
 
     return HAL_OK;
 }
@@ -376,9 +377,9 @@ HAL_Status HAL_SFC_MaskTransmInterrupt(struct HAL_SFC_HOST *host)
  * @param  host: SFC host.
  * @return HAL_Status.
  */
-HAL_Status HAL_SFC_UnMaskTransmInterrupt(struct HAL_SFC_HOST *host)
+HAL_Status HAL_SFC_UnmaskDMAInterrupt(struct HAL_SFC_HOST *host)
 {
-    CLEAR_BIT(host->instance->IMR, SFC_IMR_TRANSM_MASK);
+    CLEAR_BIT(host->instance->IMR, SFC_IMR_DMAM_MASK);
 
     return HAL_OK;
 }
@@ -388,9 +389,9 @@ HAL_Status HAL_SFC_UnMaskTransmInterrupt(struct HAL_SFC_HOST *host)
  * @param  host: SFC host.
  * @return HAL_Check.
  */
-HAL_Check HAL_SFC_IsTransmInterrupt(struct HAL_SFC_HOST *host)
+HAL_Check HAL_SFC_IsDMAInterrupt(struct HAL_SFC_HOST *host)
 {
-    return (HAL_Check)HAL_IS_BIT_SET(host->instance->ISR, SFC_ISR_TRANSS_ACTIVE);
+    return (HAL_Check)HAL_IS_BIT_SET(host->instance->ISR, SFC_ISR_DMAS_ACTIVE);
 }
 
 /**
@@ -398,7 +399,7 @@ HAL_Check HAL_SFC_IsTransmInterrupt(struct HAL_SFC_HOST *host)
  * @param  host: SFC host.
  * @return HAL_Status.
  */
-HAL_Status HAL_SFC_ClearTransmInterrupt(struct HAL_SFC_HOST *host)
+HAL_Status HAL_SFC_ClearIsr(struct HAL_SFC_HOST *host)
 {
     host->instance->ICLR = 0xFFFFFFFF;
 
@@ -410,10 +411,12 @@ HAL_Status HAL_SFC_ClearTransmInterrupt(struct HAL_SFC_HOST *host)
  * @param  host: SFC host.
  * @return HAL_Status.
  */
-__weak HAL_Status HAL_SFC_IRQHandler(struct HAL_SFC_HOST *host)
+HAL_Status HAL_SFC_IRQHelper(struct HAL_SFC_HOST *host)
 {
-    HAL_ASSERT(HAL_SFC_IsTransmInterrupt(host)); /* Only support TRANSM IT */
-    HAL_SFC_ClearTransmInterrupt(host);
+    HAL_ASSERT(HAL_SFC_IsDMAInterrupt(host)); /* Only support TRANSM IT */
+
+    HAL_SFC_ClearIsr(host);
+    host->status = HAL_UNLOCKED;
 
     return HAL_OK;
 }
