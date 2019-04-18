@@ -4700,6 +4700,8 @@ struct USB_HOST_CH_REG {
 #define SFC_TME1_AUTO_RF_EN_MASK                           (0x1U << SFC_TME1_AUTO_RF_EN_SHIFT)                          /* 0x00000001 */
 #define SFC_TME1_SCLK_INATM_EN_SHIFT                       (1U)
 #define SFC_TME1_SCLK_INATM_EN_MASK                        (0x1U << SFC_TME1_SCLK_INATM_EN_SHIFT)                       /* 0x00000002 */
+
+#define SFC_CHIP_CNT                                       (0x2U)
 /******************************************MMC*******************************************/
 /* CTRL */
 #define MMC_CTRL_CONTROLLER_RESET_SHIFT                    (0U)
