@@ -18,12 +18,12 @@
 #include "hal_list.h"
 
 /* SOC OPS Marco */
-#define SET_BIT(REG, BIT)    (*(volatile uint32_t *)(REG) |= (BIT))
-#define CLEAR_BIT(REG, MASK) (*(volatile uint32_t *)(REG) &= ~(MASK))
-#define READ_BIT(REG, MASK)  (*(volatile uint32_t *)(REG) & (MASK))
-#define CLEAR_REG(REG)       (*(volatile uint32_t *)(REG) = (0x0))
-#define WRITE_REG(REG, VAL)  (*(volatile uint32_t *)(REG) = (VAL))
-#define READ_REG(REG)        (*(volatile uint32_t *)(REG))
+#define SET_BIT(REG, BIT)    ((*(volatile uint32_t *)&(REG)) |= (BIT))
+#define CLEAR_BIT(REG, MASK) ((*(volatile uint32_t *)&(REG)) &= ~(MASK))
+#define READ_BIT(REG, MASK)  ((*(volatile uint32_t *)&(REG)) & (MASK))
+#define CLEAR_REG(REG)       ((*(volatile uint32_t *)&(REG)) = (0x0))
+#define WRITE_REG(REG, VAL)  ((*(volatile uint32_t *)&(REG)) = (VAL))
+#define READ_REG(REG)        ((*(volatile uint32_t *)&(REG)))
 #define MODIFY_REG(REG, CLEARMASK, SETMASK) \
         WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
 #define POSITION_VAL(VAL) (__CLZ(__RBIT(VAL)))
@@ -38,8 +38,8 @@
 #define HAL_MAX_DELAY 0xFFFFFFFFU
 
 #define RESET 0
-#define HAL_IS_BIT_SET(REG, MASK) ((*(volatile uint32_t *)(REG) & (MASK)) != RESET)
-#define HAL_IS_BIT_CLR(REG, MASK) ((*(volatile uint32_t *)(REG) & (MASK)) == RESET)
+#define HAL_IS_BIT_SET(REG, MASK) (((*(volatile uint32_t *)&(REG)) & (MASK)) != RESET)
+#define HAL_IS_BIT_CLR(REG, MASK) (((*(volatile uint32_t *)&(REG)) & (MASK)) == RESET)
 
 #define HAL_BIT(nr)       (1UL << (nr))
 #define HAL_ARRAY_SIZE(a) (sizeof((a)) / sizeof((a)[0]))
