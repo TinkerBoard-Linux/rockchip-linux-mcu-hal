@@ -780,58 +780,6 @@ struct SFC_REG {
 /* VER */
 #define SFC_VER_VER_SHIFT                                  (0U)
 #define SFC_VER_VER_MASK                                   (0xFFFFU << SFC_VER_VER_SHIFT)                               /* 0x0000FFFF */
-/* QOP */
-#define SFC_QOP_SO123_SHIFT                                (0U)
-#define SFC_QOP_SO123_MASK                                 (0x1U << SFC_QOP_SO123_SHIFT)                                /* 0x00000001 */
-/* EXT_CTRL */
-#define SFC_EXT_CTRL_DESEL_CS_CTRL_SHIFT                   (0U)
-#define SFC_EXT_CTRL_DESEL_CS_CTRL_MASK                    (0x7U << SFC_EXT_CTRL_DESEL_CS_CTRL_SHIFT)                   /* 0x00000007 */
-#define SFC_EXT_CTRL_SWITCH_IO_DUMM_CNT_SHIFT              (4U)
-#define SFC_EXT_CTRL_SWITCH_IO_DUMM_CNT_MASK               (0xFU << SFC_EXT_CTRL_SWITCH_IO_DUMM_CNT_SHIFT)              /* 0x000000F0 */
-#define SFC_EXT_CTRL_SWITCH_IO_O2I_CNT_SHIFT               (8U)
-#define SFC_EXT_CTRL_SWITCH_IO_O2I_CNT_MASK                (0xFU << SFC_EXT_CTRL_SWITCH_IO_O2I_CNT_SHIFT)               /* 0x00000F00 */
-#define SFC_EXT_CTRL_AX_CANCEL_PAT_SHIFT                   (12U)
-#define SFC_EXT_CTRL_AX_CANCEL_PAT_MASK                    (0xFFU << SFC_EXT_CTRL_AX_CANCEL_PAT_SHIFT)                  /* 0x000FF000 */
-#define SFC_EXT_CTRL_AX_SETUP_PAT_SHIFT                    (20U)
-#define SFC_EXT_CTRL_AX_SETUP_PAT_MASK                     (0xFFU << SFC_EXT_CTRL_AX_SETUP_PAT_SHIFT)                   /* 0x0FF00000 */
-#define SFC_EXT_CTRL_SWITCH_IO_MODE_SHIFT                  (28U)
-#define SFC_EXT_CTRL_SWITCH_IO_MODE_MASK                   (0x1U << SFC_EXT_CTRL_SWITCH_IO_MODE_SHIFT)                  /* 0x10000000 */
-/* DLL_CTRL */
-#define SFC_DLL_CTRL_SMP_DLL_CFG_SHIFT                     (0U)
-#define SFC_DLL_CTRL_SMP_DLL_CFG_MASK                      (0xFFU << SFC_DLL_CTRL_SMP_DLL_CFG_SHIFT)                    /* 0x000000FF */
-#define SFC_DLL_CTRL_SCLK_SCLK_SMP_SEL_SHIFT               (8U)
-#define SFC_DLL_CTRL_SCLK_SCLK_SMP_SEL_MASK                (0x1U << SFC_DLL_CTRL_SCLK_SCLK_SMP_SEL_SHIFT)               /* 0x00000100 */
-/* POLL_CTRL */
-#define SFC_POLL_CTRL_ST_POLL_EN_SHIFT                     (0U)
-#define SFC_POLL_CTRL_ST_POLL_EN_MASK                      (0x1U << SFC_POLL_CTRL_ST_POLL_EN_SHIFT)                     /* 0x00000001 */
-#define SFC_POLL_CTRL_ST_POLL_CMD_PARA_SHIFT               (8U)
-#define SFC_POLL_CTRL_ST_POLL_CMD_PARA_MASK                (0xFFU << SFC_POLL_CTRL_ST_POLL_CMD_PARA_SHIFT)              /* 0x0000FF00 */
-#define SFC_POLL_CTRL_ST_POLL_EXPECT_DATA_SHIFT            (16U)
-#define SFC_POLL_CTRL_ST_POLL_EXPECT_DATA_MASK             (0xFFU << SFC_POLL_CTRL_ST_POLL_EXPECT_DATA_SHIFT)           /* 0x00FF0000 */
-#define SFC_POLL_CTRL_ST_POLL_BIT_COMP_EN_SHIFT            (24U)
-#define SFC_POLL_CTRL_ST_POLL_BIT_COMP_EN_MASK             (0xFFU << SFC_POLL_CTRL_ST_POLL_BIT_COMP_EN_SHIFT)           /* 0xFF000000 */
-/* FETCH_CMD */
-#define SFC_FETCH_CMD_CMD_SHIFT                            (0U)
-#define SFC_FETCH_CMD_CMD_MASK                             (0xFFU << SFC_FETCH_CMD_CMD_SHIFT)                           /* 0x000000FF */
-#define SFC_FETCH_CMD_DUMM_SHIFT                           (8U)
-#define SFC_FETCH_CMD_DUMM_MASK                            (0xFU << SFC_FETCH_CMD_DUMM_SHIFT)                           /* 0x00000F00 */
-#define SFC_FETCH_CMD_CONT_SHIFT                           (13U)
-#define SFC_FETCH_CMD_CONT_MASK                            (0x1U << SFC_FETCH_CMD_CONT_SHIFT)                           /* 0x00002000 */
-#define SFC_FETCH_CMD_ADDRB_SHIFT                          (14U)
-#define SFC_FETCH_CMD_ADDRB_MASK                           (0x3U << SFC_FETCH_CMD_ADDRB_SHIFT)                          /* 0x0000C000 */
-/* FETCH_CTRL */
-#define SFC_FETCH_CTRL_CS_BIT_SEL_SHIFT                    (0U)
-#define SFC_FETCH_CTRL_CS_BIT_SEL_MASK                     (0x1FU << SFC_FETCH_CTRL_CS_BIT_SEL_SHIFT)                   /* 0x0000001F */
-#define SFC_FETCH_CTRL_INCR_LEN_SHIFT                      (8U)
-#define SFC_FETCH_CTRL_INCR_LEN_MASK                       (0xFU << SFC_FETCH_CTRL_INCR_LEN_SHIFT)                      /* 0x00000F00 */
-/* XIP_MODE */
-#define SFC_XIP_MODE_XIP_MODE_EN_SHIFT                     (0U)
-#define SFC_XIP_MODE_XIP_MODE_EN_MASK                      (0x1U << SFC_XIP_MODE_XIP_MODE_EN_SHIFT)                     /* 0x00000001 */
-/* POLL_DATA */
-#define SFC_POLL_DATA_POLL_DATA_SHIFT                      (0U)
-#define SFC_POLL_DATA_POLL_DATA_MASK                       (0xFFU << SFC_POLL_DATA_POLL_DATA_SHIFT)                     /* 0x000000FF */
-#define SFC_POLL_DATA_POLL_BUSY_SHIFT                      (8U)
-#define SFC_POLL_DATA_POLL_BUSY_MASK                       (0x1U << SFC_POLL_DATA_POLL_BUSY_SHIFT)                      /* 0x00000100 */
 /* DMATR */
 #define SFC_DMATR_DMATR_SHIFT                              (0U)
 #define SFC_DMATR_DMATR_MASK                               (0x1U << SFC_DMATR_DMATR_SHIFT)                              /* 0x00000001 */
@@ -859,5 +807,7 @@ struct SFC_REG {
 /* DATA */
 #define SFC_DATA_DATA_SHIFT                                (0U)
 #define SFC_DATA_DATA_MASK                                 (0xFFFFFFFFU << SFC_DATA_DATA_SHIFT)                         /* 0xFFFFFFFF */
+
+#define SFC_CHIP_CNT                                       (1U)
 
 #endif /* _RK2106_H_ */
