@@ -991,8 +991,8 @@ struct SFC_REG {
     __I  uint32_t RESERVED1;                          /* Address Offset: 0x0028 */
     __IO uint32_t VER;                                /* Address Offset: 0x002C */
          uint32_t RESERVED2[20];                      /* Address Offset: 0x0030 */
-    __IO uint32_t DMAADDR;                            /* Address Offset: 0x0080 */
-    __IO uint32_t DMATR;                              /* Address Offset: 0x0084 */
+    __IO uint32_t DMATR;                              /* Address Offset: 0x0080 */
+    __IO uint32_t DMAADDR;                            /* Address Offset: 0x0084 */
          uint32_t RESERVED3[30];                      /* Address Offset: 0x0088 */
     __O  uint32_t CMD;                                /* Address Offset: 0x0100 */
     __O  uint32_t ADDR;                               /* Address Offset: 0x0104 */
@@ -9410,6 +9410,8 @@ struct UART_REG
 /* DATA */
 #define SFC_DATA_DATA_SHIFT                                (0U)
 #define SFC_DATA_DATA_MASK                                 (0xFFFFFFFFU << SFC_DATA_DATA_SHIFT)                         /* 0xFFFFFFFF */
+
+#define SFC_CHIP_CNT                                       (1U)
 /******************************************GMAC******************************************/
 /* MAC_CONF */
 #define GMAC_MAC_CONF_RE_SHIFT                             (2U)
