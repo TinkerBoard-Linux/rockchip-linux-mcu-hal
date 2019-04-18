@@ -11,6 +11,11 @@
 
 static struct HAL_SFC_HOST *sfcHost;
 #define XIP_RAM_BASE 0x60000000
+#define maxest_sector 16
+static uint8_t *pwrite;
+static uint8_t *pread;
+static uint32_t *pread32;
+static uint32_t *pwrite32;
 
 struct cmdSet {
     char name[6];
@@ -29,18 +34,19 @@ static struct cmdSet cmdSets[5] = {
 HAL_Status SNOR_SINGLE_TEST(void)
 {
     uint32_t i, testLba = 0x80;
-    uint8_t pwrite[256];
-    uint8_t pread[256];
+
+    pwrite32 = (uint32_t *)pwrite;
+    pread32 = (uint32_t *)pread;
 
     for (i = 0; i < 256; i++) {
         pwrite[i] = i;
     }
-    pwrite[0] = 0xa5;
+    pwrite32[0] = testLba;
 
     HAL_SNOR_Erase(sfcHost, testLba << 9, 0);
-    HAL_SNOR_ProgData(sfcHost, testLba << 9, &pwrite, 0x100);
-    memset(&pread, 0, 256);
-    HAL_SNOR_ReadData(sfcHost, testLba << 9, &pread, 0x100);
+    HAL_SNOR_ProgData_DMA(sfcHost, testLba << 9, pwrite32, 0x100);
+    memset(pread, 0, 256);
+    HAL_SNOR_ReadData_DMA(sfcHost, testLba << 9, pread32, 0x100);
     for (int32_t i = 0; i < 256; i++) {
         if (pwrite[i] != pread[i]) {
             HAL_DBG_HEX("w", &pwrite, 4, 64);
@@ -56,11 +62,7 @@ HAL_Status SNOR_SINGLE_TEST(void)
     return HAL_OK;
 }
 
-#define maxest_sector 16
-static uint8_t *pwrite;
-static uint8_t *pread;
-static uint32_t *pread32;
-static uint32_t *pwrite32;
+
 static HAL_Status SNOR_TEST(uint32_t testEndLBA)
 {
     uint32_t ret, i, j;
@@ -247,11 +249,14 @@ TEST(HAL_SNOR, SnorStressTest){
     testEndLBA = 0;
     testEndLBA = HAL_SNOR_GetCapacity();
     TEST_ASSERT(testEndLBA > 0);
-
+    HAL_SFC_UnmaskDMAInterrupt(sfcHost);
     ret = SNOR_SINGLE_TEST();
+    HAL_SFC_MaskDMAInterrupt(sfcHost);
     TEST_ASSERT(ret == HAL_OK);
 
     ret = SNOR_TEST(testEndLBA / 10);
+    TEST_ASSERT(ret == HAL_OK);
+
     TEST_ASSERT(ret == HAL_OK);
 }
 
@@ -291,6 +296,13 @@ static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
     return (uint8_t *)(((uintptr_t)ptr + align - 1) & ~(uintptr_t)(align - 1));
 }
 
+static HAL_Status SFC_IRQHandler(void)
+{
+    HAL_SFC_IRQHelper(sfcHost);
+
+    return HAL_OK;
+}
+
 /* Test code should be place in ram */
 TEST_GROUP_RUNNER(HAL_SNOR){
     uint32_t ret;
@@ -308,6 +320,9 @@ TEST_GROUP_RUNNER(HAL_SNOR){
         HAL_DBG("malloc failed\n");
         while (1);
     }
+
+    HAL_NVIC_SetIRQHandler(SFC_IRQn, (NVIC_IRQHandler)&SFC_IRQHandler);
+    HAL_NVIC_EnableIRQ(SFC_IRQn);
     ret = HAL_SNOR_Init(sfcHost);
     TEST_ASSERT(ret == HAL_OK);
     RUN_TEST_CASE(HAL_SNOR, SnorStressTest);
