@@ -93,11 +93,15 @@
 
 #ifdef HAL_SFC_MODULE_ENABLED
 #include "hal_sfc.h"
-#endif
 
 #ifdef HAL_SNOR_MODULE_ENABLED
 #include "hal_snor.h"
 #endif
+
+#ifdef HAL_PSRAM_MODULE_ENABLED
+#include "hal_psram.h"
+#endif
+#endif /* HAL_SFC_MODULE_ENABLED */
 
 #ifdef HAL_SPI_MODULE_ENABLED
 #include "hal_spi.h"
