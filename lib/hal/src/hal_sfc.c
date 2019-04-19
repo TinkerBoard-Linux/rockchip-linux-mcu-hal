@@ -277,7 +277,7 @@ HAL_Status HAL_SFC_XferRequest(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32
  */
 HAL_Status HAL_SFC_XferRequest_DMA(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32_t sfctrl, uint32_t addr)
 {
-    int32_t timeout, ret = HAL_OK;
+    int32_t ret = HAL_OK;
     SFCCMD_DATA cmd;
     SFCCTRL_DATA ctrl;
     struct SFC_REG *pReg = host->instance;
