@@ -79,6 +79,52 @@ typedef enum {
     BCSH_NORMAL_MODE
 } eVOP_BcshVideoMode;
 
+struct DSC_PPS_RC_RANGE_PARAMETER {
+    char rangeMinQp;
+    char rangeMaxQp;
+    char rangeBpgOffset;
+};
+
+struct DSC_PPS_RC_PARAMETER_SET {
+    uint16_t rcModelSize;
+    uint8_t rcEdgeFactor;
+    uint8_t rcQuantIncrLimit0;
+    uint8_t rcQuantIncrLimit1;
+    uint8_t rcTgtOffsetHi;
+    uint8_t rcTgtOffsetLo;
+
+    uint16_t rcBufThresh[14];
+    struct DSC_PPS_RC_RANGE_PARAMETER rcRangeParameter[15];
+};
+
+struct DSC_PPS {
+    uint8_t dscVersionMinor;
+    uint8_t bitsPerConponent;
+    uint8_t lineBufDepth;
+    bool blockPredEnable;
+    bool convertRgb;
+    bool enable422;
+    uint16_t bitsPerPixel;
+    uint16_t pictureHeight;
+    uint16_t pictureWidth;
+    uint16_t sliceHeight;
+    uint16_t sliceWidth;
+    uint16_t chunkSize;
+    uint16_t initialXmitDelay;
+    uint16_t initialDecDelay;
+    uint8_t initialScaleValue;
+    uint16_t scaleIncrementInterval;
+    uint16_t scaleDecrementInterval;
+    uint16_t firstLineBpgOffset;
+    uint16_t nflBpgOffset;
+    uint16_t sliceBpgOffset;
+    uint16_t initialOffset;
+    uint16_t finalOffset;
+    uint8_t flatnessMinQp;
+    uint8_t flatnessMaxQp;
+    struct DSC_PPS_RC_PARAMETER_SET rcParameterSet;
+};
+
 /********************* Private Variable Definition ***************************/
 static struct VOP_REG g_VOP_RegMir;
 static const char * const VOP_IRQs[] = {
@@ -98,6 +144,96 @@ static const char * const VOP_IRQs[] = {
 };
 
 /********************* Private Function Definition ***************************/
+
+static void VOP_INIT_DSC_PPS(struct DSC_PPS *dscDefaultPps, int16_t w, int16_t h)
+{
+    uint16_t rcBufThresh[14] = { 14, 28, 42, 56, 70, 84, 98, 105, 112, 119, 121, 123, 125, 126 };
+    struct DSC_PPS_RC_RANGE_PARAMETER rcRangeParameter[15] = { { 0, 4, 2 },
+                                                               { 0, 4, 0 },
+                                                               { 1, 5, 0 },
+                                                               { 1, 6, -2 },
+                                                               { 3, 7, -4 },
+                                                               { 3, 7, -6 },
+                                                               { 3, 7, -8 },
+                                                               { 3, 8, -8 },
+                                                               { 3, 9, -8 },
+                                                               { 3, 10, -10 },
+                                                               { 5, 11, -10 },
+                                                               { 5, 12, -12 },
+                                                               { 5, 13, -12 },
+                                                               { 7, 13, -12 },
+                                                               { 13, 15, -12 } };
+
+    dscDefaultPps->dscVersionMinor = 1;
+    dscDefaultPps->bitsPerConponent = 8;
+    dscDefaultPps->lineBufDepth = 9;
+    dscDefaultPps->blockPredEnable = 1;
+    dscDefaultPps->convertRgb = 1;
+    dscDefaultPps->enable422 = 0;
+    dscDefaultPps->bitsPerPixel = 128;
+
+    if (w == 1440) {
+        dscDefaultPps->pictureHeight = 3120;
+        dscDefaultPps->pictureWidth = 1440;
+        dscDefaultPps->sliceHeight = 65;
+        dscDefaultPps->sliceWidth = 720;
+        dscDefaultPps->chunkSize = dscDefaultPps->sliceWidth;
+        dscDefaultPps->initialXmitDelay = 512;
+        dscDefaultPps->initialDecDelay = 706;
+        dscDefaultPps->initialScaleValue = 32;
+        dscDefaultPps->scaleIncrementInterval = 1624;
+        dscDefaultPps->scaleDecrementInterval = 10;
+        dscDefaultPps->firstLineBpgOffset = 15;
+        dscDefaultPps->nflBpgOffset = 480;
+        dscDefaultPps->sliceBpgOffset = 301;
+    } else if (w == 720) {
+        dscDefaultPps->pictureHeight = 1560;
+        dscDefaultPps->pictureWidth = 720;
+        dscDefaultPps->sliceHeight = 52;
+        dscDefaultPps->sliceWidth = 360;
+        dscDefaultPps->chunkSize = dscDefaultPps->sliceWidth;
+        dscDefaultPps->initialXmitDelay = 512;
+        dscDefaultPps->initialDecDelay = 706;
+        dscDefaultPps->initialScaleValue = 32;
+        dscDefaultPps->scaleIncrementInterval = 1028;
+        dscDefaultPps->scaleDecrementInterval = 5;
+        dscDefaultPps->firstLineBpgOffset = 12;
+        dscDefaultPps->nflBpgOffset = 482;
+        dscDefaultPps->sliceBpgOffset = 751;
+    } else {
+        dscDefaultPps->pictureHeight = h;
+        dscDefaultPps->pictureWidth = w;
+        dscDefaultPps->sliceHeight = h / 2;
+        dscDefaultPps->sliceWidth = w / 2;
+        dscDefaultPps->chunkSize = dscDefaultPps->sliceWidth;
+        dscDefaultPps->initialXmitDelay = 512;
+        dscDefaultPps->initialDecDelay = 436;
+        dscDefaultPps->initialScaleValue = 32;
+        dscDefaultPps->scaleIncrementInterval = 1028;
+        dscDefaultPps->scaleDecrementInterval = 5;
+        dscDefaultPps->firstLineBpgOffset = 12;
+        dscDefaultPps->nflBpgOffset = 482;
+        dscDefaultPps->sliceBpgOffset = 751;
+    }
+
+    dscDefaultPps->initialOffset = 6144;
+    dscDefaultPps->finalOffset = 4336;
+    dscDefaultPps->flatnessMinQp = 3;
+    dscDefaultPps->flatnessMaxQp = 12;
+
+    dscDefaultPps->rcParameterSet.rcModelSize = 8192;
+    dscDefaultPps->rcParameterSet.rcEdgeFactor = 6;
+    dscDefaultPps->rcParameterSet.rcQuantIncrLimit0 = 11;
+    dscDefaultPps->rcParameterSet.rcQuantIncrLimit1 = 11;
+    dscDefaultPps->rcParameterSet.rcTgtOffsetHi = 3;
+    dscDefaultPps->rcParameterSet.rcTgtOffsetLo = 3;
+
+    memcpy(dscDefaultPps->rcParameterSet.rcBufThresh,
+           rcBufThresh, sizeof(rcBufThresh));
+
+    memcpy(dscDefaultPps->rcParameterSet.rcRangeParameter,
+           rcRangeParameter, sizeof(rcRangeParameter));
+}
 
 static inline int16_t VOP_Interpolate(int16_t x1, int16_t y1, int16_t x2,
                                       int16_t y2, uint16_t x)
@@ -492,6 +628,9 @@ HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg)
     VOP_MaskWriteNoBackup(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_FRAME_ST_SHIFT,
                           VOP_MCU_MCU_FRAME_ST_MASK, 0);
 
+    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_HOLD_MODE_SHIFT,
+                  VOP_MCU_MCU_HOLD_MODE_MASK, 0);
+
     return HAL_OK;
 }
 
@@ -551,11 +690,169 @@ HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
                   VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_MASK,
                   1);
 
-    if (!(pModeInfo->flags & DSC_ENABLE))
+    VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL[2], &pReg->DSP_CTRL[2],
+                  VOP_DSP_CTRL2_DSP_LAYER1_SEL_SHIFT,
+                  VOP_DSP_CTRL2_DSP_LAYER1_SEL_MASK,
+                  1);
+    VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL[2], &pReg->DSP_CTRL[2],
+                  VOP_DSP_CTRL2_DSP_LAYER2_SEL_SHIFT,
+                  VOP_DSP_CTRL2_DSP_LAYER2_SEL_MASK,
+                  2);
+    VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL[2], &pReg->DSP_CTRL[2],
+                  VOP_DSP_CTRL2_DSP_LAYER3_SEL_SHIFT,
+                  VOP_DSP_CTRL2_DSP_LAYER3_SEL_MASK,
+                  3);
+
+    if (pModeInfo->flags & DSC_ENABLE)
+        HAL_VOP_DscInit(pReg, pModeInfo);
+    else
         VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                       VOP_SYS_CTRL2_DSC_BYPASS_EN_SHIFT,
                       VOP_SYS_CTRL2_DSC_BYPASS_EN_MASK,
                       0x1);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  VOP dsc init.
+ * @param  pReg: VOP reg base.
+ * @param  pModeInfo: VOP putput mode info.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
+                           struct DISPLAY_MODE_INFO *pModeInfo)
+{
+    uint32_t i, dsc_cfg[21];
+    struct DSC_PPS dscDefaultPps;
+    struct DSC_PPS_RC_PARAMETER_SET *rcParameterSet = &dscDefaultPps.rcParameterSet;
+    struct DSC_PPS_RC_RANGE_PARAMETER *rcRangeParameter = rcParameterSet->rcRangeParameter;
+    uint8_t flatness_det_thresh = 2; /* rockchip DSC define */
+
+    VOP_INIT_DSC_PPS(&dscDefaultPps, pModeInfo->crtcHdisplay, pModeInfo->crtcVdisplay);
+
+    dsc_cfg[0] = (rcRangeParameter[0].rangeBpgOffset & 0x3f) << 0 |
+                 (rcRangeParameter[1].rangeBpgOffset & 0x3f) << 6 |
+                 (rcRangeParameter[2].rangeBpgOffset & 0x3f) << 12 |
+                 (rcRangeParameter[3].rangeBpgOffset & 0x3f) << 18 |
+                 (rcRangeParameter[4].rangeBpgOffset & 0x3f) << 24 |
+                 (rcRangeParameter[5].rangeBpgOffset & 0x3) << 30;
+    dsc_cfg[1] = ((rcRangeParameter[5].rangeBpgOffset >> 2) & 0xf) << 0 |
+                 (rcRangeParameter[6].rangeBpgOffset & 0x3f) << 4 |
+                 (rcRangeParameter[7].rangeBpgOffset & 0x3f) << 10 |
+                 (rcRangeParameter[8].rangeBpgOffset & 0x3f) << 16 |
+                 (rcRangeParameter[9].rangeBpgOffset & 0x3f) << 22 |
+                 (rcRangeParameter[10].rangeBpgOffset & 0xf) << 28;
+    dsc_cfg[2] = ((rcRangeParameter[10].rangeBpgOffset >> 4) & 0x3) << 0 |
+                 (rcRangeParameter[11].rangeBpgOffset & 0x3f) << 2 |
+                 (rcRangeParameter[12].rangeBpgOffset & 0x3f) << 8 |
+                 (rcRangeParameter[13].rangeBpgOffset & 0x3f) << 14 |
+                 (rcRangeParameter[14].rangeBpgOffset & 0x3f) << 20 |
+                 (rcRangeParameter[0].rangeMaxQp & 0x1f) << 26 |
+                 (rcRangeParameter[1].rangeMaxQp & 0x1) << 31;
+    dsc_cfg[3] = ((rcRangeParameter[1].rangeMaxQp >> 1) & 0xf) << 0 |
+                 (rcRangeParameter[2].rangeMaxQp & 0x1f) << 4 |
+                 (rcRangeParameter[3].rangeMaxQp & 0x1f) << 9 |
+                 (rcRangeParameter[4].rangeMaxQp & 0x1f) << 14 |
+                 (rcRangeParameter[5].rangeMaxQp & 0x1f) << 19 |
+                 (rcRangeParameter[6].rangeMaxQp & 0x1f) << 24 |
+                 (rcRangeParameter[7].rangeMaxQp & 0x7) << 29;
+    dsc_cfg[4] = ((rcRangeParameter[7].rangeMaxQp >> 3) & 0x3) << 0 |
+                 (rcRangeParameter[8].rangeMaxQp & 0x1f) << 2 |
+                 (rcRangeParameter[9].rangeMaxQp & 0x1f) << 7 |
+                 (rcRangeParameter[10].rangeMaxQp & 0x1f) << 12 |
+                 (rcRangeParameter[11].rangeMaxQp & 0x1f) << 17 |
+                 (rcRangeParameter[12].rangeMaxQp & 0x1f) << 22 |
+                 (rcRangeParameter[13].rangeMaxQp & 0x1f) << 27;
+    dsc_cfg[5] = (rcRangeParameter[14].rangeMaxQp & 0x1f) << 0 |
+                 (rcRangeParameter[0].rangeMinQp & 0x1f) << 5 |
+                 (rcRangeParameter[1].rangeMinQp & 0x1f) << 10 |
+                 (rcRangeParameter[2].rangeMinQp & 0x1f) << 15 |
+                 (rcRangeParameter[3].rangeMinQp & 0x1f) << 20 |
+                 (rcRangeParameter[4].rangeMinQp & 0x1f) << 25 |
+                 (rcRangeParameter[5].rangeMinQp & 0x3) << 30;
+    dsc_cfg[6] = ((rcRangeParameter[5].rangeMinQp >> 2) & 0x7) << 0 |
+                 (rcRangeParameter[6].rangeMinQp & 0x1f) << 3 |
+                 (rcRangeParameter[7].rangeMinQp & 0x1f) << 8 |
+                 (rcRangeParameter[8].rangeMinQp & 0x1f) << 13 |
+                 (rcRangeParameter[9].rangeMinQp & 0x1f) << 18 |
+                 (rcRangeParameter[10].rangeMinQp & 0x1f) << 23 |
+                 (rcRangeParameter[11].rangeMinQp & 0xf) << 28;
+    dsc_cfg[7] = ((rcRangeParameter[11].rangeMinQp >> 4) & 0x1) << 0 |
+                 (rcRangeParameter[12].rangeMinQp & 0x1f) << 1 |
+                 (rcRangeParameter[13].rangeMinQp & 0x1f) << 6 |
+                 (rcRangeParameter[14].rangeMinQp & 0x1f) << 11 |
+                 (rcParameterSet->rcBufThresh[0] & 0xff) << 16 |
+                 (rcParameterSet->rcBufThresh[1] & 0xff) << 24;
+    dsc_cfg[8] = (rcParameterSet->rcBufThresh[2] & 0xff) << 0 |
+                 (rcParameterSet->rcBufThresh[3] & 0xff) << 8 |
+                 (rcParameterSet->rcBufThresh[4] & 0xff) << 16 |
+                 (rcParameterSet->rcBufThresh[5] & 0xff) << 24;
+    dsc_cfg[9] = (rcParameterSet->rcBufThresh[6] & 0xff) << 0 |
+                 (rcParameterSet->rcBufThresh[7] & 0xff) << 8 |
+                 (rcParameterSet->rcBufThresh[8] & 0xff) << 16 |
+                 (rcParameterSet->rcBufThresh[9] & 0xff) << 24;
+    dsc_cfg[10] = (rcParameterSet->rcBufThresh[10] & 0xff) << 0 |
+                  (rcParameterSet->rcBufThresh[11] & 0xff) << 8 |
+                  (rcParameterSet->rcBufThresh[12] & 0xff) << 16 |
+                  (rcParameterSet->rcBufThresh[13] & 0xff) << 24;
+    dsc_cfg[11] = (rcParameterSet->rcTgtOffsetLo & 0xf) << 0 |
+                  (rcParameterSet->rcTgtOffsetHi & 0xf) << 4 |
+                  (rcParameterSet->rcQuantIncrLimit1 & 0x1f) << 8 |
+                  (rcParameterSet->rcQuantIncrLimit0 & 0x1f) << 13 |
+                  (rcParameterSet->rcEdgeFactor & 0xf) << 18 |
+                  (rcParameterSet->rcModelSize & 0x3ff) << 22;
+    dsc_cfg[12] = ((rcParameterSet->rcModelSize >> 10) & 0x3f) << 0 |
+                  (flatness_det_thresh & 0xff) << 6 |
+                  (dscDefaultPps.flatnessMaxQp & 0x1f) << 14 |
+                  (dscDefaultPps.flatnessMinQp & 0xff) << 19 |
+                  (dscDefaultPps.finalOffset & 0xff) << 24;
+    dsc_cfg[13] = ((dscDefaultPps.finalOffset >> 8) & 0xff) << 0 |
+                  (dscDefaultPps.initialOffset & 0xffff) << 8 |
+                  (dscDefaultPps.sliceBpgOffset & 0xff) << 24;
+    dsc_cfg[14] = ((dscDefaultPps.sliceBpgOffset >> 8) & 0xff) << 0 |
+                  (dscDefaultPps.nflBpgOffset & 0xffff) << 8 |
+                  (dscDefaultPps.firstLineBpgOffset & 0x1f) << 24 |
+                  (dscDefaultPps.scaleDecrementInterval & 0x7) << 29;
+    dsc_cfg[15] = ((dscDefaultPps.scaleDecrementInterval >> 3) & 0x1ff) << 0 |
+                  (dscDefaultPps.scaleIncrementInterval & 0xffff) << 9 |
+                  (dscDefaultPps.initialScaleValue & 0x3f) << 25 |
+                  (dscDefaultPps.initialDecDelay & 0x1) << 31;
+    dsc_cfg[16] = ((dscDefaultPps.initialDecDelay >> 1) & 0x7fff) << 0 |
+                  (dscDefaultPps.initialXmitDelay & 0x3ff) << 15 |
+                  (dscDefaultPps.chunkSize & 0x7f) << 25;
+    dsc_cfg[17] = ((dscDefaultPps.chunkSize >> 7) & 0x1ff) << 0 |
+                  (dscDefaultPps.sliceHeight & 0xffff) << 9 |
+                  (dscDefaultPps.sliceWidth & 0x7f) << 25;
+    dsc_cfg[18] = ((dscDefaultPps.sliceWidth >> 7) & 0x1ff) << 0 |
+                  (dscDefaultPps.pictureHeight & 0xffff) << 9 |
+                  (dscDefaultPps.pictureWidth & 0x7f) << 25;
+    dsc_cfg[19] = ((dscDefaultPps.pictureWidth >> 7) & 0x1ff) << 0 |
+                  (dscDefaultPps.dscVersionMinor & 0xf) << 9 |
+                  (dscDefaultPps.bitsPerPixel & 0x3ff) << 13 |
+                  (dscDefaultPps.blockPredEnable & 0x1) << 23 |
+                  (dscDefaultPps.lineBufDepth & 0xf) << 24 |
+                  (dscDefaultPps.enable422 & 0x1) << 28 |
+                  (dscDefaultPps.convertRgb & 0x1) << 29 |
+                  (dscDefaultPps.bitsPerConponent & 0x3) << 30;
+    dsc_cfg[20] = ((dscDefaultPps.bitsPerConponent >> 2) & 0x3) << 0;
+
+    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[0], &pReg->DSC_SYS_CTRL[0], 0x02582009);
+    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[1], &pReg->DSC_SYS_CTRL[1], 0x08bb0104);
+    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[2], &pReg->DSC_SYS_CTRL[2], 0x0000035b);
+
+    for (i = 0; i < 21; i++)
+        VOP_Write(&g_VOP_RegMir.DSC_CFG[i], &pReg->DSC_CFG[i], dsc_cfg[i]);
+
+    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
+                  VOP_SYS_CTRL2_DSC_BYPASS_EN_SHIFT,
+                  VOP_SYS_CTRL2_DSC_BYPASS_EN_MASK,
+                  0x0);
+    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
+                  VOP_SYS_CTRL2_DSC_EN_SHIFT,
+                  VOP_SYS_CTRL2_DSC_EN_MASK,
+                  0x1);
+    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL0_IMD, &pReg->DSC_SYS_CTRL0_IMD, 0x11);
 
     return HAL_OK;
 }
@@ -964,11 +1261,11 @@ HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_MASK,
-                  0);
+                  1);
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_MASK,
-                  0);
+                  1);
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK,
