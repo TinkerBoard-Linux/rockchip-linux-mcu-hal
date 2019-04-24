@@ -113,7 +113,7 @@ HAL_Status BSP_VAD_DeInit(void)
 static struct PWR_DESC g_pmuPwrDev[] =
 {
     {
-        .flag = DESC_FLAG_LINEAR(PWR_CTRL_VOLT_SSPD | PWR_CTRL_VOLT_ST),
+        .flag = DESC_FLAG_LINEAR(PWR_FLG_VOLT_SSPD | PWR_FLG_VOLT_ST),
         .info = {
             .pwrId = PWR_ID_CORE,
         },
@@ -124,7 +124,7 @@ static struct PWR_DESC g_pmuPwrDev[] =
         PWR_DESC_LINEAR_VOLT(750000, 1100000, 50000),
     },
     {
-        .flag = DESC_FLAG_LINEAR(PWR_CTRL_VOLT_SSPD | PWR_CTRL_VOLT_ST | PWR_CTRL_PWR_EN),
+        .flag = DESC_FLAG_LINEAR(PWR_FLG_VOLT_SSPD | PWR_FLG_VOLT_ST | PWR_FLG_PWR_EN),
         .info = {
             .pwrId = PWR_ID_VCC_MIPI,
         },
@@ -136,7 +136,7 @@ static struct PWR_DESC g_pmuPwrDev[] =
         PWR_DESC_LINEAR_VOLT(750000, 1100000, 50000),
     },
     {
-        .flag = DESC_FLAG_LINEAR(PWR_CTRL_PWR_EN),
+        .flag = DESC_FLAG_LINEAR(PWR_FLG_PWR_EN),
         .info = {
             .pwrId = PWR_ID_VCC_AUDIO,
         },
@@ -146,7 +146,7 @@ static struct PWR_DESC g_pmuPwrDev[] =
         PWR_DESC_LINEAR_VOLT(1500000, 1650000, 50000),
     },
     {
-        .flag = DESC_FLAG_LINEAR(PWR_CTRL_VOLT_SSPD),
+        .flag = DESC_FLAG_LINEAR(PWR_FLG_VOLT_SSPD),
         .info = {
             .pwrId = PWR_ID_DSP_CORE,
         },
@@ -156,7 +156,7 @@ static struct PWR_DESC g_pmuPwrDev[] =
         PWR_DESC_LINEAR_VOLT(750000, 1100000, 50000),
     },
     {
-        .flag = DESC_FLAG_LINEAR(PWR_CTRL_VOLT_SSPD),
+        .flag = DESC_FLAG_LINEAR(PWR_FLG_VOLT_SSPD),
         .info = {
             .pwrId = PWR_ID_DSP_VCC_MIPI,
         },

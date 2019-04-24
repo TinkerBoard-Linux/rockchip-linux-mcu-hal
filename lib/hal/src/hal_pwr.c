@@ -75,7 +75,7 @@ static int PWR_SetVoltage_Linear(struct PWR_DESC *desc, int volt, PWR_CtrlType c
 
     HAL_ASSERT(val < desc->voltCnt);
 
-    preg = desc->preg[ctrlType];
+    preg = desc->regs.preg[ctrlType];
 
     val = WM_SET_BITS(desc->voltMask, desc->shift[ctrlType], val);
     WRITE_REG(*preg, val);
@@ -91,7 +91,7 @@ static int PWR_GetVoltageLinear(struct PWR_DESC *desc, PWR_CtrlType ctrlType)
     HAL_ASSERT(desc->flag & BIT(ctrlType));
     HAL_ASSERT(ctrlType <= PWR_CTRL_VOLT_ST);
 
-    preg = desc->preg[ctrlType];
+    preg = desc->regs.preg[ctrlType];
 
     val = (READ_REG(*preg) >> desc->shift[ctrlType]) & desc->voltMask;
 
@@ -107,7 +107,7 @@ int PWR_EnableDisable(struct PWR_DESC *desc, uint32_t enable)
 
     HAL_ASSERT(desc->flag & BIT(PWR_CTRL_PWR_EN));
 
-    preg = desc->preg[PWR_CTRL_PWR_EN];
+    preg = desc->regs.preg[PWR_CTRL_PWR_EN];
 
     if (enable)
         val = WM_SET_BIT(desc->shift[PWR_CTRL_PWR_EN]);
@@ -143,7 +143,7 @@ int HAL_PWR_GetEnableState(struct PWR_DESC *desc)
 
     HAL_ASSERT(desc->flag & BIT(PWR_CTRL_PWR_EN));
 
-    preg = desc->preg[PWR_CTRL_PWR_EN];
+    preg = desc->regs.preg[PWR_CTRL_PWR_EN];
 
     return (READ_REG(*preg) >> desc->shift[PWR_CTRL_PWR_EN]) & 0x1;
 }
