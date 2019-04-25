@@ -167,7 +167,16 @@ struct DCACHE_REG {
 };
 /* CRU Register Structure Define */
 struct CRU_REG {
-    __IO uint32_t PLL_CON[16];
+    __IO uint32_t CRU_GPLL_CON0;
+    __IO uint32_t CRU_GPLL_CON1;
+    __IO uint32_t CRU_GPLL_CON2;
+    __IO uint32_t CRU_GPLL_CON3;
+    __IO uint32_t RESERVED1[4];
+    __IO uint32_t CRU_CPLL_CON0;
+    __IO uint32_t CRU_CPLL_CON1;
+    __IO uint32_t CRU_CPLL_CON2;
+    __IO uint32_t CRU_CPLL_CON3;
+    __IO uint32_t RESERVED2[4];
     __IO uint32_t CRU_MODE_CON00;
     __IO uint32_t RESERVED3[15];
     __IO uint32_t CRU_CLKSEL_CON[41];
@@ -8019,21 +8028,6 @@ struct USB_HOST_CH_REG {
 #define USB_OTG_PCGCCTL_GATECLK_SHIFT            (1U)
 #define USB_OTG_PCGCCTL_GATECLK_MASK             (0x1U << USB_OTG_PCGCCTL_GATECLK_SHIFT) /* 0x00000002 */
 #define USB_OTG_PCGCCTL_GATECLK                  USB_OTG_PCGCCTL_GATECLK_MASK   /* Gate Hclk */
-
-#define PWRDOWN_SHIT       13
-#define PWRDOWN_MASK       1 << PWRDOWN_SHIT
-#define PLL_POSTDIV1_SHIFT 12
-#define PLL_POSTDIV1_MASK  0x7 << PLL_POSTDIV1_SHIFT
-#define PLL_FBDIV_SHIFT    0
-#define PLL_FBDIV_MASK     0xfff << PLL_FBDIV_SHIFT
-#define PLL_POSTDIV2_SHIFT 6
-#define PLL_POSTDIV2_MASK  0x7 << PLL_POSTDIV2_SHIFT
-#define PLL_REFDIV_SHIFT   0
-#define PLL_REFDIV_MASK    0x3f << PLL_REFDIV_SHIFT
-#define PLL_DSMPD_SHIFT    12
-#define PLL_DSMPD_MASK     1 << PLL_DSMPD_SHIFT
-#define PLL_FRAC_SHIFT     0
-#define PLL_FRAC_MASK      0xffffff << PLL_FRAC_SHIFT
 
 /********Name=SOFTRST_CON00,Offset=0x200********/
 #define SRST_D_DSP     0

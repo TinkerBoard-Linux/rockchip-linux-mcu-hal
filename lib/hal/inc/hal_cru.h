@@ -17,6 +17,56 @@
 
 /*************************** MACRO Definition ****************************/
 
+#define MHZ 1000000
+#define KHZ 1000
+
+#define PLL_INPUT_OSC_RATE (24 * MHZ)
+
+#ifndef DIV_ROUND_UP
+#define DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
+#endif
+
+#define CLK_RESET_GET_REG_OFFSET(x) ((uint32_t)(x / 16))
+#define CLK_RESET_GET_BITS_SHIFT(x) ((uint32_t)(x % 16))
+
+#define CLK_GATE_GET_REG_OFFSET(x) ((uint32_t)(x / 16))
+#define CLK_GATE_GET_BITS_SHIFT(x) ((uint32_t)(x % 16))
+
+#define CLK_GET_MUX(x) (x & 0x0F0F00FFU)
+#define CLK_GET_DIV(x) (((x & 0xFF00U) >> 8) | ((x & 0xF0F00000U) >> 4))
+
+#define WIDTH_TO_MASK(width) ((1 << (width)) - 1)
+
+#define CLK_MUX_REG_OFFSET_SHIFT 0U
+#define CLK_MUX_REG_OFFSET_MASK  0x0000FFFFU
+#define CLK_MUX_SHIFT_SHIFT      16U
+#define CLK_MUX_SHIFT_MASK       0x00FF0000U
+#define CLK_MUX_WIDTH_SHIFT      24U
+#define CLK_MUX_WIDTH_MASK       0xFF000000U
+
+#define CLK_MUX_GET_REG_OFFSET(x) \
+    (((uint32_t)(x)&CLK_MUX_REG_OFFSET_MASK) >> CLK_MUX_REG_OFFSET_SHIFT)
+#define CLK_MUX_GET_BITS_SHIFT(x) \
+    (((uint32_t)(x)&CLK_MUX_SHIFT_MASK) >> CLK_MUX_SHIFT_SHIFT)
+#define CLK_MUX_GET_MASK(x)                                                    \
+    WIDTH_TO_MASK((((uint32_t)(x)&CLK_MUX_WIDTH_MASK) >> CLK_MUX_WIDTH_SHIFT)) \
+        << CLK_MUX_GET_BITS_SHIFT(x)
+
+#define CLK_DIV_REG_OFFSET_SHIFT 0U
+#define CLK_DIV_REG_OFFSET_MASK  0x0000FFFFU
+#define CLK_DIV_SHIFT_SHIFT      16U
+#define CLK_DIV_SHIFT_MASK       0x00FF0000U
+#define CLK_DIV_WIDTH_SHIFT      24U
+#define CLK_DIV_WIDTH_MASK       0xFF000000U
+
+#define CLK_DIV_GET_REG_OFFSET(x) \
+    (((uint32_t)(x)&CLK_DIV_REG_OFFSET_MASK) >> CLK_DIV_REG_OFFSET_SHIFT)
+#define CLK_DIV_GET_BITS_SHIFT(x) \
+    (((uint32_t)(x)&CLK_DIV_SHIFT_MASK) >> CLK_DIV_SHIFT_SHIFT)
+#define CLK_DIV_GET_MASK(x)                                                    \
+    WIDTH_TO_MASK((((uint32_t)(x)&CLK_DIV_WIDTH_MASK) >> CLK_DIV_WIDTH_SHIFT)) \
+        << CLK_DIV_GET_BITS_SHIFT(x)
+
 #define RK_PLL_RATE(_rate, _refdiv, _fbdiv, _postdiv1, _postdiv2, _dsmpd, \
                     _frac)                                                \
     {                                                                     \
@@ -36,10 +86,11 @@ struct PLL_CONFIG {
 };
 
 struct PLL_SETUP {
-    uint32_t conOffset0;
-    uint32_t conOffset1;
-    uint32_t conOffset2;
-    uint32_t modeOffset;
+    __IO uint32_t conOffset0;
+    __IO uint32_t conOffset1;
+    __IO uint32_t conOffset2;
+    __IO uint32_t conOffset3;
+    __IO uint32_t modeOffset;
     uint32_t modeShift;
     uint32_t lockShift;
     uint32_t modeMask;
@@ -49,6 +100,8 @@ struct PLL_SETUP {
 /***************************** Structure Definition **************************/
 
 /***************************** Function Declare ******************************/
+uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup);
+HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate);
 HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk);
 HAL_Status HAL_CRU_ClkEnable(uint32_t clk);
 HAL_Status HAL_CRU_ClkDisable(uint32_t clk);
@@ -62,8 +115,6 @@ uint32_t HAL_CRU_ClkGetMux(uint32_t muxName);
 HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
                                     uint32_t *numerator,
                                     uint32_t *denominator);
-uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName);
-HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate);
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName);
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate);
 
