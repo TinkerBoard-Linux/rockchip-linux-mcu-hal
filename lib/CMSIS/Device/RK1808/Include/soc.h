@@ -8,6 +8,43 @@
 #ifdef __cplusplus
   extern "C" {
 #endif
+
+/* ================================================================================ */
+/* ================                       IRQ                      ================ */
+/* ================================================================================ */
+typedef enum
+{
+/*******  SGI Interrupts Numbers  ***************************************************/
+  SGI0_IRQn              =  0,
+  SGI1_IRQn              =  1,
+  SGI2_IRQn              =  2,
+  SGI3_IRQn              =  3,
+  SGI4_IRQn              =  4,
+  SGI5_IRQn              =  5,
+  SGI6_IRQn              =  6,
+  SGI7_IRQn              =  7,
+  SGI8_IRQn              =  8,
+  SGI9_IRQn              =  9,
+  SGI10_IRQn             = 10,
+  SGI11_IRQn             = 11,
+  SGI12_IRQn             = 12,
+  SGI13_IRQn             = 13,
+  SGI14_IRQn             = 14,
+  SGI15_IRQn             = 15,
+
+/******  Cortex-A7 Processor Exceptions Numbers ****************************************/
+  SecurePhyTimer_IRQn    = 29,      /*!< Physical Timer Interrupt    */
+  NoSecurePhyTimer_IRQn  = 30,    /*!< Physical Timer Interrupt    */
+
+/******  Platform Exceptions Numbers ***************************************************/
+  UART2_IRQn             = 47,      /*!< UART2 Interrupt             */
+  NUM_INTERRUPTS         = 273
+} IRQn_Type;
+
+#define __FPU_PRESENT        1U
+#define __CORTEX_A           7U        /* Cortex-A7 Core                          */
+#include "core_ca.h"                   /* Cortex-A processor and core peripherals */
+
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Structure Section                               */
@@ -496,6 +533,45 @@ struct RGA_REG {
     __IO uint32_t MMU_DST_BASE;                       /* Address Offset: 0x0178 */
     __IO uint32_t MMU_ELS_BASE;                       /* Address Offset: 0x017C */
 };
+/* UART Register Structure Define */
+struct UART_REG
+{
+    __IO uint32_t UART_RBR;
+    __IO uint32_t UART_DLH;
+    __IO uint32_t UART_IIR;
+    __IO uint32_t UART_LCR;
+    __IO uint32_t UART_MCR;
+    __IO uint32_t UART_LSR;
+    __IO uint32_t UART_MSR;
+    __IO uint32_t UART_SCR;
+    __IO uint32_t RESERVED1_UART[(0x30 - 0x20) / 4];
+    __IO uint32_t UART_SRBR[(0x70 - 0x30) / 4];
+    __IO uint32_t UART_FAR;
+    __IO uint32_t UART_TFR;
+    __IO uint32_t UART_RFW;
+    __IO uint32_t UART_USR;
+    __IO uint32_t UART_TFL;
+    __IO uint32_t UART_RFL;
+    __IO uint32_t UART_SRR;
+    __IO uint32_t UART_SRTS;
+    __IO uint32_t UART_SBCR;
+    __IO uint32_t UART_SDMAM;
+    __IO uint32_t UART_SFE;
+    __IO uint32_t UART_SRT;
+    __IO uint32_t UART_STET;
+    __IO uint32_t UART_HTX;
+    __IO uint32_t UART_DMASA;
+    __IO uint32_t RESERVED2_UART[(0xf4 - 0xac) / 4];
+    __IO uint32_t UART_CPR;
+    __IO uint32_t UART_UCV;
+    __IO uint32_t UART_CTR;
+};
+
+#define UART_THR UART_RBR
+#define UART_DLL UART_RBR
+#define UART_IER UART_DLH
+#define UART_FCR UART_IIR
+#define UART_STHR UART_SRBR
 /****************************************************************************************/
 /*                                                                                      */
 /*                                Module Address Section                                */
@@ -511,10 +587,14 @@ struct RGA_REG {
 #define GRF_BASE            0xFE050000U /* GRF base address */
 #define SGRF_BASE           0xFE400000U /* SGRF base address */
 #define PMU_SGRF_BASE       0xFE410000U /* PMU_SGRF base address */
+#define GICD_BASE           0xFF100000U /* GICD base address */
+#define GICR_BASE           0xFF140000U /* GICR base address */
+#define GICC_BASE           0xFF300000U /* GICC base address */
 #define MSCH_BASE           0xFE800000U /* MSCH base address */
 #define CRU_BASE            0xFF350000U /* CRU base address */
 #define EFUSE_NS_BASE       0xFF3B0000U /* EFUSE_NS base address */
 #define EFUSE_S_BASE        0xFF3B8000U /* EFUSE_S base address */
+#define UART2_BASE          0xFF550000U /* UART2 base address */
 #define DCF_BASE            0xFF640000U /* DCF base address */
 #define VAD_BASE            0xFF810000U /* VAD base address */
 #define DFICTRL_BASE        0xFF9B8000U /* DFICTRL base address */
@@ -543,6 +623,7 @@ struct RGA_REG {
 #define VAD                 ((struct VAD_REG *) VAD_BASE)
 #define DFICTRL             ((struct DFICTRL_REG *) DFICTRL_BASE)
 #define RGA                 ((struct RGA_REG *) RGA_BASE)
+#define UART2               ((struct UART_REG *) UART2_BASE)
 
 #define IS_BUS_GRF_INSTANCE(instance) ((instance) == BUS_GRF)
 #define IS_USB2PHY_GRF_INSTANCE(instance) ((instance) == USB2PHY_GRF)
@@ -561,6 +642,7 @@ struct RGA_REG {
 #define IS_VAD_INSTANCE(instance) ((instance) == VAD)
 #define IS_DFICTRL_INSTANCE(instance) ((instance) == DFICTRL)
 #define IS_RGA_INSTANCE(instance) ((instance) == RGA)
+#define IS_UART_INSTANCE(instance) ((instance) == UART2)
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
