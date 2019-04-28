@@ -126,6 +126,7 @@ struct DSC_PPS {
 };
 
 /********************* Private Variable Definition ***************************/
+static struct GRF_REG *const gGrfReg = GRF;
 static struct VOP_REG g_VOP_RegMir;
 static const char * const VOP_IRQs[] = {
     "frame start interrupt status!",
@@ -586,6 +587,43 @@ HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId,
 
     return HAL_OK;
 }
+
+/**
+ * @brief  VOP MIPI switch.
+ * @param  pReg: VOP reg base.
+ * @param  path: mipi switch direction.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
+{
+    switch (path) {
+    case SWITCH_TO_INTERNAL_DPHY:
+        RK_CLRSET_REG_BITS(gGrfReg->SOC_CON1[0], GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK, 0);
+#ifdef IS_FPGA
+        RK_CLRSET_REG_BITS(gGrfReg->SOC_CON1[0], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
+                           GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK);
+#else
+        RK_CLRSET_REG_BITS(gGrfReg->SOC_CON1[0], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
+                           0);
+#endif
+        break;
+    case SWITCH_TO_AP_BYPASS:
+#ifdef IS_FPGA
+        RK_CLRSET_REG_BITS(gGrfReg->SOC_CON1[0], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK, 0);
+#else
+        RK_CLRSET_REG_BITS(gGrfReg->SOC_CON1[0], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
+                           GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK);
+#endif
+        RK_CLRSET_REG_BITS(gGrfReg->SOC_CON1[0], GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK,
+                           GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK);
+        break;
+    default:
+        break;
+    }
+
+    return HAL_OK;
+}
+
 /**
  * @brief  Set plane state.
  * @param  pReg: VOP reg base.
@@ -1258,6 +1296,8 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
  */
 HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
 {
+    RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[0], GRF_SOC_CON0_VOP_TE_SEL_MASK,
+                       1 << GRF_SOC_CON0_VOP_TE_SEL_SHIFT);
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_MASK,

@@ -77,6 +77,11 @@ typedef enum VOP_mcu_cmd {
     MCU_SETBYPASS,
 } eVOP_McuCmd;
 
+typedef enum {
+    SWITCH_TO_INTERNAL_DPHY,
+    SWITCH_TO_AP_BYPASS,
+} eVOP_MipiSwitchPath;
+
 struct CRTC_WIN_STATE {
     bool winEn;
     uint8_t winId;
@@ -175,6 +180,7 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
 HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
                            struct DISPLAY_MODE_INFO *pModeInfo);
 HAL_Status HAL_VOP_McuModeInit(struct VOP_REG *pReg);
+HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path);
 HAL_Status HAL_VOP_PostScaleInit(struct VOP_REG *pReg,
                                  struct DISPLAY_MODE_INFO *pModeInfo,
                                  struct VOP_POST_SCALE_INFO *pPostScaleInfo);
