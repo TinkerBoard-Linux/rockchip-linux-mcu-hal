@@ -44,7 +44,7 @@
 
 /********************* Private Structure Definition **************************/
 
-struct PLL_CONFIG PLL_TABLE[5] = {
+static struct PLL_CONFIG PLL_TABLE[5] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
     RK_PLL_RATE(1200000000, 1, 50, 1, 1, 1, 0),
     RK_PLL_RATE(1188000000, 1, 99, 2, 1, 1, 0),
@@ -56,7 +56,7 @@ struct PLL_CONFIG PLL_TABLE[5] = {
 static uint32_t s_gpllFreq;
 static uint32_t s_cpllFreq;
 
-struct PLL_SETUP GPLL = {
+static struct PLL_SETUP GPLL = {
     .conOffset0 = (uint32_t)(&(CRU->CRU_GPLL_CON0)),
     .conOffset1 = (uint32_t)(&(CRU->CRU_GPLL_CON1)),
     .conOffset2 = (uint32_t)(&(CRU->CRU_GPLL_CON2)),
@@ -67,7 +67,7 @@ struct PLL_SETUP GPLL = {
     .rateTable = PLL_TABLE,
 };
 
-struct PLL_SETUP CPLL = {
+static struct PLL_SETUP CPLL = {
     .conOffset0 = (uint32_t)(&(CRU->CRU_CPLL_CON0)),
     .conOffset1 = (uint32_t)(&(CRU->CRU_CPLL_CON1)),
     .conOffset2 = (uint32_t)(&(CRU->CRU_CPLL_CON2)),
