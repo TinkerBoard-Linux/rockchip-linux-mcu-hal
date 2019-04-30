@@ -76,6 +76,7 @@ INCLUDES += \
 # Source Files
 #############################################################################
 DIRS := $(ROOT_PATH)/lib/hal/src \
+	$(ROOT_PATH)/lib/hal/src/*/ \
 	$(ROOT_PATH)/lib/bsp/$(PROJECT) \
 	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
 	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates \
