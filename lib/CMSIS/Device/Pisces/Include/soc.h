@@ -204,9 +204,7 @@ struct GRF_REG {
     __I  uint32_t CHIP_IDL;                           /* Address Offset: 0x00F4 */
     __I  uint32_t CHIP_IDH;                           /* Address Offset: 0x00F8 */
          uint32_t RESERVED11;                         /* Address Offset: 0x00FC */
-    __IO uint32_t SOC_CON[3];                         /* Address Offset: 0x0100 */
-         uint32_t RESERVED12;                         /* Address Offset: 0x010C */
-    __IO uint32_t SOC_CON1[2];                        /* Address Offset: 0x0110 */
+    __IO uint32_t SOC_CON[6];                         /* Address Offset: 0x0100 */
          uint32_t RESERVED13[10];                     /* Address Offset: 0x0118 */
     __IO uint32_t SOC_STATUS[2];                      /* Address Offset: 0x0140 */
          uint32_t RESERVED14[6];                      /* Address Offset: 0x0148 */
