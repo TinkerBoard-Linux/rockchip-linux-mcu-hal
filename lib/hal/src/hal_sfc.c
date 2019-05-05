@@ -128,6 +128,8 @@ HAL_Status SFC_XmmcDevRegionInit(struct HAL_SFC_HOST *host)
     host->instance->DEVRGN = 25;    /* 32MB for each region */
     host->instance->DEVSIZE0 = 24;     /* 16MB for dev0 */
     host->instance->DEVSIZE1 = 24;     /* 16MB for dev1 */
+
+    return HAL_OK;
 }
 
 #endif
@@ -427,6 +429,8 @@ HAL_Status HAL_SFC_XmmcDevRegionInit(struct HAL_SFC_HOST *host)
     host->instance->DEVRGN = 25;    /* 32MB for each region */
     host->instance->DEVSIZE0 = 24;     /* 16MB for dev0 */
     host->instance->DEVSIZE1 = 24;     /* 16MB for dev1 */
+
+    return HAL_OK;
 }
 
 /**
