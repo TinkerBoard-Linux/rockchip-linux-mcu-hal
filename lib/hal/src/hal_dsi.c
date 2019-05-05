@@ -45,6 +45,46 @@ typedef enum {
 
 /********************* Private Variable Definition ***************************/
 static struct GRF_REG *const gGrfReg = GRF;
+static const char * const DPHY_ERROR[] = {
+    "ErrEsc escape entry error from Lane 0",
+    "ErrSyncEsc low-power data transmission synchronization error from Lane 0",
+    "the ErrControl error from Lane 0",
+    "LP0 contention error ErrContentionLP0 from Lane 0",
+    "LP1 contention error ErrContentionLP1 from Lane 0",
+};
+static const char * const ACK_WITH_ERR[] = {
+    "the SoT error from the Acknowledge error report",
+    "the SoT Sync error from the Acknowledge error report",
+    "the EoT Sync error from the Acknowledge error report",
+    "the Escape Mode Entry Command error from the Acknowledge error report",
+    "the LP Transmit Sync error from the Acknowledge error report",
+    "the Peripheral Timeout error from the Acknowledge Error report",
+    "the False Control error from the Acknowledge error report",
+    "the reserved (specific to device) from the Acknowledge error report",
+    "the ECC error, single-bit (detected and corrected) from the Acknowledge error report",
+    "the ECC error, multi-bit (detected, not corrected) from the Acknowledge error report",
+    "the checksum error (long packet only) from the Acknowledge error report",
+    "the not recognized DSI data type from the Acknowledge error report",
+    "the DSI VC ID Invalid from the Acknowledge error report",
+    "the invalid transmission length from the Acknowledge error report",
+    "the reserved (specific to device) from the Acknowledge error report",
+    "the DSI protocol violation from the Acknowledge error report",
+};
+static const char * const ERROR_REPORT[] = {
+    "Host reports that the configured timeout counter for the high-speed transmission has expired",
+    "Host reports that the configured timeout counter for the low-power reception has expired",
+    "Host reports that a received packet contains a single bit error",
+    "Host reports that a received packet contains multiple ECC errors",
+    "Host reports that a received long packet has a CRC error in its payload",
+    "Host receives a transmission that does not end in the expected by boundaries",
+    "Host receives a transmission that does not end with an End of Transmission packet",
+    "An overflow occurs in the DPI pixel payload FIFO",
+    "An overflow occurs in the Generic command FIFO",
+    "An overflow occurs in the Generic write payload FIFO",
+    "An underflow occurs in the Generic write payload FIFO",
+    "An underflow occurs in the Generic read FIFO",
+    "An overflow occurs in the Generic read FIFO",
+};
 
 /********************* Private Function Definition ***************************/
 static uint32_t DSI_CheckFifoStatus(struct DSI_REG *pReg, uint32_t flag)
@@ -144,6 +184,34 @@ HAL_Status HAL_DSI_Resume(struct DSI_REG *pReg)
  @endverbatim
  *  @{
  */
+
+/**
+ * @brief  DSI Interrupt Handler.
+ * @param  pReg: DSI reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg)
+{
+    uint32_t int_st0, int_st1, i;
+
+    int_st0 = READ_REG(pReg->INT_ST0);
+    int_st1 = READ_REG(pReg->INT_ST1);
+
+    for (i = 0; i < HAL_ARRAY_SIZE(ACK_WITH_ERR); i++)
+        if (int_st0 & BIT(i))
+            HAL_DBG_ERR("DSI Irq: %s\n", ACK_WITH_ERR[i]);
+
+    for (i = 0; i < HAL_ARRAY_SIZE(DPHY_ERROR); i++)
+        if (int_st0 & BIT(16 + i))
+            HAL_DBG_ERR("DSI Irq: %s\n", DPHY_ERROR[i]);
+
+    for (i = 0; i < HAL_ARRAY_SIZE(ERROR_REPORT); i++)
+        if (int_st1 & BIT(i))
+            HAL_DBG_ERR("DSI Irq: %s\n", ERROR_REPORT[i]);
+
+    return HAL_OK;
+}
+
 /**
  * @brief  Send DSI Command Packet.
  * @param  pReg: DSI reg base.
@@ -252,6 +320,32 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
  @endverbatim
  *  @{
  */
+
+/**
+ * @brief  Config DSI Interrupt Mask.
+ * @param  pReg: DSI reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_DSI_IrqConfig(struct DSI_REG *pReg)
+{
+    uint32_t int_msk0 = ACK_WITH_ERR_0_MASK | ACK_WITH_ERR_1_MASK | ACK_WITH_ERR_2_MASK |
+                        ACK_WITH_ERR_3_MASK | ACK_WITH_ERR_4_MASK | ACK_WITH_ERR_5_MASK |
+                        ACK_WITH_ERR_6_MASK | ACK_WITH_ERR_7_MASK | ACK_WITH_ERR_8_MASK |
+                        ACK_WITH_ERR_9_MASK | ACK_WITH_ERR_10_MASK | ACK_WITH_ERR_11_MASK |
+                        ACK_WITH_ERR_12_MASK | ACK_WITH_ERR_13_MASK | ACK_WITH_ERR_14_MASK |
+                        ACK_WITH_ERR_15_MASK | DPHY_ERRORS_0_MASK | DPHY_ERRORS_1_MASK |
+                        DPHY_ERRORS_2_MASK | DPHY_ERRORS_3_MASK | DPHY_ERRORS_4_MASK;
+    uint32_t int_msk1 = TO_HS_TX_MASK | TO_LP_RX_MASK | ECC_SINGLE_ERR_MASK |
+                        ECC_MULTI_ERR_MASK | CRC_ERR_MASK | PKT_SIZE_ERR_MASK |
+                        EOPT_ERR_MASK | DPI_PLD_WR_ERR_MASK | GEN_CMD_WR_ERR_MASK |
+                        GEN_PLD_WR_ERR_MASK | GEN_PLD_SEND_ERR_MASK | GEN_PLD_RD_ERR_MASK |
+                        GEN_PLD_RECEV_ERR_MASK;
+
+    WRITE_REG(pReg->INT_MSK0, int_msk0);
+    WRITE_REG(pReg->INT_MSK1, int_msk1);
+
+    return HAL_OK;
+}
 
 /**
  * @brief  DSI m31 Dphy Set Pll.
@@ -481,21 +575,6 @@ HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg)
               0x40 << PHY_CLKHS2LP_TIME_SHIFT);
     WRITE_REG(pReg->PHY_TMR_CFG, 0x14 << PHY_HS2LP_TIME_SHIFT |
               0x10 << PHY_CLKHS2LP_TIME_SHIFT | 10000 << MAX_RD_TIME_SHIFT);
-
-    return HAL_OK;
-}
-
-/**
- * @brief  DSI_Clear Error.
- * @param  pReg: DSI reg base.
- * @return HAL_Status.
- */
-HAL_Status HAL_DSI_ClearErr(struct DSI_REG *pReg)
-{
-    READ_REG(pReg->INT_ST0);
-    READ_REG(pReg->INT_ST1);
-    WRITE_REG(pReg->INT_MSK0, 0);
-    WRITE_REG(pReg->INT_MSK1, 0);
 
     return HAL_OK;
 }
