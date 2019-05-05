@@ -45,6 +45,7 @@
 #define HAL_ARRAY_SIZE(a) (sizeof((a)) / sizeof((a)[0]))
 #define HAL_MIN(x, y)     ((x) < (y) ? (x) : (y))
 
+#define HAL_DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
 /* Compiller Marco */
 #ifdef __GNUC__
 #ifndef __weak
