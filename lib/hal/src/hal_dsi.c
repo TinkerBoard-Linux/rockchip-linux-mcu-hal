@@ -112,7 +112,7 @@ static HAL_Status DSI_WaitFifoEmpty(struct DSI_REG *pReg)
 {
     uint32_t retries = 0;
 
-    while (!DSI_CheckFifoStatus(pReg, GEN_CMD_EMPTY_MASK)) {
+    while (!DSI_CheckFifoStatus(pReg, DSI_GEN_CMD_EMPTY_MASK)) {
         if (++retries > CMD_PKT_STATUS_TIMEOUT_RETRIES) {
             HAL_DBG_ERR("%s: timeout for wait empty\n", __func__);
 
@@ -226,7 +226,7 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
     uint32_t temp, val;
     HAL_Status ret;
 
-    ret = DSI_WaitFifoNotFull(pReg, GEN_CMD_FULL_MASK);
+    ret = DSI_WaitFifoNotFull(pReg, DSI_GEN_CMD_FULL_MASK);
     if (ret != HAL_OK)
         return ret;
     val = (0x0 << 6) | DataType;
@@ -247,7 +247,7 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
     case MIPI_DSI_PPS_LONG_WRITE:
     {
         /* Send payload */
-        ret = DSI_WaitFifoNotFull(pReg, GEN_PLD_W_FULL_MASK);
+        ret = DSI_WaitFifoNotFull(pReg, DSI_GEN_PLD_W_FULL_MASK);
         if (ret != HAL_OK)
             return ret;
 
@@ -287,20 +287,20 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
  */
 HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
 {
-    uint32_t lp_mask = GEN_SW_0P_TX_MASK | GEN_SW_1P_TX_MASK |
-                       GEN_SW_2P_TX_MASK | GEN_SR_0P_TX_MASK |
-                       GEN_SR_1P_TX_MASK | GEN_SR_2P_TX_MASK |
-                       GEN_LW_TX_MASK | DCS_SW_0P_TX_MASK |
-                       DCS_SW_1P_TX_MASK | DCS_SR_0P_TXL_MASK |
-                       DCS_LW_TX_MASK | MAX_RD_PKT_SIZE_MASK;
+    uint32_t lp_mask = DSI_GEN_SW_0P_TX_MASK | DSI_GEN_SW_1P_TX_MASK |
+                       DSI_GEN_SW_2P_TX_MASK | DSI_GEN_SR_0P_TX_MASK |
+                       DSI_GEN_SR_1P_TX_MASK | DSI_GEN_SR_2P_TX_MASK |
+                       DSI_GEN_LW_TX_MASK | DSI_DCS_SW_0P_TX_MASK |
+                       DSI_DCS_SW_1P_TX_MASK | DSI_DCS_SR_0P_TXL_MASK |
+                       DSI_DCS_LW_TX_MASK | DSI_MAX_RD_PKT_SIZE_MASK;
 
     if (Enable) {
-        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, LP_CMD_EN_MASK, 1);
-        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 0);
+        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 1);
+        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 0);
         DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lp_mask, 1);
     } else {
-        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, LP_CMD_EN_MASK, 0);
-        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 1);
+        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 0);
+        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 1);
         DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lp_mask, 0);
     }
 
@@ -328,18 +328,18 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
  */
 HAL_Status HAL_DSI_IrqConfig(struct DSI_REG *pReg)
 {
-    uint32_t int_msk0 = ACK_WITH_ERR_0_MASK | ACK_WITH_ERR_1_MASK | ACK_WITH_ERR_2_MASK |
-                        ACK_WITH_ERR_3_MASK | ACK_WITH_ERR_4_MASK | ACK_WITH_ERR_5_MASK |
-                        ACK_WITH_ERR_6_MASK | ACK_WITH_ERR_7_MASK | ACK_WITH_ERR_8_MASK |
-                        ACK_WITH_ERR_9_MASK | ACK_WITH_ERR_10_MASK | ACK_WITH_ERR_11_MASK |
-                        ACK_WITH_ERR_12_MASK | ACK_WITH_ERR_13_MASK | ACK_WITH_ERR_14_MASK |
-                        ACK_WITH_ERR_15_MASK | DPHY_ERRORS_0_MASK | DPHY_ERRORS_1_MASK |
-                        DPHY_ERRORS_2_MASK | DPHY_ERRORS_3_MASK | DPHY_ERRORS_4_MASK;
-    uint32_t int_msk1 = TO_HS_TX_MASK | TO_LP_RX_MASK | ECC_SINGLE_ERR_MASK |
-                        ECC_MULTI_ERR_MASK | CRC_ERR_MASK | PKT_SIZE_ERR_MASK |
-                        EOPT_ERR_MASK | DPI_PLD_WR_ERR_MASK | GEN_CMD_WR_ERR_MASK |
-                        GEN_PLD_WR_ERR_MASK | GEN_PLD_SEND_ERR_MASK | GEN_PLD_RD_ERR_MASK |
-                        GEN_PLD_RECEV_ERR_MASK;
+    uint32_t int_msk0 = DSI_ACK_WITH_ERR_0_MASK | DSI_ACK_WITH_ERR_1_MASK | DSI_ACK_WITH_ERR_2_MASK |
+                        DSI_ACK_WITH_ERR_3_MASK | DSI_ACK_WITH_ERR_4_MASK | DSI_ACK_WITH_ERR_5_MASK |
+                        DSI_ACK_WITH_ERR_6_MASK | DSI_ACK_WITH_ERR_7_MASK | DSI_ACK_WITH_ERR_8_MASK |
+                        DSI_ACK_WITH_ERR_9_MASK | DSI_ACK_WITH_ERR_10_MASK | DSI_ACK_WITH_ERR_11_MASK |
+                        DSI_ACK_WITH_ERR_12_MASK | DSI_ACK_WITH_ERR_13_MASK | DSI_ACK_WITH_ERR_14_MASK |
+                        DSI_ACK_WITH_ERR_15_MASK | DSI_DPHY_ERRORS_0_MASK | DSI_DPHY_ERRORS_1_MASK |
+                        DSI_DPHY_ERRORS_2_MASK | DSI_DPHY_ERRORS_3_MASK | DSI_DPHY_ERRORS_4_MASK;
+    uint32_t int_msk1 = DSI_TO_HS_TX_MASK | DSI_TO_LP_RX_MASK | DSI_ECC_SINGLE_ERR_MASK |
+                        DSI_ECC_MULTI_ERR_MASK | DSI_CRC_ERR_MASK | DSI_PKT_SIZE_ERR_MASK |
+                        DSI_EOPT_ERR_MASK | DSI_DPI_PLD_WR_ERR_MASK | DSI_GEN_CMD_WR_ERR_MASK |
+                        DSI_GEN_PLD_WR_ERR_MASK | DSI_GEN_PLD_SEND_ERR_MASK | DSI_GEN_PLD_RD_ERR_MASK |
+                        DSI_GEN_PLD_RECEV_ERR_MASK;
 
     WRITE_REG(pReg->INT_MSK0, int_msk0);
     WRITE_REG(pReg->INT_MSK1, int_msk1);
@@ -395,8 +395,8 @@ HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint32_t Lanembps)
 
     val = DIV_ROUND_UP(Lanembps >> 3, 20);
     WRITE_REG(pReg->PWR_UP, 0);
-    WRITE_REG(pReg->CLKMGR_CFG, 10 << TO_CLK_DIVISION_SHIFT |
-              val << TX_ESC_CLK_DIVISION_SHIFT);
+    WRITE_REG(pReg->CLKMGR_CFG, 10 << DSI_TO_CLK_DIVISION_SHIFT |
+              val << DSI_TX_ESC_CLK_DIVISION_SHIFT);
 
     return HAL_OK;
 }
@@ -420,7 +420,7 @@ HAL_Status HAL_DSI_DpiConfig(struct DSI_REG *pReg,
         color = DPI_COLOR_CODING_24BIT;
         break;
     case MEDIA_BUS_FMT_RGB666_1X24_CPADHI:
-        color = DPI_COLOR_CODING_18BIT_2 | LOOSELY18_EN_MASK;
+        color = DPI_COLOR_CODING_18BIT_2 | DSI_LOOSELY18_EN_MASK;
         break;
     case MEDIA_BUS_FMT_RGB666_1X18:
         color = DPI_COLOR_CODING_18BIT_1;
@@ -430,9 +430,9 @@ HAL_Status HAL_DSI_DpiConfig(struct DSI_REG *pReg,
         break;
     }
 
-    polarity |= (pModeInfo->flags & VIDEO_MODE_FLAG_NHSYNC ? 1 : 0) << HSYNC_ACTIVE_LOW_SHIFT;
-    polarity |= (pModeInfo->flags & VIDEO_MODE_FLAG_NVSYNC ? 1 : 0) << VSYNC_ACTIVE_LOW_SHIFT;
-    lpcmd_time = 4 << OUTVACT_LPCMD_TIME_SHIFT | 4 << INVACT_LPCMD_TIME_SHIFT;
+    polarity |= (pModeInfo->flags & VIDEO_MODE_FLAG_NHSYNC ? 1 : 0) << DSI_HSYNC_ACTIVE_LOW_SHIFT;
+    polarity |= (pModeInfo->flags & VIDEO_MODE_FLAG_NVSYNC ? 1 : 0) << DSI_VSYNC_ACTIVE_LOW_SHIFT;
+    lpcmd_time = 4 << DSI_OUTVACT_LPCMD_TIME_SHIFT | 4 << DSI_INVACT_LPCMD_TIME_SHIFT;
 
     WRITE_REG(pReg->DPI_COLOR_CODING, color);
     WRITE_REG(pReg->DPI_CFG_POL, polarity);
@@ -448,7 +448,7 @@ HAL_Status HAL_DSI_DpiConfig(struct DSI_REG *pReg,
  */
 HAL_Status HAL_DSI_PacketHandlerConfig(struct DSI_REG *pReg)
 {
-    WRITE_REG(pReg->PCKHDL_CFG, BTA_EN_MASK | ECC_RX_MASK | CRC_RX_MASK);
+    WRITE_REG(pReg->PCKHDL_CFG, DSI_BTA_EN_MASK | DSI_ECC_RX_MASK | DSI_CRC_RX_MASK);
 
     return HAL_OK;
 }
@@ -466,26 +466,26 @@ HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
 
     if (pModeInfo->flags & DSI_MODE_VIDEO) {
         if (pModeInfo->flags & DSI_MODE_VIDEO_BURST)
-            val |= 0x2 << VID_MODE_TYPE_MASK;
+            val |= 0x2 << DSI_VID_MODE_TYPE_MASK;
         else if (pModeInfo->flags & DSI_MODE_VIDEO_SYNC_PULSE)
-            val |= 0 << VID_MODE_TYPE_MASK;
+            val |= 0 << DSI_VID_MODE_TYPE_MASK;
         else
-            val |= VID_MODE_TYPE_MASK;
+            val |= DSI_VID_MODE_TYPE_MASK;
 
         WRITE_REG(pReg->VID_MODE_CFG, val);
         WRITE_REG(pReg->VID_PKT_SIZE, pModeInfo->crtcHdisplay);
     } else {
-        WRITE_REG(pReg->TO_CNT_CFG, 1000 << HSTX_TO_CNT_SHIFT |
-                  1000 << LPRX_TO_CNT_SHIFT);
+        WRITE_REG(pReg->TO_CNT_CFG, 1000 << DSI_HSTX_TO_CNT_SHIFT |
+                  1000 << DSI_LPRX_TO_CNT_SHIFT);
         WRITE_REG(pReg->BTA_TO_CNT, 0xd00);
     }
 
     if (pModeInfo->flags & DSI_CLOCK_NON_CONTINUOUS)
-        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, AUTO_CLKLANE_CTRL_MASK, 1);
+        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_AUTO_CLKLANE_CTRL_MASK, 1);
 
     HAL_DSI_MsgLpModeConfig(pReg, pModeInfo->flags & DSI_MODE_LPM);
 
-    DSI_UPDATE_BIT(pReg->MODE_CFG, CMD_VIDEO_MODE_MASK, 1);
+    DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_CMD_VIDEO_MODE_MASK, 1);
     WRITE_REG(pReg->PWR_UP, 0x1);
 
     return HAL_OK;
@@ -527,10 +527,10 @@ HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
     uint16_t clk = pModeInfo->crtcClock;
     uint32_t lpcc;
 
-    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, TEAR_FX_EN_MASK, 0);
+    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, DSI_TEAR_FX_EN_MASK, 0);
     WRITE_REG(pReg->EDPI_CMD_SIZE, pDisplayRect->w);
-    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, DCS_LW_TX_MASK, 0);
-    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, TEAR_FX_EN_MASK, 1);
+    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, DSI_DCS_LW_TX_MASK, 0);
+    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, DSI_TEAR_FX_EN_MASK, 1);
 
     lpcc = DSI_GetHcomponentLbcc(hsa, Lanembps, clk);
 
@@ -571,10 +571,10 @@ HAL_Status HAL_DSI_VerticalTimingConfig(struct DSI_REG *pReg,
  */
 HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg)
 {
-    WRITE_REG(pReg->PHY_TMR_LPCLK_CFG, 0x40 << PHY_LP2HS_TIME_SHIFT |
-              0x40 << PHY_CLKHS2LP_TIME_SHIFT);
-    WRITE_REG(pReg->PHY_TMR_CFG, 0x14 << PHY_HS2LP_TIME_SHIFT |
-              0x10 << PHY_CLKHS2LP_TIME_SHIFT | 10000 << MAX_RD_TIME_SHIFT);
+    WRITE_REG(pReg->PHY_TMR_LPCLK_CFG, 0x40 << DSI_PHY_LP2HS_TIME_SHIFT |
+              0x40 << DSI_PHY_CLKHS2LP_TIME_SHIFT);
+    WRITE_REG(pReg->PHY_TMR_CFG, 0x14 << DSI_PHY_HS2LP_TIME_SHIFT |
+              0x10 << DSI_PHY_CLKHS2LP_TIME_SHIFT | 10000 << DSI_MAX_RD_TIME_SHIFT);
 
     return HAL_OK;
 }
@@ -588,11 +588,11 @@ HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg)
 HAL_Status HAL_DSI_Enable(struct DSI_REG *pReg,
                           struct DISPLAY_MODE_INFO *pModeInfo)
 {
-    DSI_UPDATE_BIT(pReg->LPCLK_CTRL, PHY_TXREQUESTCLKHS_MASK, 1);
+    DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 1);
     if (pModeInfo->flags & DSI_MODE_VIDEO)
-        DSI_UPDATE_BIT(pReg->MODE_CFG, CMD_VIDEO_MODE_MASK, 0);
+        DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_CMD_VIDEO_MODE_MASK, 0);
     else {
-        DSI_UPDATE_BIT(pReg->MODE_CFG, CMD_VIDEO_MODE_MASK, 1);
+        DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_CMD_VIDEO_MODE_MASK, 1);
         WRITE_REG(pReg->EDPI_CMD_SIZE, pModeInfo->crtcHdisplay);
     }
     WRITE_REG(pReg->PWR_UP, 0x1);

@@ -2917,103 +2917,103 @@ struct VOP_REG {
 #define DSI_HOST_SHUTDOWNZ_SHIFT                           (0U)
 #define DSI_HOST_SHUTDOWNZ_MASK                            (0x1U << DSI_HOST_SHUTDOWNZ_SHIFT)                           /* 0X00000001 */
 /* CLKMGR_CFG */
-#define TX_ESC_CLK_DIVISION_SHIFT                          (0U)
-#define TX_ESC_CLK_DIVISION_MASK                           (0XFFU << TX_ESC_CLK_DIVISION_SHIFT)                         /* 0X000000FF */
-#define TO_CLK_DIVISION_SHIFT                              (8U)
-#define TO_CLK_DIVISION_MASK                               (0XFFU << TO_CLK_DIVISION_SHIFT)                             /* 0X0000FF00 */
+#define DSI_TX_ESC_CLK_DIVISION_SHIFT                      (0U)
+#define DSI_TX_ESC_CLK_DIVISION_MASK                       (0XFFU << DSI_TX_ESC_CLK_DIVISION_SHIFT)                     /* 0X000000FF */
+#define DSI_TO_CLK_DIVISION_SHIFT                          (8U)
+#define DSI_TO_CLK_DIVISION_MASK                           (0XFFU << DSI_TO_CLK_DIVISION_SHIFT)                         /* 0X0000FF00 */
 /* DPI_VCID */
-#define DPI_VCID_SHIFT                                     (0U)
-#define DPI_VCID_MASK                                      (0x1U << DPI_VCID_SHIFT)                                     /* 0X00000001 */
+#define DSI_DPI_VCID_SHIFT                                 (0U)
+#define DSI_DPI_VCID_MASK                                  (0x1U << DSI_DPI_VCID_SHIFT)                                 /* 0X00000001 */
 /* DPI_COLOR_CODING */
-#define DPI_COLOR_CODING_SHIFT                             (0U)
-#define DPI_COLOR_CODING_MASK                              (0XFU << DPI_COLOR_CODING_SHIFT)                             /* 0X0000000F */
-#define LOOSELY18_EN_SHIFT                                 (8U)
-#define LOOSELY18_EN_MASK                                  (0x1U << LOOSELY18_EN_SHIFT)                                 /* 0X00000100 */
+#define DSI_DPI_COLOR_CODING_SHIFT                         (0U)
+#define DSI_DPI_COLOR_CODING_MASK                          (0XFU << DSI_DPI_COLOR_CODING_SHIFT)                         /* 0X0000000F */
+#define DSI_LOOSELY18_EN_SHIFT                             (8U)
+#define DSI_LOOSELY18_EN_MASK                              (0x1U << DSI_LOOSELY18_EN_SHIFT)                             /* 0X00000100 */
 /* DPI_CFG_POL */
-#define DATAEN_ACTIVE_LOW_SHIFT                            (0U)
-#define DATAEN_ACTIVE_LOW_MASK                             (0x1U << DATAEN_ACTIVE_LOW_SHIFT)                            /* 0X00000001 */
-#define VSYNC_ACTIVE_LOW_SHIFT                             (1U)
-#define VSYNC_ACTIVE_LOW_MASK                              (0x1U << VSYNC_ACTIVE_LOW_SHIFT)                             /* 0X00000002 */
-#define HSYNC_ACTIVE_LOW_SHIFT                             (2U)
-#define HSYNC_ACTIVE_LOW_MASK                              (0x1U << HSYNC_ACTIVE_LOW_SHIFT)                             /* 0X00000004 */
+#define DSI_DATAEN_ACTIVE_LOW_SHIFT                        (0U)
+#define DSI_DATAEN_ACTIVE_LOW_MASK                         (0x1U << DSI_DATAEN_ACTIVE_LOW_SHIFT)                        /* 0X00000001 */
+#define DSI_VSYNC_ACTIVE_LOW_SHIFT                         (1U)
+#define DSI_VSYNC_ACTIVE_LOW_MASK                          (0x1U << DSI_VSYNC_ACTIVE_LOW_SHIFT)                         /* 0X00000002 */
+#define DSI_HSYNC_ACTIVE_LOW_SHIFT                         (2U)
+#define DSI_HSYNC_ACTIVE_LOW_MASK                          (0x1U << DSI_HSYNC_ACTIVE_LOW_SHIFT)                         /* 0X00000004 */
 /* DPI_LP_CMD_TIM */
-#define INVACT_LPCMD_TIME_SHIFT                            (0U)
-#define INVACT_LPCMD_TIME_MASK                             (0XFFU << INVACT_LPCMD_TIME_SHIFT)                           /* 0X000000FF */
-#define OUTVACT_LPCMD_TIME_SHIFT                           (16U)
-#define OUTVACT_LPCMD_TIME_MASK                            (0XFFU << OUTVACT_LPCMD_TIME_SHIFT)                          /* 0X00FF0000 */
+#define DSI_INVACT_LPCMD_TIME_SHIFT                        (0U)
+#define DSI_INVACT_LPCMD_TIME_MASK                         (0XFFU << DSI_INVACT_LPCMD_TIME_SHIFT)                       /* 0X000000FF */
+#define DSI_OUTVACT_LPCMD_TIME_SHIFT                       (16U)
+#define DSI_OUTVACT_LPCMD_TIME_MASK                        (0XFFU << DSI_OUTVACT_LPCMD_TIME_SHIFT)                      /* 0X00FF0000 */
 /* PCKHDL_CFG */
-#define BTA_EN_SHIFT                                       (2U)
-#define BTA_EN_MASK                                        (0x1U << BTA_EN_SHIFT)                                       /* 0X00000004 */
-#define ECC_RX_SHIFT                                       (3U)
-#define ECC_RX_MASK                                        (0x1U << ECC_RX_SHIFT)                                       /* 0X00000008 */
-#define CRC_RX_SHIFT                                       (4U)
-#define CRC_RX_MASK                                        (0x1U << CRC_RX_SHIFT)                                       /* 0X0000000F */
+#define DSI_BTA_EN_SHIFT                                   (2U)
+#define DSI_BTA_EN_MASK                                    (0x1U << DSI_BTA_EN_SHIFT)                                   /* 0X00000004 */
+#define DSI_ECC_RX_SHIFT                                   (3U)
+#define DSI_ECC_RX_MASK                                    (0x1U << DSI_ECC_RX_SHIFT)                                   /* 0X00000008 */
+#define DSI_CRC_RX_SHIFT                                   (4U)
+#define DSI_CRC_RX_MASK                                    (0x1U << DSI_CRC_RX_SHIFT)                                   /* 0X0000000F */
 /* CMD_MODE_CFG */
-#define TEAR_FX_EN_SHIFT                                   (0U)
-#define TEAR_FX_EN_MASK                                    (0x1U << TEAR_FX_EN_SHIFT)                                   /* 0X00000001 */
-#define ACK_RQST_EN_SHIFT                                  (1U)
-#define ACK_RQST_EN_MASK                                   (0x1U << ACK_RQST_EN_SHIFT)                                  /* 0X00000002 */
-#define GEN_SW_0P_TX_SHIFT                                 (8U)
-#define GEN_SW_0P_TX_MASK                                  (0x1U << GEN_SW_0P_TX_SHIFT)                                 /* 0X00000100 */
-#define GEN_SW_1P_TX_SHIFT                                 (9U)
-#define GEN_SW_1P_TX_MASK                                  (0x1U << GEN_SW_1P_TX_SHIFT)                                 /* 0X00000200 */
-#define GEN_SW_2P_TX_SHIFT                                 (10U)
-#define GEN_SW_2P_TX_MASK                                  (0x1U << GEN_SW_2P_TX_SHIFT)                                 /* 0X00000400 */
-#define GEN_SR_0P_TX_SHIFT                                 (11U)
-#define GEN_SR_0P_TX_MASK                                  (0x1U << GEN_SR_0P_TX_SHIFT)                                 /* 0X00000800 */
-#define GEN_SR_1P_TX_SHIFT                                 (12U)
-#define GEN_SR_1P_TX_MASK                                  (0x1U << GEN_SR_1P_TX_SHIFT)                                 /* 0X00001000 */
-#define GEN_SR_2P_TX_SHIFT                                 (13U)
-#define GEN_SR_2P_TX_MASK                                  (0x1U << GEN_SR_2P_TX_SHIFT)                                 /* 0X00002000 */
-#define GEN_LW_TX_SHIFT                                    (14U)
-#define GEN_LW_TX_MASK                                     (0x1U << GEN_LW_TX_SHIFT)                                    /* 0X00004000 */
-#define DCS_SW_0P_TX_SHIFT                                 (16U)
-#define DCS_SW_0P_TX_MASK                                  (0x1U << DCS_SW_0P_TX_SHIFT)                                 /* 0X00010000 */
-#define DCS_SW_1P_TX_SHIFT                                 (17U)
-#define DCS_SW_1P_TX_MASK                                  (0x1U << DCS_SW_1P_TX_SHIFT)                                 /* 0X00020000 */
-#define DCS_SR_0P_TX_SHIFT                                 (18U)
-#define DCS_SR_0P_TXL_MASK                                 (0x1U << DCS_SR_0P_TX_SHIFT)                                 /* 0X00040000 */
-#define DCS_LW_TX_SHIFT                                    (19U)
-#define DCS_LW_TX_MASK                                     (0x1U << DCS_LW_TX_SHIFT)                                    /* 0X00080000 */
-#define MAX_RD_PKT_SIZE_SHIFT                              (24U)
-#define MAX_RD_PKT_SIZE_MASK                               (0x1U << MAX_RD_PKT_SIZE_SHIFT)
+#define DSI_TEAR_FX_EN_SHIFT                               (0U)
+#define DSI_TEAR_FX_EN_MASK                                (0x1U << DSI_TEAR_FX_EN_SHIFT)                               /* 0X00000001 */
+#define DSI_ACK_RQST_EN_SHIFT                              (1U)
+#define DSI_ACK_RQST_EN_MASK                               (0x1U << DSI_ACK_RQST_EN_SHIFT)                              /* 0X00000002 */
+#define DSI_GEN_SW_0P_TX_SHIFT                             (8U)
+#define DSI_GEN_SW_0P_TX_MASK                              (0x1U << DSI_GEN_SW_0P_TX_SHIFT)                             /* 0X00000100 */
+#define DSI_GEN_SW_1P_TX_SHIFT                             (9U)
+#define DSI_GEN_SW_1P_TX_MASK                              (0x1U << DSI_GEN_SW_1P_TX_SHIFT)                             /* 0X00000200 */
+#define DSI_GEN_SW_2P_TX_SHIFT                             (10U)
+#define DSI_GEN_SW_2P_TX_MASK                              (0x1U << DSI_GEN_SW_2P_TX_SHIFT)                             /* 0X00000400 */
+#define DSI_GEN_SR_0P_TX_SHIFT                             (11U)
+#define DSI_GEN_SR_0P_TX_MASK                              (0x1U << DSI_GEN_SR_0P_TX_SHIFT)                             /* 0X00000800 */
+#define DSI_GEN_SR_1P_TX_SHIFT                             (12U)
+#define DSI_GEN_SR_1P_TX_MASK                              (0x1U << DSI_GEN_SR_1P_TX_SHIFT)                             /* 0X00001000 */
+#define DSI_GEN_SR_2P_TX_SHIFT                             (13U)
+#define DSI_GEN_SR_2P_TX_MASK                              (0x1U << DSI_GEN_SR_2P_TX_SHIFT)                             /* 0X00002000 */
+#define DSI_GEN_LW_TX_SHIFT                                (14U)
+#define DSI_GEN_LW_TX_MASK                                 (0x1U << DSI_GEN_LW_TX_SHIFT)                                /* 0X00004000 */
+#define DSI_DCS_SW_0P_TX_SHIFT                             (16U)
+#define DSI_DCS_SW_0P_TX_MASK                              (0x1U << DSI_DCS_SW_0P_TX_SHIFT)                             /* 0X00010000 */
+#define DSI_DCS_SW_1P_TX_SHIFT                             (17U)
+#define DSI_DCS_SW_1P_TX_MASK                              (0x1U << DSI_DCS_SW_1P_TX_SHIFT)                             /* 0X00020000 */
+#define DSI_DCS_SR_0P_TX_SHIFT                             (18U)
+#define DSI_DCS_SR_0P_TXL_MASK                             (0x1U << DSI_DCS_SR_0P_TX_SHIFT)                             /* 0X00040000 */
+#define DSI_DCS_LW_TX_SHIFT                                (19U)
+#define DSI_DCS_LW_TX_MASK                                 (0x1U << DSI_DCS_LW_TX_SHIFT)                                /* 0X00080000 */
+#define DSI_MAX_RD_PKT_SIZE_SHIFT                          (24U)
+#define DSI_MAX_RD_PKT_SIZE_MASK                           (0x1U << DSI_MAX_RD_PKT_SIZE_SHIFT)
 /* CMD_PKT_STATUS */
-#define GEN_CMD_EMPTY_SHIFT                                (0U)
-#define GEN_CMD_EMPTY_MASK                                 (0x1U << GEN_CMD_EMPTY_SHIFT)                                /* 0X00000001 */
-#define GEN_CMD_FULL_SHIFT                                 (1U)
-#define GEN_CMD_FULL_MASK                                  (0x1U << GEN_CMD_FULL_SHIFT)                                 /* 0X00000002 */
-#define GEN_PLD_W_FULL_SHIFT                               (3U)
-#define GEN_PLD_W_FULL_MASK                                (0x1U << GEN_PLD_W_FULL_SHIFT)                               /* 0X00000008 */
+#define DSI_GEN_CMD_EMPTY_SHIFT                            (0U)
+#define DSI_GEN_CMD_EMPTY_MASK                             (0x1U << DSI_GEN_CMD_EMPTY_SHIFT)                            /* 0X00000001 */
+#define DSI_GEN_CMD_FULL_SHIFT                             (1U)
+#define DSI_GEN_CMD_FULL_MASK                              (0x1U << DSI_GEN_CMD_FULL_SHIFT)                             /* 0X00000002 */
+#define DSI_GEN_PLD_W_FULL_SHIFT                           (3U)
+#define DSI_GEN_PLD_W_FULL_MASK                            (0x1U << DSI_GEN_PLD_W_FULL_SHIFT)                           /* 0X00000008 */
 /* TO_CNT_CFG */
-#define LPRX_TO_CNT_SHIFT                                  (0U)
-#define LPRX_TO_CNT_MASK                                   (0XFFFFU << LPRX_TO_CNT_SHIFT)                               /* 0X0000FFFF */
-#define HSTX_TO_CNT_SHIFT                                  (16U)
-#define HSTX_TO_CNT_MASK                                   (0XFFU << HSTX_TO_CNT_SHIFT)                                 /* 0X00FF0000 */
+#define DSI_LPRX_TO_CNT_SHIFT                              (0U)
+#define DSI_LPRX_TO_CNT_MASK                               (0XFFFFU << DSI_LPRX_TO_CNT_SHIFT)                           /* 0X0000FFFF */
+#define DSI_HSTX_TO_CNT_SHIFT                              (16U)
+#define DSI_HSTX_TO_CNT_MASK                               (0XFFU << DSI_HSTX_TO_CNT_SHIFT)                             /* 0X00FF0000 */
 /* VID_MODE_CFG */
-#define VID_MODE_TYPE_SHIFT                                (0U)
-#define VID_MODE_TYPE_MASK                                 (0x3U << VID_MODE_TYPE_SHIFT)                                /* 0X00000011 */
-#define LP_CMD_EN_SHIFT                                    (15U)
-#define LP_CMD_EN_MASK                                     (0x1U << LP_CMD_EN_SHIFT)                                    /* 0X00008000 */
+#define DSI_VID_MODE_TYPE_SHIFT                            (0U)
+#define DSI_VID_MODE_TYPE_MASK                             (0x3U << DSI_VID_MODE_TYPE_SHIFT)                            /* 0X00000011 */
+#define DSI_LP_CMD_EN_SHIFT                                (15U)
+#define DSI_LP_CMD_EN_MASK                                 (0x1U << DSI_LP_CMD_EN_SHIFT)                                /* 0X00008000 */
 /* MODE_CFG */
-#define CMD_VIDEO_MODE_SHIFT                               (0U)
-#define CMD_VIDEO_MODE_MASK                                (0x1U << CMD_VIDEO_MODE_SHIFT)                               /* 0X00000001 */
+#define DSI_CMD_VIDEO_MODE_SHIFT                           (0U)
+#define DSI_CMD_VIDEO_MODE_MASK                            (0x1U << DSI_CMD_VIDEO_MODE_SHIFT)                           /* 0X00000001 */
 /* LPCLK_CTRL */
-#define PHY_TXREQUESTCLKHS_SHIFT                           (0U)
-#define PHY_TXREQUESTCLKHS_MASK                            (0x1U << PHY_TXREQUESTCLKHS_SHIFT)                           /* 0X00000001 */
-#define AUTO_CLKLANE_CTRL_SHIFT                            (1U)
-#define AUTO_CLKLANE_CTRL_MASK                             (0x1U << AUTO_CLKLANE_CTRL_SHIFT)                            /* 0X00000002 */
+#define DSI_PHY_TXREQUESTCLKHS_SHIFT                       (0U)
+#define DSI_PHY_TXREQUESTCLKHS_MASK                        (0x1U << DSI_PHY_TXREQUESTCLKHS_SHIFT)                       /* 0X00000001 */
+#define DSI_AUTO_CLKLANE_CTRL_SHIFT                        (1U)
+#define DSI_AUTO_CLKLANE_CTRL_MASK                         (0x1U << DSI_AUTO_CLKLANE_CTRL_SHIFT)                        /* 0X00000002 */
 /* TMR_LPCLK_CFG */
-#define PHY_CLKLP2HS_TIME_SHIFT                            (0U)
-#define PHY_CLKLP2HS_TIME_MASK                             (0x3FFU << PHY_CLKLP2HS_TIME_SHIFT)                          /* 0X000003FF */
-#define PHY_CLKHS2LP_TIME_SHIFT                            (16U)
-#define PHY_CLKHS2LP_TIME_MASK                             (0x3FFU << PHY_CLKHS2LP_TIME_SHIFT)                          /* 0X03FF0000 */
+#define DSI_PHY_CLKLP2HS_TIME_SHIFT                        (0U)
+#define DSI_PHY_CLKLP2HS_TIME_MASK                         (0x3FFU << DSI_PHY_CLKLP2HS_TIME_SHIFT)                      /* 0X000003FF */
+#define DSI_PHY_CLKHS2LP_TIME_SHIFT                        (16U)
+#define DSI_PHY_CLKHS2LP_TIME_MASK                         (0x3FFU << DSI_PHY_CLKHS2LP_TIME_SHIFT)                      /* 0X03FF0000 */
 /* PHY_TMR_CFG */
-#define MAX_RD_TIME_SHIFT                                  (0U)
-#define MAX_RD_TIME_MASK                                   (0x7FFFU << MAX_RD_TIME_SHIFT)                               /* 0X00007FFF */
-#define PHY_LP2HS_TIME_SHIFT                               (16U)
-#define PHY_LP2HS_TIME_MASK                                (0xFU << PHY_LP2HS_TIME_SHIFT)                               /* 0X000F0000 */
-#define PHY_HS2LP_TIME_SHIFT                               (24U)
-#define PHY_HS2LP_TIMEMASK                                 (0xFU << PHY_HS2LP_TIME_SHIFT)                               /* 0X00F00000 */
+#define DSI_MAX_RD_TIME_SHIFT                              (0U)
+#define DSI_MAX_RD_TIME_MASK                               (0x7FFFU << DSI_MAX_RD_TIME_SHIFT)                           /* 0X00007FFF */
+#define DSI_PHY_LP2HS_TIME_SHIFT                           (16U)
+#define DSI_PHY_LP2HS_TIME_MASK                            (0xFU << DSI_PHY_LP2HS_TIME_SHIFT)                           /* 0X000F0000 */
+#define DSI_PHY_HS2LP_TIME_SHIFT                           (24U)
+#define DSI_PHY_HS2LP_TIMEMASK                             (0xFU << DSI_PHY_HS2LP_TIME_SHIFT)                           /* 0X00F00000 */
 /* PHY_RSTZ */
 #define DSI_PHY_SHUTDOWNZ_SHIFT                            (0U)
 #define DSI_PHY_SHUTDOWNZ_MASK                             (0x1U << DSI_PHY_SHUTDOWNZ_SHIFT)                            /* 0X00000001 */
@@ -3024,75 +3024,75 @@ struct VOP_REG {
 #define DSI_PHY_FORCEPLL_SHIFT                             (3U)
 #define DSI_PHY_FORCEPLL_MASK                              (0x1U << DSI_PHY_FORCEPLL_SHIFT)                             /* 0X00000008 */
 /* INT_MSK0 */
-#define ACK_WITH_ERR_0_SHIFT                               (0U)
-#define ACK_WITH_ERR_0_MASK                                (0x1U << ACK_WITH_ERR_0_SHIFT)                               /* 0X00000001 */
-#define ACK_WITH_ERR_1_SHIFT                               (1U)
-#define ACK_WITH_ERR_1_MASK                                (0x1U << ACK_WITH_ERR_1_SHIFT)                               /* 0X00000002 */
-#define ACK_WITH_ERR_2_SHIFT                               (2U)
-#define ACK_WITH_ERR_2_MASK                                (0x1U << ACK_WITH_ERR_2_SHIFT)                               /* 0X00000004 */
-#define ACK_WITH_ERR_3_SHIFT                               (3U)
-#define ACK_WITH_ERR_3_MASK                                (0x1U << ACK_WITH_ERR_3_SHIFT)                               /* 0X00000008 */
-#define ACK_WITH_ERR_4_SHIFT                               (4U)
-#define ACK_WITH_ERR_4_MASK                                (0x1U << ACK_WITH_ERR_4_SHIFT)                               /* 0X00000010 */
-#define ACK_WITH_ERR_5_SHIFT                               (5U)
-#define ACK_WITH_ERR_5_MASK                                (0x1U << ACK_WITH_ERR_5_SHIFT)                               /* 0X00000020 */
-#define ACK_WITH_ERR_6_SHIFT                               (6U)
-#define ACK_WITH_ERR_6_MASK                                (0x1U << ACK_WITH_ERR_6_SHIFT)                               /* 0X00000040 */
-#define ACK_WITH_ERR_7_SHIFT                               (7U)
-#define ACK_WITH_ERR_7_MASK                                (0x1U << ACK_WITH_ERR_7_SHIFT)                               /* 0X00000080 */
-#define ACK_WITH_ERR_8_SHIFT                               (8U)
-#define ACK_WITH_ERR_8_MASK                                (0x1U << ACK_WITH_ERR_8_SHIFT)                               /* 0X00000100 */
-#define ACK_WITH_ERR_9_SHIFT                               (9U)
-#define ACK_WITH_ERR_9_MASK                                (0x1U << ACK_WITH_ERR_9_SHIFT)                               /* 0X00000200 */
-#define ACK_WITH_ERR_10_SHIFT                              (10U)
-#define ACK_WITH_ERR_10_MASK                               (0x1U << ACK_WITH_ERR_10_SHIFT)                              /* 0X00000400 */
-#define ACK_WITH_ERR_11_SHIFT                              (11U)
-#define ACK_WITH_ERR_11_MASK                               (0x1U << ACK_WITH_ERR_11_SHIFT)                              /* 0X00000800 */
-#define ACK_WITH_ERR_12_SHIFT                              (12U)
-#define ACK_WITH_ERR_12_MASK                               (0x1U << ACK_WITH_ERR_12_SHIFT)                              /* 0X00001000 */
-#define ACK_WITH_ERR_13_SHIFT                              (13U)
-#define ACK_WITH_ERR_13_MASK                               (0x1U << ACK_WITH_ERR_13_SHIFT)                              /* 0X00002000 */
-#define ACK_WITH_ERR_14_SHIFT                              (14U)
-#define ACK_WITH_ERR_14_MASK                               (0x1U << ACK_WITH_ERR_14_SHIFT)                              /* 0X00004000 */
-#define ACK_WITH_ERR_15_SHIFT                              (15U)
-#define ACK_WITH_ERR_15_MASK                               (0x1U << ACK_WITH_ERR_15_SHIFT)                              /* 0X00008000 */
-#define DPHY_ERRORS_0_SHIFT                                (16U)
-#define DPHY_ERRORS_0_MASK                                 (0x1U << DPHY_ERRORS_0_SHIFT)                                /* 0X00010000 */
-#define DPHY_ERRORS_1_SHIFT                                (17U)
-#define DPHY_ERRORS_1_MASK                                 (0x1U << DPHY_ERRORS_1_SHIFT)                                /* 0X00020000 */
-#define DPHY_ERRORS_2_SHIFT                                (18U)
-#define DPHY_ERRORS_2_MASK                                 (0x1U << DPHY_ERRORS_2_SHIFT)                                /* 0X00040000 */
-#define DPHY_ERRORS_3_SHIFT                                (19U)
-#define DPHY_ERRORS_3_MASK                                 (0x1U << DPHY_ERRORS_3_SHIFT)                                /* 0X00080000 */
-#define DPHY_ERRORS_4_SHIFT                                (20U)
-#define DPHY_ERRORS_4_MASK                                 (0x1U << DPHY_ERRORS_4_SHIFT)                                /* 0X00100000 */
+#define DSI_ACK_WITH_ERR_0_SHIFT                           (0U)
+#define DSI_ACK_WITH_ERR_0_MASK                            (0x1U << DSI_ACK_WITH_ERR_0_SHIFT)                           /* 0X00000001 */
+#define DSI_ACK_WITH_ERR_1_SHIFT                           (1U)
+#define DSI_ACK_WITH_ERR_1_MASK                            (0x1U << DSI_ACK_WITH_ERR_1_SHIFT)                           /* 0X00000002 */
+#define DSI_ACK_WITH_ERR_2_SHIFT                           (2U)
+#define DSI_ACK_WITH_ERR_2_MASK                            (0x1U << DSI_ACK_WITH_ERR_2_SHIFT)                           /* 0X00000004 */
+#define DSI_ACK_WITH_ERR_3_SHIFT                           (3U)
+#define DSI_ACK_WITH_ERR_3_MASK                            (0x1U << DSI_ACK_WITH_ERR_3_SHIFT)                           /* 0X00000008 */
+#define DSI_ACK_WITH_ERR_4_SHIFT                           (4U)
+#define DSI_ACK_WITH_ERR_4_MASK                            (0x1U << DSI_ACK_WITH_ERR_4_SHIFT)                           /* 0X00000010 */
+#define DSI_ACK_WITH_ERR_5_SHIFT                           (5U)
+#define DSI_ACK_WITH_ERR_5_MASK                            (0x1U << DSI_ACK_WITH_ERR_5_SHIFT)                           /* 0X00000020 */
+#define DSI_ACK_WITH_ERR_6_SHIFT                           (6U)
+#define DSI_ACK_WITH_ERR_6_MASK                            (0x1U << DSI_ACK_WITH_ERR_6_SHIFT)                           /* 0X00000040 */
+#define DSI_ACK_WITH_ERR_7_SHIFT                           (7U)
+#define DSI_ACK_WITH_ERR_7_MASK                            (0x1U << DSI_ACK_WITH_ERR_7_SHIFT)                           /* 0X00000080 */
+#define DSI_ACK_WITH_ERR_8_SHIFT                           (8U)
+#define DSI_ACK_WITH_ERR_8_MASK                            (0x1U << DSI_ACK_WITH_ERR_8_SHIFT)                           /* 0X00000100 */
+#define DSI_ACK_WITH_ERR_9_SHIFT                           (9U)
+#define DSI_ACK_WITH_ERR_9_MASK                            (0x1U << DSI_ACK_WITH_ERR_9_SHIFT)                           /* 0X00000200 */
+#define DSI_ACK_WITH_ERR_10_SHIFT                          (10U)
+#define DSI_ACK_WITH_ERR_10_MASK                           (0x1U << DSI_ACK_WITH_ERR_10_SHIFT)                          /* 0X00000400 */
+#define DSI_ACK_WITH_ERR_11_SHIFT                          (11U)
+#define DSI_ACK_WITH_ERR_11_MASK                           (0x1U << DSI_ACK_WITH_ERR_11_SHIFT)                          /* 0X00000800 */
+#define DSI_ACK_WITH_ERR_12_SHIFT                          (12U)
+#define DSI_ACK_WITH_ERR_12_MASK                           (0x1U << DSI_ACK_WITH_ERR_12_SHIFT)                          /* 0X00001000 */
+#define DSI_ACK_WITH_ERR_13_SHIFT                          (13U)
+#define DSI_ACK_WITH_ERR_13_MASK                           (0x1U << DSI_ACK_WITH_ERR_13_SHIFT)                          /* 0X00002000 */
+#define DSI_ACK_WITH_ERR_14_SHIFT                          (14U)
+#define DSI_ACK_WITH_ERR_14_MASK                           (0x1U << DSI_ACK_WITH_ERR_14_SHIFT)                          /* 0X00004000 */
+#define DSI_ACK_WITH_ERR_15_SHIFT                          (15U)
+#define DSI_ACK_WITH_ERR_15_MASK                           (0x1U << DSI_ACK_WITH_ERR_15_SHIFT)                          /* 0X00008000 */
+#define DSI_DPHY_ERRORS_0_SHIFT                            (16U)
+#define DSI_DPHY_ERRORS_0_MASK                             (0x1U << DSI_DPHY_ERRORS_0_SHIFT)                            /* 0X00010000 */
+#define DSI_DPHY_ERRORS_1_SHIFT                            (17U)
+#define DSI_DPHY_ERRORS_1_MASK                             (0x1U << DSI_DPHY_ERRORS_1_SHIFT)                            /* 0X00020000 */
+#define DSI_DPHY_ERRORS_2_SHIFT                            (18U)
+#define DSI_DPHY_ERRORS_2_MASK                             (0x1U << DSI_DPHY_ERRORS_2_SHIFT)                            /* 0X00040000 */
+#define DSI_DPHY_ERRORS_3_SHIFT                            (19U)
+#define DSI_DPHY_ERRORS_3_MASK                             (0x1U << DSI_DPHY_ERRORS_3_SHIFT)                            /* 0X00080000 */
+#define DSI_DPHY_ERRORS_4_SHIFT                            (20U)
+#define DSI_DPHY_ERRORS_4_MASK                             (0x1U << DSI_DPHY_ERRORS_4_SHIFT)                            /* 0X00100000 */
 /* INT_MSK1 */
-#define TO_HS_TX_SHIFT                                     (0U)
-#define TO_HS_TX_MASK                                      (0X1U << TO_HS_TX_SHIFT)                                     /* 0X00000001 */
-#define TO_LP_RX_SHIFT                                     (1U)
-#define TO_LP_RX_MASK                                      (0X1U << TO_LP_RX_SHIFT)                                     /* 0X00000002 */
-#define ECC_SINGLE_ERR_SHIFT                               (2U)
-#define ECC_SINGLE_ERR_MASK                                (0X1U << ECC_SINGLE_ERR_SHIFT)                              /* 0X00000004 */
-#define ECC_MULTI_ERR_SHIFT                                (3U)
-#define ECC_MULTI_ERR_MASK                                 (0X1U << ECC_MULTI_ERR_SHIFT)                                /* 0X00000008 */
-#define CRC_ERR_SHIFT                                      (4U)
-#define CRC_ERR_MASK                                       (0X1U << CRC_ERR_SHIFT)                                      /* 0X00000010 */
-#define PKT_SIZE_ERR_SHIFT                                 (5U)
-#define PKT_SIZE_ERR_MASK                                  (0X1U << PKT_SIZE_ERR_SHIFT)                                 /* 0X00000020 */
-#define EOPT_ERR_SHIFT                                     (6U)
-#define EOPT_ERR_MASK                                      (0X1U << EOPT_ERR_SHIFT)                                     /* 0X00000040 */
-#define DPI_PLD_WR_ERR_SHIFT                               (7U)
-#define DPI_PLD_WR_ERR_MASK                                (0X1U << DPI_PLD_WR_ERR_SHIFT)                               /* 0X00000080 */
-#define GEN_CMD_WR_ERR_SHIFT                               (8U)
-#define GEN_CMD_WR_ERR_MASK                                (0X1U << GEN_CMD_WR_ERR_SHIFT)                               /* 0X00000100 */
-#define GEN_PLD_WR_ERR_SHIFT                               (9U)
-#define GEN_PLD_WR_ERR_MASK                                (0X1U << GEN_PLD_WR_ERR_SHIFT)                               /* 0X00000200 */
-#define GEN_PLD_SEND_ERR_SHIFT                             (10U)
-#define GEN_PLD_SEND_ERR_MASK                              (0X1U << GEN_PLD_SEND_ERR_SHIFT)                             /* 0X00000400 */
-#define GEN_PLD_RD_ERR_SHIFT                               (11U)
-#define GEN_PLD_RD_ERR_MASK                                (0X1U << GEN_PLD_RD_ERR_SHIFT)                               /* 0X00000800 */
-#define GEN_PLD_RECEV_ERR_SHIFT                            (12U)
-#define GEN_PLD_RECEV_ERR_MASK                             (0X1U << GEN_PLD_RECEV_ERR_SHIFT)                            /* 0X00001000 */
+#define DSI_TO_HS_TX_SHIFT                                 (0U)
+#define DSI_TO_HS_TX_MASK                                  (0X1U << DSI_TO_HS_TX_SHIFT)                                 /* 0X00000001 */
+#define DSI_TO_LP_RX_SHIFT                                 (1U)
+#define DSI_TO_LP_RX_MASK                                  (0X1U << DSI_TO_LP_RX_SHIFT)                                 /* 0X00000002 */
+#define DSI_ECC_SINGLE_ERR_SHIFT                           (2U)
+#define DSI_ECC_SINGLE_ERR_MASK                            (0X1U << DSI_ECC_SINGLE_ERR_SHIFT)                           /* 0X00000004 */
+#define DSI_ECC_MULTI_ERR_SHIFT                            (3U)
+#define DSI_ECC_MULTI_ERR_MASK                             (0X1U << DSI_ECC_MULTI_ERR_SHIFT)                            /* 0X00000008 */
+#define DSI_CRC_ERR_SHIFT                                  (4U)
+#define DSI_CRC_ERR_MASK                                   (0X1U << DSI_CRC_ERR_SHIFT)                                  /* 0X00000010 */
+#define DSI_PKT_SIZE_ERR_SHIFT                             (5U)
+#define DSI_PKT_SIZE_ERR_MASK                              (0X1U << DSI_PKT_SIZE_ERR_SHIFT)                             /* 0X00000020 */
+#define DSI_EOPT_ERR_SHIFT                                 (6U)
+#define DSI_EOPT_ERR_MASK                                  (0X1U << DSI_EOPT_ERR_SHIFT)                                 /* 0X00000040 */
+#define DSI_DPI_PLD_WR_ERR_SHIFT                           (7U)
+#define DSI_DPI_PLD_WR_ERR_MASK                            (0X1U << DSI_DPI_PLD_WR_ERR_SHIFT)                           /* 0X00000080 */
+#define DSI_GEN_CMD_WR_ERR_SHIFT                           (8U)
+#define DSI_GEN_CMD_WR_ERR_MASK                            (0X1U << DSI_GEN_CMD_WR_ERR_SHIFT)                           /* 0X00000100 */
+#define DSI_GEN_PLD_WR_ERR_SHIFT                           (9U)
+#define DSI_GEN_PLD_WR_ERR_MASK                            (0X1U << DSI_GEN_PLD_WR_ERR_SHIFT)                           /* 0X00000200 */
+#define DSI_GEN_PLD_SEND_ERR_SHIFT                         (10U)
+#define DSI_GEN_PLD_SEND_ERR_MASK                          (0X1U << DSI_GEN_PLD_SEND_ERR_SHIFT)                         /* 0X00000400 */
+#define DSI_GEN_PLD_RD_ERR_SHIFT                           (11U)
+#define DSI_GEN_PLD_RD_ERR_MASK                            (0X1U << DSI_GEN_PLD_RD_ERR_SHIFT)                           /* 0X00000800 */
+#define DSI_GEN_PLD_RECEV_ERR_SHIFT                        (12U)
+#define DSI_GEN_PLD_RECEV_ERR_MASK                         (0X1U << DSI_GEN_PLD_RECEV_ERR_SHIFT)                        /* 0X00001000 */
 /*****************************************TIMER******************************************/
 /* TIMER0_LOAD_COUNT0 */
 #define TIMER_TIMER0_LOAD_COUNT0_COUNT0_SHIFT              (0U)
