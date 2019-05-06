@@ -534,9 +534,9 @@ uint32_t HAL_VOP_GetScanLine(struct VOP_REG *pReg)
  */
 uint8_t HAL_VOP_CommitPrepare(struct VOP_REG *pReg)
 {
-    return VOP_MaskRead(pReg->REG_CFG_DONE,
-                        VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_SHIFT,
-                        VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_MASK);
+    return VOP_MaskRead(pReg->INTR_STATUS,
+                        VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_RAW_STS_SHIFT,
+                        VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_RAW_STS_MASK);
 }
 /** @} */
 
