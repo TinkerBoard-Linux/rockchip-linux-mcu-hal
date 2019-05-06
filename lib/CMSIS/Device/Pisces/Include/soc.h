@@ -90,6 +90,7 @@ typedef enum
 #define __VTOR_PRESENT            1U       /* VTOR present */
 #define __NVIC_PRIO_BITS          4U       /* Pisces uses 4 Bits for the Priority Levels */
 #define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used  */
+#define __FPU_PRESENT             1U       /* FPU present                                   */
 
 #include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
 #include "system_pisces.h"
