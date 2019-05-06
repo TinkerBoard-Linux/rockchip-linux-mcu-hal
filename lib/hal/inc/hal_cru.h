@@ -22,10 +22,6 @@
 
 #define PLL_INPUT_OSC_RATE (24 * MHZ)
 
-#ifndef DIV_ROUND_UP
-#define DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
-#endif
-
 #define CLK_RESET_GET_REG_OFFSET(x) ((uint32_t)(x / 16))
 #define CLK_RESET_GET_BITS_SHIFT(x) ((uint32_t)(x % 16))
 

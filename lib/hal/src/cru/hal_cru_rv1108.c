@@ -397,7 +397,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_EMMC:
     case CLK_NANDC:
     case CLK_SFC:
-        div = DIV_ROUND_UP(pRate, rate);
+        div = HAL_DIV_ROUND_UP(pRate, rate);
         if (div % 2)
             div += 1;
         break;
@@ -416,7 +416,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         if (PLL_INPUT_OSC_RATE % rate) {
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CIF_OUT_SRC), 0);
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CIF_OUT_PLL), 1);
-            div = DIV_ROUND_UP(pRate, rate);
+            div = HAL_DIV_ROUND_UP(pRate, rate);
         } else {
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CIF_OUT_SRC), 1);
             div = 1;
@@ -439,7 +439,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     if ((clkMux == 0) && (clkDiv == 0))
         return HAL_INVAL;
 
-    div = DIV_ROUND_UP(pRate, rate);
+    div = HAL_DIV_ROUND_UP(pRate, rate);
     if (clkMux)
         HAL_CRU_ClkSetMux(clkMux, mux);
     if (clkDiv)

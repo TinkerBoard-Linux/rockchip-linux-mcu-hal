@@ -301,13 +301,13 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         return error;
     case DCLK_VOP_S:
         if (s_gpllFreq % rate) {
-            div = DIV_ROUND_UP(DCLK_LCDC_PLL_LIMIT_FREQ, rate);
+            div = HAL_DIV_ROUND_UP(DCLK_LCDC_PLL_LIMIT_FREQ, rate);
             error = HAL_CRU_SetPllFreq(&CPLL, rate * div);
             s_cpllFreq = HAL_CRU_GetPllFreq(&CPLL);
             HAL_CRU_ClkSetMux(clkMux, 1);
             HAL_CRU_ClkSetDiv(clkDiv, div);
         } else {
-            div = DIV_ROUND_UP(s_gpllFreq, rate);
+            div = HAL_DIV_ROUND_UP(s_gpllFreq, rate);
             HAL_CRU_ClkSetMux(clkMux, 0);
             HAL_CRU_ClkSetDiv(clkDiv, div);
         }
@@ -348,7 +348,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     if ((clkMux == 0) && (clkDiv == 0))
         return HAL_INVAL;
 
-    div = DIV_ROUND_UP(pRate, rate);
+    div = HAL_DIV_ROUND_UP(pRate, rate);
     if (clkMux)
         HAL_CRU_ClkSetMux(clkMux, mux);
     if (clkDiv)
