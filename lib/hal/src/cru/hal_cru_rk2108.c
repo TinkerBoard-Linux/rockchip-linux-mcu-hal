@@ -277,7 +277,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
  */
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
-    HAL_Status error;
+    HAL_Status error = HAL_OK;
     uint32_t clkMux = CLK_GET_MUX(clockName), mux = 0;
     uint32_t clkDiv = CLK_GET_DIV(clockName), div = 0;
     uint32_t pRate = s_gpllFreq;
