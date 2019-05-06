@@ -174,8 +174,8 @@ static void VOP_INIT_DSC_PPS(struct DSC_PPS *dscDefaultPps, int16_t w, int16_t h
     dscDefaultPps->bitsPerPixel = 128;
 
     if (w == 1440) {
-        dscDefaultPps->pictureHeight = 3120;
-        dscDefaultPps->pictureWidth = 1440;
+        dscDefaultPps->pictureHeight = h;
+        dscDefaultPps->pictureWidth = w;
         dscDefaultPps->sliceHeight = 65;
         dscDefaultPps->sliceWidth = 720;
         dscDefaultPps->chunkSize = dscDefaultPps->sliceWidth;
@@ -188,27 +188,13 @@ static void VOP_INIT_DSC_PPS(struct DSC_PPS *dscDefaultPps, int16_t w, int16_t h
         dscDefaultPps->nflBpgOffset = 480;
         dscDefaultPps->sliceBpgOffset = 301;
     } else if (w == 720) {
-        dscDefaultPps->pictureHeight = 1560;
-        dscDefaultPps->pictureWidth = 720;
+        dscDefaultPps->pictureHeight = h;
+        dscDefaultPps->pictureWidth = w;
         dscDefaultPps->sliceHeight = 52;
         dscDefaultPps->sliceWidth = 360;
         dscDefaultPps->chunkSize = dscDefaultPps->sliceWidth;
         dscDefaultPps->initialXmitDelay = 512;
         dscDefaultPps->initialDecDelay = 706;
-        dscDefaultPps->initialScaleValue = 32;
-        dscDefaultPps->scaleIncrementInterval = 1028;
-        dscDefaultPps->scaleDecrementInterval = 5;
-        dscDefaultPps->firstLineBpgOffset = 12;
-        dscDefaultPps->nflBpgOffset = 482;
-        dscDefaultPps->sliceBpgOffset = 751;
-    } else {
-        dscDefaultPps->pictureHeight = h;
-        dscDefaultPps->pictureWidth = w;
-        dscDefaultPps->sliceHeight = h / 2;
-        dscDefaultPps->sliceWidth = w / 2;
-        dscDefaultPps->chunkSize = dscDefaultPps->sliceWidth;
-        dscDefaultPps->initialXmitDelay = 512;
-        dscDefaultPps->initialDecDelay = 436;
         dscDefaultPps->initialScaleValue = 32;
         dscDefaultPps->scaleIncrementInterval = 1028;
         dscDefaultPps->scaleDecrementInterval = 5;
@@ -625,6 +611,34 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
 }
 
 /**
+ * @brief  Set display area.
+ * @param  pReg: VOP reg base.
+ * @param  display_rect: display rect.
+ * @return HAL_Status.
+ * TODO: dsc_imd_config_en
+ */
+HAL_Status HAL_VOP_SetArea(struct VOP_REG *pReg,
+                           struct DISPLAY_RECT *display_rect)
+{
+    VOP_MaskWrite(&g_VOP_RegMir.DSC_CFG[18],
+                  &pReg->DSC_CFG[18],
+                  VOP_DSC_CFG18_PICTURE_HEIGHT_SHIFT,
+                  VOP_DSC_CFG18_PICTURE_HEIGHT_MASK, display_rect->h);
+
+    VOP_MaskWrite(&g_VOP_RegMir.DSC_CFG[18],
+                  &pReg->DSC_CFG[18],
+                  VOP_DSC_CFG18_PICTURE_WIDTH_LO_SHIFT,
+                  VOP_DSC_CFG18_PICTURE_WIDTH_LO_MASK, display_rect->w & 0x7f);
+
+    VOP_MaskWrite(&g_VOP_RegMir.DSC_CFG[19],
+                  &pReg->DSC_CFG[19],
+                  VOP_DSC_CFG19_PICTURE_WIDTH_HI_SHIFT,
+                  VOP_DSC_CFG19_PICTURE_WIDTH_HI_MASK, display_rect->w >> 7 & 0x1ff);
+
+    return HAL_OK;
+}
+
+/**
  * @brief  Set plane state.
  * @param  pReg: VOP reg base.
  * @param  pWinState: win state.
@@ -875,8 +889,8 @@ HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
                   (dscDefaultPps.bitsPerConponent & 0x3) << 30;
     dsc_cfg[20] = ((dscDefaultPps.bitsPerConponent >> 2) & 0x3) << 0;
 
-    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[0], &pReg->DSC_SYS_CTRL[0], 0x02582009);
-    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[1], &pReg->DSC_SYS_CTRL[1], 0x08bb0104);
+    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[0], &pReg->DSC_SYS_CTRL[0], 0x02582039);
+    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[1], &pReg->DSC_SYS_CTRL[1], 0x08bb0004);
     VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[2], &pReg->DSC_SYS_CTRL[2], 0x0000035b);
 
     for (i = 0; i < 21; i++)

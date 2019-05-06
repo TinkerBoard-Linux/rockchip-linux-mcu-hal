@@ -147,6 +147,9 @@ struct VOP_POST_CLIP_INFO {
 
 /** @} */
 /***************************** Function Declare ******************************/
+
+HAL_Status HAL_VOP_SetArea(struct VOP_REG *pReg,
+                           struct DISPLAY_RECT *display_rect);
 HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
                             struct CRTC_WIN_STATE *pWinState,
                             struct DISPLAY_MODE_INFO *pModeInfo);
