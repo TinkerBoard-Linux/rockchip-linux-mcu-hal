@@ -30,7 +30,6 @@
 /********************* Private MACRO Definition ******************************/
 #define DSI_UPDATE_BIT(REG, SHIFT, VAL) \
                  VAL ? SET_BIT(REG, SHIFT) : CLEAR_BIT(REG, SHIFT)
-#define DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
 #define CMD_PKT_STATUS_TIMEOUT_RETRIES 100
 
 /********************* Private Structure Definition **************************/
@@ -130,7 +129,7 @@ static uint32_t DSI_GetHcomponentLbcc(uint32_t hcomponent, uint16_t lane_mbps, u
     uint64_t lbcc_tmp;
 
     lbcc_tmp = hcomponent * lane_mbps * 1000 / 8;
-    lbcc = DIV_ROUND_UP(lbcc_tmp, clk);
+    lbcc = HAL_DIV_ROUND_UP(lbcc_tmp, clk);
 
     return lbcc;
 }
@@ -393,7 +392,7 @@ HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint32_t Lanembps)
 {
     uint32_t val;
 
-    val = DIV_ROUND_UP(Lanembps >> 3, 20);
+    val = HAL_DIV_ROUND_UP(Lanembps >> 3, 20);
     WRITE_REG(pReg->PWR_UP, 0);
     WRITE_REG(pReg->CLKMGR_CFG, 10 << DSI_TO_CLK_DIVISION_SHIFT |
               val << DSI_TX_ESC_CLK_DIVISION_SHIFT);

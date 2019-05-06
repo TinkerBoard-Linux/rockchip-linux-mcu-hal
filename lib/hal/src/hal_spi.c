@@ -97,8 +97,6 @@
 #define SPI_TIMEOUT_ENABLE  (1 << SPI_TIMEOUT_TOE_SHIFT)
 #define SPI_TIMEOUT_DISABLE 0
 
-#define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
-
 /********************* Exported functions ************************************/
 /** @defgroup SPI_Exported_Functions SPI Exported Functions
   * @{
@@ -684,7 +682,7 @@ HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, ui
     cr0 |= pSPI->config.clkPolarity | pSPI->config.clkPhase | pSPI->config.firstBit;
 
     /* div doesn't support odd number */
-    div = DIV_ROUND_UP(pSPI->maxFreq, pSPI->config.speed);
+    div = HAL_DIV_ROUND_UP(pSPI->maxFreq, pSPI->config.speed);
     div = (div + 1) & 0xfffe;
 
     WRITE_REG(pSPI->pReg->CTRLR[0], cr0);

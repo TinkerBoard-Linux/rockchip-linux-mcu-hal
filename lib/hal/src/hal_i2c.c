@@ -53,8 +53,6 @@
 
 /********************* Private MACRO Definition ******************************/
 
-#define DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
-
 /* REG_CON bits */
 #define REG_CON_EN (0x1 << I2C_CON_I2C_EN_SHIFT)
 #define REG_CON_MOD(mod) ((mod) << I2C_CON_I2C_MODE_SHIFT)
@@ -163,16 +161,16 @@ static HAL_Status I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate, eI2C_BusS
         break;
     }
 
-    rateKHZ = DIV_ROUND_UP(rate, 1000);
+    rateKHZ = HAL_DIV_ROUND_UP(rate, 1000);
     spec = I2C_GetSpec(speed);
 
-    minTotalDIV = DIV_ROUND_UP(rateKHZ, speedKHZ * 8);
+    minTotalDIV = HAL_DIV_ROUND_UP(rateKHZ, speedKHZ * 8);
 
     minHighNS = spec->maxRiseNS + spec->minHighNS;
-    minHighDIV = DIV_ROUND_UP(rateKHZ * minHighNS, 8 * 1000000);
+    minHighDIV = HAL_DIV_ROUND_UP(rateKHZ * minHighNS, 8 * 1000000);
 
     minLowNS = spec->maxFallNS + spec->minLowNS;
-    minLowDIV = DIV_ROUND_UP(rateKHZ * minLowNS, 8 * 1000000);
+    minLowDIV = HAL_DIV_ROUND_UP(rateKHZ * minLowNS, 8 * 1000000);
 
     minHighDIV = (minHighDIV < 1) ? 2 : minHighDIV;
     minLowDIV = (minLowDIV < 1) ? 2 : minLowDIV;
@@ -184,7 +182,7 @@ static HAL_Status I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate, eI2C_BusS
         lowDIV = minLowDIV;
     } else {
         extraDIV = minTotalDIV - minHoldDIV;
-        extraLowDIV = DIV_ROUND_UP(minLowDIV * extraDIV, minHoldDIV);
+        extraLowDIV = HAL_DIV_ROUND_UP(minLowDIV * extraDIV, minHoldDIV);
 
         lowDIV = minLowDIV + extraLowDIV;
         highDIV = minHighDIV + (extraDIV - extraLowDIV);
