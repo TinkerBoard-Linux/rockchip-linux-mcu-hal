@@ -206,54 +206,44 @@ struct GRF_REG {
     __I  uint32_t CHIP_IDH;                           /* Address Offset: 0x00F8 */
          uint32_t RESERVED11;                         /* Address Offset: 0x00FC */
     __IO uint32_t SOC_CON[6];                         /* Address Offset: 0x0100 */
-         uint32_t RESERVED13[10];                     /* Address Offset: 0x0118 */
+         uint32_t RESERVED12[10];                     /* Address Offset: 0x0118 */
     __IO uint32_t SOC_STATUS[2];                      /* Address Offset: 0x0140 */
-         uint32_t RESERVED14[6];                      /* Address Offset: 0x0148 */
+         uint32_t RESERVED13[6];                      /* Address Offset: 0x0148 */
     __IO uint32_t DSP_CON[3];                         /* Address Offset: 0x0160 */
-         uint32_t RESERVED15;                         /* Address Offset: 0x016C */
+         uint32_t RESERVED14;                         /* Address Offset: 0x016C */
     __IO uint32_t DSP_STAT[2];                        /* Address Offset: 0x0170 */
-         uint32_t RESERVED16[2];                      /* Address Offset: 0x0178 */
-    __IO uint32_t PVTM_CON0;                          /* Address Offset: 0x0180 */
-         uint32_t RESERVED17;                         /* Address Offset: 0x0184 */
-         uint32_t RESERVED18;                         /* Address Offset: 0x0188 */
-         uint32_t RESERVED19;                         /* Address Offset: 0x018C */
-         uint32_t RESERVED20[12];                     /* Address Offset: 0x0190 */
+         uint32_t RESERVED15[2];                      /* Address Offset: 0x0178 */
+         uint32_t RESERVED16[2];                      /* Address Offset: 0x0180 */
+         uint32_t RESERVED17[2];                      /* Address Offset: 0x0188 */
+         uint32_t RESERVED18[2];                      /* Address Offset: 0x0190 */
+         uint32_t RESERVED19[10];                     /* Address Offset: 0x0198 */
     __IO uint32_t FW_CON[3];                          /* Address Offset: 0x01C0 */
-         uint32_t RESERVED21[13];                     /* Address Offset: 0x01CC */
+         uint32_t RESERVED20[13];                     /* Address Offset: 0x01CC */
     __IO uint32_t MCU_CON[4];                         /* Address Offset: 0x0200 */
-         uint32_t RESERVED22[4];                      /* Address Offset: 0x0210 */
+         uint32_t RESERVED21[4];                      /* Address Offset: 0x0210 */
     __I  uint32_t MCU_STAT0;                          /* Address Offset: 0x0220 */
-         uint32_t RESERVED23[7];                      /* Address Offset: 0x0224 */
+         uint32_t RESERVED22[7];                      /* Address Offset: 0x0224 */
     __IO uint32_t DSI_CON[30];                        /* Address Offset: 0x0240 */
-         uint32_t RESERVED24[2];                      /* Address Offset: 0x02B8 */
+         uint32_t RESERVED23[2];                      /* Address Offset: 0x02B8 */
     __IO uint32_t DSI_STATUS[9];                      /* Address Offset: 0x02C0 */
-         uint32_t RESERVED25[7];                      /* Address Offset: 0x02E4 */
+         uint32_t RESERVED24[7];                      /* Address Offset: 0x02E4 */
     __IO uint32_t MEM_CON[7];                         /* Address Offset: 0x0300 */
-         uint32_t RESERVED26[9];                      /* Address Offset: 0x031C */
-    __IO uint32_t USBPHY_CON0;                        /* Address Offset: 0x0340 */
-         uint32_t RESERVED27;                         /* Address Offset: 0x0344 */
-         uint32_t RESERVED28;                         /* Address Offset: 0x0348 */
-         uint32_t RESERVED29;                         /* Address Offset: 0x034C */
-         uint32_t RESERVED30;                         /* Address Offset: 0x0350 */
-         uint32_t RESERVED31;                         /* Address Offset: 0x0354 */
-         uint32_t RESERVED32;                         /* Address Offset: 0x0358 */
-         uint32_t RESERVED33;                         /* Address Offset: 0x035C */
-         uint32_t RESERVED34;                         /* Address Offset: 0x0360 */
-         uint32_t RESERVED35[3];                      /* Address Offset: 0x0364 */
-    __I  uint32_t USBPHY_STATUS0;                     /* Address Offset: 0x0370 */
-         uint32_t RESERVED36;                         /* Address Offset: 0x0374 */
-         uint32_t RESERVED37[2];                      /* Address Offset: 0x0378 */
+         uint32_t RESERVED25[9];                      /* Address Offset: 0x031C */
+         uint32_t RESERVED26[9];                      /* Address Offset: 0x0340 */
+         uint32_t RESERVED27[3];                      /* Address Offset: 0x0364 */
+         uint32_t RESERVED28[2];                      /* Address Offset: 0x0370 */
+         uint32_t RESERVED29[2];                      /* Address Offset: 0x0378 */
     __IO uint32_t DMAC_CON[7];                        /* Address Offset: 0x0380 */
-         uint32_t RESERVED38[9];                      /* Address Offset: 0x039C */
+         uint32_t RESERVED30[9];                      /* Address Offset: 0x039C */
     __IO uint32_t FAST_BOOT_EN;                       /* Address Offset: 0x03C0 */
     __IO uint32_t FAST_BOOT_ADDR;                     /* Address Offset: 0x03C4 */
-         uint32_t RESERVED39[14];                     /* Address Offset: 0x03C8 */
+         uint32_t RESERVED31[14];                     /* Address Offset: 0x03C8 */
     __IO uint32_t OS_REG[8];                          /* Address Offset: 0x0400 */
-         uint32_t RESERVED40[696];                    /* Address Offset: 0x0420 */
-    __I  uint32_t CHIP_ID;                            /* Address Offset: 0x0F00 */
+         uint32_t RESERVED32[696];                    /* Address Offset: 0x0420 */
+         uint32_t RESERVED33;                         /* Address Offset: 0x0F00 */
 };
 /* MBOX Register Structure Define */
-#define MBOX_CNT	     2
+#define MBOX_CNT             2
 #define MBOX_CHAN_CNT        4
 struct MBOX_CMD_DAT {
     __IO uint32_t CMD;
@@ -984,6 +974,7 @@ struct VOP_REG {
 /* REVISION */
 #define DCACHE_REVISION_REVISION_SHIFT                     (0U)
 #define DCACHE_REVISION_REVISION_MASK                      (0xFFFFFFFFU << DCACHE_REVISION_REVISION_SHIFT)              /* 0xFFFFFFFF */
+
 /* CACHE LINE SIZE */
 #define CACHE_LINE_SHIFT                (5U)
 #define CACHE_LINE_SIZE                 (0x1U << CACHE_LINE_SHIFT)
@@ -1291,6 +1282,8 @@ struct VOP_REG {
 #define GRF_SOC_STATUS1_BOOT_DEVICE_SEL_MASK               (0x1U << GRF_SOC_STATUS1_BOOT_DEVICE_SEL_SHIFT)              /* 0x00000040 */
 #define GRF_SOC_STATUS1_AP_WAKEUP_OLPC_SHIFT               (7U)
 #define GRF_SOC_STATUS1_AP_WAKEUP_OLPC_MASK                (0x1U << GRF_SOC_STATUS1_AP_WAKEUP_OLPC_SHIFT)               /* 0x00000080 */
+#define GRF_SOC_STATUS1_AUDIO_BYPASS_EN_POST_SHIFT         (8U)
+#define GRF_SOC_STATUS1_AUDIO_BYPASS_EN_POST_MASK          (0x1U << GRF_SOC_STATUS1_AUDIO_BYPASS_EN_POST_SHIFT)         /* 0x00000100 */
 /* DSP_CON0 */
 #define GRF_DSP_CON0_OCDHALTONRESET_SHIFT                  (0U)
 #define GRF_DSP_CON0_OCDHALTONRESET_MASK                   (0x1U << GRF_DSP_CON0_OCDHALTONRESET_SHIFT)                  /* 0x00000001 */
@@ -1744,6 +1737,73 @@ struct VOP_REG {
 /* OS_REG7 */
 #define GRF_OS_REG7_OS_REG_SHIFT                           (0U)
 #define GRF_OS_REG7_OS_REG_MASK                            (0xFFFFFFFFU << GRF_OS_REG7_OS_REG_SHIFT)                    /* 0xFFFFFFFF */
+
+/* GPIO_REGISTER_REDEF */
+#define GPIO_PORT_DR       0x0000 /* W 0x00000000  Port data register */
+#define GPIO_PORT_DDR      0x0008 /* W 0x00000000  Port data direction register */
+#define GPIO_INT_EN        0x0010 /* W 0x00000000  Interrupt enable register */
+#define GPIO_INT_MASK      0x0018 /* W 0x00000000  Interrupt mask register */
+#define GPIO_INT_TYPE      0x0020 /* W 0x00000000  Interrupt level register */
+#define GPIO_INT_POLARITY  0x0028 /* W 0x00000000  Interrupt polarity register */
+#define GPIO_INT_BOTHEDGE  0x0030 /* W 0x00000000  Interrupt both edge type register */
+#define GPIO_DEBOUNCE      0x0038 /* W 0x00000000  Debounce enable register */
+#define GPIO_INT_STATUS    0x0050 /* W 0x00000000  Interrupt status register */
+#define GPIO_INT_RAWSTATUS 0x0058 /* W 0x00000000  Interrupt raw status register */
+#define GPIO_PORT_EOI      0x0060 /* W 0x00000000  Interrupt clear register */
+#define GPIO_EXT_PORT      0x0070 /* W 0x00000000  External port data register */
+/* GRF_GPIO_REDEF */
+#define GRF_MUX_OFFSET 0x0000
+#define GRF_SLW_OFFSET 0x0040
+#define GRF_SMT_OFFSET 0x0060
+#define GRF_PUL_OFFSET 0x0080
+#define GRF_DRV_OFFSET 0x00c0
+#define GPIO_MUX_BANK_STRIDE 0x0020
+#define GPIO_SLW_BANK_STRIDE 0x0008
+#define GPIO_SMT_BANK_STRIDE 0x0008
+#define GPIO_PUL_BANK_STRIDE 0x0010
+#define GPIO_DRV_BANK_STRIDE 0x0010
+#define GPIO_MUX_BITS_PER_PIN 4
+#define GPIO_SLW_BITS_PER_PIN 1
+#define GPIO_SMT_BITS_PER_PIN 1
+#define GPIO_PUL_BITS_PER_PIN 2
+#define GPIO_DRV_BITS_PER_PIN 2
+#define GPIO_MUX_PINS_PER_REG 4
+#define GPIO_SLW_PINS_PER_REG 16
+#define GPIO_SMT_PINS_PER_REG 16
+#define GPIO_PUL_PINS_PER_REG 8
+#define GPIO_DRV_PINS_PER_REG 8
+/* GPIO_REGISTER_DEF */
+#define GPIO_DAT_PINS_PER_REG 16
+#define GPIO_DAT_BITS_PER_PIN 1
+#define GPIO_DIR_PINS_PER_REG 16
+#define GPIO_DIR_BITS_PER_PIN 1
+#define GPIO_DEB_PINS_PER_REG 16
+#define GPIO_DEB_BITS_PER_PIN 1
+#define GPIO_INT_EOI_PINS_PER_REG 16
+#define GPIO_INT_EOI_BITS_PER_PIN 1
+#define GPIO_INT_TYP_PINS_PER_REG 16
+#define GPIO_INT_TYP_BITS_PER_PIN 1
+#define GPIO_INT_PRY_PINS_PER_REG 16
+#define GPIO_INT_PRY_BITS_PER_PIN 1
+#define GPIO_INT_BOTH_PINS_PER_REG 16
+#define GPIO_INT_BOTH_BITS_PER_PIN 1
+#define GPIO_INT_MASK_PINS_PER_REG 16
+#define GPIO_INT_MASK_BITS_PER_PIN 1
+/* GPIO_ACTION_VALUE */
+#define GPIO_INT_LEVEL_SENSORTIVE (0x00000000U)
+#define GPIO_INT_EDGE_SENSORTIVE  (0x00000001U)
+#define GPIO_INT_ACTIVE_LOW       (0x00000000U)
+#define GPIO_INT_ACTIVE_HIGH      (0x00000001U)
+#define GPIO_INT_BOTHEDGE_DISABLE (0x00000000U)
+#define GPIO_INT_BOTHEDGE_ENABLE  (0x00000001U)
+#define GPIO_UNMASK_INT           (0x00000000U)
+#define GPIO_MASK_INT             (0x00000001U)
+#define GPIO_UNCLEAR_INT          (0x00000000U)
+#define GPIO_CLEAR_INT            (0x00000001U)
+#define GPIO_PORT_GPIO_MODE       (0x00000000U)
+#define GPIO_PORT_INTR_MODE       (0x00000001U)
+#define GPIO_DEBOUNCE_DISABLE     (0x00000000U)
+#define GPIO_DEBOUNCE_ENABLE      (0x00000001U)
 /******************************************MBOX******************************************/
 /* A2B_INTEN */
 #define MBOX_A2B_INTEN_INT0_SHIFT                          (0U)
