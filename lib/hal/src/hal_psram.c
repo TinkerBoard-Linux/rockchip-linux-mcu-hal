@@ -100,6 +100,8 @@ HAL_Status HAL_PSRAM_Init(struct HAL_SFC_HOST *host, uint8_t cs)
     HAL_DBG("sfc nor id: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
 
     PSRAM_XmmcInit(host, cs);
+
+    return HAL_OK;
 }
 
 /**
