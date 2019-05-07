@@ -44,13 +44,13 @@ HAL_Status SNOR_SINGLE_TEST(void)
     pwrite32[0] = testLba;
 
     HAL_SNOR_Erase(sfcHost, testLba << 9, 0);
-    HAL_SNOR_ProgData_DMA(sfcHost, testLba << 9, pwrite32, 0x100);
+    HAL_SNOR_ProgData(sfcHost, testLba << 9, pwrite32, 0x100);
     memset(pread, 0, 256);
-    HAL_SNOR_ReadData_DMA(sfcHost, testLba << 9, pread32, 0x100);
+    HAL_SNOR_ReadData(sfcHost, testLba << 9, pread32, 0x100);
     for (int32_t i = 0; i < 256; i++) {
         if (pwrite[i] != pread[i]) {
-            HAL_DBG_HEX("w", &pwrite, 4, 64);
-            HAL_DBG_HEX("r", &pread, 4, 64);
+            HAL_DBG_HEX("w", pwrite, 4, 64);
+            HAL_DBG_HEX("r", pread, 4, 64);
             HAL_DBG("SNOR Single test fail\n");
             while (1);
 
