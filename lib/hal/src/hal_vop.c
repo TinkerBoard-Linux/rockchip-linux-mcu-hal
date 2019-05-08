@@ -781,6 +781,8 @@ HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
     struct DSC_PPS_RC_RANGE_PARAMETER *rcRangeParameter = rcParameterSet->rcRangeParameter;
     uint8_t flatness_det_thresh = 2; /* rockchip DSC define */
 
+    memset(&dscDefaultPps, 0, sizeof(dscDefaultPps));
+
     VOP_INIT_DSC_PPS(&dscDefaultPps, pModeInfo->crtcHdisplay, pModeInfo->crtcVdisplay);
 
     dsc_cfg[0] = (rcRangeParameter[0].rangeBpgOffset & 0x3f) << 0 |
