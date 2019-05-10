@@ -165,6 +165,7 @@ struct USB_OTG_CFG {
     uint32_t hcNum;                 /*!< Host Channels number.
                                          This parameter Depends on the used USB core.
                                          Must be a number between Min_Data = 1 and Max_Data = 15            */
+    uint32_t phyif;                 /*!< USB PHY interface.                                                 */
     uint32_t speed;                 /*!< USB Core speed.                                                    */
     uint32_t dmaEnable : 1;         /*!< Enable or disable of the USB embedded DMA.                         */
     uint32_t sofEnable : 1;         /*!< Enable or disable the output of the SOF signal.                    */

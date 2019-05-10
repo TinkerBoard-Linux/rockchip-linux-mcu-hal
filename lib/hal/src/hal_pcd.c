@@ -130,6 +130,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
     struct USB_GLOBAL_REG *pUSB = pPCD->pReg;
     uint32_t i = 0, epIntr = 0, epInt = 0, epNum = 0;
     uint32_t fifoEmptyMsk = 0, temp = 0;
+    uint32_t pktCnt = 0;
     struct USB_OTG_EP *pEP = NULL;
 
     /* ensure that we are in device mode */
@@ -151,6 +152,12 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
             while (epIntr) {
                 if (epIntr & 0x1) {
                     epInt = USB_ReadDevOutEPInterrupt(pPCD->pReg, epNum);
+                    /* Don't process XferCompl interrupt if it is a setup packet */
+                    if ((epNum == 0) && (epInt & (USB_OTG_DOEPINT_STUP |
+                                                  USB_OTG_DOEPINT_STUPPKTRCVD))) {
+                        epInt &= ~USB_OTG_DOEPINT_XFRC;
+                        CLEAR_OUT_EP_INTR(epNum, USB_OTG_DOEPINT_XFRC);
+                    }
 
                     if ((epInt & USB_OTG_DOEPINT_XFRC) == USB_OTG_DOEPINT_XFRC) {
                         CLEAR_OUT_EP_INTR(epNum, USB_OTG_DOEPINT_XFRC);
@@ -162,10 +169,18 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                         }
 
                         if (pPCD->cfg.dmaEnable == 1) {
-                            pPCD->outEp[epNum].xferCount = pPCD->outEp[epNum].maxPacket -
-                                                           (USB_OUTEP(epNum)->DOEPTSIZ &
-                                                            USB_OTG_DOEPTSIZ_XFRSIZ);
-                            pPCD->outEp[epNum].pxferBuff += pPCD->outEp[epNum].maxPacket;
+                            if (pPCD->outEp[epNum].xferLen > 0) {
+                                pktCnt = HAL_DIV_ROUND_UP(pPCD->outEp[epNum].xferLen,
+                                                          pPCD->outEp[epNum].maxPacket);
+                                pPCD->outEp[epNum].xferCount = (USB_OTG_DOEPTSIZ_XFRSIZ & (pPCD->outEp[epNum].maxPacket * pktCnt)) - (USB_OUTEP(epNum)->DOEPTSIZ & USB_OTG_DOEPTSIZ_XFRSIZ);
+                                HAL_DCACHE_InvalidateByRange((uint32_t)pPCD->outEp[epNum].dmaAddr,
+                                                             pPCD->outEp[epNum].xferCount);
+                            } else {
+                                pPCD->outEp[epNum].xferCount = pPCD->outEp[epNum].maxPacket -
+                                                               (USB_OUTEP(epNum)->DOEPTSIZ & USB_OTG_DOEPTSIZ_XFRSIZ);
+                            }
+
+                            pPCD->outEp[epNum].pxferBuff += pPCD->outEp[epNum].xferCount;
                         }
 
                         HAL_PCD_DataOutStageCallback(pPCD, epNum);
@@ -182,6 +197,8 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                         if (pPCD->cfg.dmaEnable == 1) {
                             if (USB_OUTEP(0)->DOEPINT & (1 << 15))
                                 CLEAR_OUT_EP_INTR(epNum, (1 << 15));
+
+                            HAL_DCACHE_InvalidateByRange((uint32_t)(pPCD->setupBuf), sizeof(pPCD->setupBuf));
                         }
 
                         /* Inform the upper layer that a setup packet is available */
@@ -309,9 +326,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
             /* Set Default Address to 0 */
             USB_DEVICE->DCFG &= ~USB_OTG_DCFG_DAD;
 
-            /* setup EP0 to receive SETUP packets */
-            USB_EP0_OutStart(pPCD->pReg, pPCD->cfg.dmaEnable,
-                             (uint8_t *)pPCD->setupBuf);
+            HAL_PCD_ResetCallback(pPCD);
 
             __HAL_PCD_CLEAR_FLAG(pPCD, USB_OTG_GINTSTS_USBRST);
         }
@@ -319,32 +334,18 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
         /* Handle Enumeration done Interrupt */
         if (__HAL_PCD_GET_FLAG(pPCD, USB_OTG_GINTSTS_ENUMDNE)) {
             USB_ActivateSetup(pPCD->pReg);
-            pPCD->pReg->GUSBCFG &= ~USB_OTG_GUSBCFG_TRDT;
 
             if (USB_GetDevSpeed(pPCD->pReg) == USB_OTG_SPEED_HIGH) {
                 pPCD->cfg.speed = USB_OTG_SPEED_HIGH;
-                pPCD->cfg.ep0Mps = USB_OTG_HS_MAX_PACKET_SIZE;
-                pPCD->pReg->GUSBCFG |= (uint32_t)((USBD_HS_TRDT_VALUE << 10) &
-                                                  USB_OTG_GUSBCFG_TRDT);
+                pPCD->cfg.ep0Mps = USB_OTG_MAX_EP0_SIZE;
             } else {
                 pPCD->cfg.speed = USB_OTG_SPEED_FULL;
-                pPCD->cfg.ep0Mps = USB_OTG_FS_MAX_PACKET_SIZE;
-
-                /*
-                 * The USBTRD is configured according to the tables below,
-                 * depending on AHB frequency used by application. In the
-                 * low AHB frequency range it is used to stretch enough the
-                 * USB response time to IN tokens, the USB turnaround time,
-                 * so to compensate for the longer AHB read access latency
-                 * to the Data FIFO
-                 */
-
-                /* hclk Clock Range need to between 32-200 MHz */
-                pPCD->pReg->GUSBCFG |= (uint32_t)((0x6 << 10) &
-                                                  USB_OTG_GUSBCFG_TRDT);
+                pPCD->cfg.ep0Mps = USB_OTG_MAX_EP0_SIZE;
             }
 
-            HAL_PCD_ResetCallback(pPCD);
+            /* setup EP0 to receive SETUP packets */
+            USB_EP0_OutStart(pPCD->pReg, pPCD->cfg.dmaEnable,
+                             (uint8_t *)pPCD->setupBuf);
 
             __HAL_PCD_CLEAR_FLAG(pPCD, USB_OTG_GINTSTS_ENUMDNE);
         }

@@ -61,8 +61,12 @@ static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB);
  */
 HAL_Status USB_CoreInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
 {
+    uint32_t trdtim = 0, phyif = 0, toutcal = 0;
+
     /* Init The UTMI Interface */
-    pUSB->GUSBCFG &= ~(USB_OTG_GUSBCFG_TSDPS | USB_OTG_GUSBCFG_ULPIFSLS | USB_OTG_GUSBCFG_PHYSEL);
+    pUSB->GUSBCFG &= ~(USB_OTG_GUSBCFG_TSDPS |
+                       USB_OTG_GUSBCFG_ULPIFSLS |
+                       USB_OTG_GUSBCFG_PHYSEL);
 
     /* Select UTMI Interace */
     pUSB->GUSBCFG &= ~USB_OTG_GUSBCFG_ULPI_UTMI_SEL;
@@ -70,8 +74,22 @@ HAL_Status USB_CoreInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
     /* Reset after a PHY select  */
     USB_CoreReset(pUSB);
 
+    /* Set timeout calibration, phyif and turnaround time */
+    pUSB->GUSBCFG &= ~(USB_OTG_GUSBCFG_SRPCAP |
+                       USB_OTG_GUSBCFG_TRDT |
+                       USB_OTG_GUSBCFG_PHYIF |
+                       USB_OTG_GUSBCFG_TOCAL);
+
+    trdtim = (cfg.phyif == 8) ? 9 : 5;
+    phyif = (cfg.phyif == 8) ? 0 : 1;
+    toutcal = 7;
+
+    pUSB->GUSBCFG |= ((trdtim << USB_OTG_GUSBCFG_TRDT_SHIFT) |
+                      (phyif << USB_OTG_GUSBCFG_PHYIF_SHIFT) |
+                      (toutcal << USB_OTG_GUSBCFG_TOCAL_SHIFT));
+
     if (cfg.dmaEnable == HAL_ENABLE) {
-        pUSB->GAHBCFG |= USB_OTG_GAHBCFG_HBSTLEN_2;
+        pUSB->GAHBCFG |= USB_OTG_GAHBCFG_HBSTLEN_4;
         pUSB->GAHBCFG |= USB_OTG_GAHBCFG_DMAEN;
     }
 
@@ -197,17 +215,6 @@ HAL_Status USB_DevInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
     }
 
     USB_DEVICE->DIEPMSK &= ~(USB_OTG_DIEPMSK_TXFURM);
-
-    if (cfg.dmaEnable == 1) {
-        /*Set threshold parameters */
-        USB_DEVICE->DTHRCTL = (USB_OTG_DTHRCTL_TXTHRLEN_6 |
-                               USB_OTG_DTHRCTL_RXTHRLEN_6);
-        USB_DEVICE->DTHRCTL |= (USB_OTG_DTHRCTL_RXTHREN |
-                                USB_OTG_DTHRCTL_ISOTHREN |
-                                USB_OTG_DTHRCTL_NONISOTHREN);
-
-        i = USB_DEVICE->DTHRCTL;
-    }
 
     /* Disable all interrupts. */
     pUSB->GINTMSK = 0;
@@ -449,6 +456,9 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
             USB_INEP(pEP->num)->DIEPTSIZ |= (USB_OTG_DIEPTSIZ_PKTCNT & (1 << 19));
             USB_INEP(pEP->num)->DIEPTSIZ &= ~(USB_OTG_DIEPTSIZ_XFRSIZ);
         } else {
+            if (dma == 1)
+                HAL_DCACHE_CleanByRange((uint32_t)pEP->dmaAddr, pEP->xferLen);
+
             /*
              * Program the transfer size and packet count
              * as follows: xfersize = N * maxPacket +
@@ -551,6 +561,9 @@ HAL_Status USB_EP0StartXfer(struct USB_GLOBAL_REG *pUSB,
             USB_INEP(pEP->num)->DIEPTSIZ |= (USB_OTG_DIEPTSIZ_PKTCNT & (1 << 19));
             USB_INEP(pEP->num)->DIEPTSIZ &= ~(USB_OTG_DIEPTSIZ_XFRSIZ);
         } else {
+            if (dma == 1)
+                HAL_DCACHE_CleanByRange((uint32_t)pEP->dmaAddr, pEP->xferLen);
+
             /*
              * Program the transfer size and packet count
              * as follows: xfersize = N * maxPacket +
@@ -911,7 +924,7 @@ HAL_Status USB_EP0_OutStart(struct USB_GLOBAL_REG *pUSB,
     if (dma == 1) {
         USB_OUTEP(0)->DOEPDMA = (uint32_t)psetup;
         /* EP enable */
-        USB_OUTEP(0)->DOEPCTL = 0x80008000;
+        USB_OUTEP(0)->DOEPCTL = USB_OTG_DOEPCTL_EPENA;
     }
 
     return HAL_OK;

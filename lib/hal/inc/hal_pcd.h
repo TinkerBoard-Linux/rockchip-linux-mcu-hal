@@ -26,14 +26,6 @@
 #define PCD_SPEED_HIGH_IN_FULL 1U
 #define PCD_SPEED_FULL         2U
 
-/** Turnaround Timeout Value */
-#ifndef USBD_HS_TRDT_VALUE
- #define USBD_HS_TRDT_VALUE 9U
-#endif /* USBD_HS_TRDT_VALUE */
-#ifndef USBD_FS_TRDT_VALUE
- #define USBD_FS_TRDT_VALUE 5U
-#endif /* USBD_HS_TRDT_VALUE */
-
 /** PCD Interrupts Handle */
 #define __HAL_PCD_ENABLE(__HANDLE__)  USB_EnableGlobalInt((__HANDLE__)->pReg)
 #define __HAL_PCD_DISABLE(__HANDLE__) USB_DisableGlobalInt((__HANDLE__)->pReg)
@@ -66,7 +58,7 @@ struct PCD_HANDLE {
     struct USB_OTG_CFG cfg;             /*!< PCD required parameters */
     struct USB_OTG_EP inEp[16];         /*!< IN endpoint parameters  */
     struct USB_OTG_EP outEp[16];        /*!< OUT endpoint parameters */
-    uint32_t setupBuf[12];              /*!< Setup packet buffer     */
+    uint32_t setupBuf[8];               /*!< Setup packet buffer     */
     uint32_t irqno;                     /*!< irq number              */
     void *pData;                        /*!< Pointer to upper stack Handler */
     ePCD_state pcdState;                /*!< PCD communication state */
