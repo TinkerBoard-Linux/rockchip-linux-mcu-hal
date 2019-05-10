@@ -8151,6 +8151,9 @@ struct USB_HOST_CH_REG {
 #define USB_OTG_DOEPINT_NYET_SHIFT               (14U)
 #define USB_OTG_DOEPINT_NYET_MASK                (0x1U << USB_OTG_DOEPINT_NYET_SHIFT) /* 0x00004000 */
 #define USB_OTG_DOEPINT_NYET                     USB_OTG_DOEPINT_NYET_MASK      /* NYET interrupt */
+#define USB_OTG_DOEPINT_STUPPKTRCVD_SHIFT        (15U)
+#define USB_OTG_DOEPINT_STUPPKTRCVD_MASK         (0x1U << USB_OTG_DOEPINT_NYET_SHIFT) /* 0x00008000 */
+#define USB_OTG_DOEPINT_STUPPKTRCVD              USB_OTG_DOEPINT_NYET_MASK      /* STUPPKTRCVD interrupt */
 /********************  Bit definition for USB_OTG_DOEPTSIZ register  ********************/
 #define USB_OTG_DOEPTSIZ_XFRSIZ_SHIFT            (0U)
 #define USB_OTG_DOEPTSIZ_XFRSIZ_MASK             (0x7FFFFU << USB_OTG_DOEPTSIZ_XFRSIZ_SHIFT) /* 0x0007FFFF */
