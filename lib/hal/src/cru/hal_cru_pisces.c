@@ -57,9 +57,9 @@ static uint32_t s_gpllFreq;
 static uint32_t s_cpllFreq;
 
 static struct PLL_SETUP GPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->CRU_GPLL_CON0)),
-    .conOffset1 = (uint32_t)(&(CRU->CRU_GPLL_CON1)),
-    .conOffset2 = (uint32_t)(&(CRU->CRU_GPLL_CON2)),
+    .conOffset0 = (uint32_t)(&(CRU->GPLL_CON[0])),
+    .conOffset1 = (uint32_t)(&(CRU->GPLL_CON[1])),
+    .conOffset2 = (uint32_t)(&(CRU->GPLL_CON[2])),
     .modeOffset = (uint32_t)(&(CRU->CRU_MODE_CON00)),
     .modeShift = 2,
     .lockShift = 10,
@@ -68,9 +68,9 @@ static struct PLL_SETUP GPLL = {
 };
 
 static struct PLL_SETUP CPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->CRU_CPLL_CON0)),
-    .conOffset1 = (uint32_t)(&(CRU->CRU_CPLL_CON1)),
-    .conOffset2 = (uint32_t)(&(CRU->CRU_CPLL_CON2)),
+    .conOffset0 = (uint32_t)(&(CRU->CPLL_CON[0])),
+    .conOffset1 = (uint32_t)(&(CRU->CPLL_CON[1])),
+    .conOffset2 = (uint32_t)(&(CRU->CPLL_CON[2])),
     .modeOffset = (uint32_t)(&(CRU->CRU_MODE_CON00)),
     .modeShift = 0,
     .lockShift = 10,
@@ -233,20 +233,12 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         freq = HAL_CRU_ClkFracGetFreq(clockName);
 
         return freq;
-    case CLK_MEMSUBSYS:
-        mux = HAL_CRU_ClkGetMux(clkMux);
-        if (mux)
-            pRate = HAL_CRU_ClkGetFreq(HCLK_AUDIO);
-        else
-            pRate = HAL_CRU_ClkGetFreq(ACLK_DSP);
-        break;
     case CLK_TIMER0:
     case CLK_TIMER1:
     case CLK_TIMER2:
     case CLK_TIMER3:
     case CLK_TIMER4:
     case CLK_TIMER5:
-    case CLK_PMU:
         mux = HAL_CRU_ClkGetMux(clkMux);
         if (mux)
             pRate = PLL_INPUT_OSC_RATE;
@@ -319,19 +311,12 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         error = HAL_CRU_ClkFracSetFreq(clockName, rate);
 
         return error;
-    case CLK_MEMSUBSYS:
-        if (!(HAL_CRU_ClkGetFreq(ACLK_DSP) % rate))
-            mux = 0;
-        else
-            mux = 1;
-        break;
     case CLK_TIMER0:
     case CLK_TIMER1:
     case CLK_TIMER2:
     case CLK_TIMER3:
     case CLK_TIMER4:
     case CLK_TIMER5:
-    case CLK_PMU:
         if (rate == PLL_INPUT_OSC_RATE) {
             mux = 1;
             pRate = PLL_INPUT_OSC_RATE;
