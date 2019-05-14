@@ -46,6 +46,29 @@ struct CACHE_PMU_CNT {
 /***************************** Function Declare ******************************/
 
 /**
+ * @brief  translate the cpuAddr to sramAddr
+ * @param cpuAddr: the address mapping to sram, only can be accessed by cpu
+ * @return sramAddr: the real address of sram, it can be accessed by cpu & device
+ */
+__STATIC_INLINE uint32_t HAL_CpuAddrToDmaAddr(uint32_t cpuAddr)
+{
+#ifdef CPU_ADDR_TO_SRAM_ADDR_OFFSET
+
+    uint32_t sramAddr = cpuAddr;
+
+    if (cpuAddr >= CPU_ADDR_START
+        && cpuAddr < (CPU_ADDR_START + CPU_ADDR_SIZE)) {
+        sramAddr = cpuAddr + CPU_ADDR_TO_SRAM_ADDR_OFFSET;
+    }
+
+    return sramAddr;
+#else
+
+    return cpuAddr;
+#endif
+}
+
+/**
  * @brief  check mpu is enable.
  * @return HAL_ENABLE if mpu enable.
  */
