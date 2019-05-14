@@ -281,6 +281,47 @@ static uint8_t VOP_RbSwap(uint8_t format)
         return 0;
     }
 }
+static uint8_t VOP_GetHorSubSampling(uint8_t format)
+{
+    switch (format) {
+    case VOP_FMT_YUV420SP:
+    case VOP_FMT_YUV420SP_4:
+
+        return 4;
+        break;
+    case VOP_FMT_YVYU422:
+    case VOP_FMT_VYUY422:
+    case VOP_FMT_YUV422SP:
+    case VOP_FMT_YVYU422_4:
+    case VOP_FMT_VYUY422_4:
+    case VOP_FMT_YUV422SP_4:
+
+        return 2;
+        break;
+    default:
+
+        return 1;
+    }
+}
+
+static uint8_t VOP_GetVerSubSampling(uint8_t format)
+{
+    switch (format) {
+    case VOP_FMT_YUV420SP:
+    case VOP_FMT_YUV420SP_4:
+
+        return 4;
+        break;
+    case VOP_FMT_YUV422SP:
+    case VOP_FMT_YUV422SP_4:
+
+        return 2;
+        break;
+    default:
+
+        return 1;
+    }
+}
 
 static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
 {
@@ -358,9 +399,13 @@ static void VOP_SetWinLoop(struct VOP_REG *pReg,
                   pWinState->yrgbAddr);
 
         if (IS_YUV_FORMAT(pWinState->format)) {
-            offset = pWinState->yLoopOffset * pWinState->xVir +
-                     pWinState->xLoopOffset *
-                     VOP_GetFormatLength(pWinState->format, 1) / 8;
+            uint8_t hsub = VOP_GetHorSubSampling(pWinState->format);
+            uint8_t vsub = VOP_GetVerSubSampling(pWinState->format);
+            uint8_t bpp = VOP_GetFormatLength(pWinState->format, 1);
+
+            offset = pWinState->yLoopOffset * 2 * pWinState->xVir / vsub;
+            offset += pWinState->xLoopOffset * 2 * bpp / hsub / 8;
+
             VOP_Write(&g_VOP_RegMir.WIN0_CBCR_MST + regOffset,
                       &pReg->WIN0_CBCR_MST + regOffset,
                       pWinState->cbcrAddr + offset);
@@ -423,6 +468,8 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     if ((pWinState->format == VOP_FMT_YUV444SP) ||
         (pWinState->format == VOP_FMT_YUV444SP_4))
         cbcrStride = 2 * yStride;
+    else
+        cbcrStride = yStride;
     VOP_Write(&g_VOP_RegMir.WIN0_VIR + regOffset,
               &pReg->WIN0_VIR + regOffset, cbcrStride << 16 | yStride);
     VOP_Write(&g_VOP_RegMir.WIN0_YRGB_MST + regOffset,
@@ -1523,8 +1570,10 @@ HAL_Status HAL_VOP_IrqHandler(struct VOP_REG *pReg)
     val = pReg->INTR_STATUS;
 
     for (i = 0; i < HAL_ARRAY_SIZE(VOP_IRQs); i++) {
-        if (val & BIT(i))
-            HAL_DBG_ERR("VOP Irq: %s\n", VOP_IRQs[i]);
+        /**
+         *if (val & BIT(i))
+         *     HAL_DBG_ERR("VOP Irq: %s\n", VOP_IRQs[i]);
+         */
     }
 
     pReg->INTR_CLEAR = val & 0xffff;
