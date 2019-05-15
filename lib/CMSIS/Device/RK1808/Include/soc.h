@@ -37,6 +37,10 @@ typedef enum
   NoSecurePhyTimer_IRQn  = 30,    /*!< Physical Timer Interrupt    */
 
 /******  Platform Exceptions Numbers ***************************************************/
+  GPIO0_IRQn             = 35,
+  GPIO1_IRQn             = 36,
+  GPIO2_IRQn             = 37,
+  GPIO3_IRQn             = 38,
   UART2_IRQn             = 47,      /*!< UART2 Interrupt             */
   NUM_INTERRUPTS         = 273
 } IRQn_Type;
@@ -390,6 +394,25 @@ struct CRU_REG {
     __IO uint32_t PMU_CLKGATE_CON[2];                 /* Address Offset: 0x4080 */
          uint32_t RESERVED16[14];                     /* Address Offset: 0x4088 */
     __IO uint32_t PMU_AUTOCS_CON[2];                  /* Address Offset: 0x40C0 */
+};
+/* GPIO Register Structure Define */
+struct GPIO_REG {
+    __IO uint32_t SWPORT_DR;                          /* Address Offset: 0x0000 */
+    __IO uint32_t SWPORT_DDR;                         /* Address Offset: 0x0004 */
+         uint32_t RESERVED1[(0x30 - 0x04) / 4 - 1];
+    __IO uint32_t INT_EN;                             /* Address Offset: 0x0030 */
+    __IO uint32_t INT_MASK;                           /* Address Offset: 0x0034 */
+    __IO uint32_t INT_TYPE;                           /* Address Offset: 0x0038 */
+    __IO uint32_t INT_POLARITY;                       /* Address Offset: 0x003c */
+    __I  uint32_t INT_STATUS;                         /* Address Offset: 0x0040 */
+    __I  uint32_t INT_RAWSTATUS;                      /* Address Offset: 0x0044 */
+    __IO uint32_t DEBOUNCE;                           /* Address Offset: 0x0048 */
+    __O  uint32_t PORT_EOI;                           /* Address Offset: 0x004c */
+    __I  uint32_t EXT_PORT;                           /* Address Offset: 0x0050 */
+         uint32_t RESERVED2[(0x60 - 0x50) / 4 - 1];
+    __IO uint32_t LS_SYNC;                            /* Address Offset: 0x0060 */
+         uint32_t RESERVED3;
+    __IO uint32_t INT_BOTHEDGE;                       /* Address Offset: 0x0068 */
 };
 /* EFUSE_NS Register Structure Define */
 struct EFUSE_NS_REG {
@@ -3489,6 +3512,33 @@ struct UART_REG
 /* COREPVTM_STATUS1 */
 #define GRF_COREPVTM_STATUS1_COREPVTM_FREQ_CNT_SHIFT       (0U)
 #define GRF_COREPVTM_STATUS1_COREPVTM_FREQ_CNT_MASK        (0xFFFFFFFFU << GRF_COREPVTM_STATUS1_COREPVTM_FREQ_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_GRF_GPIO_REDEF */
+#define PMU_GRF_MUX_OFFSET 0x0000
+#define PMU_GRF_SLW_OFFSET 0x0040
+#define PMU_GRF_SMT_OFFSET 0x0060
+#define PMU_GRF_PUL_OFFSET 0x0080
+#define PMU_GRF_DRV_OFFSET 0x00c0
+/* GRF_GPIO_REDEF */
+#define GRF_MUX_OFFSET 0x0000
+#define GRF_PUL_OFFSET 0x0080
+#define GRF_SLW_OFFSET 0x00c0
+#define GRF_SMT_OFFSET 0x0100
+#define GRF_DRV_OFFSET 0x0140
+#define GPIO_MUX_BANK_STRIDE 0x0020
+#define GPIO_SLW_BANK_STRIDE 0x0010
+#define GPIO_SMT_BANK_STRIDE 0x0010
+#define GPIO_PUL_BANK_STRIDE 0x0010
+#define GPIO_DRV_BANK_STRIDE 0x0010
+#define GPIO_MUX_BITS_PER_PIN 4
+#define GPIO_SLW_BITS_PER_PIN 1
+#define GPIO_SMT_BITS_PER_PIN 1
+#define GPIO_PUL_BITS_PER_PIN 2
+#define GPIO_DRV_BITS_PER_PIN 2
+#define GPIO_MUX_PINS_PER_REG 8
+#define GPIO_SLW_PINS_PER_REG 8
+#define GPIO_SMT_PINS_PER_REG 8
+#define GPIO_PUL_PINS_PER_REG 8
+#define GPIO_DRV_PINS_PER_REG 8
 /******************************************SGRF******************************************/
 /* SOC_CON2 */
 #define SGRF_SOC_CON2_ACLK_DMAC_EN_SHIFT                   (0U)
