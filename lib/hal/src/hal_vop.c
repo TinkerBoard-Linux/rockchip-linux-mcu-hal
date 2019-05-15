@@ -632,6 +632,7 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
     switch (path) {
     case SWITCH_TO_INTERNAL_DPHY:
         RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK, 0);
+        HAL_DelayMs(1);
 #ifdef IS_FPGA
         RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
                            GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK);
@@ -639,14 +640,21 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
         RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
                            0);
 #endif
+        RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[0], GRF_SOC_CON0_VOP_TE_SEL_MASK,
+                           1 << GRF_SOC_CON0_VOP_TE_SEL_SHIFT);
+
         break;
     case SWITCH_TO_AP_BYPASS:
+        RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[0], GRF_SOC_CON0_VOP_TE_SEL_MASK,
+                           0 << GRF_SOC_CON0_VOP_TE_SEL_SHIFT);
+
 #ifdef IS_FPGA
         RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK, 0);
 #else
         RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
                            GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK);
 #endif
+        HAL_DelayMs(1);
         RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK,
                            GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK);
         break;
@@ -1362,6 +1370,10 @@ HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
     RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[0], GRF_SOC_CON0_VOP_TE_SEL_MASK,
                        1 << GRF_SOC_CON0_VOP_TE_SEL_SHIFT);
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
+                  VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT,
+                  VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_MASK,
+                  0x1);
+    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_MASK,
                   1);
@@ -1571,7 +1583,7 @@ HAL_Status HAL_VOP_IrqHandler(struct VOP_REG *pReg)
 
     for (i = 0; i < HAL_ARRAY_SIZE(VOP_IRQs); i++) {
         /**
-         *if (val & BIT(i))
+         * if (val & BIT(i))
          *     HAL_DBG_ERR("VOP Irq: %s\n", VOP_IRQs[i]);
          */
     }
