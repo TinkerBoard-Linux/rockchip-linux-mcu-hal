@@ -619,6 +619,7 @@ struct UART_REG
 #define EFUSE_S_BASE        0xFF3B8000U /* EFUSE_S base address */
 #define UART2_BASE          0xFF550000U /* UART2 base address */
 #define DCF_BASE            0xFF640000U /* DCF base address */
+#define STIMER_BASE         0xFF710000U /* STIMER0-1 base address */
 #define VAD_BASE            0xFF810000U /* VAD base address */
 #define DFICTRL_BASE        0xFF9B8000U /* DFICTRL base address */
 #define RGA_BASE            0xFFAF0000U /* RGA base address */
