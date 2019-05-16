@@ -42,6 +42,8 @@
 #define MCU_WR_END 8
 #define MCU_TOTAL  15
 
+#define MIPI_SWITCH_TIME_OUT 100
+
 /********************* Private Structure Definition **************************/
 typedef enum {
     VOP_WIN0,
@@ -629,6 +631,8 @@ HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId,
  */
 HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
 {
+    int i = 0;
+
     switch (path) {
     case SWITCH_TO_INTERNAL_DPHY:
         RK_CLRSET_REG_BITS(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK, 0);
@@ -660,6 +664,14 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
         break;
     default:
         break;
+    }
+    while (VOP_MaskRead(pReg->VOP_STATUS, VOP_VOP_STATUS_DPHY_SWITCH_STATUS_SHIFT,
+                        VOP_VOP_STATUS_DPHY_SWITCH_STATUS_MASK) == path) {
+        if (i++ > MIPI_SWITCH_TIME_OUT) {
+            HAL_DBG_ERR("wait mipi switch time out\n");
+            break;
+        }
+        HAL_DelayMs(1);
     }
 
     return HAL_OK;
