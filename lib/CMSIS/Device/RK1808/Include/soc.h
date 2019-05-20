@@ -42,6 +42,8 @@ typedef enum
   GPIO2_IRQn             = 37,
   GPIO3_IRQn             = 38,
   UART2_IRQn             = 47,      /*!< UART2 Interrupt             */
+  GPIO4_IRQn             = 114,
+
   NUM_INTERRUPTS         = 273
 } IRQn_Type;
 
@@ -613,12 +615,17 @@ struct UART_REG
 #define GICD_BASE           0xFF100000U /* GICD base address */
 #define GICR_BASE           0xFF140000U /* GICR base address */
 #define GICC_BASE           0xFF300000U /* GICC base address */
+#define GPIO0_BASE          0XFF4C0000U /* GPIO0 base address */
 #define MSCH_BASE           0xFE800000U /* MSCH base address */
 #define CRU_BASE            0xFF350000U /* CRU base address */
 #define EFUSE_NS_BASE       0xFF3B0000U /* EFUSE_NS base address */
 #define EFUSE_S_BASE        0xFF3B8000U /* EFUSE_S base address */
 #define UART2_BASE          0xFF550000U /* UART2 base address */
 #define DCF_BASE            0xFF640000U /* DCF base address */
+#define GPIO1_BASE          0xFF690000U /* GPIO1 base address */
+#define GPIO2_BASE          0XFF6A0000U /* GPIO2 base address */
+#define GPIO3_BASE          0xFF6B0000U /* GPIO3 base address */
+#define GPIO4_BASE          0xFF6C0000U /* GPIO4 base address */
 #define STIMER_BASE         0xFF710000U /* STIMER0-1 base address */
 #define VAD_BASE            0xFF810000U /* VAD base address */
 #define DFICTRL_BASE        0xFF9B8000U /* DFICTRL base address */
@@ -648,6 +655,11 @@ struct UART_REG
 #define DFICTRL             ((struct DFICTRL_REG *) DFICTRL_BASE)
 #define RGA                 ((struct RGA_REG *) RGA_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
+#define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
+#define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
+#define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
+#define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
 
 #define IS_BUS_GRF_INSTANCE(instance) ((instance) == BUS_GRF)
 #define IS_USB2PHY_GRF_INSTANCE(instance) ((instance) == USB2PHY_GRF)
@@ -667,6 +679,7 @@ struct UART_REG
 #define IS_DFICTRL_INSTANCE(instance) ((instance) == DFICTRL)
 #define IS_RGA_INSTANCE(instance) ((instance) == RGA)
 #define IS_UART_INSTANCE(instance) ((instance) == UART2)
+#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
