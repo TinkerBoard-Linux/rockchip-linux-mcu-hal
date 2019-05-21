@@ -57,11 +57,15 @@
 #define PD_ACK_SHIFT  16U
 #define PD_ACK_MASK   0x000F0000U
 
-#define PD_GET_PWR_SHIFT(x)  (((uint32_t)(x)&PD_PWR_MASK) >> PD_PWR_SHIFT)
-#define PD_GET_ST_SHIFT(x)   (((uint32_t)(x)&PD_ST_MASK) >> PD_ST_SHIFT)
-#define PD_GET_REQ_SHIFT(x)  (((uint32_t)(x)&PD_REQ_MASK) >> PD_REQ_SHIFT)
+#define PD_GET_PWR_SHIFT(x) (((uint32_t)(x)&PD_PWR_MASK) >> PD_PWR_SHIFT)
+#define PD_GET_ST_SHIFT(x)  (((uint32_t)(x)&PD_ST_MASK) >> PD_ST_SHIFT)
+#define PD_GET_REQ_SHIFT(x) (((uint32_t)(x)&PD_REQ_MASK) >> PD_REQ_SHIFT)
+#if defined(RKMCU_RK1808)
+#define PD_GET_IDLE_SHIFT(x) ((((uint32_t)(x)&PD_IDLE_MASK) >> PD_IDLE_SHIFT) + 16)
+#else
 #define PD_GET_IDLE_SHIFT(x) (((uint32_t)(x)&PD_IDLE_MASK) >> PD_IDLE_SHIFT)
-#define PD_GET_ACK_SHIFT(x)  (((uint32_t)(x)&PD_ACK_MASK) >> PD_ACK_SHIFT)
+#endif
+#define PD_GET_ACK_SHIFT(x) (((uint32_t)(x)&PD_ACK_MASK) >> PD_ACK_SHIFT)
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
@@ -75,12 +79,21 @@ static HAL_Check PD_IsIdle(uint32_t pd)
     return (HAL_Check)((PMU->BUS_IDLE_ST & (1 << idleShift)) >> idleShift);
 }
 
+#if defined(RKMCU_RK1808)
+static HAL_Check PD_ReadAck(uint32_t pd)
+{
+    uint32_t ackShift = PD_GET_ACK_SHIFT(pd);
+
+    return (HAL_Check)((PMU->BUS_IDLE_ST & (1 << ackShift)) >> ackShift);
+}
+#else
 static HAL_Check PD_ReadAck(uint32_t pd)
 {
     uint32_t ackShift = PD_GET_ACK_SHIFT(pd);
 
     return (HAL_Check)((PMU->BUS_IDLE_ACK & (1 << ackShift)) >> ackShift);
 }
+#endif
 
 static HAL_Check PD_IsOn(uint32_t pd)
 {
