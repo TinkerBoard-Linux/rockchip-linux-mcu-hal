@@ -390,7 +390,7 @@ static void VOP_SetWinLoop(struct VOP_REG *pReg,
     if (xLoopEn || yLoopEn) {
         offset = pWinState->yLoopOffset * pWinState->xVir +
                  pWinState->xLoopOffset *
-                 VOP_GetFormatLength(pWinState->format, 0) / 8;
+                 VOP_GetFormatLength(pWinState->hwFormat, 0) / 8;
         VOP_Write(&g_VOP_RegMir.WIN0_YRGB_MST + regOffset,
                   &pReg->WIN0_YRGB_MST + regOffset,
                   pWinState->yrgbAddr + offset);
@@ -398,10 +398,10 @@ static void VOP_SetWinLoop(struct VOP_REG *pReg,
                   &pReg->WIN0_YRGB_MST_RAW + regOffset,
                   pWinState->yrgbAddr);
 
-        if (IS_YUV_FORMAT(pWinState->format)) {
-            uint8_t hsub = VOP_GetHorSubSampling(pWinState->format);
-            uint8_t vsub = VOP_GetVerSubSampling(pWinState->format);
-            uint8_t bpp = VOP_GetFormatLength(pWinState->format, 1);
+        if (IS_YUV_FORMAT(pWinState->hwFormat)) {
+            uint8_t hsub = VOP_GetHorSubSampling(pWinState->hwFormat);
+            uint8_t vsub = VOP_GetVerSubSampling(pWinState->hwFormat);
+            uint8_t bpp = VOP_GetFormatLength(pWinState->hwFormat, 1);
 
             offset = pWinState->yLoopOffset * 2 * pWinState->xVir / vsub;
             offset += pWinState->xLoopOffset * 2 * bpp / hsub / 8;
@@ -441,9 +441,9 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                   VOP_WIN0_CTRL0_WIN0_EN_MASK, pWinState->winEn);
     if (pWinState->winEn == false)
         return;
-    yuv4Format = !!(pWinState->format & VOP_WIN_YUV4_FORMAT);
-    bppFormat = !!(pWinState->format & VOP_WIN_BPPX_FORMAT);
-    cfgFormat = pWinState->format &
+    yuv4Format = !!(pWinState->hwFormat & VOP_WIN_YUV4_FORMAT);
+    bppFormat = !!(pWinState->hwFormat & VOP_WIN_BPPX_FORMAT);
+    cfgFormat = pWinState->hwFormat &
                 ~(VOP_WIN_YUV4_FORMAT | VOP_WIN_BPPX_FORMAT);
 
     VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
@@ -462,11 +462,11 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                   &pReg->WIN0_CTRL[0] + regOffset,
                   VOP_WIN0_CTRL0_WIN0_RB_SWAP_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_RB_SWAP_MASK,
-                  VOP_RbSwap(pWinState->format));
+                  VOP_RbSwap(pWinState->hwFormat));
     yStride = pWinState->xVir / 4;
 
-    if ((pWinState->format == VOP_FMT_YUV444SP) ||
-        (pWinState->format == VOP_FMT_YUV444SP_4))
+    if ((pWinState->hwFormat == VOP_FMT_YUV444SP) ||
+        (pWinState->hwFormat == VOP_FMT_YUV444SP_4))
         cbcrStride = 2 * yStride;
     else
         cbcrStride = yStride;
@@ -478,9 +478,9 @@ static void VOP_SetWin(struct VOP_REG *pReg,
               &pReg->WIN0_CBCR_MST + regOffset, pWinState->cbcrAddr);
 
     dspInfo = (pWinState->crtcH - 1) << 16 | (pWinState->crtcW - 1);
-    dspStx = pWinState->crtcX + pModeInfo->crtcHtotal -
+    dspStx = pWinState->hwCrtcX + pModeInfo->crtcHtotal -
              pModeInfo->crtcHsyncStart;
-    dspSty = pWinState->crtcY + pModeInfo->crtcVtotal -
+    dspSty = pWinState->hwCrtcY + pModeInfo->crtcVtotal -
              pModeInfo->crtcVsyncStart;
     dspSt = dspSty << 16 | dspStx;
     VOP_Write(&g_VOP_RegMir.WIN0_DSP_INFO + regOffset,
@@ -496,7 +496,7 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     VOP_Write(&g_VOP_RegMir.WIN0_ALPHA_CTRL + regOffset,
               &pReg->WIN0_ALPHA_CTRL + regOffset, val);
 
-    if (IS_YUV_FORMAT(pWinState->format))
+    if (IS_YUV_FORMAT(pWinState->hwFormat))
         y2r_en = true;
     VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
                   &pReg->WIN0_CTRL[0] + regOffset,
@@ -504,7 +504,7 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                   VOP_WIN0_CTRL0_WIN0_Y2R_EN_MASK,
                   y2r_en);
 
-    if (IS_BPP_FORMAT(pWinState->format))
+    if (IS_BPP_FORMAT(pWinState->hwFormat))
         lut_en = true;
     VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
                   &pReg->WIN0_CTRL[0] + regOffset,
@@ -704,7 +704,7 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
                             struct CRTC_WIN_STATE *pWinState,
                             struct DISPLAY_MODE_INFO *pModeInfo)
 {
-    if (IS_BPP_FORMAT(pWinState->format)) {
+    if (IS_BPP_FORMAT(pWinState->hwFormat)) {
         if (pWinState->winId == VOP_WIN2) {
             HAL_DBG_ERR("win2 unsupport bpp format!\n");
 
@@ -712,7 +712,12 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
         }
     }
     pWinState->xVir = pWinState->xVir *
-                      VOP_GetFormatLength(pWinState->format, 0) / 8;
+                      VOP_GetFormatLength(pWinState->hwFormat, 0) / 8;
+    if (pWinState->xVir % 4) {
+        HAL_DBG_ERR("VOP setplane xvir should be 4 byte align: %d\n", pWinState->xVir);
+
+        return HAL_INVAL;
+    }
     VOP_SetWin(pReg, pWinState, pModeInfo);
     VOP_SetWinLoop(pReg, pWinState);
 

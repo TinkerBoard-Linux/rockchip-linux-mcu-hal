@@ -95,6 +95,10 @@ struct CRTC_WIN_STATE {
     uint16_t crtcW;
     uint16_t crtcH;
 
+    uint8_t hwFormat;
+    uint16_t hwCrtcX;
+    uint16_t hwCrtcY;
+
     uint16_t xLoopOffset;
     uint16_t yLoopOffset;
 
@@ -122,6 +126,8 @@ struct VOP_POST_SCALE_INFO {
     uint16_t srcW;
     uint16_t srcH;
 
+    uint16_t dstX;
+    uint16_t dstY;
     uint16_t dstW;
     uint16_t dstH;
     bool postScaleEn;
