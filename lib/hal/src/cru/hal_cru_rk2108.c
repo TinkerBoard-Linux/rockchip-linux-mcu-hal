@@ -297,10 +297,6 @@ HAL_Status HAL_CRU_ClkUsbSetFreq(eCLOCK_Name clockName, uint32_t rate)
 /**
  * @brief Get clk freq.
  * @param  clockName: CLOCK_Name id.
-
-/**
- * @brief Get clk freq.
- * @param  clockName: CLOCK_Name id.
  * @return rate.
  */
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
