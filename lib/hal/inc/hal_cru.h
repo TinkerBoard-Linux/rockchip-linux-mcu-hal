@@ -113,6 +113,7 @@ HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
                                     uint32_t *denominator);
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName);
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate);
+HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t pRate, uint32_t *bestdiv);
 
 #endif
 

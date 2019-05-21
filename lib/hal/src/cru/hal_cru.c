@@ -355,7 +355,8 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
         RK_CLRSET_BITS(PLL_FBDIV_MASK, pConfig->fbDiv << PLL_FBDIV_SHIFT);
     (*(uint32_t *)(pSetup->conOffset3)) =
         RK_CLRSET_BITS(PLL_DSMPD_MASK, pConfig->dsmpd << PLL_DSMPD_SHIFT);
-    (*(uint32_t *)(pSetup->conOffset2)) = (pSetup->conOffset2 & 0xff000000) | pConfig->frac;
+    if (pConfig->frac)
+        (*(uint32_t *)(pSetup->conOffset2)) = (pSetup->conOffset2 & 0xff000000) | pConfig->frac;
 
     /* Pll Power up */
     (*(uint32_t *)(pSetup->conOffset3)) = RK_CLRSET_BITS(PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
@@ -478,7 +479,8 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
         RK_CLRSET_BITS(PLL_FBDIV_MASK, pConfig->fbDiv << PLL_FBDIV_SHIFT);
     (*(uint32_t *)(pSetup->conOffset1)) =
         RK_CLRSET_BITS(PLL_DSMPD_MASK, pConfig->dsmpd << PLL_DSMPD_SHIFT);
-    (*(uint32_t *)(pSetup->conOffset2)) = (pSetup->conOffset2 & 0xff000000) | pConfig->frac;
+    if (pConfig->frac)
+        (*(uint32_t *)(pSetup->conOffset2)) = (pSetup->conOffset2 & 0xff000000) | pConfig->frac;
 
     /* Pll Power up */
     (*(uint32_t *)(pSetup->conOffset1)) = RK_CLRSET_BITS(PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
@@ -696,6 +698,31 @@ HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
         return HAL_INVAL;
 
     return HAL_OK;
+}
+
+/**
+ * @brief  Get Np5 best div.
+ * @param  clockName: clk id.
+ * @param  rate: clk rate.
+ * @param  pRate: clk parent rate
+ * @param  bestdiv: the returned bestdiv.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t pRate, uint32_t *bestdiv)
+{
+    uint32_t div = CLK_GET_DIV(clockName);
+    uint32_t maxDiv = CLK_DIV_GET_MASK(div);
+    uint32_t i;
+
+    for (i = 0; i < maxDiv; i++) {
+        if (((pRate * 2) == (rate * (i * 2 + 3)))) {
+            *bestdiv = i;
+
+            return HAL_OK;
+        }
+    }
+
+    return HAL_ERROR;
 }
 
 /** @} */
