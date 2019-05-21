@@ -42,7 +42,7 @@
  * @param  pPCD PCD handle
  * @param  fifo The number of Tx fifo
  * @param  size Fifo size
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCDEx_SetTxFiFo(struct PCD_HANDLE *pPCD, uint8_t fifo, uint16_t size)
 {
@@ -80,7 +80,7 @@ HAL_Status HAL_PCDEx_SetTxFiFo(struct PCD_HANDLE *pPCD, uint8_t fifo, uint16_t s
  * @brief  Set Rx FIFO
  * @param  pPCD PCD handle
  * @param  size Size of Rx fifo
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCDEx_SetRxFiFo(struct PCD_HANDLE *pPCD, uint16_t size)
 {
@@ -92,7 +92,7 @@ HAL_Status HAL_PCDEx_SetRxFiFo(struct PCD_HANDLE *pPCD, uint16_t size)
 /**
  * @brief  Activate LPM Feature
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCDEx_ActivateLPM(struct PCD_HANDLE *pPCD)
 {
@@ -108,7 +108,7 @@ HAL_Status HAL_PCDEx_ActivateLPM(struct PCD_HANDLE *pPCD)
 /**
  * @brief  DeActivate LPM feature.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCDEx_DeActivateLPM(struct PCD_HANDLE *pPCD)
 {
@@ -124,7 +124,7 @@ HAL_Status HAL_PCDEx_DeActivateLPM(struct PCD_HANDLE *pPCD)
  * @brief  Send LPM message to user layer callback.
  * @param  pPCD PCD handle
  * @param  msg LPM message
- * @retval None
+ * @return None
  */
 __weak void HAL_PCDEx_LPM_Callback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg)
 {

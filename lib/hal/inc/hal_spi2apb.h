@@ -7,7 +7,7 @@
  *  @{
  */
 
-/** @addtogroup SPSI2APB
+/** @addtogroup SPI2APB
  *  @{
  */
 
@@ -16,11 +16,10 @@
 
 #include "hal_def.h"
 
+/***************************** MACRO Definition ******************************/
 /** @defgroup SPI2APB_Exported_Definition_Group1 Basic Definition
  *  @{
  */
-
-/***************************** MACRO Definition ******************************/
 
 /* Config */
 #define SPI2APB_LSB (0 << SPI2APB_CTRL0_FBM_SHIFT)          /* LSB */

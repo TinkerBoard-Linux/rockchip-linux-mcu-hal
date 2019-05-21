@@ -18,7 +18,7 @@
 #include "hal_debug.h"
 
 /***************************** MACRO Definition ******************************/
-/** @defgroup ICache & DCache Basic Definition
+/** @defgroup CACHE_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 
@@ -44,6 +44,9 @@ struct CACHE_PMU_CNT {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup CACHE_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
 
 /**
  * @brief  translate the cpuAddr to sramAddr
@@ -718,6 +721,8 @@ __STATIC_FORCEINLINE uint32_t HAL_DCACHE_GetErrAddr(void)
 
     return -1;
 }
+
+/** @} */
 
 #endif
 

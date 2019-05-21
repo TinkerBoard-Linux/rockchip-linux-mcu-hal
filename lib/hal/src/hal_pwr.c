@@ -3,11 +3,6 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
-#include "hal_base.h"
-#include "hal_pwr.h"
-
-#ifdef HAL_PWR_MODULE_ENABLED
-
 /** @addtogroup RKMCU_HAL_Driver
  *  @{
  */
@@ -36,6 +31,10 @@
 
  @endverbatim
  @} */
+
+#include "hal_base.h"
+
+#ifdef HAL_PWR_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 

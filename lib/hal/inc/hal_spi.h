@@ -3,75 +3,38 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
-/** @addtogroup ROCKCHIP_SPI_HAL_Driver
-  * @{
-  */
+/** @addtogroup RKMCU_HAL_Driver
+ * @{
+ */
 
 /** @addtogroup SPI
-  * @{
-  */
+ * @{
+ */
 
 #ifndef __HAL_SPI_H
 #define __HAL_SPI_H
 
 #include "hal_def.h"
 
+/***************************** MACRO Definition ******************************/
 /** @defgroup SPI_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 
-/***************************** MACRO Definition ******************************/
-
-/** @defgroup SPI_Speed SPI max speed
-  * @{
-  */
-
 #define HAL_SPI_MASTER_MAX_SCLK_OUT 50000000
 #define HAL_SPI_SLAVE_MAX_SCLK_OUT  20000000
-
-/**
-  * @}
-  */
-
-/** @defgroup SPI_Data_Size SPI Data Frame Size
-  * @{
-  */
 
 #define CR0_DATA_FRAME_SIZE_4BIT  (0x00 << SPI_CTRLR0_DFS_SHIFT)
 #define CR0_DATA_FRAME_SIZE_8BIT  (0x01 << SPI_CTRLR0_DFS_SHIFT)
 #define CR0_DATA_FRAME_SIZE_16BIT (0x02 << SPI_CTRLR0_DFS_SHIFT)
-
-/**
-  * @}
-  */
-
-/** @defgroup SPI_Clock_Polarity SPI Clock Polarity
-  * @{
-  */
 
 /* serial clock toggles in middle of first data bit */
 #define CR0_PHASE_1EDGE (0x00 << SPI_CTRLR0_SCPH_SHIFT)
 /* serial clock toggles at start of first data bit */
 #define CR0_PHASE_2EDGE (0x01 << SPI_CTRLR0_SCPH_SHIFT)
 
-/**
-  * @}
-  */
-
-/** @defgroup SPI_Clock_Phase SPI Clock Phase
-  * @{
-  */
-
 #define CR0_POLARITY_LOW  (0x00 << SPI_CTRLR0_SCPOL_SHIFT)
 #define CR0_POLARITY_HIGH (0x01 << SPI_CTRLR0_SCPOL_SHIFT)
-
-/**
-  * @}
-  */
-
-/** @defgroup SPI_SSD SPI sclk_out Delay
-  * @{
-  */
 
 /*
  * The period between ss_n active and
@@ -84,24 +47,8 @@
  */
 #define CR0_SSD_ONE (0x01 << SPI_CTRLR0_SSD_SHIFT)
 
-/**
-  * @}
-  */
-
-/** @defgroup Endian SPI little endian, big endian Transmission
-  * @{
-  */
-
 #define CR0_EM_LITTLE (0x0 << SPI_CTRLR0_EM_SHIFT)
 #define CR0_EM_BIG    (0x1 << SPI_CTRLR0_EM_SHIFT)
-
-/**
-  * @}
-  */
-
-/** @defgroup SPI_MSB_LSB_transmission SPI MSB LSB Transmission
-  * @{
-  */
 
 #define CR0_FIRSTBIT_MSB (0x0 << SPI_CTRLR0_FBM_SHIFT)
 #define CR0_FIRSTBIT_LSB (0x1 << SPI_CTRLR0_FBM_SHIFT)
@@ -109,56 +56,30 @@
 #define CR0_BHT_16BIT (0x0 << SPI_CTRLR0_BHT_SHIFT)
 #define CR0_BHT_8BIT  (0x1 << SPI_CTRLR0_BHT_SHIFT)
 
-/**
-  * @}
-  */
-
-/** @defgroup SPI_Direction SPI Transfer Mode
-  * @{
-  */
-
 #define CR0_XFM_TR (0x00 << SPI_CTRLR0_XFM_SHIFT)
 #define CR0_XFM_TO (0x01 << SPI_CTRLR0_XFM_SHIFT)
 #define CR0_XFM_RO (0x02 << SPI_CTRLR0_XFM_SHIFT)
 
-/**
-  * @}
-  */
-
-/** @defgroup SPI_Mode SPI Operation Mode
-  * @{
-  */
-
 #define CR0_OPM_MASTER (0x00 << SPI_CTRLR0_OPM_SHIFT)
 #define CR0_OPM_SLAVE  (0x01 << SPI_CTRLR0_OPM_SHIFT)
 
-/**
-  * @}
-  */
-
 /***************************** Structure Definition **************************/
 
-/**
- * @brief  SPI Type definition
- */
+/** @brief  SPI Type definition */
 typedef enum {
     SSI_MOTO_SPI = 0,
     SSI_TI_SSP,
     SSI_NS_MICROWIRE
 } eSPI_SSIType;
 
-/**
- * @brief  SPI Transfer type definition
- */
+/** @brief  SPI Transfer type definition */
 typedef enum {
     SPI_POLL = 0,
     SPI_IT,
     SPI_DMA
 } eSPI_TransferType;
 
-/**
- * @brief  SPI Configuration Structure definition
- */
+/** @brief  SPI Configuration Structure definition */
 struct SPI_CONFIG {
     uint32_t opMode;           /* Specifies the SPI operating mode, master or slave. */
     uint32_t xfmMode;          /* Specifies the SPI bidirectional mode state, tx only, rx only or trx mode. */
@@ -174,9 +95,7 @@ struct SPI_CONFIG {
     uint32_t ssiType;          /* Specifies if the TI mode is enabled or not.*/
 };
 
-/**
-  * @brief  SPI handle Structure definition
-  */
+/** @brief  SPI handle Structure definition */
 struct SPI_HANDLE {
     struct SPI_REG *pReg;          /* Specifies SPI registers base address. */
     uint32_t maxFreq;              /* Specifies SPI clock frequency. */
@@ -189,35 +108,12 @@ struct SPI_HANDLE {
     eSPI_TransferType type;        /* Specifies the transfer type: POLL/IT/DMA. */
 };
 
-/**
-  * @}
-  */
+/** @} */
 
 /***************************** Function Declare ******************************/
 
-/** @addtogroup SPI_Exported_Functions
-  * @{
-  */
-
-/** @addtogroup SPI_Exported_Functions_Group1
-  * @{
-  */
-
-/****************** Initialization/de-initialization functions ***************/
-
 HAL_Status HAL_SPI_Init(struct SPI_HANDLE *pSPI, uint32_t base, bool slave);
 HAL_Status HAL_SPI_DeInit(struct SPI_HANDLE *pSPI);
-
-/**
-  * @}
-  */
-
-/** @addtogroup SPI_Exported_Functions_Group2
-  * @{
-  */
-
-/*************************** I/O operation functions ***************************/
-
 HAL_Status HAL_SPI_FlushFifo(struct SPI_HANDLE *pSPI);
 HAL_Status HAL_SPI_SetCS(struct SPI_HANDLE *pSPI, char select, bool enable);
 HAL_Status HAL_SPI_QueryBusState(struct SPI_HANDLE *pSPI);
@@ -233,20 +129,8 @@ bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI);
 bool HAL_SPI_IsSlave(struct SPI_HANDLE *pSPI);
 bool HAL_SPI_IsDmaXfer(struct SPI_HANDLE *pSPI);
 
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
 #endif
+
+/** @} */
+
+/** @} */

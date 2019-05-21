@@ -72,7 +72,7 @@ static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum);
 /**
  * @brief  Return the PCD handle state.
  * @param  pPCD PCD handle
- * @retval HAL state
+ * @return HAL state
  */
 ePCD_state HAL_PCD_GetState(struct PCD_HANDLE *pPCD)
 {
@@ -96,7 +96,7 @@ ePCD_state HAL_PCD_GetState(struct PCD_HANDLE *pPCD)
 /**
  * @brief  Start The USB OTG Device.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_Start(struct PCD_HANDLE *pPCD)
 {
@@ -109,7 +109,7 @@ HAL_Status HAL_PCD_Start(struct PCD_HANDLE *pPCD)
 /**
  * @brief  Stop The USB OTG Device.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_Stop(struct PCD_HANDLE *pPCD)
 {
@@ -123,7 +123,7 @@ HAL_Status HAL_PCD_Stop(struct PCD_HANDLE *pPCD)
 /**
  * @brief  Handle PCD interrupt request.
  * @param  pPCD PCD handle
- * @retval None
+ * @return None
  */
 void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
 {
@@ -410,7 +410,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
  * @brief  Data OUT stage callback.
  * @param  pPCD PCD handle
  * @param  epNum endpoint number
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_DataOutStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
 {
@@ -425,7 +425,7 @@ __weak void HAL_PCD_DataOutStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
  * @brief  Data IN stage callback.
  * @param  pPCD PCD handle
  * @param  epNum endpoint number
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_DataInStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
 {
@@ -438,7 +438,7 @@ __weak void HAL_PCD_DataInStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
 /**
  * @brief  Setup stage callback.
  * @param  pPCD PCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_SetupStageCallback(struct PCD_HANDLE *pPCD)
 {
@@ -452,7 +452,7 @@ __weak void HAL_PCD_SetupStageCallback(struct PCD_HANDLE *pPCD)
 /**
  * @brief  USB Start Of Frame callback.
  * @param  pPCD PCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_SOFCallback(struct PCD_HANDLE *pPCD)
 {
@@ -466,7 +466,7 @@ __weak void HAL_PCD_SOFCallback(struct PCD_HANDLE *pPCD)
 /**
  * @brief  USB Reset callback.
  * @param  pPCD PCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_ResetCallback(struct PCD_HANDLE *pPCD)
 {
@@ -480,7 +480,7 @@ __weak void HAL_PCD_ResetCallback(struct PCD_HANDLE *pPCD)
 /**
  * @brief  Suspend event callback.
  * @param  pPCD PCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_SuspendCallback(struct PCD_HANDLE *pPCD)
 {
@@ -494,7 +494,7 @@ __weak void HAL_PCD_SuspendCallback(struct PCD_HANDLE *pPCD)
 /**
  * @brief  Resume event callback.
  * @param  pPCD PCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_ResumeCallback(struct PCD_HANDLE *pPCD)
 {
@@ -509,7 +509,7 @@ __weak void HAL_PCD_ResumeCallback(struct PCD_HANDLE *pPCD)
  * @brief  Incomplete ISO OUT callback.
  * @param  pPCD PCD handle
  * @param  epNum endpoint number
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_ISOOUTIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
 {
@@ -524,7 +524,7 @@ __weak void HAL_PCD_ISOOUTIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t ep
  * @brief  Incomplete ISO IN  callback.
  * @param  pPCD PCD handle
  * @param  epNum endpoint number
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_ISOINIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
 {
@@ -538,7 +538,7 @@ __weak void HAL_PCD_ISOINIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t epN
 /**
  * @brief  Connection event callback.
  * @param  pPCD PCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_ConnectCallback(struct PCD_HANDLE *pPCD)
 {
@@ -552,7 +552,7 @@ __weak void HAL_PCD_ConnectCallback(struct PCD_HANDLE *pPCD)
 /**
  * @brief  Disconnection event callback.
  * @param  pPCD PCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_PCD_DisconnectCallback(struct PCD_HANDLE *pPCD)
 {
@@ -580,7 +580,7 @@ __weak void HAL_PCD_DisconnectCallback(struct PCD_HANDLE *pPCD)
  * @brief  Initializes the PCD according to the specified parameters
  *         in the struct USB_OTG_CFG and create the associated handle.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_Init(struct PCD_HANDLE *pPCD)
 {
@@ -646,7 +646,7 @@ HAL_Status HAL_PCD_Init(struct PCD_HANDLE *pPCD)
 /**
  * @brief  DeInitializes the PCD peripheral.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_DeInit(struct PCD_HANDLE *pPCD)
 {
@@ -672,7 +672,7 @@ HAL_Status HAL_PCD_DeInit(struct PCD_HANDLE *pPCD)
 /**
  * @brief  Connect the USB device.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_DevConnect(struct PCD_HANDLE *pPCD)
 {
@@ -684,7 +684,7 @@ HAL_Status HAL_PCD_DevConnect(struct PCD_HANDLE *pPCD)
 /**
  * @brief  Disconnect the USB device.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_DevDisconnect(struct PCD_HANDLE *pPCD)
 {
@@ -697,7 +697,7 @@ HAL_Status HAL_PCD_DevDisconnect(struct PCD_HANDLE *pPCD)
  * @brief  Set the USB Device address.
  * @param  pPCD PCD handle
  * @param  address new device address
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_SetAddress(struct PCD_HANDLE *pPCD, uint8_t address)
 {
@@ -712,7 +712,7 @@ HAL_Status HAL_PCD_SetAddress(struct PCD_HANDLE *pPCD, uint8_t address)
  * @param  epAddr endpoint address
  * @param  ep_mps endpoint max packet size
  * @param  epType endpoint type
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_EPOpen(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint16_t ep_mps, uint8_t epType)
 {
@@ -747,7 +747,7 @@ HAL_Status HAL_PCD_EPOpen(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint16_t ep_m
  * @brief  Deactivate an endpoint.
  * @param  pPCD PCD handle
  * @param  epAddr endpoint address
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_EPClose(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 {
@@ -772,7 +772,7 @@ HAL_Status HAL_PCD_EPClose(struct PCD_HANDLE *pPCD, uint8_t epAddr)
  * @param  epAddr endpoint address
  * @param  pBuf pointer to the reception buffer
  * @param  len amount of data to be received
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_EPReceive(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint8_t *pBuf, uint32_t len)
 {
@@ -802,7 +802,7 @@ HAL_Status HAL_PCD_EPReceive(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint8_t *p
  * @brief  Get Received Data Size.
  * @param  pPCD PCD handle
  * @param  epAddr endpoint address
- * @retval Data Size
+ * @return Data Size
  */
 uint16_t HAL_PCD_EPGetRxCount(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 {
@@ -815,7 +815,7 @@ uint16_t HAL_PCD_EPGetRxCount(struct PCD_HANDLE *pPCD, uint8_t epAddr)
  * @param  epAddr endpoint address
  * @param  pBuf pointer to the transmission buffer
  * @param  len amount of data to be sent
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_EPTransmit(struct PCD_HANDLE *pPCD, uint8_t epAddr,
                               uint8_t *pBuf, uint32_t len)
@@ -846,7 +846,7 @@ HAL_Status HAL_PCD_EPTransmit(struct PCD_HANDLE *pPCD, uint8_t epAddr,
  * @brief  Set a STALL condition over an endpoint.
  * @param  pPCD PCD handle
  * @param  epAddr endpoint address
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_EPSetStall(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 {
@@ -875,7 +875,7 @@ HAL_Status HAL_PCD_EPSetStall(struct PCD_HANDLE *pPCD, uint8_t epAddr)
  * @brief  Clear a STALL condition over in an endpoint.
  * @param  pPCD PCD handle
  * @param  epAddr endpoint address
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_EPClrStall(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 {
@@ -902,7 +902,7 @@ HAL_Status HAL_PCD_EPClrStall(struct PCD_HANDLE *pPCD, uint8_t epAddr)
  * @brief  Flush an endpoint.
  * @param  pPCD PCD handle
  * @param  epAddr endpoint address
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_EPFlush(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 {
@@ -917,7 +917,7 @@ HAL_Status HAL_PCD_EPFlush(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 /**
  * @brief  Activate remote wakeup signalling.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_ActivateRemoteWakeup(struct PCD_HANDLE *pPCD)
 {
@@ -934,7 +934,7 @@ HAL_Status HAL_PCD_ActivateRemoteWakeup(struct PCD_HANDLE *pPCD)
 /**
  * @brief  De-activate remote wakeup signalling.
  * @param  pPCD PCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_PCD_DeActivateRemoteWakeup(struct PCD_HANDLE *pPCD)
 {
@@ -951,7 +951,7 @@ HAL_Status HAL_PCD_DeActivateRemoteWakeup(struct PCD_HANDLE *pPCD)
  * @brief  Check FIFO for the next packet to be loaded.
  * @param  pPCD PCD handle
  * @param  epNum  endpoint number
- * @retval HAL status
+ * @return HAL status
  */
 static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum)
 {

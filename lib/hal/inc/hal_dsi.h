@@ -15,17 +15,12 @@
 #define _HAL_DSI_H_
 
 /***************************** MACRO Definition ******************************/
-/** @defgroup DEMO_Exported_Definition_Group1 Basic Definition
+/** @defgroup CACHE_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 
-/** Add brief to here */
-
 /***************************** Structure Definition **************************/
-/**
- *  Add multi line brief to here
- *  ...
- */
+
 typedef enum {
     MIPI_DSI_DCS_COMPRESSION_MODE        = 0x07,
     MIPI_DSI_GENERIC_SHORT_WRITE_0_PARAM = 0x03,
@@ -108,8 +103,6 @@ HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
                                    struct DISPLAY_MODE_INFO *pModeInfo,
                                    struct DISPLAY_RECT *pDisplayRect);
 #endif
-
-/** @} */
 
 /** @} */
 

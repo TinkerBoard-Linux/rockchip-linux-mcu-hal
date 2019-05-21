@@ -3,7 +3,7 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
-/** @addtogroup ROCKCHIP_I2C_HAL_Driver
+/** @addtogroup RKMCU_HAL_Driver
   * @{
   */
 

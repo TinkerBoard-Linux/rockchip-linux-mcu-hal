@@ -97,24 +97,19 @@
 #define SPI_TIMEOUT_ENABLE  (1 << SPI_TIMEOUT_TOE_SHIFT)
 #define SPI_TIMEOUT_DISABLE 0
 
-/********************* Exported functions ************************************/
-/** @defgroup SPI_Exported_Functions SPI Exported Functions
-  * @{
-  */
+/********************* Public Function Definition ****************************/
 
-/** @defgroup SPI_Exported_Functions_Group1 Initialization and de-initialization functions
- *  @brief    Initialization and Configuration functions
- *
-@verbatim
- ===============================================================================
-              ##### Initialization and de-initialization functions #####
- ===============================================================================
-    This subsection provides a set of functions allowing to initialize and
-    de-initialize the SPIx peripheral:
+/** @defgroup SPI_Exported_Functions_Group4 Init and Deinit Functions
+ @verbatim
 
-@endverbatim
-  * @{
-  */
+ ===============================================================================
+             #### Init and deinit functions ####
+ ===============================================================================
+ This section provides functions allowing to init and deinit module as follows:
+
+ @endverbatim
+ *  @{
+ */
 
 /**
   * @brief  Initialize the SPI according to the specified parameters.
@@ -122,7 +117,7 @@
   *               the configuration information for SPI module.
   * @param  base: SPI controller register base address.
   * @param  slave: working at slave or master.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_Init(struct SPI_HANDLE *pSPI, uint32_t base, bool slave)
 {
@@ -149,7 +144,7 @@ HAL_Status HAL_SPI_Init(struct SPI_HANDLE *pSPI, uint32_t base, bool slave)
   * @brief  DeInitialize the SPI peripheral.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_DeInit(struct SPI_HANDLE *pSPI)
 {
@@ -159,30 +154,26 @@ HAL_Status HAL_SPI_DeInit(struct SPI_HANDLE *pSPI)
     return HAL_OK;
 }
 
-/**
-  * @}
-  */
+/** @} */
 
-/** @defgroup SPI_Exported_Functions_Group2 IO operation functions
- *  @brief   Data transfers functions
- *
-@verbatim
-  ==============================================================================
-                      ##### IO operation functions #####
+/** @defgroup SPI_Exported_Functions_Group3 IO Functions
+ @verbatim
+
  ===============================================================================
-    This subsection provides a set of functions allowing to manage the SPI
-    data transfers.
+             #### IO functions ####
+ ===============================================================================
+ This section provides functions allowing to IO controlling:
 
-@endverbatim
-  * @{
-  */
+ @endverbatim
+ *  @{
+ */
 
 /**
   * @brief  Start or stop the spi module.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
   * @param  enable: start or stop the spi module.
-  * @retval HAL status
+  * @return HAL status
   */
 static inline HAL_Status HAL_SPI_EnableChip(struct SPI_HANDLE *pSPI, int enable)
 {
@@ -196,7 +187,7 @@ static inline HAL_Status HAL_SPI_EnableChip(struct SPI_HANDLE *pSPI, int enable)
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
   * @param  div: clock division.
-  * @retval HAL status
+  * @return HAL status
   */
 static inline HAL_Status HAL_SPI_SetClock(struct SPI_HANDLE *pSPI, uint16_t div)
 {
@@ -211,7 +202,7 @@ static inline HAL_Status HAL_SPI_SetClock(struct SPI_HANDLE *pSPI, uint16_t div)
   *               the configuration information for SPI module.
   * @param select: cs number select.
   * @param  enable: active or inactive the cs signal.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_SetCS(struct SPI_HANDLE *pSPI, char select, bool enable)
 {
@@ -235,7 +226,7 @@ HAL_Status HAL_SPI_SetCS(struct SPI_HANDLE *pSPI, char select, bool enable)
   * @brief  Wait for the transfer finished.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_FlushFifo(struct SPI_HANDLE *pSPI)
 {
@@ -251,7 +242,7 @@ HAL_Status HAL_SPI_FlushFifo(struct SPI_HANDLE *pSPI)
   * @brief  Calculate the timeout for transfer finished.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval Time
+  * @return Time
   */
 uint32_t HAL_SPI_CalculateTimeout(struct SPI_HANDLE *pSPI)
 {
@@ -269,7 +260,7 @@ uint32_t HAL_SPI_CalculateTimeout(struct SPI_HANDLE *pSPI)
   * @brief  Query the SPI bus state is idle or busy.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_QueryBusState(struct SPI_HANDLE *pSPI)
 {
@@ -290,7 +281,7 @@ HAL_Status HAL_SPI_QueryBusState(struct SPI_HANDLE *pSPI)
   * @brief  The max amount of data can be written in blocking mode.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval Max bytes can xfer.
+  * @return Max bytes can xfer.
   */
 static inline uint32_t HAL_SPI_TxMax(struct SPI_HANDLE *pSPI)
 {
@@ -306,7 +297,7 @@ static inline uint32_t HAL_SPI_TxMax(struct SPI_HANDLE *pSPI)
   * @brief  The max amount of data can be read in blocking mode.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval Max bytes can xfer.
+  * @return Max bytes can xfer.
   */
 static inline uint32_t HAL_SPI_RxMax(struct SPI_HANDLE *pSPI)
 {
@@ -320,7 +311,7 @@ static inline uint32_t HAL_SPI_RxMax(struct SPI_HANDLE *pSPI)
   * @brief  Send an amount of data in blocking mode.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status HAL_SPI_PioWrite(struct SPI_HANDLE *pSPI)
 {
@@ -344,7 +335,7 @@ static HAL_Status HAL_SPI_PioWrite(struct SPI_HANDLE *pSPI)
   * @brief  Read an amount of data in blocking mode.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status HAL_SPI_PioRead(struct SPI_HANDLE *pSPI)
 {
@@ -367,7 +358,7 @@ static HAL_Status HAL_SPI_PioRead(struct SPI_HANDLE *pSPI)
   * @brief  Transmit an amount of data in blocking mode.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_PioTransfer(struct SPI_HANDLE *pSPI)
 {
@@ -398,7 +389,7 @@ HAL_Status HAL_SPI_PioTransfer(struct SPI_HANDLE *pSPI)
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for the specified SPI module.
   *         mask: The bit will be mask.
-  * @retval HAL status
+  * @return HAL status
   */
 static inline HAL_Status HAL_SPI_MaskIntr(struct SPI_HANDLE *pSPI, uint32_t mask)
 {
@@ -415,7 +406,7 @@ static inline HAL_Status HAL_SPI_MaskIntr(struct SPI_HANDLE *pSPI, uint32_t mask
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for the specified SPI module.
   *         mask: The bit will be unmask.
-  * @retval HAL status
+  * @return HAL status
   */
 static inline HAL_Status HAL_SPI_UnmaskIntr(struct SPI_HANDLE *pSPI, uint32_t mask)
 {
@@ -431,7 +422,7 @@ static inline HAL_Status HAL_SPI_UnmaskIntr(struct SPI_HANDLE *pSPI, uint32_t ma
   * @brief  Handle SPI interrupt request.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for the specified SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_IrqHandler(struct SPI_HANDLE *pSPI)
 {
@@ -502,7 +493,7 @@ out:
   * @brief  Transmit an amount of data with interrupt in noblocking mode.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL_status
+  * @return HAL_status
   */
 HAL_Status HAL_SPI_ItTransfer(struct SPI_HANDLE *pSPI)
 {
@@ -548,7 +539,7 @@ HAL_Status HAL_SPI_ItTransfer(struct SPI_HANDLE *pSPI)
   * @brief  Is the SPI slave mode or not.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval Bool
+  * @return Bool
   */
 bool HAL_SPI_IsSlave(struct SPI_HANDLE *pSPI)
 {
@@ -561,7 +552,7 @@ bool HAL_SPI_IsSlave(struct SPI_HANDLE *pSPI)
   * @brief  Can the Transmit use dma in noblocking mode or not.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval Bool
+  * @return Bool
   */
 bool HAL_SPI_IsDmaXfer(struct SPI_HANDLE *pSPI)
 {
@@ -574,7 +565,7 @@ bool HAL_SPI_IsDmaXfer(struct SPI_HANDLE *pSPI)
   * @brief  Can the Transmit use dma in noblocking mode or not.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval Bool
+  * @return Bool
   */
 bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI)
 {
@@ -587,7 +578,7 @@ bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI)
   * @brief  Transmit an amount of data with dma in noblocking mode.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_DmaTransfer(struct SPI_HANDLE *pSPI)
 {
@@ -614,7 +605,7 @@ HAL_Status HAL_SPI_DmaTransfer(struct SPI_HANDLE *pSPI)
   * @brief  Stop the transmit.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_Stop(struct SPI_HANDLE *pSPI)
 {
@@ -633,7 +624,7 @@ HAL_Status HAL_SPI_Stop(struct SPI_HANDLE *pSPI)
   * @brief  Configure the SPI transfer mode depend on the tx/rx buffer.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status HAL_SPI_ConfigureTransferMode(struct SPI_HANDLE *pSPI)
 {
@@ -662,7 +653,7 @@ static HAL_Status HAL_SPI_ConfigureTransferMode(struct SPI_HANDLE *pSPI)
   * @param  pTxData: pointer to TX buffer.
   * @param  pRxData: pointer to RX buffer.
   * @param  size: amount of data to be sent.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, uint8_t *pRxData, uint32_t size)
 {
@@ -714,8 +705,6 @@ HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, ui
 
     return HAL_OK;
 }
-
-/** @} */
 
 /** @} */
 

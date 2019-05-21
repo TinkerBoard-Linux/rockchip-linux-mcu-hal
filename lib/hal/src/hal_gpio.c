@@ -412,7 +412,7 @@ HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eG
  * @brief  Get GPIO Pin direction.
  * @param  GPIOx: the GPIO struct.
  * @param  pin: gpio pin num.
- * @retval GPIO pin direction value.
+ * @return GPIO pin direction value.
  */
 eGPIO_PinDirection HAL_GPIO_GetPinDirection(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
 {
@@ -425,7 +425,7 @@ eGPIO_PinDirection HAL_GPIO_GetPinDirection(struct GPIO_REG *GPIOx, eGPIO_PinNum
  * @brief  Get GPIO Pin data value.
  * @param  GPIOx: the GPIO struct.
  * @param  pin: gpio pin num.
- * @retval GPIO pin data value.
+ * @return GPIO pin data value.
  */
 eGPIO_PinLevel HAL_GPIO_GetPinData(struct GPIO_REG * GPIOx, eGPIO_PinNum pin)
 {
@@ -438,7 +438,7 @@ eGPIO_PinLevel HAL_GPIO_GetPinData(struct GPIO_REG * GPIOx, eGPIO_PinNum pin)
  * @brief  Get GPIO Pin ext port level.
  * @param  GPIOx: the GPIO struct.
  * @param  pin: gpio pin num.
- * @retval GPIO pin ext port value.
+ * @return GPIO pin ext port value.
  */
 eGPIO_PinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
 {

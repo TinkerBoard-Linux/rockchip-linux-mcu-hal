@@ -3,10 +3,6 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
-#include "hal_base.h"
-
-#ifdef HAL_PM_MODULE_ENABLED
-
 /** @addtogroup RKMCU_HAL_Driver
  *  @{
  */
@@ -29,8 +25,16 @@
  @endverbatim
  @} */
 
+#include "hal_base.h"
+
+#ifdef HAL_PM_MODULE_ENABLED
+
+/********************* Private MACRO Definition ******************************/
+
 #define NVIC_EXT_ISER_NUM (8)
 #define NVIC_EXT_IP_NUM   (240)
+
+/********************* Private Structure Definition **************************/
 
 struct NVIC_REGS {
     __IO uint32_t ISER[8];
@@ -55,8 +59,12 @@ struct NVIC_SAVE_S {
     uint32_t pg;  /* Interrupt Priority Group Register */
 };
 
+/********************* Private Variable Definition ***************************/
+
 static struct NVIC_SAVE_S nvicSave;
 static struct NVIC_REGS *pnvic = (struct NVIC_REGS *)NVIC_BASE;
+
+/********************* Private Function Definition ***************************/
 
 /**
  * @brief  save nvic registers for resume nvic.

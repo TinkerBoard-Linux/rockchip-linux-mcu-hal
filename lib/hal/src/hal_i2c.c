@@ -4,12 +4,13 @@
  */
 
 /** @addtogroup RKMCU_HAL_Driver
-  * @{
-  */
-/** @defgroup I2C I2C
-  * @brief I2C HAL module driver
-  * @{
-  */
+ *  @{
+ */
+
+/** @addtogroup I2C
+ *  @brief I2C HAL module driver
+ *  @{
+ */
 
 /** @defgroup How_To_Use How To Use
  *  @{
@@ -120,7 +121,7 @@ static const struct I2C_SPEC_VALUES fastModePlusSpec = {
 /**
   * @brief  Get the I2C timing specification.
   * @param  speed: desired I2C bus speed.
-  * @retval matched i2c spec values
+  * @return matched i2c spec values
   */
 static const struct I2C_SPEC_VALUES *I2C_GetSpec(eI2C_BusSpeed speed)
 {
@@ -136,7 +137,7 @@ static const struct I2C_SPEC_VALUES *I2C_GetSpec(eI2C_BusSpeed speed)
   * @brief  Auto adapte the clock div base on input clock rate and desired speed.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate, eI2C_BusSpeed speed)
 {
@@ -205,7 +206,7 @@ static HAL_Status I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate, eI2C_BusS
   * @brief  Clean the I2C pending interrupt.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_CleanIPD(struct I2C_HANDLE *pI2C)
 {
@@ -218,7 +219,7 @@ static HAL_Status I2C_CleanIPD(struct I2C_HANDLE *pI2C)
   * @brief  Disable the I2C interrupt.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_DisableIRQ(struct I2C_HANDLE *pI2C)
 {
@@ -231,7 +232,7 @@ static HAL_Status I2C_DisableIRQ(struct I2C_HANDLE *pI2C)
   * @brief  Disable the I2C controller.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_Disable(struct I2C_HANDLE *pI2C)
 {
@@ -246,7 +247,7 @@ static HAL_Status I2C_Disable(struct I2C_HANDLE *pI2C)
   * @brief  Send I2C start signal.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_Start(struct I2C_HANDLE *pI2C)
 {
@@ -275,7 +276,7 @@ static HAL_Status I2C_Start(struct I2C_HANDLE *pI2C)
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
   * @param  error: report the error for the stop.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_Stop(struct I2C_HANDLE *pI2C, HAL_Status error)
 {
@@ -316,7 +317,7 @@ static HAL_Status I2C_Stop(struct I2C_HANDLE *pI2C, HAL_Status error)
   * @brief  Prepare for reading i2c data.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_PrepareRead(struct I2C_HANDLE *pI2C)
 {
@@ -352,7 +353,7 @@ static HAL_Status I2C_PrepareRead(struct I2C_HANDLE *pI2C)
   * @brief  Fill transmit buffer.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_FillTransmitBuf(struct I2C_HANDLE *pI2C)
 {
@@ -390,7 +391,7 @@ static HAL_Status I2C_FillTransmitBuf(struct I2C_HANDLE *pI2C)
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
   * @param  ipd: interrupt pending status
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_HandleStart(struct I2C_HANDLE *pI2C, uint32_t ipd)
 {
@@ -430,7 +431,7 @@ static HAL_Status I2C_HandleStart(struct I2C_HANDLE *pI2C, uint32_t ipd)
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
   * @param  ipd: interrupt pending status
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_HandleWrite(struct I2C_HANDLE *pI2C, uint32_t ipd)
 {
@@ -460,7 +461,7 @@ static HAL_Status I2C_HandleWrite(struct I2C_HANDLE *pI2C, uint32_t ipd)
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
   * @param  ipd: interrupt pending status
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_HandleRead(struct I2C_HANDLE *pI2C, uint32_t ipd)
 {
@@ -503,7 +504,7 @@ static HAL_Status I2C_HandleRead(struct I2C_HANDLE *pI2C, uint32_t ipd)
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
   * @param  ipd: interrupt pending status
-  * @retval HAL status
+  * @return HAL status
   */
 static HAL_Status I2C_HandleStop(struct I2C_HANDLE *pI2C, uint32_t ipd)
 {
@@ -530,8 +531,6 @@ static HAL_Status I2C_HandleStop(struct I2C_HANDLE *pI2C, uint32_t ipd)
     return pI2C->error ? pI2C->error : HAL_OK;
 }
 
-/** @} */
-
 /********************* Public Function Definition ****************************/
 
 /** @defgroup I2C_Exported_Functions_Group3 IO Functions
@@ -550,7 +549,7 @@ static HAL_Status I2C_HandleStop(struct I2C_HANDLE *pI2C, uint32_t ipd)
   * @brief  Handle I2C interrupt for transfer.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_I2C_IRQHandler(struct I2C_HANDLE *pI2C)
 {
@@ -621,7 +620,7 @@ out:
   * @param  buf: pointer to the buffer for I2C transfer.
   * @param  len: data length for I2C transfer.
   * @param  flags: flags for I2C transfer.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_I2C_SetupMsg(struct I2C_HANDLE *pI2C, uint16_t addr, uint8_t *buf,
                             uint16_t len, uint16_t flags)
@@ -643,7 +642,7 @@ HAL_Status HAL_I2C_SetupMsg(struct I2C_HANDLE *pI2C, uint16_t addr, uint8_t *buf
   * @param  mode: mode for I2C transfer.
   * @param  addr: slave device address with r/w bit and vaild bit.
   * @param  regAddr: register address with vaild bit.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_I2C_ConfigureMode(struct I2C_HANDLE *pI2C, eI2C_Mode mode,
                                  uint32_t addr, uint32_t regAddr)
@@ -666,7 +665,7 @@ HAL_Status HAL_I2C_ConfigureMode(struct I2C_HANDLE *pI2C, eI2C_Mode mode,
   *               the information for I2C module.
   * @param  type: using poll or interrupt.
   * @param  last: Last message or not for this transmit.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_I2C_Transfer(struct I2C_HANDLE *pI2C, eI2C_TransferType type, bool last)
 {
@@ -689,7 +688,7 @@ HAL_Status HAL_I2C_Transfer(struct I2C_HANDLE *pI2C, eI2C_TransferType type, boo
   * @brief  Force to stop the I2C transfer without interrupt.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_I2C_ForceStop(struct I2C_HANDLE *pI2C)
 {
@@ -709,7 +708,7 @@ HAL_Status HAL_I2C_ForceStop(struct I2C_HANDLE *pI2C)
   * @brief  Close the I2C transfer.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_I2C_Close(struct I2C_HANDLE *pI2C)
 {
@@ -742,7 +741,7 @@ HAL_Status HAL_I2C_Close(struct I2C_HANDLE *pI2C)
   * @param  base: I2C controller register base address.
   * @param  rate: I2C bus input clock rate.
   * @param  speed: I2C bus output speed.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, uint32_t base, uint32_t rate,
                         eI2C_BusSpeed speed)
@@ -761,7 +760,7 @@ HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, uint32_t base, uint32_t rate,
   * @brief  De Initialize the I2C peripheral.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @retval HAL status
+  * @return HAL status
   */
 HAL_Status HAL_I2C_DeInit(struct I2C_HANDLE *pI2C)
 {

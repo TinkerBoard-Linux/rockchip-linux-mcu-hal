@@ -57,7 +57,7 @@ static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB);
  * @param  pUSB USB Instance
  * @param  cfg  pointer to a USB_OTG_CFG structure that contains
  *         the configuration information for the specified pUSB peripheral.
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_CoreInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
 {
@@ -100,7 +100,7 @@ HAL_Status USB_CoreInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
  * @brief  USB_EnableGlobalInt
  *         Enables the controller's Global Int in the AHB Config reg
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_EnableGlobalInt(struct USB_GLOBAL_REG *pUSB)
 {
@@ -113,7 +113,7 @@ HAL_Status USB_EnableGlobalInt(struct USB_GLOBAL_REG *pUSB)
  * @brief  USB_DisableGlobalInt
  *         Disable the controller's Global Int in the AHB Config reg
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_DisableGlobalInt(struct USB_GLOBAL_REG *pUSB)
 {
@@ -130,7 +130,7 @@ HAL_Status USB_DisableGlobalInt(struct USB_GLOBAL_REG *pUSB)
  *         @arg USB_OTG_DEVICE_MODE: Peripheral mode
  *         @arg USB_OTG_HOST_MODE: Host mode
  *         @arg USB_OTG_DRD_MODE: Dual Role Device mode
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_SetCurrentMode(struct USB_GLOBAL_REG *pUSB, eUSB_OTG_mode mode)
 {
@@ -152,7 +152,7 @@ HAL_Status USB_SetCurrentMode(struct USB_GLOBAL_REG *pUSB, eUSB_OTG_mode mode)
  * @param  pUSB  Selected device
  * @param  cfg   pointer to a USB_OTG_CFG structure that contains
  *         the configuration information for the specified pUSB peripheral.
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_DevInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
 {
@@ -247,7 +247,7 @@ HAL_Status USB_DevInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
  * @param  num  FIFO number
  *         This parameter can be a value from 1 to 15
  *         15 means Flush all Tx FIFOs
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_FlushTxFifo(struct USB_GLOBAL_REG *pUSB, uint32_t num)
 {
@@ -266,7 +266,7 @@ HAL_Status USB_FlushTxFifo(struct USB_GLOBAL_REG *pUSB, uint32_t num)
 /**
  * @brief  USB_FlushRxFifo : Flush Rx FIFO
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_FlushRxFifo(struct USB_GLOBAL_REG *pUSB)
 {
@@ -292,7 +292,7 @@ HAL_Status USB_FlushRxFifo(struct USB_GLOBAL_REG *pUSB)
  *            @arg USB_OTG_SPEED_HIGH_IN_FULL: High speed core in Full Speed mode
  *            @arg USB_OTG_SPEED_FULL: Full speed mode
  *            @arg USB_OTG_SPEED_LOW: Low speed mode
- * @retval  Hal status
+ * @return  Hal status
  */
 HAL_Status USB_SetDevSpeed(struct USB_GLOBAL_REG *pUSB, uint8_t speed)
 {
@@ -304,7 +304,7 @@ HAL_Status USB_SetDevSpeed(struct USB_GLOBAL_REG *pUSB, uint8_t speed)
 /**
  * @brief  USB_GetDevSpeed :Return the  Dev Speed
  * @param  pUSB  Selected device
- * @retval speed : device speed
+ * @return speed : device speed
  *          This parameter can be one of these values:
  *            @arg USB_OTG_SPEED_HIGH: High speed mode
  *            @arg USB_OTG_SPEED_FULL: Full speed mode
@@ -334,7 +334,7 @@ uint8_t USB_GetDevSpeed(struct USB_GLOBAL_REG *pUSB)
  * @brief  Activate and configure an endpoint
  * @param  pUSB  Selected device
  * @param  pEP pointer to endpoint structure
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_ActivateEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
 {
@@ -365,7 +365,7 @@ HAL_Status USB_ActivateEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *
  * @brief  Activate and configure a dedicated endpoint
  * @param  pUSB  Selected device
  * @param  pEP pointer to endpoint structure
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_ActivateDedicatedEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
 {
@@ -394,7 +394,7 @@ HAL_Status USB_ActivateDedicatedEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB
  * @brief  De-activate and de-initialize an endpoint
  * @param  pUSB  Selected device
  * @param  pEP pointer to endpoint structure
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_DeactivateEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
 {
@@ -416,7 +416,7 @@ HAL_Status USB_DeactivateEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP
  * @brief  De-activate and de-initialize a dedicated endpoint
  * @param  pUSB  Selected device
  * @param  pEP pointer to endpoint structure
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_DeactivateDedicatedEndpoint(struct USB_GLOBAL_REG *pUSB,
                                            struct USB_OTG_EP *pEP)
@@ -441,7 +441,7 @@ HAL_Status USB_DeactivateDedicatedEndpoint(struct USB_GLOBAL_REG *pUSB,
  *          This parameter can be one of these values:
  *           0 : DMA feature not used
  *           1 : DMA feature used
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
                            struct USB_OTG_EP *pEP, uint8_t dma)
@@ -548,7 +548,7 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
  *          This parameter can be one of these values:
  *           0 : DMA feature not used
  *           1 : DMA feature used
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_EP0StartXfer(struct USB_GLOBAL_REG *pUSB,
                             struct USB_OTG_EP *pEP, uint8_t dma)
@@ -628,7 +628,7 @@ HAL_Status USB_EP0StartXfer(struct USB_GLOBAL_REG *pUSB,
  *          This parameter can be one of these values:
  *           0 : DMA feature not used
  *           1 : DMA feature used
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_WritePacket(struct USB_GLOBAL_REG *pUSB, uint8_t *psrc,
                            uint8_t chEpNum, uint16_t len, uint8_t dma)
@@ -650,7 +650,7 @@ HAL_Status USB_WritePacket(struct USB_GLOBAL_REG *pUSB, uint8_t *psrc,
  * @param  pUSB  Selected device
  * @param  pdest  destination buffer
  * @param  len  Number of bytes to read
- * @retval pointer to destination buffer
+ * @return pointer to destination buffer
  */
 void *USB_ReadPacket(struct USB_GLOBAL_REG *pUSB, uint8_t *pdest, uint16_t len)
 {
@@ -667,7 +667,7 @@ void *USB_ReadPacket(struct USB_GLOBAL_REG *pUSB, uint8_t *pdest, uint16_t len)
  * @brief  USB_EPSetStall : set a stall condition over an EP
  * @param  pUSB  Selected device
  * @param  pEP pointer to endpoint structure
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_EPSetStall(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
 {
@@ -690,7 +690,7 @@ HAL_Status USB_EPSetStall(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
  * @brief  USB_EPClearStall : Clear a stall condition over an EP
  * @param  pUSB  Selected device
  * @param  pEP pointer to endpoint structure
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_EPClearStall(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
 {
@@ -714,7 +714,7 @@ HAL_Status USB_EPClearStall(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
 /**
  * @brief  USB_StopDevice : Stop the usb device mode
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_StopDevice(struct USB_GLOBAL_REG *pUSB)
 {
@@ -744,7 +744,7 @@ HAL_Status USB_StopDevice(struct USB_GLOBAL_REG *pUSB)
  * @param  pUSB  Selected device
  * @param  address  new device address to be assigned
  *          This parameter can be a value from 0 to 255
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_SetDevAddress(struct USB_GLOBAL_REG *pUSB, uint8_t address)
 {
@@ -757,7 +757,7 @@ HAL_Status USB_SetDevAddress(struct USB_GLOBAL_REG *pUSB, uint8_t address)
 /**
  * @brief  USB_DevConnect : Connect the USB device by enabling the pull-up/pull-down
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_DevConnect(struct USB_GLOBAL_REG *pUSB)
 {
@@ -770,7 +770,7 @@ HAL_Status USB_DevConnect(struct USB_GLOBAL_REG *pUSB)
 /**
  * @brief  USB_DevDisconnect : Disconnect the USB device by disabling the pull-up/pull-down
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_DevDisconnect(struct USB_GLOBAL_REG *pUSB)
 {
@@ -783,7 +783,7 @@ HAL_Status USB_DevDisconnect(struct USB_GLOBAL_REG *pUSB)
 /**
  * @brief  USB_ReadInterrupts: return the global USB interrupt status
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 uint32_t USB_ReadInterrupts(struct USB_GLOBAL_REG *pUSB)
 {
@@ -798,7 +798,7 @@ uint32_t USB_ReadInterrupts(struct USB_GLOBAL_REG *pUSB)
 /**
  * @brief  USB_ReadDevAllOutEpInterrupt: return the USB device OUT endpoints interrupt status
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 uint32_t USB_ReadDevAllOutEpInterrupt(struct USB_GLOBAL_REG *pUSB)
 {
@@ -813,7 +813,7 @@ uint32_t USB_ReadDevAllOutEpInterrupt(struct USB_GLOBAL_REG *pUSB)
 /**
  * @brief  USB_ReadDevAllInEpInterrupt: return the USB device IN endpoints interrupt status
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 uint32_t USB_ReadDevAllInEpInterrupt(struct USB_GLOBAL_REG *pUSB)
 {
@@ -830,7 +830,7 @@ uint32_t USB_ReadDevAllInEpInterrupt(struct USB_GLOBAL_REG *pUSB)
  * @param  pUSB  Selected device
  * @param  epNum  endpoint number
  *          This parameter can be a value from 0 to 15
- * @retval Device OUT EP Interrupt register
+ * @return Device OUT EP Interrupt register
  */
 uint32_t USB_ReadDevOutEPInterrupt(struct USB_GLOBAL_REG *pUSB, uint8_t epNum)
 {
@@ -847,7 +847,7 @@ uint32_t USB_ReadDevOutEPInterrupt(struct USB_GLOBAL_REG *pUSB, uint8_t epNum)
  * @param  pUSB  Selected device
  * @param  epNum  endpoint number
  *          This parameter can be a value from 0 to 15
- * @retval Device IN EP Interrupt register
+ * @return Device IN EP Interrupt register
  */
 uint32_t USB_ReadDevInEPInterrupt(struct USB_GLOBAL_REG *pUSB, uint8_t epNum)
 {
@@ -865,7 +865,7 @@ uint32_t USB_ReadDevInEPInterrupt(struct USB_GLOBAL_REG *pUSB, uint8_t epNum)
  * @brief  USB_ClearInterrupts: clear a USB interrupt
  * @param  pUSB  Selected device
  * @param  interrupt  interrupt flag
- * @retval None
+ * @return None
  */
 void USB_ClearInterrupts(struct USB_GLOBAL_REG *pUSB, uint32_t interrupt)
 {
@@ -875,7 +875,7 @@ void USB_ClearInterrupts(struct USB_GLOBAL_REG *pUSB, uint32_t interrupt)
 /**
  * @brief  Returns USB core mode
  * @param  pUSB  Selected device
- * @retval return core mode : Host or Device
+ * @return return core mode : Host or Device
  *          This parameter can be one of these values:
  *           0 : Host
  *           1 : Device
@@ -888,7 +888,7 @@ uint32_t USB_GetMode(struct USB_GLOBAL_REG *pUSB)
 /**
  * @brief  Activate EP0 for Setup transactions
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_ActivateSetup(struct USB_GLOBAL_REG *pUSB)
 {
@@ -911,7 +911,7 @@ HAL_Status USB_ActivateSetup(struct USB_GLOBAL_REG *pUSB)
  *           0 : DMA feature not used
  *           1 : DMA feature used
  * @param  psetup  pointer to setup packet
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_EP0_OutStart(struct USB_GLOBAL_REG *pUSB,
                             uint8_t dma, uint8_t *psetup)
@@ -936,7 +936,7 @@ HAL_Status USB_EP0_OutStart(struct USB_GLOBAL_REG *pUSB,
  * @param  pUSB  Selected device
  * @param  cfg   pointer to a USB_OTG_CFG structure that contains
  *         the configuration information for the specified pUSB peripheral.
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_HostInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
 {
@@ -1000,7 +1000,7 @@ HAL_Status USB_HostInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
  *          This parameter can be one of these values:
  *           HCFG_48_MHZ : Full Speed 48 MHz Clock
  *           HCFG_6_MHZ : Low Speed 6 MHz Clock
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_InitFSLSPClkSel(struct USB_GLOBAL_REG *pUSB, uint8_t freq)
 {
@@ -1018,7 +1018,7 @@ HAL_Status USB_InitFSLSPClkSel(struct USB_GLOBAL_REG *pUSB, uint8_t freq)
 /**
  * @brief  USB_OTG_ResetPort : Reset Host Port
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  * @note : (1)The application must wait at least 10 ms
  *   before clearing the reset bit.
  */
@@ -1047,7 +1047,7 @@ HAL_Status USB_ResetPort(struct USB_GLOBAL_REG *pUSB)
  *          This parameter can be one of these values:
  *           0 : VBUS Active
  *           1 : VBUS Inactive
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status USB_DriveVbus(struct USB_GLOBAL_REG *pUSB, uint8_t state)
 {
@@ -1070,7 +1070,7 @@ HAL_Status USB_DriveVbus(struct USB_GLOBAL_REG *pUSB, uint8_t state)
 /**
  * @brief  Return Host Core speed
  * @param  pUSB  Selected device
- * @retval speed : Host speed
+ * @return speed : Host speed
  *          This parameter can be one of these values:
  *            @arg USB_OTG_SPEED_HIGH: High speed mode
  *            @arg USB_OTG_SPEED_FULL: Full speed mode
@@ -1088,7 +1088,7 @@ uint32_t USB_GetHostSpeed(struct USB_GLOBAL_REG *pUSB)
 /**
  * @brief  Return Host Current Frame number
  * @param  pUSB  Selected device
- * @retval current frame number
+ * @return current frame number
  */
 uint32_t USB_GetCurrentFrame(struct USB_GLOBAL_REG *pUSB)
 {
@@ -1117,7 +1117,7 @@ uint32_t USB_GetCurrentFrame(struct USB_GLOBAL_REG *pUSB)
  *            @arg EP_TYPE_INTR: Interrupt type
  * @param  mps  Max Packet Size
  *         This parameter can be a value from 0 to32K
- * @retval HAL state
+ * @return HAL state
  */
 HAL_Status USB_HCInit(struct USB_GLOBAL_REG *pUSB,
                       uint8_t chNum,
@@ -1203,7 +1203,7 @@ HAL_Status USB_HCInit(struct USB_GLOBAL_REG *pUSB,
  *          This parameter can be one of these values:
  *           0 : DMA feature not used
  *           1 : DMA feature used
- * @retval HAL state
+ * @return HAL state
  */
 HAL_Status USB_HCStartXfer(struct USB_GLOBAL_REG *pUSB,
                            struct USB_OTG_HC *pHC, uint8_t dma)
@@ -1310,7 +1310,7 @@ HAL_Status USB_HCStartXfer(struct USB_GLOBAL_REG *pUSB,
 /**
  * @brief Read all host channel interrupts status
  * @param  pUSB  Selected device
- * @retval HAL state
+ * @return HAL state
  */
 uint32_t USB_HCReadInterrupt(struct USB_GLOBAL_REG *pUSB)
 {
@@ -1322,7 +1322,7 @@ uint32_t USB_HCReadInterrupt(struct USB_GLOBAL_REG *pUSB)
  * @param  pUSB  Selected device
  * @param  hcNum  Host Channel number
  *         This parameter can be a value from 1 to 15
- * @retval HAL state
+ * @return HAL state
  */
 HAL_Status USB_HCHalt(struct USB_GLOBAL_REG *pUSB, uint8_t hcNum)
 {
@@ -1372,7 +1372,7 @@ HAL_Status USB_HCHalt(struct USB_GLOBAL_REG *pUSB, uint8_t hcNum)
  * @param  pUSB  Selected device
  * @param  chNum  Host Channel number
  *         This parameter can be a value from 1 to 15
- * @retval HAL state
+ * @return HAL state
  */
 HAL_Status USB_DoPing(struct USB_GLOBAL_REG *pUSB, uint8_t chNum)
 {
@@ -1394,7 +1394,7 @@ HAL_Status USB_DoPing(struct USB_GLOBAL_REG *pUSB, uint8_t chNum)
 /**
  * @brief  Stop Host Core
  * @param  pUSB  Selected device
- * @retval HAL state
+ * @return HAL state
  */
 HAL_Status USB_StopHost(struct USB_GLOBAL_REG *pUSB)
 {
@@ -1446,7 +1446,7 @@ HAL_Status USB_StopHost(struct USB_GLOBAL_REG *pUSB)
 /**
  * @brief  Reset the USB Core (needed after USB clock settings change)
  * @param  pUSB  Selected device
- * @retval HAL status
+ * @return HAL status
  */
 static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB)
 {

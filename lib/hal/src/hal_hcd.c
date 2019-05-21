@@ -72,7 +72,7 @@ static void HCD_Port_IRQHandler(struct HCD_HANDLE *pHCD);
 /**
  * @brief  Return the HCD handle state.
  * @param  pHCD HCD handle
- * @retval HAL state
+ * @return HAL state
  */
 eHCD_state HAL_HCD_GetState(struct HCD_HANDLE *pHCD)
 {
@@ -84,7 +84,7 @@ eHCD_state HAL_HCD_GetState(struct HCD_HANDLE *pHCD)
  * @param  pHCD HCD handle
  * @param  chNum Channel number.
  *         This parameter can be a value from 1 to 15
- * @retval URB state.
+ * @return URB state.
  *         This parameter can be one of these values:
  *            URB_IDLE/
  *            URB_DONE/
@@ -103,7 +103,7 @@ eUSB_OTG_urbState HAL_HCD_HCGetURBState(struct HCD_HANDLE *pHCD, uint8_t chNum)
  * @param  pHCD HCD handle
  * @param  chNum Channel number.
  *         This parameter can be a value from 1 to 15
- * @retval last transfer size in byte
+ * @return last transfer size in byte
  */
 uint32_t HAL_HCD_HCGetXferCount(struct HCD_HANDLE *pHCD, uint8_t chNum)
 {
@@ -115,7 +115,7 @@ uint32_t HAL_HCD_HCGetXferCount(struct HCD_HANDLE *pHCD, uint8_t chNum)
  * @param  pHCD HCD handle
  * @param  chNum Channel number.
  *         This parameter can be a value from 1 to 15
- * @retval Host channel state
+ * @return Host channel state
  *         This parameter can be one of these values:
  *            HC_IDLE/
  *            HC_XFRC/
@@ -135,7 +135,7 @@ eUSB_OTG_hcState HAL_HCD_HCGetState(struct HCD_HANDLE *pHCD, uint8_t chNum)
 /**
  * @brief  Return the current Host frame number.
  * @param  pHCD HCD handle
- * @retval Current Host frame number
+ * @return Current Host frame number
  */
 uint32_t HAL_HCD_GetCurrentFrame(struct HCD_HANDLE *pHCD)
 {
@@ -145,7 +145,7 @@ uint32_t HAL_HCD_GetCurrentFrame(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Return the Host enumeration speed.
  * @param  pHCD HCD handle
- * @retval Enumeration speed
+ * @return Enumeration speed
  */
 uint32_t HAL_HCD_GetCurrentSpeed(struct HCD_HANDLE *pHCD)
 {
@@ -189,7 +189,7 @@ uint32_t HAL_HCD_GetCurrentSpeed(struct HCD_HANDLE *pHCD)
  * @param  doPing activate do ping protocol (for high speed only).
  *         This parameter can be one of these values:
  *           0 : do ping inactive / 1 : do ping active
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_HCD_HCSubmitRequest(struct HCD_HANDLE *pHCD,
                                    uint8_t chNum,
@@ -280,7 +280,7 @@ HAL_Status HAL_HCD_HCSubmitRequest(struct HCD_HANDLE *pHCD,
 /**
  * @brief  Handle HCD interrupt request.
  * @param  pHCD HCD handle
- * @retval None
+ * @return None
  */
 void HAL_HCD_IRQHandler(struct HCD_HANDLE *pHCD)
 {
@@ -359,7 +359,7 @@ void HAL_HCD_IRQHandler(struct HCD_HANDLE *pHCD)
 /**
  * @brief  SOF callback.
  * @param  pHCD HCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_HCD_SOF_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -372,7 +372,7 @@ __weak void HAL_HCD_SOF_Callback(struct HCD_HANDLE *pHCD)
 /**
  * @brief Connection Event callback.
  * @param  pHCD HCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_HCD_Connect_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -385,7 +385,7 @@ __weak void HAL_HCD_Connect_Callback(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Disconnection Event callback.
  * @param  pHCD HCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_HCD_Disconnect_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -398,7 +398,7 @@ __weak void HAL_HCD_Disconnect_Callback(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Port Enabled  Event callback.
  * @param  pHCD: HCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_HCD_PortEnabled_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -411,7 +411,7 @@ __weak void HAL_HCD_PortEnabled_Callback(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Port Disabled  Event callback.
  * @param  pHCD: HCD handle
- * @retval None
+ * @return None
  */
 __weak void HAL_HCD_PortDisabled_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -434,7 +434,7 @@ __weak void HAL_HCD_PortDisabled_Callback(struct HCD_HANDLE *pHCD)
  *            URB_NYET/
  *            URB_ERROR/
  *            URB_STALL/
- * @retval None
+ * @return None
  */
 __weak void HAL_HCD_HCNotifyURBChange_Callback(struct HCD_HANDLE *pHCD, uint8_t chNum, eUSB_OTG_urbState urbState)
 {
@@ -460,7 +460,7 @@ __weak void HAL_HCD_HCNotifyURBChange_Callback(struct HCD_HANDLE *pHCD, uint8_t 
 /**
  * @brief  Initialize the host driver.
  * @param  pHCD HCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_HCD_Init(struct HCD_HANDLE *pHCD)
 {
@@ -511,7 +511,7 @@ HAL_Status HAL_HCD_Init(struct HCD_HANDLE *pHCD)
  *            EP_TYPE_INTR: Interrupt type
  * @param  mps Max Packet Size.
  *         This parameter can be a value from 0 to32K
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_HCD_HCInit(struct HCD_HANDLE *pHCD,
                           uint8_t chNum,
@@ -548,7 +548,7 @@ HAL_Status HAL_HCD_HCInit(struct HCD_HANDLE *pHCD,
  * @param  pHCD HCD handle
  * @param  chNum Channel number.
  *         This parameter can be a value from 1 to 15
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_HCD_HCHalt(struct HCD_HANDLE *pHCD, uint8_t chNum)
 {
@@ -562,7 +562,7 @@ HAL_Status HAL_HCD_HCHalt(struct HCD_HANDLE *pHCD, uint8_t chNum)
 /**
  * @brief  DeInitialize the host driver.
  * @param  pHCD HCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_HCD_DeInit(struct HCD_HANDLE *pHCD)
 {
@@ -587,7 +587,7 @@ HAL_Status HAL_HCD_DeInit(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Start the host driver.
  * @param  pHCD HCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_HCD_Start(struct HCD_HANDLE *pHCD)
 {
@@ -600,7 +600,7 @@ HAL_Status HAL_HCD_Start(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Stop the host driver.
  * @param  pHCD HCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_HCD_Stop(struct HCD_HANDLE *pHCD)
 {
@@ -612,7 +612,7 @@ HAL_Status HAL_HCD_Stop(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Reset the host port.
  * @param  pHCD HCD handle
- * @retval HAL status
+ * @return HAL status
  */
 HAL_Status HAL_HCD_ResetPort(struct HCD_HANDLE *pHCD)
 {
@@ -626,7 +626,7 @@ HAL_Status HAL_HCD_ResetPort(struct HCD_HANDLE *pHCD)
  * @param  pHCD HCD handle
  * @param  chNum Channel number.
  *         This parameter can be a value from 1 to 15
- * @retval none
+ * @return none
  */
 static void HCD_HC_IN_IRQHandler(struct HCD_HANDLE *pHCD, uint8_t chNum)
 {
@@ -740,7 +740,7 @@ static void HCD_HC_IN_IRQHandler(struct HCD_HANDLE *pHCD, uint8_t chNum)
  * @param  pHCD HCD handle
  * @param  chNum Channel number.
  *         This parameter can be a value from 1 to 15
- * @retval none
+ * @return none
  */
 static void HCD_HC_OUT_IRQHandler(struct HCD_HANDLE *pHCD, uint8_t chNum)
 {
@@ -840,7 +840,7 @@ static void HCD_HC_OUT_IRQHandler(struct HCD_HANDLE *pHCD, uint8_t chNum)
 /**
  * @brief  Handle Rx Queue Level interrupt requests.
  * @param  pHCD HCD handle
- * @retval none
+ * @return none
  */
 static void HCD_RXQLVL_IRQHandler(struct HCD_HANDLE *pHCD)
 {
@@ -889,7 +889,7 @@ static void HCD_RXQLVL_IRQHandler(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Handle Host Port interrupt requests.
  * @param  pHCD HCD handle
- * @retval None
+ * @return None
  */
 static void HCD_Port_IRQHandler(struct HCD_HANDLE *pHCD)
 {
