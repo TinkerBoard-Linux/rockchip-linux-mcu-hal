@@ -33,7 +33,8 @@
 
 /********************* Private MACRO Definition ******************************/
 
-#define TICK_INT_PRIORITY 0x0FU
+#define TICK_INT_PRIORITY           0x0FU
+#define HAL_TICK_PER_SECOND_DEFAULT 1000
 
 /********************* Private Structure Definition **************************/
 
@@ -173,11 +174,10 @@ __WEAK HAL_Status HAL_DelayMs(__IO uint32_t ms)
 {
     uint32_t tickstart = HAL_GetTick();
     uint32_t delta = HAL_MAX_DELAY - tickstart;
-    uint32_t wait = ms;
+    uint32_t wait = ms / HAL_GetTickWeight();
 
-    /* Add a period to guarantee minimum wait */
-    if (wait < HAL_MAX_DELAY)
-        wait++;
+    if (wait == 0)
+        return (HAL_DelayUs(ms * 1000));
 
     if (delta < wait) {
         while (HAL_GetTick() > tickstart)
@@ -227,8 +227,11 @@ HAL_Status HAL_DelayUs(uint32_t us)
  */
 HAL_Status HAL_InitTick(uint32_t tickPriority)
 {
-    HAL_SystickConfig(SystemCoreClock / 1000);
-
+#ifdef HAL_TICK_PER_SECOND
+    HAL_SystickConfig(SystemCoreClock / HAL_TICK_PER_SECOND);
+#else
+    HAL_SystickConfig(SystemCoreClock / HAL_TICK_PER_SECOND_DEFAULT);
+#endif
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, tickPriority);
 
@@ -236,6 +239,21 @@ HAL_Status HAL_InitTick(uint32_t tickPriority)
     return HAL_OK;
 }
 #endif
+
+/**
+ * @brief  Get tick weight
+ * @return uitn32_t ms_per_tick.
+ */
+uint32_t HAL_GetTickWeight(void)
+{
+#ifdef HAL_TICK_PER_SECOND
+
+    return (uint32_t)(1000 / HAL_TICK_PER_SECOND);
+#else
+
+    return (uint32_t)(1000 / HAL_TICK_PER_SECOND_DEFAULT);
+#endif
+}
 
 /** @} */
 
