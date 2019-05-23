@@ -347,6 +347,8 @@ static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
         break;
     case VOP_FMT_YVYU422:
     case VOP_FMT_VYUY422:
+        val = 16;
+        break;
     case VOP_FMT_YUV422SP:
     case VOP_FMT_YUV444SP:
         val = 8;
@@ -356,6 +358,8 @@ static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
         break;
     case VOP_FMT_YVYU422_4:
     case VOP_FMT_VYUY422_4:
+        val = 8;
+        break;
     case VOP_FMT_YUV422SP_4:
     case VOP_FMT_YUV444SP_4:
         val = 4;
