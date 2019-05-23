@@ -34,19 +34,19 @@
 /********************* Private Function Definition ***************************/
 static void UART_Reset(struct UART_REG *pReg)
 {
-    pReg->UART_SRR = UART_SRR_UR | UART_SRR_RFR | UART_SRR_XFR;
-    pReg->UART_IER = 0;
-    pReg->UART_DMASA = 1;
+    pReg->SRR = UART_SRR_UR | UART_SRR_RFR | UART_SRR_XFR;
+    pReg->IER = 0;
+    pReg->DMASA = 1;
 }
 
 static void UART_EnableDLAB(struct UART_REG *pReg)
 {
-    pReg->UART_LCR |= UART_LCR_DLAB;
+    pReg->LCR |= UART_LCR_DLAB;
 }
 
 static void UART_DisableDLAB(struct UART_REG *pReg)
 {
-    pReg->UART_LCR &= ~(UART_LCR_DLAB);
+    pReg->LCR &= ~(UART_LCR_DLAB);
 }
 
 static int32_t UART_SetBaudRate(struct UART_REG *pReg, uint32_t clk,
@@ -56,14 +56,14 @@ static int32_t UART_SetBaudRate(struct UART_REG *pReg, uint32_t clk,
 
     DivLatch = clk / MODE_X_DIV / baudRate;
 
-    pReg->UART_MCR |= UART_MCR_LOOP;
+    pReg->MCR |= UART_MCR_LOOP;
     UART_EnableDLAB(pReg);
 
-    pReg->UART_DLL = DivLatch & 0xff;
-    pReg->UART_DLH = (DivLatch >> 8) & 0xff;
+    pReg->DLL = DivLatch & 0xff;
+    pReg->DLH = (DivLatch >> 8) & 0xff;
 
     UART_DisableDLAB(pReg);
-    pReg->UART_MCR &= ~(UART_MCR_LOOP);
+    pReg->MCR &= ~(UART_MCR_LOOP);
 
     return (0);
 }
@@ -109,7 +109,7 @@ static int32_t UART_SetLcrReg(struct UART_REG *pReg, uint8_t byteSize,
     if (stopBits == UART_ONE_AND_HALF_OR_TWO_STOPBIT)
         lcr |= UART_LCR_STOP;
 
-    pReg->UART_LCR = lcr;
+    pReg->LCR = lcr;
 
     return (bRet);
 }
@@ -169,7 +169,7 @@ HAL_Status HAL_UART_Resume(struct UART_REG *pReg)
   */
 uint32_t HAL_UART_GetIrqID(struct UART_REG *pReg)
 {
-    return (pReg->UART_IIR & UART_IIR_MASK);
+    return (pReg->IIR & UART_IIR_MASK);
 }
 
 /**
@@ -179,7 +179,7 @@ uint32_t HAL_UART_GetIrqID(struct UART_REG *pReg)
   */
 uint32_t HAL_UART_GetLsr(struct UART_REG *pReg)
 {
-    return pReg->UART_LSR;
+    return pReg->LSR;
 }
 
 /**
@@ -189,7 +189,7 @@ uint32_t HAL_UART_GetLsr(struct UART_REG *pReg)
   */
 uint32_t HAL_UART_GetUsr(struct UART_REG *pReg)
 {
-    return pReg->UART_USR;
+    return pReg->USR;
 }
 
 /**
@@ -199,7 +199,7 @@ uint32_t HAL_UART_GetUsr(struct UART_REG *pReg)
   */
 uint32_t HAL_UART_GetMsr(struct UART_REG *pReg)
 {
-    return pReg->UART_MSR;
+    return pReg->MSR;
 }
 
 /** @} */
@@ -223,7 +223,7 @@ uint32_t HAL_UART_GetMsr(struct UART_REG *pReg)
   */
 void HAL_UART_SerialOutChar(struct UART_REG *pReg, uint8_t c)
 {
-    pReg->UART_THR = c;
+    pReg->THR = c;
 }
 
 /**
@@ -238,8 +238,8 @@ int HAL_UART_SerialOut(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
     int dwRealSize = 0;
 
     while (cnt--) {
-        while (!(pReg->UART_USR & UART_USR_TX_FIFO_NOT_FULL));
-        pReg->UART_THR = *pdata++;
+        while (!(pReg->USR & UART_USR_TX_FIFO_NOT_FULL));
+        pReg->THR = *pdata++;
         dwRealSize++;
     }
 
@@ -258,11 +258,11 @@ int HAL_UART_SerialIn(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
     int dwRealSize = 0;
 
     while (cnt--) {
-        if (!(pReg->UART_USR & UART_USR_RX_FIFO_NOT_EMPTY)) {
+        if (!(pReg->USR & UART_USR_RX_FIFO_NOT_EMPTY)) {
             break;
         }
 
-        *pdata++ = (uint8_t)pReg->UART_RBR;
+        *pdata++ = (uint8_t)pReg->RBR;
         dwRealSize++;
     }
 
@@ -296,7 +296,7 @@ HAL_Status HAL_UART_Init(struct UART_REG *pReg, eUART_BaudRate baudRate,
                          eUART_parityEn parity)
 {
     UART_Reset(pReg);
-    pReg->UART_FCR =
+    pReg->FCR =
         UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_10 | UART_FCR_T_TRIG_10;
     UART_SetLcrReg(pReg, dataBit, parity, stopBit);
     UART_SetBaudRate(pReg, 24000000, baudRate);
@@ -337,7 +337,7 @@ HAL_Status HAL_UART_DeInit(struct UART_REG *pReg)
   */
 void HAL_UART_EnableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
 {
-    pReg->UART_IER |= uartIntNumb;
+    pReg->IER |= uartIntNumb;
 }
 
 /**
@@ -348,7 +348,7 @@ void HAL_UART_EnableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
   */
 void HAL_UART_DisableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
 {
-    pReg->UART_IER &= ~uartIntNumb;
+    pReg->IER &= ~uartIntNumb;
 }
 
 /**
@@ -358,7 +358,7 @@ void HAL_UART_DisableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
   */
 void HAL_UART_EnableLoopback(struct UART_REG *pReg)
 {
-    pReg->UART_MCR |= UART_MCR_LOOP;
+    pReg->MCR |= UART_MCR_LOOP;
 }
 
 /**
@@ -368,7 +368,7 @@ void HAL_UART_EnableLoopback(struct UART_REG *pReg)
   */
 void HAL_UART_DisableLoopback(struct UART_REG *pReg)
 {
-    pReg->UART_MCR &= ~(UART_MCR_LOOP);
+    pReg->MCR &= ~(UART_MCR_LOOP);
 }
 
 /**
@@ -378,7 +378,7 @@ void HAL_UART_DisableLoopback(struct UART_REG *pReg)
   */
 void HAL_UART_EnableAutoFlowControl(struct UART_REG *pReg)
 {
-    pReg->UART_MCR = UART_MCR_AFE | 0X02;
+    pReg->MCR = UART_MCR_AFE | 0X02;
 }
 
 /**
@@ -388,7 +388,7 @@ void HAL_UART_EnableAutoFlowControl(struct UART_REG *pReg)
   */
 void HAL_UART_DisableAutoFlowControl(struct UART_REG *pReg)
 {
-    pReg->UART_MCR &= ~UART_MCR_AFE;
+    pReg->MCR &= ~UART_MCR_AFE;
 }
 
 /**
