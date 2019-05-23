@@ -166,46 +166,57 @@ struct TIMER_REG {
     __I  uint32_t REVISION;                           /* Address Offset: 0x00F0 */
 };
 
-/* UART Register Structuer */
+/* UART Register Structure Define */
+struct UART_REG {
+    union {
+        __I uint32_t RBR;                             /* Address Offset: 0x0000 */
+        __O uint32_t THR;                             /* Address Offset: 0x0000 */
+        __IO uint32_t DLL;                            /* Address Offset: 0x0000 */
+    };
 
-struct UART_REG
-{
-    __IO uint32_t UART_RBR;
-    __IO uint32_t UART_DLH;
-    __IO uint32_t UART_IIR;
-    __IO uint32_t UART_LCR;
-    __IO uint32_t UART_MCR;
-    __IO uint32_t UART_LSR;
-    __IO uint32_t UART_MSR;
-    __IO uint32_t UART_SCR;
-    __IO uint32_t RESERVED1_UART[(0x30 - 0x20) / 4];
-    __IO uint32_t UART_SRBR[(0x70 - 0x30) / 4];
-    __IO uint32_t UART_FAR;
-    __IO uint32_t UART_TFR;
-    __IO uint32_t UART_RFW;
-    __IO uint32_t UART_USR;
-    __IO uint32_t UART_TFL;
-    __IO uint32_t UART_RFL;
-    __IO uint32_t UART_SRR;
-    __IO uint32_t UART_SRTS;
-    __IO uint32_t UART_SBCR;
-    __IO uint32_t UART_SDMAM;
-    __IO uint32_t UART_SFE;
-    __IO uint32_t UART_SRT;
-    __IO uint32_t UART_STET;
-    __IO uint32_t UART_HTX;
-    __IO uint32_t UART_DMASA;
-    __IO uint32_t RESERVED2_UART[(0xf4 - 0xac) / 4];
-    __IO uint32_t UART_CPR;
-    __IO uint32_t UART_UCV;
-    __IO uint32_t UART_CTR;
+    union {
+        __IO uint32_t DLH;                            /* Address Offset: 0x0004 */
+        __IO uint32_t IER;                            /* Address Offset: 0x0004 */
+    };
+
+    union {
+        __I  uint32_t IIR;                            /* Address Offset: 0x0008 */
+        __O  uint32_t FCR;                            /* Address Offset: 0x0008 */
+    };
+
+    __IO uint32_t LCR;                                /* Address Offset: 0x000C */
+    __IO uint32_t MCR;                                /* Address Offset: 0x0010 */
+    __I  uint32_t LSR;                                /* Address Offset: 0x0014 */
+    __I  uint32_t MSR;                                /* Address Offset: 0x0018 */
+    __IO uint32_t SCR;                                /* Address Offset: 0x001C */
+         uint32_t RESERVED0020[4];                    /* Address Offset: 0x0020 */
+
+    union {
+        __I  uint32_t SRBR;                           /* Address Offset: 0x0030 */
+        __I  uint32_t STHR;                           /* Address Offset: 0x0030 */
+    };
+         uint32_t RESERVED0034[15];                   /* Address Offset: 0x0034 */
+
+    __IO uint32_t FAR;                                /* Address Offset: 0x0070 */
+    __I  uint32_t TFR;                                /* Address Offset: 0x0074 */
+    __O  uint32_t RFW;                                /* Address Offset: 0x0078 */
+    __I  uint32_t USR;                                /* Address Offset: 0x007C */
+    __IO uint32_t TFL;                                /* Address Offset: 0x0080 */
+    __I  uint32_t RFL;                                /* Address Offset: 0x0084 */
+    __O  uint32_t SRR;                                /* Address Offset: 0x0088 */
+    __IO uint32_t SRTS;                               /* Address Offset: 0x008C */
+    __IO uint32_t SBCR;                               /* Address Offset: 0x0090 */
+    __IO uint32_t SDMAM;                              /* Address Offset: 0x0094 */
+    __IO uint32_t SFE;                                /* Address Offset: 0x0098 */
+    __IO uint32_t SRT;                                /* Address Offset: 0x009C */
+    __IO uint32_t STET;                               /* Address Offset: 0x00A0 */
+    __IO uint32_t HTX;                                /* Address Offset: 0x00A4 */
+    __O  uint32_t DMASA;                              /* Address Offset: 0x00A8 */
+         uint32_t RESERVED00AC[18];                   /* Address Offset: 0x00AC */
+    __I  uint32_t CPR;                                /* Address Offset: 0x00F4 */
+    __I  uint32_t UCV;                                /* Address Offset: 0x00F8 */
+    __I  uint32_t CTR;                                /* Address Offset: 0x00FC */
 };
-
-#define UART_THR UART_RBR
-#define UART_DLL UART_RBR
-#define UART_IER UART_DLH
-#define UART_FCR UART_IIR
-#define UART_STHR UART_SRBR
 
 /* WDT Register Structure Define */
 struct WDT_REG {
