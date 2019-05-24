@@ -26,6 +26,7 @@ Copyright 2018 @Fuzhou Rockchip Electronics Co., Ltd.
 | 2018.11 | V1.0     | Kever Yang | 重构文档并确定编程规范 |
 | 2019.03 | V1.1     | Kever Yang | 新增和完善目录结构，代码规范，单元测试 |
 | 2019.04 | V2.0     | Jon Lin | 新增代码兼容性规范 |
+| 2019.05 | V2.1     | Jon Lin | 新增BSP库规范 |
 
 ------
 
@@ -91,6 +92,10 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 │   │       ├── cmsis_gcc.h
 │   │       ├── core_cm4.h
 │   │        ...
+│   ├── bsp
+│   │   └── RK2106
+│   │       ├── bsp.c
+│   │       └── bsp.h
 │   └── hal
 │       ├── inc
 │       │   ├── hal_base.h
@@ -109,8 +114,8 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
         ├── GCC
         ├── Scatter
         └── src
-            ├── bsp.c
-            ├── bsp.h
+            ├── rk2106_bsp.c
+            ├── rk2106_bsp.h
             ├── hal_conf.h
             ├── main.c
             └── main.h
@@ -123,6 +128,7 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 | lib     | 用于集成到rt-thread, zephyr等RTOS的lib目录     |
 | lib/CMSIS     | 以ARM CMSIS5为base, 加上Rockchip SoC定义    |
 | lib/hal     | MCU的HAL驱动库代码     |
+| lib/bsp     | MCU的芯片公共BSP配置的代码     |
 | test     | HAL驱动的驱动测试代码     |
 
 ## 1.2 模块组成预览
@@ -181,7 +187,7 @@ project目录基于板子或者项目建立工程，包含可运行的用户代�
 | 文件       | 描述                                                         |
 | ---------- | ------------------------------------------------------------ |
 | hal_conf.h | 通过重定义该文件可以裁剪HAL库。                              |
-| bsp.c      | 包含BSP初始化。                                              |
+| rkxx_bsp.c | 包含BSP初始化。                                              |
 | main.c/.h  | 系统初始化：包括HAL_Init()，系统时钟初始化，外设初始化，用户应用。 |
 
 # 2 如何使用固件库
@@ -1020,7 +1026,67 @@ core_<cpu>.h	//如：core_cm3.h
 
 - 核内寄存器访问
 
-# 7 HAL模块文档
+# 7 BSP库
+
+为了提高板级配置的通用性，固件库提供通用的板级配置以针对”同一芯片不同开发板”的通用板级配置，将对同一芯片在不同产品形态或不同的OS上的开发提供便捷，而差异化的板级配置，由应用层自行设计或增加上层BSP。
+
+代码路径为./lib/bsp/project_name/bsp.c/h，提供以下资源：
+
+- 各个模块通用的硬件初始化函数，如SFC 的IO MUX，CLK，在同一芯片中的不同开发板中的实现是相同；
+- 模块驱动中涉及的设备结构体资源，要求仅依赖于具体芯片而实现。
+
+## 7.1 硬件初始化函数
+
+提供函数来完成模块通用的硬件初始化流程，如IOMUX，CLOCK配置等。
+
+内部函数接口为相应的模块初始化的全局函数，且添加weak属性以允许上层重写接口，调用次序则由应用层或上层BSP具体规划，如：
+
+```c
+__weak void BSP_SFC_Init(void)
+{
+    CRU->CRU_CLKSEL_CON[9] = (1 << 15) | (0 << 8) | (((0x1 << 15) | (0x3F << 8)) << 16);
+    GRF->GPIO_IO2MUX[1] = (1 << 10) | ((3 << 10) << 16);
+}
+```
+
+## 7.2 设备结构体
+
+HAL层模块驱动中涉及的设备结构体资源，如AUDIOPWM驱动中使用到的PWM，其配置依赖于具体芯片，如AUDIOPWM_BASE，DMA_BASE，mclk。
+
+**结构体实例**
+
+bsp.c中实现HAL层驱动所需结构体的，需有相应模块宏开关，结构体前缀为g_以提示为全局变量，建议存放寄存器基地址的地方直接使用寄存器结构体实例的指针。
+
+```C
+#ifdef HAL_AUDIOPWM_MODULE_ENABLED
+const struct HAL_AUDIOPWM_DEV g_audioPwmDev =
+{
+    .pReg = AUDIOPWM,
+    .mclk = CLK_AUDPWM,
+    .hclk = HCLK_AUDPWM_GATE,
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(AUDIOPWM->FIFO_ENTRY),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_AUDIOPWM,
+        .dmac = DMA,
+    },
+};
+#endif
+```
+
+**结构体引用**
+
+bsp.h中提供结构体声明，需有相应模块宏开关。
+
+```C
+#ifdef HAL_AUDIOPWM_MODULE_ENABLED
+extern const struct HAL_AUDIOPWM_DEV g_audioPwmDev;
+#endif
+```
+
+# 8 HAL模块文档
 
 此处填充Doxygen自动生成各模块文档.
 
