@@ -21,10 +21,11 @@ TEST_SETUP(HAL_LEAGACY){
 TEST_TEAR_DOWN(HAL_LEAGACY){
 }
 
-#ifdef UNITY_HAL_DataAccess
+#ifdef UNITY_HAL_DATA_ACCESS
 #define BUFFER_SIZE (16 * 1024) /* Config the size of test buffer */
-#ifdef RKMCU_PISCES
+#ifdef RKMCU_RK2108
 #define XIP_RAM_BASE 0x60000000
+static struct HAL_SFC_HOST *sfcHost;
 #endif
 
 static char *AlignUp(char *ptr, int32_t align)
@@ -115,25 +116,28 @@ TEST(HAL_LEAGACY, DataAccess){
 #ifdef XIP_RAM_BASE
     xipbuf = (int32_t *)XIP_RAM_BASE;
 
-    if (HAL_SNOR_IsInXip() == FALSE) {
-        HAL_SNOR_Init();
+    sfcHost = (struct HAL_SFC_HOST *)malloc(sizeof(struct HAL_SFC_HOST));
+    sfcHost->instance = SFC;
 
-        HAL_SNOR_XipEnable();
+    HAL_SNOR_Init(sfcHost);
+    HAL_SNOR_XipEnable(sfcHost);
+    HAL_DBG("SNOR XIP DataAccess\n");
+    DataAccessHelper(xipbuf, dstbuf, (void *)&SumTest);
+    HAL_SNOR_XipDisable(sfcHost);
 
-        HAL_DBG("XIP DataAccess\n");
-        DataAccessHelper(xipbuf, dstbuf, (void *)&SumTest);
-
-        HAL_SNOR_XipDisable();
-    } else {
-        HAL_DBG("Skip XIP DataAccess Test In XIP mode\n");
-
-    }
+    xipbuf = (int32_t *)XIP_RAM_BASE + BUFFER_SIZE;
+    HAL_PSRAM_Init(sfcHost, 0);
+    HAL_PSRAM_XmmcEnable(sfcHost);
+    HAL_DBG("PSRAM XIP DataAccess\n");
+    DataAccessHelper(xipbuf, dstbuf, (void *)&SumTest);
+    HAL_PSRAM_XmmcDisable(sfcHost);
+    HAL_PSRAM_Deinit(sfcHost, 0);
 #endif
 
     free(poolbuf1);
     free(poolbuf2);
 
-    HAL_SNOR_Deinit();
+    HAL_SNOR_Deinit(sfcHost);
 }
 #endif
 
@@ -1202,7 +1206,7 @@ TEST(HAL_LEAGACY, CodePerformance){
     HAL_DBG("PMU read hit/total=%lu/%lu rate= %f\n",
             pmuStatus[3].rdHit - pmuStatus[2].rdHit,
             pmuStatus[3].rdNum - pmuStatus[2].rdNum,
-            (double)(pmuStatus[3].rdHit - pmuStatus[2].rdHit) /  (double)(pmuStatus[3].rdNum - pmuStatus[2].rdNum));
+            (double)(pmuStatus[3].rdHit - pmuStatus[2].rdHit) / (double)(pmuStatus[3].rdNum - pmuStatus[2].rdNum));
     HAL_DBG("PMU read miss penalty %lu\n", pmuStatus[3].rdMissPenalty - pmuStatus[2].rdMissPenalty);
     HAL_ICACHE_DisablePMU();
 }
@@ -1220,7 +1224,7 @@ TEST_GROUP_RUNNER(HAL_LEAGACY){
     RUN_TEST_CASE(HAL_LEAGACY, CodePerformance);
 #endif
 
-#ifdef UNITY_HAL_DataAccess
+#ifdef UNITY_HAL_DATA_ACCESS
     RUN_TEST_CASE(HAL_LEAGACY, DataAccess);
 #endif
 
@@ -1230,4 +1234,3 @@ TEST_GROUP_RUNNER(HAL_LEAGACY){
 }
 
 #endif
-
