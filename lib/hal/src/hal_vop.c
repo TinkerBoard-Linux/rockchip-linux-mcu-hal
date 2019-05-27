@@ -224,8 +224,8 @@ static void VOP_INIT_DSC_PPS(struct DSC_PPS *dscDefaultPps, int16_t w, int16_t h
            rcRangeParameter, sizeof(rcRangeParameter));
 }
 
-static inline int16_t VOP_Interpolate(int16_t x1, int16_t y1, int16_t x2,
-                                      int16_t y2, uint16_t x)
+__STATIC_INLINE int16_t VOP_Interpolate(int16_t x1, int16_t y1, int16_t x2,
+                                        int16_t y2, uint16_t x)
 {
     return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
 }
