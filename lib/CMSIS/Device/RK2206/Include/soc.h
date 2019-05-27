@@ -101,7 +101,7 @@ typedef enum
 #define __CM4_REV                 0x0001U  /* Core revision r0p1                         */
 #define __MPU_PRESENT             1U       /* RK2206 provides an MPU                     */
 #define __VTOR_PRESENT            1U       /* VTOR present */
-#define __NVIC_PRIO_BITS          3U       /* RK2206 uses 4 Bits for the Priority Levels */
+#define __NVIC_PRIO_BITS          3U       /* RK2206 uses 3 Bits for the Priority Levels */
 #define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used  */
 #define __FPU_PRESENT             1U       /* FPU present                                   */
 
@@ -113,6 +113,58 @@ typedef enum
 /*                               Module Structure Section                               */
 /*                                                                                      */
 /****************************************************************************************/
+/* ICACHE Register Structure Define */
+struct ICACHE_REG {
+    __IO uint32_t CACHE_CTRL;                         /* Address Offset: 0x0000 */
+    __IO uint32_t CACHE_MAINTAIN[2];                  /* Address Offset: 0x0004 */
+    __IO uint32_t STB_TIMEOUT_CTRL;                   /* Address Offset: 0x000C */
+         uint32_t RESERVED0[4];                       /* Address Offset: 0x0010 */
+    __IO uint32_t CACHE_INT_EN;                       /* Address Offset: 0x0020 */
+    __IO uint32_t CACHE_INT_ST;                       /* Address Offset: 0x0024 */
+    __IO uint32_t CACHE_ERR_HADDR;                    /* Address Offset: 0x0028 */
+         uint32_t RESERVED1;                          /* Address Offset: 0x002C */
+    __I  uint32_t CACHE_STATUS;                       /* Address Offset: 0x0030 */
+         uint32_t RESERVED2[3];                       /* Address Offset: 0x0034 */
+    __I  uint32_t PMU_RD_NUM_CNT;                     /* Address Offset: 0x0040 */
+    __I  uint32_t PMU_WR_NUM_CNT;                     /* Address Offset: 0x0044 */
+    __I  uint32_t PMU_SRAM_RD_HIT_CNT;                /* Address Offset: 0x0048 */
+    __I  uint32_t PMU_HB_RD_HIT_CNT;                  /* Address Offset: 0x004C */
+    __IO uint32_t PMU_STB_RD_HIT_CNT;                 /* Address Offset: 0x0050 */
+    __I  uint32_t PMU_RD_HIT_CNT;                     /* Address Offset: 0x0054 */
+    __I  uint32_t PMU_WR_HIT_CNT;                     /* Address Offset: 0x0058 */
+    __I  uint32_t PMU_RD_MISS_PENALTY_CNT;            /* Address Offset: 0x005C */
+    __I  uint32_t PMU_WR_MISS_PENALTY_CNT;            /* Address Offset: 0x0060 */
+    __I  uint32_t PMU_RD_LAT_CNT;                     /* Address Offset: 0x0064 */
+    __I  uint32_t PMU_WR_LAT_CNT;                     /* Address Offset: 0x0068 */
+         uint32_t RESERVED3[33];                      /* Address Offset: 0x006C */
+    __IO uint32_t REVISION;                           /* Address Offset: 0x00F0 */
+};
+/* DCACHE Register Structure Define */
+struct DCACHE_REG {
+    __IO uint32_t CACHE_CTRL;                         /* Address Offset: 0x0000 */
+    __IO uint32_t CACHE_MAINTAIN[2];                  /* Address Offset: 0x0004 */
+    __IO uint32_t STB_TIMEOUT_CTRL;                   /* Address Offset: 0x000C */
+         uint32_t RESERVED0[4];                       /* Address Offset: 0x0010 */
+    __IO uint32_t CACHE_INT_EN;                       /* Address Offset: 0x0020 */
+    __IO uint32_t CACHE_INT_ST;                       /* Address Offset: 0x0024 */
+    __IO uint32_t CACHE_ERR_HADDR;                    /* Address Offset: 0x0028 */
+         uint32_t RESERVED1;                          /* Address Offset: 0x002C */
+    __I  uint32_t CACHE_STATUS;                       /* Address Offset: 0x0030 */
+         uint32_t RESERVED2[3];                       /* Address Offset: 0x0034 */
+    __I  uint32_t PMU_RD_NUM_CNT;                     /* Address Offset: 0x0040 */
+    __I  uint32_t PMU_WR_NUM_CNT;                     /* Address Offset: 0x0044 */
+    __I  uint32_t PMU_SRAM_RD_HIT_CNT;                /* Address Offset: 0x0048 */
+    __I  uint32_t PMU_HB_RD_HIT_CNT;                  /* Address Offset: 0x004C */
+    __IO uint32_t PMU_STB_RD_HIT_CNT;                 /* Address Offset: 0x0050 */
+    __I  uint32_t PMU_RD_HIT_CNT;                     /* Address Offset: 0x0054 */
+    __I  uint32_t PMU_WR_HIT_CNT;                     /* Address Offset: 0x0058 */
+    __I  uint32_t PMU_RD_MISS_PENALTY_CNT;            /* Address Offset: 0x005C */
+    __I  uint32_t PMU_WR_MISS_PENALTY_CNT;            /* Address Offset: 0x0060 */
+    __I  uint32_t PMU_RD_LAT_CNT;                     /* Address Offset: 0x0064 */
+    __I  uint32_t PMU_WR_LAT_CNT;                     /* Address Offset: 0x0068 */
+         uint32_t RESERVED3[33];                      /* Address Offset: 0x006C */
+    __IO uint32_t REVISION;                           /* Address Offset: 0x00F0 */
+};
 /* TIMER Register Structure Define */
 struct TIMER_REG {
     __IO uint32_t LOAD_COUNT[2];                      /* Address Offset: 0x0000 */
@@ -497,32 +549,6 @@ struct SFC_V3_REG {
          uint32_t RESERVED0258[3];                    /* Address Offset: 0x0258 */
     __IO uint32_t DEVSIZE1;                           /* Address Offset: 0x0264 */
     __IO uint32_t TME1;                               /* Address Offset: 0x0268 */
-};
-/* RK_CACHE_M4 Register Structure Define */
-struct RK_CACHE_M4_REG {
-    __IO uint32_t CACHE_CTRL;                         /* Address Offset: 0x0000 */
-    __IO uint32_t CACHE_MAINTAIN[2];                  /* Address Offset: 0x0004 */
-    __IO uint32_t STB_TIMEOUT_CTRL;                   /* Address Offset: 0x000C */
-         uint32_t RESERVED0010[4];                    /* Address Offset: 0x0010 */
-    __IO uint32_t CACHE_INT_EN;                       /* Address Offset: 0x0020 */
-    __IO uint32_t CACHE_INT_ST;                       /* Address Offset: 0x0024 */
-    __IO uint32_t CACHE_ERR_HADDR;                    /* Address Offset: 0x0028 */
-         uint32_t RESERVED002C;                       /* Address Offset: 0x002C */
-    __I  uint32_t CACHE_STATUS;                       /* Address Offset: 0x0030 */
-         uint32_t RESERVED0034[3];                    /* Address Offset: 0x0034 */
-    __I  uint32_t PMU_RD_NUM_CNT;                     /* Address Offset: 0x0040 */
-    __I  uint32_t PMU_WR_NUM_CNT;                     /* Address Offset: 0x0044 */
-    __I  uint32_t PMU_SRAM_RD_HIT_CNT;                /* Address Offset: 0x0048 */
-    __I  uint32_t PMU_HB_RD_HIT_CNT;                  /* Address Offset: 0x004C */
-    __IO uint32_t PMU_STB_RD_HIT_CNT;                 /* Address Offset: 0x0050 */
-    __I  uint32_t PMU_RD_HIT_CNT;                     /* Address Offset: 0x0054 */
-    __I  uint32_t PMU_WR_HIT_CNT;                     /* Address Offset: 0x0058 */
-    __I  uint32_t PMU_RD_MISS_PENALTY_CNT;            /* Address Offset: 0x005C */
-    __I  uint32_t PMU_WR_MISS_PENALTY_CNT;            /* Address Offset: 0x0060 */
-    __I  uint32_t PMU_RD_LAT_CNT;                     /* Address Offset: 0x0064 */
-    __I  uint32_t PMU_WR_LAT_CNT;                     /* Address Offset: 0x0068 */
-         uint32_t RESERVED006C[33];                   /* Address Offset: 0x006C */
-    __IO uint32_t REVISION;                           /* Address Offset: 0x00F0 */
 };
 /* VOP Register Structure Define */
 struct VOP_REG {
@@ -1191,8 +1217,8 @@ struct SPI2APB_REG {
 #define DMA                 ((struct DMA_REG *) DMA_BASE)
 #define SFC0                ((struct SFC_REG *) SFC0_BASE)
 #define SFC1                ((struct SFC_REG *) SFC1_BASE)
-#define ICACHE0             ((struct ICACHE_REG *) ICACHE0_BASE)
-#define DCACHE0             ((struct DCACHE_REG *) DCACHE0_BASE)
+#define ICACHE              ((struct ICACHE_REG *) ICACHE0_BASE)
+#define DCACHE              ((struct DCACHE_REG *) DCACHE0_BASE)
 #define VOP                 ((struct VOP_REG *) VOP_BASE)
 #define AUDPWM              ((struct AUDPWM_REG *) AUDPWM_BASE)
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
@@ -1240,8 +1266,8 @@ struct SPI2APB_REG {
 #define IS_EFUSE_CTL_INSTANCE(instance) ((instance) == EFUSE_CTL0)
 #define IS_MBOX_INSTANCE(instance) (((instance) == MBOX0) || ((instance) == MBOX1))
 #define IS_SFC_INSTANCE(instance) (((instance) == SFC0) || ((instance) == SFC1))
-#define IS_ICACHE_INSTANCE(instance) ((instance) == ICACHE0)
-#define IS_DCACHE_INSTANCE(instance) ((instance) == DCACHE0)
+#define IS_ICACHE_INSTANCE(instance) ((instance) == ICACHE)
+#define IS_DCACHE_INSTANCE(instance) ((instance) == DCACHE)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
 #define IS_I2S_INSTANCE(instance) (((instance) == I2S0) || ((instance) == I2S1))
 /****************************************************************************************/
@@ -3157,97 +3183,200 @@ struct SPI2APB_REG {
 #define SFC_V3_TME1_AUTO_RF_EN_MASK                        (0x1U << SFC_V3_TME1_AUTO_RF_EN_SHIFT)                       /* 0x00000001 */
 #define SFC_V3_TME1_SCLK_INATM_EN_SHIFT                    (1U)
 #define SFC_V3_TME1_SCLK_INATM_EN_MASK                     (0x1U << SFC_V3_TME1_SCLK_INATM_EN_SHIFT)                    /* 0x00000002 */
-/**************************************RK_CACHE_M4***************************************/
+/**************************************ICACHE_M4***************************************/
 /* CACHE_CTRL */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_EN_SHIFT              (0U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_EN_MASK               (0x1U << RK_CACHE_M4_CACHE_CTRL_CACHE_EN_SHIFT)              /* 0x00000001 */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_WT_EN_SHIFT           (1U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_WT_EN_MASK            (0x1U << RK_CACHE_M4_CACHE_CTRL_CACHE_WT_EN_SHIFT)           /* 0x00000002 */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_HB_EN_SHIFT           (2U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_HB_EN_MASK            (0x1U << RK_CACHE_M4_CACHE_CTRL_CACHE_HB_EN_SHIFT)           /* 0x00000004 */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_STB_EN_SHIFT          (3U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_STB_EN_MASK           (0x1U << RK_CACHE_M4_CACHE_CTRL_CACHE_STB_EN_SHIFT)          /* 0x00000008 */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_FLUSH_SHIFT           (4U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_FLUSH_MASK            (0x1U << RK_CACHE_M4_CACHE_CTRL_CACHE_FLUSH_SHIFT)           /* 0x00000010 */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_PMU_EN_SHIFT          (5U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_PMU_EN_MASK           (0x1U << RK_CACHE_M4_CACHE_CTRL_CACHE_PMU_EN_SHIFT)          /* 0x00000020 */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_BYPASS_SHIFT          (6U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_BYPASS_MASK           (0x1U << RK_CACHE_M4_CACHE_CTRL_CACHE_BYPASS_SHIFT)          /* 0x00000040 */
-#define RK_CACHE_M4_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT        (7U)
-#define RK_CACHE_M4_CACHE_CTRL_STB_TIMEOUT_EN_MASK         (0x1U << RK_CACHE_M4_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT)        /* 0x00000080 */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT    (8U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_ENTRY_THRESH_MASK     (0x7U << RK_CACHE_M4_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT)    /* 0x00000700 */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_MPU_MODE_SHIFT        (12U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_MPU_MODE_MASK         (0x1U << RK_CACHE_M4_CACHE_CTRL_CACHE_MPU_MODE_SHIFT)        /* 0x00001000 */
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_PF_EN_SHIFT           (13U)
-#define RK_CACHE_M4_CACHE_CTRL_CACHE_PF_EN_MASK            (0x1U << RK_CACHE_M4_CACHE_CTRL_CACHE_PF_EN_SHIFT)           /* 0x00002000 */
-#define RK_CACHE_M4_CACHE_CTRL_AHB_WR_PIPE_SHIFT           (15U)
-#define RK_CACHE_M4_CACHE_CTRL_AHB_WR_PIPE_MASK            (0x1U << RK_CACHE_M4_CACHE_CTRL_AHB_WR_PIPE_SHIFT)           /* 0x00008000 */
+#define ICACHE_CACHE_CTRL_CACHE_EN_SHIFT              (0U)
+#define ICACHE_CACHE_CTRL_CACHE_EN_MASK               (0x1U << ICACHE_CACHE_CTRL_CACHE_EN_SHIFT)              /* 0x00000001 */
+#define ICACHE_CACHE_CTRL_CACHE_WT_EN_SHIFT           (1U)
+#define ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK            (0x1U << ICACHE_CACHE_CTRL_CACHE_WT_EN_SHIFT)           /* 0x00000002 */
+#define ICACHE_CACHE_CTRL_CACHE_HB_EN_SHIFT           (2U)
+#define ICACHE_CACHE_CTRL_CACHE_HB_EN_MASK            (0x1U << ICACHE_CACHE_CTRL_CACHE_HB_EN_SHIFT)           /* 0x00000004 */
+#define ICACHE_CACHE_CTRL_CACHE_STB_EN_SHIFT          (3U)
+#define ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK           (0x1U << ICACHE_CACHE_CTRL_CACHE_STB_EN_SHIFT)          /* 0x00000008 */
+#define ICACHE_CACHE_CTRL_CACHE_FLUSH_SHIFT           (4U)
+#define ICACHE_CACHE_CTRL_CACHE_FLUSH_MASK            (0x1U << ICACHE_CACHE_CTRL_CACHE_FLUSH_SHIFT)           /* 0x00000010 */
+#define ICACHE_CACHE_CTRL_CACHE_PMU_EN_SHIFT          (5U)
+#define ICACHE_CACHE_CTRL_CACHE_PMU_EN_MASK           (0x1U << ICACHE_CACHE_CTRL_CACHE_PMU_EN_SHIFT)          /* 0x00000020 */
+#define ICACHE_CACHE_CTRL_CACHE_BYPASS_SHIFT          (6U)
+#define ICACHE_CACHE_CTRL_CACHE_BYPASS_MASK           (0x1U << ICACHE_CACHE_CTRL_CACHE_BYPASS_SHIFT)          /* 0x00000040 */
+#define ICACHE_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT        (7U)
+#define ICACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK         (0x1U << ICACHE_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT)        /* 0x00000080 */
+#define ICACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT    (8U)
+#define ICACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_MASK     (0x7U << ICACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT)    /* 0x00000700 */
+#define ICACHE_CACHE_CTRL_CACHE_MPU_MODE_SHIFT        (12U)
+#define ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK         (0x1U << ICACHE_CACHE_CTRL_CACHE_MPU_MODE_SHIFT)        /* 0x00001000 */
+#define ICACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT           (13U)
+#define ICACHE_CACHE_CTRL_CACHE_PF_EN_MASK            (0x1U << ICACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT)           /* 0x00002000 */
+#define ICACHE_CACHE_CTRL_AHB_WR_PIPE_SHIFT           (15U)
+#define ICACHE_CACHE_CTRL_AHB_WR_PIPE_MASK            (0x1U << ICACHE_CACHE_CTRL_AHB_WR_PIPE_SHIFT)           /* 0x00008000 */
 /* CACHE_MAINTAIN0 */
-#define RK_CACHE_M4_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT    (0U)
-#define RK_CACHE_M4_CACHE_MAINTAIN0_CACHE_M_VALID_MASK     (0x1U << RK_CACHE_M4_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT)    /* 0x00000001 */
-#define RK_CACHE_M4_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT      (1U)
-#define RK_CACHE_M4_CACHE_MAINTAIN0_CACHE_M_CMD_MASK       (0x3U << RK_CACHE_M4_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT)      /* 0x00000006 */
-#define RK_CACHE_M4_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT     (5U)
-#define RK_CACHE_M4_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK      (0x7FFFFFFU << RK_CACHE_M4_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT) /* 0xFFFFFFE0 */
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT    (0U)
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK     (0x1U << ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT)    /* 0x00000001 */
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT      (1U)
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_CMD_MASK       (0x3U << ICACHE_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT)      /* 0x00000006 */
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT     (5U)
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK      (0x7FFFFFFU << ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT) /* 0xFFFFFFE0 */
 /* CACHE_MAINTAIN1 */
-#define RK_CACHE_M4_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT   (0U)
-#define RK_CACHE_M4_CACHE_MAINTAIN1_CACHE_M_OFFSET_MASK    (0xFFFFU << RK_CACHE_M4_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT) /* 0x0000FFFF */
+#define ICACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT   (0U)
+#define ICACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_MASK    (0xFFFFU << ICACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT) /* 0x0000FFFF */
 /* STB_TIMEOUT_CTRL */
-#define RK_CACHE_M4_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT (0U)
-#define RK_CACHE_M4_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_MASK (0x7FFFFU << RK_CACHE_M4_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT) /* 0x0007FFFF */
+#define ICACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT (0U)
+#define ICACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_MASK (0x7FFFFU << ICACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT) /* 0x0007FFFF */
 /* CACHE_INT_EN */
-#define RK_CACHE_M4_CACHE_INT_EN_ERR_RECORD_EN_SHIFT       (0U)
-#define RK_CACHE_M4_CACHE_INT_EN_ERR_RECORD_EN_MASK        (0x1U << RK_CACHE_M4_CACHE_INT_EN_ERR_RECORD_EN_SHIFT)       /* 0x00000001 */
+#define ICACHE_CACHE_INT_EN_ERR_RECORD_EN_SHIFT       (0U)
+#define ICACHE_CACHE_INT_EN_ERR_RECORD_EN_MASK        (0x1U << ICACHE_CACHE_INT_EN_ERR_RECORD_EN_SHIFT)       /* 0x00000001 */
 /* CACHE_INT_ST */
-#define RK_CACHE_M4_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT    (0U)
-#define RK_CACHE_M4_CACHE_INT_ST_AHB_ERROR_STATUS_MASK     (0x1U << RK_CACHE_M4_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT)    /* 0x00000001 */
+#define ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT    (0U)
+#define ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK     (0x1U << ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT)    /* 0x00000001 */
 /* CACHE_ERR_HADDR */
-#define RK_CACHE_M4_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT     (0U)
-#define RK_CACHE_M4_CACHE_ERR_HADDR_STATUS_HADDR_MASK      (0x1U << RK_CACHE_M4_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT)     /* 0x00000001 */
+#define ICACHE_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT     (0U)
+#define ICACHE_CACHE_ERR_HADDR_STATUS_HADDR_MASK      (0x1U << ICACHE_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT)     /* 0x00000001 */
 /* CACHE_STATUS */
-#define RK_CACHE_M4_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT   (0U)
-#define RK_CACHE_M4_CACHE_STATUS_CACHE_INIT_FINISH_MASK    (0x1U << RK_CACHE_M4_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT)   /* 0x00000001 */
-#define RK_CACHE_M4_CACHE_STATUS_CACHE_M_BUSY_SHIFT        (1U)
-#define RK_CACHE_M4_CACHE_STATUS_CACHE_M_BUSY_MASK         (0x1U << RK_CACHE_M4_CACHE_STATUS_CACHE_M_BUSY_SHIFT)        /* 0x00000002 */
-#define RK_CACHE_M4_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT    (2U)
-#define RK_CACHE_M4_CACHE_STATUS_CACHE_FLUSH_DONE_MASK     (0x1U << RK_CACHE_M4_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT)    /* 0x00000004 */
+#define ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT   (0U)
+#define ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK    (0x1U << ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT)   /* 0x00000001 */
+#define ICACHE_CACHE_STATUS_CACHE_M_BUSY_SHIFT        (1U)
+#define ICACHE_CACHE_STATUS_CACHE_M_BUSY_MASK         (0x1U << ICACHE_CACHE_STATUS_CACHE_M_BUSY_SHIFT)        /* 0x00000002 */
+#define ICACHE_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT    (2U)
+#define ICACHE_CACHE_STATUS_CACHE_FLUSH_DONE_MASK     (0x1U << ICACHE_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT)    /* 0x00000004 */
 /* PMU_RD_NUM_CNT */
-#define RK_CACHE_M4_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT    (0U)
-#define RK_CACHE_M4_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_MASK     (0xFFFFFFFFU << RK_CACHE_M4_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT    (0U)
+#define ICACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_MASK     (0xFFFFFFFFU << ICACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_WR_NUM_CNT */
-#define RK_CACHE_M4_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT    (0U)
-#define RK_CACHE_M4_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_MASK     (0xFFFFFFFFU << RK_CACHE_M4_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT    (0U)
+#define ICACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_MASK     (0xFFFFFFFFU << ICACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_SRAM_RD_HIT_CNT */
-#define RK_CACHE_M4_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT (0U)
-#define RK_CACHE_M4_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_MASK (0xFFFFFFFFU << RK_CACHE_M4_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT (0U)
+#define ICACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_HB_RD_HIT_CNT */
-#define RK_CACHE_M4_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT (0U)
-#define RK_CACHE_M4_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_MASK (0xFFFFFFFFU << RK_CACHE_M4_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT (0U)
+#define ICACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_STB_RD_HIT_CNT */
-#define RK_CACHE_M4_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT (0U)
-#define RK_CACHE_M4_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_MASK (0xFFFFFFFFU << RK_CACHE_M4_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT (0U)
+#define ICACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_RD_HIT_CNT */
-#define RK_CACHE_M4_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT    (0U)
-#define RK_CACHE_M4_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_MASK     (0xFFFFFFFFU << RK_CACHE_M4_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT    (0U)
+#define ICACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_MASK     (0xFFFFFFFFU << ICACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_WR_HIT_CNT */
-#define RK_CACHE_M4_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT    (0U)
-#define RK_CACHE_M4_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_MASK     (0xFFFFFFFFU << RK_CACHE_M4_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT    (0U)
+#define ICACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_MASK     (0xFFFFFFFFU << ICACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_RD_MISS_PENALTY_CNT */
-#define RK_CACHE_M4_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT (0U)
-#define RK_CACHE_M4_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << RK_CACHE_M4_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT (0U)
+#define ICACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_WR_MISS_PENALTY_CNT */
-#define RK_CACHE_M4_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT (0U)
-#define RK_CACHE_M4_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << RK_CACHE_M4_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT (0U)
+#define ICACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_RD_LAT_CNT */
-#define RK_CACHE_M4_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT    (0U)
-#define RK_CACHE_M4_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_MASK     (0xFFFFFFFFU << RK_CACHE_M4_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT    (0U)
+#define ICACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_MASK     (0xFFFFFFFFU << ICACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT) /* 0xFFFFFFFF */
 /* PMU_WR_LAT_CNT */
-#define RK_CACHE_M4_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT    (0U)
-#define RK_CACHE_M4_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_MASK     (0xFFFFFFFFU << RK_CACHE_M4_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT) /* 0xFFFFFFFF */
+#define ICACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT    (0U)
+#define ICACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_MASK     (0xFFFFFFFFU << ICACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT) /* 0xFFFFFFFF */
 /* REVISION */
-#define RK_CACHE_M4_REVISION_REVISION_SHIFT                (0U)
-#define RK_CACHE_M4_REVISION_REVISION_MASK                 (0xFFFFFFFFU << RK_CACHE_M4_REVISION_REVISION_SHIFT)         /* 0xFFFFFFFF */
+#define ICACHE_REVISION_REVISION_SHIFT                (0U)
+#define ICACHE_REVISION_REVISION_MASK                 (0xFFFFFFFFU << ICACHE_REVISION_REVISION_SHIFT)         /* 0xFFFFFFFF */
+
+/*****************************************DCACHE*****************************************/
+/* CACHE_CTRL */
+#define DCACHE_CACHE_CTRL_CACHE_EN_SHIFT                   (0U)
+#define DCACHE_CACHE_CTRL_CACHE_EN_MASK                    (0x1U << DCACHE_CACHE_CTRL_CACHE_EN_SHIFT)                   /* 0x00000001 */
+#define DCACHE_CACHE_CTRL_CACHE_WT_EN_SHIFT                (1U)
+#define DCACHE_CACHE_CTRL_CACHE_WT_EN_MASK                 (0x1U << DCACHE_CACHE_CTRL_CACHE_WT_EN_SHIFT)                /* 0x00000002 */
+#define DCACHE_CACHE_CTRL_CACHE_HB_EN_SHIFT                (2U)
+#define DCACHE_CACHE_CTRL_CACHE_HB_EN_MASK                 (0x1U << DCACHE_CACHE_CTRL_CACHE_HB_EN_SHIFT)                /* 0x00000004 */
+#define DCACHE_CACHE_CTRL_CACHE_STB_EN_SHIFT               (3U)
+#define DCACHE_CACHE_CTRL_CACHE_STB_EN_MASK                (0x1U << DCACHE_CACHE_CTRL_CACHE_STB_EN_SHIFT)               /* 0x00000008 */
+#define DCACHE_CACHE_CTRL_CACHE_FLUSH_SHIFT                (4U)
+#define DCACHE_CACHE_CTRL_CACHE_FLUSH_MASK                 (0x1U << DCACHE_CACHE_CTRL_CACHE_FLUSH_SHIFT)                /* 0x00000010 */
+#define DCACHE_CACHE_CTRL_CACHE_PMU_EN_SHIFT               (5U)
+#define DCACHE_CACHE_CTRL_CACHE_PMU_EN_MASK                (0x1U << DCACHE_CACHE_CTRL_CACHE_PMU_EN_SHIFT)               /* 0x00000020 */
+#define DCACHE_CACHE_CTRL_CACHE_BYPASS_SHIFT               (6U)
+#define DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK                (0x1U << DCACHE_CACHE_CTRL_CACHE_BYPASS_SHIFT)               /* 0x00000040 */
+#define DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT             (7U)
+#define DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK              (0x1U << DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT)             /* 0x00000080 */
+#define DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT         (8U)
+#define DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_MASK          (0x7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT)         /* 0x00000700 */
+#define DCACHE_CACHE_CTRL_CACHE_MPU_MODE_SHIFT             (12U)
+#define DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK              (0x1U << DCACHE_CACHE_CTRL_CACHE_MPU_MODE_SHIFT)             /* 0x00001000 */
+#define DCACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT                (13U)
+#define DCACHE_CACHE_CTRL_CACHE_PF_EN_MASK                 (0x1U << DCACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT)                /* 0x00010000 */
+#define DCACHE_CACHE_CTRL_AHB_WR_PIPE_SHIFT                (15U)
+#define DCACHE_CACHE_CTRL_AHB_WR_PIPE_MASK                 (0x1U << DCACHE_CACHE_CTRL_AHB_WR_PIPE_SHIFT)           /* 0x00008000 */
+/* CACHE_MAINTAIN0 */
+#define DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT         (0U)
+#define DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK          (0x1U << DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT)         /* 0x00000001 */
+#define DCACHE_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT           (1U)
+#define DCACHE_CACHE_MAINTAIN0_CACHE_M_CMD_MASK            (0x3U << DCACHE_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT)           /* 0x00000006 */
+#define DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT          (5U)
+#define DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK           (0x7FFFFFFU << DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT)    /* 0xFFFFFFE0 */
+/* CACHE_MAINTAIN1 */
+#define DCACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT        (0U)
+#define DCACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_MASK         (0xFFFFU << DCACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT)     /* 0x0000FFFF */
+/* STB_TIMEOUT_CTRL */
+#define DCACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT    (0U)
+#define DCACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_MASK     (0x7FFFFU << DCACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT) /* 0x0007FFFF */
+/* CACHE_INT_EN */
+#define DCACHE_CACHE_INT_EN_ERR_RECORD_EN_SHIFT            (0U)
+#define DCACHE_CACHE_INT_EN_ERR_RECORD_EN_MASK             (0x1U << DCACHE_CACHE_INT_EN_ERR_RECORD_EN_SHIFT)            /* 0x00000001 */
+/* CACHE_INT_ST */
+#define DCACHE_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT         (0U)
+#define DCACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK          (0x1U << DCACHE_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT)         /* 0x00000001 */
+/* CACHE_ERR_HADDR */
+#define DCACHE_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT          (0U)
+#define DCACHE_CACHE_ERR_HADDR_STATUS_HADDR_MASK           (0x1U << DCACHE_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT)          /* 0x00000001 */
+/* CACHE_STATUS */
+#define DCACHE_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT        (0U)
+#define DCACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK         (0x1U << DCACHE_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT)        /* 0x00000001 */
+#define DCACHE_CACHE_STATUS_CACHE_M_BUSY_SHIFT             (1U)
+#define DCACHE_CACHE_STATUS_CACHE_M_BUSY_MASK              (0x1U << DCACHE_CACHE_STATUS_CACHE_M_BUSY_SHIFT)             /* 0x00000002 */
+#define DCACHE_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT         (2U)
+#define DCACHE_CACHE_STATUS_CACHE_FLUSH_DONE_MASK          (0x1U << DCACHE_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT)         /* 0x00000004 */
+/* PMU_RD_NUM_CNT */
+#define DCACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT         (0U)
+#define DCACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_MASK          (0xFFFFFFFFU << DCACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_WR_NUM_CNT */
+#define DCACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT         (0U)
+#define DCACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_MASK          (0xFFFFFFFFU << DCACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_SRAM_RD_HIT_CNT */
+#define DCACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT (0U)
+#define DCACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_MASK (0xFFFFFFFFU << DCACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_HB_RD_HIT_CNT */
+#define DCACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT   (0U)
+#define DCACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_MASK    (0xFFFFFFFFU << DCACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_STB_RD_HIT_CNT */
+#define DCACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT (0U)
+#define DCACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_MASK  (0xFFFFFFFFU << DCACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_RD_HIT_CNT */
+#define DCACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT         (0U)
+#define DCACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_MASK          (0xFFFFFFFFU << DCACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_WR_HIT_CNT */
+#define DCACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT         (0U)
+#define DCACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_MASK          (0xFFFFFFFFU << DCACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_RD_MISS_PENALTY_CNT */
+#define DCACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT (0U)
+#define DCACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << DCACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_WR_MISS_PENALTY_CNT */
+#define DCACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT (0U)
+#define DCACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << DCACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_RD_LAT_CNT */
+#define DCACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT         (0U)
+#define DCACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_MASK          (0xFFFFFFFFU << DCACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_WR_LAT_CNT */
+#define DCACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT         (0U)
+#define DCACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_MASK          (0xFFFFFFFFU << DCACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* REVISION */
+#define DCACHE_REVISION_REVISION_SHIFT                     (0U)
+#define DCACHE_REVISION_REVISION_MASK                      (0xFFFFFFFFU << DCACHE_REVISION_REVISION_SHIFT)              /* 0xFFFFFFFF */
+
+/* CACHE LINE SIZE */
+#define CACHE_LINE_SHIFT                (5U)
+#define CACHE_LINE_SIZE                 (0x1U << CACHE_LINE_SHIFT)
+#define CACHE_LINE_ADDR_MASK            (0xFFFFFFFFU << CACHE_LINE_SHIFT)
+#define CACHE_M_CLEAN                   0x0U
+#define CACHE_M_INVALID                 0x2U
+#define CACHE_M_CLEAN_INVALID           0x4U
+#define CACHE_M_INVALID_ALL             0x6U
+
+#define CACHE_REVISION                  (0x00000100U)
 /******************************************VOP*******************************************/
 /* CON */
 #define VOP_CON_SW_MCU_IDLE_DIR_SHIFT                      (0U)

@@ -46,4 +46,37 @@ void SystemInit(void)
     SCB->VTOR = (uint32_t)__Vectors;
 #endif
 #endif
+
+    /* Icache configuration:
+     * enable:  cache_en, cache_wt
+     * disable: cache_stb, cache_bypass
+     */
+    ICACHE->CACHE_CTRL |= (ICACHE_CACHE_CTRL_CACHE_EN_MASK |
+                           ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK);
+    ICACHE->CACHE_CTRL &= (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
+
+    do {
+        status =
+            ICACHE->CACHE_STATUS & ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK;
+    } while (status == 0);
+
+    ICACHE->CACHE_CTRL &= ~ICACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
+
+    /* Dcache configuration:
+     * enable:  cache_en, cache_stb, stb_timeout, stb_entry=7
+     * disable: cache_bypass, cache_wt
+     */
+    DCACHE->CACHE_CTRL |= (DCACHE_CACHE_CTRL_CACHE_EN_MASK |
+                           DCACHE_CACHE_CTRL_CACHE_STB_EN_MASK |
+                           DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK |
+                           (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT));
+    DCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_WT_EN_MASK;
+    DCACHE->STB_TIMEOUT_CTRL = 1;
+
+    do {
+        status =
+            DCACHE->CACHE_STATUS & DCACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK;
+    } while (status == 0);
+
+    DCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 }
