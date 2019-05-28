@@ -759,6 +759,10 @@ HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg)
     VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_HOLD_MODE_SHIFT,
                   VOP_MCU_MCU_HOLD_MODE_MASK, 0);
 
+    VOP_MaskWrite(NULL, &pReg->INTR_CLEAR,
+                  VOP_INTR_CLEAR_DSP_HOLD_VALID_INTR_CLR_SHIFT,
+                  VOP_INTR_CLEAR_DSP_HOLD_VALID_INTR_CLR_MASK, 1);
+
     return HAL_OK;
 }
 
@@ -855,7 +859,7 @@ HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
     struct DSC_PPS dscDefaultPps;
     struct DSC_PPS_RC_PARAMETER_SET *rcParameterSet = &dscDefaultPps.rcParameterSet;
     struct DSC_PPS_RC_RANGE_PARAMETER *rcRangeParameter = rcParameterSet->rcRangeParameter;
-    uint8_t flatness_det_thresh = 2; /* rockchip DSC define */
+    uint8_t flatness_det_thresh = 2;     /* rockchip DSC define */
 
     memset(&dscDefaultPps, 0, sizeof(dscDefaultPps));
 
