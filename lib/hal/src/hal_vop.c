@@ -811,7 +811,7 @@ HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
     VOP_MaskWrite(&g_VOP_RegMir.DSP_BG, &pReg->DSP_BG,
                   VOP_DSP_BG_DSP_BG_BLUE_SHIFT,
                   VOP_DSP_BG_DSP_BG_BLUE_MASK,
-                  0xff);
+                  0);
 
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_SHIFT,
