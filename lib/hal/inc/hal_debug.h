@@ -6,7 +6,7 @@
 #ifndef _HAL_DEBUG_H_
 #define _HAL_DEBUG_H_
 
-/** @addtogroup RKMCU_HAL_Driver
+/** @addtogroup RK_HAL_Driver
  *  @{
  */
 
