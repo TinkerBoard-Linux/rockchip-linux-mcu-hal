@@ -4,6 +4,7 @@
  */
 
 #include "soc.h"
+#include "hal_conf.h"
 
 uint32_t SystemCoreClock = 40000000;
 
@@ -47,6 +48,7 @@ void SystemInit(void)
 #endif
 #endif
 
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(HAL_DCACHE_MODULE_ENABLED)
     /* Icache configuration:
      * enable:  cache_en, cache_wt
      * disable: cache_stb, cache_bypass
@@ -79,4 +81,5 @@ void SystemInit(void)
     } while (status == 0);
 
     DCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
+#endif
 }
