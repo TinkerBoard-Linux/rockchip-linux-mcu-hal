@@ -111,7 +111,7 @@
 #include "hal_spi.h"
 #endif
 
-#ifdef HAL_SPI_MODULE_ENABLED
+#ifdef HAL_SPI2APB_MODULE_ENABLED
 #include "hal_spi2apb.h"
 #endif
 
