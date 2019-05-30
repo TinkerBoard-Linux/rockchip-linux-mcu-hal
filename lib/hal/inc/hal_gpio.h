@@ -17,6 +17,19 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
+
+#ifndef GPIO_VER_ID
+#define GPIO_VER_ID (0U)
+#endif
+
+#define GPIO_PIN_SHIFT  (0) /* Bits 0-4: GPIO Pin number: 0 - 31 */
+#define GPIO_PIN_MASK   (0x1f << GPIO_PIN_SHIFT)
+#define GPIO_PORT_SHIFT (5) /* Bits 5-7: GPIO Port number: 0 - 7 */
+#define GPIO_PORT_MASK  (0x7 << GPIO_PORT_SHIFT)
+
+#define GPIO_PIN_DEFAULT (-1)
+#define GET_PIN(PORT, PIN) ((((PORT) << GPIO_PORT_SHIFT) & GPIO_PORT_MASK) + (((PIN) << GPIO_PIN_SHIFT) & GPIO_PIN_MASK))
+
 /** @defgroup GPIO_Exported_Definition_Group1 Basic Definition
  *  @{
  */
@@ -35,26 +48,35 @@ typedef enum {
     GPIO_FUNC0,
     GPIO_FUNC1,
     GPIO_FUNC2,
-    GPIO_FUNC3
+    GPIO_FUNC3,
+    GPIO_FUNC4,
+    GPIO_FUNC5,
+    GPIO_FUNC6,
+    GPIO_FUNC7
 } eGPIO_PinFunc;
 
 typedef enum {
     GPIO_PULL_OD,
     GPIO_PULL_UP,
     GPIO_PULL_DOWN,
+    GPIO_PULL_KEEP
 } eGPIO_PinPull;
 
 typedef enum {
     GPIO_DRIVE_LEVEL0,
     GPIO_DRIVE_LEVEL1,
     GPIO_DRIVE_LEVEL2,
-    GPIO_DRIVE_LEVEL3
+    GPIO_DRIVE_LEVEL3,
+    GPIO_DRIVE_LEVEL4,
+    GPIO_DRIVE_LEVEL5,
+    GPIO_DRIVE_LEVEL6,
+    GPIO_DRIVE_LEVEL7
 } eGPIO_PinDrive;
 
 typedef enum {
     GPIO_SLEWRATE_SLOW,
     GPIO_SLEWRATE_FAST
-} eGPIO_PinSpeed;
+} eGPIO_PinSlewRate;
 
 typedef enum {
     GPIO_SCHMITT_DIS,
@@ -72,34 +94,44 @@ typedef enum {
 } eGPIO_IrqEn;
 
 typedef enum {
-    GPIO_IRQ_TYPE_POSITIVE = 0,
-    GPIO_IRQ_TYPE_NEGATIVE,
-    GPIO_IRQ_TYPE_HIGH,
-    GPIO_IRQ_TYPE_LOW,
-    GPIO_IRQ_TYPE_DOUBLE,
+    GPIO_IRQ_TYPE_NONE         = 0x00000000,
+    GPIO_IRQ_TYPE_EDGE_RISING  = 0x00000001,
+    GPIO_IRQ_TYPE_EDGE_FALLING = 0x00000002,
+    GPIO_IRQ_TYPE_EDGE_BOTH    = (GPIO_IRQ_TYPE_EDGE_FALLING | GPIO_IRQ_TYPE_EDGE_RISING),
+    GPIO_IRQ_TYPE_LEVEL_HIGH   = 0x00000004,
+    GPIO_IRQ_TYPE_LEVEL_LOW    = 0x00000008,
+    GPIO_IRQ_TYPE_LEVEL_MASK   = (GPIO_IRQ_TYPE_LEVEL_LOW | GPIO_IRQ_TYPE_LEVEL_HIGH),
+    GPIO_IRQ_TYPE_SENSE_MASK   = 0x0000000f,
+    GPIO_IRQ_TYPE_DEFAULT      = GPIO_IRQ_TYPE_SENSE_MASK,
 } eGPIO_IrqType;
 
 typedef enum {
-#ifdef GPIO0
-    GPIO_GROUP0,
-#endif
-#ifdef GPIO1
-    GPIO_GROUP1,
-#endif
-#ifdef GPIO2
-    GPIO_GROUP2,
-#endif
-#ifdef GPIO3
-    GPIO_GROUP3,
-#endif
-#ifdef GPIO4
-    GPIO_GROUP4,
-#endif
-#ifdef GPIO5
-    GPIO_GROUP5,
-#endif
-    GPIO_GROUP_NUM
-} eGPIO_PinGroup;
+    #ifdef GPIO0
+    GPIO_PORT0 = 0,
+    #endif
+    #ifdef GPIO1
+    GPIO_PORT1 = 1,
+    #endif
+    #ifdef GPIO2
+    GPIO_PORT2 = 2,
+    #endif
+    #ifdef GPIO3
+    GPIO_PORT3 = 3,
+    #endif
+    #ifdef GPIO4
+    GPIO_PORT4 = 4,
+    #endif
+    #ifdef GPIO5
+    GPIO_PORT5 = 5,
+    #endif
+    #ifdef GPIO6
+    GPIO_PORT6 = 6,
+    #endif
+    #ifdef GPIO7
+    GPIO_PORT7 = 7,
+    #endif
+    GPIO_PORT_NUM
+} eGPIO_PortNum;
 
 typedef enum {
     GPIO_PIN_A0 = 0,
@@ -134,22 +166,53 @@ typedef enum {
     GPIO_PIN_D5,
     GPIO_PIN_D6,
     GPIO_PIN_D7,
+    GPIO_PIN_NUM
 } eGPIO_PinNum;
 
+typedef enum {
+    GPIO_MODE_INPUT,
+    GPIO_MODE_OUTPUT,
+    GPIO_MODE_IT_EDGE_RISING,
+    GPIO_MODE_IT_EDGE_FALLING,
+    GPIO_MODE_IT_EDGE_RISING_FALLING,
+    GPIO_MODE_IT_LEVEL_HIGH,
+    GPIO_MODE_IT_LEVEL_LOW,
+} eGPIO_Mode;
+
 /**
-  * @brief GPIO Descript structure definition
-  */
+ * @brief GPIO Init structure definition
+ */
+typedef struct {
+    uint32_t pin;     /*!< Specifies the GPIO pins to be configured.
+                           This parameter can be any value of (1<< @ref eGPIO_PinNum) */
+
+    uint32_t mode;    /*!< Specifies the operating mode for the selected pins.
+                           This parameter can be a value of @ref eGPIO_Mode */
+
+    uint32_t pul;    /*!< Specifies the Pull-up or Pull-Down activation for the selected pins.
+                           This parameter can be a value of @ref eGPIO_PinPull */
+
+    uint32_t smt;  /*!< Specifies the Pull-up or Pull-Down activation for the selected pins.
+                            This parameter can be a value of @ref eGPIO_PinSchmitt */
+
+    uint32_t drv;   /*!< Specifies the drive for the selected pins.
+                           This parameter can be a value of @ref eGPIO_PinDrive */
+
+    uint32_t slr;   /*!< Specifies the speed for the selected pins.
+                           This parameter can be a value of @ref eGPIO_PinSlewRate */
+} GPIO_InitTypeDef;
+
 struct GPIO_PIN_INFO {
-    uint32_t bitsPerPin;
-    uint32_t pinsPerReg;
+    uint8_t bitsPerPin;
+    uint8_t pinsPerReg;
 };
 
 struct GPIO_PIN_OFFSET {
-    uint32_t mux;
-    uint32_t slr;
-    uint32_t smt;
-    uint32_t pul;
-    uint32_t drv;
+    uint32_t mux; /* Offset of Pin IOMUX in GRF */
+    uint32_t slr; /* Offset of Pin SlewRate in GRF */
+    uint32_t smt; /* Offset of Pin Schmitt in GRF */
+    uint32_t pul; /* Offset of Pin Pull in GRF */
+    uint32_t drv; /* Offset of Pin Drive Capacity in GRF */
 };
 
 struct GPIO_DESC {
@@ -162,7 +225,7 @@ struct GPIO_DESC {
 
 struct HAL_GPIO_DEV {
     uint32_t cnt;
-    struct GPIO_DESC desc[8];
+    struct GPIO_DESC desc[GPIO_PORT_NUM];
     struct GPIO_PIN_INFO muxInfo;
     struct GPIO_PIN_INFO pulInfo;
     struct GPIO_PIN_INFO smtInfo;
@@ -175,25 +238,25 @@ struct HAL_GPIO_DEV {
   */
 
 /***************************** Function Declare ******************************/
-/** GRF Functions */
-HAL_Status HAL_GPIO_SetDrive(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinDrive level);
-HAL_Status HAL_GPIO_SetFunc(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinFunc func);
-HAL_Status HAL_GPIO_SetPull(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinPull pull);
-HAL_Status HAL_GPIO_SetSchmitt(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinSchmitt enable);
-
-/** GPIO Functions */
-HAL_Status HAL_GPIO_SetIrqAck(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
-HAL_Status HAL_GPIO_SetPinDebounce(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinDebounce enable);
-HAL_Status HAL_GPIO_SetIrqEnable(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_IrqEn enable);
-HAL_Status HAL_GPIO_SetIrqType(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_IrqType type);
-uint32_t HAL_GPIO_GetGPIOIrqType(struct GPIO_REG *GPIOx);
-uint32_t HAL_GPIO_GetGPIOIrqStatus(struct GPIO_REG *GPIOx);
-
-HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinDirection direction);
-HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinLevel level);
-eGPIO_PinDirection HAL_GPIO_GetPinDirection(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
 eGPIO_PinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
 eGPIO_PinLevel HAL_GPIO_GetPinData(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
+HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinLevel level);
+HAL_Status HAL_GPIO_SetIOMUX(struct GPIO_REG *GPIOx, uint32_t pin, uint32_t func);
+HAL_Status HAL_GPIO_Init(struct GPIO_REG *GPIOx, GPIO_InitTypeDef *GPIO_Init);
+void HAL_GPIO_EnableIRQ(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
+void HAL_GPIO_DisableIRQ(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
+void HAL_GPIO_Probe(const struct HAL_GPIO_DEV GPIO_Dev);
+void HAL_GPIOn_IRQCallback(uint32_t port, uint32_t pin);
+void HAL_GPIOn_IRQHandler(uint32_t port);
+void HAL_GPIO0_IRQHandler(void);
+void HAL_GPIO1_IRQHandler(void);
+void HAL_GPIO2_IRQHandler(void);
+void HAL_GPIO3_IRQHandler(void);
+void HAL_GPIO4_IRQHandler(void);
+void HAL_GPIO5_IRQHandler(void);
+void HAL_GPIO6_IRQHandler(void);
+void HAL_GPIO7_IRQHandler(void);
+struct GPIO_REG *HAL_GPIO_GetBase(uint32_t port);
 
 #endif
 

@@ -145,7 +145,7 @@ HAL_Status BSP_VAD_DeInit(void)
 #ifdef HAL_GPIO_MODULE_ENABLED
 const struct HAL_GPIO_DEV g_GPIOxDev =
 {
-    .cnt = 5,
+    .cnt = GPIO_PORT_NUM,
     .desc[0] = {
         .base = GPIO0_BASE,
         .irqn = GPIO0_IRQn,

@@ -19,6 +19,13 @@
                     #### How to use ####
  ==============================================================================
  The GPIO driver can be used as follows:
+ (A) User can read/write level by IO functions:
+       1) Get pin level by HAL_GPIO_GetPinLevel / HAL_GPIO_GetPinData;
+       2) Set pin level by HAL_GPIO_SetPinLevel;
+ (B) User can set IOMUX by HAL_GPIO_SetIOMUX pin by pin;
+ (C) User can set pin configure by HAL_GPIO_Config, REMEMBER that the
+       Pin is actually 1 << pin, so it can support several pins to configure.
+       It's useful for driver to set IOs onetime.
 
  @endverbatim
  @} */
@@ -29,61 +36,327 @@
 
 /********************* Private MACRO Definition ******************************/
 
-#define MASK(v)                ((1 << v) - 1)
-#define GPIO_READ(a)           (*(volatile unsigned int *)(a))
-#define GPIO_WRITE(a, w, r, v) (*(volatile unsigned int *)(a) = ((MASK(w) << (16) | (v)) << (r)))
+static struct HAL_GPIO_DEV s_GPIODev;
 
-#if defined(PMUGRF_MUX_OFFSET) && defined(PMUGRF_PUL_OFFSET) && defined(PMUGRF_DRV_OFFSET) && defined(PMUGRF_SLW_OFFSET) && defined(PMUGRF_SMT_OFFSET)
-#define GPIOn_MUX_ADDR(n) (((n) == 0) ? (PMU_GRF + PMUGRF_MUX_OFFSET) : (GRF_BASE + (n) * GPIO_MUX_BANK_STRIDE + GRF_MUX_OFFSET))
-#define GPIOn_SLW_ADDR(n) (((n) == 0) ? (PMU_GRF + PMUGRF_SLW_OFFSET) : (GRF_BASE + (n) * GPIO_SLW_BANK_STRIDE + GRF_SLW_OFFSET))
-#define GPIOn_SMT_ADDR(n) (((n) == 0) ? (PMU_GRF + PMUGRF_SMT_OFFSET) : (GRF_BASE + (n) * GPIO_SMT_BANK_STRIDE + GRF_SMT_OFFSET))
-#define GPIOn_PUL_ADDR(n) (((n) == 0) ? (PMU_GRF + PMUGRF_PUL_OFFSET) : (GRF_BASE + (n) * GPIO_PUL_BANK_STRIDE + GRF_PUL_OFFSET))
-#define GPIOn_DRV_ADDR(n) (((n) == 0) ? (PMU_GRF + PMUGRF_DRV_OFFSET) : (GRF_BASE + (n) * GPIO_DRV_BANK_STRIDE + GRF_DRV_OFFSET))
-#else
-#define GPIOn_MUX_ADDR(n) (GRF_BASE + (n) * GPIO_MUX_BANK_STRIDE + GRF_MUX_OFFSET)
-#define GPIOn_SLW_ADDR(n) (GRF_BASE + (n) * GPIO_SLW_BANK_STRIDE + GRF_SLW_OFFSET)
-#define GPIOn_SMT_ADDR(n) (GRF_BASE + (n) * GPIO_SMT_BANK_STRIDE + GRF_SMT_OFFSET)
-#define GPIOn_PUL_ADDR(n) (GRF_BASE + (n) * GPIO_PUL_BANK_STRIDE + GRF_PUL_OFFSET)
-#define GPIOn_DRV_ADDR(n) (GRF_BASE + (n) * GPIO_DRV_BANK_STRIDE + GRF_DRV_OFFSET)
-#endif
+#define GPIO_PORT_CNT (s_GPIODev.cnt)
 
-/********************* Private Structure Definition **************************/
+#define GPIO_MUX_BPP (s_GPIODev.muxInfo.bitsPerPin)
+#define GPIO_MUX_PPR (s_GPIODev.muxInfo.pinsPerReg)
+#define GPIO_SLR_BPP (s_GPIODev.slrInfo.bitsPerPin)
+#define GPIO_SLR_PPR (s_GPIODev.slrInfo.pinsPerReg)
+#define GPIO_SMT_BPP (s_GPIODev.smtInfo.bitsPerPin)
+#define GPIO_SMT_PPR (s_GPIODev.smtInfo.pinsPerReg)
+#define GPIO_PUL_BPP (s_GPIODev.pulInfo.bitsPerPin)
+#define GPIO_PUL_PPR (s_GPIODev.pulInfo.pinsPerReg)
+#define GPIO_DRV_BPP (s_GPIODev.drvInfo.bitsPerPin)
+#define GPIO_DRV_PPR (s_GPIODev.drvInfo.pinsPerReg)
+
+#define GPIO_BPP(x) (GPIO_##x##_BPP)
+#define GPIO_PPR(x) (GPIO_##x##_PPR)
+
+#define GPIOn_MUX_ADDR(n) (s_GPIODev.desc[n].offset.mux)
+#define GPIOn_SLR_ADDR(n) (s_GPIODev.desc[n].offset.slr)
+#define GPIOn_SMT_ADDR(n) (s_GPIODev.desc[n].offset.smt)
+#define GPIOn_PUL_ADDR(n) (s_GPIODev.desc[n].offset.pul)
+#define GPIOn_DRV_ADDR(n) (s_GPIODev.desc[n].offset.drv)
+
+#define SET_VAL(v, p)         (v ? RK_SET_BITS(1 << (p - 16)) : RK_CLR_BITS(1 << (p - 16)))
+#define IS_HIGH_16BITS_PIN(p) (p >= GPIO_PIN_C0 && p <= GPIO_PIN_D7)
+
+#define GPIO_READ(a)           (*(volatile uint32_t *)(a))
+#define GPIO_WRITE(a, w, r, v) (*(volatile uint32_t *)(a) = ((((1 << w) - 1) << (16) | (v)) << (r)))
+
+#define UNUSED(X) (void)(X)      /* To avoid gcc/g++ warnings */
 
 /********************* Private Variable Definition ***************************/
-
 /********************* Private Function Definition ***************************/
 
-eGPIO_PinGroup GPIO_GetPinGroup(struct GPIO_REG *GPIOx)
+/**
+ * @brief  Set GPIO function.
+ * @param  port: The port number defined in eGPIO_PortNum.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ * @param  value: The function value.
+ * @return HAL_Status
+ * Set GPIO pin mux to different functions.
+ */
+HAL_Status GPIO_SetFunc(uint32_t port, uint32_t pin, uint32_t value)
 {
-#ifdef GPIO0
-    if (GPIOx == GPIO0)
-        return GPIO_GROUP0;
-#endif
-#ifdef GPIO1
-    if (GPIOx == GPIO1)
-        return GPIO_GROUP1;
-#endif
-#ifdef GPIO2
-    if (GPIOx == GPIO2)
-        return GPIO_GROUP2;
-#endif
-#ifdef GPIO3
-    if (GPIOx == GPIO3)
-        return GPIO_GROUP3;
-#endif
-#ifdef GPIO4
-    if (GPIOx == GPIO4)
-        return GPIO_GROUP4;
-#endif
-#ifdef GPIO5
-    if (GPIOx == GPIO5)
-        return GPIO_GROUP5;
-#endif
+    uint32_t pinsPerReg = GPIO_BPP(MUX);
+    uint32_t bitsPerPin = GPIO_PPR(MUX);
+    uint32_t addr, offset;
+    uint32_t mask = bitsPerPin;
 
-    return GPIO_GROUP_NUM;
+    if (pinsPerReg == 0 || bitsPerPin == 0)
+        return HAL_OK;
+
+    if (value >= HAL_BIT(bitsPerPin) || pin >= 32 || pin < 0)
+        return HAL_ERROR;
+
+    addr = GPIOn_MUX_ADDR(port) + (pin / pinsPerReg) * 4;
+    offset = (pin % pinsPerReg) * bitsPerPin;
+
+    if (pinsPerReg * bitsPerPin == 32)
+        mask = 0;
+
+    GPIO_WRITE(addr, mask, offset, value);
+
+    return HAL_OK;
 }
 
-/********************* Public Function Definition ****************************/
+/**
+ * @brief  Set GPIO pull mode.
+ * @param  port: The port number defined in eGPIO_PortNum.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ * @param  value: The pull mode value.
+ * @return HAL_Status
+ * Set GPIO pin pull mode to pullup/pulldown/nopull.
+ */
+HAL_Status GPIO_SetPull(uint32_t port, uint32_t pin, uint32_t value)
+{
+    uint32_t pinsPerReg = GPIO_BPP(PUL);
+    uint32_t bitsPerPin = GPIO_PPR(PUL);
+    uint32_t addr, offset;
+    uint32_t mask = bitsPerPin;
+
+    if (pinsPerReg == 0 || bitsPerPin == 0)
+        return HAL_OK;
+
+    if (value >= HAL_BIT(bitsPerPin) || pin >= 32 || pin < 0)
+        return HAL_ERROR;
+
+    addr = GPIOn_PUL_ADDR(port) + (pin / pinsPerReg) * 4;
+    offset = (pin % pinsPerReg) * bitsPerPin;
+
+    if (pinsPerReg * bitsPerPin == 32)
+        mask = 0;
+
+    GPIO_WRITE(addr, mask, offset, value);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set GPIO drive level.
+ * @param  port: The port number defined in eGPIO_PortNum.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ * @param  value: The pull mode value.
+ * @return HAL_Status
+ * Set GPIO pin drive capacity to different level.
+ */
+HAL_Status GPIO_SetDrive(uint32_t port, uint32_t pin, uint32_t value)
+{
+    uint32_t pinsPerReg = GPIO_BPP(DRV);
+    uint32_t bitsPerPin = GPIO_PPR(DRV);
+    uint32_t addr, offset;
+    uint32_t mask = bitsPerPin;
+
+    if (pinsPerReg == 0 || bitsPerPin == 0)
+        return HAL_OK;
+
+    if (value >= HAL_BIT(bitsPerPin) || pin >= 32 || pin < 0)
+        return HAL_ERROR;
+
+    addr = GPIOn_DRV_ADDR(port) + (pin / pinsPerReg) * 4;
+    offset = (pin % pinsPerReg) * bitsPerPin;
+
+    if (pinsPerReg * bitsPerPin == 32)
+        mask = 0;
+
+    GPIO_WRITE(addr, mask, offset, value);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set GPIO schmitt feature.
+ * @param  port: The port number defined in eGPIO_PortNum.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ * @param  value: The schmitt enable value.
+ * @return HAL_Status
+ * Set GPIO pin schmitt trigger or not.
+ */
+HAL_Status GPIO_SetSchmitt(uint32_t port, uint32_t pin, uint32_t value)
+{
+    uint32_t pinsPerReg = GPIO_BPP(SMT);
+    uint32_t bitsPerPin = GPIO_PPR(SMT);
+    uint32_t addr, offset;
+    uint32_t mask = bitsPerPin;
+
+    if (pinsPerReg == 0 || bitsPerPin == 0)
+        return HAL_OK;
+
+    if (value >= HAL_BIT(bitsPerPin) || pin >= 32 || pin < 0)
+        return HAL_ERROR;
+
+    addr = GPIOn_SMT_ADDR(port) + (pin / pinsPerReg) * 4;
+    offset = (pin % pinsPerReg) * bitsPerPin;
+
+    if (pinsPerReg * bitsPerPin == 32)
+        mask = 0;
+
+    GPIO_WRITE(addr, mask, offset, value);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set GPIO slewrate feature.
+ * @param  port: The port number defined in eGPIO_PortNum.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ * @param  value: The slewrate value.
+ * @return HAL_Status
+ * Set GPIO pin slewrate to slow or fast.
+ */
+HAL_Status GPIO_SetSlewRate(uint32_t port, uint32_t pin, uint32_t value)
+{
+    uint32_t pinsPerReg = GPIO_BPP(SLR);
+    uint32_t bitsPerPin = GPIO_PPR(SLR);
+    uint32_t addr, offset;
+    uint32_t mask = bitsPerPin;
+
+    if (pinsPerReg == 0 || bitsPerPin == 0)
+        return HAL_OK;
+
+    if (value >= HAL_BIT(bitsPerPin) || pin >= 32 || pin < 0)
+        return HAL_ERROR;
+
+    addr = GPIOn_SLR_ADDR(port) + (pin / pinsPerReg) * 4;
+    offset = (pin % pinsPerReg) * bitsPerPin;
+
+    if (pinsPerReg * bitsPerPin == 32)
+        mask = 0;
+
+    GPIO_WRITE(addr, mask, offset, value);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set GPIO direction.
+ * @param  GPIOx: the GPIO struct.
+ * @param  pin: gpio pin num.
+ * @param  value: direction value.
+ * @return HAL_Status: HAL_OK if success.
+ */
+HAL_Status GPIO_SetPinDirection(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinDirection value)
+{
+#if (GPIO_VER_ID == 0x01000C2BU)
+    if (IS_HIGH_16BITS_PIN(pin))
+        GPIOx->SWPORT_DDR_H = SET_VAL(value, pin);
+    else
+        GPIOx->SWPORT_DDR_L = SET_VAL(value, pin);
+#else
+    MODIFY_REG(GPIOx->SWPORTA_DDR, 1 << pin, value << pin);
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set GPIO irq type.
+ * @param  GPIOx: The pointer of GPIO struct.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ * @param  IrqType: irq type defined in eGPIO_IrqType.
+ */
+void GPIO_IRQTypeSet(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_IrqType IrqType)
+{
+    uint32_t bothEdge = 0, type = 0, polarity = 0;
+
+    UNUSED(bothEdge);
+    switch (IrqType) {
+    case GPIO_IRQ_TYPE_EDGE_RISING:
+        type = 1;
+        polarity = 1;
+        bothEdge = 0;
+        break;
+    case GPIO_IRQ_TYPE_EDGE_FALLING:
+        type = 1;
+        polarity = 0;
+        bothEdge = 0;
+        break;
+    case GPIO_IRQ_TYPE_LEVEL_HIGH:
+        type = 0;
+        polarity = 1;
+        bothEdge = 0;
+        break;
+    case GPIO_IRQ_TYPE_LEVEL_LOW:
+        type = 0;
+        polarity = 0;
+        bothEdge = 0;
+        break;
+    case GPIO_IRQ_TYPE_EDGE_BOTH:
+        type = 0;
+        polarity = 0;
+        bothEdge = 1;
+        break;
+    default:
+
+        return;
+    }
+
+#if (GPIO_VER_ID == 0x01000C2BU)
+    if (IS_HIGH_16BITS_PIN(pin)) {
+        GPIOx->INT_TYPE_H = SET_VAL(type, pin);
+        GPIOx->INT_POLARITY_H = SET_VAL(polarity, pin);
+        GPIOx->INT_BOTHEDGE_H = SET_VAL(bothEdge, pin);
+    } else {
+        GPIOx->INT_TYPE_L = SET_VAL(type, pin);
+        GPIOx->INT_POLARITY_L = SET_VAL(polarity, pin);
+        GPIOx->INT_BOTHEDGE_L = SET_VAL(bothEdge, pin);
+    }
+#else
+    MODIFY_REG(GPIOx->INTTYPE_LEVEL, 1 << pin, type << pin);
+    MODIFY_REG(GPIOx->INT_POLARITY, 1 << pin, polarity << pin);
+    #ifdef SOC_RK1808
+    MODIFY_REG(GPIOx->INT_BOTHEDGE, 1 << pin, bothEdge << pin);
+    #endif
+#endif
+}
+
+/**
+ * @brief  Set the GPIO IRQ EOI.
+ * @param  GPIOx: The pointer of GPIO struct.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ */
+void GPIO_IRQEOISet(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
+{
+#if (GPIO_VER_ID == 0x01000C2BU)
+    if (IS_HIGH_16BITS_PIN(pin))
+        GPIOx->PORT_EOI_H = RK_SET_BITS(1 << (pin - 16));
+    else
+        GPIOx->PORT_EOI_L = RK_SET_BITS(1 << pin);
+#else
+    GPIOx->PORTA_EOI = 1 << pin;
+#endif
+}
+
+/**
+ * @brief  Get GPIO all pins irq type.
+ * @param  GPIOx: the GPIO struct.
+ * @return uint32_t: type value.
+ */
+uint32_t GPIO_IRQTypeGet(struct GPIO_REG *GPIOx)
+{
+    uint32_t retVal;
+
+#if (GPIO_VER_ID == 0x01000C2BU)
+    retVal = (GPIOx->INT_TYPE_L & 0xffff) | ((GPIOx->INT_TYPE_H & 0xffff) << 16);
+#else
+    retVal = GPIOx->INTTYPE_LEVEL;
+#endif
+
+    return retVal;
+}
+
+/**
+ * @brief  Get GPIO all pins irq status.
+ * @param  GPIOx: the GPIO struct.
+ * @return uint32_t: status value.
+ */
+uint32_t GPIO_IRQStatusGet(struct GPIO_REG *GPIOx)
+{
+    return GPIOx->INT_STATUS;
+}
 
 /** @defgroup GPIO_Exported_Functions_Group1 State and Errors Functions
  @verbatim
@@ -98,258 +371,89 @@ eGPIO_PinGroup GPIO_GetPinGroup(struct GPIO_REG *GPIOx)
  */
 
 /**
- * @brief  Set GPIO function.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @param  func: iomux value.
- * @return HAL_Status: HAL_OK if success.
+ * @brief  IOMUX Set.
+ * @param  GPIOx: The pointer of GPIO struct.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ * @param  func: iomux value
+ * @return HAL_Status.
  */
-HAL_Status HAL_GPIO_SetFunc(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinFunc func)
+HAL_Status HAL_GPIO_SetIOMUX(struct GPIO_REG *GPIOx, uint32_t pin, uint32_t func)
 {
-    uint32_t pinsPerReg = GPIO_MUX_PINS_PER_REG;
-    uint32_t bitsPerPin = GPIO_MUX_BITS_PER_PIN;
-    uint32_t grp = GPIO_GetPinGroup(GPIOx);
-    uint32_t addr, offset;
+    uint32_t port;
 
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    if (func >= HAL_BIT(bitsPerPin)) {
-        HAL_DBG_ERR("[line]:%d, parameter error\n", __LINE__);
-
+    if (IS_GPIO_INSTANCE(GPIOx) == 0)
         return HAL_ERROR;
-    }
 
-    addr = GPIOn_MUX_ADDR(grp);
-    addr += (pin / pinsPerReg) * 4;
-    offset = (pin % pinsPerReg) * bitsPerPin;
-
-    if (pinsPerReg * bitsPerPin == 32)
-        GPIO_WRITE(addr, 0, offset, func);
-    else
-        GPIO_WRITE(addr, bitsPerPin, offset, func);
-
-    HAL_DBG("[line]:%d(%lx+%lx)=%x\n", __LINE__, addr, offset, GPIO_READ(addr));
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Set GPIO pull mode.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @param  pull: pull mode.
- * @return HAL_Status: HAL_OK if success.
- */
-HAL_Status HAL_GPIO_SetPull(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinPull pull)
-{
-    uint32_t pinsPerReg = GPIO_PUL_PINS_PER_REG;
-    uint32_t bitsPerPin = GPIO_PUL_BITS_PER_PIN;
-    uint32_t grp = GPIO_GetPinGroup(GPIOx);
-    uint32_t addr, offset;
-
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    if (pull >= HAL_BIT(bitsPerPin)) {
-        HAL_DBG_ERR("[line]:%d, parameter error\n", __LINE__);
-
+    if (pin > 31 || pin < 0)
         return HAL_ERROR;
-    }
 
-    addr = GPIOn_PUL_ADDR(grp);
-    addr += (pin / pinsPerReg) * 4;
-    offset = (pin % pinsPerReg) * bitsPerPin;
+    for (port = 0; port < GPIO_PORT_CNT; port++)
+        if (HAL_GPIO_GetBase(port) == GPIOx)
+            break;
 
-    if (pinsPerReg * bitsPerPin == 32)
-        GPIO_WRITE(addr, 0, offset, pull);
-    else
-        GPIO_WRITE(addr, bitsPerPin, offset, pull);
-
-    HAL_DBG("[line]:%d(%lx+%lx)=%x\n", __LINE__, addr, offset, GPIO_READ(addr));
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Set GPIO drive level.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @param  level: drive level.
- * @return HAL_Status: HAL_OK if success.
- */
-HAL_Status HAL_GPIO_SetDrive(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinDrive level)
-{
-    uint32_t pinsPerReg = GPIO_DRV_PINS_PER_REG;
-    uint32_t bitsPerPin = GPIO_DRV_BITS_PER_PIN;
-    uint32_t grp = GPIO_GetPinGroup(GPIOx);
-    uint32_t addr, offset;
-
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    if (level >= HAL_BIT(bitsPerPin)) {
-        HAL_DBG_ERR("[line]:%d, parameter error\n", __LINE__);
-
+    if (port == GPIO_PORT_CNT)
         return HAL_ERROR;
-    }
 
-    addr = GPIOn_DRV_ADDR(grp);
-    addr += (pin / pinsPerReg) * 4;
-    offset = (pin % pinsPerReg) * bitsPerPin;
-
-    if (pinsPerReg * bitsPerPin == 32)
-        GPIO_WRITE(addr, 0, offset, level);
-    else
-        GPIO_WRITE(addr, bitsPerPin, offset, level);
-
-    HAL_DBG("[line]:%d(%lx+%lx)=%x\n", __LINE__, addr, offset, GPIO_READ(addr));
-
-    return HAL_OK;
+    return GPIO_SetFunc(port, pin, func);
 }
 
 /**
- * @brief  Set GPIO schmitt on.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @param  enable: schmitt enable.
- * @return HAL_Status: HAL_OK if success.
+ * @brief  GPIO Configure Pull/Drive/Slewrate/Schmitt.
+ * @param  GPIOx: The pointer of GPIO struct.
+ * @param  GPIO_Init: The pointer of GPIO init struct.
+ *         NOTE: GPIO_Init->Pin actually is 1 << pin, could has many pins.
+ * @return HAL_Status.
  */
-HAL_Status HAL_GPIO_SetSchmitt(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinSchmitt enable)
+HAL_Status HAL_GPIO_Init(struct GPIO_REG *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 {
-    uint32_t pinsPerReg = GPIO_SMT_PINS_PER_REG;
-    uint32_t bitsPerPin = GPIO_SMT_BITS_PER_PIN;
-    uint32_t grp = GPIO_GetPinGroup(GPIOx);
-    uint32_t addr, offset;
+    uint32_t pin, port;
+    uint32_t pinBit = 0U;
+    uint32_t pinTmp = 0U;
 
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
+    for (port = 0; port < GPIO_PORT_CNT; port++)
+        if (HAL_GPIO_GetBase(port) == GPIOx)
+            break;
 
-    if (enable >= HAL_BIT(bitsPerPin)) {
-        HAL_DBG_ERR("[line]:%d, parameter error\n", __LINE__);
-
+    if (port == GPIO_PORT_CNT)
         return HAL_ERROR;
-    }
 
-    addr = GPIOn_SMT_ADDR(grp);
-    addr += (pin / pinsPerReg) * 4;
-    offset = (pin % pinsPerReg) * bitsPerPin;
+    for (pin = 0U; pin < 32; pin++) {
+        pinBit = (0x01U << pin);
+        pinTmp = (uint32_t)(GPIO_Init->pin) & pinBit;
 
-    if (pinsPerReg * bitsPerPin == 32)
-        GPIO_WRITE(addr, 0, offset, enable);
-    else
-        GPIO_WRITE(addr, bitsPerPin, offset, enable);
+        if (pinTmp == pinBit) {
+            GPIO_SetPull(port, pin, GPIO_Init->pul);
+            GPIO_SetDrive(port, pin, GPIO_Init->drv);
+            GPIO_SetSchmitt(port, pin, GPIO_Init->smt);
+            GPIO_SetSlewRate(port, pin, GPIO_Init->slr);
+            GPIO_SetPinDirection(GPIOx, pin, GPIO_IN);
 
-    HAL_DBG("[line]:%d(%lx+%lx)=%x\n", __LINE__, addr, offset, GPIO_READ(addr));
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Set GPIO irq ack.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @return HAL_Status: HAL_OK if success.
- */
-HAL_Status HAL_GPIO_SetIrqAck(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
-{
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    GPIOx->PORT_EOI[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Set GPIO irq enable.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @param  enable: irq enable.
- * @return HAL_Status: HAL_OK if success.
- */
-HAL_Status HAL_GPIO_SetIrqEnable(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_IrqEn enable)
-{
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    if (enable) {
-        GPIOx->INT_EN[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-        GPIOx->INT_MASK[pin / 16] = (1 << (16 + (pin % 16)));
-    } else {
-        GPIOx->INT_EN[pin / 16] = (1 << (16 + (pin % 16)));
-        GPIOx->INT_MASK[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-    }
-
-    HAL_DBG("[line]:%d INT_EN=%lx\n", __LINE__, GPIOx->INT_EN[pin / 16]);
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Set GPIO irq type.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @param  type: irq type.
- * @return HAL_Status: HAL_OK if success.
- */
-HAL_Status HAL_GPIO_SetIrqType(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_IrqType type)
-{
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    /* 0: Both Edge NOT active */
-    GPIOx->INT_BOTHEDGE[pin / 16] = (1 << (16 + (pin % 16)));
-
-    switch (type) {
-    case GPIO_IRQ_TYPE_POSITIVE:
-        /* 1: Edge-sensitive */
-        GPIOx->INT_TYPE[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-        /* 1: Active-high */
-        GPIOx->INT_POLARITY[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-        break;
-
-    case GPIO_IRQ_TYPE_NEGATIVE:
-        /* 1: Edge-sensitive */
-        GPIOx->INT_TYPE[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-        /* 0: Active-low */
-        GPIOx->INT_POLARITY[pin / 16] |= (1 << (16 + (pin % 16)));
-        break;
-
-    case GPIO_IRQ_TYPE_HIGH:
-        /* 0: Level-sensitive */
-        GPIOx->INT_TYPE[pin / 16] = (1 << (16 + (pin % 16)));
-        /* 1: Active-high */
-        GPIOx->INT_POLARITY[pin / 16] |= (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-        break;
-
-    case GPIO_IRQ_TYPE_LOW:
-        /* 0: Level-sensitive */
-        GPIOx->INT_TYPE[pin / 16] = (1 << (16 + (pin % 16)));
-        /* 0: Active-low */
-        GPIOx->INT_POLARITY[pin / 16] = (1 << (16 + (pin % 16)));
-        break;
-
-    case GPIO_IRQ_TYPE_DOUBLE:
-        /* 1: Both Edge active */
-        GPIOx->INT_BOTHEDGE[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-        break;
-
-    default:
-        break;
-    }
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Set GPIO debounce.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @param  enable: enable debounce.
- * @return HAL_Status: HAL_OK if success.
- */
-HAL_Status HAL_GPIO_SetPinDebounce(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinDebounce enable)
-{
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    if (enable) {
-        GPIOx->DEBOUNCE[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-    } else {
-        GPIOx->DEBOUNCE[pin / 16] = (1 << (16 + (pin % 16)));
+            switch (GPIO_Init->mode) {
+            case GPIO_MODE_OUTPUT:
+                GPIO_SetPinDirection(GPIOx, pin, GPIO_OUT);
+                break;
+            case GPIO_MODE_INPUT:
+                GPIO_SetPinDirection(GPIOx, pin, GPIO_IN);
+                break;
+            case GPIO_MODE_IT_EDGE_RISING:
+                GPIO_IRQTypeSet(GPIOx, pin, GPIO_IRQ_TYPE_EDGE_RISING);
+                break;
+            case GPIO_MODE_IT_EDGE_FALLING:
+                GPIO_IRQTypeSet(GPIOx, pin, GPIO_IRQ_TYPE_EDGE_FALLING);
+                break;
+            case GPIO_MODE_IT_EDGE_RISING_FALLING:
+                GPIO_IRQTypeSet(GPIOx, pin, GPIO_IRQ_TYPE_EDGE_BOTH);
+                break;
+            case GPIO_MODE_IT_LEVEL_LOW:
+                GPIO_IRQTypeSet(GPIOx, pin, GPIO_IRQ_TYPE_LEVEL_LOW);
+                break;
+            case GPIO_MODE_IT_LEVEL_HIGH:
+                GPIO_IRQTypeSet(GPIOx, pin, GPIO_IRQ_TYPE_LEVEL_HIGH);
+                break;
+            default:
+                break;
+            }
+        }
     }
 
     return HAL_OK;
@@ -357,39 +461,21 @@ HAL_Status HAL_GPIO_SetPinDebounce(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGP
 
 /**
  * @brief  Set GPIO pin level.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @param  level: data value.
- * @return HAL_Status: HAL_OK if success.
+ * @param  GPIOx: The pointer of GPIO struct.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ * @param  value: level.
+ * @return HAL_Status.
  */
-HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinLevel level)
+HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinLevel value)
 {
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    if (level) {
-        GPIOx->SWPORT_DR[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-    } else {
-        GPIOx->SWPORT_DR[pin / 16] = (1 << (16 + (pin % 16)));
-    }
-
-    return HAL_OK;
-}
-/**
- * @brief  Set GPIO direction.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @param  direction: direction value.
- * @return HAL_Status: HAL_OK if success.
- */
-HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinDirection direction)
-{
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    if (direction) {
-        GPIOx->SWPORT_DDR[pin / 16] = (1 << (16 + (pin % 16))) | (1 << (pin % 16));
-    } else {
-        GPIOx->SWPORT_DDR[pin / 16] = (1 << (16 + (pin % 16)));
-    }
+#if (GPIO_VER_ID == 0x01000C2BU)
+    if (IS_HIGH_16BITS_PIN(pin))
+        GPIOx->SWPORT_DR_H = SET_VAL(value, pin);
+    else
+        GPIOx->SWPORT_DR_L = SET_VAL(value, pin);
+#else
+    MODIFY_REG(GPIOx->SWPORTA_DR, 1 << pin, value << pin);
+#endif
 
     return HAL_OK;
 }
@@ -409,42 +495,46 @@ HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eG
  */
 
 /**
- * @brief  Get GPIO Pin direction.
- * @param  GPIOx: the GPIO struct.
- * @param  pin: gpio pin num.
- * @return GPIO pin direction value.
- */
-eGPIO_PinDirection HAL_GPIO_GetPinDirection(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
-{
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
-
-    return (eGPIO_PinDirection)(((GPIOx->SWPORT_DDR[pin / 16]) & (0x1 << (pin % 16))) >> (pin % 16));
-}
-
-/**
  * @brief  Get GPIO Pin data value.
  * @param  GPIOx: the GPIO struct.
  * @param  pin: gpio pin num.
- * @return GPIO pin data value.
+ * @retval eGPIO_PinLevel: data value.
  */
-eGPIO_PinLevel HAL_GPIO_GetPinData(struct GPIO_REG * GPIOx, eGPIO_PinNum pin)
+eGPIO_PinLevel HAL_GPIO_GetPinData(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
 {
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
+    uint32_t retVal;
 
-    return (eGPIO_PinLevel)(((GPIOx->SWPORT_DR[pin / 16]) & (0x1 << (pin % 16))) >> (pin % 16));
+#if (GPIO_VER_ID == 0x01000C2BU)
+    if (IS_HIGH_16BITS_PIN(pin)) {
+        pin -= 16;
+        retVal = (GPIOx->SWPORT_DR_H & (0x1 << pin)) >> pin;
+    } else {
+        retVal = (GPIOx->SWPORT_DR_L & (0x1 << pin)) >> pin;
+    }
+#else
+    retVal = (GPIOx->SWPORTA_DR & (0x1 << pin)) >> pin;
+#endif
+
+    return (eGPIO_PinLevel)retVal;
 }
 
 /**
  * @brief  Get GPIO Pin ext port level.
  * @param  GPIOx: the GPIO struct.
  * @param  pin: gpio pin num.
- * @return GPIO pin ext port value.
+ * @retval eGPIO_PinLevel: ext port value.
  */
 eGPIO_PinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
 {
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
+    uint32_t retVal;
 
-    return (eGPIO_PinLevel)(((GPIOx->EXT_PORT) & (0x1 << pin)) >> pin);
+#if (GPIO_VER_ID == 0x01000C2BU)
+    retVal = (GPIOx->EXT_PORT & (0x1 << pin)) >> pin;
+#else
+    retVal = (GPIOx->EXT_PORTA & (0x1 << pin)) >> pin;
+#endif
+
+    return retVal;
 }
 
 /** @} */
@@ -454,30 +544,179 @@ eGPIO_PinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
  */
 
 /**
- * @brief  Get GPIO irq type.
- * @param  GPIOx: the GPIO struct.
- * @return uint32_t: INT_TYPE value.
+ * @brief  Get GPIO base address.
+ * @param  port: The port number defined in eGPIO_PortNum.
+ * @return struct GPIO_REG
  */
-uint32_t HAL_GPIO_GetGPIOIrqType(struct GPIO_REG *GPIOx)
+struct GPIO_REG *HAL_GPIO_GetBase(uint32_t port)
 {
-    HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
+    HAL_ASSERT((port < GPIO_PORT_CNT) && (port >= 0));
 
-    if (HAL_ARRAY_SIZE(GPIOx->INT_TYPE) == 2)
-        return ((GPIOx->INT_TYPE[0] & 0xffff) | ((GPIOx->INT_TYPE[1] & 0xffff) << 16));
-    else
-        return (GPIOx->INT_TYPE[0]);
+    return (struct GPIO_REG *)(s_GPIODev.desc[port].base);
 }
 
 /**
- * @brief  Get GPIO irq status.
- * @param  GPIOx: the GPIO struct.
- * @return uint32_t: INT_STATUS value.
+ * @brief  Probe for GPIO.
+ * @param  GPIO_Dev: The GPIO Device struct.
  */
-uint32_t HAL_GPIO_GetGPIOIrqStatus(struct GPIO_REG *GPIOx)
+void HAL_GPIO_Probe(const struct HAL_GPIO_DEV GPIO_Dev)
 {
+    s_GPIODev.cnt = GPIO_Dev.cnt;
+    s_GPIODev.muxInfo = GPIO_Dev.muxInfo;
+    s_GPIODev.pulInfo = GPIO_Dev.pulInfo;
+    s_GPIODev.smtInfo = GPIO_Dev.smtInfo;
+    s_GPIODev.drvInfo = GPIO_Dev.drvInfo;
+    s_GPIODev.slrInfo = GPIO_Dev.slrInfo;
+    for (int i = 0; i < GPIO_Dev.cnt; i++)
+        s_GPIODev.desc[i] = GPIO_Dev.desc[i];
+}
+
+/**
+ * @brief  Set GPIO irq enable.
+ * @param  GPIOx: The pointer of GPIO struct.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ */
+void HAL_GPIO_EnableIRQ(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
+{
+#if (GPIO_VER_ID == 0x01000C2BU)
+    if (IS_HIGH_16BITS_PIN(pin)) {
+        GPIOx->INT_EN_H = RK_SET_BITS(1 << (pin - 16));
+        GPIOx->INT_MASK_H = RK_CLR_BITS(1 << (pin - 16));
+    } else {
+        GPIOx->INT_EN_L = RK_SET_BITS(1 << (pin));
+        GPIOx->INT_MASK_L = RK_CLR_BITS(1 << (pin));
+    }
+#else
+    GPIOx->INTEN |= 1 << pin;
+    GPIOx->INTMASK &= ~(1 << pin);
+#endif
+}
+
+/**
+ * @brief  Set GPIO irq disable.
+ * @param  GPIOx: The pointer of GPIO struct.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ */
+void HAL_GPIO_DisableIRQ(struct GPIO_REG *GPIOx, eGPIO_PinNum pin)
+{
+#if (GPIO_VER_ID == 0x01000C2BU)
+    if (IS_HIGH_16BITS_PIN(pin))
+        GPIOx->INT_EN_H = RK_CLR_BITS(1 << (pin - 16));
+    else
+        GPIOx->INT_EN_L = RK_CLR_BITS(1 << (pin));
+#else
+    GPIOx->INTEN &= ~(1 << pin);
+#endif
+}
+
+/**
+ * @brief  GPIO IRQ hanlder.
+ * @param  port: The GPIO port number.
+ */
+void HAL_GPIOn_IRQHandler(uint32_t port)
+{
+    struct GPIO_REG *GPIOx = HAL_GPIO_GetBase(port);
+    uint32_t stat, type, clear;
+    uint32_t i;
+
     HAL_ASSERT(IS_GPIO_INSTANCE(GPIOx));
 
-    return (GPIOx->INT_STATUS);
+    stat = GPIO_IRQStatusGet(GPIOx);
+    type = GPIO_IRQTypeGet(GPIOx);
+
+    /* Then process each pending GPIO interrupt */
+    for (i = 0; i < 32 && stat != 0; i++) {
+        clear = (uint32_t)1 << i;
+
+        if ((stat & clear) != 0) {
+            /* If gpio is level triggered, masked it at first */
+            if ((type & clear) == 0)
+                HAL_GPIO_DisableIRQ(GPIOx, i);
+
+            GPIO_IRQEOISet(GPIOx, i);
+
+            /* Remove the pending interrupt bit from the clear */
+            stat &= ~clear;
+
+            /* And disptach the GPIO interrupt to the register handler */
+            HAL_GPIOn_IRQCallback(port, i);
+
+            /* If gpio is level triggered, unmasked it at last */
+            if ((type & clear) == 0)
+                HAL_GPIO_EnableIRQ(GPIOx, i);
+        }
+    }
+}
+
+/**
+ * @brief  GPIO IRQ callbacks.
+ * @param  port: The GPIO port number.
+ * @param  pin: The pin number defined in eGPIO_PinNum.
+ */
+__weak void HAL_GPIOn_IRQCallback(uint32_t port, uint32_t pin)
+{
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(port);
+    UNUSED(pin);
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_IRQ_Callback could be implemented in the user file
+     */
+}
+
+__weak void HAL_GPIO0_IRQHandler(void)
+{
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_IRQ_Callback could be implemented in the user file
+     */
+}
+
+__weak void HAL_GPIO1_IRQHandler(void)
+{
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_IRQ_Callback could be implemented in the user file
+     */
+}
+
+__weak void HAL_GPIO2_IRQHandler(void)
+{
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_IRQ_Callback could be implemented in the user file
+     */
+}
+
+__weak void HAL_GPIO3_IRQHandler(void)
+{
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_IRQ_Callback could be implemented in the user file
+     */
+}
+
+__weak void HAL_GPIO4_IRQHandler(void)
+{
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_IRQ_Callback could be implemented in the user file
+     */
+}
+
+__weak void HAL_GPIO5_IRQHandler(void)
+{
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_IRQ_Callback could be implemented in the user file
+     */
+}
+
+__weak void HAL_GPIO6_IRQHandler(void)
+{
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_IRQ_Callback could be implemented in the user file
+     */
+}
+
+__weak void HAL_GPIO7_IRQHandler(void)
+{
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_IRQ_Callback could be implemented in the user file
+     */
 }
 
 /** @} */
