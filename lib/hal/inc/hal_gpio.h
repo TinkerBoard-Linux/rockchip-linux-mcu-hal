@@ -137,6 +137,40 @@ typedef enum {
 } eGPIO_PinNum;
 
 /**
+  * @brief GPIO Descript structure definition
+  */
+struct GPIO_PIN_INFO {
+    uint32_t bitsPerPin;
+    uint32_t pinsPerReg;
+};
+
+struct GPIO_PIN_OFFSET {
+    uint32_t mux;
+    uint32_t slr;
+    uint32_t smt;
+    uint32_t pul;
+    uint32_t drv;
+};
+
+struct GPIO_DESC {
+    uint32_t base;
+    uint32_t irqn;
+    char *name;
+    void *handler;
+    struct GPIO_PIN_OFFSET offset;
+};
+
+struct HAL_GPIO_DEV {
+    uint32_t cnt;
+    struct GPIO_DESC desc[8];
+    struct GPIO_PIN_INFO muxInfo;
+    struct GPIO_PIN_INFO pulInfo;
+    struct GPIO_PIN_INFO smtInfo;
+    struct GPIO_PIN_INFO drvInfo;
+    struct GPIO_PIN_INFO slrInfo;
+};
+
+/**
   * @}
   */
 

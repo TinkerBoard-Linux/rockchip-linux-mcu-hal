@@ -168,6 +168,59 @@ static struct PWR_DESC g_pmuPwrDev[] =
 };
 #endif
 
+#ifdef HAL_GPIO_MODULE_ENABLED
+const struct HAL_GPIO_DEV g_GPIOxDev =
+{
+    .cnt = 2,
+    .desc[0] = {
+        .base = GPIO0_BASE,
+        .irqn = GPIO0_IRQn,
+        .name = "gpio0",
+        .handler = (void *)&HAL_GPIO0_IRQHandler,
+        .offset = {
+            .mux = GRF_BASE + 0x0000,
+            .slr = GRF_BASE + 0x0040,
+            .smt = GRF_BASE + 0x0060,
+            .pul = GRF_BASE + 0x0080,
+            .drv = GRF_BASE + 0x00c0,
+        },
+    },
+    .desc[1] = {
+        .base = GPIO1_BASE,
+        .irqn = GPIO1_IRQn,
+        .name = "gpio1",
+        .handler = (void *)&HAL_GPIO1_IRQHandler,
+        .offset = {
+            .mux = GRF_BASE + 0x0010,
+            .slr = GRF_BASE + 0x0048,
+            .smt = GRF_BASE + 0x0068,
+            .pul = GRF_BASE + 0x0090,
+            .drv = GRF_BASE + 0x00d0,
+        },
+    },
+    .muxInfo = {
+        .bitsPerPin = 4,
+        .pinsPerReg = 4,
+    },
+    .slrInfo = {
+        .bitsPerPin = 1,
+        .pinsPerReg = 16,
+    },
+    .smtInfo = {
+        .bitsPerPin = 0,
+        .pinsPerReg = 0,
+    },
+    .pulInfo = {
+        .bitsPerPin = 2,
+        .pinsPerReg = 8,
+    },
+    .drvInfo = {
+        .bitsPerPin = 2,
+        .pinsPerReg = 8,
+    }
+};
+#endif
+
 void BSP_DeInit(void)
 {
 #ifdef HAL_I2S_MODULE_ENABLED
@@ -189,7 +242,6 @@ void BSP_DeInit(void)
 
 void BSP_Init(void)
 {
-
 #ifdef HAL_PWR_MODULE_ENABLED
     HAL_PWR_Init(&g_pmuPwrDev[0], HAL_ARRAY_SIZE(g_pmuPwrDev));
 #endif

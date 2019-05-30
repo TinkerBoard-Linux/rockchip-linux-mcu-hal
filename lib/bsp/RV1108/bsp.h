@@ -16,18 +16,6 @@
 extern const struct HAL_GPIO_DEV g_GPIOxDev;
 #endif
 
-#ifdef HAL_I2S_MODULE_ENABLED
-extern struct HAL_I2S_DEV g_i2s0Dev;
-#endif
-
-#ifdef HAL_PDM_MODULE_ENABLED
-extern struct HAL_PDM_DEV g_pdm0Dev;
-#endif
-
-#ifdef HAL_VAD_MODULE_ENABLED
-extern struct HAL_VAD_DEV g_vadDev;
-#endif
-
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
