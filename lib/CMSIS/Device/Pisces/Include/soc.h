@@ -549,22 +549,32 @@ struct SPI_REG {
 };
 /* GPIO Register Structure Define */
 struct GPIO_REG {
-    __IO uint32_t SWPORT_DR[2];                       /* Address Offset: 0x0000 */
-    __IO uint32_t SWPORT_DDR[2];                      /* Address Offset: 0x0008 */
-    __IO uint32_t INT_EN[2];                          /* Address Offset: 0x0010 */
-    __IO uint32_t INT_MASK[2];                        /* Address Offset: 0x0018 */
-    __IO uint32_t INT_TYPE[2];                        /* Address Offset: 0x0020 */
-    __IO uint32_t INT_POLARITY[2];                    /* Address Offset: 0x0028 */
-    __IO uint32_t INT_BOTHEDGE[2];                    /* Address Offset: 0x0030 */
-    __IO uint32_t DEBOUNCE[2];                        /* Address Offset: 0x0038 */
-    __IO uint32_t DBCLK_DIV_EN[2];                    /* Address Offset: 0x0040 */
+    __IO uint32_t SWPORT_DR_L;                        /* Address Offset: 0x0000 */
+    __IO uint32_t SWPORT_DR_H;                        /* Address Offset: 0x0004 */
+    __IO uint32_t SWPORT_DDR_L;                       /* Address Offset: 0x0008 */
+    __IO uint32_t SWPORT_DDR_H;                       /* Address Offset: 0x000C */
+    __IO uint32_t INT_EN_L;                           /* Address Offset: 0x0010 */
+    __IO uint32_t INT_EN_H;                           /* Address Offset: 0x0014 */
+    __IO uint32_t INT_MASK_L;                         /* Address Offset: 0x0018 */
+    __IO uint32_t INT_MASK_H;                         /* Address Offset: 0x001C */
+    __IO uint32_t INT_TYPE_L;                         /* Address Offset: 0x0020 */
+    __IO uint32_t INT_TYPE_H;                         /* Address Offset: 0x0024 */
+    __IO uint32_t INT_POLARITY_L;                     /* Address Offset: 0x0028 */
+    __IO uint32_t INT_POLARITY_H;                     /* Address Offset: 0x002C */
+    __IO uint32_t INT_BOTHEDGE_L;                     /* Address Offset: 0x0030 */
+    __IO uint32_t INT_BOTHEDGE_H;                     /* Address Offset: 0x0034 */
+    __IO uint32_t DEBOUNCE_L;                         /* Address Offset: 0x0038 */
+    __IO uint32_t DEBOUNCE_H;                         /* Address Offset: 0x003C */
+    __IO uint32_t DBCLK_DIV_EN_L;                     /* Address Offset: 0x0040 */
+    __IO uint32_t DBCLK_DIV_EN_H;                     /* Address Offset: 0x0044 */
     __IO uint32_t DBCLK_DIV_CON;                      /* Address Offset: 0x0048 */
          uint32_t RESERVED0;                          /* Address Offset: 0x004C */
     __I  uint32_t INT_STATUS;                         /* Address Offset: 0x0050 */
          uint32_t RESERVED1;                          /* Address Offset: 0x0054 */
     __I  uint32_t INT_RAWSTATUS;                      /* Address Offset: 0x0058 */
          uint32_t RESERVED2;                          /* Address Offset: 0x005C */
-    __O  uint32_t PORT_EOI[2];                        /* Address Offset: 0x0060 */
+    __O  uint32_t PORT_EOI_L;                         /* Address Offset: 0x0060 */
+    __O  uint32_t PORT_EOI_H;                         /* Address Offset: 0x0064 */
          uint32_t RESERVED3[2];                       /* Address Offset: 0x0068 */
     __I  uint32_t EXT_PORT;                           /* Address Offset: 0x0070 */
          uint32_t RESERVED4;                          /* Address Offset: 0x0074 */
@@ -1763,72 +1773,7 @@ struct VOP_REG {
 #define GRF_OS_REG7_OS_REG_SHIFT                           (0U)
 #define GRF_OS_REG7_OS_REG_MASK                            (0xFFFFFFFFU << GRF_OS_REG7_OS_REG_SHIFT)                    /* 0xFFFFFFFF */
 
-/* GPIO_REGISTER_REDEF */
-#define GPIO_PORT_DR       0x0000 /* W 0x00000000  Port data register */
-#define GPIO_PORT_DDR      0x0008 /* W 0x00000000  Port data direction register */
-#define GPIO_INT_EN        0x0010 /* W 0x00000000  Interrupt enable register */
-#define GPIO_INT_MASK      0x0018 /* W 0x00000000  Interrupt mask register */
-#define GPIO_INT_TYPE      0x0020 /* W 0x00000000  Interrupt level register */
-#define GPIO_INT_POLARITY  0x0028 /* W 0x00000000  Interrupt polarity register */
-#define GPIO_INT_BOTHEDGE  0x0030 /* W 0x00000000  Interrupt both edge type register */
-#define GPIO_DEBOUNCE      0x0038 /* W 0x00000000  Debounce enable register */
-#define GPIO_INT_STATUS    0x0050 /* W 0x00000000  Interrupt status register */
-#define GPIO_INT_RAWSTATUS 0x0058 /* W 0x00000000  Interrupt raw status register */
-#define GPIO_PORT_EOI      0x0060 /* W 0x00000000  Interrupt clear register */
-#define GPIO_EXT_PORT      0x0070 /* W 0x00000000  External port data register */
-/* GRF_GPIO_REDEF */
-#define GRF_MUX_OFFSET 0x0000
-#define GRF_SLW_OFFSET 0x0040
-#define GRF_SMT_OFFSET 0x0060
-#define GRF_PUL_OFFSET 0x0080
-#define GRF_DRV_OFFSET 0x00c0
-#define GPIO_MUX_BANK_STRIDE 0x0020
-#define GPIO_SLW_BANK_STRIDE 0x0008
-#define GPIO_SMT_BANK_STRIDE 0x0008
-#define GPIO_PUL_BANK_STRIDE 0x0010
-#define GPIO_DRV_BANK_STRIDE 0x0010
-#define GPIO_MUX_BITS_PER_PIN 4
-#define GPIO_SLW_BITS_PER_PIN 1
-#define GPIO_SMT_BITS_PER_PIN 1
-#define GPIO_PUL_BITS_PER_PIN 2
-#define GPIO_DRV_BITS_PER_PIN 2
-#define GPIO_MUX_PINS_PER_REG 4
-#define GPIO_SLW_PINS_PER_REG 16
-#define GPIO_SMT_PINS_PER_REG 16
-#define GPIO_PUL_PINS_PER_REG 8
-#define GPIO_DRV_PINS_PER_REG 8
-/* GPIO_REGISTER_DEF */
-#define GPIO_DAT_PINS_PER_REG 16
-#define GPIO_DAT_BITS_PER_PIN 1
-#define GPIO_DIR_PINS_PER_REG 16
-#define GPIO_DIR_BITS_PER_PIN 1
-#define GPIO_DEB_PINS_PER_REG 16
-#define GPIO_DEB_BITS_PER_PIN 1
-#define GPIO_INT_EOI_PINS_PER_REG 16
-#define GPIO_INT_EOI_BITS_PER_PIN 1
-#define GPIO_INT_TYP_PINS_PER_REG 16
-#define GPIO_INT_TYP_BITS_PER_PIN 1
-#define GPIO_INT_PRY_PINS_PER_REG 16
-#define GPIO_INT_PRY_BITS_PER_PIN 1
-#define GPIO_INT_BOTH_PINS_PER_REG 16
-#define GPIO_INT_BOTH_BITS_PER_PIN 1
-#define GPIO_INT_MASK_PINS_PER_REG 16
-#define GPIO_INT_MASK_BITS_PER_PIN 1
-/* GPIO_ACTION_VALUE */
-#define GPIO_INT_LEVEL_SENSORTIVE (0x00000000U)
-#define GPIO_INT_EDGE_SENSORTIVE  (0x00000001U)
-#define GPIO_INT_ACTIVE_LOW       (0x00000000U)
-#define GPIO_INT_ACTIVE_HIGH      (0x00000001U)
-#define GPIO_INT_BOTHEDGE_DISABLE (0x00000000U)
-#define GPIO_INT_BOTHEDGE_ENABLE  (0x00000001U)
-#define GPIO_UNMASK_INT           (0x00000000U)
-#define GPIO_MASK_INT             (0x00000001U)
-#define GPIO_UNCLEAR_INT          (0x00000000U)
-#define GPIO_CLEAR_INT            (0x00000001U)
-#define GPIO_PORT_GPIO_MODE       (0x00000000U)
-#define GPIO_PORT_INTR_MODE       (0x00000001U)
-#define GPIO_DEBOUNCE_DISABLE     (0x00000000U)
-#define GPIO_DEBOUNCE_ENABLE      (0x00000001U)
+#define GPIO_VER_ID (0x01000C2BU)
 /******************************************MBOX******************************************/
 /* A2B_INTEN */
 #define MBOX_A2B_INTEN_INT0_SHIFT                          (0U)

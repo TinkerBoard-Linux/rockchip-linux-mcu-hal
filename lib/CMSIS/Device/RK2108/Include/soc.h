@@ -699,22 +699,32 @@ struct MMC_REG {
 };
 /* GPIO Register Structure Define */
 struct GPIO_REG {
-    __IO uint32_t SWPORT_DR[2];                       /* Address Offset: 0x0000 */
-    __IO uint32_t SWPORT_DDR[2];                      /* Address Offset: 0x0008 */
-    __IO uint32_t INT_EN[2];                          /* Address Offset: 0x0010 */
-    __IO uint32_t INT_MASK[2];                        /* Address Offset: 0x0018 */
-    __IO uint32_t INT_TYPE[2];                        /* Address Offset: 0x0020 */
-    __IO uint32_t INT_POLARITY[2];                    /* Address Offset: 0x0028 */
-    __IO uint32_t INT_BOTHEDGE[2];                    /* Address Offset: 0x0030 */
-    __IO uint32_t DEBOUNCE[2];                        /* Address Offset: 0x0038 */
-    __IO uint32_t DBCLK_DIV_EN[2];                    /* Address Offset: 0x0040 */
+    __IO uint32_t SWPORT_DR_L;                        /* Address Offset: 0x0000 */
+    __IO uint32_t SWPORT_DR_H;                        /* Address Offset: 0x0004 */
+    __IO uint32_t SWPORT_DDR_L;                       /* Address Offset: 0x0008 */
+    __IO uint32_t SWPORT_DDR_H;                       /* Address Offset: 0x000C */
+    __IO uint32_t INT_EN_L;                           /* Address Offset: 0x0010 */
+    __IO uint32_t INT_EN_H;                           /* Address Offset: 0x0014 */
+    __IO uint32_t INT_MASK_L;                         /* Address Offset: 0x0018 */
+    __IO uint32_t INT_MASK_H;                         /* Address Offset: 0x001C */
+    __IO uint32_t INT_TYPE_L;                         /* Address Offset: 0x0020 */
+    __IO uint32_t INT_TYPE_H;                         /* Address Offset: 0x0024 */
+    __IO uint32_t INT_POLARITY_L;                     /* Address Offset: 0x0028 */
+    __IO uint32_t INT_POLARITY_H;                     /* Address Offset: 0x002C */
+    __IO uint32_t INT_BOTHEDGE_L;                     /* Address Offset: 0x0030 */
+    __IO uint32_t INT_BOTHEDGE_H;                     /* Address Offset: 0x0034 */
+    __IO uint32_t DEBOUNCE_L;                         /* Address Offset: 0x0038 */
+    __IO uint32_t DEBOUNCE_H;                         /* Address Offset: 0x003C */
+    __IO uint32_t DBCLK_DIV_EN_L;                     /* Address Offset: 0x0040 */
+    __IO uint32_t DBCLK_DIV_EN_H;                     /* Address Offset: 0x0044 */
     __IO uint32_t DBCLK_DIV_CON;                      /* Address Offset: 0x0048 */
          uint32_t RESERVED0;                          /* Address Offset: 0x004C */
     __I  uint32_t INT_STATUS;                         /* Address Offset: 0x0050 */
          uint32_t RESERVED1;                          /* Address Offset: 0x0054 */
     __I  uint32_t INT_RAWSTATUS;                      /* Address Offset: 0x0058 */
          uint32_t RESERVED2;                          /* Address Offset: 0x005C */
-    __O  uint32_t PORT_EOI[2];                        /* Address Offset: 0x0060 */
+    __O  uint32_t PORT_EOI_L;                         /* Address Offset: 0x0060 */
+    __O  uint32_t PORT_EOI_H;                         /* Address Offset: 0x0064 */
          uint32_t RESERVED3[2];                       /* Address Offset: 0x0068 */
     __I  uint32_t EXT_PORT;                           /* Address Offset: 0x0070 */
          uint32_t RESERVED4;                          /* Address Offset: 0x0074 */

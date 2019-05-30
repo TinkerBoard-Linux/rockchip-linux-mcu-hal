@@ -139,26 +139,22 @@ typedef enum
 /*                                                                                      */
 /****************************************************************************************/
 /* GPIO Register Structure Define */
-struct GPIO_REG
-{
-    __IO uint32_t GPIO_SWPORT_DR;
-    __IO uint32_t GPIO_SWPORT_DDR;
-    __IO uint32_t RESERVED1[(0x30 - 0x04) / 4 - 1];
-    __IO uint32_t GPIO_INTEN;
-    __IO uint32_t GPIO_INTMASK;
-    __IO uint32_t GPIO_INTTYPE_LEVEL; /* edge or level trigger. */
-    __IO uint32_t
-        GPIO_INT_POLARITY; /* high level is valid or low level valid. */
-    __IO uint32_t GPIO_INT_STATUS;
-    __IO uint32_t GPIO_INT_RAWSTATUS;
-
-    __IO uint32_t GPIO_DEBOUNCE;
-    __IO uint32_t GPIO_PORT_EOI;
-    __IO uint32_t GPIO_EXT_PORT;
-    __IO uint32_t RESERVED2[(0x60 - 0x50) / 4 - 1];
-    __IO uint32_t GPIO_LS_SYNC;
+struct GPIO_REG {
+    __IO uint32_t SWPORTA_DR;                         /* Address Offset: 0x0000 */
+    __IO uint32_t SWPORTA_DDR;                        /* Address Offset: 0x0004 */
+         uint32_t RESERVED1[(0x30 - 0x04) / 4 - 1];
+    __IO uint32_t INTEN;                              /* Address Offset: 0x0030 */
+    __IO uint32_t INTMASK;                            /* Address Offset: 0x0034 */
+    __IO uint32_t INTTYPE_LEVEL;                      /* Address Offset: 0x0038 */
+    __IO uint32_t INT_POLARITY;                       /* Address Offset: 0x003c */
+    __I  uint32_t INT_STATUS;                         /* Address Offset: 0x0040 */
+    __I  uint32_t INT_RAWSTATUS;                      /* Address Offset: 0x0044 */
+    __IO uint32_t DEBOUNCE;                           /* Address Offset: 0x0048 */
+    __O  uint32_t PORTA_EOI;                          /* Address Offset: 0x004c */
+    __I  uint32_t EXT_PORTA;                          /* Address Offset: 0x0050 */
+         uint32_t RESERVED2[(0x60 - 0x50) / 4 - 1];
+    __IO uint32_t LS_SYNC;                            /* Address Offset: 0x0060 */
 };
-
 /* CRU Register Structure Define */
 struct CRU_REG
 {

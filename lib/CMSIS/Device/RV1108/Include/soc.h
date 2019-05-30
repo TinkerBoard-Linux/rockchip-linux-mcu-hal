@@ -42,6 +42,10 @@ typedef enum
   NoSecurePhyTimer_IRQn  = 30,    /*!< Physical Timer Interrupt    */
 
 /******  Platform Exceptions Numbers ***************************************************/
+  GPIO0_IRQn             = 72,      /*!< GPIO0 Interrupt             */
+  GPIO1_IRQn             = 73,      /*!< GPIO1 Interrupt             */
+  GPIO2_IRQn             = 74,      /*!< GPIO2 Interrupt             */
+  GPIO3_IRQn             = 75,      /*!< GPIO3 Interrupt             */
   UART0_IRQn             = 76,      /*!< UART0 Interrupt             */
   UART2_IRQn             = 78,      /*!< UART1 Interrupt             */
   SFC_IRQn               = 88,      /*!< SFC Interrupt               */
@@ -139,6 +143,23 @@ struct SPI_REG {
     __IO uint32_t DMARDLR;                            /* Address Offset: 0x0044 */
     __O  uint32_t TXDR;                               /* Address Offset: 0x0048 */
     __IO uint32_t RXDR;                               /* Address Offset: 0x004C */
+};
+/* GPIO Register Structure Define */
+struct GPIO_REG {
+    __IO uint32_t SWPORTA_DR;                         /* Address Offset: 0x0000 */
+    __IO uint32_t SWPORTA_DDR;                        /* Address Offset: 0x0004 */
+         uint32_t RESERVED1[(0x30 - 0x04) / 4 - 1];
+    __IO uint32_t INTEN;                              /* Address Offset: 0x0030 */
+    __IO uint32_t INTMASK;                            /* Address Offset: 0x0034 */
+    __IO uint32_t INTTYPE_LEVEL;                      /* Address Offset: 0x0038 */
+    __IO uint32_t INT_POLARITY;                       /* Address Offset: 0x003c */
+    __I  uint32_t INT_STATUS;                         /* Address Offset: 0x0040 */
+    __I  uint32_t INT_RAWSTATUS;                      /* Address Offset: 0x0044 */
+    __IO uint32_t DEBOUNCE;                           /* Address Offset: 0x0048 */
+    __O  uint32_t PORTA_EOI;                          /* Address Offset: 0x004c */
+    __I  uint32_t EXT_PORTA;                          /* Address Offset: 0x0050 */
+         uint32_t RESERVED2[(0x60 - 0x50) / 4 - 1];
+    __IO uint32_t LS_SYNC;                            /* Address Offset: 0x0060 */
 };
 /* PWM Register Structure Define */
 struct PWM_REG {
@@ -1142,7 +1163,11 @@ struct UART_REG {
 #define SPI_BASE            0x10270000U /* SPI base address */
 #define PWM_BASE            0x10280000U /* PWM base address */
 #define GRF_BASE            0x10300000U /* GRF base address */
+#define GPIO1_BASE          0x10310000U /* GPIO1 base address */
+#define GPIO2_BASE          0x10320000U /* GPIO2 base address */
+#define GPIO3_BASE          0x10330000U /* GPIO3 base address */
 #define PMU_BASE            0x20010000U /* PMU base address */
+#define GPIO0_BASE          0x20030000U /* GPIO0 base address */
 #define PMU_GRF_BASE        0x20060000U /* PMU_GRF base address */
 #define CRU_BASE            0x20200000U /* CRU base address */
 #define DDR_PHY_BASE        0x20210000U /* DDR_PHY base address */
@@ -1172,6 +1197,10 @@ struct UART_REG {
 #define I2S2                ((struct I2S_REG *) I2S2_BASE)
 #define CRYPTO              ((struct CRYPTO_REG *) CRYPTO_BASE)
 #define SPI                 ((struct SPI_REG *) SPI_BASE)
+#define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
+#define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
+#define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
 #define PWM                 ((struct PWM_REG *) PWM_BASE)
 #define GRF                 ((struct GRF_REG *) GRF_BASE)
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
@@ -1217,7 +1246,7 @@ struct UART_REG {
 #define IS_CEVA_CNT_INSTANCE(instance) ((instance) == CEVA_CNT)
 #define IS_I2S_INSTANCE(instance) (((instance) == I2S0) || ((instance) == I2S1) || ((instance) == I2S2))
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART2))
-
+#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3))
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
