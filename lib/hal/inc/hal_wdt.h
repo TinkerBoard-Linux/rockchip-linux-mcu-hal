@@ -20,7 +20,7 @@
 /***************************** Structure Definition **************************/
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_WDT_Init(uint32_t freq);
+HAL_Status HAL_WDT_Init(uint32_t freq, struct WDT_REG *wdt);
 HAL_Status HAL_WDT_SetTimeout(uint32_t top);
 HAL_Status HAL_WDT_KeepAlive(void);
 HAL_Status HAL_WDT_Start(void);

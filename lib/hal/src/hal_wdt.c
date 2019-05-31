@@ -45,7 +45,7 @@ struct DW_WDT {
 /********************* Private Variable Definition ***************************/
 
 static struct DW_WDT dwWdt;
-static struct WDT_REG *pWDT = (struct WDT_REG *)(WDT_BASE);
+static struct WDT_REG *pWDT = NULL;
 
 /********************* Private Function Definition ***************************/
 
@@ -101,9 +101,13 @@ static void WDT_SetTop(uint32_t top_s)
  * @brief  WDT enable
  * @return HAL_Status
  */
-HAL_Status HAL_WDT_Init(uint32_t freq)
+HAL_Status HAL_WDT_Init(uint32_t freq, struct WDT_REG *wdt)
 {
     HAL_ASSERT(freq != 0);
+
+    HAL_ASSERT(IS_WDT_INSTANCE(wdt));
+
+    pWDT = wdt;
 
     dwWdt.freq = freq;
 
