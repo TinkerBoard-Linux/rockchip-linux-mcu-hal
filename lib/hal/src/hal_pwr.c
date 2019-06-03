@@ -97,7 +97,7 @@ static int PWR_GetVoltageLinear(struct PWR_DESC *desc, PWR_CtrlType ctrlType)
 
     HAL_ASSERT(val < desc->voltCnt);
 
-    return (desc->volt_list.stepVolt + desc->minVolt * val);
+    return (desc->minVolt + desc->volt_list.stepVolt * val);
 }
 
 int PWR_EnableDisable(struct PWR_DESC *desc, uint32_t enable)
