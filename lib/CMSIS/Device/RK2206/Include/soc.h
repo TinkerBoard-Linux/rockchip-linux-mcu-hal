@@ -347,32 +347,21 @@ struct EFUSE_CTL_REG {
     __IO uint32_t REVISION;                           /* Address Offset: 0x0050 */
 };
 /* MAILBOX Register Structure Define */
+#define MBOX_CNT             2
+#define MBOX_CHAN_CNT        4
+
 struct MBOX_CMD_DAT {
     __IO uint32_t CMD;
     __IO uint32_t DATA;
 };
-struct MAILBOX_REG {
+struct MBOX_REG {
     __IO uint32_t A2B_INTEN;                          /* Address Offset: 0x0000 */
     __IO uint32_t A2B_STATUS;                         /* Address Offset: 0x0004 */
-    __IO uint32_t A2B_CMD_0;                          /* Address Offset: 0x0008 */
-    __IO uint32_t A2B_DAT_0;                          /* Address Offset: 0x000C */
-    __IO uint32_t A2B_CMD_1;                          /* Address Offset: 0x0010 */
-    __IO uint32_t A2B_DAT_1;                          /* Address Offset: 0x0014 */
-    __IO uint32_t A2B_CMD_2;                          /* Address Offset: 0x0018 */
-    __IO uint32_t A2B_DAT_2;                          /* Address Offset: 0x001C */
-    __IO uint32_t A2B_CMD_3;                          /* Address Offset: 0x0020 */
-    __IO uint32_t A2B_DAT_3;                          /* Address Offset: 0x0024 */
+    struct MBOX_CMD_DAT A2B[MBOX_CHAN_CNT];           /* Address Offset: 0x0008 */
     __IO uint32_t B2A_INTEN;                          /* Address Offset: 0x0028 */
     __IO uint32_t B2A_STATUS;                         /* Address Offset: 0x002C */
-    __IO uint32_t B2A_CMD_0;                          /* Address Offset: 0x0030 */
-    __IO uint32_t B2A_DAT_0;                          /* Address Offset: 0x0034 */
-    __IO uint32_t B2A_CMD_1;                          /* Address Offset: 0x0038 */
-    __IO uint32_t B2A_DAT_1;                          /* Address Offset: 0x003C */
-    __IO uint32_t B2A_CMD_2;                          /* Address Offset: 0x0040 */
-    __IO uint32_t B2A_DAT_2;                          /* Address Offset: 0x0044 */
-    __IO uint32_t B2A_CMD_3;                          /* Address Offset: 0x0048 */
-    __IO uint32_t B2A_DAT_3;                          /* Address Offset: 0x004C */
-         uint32_t RESERVED0050[44];                   /* Address Offset: 0x0050 */
+    struct MBOX_CMD_DAT B2A[MBOX_CHAN_CNT];           /* Address Offset: 0x0030 */
+         uint32_t RESERVED0[44];                      /* Address Offset: 0x0050 */
     __IO uint32_t ATOMIC_LOCK[32];                    /* Address Offset: 0x0100 */
 };
 /* SARADC Register Structure Define */
