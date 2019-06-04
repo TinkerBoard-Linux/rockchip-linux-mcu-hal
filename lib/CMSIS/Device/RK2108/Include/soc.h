@@ -2317,72 +2317,7 @@ struct USB_HOST_CH_REG {
 #define GRF_CHIP_ID_CHIP_ID_SHIFT                          (0U)
 #define GRF_CHIP_ID_CHIP_ID_MASK                           (0xFFFFFFFFU << GRF_CHIP_ID_CHIP_ID_SHIFT)                   /* 0xFFFFFFFF */
 
-/* GPIO_REGISTER_REDEF */
-#define GPIO_PORT_DR       0x0000 /* W 0x00000000  Port data register */
-#define GPIO_PORT_DDR      0x0008 /* W 0x00000000  Port data direction register */
-#define GPIO_INT_EN        0x0010 /* W 0x00000000  Interrupt enable register */
-#define GPIO_INT_MASK      0x0018 /* W 0x00000000  Interrupt mask register */
-#define GPIO_INT_TYPE      0x0020 /* W 0x00000000  Interrupt level register */
-#define GPIO_INT_POLARITY  0x0028 /* W 0x00000000  Interrupt polarity register */
-#define GPIO_INT_BOTHEDGE  0x0030 /* W 0x00000000  Interrupt both edge type register */
-#define GPIO_DEBOUNCE      0x0038 /* W 0x00000000  Debounce enable register */
-#define GPIO_INT_STATUS    0x0050 /* W 0x00000000  Interrupt status register */
-#define GPIO_INT_RAWSTATUS 0x0058 /* W 0x00000000  Interrupt raw status register */
-#define GPIO_PORT_EOI      0x0060 /* W 0x00000000  Interrupt clear register */
-#define GPIO_EXT_PORT      0x0070 /* W 0x00000000  External port data register */
-/* GRF_GPIO_REDEF */
-#define GRF_MUX_OFFSET 0x0000
-#define GRF_SLW_OFFSET 0x0040
-#define GRF_SMT_OFFSET 0x0060
-#define GRF_PUL_OFFSET 0x0080
-#define GRF_DRV_OFFSET 0x00c0
-#define GPIO_MUX_BANK_STRIDE 0x0020
-#define GPIO_SLW_BANK_STRIDE 0x0008
-#define GPIO_SMT_BANK_STRIDE 0x0008
-#define GPIO_PUL_BANK_STRIDE 0x0010
-#define GPIO_DRV_BANK_STRIDE 0x0010
-#define GPIO_MUX_BITS_PER_PIN 4
-#define GPIO_SLW_BITS_PER_PIN 1
-#define GPIO_SMT_BITS_PER_PIN 1
-#define GPIO_PUL_BITS_PER_PIN 2
-#define GPIO_DRV_BITS_PER_PIN 2
-#define GPIO_MUX_PINS_PER_REG 4
-#define GPIO_SLW_PINS_PER_REG 16
-#define GPIO_SMT_PINS_PER_REG 16
-#define GPIO_PUL_PINS_PER_REG 8
-#define GPIO_DRV_PINS_PER_REG 8
-/* GPIO_REGISTER_DEF */
-#define GPIO_DAT_PINS_PER_REG 16
-#define GPIO_DAT_BITS_PER_PIN 1
-#define GPIO_DIR_PINS_PER_REG 16
-#define GPIO_DIR_BITS_PER_PIN 1
-#define GPIO_DEB_PINS_PER_REG 16
-#define GPIO_DEB_BITS_PER_PIN 1
-#define GPIO_INT_EOI_PINS_PER_REG 16
-#define GPIO_INT_EOI_BITS_PER_PIN 1
-#define GPIO_INT_TYP_PINS_PER_REG 16
-#define GPIO_INT_TYP_BITS_PER_PIN 1
-#define GPIO_INT_PRY_PINS_PER_REG 16
-#define GPIO_INT_PRY_BITS_PER_PIN 1
-#define GPIO_INT_BOTH_PINS_PER_REG 16
-#define GPIO_INT_BOTH_BITS_PER_PIN 1
-#define GPIO_INT_MASK_PINS_PER_REG 16
-#define GPIO_INT_MASK_BITS_PER_PIN 1
-/* GPIO_ACTION_VALUE */
-#define GPIO_INT_LEVEL_SENSORTIVE (0x00000000U)
-#define GPIO_INT_EDGE_SENSORTIVE  (0x00000001U)
-#define GPIO_INT_ACTIVE_LOW       (0x00000000U)
-#define GPIO_INT_ACTIVE_HIGH      (0x00000001U)
-#define GPIO_INT_BOTHEDGE_DISABLE (0x00000000U)
-#define GPIO_INT_BOTHEDGE_ENABLE  (0x00000001U)
-#define GPIO_UNMASK_INT           (0x00000000U)
-#define GPIO_MASK_INT             (0x00000001U)
-#define GPIO_UNCLEAR_INT          (0x00000000U)
-#define GPIO_CLEAR_INT            (0x00000001U)
-#define GPIO_PORT_GPIO_MODE       (0x00000000U)
-#define GPIO_PORT_INTR_MODE       (0x00000001U)
-#define GPIO_DEBOUNCE_DISABLE     (0x00000000U)
-#define GPIO_DEBOUNCE_ENABLE      (0x00000001U)
+#define GPIO_VER_ID (0x01000C2BU)
 /******************************************MBOX******************************************/
 /* A2B_INTEN */
 #define MBOX_A2B_INTEN_INT0_SHIFT                          (0U)
