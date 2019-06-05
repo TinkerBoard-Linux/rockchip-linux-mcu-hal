@@ -84,7 +84,15 @@ HAL_Status GPIO_SetFunc(uint32_t port, uint32_t pin, uint32_t value)
     uint32_t pinsPerReg = GPIO_BPP(MUX);
     uint32_t bitsPerPin = GPIO_PPR(MUX);
     uint32_t addr, offset;
-    uint32_t mask = bitsPerPin;
+    uint32_t mask;
+
+#if defined(SOC_RK1808)
+    if (port == 0) {
+        pinsPerReg = 8;
+        bitsPerPin = 2;
+    }
+#endif
+    mask = bitsPerPin;
 
     if (pinsPerReg == 0 || bitsPerPin == 0)
         return HAL_OK;
