@@ -281,7 +281,7 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
 {
     struct MBOX_DEV *pMBox;
     eMBOX_CH chan;
-    int ret;
+    int ret = HAL_OK;
 
     if (irq < 0 || !IS_MBOX_INSTANCE(pReg))
         return HAL_INVAL;
@@ -291,6 +291,9 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
         return HAL_NODEV;
 
     for (chan = 0; chan < MBOX_CHAN_CNT; chan++) {
+        if (irq != pMBox->chans[chan].client->irq)
+            continue;
+
         if (!MBOX_ChanIntStGet(pReg, chan, pMBox->A2B))
             continue;
 

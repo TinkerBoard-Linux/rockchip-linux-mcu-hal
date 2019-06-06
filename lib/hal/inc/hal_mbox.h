@@ -34,6 +34,7 @@ typedef enum {
 
 struct MBOX_CLIENT {
     char name[16];
+    int irq;
     void (*RXCallback)(struct MBOX_CMD_DAT *msg, void *cbData);
     void *callbackData;
 };
