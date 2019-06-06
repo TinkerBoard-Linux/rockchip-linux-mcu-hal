@@ -63,8 +63,8 @@
 
 /***************************** Structure Definition **************************/
 typedef enum {
-    FALSE = 0x00U,
-    TRUE  = 0x01U
+    HAL_FALSE = 0x00U,
+    HAL_TRUE  = 0x01U
 } HAL_Check;
 
 typedef enum {

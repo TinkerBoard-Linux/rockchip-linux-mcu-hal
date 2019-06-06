@@ -306,12 +306,12 @@ __STATIC_FORCEINLINE HAL_Check HAL_ICACHE_GetInt(void)
 
     status = ICACHE->CACHE_INT_ST & ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK;
 
-    return status ? TRUE : FALSE;
+    return status ? HAL_TRUE : HAL_FALSE;
 #endif
 
 #endif
 
-    return FALSE;
+    return HAL_FALSE;
 }
 
 /**
@@ -675,12 +675,12 @@ __STATIC_FORCEINLINE HAL_Check HAL_DCACHE_GetInt(void)
 
     status = DCACHE->CACHE_INT_ST & DCACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK;
 
-    return status ? TRUE : FALSE;
+    return status ? HAL_TRUE : HAL_FALSE;
 #endif
 
 #endif
 
-    return FALSE;
+    return HAL_FALSE;
 }
 
 /**
