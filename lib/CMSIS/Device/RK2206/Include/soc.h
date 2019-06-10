@@ -26,7 +26,7 @@ typedef enum
     /******  RK2206 specific Interrupt Numbers **********************************************************************/
     DMAC_CH0_IRQn               = 0,
     WDT0_IRQn                   = 1,
-    NA_IRQn                     = 2,
+    TOUCH_NEG_IRQn              = 2,
     DMAC_CH1_IRQn               = 3,
     TIMER0_6CH_0_IRQn           = 4,
     TIMER0_6CH_1_IRQn           = 5,

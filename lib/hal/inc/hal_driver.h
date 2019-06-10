@@ -107,6 +107,10 @@
 #endif
 #endif /* HAL_SFC_MODULE_ENABLED */
 
+#ifdef HAL_TOUCHKEY_MODULE_ENABLED
+#include "hal_touchkey.h"
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 #include "hal_spi.h"
 #endif
