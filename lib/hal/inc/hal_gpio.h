@@ -24,11 +24,11 @@
 
 #define GPIO_PIN_SHIFT  (0) /* Bits 0-4: GPIO Pin number: 0 - 31 */
 #define GPIO_PIN_MASK   (0x1f << GPIO_PIN_SHIFT)
-#define GPIO_PORT_SHIFT (5) /* Bits 5-7: GPIO Port number: 0 - 7 */
-#define GPIO_PORT_MASK  (0x7 << GPIO_PORT_SHIFT)
+#define GPIO_BANK_SHIFT (5) /* Bits 5-7: GPIO Port number: 0 - 7 */
+#define GPIO_BANK_MASK  (0x7 << GPIO_BANK_SHIFT)
 
-#define GPIO_PIN_DEFAULT (-1)
-#define GET_PIN(PORT, PIN) ((((PORT) << GPIO_PORT_SHIFT) & GPIO_PORT_MASK) + (((PIN) << GPIO_PIN_SHIFT) & GPIO_PIN_MASK))
+#define BANK_PIN_DEFAULT (-1)
+#define BANK_PIN(BANK, PIN) ((((BANK) << GPIO_BANK_SHIFT) & GPIO_BANK_MASK) + (((PIN) << GPIO_PIN_SHIFT) & GPIO_PIN_MASK))
 
 /** @defgroup GPIO_Exported_Definition_Group1 Basic Definition
  *  @{
@@ -107,65 +107,73 @@ typedef enum {
 
 typedef enum {
     #ifdef GPIO0
-    GPIO_PORT0 = 0,
+    GPIO_BANK0 = 0,
     #endif
     #ifdef GPIO1
-    GPIO_PORT1 = 1,
+    GPIO_BANK1 = 1,
     #endif
     #ifdef GPIO2
-    GPIO_PORT2 = 2,
+    GPIO_BANK2 = 2,
     #endif
     #ifdef GPIO3
-    GPIO_PORT3 = 3,
+    GPIO_BANK3 = 3,
     #endif
     #ifdef GPIO4
-    GPIO_PORT4 = 4,
+    GPIO_BANK4 = 4,
     #endif
     #ifdef GPIO5
-    GPIO_PORT5 = 5,
+    GPIO_BANK5 = 5,
     #endif
     #ifdef GPIO6
-    GPIO_PORT6 = 6,
+    GPIO_BANK6 = 6,
     #endif
     #ifdef GPIO7
-    GPIO_PORT7 = 7,
+    GPIO_BANK7 = 7,
     #endif
+    GPIO_BANK_NUM
+} eGPIO_BankNum;
+
+typedef enum {
+    GPIO_PORTA,
+    GPIO_PORTB,
+    GPIO_PORTC,
+    GPIO_PORTD,
     GPIO_PORT_NUM
 } eGPIO_PortNum;
 
 typedef enum {
-    GPIO_PIN_A0 = 0,
-    GPIO_PIN_A1,
-    GPIO_PIN_A2,
-    GPIO_PIN_A3,
-    GPIO_PIN_A4,
-    GPIO_PIN_A5,
-    GPIO_PIN_A6,
-    GPIO_PIN_A7,
-    GPIO_PIN_B0,
-    GPIO_PIN_B1,
-    GPIO_PIN_B2,
-    GPIO_PIN_B3,
-    GPIO_PIN_B4,
-    GPIO_PIN_B5,
-    GPIO_PIN_B6,
-    GPIO_PIN_B7,
-    GPIO_PIN_C0,
-    GPIO_PIN_C1,
-    GPIO_PIN_C2,
-    GPIO_PIN_C3,
-    GPIO_PIN_C4,
-    GPIO_PIN_C5,
-    GPIO_PIN_C6,
-    GPIO_PIN_C7,
-    GPIO_PIN_D0,
-    GPIO_PIN_D1,
-    GPIO_PIN_D2,
-    GPIO_PIN_D3,
-    GPIO_PIN_D4,
-    GPIO_PIN_D5,
-    GPIO_PIN_D6,
-    GPIO_PIN_D7,
+    GPIOPortA_Pin0,
+    GPIOPortA_Pin1,
+    GPIOPortA_Pin2,
+    GPIOPortA_Pin3,
+    GPIOPortA_Pin4,
+    GPIOPortA_Pin5,
+    GPIOPortA_Pin6,
+    GPIOPortA_Pin7,
+    GPIOPortB_Pin0,
+    GPIOPortB_Pin1,
+    GPIOPortB_Pin2,
+    GPIOPortB_Pin3,
+    GPIOPortB_Pin4,
+    GPIOPortB_Pin5,
+    GPIOPortB_Pin6,
+    GPIOPortB_Pin7,
+    GPIOPortC_Pin0,
+    GPIOPortC_Pin1,
+    GPIOPortC_Pin2,
+    GPIOPortC_Pin3,
+    GPIOPortC_Pin4,
+    GPIOPortC_Pin5,
+    GPIOPortC_Pin6,
+    GPIOPortC_Pin7,
+    GPIOPortD_Pin0,
+    GPIOPortD_Pin1,
+    GPIOPortD_Pin2,
+    GPIOPortD_Pin3,
+    GPIOPortD_Pin4,
+    GPIOPortD_Pin5,
+    GPIOPortD_Pin6,
+    GPIOPortD_Pin7,
     GPIO_PIN_NUM
 } eGPIO_PinNum;
 
@@ -177,6 +185,7 @@ typedef enum {
     GPIO_MODE_IT_EDGE_RISING_FALLING,
     GPIO_MODE_IT_LEVEL_HIGH,
     GPIO_MODE_IT_LEVEL_LOW,
+    GPIO_MODE_INVALID
 } eGPIO_Mode;
 
 /**
@@ -225,7 +234,7 @@ struct GPIO_DESC {
 
 struct HAL_GPIO_DEV {
     uint32_t cnt;
-    struct GPIO_DESC desc[GPIO_PORT_NUM];
+    struct GPIO_DESC desc[GPIO_BANK_NUM];
     struct GPIO_PIN_INFO muxInfo;
     struct GPIO_PIN_INFO pulInfo;
     struct GPIO_PIN_INFO smtInfo;
@@ -241,13 +250,13 @@ struct HAL_GPIO_DEV {
 eGPIO_PinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
 eGPIO_PinLevel HAL_GPIO_GetPinData(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
 HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinLevel level);
-HAL_Status HAL_GPIO_SetIOMUX(struct GPIO_REG *GPIOx, uint32_t pin, uint32_t func);
+HAL_Status HAL_GPIO_SetIOMUX(struct GPIO_REG *GPIOx, eGPIO_PinNum pin, eGPIO_PinFunc func);
 HAL_Status HAL_GPIO_Init(struct GPIO_REG *GPIOx, GPIO_InitTypeDef *GPIO_Init);
 void HAL_GPIO_EnableIRQ(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
 void HAL_GPIO_DisableIRQ(struct GPIO_REG *GPIOx, eGPIO_PinNum pin);
 void HAL_GPIO_Probe(const struct HAL_GPIO_DEV GPIO_Dev);
-void HAL_GPIOn_IRQCallback(uint32_t port, uint32_t pin);
-void HAL_GPIOn_IRQHandler(uint32_t port);
+void HAL_GPIOn_IRQCallback(uint32_t bank, uint32_t pin);
+void HAL_GPIOn_IRQHandler(uint32_t bank);
 void HAL_GPIO0_IRQHandler(void);
 void HAL_GPIO1_IRQHandler(void);
 void HAL_GPIO2_IRQHandler(void);
@@ -256,7 +265,7 @@ void HAL_GPIO4_IRQHandler(void);
 void HAL_GPIO5_IRQHandler(void);
 void HAL_GPIO6_IRQHandler(void);
 void HAL_GPIO7_IRQHandler(void);
-struct GPIO_REG *HAL_GPIO_GetBase(uint32_t port);
+struct GPIO_REG *HAL_GPIO_GetBase(uint32_t bank);
 
 #endif
 

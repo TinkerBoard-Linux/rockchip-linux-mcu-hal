@@ -12,6 +12,10 @@
 
 /***************************** Structure Definition **************************/
 
+#ifdef HAL_GPIO_MODULE_ENABLED
+extern const struct HAL_GPIO_DEV g_GPIOxDev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
