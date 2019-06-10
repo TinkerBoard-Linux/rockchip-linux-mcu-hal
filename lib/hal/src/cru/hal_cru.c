@@ -513,6 +513,19 @@ HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk)
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
 
+#if defined(CRU_PMU_CLKGATE_CON0_OFFSET)
+    if (clk >= HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16) {
+        index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
+        shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
+
+        return (HAL_Check)(
+            !((CRU->PMU_CLKGATE_CON[index] & (1 << shift)) >> shift));
+    } else {
+        return (HAL_Check)(
+            !((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
+    }
+#endif
+
     return (HAL_Check)(
         !((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
 }
@@ -526,6 +539,19 @@ HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
 {
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
+
+#if defined(CRU_PMU_CLKGATE_CON0_OFFSET)
+    if (clk >= HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16) {
+        index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
+        shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
+
+        CRU->PMU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 0 << shift);
+    } else {
+        CRU->CRU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 0 << shift);
+    }
+
+    return HAL_OK;
+#endif
 
     CRU->CRU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 0 << shift);
 
@@ -542,7 +568,19 @@ HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
 
-    HAL_ASSERT(shift < 16);
+#if defined(CRU_PMU_CLKGATE_CON0_OFFSET)
+    if (clk >= HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16) {
+        index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
+        shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
+
+        CRU->PMU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 1 << shift);
+    } else {
+        CRU->CRU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 1 << shift);
+    }
+
+    return HAL_OK;
+#endif
+
     CRU->CRU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 1 << shift);
 
     return HAL_OK;

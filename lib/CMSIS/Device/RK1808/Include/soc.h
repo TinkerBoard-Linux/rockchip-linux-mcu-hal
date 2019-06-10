@@ -9728,33 +9728,33 @@ struct UART_REG {
 #define PCLK_USB_GRF_GATE        312
 #define TESTCLK_CLK_GATE         319
 /********Name=PMU_CLKGATE_CON0,Offset=0x4080********/
-#define PCLK_PDPMU_PLL_CLK_GATE        0
-#define PCLK_PMU_NIU_CLK_GATE          1
-#define PCLK_PMU_SGRF_CLK_GATE         2
-#define PCLK_PMU_GRF_CLK_GATE          3
-#define PCLK_PMU_PMU_CLK_GATE          4
-#define PCLK_PMU_MEM_CLK_GATE          5
-#define PCLK_PMU_GPIO0_CLK_GATE        6
-#define PCLK_PMU_UART0_CLK_GATE        7
-#define PCLK_PMU_CRU_CLK_GATE          8
-#define PCLK_PMU_I2C0_CLK_GATE         9
-#define XIN_OSC0_FUNC_DIV_SRC_CLK_GATE 12
-#define CLK_DIV32P768KHZ_SRC_CLK_GATE  13
-#define CLK_WIFI_PLL_CLK_GATE          14
-#define CLK_WIFI_CLK_GATE              15
+#define PCLK_PDPMU_PLL_CLK_GATE        320
+#define PCLK_PMU_NIU_CLK_GATE          321
+#define PCLK_PMU_SGRF_CLK_GATE         322
+#define PCLK_PMU_GRF_CLK_GATE          323
+#define PCLK_PMU_PMU_CLK_GATE          324
+#define PCLK_PMU_MEM_CLK_GATE          325
+#define PCLK_PMU_GPIO0_CLK_GATE        326
+#define PCLK_PMU_UART0_CLK_GATE        327
+#define PCLK_PMU_CRU_CLK_GATE          328
+#define PCLK_PMU_I2C0_CLK_GATE         329
+#define XIN_OSC0_FUNC_DIV_SRC_CLK_GATE 332
+#define CLK_DIV32P768KHZ_SRC_CLK_GATE  333
+#define CLK_WIFI_PLL_CLK_GATE          334
+#define CLK_WIFI_CLK_GATE              335
 /********Name=PMU_CLKGATE_CON1,Offset=0x4084********/
-#define CLK_UART0_PMU_PLL_CLK_GATE    16
-#define CLK_UART0_PMU_DIVNP5_CLK_GATE 17
-#define CLK_UART0_PMU_FRAC_CLK_GATE   18
-#define CLK_UART0_PMU_CLK_GATE        19
-#define CLK_PVTM_PMU_CLK_GATE         20
-#define CLK_I2C0_PMU_PLL_CLK_GATE     21
-#define DBCLK_GPIO0_PMU_PLL_CLK_GATE  22
-#define CLK_REF24M_PLL_CLK_GATE       24
-#define USBPHY_REF_CLK_GATE           25
-#define MIPIDSIPHY_REF_CCLK_GATE      26
-#define CLK_PCIEPHY_REF_DIV_CON_GATE  27
-#define CLK_PCIEPHY_REF_CLK_GATE      28
+#define CLK_UART0_PMU_PLL_CLK_GATE    336
+#define CLK_UART0_PMU_DIVNP5_CLK_GATE 337
+#define CLK_UART0_PMU_FRAC_CLK_GATE   338
+#define CLK_UART0_PMU_CLK_GATE        339
+#define CLK_PVTM_PMU_CLK_GATE         340
+#define CLK_I2C0_PMU_PLL_CLK_GATE     341
+#define DBCLK_GPIO0_PMU_PLL_CLK_GATE  342
+#define CLK_REF24M_PLL_CLK_GATE       344
+#define USBPHY_REF_CLK_GATE           345
+#define MIPIDSIPHY_REF_CCLK_GATE      346
+#define CLK_PCIEPHY_REF_DIV_CON_GATE  347
+#define CLK_PCIEPHY_REF_CLK_GATE      348
 
 /********Name=CLKSEL_CON0_S,Offset=0xF8********/
 /********Name=CLKSEL_CON0,Offset=0x100********/

@@ -139,51 +139,6 @@ static struct PLL_SETUP PPLL = {
  */
 
 /**
- * @brief  IP Clock is Enabled API
- * @param  clk: clk gate id
- * @return HAL_Check
- */
-HAL_Check HAL_PMUCRU_ClkIsEnabled(uint32_t clk)
-{
-    uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
-    uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
-
-    return (HAL_Check)(
-        !((CRU->PMU_CLKGATE_CON[index] & (1 << shift)) >> shift));
-}
-
-/**
- * @brief  IP Clock Enable API
- * @param  clk: clk gate id
- * @return NONE
- */
-HAL_Status HAL_PMUCRU_ClkEnable(uint32_t clk)
-{
-    uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
-    uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
-
-    CRU->PMU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 0 << shift);
-
-    return HAL_OK;
-}
-
-/**
- * @brief  IP Clock Disabled API
- * @param  clk: clk gate id
- * @return NONE
- */
-HAL_Status HAL_PMUCRU_ClkDisable(uint32_t clk)
-{
-    uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
-    uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
-
-    HAL_ASSERT(shift < 16);
-    CRU->PMU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 1 << shift);
-
-    return HAL_OK;
-}
-
-/**
  * @brief  IP Clock set div API
  * @param  divName: div id(Contains div offset, shift, mask information)
  * @param  divValue: div value
