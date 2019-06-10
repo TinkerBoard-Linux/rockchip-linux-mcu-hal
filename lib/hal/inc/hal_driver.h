@@ -120,6 +120,10 @@
 #include "hal_touchkey.h"
 #endif
 
+#ifdef HAL_SARADC_MODULE_ENABLED
+#include "hal_saradc.h"
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 #include "hal_spi.h"
 #endif
