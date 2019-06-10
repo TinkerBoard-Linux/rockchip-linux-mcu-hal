@@ -591,8 +591,8 @@ struct PMU_REG {
          uint32_t RESERVED0050[12];                   /* Address Offset: 0x0050 */
     __IO uint32_t TIMEOUT_CNT;                        /* Address Offset: 0x0080 */
 };
-/* RK_GPIO Register Structure Define */
-struct RK_GPIO_REG {
+/* GPIO Register Structure Define */
+struct GPIO_REG {
     __IO uint32_t SWPORT_DR_L;                        /* Address Offset: 0x0000 */
     __IO uint32_t SWPORT_DR_H;                        /* Address Offset: 0x0004 */
     __IO uint32_t SWPORT_DDR_L;                       /* Address Offset: 0x0008 */
@@ -3815,6 +3815,8 @@ struct SPI2APB_REG {
 /* VER_ID */
 #define RK_GPIO_VER_ID_GPIO_VER_ID_SHIFT                   (0U)
 #define RK_GPIO_VER_ID_GPIO_VER_ID_MASK                    (0xFFFFFFFFU << RK_GPIO_VER_ID_GPIO_VER_ID_SHIFT)            /* 0xFFFFFFFF */
+
+#define GPIO_VER_ID (0x01000C2BU)
 /******************************************GRF*******************************************/
 /* GPIO0A_IOMUX_L */
 #define GRF_GPIO0A_IOMUX_L_GPIO0A0_SEL_SHIFT               (0U)
