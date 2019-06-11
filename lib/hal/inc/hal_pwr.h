@@ -41,8 +41,6 @@ typedef enum {
     PWR_CTRL_MAX
 } PWR_CtrlType;
 
-#define PWR_REG_INT_BUS
-
 #define PWR_FLG_VOLT_RUN  HAL_BIT(PWR_CTRL_VOLT_RUN)
 #define PWR_FLG_VOLT_SSPD HAL_BIT(PWR_CTRL_VOLT_SSPD)
 #define PWR_FLG_PWR_EN    HAL_BIT(PWR_CTRL_PWR_EN)
@@ -112,11 +110,11 @@ struct PWR_REG_DATA_I2C_16 {
 };
 
 union U_PWR_REGS_DATA_CTRL {
-#ifdef PWR_REG_INT_BUS
+#ifdef HAL_PWR_INTBUS_MODULE_ENABLED
     uint32_t *preg[PWR_CTRL_MAX]; /* for internal bus reg */
 #endif
 
-#ifdef PWR_REG_EXT_I2C_8
+#ifdef HAL_PWR_I2C8_MODULE_ENABLED
     struct PWR_REG_DATA_I2C_8 i2c8; /* for 8 bits i2c interface */
 #endif
 };
