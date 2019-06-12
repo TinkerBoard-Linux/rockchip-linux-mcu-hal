@@ -124,6 +124,10 @@
 #include "hal_saradc.h"
 #endif
 
+#ifdef HAL_KEYCTRL_MODULE_ENABLED
+#include "hal_keyctrl.h"
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 #include "hal_spi.h"
 #endif
