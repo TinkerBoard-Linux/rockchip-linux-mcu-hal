@@ -90,6 +90,7 @@ typedef enum
     PWM_IRQn                    = 41,     /* PWM                                                        */
     PWM_PWR_IRQn                = 42,     /* PWM PWR                                                    */
     SPIMST2_IRQn                = 45,     /* SPI Master 2                                               */
+    KEY_CTRL_IRQn               = 46,     /* KEY Control                                                */
     NUM_INTERRUPTS
 } IRQn_Type;
 
@@ -530,6 +531,14 @@ struct WDT_REG {
     __O  uint32_t WDT_CRR;                            /* Address Offset: 0x000C */
     __I  uint32_t WDT_STAT;                           /* Address Offset: 0x0010 */
     __I  uint32_t WDT_EOI;                            /* Address Offset: 0x0014 */
+};
+/* KEY_CTRL Register Structure Define */
+struct KEY_CTRL_REG {
+    __IO uint32_t CON;                                /* Address Offset: 0x0000 */
+    __IO uint32_t CAL_TH;                             /* Address Offset: 0x0004 */
+    __I  uint32_t DET_REC;                            /* Address Offset: 0x0008 */
+    __IO uint32_t INT_CON;                            /* Address Offset: 0x000C */
+    __O  uint32_t INT_ST;                             /* Address Offset: 0x0010 */
 };
 /* I2C Register Structure Define */
 struct I2C_REG {
@@ -1020,6 +1029,7 @@ struct USB_HOST_CH_REG {
 #define SPI2_BASE           0x40C20000U /* SPI2 base address */
 #define SFC_BASE            0x40C80000U /* SFC base address */
 #define MMC0_BASE           0x40C90000U /* MMC0 base address */
+#define KEY_CTRL_BASE       0x40E00000U /* KEY_CTRL base address */
 #define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
 #define GPIO1_BASE          0x40D10000U /* GPIO1 base address */
 #define PDM0_BASE           0x41000000U /* PDM0 base address */
@@ -1065,6 +1075,7 @@ struct USB_HOST_CH_REG {
 #define SPI2                ((struct SPI_REG *) SPI2_BASE)
 #define SFC                 ((struct SFC_REG *) SFC_BASE)
 #define MMC0                ((struct MMC_REG *) MMC0_BASE)
+#define KEY_CTRL            ((struct KEY_CTRL_REG *) KEY_CTRL_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define PDM0                 ((struct PDM_REG *) PDM0_BASE)
@@ -1096,6 +1107,7 @@ struct USB_HOST_CH_REG {
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI1) || ((instance) == SPI2))
 #define IS_MMC_INSTANCE(instance) ((instance) == MMC0)
+#define IS_KEY_CTRL_INSTANCE(instance) ((instance) == KEY_CTRL)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
 #define IS_I2S_INSTANCE(instance) (((instance) == I2S0) || ((instance) == I2S1))
 #define IS_PCD_INSTANCE(instance) ((instance) == USB)
@@ -5123,6 +5135,33 @@ struct USB_HOST_CH_REG {
 /* FIFO_BASE */
 #define MMC_FIFO_BASE_FIFO_BASE_ADDR_SHIFT                 (0U)
 #define MMC_FIFO_BASE_FIFO_BASE_ADDR_MASK                  (0xFFFFFFFFU << MMC_FIFO_BASE_FIFO_BASE_ADDR_SHIFT)          /* 0xFFFFFFFF */
+/****************************************KEY_CTRL****************************************/
+/* CON */
+#define KEY_CTRL_CON_OFFSET                                (0x0)
+#define KEY_CTRL_CON_ENABLE_SHIFT                          (0U)
+#define KEY_CTRL_CON_ENABLE_MASK                           (0x1U << KEY_CTRL_CON_ENABLE_SHIFT)                          /* 0x00000001 */
+#define KEY_CTRL_CON_KEY_DET_TH_SHIFT                      (4U)
+#define KEY_CTRL_CON_KEY_DET_TH_MASK                       (0xFFFFFFFU << KEY_CTRL_CON_KEY_DET_TH_SHIFT)                /* 0xFFFFFFF0 */
+/* CAL_TH */
+#define KEY_CTRL_CAL_TH_OFFSET                             (0x4)
+#define KEY_CTRL_CAL_TH_KEY_CAL_TH_SHIFT                   (0U)
+#define KEY_CTRL_CAL_TH_KEY_CAL_TH_MASK                    (0xFFFFFFFFU << KEY_CTRL_CAL_TH_KEY_CAL_TH_SHIFT)            /* 0xFFFFFFFF */
+/* DET_REC */
+#define KEY_CTRL_DET_REC_OFFSET                            (0x8)
+#define KEY_CTRL_DET_REC_KEY_DET_REC_SHIFT                 (0U)
+#define KEY_CTRL_DET_REC_KEY_DET_REC_MASK                  (0xFFFFFFFFU << KEY_CTRL_DET_REC_KEY_DET_REC_SHIFT)          /* 0xFFFFFFFF */
+/* INT_CON */
+#define KEY_CTRL_INT_CON_OFFSET                            (0xC)
+#define KEY_CTRL_INT_CON_KEY_INT_EN_SHIFT                  (0U)
+#define KEY_CTRL_INT_CON_KEY_INT_EN_MASK                   (0x1U << KEY_CTRL_INT_CON_KEY_INT_EN_SHIFT)                  /* 0x00000001 */
+#define KEY_CTRL_INT_CON_KEY_INT_MASK_DIS_SHIFT            (1U)
+#define KEY_CTRL_INT_CON_KEY_INT_MASK_DIS_MASK             (0x1U << KEY_CTRL_INT_CON_KEY_INT_MASK_DIS_SHIFT)            /* 0x00000002 */
+#define KEY_CTRL_INT_CON_KEY_INT_MASK_TH_SHIFT             (16U)
+#define KEY_CTRL_INT_CON_KEY_INT_MASK_TH_MASK              (0xFFFFU << KEY_CTRL_INT_CON_KEY_INT_MASK_TH_SHIFT)          /* 0xFFFF0000 */
+/* INT_ST */
+#define KEY_CTRL_INT_ST_OFFSET                             (0x10)
+#define KEY_CTRL_INT_ST_KEY_INT_ST_SHIFT                   (0U)
+#define KEY_CTRL_INT_ST_KEY_INT_ST_MASK                    (0x1U << KEY_CTRL_INT_ST_KEY_INT_ST_SHIFT)                   /* 0x00000001 */
 /******************************************GPIO******************************************/
 /* SWPORT_DR_L */
 #define GPIO_SWPORT_DR_L_GPIO_SWPORT_DR_LOW_SHIFT          (0U)
