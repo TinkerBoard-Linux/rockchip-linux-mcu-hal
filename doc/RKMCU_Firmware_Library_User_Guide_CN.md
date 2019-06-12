@@ -636,12 +636,17 @@ typedef	unsigned char			bool
 
 ### 3.6.2 结构体定义
 
-结构体定义推荐使用类linux kernel普通类型：
+结构体定义推荐使用类linux kernel普通类型，主要有以下规范：
+
+- 不使用typedef以明确具体类型；
+- 结构体大写命名；
+- 结构体成员命名为小驼峰，包括变量，数组和函数指针，其中函数指针内的参数亦为小驼峰命名
 
 ```c
 struct STRUCT_A {
-uint32 member1;
-uint32 memberTest;
+uint32_t member1;
+uint32_t memberTest;
+uint32_t (*memTest)(struct GPIO_REG *pReg, uint32_t pinNum);
 };
 ```
 
@@ -662,7 +667,7 @@ typedef enum
 寄存器结构体中有种特殊情况需要使用typedef，UART的寄存器，同一个offset可能存在多种值，这种情况可以使用如下定义：
 
 ```c
-typedef struct UART_REG {
+struct UART_REG {
     __IO uint32_t UART_RBR;
     __IO uint32_t UART_DLH;
     __IO uint32_t UART_IIR;
@@ -692,7 +697,7 @@ typedef struct UART_REG {
     __IO uint32_t UART_CPR;
     __IO uint32_t UART_UCV;
     __IO uint32_t UART_CTR;
-} UART_REG_t;
+};
 
 #define UART_THR UART_RBR
 #define UART_DLL UART_RBR
