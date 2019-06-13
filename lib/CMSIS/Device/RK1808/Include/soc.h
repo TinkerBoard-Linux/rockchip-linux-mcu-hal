@@ -4220,46 +4220,6 @@ struct UART_REG {
 #define CRU_APLL_CON1_PLLPD1_MASK                          (0x1U << CRU_APLL_CON1_PLLPD1_SHIFT)                         /* 0x00004000 */
 #define CRU_APLL_CON1_PLLPDSEL_SHIFT                       (15U)
 #define CRU_APLL_CON1_PLLPDSEL_MASK                        (0x1U << CRU_APLL_CON1_PLLPDSEL_SHIFT)                       /* 0x00008000 */
-/* APLL_CON0 */
-#define CRU_APLL_CON0_OFFSET                               (0x0)
-#define CRU_APLL_CON0_FBDIV_SHIFT                          (0U)
-#define CRU_APLL_CON0_FBDIV_MASK                           (0xFFFU << CRU_APLL_CON0_FBDIV_SHIFT)                        /* 0x00000FFF */
-#define CRU_APLL_CON0_POSTDIV1_SHIFT                       (12U)
-#define CRU_APLL_CON0_POSTDIV1_MASK                        (0x7U << CRU_APLL_CON0_POSTDIV1_SHIFT)                       /* 0x00007000 */
-#define CRU_APLL_CON0_BYPASS_SHIFT                         (15U)
-#define CRU_APLL_CON0_BYPASS_MASK                          (0x1U << CRU_APLL_CON0_BYPASS_SHIFT)                         /* 0x00008000 */
-/* APLL_CON0 */
-#define CRU_APLL_CON0_OFFSET                               (0x0)
-#define CRU_APLL_CON0_FBDIV_SHIFT                          (0U)
-#define CRU_APLL_CON0_FBDIV_MASK                           (0xFFFU << CRU_APLL_CON0_FBDIV_SHIFT)                        /* 0x00000FFF */
-#define CRU_APLL_CON0_POSTDIV1_SHIFT                       (12U)
-#define CRU_APLL_CON0_POSTDIV1_MASK                        (0x7U << CRU_APLL_CON0_POSTDIV1_SHIFT)                       /* 0x00007000 */
-#define CRU_APLL_CON0_BYPASS_SHIFT                         (15U)
-#define CRU_APLL_CON0_BYPASS_MASK                          (0x1U << CRU_APLL_CON0_BYPASS_SHIFT)                         /* 0x00008000 */
-/* APLL_CON0 */
-#define CRU_APLL_CON0_OFFSET                               (0x0)
-#define CRU_APLL_CON0_FBDIV_SHIFT                          (0U)
-#define CRU_APLL_CON0_FBDIV_MASK                           (0xFFFU << CRU_APLL_CON0_FBDIV_SHIFT)                        /* 0x00000FFF */
-#define CRU_APLL_CON0_POSTDIV1_SHIFT                       (12U)
-#define CRU_APLL_CON0_POSTDIV1_MASK                        (0x7U << CRU_APLL_CON0_POSTDIV1_SHIFT)                       /* 0x00007000 */
-#define CRU_APLL_CON0_BYPASS_SHIFT                         (15U)
-#define CRU_APLL_CON0_BYPASS_MASK                          (0x1U << CRU_APLL_CON0_BYPASS_SHIFT)                         /* 0x00008000 */
-/* APLL_CON1 */
-#define CRU_APLL_CON1_OFFSET                               (0x4)
-#define CRU_APLL_CON1_REFDIV_SHIFT                         (0U)
-#define CRU_APLL_CON1_REFDIV_MASK                          (0x3FU << CRU_APLL_CON1_REFDIV_SHIFT)                        /* 0x0000003F */
-#define CRU_APLL_CON1_POSTDIV2_SHIFT                       (6U)
-#define CRU_APLL_CON1_POSTDIV2_MASK                        (0x7U << CRU_APLL_CON1_POSTDIV2_SHIFT)                       /* 0x000001C0 */
-#define CRU_APLL_CON1_PLL_LOCK_SHIFT                       (10U)
-#define CRU_APLL_CON1_PLL_LOCK_MASK                        (0x1U << CRU_APLL_CON1_PLL_LOCK_SHIFT)                       /* 0x00000400 */
-#define CRU_APLL_CON1_DSMPD_SHIFT                          (12U)
-#define CRU_APLL_CON1_DSMPD_MASK                           (0x1U << CRU_APLL_CON1_DSMPD_SHIFT)                          /* 0x00001000 */
-#define CRU_APLL_CON1_PLLPD0_SHIFT                         (13U)
-#define CRU_APLL_CON1_PLLPD0_MASK                          (0x1U << CRU_APLL_CON1_PLLPD0_SHIFT)                         /* 0x00002000 */
-#define CRU_APLL_CON1_PLLPD1_SHIFT                         (14U)
-#define CRU_APLL_CON1_PLLPD1_MASK                          (0x1U << CRU_APLL_CON1_PLLPD1_SHIFT)                         /* 0x00004000 */
-#define CRU_APLL_CON1_PLLPDSEL_SHIFT                       (15U)
-#define CRU_APLL_CON1_PLLPDSEL_MASK                        (0x1U << CRU_APLL_CON1_PLLPDSEL_SHIFT)                       /* 0x00008000 */
 /* APLL_CON2 */
 #define CRU_APLL_CON2_OFFSET                               (0x8)
 #define CRU_APLL_CON2_FRACDIV_SHIFT                        (0U)
@@ -4316,14 +4276,6 @@ struct UART_REG {
 #define CRU_DPLL_CON1_PLLPD1_MASK                          (0x1U << CRU_DPLL_CON1_PLLPD1_SHIFT)                         /* 0x00004000 */
 #define CRU_DPLL_CON1_PLLPDSEL_SHIFT                       (15U)
 #define CRU_DPLL_CON1_PLLPDSEL_MASK                        (0x1U << CRU_DPLL_CON1_PLLPDSEL_SHIFT)                       /* 0x00008000 */
-/* DPLL_CON0 */
-#define CRU_DPLL_CON0_OFFSET                               (0x20)
-#define CRU_DPLL_CON0_FBDIV_SHIFT                          (0U)
-#define CRU_DPLL_CON0_FBDIV_MASK                           (0xFFFU << CRU_DPLL_CON0_FBDIV_SHIFT)                        /* 0x00000FFF */
-#define CRU_DPLL_CON0_POSTDIV1_SHIFT                       (12U)
-#define CRU_DPLL_CON0_POSTDIV1_MASK                        (0x7U << CRU_DPLL_CON0_POSTDIV1_SHIFT)                       /* 0x00007000 */
-#define CRU_DPLL_CON0_BYPASS_SHIFT                         (15U)
-#define CRU_DPLL_CON0_BYPASS_MASK                          (0x1U << CRU_DPLL_CON0_BYPASS_SHIFT)                         /* 0x00008000 */
 /* DPLL_CON2 */
 #define CRU_DPLL_CON2_OFFSET                               (0x28)
 #define CRU_DPLL_CON2_FRACDIV_SHIFT                        (0U)
@@ -6716,7 +6668,6 @@ struct UART_REG {
 #define CRU_PMU_AUTOCS_CON1_PDPMU_CLKSEL_OUT_MASK          (0x3U << CRU_PMU_AUTOCS_CON1_PDPMU_CLKSEL_OUT_SHIFT)         /* 0x00003000 */
 #define CRU_PMU_AUTOCS_CON1_PDPMU_CLKSEL_SHIFT             (14U)
 #define CRU_PMU_AUTOCS_CON1_PDPMU_CLKSEL_MASK              (0x3U << CRU_PMU_AUTOCS_CON1_PDPMU_CLKSEL_SHIFT)             /* 0x0000C000 */
-
 /****************************************EFUSE_NS****************************************/
 /* MOD */
 #define EFUSE_NS_MOD_WORK_MOD_SHIFT                        (0U)
