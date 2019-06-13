@@ -128,7 +128,7 @@ zero_loop:
         ldr     r0, [r2, #0x00]
         mov     sp, r0
         mov     lr, #0
-        b       Main
+        b       main
 .size Reset_Handler, .-Reset_Handler
 
 /**
