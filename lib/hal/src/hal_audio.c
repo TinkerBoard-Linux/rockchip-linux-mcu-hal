@@ -53,7 +53,7 @@ static int AUDIO_CARD_CommonIoctl(void *priv, int cmd, void *arg)
     /* vad dai: optional */
     if (vadDai) {
         ret = vadDai->ops->ioctl(vadDai, cmd, arg);
-        HAL_ASSERT(ret = HAL_OK);
+        HAL_ASSERT(ret == HAL_OK);
     }
 
     ret = dai->ops->ioctl(dai, cmd, arg);
