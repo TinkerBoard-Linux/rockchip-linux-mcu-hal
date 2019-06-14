@@ -83,7 +83,7 @@ HAL_Status BSP_I2S_DeInit(void)
 #ifdef HAL_PDM_MODULE_ENABLED
 struct HAL_PDM_DEV g_pdm0Dev =
 {
-    .base = PDM0_BASE,
+    .reg = PDM0,
     .mclk = MCLK_PDM0,
 #ifdef IS_FPGA
     .mclkRate = PDM_FPGA_CLK_RATE,

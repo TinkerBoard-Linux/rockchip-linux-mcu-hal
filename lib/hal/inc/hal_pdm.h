@@ -104,7 +104,7 @@
 
 /** pdm dev struct */
 struct HAL_PDM_DEV {
-    uint32_t base;
+    struct PDM_REG *reg;
     uint32_t mclk;
     uint32_t mclkRate;
     uint32_t hclk;

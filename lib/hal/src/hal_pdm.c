@@ -137,13 +137,13 @@ static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
                                     struct AUDIO_PARAMS *params)
 {
     struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
-    struct PDM_REG *reg = (struct PDM_REG *)pdm->base;
+    struct PDM_REG *reg = pdm->reg;
 
     HAL_Status ret = HAL_OK;
     uint32_t clkOut, clkSrc, n, m, old, val, mask;
     int cic;
 
-    HAL_ASSERT(IS_PDM_INSTANCE(pdm));
+    HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
     clkSrc = pdm->mclkRate;
     ret = PDM_GetClk(params->sampleRate, &clkOut);
@@ -299,7 +299,7 @@ HAL_Status HAL_PDM_Init(struct AUDIO_DAI *dai, struct HAL_PDM_DEV *pdm)
 {
     /* TBD: clk, pin issue */
 
-    dai->id = pdm->base;
+    dai->id = (uint32_t)pdm->reg;
     dai->dmaData[AUDIO_STREAM_CAPTURE] = &pdm->rxDmaData;
     dai->privData = pdm;
     dai->ops = &pdmOps;
@@ -320,7 +320,7 @@ HAL_Status HAL_PDM_Deinit(struct AUDIO_DAI *dai)
     struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
 
     /* TBD: clk, pin issue */
-    HAL_ASSERT(IS_PDM_INSTANCE(pdm));
+    HAL_ASSERT(IS_PDM_INSTANCE(pdm->reg));
 
     HAL_CRU_ClkDisable(pdm->hclk);
 
@@ -346,10 +346,10 @@ HAL_Status HAL_PDM_Deinit(struct AUDIO_DAI *dai)
 HAL_Status HAL_PDM_Enable(struct AUDIO_DAI *dai, uint8_t stream)
 {
     struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
-    struct PDM_REG *reg = (struct PDM_REG *)pdm->base;
+    struct PDM_REG *reg = pdm->reg;
 
     HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
-    HAL_ASSERT(IS_PDM_INSTANCE(pdm));
+    HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
     MODIFY_REG(reg->DMA_CTRL,
                PDM_DMA_RD_MSK, PDM_DMA_RD_EN);
@@ -368,10 +368,10 @@ HAL_Status HAL_PDM_Enable(struct AUDIO_DAI *dai, uint8_t stream)
 HAL_Status HAL_PDM_Disable(struct AUDIO_DAI *dai, uint8_t stream)
 {
     struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
-    struct PDM_REG *reg = (struct PDM_REG *)pdm->base;
+    struct PDM_REG *reg = pdm->reg;
 
     HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
-    HAL_ASSERT(IS_PDM_INSTANCE(pdm));
+    HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
     MODIFY_REG(reg->DMA_CTRL,
                PDM_DMA_RD_MSK, PDM_DMA_RD_DIS);
@@ -393,7 +393,7 @@ HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,
                           struct AUDIO_PARAMS *params)
 {
     struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
-    struct PDM_REG *reg = (struct PDM_REG *)pdm->base;
+    struct PDM_REG *reg = pdm->reg;
     uint32_t val = 0;
     HAL_Status ret = HAL_OK;
     int rate;
