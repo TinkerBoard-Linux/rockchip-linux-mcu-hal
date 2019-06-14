@@ -54,10 +54,10 @@ TEST(HAL_CRU, ClkGate){
 
     ret = HAL_CRU_ClkDisable(PCLK_I2C0_GATE);
     ret = HAL_CRU_ClkIsEnabled(PCLK_I2C0_GATE);
-    TEST_ASSERT(ret == FALSE);
+    TEST_ASSERT(ret == HAL_FALSE);
     ret = HAL_CRU_ClkEnable(PCLK_I2C0_GATE);
     ret = HAL_CRU_ClkIsEnabled(PCLK_I2C0_GATE);
-    TEST_ASSERT(ret == TRUE);
+    TEST_ASSERT(ret == HAL_TRUE);
 }
 
 /* CRU test case 2 */
@@ -66,10 +66,10 @@ TEST(HAL_CRU, ClkReset){
 
     ret = HAL_CRU_ClkResetAssert(SRST_I2C0);
     ret = HAL_CRU_ClkIsReset(SRST_I2C0);
-    TEST_ASSERT(ret == TRUE);
+    TEST_ASSERT(ret == HAL_TRUE);
     ret = HAL_CRU_ClkResetDeassert(SRST_I2C0);
     ret = HAL_CRU_ClkIsReset(SRST_I2C0);
-    TEST_ASSERT(ret == FALSE);
+    TEST_ASSERT(ret == HAL_FALSE);
 }
 
 TEST_GROUP_RUNNER(HAL_CRU){

@@ -188,7 +188,7 @@ TEST(HAL_MPU, TC_MPU_Cache){
     ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
 
     *cacheVar = 0x0815U;
-    HAL_DCACHE_EnableWithMPU();
+    HAL_DCACHE_Enable();
     HAL_DCACHE_CleanInvalidate();
 
     /* test cached value gets lost */
@@ -210,7 +210,7 @@ TEST(HAL_MPU, TC_MPU_Cache){
 
 
     *uncacheVar = 0x0815U;
-    HAL_DCACHE_EnableWithMPU();
+    HAL_DCACHE_Enable();
     HAL_DCACHE_CleanInvalidate();
 
     /* test cached value gets lost */
@@ -276,7 +276,7 @@ TEST(HAL_MPU, TC_MPU_Priv){
     control = __get_CONTROL() & (~CONTROL_nPRIV_Msk);
     __set_CONTROL(control);
     *var = 0x55aa;
-    RT_ASSERT(*var == 0x55aa);
+    HAL_ASSERT(*var == 0x55aa);
 
     control = __get_CONTROL() | CONTROL_nPRIV_Msk;
     __set_CONTROL(control);
