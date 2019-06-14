@@ -54,6 +54,7 @@ typedef enum {
 
 #define DESC_FLAG_LINEAR(flag) (PWR_FLG_LINEAR | PWR_FLG_INTREG | flag)
 
+#ifdef HAL_PWR_INTBUS_MODULE_ENABLED
 #define PWR_DESC_REG_SHIFT_RUN(reg, sft) \
     .regs.preg[PWR_CTRL_VOLT_RUN] = (uint32_t *)(reg),\
     .shift[PWR_CTRL_VOLT_RUN] = (sft)
@@ -69,7 +70,9 @@ typedef enum {
 #define PWR_DESC_REG_SHIFT_ST(reg, sft) \
     .regs.preg[PWR_CTRL_VOLT_ST] = (uint32_t *)(reg),\
     .shift[PWR_CTRL_VOLT_ST] = (sft)
+#endif
 
+#ifdef HAL_PWR_I2C8_MODULE_ENABLED
 #define PWR_DESC_I2C8_SHIFT_RUN(reg, sft) \
     .regs.i2c8.reg[PWR_CTRL_VOLT_RUN] = (uint32_t *)(reg),\
     .shift[PWR_CTRL_VOLT_RUN] = (sft)
@@ -85,6 +88,7 @@ typedef enum {
 #define PWR_DESC_I2C8_SHIFT_ST(reg, sft) \
     .regs.reg[PWR_CTRL_VOLT_ST] = (uint32_t *)(reg),\
     .shift[PWR_CTRL_VOLT_ST] = (sft)
+#endif
 
 #define PWR_DESC_LINEAR_VOLT(min, max, step) \
     .voltCnt = (((max)-(min))/(step)) + 1,\

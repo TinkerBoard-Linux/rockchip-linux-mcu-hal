@@ -34,7 +34,7 @@
 
 #include "hal_base.h"
 
-#ifdef HAL_PWR_MODULE_ENABLED
+#ifdef HAL_PWR_INTBUS_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
