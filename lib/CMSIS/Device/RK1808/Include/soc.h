@@ -523,6 +523,48 @@ struct EFUSE_S_REG {
     __IO uint32_t T_STROBE_R;                         /* Address Offset: 0x004C */
     __IO uint32_t REVISION;                           /* Address Offset: 0x0050 */
 };
+/* DMA Register Structure Define */
+struct DMA_CHANNEL_STATUS {
+    __I  uint32_t CSR;
+    __I  uint32_t CPC;
+};
+struct DMA_CHANNEL_CONFIG {
+    __I  uint32_t SAR;
+    __I  uint32_t DAR;
+    __I  uint32_t CCR;
+    __I  uint32_t LC0;
+    __I  uint32_t LC1;
+         uint32_t PADDING[3];
+};
+/* DMA Register Structure Define */
+struct DMA_REG {
+    __I  uint32_t DSR;                                /* Address Offset: 0x0000 */
+    __I  uint32_t DPC;                                /* Address Offset: 0x0004 */
+         uint32_t RESERVED0[6];                       /* Address Offset: 0x0008 */
+    __IO uint32_t INTEN;                              /* Address Offset: 0x0020 */
+    __I  uint32_t EVENT_RIS;                          /* Address Offset: 0x0024 */
+    __I  uint32_t INTMIS;                             /* Address Offset: 0x0028 */
+    __O  uint32_t INTCLR;                             /* Address Offset: 0x002C */
+    __I  uint32_t FSRD;                               /* Address Offset: 0x0030 */
+    __I  uint32_t FSRC;                               /* Address Offset: 0x0034 */
+    __IO uint32_t FTRD;                               /* Address Offset: 0x0038 */
+         uint32_t RESERVED1;                          /* Address Offset: 0x003C */
+    __IO uint32_t FTR[6];                             /* Address Offset: 0x0040 */
+         uint32_t RESERVED2[42];                      /* Address Offset: 0x0058 */
+    struct DMA_CHANNEL_STATUS CHAN_STS[6];            /* Address Offset: 0x0100 */
+         uint32_t RESERVED3[180];                     /* Address Offset: 0x0130 */
+    struct DMA_CHANNEL_CONFIG CHAN_CFG[6];            /* Address Offset: 0x0400 */
+         uint32_t RESERVED9[528];                     /* Address Offset: 0x04C0 */
+    __I  uint32_t DBGSTATUS;                          /* Address Offset: 0x0D00 */
+    __O  uint32_t DBGCMD;                             /* Address Offset: 0x0D04 */
+    __IO uint32_t DBGINST[2];                         /* Address Offset: 0x0D08 */
+         uint32_t RESERVED10[60];                     /* Address Offset: 0x0D10 */
+    __IO uint32_t CR[5];                              /* Address Offset: 0x0E00 */
+    __I  uint32_t CRDN;                               /* Address Offset: 0x0E14 */
+         uint32_t RESERVED11[26];                     /* Address Offset: 0x0E18 */
+    __IO uint32_t WD;                                 /* Address Offset: 0x0E80 */
+};
+
 /* DCF Register Structure Define */
 struct DCF_REG {
     __IO uint32_t DCF_CTRL;                           /* Address Offset: 0x0000 */
@@ -825,6 +867,7 @@ struct UART_REG {
 #define I2C0_BASE           0xFF410000U /* I2C0 base address */
 #define UART0_BASE          0xFF430000U /* UART0 base address */
 #define GPIO0_BASE          0xFF4C0000U /* GPIO0 base address */
+#define DMA_BASE            0xFF4E0000U /* DMA base address */
 #define I2C1_BASE           0xFF500000U /* I2C1 base address */
 #define I2C2_BASE           0xFF504000U /* I2C2 base address */
 #define I2C3_BASE           0xFF508000U /* I2C3 base address */
@@ -878,6 +921,7 @@ struct UART_REG {
 #define DCF                 ((struct DCF_REG *) DCF_BASE)
 #define DFICTRL             ((struct DFICTRL_REG *) DFICTRL_BASE)
 #define RGA                 ((struct RGA_REG *) RGA_BASE)
+#define DMA                 ((struct DMA_REG *) DMA_BASE)
 #define I2S0                ((struct I2S_REG *) I2S0_BASE)
 #define I2S1                ((struct I2S_REG *) I2S1_BASE)
 #define PDM                 ((struct PDM_REG *) PDM_BASE)
@@ -926,6 +970,7 @@ struct UART_REG {
 #define IS_SPI2APB_INSTANCE(instance) ((instance) == SPI2APB)
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1))
 #define IS_I2S_INSTANCE(instance) (((instance) == I2S0) || ((instance) == I2S1))
+#define IS_DMA_INSTANCE(instance) ((instance) == DMA)
 #define IS_VAD_INSTANCE(instance) ((instance) == VAD)
 #define IS_PDM_INSTANCE(instance) ((instance) == PDM)
 /****************************************************************************************/
