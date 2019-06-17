@@ -77,10 +77,14 @@ __STATIC_INLINE uint32_t HAL_CpuAddrToDmaAddr(uint32_t cpuAddr)
  */
 __STATIC_INLINE HAL_FuncStatus HAL_MPU_IsEnable(void)
 {
+    HAL_FuncStatus ret = HAL_DISABLE;
+
+#ifdef MPU
     if (MPU->CTRL & MPU_CTRL_ENABLE_Msk)
-        return HAL_ENABLE;
-    else
-        return HAL_DISABLE;
+        ret = HAL_ENABLE;
+#endif
+
+    return ret;
 }
 
 /**
