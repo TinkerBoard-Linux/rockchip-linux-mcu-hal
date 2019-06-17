@@ -224,11 +224,9 @@ HAL_Status HAL_PCM_Deinit(struct AUDIO_PCM *pcm)
  */
 HAL_Status HAL_PCM_Enable(struct AUDIO_PCM *pcm, uint8_t stream)
 {
-    PL330_CHANNEL *chan = (PL330_CHANNEL *)pcm->privData;
+    HAL_ASSERT(pcm->chan);
 
-    HAL_ASSERT(chan != NULL);
-
-    return HAL_PL330_Start(chan);
+    return HAL_DMA_Start(pcm->chan);
 }
 
 /**
@@ -239,11 +237,9 @@ HAL_Status HAL_PCM_Enable(struct AUDIO_PCM *pcm, uint8_t stream)
  */
 HAL_Status HAL_PCM_Disable(struct AUDIO_PCM *pcm, uint8_t stream)
 {
-    PL330_CHANNEL *chan = (PL330_CHANNEL *)pcm->privData;
+    HAL_ASSERT(pcm->chan);
 
-    HAL_ASSERT(chan != NULL);
-
-    return HAL_PL330_Stop(chan);
+    return HAL_DMA_Stop(pcm->chan);
 }
 
 /**
@@ -257,17 +253,17 @@ HAL_Status HAL_PCM_Prepare(struct AUDIO_PCM *pcm, uint8_t stream,
                            struct AUDIO_BUF *abuf)
 {
     struct AUDIO_DAI_DMA_DATA *dmaData = pcm->dai->dmaData[stream];
-    DMA_SLAVE_CONFIG config;
-    PL330_CHANNEL *chan;
-    PL330 *pl330;
+    struct DMA_SLAVE_CONFIG config;
+    struct DMA_CHAN *chan;
+    struct HAL_DMA *dma;
     HAL_Status ret = HAL_OK;
 
     pcm->abuf = *abuf;
-    pl330 = HAL_PL330_Get(dmaData->dmac);
-    HAL_ASSERT(pl330 != NULL);
-    chan = HAL_PL330_RequestChannel(pl330, dmaData->dmaReqCh);
-    HAL_ASSERT(chan != NULL);
-    pcm->privData = chan;
+    dma = HAL_DMA_Get(dmaData->dmac);
+    HAL_ASSERT(dma);
+    chan = HAL_DMA_RequestChannel(dma, dmaData->dmaReqCh);
+    HAL_ASSERT(chan);
+    pcm->chan = chan;
 
     if (stream == AUDIO_STREAM_PLAYBACK) {
         config.direction = DMA_MEM_TO_DEV;
@@ -281,11 +277,11 @@ HAL_Status HAL_PCM_Prepare(struct AUDIO_PCM *pcm, uint8_t stream,
         config.srcMaxBurst = dmaData->maxBurst;
     }
 
-    ret = HAL_PL330_Config(chan, &config);
+    ret = HAL_DMA_Config(chan, &config);
     HAL_ASSERT(ret == HAL_OK);
-    ret = HAL_PL330_PrepDmaCyclic(chan, (uint32_t)abuf->buf, abuf->bufSize,
-                                  abuf->periodSize, config.direction,
-                                  (PL330_Callback) & PCM_Complete, pcm);
+    ret = HAL_DMA_PrepDmaCyclic(chan, (uint32_t)abuf->buf, abuf->bufSize,
+                                abuf->periodSize, config.direction,
+                                PCM_Complete, pcm);
 
     return ret;
 }
@@ -297,8 +293,10 @@ HAL_Status HAL_PCM_Prepare(struct AUDIO_PCM *pcm, uint8_t stream,
  */
 HAL_Status HAL_PCM_Release(struct AUDIO_PCM *pcm)
 {
-    HAL_PL330_ReleaseChannel((PL330_CHANNEL *)pcm->privData);
-    pcm->privData = NULL;
+    HAL_ASSERT(pcm->chan);
+
+    HAL_DMA_ReleaseChannel(pcm->chan);
+    pcm->chan = NULL;
 
     return HAL_OK;
 }

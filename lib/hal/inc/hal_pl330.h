@@ -22,24 +22,20 @@
 
 /***************************** MACRO Definition ******************************/
 
-#ifndef BIT
-#define BIT(nr) (1UL << (nr))
-#endif
-
 /** PL330 status */
-#define PL330_STATE_STOPPED        BIT(0)
-#define PL330_STATE_EXECUTING      BIT(1)
-#define PL330_STATE_WFE            BIT(2)
-#define PL330_STATE_FAULTING       BIT(3)
-#define PL330_STATE_COMPLETING     BIT(4)
-#define PL330_STATE_WFP            BIT(5)
-#define PL330_STATE_KILLING        BIT(6)
-#define PL330_STATE_FAULT_COMPLETE BIT(7)
-#define PL330_STATE_CACHEMISS      BIT(8)
-#define PL330_STATE_UPDTPC         BIT(9)
-#define PL330_STATE_ATBARRIER      BIT(10)
-#define PL330_STATE_QUEUEBUSY      BIT(11)
-#define PL330_STATE_INVALID        BIT(15)
+#define PL330_STATE_STOPPED        HAL_BIT(0)
+#define PL330_STATE_EXECUTING      HAL_BIT(1)
+#define PL330_STATE_WFE            HAL_BIT(2)
+#define PL330_STATE_FAULTING       HAL_BIT(3)
+#define PL330_STATE_COMPLETING     HAL_BIT(4)
+#define PL330_STATE_WFP            HAL_BIT(5)
+#define PL330_STATE_KILLING        HAL_BIT(6)
+#define PL330_STATE_FAULT_COMPLETE HAL_BIT(7)
+#define PL330_STATE_CACHEMISS      HAL_BIT(8)
+#define PL330_STATE_UPDTPC         HAL_BIT(9)
+#define PL330_STATE_ATBARRIER      HAL_BIT(10)
+#define PL330_STATE_QUEUEBUSY      HAL_BIT(11)
+#define PL330_STATE_INVALID        HAL_BIT(15)
 
 #define PL330_STABLE_STATES                                          \
     (PL330_STATE_STOPPED | PL330_STATE_EXECUTING | PL330_STATE_WFE | \
@@ -60,6 +56,7 @@
 #define PL330_MAX_CHAN_BUFS    2
 #define PL330_CHAN_BUF_LEN     128
 #define PL330_CHANNELS_PER_DEV 8
+#define PL330_NR_IRQS          2
 
 /***************************** Structure Definition **************************/
 
@@ -93,55 +90,8 @@ typedef enum {
     ALWAYS,
 } ePL330_COND;
 
-/**
- * enum DMA_TRANSFER_DIRECTION - dma transfer mode and direction indicator
- */
-typedef enum {
-    DMA_MEM_TO_MEM, /**< Async/Memcpy mode */
-    DMA_MEM_TO_DEV, /**< Slave mode & From Memory to Device */
-    DMA_DEV_TO_MEM, /**< Slave mode & From Device to Memory */
-    DMA_DEV_TO_DEV, /**< Slave mode & From Device to Device */
-    DMA_TRANS_NONE,
-} eDMA_TRANSFER_DIRECTION;
-
-/**
- * enum DMA_SLAVE_BUSWIDTH - defines bus width of the DMA slave
- * device, source or target buses
- */
-typedef enum {
-    DMA_SLAVE_BUSWIDTH_UNDEFINED = 0,
-    DMA_SLAVE_BUSWIDTH_1_BYTE    = 1,
-    DMA_SLAVE_BUSWIDTH_2_BYTES   = 2,
-    DMA_SLAVE_BUSWIDTH_3_BYTES   = 3,
-    DMA_SLAVE_BUSWIDTH_4_BYTES   = 4,
-    DMA_SLAVE_BUSWIDTH_8_BYTES   = 8,
-    DMA_SLAVE_BUSWIDTH_16_BYTES  = 16,
-    DMA_SLAVE_BUSWIDTH_32_BYTES  = 32,
-    DMA_SLAVE_BUSWIDTH_64_BYTES  = 64,
-} eDMA_SLAVE_BUSWIDTH;
-
-/**
- * struct DMA_SLAVE_CONFIG - dma slave channel runtime config
- */
-typedef struct {
-    eDMA_TRANSFER_DIRECTION direction; /**< Transfer direction. */
-    eDMA_SLAVE_BUSWIDTH srcAddrWidth; /**< The width in bytes of the source,
-                                        *  Legal values: 1, 2, 4, 8.
-                                        */
-    eDMA_SLAVE_BUSWIDTH dstAddrWidth; /**< The same as srcAddrWidth. */
-    uint32_t srcAddr; /**< The source physical address. */
-    uint32_t dstAddr; /**< The destination physical address. */
-    uint32_t srcMaxBurst; /**< The maximum number of words (note: words, as in
-                            *  units of the srcAddrWidth member, not bytes) that
-                            *  can be sent in one burst to the device, Typically
-                            *  something like half the FIFO depth on I/O peri so
-                            *  you don't overflow it.
-                            */
-    uint32_t dstMaxBurst; /**< The same as srcMaxBurst for destination. */
-} DMA_SLAVE_CONFIG;
-
 /** PL330 soc configuration */
-typedef struct {
+struct PL330_CONFIG {
     uint32_t periphId;
     uint32_t mode;
     uint32_t dataBusWidth; /* In number of bits */
@@ -151,10 +101,10 @@ typedef struct {
     uint32_t periNs;
     uint32_t numEvents;
     uint32_t irqNs;
-} PL330_CONFIG;
+};
 
 /** PL330 request config */
-typedef struct {
+struct PL330_REQCFG {
     /* Address Incrementing */
     uint32_t dstInc;
     uint32_t srcInc;
@@ -172,14 +122,14 @@ typedef struct {
     ePL330_CACHECTRL dcctl;
     ePL330_CACHECTRL scctl;
     ePL330_BYTESWAP swap;
-} PL330_REQCFG;
+};
 
 /** DMA block descriptor struct. */
-typedef struct {
+struct PL330_XFER {
     uint32_t srcAddr; /**< Source starting address */
     uint32_t dstAddr; /**< Destination starting address */
     uint32_t length; /**< Number of bytes for the xfer */
-} PL330_XFER;
+};
 
 /**
  * It's the done callback a user can set for a desc
@@ -190,9 +140,9 @@ typedef void (*PL330_Callback)(void *cparam);
  * A DMA Desc consisits of a request config struct, a xfer descriptor,
  * a pointer pointing to generated DMA program, and execution result.
  */
-typedef struct {
-    PL330_REQCFG rqcfg;
-    PL330_XFER px;
+struct PL330_DESC {
+    struct PL330_REQCFG rqcfg;
+    struct PL330_XFER px;
     uint8_t peri;
     eDMA_TRANSFER_DIRECTION dir;
     bool cyclic;
@@ -204,87 +154,86 @@ typedef struct {
     PL330_Callback callback;
     void *cparam;
     void *nextDesc;
-} PL330_DESC;
+};
 
-typedef struct {
+struct PL330_XFER_SPEC {
     uint32_t ccr;
-    PL330_DESC *desc;
-} PL330_XFER_SPEC;
+    struct PL330_DESC *desc;
+};
 
 /**
  * The PL330_MCBUF is the struct for a DMA program buffer.
  */
-typedef struct {
+struct PL330_MCBUF {
     char buf[PL330_CHAN_BUF_LEN];
     uint32_t len;
     int allocated;
-} PL330_MCBUF;
+};
 
-struct _PL330;
+struct HAL_PL330_DEV;
 /**
- * The PL330_CHANNEL Data is a struct to book keep individual channel of
+ * The PL330_CHAN Data is a struct to book keep individual channel of
  * the DMAC.
  */
-typedef struct _PL330_CHANNEL {
+struct PL330_CHAN {
+    struct DMA_CHAN chan;
     uint16_t periId;
     uint16_t chanId;
     uint32_t fifoAddr;
     uint32_t brstSz;
     uint32_t brstLen;
-    PL330_MCBUF mcBufPool[PL330_MAX_CHAN_BUFS];
-    PL330_DESC desc;
-    struct _PL330 *pl330;
+    struct PL330_MCBUF mcBufPool[PL330_MAX_CHAN_BUFS];
+    struct PL330_DESC desc;
+    struct HAL_PL330_DEV *pl330;
     bool used;
-} PL330_CHANNEL;
+};
 
 /**
  * The PL330 driver instance data structure. A pointer to an instance data
  * structure is passed around by functions to refer to a specific driver
  * instance.
  */
-typedef struct _PL330 {
-    char *name;
-    uint32_t base;
-    bool isReady;
-    PL330_CHANNEL chans[PL330_CHANNELS_PER_DEV];
-    PL330_CONFIG pcfg;
+struct HAL_PL330_DEV {
+    struct HAL_DMA dma;
+    struct DMA_REG *reg;
+    struct PL330_CHAN chans[PL330_CHANNELS_PER_DEV];
+    struct PL330_CONFIG pcfg;
     ePL330_COND peripReqType;
-    HAL_LIST list;
-} PL330;
+    uint8_t irq[PL330_NR_IRQS];
+
+    void *priv;
+};
 
 /** @} */
 
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_PL330_Init(PL330 *pl330, uint32_t base, ePL330_COND cond);
-HAL_Status HAL_PL330_Deinit(PL330 *pl330);
+HAL_Status HAL_PL330_Init(struct HAL_PL330_DEV *pl330);
+HAL_Status HAL_PL330_Deinit(struct HAL_PL330_DEV *pl330);
 
-HAL_Status HAL_PL330_Start(PL330_CHANNEL *chan);
-HAL_Status HAL_PL330_Stop(PL330_CHANNEL *chan);
+HAL_Status HAL_PL330_Start(struct DMA_CHAN *chan);
+HAL_Status HAL_PL330_Stop(struct DMA_CHAN *chan);
 
-HAL_Status HAL_PL330_ResetManager(PL330 *pl330);
-HAL_Status HAL_PL330_ResetChannel(PL330_CHANNEL *chan);
+struct DMA_CHAN *HAL_PL330_RequestChannel(struct HAL_DMA *dma, uint16_t id);
+HAL_Status HAL_PL330_ReleaseChannel(struct DMA_CHAN *chan);
 
-PL330_CHANNEL *HAL_PL330_RequestChannel(PL330 *pl330, uint16_t id);
-HAL_Status HAL_PL330_ReleaseChannel(PL330_CHANNEL *chan);
-
-HAL_Status HAL_PL330_Config(PL330_CHANNEL *chan, DMA_SLAVE_CONFIG *config);
-HAL_Status HAL_PL330_PrepDmaMemcpy(PL330_CHANNEL *chan, uint32_t dst,
+HAL_Status HAL_PL330_Config(struct DMA_CHAN *chan, struct DMA_SLAVE_CONFIG *config);
+HAL_Status HAL_PL330_PrepDmaMemcpy(struct DMA_CHAN *chan, uint32_t dst,
                                    uint32_t src, uint32_t len,
                                    PL330_Callback callback, void *cparam);
-HAL_Status HAL_PL330_PrepDmaCyclic(PL330_CHANNEL *chan, uint32_t dmaAddr,
+HAL_Status HAL_PL330_PrepDmaCyclic(struct DMA_CHAN *chan, uint32_t dmaAddr,
                                    uint32_t len, uint32_t periodLen,
                                    eDMA_TRANSFER_DIRECTION direction,
                                    PL330_Callback callback, void *cparam);
-HAL_Status HAL_PL330_PrepDmaSingle(PL330_CHANNEL *chan, uint32_t dmaAddr,
+HAL_Status HAL_PL330_PrepDmaSingle(struct DMA_CHAN *chan, uint32_t dmaAddr,
                                    uint32_t len,
                                    eDMA_TRANSFER_DIRECTION direction,
                                    PL330_Callback callback, void *cparam);
-HAL_Status HAL_PL330_IrqHandler(PL330 *pl330);
-uint32_t HAL_PL330_GetRawIrqStatus(PL330 *pl330);
-HAL_Status HAL_PL330_ClearIrq(PL330 *pl330, uint32_t irq);
-int HAL_PL330_GetPosition(PL330_CHANNEL *chan);
-PL330 *HAL_PL330_Get(uint32_t base);
+int HAL_PL330_GetPosition(struct DMA_CHAN *chan);
+
+HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330);
+uint32_t HAL_PL330_GetRawIrqStatus(struct HAL_PL330_DEV *pl330);
+HAL_Status HAL_PL330_ClearIrq(struct HAL_PL330_DEV *pl330, uint32_t irq);
 
 #endif
 

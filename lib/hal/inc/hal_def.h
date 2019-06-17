@@ -73,6 +73,7 @@ typedef enum {
     HAL_BUSY    = (-16),
     HAL_NODEV   = (-19),
     HAL_INVAL   = (-22),
+    HAL_NOSYS   = (-38),
     HAL_TIMEOUT = (-110)
 } HAL_Status;
 

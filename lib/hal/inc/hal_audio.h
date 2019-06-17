@@ -15,6 +15,7 @@
 #define _HAL_AUDIO_H_
 
 #include "hal_def.h"
+#include "hal_dma.h"
 
 /***************************** MACRO Definition ******************************/
 /** @defgroup AUDIO_Exported_Definition_Group1 Basic Definition
@@ -167,14 +168,14 @@ struct AUDIO_BUF_STATUS {
 };
 
 /**
- *
+ * struct AUDIO_DAI_DMA_DATA - audio dai dma data.
  */
 struct AUDIO_DAI_DMA_DATA {
     uint32_t addr; /**< The fifo address of dai. */
     uint16_t addrWidth; /**< The width of the addr */
     uint8_t maxBurst; /**< Max number of words(in units of the addrWidth) */
     uint8_t dmaReqCh; /**< audio dma request channel number */
-    uint32_t dmac; /**< dmac base */
+    struct DMA_REG *dmac; /**< dmac ptr */
 };
 
 /**
@@ -198,7 +199,7 @@ struct AUDIO_PCM {
     struct AUDIO_BUF abuf; /**< buf info */
     struct AUDIO_BUF_STATUS status;
     const struct AUDIO_OPS *ops; /**< audio ops function */
-    void *privData; /**< audio pcm privData, general for priv pcm struct*/
+    struct DMA_CHAN *chan; /**< dma chan */
 };
 
 /**
