@@ -16,6 +16,10 @@
 extern const struct HAL_GPIO_DEV g_GPIOxDev;
 #endif
 
+#ifdef HAL_PL330_MODULE_ENABLED
+extern struct HAL_PL330_DEV g_pl330Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);

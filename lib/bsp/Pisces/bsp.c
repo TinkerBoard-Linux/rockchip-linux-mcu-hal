@@ -47,7 +47,7 @@ struct HAL_I2S_DEV g_i2s0Dev =
         .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
         .maxBurst = 8,
         .dmaReqCh = DMA_REQ_I2S0_RX,
-        .dmac = DMA_BASE,
+        .dmac = DMA,
     },
     .txDmaData =
     {
@@ -55,7 +55,7 @@ struct HAL_I2S_DEV g_i2s0Dev =
         .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
         .maxBurst = 8,
         .dmaReqCh = DMA_REQ_I2S0_TX,
-        .dmac = DMA_BASE,
+        .dmac = DMA,
     },
 };
 
@@ -94,7 +94,7 @@ struct HAL_PDM_DEV g_pdm0Dev =
         .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
         .maxBurst = 8,
         .dmaReqCh = DMA_REQ_PDM0,
-        .dmac = DMA_BASE,
+        .dmac = DMA,
     },
 };
 
@@ -113,6 +113,43 @@ HAL_Status BSP_PDM_DeInit(void)
     /* IO Init */
     return HAL_OK;
 }
+#endif
+
+#ifdef HAL_PL330_MODULE_ENABLED
+struct HAL_PL330_DEV g_pl330Dev =
+{
+    .reg = DMA,
+    .peripReqType = BURST,
+    .irq[0] = DMAC_IRQn,
+    .irq[1] = DMAC_ABORT_IRQn,
+};
+
+static HAL_Status BSP_PL330_Init(void)
+{
+    switch (g_pl330Dev.peripReqType) {
+    case SINGLE:
+        /* config all dma reqs type as single req mode */
+        GRF->DMAC_CON[5] = 0xffff0000;
+        GRF->DMAC_CON[6] = 0xffff0000;
+        break;
+    case BURST:
+        /* config all dma reqs type as burst req mode */
+        GRF->DMAC_CON[5] = 0xffff5555;
+        GRF->DMAC_CON[6] = 0xffff5555;
+        break;
+    default:
+
+        return HAL_ERROR;
+    }
+
+    return HAL_OK;
+}
+
+static HAL_Status BSP_PL330_DeInit(void)
+{
+    return HAL_OK;
+}
+
 #endif
 
 #ifdef HAL_VAD_MODULE_ENABLED
@@ -264,6 +301,10 @@ void BSP_DeInit(void)
     BSP_VAD_DeInit();
 #endif
 
+#ifdef HAL_PL330_MODULE_ENABLED
+    BSP_PL330_DeInit();
+#endif
+
 #ifdef HAL_PWR_MODULE_ENABLED
     HAL_PWR_DeInit();
 #endif
@@ -273,6 +314,10 @@ void BSP_Init(void)
 {
 #ifdef HAL_PWR_MODULE_ENABLED
     HAL_PWR_Init(&g_pmuPwrDev[0], HAL_ARRAY_SIZE(g_pmuPwrDev));
+#endif
+
+#ifdef HAL_PL330_MODULE_ENABLED
+    BSP_PL330_Init();
 #endif
 
 #ifdef HAL_I2S_MODULE_ENABLED

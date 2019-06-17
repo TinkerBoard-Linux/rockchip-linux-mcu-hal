@@ -97,6 +97,16 @@ const struct HAL_GPIO_DEV g_GPIOxDev =
 };
 #endif
 
+#ifdef HAL_PL330_MODULE_ENABLED
+struct HAL_PL330_DEV g_pl330Dev =
+{
+    .reg = DMA,
+    .peripReqType = BURST,
+    .irq[0] = DMAC_IRQn,
+    .irq[1] = DMAC_ABORT_IRQn,
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }
