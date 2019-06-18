@@ -41,6 +41,7 @@
 
 #ifdef HAL_GPIO_MODULE_ENABLED
 #include "hal_gpio.h"
+#include "hal_pinctrl.h"
 #endif
 
 #ifdef HAL_HCD_MODULE_ENABLED
