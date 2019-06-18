@@ -32,13 +32,6 @@
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
-static void UART_Reset(struct UART_REG *pReg)
-{
-    pReg->SRR = UART_SRR_UR | UART_SRR_RFR | UART_SRR_XFR;
-    pReg->IER = 0;
-    pReg->DMASA = 1;
-}
-
 static void UART_EnableDLAB(struct UART_REG *pReg)
 {
     pReg->LCR |= UART_LCR_DLAB;
@@ -283,6 +276,18 @@ int HAL_UART_SerialIn(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
  @endverbatim
  *  @{
  */
+
+/**
+  * @brief  reset uart
+  * @param  pReg: uart reg base
+  */
+void HAL_UART_Reset(struct UART_REG *pReg)
+{
+    pReg->SRR = UART_SRR_UR | UART_SRR_RFR | UART_SRR_XFR;
+    pReg->IER = 0;
+    pReg->DMASA = 1;
+}
+
 /**
   * @brief  configure uart baudrate,data bit,stop bit and so on
   * @param  pReg: uart reg base
@@ -296,7 +301,6 @@ HAL_Status HAL_UART_Init(struct UART_REG *pReg, eUART_BaudRate baudRate,
                          eUART_dataLen dataBit, eUART_stopBit stopBit,
                          eUART_parityEn parity)
 {
-    UART_Reset(pReg);
     pReg->FCR =
         UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_10 | UART_FCR_T_TRIG_10;
     UART_SetLcrReg(pReg, dataBit, parity, stopBit);
@@ -312,7 +316,7 @@ HAL_Status HAL_UART_Init(struct UART_REG *pReg, eUART_BaudRate baudRate,
   */
 HAL_Status HAL_UART_DeInit(struct UART_REG *pReg)
 {
-    UART_Reset(pReg);
+    HAL_UART_Reset(pReg);
 
     return HAL_OK;
 }

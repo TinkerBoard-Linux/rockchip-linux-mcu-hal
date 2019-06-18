@@ -191,6 +191,7 @@ void HAL_UART_SerialOutChar(struct UART_REG *pReg, uint8_t c);
 int HAL_UART_SerialOut(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt);
 int HAL_UART_SerialIn(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt);
 HAL_Status HAL_UART_HandleIrq(struct UART_REG *pReg);
+void HAL_UART_Reset(struct UART_REG *pReg);
 HAL_Status HAL_UART_Init(struct UART_REG *pReg, eUART_BaudRate baudRate,
                          eUART_dataLen dataBit, eUART_stopBit stopBit,
                          eUART_parityEn parity);
