@@ -5,59 +5,26 @@
 
 #include "bsp.h"
 
-#ifdef HAL_GPIO_MODULE_ENABLED
-const struct HAL_GPIO_DEV g_GPIOxDev =
-{
-    .cnt = GPIO_BANK_NUM,
-    .desc[0] = {
-        .base = GPIO0_BASE,
-        .irqn = GPIO0_IRQn,
-        .name = "gpio0",
-        .handler = (void *)&HAL_GPIO0_IRQHandler,
-        .offset = {
-            .mux = GRF_BASE + 0x0000,
-            .pul = GRF_BASE + 0x0100,
-        },
-    },
-    .desc[1] = {
-        .base = GPIO1_BASE,
-        .irqn = GPIO1_IRQn,
-        .name = "gpio1",
-        .handler = (void *)&HAL_GPIO1_IRQHandler,
-        .offset = {
-            .mux = GRF_BASE + 0x0020,
-            .pul = GRF_BASE + 0x0110,
-        },
-    },
-    .muxInfo = {
-        .bitsPerPin = 4,
-        .pinsPerReg = 4,
-    },
-    .slrInfo = {
-        .bitsPerPin = 0,
-        .pinsPerReg = 0,
-    },
-    .smtInfo = {
-        .bitsPerPin = 0,
-        .pinsPerReg = 0,
-    },
-    .pulInfo = {
-        .bitsPerPin = 2,
-        .pinsPerReg = 8,
-    },
-    .drvInfo = {
-        .bitsPerPin = 0,
-        .pinsPerReg = 0,
-    }
+#if defined(HAL_PINCTRL_MODULE_ENABLED)
+static struct PINCTRL_BANK_INFO pinBanks[] = {
+    PIN_BANK_CFG_FLAGS(GPIO_BANK0, 32, GRF_BASE,
+                       0x0000, 4, 4,
+                       0x0100, 2, 8),
+    PIN_BANK_CFG_FLAGS(GPIO_BANK1, 32, GRF_BASE,
+                       0x0020, 4, 4,
+                       0x0110, 2, 8),
+};
+
+const struct RK_PINCTRL_DEV g_pinDev = {
+    .banks = pinBanks,
+    .banksNum = HAL_ARRAY_SIZE(pinBanks),
 };
 #endif
 
 void BSP_DeInit(void)
 {
-
 }
 
 void BSP_Init(void)
 {
-
 }

@@ -15,10 +15,6 @@
 extern struct HAL_AUDIOPWM_DEV g_audioPwmDev;
 #endif
 
-#ifdef HAL_GPIO_MODULE_ENABLED
-extern const struct HAL_GPIO_DEV g_GPIOxDev;
-#endif
-
 #ifdef HAL_I2C_MODULE_ENABLED
 extern const struct HAL_I2C_DEV g_i2c0Dev;
 extern const struct HAL_I2C_DEV g_i2c1Dev;
@@ -39,6 +35,10 @@ extern struct HAL_PL330_DEV g_pl330Dev;
 
 #ifdef HAL_VAD_MODULE_ENABLED
 extern struct HAL_VAD_DEV g_vadDev;
+#endif
+
+#if defined(HAL_PINCTRL_MODULE_ENABLED)
+extern const struct RK_PINCTRL_DEV g_pinDev;
 #endif
 
 /***************************** Function Declare ******************************/

@@ -11,9 +11,8 @@
 /***************************** MACRO Definition ******************************/
 
 /***************************** Structure Definition **************************/
-
-#ifdef HAL_GPIO_MODULE_ENABLED
-extern const struct HAL_GPIO_DEV g_GPIOxDev;
+#if defined(HAL_PINCTRL_MODULE_ENABLED)
+extern const struct RK_PINCTRL_DEV g_pinDev;
 #endif
 
 #ifdef HAL_PL330_MODULE_ENABLED

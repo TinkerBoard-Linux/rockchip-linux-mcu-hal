@@ -5,96 +5,45 @@
 
 #include "bsp.h"
 
-#ifdef HAL_GPIO_MODULE_ENABLED
-const struct HAL_GPIO_DEV g_GPIOxDev =
-{
-    .cnt = GPIO_BANK_NUM,
-    .desc[0] = {
-        .base = GPIO0_BASE,
-        .irqn = GPIO0_IRQn,
-        .name = "gpio0",
-        .handler = (void *)&HAL_GPIO0_IRQHandler,
-        .offset = {
-            .mux = PMU_GRF_BASE + 0x0000,
-            .pul = PMU_GRF_BASE + 0x0010,
-            .drv = PMU_GRF_BASE + 0x0020,
-            .slr = PMU_GRF_BASE + 0x0030,
-            .smt = PMU_GRF_BASE + 0x0040,
-        },
-    },
-    .desc[1] = {
-        .base = GPIO1_BASE,
-        .irqn = GPIO1_IRQn,
-        .name = "gpio1",
-        .handler = (void *)&HAL_GPIO1_IRQHandler,
-        .offset = {
-            .mux = BUS_GRF_BASE + 0x0000,
-            .pul = BUS_GRF_BASE + 0x0080,
-            .slr = BUS_GRF_BASE + 0x00c0,
-            .smt = BUS_GRF_BASE + 0x0100,
-            .drv = BUS_GRF_BASE + 0x0140,
-        },
-    },
-    .desc[2] = {
-        .base = GPIO2_BASE,
-        .irqn = GPIO2_IRQn,
-        .name = "gpio2",
-        .handler = (void *)&HAL_GPIO2_IRQHandler,
-        .offset = {
-            .mux = BUS_GRF_BASE + 0x0020,
-            .pul = BUS_GRF_BASE + 0x0090,
-            .slr = BUS_GRF_BASE + 0x00d0,
-            .smt = BUS_GRF_BASE + 0x0110,
-            .drv = BUS_GRF_BASE + 0x0150,
-        },
-    },
-    .desc[3] = {
-        .base = GPIO3_BASE,
-        .irqn = GPIO3_IRQn,
-        .name = "gpio3",
-        .handler = (void *)&HAL_GPIO3_IRQHandler,
-        .offset = {
-            .mux = BUS_GRF_BASE + 0x0040,
-            .pul = BUS_GRF_BASE + 0x00a0,
-            .slr = BUS_GRF_BASE + 0x00e0,
-            .smt = BUS_GRF_BASE + 0x0120,
-            .drv = BUS_GRF_BASE + 0x0160,
-        },
-    },
-    .desc[4] = {
-        .base = GPIO4_BASE,
-        .irqn = GPIO4_IRQn,
-        .name = "gpio4",
-        .handler = (void *)&HAL_GPIO4_IRQHandler,
-        .offset = {
-            .mux = BUS_GRF_BASE + 0x0060,
-            .pul = BUS_GRF_BASE + 0x00b0,
-            .slr = BUS_GRF_BASE + 0x00f0,
-            .smt = BUS_GRF_BASE + 0x0130,
-            .drv = BUS_GRF_BASE + 0x0170,
-        },
-    },
-    .muxInfo = {
-        .bitsPerPin = 4,
-        .pinsPerReg = 4,
-    },
-    .slrInfo = {
-        .bitsPerPin = 1,
-        .pinsPerReg = 8,
-    },
-    .smtInfo = {
-        .bitsPerPin = 1,
-        .pinsPerReg = 8,
-    },
-    .pulInfo = {
-        .bitsPerPin = 2,
-        .pinsPerReg = 8,
-    },
-    .drvInfo = {
-        .bitsPerPin = 2,
-        .pinsPerReg = 8,
-    }
+#if defined(HAL_PINCTRL_MODULE_ENABLED)
+static struct PINCTRL_BANK_INFO pinBanks[] = {
+    PIN_BANK_CFG_FLAGS(GPIO_BANK0, 32, PMU_GRF_BASE,
+                       0x0000, 2, 8,
+                       0x0010, 2, 8,
+                       0x0020, 2, 8,
+                       0x0030, 1, 8,
+                       0x0040, 1, 8),
+    PIN_BANK_CFG_FLAGS(GPIO_BANK1, 32, BUS_GRF_BASE,
+                       0x0000, 4, 4,
+                       0x0080, 2, 8,
+                       0x0140, 2, 8,
+                       0x00c0, 1, 8,
+                       0x0100, 1, 8),
+    PIN_BANK_CFG_FLAGS(GPIO_BANK2, 32, BUS_GRF_BASE,
+                       0x0020, 4, 4,
+                       0x0090, 2, 8,
+                       0x0150, 2, 8,
+                       0x00d0, 1, 8,
+                       0x0110, 1, 8),
+    PIN_BANK_CFG_FLAGS(GPIO_BANK3, 32, BUS_GRF_BASE,
+                       0x0040, 4, 4,
+                       0x00a0, 2, 8,
+                       0x0160, 2, 8,
+                       0x00e0, 1, 8,
+                       0x0120, 1, 8),
+    PIN_BANK_CFG_FLAGS(GPIO_BANK4, 32, BUS_GRF_BASE,
+                       0x0060, 4, 4,
+                       0x00b0, 2, 8,
+                       0x0170, 2, 8,
+                       0x00f0, 1, 8,
+                       0x0130, 1, 8),
 };
+
+const struct RK_PINCTRL_DEV g_pinDev = {
+    .banks = pinBanks,
+    .banksNum = HAL_ARRAY_SIZE(pinBanks),
+};
+
 #endif
 
 #ifdef HAL_PL330_MODULE_ENABLED
