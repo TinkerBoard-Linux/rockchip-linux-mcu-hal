@@ -20,7 +20,9 @@
 #define MHZ 1000000
 #define KHZ 1000
 
+#ifndef PLL_INPUT_OSC_RATE
 #define PLL_INPUT_OSC_RATE (24 * MHZ)
+#endif
 
 #define CLK_RESET_GET_REG_OFFSET(x) ((uint32_t)(x / 16))
 #define CLK_RESET_GET_BITS_SHIFT(x) ((uint32_t)(x % 16))
@@ -87,6 +89,7 @@ struct PLL_SETUP {
     __IO uint32_t *conOffset2;
     __IO uint32_t *conOffset3;
     __IO uint32_t *modeOffset;
+    __I uint32_t *stat0;
     uint32_t modeShift;
     uint32_t lockShift;
     uint32_t modeMask;

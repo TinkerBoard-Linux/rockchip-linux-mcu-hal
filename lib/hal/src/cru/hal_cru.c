@@ -475,8 +475,13 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
 
     /* Waiting for pll lock */
     while (delay > 0) {
-        if (READ_REG(*(pSetup->conOffset1)) & (1 << pSetup->lockShift))
-            break;
+        if (pSetup->stat0) {
+            if (READ_REG(*(pSetup->stat0)) & (1 << pSetup->lockShift))
+                break;
+        } else {
+            if (READ_REG(*(pSetup->conOffset1)) & (1 << pSetup->lockShift))
+                break;
+        }
         HAL_DelayMs(1);
         delay--;
     }
