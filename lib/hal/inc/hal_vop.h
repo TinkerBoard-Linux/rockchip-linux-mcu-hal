@@ -93,6 +93,8 @@ struct CRTC_WIN_STATE {
     uint16_t yrgbLength;
     uint16_t cbcrLength;
     uint16_t xVir;
+    uint16_t srcX;
+    uint16_t srcY;
     uint16_t srcW;
     uint16_t srcH;
     uint16_t crtcX;
