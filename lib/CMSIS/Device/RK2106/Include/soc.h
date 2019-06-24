@@ -501,9 +501,14 @@ struct SFC_REG {
 #define UART0               ((struct UART_REG *) UART0_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
+#define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
+#define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
 
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1))
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
+#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2))
+
 /******************************************GRF*******************************************/
 #define IOMUX_GPIO2A6_IO ((uint32_t)(0))
 
