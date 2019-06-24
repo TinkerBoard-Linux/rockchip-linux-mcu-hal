@@ -58,9 +58,9 @@ static HAL_Status PSRAM_XmmcInit(struct HAL_FSPI_HOST *host, uint8_t cs)
     writeCmd.b.addrbits = FSPI_ADDR_24BITS;
 
     FSPItrl.d32 = 0;
-    FSPItrl.b.cmdlines = FSPI_4BITS_LINE;
-    FSPItrl.b.datalines = FSPI_4BITS_LINE;
-    FSPItrl.b.addrlines = FSPI_4BITS_LINE;
+    FSPItrl.b.cmdlines = FSPI_LINES_X4;
+    FSPItrl.b.datalines = FSPI_LINES_X4;
+    FSPItrl.b.addrlines = FSPI_LINES_X4;
 
     host->xmmcDev[cs].type = DEV_PSRAM;
     host->xmmcDev[cs].ctrl = FSPItrl.d32;
@@ -97,7 +97,6 @@ HAL_Status HAL_PSRAM_Init(struct HAL_FSPI_HOST *host, uint8_t cs)
 
     HAL_FSPI_Init(host);
     HAL_PSRAM_ReadID(host, idByte);
-    HAL_DBG("FSPI nor id: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
 
     PSRAM_XmmcInit(host, cs);
 
@@ -132,18 +131,11 @@ HAL_Status HAL_PSRAM_Deinit(struct HAL_FSPI_HOST *host, uint8_t cs)
  */
 HAL_Status HAL_PSRAM_ReadID(struct HAL_FSPI_HOST *host, uint8_t *data)
 {
-    FSPICMD_DATA FSPImd;
-
     HAL_ASSERT(data != NULL);
 
-    FSPImd.d32 = 0;
-    FSPImd.b.cmd = CMD_READ_JEDECID;
-    FSPImd.b.datasize = 3;
-    FSPImd.b.addrbits = FSPI_ADDR_24BITS;
+    /* to-do */
 
-    host->data = data;
-
-    return HAL_FSPI_XferRequest(host, FSPImd.d32, 0, 0);
+    return HAL_OK;
 }
 
 /**

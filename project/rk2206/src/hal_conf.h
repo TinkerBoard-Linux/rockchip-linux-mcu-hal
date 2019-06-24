@@ -11,7 +11,7 @@
 
 /* HAL Driver Config */
 #define HAL_NVIC_MODULE_ENABLED
-#define HAL_SFC_MODULE_ENABLED
+#define HAL_FSPI_MODULE_ENABLED
 #define HAL_SNOR_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 
@@ -24,5 +24,9 @@
 
 /* UNITY CONFIG */
 #define UNITY_INCLUDE_CONFIG_H
+
+#ifdef HAL_SNOR_MODULE_ENABLED
+#define HAL_SNOR_FSPI_HOST
+#endif
 
 #endif

@@ -9,9 +9,8 @@
 
 #ifdef HAL_SNOR_MODULE_ENABLED
 
-static struct HAL_SFC_HOST *sfcHost;
-#define XIP_RAM_BASE 0x60000000
-#define maxest_sector 16
+struct SPI_NOR *nor;
+#define maxest_sector 4
 static uint8_t *pwrite;
 static uint8_t *pread;
 static uint32_t *pread32;
@@ -21,14 +20,6 @@ struct cmdSet {
     char name[6];
     uint32_t ctrl;
     uint32_t cmd;
-};
-
-static struct cmdSet cmdSets[5] = {
-    { "03h", 0x00000002, 0x00004003 },
-    { "3Bh", 0x00001002, 0x0000483b },
-    { "6Bh", 0x00002002, 0x0000486b },
-    { "EBH", 0x00002802, 0x000046eb },
-    { "", 0, 0 }
 };
 
 HAL_Status SNOR_SINGLE_TEST(void)
@@ -43,16 +34,15 @@ HAL_Status SNOR_SINGLE_TEST(void)
     }
     pwrite32[0] = testLba;
 
-    HAL_SNOR_Erase(sfcHost, testLba << 9, 0);
-    HAL_SNOR_ProgData(sfcHost, testLba << 9, pwrite32, 0x100);
+    HAL_SNOR_Erase(nor, testLba << 9, 0);
+    HAL_SNOR_ProgData(nor, testLba << 9, pwrite32, 0x100);
     memset(pread, 0, 256);
-    HAL_SNOR_ReadData(sfcHost, testLba << 9, pread32, 0x100);
+    HAL_SNOR_ReadData(nor, testLba << 9, pread32, 0x100);
     for (int32_t i = 0; i < 256; i++) {
         if (pwrite[i] != pread[i]) {
             HAL_DBG_HEX("w", pwrite, 4, 64);
             HAL_DBG_HEX("r", pread, 4, 64);
             HAL_DBG("SNOR Single test fail\n");
-            while (1);
 
             return HAL_ERROR;
         }
@@ -62,18 +52,17 @@ HAL_Status SNOR_SINGLE_TEST(void)
     return HAL_OK;
 }
 
-
 static HAL_Status SNOR_TEST(uint32_t testEndLBA)
 {
     uint32_t ret, i, j;
-    uint32_t testLBA = 0;
+    uint32_t testLBA;
     uint32_t testSecCount = 1;
     uint32_t printFlag;
 
     pwrite32 = (uint32_t *)pwrite;
     pread32 = (uint32_t *)pread;
-    for (i = 0; i < (maxest_sector * 512); i++)
-        pwrite[i] = i;
+    for (i = 0; i < (maxest_sector * nor->sectorSize / 4); i++)
+        pwrite32[i] = i;
 
     HAL_DBG("---------Test SNOR STRESS TEST---------\n");
     HAL_DBG("---------Test ftl write---------\n");
@@ -82,27 +71,26 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
     HAL_DBG("testLBA = %lx\n", testLBA);
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        ret = HAL_SNOR_Write(sfcHost, testLBA, testSecCount, pwrite);
-        if (ret)
+        ret = HAL_SNOR_OverWrite(nor, testLBA, testSecCount, pwrite32);
+        if (ret != testSecCount)
             return ret;
-        pread[0] = -1;
-        ret = HAL_SNOR_Read(sfcHost, testLBA, testSecCount, pread);
-        if (ret)
+        pread32[0] = -1;
+        ret = HAL_SNOR_Read(nor, testLBA, testSecCount, pread32);
+        if (ret != testSecCount)
             return ret;
-        for (j = 0; j < testSecCount * 512; j++) {
-            if (pwrite[j] != pread[j]) {
-                HAL_DBG_HEX("w:", pwrite, 4, testSecCount * 128);
-                HAL_DBG_HEX("r:", pread, 4, testSecCount * 128);
+        for (j = 0; j < testSecCount * nor->sectorSize / 4; j++) {
+            if (pwrite32[j] != pread32[j]) {
+                HAL_DBG_HEX("w:", pwrite32, 4, 16);
+                HAL_DBG_HEX("r:", pread32, 4, 16);
                 HAL_DBG(
-                    "check not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
-                    testLBA, j, (uint32_t)pwrite[j], (uint32_t)pread[j]);
+                    "check not match:row=%lx, num=%lx, write=%lx, read=%lx %lx %lx %lx\n",
+                    testLBA, j, pwrite32[j], pread32[j], pread32[j+1], pread32[j+2], pread32[j-1]);
 
                 return HAL_ERROR;
             }
         }
         printFlag = testLBA & 0x1FF;
-        if (printFlag < testSecCount)
-            HAL_DBG("testLBA = %lx\n", testLBA);
+        HAL_DBG("testLBA = %lx\n", testLBA);
         testLBA += testSecCount;
         testSecCount++;
         if (testSecCount > maxest_sector)
@@ -113,122 +101,29 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
     testSecCount = 1;
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        pread[0] = -1;
-        ret = HAL_SNOR_Read(sfcHost, testLBA, testSecCount, pread);
-        if (ret)
+        pread32[0] = -1;
+        ret = HAL_SNOR_Read(nor, testLBA, testSecCount, pread32);
+        if (ret != testSecCount)
             return ret;
-        for (j = 0; j < testSecCount * 512; j++) {
-            if (pwrite[j] != pread[j]) {
-                HAL_DBG_HEX("w:", pwrite, 4, testSecCount * 128);
-                HAL_DBG_HEX("r:", pread, 4, testSecCount * 128);
+        for (j = 0; j < testSecCount * nor->sectorSize / 4; j++) {
+            if (pwrite32[j] != pread32[j]) {
+                HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * nor->sectorSize / 4);
+                HAL_DBG_HEX("r:", pread32, 4, testSecCount * nor->sectorSize / 4);
                 HAL_DBG(
                     "recheck not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
-                    testLBA, j, (uint32_t)pwrite[j], (uint32_t)pread[j]);
+                    testLBA, j, pwrite32[j], pread32[j]);
 
                 return HAL_ERROR;
             }
         }
         printFlag = testLBA & 0x1FF;
-        if (printFlag < testSecCount)
-            HAL_DBG("testLBA = %lx\n", testLBA);
+        HAL_DBG("testLBA = %lx\n", testLBA);
         testLBA += testSecCount;
         testSecCount++;
         if (testSecCount > maxest_sector)
             testSecCount = 1;
     }
     HAL_DBG("---------Test end---------\n");
-
-    return HAL_OK;
-}
-
-static HAL_Status SNOR_XIP_DEFAULT_TEST(uint32_t testEndLBA)
-{
-    uint32_t i, j;
-    uint32_t testLBA = 0;
-    uint32_t testSecCount = 1;
-    uint32_t printFlag;
-
-    pwrite32 = (uint32_t *)pwrite;
-
-    for (i = 0; i < (maxest_sector * 512); i++)
-        pwrite[i] = i;
-
-    HAL_DBG("XIP default cmd read, flash memory in %x\n", XIP_RAM_BASE);
-    HAL_SNOR_XipEnable(sfcHost);
-
-    testSecCount = 1;
-    for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
-        pwrite32[0] = testLBA;
-        pread32 = (uint32_t *)(XIP_RAM_BASE + testLBA * 512);
-        for (j = 0; j < testSecCount * 128; j++) {
-            if (pwrite32[j] != pread32[j]) {
-                HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * 128);
-                HAL_DBG_HEX("r:", pread32, 4, testSecCount * 128);
-                HAL_DBG(
-                    "xip not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
-                    testLBA, j, (uint32_t)pwrite32[j], (uint32_t)pread32[j]);
-
-                return HAL_ERROR;
-            }
-        }
-        printFlag = testLBA & 0x1FF;
-        if (printFlag < testSecCount)
-            HAL_DBG("testLBA = %lx\n", testLBA);
-        testLBA += testSecCount;
-        testSecCount++;
-        if (testSecCount > maxest_sector)
-            testSecCount = 1;
-    }
-
-    HAL_DBG("---------Test end---------\n");
-    HAL_SNOR_XipDisable(sfcHost);
-
-    return HAL_OK;
-}
-
-static HAL_Status SNOR_XIP_TEST(uint32_t testEndLBA, uint8_t cmdSetNum)
-{
-    uint32_t i, j;
-    uint32_t testLBA = 0;
-    uint32_t testSecCount = 1;
-    uint32_t printFlag;
-
-    pwrite32 = (uint32_t *)pwrite;
-
-    for (i = 0; i < (maxest_sector * 512); i++)
-        pwrite[i] = i;
-
-    HAL_DBG("XIP %s read, flash memory in %x\n", cmdSets[cmdSetNum].name, XIP_RAM_BASE);
-    sfcHost->xmmcDev[0].ctrl = cmdSets[cmdSetNum].ctrl;
-    sfcHost->xmmcDev[0].readCmd = cmdSets[cmdSetNum].cmd;
-    HAL_SNOR_XipEnable(sfcHost);
-
-    testSecCount = 1;
-    for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
-        pwrite32[0] = testLBA;
-        pread32 = (uint32_t *)(XIP_RAM_BASE + testLBA * 512);
-        for (j = 0; j < testSecCount * 128; j++) {
-            if (pwrite32[j] != pread32[j]) {
-                HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * 128);
-                HAL_DBG_HEX("r:", pread32, 4, testSecCount * 128);
-                HAL_DBG(
-                    "xip not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
-                    testLBA, j, (uint32_t)pwrite32[j], (uint32_t)pread32[j]);
-
-                return HAL_ERROR;
-            }
-        }
-        printFlag = testLBA & 0x1FF;
-        if (printFlag < testSecCount)
-            HAL_DBG("testLBA = %lx\n", testLBA);
-        testLBA += testSecCount;
-        testSecCount++;
-        if (testSecCount > maxest_sector)
-            testSecCount = 1;
-    }
-
-    HAL_DBG("---------Test end---------\n");
-    HAL_SNOR_XipDisable(sfcHost);
 
     return HAL_OK;
 }
@@ -243,52 +138,14 @@ TEST_TEAR_DOWN(HAL_SNOR){
 
 /* SNOR test case 0 */
 TEST(HAL_SNOR, SnorStressTest){
-    uint32_t ret, testEndLBA;
+    int32_t ret, testEndLBA;
 
-    /*  */
-    testEndLBA = 0;
-    testEndLBA = HAL_SNOR_GetCapacity();
-    TEST_ASSERT(testEndLBA > 0);
-    HAL_SFC_UnmaskDMAInterrupt(sfcHost);
     ret = SNOR_SINGLE_TEST();
-    HAL_SFC_MaskDMAInterrupt(sfcHost);
     TEST_ASSERT(ret == HAL_OK);
-
-    ret = SNOR_TEST(testEndLBA / 10);
-    TEST_ASSERT(ret == HAL_OK);
-
-    TEST_ASSERT(ret == HAL_OK);
-}
-
-/* SNOR test case 1 */
-TEST(HAL_SNOR, XipDefaultTest){
-    uint32_t ret, testEndLBA;
-
-    /*  */
-    testEndLBA = 0;
-    testEndLBA = HAL_SNOR_GetCapacity();
+    testEndLBA = HAL_SNOR_GetCapacity(nor) / nor->sectorSize;
     TEST_ASSERT(testEndLBA > 0);
-
-    ret = SNOR_XIP_DEFAULT_TEST(testEndLBA / 10);
+    ret = SNOR_TEST(testEndLBA);
     TEST_ASSERT(ret == HAL_OK);
-}
-
-/* SNOR test case 2 */
-TEST(HAL_SNOR, XipTest){
-    uint32_t ret, testEndLBA;
-    uint32_t i;
-
-    /*  */
-    testEndLBA = 0;
-    testEndLBA = HAL_SNOR_GetCapacity();
-    TEST_ASSERT(testEndLBA > 0);
-
-    i = 0;
-    while (cmdSets[i].cmd != 0) {
-        ret = SNOR_XIP_TEST(testEndLBA / 10, i);
-        TEST_ASSERT(ret == HAL_OK);
-        i++;
-    }
 }
 
 static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
@@ -296,23 +153,24 @@ static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
     return (uint8_t *)(((uintptr_t)ptr + align - 1) & ~(uintptr_t)(align - 1));
 }
 
-static HAL_Status SFC_IRQHandler(void)
+#ifdef HAL_FSPI_MODULE_ENABLED
+static HAL_Status FSPI_IRQHandler(void)
 {
-    HAL_SFC_IRQHelper(sfcHost);
+    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)nor->spi->userdata;
+
+    HAL_FSPI_IRQHelper(host);
 
     return HAL_OK;
 }
+#endif
 
 /* Test code should be place in ram */
 TEST_GROUP_RUNNER(HAL_SNOR){
     uint32_t ret;
     uint8_t *pwrite_t, *pread_t;
 
-    sfcHost = (struct HAL_SFC_HOST *)malloc(sizeof(struct HAL_SFC_HOST));
-    sfcHost->instance = SFC;
-
-    pwrite_t = (uint8_t *)malloc(maxest_sector * 512 + 64);
-    pread_t = (uint8_t *)malloc(maxest_sector * 512 + 64);
+    pwrite_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
+    pread_t = (uint8_t *)malloc(maxest_sector * 4096  + 64);
     pwrite = AlignUp(pwrite_t, CACHE_LINE_SIZE);
     pread = AlignUp(pread_t, CACHE_LINE_SIZE);
     HAL_DBG("pwrite %p pread %p\n", pwrite, pread);
@@ -321,17 +179,39 @@ TEST_GROUP_RUNNER(HAL_SNOR){
         while (1);
     }
 
-    HAL_NVIC_SetIRQHandler(SFC_IRQn, (NVIC_IRQHandler)&SFC_IRQHandler);
-    HAL_NVIC_EnableIRQ(SFC_IRQn);
-    ret = HAL_SNOR_Init(sfcHost);
-    TEST_ASSERT(ret == HAL_OK);
-    RUN_TEST_CASE(HAL_SNOR, SnorStressTest);
-    RUN_TEST_CASE(HAL_SNOR, XipDefaultTest);
-    RUN_TEST_CASE(HAL_SNOR, XipTest);
+#ifdef HAL_FSPI_MODULE_ENABLED
+    static struct HAL_FSPI_HOST *fspiHost;
+    struct SNOR_HOST *spi;
 
-    /* SNOR deinit */
-    ret = HAL_SNOR_Deinit(sfcHost);
+    fspiHost = (struct HAL_FSPI_HOST *)malloc(sizeof(struct HAL_FSPI_HOST));
+    TEST_ASSERT_NOT_NULL(fspiHost);
+    spi = (struct SNOR_HOST *)malloc(sizeof(struct SNOR_HOST));
+    TEST_ASSERT_NOT_NULL(spi);
+    nor = (struct SPI_NOR *)malloc(sizeof(struct SPI_NOR));
+    TEST_ASSERT_NOT_NULL(nor);
+
+    fspiHost->instance = FSPI0;
+    HAL_FSPI_Init(fspiHost);
+
+#ifdef HAL_FSPI_QUAD_ENABLE
+    spi->mode = SPI_MODE_3 | SPI_TX_QUAD | SPI_RX_QUAD;
+#else
+    spi->mode = SPI_MODE_3;
+#endif
+    spi->userdata = (void *)fspiHost;
+
+    nor->spi = spi;
+    ret = HAL_SNOR_Init(nor);
     TEST_ASSERT(ret == HAL_OK);
+    if (ret != HAL_OK)
+        HAL_DBG("%s fail, ret %ld\n", __func__, ret);
+    HAL_NVIC_SetIRQHandler(FSPI0_IRQn, (NVIC_IRQHandler) & FSPI_IRQHandler);
+    HAL_NVIC_EnableIRQ(FSPI0_IRQn);
+    RUN_TEST_CASE(HAL_SNOR, SnorStressTest);
+    /* SNOR deinit */
+    ret = HAL_SNOR_Deinit(nor);
+    TEST_ASSERT(ret == HAL_OK);
+#endif
 
     free(pwrite_t);
     free(pread_t);

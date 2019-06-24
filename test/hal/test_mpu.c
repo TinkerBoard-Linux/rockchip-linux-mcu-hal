@@ -6,6 +6,8 @@
 #define USE_FULL_ASSERT 1
 #endif
 
+#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(HAL_DCACHE_MODULE_ENABLED)
+
 #include "hal_base.h"
 #include "unity.h"
 #include "unity_fixture.h"
@@ -293,3 +295,6 @@ TEST_GROUP_RUNNER(HAL_MPU){
     RUN_TEST_CASE(HAL_MPU, TC_MPU_Cache);
     RUN_TEST_CASE(HAL_MPU, TC_MPU_Priv);
 }
+
+#endif
+

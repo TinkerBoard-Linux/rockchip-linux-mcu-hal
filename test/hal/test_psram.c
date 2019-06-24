@@ -8,8 +8,7 @@
 #include "unity_fixture.h"
 
 #ifdef HAL_PSRAM_MODULE_ENABLED
-static struct HAL_SFC_HOST *sfcHost;
-#define XIP_RAM_BASE  0x60000000
+static struct HAL_FSPI_HOST *sfcHost;
 #define maxest_sector 16
 static uint8_t *pwrite;
 static uint32_t *pread32;
@@ -41,7 +40,7 @@ static HAL_Status PSRAM_TEST(uint32_t testEndLBA)
     HAL_DBG("testLBA = %lx\n", testLBA);
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        pread32 = (uint32_t *)(XIP_RAM_BASE + testLBA * 512);
+        pread32 = (uint32_t *)(XIP_MEM_BASE + testLBA * 512);
         for (i = 0; i < (maxest_sector * 128); i++)
             pread32[i] = pwrite32[i];
         for (j = 0; j < testSecCount * 128; j++) {
@@ -69,7 +68,7 @@ static HAL_Status PSRAM_TEST(uint32_t testEndLBA)
     testSecCount = 1;
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        pread32 = (uint32_t *)(XIP_RAM_BASE + testLBA * 512);
+        pread32 = (uint32_t *)(XIP_MEM_BASE + testLBA * 512);
         for (j = 0; j < testSecCount * 128; j++) {
             if (pread32[j] != pread32[j]) {
                 HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * 128);
@@ -115,8 +114,8 @@ TEST_GROUP_RUNNER(HAL_PSRAM){
     uint32_t ret;
     uint8_t *pwrite_t;
 
-    sfcHost = (struct HAL_SFC_HOST *)malloc(sizeof(struct HAL_SFC_HOST));
-    sfcHost->instance = SFC;
+    sfcHost = (struct HAL_FSPI_HOST *)malloc(sizeof(struct HAL_FSPI_HOST));
+    sfcHost->instance = FSPI0;
 
     pwrite_t = (uint8_t *)malloc(maxest_sector * 512 + 64);
     pwrite = AlignUp(pwrite_t, CACHE_LINE_SIZE);
