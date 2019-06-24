@@ -1338,7 +1338,7 @@ static int PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32_t addr
     }
 
     if (waitCount >= PL330_MAX_WAIT) {
-        HAL_DBG("PL330 device at %lx debug status busy time out\r\n", reg);
+        HAL_DBG("PL330 device at %p debug status busy time out\r\n", reg);
 
         return -1;
     }
