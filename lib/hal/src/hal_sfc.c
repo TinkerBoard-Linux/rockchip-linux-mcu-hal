@@ -23,14 +23,12 @@
  This host driver need to be used in conjunction with device flash driver like
  hal_snor.c
 
- (#) DMA mode: Register handler(HAL_SFC_IRQHandler).
- (#) DMA mode: Unmask TRANSM interrupt(HAL_SFC_UnMaskTransmInterrupt).
+ (#) DMA mode: Register handler(HAL_SFC_IRQHelper).
+ (#) DMA mode: Unmask TRANSM interrupt(HAL_SFC_UnmaskDMAInterrupt).
  (#) Initialize SFC controller(HAL_SFC_Init);
  (#) Send SFC request:
-    (##) Normal mode: (SFC_Request);
-    (##) DMA mode: (SFC_Request_DMA);
+    (##) SNOR support api: (HAL_SFC_SpiXfer);
  (#) DMA mode: Handling interrupt return in DMA mode SFC request.
- (#) Configure XIP mode if needed.(HAL_SFC_XipConfig)
 
  @endverbatim
  @} */
@@ -64,13 +62,17 @@
 #define SFC_FSR_TXES_EMPTY (1 << SFC_FSR_TXES_SHIFT) /* Transmit FIFO Empty */
 
 /* SFC_SR */
-#define SFC_SR_SR_BUSY (1 << SFC_SR_SR_SHIFT) /* When busy, don¡¯t set the control register. */
+#define SFC_SR_SR_BUSY (1 << SFC_SR_SR_SHIFT) /* When busy, do not set the control register. */
 
 /* SFC_DMATR */
 #define SFC_DMATR_DMATR_START (1 << SFC_DMATR_DMATR_SHIFT) /* Write 1 to start the dma transfer. */
 
 /* SFC_RISR */
 #define SFC_RISR_TRANSS_ACTIVE (1 << SFC_RISR_TRANSS_SHIFT)
+
+/* SFC attributes */
+#define SFC_VER_VER_1 1
+#define SFC_VER_VER_3 3
 
 /********************* Private Structure Definition **************************/
 
@@ -88,27 +90,9 @@ typedef union {
         unsigned reserved31_21 : 11;
     } b;
 } SFCFSR_DATA;
-
-/** SFC_XMMC bit union */
-typedef union {
-    uint32_t d32;
-    struct {
-        unsigned reserverd1 : 5;
-        unsigned devHwEn : 1; /* device Hwrite Enable */
-        unsigned prefetch : 1; /* prefetch enable */
-        unsigned uincrPrefetchEn : 1; /* undefine INCR Burst Prefetch Enable */
-        unsigned uincrLen : 4; /* undefine INCR length */
-        unsigned devWrapEn : 1; /* device Wrap Enable */
-        unsigned devIncrEn : 1; /* device INCR2/4/8/16 Enable */
-        unsigned devUdfincrEn : 1; /* device Undefine INCR Enable */
-        unsigned reserved2 : 17;
-    } b;
-} SFCXMMCCTRL_DATA;
-
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
-
 static void SFC_Reset(struct SFC_REG *pReg)
 {
     int32_t timeout = 10000;
@@ -121,18 +105,192 @@ static void SFC_Reset(struct SFC_REG *pReg)
     pReg->ICLR = 0xFFFFFFFF;
 }
 
-#ifdef SFC_MODE_XMMC_MODE_EN_SHIFT
-
-HAL_Status SFC_XmmcDevRegionInit(struct HAL_SFC_HOST *host)
+/**
+ * @brief  Clear internal data transmission finish interrupt.
+ * @param  host: SFC host.
+ * @return HAL_Status.
+ */
+HAL_Status SFC_ClearIsr(struct HAL_SFC_HOST *host)
 {
-    host->instance->DEVRGN = 25;    /* 32MB for each region */
-    host->instance->DEVSIZE0 = 24;     /* 16MB for dev0 */
-    host->instance->DEVSIZE1 = 24;     /* 16MB for dev1 */
+    host->instance->ICLR = 0xFFFFFFFF;
 
     return HAL_OK;
 }
 
+/**
+ * @brief  Check internal data transmission finish interrupt.
+ * @param  host: SFC host.
+ * @return HAL_Check.
+ */
+HAL_Check SFC_IsDMAInterrupt(struct HAL_SFC_HOST *host)
+{
+    return (HAL_Check)HAL_IS_BIT_SET(host->instance->ISR, SFC_ISR_DMAS_ACTIVE);
+}
+
+#ifdef HAL_SNOR_MODULE_ENABLED
+/**
+ * @brief  Configuration register with flash operation protocol.
+ * @param  host: SFC host.
+ * @param  op: flash operation protocol.
+ * @return HAL_Status.
+ */
+static HAL_Status SFC_XferStart(struct HAL_SFC_HOST *host, struct SPI_MEM_OP *op)
+{
+    struct SFC_REG *pReg = host->instance;
+    SFCCMD_DATA sfcCmd;
+    SFCCTRL_DATA sfcCtrl;
+
+    sfcCmd.d32 = 0;
+    sfcCtrl.d32 = 0;
+
+    /* set CMD */
+    sfcCmd.b.cmd = op->cmd.opcode;
+
+    /* set ADDR */
+    if (op->addr.nbytes) {
+        sfcCmd.b.addrbits = op->addr.nbytes == 4 ? SFC_ADDR_32BITS : SFC_ADDR_24BITS;
+        sfcCtrl.b.addrlines = op->addr.buswidth == 4 ? SFC_LINES_X4 : SFC_LINES_X1;
+    }
+    /* set DUMMY*/
+    if (op->dummy.nbytes)
+        sfcCmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
+
+    /* set DATA */
+    if (op->data.nbytes) {
+        sfcCmd.b.datasize = op->data.nbytes;
+        if (op->data.dir == SPI_MEM_DATA_OUT)
+            sfcCmd.b.rw = SFC_WRITE;
+        sfcCtrl.b.datalines = op->data.buswidth == 4 ? SFC_LINES_X4 : SFC_LINES_X1;
+    }
+
+    /* spitial setting */
+    sfcCtrl.b.sps = SFC_CTRL_SHIFTPHASE_NEGEDGE;
+
+    if (!(pReg->FSR & SFC_FSR_TXES_EMPTY) || !(pReg->FSR & SFC_FSR_RXES_EMPTY) || (pReg->SR & SFC_SR_SR_BUSY))
+        SFC_Reset(pReg);
+
+    /* HAL_DBG("%s 1 %lx %lx %lx\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
+    /* HAL_DBG("%s 2 %lx %lx %lx\n", __func__, sfcCtrl.d32, sfcCmd.d32, op->addr.val); */
+
+    /* config SFC */
+    pReg->CTRL = sfcCtrl.d32;
+    pReg->CMD = sfcCmd.d32;
+    if (op->addr.nbytes)
+        pReg->ADDR = op->addr.val;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  IO transfer.
+ * @param  host: SFC host.
+ * @param  len: data n bytes.
+ * @param  data: transfer buffer.
+ * @param  dir: transfer direction.
+ * @return HAL_Status.
+ */
+static HAL_Status SFC_XferData(struct HAL_SFC_HOST *host, uint32_t len, void *data, uint32_t dir)
+{
+    int32_t ret = HAL_OK;
+    __IO SFCFSR_DATA fifostat;
+    int32_t timeout = 0;
+    uint32_t i, words;
+    uint32_t *pData = (uint32_t *)data;
+    struct SFC_REG *pReg = host->instance;
+
+    /* HAL_DBG("%s %p %lx %x %lx %lx\n", __func__, (uint32_t *)host->instance, SFCCmd, cmd.b.datasize, SFCCtrl, addr); */
+    if (dir == SFC_WRITE) {
+        words = (len + 3) >> 2;
+        while (words) {
+            fifostat.d32 = pReg->FSR;
+            if (fifostat.b.txlevel > 0) {
+                uint32_t count = HAL_MIN(words, fifostat.b.txlevel);
+
+                for (i = 0; i < count; i++) {
+                    pReg->DATA = *pData++;
+                    words--;
+                }
+                if (words == 0)
+                    break;
+                timeout = 0;
+            } else {
+                HAL_DelayUs(1);
+                if (timeout++ > 10000) {
+                    ret = HAL_TIMEOUT;
+                    break;
+                }
+            }
+        }
+    } else {
+        uint32_t bytes = len & 0x3;
+
+        words = len >> 2;
+        while (words) {
+            fifostat.d32 = pReg->FSR;
+            if (fifostat.b.rxlevel > 0) {
+                uint32_t count = HAL_MIN(words, fifostat.b.rxlevel);
+
+                for (i = 0; i < count; i++) {
+                    *pData++ = pReg->DATA;
+                    words--;
+                }
+                if (0 == words)
+                    break;
+                timeout = 0;
+            } else {
+                HAL_DelayUs(1);
+                if (timeout++ > 10000) {
+                    ret = HAL_TIMEOUT;
+                    break;
+                }
+            }
+        }
+
+        timeout = 0;
+        while (bytes) {
+            fifostat.d32 = pReg->FSR;
+            if (fifostat.b.rxlevel > 0) {
+                uint8_t *pData1 = (uint8_t *)pData;
+                words = pReg->DATA;
+                for (i = 0; i < bytes; i++)
+                    pData1[i] = (uint8_t)((words >> (i * 8)) & 0xFF);
+                break;
+            } else {
+                HAL_DelayUs(1);
+                if (timeout++ > 10000) {
+                    ret = HAL_TIMEOUT;
+                    break;
+                }
+            }
+        }
+    }
+
+    return ret;
+}
+
+/**
+ * @brief  Wait for SFC host transfer finished.
+ * @return HAL_Status.
+ */
+static HAL_Status SFC_XferDone(struct HAL_SFC_HOST *host)
+{
+    int32_t ret = HAL_OK;
+    int32_t timeout = 0;
+    struct SFC_REG *pReg = host->instance;
+
+    while (pReg->SR & SFC_SR_SR_BUSY) {
+        HAL_DelayUs(1);
+        if (timeout++ > 100000) { /*wait 100ms*/
+            ret = HAL_TIMEOUT;
+            break;
+        }
+    }
+    HAL_DelayUs(1); //CS# High Time (read/write) >100ns
+
+    return ret;
+}
 #endif
+
 /********************* Public Function Definition ****************************/
 
 /** @defgroup SFC_Exported_Functions_Group3 IO Functions
@@ -150,167 +308,32 @@ HAL_Status SFC_XmmcDevRegionInit(struct HAL_SFC_HOST *host)
  *  @{
  */
 
+#ifdef HAL_SNOR_MODULE_ENABLED
 /**
- * @brief  Configuration Register Transfer Flash Protocol in normal mode.
- * @param  host: SFC host.
- * @param  sfcmd: SFC_CMD set.
- * @param  sfctrl: SFC_CTRL set.
- * @param  addr: flash device address.
+ * @brief  SPI Nor flash data transmission interface supporting open source specifications.
+ * @param  spi: host abstract.
+ * @param  op: flash operation protocol.
  * @return HAL_Status.
  */
-HAL_Status HAL_SFC_XferRequest(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32_t sfctrl, uint32_t addr)
+HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 {
-    int32_t ret = HAL_OK;
-    SFCCMD_DATA cmd;
-    SFCCTRL_DATA ctrl;
-    __IO SFCFSR_DATA fifostat;
-    int32_t timeout = 0;
-    uint32_t i, words;
-    uint32_t *pData = (uint32_t *)host->data;
-    struct SFC_REG *pReg = host->instance;
+    struct HAL_SFC_HOST *host = (struct HAL_SFC_HOST *)spi->userdata;
+    uint32_t ret = HAL_OK;
 
-    cmd.d32 = sfcmd;
-    ctrl.d32 = sfctrl;
+    SFC_XferStart(host, op);
+    if (op->data.dir == SPI_MEM_DATA_IN)
+        ret = SFC_XferData(host, op->data.nbytes, op->data.buf.in, SFC_READ);
+    else if (op->data.buf.out)
+        ret = SFC_XferData(host, op->data.nbytes, op->data.buf.in, SFC_WRITE);
+    if (ret) {
+        HAL_DBG("%s xfer data failed ret %ld\n", __func__, ret);
 
-    if (!(pReg->FSR & SFC_FSR_TXES_EMPTY) || !(pReg->FSR & SFC_FSR_RXES_EMPTY) || (pReg->SR & SFC_SR_SR_BUSY))
-        SFC_Reset(pReg);
-
-    if (cmd.b.addrbits == SFC_ADDR_XBITS) {
-        if (!ctrl.b.addrbits)
-            return HAL_INVAL;
-        pReg->ABIT = ctrl.b.addrbits - 1; /* add 1 inside the controller */
+        return ret;
     }
 
-    ctrl.b.sps = SFC_CTRL_SHIFTPHASE_NEGEDGE;
-    pReg->CTRL = ctrl.d32;
-    pReg->CMD = cmd.d32;
-    if (cmd.b.addrbits)
-        pReg->ADDR = addr;
-
-    if (cmd.b.datasize) {
-        if (cmd.b.rw == SFC_WRITE) {
-            words = (cmd.b.datasize + 3) >> 2;
-            while (words) {
-                fifostat.d32 = pReg->FSR;
-                if (fifostat.b.txlevel > 0) {
-                    uint32_t count = HAL_MIN(words, fifostat.b.txlevel);
-
-                    for (i = 0; i < count; i++) {
-                        pReg->DATA = *pData++;
-                        words--;
-                    }
-                    if (words == 0)
-                        break;
-                    timeout = 0;
-                } else {
-                    HAL_DelayUs(1);
-                    if (timeout++ > 10000) {
-                        ret = HAL_TIMEOUT;
-                        break;
-                    }
-                }
-            }
-        } else {
-            uint32_t bytes = cmd.b.datasize & 0x3;
-
-            words = cmd.b.datasize >> 2;
-            while (words) {
-                fifostat.d32 = pReg->FSR;
-                if (fifostat.b.rxlevel > 0) {
-                    uint32_t count = HAL_MIN(words, fifostat.b.rxlevel);
-
-                    for (i = 0; i < count; i++) {
-                        *pData++ = pReg->DATA;
-                        words--;
-                    }
-                    if (0 == words)
-                        break;
-                    timeout = 0;
-                } else {
-                    HAL_DelayUs(1);
-                    if (timeout++ > 10000) {
-                        ret = HAL_TIMEOUT;
-                        break;
-                    }
-                }
-            }
-
-            timeout = 0;
-            while (bytes) {
-                fifostat.d32 = pReg->FSR;
-                if (fifostat.b.rxlevel > 0) {
-                    uint8_t *pData1 = (uint8_t *)pData;
-                    words = pReg->DATA;
-                    for (i = 0; i < bytes; i++)
-                        pData1[i] = (uint8_t)((words >> (i * 8)) & 0xFF);
-                    break;
-                } else {
-                    HAL_DelayUs(1);
-                    if (timeout++ > 10000) {
-                        ret = HAL_TIMEOUT;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    timeout = 0; /*wait cmd or data send complete*/
-    while (pReg->SR & SFC_SR_SR_BUSY) {
-        HAL_DelayUs(1);
-        if (timeout++ > 100000) { /*wait 100ms*/
-            ret = HAL_TIMEOUT;
-            break;
-        }
-    }
-    HAL_DelayUs(1); //CS# High Time (read/write) >100ns
-
-    return ret;
+    return SFC_XferDone(host);
 }
-
-/**
- * @brief  Configuration Register Transfer Flash Protocol in DMA mode.
- * @param  host: SFC host.
- * @param  sfcmd: SFC_CMD set.
- * @param  sfctrl: SFC_CTRL set.
- * @param  addr: flash device address.
- * @return HAL_Status.
- * Only use for data transmission cmd
- */
-HAL_Status HAL_SFC_XferRequest_DMA(struct HAL_SFC_HOST *host, uint32_t sfcmd, uint32_t sfctrl, uint32_t addr)
-{
-    int32_t ret = HAL_OK;
-    SFCCMD_DATA cmd;
-    SFCCTRL_DATA ctrl;
-    struct SFC_REG *pReg = host->instance;
-
-    cmd.d32 = sfcmd;
-    ctrl.d32 = sfctrl;
-    host->status = HAL_LOCKED;
-
-    if (!(pReg->FSR & SFC_FSR_TXES_EMPTY) || !(pReg->FSR & SFC_FSR_RXES_EMPTY) || (pReg->SR & SFC_SR_SR_BUSY))
-        SFC_Reset(pReg);
-
-    if (cmd.b.addrbits == SFC_ADDR_XBITS) {
-        if (!ctrl.b.addrbits)
-            return HAL_INVAL;
-        pReg->ABIT = ctrl.b.addrbits - 1; /* add 1 inside the controller */
-    }
-
-    ctrl.b.sps = SFC_CTRL_SHIFTPHASE_NEGEDGE;
-    pReg->CTRL = ctrl.d32;
-    pReg->CMD = cmd.d32;
-    if (cmd.b.addrbits)
-        pReg->ADDR = addr;
-
-    if (cmd.b.datasize) {
-        pReg->ICLR = 0xFFFFFFFF;
-        pReg->DMAADDR = (uint32_t)host->data;
-        pReg->DMATR = SFC_DMATR_DMATR_START;
-    }
-
-    return ret;
-}
+#endif
 
 /** @} */
 
@@ -387,107 +410,18 @@ HAL_Status HAL_SFC_UnmaskDMAInterrupt(struct HAL_SFC_HOST *host)
 }
 
 /**
- * @brief  Check internal data transmission finish interrupt.
- * @param  host: SFC host.
- * @return HAL_Check.
- */
-HAL_Check HAL_SFC_IsDMAInterrupt(struct HAL_SFC_HOST *host)
-{
-    return (HAL_Check)HAL_IS_BIT_SET(host->instance->ISR, SFC_ISR_DMAS_ACTIVE);
-}
-
-/**
- * @brief  Clear internal data transmission finish interrupt.
- * @param  host: SFC host.
- * @return HAL_Status.
- */
-HAL_Status HAL_SFC_ClearIsr(struct HAL_SFC_HOST *host)
-{
-    host->instance->ICLR = 0xFFFFFFFF;
-
-    return HAL_OK;
-}
-
-/**
  * @brief  SFC interrupt handler.
  * @param  host: SFC host.
  * @return HAL_Status.
  */
 HAL_Status HAL_SFC_IRQHelper(struct HAL_SFC_HOST *host)
 {
-    HAL_ASSERT(HAL_SFC_IsDMAInterrupt(host)); /* Only support TRANSM IT */
-
-    HAL_SFC_ClearIsr(host);
+    HAL_ASSERT(SFC_IsDMAInterrupt(host)); /* Only support TRANSM IT */
+    SFC_ClearIsr(host);
     host->status = HAL_UNLOCKED;
 
     return HAL_OK;
 }
-
-#ifdef SFC_MODE_XMMC_MODE_EN_SHIFT
-HAL_Status HAL_SFC_XmmcDevRegionInit(struct HAL_SFC_HOST *host)
-{
-    host->instance->DEVRGN = 25;    /* 32MB for each region */
-    host->instance->DEVSIZE0 = 24;     /* 16MB for dev0 */
-    host->instance->DEVSIZE1 = 24;     /* 16MB for dev1 */
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Configuration x mode.
- * @param  host: SFC host.
- * @param  on: 1 enable, 0 disable.
- * @return HAL_Status.
- * XIP configuration cannot be modified in XIP mode.
- */
-HAL_Status HAL_SFC_XmmcRequest(struct HAL_SFC_HOST *host, uint8_t on)
-{
-    SFCCTRL_DATA ctrl;
-    SFCXMMCCTRL_DATA xmmcCtrl;
-    struct SFC_REG *pReg = host->instance;
-
-    if (on) {
-        if (pReg->MODE & 0x1)
-            return HAL_INVAL;
-
-        if (host->xmmcDev[0].type == DEV_PSRAM || host->xmmcDev[1].type == DEV_PSRAM) {
-            xmmcCtrl.b.devHwEn = 1;
-            xmmcCtrl.b.prefetch = 0;
-            xmmcCtrl.b.uincrPrefetchEn = 1;
-            xmmcCtrl.b.uincrLen = 2;
-            xmmcCtrl.b.devWrapEn = 1;
-            xmmcCtrl.b.devIncrEn = 1;
-            xmmcCtrl.b.devUdfincrEn = 1;
-        } else {
-            xmmcCtrl.b.devHwEn = 0;
-            xmmcCtrl.b.prefetch = 1;
-        }
-
-        ctrl.d32 = host->xmmcDev[0].ctrl;
-        ctrl.b.sps = SFC_CTRL_SHIFTPHASE_NEGEDGE;
-        ctrl.b.mode = 0;
-        ctrl.b.scic = 0;
-        ctrl.b.cmdlines = 0;
-
-        /* config ctroller */
-        SFC_XmmcDevRegionInit(host);
-        pReg->CTRL = ctrl.d32;
-        pReg->XMMC_CTRL = xmmcCtrl.d32;
-        /* config cs 0 */
-        pReg->XMMC_RCMD0 = host->xmmcDev[0].readCmd;
-        pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
-        /* config cs 1 */
-        pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
-        pReg->XMMC_WCMD1 = host->xmmcDev[2].writeCmd;
-
-        pReg->MODE = 1;
-    } else {
-        pReg->MODE = 0;
-    }
-
-    return HAL_OK;
-}
-#endif
 
 /** @} */
 

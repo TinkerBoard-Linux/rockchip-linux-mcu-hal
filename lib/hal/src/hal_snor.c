@@ -20,20 +20,37 @@
  ==============================================================================
  The SNOR driver can be used as follows:
 
+ (#) Init a spi nor abstract(HAL_SNOR_Init):
+    (##) Malloc a struct of SPI_NOR by user;
+    (##) Designated host to nor->spi by user;
+    (##) Init spi nor abstract by calling func HAL_SNOR_Init;
+ (#) Call the interface function like HAL_NOR_Read.
+
  @endverbatim
  @} */
 
 #include "hal_base.h"
 
 #ifdef HAL_SNOR_MODULE_ENABLED
-
 /********************* Private MACRO Definition ******************************/
+struct FLASH_INFO {
+    uint32_t id;
 
-#define SNOR_4BIT_DATA_DETECT_EN 0
-#define NOR_PAGE_SIZE            256
-#define NOR_BLOCK_SIZE           (64 * 1024)
-#define NOR_SECS_BLK             (NOR_BLOCK_SIZE / 512)
-#define NOR_SECS_PAGE            4
+    uint8_t blockSize;
+    uint8_t sectorSize;
+    uint8_t readCmd;
+    uint8_t progCmd;
+
+    uint8_t readCmd_4;
+    uint8_t progCmd_4;
+    uint8_t sectorEraseCmd;
+    uint8_t blockEraseCmd;
+
+    uint8_t feature;
+    uint8_t density; /* (1 << density) sectors */
+    uint8_t QEBits;
+    uint8_t reserved2;
+};
 
 #define FEA_READ_STATUE_MASK (0x3 << 0)
 #define FEA_STATUE_MODE1     0
@@ -52,112 +69,72 @@
 #define MID_EON      0x1C
 #define MID_ST       0x20
 
-/*Command Set*/
-#define CMD_READ_JEDECID  (0x9F)
-#define CMD_READ_DATA     (0x03)
-#define CMD_READ_STATUS   (0x05)
-#define CMD_WRITE_STATUS  (0x01)
-#define CMD_PAGE_PROG     (0x02)
-#define CMD_SECTOR_ERASE  (0x20)
-#define CMD_BLK64K_ERASE  (0xD8)
-#define CMD_BLK32K_ERASE  (0x52)
-#define CMD_CHIP_ERASE    (0xC7)
-#define CMD_WRITE_EN      (0x06)
-#define CMD_WRITE_DIS     (0x04)
-#define CMD_PAGE_READ     (0x13)
-#define CMD_GET_FEATURE   (0x0F)
-#define CMD_SET_FEATURE   (0x1F)
-#define CMD_PROG_LOAD     (0x02)
-#define CMD_PROG_EXEC     (0x10)
-#define CMD_BLOCK_ERASE   (0xD8)
-#define CMD_READ_DATA_X2  (0x3B)
-#define CMD_READ_DATA_X4  (0x6B)
-#define CMD_PROG_LOAD_X4  (0x32)
-#define CMD_READ_STATUS2  (0x35)
-#define CMD_READ_STATUS3  (0x15)
-#define CMD_WRITE_STATUS2 (0x31)
-#define CMD_WRITE_STATUS3 (0x11)
-#define CMD_FAST_READ_X1  (0x0B) /* X1 cmd, X1 addr, X1 data */
-#define CMD_FAST_READ_X2  (0x3B) /* X1 cmd, X1 addr, X2 data */
-#define CMD_FAST_READ_X4  (0x6B) /* X1 cmd, X1 addr, X4 data SUPPORT GD MARCONIX WINBOND */
-#define CMD_FAST_4READ_X4 (0x6C) /* X1 cmd, X1 addr, X4 data SUPPORT GD MARCONIX WINBOND */
+/* Used for Macronix and Winbond flashes. */
+#define SPINOR_OP_EN4B 0xb7	/* Enter 4-byte mode */
+#define SPINOR_OP_EX4B 0xe9	/* Exit 4-byte mode */
 
-#define CMD_FAST_READ_A4 (0xEB) /* X1 cmd, X4 addr, X4 data SUPPORT EON GD MARCONIX WINBOND */
-#define CMD_PAGE_PROG_X4 (0x32) /* X1 cmd, X1 addr, X4 data, SUPPORT GD WINBOND */
-#define CMD_PAGE_PROG_A4 (0x38) /* X1 cmd, X4 addr, X4 data, SUPPORT MARCONIX */
-#define CMD_RESET_NAND   (0xFF)
+/* Used for SST flashes only. */
+#define SPINOR_OP_WRDI 0x04	/* Write disable */
 
-#define CMD_ENTER_4BYTE_MODE (0xB7)
-#define CMD_EXIT_4BYTE_MODE  (0xE9)
-#define CMD_ENABLE_RESER     (0x66)
-#define CMD_RESET_DEVICE     (0x99)
-#define CMD_READ_PARAMETER   (0x5A)
+#define SPINOR_OP_MAX_SIZE 0x40
+#define UINT_MAX           (~0U)
 
+#define JEDEC_MFR(id) ((id >> 16) & 0xff)
+
+#define SPI_MEM_OP_FORMAT(__cmd, __addr, __dummy, __data) \
+    {                                                     \
+        .cmd = __cmd,                                     \
+        .addr = __addr,                                   \
+        .dummy = __dummy,                                 \
+        .data = __data,                                   \
+    }
+
+#define SPI_MEM_OP_CMD(__opcode, __buswidth) \
+    {                                        \
+        .buswidth = __buswidth,              \
+        .opcode = __opcode,                  \
+    }
+
+#define SPI_MEM_OP_ADDR(__nbytes, __val, __buswidth) \
+    {                                                \
+        .nbytes = __nbytes,                          \
+        .val = __val,                                \
+        .buswidth = __buswidth,                      \
+    }
+
+#define SPI_MEM_OP_NO_ADDR { }
+
+#define SPI_MEM_OP_DUMMY(__nbytes, __buswidth) \
+    {                                          \
+        .nbytes = __nbytes,                    \
+        .buswidth = __buswidth,                \
+    }
+
+#define SPI_MEM_OP_NO_DUMMY { }
+
+#define SPI_MEM_OP_DATA_IN(__nbytes, __buf, __buswidth) \
+    {                                                   \
+        .dir = SPI_MEM_DATA_IN,                         \
+        .nbytes = __nbytes,                             \
+        .buf.in = __buf,                                \
+        .buswidth = __buswidth,                         \
+    }
+
+#define SPI_MEM_OP_DATA_OUT(__nbytes, __buf, __buswidth) \
+    {                                                    \
+        .dir = SPI_MEM_DATA_OUT,                         \
+        .nbytes = __nbytes,                              \
+        .buf.out = __buf,                                \
+        .buswidth = __buswidth,                          \
+    }
+
+#define SPI_MEM_OP_NO_DATA { }
+
+#define READ_MAX_IOSIZE (1024 * 8) /* 8KB */
 /********************* Private Structure Definition **************************/
 
-typedef enum {
-    IO_MODE_SPI,
-    IO_MODE_QPI
-} eSNOR_ioMode;
-
-typedef enum {
-    READ_MODE_NOMAL,
-    READ_MODE_FAST
-} eSNOR_readMode;
-
-typedef enum {
-    ADDR_MODE_3BYTE,
-    ADDR_MODE_4BYTE
-} eSNOR_addrMode;
-
-struct FLASH_INFO {
-    uint32_t id;
-
-    uint8_t block_size;
-    uint8_t sector_size;
-    uint8_t readCmd;
-    uint8_t progCmd;
-
-    uint8_t readCmd_4;
-    uint8_t progCmd_4;
-    uint8_t sectorEraseCmd;
-    uint8_t blockEraseCmd;
-
-    uint8_t feature;
-    uint8_t density; /* (1 << density) sectors */
-    uint8_t QEBits;
-    uint8_t reserved2;
-};
-
-typedef HAL_Status (*SNOR_WRITE_STATUS)(struct HAL_SFC_HOST *host, uint32_t regIndex, uint8_t status);
-
-struct SFNOR_DEV {
-    uint32_t capacity;
-    uint8_t manufacturer;
-    uint8_t memType;
-    uint16_t pageSize;
-    uint32_t blockSize;
-
-    uint8_t readCmd;
-    uint8_t ProgCmd;
-    uint8_t secEraseCmd;
-    uint8_t blkEraseCmd;
-    uint8_t QEBits;
-
-    eSNOR_readMode readMode;
-    eSNOR_addrMode addrMode;
-    eSNOR_ioMode ioMode;
-
-    SFC_DATA_LINES readLines;
-    SFC_DATA_LINES progLines;
-
-    SNOR_WRITE_STATUS writeStatus;
-};
-
 /********************* Private Variable Definition ***************************/
-
 struct FLASH_INFO spiFlashbl[] = {
-    { 0xc84016, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x00, 13, 9, 0 }, /* GD25Q32B */
     { 0xc84017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 14, 9, 0 }, /* GD25Q64B */
     { 0xc84018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 }, /* GD25Q127C and GD25Q128C*/
     { 0xc84019, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 16, 6, 0 }, /* GD25Q256B/C */
@@ -166,57 +143,243 @@ struct FLASH_INFO spiFlashbl[] = {
     { 0xef4018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 }, /* 25Q128FV and 25Q128JV*/
     { 0xef4019, 128, 8, 0x13, 0x02, 0x6C, 0x32, 0x20, 0xD8, 0x3C, 16, 9, 0 }, /* 25Q256FV */
     { 0xef6017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 }, /* 25Q64FWSSIG */
-    { 0xc22018, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x00, 15, 6, 0 }, /* MX25L12835E/F */
-    { 0xc22019, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x30, 16, 6, 0 }, /* MX25L25635E/F */
     { 0x207017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 0, 0 }, /* XM25QH64A */
     { 0x207018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* XM25QH128A */
     { 0x1c7018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* EN25QH128A */
-    { 0xc22814, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x0C, 11, 6, 0 }, /* MX25R8035F */
-};
-
-static struct FLASH_INFO *s_spiFlashInfo;
-
-static struct SFNOR_DEV s_snorDev;
-
-const uint8_t snorDevCode[] = { 0x11, 0x12, 0x13, 0x14, 0x15,
-                                0x16, 0x17, 0x18, 0x19 };
-
-const uint32_t snorCapacity[] = {
-    0x20000, /* 128k-byte */
-    0x40000, /* 256k-byte */
-    0x80000, /* 512k-byte */
-    0x100000, /* 1M-byte */
-    0x200000, /* 2M-byte */
-    0x400000, /* 4M-byte */
-    0x800000, /* 8M-byte */
-    0x1000000, /* 16M-byte */
-    0x2000000 /* 32M-byte */
+    { 0xc22814, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 11, 6, 0 }, /* MX25R8035F */
 };
 
 /********************* Private Function Definition ***************************/
-static HAL_Status SNOR_WriteEn(struct HAL_SFC_HOST *host)
+#if defined(HAL_SNOR_SPI_HOST)
+static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, const struct SPI_MEM_OP *op)
 {
-    SFCCMD_DATA sfcmd;
+    uint32_t pos = 0;
+    const uint8_t *tx_buf = NULL;
+    uint8_t *rx_buf = NULL;
+    uint8_t op_buf[SPINOR_OP_MAX_SIZE];
+    int32_t op_len;
+    uint32_t flag;
+    int32_t i, ret;
 
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_WRITE_EN;
+    if (op->data.nbytes) {
+        if (op->data.dir == SPI_MEM_DATA_IN)
+            rx_buf = op->data.buf.in;
+        else
+            tx_buf = op->data.buf.out;
+    }
 
-    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
+    /* HAL_DBG("%s %d %d %x\n", __func__, sizeof(op->cmd.opcode), op->addr.nbytes, op->dummy.nbytes); */
+    op_len = sizeof(op->cmd.opcode) + op->addr.nbytes + op->dummy.nbytes;
+    op_buf[pos++] = op->cmd.opcode;
+
+    if (op->addr.nbytes) {
+        for (i = 0; i < op->addr.nbytes; i++)
+            op_buf[pos + i] = op->addr.val >>
+                              (8 * (op->addr.nbytes - i - 1));
+
+        pos += op->addr.nbytes;
+    }
+
+    if (op->dummy.nbytes)
+        memset(&op_buf[pos], 0xff, op->dummy.nbytes);
+
+    /* 1st transfer: opcode + address + dummy cycles */
+    flag = SPI_XFER_BEGIN;
+    /* Make sure to set END bit if no tx or rx data messages follow */
+    if (!tx_buf && !rx_buf)
+        flag |= SPI_XFER_END;
+
+    /* HAL_DBG("%s %ld %ld opcode %x\n", __func__, op_len, flag, op->cmd.opcode); */
+    ret = HAL_SPI_Xfer(spi, op_len * 8, op_buf, NULL, flag);
+    if (ret)
+        return HAL_ERROR;
+
+    /* 2nd transfer: rx or tx data path */
+    if (tx_buf || rx_buf) {
+        ret = HAL_SPI_Xfer(spi, op->data.nbytes * 8, tx_buf, rx_buf, SPI_XFER_END);
+        if (ret)
+            return HAL_ERROR;
+    }
+
+    return HAL_OK;
+}
+#elif defined(HAL_SNOR_SFC_HOST)
+static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
+{
+    HAL_SFC_SpiXfer(spi, op);
+
+    return HAL_OK;
+}
+#elif defined(HAL_SNOR_FSPI_HOST)
+static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
+{
+    HAL_FSPI_SpiXfer(spi, op);
+
+    return HAL_OK;
+}
+#endif
+
+static HAL_Status SNOR_ReadWriteReg(struct SPI_NOR *nor, struct SPI_MEM_OP *op, void *buf)
+{
+    if (op->data.dir == SPI_MEM_DATA_IN)
+        op->data.buf.in = buf;
+    else
+        op->data.buf.out = buf;
+
+    return SNOR_SPIMemExecOp(nor->spi, op);
 }
 
-static HAL_Status SNOR_WaitBusy(struct HAL_SFC_HOST *host, int32_t timeout)
+static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, int32_t len)
+{
+    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(code, 1),
+                                             SPI_MEM_OP_NO_ADDR,
+                                             SPI_MEM_OP_NO_DUMMY,
+                                             SPI_MEM_OP_DATA_IN(len, NULL, 1));
+    int32_t ret;
+
+    ret = SNOR_ReadWriteReg(nor, &op, val);
+    if (ret)
+        HAL_DBG("error %ld reading %x\n", ret, code);
+
+    return ret;
+}
+
+static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint8_t opcode, uint8_t *buf, int len)
+{
+    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(opcode, 1),
+                                             SPI_MEM_OP_NO_ADDR,
+                                             SPI_MEM_OP_NO_DUMMY,
+                                             SPI_MEM_OP_DATA_OUT(len, NULL, 1));
+
+    return SNOR_ReadWriteReg(nor, &op, buf);
+}
+
+static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, void *buf)
+{
+    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->readOpcode, 1),
+                                             SPI_MEM_OP_ADDR(nor->addrWidth, from, 1),
+                                             SPI_MEM_OP_DUMMY(nor->readDummy, 1),
+                                             SPI_MEM_OP_DATA_IN(len, buf, 1));
+    uint32_t remaining = len;
+    int32_t ret;
+
+    /* get transfer protocols. */
+    op.cmd.buswidth = 1;
+    op.addr.buswidth = SNOR_GET_PROTOCOL_ADDR_BITS(nor->readProto);
+    op.dummy.buswidth = op.addr.buswidth;
+    op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
+
+    /* HAL_DBG("%s %lx %lx %lx %lx\n", __func__, nor->readDummy, op.dummy.buswidth, from, op.addr.val); */
+    /* convert the dummy cycles to the number of bytes */
+    op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
+
+    while (remaining) {
+        op.data.nbytes = remaining < UINT_MAX ? remaining : UINT_MAX;
+        ret = SNOR_SPIMemExecOp(nor->spi, &op);
+        if (ret)
+            return 0;
+
+        op.addr.val += op.data.nbytes;
+        remaining -= op.data.nbytes;
+        op.data.buf.in += op.data.nbytes;
+    }
+
+    return len;
+}
+
+static int32_t SNOR_WriteData(struct SPI_NOR *nor, uint32_t to, uint32_t len, const uint8_t *buf)
+{
+    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->programOpcode, 1),
+                                             SPI_MEM_OP_ADDR(nor->addrWidth, to, 1),
+                                             SPI_MEM_OP_NO_DUMMY,
+                                             SPI_MEM_OP_DATA_OUT(len, buf, 1));
+    int32_t ret;
+
+    /* get transfer protocols. */
+    op.cmd.buswidth = 1;
+    op.addr.buswidth = SNOR_GET_PROTOCOL_ADDR_BITS(nor->writeProto);
+    op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->writeProto);
+
+    /* to-do 写数据限制 */
+    op.data.nbytes = len < op.data.nbytes ? len : op.data.nbytes;
+
+    ret = SNOR_SPIMemExecOp(nor->spi, &op);
+    if (ret)
+        return 0;
+
+    return op.data.nbytes;
+}
+
+/*
+ * Initiate the erasure of a single sector
+ */
+static HAL_Status SNOR_EraseSec(struct SPI_NOR *nor, uint32_t addr)
+{
+    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->eraseOpcodeSec, 1),
+                                             SPI_MEM_OP_ADDR(nor->addrWidth, addr, 1),
+                                             SPI_MEM_OP_NO_DUMMY,
+                                             SPI_MEM_OP_NO_DATA);
+
+    if (nor->erase)
+        return nor->erase(nor, addr);
+
+    /*
+     * Default implementation, if driver doesn't have a specialized HW
+     * control
+     */
+    return SNOR_SPIMemExecOp(nor->spi, &op);
+}
+
+/*
+ * Initiate the erasure of a single sector
+ */
+static HAL_Status SNOR_EraseBlk(struct SPI_NOR *nor, uint32_t addr)
+{
+    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->eraseOpcodeSec, 1),
+                                             SPI_MEM_OP_ADDR(nor->addrWidth, addr, 1),
+                                             SPI_MEM_OP_NO_DUMMY,
+                                             SPI_MEM_OP_NO_DATA);
+
+    if (nor->erase)
+        return nor->erase(nor, addr);
+
+    /*
+     * Default implementation, if driver doesn't have a specialized HW
+     * control
+     */
+    return SNOR_SPIMemExecOp(nor->spi, &op);
+}
+
+struct FLASH_INFO *SNOR_GerFlashInfo(uint8_t *flashId)
+{
+    uint32_t i;
+    uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
+
+    for (i = 0; i < (sizeof(spiFlashbl) / sizeof(struct FLASH_INFO)); i++) {
+        if (spiFlashbl[i].id == id)
+            return &spiFlashbl[i];
+    }
+
+    return NULL;
+}
+
+static HAL_Status SNOR_WriteEnable(struct SPI_NOR *nor)
+{
+    return nor->writeReg(nor, SPINOR_OP_WREN, NULL, 0);
+}
+
+/*
+ * Service routine to read status register until ready, or timeout occurs.
+ * Returns non-zero if error.
+ */
+static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
 {
     int32_t ret;
-    SFCCMD_DATA sfcmd;
-    uint32_t i, status;
+    uint32_t i;
+    uint8_t status;
 
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_READ_STATUS;
-    sfcmd.b.datasize = 1;
-
-    host->data = &status;
     for (i = 0; i < timeout; i++) {
-        ret = HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
+        ret = nor->readReg(nor, SPINOR_OP_RDSR, &status, 1);
         if (ret != HAL_OK)
             return ret;
 
@@ -230,750 +393,294 @@ static HAL_Status SNOR_WaitBusy(struct HAL_SFC_HOST *host, int32_t timeout)
     return HAL_BUSY;
 }
 
-static HAL_Status SNOR_Enter4ByteMode(struct HAL_SFC_HOST *host)
+static HAL_Status SNOR_ReadStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8_t *status)
 {
-    SFCCMD_DATA sfcmd;
+    uint8_t readStatCmd[] = { SPINOR_OP_RDSR, SPINOR_OP_RDCR };
 
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_ENTER_4BYTE_MODE;
-
-    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
+    return nor->readReg(nor, readStatCmd[regIndex], status, 1);
 }
 
-static HAL_Status SNOR_ReadStatus(struct HAL_SFC_HOST *host, uint32_t regIndex, uint8_t *status)
+static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8_t *status)
 {
-    SFCCMD_DATA sfcmd;
-    uint8_t readStatCmd[] = { CMD_READ_STATUS, CMD_READ_STATUS2,
-                              CMD_READ_STATUS3 };
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = readStatCmd[regIndex];
-    sfcmd.b.datasize = 1;
-
-    host->data = status;
-
-    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
-}
-
-static HAL_Status SNOR_writeStatus2(struct HAL_SFC_HOST *host, uint32_t regIndex, uint8_t status)
-{
+    uint8_t i = nor->info->feature & FEA_READ_STATUE_MASK;
     int32_t ret;
-    SFCCMD_DATA sfcmd;
-    uint8_t status2[2];
-    uint8_t readIndex;
 
-    status2[regIndex] = status;
-    readIndex = (regIndex == 0) ? 1 : 0;
-    ret = SNOR_ReadStatus(host, readIndex, &status2[readIndex]);
-    if (ret != HAL_OK)
-        return ret;
+    if (i == 0) {
+        SNOR_WriteEnable(nor);
 
-    SNOR_WriteEn(host);
+        ret = nor->writeReg(nor, SPINOR_OP_WRSR, status, 2);
+        if (ret) {
+            HAL_DBG("error while writing configuration register\n");
 
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_WRITE_STATUS;
-    sfcmd.b.datasize = 2;
-    sfcmd.b.rw = SFC_WRITE;
+            return HAL_INVAL;
+        }
 
-    host->data = &status2[0];
-    ret = HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
-    if (ret != HAL_OK)
-        return ret;
+        ret = SNOR_WaitBusy(nor, 10000);
+        if (ret) {
+            HAL_DBG("timeout while writing configuration register\n");
 
-    ret = SNOR_WaitBusy(host, 10000);
+            return ret;
+        }
+    } else {
+        uint8_t readIndex;
+        uint8_t status2[2];
 
-    return ret;
+        readIndex = (regIndex == 0) ? 1 : 0;
+        ret = SNOR_ReadStatus(nor, readIndex, &status2[readIndex]);
+        if (ret != HAL_OK)
+            return ret;
+
+        SNOR_WriteEnable(nor);
+        ret = nor->writeReg(nor, SPINOR_OP_WRSR, &status2[0], 2);
+        if (ret != HAL_OK)
+            return ret;
+
+        ret = SNOR_WaitBusy(nor, 10000);
+    }
+
+    return 0;
 }
 
-static HAL_Status SNOR_writeStatus(struct HAL_SFC_HOST *host, uint32_t regIndex, uint8_t status)
-{
-    int32_t ret;
-    SFCCMD_DATA sfcmd;
-    uint8_t writeStatCmd[] = { CMD_WRITE_STATUS, CMD_WRITE_STATUS2,
-                               CMD_WRITE_STATUS3 };
-
-    SNOR_WriteEn(host);
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = writeStatCmd[regIndex];
-    sfcmd.b.datasize = 1;
-    sfcmd.b.rw = SFC_WRITE;
-
-    host->data = &status;
-    ret = HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
-    if (ret != HAL_OK)
-        return ret;
-
-    ret = SNOR_WaitBusy(host, 10000); // 10ms
-
-    return ret;
-}
-
-HAL_Status SNOR_DeviceReset(struct HAL_SFC_HOST *host)
-{
-    int32_t ret = HAL_OK;
-    SFCCMD_DATA sfcmd;
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_ENABLE_RESER;
-    HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_RESET_DEVICE;
-    HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
-    if (ret != HAL_OK)
-        return ret;
-
-    ret = SNOR_WaitBusy(host, 10000);
-
-    return ret;
-}
-
-static HAL_Status SNOR_EnableQE(struct HAL_SFC_HOST *host)
+static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
 {
     int32_t ret = HAL_OK;
     int regIndex;
     int bitOffset;
     uint8_t status;
-    struct SFNOR_DEV *pDev = &s_snorDev;
+    uint8_t id = JEDEC_MFR(nor->info->id);
 
-    if (pDev->manufacturer == MID_GIGADEV ||
-        pDev->manufacturer == MID_WINBOND ||
-        pDev->manufacturer == MID_MACRONIX) {
-        regIndex = pDev->QEBits >> 3;
-        bitOffset = pDev->QEBits & 0x7;
-        ret = SNOR_ReadStatus(host, regIndex, &status);
+    if (id == MID_GIGADEV ||
+        id == MID_WINBOND ||
+        id == MID_MACRONIX) {
+        regIndex = nor->info->QEBits >> 3;
+        bitOffset = nor->info->QEBits & 0x7;
+        ret = SNOR_ReadStatus(nor, regIndex, &status);
         if (ret != HAL_OK)
             return ret;
 
         if (status & (1 << bitOffset)) //is QE bit set
             return HAL_OK;
 
-        status |= (1 << bitOffset);
-
-        return pDev->writeStatus(host, regIndex, status);
+        ret = SNOR_WriteStatus(nor, regIndex, &status);
     }
 
     return ret;
 }
 
-static HAL_Status SNOR_ProgDataRaw(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
+/* Enable/disable 4-byte addressing mode. */
+static HAL_Status SNOR_Set4byte(struct SPI_NOR *nor, const struct FLASH_INFO *info, int enable)
 {
-    int32_t ret;
-    SFCCMD_DATA sfcmd;
-    SFCCTRL_DATA sfctrl;
-    struct SFNOR_DEV *pDev = &s_snorDev;
+    int status;
+    bool need_wren = false;
+    uint8_t cmd;
+    uint8_t id = JEDEC_MFR(info->id);
 
-    /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
-    SNOR_WriteEn(host);
+    switch (id) {
+    case MID_ST:
+    case MID_MICRON:
+        /* Some Micron need WREN command; all will accept it */
+        need_wren = HAL_TRUE;
+    case MID_MACRONIX:
+    case MID_WINBOND:
+    case MID_GIGADEV:
+        if (need_wren)
+            SNOR_WriteEnable(nor);
 
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = pDev->ProgCmd;
-    sfcmd.b.addrbits = SFC_ADDR_24BITS;
-    sfcmd.b.datasize = size;
-    sfcmd.b.rw = SFC_WRITE;
-    if (pDev->addrMode == ADDR_MODE_4BYTE)
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-
-    sfctrl.d32 = 0;
-    sfctrl.b.datalines = pDev->progLines;
-    if (pDev->ProgCmd == CMD_PAGE_PROG_A4)
-        sfctrl.b.addrlines = SFC_4BITS_LINE;
-    ;
-
-    host->data = pData;
-    ret = HAL_SFC_XferRequest(host, sfcmd.d32, sfctrl.d32, addr);
-    if (ret != HAL_OK)
-        return ret;
-
-    ret = SNOR_WaitBusy(host, 10000);
-
-    return ret;
-}
-
-static HAL_Status SNOR_ReadDataRaw(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
-{
-    int32_t ret;
-    SFCCMD_DATA sfcmd;
-    SFCCTRL_DATA sfctrl;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-
-    /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = pDev->readCmd;
-    sfcmd.b.datasize = size;
-    sfcmd.b.addrbits = SFC_ADDR_24BITS;
-
-    sfctrl.d32 = 0;
-    sfctrl.b.datalines = pDev->readLines;
-
-    if (pDev->readCmd == CMD_FAST_READ_X1 ||
-        pDev->readCmd == CMD_FAST_READ_X4 ||
-        pDev->readCmd == CMD_FAST_READ_X2 ||
-        pDev->readCmd == CMD_FAST_4READ_X4) {
-        sfcmd.b.dummybits = 8;
-    } else if (pDev->readCmd == CMD_FAST_READ_A4) {
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-        addr = (addr << 8) | 0xFF; //Set M[7:0] = 0xFF
-        sfcmd.b.dummybits = 4;
-        sfctrl.b.addrlines = SFC_4BITS_LINE;
-    }
-
-    if (pDev->addrMode == ADDR_MODE_4BYTE)
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-
-    host->data = pData;
-    ret = HAL_SFC_XferRequest(host, sfcmd.d32, sfctrl.d32, addr);
-
-    return ret;
-}
-
-static HAL_Status SNOR_ProgDataRaw_DMA(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
-{
-    int32_t ret;
-    SFCCMD_DATA sfcmd;
-    SFCCTRL_DATA sfctrl;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-
-    /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
-    SNOR_WriteEn(host);
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = pDev->ProgCmd;
-    sfcmd.b.addrbits = SFC_ADDR_24BITS;
-    sfcmd.b.datasize = size;
-    sfcmd.b.rw = SFC_WRITE;
-    if (pDev->addrMode == ADDR_MODE_4BYTE)
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-
-    sfctrl.d32 = 0;
-    sfctrl.b.datalines = pDev->progLines;
-    if (pDev->ProgCmd == CMD_PAGE_PROG_A4)
-        sfctrl.b.addrlines = SFC_4BITS_LINE;
-    ;
-
-    host->data = pData;
-    ret = HAL_SFC_XferRequest_DMA(host, sfcmd.d32, sfctrl.d32, addr);
-
-    return ret;
-}
-
-static HAL_Status SNOR_ReadDataRaw_DMA(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
-{
-    int32_t ret;
-    SFCCMD_DATA sfcmd;
-    SFCCTRL_DATA sfctrl;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-
-    /* HAL_DBG("%s %lx %lx\n", __func__, addr, size); */
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = pDev->readCmd;
-    sfcmd.b.datasize = size;
-    sfcmd.b.addrbits = SFC_ADDR_24BITS;
-
-    sfctrl.d32 = 0;
-    sfctrl.b.datalines = pDev->readLines;
-
-    if (pDev->readCmd == CMD_FAST_READ_X1 ||
-        pDev->readCmd == CMD_FAST_READ_X4 ||
-        pDev->readCmd == CMD_FAST_READ_X2 ||
-        pDev->readCmd == CMD_FAST_4READ_X4) {
-        sfcmd.b.dummybits = 8;
-    } else if (pDev->readCmd == CMD_FAST_READ_A4) {
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-        addr = (addr << 8) | 0xFF; //Set M[7:0] = 0xFF
-        sfcmd.b.dummybits = 4;
-        sfctrl.b.addrlines = SFC_4BITS_LINE;
-    }
-
-    if (pDev->addrMode == ADDR_MODE_4BYTE)
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-
-    host->data = pData;
-    ret = HAL_SFC_XferRequest_DMA(host, sfcmd.d32, sfctrl.d32, addr);
-
-    return ret;
-}
-
-HAL_Status SNOR_Read_Parameter(struct HAL_SFC_HOST *host, uint32_t addr, uint8_t *data)
-{
-    SFCCMD_DATA sfcmd;
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_READ_PARAMETER;
-    sfcmd.b.datasize = 1;
-    sfcmd.b.addrbits = SFC_ADDR_24BITS;
-    sfcmd.b.dummybits = 8;
-
-    host->data = data;
-
-    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, addr);
-}
-
-struct FLASH_INFO *SNOR_get_flash_info(uint8_t *flashId)
-{
-    uint32_t i;
-    uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
-
-    for (i = 0; i < (sizeof(spiFlashbl) / sizeof(struct FLASH_INFO)); i++) {
-        if (spiFlashbl[i].id == id)
-            return &spiFlashbl[i];
-    }
-
-    return NULL;
-}
-
-/* Adjust flash info in ram base on parameter */
-void *SNOR_flash_info_adjust(struct HAL_SFC_HOST *host, struct FLASH_INFO *spi_flash_info)
-{
-    uint32_t addr;
-    uint8_t paraVersion;
-
-    if (s_spiFlashInfo->id == 0xc84019) {
-        addr = 0x09;
-        SNOR_Read_Parameter(host, addr, &paraVersion);
-        if (paraVersion == 0x06) {
-            spi_flash_info->QEBits = 9;
-            spi_flash_info->progCmd_4 = 0x34;
+        cmd = enable ? SPINOR_OP_EN4B : SPINOR_OP_EX4B;
+        status = nor->writeReg(nor, cmd, NULL, 0);
+        if (!status && !enable &&
+            id == MID_WINBOND) {
+            /*
+             * On Winbond W25Q256FV, leaving 4byte mode causes
+             * the Extended Address Register to be set to 1, so all
+             * 3-byte-address reads come from the second 16M.
+             * We must clear the register to enable normal behavior.
+             */
+            SNOR_WriteEnable(nor);
+            nor->cmdBuf[0] = 0;
+            nor->writeReg(nor, SPINOR_OP_WREAR, nor->cmdBuf, 1);
         }
+    default:
+        break;
     }
-
-    return 0;
-}
-
-HAL_Status SNOR_XmmcInit(struct HAL_SFC_HOST *host, uint8_t cs)
-{
-    SFCCMD_DATA sfcmd;
-    SFCCTRL_DATA sfctrl;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-
-    HAL_ASSERT(cs < SFC_CHIP_CNT);
-
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = pDev->readCmd;
-    sfcmd.b.addrbits = SFC_ADDR_24BITS;
-
-    sfctrl.d32 = 0;
-    sfctrl.b.datalines = pDev->readLines;
-
-    if (pDev->readCmd == CMD_FAST_READ_X1 ||
-        pDev->readCmd == CMD_FAST_READ_X4 ||
-        pDev->readCmd == CMD_FAST_READ_X2 ||
-        pDev->readCmd == CMD_FAST_4READ_X4) {
-        sfcmd.b.dummybits = 8;
-    } else if (pDev->readCmd == CMD_FAST_READ_A4) {
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-        sfcmd.b.dummybits = 4;
-        sfctrl.b.addrlines = SFC_4BITS_LINE;
-    }
-
-    if (pDev->addrMode == ADDR_MODE_4BYTE)
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-
-    host->xmmcDev[cs].ctrl = sfctrl.d32;
-    host->xmmcDev[cs].readCmd = sfcmd.d32;
-    host->xmmcDev[cs].writeCmd = 0;
 
     return HAL_OK;
-}
-/********************* Public Function Definition ****************************/
-/** @defgroup SNOR_Exported_Functions_Group3 IO Functions
- @verbatim
-
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
- This section provides functions allowing to IO controlling:
-
- @endverbatim
- *  @{
- */
-
-/**
- * @brief  Flash erase with erase type.
- * @param  host: SFC host.
- * @param  addr: byte address.
- * @param  eraseType: erase type.
- * @return HAL_Status.
- */
-HAL_Status HAL_SNOR_Erase(struct HAL_SFC_HOST *host, uint32_t addr, NOR_ERASE_TYPE eraseType)
-{
-    int32_t ret;
-    SFCCMD_DATA sfcmd;
-    int32_t timeout[] = { 400, 2000, 40000 };
-    struct SFNOR_DEV *pDev = &s_snorDev;
-
-    /* HAL_DBG("%s %lx %x\n", __func__, addr / 0x200, eraseType); */
-    if (eraseType > ERASE_CHIP)
-        return HAL_INVAL;
-
-    ret = SNOR_WriteEn(host);
-
-    sfcmd.d32 = 0;
-    if (eraseType == ERASE_BLOCK64K)
-        sfcmd.b.cmd = pDev->blkEraseCmd;
-    else if (eraseType == ERASE_SECTOR)
-        sfcmd.b.cmd = pDev->secEraseCmd;
-    else
-        sfcmd.b.cmd = CMD_CHIP_ERASE;
-
-    sfcmd.b.addrbits =
-        (eraseType != ERASE_CHIP) ? SFC_ADDR_24BITS : SFC_ADDR_0BITS;
-    if ((pDev->addrMode == ADDR_MODE_4BYTE) && (eraseType != ERASE_CHIP))
-        sfcmd.b.addrbits = SFC_ADDR_32BITS;
-
-    if (ret != HAL_OK)
-        return ret;
-
-    ret = HAL_SFC_XferRequest(host, sfcmd.d32, 0, addr);
-    if (ret != HAL_OK)
-        return ret;
-
-    ret = SNOR_WaitBusy(host, timeout[eraseType] * 1000);
-
-    return ret;
-}
-
-/**
- * @brief  Flash block erase.
- * @param  host: SFC host.
- * @param  addr: byte address.
- * @return HAL_Status.
- */
-HAL_Status HAL_SNOR_EraseBlk(struct HAL_SFC_HOST *host, uint32_t addr)
-{
-    return HAL_SNOR_Erase(host, addr, ERASE_BLOCK64K);
 }
 
 /**
  * @brief  Flash continuous writing.
- * @param  host: SFC host.
- * @param  addr: byte address.
- * @param  pData: source address.
- * @param  size: number of bytes.
+ * @param  nor: nor dev.
+ * @param  from: byte address.
+ * @param  buf: source address.
+ * @param  len: number of bytes.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_ProgData(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
+uint32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_t len)
 {
-    int32_t ret = HAL_OK;
-    uint32_t pageSize, len;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-    uint8_t *pBuf = (uint8_t *)pData;
+    uint32_t ret;
+    uint8_t *pBuf = (uint8_t *)buf;
+    uint32_t size, remain = len;
 
-    if ((addr + size) > (pDev->capacity << 9))
-        return HAL_INVAL;
+    /* HAL_DBG("%s from 0x%08x, len %lx\n", __func__, from, len); */
+    if ((from + len) > nor->size)
+        return 0;
 
-    pageSize = NOR_PAGE_SIZE;
-    while (size) {
-        len = HAL_MIN(pageSize, size);
-        ret = SNOR_ProgDataRaw(host, addr, pBuf, len);
-        if (ret != HAL_OK) {
-            HAL_DBG("%s %lu ret= %ld\n", __func__, addr >> 9, ret);
+    while (remain) {
+        size = HAL_MIN(READ_MAX_IOSIZE, remain);
+        ret = nor->read(nor, from, size, pBuf);
+        if (ret != size) {
+            HAL_DBG("%s %lu ret= %ld\n", __func__, from >> 9, ret);
 
-            return ret;
+            return 0;
         }
-        size -= len;
-        addr += len;
-        pBuf += len;
+        remain -= size;
+        from += size;
+        pBuf += size;
     }
 
-    return ret;
+    return len;
 }
 
 /**
  * @brief  Flash continuous reading.
- * @param  host: SFC host.
- * @param  addr: byte address.
- * @param  pData: destination address.
- * @param  size: number of bytes.
+ * @param  nor: nor dev.
+ * @param  to: byte address.
+ * @param  buf: source address.
+ * @param  len: number of bytes.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_ReadData(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
+uint32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t len)
 {
-    int32_t ret = HAL_OK;
-    uint32_t len;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-    uint8_t *pBuf = (uint8_t *)pData;
+    uint32_t ret;
+    uint8_t *pBuf = (uint8_t *)buf;
+    uint32_t size, remain = len;
 
-    if ((addr + size) > (pDev->capacity << 9))
-        return HAL_INVAL;
+    /* HAL_DBG("%s to 0x%08x, len %lx\n", __func__, to, len); */
+    if ((to + len) > nor->size)
+        return 0;
 
-    while (size) {
-        len = HAL_MIN(size, SFC_MAX_IOSIZE);
-        ret = SNOR_ReadDataRaw(host, addr, pBuf, len);
-        if (ret != HAL_OK) {
-            HAL_DBG("%s %lu ret= %ld\n", __func__, addr >> 9, ret);
+    while (remain) {
+        size = HAL_MIN(nor->pageSize, remain);
+        SNOR_WriteEnable(nor);
+        ret = nor->write(nor, to, size, pBuf);
+        if (ret != size) {
+            HAL_DBG("%s %lu ret= %ld\n", __func__, to >> 9, ret);
 
-            return ret;
+            return 0;
         }
-        size -= len;
-        addr += len;
-        pBuf += len;
+        SNOR_WaitBusy(nor, 10000);
+        remain -= size;
+        to += size;
+        pBuf += size;
     }
 
-    return ret;
+    return len;
 }
 
 /**
- * @brief  Flash continuous writing in DMA mode.
- * @param  host: SFC host.
+ * @brief  Flash erase with erase type.
+ * @param  nor: nor dev.
  * @param  addr: byte address.
- * @param  pData: source address.
- * @param  size: number of bytes.
+ * @param  eraseType: erase type.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_ProgData_DMA(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
+HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE eraseType)
 {
-    int32_t ret = HAL_OK;
-    uint32_t pageSize, len;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-    uint8_t *pBuf = (uint8_t *)pData;
-    int32_t timeOut;
+    uint32_t ret;
+    int32_t timeout[] = { 400, 2000, 40000 };
 
-    if ((addr + size) > (pDev->capacity << 9))
-        return HAL_INVAL;
+    /* HAL_DBG("%s addr lx\n", __func__, addr); */
+    SNOR_WriteEnable(nor);
+    if (eraseType == ERASE_SECTOR)
+        ret = SNOR_EraseSec(nor, addr);
+    else
+        ret = SNOR_EraseBlk(nor, addr);
+    if (ret != HAL_OK)
+        return ret;
 
-    pageSize = NOR_PAGE_SIZE;
-    while (size) {
-        len = HAL_MIN(pageSize, size);
-        ret = SNOR_ProgDataRaw_DMA(host, addr, pBuf, len);
-        if (ret != HAL_OK) {
-            HAL_DBG("%s %lu ret= %ld\n", __func__, addr >> 9, ret);
-
-            return ret;
-        }
-        timeOut = len * 10;
-        while (host->status == HAL_LOCKED && timeOut) {
-            HAL_DelayUs(1);
-            timeOut--;
-        }
-        if (timeOut <= 0) {
-            HAL_DBG("%s %lu ret= %d\n", __func__, addr >> 9, HAL_TIMEOUT);
-
-            return HAL_TIMEOUT;
-        }
-        size -= len;
-        addr += len;
-        pBuf += len;
-    }
-
-    return ret;
-}
-
-/**
- * @brief  Flash continuous reading in DMA mode.
- * @param  host: SFC host.
- * @param  addr: byte address.
- * @param  pData: destination address.
- * @param  size: number of bytes.
- * @return HAL_Status.
- */
-HAL_Status HAL_SNOR_ReadData_DMA(struct HAL_SFC_HOST *host, uint32_t addr, void *pData, uint32_t size)
-{
-    int32_t ret = HAL_OK;
-    uint32_t len;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-    uint8_t *pBuf = (uint8_t *)pData;
-    int32_t timeOut;
-
-    if ((addr + size) > (pDev->capacity << 9))
-        return HAL_INVAL;
-
-    while (size) {
-        len = HAL_MIN(size, SFC_MAX_IOSIZE);
-        ret = SNOR_ReadDataRaw_DMA(host, addr, pBuf, len);
-        timeOut = len * 10;
-        if (ret != HAL_OK) {
-            HAL_DBG("%s %lu ret= %ld\n", __func__, addr >> 9, ret);
-
-            return ret;
-        }
-        while (host->status == HAL_LOCKED && timeOut) {
-            HAL_DelayUs(1);
-            timeOut--;
-        }
-        if (timeOut <= 0) {
-            HAL_DBG("%s %lu ret= %d\n", __func__, addr >> 9, HAL_TIMEOUT);
-
-            return HAL_TIMEOUT;
-        }
-        size -= len;
-        addr += len;
-        pBuf += len;
-    }
-
-    return ret;
-}
-
-/**
- * @brief  Flash continuous writing according to sectors.
- * @param  host: SFC host.
- * @param  sec: sector address.
- * @param  nSec: number of sectors.
- * @param  pData: source address.
- * @return HAL_Status.
- */
-HAL_Status HAL_SNOR_Write(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t nSec, void *pData)
-{
-    int32_t ret = HAL_OK;
-    uint32_t len, blockSize, offset;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-    uint8_t *pBuf = (uint8_t *)pData;
-
-    if ((sec + nSec) > pDev->capacity)
-        return HAL_INVAL;
-
-    while (nSec) {
-        if (sec < 512 || sec >= pDev->capacity - 512)
-            blockSize = 8;
-        else
-            blockSize = pDev->blockSize;
-
-        offset = (sec & (blockSize - 1));
-        if (!offset) {
-            ret = HAL_SNOR_Erase(host, sec << 9, (blockSize == 8) ? ERASE_SECTOR :
-                                                                    ERASE_BLOCK64K);
-            if (ret != HAL_OK) {
-                HAL_DBG("SNOR_Erase %lu ret= %ld\n", sec, ret);
-                break;
-            }
-        }
-        len = HAL_MIN((blockSize - offset), nSec);
-        ret = HAL_SNOR_ProgData(host, sec << 9, pBuf, len << 9);
-        if (ret != HAL_OK) {
-            HAL_DBG("SNOR_Erase %lu ret= %ld\n", sec, ret);
-            break;
-        }
-        nSec -= len;
-        sec += len;
-        pBuf += len << 9;
-    }
-
-    return ret;
+    return SNOR_WaitBusy(nor, timeout[eraseType] * 1000);
 }
 
 /**
  * @brief  Flash continuous reading according to sectors.
- * @param  host: SFC host.
+ * @param  nor: nor dev.
  * @param  sec: sector address.
  * @param  nSec: number of sectors.
  * @param  pData: destination address.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Read(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t nSec, void *pData)
+uint32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
 {
-    int32_t ret = HAL_OK;
-    uint32_t addr, size, len;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-    uint8_t *pBuf = (uint8_t *)pData;
+    uint32_t ret = HAL_OK;
 
-    if ((sec + nSec) > pDev->capacity)
+    /* HAL_DBG("%s sec 0x%08x, nSec %lx\n", __func__, sec, nSec); */
+    if ((sec + nSec) * 512 > nor->size)
         return HAL_INVAL;
 
-    addr = sec << 9;
-    size = nSec << 9;
-    while (size) {
-        len = HAL_MIN(size, SFC_MAX_IOSIZE);
-        ret = HAL_SNOR_ReadData(host, addr, pBuf, len);
-        if (ret != HAL_OK) {
-            HAL_DBG("SNOR_ReadData %lu ret= %ld\n", addr >> 9, ret);
-            break;
-        }
+    ret = HAL_SNOR_ReadData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
+    if (ret != nSec * nor->sectorSize)
+        return 0;
 
-        size -= len;
-        addr += len;
-        pBuf += len;
-    }
-
-    return ret;
+    return nSec;
 }
 
 /**
- * @brief  Flash continuous writing according to sectors in DMA mode.
- * @param  host: SFC host.
+ * @brief  Flash continuous writing according to sectors.
+ * @param  nor: nor dev.
  * @param  sec: sector address.
  * @param  nSec: number of sectors.
  * @param  pData: source address.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Write_DMA(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t nSec, void *pData)
+uint32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
 {
     int32_t ret = HAL_OK;
-    uint32_t len, blockSize, offset;
-    struct SFNOR_DEV *pDev = &s_snorDev;
-    uint8_t *pBuf = (uint8_t *)pData;
 
-    if ((sec + nSec) > pDev->capacity)
+    /* HAL_DBG("%s sec 0x%08x, nSec %lx\n", __func__, sec, nSec); */
+    if ((sec + nSec) * nor->sectorSize > nor->size)
         return HAL_INVAL;
 
-    while (nSec) {
-        if (sec < 512 || sec >= pDev->capacity - 512)
-            blockSize = 8;
-        else
-            blockSize = pDev->blockSize;
+    ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
+    if (ret != nSec * nor->sectorSize)
+        return ret;
 
-        offset = (sec & (blockSize - 1));
-        if (!offset) {
-            ret = HAL_SNOR_Erase(host, sec << 9, (blockSize == 8) ? ERASE_SECTOR :
-                                                                    ERASE_BLOCK64K);
-            if (ret != HAL_OK) {
-                HAL_DBG("SNOR_Erase %lu ret= %ld\n", sec, ret);
-                break;
-            }
-        }
-        len = HAL_MIN((blockSize - offset), nSec);
-        ret = HAL_SNOR_ProgData_DMA(host, sec << 9, pBuf, len << 9);
-        if (ret != HAL_OK) {
-            HAL_DBG("SNOR_Erase %lu ret= %ld\n", sec, ret);
-            break;
-        }
-        nSec -= len;
-        sec += len;
-        pBuf += len << 9;
-    }
-
-    return ret;
+    return nSec;
 }
 
 /**
- * @brief  Flash continuous reading according to sectors in DMA mode.
- * @param  host: SFC host.
+ * @brief  Flash continuous writing according to sectors.
+ * @param  nor: nor dev.
  * @param  sec: sector address.
  * @param  nSec: number of sectors.
- * @param  pData: destination address.
+ * @param  pData: source address.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Read_DMA(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t nSec, void *pData)
+uint32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
 {
-    int32_t ret = HAL_OK;
-    uint32_t addr, size, len;
-    struct SFNOR_DEV *pDev = &s_snorDev;
+    uint32_t ret = HAL_OK;
     uint8_t *pBuf = (uint8_t *)pData;
+    uint32_t remaining = nSec;
 
-    if ((sec + nSec) > pDev->capacity)
+    /* HAL_DBG("%s sec 0x%08x, nSec %lx\n", __func__, sec, nSec); */
+    if ((sec + nSec) * 512 > nor->size)
         return HAL_INVAL;
 
-    addr = sec << 9;
-    size = nSec << 9;
-    while (size) {
-        len = HAL_MIN(size, SFC_MAX_IOSIZE);
-        ret = HAL_SNOR_ReadData_DMA(host, addr, pBuf, len);
-        if (ret != HAL_OK) {
-            HAL_DBG("SNOR_ReadData %lu ret= %ld\n", addr >> 9, ret);
-            break;
-        }
+    while (remaining) {
+        ret = HAL_SNOR_Erase(nor, sec * nor->sectorSize, ERASE_SECTOR);
+        if (ret != HAL_OK)
+            return 0;
 
-        size -= len;
-        addr += len;
-        pBuf += len;
+        ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, (void *)pBuf, nor->sectorSize);
+        if (ret != nor->sectorSize)
+            return 0;
+
+        pBuf += nor->sectorSize;
+        remaining--;
+        sec++;
     }
 
-    return ret;
+    return nSec;
 }
-
-/** @} */
 
 /** @defgroup SNOR_Exported_Functions_Group4 Init and Deinit Functions
  @verbatim
@@ -991,123 +698,104 @@ HAL_Status HAL_SNOR_Read_DMA(struct HAL_SFC_HOST *host, uint32_t sec, uint32_t n
 
 /**
  * @brief  SFC NOR flash module init.
- * @param  host: SFC host.
+ * @param  nor: nor dev.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Init(struct HAL_SFC_HOST *host)
+HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
 {
-    int32_t i;
-    struct SFNOR_DEV *pDev = &s_snorDev;
     uint8_t idByte[5];
+    struct FLASH_INFO *info;
 
-    HAL_SFC_Init(host);
-    memset(pDev, 0, sizeof(struct SFNOR_DEV));
-    HAL_SNOR_ReadID(host, idByte);
-    HAL_DBG("sfc nor id: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
+    if (!nor->spi) {
+        HAL_DBG("%s no host\n", __func__);
+
+        return HAL_INVAL;
+    }
+    nor->read = (void *)SNOR_ReadData;
+    nor->write = (void *)SNOR_WriteData;
+    nor->readReg = (void *)SNOR_ReadReg;
+    nor->writeReg = (void *)SNOR_WriteReg;
+
+    HAL_SNOR_ReadID(nor, idByte);
+    HAL_DBG("SPI Nor ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
     if ((idByte[0] == 0xFF) || (idByte[0] == 0x00))
-        return HAL_ERROR;
+        return HAL_NODEV;
 
-    pDev->manufacturer = idByte[0];
-    pDev->memType = idByte[1];
-
-    s_spiFlashInfo = SNOR_get_flash_info(idByte);
-    if (s_spiFlashInfo != NULL) {
-        SNOR_flash_info_adjust(host, s_spiFlashInfo);
-        pDev->capacity = 1 << s_spiFlashInfo->density;
-        pDev->blockSize = s_spiFlashInfo->block_size;
-        pDev->pageSize = NOR_SECS_PAGE;
-        pDev->readCmd = s_spiFlashInfo->readCmd;
-        pDev->ProgCmd = s_spiFlashInfo->progCmd;
-        pDev->secEraseCmd = s_spiFlashInfo->sectorEraseCmd;
-        pDev->blkEraseCmd = s_spiFlashInfo->blockEraseCmd;
-        pDev->progLines = DATA_LINES_X1;
-        pDev->readLines = DATA_LINES_X1;
-        pDev->QEBits = s_spiFlashInfo->QEBits;
-
-        i = s_spiFlashInfo->feature & FEA_READ_STATUE_MASK;
-        if (i == 0)
-            pDev->writeStatus = SNOR_writeStatus;
-        else
-            pDev->writeStatus = SNOR_writeStatus2;
-
-        if (s_spiFlashInfo->feature & FEA_4BIT_READ) {
-            if (SNOR_EnableQE(host) == HAL_OK) {
-                pDev->readLines = DATA_LINES_X4;
-                pDev->readCmd = s_spiFlashInfo->readCmd_4;
+    info = SNOR_GerFlashInfo(idByte);
+    if (info) {
+        nor->info = info;
+        nor->pageSize = 256;
+        nor->addrWidth = 3;
+        nor->eraseOpcodeSec = info->sectorEraseCmd;
+        nor->eraseOpcodeBlk = info->blockEraseCmd;
+        nor->readOpcode = info->readCmd;
+        nor->readProto = SNOR_PROTO_1_1_1;
+        nor->readDummy = 8;
+        nor->programOpcode = info->progCmd;
+        nor->writeProto = SNOR_PROTO_1_1_1;
+        nor->name = "spi-nor";
+        nor->sectorSize = info->sectorSize * 512;
+        nor->size = 1 << (info->density + 9);
+        nor->eraseSize = nor->sectorSize;
+        if ((info->feature & FEA_4BIT_READ) && (nor->spi->mode & SPI_RX_QUAD)) {
+            if (SNOR_EnableQE(nor) == HAL_OK) {
+                nor->readOpcode = info->readCmd_4;
+                switch (nor->readOpcode) {
+                case SPINOR_OP_READ_1_4_4:
+                    nor->readDummy = 4;
+                    nor->readProto = SNOR_PROTO_1_4_4;
+                    break;
+                case SPINOR_OP_READ_1_2_2:
+                    nor->readProto = SNOR_PROTO_1_2_2;
+                    break;
+                default:
+                    nor->readProto = SNOR_PROTO_1_1_4;
+                    break;
+                }
             }
         }
-        if ((s_spiFlashInfo->feature & FEA_4BIT_PROG) &&
-            (pDev->readLines == DATA_LINES_X4)) {
-            pDev->progLines = DATA_LINES_X4;
-            pDev->ProgCmd = s_spiFlashInfo->progCmd_4;
+        if ((info->feature & FEA_4BIT_PROG) && (nor->spi->mode & SPI_TX_QUAD)) {
+            nor->programOpcode = info->progCmd_4;
+            switch (nor->programOpcode) {
+            case SPINOR_OP_PP_1_4_4:
+                nor->writeProto = SNOR_PROTO_1_4_4;
+                break;
+            default:
+                nor->writeProto = SNOR_PROTO_1_1_4;
+                break;
+            }
         }
+        if (info->feature & FEA_4BYTE_ADDR)
+            nor->addrWidth = 4;
 
-        if (s_spiFlashInfo->feature & FEA_4BYTE_ADDR)
-            pDev->addrMode = ADDR_MODE_4BYTE;
-        if ((s_spiFlashInfo->feature & FEA_4BYTE_ADDR_MODE))
-            SNOR_Enter4ByteMode(host);
-        HAL_DBG("addrMode: %x\n", pDev->addrMode);
-        HAL_DBG("readLines: %x\n", pDev->readLines);
-        HAL_DBG("progLines: %x\n", pDev->progLines);
-        HAL_DBG("readCmd: %x\n", pDev->readCmd);
-        HAL_DBG("ProgCmd: %x\n", pDev->ProgCmd);
-        HAL_DBG("blkEraseCmd: %x\n", pDev->blkEraseCmd);
-        HAL_DBG("secEraseCmd: %x\n", pDev->secEraseCmd);
-#ifdef SFC_MODE_XMMC_MODE_EN_SHIFT
-        SNOR_XmmcInit(host, 0);
-#endif
+        if ((info->feature & FEA_4BYTE_ADDR_MODE))
+            SNOR_Set4byte(nor, info, HAL_ENABLE);
 
-        return HAL_OK;
+//        HAL_DBG("nor->addrWidth: %x\n", nor->addrWidth);
+//        HAL_DBG("nor->readProto: %x\n", nor->readProto);
+//        HAL_DBG("nor->writeProto: %x\n", nor->writeProto);
+//        HAL_DBG("nor->readCmd: %x\n", nor->readOpcode);
+//        HAL_DBG("nor->programCmd: %x\n", nor->programOpcode);
+//        HAL_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
+//        HAL_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
+//        HAL_DBG("nor->size: %ldMB\n", nor->size >> 20);
+    } else {
+        return HAL_NODEV;
     }
-
-    for (i = 0; i < sizeof(snorDevCode); i++) {
-        if (idByte[2] == snorDevCode[i]) {
-            pDev->capacity = snorCapacity[i] >> 9;
-            break;
-        }
-    }
-
-    if (i >= sizeof(snorDevCode))
-        return HAL_ERROR;
-
-    pDev->QEBits = 9;
-    pDev->blockSize = NOR_SECS_BLK;
-    pDev->pageSize = NOR_SECS_PAGE;
-
-    pDev->readCmd = CMD_READ_DATA;
-    pDev->ProgCmd = CMD_PAGE_PROG;
-    pDev->secEraseCmd = CMD_SECTOR_ERASE;
-    pDev->blkEraseCmd = CMD_BLOCK_ERASE;
-    pDev->writeStatus = SNOR_writeStatus2;
-
-    HAL_DBG("addrMode: %x\n", pDev->addrMode);
-    HAL_DBG("readLines: %x\n", pDev->readLines);
-    HAL_DBG("progLines: %x\n", pDev->progLines);
-    HAL_DBG("readCmd: %x\n", pDev->readCmd);
-    HAL_DBG("ProgCmd: %x\n", pDev->ProgCmd);
-    HAL_DBG("blkEraseCmd: %x\n", pDev->blkEraseCmd);
-    HAL_DBG("secEraseCmd: %x\n", pDev->secEraseCmd);
-#ifdef SFC_MODE_XMMC_MODE_EN_SHIFT
-    SNOR_XmmcInit(host, 0);
-#endif
 
     return HAL_OK;
 }
 
 /**
  * @brief  SFC NOR flash module deinit.
- * @param  host: SFC host.
+ * @param  nor: nor dev.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Deinit(struct HAL_SFC_HOST *host)
+HAL_Status HAL_SNOR_Deinit(struct SPI_NOR *nor)
 {
-    uint32_t ret;
+    memset(nor, 0, sizeof(struct SPI_NOR));
 
-    ret = SNOR_DeviceReset(host);
-    if (ret != HAL_OK)
-        return ret;
-
-    return HAL_SFC_Deinit(host);
+    return HAL_OK;
 }
 
 /** @} */
@@ -1118,55 +806,35 @@ HAL_Status HAL_SNOR_Deinit(struct HAL_SFC_HOST *host)
 
 /**
  * @brief  Read flash ID.
- * @param  host: SFC host.
+ * @param  nor: nor dev.
  * @param  data: address to storage flash ID value.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_ReadID(struct HAL_SFC_HOST *host, uint8_t *data)
+HAL_Status HAL_SNOR_ReadID(struct SPI_NOR *nor, uint8_t *data)
 {
-    SFCCMD_DATA sfcmd;
+    uint32_t ret;
+    uint8_t *id = data;
 
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_READ_JEDECID;
-    sfcmd.b.datasize = 3;
+    ret = nor->readReg(nor, SPINOR_OP_RDID, id, 3);
+    if (ret) {
+        HAL_DBG("error reading JEDEC ID%x %x %x\n", id[0], id[1], id[2]);
 
-    host->data = data;
+        return HAL_ERROR;
+    }
 
-    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
+    return HAL_OK;
 }
 
 /**
  * @brief  Get flash capacity.
- * @return uint32_t: flash capacity, sectors.
+ * @param  nor: nor dev.
+ * @return uint32_t: flash capacity, n bytes.
  */
-uint32_t HAL_SNOR_GetCapacity(void)
+uint32_t HAL_SNOR_GetCapacity(struct SPI_NOR *nor)
 {
-    struct SFNOR_DEV *pDev = &s_snorDev;
-
-    return pDev->capacity;
+    return nor->size;
 }
 
-#ifdef SFC_MODE_XMMC_MODE_EN_SHIFT
-/**
- * @brief  Enable XIP mode
- * @param  host: SFC host.
- * @return HAL_Status
- */
-HAL_Status HAL_SNOR_XipEnable(struct HAL_SFC_HOST *host)
-{
-    return HAL_SFC_XmmcRequest(host, 1);
-}
-
-/**
- * @brief  Disable XIP mode
- * @param  host: SFC host.
- * @return HAL_Status
- */
-HAL_Status HAL_SNOR_XipDisable(struct HAL_SFC_HOST *host)
-{
-    return HAL_SFC_XmmcRequest(host, 0);
-}
-#endif
 /** @} */
 
 #endif

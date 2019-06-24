@@ -40,30 +40,30 @@
 
 /********************* Private Function Definition ***************************/
 
-static HAL_Status PSRAM_XmmcInit(struct HAL_SFC_HOST *host, uint8_t cs)
+static HAL_Status PSRAM_XmmcInit(struct HAL_FSPI_HOST *host, uint8_t cs)
 {
-    SFCCMD_DATA readCmd, writeCmd;
-    SFCCTRL_DATA sfctrl;
+    FSPICMD_DATA readCmd, writeCmd;
+    FSPICTRL_DATA FSPItrl;
 
-    HAL_ASSERT(cs < SFC_CHIP_CNT);
+    HAL_ASSERT(cs < FSPI_CHIP_CNT);
 
     readCmd.d32 = 0;
     readCmd.b.cmd = CMD_FAST_READ_A4;
     readCmd.b.dummybits = 6;
-    readCmd.b.addrbits = SFC_ADDR_24BITS;
+    readCmd.b.addrbits = FSPI_ADDR_24BITS;
 
     writeCmd.d32 = 0;
     writeCmd.b.cmd = CMD_PAGE_PROG_A4;
     writeCmd.b.dummybits = 0;
-    writeCmd.b.addrbits = SFC_ADDR_24BITS;
+    writeCmd.b.addrbits = FSPI_ADDR_24BITS;
 
-    sfctrl.d32 = 0;
-    sfctrl.b.cmdlines = SFC_4BITS_LINE;
-    sfctrl.b.datalines = SFC_4BITS_LINE;
-    sfctrl.b.addrlines = SFC_4BITS_LINE;
+    FSPItrl.d32 = 0;
+    FSPItrl.b.cmdlines = FSPI_4BITS_LINE;
+    FSPItrl.b.datalines = FSPI_4BITS_LINE;
+    FSPItrl.b.addrlines = FSPI_4BITS_LINE;
 
     host->xmmcDev[cs].type = DEV_PSRAM;
-    host->xmmcDev[cs].ctrl = sfctrl.d32;
+    host->xmmcDev[cs].ctrl = FSPItrl.d32;
     host->xmmcDev[cs].readCmd = readCmd.d32;
     host->xmmcDev[cs].writeCmd = writeCmd.d32;
 
@@ -87,17 +87,17 @@ static HAL_Status PSRAM_XmmcInit(struct HAL_SFC_HOST *host, uint8_t cs)
 
 /**
  * @brief  Psram init.
- * @param  host: SFC host.
+ * @param  host: FSPI host.
  * @param  cs: chip select.
  * @return HAL_Status
  */
-HAL_Status HAL_PSRAM_Init(struct HAL_SFC_HOST *host, uint8_t cs)
+HAL_Status HAL_PSRAM_Init(struct HAL_FSPI_HOST *host, uint8_t cs)
 {
     uint8_t idByte[5];
 
-    HAL_SFC_Init(host);
+    HAL_FSPI_Init(host);
     HAL_PSRAM_ReadID(host, idByte);
-    HAL_DBG("sfc nor id: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
+    HAL_DBG("FSPI nor id: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
 
     PSRAM_XmmcInit(host, cs);
 
@@ -106,14 +106,14 @@ HAL_Status HAL_PSRAM_Init(struct HAL_SFC_HOST *host, uint8_t cs)
 
 /**
  * @brief  Psram deinit.
- * @param  host: SFC host.
+ * @param  host: FSPI host.
  * @param  cs: chip select.
  * @return HAL_Status
  */
-HAL_Status HAL_PSRAM_Deinit(struct HAL_SFC_HOST *host, uint8_t cs)
+HAL_Status HAL_PSRAM_Deinit(struct HAL_FSPI_HOST *host, uint8_t cs)
 {
-    HAL_SFC_Deinit(host);
-    memset(&host->xmmcDev[cs], 0, sizeof(struct HAL_SFC_XMMC_DEV));
+    HAL_FSPI_Deinit(host);
+    memset(&host->xmmcDev[cs], 0, sizeof(struct HAL_FSPI_XMMC_DEV));
 
     return HAL_OK;
 }
@@ -126,45 +126,45 @@ HAL_Status HAL_PSRAM_Deinit(struct HAL_SFC_HOST *host, uint8_t cs)
 
 /**
  * @brief  Read psram ID.
- * @param  host: SFC host.
+ * @param  host: FSPI host.
  * @param  data: ID buffer.
  * @return HAL_Status
  */
-HAL_Status HAL_PSRAM_ReadID(struct HAL_SFC_HOST *host, uint8_t *data)
+HAL_Status HAL_PSRAM_ReadID(struct HAL_FSPI_HOST *host, uint8_t *data)
 {
-    SFCCMD_DATA sfcmd;
+    FSPICMD_DATA FSPImd;
 
     HAL_ASSERT(data != NULL);
 
-    sfcmd.d32 = 0;
-    sfcmd.b.cmd = CMD_READ_JEDECID;
-    sfcmd.b.datasize = 3;
-    sfcmd.b.addrbits = SFC_ADDR_24BITS;
+    FSPImd.d32 = 0;
+    FSPImd.b.cmd = CMD_READ_JEDECID;
+    FSPImd.b.datasize = 3;
+    FSPImd.b.addrbits = FSPI_ADDR_24BITS;
 
     host->data = data;
 
-    return HAL_SFC_XferRequest(host, sfcmd.d32, 0, 0);
+    return HAL_FSPI_XferRequest(host, FSPImd.d32, 0, 0);
 }
 
 /**
  * @brief  Psram XMMC mode enable.
- * @param  host: SFC host.
+ * @param  host: FSPI host.
  * @return HAL_Status
  * Access data in memory map mode.
  */
-HAL_Status HAL_PSRAM_XmmcEnable(struct HAL_SFC_HOST *host)
+HAL_Status HAL_PSRAM_XmmcEnable(struct HAL_FSPI_HOST *host)
 {
-    return HAL_SFC_XmmcRequest(host, 1);
+    return HAL_FSPI_XmmcRequest(host, 1);
 }
 
 /**
  * @brief  Psram XMMC mode disable.
- * @param  host: SFC host.
+ * @param  host: FSPI host.
  * @return HAL_Status
  */
-HAL_Status HAL_PSRAM_XmmcDisable(struct HAL_SFC_HOST *host)
+HAL_Status HAL_PSRAM_XmmcDisable(struct HAL_FSPI_HOST *host)
 {
-    return HAL_SFC_XmmcRequest(host, 0);
+    return HAL_FSPI_XmmcRequest(host, 0);
 }
 
 /** @} */

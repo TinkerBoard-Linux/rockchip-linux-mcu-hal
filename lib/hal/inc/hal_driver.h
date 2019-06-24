@@ -100,17 +100,21 @@
 #include "hal_sdio.h"
 #endif
 
-#ifdef HAL_SFC_MODULE_ENABLED
-#include "hal_sfc.h"
-
 #ifdef HAL_SNOR_MODULE_ENABLED
 #include "hal_snor.h"
+#endif
+
+#ifdef HAL_SFC_MODULE_ENABLED
+#include "hal_sfc.h"
+#endif
+
+#ifdef HAL_FSPI_MODULE_ENABLED
+#include "hal_fspi.h"
 #endif
 
 #ifdef HAL_PSRAM_MODULE_ENABLED
 #include "hal_psram.h"
 #endif
-#endif /* HAL_SFC_MODULE_ENABLED */
 
 #ifdef HAL_TOUCHKEY_MODULE_ENABLED
 #include "hal_touchkey.h"

@@ -7,29 +7,29 @@
  *  @{
  */
 
-/** @addtogroup SFC
+/** @addtogroup FSPI
  *  @{
  */
 
-#ifndef _HAL_SFC_H_
-#define _HAL_SFC_H_
+#ifndef _HAL_FSPI_H_
+#define _HAL_FSPI_H_
 
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
-/** @defgroup SFC_Exported_Definition_Group1 Basic Definition
+/** @defgroup FSPI_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 
-#define HAL_SFC_QUAD_ENABLE
+#define HAL_FSPI_QUAD_ENABLE
 
 /***************************** Structure Definition **************************/
-/** SFC_CTRL register datalines, addrlines and cmdlines value */
-#define SFC_LINES_X1 (0)
-#define SFC_LINES_X2 (1)
-#define SFC_LINES_X4 (2)
+/** FSPI_CTRL register datalines, addrlines and cmdlines value */
+#define FSPI_LINES_X1 (0)
+#define FSPI_LINES_X2 (1)
+#define FSPI_LINES_X4 (2)
 
-/** SFC_CTRL bit union */
+/** FSPI_CTRL bit union */
 typedef union {
     uint32_t d32;
     struct {
@@ -44,19 +44,19 @@ typedef union {
         unsigned addrbits : 5;
         unsigned reserved31_21 : 11;
     } b;
-} SFCCTRL_DATA;
+} FSPICTRL_DATA;
 
-/** SFC_CMD register rw value without shift */
-#define SFC_READ  (0)
-#define SFC_WRITE (1)
+/** FSPI_CMD register rw value without shift */
+#define FSPI_READ  (0)
+#define FSPI_WRITE (1)
 
-/** SFC_CMD regitser addrbits value without shift */
-#define SFC_ADDR_0BITS  (0)
-#define SFC_ADDR_24BITS (1)
-#define SFC_ADDR_32BITS (2)
-#define SFC_ADDR_XBITS  (3)
+/** FSPI_CMD regitser addrbits value without shift */
+#define FSPI_ADDR_0BITS  (0)
+#define FSPI_ADDR_24BITS (1)
+#define FSPI_ADDR_32BITS (2)
+#define FSPI_ADDR_XBITS  (3)
 
-/** SFC_CMD bit union */
+/** FSPI_CMD bit union */
 typedef union {
     uint32_t d32;
     struct {
@@ -68,36 +68,37 @@ typedef union {
         unsigned datasize : 14; /* transferred bytes number */
         unsigned cs : 2; /* chip select */
     } b;
-} SFCCMD_DATA;
+} FSPICMD_DATA;
 
 typedef enum {
     DEV_NOR = 0,
     DEV_PSRAM,
-} eSFC_devType;
+} eFSPI_devType;
 
-struct HAL_SFC_XMMC_DEV {
-    eSFC_devType type;
+struct HAL_FSPI_XMMC_DEV {
+    eFSPI_devType type;
     uint32_t ctrl;
     uint32_t readCmd;
     uint32_t writeCmd;
 };
 
-struct HAL_SFC_HOST {
-    struct SFC_REG *instance;
+struct HAL_FSPI_HOST {
+    struct FSPI_REG *instance;
     HAL_LockStatus status;
     uint32_t version;
-    struct HAL_SFC_XMMC_DEV xmmcDev[SFC_CHIP_CNT];
+    struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT];
 };
 /** @} */
 /***************************** Function Declare ******************************/
-HAL_Status HAL_SFC_Init(struct HAL_SFC_HOST *host);
-HAL_Status HAL_SFC_Deinit(struct HAL_SFC_HOST *host);
+HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host);
+HAL_Status HAL_FSPI_Deinit(struct HAL_FSPI_HOST *host);
 #ifdef HAL_SNOR_MODULE_ENABLED
-HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op);
+HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op);
 #endif
-HAL_Status HAL_SFC_IRQHelper(struct HAL_SFC_HOST *host);
-HAL_Status HAL_SFC_MaskDMAInterrupt(struct HAL_SFC_HOST *host);
-HAL_Status HAL_SFC_UnmaskDMAInterrupt(struct HAL_SFC_HOST *host);
+HAL_Status HAL_FSPI_IRQHelper(struct HAL_FSPI_HOST *host);
+HAL_Status HAL_FSPI_MaskDMAInterrupt(struct HAL_FSPI_HOST *host);
+HAL_Status HAL_FSPI_UnmaskDMAInterrupt(struct HAL_FSPI_HOST *host);
+HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on);
 #endif
 
 /** @} */
