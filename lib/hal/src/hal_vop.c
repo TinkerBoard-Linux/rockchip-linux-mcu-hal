@@ -483,7 +483,7 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     VOP_Write(&g_VOP_RegMir.WIN0_CBCR_MST + regOffset,
               &pReg->WIN0_CBCR_MST + regOffset, pWinState->cbcrAddr);
 
-    dspInfo = (pWinState->crtcH - 1) << 16 | (pWinState->crtcW - 1);
+    dspInfo = (pWinState->srcH - 1) << 16 | (pWinState->srcW - 1);
     dspStx = pWinState->hwCrtcX + pModeInfo->crtcHtotal -
              pModeInfo->crtcHsyncStart;
     dspSty = pWinState->hwCrtcY + pModeInfo->crtcVtotal -
@@ -1571,6 +1571,9 @@ HAL_Status HAL_VOP_EnableDebugIrq(struct VOP_REG *pReg)
     VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_POST_EMPTY_INTR_EN_SHIFT,
                   VOP_INTR_EN_POST_EMPTY_INTR_EN_MASK, 1);
 
+    VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_SHIFT,
+                  VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_MASK, 1);
+
     return HAL_OK;
 }
 
@@ -1600,7 +1603,7 @@ HAL_Status HAL_VOP_DisableDebugIrq(struct VOP_REG *pReg)
  * @param  pReg: VOP reg base.
  * @return HAL_Status.
  */
-HAL_Status HAL_VOP_IrqHandler(struct VOP_REG *pReg)
+uint32_t HAL_VOP_IrqHandler(struct VOP_REG *pReg)
 {
     uint32_t i, val;
 
@@ -1615,7 +1618,7 @@ HAL_Status HAL_VOP_IrqHandler(struct VOP_REG *pReg)
 
     pReg->INTR_CLEAR = val & 0xffff;
 
-    return HAL_OK;
+    return val & 0xffff;
 }
 
 /**

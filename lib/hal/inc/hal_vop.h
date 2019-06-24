@@ -84,16 +84,23 @@ typedef enum {
 
 struct CRTC_WIN_STATE {
     bool winEn;
+    bool winUpdate;
     uint8_t winId;
     uint8_t zpos;
     uint8_t format;
     uint32_t yrgbAddr;
     uint32_t cbcrAddr;
+    uint16_t yrgbLength;
+    uint16_t cbcrLength;
     uint16_t xVir;
+    uint16_t srcW;
+    uint16_t srcH;
     uint16_t crtcX;
     uint16_t crtcY;
     uint16_t crtcW;
     uint16_t crtcH;
+    uint16_t scaleFacW;
+    uint16_t scaleFacH;
 
     uint8_t hwFormat;
     uint16_t hwCrtcX;
@@ -175,7 +182,7 @@ HAL_Status HAL_VOP_EnableLineIrq(struct VOP_REG *pReg,
 HAL_Status HAL_VOP_DisableLineIrq(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_EnableDebugIrq(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_DisableDebugIrq(struct VOP_REG *pReg);
-HAL_Status HAL_VOP_IrqHandler(struct VOP_REG *pReg);
+uint32_t HAL_VOP_IrqHandler(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_NocQosInit(struct VOP_REG *pReg, uint32_t nocQosValue);
 HAL_Status HAL_VOP_NocHurryInit(struct VOP_REG *pReg, uint32_t hurryValue,
                                 uint32_t hurryThreshold);
