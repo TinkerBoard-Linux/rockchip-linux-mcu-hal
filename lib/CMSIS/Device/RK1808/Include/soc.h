@@ -12,6 +12,39 @@
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
+typedef enum {
+    DMA_REQ_UART0_TX = 0,
+    DMA_REQ_UART0_RX = 1,
+    DMA_REQ_UART1_TX = 2,
+    DMA_REQ_UART1_RX = 3,
+    DMA_REQ_UART2_TX = 4,
+    DMA_REQ_UART2_RX = 5,
+    DMA_REQ_UART3_TX = 6,
+    DMA_REQ_UART3_RX = 7,
+    DMA_REQ_UART4_TX = 8,
+    DMA_REQ_UART4_RX = 9,
+    DMA_REQ_SPI0_TX = 10,
+    DMA_REQ_SPI0_RX = 11,
+    DMA_REQ_SPI1_TX = 12,
+    DMA_REQ_SPI1_RX = 13,
+    DMA_REQ_SPI2_TX = 14,
+    DMA_REQ_SPI2_RX = 15,
+    DMA_REQ_I2S0_TX = 16,
+    DMA_REQ_I2S0_RX = 17,
+    DMA_REQ_I2S1_TX = 18,
+    DMA_REQ_I2S1_RX = 19,
+    DMA_REQ_PWM0 = 21,
+    DMA_REQ_PWM1 = 22,
+    DMA_REQ_PWM2 = 23,
+    DMA_REQ_PDM = 24,
+    DMA_REQ_UART5_TX = 25,
+    DMA_REQ_UART5_RX = 26,
+    DMA_REQ_UART6_TX = 27,
+    DMA_REQ_UART6_RX = 28,
+    DMA_REQ_UART7_TX = 29,
+    DMA_REQ_UART7_RX = 30
+} DMA_REQ_Type;
+
 typedef enum
 {
 /*******  SGI Interrupts Numbers  ***************************************************/
@@ -63,6 +96,7 @@ typedef enum
   UART7_IRQn             = 76,
   UART6_IRQn             = 77,
   UART5_IRQn             = 78,
+  VAD_IRQn               = 104,
   GPIO4_IRQn             = 114,
   I2C3_IRQn              = 115,
   I2C4_IRQn              = 133,
@@ -645,22 +679,8 @@ struct WDT_REG {
     __I  uint32_t STAT;                               /* Address Offset: 0x0010 */
     __I  uint32_t EOI;                                /* Address Offset: 0x0014 */
 };
-/* I2S 2CH Register Structure Define */
-struct I2S1_REG {
-    __IO uint32_t TXCR;                               /* Address Offset: 0x0000 */
-    __IO uint32_t RXCR;                               /* Address Offset: 0x0004 */
-    __IO uint32_t CKR;                                /* Address Offset: 0x0008 */
-    __IO uint32_t FIFOLR;                             /* Address Offset: 0x000C */
-    __IO uint32_t DMACR;                              /* Address Offset: 0x0010 */
-    __IO uint32_t INTCR;                              /* Address Offset: 0x0014 */
-    __I  uint32_t INTSR;                              /* Address Offset: 0x0018 */
-    __IO uint32_t XFER;                               /* Address Offset: 0x001C */
-    __IO uint32_t CLR;                                /* Address Offset: 0x0020 */
-    __IO uint32_t TXDR;                               /* Address Offset: 0x0024 */
-    __IO uint32_t RXDR;                               /* Address Offset: 0x0028 */
-};
-/* I2S 8CH Register Structure Define */
-struct I2S0_REG {
+/* I2S Register Structure Define */
+struct I2S_REG {
     __IO uint32_t TXCR;                               /* Address Offset: 0x0000 */
     __IO uint32_t RXCR;                               /* Address Offset: 0x0004 */
     __IO uint32_t CKR;                                /* Address Offset: 0x0008 */
@@ -893,7 +913,7 @@ struct UART_REG {
 #define WDT_BASE            0xFF720000U /* WDT base address */
 #define I2S0_BASE           0xFF7E0000U /* I2S0 base address */
 #define I2S1_BASE           0xFF7F0000U /* I2S1 base address */
-#define PDM_BASE            0xFF800000U /* PDM base address */
+#define PDM0_BASE           0xFF800000U /* PDM base address */
 #define VAD_BASE            0xFF810000U /* VAD base address */
 #define DFICTRL_BASE        0xFF9B8000U /* DFICTRL base address */
 #define RGA_BASE            0xFFAF0000U /* RGA base address */
@@ -924,7 +944,7 @@ struct UART_REG {
 #define DMA                 ((struct DMA_REG *) DMA_BASE)
 #define I2S0                ((struct I2S_REG *) I2S0_BASE)
 #define I2S1                ((struct I2S_REG *) I2S1_BASE)
-#define PDM                 ((struct PDM_REG *) PDM_BASE)
+#define PDM0                ((struct PDM_REG *) PDM0_BASE)
 #define VAD                 ((struct VAD_REG *) VAD_BASE)
 #define PWM0                ((struct PWM_REG *) PWM0_BASE)
 #define PWM1                ((struct PWM_REG *) PWM1_BASE)
