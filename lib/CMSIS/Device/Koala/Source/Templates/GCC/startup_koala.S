@@ -31,7 +31,7 @@ __Vectors:
         .long    __stack_start    /*     Top of Stack */
         .long    Reset_Handler                      /*     Reset Handler */
         .long    Default_Handler                    /* -14 NMI Handler */
-        .long    Default_Handler                    /* -13 Hard Fault Handler */
+        .long    HardFault_Handler                  /* -13 Hard Fault Handler */
         .long    Default_Handler                    /* -12 MPU Fault Handler */
         .long    Default_Handler                    /* -11 Bus Fault Handler */
         .long    Default_Handler                    /* -10 Usage Fault Handler */
@@ -139,6 +139,23 @@ Default_Handler:
         B       Default_Handler
 .size Default_Handler, .-Default_Handler
 
+
+        .type cm_backtrace_fault, %function
+        .weak cm_backtrace_fault
+cm_backtrace_fault:
+        b .
+/**
+ * trap HardFault by cm_backtrack
+ */
+        .section .text.HardFault_Handler,"ax",%progbits
+        .type HardFault_Handler, %function
+HardFault_Handler:
+        mov	r0, lr                  /* get lr */
+        mov     r1, sp                  /* get stack pointer (current is MSP) */
+        bl cm_backtrace_fault
+
+Fault_Loop:
+        bl      Fault_Loop              /* while(1) */
 /**
  * Macro to define default exception/interrupt handlers.
  * Default handler are weak symbols with an endless loop.
