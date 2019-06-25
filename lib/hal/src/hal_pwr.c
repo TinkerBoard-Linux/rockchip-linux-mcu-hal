@@ -245,7 +245,8 @@ int HAL_PWR_SetVoltage(struct PWR_DESC *desc, int volt)
 
     if (desc->flag & PWR_FLG_LINEAR)
         return PWR_SetVoltage_Linear(desc, volt, PWR_CTRL_VOLT_RUN);
-    else return HAL_INVAL;
+    else
+        return HAL_INVAL;
 }
 
 /**
@@ -259,7 +260,8 @@ int HAL_PWR_SetVoltageSuspend(struct PWR_DESC *desc, int volt)
     HAL_ASSERT(desc);
     if (desc->flag & PWR_FLG_LINEAR)
         return PWR_SetVoltage_Linear(desc, volt, PWR_CTRL_VOLT_SSPD);
-    else return HAL_INVAL;
+    else
+        return HAL_INVAL;
 }
 
 /**

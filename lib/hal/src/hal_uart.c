@@ -238,7 +238,8 @@ int HAL_UART_SerialOut(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
     int dwRealSize = 0;
 
     while (cnt--) {
-        while (!(pReg->USR & UART_USR_TX_FIFO_NOT_FULL));
+        while (!(pReg->USR & UART_USR_TX_FIFO_NOT_FULL))
+            ;
         pReg->THR = *pdata++;
         dwRealSize++;
     }
