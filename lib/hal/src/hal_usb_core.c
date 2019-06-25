@@ -638,7 +638,7 @@ HAL_Status USB_WritePacket(struct USB_GLOBAL_REG *pUSB, uint8_t *psrc,
     if (dma == 0) {
         lenWords = (len + 3) / 4;
         for (i = 0; i < lenWords; i++, psrc += 4)
-            USB_DFIFO(chEpNum) = *((__packed uint32_t *)psrc);
+            USB_DFIFO(chEpNum) = __UNALIGNED_UINT32_READ(psrc);
     }
 
     return HAL_OK;
@@ -658,7 +658,7 @@ void *USB_ReadPacket(struct USB_GLOBAL_REG *pUSB, uint8_t *pdest, uint16_t len)
     uint32_t lenWords = (len + 3) / 4;
 
     for (i = 0; i < lenWords; i++, pdest += 4)
-        *(__packed uint32_t *)pdest = USB_DFIFO(0);
+        __UNALIGNED_UINT32_WRITE(pdest, USB_DFIFO(0));
 
     return ((void *)pdest);
 }
