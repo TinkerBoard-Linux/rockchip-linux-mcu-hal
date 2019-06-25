@@ -185,42 +185,8 @@ typedef enum {
 
 #define GPIO_PIN_All (0xFFFFFFFFU)  /*!< All pins selected */
 
-#define IS_GPIO_PIN(PIN)           ((PIN) != 0x00000000U)
-#define IS_GPIO_HIGH_PIN(PIN)      IS_GPIO_PIN(((PIN) & 0xFFFF0000U))
-#define IS_GPIO_PIN_ACTION(ACTION) (((ACTION) == GPIO_LOW) || ((ACTION) == GPIO_HIGH) || ((ACTION) == GPIO_IN) || ((ACTION) == GPIO_OUT))
-
-#define IS_GET_GPIO_PIN(PIN) (((PIN) == GPIO_PIN_A0) || \
-                              ((PIN) == GPIO_PIN_A1) || \
-                              ((PIN) == GPIO_PIN_A2) || \
-                              ((PIN) == GPIO_PIN_A3) || \
-                              ((PIN) == GPIO_PIN_A4) || \
-                              ((PIN) == GPIO_PIN_A5) || \
-                              ((PIN) == GPIO_PIN_A6) || \
-                              ((PIN) == GPIO_PIN_A7) || \
-                              ((PIN) == GPIO_PIN_B0) || \
-                              ((PIN) == GPIO_PIN_B1) || \
-                              ((PIN) == GPIO_PIN_B2) || \
-                              ((PIN) == GPIO_PIN_B3) || \
-                              ((PIN) == GPIO_PIN_B4) || \
-                              ((PIN) == GPIO_PIN_B5) || \
-                              ((PIN) == GPIO_PIN_B6) || \
-                              ((PIN) == GPIO_PIN_B7) || \
-                              ((PIN) == GPIO_PIN_C0) || \
-                              ((PIN) == GPIO_PIN_C1) || \
-                              ((PIN) == GPIO_PIN_C2) || \
-                              ((PIN) == GPIO_PIN_C3) || \
-                              ((PIN) == GPIO_PIN_C4) || \
-                              ((PIN) == GPIO_PIN_C5) || \
-                              ((PIN) == GPIO_PIN_C6) || \
-                              ((PIN) == GPIO_PIN_C7) || \
-                              ((PIN) == GPIO_PIN_D0) || \
-                              ((PIN) == GPIO_PIN_D1) || \
-                              ((PIN) == GPIO_PIN_D2) || \
-                              ((PIN) == GPIO_PIN_D3) || \
-                              ((PIN) == GPIO_PIN_D4) || \
-                              ((PIN) == GPIO_PIN_D5) || \
-                              ((PIN) == GPIO_PIN_D6) || \
-                              ((PIN) == GPIO_PIN_D7))
+#define IS_GPIO_PIN(PIN)      ((PIN) != 0x00000000U)
+#define IS_GPIO_HIGH_PIN(PIN) IS_GPIO_PIN(((PIN) & 0xFFFF0000U))
 /** @} */
 
 /** @defgroup PINCTRL_Exported_Definition_Group2 Struct Definition

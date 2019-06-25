@@ -93,6 +93,43 @@ typedef enum {
     GPIO_INT_MODE_LEVEL_LOW,
     GPIO_INT_MODE_INVALID
 } eGPIO_intMode;
+
+#define IS_GPIO_PIN_DIR(ACTION)   (((ACTION) == GPIO_IN) || ((ACTION) == GPIO_OUT))
+#define IS_GPIO_PIN_LEVEL(ACTION) (((ACTION) == GPIO_LOW) || ((ACTION) == GPIO_HIGH))
+
+#define IS_GET_GPIO_PIN(PIN) (((PIN) == GPIO_PIN_A0) || \
+                              ((PIN) == GPIO_PIN_A1) || \
+                              ((PIN) == GPIO_PIN_A2) || \
+                              ((PIN) == GPIO_PIN_A3) || \
+                              ((PIN) == GPIO_PIN_A4) || \
+                              ((PIN) == GPIO_PIN_A5) || \
+                              ((PIN) == GPIO_PIN_A6) || \
+                              ((PIN) == GPIO_PIN_A7) || \
+                              ((PIN) == GPIO_PIN_B0) || \
+                              ((PIN) == GPIO_PIN_B1) || \
+                              ((PIN) == GPIO_PIN_B2) || \
+                              ((PIN) == GPIO_PIN_B3) || \
+                              ((PIN) == GPIO_PIN_B4) || \
+                              ((PIN) == GPIO_PIN_B5) || \
+                              ((PIN) == GPIO_PIN_B6) || \
+                              ((PIN) == GPIO_PIN_B7) || \
+                              ((PIN) == GPIO_PIN_C0) || \
+                              ((PIN) == GPIO_PIN_C1) || \
+                              ((PIN) == GPIO_PIN_C2) || \
+                              ((PIN) == GPIO_PIN_C3) || \
+                              ((PIN) == GPIO_PIN_C4) || \
+                              ((PIN) == GPIO_PIN_C5) || \
+                              ((PIN) == GPIO_PIN_C6) || \
+                              ((PIN) == GPIO_PIN_C7) || \
+                              ((PIN) == GPIO_PIN_D0) || \
+                              ((PIN) == GPIO_PIN_D1) || \
+                              ((PIN) == GPIO_PIN_D2) || \
+                              ((PIN) == GPIO_PIN_D3) || \
+                              ((PIN) == GPIO_PIN_D4) || \
+                              ((PIN) == GPIO_PIN_D5) || \
+                              ((PIN) == GPIO_PIN_D6) || \
+                              ((PIN) == GPIO_PIN_D7))
+
 /** @} */
 
 /** @defgroup GPIO_Exported_Definition_Group2 Public Functions Declare.

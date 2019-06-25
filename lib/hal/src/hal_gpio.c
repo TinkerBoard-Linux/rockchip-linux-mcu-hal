@@ -188,7 +188,7 @@ HAL_Status HAL_GPIO_SetIntType(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_intTy
 HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_pinDirection pinDir)
 {
     HAL_ASSERT(IS_GET_GPIO_PIN(pin));
-    HAL_ASSERT(IS_GPIO_PIN_ACTION(pinDir));
+    HAL_ASSERT(IS_GPIO_PIN_DIR(pinDir));
 
 #if (GPIO_VER_ID == 0x01000C2BU)
     if (IS_GPIO_HIGH_PIN(pin)) {
@@ -217,7 +217,7 @@ HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_
 HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_pinLevel pinLevel)
 {
     HAL_ASSERT(IS_GET_GPIO_PIN(pin));
-    HAL_ASSERT(IS_GPIO_PIN_ACTION(pinLevel));
+    HAL_ASSERT(IS_GPIO_PIN_LEVEL(pinLevel));
 
 #if (GPIO_VER_ID == 0x01000C2BU)
     if (IS_GPIO_HIGH_PIN(pin)) {
