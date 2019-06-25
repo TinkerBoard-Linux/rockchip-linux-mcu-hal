@@ -5,6 +5,51 @@
 
 #include "bsp.h"
 
+#ifdef HAL_I2S_MODULE_ENABLED
+struct HAL_I2S_DEV g_i2s0Dev =
+{
+    .base = I2S0_BASE,
+    .mclk = CLK_I2S0_TX,
+    .hclk = HCLK_I2S0_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2S0->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_RX,
+        .dmac = DMA,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2S0->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_TX,
+        .dmac = DMA,
+    },
+};
+#endif
+
+#ifdef HAL_PDM_MODULE_ENABLED
+struct HAL_PDM_DEV g_pdm0Dev =
+{
+    .reg = PDM0,
+    .mclk = CLK_PDM,
+    .mclkRate = CLK_PDM_CLK_GATE,
+    .hclk = HCLK_PDM_GATE,
+    .reset = SRST_PDM_SRSTN,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(PDM0->RXFIFO_DATA_REG),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_PDM,
+        .dmac = DMA,
+    },
+};
+#endif
+
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
 static struct PINCTRL_BANK_INFO pinBanks[] = {
     PIN_BANK_CFG_FLAGS(GPIO_BANK0, 32, PMU_GRF_BASE,
@@ -53,6 +98,15 @@ struct HAL_PL330_DEV g_pl330Dev =
     .peripReqType = BURST,
     .irq[0] = DMAC_IRQn,
     .irq[1] = DMAC_ABORT_IRQn,
+};
+#endif
+
+#ifdef HAL_VAD_MODULE_ENABLED
+struct HAL_VAD_DEV g_vadDev =
+{
+    .base = VAD_BASE,
+    .hclk = HCLK_VAD_GATE,
+    .irq = VAD_IRQn,
 };
 #endif
 
