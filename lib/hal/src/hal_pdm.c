@@ -81,6 +81,7 @@ static HAL_Status PDM_GetClk(uint32_t sr, uint32_t *clkOut)
     return ret;
 }
 
+#ifdef PDM_CTRL0_SAMPLE_RATE_SEL_MASK
 static int PDM_SampleRate(uint32_t sampleRate)
 {
     switch (sampleRate) {
@@ -113,7 +114,9 @@ static int PDM_SampleRate(uint32_t sampleRate)
         return HAL_INVAL;
     }
 }
+#endif
 
+#ifdef PDM_CLK_CTRL_CIC_DS_RATIO_MASK
 static int PDM_GetCicDsRatio(uint32_t clk)
 {
     switch (clk) {
@@ -132,6 +135,7 @@ static int PDM_GetCicDsRatio(uint32_t clk)
         return HAL_INVAL;
     }
 }
+#endif
 
 static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
                                     struct AUDIO_PARAMS *params)
@@ -141,7 +145,6 @@ static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
 
     HAL_Status ret = HAL_OK;
     uint32_t clkOut, clkSrc, n, m, old, val, mask;
-    int cic;
 
     HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
@@ -157,9 +160,14 @@ static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
     mask = PDM_FD_NUMERATOR_MSK | PDM_FD_DENOMINATOR_MSK;
     MODIFY_REG(reg->CTRL[1], mask, val);
 
-    cic = PDM_GetCicDsRatio(clkOut);
-    HAL_ASSERT(cic != HAL_INVAL);
-    MODIFY_REG(reg->CLK_CTRL, PDM_CLK_CTRL_CIC_DS_RATIO_MASK, cic);
+#ifdef PDM_CLK_CTRL_CIC_DS_RATIO_MASK
+    {
+        int cic = PDM_GetCicDsRatio(clkOut);
+
+        HAL_ASSERT(cic != HAL_INVAL);
+        MODIFY_REG(reg->CLK_CTRL, PDM_CLK_CTRL_CIC_DS_RATIO_MASK, cic);
+    }
+#endif
 
     if (old != val) {
         /* reset */
@@ -396,7 +404,6 @@ HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,
     struct PDM_REG *reg = pdm->reg;
     uint32_t val = 0;
     HAL_Status ret = HAL_OK;
-    int rate;
 
     /* pdm only support capture */
     HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
@@ -404,11 +411,17 @@ HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,
     ret = PDM_ChangeClkFreq(dai, params);
     HAL_ASSERT(ret == HAL_OK);
 
-    rate = PDM_SampleRate(params->sampleRate);
-    HAL_ASSERT(rate != HAL_INVAL);
-    MODIFY_REG(reg->CTRL[0],
-               PDM_CTRL0_SAMPLE_RATE_SEL_MASK,
-               rate << PDM_CTRL0_SAMPLE_RATE_SEL_SHIFT);
+#ifdef PDM_CTRL0_SAMPLE_RATE_SEL_MASK
+    {
+        int rate = PDM_SampleRate(params->sampleRate);
+
+        HAL_ASSERT(rate != HAL_INVAL);
+        MODIFY_REG(reg->CTRL[0],
+                   PDM_CTRL0_SAMPLE_RATE_SEL_MASK,
+                   rate << PDM_CTRL0_SAMPLE_RATE_SEL_SHIFT);
+    }
+#endif
+
     MODIFY_REG(reg->CTRL[0],
                PDM_MODE_MSK, PDM_MODE_LJ);
     MODIFY_REG(reg->HPF_CTRL,
