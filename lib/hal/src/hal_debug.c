@@ -33,7 +33,7 @@
 
 /********************* Private Function Definition ***************************/
 
-__weak void AssertFailed(const char *file, uint32_t line)
+__WEAK void AssertFailed(const char *file, uint32_t line)
 {
     HAL_DBG_ERR("assert failed at %s %lu\n", file, line);
     while (1)

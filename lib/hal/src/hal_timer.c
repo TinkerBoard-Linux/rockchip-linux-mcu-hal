@@ -207,7 +207,7 @@ HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg)
  * @return HAL_Status: HAL_OK.
  * Clear interrupt status.
  */
-__weak HAL_Status HAL_TIMER0_Handler(void)
+__WEAK HAL_Status HAL_TIMER0_Handler(void)
 {
     HAL_TIMER_ClrInt(TIMER0);
 
@@ -219,7 +219,7 @@ __weak HAL_Status HAL_TIMER0_Handler(void)
  * @return HAL_Status: HAL_OK.
  * Clear interrupt status.
  */
-__weak HAL_Status HAL_TIMER1_Handler(void)
+__WEAK HAL_Status HAL_TIMER1_Handler(void)
 {
     HAL_TIMER_ClrInt(TIMER1);
 

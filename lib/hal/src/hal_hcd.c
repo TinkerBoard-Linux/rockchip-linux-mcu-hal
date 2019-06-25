@@ -361,7 +361,7 @@ void HAL_HCD_IRQHandler(struct HCD_HANDLE *pHCD)
  * @param  pHCD HCD handle
  * @return None
  */
-__weak void HAL_HCD_SOF_Callback(struct HCD_HANDLE *pHCD)
+__WEAK void HAL_HCD_SOF_Callback(struct HCD_HANDLE *pHCD)
 {
     /* NOTE:
      * This function Should not be modified, when the callback is needed,
@@ -374,7 +374,7 @@ __weak void HAL_HCD_SOF_Callback(struct HCD_HANDLE *pHCD)
  * @param  pHCD HCD handle
  * @return None
  */
-__weak void HAL_HCD_Connect_Callback(struct HCD_HANDLE *pHCD)
+__WEAK void HAL_HCD_Connect_Callback(struct HCD_HANDLE *pHCD)
 {
     /* NOTE:
      * This function Should not be modified, when the callback is needed,
@@ -387,7 +387,7 @@ __weak void HAL_HCD_Connect_Callback(struct HCD_HANDLE *pHCD)
  * @param  pHCD HCD handle
  * @return None
  */
-__weak void HAL_HCD_Disconnect_Callback(struct HCD_HANDLE *pHCD)
+__WEAK void HAL_HCD_Disconnect_Callback(struct HCD_HANDLE *pHCD)
 {
     /* NOTE:
      * This function Should not be modified, when the callback is needed,
@@ -400,7 +400,7 @@ __weak void HAL_HCD_Disconnect_Callback(struct HCD_HANDLE *pHCD)
  * @param  pHCD: HCD handle
  * @return None
  */
-__weak void HAL_HCD_PortEnabled_Callback(struct HCD_HANDLE *pHCD)
+__WEAK void HAL_HCD_PortEnabled_Callback(struct HCD_HANDLE *pHCD)
 {
     /* NOTE:
      * This function Should not be modified, when the callback is needed,
@@ -413,7 +413,7 @@ __weak void HAL_HCD_PortEnabled_Callback(struct HCD_HANDLE *pHCD)
  * @param  pHCD: HCD handle
  * @return None
  */
-__weak void HAL_HCD_PortDisabled_Callback(struct HCD_HANDLE *pHCD)
+__WEAK void HAL_HCD_PortDisabled_Callback(struct HCD_HANDLE *pHCD)
 {
     /* NOTE:
      * This function Should not be modified, when the callback is needed,
@@ -436,7 +436,7 @@ __weak void HAL_HCD_PortDisabled_Callback(struct HCD_HANDLE *pHCD)
  *            URB_STALL/
  * @return None
  */
-__weak void HAL_HCD_HCNotifyURBChange_Callback(struct HCD_HANDLE *pHCD, uint8_t chNum, eUSB_OTG_urbState urbState)
+__WEAK void HAL_HCD_HCNotifyURBChange_Callback(struct HCD_HANDLE *pHCD, uint8_t chNum, eUSB_OTG_urbState urbState)
 {
     /* NOTE:
      * This function Should not be modified, when the callback is needed,

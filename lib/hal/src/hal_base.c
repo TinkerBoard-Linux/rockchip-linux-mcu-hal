@@ -109,7 +109,7 @@ HAL_Status HAL_IncTick(void)
  * @return HAL_Status: HAL_OK.
  * Count plus 1.
  */
-__weak __irq HAL_Status HAL_SysTick_Handler(void)
+__WEAK __irq HAL_Status HAL_SysTick_Handler(void)
 {
     HAL_IncTick();
 
@@ -131,7 +131,7 @@ uint32_t HAL_GetTick(void)
  * @param  ms: mdelay count.
  * @return HAL_Status: HAL_OK.
  */
-__weak HAL_Status HAL_DelayMs(__IO uint32_t ms)
+__WEAK HAL_Status HAL_DelayMs(__IO uint32_t ms)
 {
     return HAL_DelayUs(1000 * ms);
 }
@@ -169,7 +169,7 @@ HAL_Check HAL_SystickConfig(uint32_t ticksNumb)
  * @return HAL_Status: HAL_OK.
  * When the tickPerSec is 1000, the delicate delay is accurate.
  */
-__weak HAL_Status HAL_DelayMs(__IO uint32_t ms)
+__WEAK HAL_Status HAL_DelayMs(__IO uint32_t ms)
 {
     uint32_t tickstart = HAL_GetTick();
     uint32_t delta = HAL_MAX_DELAY - tickstart;

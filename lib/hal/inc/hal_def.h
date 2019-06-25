@@ -48,9 +48,6 @@
 #define HAL_DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
 /* Compiller Marco */
 #ifdef __GNUC__
-#ifndef __weak
-#define __weak __attribute__((weak))
-#endif
 #ifndef __packed
 #define __packed __attribute__((__packed__))
 #endif

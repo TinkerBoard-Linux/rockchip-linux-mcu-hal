@@ -412,7 +412,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
  * @param  epNum endpoint number
  * @return None
  */
-__weak void HAL_PCD_DataOutStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
+__WEAK void HAL_PCD_DataOutStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
 {
     /*
      * NOTE:
@@ -427,7 +427,7 @@ __weak void HAL_PCD_DataOutStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
  * @param  epNum endpoint number
  * @return None
  */
-__weak void HAL_PCD_DataInStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
+__WEAK void HAL_PCD_DataInStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
 {
     /*
      * NOTE:
@@ -440,7 +440,7 @@ __weak void HAL_PCD_DataInStageCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
  * @param  pPCD PCD handle
  * @return None
  */
-__weak void HAL_PCD_SetupStageCallback(struct PCD_HANDLE *pPCD)
+__WEAK void HAL_PCD_SetupStageCallback(struct PCD_HANDLE *pPCD)
 {
     /*
      * NOTE:
@@ -454,7 +454,7 @@ __weak void HAL_PCD_SetupStageCallback(struct PCD_HANDLE *pPCD)
  * @param  pPCD PCD handle
  * @return None
  */
-__weak void HAL_PCD_SOFCallback(struct PCD_HANDLE *pPCD)
+__WEAK void HAL_PCD_SOFCallback(struct PCD_HANDLE *pPCD)
 {
     /*
      * NOTE:
@@ -468,7 +468,7 @@ __weak void HAL_PCD_SOFCallback(struct PCD_HANDLE *pPCD)
  * @param  pPCD PCD handle
  * @return None
  */
-__weak void HAL_PCD_ResetCallback(struct PCD_HANDLE *pPCD)
+__WEAK void HAL_PCD_ResetCallback(struct PCD_HANDLE *pPCD)
 {
     /*
      * NOTE:
@@ -482,7 +482,7 @@ __weak void HAL_PCD_ResetCallback(struct PCD_HANDLE *pPCD)
  * @param  pPCD PCD handle
  * @return None
  */
-__weak void HAL_PCD_SuspendCallback(struct PCD_HANDLE *pPCD)
+__WEAK void HAL_PCD_SuspendCallback(struct PCD_HANDLE *pPCD)
 {
     /*
      * NOTE:
@@ -496,7 +496,7 @@ __weak void HAL_PCD_SuspendCallback(struct PCD_HANDLE *pPCD)
  * @param  pPCD PCD handle
  * @return None
  */
-__weak void HAL_PCD_ResumeCallback(struct PCD_HANDLE *pPCD)
+__WEAK void HAL_PCD_ResumeCallback(struct PCD_HANDLE *pPCD)
 {
     /*
      * NOTE:
@@ -511,7 +511,7 @@ __weak void HAL_PCD_ResumeCallback(struct PCD_HANDLE *pPCD)
  * @param  epNum endpoint number
  * @return None
  */
-__weak void HAL_PCD_ISOOUTIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
+__WEAK void HAL_PCD_ISOOUTIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
 {
     /*
      * NOTE:
@@ -526,7 +526,7 @@ __weak void HAL_PCD_ISOOUTIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t ep
  * @param  epNum endpoint number
  * @return None
  */
-__weak void HAL_PCD_ISOINIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
+__WEAK void HAL_PCD_ISOINIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t epNum)
 {
     /*
      * NOTE:
@@ -540,7 +540,7 @@ __weak void HAL_PCD_ISOINIncompleteCallback(struct PCD_HANDLE *pPCD, uint8_t epN
  * @param  pPCD PCD handle
  * @return None
  */
-__weak void HAL_PCD_ConnectCallback(struct PCD_HANDLE *pPCD)
+__WEAK void HAL_PCD_ConnectCallback(struct PCD_HANDLE *pPCD)
 {
     /*
      * NOTE:
@@ -554,7 +554,7 @@ __weak void HAL_PCD_ConnectCallback(struct PCD_HANDLE *pPCD)
  * @param  pPCD PCD handle
  * @return None
  */
-__weak void HAL_PCD_DisconnectCallback(struct PCD_HANDLE *pPCD)
+__WEAK void HAL_PCD_DisconnectCallback(struct PCD_HANDLE *pPCD)
 {
     /*
      * NOTE:

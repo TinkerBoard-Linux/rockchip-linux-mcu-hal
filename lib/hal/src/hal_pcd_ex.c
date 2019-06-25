@@ -126,7 +126,7 @@ HAL_Status HAL_PCDEx_DeActivateLPM(struct PCD_HANDLE *pPCD)
  * @param  msg LPM message
  * @return None
  */
-__weak void HAL_PCDEx_LPM_Callback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg)
+__WEAK void HAL_PCDEx_LPM_Callback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg)
 {
     /*
      * NOTE : This function Should not be modified, when the callback is needed,
