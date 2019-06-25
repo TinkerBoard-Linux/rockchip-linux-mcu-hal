@@ -9,10 +9,16 @@
 static struct PINCTRL_BANK_INFO pinBanks[] = {
     PIN_BANK_CFG_FLAGS(GPIO_BANK0, 32, GRF_BASE,
                        0x0000, 4, 4,
-                       0x0100, 2, 8),
+                       0x0100, 2, 8,
+                       0x0000, 0, 0,
+                       0x0000, 0, 0,
+                       0x0000, 0, 0),
     PIN_BANK_CFG_FLAGS(GPIO_BANK1, 32, GRF_BASE,
                        0x0020, 4, 4,
-                       0x0110, 2, 8),
+                       0x0110, 2, 8,
+                       0x0000, 0, 0,
+                       0x0000, 0, 0,
+                       0x0000, 0, 0),
 };
 
 const struct RK_PINCTRL_DEV g_pinDev = {
