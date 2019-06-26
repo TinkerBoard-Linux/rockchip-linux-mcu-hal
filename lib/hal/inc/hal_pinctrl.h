@@ -129,16 +129,16 @@ typedef enum {
     GRF_INFO_NUM
 } ePIN_GRF_INFO_ID;
 
-#define PIN_BANK_CFG_FLAGS(chn, cnt, reg, \
-                           offset0, bpp0, ppr0,   \
-                           offset1, bpp1, ppr1,   \
-                           offset2, bpp2, ppr2,   \
-                           offset3, bpp3, ppr3,   \
-                           offset4, bpp4, ppr4)   \
-    { \
-        .channel = chn, \
-        .pinCount = cnt, \
-        .grfBase = reg, \
+#define PIN_BANK_CFG_FLAGS(chn, cnt, reg,                                                       \
+                           offset0, bpp0, ppr0,                                                 \
+                           offset1, bpp1, ppr1,                                                 \
+                           offset2, bpp2, ppr2,                                                 \
+                           offset3, bpp3, ppr3,                                                 \
+                           offset4, bpp4, ppr4)                                                 \
+    {                                                                                           \
+        .channel = chn,                                                                         \
+        .pinCount = cnt,                                                                        \
+        .grfBase = reg,                                                                         \
         .GRFInfo[GRF_MUX_INFO] = { .offset = offset0, .bitsPerPin = bpp0, .pinsPerReg = ppr0 }, \
         .GRFInfo[GRF_PUL_INFO] = { .offset = offset1, .bitsPerPin = bpp1, .pinsPerReg = ppr1 }, \
         .GRFInfo[GRF_DRV_INFO] = { .offset = offset2, .bitsPerPin = bpp2, .pinsPerReg = ppr2 }, \
@@ -188,7 +188,8 @@ typedef enum {
 #define IS_GPIO_PIN(PIN)           ((PIN) != 0x00000000U)
 #define IS_GPIO_HIGH_PIN(PIN)      IS_GPIO_PIN(((PIN) & 0xFFFF0000U))
 #define IS_GPIO_PIN_ACTION(ACTION) (((ACTION) == GPIO_LOW) || ((ACTION) == GPIO_HIGH) || ((ACTION) == GPIO_IN) || ((ACTION) == GPIO_OUT))
-#define IS_GET_GPIO_PIN(PIN)       (((PIN) == GPIO_PIN_A0) ||\
+
+#define IS_GET_GPIO_PIN(PIN) (((PIN) == GPIO_PIN_A0) || \
                               ((PIN) == GPIO_PIN_A1) || \
                               ((PIN) == GPIO_PIN_A2) || \
                               ((PIN) == GPIO_PIN_A3) || \

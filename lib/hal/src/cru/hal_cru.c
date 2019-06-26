@@ -77,9 +77,9 @@
 #define MIN_FOUT_FREQ    (24 * MHZ)
 #define MAX_FOUT_FREQ    (1400 * MHZ)
 
-#define RK_PLL_MODE_SLOW   0
-#define RK_PLL_MODE_NORMAL 1
-#define RK_PLL_MODE_DEEP   2
+#define RK_PLL_MODE_SLOW                  0
+#define RK_PLL_MODE_NORMAL                1
+#define RK_PLL_MODE_DEEP                  2
 #define PLL_GET_PLLMODE(val, shift, mask) (((uint32_t)(val)&mask) >> shift)
 
 #define PLL_GET_FBDIV(x) (((uint32_t)(x) & (PLL_FBDIV_MASK)) >> PLL_FBDIV_SHIFT)

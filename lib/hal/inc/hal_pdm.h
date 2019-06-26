@@ -56,7 +56,7 @@
 #define PDM_PATH0_EN HAL_BIT(27)
 #define PDM_HWT_EN   HAL_BIT(26)
 #define PDM_VDW_MSK  (0x1f << 0)
-#define PDM_VDW(X) ((X - 1) << 0)
+#define PDM_VDW(X)   ((X - 1) << 0)
 
 /* PDM CTRL1 */
 #define PDM_FD_NUMERATOR_SFT   16
@@ -95,7 +95,7 @@
 #define PDM_DMA_RD_EN   HAL_BIT(8)
 #define PDM_DMA_RD_DIS  (0x0 << 8)
 #define PDM_DMA_RDL_MSK (0x7f << 0)
-#define PDM_DMA_RDL(X) ((X - 1) << 0)
+#define PDM_DMA_RDL(X)  ((X - 1) << 0)
 
 /** PDM CLK RATE */
 #define PDM_FPGA_CLK_RATE (72000000)

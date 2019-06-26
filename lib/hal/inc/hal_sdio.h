@@ -35,7 +35,7 @@
      MMC_INT_STATUS_TX_REQUEST | MMC_INT_STATUS_RX_REQUEST)
 #endif
 
-#define BIT(nr) (1UL << (nr))
+#define BIT(nr)        (1UL << (nr))
 #define MMC_FIFO_DEPTH (16)
 #define MMC_CLOCK_IN   (50000000)
 

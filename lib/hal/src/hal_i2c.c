@@ -55,7 +55,7 @@
 /********************* Private MACRO Definition ******************************/
 
 /* REG_CON bits */
-#define REG_CON_EN (0x1 << I2C_CON_I2C_EN_SHIFT)
+#define REG_CON_EN       (0x1 << I2C_CON_I2C_EN_SHIFT)
 #define REG_CON_MOD(mod) ((mod) << I2C_CON_I2C_MODE_SHIFT)
 #define REG_CON_MOD_MASK (I2C_CON_I2C_MODE_MASK)
 #define REG_CON_START    (0x1 << I2C_CON_START_SHIFT)
@@ -63,7 +63,7 @@
 #define REG_CON_LASTACK  (0x1 << I2C_CON_ACK_SHIFT) /* send NACK after last received byte */
 #define REG_CON_ACTACK   (0x1 << I2C_CON_ACT2NAK_SHIFT) /* stop if NACK is received */
 
-#define REG_CON_TUNING_MASK (0xff << I2C_CON_DATA_UPD_ST_SHIFT)
+#define REG_CON_TUNING_MASK  (0xff << I2C_CON_DATA_UPD_ST_SHIFT)
 #define REG_CON_SDA_CFG(cfg) ((cfg) << I2C_CON_DATA_UPD_ST_SHIFT)
 #define REG_CON_STA_CFG(cfg) ((cfg) << I2C_CON_START_SETUP_SHIFT)
 #define REG_CON_STO_CFG(cfg) ((cfg) << I2C_CON_STOP_SETUP_SHIFT)

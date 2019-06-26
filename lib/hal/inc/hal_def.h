@@ -37,7 +37,7 @@
 /* Misc OPS Marco */
 #define HAL_MAX_DELAY 0xFFFFFFFFU
 
-#define RESET 0
+#define RESET                     0
 #define HAL_IS_BIT_SET(REG, MASK) (((*(volatile uint32_t *)&(REG)) & (MASK)) != RESET)
 #define HAL_IS_BIT_CLR(REG, MASK) (((*(volatile uint32_t *)&(REG)) & (MASK)) == RESET)
 

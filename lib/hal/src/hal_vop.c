@@ -31,10 +31,9 @@
 /********************* Private MACRO Definition ******************************/
 #define VOP_WIN_YUV4_FORMAT BIT(4)
 #define VOP_WIN_BPPX_FORMAT BIT(5)
-#define IS_YUV_FORMAT(x) ((x >= VOP_FMT_YUV420SP) &&    \
-                 (x <= VOP_FMT_VYUY422_4)) ? 1 : 0
-#define IS_BPP_FORMAT(x) ((x >= VOP_FMT_1BPP) &&    \
-                 (x <= VOP_FMT_8BPP)) ? 1 : 0
+
+#define IS_YUV_FORMAT(x) ((x >= VOP_FMT_YUV420SP) && (x <= VOP_FMT_VYUY422_4)) ? 1 : 0
+#define IS_BPP_FORMAT(x) ((x >= VOP_FMT_1BPP) && (x <= VOP_FMT_8BPP)) ? 1 : 0
 
 #define MCU_CS_STR 2
 #define MCU_CS_END 12

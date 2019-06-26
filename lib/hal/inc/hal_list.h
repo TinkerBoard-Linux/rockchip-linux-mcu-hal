@@ -140,7 +140,7 @@ __STATIC_INLINE uint32_t HAL_LIST_Len(const HAL_LIST *l)
  * @param n:    another rt_list_t * to use as temporary storage
  * @param head: the head for your list.
  */
-#define HAL_LIST_FOR_EACH_SAFE(pos, n, head) \
+#define HAL_LIST_FOR_EACH_SAFE(pos, n, head)               \
     for (pos = (head)->next, n = pos->next; pos != (head); \
         pos = n, n = pos->next)
 
@@ -150,9 +150,9 @@ __STATIC_INLINE uint32_t HAL_LIST_Len(const HAL_LIST *l)
  * @param   head:   the head for your list.
  * @param   member: the name of the list_struct within the struct.
  */
-#define HAL_LIST_FOR_EACH_ENTRY(pos, head, member) \
+#define HAL_LIST_FOR_EACH_ENTRY(pos, head, member)                     \
     for (pos = HAL_LIST_ENTRY((head)->next, __typeof__(*pos), member); \
-         &pos->member != (head); \
+         &pos->member != (head);                                       \
          pos = HAL_LIST_ENTRY(pos->member.next, __typeof__(*pos), member))
 
 /**
@@ -162,10 +162,10 @@ __STATIC_INLINE uint32_t HAL_LIST_Len(const HAL_LIST *l)
  * @param   head:   the head for your list.
  * @param   member: the name of the list_struct within the struct.
  */
-#define HAL_LIST_FOR_EACH_ENTRY_SAFE(pos, n, head, member) \
-    for (pos = HAL_LIST_ENTRY((head)->next, __typeof__(*pos), member), \
+#define HAL_LIST_FOR_EACH_ENTRY_SAFE(pos, n, head, member)               \
+    for (pos = HAL_LIST_ENTRY((head)->next, __typeof__(*pos), member),   \
          n = HAL_LIST_ENTRY(pos->member.next, __typeof__(*pos), member); \
-         &pos->member != (head); \
+         &pos->member != (head);                                         \
          pos = n, n = HAL_LIST_ENTRY(n->member.next, __typeof__(*n), member))
 
 /**
