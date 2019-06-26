@@ -508,6 +508,7 @@ struct SFC_REG {
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1))
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2))
+#define IS_SFC_INSTANCE(instance) ((instance) == SFC)
 
 /******************************************GRF*******************************************/
 #define IOMUX_GPIO2A6_IO ((uint32_t)(0))
