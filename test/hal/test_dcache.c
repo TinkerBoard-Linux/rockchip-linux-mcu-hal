@@ -3,11 +3,13 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
+#include "hal_base.h"
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+
 #ifndef USE_FULL_ASSERT
 #define USE_FULL_ASSERT 1
 #endif
 
-#include "hal_base.h"
 #include "unity.h"
 #include "unity_fixture.h"
 
@@ -179,3 +181,5 @@ TEST_GROUP_RUNNER(HAL_DCACHE){
     RUN_TEST_CASE(HAL_DCACHE, TC_DCache_CleanInvalidateByRange);
     RUN_TEST_CASE(HAL_DCACHE, TC_DCache_CleanInvalidate);
 }
+
+#endif
