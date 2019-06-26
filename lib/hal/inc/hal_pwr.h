@@ -51,6 +51,7 @@ typedef enum {
 #define PWR_FLG_INTREG    (PWR_FLG_ALWAYSON << 1)
 #define PWR_FLG_I2C8      (PWR_FLG_INTREG << 1)
 #define PWR_FLG_I2C16     (PWR_FLG_I2C8 << 1)
+#define PWR_FLG_ENMASK    (PWR_FLG_I2C16 << 1)
 
 #define DESC_FLAG_LINEAR(flag) (PWR_FLG_LINEAR | PWR_FLG_INTREG | flag)
 
@@ -73,20 +74,20 @@ typedef enum {
 #endif
 
 #ifdef HAL_PWR_I2C8_MODULE_ENABLED
-#define PWR_DESC_I2C8_SHIFT_RUN(reg, sft)                  \
-    .regs.i2c8.reg[PWR_CTRL_VOLT_RUN] = (uint32_t *)(reg), \
+#define PWR_DESC_I2C8_SHIFT_RUN(_reg, sft)      \
+    .regs.i2c8.reg[PWR_CTRL_VOLT_RUN] = (_reg), \
     .shift[PWR_CTRL_VOLT_RUN] = (sft)
 
-#define PWR_DESC_I2C8_SHIFT_SSPD(reg, sft)                  \
-    .regs.i2c8.reg[PWR_CTRL_VOLT_SSPD] = (uint32_t *)(reg), \
+#define PWR_DESC_I2C8_SHIFT_SSPD(_reg, sft)      \
+    .regs.i2c8.reg[PWR_CTRL_VOLT_SSPD] = (_reg), \
     .shift[PWR_CTRL_VOLT_SSPD] = (sft)
 
-#define PWR_DESC_I2C8_SHIFT_EN(reg, sft)                 \
-    .regs.i2c8.reg[PWR_CTRL_PWR_EN] = (uint32_t *)(reg), \
+#define PWR_DESC_I2C8_SHIFT_EN(_reg, sft)     \
+    .regs.i2c8.reg[PWR_CTRL_PWR_EN] = (_reg), \
     .shift[PWR_CTRL_PWR_EN] = (sft)
 
-#define PWR_DESC_I2C8_SHIFT_ST(reg, sft)             \
-    .regs.reg[PWR_CTRL_VOLT_ST] = (uint32_t *)(reg), \
+#define PWR_DESC_I2C8_SHIFT_ST(_reg, sft)      \
+    .regs.i2c8.reg[PWR_CTRL_VOLT_ST] = (_reg), \
     .shift[PWR_CTRL_VOLT_ST] = (sft)
 #endif
 
@@ -104,11 +105,13 @@ union U_PWR_VOLT_LIST {
 };
 
 struct PWR_REG_DATA_I2C_8 {
+    const char *name;
     uint8_t i2cAddr;
     uint8_t reg[PWR_CTRL_MAX];
 };
 
 struct PWR_REG_DATA_I2C_16 {
+    const char *name;
     uint16_t i2cAddr;
     uint16_t reg[PWR_CTRL_MAX];
 };
