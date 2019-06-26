@@ -27,9 +27,7 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 CPU		= -mcpu=cortex-m3 -mthumb
 
 ASFLAGS         += $(CPU)
-#CFLAGS		+= $(CPU) -std=c99 -O2 -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk --specs=nano.specs
-#LDFLAGS	+= $(CPU) -Wl,--gc-sections --specs=nano.specs -u _scanf_float -u _printf_float
-CFLAGS		+= $(CPU) -std=c99 -O2 -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk -Wunused-variable -Wformat=2
+CFLAGS		+= $(CPU) -std=c99 -O2 -g -Wformat=2 -Wall -Werror
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc -nostartfiles
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
@@ -73,6 +71,7 @@ INCLUDES += \
 # Source Files
 #############################################################################
 DIRS := $(ROOT_PATH)/lib/hal/src \
+	$(ROOT_PATH)/lib/hal/src/*/ \
 	$(ROOT_PATH)/lib/bsp/$(PROJECT) \
 	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
 	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates \
