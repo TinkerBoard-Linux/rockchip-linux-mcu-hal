@@ -67,6 +67,7 @@ __Vectors_End:
  */
         .section .text.Reset_Handler
         .type    Reset_Handler, %function
+        .globl   Reset_Handler
 Reset_Handler:
         ldr     r0, =0x00000000
         ldr     r1, =0x00000000
