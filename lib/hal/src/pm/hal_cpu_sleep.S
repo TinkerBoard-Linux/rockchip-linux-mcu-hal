@@ -2,6 +2,9 @@
 /*
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
+#if defined(HAL_PM_CPU_SLEEP_MODULE_ENABLED)
+#if defined(__CM3_REV) || defined(__CM4_REV)
+#if define (__GNUC__)
 .thumb
 .syntax unified
 
@@ -77,3 +80,6 @@ HAL_CPU_DoResume:
 .ltorg
 sleepSaveSp:
 .word   0
+#endif /* __GNUC__ */
+#endif /* __CM3_REV || __CM4_REV */
+#endif /* HAL_PM_CPU_SLEEP_MODULE_ENABLED */

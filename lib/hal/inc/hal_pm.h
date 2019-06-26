@@ -18,22 +18,16 @@
 
 /***************************** Function Declare ******************************/
 int HAL_SYS_Suspend(uint32_t flag);
+
+#ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
 void HAL_CPU_ArchSuspend(uint32_t *ptr);
 void HAL_CPU_ArchResume(void);
 
-/** @defgroup PM_Exported_Functions_Group5 Other Functions
- *  @{
- */
+void HAL_NVIC_SuspendSave(void);
+void HAL_NVIC_ResumeRestore(void);
 
-/**
- * @brief  it is the enterpoint for the soc suspend.
- * @param  flag: flag for controlling
- * @param  suspend: a callback function for running some codes at last when suspending.
- * @return HAL_Status
- */
 int HAL_CPU_SuspendEnter(uint32_t flag, int (*suspend)(uint32_t));
-
-/** @} */
+#endif
 
 #endif
 
