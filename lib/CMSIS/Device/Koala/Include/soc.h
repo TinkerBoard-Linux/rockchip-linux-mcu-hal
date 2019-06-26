@@ -5109,6 +5109,11 @@ struct CRU_REG {
 #define CRU_GLB_RST_ST_SND_GLB_WDT_RST_ST_MASK             (0x1U << CRU_GLB_RST_ST_SND_GLB_WDT_RST_ST_SHIFT)            /* 0x00000008 */
 
 #define PLL_INPUT_OSC_RATE       (26 * MHZ)
+
+#define KOALA_PD_DSP 0x00000000U
+#define KOALA_PD_MCU 0x00011111U
+#define KOALA_PD_BT_AUDIO 0x00022222U
+
 /********Name=SOFTRST0_CON,Offset=0x300********/
 #define SRST_M3_AUTOCLR          0
 #define SRST_S_M3_AUTOCLR        1
