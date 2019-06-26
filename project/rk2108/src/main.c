@@ -39,7 +39,7 @@ int _write(int fd, char *ptr, int len)
     {
         if (*ptr == '\n')
         {
-            HAL_UART_SerialOut(pUart, "\r", 1);
+            HAL_UART_SerialOut(pUart, (const uint8_t *)"\r", 1);
         }
         HAL_UART_SerialOut(pUart, (uint8_t *)ptr, 1);
 
@@ -93,4 +93,6 @@ int main(void)
 int _start(void)
 {
     main();
+
+    return 0;
 }
