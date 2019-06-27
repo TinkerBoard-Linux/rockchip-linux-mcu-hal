@@ -29,6 +29,10 @@ extern struct HAL_I2S_DEV g_i2s0Dev;
 extern struct HAL_PDM_DEV g_pdm0Dev;
 #endif
 
+#ifdef HAL_PWM_MODULE_ENABLED
+extern const struct HAL_PWM_DEV g_pwm0Dev;
+#endif
+
 #ifdef HAL_PL330_MODULE_ENABLED
 extern struct HAL_PL330_DEV g_pl330Dev;
 #endif

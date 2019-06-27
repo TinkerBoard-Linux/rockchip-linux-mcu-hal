@@ -182,7 +182,17 @@ static HAL_Status BSP_PL330_DeInit(void)
 {
     return HAL_OK;
 }
+#endif
 
+#ifdef HAL_PWM_MODULE_ENABLED
+const struct HAL_PWM_DEV g_pwm0Dev =
+{
+    .base = PWM0,
+    .clkID = CLK_PWM,
+    .clkGateID = CLK_PWM_GATE,
+    .pclkGateID = PCLK_PWM_GATE,
+    .irqNum = PWM_IRQn,
+};
 #endif
 
 #ifdef HAL_VAD_MODULE_ENABLED
