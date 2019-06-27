@@ -57,7 +57,7 @@ __Vectors:
         .long    Default_Handler                    /*   8 Interrupt 8 */
         .long    Default_Handler                    /*   9 Interrupt 9 */
 
-       .space   (31 * 4)            /* Interrupts 10 .. 224 are left out */
+       .space   (47 * 4)                            /*   10 ... 56 */
 __Vectors_End:
         .equ     __Vectors_Size, __Vectors_End - __Vectors
         .size    __Vectors, . - __Vectors
