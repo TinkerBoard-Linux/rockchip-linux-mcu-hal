@@ -171,8 +171,8 @@ TEST_GROUP_RUNNER(HAL_SNOR){
 
     pwrite_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
     pread_t = (uint8_t *)malloc(maxest_sector * 4096  + 64);
-    pwrite = AlignUp(pwrite_t, CACHE_LINE_SIZE);
-    pread = AlignUp(pread_t, CACHE_LINE_SIZE);
+    pwrite = AlignUp(pwrite_t, 64);
+    pread = AlignUp(pread_t, 64);
     HAL_DBG("pwrite %p pread %p\n", pwrite, pread);
     if (!pwrite || !pread) {
         HAL_DBG("malloc failed\n");
