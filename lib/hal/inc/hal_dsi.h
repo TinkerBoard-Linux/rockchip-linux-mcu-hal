@@ -33,7 +33,7 @@ typedef enum {
     MIPI_DSI_GENERIC_LONG_WRITE          = 0x29,
     MIPI_DSI_DCS_LONG_WRITE              = 0x39,
     MIPI_DSI_PPS_LONG_WRITE              = 0x0A,
-}  eDSI_DataType;
+} eDSI_DataType;
 
 typedef enum {
     MIPI_DCS_NOP                 = 0x00,
