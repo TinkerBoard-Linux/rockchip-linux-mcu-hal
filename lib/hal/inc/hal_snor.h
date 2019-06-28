@@ -89,6 +89,8 @@ enum SPI_NOR_PROTOCOL {
 #define SPINOR_OP_WREN       0x06	/* Write enable */
 #define SPINOR_OP_RDSR       0x05	/* Read status register */
 #define SPINOR_OP_WRSR       0x01	/* Write status register 1 byte */
+#define SPINOR_OP_RDSR1      0x35	/* Read status register 1 */
+#define SPINOR_OP_WRSR1      0x31	/* Write status register 1 */
 #define SPINOR_OP_RDSR2      0x3f	/* Read status register 2 */
 #define SPINOR_OP_WRSR2      0x3e	/* Write status register 2 */
 #define SPINOR_OP_READ       0x03	/* Read data bytes (low frequency) */
@@ -108,6 +110,7 @@ enum SPI_NOR_PROTOCOL {
 #define SPINOR_OP_RDID       0x9f	/* Read JEDEC ID */
 #define SPINOR_OP_RDSFDP     0x5a	/* Read SFDP */
 #define SPINOR_OP_RDCR       0x35	/* Read configuration register */
+#define SPINOR_OP_WRCR       0x11	/* Write configuration register */
 #define SPINOR_OP_RDFSR      0x70	/* Read flag status register */
 #define SPINOR_OP_CLFSR      0x50	/* Clear flag status register */
 #define SPINOR_OP_RDEAR      0xc8	/* Read Extended Address Register */

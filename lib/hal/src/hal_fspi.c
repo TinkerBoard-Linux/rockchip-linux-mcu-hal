@@ -224,7 +224,7 @@ static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *
     uint32_t *pData = (uint32_t *)data;
     struct FSPI_REG *pReg = host->instance;
 
-    /* HAL_DBG("%s %p %lx %x %lx %lx\n", __func__, (uint32_t *)host->instance, FSPICmd, cmd.b.datasize, FSPICtrl, addr); */
+    /* HAL_DBG("%s %p len %lx word0 %lx dir %lx\n", __func__, len, pData[0], dir); */
     if (dir == FSPI_WRITE) {
         words = (len + 3) >> 2;
         while (words) {

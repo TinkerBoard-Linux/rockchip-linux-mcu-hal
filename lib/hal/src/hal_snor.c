@@ -68,6 +68,7 @@ struct FLASH_INFO {
 #define MID_SPANSION 0x01
 #define MID_EON      0x1C
 #define MID_ST       0x20
+#define MID_PUYA     0x85
 
 /* Used for Macronix and Winbond flashes. */
 #define SPINOR_OP_EN4B 0xb7	/* Enter 4-byte mode */
@@ -147,6 +148,8 @@ struct FLASH_INFO spiFlashbl[] = {
     { 0x207018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* XM25QH128A */
     { 0x1c7018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 }, /* EN25QH128A */
     { 0xc22814, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 11, 6, 0 }, /* MX25R8035F */
+    { 0x856017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 }, /* P25Q64H */
+    { 0x856016, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 13, 9, 0 }, /* P25Q32H */
 };
 
 /********************* Private Function Definition ***************************/
@@ -395,20 +398,21 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
 
 static HAL_Status SNOR_ReadStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8_t *status)
 {
-    uint8_t readStatCmd[] = { SPINOR_OP_RDSR, SPINOR_OP_RDCR };
+    uint8_t readStatCmd[] = { SPINOR_OP_RDSR, SPINOR_OP_RDSR1 };
 
     return nor->readReg(nor, readStatCmd[regIndex], status, 1);
 }
 
 static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8_t *status)
 {
+    uint8_t WriteStatCmd[2] = { SPINOR_OP_WRSR, SPINOR_OP_WRSR1 };
     uint8_t i = nor->info->feature & FEA_READ_STATUE_MASK;
     int32_t ret;
 
     if (i == 0) {
         SNOR_WriteEnable(nor);
 
-        ret = nor->writeReg(nor, SPINOR_OP_WRSR, status, 2);
+        ret = nor->writeReg(nor, WriteStatCmd[regIndex], status, 1);
         if (ret) {
             HAL_DBG("error while writing configuration register\n");
 
@@ -451,17 +455,22 @@ static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
 
     if (id == MID_GIGADEV ||
         id == MID_WINBOND ||
-        id == MID_MACRONIX) {
+        id == MID_MACRONIX ||
+        id == MID_PUYA) {
         regIndex = nor->info->QEBits >> 3;
         bitOffset = nor->info->QEBits & 0x7;
         ret = SNOR_ReadStatus(nor, regIndex, &status);
         if (ret != HAL_OK)
             return ret;
-
+        HAL_DBG("%s %x\n", __func__, status);
         if (status & (1 << bitOffset)) //is QE bit set
             return HAL_OK;
 
         ret = SNOR_WriteStatus(nor, regIndex, &status);
+        ret = SNOR_ReadStatus(nor, regIndex, &status);
+        if (ret != HAL_OK)
+            return ret;
+        HAL_DBG("%s %x\n", __func__, status);
     }
 
     return ret;
@@ -483,6 +492,7 @@ static HAL_Status SNOR_Set4byte(struct SPI_NOR *nor, const struct FLASH_INFO *in
     case MID_MACRONIX:
     case MID_WINBOND:
     case MID_GIGADEV:
+    case MID_PUYA:
         if (need_wren)
             SNOR_WriteEnable(nor);
 
@@ -730,7 +740,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         nor->eraseOpcodeBlk = info->blockEraseCmd;
         nor->readOpcode = info->readCmd;
         nor->readProto = SNOR_PROTO_1_1_1;
-        nor->readDummy = 8;
+        nor->readDummy = 0;
         nor->programOpcode = info->progCmd;
         nor->writeProto = SNOR_PROTO_1_1_1;
         nor->name = "spi-nor";
@@ -746,9 +756,11 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
                     nor->readProto = SNOR_PROTO_1_4_4;
                     break;
                 case SPINOR_OP_READ_1_2_2:
+                    nor->readDummy = 8;
                     nor->readProto = SNOR_PROTO_1_2_2;
                     break;
                 default:
+                    nor->readDummy = 8;
                     nor->readProto = SNOR_PROTO_1_1_4;
                     break;
                 }
