@@ -58,11 +58,11 @@ static uint32_t s_dpllFreq;
 static uint32_t s_gpllFreq;
 
 static struct PLL_SETUP APLL = {
-    .conOffset0 = (uint32_t)(&(CRU->APLL_CON[0])),
-    .conOffset1 = (uint32_t)(&(CRU->APLL_CON[1])),
-    .conOffset2 = (uint32_t)(&(CRU->APLL_CON[2])),
-    .conOffset3 = (uint32_t)(&(CRU->APLL_CON[3])),
-    .modeOffset = (uint32_t)(&(CRU->APLL_CON[3])),
+    .conOffset0 = &(CRU->APLL_CON[0]),
+    .conOffset1 = &(CRU->APLL_CON[1]),
+    .conOffset2 = &(CRU->APLL_CON[2]),
+    .conOffset3 = &(CRU->APLL_CON[3]),
+    .modeOffset = &(CRU->APLL_CON[3]),
     .modeShift = 8,
     .lockShift = 31,
     .modeMask = 0x1 << 8,
@@ -70,11 +70,11 @@ static struct PLL_SETUP APLL = {
 };
 
 static struct PLL_SETUP DPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->DPLL_CON[0])),
-    .conOffset1 = (uint32_t)(&(CRU->DPLL_CON[1])),
-    .conOffset2 = (uint32_t)(&(CRU->DPLL_CON[2])),
-    .conOffset3 = (uint32_t)(&(CRU->DPLL_CON[3])),
-    .modeOffset = (uint32_t)(&(CRU->DPLL_CON[3])),
+    .conOffset0 = &(CRU->DPLL_CON[0]),
+    .conOffset1 = &(CRU->DPLL_CON[1]),
+    .conOffset2 = &(CRU->DPLL_CON[2]),
+    .conOffset3 = &(CRU->DPLL_CON[3]),
+    .modeOffset = &(CRU->DPLL_CON[3]),
     .modeShift = 8,
     .lockShift = 31,
     .modeMask = 0x1 << 8,
@@ -82,11 +82,11 @@ static struct PLL_SETUP DPLL = {
 };
 
 static struct PLL_SETUP GPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->GPLL_CON[0])),
-    .conOffset1 = (uint32_t)(&(CRU->GPLL_CON[1])),
-    .conOffset2 = (uint32_t)(&(CRU->GPLL_CON[2])),
-    .conOffset3 = (uint32_t)(&(CRU->GPLL_CON[3])),
-    .modeOffset = (uint32_t)(&(CRU->GPLL_CON[3])),
+    .conOffset0 = &(CRU->GPLL_CON[0]),
+    .conOffset1 = &(CRU->GPLL_CON[1]),
+    .conOffset2 = &(CRU->GPLL_CON[2]),
+    .conOffset3 = &(CRU->GPLL_CON[3]),
+    .modeOffset = &(CRU->GPLL_CON[3]),
     .modeShift = 8,
     .lockShift = 31,
     .modeMask = 0x1 << 8,

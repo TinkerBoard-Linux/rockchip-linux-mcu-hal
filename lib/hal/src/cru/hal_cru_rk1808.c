@@ -63,10 +63,10 @@ static uint32_t s_npllFreq;
 static uint32_t s_ppllFreq;
 
 static struct PLL_SETUP APLL = {
-    .conOffset0 = (uint32_t)(&(CRU->APLL_CON[0])),
-    .conOffset1 = (uint32_t)(&(CRU->APLL_CON[1])),
-    .conOffset2 = (uint32_t)(&(CRU->APLL_CON[2])),
-    .modeOffset = (uint32_t)(&(CRU->MODE)),
+    .conOffset0 = &(CRU->APLL_CON[0]),
+    .conOffset1 = &(CRU->APLL_CON[1]),
+    .conOffset2 = &(CRU->APLL_CON[2]),
+    .modeOffset = &(CRU->MODE),
     .modeShift = 0,
     .lockShift = 10,
     .modeMask = 0x3 << 0,
@@ -74,10 +74,10 @@ static struct PLL_SETUP APLL = {
 };
 
 static struct PLL_SETUP DPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->DPLL_CON[0])),
-    .conOffset1 = (uint32_t)(&(CRU->DPLL_CON[1])),
-    .conOffset2 = (uint32_t)(&(CRU->DPLL_CON[2])),
-    .modeOffset = (uint32_t)(&(CRU->MODE)),
+    .conOffset0 = &(CRU->DPLL_CON[0]),
+    .conOffset1 = &(CRU->DPLL_CON[1]),
+    .conOffset2 = &(CRU->DPLL_CON[2]),
+    .modeOffset = &(CRU->MODE),
     .modeShift = 2,
     .lockShift = 10,
     .modeMask = 0x3 << 2,
@@ -85,10 +85,10 @@ static struct PLL_SETUP DPLL = {
 };
 
 static struct PLL_SETUP CPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->CPLL_CON[0])),
-    .conOffset1 = (uint32_t)(&(CRU->CPLL_CON[1])),
-    .conOffset2 = (uint32_t)(&(CRU->CPLL_CON[2])),
-    .modeOffset = (uint32_t)(&(CRU->MODE)),
+    .conOffset0 = &(CRU->CPLL_CON[0]),
+    .conOffset1 = &(CRU->CPLL_CON[1]),
+    .conOffset2 = &(CRU->CPLL_CON[2]),
+    .modeOffset = &(CRU->MODE),
     .modeShift = 4,
     .lockShift = 10,
     .modeMask = 0x3 << 4,
@@ -96,10 +96,10 @@ static struct PLL_SETUP CPLL = {
 };
 
 static struct PLL_SETUP GPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->GPLL_CON[0])),
-    .conOffset1 = (uint32_t)(&(CRU->GPLL_CON[1])),
-    .conOffset2 = (uint32_t)(&(CRU->GPLL_CON[2])),
-    .modeOffset = (uint32_t)(&(CRU->MODE)),
+    .conOffset0 = &(CRU->GPLL_CON[0]),
+    .conOffset1 = &(CRU->GPLL_CON[1]),
+    .conOffset2 = &(CRU->GPLL_CON[2]),
+    .modeOffset = &(CRU->MODE),
     .modeShift = 6,
     .lockShift = 10,
     .modeMask = 0x3 << 6,
@@ -107,10 +107,10 @@ static struct PLL_SETUP GPLL = {
 };
 
 static struct PLL_SETUP NPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->NPLL_CON[0])),
-    .conOffset1 = (uint32_t)(&(CRU->NPLL_CON[1])),
-    .conOffset2 = (uint32_t)(&(CRU->NPLL_CON[2])),
-    .modeOffset = (uint32_t)(&(CRU->MODE)),
+    .conOffset0 = &(CRU->NPLL_CON[0]),
+    .conOffset1 = &(CRU->NPLL_CON[1]),
+    .conOffset2 = &(CRU->NPLL_CON[2]),
+    .modeOffset = &(CRU->MODE),
     .modeShift = 8,
     .lockShift = 10,
     .modeMask = 0x3 << 8,
@@ -118,10 +118,10 @@ static struct PLL_SETUP NPLL = {
 };
 
 static struct PLL_SETUP PPLL = {
-    .conOffset0 = (uint32_t)(&(CRU->PMUPLL_CON[0])),
-    .conOffset1 = (uint32_t)(&(CRU->PMUPLL_CON[1])),
-    .conOffset2 = (uint32_t)(&(CRU->PMUPLL_CON[2])),
-    .modeOffset = (uint32_t)(&(CRU->PMU_MODE)),
+    .conOffset0 = &(CRU->PMUPLL_CON[0]),
+    .conOffset1 = &(CRU->PMUPLL_CON[1]),
+    .conOffset2 = &(CRU->PMUPLL_CON[2]),
+    .modeOffset = &(CRU->PMU_MODE),
     .modeShift = 0,
     .lockShift = 10,
     .modeMask = 0x3 << 0,

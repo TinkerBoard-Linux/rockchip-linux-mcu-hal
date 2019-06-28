@@ -82,11 +82,11 @@ struct PLL_CONFIG {
 };
 
 struct PLL_SETUP {
-    __IO uint32_t conOffset0;
-    __IO uint32_t conOffset1;
-    __IO uint32_t conOffset2;
-    __IO uint32_t conOffset3;
-    __IO uint32_t modeOffset;
+    __IO uint32_t *conOffset0;
+    __IO uint32_t *conOffset1;
+    __IO uint32_t *conOffset2;
+    __IO uint32_t *conOffset3;
+    __IO uint32_t *modeOffset;
     uint32_t modeShift;
     uint32_t lockShift;
     uint32_t modeMask;
