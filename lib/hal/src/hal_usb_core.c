@@ -220,7 +220,7 @@ HAL_Status USB_DevInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
     pUSB->GINTMSK = 0;
 
     /* Clear any pending interrupts */
-    pUSB->GINTSTS = 0xBFFFFFFF;
+    pUSB->GINTSTS = 0xFFFFFFFF;
 
     /* Enable the common interrupts */
     if (cfg.dmaEnable == HAL_DISABLE)
