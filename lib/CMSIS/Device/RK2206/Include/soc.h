@@ -515,27 +515,27 @@ struct FSPI_REG {
     __IO uint32_t DEVSIZE0;                           /* Address Offset: 0x0064 */
     __IO uint32_t TME0;                               /* Address Offset: 0x0068 */
     __IO uint32_t POLLDLY_CTRL;                       /* Address Offset: 0x006C */
-         uint32_t RESERVED0112[4];                    /* Address Offset: 0x0070 */
+         uint32_t RESERVED0070[4];                    /* Address Offset: 0x0070 */
     __O  uint32_t DMATR;                              /* Address Offset: 0x0080 */
     __IO uint32_t DMAADDR;                            /* Address Offset: 0x0084 */
-         uint32_t RESERVED0136[2];                    /* Address Offset: 0x0088 */
+         uint32_t RESERVED0088[2];                    /* Address Offset: 0x0088 */
     __I  uint32_t POLL_DATA;                          /* Address Offset: 0x0090 */
     __IO uint32_t XMMCSR;                             /* Address Offset: 0x0094 */
-         uint32_t RESERVED0152[26];                   /* Address Offset: 0x0098 */
+         uint32_t RESERVED0098[26];                   /* Address Offset: 0x0098 */
     __O  uint32_t CMD;                                /* Address Offset: 0x0100 */
     __O  uint32_t ADDR;                               /* Address Offset: 0x0104 */
     __IO uint32_t DATA;                               /* Address Offset: 0x0108 */
-         uint32_t RESERVED0268[61];                   /* Address Offset: 0x010C */
+         uint32_t RESERVED010C[61];                   /* Address Offset: 0x010C */
     __IO uint32_t CTRL1;                              /* Address Offset: 0x0200 */
-         uint32_t RESERVED0516[4];                    /* Address Offset: 0x0204 */
+         uint32_t RESERVED0204[4];                    /* Address Offset: 0x0204 */
     __IO uint32_t AX1;                                /* Address Offset: 0x0214 */
     __IO uint32_t ABIT1;                              /* Address Offset: 0x0218 */
-         uint32_t RESERVED0540[8];                    /* Address Offset: 0x021C */
+         uint32_t RESERVED021C[8];                    /* Address Offset: 0x021C */
     __IO uint32_t DLL_CTRL1;                          /* Address Offset: 0x023C */
-         uint32_t RESERVED0576[4];                    /* Address Offset: 0x0240 */
+         uint32_t RESERVED0240[4];                    /* Address Offset: 0x0240 */
     __O  uint32_t XMMC_WCMD1;                         /* Address Offset: 0x0250 */
     __O  uint32_t XMMC_RCMD1;                         /* Address Offset: 0x0254 */
-         uint32_t RESERVED0600[3];                    /* Address Offset: 0x0258 */
+         uint32_t RESERVED0258[3];                    /* Address Offset: 0x0258 */
     __IO uint32_t DEVSIZE1;                           /* Address Offset: 0x0264 */
     __IO uint32_t TME1;                               /* Address Offset: 0x0268 */
 };
@@ -640,7 +640,9 @@ struct GRF_REG {
     __IO uint32_t GPIO1B_IOMUX_L;                     /* Address Offset: 0x0028 */
     __IO uint32_t GPIO1B_IOMUX_H;                     /* Address Offset: 0x002C */
     __IO uint32_t GPIO1C_IOMUX_L;                     /* Address Offset: 0x0030 */
-         uint32_t RESERVED0034[51];                   /* Address Offset: 0x0034 */
+         uint32_t RESERVED0034;                       /* Address Offset: 0x0034 */
+    __IO uint32_t GPIO1D_IOMUX_L;                     /* Address Offset: 0x0038 */
+         uint32_t RESERVED003C[49];                   /* Address Offset: 0x003C */
     __IO uint32_t GPIO0A_P;                           /* Address Offset: 0x0100 */
     __IO uint32_t GPIO0B_P;                           /* Address Offset: 0x0104 */
     __IO uint32_t GPIO0C_P;                           /* Address Offset: 0x0108 */
@@ -648,20 +650,21 @@ struct GRF_REG {
     __IO uint32_t GPIO1A_P;                           /* Address Offset: 0x0110 */
     __IO uint32_t GPIO1B_P;                           /* Address Offset: 0x0114 */
     __IO uint32_t GPIO1C_P;                           /* Address Offset: 0x0118 */
-         uint32_t RESERVED011C[57];                   /* Address Offset: 0x011C */
+    __IO uint32_t GPIO1D_P;                           /* Address Offset: 0x011C */
+         uint32_t RESERVED0120[56];                   /* Address Offset: 0x0120 */
     __IO uint32_t SOC_CON[32];                        /* Address Offset: 0x0200 */
     __IO uint32_t SOC_STATUS;                         /* Address Offset: 0x0280 */
          uint32_t RESERVED0284[31];                   /* Address Offset: 0x0284 */
     __IO uint32_t MCU0_CON[2];                        /* Address Offset: 0x0300 */
     __IO uint32_t MCU1_CON[2];                        /* Address Offset: 0x0308 */
          uint32_t RESERVED0310[4];                    /* Address Offset: 0x0310 */
-    __IO uint32_t SOC_DSP[3];                         /* Address Offset: 0x0320 */
+    __IO uint32_t DSP_CON[3];                         /* Address Offset: 0x0320 */
          uint32_t RESERVED032C[5];                    /* Address Offset: 0x032C */
     __IO uint32_t SOC_UOC[3];                         /* Address Offset: 0x0340 */
          uint32_t RESERVED034C[13];                   /* Address Offset: 0x034C */
     __IO uint32_t MCU0_STATUS;                        /* Address Offset: 0x0380 */
     __IO uint32_t MCU1_STATUS;                        /* Address Offset: 0x0384 */
-    __IO uint32_t DSP_STATUS[2];                      /* Address Offset: 0x0388 */
+    __IO uint32_t DSP_STAT[2];                        /* Address Offset: 0x0388 */
          uint32_t RESERVED0390[28];                   /* Address Offset: 0x0390 */
     __IO uint32_t GRF_FAST_BOOT;                      /* Address Offset: 0x0400 */
     __IO uint32_t GRF_FAST_BOOT_ADDR;                 /* Address Offset: 0x0404 */
@@ -680,7 +683,9 @@ struct GRF_REG {
     __IO uint32_t USB2_DETECT_IRQ_ENABLE;             /* Address Offset: 0x0690 */
     __IO uint32_t USB2_DETECT_IRQ_STATUS;             /* Address Offset: 0x0694 */
     __IO uint32_t USB2_DETECT_IRQ_STATUS_CLR;         /* Address Offset: 0x0698 */
-         uint32_t RESERVED069C[89];                   /* Address Offset: 0x069C */
+         uint32_t RESERVED069C[25];                   /* Address Offset: 0x069C */
+    __IO uint32_t SPINLOCK_REG_X;                     /* Address Offset: 0x0700 */
+         uint32_t RESERVED0704[63];                   /* Address Offset: 0x0704 */
     __IO uint32_t OS_REG[8];                          /* Address Offset: 0x0800 */
     __I  uint32_t GRF_SOC_VERSION;                    /* Address Offset: 0x0820 */
 };
@@ -698,8 +703,8 @@ struct CRU_REG {
     __IO uint32_t GLB_SRST_SND;                       /* Address Offset: 0x00BC */
     __IO uint32_t GLB_RST_CON;                        /* Address Offset: 0x00C0 */
          uint32_t RESERVED00C4[15];                   /* Address Offset: 0x00C4 */
-    __IO uint32_t CRU_CLKSEL_CON[36];                 /* Address Offset: 0x0100 */
-         uint32_t RESERVED0190[92];                   /* Address Offset: 0x0190 */
+    __IO uint32_t CRU_CLKSEL_CON[37];                 /* Address Offset: 0x0100 */
+         uint32_t RESERVED0194[91];                   /* Address Offset: 0x0194 */
     __IO uint32_t CRU_CLKGATE_CON[13];                /* Address Offset: 0x0300 */
          uint32_t RESERVED0334[19];                   /* Address Offset: 0x0334 */
     __O  uint32_t SSCGTBL0_3;                         /* Address Offset: 0x0380 */
@@ -734,8 +739,7 @@ struct CRU_REG {
     __O  uint32_t SSCGTBL116_119;                     /* Address Offset: 0x03F4 */
     __O  uint32_t SSCGTBL120_123;                     /* Address Offset: 0x03F8 */
     __O  uint32_t SSCGTBL124_127;                     /* Address Offset: 0x03FC */
-         uint32_t RESERVED0400;                       /* Address Offset: 0x0400 */
-    __IO uint32_t CRU_SOFTRST_CON[12];                /* Address Offset: 0x0404 */
+    __IO uint32_t CRU_SOFTRST_CON[13];                /* Address Offset: 0x0400 */
          uint32_t RESERVED0434[19];                   /* Address Offset: 0x0434 */
     __IO uint32_t SDMMC_CON[2];                       /* Address Offset: 0x0480 */
 };
@@ -3934,7 +3938,7 @@ struct USB_HOST_CH_REG {
 #define GRF_GPIO0A_IOMUX_H_GPIO0A4_SEL_SHIFT               (0U)
 #define GRF_GPIO0A_IOMUX_H_GPIO0A4_SEL_MASK                (0xFU << GRF_GPIO0A_IOMUX_H_GPIO0A4_SEL_SHIFT)               /* 0x0000000F */
 #define GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_SHIFT               (4U)
-#define GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_MASK                (0xFU << GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_SHIFT)               /* 0x000000F0 */
 #define GRF_GPIO0A_IOMUX_H_GPIO0A6_SEL_SHIFT               (8U)
 #define GRF_GPIO0A_IOMUX_H_GPIO0A6_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_H_GPIO0A6_SEL_SHIFT)               /* 0x00000700 */
 #define GRF_GPIO0A_IOMUX_H_GPIO0A7_SEL_SHIFT               (12U)
@@ -4028,10 +4032,15 @@ struct USB_HOST_CH_REG {
 #define GRF_GPIO1C_IOMUX_L_GPIO1C0_SEL_MASK                (0x3U << GRF_GPIO1C_IOMUX_L_GPIO1C0_SEL_SHIFT)               /* 0x00000003 */
 #define GRF_GPIO1C_IOMUX_L_GPIO1C1_SEL_SHIFT               (4U)
 #define GRF_GPIO1C_IOMUX_L_GPIO1C1_SEL_MASK                (0x1U << GRF_GPIO1C_IOMUX_L_GPIO1C1_SEL_SHIFT)               /* 0x00000010 */
+#define GRF_GPIO1C_IOMUX_L_FIELD0000_SHIFT                 (5U)
+#define GRF_GPIO1C_IOMUX_L_FIELD0000_MASK                  (0x1U << GRF_GPIO1C_IOMUX_L_FIELD0000_SHIFT)                 /* 0x00000020 */
 #define GRF_GPIO1C_IOMUX_L_GPIO1C2_SEL_SHIFT               (8U)
 #define GRF_GPIO1C_IOMUX_L_GPIO1C2_SEL_MASK                (0x1U << GRF_GPIO1C_IOMUX_L_GPIO1C2_SEL_SHIFT)               /* 0x00000100 */
 #define GRF_GPIO1C_IOMUX_L_GPIO1C3_SEL_SHIFT               (12U)
 #define GRF_GPIO1C_IOMUX_L_GPIO1C3_SEL_MASK                (0x1U << GRF_GPIO1C_IOMUX_L_GPIO1C3_SEL_SHIFT)               /* 0x00001000 */
+/* GPIO1D_IOMUX_L */
+#define GRF_GPIO1D_IOMUX_L_GPIO1D0_SEL_SHIFT               (0U)
+#define GRF_GPIO1D_IOMUX_L_GPIO1D0_SEL_MASK                (0x3U << GRF_GPIO1D_IOMUX_L_GPIO1D0_SEL_SHIFT)               /* 0x00000003 */
 /* GPIO0A_P */
 #define GRF_GPIO0A_P_GPIO0A0_P_SHIFT                       (0U)
 #define GRF_GPIO0A_P_GPIO0A0_P_MASK                        (0x3U << GRF_GPIO0A_P_GPIO0A0_P_SHIFT)                       /* 0x00000003 */
@@ -4137,6 +4146,9 @@ struct USB_HOST_CH_REG {
 #define GRF_GPIO1C_P_GPIO1C2_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C2_P_SHIFT)                       /* 0x00000030 */
 #define GRF_GPIO1C_P_GPIO1C3_P_SHIFT                       (6U)
 #define GRF_GPIO1C_P_GPIO1C3_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C3_P_SHIFT)                       /* 0x000000C0 */
+/* GPIO1D_P */
+#define GRF_GPIO1D_P_GPIO1D0_P_SHIFT                       (0U)
+#define GRF_GPIO1D_P_GPIO1D0_P_MASK                        (0x3U << GRF_GPIO1D_P_GPIO1D0_P_SHIFT)                       /* 0x00000003 */
 /* SOC_CON0 */
 #define GRF_SOC_CON0_REMAP_SHIFT                           (0U)
 #define GRF_SOC_CON0_REMAP_MASK                            (0x1U << GRF_SOC_CON0_REMAP_SHIFT)                           /* 0x00000001 */
@@ -4562,6 +4574,10 @@ struct USB_HOST_CH_REG {
 #define GRF_MCU0_CON1_GRF_CON_M4F_MPU_DISABLE_MASK         (0x1U << GRF_MCU0_CON1_GRF_CON_M4F_MPU_DISABLE_SHIFT)        /* 0x00000040 */
 #define GRF_MCU0_CON1_GRF_CON_M4F_FPU_DISABLE_SHIFT        (7U)
 #define GRF_MCU0_CON1_GRF_CON_M4F_FPU_DISABLE_MASK         (0x1U << GRF_MCU0_CON1_GRF_CON_M4F_FPU_DISABLE_SHIFT)        /* 0x00000080 */
+#define GRF_MCU0_CON1_GRF_CON_M4_DAP_FIXMASTER_SHIFT       (8U)
+#define GRF_MCU0_CON1_GRF_CON_M4_DAP_FIXMASTER_MASK        (0x1U << GRF_MCU0_CON1_GRF_CON_M4_DAP_FIXMASTER_SHIFT)       /* 0x00000100 */
+#define GRF_MCU0_CON1_GRF_CON_M4_DAP_DCACHE_SHIFT          (9U)
+#define GRF_MCU0_CON1_GRF_CON_M4_DAP_DCACHE_MASK           (0x1U << GRF_MCU0_CON1_GRF_CON_M4_DAP_DCACHE_SHIFT)          /* 0x00000200 */
 /* MCU1_CON0 */
 #define GRF_MCU1_CON0_GRF_CON_M0_STALIB_SHIFT              (0U)
 #define GRF_MCU1_CON0_GRF_CON_M0_STALIB_MASK               (0x3FFFFFFU << GRF_MCU1_CON0_GRF_CON_M0_STALIB_SHIFT)        /* 0x03FFFFFF */
@@ -4580,25 +4596,25 @@ struct USB_HOST_CH_REG {
 #define GRF_MCU1_CON1_GRF_CON_M0_PMU_ENABLE_MASK           (0x1U << GRF_MCU1_CON1_GRF_CON_M0_PMU_ENABLE_SHIFT)          /* 0x00000020 */
 #define GRF_MCU1_CON1_GRF_CON_M0_MPU_DISABLE_SHIFT         (6U)
 #define GRF_MCU1_CON1_GRF_CON_M0_MPU_DISABLE_MASK          (0xFFU << GRF_MCU1_CON1_GRF_CON_M0_MPU_DISABLE_SHIFT)        /* 0x00003FC0 */
-/* SOC_DSP0 */
-#define GRF_SOC_DSP0_GRF_CON_DSP_OCDHALTONRESET_SHIFT      (0U)
-#define GRF_SOC_DSP0_GRF_CON_DSP_OCDHALTONRESET_MASK       (0x1U << GRF_SOC_DSP0_GRF_CON_DSP_OCDHALTONRESET_SHIFT)      /* 0x00000001 */
-#define GRF_SOC_DSP0_GRF_CON_DSP_BREAKIN_SHIFT             (1U)
-#define GRF_SOC_DSP0_GRF_CON_DSP_BREAKIN_MASK              (0x1U << GRF_SOC_DSP0_GRF_CON_DSP_BREAKIN_SHIFT)             /* 0x00000002 */
-#define GRF_SOC_DSP0_GRF_CON_DSP_BREAKOUTACK_SHIFT         (2U)
-#define GRF_SOC_DSP0_GRF_CON_DSP_BREAKOUTACK_MASK          (0x1U << GRF_SOC_DSP0_GRF_CON_DSP_BREAKOUTACK_SHIFT)         /* 0x00000004 */
-#define GRF_SOC_DSP0_GRF_CON_DSP_STATVECTORSEL_SHIFT       (4U)
-#define GRF_SOC_DSP0_GRF_CON_DSP_STATVECTORSEL_MASK        (0x1U << GRF_SOC_DSP0_GRF_CON_DSP_STATVECTORSEL_SHIFT)       /* 0x00000010 */
-#define GRF_SOC_DSP0_GRF_CON_DSP_RUNSTALL_SHIFT            (5U)
-#define GRF_SOC_DSP0_GRF_CON_DSP_RUNSTALL_MASK             (0x1U << GRF_SOC_DSP0_GRF_CON_DSP_RUNSTALL_SHIFT)            /* 0x00000020 */
-/* SOC_DSP1 */
-#define GRF_SOC_DSP1_GRF_CON_DSP_ALTRESETVEC_SHIFT         (0U)
-#define GRF_SOC_DSP1_GRF_CON_DSP_ALTRESETVEC_MASK          (0xFFFFFFFFU << GRF_SOC_DSP1_GRF_CON_DSP_ALTRESETVEC_SHIFT)  /* 0xFFFFFFFF */
-/* SOC_DSP2 */
-#define GRF_SOC_DSP2_GRF_CON_DSP_MEMAUTOGATINGEN_SHIFT     (0U)
-#define GRF_SOC_DSP2_GRF_CON_DSP_MEMAUTOGATINGEN_MASK      (0x1FU << GRF_SOC_DSP2_GRF_CON_DSP_MEMAUTOGATINGEN_SHIFT)    /* 0x0000001F */
-#define GRF_SOC_DSP2_GRF_CON_DSP_TCM_MEMAUTOGATINGEN_SHIFT (5U)
-#define GRF_SOC_DSP2_GRF_CON_DSP_TCM_MEMAUTOGATINGEN_MASK  (0x3U << GRF_SOC_DSP2_GRF_CON_DSP_TCM_MEMAUTOGATINGEN_SHIFT) /* 0x00000060 */
+/* DSP_CON0 */
+#define GRF_DSP_CON0_GRF_CON_DSP_OCDHALTONRESET_SHIFT      (0U)
+#define GRF_DSP_CON0_GRF_CON_DSP_OCDHALTONRESET_MASK       (0x1U << GRF_DSP_CON0_GRF_CON_DSP_OCDHALTONRESET_SHIFT)      /* 0x00000001 */
+#define GRF_DSP_CON0_GRF_CON_DSP_BREAKIN_SHIFT             (1U)
+#define GRF_DSP_CON0_GRF_CON_DSP_BREAKIN_MASK              (0x1U << GRF_DSP_CON0_GRF_CON_DSP_BREAKIN_SHIFT)             /* 0x00000002 */
+#define GRF_DSP_CON0_GRF_CON_DSP_BREAKOUTACK_SHIFT         (2U)
+#define GRF_DSP_CON0_GRF_CON_DSP_BREAKOUTACK_MASK          (0x1U << GRF_DSP_CON0_GRF_CON_DSP_BREAKOUTACK_SHIFT)         /* 0x00000004 */
+#define GRF_DSP_CON0_GRF_CON_DSP_STATVECTORSEL_SHIFT       (4U)
+#define GRF_DSP_CON0_GRF_CON_DSP_STATVECTORSEL_MASK        (0x1U << GRF_DSP_CON0_GRF_CON_DSP_STATVECTORSEL_SHIFT)       /* 0x00000010 */
+#define GRF_DSP_CON0_GRF_CON_DSP_RUNSTALL_SHIFT            (5U)
+#define GRF_DSP_CON0_GRF_CON_DSP_RUNSTALL_MASK             (0x1U << GRF_DSP_CON0_GRF_CON_DSP_RUNSTALL_SHIFT)            /* 0x00000020 */
+/* DSP_CON1 */
+#define GRF_DSP_CON1_GRF_CON_DSP_ALTRESETVEC_SHIFT         (0U)
+#define GRF_DSP_CON1_GRF_CON_DSP_ALTRESETVEC_MASK          (0xFFFFFFFFU << GRF_DSP_CON1_GRF_CON_DSP_ALTRESETVEC_SHIFT)  /* 0xFFFFFFFF */
+/* DSP_CON2 */
+#define GRF_DSP_CON2_GRF_CON_DSP_MEMAUTOGATINGEN_SHIFT     (0U)
+#define GRF_DSP_CON2_GRF_CON_DSP_MEMAUTOGATINGEN_MASK      (0x1FU << GRF_DSP_CON2_GRF_CON_DSP_MEMAUTOGATINGEN_SHIFT)    /* 0x0000001F */
+#define GRF_DSP_CON2_GRF_CON_DSP_TCM_MEMAUTOGATINGEN_SHIFT (5U)
+#define GRF_DSP_CON2_GRF_CON_DSP_TCM_MEMAUTOGATINGEN_MASK  (0x3U << GRF_DSP_CON2_GRF_CON_DSP_TCM_MEMAUTOGATINGEN_SHIFT) /* 0x00000060 */
 /* SOC_UOC0 */
 #define GRF_SOC_UOC0_OTGPHY_COMMON_ON_N_SHIFT              (0U)
 #define GRF_SOC_UOC0_OTGPHY_COMMON_ON_N_MASK               (0x1U << GRF_SOC_UOC0_OTGPHY_COMMON_ON_N_SHIFT)              /* 0x00000001 */
@@ -4706,28 +4722,28 @@ struct USB_HOST_CH_REG {
 #define GRF_MCU1_STATUS_GRF_ST_M0_SLEEPHOLDACKN_MASK       (0x1U << GRF_MCU1_STATUS_GRF_ST_M0_SLEEPHOLDACKN_SHIFT)      /* 0x00000100 */
 #define GRF_MCU1_STATUS_GRF_ST_M0_WICENACK_SHIFT           (9U)
 #define GRF_MCU1_STATUS_GRF_ST_M0_WICENACK_MASK            (0x1U << GRF_MCU1_STATUS_GRF_ST_M0_WICENACK_SHIFT)           /* 0x00000200 */
-/* DSP_STATUS0 */
-#define GRF_DSP_STATUS0_XOCDMODE_SHIFT                     (0U)
-#define GRF_DSP_STATUS0_XOCDMODE_MASK                      (0x1U << GRF_DSP_STATUS0_XOCDMODE_SHIFT)                     /* 0x00000001 */
-#define GRF_DSP_STATUS0_DEBUGMODE_SHIFT                    (1U)
-#define GRF_DSP_STATUS0_DEBUGMODE_MASK                     (0x1U << GRF_DSP_STATUS0_DEBUGMODE_SHIFT)                    /* 0x00000002 */
-#define GRF_DSP_STATUS0_BREAKINACK_SHIFT                   (2U)
-#define GRF_DSP_STATUS0_BREAKINACK_MASK                    (0x1U << GRF_DSP_STATUS0_BREAKINACK_SHIFT)                   /* 0x00000004 */
-#define GRF_DSP_STATUS0_BREAKOUT_SHIFT                     (3U)
-#define GRF_DSP_STATUS0_BREAKOUT_MASK                      (0x1U << GRF_DSP_STATUS0_BREAKOUT_SHIFT)                     /* 0x00000008 */
-#define GRF_DSP_STATUS0_DOUBLEEXCEPTIONERROR_SHIFT         (4U)
-#define GRF_DSP_STATUS0_DOUBLEEXCEPTIONERROR_MASK          (0x1U << GRF_DSP_STATUS0_DOUBLEEXCEPTIONERROR_SHIFT)         /* 0x00000010 */
-#define GRF_DSP_STATUS0_PFATALERROR_SHIFT                  (5U)
-#define GRF_DSP_STATUS0_PFATALERROR_MASK                   (0x1U << GRF_DSP_STATUS0_PFATALERROR_SHIFT)                  /* 0x00000020 */
-#define GRF_DSP_STATUS0_PFAULTINFOVALID_SHIFT              (6U)
-#define GRF_DSP_STATUS0_PFAULTINFOVALID_MASK               (0x1U << GRF_DSP_STATUS0_PFAULTINFOVALID_SHIFT)              /* 0x00000040 */
-#define GRF_DSP_STATUS0_PWAITMODE_SHIFT                    (7U)
-#define GRF_DSP_STATUS0_PWAITMODE_MASK                     (0x1U << GRF_DSP_STATUS0_PWAITMODE_SHIFT)                    /* 0x00000080 */
-#define GRF_DSP_STATUS0_IRAM0LADSTORE_SHIFT                (8U)
-#define GRF_DSP_STATUS0_IRAM0LADSTORE_MASK                 (0x1U << GRF_DSP_STATUS0_IRAM0LADSTORE_SHIFT)                /* 0x00000100 */
-/* DSP_STATUS1 */
-#define GRF_DSP_STATUS1_PFAULTINFO_SHIFT                   (0U)
-#define GRF_DSP_STATUS1_PFAULTINFO_MASK                    (0xFFFFFFFFU << GRF_DSP_STATUS1_PFAULTINFO_SHIFT)            /* 0xFFFFFFFF */
+/* DSP_STAT0 */
+#define GRF_DSP_STAT0_XOCDMODE_SHIFT                       (0U)
+#define GRF_DSP_STAT0_XOCDMODE_MASK                        (0x1U << GRF_DSP_STAT0_XOCDMODE_SHIFT)                       /* 0x00000001 */
+#define GRF_DSP_STAT0_DEBUGMODE_SHIFT                      (1U)
+#define GRF_DSP_STAT0_DEBUGMODE_MASK                       (0x1U << GRF_DSP_STAT0_DEBUGMODE_SHIFT)                      /* 0x00000002 */
+#define GRF_DSP_STAT0_BREAKINACK_SHIFT                     (2U)
+#define GRF_DSP_STAT0_BREAKINACK_MASK                      (0x1U << GRF_DSP_STAT0_BREAKINACK_SHIFT)                     /* 0x00000004 */
+#define GRF_DSP_STAT0_BREAKOUT_SHIFT                       (3U)
+#define GRF_DSP_STAT0_BREAKOUT_MASK                        (0x1U << GRF_DSP_STAT0_BREAKOUT_SHIFT)                       /* 0x00000008 */
+#define GRF_DSP_STAT0_DOUBLEEXCEPTIONERROR_SHIFT           (4U)
+#define GRF_DSP_STAT0_DOUBLEEXCEPTIONERROR_MASK            (0x1U << GRF_DSP_STAT0_DOUBLEEXCEPTIONERROR_SHIFT)           /* 0x00000010 */
+#define GRF_DSP_STAT0_PFATALERROR_SHIFT                    (5U)
+#define GRF_DSP_STAT0_PFATALERROR_MASK                     (0x1U << GRF_DSP_STAT0_PFATALERROR_SHIFT)                    /* 0x00000020 */
+#define GRF_DSP_STAT0_PFAULTINFOVALID_SHIFT                (6U)
+#define GRF_DSP_STAT0_PFAULTINFOVALID_MASK                 (0x1U << GRF_DSP_STAT0_PFAULTINFOVALID_SHIFT)                /* 0x00000040 */
+#define GRF_DSP_STAT0_PWAITMODE_SHIFT                      (7U)
+#define GRF_DSP_STAT0_PWAITMODE_MASK                       (0x1U << GRF_DSP_STAT0_PWAITMODE_SHIFT)                      /* 0x00000080 */
+#define GRF_DSP_STAT0_IRAM0LADSTORE_SHIFT                  (8U)
+#define GRF_DSP_STAT0_IRAM0LADSTORE_MASK                   (0x1U << GRF_DSP_STAT0_IRAM0LADSTORE_SHIFT)                  /* 0x00000100 */
+/* DSP_STAT1 */
+#define GRF_DSP_STAT1_PFAULTINFO_SHIFT                     (0U)
+#define GRF_DSP_STAT1_PFAULTINFO_MASK                      (0xFFFFFFFFU << GRF_DSP_STAT1_PFAULTINFO_SHIFT)              /* 0xFFFFFFFF */
 /* GRF_FAST_BOOT */
 #define GRF_GRF_FAST_BOOT_GRF_FAST_BOOT_SHIFT              (0U)
 #define GRF_GRF_FAST_BOOT_GRF_FAST_BOOT_MASK               (0x1U << GRF_GRF_FAST_BOOT_GRF_FAST_BOOT_SHIFT)              /* 0x00000001 */
@@ -4749,6 +4765,8 @@ struct USB_HOST_CH_REG {
 #define GRF_LPW_CON_RPU_WAKEUP_IRQ_EN_MASK                 (0x1U << GRF_LPW_CON_RPU_WAKEUP_IRQ_EN_SHIFT)                /* 0x00000020 */
 #define GRF_LPW_CON_RPU_READY_IRQ_EN_SHIFT                 (6U)
 #define GRF_LPW_CON_RPU_READY_IRQ_EN_MASK                  (0x1U << GRF_LPW_CON_RPU_READY_IRQ_EN_SHIFT)                 /* 0x00000040 */
+#define GRF_LPW_CON_LPW_EXT_IRQ_SHIFT                      (7U)
+#define GRF_LPW_CON_LPW_EXT_IRQ_MASK                       (0x1U << GRF_LPW_CON_LPW_EXT_IRQ_SHIFT)                      /* 0x00000080 */
 #define GRF_LPW_CON_LPW_REV_SHIFT                          (8U)
 #define GRF_LPW_CON_LPW_REV_MASK                           (0xFFU << GRF_LPW_CON_LPW_REV_SHIFT)                         /* 0x0000FF00 */
 /* LPWCLK_CON */
@@ -4764,6 +4782,8 @@ struct USB_HOST_CH_REG {
 #define GRF_LPWCLK_CON_MCU_CLK_FORCE_MASK                  (0x1U << GRF_LPWCLK_CON_MCU_CLK_FORCE_SHIFT)                 /* 0x00000010 */
 #define GRF_LPWCLK_CON_LPW_AON_WAKEUP_SHIFT                (5U)
 #define GRF_LPWCLK_CON_LPW_AON_WAKEUP_MASK                 (0x1U << GRF_LPWCLK_CON_LPW_AON_WAKEUP_SHIFT)                /* 0x00000020 */
+#define GRF_LPWCLK_CON_BT_PTI1_SHIFT                       (6U)
+#define GRF_LPWCLK_CON_BT_PTI1_MASK                        (0x1U << GRF_LPWCLK_CON_BT_PTI1_SHIFT)                       /* 0x00000040 */
 /* LPW_GPIO_IN */
 #define GRF_LPW_GPIO_IN_LPW_GPIO_IN_SHIFT                  (0U)
 #define GRF_LPW_GPIO_IN_LPW_GPIO_IN_MASK                   (0xFFFFFFFFU << GRF_LPW_GPIO_IN_LPW_GPIO_IN_SHIFT)           /* 0xFFFFFFFF */
@@ -4836,6 +4856,9 @@ struct USB_HOST_CH_REG {
 #define GRF_USB2_DETECT_IRQ_STATUS_CLR_OTG0_DISCONNECT_POS_IRQ_CLR_MASK (0x1U << GRF_USB2_DETECT_IRQ_STATUS_CLR_OTG0_DISCONNECT_POS_IRQ_CLR_SHIFT) /* 0x00000020 */
 #define GRF_USB2_DETECT_IRQ_STATUS_CLR_OTG0_DISCONNECT_NEG_IRQ_CLR_SHIFT (6U)
 #define GRF_USB2_DETECT_IRQ_STATUS_CLR_OTG0_DISCONNECT_NEG_IRQ_CLR_MASK (0x1U << GRF_USB2_DETECT_IRQ_STATUS_CLR_OTG0_DISCONNECT_NEG_IRQ_CLR_SHIFT) /* 0x00000040 */
+/* SPINLOCK_REG_X */
+#define GRF_SPINLOCK_REG_X_SPINLOCK_REG_X_SHIFT            (0U)
+#define GRF_SPINLOCK_REG_X_SPINLOCK_REG_X_MASK             (0xFU << GRF_SPINLOCK_REG_X_SPINLOCK_REG_X_SHIFT)            /* 0x0000000F */
 /* OS_REG0 */
 #define GRF_OS_REG0_OS_REGISTER0_SHIFT                     (0U)
 #define GRF_OS_REG0_OS_REGISTER0_MASK                      (0xFFFFFFFFU << GRF_OS_REG0_OS_REGISTER0_SHIFT)              /* 0xFFFFFFFF */
@@ -4880,12 +4903,8 @@ struct USB_HOST_CH_REG {
 #define CRU_GPLL_CON1_PLL_LOCK_MASK                        (0x1U << CRU_GPLL_CON1_PLL_LOCK_SHIFT)                       /* 0x00000400 */
 #define CRU_GPLL_CON1_DSMPD_SHIFT                          (12U)
 #define CRU_GPLL_CON1_DSMPD_MASK                           (0x1U << CRU_GPLL_CON1_DSMPD_SHIFT)                          /* 0x00001000 */
-#define CRU_GPLL_CON1_PLLPD0_SHIFT                         (13U)
-#define CRU_GPLL_CON1_PLLPD0_MASK                          (0x1U << CRU_GPLL_CON1_PLLPD0_SHIFT)                         /* 0x00002000 */
-#define CRU_GPLL_CON1_PLLPD1_SHIFT                         (14U)
-#define CRU_GPLL_CON1_PLLPD1_MASK                          (0x1U << CRU_GPLL_CON1_PLLPD1_SHIFT)                         /* 0x00004000 */
-#define CRU_GPLL_CON1_PLLPDSEL_SHIFT                       (15U)
-#define CRU_GPLL_CON1_PLLPDSEL_MASK                        (0x1U << CRU_GPLL_CON1_PLLPDSEL_SHIFT)                       /* 0x00008000 */
+#define CRU_GPLL_CON1_PLLPD_SHIFT                          (13U)
+#define CRU_GPLL_CON1_PLLPD_MASK                           (0x1U << CRU_GPLL_CON1_PLLPD_SHIFT)                          /* 0x00002000 */
 /* GPLL_CON2 */
 #define CRU_GPLL_CON2_FRACDIV_SHIFT                        (0U)
 #define CRU_GPLL_CON2_FRACDIV_MASK                         (0xFFFFFFU << CRU_GPLL_CON2_FRACDIV_SHIFT)                   /* 0x00FFFFFF */
@@ -4931,12 +4950,8 @@ struct USB_HOST_CH_REG {
 #define CRU_VPLL_CON1_PLL_LOCK_MASK                        (0x1U << CRU_VPLL_CON1_PLL_LOCK_SHIFT)                       /* 0x00000400 */
 #define CRU_VPLL_CON1_DSMPD_SHIFT                          (12U)
 #define CRU_VPLL_CON1_DSMPD_MASK                           (0x1U << CRU_VPLL_CON1_DSMPD_SHIFT)                          /* 0x00001000 */
-#define CRU_VPLL_CON1_PLLPD0_SHIFT                         (13U)
-#define CRU_VPLL_CON1_PLLPD0_MASK                          (0x1U << CRU_VPLL_CON1_PLLPD0_SHIFT)                         /* 0x00002000 */
-#define CRU_VPLL_CON1_PLLPD1_SHIFT                         (14U)
-#define CRU_VPLL_CON1_PLLPD1_MASK                          (0x1U << CRU_VPLL_CON1_PLLPD1_SHIFT)                         /* 0x00004000 */
-#define CRU_VPLL_CON1_PLLPDSEL_SHIFT                       (15U)
-#define CRU_VPLL_CON1_PLLPDSEL_MASK                        (0x1U << CRU_VPLL_CON1_PLLPDSEL_SHIFT)                       /* 0x00008000 */
+#define CRU_VPLL_CON1_PLLPD_SHIFT                          (13U)
+#define CRU_VPLL_CON1_PLLPD_MASK                           (0x1U << CRU_VPLL_CON1_PLLPD_SHIFT)                          /* 0x00002000 */
 /* VPLL_CON2 */
 #define CRU_VPLL_CON2_FRACDIV_SHIFT                        (0U)
 #define CRU_VPLL_CON2_FRACDIV_MASK                         (0xFFFFFFU << CRU_VPLL_CON2_FRACDIV_SHIFT)                   /* 0x00FFFFFF */
@@ -5002,12 +5017,18 @@ struct USB_HOST_CH_REG {
 #define CRU_GLB_SRST_SND_GLB_SRST_SND_SHIFT                (0U)
 #define CRU_GLB_SRST_SND_GLB_SRST_SND_MASK                 (0xFFFFU << CRU_GLB_SRST_SND_GLB_SRST_SND_SHIFT)             /* 0x0000FFFF */
 /* GLB_RST_CON */
+#define CRU_GLB_RST_CON_TSADC_GLB_SRST_EN_SHIFT            (0U)
+#define CRU_GLB_RST_CON_TSADC_GLB_SRST_EN_MASK             (0x1U << CRU_GLB_RST_CON_TSADC_GLB_SRST_EN_SHIFT)            /* 0x00000001 */
+#define CRU_GLB_RST_CON_TSADC_GLB_SRST_CTRL_SHIFT          (1U)
+#define CRU_GLB_RST_CON_TSADC_GLB_SRST_CTRL_MASK           (0x1U << CRU_GLB_RST_CON_TSADC_GLB_SRST_CTRL_SHIFT)          /* 0x00000002 */
 #define CRU_GLB_RST_CON_PMU_SRST_CTRL_SHIFT                (2U)
 #define CRU_GLB_RST_CON_PMU_SRST_CTRL_MASK                 (0x1U << CRU_GLB_RST_CON_PMU_SRST_CTRL_SHIFT)                /* 0x00000004 */
 #define CRU_GLB_RST_CON_PMU_SRST_GLB_RST_EN_SHIFT          (3U)
 #define CRU_GLB_RST_CON_PMU_SRST_GLB_RST_EN_MASK           (0x1U << CRU_GLB_RST_CON_PMU_SRST_GLB_RST_EN_SHIFT)          /* 0x00000008 */
 #define CRU_GLB_RST_CON_PMU_SRST_WDT_EN_SHIFT              (4U)
 #define CRU_GLB_RST_CON_PMU_SRST_WDT_EN_MASK               (0x1U << CRU_GLB_RST_CON_PMU_SRST_WDT_EN_SHIFT)              /* 0x00000010 */
+#define CRU_GLB_RST_CON_TSADC_RESET_EXT_EN_SHIFT           (6U)
+#define CRU_GLB_RST_CON_TSADC_RESET_EXT_EN_MASK            (0x1U << CRU_GLB_RST_CON_TSADC_RESET_EXT_EN_SHIFT)           /* 0x00000040 */
 #define CRU_GLB_RST_CON_WDT_RESET_EXT_EN_SHIFT             (7U)
 #define CRU_GLB_RST_CON_WDT_RESET_EXT_EN_MASK              (0x1U << CRU_GLB_RST_CON_WDT_RESET_EXT_EN_SHIFT)             /* 0x00000080 */
 #define CRU_GLB_RST_CON_WDT0_GLB_SRST_EN_SHIFT             (8U)
@@ -5107,7 +5128,7 @@ struct USB_HOST_CH_REG {
 #define CRU_CLKSEL_CON12_CLK_PWM1_SEL_MASK                 (0x1U << CRU_CLKSEL_CON12_CLK_PWM1_SEL_SHIFT)                /* 0x00008000 */
 /* CLKSEL_CON13 */
 #define CRU_CLKSEL_CON13_CLK_PWM2_DIV_SHIFT                (0U)
-#define CRU_CLKSEL_CON13_CLK_PWM2_DIV_MASK                 (0x1FU << CRU_CLKSEL_CON13_CLK_PWM2_DIV_SHIFT)               /* 0x0000001F */
+#define CRU_CLKSEL_CON13_CLK_PWM2_DIV_MASK                 (0x3FU << CRU_CLKSEL_CON13_CLK_PWM2_DIV_SHIFT)               /* 0x0000003F */
 #define CRU_CLKSEL_CON13_CLK_PWM2_SEL_SHIFT                (7U)
 #define CRU_CLKSEL_CON13_CLK_PWM2_SEL_MASK                 (0x1U << CRU_CLKSEL_CON13_CLK_PWM2_SEL_SHIFT)                /* 0x00000080 */
 #define CRU_CLKSEL_CON13_CLK_EFUSE_DIV_SHIFT               (8U)
@@ -5144,8 +5165,6 @@ struct USB_HOST_CH_REG {
 #define CRU_CLKSEL_CON17_CLK_XIP_HYPERX8_DIV_MASK          (0x3FU << CRU_CLKSEL_CON17_CLK_XIP_HYPERX8_DIV_SHIFT)        /* 0x0000003F */
 #define CRU_CLKSEL_CON17_CLK_XIP_HYPERX8_SEL_SHIFT         (6U)
 #define CRU_CLKSEL_CON17_CLK_XIP_HYPERX8_SEL_MASK          (0x3U << CRU_CLKSEL_CON17_CLK_XIP_HYPERX8_SEL_SHIFT)         /* 0x000000C0 */
-#define CRU_CLKSEL_CON17_SCLK_M4F0_DIV_SHIFT               (8U)
-#define CRU_CLKSEL_CON17_SCLK_M4F0_DIV_MASK                (0x3FU << CRU_CLKSEL_CON17_SCLK_M4F0_DIV_SHIFT)              /* 0x00003F00 */
 /* CLKSEL_CON18 */
 #define CRU_CLKSEL_CON18_CLK_AUDPWM_DIV_DIV_SHIFT          (0U)
 #define CRU_CLKSEL_CON18_CLK_AUDPWM_DIV_DIV_MASK           (0x1FU << CRU_CLKSEL_CON18_CLK_AUDPWM_DIV_DIV_SHIFT)         /* 0x0000001F */
@@ -5169,7 +5188,7 @@ struct USB_HOST_CH_REG {
 #define CRU_CLKSEL_CON21_CLK_VIP_OUT_SEL_SHIFT             (6U)
 #define CRU_CLKSEL_CON21_CLK_VIP_OUT_SEL_MASK              (0x3U << CRU_CLKSEL_CON21_CLK_VIP_OUT_SEL_SHIFT)             /* 0x000000C0 */
 #define CRU_CLKSEL_CON21_CLK_SDMMC_DIV_SHIFT               (8U)
-#define CRU_CLKSEL_CON21_CLK_SDMMC_DIV_MASK                (0x3FU << CRU_CLKSEL_CON21_CLK_SDMMC_DIV_SHIFT)              /* 0x00003F00 */
+#define CRU_CLKSEL_CON21_CLK_SDMMC_DIV_MASK                (0x7FU << CRU_CLKSEL_CON21_CLK_SDMMC_DIV_SHIFT)              /* 0x00007F00 */
 #define CRU_CLKSEL_CON21_CLK_SDMMC_SEL_SHIFT               (15U)
 #define CRU_CLKSEL_CON21_CLK_SDMMC_SEL_MASK                (0x1U << CRU_CLKSEL_CON21_CLK_SDMMC_SEL_SHIFT)               /* 0x00008000 */
 /* CLKSEL_CON22 */
@@ -5254,329 +5273,336 @@ struct USB_HOST_CH_REG {
 #define CRU_CLKSEL_CON35_OUTCLOCK_TEST_DIV_MASK            (0xFU << CRU_CLKSEL_CON35_OUTCLOCK_TEST_DIV_SHIFT)           /* 0x0000000F */
 #define CRU_CLKSEL_CON35_OUTCLOCK_TEST_SEL_SHIFT           (4U)
 #define CRU_CLKSEL_CON35_OUTCLOCK_TEST_SEL_MASK            (0x1FU << CRU_CLKSEL_CON35_OUTCLOCK_TEST_SEL_SHIFT)          /* 0x000001F0 */
-/* CLKGATE_CON00 */
-#define CRU_CLKGATE_CON00_CLK_32K_FRAC_DIV_EN_SHIFT        (1U)
-#define CRU_CLKGATE_CON00_CLK_32K_FRAC_DIV_EN_MASK         (0x1U << CRU_CLKGATE_CON00_CLK_32K_FRAC_DIV_EN_SHIFT)        /* 0x00000002 */
-#define CRU_CLKGATE_CON00_CLK_32K_EN_SHIFT                 (2U)
-#define CRU_CLKGATE_CON00_CLK_32K_EN_MASK                  (0x1U << CRU_CLKGATE_CON00_CLK_32K_EN_SHIFT)                 /* 0x00000004 */
-#define CRU_CLKGATE_CON00_CLK_GPLL_MUX_DIV_NP5_EN_SHIFT    (4U)
-#define CRU_CLKGATE_CON00_CLK_GPLL_MUX_DIV_NP5_EN_MASK     (0x1U << CRU_CLKGATE_CON00_CLK_GPLL_MUX_DIV_NP5_EN_SHIFT)    /* 0x00000010 */
-/* CLKGATE_CON01 */
-#define CRU_CLKGATE_CON01_HCLK_MCU_BUS_PLL_EN_SHIFT        (0U)
-#define CRU_CLKGATE_CON01_HCLK_MCU_BUS_PLL_EN_MASK         (0x1U << CRU_CLKGATE_CON01_HCLK_MCU_BUS_PLL_EN_SHIFT)        /* 0x00000001 */
-#define CRU_CLKGATE_CON01_HCLK_MCU_BUS_NIU_EN_SHIFT        (1U)
-#define CRU_CLKGATE_CON01_HCLK_MCU_BUS_NIU_EN_MASK         (0x1U << CRU_CLKGATE_CON01_HCLK_MCU_BUS_NIU_EN_SHIFT)        /* 0x00000002 */
-#define CRU_CLKGATE_CON01_FCLK_M4F0_EN_SHIFT               (2U)
-#define CRU_CLKGATE_CON01_FCLK_M4F0_EN_MASK                (0x1U << CRU_CLKGATE_CON01_FCLK_M4F0_EN_SHIFT)               /* 0x00000004 */
-#define CRU_CLKGATE_CON01_FCLK_M0_EN_SHIFT                 (4U)
-#define CRU_CLKGATE_CON01_FCLK_M0_EN_MASK                  (0x1U << CRU_CLKGATE_CON01_FCLK_M0_EN_SHIFT)                 /* 0x00000010 */
-#define CRU_CLKGATE_CON01_DCLK_M0_EN_SHIFT                 (6U)
-#define CRU_CLKGATE_CON01_DCLK_M0_EN_MASK                  (0x1U << CRU_CLKGATE_CON01_DCLK_M0_EN_SHIFT)                 /* 0x00000040 */
-#define CRU_CLKGATE_CON01_SCLK_M0_EN_SHIFT                 (7U)
-#define CRU_CLKGATE_CON01_SCLK_M0_EN_MASK                  (0x1U << CRU_CLKGATE_CON01_SCLK_M0_EN_SHIFT)                 /* 0x00000080 */
-#define CRU_CLKGATE_CON01_HCLK_INTMEM0_MCU_EN_SHIFT        (9U)
-#define CRU_CLKGATE_CON01_HCLK_INTMEM0_MCU_EN_MASK         (0x1U << CRU_CLKGATE_CON01_HCLK_INTMEM0_MCU_EN_SHIFT)        /* 0x00000200 */
-#define CRU_CLKGATE_CON01_HCLK_INTMEM1_MCU_EN_SHIFT        (10U)
-#define CRU_CLKGATE_CON01_HCLK_INTMEM1_MCU_EN_MASK         (0x1U << CRU_CLKGATE_CON01_HCLK_INTMEM1_MCU_EN_SHIFT)        /* 0x00000400 */
-#define CRU_CLKGATE_CON01_HCLK_DMAC_EN_SHIFT               (11U)
-#define CRU_CLKGATE_CON01_HCLK_DMAC_EN_MASK                (0x1U << CRU_CLKGATE_CON01_HCLK_DMAC_EN_SHIFT)               /* 0x00000800 */
-#define CRU_CLKGATE_CON01_HCLK_ROM_EN_SHIFT                (12U)
-#define CRU_CLKGATE_CON01_HCLK_ROM_EN_MASK                 (0x1U << CRU_CLKGATE_CON01_HCLK_ROM_EN_SHIFT)                /* 0x00001000 */
-#define CRU_CLKGATE_CON01_HCLK_HIFI3_TCM_EN_SHIFT          (13U)
-#define CRU_CLKGATE_CON01_HCLK_HIFI3_TCM_EN_MASK           (0x1U << CRU_CLKGATE_CON01_HCLK_HIFI3_TCM_EN_SHIFT)          /* 0x00002000 */
-#define CRU_CLKGATE_CON01_HCLK_VOP_EN_SHIFT                (14U)
-#define CRU_CLKGATE_CON01_HCLK_VOP_EN_MASK                 (0x1U << CRU_CLKGATE_CON01_HCLK_VOP_EN_SHIFT)                /* 0x00004000 */
-#define CRU_CLKGATE_CON01_HCLK_SFC0_EN_SHIFT               (15U)
-#define CRU_CLKGATE_CON01_HCLK_SFC0_EN_MASK                (0x1U << CRU_CLKGATE_CON01_HCLK_SFC0_EN_SHIFT)               /* 0x00008000 */
-/* CLKGATE_CON02 */
-#define CRU_CLKGATE_CON02_HCLK_SFC0_XIP_EN_SHIFT           (0U)
-#define CRU_CLKGATE_CON02_HCLK_SFC0_XIP_EN_MASK            (0x1U << CRU_CLKGATE_CON02_HCLK_SFC0_XIP_EN_SHIFT)           /* 0x00000001 */
-#define CRU_CLKGATE_CON02_HCLK_SFC1_EN_SHIFT               (1U)
-#define CRU_CLKGATE_CON02_HCLK_SFC1_EN_MASK                (0x1U << CRU_CLKGATE_CON02_HCLK_SFC1_EN_SHIFT)               /* 0x00000002 */
-#define CRU_CLKGATE_CON02_HCLK_SFC1_XIP_EN_SHIFT           (2U)
-#define CRU_CLKGATE_CON02_HCLK_SFC1_XIP_EN_MASK            (0x1U << CRU_CLKGATE_CON02_HCLK_SFC1_XIP_EN_SHIFT)           /* 0x00000004 */
-#define CRU_CLKGATE_CON02_ACLK_XIP_HYPERX8_EN_SHIFT        (3U)
-#define CRU_CLKGATE_CON02_ACLK_XIP_HYPERX8_EN_MASK         (0x1U << CRU_CLKGATE_CON02_ACLK_XIP_HYPERX8_EN_SHIFT)        /* 0x00000008 */
-#define CRU_CLKGATE_CON02_HCLK_AUDPWM_EN_SHIFT             (4U)
-#define CRU_CLKGATE_CON02_HCLK_AUDPWM_EN_MASK              (0x1U << CRU_CLKGATE_CON02_HCLK_AUDPWM_EN_SHIFT)             /* 0x00000010 */
-#define CRU_CLKGATE_CON02_PCLK_MCU_BUS_PLL_EN_SHIFT        (8U)
-#define CRU_CLKGATE_CON02_PCLK_MCU_BUS_PLL_EN_MASK         (0x1U << CRU_CLKGATE_CON02_PCLK_MCU_BUS_PLL_EN_SHIFT)        /* 0x00000100 */
-#define CRU_CLKGATE_CON02_PCLK_MCU_BUS_NIU_EN_SHIFT        (9U)
-#define CRU_CLKGATE_CON02_PCLK_MCU_BUS_NIU_EN_MASK         (0x1U << CRU_CLKGATE_CON02_PCLK_MCU_BUS_NIU_EN_SHIFT)        /* 0x00000200 */
-#define CRU_CLKGATE_CON02_PCLK_UART0_EN_SHIFT              (10U)
-#define CRU_CLKGATE_CON02_PCLK_UART0_EN_MASK               (0x1U << CRU_CLKGATE_CON02_PCLK_UART0_EN_SHIFT)              /* 0x00000400 */
-#define CRU_CLKGATE_CON02_PCLK_UART1_EN_SHIFT              (11U)
-#define CRU_CLKGATE_CON02_PCLK_UART1_EN_MASK               (0x1U << CRU_CLKGATE_CON02_PCLK_UART1_EN_SHIFT)              /* 0x00000800 */
-#define CRU_CLKGATE_CON02_PCLK_UART2_EN_SHIFT              (12U)
-#define CRU_CLKGATE_CON02_PCLK_UART2_EN_MASK               (0x1U << CRU_CLKGATE_CON02_PCLK_UART2_EN_SHIFT)              /* 0x00001000 */
-#define CRU_CLKGATE_CON02_PCLK_I2C0_EN_SHIFT               (13U)
-#define CRU_CLKGATE_CON02_PCLK_I2C0_EN_MASK                (0x1U << CRU_CLKGATE_CON02_PCLK_I2C0_EN_SHIFT)               /* 0x00002000 */
-#define CRU_CLKGATE_CON02_PCLK_I2C1_EN_SHIFT               (14U)
-#define CRU_CLKGATE_CON02_PCLK_I2C1_EN_MASK                (0x1U << CRU_CLKGATE_CON02_PCLK_I2C1_EN_SHIFT)               /* 0x00004000 */
-#define CRU_CLKGATE_CON02_PCLK_I2C2_EN_SHIFT               (15U)
-#define CRU_CLKGATE_CON02_PCLK_I2C2_EN_MASK                (0x1U << CRU_CLKGATE_CON02_PCLK_I2C2_EN_SHIFT)               /* 0x00008000 */
-/* CLKGATE_CON03 */
-#define CRU_CLKGATE_CON03_PCLK_PWM0_EN_SHIFT               (0U)
-#define CRU_CLKGATE_CON03_PCLK_PWM0_EN_MASK                (0x1U << CRU_CLKGATE_CON03_PCLK_PWM0_EN_SHIFT)               /* 0x00000001 */
-#define CRU_CLKGATE_CON03_PCLK_PWM1_EN_SHIFT               (1U)
-#define CRU_CLKGATE_CON03_PCLK_PWM1_EN_MASK                (0x1U << CRU_CLKGATE_CON03_PCLK_PWM1_EN_SHIFT)               /* 0x00000002 */
-#define CRU_CLKGATE_CON03_PCLK_PWM2_EN_SHIFT               (2U)
-#define CRU_CLKGATE_CON03_PCLK_PWM2_EN_MASK                (0x1U << CRU_CLKGATE_CON03_PCLK_PWM2_EN_SHIFT)               /* 0x00000004 */
-#define CRU_CLKGATE_CON03_PCLK_SPI0_EN_SHIFT               (3U)
-#define CRU_CLKGATE_CON03_PCLK_SPI0_EN_MASK                (0x1U << CRU_CLKGATE_CON03_PCLK_SPI0_EN_SHIFT)               /* 0x00000008 */
-#define CRU_CLKGATE_CON03_PCLK_SPI1_EN_SHIFT               (4U)
-#define CRU_CLKGATE_CON03_PCLK_SPI1_EN_MASK                (0x1U << CRU_CLKGATE_CON03_PCLK_SPI1_EN_SHIFT)               /* 0x00000010 */
-#define CRU_CLKGATE_CON03_PCLK_SARADC_CONTROL_EN_SHIFT     (5U)
-#define CRU_CLKGATE_CON03_PCLK_SARADC_CONTROL_EN_MASK      (0x1U << CRU_CLKGATE_CON03_PCLK_SARADC_CONTROL_EN_SHIFT)     /* 0x00000020 */
-#define CRU_CLKGATE_CON03_PCLK_EFUSE_EN_SHIFT              (6U)
-#define CRU_CLKGATE_CON03_PCLK_EFUSE_EN_MASK               (0x1U << CRU_CLKGATE_CON03_PCLK_EFUSE_EN_SHIFT)              /* 0x00000040 */
-#define CRU_CLKGATE_CON03_PCLK_TIMER_EN_SHIFT              (7U)
-#define CRU_CLKGATE_CON03_PCLK_TIMER_EN_MASK               (0x1U << CRU_CLKGATE_CON03_PCLK_TIMER_EN_SHIFT)              /* 0x00000080 */
-#define CRU_CLKGATE_CON03_PCLK_WDT0_EN_SHIFT               (8U)
-#define CRU_CLKGATE_CON03_PCLK_WDT0_EN_MASK                (0x1U << CRU_CLKGATE_CON03_PCLK_WDT0_EN_SHIFT)               /* 0x00000100 */
-#define CRU_CLKGATE_CON03_PCLK_WDT1_EN_SHIFT               (9U)
-#define CRU_CLKGATE_CON03_PCLK_WDT1_EN_MASK                (0x1U << CRU_CLKGATE_CON03_PCLK_WDT1_EN_SHIFT)               /* 0x00000200 */
-#define CRU_CLKGATE_CON03_PCLK_WDT2_EN_SHIFT               (10U)
-#define CRU_CLKGATE_CON03_PCLK_WDT2_EN_MASK                (0x1U << CRU_CLKGATE_CON03_PCLK_WDT2_EN_SHIFT)               /* 0x00000400 */
-#define CRU_CLKGATE_CON03_PCLK_MAILBOX0_EN_SHIFT           (11U)
-#define CRU_CLKGATE_CON03_PCLK_MAILBOX0_EN_MASK            (0x1U << CRU_CLKGATE_CON03_PCLK_MAILBOX0_EN_SHIFT)           /* 0x00000800 */
-#define CRU_CLKGATE_CON03_PCLK_MAILBOX1_EN_SHIFT           (12U)
-#define CRU_CLKGATE_CON03_PCLK_MAILBOX1_EN_MASK            (0x1U << CRU_CLKGATE_CON03_PCLK_MAILBOX1_EN_SHIFT)           /* 0x00001000 */
-#define CRU_CLKGATE_CON03_PCLK_INT_CTRL_EN_SHIFT           (13U)
-#define CRU_CLKGATE_CON03_PCLK_INT_CTRL_EN_MASK            (0x1U << CRU_CLKGATE_CON03_PCLK_INT_CTRL_EN_SHIFT)           /* 0x00002000 */
-/* CLKGATE_CON04 */
-#define CRU_CLKGATE_CON04_CLK_HIFI3_DIV_EN_SHIFT           (0U)
-#define CRU_CLKGATE_CON04_CLK_HIFI3_DIV_EN_MASK            (0x1U << CRU_CLKGATE_CON04_CLK_HIFI3_DIV_EN_SHIFT)           /* 0x00000001 */
-#define CRU_CLKGATE_CON04_CLK_HIFI3_NP5_DIV_EN_SHIFT       (1U)
-#define CRU_CLKGATE_CON04_CLK_HIFI3_NP5_DIV_EN_MASK        (0x1U << CRU_CLKGATE_CON04_CLK_HIFI3_NP5_DIV_EN_SHIFT)       /* 0x00000002 */
-#define CRU_CLKGATE_CON04_CLK_HIFI3_EN_SHIFT               (2U)
-#define CRU_CLKGATE_CON04_CLK_HIFI3_EN_MASK                (0x1U << CRU_CLKGATE_CON04_CLK_HIFI3_EN_SHIFT)               /* 0x00000004 */
-#define CRU_CLKGATE_CON04_ACLK_HIFI3_NIU_EN_SHIFT          (3U)
-#define CRU_CLKGATE_CON04_ACLK_HIFI3_NIU_EN_MASK           (0x1U << CRU_CLKGATE_CON04_ACLK_HIFI3_NIU_EN_SHIFT)          /* 0x00000008 */
-#define CRU_CLKGATE_CON04_CLK_UART0_PLL_EN_SHIFT           (4U)
-#define CRU_CLKGATE_CON04_CLK_UART0_PLL_EN_MASK            (0x1U << CRU_CLKGATE_CON04_CLK_UART0_PLL_EN_SHIFT)           /* 0x00000010 */
-#define CRU_CLKGATE_CON04_CLK_UART0_FRAC_EN_SHIFT          (5U)
-#define CRU_CLKGATE_CON04_CLK_UART0_FRAC_EN_MASK           (0x1U << CRU_CLKGATE_CON04_CLK_UART0_FRAC_EN_SHIFT)          /* 0x00000020 */
-#define CRU_CLKGATE_CON04_SCLK_UART0_EN_SHIFT              (6U)
-#define CRU_CLKGATE_CON04_SCLK_UART0_EN_MASK               (0x1U << CRU_CLKGATE_CON04_SCLK_UART0_EN_SHIFT)              /* 0x00000040 */
-#define CRU_CLKGATE_CON04_CLK_UART1_EN_SHIFT               (7U)
-#define CRU_CLKGATE_CON04_CLK_UART1_EN_MASK                (0x1U << CRU_CLKGATE_CON04_CLK_UART1_EN_SHIFT)               /* 0x00000080 */
-#define CRU_CLKGATE_CON04_CLK_UART1_FRAC_EN_SHIFT          (8U)
-#define CRU_CLKGATE_CON04_CLK_UART1_FRAC_EN_MASK           (0x1U << CRU_CLKGATE_CON04_CLK_UART1_FRAC_EN_SHIFT)          /* 0x00000100 */
-#define CRU_CLKGATE_CON04_SCLK_UART1_EN_SHIFT              (9U)
-#define CRU_CLKGATE_CON04_SCLK_UART1_EN_MASK               (0x1U << CRU_CLKGATE_CON04_SCLK_UART1_EN_SHIFT)              /* 0x00000200 */
-#define CRU_CLKGATE_CON04_CLK_UART2_PLL_EN_SHIFT           (10U)
-#define CRU_CLKGATE_CON04_CLK_UART2_PLL_EN_MASK            (0x1U << CRU_CLKGATE_CON04_CLK_UART2_PLL_EN_SHIFT)           /* 0x00000400 */
-#define CRU_CLKGATE_CON04_CLK_UART2_FRAC_EN_SHIFT          (11U)
-#define CRU_CLKGATE_CON04_CLK_UART2_FRAC_EN_MASK           (0x1U << CRU_CLKGATE_CON04_CLK_UART2_FRAC_EN_SHIFT)          /* 0x00000800 */
-#define CRU_CLKGATE_CON04_SCLK_UART2_EN_SHIFT              (12U)
-#define CRU_CLKGATE_CON04_SCLK_UART2_EN_MASK               (0x1U << CRU_CLKGATE_CON04_SCLK_UART2_EN_SHIFT)              /* 0x00001000 */
-/* CLKGATE_CON05 */
-#define CRU_CLKGATE_CON05_CLK_I2C0_PLL_EN_SHIFT            (0U)
-#define CRU_CLKGATE_CON05_CLK_I2C0_PLL_EN_MASK             (0x1U << CRU_CLKGATE_CON05_CLK_I2C0_PLL_EN_SHIFT)            /* 0x00000001 */
-#define CRU_CLKGATE_CON05_CLK_I2C1_PLL_EN_SHIFT            (1U)
-#define CRU_CLKGATE_CON05_CLK_I2C1_PLL_EN_MASK             (0x1U << CRU_CLKGATE_CON05_CLK_I2C1_PLL_EN_SHIFT)            /* 0x00000002 */
-#define CRU_CLKGATE_CON05_CLK_I2C2_PLL_EN_SHIFT            (2U)
-#define CRU_CLKGATE_CON05_CLK_I2C2_PLL_EN_MASK             (0x1U << CRU_CLKGATE_CON05_CLK_I2C2_PLL_EN_SHIFT)            /* 0x00000004 */
-#define CRU_CLKGATE_CON05_CLK_PWM0_PLL_EN_SHIFT            (3U)
-#define CRU_CLKGATE_CON05_CLK_PWM0_PLL_EN_MASK             (0x1U << CRU_CLKGATE_CON05_CLK_PWM0_PLL_EN_SHIFT)            /* 0x00000008 */
-#define CRU_CLKGATE_CON05_CLK_PWM1_PLL_EN_SHIFT            (4U)
-#define CRU_CLKGATE_CON05_CLK_PWM1_PLL_EN_MASK             (0x1U << CRU_CLKGATE_CON05_CLK_PWM1_PLL_EN_SHIFT)            /* 0x00000010 */
-#define CRU_CLKGATE_CON05_CLK_PWM2_PLL_EN_SHIFT            (5U)
-#define CRU_CLKGATE_CON05_CLK_PWM2_PLL_EN_MASK             (0x1U << CRU_CLKGATE_CON05_CLK_PWM2_PLL_EN_SHIFT)            /* 0x00000020 */
-#define CRU_CLKGATE_CON05_CLK_SPI0_PLL_EN_SHIFT            (6U)
-#define CRU_CLKGATE_CON05_CLK_SPI0_PLL_EN_MASK             (0x1U << CRU_CLKGATE_CON05_CLK_SPI0_PLL_EN_SHIFT)            /* 0x00000040 */
-#define CRU_CLKGATE_CON05_CLK_SPI1_PLL_EN_SHIFT            (7U)
-#define CRU_CLKGATE_CON05_CLK_SPI1_PLL_EN_MASK             (0x1U << CRU_CLKGATE_CON05_CLK_SPI1_PLL_EN_SHIFT)            /* 0x00000080 */
-#define CRU_CLKGATE_CON05_CLK_TIMER_PLL_EN_SHIFT           (8U)
-#define CRU_CLKGATE_CON05_CLK_TIMER_PLL_EN_MASK            (0x1U << CRU_CLKGATE_CON05_CLK_TIMER_PLL_EN_SHIFT)           /* 0x00000100 */
-#define CRU_CLKGATE_CON05_CLK_TIMER0_EN_SHIFT              (9U)
-#define CRU_CLKGATE_CON05_CLK_TIMER0_EN_MASK               (0x1U << CRU_CLKGATE_CON05_CLK_TIMER0_EN_SHIFT)              /* 0x00000200 */
-#define CRU_CLKGATE_CON05_CLK_TIMER1_EN_SHIFT              (10U)
-#define CRU_CLKGATE_CON05_CLK_TIMER1_EN_MASK               (0x1U << CRU_CLKGATE_CON05_CLK_TIMER1_EN_SHIFT)              /* 0x00000400 */
-#define CRU_CLKGATE_CON05_CLK_TIMER2_EN_SHIFT              (11U)
-#define CRU_CLKGATE_CON05_CLK_TIMER2_EN_MASK               (0x1U << CRU_CLKGATE_CON05_CLK_TIMER2_EN_SHIFT)              /* 0x00000800 */
-#define CRU_CLKGATE_CON05_CLK_TIMER3_EN_SHIFT              (12U)
-#define CRU_CLKGATE_CON05_CLK_TIMER3_EN_MASK               (0x1U << CRU_CLKGATE_CON05_CLK_TIMER3_EN_SHIFT)              /* 0x00001000 */
-#define CRU_CLKGATE_CON05_CLK_TIMER4_EN_SHIFT              (13U)
-#define CRU_CLKGATE_CON05_CLK_TIMER4_EN_MASK               (0x1U << CRU_CLKGATE_CON05_CLK_TIMER4_EN_SHIFT)              /* 0x00002000 */
-#define CRU_CLKGATE_CON05_CLK_TIMER5_EN_SHIFT              (14U)
-#define CRU_CLKGATE_CON05_CLK_TIMER5_EN_MASK               (0x1U << CRU_CLKGATE_CON05_CLK_TIMER5_EN_SHIFT)              /* 0x00004000 */
-/* CLKGATE_CON06 */
-#define CRU_CLKGATE_CON06_CLK_EFUSE_EN_SHIFT               (2U)
-#define CRU_CLKGATE_CON06_CLK_EFUSE_EN_MASK                (0x1U << CRU_CLKGATE_CON06_CLK_EFUSE_EN_SHIFT)               /* 0x00000004 */
-#define CRU_CLKGATE_CON06_CLK_XIP_SFC0_DT50_EN_SHIFT       (3U)
-#define CRU_CLKGATE_CON06_CLK_XIP_SFC0_DT50_EN_MASK        (0x1U << CRU_CLKGATE_CON06_CLK_XIP_SFC0_DT50_EN_SHIFT)       /* 0x00000008 */
-#define CRU_CLKGATE_CON06_CLK_XIP_SFC1_DT50_EN_SHIFT       (4U)
-#define CRU_CLKGATE_CON06_CLK_XIP_SFC1_DT50_EN_MASK        (0x1U << CRU_CLKGATE_CON06_CLK_XIP_SFC1_DT50_EN_SHIFT)       /* 0x00000010 */
-#define CRU_CLKGATE_CON06_CLK_XIP_HYPERX8_DT50_EN_SHIFT    (5U)
-#define CRU_CLKGATE_CON06_CLK_XIP_HYPERX8_DT50_EN_MASK     (0x1U << CRU_CLKGATE_CON06_CLK_XIP_HYPERX8_DT50_EN_SHIFT)    /* 0x00000020 */
-#define CRU_CLKGATE_CON06_SCLK_M4F0_EN_SHIFT               (6U)
-#define CRU_CLKGATE_CON06_SCLK_M4F0_EN_MASK                (0x1U << CRU_CLKGATE_CON06_SCLK_M4F0_EN_SHIFT)               /* 0x00000040 */
-#define CRU_CLKGATE_CON06_CLK_AUDPWM_PLL_EN_SHIFT          (7U)
-#define CRU_CLKGATE_CON06_CLK_AUDPWM_PLL_EN_MASK           (0x1U << CRU_CLKGATE_CON06_CLK_AUDPWM_PLL_EN_SHIFT)          /* 0x00000080 */
-#define CRU_CLKGATE_CON06_CLK_AUDPWM_FRAC_EN_SHIFT         (8U)
-#define CRU_CLKGATE_CON06_CLK_AUDPWM_FRAC_EN_MASK          (0x1U << CRU_CLKGATE_CON06_CLK_AUDPWM_FRAC_EN_SHIFT)         /* 0x00000100 */
-#define CRU_CLKGATE_CON06_SCLK_AUDPWM_EN_SHIFT             (9U)
-#define CRU_CLKGATE_CON06_SCLK_AUDPWM_EN_MASK              (0x1U << CRU_CLKGATE_CON06_SCLK_AUDPWM_EN_SHIFT)             /* 0x00000200 */
-#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE0_PLL_EN_SHIFT    (10U)
-#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE0_PLL_EN_MASK     (0x1U << CRU_CLKGATE_CON06_CLK_PWM_CAPTURE0_PLL_EN_SHIFT)    /* 0x00000400 */
-#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE1_PLL_EN_SHIFT    (11U)
-#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE1_PLL_EN_MASK     (0x1U << CRU_CLKGATE_CON06_CLK_PWM_CAPTURE1_PLL_EN_SHIFT)    /* 0x00000800 */
-#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE2_PLL_EN_SHIFT    (12U)
-#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE2_PLL_EN_MASK     (0x1U << CRU_CLKGATE_CON06_CLK_PWM_CAPTURE2_PLL_EN_SHIFT)    /* 0x00001000 */
-/* CLKGATE_CON07 */
-#define CRU_CLKGATE_CON07_ACLK_PERI_BUS_PLL_EN_SHIFT       (0U)
-#define CRU_CLKGATE_CON07_ACLK_PERI_BUS_PLL_EN_MASK        (0x1U << CRU_CLKGATE_CON07_ACLK_PERI_BUS_PLL_EN_SHIFT)       /* 0x00000001 */
-#define CRU_CLKGATE_CON07_HCLK_PERI_BUS_PLL_EN_SHIFT       (1U)
-#define CRU_CLKGATE_CON07_HCLK_PERI_BUS_PLL_EN_MASK        (0x1U << CRU_CLKGATE_CON07_HCLK_PERI_BUS_PLL_EN_SHIFT)       /* 0x00000002 */
-#define CRU_CLKGATE_CON07_ACLK_PERI_BUS_NIU_EN_SHIFT       (2U)
-#define CRU_CLKGATE_CON07_ACLK_PERI_BUS_NIU_EN_MASK        (0x1U << CRU_CLKGATE_CON07_ACLK_PERI_BUS_NIU_EN_SHIFT)       /* 0x00000004 */
-#define CRU_CLKGATE_CON07_HCLK_PERI_BUS_NIU_EN_SHIFT       (3U)
-#define CRU_CLKGATE_CON07_HCLK_PERI_BUS_NIU_EN_MASK        (0x1U << CRU_CLKGATE_CON07_HCLK_PERI_BUS_NIU_EN_SHIFT)       /* 0x00000008 */
-#define CRU_CLKGATE_CON07_ACLK_VIP_EN_SHIFT                (4U)
-#define CRU_CLKGATE_CON07_ACLK_VIP_EN_MASK                 (0x1U << CRU_CLKGATE_CON07_ACLK_VIP_EN_SHIFT)                /* 0x00000010 */
-#define CRU_CLKGATE_CON07_ACLK_CRYPTO_EN_SHIFT             (5U)
-#define CRU_CLKGATE_CON07_ACLK_CRYPTO_EN_MASK              (0x1U << CRU_CLKGATE_CON07_ACLK_CRYPTO_EN_SHIFT)             /* 0x00000020 */
-#define CRU_CLKGATE_CON07_HCLK_VIP_EN_SHIFT                (6U)
-#define CRU_CLKGATE_CON07_HCLK_VIP_EN_MASK                 (0x1U << CRU_CLKGATE_CON07_HCLK_VIP_EN_SHIFT)                /* 0x00000040 */
-#define CRU_CLKGATE_CON07_HCLK_CRYPTO_EN_SHIFT             (7U)
-#define CRU_CLKGATE_CON07_HCLK_CRYPTO_EN_MASK              (0x1U << CRU_CLKGATE_CON07_HCLK_CRYPTO_EN_SHIFT)             /* 0x00000080 */
-#define CRU_CLKGATE_CON07_HCLK_SDMMC_EN_SHIFT              (8U)
-#define CRU_CLKGATE_CON07_HCLK_SDMMC_EN_MASK               (0x1U << CRU_CLKGATE_CON07_HCLK_SDMMC_EN_SHIFT)              /* 0x00000100 */
-#define CRU_CLKGATE_CON07_HCLK_USBOTG_EN_SHIFT             (9U)
-#define CRU_CLKGATE_CON07_HCLK_USBOTG_EN_MASK              (0x1U << CRU_CLKGATE_CON07_HCLK_USBOTG_EN_SHIFT)             /* 0x00000200 */
-#define CRU_CLKGATE_CON07_HCLK_USBOTG_PMU_EN_SHIFT         (10U)
-#define CRU_CLKGATE_CON07_HCLK_USBOTG_PMU_EN_MASK          (0x1U << CRU_CLKGATE_CON07_HCLK_USBOTG_PMU_EN_SHIFT)         /* 0x00000400 */
-#define CRU_CLKGATE_CON07_PCLK_SPI2APB_EN_SHIFT            (13U)
-#define CRU_CLKGATE_CON07_PCLK_SPI2APB_EN_MASK             (0x1U << CRU_CLKGATE_CON07_PCLK_SPI2APB_EN_SHIFT)            /* 0x00002000 */
-#define CRU_CLKGATE_CON07_CLK_VIP_PLL_EN_SHIFT             (14U)
-#define CRU_CLKGATE_CON07_CLK_VIP_PLL_EN_MASK              (0x1U << CRU_CLKGATE_CON07_CLK_VIP_PLL_EN_SHIFT)             /* 0x00004000 */
-/* CLKGATE_CON08 */
-#define CRU_CLKGATE_CON08_CLK_OTG_ADP_EN_SHIFT             (1U)
-#define CRU_CLKGATE_CON08_CLK_OTG_ADP_EN_MASK              (0x1U << CRU_CLKGATE_CON08_CLK_OTG_ADP_EN_SHIFT)             /* 0x00000002 */
-#define CRU_CLKGATE_CON08_CLK_SDMMC_DT50_EN_SHIFT          (2U)
-#define CRU_CLKGATE_CON08_CLK_SDMMC_DT50_EN_MASK           (0x1U << CRU_CLKGATE_CON08_CLK_SDMMC_DT50_EN_SHIFT)          /* 0x00000004 */
-#define CRU_CLKGATE_CON08_CLK_CRYPTO_DIV_EN_SHIFT          (3U)
-#define CRU_CLKGATE_CON08_CLK_CRYPTO_DIV_EN_MASK           (0x1U << CRU_CLKGATE_CON08_CLK_CRYPTO_DIV_EN_SHIFT)          /* 0x00000008 */
-#define CRU_CLKGATE_CON08_CLK_CRYPTO_NP5_DIV_EN_SHIFT      (4U)
-#define CRU_CLKGATE_CON08_CLK_CRYPTO_NP5_DIV_EN_MASK       (0x1U << CRU_CLKGATE_CON08_CLK_CRYPTO_NP5_DIV_EN_SHIFT)      /* 0x00000010 */
-#define CRU_CLKGATE_CON08_CLK_CRYPTO_EN_SHIFT              (5U)
-#define CRU_CLKGATE_CON08_CLK_CRYPTO_EN_MASK               (0x1U << CRU_CLKGATE_CON08_CLK_CRYPTO_EN_SHIFT)              /* 0x00000020 */
-#define CRU_CLKGATE_CON08_CLK_CRYPTO_PKA_EN_SHIFT          (6U)
-#define CRU_CLKGATE_CON08_CLK_CRYPTO_PKA_EN_MASK           (0x1U << CRU_CLKGATE_CON08_CLK_CRYPTO_PKA_EN_SHIFT)          /* 0x00000040 */
-#define CRU_CLKGATE_CON08_ACLK_WIFI_BUS_EN_SHIFT           (8U)
-#define CRU_CLKGATE_CON08_ACLK_WIFI_BUS_EN_MASK            (0x1U << CRU_CLKGATE_CON08_ACLK_WIFI_BUS_EN_SHIFT)           /* 0x00000100 */
-#define CRU_CLKGATE_CON08_ACLK_WIFI_BUS_NIU_EN_SHIFT       (9U)
-#define CRU_CLKGATE_CON08_ACLK_WIFI_BUS_NIU_EN_MASK        (0x1U << CRU_CLKGATE_CON08_ACLK_WIFI_BUS_NIU_EN_SHIFT)       /* 0x00000200 */
-#define CRU_CLKGATE_CON08_HCLK_BUFFER_EN_SHIFT             (11U)
-#define CRU_CLKGATE_CON08_HCLK_BUFFER_EN_MASK              (0x1U << CRU_CLKGATE_CON08_HCLK_BUFFER_EN_SHIFT)             /* 0x00000800 */
-#define CRU_CLKGATE_CON08_CLK80_LPW_EN_SHIFT               (12U)
-#define CRU_CLKGATE_CON08_CLK80_LPW_EN_MASK                (0x1U << CRU_CLKGATE_CON08_CLK80_LPW_EN_SHIFT)               /* 0x00001000 */
-#define CRU_CLKGATE_CON08_CLK40_LPW_EN_SHIFT               (13U)
-#define CRU_CLKGATE_CON08_CLK40_LPW_EN_MASK                (0x1U << CRU_CLKGATE_CON08_CLK40_LPW_EN_SHIFT)               /* 0x00002000 */
-/* CLKGATE_CON09 */
-#define CRU_CLKGATE_CON09_HCLK_TOP_BUS_PLL_EN_SHIFT        (0U)
-#define CRU_CLKGATE_CON09_HCLK_TOP_BUS_PLL_EN_MASK         (0x1U << CRU_CLKGATE_CON09_HCLK_TOP_BUS_PLL_EN_SHIFT)        /* 0x00000001 */
-#define CRU_CLKGATE_CON09_HCLK_TOP_BUS_NIU_EN_SHIFT        (1U)
-#define CRU_CLKGATE_CON09_HCLK_TOP_BUS_NIU_EN_MASK         (0x1U << CRU_CLKGATE_CON09_HCLK_TOP_BUS_NIU_EN_SHIFT)        /* 0x00000002 */
-#define CRU_CLKGATE_CON09_HCLK_PDM_EN_SHIFT                (2U)
-#define CRU_CLKGATE_CON09_HCLK_PDM_EN_MASK                 (0x1U << CRU_CLKGATE_CON09_HCLK_PDM_EN_SHIFT)                /* 0x00000004 */
-#define CRU_CLKGATE_CON09_HCLK_I2S0_EN_SHIFT               (3U)
-#define CRU_CLKGATE_CON09_HCLK_I2S0_EN_MASK                (0x1U << CRU_CLKGATE_CON09_HCLK_I2S0_EN_SHIFT)               /* 0x00000008 */
-#define CRU_CLKGATE_CON09_HCLK_I2S1_EN_SHIFT               (4U)
-#define CRU_CLKGATE_CON09_HCLK_I2S1_EN_MASK                (0x1U << CRU_CLKGATE_CON09_HCLK_I2S1_EN_SHIFT)               /* 0x00000010 */
-#define CRU_CLKGATE_CON09_HCLK_VAD_EN_SHIFT                (5U)
-#define CRU_CLKGATE_CON09_HCLK_VAD_EN_MASK                 (0x1U << CRU_CLKGATE_CON09_HCLK_VAD_EN_SHIFT)                /* 0x00000020 */
-#define CRU_CLKGATE_CON09_PCLK_TOP_BUS_PLL_EN_SHIFT        (6U)
-#define CRU_CLKGATE_CON09_PCLK_TOP_BUS_PLL_EN_MASK         (0x1U << CRU_CLKGATE_CON09_PCLK_TOP_BUS_PLL_EN_SHIFT)        /* 0x00000040 */
-#define CRU_CLKGATE_CON09_PCLK_TOP_BUS_NIU_EN_SHIFT        (7U)
-#define CRU_CLKGATE_CON09_PCLK_TOP_BUS_NIU_EN_MASK         (0x1U << CRU_CLKGATE_CON09_PCLK_TOP_BUS_NIU_EN_SHIFT)        /* 0x00000080 */
-#define CRU_CLKGATE_CON09_PCLK_GPIO0_EN_SHIFT              (8U)
-#define CRU_CLKGATE_CON09_PCLK_GPIO0_EN_MASK               (0x1U << CRU_CLKGATE_CON09_PCLK_GPIO0_EN_SHIFT)              /* 0x00000100 */
-#define CRU_CLKGATE_CON09_PCLK_GPIO1_EN_SHIFT              (9U)
-#define CRU_CLKGATE_CON09_PCLK_GPIO1_EN_MASK               (0x1U << CRU_CLKGATE_CON09_PCLK_GPIO1_EN_SHIFT)              /* 0x00000200 */
-#define CRU_CLKGATE_CON09_PCLK_PMU_EN_SHIFT                (10U)
-#define CRU_CLKGATE_CON09_PCLK_PMU_EN_MASK                 (0x1U << CRU_CLKGATE_CON09_PCLK_PMU_EN_SHIFT)                /* 0x00000400 */
-#define CRU_CLKGATE_CON09_PCLK_CRU_EN_SHIFT                (11U)
-#define CRU_CLKGATE_CON09_PCLK_CRU_EN_MASK                 (0x1U << CRU_CLKGATE_CON09_PCLK_CRU_EN_SHIFT)                /* 0x00000800 */
-#define CRU_CLKGATE_CON09_PCLK_GRF_EN_SHIFT                (12U)
-#define CRU_CLKGATE_CON09_PCLK_GRF_EN_MASK                 (0x1U << CRU_CLKGATE_CON09_PCLK_GRF_EN_SHIFT)                /* 0x00001000 */
-#define CRU_CLKGATE_CON09_PCLK_ACODEC_EN_SHIFT             (13U)
-#define CRU_CLKGATE_CON09_PCLK_ACODEC_EN_MASK              (0x1U << CRU_CLKGATE_CON09_PCLK_ACODEC_EN_SHIFT)             /* 0x00002000 */
-#define CRU_CLKGATE_CON09_PCLK_32KTRIM_EN_SHIFT            (14U)
-#define CRU_CLKGATE_CON09_PCLK_32KTRIM_EN_MASK             (0x1U << CRU_CLKGATE_CON09_PCLK_32KTRIM_EN_SHIFT)            /* 0x00004000 */
-#define CRU_CLKGATE_CON09_PCLK_TOP_TIMER_EN_SHIFT          (15U)
-#define CRU_CLKGATE_CON09_PCLK_TOP_TIMER_EN_MASK           (0x1U << CRU_CLKGATE_CON09_PCLK_TOP_TIMER_EN_SHIFT)          /* 0x00008000 */
-/* CLKGATE_CON10 */
-#define CRU_CLKGATE_CON10_PCLK_PVTM_EN_SHIFT               (0U)
-#define CRU_CLKGATE_CON10_PCLK_PVTM_EN_MASK                (0x1U << CRU_CLKGATE_CON10_PCLK_PVTM_EN_SHIFT)               /* 0x00000001 */
-#define CRU_CLKGATE_CON10_PCLK_TOUCH_DETECT_EN_SHIFT       (1U)
-#define CRU_CLKGATE_CON10_PCLK_TOUCH_DETECT_EN_MASK        (0x1U << CRU_CLKGATE_CON10_PCLK_TOUCH_DETECT_EN_SHIFT)       /* 0x00000002 */
-#define CRU_CLKGATE_CON10_PCLK_TSADC_EN_SHIFT              (2U)
-#define CRU_CLKGATE_CON10_PCLK_TSADC_EN_MASK               (0x1U << CRU_CLKGATE_CON10_PCLK_TSADC_EN_SHIFT)              /* 0x00000004 */
-#define CRU_CLKGATE_CON10_AON_SLEEP_CLK_EN_SHIFT           (5U)
-#define CRU_CLKGATE_CON10_AON_SLEEP_CLK_EN_MASK            (0x1U << CRU_CLKGATE_CON10_AON_SLEEP_CLK_EN_SHIFT)           /* 0x00000020 */
-#define CRU_CLKGATE_CON10_CLK_32K_TOP_EN_SHIFT             (6U)
-#define CRU_CLKGATE_CON10_CLK_32K_TOP_EN_MASK              (0x1U << CRU_CLKGATE_CON10_CLK_32K_TOP_EN_SHIFT)             /* 0x00000040 */
-#define CRU_CLKGATE_CON10_CLK_PMU_EN_SHIFT                 (7U)
-#define CRU_CLKGATE_CON10_CLK_PMU_EN_MASK                  (0x1U << CRU_CLKGATE_CON10_CLK_PMU_EN_SHIFT)                 /* 0x00000080 */
-#define CRU_CLKGATE_CON10_DBCLK_GPIO0_EN_SHIFT             (8U)
-#define CRU_CLKGATE_CON10_DBCLK_GPIO0_EN_MASK              (0x1U << CRU_CLKGATE_CON10_DBCLK_GPIO0_EN_SHIFT)             /* 0x00000100 */
-#define CRU_CLKGATE_CON10_DBCLK_GPIO1_EN_SHIFT             (9U)
-#define CRU_CLKGATE_CON10_DBCLK_GPIO1_EN_MASK              (0x1U << CRU_CLKGATE_CON10_DBCLK_GPIO1_EN_SHIFT)             /* 0x00000200 */
-#define CRU_CLKGATE_CON10_CLK_PMU_OSC_EN_SHIFT             (10U)
-#define CRU_CLKGATE_CON10_CLK_PMU_OSC_EN_MASK              (0x1U << CRU_CLKGATE_CON10_CLK_PMU_OSC_EN_SHIFT)             /* 0x00000400 */
-#define CRU_CLKGATE_CON10_MCLK_PDM_PLL_EN_SHIFT            (12U)
-#define CRU_CLKGATE_CON10_MCLK_PDM_PLL_EN_MASK             (0x1U << CRU_CLKGATE_CON10_MCLK_PDM_PLL_EN_SHIFT)            /* 0x00001000 */
-#define CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_PLL_EN_SHIFT     (13U)
-#define CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_PLL_EN_MASK      (0x1U << CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_PLL_EN_SHIFT)     /* 0x00002000 */
-#define CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_FRAC_DIV_EN_SHIFT (14U)
-#define CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_FRAC_DIV_EN_MASK (0x1U << CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_FRAC_DIV_EN_SHIFT) /* 0x00004000 */
-#define CRU_CLKGATE_CON10_MCLK_I2S8CH_0_TX_EN_SHIFT        (15U)
-#define CRU_CLKGATE_CON10_MCLK_I2S8CH_0_TX_EN_MASK         (0x1U << CRU_CLKGATE_CON10_MCLK_I2S8CH_0_TX_EN_SHIFT)        /* 0x00008000 */
-/* CLKGATE_CON11 */
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_PLL_EN_SHIFT     (0U)
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_PLL_EN_MASK      (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_PLL_EN_SHIFT)     /* 0x00000001 */
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_FRAC_DIV_EN_SHIFT (1U)
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_FRAC_DIV_EN_MASK (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_FRAC_DIV_EN_SHIFT) /* 0x00000002 */
-#define CRU_CLKGATE_CON11_MCLK_I2S8CH_0_RX_EN_SHIFT        (2U)
-#define CRU_CLKGATE_CON11_MCLK_I2S8CH_0_RX_EN_MASK         (0x1U << CRU_CLKGATE_CON11_MCLK_I2S8CH_0_RX_EN_SHIFT)        /* 0x00000004 */
-#define CRU_CLKGATE_CON11_MCLKOUT_I2S8CH_0_EN_SHIFT        (3U)
-#define CRU_CLKGATE_CON11_MCLKOUT_I2S8CH_0_EN_MASK         (0x1U << CRU_CLKGATE_CON11_MCLKOUT_I2S8CH_0_EN_SHIFT)        /* 0x00000008 */
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_PLL_EN_SHIFT     (4U)
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_PLL_EN_MASK      (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_PLL_EN_SHIFT)     /* 0x00000010 */
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_FRAC_DIV_EN_SHIFT (5U)
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_FRAC_DIV_EN_MASK (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_FRAC_DIV_EN_SHIFT) /* 0x00000020 */
-#define CRU_CLKGATE_CON11_MCLK_I2S8CH_1_TX_EN_SHIFT        (6U)
-#define CRU_CLKGATE_CON11_MCLK_I2S8CH_1_TX_EN_MASK         (0x1U << CRU_CLKGATE_CON11_MCLK_I2S8CH_1_TX_EN_SHIFT)        /* 0x00000040 */
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_PLL_EN_SHIFT     (7U)
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_PLL_EN_MASK      (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_PLL_EN_SHIFT)     /* 0x00000080 */
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_FRAC_DIV_EN_SHIFT (8U)
-#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_FRAC_DIV_EN_MASK (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_FRAC_DIV_EN_SHIFT) /* 0x00000100 */
-#define CRU_CLKGATE_CON11_MCLK_I2S8CH_1_RX_EN_SHIFT        (9U)
-#define CRU_CLKGATE_CON11_MCLK_I2S8CH_1_RX_EN_MASK         (0x1U << CRU_CLKGATE_CON11_MCLK_I2S8CH_1_RX_EN_SHIFT)        /* 0x00000200 */
-#define CRU_CLKGATE_CON11_SCLK_CODEC_EN_SHIFT              (10U)
-#define CRU_CLKGATE_CON11_SCLK_CODEC_EN_MASK               (0x1U << CRU_CLKGATE_CON11_SCLK_CODEC_EN_SHIFT)              /* 0x00000400 */
-#define CRU_CLKGATE_CON11_CLK_I2C_CODEC_PLL_EN_SHIFT       (11U)
-#define CRU_CLKGATE_CON11_CLK_I2C_CODEC_PLL_EN_MASK        (0x1U << CRU_CLKGATE_CON11_CLK_I2C_CODEC_PLL_EN_SHIFT)       /* 0x00000800 */
-/* CLKGATE_CON12 */
-#define CRU_CLKGATE_CON12_CLK_OTG_USBPHY_PLL_EN_SHIFT      (3U)
-#define CRU_CLKGATE_CON12_CLK_OTG_USBPHY_PLL_EN_MASK       (0x1U << CRU_CLKGATE_CON12_CLK_OTG_USBPHY_PLL_EN_SHIFT)      /* 0x00000008 */
-#define CRU_CLKGATE_CON12_CLK_32KTRIM_EN_SHIFT             (4U)
-#define CRU_CLKGATE_CON12_CLK_32KTRIM_EN_MASK              (0x1U << CRU_CLKGATE_CON12_CLK_32KTRIM_EN_SHIFT)             /* 0x00000010 */
-#define CRU_CLKGATE_CON12_OUTCLOCK_TEST_EN_SHIFT           (5U)
-#define CRU_CLKGATE_CON12_OUTCLOCK_TEST_EN_MASK            (0x1U << CRU_CLKGATE_CON12_OUTCLOCK_TEST_EN_SHIFT)           /* 0x00000020 */
-#define CRU_CLKGATE_CON12_CLK_PVTM_EN_SHIFT                (7U)
-#define CRU_CLKGATE_CON12_CLK_PVTM_EN_MASK                 (0x1U << CRU_CLKGATE_CON12_CLK_PVTM_EN_SHIFT)                /* 0x00000080 */
-#define CRU_CLKGATE_CON12_CLK_TOUCH_DETECT_EN_SHIFT        (8U)
-#define CRU_CLKGATE_CON12_CLK_TOUCH_DETECT_EN_MASK         (0x1U << CRU_CLKGATE_CON12_CLK_TOUCH_DETECT_EN_SHIFT)        /* 0x00000100 */
-#define CRU_CLKGATE_CON12_CLK_TIMER_TOP_PLL_EN_SHIFT       (9U)
-#define CRU_CLKGATE_CON12_CLK_TIMER_TOP_PLL_EN_MASK        (0x1U << CRU_CLKGATE_CON12_CLK_TIMER_TOP_PLL_EN_SHIFT)       /* 0x00000200 */
-#define CRU_CLKGATE_CON12_CLK_SARADC_EN_SHIFT              (10U)
-#define CRU_CLKGATE_CON12_CLK_SARADC_EN_MASK               (0x1U << CRU_CLKGATE_CON12_CLK_SARADC_EN_SHIFT)              /* 0x00000400 */
-#define CRU_CLKGATE_CON12_CLK_TSADC_EN_SHIFT               (11U)
-#define CRU_CLKGATE_CON12_CLK_TSADC_EN_MASK                (0x1U << CRU_CLKGATE_CON12_CLK_TSADC_EN_SHIFT)               /* 0x00000800 */
+/* CLKSEL_CON36 */
+#define CRU_CLKSEL_CON36_STCLK_M4F0_DIV_SHIFT              (0U)
+#define CRU_CLKSEL_CON36_STCLK_M4F0_DIV_MASK               (0x3FU << CRU_CLKSEL_CON36_STCLK_M4F0_DIV_SHIFT)             /* 0x0000003F */
+#define CRU_CLKSEL_CON36_STCLK_M0_DIV_SHIFT                (8U)
+#define CRU_CLKSEL_CON36_STCLK_M0_DIV_MASK                 (0x3FU << CRU_CLKSEL_CON36_STCLK_M0_DIV_SHIFT)               /* 0x00003F00 */
+/* GATE_CON00 */
+#define CRU_CLKGATE_CON00_CLK_32K_FRAC_DIV_EN_SHIFT           (1U)
+#define CRU_CLKGATE_CON00_CLK_32K_FRAC_DIV_EN_MASK            (0x1U << CRU_CLKGATE_CON00_CLK_32K_FRAC_DIV_EN_SHIFT)           /* 0x00000002 */
+#define CRU_CLKGATE_CON00_CLK_32K_EN_SHIFT                    (2U)
+#define CRU_CLKGATE_CON00_CLK_32K_EN_MASK                     (0x1U << CRU_CLKGATE_CON00_CLK_32K_EN_SHIFT)                    /* 0x00000004 */
+#define CRU_CLKGATE_CON00_CLK_GPLL_MUX_DIV_NP5_EN_SHIFT       (4U)
+#define CRU_CLKGATE_CON00_CLK_GPLL_MUX_DIV_NP5_EN_MASK        (0x1U << CRU_CLKGATE_CON00_CLK_GPLL_MUX_DIV_NP5_EN_SHIFT)       /* 0x00000010 */
+/* GATE_CON01 */
+#define CRU_CLKGATE_CON01_HCLK_MCU_BUS_PLL_EN_SHIFT           (0U)
+#define CRU_CLKGATE_CON01_HCLK_MCU_BUS_PLL_EN_MASK            (0x1U << CRU_CLKGATE_CON01_HCLK_MCU_BUS_PLL_EN_SHIFT)           /* 0x00000001 */
+#define CRU_CLKGATE_CON01_HCLK_MCU_BUS_NIU_EN_SHIFT           (1U)
+#define CRU_CLKGATE_CON01_HCLK_MCU_BUS_NIU_EN_MASK            (0x1U << CRU_CLKGATE_CON01_HCLK_MCU_BUS_NIU_EN_SHIFT)           /* 0x00000002 */
+#define CRU_CLKGATE_CON01_FCLK_M4F0_EN_SHIFT                  (2U)
+#define CRU_CLKGATE_CON01_FCLK_M4F0_EN_MASK                   (0x1U << CRU_CLKGATE_CON01_FCLK_M4F0_EN_SHIFT)                  /* 0x00000004 */
+#define CRU_CLKGATE_CON01_FCLK_M0_EN_SHIFT                    (4U)
+#define CRU_CLKGATE_CON01_FCLK_M0_EN_MASK                     (0x1U << CRU_CLKGATE_CON01_FCLK_M0_EN_SHIFT)                    /* 0x00000010 */
+#define CRU_CLKGATE_CON01_DCLK_M0_EN_SHIFT                    (6U)
+#define CRU_CLKGATE_CON01_DCLK_M0_EN_MASK                     (0x1U << CRU_CLKGATE_CON01_DCLK_M0_EN_SHIFT)                    /* 0x00000040 */
+#define CRU_CLKGATE_CON01_SCLK_M0_EN_SHIFT                    (7U)
+#define CRU_CLKGATE_CON01_SCLK_M0_EN_MASK                     (0x1U << CRU_CLKGATE_CON01_SCLK_M0_EN_SHIFT)                    /* 0x00000080 */
+#define CRU_CLKGATE_CON01_HCLK_INTMEM0_MCU_EN_SHIFT           (9U)
+#define CRU_CLKGATE_CON01_HCLK_INTMEM0_MCU_EN_MASK            (0x1U << CRU_CLKGATE_CON01_HCLK_INTMEM0_MCU_EN_SHIFT)           /* 0x00000200 */
+#define CRU_CLKGATE_CON01_HCLK_INTMEM1_MCU_EN_SHIFT           (10U)
+#define CRU_CLKGATE_CON01_HCLK_INTMEM1_MCU_EN_MASK            (0x1U << CRU_CLKGATE_CON01_HCLK_INTMEM1_MCU_EN_SHIFT)           /* 0x00000400 */
+#define CRU_CLKGATE_CON01_HCLK_DMAC_EN_SHIFT                  (11U)
+#define CRU_CLKGATE_CON01_HCLK_DMAC_EN_MASK                   (0x1U << CRU_CLKGATE_CON01_HCLK_DMAC_EN_SHIFT)                  /* 0x00000800 */
+#define CRU_CLKGATE_CON01_HCLK_ROM_EN_SHIFT                   (12U)
+#define CRU_CLKGATE_CON01_HCLK_ROM_EN_MASK                    (0x1U << CRU_CLKGATE_CON01_HCLK_ROM_EN_SHIFT)                   /* 0x00001000 */
+#define CRU_CLKGATE_CON01_HCLK_HIFI3_TCM_EN_SHIFT             (13U)
+#define CRU_CLKGATE_CON01_HCLK_HIFI3_TCM_EN_MASK              (0x1U << CRU_CLKGATE_CON01_HCLK_HIFI3_TCM_EN_SHIFT)             /* 0x00002000 */
+#define CRU_CLKGATE_CON01_HCLK_VOP_EN_SHIFT                   (14U)
+#define CRU_CLKGATE_CON01_HCLK_VOP_EN_MASK                    (0x1U << CRU_CLKGATE_CON01_HCLK_VOP_EN_SHIFT)                   /* 0x00004000 */
+#define CRU_CLKGATE_CON01_HCLK_SFC0_EN_SHIFT                  (15U)
+#define CRU_CLKGATE_CON01_HCLK_SFC0_EN_MASK                   (0x1U << CRU_CLKGATE_CON01_HCLK_SFC0_EN_SHIFT)                  /* 0x00008000 */
+/* GATE_CON02 */
+#define CRU_CLKGATE_CON02_HCLK_SFC0_XIP_EN_SHIFT              (0U)
+#define CRU_CLKGATE_CON02_HCLK_SFC0_XIP_EN_MASK               (0x1U << CRU_CLKGATE_CON02_HCLK_SFC0_XIP_EN_SHIFT)              /* 0x00000001 */
+#define CRU_CLKGATE_CON02_HCLK_SFC1_EN_SHIFT                  (1U)
+#define CRU_CLKGATE_CON02_HCLK_SFC1_EN_MASK                   (0x1U << CRU_CLKGATE_CON02_HCLK_SFC1_EN_SHIFT)                  /* 0x00000002 */
+#define CRU_CLKGATE_CON02_HCLK_SFC1_XIP_EN_SHIFT              (2U)
+#define CRU_CLKGATE_CON02_HCLK_SFC1_XIP_EN_MASK               (0x1U << CRU_CLKGATE_CON02_HCLK_SFC1_XIP_EN_SHIFT)              /* 0x00000004 */
+#define CRU_CLKGATE_CON02_ACLK_XIP_HYPERX8_EN_SHIFT           (3U)
+#define CRU_CLKGATE_CON02_ACLK_XIP_HYPERX8_EN_MASK            (0x1U << CRU_CLKGATE_CON02_ACLK_XIP_HYPERX8_EN_SHIFT)           /* 0x00000008 */
+#define CRU_CLKGATE_CON02_HCLK_AUDPWM_EN_SHIFT                (4U)
+#define CRU_CLKGATE_CON02_HCLK_AUDPWM_EN_MASK                 (0x1U << CRU_CLKGATE_CON02_HCLK_AUDPWM_EN_SHIFT)                /* 0x00000010 */
+#define CRU_CLKGATE_CON02_PCLK_MCU_BUS_PLL_EN_SHIFT           (8U)
+#define CRU_CLKGATE_CON02_PCLK_MCU_BUS_PLL_EN_MASK            (0x1U << CRU_CLKGATE_CON02_PCLK_MCU_BUS_PLL_EN_SHIFT)           /* 0x00000100 */
+#define CRU_CLKGATE_CON02_HCLK_AHB2APB_EN_SHIFT               (9U)
+#define CRU_CLKGATE_CON02_HCLK_AHB2APB_EN_MASK                (0x1U << CRU_CLKGATE_CON02_HCLK_AHB2APB_EN_SHIFT)               /* 0x00000200 */
+#define CRU_CLKGATE_CON02_PCLK_UART0_EN_SHIFT                 (10U)
+#define CRU_CLKGATE_CON02_PCLK_UART0_EN_MASK                  (0x1U << CRU_CLKGATE_CON02_PCLK_UART0_EN_SHIFT)                 /* 0x00000400 */
+#define CRU_CLKGATE_CON02_PCLK_UART1_EN_SHIFT                 (11U)
+#define CRU_CLKGATE_CON02_PCLK_UART1_EN_MASK                  (0x1U << CRU_CLKGATE_CON02_PCLK_UART1_EN_SHIFT)                 /* 0x00000800 */
+#define CRU_CLKGATE_CON02_PCLK_UART2_EN_SHIFT                 (12U)
+#define CRU_CLKGATE_CON02_PCLK_UART2_EN_MASK                  (0x1U << CRU_CLKGATE_CON02_PCLK_UART2_EN_SHIFT)                 /* 0x00001000 */
+#define CRU_CLKGATE_CON02_PCLK_I2C0_EN_SHIFT                  (13U)
+#define CRU_CLKGATE_CON02_PCLK_I2C0_EN_MASK                   (0x1U << CRU_CLKGATE_CON02_PCLK_I2C0_EN_SHIFT)                  /* 0x00002000 */
+#define CRU_CLKGATE_CON02_PCLK_I2C1_EN_SHIFT                  (14U)
+#define CRU_CLKGATE_CON02_PCLK_I2C1_EN_MASK                   (0x1U << CRU_CLKGATE_CON02_PCLK_I2C1_EN_SHIFT)                  /* 0x00004000 */
+#define CRU_CLKGATE_CON02_PCLK_I2C2_EN_SHIFT                  (15U)
+#define CRU_CLKGATE_CON02_PCLK_I2C2_EN_MASK                   (0x1U << CRU_CLKGATE_CON02_PCLK_I2C2_EN_SHIFT)                  /* 0x00008000 */
+/* GATE_CON03 */
+#define CRU_CLKGATE_CON03_PCLK_PWM0_EN_SHIFT                  (0U)
+#define CRU_CLKGATE_CON03_PCLK_PWM0_EN_MASK                   (0x1U << CRU_CLKGATE_CON03_PCLK_PWM0_EN_SHIFT)                  /* 0x00000001 */
+#define CRU_CLKGATE_CON03_PCLK_PWM1_EN_SHIFT                  (1U)
+#define CRU_CLKGATE_CON03_PCLK_PWM1_EN_MASK                   (0x1U << CRU_CLKGATE_CON03_PCLK_PWM1_EN_SHIFT)                  /* 0x00000002 */
+#define CRU_CLKGATE_CON03_PCLK_PWM2_EN_SHIFT                  (2U)
+#define CRU_CLKGATE_CON03_PCLK_PWM2_EN_MASK                   (0x1U << CRU_CLKGATE_CON03_PCLK_PWM2_EN_SHIFT)                  /* 0x00000004 */
+#define CRU_CLKGATE_CON03_PCLK_SPI0_EN_SHIFT                  (3U)
+#define CRU_CLKGATE_CON03_PCLK_SPI0_EN_MASK                   (0x1U << CRU_CLKGATE_CON03_PCLK_SPI0_EN_SHIFT)                  /* 0x00000008 */
+#define CRU_CLKGATE_CON03_PCLK_SPI1_EN_SHIFT                  (4U)
+#define CRU_CLKGATE_CON03_PCLK_SPI1_EN_MASK                   (0x1U << CRU_CLKGATE_CON03_PCLK_SPI1_EN_SHIFT)                  /* 0x00000010 */
+#define CRU_CLKGATE_CON03_PCLK_SARADC_CONTROL_EN_SHIFT        (5U)
+#define CRU_CLKGATE_CON03_PCLK_SARADC_CONTROL_EN_MASK         (0x1U << CRU_CLKGATE_CON03_PCLK_SARADC_CONTROL_EN_SHIFT)        /* 0x00000020 */
+#define CRU_CLKGATE_CON03_PCLK_EFUSE_EN_SHIFT                 (6U)
+#define CRU_CLKGATE_CON03_PCLK_EFUSE_EN_MASK                  (0x1U << CRU_CLKGATE_CON03_PCLK_EFUSE_EN_SHIFT)                 /* 0x00000040 */
+#define CRU_CLKGATE_CON03_PCLK_TIMER_EN_SHIFT                 (7U)
+#define CRU_CLKGATE_CON03_PCLK_TIMER_EN_MASK                  (0x1U << CRU_CLKGATE_CON03_PCLK_TIMER_EN_SHIFT)                 /* 0x00000080 */
+#define CRU_CLKGATE_CON03_PCLK_WDT0_EN_SHIFT                  (8U)
+#define CRU_CLKGATE_CON03_PCLK_WDT0_EN_MASK                   (0x1U << CRU_CLKGATE_CON03_PCLK_WDT0_EN_SHIFT)                  /* 0x00000100 */
+#define CRU_CLKGATE_CON03_PCLK_WDT1_EN_SHIFT                  (9U)
+#define CRU_CLKGATE_CON03_PCLK_WDT1_EN_MASK                   (0x1U << CRU_CLKGATE_CON03_PCLK_WDT1_EN_SHIFT)                  /* 0x00000200 */
+#define CRU_CLKGATE_CON03_PCLK_WDT2_EN_SHIFT                  (10U)
+#define CRU_CLKGATE_CON03_PCLK_WDT2_EN_MASK                   (0x1U << CRU_CLKGATE_CON03_PCLK_WDT2_EN_SHIFT)                  /* 0x00000400 */
+#define CRU_CLKGATE_CON03_PCLK_MAILBOX0_EN_SHIFT              (11U)
+#define CRU_CLKGATE_CON03_PCLK_MAILBOX0_EN_MASK               (0x1U << CRU_CLKGATE_CON03_PCLK_MAILBOX0_EN_SHIFT)              /* 0x00000800 */
+#define CRU_CLKGATE_CON03_PCLK_MAILBOX1_EN_SHIFT              (12U)
+#define CRU_CLKGATE_CON03_PCLK_MAILBOX1_EN_MASK               (0x1U << CRU_CLKGATE_CON03_PCLK_MAILBOX1_EN_SHIFT)              /* 0x00001000 */
+#define CRU_CLKGATE_CON03_PCLK_INT_CTRL_EN_SHIFT              (13U)
+#define CRU_CLKGATE_CON03_PCLK_INT_CTRL_EN_MASK               (0x1U << CRU_CLKGATE_CON03_PCLK_INT_CTRL_EN_SHIFT)              /* 0x00002000 */
+/* GATE_CON04 */
+#define CRU_CLKGATE_CON04_CLK_HIFI3_DIV_EN_SHIFT              (0U)
+#define CRU_CLKGATE_CON04_CLK_HIFI3_DIV_EN_MASK               (0x1U << CRU_CLKGATE_CON04_CLK_HIFI3_DIV_EN_SHIFT)              /* 0x00000001 */
+#define CRU_CLKGATE_CON04_CLK_HIFI3_NP5_DIV_EN_SHIFT          (1U)
+#define CRU_CLKGATE_CON04_CLK_HIFI3_NP5_DIV_EN_MASK           (0x1U << CRU_CLKGATE_CON04_CLK_HIFI3_NP5_DIV_EN_SHIFT)          /* 0x00000002 */
+#define CRU_CLKGATE_CON04_CLK_HIFI3_EN_SHIFT                  (2U)
+#define CRU_CLKGATE_CON04_CLK_HIFI3_EN_MASK                   (0x1U << CRU_CLKGATE_CON04_CLK_HIFI3_EN_SHIFT)                  /* 0x00000004 */
+#define CRU_CLKGATE_CON04_ACLK_HIFI3_NIU_EN_SHIFT             (3U)
+#define CRU_CLKGATE_CON04_ACLK_HIFI3_NIU_EN_MASK              (0x1U << CRU_CLKGATE_CON04_ACLK_HIFI3_NIU_EN_SHIFT)             /* 0x00000008 */
+#define CRU_CLKGATE_CON04_CLK_UART0_PLL_EN_SHIFT              (4U)
+#define CRU_CLKGATE_CON04_CLK_UART0_PLL_EN_MASK               (0x1U << CRU_CLKGATE_CON04_CLK_UART0_PLL_EN_SHIFT)              /* 0x00000010 */
+#define CRU_CLKGATE_CON04_CLK_UART0_FRAC_EN_SHIFT             (5U)
+#define CRU_CLKGATE_CON04_CLK_UART0_FRAC_EN_MASK              (0x1U << CRU_CLKGATE_CON04_CLK_UART0_FRAC_EN_SHIFT)             /* 0x00000020 */
+#define CRU_CLKGATE_CON04_SCLK_UART0_EN_SHIFT                 (6U)
+#define CRU_CLKGATE_CON04_SCLK_UART0_EN_MASK                  (0x1U << CRU_CLKGATE_CON04_SCLK_UART0_EN_SHIFT)                 /* 0x00000040 */
+#define CRU_CLKGATE_CON04_CLK_UART1_EN_SHIFT                  (7U)
+#define CRU_CLKGATE_CON04_CLK_UART1_EN_MASK                   (0x1U << CRU_CLKGATE_CON04_CLK_UART1_EN_SHIFT)                  /* 0x00000080 */
+#define CRU_CLKGATE_CON04_CLK_UART1_FRAC_EN_SHIFT             (8U)
+#define CRU_CLKGATE_CON04_CLK_UART1_FRAC_EN_MASK              (0x1U << CRU_CLKGATE_CON04_CLK_UART1_FRAC_EN_SHIFT)             /* 0x00000100 */
+#define CRU_CLKGATE_CON04_SCLK_UART1_EN_SHIFT                 (9U)
+#define CRU_CLKGATE_CON04_SCLK_UART1_EN_MASK                  (0x1U << CRU_CLKGATE_CON04_SCLK_UART1_EN_SHIFT)                 /* 0x00000200 */
+#define CRU_CLKGATE_CON04_CLK_UART2_PLL_EN_SHIFT              (10U)
+#define CRU_CLKGATE_CON04_CLK_UART2_PLL_EN_MASK               (0x1U << CRU_CLKGATE_CON04_CLK_UART2_PLL_EN_SHIFT)              /* 0x00000400 */
+#define CRU_CLKGATE_CON04_CLK_UART2_FRAC_EN_SHIFT             (11U)
+#define CRU_CLKGATE_CON04_CLK_UART2_FRAC_EN_MASK              (0x1U << CRU_CLKGATE_CON04_CLK_UART2_FRAC_EN_SHIFT)             /* 0x00000800 */
+#define CRU_CLKGATE_CON04_SCLK_UART2_EN_SHIFT                 (12U)
+#define CRU_CLKGATE_CON04_SCLK_UART2_EN_MASK                  (0x1U << CRU_CLKGATE_CON04_SCLK_UART2_EN_SHIFT)                 /* 0x00001000 */
+/* GATE_CON05 */
+#define CRU_CLKGATE_CON05_CLK_I2C0_PLL_EN_SHIFT               (0U)
+#define CRU_CLKGATE_CON05_CLK_I2C0_PLL_EN_MASK                (0x1U << CRU_CLKGATE_CON05_CLK_I2C0_PLL_EN_SHIFT)               /* 0x00000001 */
+#define CRU_CLKGATE_CON05_CLK_I2C1_PLL_EN_SHIFT               (1U)
+#define CRU_CLKGATE_CON05_CLK_I2C1_PLL_EN_MASK                (0x1U << CRU_CLKGATE_CON05_CLK_I2C1_PLL_EN_SHIFT)               /* 0x00000002 */
+#define CRU_CLKGATE_CON05_CLK_I2C2_PLL_EN_SHIFT               (2U)
+#define CRU_CLKGATE_CON05_CLK_I2C2_PLL_EN_MASK                (0x1U << CRU_CLKGATE_CON05_CLK_I2C2_PLL_EN_SHIFT)               /* 0x00000004 */
+#define CRU_CLKGATE_CON05_CLK_PWM0_PLL_EN_SHIFT               (3U)
+#define CRU_CLKGATE_CON05_CLK_PWM0_PLL_EN_MASK                (0x1U << CRU_CLKGATE_CON05_CLK_PWM0_PLL_EN_SHIFT)               /* 0x00000008 */
+#define CRU_CLKGATE_CON05_CLK_PWM1_PLL_EN_SHIFT               (4U)
+#define CRU_CLKGATE_CON05_CLK_PWM1_PLL_EN_MASK                (0x1U << CRU_CLKGATE_CON05_CLK_PWM1_PLL_EN_SHIFT)               /* 0x00000010 */
+#define CRU_CLKGATE_CON05_CLK_PWM2_PLL_EN_SHIFT               (5U)
+#define CRU_CLKGATE_CON05_CLK_PWM2_PLL_EN_MASK                (0x1U << CRU_CLKGATE_CON05_CLK_PWM2_PLL_EN_SHIFT)               /* 0x00000020 */
+#define CRU_CLKGATE_CON05_CLK_SPI0_PLL_EN_SHIFT               (6U)
+#define CRU_CLKGATE_CON05_CLK_SPI0_PLL_EN_MASK                (0x1U << CRU_CLKGATE_CON05_CLK_SPI0_PLL_EN_SHIFT)               /* 0x00000040 */
+#define CRU_CLKGATE_CON05_CLK_SPI1_PLL_EN_SHIFT               (7U)
+#define CRU_CLKGATE_CON05_CLK_SPI1_PLL_EN_MASK                (0x1U << CRU_CLKGATE_CON05_CLK_SPI1_PLL_EN_SHIFT)               /* 0x00000080 */
+#define CRU_CLKGATE_CON05_CLK_TIMER_PLL_EN_SHIFT              (8U)
+#define CRU_CLKGATE_CON05_CLK_TIMER_PLL_EN_MASK               (0x1U << CRU_CLKGATE_CON05_CLK_TIMER_PLL_EN_SHIFT)              /* 0x00000100 */
+#define CRU_CLKGATE_CON05_CLK_TIMER0_EN_SHIFT                 (9U)
+#define CRU_CLKGATE_CON05_CLK_TIMER0_EN_MASK                  (0x1U << CRU_CLKGATE_CON05_CLK_TIMER0_EN_SHIFT)                 /* 0x00000200 */
+#define CRU_CLKGATE_CON05_CLK_TIMER1_EN_SHIFT                 (10U)
+#define CRU_CLKGATE_CON05_CLK_TIMER1_EN_MASK                  (0x1U << CRU_CLKGATE_CON05_CLK_TIMER1_EN_SHIFT)                 /* 0x00000400 */
+#define CRU_CLKGATE_CON05_CLK_TIMER2_EN_SHIFT                 (11U)
+#define CRU_CLKGATE_CON05_CLK_TIMER2_EN_MASK                  (0x1U << CRU_CLKGATE_CON05_CLK_TIMER2_EN_SHIFT)                 /* 0x00000800 */
+#define CRU_CLKGATE_CON05_CLK_TIMER3_EN_SHIFT                 (12U)
+#define CRU_CLKGATE_CON05_CLK_TIMER3_EN_MASK                  (0x1U << CRU_CLKGATE_CON05_CLK_TIMER3_EN_SHIFT)                 /* 0x00001000 */
+#define CRU_CLKGATE_CON05_CLK_TIMER4_EN_SHIFT                 (13U)
+#define CRU_CLKGATE_CON05_CLK_TIMER4_EN_MASK                  (0x1U << CRU_CLKGATE_CON05_CLK_TIMER4_EN_SHIFT)                 /* 0x00002000 */
+#define CRU_CLKGATE_CON05_CLK_TIMER5_EN_SHIFT                 (14U)
+#define CRU_CLKGATE_CON05_CLK_TIMER5_EN_MASK                  (0x1U << CRU_CLKGATE_CON05_CLK_TIMER5_EN_SHIFT)                 /* 0x00004000 */
+/* GATE_CON06 */
+#define CRU_CLKGATE_CON06_CLK_EFUSE_EN_SHIFT                  (2U)
+#define CRU_CLKGATE_CON06_CLK_EFUSE_EN_MASK                   (0x1U << CRU_CLKGATE_CON06_CLK_EFUSE_EN_SHIFT)                  /* 0x00000004 */
+#define CRU_CLKGATE_CON06_CLK_XIP_SFC0_DT50_EN_SHIFT          (3U)
+#define CRU_CLKGATE_CON06_CLK_XIP_SFC0_DT50_EN_MASK           (0x1U << CRU_CLKGATE_CON06_CLK_XIP_SFC0_DT50_EN_SHIFT)          /* 0x00000008 */
+#define CRU_CLKGATE_CON06_CLK_XIP_SFC1_DT50_EN_SHIFT          (4U)
+#define CRU_CLKGATE_CON06_CLK_XIP_SFC1_DT50_EN_MASK           (0x1U << CRU_CLKGATE_CON06_CLK_XIP_SFC1_DT50_EN_SHIFT)          /* 0x00000010 */
+#define CRU_CLKGATE_CON06_CLK_XIP_HYPERX8_DT50_EN_SHIFT       (5U)
+#define CRU_CLKGATE_CON06_CLK_XIP_HYPERX8_DT50_EN_MASK        (0x1U << CRU_CLKGATE_CON06_CLK_XIP_HYPERX8_DT50_EN_SHIFT)       /* 0x00000020 */
+#define CRU_CLKGATE_CON06_STCLK_M4F0_EN_SHIFT                 (6U)
+#define CRU_CLKGATE_CON06_STCLK_M4F0_EN_MASK                  (0x1U << CRU_CLKGATE_CON06_STCLK_M4F0_EN_SHIFT)                 /* 0x00000040 */
+#define CRU_CLKGATE_CON06_CLK_AUDPWM_PLL_EN_SHIFT             (7U)
+#define CRU_CLKGATE_CON06_CLK_AUDPWM_PLL_EN_MASK              (0x1U << CRU_CLKGATE_CON06_CLK_AUDPWM_PLL_EN_SHIFT)             /* 0x00000080 */
+#define CRU_CLKGATE_CON06_CLK_AUDPWM_FRAC_EN_SHIFT            (8U)
+#define CRU_CLKGATE_CON06_CLK_AUDPWM_FRAC_EN_MASK             (0x1U << CRU_CLKGATE_CON06_CLK_AUDPWM_FRAC_EN_SHIFT)            /* 0x00000100 */
+#define CRU_CLKGATE_CON06_SCLK_AUDPWM_EN_SHIFT                (9U)
+#define CRU_CLKGATE_CON06_SCLK_AUDPWM_EN_MASK                 (0x1U << CRU_CLKGATE_CON06_SCLK_AUDPWM_EN_SHIFT)                /* 0x00000200 */
+#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE0_PLL_EN_SHIFT       (10U)
+#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE0_PLL_EN_MASK        (0x1U << CRU_CLKGATE_CON06_CLK_PWM_CAPTURE0_PLL_EN_SHIFT)       /* 0x00000400 */
+#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE1_PLL_EN_SHIFT       (11U)
+#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE1_PLL_EN_MASK        (0x1U << CRU_CLKGATE_CON06_CLK_PWM_CAPTURE1_PLL_EN_SHIFT)       /* 0x00000800 */
+#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE2_PLL_EN_SHIFT       (12U)
+#define CRU_CLKGATE_CON06_CLK_PWM_CAPTURE2_PLL_EN_MASK        (0x1U << CRU_CLKGATE_CON06_CLK_PWM_CAPTURE2_PLL_EN_SHIFT)       /* 0x00001000 */
+#define CRU_CLKGATE_CON06_STCLK_M0_EN_SHIFT                   (13U)
+#define CRU_CLKGATE_CON06_STCLK_M0_EN_MASK                    (0x1U << CRU_CLKGATE_CON06_STCLK_M0_EN_SHIFT)                   /* 0x00002000 */
+/* GATE_CON07 */
+#define CRU_CLKGATE_CON07_ACLK_PERI_BUS_PLL_EN_SHIFT          (0U)
+#define CRU_CLKGATE_CON07_ACLK_PERI_BUS_PLL_EN_MASK           (0x1U << CRU_CLKGATE_CON07_ACLK_PERI_BUS_PLL_EN_SHIFT)          /* 0x00000001 */
+#define CRU_CLKGATE_CON07_HCLK_PERI_BUS_PLL_EN_SHIFT          (1U)
+#define CRU_CLKGATE_CON07_HCLK_PERI_BUS_PLL_EN_MASK           (0x1U << CRU_CLKGATE_CON07_HCLK_PERI_BUS_PLL_EN_SHIFT)          /* 0x00000002 */
+#define CRU_CLKGATE_CON07_ACLK_PERI_BUS_NIU_EN_SHIFT          (2U)
+#define CRU_CLKGATE_CON07_ACLK_PERI_BUS_NIU_EN_MASK           (0x1U << CRU_CLKGATE_CON07_ACLK_PERI_BUS_NIU_EN_SHIFT)          /* 0x00000004 */
+#define CRU_CLKGATE_CON07_HCLK_PERI_BUS_NIU_EN_SHIFT          (3U)
+#define CRU_CLKGATE_CON07_HCLK_PERI_BUS_NIU_EN_MASK           (0x1U << CRU_CLKGATE_CON07_HCLK_PERI_BUS_NIU_EN_SHIFT)          /* 0x00000008 */
+#define CRU_CLKGATE_CON07_ACLK_VIP_EN_SHIFT                   (4U)
+#define CRU_CLKGATE_CON07_ACLK_VIP_EN_MASK                    (0x1U << CRU_CLKGATE_CON07_ACLK_VIP_EN_SHIFT)                   /* 0x00000010 */
+#define CRU_CLKGATE_CON07_ACLK_CRYPTO_EN_SHIFT                (5U)
+#define CRU_CLKGATE_CON07_ACLK_CRYPTO_EN_MASK                 (0x1U << CRU_CLKGATE_CON07_ACLK_CRYPTO_EN_SHIFT)                /* 0x00000020 */
+#define CRU_CLKGATE_CON07_HCLK_VIP_EN_SHIFT                   (6U)
+#define CRU_CLKGATE_CON07_HCLK_VIP_EN_MASK                    (0x1U << CRU_CLKGATE_CON07_HCLK_VIP_EN_SHIFT)                   /* 0x00000040 */
+#define CRU_CLKGATE_CON07_HCLK_CRYPTO_EN_SHIFT                (7U)
+#define CRU_CLKGATE_CON07_HCLK_CRYPTO_EN_MASK                 (0x1U << CRU_CLKGATE_CON07_HCLK_CRYPTO_EN_SHIFT)                /* 0x00000080 */
+#define CRU_CLKGATE_CON07_HCLK_SDMMC_EN_SHIFT                 (8U)
+#define CRU_CLKGATE_CON07_HCLK_SDMMC_EN_MASK                  (0x1U << CRU_CLKGATE_CON07_HCLK_SDMMC_EN_SHIFT)                 /* 0x00000100 */
+#define CRU_CLKGATE_CON07_HCLK_USBOTG_EN_SHIFT                (9U)
+#define CRU_CLKGATE_CON07_HCLK_USBOTG_EN_MASK                 (0x1U << CRU_CLKGATE_CON07_HCLK_USBOTG_EN_SHIFT)                /* 0x00000200 */
+#define CRU_CLKGATE_CON07_HCLK_USBOTG_PMU_EN_SHIFT            (10U)
+#define CRU_CLKGATE_CON07_HCLK_USBOTG_PMU_EN_MASK             (0x1U << CRU_CLKGATE_CON07_HCLK_USBOTG_PMU_EN_SHIFT)            /* 0x00000400 */
+#define CRU_CLKGATE_CON07_PCLK_SPI2APB_EN_SHIFT               (13U)
+#define CRU_CLKGATE_CON07_PCLK_SPI2APB_EN_MASK                (0x1U << CRU_CLKGATE_CON07_PCLK_SPI2APB_EN_SHIFT)               /* 0x00002000 */
+#define CRU_CLKGATE_CON07_CLK_VIP_PLL_EN_SHIFT                (14U)
+#define CRU_CLKGATE_CON07_CLK_VIP_PLL_EN_MASK                 (0x1U << CRU_CLKGATE_CON07_CLK_VIP_PLL_EN_SHIFT)                /* 0x00004000 */
+/* GATE_CON08 */
+#define CRU_CLKGATE_CON08_CLK_OTG_ADP_EN_SHIFT                (1U)
+#define CRU_CLKGATE_CON08_CLK_OTG_ADP_EN_MASK                 (0x1U << CRU_CLKGATE_CON08_CLK_OTG_ADP_EN_SHIFT)                /* 0x00000002 */
+#define CRU_CLKGATE_CON08_CLK_SDMMC_DT50_EN_SHIFT             (2U)
+#define CRU_CLKGATE_CON08_CLK_SDMMC_DT50_EN_MASK              (0x1U << CRU_CLKGATE_CON08_CLK_SDMMC_DT50_EN_SHIFT)             /* 0x00000004 */
+#define CRU_CLKGATE_CON08_CLK_CRYPTO_DIV_EN_SHIFT             (3U)
+#define CRU_CLKGATE_CON08_CLK_CRYPTO_DIV_EN_MASK              (0x1U << CRU_CLKGATE_CON08_CLK_CRYPTO_DIV_EN_SHIFT)             /* 0x00000008 */
+#define CRU_CLKGATE_CON08_CLK_CRYPTO_NP5_DIV_EN_SHIFT         (4U)
+#define CRU_CLKGATE_CON08_CLK_CRYPTO_NP5_DIV_EN_MASK          (0x1U << CRU_CLKGATE_CON08_CLK_CRYPTO_NP5_DIV_EN_SHIFT)         /* 0x00000010 */
+#define CRU_CLKGATE_CON08_CLK_CRYPTO_EN_SHIFT                 (5U)
+#define CRU_CLKGATE_CON08_CLK_CRYPTO_EN_MASK                  (0x1U << CRU_CLKGATE_CON08_CLK_CRYPTO_EN_SHIFT)                 /* 0x00000020 */
+#define CRU_CLKGATE_CON08_CLK_CRYPTO_PKA_EN_SHIFT             (6U)
+#define CRU_CLKGATE_CON08_CLK_CRYPTO_PKA_EN_MASK              (0x1U << CRU_CLKGATE_CON08_CLK_CRYPTO_PKA_EN_SHIFT)             /* 0x00000040 */
+#define CRU_CLKGATE_CON08_ACLK_WIFI_BUS_EN_SHIFT              (8U)
+#define CRU_CLKGATE_CON08_ACLK_WIFI_BUS_EN_MASK               (0x1U << CRU_CLKGATE_CON08_ACLK_WIFI_BUS_EN_SHIFT)              /* 0x00000100 */
+#define CRU_CLKGATE_CON08_ACLK_WIFI_BUS_NIU_EN_SHIFT          (9U)
+#define CRU_CLKGATE_CON08_ACLK_WIFI_BUS_NIU_EN_MASK           (0x1U << CRU_CLKGATE_CON08_ACLK_WIFI_BUS_NIU_EN_SHIFT)          /* 0x00000200 */
+#define CRU_CLKGATE_CON08_HCLK_BUFFER_EN_SHIFT                (11U)
+#define CRU_CLKGATE_CON08_HCLK_BUFFER_EN_MASK                 (0x1U << CRU_CLKGATE_CON08_HCLK_BUFFER_EN_SHIFT)                /* 0x00000800 */
+#define CRU_CLKGATE_CON08_CLK80_LPW_EN_SHIFT                  (12U)
+#define CRU_CLKGATE_CON08_CLK80_LPW_EN_MASK                   (0x1U << CRU_CLKGATE_CON08_CLK80_LPW_EN_SHIFT)                  /* 0x00001000 */
+#define CRU_CLKGATE_CON08_CLK40_LPW_EN_SHIFT                  (13U)
+#define CRU_CLKGATE_CON08_CLK40_LPW_EN_MASK                   (0x1U << CRU_CLKGATE_CON08_CLK40_LPW_EN_SHIFT)                  /* 0x00002000 */
+/* GATE_CON09 */
+#define CRU_CLKGATE_CON09_HCLK_TOP_BUS_PLL_EN_SHIFT           (0U)
+#define CRU_CLKGATE_CON09_HCLK_TOP_BUS_PLL_EN_MASK            (0x1U << CRU_CLKGATE_CON09_HCLK_TOP_BUS_PLL_EN_SHIFT)           /* 0x00000001 */
+#define CRU_CLKGATE_CON09_HCLK_TOP_BUS_NIU_EN_SHIFT           (1U)
+#define CRU_CLKGATE_CON09_HCLK_TOP_BUS_NIU_EN_MASK            (0x1U << CRU_CLKGATE_CON09_HCLK_TOP_BUS_NIU_EN_SHIFT)           /* 0x00000002 */
+#define CRU_CLKGATE_CON09_HCLK_PDM_EN_SHIFT                   (2U)
+#define CRU_CLKGATE_CON09_HCLK_PDM_EN_MASK                    (0x1U << CRU_CLKGATE_CON09_HCLK_PDM_EN_SHIFT)                   /* 0x00000004 */
+#define CRU_CLKGATE_CON09_HCLK_I2S0_EN_SHIFT                  (3U)
+#define CRU_CLKGATE_CON09_HCLK_I2S0_EN_MASK                   (0x1U << CRU_CLKGATE_CON09_HCLK_I2S0_EN_SHIFT)                  /* 0x00000008 */
+#define CRU_CLKGATE_CON09_HCLK_I2S1_EN_SHIFT                  (4U)
+#define CRU_CLKGATE_CON09_HCLK_I2S1_EN_MASK                   (0x1U << CRU_CLKGATE_CON09_HCLK_I2S1_EN_SHIFT)                  /* 0x00000010 */
+#define CRU_CLKGATE_CON09_HCLK_VAD_EN_SHIFT                   (5U)
+#define CRU_CLKGATE_CON09_HCLK_VAD_EN_MASK                    (0x1U << CRU_CLKGATE_CON09_HCLK_VAD_EN_SHIFT)                   /* 0x00000020 */
+#define CRU_CLKGATE_CON09_PCLK_TOP_BUS_PLL_EN_SHIFT           (6U)
+#define CRU_CLKGATE_CON09_PCLK_TOP_BUS_PLL_EN_MASK            (0x1U << CRU_CLKGATE_CON09_PCLK_TOP_BUS_PLL_EN_SHIFT)           /* 0x00000040 */
+#define CRU_CLKGATE_CON09_PCLK_TOP_BUS_NIU_EN_SHIFT           (7U)
+#define CRU_CLKGATE_CON09_PCLK_TOP_BUS_NIU_EN_MASK            (0x1U << CRU_CLKGATE_CON09_PCLK_TOP_BUS_NIU_EN_SHIFT)           /* 0x00000080 */
+#define CRU_CLKGATE_CON09_PCLK_GPIO0_EN_SHIFT                 (8U)
+#define CRU_CLKGATE_CON09_PCLK_GPIO0_EN_MASK                  (0x1U << CRU_CLKGATE_CON09_PCLK_GPIO0_EN_SHIFT)                 /* 0x00000100 */
+#define CRU_CLKGATE_CON09_PCLK_GPIO1_EN_SHIFT                 (9U)
+#define CRU_CLKGATE_CON09_PCLK_GPIO1_EN_MASK                  (0x1U << CRU_CLKGATE_CON09_PCLK_GPIO1_EN_SHIFT)                 /* 0x00000200 */
+#define CRU_CLKGATE_CON09_PCLK_PMU_EN_SHIFT                   (10U)
+#define CRU_CLKGATE_CON09_PCLK_PMU_EN_MASK                    (0x1U << CRU_CLKGATE_CON09_PCLK_PMU_EN_SHIFT)                   /* 0x00000400 */
+#define CRU_CLKGATE_CON09_PCLK_CRU_EN_SHIFT                   (11U)
+#define CRU_CLKGATE_CON09_PCLK_CRU_EN_MASK                    (0x1U << CRU_CLKGATE_CON09_PCLK_CRU_EN_SHIFT)                   /* 0x00000800 */
+#define CRU_CLKGATE_CON09_PCLK_GRF_EN_SHIFT                   (12U)
+#define CRU_CLKGATE_CON09_PCLK_GRF_EN_MASK                    (0x1U << CRU_CLKGATE_CON09_PCLK_GRF_EN_SHIFT)                   /* 0x00001000 */
+#define CRU_CLKGATE_CON09_PCLK_ACODEC_EN_SHIFT                (13U)
+#define CRU_CLKGATE_CON09_PCLK_ACODEC_EN_MASK                 (0x1U << CRU_CLKGATE_CON09_PCLK_ACODEC_EN_SHIFT)                /* 0x00002000 */
+#define CRU_CLKGATE_CON09_PCLK_32KTRIM_EN_SHIFT               (14U)
+#define CRU_CLKGATE_CON09_PCLK_32KTRIM_EN_MASK                (0x1U << CRU_CLKGATE_CON09_PCLK_32KTRIM_EN_SHIFT)               /* 0x00004000 */
+#define CRU_CLKGATE_CON09_PCLK_TOP_TIMER_EN_SHIFT             (15U)
+#define CRU_CLKGATE_CON09_PCLK_TOP_TIMER_EN_MASK              (0x1U << CRU_CLKGATE_CON09_PCLK_TOP_TIMER_EN_SHIFT)             /* 0x00008000 */
+/* GATE_CON10 */
+#define CRU_CLKGATE_CON10_PCLK_PVTM_EN_SHIFT                  (0U)
+#define CRU_CLKGATE_CON10_PCLK_PVTM_EN_MASK                   (0x1U << CRU_CLKGATE_CON10_PCLK_PVTM_EN_SHIFT)                  /* 0x00000001 */
+#define CRU_CLKGATE_CON10_PCLK_TOUCH_DETECT_EN_SHIFT          (1U)
+#define CRU_CLKGATE_CON10_PCLK_TOUCH_DETECT_EN_MASK           (0x1U << CRU_CLKGATE_CON10_PCLK_TOUCH_DETECT_EN_SHIFT)          /* 0x00000002 */
+#define CRU_CLKGATE_CON10_PCLK_TSADC_EN_SHIFT                 (2U)
+#define CRU_CLKGATE_CON10_PCLK_TSADC_EN_MASK                  (0x1U << CRU_CLKGATE_CON10_PCLK_TSADC_EN_SHIFT)                 /* 0x00000004 */
+#define CRU_CLKGATE_CON10_AON_SLEEP_CLK_EN_SHIFT              (5U)
+#define CRU_CLKGATE_CON10_AON_SLEEP_CLK_EN_MASK               (0x1U << CRU_CLKGATE_CON10_AON_SLEEP_CLK_EN_SHIFT)              /* 0x00000020 */
+#define CRU_CLKGATE_CON10_CLK_32K_TOP_EN_SHIFT                (6U)
+#define CRU_CLKGATE_CON10_CLK_32K_TOP_EN_MASK                 (0x1U << CRU_CLKGATE_CON10_CLK_32K_TOP_EN_SHIFT)                /* 0x00000040 */
+#define CRU_CLKGATE_CON10_CLK_PMU_EN_SHIFT                    (7U)
+#define CRU_CLKGATE_CON10_CLK_PMU_EN_MASK                     (0x1U << CRU_CLKGATE_CON10_CLK_PMU_EN_SHIFT)                    /* 0x00000080 */
+#define CRU_CLKGATE_CON10_DBCLK_GPIO0_EN_SHIFT                (8U)
+#define CRU_CLKGATE_CON10_DBCLK_GPIO0_EN_MASK                 (0x1U << CRU_CLKGATE_CON10_DBCLK_GPIO0_EN_SHIFT)                /* 0x00000100 */
+#define CRU_CLKGATE_CON10_DBCLK_GPIO1_EN_SHIFT                (9U)
+#define CRU_CLKGATE_CON10_DBCLK_GPIO1_EN_MASK                 (0x1U << CRU_CLKGATE_CON10_DBCLK_GPIO1_EN_SHIFT)                /* 0x00000200 */
+#define CRU_CLKGATE_CON10_CLK_PMU_OSC_EN_SHIFT                (10U)
+#define CRU_CLKGATE_CON10_CLK_PMU_OSC_EN_MASK                 (0x1U << CRU_CLKGATE_CON10_CLK_PMU_OSC_EN_SHIFT)                /* 0x00000400 */
+#define CRU_CLKGATE_CON10_MCLK_PDM_PLL_EN_SHIFT               (12U)
+#define CRU_CLKGATE_CON10_MCLK_PDM_PLL_EN_MASK                (0x1U << CRU_CLKGATE_CON10_MCLK_PDM_PLL_EN_SHIFT)               /* 0x00001000 */
+#define CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_PLL_EN_SHIFT        (13U)
+#define CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_PLL_EN_MASK         (0x1U << CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_PLL_EN_SHIFT)        /* 0x00002000 */
+#define CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_FRAC_DIV_EN_SHIFT   (14U)
+#define CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_FRAC_DIV_EN_MASK    (0x1U << CRU_CLKGATE_CON10_CLK_I2S8CH_0_TX_FRAC_DIV_EN_SHIFT)   /* 0x00004000 */
+#define CRU_CLKGATE_CON10_MCLK_I2S8CH_0_TX_EN_SHIFT           (15U)
+#define CRU_CLKGATE_CON10_MCLK_I2S8CH_0_TX_EN_MASK            (0x1U << CRU_CLKGATE_CON10_MCLK_I2S8CH_0_TX_EN_SHIFT)           /* 0x00008000 */
+/* GATE_CON11 */
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_PLL_EN_SHIFT        (0U)
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_PLL_EN_MASK         (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_PLL_EN_SHIFT)        /* 0x00000001 */
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_FRAC_DIV_EN_SHIFT   (1U)
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_FRAC_DIV_EN_MASK    (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_0_RX_FRAC_DIV_EN_SHIFT)   /* 0x00000002 */
+#define CRU_CLKGATE_CON11_MCLK_I2S8CH_0_RX_EN_SHIFT           (2U)
+#define CRU_CLKGATE_CON11_MCLK_I2S8CH_0_RX_EN_MASK            (0x1U << CRU_CLKGATE_CON11_MCLK_I2S8CH_0_RX_EN_SHIFT)           /* 0x00000004 */
+#define CRU_CLKGATE_CON11_MCLKOUT_I2S8CH_0_EN_SHIFT           (3U)
+#define CRU_CLKGATE_CON11_MCLKOUT_I2S8CH_0_EN_MASK            (0x1U << CRU_CLKGATE_CON11_MCLKOUT_I2S8CH_0_EN_SHIFT)           /* 0x00000008 */
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_PLL_EN_SHIFT        (4U)
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_PLL_EN_MASK         (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_PLL_EN_SHIFT)        /* 0x00000010 */
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_FRAC_DIV_EN_SHIFT   (5U)
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_FRAC_DIV_EN_MASK    (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_1_TX_FRAC_DIV_EN_SHIFT)   /* 0x00000020 */
+#define CRU_CLKGATE_CON11_MCLK_I2S8CH_1_TX_EN_SHIFT           (6U)
+#define CRU_CLKGATE_CON11_MCLK_I2S8CH_1_TX_EN_MASK            (0x1U << CRU_CLKGATE_CON11_MCLK_I2S8CH_1_TX_EN_SHIFT)           /* 0x00000040 */
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_PLL_EN_SHIFT        (7U)
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_PLL_EN_MASK         (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_PLL_EN_SHIFT)        /* 0x00000080 */
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_FRAC_DIV_EN_SHIFT   (8U)
+#define CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_FRAC_DIV_EN_MASK    (0x1U << CRU_CLKGATE_CON11_CLK_I2S8CH_1_RX_FRAC_DIV_EN_SHIFT)   /* 0x00000100 */
+#define CRU_CLKGATE_CON11_MCLK_I2S8CH_1_RX_EN_SHIFT           (9U)
+#define CRU_CLKGATE_CON11_MCLK_I2S8CH_1_RX_EN_MASK            (0x1U << CRU_CLKGATE_CON11_MCLK_I2S8CH_1_RX_EN_SHIFT)           /* 0x00000200 */
+#define CRU_CLKGATE_CON11_SCLK_CODEC_EN_SHIFT                 (10U)
+#define CRU_CLKGATE_CON11_SCLK_CODEC_EN_MASK                  (0x1U << CRU_CLKGATE_CON11_SCLK_CODEC_EN_SHIFT)                 /* 0x00000400 */
+#define CRU_CLKGATE_CON11_CLK_I2C_CODEC_PLL_EN_SHIFT          (11U)
+#define CRU_CLKGATE_CON11_CLK_I2C_CODEC_PLL_EN_MASK           (0x1U << CRU_CLKGATE_CON11_CLK_I2C_CODEC_PLL_EN_SHIFT)          /* 0x00000800 */
+/* GATE_CON12 */
+#define CRU_CLKGATE_CON12_CLK_OTG_USBPHY_PLL_EN_SHIFT         (3U)
+#define CRU_CLKGATE_CON12_CLK_OTG_USBPHY_PLL_EN_MASK          (0x1U << CRU_CLKGATE_CON12_CLK_OTG_USBPHY_PLL_EN_SHIFT)         /* 0x00000008 */
+#define CRU_CLKGATE_CON12_CLK_32KTRIM_EN_SHIFT                (4U)
+#define CRU_CLKGATE_CON12_CLK_32KTRIM_EN_MASK                 (0x1U << CRU_CLKGATE_CON12_CLK_32KTRIM_EN_SHIFT)                /* 0x00000010 */
+#define CRU_CLKGATE_CON12_OUTCLOCK_TEST_EN_SHIFT              (5U)
+#define CRU_CLKGATE_CON12_OUTCLOCK_TEST_EN_MASK               (0x1U << CRU_CLKGATE_CON12_OUTCLOCK_TEST_EN_SHIFT)              /* 0x00000020 */
+#define CRU_CLKGATE_CON12_CLK_PVTM_EN_SHIFT                   (7U)
+#define CRU_CLKGATE_CON12_CLK_PVTM_EN_MASK                    (0x1U << CRU_CLKGATE_CON12_CLK_PVTM_EN_SHIFT)                   /* 0x00000080 */
+#define CRU_CLKGATE_CON12_CLK_TOUCH_DETECT_EN_SHIFT           (8U)
+#define CRU_CLKGATE_CON12_CLK_TOUCH_DETECT_EN_MASK            (0x1U << CRU_CLKGATE_CON12_CLK_TOUCH_DETECT_EN_SHIFT)           /* 0x00000100 */
+#define CRU_CLKGATE_CON12_CLK_TIMER_TOP_PLL_EN_SHIFT          (9U)
+#define CRU_CLKGATE_CON12_CLK_TIMER_TOP_PLL_EN_MASK           (0x1U << CRU_CLKGATE_CON12_CLK_TIMER_TOP_PLL_EN_SHIFT)          /* 0x00000200 */
+#define CRU_CLKGATE_CON12_CLK_SARADC_EN_SHIFT                 (10U)
+#define CRU_CLKGATE_CON12_CLK_SARADC_EN_MASK                  (0x1U << CRU_CLKGATE_CON12_CLK_SARADC_EN_SHIFT)                 /* 0x00000400 */
+#define CRU_CLKGATE_CON12_CLK_TSADC_EN_SHIFT                  (11U)
+#define CRU_CLKGATE_CON12_CLK_TSADC_EN_MASK                   (0x1U << CRU_CLKGATE_CON12_CLK_TSADC_EN_SHIFT)                  /* 0x00000800 */
 /* SSCGTBL0_3 */
 #define CRU_SSCGTBL0_3_SSCGTBL0_3_SHIFT                    (0U)
 #define CRU_SSCGTBL0_3_SSCGTBL0_3_MASK                     (0xFFFFFFFFU << CRU_SSCGTBL0_3_SSCGTBL0_3_SHIFT)             /* 0xFFFFFFFF */
@@ -5673,6 +5699,23 @@ struct USB_HOST_CH_REG {
 /* SSCGTBL124_127 */
 #define CRU_SSCGTBL124_127_SSCGTBL124_127_SHIFT            (0U)
 #define CRU_SSCGTBL124_127_SSCGTBL124_127_MASK             (0xFFFFFFFFU << CRU_SSCGTBL124_127_SSCGTBL124_127_SHIFT)     /* 0xFFFFFFFF */
+/* SOFTRST_CON00 */
+#define CRU_SOFTRST_CON00_HRESETN_MCU_BUS_AC_SHIFT         (1U)
+#define CRU_SOFTRST_CON00_HRESETN_MCU_BUS_AC_MASK          (0x1U << CRU_SOFTRST_CON00_HRESETN_MCU_BUS_AC_SHIFT)         /* 0x00000002 */
+#define CRU_SOFTRST_CON00_PORESETN_M4F0_AC_SHIFT           (2U)
+#define CRU_SOFTRST_CON00_PORESETN_M4F0_AC_MASK            (0x1U << CRU_SOFTRST_CON00_PORESETN_M4F0_AC_SHIFT)           /* 0x00000004 */
+#define CRU_SOFTRST_CON00_HRESETN_M4F0_AC_SHIFT            (3U)
+#define CRU_SOFTRST_CON00_HRESETN_M4F0_AC_MASK             (0x1U << CRU_SOFTRST_CON00_HRESETN_M4F0_AC_SHIFT)            /* 0x00000008 */
+#define CRU_SOFTRST_CON00_PORESETN_M0_AC_SHIFT             (4U)
+#define CRU_SOFTRST_CON00_PORESETN_M0_AC_MASK              (0x1U << CRU_SOFTRST_CON00_PORESETN_M0_AC_SHIFT)             /* 0x00000010 */
+#define CRU_SOFTRST_CON00_HRESETN_M0_AC_SHIFT              (5U)
+#define CRU_SOFTRST_CON00_HRESETN_M0_AC_MASK               (0x1U << CRU_SOFTRST_CON00_HRESETN_M0_AC_SHIFT)              /* 0x00000020 */
+#define CRU_SOFTRST_CON00_DBRESETN_M0_AC_SHIFT             (6U)
+#define CRU_SOFTRST_CON00_DBRESETN_M0_AC_MASK              (0x1U << CRU_SOFTRST_CON00_DBRESETN_M0_AC_SHIFT)             /* 0x00000040 */
+#define CRU_SOFTRST_CON00_PRESETN_TOP_BUS_AC_SHIFT         (7U)
+#define CRU_SOFTRST_CON00_PRESETN_TOP_BUS_AC_MASK          (0x1U << CRU_SOFTRST_CON00_PRESETN_TOP_BUS_AC_SHIFT)         /* 0x00000080 */
+#define CRU_SOFTRST_CON00_PRESETN_CRU_AC_SHIFT             (8U)
+#define CRU_SOFTRST_CON00_PRESETN_CRU_AC_MASK              (0x1U << CRU_SOFTRST_CON00_PRESETN_CRU_AC_SHIFT)             /* 0x00000100 */
 /* SOFTRST_CON01 */
 #define CRU_SOFTRST_CON01_HRESETN_MCU_BUS_NIU_SHIFT        (1U)
 #define CRU_SOFTRST_CON01_HRESETN_MCU_BUS_NIU_MASK         (0x1U << CRU_SOFTRST_CON01_HRESETN_MCU_BUS_NIU_SHIFT)        /* 0x00000002 */
@@ -5711,8 +5754,8 @@ struct USB_HOST_CH_REG {
 #define CRU_SOFTRST_CON02_ARESETN_XIP_HYPERX8_MASK         (0x1U << CRU_SOFTRST_CON02_ARESETN_XIP_HYPERX8_SHIFT)        /* 0x00000008 */
 #define CRU_SOFTRST_CON02_HRESETN_AUDPWM_SHIFT             (4U)
 #define CRU_SOFTRST_CON02_HRESETN_AUDPWM_MASK              (0x1U << CRU_SOFTRST_CON02_HRESETN_AUDPWM_SHIFT)             /* 0x00000010 */
-#define CRU_SOFTRST_CON02_PRESETN_MCU_BUS_NIU_SHIFT        (9U)
-#define CRU_SOFTRST_CON02_PRESETN_MCU_BUS_NIU_MASK         (0x1U << CRU_SOFTRST_CON02_PRESETN_MCU_BUS_NIU_SHIFT)        /* 0x00000200 */
+#define CRU_SOFTRST_CON02_HRESETN_AHB2APB_SHIFT            (9U)
+#define CRU_SOFTRST_CON02_HRESETN_AHB2APB_MASK             (0x1U << CRU_SOFTRST_CON02_HRESETN_AHB2APB_SHIFT)            /* 0x00000200 */
 #define CRU_SOFTRST_CON02_PRESETN_UART0_SHIFT              (10U)
 #define CRU_SOFTRST_CON02_PRESETN_UART0_MASK               (0x1U << CRU_SOFTRST_CON02_PRESETN_UART0_SHIFT)              /* 0x00000400 */
 #define CRU_SOFTRST_CON02_PRESETN_UART1_SHIFT              (11U)
@@ -5761,10 +5804,10 @@ struct USB_HOST_CH_REG {
 #define CRU_SOFTRST_CON04_BRESETN_HIFI3_MASK               (0x1U << CRU_SOFTRST_CON04_BRESETN_HIFI3_SHIFT)              /* 0x00000004 */
 #define CRU_SOFTRST_CON04_ARESETN_HIFI3_NIU_SHIFT          (3U)
 #define CRU_SOFTRST_CON04_ARESETN_HIFI3_NIU_MASK           (0x1U << CRU_SOFTRST_CON04_ARESETN_HIFI3_NIU_SHIFT)          /* 0x00000008 */
-#define CRU_SOFTRST_CON04_SRESETN_UART1_SHIFT              (5U)
-#define CRU_SOFTRST_CON04_SRESETN_UART1_MASK               (0x1U << CRU_SOFTRST_CON04_SRESETN_UART1_SHIFT)              /* 0x00000020 */
 #define CRU_SOFTRST_CON04_SRESETN_UART0_SHIFT              (6U)
 #define CRU_SOFTRST_CON04_SRESETN_UART0_MASK               (0x1U << CRU_SOFTRST_CON04_SRESETN_UART0_SHIFT)              /* 0x00000040 */
+#define CRU_SOFTRST_CON04_SRESETN_UART1_SHIFT              (9U)
+#define CRU_SOFTRST_CON04_SRESETN_UART1_MASK               (0x1U << CRU_SOFTRST_CON04_SRESETN_UART1_SHIFT)              /* 0x00000200 */
 #define CRU_SOFTRST_CON04_SRESETN_UART2_SHIFT              (12U)
 #define CRU_SOFTRST_CON04_SRESETN_UART2_MASK               (0x1U << CRU_SOFTRST_CON04_SRESETN_UART2_SHIFT)              /* 0x00001000 */
 /* SOFTRST_CON05 */
