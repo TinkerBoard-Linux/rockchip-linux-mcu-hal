@@ -373,22 +373,22 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
              */
             HAL_CRU_ClkSetMux(clkMux, HCLK_MCU_SRC_SEL_GPLL);
             /* hclk_mcu=104MHz, pclk_mcu=26MHz */
-            HAL_CRU_ClkSetDiv(CLK_GET_MUX(PCLK_MCU), rate / PCLK_MCU_MAX_RATE);
+            HAL_CRU_ClkSetDiv(CLK_GET_DIV(PCLK_MCU), rate / PCLK_MCU_MAX_RATE);
             HAL_CRU_ClkSetDiv(clkDiv, s_gpllFreq / rate);
             /* stclk_m3 is equal to hclk_mcu */
-            HAL_CRU_ClkSetDiv(CLK_GET_MUX(STCLK_M3), 1);
+            HAL_CRU_ClkSetDiv(CLK_GET_DIV(STCLK_M3), 1);
         } else {
             /*
              * CPLL=240MHz, GPLL=104MHz
              * change src from gpll to cpll(small to big), set div first
              * hclk_mcu=80MHz/60MHz, pclk_mcu<=26MHz, set pclk_mcu to a small rate first
              */
-            HAL_CRU_ClkSetDiv(CLK_GET_MUX(PCLK_MCU), HCLK_MCU_MAX_RATE / PCLK_MCU_MAX_RATE);
+            HAL_CRU_ClkSetDiv(CLK_GET_DIV(PCLK_MCU), HCLK_MCU_MAX_RATE / PCLK_MCU_MAX_RATE);
             HAL_CRU_ClkSetDiv(clkDiv, s_cpllFreq / rate);
             /* stclk_m3 is equal to hclk_mcu */
-            HAL_CRU_ClkSetDiv(CLK_GET_MUX(STCLK_M3), 1);
+            HAL_CRU_ClkSetDiv(CLK_GET_DIV(STCLK_M3), 1);
             /* pclk_mcu<=26MHz */
-            HAL_CRU_ClkSetDiv(CLK_GET_MUX(PCLK_MCU), rate / PCLK_MCU_MAX_RATE);
+            HAL_CRU_ClkSetDiv(CLK_GET_DIV(PCLK_MCU), rate / PCLK_MCU_MAX_RATE);
             HAL_CRU_ClkSetMux(clkMux, HCLK_MCU_SRC_SEL_CPLL);
         }
 
