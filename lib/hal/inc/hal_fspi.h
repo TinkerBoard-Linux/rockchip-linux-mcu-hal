@@ -71,7 +71,8 @@ typedef union {
 } FSPICMD_DATA;
 
 typedef enum {
-    DEV_NOR = 0,
+    DEV_UNKNON = 0,
+    DEV_NOR,
     DEV_PSRAM,
 } eFSPI_devType;
 
@@ -84,8 +85,8 @@ struct HAL_FSPI_XMMC_DEV {
 
 struct HAL_FSPI_HOST {
     struct FSPI_REG *instance;
-    HAL_LockStatus status;
     uint32_t version;
+    uint8_t cs;
     struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT];
 };
 /** @} */
@@ -94,6 +95,7 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host);
 HAL_Status HAL_FSPI_Deinit(struct HAL_FSPI_HOST *host);
 #ifdef HAL_SNOR_MODULE_ENABLED
 HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op);
+HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on);
 #endif
 HAL_Status HAL_FSPI_IRQHelper(struct HAL_FSPI_HOST *host);
 HAL_Status HAL_FSPI_MaskDMAInterrupt(struct HAL_FSPI_HOST *host);

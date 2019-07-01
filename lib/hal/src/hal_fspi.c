@@ -315,6 +315,99 @@ static HAL_Status FSPI_XferDone(struct HAL_FSPI_HOST *host)
 
     return ret;
 }
+
+/**
+ * @brief  Set XMMC dev.
+ * @param  host: FSPI host.
+ * @param  op: flash operation protocol.
+ * @return HAL_Status.
+ */
+HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *op)
+{
+    FSPICMD_DATA FSPICmd;
+    FSPICTRL_DATA FSPICtrl;
+
+    FSPICmd.d32 = 0;
+    FSPICtrl.d32 = 0;
+
+    /* set CMD */
+    FSPICmd.b.cmd = op->cmd.opcode;
+
+    /* set ADDR */
+    if (op->addr.nbytes) {
+        FSPICmd.b.addrbits = op->addr.nbytes == 4 ? FSPI_ADDR_32BITS : FSPI_ADDR_24BITS;
+        FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+    }
+    /* set DUMMY*/
+    if (op->dummy.nbytes)
+        FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
+
+    /* set DATA */
+    if (op->data.nbytes) {
+        FSPICmd.b.datasize = op->data.nbytes;
+        if (op->data.dir == SPI_MEM_DATA_OUT)
+            FSPICmd.b.rw = FSPI_WRITE;
+        FSPICtrl.b.datalines = op->data.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+    }
+
+    /* spitial setting */
+    FSPICtrl.b.sps = FSPI_CTRL_SHIFTPHASE_NEGEDGE;
+
+    /* HAL_DBG("%s 1 %lx %lx %lx\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
+    /* HAL_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
+    host->xmmcDev[host->cs].type = DEV_NOR;
+    host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
+    host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Enable or Disable FSPI XIP interface.
+ * @param  host: FSPI host.
+ * @param  on: 1 enable, 0 disable.
+ * @return HAL_Status.
+ */
+HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
+{
+    FSPIXMMCCTRL_DATA xmmcCtrl;
+    struct FSPI_REG *pReg = host->instance;
+
+    if (on) {
+        if (pReg->MODE & 0x1)
+            return HAL_INVAL;
+
+        if (host->xmmcDev[0].type == DEV_PSRAM || host->xmmcDev[1].type == DEV_PSRAM) {
+            xmmcCtrl.b.devHwEn = 1;
+            xmmcCtrl.b.prefetch = 0;
+            xmmcCtrl.b.uincrPrefetchEn = 1;
+            xmmcCtrl.b.uincrLen = 2;
+            xmmcCtrl.b.devWrapEn = 1;
+            xmmcCtrl.b.devIncrEn = 1;
+            xmmcCtrl.b.devUdfincrEn = 1;
+        } else {
+            xmmcCtrl.b.devHwEn = 0;
+            xmmcCtrl.b.prefetch = 1;
+        }
+
+        /* config ctroller */
+        pReg->CTRL0 = host->xmmcDev[0].ctrl;
+        pReg->XMMC_CTRL = xmmcCtrl.d32;
+        /* config cs 0 */
+        pReg->XMMC_RCMD0 = host->xmmcDev[0].readCmd;
+        pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
+        /* config cs 1 */
+        pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
+        pReg->XMMC_WCMD1 = host->xmmcDev[1].writeCmd;
+
+        pReg->MODE = 1;
+    } else {
+        pReg->MODE = 0;
+    }
+
+    return HAL_OK;
+}
+
 #endif
 
 /********************* Public Function Definition ****************************/
@@ -359,6 +452,22 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 
     return FSPI_XferDone(host);
 }
+
+/**
+ * @brief  SPI Nor flash data transmission interface supporting open source specifications.
+ * @param  spi: host abstract.
+ * @param  op: flash operation protocol.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on)
+{
+    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
+
+    if (op->cmd.opcode)
+        FSPI_XmmcSetting(host, op);
+
+    return FSPI_XmmcRequest(host, on);
+}
 #endif
 
 /** @} */
@@ -385,7 +494,7 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
     HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
 
     FSPI_Reset(host->instance);
-    host->status = HAL_UNLOCKED;
+    FSPI_XmmcDevRegionInit(host);
     host->instance->CTRL0 = 0;
     host->version = host->instance->VER & FSPI_VER_VER_MASK;
     HAL_DBG("FSPI vertion %lx\n", host->version);
@@ -444,14 +553,13 @@ HAL_Status HAL_FSPI_IRQHelper(struct HAL_FSPI_HOST *host)
 {
     HAL_ASSERT(FSPI_IsDMAInterrupt(host)); /* Only support TRANSM IT */
     FSPI_ClearIsr(host);
-    host->status = HAL_UNLOCKED;
 
     return HAL_OK;
 }
 
 /**
- * @brief  Configuration x mode.
- * @param  host: SFC host.
+ * @brief  Configure FSPI XIP mode.
+ * @param  host: FSPI host.
  * @param  on: 1 enable, 0 disable.
  * @return HAL_Status.
  * XIP configuration cannot be modified in XIP mode.
