@@ -387,12 +387,12 @@ struct DMA_REG {
     struct DMA_CHANNEL_STATUS CHAN_STS[6];            /* Address Offset: 0x0100 */
          uint32_t RESERVED0304[180];                  /* Address Offset: 0x0130 */
     struct DMA_CHANNEL_CONFIG CHAN_CFG[6];            /* Address Offset: 0x0400 */
-         uint32_t RESERVED1144[546];                  /* Address Offset: 0x0478 */
+         uint32_t RESERVED1216[528];                  /* Address Offset: 0x04C0 */
     __I  uint32_t DBGSTATUS;                          /* Address Offset: 0x0D00 */
     __O  uint32_t DBGCMD;                             /* Address Offset: 0x0D04 */
     __O  uint32_t DBGINST[2];                         /* Address Offset: 0x0D08 */
          uint32_t RESERVED3344[60];                   /* Address Offset: 0x0D10 */
-    __I  uint32_t CR[0];                              /* Address Offset: 0x0E00 */
+    __I  uint32_t CR[5];                              /* Address Offset: 0x0E00 */
     __I  uint32_t CRDN;                               /* Address Offset: 0x0E14 */
          uint32_t RESERVED3608[26];                   /* Address Offset: 0x0E18 */
     __IO uint32_t WD;                                 /* Address Offset: 0x0E80 */
