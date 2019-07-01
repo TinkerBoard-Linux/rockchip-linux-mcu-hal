@@ -206,6 +206,7 @@ static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, const struct SPI_MEM_
 
     return HAL_OK;
 }
+
 #elif defined(HAL_SNOR_SFC_HOST)
 static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 {
@@ -213,6 +214,7 @@ static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op
 
     return HAL_OK;
 }
+
 #elif defined(HAL_SNOR_FSPI_HOST)
 static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 {
@@ -221,6 +223,15 @@ static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op
     return HAL_OK;
 }
 #endif
+
+static HAL_Status SNOR_XipExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on)
+{
+#if defined(HAL_SNOR_FSPI_HOST)
+    HAL_FSPI_SpiXipConfig(spi, op, on);
+#endif
+
+    return HAL_OK;
+}
 
 static HAL_Status SNOR_ReadWriteReg(struct SPI_NOR *nor, struct SPI_MEM_OP *op, void *buf)
 {
@@ -303,6 +314,26 @@ static int32_t SNOR_WriteData(struct SPI_NOR *nor, uint32_t to, uint32_t len, co
         return 0;
 
     return op.data.nbytes;
+}
+
+static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
+{
+    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->readOpcode, 1),
+                                             SPI_MEM_OP_ADDR(nor->addrWidth, 0, 1),
+                                             SPI_MEM_OP_DUMMY(nor->readDummy, 1),
+                                             SPI_MEM_OP_DATA_IN(0, NULL, 1));
+
+    /* get transfer protocols. */
+    op.cmd.buswidth = 1;
+    op.addr.buswidth = SNOR_GET_PROTOCOL_ADDR_BITS(nor->readProto);
+    op.dummy.buswidth = op.addr.buswidth;
+    op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
+
+    /* HAL_DBG("%s %lx %lx %lx %lx\n", __func__, nor->readDummy, op.dummy.buswidth, from, op.addr.val); */
+    /* convert the dummy cycles to the number of bytes */
+    op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
+
+    return SNOR_XipExecOp(nor->spi, &op, 0);
 }
 
 /*
@@ -787,6 +818,9 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         return HAL_NODEV;
     }
 
+    if (nor->spi->flags & SPI_XIP)
+        SNOR_XipInit(nor);
+
     return HAL_OK;
 }
 
@@ -837,6 +871,26 @@ HAL_Status HAL_SNOR_ReadID(struct SPI_NOR *nor, uint8_t *data)
 uint32_t HAL_SNOR_GetCapacity(struct SPI_NOR *nor)
 {
     return nor->size;
+}
+
+/**
+ * @brief  Enable SPI Flash XIP mode.
+ * @param  nor: nor dev.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SNOR_XIPEnable(struct SPI_NOR *nor)
+{
+    return SNOR_XipExecOp(nor->spi, NULL, 1);
+}
+
+/**
+ * @brief  Diabled SPI Flash XIP mode.
+ * @param  nor: nor dev.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SNOR_XIPDisable(struct SPI_NOR *nor)
+{
+    return SNOR_XipExecOp(nor->spi, NULL, 0);
 }
 
 /** @} */

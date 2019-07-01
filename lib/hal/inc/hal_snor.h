@@ -48,6 +48,7 @@ typedef enum {
 #define SPI_RX_SLOW   HAL_BIT(11)           /* receive with 1 wire slow */
 #define SPI_RX_DUAL   HAL_BIT(12)           /* receive with 2 wires */
 #define SPI_RX_QUAD   HAL_BIT(13)           /* receive with 4 wires */
+#define SPI_XIP       HAL_BIT(14)           /* support spi flash xip mode */
 
 /** SNOR HOST xfer flags */
 #define SPI_XFER_BEGIN HAL_BIT(0)	/* Assert CS before transfer */
@@ -193,6 +194,8 @@ uint32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *
 uint32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData);
 HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE EraseType);
 HAL_Status HAL_SNOR_ShowFlashInfo(struct SPI_NOR *nor);
+HAL_Status HAL_SNOR_XIPEnable(struct SPI_NOR *nor);
+HAL_Status HAL_SNOR_XIPDisable(struct SPI_NOR *nor);
 
 #endif
 

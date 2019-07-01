@@ -120,10 +120,10 @@ TEST(HAL_LEAGACY, DataAccess){
     sfcHost->instance = SFC;
 
     HAL_SNOR_Init(sfcHost);
-    HAL_SNOR_XipEnable(sfcHost);
+    HAL_SNOR_XIPEnable(sfcHost);
     HAL_DBG("SNOR XIP DataAccess\n");
     DataAccessHelper(xipbuf, dstbuf, (void *)&SumTest);
-    HAL_SNOR_XipDisable(sfcHost);
+    HAL_SNOR_XIPDisable(sfcHost);
 
     xipbuf = (int32_t *)XIP_RAM_BASE + BUFFER_SIZE;
     HAL_PSRAM_Init(sfcHost, 0);
