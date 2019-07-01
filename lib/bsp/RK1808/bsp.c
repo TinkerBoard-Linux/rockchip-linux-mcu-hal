@@ -5,6 +5,62 @@
 
 #include "bsp.h"
 
+#ifdef HAL_I2C_MODULE_ENABLED
+const struct HAL_I2C_DEV g_i2c0Dev =
+{
+    .base = I2C0,
+    .clkID = CLK_I2C0,
+    .clkGateID = CLK_I2C0_PMU_PLL_CLK_GATE,
+    .pclkGateID = PCLK_PMU_I2C0_CLK_GATE,
+    .irqNum = I2C0_IRQn,
+};
+
+const struct HAL_I2C_DEV g_i2c1Dev =
+{
+    .base = I2C1,
+    .clkID = CLK_I2C1,
+    .clkGateID = CLK_I2C1_PLL_CLK_GATE,
+    .pclkGateID = PCLK_I2C1_CLK_GATE,
+    .irqNum = I2C1_IRQn,
+};
+
+const struct HAL_I2C_DEV g_i2c2Dev =
+{
+    .base = I2C2,
+    .clkID = CLK_I2C2,
+    .clkGateID = CLK_I2C2_PLL_CLK_GATE,
+    .pclkGateID = PCLK_I2C2_CLK_GATE,
+    .irqNum = I2C2_IRQn,
+};
+
+const struct HAL_I2C_DEV g_i2c3Dev =
+{
+    .base = I2C3,
+    .clkID = CLK_I2C3,
+    .clkGateID = CLK_I2C3_PLL_CLK_GATE,
+    .pclkGateID = PCLK_I2C3_CLK_GATE,
+    .irqNum = I2C3_IRQn,
+};
+
+const struct HAL_I2C_DEV g_i2c4Dev =
+{
+    .base = I2C4,
+    .clkID = CLK_I2C4,
+    .clkGateID = CLK_I2C4_PLL_CLK_GATE,
+    .pclkGateID = PCLK_I2C4_CLK_GATE,
+    .irqNum = I2C4_IRQn,
+};
+
+const struct HAL_I2C_DEV g_i2c5Dev =
+{
+    .base = I2C5,
+    .clkID = CLK_I2C5,
+    .clkGateID = CLK_I2C5_PLL_CLK_GATE,
+    .pclkGateID = PCLK_I2C5_CLK_GATE,
+    .irqNum = I2C5_IRQn,
+};
+#endif
+
 #ifdef HAL_I2S_MODULE_ENABLED
 struct HAL_I2S_DEV g_i2s0Dev =
 {
