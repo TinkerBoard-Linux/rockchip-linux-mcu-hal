@@ -28,13 +28,13 @@ typedef enum
     WDT0_IRQn                   = 1,
     TOUCH_NEG_IRQn              = 2,
     DMAC_CH1_IRQn               = 3,
-    TIMER0_6CH_0_IRQn           = 4,
-    TIMER0_6CH_1_IRQn           = 5,
-    TIMER0_6CH_2_IRQn           = 6,
-    TIMER0_6CH_3_IRQn           = 7,
-    TIMER0_6CH_4_IRQn           = 8,
-    TIMER0_6CH_5_IRQn           = 9,
-    TIMER1_1CH_IRQn             = 10,
+    TIMER0_IRQn                 = 4,
+    TIMER1_IRQn                 = 5,
+    TIMER2_IRQn                 = 6,
+    TIMER3_IRQn                 = 7,
+    TIMER4_IRQn                 = 8,
+    TIMER5_IRQn                 = 9,
+    TIMER6_IRQn                 = 10,
     I2C0_IRQn                   = 11,
     I2C1_IRQn                   = 12,
     I2C2_IRQn                   = 13,
@@ -168,7 +168,7 @@ struct DCACHE_REG {
 /* TIMER Register Structure Define */
 struct TIMER_REG {
     __IO uint32_t LOAD_COUNT[2];                      /* Address Offset: 0x0000 */
-    __IO uint32_t CURRENT_VALUE[2];                   /* Address Offset: 0x0008 */
+    __I  uint32_t CURRENT_VALUE[2];                   /* Address Offset: 0x0008 */
     __IO uint32_t CONTROLREG;                         /* Address Offset: 0x0010 */
          uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
     __O  uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
@@ -1279,8 +1279,12 @@ struct USB_HOST_CH_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Module Variable Define */
-
 #define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
+#define TIMER1              ((struct TIMER_REG *) (TIMER0_BASE + 0x20))
+#define TIMER2              ((struct TIMER_REG *) (TIMER0_BASE + 0x40))
+#define TIMER3              ((struct TIMER_REG *) (TIMER0_BASE + 0x60))
+#define TIMER4              ((struct TIMER_REG *) (TIMER0_BASE + 0x80))
+#define TIMER5              ((struct TIMER_REG *) (TIMER0_BASE + 0xA0))
 #define WDT0                ((struct WDT_REG *) WDT0_BASE)
 #define WDT1                ((struct WDT_REG *) WDT1_BASE)
 #define WDT2                ((struct WDT_REG *) WDT2_BASE)
@@ -1309,7 +1313,7 @@ struct USB_HOST_CH_REG {
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
-#define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
+#define TIMER6              ((struct TIMER_REG *) TIMER1_BASE)
 #define GRF                 ((struct GRF_REG *) GRF_BASE)
 #define CRU                 ((struct CRU_REG *) CRU_BASE)
 #define PVTM                ((struct PVTM_REG *) PVTM_BASE)
@@ -1343,7 +1347,7 @@ struct USB_HOST_CH_REG {
 #define IS_SDMMC_INSTANCE(instance) ((instance) == SDMMC)
 #define IS_CRYPTO_INSTANCE(instance) ((instance) == CRYPTO)
 #define IS_SPI2APB_INSTANCE(instance) ((instance) == SPI2APB)
-#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1))
+#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6))
 #define IS_WDT_INSTANCE(instance) (((instance) == WDT0) || ((instance) == WDT1) || ((instance) == WDT2))
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2))
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2))
