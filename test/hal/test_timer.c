@@ -71,7 +71,8 @@ TEST(HAL_TIMER, TimerInit){
     HAL_TIMER_SetCount(TIMER0, (uint64_t)SystemCoreClock / 1000); /* Ms count */
     HAL_TIMER_Start(TIMER0);
     HAL_DelayMs(1000);
-    TEST_ASSERT(HAL_TIMER_GetCount(TIMER0) == 0);
+    ret = HAL_TIMER_GetCount(TIMER0);
+    TEST_ASSERT((ret == 0) || (ret == (uint64_t)SystemCoreClock / 1000));
     HAL_TIMER_Stop(TIMER0);
 }
 
