@@ -1001,6 +1001,12 @@ struct SFC_REG {
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
 #define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
 #define SFC                 ((struct SFC_REG *) SFC_BASE)
+#define I2C0                ((struct I2C_REG *) I2C0_BASE)
+#define I2C1                ((struct I2C_REG *) I2C1_BASE)
+#define I2C2                ((struct I2C_REG *) I2C2_BASE)
+#define I2C3                ((struct I2C_REG *) I2C3_BASE)
+#define I2C4                ((struct I2C_REG *) I2C4_BASE)
+#define I2C5                ((struct I2C_REG *) I2C5_BASE)
 
 #define IS_BUS_GRF_INSTANCE(instance) ((instance) == BUS_GRF)
 #define IS_USB2PHY_GRF_INSTANCE(instance) ((instance) == USB2PHY_GRF)
