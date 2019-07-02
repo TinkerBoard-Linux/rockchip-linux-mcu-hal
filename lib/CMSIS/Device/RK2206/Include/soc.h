@@ -684,8 +684,7 @@ struct GRF_REG {
     __IO uint32_t USB2_DETECT_IRQ_STATUS;             /* Address Offset: 0x0694 */
     __IO uint32_t USB2_DETECT_IRQ_STATUS_CLR;         /* Address Offset: 0x0698 */
          uint32_t RESERVED069C[25];                   /* Address Offset: 0x069C */
-    __IO uint32_t SPINLOCK_REG_X;                     /* Address Offset: 0x0700 */
-         uint32_t RESERVED0704[63];                   /* Address Offset: 0x0704 */
+    __IO uint32_t HW_SPINLOCK[64];                    /* Address Offset: 0x0700 */
     __IO uint32_t OS_REG[8];                          /* Address Offset: 0x0800 */
     __I  uint32_t GRF_SOC_VERSION;                    /* Address Offset: 0x0820 */
 };
