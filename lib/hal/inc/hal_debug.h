@@ -33,19 +33,19 @@
 #if (HAL_DBG_ON) && (HAL_DBG_ON)
 #define HAL_DBG(fmt, arg...) HAL_SYSLOG("[HAL INFO] " fmt, ##arg)
 #else
-#define HAL_DBG(fmt, arg...)
+#define HAL_DBG(fmt, arg...) do { if (0) HAL_SYSLOG("[HAL INFO] " fmt, ##arg); } while (0)
 #endif
 
 #if (HAL_DBG_ON && HAL_DBG_WRN_ON)
 #define HAL_DBG_WRN(fmt, arg...) HAL_SYSLOG("[HAL WARNING] " fmt, ##arg)
 #else
-#define HAL_DBG_WRN(fmt, arg...)
+#define HAL_DBG_WRN(fmt, arg...) do { if (0) HAL_SYSLOG("[HAL WARNING] " fmt, ##arg); } while (0)
 #endif
 
 #if (HAL_DBG_ON && HAL_DBG_ERR_ON)
 #define HAL_DBG_ERR(fmt, arg...) HAL_SYSLOG("[HAL ERROR] " fmt, ##arg)
 #else
-#define HAL_DBG_ERR(fmt, arg...)
+#define HAL_DBG_ERR(fmt, arg...) do { if (0) HAL_SYSLOG("[HAL ERROR] " fmt, ##arg); } while (0)
 #endif
 
 #if (HAL_DBG_ON && USE_FULL_ASSERT)
