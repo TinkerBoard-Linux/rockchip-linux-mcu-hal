@@ -55,9 +55,8 @@ HAL_Status SNOR_SINGLE_TEST(void)
 static HAL_Status SNOR_TEST(uint32_t testEndLBA)
 {
     uint32_t ret, i, j;
-    uint32_t testLBA;
+    uint32_t testLBA = 0;
     uint32_t testSecCount = 1;
-    uint32_t printFlag;
 
     pwrite32 = (uint32_t *)pwrite;
     pread32 = (uint32_t *)pread;
@@ -89,7 +88,6 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
                 return HAL_ERROR;
             }
         }
-        printFlag = testLBA & 0x1FF;
         HAL_DBG("testLBA = %lx\n", testLBA);
         testLBA += testSecCount;
         testSecCount++;
@@ -116,7 +114,6 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
                 return HAL_ERROR;
             }
         }
-        printFlag = testLBA & 0x1FF;
         HAL_DBG("testLBA = %lx\n", testLBA);
         testLBA += testSecCount;
         testSecCount++;
