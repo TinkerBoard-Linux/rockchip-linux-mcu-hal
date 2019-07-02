@@ -387,7 +387,7 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
     FSPI_Reset(host->instance);
     host->status = HAL_UNLOCKED;
     host->instance->CTRL0 = 0;
-    host->version = (uint16_t)(host->instance && FSPI_VER_VER_MASK);
+    host->version = host->instance->VER & FSPI_VER_VER_MASK;
     HAL_DBG("FSPI vertion %lx\n", host->version);
 
     return HAL_OK;
@@ -494,7 +494,7 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
         pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
         /* config cs 1 */
         pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
-        pReg->XMMC_WCMD1 = host->xmmcDev[2].writeCmd;
+        pReg->XMMC_WCMD1 = host->xmmcDev[1].writeCmd;
 
         pReg->MODE = 1;
     } else {
