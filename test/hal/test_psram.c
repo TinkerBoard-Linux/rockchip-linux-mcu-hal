@@ -70,7 +70,7 @@ static HAL_Status PSRAM_TEST(uint32_t testEndLBA)
         pwrite32[0] = testLBA;
         pread32 = (uint32_t *)(XIP_MEM_BASE + testLBA * 512);
         for (j = 0; j < testSecCount * 128; j++) {
-            if (pread32[j] != pread32[j]) {
+            if (pwrite32[j] != pread32[j]) {
                 HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * 128);
                 HAL_DBG_HEX("r:", pread32, 4, testSecCount * 128);
                 HAL_DBG(
