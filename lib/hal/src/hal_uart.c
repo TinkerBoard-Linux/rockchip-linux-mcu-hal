@@ -226,7 +226,7 @@ void HAL_UART_SerialOutChar(struct UART_REG *pReg, uint8_t c)
   * @param  cnt: the number of characters
   * @return dwRealSize the number has been sent
   */
-int HAL_UART_SerialOut(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
+int HAL_UART_SerialOut(struct UART_REG *pReg, const uint8_t *pdata, uint32_t cnt)
 {
     int dwRealSize = 0;
 
