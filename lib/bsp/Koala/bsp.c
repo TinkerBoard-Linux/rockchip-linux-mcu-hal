@@ -43,6 +43,28 @@ struct HAL_PL330_DEV g_pl330Dev =
 };
 #endif
 
+#ifdef HAL_UART_MODULE_ENABLED
+const struct HAL_UART_DEV g_uart0Dev =
+{
+    .base = UART0,
+    .sclkID = CLK_UART0,
+    .sclkGateID = CLK_UART0_SRC_GATE,
+    .pclkGateID = PCLK_UART0_GATE,
+    .irqNum = UART0_IRQn,
+    .isAutoFlow = true,
+};
+
+const struct HAL_UART_DEV g_uart1Dev =
+{
+    .base = UART1,
+    .sclkID = CLK_UART1,
+    .sclkGateID = CLK_UART1_SRC_GATE,
+    .pclkGateID = PCLK_UART1_GATE,
+    .irqNum = UART1_IRQn,
+    .isAutoFlow = true,
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }

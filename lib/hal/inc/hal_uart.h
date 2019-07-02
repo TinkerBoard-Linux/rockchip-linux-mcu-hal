@@ -127,6 +127,9 @@
 
 /***************************** Structure Definition **************************/
 
+/**
+  * @brief  UART baud rate definition
+  */
 typedef enum {
     UART_BR_110     = 110,
     UART_BR_300     = 300,
@@ -149,8 +152,11 @@ typedef enum {
     UART_BR_2000000 = 2000000,
     UART_BR_3000000 = 3000000,
     UART_BR_4000000 = 4000000,
-} eUART_BaudRate;
+} eUART_baudRate;
 
+/**
+  * @brief  UART data bit definition
+  */
 typedef enum {
     UART_DATA_5B = 5,
     UART_DATA_6B,
@@ -158,23 +164,48 @@ typedef enum {
     UART_DATA_8B
 } eUART_dataLen;
 
+/**
+  * @brief  UART stop bit definition
+  */
 typedef enum {
     UART_ONE_STOPBIT,
     UART_ONE_AND_HALF_OR_TWO_STOPBIT
 } eUART_stopBit;
 
+/**
+  * @brief  UART parity definition
+  */
 typedef enum {
     UART_ODD_PARITY,
     UART_EVEN_PARITY,
     UART_PARITY_DISABLE
 } eUART_parityEn;
 
-typedef enum {
-    UART_INT_READ_FIFO_NOT_EMPTY = 2,
-    UART_INT_WRITE_FIFO_EMPTY    = 4,
-    UART_INT_UART_ERR            = 8,
-    UART_INT_NUM
-} UART_INT_TYPE;
+/**
+  * @brief  UART config definition
+  */
+struct HAL_UART_CONFIG {
+    eUART_baudRate baudRate;
+    eUART_dataLen dataBit;
+    eUART_stopBit stopBit;
+    eUART_parityEn parity;
+};
+
+/**
+  * @brief  UART HW information definition on a soc
+  */
+struct HAL_UART_DEV {
+    /* registers base address */
+    struct UART_REG *base;
+
+    /* sclk is for uart logic, pclk is for register access*/
+    uint32_t sclkID;
+    uint32_t sclkGateID;
+    uint32_t pclkGateID;
+
+    IRQn_Type irqNum;
+    bool isAutoFlow;
+};
 
 /***************************** Function Declare ******************************/
 void HAL_UART_EnableIrq(struct UART_REG *pReg, uint32_t uartIntNumb);
@@ -187,14 +218,12 @@ uint32_t HAL_UART_GetIrqID(struct UART_REG *pReg);
 uint32_t HAL_UART_GetLsr(struct UART_REG *pReg);
 uint32_t HAL_UART_GetUsr(struct UART_REG *pReg);
 uint32_t HAL_UART_GetMsr(struct UART_REG *pReg);
-void HAL_UART_SerialOutChar(struct UART_REG *pReg, uint8_t c);
+void HAL_UART_SerialOutChar(struct UART_REG *pReg, char c);
 int HAL_UART_SerialOut(struct UART_REG *pReg, const uint8_t *pdata, uint32_t cnt);
 int HAL_UART_SerialIn(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt);
 HAL_Status HAL_UART_HandleIrq(struct UART_REG *pReg);
 void HAL_UART_Reset(struct UART_REG *pReg);
-HAL_Status HAL_UART_Init(struct UART_REG *pReg, eUART_BaudRate baudRate,
-                         eUART_dataLen dataBit, eUART_stopBit stopBit,
-                         eUART_parityEn parity);
+HAL_Status HAL_UART_Init(const struct HAL_UART_DEV *dev, const struct HAL_UART_CONFIG *config);
 HAL_Status HAL_UART_DeInit(struct UART_REG *pReg);
 HAL_Status HAL_UART_Suspend(struct UART_REG *pReg);
 HAL_Status HAL_UART_Resume(struct UART_REG *pReg);

@@ -166,6 +166,88 @@ struct HAL_VAD_DEV g_vadDev =
 };
 #endif
 
+#ifdef HAL_UART_MODULE_ENABLED
+const struct HAL_UART_DEV g_uart0Dev =
+{
+    .base = UART0,
+    .sclkID = CLK_UART0,
+    .sclkGateID = CLK_UART0_PMU_CLK_GATE,
+    .pclkGateID = PCLK_PMU_UART0_CLK_GATE,
+    .irqNum = UART0_IRQn,
+    .isAutoFlow = true,
+};
+
+const struct HAL_UART_DEV g_uart1Dev =
+{
+    .base = UART1,
+    .sclkID = CLK_UART1,
+    .sclkGateID = CLK_UART1_CLK_GATE,
+    .pclkGateID = PCLK_UART1_CLK_GATE,
+    .irqNum = UART1_IRQn,
+    .isAutoFlow = true,
+};
+
+const struct HAL_UART_DEV g_uart2Dev =
+{
+    .base = UART2,
+    .sclkID = CLK_UART2,
+    .sclkGateID = CLK_UART2_CLK_GATE,
+    .pclkGateID = PCLK_UART2_CLK_GATE,
+    .irqNum = UART2_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart3Dev =
+{
+    .base = UART3,
+    .sclkID = CLK_UART3,
+    .sclkGateID = CLK_UART3_CLK_GATE,
+    .pclkGateID = PCLK_UART3_CLK_GATE,
+    .irqNum = UART3_IRQn,
+    .isAutoFlow = true,
+};
+
+const struct HAL_UART_DEV g_uart4Dev =
+{
+    .base = UART4,
+    .sclkID = CLK_UART4,
+    .sclkGateID = CLK_UART4_CLK_GATE,
+    .pclkGateID = PCLK_UART4_CLK_GATE,
+    .irqNum = UART4_IRQn,
+    .isAutoFlow = true,
+};
+
+const struct HAL_UART_DEV g_uart5Dev =
+{
+    .base = UART5,
+    .sclkID = CLK_UART5,
+    .sclkGateID = CLK_UART5_CLK_GATE,
+    .pclkGateID = PCLK_UART5_CLK_GATE,
+    .irqNum = UART5_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart6Dev =
+{
+    .base = UART6,
+    .sclkID = CLK_UART6,
+    .sclkGateID = CLK_UART6_CLK_GATE,
+    .pclkGateID = PCLK_UART6_CLK_GATE,
+    .irqNum = UART6_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart7Dev =
+{
+    .base = UART7,
+    .sclkID = CLK_UART7,
+    .sclkGateID = CLK_UART7_CLK_GATE,
+    .pclkGateID = PCLK_UART7_CLK_GATE,
+    .irqNum = UART7_IRQn,
+    .isAutoFlow = false,
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }

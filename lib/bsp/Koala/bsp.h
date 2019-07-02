@@ -18,6 +18,12 @@ extern const struct RK_PINCTRL_DEV g_pinDev;
 #ifdef HAL_PL330_MODULE_ENABLED
 extern struct HAL_PL330_DEV g_pl330Dev;
 #endif
+
+#ifdef HAL_UART_MODULE_ENABLED
+extern const struct HAL_UART_DEV g_uart0Dev;
+extern const struct HAL_UART_DEV g_uart1Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);

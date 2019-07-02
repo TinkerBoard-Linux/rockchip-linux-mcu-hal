@@ -500,6 +500,9 @@ struct SFC_REG {
 #define UART0               ((struct UART_REG *) UART0_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
+#define UART3               ((struct UART_REG *) UART3_BASE)
+#define UART4               ((struct UART_REG *) UART4_BASE)
+#define UART5               ((struct UART_REG *) UART5_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
@@ -508,6 +511,7 @@ struct SFC_REG {
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2))
 #define IS_SFC_INSTANCE(instance) ((instance) == SFC)
+#define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5))
 
 /******************************************GRF*******************************************/
 #define IOMUX_GPIO2A6_IO ((uint32_t)(0))

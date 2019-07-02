@@ -9799,7 +9799,7 @@ struct SFC_REG {
 #define CLK_UART2_PLL_CLK_GATE      188
 #define CLK_UART2_DIVNP5_CLK_GATE   189
 #define CLK_UART2_FRAC_SRC_CLK_GATE 190
-#define CLK_UAR2_CLK_GATE           191
+#define CLK_UART2_CLK_GATE          191
 /********Name=CLKGATE_CON12,Offset=0x260********/
 #define CLK_UART3_PLL_CLK_GATE      192
 #define CLK_UART3_DIVNP5_CLK_GATE   193

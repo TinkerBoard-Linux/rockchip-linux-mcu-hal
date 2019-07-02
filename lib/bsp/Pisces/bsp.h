@@ -38,6 +38,11 @@ extern struct HAL_VAD_DEV g_vadDev;
 extern const struct RK_PINCTRL_DEV g_pinDev;
 #endif
 
+#ifdef HAL_UART_MODULE_ENABLED
+extern const struct HAL_UART_DEV g_uart0Dev;
+extern const struct HAL_UART_DEV g_uart1Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);

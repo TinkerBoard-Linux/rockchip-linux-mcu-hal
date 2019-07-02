@@ -41,6 +41,17 @@ extern struct HAL_PL330_DEV g_pl330Dev;
 extern struct HAL_VAD_DEV g_vadDev;
 #endif
 
+#ifdef HAL_UART_MODULE_ENABLED
+extern const struct HAL_UART_DEV g_uart0Dev;
+extern const struct HAL_UART_DEV g_uart1Dev;
+extern const struct HAL_UART_DEV g_uart2Dev;
+extern const struct HAL_UART_DEV g_uart3Dev;
+extern const struct HAL_UART_DEV g_uart4Dev;
+extern const struct HAL_UART_DEV g_uart5Dev;
+extern const struct HAL_UART_DEV g_uart6Dev;
+extern const struct HAL_UART_DEV g_uart7Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);

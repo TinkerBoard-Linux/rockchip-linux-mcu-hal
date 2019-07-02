@@ -6,6 +6,22 @@
 #include "bsp.h"
 #include "hal_base.h"
 
+#ifdef HAL_UART_MODULE_ENABLED
+const struct HAL_UART_DEV g_uart0Dev =
+{
+    .base = UART0,
+    .irqNum = UART0_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart1Dev =
+{
+    .base = UART1,
+    .irqNum = UART1_IRQn,
+    .isAutoFlow = true,
+};
+#endif
+
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/
