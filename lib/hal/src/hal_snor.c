@@ -276,16 +276,9 @@ static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, v
     /* convert the dummy cycles to the number of bytes */
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
 
-    while (remaining) {
-        op.data.nbytes = remaining < UINT_MAX ? remaining : UINT_MAX;
-        ret = SNOR_SPIMemExecOp(nor->spi, &op);
-        if (ret)
-            return 0;
-
-        op.addr.val += op.data.nbytes;
-        remaining -= op.data.nbytes;
-        op.data.buf.in += op.data.nbytes;
-    }
+    ret = SNOR_SPIMemExecOp(nor->spi, &op);
+    if (ret)
+        return 0;
 
     return len;
 }
