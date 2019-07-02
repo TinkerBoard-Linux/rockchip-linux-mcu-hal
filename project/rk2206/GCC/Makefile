@@ -27,17 +27,11 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 CPU		= -mcpu=cortex-m4 -mthumb
 
 ASFLAGS         += $(CPU)
-#CFLAGS		+= $(CPU) -std=c99 -O2 -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk --specs=nano.specs
-#LDFLAGS	+= $(CPU) -Wl,--gc-sections --specs=nano.specs -u _scanf_float -u _printf_float
-CFLAGS		+= $(CPU) -std=c99 -O2 -g -DOS_VERSION=FREERTOS_V7_4_2 -finput-charset=gbk -Wunused-variable -Wformat=2
+CFLAGS		+= $(CPU) -std=c99 -O2 -g -Wformat=2 -Wall -Werror
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc -nostartfiles
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
-ifeq ($(XIP),1)
-	LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC/gcc_arm_xip.ld
-else
-	LINKER_SCRIPT   := $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC/gcc_arm.ld
-endif
+LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC/gcc_arm$(if $(findstring 1,$(XIP)),_xip).ld
 
 #############################################################################
 # Output files
