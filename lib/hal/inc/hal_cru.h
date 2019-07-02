@@ -6,7 +6,7 @@
  *  @{
  */
 
-/** @addtogroup PD
+/** @addtogroup CRU
  *  @{
  */
 
@@ -16,6 +16,9 @@
 #include "hal_def.h"
 
 /*************************** MACRO Definition ****************************/
+/** @defgroup CRU_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
 
 #define MHZ 1000000
 #define KHZ 1000
@@ -98,6 +101,7 @@ struct PLL_SETUP {
 
 /***************************** Structure Definition **************************/
 
+/** @} */
 /***************************** Function Declare ******************************/
 uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup);
 HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate);
