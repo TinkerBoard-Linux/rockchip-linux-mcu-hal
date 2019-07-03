@@ -57,12 +57,12 @@ void SystemReset(eRESET_MODE mode)
   if (REST_MASKROM == mode)
   {
       /* maskrom */
-      PMU->SYS_REG[3] = RK_CLRSET_BITS(0xFFFF, 0x18BF);
+      PMU->SYS_REG[3] = VAL_MASK_WE(0xFFFF, 0x18BF);
   }
   else if (REST_LOADER == mode)
   {
       /* loader */
-      PMU->SYS_REG[3] = RK_CLRSET_BITS(0xFFFF, 0x18AF);
+      PMU->SYS_REG[3] = VAL_MASK_WE(0xFFFF, 0x18AF);
   }
   else
   {
@@ -73,7 +73,7 @@ void SystemReset(eRESET_MODE mode)
   SCB->VTOR = 0x00000000;
 
   /* Remap, address 0x0 --> maskrom */
-  GRF->GRF_INTER_CON0 = RK_CLRSET_BITS(0x01 << 8, 0x00 << 8);
+  GRF->GRF_INTER_CON0 = VAL_MASK_WE(0x01 << 8, 0x00 << 8);
 
   /* Software reset */
   NVIC_SystemReset();

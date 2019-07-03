@@ -154,7 +154,7 @@ HAL_Status HAL_PMUCRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
     mask = CLK_DIV_GET_MASK(divName);
     HAL_ASSERT(divValue < mask);
 
-    CRU->PMU_CLKSEL_CON[index] = RK_CLRSET_BITS(mask, (divValue - 1U) << shift);
+    CRU->PMU_CLKSEL_CON[index] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
 
     return HAL_OK;
 }
@@ -191,7 +191,7 @@ HAL_Status HAL_PMUCRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
     HAL_ASSERT(shift < 16);
     mask = CLK_MUX_GET_MASK(muxName);
 
-    CRU->PMU_CLKSEL_CON[index] = RK_CLRSET_BITS(mask, muxValue << shift);
+    CRU->PMU_CLKSEL_CON[index] = VAL_MASK_WE(mask, muxValue << shift);
 
     return HAL_OK;
 }

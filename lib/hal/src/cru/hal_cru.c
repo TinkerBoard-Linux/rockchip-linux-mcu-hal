@@ -338,22 +338,22 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
         return HAL_ERROR;
 
     /* Force PLL into slow mode to ensure output stable clock */
-    WRITE_REG(*(pSetup->modeOffset), RK_CLRSET_BITS(pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift));
+    WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift);
 
     /* Pll Power down */
-    WRITE_REG(*(pSetup->conOffset3), RK_CLRSET_BITS(PWRDOWN_MASK, 1 << PWRDOWN_SHIT));
+    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
 
     /* Pll Config */
-    WRITE_REG(*(pSetup->conOffset1), RK_CLRSET_BITS(PLL_POSTDIV2_MASK, pConfig->postDiv2 << PLL_POSTDIV2_SHIFT));
-    WRITE_REG(*(pSetup->conOffset1), RK_CLRSET_BITS(PLL_REFDIV_MASK, pConfig->refDiv << PLL_REFDIV_SHIFT));
-    WRITE_REG(*(pSetup->conOffset1), RK_CLRSET_BITS(PLL_POSTDIV1_MASK, pConfig->postDiv1 << PLL_POSTDIV1_SHIFT));
-    WRITE_REG(*(pSetup->conOffset0), RK_CLRSET_BITS(PLL_FBDIV_MASK, pConfig->fbDiv << PLL_FBDIV_SHIFT));
-    WRITE_REG(*(pSetup->conOffset3), RK_CLRSET_BITS(PLL_DSMPD_MASK, pConfig->dsmpd << PLL_DSMPD_SHIFT));
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLL_POSTDIV2_MASK, pConfig->postDiv2 << PLL_POSTDIV2_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLL_REFDIV_MASK, pConfig->refDiv << PLL_REFDIV_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLL_POSTDIV1_MASK, pConfig->postDiv1 << PLL_POSTDIV1_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset0), PLL_FBDIV_MASK, pConfig->fbDiv << PLL_FBDIV_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PLL_DSMPD_MASK, pConfig->dsmpd << PLL_DSMPD_SHIFT);
 
     if (pConfig->frac)
         WRITE_REG(*(pSetup->conOffset2), (READ_REG(*(pSetup->conOffset2)) & 0xff000000) | pConfig->frac);
 
-    WRITE_REG(*(pSetup->conOffset3), RK_CLRSET_BITS(PWRDOWN_MASK, 0 << PWRDOWN_SHIT));
+    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
@@ -366,7 +366,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
         return HAL_TIMEOUT;
 
     /* Force PLL into normal mode */
-    WRITE_REG(*(pSetup->modeOffset), RK_CLRSET_BITS(pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift));
+    WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift);
 
     return HAL_OK;
 }
@@ -455,23 +455,23 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
         return HAL_ERROR;
 
     /* Force PLL into slow mode to ensure output stable clock */
-    WRITE_REG(*(pSetup->modeOffset), RK_CLRSET_BITS(pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift));
+    WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift);
 
     /* Pll Power down */
-    WRITE_REG(*(pSetup->conOffset1), RK_CLRSET_BITS(PWRDOWN_MASK, 1 << PWRDOWN_SHIT));
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
 
     /* Pll Config */
-    WRITE_REG(*(pSetup->conOffset1), RK_CLRSET_BITS(PLL_POSTDIV2_MASK, pConfig->postDiv2 << PLL_POSTDIV2_SHIFT));
-    WRITE_REG(*(pSetup->conOffset1), RK_CLRSET_BITS(PLL_REFDIV_MASK, pConfig->refDiv << PLL_REFDIV_SHIFT));
-    WRITE_REG(*(pSetup->conOffset0), RK_CLRSET_BITS(PLL_POSTDIV1_MASK, pConfig->postDiv1 << PLL_POSTDIV1_SHIFT));
-    WRITE_REG(*(pSetup->conOffset0), RK_CLRSET_BITS(PLL_FBDIV_MASK, pConfig->fbDiv << PLL_FBDIV_SHIFT));
-    WRITE_REG(*(pSetup->conOffset1), RK_CLRSET_BITS(PLL_DSMPD_MASK, pConfig->dsmpd << PLL_DSMPD_SHIFT));
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLL_POSTDIV2_MASK, pConfig->postDiv2 << PLL_POSTDIV2_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLL_REFDIV_MASK, pConfig->refDiv << PLL_REFDIV_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset0), PLL_POSTDIV1_MASK, pConfig->postDiv1 << PLL_POSTDIV1_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset0), PLL_FBDIV_MASK, pConfig->fbDiv << PLL_FBDIV_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLL_DSMPD_MASK, pConfig->dsmpd << PLL_DSMPD_SHIFT);
 
     if (pConfig->frac)
         WRITE_REG(*(pSetup->conOffset2), (READ_REG(*(pSetup->conOffset2)) & 0xff000000) | pConfig->frac);
 
     /* Pll Power up */
-    WRITE_REG(*(pSetup->conOffset1), RK_CLRSET_BITS(PWRDOWN_MASK, 0 << PWRDOWN_SHIT));
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
@@ -489,7 +489,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
         return HAL_TIMEOUT;
 
     /* Force PLL into normal mode */
-    WRITE_REG(*(pSetup->modeOffset), RK_CLRSET_BITS(pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift));
+    WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift);
 
     return HAL_OK;
 }
@@ -537,15 +537,15 @@ HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
         index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
         shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
 
-        CRU->PMU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 0 << shift);
+        CRU->PMU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 0 << shift);
     } else {
-        CRU->CRU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 0 << shift);
+        CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 0 << shift);
     }
 
     return HAL_OK;
 #endif
 
-    CRU->CRU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 0 << shift);
+    CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 0 << shift);
 
     return HAL_OK;
 }
@@ -565,15 +565,15 @@ HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
         index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
         shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
 
-        CRU->PMU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 1 << shift);
+        CRU->PMU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 1 << shift);
     } else {
-        CRU->CRU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 1 << shift);
+        CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 1 << shift);
     }
 
     return HAL_OK;
 #endif
 
-    CRU->CRU_CLKGATE_CON[index] = RK_CLRSET_BITS(1 << shift, 1 << shift);
+    CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 1 << shift);
 
     return HAL_OK;
 }
@@ -602,7 +602,7 @@ HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk)
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
 
     HAL_ASSERT(shift < 16);
-    CRU->CRU_SOFTRST_CON[index] = RK_CLRSET_BITS(1 << shift, 1 << shift);
+    CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1 << shift, 1 << shift);
 
     return HAL_OK;
 }
@@ -618,7 +618,7 @@ HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
 
     HAL_ASSERT(shift < 16);
-    CRU->CRU_SOFTRST_CON[index] = RK_CLRSET_BITS(1 << shift, 0 << shift);
+    CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1 << shift, 0 << shift);
 
     return HAL_OK;
 }
@@ -639,7 +639,7 @@ HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
     mask = CLK_DIV_GET_MASK(divName);
     HAL_ASSERT(divValue < mask);
 
-    CRU->CRU_CLKSEL_CON[index] = RK_CLRSET_BITS(mask, (divValue - 1U) << shift);
+    CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
 
     return HAL_OK;
 }
@@ -676,7 +676,7 @@ HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
     HAL_ASSERT(shift < 16);
     mask = CLK_MUX_GET_MASK(muxName);
 
-    CRU->CRU_CLKSEL_CON[index] = RK_CLRSET_BITS(mask, muxValue << shift);
+    CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, muxValue << shift);
 
     return HAL_OK;
 }

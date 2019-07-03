@@ -28,11 +28,9 @@
         WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
 #define POSITION_VAL(VAL) (__CLZ(__RBIT(VAL)))
 
-#define RK_CLRSET_BITS(CLR, SET) ((((CLR) | ((SET))) << 16) | ((SET)))
-#define RK_SET_BITS(SET)         RK_CLRSET_BITS(0, SET)
-#define RK_CLR_BITS(CLR)         RK_CLRSET_BITS(CLR, 0)
-#define RK_CLRSET_REG_BITS(REG, CLR, SET) \
-        WRITE_REG(REG, ((CLR) | (SET)) << 16 | ((SET)))
+#define MASK_TO_WE(msk)                  (__builtin_constant_p(msk) ? ((msk) > 0xFFFFU ? 0 : ((msk) << 16)) : ((msk) << 16))
+#define VAL_MASK_WE(msk, val)            ((MASK_TO_WE(msk)) | (val))
+#define WRITE_REG_MASK_WE(reg, msk, val) WRITE_REG(reg, (VAL_MASK_WE(msk, val)))
 
 /* Misc OPS Marco */
 #define HAL_MAX_DELAY 0xFFFFFFFFU
@@ -46,6 +44,7 @@
 #define HAL_MIN(x, y)     ((x) < (y) ? (x) : (y))
 
 #define HAL_DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
+
 /* Compiller Marco */
 #ifdef __GNUC__
 #ifndef __unused
