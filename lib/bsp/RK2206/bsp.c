@@ -5,6 +5,21 @@
 
 #include "bsp.h"
 
+#ifdef HAL_DWDMA_MODULE_ENABLED
+struct HAL_DWDMA_DEV g_dwDmaDev =
+{
+    .reg = DMA,
+    .irq[0] = DMAC_CH0_IRQn,
+    .irq[1] = DMAC_CH1_IRQn,
+    .irq[2] = DMAC_CH2_IRQn,
+    .irq[3] = DMAC_CH3_IRQn,
+    .irq[4] = DMAC_CH4_IRQn,
+    .irq[5] = DMAC_CH5_IRQn,
+    .dataWidth = 2, /**< 32 bits */
+    .blockSize = 0xfff, /** ref to trm */
+};
+#endif
+
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
 static struct PINCTRL_BANK_INFO pinBanks[] = {
     PIN_BANK_CFG_FLAGS(GPIO_BANK0, 32, GRF_BASE,
