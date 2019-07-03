@@ -33,6 +33,11 @@
 #include "hal_dsp.h"
 #endif
 
+#ifdef HAL_DWDMA_MODULE_ENABLED
+#include "hal_dma.h"
+#include "hal_dwdma.h"
+#endif
+
 #ifdef HAL_GPIO_MODULE_ENABLED
 #include "hal_gpio.h"
 #include "hal_pinctrl.h"
