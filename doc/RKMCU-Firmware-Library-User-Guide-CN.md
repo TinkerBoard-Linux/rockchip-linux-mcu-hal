@@ -2,7 +2,7 @@
 
 **Rockchip**
 
-# **RKMCU_Firmware_Library_User_Guide**
+# **RKMCU-Firmware-Library-User-Guide-CN**
 
 发布版本:1.1
 
@@ -80,7 +80,7 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 │   │   ├── Device
 │   │   │   └── RK2106
 │   │   │       ├── Include
-│   │   │       │   ├── rk2106.h
+│   │   │       │   ├── soc.h
 │   │   │       │   └── system_rk2106.h
 │   │   │       └── Source
 │   │   │           ├── GCC
@@ -99,7 +99,6 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 │   └── hal
 │       ├── inc
 │       │   ├── hal_base.h
-│       │   ├── hal_conf_template.h
 │       │   ├── hal_def.h
 │       │   ├── hal_nvic.h
 │       │   ├── hal_uart.h
@@ -112,11 +111,10 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 └── test
     └── rk2106
         ├── GCC
-        ├── Scatter
         └── src
+            ├── hal_conf.h
             ├── rk2106_bsp.c
             ├── rk2106_bsp.h
-            ├── hal_conf.h
             ├── main.c
             └── main.h
 
@@ -150,14 +148,7 @@ lib/CMSIS/Device目录存放SoC相关的硬件信息,寄存器定义文件以及
 | *startup_rk2106.S*   | 包含重置处理程序和异常向量的工具链特定文件,根据需求调整堆栈大小。 |
 | *system_rk2106.c/.h* | 包含：系统start up汇编文件中在跳转main前调用的SystemInit()。 |
 | *gcc_arm.ld*         | 链接脚本                                                     |
-| *rkxxxx.h*        | 寄存器结构体及位宏定义总的头文件，HAL库统一引用              |
-
-SOC硬件信息由工具从TRM自动生成为头文件'hw_rkxxxx.h', 包含内容:
-
-- IRQ source;
-- SoC memory map, IP base address;
-- Module register structure;
-- Module register Bit map;
+| *soc.h*      | 存放中断号、模块基地址、寄存器结构体、位宏信息的头文件，HAL库统一引用 |
 
 ## 1.4 HAL库文件
 
@@ -344,12 +335,12 @@ Jenkins也会使用以上命令进行校验，原则上需要通过校验才合�
 | @parm        | 函数参数定义                                                 |
 | @return      | 函数返回值定义                                               |
 
-#### RKMCU_HAL_Driver库
+#### RK_HAL_Driver库
 
-文件注释统一输出到RKMCU_HAL_Driver库，用法如下：
+文件注释统一输出到RK_HAL_Driver库，用法如下：
 
 ```
-/** @addtogroup RKMCU_HAL_Driver
+/** @addtogroup RK_HAL_Driver
  *  @{
  */
 
@@ -585,10 +576,7 @@ HAL_UART_WriteByte(UART0, buf, 1);
 须使用如下参数合法性检查，因改检查代码占用较多代码，只在Init做常规检查，其他入口以Assert形式检查(release时会关闭)。
 
 ```c
-#define IS_UART_INSTANCE(INSTANCE) (((INSTANCE) == UART1) || \
-                                    ((INSTANCE) == UART2) || \
-                                    ((INSTANCE) == UART3) || \
-                                    ((INSTANCE) == UART4)
+#define IS_UART_INSTANCE(INSTANCE) (((INSTANCE) == UART1) || ((INSTANCE) == UART2) || ((INSTANCE) == UART3) || ((INSTANCE) == UART4)
 ```
 
 I2C/I2S/SPI/UART/PWM/ADC/DMA建议使用这种模式。
@@ -652,7 +640,7 @@ uint32_t (*memTest)(struct GPIO_REG *pReg, uint32_t pinNum);
 
 ### 3.6.3 枚举类型定义
 
-只用实例好的定义，以“e”开头:
+只用实例好的定义，命名规则"eMODULE_小驼峰":
 
 ```c
 typedef enum
@@ -662,61 +650,7 @@ typedef enum
 } eUART_stopBit;
 ```
 
-#### 特殊情况
-
-寄存器结构体中有种特殊情况需要使用typedef，UART的寄存器，同一个offset可能存在多种值，这种情况可以使用如下定义：
-
-```c
-struct UART_REG {
-    __IO uint32_t UART_RBR;
-    __IO uint32_t UART_DLH;
-    __IO uint32_t UART_IIR;
-    __IO uint32_t UART_LCR;
-    __IO uint32_t UART_MCR;
-    __IO uint32_t UART_LSR;
-    __IO uint32_t UART_MSR;
-    __IO uint32_t UART_SCR;
-    __IO uint32_t RESERVED1_UART[(0x30 - 0x20) / 4];
-    __IO uint32_t UART_SRBR[(0x70 - 0x30) / 4];
-    __IO uint32_t UART_FAR;
-    __IO uint32_t UART_TFR;
-    __IO uint32_t UART_RFW;
-    __IO uint32_t UART_USR;
-    __IO uint32_t UART_TFL;
-    __IO uint32_t UART_RFL;
-    __IO uint32_t UART_SRR;
-    __IO uint32_t UART_SRTS;
-    __IO uint32_t UART_SBCR;
-    __IO uint32_t UART_SDMAM;
-    __IO uint32_t UART_SFE;
-    __IO uint32_t UART_SRT;
-    __IO uint32_t UART_STET;
-    __IO uint32_t UART_HTX;
-    __IO uint32_t UART_DMASA;
-    __IO uint32_t RESERVED2_UART[(0xf4 - 0xac) / 4];
-    __IO uint32_t UART_CPR;
-    __IO uint32_t UART_UCV;
-    __IO uint32_t UART_CTR;
-};
-
-#define UART_THR UART_RBR
-#define UART_DLL UART_RBR
-#define UART_IER UART_DLH
-#define UART_FCR UART_IIR
-#define UART_STHR UART_SRBR
-```
-
-其中UART_RBR, UART_THR, UART_DLL使用同一个offset，这种类型定义，可以在C代码中根据需求使用如下三种指针：
-
-```c
-UART_REG_t *pUART;
-
-pUART->UART_RBR = UART_TEST_BAUDRATE;
-pUART->UART_THR = UART_TEST_EN;
-pUART->UART_DLL = UART_TEST_DLL_VAL;
-```
-
-### 3.6.3 寄存器访问
+### 3.6.4 寄存器结构体定义
 
 寄存器结构体使用全局变量，如驱动有私有结构，可以包含在私有结构中。
 
@@ -742,32 +676,35 @@ struct CRU_REG {
 struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 ```
 
-访问寄存器原则上使用结构体指针访问，如有特殊需求可以使用宏定义.
+访问寄存器原则上使用结构体指针访问，如有特殊需求可以使用宏定义。
 寄存器设置值使用预定义的宏，不推荐使用立即数；带mask寄存器如CRU, GRF，使用专用接口处理数值:
 
 ```c
-#define RK_CLRSETBITS(clr, set)         ((((clr) | (set)) << 16) | (set)
-#define RK_SETBITS(set)                 RK_CLRSETBITS(0, set)
-#define RK_CLRBITS(clr)                 RK_CLRSETBITS(clr, 0)
+/* SOC OPS Marco */
+#define SET_BIT(REG, BIT)    ((*(volatile uint32_t *)&(REG)) |= (BIT))
+#define CLEAR_BIT(REG, MASK) ((*(volatile uint32_t *)&(REG)) &= ~(MASK))
+#define READ_BIT(REG, MASK)  ((*(volatile uint32_t *)&(REG)) & (MASK))
+#define CLEAR_REG(REG)       ((*(volatile uint32_t *)&(REG)) = (0x0))
+#define WRITE_REG(REG, VAL)  ((*(volatile uint32_t *)&(REG)) = (VAL))
+#define READ_REG(REG)        ((*(volatile uint32_t *)&(REG)))
+#define MODIFY_REG(REG, CLEARMASK, SETMASK) \
+        WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
+#define POSITION_VAL(VAL) (__CLZ(__RBIT(VAL)))
 
-pCRU->CRU_SOFTRST[0] = RK_SETBITS(CRU_SOFTRST_SPI);
-pCRU->CRU_SOFTRST[0] = RK_CLRBITS(CRU_SOFTRST_SPI);
+#define RK_CLRSET_BITS(CLR, SET) ((((CLR) | ((SET))) << 16) | ((SET)))
+#define RK_SET_BITS(SET)         RK_CLRSET_BITS(0, SET)
+#define RK_CLR_BITS(CLR)         RK_CLRSET_BITS(CLR, 0)
+#define RK_CLRSET_REG_BITS(REG, CLR, SET) \
+        WRITE_REG(REG, ((CLR) | (SET)) << 16 | ((SET)))
 ```
 
-#### 寄存器BIT定义
+###3.6.5 寄存器位宏定义
 
 寄存器BIT定义包括SHIFT, MASK, 以及对应的数值定义，格式为：
-IPNAME_BITNAME_VAL
 
 ```c
-enum {
-        GPIO4A2_SHIFT		= 4,
-        GPIO4A2_MSK		= 3 << GPIO4A2_SHIFT,
-        GPIO4A2_GPIO		= 0,
-        GPIO4A2_FLASH1_RDN	= 1 << GPIO4A2_SHIFT,
-        GPIO4A2_HOST_DOUT8	= 2 << GPIO4A2_SHIFT,
-        GPIO4A2_MAC_RXER	= 3 << GPIO4A2_SHIFT,
-};
+#define UART_RBR_DATA_INPUT_SHIFT                          (0U)
+#define UART_RBR_DATA_INPUT_MASK                           (0xFFU << UART_RBR_DATA_INPUT_SHIFT)
 ```
 
 ## 3.7 文件布局
