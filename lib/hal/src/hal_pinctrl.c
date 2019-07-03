@@ -51,7 +51,7 @@ Example:
 
 /********************* Private MACRO Definition ******************************/
 #define PIN_READ(r)           (*(volatile uint32_t *)(r))
-#define PIN_WRITE(r, b, w, v) (*(volatile uint32_t *)(r) = ((((1 << w) - 1) << (16) | (v)) << (b)))
+#define PIN_WRITE(r, b, w, v) (*(volatile uint32_t *)(r) = (((w) << (16) | (v)) << (b)))
 
 /********************* Private Variable Definition ***************************/
 __WEAK const struct RK_PINCTRL_DEV g_pinDev;
