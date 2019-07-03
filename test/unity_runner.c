@@ -25,10 +25,10 @@ static void RunAllTests(void)
 #ifdef HAL_PL330_MODULE_ENABLED
     RUN_TEST_GROUP(HAL_PL330);
 #endif
-#ifdef HAL_PMU_MODULE_ENABLED
+#if defined(HAL_PMU_MODULE_ENABLED) && (defined(RKMCU_PISCES) || defined(RKMCU_RK2108))
     RUN_TEST_GROUP(HAL_PD);
 #endif
-#ifdef HAL_CRU_MODULE_ENABLED
+#if defined(HAL_CRU_MODULE_ENABLED) && (defined(RKMCU_PISCES) || defined(RKMCU_RK2108))
     RUN_TEST_GROUP(HAL_CRU);
 #endif
 }

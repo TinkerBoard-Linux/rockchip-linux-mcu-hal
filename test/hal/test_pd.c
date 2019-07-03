@@ -7,7 +7,7 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-#ifdef HAL_PMU_MODULE_ENABLED
+#if defined(HAL_PMU_MODULE_ENABLED) && (defined(RKMCU_PISCES) || defined(RKMCU_RK2108))
 
 static uint32_t isrActive;
 
