@@ -45,17 +45,10 @@
 #define LNR_VOLT_LT(volt, min, step) (((volt - min) + (step -1)) / (step))
 
 /********************* Private Structure Definition **************************/
-struct PWR_DESCS_INFO {
-    struct PWR_DESC *descs;
-    uint32_t cnt;
-};
-
 /********************* Private Variable Definition ***************************/
-
-static struct PWR_DESCS_INFO pwrDescs;
-
 /********************* Private Function Definition ***************************/
-static int PWR_SetVoltage_Linear(struct PWR_DESC *desc, int volt, PWR_CtrlType ctrlType)
+static HAL_Status PWR_SetVoltage_Linear(struct PWR_INTREG_DESC *desc, uint32_t volt,
+                                        ePWR_CtrlType ctrlType)
 {
     uint32_t val;
     __IO uint32_t *preg;
@@ -70,7 +63,7 @@ static int PWR_SetVoltage_Linear(struct PWR_DESC *desc, int volt, PWR_CtrlType c
 
     HAL_ASSERT(val < desc->voltCnt);
 
-    preg = desc->regs.preg[ctrlType];
+    preg = desc->preg[ctrlType];
 
     val = WM_SET_BITS(desc->voltMask, desc->shift[ctrlType], val);
     WRITE_REG(*preg, val);
@@ -78,7 +71,8 @@ static int PWR_SetVoltage_Linear(struct PWR_DESC *desc, int volt, PWR_CtrlType c
     return HAL_OK;
 }
 
-static int PWR_GetVoltageLinear(struct PWR_DESC *desc, PWR_CtrlType ctrlType)
+static uint32_t PWR_GetVoltageLinear(struct PWR_INTREG_DESC *desc,
+                                     ePWR_CtrlType ctrlType)
 {
     uint32_t val;
     __IO uint32_t *preg;
@@ -86,7 +80,7 @@ static int PWR_GetVoltageLinear(struct PWR_DESC *desc, PWR_CtrlType ctrlType)
     HAL_ASSERT(desc->flag & BIT(ctrlType));
     HAL_ASSERT(ctrlType <= PWR_CTRL_VOLT_ST);
 
-    preg = desc->regs.preg[ctrlType];
+    preg = desc->preg[ctrlType];
 
     val = (READ_REG(*preg) >> desc->shift[ctrlType]) & desc->voltMask;
 
@@ -95,14 +89,14 @@ static int PWR_GetVoltageLinear(struct PWR_DESC *desc, PWR_CtrlType ctrlType)
     return (desc->minVolt + desc->volt_list.stepVolt * val);
 }
 
-int PWR_EnableDisable(struct PWR_DESC *desc, uint32_t enable)
+HAL_Status PWR_EnableDisable(struct PWR_INTREG_DESC *desc, uint32_t enable)
 {
     uint32_t val;
     __IO uint32_t *preg;
 
     HAL_ASSERT(desc->flag & BIT(PWR_CTRL_PWR_EN));
 
-    preg = desc->regs.preg[PWR_CTRL_PWR_EN];
+    preg = desc->preg[PWR_CTRL_PWR_EN];
 
     if (enable)
         val = WM_SET_BIT(desc->shift[PWR_CTRL_PWR_EN]);
@@ -127,13 +121,13 @@ int PWR_EnableDisable(struct PWR_DESC *desc, uint32_t enable)
  * @param  desc: the power regulator description pointer.
  * @return 1 is enable, 0 is disable.
  */
-int HAL_PWR_GetEnableState(struct PWR_DESC *desc)
+int HAL_PWR_GetEnableState(struct PWR_INTREG_DESC *desc)
 {
     __IO uint32_t *preg;
 
     HAL_ASSERT(desc->flag & BIT(PWR_CTRL_PWR_EN));
 
-    preg = desc->regs.preg[PWR_CTRL_PWR_EN];
+    preg = desc->preg[PWR_CTRL_PWR_EN];
 
     return (READ_REG(*preg) >> desc->shift[PWR_CTRL_PWR_EN]) & 0x1;
 }
@@ -141,75 +135,43 @@ int HAL_PWR_GetEnableState(struct PWR_DESC *desc)
 /**
  * @brief  get voltage value.
  * @param  desc: the power regulator description pointer.
- * @return the voltage value if support, otherwise return HAL_INVAL.
+ * @return the voltage value if support, otherwise return 0.
  */
-int HAL_PWR_GetVoltage(struct PWR_DESC *desc)
+uint32_t HAL_PWR_GetVoltage(struct PWR_INTREG_DESC *desc)
 {
     HAL_ASSERT(desc);
     if (desc->flag & PWR_FLG_LINEAR)
         return PWR_GetVoltageLinear(desc, PWR_CTRL_VOLT_RUN);
     else
-        return HAL_INVAL;
+        return 0;
 }
 
 /**
  * @brief  get voltage value for suspend mode.
  * @param  desc: the power regulator description pointer.
- * @return the voltage value if support, otherwise return HAL_INVAL.
+ * @return the voltage value if support, otherwise return 0.
  */
-int HAL_PWR_GetVoltageSuspend(struct PWR_DESC *desc)
+uint32_t HAL_PWR_GetVoltageSuspend(struct PWR_INTREG_DESC *desc)
 {
     HAL_ASSERT(desc);
     if (desc->flag & PWR_FLG_LINEAR)
         return PWR_GetVoltageLinear(desc, PWR_CTRL_VOLT_SSPD);
     else
-        return HAL_INVAL;
+        return 0;
 }
 
 /**
  * @brief  get real voltage value.
  * @param  desc: the power regulator description pointer.
- * @return the voltage value if support, otherwise return HAL_INVAL.
+ * @return the voltage value if support, otherwise return 0.
  */
-int HAL_PWR_GetVoltageReal(struct PWR_DESC *desc)
+uint32_t HAL_PWR_GetVoltageReal(struct PWR_INTREG_DESC *desc)
 {
     HAL_ASSERT(desc);
     if (desc->flag & PWR_FLG_LINEAR)
         return PWR_GetVoltageLinear(desc, PWR_CTRL_VOLT_ST);
     else
-        return HAL_INVAL;
-}
-
-/** @} */
-
-/** @defgroup PWR_Exported_Functions_Group4 Init and DeInit Functions
-
- This section provides functions allowing to init and deinit the module:
- *  @{
- */
-
-/**
- * @brief  PWR init.
- * @param  descs: the pointer of power regulator descriptions array.
- * @param  cnt: number of power regulator descriptions
- * @return HAL_Status.
- */
-int HAL_PWR_Init(struct PWR_DESC *descs, uint32_t cnt)
-{
-    HAL_ASSERT(descs);
-    pwrDescs.descs = descs;
-    pwrDescs.cnt = cnt;
-
-    return HAL_OK;
-}
-
-/**
- * @brief  PWR deinit.
- */
-void HAL_PWR_DeInit(void)
-{
-    pwrDescs.descs = NULL;
-    pwrDescs.cnt = 0;
+        return 0;
 }
 
 /** @} */
@@ -224,7 +186,7 @@ void HAL_PWR_DeInit(void)
  * @param  volt: the volt value to be config
  * @return HAL_Status.
  */
-int HAL_PWR_SetVoltage(struct PWR_DESC *desc, int volt)
+HAL_Status HAL_PWR_SetVoltage(struct PWR_INTREG_DESC *desc, uint32_t volt)
 {
     HAL_ASSERT(desc);
 
@@ -240,7 +202,8 @@ int HAL_PWR_SetVoltage(struct PWR_DESC *desc, int volt)
  * @param  volt: the volt value to be config
  * @return HAL_Status.
  */
-int HAL_PWR_SetVoltageSuspend(struct PWR_DESC *desc, int volt)
+HAL_Status HAL_PWR_SetVoltageSuspend(struct PWR_INTREG_DESC *desc,
+                                     uint32_t volt)
 {
     HAL_ASSERT(desc);
     if (desc->flag & PWR_FLG_LINEAR)
@@ -254,7 +217,7 @@ int HAL_PWR_SetVoltageSuspend(struct PWR_DESC *desc, int volt)
  * @param  desc: the power regulator description pointer.
  * @return HAL_Status.
  */
-int HAL_PWR_Enable(struct PWR_DESC *desc)
+HAL_Status HAL_PWR_Enable(struct PWR_INTREG_DESC *desc)
 {
     HAL_ASSERT(desc);
 
@@ -266,7 +229,7 @@ int HAL_PWR_Enable(struct PWR_DESC *desc)
  * @param  desc: the power regulator description pointer.
  * @return HAL_Status.
  */
-int HAL_PWR_Disable(struct PWR_DESC *desc)
+HAL_Status HAL_PWR_Disable(struct PWR_INTREG_DESC *desc)
 {
     HAL_ASSERT(desc);
 
@@ -274,23 +237,20 @@ int HAL_PWR_Disable(struct PWR_DESC *desc)
 }
 
 /**
- * @brief  get a power regulator description.
+ * @brief  match a power regulator description by pwr id.
+ * @param  desc: a power regulator description.
  * @param  pwrId: a regulator channel id.
- * @return a pointer for struct PWR_DESC.
+ * @return if match return HAL_TRUE.
  */
-struct PWR_DESC *HAL_PWR_GetDescByPwrId(ePWR_ID pwrId)
+HAL_Check HAL_PWR_CheckDescByPwrId(struct PWR_INTREG_DESC *desc,
+                                   ePWR_ID pwrId)
 {
-    int i;
-    struct PWR_DESC *pdescs = pwrDescs.descs;
-
-    for (i = 0; i < pwrDescs.cnt; i++) {
-        if (pdescs->info.pwrId == pwrId)
-            break;
-        pdescs++;
-    }
-
-    return pdescs;
+    if (desc->info.pwrId == pwrId)
+        return HAL_TRUE;
+    else
+        return HAL_FALSE;
 }
+
 /** @} */
 
 #endif

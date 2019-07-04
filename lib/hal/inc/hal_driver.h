@@ -103,9 +103,7 @@
 #include "hal_pwm.h"
 #endif
 
-#ifdef HAL_PWR_MODULE_ENABLED
 #include "hal_pwr.h"
-#endif
 
 #ifdef HAL_SDIO_MODULE_ENABLED
 #include "hal_sdio.h"
