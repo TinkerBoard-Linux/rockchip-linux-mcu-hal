@@ -240,7 +240,7 @@ HAL_Status HAL_PWM_SetEnable(struct PWM_HANDLE *pPWM, uint32_t channel,
  * @param  freq: PWM bus input clock frequency.
  * @return HAL_Status
  */
-HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG * base, uint32_t freq)
+HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *base, uint32_t freq)
 {
     HAL_ASSERT(pPWM != NULL);
 

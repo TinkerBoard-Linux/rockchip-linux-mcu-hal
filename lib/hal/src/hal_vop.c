@@ -127,7 +127,7 @@ struct DSC_PPS {
 };
 
 /********************* Private Variable Definition ***************************/
-static struct GRF_REG *const gGrfReg = GRF;
+static struct GRF_REG * const gGrfReg = GRF;
 static struct VOP_REG g_VOP_RegMir;
 static const char * const VOP_IRQs[] = {
     "frame start interrupt status!",

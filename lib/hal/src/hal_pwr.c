@@ -51,7 +51,7 @@
 
 /********************* Private Structure Definition **************************/
 struct PWR_DESCS_INFO {
-    struct PWR_DESC * descs;
+    struct PWR_DESC *descs;
     uint32_t cnt;
 };
 

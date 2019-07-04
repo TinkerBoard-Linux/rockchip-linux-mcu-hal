@@ -43,7 +43,7 @@ typedef enum {
 } eDSI_DpiColorCoding;
 
 /********************* Private Variable Definition ***************************/
-static struct GRF_REG *const gGrfReg = GRF;
+static struct GRF_REG * const gGrfReg = GRF;
 static const char * const DPHY_ERROR[] = {
     "ErrEsc escape entry error from Lane 0",
     "ErrSyncEsc low-power data transmission synchronization error from Lane 0",
