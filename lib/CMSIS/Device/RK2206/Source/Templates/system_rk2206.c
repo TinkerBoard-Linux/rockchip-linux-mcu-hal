@@ -65,12 +65,13 @@ void SystemInit(void)
     ICACHE->CACHE_CTRL &= ~ICACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 
     /* Dcache configuration:
-     * enable:  cache_en, cache_stb, stb_timeout, stb_entry=7
+     * enable:  cache_en, cache_stb, stb_timeout, stb_entry=7, mpu_mode
      * disable: cache_bypass, cache_wt
      */
     DCACHE->CACHE_CTRL |= (DCACHE_CACHE_CTRL_CACHE_EN_MASK |
                            DCACHE_CACHE_CTRL_CACHE_STB_EN_MASK |
                            DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK |
+                           DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK |
                            (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT));
     DCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_WT_EN_MASK;
     DCACHE->STB_TIMEOUT_CTRL = 1;
