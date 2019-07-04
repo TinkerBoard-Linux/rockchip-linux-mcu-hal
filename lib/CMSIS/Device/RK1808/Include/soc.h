@@ -97,6 +97,7 @@ typedef enum
   UART6_IRQn             = 77,
   UART5_IRQn             = 78,
   SFC_IRQn               = 82,
+  SARADC_IRQn            = 96,
   VAD_IRQn               = 104,
   GPIO4_IRQn             = 114,
   I2C3_IRQn              = 115,
@@ -558,6 +559,13 @@ struct EFUSE_S_REG {
     __IO uint32_t T_STROBE_R;                         /* Address Offset: 0x004C */
     __IO uint32_t REVISION;                           /* Address Offset: 0x0050 */
 };
+/* SARADC Register Structure Define */
+struct SARADC_REG {
+    __I  uint32_t DATA;                               /* Address Offset: 0x0000 */
+    __I  uint32_t STAS;                               /* Address Offset: 0x0004 */
+    __IO uint32_t CTRL;                               /* Address Offset: 0x0008 */
+    __IO uint32_t DLY_PU_SOC;                         /* Address Offset: 0x000C */
+};
 /* DMA Register Structure Define */
 struct DMA_CHANNEL_STATUS {
     __I  uint32_t CSR;
@@ -914,6 +922,7 @@ struct SFC_REG {
 #define CRU_BASE            0xFF350000U /* CRU base address */
 #define EFUSE_NS_BASE       0xFF3B0000U /* EFUSE_NS base address */
 #define EFUSE_S_BASE        0xFF3B8000U /* EFUSE_S base address */
+#define SARADC_BASE         0xFF3C0000U /* SARADC base address */
 #define PWM0_BASE           0xFF3D0000U /* PWM0 base address */
 #define PWM1_BASE           0xFF3D8000U /* PWM1 base address */
 #define PMU_BASE            0xFF3E0000U /* PMU base address */
@@ -972,6 +981,7 @@ struct SFC_REG {
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define EFUSE_NS            ((struct EFUSE_NS_REG *) EFUSE_NS_BASE)
 #define EFUSE_S             ((struct EFUSE_S_REG *) EFUSE_S_BASE)
+#define SARADC              ((struct SARADC_REG *) SARADC_BASE)
 #define DCF                 ((struct DCF_REG *) DCF_BASE)
 #define DFICTRL             ((struct DFICTRL_REG *) DFICTRL_BASE)
 #define RGA                 ((struct RGA_REG *) RGA_BASE)
@@ -1021,6 +1031,7 @@ struct SFC_REG {
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_EFUSE_NS_INSTANCE(instance) ((instance) == EFUSE_NS)
 #define IS_EFUSE_S_INSTANCE(instance) ((instance) == EFUSE_S)
+#define IS_SARADC_INSTANCE(instance) ((instance) == SARADC)
 #define IS_DCF_INSTANCE(instance) ((instance) == DCF)
 #define IS_DFICTRL_INSTANCE(instance) ((instance) == DFICTRL)
 #define IS_RGA_INSTANCE(instance) ((instance) == RGA)
@@ -7019,6 +7030,25 @@ struct SFC_REG {
 /* REVISION */
 #define EFUSE_S_REVISION_REVISION_SHIFT                    (0U)
 #define EFUSE_S_REVISION_REVISION_MASK                     (0xFFU << EFUSE_S_REVISION_REVISION_SHIFT)                   /* 0x000000FF */
+/*****************************************SARADC*****************************************/
+/* DATA */
+#define SARADC_DATA_ADC_DATA_SHIFT                         (0U)
+#define SARADC_DATA_ADC_DATA_MASK                          (0x3FFU << SARADC_DATA_ADC_DATA_SHIFT)                       /* 0x000003FF */
+/* STAS */
+#define SARADC_STAS_ADC_STATUS_SHIFT                       (0U)
+#define SARADC_STAS_ADC_STATUS_MASK                        (0x1U << SARADC_STAS_ADC_STATUS_SHIFT)                       /* 0x00000001 */
+/* CTRL */
+#define SARADC_CTRL_ADC_INPUT_SRC_SEL_SHIFT                (0U)
+#define SARADC_CTRL_ADC_INPUT_SRC_SEL_MASK                 (0x7U << SARADC_CTRL_ADC_INPUT_SRC_SEL_SHIFT)                /* 0x00000007 */
+#define SARADC_CTRL_ADC_POWER_CTRL_SHIFT                   (3U)
+#define SARADC_CTRL_ADC_POWER_CTRL_MASK                    (0x1U << SARADC_CTRL_ADC_POWER_CTRL_SHIFT)                   /* 0x00000008 */
+#define SARADC_CTRL_INT_EN_SHIFT                           (5U)
+#define SARADC_CTRL_INT_EN_MASK                            (0x1U << SARADC_CTRL_INT_EN_SHIFT)                           /* 0x00000020 */
+#define SARADC_CTRL_INT_STATUS_SHIFT                       (6U)
+#define SARADC_CTRL_INT_STATUS_MASK                        (0x1U << SARADC_CTRL_INT_STATUS_SHIFT)                       /* 0x00000040 */
+/* DLY_PU_SOC */
+#define SARADC_DLY_PU_SOC_DLY_PU_SOC_SHIFT                 (0U)
+#define SARADC_DLY_PU_SOC_DLY_PU_SOC_MASK                  (0x3FU << SARADC_DLY_PU_SOC_DLY_PU_SOC_SHIFT)                /* 0x0000003F */
 /******************************************DCF*******************************************/
 /* DCF_CTRL */
 #define DCF_DCF_CTRL_START_SHIFT                           (0U)
