@@ -263,7 +263,6 @@ static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, v
                                              SPI_MEM_OP_ADDR(nor->addrWidth, from, 1),
                                              SPI_MEM_OP_DUMMY(nor->readDummy, 1),
                                              SPI_MEM_OP_DATA_IN(len, buf, 1));
-    uint32_t remaining = len;
     int32_t ret;
 
     /* get transfer protocols. */
