@@ -30,15 +30,12 @@ int _write(int fd, char *ptr, int len)
      *
     * Only work for STDOUT, STDIN, and STDERR
      */
-    if (fd > 2)
-    {
+    if (fd > 2) {
         return -1;
     }
 
-    while (*ptr && (i < len))
-    {
-        if (*ptr == '\n')
-        {
+    while (*ptr && (i < len)) {
+        if (*ptr == '\n') {
             HAL_UART_SerialOut(pUart, (const uint8_t *)"\r", 1);
         }
         HAL_UART_SerialOut(pUart, (uint8_t *)ptr, 1);
@@ -56,7 +53,6 @@ int fputc(int ch, FILE *f)
         HAL_UART_SerialOut(pUart, "\r", 1);
     }
     HAL_UART_SerialOut(pUart, (uint8_t *)&ch, 1);
-
 }
 #endif
 
@@ -65,18 +61,17 @@ void UART_IRQHandler(void)
     HAL_UART_HandleIrq(pUart);
 }
 
-
 int main(void)
 {
     /* HAL BASE Init */
-    HAL_NVIC_SetIRQHandler(SysTick_IRQn, (NVIC_IRQHandler)&HAL_SysTick_Handler);
+    HAL_NVIC_SetIRQHandler(SysTick_IRQn, (NVIC_IRQHandler)HAL_SysTick_Handler);
     HAL_Init();
 
     /* BSP Init */
     BSP_Init();
 
     /* UART Init */
-    HAL_NVIC_SetIRQHandler(UART0_IRQn, (NVIC_IRQHandler)&UART_IRQHandler);
+    HAL_NVIC_SetIRQHandler(UART0_IRQn, (NVIC_IRQHandler)UART_IRQHandler);
     HAL_NVIC_EnableIRQ(UART0_IRQn);
     HAL_UART_Init(pUart, UART_BR_115200, UART_DATA_8B, UART_ONE_STOPBIT,
                   UART_PARITY_DISABLE);
@@ -89,4 +84,3 @@ int main(void)
 
     return 0;
 }
-

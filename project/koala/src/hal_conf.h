@@ -29,12 +29,11 @@
 #define HAL_SPI_MODULE_ENABLED
 #define HAL_WDT_MODULE_ENABLED
 
-
 /* HAL_DEG SUB CONFIG */
-#define HAL_DBG_ON 1
+#define HAL_DBG_ON      1
 #define HAL_DBG_INFO_ON 1
-#define HAL_DBG_WRN_ON 1
-#define HAL_DBG_ERR_ON 1
+#define HAL_DBG_WRN_ON  1
+#define HAL_DBG_ERR_ON  1
 #define USE_FULL_ASSERT 1
 
 /* UNITY CONFIG */
