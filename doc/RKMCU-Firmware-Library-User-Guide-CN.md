@@ -129,17 +129,13 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 | lib/bsp     | MCU的芯片公共BSP配置的代码     |
 | test     | HAL驱动的驱动测试代码     |
 
-## 1.2 模块组成预览
+## 1.2 库组成预览
 
-下图大概描述了代码组成, 运行顺序, 以及头文件包含关系.
+以RK2106为例：
 
-![2](RKMCU_Firmware_Library_User_Guide_CN\2.jpg)
+![5](RKMCU-Firmware-Library-User-Guide-CN\5.jpg)
 
-### 1.2.1 RK2106
-
-![5](RKMCU_Firmware_Library_User_Guide_CN\5.jpg)
-
-## 1.3 SOC相关文件
+## 1.3 SOC目录文件
 
 lib/CMSIS/Device目录存放SoC相关的硬件信息,寄存器定义文件以及芯片启动相关代码.
 
@@ -150,9 +146,9 @@ lib/CMSIS/Device目录存放SoC相关的硬件信息,寄存器定义文件以及
 | *gcc_arm.ld*         | 链接脚本                                                     |
 | *soc.h*      | 存放中断号、模块基地址、寄存器结构体、位宏信息的头文件，HAL库统一引用 |
 
-## 1.4 HAL库文件
+## 1.4 HAL目录文件
 
-lib/hal目录包含HAL库的代码主体, 其中src目录直接包含所有模块的C代码, inc目录包含对外API函数声明, 由于模块寄存器结构体和BIT定义都已包含在SOC头文件中, 各模块不在使用私有头文件, 如需要定义私有的宏或结构体, 可在C文件中直接定义.
+lib/hal目录包含HAL库的代码主体, 其中src目录直接包含所有模块的C代码, inc目录包含对外API函数声明, 由于模块寄存器结构体和BIT定义都已包含在SOC头文件中, 各模块不再使用私有头文件, 如需要定义私有的宏或结构体, 可在C文件中直接定义。
 
 | 文件           | 描述                                                         |
 | -------------- | ------------------------------------------------------------ |
@@ -165,13 +161,23 @@ lib/hal目录包含HAL库的代码主体, 其中src目录直接包含所有模�
 | *hal_conf.h*   | 允许通过宏裁剪驱动。                                         |
 | *hal_def.h*    | 常见的HAL资源，如通用定义语句、枚举、结构体和宏定义。        |
 
-## 1.5 test目录文件
+##1.5 BSP目录文件
+
+bsp库用来存放某个芯片公共的板级配置和dev资源，代码路径为./lib/bsp/project_name/bsp.c/h。
+
+| 文件  | 描述                                                         |
+| ----- | ------------------------------------------------------------ |
+| bsp.c | 某个芯片公共的板级配置、HAL驱动需求的可抽象化的相关模块资源（如i2c_dev）。 |
+| bsp.h | bsp.c头文件                                                  |
+
+## 1.6 test目录文件
+
 test目录用于存放HAL的unit test相关实现，其中：
 test/unity:　测试框架Unity的代码实现，　来源于https://github.com/ThrowTheSwitch/Unity.git
 test/hal: HAL驱动的测试代码
 test_runner.c: 测试骨架程序，用于用户主程序调用
 
-## 1.6 project目录文件
+## 1.7 project目录文件
 
 project目录基于板子或者项目建立工程，包含可运行的用户代码, 主要用于提供main函数调用各模块接口. 如rk2106-evb是针对该板子的工程，里面需要实现所有板子特有的软硬件初始化和模块定义。
 
@@ -199,7 +205,7 @@ project目录基于板子或者项目建立工程，包含可运行的用户代�
 
 芯片相关的以芯片型号为关键字标识,如start up汇编“*startup_rk2106.S*”，驱动相关的硬件抽象层文件以模块简写开头，如“*hal_uart.c*”.
 
-### 3.1.4 函数命名
+### 3.1.1 函数命名
 
 **函数名：**每一个函数命名以驼峰式为基础, 加上以下划线分隔的全大写前缀或后缀, 包括以下部分：
 
@@ -227,7 +233,7 @@ HAL_Status USB_Reset(void);
 HAL_Status USB_StartTransfer();
 ```
 
-### 3.1.5 变量命名
+### 3.1.2 变量命名
 
 变量的命名尽量在有意义的前提下尽量简写，如：
 推荐用clk, cnt, msg, 而不推荐clock, count, message．
@@ -253,11 +259,11 @@ int retValue, varNum;
 
 指针变量需要以'p'为前缀。
 
-### 3.1.6 宏定义, 枚举类型命名
+### 3.1.3 宏定义, 枚举类型命名
 
 所有宏定义及枚举类型使用全大写，下划线分隔单词．
 
-### 3.1.7 寄存器命名
+### 3.1.4 寄存器命名
 
 寄存器结构体中命名使用全大写，下划线分隔单词．
 寄存器名主体一致，但ID不一致的，合并为数组。
@@ -321,7 +327,7 @@ Jenkins也会使用以上命令进行校验，原则上需要通过校验才合�
 
 所有需要详细注释的内容，应出现在定义处，如函数API注释在C文件内，宏API注释在头文件内，两边都出现的只需要定义处详细注释即可。
 
-### Doxygen注释及其布局
+### 3.4.1 Doxygen注释及其布局
 
 #### Doxygen关键字
 
@@ -334,6 +340,7 @@ Jenkins也会使用以上命令进行校验，原则上需要通过校验才合�
 | @brief       | 简要描述                                                     |
 | @parm        | 函数参数定义                                                 |
 | @return      | 函数返回值定义                                               |
+| @attention   | 需要注意的信息                                               |
 
 #### RK_HAL_Driver库
 
@@ -507,7 +514,7 @@ Jenkins也会使用以上命令进行校验，原则上需要通过校验才合�
 
 #### 函数注释
 
-函数注释在函数定义处，通常为.c文件中。
+函数注释在函数定义处，通常为.c文件中，如函数有多处定义处，可将注释置于函数声明处。
 
 ```
 /**
@@ -536,7 +543,7 @@ linux
 
 - 检查是否存在warning和error关键字。
 
-### 通用代码注释
+### 3.4.2 通用代码注释
 
 单行注释不接收双斜杠'//'，必须使用如下风格：
 
@@ -553,16 +560,17 @@ linux
  */
 ```
 
-### 通用函数注释
+### 3.4.3 通用函数注释
 
 所有函数按照doxygen标准注释，且所有公共api都应有相应注释。
 
 ## 3.5 函数
 
-### API参数要求
+### 3.5.1 API参数要求
 
 简单IP的API传参可以直接使用结构体指针作为作为控制器ID。
 如
+
 ```c
 /* Define in SoC header */
 #define UART0               ((struct UART_REG *) UART0_BASE)
@@ -583,11 +591,11 @@ I2C/I2S/SPI/UART/PWM/ADC/DMA建议使用这种模式。
 
 如果硬件信息不足，需要额外变量作为状态辅助，可以使用结构体，如MMC的mmc_host结构体形式；
 
-### 参数检查
+### 3.5.2 参数检查要求
 
 必须在合理范围内对参数做合法性检查，代码使用异常情况使用ASSERT()进行检查，只在debug版本生效，实际使用也可能碰到的出错类型，请使用普通代码检查参数合法性．
 
-### 出错码
+### 3.5.3 出错码
 
 所有函数调用, 返回值使用有效出错码, 请不要自定义出错码, 出错码的值和含义参考自Linux kernel.
 无特定返回值时使用0表示函数执行成功.
@@ -598,10 +606,37 @@ typedef enum
     HAL_OK       = 0x00U,
     HAL_ERROR    = (-1),
     HAL_BUSY     = (-16),
-    HAL_NODEV     = (-19),
-    HAL_INVAL     = (-22),
+    HAL_NODEV    = (-19),
+    HAL_INVAL    = (-22),
     HAL_TIMEOUT  = (-110)
 } HAL_Status;
+```
+
+### 3.5.4 注意点
+
+- 为了降低模块间的耦合性、降低误调用的导致并发问题的可能，HAL库公共函数应被设计为仅由上层调用的结构，即HAL层间不进行相互调用接口；
+- 如该接口函数、或该组接口函数可供HAL层互相调用，请在函数接口注释处、或函数分组注释处相应添加@atterntion关键字，并附上“this API allow direct use in the HAL layer” 或 “these APIs allow direct use in the HAL layer”。
+
+```c
+/**
+ * @brief Set clk freq.
+ * @param  clockName: CLOCK_Name id.
+ * @param  rate: clk rate.
+ * @return HAL_Status.
+ * @atterntion this API allow direct use in the HAL layer.
+ */
+HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
+{
+	...
+}
+```
+
+```c
+/** @defgroup HAL_BASE_Exported_Functions_Group5 Other Functions
+ *  @atterntion these APIs allow direct use in the HAL layer.
+ *  @{
+ */
+
 ```
 
 ## 3.6 变量，结构
@@ -611,15 +646,15 @@ typedef enum
 编码请使用位数明确的数据类型, 不推荐使用long, short等可能产生不同结果的类型, 一律使用stdint的*_t类型，如下:
 
 ```c
-typedef	unsigned char			uint8_t
-typedef	signed char			int8_t
-typedef	unsigned short int		uint16_t
-typedef	signed short int		int16_t
-typedef	unsigned int			uint32_t
-typedef	signed int			int32_t
-typedef	unsigned long long		uint64_t
-typedef	signed long long		int64_t
-typedef	unsigned char			bool
+typedef	unsigned char            uint8_t
+typedef	signed char              int8_t
+typedef	unsigned short int       uint16_t
+typedef	signed short int         int16_t
+typedef	unsigned int             uint32_t
+typedef	signed int               int32_t
+typedef	unsigned long long       uint64_t
+typedef	signed long long         int64_t
+typedef	unsigned char            bool
 ```
 
 ### 3.6.2 结构体定义
@@ -758,7 +793,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 
 头文件包含关系示例如下：
 
-![header](RKMCU_Firmware_Library_User_Guide_CN\header_call.jpg)
+![header](RKMCU-Firmware-Library-User-Guide-CN\header_call.jpg)
 
 其中芯片的选择和模块选择统一位于hal_conf.h。
 
@@ -970,9 +1005,7 @@ core_<cpu>.h	//如：core_cm3.h
 
 # 7 BSP库
 
-为了提高板级配置的通用性，固件库提供通用的板级配置以针对”同一芯片不同开发板”的通用板级配置，将对同一芯片在不同产品形态或不同的OS上的开发提供便捷，而差异化的板级配置，由应用层自行设计或增加上层BSP。
-
-代码路径为./lib/bsp/project_name/bsp.c/h，提供以下资源：
+为了提高板级配置的通用性，固件库提供通用的板级配置以针对”同一芯片不同开发板”的通用板级配置，将对同一芯片在不同产品形态或不同的OS上的开发提供便捷，而差异化的板级配置，由应用层自行设计或增加上层BSP：提供以下资源：
 
 - 各个模块通用的硬件初始化函数，如SFC 的IO MUX，CLK，在同一芯片中的不同开发板中的实现是相同；
 - 模块驱动中涉及的设备结构体资源，要求仅依赖于具体芯片而实现。
