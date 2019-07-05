@@ -867,7 +867,7 @@ struct TOUCH_SENSOR_REG {
     __IO uint32_t CH19_CNT_FILTER;                    /* Address Offset: 0x200C */
 };
 /* I2S_TDM_8CH Register Structure Define */
-struct I2S_TDM_8CH_REG {
+struct I2S_REG {
     __IO uint32_t TXCR;                               /* Address Offset: 0x0000 */
     __IO uint32_t RXCR;                               /* Address Offset: 0x0004 */
     __IO uint32_t CKR;                                /* Address Offset: 0x0008 */
