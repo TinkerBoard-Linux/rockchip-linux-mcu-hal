@@ -21,6 +21,12 @@
  *  @{
  */
 
+#define DSP_IOCTL(a) (0x1000 + a)
+
+/** general cmd for dsp control */
+#define DSP_IOCTL_SET_ITCM_SIZE DSP_IOCTL(1)
+#define DSP_IOCTL_SET_DTCM_SIZE DSP_IOCTL(2)
+
 /***************************** Structure Definition **************************/
 
 struct DSP_OPS {
