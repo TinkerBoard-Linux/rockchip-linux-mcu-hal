@@ -826,8 +826,6 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
  */
 HAL_Status HAL_SNOR_Deinit(struct SPI_NOR *nor)
 {
-    memset(nor, 0, sizeof(struct SPI_NOR));
-
     return HAL_OK;
 }
 
