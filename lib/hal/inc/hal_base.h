@@ -31,7 +31,7 @@ uint32_t HAL_GetTick(void);
 HAL_Status HAL_DelayUs(__IO uint32_t delay);
 HAL_Status HAL_DelayMs(__IO uint32_t delay);
 HAL_Status HAL_SysTick_Handler(void);
-HAL_Check HAL_SystickConfig(uint32_t ticksNumb);
+HAL_Status HAL_SystickConfig(uint32_t ticksNumb);
 uint32_t HAL_GetTickWeight(void);
 
 #endif

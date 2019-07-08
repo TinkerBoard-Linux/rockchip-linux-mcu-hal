@@ -156,12 +156,15 @@ HAL_Status HAL_DelayUs(uint32_t us)
 /**
  * @brief  Config systick reload value.
  * @param  ticksNumb: systick reload value.
- * @return uint32_t:
+ * @return HAL_Status
  *
  */
-HAL_Check HAL_SystickConfig(uint32_t ticksNumb)
+HAL_Status HAL_SystickConfig(uint32_t ticksNumb)
 {
-    return (HAL_Check)SysTick_Config(ticksNumb);
+    if (SysTick_Config(ticksNumb))
+        return HAL_INVAL;
+    else
+        return HAL_OK;
 }
 
 /**
