@@ -125,6 +125,76 @@ static HAL_Status SNOR_TEST(uint32_t testEndLBA)
     return HAL_OK;
 }
 
+#ifdef HAL_FSPI_XIP_ENABLE
+static HAL_Status SNOR_XIP_TEST(uint32_t testEndLBA)
+{
+    uint32_t i, j;
+    uint32_t testLBA = 0;
+    uint32_t testSecCount = 1;
+
+    pwrite32 = (uint32_t *)pwrite;
+    pread32 = (uint32_t *)pread;
+    for (i = 0; i < (maxest_sector * nor->sectorSize / 4); i++)
+        pwrite32[i] = i;
+
+    HAL_SNOR_XIPEnable(nor);
+    HAL_DBG("---------Test SNOR XIP TEST---------\n");
+    HAL_DBG("---------Test ftl write---------\n");
+    testSecCount = 1;
+    HAL_DBG("testEndLBA = %lx\n", testEndLBA);
+    HAL_DBG("testLBA = %lx\n", testLBA);
+    for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
+        pwrite32[0] = testLBA;
+        pread32 = (uint32_t *)(XIP_MEM_BASE + testLBA * nor->sectorSize);
+        for (i = 0; i < testSecCount * nor->sectorSize / 4; i++)
+            pread32[i] = pwrite32[i];
+        for (j = 0; j < testSecCount * nor->sectorSize / 4; j++) {
+            if (pwrite32[j] != pread32[j]) {
+                HAL_DBG_HEX("w:", pwrite32, 4, 16);
+                HAL_DBG_HEX("r:", pread32, 4, 16);
+                HAL_DBG(
+                    "check not match:row=%lx, num=%lx, write=%lx, read=%lx %lx %lx %lx\n",
+                    testLBA, j, pwrite32[j], pread32[j], pread32[j+1], pread32[j+2], pread32[j-1]);
+
+                return HAL_ERROR;
+            }
+        }
+        HAL_DBG("testLBA = %lx\n", testLBA);
+        testLBA += testSecCount;
+        testSecCount++;
+        if (testSecCount > maxest_sector)
+            testSecCount = 1;
+    }
+    HAL_DBG("---------Test ftl check---------\n");
+
+    testSecCount = 1;
+    for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
+        pwrite32[0] = testLBA;
+        pread32 = (uint32_t *)(XIP_MEM_BASE + testLBA * nor->sectorSize);
+        for (j = 0; j < testSecCount * nor->sectorSize / 4; j++) {
+            if (pwrite32[j] != pread32[j]) {
+                HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * nor->sectorSize / 4);
+                HAL_DBG_HEX("r:", pread32, 4, testSecCount * nor->sectorSize / 4);
+                HAL_DBG(
+                    "recheck not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
+                    testLBA, j, pwrite32[j], pread32[j]);
+
+                return HAL_ERROR;
+            }
+        }
+        HAL_DBG("testLBA = %lx\n", testLBA);
+        testLBA += testSecCount;
+        testSecCount++;
+        if (testSecCount > maxest_sector)
+            testSecCount = 1;
+    }
+    HAL_DBG("---------Test end---------\n");
+
+    return HAL_OK;
+
+}
+#endif
+
 TEST_GROUP(HAL_SNOR);
 
 TEST_SETUP(HAL_SNOR){
@@ -144,6 +214,18 @@ TEST(HAL_SNOR, SnorStressTest){
     ret = SNOR_TEST(testEndLBA);
     TEST_ASSERT(ret == HAL_OK);
 }
+
+#ifdef HAL_FSPI_XIP_ENABLE
+/* SNOR test case 1 */
+TEST(HAL_SNOR, SnorXIPTest){
+    int32_t ret, testEndLBA;
+
+    testEndLBA = HAL_SNOR_GetCapacity(nor) / nor->sectorSize;
+    TEST_ASSERT(testEndLBA > 0);
+    ret = SNOR_XIP_TEST(testEndLBA);
+    TEST_ASSERT(ret == HAL_OK);
+}
+#endif
 
 static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
 {
@@ -197,6 +279,9 @@ TEST_GROUP_RUNNER(HAL_SNOR){
 #endif
     spi->userdata = (void *)fspiHost;
 
+#ifdef HAL_FSPI_XIP_ENABLE
+    spi->mode = SPI_XIP;
+#endif
     nor->spi = spi;
     ret = HAL_SNOR_Init(nor);
     TEST_ASSERT(ret == HAL_OK);
@@ -205,6 +290,9 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     HAL_NVIC_SetIRQHandler(FSPI0_IRQn, (NVIC_IRQHandler) & FSPI_IRQHandler);
     HAL_NVIC_EnableIRQ(FSPI0_IRQn);
     RUN_TEST_CASE(HAL_SNOR, SnorStressTest);
+#ifdef HAL_FSPI_XIP_ENABLE
+    RUN_TEST_CASE(HAL_SNOR, SnorXIPTest);
+#endif
     /* SNOR deinit */
     ret = HAL_SNOR_Deinit(nor);
     TEST_ASSERT(ret == HAL_OK);

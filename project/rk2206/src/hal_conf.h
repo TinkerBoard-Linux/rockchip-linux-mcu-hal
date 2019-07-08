@@ -27,6 +27,7 @@
 
 #ifdef HAL_SNOR_MODULE_ENABLED
 #define HAL_SNOR_FSPI_HOST
+#define HAL_FSPI_XIP_ENABLE
 #endif
 
 #endif
