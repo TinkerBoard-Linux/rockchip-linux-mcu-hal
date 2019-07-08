@@ -153,9 +153,9 @@ struct FLASH_INFO spiFlashbl[] = {
 };
 
 /********************* Private Function Definition ***************************/
-#if defined(HAL_SNOR_SPI_HOST)
-static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, const struct SPI_MEM_OP *op)
+static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 {
+#if defined(HAL_SNOR_SPI_HOST)
     uint32_t pos = 0;
     const uint8_t *tx_buf = NULL;
     uint8_t *rx_buf = NULL;
@@ -205,32 +205,27 @@ static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, const struct SPI_MEM_
     }
 
     return HAL_OK;
-}
-
 #elif defined(HAL_SNOR_SFC_HOST)
-static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
-{
-    HAL_SFC_SpiXfer(spi, op);
 
-    return HAL_OK;
-}
-
+    return HAL_SFC_SpiXfer(spi, op);
 #elif defined(HAL_SNOR_FSPI_HOST)
-static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
-{
-    HAL_FSPI_SpiXfer(spi, op);
+
+    return HAL_FSPI_SpiXfer(spi, op);
+#else
 
     return HAL_OK;
-}
 #endif
+}
 
 static HAL_Status SNOR_XipExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on)
 {
 #if defined(HAL_SNOR_FSPI_HOST)
-    HAL_FSPI_SpiXipConfig(spi, op, on);
-#endif
+
+    return HAL_FSPI_SpiXipConfig(spi, op, on);
+#else
 
     return HAL_OK;
+#endif
 }
 
 static HAL_Status SNOR_ReadWriteReg(struct SPI_NOR *nor, struct SPI_MEM_OP *op, void *buf)

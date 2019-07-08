@@ -163,7 +163,6 @@ static HAL_Status FSPI_IRQHandler(void)
 
 /* Test code should be place in ram */
 TEST_GROUP_RUNNER(HAL_SNOR){
-    uint32_t ret;
     uint8_t *pwrite_t, *pread_t;
 
     pwrite_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
@@ -177,6 +176,7 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     }
 
 #ifdef HAL_FSPI_MODULE_ENABLED
+    uint32_t ret;
     static struct HAL_FSPI_HOST *fspiHost;
     struct SNOR_HOST *spi;
 
