@@ -317,7 +317,7 @@ void HAL_UART_Reset(struct UART_REG *pReg)
   */
 HAL_Status HAL_UART_Init(const struct HAL_UART_DEV *dev, const struct HAL_UART_CONFIG *config)
 {
-    uint32_t newRate = 24000000;
+    uint32_t newRate;
     struct UART_REG *pReg;
 
     HAL_ASSERT(dev != NULL);
@@ -325,7 +325,7 @@ HAL_Status HAL_UART_Init(const struct HAL_UART_DEV *dev, const struct HAL_UART_C
     pReg = dev->base;
     HAL_ASSERT(IS_UART_INSTANCE(pReg));
 
-#ifdef HAL_CRU_MODULE_ENABLED
+#if defined(HAL_CRU_MODULE_ENABLED) && !defined(IS_FPGA)
     {
         uint32_t rate;
 
@@ -338,7 +338,12 @@ HAL_Status HAL_UART_Init(const struct HAL_UART_DEV *dev, const struct HAL_UART_C
         newRate = HAL_CRU_ClkGetFreq(dev->sclkID);
         HAL_ASSERT(rate == newRate);
     }
+#elif defined(PLL_INPUT_OSC_RATE) && !defined(IS_FPGA)
+    newRate = PLL_INPUT_OSC_RATE;
+#else
+    newRate = 24000000;
 #endif
+
     pReg->FCR =
         UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_10 | UART_FCR_T_TRIG_10;
     UART_SetLcrReg(pReg, config->dataBit, config->parity, config->stopBit);
