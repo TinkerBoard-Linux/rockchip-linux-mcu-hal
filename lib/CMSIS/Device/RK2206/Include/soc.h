@@ -46,7 +46,7 @@ typedef enum
     PWM_4CH_0_IRQn              = 19,
     PWM_4CH_1_IRQn              = 20,
     PWM_4CH_2_IRQn              = 21,
-    SARADC_CTL_IRQn             = 22,
+    SARADC_IRQn                 = 22,
     B2A0_INT0_IRQn              = 23,
     B2A0_INT1_IRQn              = 24,
     B2A0_INT2_IRQn              = 25,
