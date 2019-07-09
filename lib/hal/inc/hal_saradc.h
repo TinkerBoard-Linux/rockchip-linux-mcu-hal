@@ -17,7 +17,7 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
-/** @defgroup PINCTRL_Exported_Definition_Group1 Basic Definition
+/** @defgroup SARADC_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 
