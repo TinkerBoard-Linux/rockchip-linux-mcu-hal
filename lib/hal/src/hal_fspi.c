@@ -457,6 +457,7 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
  * @brief  SPI Nor flash data transmission interface supporting open source specifications.
  * @param  spi: host abstract.
  * @param  op: flash operation protocol.
+ * @param  on: 1 for XIP enable, 0 for XIP disable.
  * @return HAL_Status.
  */
 HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on)
