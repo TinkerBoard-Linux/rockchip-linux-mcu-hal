@@ -24,6 +24,12 @@ extern const struct HAL_UART_DEV g_uart0Dev;
 extern const struct HAL_UART_DEV g_uart1Dev;
 #endif
 
+#ifdef HAL_I2C_MODULE_ENABLED
+extern const struct HAL_I2C_DEV g_i2c0Dev;
+extern const struct HAL_I2C_DEV g_i2c1Dev;
+extern const struct HAL_I2C_DEV g_i2c2Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);

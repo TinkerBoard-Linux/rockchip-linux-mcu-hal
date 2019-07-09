@@ -65,6 +65,35 @@ const struct HAL_UART_DEV g_uart1Dev =
 };
 #endif
 
+#ifdef HAL_I2C_MODULE_ENABLED
+const struct HAL_I2C_DEV g_i2c0Dev =
+{
+    .base = I2C0,
+    .clkID = CLK_I2C0,
+    .clkGateID = CLK_I2C0_SRC_GATE,
+    .pclkGateID = PCLK_I2C0_GATE,
+    .irqNum = I2CMST0_IRQn,
+};
+
+const struct HAL_I2C_DEV g_i2c1Dev =
+{
+    .base = I2C1,
+    .clkID = CLK_I2C1,
+    .clkGateID = CLK_I2C1_SRC_GATE,
+    .pclkGateID = PCLK_I2C1_GATE,
+    .irqNum = I2CMST1_IRQn,
+};
+
+const struct HAL_I2C_DEV g_i2c2Dev =
+{
+    .base = I2C2,
+    .clkID = CLK_I2C2,
+    .clkGateID = CLK_I2C2_SRC_GATE,
+    .pclkGateID = PCLK_I2C2_GATE,
+    .irqNum = I2CMST2_IRQn,
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }
