@@ -45,7 +45,7 @@
 /**
  * @brief  Set the GPIO IRQ end of interrupt(EOI).
  * @param  pGPIO: The pointer of GPIO struct.
- * @param  pin: The pin number defined in @ref PINCTRL_GPIO_pins.
+ * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
  */
 static void GPIO_SetEOI(struct GPIO_REG *pGPIO, uint32_t pin)
 {
@@ -111,7 +111,7 @@ static uint32_t GPIO_GetIntStatus(struct GPIO_REG *pGPIO)
 /**
  * @brief  GPIO Configure IRQ trigger type.
  * @param  pGPIO: The pointer of GPIO struct.
- * @param  pin: The pin number defined in @ref PINCTRL_GPIO_pins.
+ * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
  * @param  mode: The value defined in eGPIO_intType.
  * @return HAL_Status.
  */
@@ -181,7 +181,7 @@ HAL_Status HAL_GPIO_SetIntType(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_intTy
 /**
  * @brief  Set GPIO direction.
  * @param  pGPIO: the GPIO struct.
- * @param  pin: The pin number defined in @ref PINCTRL_GPIO_pins.
+ * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
  * @param  pinDir: direction value defined in eGPIO_pinDirection.
  * @return HAL_Status: HAL_OK if success.
  */
@@ -210,7 +210,7 @@ HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_
 /**
  * @brief  Set GPIO pin level.
  * @param  pGPIO: The pointer of GPIO struct.
- * @param  pin: The pin number defined in @ref PINCTRL_GPIO_pins.
+ * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
  * @param  pinLevel: The level defined in @ref eGPIO_pinLevel.
  * @return HAL_Status.
  */
@@ -253,7 +253,7 @@ HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_pinL
 /**
  * @brief  Get GPIO Pin data value.
  * @param  pGPIO: the GPIO struct.
- * @param  pin: The pin number defined in @ref PINCTRL_GPIO_pins.
+ * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
  * @retval eGPIO_pinLevel: data value.
  */
 eGPIO_pinLevel HAL_GPIO_GetPinData(struct GPIO_REG *pGPIO, uint32_t pin)
@@ -281,7 +281,7 @@ eGPIO_pinLevel HAL_GPIO_GetPinData(struct GPIO_REG *pGPIO, uint32_t pin)
 /**
  * @brief  Get GPIO Pin ext bank level.
  * @param  pGPIO: the GPIO struct.
- * @param  pin: The pin number defined in @ref PINCTRL_GPIO_pins.
+ * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
  * @retval GPIO_PinState: ext bank value.
  */
 eGPIO_pinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin)
@@ -308,7 +308,7 @@ eGPIO_pinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin)
 /**
  * @brief  Set GPIO irq enable.
  * @param  pGPIO: The pointer of GPIO struct.
- * @param  pin: The pin number defined in @ref PINCTRL_GPIO_pins.
+ * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
  */
 void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, uint32_t pin)
 {
@@ -335,7 +335,7 @@ void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, uint32_t pin)
 /**
  * @brief  Set GPIO irq disable.
  * @param  pGPIO: The pointer of GPIO struct.
- * @param  pin: The pin number defined in @ref PINCTRL_GPIO_pins.
+ * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
  */
 void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, uint32_t pin)
 {

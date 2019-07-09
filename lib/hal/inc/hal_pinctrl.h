@@ -3,8 +3,21 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
+/** @addtogroup RK_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup PINCTRL
+ *  @{
+ */
+
 #ifndef __HAL_PINCTRL_H__
 #define __HAL_PINCTRL_H__
+
+/***************************** MACRO Definition ******************************/
+/** @defgroup PINCTRL_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
 
 typedef enum {
     PINCTRL_IOMUX_FUNC0,
@@ -60,10 +73,6 @@ typedef enum {
 #define MASK_DRV  (0xFU << SHIFT_DRV)
 #define MASK_SRT  (0x3U << SHIFT_SRT)
 #define MASK_SMT  (0x3U << SHIFT_SMT)
-
-/** @defgroup PINCTRL_Exported_Definition_Group1 Basic Definition
-*  @{
-*/
 
 /** @brief  PIN Configuration Mode
  *  Elements values convention: gggg g000 0000 0000 ttrr dddd pppp xxxx
@@ -145,11 +154,11 @@ typedef enum {
         .GRFInfo[GRF_SRT_INFO] = { .offset = offset3, .bitsPerPin = bpp3, .pinsPerReg = ppr3 }, \
         .GRFInfo[GRF_SMT_INFO] = { .offset = offset4, .bitsPerPin = bpp4, .pinsPerReg = ppr4 }, \
     }
-/** @} */
 
-/** @defgroup PINCTRL_GPIO_pins Basic Definition
-  * @{
-  */
+/** @defgroup PINCTRL_GPIO_PINS Pins Definition
+ *  @{
+ */
+
 #define GPIO_PIN_A0 (0x00000001U)  /*!< Pin 0 selected    */
 #define GPIO_PIN_A1 (0x00000002U)  /*!< Pin 1 selected    */
 #define GPIO_PIN_A2 (0x00000004U)  /*!< Pin 2 selected    */
@@ -185,13 +194,12 @@ typedef enum {
 
 #define GPIO_PIN_All (0xFFFFFFFFU)  /*!< All pins selected */
 
-#define IS_GPIO_PIN(PIN)      ((PIN) != 0x00000000U)
-#define IS_GPIO_HIGH_PIN(PIN) IS_GPIO_PIN(((PIN) & 0xFFFF0000U))
 /** @} */
 
-/** @defgroup PINCTRL_Exported_Definition_Group2 Struct Definition
- *  @{
- */
+#define IS_GPIO_PIN(PIN)      ((PIN) != 0x00000000U)
+#define IS_GPIO_HIGH_PIN(PIN) IS_GPIO_PIN(((PIN) & 0xFFFF0000U))
+
+/***************************** Structure Definition **************************/
 
 struct PINCTRL_GRF_INFO {
     uint16_t offset;
@@ -240,6 +248,8 @@ extern const struct RK_PINCTRL_DEV g_pinDev;
 
 /** @} */
 
+/***************************** Function Declare ******************************/
+
 HAL_Status HAL_PINCTRL_Suspend(void);
 HAL_Status HAL_PINCTRL_Resume(void);
 
@@ -250,3 +260,7 @@ HAL_Status HAL_PINCTRL_SetParam(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
 HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_configParam param);
 
 #endif /* __HAL_PINCTRL_H__ */
+
+/** @} */
+
+/** @} */

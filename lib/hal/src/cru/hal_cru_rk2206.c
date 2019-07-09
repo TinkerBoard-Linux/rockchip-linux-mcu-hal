@@ -7,7 +7,7 @@
 
 #if defined(RKMCU_RK2206) && defined(HAL_CRU_MODULE_ENABLED)
 
-/** @addtogroup RKMCU_HAL_Driver
+/** @addtogroup RK_HAL_Driver
  *  @{
  */
 
