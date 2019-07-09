@@ -7,7 +7,7 @@
  *  @{
  */
 
-/** @addtogroup SARDAC
+/** @addtogroup SARADC
  *  @{
  */
 
@@ -17,12 +17,17 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
+/** @defgroup PINCTRL_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
 
 /***************************** Structure Definition **************************/
 typedef enum {
     SARADC_INT_MOD,
     SARADC_POL_MOD,
 } eSARADC_mode;
+
+/** @} */
 
 /***************************** Function Declare ******************************/
 HAL_Status HAL_SARADC_Start(struct SARADC_REG *reg, eSARADC_mode mode, uint32_t chn);

@@ -36,18 +36,17 @@
 /********************* Private Function Definition ***************************/
 
 /********************* Public Function Definition ****************************/
-
 /** @defgroup SARADC_Exported_Functions_Group5 Other Functions
-  @verbatim
+ @verbatim
 
-  ===============================================================================
-             #### Other functions ####
-  ===============================================================================
-  This section provides functions allowing to other controlling:
+ ===============================================================================
+          #### Other functions ####
+ ===============================================================================
+ This section provides functions allowing to other controlling:
 
-  @endverbatim
-  *  @{
-  */
+ @endverbatim
+ *  @{
+ */
 
 /**
  * @brief  Start adc
