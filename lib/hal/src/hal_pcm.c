@@ -35,19 +35,6 @@
 
 /********************* Private Function Definition ***************************/
 
-static void PCM_Complete(void *arg)
-{
-    struct AUDIO_PCM *pcm = (struct AUDIO_PCM *)arg;
-
-    pcm->status.hwPtr += pcm->abuf.periodSize;
-
-    /* TBD: mark uncacheable? */
-    HAL_DCACHE_CleanByRange((uint32_t)&pcm->status.hwPtr, sizeof(uint32_t));
-    HAL_DCACHE_InvalidateByRange((uint32_t)&pcm->status.applPtr, sizeof(uint32_t));
-
-    HAL_DBG("%s: hwPtr: 0x%lx\n", __func__, pcm->status.hwPtr);
-}
-
 static int PCM_Ioctl(void *priv, int cmd, void *arg)
 {
     struct AUDIO_PCM *pcm = (struct AUDIO_PCM *)priv;
@@ -195,7 +182,7 @@ HAL_Status HAL_PCM_Init(struct AUDIO_PCM *pcm)
 {
     pcm->ops = &pcmOps;
 
-    return HAL_AUDIO_RegisterPcm(pcm);
+    return HAL_OK;
 }
 
 /**
@@ -207,7 +194,7 @@ HAL_Status HAL_PCM_Deinit(struct AUDIO_PCM *pcm)
 {
     pcm->ops = NULL;
 
-    return HAL_AUDIO_UnregisterPcm(pcm);
+    return HAL_OK;
 }
 
 /** @} */
@@ -224,9 +211,7 @@ HAL_Status HAL_PCM_Deinit(struct AUDIO_PCM *pcm)
  */
 HAL_Status HAL_PCM_Enable(struct AUDIO_PCM *pcm, uint8_t stream)
 {
-    HAL_ASSERT(pcm->chan);
-
-    return HAL_DMA_Start(pcm->chan);
+    return HAL_OK;
 }
 
 /**
@@ -237,9 +222,7 @@ HAL_Status HAL_PCM_Enable(struct AUDIO_PCM *pcm, uint8_t stream)
  */
 HAL_Status HAL_PCM_Disable(struct AUDIO_PCM *pcm, uint8_t stream)
 {
-    HAL_ASSERT(pcm->chan);
-
-    return HAL_DMA_Stop(pcm->chan);
+    return HAL_OK;
 }
 
 /**
@@ -252,38 +235,7 @@ HAL_Status HAL_PCM_Disable(struct AUDIO_PCM *pcm, uint8_t stream)
 HAL_Status HAL_PCM_Prepare(struct AUDIO_PCM *pcm, uint8_t stream,
                            struct AUDIO_BUF *abuf)
 {
-    struct AUDIO_DAI_DMA_DATA *dmaData = pcm->dai->dmaData[stream];
-    struct DMA_SLAVE_CONFIG config;
-    struct DMA_CHAN *chan;
-    struct HAL_DMA *dma;
-    HAL_Status ret = HAL_OK;
-
-    pcm->abuf = *abuf;
-    dma = HAL_DMA_Get(dmaData->dmac);
-    HAL_ASSERT(dma);
-    chan = HAL_DMA_RequestChannel(dma, dmaData->dmaReqCh);
-    HAL_ASSERT(chan);
-    pcm->chan = chan;
-
-    if (stream == AUDIO_STREAM_PLAYBACK) {
-        config.direction = DMA_MEM_TO_DEV;
-        config.dstAddr = dmaData->addr;
-        config.dstAddrWidth = dmaData->addrWidth;
-        config.dstMaxBurst = dmaData->maxBurst;
-    } else {
-        config.direction = DMA_DEV_TO_MEM;
-        config.srcAddr = dmaData->addr;
-        config.srcAddrWidth = dmaData->addrWidth;
-        config.srcMaxBurst = dmaData->maxBurst;
-    }
-
-    ret = HAL_DMA_Config(chan, &config);
-    HAL_ASSERT(ret == HAL_OK);
-    ret = HAL_DMA_PrepDmaCyclic(chan, (uint32_t)abuf->buf, abuf->bufSize,
-                                abuf->periodSize, config.direction,
-                                PCM_Complete, pcm);
-
-    return ret;
+    return HAL_OK;
 }
 
 /**
@@ -293,11 +245,6 @@ HAL_Status HAL_PCM_Prepare(struct AUDIO_PCM *pcm, uint8_t stream,
  */
 HAL_Status HAL_PCM_Release(struct AUDIO_PCM *pcm)
 {
-    HAL_ASSERT(pcm->chan);
-
-    HAL_DMA_ReleaseChannel(pcm->chan);
-    pcm->chan = NULL;
-
     return HAL_OK;
 }
 
@@ -311,8 +258,6 @@ HAL_Status HAL_PCM_Release(struct AUDIO_PCM *pcm)
 HAL_Status HAL_PCM_Config(struct AUDIO_PCM *pcm, uint8_t stream,
                           struct AUDIO_PARAMS *params)
 {
-    pcm->params = *params;
-
     return HAL_OK;
 }
 

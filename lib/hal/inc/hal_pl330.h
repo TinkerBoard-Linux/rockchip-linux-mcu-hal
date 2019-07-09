@@ -176,7 +176,6 @@ struct HAL_PL330_DEV;
  * the DMAC.
  */
 struct PL330_CHAN {
-    struct DMA_CHAN chan;
     uint16_t periId;
     uint16_t chanId;
     uint32_t fifoAddr;
@@ -194,7 +193,6 @@ struct PL330_CHAN {
  * instance.
  */
 struct HAL_PL330_DEV {
-    struct HAL_DMA dma;
     struct DMA_REG *reg;
     struct PL330_CHAN chans[PL330_CHANNELS_PER_DEV];
     struct PL330_CONFIG pcfg;
@@ -211,25 +209,25 @@ struct HAL_PL330_DEV {
 HAL_Status HAL_PL330_Init(struct HAL_PL330_DEV *pl330);
 HAL_Status HAL_PL330_Deinit(struct HAL_PL330_DEV *pl330);
 
-HAL_Status HAL_PL330_Start(struct DMA_CHAN *chan);
-HAL_Status HAL_PL330_Stop(struct DMA_CHAN *chan);
+HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan);
+HAL_Status HAL_PL330_Stop(struct PL330_CHAN *pchan);
 
-struct DMA_CHAN *HAL_PL330_RequestChannel(struct HAL_DMA *dma, uint16_t id);
-HAL_Status HAL_PL330_ReleaseChannel(struct DMA_CHAN *chan);
+struct PL330_CHAN *HAL_PL330_RequestChannel(struct HAL_PL330_DEV *pl330, DMA_REQ_Type id);
+HAL_Status HAL_PL330_ReleaseChannel(struct PL330_CHAN *pchan);
 
-HAL_Status HAL_PL330_Config(struct DMA_CHAN *chan, struct DMA_SLAVE_CONFIG *config);
-HAL_Status HAL_PL330_PrepDmaMemcpy(struct DMA_CHAN *chan, uint32_t dst,
+HAL_Status HAL_PL330_Config(struct PL330_CHAN *pchan, struct DMA_SLAVE_CONFIG *config);
+HAL_Status HAL_PL330_PrepDmaMemcpy(struct PL330_CHAN *pchan, uint32_t dst,
                                    uint32_t src, uint32_t len,
                                    PL330_Callback callback, void *cparam);
-HAL_Status HAL_PL330_PrepDmaCyclic(struct DMA_CHAN *chan, uint32_t dmaAddr,
+HAL_Status HAL_PL330_PrepDmaCyclic(struct PL330_CHAN *pchan, uint32_t dmaAddr,
                                    uint32_t len, uint32_t periodLen,
                                    eDMA_TRANSFER_DIRECTION direction,
                                    PL330_Callback callback, void *cparam);
-HAL_Status HAL_PL330_PrepDmaSingle(struct DMA_CHAN *chan, uint32_t dmaAddr,
+HAL_Status HAL_PL330_PrepDmaSingle(struct PL330_CHAN *pchan, uint32_t dmaAddr,
                                    uint32_t len,
                                    eDMA_TRANSFER_DIRECTION direction,
                                    PL330_Callback callback, void *cparam);
-int HAL_PL330_GetPosition(struct DMA_CHAN *chan);
+int HAL_PL330_GetPosition(struct PL330_CHAN *pchan);
 
 HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330);
 uint32_t HAL_PL330_GetRawIrqStatus(struct HAL_PL330_DEV *pl330);

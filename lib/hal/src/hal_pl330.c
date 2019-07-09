@@ -1035,36 +1035,6 @@ __STATIC_INLINE int getBurstLen(struct PL330_DESC *desc, struct HAL_PL330_DEV *p
 }
 
 /**
- * @brief Cast struct DMA_CHAN to struct PL330_CHAN
- *
- * @param ch: the handle of struct DMA_CHAN.
- *
- * @return the handle of struct PL330_CHAN.
- */
-__STATIC_INLINE struct PL330_CHAN *to_pchan(struct DMA_CHAN *ch)
-{
-    if (!ch)
-        return NULL;
-
-    return HAL_CONTAINER_OF(ch, struct PL330_CHAN, chan);
-}
-
-/**
- * @brief Cast struct HAL_DMA to struct HAL_PL330_DEV
- *
- * @param dma: the handle of struct HAL_DMA.
- *
- * @return the handle of struct HAL_PL330_DEV.
- */
-__STATIC_INLINE struct HAL_PL330_DEV *to_pl330(struct HAL_DMA *dma)
-{
-    if (!dma)
-        return NULL;
-
-    return HAL_CONTAINER_OF(dma, struct HAL_PL330_DEV, dma);
-}
-
-/**
  * @brief Use the debug registers to kill the DMA thread.
  *
  * @param reg: the DMA_REG info.
@@ -1397,14 +1367,13 @@ HAL_Status HAL_PL330_ClearIrq(struct HAL_PL330_DEV *pl330, uint32_t irq)
 /**
  * @brief get the position
  *
- * @param chan: the handle of struct DMA_CHAN.
+ * @param pchan: the handle of struct PL330_CHAN.
  *
  * @return the size dma transferred.
  */
-int HAL_PL330_GetPosition(struct DMA_CHAN *chan)
+int HAL_PL330_GetPosition(struct PL330_CHAN *pchan)
 {
     uint32_t val = 0, addr = 0;
-    struct PL330_CHAN *pchan = to_pchan(chan);
     struct HAL_PL330_DEV *pl330 = pchan->pl330;
     struct PL330_DESC *desc = &pchan->desc;
     struct DMA_REG *reg = pl330->reg;
@@ -1449,12 +1418,9 @@ int HAL_PL330_GetPosition(struct DMA_CHAN *chan)
 HAL_Status HAL_PL330_Init(struct HAL_PL330_DEV *pl330)
 {
     struct PL330_CHAN *pchan;
-    struct HAL_DMA *dma;
     uint8_t channel;
 
     HAL_ASSERT(pl330 != NULL);
-
-    dma = &pl330->dma;
 
     memset(pl330->chans, 0, sizeof(*pchan) * PL330_CHANNELS_PER_DEV);
 
@@ -1465,18 +1431,7 @@ HAL_Status HAL_PL330_Init(struct HAL_PL330_DEV *pl330)
 
     PL330_Read_Config(pl330);
 
-    dma->start = HAL_PL330_Start;
-    dma->stop = HAL_PL330_Stop;
-    dma->requestChannel = HAL_PL330_RequestChannel;
-    dma->releaseChannel = HAL_PL330_ReleaseChannel;
-    dma->config = HAL_PL330_Config;
-    dma->prepDmaMemcpy = HAL_PL330_PrepDmaMemcpy;
-    dma->prepDmaCyclic = HAL_PL330_PrepDmaCyclic;
-    dma->prepDmaSingle = HAL_PL330_PrepDmaSingle;
-
-    dma->id = pl330->reg;
-
-    return HAL_DMA_Register(dma);
+    return HAL_OK;
 }
 
 /**
@@ -1494,7 +1449,6 @@ HAL_Status HAL_PL330_Deinit(struct HAL_PL330_DEV *pl330)
     uint32_t waitCount = 0;
     uint32_t i;
     struct DMA_REG *reg = pl330->reg;
-    struct HAL_DMA *dma = &pl330->dma;
 
     /* Disable all the interrupts */
     WRITE_REG(reg->INTEN, 0x00);
@@ -1517,8 +1471,6 @@ HAL_Status HAL_PL330_Deinit(struct HAL_PL330_DEV *pl330)
     WRITE_REG(reg->DBGINST[1], 0x0);
     WRITE_REG(reg->DBGCMD, 0x0);
 
-    HAL_DMA_Unregister(dma);
-
     return HAL_OK;
 }
 
@@ -1539,21 +1491,20 @@ HAL_Status HAL_PL330_Deinit(struct HAL_PL330_DEV *pl330)
 /**
  * @brief Start a DMA channel with the desc request.
  *
- * @param chan: the hanlde of struct DMA_CHAN.
+ * @param pchan: the hanlde of struct PL330_CHAN.
  *
  * @return
  *        - HAL_OK on success
  *        - HAL_BUSY if DMA is busy
  *        - HAL_ERROR on other failures
  */
-HAL_Status HAL_PL330_Start(struct DMA_CHAN *chan)
+HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
 {
     int status = HAL_OK;
     uint32_t mcBuf = 0;
     uint32_t inten;
     uint32_t ccr;
     struct PL330_XFER_SPEC xs;
-    struct PL330_CHAN *pchan = to_pchan(chan);
     uint32_t channel = pchan->chanId;
     struct HAL_PL330_DEV *pl330 = pchan->pl330;
     struct PL330_DESC *desc = &pchan->desc;
@@ -1604,17 +1555,15 @@ HAL_Status HAL_PL330_Start(struct DMA_CHAN *chan)
 /**
  * @brief Stop a DMA channel.
  *
- * @param chan: the hanlde of struct DMA_CHAN.
+ * @param pchan: the hanlde of struct PL330_CHAN.
  *
  * @return
  *        - HAL_OK on success
  *        - HAL_BUSY if DMA is busy
  *        - HAL_ERROR on other failures
  */
-HAL_Status HAL_PL330_Stop(struct DMA_CHAN *chan)
+HAL_Status HAL_PL330_Stop(struct PL330_CHAN *pchan)
 {
-    struct PL330_CHAN *pchan = to_pchan(chan);
-
     HAL_ASSERT(pchan != NULL);
 
     return PL330_Exec_DMAKILL(pchan->pl330->reg, pchan->chanId, 1);
@@ -1695,15 +1644,14 @@ HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
 /**
  * @brief Request a dma channel
  *
- * @param dma: the handle of struct HAL_DMA.
+ * @param pl330: the handle of struct HAL_PL330_DEV.
  * @param id: the peri id.
  *
  * @return a idle dma channel.
  */
-struct DMA_CHAN *HAL_PL330_RequestChannel(struct HAL_DMA *dma, uint16_t id)
+struct PL330_CHAN *HAL_PL330_RequestChannel(struct HAL_PL330_DEV *pl330, DMA_REQ_Type id)
 {
     int i = 0;
-    struct HAL_PL330_DEV *pl330 = to_pl330(dma);
     struct PL330_CHAN *pchan = NULL;
 
     for (i = 0; i < PL330_CHANNELS_PER_DEV; i++) {
@@ -1716,21 +1664,21 @@ struct DMA_CHAN *HAL_PL330_RequestChannel(struct HAL_DMA *dma, uint16_t id)
         break;
     }
 
-    return &pchan->chan;
+    return pchan;
 }
 
 /**
  * @brief Release a dma channel
  *
- * @param chan: the handle of struct DMA_CHAN.
+ * @param pchan: the handle of struct PL330_CHAN.
  *
  * @return
  *        - HAL_OK on success.
  *        - HAL_ERROR on fail.
  */
-HAL_Status HAL_PL330_ReleaseChannel(struct DMA_CHAN *chan)
+HAL_Status HAL_PL330_ReleaseChannel(struct PL330_CHAN *pchan)
 {
-    struct PL330_CHAN *pchan = to_pchan(chan);
+    HAL_ASSERT(pchan);
 
     pchan->periId = 0;
     pchan->used = false;
@@ -1741,16 +1689,16 @@ HAL_Status HAL_PL330_ReleaseChannel(struct DMA_CHAN *chan)
 /**
  * @brief Config a pl330 dma channel
  *
- * @param chan: the handle of struct DMA_CHAN.
+ * @param pchan: the handle of struct PL330_CHAN.
  * @param config: the peri req config.
  *
  * @return
  *        - HAL_OK on success.
  *        - HAL_ERROR on fail.
  */
-HAL_Status HAL_PL330_Config(struct DMA_CHAN *chan, struct DMA_SLAVE_CONFIG *config)
+HAL_Status HAL_PL330_Config(struct PL330_CHAN *pchan, struct DMA_SLAVE_CONFIG *config)
 {
-    struct PL330_CHAN *pchan = to_pchan(chan);
+    HAL_ASSERT(pchan);
 
     if (config->direction == DMA_MEM_TO_DEV) {
         if (config->dstAddr)
@@ -1774,7 +1722,7 @@ HAL_Status HAL_PL330_Config(struct DMA_CHAN *chan, struct DMA_SLAVE_CONFIG *conf
 /**
  * @brief Prepare a cyclic dma transfer for the channel
  *
- * @param chan: tthe handle of struct DMA_CHAN.
+ * @param pchan: tthe handle of struct PL330_CHAN.
  * @param dmaAddr: the memory addr.
  * @param len: data len.
  * @param periodLen: periodic len.
@@ -1786,12 +1734,11 @@ HAL_Status HAL_PL330_Config(struct DMA_CHAN *chan, struct DMA_SLAVE_CONFIG *conf
  *        - HAL_OK on success.
  *        - HAL_ERROR on fail.
  */
-HAL_Status HAL_PL330_PrepDmaCyclic(struct DMA_CHAN *chan, uint32_t dmaAddr,
+HAL_Status HAL_PL330_PrepDmaCyclic(struct PL330_CHAN *pchan, uint32_t dmaAddr,
                                    uint32_t len, uint32_t periodLen,
                                    eDMA_TRANSFER_DIRECTION direction,
                                    PL330_Callback callback, void *cparam)
 {
-    struct PL330_CHAN *pchan = to_pchan(chan);
     struct HAL_PL330_DEV *pl330 = pchan->pl330;
     struct PL330_DESC *desc = &pchan->desc;
     uint32_t dst;
@@ -1845,7 +1792,7 @@ HAL_Status HAL_PL330_PrepDmaCyclic(struct DMA_CHAN *chan, uint32_t dmaAddr,
 /**
  * @brief Prepare a single dma transfer for the channel
  *
- * @param chan: the handle of struct DMA_CHAN.
+ * @param pchan: the handle of struct PL330_CHAN.
  * @param dmaAddr: the memory addr.
  * @param len: data len.
  * @param direction: transfer direction.
@@ -1856,12 +1803,11 @@ HAL_Status HAL_PL330_PrepDmaCyclic(struct DMA_CHAN *chan, uint32_t dmaAddr,
  *        - HAL_OK on success.
  *        - HAL_ERROR on fail.
  */
-HAL_Status HAL_PL330_PrepDmaSingle(struct DMA_CHAN *chan, uint32_t dmaAddr,
+HAL_Status HAL_PL330_PrepDmaSingle(struct PL330_CHAN *pchan, uint32_t dmaAddr,
                                    uint32_t len,
                                    eDMA_TRANSFER_DIRECTION direction,
                                    PL330_Callback callback, void *cparam)
 {
-    struct PL330_CHAN *pchan = to_pchan(chan);
     struct HAL_PL330_DEV *pl330 = pchan->pl330;
     struct PL330_DESC *desc = &pchan->desc;
     uint32_t dst;
@@ -1914,7 +1860,7 @@ HAL_Status HAL_PL330_PrepDmaSingle(struct DMA_CHAN *chan, uint32_t dmaAddr,
 /**
  * @brief Prepare a dma memcpy
  *
- * @param chan: the handle of struct DMA_CHAN.
+ * @param pchan: the handle of struct PL330_CHAN.
  * @param dst: the memory dst addr.
  * @param src: the memory src addr.
  * @param len: data len.
@@ -1925,11 +1871,10 @@ HAL_Status HAL_PL330_PrepDmaSingle(struct DMA_CHAN *chan, uint32_t dmaAddr,
  *        - HAL_OK on success.
  *        - HAL_ERROR on fail.
  */
-HAL_Status HAL_PL330_PrepDmaMemcpy(struct DMA_CHAN *chan, uint32_t dst,
+HAL_Status HAL_PL330_PrepDmaMemcpy(struct PL330_CHAN *pchan, uint32_t dst,
                                    uint32_t src, uint32_t len,
                                    PL330_Callback callback, void *cparam)
 {
-    struct PL330_CHAN *pchan = to_pchan(chan);
     struct HAL_PL330_DEV *pl330 = pchan->pl330;
     struct PL330_DESC *desc = &pchan->desc;
     int burst;

@@ -12,7 +12,7 @@
 
 #define TSIZE 64
 
-static struct HAL_DMA *dma;
+static struct HAL_PL330_DEV *s_pl330;
 static uint8_t *src;
 static uint8_t *dst;
 
@@ -24,50 +24,40 @@ TEST_SETUP(HAL_PL330){
 TEST_TEAR_DOWN(HAL_PL330){
 }
 
-__STATIC_INLINE struct HAL_PL330_DEV *to_pl330(struct HAL_DMA *dma)
-{
-    if (!dma)
-        return NULL;
-
-    return HAL_CONTAINER_OF(dma, struct HAL_PL330_DEV, dma);
-}
-
 static void HAL_PL330_Handler(void)
 {
-    struct HAL_PL330_DEV *pl330 = to_pl330(dma);
-
-    HAL_PL330_IrqHandler(pl330);
+    HAL_PL330_IrqHandler(s_pl330);
 }
 
 static void MEMCPY_Callback(void *cparam)
 {
-    struct DMA_CHAN *chan = cparam;
+    struct PL330_CHAN *pchan = cparam;
     uint32_t ret;
 
     TEST_ASSERT_EQUAL_MEMORY(src, dst, TSIZE);
 
-    ret = HAL_DMA_Stop(chan);
+    ret = HAL_PL330_Stop(pchan);
     TEST_ASSERT(ret == HAL_OK);
 
-    ret = HAL_DMA_ReleaseChannel(chan);
+    ret = HAL_PL330_ReleaseChannel(pchan);
     TEST_ASSERT(ret == HAL_OK);
 }
 
 TEST(HAL_PL330, MemcpyTest){
     uint32_t ret, i;
-    struct DMA_CHAN *chan;
+    struct PL330_CHAN *pchan;
 
     for (i = 0; i < TSIZE; i++)
         src[i] = i;
 
-    chan = HAL_DMA_RequestChannel(dma, 0);
-    TEST_ASSERT_NOT_NULL(chan);
+    pchan = HAL_PL330_RequestChannel(s_pl330, 0);
+    TEST_ASSERT_NOT_NULL(pchan);
 
-    ret = HAL_DMA_PrepDmaMemcpy(chan, (uint32_t)&dst, (uint32_t)&src,
-                                TSIZE, MEMCPY_Callback, chan);
+    ret = HAL_PL330_PrepDmaMemcpy(pchan, (uint32_t)&dst, (uint32_t)&src,
+                                  TSIZE, MEMCPY_Callback, pchan);
     TEST_ASSERT(ret == HAL_OK);
 
-    ret = HAL_DMA_Start(chan);
+    ret = HAL_PL330_Start(pchan);
     TEST_ASSERT(ret == HAL_OK);
 }
 
@@ -78,7 +68,7 @@ TEST_GROUP_RUNNER(HAL_PL330){
     ret = HAL_PL330_Init(pl330);
     TEST_ASSERT(ret == HAL_OK);
 
-    dma = &pl330->dma;
+    s_pl330 = pl330;
 
     src = (uint8_t *)malloc(TSIZE);
     TEST_ASSERT_NOT_NULL(src);

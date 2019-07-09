@@ -60,13 +60,13 @@ struct DMA_SLAVE_CONFIG {
     eDMA_SLAVE_BUSWIDTH dstAddrWidth; /**< The same as srcAddrWidth. */
     uint32_t srcAddr; /**< The source physical address. */
     uint32_t dstAddr; /**< The destination physical address. */
-    uint32_t srcMaxBurst; /**< The maximum number of words (note: words, as in
+    uint16_t srcMaxBurst; /**< The maximum number of words (note: words, as in
                             *  units of the srcAddrWidth member, not bytes) that
                             *  can be sent in one burst to the device, Typically
                             *  something like half the FIFO depth on I/O peri so
                             *  you don't overflow it.
                             */
-    uint32_t dstMaxBurst; /**< The same as srcMaxBurst for destination. */
+    uint16_t dstMaxBurst; /**< The same as srcMaxBurst for destination. */
 };
 
 /**
@@ -74,75 +74,9 @@ struct DMA_SLAVE_CONFIG {
  */
 typedef void (*DMA_Callback)(void *cparam);
 
-struct DMA_CHAN;
-
-/**
- * struct HAL_DMA - general dma struct.
- */
-struct HAL_DMA {
-    HAL_LIST list; /**< list node */
-    struct DMA_REG *id; /**< assign DMA_REG ptr as the unique id. */
-
-    uint32_t chanCnt; /**< dma channels count*/
-    HAL_Status (*start)(struct DMA_CHAN *chan);
-    HAL_Status (*stop)(struct DMA_CHAN *chan);
-
-    struct DMA_CHAN *(*requestChannel)(struct HAL_DMA *dma, uint16_t id);
-    HAL_Status (*releaseChannel)(struct DMA_CHAN *chan);
-
-    HAL_Status (*config)(struct DMA_CHAN *chan, struct DMA_SLAVE_CONFIG *config);
-    HAL_Status (*prepDmaMemcpy)(struct DMA_CHAN *chan, uint32_t dst,
-                                uint32_t src, uint32_t len,
-                                DMA_Callback callback, void *cparam);
-    HAL_Status (*prepDmaCyclic)(struct DMA_CHAN *chan, uint32_t dmaAddr,
-                                uint32_t len, uint32_t periodLen,
-                                eDMA_TRANSFER_DIRECTION direction,
-                                DMA_Callback callback, void *cparam);
-    HAL_Status (*prepDmaSingle)(struct DMA_CHAN *chan, uint32_t dmaAddr,
-                                uint32_t len,
-                                eDMA_TRANSFER_DIRECTION direction,
-                                DMA_Callback callback, void *cparam);
-    int (*getPosition)(struct DMA_CHAN *chan);
-
-    void *privData; /**< dma privData, general for priv dma struct*/
-};
-
-/**
- * struct DMA_CHAN - dma chan struct.
- */
-struct DMA_CHAN {
-    struct HAL_DMA *device;
-    int chanId;
-};
-
 /** @} */
 
 /***************************** Function Declare ******************************/
-
-HAL_Status HAL_DMA_Register(struct HAL_DMA *dma);
-HAL_Status HAL_DMA_Unregister(struct HAL_DMA *dma);
-
-HAL_Status HAL_DMA_Start(struct DMA_CHAN *chan);
-HAL_Status HAL_DMA_Stop(struct DMA_CHAN *chan);
-
-struct DMA_CHAN *HAL_DMA_RequestChannel(struct HAL_DMA *dma, uint16_t id);
-HAL_Status HAL_DMA_ReleaseChannel(struct DMA_CHAN *chan);
-
-HAL_Status HAL_DMA_Config(struct DMA_CHAN *chan, struct DMA_SLAVE_CONFIG *config);
-HAL_Status HAL_DMA_PrepDmaMemcpy(struct DMA_CHAN *chan, uint32_t dst,
-                                 uint32_t src, uint32_t len,
-                                 DMA_Callback callback, void *cparam);
-HAL_Status HAL_DMA_PrepDmaCyclic(struct DMA_CHAN *chan, uint32_t dmaAddr,
-                                 uint32_t len, uint32_t periodLen,
-                                 eDMA_TRANSFER_DIRECTION direction,
-                                 DMA_Callback callback, void *cparam);
-HAL_Status HAL_DMA_PrepDmaSingle(struct DMA_CHAN *chan, uint32_t dmaAddr,
-                                 uint32_t len,
-                                 eDMA_TRANSFER_DIRECTION direction,
-                                 DMA_Callback callback, void *cparam);
-
-int HAL_DMA_GetPosition(struct DMA_CHAN *chan);
-struct HAL_DMA *HAL_DMA_Get(struct DMA_REG *id);
 
 #endif
 
