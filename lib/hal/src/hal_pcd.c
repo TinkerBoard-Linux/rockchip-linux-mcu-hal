@@ -12,7 +12,7 @@
  *  @{
  */
 
-/** @defgroup How_To_Use How To Use
+/** @defgroup PCD_How_To_Use How To Use
  *  @{
  @verbatim
 

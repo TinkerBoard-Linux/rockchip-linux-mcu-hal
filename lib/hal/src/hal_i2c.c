@@ -12,7 +12,7 @@
  *  @{
  */
 
-/** @defgroup How_To_Use How To Use
+/** @defgroup I2C_How_To_Use How To Use
  *  @{
  @verbatim
 

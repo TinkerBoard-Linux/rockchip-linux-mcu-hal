@@ -15,7 +15,7 @@
  *  @{
  */
 
-/** @defgroup How_To_Use How To Use
+/** @defgroup CRU_How_To_Use How To Use
  *  @{
  @verbatim
 

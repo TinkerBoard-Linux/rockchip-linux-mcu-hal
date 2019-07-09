@@ -11,7 +11,7 @@
  *  @{
  */
 
-/** @defgroup How_To_Use How To Use
+/** @defgroup VOP_How_To_Use How To Use
  *  @{
  @verbatim
 

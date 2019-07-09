@@ -15,7 +15,7 @@
  *  @{
  */
 
-/** @defgroup How_To_Use How To Use
+/** @defgroup Mailbox_How_To_Use How To Use
  *  @{
  @verbatim
 
