@@ -34,6 +34,7 @@
  */
 #define BANK_PIN(BANK, PIN) ((((BANK) << GPIO_BANK_SHIFT) & GPIO_BANK_MASK) + (((PIN) << GPIO_PIN_SHIFT) & GPIO_PIN_MASK))
 
+/** GPIO pin levle */
 typedef enum {
     GPIO_LOW,
     GPIO_HIGH
@@ -66,6 +67,7 @@ typedef enum {
     GPIO_INT_TYPE_DEFAULT      = GPIO_INT_TYPE_SENSE_MASK,
 } eGPIO_intType;
 
+/** GPIO bank */
 typedef enum {
     #ifdef GPIO0
     GPIO_BANK0 = 0,
