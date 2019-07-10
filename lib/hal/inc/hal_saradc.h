@@ -35,7 +35,7 @@ HAL_Status HAL_SARADC_Stop(struct SARADC_REG *reg);
 uint32_t HAL_SARADC_GetRaw(struct SARADC_REG *reg);
 HAL_Check HAL_SARADC_PollIsEOC(struct SARADC_REG *reg);
 void HAL_SARADC_IrqHandler(struct SARADC_REG *reg);
-
+void HAL_SARADC_ClearIrq(struct SARADC_REG *reg);
 #endif
 
 /** @} */
