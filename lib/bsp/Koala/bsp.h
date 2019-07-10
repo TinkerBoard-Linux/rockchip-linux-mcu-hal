@@ -30,6 +30,10 @@ extern const struct HAL_I2C_DEV g_i2c1Dev;
 extern const struct HAL_I2C_DEV g_i2c2Dev;
 #endif
 
+#ifdef HAL_PWM_MODULE_ENABLED
+extern const struct HAL_PWM_DEV g_pwm0Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);

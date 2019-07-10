@@ -94,6 +94,17 @@ const struct HAL_I2C_DEV g_i2c2Dev =
 };
 #endif
 
+#if defined(HAL_PWM_MODULE_ENABLED)
+const struct HAL_PWM_DEV g_pwm0Dev =
+{
+    .base = PWM,
+    .clkID = CLK_PWM,
+    .clkGateID = CLK_PWM_SRC_GATE,
+    .pclkGateID = PCLK_PWM_GATE,
+    .irqNum = PWM_IRQn,
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }
