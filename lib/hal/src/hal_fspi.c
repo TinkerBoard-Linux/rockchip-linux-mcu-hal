@@ -13,25 +13,27 @@
 
 /** @defgroup FSPI_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The FSPI driver can be used as follows:
 
- This host driver need to be used in conjunction with device flash driver like
- hal_snor.c
+ For Nor flash This host driver need to be used in conjunction with device flash driver like
+ hal_snor.c:
 
- (#) DMA mode: Register handler(HAL_FSPI_IRQHelper).
- (#) DMA mode: Unmask TRANSM interrupt(HAL_FSPI_UnmaskDMAInterrupt).
- (#) Initialize FSPI controller(HAL_FSPI_Init);
- (#) Send FSPI request:
-    (##) SNOR support api: (HAL_FSPI_SpiXfer);
- (#) DMA mode: Handling interrupt return in DMA mode FSPI request.
- (#) Configure XIP mode if needed.(HAL_FSPI_XmmcRequest)
+ - DMA mode: Register handler by calling HAL_FSPI_IRQHelper().
+ - DMA mode: Unmask TRANSM interrupt by calling HAL_FSPI_UnmaskDMAInterrupt().
+ - Initialize FSPI controller by calling HAL_FSPI_Init();
+ - Send FSPI request:
+    - SNOR support api: HAL_FSPI_SpiXfer() which can analyze the flash
+        read and write protocol of the SNOR framework;
+ - DMA mode: Handling interrupt return in DMA mode.
+ - Configure XIP mode if needed by calling:
+    - SNOR support api: HAL_FSPI_SpiXipConfig() which can analyze the flash
+        read and write protocol of the SNOR framework;
 
- @endverbatim
+ For psram:
+ - Initialize FSPI controller by calling HAL_FSPI_Init();
+ - Configure XIP mode if needed by calling HAL_FSPI_XmmcRequest() which support for FSPI config FSPI directly.
+
  @} */
 
 #include "hal_base.h"
@@ -411,17 +413,12 @@ HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 /********************* Public Function Definition ****************************/
 
 /** @defgroup FSPI_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- (#) Operate in blocking mode (DMA IT) using HAL_FSPI_Request_DMA();
- (#) Operate in blocking mode (Normal) using HAL_FSPI_Request();
+ - Operate in blocking mode (DMA IT) using HAL_FSPI_Request_DMA();
+ - Operate in blocking mode (Normal) using HAL_FSPI_Request();
 
- @endverbatim
  *  @{
  */
 
@@ -472,14 +469,9 @@ HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, u
 /** @} */
 
 /** @defgroup FSPI_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 

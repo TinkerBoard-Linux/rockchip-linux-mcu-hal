@@ -13,22 +13,17 @@
 
 /** @defgroup SPI2APB_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The SPI2APB driver can be used as follows:
 
- (#) Invoke HAL_SPI2APB_Configurate to configurate it.
- (#) Invoke HAL_SPI2APB_ReadStatus to query status.
- (#) Invoke HAL_SPI2APB_UnmaskIrq to mask/unmask irq.
- (#) Invoke HAL_SPI2APB_CleanIrq to clean irq.
- (#) Invoke HAL_SPI2APB_ReadReg0 to read reg0.
- (#) Invoke HAL_SPI2APB_ReadReg1 to read reg1.
- (#) Invoke HAL_SPI2APB_WriteReg2 to write value into reg2.
+ - Invoke HAL_SPI2APB_Configurate() to configurate it.
+ - Invoke HAL_SPI2APB_ReadStatus() to query status.
+ - Invoke HAL_SPI2APB_UnmaskIrq() to mask/unmask irq.
+ - Invoke HAL_SPI2APB_CleanIrq() to clean irq.
+ - Invoke HAL_SPI2APB_ReadReg0() to read reg0.
+ - Invoke HAL_SPI2APB_ReadReg1() to read reg1.
+ - Invoke HAL_SPI2APB_WriteReg2() to write value into reg2.
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -36,14 +31,9 @@
 #ifdef HAL_SPI2APB_MODULE_ENABLED
 
 /** @defgroup SPI2APB_Exported_Definition_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 

@@ -14,20 +14,15 @@
 
 /** @defgroup USB_CORE_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    ##### How to use #####
- ==============================================================================
  The USB CORE HAL driver can be used as follows:
 
- (#) Fill parameters of Init structure in USB_OTG_CFG structure.
+ - Fill parameters of Init structure in USB_OTG_CFG structure.
 
- (#) Call USB_CoreInit() API to initialize the USB Core peripheral.
+ - Call USB_CoreInit() API to initialize the USB Core peripheral.
 
- (#) The upper HAL HCD/PCD driver will call the right routines for its internal processes.
+ - The upper HAL HCD/PCD driver will call the right routines for its internal processes.
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -42,13 +37,8 @@ static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB);
 
 /********************* Public Function Definition ****************************/
 /** @defgroup USB_CORE_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
- @endverbatim
  *  @{
  */
 

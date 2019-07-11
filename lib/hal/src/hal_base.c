@@ -13,20 +13,15 @@
 
 /** @defgroup HAL_BASE_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The HAL_BASE driver can be used as follows:
 
- (#) Resgister HAL_SysTick_Handler.
- (#) Initialize the HAL_BASE(HAL_Init):
-    (##) Enable default interrupt.
-    (##) Define interrupt priority group:
-    (##) Initial systick
+ - Resgister HAL_SysTick_Handler().
+ - Initialize the HAL_BASE (HAL_Init()):
+    - Enable default interrupt.
+    - Define interrupt priority group:
+    - Initial systick
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -44,14 +39,9 @@ static __IO uint32_t uwTick;
 
 /********************* Private Function Definition ***************************/
 /** @defgroup HAL_BASE_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 

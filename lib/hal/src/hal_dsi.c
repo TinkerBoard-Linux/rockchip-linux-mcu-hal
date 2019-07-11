@@ -13,14 +13,9 @@
 
 /** @defgroup DSI_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The DSI driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -137,14 +132,9 @@ static uint32_t DSI_GetHcomponentLbcc(uint32_t hcomponent, uint16_t lane_mbps, u
 /********************* Public Function Definition ****************************/
 
 /** @defgroup DSI_Exported_Functions_Group1 Suspend and Resume Functions
- @verbatim
 
- ===============================================================================
-             #### Suspend and Resume functions ####
- ===============================================================================
  This section provides functions allowing to suspend and resume the module:
 
- @endverbatim
  *  @{
  */
 
@@ -173,14 +163,9 @@ HAL_Status HAL_DSI_Resume(struct DSI_REG *pReg)
 /** @} */
 
 /** @defgroup DSI_Exported_Functions_Group2 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 
@@ -309,14 +294,9 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
 /** @} */
 
 /** @defgroup DSI_Exported_Functions_Group3 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 

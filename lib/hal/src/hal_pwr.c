@@ -13,23 +13,18 @@
 
 /** @defgroup PWR_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The PWR driver can be used as follows:
 
- (#) Invoke HAL_PWR_SetVoltage to set voltage value.
- (#) Invoke HAL_PWR_GetVoltage to Get voltage value.
- (#) Invoke HAL_PWR_SetVoltageSuspend to set voltage value for suspend mode.
- (#) Invoke HAL_PWR_GetVoltageSuspend to get voltage value for suspend mode.
- (#) Invoke HAL_PWR_GetVoltageReal to get voltage value while is in effect.
- (#) Invoke HAL_PWR_Enable to enable a regulator.
- (#) Invoke HAL_PWR_Disable to disable a regulator.
- (#) Invoke HAL_PWR_GetEnableState to get the enable state.
+ - Invoke HAL_PWR_SetVoltage to set voltage value.
+ - Invoke HAL_PWR_GetVoltage to Get voltage value.
+ - Invoke HAL_PWR_SetVoltageSuspend to set voltage value for suspend mode.
+ - Invoke HAL_PWR_GetVoltageSuspend to get voltage value for suspend mode.
+ - Invoke HAL_PWR_GetVoltageReal to get voltage value while is in effect.
+ - Invoke HAL_PWR_Enable to enable a regulator.
+ - Invoke HAL_PWR_Disable to disable a regulator.
+ - Invoke HAL_PWR_GetEnableState to get the enable state.
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -121,14 +116,9 @@ int PWR_EnableDisable(struct PWR_DESC *desc, uint32_t enable)
 
 /********************* Public Function Definition ****************************/
 /** @defgroup PWR_Exported_Functions_Group2 State and Errors Functions
- @verbatim
 
- ===============================================================================
-             #### State and Errors functions ####
- ===============================================================================
  This section provides functions allowing to get the status of the module:
 
- @endverbatim
  *  @{
  */
 
@@ -193,13 +183,8 @@ int HAL_PWR_GetVoltageReal(struct PWR_DESC *desc)
 /** @} */
 
 /** @defgroup PWR_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
- @endverbatim
  *  @{
  */
 

@@ -14,38 +14,33 @@
 
 /** @defgroup I2C_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
-    [..]
-      The I2C HAL driver can be used as follows:
+ The I2C HAL driver can be used as follows:
 
-      (#) Declare a I2C_Handle handle structure, for example:
-          I2C_Handle instance;
+ - Declare a I2C_HANDLE handle structure, for example:
+   ```
+   I2C_HANDLE instance;
+   ```
+ - Invoke HAL_I2C_Init() API to initialize base address and bourate:
+   - Base register address;
+   - DIV base on speed.
 
-      (#) Invoke HAL_I2C_Init() API to initialize base address and bourate:
-          (++) Base register address;
-          (++) DIV base on speed.
+ - Invoke HAL_I2C_ConfigureMode() API and HAL_I2C_SetupMsg() to program mode:
+   - I2C mode;
+   - Device address and register address;
+   - Current message.
 
-      (#) Invoke HAL_I2C_ConfigureMode() API and HAL_I2C_SetupMsg() to program mode:
-          (++) I2C mode;
-          (++) Device address and register address;
-          (++) Current message.
+ - There are two modes of transfer:
+   - Blocking mode: The communication is performed in polling mode by calling
+     HAL_I2C_Transfer() and HAL_I2C_IRQHandler() with I2C_POLL type;
+   - No-Blocking mode: The communication is performed using Interrupts.The
+     HAL_I2C_Transfer() with I2C_IT type, HAL_I2C_IRQHandler() is used for
+     interrupt mode.
 
-     (#) There are two modes of transfer:
-         (++) Blocking mode: The communication is performed in polling mode by calling
-              HAL_I2C_Transfer() and HAL_I2C_IRQHandler() with I2C_POLL type;
-         (++) No-Blocking mode: The communication is performed using Interrupts.The
-              HAL_I2C_Transfer() with I2C_IT type, HAL_I2C_IRQHandler() is used for
-              interrupt mode.
+ - Invoke HAL_I2C_Close() to finish this transfer.
 
-      (#) Invoke HAL_I2C_Close() to finish this transfer.
+ - Invoke HAL_I2C_DeInit() if necessary.
 
-      (#) Invoke HAL_I2C_DeInit() if necessary.
-
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -534,14 +529,9 @@ static HAL_Status I2C_HandleStop(struct I2C_HANDLE *pI2C, uint32_t ipd)
 /********************* Public Function Definition ****************************/
 
 /** @defgroup I2C_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 
@@ -723,14 +713,9 @@ HAL_Status HAL_I2C_Close(struct I2C_HANDLE *pI2C)
 /** @} */
 
 /** @defgroup I2C_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 

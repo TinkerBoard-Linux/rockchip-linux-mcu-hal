@@ -17,24 +17,19 @@
 
 /** @defgroup Mailbox_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The Mbox driver can be used as follows:
 
- (#) Invoke HAL_MBOX_Init in driver wrapper file to initialize mailbox.
- (#) Invoke HAL_MBOX_RegisterClient in protocol layer to register mailbox
+ - Invoke HAL_MBOX_Init in driver wrapper file to initialize mailbox.
+ - Invoke HAL_MBOX_RegisterClient in protocol layer to register mailbox
      client (user).
- (#) Protocol layer call HAL_MBOX_SendMsg to send mailbox message and receive
+ - Protocol layer call HAL_MBOX_SendMsg to send mailbox message and receive
      message via interrupt handler.
- (#) Using destroy related function to finish resource release work.
- (#) Mailbox driver is just responsible for passing simple command data, and
+ - Using destroy related function to finish resource release work.
+ - Mailbox driver is just responsible for passing simple command data, and
      the detail data is the user's responsibility.
- (#) More details refer to APIs' descriptions as below.
+ - More details refer to APIs' descriptions as below.
 
- @endverbatim
  @} */
 
 /********************* Private MACRO Definition ******************************/
@@ -163,14 +158,9 @@ static HAL_Status MBOX_RecvMsg(struct MBOX_DEV *mbox, eMBOX_CH chan)
 /********************* Public Function Definition ****************************/
 
 /** @defgroup MBox_Exported_Functions_Group1 Suspend and Resume Functions
- @verbatim
 
-===============================================================================
-            #### Suspend and Resume functions ####
-===============================================================================
 This section provides functions allowing to suspend and resume the module:
 
-@endverbatim
 *  @{
 */
 
@@ -193,14 +183,9 @@ HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg)
 /********************* Public Function Definition ****************************/
 
 /** @defgroup MBox_Exported_Functions_Group2 Send and Receive Functions
- @verbatim
 
-===============================================================================
-            #### Send and Receive message functions ####
-===============================================================================
 This section provides functions allowing to send and receive mailbox message:
 
-@endverbatim
 *  @{
 */
 
@@ -259,14 +244,9 @@ HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *pReg, eMBOX_CH chan)
 /** @} */
 
 /** @defgroup MBox_Exported_Functions_Group3 Interrupt Handle Functions
- @verbatim
 
- ===============================================================================
-             #### Interrupt Handle functions ####
- ===============================================================================
  This section provides functions allowing to handle interrupt request:
 
- @endverbatim
  *  @{
  */
 
@@ -310,14 +290,9 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
 /** @} */
 
 /** @defgroup MBox_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 
@@ -380,14 +355,9 @@ HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *pReg)
 /** @} */
 
 /** @defgroup MBox_Exported_Functions_Group5 Register and Unregister Functions
- @verbatim
 
- ===============================================================================
-             #### Register and Unregister mailbox client functions ####
- ===============================================================================
  This section provides functions allowing to register/unregister mbox client:
 
- @endverbatim
  *  @{
  */
 

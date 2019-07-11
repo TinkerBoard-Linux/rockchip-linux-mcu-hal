@@ -13,14 +13,9 @@
 
 /** @defgroup AUDIOPWM_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The AUDIOPWM driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -78,16 +73,11 @@ static const struct AUDIO_OPS audioPwmOps = {
 
 /********************* Public Function Definition ****************************/
 /** @defgroup AUDIOPWM_Exported_Functions_Group1 Suspend and Resume Functions
- @verbatim
 
- ===============================================================================
-             #### Suspend and Resume functions ####
- ===============================================================================
  This section provides functions allowing to suspend and resume the module:
 
  ...to do or delete this row
 
- @endverbatim
  *  @{
  */
 
@@ -114,44 +104,29 @@ HAL_Status HAL_AUDIOPWM_Resume(struct AUDIO_DAI *dai)
 /** @} */
 
 /** @defgroup AUDIOPWM_Exported_Functions_Group2 State and Errors Functions
- @verbatim
 
- ===============================================================================
-             #### State and Errors functions ####
- ===============================================================================
  This section provides functions allowing to get the status of the module:
 
- @endverbatim
  *  @{
  */
 
 /** @} */
 
 /** @defgroup AUDIOPWM_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 
 /** @} */
 
 /** @defgroup AUDIOPWM_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
  ...to do or delete this row
 
- @endverbatim
  *  @{
  */
 

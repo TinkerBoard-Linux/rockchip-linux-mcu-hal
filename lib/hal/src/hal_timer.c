@@ -14,22 +14,16 @@
 /** @defgroup TIMER_How_To_Use How To Use
  *  @{
 
- @verbatim
-
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The TIMER driver can be used as follows:
 
- (#) IT mode: Resgister TIMER handler.
- (#) Initialize the TIMER(HAL_TIMER_Init):
-    (##) Mask interrupt.
-    (##) Set TIMER mode.
- (#) Set TIMER count(HAL_TIMER_SetCount).
- (#) Start the TIMER(HAL_TIMER_Start, HAL_TIMER_Start_IT).
- (#) Stop the TIMER(HAL_TIMER_Stop, HAL_TIMER_Stop_IT).
+ - IT mode: Resgister TIMER handler.
+ - Initialize the TIMER (HAL_TIMER_Init()):
+    - Mask interrupt.
+    - Set TIMER mode.
+ - Set TIMER count (HAL_TIMER_SetCount()).
+ - Start the TIMER (HAL_TIMER_Start(), HAL_TIMER_Start_IT()).
+ - Stop the TIMER (HAL_TIMER_Stop(), HAL_TIMER_Stop_IT()).
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -47,14 +41,9 @@
 /********************* Public Function Definition ****************************/
 
 /** @defgroup TIMER_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit module as follows:
 
- @endverbatim
  *  @{
  */
 

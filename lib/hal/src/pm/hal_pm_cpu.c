@@ -13,18 +13,13 @@
 
 /** @defgroup PM_CPU_SLEEP_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The PM_CPU_SLEEP driver can be used as follows:
 
- (#) Invoke HAL_NVIC_SuspendSave when NVIC needs to be save.
- (#) Invoke HAL_NVIC_ResumeRestore when NVIC needs to be resume.
- (#) Invoke HAL_CPU_SuspendSave when cpu may need save some info.
+ - Invoke HAL_NVIC_SuspendSave() when NVIC needs to be save.
+ - Invoke HAL_NVIC_ResumeRestore() when NVIC needs to be resume.
+ - Invoke HAL_CPU_SuspendSave() when cpu may need save some info.
 
- @endverbatim
  @} */
 
 #include "hal_base.h"

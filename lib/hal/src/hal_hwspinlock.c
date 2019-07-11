@@ -35,14 +35,9 @@ static const uint8_t g_OwnerID = HAL_HWSPINLOCK_OWNER_ID;
 /********************* Public Function Definition ****************************/
 
 /** @defgroup HWSpinlock_Exported_Functions_Group1 TryLock and Unlock Functions
- @verbatim
 
-===============================================================================
-            #### Trylock and Unlock functions ####
-===============================================================================
 This section provides functions allowing to Trylock and Unlock HWSpinlock:
 
-@endverbatim
 *  @{
 */
 

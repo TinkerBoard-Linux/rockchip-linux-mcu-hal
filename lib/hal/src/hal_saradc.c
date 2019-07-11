@@ -13,14 +13,9 @@
 
 /** @defgroup SARADC_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The SARADC driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -37,14 +32,9 @@
 
 /********************* Public Function Definition ****************************/
 /** @defgroup SARADC_Exported_Functions_Group5 Other Functions
- @verbatim
 
- ===============================================================================
-          #### Other functions ####
- ===============================================================================
  This section provides functions allowing to other controlling:
 
- @endverbatim
  *  @{
  */
 

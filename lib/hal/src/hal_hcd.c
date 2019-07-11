@@ -14,31 +14,26 @@
 
 /** @defgroup HCD_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    ##### How to use #####
- ==============================================================================
  The HCD HAL driver can be used as follows:
 
- (#) Declare a struct HCD_HANDLE handle structure, for example:
+ - Declare a struct HCD_HANDLE handle structure, for example:
      struct HCD_HANDLE pHCD;
 
- (#) Fill parameters of Init structure in HCD handle
+ - Fill parameters of Init structure in HCD handle
 
- (#) Initialize the HCD low level resources:
-     (##) Enable the HCD/USB Low Level interface clocks;
-     (##) Configure HCD NVIC interrupt;
+ - Initialize the HCD low level resources:
+     - Enable the HCD/USB Low Level interface clocks;
+     - Configure HCD NVIC interrupt;
 
- (#) Call HAL_HCD_Init() API to initialize the HCD peripheral (Core, Host core, ...)
+ - Call HAL_HCD_Init() API to initialize the HCD peripheral (Core, Host core, ...)
 
- (#) Associate the Upper USB Host stack to the HAL HCD Driver:
-     (##) pHCD.pData = phost;
+ - Associate the Upper USB Host stack to the HAL HCD Driver:
+     - pHCD.pData = phost;
 
- (#) Enable HCD transmission and reception:
-     (##) HAL_HCD_Start();
+ - Enable HCD transmission and reception:
+     - HAL_HCD_Start();
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -58,14 +53,9 @@ static void HCD_Port_IRQHandler(struct HCD_HANDLE *pHCD);
 /** @defgroup HCD_Exported_Functions_Group2 State and Errors Functions
  *  @brief    HCD State functions
  *
- @verbatim
 
- ==============================================================================
-             #### State and Errors functions ####
- ===============================================================================
  This section provides functions allowing to get the status of the module:
 
- @endverbatim
  *  @{
  */
 
@@ -156,14 +146,9 @@ uint32_t HAL_HCD_GetCurrentSpeed(struct HCD_HANDLE *pHCD)
 
 /** @defgroup HCD_Exported_Functions_Group3 IO Functions
  *  @brief    HCD IO operation functions
- @verbatim
 
- ==============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 
@@ -447,13 +432,8 @@ __WEAK void HAL_HCD_HCNotifyURBChange_Callback(struct HCD_HANDLE *pHCD, uint8_t 
 /** @} */
 
 /** @defgroup HCD_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
- @endverbatim
  *  @{
  */
 

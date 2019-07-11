@@ -13,14 +13,9 @@
 
 /** @defgroup SDIO_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The SDIO driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -50,14 +45,9 @@ static inline uint32_t MMC_IsFifoEmpty(struct HAL_MMC_HOST *host)
 /********************* Public Function Definition ****************************/
 
 /** @defgroup SDIO_Exported_Functions_Group2 State and Errors Functions
- @verbatim
 
- ===============================================================================
-             #### State and Errors functions ####
- ===============================================================================
  This section provides functions allowing to get the status of the module:
 
- @endverbatim
  *  @{
  */
 
@@ -105,14 +95,9 @@ uint32_t HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host)
 /** @} */
 
 /** @defgroup SDIO_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 
@@ -581,14 +566,9 @@ inline HAL_Status HAL_MMC_StopDma(struct HAL_MMC_HOST *host)
 /** @} */
 
 /** @defgroup SDIO_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 

@@ -13,16 +13,11 @@
 
 /** @defgroup PM_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The PM driver can be used as follows:
 
- (#) Invoke HAL_SYS_SuspendEnter when system will enter suspend.
+ - Invoke HAL_SYS_Suspend() when system will enter suspend.
 
- @endverbatim
  @} */
 
 #include "hal_base.h"

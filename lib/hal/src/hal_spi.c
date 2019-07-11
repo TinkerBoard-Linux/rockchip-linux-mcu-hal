@@ -17,49 +17,43 @@
 
 /** @defgroup How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
-    [..]
-      The SPI HAL driver can be used as follows:
+ The SPI HAL driver can be used as follows:
 
-      (#) Declare a SPI_Handle handle structure, for example:
-          SPI_Handle instance;
+ - Declare a SPI_Handle handle structure, for example:
+   ```
+   SPI_Handle instance;
+   ```
 
-      (#) Invoke HAL_SPI_Init() API to configure default config:
-          (++) opMode: slave or master
-          (++) apbTransform
-          (++) endianMode
-          (++) ssd
-          (++) Clock rate
+ - Invoke HAL_SPI_Init() API to configure default config:
+     - opMode: slave or master
+     - apbTransform
+     - endianMode
+     - ssd
+     - Clock rate
 
-      (#) Invoke HAL_SPI_Configure() API to program other mode:
-          (++) Data size
-          (++) Clock polarity and phase
-          (++) FirstBit
-          (++) Clock div
-          (++) Number of data frames received at RX only mode
-          (++) IT FIFO Level and DMA FIFO Level
-          (++) Transfer Mode
+ - Invoke HAL_SPI_Configure() API to program other mode:
+     - Data size
+     - Clock polarity and phase
+     - FirstBit
+     - Clock div
+     - Number of data frames received at RX only mode
+     - IT FIFO Level and DMA FIFO Level
+     - Transfer Mode
 
-     (#) There are two modes of transfer:
-         (++) Blocking mode: The communication is performed in polling mode by calling
-              HAL_SPI_PioTransfer().
-         (++) No-Blocking mode: The communication is performed using Interrupts or DMA.
-              The HAL_SPI_ItTransfer(), HAL_SPI_IRQHandler() is used for Interrupt mode.
-              The HAL_SPI_DmaTransfer() is used for DMA mode, and Hal driver dones not
-              provide more DMA functions.
+ - There are two modes of transfer:
+     - Blocking mode: The communication is performed in polling mode by calling HAL_SPI_PioTransfer().
+     - No-Blocking mode: The communication is performed using Interrupts or DMA.
+         - The HAL_SPI_ItTransfer(), HAL_SPI_IrqHandler() is used for Interrupt mode.
+         - The HAL_SPI_DmaTransfer() is used for DMA mode, and Hal driver dones not
+         - provide more DMA functions.
 
-      (#) Invoke HAL_SPI_DeInit() if necessary.
+ - Invoke HAL_SPI_DeInit() if necessary.
 
-      (#) More details refer to APIs' descriptions as below.
+ - More details refer to APIs' descriptions as below.
 
-     [..]
-       Using the HAL it is not possible to reach all supported SPI frequency with the differents SPI Modes.
+ Using the HAL it is not possible to reach all supported SPI frequency with the differents SPI Modes.
 
- @endverbatim
  @} */
 
 /********************* Private MACRO Definition ******************************/
@@ -100,14 +94,9 @@
 /********************* Public Function Definition ****************************/
 
 /** @defgroup SPI_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit module as follows:
 
- @endverbatim
  *  @{
  */
 
@@ -157,14 +146,9 @@ HAL_Status HAL_SPI_DeInit(struct SPI_HANDLE *pSPI)
 /** @} */
 
 /** @defgroup SPI_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 

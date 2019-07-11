@@ -13,24 +13,19 @@
 
 /** @defgroup SFC_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The SFC driver can be used as follows:
 
  This host driver need to be used in conjunction with device flash driver like
  hal_snor.c
 
- (#) DMA mode: Register handler(HAL_SFC_IRQHelper).
- (#) DMA mode: Unmask TRANSM interrupt(HAL_SFC_UnmaskDMAInterrupt).
- (#) Initialize SFC controller(HAL_SFC_Init);
- (#) Send SFC request:
-    (##) SNOR support api: (HAL_SFC_SpiXfer);
- (#) DMA mode: Handling interrupt return in DMA mode SFC request.
+ - DMA mode: Register handler (HAL_SFC_IRQHelper()).
+ - DMA mode: Unmask TRANSM interrupt (HAL_SFC_UnmaskDMAInterrupt()).
+ - Initialize SFC controller (HAL_SFC_Init());
+ - Send SFC request:
+    - SNOR support api: (HAL_SFC_SpiXfer());
+ - DMA mode: Handling interrupt return in DMA mode SFC request.
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -294,17 +289,12 @@ static HAL_Status SFC_XferDone(struct HAL_SFC_HOST *host)
 /********************* Public Function Definition ****************************/
 
 /** @defgroup SFC_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- (#) Operate in blocking mode (DMA IT) using HAL_SFC_Request_DMA();
- (#) Operate in blocking mode (Normal) using HAL_SFC_Request();
+ - Operate in blocking mode (DMA IT) using HAL_SFC_Request_DMA();
+ - Operate in blocking mode (Normal) using HAL_SFC_Request();
 
- @endverbatim
  *  @{
  */
 
@@ -338,14 +328,9 @@ HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 /** @} */
 
 /** @defgroup SFC_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 

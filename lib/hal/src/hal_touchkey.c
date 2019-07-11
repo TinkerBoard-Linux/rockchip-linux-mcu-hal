@@ -13,14 +13,9 @@
 
 /** @defgroup TOUCHKEY_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The TOUCHKEY driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -45,14 +40,9 @@
 /********************* Public Function Definition ****************************/
 
 /** @defgroup TOUCHKEY_Exported_Functions_Group4 Init and Deinit
-  @verbatim
 
-  ===============================================================================
-             #### Init and deinit functions ####
-  ===============================================================================
   This section provides functions allowing to init and deinit the module:
 
-  @endverbatim
   *  @{
   */
 
@@ -115,14 +105,9 @@ HAL_Status HAL_TouchKey_DeInit(struct TOUCH_SENSOR_REG *touchkey)
 /** @} */
 
 /** @defgroup TOUCHKEY_Exported_Functions_Group5 Other Functions
-  @verbatim
 
-  ===============================================================================
-             #### Other functions ####
-  ===============================================================================
   This section provides functions allowing to other controlling:
 
-  @endverbatim
   *  @{
   */
 

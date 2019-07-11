@@ -13,11 +13,7 @@
 
 /** @defgroup PINCTRL_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The pinctrl setting registers actually is bus grf registers, which include
  iomux, drive strength, pull mode, slew rate and schmitt trigger.
 
@@ -42,7 +38,6 @@ Example:
                           PIN_CONFIG_DRV_LEVEL2 |
                           PIN_CONFIG_SRT_FAST |
                           PIN_CONFIG_SMT_ENABLE);
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -380,14 +375,9 @@ static HAL_Status PINCTRL_SetPinIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t p
 /********************* Public Function Definition ****************************/
 
 /** @defgroup PINCTRL_Exported_Functions_Group1 Suspend and Resume Functions
- @verbatim
 
- ===============================================================================
-             #### Suspend and Resume functions ####
- ===============================================================================
  This section provides functions allowing to suspend and resume the module:
 
- @endverbatim
  *  @{
  */
 
@@ -403,14 +393,9 @@ HAL_Status HAL_PINCTRL_Resume(void)
 /** @} */
 
 /** @defgroup PINCTRL_Exported_Functions_Group2 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 
@@ -426,14 +411,9 @@ HAL_Status HAL_PINCTRL_Deinit(void)
 /** @} */
 
 /** @defgroup PINCTRL_Exported_Functions_Group3 State and Errors Functions
- @verbatim
 
- ===============================================================================
-             #### State and Errors functions ####
- ===============================================================================
  This section provides functions allowing to get the status of the module:
 
- @endverbatim
  *  @{
  */
 
@@ -491,14 +471,9 @@ HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
 /** @} */
 
 /** @defgroup PINCTRL_Exported_Functions_Group4 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 

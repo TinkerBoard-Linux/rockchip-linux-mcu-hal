@@ -14,31 +14,30 @@
 
 /** @defgroup PCD_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The PCD HAL driver can be used as follows:
 
- (#) Declare a struct PCD_HANDLE handle structure, for example:
-     struct PCD_HANDLE pPCD;
+ - Declare a struct PCD_HANDLE handle structure, for example:
+   ```
+   struct PCD_HANDLE pPCD;
+   ```
+ - Fill parameters of Init structure in HCD handle
 
- (#) Fill parameters of Init structure in HCD handle
+ - Initialize the PCD low level resources:
+     - Enable the PCD/USB Low Level interface clocks;
+     - Configure PCD NVIC interrupt;
 
- (#) Initialize the PCD low level resources:
-     (##) Enable the PCD/USB Low Level interface clocks;
-     (##) Configure PCD NVIC interrupt;
+ - Call HAL_PCD_Init() API to initialize the PCD peripheral (Core, Device core, ...)
 
- (#) Call HAL_PCD_Init() API to initialize the PCD peripheral (Core, Device core, ...)
+ - Associate the Upper USB device stack to the HAL PCD Driver:
+   ```
+   pPCD.pData = pdev;
+   ```
+ - Enable PCD transmission and reception:
+   ```
+   HAL_PCD_Start();
+   ```
 
- (#) Associate the Upper USB device stack to the HAL PCD Driver:
-     (##) pPCD.pData = pdev;
-
- (#) Enable PCD transmission and reception:
-     (##) HAL_PCD_Start();
-
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -58,14 +57,9 @@ static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum);
 /** @defgroup PCD_Exported_Functions_Group2 State and Errors Functions
  *  @brief    Peripheral State functions
  *
- @verbatim
 
- ==============================================================================
-             #### State and Errors functions ####
- ===============================================================================
  This section provides functions allowing to get the status of the module:
 
- @endverbatim
  *  @{
  */
 
@@ -82,14 +76,9 @@ ePCD_state HAL_PCD_GetState(struct PCD_HANDLE *pPCD)
 
 /** @defgroup PCD_Exported_Functions_Group3 IO Functions
  *  @brief    Data transfers functions
- @verbatim
 
- ==============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 
@@ -566,13 +555,8 @@ __WEAK void HAL_PCD_DisconnectCallback(struct PCD_HANDLE *pPCD)
 /** @} */
 
 /** @defgroup PCD_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
- @endverbatim
  *  @{
  */
 

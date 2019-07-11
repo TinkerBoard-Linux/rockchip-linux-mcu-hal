@@ -13,30 +13,24 @@
 
 /** @defgroup PWM_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
- The PWM driver can be used as follows:
+ The PWM HAL driver can be used as follows:
 
-    [..]
-      The PWM HAL driver can be used as follows:
+ - Declare a PWM_Handle handle structure, for example:
+   ```
+   PWM_Handle instance;
+   ```
+ - Invoke HAL_PWM_Init() API to initialize base address and clock frequency:
+     - Base register address;
+     - Input clock frequency.
 
-      (#) Declare a PWM_Handle handle structure, for example:
-          PWM_Handle instance;
+ - Invoke HAL_PWM_SetConfig() API and HAL_PWM_SetEnable() to start/stop:
+     - Use HAL_PWM_SetConfig() to configurate the request mode;
+     - Use HAL_PWM_SetEnable() with true to start PWM;
+     - Use HAL_PWM_SetEnable() with false to stop PWM.
 
-      (#) Invoke HAL_PWM_Init() API to initialize base address and clock frequency:
-          (++) Base register address;
-          (++) Input clock frequency.
+ - Invoke HAL_PWM_Deinit() if necessary.
 
-      (#) Invoke HAL_PWM_SetConfig() API and HAL_PWM_SetEnable() to start/stop:
-          (++) Use HAL_PWM_SetConfig() to configurate the request mode;
-          (++) Use HAL_PWM_SetEnable() with true to start PWM;
-          (++) Use HAL_PWM_SetEnable() with false to stop PWM.
-
-      (#) Invoke HAL_PWM_DeInit() if necessary.
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -84,14 +78,9 @@
 /********************* Public Function Definition ****************************/
 
 /** @defgroup PWM_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 
@@ -221,14 +210,9 @@ HAL_Status HAL_PWM_SetEnable(struct PWM_HANDLE *pPWM, uint32_t channel,
 /** @} */
 
 /** @defgroup PWM_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 

@@ -13,24 +13,19 @@
 
 /** @defgroup PL330_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The PL330 driver can be used as follows:
 
- (#) Invoke HAL_PL330_Init to initialize pl330.
- (#) Invoke HAL_PL330_RequestChannel to request a available dma channel.
- (#) Invoke HAL_PL330_Config to config dma transfer config.
- (#) Invoke HAL_PL330_PrepDmaSingle/Cyclic for single/cyclic transfer.
- (#) Invoke HAL_PL330_Start to start a ready dma transfer.
- (#) Invoke HAL_PL330_Stop to stop the dma channel.
- (#) Invoke HAL_PL330_ReleaseChannel to release the dma channel.
- (#) Invoke HAL_PL330_Deinit to deinitialize pl330.
- (#) More details refer to APIs' descriptions as below.
+ - Invoke HAL_PL330_Init to initialize pl330.
+ - Invoke HAL_PL330_RequestChannel to request a available dma channel.
+ - Invoke HAL_PL330_Config to config dma transfer config.
+ - Invoke HAL_PL330_PrepDmaSingle/Cyclic for single/cyclic transfer.
+ - Invoke HAL_PL330_Start to start a ready dma transfer.
+ - Invoke HAL_PL330_Stop to stop the dma channel.
+ - Invoke HAL_PL330_ReleaseChannel to release the dma channel.
+ - Invoke HAL_PL330_Deinit to deinitialize pl330.
+ - More details refer to APIs' descriptions as below.
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -1322,14 +1317,9 @@ static int PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32_t addr
 /********************* Public Function Definition ****************************/
 
 /** @defgroup PL330_Exported_Functions_Group2 State and Errors Functions
- @verbatim
 
- ===============================================================================
-             #### State and Errors functions ####
- ===============================================================================
  This section provides functions allowing to get the status of the module:
 
- @endverbatim
  *  @{
  */
 
@@ -1395,14 +1385,9 @@ int HAL_PL330_GetPosition(struct PL330_CHAN *pchan)
 /** @} */
 
 /** @defgroup PL330_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 
@@ -1477,14 +1462,9 @@ HAL_Status HAL_PL330_Deinit(struct HAL_PL330_DEV *pl330)
 /** @} */
 
 /** @defgroup PL330_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 

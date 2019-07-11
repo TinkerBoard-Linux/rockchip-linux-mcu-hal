@@ -13,14 +13,9 @@
 
 /** @defgroup PSRAM_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The PSRAM driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -72,16 +67,11 @@ static HAL_Status PSRAM_XmmcInit(struct HAL_FSPI_HOST *host, uint8_t cs)
 
 /********************* Public Function Definition ****************************/
 /** @defgroup PSRAM_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
  ...to do or delete this row
 
- @endverbatim
  *  @{
  */
 

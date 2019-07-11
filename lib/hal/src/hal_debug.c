@@ -13,14 +13,9 @@
 
 /** @defgroup DEBUG_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The DEBUG driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -43,14 +38,9 @@ __WEAK void AssertFailed(const char *file, uint32_t line)
 /********************* Public Function Definition ****************************/
 
 /** @defgroup TIMER_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit module as follows:
 
- @endverbatim
  *  @{
  */
 

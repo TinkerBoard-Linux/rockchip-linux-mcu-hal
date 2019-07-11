@@ -13,11 +13,7 @@
 
 /** @defgroup GPIO_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The GPIO driver can be used as follows:
  APIs for GPIO io read write:
    1) HAL_GPIO_GetPinLevel to get EXT port level.
@@ -30,7 +26,6 @@
    3) HAL_GPIO_IRQHandler to handle GPIO IRQ isr.
    4) HAL_GPIO_IRQDispatch to dispatch GPIO IRQ, should be implemented by User.
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -97,14 +92,9 @@ static uint32_t GPIO_GetIntStatus(struct GPIO_REG *pGPIO)
 /********************* Public Function Definition ***************************/
 
 /** @defgroup GPIO_Exported_Functions_Group1 State and Errors Functions
- @verbatim
 
- ===============================================================================
-             #### State and Errors functions ####
- ===============================================================================
  This section provides functions allowing to get the status of the module:
 
- @endverbatim
  *  @{
  */
 
@@ -239,14 +229,9 @@ HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_pinL
 /** @} */
 
 /** @defgroup GPIO_Exported_Functions_Group2 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 

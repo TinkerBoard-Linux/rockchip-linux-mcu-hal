@@ -14,14 +14,9 @@
 
 /** @defgroup PCDEx_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The PCD Extended HAL driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"

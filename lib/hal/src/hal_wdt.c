@@ -13,14 +13,9 @@
 
 /** @defgroup WDT_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The WDT driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -86,14 +81,9 @@ static void WDT_SetTop(uint32_t top_s)
 /********************* Public Function Definition ****************************/
 
 /** @defgroup WDT_Exported_Functions_Group4 Init and Deinit
-  @verbatim
 
-  ===============================================================================
-             #### Init and deinit functions ####
-  ===============================================================================
   This section provides functions allowing to init and deinit the module:
 
-  @endverbatim
   *  @{
   */
 
@@ -117,14 +107,9 @@ HAL_Status HAL_WDT_Init(uint32_t freq, struct WDT_REG *wdt)
 /** @} */
 
 /** @defgroup WDT_Exported_Functions_Group5 Other Functions
-  @verbatim
 
-  ===============================================================================
-             #### Other functions ####
-  ===============================================================================
   This section provides functions allowing to other controlling:
 
-  @endverbatim
   *  @{
   */
 

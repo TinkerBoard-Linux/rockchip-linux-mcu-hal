@@ -15,30 +15,6 @@
  *  @{
  */
 
-/** @defgroup CRU_How_To_Use How To Use
- *  @{
- @verbatim
-
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
- The CRU driver can be used as follows:
-
- (#) Invoke cru functions to set clk rate, enable\disable clk, reset clk in each device.
- (#) The gate and soft reset id is include register offset and shift information:
-       con_offset: id /16
-       shift: id %16
- (#) The mux and div id is include register offset, shift, mask information:
-       [15:0]: con
-       [23:16]: shift
-       [31:24]: width
- (#) CRU driver is just responsible for passing simple command data, And
- the usecount is the user's responsibility. Protection the usecount at the driver layer.
- (#) More details refer to APIs' descriptions as below.
-
- @endverbatim
- @} */
-
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/

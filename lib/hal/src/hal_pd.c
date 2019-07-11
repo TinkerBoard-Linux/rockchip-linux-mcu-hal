@@ -13,32 +13,31 @@
 
 /** @defgroup PD_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The PD driver can be used as follows:
 
- (#) Invoke HAL_PD_Setting in each device power on/off its own Pd.
- (#) The order of setting power domain.
+ - Invoke HAL_PD_Setting in each device power on/off its own Pd.
+ - The order of setting power domain.
+
        power on:
            set power domain on
            leave idle
        power off:
            request ilde
            set power domain off
- (#) The PD ID is include shift information:
-      [3:0]:power on shift
-      [7:4]:power on status shift
-      [11:8]:idle request shift
-      [15:12]:idle status shift
-      [19:16]:ack status shift
- (#) PD driver is just responsible for passing simple command data, And
- the usecount is the user's responsibility. Protection the usecount at the driver layer.
- (#) More details refer to APIs' descriptions as below.
 
- @endverbatim
+ - The PD ID is include shift information:
+
+       [3:0]: power on shift
+       [7:4]: power on status shift
+       [11:8]: idle request shift
+       [15:12]: idle status shift
+       [19:16]: ack status shift
+
+ - PD driver is just responsible for passing simple command data, And
+   the usecount is the user's responsibility. Protection the usecount at the driver layer.
+ - More details refer to APIs' descriptions as below.
+
  @} */
 
 #include "hal_base.h"

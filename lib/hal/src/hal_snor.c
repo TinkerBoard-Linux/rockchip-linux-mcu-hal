@@ -13,20 +13,15 @@
 
 /** @defgroup SNOR_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The SNOR driver can be used as follows:
 
- (#) Init a spi nor abstract(HAL_SNOR_Init):
-    (##) Malloc a struct of SPI_NOR by user;
-    (##) Designated host to nor->spi by user;
-    (##) Init spi nor abstract by calling func HAL_SNOR_Init;
- (#) Call the interface function like HAL_NOR_Read.
+ - Init a spi nor abstract (HAL_SNOR_Init()):
+    - Malloc a struct of SPI_NOR by user;
+    - Designated host to nor->spi by user;
+    - Init spi nor abstract by calling func HAL_SNOR_Init();
+ - Call the interface function like HAL_SNOR_Read().
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -707,16 +702,11 @@ uint32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, vo
 }
 
 /** @defgroup SNOR_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
  ...to do or delete this row
 
- @endverbatim
  *  @{
  */
 

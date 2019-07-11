@@ -13,14 +13,9 @@
 
 /** @defgroup VOP_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The VOP driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -521,14 +516,9 @@ static void VOP_SetWin(struct VOP_REG *pReg,
 /********************* Public Function Definition ****************************/
 
 /** @defgroup VOP_Exported_Functions_Group1 Suspend and Resume Functions
- @verbatim
 
- ===============================================================================
-             #### Suspend and Resume functions ####
- ===============================================================================
  This section provides functions allowing to suspend and resume the module:
 
- @endverbatim
  *  @{
  */
 
@@ -557,14 +547,9 @@ HAL_Status HAL_VOP_Resume(struct VOP_REG *pReg)
 /** @} */
 
 /** @defgroup VOP_Exported_Functions_Group2 get VOP Status and Errors Functions
- @verbatim
 
- ===============================================================================
-             #### get uart status functions ####
- ===============================================================================
  This section provides functions allowing to get VOP status:
 
- @endverbatim
  *  @{
  */
 /**
@@ -593,14 +578,9 @@ uint8_t HAL_VOP_CommitPrepare(struct VOP_REG *pReg)
 /** @} */
 
 /** @defgroup VOP_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 /**
@@ -782,14 +762,9 @@ HAL_Status HAL_VOP_EdpiFrmSt(struct VOP_REG *pReg)
 /** @} */
 
 /** @defgroup VOP_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 
@@ -1476,14 +1451,9 @@ HAL_Status HAL_VOP_AxiOutstandInit(struct VOP_REG *pReg, uint32_t outStandNum)
 /** @} */
 
 /** @defgroup VOP_Exported_Functions_Group5 Other Functions
- @verbatim
 
- ===============================================================================
-             #### Other Functions ####
- ===============================================================================
  This section provides functions allowing to control uart:
 
- @endverbatim
  *  @{
  */
 /**

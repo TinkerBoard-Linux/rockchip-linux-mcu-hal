@@ -13,14 +13,9 @@
 
 /** @defgroup UART_How_To_Use How To Use
  *  @{
- @verbatim
 
- ==============================================================================
-                    #### How to use ####
- ==============================================================================
  The UART driver can be used as follows:
 
- @endverbatim
  @} */
 
 #include "hal_base.h"
@@ -110,14 +105,9 @@ static int32_t UART_SetLcrReg(struct UART_REG *pReg, uint8_t byteSize,
 /********************* Public Function Definition ****************************/
 
 /** @defgroup UART_Exported_Functions_Group1 Suspend and Resume Functions
- @verbatim
 
- ===============================================================================
-             #### Suspend and Resume functions ####
- ===============================================================================
  This section provides functions allowing to suspend and resume the module:
 
- @endverbatim
  *  @{
  */
 /**
@@ -148,14 +138,9 @@ HAL_Status HAL_UART_Resume(struct UART_REG *pReg)
 /** @} */
 
 /** @defgroup UART_Exported_Functions_Group2 get uart status Functions
- @verbatim
 
- ===============================================================================
-             #### get uart status functions ####
- ===============================================================================
  This section provides functions allowing to get uart status:
 
- @endverbatim
  *  @{
  */
 
@@ -210,14 +195,9 @@ uint32_t HAL_UART_GetMsr(struct UART_REG *pReg)
 /** @} */
 
 /** @defgroup UART_Exported_Functions_Group3 IO Functions
- @verbatim
 
- ===============================================================================
-             #### IO functions ####
- ===============================================================================
  This section provides functions allowing to IO controlling:
 
- @endverbatim
  *  @{
  */
 /**
@@ -286,14 +266,9 @@ int HAL_UART_SerialIn(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
 /** @} */
 
 /** @defgroup UART_Exported_Functions_Group4 Init and Deinit Functions
- @verbatim
 
- ===============================================================================
-             #### Init and deinit functions ####
- ===============================================================================
  This section provides functions allowing to init and deinit the module:
 
- @endverbatim
  *  @{
  */
 
@@ -368,14 +343,9 @@ HAL_Status HAL_UART_DeInit(struct UART_REG *pReg)
 /** @} */
 
 /** @defgroup UART_Exported_Functions_Group5 Other Functions
- @verbatim
 
- ===============================================================================
-             #### Other Functions ####
- ===============================================================================
  This section provides functions allowing to control uart:
 
- @endverbatim
  *  @{
  */
 /**
