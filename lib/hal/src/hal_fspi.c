@@ -343,17 +343,12 @@ HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *op)
         FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
 
     /* set DATA */
-    if (op->data.nbytes) {
-        FSPICmd.b.datasize = op->data.nbytes;
-        if (op->data.dir == SPI_MEM_DATA_OUT)
-            FSPICmd.b.rw = FSPI_WRITE;
-        FSPICtrl.b.datalines = op->data.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
-    }
+    FSPICtrl.b.datalines = op->data.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
 
     /* spitial setting */
     FSPICtrl.b.sps = FSPI_CTRL_SHIFTPHASE_NEGEDGE;
 
-    /* HAL_DBG("%s 1 %lx %lx %lx\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
+    /* HAL_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
     /* HAL_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
     host->xmmcDev[host->cs].type = DEV_NOR;
     host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
@@ -389,19 +384,22 @@ HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
             xmmcCtrl.b.devHwEn = 0;
             xmmcCtrl.b.prefetch = 1;
         }
+        /* HAL_DBG("%s enable 3 %lx %lx %lx\n", __func__, host->xmmcDev[0].ctrl, xmmcCtrl.d32, host->xmmcDev[0].readCmd); */
 
         /* config ctroller */
-        pReg->CTRL0 = host->xmmcDev[0].ctrl;
         pReg->XMMC_CTRL = xmmcCtrl.d32;
         /* config cs 0 */
+        pReg->CTRL0 = host->xmmcDev[0].ctrl;
         pReg->XMMC_RCMD0 = host->xmmcDev[0].readCmd;
         pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
         /* config cs 1 */
+        pReg->CTRL1 = host->xmmcDev[1].ctrl;
         pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
         pReg->XMMC_WCMD1 = host->xmmcDev[1].writeCmd;
 
         pReg->MODE = 1;
     } else {
+        /* HAL_DBG("%s diable\n", __func__); */
         pReg->MODE = 0;
     }
 
@@ -464,7 +462,7 @@ HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, u
 {
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
 
-    if (op->cmd.opcode)
+    if (op)
         FSPI_XmmcSetting(host, op);
 
     return FSPI_XmmcRequest(host, on);
