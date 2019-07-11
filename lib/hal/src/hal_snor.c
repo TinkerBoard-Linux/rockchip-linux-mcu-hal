@@ -324,7 +324,7 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
     op.dummy.buswidth = op.addr.buswidth;
     op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
 
-    /* HAL_DBG("%s %lx %lx %lx %lx\n", __func__, nor->readDummy, op.dummy.buswidth, from, op.addr.val); */
+    /* HAL_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
     /* convert the dummy cycles to the number of bytes */
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
 
@@ -480,15 +480,11 @@ static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
         ret = SNOR_ReadStatus(nor, regIndex, &status);
         if (ret != HAL_OK)
             return ret;
-        HAL_DBG("%s %x\n", __func__, status);
+
         if (status & (1 << bitOffset)) //is QE bit set
             return HAL_OK;
 
         ret = SNOR_WriteStatus(nor, regIndex, &status);
-        ret = SNOR_ReadStatus(nor, regIndex, &status);
-        if (ret != HAL_OK)
-            return ret;
-        HAL_DBG("%s %x\n", __func__, status);
     }
 
     return ret;
@@ -809,11 +805,12 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
 //        HAL_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
 //        HAL_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
 //        HAL_DBG("nor->size: %ldMB\n", nor->size >> 20);
+//        HAL_DBG("xip enable: %lx\n", nor->spi->mode & SPI_XIP);
     } else {
         return HAL_NODEV;
     }
 
-    if (nor->spi->flags & SPI_XIP)
+    if (nor->spi->mode & SPI_XIP)
         SNOR_XipInit(nor);
 
     return HAL_OK;
