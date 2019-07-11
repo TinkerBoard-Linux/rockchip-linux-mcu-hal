@@ -17,7 +17,7 @@
 #if defined(RKMCU_RK2108)
 #define XIP_MEM_BASE 0x60000000
 #elif defined(RKMCU_RK2206)
-#define XIP_MEM_BASE 0x18000000
+#define XIP_MEM_BASE 0x10000000
 #endif
 
 #endif
