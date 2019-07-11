@@ -14,9 +14,7 @@
 #include "hal_audiopwm.h"
 #endif
 
-#if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
 #include "hal_cache.h"
-#endif
 
 #ifdef HAL_CRU_MODULE_ENABLED
 #include "hal_cru.h"
