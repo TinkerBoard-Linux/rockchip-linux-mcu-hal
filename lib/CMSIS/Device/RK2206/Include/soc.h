@@ -616,7 +616,7 @@ struct GRF_REG {
     __IO uint32_t GPIO1D_P;                           /* Address Offset: 0x011C */
          uint32_t RESERVED0120[56];                   /* Address Offset: 0x0120 */
     __IO uint32_t SOC_CON[32];                        /* Address Offset: 0x0200 */
-    __IO uint32_t SOC_STATUS;                         /* Address Offset: 0x0280 */
+    __I  uint32_t SOC_STATUS;                         /* Address Offset: 0x0280 */
          uint32_t RESERVED0284[31];                   /* Address Offset: 0x0284 */
     __IO uint32_t MCU0_CON[2];                        /* Address Offset: 0x0300 */
     __IO uint32_t MCU1_CON[2];                        /* Address Offset: 0x0308 */
@@ -625,7 +625,7 @@ struct GRF_REG {
          uint32_t RESERVED032C[5];                    /* Address Offset: 0x032C */
     __IO uint32_t SOC_UOC[3];                         /* Address Offset: 0x0340 */
          uint32_t RESERVED034C[13];                   /* Address Offset: 0x034C */
-    __IO uint32_t MCU0_STATUS;                        /* Address Offset: 0x0380 */
+    __I  uint32_t MCU0_STATUS;                        /* Address Offset: 0x0380 */
     __IO uint32_t MCU1_STATUS;                        /* Address Offset: 0x0384 */
     __IO uint32_t DSP_STAT[2];                        /* Address Offset: 0x0388 */
          uint32_t RESERVED0390[28];                   /* Address Offset: 0x0390 */
@@ -637,7 +637,7 @@ struct GRF_REG {
     __IO uint32_t LPW_GPIO_IN;                        /* Address Offset: 0x0508 */
     __IO uint32_t LPW_GPIO_OUT;                       /* Address Offset: 0x050C */
          uint32_t RESERVED0510[28];                   /* Address Offset: 0x0510 */
-    __IO uint32_t LPW_STATUS;                         /* Address Offset: 0x0580 */
+    __I  uint32_t LPW_STATUS;                         /* Address Offset: 0x0580 */
          uint32_t RESERVED0584[63];                   /* Address Offset: 0x0584 */
     __IO uint32_t USB2_DISCONNECT_CON;                /* Address Offset: 0x0680 */
     __IO uint32_t USB2_LINESTATE_CON;                 /* Address Offset: 0x0684 */
@@ -5080,8 +5080,8 @@ struct USB_HOST_CH_REG {
 /* CLKSEL_CON02 */
 #define CRU_CLKSEL_CON02_HCLK_MCU_BUS_DIV_SHIFT            (0U)
 #define CRU_CLKSEL_CON02_HCLK_MCU_BUS_DIV_MASK             (0x1FU << CRU_CLKSEL_CON02_HCLK_MCU_BUS_DIV_SHIFT)           /* 0x0000001F */
-#define CRU_CLKSEL_CON02_HCLK_MCU_BUS_SEL_SHIFT            (7U)
-#define CRU_CLKSEL_CON02_HCLK_MCU_BUS_SEL_MASK             (0x1U << CRU_CLKSEL_CON02_HCLK_MCU_BUS_SEL_SHIFT)            /* 0x00000080 */
+#define CRU_CLKSEL_CON02_HCLK_MCU_BUS_SEL_SHIFT            (6U)
+#define CRU_CLKSEL_CON02_HCLK_MCU_BUS_SEL_MASK             (0x3U << CRU_CLKSEL_CON02_HCLK_MCU_BUS_SEL_SHIFT)            /* 0x000000C0 */
 #define CRU_CLKSEL_CON02_PCLK_MCU_BUS_DIV_SHIFT            (8U)
 #define CRU_CLKSEL_CON02_PCLK_MCU_BUS_DIV_MASK             (0x1FU << CRU_CLKSEL_CON02_PCLK_MCU_BUS_DIV_SHIFT)           /* 0x00001F00 */
 /* CLKSEL_CON03 */
