@@ -166,7 +166,8 @@ static HAL_Status SNOR_XIP_TEST(uint32_t testEndLBA)
             testSecCount = 1;
     }
     HAL_DBG("---------Test ftl check---------\n");
-
+    HAL_SNOR_XIPDisable(nor);
+    HAL_SNOR_XIPEnable(nor);
     testSecCount = 1;
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
@@ -272,16 +273,12 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     fspiHost->instance = FSPI0;
     HAL_FSPI_Init(fspiHost);
 
-#ifdef HAL_FSPI_QUAD_ENABLE
     spi->mode = SPI_MODE_3 | SPI_TX_QUAD | SPI_RX_QUAD;
-#else
-    spi->mode = SPI_MODE_3;
+#ifdef HAL_FSPI_XIP_ENABLE
+    spi->mode |= SPI_XIP;
 #endif
     spi->userdata = (void *)fspiHost;
 
-#ifdef HAL_FSPI_XIP_ENABLE
-    spi->mode = SPI_XIP;
-#endif
     nor->spi = spi;
     ret = HAL_SNOR_Init(nor);
     TEST_ASSERT(ret == HAL_OK);
