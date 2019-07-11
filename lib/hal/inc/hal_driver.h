@@ -20,10 +20,6 @@
 #include "hal_cru.h"
 #endif
 
-#ifdef HAL_DMA_MODULE_ENABLED
-#include "hal_dma.h"
-#endif
-
 #ifdef HAL_DSI_MODULE_ENABLED
 #include "hal_display.h"
 #include "hal_dsi.h"
@@ -86,6 +82,7 @@
 #endif
 
 #ifdef HAL_PL330_MODULE_ENABLED
+#include "hal_dma.h"
 #include "hal_pl330.h"
 #endif
 
