@@ -284,7 +284,7 @@ int retValue, varNum;
 
 ```c
 /*
- * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
+ * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 ```
 
@@ -751,7 +751,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 ```c
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
+ * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
 #include "hal_base.h"
@@ -774,7 +774,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 ```c
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2018 Rockchip Electronic Co.,Ltd
+ * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
 #ifndef _HAL_UART_H_
