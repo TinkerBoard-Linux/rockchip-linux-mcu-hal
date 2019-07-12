@@ -1563,7 +1563,7 @@ HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
     int ret = HAL_OK;
     struct DMA_REG *reg = pl330->reg;
     uint32_t val;
-    int ev, i = 0;
+    unsigned int ev, i = 0;
 
     val = READ_REG(reg->FSRD) & 0x1;
     if (val) {
