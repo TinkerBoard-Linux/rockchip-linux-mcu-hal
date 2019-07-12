@@ -49,7 +49,7 @@
 /**
  * @brief  TOUCHKEY Init
  * @param  chn_num: touchkey channel number
- * @param  toucheky: touchkey base address
+ * @param  touchkey: touchkey base address
  * @return HAL_Status
  */
 HAL_Status HAL_TouchKey_Init(uint32_t chn_num, struct TOUCH_SENSOR_REG *touchkey)
