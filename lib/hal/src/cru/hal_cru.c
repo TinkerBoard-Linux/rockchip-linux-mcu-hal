@@ -536,15 +536,15 @@ HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
         index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
         shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
 
-        CRU->PMU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 0 << shift);
+        CRU->PMU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
     } else {
-        CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 0 << shift);
+        CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
     }
 
     return HAL_OK;
 #endif
 
-    CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 0 << shift);
+    CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
 
     return HAL_OK;
 }
@@ -564,15 +564,15 @@ HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
         index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
         shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
 
-        CRU->PMU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 1 << shift);
+        CRU->PMU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
     } else {
-        CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 1 << shift);
+        CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
     }
 
     return HAL_OK;
 #endif
 
-    CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1 << shift, 1 << shift);
+    CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
 
     return HAL_OK;
 }
@@ -601,7 +601,7 @@ HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk)
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
 
     HAL_ASSERT(shift < 16);
-    CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1 << shift, 1 << shift);
+    CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
 
     return HAL_OK;
 }
@@ -617,7 +617,7 @@ HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
 
     HAL_ASSERT(shift < 16);
-    CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1 << shift, 0 << shift);
+    CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
 
     return HAL_OK;
 }
