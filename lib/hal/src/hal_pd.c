@@ -114,7 +114,7 @@ static HAL_Status PD_IdleRequest(uint32_t pd, bool idle)
     if (reqShift > 16)
         return HAL_INVAL;
     else
-        PMU->BUS_IDLE_REQ = VAL_MASK_WE(1 << reqShift, idle << reqShift);
+        PMU->BUS_IDLE_REQ = VAL_MASK_WE(1U << reqShift, idle << reqShift);
 
     /* Wait util idle_ack = 1 */
     while (delay > 0) {
@@ -145,7 +145,7 @@ static HAL_Status PD_PowerOn(uint32_t pd, bool on)
     if (pwrShift > 16)
         return HAL_INVAL;
     else
-        PMU->PWRDN_CON = VAL_MASK_WE(1 << pwrShift, !on << pwrShift);
+        PMU->PWRDN_CON = VAL_MASK_WE(1U << pwrShift, !on << pwrShift);
 
     while (delay > 0) {
         if (PD_IsOn(pd) == on)
