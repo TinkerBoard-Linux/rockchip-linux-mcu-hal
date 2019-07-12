@@ -241,6 +241,7 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, 
                                              SPI_MEM_OP_DATA_IN(len, NULL, 1));
     int32_t ret;
 
+    /* HAL_DBG("%s %x %lx\n", __func__, code, len); */
     ret = SNOR_ReadWriteReg(nor, &op, val);
     if (ret)
         HAL_DBG("error %ld reading %x\n", ret, code);
@@ -248,12 +249,14 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, 
     return ret;
 }
 
-static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint8_t opcode, uint8_t *buf, int len)
+static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint8_t opcode, uint8_t *buf, int32_t len)
 {
     struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(opcode, 1),
                                              SPI_MEM_OP_NO_ADDR,
                                              SPI_MEM_OP_NO_DUMMY,
                                              SPI_MEM_OP_DATA_OUT(len, NULL, 1));
+
+    /* HAL_DBG("%s %x %ld\n", __func__, opcode, len); */
 
     return SNOR_ReadWriteReg(nor, &op, buf);
 }
@@ -608,7 +611,7 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE era
     uint32_t ret;
     int32_t timeout[] = { 400, 2000, 40000 };
 
-    /* HAL_DBG("%s addr lx\n", __func__, addr); */
+    /* HAL_DBG("%s addr %lx\n", __func__, addr); */
     SNOR_WriteEnable(nor);
     if (eraseType == ERASE_SECTOR)
         ret = SNOR_EraseSec(nor, addr);
@@ -632,7 +635,7 @@ uint32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *p
 {
     uint32_t ret = HAL_OK;
 
-    /* HAL_DBG("%s sec 0x%08x, nSec %lx\n", __func__, sec, nSec); */
+    /* HAL_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     if ((sec + nSec) * 512 > nor->size)
         return HAL_INVAL;
 
@@ -655,7 +658,7 @@ uint32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *
 {
     int32_t ret = HAL_OK;
 
-    /* HAL_DBG("%s sec 0x%08x, nSec %lx\n", __func__, sec, nSec); */
+    /* HAL_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     if ((sec + nSec) * nor->sectorSize > nor->size)
         return HAL_INVAL;
 
@@ -784,7 +787,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         if (info->feature & FEA_4BYTE_ADDR)
             nor->addrWidth = 4;
 
-        if ((info->feature & FEA_4BYTE_ADDR_MODE))
+        if (info->feature & FEA_4BYTE_ADDR_MODE)
             SNOR_Set4byte(nor, info, HAL_ENABLE);
 
 //        HAL_DBG("nor->addrWidth: %x\n", nor->addrWidth);
