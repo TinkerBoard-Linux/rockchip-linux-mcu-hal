@@ -23,7 +23,7 @@
  - Invoke HAL_PL330_Start to start a ready dma transfer.
  - Invoke HAL_PL330_Stop to stop the dma channel.
  - Invoke HAL_PL330_ReleaseChannel to release the dma channel.
- - Invoke HAL_PL330_Deinit to deinitialize pl330.
+ - Invoke HAL_PL330_DeInit to deinitialize pl330.
  - More details refer to APIs' descriptions as below.
 
  @} */
@@ -1384,7 +1384,7 @@ int HAL_PL330_GetPosition(struct PL330_CHAN *pchan)
 
 /** @} */
 
-/** @defgroup PL330_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup PL330_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -1428,7 +1428,7 @@ HAL_Status HAL_PL330_Init(struct HAL_PL330_DEV *pl330)
  *        - HAL_OK on success.
  *        - HAL_ERROR on fail.
  */
-HAL_Status HAL_PL330_Deinit(struct HAL_PL330_DEV *pl330)
+HAL_Status HAL_PL330_DeInit(struct HAL_PL330_DEV *pl330)
 {
     uint32_t dbgInst;
     uint32_t waitCount = 0;

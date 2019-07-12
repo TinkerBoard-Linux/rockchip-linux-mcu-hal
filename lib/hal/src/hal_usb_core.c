@@ -36,7 +36,7 @@
 static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB);
 
 /********************* Public Function Definition ****************************/
-/** @defgroup USB_CORE_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup USB_CORE_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
  *  @{

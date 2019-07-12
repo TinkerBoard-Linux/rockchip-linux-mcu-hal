@@ -392,7 +392,7 @@ HAL_Status HAL_PINCTRL_Resume(void)
 }
 /** @} */
 
-/** @defgroup PINCTRL_Exported_Functions_Group2 Init and Deinit Functions
+/** @defgroup PINCTRL_Exported_Functions_Group2 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -404,7 +404,7 @@ HAL_Status HAL_PINCTRL_Init(void)
     return HAL_OK;
 }
 
-HAL_Status HAL_PINCTRL_Deinit(void)
+HAL_Status HAL_PINCTRL_DeInit(void)
 {
     return HAL_OK;
 }

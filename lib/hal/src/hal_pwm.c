@@ -29,7 +29,7 @@
      - Use HAL_PWM_SetEnable() with true to start PWM;
      - Use HAL_PWM_SetEnable() with false to stop PWM.
 
- - Invoke HAL_PWM_Deinit() if necessary.
+ - Invoke HAL_PWM_DeInit() if necessary.
 
  @} */
 
@@ -209,7 +209,7 @@ HAL_Status HAL_PWM_SetEnable(struct PWM_HANDLE *pPWM, uint32_t channel,
 
 /** @} */
 
-/** @defgroup PWM_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup PWM_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -242,7 +242,7 @@ HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *base, uint32_t 
   *               the information for PWM module.
   * @return HAL status
   */
-HAL_Status HAL_PWM_Deinit(struct PWM_HANDLE *pPWM)
+HAL_Status HAL_PWM_DeInit(struct PWM_HANDLE *pPWM)
 {
     /* ...to do */
     return HAL_OK;

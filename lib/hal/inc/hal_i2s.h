@@ -308,7 +308,7 @@ struct HAL_I2S_DEV {
 HAL_Status HAL_I2S_Supsend(struct AUDIO_DAI *dai);
 HAL_Status HAL_I2S_Resume(struct AUDIO_DAI *dai);
 HAL_Status HAL_I2S_Init(struct AUDIO_DAI *dai, struct HAL_I2S_DEV *i2s);
-HAL_Status HAL_I2S_Deinit(struct AUDIO_DAI *dai);
+HAL_Status HAL_I2S_DeInit(struct AUDIO_DAI *dai);
 HAL_Status HAL_I2S_Enable(struct AUDIO_DAI *dai, uint8_t stream);
 HAL_Status HAL_I2S_Disable(struct AUDIO_DAI *dai, uint8_t stream);
 HAL_Status HAL_I2S_Config(struct AUDIO_DAI *dai, uint8_t stream,

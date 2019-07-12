@@ -327,7 +327,7 @@ HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 
 /** @} */
 
-/** @defgroup SFC_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup SFC_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -353,11 +353,11 @@ HAL_Status HAL_SFC_Init(struct HAL_SFC_HOST *host)
 }
 
 /**
- * @brief  Deinit SFC.
+ * @brief  DeInit SFC.
  * @param  host: SFC host.
  * @return HAL_Status.
  */
-HAL_Status HAL_SFC_Deinit(struct HAL_SFC_HOST *host)
+HAL_Status HAL_SFC_DeInit(struct HAL_SFC_HOST *host)
 {
     SFC_Reset(host->instance);
 

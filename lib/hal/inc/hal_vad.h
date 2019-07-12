@@ -253,7 +253,7 @@ struct HAL_VAD_DEV {
 /***************************** Function Declare ******************************/
 
 HAL_Status HAL_VAD_Init(struct AUDIO_DAI *dai, struct HAL_VAD_DEV *vad);
-HAL_Status HAL_VAD_Deinit(struct AUDIO_DAI *dai);
+HAL_Status HAL_VAD_DeInit(struct AUDIO_DAI *dai);
 HAL_Status HAL_VAD_Supsend(struct AUDIO_DAI *dai);
 HAL_Status HAL_VAD_Resume(struct AUDIO_DAI *dai);
 HAL_Status HAL_VAD_Start(struct AUDIO_DAI *dai, uint8_t stream);

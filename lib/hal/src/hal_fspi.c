@@ -468,7 +468,7 @@ HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, u
 
 /** @} */
 
-/** @defgroup FSPI_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup FSPI_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -494,11 +494,11 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
 }
 
 /**
- * @brief  Deinit FSPI.
+ * @brief  DeInit FSPI.
  * @param  host: FSPI host.
  * @return HAL_Status.
  */
-HAL_Status HAL_FSPI_Deinit(struct HAL_FSPI_HOST *host)
+HAL_Status HAL_FSPI_DeInit(struct HAL_FSPI_HOST *host)
 {
     FSPI_Reset(host->instance);
 

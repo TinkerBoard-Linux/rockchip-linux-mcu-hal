@@ -701,7 +701,7 @@ uint32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, vo
     return nSec;
 }
 
-/** @defgroup SNOR_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup SNOR_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -811,7 +811,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
  * @param  nor: nor dev.
  * @return HAL_Status.
  */
-HAL_Status HAL_SNOR_Deinit(struct SPI_NOR *nor)
+HAL_Status HAL_SNOR_DeInit(struct SPI_NOR *nor)
 {
     return HAL_OK;
 }

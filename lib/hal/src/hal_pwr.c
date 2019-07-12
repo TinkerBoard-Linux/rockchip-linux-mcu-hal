@@ -182,7 +182,7 @@ int HAL_PWR_GetVoltageReal(struct PWR_DESC *desc)
 
 /** @} */
 
-/** @defgroup PWR_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup PWR_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
  *  @{

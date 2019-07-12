@@ -289,7 +289,7 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
 
 /** @} */
 
-/** @defgroup MBox_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup MBox_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 

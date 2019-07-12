@@ -119,7 +119,7 @@ struct HAL_PDM_DEV {
 HAL_Status HAL_PDM_Supsend(struct AUDIO_DAI *dai);
 HAL_Status HAL_PDM_Resume(struct AUDIO_DAI *dai);
 HAL_Status HAL_PDM_Init(struct AUDIO_DAI *dai, struct HAL_PDM_DEV *pdm);
-HAL_Status HAL_PDM_Deinit(struct AUDIO_DAI *dai);
+HAL_Status HAL_PDM_DeInit(struct AUDIO_DAI *dai);
 HAL_Status HAL_PDM_Enable(struct AUDIO_DAI *dai, uint8_t stream);
 HAL_Status HAL_PDM_Disable(struct AUDIO_DAI *dai, uint8_t stream);
 HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,

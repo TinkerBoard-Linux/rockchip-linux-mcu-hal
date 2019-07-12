@@ -265,7 +265,7 @@ int HAL_UART_SerialIn(struct UART_REG *pReg, uint8_t *pdata, uint32_t cnt)
 
 /** @} */
 
-/** @defgroup UART_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup UART_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 

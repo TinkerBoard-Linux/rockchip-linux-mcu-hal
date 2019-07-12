@@ -139,7 +139,7 @@ HAL_Status HAL_PCM_Resume(struct AUDIO_PCM *pcm)
 
 /** @} */
 
-/** @defgroup PCM_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup PCM_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -161,11 +161,11 @@ HAL_Status HAL_PCM_Init(struct AUDIO_PCM *pcm)
 }
 
 /**
- * @brief  Deinit pcm.
+ * @brief  DeInit pcm.
  * @param  pcm: the handle of pcm.
  * @return HAL_Status
  */
-HAL_Status HAL_PCM_Deinit(struct AUDIO_PCM *pcm)
+HAL_Status HAL_PCM_DeInit(struct AUDIO_PCM *pcm)
 {
     pcm->ops = NULL;
 

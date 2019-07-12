@@ -291,7 +291,7 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     RUN_TEST_CASE(HAL_SNOR, SnorXIPTest);
 #endif
     /* SNOR deinit */
-    ret = HAL_SNOR_Deinit(nor);
+    ret = HAL_SNOR_DeInit(nor);
     TEST_ASSERT(ret == HAL_OK);
 #endif
 

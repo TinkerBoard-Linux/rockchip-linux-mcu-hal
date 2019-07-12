@@ -80,7 +80,7 @@ static void WDT_SetTop(uint32_t top_s)
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup WDT_Exported_Functions_Group4 Init and Deinit
+/** @defgroup WDT_Exported_Functions_Group4 Init and DeInit
 
   This section provides functions allowing to init and deinit the module:
 

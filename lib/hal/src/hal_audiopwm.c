@@ -121,7 +121,7 @@ HAL_Status HAL_AUDIOPWM_Resume(struct AUDIO_DAI *dai)
 
 /** @} */
 
-/** @defgroup AUDIOPWM_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup AUDIOPWM_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -149,11 +149,11 @@ HAL_Status HAL_AUDIOPWM_Init(struct AUDIO_DAI *dai, struct HAL_AUDIOPWM_DEV *aud
 }
 
 /**
- * @brief  Deinit audioPwm controller.
+ * @brief  DeInit audioPwm controller.
  * @param  dai: the handle of dai.
  * @return HAL_Status
  */
-HAL_Status HAL_AUDIOPWM_Deinit(struct AUDIO_DAI *dai)
+HAL_Status HAL_AUDIOPWM_DeInit(struct AUDIO_DAI *dai)
 {
     struct HAL_AUDIOPWM_DEV *audioPwm = (struct HAL_AUDIOPWM_DEV *)dai->privData;
 

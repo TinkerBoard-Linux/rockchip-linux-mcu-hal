@@ -69,7 +69,7 @@ struct HAL_AUDIOPWM_DEV {
 HAL_Status HAL_AUDIOPWM_Supsend(struct AUDIO_DAI *dai);
 HAL_Status HAL_AUDIOPWM_Resume(struct AUDIO_DAI *dai);
 HAL_Status HAL_AUDIOPWM_Init(struct AUDIO_DAI *dai, struct HAL_AUDIOPWM_DEV *audioPwm);
-HAL_Status HAL_AUDIOPWM_Deinit(struct AUDIO_DAI *dai);
+HAL_Status HAL_AUDIOPWM_DeInit(struct AUDIO_DAI *dai);
 HAL_Status HAL_AUDIOPWM_Enable(struct AUDIO_DAI *dai, uint8_t stream);
 HAL_Status HAL_AUDIOPWM_Disable(struct AUDIO_DAI *dai, uint8_t stream);
 HAL_Status HAL_AUDIOPWM_Config(struct AUDIO_DAI *dai, uint8_t stream,

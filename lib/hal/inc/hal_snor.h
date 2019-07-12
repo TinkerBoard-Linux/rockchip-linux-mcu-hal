@@ -184,7 +184,7 @@ struct SPI_MEM_OP {
 /** @} */
 /***************************** Function Declare ******************************/
 HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor);
-HAL_Status HAL_SNOR_Deinit(struct SPI_NOR *nor);
+HAL_Status HAL_SNOR_DeInit(struct SPI_NOR *nor);
 uint32_t HAL_SNOR_GetCapacity(struct SPI_NOR *nor);
 HAL_Status HAL_SNOR_ReadID(struct SPI_NOR *nor, uint8_t *data);
 uint32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_t len);

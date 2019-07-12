@@ -129,7 +129,7 @@ TEST_GROUP_RUNNER(HAL_PSRAM){
     TEST_ASSERT(ret == HAL_OK);
     RUN_TEST_CASE(HAL_PSRAM, PsramStressTest);
 
-    ret = HAL_PSRAM_Deinit(sfcHost, 0);
+    ret = HAL_PSRAM_DeInit(sfcHost, 0);
     TEST_ASSERT(ret == HAL_OK);
 
     free(pwrite_t);

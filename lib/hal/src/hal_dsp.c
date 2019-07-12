@@ -137,7 +137,7 @@ HAL_Status HAL_DSP_Resume(struct DSP_DEV *dsp)
 
 /** @} */
 
-/** @defgroup DSP_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup DSP_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -160,11 +160,11 @@ HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp)
 }
 
 /**
- * @brief  Deinit dsp.
+ * @brief  DeInit dsp.
  * @param  dsp: the handle of dsp.
  * @return HAL_Status
  */
-HAL_Status HAL_DSP_Deinit(struct DSP_DEV *dsp)
+HAL_Status HAL_DSP_DeInit(struct DSP_DEV *dsp)
 {
     dsp->ops = NULL;
     dsp->grfReg = NULL;

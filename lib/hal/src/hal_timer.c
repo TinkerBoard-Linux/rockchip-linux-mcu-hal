@@ -40,7 +40,7 @@
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup TIMER_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup TIMER_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit module as follows:
 

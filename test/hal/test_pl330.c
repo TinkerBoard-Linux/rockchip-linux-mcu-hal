@@ -83,7 +83,7 @@ TEST_GROUP_RUNNER(HAL_PL330){
 
     RUN_TEST_CASE(HAL_PL330, MemcpyTest);
 
-    ret = HAL_PL330_Deinit(pl330);
+    ret = HAL_PL330_DeInit(pl330);
     TEST_ASSERT(ret == HAL_OK);
 
     free(src);

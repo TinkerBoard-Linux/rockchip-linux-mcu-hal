@@ -431,7 +431,7 @@ __WEAK void HAL_HCD_HCNotifyURBChange_Callback(struct HCD_HANDLE *pHCD, uint8_t 
 
 /** @} */
 
-/** @defgroup HCD_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup HCD_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
  *  @{

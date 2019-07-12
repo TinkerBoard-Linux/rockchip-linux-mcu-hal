@@ -458,7 +458,7 @@ Jenkins也会使用以上命令进行校验，原则上需要通过校验才合�
 - 初始化反初始化
 
 ```
-/** @defgroup DEMO_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup DEMO_Exported_Functions_Group4 Init and DeInit Functions
  @verbatim
 
  ===============================================================================

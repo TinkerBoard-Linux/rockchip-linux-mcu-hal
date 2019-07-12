@@ -172,7 +172,7 @@ static const struct AUDIO_OPS card_ops = {
 
 /** @} */
 
-/** @defgroup AUDIO_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup AUDIO_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 

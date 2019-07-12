@@ -153,7 +153,7 @@ HAL_Status HAL_I2S_Resume(struct AUDIO_DAI *dai)
 
 /** @} */
 
-/** @defgroup I2S_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup I2S_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -184,11 +184,11 @@ HAL_Status HAL_I2S_Init(struct AUDIO_DAI *dai, struct HAL_I2S_DEV *i2s)
 }
 
 /**
- * @brief  Deinit i2s controller.
+ * @brief  DeInit i2s controller.
  * @param  dai: the handle of dai.
  * @return HAL_Status
  */
-HAL_Status HAL_I2S_Deinit(struct AUDIO_DAI *dai)
+HAL_Status HAL_I2S_DeInit(struct AUDIO_DAI *dai)
 {
     struct HAL_I2S_DEV *i2s = (struct HAL_I2S_DEV *)dai->privData;
 

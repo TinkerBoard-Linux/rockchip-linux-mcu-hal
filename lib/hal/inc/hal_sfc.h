@@ -91,7 +91,7 @@ struct HAL_SFC_HOST {
 /** @} */
 /***************************** Function Declare ******************************/
 HAL_Status HAL_SFC_Init(struct HAL_SFC_HOST *host);
-HAL_Status HAL_SFC_Deinit(struct HAL_SFC_HOST *host);
+HAL_Status HAL_SFC_DeInit(struct HAL_SFC_HOST *host);
 #ifdef HAL_SNOR_MODULE_ENABLED
 HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op);
 #endif

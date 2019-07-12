@@ -92,7 +92,7 @@ struct HAL_FSPI_HOST {
 /** @} */
 /***************************** Function Declare ******************************/
 HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host);
-HAL_Status HAL_FSPI_Deinit(struct HAL_FSPI_HOST *host);
+HAL_Status HAL_FSPI_DeInit(struct HAL_FSPI_HOST *host);
 #ifdef HAL_SNOR_MODULE_ENABLED
 HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op);
 HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on);

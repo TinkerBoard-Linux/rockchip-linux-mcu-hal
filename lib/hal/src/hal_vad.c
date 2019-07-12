@@ -178,7 +178,7 @@ HAL_Status HAL_VAD_Resume(struct AUDIO_DAI *dai)
 
 /** @} */
 
-/** @defgroup VAD_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup VAD_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -225,11 +225,11 @@ HAL_Status HAL_VAD_Init(struct AUDIO_DAI *dai, struct HAL_VAD_DEV *vad)
 }
 
 /**
- * @brief  Deinit vad controller.
+ * @brief  DeInit vad controller.
  * @param  dai: The handle of struct AUDIO_DAI.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_Deinit(struct AUDIO_DAI *dai)
+HAL_Status HAL_VAD_DeInit(struct AUDIO_DAI *dai)
 {
     struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
 

@@ -565,7 +565,7 @@ inline HAL_Status HAL_MMC_StopDma(struct HAL_MMC_HOST *host)
 
 /** @} */
 
-/** @defgroup SDIO_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup SDIO_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 

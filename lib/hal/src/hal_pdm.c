@@ -263,7 +263,7 @@ HAL_Status HAL_PDM_Resume(struct AUDIO_DAI *dai)
 
 /** @} */
 
-/** @defgroup PDM_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup PDM_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -294,11 +294,11 @@ HAL_Status HAL_PDM_Init(struct AUDIO_DAI *dai, struct HAL_PDM_DEV *pdm)
 }
 
 /**
- * @brief  Deinit pdm controller.
+ * @brief  DeInit pdm controller.
  * @param  dai: the handle of dai.
  * @return HAL_Status
  */
-HAL_Status HAL_PDM_Deinit(struct AUDIO_DAI *dai)
+HAL_Status HAL_PDM_DeInit(struct AUDIO_DAI *dai)
 {
     struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
 

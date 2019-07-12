@@ -39,7 +39,7 @@
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup TOUCHKEY_Exported_Functions_Group4 Init and Deinit
+/** @defgroup TOUCHKEY_Exported_Functions_Group4 Init and DeInit
 
   This section provides functions allowing to init and deinit the module:
 
@@ -81,7 +81,7 @@ HAL_Status HAL_TouchKey_Init(uint32_t chn_num, struct TOUCH_SENSOR_REG *touchkey
 }
 
 /**
- * @brief  TOUCHKEY Deinit
+ * @brief  TOUCHKEY DeInit
  * @param  touchkey: touchkey base address
  * @return HAL_Status
  */

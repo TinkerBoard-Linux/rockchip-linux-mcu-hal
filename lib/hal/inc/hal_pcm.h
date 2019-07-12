@@ -30,7 +30,7 @@
 HAL_Status HAL_PCM_Supsend(struct AUDIO_PCM *pcm);
 HAL_Status HAL_PCM_Resume(struct AUDIO_PCM *pcm);
 HAL_Status HAL_PCM_Init(struct AUDIO_PCM *pcm);
-HAL_Status HAL_PCM_Deinit(struct AUDIO_PCM *pcm);
+HAL_Status HAL_PCM_DeInit(struct AUDIO_PCM *pcm);
 HAL_Status HAL_PCM_Enable(struct AUDIO_PCM *pcm, uint8_t stream);
 HAL_Status HAL_PCM_Disable(struct AUDIO_PCM *pcm, uint8_t stream);
 HAL_Status HAL_PCM_Prepare(struct AUDIO_PCM *pcm, uint8_t stream,

@@ -131,13 +131,13 @@ TEST(HAL_LEAGACY, DataAccess){
     HAL_DBG("PSRAM XIP DataAccess\n");
     DataAccessHelper(xipbuf, dstbuf, (void *)&SumTest);
     HAL_PSRAM_XmmcDisable(sfcHost);
-    HAL_PSRAM_Deinit(sfcHost, 0);
+    HAL_PSRAM_DeInit(sfcHost, 0);
 #endif
 
     free(poolbuf1);
     free(poolbuf2);
 
-    HAL_SNOR_Deinit(sfcHost);
+    HAL_SNOR_DeInit(sfcHost);
 }
 #endif
 

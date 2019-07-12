@@ -47,7 +47,7 @@ struct DSP_DEV {
 
 /** should hold lock to call these functions */
 HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp);
-HAL_Status HAL_DSP_Deinit(struct DSP_DEV *dsp);
+HAL_Status HAL_DSP_DeInit(struct DSP_DEV *dsp);
 HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr);
 HAL_Status HAL_DSP_Disable(struct DSP_DEV *dsp);
 HAL_Status HAL_DSP_START(struct DSP_DEV *dsp);

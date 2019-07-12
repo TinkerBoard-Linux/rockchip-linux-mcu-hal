@@ -207,7 +207,7 @@ struct HAL_PL330_DEV {
 /***************************** Function Declare ******************************/
 
 HAL_Status HAL_PL330_Init(struct HAL_PL330_DEV *pl330);
-HAL_Status HAL_PL330_Deinit(struct HAL_PL330_DEV *pl330);
+HAL_Status HAL_PL330_DeInit(struct HAL_PL330_DEV *pl330);
 
 HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan);
 HAL_Status HAL_PL330_Stop(struct PL330_CHAN *pchan);

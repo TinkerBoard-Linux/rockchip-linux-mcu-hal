@@ -254,7 +254,7 @@ HAL_Status HAL_PINCTRL_Suspend(void);
 HAL_Status HAL_PINCTRL_Resume(void);
 
 HAL_Status HAL_PINCTRL_Init(void);
-HAL_Status HAL_PINCTRL_Deinit(void);
+HAL_Status HAL_PINCTRL_DeInit(void);
 
 HAL_Status HAL_PINCTRL_SetParam(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_configParam param);
 HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_configParam param);

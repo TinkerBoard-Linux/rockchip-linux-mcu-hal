@@ -44,7 +44,7 @@ HAL_Status HAL_DEMO_Resume(uint32_t inputTest);
 HAL_Status HAL_DEMO_GetXXXState(uint32_t inputTest);
 HAL_Status HAL_DEMO_WriteByte_DMA(uint32_t inputTest);
 HAL_Status HAL_DEMO_Init(uint32_t inputTest);
-HAL_Status HAL_DEMO_Deinit(uint32_t inputTest);
+HAL_Status HAL_DEMO_DeInit(uint32_t inputTest);
 HAL_Status HAL_DEMO_CommonFunction(uint32_t inputTest);
 
 #endif

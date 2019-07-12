@@ -293,7 +293,7 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
 
 /** @} */
 
-/** @defgroup DSI_Exported_Functions_Group3 Init and Deinit Functions
+/** @defgroup DSI_Exported_Functions_Group3 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 

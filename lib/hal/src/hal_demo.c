@@ -104,7 +104,7 @@ HAL_Status HAL_DEMO_WriteByte_DMA(uint32_t inputTest)
 
 /** @} */
 
-/** @defgroup DEMO_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup DEMO_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -130,7 +130,7 @@ HAL_Status HAL_DEMO_Init(uint32_t inputTest)
  * @return HAL_Status
  * ...to do or delete this row
  */
-HAL_Status HAL_DEMO_Deinit(uint32_t inputTest)
+HAL_Status HAL_DEMO_DeInit(uint32_t inputTest)
 {
     /* ...to do */
 }

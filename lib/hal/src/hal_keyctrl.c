@@ -32,7 +32,7 @@
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup KEYCTRL_Exported_Functions_Group4 Init and Deinit
+/** @defgroup KEYCTRL_Exported_Functions_Group4 Init and DeInit
 
   This section provides functions allowing to init and deinit the module:
 
@@ -64,7 +64,7 @@ HAL_Status HAL_KeyCtrl_Init(struct KEY_CTRL_REG *reg, uint32_t keyDetectionTh, u
 }
 
 /**
- * @brief  Keyctrl Deinit
+ * @brief  Keyctrl DeInit
  * @param  reg: keyctrl base address
  * @return HAL_Status
  */

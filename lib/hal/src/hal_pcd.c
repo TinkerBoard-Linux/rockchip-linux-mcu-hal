@@ -554,7 +554,7 @@ __WEAK void HAL_PCD_DisconnectCallback(struct PCD_HANDLE *pPCD)
 
 /** @} */
 
-/** @defgroup PCD_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup PCD_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
  *  @{

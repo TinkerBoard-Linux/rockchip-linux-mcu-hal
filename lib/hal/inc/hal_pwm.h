@@ -83,7 +83,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint32_t channel,
 HAL_Status HAL_PWM_SetEnable(struct PWM_HANDLE *pPWM, uint32_t channel,
                              uint32_t mode, bool enable);
 HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *base, uint32_t freq);
-HAL_Status HAL_PWM_Deinit(struct PWM_HANDLE *pPWM);
+HAL_Status HAL_PWM_DeInit(struct PWM_HANDLE *pPWM);
 
 #endif
 

@@ -38,7 +38,7 @@
 static __IO uint32_t uwTick;
 
 /********************* Private Function Definition ***************************/
-/** @defgroup HAL_BASE_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 

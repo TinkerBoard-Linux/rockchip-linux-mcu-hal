@@ -712,7 +712,7 @@ HAL_Status HAL_I2C_Close(struct I2C_HANDLE *pI2C)
 
 /** @} */
 
-/** @defgroup I2C_Exported_Functions_Group4 Init and Deinit Functions
+/** @defgroup I2C_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
