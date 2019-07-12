@@ -34,7 +34,7 @@
 
 /********************* Private MACRO Definition ******************************/
 
-#define IS_VALID_CHAN(n) ((int32_t)(n) >= 0 && (int32_t)(n) < MBOX_CHAN_CNT)
+#define IS_VALID_CHAN(n) (((uint32_t)(n)) < MBOX_CHAN_CNT)
 
 /********************* Private Structure Definition **************************/
 
