@@ -52,8 +52,6 @@
 #endif
 #endif
 
-#define __irq
-
 /***************************** Structure Definition **************************/
 typedef enum {
     HAL_FALSE = 0x00U,

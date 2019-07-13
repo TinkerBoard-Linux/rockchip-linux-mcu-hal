@@ -100,7 +100,7 @@ HAL_Status HAL_IncTick(void)
  * @return HAL_Status: HAL_OK.
  * Count plus 1.
  */
-__WEAK __irq HAL_Status HAL_SysTick_Handler(void)
+__WEAK HAL_Status HAL_SysTick_Handler(void)
 {
     HAL_IncTick();
 
