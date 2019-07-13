@@ -148,6 +148,7 @@ struct FLASH_INFO spiFlashbl[] = {
 };
 
 /********************* Private Function Definition ***************************/
+extern HAL_Status HAL_SPI_Xfer(struct SNOR_HOST *spi, uint32_t bitlen, const void *dout, void *din, unsigned long flags);
 static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 {
 #if defined(HAL_SNOR_SPI_HOST)
@@ -187,11 +188,12 @@ static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op
     if (!tx_buf && !rx_buf)
         flag |= SPI_XFER_END;
 
-    /* HAL_DBG("%s %ld %ld opcode %x\n", __func__, op_len, flag, op->cmd.opcode); */
+    /* HAL_DBG("%s first op_len= %ld flags= %ld opcode= %x\n", __func__, op_len, flag, op->cmd.opcode); */
     ret = HAL_SPI_Xfer(spi, op_len * 8, op_buf, NULL, flag);
     if (ret)
         return HAL_ERROR;
 
+    /* HAL_DBG("%s second nbytes= %d\n", __func__, op->data.nbytes * 8); */
     /* 2nd transfer: rx or tx data path */
     if (tx_buf || rx_buf) {
         ret = HAL_SPI_Xfer(spi, op->data.nbytes * 8, tx_buf, rx_buf, SPI_XFER_END);
@@ -397,6 +399,7 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
     uint32_t i;
     uint8_t status;
 
+    /* HAL_DBG("%s %lx\n", __func__, timeout); */
     for (i = 0; i < timeout; i++) {
         ret = nor->readReg(nor, SPINOR_OP_RDSR, &status, 1);
         if (ret != HAL_OK)
@@ -543,7 +546,7 @@ uint32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32
     uint8_t *pBuf = (uint8_t *)buf;
     uint32_t size, remain = len;
 
-    /* HAL_DBG("%s from 0x%08x, len %lx\n", __func__, from, len); */
+    /* HAL_DBG("%s from 0x%08lx, len %lx\n", __func__, from, len); */
     if ((from + len) > nor->size)
         return 0;
 
@@ -577,7 +580,7 @@ uint32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t
     uint8_t *pBuf = (uint8_t *)buf;
     uint32_t size, remain = len;
 
-    /* HAL_DBG("%s to 0x%08x, len %lx\n", __func__, to, len); */
+    /* HAL_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
     if ((to + len) > nor->size)
         return 0;
 
@@ -735,6 +738,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
 
     HAL_SNOR_ReadID(nor, idByte);
     HAL_DBG("SPI Nor ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
+
     if ((idByte[0] == 0xFF) || (idByte[0] == 0x00))
         return HAL_NODEV;
 
