@@ -130,4 +130,7 @@ __attribute__((section("_ModuleInfo_"))) FIRMWARE_INFO_T const ModuleInfo = {
 
         },
     },
+
+    {
+    },
 };
