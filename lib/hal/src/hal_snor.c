@@ -504,6 +504,7 @@ static HAL_Status SNOR_Set4byte(struct SPI_NOR *nor, const struct FLASH_INFO *in
     case MID_MICRON:
         /* Some Micron need WREN command; all will accept it */
         need_wren = HAL_TRUE;
+    /* fallthrough */
     case MID_MACRONIX:
     case MID_WINBOND:
     case MID_GIGADEV:
