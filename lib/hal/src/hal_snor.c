@@ -539,25 +539,25 @@ static HAL_Status SNOR_Set4byte(struct SPI_NOR *nor, const struct FLASH_INFO *in
  * @param  from: byte address.
  * @param  buf: source address.
  * @param  len: number of bytes.
- * @return HAL_Status.
+ * @return If the transfer is successful, return the transfer length, or error code.
  */
-uint32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_t len)
+int32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_t len)
 {
-    uint32_t ret;
+    int32_t ret;
     uint8_t *pBuf = (uint8_t *)buf;
     uint32_t size, remain = len;
 
     /* HAL_DBG("%s from 0x%08lx, len %lx\n", __func__, from, len); */
     if ((from + len) > nor->size)
-        return 0;
+        return HAL_INVAL;
 
     while (remain) {
         size = HAL_MIN(READ_MAX_IOSIZE, remain);
         ret = nor->read(nor, from, size, pBuf);
-        if (ret != size) {
+        if (ret != (int32_t)size) {
             HAL_DBG("%s %lu ret= %ld\n", __func__, from >> 9, ret);
 
-            return 0;
+            return ret;
         }
         remain -= size;
         from += size;
@@ -573,26 +573,26 @@ uint32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32
  * @param  to: byte address.
  * @param  buf: source address.
  * @param  len: number of bytes.
- * @return HAL_Status.
+ * @return If the transfer is successful, return the transfer length, or error code.
  */
-uint32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t len)
+int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t len)
 {
-    uint32_t ret;
+    int32_t ret;
     uint8_t *pBuf = (uint8_t *)buf;
     uint32_t size, remain = len;
 
     /* HAL_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
     if ((to + len) > nor->size)
-        return 0;
+        return HAL_INVAL;
 
     while (remain) {
         size = HAL_MIN(nor->pageSize, remain);
         SNOR_WriteEnable(nor);
         ret = nor->write(nor, to, size, pBuf);
-        if (ret != size) {
+        if (ret != (int32_t)size) {
             HAL_DBG("%s %lu ret= %ld\n", __func__, to >> 9, ret);
 
-            return 0;
+            return ret;
         }
         SNOR_WaitBusy(nor, 10000);
         remain -= size;
@@ -612,7 +612,7 @@ uint32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t
  */
 HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE eraseType)
 {
-    uint32_t ret;
+    int32_t ret;
     int32_t timeout[] = { 400, 2000, 40000 };
 
     /* HAL_DBG("%s addr %lx\n", __func__, addr); */
@@ -633,19 +633,19 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE era
  * @param  sec: sector address.
  * @param  nSec: number of sectors.
  * @param  pData: destination address.
- * @return HAL_Status.
+ * @return If the transfer is successful, return the transfer length, or error code.
  */
-uint32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
+int32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
 {
-    uint32_t ret = HAL_OK;
+    int32_t ret = HAL_OK;
 
     /* HAL_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     if ((sec + nSec) * 512 > nor->size)
         return HAL_INVAL;
 
     ret = HAL_SNOR_ReadData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
-    if (ret != nSec * nor->sectorSize)
-        return 0;
+    if (ret != (int32_t)(nSec * nor->sectorSize))
+        return HAL_ERROR;
 
     return nSec;
 }
@@ -656,9 +656,9 @@ uint32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *p
  * @param  sec: sector address.
  * @param  nSec: number of sectors.
  * @param  pData: source address.
- * @return HAL_Status.
+ * @return If the transfer is successful, return the transfer length, or error code.
  */
-uint32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
+int32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
 {
     int32_t ret = HAL_OK;
 
@@ -667,8 +667,8 @@ uint32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *
         return HAL_INVAL;
 
     ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
-    if (ret != nSec * nor->sectorSize)
-        return ret;
+    if (ret != (int32_t)(nSec * nor->sectorSize))
+        return HAL_ERROR;
 
     return nSec;
 }
@@ -679,11 +679,11 @@ uint32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *
  * @param  sec: sector address.
  * @param  nSec: number of sectors.
  * @param  pData: source address.
- * @return HAL_Status.
+ * @return If the transfer is successful, return the transfer length, or error code.
  */
-uint32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
+int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
 {
-    uint32_t ret = HAL_OK;
+    int32_t ret = HAL_OK;
     uint8_t *pBuf = (uint8_t *)pData;
     uint32_t remaining = nSec;
 
@@ -694,11 +694,11 @@ uint32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, vo
     while (remaining) {
         ret = HAL_SNOR_Erase(nor, sec * nor->sectorSize, ERASE_SECTOR);
         if (ret != HAL_OK)
-            return 0;
+            return ret;
 
         ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, (void *)pBuf, nor->sectorSize);
-        if (ret != nor->sectorSize)
-            return 0;
+        if (ret != (int32_t)(nSec * nor->sectorSize))
+            return HAL_ERROR;
 
         pBuf += nor->sectorSize;
         remaining--;
@@ -838,7 +838,7 @@ HAL_Status HAL_SNOR_DeInit(struct SPI_NOR *nor)
  */
 HAL_Status HAL_SNOR_ReadID(struct SPI_NOR *nor, uint8_t *data)
 {
-    uint32_t ret;
+    int32_t ret;
     uint8_t *id = data;
 
     ret = nor->readReg(nor, SPINOR_OP_RDID, id, 3);
