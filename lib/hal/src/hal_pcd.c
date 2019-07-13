@@ -941,7 +941,7 @@ static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum)
 {
     struct USB_GLOBAL_REG *pUSB = pPCD->pReg;
     struct USB_OTG_EP *pEP;
-    int32_t len = 0;
+    uint32_t len = 0;
     uint32_t lenWords;
     uint32_t fifoEmptyMsk = 0;
 
