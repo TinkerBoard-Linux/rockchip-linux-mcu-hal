@@ -124,7 +124,8 @@ struct DSC_PPS {
 /********************* Private Variable Definition ***************************/
 static struct GRF_REG * const gGrfReg = GRF;
 static struct VOP_REG g_VOP_RegMir;
-static const char * const VOP_IRQs[] = {
+static const char * const VOP_IRQs[] =
+{
     "frame start interrupt status!",
     "new frame start interrupt status!",
     "same address interrupt status!",
@@ -511,6 +512,16 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                   VOP_WIN0_CTRL0_WIN0_LUT_EN_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_LUT_EN_MASK,
                   lut_en);
+    if (pWinState->hwFormat == VOP_FMT_1BPP)
+        VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
+                      &pReg->WIN0_CTRL[0] + regOffset,
+                      VOP_WIN0_CTRL0_WIN0_BPP_SWAP_SHIFT,
+                      VOP_WIN0_CTRL0_WIN0_BPP_SWAP_MASK, 1);
+    else
+        VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
+                      &pReg->WIN0_CTRL[0] + regOffset,
+                      VOP_WIN0_CTRL0_WIN0_BPP_SWAP_SHIFT,
+                      VOP_WIN0_CTRL0_WIN0_BPP_SWAP_MASK, 0);
 }
 
 /********************* Public Function Definition ****************************/
@@ -700,7 +711,7 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
                             struct DISPLAY_MODE_INFO *pModeInfo)
 {
     if (IS_BPP_FORMAT(pWinState->hwFormat)) {
-        if (pWinState->winId == VOP_WIN2) {
+        if ((pWinState->winId == VOP_WIN2) && (pWinState->winEn)) {
             HAL_DBG_ERR("win2 unsupport bpp format!\n");
 
             return HAL_INVAL;
@@ -1351,6 +1362,7 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_SHIFT,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
                       OUT_MODE_S888_DUMMY);
+        break;
     default:
         HAL_DBG_ERR("Unknown Bus Format: %d\n", BusFormat);
         break;
@@ -1540,9 +1552,6 @@ HAL_Status HAL_VOP_EnableDebugIrq(struct VOP_REG *pReg)
     VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_POST_EMPTY_INTR_EN_SHIFT,
                   VOP_INTR_EN_POST_EMPTY_INTR_EN_MASK, 1);
 
-    VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_SHIFT,
-                  VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_MASK, 1);
-
     return HAL_OK;
 }
 
@@ -1563,6 +1572,32 @@ HAL_Status HAL_VOP_DisableDebugIrq(struct VOP_REG *pReg)
                   VOP_INTR_EN_WIN2_EMPTY_INTR_EN_MASK, 0);
     VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_POST_EMPTY_INTR_EN_SHIFT,
                   VOP_INTR_EN_POST_EMPTY_INTR_EN_MASK, 0);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Enable VOP DSP hold interrupt.
+ * @param  pReg: VOP reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_EnableDspHoldIrq(struct VOP_REG *pReg)
+{
+    VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_SHIFT,
+                  VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_MASK, 1);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable VOP DSP hold interrupt.
+ * @param  pReg: VOP reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_DisableDspHoldIrq(struct VOP_REG *pReg)
+{
+    VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_SHIFT,
+                  VOP_INTR_EN_DSP_HOLD_VALID_INTR_EN_MASK, 0);
 
     return HAL_OK;
 }

@@ -184,6 +184,8 @@ HAL_Status HAL_VOP_EnableLineIrq(struct VOP_REG *pReg,
 HAL_Status HAL_VOP_DisableLineIrq(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_EnableDebugIrq(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_DisableDebugIrq(struct VOP_REG *pReg);
+HAL_Status HAL_VOP_EnableDspHoldIrq(struct VOP_REG *pReg);
+HAL_Status HAL_VOP_DisableDspHoldIrq(struct VOP_REG *pReg);
 uint32_t HAL_VOP_IrqHandler(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_NocQosInit(struct VOP_REG *pReg, uint32_t nocQosValue);
 HAL_Status HAL_VOP_NocHurryInit(struct VOP_REG *pReg, uint32_t hurryValue,
