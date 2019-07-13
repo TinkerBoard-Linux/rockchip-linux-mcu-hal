@@ -27,7 +27,7 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 CPU		= -mcpu=cortex-m4 -mthumb
 
 ASFLAGS         += $(CPU)
-CFLAGS		+= $(CPU) -std=c99 -O2 -g -Wformat=2 -Wall -Werror
+CFLAGS		+= $(CPU) -std=c99 -O2 -g -Wformat=2 -Wall -Wextra -Wno-unused-parameter -Werror
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc -nostartfiles
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
