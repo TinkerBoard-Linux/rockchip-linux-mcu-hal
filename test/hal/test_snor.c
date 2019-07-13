@@ -247,33 +247,44 @@ static HAL_Status FSPI_IRQHandler(void)
 HAL_Status HAL_SPI_Xfer(struct SNOR_HOST *spi, uint32_t bitlen, const void *dout, void *din, unsigned long flags)
 {
     struct SPI_HANDLE *pSPI = (struct SPI_HANDLE *)spi->userdata;
-    const uint8_t *tx_data = (const uint8_t *)dout;
+    uint8_t *tx_data = (uint8_t *)dout;
     uint8_t *rx_data = (uint8_t *)din;
     unsigned int len = bitlen / 8;
     int ret;
     uint32_t timeout;
-
-    HAL_SPI_Configure(pSPI, tx_data, rx_data, len);
+    uint32_t realLen, xferLimit = 64;
 
     /* HAL_DBG("%s %lx %lx\n", __func__, bitlen, flags); */
     if (flags & SPI_XFER_BEGIN)
         HAL_SPI_SetCS(pSPI, 0, HAL_TRUE);
 
-    HAL_SPI_PioTransfer(pSPI);
-    if (tx_data) {
-        timeout = HAL_GetTick() + 30;
-        do {
-            ret = HAL_SPI_QueryBusState(pSPI);
-            if (ret == HAL_OK)
-                break;
-        } while (timeout > HAL_GetTick());
-        if (ret)
-            return HAL_TIMEOUT;
-    }
-    HAL_SPI_Stop(pSPI);
+    do {
+        realLen = HAL_MIN(len, xferLimit);
+        HAL_SPI_Configure(pSPI, tx_data, rx_data, realLen);
+        HAL_SPI_PioTransfer(pSPI);
+        if (tx_data) {
+            /* HAL_DBG("%s len=%lx tx0= %x tx1=%x tx2=%x tx3=%x\n", __func__, realLen, tx_data[0], tx_data[1], tx_data[2], tx_data[2]); */
+            timeout = HAL_GetTick() + 10000;    /* FPGA may be in low frequency */
+            do {
+                ret = HAL_SPI_QueryBusState(pSPI);
+                if (ret == HAL_OK)
+                    break;
+            } while (timeout > HAL_GetTick());
+            if (ret) {
+                HAL_DBG("%s timeout\n", __func__);
+
+                return HAL_TIMEOUT;
+            }
+        }
+        len -= realLen;
+        tx_data += realLen;
+        rx_data += realLen;
+        HAL_SPI_Stop(pSPI);
+    } while (len > 0);
 
     if (flags & SPI_XFER_END) {
         HAL_SPI_SetCS(pSPI, 0, HAL_FALSE);
+        HAL_DelayUs(1);
     }
 
     return HAL_OK;
@@ -294,6 +305,8 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     TEST_ASSERT_NOT_NULL(pwrite);
     spi = (struct SNOR_HOST *)malloc(sizeof(struct SNOR_HOST));
     TEST_ASSERT_NOT_NULL(spi);
+    nor = (struct SPI_NOR *)malloc(sizeof(struct SPI_NOR));
+    TEST_ASSERT_NOT_NULL(nor);
 
 #ifdef HAL_SNOR_FSPI_HOST
     uint32_t ret;
@@ -301,9 +314,6 @@ TEST_GROUP_RUNNER(HAL_SNOR){
 
     fspiHost = (struct HAL_FSPI_HOST *)malloc(sizeof(struct HAL_FSPI_HOST));
     TEST_ASSERT_NOT_NULL(fspiHost);
-
-    nor = (struct SPI_NOR *)malloc(sizeof(struct SPI_NOR));
-    TEST_ASSERT_NOT_NULL(nor);
 
     fspiHost->instance = FSPI0;
     HAL_NVIC_SetIRQHandler(FSPI0_IRQn, (NVIC_IRQHandler) & FSPI_IRQHandler);
@@ -330,6 +340,7 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     spiHost->config.speed = HAL_SPI_MASTER_MAX_SCLK_OUT;
     spiHost->config.nBytes = CR0_DATA_FRAME_SIZE_8BIT;
     HAL_SPI_Init(spiHost, SPI0_BASE, HAL_FALSE);
+    HAL_SPI_Stop(spiHost);
 
     spi->mode = SPI_MODE_3;
     spi->userdata = (void *)spiHost;
@@ -337,7 +348,6 @@ TEST_GROUP_RUNNER(HAL_SNOR){
 
     nor->spi = spi;
     ret = HAL_SNOR_Init(nor);
-    HAL_DBG("%s fail, ret %ld\n", __func__, ret);
     TEST_ASSERT(ret == HAL_OK);
     if (ret != HAL_OK)
         HAL_DBG("%s fail, ret %ld\n", __func__, ret);
