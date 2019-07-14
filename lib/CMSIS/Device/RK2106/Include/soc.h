@@ -335,6 +335,7 @@ struct GRF_REG
     __IO uint32_t GRF_CPU_ID;
 };
 /* TIMER Register Structure Define */
+#define TIMER_CHAN_CNT   2
 struct TIMER_REG {
     __IO uint32_t LOAD_COUNT[2];                      /* Address Offset: 0x0000 */
     __I  uint32_t CURRENT_VALUE[2];                   /* Address Offset: 0x0008 */
