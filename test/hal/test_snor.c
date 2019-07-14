@@ -244,6 +244,36 @@ static HAL_Status FSPI_IRQHandler(void)
 #endif
 
 #ifdef HAL_SNOR_SPI_HOST
+static HAL_Status SPI_IRQHandler(void)
+{
+    struct SPI_HANDLE *host = (struct SPI_HANDLE *)nor->spi->userdata;
+
+    HAL_SPI_IrqHandler(host);
+
+    return HAL_OK;
+}
+
+static HAL_Status SPI_ReadID_IT(struct SPI_HANDLE *pSPI)
+{
+    uint32_t timeout, ret = HAL_OK;
+
+    pwrite[0] = 0x9f;
+    HAL_SPI_Configure(pSPI, pwrite, pread, 4);
+    HAL_SPI_SetCS(pSPI, 0, HAL_TRUE);
+    HAL_SPI_ItTransfer(pSPI);
+    timeout = HAL_GetTick() + 10000;    /* FPGA may be in low frequency */
+    do {
+        ret = HAL_SPI_QueryBusState(pSPI);
+        if (ret == HAL_OK)
+            break;
+    } while (timeout > HAL_GetTick());
+    HAL_SPI_SetCS(pSPI, 0, HAL_FALSE);
+    HAL_SPI_Stop(pSPI);
+    HAL_DBG("SPI Nor ID %x %x %x\n", pread[1], pread[2], pread[3]);
+
+    return ret;
+}
+
 HAL_Status HAL_SPI_Xfer(struct SNOR_HOST *spi, uint32_t bitlen, const void *dout, void *din, unsigned long flags)
 {
     struct SPI_HANDLE *pSPI = (struct SPI_HANDLE *)spi->userdata;
@@ -307,6 +337,7 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     TEST_ASSERT_NOT_NULL(spi);
     nor = (struct SPI_NOR *)malloc(sizeof(struct SPI_NOR));
     TEST_ASSERT_NOT_NULL(nor);
+    nor->spi = spi;
 
 #ifdef HAL_SNOR_FSPI_HOST
     uint32_t ret;
@@ -339,14 +370,19 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     spiHost->config.firstBit = CR0_FIRSTBIT_MSB;
     spiHost->config.speed = HAL_SPI_MASTER_MAX_SCLK_OUT;
     spiHost->config.nBytes = CR0_DATA_FRAME_SIZE_8BIT;
+
+    HAL_NVIC_SetIRQHandler(SPI0_IRQn, (NVIC_IRQHandler) & SPI_IRQHandler);
+    HAL_NVIC_EnableIRQ(SPI0_IRQn);
     HAL_SPI_Init(spiHost, SPI0_BASE, HAL_FALSE);
     HAL_SPI_Stop(spiHost);
 
     spi->mode = SPI_MODE_3;
     spi->userdata = (void *)spiHost;
+
+    SPI_ReadID_IT(spiHost);
+
 #endif
 
-    nor->spi = spi;
     ret = HAL_SNOR_Init(nor);
     TEST_ASSERT(ret == HAL_OK);
     if (ret != HAL_OK)
