@@ -52,6 +52,12 @@ typedef enum
   NUM_INTERRUPTS         = 96,
 } IRQn_Type;
 
+/* ================================================================================ */
+/* ================      Processor and Core Peripheral Section     ================ */
+/* ================================================================================ */
+#include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
+#include "system_rv1108.h"
+
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Structure Section                               */
