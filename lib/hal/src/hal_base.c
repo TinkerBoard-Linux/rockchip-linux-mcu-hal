@@ -134,13 +134,7 @@ __WEAK HAL_Status HAL_DelayMs(__IO uint32_t ms)
  */
 HAL_Status HAL_DelayUs(uint32_t us)
 {
-    volatile uint32_t len;
-
-    for (; us > 0; us--)
-        for (len = 0; len < 20; len++)
-            ;
-
-    return HAL_OK;
+    HAL_CPUDelayUs(us);
 }
 #else
 /**

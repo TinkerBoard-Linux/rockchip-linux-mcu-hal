@@ -34,6 +34,28 @@ HAL_Status HAL_SysTick_Handler(void);
 HAL_Status HAL_SystickConfig(uint32_t ticksNumb);
 uint32_t HAL_GetTickWeight(void);
 
+/** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
+ *  @{
+ */
+
+/**
+ * @brief  CPU loop udelay.
+ * @param  us: udelay count.
+ * @return HAL_Status: HAL_OK.
+ */
+__STATIC_INLINE uint32_t HAL_CPUDelayUs(uint32_t us)
+{
+    volatile uint32_t len;
+    uint32_t loopPerUs = SystemCoreClock / 1000000;
+
+    for (; us > 0; us--)
+        for (len = 0; len < loopPerUs; len++)
+            ;
+
+    return HAL_OK;
+}
+/** @} */
+
 #endif
 
 /** @} */
