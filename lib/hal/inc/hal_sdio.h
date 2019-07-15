@@ -23,6 +23,8 @@
 
 /** Use internal DMA */
 #define MMC_USE_DMA
+/* Wait for buffer ready in LLD */
+#define MMC_WAIT_FOR_BR 0
 /** Buffer size for internal DMA */
 #define MMC_DMA_DESC_BUFF_SIZE (0x1f00)
 
@@ -188,6 +190,7 @@ uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int32_t respNum);
 uint32_t HAL_MMC_GetRawInterrupt(struct HAL_MMC_HOST *host);
 uint32_t HAL_MMC_GetInterruptMask(struct HAL_MMC_HOST *host);
 uint32_t HAL_MMC_GetUnmaskedInterrupt(struct HAL_MMC_HOST *host);
+HAL_Status HAL_MMC_PowerCtrl(struct HAL_MMC_HOST *host, bool on);
 
 #endif
 

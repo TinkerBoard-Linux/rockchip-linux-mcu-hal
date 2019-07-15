@@ -76,7 +76,7 @@ uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int32_t respNum)
 {
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
-    return READ_REG(pReg->RESP0 + respNum * 4);
+    return READ_REG(pReg->RESP[respNum]);
 }
 
 /**
@@ -223,6 +223,10 @@ HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
     int32_t fifo_available, i, retries;
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
+    if (size % 4) {
+        size = size + size % 4;
+    }
+
     for (i = 0; i < size / 4; i++) {
         retries = 0;
         do {
@@ -263,6 +267,7 @@ HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     for (i = 0; i < size / 4; i++) {
+        #if MMC_WAIT_FOR_BR
         retries = 0;
         do {
             fifo_available = MMC_GetWaterlevel(host);
@@ -272,10 +277,11 @@ HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
                 return HAL_TIMEOUT;
             }
         } while (!fifo_available);
-
+        #endif
         *buf++ = READ_REG(pReg->FIFO_BASE);
     }
 
+    #if MMC_WAIT_FOR_BR
     retries = 0;
     while (HAL_MMC_IsDataStateBusy(host)) {
         if (retries++ > 10000) {
@@ -285,6 +291,7 @@ HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
             return HAL_TIMEOUT;
         }
     }
+    #endif
 
     return HAL_OK;
 }
@@ -563,6 +570,28 @@ inline HAL_Status HAL_MMC_StopDma(struct HAL_MMC_HOST *host)
     return HAL_OK;
 }
 
+/**
+ * @brief  Power control.
+ * @param  host: private hal host data.
+ * @param  on: TRUE stands for power on and FALSE stands for power off.
+ * @return HAL_Status.
+ */
+inline HAL_Status HAL_MMC_PowerCtrl(struct HAL_MMC_HOST *host, bool on)
+{
+    uint32_t reg;
+    struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
+
+    reg = READ_REG(pReg->PWREN);
+    if (on)
+        reg |= BIT(0);
+    else
+        reg &= ~BIT(0);
+
+    WRITE_REG(pReg->PWREN, reg);
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /** @defgroup SDIO_Exported_Functions_Group4 Init and DeInit Functions
@@ -613,11 +642,21 @@ HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host)
 
     /* Set FIFO */
     reg = READ_REG(pReg->FIFOTH);
+#ifndef MMC_USE_DMA
     reg = (reg >> MMC_FIFOTH_RX_WMARK_SHIFT) & MMC_FIFOTH_RX_WMARK_MASK;
     reg = ((MMC_FIFOTH_DMA_MULTIPLE_TRANSACTION_SIZE_8
             << MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT) |
            ((reg / 2) << MMC_FIFOTH_RX_WMARK_SHIFT) |
            ((reg / 2 + 1) << MMC_FIFOTH_TX_WMARK_SHIFT));
+
+#else
+    reg = ((reg >> MMC_FIFOTH_RX_WMARK_SHIFT) & 0xfff) + 1;
+    reg = ((MMC_FIFOTH_DMA_MULTIPLE_TRANSACTION_SIZE_8
+            << MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT) |
+           ((reg / 2 - 1) << MMC_FIFOTH_RX_WMARK_SHIFT) |
+           ((reg / 2) << MMC_FIFOTH_TX_WMARK_SHIFT));
+#endif
+
     WRITE_REG(pReg->FIFOTH, reg);
 
     return HAL_OK;
