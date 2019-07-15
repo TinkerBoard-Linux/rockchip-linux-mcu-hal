@@ -46,8 +46,12 @@ uint32_t HAL_GetTickWeight(void);
 __STATIC_INLINE uint32_t HAL_CPUDelayUs(uint32_t us)
 {
     volatile uint32_t len;
-    uint32_t loopPerUs = SystemCoreClock / 1000000;
 
+#ifdef SystemCoreClock
+    uint32_t loopPerUs = SystemCoreClock / 1000000;
+#else
+    uint32_t loopPerUs = 20;
+#endif
     for (; us > 0; us--)
         for (len = 0; len < loopPerUs; len++)
             ;

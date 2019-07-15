@@ -134,7 +134,7 @@ __WEAK HAL_Status HAL_DelayMs(__IO uint32_t ms)
  */
 HAL_Status HAL_DelayUs(uint32_t us)
 {
-    HAL_CPUDelayUs(us);
+    return HAL_CPUDelayUs(us);
 }
 #else
 /**
