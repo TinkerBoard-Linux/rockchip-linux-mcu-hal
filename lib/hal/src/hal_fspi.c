@@ -118,7 +118,7 @@ static void FSPI_Reset(struct FSPI_REG *pReg)
 
     pReg->RCVR = FSPI_RCVR_RCVR_RESET;
     while ((pReg->RCVR == FSPI_RCVR_RCVR_RESET) && (timeout > 0)) {
-        HAL_DelayUs(1);
+        HAL_CPUDelayUs(1);
         timeout--;
     }
     pReg->ICLR = 0xFFFFFFFF;
@@ -242,7 +242,7 @@ static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *
                     break;
                 timeout = 0;
             } else {
-                HAL_DelayUs(1);
+                HAL_CPUDelayUs(1);
                 if (timeout++ > 10000) {
                     ret = HAL_TIMEOUT;
                     break;
@@ -266,7 +266,7 @@ static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *
                     break;
                 timeout = 0;
             } else {
-                HAL_DelayUs(1);
+                HAL_CPUDelayUs(1);
                 if (timeout++ > 10000) {
                     ret = HAL_TIMEOUT;
                     break;
@@ -284,7 +284,7 @@ static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *
                     pData1[i] = (uint8_t)((words >> (i * 8)) & 0xFF);
                 break;
             } else {
-                HAL_DelayUs(1);
+                HAL_CPUDelayUs(1);
                 if (timeout++ > 10000) {
                     ret = HAL_TIMEOUT;
                     break;
@@ -307,13 +307,13 @@ static HAL_Status FSPI_XferDone(struct HAL_FSPI_HOST *host)
     struct FSPI_REG *pReg = host->instance;
 
     while (pReg->SR & FSPI_SR_SR_BUSY) {
-        HAL_DelayUs(1);
+        HAL_CPUDelayUs(1);
         if (timeout++ > 100000) { /*wait 100ms*/
             ret = HAL_TIMEOUT;
             break;
         }
     }
-    HAL_DelayUs(1); //CS# High Time (read/write) >100ns
+    HAL_CPUDelayUs(1); //CS# High Time (read/write) >100ns
 
     return ret;
 }
