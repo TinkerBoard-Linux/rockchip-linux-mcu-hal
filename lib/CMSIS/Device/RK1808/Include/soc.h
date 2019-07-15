@@ -112,6 +112,7 @@ typedef enum
 #define __FPU_PRESENT        1U
 #define __CORTEX_A           7U        /* Cortex-A7 Core                          */
 #include "core_ca.h"                   /* Cortex-A processor and core peripherals */
+#include "system_rk1808.h"
 
 /****************************************************************************************/
 /*                                                                                      */
