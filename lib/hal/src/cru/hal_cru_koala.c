@@ -258,7 +258,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
             pRate = PLL_INPUT_OSC_RATE;
         break;
     case CLK_PWM:
-    case CLK_SPI:
+    case CLK_SPI1:
     case CLK_I2C0:
     case CLK_I2C1:
     case CLK_I2C2:
@@ -401,7 +401,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         }
         break;
     case CLK_PWM:
-    case CLK_SPI:
+    case CLK_SPI1:
     case CLK_I2C0:
     case CLK_I2C1:
     case CLK_I2C2:

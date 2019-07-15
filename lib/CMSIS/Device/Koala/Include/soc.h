@@ -628,7 +628,7 @@ struct CRU_REG {
 #define WDT0_BASE           0x44030000U /* WDT0 base address */
 #define WDT1_BASE           0x44040000U /* WDT1 base address */
 #define MBOX_BASE           0x44050000U /* MBOX base address */
-#define SPI_BASE            0x44060000U /* SPI base address */
+#define SPI1_BASE            0x44060000U /* SPI base address */
 #define I2C0_BASE           0x44070000U /* I2C0 base address */
 #define I2C1_BASE           0x44080000U /* I2C1 base address */
 #define PWM_BASE            0x44090000U /* PWM base address  */
@@ -662,7 +662,7 @@ struct CRU_REG {
 #define WDT0                ((struct WDT_REG *) WDT0_BASE)
 #define WDT1                ((struct WDT_REG *) WDT1_BASE)
 #define MBOX                ((struct MBOX_REG *) MBOX_BASE)
-#define SPI                 ((struct SPI_REG *) SPI_BASE)
+#define SPI1                 ((struct SPI_REG *) SPI1_BASE)
 #define I2C0                ((struct I2C_REG *) I2C0_BASE)
 #define I2C1                ((struct I2C_REG *) I2C1_BASE)
 #define PWM		    ((struct PWM_REG *) PWM_BASE)
@@ -682,7 +682,7 @@ struct CRU_REG {
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4))
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX)
-#define IS_SPI_INSTANCE(instance) ((instance) == SPI)
+#define IS_SPI_INSTANCE(instance) ((instance) == SPI1)
 #define IS_EFUSE_INSTANCE(instance) ((instance) == EFUSE)
 #define IS_DMA_INSTANCE(instance) ((instance) == DMA)
 #define IS_FSPI_INSTANCE(instance) ((instance) == FSPI0)
@@ -5394,7 +5394,7 @@ struct CRU_REG {
 #define CLK_UART1_FRAC_SRC_GATE  12
 #define CLK_PWM_SRC_GATE         13
 #define CLK_PVTM_GATE            14
-#define CLK_SPI_SRC_GATE         15
+#define CLK_SPI1_GATE            15
 /********Name=CLKGATE1_CON,Offset=0x204********/
 #define CLK_I2C0_SRC_GATE        16
 #define CLK_I2C1_SRC_GATE        17
@@ -5426,7 +5426,7 @@ struct CRU_REG {
 #define PCLK_MAILBOX_GATE        46
 #define HCLK_SFC_XIP_GATE        47
 /********Name=CLKGATE3_CON,Offset=0x20C********/
-#define PCLK_SPI_GATE            49
+#define PCLK_SPI1_GATE            49
 #define PCLK_I2C0_GATE           50
 #define PCLK_I2C1_GATE           51
 #define PCLK_GPIO1_GATE          52
@@ -5643,7 +5643,7 @@ typedef enum CLOCK_Name {
     CLK_UART1_FRAC       = CLK(0, UART1_FRAC_DIV),
     CLK_UART1            = CLK(UART1_CLK_SEL, 0),
     CLK_PWM              = CLK(0, CLK_PWM_DIV),
-    CLK_SPI              = CLK(0, SPI_DIV),
+    CLK_SPI1             = CLK(0, SPI_DIV),
     CLK_I2C0             = CLK(0, CLK_I2C0_DIV),
     CLK_BT52M            = CLK(CLK_BT52M_SRC_SEL, CLK_BT52M_DIV),
     HCLK_BT              = CLK(HCLK_BT_SRC_SEL, HCLK_BT_DIV),
