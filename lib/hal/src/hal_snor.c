@@ -128,11 +128,11 @@ struct FLASH_INFO {
 
 #define READ_MAX_IOSIZE (1024 * 8) /* 8KB */
 
-//#define SNOR_DEBUG
-#ifdef SNOR_DEBUG
-#define SNOR_DBG(...) SNOR_DBG(__VA_ARGS__)
+//#define HAL_SNOR_DEBUG
+#ifdef HAL_SNOR_DEBUG
+#define HAL_SNOR_DBG(...) HAL_DBG(__VA_ARGS__)
 #else
-#define SNOR_DBG(...)
+#define HAL_SNOR_DBG(...)
 #endif
 /********************* Private Structure Definition **************************/
 
@@ -174,7 +174,7 @@ static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op
             tx_buf = op->data.buf.out;
     }
 
-    /* SNOR_DBG("%s %d %d %x\n", __func__, sizeof(op->cmd.opcode), op->addr.nbytes, op->dummy.nbytes); */
+    /* HAL_SNOR_DBG("%s %d %d %x\n", __func__, sizeof(op->cmd.opcode), op->addr.nbytes, op->dummy.nbytes); */
     op_len = sizeof(op->cmd.opcode) + op->addr.nbytes + op->dummy.nbytes;
     op_buf[pos++] = op->cmd.opcode;
 
@@ -195,12 +195,12 @@ static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op
     if (!tx_buf && !rx_buf)
         flag |= SPI_XFER_END;
 
-    /* SNOR_DBG("%s first op_len= %ld flags= %ld opcode= %x\n", __func__, op_len, flag, op->cmd.opcode); */
+    /* HAL_SNOR_DBG("%s first op_len= %ld flags= %ld opcode= %x\n", __func__, op_len, flag, op->cmd.opcode); */
     ret = HAL_SPI_Xfer(spi, op_len * 8, op_buf, NULL, flag);
     if (ret)
         return HAL_ERROR;
 
-    /* SNOR_DBG("%s second nbytes= %d\n", __func__, op->data.nbytes * 8); */
+    /* HAL_SNOR_DBG("%s second nbytes= %d\n", __func__, op->data.nbytes * 8); */
     /* 2nd transfer: rx or tx data path */
     if (tx_buf || rx_buf) {
         ret = HAL_SPI_Xfer(spi, op->data.nbytes * 8, tx_buf, rx_buf, SPI_XFER_END);
@@ -250,10 +250,10 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, 
                                              SPI_MEM_OP_DATA_IN(len, NULL, 1));
     int32_t ret;
 
-    /* SNOR_DBG("%s %x %lx\n", __func__, code, len); */
+    /* HAL_SNOR_DBG("%s %x %lx\n", __func__, code, len); */
     ret = SNOR_ReadWriteReg(nor, &op, val);
     if (ret)
-        SNOR_DBG("error %ld reading %x\n", ret, code);
+        HAL_SNOR_DBG("error %ld reading %x\n", ret, code);
 
     return ret;
 }
@@ -265,7 +265,7 @@ static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint8_t opcode, uint8_t *bu
                                              SPI_MEM_OP_NO_DUMMY,
                                              SPI_MEM_OP_DATA_OUT(len, NULL, 1));
 
-    /* SNOR_DBG("%s %x %ld\n", __func__, opcode, len); */
+    /* HAL_SNOR_DBG("%s %x %ld\n", __func__, opcode, len); */
 
     return SNOR_ReadWriteReg(nor, &op, buf);
 }
@@ -284,7 +284,7 @@ static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, v
     op.dummy.buswidth = op.addr.buswidth;
     op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
 
-    /* SNOR_DBG("%s %lx %lx %lx %lx\n", __func__, nor->readDummy, op.dummy.buswidth, from, op.addr.val); */
+    /* HAL_SNOR_DBG("%s %lx %lx %lx %lx\n", __func__, nor->readDummy, op.dummy.buswidth, from, op.addr.val); */
     /* convert the dummy cycles to the number of bytes */
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
 
@@ -308,7 +308,7 @@ static int32_t SNOR_WriteData(struct SPI_NOR *nor, uint32_t to, uint32_t len, co
     op.addr.buswidth = SNOR_GET_PROTOCOL_ADDR_BITS(nor->writeProto);
     op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->writeProto);
 
-    /* to-do 写数据限制 */
+    /* to-do 脨麓脢媒戮脻脧脼脰脝 */
     op.data.nbytes = len < op.data.nbytes ? len : op.data.nbytes;
 
     ret = SNOR_SPIMemExecOp(nor->spi, &op);
@@ -331,7 +331,7 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
     op.dummy.buswidth = op.addr.buswidth;
     op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
 
-    /* SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
+    /* HAL_SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
     /* convert the dummy cycles to the number of bytes */
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
 
@@ -406,7 +406,7 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
     uint32_t i;
     uint8_t status;
 
-    /* SNOR_DBG("%s %lx\n", __func__, timeout); */
+    /* HAL_SNOR_DBG("%s %lx\n", __func__, timeout); */
     for (i = 0; i < timeout; i++) {
         ret = nor->readReg(nor, SPINOR_OP_RDSR, &status, 1);
         if (ret != HAL_OK)
@@ -417,7 +417,7 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
 
         HAL_CPUDelayUs(1);
     }
-    SNOR_DBG("%s error %ld\n", __func__, timeout);
+    HAL_SNOR_DBG("%s error %ld\n", __func__, timeout);
 
     return HAL_BUSY;
 }
@@ -440,14 +440,14 @@ static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8
 
         ret = nor->writeReg(nor, WriteStatCmd[regIndex], status, 1);
         if (ret) {
-            SNOR_DBG("error while writing configuration register\n");
+            HAL_SNOR_DBG("error while writing configuration register\n");
 
             return HAL_INVAL;
         }
 
         ret = SNOR_WaitBusy(nor, 10000);
         if (ret) {
-            SNOR_DBG("timeout while writing configuration register\n");
+            HAL_SNOR_DBG("timeout while writing configuration register\n");
 
             return ret;
         }
@@ -554,7 +554,7 @@ int32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_
     uint8_t *pBuf = (uint8_t *)buf;
     uint32_t size, remain = len;
 
-    /* SNOR_DBG("%s from 0x%08lx, len %lx\n", __func__, from, len); */
+    /* HAL_SNOR_DBG("%s from 0x%08lx, len %lx\n", __func__, from, len); */
     if ((from + len) > nor->size)
         return HAL_INVAL;
 
@@ -562,7 +562,7 @@ int32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_
         size = HAL_MIN(READ_MAX_IOSIZE, remain);
         ret = nor->read(nor, from, size, pBuf);
         if (ret != (int32_t)size) {
-            SNOR_DBG("%s %lu ret= %ld\n", __func__, from >> 9, ret);
+            HAL_SNOR_DBG("%s %lu ret= %ld\n", __func__, from >> 9, ret);
 
             return ret;
         }
@@ -588,7 +588,7 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
     uint8_t *pBuf = (uint8_t *)buf;
     uint32_t size, remain = len;
 
-    /* SNOR_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
+    /* HAL_SNOR_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
     if ((to + len) > nor->size)
         return HAL_INVAL;
 
@@ -597,7 +597,7 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
         SNOR_WriteEnable(nor);
         ret = nor->write(nor, to, size, pBuf);
         if (ret != (int32_t)size) {
-            SNOR_DBG("%s %lu ret= %ld\n", __func__, to >> 9, ret);
+            HAL_SNOR_DBG("%s %lu ret= %ld\n", __func__, to >> 9, ret);
 
             return ret;
         }
@@ -622,7 +622,7 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE era
     int32_t ret;
     int32_t timeout[] = { 400, 2000, 40000 };
 
-    /* SNOR_DBG("%s addr %lx\n", __func__, addr); */
+    /* HAL_SNOR_DBG("%s addr %lx\n", __func__, addr); */
     SNOR_WriteEnable(nor);
     if (eraseType == ERASE_SECTOR)
         ret = SNOR_EraseSec(nor, addr);
@@ -646,7 +646,7 @@ int32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pD
 {
     int32_t ret = HAL_OK;
 
-    /* SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
+    /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     if ((sec + nSec) * 512 > nor->size)
         return HAL_INVAL;
 
@@ -669,7 +669,7 @@ int32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *p
 {
     int32_t ret = HAL_OK;
 
-    /* SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
+    /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     if ((sec + nSec) * nor->sectorSize > nor->size)
         return HAL_INVAL;
 
@@ -694,7 +694,7 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
     uint8_t *pBuf = (uint8_t *)pData;
     uint32_t remaining = nSec;
 
-    /* SNOR_DBG("%s sec 0x%08x, nSec %lx\n", __func__, sec, nSec); */
+    /* HAL_SNOR_DBG("%s sec 0x%08x, nSec %lx\n", __func__, sec, nSec); */
     if ((sec + nSec) * 512 > nor->size)
         return HAL_INVAL;
 
@@ -735,7 +735,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     struct FLASH_INFO *info;
 
     if (!nor->spi) {
-        SNOR_DBG("%s no host\n", __func__);
+        HAL_SNOR_DBG("%s no host\n", __func__);
 
         return HAL_INVAL;
     }
@@ -745,7 +745,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     nor->writeReg = (void *)SNOR_WriteReg;
 
     HAL_SNOR_ReadID(nor, idByte);
-    SNOR_DBG("SPI Nor ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
+    HAL_SNOR_DBG("SPI Nor ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
 
     if ((idByte[0] == 0xFF) || (idByte[0] == 0x00))
         return HAL_NODEV;
@@ -802,15 +802,15 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         if (info->feature & FEA_4BYTE_ADDR_MODE)
             SNOR_Set4byte(nor, info, HAL_ENABLE);
 
-//        SNOR_DBG("nor->addrWidth: %x\n", nor->addrWidth);
-//        SNOR_DBG("nor->readProto: %x\n", nor->readProto);
-//        SNOR_DBG("nor->writeProto: %x\n", nor->writeProto);
-//        SNOR_DBG("nor->readCmd: %x\n", nor->readOpcode);
-//        SNOR_DBG("nor->programCmd: %x\n", nor->programOpcode);
-//        SNOR_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
-//        SNOR_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
-//        SNOR_DBG("nor->size: %ldMB\n", nor->size >> 20);
-//        SNOR_DBG("xip enable: %lx\n", nor->spi->mode & SPI_XIP);
+//        HAL_SNOR_DBG("nor->addrWidth: %x\n", nor->addrWidth);
+//        HAL_SNOR_DBG("nor->readProto: %x\n", nor->readProto);
+//        HAL_SNOR_DBG("nor->writeProto: %x\n", nor->writeProto);
+//        HAL_SNOR_DBG("nor->readCmd: %x\n", nor->readOpcode);
+//        HAL_SNOR_DBG("nor->programCmd: %x\n", nor->programOpcode);
+//        HAL_SNOR_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
+//        HAL_SNOR_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
+//        HAL_SNOR_DBG("nor->size: %ldMB\n", nor->size >> 20);
+//        HAL_SNOR_DBG("xip enable: %lx\n", nor->spi->mode & SPI_XIP);
     } else {
         return HAL_NODEV;
     }
@@ -850,7 +850,7 @@ HAL_Status HAL_SNOR_ReadID(struct SPI_NOR *nor, uint8_t *data)
 
     ret = nor->readReg(nor, SPINOR_OP_RDID, id, 3);
     if (ret) {
-        SNOR_DBG("error reading JEDEC ID%x %x %x\n", id[0], id[1], id[2]);
+        HAL_SNOR_DBG("error reading JEDEC ID%x %x %x\n", id[0], id[1], id[2]);
 
         return HAL_ERROR;
     }
