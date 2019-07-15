@@ -99,6 +99,10 @@
 #include "hal_pm.h"
 #endif
 
+#ifdef HAL_PVTM_MODULE_ENABLED
+#include "hal_pvtm.h"
+#endif
+
 #ifdef HAL_PWM_MODULE_ENABLED
 #include "hal_pwm.h"
 #endif
