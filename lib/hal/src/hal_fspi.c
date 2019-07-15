@@ -77,6 +77,13 @@
 #define FSPI_VER_VER_1 1
 #define FSPI_VER_VER_3 3
 
+//#define FSPI_DEBUG
+#ifdef FSPI_DEBUG
+#define FSPI_DBG(...) FSPI_DBG(__VA_ARGS__)
+#else
+#define FSPI_DBG(...)
+#endif
+
 /********************* Private Structure Definition **************************/
 
 typedef union {
@@ -197,8 +204,8 @@ static HAL_Status FSPI_XferStart(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *
     if (!(pReg->FSR & FSPI_FSR_TXES_EMPTY) || !(pReg->FSR & FSPI_FSR_RXES_EMPTY) || (pReg->SR & FSPI_SR_SR_BUSY))
         FSPI_Reset(pReg);
 
-    /* HAL_DBG("%s 1 %lx %lx %lx\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
-    /* HAL_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
+    /* FSPI_DBG("%s 1 %lx %lx %lx\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
+    /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
 
     /* config FSPI */
     pReg->CTRL0 = FSPICtrl.d32;
@@ -226,7 +233,7 @@ static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *
     uint32_t *pData = (uint32_t *)data;
     struct FSPI_REG *pReg = host->instance;
 
-    /* HAL_DBG("%s %p len %lx word0 %lx dir %lx\n", __func__, len, pData[0], dir); */
+    /* FSPI_DBG("%s %p len %lx word0 %lx dir %lx\n", __func__, len, pData[0], dir); */
     if (dir == FSPI_WRITE) {
         words = (len + 3) >> 2;
         while (words) {
@@ -350,8 +357,8 @@ HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *op)
     /* spitial setting */
     FSPICtrl.b.sps = FSPI_CTRL_SHIFTPHASE_NEGEDGE;
 
-    /* HAL_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
-    /* HAL_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
+    /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
+    /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
     host->xmmcDev[host->cs].type = DEV_NOR;
     host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
     host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
@@ -386,7 +393,7 @@ HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
             xmmcCtrl.b.devHwEn = 0;
             xmmcCtrl.b.prefetch = 1;
         }
-        /* HAL_DBG("%s enable 3 %lx %lx %lx\n", __func__, host->xmmcDev[0].ctrl, xmmcCtrl.d32, host->xmmcDev[0].readCmd); */
+        /* FSPI_DBG("%s enable 3 %lx %lx %lx\n", __func__, host->xmmcDev[0].ctrl, xmmcCtrl.d32, host->xmmcDev[0].readCmd); */
 
         /* config ctroller */
         pReg->XMMC_CTRL = xmmcCtrl.d32;
@@ -401,7 +408,7 @@ HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 
         pReg->MODE = 1;
     } else {
-        /* HAL_DBG("%s diable\n", __func__); */
+        /* FSPI_DBG("%s diable\n", __func__); */
         pReg->MODE = 0;
     }
 
@@ -440,7 +447,7 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
     else if (op->data.buf.out)
         ret = FSPI_XferData(host, op->data.nbytes, op->data.buf.in, FSPI_WRITE);
     if (ret) {
-        HAL_DBG("%s xfer data failed ret %ld\n", __func__, ret);
+        FSPI_DBG("%s xfer data failed ret %ld\n", __func__, ret);
 
         return ret;
     }
@@ -488,7 +495,7 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
     FSPI_XmmcDevRegionInit(host);
     host->instance->CTRL0 = 0;
     host->version = host->instance->VER & FSPI_VER_VER_MASK;
-    HAL_DBG("FSPI vertion %lx\n", host->version);
+    FSPI_DBG("FSPI vertion %lx\n", host->version);
 
     return HAL_OK;
 }
