@@ -408,7 +408,7 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
         if ((status & 0x01) == 0)
             return HAL_OK;
 
-        HAL_DelayUs(1);
+        HAL_CPUDelayUs(1);
     }
     HAL_DBG("%s error %ld\n", __func__, timeout);
 
