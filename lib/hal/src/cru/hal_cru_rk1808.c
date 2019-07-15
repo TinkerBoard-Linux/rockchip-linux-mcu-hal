@@ -930,6 +930,13 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_SARADC:
         pRate = PLL_INPUT_OSC_RATE;
         break;
+    case CLK_SDIO_PLL:
+    case CLK_EMMC_PLL:
+    case CLK_SDMMC_PLL:
+        HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_SDIO), 1);
+        HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_EMMC), 1);
+        HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_SDMMC), 1);
+        break;
     case ACLK_NPU2MEM:
         pRate = HAL_CRU_ClkGetFreq(ACLK_NPU);
         break;
