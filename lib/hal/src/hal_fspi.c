@@ -489,7 +489,8 @@ HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, u
  */
 HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
 {
-    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+    if (!IS_FSPI_INSTANCE(host->instance))
+        return HAL_INVAL;
 
     FSPI_Reset(host->instance);
     FSPI_XmmcDevRegionInit(host);
