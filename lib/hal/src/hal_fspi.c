@@ -492,6 +492,7 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
     if (!IS_FSPI_INSTANCE(host->instance))
         return HAL_INVAL;
 
+    host->instance->MODE = 0;
     FSPI_Reset(host->instance);
     FSPI_XmmcDevRegionInit(host);
     host->instance->CTRL0 = 0;
@@ -508,6 +509,7 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
  */
 HAL_Status HAL_FSPI_DeInit(struct HAL_FSPI_HOST *host)
 {
+    host->instance->MODE = 0;
     FSPI_Reset(host->instance);
 
     return HAL_OK;
