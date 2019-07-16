@@ -38,6 +38,10 @@
 #include "hal_dwdma.h"
 #endif
 
+#ifdef HAL_EFUSE_MODULE_ENABLED
+#include "hal_efuse.h"
+#endif
+
 #ifdef HAL_GPIO_MODULE_ENABLED
 #include "hal_gpio.h"
 #include "hal_pinctrl.h"
