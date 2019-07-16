@@ -497,7 +497,6 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
     FSPI_XmmcDevRegionInit(host);
     host->instance->CTRL0 = 0;
     host->version = host->instance->VER & FSPI_VER_VER_MASK;
-    FSPI_DBG("FSPI vertion %lx\n", host->version);
 
     return HAL_OK;
 }
