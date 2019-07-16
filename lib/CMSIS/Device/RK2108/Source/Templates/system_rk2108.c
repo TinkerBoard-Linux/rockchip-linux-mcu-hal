@@ -34,13 +34,8 @@ void SystemInit(void)
 #endif
 
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-#ifdef __vector_remap__
-    uint32_t *ramVector = (uint32_t *)(__vector_remap__);
-
-    for (uint32_t i = 0; i < 16; i++) {
-        ramVector[i] = __Vectors[i];
-    }
-    SCB->VTOR = (uint32_t)ramVector;
+#ifdef __STARTUP_COPY_MULTIPLE
+    SCB->VTOR = (uint32_t *)(__vector_remap__);
 #else
     SCB->VTOR = (uint32_t)__Vectors;
 #endif
