@@ -112,11 +112,13 @@ __STATIC_INLINE void DW_ConvertBurst(uint16_t *maxburst)
 __STATIC_INLINE uint32_t DW_FFS(uint32_t word)
 {
 #ifdef __GNUC__
+    HAL_ASSERT(word);
 
-    return __builtin_ffs(word);
+    return (__builtin_ffs(word) - 1);
 #else
     int num = 0;
 
+    HAL_ASSERT(word);
     if ((word & 0xffff) == 0) {
         num += 16;
         word >>= 16;
