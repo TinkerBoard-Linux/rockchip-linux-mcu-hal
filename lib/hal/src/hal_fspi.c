@@ -377,6 +377,8 @@ HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
     FSPIXMMCCTRL_DATA xmmcCtrl;
     struct FSPI_REG *pReg = host->instance;
 
+    xmmcCtrl.d32 = pReg->XMMC_CTRL;
+
     if (on) {
         if (pReg->MODE & 0x1)
             return HAL_INVAL;
@@ -569,6 +571,8 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
     FSPICTRL_DATA ctrl;
     FSPIXMMCCTRL_DATA xmmcCtrl;
     struct FSPI_REG *pReg = host->instance;
+
+    xmmcCtrl.d32 = pReg->XMMC_CTRL;
 
     if (on) {
         if (pReg->MODE & 0x1)
