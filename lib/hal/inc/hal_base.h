@@ -20,7 +20,21 @@
 
 /***************************** MACRO Definition ******************************/
 
+/** @defgroup HAL_BASE_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
+
+#define IS_TICKFREQ(f) (((f) == HAL_TICK_FREQ_1KHZ)  || ((f) == HAL_TICK_FREQ_100HZ) || ((f) == HAL_TICK_FREQ_10HZ))
+
 /***************************** Structure Definition **************************/
+typedef enum {
+    HAL_TICK_FREQ_10HZ    = 100U,    /* 10 ticks per second, so it's 100ms/tick */
+    HAL_TICK_FREQ_100HZ   = 10U,     /* 100 ticks per second, so it's 10ms/tick */
+    HAL_TICK_FREQ_1KHZ    = 1U,      /* 1000 ticks per second, so it's 1ms/tick */
+    HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ
+} eHAL_tickFreq;
+
+/** @} */
 
 /***************************** Function Declare ******************************/
 
@@ -28,11 +42,12 @@ HAL_Status HAL_Init(void);
 HAL_Status HAL_InitTick(uint32_t tickPriority);
 HAL_Status HAL_IncTick(void);
 uint32_t HAL_GetTick(void);
-HAL_Status HAL_DelayUs(__IO uint32_t delay);
-HAL_Status HAL_DelayMs(__IO uint32_t delay);
+HAL_Status HAL_DelayUs(uint32_t delay);
+HAL_Status HAL_DelayMs(uint32_t delay);
 HAL_Status HAL_SysTick_Handler(void);
 HAL_Status HAL_SystickConfig(uint32_t ticksNumb);
-uint32_t HAL_GetTickWeight(void);
+HAL_Status HAL_SetTickFreq(eHAL_tickFreq freq);
+eHAL_tickFreq HAL_GetTickFreq(void);
 
 /** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
  *  @{

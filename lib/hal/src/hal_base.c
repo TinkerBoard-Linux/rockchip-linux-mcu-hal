@@ -28,14 +28,15 @@
 
 /********************* Private MACRO Definition ******************************/
 
-#define TICK_INT_PRIORITY           0x0FU
-#define HAL_TICK_PER_SECOND_DEFAULT 1000
+#define TICK_INT_PRIORITY     0x0FU
+#define HAL_TICK_FREQ_DEFAULT HAL_TICK_FREQ_1KHZ
 
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
 
 static __IO uint32_t uwTick;
+static eHAL_tickFreq uwTickFreq = HAL_TICK_FREQ_DEFAULT;
 
 /********************* Private Function Definition ***************************/
 /** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
@@ -48,13 +49,10 @@ static __IO uint32_t uwTick;
 /**
  * @brief  Init HAL driver basic code.
  * @return HAL_OK.
- * Init NVIC, set priority group, and init SysTick.
  */
 HAL_Status HAL_Init(void)
 {
-#ifdef __CORTEX_A
-    /* TBD */
-#else
+#ifdef __CORTEX_M
     /* Set Interrupt Group Priority */
     HAL_NVIC_Init();
 
@@ -90,7 +88,7 @@ HAL_Status HAL_DeInit(void)
  */
 HAL_Status HAL_IncTick(void)
 {
-    uwTick++;
+    uwTick += uwTickFreq;
 
     return HAL_OK;
 }
@@ -108,25 +106,59 @@ __WEAK HAL_Status HAL_SysTick_Handler(void)
 }
 
 /**
- * @brief  Get SysTick count.
- * @return uint32_t: sys tick count.
+ * @brief  Provides a tick value in millisecond.
+ * @return uint32_t: tick value in millisecond.
  */
 uint32_t HAL_GetTick(void)
 {
     return uwTick;
 }
 
-#ifdef __CORTEX_A
+/**
+  * @brief Set new tick Freq.
+  * @return HAL_Status.
+  */
+HAL_Status HAL_SetTickFreq(eHAL_tickFreq freq)
+{
+    HAL_ASSERT(IS_TICKFREQ(freq));
+
+    uwTickFreq = freq;
+
+    return HAL_OK;
+}
+
+/**
+  * @brief Return tick frequency.
+  * @return uint32_t: tick period in Hz.
+  */
+eHAL_tickFreq HAL_GetTickFreq(void)
+{
+    return uwTickFreq;
+}
+
 /**
  * @brief  SysTick mdelay.
  * @param  ms: mdelay count.
  * @return HAL_Status: HAL_OK.
+ * @attention this API allow direct use in the HAL layer.
  */
-__WEAK HAL_Status HAL_DelayMs(__IO uint32_t ms)
+__WEAK HAL_Status HAL_DelayMs(uint32_t ms)
 {
-    return HAL_DelayUs(1000 * ms);
+    uint32_t startTick = HAL_GetTick();
+    uint32_t waitTick = ms;
+
+    /* Add a freq to guarantee minimum wait */
+    if (waitTick < HAL_MAX_DELAY) {
+        waitTick += (uint32_t)(uwTickFreq);
+    }
+
+    while ((HAL_GetTick() - startTick) < waitTick)
+        ;
+
+    return HAL_OK;
 }
 
+#ifdef __CORTEX_A
 /**
  * @brief  SysTick udelay.
  * @param  us: udelay count.
@@ -140,8 +172,7 @@ HAL_Status HAL_DelayUs(uint32_t us)
 /**
  * @brief  Config systick reload value.
  * @param  ticksNumb: systick reload value.
- * @return HAL_Status
- *
+ * @return HAL_Status.
  */
 HAL_Status HAL_SystickConfig(uint32_t ticksNumb)
 {
@@ -152,37 +183,11 @@ HAL_Status HAL_SystickConfig(uint32_t ticksNumb)
 }
 
 /**
- * @brief  SysTick mdelay.
- * @param  ms: mdelay count.
- * @return HAL_Status: HAL_OK.
- * When the tickPerSec is 1000, the delicate delay is accurate.
- */
-__WEAK HAL_Status HAL_DelayMs(__IO uint32_t ms)
-{
-    uint32_t tickstart = HAL_GetTick();
-    uint32_t delta = HAL_MAX_DELAY - tickstart;
-    uint32_t wait = ms / HAL_GetTickWeight();
-
-    if (wait == 0)
-        return (HAL_DelayUs(ms * 1000));
-
-    if (delta < wait) {
-        while (HAL_GetTick() > tickstart)
-            ;
-        tickstart = 0;
-        wait -= delta;
-    }
-    while ((HAL_GetTick() - tickstart) < wait)
-        ;
-
-    return HAL_OK;
-}
-
-/**
  * @brief  SysTick udelay.
  * @param  us: udelay count.
  * @return HAL_Status: HAL_OK.
- * When the tickPerSec is within a certain range, the delicate delay is more
+ * @attention this API allow direct use in the HAL layer.
+ *  When the tickPerSec is within a certain range, the delicate delay is more
  * accurate. about (10 10000);
  */
 HAL_Status HAL_DelayUs(uint32_t us)
@@ -214,11 +219,9 @@ HAL_Status HAL_DelayUs(uint32_t us)
  */
 HAL_Status HAL_InitTick(uint32_t tickPriority)
 {
-#ifdef HAL_TICK_PER_SECOND
-    HAL_SystickConfig(SystemCoreClock / HAL_TICK_PER_SECOND);
-#else
-    HAL_SystickConfig(SystemCoreClock / HAL_TICK_PER_SECOND_DEFAULT);
-#endif
+    /* Configure the SysTick to have interrupt in 1ms time basis */
+    HAL_SystickConfig(SystemCoreClock / (1000U / uwTickFreq));
+
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, tickPriority);
 
@@ -226,21 +229,6 @@ HAL_Status HAL_InitTick(uint32_t tickPriority)
     return HAL_OK;
 }
 #endif
-
-/**
- * @brief  Get tick weight
- * @return uitn32_t ms_per_tick.
- */
-uint32_t HAL_GetTickWeight(void)
-{
-#ifdef HAL_TICK_PER_SECOND
-
-    return (uint32_t)(1000 / HAL_TICK_PER_SECOND);
-#else
-
-    return (uint32_t)(1000 / HAL_TICK_PER_SECOND_DEFAULT);
-#endif
-}
 
 /** @} */
 
