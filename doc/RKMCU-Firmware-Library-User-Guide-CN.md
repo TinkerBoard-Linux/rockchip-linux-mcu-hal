@@ -615,7 +615,7 @@ typedef enum
 ### 3.5.4 注意点
 
 - 为了降低模块间的耦合性、降低误调用的导致并发问题的可能，HAL库公共函数应被设计为仅由上层调用的结构，即HAL层间不进行相互调用接口；
-- 如该接口函数、或该组接口函数可供HAL层互相调用，请在函数接口注释处、或函数分组注释处相应添加@atterntion关键字，并附上“this API allow direct use in the HAL layer” 或 “these APIs allow direct use in the HAL layer”。
+- 如该接口函数、或该组接口函数可供HAL层互相调用，请在函数接口注释处、或函数分组注释处相应添加@attention关键字，并附上“this API allow direct use in the HAL layer” 或 “these APIs allow direct use in the HAL layer”。
 
 ```c
 /**
@@ -623,7 +623,7 @@ typedef enum
  * @param  clockName: CLOCK_Name id.
  * @param  rate: clk rate.
  * @return HAL_Status.
- * @atterntion this API allow direct use in the HAL layer.
+ * @attention this API allow direct use in the HAL layer.
  */
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
@@ -633,7 +633,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
 ```c
 /** @defgroup HAL_BASE_Exported_Functions_Group5 Other Functions
- *  @atterntion these APIs allow direct use in the HAL layer.
+ *  @attention these APIs allow direct use in the HAL layer.
  *  @{
  */
 
