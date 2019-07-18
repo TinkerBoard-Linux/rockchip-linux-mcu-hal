@@ -393,8 +393,7 @@ struct GRF_REG {
 };
 /* SGRF Register Structure Define */
 struct SGRF_REG {
-         uint32_t RESERVED0[2];                       /* Address Offset: 0x0000 */
-    __IO uint32_t SOC_CON[7];                         /* Address Offset: 0x0008 */
+    __IO uint32_t SOC_CON[9];                         /* Address Offset: 0x0000 */
          uint32_t RESERVED1[23];                      /* Address Offset: 0x0024 */
     __IO uint32_t DMAC_CON[10];                       /* Address Offset: 0x0080 */
          uint32_t RESERVED2[6];                       /* Address Offset: 0x00A8 */
