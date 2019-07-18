@@ -34,6 +34,11 @@ typedef enum {
     HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ
 } eHAL_tickFreq;
 
+typedef enum {
+    HAL_TICK_CLKSRC_CORE,
+    HAL_TICK_CLKSRC_EXT
+} eHAL_tickClkSource;
+
 /** @} */
 
 /***************************** Function Declare ******************************/
@@ -50,6 +55,8 @@ HAL_Status HAL_DelayMs(uint32_t ms);
 
 void HAL_SYSTICK_IRQHandler(void);
 HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb);
+HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_tickClkSource clkSouce);
+HAL_Check HAL_SYSTICK_IsExtRefClockEnabled(void);
 
 /** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
  *  @{

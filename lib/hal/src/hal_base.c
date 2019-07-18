@@ -187,6 +187,41 @@ HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb)
 }
 
 /**
+ * @brief  Config clock source type for Systick.
+ * @param  clkSource: HAL_TICK_CLKSRC_CORE clock source is from core clk,
+ *                    HAL_TICK_CLKSRC_EXT clock source is from external reference
+ * @return HAL_OK if successful, HAL_INVAL if soc not support.
+ */
+HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_tickClkSource clkSource)
+{
+    if (clkSource == HAL_TICK_CLKSRC_CORE) {
+        SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
+    } else {
+        if (SysTick->CALIB & SysTick_CALIB_NOREF_Msk)
+            return HAL_INVAL;
+        else
+            SysTick->CTRL &= ~SysTick_CTRL_CLKSOURCE_Msk;
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  System Tick, Is the externalreferance clock enabled as a source clock.
+ * @return HAL_TRUE if external referance clock is enabled
+ */
+HAL_Check HAL_SYSTICK_IsExtRefClockEnabled(void)
+{
+    if (SysTick->CTRL & SysTick_CTRL_CLKSOURCE_Msk) {
+        return HAL_FALSE;
+    } else {
+        HAL_ASSERT(!(SysTick->CALIB & SysTick_CALIB_NOREF_Msk));
+
+        return HAL_TRUE;
+    }
+}
+
+/**
  * @brief  SysTick udelay.
  * @param  us: udelay count.
  * @return HAL_Status: HAL_OK.
