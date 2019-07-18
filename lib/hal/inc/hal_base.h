@@ -42,12 +42,14 @@ HAL_Status HAL_Init(void);
 HAL_Status HAL_InitTick(uint32_t tickPriority);
 HAL_Status HAL_IncTick(void);
 uint32_t HAL_GetTick(void);
-HAL_Status HAL_DelayUs(uint32_t delay);
-HAL_Status HAL_DelayMs(uint32_t delay);
-HAL_Status HAL_SysTick_Handler(void);
-HAL_Status HAL_SystickConfig(uint32_t ticksNumb);
 HAL_Status HAL_SetTickFreq(eHAL_tickFreq freq);
 eHAL_tickFreq HAL_GetTickFreq(void);
+
+HAL_Status HAL_DelayUs(uint32_t us);
+HAL_Status HAL_DelayMs(uint32_t ms);
+
+void HAL_SYSTICK_IRQHandler(void);
+HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb);
 
 /** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
  *  @{

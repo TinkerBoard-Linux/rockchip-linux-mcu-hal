@@ -72,14 +72,14 @@ int main(void)
     };
 
     /* HAL BASE Init */
-    HAL_NVIC_SetIRQHandler(SysTick_IRQn, (NVIC_IRQHandler)HAL_SysTick_Handler);
+    HAL_NVIC_SetIRQHandler(SysTick_IRQn, HAL_SYSTICK_IRQHandler);
     HAL_Init();
 
     /* BSP Init */
     BSP_Init();
 
     /* UART Init */
-    HAL_NVIC_SetIRQHandler(UART1_IRQn, (NVIC_IRQHandler)UART_IRQHandler);
+    HAL_NVIC_SetIRQHandler(UART1_IRQn, UART_IRQHandler);
     HAL_NVIC_EnableIRQ(UART1_IRQn);
 
     HAL_UART_Init(&g_uart1Dev, &hal_uart_config);

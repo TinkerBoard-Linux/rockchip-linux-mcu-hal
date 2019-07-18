@@ -16,7 +16,7 @@
 
  The HAL_BASE driver can be used as follows:
 
- - Resgister HAL_SysTick_Handler().
+ - Resgister HAL_SYSTICK_IRQHandler().
  - Initialize the HAL_BASE (HAL_Init()):
     - Enable default interrupt.
     - Define interrupt priority group:
@@ -94,15 +94,13 @@ HAL_Status HAL_IncTick(void)
 }
 
 /**
- * @brief  Core internal SysTick handler
- * @return HAL_Status: HAL_OK.
+ * @brief  Core internal SysTick IRQ handler
+ * @return None
  * Count plus 1.
  */
-__WEAK HAL_Status HAL_SysTick_Handler(void)
+__WEAK void HAL_SYSTICK_IRQHandler(void)
 {
     HAL_IncTick();
-
-    return HAL_OK;
 }
 
 /**
@@ -174,7 +172,7 @@ HAL_Status HAL_DelayUs(uint32_t us)
  * @param  ticksNumb: systick reload value.
  * @return HAL_Status.
  */
-HAL_Status HAL_SystickConfig(uint32_t ticksNumb)
+HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb)
 {
     if (SysTick_Config(ticksNumb))
         return HAL_INVAL;
@@ -220,7 +218,7 @@ HAL_Status HAL_DelayUs(uint32_t us)
 HAL_Status HAL_InitTick(uint32_t tickPriority)
 {
     /* Configure the SysTick to have interrupt in 1ms time basis */
-    HAL_SystickConfig(SystemCoreClock / (1000U / uwTickFreq));
+    HAL_SYSTICK_Config(SystemCoreClock / (1000U / uwTickFreq));
 
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, tickPriority);
