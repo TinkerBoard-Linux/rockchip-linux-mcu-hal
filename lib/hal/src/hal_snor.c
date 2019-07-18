@@ -132,7 +132,7 @@ struct FLASH_INFO {
 #ifdef HAL_SNOR_DEBUG
 #define HAL_SNOR_DBG(...) HAL_DBG(__VA_ARGS__)
 #else
-#define HAL_SNOR_DBG(...)
+#define HAL_SNOR_DBG(...) do { if (0) HAL_DBG(__VA_ARGS__); } while (0)
 #endif
 /********************* Private Structure Definition **************************/
 
