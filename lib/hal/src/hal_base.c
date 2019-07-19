@@ -16,11 +16,15 @@
 
  The HAL_BASE driver can be used as follows:
 
- - Resgister HAL_SYSTICK_IRQHandler().
- - Initialize the HAL_BASE (HAL_Init()):
-    - Enable default interrupt.
-    - Define interrupt priority group:
-    - Initial systick
+  - Resgister HAL_SYSTICK_IRQHandler().
+  - Initialize the HAL_BASE by calling HAL_Init():
+  - Get system time by calling HAL_GetTick();
+  - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs, and HAL_CPUDelayUs();
+
+ Suggest:
+
+  - Blocking for a certain period of time to continuously query HW status, use HAL_GetTick()
+      to do timeout, this will be more accurate.
 
  @} */
 
@@ -83,7 +87,7 @@ HAL_Status HAL_DeInit(void)
  */
 
 /**
- * @brief  Count plus 1 when interrupt occurs.
+ * @brief  Count plus tickFreq when interrupt occurs.
  * @return HAL_Status: HAL_OK.
  */
 HAL_Status HAL_IncTick(void)
@@ -104,7 +108,7 @@ __WEAK void HAL_SYSTICK_IRQHandler(void)
 }
 
 /**
- * @brief  Provides a tick value in millisecond.
+ * @brief  Provides tick value in millisecond.
  * @return uint32_t: tick value in millisecond.
  */
 uint32_t HAL_GetTick(void)
@@ -113,7 +117,7 @@ uint32_t HAL_GetTick(void)
 }
 
 /**
-  * @brief Set new tick Freq.
+  * @brief Set new tick frequency.
   * @return HAL_Status.
   */
 HAL_Status HAL_SetTickFreq(eHAL_tickFreq freq)
@@ -138,7 +142,9 @@ eHAL_tickFreq HAL_GetTickFreq(void)
  * @brief  SysTick mdelay.
  * @param  ms: mdelay count.
  * @return HAL_Status: HAL_OK.
- * @attention this API allow direct use in the HAL layer.
+ * @attention this API allow direct use in the HAL layer. Blocking for a
+ *  certain period of time to continuously query HW status, use HAL_GetTick
+ *  to do timeout, that will be more accurate.
  */
 __WEAK HAL_Status HAL_DelayMs(uint32_t ms)
 {
