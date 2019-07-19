@@ -347,7 +347,6 @@ HAL_Status HAL_SFC_Init(struct HAL_SFC_HOST *host)
     host->status = HAL_UNLOCKED;
     host->instance->CTRL = 0;
     host->version = host->instance->VER & SFC_VER_VER_MASK;
-    HAL_DBG("SFC vertion %lx\n", host->version);
 
     return HAL_OK;
 }
