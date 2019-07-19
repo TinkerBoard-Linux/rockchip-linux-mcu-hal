@@ -358,7 +358,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     while (delay > 0) {
         if (READ_REG(*(pSetup->conOffset2)) & (1 << pSetup->lockShift))
             break;
-        HAL_DelayMs(1);
+        HAL_CPUDelayUs(1000);
         delay--;
     }
     if (delay == 0)
@@ -481,7 +481,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
             if (READ_REG(*(pSetup->conOffset1)) & (1 << pSetup->lockShift))
                 break;
         }
-        HAL_DelayMs(1);
+        HAL_CPUDelayUs(1000);
         delay--;
     }
     if (delay == 0)
