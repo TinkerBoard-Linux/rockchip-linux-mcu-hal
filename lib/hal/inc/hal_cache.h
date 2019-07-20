@@ -181,6 +181,8 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
     uint32_t offset = 0;
     uint32_t status = 0;
 
+    address = HAL_CpuAddrToDmaAddr(address);
+
     offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte + CACHE_LINE_SIZE - 1) >> CACHE_LINE_SHIFT;
     value = (address & ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_INVALID | ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
@@ -360,9 +362,8 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_ClearInt(void)
 /**
  * @brief     enable dcache.
  * @return    HAL_OK if success.
- * @attention Cache invalidate must be call if the dcache is not enable for the first
- * time after power-up. The MPU must be configured before cache if you need the
- * function.
+ * @attention The MPU must be configured before cache if you need the feature.
+ * @attention Dynamically disable and enable dcache is not allowed.
  */
 __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Enable(void)
 {
