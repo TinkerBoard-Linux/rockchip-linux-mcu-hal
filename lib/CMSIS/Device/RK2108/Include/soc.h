@@ -5936,6 +5936,7 @@ struct USB_HOST_CH_REG {
 
 #define FSPI_CHIP_CNT                                      (2)
 /******************************************MMC*******************************************/
+#define CLK_SDIO_PLL CLK_SDIO_SRC
 /* CTRL */
 #define MMC_CTRL_CONTROLLER_RESET_SHIFT                    (0U)
 #define MMC_CTRL_CONTROLLER_RESET_MASK                     (0x1U << MMC_CTRL_CONTROLLER_RESET_SHIFT)                    /* 0x00000001 */
