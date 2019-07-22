@@ -16,6 +16,10 @@
 
 #include "hal_cache.h"
 
+#ifdef HAL_CIF_MODULE_ENABLED
+#include "hal_cif.h"
+#endif
+
 #ifdef HAL_CRU_MODULE_ENABLED
 #include "hal_cru.h"
 #endif
