@@ -669,10 +669,7 @@ struct MMC_REG {
     __IO uint32_t INTMASK;                            /* Address Offset: 0x0024 */
     __IO uint32_t CMDARG;                             /* Address Offset: 0x0028 */
     __IO uint32_t CMD;                                /* Address Offset: 0x002C */
-    __I  uint32_t RESP0;                              /* Address Offset: 0x0030 */
-    __I  uint32_t RESP1;                              /* Address Offset: 0x0034 */
-    __I  uint32_t RESP2;                              /* Address Offset: 0x0038 */
-    __I  uint32_t RESP3;                              /* Address Offset: 0x003C */
+    __I  uint32_t RESP[4];                            /* Address Offset: 0x0030 */
     __IO uint32_t MINTSTS;                            /* Address Offset: 0x0040 */
     __IO uint32_t RINTSTS;                            /* Address Offset: 0x0044 */
     __I  uint32_t STATUS;                             /* Address Offset: 0x0048 */
@@ -1028,7 +1025,7 @@ struct USB_HOST_CH_REG {
 #define SPI1_BASE           0x40C10000U /* SPI1 base address */
 #define SPI2_BASE           0x40C20000U /* SPI2 base address */
 #define FSPI0_BASE          0x40C80000U /* FSPI base address */
-#define MMC0_BASE           0x40C90000U /* MMC0 base address */
+#define SDIO_BASE           0x40C90000U /* MMC0 base address */
 #define KEY_CTRL_BASE       0x40E00000U /* KEY_CTRL base address */
 #define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
 #define GPIO1_BASE          0x40D10000U /* GPIO1 base address */
@@ -1074,7 +1071,7 @@ struct USB_HOST_CH_REG {
 #define SPI1                ((struct SPI_REG *) SPI1_BASE)
 #define SPI2                ((struct SPI_REG *) SPI2_BASE)
 #define FSPI0               ((struct FSPI_REG *) FSPI0_BASE)
-#define MMC0                ((struct MMC_REG *) MMC0_BASE)
+#define SDIO                ((struct MMC_REG *) SDIO_BASE)
 #define KEY_CTRL            ((struct KEY_CTRL_REG *) KEY_CTRL_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
