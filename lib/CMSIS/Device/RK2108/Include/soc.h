@@ -89,6 +89,7 @@ typedef enum
     DSP_PFATAL_ERROR_IRQn       = 40,     /* DSP pfatal error                                           */
     PWM_IRQn                    = 41,     /* PWM                                                        */
     PWM_PWR_IRQn                = 42,     /* PWM PWR                                                    */
+    CIF_IRQn                    = 44,     /* CIF                                                        */
     SPIMST2_IRQn                = 45,     /* SPI Master 2                                               */
     KEY_CTRL_IRQn               = 46,     /* KEY Control                                                */
     NUM_INTERRUPTS
@@ -888,6 +889,36 @@ struct VOP_REG {
          uint32_t RESERVED12;                         /* Address Offset: 0x0A7C */
     __IO uint32_t DSC_DBG_STATUS[3];                  /* Address Offset: 0x0A80 */
 };
+/*  CIF Register Structure Define */
+struct CIF_REG {
+    __IO uint32_t CIF_DVP_CTRL;                       /* Address Offset: 0x0000 */
+    __IO uint32_t CIF_DVP_INTEN;                      /* Address Offset: 0x0004 */
+    __IO uint32_t CIF_DVP_INTSTAT;                    /* Address Offset: 0x0008 */
+    __IO uint32_t CIF_DVP_FOR;                        /* Address Offset: 0x000C */
+    __IO uint32_t CIF_DVP_DMA_IDLE_REQ;               /* Address Offset: 0x0010 */
+    __IO uint32_t CIF_DVP_FRM0_ADDR_Y;                /* Address Offset: 0x0014 */
+    __IO uint32_t CIF_DVP_FRM0_ADDR_UV;               /* Address Offset: 0x0018 */
+    __IO uint32_t CIF_DVP_FRM1_ADDR_Y;                /* Address Offset: 0x001C */
+    __IO uint32_t CIF_DVP_FRM1_ADDR_UV;               /* Address Offset: 0x0020 */
+    __IO uint32_t CIF_DVP_VIR_LINE_WIDTH;             /* Address Offset: 0x0024 */
+    __IO uint32_t CIF_DVP_SET_SIZE;                   /* Address Offset: 0x0028 */
+    __IO uint32_t CIF_DVP_BLOCK_LINE_NUM;             /* Address Offset: 0x002C */
+    __IO uint32_t CIF_DVP_BLOCK0_ADDRY;               /* Address Offset: 0x0030 */
+    __IO uint32_t CIF_DVP_BLOCK0_ADDRUV;              /* Address Offset: 0x0034 */
+    __IO uint32_t CIF_DVP_BLOCK1_ADDRY;               /* Address Offset: 0x0038 */
+    __IO uint32_t CIF_DVP_BLOCK1_ADDRUV;              /* Address Offset: 0x003c */
+    __IO uint32_t CIF_DVP_BLOCK_STATUS;               /* Address Offset: 0x0040 */
+    __IO uint32_t CIF_DVP_CROP;                       /* Address Offset: 0x0044 */
+    __IO uint32_t CIF_DVP_PATH_SEL;                   /* Address Offset: 0x0048 */
+    __IO uint32_t CIF_DVP_LINE_INT_NUM;               /* Address Offset: 0x004c */
+    __IO uint32_t CIF_DVP_WATER_LINE;                 /* Address Offset: 0x0050 */
+    __IO uint32_t CIF_DVP_FIFO_ENTRY;                 /* Address Offset: 0x0054 */
+         uint32_t RESERVED0[2];                       /* Address Offset: 0x0058 */
+    __IO uint32_t CIF_DVP_FRAME_STATUS;               /* Address Offset: 0x0060*/
+    __IO uint32_t CIF_DVP_CUR_DST;                    /* Address Offset: 0x0064 */
+    __IO uint32_t CIF_DVP_LAST_LINE;                  /* Address Offset: 0x0068 */
+    __IO uint32_t CIF_DVP_LAST_PIX;                   /* Address Offset: 0x006c */
+};
 /* AUDIOPWM Register Structure Define */
 struct AUDIOPWM_REG {
     __I  uint32_t VERSION;                            /* Address Offset: 0x0000 */
@@ -995,6 +1026,7 @@ struct USB_HOST_CH_REG {
     __IO uint32_t HCDMA;                              /* Address Offset: 0x0514 */
          uint32_t RESERVED0[2];                       /* Address Offset: 0x0518 */
 };
+
 /****************************************************************************************/
 /*                                                                                      */
 /*                                Module Address Section                                */
@@ -1034,6 +1066,7 @@ struct USB_HOST_CH_REG {
 #define VAD_BASE            0x41020000U /* VAD base address */
 #define I2S1_BASE           0x41030000U /* I2S1 base address */
 #define VOP_BASE            0x41100000U /* VOP base address */
+#define CIF_BASE            0x41120000U /* CIF base address */
 #define AUDIOPWM_BASE       0x41200000U /* AUDIOPWM base address */
 #define USB_BASE            0X41300000U /* USB base address */
 /****************************************************************************************/
@@ -1080,6 +1113,7 @@ struct USB_HOST_CH_REG {
 #define VAD                 ((struct VAD_REG *) VAD_BASE)
 #define I2S1                ((struct I2S_REG *) I2S1_BASE)
 #define VOP                 ((struct VOP_REG *) VOP_BASE)
+#define CIF                 ((struct CIF_REG *) CIF_BASE)
 #define AUDIOPWM            ((struct AUDIOPWM_REG *) AUDIOPWM_BASE)
 #define USB                 ((struct USB_GLOBAL_REG *) USB_BASE)
 
@@ -1109,6 +1143,7 @@ struct USB_HOST_CH_REG {
 #define IS_I2S_INSTANCE(instance) (((instance) == I2S0) || ((instance) == I2S1))
 #define IS_PCD_INSTANCE(instance) ((instance) == USB)
 #define IS_HCD_INSTANCE(instance) ((instance) == USB)
+#define IS_CIF_INSTANCE(instance) ((instance) == CIF)
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
@@ -7984,6 +8019,195 @@ struct USB_HOST_CH_REG {
 #define VOP_DSC_DBG_STATUS2_FRAME_STARTED_MASK             (0x1U << VOP_DSC_DBG_STATUS2_FRAME_STARTED_SHIFT)            /* 0x00000020 */
 #define VOP_DSC_DBG_STATUS2_CE_SHIFT                       (6U)
 #define VOP_DSC_DBG_STATUS2_CE_MASK                        (0x1U << VOP_DSC_DBG_STATUS2_CE_SHIFT)                       /* 0x00000040 */
+/******************************************CIF*******************************************/
+/* CIF_DVP_CTRL */
+#define CIF_DVP_CTRL_AXI_BURST_BYTE_SHIFT                   (12U)
+#define CIF_DVP_CTRL_AXI_BURST_BYTE_MASK                    (0xf << CIF_DVP_CTRL_AXI_BURST_BYTE_SHIFT)
+#define CIF_DVP_CTRL_WORKMODE_SHIFT                         (1U)
+#define CIF_DVP_CTRL_WORKMODE_MASK                          (0x3 << CIF_DVP_CTRL_WORKMODE_SHIFT)
+#define CIF_DVP_CTRL_CAP_EN_SHIFT                           (0U)
+#define CIF_DVP_CTRL_CAP_EN_MASK                            (0x1 << CIF_DVP_CTRL_CAP_EN_SHIFT)
+/* CIF_DVP_INTEN */
+#define CIF_DVP_INTEN_BLOCK_ERR_SHIFT                       (14U)
+#define CIF_DVP_INTEN_BLOCK_ERR_MASK                        (0x1 << CIF_DVP_INTEN_BLOCK_ERR_SHIFT)
+#define CIF_DVP_INTEN_LINE1_END_SHIFT                       (13U)
+#define CIF_DVP_INTEN_LINE1_END_MASK                        (0x1 << CIF_DVP_INTEN_LINE1_END_SHIFT)
+#define CIF_DVP_INTEN_LINE0_END_SHIFT                       (12U)
+#define CIF_DVP_INTEN_LINE0_END_MASK                        (0x1 << CIF_DVP_INTEN_LINE0_END_SHIFT)
+#define CIF_DVP_INTEN_BLOCK1_END_SHIFT                      (11U)
+#define CIF_DVP_INTEN_BLOCK1_END_MASK                       (0x1 << CIF_DVP_INTEN_BLOCK1_END_SHIFT)
+#define CIF_DVP_INTEN_BLOCK0_END_SHIFT                      (10U)
+#define CIF_DVP_INTEN_BLOCK0_END_MASK                       (0x1 << CIF_DVP_INTEN_BLOCK0_END_SHIFT)
+#define CIF_DVP_INTEN_PST_INF_FRAME_END_SHIFT               (9U)
+#define CIF_DVP_INTEN_PST_INF_FRAME_END_MASK                (0x1 << CIF_DVP_INTEN_PST_INF_FRAME_END_SHIFT)
+#define CIF_DVP_INTEN_PRE_INF_FRAME_END_SHIFT               (8U)
+#define CIF_DVP_INTEN_PRE_INF_FRAME_END_MASK                (0x1 << CIF_DVP_INTEN_PRE_INF_FRAME_END_SHIFT)
+#define CIF_DVP_INTEN_FRAME_START_EN_SHIFT                  (7U)
+#define CIF_DVP_INTEN_FRAME_START_EN_MASK                   (0x1 << CIF_DVP_INTEN_FRAME_START_EN_SHIFT)
+#define CIF_DVP_INTEN_BUS_ERR_SHIFT                         (6U)
+#define CIF_DVP_INTEN_BUS_ERR_MASK                          (0x1 << CIF_DVP_INTEN_BUS_ERR_SHIFT)
+#define CIF_DVP_INTEN_DFIFO_OF_SHIFT                        (5U)
+#define CIF_DVP_INTEN_DFIFO_OF_MASK                         (0x1 << CIF_DVP_INTEN_DFIFO_OF_SHIFT)
+#define CIF_DVP_INTEN_IFIFO_OF_SHIFT                        (4U)
+#define CIF_DVP_INTEN_IFIFO_OF_MASK                         (0x1 << CIF_DVP_INTEN_IFIFO_OF_SHIFT)
+#define CIF_DVP_INTEN_PIX_ERR_SHIFT                         (3U)
+#define CIF_DVP_INTEN_PIX_ERR_MASK                          (0x1 << CIF_DVP_INTEN_PIX_ERR_SHIFT)
+#define CIF_DVP_INTEN_LINE_ERR_SHIFT                        (2U)
+#define CIF_DVP_INTEN_LINE_ERR_MASK                         (0x1 << CIF_DVP_INTEN_LINE_ERR_SHIFT)
+#define CIF_DVP_INTEN_LINE_END_SHIFT                        (1U)
+#define CIF_DVP_INTEN_LINE_END_MASK                         (0x1 << CIF_DVP_INTEN_LINE_END_SHIFT)
+#define CIF_DVP_INTEN_DMA_FRAME_END_SHIFT                   (0U)
+#define CIF_DVP_INTEN_DMA_FRAME_END_MASK                    (0x1 << CIF_DVP_INTEN_DMA_FRAME_END_SHIFT)
+/* CIF_DVP_INTSTAT */
+#define CIF_DVP_INTSTAT_BLOCK_ERR_SHIFT                     (14U)
+#define CIF_DVP_INTSTAT_BLOCK_ERR_MASK                      (0x1 << CIF_DVP_INTSTAT_BLOCK_ERR_SHIFT)
+#define CIF_DVP_INTSTAT_LINE1_END_SHIFT                     (13U)
+#define CIF_DVP_INTSTAT_LINE1_END_MASK                      (0x1 << CIF_DVP_INTSTAT_LINE1_END_SHIFT)
+#define CIF_DVP_INTSTAT_LINE0_END_SHIFT                     (12U)
+#define CIF_DVP_INTSTAT_LINE0_END_MASK                      (0x1 << CIF_DVP_INTSTAT_LINE0_END_SHIFT)
+#define CIF_DVP_INTSTAT_BLOCK1_END_SHIFT                    (11U)
+#define CIF_DVP_INTSTAT_BLOCK1_END_MASK                     (0x1 << CIF_DVP_INTSTAT_BLOCK1_END_SHIFT)
+#define CIF_DVP_INTSTAT_BLOCK0_END_SHIFT                    (10U)
+#define CIF_DVP_INTSTAT_BLOCK0_END_MASK                     (0x1 << CIF_DVP_INTSTAT_BLOCK0_END_SHIFT)
+#define CIF_DVP_INTSTAT_PST_INF_FRAME_END_SHIFT             (9U)
+#define CIF_DVP_INTSTAT_PST_INF_FRAME_END_MASK              (0x1 << CIF_DVP_INTSTAT_PST_INF_FRAME_END_SHIFT)
+#define CIF_DVP_INTSTAT_PRE_INF_FRAME_END_SHIFT             (8U)
+#define CIF_DVP_INTSTAT_PRE_INF_FRAME_END_MASK              (0x1 << CIF_DVP_INTSTAT_PRE_INF_FRAME_END_SHIFT)
+#define CIF_DVP_INTSTAT_FRAME_START_SHIFT                   (7U)
+#define CIF_DVP_INTSTAT_FRAME_START_MASK                    (0x1 << CIF_DVP_INTSTAT_FRAME_START_SHIFT)
+#define CIF_DVP_INTSTAT_BUS_ERR_SHIFT                       (6U)
+#define CIF_DVP_INTSTAT_BUS_ERR_MASK                        (0x1 << CIF_DVP_INTSTAT_BUS_ERR_SHIFT)
+#define CIF_DVP_INTSTAT_DFIFO_OF_SHIFT                      (5U)
+#define CIF_DVP_INTSTAT_DFIFO_OF_MASK                       (0x1 << CIF_DVP_INTSTAT_DFIFO_OF_SHIFT)
+#define CIF_DVP_INTSTAT_IFIFO_OF_SHIFT                      (4U)
+#define CIF_DVP_INTSTAT_IFIFO_OF_MASK                       (0x1 << CIF_DVP_INTSTAT_IFIFO_OF_SHIFT)
+#define CIF_DVP_INTSTAT_PIX_ERR_SHIFT                       (3U)
+#define CIF_DVP_INTSTAT_PIX_ERR_MASK                        (0x1 << CIF_DVP_INTSTAT_PIX_ERR_SHIFT)
+#define CIF_DVP_INTSTAT_LINE_ERR_SHIFT                      (2U)
+#define CIF_DVP_INTSTAT_LINE_ERR_MASK                       (0x1 << CIF_DVP_INTSTAT_LINE_ERR_SHIFT)
+#define CIF_DVP_INTSTAT_LINE_END_SHIFT                      (1U)
+#define CIF_DVP_INTSTAT_LINE_END_MASK                       (0x1 << CIF_DVP_INTSTAT_LINE_END_SHIFT)
+#define CIF_DVP_INTSTAT_DMA_FRAME_END_SHIFT                 (0U)
+#define CIF_DVP_INTSTAT_DMA_FRAME_END_MASK                  (0x1 << CIF_DVP_INTSTAT_DMA_FRAME_END_SHIFT)
+/* CIF_DVP_FOR */
+#define CIF_DVP_FOR_UV_STORE_ORDER_SHIFT                    (19U)
+#define CIF_DVP_FOR_UV_STORE_ORDER_MASK                     (0x1 << CIF_DVP_FOR_UV_STORE_ORDER_SHIFT)
+#define CIF_DVP_FOR_RAW_END_SHIFT                           (18U)
+#define CIF_DVP_FOR_RAW_END_MASK                            (0x1 << CIF_DVP_FOR_RAW_END_SHIFT)
+#define CIF_DVP_FOR_OUT_420_ORDER_SHIFT                     (17U)
+#define CIF_DVP_FOR_OUT_420_ORDER_MASK                      (0x1 << CIF_DVP_FOR_OUT_420_ORDER_SHIFT)
+#define CIF_DVP_FOR_OUTPUT_420_SHIFT                        (16U)
+#define CIF_DVP_FOR_OUTPUT_420_MASK                         (0x1 << CIF_DVP_FOR_OUTPUT_420_SHIFT)
+#define CIF_DVP_FOR_ONLY_Y_MODE_SHIFT                       (15U)
+#define CIF_DVP_FOR_ONLY_Y_MODE_MASK                        (0x1 << CIF_DVP_FOR_ONLY_Y_MODE_SHIFT)
+#define CIF_DVP_FOR_RAW_WIDTH_SHIFT                         (11U)
+#define CIF_DVP_FOR_RAW_WIDTH_MASK                          (0x3 << CIF_DVP_FOR_RAW_WIDTH_SHIFT)
+#define CIF_DVP_FOR_JPEG_MODE_SHIFT                         (10U)
+#define CIF_DVP_FOR_JPEG_MODE_MASK                          (0x1 << CIF_DVP_FOR_JPEG_MODE_SHIFT)
+#define CIF_DVP_FOR_FIELD_ORDER_SHIFT                       (9U)
+#define CIF_DVP_FOR_FIELD_ORDER_MASK                        (0x1 << CIF_DVP_FOR_FIELD_ORDER_SHIFT)
+#define CIF_DVP_FOR_YUV_IN_ORDER_SHIFT                      (5U)
+#define CIF_DVP_FOR_YUV_IN_ORDER_MASK                       (0x3 << CIF_DVP_FOR_YUV_IN_ORDER_SHIFT)
+#define CIF_DVP_FOR_INPUT_MODE_SHIFT                        (2U)
+#define CIF_DVP_FOR_INPUT_MODE_MASK                         (0x7 << CIF_DVP_FOR_INPUT_MODE_SHIFT)
+#define CIF_DVP_FOR_HREF_POL_SHIFT                          (1U)
+#define CIF_DVP_FOR_HREF_POL_MASK                           (0x1 << CIF_DVP_FOR_HREF_POL_SHIFT)
+#define CIF_DVP_FOR_VSYNC_POL_SHIFT                         (0x0U)
+#define CIF_DVP_FOR_VSYNC_POL_MASK                          (0x1 << CIF_DVP_FOR_VSYNC_POL_SHIFT)
+/* CIF_DVP_DMA_IDLE_REQ */
+#define CIF_DVP_DMA_IDLE_REQ_SHIFT                          (0U)
+#define CIF_DVP_DMA_IDLE_REQ_MASK                           (0x1 << CIF_DVP_DMA_IDLE_REQ_SHIFT)
+/* CIF_DVP_FRM0_ADDR_Y */
+#define CIF_DVP_FRM0_ADDR_Y_SHIFT                           (0U)
+#define CIF_DVP_FRM0_ADDR_Y_MASK                            (0xffffffff << CIF_DVP_FRM0_ADDR_Y_SHIFT)
+/* CIF_DVP_FRM0_ADDR_UV*/
+#define CIF_DVP_FRM0_ADDR_UV_SHIFT                          (0U)
+#define CIF_DVP_FRM0_ADDR_UV_MASK                           (0xffffffff << CIF_DVP_FRM0_ADDR_UV_SHIFT)
+/* CIF_DVP_FRM1_ADDR_Y */
+#define CIF_DVP_FRM1_ADDR_Y_SHIFT                           (0U)
+#define CIF_DVP_FRM1_ADDR_Y_MASK                            (0xffffffff << CIF_DVP_FRM1_ADDR_Y_SHIFT)
+/* CIF_DVP_FRM1_ADDR_UV*/
+#define CIF_DVP_FRM1_ADDR_UV_SHIFT                          (0U)
+#define CIF_DVP_FRM1_ADDR_UV_MASK                           (0xffffffff << CIF_DVP_FRM1_ADDR_UV_SHIFT)
+/* CIF_DVP_VIR_LINE_WIDTH */
+#define CIF_DVP_VIR_LINE_WIDTH_SHIFT                        (0U)
+#define CIF_DVP_VIR_LINE_WIDTH_MASK                         (0x7fff << CIF_DVP_VIR_LINE_WIDTH_SHIFT)
+/* CIF_DVP_SET_SIZE */
+#define CIF_DVP_SET_SIZE_SET_HEIGHT_SHIFT                   (16U)
+#define CIF_DVP_SET_SIZE_SET_HEIGHT_MASK                    (0x1fff << CIF_DVP_SET_SIZE_SET_HEIGHT_SHIFT)
+#define CIF_DVP_SET_SIZE_SET_WIDTH_SHIFT                    (0U)
+#define CIF_DVP_SET_SIZE_SET_WIDTH_MASK                     (0x1fff << CIF_DVP_SET_SIZE_SET_WIDTH_SHIFT)
+/* CIF_DVP_BLOCK_LINE_NUM */
+#define CIF_DVP_LINE_NUM_SHIFT                              (0U)
+#define CIF_DVP_LINE_NUM_MASK                               (0x1fff << CIF_DVP_LINE_NUM_SHIFT)
+/* CIF_DVP_BLOCK0_ADDR_Y */
+#define CIF_DVP_BLOCK0_ADDR_Y_SHIFT                         (0U)
+#define CIF_DVP_BLOCK0_ADDR_Y_MASK                          (0xffffffff << CIF_DVP_BLOCK0_ADDR_Y_SHIFT)
+/* CIF_DVP_BLOCK0_ADDR_UV */
+#define CIF_DVP_BLOCK0_ADDR_UV_SHIFT                        (0U)
+#define CIF_DVP_BLOCK0_ADDR_UV_MASK                         (0xffffffff << CIF_DVP_BLOCK0_ADDR_UV_SHIFT)
+/* CIF_DVP_BLOCK1_ADDR_Y */
+#define CIF_DVP_BLOCK1_ADDR_Y_SHIFT                         (0U)
+#define CIF_DVP_BLOCK1_ADDR_Y_MASK                          (0xffffffff << CIF_DVP_BLOCK1_ADDR_Y_SHIFT)
+/* CIF_DVP_BLOCK1_ADDR_UV */
+#define CIF_DVP_BLOCK1_ADDR_UV_SHIFT                        (0U)
+#define CIF_DVP_BLOCK1_ADDR_UV_MASK                         (0xffffffff << CIF_DVP_BLOCK1_ADDR_UV_SHIFT)
+/* CIF_DVP_BLOCK_STATUS */
+#define CIF_DVP_BLOCK_STATUS_BLK_ID_SHIFT                   (16U)
+#define CIF_DVP_BLOCK_STATUS_BLK_ID_MASK                    (0xff << CIF_DVP_BLOCK_STATUS_BLK_ID_SHIFT)
+#define CIF_DVP_BLOCK_STATUS_BLK1_STATUS_SHIFT              (1U)
+#define CIF_DVP_BLOCK_STATUS_BLK1_STATUS_MASK               (0x1 << CIF_DVP_BLOCK_STATUS_BLK1_STATUS_SHIFT)
+#define CIF_DVP_BLOCK_STATUS_BLK0_STATUS_SHIFT              (0U)
+#define CIF_DVP_BLOCK_STATUS_BLK0_STATUS_MASK               (0x1 << CIF_DVP_BLOCK_STATUS_BLK0_STATUS_SHIFT)
+/* CIF_DVP_CROP */
+#define CIF_DVP_CROP_START_Y_SHIFT                          (16U)
+#define CIF_DVP_CROP_START_Y_MASK                           (0x1fff << CIF_DVP_CROP_START_Y_SHIFT)
+#define CIF_DVP_CROP_START_X_SHIFT                          (0U)
+#define CIF_DVP_CROP_START_X_MASK                           (0x1fff << CIF_DVP_CROP_START_X_SHIFT)
+/* CIF_DVP_PATH_SEL */
+#define CIF_DVP_PATH_SEL_RAW_SEL_SHIFT                      (5U)
+#define CIF_DVP_PATH_SEL_RAW_SEL_MASK                       (0x1 << CIF_DVP_PATH_SEL_RAW_SEL_SHIFT)
+#define CIF_DVP_PATH_SEL_YUV_SEL_SHIFT                      (4U)
+#define CIF_DVP_PATH_SEL_YUV_SEL_MASK                       (0x1 << CIF_DVP_PATH_SEL_YUV_SEL_SHIFT)
+/* CIF_DVP_LINE_INT_NUM */
+#define CIF_DVP_LINE_INT_NUM_LINE1_INT_NUM_SHIFT            (16U)
+#define CIF_DVP_LINE_INT_NUM_LINE1_INT_NUM_MASK             (0x1fff << CIF_DVP_LINE_INT_NUM_LINE1_INT_NUM_SHIFT)
+#define CIF_DVP_LINE_INT_NUM_LINE0_INT_NUM_SHIFT            (0U)
+#define CIF_DVP_LINE_INT_NUM_LINE0_INT_NUM_MASK             (0x1fff << CIF_DVP_LINE_INT_NUM_LINE0_INT_NUM_SHIFT)
+/* CIF_DVP_WATER_LINE */
+#define CIF_DVP_WATER_LINE_WATER_LINE_SHIFT                 (8U)
+#define CIF_DVP_WATER_LINE_WATER_LINE_MASK                  (0x3 << CIF_DVP_WATER_LINE_WATER_LINE_SHIFT)
+#define CIF_DVP_WATER_LINE_HURRY_VALUE_SHIFT                (4U)
+#define CIF_DVP_WATER_LINE_HURRY_VALUE_MASK                 (0x3 << CIF_DVP_WATER_LINE_HURRY_VALUE_SHIFT)
+#define CIF_DVP_WATER_LINE_HURRY_EN_SHIFT                   (0U)
+#define CIF_DVP_WATER_LINE_HURRY_EN_MASK                    (0x1 << CIF_DVP_WATER_LINE_HURRY_EN_SHIFT)
+/* CIF_DVP_FIFO_ENTRY */
+#define CIF_DVP_FIFO_ENTRY_UV_FIFO_ENTRY_SHIFT              (9U)
+#define CIF_DVP_FIFO_ENTRY_UV_FIFO_ENTRY_MASK               (0x1ff << CIF_DVP_FIFO_ENTRY_UV_FIFO_ENTRY_SHIFT)
+#define CIF_DVP_FIFO_ENTRY_Y_FIFO_ENTRY_SHIFT               (0U)
+#define CIF_DVP_FIFO_ENTRY_Y_FIFO_ENTRY_MASK                (0x1ff << CIF_DVP_FIFO_ENTRY_Y_FIFO_ENTRY_SHIFT)
+/* CIF_DVP_FRAME_STATUS */
+#define CIF_DVP_FRAME_STATUS_FRAME_NUM_SHIFT                (16U)
+#define CIF_DVP_FRAME_STATUS_FRAME_NUM_MASK                 (0xffff << CIF_DVP_FRAME_STATUS_FRAME_NUM_SHIFT)
+#define CIF_DVP_FRAME_STATUS_IDLE_SHIFT                     (2U)
+#define CIF_DVP_FRAME_STATUS_IDLE_MASK                      (0x1 << CIF_DVP_FRAME_STATUS_IDLE_SHIFT)
+#define CIF_DVP_FRAME_STATUS_F1_STATUS_SHIFT                (1U)
+#define CIF_DVP_FRAME_STATUS_F1_STATUS_MASK                 (0x1 << CIF_DVP_FRAME_STATUS_F1_STATUS_SHIFT)
+#define CIF_DVP_FRAME_STATUS_F0_STATUS_SHIFT                (0U)
+#define CIF_DVP_FRAME_STATUS_F0_STATUS_MASK                 (0x1 << CIF_DVP_FRAME_STATUS_F0_STATUS_SHIFT)
+/* CIF_DVP_CUR_DST */
+#define CIF_DVP_CUR_DST_SHIFT                               (0U)
+#define CIF_DVP_CUR_DST_MASK                                (0xffffffff << CIF_DVP_CUR_DST_SHIFT)
+/* CIF_DVP_LAST_LINE */
+#define CIF_DVP_LAST_LINE_LAST_UV_NUM_SHIFT                 (16U)
+#define CIF_DVP_LAST_LINE_LAST_UV_NUM_MASK                  (0x1fff << CIF_DVP_LAST_LINE_LAST_UV_NUM_SHIFT)
+#define CIF_DVP_LAST_LINE_LAST_Y_NUM_SHIFT                  (0U)
+#define CIF_DVP_LAST_LINE_LAST_Y_NUM_MASK                   (0x1fff << CIF_DVP_LAST_LINE_LAST_UV_NUM_SHIFT)
+/* CIF_DVP_LAST_PIX */
+#define CIF_DVP_LAST_PIX_LAST_UV_NUM_SHIFT                  (16U)
+#define CIF_DVP_LAST_PIX_LAST_UV_NUM_MASK                   (0x1fff << CIF_DVP_LAST_PIX_LAST_UV_NUM_SHIFT)
+#define CIF_DVP_LAST_PIX_LAST_Y_NUM_SHIFT                   (0U)
+#define CIF_DVP_LAST_PIX_LAST_Y_NUM_MASK                    (0x1fff << CIF_DVP_LAST_PIX_LAST_Y_NUM_SHIFT)
 /****************************************AUDIOPWM****************************************/
 /* VERSION */
 #define AUDIOPWM_VERSION_VERSION_SHIFT                     (0U)
