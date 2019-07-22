@@ -19,7 +19,7 @@
   - Resgister HAL_SYSTICK_IRQHandler().
   - Initialize the HAL_BASE by calling HAL_Init():
   - Get system time by calling HAL_GetTick();
-  - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs, and HAL_CPUDelayUs();
+  - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs(), and HAL_CPUDelayUs();
 
  Suggest:
 
