@@ -34,10 +34,7 @@
 /********************* Private Function Definition ***************************/
 static int DSP_Ioctl(void *priv, int cmd, void *arg)
 {
-    struct DSP_DEV *dev = (struct DSP_DEV *)priv;
     HAL_Status ret = HAL_OK;
-
-    HAL_ASSERT(dev != NULL);
 
     switch (cmd) {
 #ifdef RKMCU_RK2206
