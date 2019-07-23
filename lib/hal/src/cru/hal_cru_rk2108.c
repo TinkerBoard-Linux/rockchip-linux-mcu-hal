@@ -39,7 +39,7 @@ static struct PLL_SETUP GPLL = {
     .modeOffset = &(CRU->CRU_MODE_CON00),
     .modeShift = 2,
     .lockShift = 10,
-    .modeMask = 0x3 << 2,
+    .modeMask = 0x3 << 0,
     .rateTable = PLL_TABLE,
 };
 
@@ -50,7 +50,7 @@ static struct PLL_SETUP CPLL = {
     .modeOffset = &(CRU->CRU_MODE_CON00),
     .modeShift = 0,
     .lockShift = 10,
-    .modeMask = 0x3 << 0,
+    .modeMask = 0x3 << 2,
     .rateTable = PLL_TABLE,
 };
 /********************* Private Variable Definition ***************************/
