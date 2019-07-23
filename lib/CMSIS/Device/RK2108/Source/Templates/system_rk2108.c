@@ -5,7 +5,7 @@
 
 #include "soc.h"
 
-uint32_t SystemCoreClock = 30000000;
+uint32_t SystemCoreClock = 24000000;
 
 /*----------------------------------------------------------------------------
   Externals
