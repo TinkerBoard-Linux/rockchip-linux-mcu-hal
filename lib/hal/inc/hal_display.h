@@ -73,7 +73,7 @@
  *  ...
  */
 struct DISPLAY_MODE_INFO {
-    uint16_t crtcClock;
+    uint32_t crtcClock;
     uint16_t crtcHdisplay;
     uint16_t crtcHsyncStart;
     uint16_t crtcHsyncEnd;
