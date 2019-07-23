@@ -37,7 +37,7 @@ static struct PLL_SETUP GPLL = {
     .conOffset1 = &(CRU->GPLL_CON[1]),
     .conOffset2 = &(CRU->GPLL_CON[2]),
     .modeOffset = &(CRU->CRU_MODE_CON00),
-    .modeShift = 2,
+    .modeShift = 0,
     .lockShift = 10,
     .modeMask = 0x3 << 0,
     .rateTable = PLL_TABLE,
@@ -48,7 +48,7 @@ static struct PLL_SETUP CPLL = {
     .conOffset1 = &(CRU->CPLL_CON[1]),
     .conOffset2 = &(CRU->CPLL_CON[2]),
     .modeOffset = &(CRU->CRU_MODE_CON00),
-    .modeShift = 0,
+    .modeShift = 2,
     .lockShift = 10,
     .modeMask = 0x3 << 2,
     .rateTable = PLL_TABLE,
@@ -296,6 +296,13 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case PLL_CPLL:
         freq = HAL_CRU_GetPllFreq(&CPLL);
         s_cpllFreq = freq;
+
+        return freq;
+    case DCLK_VOP_S:
+        if (HAL_CRU_ClkGetMux(clkMux))
+            pRate = s_cpllFreq;
+
+        freq = pRate / HAL_CRU_ClkGetDiv(clkDiv);
 
         return freq;
     case CLK_UART0:
