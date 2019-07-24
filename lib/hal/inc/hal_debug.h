@@ -20,8 +20,8 @@
  *  @{
  */
 
-//#define HAL_DBG_USING_RTT_SERIAL
-#ifdef HAL_DBG_USING_RTT_SERIAL
+//#define HAL_DBG_USING_RTT_SERIAL 1
+#if HAL_DBG_USING_RTT_SERIAL
 #include <rthw.h>
 #include <rtthread.h>
 
@@ -30,7 +30,7 @@
 #define HAL_SYSLOG printf
 #endif
 
-#if (HAL_DBG_ON) && (HAL_DBG_ON)
+#if (HAL_DBG_ON && HAL_DBG_INFO_ON)
 #define HAL_DBG(fmt, arg...) HAL_SYSLOG("[HAL INFO] " fmt, ##arg)
 #else
 #define HAL_DBG(fmt, arg...) do { if (0) HAL_SYSLOG("[HAL INFO] " fmt, ##arg); } while (0)
