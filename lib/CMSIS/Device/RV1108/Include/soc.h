@@ -1,5 +1,10 @@
-#ifndef __1108_H
-#define __1108_H
+/* SPDX-License-Identifier: BSD-3-Clause */
+/*
+ * Copyright (c) 2018-2019 Fuzhou Rockchip Electronics Co., Ltd
+ */
+
+#ifndef __SOC_H
+#define __SOC_H
 #ifdef __cplusplus
   extern "C" {
 #endif
@@ -11336,4 +11341,4 @@ typedef enum CLOCK_Name {
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-#endif /* __1108_H */
+#endif /* __SOC_H */

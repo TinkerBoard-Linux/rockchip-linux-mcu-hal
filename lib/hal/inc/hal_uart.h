@@ -199,7 +199,7 @@ struct HAL_UART_DEV {
     struct UART_REG *base;
 
     /* sclk is for uart logic, pclk is for register access*/
-    uint32_t sclkID;
+    eCLOCK_Name sclkID;
     uint32_t sclkGateID;
     uint32_t pclkGateID;
 

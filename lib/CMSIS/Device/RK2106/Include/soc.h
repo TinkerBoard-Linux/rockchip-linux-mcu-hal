@@ -1,10 +1,13 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
+ * Copyright (c) 2018-2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
-#ifndef _RK2106_H_
-#define _RK2106_H_
+#ifndef __SOC_H
+#define __SOC_H
+#ifdef __cplusplus
+  extern "C" {
+#endif
 
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
@@ -807,4 +810,9 @@ struct SFC_REG {
 
 #define SFC_CHIP_CNT                                       (1U)
 
-#endif /* _RK2106_H_ */
+typedef uint32_t eCLOCK_Name;
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+#endif /* __SOC_H */
