@@ -30,11 +30,11 @@
 #define IS_YUV_FORMAT(x) ((x >= VOP_FMT_YUV420SP) && (x <= VOP_FMT_VYUY422_4)) ? 1 : 0
 #define IS_BPP_FORMAT(x) ((x >= VOP_FMT_1BPP) && (x <= VOP_FMT_8BPP)) ? 1 : 0
 
-#define MCU_CS_STR 2
-#define MCU_CS_END 12
+#define MCU_CS_STR 1
+#define MCU_CS_END 7
 #define MCU_WR_STR 4
-#define MCU_WR_END 8
-#define MCU_TOTAL  15
+#define MCU_WR_END 6
+#define MCU_TOTAL  8
 
 #define MIPI_SWITCH_TIME_OUT 100
 
@@ -754,10 +754,6 @@ HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg)
                           VOP_MCU_MCU_FRAME_ST_MASK, 1);
     VOP_MaskWriteNoBackup(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_FRAME_ST_SHIFT,
                           VOP_MCU_MCU_FRAME_ST_MASK, 0);
-
-    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_HOLD_MODE_SHIFT,
-                  VOP_MCU_MCU_HOLD_MODE_MASK, 0);
-
     VOP_MaskWrite(NULL, &pReg->INTR_CLEAR,
                   VOP_INTR_CLEAR_DSP_HOLD_VALID_INTR_CLR_SHIFT,
                   VOP_INTR_CLEAR_DSP_HOLD_VALID_INTR_CLR_MASK, 1);
