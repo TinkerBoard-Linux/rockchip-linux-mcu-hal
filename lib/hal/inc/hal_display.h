@@ -88,6 +88,9 @@ struct DISPLAY_MODE_INFO {
     uint16_t crtcVsyncEnd;
     uint16_t crtcVtotal;
     uint16_t flags;
+    uint16_t mcuCsRw;
+    uint16_t mcuRwPw;
+    uint16_t mcuRwCs;
 };
 
 /**

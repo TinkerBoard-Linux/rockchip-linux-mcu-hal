@@ -50,6 +50,13 @@ typedef enum {
     VOP_PREMULT_ALPHA,
 } eVOP_PreMulAlphaMode;
 
+typedef enum {
+    VOP_MCU_SPLIT_8_BIT = 0,
+    VOP_MCU_SPLIT_16_BIT,
+    VOP_MCU_SPLIT_24_BIT,
+    VOP_MCU_SPLIT_32_BIT,
+} eVOP_McuSplit;
+
 typedef enum vop_data_format {
     VOP_FMT_ARGB8888 = 0,
     VOP_FMT_RGB888,
@@ -120,6 +127,9 @@ struct CRTC_WIN_STATE {
 
     uint32_t colorKey;
     uint32_t *lut;
+    uint8_t cscMode;
+    uint8_t uvSwap;
+    uint8_t split;
 };
 
 struct VOP_BCSH_INFO {
@@ -224,6 +234,7 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
                               uint16_t BusFormat);
 HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val);
+HAL_Status HAL_VOP_SetSplit(struct VOP_REG *pReg, eVOP_McuSplit mode);
 #endif
 
 /** @} */

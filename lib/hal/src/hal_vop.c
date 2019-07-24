@@ -123,7 +123,7 @@ struct DSC_PPS {
 
 /********************* Private Variable Definition ***************************/
 static struct GRF_REG * const gGrfReg = GRF;
-static struct VOP_REG g_VOP_RegMir;
+static struct VOP_REG s_vopRegMir;
 static const char * const VOP_IRQs[] =
 {
     "frame start interrupt status!",
@@ -380,6 +380,7 @@ static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
     return val;
 }
 
+#ifndef CONFIG_MCU_RK2206
 static void VOP_SetWinLoop(struct VOP_REG *pReg,
                            struct CRTC_WIN_STATE *pWinState)
 {
@@ -392,10 +393,10 @@ static void VOP_SetWinLoop(struct VOP_REG *pReg,
         offset = pWinState->yLoopOffset * pWinState->stride / 4 +
                  pWinState->xLoopOffset *
                  VOP_GetFormatLength(pWinState->hwFormat, 0) / 8;
-        VOP_Write(&g_VOP_RegMir.WIN0_YRGB_MST + regOffset,
+        VOP_Write(&s_vopRegMir.WIN0_YRGB_MST + regOffset,
                   &pReg->WIN0_YRGB_MST + regOffset,
                   pWinState->yrgbAddr + offset);
-        VOP_Write(&g_VOP_RegMir.WIN0_YRGB_MST_RAW + regOffset,
+        VOP_Write(&s_vopRegMir.WIN0_YRGB_MST_RAW + regOffset,
                   &pReg->WIN0_YRGB_MST_RAW + regOffset,
                   pWinState->yrgbAddr);
 
@@ -407,10 +408,10 @@ static void VOP_SetWinLoop(struct VOP_REG *pReg,
             offset = pWinState->yLoopOffset * 2 * pWinState->stride / 4 / vsub;
             offset += pWinState->xLoopOffset * 2 * bpp / hsub / 8;
 
-            VOP_Write(&g_VOP_RegMir.WIN0_CBCR_MST + regOffset,
+            VOP_Write(&s_vopRegMir.WIN0_CBCR_MST + regOffset,
                       &pReg->WIN0_CBCR_MST + regOffset,
                       pWinState->cbcrAddr + offset);
-            VOP_Write(&g_VOP_RegMir.WIN0_CBCR_MST_RAW + regOffset,
+            VOP_Write(&s_vopRegMir.WIN0_CBCR_MST_RAW + regOffset,
                       &pReg->WIN0_CBCR_MST_RAW + regOffset,
                       pWinState->cbcrAddr);
         }
@@ -419,10 +420,10 @@ static void VOP_SetWinLoop(struct VOP_REG *pReg,
               pWinState->xLoopOffset << VOP_WIN0_LOOP_OFFSET_WIN0_XLOOP_OFFSET_SHIFT |
               yLoopEn << VOP_WIN0_LOOP_OFFSET_WIN0_YLOOP_EN_SHIFT |
               pWinState->yLoopOffset << VOP_WIN0_LOOP_OFFSET_WIN0_YLOOP_OFFSET_SHIFT;
-        VOP_Write(&g_VOP_RegMir.WIN0_LOOP_OFFSET + regOffset,
+        VOP_Write(&s_vopRegMir.WIN0_LOOP_OFFSET + regOffset,
                   &pReg->WIN0_LOOP_OFFSET + regOffset, val);
     } else {
-        VOP_Write(&g_VOP_RegMir.WIN0_LOOP_OFFSET + regOffset,
+        VOP_Write(&s_vopRegMir.WIN0_LOOP_OFFSET + regOffset,
                   &pReg->WIN0_LOOP_OFFSET + regOffset, 0);
     }
 }
@@ -436,7 +437,7 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     uint32_t regOffset = pWinState->winId * 0x40 / 4;
     uint32_t yStride, cbcrStride = 0;
 
-    VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL0 + regOffset,
+    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                   &pReg->WIN0_CTRL0 + regOffset,
                   VOP_WIN0_CTRL0_WIN0_EN_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_EN_MASK, pWinState->winEn);
@@ -447,19 +448,19 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     cfgFormat = pWinState->hwFormat &
                 ~(VOP_WIN_YUV4_FORMAT | VOP_WIN_BPPX_FORMAT);
 
-    VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL0 + regOffset,
+    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                   &pReg->WIN0_CTRL0 + regOffset,
                   VOP_WIN0_CTRL0_WIN0_DATA_FMT_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_DATA_FMT_MASK, cfgFormat);
-    VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL0 + regOffset,
+    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                   &pReg->WIN0_CTRL0 + regOffset,
                   VOP_WIN0_CTRL0_WIN0_BPP_EN_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_BPP_EN_MASK, bppFormat);
-    VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL0 + regOffset,
+    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                   &pReg->WIN0_CTRL0 + regOffset,
                   VOP_WIN0_CTRL0_WIN0_YUV_4BIT_EN_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_YUV_4BIT_EN_MASK, yuv4Format);
-    VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL0 + regOffset,
+    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                   &pReg->WIN0_CTRL0 + regOffset,
                   VOP_WIN0_CTRL0_WIN0_RB_SWAP_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_RB_SWAP_MASK,
@@ -471,11 +472,11 @@ static void VOP_SetWin(struct VOP_REG *pReg,
         cbcrStride = 2 * yStride;
     else
         cbcrStride = yStride;
-    VOP_Write(&g_VOP_RegMir.WIN0_VIR + regOffset,
+    VOP_Write(&s_vopRegMir.WIN0_VIR + regOffset,
               &pReg->WIN0_VIR + regOffset, cbcrStride << 16 | yStride);
-    VOP_Write(&g_VOP_RegMir.WIN0_YRGB_MST + regOffset,
+    VOP_Write(&s_vopRegMir.WIN0_YRGB_MST + regOffset,
               &pReg->WIN0_YRGB_MST + regOffset, pWinState->yrgbAddr);
-    VOP_Write(&g_VOP_RegMir.WIN0_CBCR_MST + regOffset,
+    VOP_Write(&s_vopRegMir.WIN0_CBCR_MST + regOffset,
               &pReg->WIN0_CBCR_MST + regOffset, pWinState->cbcrAddr);
 
     dspInfo = (pWinState->srcH - 1) << 16 | (pWinState->srcW - 1);
@@ -484,9 +485,9 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     dspSty = pWinState->hwCrtcY + pModeInfo->crtcVtotal -
              pModeInfo->crtcVsyncStart;
     dspSt = dspSty << 16 | dspStx;
-    VOP_Write(&g_VOP_RegMir.WIN0_DSP_INFO + regOffset,
+    VOP_Write(&s_vopRegMir.WIN0_DSP_INFO + regOffset,
               &pReg->WIN0_DSP_INFO + regOffset, dspInfo);
-    VOP_Write(&g_VOP_RegMir.WIN0_DSP_ST + regOffset,
+    VOP_Write(&s_vopRegMir.WIN0_DSP_ST + regOffset,
               &pReg->WIN0_DSP_ST + regOffset, dspSt);
 
     val = pWinState->alphaEn << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_EN_SHIFT |
@@ -494,15 +495,15 @@ static void VOP_SetWin(struct VOP_REG *pReg,
           pWinState->alphaPreMul << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_PRE_MUL_SHIFT |
           pWinState->alphaSatMode << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_SAT_MODE_SHIFT |
           pWinState->globalAlphaValue << VOP_WIN0_ALPHA_CTRL_WIN0_ALPHA_VALUE_SHIFT;
-    VOP_Write(&g_VOP_RegMir.WIN0_ALPHA_CTRL + regOffset,
+    VOP_Write(&s_vopRegMir.WIN0_ALPHA_CTRL + regOffset,
               &pReg->WIN0_ALPHA_CTRL + regOffset, val);
 
-    VOP_Write(&g_VOP_RegMir.WIN0_COLOR_KEY + regOffset,
+    VOP_Write(&s_vopRegMir.WIN0_COLOR_KEY + regOffset,
               &pReg->WIN0_COLOR_KEY + regOffset, pWinState->colorKey);
 
     if (IS_YUV_FORMAT(pWinState->hwFormat))
         y2r_en = true;
-    VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL0 + regOffset,
+    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                   &pReg->WIN0_CTRL0 + regOffset,
                   VOP_WIN0_CTRL0_WIN0_Y2R_EN_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_Y2R_EN_MASK,
@@ -510,18 +511,18 @@ static void VOP_SetWin(struct VOP_REG *pReg,
 
     if (IS_BPP_FORMAT(pWinState->hwFormat))
         lut_en = true;
-    VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL0 + regOffset,
+    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                   &pReg->WIN0_CTRL0 + regOffset,
                   VOP_WIN0_CTRL0_WIN0_LUT_EN_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_LUT_EN_MASK,
                   lut_en);
     if (pWinState->hwFormat == VOP_FMT_1BPP)
-        VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL0 + regOffset,
+        VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                       &pReg->WIN0_CTRL0 + regOffset,
                       VOP_WIN0_CTRL0_WIN0_BPP_SWAP_SHIFT,
                       VOP_WIN0_CTRL0_WIN0_BPP_SWAP_MASK, 1);
     else
-        VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL0 + regOffset,
+        VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                       &pReg->WIN0_CTRL0 + regOffset,
                       VOP_WIN0_CTRL0_WIN0_BPP_SWAP_SHIFT,
                       VOP_WIN0_CTRL0_WIN0_BPP_SWAP_MASK, 0);
@@ -594,7 +595,7 @@ HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId,
     uint32_t regOffset = winId * 0x400 / 4;
 
     for (i = 0; i < lut_size; i++) {
-        VOP_Write(&g_VOP_RegMir.WIN0_BPP_LUT[i] + regOffset,
+        VOP_Write(&s_vopRegMir.WIN0_BPP_LUT[i] + regOffset,
                   &pReg->WIN0_BPP_LUT[i] + regOffset,
                   lut[i]);
     }
@@ -676,17 +677,17 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
 HAL_Status HAL_VOP_SetArea(struct VOP_REG *pReg,
                            struct DISPLAY_RECT *display_rect)
 {
-    VOP_MaskWrite(&g_VOP_RegMir.DSC_CFG[18],
+    VOP_MaskWrite(&s_vopRegMir.DSC_CFG[18],
                   &pReg->DSC_CFG[18],
                   VOP_DSC_CFG18_PICTURE_HEIGHT_SHIFT,
                   VOP_DSC_CFG18_PICTURE_HEIGHT_MASK, display_rect->h);
 
-    VOP_MaskWrite(&g_VOP_RegMir.DSC_CFG[18],
+    VOP_MaskWrite(&s_vopRegMir.DSC_CFG[18],
                   &pReg->DSC_CFG[18],
                   VOP_DSC_CFG18_PICTURE_WIDTH_LO_SHIFT,
                   VOP_DSC_CFG18_PICTURE_WIDTH_LO_MASK, display_rect->w & 0x7f);
 
-    VOP_MaskWrite(&g_VOP_RegMir.DSC_CFG[19],
+    VOP_MaskWrite(&s_vopRegMir.DSC_CFG[19],
                   &pReg->DSC_CFG[19],
                   VOP_DSC_CFG19_PICTURE_WIDTH_HI_SHIFT,
                   VOP_DSC_CFG19_PICTURE_WIDTH_HI_MASK, display_rect->w >> 7 & 0x1ff);
@@ -735,13 +736,13 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
  */
 HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg)
 {
-    VOP_MaskWriteNoBackup(&g_VOP_RegMir.REG_CFG_DONE, &pReg->REG_CFG_DONE,
+    VOP_MaskWriteNoBackup(&s_vopRegMir.REG_CFG_DONE, &pReg->REG_CFG_DONE,
                           VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_SHIFT,
                           VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_MASK, 1);
 
-    VOP_MaskWriteNoBackup(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_FRAME_ST_SHIFT,
+    VOP_MaskWriteNoBackup(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_FRAME_ST_SHIFT,
                           VOP_MCU_MCU_FRAME_ST_MASK, 1);
-    VOP_MaskWriteNoBackup(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_FRAME_ST_SHIFT,
+    VOP_MaskWriteNoBackup(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_FRAME_ST_SHIFT,
                           VOP_MCU_MCU_FRAME_ST_MASK, 0);
     VOP_MaskWrite(NULL, &pReg->INTR_CLEAR,
                   VOP_INTR_CLEAR_DSP_HOLD_VALID_INTR_CLR_SHIFT,
@@ -757,7 +758,7 @@ HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg)
  */
 HAL_Status HAL_VOP_EdpiFrmSt(struct VOP_REG *pReg)
 {
-    VOP_MaskWriteNoBackup(&g_VOP_RegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
+    VOP_MaskWriteNoBackup(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                           VOP_SYS_CTRL2_IMD_EDPI_WMS_FS_SHIFT,
                           VOP_SYS_CTRL2_IMD_EDPI_WMS_FS_MASK, 1);
 
@@ -782,34 +783,34 @@ HAL_Status HAL_VOP_EdpiFrmSt(struct VOP_REG *pReg)
 HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
                         struct DISPLAY_MODE_INFO *pModeInfo)
 {
-    uint32_t regLen = sizeof(g_VOP_RegMir);
+    uint32_t regLen = sizeof(s_vopRegMir);
 
-    memcpy(&g_VOP_RegMir, pReg, regLen);
+    memcpy(&s_vopRegMir, pReg, regLen);
 
-    VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                   VOP_DSP_CTRL2_DSP_BLANK_EN_SHIFT,
                   VOP_DSP_CTRL2_DSP_BLANK_EN_MASK,
                   0);
 
-    VOP_MaskWrite(&g_VOP_RegMir.DSP_BG, &pReg->DSP_BG,
+    VOP_MaskWrite(&s_vopRegMir.DSP_BG, &pReg->DSP_BG,
                   VOP_DSP_BG_DSP_BG_BLUE_SHIFT,
                   VOP_DSP_BG_DSP_BG_BLUE_MASK,
                   0);
 
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_SHIFT,
                   VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_MASK,
                   1);
 
-    VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                   VOP_DSP_CTRL2_DSP_LAYER1_SEL_SHIFT,
                   VOP_DSP_CTRL2_DSP_LAYER1_SEL_MASK,
                   1);
-    VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                   VOP_DSP_CTRL2_DSP_LAYER2_SEL_SHIFT,
                   VOP_DSP_CTRL2_DSP_LAYER2_SEL_MASK,
                   2);
-    VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                   VOP_DSP_CTRL2_DSP_LAYER3_SEL_SHIFT,
                   VOP_DSP_CTRL2_DSP_LAYER3_SEL_MASK,
                   3);
@@ -817,7 +818,7 @@ HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
     if (pModeInfo->flags & DSC_ENABLE)
         HAL_VOP_DscInit(pReg, pModeInfo);
     else
-        VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                       VOP_SYS_CTRL2_DSC_BYPASS_EN_SHIFT,
                       VOP_SYS_CTRL2_DSC_BYPASS_EN_MASK,
                       0x1);
@@ -977,29 +978,29 @@ HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
           VOP_DSC_SYS_CTRL1_HI_LO_BYTE_SWAP_MASK |
           VOP_DSC_SYS_CTRL1_DSC_ICH_RST_MANUAL_MODE_MASK |
           dscOutputDelayPeri << VOP_DSC_SYS_CTRL1_DSC_OUTPUT_DELAY_PERI_SHIFT;
-    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL1, &pReg->DSC_SYS_CTRL1, val);
+    VOP_Write(&s_vopRegMir.DSC_SYS_CTRL1, &pReg->DSC_SYS_CTRL1, val);
     val = dscInitialLines | VOP_DSC_SYS_CTRL2_DSC_OUTPUT_DELAY_EN_MASK |
           dscOutputDelayInit << VOP_DSC_SYS_CTRL2_DSC_OUTPUT_DELAY_INIT_SHIFT;
-    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL2, &pReg->DSC_SYS_CTRL2, val);
+    VOP_Write(&s_vopRegMir.DSC_SYS_CTRL2, &pReg->DSC_SYS_CTRL2, val);
 
     if (sliceNum == 2)
         val = 0x35b;
     else
         val = 0x6b7;
-    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL3, &pReg->DSC_SYS_CTRL3, val);
+    VOP_Write(&s_vopRegMir.DSC_SYS_CTRL3, &pReg->DSC_SYS_CTRL3, val);
 
     for (i = 0; i < 21; i++)
-        VOP_Write(&g_VOP_RegMir.DSC_CFG[i], &pReg->DSC_CFG[i], dsc_cfg[i]);
+        VOP_Write(&s_vopRegMir.DSC_CFG[i], &pReg->DSC_CFG[i], dsc_cfg[i]);
 
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_DSC_BYPASS_EN_SHIFT,
                   VOP_SYS_CTRL2_DSC_BYPASS_EN_MASK,
                   0x0);
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_DSC_EN_SHIFT,
                   VOP_SYS_CTRL2_DSC_EN_MASK,
                   0x1);
-    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL0_IMD, &pReg->DSC_SYS_CTRL0_IMD, 0x11);
+    VOP_Write(&s_vopRegMir.DSC_SYS_CTRL0_IMD, &pReg->DSC_SYS_CTRL0_IMD, 0x11);
 
     return HAL_OK;
 }
@@ -1054,13 +1055,13 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
     preVactEnd = preVactSt + preVdisplay;
     preVtotal = preVactEnd + vfp;
 
-    VOP_Write(&g_VOP_RegMir.PRE_HTOTAL_HS_END, &pReg->PRE_HTOTAL_HS_END,
+    VOP_Write(&s_vopRegMir.PRE_HTOTAL_HS_END, &pReg->PRE_HTOTAL_HS_END,
               preHtotal << 16 | preHsync);
-    VOP_Write(&g_VOP_RegMir.PRE_HACT_ST_END, &pReg->PRE_HACT_ST_END,
+    VOP_Write(&s_vopRegMir.PRE_HACT_ST_END, &pReg->PRE_HACT_ST_END,
               preHactSt << 16 | preHactEnd);
-    VOP_Write(&g_VOP_RegMir.PRE_VTOTAL_VS_END, &pReg->PRE_VTOTAL_VS_END,
+    VOP_Write(&s_vopRegMir.PRE_VTOTAL_VS_END, &pReg->PRE_VTOTAL_VS_END,
               preVtotal << 16 | preVsync);
-    VOP_Write(&g_VOP_RegMir.PRE_VACT_ST_END, &pReg->PRE_VACT_ST_END,
+    VOP_Write(&s_vopRegMir.PRE_VACT_ST_END, &pReg->PRE_VACT_ST_END,
               preVactSt << 16 | preVactEnd);
 
     dspHsync = hsyncLen;
@@ -1073,13 +1074,13 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
     dspVactEnd = dspVactSt + dsp_vdisplay;
     dspVtotal = dspVactEnd + vfp;
 
-    VOP_Write(&g_VOP_RegMir.DSP_HTOTAL_HS_END, &pReg->DSP_HTOTAL_HS_END,
+    VOP_Write(&s_vopRegMir.DSP_HTOTAL_HS_END, &pReg->DSP_HTOTAL_HS_END,
               dspHtotal << 16 | dspHsync);
-    VOP_Write(&g_VOP_RegMir.DSP_HACT_ST_END, &pReg->DSP_HACT_ST_END,
+    VOP_Write(&s_vopRegMir.DSP_HACT_ST_END, &pReg->DSP_HACT_ST_END,
               dspHactSt << 16 | dspHactEnd);
-    VOP_Write(&g_VOP_RegMir.DSP_VTOTAL_VS_END, &pReg->DSP_VTOTAL_VS_END,
+    VOP_Write(&s_vopRegMir.DSP_VTOTAL_VS_END, &pReg->DSP_VTOTAL_VS_END,
               dspVtotal << 16 | dspVsync);
-    VOP_Write(&g_VOP_RegMir.DSP_VACT_ST_END, &pReg->DSP_VACT_ST_END,
+    VOP_Write(&s_vopRegMir.DSP_VACT_ST_END, &pReg->DSP_VACT_ST_END,
               dspVactSt << 16 | dspVactEnd);
 
     return HAL_OK;
@@ -1092,28 +1093,28 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
  */
 HAL_Status HAL_VOP_McuModeInit(struct VOP_REG *pReg)
 {
-    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_TYPE_SHIFT,
+    VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_TYPE_SHIFT,
                   VOP_MCU_MCU_TYPE_MASK, 1);
 
-    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_PIX_TOTAL_SHIFT,
+    VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_PIX_TOTAL_SHIFT,
                   VOP_MCU_MCU_PIX_TOTAL_MASK, MCU_TOTAL);
 
-    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CS_PST_SHIFT,
+    VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CS_PST_SHIFT,
                   VOP_MCU_MCU_CS_PST_MASK, MCU_CS_STR);
 
-    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CS_PEND_SHIFT,
+    VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CS_PEND_SHIFT,
                   VOP_MCU_MCU_CS_PEND_MASK, MCU_CS_END);
 
-    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RW_PST_SHIFT,
+    VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RW_PST_SHIFT,
                   VOP_MCU_MCU_RW_PST_MASK, MCU_WR_STR);
 
-    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RW_PEND_SHIFT,
+    VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RW_PEND_SHIFT,
                   VOP_MCU_MCU_RW_PEND_MASK, MCU_WR_END);
 
-    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CLK_SEL_SHIFT,
+    VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CLK_SEL_SHIFT,
                   VOP_MCU_MCU_CLK_SEL_MASK, 0);
 
-    VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_HOLD_MODE_SHIFT,
+    VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_HOLD_MODE_SHIFT,
                   VOP_MCU_MCU_HOLD_MODE_MASK, 1);
 
     return HAL_OK;
@@ -1130,15 +1131,15 @@ HAL_Status HAL_VOP_PostScaleInit(struct VOP_REG *pReg,
                                  struct DISPLAY_MODE_INFO *pModeInfo,
                                  struct VOP_POST_SCALE_INFO *pPostScaleInfo)
 {
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_POST_SCL_HMODE_SHIFT,
                   VOP_POST_CTRL_POST_SCL_HMODE_MASK,
                   pPostScaleInfo->postSclHmode);
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_POST_SCL_VMODE_SHIFT,
                   VOP_POST_CTRL_POST_SCL_VMODE_MASK,
                   pPostScaleInfo->postSclVmode);
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_POST_SCL_EN_SHIFT,
                   VOP_POST_CTRL_POST_SCL_EN_MASK,
                   pPostScaleInfo->postScaleEn);
@@ -1182,27 +1183,27 @@ HAL_Status HAL_VOP_PostBCSH(struct VOP_REG *pReg,
     val = brightness << VOP_BCSH_BCS_BRIGHTNESS_SHIFT |
           contrast << VOP_BCSH_BCS_CONTRAST_SHIFT |
           saturation << VOP_BCSH_BCS_SAT_CON_SHIFT;
-    VOP_Write(&g_VOP_RegMir.BCSH_BCS, &pReg->BCSH_BCS, val);
+    VOP_Write(&s_vopRegMir.BCSH_BCS, &pReg->BCSH_BCS, val);
 
     val = sinHue << VOP_BCSH_H_SIN_HUE_SHIFT |
           cosHue << VOP_BCSH_H_COS_HUE_SHIFT;
-    VOP_Write(&g_VOP_RegMir.BCSH_H, &pReg->BCSH_H, val);
+    VOP_Write(&s_vopRegMir.BCSH_H, &pReg->BCSH_H, val);
 
-    VOP_MaskWrite(&g_VOP_RegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
                   VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_SHIFT,
                   VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_MASK,
                   bcshEn);
 
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_POST_CSC_EN_SHIFT,
                   VOP_POST_CTRL_POST_CSC_EN_MASK,
                   bcshEn);
-    VOP_MaskWrite(&g_VOP_RegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
                   VOP_BCSH_CTRL_VIDEO_MODE_SHIFT,
                   VOP_BCSH_CTRL_VIDEO_MODE_MASK,
                   BCSH_NORMAL_MODE);
 
-    VOP_MaskWrite(&g_VOP_RegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
                   VOP_BCSH_CTRL_BCSH_EN_SHIFT,
                   VOP_BCSH_CTRL_BCSH_EN_MASK,
                   bcshEn);
@@ -1222,20 +1223,20 @@ HAL_Status HAL_VOP_PostGammaInit(struct VOP_REG *pReg,
 {
     uint8_t i = 0;
 
-    VOP_MaskWrite(&g_VOP_RegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.BCSH_CTRL, &pReg->BCSH_CTRL,
                   VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_SHIFT,
                   VOP_BCSH_CTRL_SW_BCSH_R2Y_EN_MASK,
                   pGammaInfo->gammaCoeEnable);
 
     for (i = 0; i < VOP_GAMMA_SIZE; i++)
-        VOP_Write(&g_VOP_RegMir.GAMMA_COE_WORD0 + i, &pReg->GAMMA_COE_WORD0 + i,
+        VOP_Write(&s_vopRegMir.GAMMA_COE_WORD0 + i, &pReg->GAMMA_COE_WORD0 + i,
                   *((uint32_t *)pGammaInfo->gammaCoeWord + i));
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_Y_GAMMA_EN_SHIFT,
                   VOP_POST_CTRL_Y_GAMMA_EN_MASK,
                   pGammaInfo->gammaCoeEnable);
 
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_POST_CSC_EN_SHIFT,
                   VOP_POST_CTRL_POST_CSC_EN_MASK,
                   pGammaInfo->gammaCoeEnable);
@@ -1262,11 +1263,11 @@ HAL_Status HAL_VOP_PostColorMatrixInit(struct VOP_REG *pReg,
               colorMatrixCoe[VOP_COLOR_MATRIX_SIZE * i + 1] << 8 |
               colorMatrixCoe[VOP_COLOR_MATRIX_SIZE * i + 2] << 16 |
               colorMatrixOffset[i] << 24;
-        VOP_Write(&g_VOP_RegMir.COLOR_MATRIX_COE0 + i,
+        VOP_Write(&s_vopRegMir.COLOR_MATRIX_COE0 + i,
                   &pReg->COLOR_MATRIX_COE0 + i,
                   val);
     }
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_COLOR_MATRIX_EN_SHIFT,
                   VOP_POST_CTRL_COLOR_MATRIX_EN_MASK,
                   pColorMatrixInfo->colorMatrixEn);
@@ -1283,11 +1284,11 @@ HAL_Status HAL_VOP_PostColorMatrixInit(struct VOP_REG *pReg,
 HAL_Status HAL_VOP_PostClipInit(struct VOP_REG *pReg,
                                 struct VOP_POST_CLIP_INFO *pClipInfo)
 {
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_Y_THRES_SHIFT,
                   VOP_POST_CTRL_Y_THRES_MASK,
                   pClipInfo->postYThres);
-    VOP_MaskWrite(&g_VOP_RegMir.POST_CTRL, &pReg->POST_CTRL,
+    VOP_MaskWrite(&s_vopRegMir.POST_CTRL, &pReg->POST_CTRL,
                   VOP_POST_CTRL_CLIP_EN_SHIFT,
                   VOP_POST_CTRL_CLIP_EN_MASK,
                   pClipInfo->postClipEn);
@@ -1315,11 +1316,11 @@ HAL_Status HAL_VOP_PolarityInit(struct VOP_REG *pReg,
     polarity |= (pModeInfo->flags & VIDEO_MODE_FLAG_DEN ? 1 : 0) << 4;
     switch (ConnectorType) {
     case RK_DISPLAY_CONNECTOR_RGB:
-        VOP_Write(&g_VOP_RegMir.DSP_CTRL0, &pReg->DSP_CTRL0,
+        VOP_Write(&s_vopRegMir.DSP_CTRL0, &pReg->DSP_CTRL0,
                   polarity);
         break;
     case RK_DISPLAY_CONNECTOR_DSI:
-        VOP_Write(&g_VOP_RegMir.DSP_CTRL0, &pReg->DSP_CTRL0,
+        VOP_Write(&s_vopRegMir.DSP_CTRL0, &pReg->DSP_CTRL0,
                   polarity << VOP_DSP_CTRL0_MIPI_DCLK_EN_SHIFT);
         break;
     default:
@@ -1344,49 +1345,49 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
     switch (BusFormat) {
     case MEDIA_BUS_FMT_RGB666_1X18:
     case MEDIA_BUS_FMT_RGB666_1X24_CPADHI:
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DITHER_DOWN_MODE_SHIFT,
                       VOP_DSP_CTRL2_DITHER_DOWN_MODE_MASK,
                       RGB888TORGB666);
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DITHER_DOWN_SEL_SHIFT,
                       VOP_DSP_CTRL2_DITHER_DOWN_SEL_MASK,
                       DITHER_DOWN_ALLEGRO);
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DITHER_DOWN_SHIFT,
                       VOP_DSP_CTRL2_DITHER_DOWN_MASK,
                       1);
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_SHIFT,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
                       OUTPUT_MODE_666);
         break;
     case MEDIA_BUS_FMT_RGB888_1X24:
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DITHER_DOWN_SHIFT,
                       VOP_DSP_CTRL2_DITHER_DOWN_MASK,
                       0);
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_SHIFT,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
                       OUTPUT_MODE_888);
         break;
     case MEDIA_BUS_FMT_SRGB888_3X8:
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DITHER_DOWN_SHIFT,
                       VOP_DSP_CTRL2_DITHER_DOWN_MASK,
                       0);
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_SHIFT,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
                       OUT_MODE_S888);
         break;
     case MEDIA_BUS_FMT_SRGB888_DUMMY_4X8:
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DITHER_DOWN_SHIFT,
                       VOP_DSP_CTRL2_DITHER_DOWN_MASK,
                       0);
-        VOP_MaskWrite(&g_VOP_RegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_SHIFT,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
                       OUT_MODE_S888_DUMMY);
@@ -1406,19 +1407,19 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
  */
 HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
 {
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT,
                   VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_MASK,
                   0x1);
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_MASK,
                   1);
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_MASK,
                   1);
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK,
                   0x1);
@@ -1434,10 +1435,10 @@ HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
  */
 HAL_Status HAL_VOP_NocQosInit(struct VOP_REG *pReg, uint32_t nocQosValue)
 {
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
                   VOP_SYS_CTRL1_SW_NOC_QOS_EN_SHIFT,
                   VOP_SYS_CTRL1_SW_NOC_QOS_EN_MASK, 1);
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
                   VOP_SYS_CTRL1_SW_NOC_QOS_VALUE_SHIFT,
                   VOP_SYS_CTRL1_SW_NOC_QOS_VALUE_MASK, nocQosValue);
 
@@ -1454,13 +1455,13 @@ HAL_Status HAL_VOP_NocQosInit(struct VOP_REG *pReg, uint32_t nocQosValue)
 HAL_Status HAL_VOP_NocHurryInit(struct VOP_REG *pReg, uint32_t hurryValue,
                                 uint32_t hurryThreshold)
 {
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
                   VOP_SYS_CTRL1_SW_NOC_HURRY_EN_SHIFT,
                   VOP_SYS_CTRL1_SW_NOC_HURRY_EN_MASK, 1);
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
                   VOP_SYS_CTRL1_SW_NOC_HURRY_VALUE_SHIFT,
                   VOP_SYS_CTRL1_SW_NOC_HURRY_VALUE_MASK, hurryValue);
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
                   VOP_SYS_CTRL1_SW_NOC_HURRY_THRESHOLD_SHIFT,
                   VOP_SYS_CTRL1_SW_NOC_HURRY_THRESHOLD_MASK,
                   hurryThreshold);
@@ -1476,10 +1477,10 @@ HAL_Status HAL_VOP_NocHurryInit(struct VOP_REG *pReg, uint32_t hurryValue,
  */
 HAL_Status HAL_VOP_AxiOutstandInit(struct VOP_REG *pReg, uint32_t outStandNum)
 {
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
                   VOP_SYS_CTRL1_SW_AXI_MAX_OUTSTAND_EN_SHIFT,
                   VOP_SYS_CTRL1_SW_AXI_MAX_OUTSTAND_EN_MASK, 1);
-    VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
+    VOP_MaskWrite(&s_vopRegMir.SYS_CTRL1, &pReg->SYS_CTRL1,
                   VOP_SYS_CTRL1_SW_AXI_MAX_OUTSTAND_NUM_SHIFT,
                   VOP_SYS_CTRL1_SW_AXI_MAX_OUTSTAND_NUM_MASK, outStandNum);
 
@@ -1538,7 +1539,7 @@ HAL_Status HAL_VOP_EnableLineIrq(struct VOP_REG *pReg,
                   VOP_INTR_EN_LINE_FLAG1_INTR_EN_SHIFT,
                   VOP_INTR_EN_LINE_FLAG1_INTR_EN_MASK, 1);
 
-    VOP_Write(&g_VOP_RegMir.LINE_FLAG, &pReg->LINE_FLAG,
+    VOP_Write(&s_vopRegMir.LINE_FLAG, &pReg->LINE_FLAG,
               lineFlag1 << 16 | lineFlag0);
 
     return HAL_OK;
@@ -1662,21 +1663,21 @@ HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val)
 {
     switch (type) {
     case MCU_WRCMD:
-        VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RS_SHIFT,
+        VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RS_SHIFT,
                       VOP_MCU_MCU_RS_MASK, 0);
-        VOP_Write(&g_VOP_RegMir.MCU_WRITE_DATA, &pReg->MCU_WRITE_DATA,
+        VOP_Write(&s_vopRegMir.MCU_WRITE_DATA, &pReg->MCU_WRITE_DATA,
                   val);
-        VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RS_SHIFT,
+        VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RS_SHIFT,
                       VOP_MCU_MCU_RS_MASK, 1);
         break;
     case MCU_WRDATA:
-        VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RS_SHIFT,
+        VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RS_SHIFT,
                       VOP_MCU_MCU_RS_MASK, 1);
-        VOP_Write(&g_VOP_RegMir.MCU_WRITE_DATA, &pReg->MCU_WRITE_DATA,
+        VOP_Write(&s_vopRegMir.MCU_WRITE_DATA, &pReg->MCU_WRITE_DATA,
                   val);
         break;
     case MCU_SETBYPASS:
-        VOP_MaskWrite(&g_VOP_RegMir.MCU, &pReg->MCU, VOP_MCU_MCU_BYPASS_SHIFT,
+        VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_BYPASS_SHIFT,
                       VOP_MCU_MCU_BYPASS_MASK, val ? 1 : 0);
         break;
     default:
@@ -1685,6 +1686,127 @@ HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val)
 
     return HAL_OK;
 }
+#else
+
+/**
+ * @brief  VOP init.
+ * @param  pReg: VOP reg base.
+ * @param  pModeInfo: VOP putput mode info.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
+                        struct DISPLAY_MODE_INFO *pModeInfo)
+{
+    uint32_t conMode = 0;
+
+    conMode |= 0x1 << VOP_CON_SW_AUTO_CKG_SHIFT;
+    conMode |= 0x1 << VOP_CON_SW_WDATA_BYPASS_EN_SHIFT;
+
+    VOP_Write(&s_vopRegMir.CON, &pReg->CON, conMode);
+    VOP_Write(&s_vopRegMir.START, &pReg->START, 0x1);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set plane state.
+ * @param  pReg: VOP reg base.
+ * @param  pWinState: win state.
+ * @param  pModeInfo: VOP output modeinfo.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
+                            struct CRTC_WIN_STATE *pWinState,
+                            struct DISPLAY_MODE_INFO *pModeInfo)
+{
+    uint32_t conMode = 0;
+
+    VOP_Write(&s_vopRegMir.LCD_SIZE, &pReg->LCD_SIZE,
+              ((pWinState->crtcH - 1) << VOP_LCD_SIZE_SW_MCU_LCD_HEIGHT_SHIFT) | (pWinState->crtcW - 1));
+    if (pWinState->format == VOP_FMT_YUV420SP) {
+        conMode |= (pWinState->cscMode << VOP_CON_SW_MCU_Y2R_MODE_SHIFT);
+        conMode |= (pWinState->uvSwap << VOP_CON_SW_MCU_UV_SWAP_SHIFT);
+        conMode |= (0x1 << VOP_CON_SW_MCU_WR_PHASE_SHIFT);
+        conMode |= (0x1 << VOP_CON_SW_DITHER_DOWN_EN_SHIFT);
+        conMode |= (0x1 << VOP_CON_SW_MCU_INPUT_FORMAT_SHIFT);
+        conMode |= (0x0 << VOP_CON_SW_WDATA_BYPASS_EN_SHIFT);
+    } else if (pWinState->format == VOP_FMT_RGB565) {
+        conMode |= pWinState->split << VOP_CON_SW_MCU_WR_PHASE_SHIFT;
+        if (pWinState->split == VOP_MCU_SPLIT_32_BIT)
+            conMode |= 0x1 << VOP_CON_SW_MCU_HW_SWAP_SHIFT;
+    } else {
+        HAL_DBG_ERR("ERR format err %d\n", pWinState->format);
+
+        return HAL_ERROR;
+    }
+
+    VOP_Write(&s_vopRegMir.CON, &pReg->CON, conMode);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  VOP set split
+ * @param  pReg : VOP reg base.
+ * @param  mode : eVOP_McuSplit.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_SetSplit(struct VOP_REG *pReg, eVOP_McuSplit mode)
+{
+    VOP_MaskWrite(&s_vopRegMir.CON, &pReg->CON, VOP_CON_SW_MCU_WR_PHASE_SHIFT,
+                  VOP_CON_SW_MCU_WR_PHASE_MASK, mode);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  VOP interrupt handler.
+ * @param  pReg: VOP reg base.
+ * @param  type: send cmd or data
+ * @param  val: send value
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val)
+{
+    switch (type) {
+    case MCU_WRCMD:
+        VOP_Write(&s_vopRegMir.CMD, &pReg->CMD, val);
+        break;
+    case MCU_WRDATA:
+        VOP_Write(&s_vopRegMir.DATA, &pReg->DATA, val);
+        break;
+    default:
+        break;
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  VOP mode init.
+ * @param  pReg: VOP reg base.
+ * @param  pModeInfo: VOP output mode info.
+ * @param  pPostScaleInfo: VOP post scale info.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
+                            struct DISPLAY_MODE_INFO *pModeInfo,
+                            struct VOP_POST_SCALE_INFO *pPostScaleInfo)
+{
+    uint32_t csrw, rwpw, rwcs;
+
+    csrw = pModeInfo->mcuCsRw;
+    rwpw = pModeInfo->mcuRwCs;
+    rwcs = pModeInfo->mcuRwPw;
+
+    VOP_Write(&s_vopRegMir.TIMING, &pReg->TIMING, (csrw << VOP_TIMING_SW_MCU_CSRW_SHIFT)
+              | (rwpw << VOP_TIMING_SW_MCU_RWPW_SHIFT)
+              | (rwcs << VOP_TIMING_SW_MCU_RWCS_SHIFT));
+
+    return HAL_OK;
+}
+
+#endif
 
 /** @} */
 #endif
