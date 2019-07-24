@@ -6720,6 +6720,8 @@ struct VOP_REG {
 #define PCLK_LOGIC_DIV 0x05000028
 #define ACLK_LOGIC_DIV 0x05080028
 /********Name=CLKSEL_CON41,Offset=0x124********/
+/********Name=CLKSEL_CON49,Offset=0x144********/
+#define XIN_OSC0_DIV 0x20000031
 
 /********Name=CLKSEL_CON00,Offset=0x80********/
 #define ACLK_DSP_S_SEL               0x02060000
@@ -6898,6 +6900,7 @@ typedef enum CLOCK_Name {
     HCLK_LOGIC               = CLK(HCLK_LOGIC_SEL, HCLK_LOGIC_DIV),
     PCLK_LOGIC               = CLK(PCLK_LOGIC_SEL, PCLK_LOGIC_DIV),
     ACLK_LOGIC               = CLK(ACLK_LOGIC_SEL, ACLK_LOGIC_DIV),
+    CLK_32K                  = CLK(0, XIN_OSC0_DIV),
 } eCLOCK_Name;
 #ifdef __cplusplus
 }

@@ -10131,6 +10131,7 @@ typedef enum CLOCK_Name {
     SCLK_SFC1_DT50           = CLK(SCLK_SFC1_SRC_SEL, SCLK_SFC1_DT50_DIV),
     SCLK_SFC1_DF             = CLK(SCLK_SFC1_SRC_SEL, SCLK_SFC1_DF_DIV),
     SCLK_SFC1                = CLK(SCLK_SFC1_SEL, 0),
+    CLK_32K                  = CLK(0, XIN_OSC0_DIV),
 } eCLOCK_Name;
 #ifdef __cplusplus
 }
