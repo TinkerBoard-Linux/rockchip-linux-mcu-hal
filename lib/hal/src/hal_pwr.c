@@ -24,6 +24,7 @@
  - Invoke HAL_PWR_Enable to enable a regulator.
  - Invoke HAL_PWR_Disable to disable a regulator.
  - Invoke HAL_PWR_GetEnableState to get the enable state.
+ - Invoke HAL_PWR_RoundVoltage to check the volt is valid or not.
 
  @} */
 
@@ -41,16 +42,13 @@
 #define WM_SET_BIT(shift)             ((1 << (16 + shift) ) | (1 << shift))
 #define WM_CLR_BIT(shift)             (1 << (16 + shift) )
 
-#define LNR_VOLT_BG(volt, min, step) (((volt - min) + (step -1)) / (step))
-#define LNR_VOLT_LT(volt, min, step) (((volt - min) + (step -1)) / (step))
-
 /********************* Private Structure Definition **************************/
 /********************* Private Variable Definition ***************************/
 /********************* Private Function Definition ***************************/
 static HAL_Status PWR_SetVoltage_Linear(struct PWR_INTREG_DESC *desc, uint32_t volt,
                                         ePWR_CtrlType ctrlType)
 {
-    uint32_t val;
+    uint32_t val, delta, mod;
     __IO uint32_t *preg;
 
     HAL_ASSERT(desc->flag & BIT(ctrlType));
@@ -59,7 +57,12 @@ static HAL_Status PWR_SetVoltage_Linear(struct PWR_INTREG_DESC *desc, uint32_t v
 
     HAL_ASSERT(ctrlType <= PWR_CTRL_VOLT_SSPD);
 
-    val = LNR_VOLT_BG(volt, desc->minVolt, desc->volt_list.stepVolt);
+    delta = volt - desc->minVolt;
+    mod = delta % desc->volt_list.stepVolt;
+    if (mod)
+        return HAL_INVAL;
+
+    val = delta / desc->volt_list.stepVolt;
 
     HAL_ASSERT(val < desc->voltCnt);
 
@@ -69,6 +72,24 @@ static HAL_Status PWR_SetVoltage_Linear(struct PWR_INTREG_DESC *desc, uint32_t v
     WRITE_REG(*preg, val);
 
     return HAL_OK;
+}
+
+static uint32_t PWR_RoundVoltage_Linear(struct PWR_INTREG_DESC *desc, uint32_t volt)
+{
+    uint32_t val, delta, mod;
+
+    HAL_ASSERT(volt >= desc->minVolt);
+
+    delta = volt - desc->minVolt;
+    val = delta / desc->volt_list.stepVolt;
+
+    mod = delta % desc->volt_list.stepVolt;
+
+    if (mod) {
+        val += 1;
+    }
+
+    return (desc->minVolt + desc->volt_list.stepVolt * val);
 }
 
 static uint32_t PWR_GetVoltageLinear(struct PWR_INTREG_DESC *desc,
@@ -89,7 +110,7 @@ static uint32_t PWR_GetVoltageLinear(struct PWR_INTREG_DESC *desc,
     return (desc->minVolt + desc->volt_list.stepVolt * val);
 }
 
-HAL_Status PWR_EnableDisable(struct PWR_INTREG_DESC *desc, uint32_t enable)
+static HAL_Status PWR_EnableDisable(struct PWR_INTREG_DESC *desc, uint32_t enable)
 {
     uint32_t val;
     __IO uint32_t *preg;
@@ -147,6 +168,21 @@ uint32_t HAL_PWR_GetVoltage(struct PWR_INTREG_DESC *desc)
 }
 
 /**
+ * @brief  round voltage value.
+ * @param  desc: the power regulator description pointer.
+ * @param  volt: the volt value to be check
+ * @return the voltage value if support, otherwise return 0.
+ */
+uint32_t HAL_PWR_RoundVoltage(struct PWR_INTREG_DESC *desc, uint32_t volt)
+{
+    HAL_ASSERT(desc);
+    if (desc->flag & PWR_FLG_LINEAR)
+        return PWR_RoundVoltage_Linear(desc, volt);
+    else
+        return 0;
+}
+
+/**
  * @brief  get voltage value for suspend mode.
  * @param  desc: the power regulator description pointer.
  * @return the voltage value if support, otherwise return 0.
@@ -168,7 +204,8 @@ uint32_t HAL_PWR_GetVoltageSuspend(struct PWR_INTREG_DESC *desc)
 uint32_t HAL_PWR_GetVoltageReal(struct PWR_INTREG_DESC *desc)
 {
     HAL_ASSERT(desc);
-    if (desc->flag & PWR_FLG_LINEAR)
+    if ((desc->flag & (PWR_FLG_LINEAR | PWR_FLG_VOLT_ST)) ==
+        (PWR_FLG_LINEAR | PWR_FLG_VOLT_ST))
         return PWR_GetVoltageLinear(desc, PWR_CTRL_VOLT_ST);
     else
         return 0;
@@ -193,7 +230,7 @@ HAL_Status HAL_PWR_SetVoltage(struct PWR_INTREG_DESC *desc, uint32_t volt)
     if (desc->flag & PWR_FLG_LINEAR)
         return PWR_SetVoltage_Linear(desc, volt, PWR_CTRL_VOLT_RUN);
     else
-        return HAL_INVAL;
+        return HAL_NODEV;
 }
 
 /**
@@ -209,7 +246,7 @@ HAL_Status HAL_PWR_SetVoltageSuspend(struct PWR_INTREG_DESC *desc,
     if (desc->flag & PWR_FLG_LINEAR)
         return PWR_SetVoltage_Linear(desc, volt, PWR_CTRL_VOLT_SSPD);
     else
-        return HAL_INVAL;
+        return HAL_NODEV;
 }
 
 /**

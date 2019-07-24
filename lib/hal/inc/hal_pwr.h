@@ -111,6 +111,7 @@ HAL_Status HAL_PWR_Enable(struct PWR_INTREG_DESC *desc);
 HAL_Status HAL_PWR_Disable(struct PWR_INTREG_DESC *desc);
 HAL_Check HAL_PWR_CheckDescByPwrId(struct PWR_INTREG_DESC *pdesc,
                                    ePWR_ID pwrId);
+uint32_t HAL_PWR_RoundVoltage(struct PWR_INTREG_DESC *desc, uint32_t volt);
 #endif
 
 #endif
