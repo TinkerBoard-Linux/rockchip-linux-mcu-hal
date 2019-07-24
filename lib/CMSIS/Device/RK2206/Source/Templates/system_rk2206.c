@@ -6,7 +6,7 @@
 #include "soc.h"
 #include "hal_conf.h"
 
-uint32_t SystemCoreClock = 40000000;
+uint32_t SystemCoreClock = PLL_INPUT_OSC_RATE;
 
 /*----------------------------------------------------------------------------
   Externals

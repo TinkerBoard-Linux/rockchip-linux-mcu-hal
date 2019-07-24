@@ -126,6 +126,7 @@ typedef enum
 #define __NVIC_PRIO_BITS          3U       /* RK2206 uses 3 Bits for the Priority Levels */
 #define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used  */
 #define __FPU_PRESENT             1U       /* FPU present                                   */
+#define PLL_INPUT_OSC_RATE        (40000000U) /* RK2206 OSC Rate */
 
 #include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
 #include "system_rk2206.h"
