@@ -99,6 +99,8 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
+                ldr   sp, =__StackTop      /* set stack pointer */
+
 #define __NEED_COPY_TO_RAM
 #define __STARTUP_CLEAR_BSS
 
