@@ -236,6 +236,9 @@ static const struct PLL_CONFIG *CRU_PllGetSettings(struct PLL_SETUP *pSetup,
 {
     const struct PLL_CONFIG *rateTable = pSetup->rateTable;
 
+    if (rateTable == NULL)
+        return CRU_PllSetByAuto(PLL_INPUT_OSC_RATE, rate);
+
     while (rateTable->rate) {
         if (rateTable->rate == rate)
             break;
