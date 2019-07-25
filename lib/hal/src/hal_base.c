@@ -21,6 +21,11 @@
   - Get system time by calling HAL_GetTick();
   - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs(), and HAL_CPUDelayUs();
 
+ How to reset SysTick:
+  - Choose SysTick clock source by calling HAL_SYSTICK_CLKSourceConfig();
+  - Config SysTick reload value by calling HAL_SYSTICK_Config();
+  - Configure the SysTick frequency by calling by calling HAL_SetTickFreq().
+
  Suggest:
 
   - Blocking for a certain period of time to continuously query HW status, use HAL_GetTick()
@@ -180,10 +185,17 @@ HAL_Status HAL_DelayUs(uint32_t us)
  */
 HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb)
 {
-    if (SysTick_Config(ticksNumb))
-        return HAL_INVAL;
-    else
-        return HAL_OK;
+    if ((ticksNumb - 1UL) > SysTick_LOAD_RELOAD_Msk) {
+        return HAL_INVAL;                                             /* Reload value impossible */
+    }
+
+    SysTick->LOAD = (uint32_t)(ticksNumb - 1UL);                      /* set reload register */
+    NVIC_SetPriority(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);  /* set Priority for Systick Interrupt */
+    SysTick->VAL = 0UL;                                               /* Load the SysTick Counter Value */
+    SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk |
+                      SysTick_CTRL_ENABLE_Msk);                       /* Enable SysTick IRQ and SysTick Timer */
+
+    return HAL_OK;
 }
 
 /**
@@ -255,11 +267,18 @@ HAL_Status HAL_DelayUs(uint32_t us)
  * @brief  Init SysTick
  * @param  tickPriority: Interrupt priority.
  * @return HAL_Status: HAL_OK.
+ * Reset SysTick to default setting.
  */
 HAL_Status HAL_InitTick(uint32_t tickPriority)
 {
-    /* Configure the SysTick to have interrupt in 1ms time basis */
-    HAL_SYSTICK_Config(SystemCoreClock / (1000U / uwTickFreq));
+    uint32_t ret, rate = SystemCoreClock;
+
+    ret = HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);       /* Choose external clock source */
+    if (ret == HAL_OK)
+        rate = PLL_INPUT_OSC_RATE;
+
+    HAL_SYSTICK_Config(rate / 1000);                              /* Configure the SysTick to have interrupt in 1ms time basis */
+    HAL_SetTickFreq(HAL_TICK_FREQ_1KHZ);                          /* Configure the SysTick frequency */
 
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, tickPriority);
