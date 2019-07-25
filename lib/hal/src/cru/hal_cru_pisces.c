@@ -124,8 +124,8 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         freq = pRate;
     else if (HAL_CRU_ClkGetMux(mux) == 1)
         freq = (pRate / m) * n;
-    else if (HAL_CRU_ClkGetMux(mux) == 3)
-        freq = PLL_INPUT_OSC_RATE / 2;
+    else if (HAL_CRU_ClkGetMux(mux) == 2)
+        freq = PLL_INPUT_OSC_RATE;
 
     return freq;
 }
@@ -203,7 +203,7 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 {
     uint32_t freq;
-    uint32_t clkMux = CLK_GET_MUX(clockName), mux = 0;
+    uint32_t clkMux = CLK_GET_MUX(clockName);
     uint32_t clkDiv = CLK_GET_DIV(clockName);
     uint32_t pRate = s_gpllFreq;
 
@@ -237,16 +237,6 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         freq = HAL_CRU_ClkFracGetFreq(clockName);
 
         return freq;
-    case CLK_TIMER0:
-    case CLK_TIMER1:
-    case CLK_TIMER2:
-    case CLK_TIMER3:
-    case CLK_TIMER4:
-    case CLK_TIMER5:
-        mux = HAL_CRU_ClkGetMux(clkMux);
-        if (mux)
-            pRate = PLL_INPUT_OSC_RATE;
-        break;
     case CLK_GPIO_DBG0:
     case CLK_GPIO_DBG1:
         pRate = PLL_INPUT_OSC_RATE;
@@ -316,17 +306,6 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         error = HAL_CRU_ClkFracSetFreq(clockName, rate);
 
         return error;
-    case CLK_TIMER0:
-    case CLK_TIMER1:
-    case CLK_TIMER2:
-    case CLK_TIMER3:
-    case CLK_TIMER4:
-    case CLK_TIMER5:
-        if (rate == PLL_INPUT_OSC_RATE) {
-            mux = 1;
-            pRate = PLL_INPUT_OSC_RATE;
-        }
-        break;
     case CLK_GPIO_DBG0:
     case CLK_GPIO_DBG1:
         pRate = PLL_INPUT_OSC_RATE;

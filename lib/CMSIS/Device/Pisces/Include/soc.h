@@ -6495,6 +6495,7 @@ struct VOP_REG {
 /********Name=SOFTRST_CON08,Offset=0x220********/
 #define SRST_P_GPIO0  128
 #define SRST_P_GPIO1  129
+#define SRST_GPIO_DB0 131
 #define SRST_GPIO_DB1 132
 /********Name=SOFTRST_CON09,Offset=0x224********/
 #define SRST_H_ALIVE_NIU    146
@@ -6519,7 +6520,7 @@ struct VOP_REG {
 #define SRST_P_MIPIDSI_HOST 189
 #define SRST_P_LOGIC_NIU    191
 /********Name=SOFTRST_CON12,Offset=0x230********/
-#define SRST_GPIO_DB0        195
+#define SRST_H_BOOTROM       195
 #define SRST_H_VOP           196
 #define SRST_H_LOGIC_NIU     199
 #define SRST_H_LOGIC_AHB_ARB 203
@@ -6662,14 +6663,8 @@ struct VOP_REG {
 /********Name=CLKSEL_CON07,Offset=0x9C********/
 /********Name=CLKSEL_CON08,Offset=0xA0********/
 /********Name=CLKSEL_CON10,Offset=0xA8********/
-#define CLK_TIMER0_DIV 0x0700000A
-#define CLK_TIMER1_DIV 0x0708000A
 /********Name=CLKSEL_CON11,Offset=0xAC********/
-#define CLK_TIMER2_DIV 0x0700000B
-#define CLK_TIMER3_DIV 0x0708000B
 /********Name=CLKSEL_CON12,Offset=0xB0********/
-#define CLK_TIMER4_DIV 0x0700000C
-#define CLK_TIMER5_DIV 0x0708000C
 /********Name=CLKSEL_CON13,Offset=0xB4********/
 #define CLK_I2C0_DIV 0x0400000D
 #define CLK_I2C1_DIV 0x0404000D
@@ -6739,8 +6734,7 @@ struct VOP_REG {
 #define SCLK_UART0_SEL                 0x02060003
 #define SCLK_UART0_SEL_CLK_UART0_SRC   0
 #define SCLK_UART0_SEL_CLK_UART0_FRAC  1
-#define SCLK_UART0_SEL_CLK_UART0_NP5   2
-#define SCLK_UART0_SEL_XIN_OSC0_HALF   3
+#define SCLK_UART0_SEL_XIN_OSC0_FUNC   2
 /********Name=CLKSEL_CON04,Offset=0x90********/
 /********Name=CLKSEL_CON05,Offset=0x94********/
 #define CLK_UART1_SRC_SEL              0x01050005
@@ -6749,32 +6743,13 @@ struct VOP_REG {
 #define SCLK_UART1_SEL                 0x02060005
 #define SCLK_UART1_SEL_CLK_UART1_SRC   0
 #define SCLK_UART1_SEL_CLK_UART1_FRAC  1
-#define SCLK_UART1_SEL_CLK_UART1_NP5   2
-#define SCLK_UART1_SEL_XIN_OSC0_HALF   3
+#define SCLK_UART1_SEL_XIN_OSC0_FUNC   2
 /********Name=CLKSEL_CON06,Offset=0x98********/
 /********Name=CLKSEL_CON07,Offset=0x9C********/
 /********Name=CLKSEL_CON08,Offset=0xA0********/
 /********Name=CLKSEL_CON10,Offset=0xA8********/
-#define CLK_TIMER0_SEL               0x0107000A
-#define CLK_TIMER0_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER0_SEL_XIN_OSC0_FUNC 1
-#define CLK_TIMER1_SEL               0x010F000A
-#define CLK_TIMER1_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER1_SEL_XIN_OSC0_FUNC 1
 /********Name=CLKSEL_CON11,Offset=0xAC********/
-#define CLK_TIMER2_SEL               0x0107000B
-#define CLK_TIMER2_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER2_SEL_XIN_OSC0_FUNC 1
-#define CLK_TIMER3_SEL               0x010F000B
-#define CLK_TIMER3_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER3_SEL_XIN_OSC0_FUNC 1
 /********Name=CLKSEL_CON12,Offset=0xB0********/
-#define CLK_TIMER4_SEL               0x0107000C
-#define CLK_TIMER4_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER4_SEL_XIN_OSC0_FUNC 1
-#define CLK_TIMER5_SEL               0x010F000C
-#define CLK_TIMER5_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER5_SEL_XIN_OSC0_FUNC 1
 /********Name=CLKSEL_CON13,Offset=0xB4********/
 /********Name=CLKSEL_CON14,Offset=0xB8********/
 #define MCLK_PDM0_SEL               0x0107000E
@@ -6825,7 +6800,7 @@ struct VOP_REG {
 /********Name=CLKSEL_CON28,Offset=0xF0********/
 /********Name=CLKSEL_CON29,Offset=0xF4********/
 /********Name=CLKSEL_CON30,Offset=0xF8********/
-#define CLK_TESTOUT_SEL              0x0108001E
+#define CLK_TESTOUT_SEL              0x0408001E
 #define CLK_TESTOUT_SEL_CLK_GPLL_MUX 0
 #define CLK_TESTOUT_SEL_CLK_CPLL_MUX 1
 /********Name=CLKSEL_CON31,Offset=0xFC********/
@@ -6869,12 +6844,6 @@ typedef enum CLOCK_Name {
     CLK_UART1_SRC            = CLK(CLK_UART1_SRC_SEL, CLK_UART1_SRC_DIV),
     CLK_UART1_FRAC           = CLK(0, CLK_UART1_FRAC_DIV),
     CLK_UART1                = CLK(SCLK_UART1_SEL, 0),
-    CLK_TIMER0               = CLK(CLK_TIMER0_SEL, CLK_TIMER0_DIV),
-    CLK_TIMER1               = CLK(CLK_TIMER1_SEL, CLK_TIMER1_DIV),
-    CLK_TIMER2               = CLK(CLK_TIMER2_SEL, CLK_TIMER2_DIV),
-    CLK_TIMER3               = CLK(CLK_TIMER3_SEL, CLK_TIMER3_DIV),
-    CLK_TIMER4               = CLK(CLK_TIMER4_SEL, CLK_TIMER4_DIV),
-    CLK_TIMER5               = CLK(CLK_TIMER5_SEL, CLK_TIMER5_DIV),
     CLK_I2C0                 = CLK(0, CLK_I2C0_DIV),
     CLK_I2C1                 = CLK(0, CLK_I2C1_DIV),
     CLK_I2C2                 = CLK(0, CLK_I2C2_DIV),
