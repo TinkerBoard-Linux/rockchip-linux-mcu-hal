@@ -16,10 +16,10 @@
 
  The SNOR driver can be used as follows:
 
- - Init a spi nor abstract (HAL_SNOR_Init()):
-    - Malloc a struct of SPI_NOR by user;
-    - Designated host to nor->spi by user;
-    - Init spi nor abstract by calling func HAL_SNOR_Init();
+ - Init a spi nor abstract:
+    - Malloc struct SPI_NOR nor by user;
+    - Designated host to struct SPI_NOR nor->spi by user;
+    - Init spi nor abstract by calling HAL_SNOR_Init();
  - Call the interface function like HAL_SNOR_Read().
 
  @} */
