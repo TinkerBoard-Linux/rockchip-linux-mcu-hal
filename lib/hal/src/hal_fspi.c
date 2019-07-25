@@ -425,7 +425,6 @@ HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 
  This section provides functions allowing to IO controlling:
 
- - Operate in blocking mode (DMA IT) using HAL_FSPI_Request_DMA();
  - Operate in blocking mode (Normal) using HAL_FSPI_Request();
 
  *  @{
@@ -433,7 +432,7 @@ HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 
 #ifdef HAL_SNOR_MODULE_ENABLED
 /**
- * @brief  SPI Nor flash data transmission interface supporting open source specifications.
+ * @brief  SPI Nor flash data transmission interface to support open source specifications SNOR.
  * @param  spi: host abstract.
  * @param  op: flash operation protocol.
  * @return HAL_Status.
@@ -458,7 +457,7 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 }
 
 /**
- * @brief  SPI Nor flash data transmission interface supporting open source specifications.
+ * @brief  SPI Nor flash XIP interface config to support open source specifications SNOR.
  * @param  spi: host abstract.
  * @param  op: flash operation protocol.
  * @param  on: 1 for XIP enable, 0 for XIP disable.
@@ -541,7 +540,7 @@ HAL_Status HAL_FSPI_MaskDMAInterrupt(struct HAL_FSPI_HOST *host)
  */
 HAL_Status HAL_FSPI_UnmaskDMAInterrupt(struct HAL_FSPI_HOST *host)
 {
-    CLEAR_BIT(host->instance->IMR, FSPI_IMR_DMAM_MASK);
+    CLEAR_BIT(host->instance->IMR, FSPI_IMR_TRANSM_MASK);
 
     return HAL_OK;
 }
