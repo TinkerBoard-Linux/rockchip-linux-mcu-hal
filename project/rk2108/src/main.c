@@ -17,7 +17,7 @@
 
 /********************* Public Function Definition ****************************/
 
-static struct UART_REG *pUart = UART0;
+static struct UART_REG *pUart = UART2;
 
 #ifdef __GNUC__
 int _write(int fd, char *ptr, int len)
