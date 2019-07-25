@@ -181,7 +181,7 @@ static const struct PLL_CONFIG *CRU_PllSetByAuto(uint32_t finHz,
 {
     struct PLL_CONFIG *rateTable = &g_rockchipAutoTable;
     uint32_t foutVco = foutHz;
-    uint32_t fin64, frac64;
+    uint64_t fin64, frac64;
     uint32_t fFrac, postDiv1, postDiv2;
     uint32_t clkGcd = 0;
     HAL_Status error;
@@ -204,6 +204,20 @@ static const struct PLL_CONFIG *CRU_PllSetByAuto(uint32_t finHz,
         rateTable->fbDiv = foutVco / clkGcd;
 
         rateTable->frac = 0;
+    } else if (finHz / MHZ * MHZ != finHz) {
+        clkGcd = foutHz / finHz;
+        clkGcd = (clkGcd / 10) * 10;
+        rateTable->fbDiv = clkGcd;
+        rateTable->refDiv = 1;
+        rateTable->postDiv1 = 1;
+        rateTable->postDiv2 = 1;
+
+        fin64 = foutHz * rateTable->refDiv;
+        fin64 = HAL_DivU64(fin64 << 24, finHz * rateTable->fbDiv);
+        frac64 = fin64 - (1 << 24);
+        rateTable->frac = frac64;
+        if (rateTable->frac > 0)
+            rateTable->dsmpd = 0;
     } else {
         clkGcd = CRU_Gcd(finHz / MHZ, foutVco / MHZ);
         rateTable->refDiv = finHz / MHZ / clkGcd;
@@ -408,12 +422,11 @@ uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
         frac = PLL_GET_FRAC(READ_REG(*(pSetup->conOffset2)));
         rate = (rate / refDiv) * fbDiv;
         if (dsmpd == 0) {
-            uint32_t fracRate = PLL_INPUT_OSC_RATE;
+            uint64_t fracRate = PLL_INPUT_OSC_RATE;
 
-            fracRate = fracRate >> 12;
-            fracRate = fracRate * frac;
-            fracRate = fracRate >> 12;
-            fracRate = fracRate / refDiv;
+            fracRate *= fbDiv;
+            fracRate *= frac;
+            fracRate = fracRate >> 24;
             rate += fracRate;
         }
         rate = rate / (postdDv1 * postDiv2);
