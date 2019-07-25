@@ -73,6 +73,22 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
     }
     break;
 #endif
+    case DSP_IOCTL_SET_MEM_GATING:
+    {
+        uint32_t mask = 0;
+        mask |= GRF_DSP_CON2_ICACHE_MEM_AUTO_GATING_EN_MASK |
+                GRF_DSP_CON2_ITAG_MEM_AUTO_GATING_EN_MASK |
+                GRF_DSP_CON2_DCACHE_MEM_AUTO_GATING_EN_MASK |
+                GRF_DSP_CON2_DTAG_MEM_AUTO_GATING_EN_MASK |
+                GRF_DSP_CON2_PREFETCH_RAM_AUTO_GATING_EN_MASK |
+                GRF_DSP_CON2_DTCM_MEM_AUTO_GATING_EN_MASK |
+                GRF_DSP_CON2_ITCM_MEM_AUTO_GATING_EN_MASK;
+        if ((uint32_t)arg)
+            WRITE_REG_MASK_WE(GRF->DSP_CON[2], mask, mask);
+        else
+            WRITE_REG_MASK_WE(GRF->DSP_CON[2], mask, 0);
+    };
+        break;
     default:
         break;
     }
@@ -152,6 +168,7 @@ HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp)
 {
     dsp->ops = &dspOps;
     dsp->grfReg = (struct GRF_REG *)(GRF_BASE);
+    dsp->resetFlag = 0;
 
     return HAL_OK;
 }
@@ -195,9 +212,15 @@ HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr)
               CRU_SOFTRST_CON04_ARESETN_HIFI3_NIU_MASK;
     WRITE_REG_MASK_WE(CRU->CRU_SOFTRST_CON[4], setMask, setMask);
 #elif (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
-    setMask = CRU_CRU_SOFTRST_CON00_DRESETN_DSP_MASK |
-              CRU_CRU_SOFTRST_CON00_BRESETN_DSP_MASK |
-              CRU_CRU_SOFTRST_CON00_ARESETN_DSP_NIU_MASK;
+    if (dsp->resetFlag == 0) {
+        setMask = CRU_CRU_SOFTRST_CON00_DRESETN_DSP_MASK |
+                  CRU_CRU_SOFTRST_CON00_BRESETN_DSP_MASK |
+                  CRU_CRU_SOFTRST_CON00_ARESETN_DSP_NIU_MASK;
+        dsp->resetFlag = 1;
+    } else {
+        setMask = CRU_CRU_SOFTRST_CON00_DRESETN_DSP_MASK |
+                  CRU_CRU_SOFTRST_CON00_BRESETN_DSP_MASK;
+    }
     WRITE_REG_MASK_WE(CRU->CRU_SOFTRST_CON[0], setMask, setMask);
 #endif
 

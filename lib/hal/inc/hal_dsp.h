@@ -24,8 +24,9 @@
 #define DSP_IOCTL(a) (0x1000 + a)
 
 /** general cmd for dsp control */
-#define DSP_IOCTL_SET_ITCM_SIZE DSP_IOCTL(1)
-#define DSP_IOCTL_SET_DTCM_SIZE DSP_IOCTL(2)
+#define DSP_IOCTL_SET_ITCM_SIZE  DSP_IOCTL(1)
+#define DSP_IOCTL_SET_DTCM_SIZE  DSP_IOCTL(2)
+#define DSP_IOCTL_SET_MEM_GATING DSP_IOCTL(3)
 
 /***************************** Structure Definition **************************/
 
@@ -39,6 +40,7 @@ struct DSP_OPS {
 struct DSP_DEV {
     struct GRF_REG *grfReg;    /**< grf register base */
     const struct DSP_OPS *ops; /**< dsp ops function */
+    int32_t resetFlag; /**< dsp have been reset flag */
     void *privData; /**< dsp dev privData */
 };
 
