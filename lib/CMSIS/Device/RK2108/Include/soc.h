@@ -9529,6 +9529,7 @@ struct USB_HOST_CH_REG {
 /********Name=SOFTRST_CON08,Offset=0x220********/
 #define SRST_P_GPIO0  128
 #define SRST_P_GPIO1  129
+#define SRST_GPIO_DB0 131
 #define SRST_GPIO_DB1 132
 /********Name=SOFTRST_CON09,Offset=0x224********/
 #define SRST_H_ALIVE_NIU    146
@@ -9559,7 +9560,7 @@ struct USB_HOST_CH_REG {
 /********Name=SOFTRST_CON12,Offset=0x230********/
 #define SRST_H_USB2CTRL      193
 #define SRST_H_USB2_NIU      194
-#define SRST_GPIO_DB0        195
+#define SRST_H_BOOTROM       195
 #define SRST_H_VOP           196
 #define SRST_H_AUDPWM        197
 #define SRST_H_CIF           198
@@ -9583,14 +9584,18 @@ struct USB_HOST_CH_REG {
 #define SRST_AUDPWM     222
 #define SRST_A_CIF      223
 /********Name=SOFTRST_CON14,Offset=0x238********/
+#define SRST_A_CIF_NIU   225
 #define SRST_S_SFC1      228
 #define SRST_USB2_ADP    229
+#define SRST_KEY         233
+#define SRST_P_KEY       234
 #define SRST_USB2PHYUTMI 236
 #define SRST_USB2CTRL    237
 #define SRST_USB2PHYPO   238
 /********Name=SOFTRST_CON15,Offset=0x23C********/
-#define SRST_KEY   240
-#define SRST_P_KEY 241
+#define SRST_H_AC_CM4_CORE 240
+#define SRST_WRITE_ENABLE  256
+
 /********Name=CLKGATE_CON00,Offset=0x180********/
 #define ACLK_DSP_GATE     0
 #define ACLK_DSP_NIU_GATE 2
@@ -9726,12 +9731,9 @@ struct USB_HOST_CH_REG {
 /********Name=CLKGATE_CON13,Offset=0x1B4********/
 #define CLK_SPI1_GATE          208
 #define CLK_SPI2_GATE          209
-#define SCLK_SFC_DF_GATE       210
-#define SCLK_SFC_DT50_GATE     211
 #define SCLK_SFC_GATE          212
 #define HCLK_SFC1_GATE         213
 #define HCLK_XIP_SFC1_GATE     214
-#define CLK_SDIO_DT50_GATE     215
 #define CLK_SDIO_GATE          216
 #define CLK_I2S1_8CH_GATE      217
 #define CLK_I2S1_8CH_FRAC_GATE 218
@@ -9742,18 +9744,16 @@ struct USB_HOST_CH_REG {
 #define ACLK_CIF_GATE          223
 /********Name=CLKGATE_CON14,Offset=0x1B8********/
 #define CLK_AUDPWM_FRAC_GATE      224
-#define SCLK_SFC1_DF_GATE         226
-#define SCLK_SFC1_DT50_GATE       227
+#define ACLK_CIF_NIU_GATE         225
 #define SCLK_SFC1_GATE            228
 #define CLK_USB2_ADP_GATE         229
 #define CLK_USB2PHY_REF_FRAC_GATE 230
 #define CLK_DPHY_REF_FRAC_GATE    231
 #define STCLK_M4_GATE             232
+#define CLK_KEY_GATE              233
+#define PCLK_KEY_GATE             234
 #define CLK_USB2CTRL_GATE         237
-/********Name=CLKGATE_CON15,Offset=0x1BC********/
-#define CLK_KEY_GATE   240
-#define PCLK_KEY_GATE  241
-#define CLK_BT32K_GATE 244
+#define CLK_BT32K_GATE            239
 
 /********Name=CLKSEL_CON00,Offset=0x80********/
 #define ACLK_DSP_S_DIV 0x06000000
@@ -9763,28 +9763,16 @@ struct USB_HOST_CH_REG {
 #define PCLK_SHRM_DIV 0x05080002
 /********Name=CLKSEL_CON03,Offset=0x8C********/
 #define CLK_UART0_SRC_DIV 0x05000003
-#define CLK_UART0_NP5_DIV 0x07080003
 /********Name=CLKSEL_CON04,Offset=0x90********/
 #define CLK_UART0_FRAC_DIV 0x20000004
 /********Name=CLKSEL_CON05,Offset=0x94********/
 #define CLK_UART1_SRC_DIV 0x05000005
-#define CLK_UART1_NP5_DIV 0x07080005
 /********Name=CLKSEL_CON06,Offset=0x98********/
 #define CLK_UART1_FRAC_DIV 0x20000006
 /********Name=CLKSEL_CON07,Offset=0x9C********/
 #define CLK_UART2_SRC_DIV 0x05000007
-#define CLK_UART2_NP5_DIV 0x07080007
 /********Name=CLKSEL_CON08,Offset=0xA0********/
 #define CLK_UART2_FRAC_DIV 0x20000008
-/********Name=CLKSEL_CON10,Offset=0xA8********/
-#define CLK_TIMER0_DIV 0x0700000A
-#define CLK_TIMER1_DIV 0x0708000A
-/********Name=CLKSEL_CON11,Offset=0xAC********/
-#define CLK_TIMER2_DIV 0x0700000B
-#define CLK_TIMER3_DIV 0x0708000B
-/********Name=CLKSEL_CON12,Offset=0xB0********/
-#define CLK_TIMER4_DIV 0x0700000C
-#define CLK_TIMER5_DIV 0x0708000C
 /********Name=CLKSEL_CON13,Offset=0xB4********/
 #define CLK_I2C0_DIV 0x0400000D
 #define CLK_I2C1_DIV 0x0404000D
@@ -9816,8 +9804,6 @@ struct USB_HOST_CH_REG {
 #define PCLK_ALIVE_DIV 0x0500001B
 /********Name=CLKSEL_CON28,Offset=0xF0********/
 #define HCLK_ALIVE_DIV 0x0500001C
-/********Name=CLKSEL_CON29,Offset=0xF4********/
-#define CLK_PVTM_DIV 0x0500001D
 /********Name=CLKSEL_CON30,Offset=0xF8********/
 #define CLK_TESTOUT_DIV 0x0800001E
 /********Name=CLKSEL_CON31,Offset=0xFC********/
@@ -9826,13 +9812,11 @@ struct USB_HOST_CH_REG {
 #define HCLK_M4_DIV  0x05000021
 #define CLK_SPI1_DIV 0x05080021
 /********Name=CLKSEL_CON34,Offset=0x108********/
-#define SCLK_SFC_DF_DIV 0x08000022
-#define CLK_SPI2_DIV    0x05080022
+#define CLK_SPI2_DIV 0x05080022
 /********Name=CLKSEL_CON35,Offset=0x10C********/
-#define SCLK_SFC_DT50_DIV 0x08000023
-#define CLK_SDIO_DT50_DIV 0x08080023
+#define SCLK_SFC_DIV 0x08000023
+#define CLK_SDIO_DIV 0x08080023
 /********Name=CLKSEL_CON36,Offset=0x110********/
-#define CLK_SDIO_DF_DIV 0x08000024
 /********Name=CLKSEL_CON37,Offset=0x114********/
 #define CLK_AUDPWM_DF_DIV    0x05000025
 #define CLK_I2S1_8CH_SRC_DIV 0x05080025
@@ -9853,9 +9837,8 @@ struct USB_HOST_CH_REG {
 /********Name=CLKSEL_CON44,Offset=0x130********/
 #define CLK_DPHY_REF_FRAC_DIV 0x2000002C
 /********Name=CLKSEL_CON46,Offset=0x138********/
-#define SCLK_SFC1_DF_DIV 0x0800002E
 /********Name=CLKSEL_CON47,Offset=0x13C********/
-#define SCLK_SFC1_DT50_DIV 0x0800002F
+#define SCLK_SFC1_DIV 0x0800002F
 /********Name=CLKSEL_CON49,Offset=0x144********/
 #define XIN_OSC0_DIV 0x20000031
 
@@ -9875,8 +9858,7 @@ struct USB_HOST_CH_REG {
 #define SCLK_UART0_SEL                 0x02060003
 #define SCLK_UART0_SEL_CLK_UART0_SRC   0
 #define SCLK_UART0_SEL_CLK_UART0_FRAC  1
-#define SCLK_UART0_SEL_CLK_UART0_NP5   2
-#define SCLK_UART0_SEL_XIN_OSC0_HALF   3
+#define SCLK_UART0_SEL_XIN_OSC0_FUNC   2
 /********Name=CLKSEL_CON04,Offset=0x90********/
 /********Name=CLKSEL_CON05,Offset=0x94********/
 #define CLK_UART1_SRC_SEL              0x01050005
@@ -9885,8 +9867,7 @@ struct USB_HOST_CH_REG {
 #define SCLK_UART1_SEL                 0x02060005
 #define SCLK_UART1_SEL_CLK_UART1_SRC   0
 #define SCLK_UART1_SEL_CLK_UART1_FRAC  1
-#define SCLK_UART1_SEL_CLK_UART1_NP5   2
-#define SCLK_UART1_SEL_XIN_OSC0_HALF   3
+#define SCLK_UART1_SEL_XIN_OSC0_FUNC   2
 /********Name=CLKSEL_CON06,Offset=0x98********/
 /********Name=CLKSEL_CON07,Offset=0x9C********/
 #define CLK_UART2_SRC_SEL              0x01050007
@@ -9895,30 +9876,8 @@ struct USB_HOST_CH_REG {
 #define SCLK_UART2_SEL                 0x02060007
 #define SCLK_UART2_SEL_CLK_UART2_SRC   0
 #define SCLK_UART2_SEL_CLK_UART2_FRAC  1
-#define SCLK_UART2_SEL_CLK_UART2_NP5   2
-#define SCLK_UART2_SEL_XIN_OSC0_HALF   3
+#define SCLK_UART2_SEL_XIN_OSC0_FUNC   2
 /********Name=CLKSEL_CON08,Offset=0xA0********/
-/********Name=CLKSEL_CON10,Offset=0xA8********/
-#define CLK_TIMER0_SEL               0x0107000A
-#define CLK_TIMER0_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER0_SEL_XIN_OSC0_FUNC 1
-#define CLK_TIMER1_SEL               0x010F000A
-#define CLK_TIMER1_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER1_SEL_XIN_OSC0_FUNC 1
-/********Name=CLKSEL_CON11,Offset=0xAC********/
-#define CLK_TIMER2_SEL               0x0107000B
-#define CLK_TIMER2_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER2_SEL_XIN_OSC0_FUNC 1
-#define CLK_TIMER3_SEL               0x010F000B
-#define CLK_TIMER3_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER3_SEL_XIN_OSC0_FUNC 1
-/********Name=CLKSEL_CON12,Offset=0xB0********/
-#define CLK_TIMER4_SEL               0x0107000C
-#define CLK_TIMER4_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER4_SEL_XIN_OSC0_FUNC 1
-#define CLK_TIMER5_SEL               0x010F000C
-#define CLK_TIMER5_SEL_CLK_GPLL_MUX  0
-#define CLK_TIMER5_SEL_XIN_OSC0_FUNC 1
 /********Name=CLKSEL_CON13,Offset=0xB4********/
 /********Name=CLKSEL_CON14,Offset=0xB8********/
 #define MCLK_PDM0_SEL               0x0107000E
@@ -9966,14 +9925,24 @@ struct USB_HOST_CH_REG {
 /********Name=CLKSEL_CON25,Offset=0xE4********/
 /********Name=CLKSEL_CON27,Offset=0xEC********/
 /********Name=CLKSEL_CON28,Offset=0xF0********/
-/********Name=CLKSEL_CON29,Offset=0xF4********/
-#define CLK_PVTM_SEL               0x0107001D
-#define CLK_PVTM_SEL_CLK_GPLL_MUX  0
-#define CLK_PVTM_SEL_XIN_OSC0_FUNC 1
 /********Name=CLKSEL_CON30,Offset=0xF8********/
-#define CLK_TESTOUT_SEL              0x0108001E
-#define CLK_TESTOUT_SEL_CLK_GPLL_MUX 0
-#define CLK_TESTOUT_SEL_CLK_CPLL_MUX 1
+#define CLK_TESTOUT_SEL                     0x0408001E
+#define CLK_TESTOUT_SEL_ACLK_DSP            0
+#define CLK_TESTOUT_SEL_HCLK_M4             1
+#define CLK_TESTOUT_SEL_XIN_OSC0_FUNC       2
+#define CLK_TESTOUT_SEL_CLK_DEEPSLOW        3
+#define CLK_TESTOUT_SEL_PCLK_CIF            4
+#define CLK_TESTOUT_SEL_CLK_USB2PHY_REF     5
+#define CLK_TESTOUT_SEL_CLK_DPHY_REF        6
+#define CLK_TESTOUT_SEL_CLK_MIPIPHY_LANBYTE 7
+#define CLK_TESTOUT_SEL_CLK_USBPHY48M       8
+#define CLK_TESTOUT_SEL_CLK_USBPHY480M      9
+#define CLK_TESTOUT_SEL_ACLK_LOGIC          10
+#define CLK_TESTOUT_SEL_CLK_AUDPWM          11
+#define CLK_TESTOUT_SEL_CLK_SDIO            12
+#define CLK_TESTOUT_SEL_MCLK_I2S8CH         13
+#define CLK_TESTOUT_SEL_DCLK_VOP            14
+#define CLK_TESTOUT_SEL_HCLK_AUDIO          15
 /********Name=CLKSEL_CON31,Offset=0xFC********/
 #define CLK_PDM_SAMP_SEL              0x0105001F
 #define CLK_PDM_SAMP_SEL_CLK_GPLL_MUX 0
@@ -9983,24 +9952,18 @@ struct USB_HOST_CH_REG {
 #define HCLK_M4_SEL_CLK_GPLL_MUX 0
 #define HCLK_M4_SEL_CLK_CPLL_MUX 1
 /********Name=CLKSEL_CON34,Offset=0x108********/
-#define SCLK_SFC_SRC_SEL              0x010E0022
-#define SCLK_SFC_SRC_SEL_CLK_GPLL_MUX 0
-#define SCLK_SFC_SRC_SEL_CLK_CPLL_MUX 1
-#define SCLK_SFC_SEL                  0x010F0022
-#define SCLK_SFC_SEL_SCLK_SFC_DF      0
-#define SCLK_SFC_SEL_SCLK_SFC_DT50    1
+#define SCLK_SFC_SEL              0x010E0022
+#define SCLK_SFC_SEL_CLK_GPLL_MUX 0
+#define SCLK_SFC_SEL_CLK_CPLL_MUX 1
 /********Name=CLKSEL_CON35,Offset=0x10C********/
 /********Name=CLKSEL_CON36,Offset=0x110********/
-#define CLK_SDIO_SRC_SEL               0x02080024
-#define CLK_SDIO_SRC_SEL_CLK_GPLL_MUX  0
-#define CLK_SDIO_SRC_SEL_CLK_CPLL_MUX  1
-#define CLK_SDIO_SRC_SEL_XIN_OSC0_FUNC 2
-#define CLK_SDIO_SEL                   0x010A0024
-#define CLK_SDIO_SEL_CLK_SDIO_DF       0
-#define CLK_SDIO_SEL_CLK_SDIO_DT50     1
-#define PCLK_CIF_SRC_SEL               0x010C0024
-#define PCLK_CIF_SRC_SEL_PCLK_CIF_I    0
-#define PCLK_CIF_SRC_SEL_PCLK_CIF_I_N  1
+#define CLK_SDIO_SEL                     0x02080024
+#define CLK_SDIO_SEL_CLK_GPLL_MUX        0
+#define CLK_SDIO_SEL_CLK_CPLL_MUX        1
+#define CLK_SDIO_SEL_XIN_OSC0_FUNC       2
+#define PCLK_CIF_SRC_SEL                 0x010C0024
+#define PCLK_CIF_SRC_SEL_PCLK_CIF        0
+#define PCLK_CIF_SRC_SEL_PCLK_CIF_INVERT 1
 /********Name=CLKSEL_CON37,Offset=0x114********/
 #define CLK_AUDPWM_SEL                      0x01050025
 #define CLK_AUDPWM_SEL_CLK_AUDPWM_DF        0
@@ -10021,6 +9984,9 @@ struct USB_HOST_CH_REG {
 #define MCLK_I2S1_8CH_SEL_XIN_OSC0_HALF     3
 /********Name=CLKSEL_CON38,Offset=0x118********/
 /********Name=CLKSEL_CON39,Offset=0x11C********/
+#define CLK_PWM_SEL                 0x01050027
+#define CLK_PWM_SEL_CLK_GPLL_MUX    0
+#define CLK_PWM_SEL_XIN_OSC0_FUNC   1
 #define HCLK_LOGIC_SEL              0x010F0027
 #define HCLK_LOGIC_SEL_CLK_GPLL_MUX 0
 #define HCLK_LOGIC_SEL_CLK_CPLL_MUX 1
@@ -10052,12 +10018,9 @@ struct USB_HOST_CH_REG {
 /********Name=CLKSEL_CON43,Offset=0x12C********/
 /********Name=CLKSEL_CON44,Offset=0x130********/
 /********Name=CLKSEL_CON46,Offset=0x138********/
-#define SCLK_SFC1_SRC_SEL              0x010E002E
-#define SCLK_SFC1_SRC_SEL_CLK_GPLL_MUX 0
-#define SCLK_SFC1_SRC_SEL_CLK_CPLL_MUX 1
-#define SCLK_SFC1_SEL                  0x010F002E
-#define SCLK_SFC1_SEL_SCLK_SFC1_DF     0
-#define SCLK_SFC1_SEL_SCLK_SFC1_DT50   1
+#define SCLK_SFC1_SEL              0x010E002E
+#define SCLK_SFC1_SEL_CLK_GPLL_MUX 0
+#define SCLK_SFC1_SEL_CLK_CPLL_MUX 1
 /********Name=CLKSEL_CON47,Offset=0x13C********/
 /********Name=CLKSEL_CON49,Offset=0x144********/
 
@@ -10080,12 +10043,6 @@ typedef enum CLOCK_Name {
     CLK_UART2_SRC            = CLK(CLK_UART2_SRC_SEL, CLK_UART2_SRC_DIV),
     CLK_UART2_FRAC           = CLK(0, CLK_UART2_FRAC_DIV),
     CLK_UART2                = CLK(SCLK_UART2_SEL, 0),
-    CLK_TIMER0               = CLK(CLK_TIMER0_SEL, CLK_TIMER0_DIV),
-    CLK_TIMER1               = CLK(CLK_TIMER1_SEL, CLK_TIMER1_DIV),
-    CLK_TIMER2               = CLK(CLK_TIMER2_SEL, CLK_TIMER2_DIV),
-    CLK_TIMER3               = CLK(CLK_TIMER3_SEL, CLK_TIMER3_DIV),
-    CLK_TIMER4               = CLK(CLK_TIMER4_SEL, CLK_TIMER4_DIV),
-    CLK_TIMER5               = CLK(CLK_TIMER5_SEL, CLK_TIMER5_DIV),
     CLK_I2C0                 = CLK(0, CLK_I2C0_DIV),
     CLK_I2C1                 = CLK(0, CLK_I2C1_DIV),
     CLK_I2C2                 = CLK(0, CLK_I2C2_DIV),
@@ -10104,14 +10061,13 @@ typedef enum CLOCK_Name {
     CLK_GPIO_DBG1            = CLK(0, CLK_GPIO_DB1_DIV),
     PCLK_ALIVE               = CLK(0, PCLK_ALIVE_DIV),
     HCLK_ALIVE               = CLK(0, HCLK_ALIVE_DIV),
-    CLK_PVTM                 = CLK(CLK_PVTM_SEL, CLK_PVTM_DIV),
     CLK_TESTOUT              = CLK(CLK_TESTOUT_SEL, CLK_TESTOUT_DIV),
     CLK_PDM_SAMP             = CLK(CLK_PDM_SAMP_SEL, CLK_PDM_SAMP_DIV),
     HCLK_M4                  = CLK(HCLK_M4_SEL, HCLK_M4_DIV),
     CLK_SPI1                 = CLK(0, CLK_SPI1_DIV),
-    SCLK_SFC_SRC             = CLK(SCLK_SFC_SRC_SEL, SCLK_SFC_DT50_DIV),
+    SCLK_SFC_SRC             = CLK(SCLK_SFC_SEL, SCLK_SFC_DIV),
     CLK_SPI2                 = CLK(0, CLK_SPI2_DIV),
-    CLK_SDIO_SRC             = CLK(CLK_SDIO_SRC_SEL, CLK_SDIO_DT50_DIV),
+    CLK_SDIO_SRC             = CLK(CLK_SDIO_SEL, CLK_SDIO_DIV),
     CLK_AUDPWM_SRC           = CLK(CLK_AUDPWM_SRC_SEL, CLK_AUDPWM_DF_DIV),
     CLK_AUDPWM_FRAC          = CLK(0, CLK_AUDPWM_FRAC_DIV),
     CLK_AUDPWM               = CLK(CLK_AUDPWM_SEL, 0),
@@ -10119,7 +10075,7 @@ typedef enum CLOCK_Name {
     CLK_I2S1_8CH_FRAC        = CLK(0, CLK_I2S1_8CH_FRAC_DIV),
     MCLK_I2S1_8CH            = CLK(MCLK_I2S1_8CH_SEL, 0),
     I2S1_MCLKOUT             = CLK(I2S1_MCLKOUT_SEL, 0),
-    CLK_PWM                  = CLK(0, CLK_PWM_DIV),
+    CLK_PWM                  = CLK(CLK_PWM_SEL, CLK_PWM_DIV),
     HCLK_LOGIC               = CLK(HCLK_LOGIC_SEL, HCLK_LOGIC_DIV),
     PCLK_LOGIC               = CLK(PCLK_LOGIC_SEL, PCLK_LOGIC_DIV),
     ACLK_LOGIC               = CLK(ACLK_LOGIC_SEL, ACLK_LOGIC_DIV),
@@ -10128,9 +10084,7 @@ typedef enum CLOCK_Name {
     CLK_USB2PHY_REF          = CLK(CLK_USB2PHY_REF_SEL, 0),
     CLK_DPHY_REF_FRAC        = CLK(CLK_DPHY_REF_FRAC_SEL, CLK_DPHY_REF_FRAC_DIV),
     CLK_DPHY_REF             = CLK(CLK_DPHY_REF_SEL, 0),
-    SCLK_SFC1_DT50           = CLK(SCLK_SFC1_SRC_SEL, SCLK_SFC1_DT50_DIV),
-    SCLK_SFC1_DF             = CLK(SCLK_SFC1_SRC_SEL, SCLK_SFC1_DF_DIV),
-    SCLK_SFC1                = CLK(SCLK_SFC1_SEL, 0),
+    SCLK_SFC1_SRC            = CLK(SCLK_SFC1_SEL, SCLK_SFC1_DIV),
     CLK_32K                  = CLK(0, XIN_OSC0_DIV),
 } eCLOCK_Name;
 #ifdef __cplusplus

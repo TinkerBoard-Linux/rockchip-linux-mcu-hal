@@ -133,8 +133,8 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         freq = pRate;
     else if (HAL_CRU_ClkGetMux(mux) == 1)
         freq = (pRate / m) * n;
-    else if (HAL_CRU_ClkGetMux(mux) == 3)
-        freq = PLL_INPUT_OSC_RATE / 2;
+    else if (HAL_CRU_ClkGetMux(mux) == 2)
+        freq = PLL_INPUT_OSC_RATE;
 
     return freq;
 }
@@ -345,13 +345,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         freq = HAL_CRU_ClkFracGetFreq(clockName);
 
         return freq;
-    case CLK_TIMER0:
-    case CLK_TIMER1:
-    case CLK_TIMER2:
-    case CLK_TIMER3:
-    case CLK_TIMER4:
-    case CLK_TIMER5:
-    case CLK_PVTM:
+    case CLK_PWM:
         mux = HAL_CRU_ClkGetMux(clkMux);
         if (mux)
             pRate = PLL_INPUT_OSC_RATE;
@@ -363,13 +357,6 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case CLK_USB2PHY_REF:
     case CLK_DPHY_REF:
         freq = HAL_CRU_ClkUsbGetFreq(clockName);
-
-        return freq;
-    case SCLK_SFC1:
-        if (HAL_CRU_ClkGetMux(clkMux))
-            freq = pRate / HAL_CRU_ClkGetDiv(CLK_GET_DIV(SCLK_SFC1_DT50));
-        else
-            freq = PLL_INPUT_OSC_RATE;
 
         return freq;
     default:
@@ -439,13 +426,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         error = HAL_CRU_ClkFracSetFreq(clockName, rate);
 
         return error;
-    case CLK_TIMER0:
-    case CLK_TIMER1:
-    case CLK_TIMER2:
-    case CLK_TIMER3:
-    case CLK_TIMER4:
-    case CLK_TIMER5:
-    case CLK_PVTM:
+    case CLK_PWM:
         if (rate == PLL_INPUT_OSC_RATE) {
             mux = 1;
             pRate = PLL_INPUT_OSC_RATE;
@@ -460,12 +441,6 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         error = HAL_CRU_ClkUsbSetFreq(clockName, rate);
 
         return error;
-    case SCLK_SFC1:
-        div = HAL_DIV_ROUND_UP(pRate, rate);
-        HAL_CRU_ClkSetMux(CLK_GET_MUX(SCLK_SFC1_DT50), 0);
-        HAL_CRU_ClkSetDiv(CLK_GET_DIV(SCLK_SFC1_DT50), div);
-        mux = 1;
-        break;
     default:
         break;
     }
