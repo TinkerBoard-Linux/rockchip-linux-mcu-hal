@@ -284,7 +284,7 @@ static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, v
     op.dummy.buswidth = op.addr.buswidth;
     op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
 
-    /* HAL_SNOR_DBG("%s %lx %lx %lx %lx\n", __func__, nor->readDummy, op.dummy.buswidth, from, op.addr.val); */
+    /* HAL_SNOR_DBG("%s %x %x %lx %lx\n", __func__, nor->readDummy, op.dummy.buswidth, from, op.addr.val); */
     /* convert the dummy cycles to the number of bytes */
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
 
@@ -308,7 +308,6 @@ static int32_t SNOR_WriteData(struct SPI_NOR *nor, uint32_t to, uint32_t len, co
     op.addr.buswidth = SNOR_GET_PROTOCOL_ADDR_BITS(nor->writeProto);
     op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->writeProto);
 
-    /* to-do Ð´Êý¾ÝÏÞÖÆ */
     op.data.nbytes = len < op.data.nbytes ? len : op.data.nbytes;
 
     ret = SNOR_SPIMemExecOp(nor->spi, &op);
@@ -694,7 +693,7 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
     uint8_t *pBuf = (uint8_t *)pData;
     uint32_t remaining = nSec;
 
-    /* HAL_SNOR_DBG("%s sec 0x%08x, nSec %lx\n", __func__, sec, nSec); */
+    /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     if ((sec + nSec) * 512 > nor->size)
         return HAL_INVAL;
 
@@ -704,7 +703,7 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
             return ret;
 
         ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, (void *)pBuf, nor->sectorSize);
-        if (ret != (int32_t)(nSec * nor->sectorSize))
+        if (ret != (int32_t)(nor->sectorSize))
             return HAL_ERROR;
 
         pBuf += nor->sectorSize;
@@ -802,15 +801,15 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         if (info->feature & FEA_4BYTE_ADDR_MODE)
             SNOR_Set4byte(nor, info, HAL_ENABLE);
 
-//        HAL_SNOR_DBG("nor->addrWidth: %x\n", nor->addrWidth);
-//        HAL_SNOR_DBG("nor->readProto: %x\n", nor->readProto);
-//        HAL_SNOR_DBG("nor->writeProto: %x\n", nor->writeProto);
-//        HAL_SNOR_DBG("nor->readCmd: %x\n", nor->readOpcode);
-//        HAL_SNOR_DBG("nor->programCmd: %x\n", nor->programOpcode);
-//        HAL_SNOR_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
-//        HAL_SNOR_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
-//        HAL_SNOR_DBG("nor->size: %ldMB\n", nor->size >> 20);
-//        HAL_SNOR_DBG("xip enable: %lx\n", nor->spi->mode & SPI_XIP);
+        HAL_SNOR_DBG("nor->addrWidth: %x\n", nor->addrWidth);
+        HAL_SNOR_DBG("nor->readProto: %x\n", nor->readProto);
+        HAL_SNOR_DBG("nor->writeProto: %x\n", nor->writeProto);
+        HAL_SNOR_DBG("nor->readCmd: %x\n", nor->readOpcode);
+        HAL_SNOR_DBG("nor->programCmd: %x\n", nor->programOpcode);
+        HAL_SNOR_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
+        HAL_SNOR_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
+        HAL_SNOR_DBG("nor->size: %ldMB\n", nor->size >> 20);
+        HAL_SNOR_DBG("xip enable: %lx\n", nor->spi->mode & SPI_XIP);
     } else {
         return HAL_NODEV;
     }
