@@ -636,7 +636,8 @@ HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
     HAL_ASSERT(shift < 16);
     mask = CLK_DIV_GET_MASK(divName);
-    HAL_ASSERT(divValue < mask);
+    if (divValue > mask)
+        divValue = mask;
 
     CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
 
