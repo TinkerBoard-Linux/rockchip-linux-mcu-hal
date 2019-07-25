@@ -16,15 +16,22 @@
 
  The HAL_BASE driver can be used as follows:
 
-  - Resgister HAL_SYSTICK_IRQHandler().
+  - Resgister HAL_SYSTICK_IRQHandler();
   - Initialize the HAL_BASE by calling HAL_Init():
   - Get system time by calling HAL_GetTick();
   - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs(), and HAL_CPUDelayUs();
 
- How to reset SysTick:
+ Reset SysTick in default setting:
+
+  - Reset tick frequency value by calling HAL_SetTickFreq() if needed;
+  - Reset SysTick by calling HAL_InitTick().
+
+ Reset SysTick by user:
+
   - Choose SysTick clock source by calling HAL_SYSTICK_CLKSourceConfig();
   - Config SysTick reload value by calling HAL_SYSTICK_Config();
   - Configure the SysTick frequency by calling by calling HAL_SetTickFreq().
+
 
  Suggest:
 
@@ -48,6 +55,27 @@ static __IO uint32_t uwTick;
 static eHAL_tickFreq uwTickFreq = HAL_TICK_FREQ_DEFAULT;
 
 /********************* Private Function Definition ***************************/
+#ifdef __GNUC__
+static void CPUCycleLoop(uint32_t cycles)
+{
+    __ASM volatile (
+        "mov  r0, %0\n\t"
+        "adds r0, r0, #2\n\t"   //    1    2    Round to the nearest multiple of 4.
+        "lsrs r0, r0, #2\n\t"   //    1    2    Divide by 4 and set flags.
+        "beq  2f\n\t"           //    2    2    Skip if 0.
+        ".align 4\n\t"
+        "1:\n\t"
+        "adds r0, r0, #1\n\t"   //    1    2    Increment the counter.
+        "subs r0, r0, #2\n\t"   //    1    2    Decrement the counter by 2.
+        "bne  1b\n\t"           //   (1)2  2    2 CPU cycles (if branch is taken).
+        "nop\n\t"               //    1    2    Loop alignment padding.
+        "2:"
+        : : "r" (cycles)
+        );
+}
+#endif
+
+/********************* Public Function Definition ***************************/
 /** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
@@ -167,6 +195,24 @@ __WEAK HAL_Status HAL_DelayMs(uint32_t ms)
     return HAL_OK;
 }
 
+/**
+ * @brief  CPU loop udelay.
+ * @param  us: udelay count.
+ * @return HAL_Status: HAL_OK.
+ * @attention this API allow direct use in the HAL layer. The longer the delay,
+ *  the more accurate. Actual delay is greater than the parameter.
+ */
+HAL_Status HAL_CPUDelayUs(uint32_t us)
+{
+    volatile uint32_t cycles;
+
+    cycles = SystemCoreClock / 1000000 * us; /* Add few cycles penalty */
+
+    CPUCycleLoop(cycles);
+
+    return HAL_OK;
+}
+
 #ifdef __CORTEX_A
 /**
  * @brief  SysTick udelay.
@@ -277,8 +323,8 @@ HAL_Status HAL_InitTick(uint32_t tickPriority)
     if (ret == HAL_OK)
         rate = PLL_INPUT_OSC_RATE;
 
-    HAL_SYSTICK_Config(rate / 1000);                              /* Configure the SysTick to have interrupt in 1ms time basis */
-    HAL_SetTickFreq(HAL_TICK_FREQ_1KHZ);                          /* Configure the SysTick frequency */
+    HAL_SYSTICK_Config(rate / (1000 / uwTickFreq));               /* Configure the SysTick to have interrupt in 1ms time basis */
+    HAL_SetTickFreq(uwTickFreq);                                  /* Configure the SysTick frequency */
 
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, tickPriority);

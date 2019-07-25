@@ -52,37 +52,12 @@ eHAL_tickFreq HAL_GetTickFreq(void);
 
 HAL_Status HAL_DelayUs(uint32_t us);
 HAL_Status HAL_DelayMs(uint32_t ms);
+HAL_Status HAL_CPUDelayUs(uint32_t us);
 
 void HAL_SYSTICK_IRQHandler(void);
 HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb);
 HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_tickClkSource clkSouce);
 HAL_Check HAL_SYSTICK_IsExtRefClockEnabled(void);
-
-/** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
- *  @{
- */
-
-/**
- * @brief  CPU loop udelay.
- * @param  us: udelay count.
- * @return HAL_Status: HAL_OK.
- */
-__STATIC_INLINE uint32_t HAL_CPUDelayUs(uint32_t us)
-{
-    volatile uint32_t len;
-
-#ifdef SystemCoreClock
-    uint32_t loopPerUs = SystemCoreClock / 1000000;
-#else
-    uint32_t loopPerUs = 20;
-#endif
-    for (; us > 0; us--)
-        for (len = 0; len < loopPerUs; len++)
-            ;
-
-    return HAL_OK;
-}
-/** @} */
 
 #endif
 
