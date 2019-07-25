@@ -20,7 +20,7 @@
 
 /********************* Private Structure Definition **************************/
 
-static struct PLL_CONFIG PLL_TABLE[8] = {
+static struct PLL_CONFIG PLL_TABLE[] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
     RK_PLL_RATE(1200000000, 1, 50, 1, 1, 1, 0),
     RK_PLL_RATE(1188000000, 1, 99, 2, 1, 1, 0),
@@ -29,6 +29,7 @@ static struct PLL_CONFIG PLL_TABLE[8] = {
     RK_PLL_RATE(816000000, 1, 68, 2, 1, 1, 0),
     RK_PLL_RATE(200000000, 1, 200, 6, 4, 1, 0),
     RK_PLL_RATE(100000000, 1, 100, 6, 4, 1, 0),
+    { /* sentinel */ },
 };
 
 static uint32_t s_apllFreq;
