@@ -32,45 +32,6 @@
 
 /********************* Private Function Definition ***************************/
 
-static int AUDIOPWM_Ioctl(void *priv, int cmd, void *arg)
-{
-    struct AUDIO_DAI *dai = (struct AUDIO_DAI *)priv;
-    int ret = HAL_OK;
-
-    switch (cmd) {
-    case AUDIO_IOCTL_HW_PARAMS:
-    {
-        struct AUDIO_PARAMS *params = (struct AUDIO_PARAMS *)arg;
-
-        ret = HAL_AUDIOPWM_Config(dai, params->stream, params);
-    }
-    break;
-    case AUDIO_IOCTL_START:
-    {
-        uint8_t stream = *(uint8_t *)arg;
-
-        ret = HAL_AUDIOPWM_Enable(dai, stream);
-    }
-    break;
-    case AUDIO_IOCTL_DROP:
-    {
-        uint8_t stream = *(uint8_t *)arg;
-
-        ret = HAL_AUDIOPWM_Disable(dai, stream);
-    }
-    break;
-    default:
-
-        return HAL_INVAL;
-    }
-
-    return ret;
-}
-
-static const struct AUDIO_OPS audioPwmOps = {
-    .ioctl = AUDIOPWM_Ioctl,
-};
-
 /********************* Public Function Definition ****************************/
 /** @defgroup AUDIOPWM_Exported_Functions_Group1 Suspend and Resume Functions
 
@@ -83,20 +44,20 @@ static const struct AUDIO_OPS audioPwmOps = {
 
 /**
  * @brief  audioPwm suspend.
- * @param  dai: the handle of dai.
+ * @param  audioPwm: the handle of audioPwm.
  * @return HAL_Status
  */
-HAL_Status HAL_AUDIOPWM_Supsend(struct AUDIO_DAI *dai)
+HAL_Status HAL_AUDIOPWM_Supsend(struct HAL_AUDIOPWM_DEV *audioPwm)
 {
     return HAL_OK;
 }
 
 /**
  * @brief  audioPwm resume.
- * @param  dai: the handle of dai.
+ * @param  audioPwm: the handle of audioPwm.
  * @return HAL_Status
  */
-HAL_Status HAL_AUDIOPWM_Resume(struct AUDIO_DAI *dai)
+HAL_Status HAL_AUDIOPWM_Resume(struct HAL_AUDIOPWM_DEV *audioPwm)
 {
     return HAL_OK;
 }
@@ -132,36 +93,27 @@ HAL_Status HAL_AUDIOPWM_Resume(struct AUDIO_DAI *dai)
 
 /**
  * @brief  Init audioPwm controller.
- * @param  dai: the handle of dai.
  * @param  audioPwm: the handle of audioPwm.
+ * @param  config: init config for audioPwm init.
  * @return HAL_Status
  */
-HAL_Status HAL_AUDIOPWM_Init(struct AUDIO_DAI *dai, struct HAL_AUDIOPWM_DEV *audioPwm)
+HAL_Status HAL_AUDIOPWM_Init(struct HAL_AUDIOPWM_DEV *audioPwm, struct AUDIO_INIT_CONFIG *config)
 {
     HAL_CRU_ClkEnable(audioPwm->hclk);
 
-    dai->id = audioPwm->base;
-    dai->dmaData[AUDIO_STREAM_PLAYBACK] = &audioPwm->txDmaData;
-    dai->privData = audioPwm;
-    dai->ops = &audioPwmOps;
-
-    return HAL_AUDIO_RegisterDai(dai);
+    return HAL_OK;
 }
 
 /**
  * @brief  DeInit audioPwm controller.
- * @param  dai: the handle of dai.
+ * @param  audioPwm: the handle of audioPwm.
  * @return HAL_Status
  */
-HAL_Status HAL_AUDIOPWM_DeInit(struct AUDIO_DAI *dai)
+HAL_Status HAL_AUDIOPWM_DeInit(struct HAL_AUDIOPWM_DEV *audioPwm)
 {
-    struct HAL_AUDIOPWM_DEV *audioPwm = (struct HAL_AUDIOPWM_DEV *)dai->privData;
-
     HAL_CRU_ClkDisable(audioPwm->hclk);
 
-    dai->ops = NULL;
-
-    return HAL_AUDIO_UnregisterDai(dai);
+    return HAL_OK;
 }
 
 /** @} */
@@ -172,62 +124,44 @@ HAL_Status HAL_AUDIOPWM_DeInit(struct AUDIO_DAI *dai)
 
 /**
  * @brief  Enable audioPwm controller.
- * @param  dai: the handle of dai.
- * @param  stream: should be AUDIO_STREAM_PLAYBACK.
+ * @param  audioPwm: the handle of audioPwm.
  * @return HAL_Status
  */
-HAL_Status HAL_AUDIOPWM_Enable(struct AUDIO_DAI *dai, uint8_t stream)
+HAL_Status HAL_AUDIOPWM_Enable(struct HAL_AUDIOPWM_DEV *audioPwm)
 {
-    struct HAL_AUDIOPWM_DEV *audioPwm = (struct HAL_AUDIOPWM_DEV *)dai->privData;
-    struct AUDIOPWM_REG *reg = (struct AUDIOPWM_REG *)audioPwm->base;
+    struct AUDIOPWM_REG *reg = (struct AUDIOPWM_REG *)audioPwm->reg;
 
-    HAL_ASSERT(stream == AUDIO_STREAM_PLAYBACK);
-
-    WRITE_REG(reg->FIFO_CFG,
-              AUDPWM_DMA_EN << 16 | AUDPWM_DMA_EN);
-    WRITE_REG(reg->XFER,
-              AUDPWM_START << 16 | AUDPWM_START);
+    WRITE_REG(reg->FIFO_CFG, AUDPWM_DMA_EN << 16 | AUDPWM_DMA_EN);
+    WRITE_REG(reg->XFER, AUDPWM_START << 16 | AUDPWM_START);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Disable audioPwm controller.
- * @param  dai: the handle of dai.
- * @param  stream: should be AUDIO_STREAM_PLAYBACK.
+ * @param  audioPwm: the handle of audioPwm.
  * @return HAL_Status
  */
-HAL_Status HAL_AUDIOPWM_Disable(struct AUDIO_DAI *dai, uint8_t stream)
+HAL_Status HAL_AUDIOPWM_Disable(struct HAL_AUDIOPWM_DEV *audioPwm)
 {
-    struct HAL_AUDIOPWM_DEV *audioPwm = (struct HAL_AUDIOPWM_DEV *)dai->privData;
-    struct AUDIOPWM_REG *reg = (struct AUDIOPWM_REG *)audioPwm->base;
+    struct AUDIOPWM_REG *reg = (struct AUDIOPWM_REG *)audioPwm->reg;
 
-    HAL_ASSERT(stream == AUDIO_STREAM_PLAYBACK);
-
-    WRITE_REG(reg->FIFO_CFG,
-              AUDPWM_DMA_EN << 16 | AUDPWM_DMA_DIS);
-    WRITE_REG(reg->XFER,
-              AUDPWM_START << 16 | AUDPWM_STOP);
+    WRITE_REG(reg->FIFO_CFG, AUDPWM_DMA_EN << 16 | AUDPWM_DMA_DIS);
+    WRITE_REG(reg->XFER, AUDPWM_START << 16 | AUDPWM_STOP);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Config audioPwm controller.
- * @param  dai: the handle of dai.
- * @param  stream: should be AUDIO_STREAM_PLAYBACK.
+ * @param  audioPwm: the handle of audioPwm.
  * @param  params: audio params.
  * @return HAL_Status
  */
-HAL_Status HAL_AUDIOPWM_Config(struct AUDIO_DAI *dai, uint8_t stream,
+HAL_Status HAL_AUDIOPWM_Config(struct HAL_AUDIOPWM_DEV *audioPwm,
                                struct AUDIO_PARAMS *params)
 {
-    struct HAL_AUDIOPWM_DEV *audioPwm = (struct HAL_AUDIOPWM_DEV *)dai->privData;
-    struct AUDIOPWM_REG *reg = (struct AUDIOPWM_REG *)audioPwm->base;
-    HAL_Status ret = HAL_OK;
-
-    /* audioPwm only support playback */
-    HAL_ASSERT(stream == AUDIO_STREAM_PLAYBACK);
+    struct AUDIOPWM_REG *reg = (struct AUDIOPWM_REG *)audioPwm->reg;
 
     WRITE_REG(reg->SRC_CFG,
               AUDPWM_WIDTH_MASK << 16 | AUDPWM_WIDTH(params->sampleBits));
@@ -240,7 +174,7 @@ HAL_Status HAL_AUDIOPWM_Config(struct AUDIO_DAI *dai, uint8_t stream,
     WRITE_REG(reg->FIFO_CFG,
               AUDPWM_DMA_TDL_MASK << 16 | AUDPWM_DMA_TDL(16));
 
-    return ret;
+    return HAL_OK;
 }
 
 /** @} */

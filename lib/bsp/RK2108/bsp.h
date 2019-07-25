@@ -11,6 +11,10 @@
 /***************************** MACRO Definition ******************************/
 
 /***************************** Structure Definition **************************/
+#ifdef HAL_ACDCDIG_MODULE_ENABLED
+extern struct HAL_ACDCDIG_DEV g_acdcDigDev;
+#endif
+
 #ifdef HAL_AUDIOPWM_MODULE_ENABLED
 extern struct HAL_AUDIOPWM_DEV g_audioPwmDev;
 #endif
@@ -21,8 +25,9 @@ extern const struct HAL_I2C_DEV g_i2c1Dev;
 extern const struct HAL_I2C_DEV g_i2c2Dev;
 #endif
 
-#ifdef HAL_I2S_MODULE_ENABLED
-extern struct HAL_I2S_DEV g_i2s0Dev;
+#ifdef HAL_I2STDM_MODULE_ENABLED
+extern struct HAL_I2STDM_DEV g_i2sTdm0Dev;
+extern struct HAL_I2STDM_DEV g_i2sTdm1Dev;
 #endif
 
 #ifdef HAL_PDM_MODULE_ENABLED

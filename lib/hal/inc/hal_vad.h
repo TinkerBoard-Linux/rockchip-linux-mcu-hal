@@ -227,7 +227,7 @@ struct VAD_BUF {
 
 /** vad structure */
 struct HAL_VAD_DEV {
-    uint32_t base; /**< vad controller physical base address */
+    struct VAD_REG *reg; /**< vad controller physical base address */
     uint32_t ramStartAddr; /**< The physical ring buffer start address, double word align */
     uint32_t ramEndAddr; /**< The physical ring buffer end address, double word align */
     uint32_t audioSrc; /**< Src 0: from i2s; src 1: from pdm */
@@ -252,23 +252,22 @@ struct HAL_VAD_DEV {
 /** @} */
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_VAD_Init(struct AUDIO_DAI *dai, struct HAL_VAD_DEV *vad);
-HAL_Status HAL_VAD_DeInit(struct AUDIO_DAI *dai);
-HAL_Status HAL_VAD_Supsend(struct AUDIO_DAI *dai);
-HAL_Status HAL_VAD_Resume(struct AUDIO_DAI *dai);
-HAL_Status HAL_VAD_Start(struct AUDIO_DAI *dai, uint8_t stream);
-HAL_Status HAL_VAD_Stop(struct AUDIO_DAI *dai, uint8_t stream);
-HAL_Status HAL_VAD_SetAudioSource(struct AUDIO_DAI *dai, uint32_t source);
-HAL_Status HAL_VAD_SetMode(struct AUDIO_DAI *dai, int mode);
-HAL_Status HAL_VAD_SetBufferTime(struct AUDIO_DAI *dai, uint32_t bufferTime);
-HAL_Status HAL_VAD_SetDetectChannel(struct AUDIO_DAI *dai,
+HAL_Status HAL_VAD_Init(struct HAL_VAD_DEV *vad);
+HAL_Status HAL_VAD_DeInit(struct HAL_VAD_DEV *vad);
+HAL_Status HAL_VAD_Supsend(struct HAL_VAD_DEV *vad);
+HAL_Status HAL_VAD_Resume(struct HAL_VAD_DEV *vad);
+HAL_Status HAL_VAD_Start(struct HAL_VAD_DEV *vad);
+HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad);
+HAL_Status HAL_VAD_SetAudioSource(struct HAL_VAD_DEV *vad, uint32_t source);
+HAL_Status HAL_VAD_SetMode(struct HAL_VAD_DEV *vad, int mode);
+HAL_Status HAL_VAD_SetBufferTime(struct HAL_VAD_DEV *vad, uint32_t bufferTime);
+HAL_Status HAL_VAD_SetDetectChannel(struct HAL_VAD_DEV *vad,
                                     uint32_t detectChannel);
-HAL_Status HAL_VAD_Config(struct AUDIO_DAI *dai, uint8_t stream,
-                          struct AUDIO_PARAMS *params);
-HAL_Status HAL_VAD_ConfigRingBuffer(struct AUDIO_DAI *dai,
+HAL_Status HAL_VAD_Config(struct HAL_VAD_DEV *vad, struct AUDIO_PARAMS *params);
+HAL_Status HAL_VAD_ConfigRingBuffer(struct HAL_VAD_DEV *vad,
                                     uint32_t start, uint32_t end);
-HAL_Status HAL_VAD_SetPeriodSize(struct AUDIO_DAI *dai, uint32_t kbytes);
-HAL_Status HAL_VAD_EnableBusMode(struct AUDIO_DAI *dai, uint8_t en);
+HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t kbytes);
+HAL_Status HAL_VAD_EnableBusMode(struct HAL_VAD_DEV *vad, uint8_t en);
 
 HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad);
 

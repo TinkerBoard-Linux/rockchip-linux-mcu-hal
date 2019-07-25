@@ -26,82 +26,131 @@
 
 #define I2S_DMA_BURST_SIZE (8) /* size * width: 8*4 = 32 bytes */
 
+/*
+ * TXCR
+ * transmit operation control register
+ */
+#define I2S_TXCR_PATH_SHIFT(x) (23 + (x) * 2)
+#define I2S_TXCR_PATH_MASK(x)  (0x3 << I2S_TXCR_PATH_SHIFT(x))
+#define I2S_TXCR_PATH(x, v)    ((v) << I2S_TXCR_PATH_SHIFT(x))
+#define I2S_TXCR_CSR(x)        (x << I2S_TXCR_TCSR_SHIFT)
+#define I2S_TXCR_HWT           (1 << I2S_TXCR_HWT_SHIFT)
+#define I2S_TXCR_SJM_R         (0 << I2S_TXCR_SJM_SHIFT)
+#define I2S_TXCR_SJM_L         (1 << I2S_TXCR_SJM_SHIFT)
+#define I2S_TXCR_FBM_MSB       (0 << I2S_TXCR_FBM_SHIFT)
+#define I2S_TXCR_FBM_LSB       (1 << I2S_TXCR_FBM_SHIFT)
+#define I2S_TXCR_IBM_NORMAL    (0 << I2S_TXCR_IBM_SHIFT)
+#define I2S_TXCR_IBM_LSJM      (1 << I2S_TXCR_IBM_SHIFT)
+#define I2S_TXCR_IBM_RSJM      (2 << I2S_TXCR_IBM_SHIFT)
+#define I2S_TXCR_PBM_MODE(x)   (x << I2S_TXCR_PBM_SHIFT)
+#define I2S_TXCR_TFS_I2S       (0 << I2S_TXCR_TFS_SHIFT)
+#define I2S_TXCR_TFS_PCM       (1 << I2S_TXCR_TFS_SHIFT)
+#define I2S_TXCR_TFS_TDM_PCM   (2 << I2S_TXCR_TFS_SHIFT)
+#define I2S_TXCR_TFS_TDM_I2S   (3 << I2S_TXCR_TFS_SHIFT)
+#define I2S_TXCR_VDW(x)        ((x - 1) << I2S_TXCR_VDW_SHIFT)
+
+/*
+ * RXCR
+ * receive operation control register
+ */
+#define I2S_RXCR_PATH_SHIFT(x) (17 + (x) * 2)
+#define I2S_RXCR_PATH_MASK(x)  (0x3 << I2S_RXCR_PATH_SHIFT(x))
+#define I2S_RXCR_PATH(x, v)    ((v) << I2S_RXCR_PATH_SHIFT(x))
+#define I2S_RXCR_CSR(x)        (x << I2S_RXCR_RCSR_SHIFT)
+#define I2S_RXCR_HWT           (1 << I2S_RXCR_HWT_SHIFT)
+#define I2S_RXCR_SJM_R         (0 << I2S_RXCR_SJM_SHIFT)
+#define I2S_RXCR_SJM_L         (1 << I2S_RXCR_SJM_SHIFT)
+#define I2S_RXCR_FBM_MSB       (0 << I2S_RXCR_FBM_SHIFT)
+#define I2S_RXCR_FBM_LSB       (1 << I2S_RXCR_FBM_SHIFT)
+#define I2S_RXCR_IBM_NORMAL    (0 << I2S_RXCR_IBM_SHIFT)
+#define I2S_RXCR_IBM_LSJM      (1 << I2S_RXCR_IBM_SHIFT)
+#define I2S_RXCR_IBM_RSJM      (2 << I2S_RXCR_IBM_SHIFT)
+#define I2S_RXCR_PBM_MODE(x)   (x << I2S_RXCR_PBM_SHIFT)
+#define I2S_RXCR_TFS_I2S       (0 << I2S_RXCR_TFS_SHIFT)
+#define I2S_RXCR_TFS_PCM       (1 << I2S_RXCR_TFS_SHIFT)
+#define I2S_RXCR_TFS_TDM_PCM   (2 << I2S_RXCR_TFS_SHIFT)
+#define I2S_RXCR_TFS_TDM_I2S   (3 << I2S_RXCR_TFS_SHIFT)
+#define I2S_RXCR_VDW(x)        ((x - 1) << I2S_RXCR_VDW_SHIFT)
+
+/*
+ * CKR
+ * clock generation register
+ */
+#define I2S_CKR_TRCM(x)     (x << I2S_CKR_TRCM_SHIFT)
+#define I2S_CKR_TRCM_TXRX   (0 << I2S_CKR_TRCM_SHIFT)
+#define I2S_CKR_TRCM_TXONLY (1 << I2S_CKR_TRCM_SHIFT)
+#define I2S_CKR_TRCM_RXONLY (2 << I2S_CKR_TRCM_SHIFT)
+#define I2S_CKR_MSS_MASTER  (0 << I2S_CKR_MSS_SHIFT)
+#define I2S_CKR_MSS_SLAVE   (1 << I2S_CKR_MSS_SHIFT)
+#define I2S_CKR_CKP_NEG     (0 << I2S_CKR_CKP_SHIFT)
+#define I2S_CKR_CKP_POS     (1 << I2S_CKR_CKP_SHIFT)
+#define I2S_CKR_RLP_NORMAL  (0 << I2S_CKR_RLP_SHIFT)
+#define I2S_CKR_RLP_OPPSITE (1 << I2S_CKR_RLP_SHIFT)
+#define I2S_CKR_TLP_NORMAL  (0 << I2S_CKR_TLP_SHIFT)
+#define I2S_CKR_TLP_OPPSITE (1 << I2S_CKR_TLP_SHIFT)
+#define I2S_CKR_MDIV(x)     ((x - 1) << I2S_CKR_MDIV_SHIFT)
+#define I2S_CKR_RSD(x)      ((x - 1) << I2S_CKR_RSD_SHIFT)
+#define I2S_CKR_TSD(x)      ((x - 1) << I2S_CKR_TSD_SHIFT)
+
+/*
+ * DMACR
+ * DMA control register
+ */
+#define I2S_DMACR_RDE_DISABLE (0 << I2S_DMACR_RDE_SHIFT)
+#define I2S_DMACR_RDE_ENABLE  (1 << I2S_DMACR_RDE_SHIFT)
+#define I2S_DMACR_RDL(x)      ((x - 1) << I2S_DMACR_RDL_SHIFT)
+#define I2S_DMACR_TDE_DISABLE (0 << I2S_DMACR_TDE_SHIFT)
+#define I2S_DMACR_TDE_ENABLE  (1 << I2S_DMACR_TDE_SHIFT)
+#define I2S_DMACR_TDL(x)      ((x) << I2S_DMACR_TDL_SHIFT)
+
+/*
+ * XFER
+ * Transfer start register
+ */
+#define I2S_XFER_RXS_STOP  (0 << I2S_XFER_RXS_SHIFT)
+#define I2S_XFER_RXS_START (1 << I2S_XFER_RXS_SHIFT)
+#define I2S_XFER_TXS_STOP  (0 << I2S_XFER_TXS_SHIFT)
+#define I2S_XFER_TXS_START (1 << I2S_XFER_TXS_SHIFT)
+
+/*
+ * CLR
+ * clear SCLK domain logic register
+ */
+#define I2S_CLR_RXC (1 << I2S_CLR_RXC_SHIFT)
+#define I2S_CLR_TXC (1 << I2S_CLR_TXC_SHIFT)
+
+/* channel select */
+#define I2S_CSR_SHIFT 15
+#define I2S_CHN_2     (0 << I2S_CSR_SHIFT)
+#define I2S_CHN_4     (1 << I2S_CSR_SHIFT)
+#define I2S_CHN_6     (2 << I2S_CSR_SHIFT)
+#define I2S_CHN_8     (3 << I2S_CSR_SHIFT)
+
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
 
-static HAL_Status I2S_ChangeClkFreq(struct AUDIO_DAI *dai,
-                                    struct AUDIO_PARAMS *params)
+static HAL_Status I2S_SetSampleRate(struct HAL_I2S_DEV *i2s,
+                                    eAUDIO_sampleRate sampleRate)
 {
-    struct HAL_I2S_DEV *i2s = (struct HAL_I2S_DEV *)dai->privData;
-    struct I2S_REG *reg = (struct I2S_REG *)i2s->base;
+    struct I2S_REG *reg = i2s->reg;
     uint32_t mclkRate, bclkRate, divBclk, divLrck;
     HAL_Status ret = HAL_OK;
 
     mclkRate = HAL_CRU_ClkGetFreq(i2s->mclk);
-    bclkRate = i2s->bclkFs * params->sampleRate;
+    bclkRate = i2s->bclkFs * sampleRate;
     HAL_ASSERT(bclkRate != 0);
     divBclk = mclkRate / bclkRate;
-    divLrck = bclkRate / params->sampleRate;
-    if (params->stream == AUDIO_STREAM_PLAYBACK) {
-        MODIFY_REG(reg->CLKDIV,
-                   I2S_TDM_CLKDIV_TXM_MASK,
-                   I2S_TDM_CLKDIV_TXM(divBclk));
-        MODIFY_REG(reg->CKR,
-                   I2S_TDM_CKR_TSD_MASK,
-                   I2S_TDM_CKR_TSD(divLrck));
-    } else {
-        MODIFY_REG(reg->CLKDIV,
-                   I2S_TDM_CLKDIV_RXM_MASK,
-                   I2S_TDM_CLKDIV_RXM(divBclk));
-        MODIFY_REG(reg->CKR,
-                   I2S_TDM_CKR_RSD_MASK,
-                   I2S_TDM_CKR_RSD(divLrck));
-    }
+    divLrck = bclkRate / sampleRate;
+
+    MODIFY_REG(reg->CKR, I2S_CKR_MDIV_MASK, I2S_CKR_MDIV(divBclk));
+    MODIFY_REG(reg->CKR, I2S_CKR_TSD_MASK, I2S_CKR_TSD(divLrck));
+    MODIFY_REG(reg->CKR, I2S_CKR_RSD_MASK, I2S_CKR_RSD(divLrck));
 
     return ret;
 }
-
-static int I2S_Ioctl(void *priv, int cmd, void *arg)
-{
-    struct AUDIO_DAI *dai = (struct AUDIO_DAI *)priv;
-    int ret = HAL_OK;
-
-    switch (cmd) {
-    case AUDIO_IOCTL_HW_PARAMS:
-    {
-        struct AUDIO_PARAMS *params = (struct AUDIO_PARAMS *)arg;
-
-        ret = HAL_I2S_Config(dai, params->stream, params);
-    }
-    break;
-    case AUDIO_IOCTL_START:
-    {
-        uint8_t stream = *(uint8_t *)arg;
-
-        ret = HAL_I2S_Enable(dai, stream);
-    }
-    break;
-    case AUDIO_IOCTL_DROP:
-    {
-        uint8_t stream = *(uint8_t *)arg;
-
-        ret = HAL_I2S_Disable(dai, stream);
-    }
-    break;
-    default:
-
-        return HAL_INVAL;
-    }
-
-    return ret;
-}
-
-static const struct AUDIO_OPS i2sOps = {
-    .ioctl = I2S_Ioctl,
-};
 
 /********************* Public Function Definition ****************************/
 /** @defgroup I2S_Exported_Functions_Group1 Suspend and Resume Functions
@@ -115,20 +164,20 @@ static const struct AUDIO_OPS i2sOps = {
 
 /**
  * @brief  i2s suspend.
- * @param  dai: the handle of dai.
+ * @param  i2s: the handle of i2s.
  * @return HAL_Status
  */
-HAL_Status HAL_I2S_Supsend(struct AUDIO_DAI *dai)
+HAL_Status HAL_I2S_Supsend(struct HAL_I2S_DEV *i2s)
 {
     return HAL_OK;
 }
 
 /**
  * @brief  i2s resume.
- * @param  dai: the handle of dai.
+ * @param  i2s: the handle of i2s.
  * @return HAL_Status
  */
-HAL_Status HAL_I2S_Resume(struct AUDIO_DAI *dai)
+HAL_Status HAL_I2S_Resume(struct HAL_I2S_DEV *i2s)
 {
     return HAL_OK;
 }
@@ -164,41 +213,40 @@ HAL_Status HAL_I2S_Resume(struct AUDIO_DAI *dai)
 
 /**
  * @brief  Init i2s controller.
- * @param  dai: the handle of dai.
  * @param  i2s: the handle of i2s.
+ * @param  config: init config for i2s init.
  * @return HAL_Status
  */
-HAL_Status HAL_I2S_Init(struct AUDIO_DAI *dai, struct HAL_I2S_DEV *i2s)
+HAL_Status HAL_I2S_Init(struct HAL_I2S_DEV *i2s, struct AUDIO_INIT_CONFIG *config)
 {
-    /* TBD: clk, pin issue */
+    uint32_t mask = 0, val = 0;
+    bool isMaster = config->master;
+    bool clkInvert = config->clkInvert;
+    struct I2S_REG *reg = i2s->reg;
 
     HAL_CRU_ClkEnable(i2s->hclk);
 
-    dai->id = i2s->base;
-    dai->dmaData[AUDIO_STREAM_PLAYBACK] = &i2s->txDmaData;
-    dai->dmaData[AUDIO_STREAM_CAPTURE] = &i2s->rxDmaData;
-    dai->privData = i2s;
-    dai->ops = &i2sOps;
+    mask = I2S_CKR_MSS_MASK;
+    val = isMaster ? I2S_CKR_MSS_MASTER : I2S_CKR_MSS_SLAVE;
+    MODIFY_REG(reg->CKR, mask, val);
 
-    return HAL_AUDIO_RegisterDai(dai);
+    mask = I2S_CKR_CKP_MASK;
+    val = clkInvert ? I2S_CKR_CKP_POS : I2S_CKR_CKP_NEG;
+    MODIFY_REG(reg->CKR, mask, val);
+
+    return HAL_OK;
 }
 
 /**
  * @brief  DeInit i2s controller.
- * @param  dai: the handle of dai.
+ * @param  i2s: the handle of i2s.
  * @return HAL_Status
  */
-HAL_Status HAL_I2S_DeInit(struct AUDIO_DAI *dai)
+HAL_Status HAL_I2S_DeInit(struct HAL_I2S_DEV *i2s)
 {
-    struct HAL_I2S_DEV *i2s = (struct HAL_I2S_DEV *)dai->privData;
-
-    /* TBD: clk, pin issue */
-
     HAL_CRU_ClkDisable(i2s->hclk);
 
-    dai->ops = NULL;
-
-    return HAL_AUDIO_UnregisterDai(dai);
+    return HAL_OK;
 }
 
 /** @} */
@@ -209,21 +257,20 @@ HAL_Status HAL_I2S_DeInit(struct AUDIO_DAI *dai)
 
 /**
  * @brief  Enable i2s controller.
- * @param  dai: the handle of dai.
+ * @param  i2s: the handle of i2s.
  * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
  * @return HAL_Status
  */
-HAL_Status HAL_I2S_Enable(struct AUDIO_DAI *dai, uint8_t stream)
+HAL_Status HAL_I2S_Enable(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream)
 {
-    struct HAL_I2S_DEV *i2s = (struct HAL_I2S_DEV *)dai->privData;
-    struct I2S_REG *reg = (struct I2S_REG *)i2s->base;
+    struct I2S_REG *reg = i2s->reg;
 
     if (stream == AUDIO_STREAM_PLAYBACK) {
-        MODIFY_REG(reg->DMACR, I2S_TDM_DMACR_TDE_ENABLE, I2S_TDM_DMACR_TDE_ENABLE);
-        MODIFY_REG(reg->XFER, I2S_TDM_XFER_TXS_START, I2S_TDM_XFER_TXS_START);
+        MODIFY_REG(reg->DMACR, I2S_DMACR_TDE_MASK, I2S_DMACR_TDE_ENABLE);
+        MODIFY_REG(reg->XFER, I2S_XFER_TXS_MASK, I2S_XFER_TXS_START);
     } else {
-        MODIFY_REG(reg->DMACR, I2S_TDM_DMACR_RDE_ENABLE, I2S_TDM_DMACR_RDE_ENABLE);
-        MODIFY_REG(reg->XFER, I2S_TDM_XFER_RXS_START, I2S_TDM_XFER_RXS_START);
+        MODIFY_REG(reg->DMACR, I2S_DMACR_RDE_MASK, I2S_DMACR_RDE_ENABLE);
+        MODIFY_REG(reg->XFER, I2S_XFER_RXS_MASK, I2S_XFER_RXS_START);
     }
 
     return HAL_OK;
@@ -231,25 +278,24 @@ HAL_Status HAL_I2S_Enable(struct AUDIO_DAI *dai, uint8_t stream)
 
 /**
  * @brief  Disable i2s controller.
- * @param  dai: the handle of dai.
+ * @param  i2s: the handle of i2s.
  * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
  * @return HAL_Status
  */
-HAL_Status HAL_I2S_Disable(struct AUDIO_DAI *dai, uint8_t stream)
+HAL_Status HAL_I2S_Disable(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream)
 {
-    struct HAL_I2S_DEV *i2s = (struct HAL_I2S_DEV *)dai->privData;
-    struct I2S_REG *reg = (struct I2S_REG *)i2s->base;
+    struct I2S_REG *reg = i2s->reg;
 
     if (stream == AUDIO_STREAM_PLAYBACK) {
-        MODIFY_REG(reg->DMACR, I2S_TDM_DMACR_TDE_ENABLE, I2S_TDM_DMACR_TDE_DISABLE);
-        MODIFY_REG(reg->XFER, I2S_TDM_XFER_TXS_START, I2S_TDM_XFER_TXS_STOP);
+        MODIFY_REG(reg->DMACR, I2S_DMACR_TDE_MASK, I2S_DMACR_TDE_DISABLE);
+        MODIFY_REG(reg->XFER, I2S_XFER_TXS_MASK, I2S_XFER_TXS_STOP);
         HAL_DelayUs(150);
-        MODIFY_REG(reg->CLR, I2S_TDM_CLR_TXC, I2S_TDM_CLR_TXC);
+        MODIFY_REG(reg->CLR, I2S_CLR_TXC_MASK, I2S_CLR_TXC);
     } else {
-        MODIFY_REG(reg->DMACR, I2S_TDM_DMACR_RDE_ENABLE, I2S_TDM_DMACR_RDE_DISABLE);
-        MODIFY_REG(reg->XFER, I2S_TDM_XFER_RXS_START, I2S_TDM_XFER_RXS_STOP);
+        MODIFY_REG(reg->DMACR, I2S_DMACR_RDE_MASK, I2S_DMACR_RDE_DISABLE);
+        MODIFY_REG(reg->XFER, I2S_XFER_RXS_MASK, I2S_XFER_RXS_STOP);
         HAL_DelayUs(150);
-        MODIFY_REG(reg->CLR, I2S_TDM_CLR_RXC, I2S_TDM_CLR_RXC);
+        MODIFY_REG(reg->CLR, I2S_CLR_RXC_MASK, I2S_CLR_RXC);
     }
 
     return HAL_OK;
@@ -257,45 +303,36 @@ HAL_Status HAL_I2S_Disable(struct AUDIO_DAI *dai, uint8_t stream)
 
 /**
  * @brief  Config i2s controller.
- * @param  dai: the handle of dai.
+ * @param  i2s: the handle of i2s.
  * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
  * @param  params: audio params.
  * @return HAL_Status
  */
-HAL_Status HAL_I2S_Config(struct AUDIO_DAI *dai, uint8_t stream,
+HAL_Status HAL_I2S_Config(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream,
                           struct AUDIO_PARAMS *params)
 {
-    struct HAL_I2S_DEV *i2s = (struct HAL_I2S_DEV *)dai->privData;
-    struct I2S_REG *reg = (struct I2S_REG *)i2s->base;
-
-    uint32_t val = 0, mask = 0;
+    struct I2S_REG *reg = i2s->reg;
+    uint32_t val = 0;
     HAL_Status ret = HAL_OK;
+    bool isMaster;
 
-    i2s->isMasterMode = params->daiMaster == AUDIO_DAI_MASTER;
-    mask = I2S_TDM_CKR_MSS_MASK;
-    val = (i2s->isMasterMode) ? I2S_TDM_CKR_MSS_MASTER : I2S_TDM_CKR_MSS_SLAVE;
-    MODIFY_REG(reg->CKR, mask, val);
+    isMaster = (READ_BIT(reg->CKR, I2S_CKR_MSS_MASK) == I2S_CKR_MSS_MASTER);
+    if (isMaster)
+        I2S_SetSampleRate(i2s, params->sampleRate);
 
-    mask = I2S_TDM_CKR_CKP_MASK;
-    val = (params->clkInvert == AUDIO_CLK_NORMAL) ? I2S_TDM_CKR_CKP_NEG : I2S_TDM_CKR_CKP_POS;
-    MODIFY_REG(reg->CKR, mask, val);
-
-    if (i2s->isMasterMode)
-        I2S_ChangeClkFreq(dai, params);
-
-    val = I2S_TDM_TXCR_VDW(params->sampleBits);
+    val = I2S_TXCR_VDW(params->sampleBits);
     switch (params->channels) {
     case 8:
-        val |= I2S_TDM_CHN_8;
+        val |= I2S_CHN_8;
         break;
     case 6:
-        val |= I2S_TDM_CHN_6;
+        val |= I2S_CHN_6;
         break;
     case 4:
-        val |= I2S_TDM_CHN_4;
+        val |= I2S_CHN_4;
         break;
     case 2:
-        val |= I2S_TDM_CHN_2;
+        val |= I2S_CHN_2;
         break;
     default:
 
@@ -303,18 +340,12 @@ HAL_Status HAL_I2S_Config(struct AUDIO_DAI *dai, uint8_t stream,
     }
 
     if (stream == AUDIO_STREAM_CAPTURE)
-        MODIFY_REG(reg->RXCR,
-                   I2S_TDM_RXCR_VDW_MASK | I2S_TDM_RXCR_CSR_MASK,
-                   val);
+        MODIFY_REG(reg->RXCR, I2S_RXCR_VDW_MASK | I2S_RXCR_RCSR_MASK, val);
     else
-        MODIFY_REG(reg->TXCR,
-                   I2S_TDM_TXCR_VDW_MASK | I2S_TDM_TXCR_CSR_MASK,
-                   val);
+        MODIFY_REG(reg->TXCR, I2S_TXCR_VDW_MASK | I2S_TXCR_TCSR_MASK, val);
 
-    MODIFY_REG(reg->DMACR, I2S_TDM_DMACR_TDL_MASK,
-               I2S_TDM_DMACR_TDL(16));
-    MODIFY_REG(reg->DMACR, I2S_TDM_DMACR_RDL_MASK,
-               I2S_TDM_DMACR_RDL(16));
+    MODIFY_REG(reg->DMACR, I2S_DMACR_TDL_MASK, I2S_DMACR_TDL(I2S_DMA_BURST_SIZE));
+    MODIFY_REG(reg->DMACR, I2S_DMACR_RDL_MASK, I2S_DMACR_RDL(I2S_DMA_BURST_SIZE));
 
     return ret;
 }

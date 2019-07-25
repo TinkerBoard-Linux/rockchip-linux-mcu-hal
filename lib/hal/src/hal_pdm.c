@@ -41,18 +41,17 @@ struct RK_PDM_DS_RATIO {
 
 /********************* Private Variable Definition ***************************/
 
-static struct RK_PDM_CLKREF clkRef[] = {
-    { 8000, 2048000 },
-    { 11025, 2822400 },
-    { 12000, 3072000 },
+static const struct RK_PDM_CLKREF clkRef[] = {
+    { 8000, 1024000 },
+    { 11025, 1411200 },
+    { 12000, 1536000 },
 };
 
 /********************* Private Function Definition ***************************/
 
-static HAL_Status PDM_GetClk(uint32_t sr, uint32_t *clkOut)
+static uint32_t PDM_GetClk(struct HAL_PDM_DEV *pdm, uint32_t sr)
 {
-    uint32_t i, count, div, found = 0;
-    HAL_Status ret = HAL_OK;
+    uint32_t i, count, div, clk = 0;
 
     HAL_ASSERT(sr > 0);
 
@@ -62,18 +61,26 @@ static HAL_Status PDM_GetClk(uint32_t sr, uint32_t *clkOut)
             continue;
         div = sr / clkRef[i].sr;
         if ((div & (div - 1)) == 0) {
-            *clkOut = clkRef[i].clkOut;
-            found = 1;
+            clk = clkRef[i].clkOut;
             break;
         }
     }
 
-    if (!found) {
-        *clkOut = 0;
-        ret = HAL_INVAL;
+    switch (pdm->mode) {
+    case PDM_LOW_MODE:
+        break;
+    case PDM_NORMAL_MODE:
+        clk *= 2;
+        break;
+    case PDM_HIGH_MODE:
+        clk *= 4;
+        break;
+    default:
+        clk = 0;
+        break;
     }
 
-    return ret;
+    return clk;
 }
 
 #ifdef PDM_CTRL0_SAMPLE_RATE_SEL_MASK
@@ -115,16 +122,21 @@ static int PDM_SampleRate(uint32_t sampleRate)
 static int PDM_GetCicDsRatio(uint32_t clk)
 {
     switch (clk) {
-    case 1024000:
-    case 1411200:
-    case 1536000:
+    case 4096000:
+    case 5644800:
+    case 6144000:
 
-        return 2;
+        return 0;
     case 2048000:
     case 2822400:
     case 3072000:
 
         return 1;
+    case 1024000:
+    case 1411200:
+    case 1536000:
+
+        return 2;
     default:
 
         return HAL_INVAL;
@@ -132,10 +144,9 @@ static int PDM_GetCicDsRatio(uint32_t clk)
 }
 #endif
 
-static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
+static HAL_Status PDM_ChangeClkFreq(struct HAL_PDM_DEV *pdm,
                                     struct AUDIO_PARAMS *params)
 {
-    struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
     struct PDM_REG *reg = pdm->reg;
 
     HAL_Status ret = HAL_OK;
@@ -144,8 +155,8 @@ static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
     HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
     clkSrc = pdm->mclkRate;
-    ret = PDM_GetClk(params->sampleRate, &clkOut);
-    HAL_ASSERT(ret == HAL_OK);
+    clkOut = PDM_GetClk(pdm, params->sampleRate);
+    HAL_ASSERT(clkOut);
     HAL_CRU_ClkSetFreq(pdm->mclk, clkSrc);
     HAL_CRU_FracdivGetConfig(clkOut, clkSrc, &n, &m);
     HAL_DBG("%s: n: 0x%lx, m: 0x%lx\n", __func__, n, m);
@@ -168,50 +179,11 @@ static HAL_Status PDM_ChangeClkFreq(struct AUDIO_DAI *dai,
         /* reset */
         HAL_CRU_ClkResetAssert(pdm->reset);
         HAL_CRU_ClkResetDeassert(pdm->reset);
-        HAL_PDM_Disable(dai, AUDIO_STREAM_CAPTURE);
+        HAL_PDM_Disable(pdm);
     }
 
     return ret;
 }
-
-static int PDM_Ioctl(void *priv, int cmd, void *arg)
-{
-    struct AUDIO_DAI *dai = (struct AUDIO_DAI *)priv;
-    int ret = HAL_OK;
-
-    switch (cmd) {
-    case AUDIO_IOCTL_HW_PARAMS:
-    {
-        struct AUDIO_PARAMS *params = (struct AUDIO_PARAMS *)arg;
-
-        ret = HAL_PDM_Config(dai, params->stream, params);
-    }
-    break;
-    case AUDIO_IOCTL_START:
-    {
-        uint8_t stream = *(uint8_t *)arg;
-
-        ret = HAL_PDM_Enable(dai, stream);
-    }
-    break;
-    case AUDIO_IOCTL_DROP:
-    {
-        uint8_t stream = *(uint8_t *)arg;
-
-        ret = HAL_PDM_Disable(dai, stream);
-    }
-    break;
-    default:
-
-        return HAL_INVAL;
-    }
-
-    return ret;
-}
-
-static const struct AUDIO_OPS pdmOps = {
-    .ioctl = PDM_Ioctl,
-};
 
 /********************* Public Function Definition ****************************/
 /** @defgroup PDM_Exported_Functions_Group1 Suspend and Resume Functions
@@ -225,20 +197,20 @@ static const struct AUDIO_OPS pdmOps = {
 
 /**
  * @brief  pdm suspend.
- * @param  dai: the handle of dai.
+ * @param  pdm: the handle of pdm.
  * @return HAL_Status
  */
-HAL_Status HAL_PDM_Supsend(struct AUDIO_DAI *dai)
+HAL_Status HAL_PDM_Supsend(struct HAL_PDM_DEV *pdm)
 {
     return HAL_OK;
 }
 
 /**
  * @brief  pdm resume.
- * @param  dai: the handle of dai.
+ * @param  pdm: the handle of pdm.
  * @return HAL_Status
  */
-HAL_Status HAL_PDM_Resume(struct AUDIO_DAI *dai)
+HAL_Status HAL_PDM_Resume(struct HAL_PDM_DEV *pdm)
 {
     return HAL_OK;
 }
@@ -274,44 +246,37 @@ HAL_Status HAL_PDM_Resume(struct AUDIO_DAI *dai)
 
 /**
  * @brief  Init pdm controller.
- * @param  dai: the handle of dai.
  * @param  pdm: the handle of pdm.
+ * @param  config: init config for i2s init.
  * @return HAL_Status
  */
-HAL_Status HAL_PDM_Init(struct AUDIO_DAI *dai, struct HAL_PDM_DEV *pdm)
+HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *config)
 {
-    /* TBD: clk, pin issue */
-
-    dai->id = (uint32_t)pdm->reg;
-    dai->dmaData[AUDIO_STREAM_CAPTURE] = &pdm->rxDmaData;
-    dai->privData = pdm;
-    dai->ops = &pdmOps;
+    struct PDM_REG *reg = pdm->reg;
+    uint32_t val;
 
     HAL_CRU_ClkEnable(pdm->hclk);
-    HAL_PDM_Disable(dai, AUDIO_STREAM_CAPTURE);
+    HAL_PDM_Disable(pdm);
+    val = config->clkInvert ? PDM_CKP_INVERTED : PDM_CKP_NORMAL;
+    MODIFY_REG(reg->CLK_CTRL, PDM_CKP_MSK, val);
 
-    return HAL_AUDIO_RegisterDai(dai);
+    return HAL_OK;
 }
 
 /**
  * @brief  DeInit pdm controller.
- * @param  dai: the handle of dai.
+ * @param  pdm: the handle of pdm.
  * @return HAL_Status
  */
-HAL_Status HAL_PDM_DeInit(struct AUDIO_DAI *dai)
+HAL_Status HAL_PDM_DeInit(struct HAL_PDM_DEV *pdm)
 {
-    struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
-
-    /* TBD: clk, pin issue */
     HAL_ASSERT(IS_PDM_INSTANCE(pdm->reg));
+
+    HAL_PDM_Disable(pdm);
 
     HAL_CRU_ClkDisable(pdm->hclk);
 
-    HAL_PDM_Disable(dai, AUDIO_STREAM_CAPTURE);
-
-    dai->ops = NULL;
-
-    return HAL_AUDIO_UnregisterDai(dai);
+    return HAL_OK;
 }
 
 /** @} */
@@ -322,16 +287,13 @@ HAL_Status HAL_PDM_DeInit(struct AUDIO_DAI *dai)
 
 /**
  * @brief  Enable pdm controller.
- * @param  dai: the handle of dai.
- * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @param  pdm: the handle of pdm.
  * @return HAL_Status
  */
-HAL_Status HAL_PDM_Enable(struct AUDIO_DAI *dai, uint8_t stream)
+HAL_Status HAL_PDM_Enable(struct HAL_PDM_DEV *pdm)
 {
-    struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
     struct PDM_REG *reg = pdm->reg;
 
-    HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
     HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
     MODIFY_REG(reg->DMA_CTRL,
@@ -344,16 +306,13 @@ HAL_Status HAL_PDM_Enable(struct AUDIO_DAI *dai, uint8_t stream)
 
 /**
  * @brief  Disable pdm controller.
- * @param  dai: the handle of dai.
- * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @param  pdm: the handle of pdm.
  * @return HAL_Status
  */
-HAL_Status HAL_PDM_Disable(struct AUDIO_DAI *dai, uint8_t stream)
+HAL_Status HAL_PDM_Disable(struct HAL_PDM_DEV *pdm)
 {
-    struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
     struct PDM_REG *reg = pdm->reg;
 
-    HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
     HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
     MODIFY_REG(reg->DMA_CTRL,
@@ -367,23 +326,17 @@ HAL_Status HAL_PDM_Disable(struct AUDIO_DAI *dai, uint8_t stream)
 
 /**
  * @brief  Config pdm controller.
- * @param  dai: the handle of dai.
- * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @param  pdm: the handle of pdm.
  * @param  params: audio params.
  * @return HAL_Status
  */
-HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,
-                          struct AUDIO_PARAMS *params)
+HAL_Status HAL_PDM_Config(struct HAL_PDM_DEV *pdm, struct AUDIO_PARAMS *params)
 {
-    struct HAL_PDM_DEV *pdm = (struct HAL_PDM_DEV *)dai->privData;
     struct PDM_REG *reg = pdm->reg;
     uint32_t val = 0;
     HAL_Status ret = HAL_OK;
 
-    /* pdm only support capture */
-    HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
-
-    ret = PDM_ChangeClkFreq(dai, params);
+    ret = PDM_ChangeClkFreq(pdm, params);
     HAL_ASSERT(ret == HAL_OK);
 
 #ifdef PDM_CTRL0_SAMPLE_RATE_SEL_MASK
@@ -430,9 +383,6 @@ HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,
     /* all channels share the single FIFO */
     MODIFY_REG(reg->DMA_CTRL, PDM_DMA_RDL_MSK,
                PDM_DMA_RDL(8 * params->channels));
-
-    val = params->clkInvert ? PDM_CKP_INVERTED : PDM_CKP_NORMAL;
-    MODIFY_REG(reg->CLK_CTRL, PDM_CKP_MSK, val);
 
     return ret;
 }

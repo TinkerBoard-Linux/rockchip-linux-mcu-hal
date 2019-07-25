@@ -6,8 +6,8 @@
 #ifndef _HAL_DRIVER_H_
 #define _HAL_DRIVER_H_
 
-#ifdef HAL_AUDIO_MODULE_ENABLED
-#include "hal_audio.h"
+#ifdef HAL_ACDCDIG_MODULE_ENABLED
+#include "hal_acdcdig.h"
 #endif
 
 #ifdef HAL_AUDIOPWM_MODULE_ENABLED
@@ -66,6 +66,10 @@
 #include "hal_i2s.h"
 #endif
 
+#ifdef HAL_I2STDM_MODULE_ENABLED
+#include "hal_i2stdm.h"
+#endif
+
 #ifdef HAL_INTC_MODULE_ENABLED
 #include "hal_intc.h"
 #endif
@@ -80,10 +84,6 @@
 
 #ifdef HAL_PCD_MODULE_ENABLED
 #include "hal_pcd.h"
-#endif
-
-#ifdef HAL_PCM_MODULE_ENABLED
-#include "hal_pcm.h"
 #endif
 
 #ifdef HAL_PDM_MODULE_ENABLED

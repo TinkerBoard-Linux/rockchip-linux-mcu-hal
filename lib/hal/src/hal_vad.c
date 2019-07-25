@@ -57,77 +57,6 @@ static HAL_Status VAD_Get_Audio_Src_Info(struct HAL_VAD_DEV *vad, uint32_t addr)
     return HAL_ERROR;
 }
 
-static int VAD_Ioctl(void *priv, int cmd, void *arg)
-{
-    struct AUDIO_DAI *dai = (struct AUDIO_DAI *)priv;
-    int ret = HAL_OK;
-
-    HAL_ASSERT(dai != NULL);
-
-    switch (cmd) {
-    case AUDIO_IOCTL_HW_PARAMS:
-    {
-        struct AUDIO_PARAMS *params = (struct AUDIO_PARAMS *)arg;
-
-        ret = HAL_VAD_Config(dai, params->stream, params);
-    }
-    break;
-    case AUDIO_IOCTL_START:
-    {
-        uint8_t stream = *(uint8_t *)arg;
-
-        ret = HAL_VAD_Start(dai, stream);
-    }
-    break;
-    case AUDIO_IOCTL_DROP:
-    {
-        uint8_t stream = *(uint8_t *)arg;
-
-        ret = HAL_VAD_Stop(dai, stream);
-    }
-    break;
-    case AUDIO_IOCTL_VAD_SET_BUFFER:
-    {
-        struct AUDIO_BUF *abuf = (struct AUDIO_BUF *)arg;
-        uint32_t start = (uint32_t)abuf->buf; /* phy addr */
-        uint32_t end = (uint32_t)(abuf->buf + abuf->bufSize);
-
-        ret = HAL_VAD_ConfigRingBuffer(dai, start, end);
-    }
-    break;
-    case AUDIO_IOCTL_VAD_SET_PERIOD:
-    {
-        uint32_t kBytes = *(uint32_t *)arg;
-
-        ret = HAL_VAD_SetPeriodSize(dai, kBytes);
-    }
-    break;
-    case AUDIO_IOCTL_VAD_SET_AUDIOSRC:
-    {
-        uint32_t source = *(uint32_t *)arg;
-
-        ret = HAL_VAD_SetAudioSource(dai, source);
-    }
-    break;
-    case AUDIO_IOCTL_VAD_EN_BUSMODE:
-    {
-        uint8_t en = *(uint8_t *)arg;
-
-        ret = HAL_VAD_EnableBusMode(dai, en);
-    }
-    break;
-    default:
-
-        return HAL_INVAL;
-    }
-
-    return ret;
-}
-
-static const struct AUDIO_OPS vadOps = {
-    .ioctl = VAD_Ioctl,
-};
-
 /********************* Public Function Definition ****************************/
 /** @defgroup VAD_Exported_Functions_Group1 Suspend and Resume Functions
 
@@ -140,20 +69,20 @@ static const struct AUDIO_OPS vadOps = {
 
 /**
  * @brief  vad suspend.
- * @param  dai: vad dai.
+ * @param  vad: vad vad.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_Supsend(struct AUDIO_DAI *dai)
+HAL_Status HAL_VAD_Supsend(struct HAL_VAD_DEV *vad)
 {
     return HAL_OK;
 }
 
 /**
  * @brief  vad resume.
- * @param  dai: vad dai.
+ * @param  vad: vad vad.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_Resume(struct AUDIO_DAI *dai)
+HAL_Status HAL_VAD_Resume(struct HAL_VAD_DEV *vad)
 {
     return HAL_OK;
 }
@@ -189,13 +118,12 @@ HAL_Status HAL_VAD_Resume(struct AUDIO_DAI *dai)
 
 /**
  * @brief  Init vad controller.
- * @param  dai: the handle of struct AUDIO_DAI.
  * @param  vad: the handle of struct HAL_VAD_DEV.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_Init(struct AUDIO_DAI *dai, struct HAL_VAD_DEV *vad)
+HAL_Status HAL_VAD_Init(struct HAL_VAD_DEV *vad)
 {
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
     uint32_t val, mask;
 
     HAL_CRU_ClkEnable(vad->hclk);
@@ -217,27 +145,19 @@ HAL_Status HAL_VAD_Init(struct AUDIO_DAI *dai, struct HAL_VAD_DEV *vad)
 
     MODIFY_REG(reg->CONTROL, mask, val);
 
-    dai->id = vad->base;
-    dai->privData = vad;
-    dai->ops = &vadOps;
-
-    return HAL_AUDIO_RegisterDai(dai);
+    return HAL_OK;
 }
 
 /**
  * @brief  DeInit vad controller.
- * @param  dai: The handle of struct AUDIO_DAI.
+ * @param  vad: The handle of struct vad.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_DeInit(struct AUDIO_DAI *dai)
+HAL_Status HAL_VAD_DeInit(struct HAL_VAD_DEV *vad)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-
     HAL_CRU_ClkDisable(vad->hclk);
 
-    dai->ops = NULL;
-
-    return HAL_AUDIO_UnregisterDai(dai);
+    return HAL_OK;
 }
 
 /** @} */
@@ -248,17 +168,13 @@ HAL_Status HAL_VAD_DeInit(struct AUDIO_DAI *dai)
 
 /**
  * @brief  Start VAD.
- * @param  dai: The handle of struct AUDIO_DAI.
- * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @param  vad: The handle of struct vad.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_Start(struct AUDIO_DAI *dai, uint8_t stream)
+HAL_Status HAL_VAD_Start(struct HAL_VAD_DEV *vad)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
     uint32_t val, mask;
-
-    HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
 
     MODIFY_REG(reg->CONTROL, VAD_EN_MASK, VAD_EN);
 
@@ -272,18 +188,14 @@ HAL_Status HAL_VAD_Start(struct AUDIO_DAI *dai, uint8_t stream)
 
 /**
  * @brief  Stop VAD.
- * @param  dai: The handle of struct AUDIO_DAI.
- * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @param  vad: The handle of struct vad.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_Stop(struct AUDIO_DAI *dai, uint8_t stream)
+HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
     struct VAD_BUF *vbuf = &vad->vbuf;
     uint32_t val;
-
-    HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
 
     val = READ_REG(reg->CONTROL);
     if ((val & VAD_EN_MASK) == VAD_DISABLE)
@@ -319,19 +231,14 @@ HAL_Status HAL_VAD_Stop(struct AUDIO_DAI *dai, uint8_t stream)
 
 /**
  * @brief  Config params for VAD.
- * @param  dai: The handle of struct AUDIO_DAI.
- * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @param  vad: The handle of struct vad.
  * @param  params: The audio params.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_Config(struct AUDIO_DAI *dai, uint8_t stream,
-                          struct AUDIO_PARAMS *params)
+HAL_Status HAL_VAD_Config(struct HAL_VAD_DEV *vad, struct AUDIO_PARAMS *params)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
     uint32_t val, mask, channels;
-
-    HAL_ASSERT(stream == AUDIO_STREAM_CAPTURE);
 
     switch (params->sampleBits) {
     case AUDIO_SAMPLEBITS_16:
@@ -360,15 +267,14 @@ HAL_Status HAL_VAD_Config(struct AUDIO_DAI *dai, uint8_t stream,
 
 /**
  * @brief  Set the audio stream source for VAD.
- * @param  dai: The handle of struct AUDIO_DAI.
+ * @param  vad: The handle of struct vad.
  @ @param  source: The audio controllers' base addr.
            depends on bit SOURCE_FIXADDR_EN in register 'VAD_CONTROL'.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_SetAudioSource(struct AUDIO_DAI *dai, uint32_t source)
+HAL_Status HAL_VAD_SetAudioSource(struct HAL_VAD_DEV *vad, uint32_t source)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
     HAL_Status ret;
 
     ret = VAD_Get_Audio_Src_Info(vad, source);
@@ -382,14 +288,13 @@ HAL_Status HAL_VAD_SetAudioSource(struct AUDIO_DAI *dai, uint32_t source)
 
 /**
  * @brief  Set VAD work mode.
- * @param  dai: The handle of struct AUDIO_DAI.
+ * @param  vad: The handle of struct vad.
  * @param  mode: vad work mode, 0~2.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_SetMode(struct AUDIO_DAI *dai, int mode)
+HAL_Status HAL_VAD_SetMode(struct HAL_VAD_DEV *vad, int mode)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
 
     vad->mode = mode;
     MODIFY_REG(reg->CONTROL, VAD_MODE_MASK, vad->mode << VAD_MODE_SHIFT);
@@ -399,14 +304,12 @@ HAL_Status HAL_VAD_SetMode(struct AUDIO_DAI *dai, int mode)
 
 /**
  * @brief  Set the ring buffer time for VAD.
- * @param  dai: The handle of struct AUDIO_DAI.
+ * @param  vad: The handle of struct vad.
  * @param  bufferTime: buffer time in msec.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_SetBufferTime(struct AUDIO_DAI *dai, uint32_t bufferTime)
+HAL_Status HAL_VAD_SetBufferTime(struct HAL_VAD_DEV *vad, uint32_t bufferTime)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-
     vad->bufferTime = bufferTime;
 
     return HAL_OK;
@@ -414,14 +317,13 @@ HAL_Status HAL_VAD_SetBufferTime(struct AUDIO_DAI *dai, uint32_t bufferTime)
 
 /**
  * @brief  Set detect channel for VAD.
- * @param  dai: The handle of struct AUDIO_DAI.
+ * @param  vad: The handle of struct vad.
  * @param  detectChannel: The channel index for detection.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_SetDetectChannel(struct AUDIO_DAI *dai, uint32_t detectChannel)
+HAL_Status HAL_VAD_SetDetectChannel(struct HAL_VAD_DEV *vad, uint32_t detectChannel)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
 
     vad->audioDetChnl = detectChannel;
 
@@ -433,15 +335,14 @@ HAL_Status HAL_VAD_SetDetectChannel(struct AUDIO_DAI *dai, uint32_t detectChanne
 
 /**
  * @brief  config ring buffer start and end address for VAD.
- * @param  dai: The handle of struct AUDIO_DAI.
+ * @param  vad: The handle of struct vad.
  * @param  start: The begin address.
  * @param  end: The end address.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_ConfigRingBuffer(struct AUDIO_DAI *dai, uint32_t start, uint32_t end)
+HAL_Status HAL_VAD_ConfigRingBuffer(struct HAL_VAD_DEV *vad, uint32_t start, uint32_t end)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
 
     vad->ramStartAddr = start;
     /* ramEndAddr means the last entry address to store data,
@@ -462,27 +363,26 @@ HAL_Status HAL_VAD_ConfigRingBuffer(struct AUDIO_DAI *dai, uint32_t start, uint3
  */
 HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad)
 {
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
     uint32_t val;
 
     val = READ_REG(reg->INT);
     WRITE_REG(reg->INT, val);
 
-    HAL_DBG("%s: irq status: 0x%lx\n", __func__, val);
+    //HAL_DBG("%s: irq status: 0x%lx\n", __func__, val);
 
     return HAL_OK;
 }
 
 /**
  * @brief  enable periods data irq.
- * @param  dai: The handle of struct AUDIO_DAI.
+ * @param  vad: The handle of struct vad.
  * @param  kbytes: period size in units of kbytes.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_SetPeriodSize(struct AUDIO_DAI *dai, uint32_t kbytes)
+HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t kbytes)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
 
     MODIFY_REG(reg->AUX_CONTROL, DATA_TRANS_KBYTE_THD_MASK,
                DATA_TRANS_KBYTE_THD(kbytes));
@@ -496,14 +396,13 @@ HAL_Status HAL_VAD_SetPeriodSize(struct AUDIO_DAI *dai, uint32_t kbytes)
 
 /**
  * @brief  Enable store data through ahb bus or ram interface.
- * @param  dai: The handle of struct AUDIO_DAI.
+ * @param  vad: The handle of struct vad.
  * @param  en: enable flag.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_EnableBusMode(struct AUDIO_DAI *dai, uint8_t en)
+HAL_Status HAL_VAD_EnableBusMode(struct HAL_VAD_DEV *vad, uint8_t en)
 {
-    struct HAL_VAD_DEV *vad = (struct HAL_VAD_DEV *)dai->privData;
-    struct VAD_REG *reg = (struct VAD_REG *)vad->base;
+    struct VAD_REG *reg = vad->reg;
 
     if (en)
         MODIFY_REG(reg->AUX_CONTROL, RAM_ITF_EN_MASK | BUS_WRITE_EN_MASK,

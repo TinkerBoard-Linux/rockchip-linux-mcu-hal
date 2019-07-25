@@ -56,24 +56,24 @@
 
 /** audioPwm dev struct */
 struct HAL_AUDIOPWM_DEV {
-    uint32_t base;
+    struct AUDIOPWM_REG *reg;
     uint32_t mclk;
+    uint32_t mclkGate;
     uint32_t hclk;
 
-    struct AUDIO_DAI_DMA_DATA txDmaData;
+    struct AUDIO_DMA_DATA txDmaData;
 };
 
 /** @} */
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_AUDIOPWM_Supsend(struct AUDIO_DAI *dai);
-HAL_Status HAL_AUDIOPWM_Resume(struct AUDIO_DAI *dai);
-HAL_Status HAL_AUDIOPWM_Init(struct AUDIO_DAI *dai, struct HAL_AUDIOPWM_DEV *audioPwm);
-HAL_Status HAL_AUDIOPWM_DeInit(struct AUDIO_DAI *dai);
-HAL_Status HAL_AUDIOPWM_Enable(struct AUDIO_DAI *dai, uint8_t stream);
-HAL_Status HAL_AUDIOPWM_Disable(struct AUDIO_DAI *dai, uint8_t stream);
-HAL_Status HAL_AUDIOPWM_Config(struct AUDIO_DAI *dai, uint8_t stream,
-                               struct AUDIO_PARAMS *params);
+HAL_Status HAL_AUDIOPWM_Supsend(struct HAL_AUDIOPWM_DEV *audioPwm);
+HAL_Status HAL_AUDIOPWM_Resume(struct HAL_AUDIOPWM_DEV *audioPwm);
+HAL_Status HAL_AUDIOPWM_Init(struct HAL_AUDIOPWM_DEV *audioPwm, struct AUDIO_INIT_CONFIG *config);
+HAL_Status HAL_AUDIOPWM_DeInit(struct HAL_AUDIOPWM_DEV *audioPwm);
+HAL_Status HAL_AUDIOPWM_Enable(struct HAL_AUDIOPWM_DEV *audioPwm);
+HAL_Status HAL_AUDIOPWM_Disable(struct HAL_AUDIOPWM_DEV *audioPwm);
+HAL_Status HAL_AUDIOPWM_Config(struct HAL_AUDIOPWM_DEV *audioPwm, struct AUDIO_PARAMS *params);
 
 #endif
 

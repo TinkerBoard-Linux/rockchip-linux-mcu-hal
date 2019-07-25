@@ -62,15 +62,45 @@ const struct HAL_I2C_DEV g_i2c5Dev =
 #endif
 
 #ifdef HAL_I2S_MODULE_ENABLED
-struct HAL_I2S_DEV g_i2s0Dev =
+struct HAL_I2S_DEV g_i2s1Dev =
 {
-    .base = I2S0_BASE,
-    .mclk = CLK_I2S0_TX,
+    .reg = I2S1,
+    .mclk = CLK_I2S1,
+    .mclkGate = CLK_I2S1_CLK_GATE,
+    .hclk = HCLK_I2S1_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2S1->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S1_RX,
+        .dmac = DMA,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2S1->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S1_TX,
+        .dmac = DMA,
+    },
+};
+#endif
+
+#ifdef HAL_I2STDM_MODULE_ENABLED
+struct HAL_I2STDM_DEV g_i2sTdm0Dev =
+{
+    .reg = I2STDM0,
+    .mclkTx = CLK_I2S0_TX,
+    .mclkTxGate = CLK_I2S0_TX_CLK_GATE,
+    .mclkRx = CLK_I2S0_RX,
+    .mclkRxGate = CLK_I2S0_RX_CLK_GATE,
     .hclk = HCLK_I2S0_GATE,
     .bclkFs = 64,
     .rxDmaData =
     {
-        .addr = (uint32_t)&(I2S0->RXDR),
+        .addr = (uint32_t)&(I2STDM0->RXDR),
         .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
         .maxBurst = 8,
         .dmaReqCh = DMA_REQ_I2S0_RX,
@@ -78,7 +108,7 @@ struct HAL_I2S_DEV g_i2s0Dev =
     },
     .txDmaData =
     {
-        .addr = (uint32_t)&(I2S0->TXDR),
+        .addr = (uint32_t)&(I2STDM0->TXDR),
         .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
         .maxBurst = 8,
         .dmaReqCh = DMA_REQ_I2S0_TX,
@@ -160,7 +190,7 @@ struct HAL_PL330_DEV g_pl330Dev =
 #ifdef HAL_VAD_MODULE_ENABLED
 struct HAL_VAD_DEV g_vadDev =
 {
-    .base = VAD_BASE,
+    .reg = VAD,
     .hclk = HCLK_VAD_GATE,
     .irq = VAD_IRQn,
 };

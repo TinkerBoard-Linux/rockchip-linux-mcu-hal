@@ -102,6 +102,12 @@
 #define PDM_CLK_RATE      (100000000)
 /***************************** Structure Definition **************************/
 
+typedef enum {
+    PDM_NORMAL_MODE = 0, /**< normal mode: 2.048/2.8224M/3.072M clk */
+    PDM_LOW_MODE, /**< lower power mode: 1.024M/1.4112M/1.536M clk */
+    PDM_HIGH_MODE, /**< high mode: 4.096M/5.6448M/6.144M clk */
+} ePDM_MODE;
+
 /** pdm dev struct */
 struct HAL_PDM_DEV {
     struct PDM_REG *reg;
@@ -109,21 +115,20 @@ struct HAL_PDM_DEV {
     uint32_t mclkRate;
     uint32_t hclk;
     uint32_t reset;
-
-    struct AUDIO_DAI_DMA_DATA rxDmaData;
+    ePDM_MODE mode;
+    struct AUDIO_DMA_DATA rxDmaData;
 };
 
 /** @} */
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_PDM_Supsend(struct AUDIO_DAI *dai);
-HAL_Status HAL_PDM_Resume(struct AUDIO_DAI *dai);
-HAL_Status HAL_PDM_Init(struct AUDIO_DAI *dai, struct HAL_PDM_DEV *pdm);
-HAL_Status HAL_PDM_DeInit(struct AUDIO_DAI *dai);
-HAL_Status HAL_PDM_Enable(struct AUDIO_DAI *dai, uint8_t stream);
-HAL_Status HAL_PDM_Disable(struct AUDIO_DAI *dai, uint8_t stream);
-HAL_Status HAL_PDM_Config(struct AUDIO_DAI *dai, uint8_t stream,
-                          struct AUDIO_PARAMS *params);
+HAL_Status HAL_PDM_Supsend(struct HAL_PDM_DEV *pdm);
+HAL_Status HAL_PDM_Resume(struct HAL_PDM_DEV *pdm);
+HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *config);
+HAL_Status HAL_PDM_DeInit(struct HAL_PDM_DEV *pdm);
+HAL_Status HAL_PDM_Enable(struct HAL_PDM_DEV *pdm);
+HAL_Status HAL_PDM_Disable(struct HAL_PDM_DEV *pdm);
+HAL_Status HAL_PDM_Config(struct HAL_PDM_DEV *pdm, struct AUDIO_PARAMS *params);
 
 #endif
 

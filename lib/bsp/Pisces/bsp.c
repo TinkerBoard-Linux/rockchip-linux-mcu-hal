@@ -5,6 +5,27 @@
 
 #include "bsp.h"
 
+#ifdef HAL_ACDCDIG_MODULE_ENABLED
+struct HAL_ACDCDIG_DEV g_acdcDigDev =
+{
+    .reg = ACDCDIG,
+    .hclk = PCLK_ACDC_DIG_GATE,
+};
+
+static HAL_Status BSP_ACDCDIG_Init(void)
+{
+    /* codec adc enable(analog mic) */
+    GRF->SOC_CON[2] = HAL_BIT(2) << 16 | HAL_BIT(2);
+
+    return HAL_OK;
+}
+
+static HAL_Status BSP_ACDCDIG_DeInit(void)
+{
+    return HAL_OK;
+}
+#endif
+
 #ifdef HAL_I2C_MODULE_ENABLED
 const struct HAL_I2C_DEV g_i2c0Dev =
 {
@@ -34,16 +55,19 @@ const struct HAL_I2C_DEV g_i2c2Dev =
 };
 #endif
 
-#ifdef HAL_I2S_MODULE_ENABLED
-struct HAL_I2S_DEV g_i2s0Dev =
+#ifdef HAL_I2STDM_MODULE_ENABLED
+struct HAL_I2STDM_DEV g_i2sTdm0Dev =
 {
-    .base = I2S0_BASE,
-    .mclk = MCLK_I2S8CH,
+    .reg = I2STDM0,
+    .mclkTx = I2S_MCLKOUT,
+    .mclkTxGate = I2S_MCLKOUT_GATE,
+    .mclkRx = I2S_MCLKOUT,
+    .mclkRxGate = I2S_MCLKOUT_GATE,
     .hclk = HCLK_I2S_8CH_GATE,
     .bclkFs = 64,
     .rxDmaData =
     {
-        .addr = (uint32_t)&(I2S0->RXDR),
+        .addr = (uint32_t)&(I2STDM0->RXDR),
         .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
         .maxBurst = 8,
         .dmaReqCh = DMA_REQ_I2S0_RX,
@@ -51,7 +75,7 @@ struct HAL_I2S_DEV g_i2s0Dev =
     },
     .txDmaData =
     {
-        .addr = (uint32_t)&(I2S0->TXDR),
+        .addr = (uint32_t)&(I2STDM0->TXDR),
         .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
         .maxBurst = 8,
         .dmaReqCh = DMA_REQ_I2S0_TX,
@@ -155,7 +179,7 @@ static HAL_Status BSP_PL330_DeInit(void)
 #ifdef HAL_VAD_MODULE_ENABLED
 struct HAL_VAD_DEV g_vadDev =
 {
-    .base = VAD_BASE,
+    .reg = VAD,
     .hclk = HCLK_VAD_GATE,
     .irq = VAD_IRQn,
 };
@@ -221,6 +245,10 @@ const struct HAL_UART_DEV g_uart1Dev =
 
 void BSP_DeInit(void)
 {
+#ifdef HAL_ACDCDIG_MODULE_ENABLED
+    BSP_ACDCDIG_DeInit();
+#endif
+
 #ifdef HAL_I2S_MODULE_ENABLED
     BSP_I2S_DeInit();
 #endif
@@ -240,6 +268,10 @@ void BSP_DeInit(void)
 
 void BSP_Init(void)
 {
+#ifdef HAL_ACDCDIG_MODULE_ENABLED
+    BSP_ACDCDIG_Init();
+#endif
+
 #ifdef HAL_PL330_MODULE_ENABLED
     BSP_PL330_Init();
 #endif
