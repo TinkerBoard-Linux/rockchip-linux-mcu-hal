@@ -21,18 +21,6 @@
   - Get system time by calling HAL_GetTick();
   - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs(), and HAL_CPUDelayUs();
 
- Reset SysTick in default setting:
-
-  - Reset tick frequency value by calling HAL_SetTickFreq() if needed;
-  - Reset SysTick by calling HAL_InitTick().
-
- Reset SysTick by user:
-
-  - Choose SysTick clock source by calling HAL_SYSTICK_CLKSourceConfig();
-  - Config SysTick reload value by calling HAL_SYSTICK_Config();
-  - Configure the SysTick frequency by calling by calling HAL_SetTickFreq().
-
-
  Suggest:
 
   - Blocking for a certain period of time to continuously query HW status, use HAL_GetTick()
@@ -44,7 +32,6 @@
 
 /********************* Private MACRO Definition ******************************/
 
-#define TICK_INT_PRIORITY     0x0FU
 #define HAL_TICK_FREQ_DEFAULT HAL_TICK_FREQ_1KHZ
 
 /********************* Private Structure Definition **************************/
@@ -90,13 +77,17 @@ static void CPUCycleLoop(uint32_t cycles)
 HAL_Status HAL_Init(void)
 {
 #ifdef __CORTEX_M
+
+#ifdef HAL_NVIC_MODULE_ENABLED
     /* Set Interrupt Group Priority */
     HAL_NVIC_Init();
 
     /* Set Interrupt Group Priority */
     HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_DEFAULT);
-
-    HAL_InitTick(TICK_INT_PRIORITY);
+#endif
+#ifdef HAL_SYSTICK_MODULE_ENABLED
+    HAL_SYSTICK_Init();
+#endif
 #endif
 
     return HAL_OK;
@@ -128,16 +119,6 @@ HAL_Status HAL_IncTick(void)
     uwTick += uwTickFreq;
 
     return HAL_OK;
-}
-
-/**
- * @brief  Core internal SysTick IRQ handler
- * @return None
- * Count plus 1.
- */
-__WEAK void HAL_SYSTICK_IRQHandler(void)
-{
-    HAL_IncTick();
 }
 
 /**
@@ -196,6 +177,16 @@ __WEAK HAL_Status HAL_DelayMs(uint32_t ms)
 }
 
 /**
+ * @brief  SysTick udelay.
+ * @param  us: udelay count.
+ * @return HAL_Status: HAL_OK.
+ */
+HAL_Status HAL_DelayUs(uint32_t us)
+{
+    return HAL_CPUDelayUs(us);
+}
+
+/**
  * @brief  CPU loop udelay.
  * @param  us: udelay count.
  * @return HAL_Status: HAL_OK.
@@ -212,127 +203,6 @@ HAL_Status HAL_CPUDelayUs(uint32_t us)
 
     return HAL_OK;
 }
-
-#ifdef __CORTEX_A
-/**
- * @brief  SysTick udelay.
- * @param  us: udelay count.
- * @return HAL_Status: HAL_OK.
- */
-HAL_Status HAL_DelayUs(uint32_t us)
-{
-    return HAL_CPUDelayUs(us);
-}
-#else
-/**
- * @brief  Config systick reload value.
- * @param  ticksNumb: systick reload value.
- * @return HAL_Status.
- */
-HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb)
-{
-    if ((ticksNumb - 1UL) > SysTick_LOAD_RELOAD_Msk) {
-        return HAL_INVAL;                                             /* Reload value impossible */
-    }
-
-    SysTick->LOAD = (uint32_t)(ticksNumb - 1UL);                      /* set reload register */
-    NVIC_SetPriority(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);  /* set Priority for Systick Interrupt */
-    SysTick->VAL = 0UL;                                               /* Load the SysTick Counter Value */
-    SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk |
-                      SysTick_CTRL_ENABLE_Msk);                       /* Enable SysTick IRQ and SysTick Timer */
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Config clock source type for Systick.
- * @param  clkSource: HAL_TICK_CLKSRC_CORE clock source is from core clk,
- *                    HAL_TICK_CLKSRC_EXT clock source is from external reference
- * @return HAL_OK if successful, HAL_INVAL if soc not support.
- */
-HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_tickClkSource clkSource)
-{
-    if (clkSource == HAL_TICK_CLKSRC_CORE) {
-        SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
-    } else {
-        if (SysTick->CALIB & SysTick_CALIB_NOREF_Msk)
-            return HAL_INVAL;
-        else
-            SysTick->CTRL &= ~SysTick_CTRL_CLKSOURCE_Msk;
-    }
-
-    return HAL_OK;
-}
-
-/**
- * @brief  System Tick, Is the externalreferance clock enabled as a source clock.
- * @return HAL_TRUE if external referance clock is enabled
- */
-HAL_Check HAL_SYSTICK_IsExtRefClockEnabled(void)
-{
-    if (SysTick->CTRL & SysTick_CTRL_CLKSOURCE_Msk) {
-        return HAL_FALSE;
-    } else {
-        HAL_ASSERT(!(SysTick->CALIB & SysTick_CALIB_NOREF_Msk));
-
-        return HAL_TRUE;
-    }
-}
-
-/**
- * @brief  SysTick udelay.
- * @param  us: udelay count.
- * @return HAL_Status: HAL_OK.
- * @attention this API allow direct use in the HAL layer.
- *  When the tickPerSec is within a certain range, the delicate delay is more
- * accurate. about (10 10000);
- */
-HAL_Status HAL_DelayUs(uint32_t us)
-{
-    uint32_t delta = SysTick->VAL;
-    uint32_t tickstart = HAL_GetTick();
-
-    us = us * (SystemCoreClock / 1000000); /* Systick->Load 1ms */
-
-    if (us > SysTick->LOAD)
-        us = SysTick->LOAD;
-
-    if (delta < us) {
-        while (tickstart == HAL_GetTick())
-            ;
-        us -= delta;
-        delta = SysTick->LOAD;
-    }
-    while ((delta - SysTick->VAL) < us)
-        ;
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Init SysTick
- * @param  tickPriority: Interrupt priority.
- * @return HAL_Status: HAL_OK.
- * Reset SysTick to default setting.
- */
-HAL_Status HAL_InitTick(uint32_t tickPriority)
-{
-    uint32_t ret, rate = SystemCoreClock;
-
-    ret = HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);       /* Choose external clock source */
-    if (ret == HAL_OK)
-        rate = PLL_INPUT_OSC_RATE;
-
-    HAL_SYSTICK_Config(rate / (1000 / uwTickFreq));               /* Configure the SysTick to have interrupt in 1ms time basis */
-    HAL_SetTickFreq(uwTickFreq);                                  /* Configure the SysTick frequency */
-
-    /*Configure the SysTick IRQ priority */
-    HAL_NVIC_SetPriority(SysTick_IRQn, tickPriority);
-
-    /* Return function status */
-    return HAL_OK;
-}
-#endif
 
 /** @} */
 

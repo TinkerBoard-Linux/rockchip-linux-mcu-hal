@@ -34,11 +34,6 @@ typedef enum {
     HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ
 } eHAL_tickFreq;
 
-typedef enum {
-    HAL_TICK_CLKSRC_CORE,
-    HAL_TICK_CLKSRC_EXT
-} eHAL_tickClkSource;
-
 /** @} */
 
 /***************************** Function Declare ******************************/
