@@ -63,16 +63,13 @@ static const struct RK_PINCTRL_DEV *PINCTRL_GetInfo(void)
  * @param  pBank: point to pin bank info.
  * @param  pin: pin index, 0~31.
  * @param  mux: func data.
- * @param  reg: reg offset of the pin.
- * @param  value: to get route value.
  * @return HAL_Status.
  */
-static HAL_Status PINCTRL_AcquireMuxRoute(struct PINCTRL_BANK_INFO *pBank, uint8_t pin,
-                                          uint32_t mux, uint32_t *reg, uint8_t *value)
+static HAL_Status PINCTRL_AcquireMuxRoute(struct PINCTRL_BANK_INFO *pBank, uint8_t pin, uint32_t mux)
 {
     const struct RK_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
     struct PINCTRL_MUX_ROUTE_DATA *data;
-    uint32_t i;
+    uint32_t i, reg = 0;
     HAL_Status rc = HAL_OK;
 
     if (ctrl->muxRouteDataNum == 0) {
@@ -83,7 +80,7 @@ static HAL_Status PINCTRL_AcquireMuxRoute(struct PINCTRL_BANK_INFO *pBank, uint8
     for (i = 0; i < ctrl->muxRouteDataNum; i++) {
         data = &ctrl->muxRouteData[i];
         if (data->bank == pBank->channel &&
-            data->pin == pin && data->func == mux)
+            data->pin & (1 << pin) && data->func == mux)
             break;
     }
 
@@ -92,8 +89,10 @@ static HAL_Status PINCTRL_AcquireMuxRoute(struct PINCTRL_BANK_INFO *pBank, uint8
         goto exit;
     }
 
-    *reg = data->routeReg;
-    *value = data->routeVal;
+    reg = pBank->grfBase + data->routeReg;
+    *(volatile uint32_t *)(reg) = data->routeVal;
+
+    HAL_DBG("setting route %08lx = %08lx, %08lx\n", reg, data->routeVal, *(volatile uint32_t *)(reg));
 exit:
 
     return rc;
@@ -191,7 +190,6 @@ static HAL_Status PINCTRL_SetMux(struct PINCTRL_BANK_INFO *pBank,
 {
     uint32_t reg = 0, mask = 0;
     uint8_t bit = 0;
-    uint8_t param2;
     HAL_Status rc = HAL_OK;
 
     HAL_DBG("setting GPIO%d-%d to %d\n", pBank->channel, pin, param);
@@ -200,15 +198,16 @@ static HAL_Status PINCTRL_SetMux(struct PINCTRL_BANK_INFO *pBank,
     if (rc)
         HAL_DBG("Warning: Acquire Mux Param failed\n");
 
-    rc = PINCTRL_AcquireMuxRoute(pBank, pin, param, &reg, &param2);
-    if (rc == HAL_OK)
-        param = param2;
-
     rc = PINCTRL_RectifyMuxParams(pBank, pin, &reg, &bit, &mask);
     if (rc == HAL_OK)
         HAL_DBG("Warning: Param is rectified\n");
 
     PIN_WRITE(reg, bit, mask, param);
+
+    rc = PINCTRL_AcquireMuxRoute(pBank, pin, param);
+    if (rc == HAL_OK) {
+        HAL_DBG("setting route for GPIO%d-%d\n", pBank->channel, pin);
+    }
 
     return HAL_OK;
 }
@@ -227,7 +226,7 @@ static uint32_t PINCTRL_SetDrive(struct PINCTRL_BANK_INFO *pBank,
     uint8_t bit = 0;
     HAL_Status rc = HAL_OK;
 
-    HAL_DBG("setting GPIO%d-%d to %d\n", pBank->channel, pin, param);
+    HAL_DBG("setting GPIO%d-%d drive to %d\n", pBank->channel, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_DRV_INFO, &reg, &bit, &mask);
     if (rc)
@@ -253,7 +252,7 @@ static HAL_Status PINCTRL_SetPull(struct PINCTRL_BANK_INFO *pBank,
     uint8_t bit = 0;
     HAL_Status rc = HAL_OK;
 
-    HAL_DBG("setting GPIO%d-%d to %d\n", pBank->channel, pin, param);
+    HAL_DBG("setting GPIO%d-%d pull to %d\n", pBank->channel, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_PUL_INFO, &reg, &bit, &mask);
     if (rc)
@@ -279,7 +278,7 @@ static HAL_Status PINCTRL_SetSchmitt(struct PINCTRL_BANK_INFO *pBank,
     uint8_t bit = 0;
     HAL_Status rc = HAL_OK;
 
-    HAL_DBG("setting GPIO%d-%d to %d\n", pBank->channel, pin, param);
+    HAL_DBG("setting GPIO%d-%d schmitt to %d\n", pBank->channel, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_SMT_INFO, &reg, &bit, &mask);
     if (rc)
@@ -305,7 +304,7 @@ static HAL_Status PINCTRL_SetSlewRate(struct PINCTRL_BANK_INFO *pBank,
     uint8_t bit = 0;
     HAL_Status rc = HAL_OK;
 
-    HAL_DBG("setting GPIO%d-%d to %d\n", pBank->channel, pin, param);
+    HAL_DBG("setting GPIO%d-%d slewrate to %d\n", pBank->channel, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_SRT_INFO, &reg, &bit, &mask);
     if (rc)

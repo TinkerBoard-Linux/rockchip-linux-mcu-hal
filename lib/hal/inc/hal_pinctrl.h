@@ -199,6 +199,8 @@ typedef enum {
 #define IS_GPIO_PIN(PIN)      ((PIN) != 0x00000000U)
 #define IS_GPIO_HIGH_PIN(PIN) IS_GPIO_PIN(((PIN) & 0xFFFF0000U))
 
+#define ROUTE_VAL(v, s, m) (((v) << (s)) | (m) << ((s) + 16))
+
 /***************************** Structure Definition **************************/
 
 struct PINCTRL_GRF_INFO {
@@ -217,10 +219,10 @@ struct PINCTRL_MUX_RECAL_DATA {
 
 struct PINCTRL_MUX_ROUTE_DATA {
     uint32_t routeReg;
+    uint32_t routeVal;
+    uint32_t pin;
     uint8_t bank;
-    uint8_t pin;
     uint8_t func;
-    uint8_t routeVal;
 };
 
 struct PINCTRL_BANK_INFO {
