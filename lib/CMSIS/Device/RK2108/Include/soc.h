@@ -73,7 +73,7 @@ typedef enum
     I2CMST2_IRQn                = 24,     /* I2C Master 2                                               */
     SPISLV0_IRQn                = 25,     /* SPI Slave 0                                                */
     SPIMST1_IRQn                = 26,     /* SPI Master 1                                               */
-    FSPI0_IRQn                  = 27,     /* FSPI                                                       */
+    FSPI0_IRQn                  = 27,     /* FSPI0                                                      */
     SDIO_IRQn                   = 28,     /* SDIO                                                       */
     GPIO0_IRQn                  = 29,     /* GPIO 0                                                     */
     GPIO1_IRQn                  = 30,     /* GPIO 1                                                     */
@@ -92,6 +92,7 @@ typedef enum
     CIF_IRQn                    = 44,     /* CIF                                                        */
     SPIMST2_IRQn                = 45,     /* SPI Master 2                                               */
     KEY_CTRL_IRQn               = 46,     /* KEY Control                                                */
+    FSPI1_IRQn                  = 27,     /* FSPI1                                                      */
     NUM_INTERRUPTS
 } IRQn_Type;
 
@@ -1056,8 +1057,9 @@ struct USB_HOST_CH_REG {
 #define SPI2APB_BASE        0x40C00000U /* SPI2APB base address */
 #define SPI1_BASE           0x40C10000U /* SPI1 base address */
 #define SPI2_BASE           0x40C20000U /* SPI2 base address */
-#define FSPI0_BASE          0x40C80000U /* FSPI base address */
+#define FSPI0_BASE          0x40C80000U /* FSPI0 base address */
 #define SDIO_BASE           0x40C90000U /* MMC0 base address */
+#define FSPI1_BASE          0x40CA0000U /* FSPI1 base address */
 #define KEY_CTRL_BASE       0x40E00000U /* KEY_CTRL base address */
 #define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
 #define GPIO1_BASE          0x40D10000U /* GPIO1 base address */
@@ -1105,6 +1107,7 @@ struct USB_HOST_CH_REG {
 #define SPI2                ((struct SPI_REG *) SPI2_BASE)
 #define FSPI0               ((struct FSPI_REG *) FSPI0_BASE)
 #define SDIO                ((struct MMC_REG *) SDIO_BASE)
+#define FSPI1               ((struct FSPI_REG *) FSPI1_BASE)
 #define KEY_CTRL            ((struct KEY_CTRL_REG *) KEY_CTRL_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
