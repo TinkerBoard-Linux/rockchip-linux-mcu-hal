@@ -758,6 +758,25 @@ HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t 
     return HAL_ERROR;
 }
 
+/**
+ * @brief  assert CRU global software reset.
+ * @param  type: global software reset type.
+ * @return HAL_INVAL if the SoC does not support.
+ */
+HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type)
+{
+#ifdef CRU_GLB_SRST_FST_VALUE_OFFSET
+    if (type == GLB_SRST_FST)
+        CRU->GLB_SRST_FST_VALUE = GLB_SRST_FST;
+#endif
+#ifdef CRU_GLB_SRST_SND_VALUE_OFFSET
+    if (type == GLB_SRST_SND)
+        CRU->GLB_SRST_SND_VALUE = GLB_SRST_SND;
+#endif
+
+    return HAL_INVAL;
+}
+
 /** @} */
 
 #endif

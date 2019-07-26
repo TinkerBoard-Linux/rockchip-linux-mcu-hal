@@ -99,28 +99,42 @@ struct PLL_SETUP {
     const struct PLL_CONFIG *rateTable;
 };
 
+typedef enum {
+    GLB_SRST_FST = 0xfdb9,
+    GLB_SRST_SND = 0xeca8,
+} eCRU_GlbSrstType;
+
 /***************************** Structure Definition **************************/
 
 /** @} */
 /***************************** Function Declare ******************************/
 uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup);
 HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate);
+
 HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk);
 HAL_Status HAL_CRU_ClkEnable(uint32_t clk);
 HAL_Status HAL_CRU_ClkDisable(uint32_t clk);
+
 HAL_Check HAL_CRU_ClkIsReset(uint32_t clk);
 HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk);
 HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk);
+
 HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue);
 uint32_t HAL_CRU_ClkGetDiv(uint32_t divName);
+
 HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue);
 uint32_t HAL_CRU_ClkGetMux(uint32_t muxName);
+
 HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
                                     uint32_t *numerator,
                                     uint32_t *denominator);
+
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName);
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate);
+
 HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t pRate, uint32_t *bestdiv);
+
+HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type);
 
 #endif
 
