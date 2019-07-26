@@ -55,20 +55,36 @@ struct CACHE_PMU_CNT {
  */
 __STATIC_INLINE uint32_t HAL_CpuAddrToDmaAddr(uint32_t cpuAddr)
 {
-#ifdef CPU_ADDR_TO_SRAM_ADDR_OFFSET
-
     uint32_t sramAddr = cpuAddr;
 
-    if (cpuAddr >= CPU_ADDR_START
-        && cpuAddr < (CPU_ADDR_START + CPU_ADDR_SIZE)) {
-        sramAddr = cpuAddr + CPU_ADDR_TO_SRAM_ADDR_OFFSET;
+#ifdef SRAM_IADDR_TO_DADDR_OFFSET
+
+    if (cpuAddr >= SRAM_IADDR_START
+        && cpuAddr < (SRAM_IADDR_START + SRAM_SIZE)) {
+        sramAddr = cpuAddr + SRAM_IADDR_TO_DADDR_OFFSET;
     }
 
-    return sramAddr;
-#else
-
-    return cpuAddr;
 #endif
+
+#ifdef XIP_NOR_IADDR_TO_DADDR_OFFSET
+
+    if (cpuAddr >= XIP_NOR_IADDR_START
+        && cpuAddr < (XIP_NOR_IADDR_START + XIP_NOR_SIZE)) {
+        sramAddr = cpuAddr + XIP_NOR_IADDR_TO_DADDR_OFFSET;
+    }
+
+#endif
+
+#ifdef XIP_PSRAM_IADDR_TO_DADDR_OFFSET
+
+    if (cpuAddr >= XIP_PSRAM_IADDR_START
+        && cpuAddr < (XIP_PSRAM_IADDR_START + XIP_PSRAM_SIZE)) {
+        sramAddr = cpuAddr + XIP_PSRAM_IADDR_TO_DADDR_OFFSET;
+    }
+
+#endif
+
+    return sramAddr;
 }
 
 /**

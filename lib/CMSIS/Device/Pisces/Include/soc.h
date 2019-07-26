@@ -1013,10 +1013,11 @@ struct VOP_REG {
 #define CACHE_M_CLEAN_INVALID           0x4U
 #define CACHE_M_INVALID_ALL             0x6U
 
-/* CPU ADDR TO SRAM ADDR */
-#define CPU_ADDR_START                  (0x04000000U)
-#define CPU_ADDR_SIZE                   (0x00100000U)
-#define CPU_ADDR_TO_SRAM_ADDR_OFFSET    (0x1c000000U)
+/* ICACHE ADDR TO DCACHE ADDR */
+#define SRAM_IADDR_START                                   (0x04000000U)
+#define SRAM_SIZE                                          (0x00100000U)
+#define SRAM_IADDR_TO_DADDR_OFFSET                         (0x1c000000U)
+
 
 #define CACHE_REVISION                  (0x00000100U)
 /******************************************CRU*******************************************/
