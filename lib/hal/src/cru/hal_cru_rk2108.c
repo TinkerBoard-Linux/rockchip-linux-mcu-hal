@@ -101,6 +101,13 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         muxSrc = CLK_GET_MUX(CLK_I2S8CH_SRC);
         divSrc = CLK_GET_DIV(CLK_I2S8CH_SRC);
         divFrac = CLK_GET_DIV(CLK_I2S8CH_FRAC);
+        mux = CLK_GET_MUX(MCLK_I2S8CH);
+        break;
+    case I2S1_MCLKOUT:
+        muxSrc = CLK_GET_MUX(CLK_I2S1_8CH_SRC);
+        divSrc = CLK_GET_DIV(CLK_I2S1_8CH_SRC);
+        divFrac = CLK_GET_DIV(CLK_I2S1_8CH_FRAC);
+        mux = CLK_GET_MUX(MCLK_I2S1_8CH);
         break;
     case CLK_AUDPWM:
         muxSrc = CLK_GET_MUX(CLK_AUDPWM_SRC);
@@ -175,7 +182,13 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         muxSrc = CLK_GET_MUX(CLK_I2S8CH_SRC);
         divSrc = CLK_GET_DIV(CLK_I2S8CH_SRC);
         divFrac = CLK_GET_DIV(CLK_I2S8CH_FRAC);
-        mux = CLK_GET_MUX(I2S_MCLKOUT);
+        mux = CLK_GET_MUX(MCLK_I2S8CH);
+        break;
+    case I2S1_MCLKOUT:
+        muxSrc = CLK_GET_MUX(CLK_I2S1_8CH_SRC);
+        divSrc = CLK_GET_DIV(CLK_I2S1_8CH_SRC);
+        divFrac = CLK_GET_DIV(CLK_I2S1_8CH_FRAC);
+        mux = CLK_GET_MUX(MCLK_I2S1_8CH);
         break;
     case CLK_AUDPWM:
         muxSrc = CLK_GET_MUX(CLK_AUDPWM_SRC);
@@ -341,6 +354,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case CLK_UART1:
     case CLK_UART2:
     case I2S_MCLKOUT:
+    case I2S1_MCLKOUT:
     case CLK_AUDPWM:
     case CLK_32K:
         freq = HAL_CRU_ClkFracGetFreq(clockName);
@@ -360,6 +374,11 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         freq = HAL_CRU_ClkUsbGetFreq(clockName);
 
         return freq;
+    case CLK_CIFOUT:
+        mux = HAL_CRU_ClkGetMux(clkMux);
+        if (mux == 2)
+            pRate = PLL_INPUT_OSC_RATE;
+        break;
     default:
         break;
     }
@@ -422,6 +441,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_UART1:
     case CLK_UART2:
     case I2S_MCLKOUT:
+    case I2S1_MCLKOUT:
     case CLK_AUDPWM:
     case CLK_32K:
         error = HAL_CRU_ClkFracSetFreq(clockName, rate);
@@ -442,6 +462,12 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         error = HAL_CRU_ClkUsbSetFreq(clockName, rate);
 
         return error;
+    case CLK_CIFOUT:
+        if (rate == PLL_INPUT_OSC_RATE) {
+            mux = 2;
+            pRate = PLL_INPUT_OSC_RATE;
+        }
+        break;
     default:
         break;
     }

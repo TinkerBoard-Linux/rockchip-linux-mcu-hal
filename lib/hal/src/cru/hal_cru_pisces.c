@@ -87,6 +87,7 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         muxSrc = CLK_GET_MUX(CLK_I2S8CH_SRC);
         divSrc = CLK_GET_DIV(CLK_I2S8CH_SRC);
         divFrac = CLK_GET_DIV(CLK_I2S8CH_FRAC);
+        mux = CLK_GET_MUX(MCLK_I2S8CH);
         break;
     case CLK_32K:
         divFrac = CLK_GET_DIV(CLK_32K);
@@ -151,7 +152,7 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         muxSrc = CLK_GET_MUX(CLK_I2S8CH_SRC);
         divSrc = CLK_GET_DIV(CLK_I2S8CH_SRC);
         divFrac = CLK_GET_DIV(CLK_I2S8CH_FRAC);
-        mux = CLK_GET_MUX(I2S_MCLKOUT);
+        mux = CLK_GET_MUX(MCLK_I2S8CH);
         break;
     case CLK_32K:
         divFrac = CLK_GET_DIV(CLK_32K);
