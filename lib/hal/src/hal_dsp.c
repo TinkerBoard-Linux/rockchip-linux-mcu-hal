@@ -32,6 +32,94 @@
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
+
+/**
+ * @brief  Set tcm work mode for retention or power down.
+ * @param  tcmSel: itcm or dtcm "|" combination, such as DSP_DTCM0 | DSP_DTCM1.
+ * @param  mode: work mode in eDSP_tcmMode.
+ * @return HAL_Status
+ */
+static HAL_Status DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
+{
+    uint32_t mask0 = 0;
+    uint32_t mask1 = 0;
+    uint32_t value0 = 0;
+    uint32_t value1 = 0;
+
+    if (tcmSel == DSP_ITCM) {
+        mask1 = PMU_DSPTCM_CON1_DSPITCM_PGEN_SFT_MASK |
+                PMU_DSPTCM_CON1_DSPITCM_RET1N_SFT_MASK |
+                PMU_DSPTCM_CON1_DSPITCM_RET2N_SFT_MASK;
+        switch (mode) {
+        case NOR_MODE:
+        {
+            value1 = PMU_DSPTCM_CON1_DSPITCM_RET1N_SFT_MASK |
+                     PMU_DSPTCM_CON1_DSPITCM_RET2N_SFT_MASK;
+        }
+        break;
+        case RET1N_MODE:
+        {
+            value1 = PMU_DSPTCM_CON1_DSPITCM_PGEN_SFT_MASK |
+                     PMU_DSPTCM_CON1_DSPITCM_RET2N_SFT_MASK;
+        }
+        break;
+        case RET2N_MODE:
+        {
+            value1 = PMU_DSPTCM_CON1_DSPITCM_PGEN_SFT_MASK |
+                     PMU_DSPTCM_CON1_DSPITCM_RET1N_SFT_MASK;
+        }
+        break;
+        case PWR_DOWN_MODE:
+        {
+            value1 = PMU_DSPTCM_CON1_DSPITCM_PGEN_SFT_MASK |
+                     PMU_DSPTCM_CON1_DSPITCM_RET1N_SFT_MASK |
+                     PMU_DSPTCM_CON1_DSPITCM_RET2N_SFT_MASK;
+        }
+        break;
+        default:
+            break;
+        }
+    } else {
+        mask0 = (PMU_DSPTCM_CON0_DSPDTCM_PGEN_SFT_MASK & tcmSel) |
+                (PMU_DSPTCM_CON0_DSPDTCM_RET1N_SFT_MASK & (tcmSel << 8));
+        mask1 = PMU_DSPTCM_CON1_DSPDTCM_RET2N_SFT_MASK & tcmSel;
+        switch (mode) {
+        case NOR_MODE:
+        {
+            value0 = PMU_DSPTCM_CON0_DSPDTCM_RET1N_SFT_MASK & (tcmSel << 8);
+            value1 = PMU_DSPTCM_CON1_DSPDTCM_RET2N_SFT_MASK & tcmSel;
+        }
+        break;
+        case RET1N_MODE:
+        {
+            value0 = PMU_DSPTCM_CON0_DSPDTCM_PGEN_SFT_MASK & tcmSel;
+            value1 = PMU_DSPTCM_CON1_DSPDTCM_RET2N_SFT_MASK & tcmSel;
+        }
+        break;
+        case RET2N_MODE:
+        {
+            value0 = (PMU_DSPTCM_CON0_DSPDTCM_PGEN_SFT_MASK & tcmSel) |
+                     (PMU_DSPTCM_CON0_DSPDTCM_RET1N_SFT_MASK & (tcmSel << 8));
+        }
+        break;
+        case PWR_DOWN_MODE:
+        {
+            value0 = (PMU_DSPTCM_CON0_DSPDTCM_PGEN_SFT_MASK & tcmSel) |
+                     (PMU_DSPTCM_CON0_DSPDTCM_RET1N_SFT_MASK & (tcmSel << 8));
+            value1 = PMU_DSPTCM_CON1_DSPDTCM_RET2N_SFT_MASK & tcmSel;
+        }
+        break;
+        default:
+            break;
+        }
+    }
+    if (mask0)
+        WRITE_REG_MASK_WE(PMU->DSPTCM_CON[0], mask0, value0);
+    WRITE_REG_MASK_WE(PMU->DSPTCM_CON[1], mask1, value1);
+
+    return HAL_OK;
+}
+
 static int DSP_Ioctl(void *priv, int cmd, void *arg)
 {
     HAL_Status ret = HAL_OK;
@@ -158,6 +246,31 @@ HAL_Status HAL_DSP_Resume(struct DSP_DEV *dsp)
 
  *  @{
  */
+
+/**
+ * @brief  Set tcm work mode for retention or power down.
+ * @param  tcmSel: tcm "|" combination, such as DSP_DTCM0 | DSP_ITCM.
+ * @param  mode: work mode in eDSP_tCMMODE.
+ * @return HAL_Status
+ */
+HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
+{
+    uint32_t sel;
+
+    HAL_ASSERT(!tcmSel);
+
+    /* Check itcm select */
+    sel = tcmSel & DSP_ITCM;
+    if (sel)
+        DSP_SetTcmMode(sel, mode);
+
+    /* Check dtcm select */
+    sel = tcmSel & ~sel;
+    if (sel)
+        DSP_SetTcmMode(sel, mode);
+
+    return HAL_OK;
+}
 
 /**
  * @brief  Init dsp.
