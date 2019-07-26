@@ -27,6 +27,8 @@
  - Config SysTick reload value by calling HAL_SYSTICK_Config();
  - Configure the SysTick frequency by calling by calling HAL_SetTickFreq().
 
+ Resgister HAL_SYSTICK_IRQHandler();
+
  @} */
 
 #include "hal_base.h"

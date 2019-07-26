@@ -35,6 +35,7 @@ HAL_Status HAL_SYSTICK_Init(void);
 HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb);
 HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_tickClkSource clkSource);
 HAL_Check HAL_SYSTICK_IsExtRefClockEnabled(void);
+void HAL_SYSTICK_IRQHandler(void);
 
 #endif
 

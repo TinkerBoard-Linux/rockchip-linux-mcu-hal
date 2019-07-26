@@ -49,11 +49,6 @@ HAL_Status HAL_DelayUs(uint32_t us);
 HAL_Status HAL_DelayMs(uint32_t ms);
 HAL_Status HAL_CPUDelayUs(uint32_t us);
 
-void HAL_SYSTICK_IRQHandler(void);
-HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb);
-HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_tickClkSource clkSouce);
-HAL_Check HAL_SYSTICK_IsExtRefClockEnabled(void);
-
 #endif
 
 /** @} */
