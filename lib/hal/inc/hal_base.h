@@ -49,6 +49,19 @@ HAL_Status HAL_DelayUs(uint32_t us);
 HAL_Status HAL_DelayMs(uint32_t ms);
 HAL_Status HAL_CPUDelayUs(uint32_t us);
 
+uint64_t HAL_DivU64Rem(uint64_t numerator, uint32_t denominator, uint32_t *pRemainder);
+
+/**
+ * @brief  uint64_t numerator / uint32_t denominator
+ * @param  numerator
+ * @param  denominator
+ * @return uint64_t result
+ */
+__STATIC_INLINE uint64_t HAL_DivU64(uint64_t numerator, uint32_t denominator)
+{
+    return HAL_DivU64Rem(numerator, denominator, NULL);
+}
+
 #endif
 
 /** @} */
