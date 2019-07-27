@@ -8,6 +8,7 @@
 
 /* HAL SOC Config */
 #define RKMCU_RK2108
+#define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
 #define HAL_AUDIO_MODULE_ENABLED
