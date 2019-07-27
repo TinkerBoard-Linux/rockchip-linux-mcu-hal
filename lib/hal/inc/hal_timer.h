@@ -42,6 +42,7 @@ uint64_t HAL_TIMER_GetCount(struct TIMER_REG *pReg);
 HAL_Status HAL_TIMER0_Handler(void);
 HAL_Status HAL_TIMER1_Handler(void);
 HAL_Status HAL_TIMER_Init(struct TIMER_REG *pReg, eTIMER_MODE mode);
+HAL_Status HAL_TIMER_SysTimerInit(struct TIMER_REG *pReg);
 HAL_Status HAL_TIMER_DeInit(struct TIMER_REG *pReg);
 HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg);
 

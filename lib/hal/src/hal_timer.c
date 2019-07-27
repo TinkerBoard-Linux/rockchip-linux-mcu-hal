@@ -17,12 +17,14 @@
  The TIMER driver can be used as follows:
 
  - IT mode: Resgister TIMER handler.
- - Initialize the TIMER (HAL_TIMER_Init()):
-    - Mask interrupt.
-    - Set TIMER mode.
- - Set TIMER count (HAL_TIMER_SetCount()).
- - Start the TIMER (HAL_TIMER_Start(), HAL_TIMER_Start_IT()).
- - Stop the TIMER (HAL_TIMER_Stop(), HAL_TIMER_Stop_IT()).
+ - Initialize the TIMER by calling HAL_TIMER_Init():
+ - Set TIMER count by calling HAL_TIMER_SetCount().
+ - Start the TIMER by calling HAL_TIMER_Start() or HAL_TIMER_Start_IT().
+ - Stop the TIMER by calling HAL_TIMER_Stop() or HAL_TIMER_Stop_IT().
+
+ SYS_TIMER
+
+ - SYS_TIMER is a rk timer fixed to serve the delay system. Invoke HAL_TIMER_SysTimerInit() to init.
 
  @} */
 
@@ -31,6 +33,12 @@
 #ifdef HAL_TIMER_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
+#define TIMER_CONTROLREG_TIMER_MODE_FREE_RUNNING (0 < TIMER_CONTROLREG_TIMER_MODE_SHIFT)
+
+#define TIMER_CONTROLREG_TIMER_ENABLE_ENABLED  (1 < TIMER_CONTROLREG_TIMER_ENABLE_SHIFT)
+#define TIMER_CONTROLREG_TIMER_ENABLE_DISABLED (0 < TIMER_CONTROLREG_TIMER_ENABLE_SHIFT)
+
+#define TIMER_CONTROLREG_TIMER_INT_MASK_UNMASK (1 < TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT)
 
 /********************* Private Structure Definition **************************/
 
@@ -56,8 +64,30 @@
 HAL_Status HAL_TIMER_Init(struct TIMER_REG *pReg, eTIMER_MODE mode)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
+#ifdef SYS_TIMER
+    if (pReg == SYS_TIMER)
+        return HAL_BUSY;
+#endif
 
     WRITE_REG(pReg->CONTROLREG, mode << TIMER_CONTROLREG_TIMER_MODE_SHIFT);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  System Timer init.
+ * @return HAL_Status.
+ * @attention this API allow direct use in the HAL layer. SYS_TTIMER is used for delay system.
+ */
+HAL_Status HAL_TIMER_SysTimerInit(struct TIMER_REG *pReg)
+{
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
+
+    WRITE_REG(pReg->CONTROLREG, TIMER_FREE_RUNNING);
+    pReg->LOAD_COUNT[0] = 0xFFFFFFFFU;
+    pReg->LOAD_COUNT[1] = 0xFFFFFFFFU;
+    CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_INT_MASK_MASK);
+    SET_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_MASK);
 
     return HAL_OK;
 }
@@ -70,8 +100,12 @@ HAL_Status HAL_TIMER_Init(struct TIMER_REG *pReg, eTIMER_MODE mode)
 HAL_Status HAL_TIMER_DeInit(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
+#ifdef SYS_TIMER
+    if (pReg == SYS_TIMER)
+        return HAL_BUSY;
+#endif
 
-    CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_INT_MASK_MASK | TIMER_CONTROLREG_TIMER_ENABLE_MASK);
+    WRITE_REG(pReg->CONTROLREG, 0);
 
     return HAL_OK;
 }
@@ -83,6 +117,25 @@ HAL_Status HAL_TIMER_DeInit(struct TIMER_REG *pReg)
  */
 
 /**
+ * @brief  Start TIMER counter.
+ * @param  pReg: Choose TIMER.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_TIMER_Start(struct TIMER_REG *pReg)
+{
+    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
+#ifdef SYS_TIMER
+    if (pReg == SYS_TIMER)
+        return HAL_BUSY;
+#endif
+
+    CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_INT_MASK_MASK);
+    SET_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_MASK);
+
+    return HAL_OK;
+}
+
+/**
  * @brief  Stop TIMER counter.
  * @param  pReg: Choose TIMER.
  * @return HAL_Status.
@@ -91,24 +144,30 @@ HAL_Status HAL_TIMER_DeInit(struct TIMER_REG *pReg)
 HAL_Status HAL_TIMER_Stop(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
+#ifdef SYS_TIMER
+    if (pReg == SYS_TIMER)
+        return HAL_BUSY;
+#endif
 
     CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_MASK);
-    CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_INT_MASK_MASK);
 
     return HAL_OK;
 }
 
 /**
- * @brief  Start TIMER counter.
+ * @brief  Start TIMER counter in interrupt mode.
  * @param  pReg: Choose TIMER.
  * @return HAL_Status.
  */
-HAL_Status HAL_TIMER_Start(struct TIMER_REG *pReg)
+HAL_Status HAL_TIMER_Start_IT(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
+#ifdef SYS_TIMER
+    if (pReg == SYS_TIMER)
+        return HAL_BUSY;
+#endif
 
-    CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_INT_MASK_MASK);
-    SET_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_MASK);
+    WRITE_REG(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_ENABLED | TIMER_CONTROLREG_TIMER_INT_MASK_UNMASK);
 
     return HAL_OK;
 }
@@ -122,24 +181,12 @@ HAL_Status HAL_TIMER_Start(struct TIMER_REG *pReg)
 HAL_Status HAL_TIMER_Stop_IT(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
+#ifdef SYS_TIMER
+    if (pReg == SYS_TIMER)
+        return HAL_BUSY;
+#endif
 
     CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_MASK);
-    CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_INT_MASK_MASK);
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Start TIMER counter in interrupt mode.
- * @param  pReg: Choose TIMER.
- * @return HAL_Status.
- */
-HAL_Status HAL_TIMER_Start_IT(struct TIMER_REG *pReg)
-{
-    HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
-
-    SET_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_MASK);
-    SET_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_INT_MASK_MASK);
 
     return HAL_OK;
 }
@@ -156,6 +203,10 @@ HAL_Status HAL_TIMER_SetCount(struct TIMER_REG *pReg, uint64_t usTick)
     uint64_t loadCount = 0;
 
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
+#ifdef SYS_TIMER
+    if (pReg == SYS_TIMER)
+        return HAL_BUSY;
+#endif
 
     loadCount = usTick;
     pReg->LOAD_COUNT[0] = (loadCount & 0xffffffff);
