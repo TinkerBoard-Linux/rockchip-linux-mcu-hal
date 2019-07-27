@@ -61,6 +61,23 @@ static void CPUCycleLoop(uint32_t cycles)
 }
 #endif
 
+#if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
+__STATIC_FORCEINLINE HAL_Status TimerDelayUs(uint32_t us)
+{
+    uint64_t count, from, now, pass;
+
+    from = HAL_TIMER_GetCount(SYS_TIMER);
+    count = PLL_INPUT_OSC_RATE / 1000000 * us;
+
+    do {
+        now = HAL_TIMER_GetCount(SYS_TIMER);
+        pass = now > from ? now - from : from - now;
+    } while (pass < count);
+
+    return HAL_OK;
+}
+#endif
+
 /********************* Public Function Definition ***************************/
 /** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
 
@@ -87,6 +104,10 @@ HAL_Status HAL_Init(void)
 #ifdef HAL_SYSTICK_MODULE_ENABLED
     HAL_SYSTICK_Init();
 #endif
+#endif
+
+#if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
+    HAL_TIMER_SysTimerInit(SYS_TIMER);
 #endif
 
     return HAL_OK;
@@ -123,10 +144,22 @@ HAL_Status HAL_IncTick(void)
 /**
  * @brief  Provides tick value in millisecond.
  * @return uint32_t: tick value in millisecond.
+ * @attention this API allow direct use in the HAL layer.
  */
 uint32_t HAL_GetTick(void)
 {
+#if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
+    uint64_t tick = HAL_TIMER_GetCount(SYS_TIMER);
+    uint32_t base = PLL_INPUT_OSC_RATE / 1000;
+
+    if (tick >> 62)
+        tick = ~tick;
+
+    return (uint32_t)HAL_DivU64(tick, base);
+#else
+
     return uwTick;
+#endif
 }
 
 /**
@@ -145,6 +178,7 @@ HAL_Status HAL_SetTickFreq(eHAL_tickFreq freq)
 /**
   * @brief Return tick frequency.
   * @return uint32_t: tick period in Hz.
+  * @attention this API allow direct use in the HAL layer.
   */
 eHAL_tickFreq HAL_GetTickFreq(void)
 {
@@ -161,6 +195,10 @@ eHAL_tickFreq HAL_GetTickFreq(void)
  */
 __WEAK HAL_Status HAL_DelayMs(uint32_t ms)
 {
+#if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
+    for (uint32_t i = 0; i < ms; i++)
+        HAL_DelayUs(1000);
+#else
     uint32_t startTick = HAL_GetTick();
     uint32_t waitTick = ms;
 
@@ -171,6 +209,7 @@ __WEAK HAL_Status HAL_DelayMs(uint32_t ms)
 
     while ((HAL_GetTick() - startTick) < waitTick)
         ;
+#endif
 
     return HAL_OK;
 }
@@ -179,10 +218,18 @@ __WEAK HAL_Status HAL_DelayMs(uint32_t ms)
  * @brief  SysTick udelay.
  * @param  us: udelay count.
  * @return HAL_Status: HAL_OK.
+ * @attention this API allow direct use in the HAL layer. The longer the delay,
+ *  the more accurate. Actual delay is greater than the parameter.
  */
 HAL_Status HAL_DelayUs(uint32_t us)
 {
+#if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
+
+    return TimerDelayUs(us);
+#else
+
     return HAL_CPUDelayUs(us);
+#endif
 }
 
 /**
