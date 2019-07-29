@@ -76,7 +76,8 @@ typedef enum {
 
 /** @} */
 /***************************** Function Declare ******************************/
-HAL_Status HAL_DSI_IrqConfig(struct DSI_REG *pReg);
+HAL_Status HAL_DSI_IrqEnable(struct DSI_REG *pReg);
+HAL_Status HAL_DSI_IrqDisable(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps);
 HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg);

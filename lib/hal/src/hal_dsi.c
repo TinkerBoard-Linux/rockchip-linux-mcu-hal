@@ -302,11 +302,24 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
  */
 
 /**
- * @brief  Config DSI Interrupt Mask.
+ * @brief  Disable DSI Interrupt.
  * @param  pReg: DSI reg base.
  * @return HAL_Status.
  */
-HAL_Status HAL_DSI_IrqConfig(struct DSI_REG *pReg)
+HAL_Status HAL_DSI_IrqDisable(struct DSI_REG *pReg)
+{
+    WRITE_REG(pReg->INT_MSK0, 0);
+    WRITE_REG(pReg->INT_MSK1, 0);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Enable DSI Interrupt.
+ * @param  pReg: DSI reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_DSI_IrqEnable(struct DSI_REG *pReg)
 {
     uint32_t intMsk0 = DSI_ACK_WITH_ERR_0_MASK | DSI_ACK_WITH_ERR_1_MASK | DSI_ACK_WITH_ERR_2_MASK |
                        DSI_ACK_WITH_ERR_3_MASK | DSI_ACK_WITH_ERR_4_MASK | DSI_ACK_WITH_ERR_5_MASK |
