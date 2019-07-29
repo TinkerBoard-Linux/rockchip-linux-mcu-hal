@@ -629,6 +629,9 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
 
     switch (path) {
     case SWITCH_TO_INTERNAL_DPHY:
+        WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK,
+                          GRF_DSI_CON0_DPHY_PHYRSTZ_MASK);
+
         WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK, 0);
         HAL_DelayMs(1);
 #ifdef IS_FPGA
@@ -652,6 +655,9 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
         WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
                           GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK);
 #endif
+        WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0],
+                          GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 0);
+
         HAL_DelayMs(1);
         WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK,
                           GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK);
@@ -660,7 +666,7 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
         break;
     }
     while (VOP_MaskRead(pReg->VOP_STATUS, VOP_VOP_STATUS_DPHY_SWITCH_STATUS_SHIFT,
-                        VOP_VOP_STATUS_DPHY_SWITCH_STATUS_MASK) == path) {
+                        VOP_VOP_STATUS_DPHY_SWITCH_STATUS_MASK) != path) {
         if (i++ > MIPI_SWITCH_TIME_OUT) {
             HAL_DBG_ERR("wait mipi switch time out\n");
             break;
@@ -1380,6 +1386,10 @@ HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
 {
     WRITE_REG_MASK_WE(gGrfReg->SOC_CON[0], GRF_SOC_CON0_VOP_TE_SEL_MASK,
                       1 << GRF_SOC_CON0_VOP_TE_SEL_SHIFT);
+    WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4],
+                      GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_SEL_MASK,
+                      GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_SEL_MASK);
+
     VOP_MaskWrite(&g_VOP_RegMir.SYS_CTRL[2], &pReg->SYS_CTRL[2],
                   VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT,
                   VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_MASK,
