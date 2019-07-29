@@ -646,7 +646,7 @@ int32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pD
     int32_t ret = HAL_OK;
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
-    if ((sec + nSec) * 512 > nor->size)
+    if ((sec + nSec) * nor->sectorSize > nor->size)
         return HAL_INVAL;
 
     ret = HAL_SNOR_ReadData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
@@ -694,7 +694,7 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
     uint32_t remaining = nSec;
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
-    if ((sec + nSec) * 512 > nor->size)
+    if ((sec + nSec) * nor->sectorSize > nor->size)
         return HAL_INVAL;
 
     while (remaining) {
