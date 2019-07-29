@@ -389,7 +389,7 @@ static void VOP_SetWinLoop(struct VOP_REG *pReg,
     xLoopEn = !!pWinState->xLoopOffset;
     yLoopEn = !!pWinState->yLoopOffset;
     if (xLoopEn || yLoopEn) {
-        offset = pWinState->yLoopOffset * pWinState->xVir +
+        offset = pWinState->yLoopOffset * pWinState->stride / 4 +
                  pWinState->xLoopOffset *
                  VOP_GetFormatLength(pWinState->hwFormat, 0) / 8;
         VOP_Write(&g_VOP_RegMir.WIN0_YRGB_MST + regOffset,
@@ -404,7 +404,7 @@ static void VOP_SetWinLoop(struct VOP_REG *pReg,
             uint8_t vsub = VOP_GetVerSubSampling(pWinState->hwFormat);
             uint8_t bpp = VOP_GetFormatLength(pWinState->hwFormat, 1);
 
-            offset = pWinState->yLoopOffset * 2 * pWinState->xVir / vsub;
+            offset = pWinState->yLoopOffset * 2 * pWinState->stride / 4 / vsub;
             offset += pWinState->xLoopOffset * 2 * bpp / hsub / 8;
 
             VOP_Write(&g_VOP_RegMir.WIN0_CBCR_MST + regOffset,
@@ -464,7 +464,7 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                   VOP_WIN0_CTRL0_WIN0_RB_SWAP_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_RB_SWAP_MASK,
                   VOP_RbSwap(pWinState->hwFormat));
-    yStride = pWinState->xVir / 4;
+    yStride = pWinState->stride;
 
     if ((pWinState->hwFormat == VOP_FMT_YUV444SP) ||
         (pWinState->hwFormat == VOP_FMT_YUV444SP_4))
@@ -716,6 +716,8 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
                             struct CRTC_WIN_STATE *pWinState,
                             struct DISPLAY_MODE_INFO *pModeInfo)
 {
+    uint16_t xVirByte;
+
     if (IS_BPP_FORMAT(pWinState->hwFormat)) {
         if ((pWinState->winId == VOP_WIN2) && (pWinState->winEn)) {
             HAL_DBG_ERR("win2 unsupport bpp format!\n");
@@ -723,13 +725,14 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
             return HAL_INVAL;
         }
     }
-    pWinState->xVir = pWinState->xVir *
-                      VOP_GetFormatLength(pWinState->hwFormat, 0) / 8;
-    if (pWinState->xVir % 4) {
-        HAL_DBG_ERR("VOP setplane xvir should be 4 byte align: %d\n", pWinState->xVir);
+    xVirByte = pWinState->xVir *
+               VOP_GetFormatLength(pWinState->hwFormat, 0) / 8;
+    if (xVirByte % 4) {
+        HAL_DBG_ERR("VOP setplane xvir should be 4 byte align: %d\n", xVirByte);
 
         return HAL_INVAL;
     }
+    pWinState->stride = xVirByte / 4;
     VOP_SetWin(pReg, pWinState, pModeInfo);
     VOP_SetWinLoop(pReg, pWinState);
 

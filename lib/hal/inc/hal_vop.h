@@ -107,6 +107,7 @@ struct CRTC_WIN_STATE {
     uint8_t hwFormat;
     uint16_t hwCrtcX;
     uint16_t hwCrtcY;
+    uint16_t stride;
 
     uint16_t xLoopOffset;
     uint16_t yLoopOffset;
