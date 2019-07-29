@@ -59,7 +59,6 @@
 /********************* Private MACRO Definition ******************************/
 
 #define HAL_SPI_FIFO_LENGTH 64
-
 /* Bit fields in SR */
 #define HAL_SPI_SR_BUSY     (0x1 << SPI_SR_BSF_SHIFT)
 #define HAL_SPI_SR_STB_BUSY (0x1 << SPI_SR_STB_SHIFT)
@@ -125,6 +124,7 @@ HAL_Status HAL_SPI_Init(struct SPI_HANDLE *pSPI, uint32_t base, bool slave)
     pSPI->config.apbTransform = CR0_BHT_8BIT;
     pSPI->config.endianMode = CR0_EM_BIG;
     pSPI->config.ssd = CR0_SSD_ONE;
+    pSPI->dmaBurstSize = 1;
 
     return HAL_OK;
 }
@@ -624,6 +624,8 @@ static HAL_Status HAL_SPI_ConfigureTransferMode(struct SPI_HANDLE *pSPI)
     cr0 = READ_REG(pSPI->pReg->CTRLR[0]);
     cr0 &= ~SPI_CTRLR0_XFM_MASK;
     cr0 |= pSPI->config.xfmMode;
+
+    WRITE_REG(pSPI->pReg->DMARDLR, pSPI->dmaBurstSize - 1);
 
     WRITE_REG(pSPI->pReg->CTRLR[0], cr0);
 

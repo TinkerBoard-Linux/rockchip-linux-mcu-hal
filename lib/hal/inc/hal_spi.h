@@ -21,7 +21,7 @@
  *  @{
  */
 
-#define HAL_SPI_MASTER_MAX_SCLK_OUT 50000000
+#define HAL_SPI_MASTER_MAX_SCLK_OUT 100000000
 #define HAL_SPI_SLAVE_MAX_SCLK_OUT  20000000
 
 #define CR0_DATA_FRAME_SIZE_4BIT  (0x00 << SPI_CTRLR0_DFS_SHIFT)
@@ -106,6 +106,7 @@ struct SPI_HANDLE {
     uint8_t *pRxBufferEnd;         /* Specifies pointer to SPI Rx End transfer Buffer. */
     uint32_t len;                  /* Specifies the transfer length . */
     eSPI_TransferType type;        /* Specifies the transfer type: POLL/IT/DMA. */
+    uint32_t dmaBurstSize;         /* Specifies Dma Burst size */
 };
 
 /** @} */
