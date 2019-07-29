@@ -26,6 +26,7 @@
 #define DSI_UPDATE_BIT(REG, SHIFT, VAL) \
                  VAL ? SET_BIT(REG, SHIFT) : CLEAR_BIT(REG, SHIFT)
 #define CMD_PKT_STATUS_TIMEOUT_RETRIES 100
+#define WAIT_PHY_READY_MS              10
 
 /********************* Private Structure Definition **************************/
 typedef enum {
@@ -118,13 +119,13 @@ static HAL_Status DSI_WaitFifoEmpty(struct DSI_REG *pReg)
     return HAL_OK;
 }
 
-static uint32_t DSI_GetHcomponentLbcc(uint32_t hcomponent, uint16_t lane_mbps, uint16_t clk)
+static uint32_t DSI_GetHcomponentLbcc(uint32_t hcomponent, uint16_t laneMbps, uint16_t clk)
 {
     uint32_t lbcc;
-    uint64_t lbcc_tmp;
+    uint64_t lbccTmp;
 
-    lbcc_tmp = hcomponent * lane_mbps * 1000 / 8;
-    lbcc = HAL_DIV_ROUND_UP(lbcc_tmp, clk);
+    lbccTmp = hcomponent * laneMbps * 1000 / 8;
+    lbcc = HAL_DIV_ROUND_UP(lbccTmp, clk);
 
     return lbcc;
 }
@@ -176,21 +177,21 @@ HAL_Status HAL_DSI_Resume(struct DSI_REG *pReg)
  */
 HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg)
 {
-    uint32_t int_st0, int_st1, i;
+    uint32_t intSt0, intSt1, i;
 
-    int_st0 = READ_REG(pReg->INT_ST0);
-    int_st1 = READ_REG(pReg->INT_ST1);
+    intSt0 = READ_REG(pReg->INT_ST0);
+    intSt1 = READ_REG(pReg->INT_ST1);
 
     for (i = 0; i < HAL_ARRAY_SIZE(ACK_WITH_ERR); i++)
-        if (int_st0 & BIT(i))
+        if (intSt0 & BIT(i))
             HAL_DBG_ERR("DSI Irq: %s\n", ACK_WITH_ERR[i]);
 
     for (i = 0; i < HAL_ARRAY_SIZE(DPHY_ERROR); i++)
-        if (int_st0 & BIT(16 + i))
+        if (intSt0 & BIT(16 + i))
             HAL_DBG_ERR("DSI Irq: %s\n", DPHY_ERROR[i]);
 
     for (i = 0; i < HAL_ARRAY_SIZE(ERROR_REPORT); i++)
-        if (int_st1 & BIT(i))
+        if (intSt1 & BIT(i))
             HAL_DBG_ERR("DSI Irq: %s\n", ERROR_REPORT[i]);
 
     return HAL_OK;
@@ -199,13 +200,13 @@ HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg)
 /**
  * @brief  Send DSI Command Packet.
  * @param  pReg: DSI reg base.
- * @param  DataType: DSI Command Data Type.
- * @param  PayloadLen: DSI Command Data Len.
- * @param  Payload: DSI Command Data.
+ * @param  dataType: DSI Command Data Type.
+ * @param  payloadLen: DSI Command Data Len.
+ * @param  payload: DSI Command Data.
  * @return HAL_Status.
  */
-HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
-                              uint8_t PayloadLen, uint8_t *Payload)
+HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t dataType,
+                              uint8_t payloadLen, uint8_t *payload)
 {
     uint32_t temp, val;
     HAL_Status ret;
@@ -213,8 +214,8 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
     ret = DSI_WaitFifoNotFull(pReg, DSI_GEN_CMD_FULL_MASK);
     if (ret != HAL_OK)
         return ret;
-    val = (0x0 << 6) | DataType;
-    switch (DataType) {
+    val = (0x0 << 6) | dataType;
+    switch (dataType) {
     case MIPI_DSI_DCS_COMPRESSION_MODE:
     case MIPI_DSI_DCS_SHORT_WRITE:
     case MIPI_DSI_DCS_SHORT_WRITE_PARAM:
@@ -222,8 +223,8 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
     case MIPI_DSI_GENERIC_SHORT_WRITE_1_PARAM:
     case MIPI_DSI_GENERIC_SHORT_WRITE_2_PARAM:
     {
-        val |= (PayloadLen > 0) ? (Payload[0] << 8) : 0;
-        val |= (PayloadLen > 1) ? (Payload[1] << 16) : 0;
+        val |= (payloadLen > 0) ? (payload[0] << 8) : 0;
+        val |= (payloadLen > 1) ? (payload[1] << 16) : 0;
         break;
     }
     case MIPI_DSI_DCS_LONG_WRITE:
@@ -235,24 +236,24 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
         if (ret != HAL_OK)
             return ret;
 
-        val |= (PayloadLen << 8);
-        while (PayloadLen) {
-            if (PayloadLen < 4) {
+        val |= (payloadLen << 8);
+        while (payloadLen) {
+            if (payloadLen < 4) {
                 temp = 0;
-                memcpy(&temp, Payload, PayloadLen);
+                memcpy(&temp, payload, payloadLen);
                 WRITE_REG(pReg->GEN_PLD_DATA, temp);
-                PayloadLen = 0;
+                payloadLen = 0;
             } else {
-                temp = *(uint32_t *)Payload;
+                temp = *(uint32_t *)payload;
                 WRITE_REG(pReg->GEN_PLD_DATA, temp);
-                Payload += 4;
-                PayloadLen -= 4;
+                payload += 4;
+                payloadLen -= 4;
             }
         }
         break;
     }
     default:
-        HAL_DBG_ERR("%s: Unsupported command\n", __func__);
+        HAL_DBG_ERR("%s, Unsupport dataType:0x%x\n", __func__, dataType);
     }
 
     /* Send packet header */
@@ -271,21 +272,21 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
  */
 HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
 {
-    uint32_t lp_mask = DSI_GEN_SW_0P_TX_MASK | DSI_GEN_SW_1P_TX_MASK |
-                       DSI_GEN_SW_2P_TX_MASK | DSI_GEN_SR_0P_TX_MASK |
-                       DSI_GEN_SR_1P_TX_MASK | DSI_GEN_SR_2P_TX_MASK |
-                       DSI_GEN_LW_TX_MASK | DSI_DCS_SW_0P_TX_MASK |
-                       DSI_DCS_SW_1P_TX_MASK | DSI_DCS_SR_0P_TXL_MASK |
-                       DSI_DCS_LW_TX_MASK | DSI_MAX_RD_PKT_SIZE_MASK;
+    uint32_t lpMask = DSI_GEN_SW_0P_TX_MASK | DSI_GEN_SW_1P_TX_MASK |
+                      DSI_GEN_SW_2P_TX_MASK | DSI_GEN_SR_0P_TX_MASK |
+                      DSI_GEN_SR_1P_TX_MASK | DSI_GEN_SR_2P_TX_MASK |
+                      DSI_GEN_LW_TX_MASK | DSI_DCS_SW_0P_TX_MASK |
+                      DSI_DCS_SW_1P_TX_MASK | DSI_DCS_SR_0P_TXL_MASK |
+                      DSI_DCS_LW_TX_MASK | DSI_MAX_RD_PKT_SIZE_MASK;
 
     if (Enable) {
         DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 1);
         DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 0);
-        DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lp_mask, 1);
+        DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lpMask, 1);
     } else {
         DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 0);
         DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 1);
-        DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lp_mask, 0);
+        DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lpMask, 0);
     }
 
     return HAL_OK;
@@ -307,57 +308,105 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
  */
 HAL_Status HAL_DSI_IrqConfig(struct DSI_REG *pReg)
 {
-    uint32_t int_msk0 = DSI_ACK_WITH_ERR_0_MASK | DSI_ACK_WITH_ERR_1_MASK | DSI_ACK_WITH_ERR_2_MASK |
-                        DSI_ACK_WITH_ERR_3_MASK | DSI_ACK_WITH_ERR_4_MASK | DSI_ACK_WITH_ERR_5_MASK |
-                        DSI_ACK_WITH_ERR_6_MASK | DSI_ACK_WITH_ERR_7_MASK | DSI_ACK_WITH_ERR_8_MASK |
-                        DSI_ACK_WITH_ERR_9_MASK | DSI_ACK_WITH_ERR_10_MASK | DSI_ACK_WITH_ERR_11_MASK |
-                        DSI_ACK_WITH_ERR_12_MASK | DSI_ACK_WITH_ERR_13_MASK | DSI_ACK_WITH_ERR_14_MASK |
-                        DSI_ACK_WITH_ERR_15_MASK | DSI_DPHY_ERRORS_0_MASK | DSI_DPHY_ERRORS_1_MASK |
-                        DSI_DPHY_ERRORS_2_MASK | DSI_DPHY_ERRORS_3_MASK | DSI_DPHY_ERRORS_4_MASK;
-    uint32_t int_msk1 = DSI_TO_HS_TX_MASK | DSI_TO_LP_RX_MASK | DSI_ECC_SINGLE_ERR_MASK |
-                        DSI_ECC_MULTI_ERR_MASK | DSI_CRC_ERR_MASK | DSI_PKT_SIZE_ERR_MASK |
-                        DSI_EOPT_ERR_MASK | DSI_DPI_PLD_WR_ERR_MASK | DSI_GEN_CMD_WR_ERR_MASK |
-                        DSI_GEN_PLD_WR_ERR_MASK | DSI_GEN_PLD_SEND_ERR_MASK | DSI_GEN_PLD_RD_ERR_MASK |
-                        DSI_GEN_PLD_RECEV_ERR_MASK;
+    uint32_t intMsk0 = DSI_ACK_WITH_ERR_0_MASK | DSI_ACK_WITH_ERR_1_MASK | DSI_ACK_WITH_ERR_2_MASK |
+                       DSI_ACK_WITH_ERR_3_MASK | DSI_ACK_WITH_ERR_4_MASK | DSI_ACK_WITH_ERR_5_MASK |
+                       DSI_ACK_WITH_ERR_6_MASK | DSI_ACK_WITH_ERR_7_MASK | DSI_ACK_WITH_ERR_8_MASK |
+                       DSI_ACK_WITH_ERR_9_MASK | DSI_ACK_WITH_ERR_10_MASK | DSI_ACK_WITH_ERR_11_MASK |
+                       DSI_ACK_WITH_ERR_12_MASK | DSI_ACK_WITH_ERR_13_MASK | DSI_ACK_WITH_ERR_14_MASK |
+                       DSI_ACK_WITH_ERR_15_MASK | DSI_DPHY_ERRORS_0_MASK | DSI_DPHY_ERRORS_1_MASK |
+                       DSI_DPHY_ERRORS_2_MASK | DSI_DPHY_ERRORS_3_MASK | DSI_DPHY_ERRORS_4_MASK;
+    uint32_t intMsk1 = DSI_TO_HS_TX_MASK | DSI_TO_LP_RX_MASK | DSI_ECC_SINGLE_ERR_MASK |
+                       DSI_ECC_MULTI_ERR_MASK | DSI_CRC_ERR_MASK | DSI_PKT_SIZE_ERR_MASK |
+                       DSI_EOPT_ERR_MASK | DSI_DPI_PLD_WR_ERR_MASK | DSI_GEN_CMD_WR_ERR_MASK |
+                       DSI_GEN_PLD_WR_ERR_MASK | DSI_GEN_PLD_SEND_ERR_MASK | DSI_GEN_PLD_RD_ERR_MASK |
+                       DSI_GEN_PLD_RECEV_ERR_MASK;
 
-    WRITE_REG(pReg->INT_MSK0, int_msk0);
-    WRITE_REG(pReg->INT_MSK1, int_msk1);
+    WRITE_REG(pReg->INT_MSK0, intMsk0);
+    WRITE_REG(pReg->INT_MSK1, intMsk1);
 
-    return HAL_OK;
-}
-
-/**
- * @brief  DSI m31 Dphy Set Pll.
- * @param  rate: DSI per lane mbps.
- * @return HAL_Status.
- */
-HAL_Status HAL_DSI_M31DphySetPll(uint32_t rate)
-{
-    /**
-     * TODO:
-     */
     return HAL_OK;
 }
 
 /**
  * @brief  DSI m31 Dphy Init.
  * @param  pReg: DSI reg base.
+ * @param  laneMbps: DSI per lane mbps.
  * @return HAL_Status.
  */
-HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg)
+HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps)
 {
+    uint32_t index, clkSel, start = 0;
+    uint32_t lanebps = laneMbps * 1000000;
+    uint32_t phyStopState = GRF_DSI_STATUS0_DPHY_PHYSTOPSTATECLKLANE_MASK |
+                            GRF_DSI_STATUS0_DPHY_STOPSTATE_MASK;
+
+    /* Table 8-2 Relative setting for PLL output clock */
+    const struct {
+        uint32_t maxLanebps;
+        uint32_t pllClkSel;
+    } pllClkSelTable[] = {
+        {   63750000, 0 },
+        {   93125000, 94 },
+        {  186250000, 243 },
+        {  372500000, 392 },
+        {  745000000, 541 },
+        { 1500000000, 692 },
+    };
+
+    if (lanebps <= 63750000) {
+        clkSel = 0;
+    } else if (lanebps > 1500000000) {
+        HAL_DBG_ERR("dsi mbps is out of range, using 1500 mbps config\n");
+        clkSel = 692;
+    } else {
+        for (index = 0; index < HAL_ARRAY_SIZE(pllClkSelTable); index++)
+            if (lanebps < pllClkSelTable[index].maxLanebps)
+                break;
+        clkSel = HAL_DIV_ROUND_UP((lanebps - pllClkSelTable[index - 1 ].maxLanebps),
+                                  (312500 << (index - 1)));
+
+        clkSel += pllClkSelTable[index - 1 ].pllClkSel;
+    }
+    HAL_DBG("dsi mbps = %ld, m31 dphy pll_clkSel = %ld\n", laneMbps, clkSel);
+
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_ENABLECLK_MASK, 0);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_RSTZ_MASK, 1);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_SHUTDOWNZ_MASK, 1);
 
     WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 0);
-    HAL_DelayUs(10);
+
+    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PLL_CLK_SEL_MASK,
+                      clkSel << GRF_DSI_CON0_DPHY_PLL_CLK_SEL_SHIFT);
+
+    /* Set dphy ref_clk_in = 27Mhz */
+    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_REFCLK_IN_SEL_MASK,
+                      0x5 << GRF_DSI_CON0_DPHY_REFCLK_IN_SEL_SHIFT);
+
+    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[2], GRF_DSI_CON2_DPHY_LANE_SWAP0_MASK |
+                      GRF_DSI_CON2_DPHY_LANE_SWAP1_MASK | GRF_DSI_CON2_DPHY_LANE_SWAP2_MASK |
+                      GRF_DSI_CON2_DPHY_LANE_SWAP3_MASK | GRF_DSI_CON2_DPHY_LANE_SWAP_CLK_MASK,
+                      0 << GRF_DSI_CON2_DPHY_LANE_SWAP0_SHIFT | 1 << GRF_DSI_CON2_DPHY_LANE_SWAP1_SHIFT |
+                      2 << GRF_DSI_CON2_DPHY_LANE_SWAP2_SHIFT | 3 << GRF_DSI_CON2_DPHY_LANE_SWAP3_SHIFT |
+                      4 << GRF_DSI_CON2_DPHY_LANE_SWAP_CLK_SHIFT);
+
     WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 1);
 
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_SHUTDOWNZ_MASK, 0);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_RSTZ_MASK, 0);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_ENABLECLK_MASK, 1);
-    HAL_DelayUs(10);
+
+    start = HAL_GetTick();
+    /* *
+     * There is no phy_lock signal interface in m31 dphy
+     * Use each lane's stop state to judge dphy is ready
+     */
+    while (READ_BIT(gGrfReg->DSI_STATUS[0], phyStopState) != phyStopState) {
+        if (HAL_GetTick() - start > WAIT_PHY_READY_MS) {
+            HAL_DBG_ERR("wait mipi dphy ready time out\n");
+
+            return HAL_TIMEOUT;;
+        }
+    }
 
     return HAL_OK;
 }
@@ -365,14 +414,14 @@ HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg)
 /**
  * @brief  DSI Init.
  * @param  pReg: DSI reg base.
- * @param  Lanembps: DSI per lane mbps.
+ * @param  laneMbps: DSI per lane mbps.
  * @return HAL_Status.
  */
-HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint32_t Lanembps)
+HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint32_t laneMbps)
 {
     uint32_t val;
 
-    val = HAL_DIV_ROUND_UP(Lanembps >> 3, 20);
+    val = HAL_DIV_ROUND_UP(laneMbps >> 3, 20);
     WRITE_REG(pReg->PWR_UP, 0);
     WRITE_REG(pReg->CLKMGR_CFG, 10 << DSI_TO_CLK_DIVISION_SHIFT |
               val << DSI_TX_ESC_CLK_DIVISION_SHIFT);
@@ -384,17 +433,17 @@ HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint32_t Lanembps)
  * @brief  DSI Dpi Config.
  * @param  pReg: DSI reg base.
  * @param  pModeInfo: display mode info.
- * @param  BusFormat: display busformat.
+ * @param  busFormat: display busFormat.
  * @return HAL_Status.
  */
 HAL_Status HAL_DSI_DpiConfig(struct DSI_REG *pReg,
                              struct DISPLAY_MODE_INFO *pModeInfo,
-                             uint16_t BusFormat)
+                             uint16_t busFormat)
 {
-    uint32_t lpcmd_time;
+    uint32_t lpcmdTime;
     uint32_t color = 0, polarity = 0;
 
-    switch (BusFormat) {
+    switch (busFormat) {
     case MEDIA_BUS_FMT_RGB888_1X24:
         color = DPI_COLOR_CODING_24BIT;
         break;
@@ -411,11 +460,11 @@ HAL_Status HAL_DSI_DpiConfig(struct DSI_REG *pReg,
 
     polarity |= (pModeInfo->flags & VIDEO_MODE_FLAG_NHSYNC ? 1 : 0) << DSI_HSYNC_ACTIVE_LOW_SHIFT;
     polarity |= (pModeInfo->flags & VIDEO_MODE_FLAG_NVSYNC ? 1 : 0) << DSI_VSYNC_ACTIVE_LOW_SHIFT;
-    lpcmd_time = 4 << DSI_OUTVACT_LPCMD_TIME_SHIFT | 4 << DSI_INVACT_LPCMD_TIME_SHIFT;
+    lpcmdTime = 4 << DSI_OUTVACT_LPCMD_TIME_SHIFT | 4 << DSI_INVACT_LPCMD_TIME_SHIFT;
 
     WRITE_REG(pReg->DPI_COLOR_CODING, color);
     WRITE_REG(pReg->DPI_CFG_POL, polarity);
-    WRITE_REG(pReg->DPI_LP_CMD_TIM, lpcmd_time);
+    WRITE_REG(pReg->DPI_LP_CMD_TIM, lpcmdTime);
 
     return HAL_OK;
 }
@@ -473,12 +522,12 @@ HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
 /**
  * @brief  DSI Line Timer Config.
  * @param  pReg: DSI reg base.
- * @param  Lanembps: DSI per lane mbps.
+ * @param  laneMbps: DSI per lane mbps.
  * @param  pModeInfo: display mode info.
  * @return HAL_Status.
  */
 HAL_Status HAL_DSI_LineTimerConfig(struct DSI_REG *pReg,
-                                   uint16_t Lanembps,
+                                   uint16_t laneMbps,
                                    struct DISPLAY_MODE_INFO *pModeInfo)
 {
     uint16_t hsa = pModeInfo->crtcHsyncEnd - pModeInfo->crtcHsyncStart;
@@ -486,18 +535,18 @@ HAL_Status HAL_DSI_LineTimerConfig(struct DSI_REG *pReg,
     uint16_t clk = pModeInfo->crtcClock;
     uint32_t lpcc;
 
-    lpcc = DSI_GetHcomponentLbcc(hsa, Lanembps, clk);
+    lpcc = DSI_GetHcomponentLbcc(hsa, laneMbps, clk);
     WRITE_REG(pReg->VID_HSA_TIME, lpcc);
-    lpcc = DSI_GetHcomponentLbcc(hbp, Lanembps, clk);
+    lpcc = DSI_GetHcomponentLbcc(hbp, laneMbps, clk);
     WRITE_REG(pReg->VID_HBP_TIME, lpcc);
-    lpcc = DSI_GetHcomponentLbcc(pModeInfo->crtcHtotal, Lanembps, clk);
+    lpcc = DSI_GetHcomponentLbcc(pModeInfo->crtcHtotal, laneMbps, clk);
     WRITE_REG(pReg->VID_HLINE_TIME, lpcc);
 
     return HAL_OK;
 }
 
 HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
-                                   uint16_t Lanembps,
+                                   uint16_t laneMbps,
                                    struct DISPLAY_MODE_INFO *pModeInfo,
                                    struct DISPLAY_RECT *pDisplayRect)
 {
@@ -511,12 +560,12 @@ HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
     DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, DSI_DCS_LW_TX_MASK, 0);
     DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, DSI_TEAR_FX_EN_MASK, 1);
 
-    lpcc = DSI_GetHcomponentLbcc(hsa, Lanembps, clk);
+    lpcc = DSI_GetHcomponentLbcc(hsa, laneMbps, clk);
 
     WRITE_REG(pReg->VID_HSA_TIME, lpcc);
-    lpcc = DSI_GetHcomponentLbcc(hbp, Lanembps, clk);
+    lpcc = DSI_GetHcomponentLbcc(hbp, laneMbps, clk);
     WRITE_REG(pReg->VID_HBP_TIME, lpcc);
-    lpcc = DSI_GetHcomponentLbcc(pDisplayRect->w, Lanembps, clk);
+    lpcc = DSI_GetHcomponentLbcc(pDisplayRect->w, laneMbps, clk);
     WRITE_REG(pReg->VID_HLINE_TIME, lpcc);
 
     return HAL_OK;

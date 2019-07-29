@@ -78,28 +78,27 @@ typedef enum {
 /***************************** Function Declare ******************************/
 HAL_Status HAL_DSI_IrqConfig(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg);
-HAL_Status HAL_DSI_M31DphySetPll(uint32_t Lanembps);
-HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg);
+HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps);
 HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_PacketHandlerConfig(struct DSI_REG *pReg);
-HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint32_t Lanembps);
+HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint32_t laneMbps);
 HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable);
 HAL_Status HAL_DSI_Enable(struct DSI_REG *pReg,
                           struct DISPLAY_MODE_INFO *pModeInfo);
-HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t DataType,
-                              uint8_t PayloadLen, uint8_t *Payload);
+HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t dataType,
+                              uint8_t payloadLen, uint8_t *payload);
 HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
                               struct DISPLAY_MODE_INFO *pModeInfo);
 HAL_Status HAL_DSI_VerticalTimingConfig(struct DSI_REG *pReg,
                                         struct DISPLAY_MODE_INFO *pModeInfo);
 HAL_Status HAL_DSI_DpiConfig(struct DSI_REG *pReg,
                              struct DISPLAY_MODE_INFO *pModeInfo,
-                             uint16_t BusFormat);
+                             uint16_t busFormat);
 HAL_Status HAL_DSI_LineTimerConfig(struct DSI_REG *pReg,
                                    uint16_t Lanembps,
                                    struct DISPLAY_MODE_INFO *pModeInfo);
 HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
-                                   uint16_t Lanembps,
+                                   uint16_t laneMbps,
                                    struct DISPLAY_MODE_INFO *pModeInfo,
                                    struct DISPLAY_RECT *pDisplayRect);
 #endif
