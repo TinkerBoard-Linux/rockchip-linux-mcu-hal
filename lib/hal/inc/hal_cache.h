@@ -202,7 +202,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
 
     address = HAL_CpuAddrToDmaAddr(address);
 
-    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte) >> CACHE_LINE_SHIFT;
+    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_INVALID | ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
@@ -476,7 +476,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
     if (sizeByte == 0)
         return HAL_OK;
 
-    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte) >> CACHE_LINE_SHIFT;
+    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_INVALID | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
@@ -514,7 +514,7 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
     if (sizeByte == 0)
         return HAL_OK;
 
-    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte) >> CACHE_LINE_SHIFT;
+    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_CLEAN | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
@@ -552,7 +552,7 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     if (sizeByte == 0)
         return HAL_OK;
 
-    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte) >> CACHE_LINE_SHIFT;
+    offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_CLEAN_INVALID | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
 
