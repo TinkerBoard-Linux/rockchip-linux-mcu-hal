@@ -3,6 +3,21 @@
  * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+/** @addtogroup RK_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup NVIC
+ *  @{
+ */
+
+/** @defgroup NVIC_How_To_Use How To Use
+ *  @{
+
+ The NVIC driver can be used as follows:
+
+ @} */
+
 #include "hal_base.h"
 
 #ifdef HAL_NVIC_MODULE_ENABLED
@@ -19,13 +34,31 @@
 
 /********************* Public Function Definition ****************************/
 
-void HAL_NVIC_SetIRQHandler(IRQn_Type IRQn, NVIC_IRQHandler handler)
+/** @defgroup NVIC_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
+/**
+ * @brief  Get interrupt handler.
+ * @param  IRQn: interrupt number.
+ * @param  handler: NVIC_IRQHandler.
+ * @return HAL_OK.
+ */
+HAL_Status HAL_NVIC_SetIRQHandler(IRQn_Type IRQn, NVIC_IRQHandler handler)
 {
     uint32_t *vectors = (uint32_t *)SCB->VTOR;
 
     vectors[IRQn + NVIC_PERIPH_IRQ_OFFSET] = (uint32_t)handler;
+    HAL_NVIC_SetPriority(IRQn, NVIC_PERIPH_PRIO_DEFAULT, NVIC_PERIPH_SUB_PRIO_DEFAULT);
+
+    return HAL_OK;
 }
 
+/**
+ * @brief  Get interrupt handler.
+ * @param  IRQn: interrupt number
+ * @return NVIC_IRQHandler.
+ */
 NVIC_IRQHandler HAL_NVIC_GetIRQHandler(IRQn_Type IRQn)
 {
     uint32_t *vectors = (uint32_t *)SCB->VTOR;
@@ -33,39 +66,93 @@ NVIC_IRQHandler HAL_NVIC_GetIRQHandler(IRQn_Type IRQn)
     return (NVIC_IRQHandler)(vectors[IRQn + NVIC_PERIPH_IRQ_OFFSET]);
 }
 
-void HAL_NVIC_SetPriorityGrouping(eNVIC_PriorityGroup priorityGroup)
+/**
+ * @brief  Set interrupt priority group.
+ * @return priorityGroup: priority group.
+ * @return HAL_OK.
+ */
+HAL_Status HAL_NVIC_SetPriorityGrouping(eNVIC_PriorityGroup priorityGroup)
 {
     NVIC_SetPriorityGrouping(priorityGroup);
+
+    return HAL_OK;
 }
 
+/**
+ * @brief  Get interrupt priority group.
+ * @return uint32_t: priority group.
+ */
 uint32_t HAL_NVIC_GetPriorityGrouping(void)
 {
     return NVIC_GetPriorityGrouping();
 }
 
-void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
+/**
+ * @brief  Set interrupt priority.
+ * @param  IRQn: interrupt number.
+ * @param  preemptPriority: preemt priority.
+ * @param  subPriority: sub priority.
+ * @return HAL_OK.
+ */
+HAL_Status HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t preemptPriority, uint32_t subPriority)
 {
-    NVIC_SetPriority(IRQn, priority);
+    uint32_t prioritygroup = 0x00U;
+
+    /* Check the parameters */
+    HAL_ASSERT(IS_NVIC_SUB_PRIORITY(subPriority));
+    HAL_ASSERT(IS_NVIC_PREEMPTION_PRIORITY(preemptPriority));
+
+    prioritygroup = NVIC_GetPriorityGrouping();
+
+    NVIC_SetPriority(IRQn, NVIC_EncodePriority(prioritygroup, preemptPriority, subPriority));
+
+    return HAL_OK;
 }
 
+/**
+ * @brief  Get interrupt priority.
+ * @param  IRQn: interrupt number
+ * @return HAL_OK.
+ */
 uint32_t HAL_NVIC_GetPriority(IRQn_Type IRQn)
 {
     return NVIC_GetPriority(IRQn);
 }
 
-void HAL_NVIC_EnableIRQ(IRQn_Type IRQn)
+/**
+ * @brief  Enabled interrupt.
+ * @param  IRQn: interrupt number
+ * @return HAL_OK.
+ */
+HAL_Status HAL_NVIC_EnableIRQ(IRQn_Type IRQn)
 {
     NVIC_EnableIRQ(IRQn);
+
+    return HAL_OK;
 }
 
-void HAL_NVIC_DisableIRQ(IRQn_Type IRQn)
+/**
+ * @brief  Disable interrupt.
+ * @param  IRQn: interrupt number
+ * @return HAL_OK.
+ */
+HAL_Status HAL_NVIC_DisableIRQ(IRQn_Type IRQn)
 {
     NVIC_DisableIRQ(IRQn);
+
+    return HAL_OK;
 }
 
-void HAL_NVIC_SetPendingIRQ(IRQn_Type IRQn)
+/**
+ * @brief  Pending interrupt.
+ * @param  IRQn: interrupt number
+ * @return HAL_OK.
+ */
+HAL_Status HAL_NVIC_SetPendingIRQ(IRQn_Type IRQn)
 {
     NVIC_SetPendingIRQ(IRQn);
+
+    return HAL_OK;
 }
 
 /**
@@ -83,33 +170,46 @@ HAL_Check HAL_NVIC_IsPendingIRQ(IRQn_Type IRQn)
  * @param  IRQn: interrupt number
  * @return None.
  */
-void HAL_NVIC_ClearPendingIRQ(IRQn_Type IRQn)
+HAL_Status HAL_NVIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
     NVIC_ClearPendingIRQ(IRQn);
+
+    return HAL_OK;
 }
 
 /**
  * @brief  Register peripheral interrupt handle and priority.
- * @param  IRQn: interrupt number
- * @param  handler: interrupt handle
- * @param  priority: interrupt priority
+ * @param  IRQn: interrupt number.
+ * @param  handler: interrupt handle.
+ * @param  preemptPriority: preemt priority.
+ * @param  subPriority: sub priority.
  * @return None.
  */
-void HAL_NVIC_ConfigExtIRQ(IRQn_Type IRQn, NVIC_IRQHandler handler,
-                           uint32_t priority)
+HAL_Status HAL_NVIC_ConfigExtIRQ(IRQn_Type IRQn, NVIC_IRQHandler handler,
+                                 uint32_t preemptPriority, uint32_t subPriority)
 {
     HAL_NVIC_SetIRQHandler(IRQn, handler);
-    HAL_NVIC_SetPriority(IRQn, priority);
+    HAL_NVIC_SetPriority(IRQn, preemptPriority, subPriority);
     HAL_NVIC_EnableIRQ(IRQn);
+
+    return HAL_OK;
 }
 
 /**
  * @brief  Init NVIC Interrupt Controller.
  * @return None.
  */
-void HAL_NVIC_Init(void)
+HAL_Status HAL_NVIC_Init(void)
 {
     /* Use HardFault */
+
+    return HAL_OK;
 }
 
+/** @} */
+
 #endif
+
+/** @} */
+
+/** @} */

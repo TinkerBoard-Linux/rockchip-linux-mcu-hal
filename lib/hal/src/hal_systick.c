@@ -66,7 +66,7 @@ HAL_Status HAL_SYSTICK_Init(void)
     HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq()));        /* Configure the SysTick to have interrupt in 1ms time basis */
 
     /*Configure the SysTick IRQ priority */
-    HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY);
+    HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
 
     return HAL_OK;
 }

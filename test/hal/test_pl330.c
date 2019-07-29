@@ -76,10 +76,8 @@ TEST_GROUP_RUNNER(HAL_PL330){
     dst = (uint8_t *)malloc(TSIZE);
     TEST_ASSERT_NOT_NULL(dst);
 
-    HAL_NVIC_ConfigExtIRQ(pl330->irq[0], (NVIC_IRQHandler) & HAL_PL330_Handler,
-                          NVIC_PERIPH_PRIO_DEFAULT);
-    HAL_NVIC_ConfigExtIRQ(pl330->irq[1], (NVIC_IRQHandler) & HAL_PL330_Handler,
-                          NVIC_PERIPH_PRIO_DEFAULT);
+    HAL_NVIC_SetIRQHandler(pl330->irq[0], (NVIC_IRQHandler) & HAL_PL330_Handler);
+    HAL_NVIC_SetIRQHandler(pl330->irq[1], (NVIC_IRQHandler) & HAL_PL330_Handler);
 
     RUN_TEST_CASE(HAL_PL330, MemcpyTest);
 

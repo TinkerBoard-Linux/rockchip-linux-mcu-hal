@@ -124,10 +124,8 @@ TEST(HAL_TIMER, TimerStartStop){
 }
 
 TEST_GROUP_RUNNER(HAL_TIMER){
-    HAL_NVIC_ConfigExtIRQ(TIMER0_IRQn, (NVIC_IRQHandler) & HAL_TIMER0_Handler,
-                          NVIC_PERIPH_PRIO_DEFAULT);
-    HAL_NVIC_ConfigExtIRQ(TIMER1_IRQn, (NVIC_IRQHandler) & HAL_TIMER1_Handler,
-                          NVIC_PERIPH_PRIO_DEFAULT);
+    HAL_NVIC_SetIRQHandler(TIMER0_IRQn, (NVIC_IRQHandler) & HAL_TIMER0_Handler);
+    HAL_NVIC_SetIRQHandler(TIMER1_IRQn, (NVIC_IRQHandler) & HAL_TIMER1_Handler);
     RUN_TEST_CASE(HAL_TIMER, TimerInit);
     RUN_TEST_CASE(HAL_TIMER, TimerSetCount);
     RUN_TEST_CASE(HAL_TIMER, TimerStartStop);
