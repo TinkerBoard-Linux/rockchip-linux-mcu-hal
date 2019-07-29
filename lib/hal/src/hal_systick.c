@@ -18,16 +18,24 @@
 
  Reset SysTick in default setting:
 
+  - Resgister HAL_SYSTICK_IRQHandler();
   - Reset HAL_BASE tick frequency value by calling HAL_SetTickFreq() if needed;
   - Reset SysTick by calling HAL_SYSTICK_Init().
 
  Reset SysTick by user:
 
+ - Resgister HAL_SYSTICK_IRQHandler();
  - Choose SysTick clock source by calling HAL_SYSTICK_CLKSourceConfig();
  - Config SysTick reload value by calling HAL_SYSTICK_Config();
  - Configure the SysTick frequency by calling by calling HAL_SetTickFreq().
 
- Resgister HAL_SYSTICK_IRQHandler();
+ Reinit SysTick when system core clock and clock source is changed;
+
+ - Reset core rate by calling CRU module interface;
+ - Update HAL global variable systemCoreClock by calling HAL_UpdateWithNewCoreRate();
+ - Change systick clock source by calling HAL_SYSTICK_CLKSourceConfig();
+ - Update systick reloader num in default frequency by calling
+    HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq())).
 
  @} */
 

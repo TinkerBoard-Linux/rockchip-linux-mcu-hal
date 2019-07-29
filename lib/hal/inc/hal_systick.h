@@ -28,6 +28,8 @@ typedef enum {
     HAL_TICK_CLKSRC_EXT
 } eHAL_tickClkSource;
 
+#define IS_SYSTICK_SOURCE(s) (((s) == HAL_TICK_CLKSRC_CORE) || ((s) == HAL_TICK_CLKSRC_EXT))
+
 /** @} */
 /***************************** Function Declare ******************************/
 
