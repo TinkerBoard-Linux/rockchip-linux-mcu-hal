@@ -615,6 +615,23 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
     return HAL_OK;
 }
 
+/**
+ * @brief  Set FSPI delay line.
+ * @param  host: FSPI host.
+ * @param  cells: delay line cells.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint8_t cells)
+{
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+    if (host->cs == 0)
+        host->instance->DLL_CTRL0 = 1 << 8 | cells;
+    else
+        host->instance->DLL_CTRL1 = 1 << 8 | cells;
+
+    return HAL_OK;
+}
+
 /** @} */
 
 #endif
