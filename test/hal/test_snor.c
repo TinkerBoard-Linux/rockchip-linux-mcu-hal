@@ -204,7 +204,7 @@ static HAL_Status SNOR_HostSet(struct SNOR_HOST *spi)
     HAL_NVIC_EnableIRQ(FSPI0_IRQn);
     HAL_FSPI_Init(fspiHost);
 
-    spi->mode = SPI_MODE_0 | SPI_TX_QUAD | SPI_RX_QUAD;
+    spi->mode = SPI_MODE_3 | SPI_TX_QUAD | SPI_RX_QUAD;
 #ifdef HAL_FSPI_XIP_ENABLE
     spi->mode |= SPI_XIP;
 #endif
@@ -291,8 +291,6 @@ HAL_Status HAL_SPI_Xfer(struct SNOR_HOST *spi, uint32_t bitlen, const void *dout
 
 static HAL_Status SNOR_HostSet(struct SNOR_HOST *spi)
 {
-    uint32_t ret;
-
     static struct SPI_HANDLE *spiHost;
 
     spiHost = (struct SPI_HANDLE *)calloc(1, sizeof(struct SPI_HANDLE));
@@ -304,9 +302,9 @@ static HAL_Status SNOR_HostSet(struct SNOR_HOST *spi)
     spiHost->config.speed = HAL_SPI_MASTER_MAX_SCLK_OUT;
     spiHost->config.nBytes = CR0_DATA_FRAME_SIZE_8BIT;
 
-    HAL_NVIC_SetIRQHandler(SPI0_IRQn, (NVIC_IRQHandler) & SPI_IRQHandler);
-    HAL_NVIC_EnableIRQ(SPI0_IRQn);
-    HAL_SPI_Init(spiHost, SPI0_BASE, HAL_FALSE);
+    HAL_NVIC_SetIRQHandler(SPIMST2_IRQn, (NVIC_IRQHandler) & SPI_IRQHandler);
+    HAL_NVIC_EnableIRQ(SPIMST2_IRQn);
+    HAL_SPI_Init(spiHost, SPI2_BASE, HAL_FALSE);
     HAL_SPI_Stop(spiHost);
 
     spi->mode = SPI_MODE_3;
