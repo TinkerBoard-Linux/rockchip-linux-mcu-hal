@@ -39,6 +39,7 @@
  * @param  mode: work mode in eDSP_tcmMode.
  * @return HAL_Status
  */
+#if (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
 static HAL_Status DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
 {
     uint32_t mask0 = 0;
@@ -119,13 +120,14 @@ static HAL_Status DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
 
     return HAL_OK;
 }
+#endif
 
 static int DSP_Ioctl(void *priv, int cmd, void *arg)
 {
     HAL_Status ret = HAL_OK;
 
     switch (cmd) {
-#ifdef RKMCU_RK2206
+#if defined(RKMCU_RK2206)
     case DSP_IOCTL_SET_ITCM_SIZE:
     {
         uint32_t setBit = 0;
@@ -161,6 +163,7 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
     }
     break;
 #endif
+#if (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
     case DSP_IOCTL_SET_MEM_GATING:
     {
         uint32_t mask = 0;
@@ -177,6 +180,7 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
             WRITE_REG_MASK_WE(GRF->DSP_CON[2], mask, 0);
     };
         break;
+#endif
     default:
         break;
     }
@@ -247,6 +251,7 @@ HAL_Status HAL_DSP_Resume(struct DSP_DEV *dsp)
  *  @{
  */
 
+#if (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
 /**
  * @brief  Set tcm work mode for retention or power down.
  * @param  tcmSel: tcm "|" combination, such as DSP_DTCM0 | DSP_ITCM.
@@ -271,6 +276,7 @@ HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
 
     return HAL_OK;
 }
+#endif
 
 /**
  * @brief  Init dsp.
