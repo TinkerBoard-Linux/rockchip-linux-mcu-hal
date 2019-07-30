@@ -193,9 +193,9 @@ int32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pD
 int32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData);
 int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData);
 HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE EraseType);
-HAL_Status HAL_SNOR_ShowFlashInfo(struct SPI_NOR *nor);
 HAL_Status HAL_SNOR_XIPEnable(struct SPI_NOR *nor);
 HAL_Status HAL_SNOR_XIPDisable(struct SPI_NOR *nor);
+HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId);
 
 #endif
 

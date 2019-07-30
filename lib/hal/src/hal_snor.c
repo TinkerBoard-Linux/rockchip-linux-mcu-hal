@@ -382,7 +382,7 @@ struct FLASH_INFO *SNOR_GerFlashInfo(uint8_t *flashId)
     uint32_t i;
     uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
 
-    for (i = 0; i < (sizeof(spiFlashbl) / sizeof(struct FLASH_INFO)); i++) {
+    for (i = 0; i < HAL_ARRAY_SIZE(spiFlashbl); i++) {
         if (spiFlashbl[i].id == id)
             return &spiFlashbl[i];
     }
@@ -885,6 +885,24 @@ HAL_Status HAL_SNOR_XIPEnable(struct SPI_NOR *nor)
 HAL_Status HAL_SNOR_XIPDisable(struct SPI_NOR *nor)
 {
     return SNOR_XipExecOp(nor->spi, NULL, 0);
+}
+
+/**
+ * @brief  Check if the flash support.
+ * @param  flashId: flash id.
+ * @return HAL_Check.
+ */
+HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId)
+{
+    uint32_t i;
+    uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
+
+    for (i = 0; i < HAL_ARRAY_SIZE(spiFlashbl); i++) {
+        if (spiFlashbl[i].id == id)
+            return HAL_TRUE;
+    }
+
+    return HAL_FALSE;
 }
 
 /** @} */
