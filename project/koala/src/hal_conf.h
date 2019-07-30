@@ -8,6 +8,7 @@
 
 /* HAL SOC Config */
 #define RKMCU_KOALA
+#define SYS_TIMER TIMER4 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
 #define HAL_CRU_MODULE_ENABLED
@@ -23,6 +24,7 @@
 #define HAL_SNOR_MODULE_ENABLED
 #define HAL_SPI_MODULE_ENABLED
 #define HAL_SYSTICK_MODULE_ENABLED
+#define HAL_TIMER_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 #define HAL_WDT_MODULE_ENABLED
 

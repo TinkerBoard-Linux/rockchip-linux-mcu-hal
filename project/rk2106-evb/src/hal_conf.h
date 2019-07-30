@@ -8,6 +8,7 @@
 
 /* HAL SOC Config */
 #define RKMCU_RK2106
+#define SYS_TIMER TIMER1 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
 #define HAL_GPIO_MODULE_ENABLED

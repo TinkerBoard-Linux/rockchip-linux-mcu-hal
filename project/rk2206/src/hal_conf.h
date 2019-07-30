@@ -8,6 +8,7 @@
 
 /* HAL SOC Config */
 #define RKMCU_RK2206
+#define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
 #define HAL_CRU_MODULE_ENABLED
@@ -19,6 +20,7 @@
 #define HAL_SNOR_MODULE_ENABLED
 #define HAL_SPI_MODULE_ENABLED
 #define HAL_SYSTICK_MODULE_ENABLED
+#define HAL_TIMER_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 
 /* HAL_DEG SUB CONFIG */

@@ -8,6 +8,7 @@
 
 /* HAL SOC Config */
 #define RKMCU_PISCES
+#define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
 #define HAL_ACDCDIG_MODULE_ENABLED
