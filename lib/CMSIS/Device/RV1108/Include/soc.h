@@ -47,6 +47,8 @@ typedef enum
   NoSecurePhyTimer_IRQn  = 30,    /*!< Physical Timer Interrupt    */
 
 /******  Platform Exceptions Numbers ***************************************************/
+  TIMER0_IRQn            = 67,      /*!< TIMER0 Interrupt            */
+  TIMER1_IRQn            = 68,      /*!< TIMER1 Interrupt            */
   GPIO0_IRQn             = 72,      /*!< GPIO0 Interrupt             */
   GPIO1_IRQn             = 73,      /*!< GPIO1 Interrupt             */
   GPIO2_IRQn             = 74,      /*!< GPIO2 Interrupt             */
@@ -1159,6 +1161,15 @@ struct UART_REG {
     __I  uint32_t UCV;                                /* Address Offset: 0x00F8 */
     __I  uint32_t CTR;                                /* Address Offset: 0x00FC */
 };
+/* TIMER Register Structure Define */
+#define TIMER_CHAN_CNT   2
+struct TIMER_REG {
+    __IO uint32_t LOAD_COUNT[2];                      /* Address Offset: 0x0000 */
+    __I  uint32_t CURRENT_VALUE[2];                   /* Address Offset: 0x0008 */
+    __IO uint32_t CONTROLREG;                         /* Address Offset: 0x0010 */
+         uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
+    __O  uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
+};
 /****************************************************************************************/
 /*                                                                                      */
 /*                                Module Address Section                                */
@@ -1177,6 +1188,7 @@ struct UART_REG {
 #define GPIO1_BASE          0x10310000U /* GPIO1 base address */
 #define GPIO2_BASE          0x10320000U /* GPIO2 base address */
 #define GPIO3_BASE          0x10330000U /* GPIO3 base address */
+#define TIMER_BASE          0x10350000U /* TIMER base address */
 #define PMU_BASE            0x20010000U /* PMU base address */
 #define GPIO0_BASE          0x20030000U /* GPIO0 base address */
 #define PMU_GRF_BASE        0x20060000U /* PMU_GRF base address */
@@ -1212,6 +1224,8 @@ struct UART_REG {
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
+#define TIMER0              ((struct TIMER_REG *) TIMER_BASE)
+#define TIMER1              ((struct TIMER_REG *) (TIMER_BASE + 0x20))
 #define PWM                 ((struct PWM_REG *) PWM_BASE)
 #define GRF                 ((struct GRF_REG *) GRF_BASE)
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
@@ -1236,6 +1250,7 @@ struct UART_REG {
 
 #define IS_CRYPTO_INSTANCE(instance) ((instance) == CRYPTO)
 #define IS_SPI_INSTANCE(instance) ((instance) == SPI)
+#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1))
 #define IS_PWM_INSTANCE(instance) ((instance) == PWM)
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
@@ -10484,6 +10499,29 @@ struct UART_REG {
 /* CEVA_PFM_VERSION */
 #define CEVA_CNT_CEVA_PFM_VERSION_PFM_VERSION_SHIFT        (0U)
 #define CEVA_CNT_CEVA_PFM_VERSION_PFM_VERSION_MASK         (0xFFFFFFFFU << CEVA_CNT_CEVA_PFM_VERSION_PFM_VERSION_SHIFT) /* 0xFFFFFFFF */
+/*****************************************TIMER******************************************/
+/* LOAD_COUNT0 */
+#define TIMER_LOAD_COUNT0_TIMER_LOAD_COUNT0_SHIFT          (0U)
+#define TIMER_LOAD_COUNT0_TIMER_LOAD_COUNT0_MASK           (0xFFFFFFFFU << TIMER_LOAD_COUNT0_TIMER_LOAD_COUNT0_SHIFT)   /* 0xFFFFFFFF */
+/* LOAD_COUNT1 */
+#define TIMER_LOAD_COUNT1_TIMER_LOAD_COUNT1_SHIFT          (0U)
+#define TIMER_LOAD_COUNT1_TIMER_LOAD_COUNT1_MASK           (0xFFFFFFFFU << TIMER_LOAD_COUNT1_TIMER_LOAD_COUNT1_SHIFT)   /* 0xFFFFFFFF */
+/* CURRENT_VALUE0 */
+#define TIMER_CURRENT_VALUE0_TIMER_CURRENT_VALUE0_SHIFT    (0U)
+#define TIMER_CURRENT_VALUE0_TIMER_CURRENT_VALUE0_MASK     (0xFFFFFFFFU << TIMER_CURRENT_VALUE0_TIMER_CURRENT_VALUE0_SHIFT) /* 0xFFFFFFFF */
+/* CURRENT_VALUE1 */
+#define TIMER_CURRENT_VALUE1_TIMER_CURRENT_VALUE_SHIFT     (0U)
+#define TIMER_CURRENT_VALUE1_TIMER_CURRENT_VALUE_MASK      (0xFFFFFFFFU << TIMER_CURRENT_VALUE1_TIMER_CURRENT_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* CONTROLREG */
+#define TIMER_CONTROLREG_TIMER_ENABLE_SHIFT                (0U)
+#define TIMER_CONTROLREG_TIMER_ENABLE_MASK                 (0x1U << TIMER_CONTROLREG_TIMER_ENABLE_SHIFT)                /* 0x00000001 */
+#define TIMER_CONTROLREG_TIMER_MODE_SHIFT                  (1U)
+#define TIMER_CONTROLREG_TIMER_MODE_MASK                   (0x1U << TIMER_CONTROLREG_TIMER_MODE_SHIFT)                  /* 0x00000002 */
+#define TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT              (2U)
+#define TIMER_CONTROLREG_TIMER_INT_MASK_MASK               (0x1U << TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT)              /* 0x00000004 */
+/* INTSTATUS */
+#define TIMER_INTSTATUS_INTSTATUS_SHIFT                    (0U)
+#define TIMER_INTSTATUS_INTSTATUS_MASK                     (0x1U << TIMER_INTSTATUS_INTSTATUS_SHIFT)                    /* 0x00000001 */
 
 /********Name=SOFTRST0_CON,Offset=0x180********/
 #define SRST_COREPO_SRSTN    0
