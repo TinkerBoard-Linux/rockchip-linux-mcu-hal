@@ -92,7 +92,7 @@ typedef enum
     CIF_IRQn                    = 44,     /* CIF                                                        */
     SPIMST2_IRQn                = 45,     /* SPI Master 2                                               */
     KEY_CTRL_IRQn               = 46,     /* KEY Control                                                */
-    FSPI1_IRQn                  = 27,     /* FSPI1                                                      */
+    FSPI1_IRQn                  = 47,     /* FSPI1                                                      */
     NUM_INTERRUPTS
 } IRQn_Type;
 
