@@ -39,7 +39,7 @@
  */
 
 /**
- * @brief  Get interrupt handler.
+ * @brief  Set interrupt handler.
  * @param  IRQn: interrupt number.
  * @param  handler: NVIC_IRQHandler.
  * @return HAL_OK.
@@ -49,7 +49,6 @@ HAL_Status HAL_NVIC_SetIRQHandler(IRQn_Type IRQn, NVIC_IRQHandler handler)
     uint32_t *vectors = (uint32_t *)SCB->VTOR;
 
     vectors[IRQn + NVIC_PERIPH_IRQ_OFFSET] = (uint32_t)handler;
-    HAL_NVIC_SetPriority(IRQn, NVIC_PERIPH_PRIO_DEFAULT, NVIC_PERIPH_SUB_PRIO_DEFAULT);
 
     return HAL_OK;
 }
