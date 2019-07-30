@@ -144,13 +144,12 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
 }
 #endif
 
+/*************************** SNOR TEST ****************************/
 TEST_GROUP(HAL_SNOR);
 
 TEST_SETUP(HAL_SNOR){
-    int32_t i;
-
     /* Write pattern */
-    for (i = 0; i < (maxest_sector * (int32_t)nor->sectorSize / 4); i++)
+    for (int32_t i = 0; i < (maxest_sector * (int32_t)nor->sectorSize / 4); i++)
         pwrite32[i] = i;
 }
 
@@ -169,8 +168,8 @@ TEST(HAL_SNOR, SnorStressRandomTest){
     TEST_ASSERT(ret == HAL_OK);
 }
 
-#ifdef HAL_FSPI_XIP_ENABLE
 /* SNOR test case 1 */
+#ifdef HAL_FSPI_XIP_ENABLE
 TEST(HAL_SNOR, SnorXIPRandomTest){
     int32_t ret, testEndLBA;
 
@@ -182,12 +181,8 @@ TEST(HAL_SNOR, SnorXIPRandomTest){
 }
 #endif
 
-static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
-{
-    return (uint8_t *)(((uintptr_t)ptr + align - 1) & ~(uintptr_t)(align - 1));
-}
-
-#ifdef HAL_SNOR_FSPI_HOST
+/*************************** SNOR FSPI HOST SETTING****************************/
+#if defined(HAL_SNOR_FSPI_HOST)
 static HAL_Status FSPI_IRQHandler(void)
 {
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)nor->spi->userdata;
@@ -196,9 +191,28 @@ static HAL_Status FSPI_IRQHandler(void)
 
     return HAL_OK;
 }
-#endif
 
-#ifdef HAL_SNOR_SPI_HOST
+static HAL_Status SNOR_HostSet(struct SNOR_HOST *spi)
+{
+    static struct HAL_FSPI_HOST *fspiHost;
+
+    fspiHost = (struct HAL_FSPI_HOST *)calloc(1, sizeof(struct HAL_FSPI_HOST));
+    TEST_ASSERT_NOT_NULL(fspiHost);
+
+    fspiHost->instance = FSPI0;
+    HAL_NVIC_SetIRQHandler(FSPI0_IRQn, (NVIC_IRQHandler) & FSPI_IRQHandler);
+    HAL_NVIC_EnableIRQ(FSPI0_IRQn);
+    HAL_FSPI_Init(fspiHost);
+
+    spi->mode = SPI_MODE_0 | SPI_TX_QUAD | SPI_RX_QUAD;
+#ifdef HAL_FSPI_XIP_ENABLE
+    spi->mode |= SPI_XIP;
+#endif
+    spi->userdata = (void *)fspiHost;
+
+    return HAL_OK;
+}
+#elif defined(HAL_SNOR_SPI_HOST)
 static HAL_Status SPI_IRQHandler(void)
 {
     struct SPI_HANDLE *host = (struct SPI_HANDLE *)nor->spi->userdata;
@@ -274,52 +288,9 @@ HAL_Status HAL_SPI_Xfer(struct SNOR_HOST *spi, uint32_t bitlen, const void *dout
 
     return HAL_OK;
 }
-#endif
 
-/* Test code should be place in ram */
-TEST_GROUP_RUNNER(HAL_SNOR){
-    struct SNOR_HOST *spi;
-    uint8_t *pwrite_t, *pread_t;
-
-    pwrite_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
-    pread_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
-    pwrite = AlignUp(pwrite_t, 64);
-    pread = AlignUp(pread_t, 64);
-    HAL_DBG("pwrite %p pread %p\n", pwrite, pread);
-    TEST_ASSERT_NOT_NULL(pread);
-    TEST_ASSERT_NOT_NULL(pwrite);
-    pwrite32 = (uint32_t *)pwrite;
-    pread32 = (uint32_t *)pread;
-    /* Write pattern */
-    for (int32_t i = 0; i < (maxest_sector * (int32_t)nor->sectorSize / 4); i++)
-        pwrite32[i] = i;
-
-    spi = (struct SNOR_HOST *)calloc(1, sizeof(struct SNOR_HOST));
-    TEST_ASSERT_NOT_NULL(spi);
-    nor = (struct SPI_NOR *)calloc(1, sizeof(struct SPI_NOR));
-    TEST_ASSERT_NOT_NULL(nor);
-    nor->spi = spi;
-
-#ifdef HAL_SNOR_FSPI_HOST
-    uint32_t ret;
-    static struct HAL_FSPI_HOST *fspiHost;
-
-    fspiHost = (struct HAL_FSPI_HOST *)calloc(1, sizeof(struct HAL_FSPI_HOST));
-    TEST_ASSERT_NOT_NULL(fspiHost);
-
-    fspiHost->instance = FSPI0;
-    HAL_NVIC_SetIRQHandler(FSPI0_IRQn, (NVIC_IRQHandler) & FSPI_IRQHandler);
-    HAL_NVIC_EnableIRQ(FSPI0_IRQn);
-    HAL_FSPI_Init(fspiHost);
-
-    spi->mode = SPI_MODE_3 | SPI_TX_QUAD | SPI_RX_QUAD;
-#ifdef HAL_FSPI_XIP_ENABLE
-    spi->mode |= SPI_XIP;
-#endif
-    spi->userdata = (void *)fspiHost;
-
-/* SPI Setting */
-#elif defined(HAL_SNOR_SPI_HOST)
+static HAL_Status SNOR_HostSet(struct SNOR_HOST *spi)
+{
     uint32_t ret;
 
     static struct SPI_HANDLE *spiHost;
@@ -343,12 +314,38 @@ TEST_GROUP_RUNNER(HAL_SNOR){
 
     SPI_ReadID_IT(spiHost);
 
+    return HAL_OK;
+}
 #endif
 
+/* Test code should be place in ram */
+TEST_GROUP_RUNNER(HAL_SNOR){
+    struct SNOR_HOST *spi;
+    uint32_t ret;
+
+    /* Config test buffer */
+    pwrite = (uint8_t *)malloc(maxest_sector * 4096 + 64);
+    pread = (uint8_t *)malloc(maxest_sector * 4096 + 64);
+    HAL_DBG("pwrite %p pread %p\n", pwrite, pread);
+    TEST_ASSERT_NOT_NULL(pread);
+    TEST_ASSERT_NOT_NULL(pwrite);
+    pwrite32 = (uint32_t *)pwrite;
+    pread32 = (uint32_t *)pread;
+    for (int32_t i = 0; i < (maxest_sector * (int32_t)nor->sectorSize / 4); i++)
+        pwrite32[i] = i;
+
+    /* SNOR Init */
+    spi = (struct SNOR_HOST *)calloc(1, sizeof(struct SNOR_HOST));
+    TEST_ASSERT_NOT_NULL(spi);
+    nor = (struct SPI_NOR *)calloc(1, sizeof(struct SPI_NOR));
+    TEST_ASSERT_NOT_NULL(nor);
+
+    ret = SNOR_HostSet(spi);
+    TEST_ASSERT(ret == HAL_OK);
+
+    nor->spi = spi;
     ret = HAL_SNOR_Init(nor);
     TEST_ASSERT(ret == HAL_OK);
-    if (ret != HAL_OK)
-        HAL_DBG("%s fail, ret %ld\n", __func__, ret);
 
     RUN_TEST_CASE(HAL_SNOR, SnorStressRandomTest);
 #ifdef HAL_FSPI_XIP_ENABLE
@@ -359,15 +356,10 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     ret = HAL_SNOR_DeInit(nor);
     TEST_ASSERT(ret == HAL_OK);
 
-    free(pwrite_t);
-    free(pread_t);
-    free(spi);
+    free(pwrite);
+    free(pread);
+    free(nor->spi->userdata);
     free(nor);
-#if defined(HAL_SNOR_FSPI_HOST)
-    free(fspiHost);
-#elif defined(HAL_FSPI_MODULE_ENABLED)
-    free(spiHost);
-#endif
 }
 
 #endif
