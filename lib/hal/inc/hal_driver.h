@@ -58,6 +58,10 @@
 #endif
 #endif
 
+#ifdef HAL_HYPERPSRAM_MODULE_ENABLED
+#include "hal_hyperpsram.h"
+#endif
+
 #ifdef HAL_I2C_MODULE_ENABLED
 #include "hal_i2c.h"
 #endif

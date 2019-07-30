@@ -1220,6 +1220,23 @@ struct USB_HOST_CH_REG {
     __IO uint32_t HCDMA;                              /* Address Offset: 0x0514 */
          uint32_t RESERVED0[2];                       /* Address Offset: 0x0518 */
 };
+/* HYPERBUS Register Structure Define */
+struct HYPERBUS_REG {
+    __IO uint32_t  CSR;                               /* Address Offset: 0x0000 */
+    __IO uint32_t  IEN;                               /* Address Offset: 0x0004 */
+    __I  uint32_t  ISR;                               /* Address Offset: 0x0008 */
+    __IO uint32_t  ICR;                               /* Address Offset: 0x000C */
+    __IO uint32_t  MBR[4];                            /* Address Offset: 0x0010 */
+    __IO uint32_t  MCR[4];                            /* Address Offset: 0x0020 */
+    __IO uint32_t  MTR[4];                            /* Address Offset: 0x0030 */
+    __IO uint32_t  GPOR;                              /* Address Offset: 0x0040 */
+    __IO uint32_t  WPR;                               /* Address Offset: 0x0044 */
+    __IO uint32_t  LBR;                               /* Address Offset: 0x0048 */
+    __IO uint32_t  TAR;                               /* Address Offset: 0x004C */
+    __IO uint32_t  RWDSIC;                            /* Address Offset: 0x0050 */
+    __IO uint32_t  CA2RSVD;                           /* Address Offset: 0x0054 */
+    __IO uint32_t  SPCSR;                             /* Address Offset: 0x0058 */
+};
 #endif /* __ASSEMBLY__ */
 /****************************************************************************************/
 /*                                                                                      */
@@ -1227,10 +1244,12 @@ struct USB_HOST_CH_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
+#define XIP_MAP_BASE0       0x18000000U /* HYPERBUS/FSPI1 map address0 */
 #define DSP_ITCM_BASE       0x20400000U /* DSP itcm base address */
 #define DSP_ITCM_END        0x20407fffU /* DSP itcm end address */
 #define DSP_DTCM_BASE       0x20600000U /* DSP dtcm base address */
 #define DSP_DTCM_END        0x2062ffffU /* DSP dtcm end address */
+#define XIP_MAP_BASE1       0x38000000U /* HYPERBUS/FSPI1 map address1 */
 #define TIMER0_BASE         0x40000000U /* TIMER0 base address */
 #define WDT0_BASE           0x40010000U /* WDT0 base address */
 #define WDT1_BASE           0x40020000U /* WDT1 base address */
@@ -1257,6 +1276,7 @@ struct USB_HOST_CH_REG {
 #define DCACHE0_BASE        0x40234000U /* DCACHE0 base address */
 #define VOP_BASE            0x40250000U /* VOP base address */
 #define AUDIOPWM_BASE         0x40260000U /* AUDIOPWM base address */
+#define HYPERBUS_BASE       0x40300000U /* HYPERBUS base address */
 #define PMU_BASE            0x41000000U /* PMU base address */
 #define GPIO0_BASE          0x41010000U /* GPIO0 base address */
 #define GPIO1_BASE          0x41020000U /* GPIO1 base address */
@@ -1314,6 +1334,7 @@ struct USB_HOST_CH_REG {
 #define DCACHE              ((struct DCACHE_REG *) DCACHE0_BASE)
 #define VOP                 ((struct VOP_REG *) VOP_BASE)
 #define AUDIOPWM              ((struct AUDIOPWM_REG *) AUDIOPWM_BASE)
+#define HYPERBUS            ((struct HYPERBUS_REG *) HYPERBUS_BASE)
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
@@ -1368,6 +1389,7 @@ struct USB_HOST_CH_REG {
 #define IS_I2S_INSTANCE(instance) (((instance) == I2STDM0) || ((instance) == I2STDM1))
 #define IS_PCD_INSTANCE(instance) ((instance) == USB)
 #define IS_HCD_INSTANCE(instance) ((instance) == USB)
+#define IS_HYPERBUS_INSTANCE(instance) ((instance) == HYPERBUS)
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
@@ -8206,6 +8228,33 @@ struct USB_HOST_CH_REG {
 /* QUICK_REG2 */
 #define SPI2APB_QUICK_REG2_QRV_SHIFT                       (0U)
 #define SPI2APB_QUICK_REG2_QRV_MASK                        (0xFFFFFFFFU << SPI2APB_QUICK_REG2_QRV_SHIFT)                /* 0xFFFFFFFF */
+/****************************************HYPERBUS*****************************************/
+/* MTR0 */
+#define HYPERBUS_MTR0_RCSHI_SHIFT                           (28U)
+#define HYPERBUS_MTR0_WCSHI_SHIFT                           (24U)
+#define HYPERBUS_MTR0_RCSS_SHIFT                            (20U)
+#define HYPERBUS_MTR0_WCSS_SHIFT                            (16U)
+#define HYPERBUS_MTR0_RCSH_SHIFT                            (12U)
+#define HYPERBUS_MTR0_WCSH_SHIFT                            (8U)
+#define HYPERBUS_MTR0_LTCY_SHIFT                            (0U)
+/* MCR0 */
+#define HYPERBUS_MCR0_MAXEN_SHIFT                           (31U)
+#define HYPERBUS_MCR0_MAXLEN_SHIFT                          (18U)
+#define HYPERBUS_MCR0_MAXLEN_MASK                           (0x1FFU << HYPERBUS_MCR0_MAXLEN_SHIFT)
+#define HYPERBUS_MCR0_CRT_SHIFT                             (5U)
+#define HYPERBUS_MCR0_CRT_MASK                              (0x1U << HYPERBUS_MCR0_CRT_SHIFT)
+#define HYPERBUS_MCR0_DEVTYPE_SHIFT                         (4U)
+#define HYPERBUS_MCR0_WRAPSIZE_SHIFT                        (0U)
+/* LBR */
+#define HYPERBUS_LBR_LOOPBACK_SHIFT                         (0U)
+/* RWSDIC */
+#define HYPERBUS_RWSDIC_RXEND_CTRL_SHIFT                    (1U)
+#define HYPERBUS_RWSDIC_RXEND_CTRL_MASK                     (0x1U << HYPERBUS_RWSDIC_RXEND_CTRL_SHIFT)
+#define HYPERBUS_RWSDIC_RXSTART_CTRL_SHIFT                  (0U)
+#define HYPERBUS_RWSDIC_RXSTART_CTRL_MASK                   (0x1U << HYPERBUS_RWSDIC_RXSTART_CTRL_SHIFT)
+/* SPCSR */
+#define HYPERBUS_SPCSR_W955D8_CON_SHIFT                     (0U)
+#define HYPERBUS_SPCSR_W955D8_CON_MASK                      (0x3U << HYPERBUS_SPCSR_W955D8_CON_SHIFT)
 
 /********Name=SOFTRST_CON00,Offset=0x400********/
 #define SRST_H_MCU_BUS_AC 1
