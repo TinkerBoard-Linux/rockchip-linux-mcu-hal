@@ -5,7 +5,7 @@
 
 #include "hal_base.h"
 
-#if defined(RKMCU_RV1108) && defined(HAL_CRU_MODULE_ENABLED)
+#if defined(SOC_RV1108) && defined(HAL_CRU_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver
  *  @{

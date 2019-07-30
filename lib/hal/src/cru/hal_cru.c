@@ -39,7 +39,7 @@
 #ifdef HAL_CRU_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-#if defined(RKMCU_RV1108)
+#if defined(SOC_RV1108)
 #define PWRDOWN_SHIT       0
 #define PWRDOWN_MASK       1 << PWRDOWN_SHIT
 #define PLL_POSTDIV1_SHIFT 8
@@ -269,7 +269,7 @@ static const struct PLL_CONFIG *CRU_PllGetSettings(struct PLL_SETUP *pSetup,
  *  @{
  */
 
-#if defined(RKMCU_RV1108)
+#if defined(SOC_RV1108)
 /**
  * @brief Get pll freq.
  * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
