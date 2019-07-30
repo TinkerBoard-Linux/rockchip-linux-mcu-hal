@@ -77,6 +77,9 @@
 #define FSPI_VER_VER_1 1
 #define FSPI_VER_VER_3 3
 
+#define GET_MODE_CPHA_VAL(m) ((m) & 0x1)
+#define GET_MODE_CPOL_VAL(m) ((m) & 0x2)
+
 //#define FSPI_DEBUG
 #ifdef FSPI_DEBUG
 #define FSPI_DBG(...) FSPI_DBG(__VA_ARGS__)
@@ -199,7 +202,7 @@ static HAL_Status FSPI_XferStart(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *
     }
 
     /* spitial setting */
-    FSPICtrl.b.sps = FSPI_CTRL_SHIFTPHASE_NEGEDGE;
+    FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);;
 
     if (!(pReg->FSR & FSPI_FSR_TXES_EMPTY) || !(pReg->FSR & FSPI_FSR_RXES_EMPTY) || (pReg->SR & FSPI_SR_SR_BUSY))
         FSPI_Reset(pReg);
@@ -355,7 +358,7 @@ HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *op)
     FSPICtrl.b.datalines = op->data.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
 
     /* spitial setting */
-    FSPICtrl.b.sps = FSPI_CTRL_SHIFTPHASE_NEGEDGE;
+    FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
 
     /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
     /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
@@ -442,6 +445,7 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
     uint32_t ret = HAL_OK;
 
+    host->mode = spi->mode;
     FSPI_XferStart(host, op);
     if (op->data.dir == SPI_MEM_DATA_IN)
         ret = FSPI_XferData(host, op->data.nbytes, op->data.buf.in, FSPI_READ);

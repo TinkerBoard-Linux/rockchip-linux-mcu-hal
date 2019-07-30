@@ -87,8 +87,11 @@ struct HAL_FSPI_HOST {
     struct FSPI_REG *instance;
     uint32_t version;
     uint8_t cs;
+    uint8_t mode;
     struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT];
 };
+
+#define HAL_FSPI_MAX_DELAY_LINE_CELLS (0xFFU)
 /** @} */
 /***************************** Function Declare ******************************/
 HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host);
