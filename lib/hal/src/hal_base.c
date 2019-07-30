@@ -19,6 +19,7 @@
   - Initialize the HAL_BASE by calling HAL_Init():
   - Get system time by calling HAL_GetTick();
   - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs(), and HAL_CPUDelayUs();
+  - Update system with new core clock and new systick clock source by calling HAL_SystemCoreClockUpdate();
 
  Suggest:
 
@@ -108,6 +109,30 @@ HAL_Status HAL_Init(void)
 
 #if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
     HAL_TIMER_SysTimerInit(SYS_TIMER);
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  HAL system update with new core clock and systick clock source.
+ * @param  hz: new core clock.
+ * @param  clkSource: new systick clock source.
+ * @return HAL_OK.
+ */
+HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, uint32_t clkSource)
+{
+    uint32_t rate = hz;
+    uint32_t ret = HAL_OK;
+
+    SystemCoreClock = rate;   /* Update global SystemCoreClock */
+
+#ifdef __CORTEX_M
+    HAL_ASSERT(IS_SYSTICK_SOURCE(clkSource));
+    ret = HAL_SYSTICK_CLKSourceConfig(clkSource);
+    if (ret == HAL_OK && clkSource == HAL_TICK_CLKSRC_EXT)
+        rate = PLL_INPUT_OSC_RATE;
+    HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq()));
 #endif
 
     return HAL_OK;

@@ -48,6 +48,7 @@ eHAL_tickFreq HAL_GetTickFreq(void);
 HAL_Status HAL_DelayUs(uint32_t us);
 HAL_Status HAL_DelayMs(uint32_t ms);
 HAL_Status HAL_CPUDelayUs(uint32_t us);
+HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, uint32_t clkSource);
 
 uint64_t HAL_DivU64Rem(uint64_t numerator, uint32_t denominator, uint32_t *pRemainder);
 
