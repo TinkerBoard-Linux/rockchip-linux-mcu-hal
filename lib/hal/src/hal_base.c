@@ -133,9 +133,10 @@ HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, uint32_t clkSource)
     if (ret == HAL_OK && clkSource == HAL_TICK_CLKSRC_EXT)
         rate = PLL_INPUT_OSC_RATE;
     HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq()));
+    ret = HAL_OK;
 #endif
 
-    return HAL_OK;
+    return ret;
 }
 
 /**
