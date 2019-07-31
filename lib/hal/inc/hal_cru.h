@@ -136,6 +136,14 @@ HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t 
 
 HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type);
 
+#ifdef HAL_CRU_AS_FEATURE_ENABLED
+/**
+ * @brief  it is for AS init.
+ * @return HAL_Status.
+ */
+void HAL_CRU_AsInit(void);
+#endif
+
 #endif
 
 /** @} */

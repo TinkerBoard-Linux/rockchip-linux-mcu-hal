@@ -287,4 +287,8 @@ void BSP_Init(void)
 #ifdef HAL_VAD_MODULE_ENABLED
     BSP_VAD_Init();
 #endif
+
+#ifdef HAL_CRU_AS_FEATURE_ENABLED
+    HAL_CRU_AsInit();
+#endif
 }

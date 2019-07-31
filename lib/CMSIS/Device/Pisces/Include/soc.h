@@ -173,16 +173,10 @@ struct CRU_REG {
     __IO uint32_t GLB_SRST_SND_VALUE;                 /* Address Offset: 0x030C */
     __IO uint32_t GLB_RST_CON;                        /* Address Offset: 0x0310 */
     uint32_t RESERVED8[3];                    /* Address Offset: 0x0314 */
-    uint32_t RESERVED9[4];                    /* Address Offset: 0x0328 */
-    __IO uint32_t DVFS_ACLK_DSP_S_CON[6];             /* Address Offset: 0x0330 */
-    uint32_t RESERVED10[2];                    /* Address Offset: 0x0348 */
-    __IO uint32_t DVFS_HCLK_M4_CON[6];                /* Address Offset: 0x0350 */
-    uint32_t RESERVED11[38];                   /* Address Offset: 0x0368 */
-    __IO uint32_t AUTOCS_ACLK_DSP_S_CON[2];           /* Address Offset: 0x0400 */
-    __IO uint32_t AUTOCS_HCLK_LOGIC_CON[2];           /* Address Offset: 0x0408 */
-    __IO uint32_t AUTOCS_HCLK_M4_CON[2];              /* Address Offset: 0x0410 */
-    __IO uint32_t AUTOCS_PCLK_ALIVE_CON[2];           /* Address Offset: 0x0418 */
-    __IO uint32_t AUTOCS_PCLK_LOGIC_CON[2];           /* Address Offset: 0x0420 */
+    uint32_t RESERVED9[2];                    /* Address Offset: 0x0328 */
+    __IO uint32_t DCG_CON[2][8];                      /* Address Offset: 0x0330 */
+    uint32_t RESERVED10[36];                   /* Address Offset: 0x0370 */
+    __IO uint32_t AS_CON[5][2];                       /* Address Offset: 0x0400 */
 };
 /* GRF Register Structure Define */
 struct GRF_REG {
@@ -2067,140 +2061,148 @@ struct ACDCDIG_REG {
 #define CRU_CRU_SDIO_CON1_OFFSET                           (0x324)
 #define CRU_CRU_SDIO_CON1_SDIO_CON1_SHIFT                  (0U)
 #define CRU_CRU_SDIO_CON1_SDIO_CON1_MASK                   (0xFFFFU << CRU_CRU_SDIO_CON1_SDIO_CON1_SHIFT)               /* 0x0000FFFF */
-/* DVFS_ACLK_DSP_S_CON0 */
-#define CRU_DVFS_ACLK_DSP_S_CON0_OFFSET                    (0x330)
-#define CRU_DVFS_ACLK_DSP_S_CON0_CFG_FUP_PERIOD_SHIFT      (0U)
-#define CRU_DVFS_ACLK_DSP_S_CON0_CFG_FUP_PERIOD_MASK       (0xFFFFFFFFU << CRU_DVFS_ACLK_DSP_S_CON0_CFG_FUP_PERIOD_SHIFT) /* 0xFFFFFFFF */
-/* DVFS_ACLK_DSP_S_CON1 */
-#define CRU_DVFS_ACLK_DSP_S_CON1_OFFSET                    (0x334)
-#define CRU_DVFS_ACLK_DSP_S_CON1_CFG_FUP_IDLECNT_SHIFT     (0U)
-#define CRU_DVFS_ACLK_DSP_S_CON1_CFG_FUP_IDLECNT_MASK      (0xFFFFFFFFU << CRU_DVFS_ACLK_DSP_S_CON1_CFG_FUP_IDLECNT_SHIFT) /* 0xFFFFFFFF */
-/* DVFS_ACLK_DSP_S_CON2 */
-#define CRU_DVFS_ACLK_DSP_S_CON2_OFFSET                    (0x338)
-#define CRU_DVFS_ACLK_DSP_S_CON2_CFG_FDWN_PERIOD_SHIFT     (0U)
-#define CRU_DVFS_ACLK_DSP_S_CON2_CFG_FDWN_PERIOD_MASK      (0xFFFFFFFFU << CRU_DVFS_ACLK_DSP_S_CON2_CFG_FDWN_PERIOD_SHIFT) /* 0xFFFFFFFF */
-/* DVFS_ACLK_DSP_S_CON3 */
-#define CRU_DVFS_ACLK_DSP_S_CON3_OFFSET                    (0x33C)
-#define CRU_DVFS_ACLK_DSP_S_CON3_CFG_FDWN_IDLECNT_SHIFT    (0U)
-#define CRU_DVFS_ACLK_DSP_S_CON3_CFG_FDWN_IDLECNT_MASK     (0xFFFFFFFFU << CRU_DVFS_ACLK_DSP_S_CON3_CFG_FDWN_IDLECNT_SHIFT) /* 0xFFFFFFFF */
-/* DVFS_ACLK_DSP_S_CON4 */
-#define CRU_DVFS_ACLK_DSP_S_CON4_OFFSET                    (0x340)
-#define CRU_DVFS_ACLK_DSP_S_CON4_CFG_FUP_STEP_SHIFT        (0U)
-#define CRU_DVFS_ACLK_DSP_S_CON4_CFG_FUP_STEP_MASK         (0x7FU << CRU_DVFS_ACLK_DSP_S_CON4_CFG_FUP_STEP_SHIFT)       /* 0x0000007F */
-#define CRU_DVFS_ACLK_DSP_S_CON4_CFG_FDWN_STEP_SHIFT       (8U)
-#define CRU_DVFS_ACLK_DSP_S_CON4_CFG_FDWN_STEP_MASK        (0x7FU << CRU_DVFS_ACLK_DSP_S_CON4_CFG_FDWN_STEP_SHIFT)      /* 0x00007F00 */
-#define CRU_DVFS_ACLK_DSP_S_CON4_CFG_DVFS_EN_SHIFT         (15U)
-#define CRU_DVFS_ACLK_DSP_S_CON4_CFG_DVFS_EN_MASK          (0x1U << CRU_DVFS_ACLK_DSP_S_CON4_CFG_DVFS_EN_SHIFT)         /* 0x00008000 */
-/* DVFS_ACLK_DSP_S_CON5 */
-#define CRU_DVFS_ACLK_DSP_S_CON5_OFFSET                    (0x344)
-#define CRU_DVFS_ACLK_DSP_S_CON5_CFG_LMT_IDLE_SHIFT        (0U)
-#define CRU_DVFS_ACLK_DSP_S_CON5_CFG_LMT_IDLE_MASK         (0x7FU << CRU_DVFS_ACLK_DSP_S_CON5_CFG_LMT_IDLE_SHIFT)       /* 0x0000007F */
-/* DVFS_HCLK_M4_CON0 */
-#define CRU_DVFS_HCLK_M4_CON0_OFFSET                       (0x350)
-#define CRU_DVFS_HCLK_M4_CON0_CFG_FUP_PERIOD_SHIFT         (0U)
-#define CRU_DVFS_HCLK_M4_CON0_CFG_FUP_PERIOD_MASK          (0xFFFFFFFFU << CRU_DVFS_HCLK_M4_CON0_CFG_FUP_PERIOD_SHIFT)  /* 0xFFFFFFFF */
-/* DVFS_HCLK_M4_CON1 */
-#define CRU_DVFS_HCLK_M4_CON1_OFFSET                       (0x354)
-#define CRU_DVFS_HCLK_M4_CON1_CFG_FUP_IDLECNT_SHIFT        (0U)
-#define CRU_DVFS_HCLK_M4_CON1_CFG_FUP_IDLECNT_MASK         (0xFFFFFFFFU << CRU_DVFS_HCLK_M4_CON1_CFG_FUP_IDLECNT_SHIFT) /* 0xFFFFFFFF */
-/* DVFS_HCLK_M4_CON2 */
-#define CRU_DVFS_HCLK_M4_CON2_OFFSET                       (0x358)
-#define CRU_DVFS_HCLK_M4_CON2_CFG_FDWN_PERIOD_SHIFT        (0U)
-#define CRU_DVFS_HCLK_M4_CON2_CFG_FDWN_PERIOD_MASK         (0xFFFFFFFFU << CRU_DVFS_HCLK_M4_CON2_CFG_FDWN_PERIOD_SHIFT) /* 0xFFFFFFFF */
-/* DVFS_HCLK_M4_CON3 */
-#define CRU_DVFS_HCLK_M4_CON3_OFFSET                       (0x35C)
-#define CRU_DVFS_HCLK_M4_CON3_CFG_FDWN_IDLECNT_SHIFT       (0U)
-#define CRU_DVFS_HCLK_M4_CON3_CFG_FDWN_IDLECNT_MASK        (0xFFFFFFFFU << CRU_DVFS_HCLK_M4_CON3_CFG_FDWN_IDLECNT_SHIFT) /* 0xFFFFFFFF */
-/* DVFS_HCLK_M4_CON4 */
-#define CRU_DVFS_HCLK_M4_CON4_OFFSET                       (0x360)
-#define CRU_DVFS_HCLK_M4_CON4_CFG_FUP_STEP_SHIFT           (0U)
-#define CRU_DVFS_HCLK_M4_CON4_CFG_FUP_STEP_MASK            (0x7FU << CRU_DVFS_HCLK_M4_CON4_CFG_FUP_STEP_SHIFT)          /* 0x0000007F */
-#define CRU_DVFS_HCLK_M4_CON4_CFG_FDWN_STEP_SHIFT          (8U)
-#define CRU_DVFS_HCLK_M4_CON4_CFG_FDWN_STEP_MASK           (0x7FU << CRU_DVFS_HCLK_M4_CON4_CFG_FDWN_STEP_SHIFT)         /* 0x00007F00 */
-#define CRU_DVFS_HCLK_M4_CON4_CFG_DVFS_EN_SHIFT            (15U)
-#define CRU_DVFS_HCLK_M4_CON4_CFG_DVFS_EN_MASK             (0x1U << CRU_DVFS_HCLK_M4_CON4_CFG_DVFS_EN_SHIFT)            /* 0x00008000 */
-/* DVFS_HCLK_M4_CON5 */
-#define CRU_DVFS_HCLK_M4_CON5_OFFSET                       (0x364)
-#define CRU_DVFS_HCLK_M4_CON5_CFG_LMT_IDLE_SHIFT           (0U)
-#define CRU_DVFS_HCLK_M4_CON5_CFG_LMT_IDLE_MASK            (0x7FU << CRU_DVFS_HCLK_M4_CON5_CFG_LMT_IDLE_SHIFT)          /* 0x0000007F */
-/* AUTOCS_ACLK_DSP_S_CON0 */
-#define CRU_AUTOCS_ACLK_DSP_S_CON0_OFFSET                  (0x400)
-#define CRU_AUTOCS_ACLK_DSP_S_CON0_WAIT_TH_SHIFT           (0U)
-#define CRU_AUTOCS_ACLK_DSP_S_CON0_WAIT_TH_MASK            (0xFFFFU << CRU_AUTOCS_ACLK_DSP_S_CON0_WAIT_TH_SHIFT)        /* 0x0000FFFF */
-#define CRU_AUTOCS_ACLK_DSP_S_CON0_IDLE_TH_SHIFT           (16U)
-#define CRU_AUTOCS_ACLK_DSP_S_CON0_IDLE_TH_MASK            (0xFFFFU << CRU_AUTOCS_ACLK_DSP_S_CON0_IDLE_TH_SHIFT)        /* 0xFFFF0000 */
-/* AUTOCS_ACLK_DSP_S_CON1 */
-#define CRU_AUTOCS_ACLK_DSP_S_CON1_OFFSET                  (0x404)
-#define CRU_AUTOCS_ACLK_DSP_S_CON1_AUTOCS_CTRL_SHIFT       (0U)
-#define CRU_AUTOCS_ACLK_DSP_S_CON1_AUTOCS_CTRL_MASK        (0xFFFU << CRU_AUTOCS_ACLK_DSP_S_CON1_AUTOCS_CTRL_SHIFT)     /* 0x00000FFF */
-#define CRU_AUTOCS_ACLK_DSP_S_CON1_AUTOCS_EN_SHIFT         (12U)
-#define CRU_AUTOCS_ACLK_DSP_S_CON1_AUTOCS_EN_MASK          (0x1U << CRU_AUTOCS_ACLK_DSP_S_CON1_AUTOCS_EN_SHIFT)         /* 0x00001000 */
-#define CRU_AUTOCS_ACLK_DSP_S_CON1_SWITCH_EN_SHIFT         (13U)
-#define CRU_AUTOCS_ACLK_DSP_S_CON1_SWITCH_EN_MASK          (0x1U << CRU_AUTOCS_ACLK_DSP_S_CON1_SWITCH_EN_SHIFT)         /* 0x00002000 */
-#define CRU_AUTOCS_ACLK_DSP_S_CON1_CLKSEL_CFG_SHIFT        (14U)
-#define CRU_AUTOCS_ACLK_DSP_S_CON1_CLKSEL_CFG_MASK         (0x3U << CRU_AUTOCS_ACLK_DSP_S_CON1_CLKSEL_CFG_SHIFT)        /* 0x0000C000 */
-/* AUTOCS_HCLK_LOGIC_CON0 */
-#define CRU_AUTOCS_HCLK_LOGIC_CON0_OFFSET                  (0x408)
-#define CRU_AUTOCS_HCLK_LOGIC_CON0_WAIT_TH_SHIFT           (0U)
-#define CRU_AUTOCS_HCLK_LOGIC_CON0_WAIT_TH_MASK            (0xFFFFU << CRU_AUTOCS_HCLK_LOGIC_CON0_WAIT_TH_SHIFT)        /* 0x0000FFFF */
-#define CRU_AUTOCS_HCLK_LOGIC_CON0_IDLE_TH_SHIFT           (16U)
-#define CRU_AUTOCS_HCLK_LOGIC_CON0_IDLE_TH_MASK            (0xFFFFU << CRU_AUTOCS_HCLK_LOGIC_CON0_IDLE_TH_SHIFT)        /* 0xFFFF0000 */
-/* AUTOCS_HCLK_LOGIC_CON1 */
-#define CRU_AUTOCS_HCLK_LOGIC_CON1_OFFSET                  (0x40C)
-#define CRU_AUTOCS_HCLK_LOGIC_CON1_AUTOCS_CTRL_SHIFT       (0U)
-#define CRU_AUTOCS_HCLK_LOGIC_CON1_AUTOCS_CTRL_MASK        (0xFFFU << CRU_AUTOCS_HCLK_LOGIC_CON1_AUTOCS_CTRL_SHIFT)     /* 0x00000FFF */
-#define CRU_AUTOCS_HCLK_LOGIC_CON1_AUTOCS_EN_SHIFT         (12U)
-#define CRU_AUTOCS_HCLK_LOGIC_CON1_AUTOCS_EN_MASK          (0x1U << CRU_AUTOCS_HCLK_LOGIC_CON1_AUTOCS_EN_SHIFT)         /* 0x00001000 */
-#define CRU_AUTOCS_HCLK_LOGIC_CON1_SWITCH_EN_SHIFT         (13U)
-#define CRU_AUTOCS_HCLK_LOGIC_CON1_SWITCH_EN_MASK          (0x1U << CRU_AUTOCS_HCLK_LOGIC_CON1_SWITCH_EN_SHIFT)         /* 0x00002000 */
-#define CRU_AUTOCS_HCLK_LOGIC_CON1_CLKSEL_CFG_SHIFT        (14U)
-#define CRU_AUTOCS_HCLK_LOGIC_CON1_CLKSEL_CFG_MASK         (0x3U << CRU_AUTOCS_HCLK_LOGIC_CON1_CLKSEL_CFG_SHIFT)        /* 0x0000C000 */
-/* AUTOCS_HCLK_M4_CON0 */
-#define CRU_AUTOCS_HCLK_M4_CON0_OFFSET                     (0x410)
-#define CRU_AUTOCS_HCLK_M4_CON0_WAIT_TH_SHIFT              (0U)
-#define CRU_AUTOCS_HCLK_M4_CON0_WAIT_TH_MASK               (0xFFFFU << CRU_AUTOCS_HCLK_M4_CON0_WAIT_TH_SHIFT)           /* 0x0000FFFF */
-#define CRU_AUTOCS_HCLK_M4_CON0_IDLE_TH_SHIFT              (16U)
-#define CRU_AUTOCS_HCLK_M4_CON0_IDLE_TH_MASK               (0xFFFFU << CRU_AUTOCS_HCLK_M4_CON0_IDLE_TH_SHIFT)           /* 0xFFFF0000 */
-/* AUTOCS_HCLK_M4_CON1 */
-#define CRU_AUTOCS_HCLK_M4_CON1_OFFSET                     (0x414)
-#define CRU_AUTOCS_HCLK_M4_CON1_AUTOCS_EN_SHIFT            (12U)
-#define CRU_AUTOCS_HCLK_M4_CON1_AUTOCS_EN_MASK             (0x1U << CRU_AUTOCS_HCLK_M4_CON1_AUTOCS_EN_SHIFT)            /* 0x00001000 */
-#define CRU_AUTOCS_HCLK_M4_CON1_SWITCH_EN_SHIFT            (13U)
-#define CRU_AUTOCS_HCLK_M4_CON1_SWITCH_EN_MASK             (0x1U << CRU_AUTOCS_HCLK_M4_CON1_SWITCH_EN_SHIFT)            /* 0x00002000 */
-#define CRU_AUTOCS_HCLK_M4_CON1_CLKSEL_CFG_SHIFT           (14U)
-#define CRU_AUTOCS_HCLK_M4_CON1_CLKSEL_CFG_MASK            (0x3U << CRU_AUTOCS_HCLK_M4_CON1_CLKSEL_CFG_SHIFT)           /* 0x0000C000 */
-/* AUTOCS_PCLK_ALIVE_CON0 */
-#define CRU_AUTOCS_PCLK_ALIVE_CON0_OFFSET                  (0x418)
-#define CRU_AUTOCS_PCLK_ALIVE_CON0_WAIT_TH_SHIFT           (0U)
-#define CRU_AUTOCS_PCLK_ALIVE_CON0_WAIT_TH_MASK            (0xFFFFU << CRU_AUTOCS_PCLK_ALIVE_CON0_WAIT_TH_SHIFT)        /* 0x0000FFFF */
-#define CRU_AUTOCS_PCLK_ALIVE_CON0_IDLE_TH_SHIFT           (16U)
-#define CRU_AUTOCS_PCLK_ALIVE_CON0_IDLE_TH_MASK            (0xFFFFU << CRU_AUTOCS_PCLK_ALIVE_CON0_IDLE_TH_SHIFT)        /* 0xFFFF0000 */
-/* AUTOCS_PCLK_ALIVE_CON1 */
-#define CRU_AUTOCS_PCLK_ALIVE_CON1_OFFSET                  (0x41C)
-#define CRU_AUTOCS_PCLK_ALIVE_CON1_AUTOCS_CTRL_SHIFT       (0U)
-#define CRU_AUTOCS_PCLK_ALIVE_CON1_AUTOCS_CTRL_MASK        (0xFFFU << CRU_AUTOCS_PCLK_ALIVE_CON1_AUTOCS_CTRL_SHIFT)     /* 0x00000FFF */
-#define CRU_AUTOCS_PCLK_ALIVE_CON1_AUTOCS_EN_SHIFT         (12U)
-#define CRU_AUTOCS_PCLK_ALIVE_CON1_AUTOCS_EN_MASK          (0x1U << CRU_AUTOCS_PCLK_ALIVE_CON1_AUTOCS_EN_SHIFT)         /* 0x00001000 */
-#define CRU_AUTOCS_PCLK_ALIVE_CON1_SWITCH_EN_SHIFT         (13U)
-#define CRU_AUTOCS_PCLK_ALIVE_CON1_SWITCH_EN_MASK          (0x1U << CRU_AUTOCS_PCLK_ALIVE_CON1_SWITCH_EN_SHIFT)         /* 0x00002000 */
-#define CRU_AUTOCS_PCLK_ALIVE_CON1_CLKSEL_CFG_SHIFT        (14U)
-#define CRU_AUTOCS_PCLK_ALIVE_CON1_CLKSEL_CFG_MASK         (0x3U << CRU_AUTOCS_PCLK_ALIVE_CON1_CLKSEL_CFG_SHIFT)        /* 0x0000C000 */
-/* AUTOCS_PCLK_LOGIC_CON0 */
-#define CRU_AUTOCS_PCLK_LOGIC_CON0_OFFSET                  (0x420)
-#define CRU_AUTOCS_PCLK_LOGIC_CON0_WAIT_TH_SHIFT           (0U)
-#define CRU_AUTOCS_PCLK_LOGIC_CON0_WAIT_TH_MASK            (0xFFFFU << CRU_AUTOCS_PCLK_LOGIC_CON0_WAIT_TH_SHIFT)        /* 0x0000FFFF */
-#define CRU_AUTOCS_PCLK_LOGIC_CON0_IDLE_TH_SHIFT           (16U)
-#define CRU_AUTOCS_PCLK_LOGIC_CON0_IDLE_TH_MASK            (0xFFFFU << CRU_AUTOCS_PCLK_LOGIC_CON0_IDLE_TH_SHIFT)        /* 0xFFFF0000 */
-/* AUTOCS_PCLK_LOGIC_CON1 */
-#define CRU_AUTOCS_PCLK_LOGIC_CON1_OFFSET                  (0x424)
-#define CRU_AUTOCS_PCLK_LOGIC_CON1_AUTOCS_CTRL_SHIFT       (0U)
-#define CRU_AUTOCS_PCLK_LOGIC_CON1_AUTOCS_CTRL_MASK        (0xFFFU << CRU_AUTOCS_PCLK_LOGIC_CON1_AUTOCS_CTRL_SHIFT)     /* 0x00000FFF */
-#define CRU_AUTOCS_PCLK_LOGIC_CON1_AUTOCS_EN_SHIFT         (12U)
-#define CRU_AUTOCS_PCLK_LOGIC_CON1_AUTOCS_EN_MASK          (0x1U << CRU_AUTOCS_PCLK_LOGIC_CON1_AUTOCS_EN_SHIFT)         /* 0x00001000 */
-#define CRU_AUTOCS_PCLK_LOGIC_CON1_SWITCH_EN_SHIFT         (13U)
-#define CRU_AUTOCS_PCLK_LOGIC_CON1_SWITCH_EN_MASK          (0x1U << CRU_AUTOCS_PCLK_LOGIC_CON1_SWITCH_EN_SHIFT)         /* 0x00002000 */
-#define CRU_AUTOCS_PCLK_LOGIC_CON1_CLKSEL_CFG_SHIFT        (14U)
-#define CRU_AUTOCS_PCLK_LOGIC_CON1_CLKSEL_CFG_MASK         (0x3U << CRU_AUTOCS_PCLK_LOGIC_CON1_CLKSEL_CFG_SHIFT)        /* 0x0000C000 */
+/* DCG0_CON0 */
+#define CRU_DCG0_CON0_OFFSET                               (0x330)
+#define CRU_DCG0_CON0_CFG_PERIOD_SHIFT                     (0U)
+#define CRU_DCG0_CON0_CFG_PERIOD_MASK                      (0xFFFFFFFFU << CRU_DCG0_CON0_CFG_PERIOD_SHIFT)              /* 0xFFFFFFFF */
+/* DCG0_CON1 */
+#define CRU_DCG0_CON1_OFFSET                               (0x334)
+#define CRU_DCG0_CON1_CFG_CNT_SHIFT                        (0U)
+#define CRU_DCG0_CON1_CFG_CNT_MASK                         (0xFFFFFFFFU << CRU_DCG0_CON1_CFG_CNT_SHIFT)                 /* 0xFFFFFFFF */
+/* DCG0_CON2 */
+#define CRU_DCG0_CON2_OFFSET                               (0x338)
+#define CRU_DCG0_CON2_CFG_PERIOD_SHIFT                     (0U)
+#define CRU_DCG0_CON2_CFG_PERIOD_MASK                      (0xFFFFFFFFU << CRU_DCG0_CON2_CFG_PERIOD_SHIFT)              /* 0xFFFFFFFF */
+/* DCG0_CON3 */
+#define CRU_DCG0_CON3_OFFSET                               (0x33C)
+#define CRU_DCG0_CON3_CFG_CNT_SHIFT                        (0U)
+#define CRU_DCG0_CON3_CFG_CNT_MASK                         (0xFFFFFFFFU << CRU_DCG0_CON3_CFG_CNT_SHIFT)                 /* 0xFFFFFFFF */
+/* DCG0_CON4 */
+#define CRU_DCG0_CON4_OFFSET                               (0x340)
+#define CRU_DCG0_CON4_CFG_STEP1_SHIFT                      (0U)
+#define CRU_DCG0_CON4_CFG_STEP1_MASK                       (0x7FU << CRU_DCG0_CON4_CFG_STEP1_SHIFT)                     /* 0x0000007F */
+#define CRU_DCG0_CON4_CFG_STEP2_SHIFT                      (8U)
+#define CRU_DCG0_CON4_CFG_STEP2_MASK                       (0x7FU << CRU_DCG0_CON4_CFG_STEP2_SHIFT)                     /* 0x00007F00 */
+#define CRU_DCG0_CON4_CFG_EN_SHIFT                         (15U)
+#define CRU_DCG0_CON4_CFG_EN_MASK                          (0x1U << CRU_DCG0_CON4_CFG_EN_SHIFT)                         /* 0x00008000 */
+/* DCG0_CON5 */
+#define CRU_DCG0_CON5_OFFSET                               (0x344)
+#define CRU_DCG0_CON5_CFG_LMT_SHIFT                        (0U)
+#define CRU_DCG0_CON5_CFG_LMT_MASK                         (0x7FU << CRU_DCG0_CON5_CFG_LMT_SHIFT)                       /* 0x0000007F */
+/* DCG0_CON6 */
+#define CRU_DCG0_CON6_OFFSET                               (0x348)
+/* DCG0_CON7 */
+#define CRU_DCG0_CON7_OFFSET                               (0x34C)
+/* DCG1_CON0 */
+#define CRU_DCG1_CON0_OFFSET                               (0x350)
+#define CRU_DCG1_CON0_CFG_PERIOD_SHIFT                     (0U)
+#define CRU_DCG1_CON0_CFG_PERIOD_MASK                      (0xFFFFFFFFU << CRU_DCG1_CON0_CFG_PERIOD_SHIFT)              /* 0xFFFFFFFF */
+/* DCG1_CON1 */
+#define CRU_DCG1_CON1_OFFSET                               (0x354)
+#define CRU_DCG1_CON1_CFG_CNT_SHIFT                        (0U)
+#define CRU_DCG1_CON1_CFG_CNT_MASK                         (0xFFFFFFFFU << CRU_DCG1_CON1_CFG_CNT_SHIFT)                 /* 0xFFFFFFFF */
+/* DCG1_CON2 */
+#define CRU_DCG1_CON2_OFFSET                               (0x358)
+#define CRU_DCG1_CON2_CFG_PERIOD_SHIFT                     (0U)
+#define CRU_DCG1_CON2_CFG_PERIOD_MASK                      (0xFFFFFFFFU << CRU_DCG1_CON2_CFG_PERIOD_SHIFT)              /* 0xFFFFFFFF */
+/* DCG1_CON3 */
+#define CRU_DCG1_CON3_OFFSET                               (0x35C)
+#define CRU_DCG1_CON3_CFG_CNT_SHIFT                        (0U)
+#define CRU_DCG1_CON3_CFG_CNT_MASK                         (0xFFFFFFFFU << CRU_DCG1_CON3_CFG_CNT_SHIFT)                 /* 0xFFFFFFFF */
+/* DCG1_CON4 */
+#define CRU_DCG1_CON4_OFFSET                               (0x360)
+#define CRU_DCG1_CON4_CFG_STEP1_SHIFT                      (0U)
+#define CRU_DCG1_CON4_CFG_STEP1_MASK                       (0x7FU << CRU_DCG1_CON4_CFG_STEP1_SHIFT)                     /* 0x0000007F */
+#define CRU_DCG1_CON4_CFG_STEP2_SHIFT                      (8U)
+#define CRU_DCG1_CON4_CFG_STEP2_MASK                       (0x7FU << CRU_DCG1_CON4_CFG_STEP2_SHIFT)                     /* 0x00007F00 */
+#define CRU_DCG1_CON4_CFG_EN_SHIFT                         (15U)
+#define CRU_DCG1_CON4_CFG_EN_MASK                          (0x1U << CRU_DCG1_CON4_CFG_EN_SHIFT)                         /* 0x00008000 */
+/* DCG1_CON5 */
+#define CRU_DCG1_CON5_OFFSET                               (0x364)
+#define CRU_DCG1_CON5_CFG_LMT_SHIFT                        (0U)
+#define CRU_DCG1_CON5_CFG_LMT_MASK                         (0x7FU << CRU_DCG1_CON5_CFG_LMT_SHIFT)                       /* 0x0000007F */
+/* DCG1_CON6 */
+#define CRU_DCG1_CON6_OFFSET                               (0x368)
+/* DCG1_CON7 */
+#define CRU_DCG1_CON7_OFFSET                               (0x36C)
+/* AS0_CON0 */
+#define CRU_AS0_CON0_OFFSET                                (0x400)
+#define CRU_AS0_CON0_CNT_TH_SHIFT                          (0U)
+#define CRU_AS0_CON0_CNT_TH_MASK                           (0xFFFFU << CRU_AS0_CON0_CNT_TH_SHIFT)                       /* 0x0000FFFF */
+#define CRU_AS0_CON0_WAIT_TH_SHIFT                         (16U)
+#define CRU_AS0_CON0_WAIT_TH_MASK                          (0xFFFFU << CRU_AS0_CON0_WAIT_TH_SHIFT)                      /* 0xFFFF0000 */
+/* AS0_CON1 */
+#define CRU_AS0_CON1_OFFSET                                (0x404)
+#define CRU_AS0_CON1_AS_CTRL_SHIFT                         (0U)
+#define CRU_AS0_CON1_AS_CTRL_MASK                          (0xFFFU << CRU_AS0_CON1_AS_CTRL_SHIFT)                       /* 0x00000FFF */
+#define CRU_AS0_CON1_AS_EN_SHIFT                           (12U)
+#define CRU_AS0_CON1_AS_EN_MASK                            (0x1U << CRU_AS0_CON1_AS_EN_SHIFT)                           /* 0x00001000 */
+#define CRU_AS0_CON1_ASS_EN_SHIFT                          (13U)
+#define CRU_AS0_CON1_ASS_EN_MASK                           (0x1U << CRU_AS0_CON1_ASS_EN_SHIFT)                          /* 0x00002000 */
+#define CRU_AS0_CON1_AS_CFG_SHIFT                          (14U)
+#define CRU_AS0_CON1_AS_CFG_MASK                           (0x3U << CRU_AS0_CON1_AS_CFG_SHIFT)                          /* 0x0000C000 */
+/* AS1_CON0 */
+#define CRU_AS1_CON0_OFFSET                                (0x408)
+#define CRU_AS1_CON0_CNT_TH_SHIFT                          (0U)
+#define CRU_AS1_CON0_CNT_TH_MASK                           (0xFFFFU << CRU_AS1_CON0_CNT_TH_SHIFT)                       /* 0x0000FFFF */
+#define CRU_AS1_CON0_WAIT_TH_SHIFT                         (16U)
+#define CRU_AS1_CON0_WAIT_TH_MASK                          (0xFFFFU << CRU_AS1_CON0_WAIT_TH_SHIFT)                      /* 0xFFFF0000 */
+/* AS1_CON1 */
+#define CRU_AS1_CON1_OFFSET                                (0x40C)
+#define CRU_AS1_CON1_AS_CTRL_SHIFT                         (0U)
+#define CRU_AS1_CON1_AS_CTRL_MASK                          (0xFFFU << CRU_AS1_CON1_AS_CTRL_SHIFT)                       /* 0x00000FFF */
+#define CRU_AS1_CON1_AS_EN_SHIFT                           (12U)
+#define CRU_AS1_CON1_AS_EN_MASK                            (0x1U << CRU_AS1_CON1_AS_EN_SHIFT)                           /* 0x00001000 */
+#define CRU_AS1_CON1_ASS_EN_SHIFT                          (13U)
+#define CRU_AS1_CON1_ASS_EN_MASK                           (0x1U << CRU_AS1_CON1_ASS_EN_SHIFT)                          /* 0x00002000 */
+#define CRU_AS1_CON1_AS_CFG_SHIFT                          (14U)
+#define CRU_AS1_CON1_AS_CFG_MASK                           (0x3U << CRU_AS1_CON1_AS_CFG_SHIFT)                          /* 0x0000C000 */
+/* AS2_CON0 */
+#define CRU_AS2_CON0_OFFSET                                (0x410)
+#define CRU_AS2_CON0_CNT_TH_SHIFT                          (0U)
+#define CRU_AS2_CON0_CNT_TH_MASK                           (0xFFFFU << CRU_AS2_CON0_CNT_TH_SHIFT)                       /* 0x0000FFFF */
+#define CRU_AS2_CON0_WAIT_TH_SHIFT                         (16U)
+#define CRU_AS2_CON0_WAIT_TH_MASK                          (0xFFFFU << CRU_AS2_CON0_WAIT_TH_SHIFT)                      /* 0xFFFF0000 */
+/* AS2_CON1 */
+#define CRU_AS2_CON1_OFFSET                                (0x414)
+#define CRU_AS2_CON1_AS_EN_SHIFT                           (12U)
+#define CRU_AS2_CON1_AS_EN_MASK                            (0x1U << CRU_AS2_CON1_AS_EN_SHIFT)                           /* 0x00001000 */
+#define CRU_AS2_CON1_ASS_EN_SHIFT                          (13U)
+#define CRU_AS2_CON1_ASS_EN_MASK                           (0x1U << CRU_AS2_CON1_ASS_EN_SHIFT)                          /* 0x00002000 */
+#define CRU_AS2_CON1_AS_CFG_SHIFT                          (14U)
+#define CRU_AS2_CON1_AS_CFG_MASK                           (0x3U << CRU_AS2_CON1_AS_CFG_SHIFT)                          /* 0x0000C000 */
+/* AS3_CON0 */
+#define CRU_AS3_CON0_OFFSET                                (0x418)
+#define CRU_AS3_CON0_CNT_TH_SHIFT                          (0U)
+#define CRU_AS3_CON0_CNT_TH_MASK                           (0xFFFFU << CRU_AS3_CON0_CNT_TH_SHIFT)                       /* 0x0000FFFF */
+#define CRU_AS3_CON0_WAIT_TH_SHIFT                         (16U)
+#define CRU_AS3_CON0_WAIT_TH_MASK                          (0xFFFFU << CRU_AS3_CON0_WAIT_TH_SHIFT)                      /* 0xFFFF0000 */
+/* AS3_CON1 */
+#define CRU_AS3_CON1_OFFSET                                (0x41C)
+#define CRU_AS3_CON1_AS_CTRL_SHIFT                         (0U)
+#define CRU_AS3_CON1_AS_CTRL_MASK                          (0xFFFU << CRU_AS3_CON1_AS_CTRL_SHIFT)                       /* 0x00000FFF */
+#define CRU_AS3_CON1_AS_EN_SHIFT                           (12U)
+#define CRU_AS3_CON1_AS_EN_MASK                            (0x1U << CRU_AS3_CON1_AS_EN_SHIFT)                           /* 0x00001000 */
+#define CRU_AS3_CON1_ASS_EN_SHIFT                          (13U)
+#define CRU_AS3_CON1_ASS_EN_MASK                           (0x1U << CRU_AS3_CON1_ASS_EN_SHIFT)                          /* 0x00002000 */
+#define CRU_AS3_CON1_AS_CFG_SHIFT                          (14U)
+#define CRU_AS3_CON1_AS_CFG_MASK                           (0x3U << CRU_AS3_CON1_AS_CFG_SHIFT)                          /* 0x0000C000 */
+/* AS4_CON0 */
+#define CRU_AS4_CON0_OFFSET                                (0x420)
+#define CRU_AS4_CON0_CNT_TH_SHIFT                          (0U)
+#define CRU_AS4_CON0_CNT_TH_MASK                           (0xFFFFU << CRU_AS4_CON0_CNT_TH_SHIFT)                       /* 0x0000FFFF */
+#define CRU_AS4_CON0_WAIT_TH_SHIFT                         (16U)
+#define CRU_AS4_CON0_WAIT_TH_MASK                          (0xFFFFU << CRU_AS4_CON0_WAIT_TH_SHIFT)                      /* 0xFFFF0000 */
+/* AS4_CON1 */
+#define CRU_AS4_CON1_OFFSET                                (0x424)
+#define CRU_AS4_CON1_AS_CTRL_SHIFT                         (0U)
+#define CRU_AS4_CON1_AS_CTRL_MASK                          (0xFFFU << CRU_AS4_CON1_AS_CTRL_SHIFT)                       /* 0x00000FFF */
+#define CRU_AS4_CON1_AS_EN_SHIFT                           (12U)
+#define CRU_AS4_CON1_AS_EN_MASK                            (0x1U << CRU_AS4_CON1_AS_EN_SHIFT)                           /* 0x00001000 */
+#define CRU_AS4_CON1_ASS_EN_SHIFT                          (13U)
+#define CRU_AS4_CON1_ASS_EN_MASK                           (0x1U << CRU_AS4_CON1_ASS_EN_SHIFT)                          /* 0x00002000 */
+#define CRU_AS4_CON1_AS_CFG_SHIFT                          (14U)
+#define CRU_AS4_CON1_AS_CFG_MASK                           (0x3U << CRU_AS4_CON1_AS_CFG_SHIFT)                          /* 0x0000C000 */
 /******************************************GRF*******************************************/
 /* GPIO0A_IOMUX_L */
 #define GRF_GPIO0A_IOMUX_L_GPIO0A0_SEL_SHIFT               (0U)

@@ -17,6 +17,8 @@
 
 /********************* Private MACRO Definition ******************************/
 #define DCLK_LCDC_PLL_LIMIT_FREQ 800 * 1000000
+#define CRU_AS_CFG_VAL2          0x1
+#define CRU_AS_CNT_MSK           0xFFFF
 
 /********************* Private Structure Definition **************************/
 
@@ -54,12 +56,109 @@ static struct PLL_SETUP CPLL = {
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
+#ifdef HAL_CRU_DCG_FEATURE_ENABLED
+static void CRU_DcgConfig(uint8_t ch, uint8_t func, uint32_t val1, uint32_t val2)
+{
+    HAL_ASSERT(ch < 2);
 
+    switch (func) {
+    case 1: /* cfg en */
+        CRU->DCG_CON[ch][4] = VAL_MASK_WE(CRU_DCG0_CON4_CFG_EN_MASK,
+                                          val1 << CRU_DCG0_CON4_CFG_EN_SHIFT);
+        break;
+    case 2: /* period cnt */
+        CRU->DCG_CON[ch][0] = val1;
+        CRU->DCG_CON[ch][1] = val2;
+        break;
+    case 3: /* period cnt */
+        CRU->DCG_CON[ch][2] = val1;
+        CRU->DCG_CON[ch][3] = val2;
+        break;
+    case 4: /* step */
+        CRU->DCG_CON[ch][4] = VAL_MASK_WE(CRU_DCG0_CON4_CFG_STEP1_MASK,
+                                          val1 << CRU_DCG0_CON4_CFG_STEP1_SHIFT);
+        CRU->DCG_CON[ch][4] = VAL_MASK_WE(CRU_DCG0_CON4_CFG_STEP2_MASK,
+                                          val2 << CRU_DCG0_CON4_CFG_STEP2_SHIFT);
+        break;
+    case 5: /* limit */
+        CRU->DCG_CON[ch][5] = VAL_MASK_WE(CRU_DCG0_CON5_CFG_LMT_MASK,
+                                          val1 << CRU_DCG0_CON5_CFG_LMT_SHIFT);
+        break;
+    default:
+        break;
+    }
+}
+#endif
+
+#ifdef HAL_CRU_AS_FEATURE_ENABLED
+static void CRU_AsConfig(uint8_t ch, uint32_t val1, uint32_t val2)
+{
+    HAL_ASSERT(ch < 5);
+    CRU->AS_CON[ch][1] = VAL_MASK_WE(CRU_AS0_CON1_AS_CTRL_MASK |
+                                     CRU_AS0_CON1_AS_CFG_MASK,
+                                     val1 << CRU_AS0_CON1_AS_CTRL_SHIFT |
+                                     val2 << CRU_AS0_CON1_AS_CFG_SHIFT);
+}
+
+static void CRU_AsCntConfig(uint8_t ch, uint32_t val1, uint32_t val2)
+{
+    HAL_ASSERT(ch < 5);
+
+    if (val1 >= CRU_AS_CNT_MSK)
+        val1 = CRU->AS_CON[ch][0] & CRU_AS_CNT_MSK;
+
+    if (val2 >= CRU_AS_CNT_MSK)
+        val2 = (CRU->AS_CON[ch][0] >> 16) & CRU_AS_CNT_MSK;
+
+    CRU->AS_CON[ch][0] = val1 | (val2 << 16);
+}
+
+static void CRU_AsEnable(uint8_t ch, uint8_t en)
+{
+    HAL_ASSERT(ch < 5);
+
+    if (en)
+        CRU->AS_CON[ch][1] = VAL_MASK_WE(CRU_AS0_CON1_AS_EN_MASK |
+                                         CRU_AS0_CON1_ASS_EN_MASK,
+                                         CRU_AS0_CON1_AS_EN_MASK |
+                                         CRU_AS0_CON1_ASS_EN_MASK);
+    else
+        CRU->AS_CON[ch][1] = VAL_MASK_WE(CRU_AS0_CON1_AS_EN_MASK |
+                                         CRU_AS0_CON1_ASS_EN_MASK, 0);
+}
+
+#endif
 /********************* Public Function Definition ****************************/
 
 /** @defgroup CRU_Exported_Functions_Group5 Other Functions
  *  @{
  */
+
+#ifdef HAL_CRU_AS_FEATURE_ENABLED
+void HAL_CRU_AsInit(void)
+{
+    CRU_AsConfig(0, 0x7, CRU_AS_CFG_VAL2);
+    CRU_AsCntConfig(0, 0x20, 0x18);
+
+    CRU_AsConfig(1, 0x1 << 4 | 0x1, CRU_AS_CFG_VAL2);
+    CRU_AsCntConfig(1, 0x20, 0x18);
+
+    CRU_AsConfig(2, 0x1, CRU_AS_CFG_VAL2);
+    CRU_AsCntConfig(2, 0x20, 0x18);
+
+    CRU_AsConfig(3, 0x1 << 4 | 0x1, CRU_AS_CFG_VAL2);
+    CRU_AsCntConfig(3, 0x20, 0x18);
+
+    CRU_AsConfig(4, 0x1 << 4 | 0x1 << 6 | 0x1, CRU_AS_CFG_VAL2);
+    CRU_AsCntConfig(4, 0x20, 0x18);
+
+    CRU_AsEnable(0, 1);
+    CRU_AsEnable(1, 1);
+    CRU_AsEnable(2, 1);
+    CRU_AsEnable(3, 1);
+    CRU_AsEnable(4, 1);
+}
+#endif
 
 /**
  * @brief Get frac clk freq.
