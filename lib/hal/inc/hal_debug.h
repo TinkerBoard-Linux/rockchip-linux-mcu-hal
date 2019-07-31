@@ -16,18 +16,24 @@
 
 /***************************** MACRO Definition ******************************/
 
-/** @defgroup DEBUG_Exported_Definition_Group1 Basic Definition
- *  @{
- */
-
+/* Run only for debugging, please refer to how-to-use for the definition of the specification. */
 //#define HAL_DBG_USING_RTT_SERIAL 1
+//#define HAL_DBG_USING_LIBC_PRINTF 1
 #if HAL_DBG_USING_RTT_SERIAL
 #include <rthw.h>
 #include <rtthread.h>
 
 #define HAL_SYSLOG rt_kprintf
-#else
+#elif HAL_DBG_USING_LIBC_PRINTF
 #define HAL_SYSLOG printf
+#endif
+
+/** @defgroup DEBUG_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
+
+#ifndef HAL_SYSLOG
+#define HAL_SYSLOG HAL_DBG_Printf
 #endif
 
 #if (HAL_DBG_ON && HAL_DBG_INFO_ON)
@@ -65,6 +71,10 @@
 
 extern void AssertFailed(const char *file, uint32_t line);
 HAL_Status HAL_DBG_HEX(char *s, void *buf, uint32_t width, uint32_t len);
+#ifdef __GNUC__
+__attribute__((__format__(printf, 1, 2)))
+#endif
+int32_t HAL_DBG_Printf(const char *format, ...);
 
 #endif
 

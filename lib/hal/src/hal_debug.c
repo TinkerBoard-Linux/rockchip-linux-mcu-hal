@@ -16,6 +16,26 @@
 
  The DEBUG driver can be used as follows:
 
+ Implement DBG hook:
+
+ - printf func: define new HAL_SYSLOG in hal_conf.h or use HAL_DBG_Printf() in default;
+ - assert func: redefine AssertFailed().
+
+ Define debug level in hal_conf.h:
+
+ - HAL_DBG_ON: print master switch;
+ - HAL_DBG_INFO_ON: information printing switch;
+ - HAL_DBG_WRN_ON: information printing switch;
+ - HAL_DBG_ERR_ON: information printing switch;
+ - USE_FULL_ASSERT: use full-featured assert, or directly return inside HAL_ASSERT function.
+
+ APIS:
+
+ - printf information by calling HAL_DBG();
+ - printf warning by calling HAL_DBG_WRN();
+ - printf error by calling HAL_DBG_ERR();
+ - do assert by calling HAL_ASSERT().
+
  @} */
 
 #include "hal_base.h"
@@ -37,7 +57,7 @@ __WEAK void AssertFailed(const char *file, uint32_t line)
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup TIMER_Exported_Functions_Group4 Init and DeInit Functions
+/** @defgroup DEBUG_Exported_Functions_Group5 Other Functions
 
  This section provides functions allowing to init and deinit module as follows:
 
@@ -83,6 +103,16 @@ HAL_Status HAL_DBG_HEX(char *s, void *buf, uint32_t width, uint32_t len)
 #endif
 
     return HAL_OK;
+}
+
+/**
+ * @brief  format and print data
+ * @param  format: format printf param.
+ * @return int32_t.
+ */
+__WEAK int32_t HAL_DBG_Printf(const char *format, ...)
+{
+    return 0;
 }
 
 /** @} */
