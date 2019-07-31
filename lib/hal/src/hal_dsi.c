@@ -600,7 +600,7 @@ HAL_Status HAL_DSI_VerticalTimingConfig(struct DSI_REG *pReg,
     WRITE_REG(pReg->VID_VSA_LINES, vsa);
     WRITE_REG(pReg->VID_VBP_LINES, vbp);
     WRITE_REG(pReg->VID_VFP_LINES, vfp);
-    WRITE_REG(pReg->VID_VACTIVE_LINES, pModeInfo->crtcHdisplay);
+    WRITE_REG(pReg->VID_VACTIVE_LINES, pModeInfo->crtcVdisplay);
 
     return HAL_OK;
 }
