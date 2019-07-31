@@ -849,11 +849,12 @@ HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
 HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
                            struct DISPLAY_MODE_INFO *pModeInfo)
 {
-    uint32_t i, dsc_cfg[21];
+    uint32_t i, dsc_cfg[21], val;
     struct DSC_PPS dscDefaultPps;
     struct DSC_PPS_RC_PARAMETER_SET *rcParameterSet = &dscDefaultPps.rcParameterSet;
     struct DSC_PPS_RC_RANGE_PARAMETER *rcRangeParameter = rcParameterSet->rcRangeParameter;
-    uint8_t flatness_det_thresh = 2;     /* rockchip DSC define */
+    uint8_t flatnessDetThresh = 2, sliceNum = 2;     /* rockchip DSC define */
+    uint32_t dscOutputDelayPeri, dscOutputDelayInit, dscInitialLines;
 
     memset(&dscDefaultPps, 0, sizeof(dscDefaultPps));
 
@@ -931,7 +932,7 @@ HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
                   (rcParameterSet->rcEdgeFactor & 0xf) << 18 |
                   (rcParameterSet->rcModelSize & 0x3ff) << 22;
     dsc_cfg[12] = ((rcParameterSet->rcModelSize >> 10) & 0x3f) << 0 |
-                  (flatness_det_thresh & 0xff) << 6 |
+                  (flatnessDetThresh & 0xff) << 6 |
                   (dscDefaultPps.flatnessMaxQp & 0x1f) << 14 |
                   (dscDefaultPps.flatnessMinQp & 0xff) << 19 |
                   (dscDefaultPps.finalOffset & 0xff) << 24;
@@ -965,9 +966,42 @@ HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
                   (dscDefaultPps.bitsPerConponent & 0x3) << 30;
     dsc_cfg[20] = ((dscDefaultPps.bitsPerConponent >> 2) & 0x3) << 0;
 
-    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[0], &pReg->DSC_SYS_CTRL[0], 0x02582039);
-    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[1], &pReg->DSC_SYS_CTRL[1], 0x08bb0004);
-    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[2], &pReg->DSC_SYS_CTRL[2], 0x0000035b);
+    /**
+     * dscOutputDelayPeri: delay between line
+     *     dscOutputDelayPeri = htotal - hactive / 3;
+     * dsc_output_delay_init:
+     *     enc_valid_out and den delay 285 dclk cycle.
+     *     dsc encoder delay 3 lane to output, so
+     *     dsc_output_delay_init = 3 * htotal - 285;
+     */
+    dscOutputDelayPeri = pModeInfo->crtcHtotal - pModeInfo->crtcHdisplay / 3;
+    dscOutputDelayInit = pModeInfo->crtcHtotal * 3 - 285;
+
+    if (dscDefaultPps.sliceWidth > 2100)
+        dscInitialLines = 1;
+    else if (dscDefaultPps.sliceWidth > 1100)
+        dscInitialLines = 2;
+    else if (dscDefaultPps.sliceWidth > 700)
+        dscInitialLines = 3;
+    else
+        dscInitialLines = 4;
+
+    val = VOP_DSC_SYS_CTRL1_DSI_HALT_EN_MASK |
+          VOP_DSC_SYS_CTRL1_DSC_VIDEO_MODE_MASK |
+          VOP_DSC_SYS_CTRL1_DSC_ICH_RST_MANUAL_VALUE_MASK |
+          VOP_DSC_SYS_CTRL1_HI_LO_BYTE_SWAP_MASK |
+          VOP_DSC_SYS_CTRL1_DSC_ICH_RST_MANUAL_MODE_MASK |
+          dscOutputDelayPeri << VOP_DSC_SYS_CTRL1_DSC_OUTPUT_DELAY_PERI_SHIFT;
+    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[0], &pReg->DSC_SYS_CTRL[0], val);
+    val = dscInitialLines | VOP_DSC_SYS_CTRL2_DSC_OUTPUT_DELAY_EN_MASK |
+          dscOutputDelayInit << VOP_DSC_SYS_CTRL2_DSC_OUTPUT_DELAY_INIT_SHIFT;
+    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[1], &pReg->DSC_SYS_CTRL[1], val);
+
+    if (sliceNum == 2)
+        val = 0x35b;
+    else
+        val = 0x6b7;
+    VOP_Write(&g_VOP_RegMir.DSC_SYS_CTRL[2], &pReg->DSC_SYS_CTRL[2], val);
 
     for (i = 0; i < 21; i++)
         VOP_Write(&g_VOP_RegMir.DSC_CFG[i], &pReg->DSC_CFG[i], dsc_cfg[i]);
