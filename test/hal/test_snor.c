@@ -17,9 +17,14 @@ static uint32_t *pread32;
 static uint32_t *pwrite32;
 #define FLASH_SKIP_LBA 0x100 /* About 1M space skip */
 
+static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
+{
+    return (uint8_t *)(((uintptr_t)ptr + align - 1) & ~(uintptr_t)(align - 1));
+}
+
 HAL_Status SNOR_SINGLE_TEST(void)
 {
-    uint32_t ret, testLba = 0x80;
+    uint32_t ret, testLba = FLASH_SKIP_LBA;
 
     pwrite32[0] = testLba;
     HAL_SNOR_Erase(nor, testLba << 9, 0);
@@ -29,15 +34,20 @@ HAL_Status SNOR_SINGLE_TEST(void)
     HAL_DBG("write %lu KB/s\n", 4 * 1000 / ret);
     memset(pread, 0, 256);
     ret = HAL_GetTick();
+    memset(pread32, 0, 0x1000);
     for (int i = 0; i < 1024; i++)
         HAL_SNOR_ReadData(nor, testLba << 9, pread32, 0x1000);
     ret = HAL_GetTick() - ret;
     HAL_DBG("read %lu MB/s\n", 4 * 1000 / ret);
     for (int32_t i = 0; i < (0x1000 / 4); i++) {
-        if (pwrite[i] != pread[i]) {
-            HAL_DBG_HEX("w", pwrite, 4, 64);
-            HAL_DBG_HEX("r", pread, 4, 64);
+        if (pwrite32[i] != pread32[i]) {
+            HAL_DBG_HEX("w", pwrite32, 4, 0x400);
+            HAL_DBG_HEX("r", pread32, 4, 0x400);
+            HAL_DBG("check not match:row=%lx, num=%lx, write=%lx, read=%lx %lx %lx %lx\n",
+                    testLba, i, pwrite32[i], pread32[i], pread32[i + 1], pread32[i + 2], pread32[i - 1]);
             HAL_DBG("SNOR Single test fail\n");
+            while (1)
+                ;
 
             return HAL_ERROR;
         }
@@ -55,9 +65,10 @@ static HAL_Status SNOR_STRESS_RANDOM_TEST(uint32_t testEndLBA)
 
     HAL_DBG("---------%s %lx---------\n", __func__, testEndLBA);
     HAL_DBG("---------%s---------\n", __func__);
-    for (testCount = 0; testCount < testEndLBA; testCount++) {
+    for (testCount = 0; testCount < testEndLBA;) {
         testLBA = (uint32_t)HAL_TIMER_GetCount(SYS_TIMER) % testEndLBA;
-        testLBA = testLBA < FLASH_SKIP_LBA ? testLBA + FLASH_SKIP_LBA : testLBA;
+        if (testLBA < FLASH_SKIP_LBA)
+            continue;
         pwrite32[0] = testLBA;
         ret = HAL_SNOR_OverWrite(nor, testLBA, testSecCount, pwrite32);
         if (ret != testSecCount)
@@ -73,11 +84,14 @@ static HAL_Status SNOR_STRESS_RANDOM_TEST(uint32_t testEndLBA)
                 HAL_DBG(
                     "check not match:row=%lx, num=%lx, write=%lx, read=%lx %lx %lx %lx\n",
                     testLBA, j, pwrite32[j], pread32[j], pread32[j + 1], pread32[j + 2], pread32[j - 1]);
+                while (1)
+                    ;
 
                 return HAL_ERROR;
             }
         }
         HAL_DBG("testCount= %lx testLBA= %lx\n", testCount, testLBA);
+        testCount += testSecCount;
     }
     HAL_DBG("---------%s SUCCESS---------\n", __func__);
 
@@ -108,6 +122,8 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
                 HAL_DBG(
                     "check not match:row=%lx, num=%lx, write=%lx, read=%lx %lx %lx %lx\n",
                     testLBA, j, pwrite32[j], pread32[j], pread32[j + 1], pread32[j + 2], pread32[j - 1]);
+                while (1)
+                    ;
 
                 return HAL_ERROR;
             }
@@ -118,9 +134,10 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
     HAL_DBG("---------%s Begin to test---------\n", __func__);
     HAL_SNOR_XIPEnable(nor);
     testSecCount = 1;
-    for (testCount = 0; testCount < testEndLBA; testCount++) {
+    for (testCount = 0; testCount < (testEndLBA - FLASH_SKIP_LBA);) {
         testLBA = (uint32_t)HAL_TIMER_GetCount(SYS_TIMER) % testEndLBA;
-        testLBA = testLBA < FLASH_SKIP_LBA ? testLBA + FLASH_SKIP_LBA : testLBA;
+        if (testLBA < FLASH_SKIP_LBA)
+            continue;
         pwrite32[0] = testLBA;
         pread32 = (uint32_t *)(XIP_MEM_BASE + testLBA * nor->sectorSize);
         for (j = 0; j < testSecCount * nor->sectorSize / 4; j++) {
@@ -130,12 +147,14 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
                 HAL_DBG(
                     "recheck not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
                     testLBA, j, pwrite32[j], pread32[j]);
+                while (1)
+                    ;
 
                 return HAL_ERROR;
             }
         }
         HAL_DBG("testCount= %lx testLBA = %lx\n", testCount, testLBA);
-        testLBA += testSecCount;
+        testCount += testSecCount;
     }
     HAL_DBG("---------%s SUCCESS---------\n", __func__);
     HAL_SNOR_XIPDisable(nor);
@@ -148,6 +167,9 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
 TEST_GROUP(HAL_SNOR);
 
 TEST_SETUP(HAL_SNOR){
+    pwrite32 = (uint32_t *)pwrite;
+    pread32 = (uint32_t *)pread;
+
     /* Write pattern */
     for (int32_t i = 0; i < (maxest_sector * (int32_t)nor->sectorSize / 4); i++)
         pwrite32[i] = i;
@@ -356,15 +378,17 @@ static HAL_Status SNOR_HostSet(void)
 TEST_GROUP_RUNNER(HAL_SNOR){
     struct SNOR_HOST *spi;
     uint32_t ret;
+    uint8_t *pwrite_t, *pread_t;
 
     /* Config test buffer */
-    pwrite = (uint8_t *)malloc(maxest_sector * 4096 + 64);
-    pread = (uint8_t *)malloc(maxest_sector * 4096 + 64);
+    pwrite_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
+    pread_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
+    TEST_ASSERT_NOT_NULL(pwrite_t);
+    TEST_ASSERT_NOT_NULL(pread_t);
+    pwrite = AlignUp(pwrite_t, 64);
+    pread = AlignUp(pread_t, 64);
     HAL_DBG("pwrite %p pread %p\n", pwrite, pread);
-    TEST_ASSERT_NOT_NULL(pread);
-    TEST_ASSERT_NOT_NULL(pwrite);
-    pwrite32 = (uint32_t *)pwrite;
-    pread32 = (uint32_t *)pread;
+
     for (int32_t i = 0; i < (maxest_sector * (int32_t)nor->sectorSize / 4); i++)
         pwrite32[i] = i;
 
@@ -387,8 +411,8 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     ret = HAL_SNOR_DeInit(nor);
     TEST_ASSERT(ret == HAL_OK);
 
-    free(pwrite);
-    free(pread);
+    free(pwrite_t);
+    free(pread_t);
     free(nor->spi->userdata);
     free(nor->spi);
     free(nor);
