@@ -106,7 +106,7 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
     uint32_t testCount, testSecCount = 1;
 
     HAL_DBG("---------%s Begin to set pattern---------\n", __func__);
-    for (testLBA = FLASH_SKIP_LBA; (testLBA + testSecCount) < testEndLBA;) {
+    for (testLBA = FLASH_SKIP_LBA; testLBA < testEndLBA;) {
         pwrite32[0] = testLBA;
         ret = HAL_SNOR_OverWrite(nor, testLBA, testSecCount, pwrite32);
         if (ret != testSecCount)
