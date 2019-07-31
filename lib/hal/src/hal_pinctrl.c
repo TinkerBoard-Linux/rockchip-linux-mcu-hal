@@ -65,10 +65,10 @@ static const struct RK_PINCTRL_DEV *PINCTRL_GetInfo(void)
  * @param  mux: func data.
  * @return HAL_Status.
  */
-static HAL_Status PINCTRL_AcquireMuxRoute(struct PINCTRL_BANK_INFO *pBank, uint8_t pin, uint32_t mux)
+static HAL_Status PINCTRL_AcquireMuxRoute(const struct PINCTRL_BANK_INFO *pBank, uint8_t pin, uint32_t mux)
 {
     const struct RK_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
-    struct PINCTRL_MUX_ROUTE_DATA *data;
+    const struct PINCTRL_MUX_ROUTE_DATA *data;
     uint32_t i, reg = 0;
     HAL_Status rc = HAL_OK;
 
@@ -107,11 +107,11 @@ exit:
  * @param  mask: to get mask bits of the pin.
  * @return HAL_Status.
  */
-static HAL_Status PINCTRL_RectifyMuxParams(struct PINCTRL_BANK_INFO *pBank, uint8_t pin,
+static HAL_Status PINCTRL_RectifyMuxParams(const struct PINCTRL_BANK_INFO *pBank, uint8_t pin,
                                            uint32_t *reg, uint8_t *bit, uint32_t *mask)
 {
     const struct RK_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
-    struct PINCTRL_MUX_RECAL_DATA *data;
+    const struct PINCTRL_MUX_RECAL_DATA *data;
     uint32_t i;
     HAL_Status rc = HAL_OK;
 
@@ -150,7 +150,7 @@ exit:
  * @param  mask: to get mask bits of the pin.
  * @return HAL_Status: HAL_OK for success to get param.
  */
-static HAL_Status PINCTRL_AcquireParam(struct PINCTRL_BANK_INFO *pBank, uint8_t pin,
+static HAL_Status PINCTRL_AcquireParam(const struct PINCTRL_BANK_INFO *pBank, uint8_t pin,
                                        ePIN_GRF_INFO_ID id,
                                        uint32_t *reg, uint8_t *bit, uint32_t *mask)
 {
@@ -185,7 +185,7 @@ static HAL_Status PINCTRL_AcquireParam(struct PINCTRL_BANK_INFO *pBank, uint8_t 
  * @param  param: mux value  to set.
  * @return HAL_Status.
  */
-static HAL_Status PINCTRL_SetMux(struct PINCTRL_BANK_INFO *pBank,
+static HAL_Status PINCTRL_SetMux(const struct PINCTRL_BANK_INFO *pBank,
                                  uint8_t pin, uint8_t param)
 {
     uint32_t reg = 0, mask = 0;
@@ -219,7 +219,7 @@ static HAL_Status PINCTRL_SetMux(struct PINCTRL_BANK_INFO *pBank,
  * @param  param: drive strength to set.
  * @return HAL_Status.
  */
-static uint32_t PINCTRL_SetDrive(struct PINCTRL_BANK_INFO *pBank,
+static uint32_t PINCTRL_SetDrive(const struct PINCTRL_BANK_INFO *pBank,
                                  uint8_t pin, uint8_t param)
 {
     uint32_t reg = 0, mask = 0;
@@ -245,7 +245,7 @@ exit:
  * @param  param: pull mode to set.
  * @return HAL_Status.
  */
-static HAL_Status PINCTRL_SetPull(struct PINCTRL_BANK_INFO *pBank,
+static HAL_Status PINCTRL_SetPull(const struct PINCTRL_BANK_INFO *pBank,
                                   uint8_t pin, uint8_t param)
 {
     uint32_t reg = 0, mask = 0;
@@ -271,7 +271,7 @@ exit:
  * @param  param: schmitt trigger enable or not.
  * @return HAL_Status.
  */
-static HAL_Status PINCTRL_SetSchmitt(struct PINCTRL_BANK_INFO *pBank,
+static HAL_Status PINCTRL_SetSchmitt(const struct PINCTRL_BANK_INFO *pBank,
                                      uint8_t pin, uint8_t param)
 {
     uint32_t reg = 0, mask = 0;
@@ -297,7 +297,7 @@ exit:
  * @param  param: slew rate fast or slow
  * @return HAL_Status.
  */
-static HAL_Status PINCTRL_SetSlewRate(struct PINCTRL_BANK_INFO *pBank,
+static HAL_Status PINCTRL_SetSlewRate(const struct PINCTRL_BANK_INFO *pBank,
                                       uint8_t pin, uint8_t param)
 {
     uint32_t reg = 0, mask = 0;
@@ -323,7 +323,7 @@ exit:
  * @param  param: multi params defined in @ref ePINCTRL_configParam,
  * @return HAL_Status.
  */
-static HAL_Status PINCTRL_SetParam(struct PINCTRL_BANK_INFO *pBank,
+static HAL_Status PINCTRL_SetParam(const struct PINCTRL_BANK_INFO *pBank,
                                    uint8_t pin, uint32_t param)
 {
     HAL_Status rc = HAL_OK;

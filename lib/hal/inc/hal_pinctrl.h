@@ -233,9 +233,9 @@ struct PINCTRL_BANK_INFO {
 };
 
 struct RK_PINCTRL_DEV {
-    struct PINCTRL_BANK_INFO *banks;
-    struct PINCTRL_MUX_RECAL_DATA *muxRecalData;
-    struct PINCTRL_MUX_ROUTE_DATA *muxRouteData;
+    const struct PINCTRL_BANK_INFO *banks;
+    const struct PINCTRL_MUX_RECAL_DATA *muxRecalData;
+    const struct PINCTRL_MUX_ROUTE_DATA *muxRouteData;
     uint8_t banksNum;
     uint8_t muxRecalDataNum;
     uint8_t muxRouteDataNum;
