@@ -24,6 +24,9 @@
  *  @{
  */
 
+/** enter markrom usb upgrade */
+#define SYS_UPGRADE_FLAG (0xEF08A53C)
+
 #define IS_TICKFREQ(f) (((f) == HAL_TICK_FREQ_1KHZ)  || ((f) == HAL_TICK_FREQ_100HZ) || ((f) == HAL_TICK_FREQ_10HZ))
 
 /***************************** Structure Definition **************************/

@@ -473,3 +473,8 @@ void BSP_Init(void)
     BSP_VAD_Init();
 #endif
 }
+
+void BSP_SetLoaderFlag(void)
+{
+    GRF->OS_REG[0] = SYS_UPGRADE_FLAG;
+}

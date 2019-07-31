@@ -59,5 +59,6 @@ extern const struct HAL_UART_DEV g_uart2Dev;
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
+void BSP_SetLoaderFlag(void);
 
 #endif
