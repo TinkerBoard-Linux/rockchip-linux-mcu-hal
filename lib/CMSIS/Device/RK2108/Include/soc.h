@@ -4762,6 +4762,10 @@ struct USB_HOST_CH_REG {
 #define DSI_OUTVACT_LPCMD_TIME_SHIFT                       (16U)
 #define DSI_OUTVACT_LPCMD_TIME_MASK                        (0XFFU << DSI_OUTVACT_LPCMD_TIME_SHIFT)                      /* 0X00FF0000 */
 /* PCKHDL_CFG */
+#define EOTP_TX_EN_SHIFT                                   (0U)
+#define EOTP_TX_EN_MASK                                    (0x1U << EOTP_TX_EN_SHIFT)                                   /* 0X00000001 */
+#define EOTP_RX_EN_SHIFT                                   (1U)
+#define EOTP_RX_EN_MASK                                    (0x1U << EOTP_RX_EN_SHIFT)                                   /* 0X00000002 */
 #define DSI_BTA_EN_SHIFT                                   (2U)
 #define DSI_BTA_EN_MASK                                    (0x1U << DSI_BTA_EN_SHIFT)                                   /* 0X00000004 */
 #define DSI_ECC_RX_SHIFT                                   (3U)
@@ -4812,8 +4816,24 @@ struct USB_HOST_CH_REG {
 /* VID_MODE_CFG */
 #define DSI_VID_MODE_TYPE_SHIFT                            (0U)
 #define DSI_VID_MODE_TYPE_MASK                             (0x3U << DSI_VID_MODE_TYPE_SHIFT)                            /* 0X00000011 */
+#define DSI_LP_VSA_EN_SHIFT                                (8U)
+#define DSI_LP_VSA_EN_MASK                                 (0x1U << DSI_LP_VSA_EN_SHIFT)                                /* 0X00000100 */
+#define DSI_LP_VBP_EN_SHIFT                                (9U)
+#define DSI_LP_VBP_EN_MASK                                 (0x1U << DSI_LP_VBP_EN_SHIFT)                                /* 0X00000200 */
+#define DSI_LP_VFP_EN_SHIFT                                (10U)
+#define DSI_LP_VFP_EN_MASK                                 (0x1U << DSI_LP_VFP_EN_SHIFT)                                /* 0X00000400 */
+#define DSI_LP_VACT_EN_SHIFT                               (11U)
+#define DSI_LP_VACT_EN_MASK                                (0x1U << DSI_LP_VACT_EN_SHIFT)                               /* 0X00000800 */
+#define DSI_LP_HBP_EN_SHIFT                                (12U)
+#define DSI_LP_HBP_EN_MASK                                 (0x1U << DSI_LP_HBP_EN_SHIFT)                                /* 0X00001000 */
+#define DSI_LP_HFP_EN_SHIFT                                (13U)
+#define DSI_LP_HFP_EN_MASK                                 (0x1U << DSI_LP_HFP_EN_SHIFT)                                /* 0X00002000 */
+#define DSI_LP_FRAME_BTA_ACK_SHIFT                         (14U)
+#define DSI_LP_FRAME_BTA_ACK_MASK                          (0x1U << DSI_LP_FRAME_BTA_ACK_SHIFT)                         /* 0X00004000 */
 #define DSI_LP_CMD_EN_SHIFT                                (15U)
 #define DSI_LP_CMD_EN_MASK                                 (0x1U << DSI_LP_CMD_EN_SHIFT)                                /* 0X00008000 */
+#define DSI_VPG_EN_SHIFT                                   (16U)
+#define DSI_VPG_EN_MASK                                    (0x1U << DSI_VPG_EN_SHIFT)                                   /* 0X00010000 */
 /* MODE_CFG */
 #define DSI_CMD_VIDEO_MODE_SHIFT                           (0U)
 #define DSI_CMD_VIDEO_MODE_MASK                            (0x1U << DSI_CMD_VIDEO_MODE_SHIFT)                           /* 0X00000001 */
