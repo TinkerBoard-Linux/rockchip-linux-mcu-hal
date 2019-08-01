@@ -28,6 +28,13 @@
 
 #ifdef HAL_SNOR_MODULE_ENABLED
 /********************* Private MACRO Definition ******************************/
+//#define HAL_SNOR_DEBUG
+#ifdef HAL_SNOR_DEBUG
+#define HAL_SNOR_DBG(...) HAL_DBG(__VA_ARGS__)
+#else
+#define HAL_SNOR_DBG(...) do { if (0) HAL_DBG(__VA_ARGS__); } while (0)
+#endif
+
 struct FLASH_INFO {
     uint32_t id;
 
@@ -127,17 +134,11 @@ struct FLASH_INFO {
 #define SPI_MEM_OP_NO_DATA { }
 
 #define READ_MAX_IOSIZE (1024 * 8) /* 8KB */
-
-//#define HAL_SNOR_DEBUG
-#ifdef HAL_SNOR_DEBUG
-#define HAL_SNOR_DBG(...) HAL_DBG(__VA_ARGS__)
-#else
-#define HAL_SNOR_DBG(...) do { if (0) HAL_DBG(__VA_ARGS__); } while (0)
-#endif
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
 struct FLASH_INFO spiFlashbl[] = {
+    { 0xc84013, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 10, 9, 0 }, /* GD25Q40B */
     { 0xc84017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 14, 9, 0 }, /* GD25Q64B */
     { 0xc84018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 }, /* GD25Q127C and GD25Q128C*/
     { 0xc84019, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 16, 6, 0 }, /* GD25Q256B/C */
@@ -155,70 +156,12 @@ struct FLASH_INFO spiFlashbl[] = {
 };
 
 /********************* Private Function Definition ***************************/
-extern HAL_Status HAL_SPI_Xfer(struct SNOR_HOST *spi, uint32_t bitlen, const void *dout, void *din, unsigned long flags);
 static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 {
-#if defined(HAL_SNOR_SPI_HOST)
-    uint32_t pos = 0;
-    const uint8_t *tx_buf = NULL;
-    uint8_t *rx_buf = NULL;
-    uint8_t op_buf[SPINOR_OP_MAX_SIZE];
-    int32_t op_len;
-    uint32_t flag;
-    int32_t i, ret;
-
-    if (op->data.nbytes) {
-        if (op->data.dir == SPI_MEM_DATA_IN)
-            rx_buf = op->data.buf.in;
-        else
-            tx_buf = op->data.buf.out;
-    }
-
-    /* HAL_SNOR_DBG("%s %d %d %x\n", __func__, sizeof(op->cmd.opcode), op->addr.nbytes, op->dummy.nbytes); */
-    op_len = sizeof(op->cmd.opcode) + op->addr.nbytes + op->dummy.nbytes;
-    op_buf[pos++] = op->cmd.opcode;
-
-    if (op->addr.nbytes) {
-        for (i = 0; i < op->addr.nbytes; i++)
-            op_buf[pos + i] = op->addr.val >>
-                              (8 * (op->addr.nbytes - i - 1));
-
-        pos += op->addr.nbytes;
-    }
-
-    if (op->dummy.nbytes)
-        memset(&op_buf[pos], 0xff, op->dummy.nbytes);
-
-    /* 1st transfer: opcode + address + dummy cycles */
-    flag = SPI_XFER_BEGIN;
-    /* Make sure to set END bit if no tx or rx data messages follow */
-    if (!tx_buf && !rx_buf)
-        flag |= SPI_XFER_END;
-
-    /* HAL_SNOR_DBG("%s first op_len= %ld flags= %ld opcode= %x\n", __func__, op_len, flag, op->cmd.opcode); */
-    ret = HAL_SPI_Xfer(spi, op_len * 8, op_buf, NULL, flag);
-    if (ret)
+    if (spi->xfer)
+        return spi->xfer(spi, op);
+    else
         return HAL_ERROR;
-
-    /* HAL_SNOR_DBG("%s second nbytes= %d\n", __func__, op->data.nbytes * 8); */
-    /* 2nd transfer: rx or tx data path */
-    if (tx_buf || rx_buf) {
-        ret = HAL_SPI_Xfer(spi, op->data.nbytes * 8, tx_buf, rx_buf, SPI_XFER_END);
-        if (ret)
-            return HAL_ERROR;
-    }
-
-    return HAL_OK;
-#elif defined(HAL_SNOR_SFC_HOST)
-
-    return HAL_SFC_SpiXfer(spi, op);
-#elif defined(HAL_SNOR_FSPI_HOST)
-
-    return HAL_FSPI_SpiXfer(spi, op);
-#else
-
-    return HAL_OK;
-#endif
 }
 
 static HAL_Status SNOR_XipExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on)
@@ -284,7 +227,7 @@ static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, v
     op.dummy.buswidth = op.addr.buswidth;
     op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
 
-    /* HAL_SNOR_DBG("%s %x %x %lx %lx\n", __func__, nor->readDummy, op.dummy.buswidth, from, op.addr.val); */
+    /* HAL_SNOR_DBG("%s %x %lx %lx %lx\n", __func__, nor->readDummy, op.data.nbytes, from, op.addr.val); */
     /* convert the dummy cycles to the number of bytes */
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
 
