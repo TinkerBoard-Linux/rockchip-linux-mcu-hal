@@ -122,24 +122,31 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
     n = (CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0xffff0000) >> 16;
     m = CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0x0000ffff;
 
-    if (clockName == CLK_32K) {
+    switch (clockName) {
+    case CLK_32K:
         pRate = PLL_INPUT_OSC_RATE;
         freq = (pRate / m) * n;
+        break;
+    case CLK_AUDPWM:
+        if (HAL_CRU_ClkGetMux(mux) == 0)
+            freq = s_gpllFreq / HAL_CRU_ClkGetDiv(divSrc);
+        else if (HAL_CRU_ClkGetMux(mux) == 1)
+            freq = (s_gpllFreq / m) * n;
+        break;
+    default:
+        if (HAL_CRU_ClkGetMux(muxSrc))
+            pRate = s_cpllFreq / HAL_CRU_ClkGetDiv(divSrc);
+        else
+            pRate = s_gpllFreq / HAL_CRU_ClkGetDiv(divSrc);
 
-        return freq;
+        if (HAL_CRU_ClkGetMux(mux) == 0)
+            freq = pRate;
+        else if (HAL_CRU_ClkGetMux(mux) == 1)
+            freq = (pRate / m) * n;
+        else if (HAL_CRU_ClkGetMux(mux) == 2)
+            freq = PLL_INPUT_OSC_RATE;
+        break;
     }
-
-    if (HAL_CRU_ClkGetMux(muxSrc))
-        pRate = s_cpllFreq / HAL_CRU_ClkGetDiv(divSrc);
-    else
-        pRate = s_gpllFreq / HAL_CRU_ClkGetDiv(divSrc);
-
-    if (HAL_CRU_ClkGetMux(mux) == 0)
-        freq = pRate;
-    else if (HAL_CRU_ClkGetMux(mux) == 1)
-        freq = (pRate / m) * n;
-    else if (HAL_CRU_ClkGetMux(mux) == 2)
-        freq = PLL_INPUT_OSC_RATE;
 
     return freq;
 }
@@ -191,6 +198,7 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         muxSrc = CLK_GET_MUX(CLK_AUDPWM_SRC);
         divSrc = CLK_GET_DIV(CLK_AUDPWM_SRC);
         divFrac = CLK_GET_DIV(CLK_AUDPWM_FRAC);
+        pRate = s_gpllFreq;
         break;
     case CLK_32K:
         divFrac = CLK_GET_DIV(CLK_32K);
