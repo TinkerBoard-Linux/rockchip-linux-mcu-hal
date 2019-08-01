@@ -281,11 +281,9 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
 
     if (Enable) {
         DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 1);
-        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 0);
         DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lpMask, 1);
     } else {
         DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 0);
-        DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 1);
         DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lpMask, 0);
     }
 
@@ -380,7 +378,7 @@ HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps)
 
         clkSel += pllClkSelTable[index - 1 ].pllClkSel;
     }
-    HAL_DBG("dsi mbps = %ld, m31 dphy pll_clkSel = %ld\n", laneMbps, clkSel);
+    HAL_DBG("dsi mbps = %ld, m31 dphy pll_clk_sel = %ld\n", laneMbps, clkSel);
 
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_ENABLECLK_MASK, 0);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_RSTZ_MASK, 1);
@@ -485,11 +483,17 @@ HAL_Status HAL_DSI_DpiConfig(struct DSI_REG *pReg,
 /**
  * @brief  DSI Packet Handler Config.
  * @param  pReg: DSI reg base.
+ * @param  pModeInfo: display mode info.
  * @return HAL_Status.
  */
-HAL_Status HAL_DSI_PacketHandlerConfig(struct DSI_REG *pReg)
+HAL_Status HAL_DSI_PacketHandlerConfig(struct DSI_REG *pReg,
+                                       struct DISPLAY_MODE_INFO *pModeInfo)
 {
-    WRITE_REG(pReg->PCKHDL_CFG, DSI_BTA_EN_MASK | DSI_ECC_RX_MASK | DSI_CRC_RX_MASK);
+    uint32_t val = DSI_BTA_EN_MASK | DSI_ECC_RX_MASK | DSI_CRC_RX_MASK | EOTP_TX_EN_MASK;
+
+    if (pModeInfo->flags & DSI_MODE_EOT_PACKET)
+        val &= ~EOTP_TX_EN_MASK;
+    WRITE_REG(pReg->PCKHDL_CFG, val);
 
     return HAL_OK;
 }
@@ -503,13 +507,14 @@ HAL_Status HAL_DSI_PacketHandlerConfig(struct DSI_REG *pReg)
 HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
                               struct DISPLAY_MODE_INFO *pModeInfo)
 {
-    uint32_t val = 0;
+    uint32_t val = DSI_LP_VSA_EN_MASK | DSI_LP_VFP_EN_MASK | DSI_LP_VBP_EN_MASK |
+                   DSI_LP_VACT_EN_MASK | DSI_LP_HBP_EN_MASK | DSI_LP_HFP_EN_MASK;
 
     if (pModeInfo->flags & DSI_MODE_VIDEO) {
         if (pModeInfo->flags & DSI_MODE_VIDEO_BURST)
-            val |= 0x2 << DSI_VID_MODE_TYPE_MASK;
+            val |= 0x2 << DSI_VID_MODE_TYPE_SHIFT;
         else if (pModeInfo->flags & DSI_MODE_VIDEO_SYNC_PULSE)
-            val |= 0 << DSI_VID_MODE_TYPE_MASK;
+            val |= 0 << DSI_VID_MODE_TYPE_SHIFT;
         else
             val |= DSI_VID_MODE_TYPE_MASK;
 

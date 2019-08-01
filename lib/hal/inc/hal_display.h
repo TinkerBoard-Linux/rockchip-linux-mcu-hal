@@ -19,26 +19,33 @@
  *  @{
  */
 
-/* RK display connector type */
+/** RK display connector type */
 #define RK_DISPLAY_CONNECTOR_UNKNOWN 0
 #define RK_DISPLAY_CONNECTOR_RGB     1
 #define RK_DISPLAY_CONNECTOR_DSI     2
 
-/* video mode flag default polarity is positive */
-#define VIDEO_MODE_FLAG_NHSYNC    HAL_BIT(0)
-#define VIDEO_MODE_FLAG_NVSYNC    HAL_BIT(1)
-#define VIDEO_MODE_FLAG_NPIXDATA  HAL_BIT(2)
-#define VIDEO_MODE_FLAG_DEN       HAL_BIT(3)
-#define DSI_MODE_VIDEO            HAL_BIT(4)
-#define DSI_MODE_VIDEO_BURST      HAL_BIT(5)
+/** video mode flag default polarity is positive */
+#define VIDEO_MODE_FLAG_NHSYNC   HAL_BIT(0)
+#define VIDEO_MODE_FLAG_NVSYNC   HAL_BIT(1)
+#define VIDEO_MODE_FLAG_NPIXDATA HAL_BIT(2)
+#define VIDEO_MODE_FLAG_DEN      HAL_BIT(3)
+/** video mode */
+#define DSI_MODE_VIDEO HAL_BIT(4)
+/** video burst mode */
+#define DSI_MODE_VIDEO_BURST HAL_BIT(5)
+/** video pulse mode */
 #define DSI_MODE_VIDEO_SYNC_PULSE HAL_BIT(6)
-#define DSI_MODE_VIDEO_AUTO_VERT  HAL_BIT(7)
-#define DSI_MODE_EOT_PACKET       HAL_BIT(8)
-#define DSI_CLOCK_NON_CONTINUOUS  HAL_BIT(9)
-#define DSI_MODE_LPM              HAL_BIT(10)
-#define DSC_ENABLE                HAL_BIT(11)
+/** enable auto vertical count mode */
+#define DSI_MODE_VIDEO_AUTO_VERT HAL_BIT(7)
+/** disable EoT packets in HS mode */
+#define DSI_MODE_EOT_PACKET HAL_BIT(8)
+/** device supports non-continuous clock behavior (DSI spec 5.6.1) */
+#define DSI_CLOCK_NON_CONTINUOUS HAL_BIT(9)
+/** transmit data in low power */
+#define DSI_MODE_LPM HAL_BIT(10)
+#define DSC_ENABLE   HAL_BIT(11)
 
-/* media bus format from DRM define */
+/** media bus format from DRM define */
 #define MEDIA_BUS_FMT_RGB565_1X16        0x1017
 #define MEDIA_BUS_FMT_BGR565_2X8_BE      0x1005
 #define MEDIA_BUS_FMT_BGR565_2X8_LE      0x1006
