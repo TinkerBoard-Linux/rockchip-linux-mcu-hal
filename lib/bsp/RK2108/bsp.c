@@ -215,11 +215,13 @@ static HAL_Status BSP_PL330_Init(void)
     switch (g_pl330Dev.peripReqType) {
     case SINGLE:
         /* config all dma reqs type as single req mode */
+        GRF->DMAC_CON[3] = 0x30000000;
         GRF->DMAC_CON[5] = 0xffff0000;
         GRF->DMAC_CON[6] = 0xffff0000;
         break;
     case BURST:
         /* config all dma reqs type as burst req mode */
+        GRF->DMAC_CON[3] = 0x30001000;
         GRF->DMAC_CON[5] = 0xffff5555;
         GRF->DMAC_CON[6] = 0xffff5555;
         break;
