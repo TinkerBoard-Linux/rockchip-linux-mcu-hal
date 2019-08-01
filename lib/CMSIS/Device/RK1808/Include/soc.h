@@ -9833,6 +9833,11 @@ struct TIMER_REG {
 #define TIMER_INTSTATUS_INTSTATUS_SHIFT                    (0U)
 #define TIMER_INTSTATUS_INTSTATUS_MASK                     (0x1U << TIMER_INTSTATUS_INTSTATUS_SHIFT)                    /* 0x00000001 */
 
+/*****************************************CACHE*****************************************/
+/* CACHE LINE SIZE */
+#define CACHE_LINE_SHIFT                                   (6U)
+#define CACHE_LINE_SIZE                                    (0x1U << CACHE_LINE_SHIFT)
+
 #define RK1808_VD_NPU  0x000222FFU
 #define RK1808_PD_PCIE 0x00044499U
 #define RK1808_PD_VPU  0x000777DDU

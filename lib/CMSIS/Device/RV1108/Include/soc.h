@@ -10523,6 +10523,11 @@ struct TIMER_REG {
 #define TIMER_INTSTATUS_INTSTATUS_SHIFT                    (0U)
 #define TIMER_INTSTATUS_INTSTATUS_MASK                     (0x1U << TIMER_INTSTATUS_INTSTATUS_SHIFT)                    /* 0x00000001 */
 
+/*****************************************CACHE*****************************************/
+/* CACHE LINE SIZE */
+#define CACHE_LINE_SHIFT                                   (6U)
+#define CACHE_LINE_SIZE                                    (0x1U << CACHE_LINE_SHIFT)
+
 /********Name=SOFTRST0_CON,Offset=0x180********/
 #define SRST_COREPO_SRSTN    0
 #define SRST_CORE_SRSTN      1
