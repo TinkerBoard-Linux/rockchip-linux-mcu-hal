@@ -350,8 +350,8 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
     WRITE_REG(pReg->CLKSRC, 0);
 
     /* Inform CIU */
-    WRITE_REG(pReg->CMD, BIT(31) | BIT(21));
-    while (READ_REG(pReg->CMD) & BIT(31)) {
+    WRITE_REG(pReg->CMD, HAL_BIT(31) | HAL_BIT(21));
+    while (READ_REG(pReg->CMD) & HAL_BIT(31)) {
         if (!loop) {
             HAL_DBG_ERR("%s: update clock timeout\n", __func__);
 
@@ -366,10 +366,10 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
     WRITE_REG(pReg->CLKDIV, div);
 
     /* Inform CIU */
-    WRITE_REG(pReg->CMD, BIT(31) | BIT(21));
+    WRITE_REG(pReg->CMD, HAL_BIT(31) | HAL_BIT(21));
 
     loop = 5000;
-    while (READ_REG(pReg->CMD) & BIT(31)) {
+    while (READ_REG(pReg->CMD) & HAL_BIT(31)) {
         if (!loop) {
             HAL_DBG_ERR("%s: update clock timeout\n", __func__);
 
@@ -384,10 +384,10 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
     WRITE_REG(pReg->CLKENA, 1);
 
     /* Inform CIU */
-    WRITE_REG(pReg->CMD, BIT(31) | BIT(21));
+    WRITE_REG(pReg->CMD, HAL_BIT(31) | HAL_BIT(21));
 
     loop = 5000;
-    while (READ_REG(pReg->CMD) & BIT(31)) {
+    while (READ_REG(pReg->CMD) & HAL_BIT(31)) {
         if (!loop) {
             HAL_DBG_ERR("%s: update clock timeout\n", __func__);
 
@@ -547,7 +547,7 @@ inline HAL_Status HAL_MMC_StartDma(struct HAL_MMC_HOST *host)
     WRITE_REG(pReg->DBADDR, (uint32_t)host->descriptors);
 
     reg = READ_REG(pReg->BMOD);
-    reg |= BIT(7);
+    reg |= HAL_BIT(7);
     WRITE_REG(pReg->BMOD, reg);
 
     return HAL_OK;
@@ -583,7 +583,7 @@ inline HAL_Status HAL_MMC_PowerCtrl(struct HAL_MMC_HOST *host, bool on)
 
     reg = READ_REG(pReg->PWREN);
     if (on)
-        reg |= BIT(0);
+        reg |= HAL_BIT(0);
     else
         reg &= ~BIT(0);
 
@@ -622,7 +622,7 @@ HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host)
 
     /* Fixed burst for DMA master burst */
     reg = READ_REG(pReg->BMOD);
-    reg |= BIT(1);
+    reg |= HAL_BIT(1);
     WRITE_REG(pReg->BMOD, reg);
 
     /* TODO: pinmux -> power-ctrl  */

@@ -183,15 +183,15 @@ HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg)
     intSt1 = READ_REG(pReg->INT_ST1);
 
     for (i = 0; i < HAL_ARRAY_SIZE(ACK_WITH_ERR); i++)
-        if (intSt0 & BIT(i))
+        if (intSt0 & HAL_BIT(i))
             HAL_DBG_ERR("DSI Irq: %s\n", ACK_WITH_ERR[i]);
 
     for (i = 0; i < HAL_ARRAY_SIZE(DPHY_ERROR); i++)
-        if (intSt0 & BIT(16 + i))
+        if (intSt0 & HAL_BIT(16 + i))
             HAL_DBG_ERR("DSI Irq: %s\n", DPHY_ERROR[i]);
 
     for (i = 0; i < HAL_ARRAY_SIZE(ERROR_REPORT); i++)
-        if (intSt1 & BIT(i))
+        if (intSt1 & HAL_BIT(i))
             HAL_DBG_ERR("DSI Irq: %s\n", ERROR_REPORT[i]);
 
     return HAL_OK;

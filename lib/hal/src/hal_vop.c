@@ -24,8 +24,8 @@
 #ifdef HAL_VOP_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-#define VOP_WIN_YUV4_FORMAT BIT(4)
-#define VOP_WIN_BPPX_FORMAT BIT(5)
+#define VOP_WIN_YUV4_FORMAT HAL_BIT(4)
+#define VOP_WIN_BPPX_FORMAT HAL_BIT(5)
 
 #define IS_YUV_FORMAT(x) ((x >= VOP_FMT_YUV420SP) && (x <= VOP_FMT_VYUY422_4)) ? 1 : 0
 #define IS_BPP_FORMAT(x) ((x >= VOP_FMT_1BPP) && (x <= VOP_FMT_8BPP)) ? 1 : 0
@@ -1658,7 +1658,7 @@ uint32_t HAL_VOP_IrqHandler(struct VOP_REG *pReg)
 
     for (i = 0; i < HAL_ARRAY_SIZE(VOP_IRQs); i++) {
         /**
-         * if (val & BIT(i))
+         * if (val & HAL_BIT(i))
          *     HAL_DBG_ERR("VOP Irq: %s\n", VOP_IRQs[i]);
          */
     }

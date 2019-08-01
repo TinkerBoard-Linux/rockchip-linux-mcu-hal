@@ -34,10 +34,6 @@
 
 /********************* Private MACRO Definition ******************************/
 
-#ifndef BIT
-#define BIT(nr) (1UL << (nr))
-#endif
-
 #define WM_SET_BITS(msk, shift, bits) ((msk <<(shift + 16)) | (bits << shift))
 #define WM_SET_BIT(shift)             ((1 << (16 + shift) ) | (1 << shift))
 #define WM_CLR_BIT(shift)             (1 << (16 + shift) )
@@ -51,7 +47,7 @@ static HAL_Status PWR_SetVoltage_Linear(struct PWR_INTREG_DESC *desc, uint32_t v
     uint32_t val, delta, mod;
     __IO uint32_t *preg;
 
-    HAL_ASSERT(desc->flag & BIT(ctrlType));
+    HAL_ASSERT(desc->flag & HAL_BIT(ctrlType));
 
     HAL_ASSERT(volt >= desc->minVolt);
 
@@ -98,7 +94,7 @@ static uint32_t PWR_GetVoltageLinear(struct PWR_INTREG_DESC *desc,
     uint32_t val;
     __IO uint32_t *preg;
 
-    HAL_ASSERT(desc->flag & BIT(ctrlType));
+    HAL_ASSERT(desc->flag & HAL_BIT(ctrlType));
     HAL_ASSERT(ctrlType <= PWR_CTRL_VOLT_ST);
 
     preg = desc->preg[ctrlType];
@@ -115,7 +111,7 @@ static HAL_Status PWR_EnableDisable(struct PWR_INTREG_DESC *desc, uint32_t enabl
     uint32_t val;
     __IO uint32_t *preg;
 
-    HAL_ASSERT(desc->flag & BIT(PWR_CTRL_PWR_EN));
+    HAL_ASSERT(desc->flag & HAL_BIT(PWR_CTRL_PWR_EN));
 
     preg = desc->preg[PWR_CTRL_PWR_EN];
 
@@ -146,7 +142,7 @@ int HAL_PWR_GetEnableState(struct PWR_INTREG_DESC *desc)
 {
     __IO uint32_t *preg;
 
-    HAL_ASSERT(desc->flag & BIT(PWR_CTRL_PWR_EN));
+    HAL_ASSERT(desc->flag & HAL_BIT(PWR_CTRL_PWR_EN));
 
     preg = desc->preg[PWR_CTRL_PWR_EN];
 
