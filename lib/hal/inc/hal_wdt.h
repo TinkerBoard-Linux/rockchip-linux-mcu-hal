@@ -18,12 +18,24 @@
 
 /***************************** MACRO Definition ******************************/
 /***************************** Structure Definition **************************/
+
+enum WDT_RESP_MODE {
+    /** Immediately reset system if WDT timeout */
+    DIRECT_SYSTEM_RESET,
+    /** First generate an interrupt and if the interrupt is not cleard by the time,
+      * a second timeout occur then generate a system reset
+      */
+    INDIRECT_SYSTEM_RESET,
+};
+
 /***************************** Function Declare ******************************/
 
 HAL_Status HAL_WDT_Init(uint32_t freq, struct WDT_REG *wdt);
 HAL_Status HAL_WDT_SetTimeout(uint32_t top);
 HAL_Status HAL_WDT_KeepAlive(void);
-HAL_Status HAL_WDT_Start(void);
+HAL_Status HAL_WDT_Start(enum WDT_RESP_MODE mode);
+uint32_t HAL_WDT_ClearInterrupt(void);
+uint32_t HAL_WDT_GetIntStatus(void);
 
 #endif
 

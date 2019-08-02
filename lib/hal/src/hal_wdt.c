@@ -138,13 +138,41 @@ HAL_Status HAL_WDT_KeepAlive(void)
 
 /**
  * @brief  Start WDT
+ * @param  mode: Set WDT resp mode
  * @return HAL_Status
  */
-HAL_Status HAL_WDT_Start(void)
+HAL_Status HAL_WDT_Start(enum WDT_RESP_MODE mode)
 {
-    pWDT->WDT_CR = WDT_WDT_CR_WDT_EN_MASK;
+    uint32_t tmp = pWDT->WDT_CR;
+
+    if (mode == INDIRECT_SYSTEM_RESET)
+        tmp |= WDT_WDT_CR_RESP_MODE_MASK;
+    else if (mode == DIRECT_SYSTEM_RESET)
+        tmp &= ~WDT_WDT_CR_RESP_MODE_MASK;
+
+    tmp |= WDT_WDT_CR_WDT_EN_MASK;
+
+    pWDT->WDT_CR = tmp;
 
     return HAL_OK;
+}
+
+/**
+ * @brief  Clear interrupt
+ * @return WDT_EOI value
+ */
+uint32_t HAL_WDT_ClearInterrupt(void)
+{
+    return pWDT->WDT_EOI;
+}
+
+/**
+ * @brief  Get interrupt status
+ * @return Interrupt status
+ */
+uint32_t HAL_WDT_GetIntStatus(void)
+{
+    return pWDT->WDT_STAT;
 }
 
 /** @} */
