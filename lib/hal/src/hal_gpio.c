@@ -198,6 +198,60 @@ HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_
 }
 
 /**
+ * @brief  Set GPIO direction.
+ * @param  pGPIO: the GPIO struct.
+ * @param  mPins: The pins defined in @ref PINCTRL_GPIO_PINS.
+ * @param  pinDir: direction value defined in eGPIO_pinDirection.
+ * @return HAL_Status: HAL_OK if success.
+ */
+HAL_Status HAL_GPIO_SetPinsDirection(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_pinDirection pinDir)
+{
+    uint8_t pin;
+    HAL_Status rc;
+
+    HAL_ASSERT(IS_GPIO_INSTANCE(pGPIO));
+    HAL_ASSERT(IS_GPIO_PIN(mPins));
+
+    for (pin = 0; pin < 32; pin++) {
+        if (mPins & (1 << pin)) {
+            rc = HAL_GPIO_SetPinDirection(pGPIO, (1 << pin), pinDir);
+            if (rc)
+                return rc;
+        }
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get GPIO Pin data direction value.
+ * @param  pGPIO: the GPIO struct.
+ * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
+ * @retval eGPIO_pinDirection: data direction value.
+ */
+eGPIO_pinDirection HAL_GPIO_GetPinDirection(struct GPIO_REG *pGPIO, uint32_t pin)
+{
+    eGPIO_pinDirection pinDir;
+    uint32_t value;
+
+    HAL_ASSERT(IS_GET_GPIO_PIN(pin));
+
+#if (GPIO_VER_ID == 0x01000C2BU)
+    value = IS_GPIO_HIGH_PIN(pin) ? (pGPIO->SWPORT_DDR_H & (pin >> 16)) : (pGPIO->SWPORT_DDR_L & pin);
+#else
+    value = pGPIO->SWPORTA_DDR & pin;
+#endif
+
+    if (value != (uint32_t)GPIO_IN) {
+        pinDir = GPIO_OUT;
+    } else {
+        pinDir = GPIO_IN;
+    }
+
+    return pinDir;
+}
+
+/**
  * @brief  Set GPIO pin level.
  * @param  pGPIO: The pointer of GPIO struct.
  * @param  pin: The pin number defined in @ref PINCTRL_GPIO_PINS.
@@ -222,6 +276,32 @@ HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_pinL
         pGPIO->SWPORTA_DR = (pinLevel == GPIO_HIGH) ? (pin) : (pGPIO->SWPORTA_DR & ~(pin));
     }
 #endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set GPIO pin level.
+ * @param  pGPIO: The pointer of GPIO struct.
+ * @param  mPins: The pins defined in @ref PINCTRL_GPIO_PINS.
+ * @param  pinLevel: The level defined in @ref eGPIO_pinLevel.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_GPIO_SetPinsLevel(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_pinLevel pinLevel)
+{
+    uint8_t pin;
+    HAL_Status rc;
+
+    HAL_ASSERT(IS_GPIO_INSTANCE(pGPIO));
+    HAL_ASSERT(IS_GPIO_PIN(mPins));
+
+    for (pin = 0; pin < 32; pin++) {
+        if (mPins & (1 << pin)) {
+            rc = HAL_GPIO_SetPinLevel(pGPIO, (1 << pin), pinLevel);
+            if (rc)
+                return rc;
+        }
+    }
 
     return HAL_OK;
 }
@@ -284,6 +364,23 @@ eGPIO_pinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin)
     return (value == (uint32_t)GPIO_LOW) ? GPIO_LOW : GPIO_HIGH;
 }
 
+/**
+ * @brief  Get GPIO Pin ext bank level.
+ * @param  pGPIO: the GPIO struct.
+ * @retval uint32_t: ext bank value.
+ */
+uint32_t HAL_GPIO_GetBankLevel(struct GPIO_REG *pGPIO)
+{
+    uint32_t value;
+
+#if (GPIO_VER_ID == 0x01000C2BU)
+    value = (pGPIO->EXT_PORT);
+#else
+    value = (pGPIO->EXT_PORTA);
+#endif
+
+    return value;
+}
 /** @} */
 
 /** @defgroup GPIO_Exported_Functions_Group3 Other Functions

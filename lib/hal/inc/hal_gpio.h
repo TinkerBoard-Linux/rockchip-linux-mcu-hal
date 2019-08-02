@@ -137,15 +137,18 @@ typedef enum {
 /** @defgroup GPIO_Exported_Definition_Group2 Public Functions Declare.
  *  @{
  */
+eGPIO_pinDirection HAL_GPIO_GetPinDirection(struct GPIO_REG *pGPIO, uint32_t pin);
 eGPIO_pinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin);
 HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_pinLevel pinLevel);
 HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_pinDirection pinDir);
+HAL_Status HAL_GPIO_SetPinsLevel(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_pinLevel pinLevel);
+HAL_Status HAL_GPIO_SetPinsDirection(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_pinDirection pinDir);
+eGPIO_pinLevel HAL_GPIO_GetPinData(struct GPIO_REG *pGPIO, uint32_t pin);
+uint32_t HAL_GPIO_GetBankLevel(struct GPIO_REG *pGPIO);
 
 void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, uint32_t pin);
 void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, uint32_t pin);
 void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank);
-
-eGPIO_pinLevel HAL_GPIO_GetPinData(struct GPIO_REG *pGPIO, uint32_t pin);
 /** @} */
 
 /** @defgroup GPIO_Exported_Definition_Group3 Internal Public Functions Declare.
