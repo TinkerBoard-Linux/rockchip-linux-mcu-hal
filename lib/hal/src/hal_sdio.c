@@ -82,9 +82,9 @@ uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int32_t respNum)
 /**
  * @brief  Check if the card is in busy state.
  * @param  host: private hal host data.
- * @return zero means card is idle and vice versa.
+ * @return HAL_Check status code.
  */
-uint32_t HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host)
+HAL_Check HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host)
 {
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
@@ -220,18 +220,19 @@ uint32_t HAL_MMC_GetStatus(struct HAL_MMC_HOST *host)
 HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
                              uint32_t size)
 {
-    int32_t fifo_available, i, retries;
+    int32_t fifo_available, i;
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
+    uint32_t start, timeoutMs = 500;
 
     if (size % 4) {
         size = size + size % 4;
     }
 
     for (i = 0; i < size / 4; i++) {
-        retries = 0;
+        start = HAL_GetTick();
         do {
             fifo_available = MMC_FIFO_DEPTH - MMC_GetWaterlevel(host);
-            if (retries++ > 10000) {
+            if ((HAL_GetTick() - start) > timeoutMs) {
                 HAL_DBG_ERR("%s: get water level timeout\n", __func__);
 
                 return HAL_TIMEOUT;
@@ -240,9 +241,9 @@ HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
         WRITE_REG(pReg->FIFO_BASE, *buf++);
     }
 
-    retries = 0;
+    start = HAL_GetTick();
     while (HAL_MMC_IsDataStateBusy(host)) {
-        if (retries++ > 10000) {
+        if ((HAL_GetTick() - start) > timeoutMs * 2) {
             HAL_DBG_ERR("%s: timeout for data line keep being busy\n",
                         __func__);
 
@@ -418,6 +419,9 @@ HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int32_t width)
     case MMC_CARD_WIDTH_4BIT:
         WRITE_REG(pReg->CTYPE, 1);
         break;
+    case MMC_CARD_WIDTH_8BIT:
+        WRITE_REG(pReg->CTYPE, 0x10000);
+        break;
     default:
         HAL_DBG_ERR("%s: card width %ld is not supported\n", __func__, width);
 
@@ -564,7 +568,7 @@ inline HAL_Status HAL_MMC_StopDma(struct HAL_MMC_HOST *host)
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     reg = READ_REG(pReg->BMOD);
-    reg &= ~BIT(7);
+    reg &= ~HAL_BIT(7);
     WRITE_REG(pReg->BMOD, reg);
 
     return HAL_OK;
@@ -585,7 +589,7 @@ inline HAL_Status HAL_MMC_PowerCtrl(struct HAL_MMC_HOST *host, bool on)
     if (on)
         reg |= HAL_BIT(0);
     else
-        reg &= ~BIT(0);
+        reg &= ~HAL_BIT(0);
 
     WRITE_REG(pReg->PWREN, reg);
 

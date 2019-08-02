@@ -42,6 +42,7 @@
 
 #define MMC_CARD_WIDTH_1BIT (0)
 #define MMC_CARD_WIDTH_4BIT (1)
+#define MMC_CARD_WIDTH_8BIT (2)
 #define MMC_CARD_DETECT_N   (1)
 
 #define MMC_CMD_FLAG_RESPONSE_EXPECTED HAL_BIT(6)
@@ -190,6 +191,7 @@ uint32_t HAL_MMC_GetRawInterrupt(struct HAL_MMC_HOST *host);
 uint32_t HAL_MMC_GetInterruptMask(struct HAL_MMC_HOST *host);
 uint32_t HAL_MMC_GetUnmaskedInterrupt(struct HAL_MMC_HOST *host);
 HAL_Status HAL_MMC_PowerCtrl(struct HAL_MMC_HOST *host, bool on);
+HAL_Check HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host);
 
 #endif
 
