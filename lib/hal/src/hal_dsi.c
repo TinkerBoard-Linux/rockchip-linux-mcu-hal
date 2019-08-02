@@ -531,6 +531,7 @@ HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
 
     HAL_DSI_MsgLpModeConfig(pReg, pModeInfo->flags & DSI_MODE_LPM);
 
+    DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 1);
     DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_CMD_VIDEO_MODE_MASK, 1);
     WRITE_REG(pReg->PWR_UP, 0x1);
 
