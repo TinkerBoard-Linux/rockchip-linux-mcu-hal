@@ -453,6 +453,34 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     return HAL_OK;
 }
 
+/**
+ * @brief wdt glbrst enable.
+ * @param  wdtType: wdt reset type.
+ * @return HAL_OK.
+ */
+HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType)
+{
+    uint32_t mask = 0, val = 0;
+
+    switch (wdtType) {
+    case GLB_RST_FST_WDT0:
+        mask = CRU_GLB_RST_CON_WDT_GLB_SRST_CTRL_MASK;
+        val = (1 << CRU_GLB_RST_CON_WDT_GLB_SRST_CTRL_SHIFT);
+        break;
+    case GLB_RST_SND_WDT0:
+        mask = CRU_GLB_RST_CON_WDT_GLB_SRST_CTRL_MASK;
+        val = 0;
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    CRU->GLB_RST_CON = VAL_MASK_WE(mask, val);
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /** @} */

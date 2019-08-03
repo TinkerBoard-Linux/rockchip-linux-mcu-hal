@@ -104,6 +104,15 @@ typedef enum {
     GLB_SRST_SND = 0xeca8,
 } eCRU_GlbSrstType;
 
+typedef enum {
+    GLB_RST_FST_WDT0 = 0U,
+    GLB_RST_SND_WDT0,
+    GLB_RST_FST_WDT1,
+    GLB_RST_SND_WDT1,
+    GLB_RST_FST_WDT2,
+    GLB_RST_SND_WDT2,
+} eCRU_WdtRstType;
+
 /***************************** Structure Definition **************************/
 
 /** @} */
@@ -135,6 +144,8 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate);
 HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t pRate, uint32_t *bestdiv);
 
 HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type);
+
+HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType);
 
 #ifdef HAL_CRU_AS_FEATURE_ENABLED
 /**
