@@ -206,7 +206,7 @@ HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg)
  * @return HAL_Status.
  */
 HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t dataType,
-                              uint8_t payloadLen, uint8_t *payload)
+                              uint8_t payloadLen, const uint8_t *payload)
 {
     uint32_t temp, val;
     HAL_Status ret;

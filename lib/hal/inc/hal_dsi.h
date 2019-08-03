@@ -86,7 +86,7 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable);
 HAL_Status HAL_DSI_Enable(struct DSI_REG *pReg,
                           struct DISPLAY_MODE_INFO *pModeInfo);
 HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t dataType,
-                              uint8_t payloadLen, uint8_t *payload);
+                              uint8_t payloadLen, const uint8_t *payload);
 HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
                               struct DISPLAY_MODE_INFO *pModeInfo);
 HAL_Status HAL_DSI_PacketHandlerConfig(struct DSI_REG *pReg,
