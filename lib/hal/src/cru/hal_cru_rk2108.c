@@ -293,7 +293,7 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
     uint32_t muxSrc, mux = CLK_GET_MUX(clockName), muxOut = 0;
     uint32_t divSrc, divFrac;
-    uint32_t n = 0, m = 0, pRate = s_gpllFreq / 2;
+    uint32_t n = 0, m = 0, pRate = s_gpllFreq;
 
     switch (clockName) {
     case CLK_UART0:
@@ -355,7 +355,7 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         HAL_CRU_ClkSetMux(mux, 0);
     } else {
         HAL_CRU_FracdivGetConfig(rate, pRate, &n, &m);
-        HAL_CRU_ClkSetDiv(divSrc, 2);
+        HAL_CRU_ClkSetDiv(divSrc, 1);
         HAL_CRU_ClkSetMux(muxSrc, 0);
         CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
         HAL_CRU_ClkSetMux(mux, 1);
@@ -586,7 +586,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return error;
     case CLK_PWM:
-        if (rate == PLL_INPUT_OSC_RATE) {
+        if (rate <= PLL_INPUT_OSC_RATE) {
             mux = 1;
             pRate = PLL_INPUT_OSC_RATE;
         }
