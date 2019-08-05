@@ -66,6 +66,17 @@ __STATIC_INLINE uint64_t HAL_DivU64(uint64_t numerator, uint32_t denominator)
     return HAL_DivU64Rem(numerator, denominator, NULL);
 }
 
+/**
+ * @brief  uint32_t numerator / uint32_t denominator rounded to nearest integer
+ * @param  numerator
+ * @param  denominator
+ * @return uint32_t result rounded to nearest integer
+ */
+__STATIC_INLINE uint32_t HAL_DivRoundClosest(uint32_t numerator, uint32_t denominator)
+{
+    return (numerator + (denominator / 2)) / denominator;
+}
+
 #endif
 
 /** @} */
