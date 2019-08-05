@@ -342,9 +342,9 @@ HAL_Status HAL_DSI_IrqEnable(struct DSI_REG *pReg)
  * @brief  DSI m31 Dphy Init.
  * @param  pReg: DSI reg base.
  * @param  laneMbps: DSI per lane mbps.
- * @return HAL_Status.
+ * @return Actually DSI per lane mbps..
  */
-HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps)
+uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps)
 {
     uint32_t index, clkSel, start = 0;
     uint32_t lanebps = laneMbps * 1000000;
@@ -356,7 +356,7 @@ HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps)
         uint32_t maxLanebps;
         uint32_t pllClkSel;
     } pllClkSelTable[] = {
-        {   63750000, 0 },
+        {   80000000, 52 },
         {   93125000, 94 },
         {  186250000, 243 },
         {  372500000, 392 },
@@ -364,11 +364,13 @@ HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps)
         { 1500000000, 692 },
     };
 
-    if (lanebps <= 63750000) {
-        clkSel = 0;
+    if (lanebps <= 80000000) {
+        clkSel = 52;
+        laneMbps = 80;
     } else if (lanebps > 1500000000) {
         HAL_DBG_ERR("dsi mbps is out of range, using 1500 mbps config\n");
         clkSel = 692;
+        laneMbps = 1500;
     } else {
         for (index = 0; index < HAL_ARRAY_SIZE(pllClkSelTable); index++)
             if (lanebps < pllClkSelTable[index].maxLanebps)
@@ -376,9 +378,12 @@ HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps)
         clkSel = HAL_DIV_ROUND_UP((lanebps - pllClkSelTable[index - 1 ].maxLanebps),
                                   (312500 << (index - 1)));
 
+        lanebps = pllClkSelTable[index - 1 ].maxLanebps + clkSel * (312500 << (index - 1));
+        laneMbps = lanebps / 1000000;
+
         clkSel += pllClkSelTable[index - 1 ].pllClkSel;
     }
-    HAL_DBG("dsi mbps = %ld, m31 dphy pll_clk_sel = %ld\n", laneMbps, clkSel);
+    HAL_DBG("actually dsi mbps = %d, m31 dphy pll_clk_sel = %ld\n", laneMbps, clkSel);
 
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_ENABLECLK_MASK, 0);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_RSTZ_MASK, 1);
@@ -412,14 +417,11 @@ HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps)
      * Use each lane's stop state to judge dphy is ready
      */
     while (READ_BIT(gGrfReg->DSI_STATUS[0], phyStopState) != phyStopState) {
-        if (HAL_GetTick() - start > WAIT_PHY_READY_MS) {
+        if (HAL_GetTick() - start > WAIT_PHY_READY_MS)
             HAL_DBG_ERR("wait mipi dphy ready time out\n");
-
-            return HAL_TIMEOUT;;
-        }
     }
 
-    return HAL_OK;
+    return laneMbps;
 }
 
 /**
@@ -428,7 +430,7 @@ HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps)
  * @param  laneMbps: DSI per lane mbps.
  * @return HAL_Status.
  */
-HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint32_t laneMbps)
+HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint16_t laneMbps)
 {
     uint32_t val;
 

@@ -79,9 +79,9 @@ typedef enum {
 HAL_Status HAL_DSI_IrqEnable(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_IrqDisable(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg);
-HAL_Status HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint32_t laneMbps);
+uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps);
 HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg);
-HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint32_t laneMbps);
+HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint16_t laneMbps);
 HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable);
 HAL_Status HAL_DSI_Enable(struct DSI_REG *pReg,
                           struct DISPLAY_MODE_INFO *pModeInfo);
@@ -97,7 +97,7 @@ HAL_Status HAL_DSI_DpiConfig(struct DSI_REG *pReg,
                              struct DISPLAY_MODE_INFO *pModeInfo,
                              uint16_t busFormat);
 HAL_Status HAL_DSI_LineTimerConfig(struct DSI_REG *pReg,
-                                   uint16_t Lanembps,
+                                   uint16_t laneMbps,
                                    struct DISPLAY_MODE_INFO *pModeInfo);
 HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
                                    uint16_t laneMbps,
