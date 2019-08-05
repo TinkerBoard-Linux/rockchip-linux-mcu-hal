@@ -142,7 +142,7 @@ static HAL_Status I2S_SetSampleRate(struct HAL_I2S_DEV *i2s,
     mclkRate = HAL_CRU_ClkGetFreq(i2s->mclk);
     bclkRate = i2s->bclkFs * sampleRate;
     HAL_ASSERT(bclkRate != 0);
-    divBclk = mclkRate / bclkRate;
+    divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
     divLrck = bclkRate / sampleRate;
 
     MODIFY_REG(reg->CKR, I2S_CKR_MDIV_MASK, I2S_CKR_MDIV(divBclk));

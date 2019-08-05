@@ -174,7 +174,7 @@ static HAL_Status I2STDM_SetSampleRate(struct HAL_I2STDM_DEV *i2sTdm,
 
     bclkRate = i2sTdm->bclkFs * sampleRate;
     HAL_ASSERT(bclkRate != 0);
-    divBclk = mclkRate / bclkRate;
+    divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
     divLrck = bclkRate / sampleRate;
 
     if (stream == AUDIO_STREAM_PLAYBACK) {
