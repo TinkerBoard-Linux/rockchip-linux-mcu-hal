@@ -1076,6 +1076,7 @@ struct USB_HOST_CH_REG {
 #define DCACHE_BASE         0x40004000U /* DCACHE base address */
 #define CRU_BASE            0x40050000U /* CRU base address */
 #define GRF_BASE            0x400B0000U /* GRF base address */
+#define USB_M31PHY_BASE     0x400B0340U /* USB M31 PHY base address */
 #define MBOX0_BASE          0x40100000U /* MBOX0 base address */
 #define MBOX1_BASE          0x40110000U /* MBOX1 base address */
 #define MBOX2_BASE          0x40120000U /* MBOX2 base address */
@@ -1109,7 +1110,7 @@ struct USB_HOST_CH_REG {
 #define VOP_BASE            0x41100000U /* VOP base address */
 #define CIF_BASE            0x41120000U /* CIF base address */
 #define AUDIOPWM_BASE       0x41200000U /* AUDIOPWM base address */
-#define USB_BASE            0X41300000U /* USB base address */
+#define USB_BASE            0x41300000U /* USB base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
