@@ -33,7 +33,43 @@
 /********************* Private Structure Definition **************************/
 /********************* Private Variable Definition ***************************/
 /********************* Private Function Definition ***************************/
-static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB);
+static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB)
+{
+    uint32_t count = 0;
+
+    /* Wait for AHB master IDLE state. */
+    do {
+        if (++count > 200000)
+            return HAL_TIMEOUT;
+    } while ((pUSB->GRSTCTL & USB_OTG_GRSTCTL_AHBIDL) == 0);
+
+    /* Core Soft Reset */
+    count = 0;
+    pUSB->GRSTCTL |= USB_OTG_GRSTCTL_CSRST;
+
+    do {
+        if (++count > 200000)
+            return HAL_TIMEOUT;
+    } while ((pUSB->GRSTCTL & USB_OTG_GRSTCTL_CSRST) == USB_OTG_GRSTCTL_CSRST);
+
+    return HAL_OK;
+}
+
+#ifdef USB_M31PHY_BASE
+static HAL_Status USB_M31PHYInit(void)
+{
+    struct GRF_REG * const gGrfReg = GRF;
+
+    HAL_CRU_ClkResetDeassert(SRST_USB2PHYPO);
+    /* Select USB controller UTMI interface to phy */
+    WRITE_REG_MASK_WE(gGrfReg->USBPHY_CON[0], GRF_USBPHY_CON0_UTMI_SEL_MASK,
+                      0 << GRF_USBPHY_CON0_UTMI_SEL_SHIFT);
+    /* Wait for UTMI clk stable */
+    HAL_DelayMs(2);
+
+    return HAL_OK;
+}
+#endif
 
 /********************* Public Function Definition ****************************/
 /** @defgroup USB_CORE_Exported_Functions_Group4 Init and DeInit Functions
@@ -53,6 +89,10 @@ HAL_Status USB_CoreInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
 {
     uint32_t trdtim = 0, phyif = 0, toutcal = 0;
 
+#ifdef USB_M31PHY_BASE
+    USB_M31PHYInit();
+#endif
+
     /* Init The UTMI Interface */
     pUSB->GUSBCFG &= ~(USB_OTG_GUSBCFG_TSDPS |
                        USB_OTG_GUSBCFG_ULPIFSLS |
@@ -70,8 +110,8 @@ HAL_Status USB_CoreInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
                        USB_OTG_GUSBCFG_PHYIF |
                        USB_OTG_GUSBCFG_TOCAL);
 
-    trdtim = (cfg.phyif == 8) ? 9 : 5;
-    phyif = (cfg.phyif == 8) ? 0 : 1;
+    trdtim = ((cfg.phyif & USB_PHY_UTMI_MASK) == 8) ? 9 : 5;
+    phyif = ((cfg.phyif & USB_PHY_UTMI_MASK) == 8) ? 0 : 1;
     toutcal = 7;
 
     pUSB->GUSBCFG |= ((trdtim << USB_OTG_GUSBCFG_TRDT_SHIFT) |
@@ -1432,33 +1472,6 @@ HAL_Status USB_StopHost(struct USB_GLOBAL_REG *pUSB)
 }
 
 /** @} */
-
-/**
- * @brief  Reset the USB Core (needed after USB clock settings change)
- * @param  pUSB  Selected device
- * @return HAL status
- */
-static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB)
-{
-    uint32_t count = 0;
-
-    /* Wait for AHB master IDLE state. */
-    do {
-        if (++count > 200000)
-            return HAL_TIMEOUT;
-    } while ((pUSB->GRSTCTL & USB_OTG_GRSTCTL_AHBIDL) == 0);
-
-    /* Core Soft Reset */
-    count = 0;
-    pUSB->GRSTCTL |= USB_OTG_GRSTCTL_CSRST;
-
-    do {
-        if (++count > 200000)
-            return HAL_TIMEOUT;
-    } while ((pUSB->GRSTCTL & USB_OTG_GRSTCTL_CSRST) == USB_OTG_GRSTCTL_CSRST);
-
-    return HAL_OK;
-}
 
 #endif /* defined (HAL_PCD_MODULE_ENABLED) || defined (HAL_HCD_MODULE_ENABLED) */
 

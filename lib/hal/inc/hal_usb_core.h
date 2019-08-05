@@ -37,6 +37,11 @@
 #define USB_OTG_FS_MAX_PACKET_SIZE 64U
 #define USB_OTG_MAX_EP0_SIZE       64U
 
+/** USB PHY UTMI Width */
+#define USB_PHY_UTMI_WIDTH_8  8
+#define USB_PHY_UTMI_WIDTH_16 16
+#define USB_PHY_UTMI_MASK     0x0000FFFFU
+
 /** USB Core Phy Frequency */
 #define DSTS_ENUMSPD_HS_PHY_30MHZ_OR_60MHZ (0 << 1)
 #define DSTS_ENUMSPD_FS_PHY_30MHZ_OR_60MHZ (1 << 1)
