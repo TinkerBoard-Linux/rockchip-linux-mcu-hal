@@ -242,9 +242,13 @@ uint64_t HAL_TIMER_GetCount(struct TIMER_REG *pReg)
  */
 HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg)
 {
+    uint32_t timeOut = 1000;
+
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
     pReg->INTSTATUS = 0x1;
+    while (pReg->INTSTATUS || timeOut--)
+        ;
 
     return HAL_OK;
 }
