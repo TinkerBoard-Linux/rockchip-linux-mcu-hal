@@ -178,6 +178,7 @@ struct SNOR_HOST {
     uint32_t max_write_size;
     uint8_t flags;
     HAL_Status (*xfer)(struct SNOR_HOST *spi, struct SPI_MEM_OP *op);
+    HAL_Status (*xipConfig)(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on);
 
     void *userdata;
 };

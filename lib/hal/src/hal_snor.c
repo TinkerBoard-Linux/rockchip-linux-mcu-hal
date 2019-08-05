@@ -166,13 +166,10 @@ static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op
 
 static HAL_Status SNOR_XipExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on)
 {
-#if defined(HAL_SNOR_FSPI_HOST)
-
-    return HAL_FSPI_SpiXipConfig(spi, op, on);
-#else
-
-    return HAL_OK;
-#endif
+    if (spi->xipConfig)
+        return spi->xipConfig(spi, op, on);
+    else
+        return HAL_ERROR;
 }
 
 static HAL_Status SNOR_ReadWriteReg(struct SPI_NOR *nor, struct SPI_MEM_OP *op, void *buf)

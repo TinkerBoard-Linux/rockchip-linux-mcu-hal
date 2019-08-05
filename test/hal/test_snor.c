@@ -260,6 +260,7 @@ static HAL_Status SNOR_HostSet(void)
     nor->spi->mode |= SPI_TX_QUAD | SPI_RX_QUAD;
 #ifdef HAL_FSPI_XIP_ENABLE
     nor->spi->mode |= SPI_XIP;
+    nor->spi->xipConfig = HAL_FSPI_SpiXipConfig;
 #endif
 
     ret = HAL_SNOR_Init(nor);
