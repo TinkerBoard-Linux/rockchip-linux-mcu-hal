@@ -772,7 +772,7 @@ HAL_Status HAL_PCD_EPReceive(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint8_t *p
     pEP->num = epAddr & 0x7F;
 
     if (pPCD->cfg.dmaEnable == 1)
-        pEP->dmaAddr = (uint32_t)pBuf;
+        pEP->dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pBuf);
 
     if ((epAddr & 0x7F) == 0)
         USB_EP0StartXfer(pPCD->pReg, pEP, pPCD->cfg.dmaEnable);
@@ -816,7 +816,7 @@ HAL_Status HAL_PCD_EPTransmit(struct PCD_HANDLE *pPCD, uint8_t epAddr,
     pEP->num = epAddr & 0x7F;
 
     if (pPCD->cfg.dmaEnable == 1)
-        pEP->dmaAddr = (uint32_t)pBuf;
+        pEP->dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pBuf);
 
     if ((epAddr & 0x7F) == 0)
         USB_EP0StartXfer(pPCD->pReg, pEP, pPCD->cfg.dmaEnable);

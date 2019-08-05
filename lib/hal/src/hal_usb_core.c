@@ -514,7 +514,7 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
         }
 
         if (dma == 1)
-            USB_OUTEP(pEP->num)->DOEPDMA = (uint32_t)pEP->pxferBuff;
+            USB_OUTEP(pEP->num)->DOEPDMA = (uint32_t)pEP->dmaAddr;
 
         if (pEP->type == EP_TYPE_ISOC) {
             if ((USB_DEVICE->DSTS & (1 << 8)) == 0)
@@ -597,7 +597,7 @@ HAL_Status USB_EP0StartXfer(struct USB_GLOBAL_REG *pUSB,
         USB_OUTEP(pEP->num)->DOEPTSIZ |= (USB_OTG_DOEPTSIZ_XFRSIZ & (pEP->maxPacket));
 
         if (dma == 1)
-            USB_OUTEP(pEP->num)->DOEPDMA = (uint32_t)(pEP->pxferBuff);
+            USB_OUTEP(pEP->num)->DOEPDMA = (uint32_t)(pEP->dmaAddr);
 
         /* EP enable */
         USB_OUTEP(pEP->num)->DOEPCTL |= (USB_OTG_DOEPCTL_CNAK |
