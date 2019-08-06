@@ -30,6 +30,7 @@ typedef enum {
     PWR_ID_VCC_MIPI,
     PWR_ID_VCC_AUDIO,
     PWR_ID_DSP_VCC_MIPI,
+    PWR_ID_MEMORY, /* for share memory and sram */
     PWR_ID_MAX,
 } ePWR_ID;
 
