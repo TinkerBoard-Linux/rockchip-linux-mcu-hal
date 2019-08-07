@@ -295,8 +295,10 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     nor->spi = spi;
     HAL_SNOR_Init(nor);
 
+#if defined(HAL_SNOR_FSPI_HOST)
     ret = SNOR_HostSet();
     TEST_ASSERT(ret == HAL_OK);
+#endif
 
     RUN_TEST_CASE(HAL_SNOR, SnorStressRandomTest);
 #ifdef HAL_FSPI_XIP_ENABLE
