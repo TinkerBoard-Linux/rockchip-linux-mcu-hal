@@ -204,7 +204,7 @@ static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
 {
     uint32_t freq = 0;
     uint32_t muxSrc = 0, mux = CLK_GET_MUX(clockName);
-    uint32_t divSrc = 0, divFrac;
+    uint32_t divSrc = 0, divFrac = 0;
     uint32_t n, m, pRate;
 
     switch (clockName) {
