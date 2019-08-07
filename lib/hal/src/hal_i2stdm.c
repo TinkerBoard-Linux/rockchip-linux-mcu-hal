@@ -167,30 +167,48 @@ static HAL_Status I2STDM_SetSampleRate(struct HAL_I2STDM_DEV *i2sTdm,
     uint32_t mclkRate, bclkRate, divBclk, divLrck;
     HAL_Status ret = HAL_OK;
 
-    if (stream == AUDIO_STREAM_PLAYBACK)
-        mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkTx);
-    else
-        mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkRx);
+    if (i2sTdm->trcmMode) {
+        if (i2sTdm->trcmMode == TRCM_TXONLY)
+            mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkTx);
+        else
+            mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkRx);
 
-    bclkRate = i2sTdm->bclkFs * sampleRate;
-    HAL_ASSERT(bclkRate != 0);
-    divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
-    divLrck = bclkRate / sampleRate;
-
-    if (stream == AUDIO_STREAM_PLAYBACK) {
+        bclkRate = i2sTdm->bclkFs * sampleRate;
+        HAL_ASSERT(bclkRate != 0);
+        divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
+        divLrck = bclkRate / sampleRate;
         MODIFY_REG(reg->CLKDIV,
-                   I2STDM_CLKDIV_TX_MDIV_MASK,
-                   I2STDM_CLKDIV_TX_MDIV(divBclk));
+                   I2STDM_CLKDIV_TX_MDIV_MASK | I2STDM_CLKDIV_RX_MDIV_MASK,
+                   I2STDM_CLKDIV_TX_MDIV(divBclk) | I2STDM_CLKDIV_RX_MDIV(divBclk));
         MODIFY_REG(reg->CKR,
-                   I2STDM_CKR_TSD_MASK,
-                   I2STDM_CKR_TSD(divLrck));
+                   I2STDM_CKR_TSD_MASK | I2STDM_CKR_RSD_MASK,
+                   I2STDM_CKR_TSD(divLrck) | I2STDM_CKR_RSD(divLrck));
     } else {
-        MODIFY_REG(reg->CLKDIV,
-                   I2STDM_CLKDIV_RX_MDIV_MASK,
-                   I2STDM_CLKDIV_RX_MDIV(divBclk));
-        MODIFY_REG(reg->CKR,
-                   I2STDM_CKR_RSD_MASK,
-                   I2STDM_CKR_RSD(divLrck));
+        if (stream == AUDIO_STREAM_PLAYBACK)
+            mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkTx);
+        else
+            mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkRx);
+
+        bclkRate = i2sTdm->bclkFs * sampleRate;
+        HAL_ASSERT(bclkRate != 0);
+        divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
+        divLrck = bclkRate / sampleRate;
+
+        if (stream == AUDIO_STREAM_PLAYBACK) {
+            MODIFY_REG(reg->CLKDIV,
+                       I2STDM_CLKDIV_TX_MDIV_MASK,
+                       I2STDM_CLKDIV_TX_MDIV(divBclk));
+            MODIFY_REG(reg->CKR,
+                       I2STDM_CKR_TSD_MASK,
+                       I2STDM_CKR_TSD(divLrck));
+        } else {
+            MODIFY_REG(reg->CLKDIV,
+                       I2STDM_CLKDIV_RX_MDIV_MASK,
+                       I2STDM_CLKDIV_RX_MDIV(divBclk));
+            MODIFY_REG(reg->CKR,
+                       I2STDM_CKR_RSD_MASK,
+                       I2STDM_CKR_RSD(divLrck));
+        }
     }
 
     return ret;
@@ -278,6 +296,11 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
     val = clkInvert ? I2STDM_CKR_CKP_POS : I2STDM_CKR_CKP_NEG;
     MODIFY_REG(reg->CKR, mask, val);
 
+    HAL_ASSERT((config->trcmMode >= TRCM_NONE) && (config->trcmMode <= TRCM_RXONLY));
+    i2sTdm->trcmMode = config->trcmMode;
+    MODIFY_REG(reg->CKR, I2STDM_CKR_LRCK_COMMON_MASK,
+               i2sTdm->trcmMode << I2STDM_CKR_LRCK_COMMON_SHIFT);
+
     return HAL_OK;
 }
 
@@ -340,6 +363,58 @@ HAL_Status HAL_I2STDM_Disable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType s
         MODIFY_REG(reg->XFER, I2STDM_XFER_RXS_MASK, I2STDM_XFER_RXS_STOP);
         HAL_DelayUs(150);
         MODIFY_REG(reg->CLR, I2STDM_CLR_RXC_MASK, I2STDM_CLR_RXC);
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Enable i2sTdm controller under trcm conditions.
+ * @param  i2sTdm: the handle of i2sTdm.
+ * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @param  doXfer: whether start to handle xfer registers.
+ * @return HAL_Status
+ */
+HAL_Status HAL_I2STDM_TxRxEnable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream,
+                                 bool doXfer)
+{
+    struct I2STDM_REG *reg = i2sTdm->pReg;
+
+    if (stream == AUDIO_STREAM_PLAYBACK)
+        MODIFY_REG(reg->DMACR, I2STDM_DMACR_TDE_MASK, I2STDM_DMACR_TDE_ENABLE);
+    else
+        MODIFY_REG(reg->DMACR, I2STDM_DMACR_RDE_MASK, I2STDM_DMACR_RDE_ENABLE);
+
+    if (doXfer)
+        MODIFY_REG(reg->XFER, I2STDM_XFER_TXS_MASK | I2STDM_XFER_RXS_MASK,
+                   I2STDM_XFER_TXS_START | I2STDM_XFER_RXS_START);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable i2sTdm controller under trcm conditions.
+ * @param  i2sTdm: the handle of i2sTdm.
+ * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @param  doXfer: whether start to handle xfer registers.
+ * @return HAL_Status
+ */
+HAL_Status HAL_I2STDM_TxRxDisable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream,
+                                  bool doXfer)
+{
+    struct I2STDM_REG *reg = i2sTdm->pReg;
+
+    if (stream == AUDIO_STREAM_PLAYBACK)
+        MODIFY_REG(reg->DMACR, I2STDM_DMACR_TDE_MASK, I2STDM_DMACR_TDE_DISABLE);
+    else
+        MODIFY_REG(reg->DMACR, I2STDM_DMACR_RDE_MASK, I2STDM_DMACR_RDE_DISABLE);
+
+    if (doXfer) {
+        MODIFY_REG(reg->XFER, I2STDM_XFER_TXS_MASK | I2STDM_XFER_RXS_MASK,
+                   I2STDM_XFER_TXS_STOP | I2STDM_XFER_RXS_STOP);
+        HAL_DelayUs(150);
+        MODIFY_REG(reg->CLR, I2STDM_CLR_TXC_MASK | I2STDM_CLR_RXC_MASK,
+                   I2STDM_CLR_TXC | I2STDM_CLR_RXC);
     }
 
     return HAL_OK;

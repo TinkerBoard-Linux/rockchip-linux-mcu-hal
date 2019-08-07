@@ -84,12 +84,22 @@ typedef enum {
 } eAUDIO_fmtType;
 
 /**
+ * enum TRCM_modeType - TRCM modes just for i2stdm.
+ */
+typedef enum {
+    TRCM_NONE = 0,
+    TRCM_TXONLY,
+    TRCM_RXONLY,
+} eTRCM_modeType;
+
+/**
  * struct AUDIO_INIT_CONFIG - init config for dai/codec init.
  */
 struct AUDIO_INIT_CONFIG {
-    bool master;
-    bool clkInvert;
+    uint32_t master : 1;
+    uint32_t clkInvert : 1;
     eAUDIO_fmtType format;
+    eTRCM_modeType trcmMode;
 };
 
 /**

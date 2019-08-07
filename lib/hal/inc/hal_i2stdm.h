@@ -33,6 +33,7 @@ struct HAL_I2STDM_DEV {
     uint32_t mclkRxGate;
     uint32_t hclk;
     uint16_t bclkFs;
+    eTRCM_modeType trcmMode;
     struct AUDIO_DMA_DATA rxDmaData;
     struct AUDIO_DMA_DATA txDmaData;
 };
@@ -46,6 +47,8 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
 HAL_Status HAL_I2STDM_DeInit(struct HAL_I2STDM_DEV *i2sTdm);
 HAL_Status HAL_I2STDM_Enable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream);
 HAL_Status HAL_I2STDM_Disable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream);
+HAL_Status HAL_I2STDM_TxRxEnable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream, bool doXfer);
+HAL_Status HAL_I2STDM_TxRxDisable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream, bool doXfer);
 HAL_Status HAL_I2STDM_Config(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream,
                              struct AUDIO_PARAMS *params);
 
