@@ -27,14 +27,14 @@
 #define PLL_INPUT_OSC_RATE (24 * MHZ)
 #endif
 
-#define CLK_RESET_GET_REG_OFFSET(x) ((uint32_t)(x / 16))
-#define CLK_RESET_GET_BITS_SHIFT(x) ((uint32_t)(x % 16))
+#define CLK_RESET_GET_REG_OFFSET(x) ((uint32_t)((x) / 16))
+#define CLK_RESET_GET_BITS_SHIFT(x) ((uint32_t)((x) % 16))
 
-#define CLK_GATE_GET_REG_OFFSET(x) ((uint32_t)(x / 16))
-#define CLK_GATE_GET_BITS_SHIFT(x) ((uint32_t)(x % 16))
+#define CLK_GATE_GET_REG_OFFSET(x) ((uint32_t)((x) / 16))
+#define CLK_GATE_GET_BITS_SHIFT(x) ((uint32_t)((x) % 16))
 
-#define CLK_GET_MUX(x) (x & 0x0F0F00FFU)
-#define CLK_GET_DIV(x) (((x & 0xFF00U) >> 8) | ((x & 0xF0F00000U) >> 4))
+#define CLK_GET_MUX(x) ((x) & 0x0F0F00FFU)
+#define CLK_GET_DIV(x) ((((x) & 0xFF00U) >> 8) | (((x) & 0xF0F00000U) >> 4))
 
 #define WIDTH_TO_MASK(width) ((1 << (width)) - 1)
 
@@ -46,11 +46,11 @@
 #define CLK_MUX_WIDTH_MASK       0xFF000000U
 
 #define CLK_MUX_GET_REG_OFFSET(x) \
-    (((uint32_t)(x)&CLK_MUX_REG_OFFSET_MASK) >> CLK_MUX_REG_OFFSET_SHIFT)
+    (((uint32_t)(x) & CLK_MUX_REG_OFFSET_MASK) >> CLK_MUX_REG_OFFSET_SHIFT)
 #define CLK_MUX_GET_BITS_SHIFT(x) \
-    (((uint32_t)(x)&CLK_MUX_SHIFT_MASK) >> CLK_MUX_SHIFT_SHIFT)
-#define CLK_MUX_GET_MASK(x)                                                    \
-    WIDTH_TO_MASK((((uint32_t)(x)&CLK_MUX_WIDTH_MASK) >> CLK_MUX_WIDTH_SHIFT)) \
+    (((uint32_t)(x) & CLK_MUX_SHIFT_MASK) >> CLK_MUX_SHIFT_SHIFT)
+#define CLK_MUX_GET_MASK(x)                                                      \
+    WIDTH_TO_MASK((((uint32_t)(x) & CLK_MUX_WIDTH_MASK) >> CLK_MUX_WIDTH_SHIFT)) \
         << CLK_MUX_GET_BITS_SHIFT(x)
 
 #define CLK_DIV_REG_OFFSET_SHIFT 0U
@@ -61,11 +61,11 @@
 #define CLK_DIV_WIDTH_MASK       0xFF000000U
 
 #define CLK_DIV_GET_REG_OFFSET(x) \
-    (((uint32_t)(x)&CLK_DIV_REG_OFFSET_MASK) >> CLK_DIV_REG_OFFSET_SHIFT)
+    (((uint32_t)(x) & CLK_DIV_REG_OFFSET_MASK) >> CLK_DIV_REG_OFFSET_SHIFT)
 #define CLK_DIV_GET_BITS_SHIFT(x) \
-    (((uint32_t)(x)&CLK_DIV_SHIFT_MASK) >> CLK_DIV_SHIFT_SHIFT)
-#define CLK_DIV_GET_MASK(x)                                                    \
-    WIDTH_TO_MASK((((uint32_t)(x)&CLK_DIV_WIDTH_MASK) >> CLK_DIV_WIDTH_SHIFT)) \
+    (((uint32_t)(x) & CLK_DIV_SHIFT_MASK) >> CLK_DIV_SHIFT_SHIFT)
+#define CLK_DIV_GET_MASK(x)                                                      \
+    WIDTH_TO_MASK((((uint32_t)(x) & CLK_DIV_WIDTH_MASK) >> CLK_DIV_WIDTH_SHIFT)) \
         << CLK_DIV_GET_BITS_SHIFT(x)
 
 #define RK_PLL_RATE(_rate, _refdiv, _fbdiv, _postdiv1, _postdiv2, _dsmpd, \
