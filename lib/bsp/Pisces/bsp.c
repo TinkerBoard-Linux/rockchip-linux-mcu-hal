@@ -60,9 +60,9 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
 {
     .pReg = I2STDM0,
     .mclkTx = I2S_MCLKOUT,
-    .mclkTxGate = I2S_MCLKOUT_GATE,
+    .mclkTxGate = CLK_I2S8CH_GATE,
     .mclkRx = I2S_MCLKOUT,
-    .mclkRxGate = I2S_MCLKOUT_GATE,
+    .mclkRxGate = CLK_I2S8CH_GATE,
     .hclk = HCLK_I2S_8CH_GATE,
     .bclkFs = 64,
     .rxDmaData =
