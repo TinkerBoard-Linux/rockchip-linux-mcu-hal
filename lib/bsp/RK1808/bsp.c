@@ -10,8 +10,8 @@ const struct HAL_I2C_DEV g_i2c0Dev =
 {
     .base = I2C0,
     .clkID = CLK_I2C0,
-    .clkGateID = CLK_I2C0_PMU_PLL_CLK_GATE,
-    .pclkGateID = PCLK_PMU_I2C0_CLK_GATE,
+    .clkGateID = CLK_I2C0_PMU_PLL_GATE,
+    .pclkGateID = PCLK_PMU_I2C0_GATE,
     .irqNum = I2C0_IRQn,
 };
 
@@ -19,8 +19,8 @@ const struct HAL_I2C_DEV g_i2c1Dev =
 {
     .base = I2C1,
     .clkID = CLK_I2C1,
-    .clkGateID = CLK_I2C1_PLL_CLK_GATE,
-    .pclkGateID = PCLK_I2C1_CLK_GATE,
+    .clkGateID = CLK_I2C1_PLL_GATE,
+    .pclkGateID = PCLK_I2C1_GATE,
     .irqNum = I2C1_IRQn,
 };
 
@@ -28,8 +28,8 @@ const struct HAL_I2C_DEV g_i2c2Dev =
 {
     .base = I2C2,
     .clkID = CLK_I2C2,
-    .clkGateID = CLK_I2C2_PLL_CLK_GATE,
-    .pclkGateID = PCLK_I2C2_CLK_GATE,
+    .clkGateID = CLK_I2C2_PLL_GATE,
+    .pclkGateID = PCLK_I2C2_GATE,
     .irqNum = I2C2_IRQn,
 };
 
@@ -37,8 +37,8 @@ const struct HAL_I2C_DEV g_i2c3Dev =
 {
     .base = I2C3,
     .clkID = CLK_I2C3,
-    .clkGateID = CLK_I2C3_PLL_CLK_GATE,
-    .pclkGateID = PCLK_I2C3_CLK_GATE,
+    .clkGateID = CLK_I2C3_PLL_GATE,
+    .pclkGateID = PCLK_I2C3_GATE,
     .irqNum = I2C3_IRQn,
 };
 
@@ -46,8 +46,8 @@ const struct HAL_I2C_DEV g_i2c4Dev =
 {
     .base = I2C4,
     .clkID = CLK_I2C4,
-    .clkGateID = CLK_I2C4_PLL_CLK_GATE,
-    .pclkGateID = PCLK_I2C4_CLK_GATE,
+    .clkGateID = CLK_I2C4_PLL_GATE,
+    .pclkGateID = PCLK_I2C4_GATE,
     .irqNum = I2C4_IRQn,
 };
 
@@ -55,8 +55,8 @@ const struct HAL_I2C_DEV g_i2c5Dev =
 {
     .base = I2C5,
     .clkID = CLK_I2C5,
-    .clkGateID = CLK_I2C5_PLL_CLK_GATE,
-    .pclkGateID = PCLK_I2C5_CLK_GATE,
+    .clkGateID = CLK_I2C5_PLL_GATE,
+    .pclkGateID = PCLK_I2C5_GATE,
     .irqNum = I2C5_IRQn,
 };
 #endif
@@ -66,7 +66,7 @@ struct HAL_I2S_DEV g_i2s1Dev =
 {
     .reg = I2S1,
     .mclk = CLK_I2S1,
-    .mclkGate = CLK_I2S1_CLK_GATE,
+    .mclkGate = CLK_I2S1_GATE,
     .hclk = HCLK_I2S1_GATE,
     .bclkFs = 64,
     .rxDmaData =
@@ -93,9 +93,9 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
 {
     .reg = I2STDM0,
     .mclkTx = CLK_I2S0_TX,
-    .mclkTxGate = CLK_I2S0_TX_CLK_GATE,
+    .mclkTxGate = CLK_I2S0_TX_GATE,
     .mclkRx = CLK_I2S0_RX,
-    .mclkRxGate = CLK_I2S0_RX_CLK_GATE,
+    .mclkRxGate = CLK_I2S0_RX_GATE,
     .hclk = HCLK_I2S0_GATE,
     .bclkFs = 64,
     .rxDmaData =
@@ -122,7 +122,7 @@ struct HAL_PDM_DEV g_pdm0Dev =
 {
     .reg = PDM0,
     .mclk = CLK_PDM,
-    .mclkRate = CLK_PDM_CLK_GATE,
+    .mclkRate = CLK_PDM_GATE,
     .hclk = HCLK_PDM_GATE,
     .reset = SRST_PDM_SRSTN,
     .rxDmaData =
@@ -201,8 +201,8 @@ const struct HAL_UART_DEV g_uart0Dev =
 {
     .base = UART0,
     .sclkID = CLK_UART0,
-    .sclkGateID = CLK_UART0_PMU_CLK_GATE,
-    .pclkGateID = PCLK_PMU_UART0_CLK_GATE,
+    .sclkGateID = CLK_UART0_PMU_GATE,
+    .pclkGateID = PCLK_PMU_UART0_GATE,
     .irqNum = UART0_IRQn,
     .isAutoFlow = true,
 };
@@ -211,8 +211,8 @@ const struct HAL_UART_DEV g_uart1Dev =
 {
     .base = UART1,
     .sclkID = CLK_UART1,
-    .sclkGateID = CLK_UART1_CLK_GATE,
-    .pclkGateID = PCLK_UART1_CLK_GATE,
+    .sclkGateID = CLK_UART1_GATE,
+    .pclkGateID = PCLK_UART1_GATE,
     .irqNum = UART1_IRQn,
     .isAutoFlow = true,
 };
@@ -221,8 +221,8 @@ const struct HAL_UART_DEV g_uart2Dev =
 {
     .base = UART2,
     .sclkID = CLK_UART2,
-    .sclkGateID = CLK_UART2_CLK_GATE,
-    .pclkGateID = PCLK_UART2_CLK_GATE,
+    .sclkGateID = CLK_UART2_GATE,
+    .pclkGateID = PCLK_UART2_GATE,
     .irqNum = UART2_IRQn,
     .isAutoFlow = false,
 };
@@ -231,8 +231,8 @@ const struct HAL_UART_DEV g_uart3Dev =
 {
     .base = UART3,
     .sclkID = CLK_UART3,
-    .sclkGateID = CLK_UART3_CLK_GATE,
-    .pclkGateID = PCLK_UART3_CLK_GATE,
+    .sclkGateID = CLK_UART3_GATE,
+    .pclkGateID = PCLK_UART3_GATE,
     .irqNum = UART3_IRQn,
     .isAutoFlow = true,
 };
@@ -241,8 +241,8 @@ const struct HAL_UART_DEV g_uart4Dev =
 {
     .base = UART4,
     .sclkID = CLK_UART4,
-    .sclkGateID = CLK_UART4_CLK_GATE,
-    .pclkGateID = PCLK_UART4_CLK_GATE,
+    .sclkGateID = CLK_UART4_GATE,
+    .pclkGateID = PCLK_UART4_GATE,
     .irqNum = UART4_IRQn,
     .isAutoFlow = true,
 };
@@ -251,8 +251,8 @@ const struct HAL_UART_DEV g_uart5Dev =
 {
     .base = UART5,
     .sclkID = CLK_UART5,
-    .sclkGateID = CLK_UART5_CLK_GATE,
-    .pclkGateID = PCLK_UART5_CLK_GATE,
+    .sclkGateID = CLK_UART5_GATE,
+    .pclkGateID = PCLK_UART5_GATE,
     .irqNum = UART5_IRQn,
     .isAutoFlow = false,
 };
@@ -261,8 +261,8 @@ const struct HAL_UART_DEV g_uart6Dev =
 {
     .base = UART6,
     .sclkID = CLK_UART6,
-    .sclkGateID = CLK_UART6_CLK_GATE,
-    .pclkGateID = PCLK_UART6_CLK_GATE,
+    .sclkGateID = CLK_UART6_GATE,
+    .pclkGateID = PCLK_UART6_GATE,
     .irqNum = UART6_IRQn,
     .isAutoFlow = false,
 };
@@ -271,8 +271,8 @@ const struct HAL_UART_DEV g_uart7Dev =
 {
     .base = UART7,
     .sclkID = CLK_UART7,
-    .sclkGateID = CLK_UART7_CLK_GATE,
-    .pclkGateID = PCLK_UART7_CLK_GATE,
+    .sclkGateID = CLK_UART7_GATE,
+    .pclkGateID = PCLK_UART7_GATE,
     .irqNum = UART7_IRQn,
     .isAutoFlow = false,
 };
