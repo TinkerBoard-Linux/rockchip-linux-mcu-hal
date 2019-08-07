@@ -220,7 +220,7 @@ uint32_t HAL_MMC_GetStatus(struct HAL_MMC_HOST *host)
 HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
                              uint32_t size)
 {
-    int32_t fifo_available, i;
+    uint32_t fifo_available, i;
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
     uint32_t start, timeoutMs = 500;
 
@@ -264,7 +264,10 @@ HAL_Status HAL_MMC_WriteData(struct HAL_MMC_HOST *host, uint32_t *buf,
 HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
                             uint32_t size)
 {
-    int32_t fifo_available, i, retries;
+#if MMC_WAIT_FOR_BR
+    uint32_t fifo_available, retries;
+#endif
+    uint32_t i;
     struct MMC_REG *pReg = ((struct MMC_REG *)(host->base));
 
     for (i = 0; i < size / 4; i++) {
