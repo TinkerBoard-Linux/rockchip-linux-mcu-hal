@@ -37,20 +37,28 @@ static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB)
 {
     uint32_t count = 0;
 
-    /* Wait for AHB master IDLE state. */
-    do {
-        if (++count > 200000)
-            return HAL_TIMEOUT;
-    } while ((pUSB->GRSTCTL & USB_OTG_GRSTCTL_AHBIDL) == 0);
-
     /* Core Soft Reset */
-    count = 0;
     pUSB->GRSTCTL |= USB_OTG_GRSTCTL_CSRST;
 
     do {
-        if (++count > 200000)
+        HAL_DelayUs(1);
+        if (++count > 50) {
+            HAL_DBG_ERR("%s HANG! Soft Reset GRSTCTL=0x%08lx", __func__, pUSB->GRSTCTL);
+
             return HAL_TIMEOUT;
+        }
     } while ((pUSB->GRSTCTL & USB_OTG_GRSTCTL_CSRST) == USB_OTG_GRSTCTL_CSRST);
+
+    /* Wait for AHB master IDLE state. */
+    count = 0;
+    do {
+        HAL_DelayUs(1);
+        if (++count > 50) {
+            HAL_DBG_ERR("%s HANG! AHB Idle GRSTCTL=0x%08lx", __func__, pUSB->GRSTCTL);
+
+            return HAL_TIMEOUT;
+        }
+    } while ((pUSB->GRSTCTL & USB_OTG_GRSTCTL_AHBIDL) == 0);
 
     return HAL_OK;
 }
