@@ -1132,13 +1132,14 @@ struct TIMER_REG {
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
 #define IS_SPI2APB_INSTANCE(instance) ((instance) == SPI2APB)
-#define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1))
+#define IS_SPI_INSTANCE(instance) (((instance) == SPI1) || ((instance) == SPI2))
 #define IS_I2S_INSTANCE(instance) ((instance) == I2S1)
 #define IS_I2STDM_INSTANCE(instance) ((instance) == I2STDM0)
 #define IS_DMA_INSTANCE(instance) ((instance) == DMA)
 #define IS_VAD_INSTANCE(instance) ((instance) == VAD)
-#define IS_PDM_INSTANCE(instance) ((instance) == PDM)
-#define IS_SFC_INSTANCE(instance) ((instance) == PDM)
+#define IS_PDM_INSTANCE(instance) ((instance) == PDM0)
+#define IS_SFC_INSTANCE(instance) ((instance) == SFC)
+#define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2) || ((instance) == I2C3) || ((instance) == I2C4) || ((instance) == I2C5))
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
