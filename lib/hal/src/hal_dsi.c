@@ -265,12 +265,11 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t dataType,
 }
 
 /**
- * @brief  Config DSI Send Message In Lp or Hs Mode.
+ * @brief  Config DSI Send Message In Hs Mode.
  * @param  pReg: DSI reg base.
- * @param  Enable: LowPower Mode Flag.
  * @return HAL_Status.
  */
-HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
+HAL_Status HAL_DSI_MsgHsModeConfig(struct DSI_REG *pReg)
 {
     uint32_t lpMask = DSI_GEN_SW_0P_TX_MASK | DSI_GEN_SW_1P_TX_MASK |
                       DSI_GEN_SW_2P_TX_MASK | DSI_GEN_SR_0P_TX_MASK |
@@ -279,13 +278,30 @@ HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg, bool Enable)
                       DSI_DCS_SW_1P_TX_MASK | DSI_DCS_SR_0P_TXL_MASK |
                       DSI_DCS_LW_TX_MASK | DSI_MAX_RD_PKT_SIZE_MASK;
 
-    if (Enable) {
-        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 1);
-        DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lpMask, 1);
-    } else {
-        DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 0);
-        DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lpMask, 0);
-    }
+    DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 0);
+    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lpMask, 0);
+
+    DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 1);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Config DSI Send Message In Lp Mode.
+ * @param  pReg: DSI reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg)
+{
+    uint32_t lpMask = DSI_GEN_SW_0P_TX_MASK | DSI_GEN_SW_1P_TX_MASK |
+                      DSI_GEN_SW_2P_TX_MASK | DSI_GEN_SR_0P_TX_MASK |
+                      DSI_GEN_SR_1P_TX_MASK | DSI_GEN_SR_2P_TX_MASK |
+                      DSI_GEN_LW_TX_MASK | DSI_DCS_SW_0P_TX_MASK |
+                      DSI_DCS_SW_1P_TX_MASK | DSI_DCS_SR_0P_TXL_MASK |
+                      DSI_DCS_LW_TX_MASK | DSI_MAX_RD_PKT_SIZE_MASK;
+
+    DSI_UPDATE_BIT(pReg->VID_MODE_CFG, DSI_LP_CMD_EN_MASK, 1);
+    DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, lpMask, 1);
 
     return HAL_OK;
 }
@@ -339,6 +355,47 @@ HAL_Status HAL_DSI_IrqEnable(struct DSI_REG *pReg)
 }
 
 /**
+ * @brief  DSI m31 Dphy Power Up.
+ * @param  pReg: DSI reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_DSI_M31DphyPowerUp(struct DSI_REG *pReg)
+{
+    uint32_t phyStopState = GRF_DSI_STATUS0_DPHY_PHYSTOPSTATECLKLANE_MASK |
+                            GRF_DSI_STATUS0_DPHY_STOPSTATE_MASK;
+    uint32_t start;
+
+    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 1);
+
+    start = HAL_GetTick();
+    /* *
+     * There is no phy_lock signal interface in m31 dphy
+     * Use each lane's stop state to judge dphy is ready
+     */
+    while (READ_BIT(gGrfReg->DSI_STATUS[0], phyStopState) != phyStopState) {
+        if (HAL_GetTick() - start > WAIT_PHY_READY_MS) {
+            HAL_DBG_ERR("wait mipi dphy ready time out\n");
+
+            return HAL_TIMEOUT;
+        }
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  DSI m31 Dphy Power Down.
+ * @param  pReg: DSI reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_DSI_M31DphyPowerDown(struct DSI_REG *pReg)
+{
+    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 0);
+
+    return HAL_OK;
+}
+
+/**
  * @brief  DSI m31 Dphy Init.
  * @param  pReg: DSI reg base.
  * @param  laneMbps: DSI per lane mbps.
@@ -346,10 +403,8 @@ HAL_Status HAL_DSI_IrqEnable(struct DSI_REG *pReg)
  */
 uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps)
 {
-    uint32_t index, clkSel, start = 0;
+    uint32_t index, clkSel = 0;
     uint32_t lanebps = laneMbps * 1000000;
-    uint32_t phyStopState = GRF_DSI_STATUS0_DPHY_PHYSTOPSTATECLKLANE_MASK |
-                            GRF_DSI_STATUS0_DPHY_STOPSTATE_MASK;
 
     /* Table 8-2 Relative setting for PLL output clock */
     const struct {
@@ -389,7 +444,7 @@ uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps)
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_RSTZ_MASK, 1);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_SHUTDOWNZ_MASK, 1);
 
-    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 0);
+    HAL_DSI_M31DphyPowerDown(pReg);
 
     WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PLL_CLK_SEL_MASK,
                       clkSel << GRF_DSI_CON0_DPHY_PLL_CLK_SEL_SHIFT);
@@ -411,15 +466,7 @@ uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps)
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_RSTZ_MASK, 0);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_ENABLECLK_MASK, 1);
 
-    start = HAL_GetTick();
-    /* *
-     * There is no phy_lock signal interface in m31 dphy
-     * Use each lane's stop state to judge dphy is ready
-     */
-    while (READ_BIT(gGrfReg->DSI_STATUS[0], phyStopState) != phyStopState) {
-        if (HAL_GetTick() - start > WAIT_PHY_READY_MS)
-            HAL_DBG_ERR("wait mipi dphy ready time out\n");
-    }
+    HAL_DSI_M31DphyPowerUp(pReg);
 
     return laneMbps;
 }
@@ -433,6 +480,8 @@ uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps)
 HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint16_t laneMbps)
 {
     uint32_t val;
+
+    HAL_ASSERT(IS_DSI_INSTANCE(pReg));
 
     val = HAL_DIV_ROUND_UP(laneMbps >> 3, 20);
     WRITE_REG(pReg->PWR_UP, 0);
@@ -531,9 +580,11 @@ HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
     if (pModeInfo->flags & DSI_CLOCK_NON_CONTINUOUS)
         DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_AUTO_CLKLANE_CTRL_MASK, 1);
 
-    HAL_DSI_MsgLpModeConfig(pReg, pModeInfo->flags & DSI_MODE_LPM);
+    if (pModeInfo->flags & DSI_MODE_LPM)
+        HAL_DSI_MsgLpModeConfig(pReg);
+    else
+        HAL_DSI_MsgHsModeConfig(pReg);
 
-    DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 1);
     DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_CMD_VIDEO_MODE_MASK, 1);
     WRITE_REG(pReg->PWR_UP, 0x1);
 
@@ -645,6 +696,26 @@ HAL_Status HAL_DSI_Enable(struct DSI_REG *pReg,
         WRITE_REG(pReg->EDPI_CMD_SIZE, pModeInfo->crtcHdisplay);
     }
     WRITE_REG(pReg->PWR_UP, 0x1);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  DSI Disable.
+ * @param  pReg: DSI reg base.
+ * @param  pModeInfo: display mode info.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_DSI_Disable(struct DSI_REG *pReg,
+                           struct DISPLAY_MODE_INFO *pModeInfo)
+{
+    DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_PHY_TXREQUESTCLKHS_MASK, 0);
+    if (pModeInfo->flags & DSI_MODE_VIDEO)
+        DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_CMD_VIDEO_MODE_MASK, 1);
+    else {
+        WRITE_REG(pReg->EDPI_CMD_SIZE, 0);
+    }
+    WRITE_REG(pReg->PWR_UP, 0x0);
 
     return HAL_OK;
 }
