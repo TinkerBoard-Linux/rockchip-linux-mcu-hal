@@ -106,54 +106,49 @@ static HAL_Check PD_IsOn(uint32_t pd)
     return (HAL_Check)(!((PMU->PWRDN_ST & (1 << stShift)) >> stShift));
 }
 
-static HAL_Status PD_IdleRequest(uint32_t pd, bool idle)
+static HAL_Status PD_IdleRequest(uint32_t pd, HAL_Check idle)
 {
-    int delay = 24000000;
     uint32_t reqShift = PD_GET_REQ_SHIFT(pd);
+    uint32_t start, timeoutMs = 1000;
 
     if (reqShift > 16)
         return HAL_INVAL;
-    else
-        PMU->BUS_IDLE_REQ = VAL_MASK_WE(1U << reqShift, idle << reqShift);
+
+    PMU->BUS_IDLE_REQ = VAL_MASK_WE(1U << reqShift, (idle ? 1U : 0U) << reqShift);
 
     /* Wait util idle_ack = 1 */
-    while (delay > 0) {
-        if (PD_ReadAck(pd) == idle)
-            break;
-        delay--;
-    }
-    if (delay == 0)
-        return HAL_TIMEOUT;
+    start = HAL_GetTick();
 
-    delay = 24000000;
-    while (delay > 0) {
-        if (PD_IsIdle(pd) == idle)
-            break;
-        delay--;
+    while (PD_ReadAck(pd) != idle) {
+        if ((HAL_GetTick() - start) > timeoutMs)
+            return HAL_TIMEOUT;
     }
-    if (delay == 0)
-        return HAL_TIMEOUT;
+
+    start = HAL_GetTick();
+    while (PD_IsIdle(pd) != idle) {
+        if ((HAL_GetTick() - start) > timeoutMs)
+            return HAL_TIMEOUT;
+    }
 
     return HAL_OK;
 }
 
-static HAL_Status PD_PowerOn(uint32_t pd, bool on)
+static HAL_Status PD_PowerOn(uint32_t pd, HAL_Check on)
 {
-    int delay = 24000000;
     uint32_t pwrShift = PD_GET_PWR_SHIFT(pd);
+    uint32_t start, timeoutMs = 1000;
 
     if (pwrShift > 16)
         return HAL_INVAL;
-    else
-        PMU->PWRDN_CON = VAL_MASK_WE(1U << pwrShift, !on << pwrShift);
 
-    while (delay > 0) {
-        if (PD_IsOn(pd) == on)
-            break;
-        delay--;
+    PMU->PWRDN_CON = VAL_MASK_WE(1U << pwrShift, (on ? 0U : 1U) << pwrShift);
+
+    start = HAL_GetTick();
+
+    while (PD_IsOn(pd) != on) {
+        if ((HAL_GetTick() - start) > timeoutMs)
+            return HAL_TIMEOUT;
     }
-    if (delay == 0)
-        return HAL_TIMEOUT;
 
     return HAL_OK;
 }
@@ -165,36 +160,45 @@ static HAL_Status PD_PowerOn(uint32_t pd, bool on)
  */
 
 /**
- * @brief  Pd setting API
+ * @brief  Pd setting on
  * @param  pd: pd id
- * @param  powerOn: power on or off
  * @return HAL_Status
  */
-HAL_Status HAL_PD_Setting(uint32_t pd, bool powerOn)
+HAL_Status HAL_PD_On(uint32_t pd)
 {
-    HAL_Status error = HAL_OK;
+    HAL_Status error;
 
-    if (PD_IsOn(pd) != powerOn) {
-        if (!powerOn) {
-            /* if powering down, idle request to NIU first */
-            error = PD_IdleRequest(pd, 1);
-            if (error < 0)
-                return error;
+    if (PD_IsOn(pd))
+        return HAL_OK;
 
-            error = PD_PowerOn(pd, powerOn);
-            if (error < 0)
-                return error;
-        } else {
-            error = PD_PowerOn(pd, powerOn);
-            if (error < 0)
-                return error;
+    error = PD_PowerOn(pd, HAL_TRUE);
+    if (error)
+        return error;
 
-            /* if powering up, leave idle mode */
-            error = PD_IdleRequest(pd, 0);
-            if (error < 0)
-                return error;
-        }
-    }
+    /* if powering up, leave idle mode */
+    error = PD_IdleRequest(pd, HAL_FALSE);
+
+    return error;
+}
+
+/**
+ * @brief  Pd setting off
+ * @param  pd: pd id
+ * @return HAL_Status
+ */
+HAL_Status HAL_PD_Off(uint32_t pd)
+{
+    HAL_Status error;
+
+    if (!PD_IsOn(pd))
+        return HAL_OK;
+
+    /* if powering down, idle request to NIU first */
+    error = PD_IdleRequest(pd, HAL_TRUE);
+    if (error)
+        return error;
+
+    error = PD_PowerOn(pd, HAL_FALSE);
 
     return error;
 }

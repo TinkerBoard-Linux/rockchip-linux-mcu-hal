@@ -21,7 +21,9 @@
 /***************************** Structure Definition **************************/
 
 /***************************** Function Declare ******************************/
-HAL_Status HAL_PD_Setting(uint32_t pd, bool powerOn);
+
+HAL_Status HAL_PD_On(uint32_t pd);
+HAL_Status HAL_PD_Off(uint32_t pd);
 
 #endif
 
