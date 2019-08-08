@@ -172,6 +172,7 @@ HAL_Status HAL_VOP_SetPlane(struct VOP_REG *pReg,
 
 uint32_t HAL_VOP_GetScanLine(struct VOP_REG *pReg);
 uint8_t HAL_VOP_CommitPrepare(struct VOP_REG *pReg);
+uint8_t HAL_VOP_CommitPost(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId, uint32_t *lut,
                            uint16_t lut_size);
 HAL_Status HAL_VOP_Commit(struct VOP_REG *pReg);

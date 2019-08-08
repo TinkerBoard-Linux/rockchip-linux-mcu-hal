@@ -586,6 +586,19 @@ uint8_t HAL_VOP_CommitPrepare(struct VOP_REG *pReg)
                         VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_RAW_STS_SHIFT,
                         VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_RAW_STS_MASK);
 }
+
+/**
+ * @brief  Get the current commit active state.
+ * @param  pReg: VOP reg base.
+ * @return HAL_Status.
+ */
+uint8_t HAL_VOP_CommitPost(struct VOP_REG *pReg)
+{
+    return VOP_MaskRead(pReg->REG_CFG_DONE,
+                        VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_SHIFT,
+                        VOP_REG_CFG_DONE_REG_LOAD_GLOBAL_EN_MASK);
+}
+
 /** @} */
 
 /** @defgroup VOP_Exported_Functions_Group3 IO Functions
