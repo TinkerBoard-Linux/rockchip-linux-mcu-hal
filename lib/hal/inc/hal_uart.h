@@ -196,7 +196,7 @@ struct HAL_UART_CONFIG {
   */
 struct HAL_UART_DEV {
     /* registers base address */
-    struct UART_REG *base;
+    struct UART_REG *pReg;
 
     /* sclk is for uart logic, pclk is for register access*/
     eCLOCK_Name sclkID;

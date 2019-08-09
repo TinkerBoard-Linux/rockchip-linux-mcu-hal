@@ -26,7 +26,7 @@
 
 /** i2s-tdm dev struct */
 struct HAL_I2STDM_DEV {
-    struct I2STDM_REG *reg;
+    struct I2STDM_REG *pReg;
     uint32_t mclkTx;
     uint32_t mclkTxGate;
     uint32_t mclkRx;

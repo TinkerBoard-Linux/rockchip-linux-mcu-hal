@@ -129,7 +129,7 @@ HAL_Status HAL_AUDIOPWM_DeInit(struct HAL_AUDIOPWM_DEV *audioPwm)
  */
 HAL_Status HAL_AUDIOPWM_Enable(struct HAL_AUDIOPWM_DEV *audioPwm)
 {
-    struct AUDIOPWM_REG *reg = (struct AUDIOPWM_REG *)audioPwm->reg;
+    struct AUDIOPWM_REG *reg = audioPwm->pReg;
 
     WRITE_REG(reg->FIFO_CFG, AUDPWM_DMA_EN << 16 | AUDPWM_DMA_EN);
     WRITE_REG(reg->XFER, AUDPWM_START << 16 | AUDPWM_START);
@@ -144,7 +144,7 @@ HAL_Status HAL_AUDIOPWM_Enable(struct HAL_AUDIOPWM_DEV *audioPwm)
  */
 HAL_Status HAL_AUDIOPWM_Disable(struct HAL_AUDIOPWM_DEV *audioPwm)
 {
-    struct AUDIOPWM_REG *reg = (struct AUDIOPWM_REG *)audioPwm->reg;
+    struct AUDIOPWM_REG *reg = audioPwm->pReg;
 
     WRITE_REG(reg->FIFO_CFG, AUDPWM_DMA_EN << 16 | AUDPWM_DMA_DIS);
     WRITE_REG(reg->XFER, AUDPWM_START << 16 | AUDPWM_STOP);
@@ -161,7 +161,7 @@ HAL_Status HAL_AUDIOPWM_Disable(struct HAL_AUDIOPWM_DEV *audioPwm)
 HAL_Status HAL_AUDIOPWM_Config(struct HAL_AUDIOPWM_DEV *audioPwm,
                                struct AUDIO_PARAMS *params)
 {
-    struct AUDIOPWM_REG *reg = (struct AUDIOPWM_REG *)audioPwm->reg;
+    struct AUDIOPWM_REG *reg = audioPwm->pReg;
 
     WRITE_REG(reg->SRC_CFG,
               AUDPWM_WIDTH_MASK << 16 | AUDPWM_WIDTH(params->sampleBits));

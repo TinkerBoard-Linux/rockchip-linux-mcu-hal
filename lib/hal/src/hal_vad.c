@@ -123,7 +123,7 @@ HAL_Status HAL_VAD_Resume(struct HAL_VAD_DEV *vad)
  */
 HAL_Status HAL_VAD_Init(struct HAL_VAD_DEV *vad)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
     uint32_t val, mask;
 
     HAL_CRU_ClkEnable(vad->hclk);
@@ -173,7 +173,7 @@ HAL_Status HAL_VAD_DeInit(struct HAL_VAD_DEV *vad)
  */
 HAL_Status HAL_VAD_Start(struct HAL_VAD_DEV *vad)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
     uint32_t val, mask;
 
     MODIFY_REG(reg->CONTROL, VAD_EN_MASK, VAD_EN);
@@ -193,7 +193,7 @@ HAL_Status HAL_VAD_Start(struct HAL_VAD_DEV *vad)
  */
 HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
     struct VAD_BUF *vbuf = &vad->vbuf;
     uint32_t val;
 
@@ -237,7 +237,7 @@ HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad)
  */
 HAL_Status HAL_VAD_Config(struct HAL_VAD_DEV *vad, struct AUDIO_PARAMS *params)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
     uint32_t val, mask, channels;
 
     switch (params->sampleBits) {
@@ -274,7 +274,7 @@ HAL_Status HAL_VAD_Config(struct HAL_VAD_DEV *vad, struct AUDIO_PARAMS *params)
  */
 HAL_Status HAL_VAD_SetAudioSource(struct HAL_VAD_DEV *vad, uint32_t source)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
     HAL_Status ret;
 
     ret = VAD_Get_Audio_Src_Info(vad, source);
@@ -294,7 +294,7 @@ HAL_Status HAL_VAD_SetAudioSource(struct HAL_VAD_DEV *vad, uint32_t source)
  */
 HAL_Status HAL_VAD_SetMode(struct HAL_VAD_DEV *vad, int mode)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
 
     vad->mode = mode;
     MODIFY_REG(reg->CONTROL, VAD_MODE_MASK, vad->mode << VAD_MODE_SHIFT);
@@ -323,7 +323,7 @@ HAL_Status HAL_VAD_SetBufferTime(struct HAL_VAD_DEV *vad, uint32_t bufferTime)
  */
 HAL_Status HAL_VAD_SetDetectChannel(struct HAL_VAD_DEV *vad, uint32_t detectChannel)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
 
     vad->audioDetChnl = detectChannel;
 
@@ -342,7 +342,7 @@ HAL_Status HAL_VAD_SetDetectChannel(struct HAL_VAD_DEV *vad, uint32_t detectChan
  */
 HAL_Status HAL_VAD_ConfigRingBuffer(struct HAL_VAD_DEV *vad, uint32_t start, uint32_t end)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
 
     vad->ramStartAddr = start;
     /* ramEndAddr means the last entry address to store data,
@@ -363,7 +363,7 @@ HAL_Status HAL_VAD_ConfigRingBuffer(struct HAL_VAD_DEV *vad, uint32_t start, uin
  */
 HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
     uint32_t val;
 
     val = READ_REG(reg->INT);
@@ -382,7 +382,7 @@ HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad)
  */
 HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t kbytes)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
 
     MODIFY_REG(reg->AUX_CONTROL, DATA_TRANS_KBYTE_THD_MASK,
                DATA_TRANS_KBYTE_THD(kbytes));
@@ -402,7 +402,7 @@ HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t kbytes)
  */
 HAL_Status HAL_VAD_EnableBusMode(struct HAL_VAD_DEV *vad, uint8_t en)
 {
-    struct VAD_REG *reg = vad->reg;
+    struct VAD_REG *reg = vad->pReg;
 
     if (en)
         MODIFY_REG(reg->AUX_CONTROL, RAM_ITF_EN_MASK | BUS_WRITE_EN_MASK,

@@ -56,7 +56,7 @@
 
 /** audioPwm dev struct */
 struct HAL_AUDIOPWM_DEV {
-    struct AUDIOPWM_REG *reg;
+    struct AUDIOPWM_REG *pReg;
     uint32_t mclk;
     uint32_t mclkGate;
     uint32_t hclk;

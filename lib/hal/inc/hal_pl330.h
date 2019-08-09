@@ -193,7 +193,7 @@ struct PL330_CHAN {
  * instance.
  */
 struct HAL_PL330_DEV {
-    struct DMA_REG *reg;
+    struct DMA_REG *pReg;
     struct PL330_CHAN chans[PL330_CHANNELS_PER_DEV];
     struct PL330_CONFIG pcfg;
     ePL330_COND peripReqType;

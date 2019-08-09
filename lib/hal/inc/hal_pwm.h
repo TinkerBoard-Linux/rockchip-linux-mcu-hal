@@ -32,7 +32,7 @@
   * @brief  PWM HW information definition
   */
 struct HAL_PWM_DEV {
-    struct PWM_REG *base;
+    struct PWM_REG *pReg;
     uint32_t clkID;
     uint32_t clkGateID;
     uint32_t pclkGateID;
@@ -82,7 +82,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint32_t channel,
                              const struct HAL_PWM_CONFIG *config);
 HAL_Status HAL_PWM_SetEnable(struct PWM_HANDLE *pPWM, uint32_t channel,
                              uint32_t mode, bool enable);
-HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *base, uint32_t freq);
+HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *pReg, uint32_t freq);
 HAL_Status HAL_PWM_DeInit(struct PWM_HANDLE *pPWM);
 
 #endif

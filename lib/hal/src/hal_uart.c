@@ -297,7 +297,7 @@ HAL_Status HAL_UART_Init(const struct HAL_UART_DEV *dev, const struct HAL_UART_C
 
     HAL_ASSERT(dev != NULL);
 
-    pReg = dev->base;
+    pReg = dev->pReg;
     HAL_ASSERT(IS_UART_INSTANCE(pReg));
 
 #if defined(HAL_CRU_MODULE_ENABLED) && !defined(IS_FPGA)

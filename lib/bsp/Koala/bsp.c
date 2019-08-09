@@ -36,7 +36,7 @@ const struct RK_PINCTRL_DEV g_pinDev = {
 #ifdef HAL_PL330_MODULE_ENABLED
 struct HAL_PL330_DEV g_pl330Dev =
 {
-    .reg = DMA,
+    .pReg = DMA,
     .peripReqType = BURST,
     .irq[0] = DMAC_IRQn,
     .irq[1] = DMAC_ABORT_IRQn,
@@ -46,7 +46,7 @@ struct HAL_PL330_DEV g_pl330Dev =
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
-    .base = UART0,
+    .pReg = UART0,
     .sclkID = CLK_UART0,
     .sclkGateID = CLK_UART0_SRC_GATE,
     .pclkGateID = PCLK_UART0_GATE,
@@ -56,7 +56,7 @@ const struct HAL_UART_DEV g_uart0Dev =
 
 const struct HAL_UART_DEV g_uart1Dev =
 {
-    .base = UART1,
+    .pReg = UART1,
     .sclkID = CLK_UART1,
     .sclkGateID = CLK_UART1_SRC_GATE,
     .pclkGateID = PCLK_UART1_GATE,
@@ -68,7 +68,7 @@ const struct HAL_UART_DEV g_uart1Dev =
 #ifdef HAL_I2C_MODULE_ENABLED
 const struct HAL_I2C_DEV g_i2c0Dev =
 {
-    .base = I2C0,
+    .pReg = I2C0,
     .clkID = CLK_I2C0,
     .clkGateID = CLK_I2C0_SRC_GATE,
     .pclkGateID = PCLK_I2C0_GATE,
@@ -77,7 +77,7 @@ const struct HAL_I2C_DEV g_i2c0Dev =
 
 const struct HAL_I2C_DEV g_i2c1Dev =
 {
-    .base = I2C1,
+    .pReg = I2C1,
     .clkID = CLK_I2C1,
     .clkGateID = CLK_I2C1_SRC_GATE,
     .pclkGateID = PCLK_I2C1_GATE,
@@ -86,7 +86,7 @@ const struct HAL_I2C_DEV g_i2c1Dev =
 
 const struct HAL_I2C_DEV g_i2c2Dev =
 {
-    .base = I2C2,
+    .pReg = I2C2,
     .clkID = CLK_I2C2,
     .clkGateID = CLK_I2C2_SRC_GATE,
     .pclkGateID = PCLK_I2C2_GATE,
@@ -97,7 +97,7 @@ const struct HAL_I2C_DEV g_i2c2Dev =
 #if defined(HAL_PWM_MODULE_ENABLED)
 const struct HAL_PWM_DEV g_pwm0Dev =
 {
-    .base = PWM,
+    .pReg = PWM,
     .clkID = CLK_PWM,
     .clkGateID = CLK_PWM_SRC_GATE,
     .pclkGateID = PCLK_PWM_GATE,

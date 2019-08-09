@@ -1080,7 +1080,7 @@ static void PL330_Read_Config(struct HAL_PL330_DEV *pl330)
 {
     uint32_t val;
     struct PL330_CONFIG *pcfg = &pl330->pcfg;
-    struct DMA_REG *reg = pl330->reg;
+    struct DMA_REG *reg = pl330->pReg;
 
     val = READ_REG(reg->CRDN) >> CRD_DATA_WIDTH_SHIFT;
     val &= CRD_DATA_WIDTH_MASK;
@@ -1332,7 +1332,7 @@ static int PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32_t addr
  */
 uint32_t HAL_PL330_GetRawIrqStatus(struct HAL_PL330_DEV *pl330)
 {
-    struct DMA_REG *reg = pl330->reg;
+    struct DMA_REG *reg = pl330->pReg;
 
     return READ_REG(reg->EVENT_RIS);
 }
@@ -1347,7 +1347,7 @@ uint32_t HAL_PL330_GetRawIrqStatus(struct HAL_PL330_DEV *pl330)
  */
 HAL_Status HAL_PL330_ClearIrq(struct HAL_PL330_DEV *pl330, uint32_t irq)
 {
-    struct DMA_REG *reg = pl330->reg;
+    struct DMA_REG *reg = pl330->pReg;
 
     WRITE_REG(reg->INTCLR, 1 << irq);
 
@@ -1366,7 +1366,7 @@ int HAL_PL330_GetPosition(struct PL330_CHAN *pchan)
     uint32_t val = 0, addr = 0;
     struct HAL_PL330_DEV *pl330 = pchan->pl330;
     struct PL330_DESC *desc = &pchan->desc;
-    struct DMA_REG *reg = pl330->reg;
+    struct DMA_REG *reg = pl330->pReg;
     int transferred;
 
     if (desc->rqcfg.srcInc) {
@@ -1433,7 +1433,7 @@ HAL_Status HAL_PL330_DeInit(struct HAL_PL330_DEV *pl330)
     uint32_t dbgInst;
     uint32_t waitCount = 0;
     uint32_t i;
-    struct DMA_REG *reg = pl330->reg;
+    struct DMA_REG *reg = pl330->pReg;
 
     /* Disable all the interrupts */
     WRITE_REG(reg->INTEN, 0x00);
@@ -1488,7 +1488,7 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
     uint32_t channel = pchan->chanId;
     struct HAL_PL330_DEV *pl330 = pchan->pl330;
     struct PL330_DESC *desc = &pchan->desc;
-    struct DMA_REG *reg = pl330->reg;
+    struct DMA_REG *reg = pl330->pReg;
 
     HAL_ASSERT(pl330 != NULL);
 
@@ -1524,7 +1524,7 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
         if (desc->rqcfg.dstInc)
             HAL_DCACHE_InvalidateByRange(desc->px.dstAddr, desc->px.length);
 
-        status = PL330_Exec_DMAGO(pl330->reg, channel, mcBuf);
+        status = PL330_Exec_DMAGO(pl330->pReg, channel, mcBuf);
     } else {
         status = HAL_ERROR;
     }
@@ -1546,7 +1546,7 @@ HAL_Status HAL_PL330_Stop(struct PL330_CHAN *pchan)
 {
     HAL_ASSERT(pchan != NULL);
 
-    return PL330_Exec_DMAKILL(pchan->pl330->reg, pchan->chanId, 1);
+    return PL330_Exec_DMAKILL(pchan->pl330->pReg, pchan->chanId, 1);
 }
 
 /**
@@ -1561,7 +1561,7 @@ HAL_Status HAL_PL330_Stop(struct PL330_CHAN *pchan)
 HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
 {
     int ret = HAL_OK;
-    struct DMA_REG *reg = pl330->reg;
+    struct DMA_REG *reg = pl330->pReg;
     uint32_t val;
     unsigned int ev, i = 0;
 
@@ -1570,11 +1570,11 @@ HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
         /*
          * if DMA manager is fault
          */
-        HAL_DBG("pl330 %p fault with type: 0x%lx at pc 0x%lx\n", pl330->reg,
+        HAL_DBG("pl330 %p fault with type: 0x%lx at pc 0x%lx\n", pl330->pReg,
                 READ_REG(reg->FTRD), READ_REG(reg->DPC));
         /* kill the DMA manager thread */
         /* Should we disable interrupt?*/
-        PL330_Exec_DMAKILL(pl330->reg, 0, 0);
+        PL330_Exec_DMAKILL(pl330->pReg, 0, 0);
     }
 
     val = READ_REG(reg->FSRC) & ((1 << pl330->pcfg.numChan) - 1);
@@ -1585,7 +1585,7 @@ HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
                         READ_REG(reg->CHAN_STS[i].CSR), READ_REG(reg->FTR[i]));
                 /* kill the channel thread */
                 /* Should we disable interrupt? */
-                PL330_Exec_DMAKILL(pl330->reg, i, 1);
+                PL330_Exec_DMAKILL(pl330->pReg, i, 1);
             }
             i++;
         }

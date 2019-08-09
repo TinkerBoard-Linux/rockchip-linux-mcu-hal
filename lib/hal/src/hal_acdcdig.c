@@ -97,7 +97,7 @@ HAL_Status HAL_ACDCDIG_Resume(struct HAL_ACDCDIG_DEV *acdcDig)
  */
 HAL_Status HAL_ACDCDIG_Init(struct HAL_ACDCDIG_DEV *acdcDig, struct AUDIO_INIT_CONFIG *config)
 {
-    struct ACDCDIG_REG *reg = acdcDig->reg;
+    struct ACDCDIG_REG *reg = acdcDig->pReg;
     HAL_Status ret = HAL_OK;
 
     HAL_CRU_ClkEnable(acdcDig->hclk);
@@ -154,7 +154,7 @@ HAL_Status HAL_ACDCDIG_DeInit(struct HAL_ACDCDIG_DEV *acdcDig)
  */
 HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig)
 {
-    struct ACDCDIG_REG *reg = acdcDig->reg;
+    struct ACDCDIG_REG *reg = acdcDig->pReg;
     HAL_Status ret = HAL_OK;
 
     /* power up */
@@ -207,7 +207,7 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig)
  */
 HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig)
 {
-    struct ACDCDIG_REG *reg = acdcDig->reg;
+    struct ACDCDIG_REG *reg = acdcDig->pReg;
     HAL_Status ret = HAL_OK;
 
     switch (acdcDig->format) {
@@ -262,7 +262,7 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig)
 HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
                               struct AUDIO_PARAMS *params)
 {
-    struct ACDCDIG_REG *reg = acdcDig->reg;
+    struct ACDCDIG_REG *reg = acdcDig->pReg;
     HAL_Status ret = HAL_OK;
     uint32_t srt = 0;
 

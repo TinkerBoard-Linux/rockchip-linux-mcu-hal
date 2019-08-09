@@ -8,7 +8,7 @@
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
 struct HAL_ACDCDIG_DEV g_acdcDigDev =
 {
-    .reg = ACDCDIG,
+    .pReg = ACDCDIG,
     .hclk = PCLK_ACDC_DIG_GATE,
 };
 
@@ -30,7 +30,7 @@ static HAL_Status BSP_ACDCDIG_DeInit(void)
 #ifdef HAL_AUDIOPWM_MODULE_ENABLED
 struct HAL_AUDIOPWM_DEV g_audioPwmDev =
 {
-    .reg = AUDIOPWM,
+    .pReg = AUDIOPWM,
     .mclk = CLK_AUDPWM,
     .mclkGate = CLK_AUDPWM_DF_GATE,
     .hclk = HCLK_AUDPWM_GATE,
@@ -64,7 +64,7 @@ HAL_Status BSP_AUDIOPWM_DeInit(void)
 #ifdef HAL_I2C_MODULE_ENABLED
 const struct HAL_I2C_DEV g_i2c0Dev =
 {
-    .base = I2C0,
+    .pReg = I2C0,
     .clkID = CLK_I2C0,
     .clkGateID = CLK_I2C0_GATE,
     .pclkGateID = PCLK_I2C0_GATE,
@@ -73,7 +73,7 @@ const struct HAL_I2C_DEV g_i2c0Dev =
 
 const struct HAL_I2C_DEV g_i2c1Dev =
 {
-    .base = I2C1,
+    .pReg = I2C1,
     .clkID = CLK_I2C1,
     .clkGateID = CLK_I2C1_GATE,
     .pclkGateID = PCLK_I2C1_GATE,
@@ -82,7 +82,7 @@ const struct HAL_I2C_DEV g_i2c1Dev =
 
 const struct HAL_I2C_DEV g_i2c2Dev =
 {
-    .base = I2C2,
+    .pReg = I2C2,
     .clkID = CLK_I2C2,
     .clkGateID = CLK_I2C2_GATE,
     .pclkGateID = PCLK_I2C2_GATE,
@@ -93,7 +93,7 @@ const struct HAL_I2C_DEV g_i2c2Dev =
 #ifdef HAL_I2STDM_MODULE_ENABLED
 struct HAL_I2STDM_DEV g_i2sTdm0Dev =
 {
-    .reg = I2STDM0,
+    .pReg = I2STDM0,
     .mclkTx = I2S_MCLKOUT,
     .mclkTxGate = I2S_MCLKOUT_GATE,
     .mclkRx = I2S_MCLKOUT,
@@ -120,7 +120,7 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
 
 struct HAL_I2STDM_DEV g_i2sTdm1Dev =
 {
-    .reg = I2STDM1,
+    .pReg = I2STDM1,
     .mclkTx = I2S1_MCLKOUT,
     .mclkTxGate = I2S1_MCLKOUT_GATE,
     .mclkRx = I2S1_MCLKOUT,
@@ -165,7 +165,7 @@ HAL_Status BSP_I2S_DeInit(void)
 #ifdef HAL_PDM_MODULE_ENABLED
 struct HAL_PDM_DEV g_pdm0Dev =
 {
-    .reg = PDM0,
+    .pReg = PDM0,
     .mclk = MCLK_PDM0,
 #ifdef IS_FPGA
     .mclkRate = PDM_FPGA_CLK_RATE,
@@ -204,7 +204,7 @@ HAL_Status BSP_PDM_DeInit(void)
 #ifdef HAL_PL330_MODULE_ENABLED
 struct HAL_PL330_DEV g_pl330Dev =
 {
-    .reg = DMA,
+    .pReg = DMA,
     .peripReqType = BURST,
     .irq[0] = DMAC_IRQn,
     .irq[1] = DMAC_ABORT_IRQn,
@@ -242,7 +242,7 @@ static HAL_Status BSP_PL330_DeInit(void)
 #ifdef HAL_PWM_MODULE_ENABLED
 const struct HAL_PWM_DEV g_pwm0Dev =
 {
-    .base = PWM0,
+    .pReg = PWM0,
     .clkID = CLK_PWM,
     .clkGateID = CLK_PWM_GATE,
     .pclkGateID = PCLK_PWM_GATE,
@@ -253,7 +253,7 @@ const struct HAL_PWM_DEV g_pwm0Dev =
 #ifdef HAL_VAD_MODULE_ENABLED
 struct HAL_VAD_DEV g_vadDev =
 {
-    .reg = VAD,
+    .pReg = VAD,
     .hclk = HCLK_VAD_GATE,
     .irq = VAD_IRQn,
 };
@@ -391,7 +391,7 @@ const struct RK_PINCTRL_DEV g_pinDev = {
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
-    .base = UART0,
+    .pReg = UART0,
     .sclkID = CLK_UART0,
     .sclkGateID = CLK_UART0_GATE,
     .pclkGateID = PCLK_UART0_GATE,
@@ -401,7 +401,7 @@ const struct HAL_UART_DEV g_uart0Dev =
 
 const struct HAL_UART_DEV g_uart1Dev =
 {
-    .base = UART1,
+    .pReg = UART1,
     .sclkID = CLK_UART1,
     .sclkGateID = CLK_UART1_GATE,
     .pclkGateID = PCLK_UART1_GATE,
@@ -411,7 +411,7 @@ const struct HAL_UART_DEV g_uart1Dev =
 
 const struct HAL_UART_DEV g_uart2Dev =
 {
-    .base = UART2,
+    .pReg = UART2,
     .sclkID = CLK_UART2,
     .sclkGateID = CLK_UART2_GATE,
     .pclkGateID = PCLK_UART2_GATE,

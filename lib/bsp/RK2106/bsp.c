@@ -9,14 +9,14 @@
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
-    .base = UART0,
+    .pReg = UART0,
     .irqNum = UART0_IRQn,
     .isAutoFlow = false,
 };
 
 const struct HAL_UART_DEV g_uart1Dev =
 {
-    .base = UART1,
+    .pReg = UART1,
     .irqNum = UART1_IRQn,
     .isAutoFlow = true,
 };

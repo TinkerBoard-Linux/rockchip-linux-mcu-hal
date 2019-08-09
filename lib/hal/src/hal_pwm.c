@@ -220,15 +220,15 @@ HAL_Status HAL_PWM_SetEnable(struct PWM_HANDLE *pPWM, uint32_t channel,
  * @brief  Initialize the PWM according to the specified parameters.
  * @param  pPWM: pointer to a PWM_HANDLE structure that contains
  *               the information for PWM module.
- * @param  base: PWM controller register base address.
+ * @param  pReg: PWM controller register base address.
  * @param  freq: PWM bus input clock frequency.
  * @return HAL_Status
  */
-HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *base, uint32_t freq)
+HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *pReg, uint32_t freq)
 {
     HAL_ASSERT(pPWM != NULL);
 
-    pPWM->pReg = base;
+    pPWM->pReg = pReg;
     HAL_ASSERT(IS_PWM_INSTANCE(pPWM->pReg));
 
     pPWM->freq = freq;

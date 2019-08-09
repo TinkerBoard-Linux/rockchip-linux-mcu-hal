@@ -8,7 +8,7 @@
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
-    .base = UART0,
+    .pReg = UART0,
     .sclkID = CLK_UART0,
     .sclkGateID = CLK_UART0_SRC_GATE,
     .pclkGateID = PCLK_UART0_GATE,
@@ -18,7 +18,7 @@ const struct HAL_UART_DEV g_uart0Dev =
 
 const struct HAL_UART_DEV g_uart2Dev =
 {
-    .base = UART2,
+    .pReg = UART2,
     .sclkID = CLK_UART2,
     .sclkGateID = CLK_UART2_SRC_GATE,
     .pclkGateID = PCLK_UART2_GATE,

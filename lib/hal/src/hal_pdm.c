@@ -147,7 +147,7 @@ static int PDM_GetCicDsRatio(uint32_t clk)
 static HAL_Status PDM_ChangeClkFreq(struct HAL_PDM_DEV *pdm,
                                     struct AUDIO_PARAMS *params)
 {
-    struct PDM_REG *reg = pdm->reg;
+    struct PDM_REG *reg = pdm->pReg;
 
     HAL_Status ret = HAL_OK;
     uint32_t clkOut, clkSrc, n, m, old, val, mask;
@@ -252,7 +252,7 @@ HAL_Status HAL_PDM_Resume(struct HAL_PDM_DEV *pdm)
  */
 HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *config)
 {
-    struct PDM_REG *reg = pdm->reg;
+    struct PDM_REG *reg = pdm->pReg;
     uint32_t val;
 
     HAL_CRU_ClkEnable(pdm->hclk);
@@ -270,7 +270,7 @@ HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *confi
  */
 HAL_Status HAL_PDM_DeInit(struct HAL_PDM_DEV *pdm)
 {
-    HAL_ASSERT(IS_PDM_INSTANCE(pdm->reg));
+    HAL_ASSERT(IS_PDM_INSTANCE(pdm->pReg));
 
     HAL_PDM_Disable(pdm);
 
@@ -292,7 +292,7 @@ HAL_Status HAL_PDM_DeInit(struct HAL_PDM_DEV *pdm)
  */
 HAL_Status HAL_PDM_Enable(struct HAL_PDM_DEV *pdm)
 {
-    struct PDM_REG *reg = pdm->reg;
+    struct PDM_REG *reg = pdm->pReg;
 
     HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
@@ -311,7 +311,7 @@ HAL_Status HAL_PDM_Enable(struct HAL_PDM_DEV *pdm)
  */
 HAL_Status HAL_PDM_Disable(struct HAL_PDM_DEV *pdm)
 {
-    struct PDM_REG *reg = pdm->reg;
+    struct PDM_REG *reg = pdm->pReg;
 
     HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
@@ -332,7 +332,7 @@ HAL_Status HAL_PDM_Disable(struct HAL_PDM_DEV *pdm)
  */
 HAL_Status HAL_PDM_Config(struct HAL_PDM_DEV *pdm, struct AUDIO_PARAMS *params)
 {
-    struct PDM_REG *reg = pdm->reg;
+    struct PDM_REG *reg = pdm->pReg;
     uint32_t val = 0;
     HAL_Status ret = HAL_OK;
 

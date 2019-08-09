@@ -723,18 +723,18 @@ HAL_Status HAL_I2C_Close(struct I2C_HANDLE *pI2C)
   * @brief  Initialize the I2C according to the specified parameters.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
-  * @param  base: I2C controller register base address.
+  * @param  pReg: I2C controller register base address.
   * @param  rate: I2C bus input clock rate.
   * @param  speed: I2C bus output speed.
   * @return HAL status
   */
-HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, struct I2C_REG *base, uint32_t rate,
+HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, struct I2C_REG *pReg, uint32_t rate,
                         eI2C_BusSpeed speed)
 {
     /* Check the I2C handle allocation */
     HAL_ASSERT(pI2C != NULL);
 
-    pI2C->pReg = base;
+    pI2C->pReg = pReg;
     HAL_ASSERT(IS_I2C_INSTANCE(pI2C->pReg));
 
     /* Init speed */

@@ -175,7 +175,7 @@
 
 /** acdcDig dev struct */
 struct HAL_ACDCDIG_DEV {
-    struct ACDCDIG_REG *reg;
+    struct ACDCDIG_REG *pReg;
     uint32_t hclk;
     eAUDIO_fmtType format;
 };

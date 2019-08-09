@@ -158,7 +158,7 @@ struct DWDMA_CHAN {
  * struct HAL_DWDMA_DEV - dw dma hal dev.
  */
 struct HAL_DWDMA_DEV {
-    struct DMA_REG *reg;
+    struct DMA_REG *pReg;
     struct DWDMA_CHAN chan[DMA_NUM_CHANNELS];
     uint8_t irq[DMA_NUM_CHANNELS];
     uint8_t allChanMask;

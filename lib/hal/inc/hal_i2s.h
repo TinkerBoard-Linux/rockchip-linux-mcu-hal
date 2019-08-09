@@ -26,7 +26,7 @@
 
 /** i2s dev struct */
 struct HAL_I2S_DEV {
-    struct I2S_REG *reg;
+    struct I2S_REG *pReg;
     uint32_t mclk;
     uint32_t mclkGate;
     uint32_t hclk;

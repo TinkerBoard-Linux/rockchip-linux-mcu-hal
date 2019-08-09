@@ -78,7 +78,7 @@ typedef enum {
   * @brief  I2C HW information definition
   */
 struct HAL_I2C_DEV {
-    struct I2C_REG *base;
+    struct I2C_REG *pReg;
     uint32_t clkID;
     uint32_t clkGateID;
     uint32_t pclkGateID;
@@ -124,7 +124,7 @@ HAL_Status HAL_I2C_SetupMsg(struct I2C_HANDLE *pI2C, uint16_t addr, uint8_t *buf
 HAL_Status HAL_I2C_Transfer(struct I2C_HANDLE *pI2C, eI2C_TransferType type, bool last);
 HAL_Status HAL_I2C_ForceStop(struct I2C_HANDLE *pI2C);
 HAL_Status HAL_I2C_Close(struct I2C_HANDLE *pI2C);
-HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, struct I2C_REG *base, uint32_t rate,
+HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, struct I2C_REG *pReg, uint32_t rate,
                         eI2C_BusSpeed speed);
 HAL_Status HAL_I2C_DeInit(struct I2C_HANDLE *pI2C);
 

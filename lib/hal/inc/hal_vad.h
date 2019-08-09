@@ -227,7 +227,7 @@ struct VAD_BUF {
 
 /** vad structure */
 struct HAL_VAD_DEV {
-    struct VAD_REG *reg; /**< vad controller physical base address */
+    struct VAD_REG *pReg; /**< vad controller physical base address */
     uint32_t ramStartAddr; /**< The physical ring buffer start address, double word align */
     uint32_t ramEndAddr; /**< The physical ring buffer end address, double word align */
     uint32_t audioSrc; /**< Src 0: from i2s; src 1: from pdm */

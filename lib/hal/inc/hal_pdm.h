@@ -110,7 +110,7 @@ typedef enum {
 
 /** pdm dev struct */
 struct HAL_PDM_DEV {
-    struct PDM_REG *reg;
+    struct PDM_REG *pReg;
     uint32_t mclk;
     uint32_t mclkRate;
     uint32_t hclk;

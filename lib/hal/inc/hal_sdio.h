@@ -152,7 +152,7 @@ typedef struct {
 struct HAL_MMC_HOST {
     uint32_t id;
     uint32_t irq;
-    uint32_t base;
+    struct MMC_REG *pReg;
     uint32_t powerPin;
     uint32_t resetPin;
     uint32_t frequency;
