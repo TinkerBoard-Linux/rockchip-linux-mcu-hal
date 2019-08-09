@@ -20,6 +20,35 @@ struct HAL_DWDMA_DEV g_dwDmaDev =
 };
 #endif
 
+#ifdef HAL_I2C_MODULE_ENABLED
+const struct HAL_I2C_DEV g_i2c0Dev =
+{
+    .base = I2C0,
+    .clkID = CLK_I2C0,
+    .clkGateID = CLK_I2C0_PLL_GATE,
+    .pclkGateID = PCLK_I2C0_GATE,
+    .irqNum = I2C0_IRQn,
+};
+
+const struct HAL_I2C_DEV g_i2c1Dev =
+{
+    .base = I2C1,
+    .clkID = CLK_I2C1,
+    .clkGateID = CLK_I2C1_PLL_GATE,
+    .pclkGateID = PCLK_I2C1_GATE,
+    .irqNum = I2C1_IRQn,
+};
+
+const struct HAL_I2C_DEV g_i2c2Dev =
+{
+    .base = I2C2,
+    .clkID = CLK_I2C2,
+    .clkGateID = CLK_I2C2_PLL_GATE,
+    .pclkGateID = PCLK_I2C2_GATE,
+    .irqNum = I2C2_IRQn,
+};
+#endif
+
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
 static struct PINCTRL_BANK_INFO pinBanks[] = {
     PIN_BANK_CFG_FLAGS(GPIO_BANK0, 32, GRF_BASE,
