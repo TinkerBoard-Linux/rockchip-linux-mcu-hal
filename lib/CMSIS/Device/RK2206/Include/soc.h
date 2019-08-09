@@ -276,6 +276,25 @@ struct UART_REG {
     __I  uint32_t UCV;                                /* Address Offset: 0x00F8 */
     __I  uint32_t CTR;                                /* Address Offset: 0x00FC */
 };
+/* I2C Register Structure Define */
+struct I2C_REG {
+    __IO uint32_t CON;                                /* Address Offset: 0x0000 */
+    __IO uint32_t CLKDIV;                             /* Address Offset: 0x0004 */
+    __IO uint32_t MRXADDR;                            /* Address Offset: 0x0008 */
+    __IO uint32_t MRXRADDR;                           /* Address Offset: 0x000C */
+    __IO uint32_t MTXCNT;                             /* Address Offset: 0x0010 */
+    __IO uint32_t MRXCNT;                             /* Address Offset: 0x0014 */
+    __IO uint32_t IEN;                                /* Address Offset: 0x0018 */
+    __IO uint32_t IPD;                                /* Address Offset: 0x001C */
+    __I  uint32_t FCNT;                               /* Address Offset: 0x0020 */
+    __IO uint32_t SCL_OE_DB;                          /* Address Offset: 0x0024 */
+         uint32_t RESERVED0[54];                      /* Address Offset: 0x0028 */
+    __IO uint32_t TXDATA[8];                          /* Address Offset: 0x0100 */
+         uint32_t RESERVED1[56];                      /* Address Offset: 0x0120 */
+    __IO uint32_t RXDATA[8];                          /* Address Offset: 0x0200 */
+    __I  uint32_t ST;                                 /* Address Offset: 0x0220 */
+    __IO uint32_t DBGCTRL;                            /* Address Offset: 0x0224 */
+};
 /* PWM_2 Register Structure Define */
 struct PWM_CHANNEL {
     __I  uint32_t CNT;
@@ -1378,163 +1397,163 @@ struct USB_HOST_CH_REG {
 /* WDT_EOI */
 #define WDT_WDT_EOI_WDT_INT_CLR_SHIFT                      (0U)
 #define WDT_WDT_EOI_WDT_INT_CLR_MASK                       (0x1U << WDT_WDT_EOI_WDT_INT_CLR_SHIFT)                      /* 0x00000001 */
-/*************************************RKI2C_20180130*************************************/
+/******************************************I2C*******************************************/
 /* CON */
-#define RKI2C_20180130_CON_I2C_EN_SHIFT                    (0U)
-#define RKI2C_20180130_CON_I2C_EN_MASK                     (0x1U << RKI2C_20180130_CON_I2C_EN_SHIFT)                    /* 0x00000001 */
-#define RKI2C_20180130_CON_I2C_MODE_SHIFT                  (1U)
-#define RKI2C_20180130_CON_I2C_MODE_MASK                   (0x3U << RKI2C_20180130_CON_I2C_MODE_SHIFT)                  /* 0x00000006 */
-#define RKI2C_20180130_CON_START_SHIFT                     (3U)
-#define RKI2C_20180130_CON_START_MASK                      (0x1U << RKI2C_20180130_CON_START_SHIFT)                     /* 0x00000008 */
-#define RKI2C_20180130_CON_STOP_SHIFT                      (4U)
-#define RKI2C_20180130_CON_STOP_MASK                       (0x1U << RKI2C_20180130_CON_STOP_SHIFT)                      /* 0x00000010 */
-#define RKI2C_20180130_CON_ACK_SHIFT                       (5U)
-#define RKI2C_20180130_CON_ACK_MASK                        (0x1U << RKI2C_20180130_CON_ACK_SHIFT)                       /* 0x00000020 */
-#define RKI2C_20180130_CON_ACT2NAK_SHIFT                   (6U)
-#define RKI2C_20180130_CON_ACT2NAK_MASK                    (0x1U << RKI2C_20180130_CON_ACT2NAK_SHIFT)                   /* 0x00000040 */
-#define RKI2C_20180130_CON_DATA_UPD_ST_SHIFT               (8U)
-#define RKI2C_20180130_CON_DATA_UPD_ST_MASK                (0x7U << RKI2C_20180130_CON_DATA_UPD_ST_SHIFT)               /* 0x00000700 */
-#define RKI2C_20180130_CON_START_SETUP_SHIFT               (12U)
-#define RKI2C_20180130_CON_START_SETUP_MASK                (0x3U << RKI2C_20180130_CON_START_SETUP_SHIFT)               /* 0x00003000 */
-#define RKI2C_20180130_CON_STOP_SETUP_SHIFT                (14U)
-#define RKI2C_20180130_CON_STOP_SETUP_MASK                 (0x3U << RKI2C_20180130_CON_STOP_SETUP_SHIFT)                /* 0x0000C000 */
-#define RKI2C_20180130_CON_VERSION_SHIFT                   (16U)
-#define RKI2C_20180130_CON_VERSION_MASK                    (0xFFFFU << RKI2C_20180130_CON_VERSION_SHIFT)                /* 0xFFFF0000 */
+#define I2C_CON_I2C_EN_SHIFT                               (0U)
+#define I2C_CON_I2C_EN_MASK                                (0x1U << I2C_CON_I2C_EN_SHIFT)                               /* 0x00000001 */
+#define I2C_CON_I2C_MODE_SHIFT                             (1U)
+#define I2C_CON_I2C_MODE_MASK                              (0x3U << I2C_CON_I2C_MODE_SHIFT)                             /* 0x00000006 */
+#define I2C_CON_START_SHIFT                                (3U)
+#define I2C_CON_START_MASK                                 (0x1U << I2C_CON_START_SHIFT)                                /* 0x00000008 */
+#define I2C_CON_STOP_SHIFT                                 (4U)
+#define I2C_CON_STOP_MASK                                  (0x1U << I2C_CON_STOP_SHIFT)                                 /* 0x00000010 */
+#define I2C_CON_ACK_SHIFT                                  (5U)
+#define I2C_CON_ACK_MASK                                   (0x1U << I2C_CON_ACK_SHIFT)                                  /* 0x00000020 */
+#define I2C_CON_ACT2NAK_SHIFT                              (6U)
+#define I2C_CON_ACT2NAK_MASK                               (0x1U << I2C_CON_ACT2NAK_SHIFT)                              /* 0x00000040 */
+#define I2C_CON_DATA_UPD_ST_SHIFT                          (8U)
+#define I2C_CON_DATA_UPD_ST_MASK                           (0x7U << I2C_CON_DATA_UPD_ST_SHIFT)                          /* 0x00000700 */
+#define I2C_CON_START_SETUP_SHIFT                          (12U)
+#define I2C_CON_START_SETUP_MASK                           (0x3U << I2C_CON_START_SETUP_SHIFT)                          /* 0x00003000 */
+#define I2C_CON_STOP_SETUP_SHIFT                           (14U)
+#define I2C_CON_STOP_SETUP_MASK                            (0x3U << I2C_CON_STOP_SETUP_SHIFT)                           /* 0x0000C000 */
+#define I2C_CON_VERSION_SHIFT                              (16U)
+#define I2C_CON_VERSION_MASK                               (0xFFFFU << I2C_CON_VERSION_SHIFT)                           /* 0xFFFF0000 */
 /* CLKDIV */
-#define RKI2C_20180130_CLKDIV_CLKDIVL_SHIFT                (0U)
-#define RKI2C_20180130_CLKDIV_CLKDIVL_MASK                 (0xFFFFU << RKI2C_20180130_CLKDIV_CLKDIVL_SHIFT)             /* 0x0000FFFF */
-#define RKI2C_20180130_CLKDIV_CLKDIVH_SHIFT                (16U)
-#define RKI2C_20180130_CLKDIV_CLKDIVH_MASK                 (0xFFFFU << RKI2C_20180130_CLKDIV_CLKDIVH_SHIFT)             /* 0xFFFF0000 */
+#define I2C_CLKDIV_CLKDIVL_SHIFT                           (0U)
+#define I2C_CLKDIV_CLKDIVL_MASK                            (0xFFFFU << I2C_CLKDIV_CLKDIVL_SHIFT)                        /* 0x0000FFFF */
+#define I2C_CLKDIV_CLKDIVH_SHIFT                           (16U)
+#define I2C_CLKDIV_CLKDIVH_MASK                            (0xFFFFU << I2C_CLKDIV_CLKDIVH_SHIFT)                        /* 0xFFFF0000 */
 /* MRXADDR */
-#define RKI2C_20180130_MRXADDR_SADDR_SHIFT                 (0U)
-#define RKI2C_20180130_MRXADDR_SADDR_MASK                  (0xFFFFFFU << RKI2C_20180130_MRXADDR_SADDR_SHIFT)            /* 0x00FFFFFF */
-#define RKI2C_20180130_MRXADDR_ADDLVLD_SHIFT               (24U)
-#define RKI2C_20180130_MRXADDR_ADDLVLD_MASK                (0x1U << RKI2C_20180130_MRXADDR_ADDLVLD_SHIFT)               /* 0x01000000 */
-#define RKI2C_20180130_MRXADDR_ADDMVLD_SHIFT               (25U)
-#define RKI2C_20180130_MRXADDR_ADDMVLD_MASK                (0x1U << RKI2C_20180130_MRXADDR_ADDMVLD_SHIFT)               /* 0x02000000 */
-#define RKI2C_20180130_MRXADDR_ADDHVLD_SHIFT               (26U)
-#define RKI2C_20180130_MRXADDR_ADDHVLD_MASK                (0x1U << RKI2C_20180130_MRXADDR_ADDHVLD_SHIFT)               /* 0x04000000 */
+#define I2C_MRXADDR_SADDR_SHIFT                            (0U)
+#define I2C_MRXADDR_SADDR_MASK                             (0xFFFFFFU << I2C_MRXADDR_SADDR_SHIFT)                       /* 0x00FFFFFF */
+#define I2C_MRXADDR_ADDLVLD_SHIFT                          (24U)
+#define I2C_MRXADDR_ADDLVLD_MASK                           (0x1U << I2C_MRXADDR_ADDLVLD_SHIFT)                          /* 0x01000000 */
+#define I2C_MRXADDR_ADDMVLD_SHIFT                          (25U)
+#define I2C_MRXADDR_ADDMVLD_MASK                           (0x1U << I2C_MRXADDR_ADDMVLD_SHIFT)                          /* 0x02000000 */
+#define I2C_MRXADDR_ADDHVLD_SHIFT                          (26U)
+#define I2C_MRXADDR_ADDHVLD_MASK                           (0x1U << I2C_MRXADDR_ADDHVLD_SHIFT)                          /* 0x04000000 */
 /* MRXRADDR */
-#define RKI2C_20180130_MRXRADDR_SRADDR_SHIFT               (0U)
-#define RKI2C_20180130_MRXRADDR_SRADDR_MASK                (0xFFFFFFU << RKI2C_20180130_MRXRADDR_SRADDR_SHIFT)          /* 0x00FFFFFF */
-#define RKI2C_20180130_MRXRADDR_SRADDLVLD_SHIFT            (24U)
-#define RKI2C_20180130_MRXRADDR_SRADDLVLD_MASK             (0x1U << RKI2C_20180130_MRXRADDR_SRADDLVLD_SHIFT)            /* 0x01000000 */
-#define RKI2C_20180130_MRXRADDR_SRADDMVLD_SHIFT            (25U)
-#define RKI2C_20180130_MRXRADDR_SRADDMVLD_MASK             (0x1U << RKI2C_20180130_MRXRADDR_SRADDMVLD_SHIFT)            /* 0x02000000 */
-#define RKI2C_20180130_MRXRADDR_SRADDHVLD_SHIFT            (26U)
-#define RKI2C_20180130_MRXRADDR_SRADDHVLD_MASK             (0x1U << RKI2C_20180130_MRXRADDR_SRADDHVLD_SHIFT)            /* 0x04000000 */
+#define I2C_MRXRADDR_SRADDR_SHIFT                          (0U)
+#define I2C_MRXRADDR_SRADDR_MASK                           (0xFFFFFFU << I2C_MRXRADDR_SRADDR_SHIFT)                     /* 0x00FFFFFF */
+#define I2C_MRXRADDR_SRADDLVLD_SHIFT                       (24U)
+#define I2C_MRXRADDR_SRADDLVLD_MASK                        (0x1U << I2C_MRXRADDR_SRADDLVLD_SHIFT)                       /* 0x01000000 */
+#define I2C_MRXRADDR_SRADDMVLD_SHIFT                       (25U)
+#define I2C_MRXRADDR_SRADDMVLD_MASK                        (0x1U << I2C_MRXRADDR_SRADDMVLD_SHIFT)                       /* 0x02000000 */
+#define I2C_MRXRADDR_SRADDHVLD_SHIFT                       (26U)
+#define I2C_MRXRADDR_SRADDHVLD_MASK                        (0x1U << I2C_MRXRADDR_SRADDHVLD_SHIFT)                       /* 0x04000000 */
 /* MTXCNT */
-#define RKI2C_20180130_MTXCNT_MTXCNT_SHIFT                 (0U)
-#define RKI2C_20180130_MTXCNT_MTXCNT_MASK                  (0x3FU << RKI2C_20180130_MTXCNT_MTXCNT_SHIFT)                /* 0x0000003F */
+#define I2C_MTXCNT_MTXCNT_SHIFT                            (0U)
+#define I2C_MTXCNT_MTXCNT_MASK                             (0x3FU << I2C_MTXCNT_MTXCNT_SHIFT)                           /* 0x0000003F */
 /* MRXCNT */
-#define RKI2C_20180130_MRXCNT_MRXCNT_SHIFT                 (0U)
-#define RKI2C_20180130_MRXCNT_MRXCNT_MASK                  (0x3FU << RKI2C_20180130_MRXCNT_MRXCNT_SHIFT)                /* 0x0000003F */
+#define I2C_MRXCNT_MRXCNT_SHIFT                            (0U)
+#define I2C_MRXCNT_MRXCNT_MASK                             (0x3FU << I2C_MRXCNT_MRXCNT_SHIFT)                           /* 0x0000003F */
 /* IEN */
-#define RKI2C_20180130_IEN_BTFIEN_SHIFT                    (0U)
-#define RKI2C_20180130_IEN_BTFIEN_MASK                     (0x1U << RKI2C_20180130_IEN_BTFIEN_SHIFT)                    /* 0x00000001 */
-#define RKI2C_20180130_IEN_BRFIEN_SHIFT                    (1U)
-#define RKI2C_20180130_IEN_BRFIEN_MASK                     (0x1U << RKI2C_20180130_IEN_BRFIEN_SHIFT)                    /* 0x00000002 */
-#define RKI2C_20180130_IEN_MBTFIEN_SHIFT                   (2U)
-#define RKI2C_20180130_IEN_MBTFIEN_MASK                    (0x1U << RKI2C_20180130_IEN_MBTFIEN_SHIFT)                   /* 0x00000004 */
-#define RKI2C_20180130_IEN_MBRFIEN_SHIFT                   (3U)
-#define RKI2C_20180130_IEN_MBRFIEN_MASK                    (0x1U << RKI2C_20180130_IEN_MBRFIEN_SHIFT)                   /* 0x00000008 */
-#define RKI2C_20180130_IEN_STARTIEN_SHIFT                  (4U)
-#define RKI2C_20180130_IEN_STARTIEN_MASK                   (0x1U << RKI2C_20180130_IEN_STARTIEN_SHIFT)                  /* 0x00000010 */
-#define RKI2C_20180130_IEN_STOPIEN_SHIFT                   (5U)
-#define RKI2C_20180130_IEN_STOPIEN_MASK                    (0x1U << RKI2C_20180130_IEN_STOPIEN_SHIFT)                   /* 0x00000020 */
-#define RKI2C_20180130_IEN_NAKRCVIEN_SHIFT                 (6U)
-#define RKI2C_20180130_IEN_NAKRCVIEN_MASK                  (0x1U << RKI2C_20180130_IEN_NAKRCVIEN_SHIFT)                 /* 0x00000040 */
-#define RKI2C_20180130_IEN_SLAVEHDSCLEN_SHIFT              (7U)
-#define RKI2C_20180130_IEN_SLAVEHDSCLEN_MASK               (0x1U << RKI2C_20180130_IEN_SLAVEHDSCLEN_SHIFT)              /* 0x00000080 */
+#define I2C_IEN_BTFIEN_SHIFT                               (0U)
+#define I2C_IEN_BTFIEN_MASK                                (0x1U << I2C_IEN_BTFIEN_SHIFT)                               /* 0x00000001 */
+#define I2C_IEN_BRFIEN_SHIFT                               (1U)
+#define I2C_IEN_BRFIEN_MASK                                (0x1U << I2C_IEN_BRFIEN_SHIFT)                               /* 0x00000002 */
+#define I2C_IEN_MBTFIEN_SHIFT                              (2U)
+#define I2C_IEN_MBTFIEN_MASK                               (0x1U << I2C_IEN_MBTFIEN_SHIFT)                              /* 0x00000004 */
+#define I2C_IEN_MBRFIEN_SHIFT                              (3U)
+#define I2C_IEN_MBRFIEN_MASK                               (0x1U << I2C_IEN_MBRFIEN_SHIFT)                              /* 0x00000008 */
+#define I2C_IEN_STARTIEN_SHIFT                             (4U)
+#define I2C_IEN_STARTIEN_MASK                              (0x1U << I2C_IEN_STARTIEN_SHIFT)                             /* 0x00000010 */
+#define I2C_IEN_STOPIEN_SHIFT                              (5U)
+#define I2C_IEN_STOPIEN_MASK                               (0x1U << I2C_IEN_STOPIEN_SHIFT)                              /* 0x00000020 */
+#define I2C_IEN_NAKRCVIEN_SHIFT                            (6U)
+#define I2C_IEN_NAKRCVIEN_MASK                             (0x1U << I2C_IEN_NAKRCVIEN_SHIFT)                            /* 0x00000040 */
+#define I2C_IEN_SLAVEHDSCLEN_SHIFT                         (7U)
+#define I2C_IEN_SLAVEHDSCLEN_MASK                          (0x1U << I2C_IEN_SLAVEHDSCLEN_SHIFT)                         /* 0x00000080 */
 /* IPD */
-#define RKI2C_20180130_IPD_BTFIPD_SHIFT                    (0U)
-#define RKI2C_20180130_IPD_BTFIPD_MASK                     (0x1U << RKI2C_20180130_IPD_BTFIPD_SHIFT)                    /* 0x00000001 */
-#define RKI2C_20180130_IPD_BRFIPD_SHIFT                    (1U)
-#define RKI2C_20180130_IPD_BRFIPD_MASK                     (0x1U << RKI2C_20180130_IPD_BRFIPD_SHIFT)                    /* 0x00000002 */
-#define RKI2C_20180130_IPD_MBTFIPD_SHIFT                   (2U)
-#define RKI2C_20180130_IPD_MBTFIPD_MASK                    (0x1U << RKI2C_20180130_IPD_MBTFIPD_SHIFT)                   /* 0x00000004 */
-#define RKI2C_20180130_IPD_MBRFIPD_SHIFT                   (3U)
-#define RKI2C_20180130_IPD_MBRFIPD_MASK                    (0x1U << RKI2C_20180130_IPD_MBRFIPD_SHIFT)                   /* 0x00000008 */
-#define RKI2C_20180130_IPD_STARTIPD_SHIFT                  (4U)
-#define RKI2C_20180130_IPD_STARTIPD_MASK                   (0x1U << RKI2C_20180130_IPD_STARTIPD_SHIFT)                  /* 0x00000010 */
-#define RKI2C_20180130_IPD_STOPIPD_SHIFT                   (5U)
-#define RKI2C_20180130_IPD_STOPIPD_MASK                    (0x1U << RKI2C_20180130_IPD_STOPIPD_SHIFT)                   /* 0x00000020 */
-#define RKI2C_20180130_IPD_NAKRCVIPD_SHIFT                 (6U)
-#define RKI2C_20180130_IPD_NAKRCVIPD_MASK                  (0x1U << RKI2C_20180130_IPD_NAKRCVIPD_SHIFT)                 /* 0x00000040 */
-#define RKI2C_20180130_IPD_SLAVEHDSCLIPD_SHIFT             (7U)
-#define RKI2C_20180130_IPD_SLAVEHDSCLIPD_MASK              (0x1U << RKI2C_20180130_IPD_SLAVEHDSCLIPD_SHIFT)             /* 0x00000080 */
+#define I2C_IPD_BTFIPD_SHIFT                               (0U)
+#define I2C_IPD_BTFIPD_MASK                                (0x1U << I2C_IPD_BTFIPD_SHIFT)                               /* 0x00000001 */
+#define I2C_IPD_BRFIPD_SHIFT                               (1U)
+#define I2C_IPD_BRFIPD_MASK                                (0x1U << I2C_IPD_BRFIPD_SHIFT)                               /* 0x00000002 */
+#define I2C_IPD_MBTFIPD_SHIFT                              (2U)
+#define I2C_IPD_MBTFIPD_MASK                               (0x1U << I2C_IPD_MBTFIPD_SHIFT)                              /* 0x00000004 */
+#define I2C_IPD_MBRFIPD_SHIFT                              (3U)
+#define I2C_IPD_MBRFIPD_MASK                               (0x1U << I2C_IPD_MBRFIPD_SHIFT)                              /* 0x00000008 */
+#define I2C_IPD_STARTIPD_SHIFT                             (4U)
+#define I2C_IPD_STARTIPD_MASK                              (0x1U << I2C_IPD_STARTIPD_SHIFT)                             /* 0x00000010 */
+#define I2C_IPD_STOPIPD_SHIFT                              (5U)
+#define I2C_IPD_STOPIPD_MASK                               (0x1U << I2C_IPD_STOPIPD_SHIFT)                              /* 0x00000020 */
+#define I2C_IPD_NAKRCVIPD_SHIFT                            (6U)
+#define I2C_IPD_NAKRCVIPD_MASK                             (0x1U << I2C_IPD_NAKRCVIPD_SHIFT)                            /* 0x00000040 */
+#define I2C_IPD_SLAVEHDSCLIPD_SHIFT                        (7U)
+#define I2C_IPD_SLAVEHDSCLIPD_MASK                         (0x1U << I2C_IPD_SLAVEHDSCLIPD_SHIFT)                        /* 0x00000080 */
 /* FCNT */
-#define RKI2C_20180130_FCNT_FCNT_SHIFT                     (0U)
-#define RKI2C_20180130_FCNT_FCNT_MASK                      (0x3FU << RKI2C_20180130_FCNT_FCNT_SHIFT)                    /* 0x0000003F */
+#define I2C_FCNT_FCNT_SHIFT                                (0U)
+#define I2C_FCNT_FCNT_MASK                                 (0x3FU << I2C_FCNT_FCNT_SHIFT)                               /* 0x0000003F */
 /* SCL_OE_DB */
-#define RKI2C_20180130_SCL_OE_DB_SCL_OE_DB_SHIFT           (0U)
-#define RKI2C_20180130_SCL_OE_DB_SCL_OE_DB_MASK            (0xFFU << RKI2C_20180130_SCL_OE_DB_SCL_OE_DB_SHIFT)          /* 0x000000FF */
+#define I2C_SCL_OE_DB_SCL_OE_DB_SHIFT                      (0U)
+#define I2C_SCL_OE_DB_SCL_OE_DB_MASK                       (0xFFU << I2C_SCL_OE_DB_SCL_OE_DB_SHIFT)                     /* 0x000000FF */
 /* TXDATA0 */
-#define RKI2C_20180130_TXDATA0_TXDATA0_SHIFT               (0U)
-#define RKI2C_20180130_TXDATA0_TXDATA0_MASK                (0xFFFFFFFFU << RKI2C_20180130_TXDATA0_TXDATA0_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_TXDATA0_TXDATA0_SHIFT                          (0U)
+#define I2C_TXDATA0_TXDATA0_MASK                           (0xFFFFFFFFU << I2C_TXDATA0_TXDATA0_SHIFT)                   /* 0xFFFFFFFF */
 /* TXDATA1 */
-#define RKI2C_20180130_TXDATA1_TXDATA1_SHIFT               (0U)
-#define RKI2C_20180130_TXDATA1_TXDATA1_MASK                (0xFFFFFFFFU << RKI2C_20180130_TXDATA1_TXDATA1_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_TXDATA1_TXDATA1_SHIFT                          (0U)
+#define I2C_TXDATA1_TXDATA1_MASK                           (0xFFFFFFFFU << I2C_TXDATA1_TXDATA1_SHIFT)                   /* 0xFFFFFFFF */
 /* TXDATA2 */
-#define RKI2C_20180130_TXDATA2_TXDATA2_SHIFT               (0U)
-#define RKI2C_20180130_TXDATA2_TXDATA2_MASK                (0xFFFFFFFFU << RKI2C_20180130_TXDATA2_TXDATA2_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_TXDATA2_TXDATA2_SHIFT                          (0U)
+#define I2C_TXDATA2_TXDATA2_MASK                           (0xFFFFFFFFU << I2C_TXDATA2_TXDATA2_SHIFT)                   /* 0xFFFFFFFF */
 /* TXDATA3 */
-#define RKI2C_20180130_TXDATA3_TXDATA3_SHIFT               (0U)
-#define RKI2C_20180130_TXDATA3_TXDATA3_MASK                (0xFFFFFFFFU << RKI2C_20180130_TXDATA3_TXDATA3_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_TXDATA3_TXDATA3_SHIFT                          (0U)
+#define I2C_TXDATA3_TXDATA3_MASK                           (0xFFFFFFFFU << I2C_TXDATA3_TXDATA3_SHIFT)                   /* 0xFFFFFFFF */
 /* TXDATA4 */
-#define RKI2C_20180130_TXDATA4_TXDATA4_SHIFT               (0U)
-#define RKI2C_20180130_TXDATA4_TXDATA4_MASK                (0xFFFFFFFFU << RKI2C_20180130_TXDATA4_TXDATA4_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_TXDATA4_TXDATA4_SHIFT                          (0U)
+#define I2C_TXDATA4_TXDATA4_MASK                           (0xFFFFFFFFU << I2C_TXDATA4_TXDATA4_SHIFT)                   /* 0xFFFFFFFF */
 /* TXDATA5 */
-#define RKI2C_20180130_TXDATA5_TXDATA5_SHIFT               (0U)
-#define RKI2C_20180130_TXDATA5_TXDATA5_MASK                (0xFFFFFFFFU << RKI2C_20180130_TXDATA5_TXDATA5_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_TXDATA5_TXDATA5_SHIFT                          (0U)
+#define I2C_TXDATA5_TXDATA5_MASK                           (0xFFFFFFFFU << I2C_TXDATA5_TXDATA5_SHIFT)                   /* 0xFFFFFFFF */
 /* TXDATA6 */
-#define RKI2C_20180130_TXDATA6_TXDATA6_SHIFT               (0U)
-#define RKI2C_20180130_TXDATA6_TXDATA6_MASK                (0xFFFFFFFFU << RKI2C_20180130_TXDATA6_TXDATA6_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_TXDATA6_TXDATA6_SHIFT                          (0U)
+#define I2C_TXDATA6_TXDATA6_MASK                           (0xFFFFFFFFU << I2C_TXDATA6_TXDATA6_SHIFT)                   /* 0xFFFFFFFF */
 /* TXDATA7 */
-#define RKI2C_20180130_TXDATA7_TXDATA7_SHIFT               (0U)
-#define RKI2C_20180130_TXDATA7_TXDATA7_MASK                (0xFFFFFFFFU << RKI2C_20180130_TXDATA7_TXDATA7_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_TXDATA7_TXDATA7_SHIFT                          (0U)
+#define I2C_TXDATA7_TXDATA7_MASK                           (0xFFFFFFFFU << I2C_TXDATA7_TXDATA7_SHIFT)                   /* 0xFFFFFFFF */
 /* RXDATA0 */
-#define RKI2C_20180130_RXDATA0_RXDATA0_SHIFT               (0U)
-#define RKI2C_20180130_RXDATA0_RXDATA0_MASK                (0xFFFFFFFFU << RKI2C_20180130_RXDATA0_RXDATA0_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_RXDATA0_RXDATA0_SHIFT                          (0U)
+#define I2C_RXDATA0_RXDATA0_MASK                           (0xFFFFFFFFU << I2C_RXDATA0_RXDATA0_SHIFT)                   /* 0xFFFFFFFF */
 /* RXDATA1 */
-#define RKI2C_20180130_RXDATA1_RXDATA1_SHIFT               (0U)
-#define RKI2C_20180130_RXDATA1_RXDATA1_MASK                (0xFFFFFFFFU << RKI2C_20180130_RXDATA1_RXDATA1_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_RXDATA1_RXDATA1_SHIFT                          (0U)
+#define I2C_RXDATA1_RXDATA1_MASK                           (0xFFFFFFFFU << I2C_RXDATA1_RXDATA1_SHIFT)                   /* 0xFFFFFFFF */
 /* RXDATA2 */
-#define RKI2C_20180130_RXDATA2_RXDATA2_SHIFT               (0U)
-#define RKI2C_20180130_RXDATA2_RXDATA2_MASK                (0xFFFFFFFFU << RKI2C_20180130_RXDATA2_RXDATA2_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_RXDATA2_RXDATA2_SHIFT                          (0U)
+#define I2C_RXDATA2_RXDATA2_MASK                           (0xFFFFFFFFU << I2C_RXDATA2_RXDATA2_SHIFT)                   /* 0xFFFFFFFF */
 /* RXDATA3 */
-#define RKI2C_20180130_RXDATA3_RXDATA3_SHIFT               (0U)
-#define RKI2C_20180130_RXDATA3_RXDATA3_MASK                (0xFFFFFFFFU << RKI2C_20180130_RXDATA3_RXDATA3_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_RXDATA3_RXDATA3_SHIFT                          (0U)
+#define I2C_RXDATA3_RXDATA3_MASK                           (0xFFFFFFFFU << I2C_RXDATA3_RXDATA3_SHIFT)                   /* 0xFFFFFFFF */
 /* RXDATA4 */
-#define RKI2C_20180130_RXDATA4_RXDATA4_SHIFT               (0U)
-#define RKI2C_20180130_RXDATA4_RXDATA4_MASK                (0xFFFFFFFFU << RKI2C_20180130_RXDATA4_RXDATA4_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_RXDATA4_RXDATA4_SHIFT                          (0U)
+#define I2C_RXDATA4_RXDATA4_MASK                           (0xFFFFFFFFU << I2C_RXDATA4_RXDATA4_SHIFT)                   /* 0xFFFFFFFF */
 /* RXDATA5 */
-#define RKI2C_20180130_RXDATA5_RXDATA5_SHIFT               (0U)
-#define RKI2C_20180130_RXDATA5_RXDATA5_MASK                (0xFFFFFFFFU << RKI2C_20180130_RXDATA5_RXDATA5_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_RXDATA5_RXDATA5_SHIFT                          (0U)
+#define I2C_RXDATA5_RXDATA5_MASK                           (0xFFFFFFFFU << I2C_RXDATA5_RXDATA5_SHIFT)                   /* 0xFFFFFFFF */
 /* RXDATA6 */
-#define RKI2C_20180130_RXDATA6_RXDATA6_SHIFT               (0U)
-#define RKI2C_20180130_RXDATA6_RXDATA6_MASK                (0xFFFFFFFFU << RKI2C_20180130_RXDATA6_RXDATA6_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_RXDATA6_RXDATA6_SHIFT                          (0U)
+#define I2C_RXDATA6_RXDATA6_MASK                           (0xFFFFFFFFU << I2C_RXDATA6_RXDATA6_SHIFT)                   /* 0xFFFFFFFF */
 /* RXDATA7 */
-#define RKI2C_20180130_RXDATA7_RXDATA7_SHIFT               (0U)
-#define RKI2C_20180130_RXDATA7_RXDATA7_MASK                (0xFFFFFFFFU << RKI2C_20180130_RXDATA7_RXDATA7_SHIFT)        /* 0xFFFFFFFF */
+#define I2C_RXDATA7_RXDATA7_SHIFT                          (0U)
+#define I2C_RXDATA7_RXDATA7_MASK                           (0xFFFFFFFFU << I2C_RXDATA7_RXDATA7_SHIFT)                   /* 0xFFFFFFFF */
 /* ST */
-#define RKI2C_20180130_ST_SDA_ST_SHIFT                     (0U)
-#define RKI2C_20180130_ST_SDA_ST_MASK                      (0x1U << RKI2C_20180130_ST_SDA_ST_SHIFT)                     /* 0x00000001 */
-#define RKI2C_20180130_ST_SCL_ST_SHIFT                     (1U)
-#define RKI2C_20180130_ST_SCL_ST_MASK                      (0x1U << RKI2C_20180130_ST_SCL_ST_SHIFT)                     /* 0x00000002 */
+#define I2C_ST_SDA_ST_SHIFT                                (0U)
+#define I2C_ST_SDA_ST_MASK                                 (0x1U << I2C_ST_SDA_ST_SHIFT)                                /* 0x00000001 */
+#define I2C_ST_SCL_ST_SHIFT                                (1U)
+#define I2C_ST_SCL_ST_MASK                                 (0x1U << I2C_ST_SCL_ST_SHIFT)                                /* 0x00000002 */
 /* DBGCTRL */
-#define RKI2C_20180130_DBGCTRL_FLT_F_SHIFT                 (0U)
-#define RKI2C_20180130_DBGCTRL_FLT_F_MASK                  (0xFU << RKI2C_20180130_DBGCTRL_FLT_F_SHIFT)                 /* 0x0000000F */
-#define RKI2C_20180130_DBGCTRL_FLT_R_SHIFT                 (4U)
-#define RKI2C_20180130_DBGCTRL_FLT_R_MASK                  (0xFU << RKI2C_20180130_DBGCTRL_FLT_R_SHIFT)                 /* 0x000000F0 */
-#define RKI2C_20180130_DBGCTRL_SLV_HOLD_SCL_TH_SHIFT       (8U)
-#define RKI2C_20180130_DBGCTRL_SLV_HOLD_SCL_TH_MASK        (0xFU << RKI2C_20180130_DBGCTRL_SLV_HOLD_SCL_TH_SHIFT)       /* 0x00000F00 */
-#define RKI2C_20180130_DBGCTRL_FLT_EN_SHIFT                (12U)
-#define RKI2C_20180130_DBGCTRL_FLT_EN_MASK                 (0x1U << RKI2C_20180130_DBGCTRL_FLT_EN_SHIFT)                /* 0x00001000 */
-#define RKI2C_20180130_DBGCTRL_NAK_RELEASE_SCL_SHIFT       (13U)
-#define RKI2C_20180130_DBGCTRL_NAK_RELEASE_SCL_MASK        (0x1U << RKI2C_20180130_DBGCTRL_NAK_RELEASE_SCL_SHIFT)       /* 0x00002000 */
-#define RKI2C_20180130_DBGCTRL_H0_CHECK_SCL_SHIFT          (14U)
-#define RKI2C_20180130_DBGCTRL_H0_CHECK_SCL_MASK           (0x1U << RKI2C_20180130_DBGCTRL_H0_CHECK_SCL_SHIFT)          /* 0x00004000 */
+#define I2C_DBGCTRL_FLT_F_SHIFT                            (0U)
+#define I2C_DBGCTRL_FLT_F_MASK                             (0xFU << I2C_DBGCTRL_FLT_F_SHIFT)                            /* 0x0000000F */
+#define I2C_DBGCTRL_FLT_R_SHIFT                            (4U)
+#define I2C_DBGCTRL_FLT_R_MASK                             (0xFU << I2C_DBGCTRL_FLT_R_SHIFT)                            /* 0x000000F0 */
+#define I2C_DBGCTRL_SLV_HOLD_SCL_TH_SHIFT                  (8U)
+#define I2C_DBGCTRL_SLV_HOLD_SCL_TH_MASK                   (0xFU << I2C_DBGCTRL_SLV_HOLD_SCL_TH_SHIFT)                  /* 0x00000F00 */
+#define I2C_DBGCTRL_FLT_EN_SHIFT                           (12U)
+#define I2C_DBGCTRL_FLT_EN_MASK                            (0x1U << I2C_DBGCTRL_FLT_EN_SHIFT)                           /* 0x00001000 */
+#define I2C_DBGCTRL_NAK_RELEASE_SCL_SHIFT                  (13U)
+#define I2C_DBGCTRL_NAK_RELEASE_SCL_MASK                   (0x1U << I2C_DBGCTRL_NAK_RELEASE_SCL_SHIFT)                  /* 0x00002000 */
+#define I2C_DBGCTRL_H0_CHECK_SCL_SHIFT                     (14U)
+#define I2C_DBGCTRL_H0_CHECK_SCL_MASK                      (0x1U << I2C_DBGCTRL_H0_CHECK_SCL_SHIFT)                     /* 0x00004000 */
 /******************************************UART******************************************/
 /* RBR */
 #define UART_RBR_DATA_INPUT_SHIFT                          (0U)
