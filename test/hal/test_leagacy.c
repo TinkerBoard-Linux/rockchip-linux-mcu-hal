@@ -22,11 +22,7 @@ TEST_TEAR_DOWN(HAL_LEAGACY){
 }
 
 #ifdef UNITY_HAL_DATA_ACCESS
-#define BUFFER_SIZE (16 * 1024) /* Config the size of test buffer */
-#ifdef RKMCU_RK2108
-#define XIP_RAM_BASE 0x60000000
-static struct HAL_SFC_HOST *sfcHost;
-#endif
+#define BUFFER_SIZE (4 * 1024) /* Config the size of test buffer */
 
 static char *AlignUp(char *ptr, int32_t align)
 {
@@ -49,59 +45,69 @@ static void *AllocBuffer(void * *buf1_, int32_t size)
     return buf;
 }
 
-static void SumTest(uint32_t *src, uint32_t *dst, uint32_t size)
+static uint32_t MyCpy(uint32_t *dst, uint32_t *src, uint32_t size)
 {
-    int32_t i, sum;
+    uint32_t i;
 
     for (i = 0; i < (size / 4); i++)
-        sum += src[i];
+        dst[i] = src[i];
 
-    dst[0] = sum;
+    return 0;
 }
 
-static void DataAccessHelper(uint32_t *srcbuf, uint32_t *dstbuf, void (*f)(int32_t *, int32_t *, uint32_t))
+static void DataAccessHelper(uint32_t *srcbuf, uint32_t *dstbuf, uint32_t (*f)(uint32_t *, uint32_t *, uint32_t))
 {
-    uint32_t uTick[4], tickVal[4];
+    uint64_t timCount[4], gap;
     struct CACHE_PMU_CNT pmuStatus[4];
-    double val;
+    uint32_t us;
 
     /* 1st test */
     HAL_DCACHE_CleanInvalidate();
     HAL_DCACHE_GetPMU(&pmuStatus[0]);
-    uTick[0] = HAL_GetTick();
-    tickVal[0] = SysTick->VAL;
-    f(srcbuf, dstbuf, BUFFER_SIZE);
-    tickVal[1] = SysTick->VAL;
-    uTick[1] = HAL_GetTick();
+    timCount[0] = HAL_TIMER_GetCount(SYS_TIMER);
+    f(dstbuf, srcbuf, BUFFER_SIZE);
+    timCount[1] = HAL_TIMER_GetCount(SYS_TIMER);
     HAL_DCACHE_GetPMU(&pmuStatus[1]);
 
     /* 2nd test */
     HAL_DCACHE_GetPMU(&pmuStatus[2]);
-    uTick[2] = HAL_GetTick();
-    tickVal[2] = SysTick->VAL;
-    f(srcbuf, dstbuf, BUFFER_SIZE);
-    tickVal[3] = SysTick->VAL;
-    uTick[3] = HAL_GetTick();
+    timCount[2] = HAL_TIMER_GetCount(SYS_TIMER);
+    f(dstbuf, srcbuf, BUFFER_SIZE);
+    timCount[3] = HAL_TIMER_GetCount(SYS_TIMER);
     HAL_DCACHE_GetPMU(&pmuStatus[3]);
 
-    val = (double)BUFFER_SIZE / ((double)((uTick[1] - uTick[0]) * SysTick->LOAD + tickVal[0] - tickVal[1]));
-    HAL_DBG("1st: %.2f cycle/byte %.2f MB/s (CCLK 30Mhz)\n", 1 / val, val * 30000000 / 1024 / 1024);
-    HAL_DBG("PMU read hit/total=%lu/%lu rate= %f\n",
+    HAL_DBG("1: cache miss\n");
+    HAL_DBG("start timer count %ld%ld\n", (uint32_t)(timCount[0] >> 32), (uint32_t)(timCount[0]));
+    HAL_DBG("end timer count %ld%ld\n", (uint32_t)(timCount[1] >> 32), (uint32_t)(timCount[1]));
+    HAL_DBG("PMU read hit/total=%lu/%lu\n",
             pmuStatus[1].rdHit - pmuStatus[0].rdHit,
-            pmuStatus[1].rdNum - pmuStatus[0].rdNum,
-            (double)(pmuStatus[1].rdHit - pmuStatus[0].rdHit) / (double)(pmuStatus[1].rdNum - pmuStatus[0].rdNum));
+            pmuStatus[1].rdNum - pmuStatus[0].rdNum);
     HAL_DBG("PMU read miss penalty %lu\n", pmuStatus[1].rdMissPenalty - pmuStatus[0].rdMissPenalty);
-    val = (double)BUFFER_SIZE / ((double)((uTick[3] - uTick[2]) * SysTick->LOAD + tickVal[2] - tickVal[3]));
-    HAL_DBG("2nd: %.2f cycle/byte %.2f MB/s (CCLK 30Mhz)\n", 1 / val, val * 30000000 / 1024 / 1024);
-    HAL_DBG("PMU read hit/total=%lu/%lu rate= %f\n",
+    if (timCount[1] > timCount[0])
+        gap = timCount[1] - timCount[0];
+    else
+        gap = timCount[0] - timCount[1];
+    us = HAL_DivU64(gap, PLL_INPUT_OSC_RATE / 1000000);
+    HAL_DBG("data %d bytes, cost %ld us(gap %lld), about %ld KB/s\n", BUFFER_SIZE, us, gap, 1000000 / us * BUFFER_SIZE / 1024);
+
+    HAL_DBG("2: cache hit\n");
+    HAL_DBG("start timer count %ld%ld\n", (uint32_t)(timCount[2] >> 32), (uint32_t)(timCount[2]));
+    HAL_DBG("end timer count %ld%ld\n", (uint32_t)(timCount[3] >> 32), (uint32_t)(timCount[3]));
+    HAL_DBG("PMU read hit/total=%lu/%lu\n",
             pmuStatus[3].rdHit - pmuStatus[2].rdHit,
-            pmuStatus[3].rdNum - pmuStatus[2].rdNum,
-            (double)(pmuStatus[3].rdHit - pmuStatus[2].rdHit) / (double)(pmuStatus[3].rdNum - pmuStatus[2].rdNum));
+            pmuStatus[3].rdNum - pmuStatus[2].rdNum);
     HAL_DBG("PMU read miss penalty %lu\n", pmuStatus[3].rdMissPenalty - pmuStatus[2].rdMissPenalty);
+    if (timCount[3] > timCount[2])
+        gap = timCount[3] - timCount[2];
+    else
+        gap = timCount[2] - timCount[3];
+    us = HAL_DivU64(gap, PLL_INPUT_OSC_RATE / 1000000);
+    HAL_DBG("data %d bytes, cost %ld us(gap %lld), about %ld KB/s\n", BUFFER_SIZE, us, gap, 1000000 / us * BUFFER_SIZE / 1024);
+    HAL_ICACHE_DisablePMU();
 }
 
 TEST(HAL_LEAGACY, DataAccess){
-    int32_t *xipbuf, *srcbuf, *dstbuf;
+    uint32_t *xipbuf, *srcbuf, *dstbuf;
     void *poolbuf1, *poolbuf2;
 
     HAL_DBG("\nDataAccess\n");
@@ -111,33 +117,42 @@ TEST(HAL_LEAGACY, DataAccess){
     poolbuf2 = AllocBuffer((void * *)&dstbuf, BUFFER_SIZE);
 
     HAL_DBG("SRAM DataAccess\n");
-    DataAccessHelper(srcbuf, dstbuf, (void *)&SumTest);
+    memset(srcbuf, 0xa5, BUFFER_SIZE);
+    memset(dstbuf, 0x5a, BUFFER_SIZE);
+    DataAccessHelper(srcbuf, dstbuf, (void *)&MyCpy);
+    HAL_DBG("src point %p dst[0] %lx dst[1]%lx src[0]%lx src[1]%lx\n", srcbuf, dstbuf[0], dstbuf[1], srcbuf[0], srcbuf[1]);
 
-#ifdef XIP_RAM_BASE
-    xipbuf = (int32_t *)XIP_RAM_BASE;
+#ifdef XIP_MEM_BASE
+    xipbuf = (uint32_t *)(0x60000000 + 0x4000);
+    struct SNOR_HOST *spi = (struct SNOR_HOST *)calloc(1, sizeof(struct SNOR_HOST));
+    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)calloc(1, sizeof(*host));
+    struct SPI_NOR *nor = (struct SPI_NOR *)calloc(1, sizeof(struct SPI_NOR));
 
-    sfcHost = (struct HAL_SFC_HOST *)malloc(sizeof(struct HAL_SFC_HOST));
-    sfcHost->instance = SFC;
+    nor->spi = spi;
 
-    HAL_SNOR_Init(sfcHost);
-    HAL_SNOR_XIPEnable(sfcHost);
+    host = (struct HAL_FSPI_HOST *)calloc(1, sizeof(struct HAL_FSPI_HOST));
+    host->instance = FSPI0;
+    HAL_FSPI_Init(host);
+    nor->spi->userdata = (void *)host;
+    nor->spi->mode = SPI_MODE_3 | SPI_TX_QUAD | SPI_RX_QUAD;
+    nor->spi->xfer = HAL_FSPI_SpiXfer;
+    nor->spi->mode |= SPI_XIP;
+    nor->spi->xipConfig = HAL_FSPI_SpiXipConfig;
+
+    /* Init spi nor abstract */
+    HAL_SNOR_Init(nor);
+
+    HAL_SNOR_XIPEnable(nor);
     HAL_DBG("SNOR XIP DataAccess\n");
-    DataAccessHelper(xipbuf, dstbuf, (void *)&SumTest);
-    HAL_SNOR_XIPDisable(sfcHost);
-
-    xipbuf = (int32_t *)XIP_RAM_BASE + BUFFER_SIZE;
-    HAL_PSRAM_Init(sfcHost, 0);
-    HAL_PSRAM_XmmcEnable(sfcHost);
-    HAL_DBG("PSRAM XIP DataAccess\n");
-    DataAccessHelper(xipbuf, dstbuf, (void *)&SumTest);
-    HAL_PSRAM_XmmcDisable(sfcHost);
-    HAL_PSRAM_DeInit(sfcHost, 0);
+    DataAccessHelper(xipbuf, dstbuf, (void *)&MyCpy);
+    HAL_DBG("src point %p dst[0] %lx dst[1]%lx src[0]%lx src[1]%lx\n", xipbuf, dstbuf[0], dstbuf[1], xipbuf[2], xipbuf[3]);
+    HAL_SNOR_XIPDisable(nor);
 #endif
 
     free(poolbuf1);
     free(poolbuf2);
 
-    HAL_SNOR_DeInit(sfcHost);
+    HAL_SNOR_DeInit(nor);
 }
 #endif
 
@@ -1172,41 +1187,37 @@ static void NopTest(void)
 }
 
 TEST(HAL_LEAGACY, CodePerformance){
-    uint32_t uTick[4], tickVal[4];
+    uint64_t timCount[4];
     struct CACHE_PMU_CNT pmuStatus[4];
 
     HAL_DBG("\nCodePerformance\n");
     HAL_ICACHE_EnablePMU();
     HAL_ICACHE_GetPMU(&pmuStatus[0]);
-    uTick[0] = HAL_GetTick();
-    tickVal[0] = SysTick->VAL;
+    timCount[0] = HAL_TIMER_GetCount(SYS_TIMER);
     NopTest();
-    tickVal[1] = SysTick->VAL;
-    uTick[1] = HAL_GetTick();
+    timCount[1] = HAL_TIMER_GetCount(SYS_TIMER);
     HAL_ICACHE_GetPMU(&pmuStatus[1]);
 
     HAL_ICACHE_GetPMU(&pmuStatus[2]);
-    uTick[2] = HAL_GetTick();
-    tickVal[2] = SysTick->VAL;
+    timCount[2] = HAL_TIMER_GetCount(SYS_TIMER);
     NopTest();
-    tickVal[3] = SysTick->VAL;
-    uTick[3] = HAL_GetTick();
+    timCount[3] = HAL_TIMER_GetCount(SYS_TIMER);
     HAL_ICACHE_GetPMU(&pmuStatus[3]);
 
-    HAL_DBG("1st: %f cycle per NOP\n",
-            ((double)(uTick[1] - uTick[0]) * SysTick->LOAD + tickVal[0] - tickVal[1]) / (1024));  /* SysTick->VAL reciprocal */
-    HAL_DBG("PMU read hit/total=%lu/%lu rate= %f\n",
+    HAL_DBG("1: cache miss\n");
+    HAL_DBG("start timer count %ld%ld\n", (uint32_t)(timCount[0] >> 32), (uint32_t)(timCount[0]));
+    HAL_DBG("end timer count %ld%ld\n", (uint32_t)(timCount[1] >> 32), (uint32_t)(timCount[1]));
+    HAL_DBG("PMU read hit/total=%lu/%lu\n",
             pmuStatus[1].rdHit - pmuStatus[0].rdHit,
-            pmuStatus[1].rdNum - pmuStatus[0].rdNum,
-            (double)(pmuStatus[1].rdHit - pmuStatus[0].rdHit) / (double)(pmuStatus[1].rdNum - pmuStatus[0].rdNum));
+            pmuStatus[1].rdNum - pmuStatus[0].rdNum);
     HAL_DBG("PMU read miss penalty %lu\n", pmuStatus[1].rdMissPenalty - pmuStatus[0].rdMissPenalty);
 
-    HAL_DBG("2nd: %f cycle per NOP\n",
-            ((double)(uTick[3] - uTick[2]) * SysTick->LOAD + tickVal[2] - tickVal[3]) / (1024));
-    HAL_DBG("PMU read hit/total=%lu/%lu rate= %f\n",
+    HAL_DBG("2: cache hit\n");
+    HAL_DBG("start timer count %ld%ld\n", (uint32_t)(timCount[2] >> 32), (uint32_t)(timCount[2]));
+    HAL_DBG("end timer count %ld%ld\n", (uint32_t)(timCount[3] >> 32), (uint32_t)(timCount[3]));
+    HAL_DBG("PMU read hit/total=%lu/%lu\n",
             pmuStatus[3].rdHit - pmuStatus[2].rdHit,
-            pmuStatus[3].rdNum - pmuStatus[2].rdNum,
-            (double)(pmuStatus[3].rdHit - pmuStatus[2].rdHit) / (double)(pmuStatus[3].rdNum - pmuStatus[2].rdNum));
+            pmuStatus[3].rdNum - pmuStatus[2].rdNum);
     HAL_DBG("PMU read miss penalty %lu\n", pmuStatus[3].rdMissPenalty - pmuStatus[2].rdMissPenalty);
     HAL_ICACHE_DisablePMU();
 }
