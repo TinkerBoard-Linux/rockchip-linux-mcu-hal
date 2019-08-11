@@ -145,7 +145,7 @@ TEST(HAL_LEAGACY, DataAccess){
     HAL_SNOR_XIPEnable(nor);
     HAL_DBG("SNOR XIP DataAccess\n");
     DataAccessHelper(xipbuf, dstbuf, (void *)&MyCpy);
-    HAL_DBG("src point %p dst[0] %lx dst[1]%lx src[0]%lx src[1]%lx\n", xipbuf, dstbuf[0], dstbuf[1], xipbuf[2], xipbuf[3]);
+    HAL_DBG("src point %p dst[0] %lx dst[1]%lx src[0]%lx src[1]%lx\n", xipbuf, dstbuf[0], dstbuf[1], xipbuf[0], xipbuf[1]);
     HAL_SNOR_XIPDisable(nor);
 #endif
 
