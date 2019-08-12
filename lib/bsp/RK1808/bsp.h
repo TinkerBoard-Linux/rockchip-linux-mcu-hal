@@ -34,7 +34,7 @@ extern struct HAL_PDM_DEV g_pdm0Dev;
 #endif
 
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
-extern const struct RK_PINCTRL_DEV g_pinDev;
+extern const struct HAL_PINCTRL_DEV g_pinDev;
 #endif
 
 #ifdef HAL_PL330_MODULE_ENABLED

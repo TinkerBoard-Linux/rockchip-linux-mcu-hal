@@ -65,7 +65,7 @@ static struct PINCTRL_BANK_INFO pinBanks[] = {
                        0x0000, 0, 0),
 };
 
-const struct RK_PINCTRL_DEV g_pinDev = {
+const struct HAL_PINCTRL_DEV g_pinDev = {
     .banks = pinBanks,
     .banksNum = HAL_ARRAY_SIZE(pinBanks),
 };

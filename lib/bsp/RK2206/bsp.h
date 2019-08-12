@@ -22,7 +22,7 @@ extern const struct HAL_I2C_DEV g_i2c2Dev;
 #endif
 
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
-extern const struct RK_PINCTRL_DEV g_pinDev;
+extern const struct HAL_PINCTRL_DEV g_pinDev;
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED

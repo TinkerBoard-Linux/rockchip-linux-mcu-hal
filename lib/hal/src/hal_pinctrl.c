@@ -49,11 +49,11 @@ Example:
 #define PIN_WRITE(r, b, w, v) (*(volatile uint32_t *)(r) = (((w) << (16) | (v)) << (b)))
 
 /********************* Private Variable Definition ***************************/
-__WEAK const struct RK_PINCTRL_DEV g_pinDev;
+__WEAK const struct HAL_PINCTRL_DEV g_pinDev;
 
 /********************* Private Function Definition ***************************/
 
-static const struct RK_PINCTRL_DEV *PINCTRL_GetInfo(void)
+static const struct HAL_PINCTRL_DEV *PINCTRL_GetInfo(void)
 {
     return &g_pinDev;
 }
@@ -67,7 +67,7 @@ static const struct RK_PINCTRL_DEV *PINCTRL_GetInfo(void)
  */
 static HAL_Status PINCTRL_AcquireMuxRoute(const struct PINCTRL_BANK_INFO *pBank, uint8_t pin, uint32_t mux)
 {
-    const struct RK_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
+    const struct HAL_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
     const struct PINCTRL_MUX_ROUTE_DATA *data;
     uint32_t i, reg = 0;
     HAL_Status rc = HAL_OK;
@@ -110,7 +110,7 @@ exit:
 static HAL_Status PINCTRL_RectifyMuxParams(const struct PINCTRL_BANK_INFO *pBank, uint8_t pin,
                                            uint32_t *reg, uint8_t *bit, uint32_t *mask)
 {
-    const struct RK_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
+    const struct HAL_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
     const struct PINCTRL_MUX_RECAL_DATA *data;
     uint32_t i;
     HAL_Status rc = HAL_OK;
@@ -352,7 +352,7 @@ static HAL_Status PINCTRL_SetParam(const struct PINCTRL_BANK_INFO *pBank,
  */
 static HAL_Status PINCTRL_SetPinParam(eGPIO_bankId bank, uint8_t pin, uint32_t param)
 {
-    const struct RK_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
+    const struct HAL_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
 
     return PINCTRL_SetParam(&ctrl->banks[bank], pin, param);
 }
@@ -366,7 +366,7 @@ static HAL_Status PINCTRL_SetPinParam(eGPIO_bankId bank, uint8_t pin, uint32_t p
  */
 static HAL_Status PINCTRL_SetPinIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t param)
 {
-    const struct RK_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
+    const struct HAL_PINCTRL_DEV *ctrl = PINCTRL_GetInfo();
 
     return PINCTRL_SetMux(&ctrl->banks[bank], pin, (uint8_t)((param & MASK_MUX) >> SHIFT_MUX));
 }

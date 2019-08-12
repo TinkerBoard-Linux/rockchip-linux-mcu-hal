@@ -380,7 +380,7 @@ static const struct PINCTRL_MUX_ROUTE_DATA muxRouteData[] = {
     },
 };
 
-const struct RK_PINCTRL_DEV g_pinDev = {
+const struct HAL_PINCTRL_DEV g_pinDev = {
     .banks = pinBanks,
     .banksNum = HAL_ARRAY_SIZE(pinBanks),
     .muxRouteData = muxRouteData,

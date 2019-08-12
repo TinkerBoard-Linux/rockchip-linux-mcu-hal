@@ -232,7 +232,7 @@ struct PINCTRL_BANK_INFO {
     uint8_t channel;
 };
 
-struct RK_PINCTRL_DEV {
+struct HAL_PINCTRL_DEV {
     const struct PINCTRL_BANK_INFO *banks;
     const struct PINCTRL_MUX_RECAL_DATA *muxRecalData;
     const struct PINCTRL_MUX_ROUTE_DATA *muxRouteData;
@@ -246,7 +246,7 @@ struct RK_PINCTRL_DEV {
  * and grf info about iomux offset, iomux bit info, drive/pull/
  * slewrate/schmitt offset and bit info.
  */
-extern const struct RK_PINCTRL_DEV g_pinDev;
+extern const struct HAL_PINCTRL_DEV g_pinDev;
 
 /** @} */
 
