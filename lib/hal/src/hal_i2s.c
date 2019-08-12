@@ -135,7 +135,7 @@
 static HAL_Status I2S_SetSampleRate(struct HAL_I2S_DEV *i2s,
                                     eAUDIO_sampleRate sampleRate)
 {
-    struct I2S_REG *reg = i2s->reg;
+    struct I2S_REG *reg = i2s->pReg;
     uint32_t mclkRate, bclkRate, divBclk, divLrck;
     HAL_Status ret = HAL_OK;
 
@@ -222,7 +222,7 @@ HAL_Status HAL_I2S_Init(struct HAL_I2S_DEV *i2s, struct AUDIO_INIT_CONFIG *confi
     uint32_t mask = 0, val = 0;
     bool isMaster = config->master;
     bool clkInvert = config->clkInvert;
-    struct I2S_REG *reg = i2s->reg;
+    struct I2S_REG *reg = i2s->pReg;
 
     HAL_CRU_ClkEnable(i2s->hclk);
 
@@ -263,7 +263,7 @@ HAL_Status HAL_I2S_DeInit(struct HAL_I2S_DEV *i2s)
  */
 HAL_Status HAL_I2S_Enable(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream)
 {
-    struct I2S_REG *reg = i2s->reg;
+    struct I2S_REG *reg = i2s->pReg;
 
     if (stream == AUDIO_STREAM_PLAYBACK) {
         MODIFY_REG(reg->DMACR, I2S_DMACR_TDE_MASK, I2S_DMACR_TDE_ENABLE);
@@ -284,7 +284,7 @@ HAL_Status HAL_I2S_Enable(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream)
  */
 HAL_Status HAL_I2S_Disable(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream)
 {
-    struct I2S_REG *reg = i2s->reg;
+    struct I2S_REG *reg = i2s->pReg;
 
     if (stream == AUDIO_STREAM_PLAYBACK) {
         MODIFY_REG(reg->DMACR, I2S_DMACR_TDE_MASK, I2S_DMACR_TDE_DISABLE);
@@ -311,7 +311,7 @@ HAL_Status HAL_I2S_Disable(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream)
 HAL_Status HAL_I2S_Config(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream,
                           struct AUDIO_PARAMS *params)
 {
-    struct I2S_REG *reg = i2s->reg;
+    struct I2S_REG *reg = i2s->pReg;
     uint32_t val = 0;
     HAL_Status ret = HAL_OK;
     bool isMaster;
