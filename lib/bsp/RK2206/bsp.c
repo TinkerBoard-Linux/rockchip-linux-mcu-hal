@@ -103,6 +103,62 @@ const struct HAL_UART_DEV g_uart2Dev =
 };
 #endif
 
+#ifdef HAL_I2STDM_MODULE_ENABLED
+struct HAL_I2STDM_DEV g_i2sTdm0Dev =
+{
+    .pReg = I2STDM0,
+    .mclkTx = MCLK_I2S8CH_0_TX,
+    .mclkTxGate = MCLK_I2S8CH_0_TX_GATE,
+    .mclkRx = MCLK_I2S8CH_0_RX,
+    .mclkRxGate = MCLK_I2S8CH_0_RX_GATE,
+    .hclk = HCLK_I2S0_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM0->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_RX,
+        .dmac = DMA,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM0->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_TX,
+        .dmac = DMA,
+    },
+};
+
+struct HAL_I2STDM_DEV g_i2sTdm1Dev =
+{
+    .pReg = I2STDM1,
+    .mclkTx = MCLK_I2S8CH_1_TX,
+    .mclkTxGate = MCLK_I2S8CH_1_TX_GATE,
+    .mclkRx = MCLK_I2S8CH_1_RX,
+    .mclkRxGate = MCLK_I2S8CH_1_RX_GATE,
+    .hclk = HCLK_I2S1_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM1->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S1_RX,
+        .dmac = DMA,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM1->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S1_TX,
+        .dmac = DMA,
+    },
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }
