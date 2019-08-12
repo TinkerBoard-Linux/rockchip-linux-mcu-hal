@@ -101,7 +101,7 @@ typedef enum
 /****************************************************************************************/
 /* GRF Register Structure Define */
 struct GRF_REG {
-    __IO uint32_t SOC_CON[8];                         /* Address Offset: 0x0020 */
+    __IO uint32_t SOC_CON[9];                         /* Address Offset: 0x0000 */
          uint32_t RESERVED0036[6];                    /* Address Offset: 0x0024 */
     __IO uint32_t GPIOMUX_PLUS;                       /* Address Offset: 0x003C */
     __IO uint32_t GPIO0A_IOMUX;                       /* Address Offset: 0x0040 */
