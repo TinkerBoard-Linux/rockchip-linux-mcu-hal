@@ -305,8 +305,8 @@ HAL_Status HAL_UART_Init(const struct HAL_UART_DEV *dev, const struct HAL_UART_C
         uint32_t rate;
 
         /* set sclk according to uart baud rate */
-        if (config->baudRate <= 460800)
-            rate = 14745600;
+        if (config->baudRate <= 115200)
+            rate = PLL_INPUT_OSC_RATE;
         else
             rate = config->baudRate * 16;
         HAL_CRU_ClkSetFreq(dev->sclkID, rate);
