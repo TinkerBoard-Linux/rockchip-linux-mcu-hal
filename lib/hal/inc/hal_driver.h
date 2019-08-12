@@ -42,7 +42,7 @@
 #include "hal_efuse.h"
 #endif
 
-#ifdef HAL_GPIO_MODULE_ENABLED
+#if defined(HAL_GPIO_MODULE_ENABLED) || defined(HAL_PINCTRL_MODULE_ENABLED)
 #include "hal_gpio.h"
 #include "hal_pinctrl.h"
 #endif
