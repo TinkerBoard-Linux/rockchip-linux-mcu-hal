@@ -15,7 +15,7 @@
 #define _HAL_DSI_H_
 
 /***************************** MACRO Definition ******************************/
-/** @defgroup CACHE_Exported_Definition_Group1 Basic Definition
+/** @defgroup DSI_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 
