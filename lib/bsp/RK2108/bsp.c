@@ -430,7 +430,7 @@ void BSP_DeInit(void)
     BSP_AUDIOPWM_DeInit();
 #endif
 
-#ifdef HAL_I2S_MODULE_ENABLED
+#ifdef HAL_I2STDM_MODULE_ENABLED
     BSP_I2S_DeInit();
 #endif
 
@@ -461,7 +461,7 @@ void BSP_Init(void)
     BSP_AUDIOPWM_Init();
 #endif
 
-#ifdef HAL_I2S_MODULE_ENABLED
+#ifdef HAL_I2STDM_MODULE_ENABLED
     BSP_I2S_Init();
 #endif
 
