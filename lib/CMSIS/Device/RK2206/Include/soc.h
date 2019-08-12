@@ -110,6 +110,7 @@ typedef enum
     DMAC_CH3_IRQn               = 61,
     DMAC_CH4_IRQn               = 62,
     DMAC_CH5_IRQn               = 63,
+    TSADC_IRQn                  = 64,
     NUM_INTERRUPTS
 } IRQn_Type;
 
@@ -653,12 +654,12 @@ struct GRF_REG {
     __IO uint32_t GRF_FAST_BOOT;                      /* Address Offset: 0x0400 */
     __IO uint32_t GRF_FAST_BOOT_ADDR;                 /* Address Offset: 0x0404 */
          uint32_t RESERVED0408[62];                   /* Address Offset: 0x0408 */
-    __IO uint32_t LPW_CON;                            /* Address Offset: 0x0500 */
-    __IO uint32_t LPWCLK_CON;                         /* Address Offset: 0x0504 */
-    __IO uint32_t LPW_GPIO_IN;                        /* Address Offset: 0x0508 */
-    __IO uint32_t LPW_GPIO_OUT;                       /* Address Offset: 0x050C */
+    __IO uint32_t WLAN_CON;                           /* Address Offset: 0x0500 */
+    __IO uint32_t WLANCLK_CON;                        /* Address Offset: 0x0504 */
+    __IO uint32_t WLAN_GPIO_IN;                       /* Address Offset: 0x0508 */
+    __IO uint32_t WLAN_GPIO_OUT;                      /* Address Offset: 0x050C */
          uint32_t RESERVED0510[28];                   /* Address Offset: 0x0510 */
-    __I  uint32_t LPW_STATUS;                         /* Address Offset: 0x0580 */
+    __I  uint32_t WLAN_STATUS;                        /* Address Offset: 0x0580 */
          uint32_t RESERVED0584[63];                   /* Address Offset: 0x0584 */
     __IO uint32_t USB2_DISCONNECT_CON;                /* Address Offset: 0x0680 */
     __IO uint32_t USB2_LINESTATE_CON;                 /* Address Offset: 0x0684 */
@@ -849,6 +850,29 @@ struct TOUCH_SENSOR_REG {
     __IO uint32_t CH19_CNT_DC;                        /* Address Offset: 0x2004 */
     __IO uint32_t CH19_CNT_DO;                        /* Address Offset: 0x2008 */
     __IO uint32_t CH19_CNT_FILTER;                    /* Address Offset: 0x200C */
+};
+/* TSADC Register Structure Define */
+struct TSADC_REG {
+    __IO uint32_t USER_CON;                           /* Address Offset: 0x0000 */
+    __IO uint32_t AUTO_CON;                           /* Address Offset: 0x0004 */
+    __IO uint32_t INT_EN;                             /* Address Offset: 0x0008 */
+    __IO uint32_t INT_PD;                             /* Address Offset: 0x000C */
+         uint32_t RESERVED0010[4];                    /* Address Offset: 0x0010 */
+    __IO uint32_t DATA[2];                            /* Address Offset: 0x0020 */
+         uint32_t RESERVED0028[2];                    /* Address Offset: 0x0028 */
+    __IO uint32_t COMP0_INT;                          /* Address Offset: 0x0030 */
+    __IO uint32_t COMP1_INT;                          /* Address Offset: 0x0034 */
+         uint32_t RESERVED0038[2];                    /* Address Offset: 0x0038 */
+    __IO uint32_t COMP0_SHUT;                         /* Address Offset: 0x0040 */
+    __IO uint32_t COMP1_SHUT;                         /* Address Offset: 0x0044 */
+         uint32_t RESERVED0048[6];                    /* Address Offset: 0x0048 */
+    __IO uint32_t HIGHT_INT_DEBOUNCE;                 /* Address Offset: 0x0060 */
+    __IO uint32_t HIGHT_TSHUT_DEBOUNCE;               /* Address Offset: 0x0064 */
+    __IO uint32_t AUTO_PERIOD;                        /* Address Offset: 0x0068 */
+    __IO uint32_t AUTO_PERIOD_HT;                     /* Address Offset: 0x006C */
+         uint32_t RESERVED0070[4];                    /* Address Offset: 0x0070 */
+    __IO uint32_t COMP0_LOW_INT;                      /* Address Offset: 0x0080 */
+    __IO uint32_t COMP1_LOW_INT;                      /* Address Offset: 0x0084 */
 };
 /* I2S_TDM_8CH Register Structure Define */
 struct I2S_REG {
@@ -1246,6 +1270,7 @@ struct USB_HOST_CH_REG {
 #define CRU_BASE            0x41060000U /* CRU base address */
 #define PVTM_BASE           0x41080000U /* PVTM base address */
 #define TOUCH_SENSOR_BASE   0x41090000U /* TOUCH_SENSOR base address */
+#define TSADC_BASE          0x410A0000U /* TSADC base address */
 #define I2S0_BASE           0x41100000U /* I2S0 base address */
 #define I2S1_BASE           0x41110000U /* I2S1 base address */
 #define PDM_BASE            0x41120000U /* PDM base address */
@@ -1302,6 +1327,7 @@ struct USB_HOST_CH_REG {
 #define CRU                 ((struct CRU_REG *) CRU_BASE)
 #define PVTM                ((struct PVTM_REG *) PVTM_BASE)
 #define TOUCH_SENSOR        ((struct TOUCH_SENSOR_REG *) TOUCH_SENSOR_BASE)
+#define TSADC               ((struct TSADC_REG *) TSADC_BASE)
 #define I2S0                ((struct I2S_REG *) I2S0_BASE)
 #define I2S1                ((struct I2S_REG *) I2S1_BASE)
 #define PDM                 ((struct PDM_REG *) PDM_BASE)
@@ -1323,6 +1349,7 @@ struct USB_HOST_CH_REG {
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
 #define IS_PVTM_INSTANCE(instance) ((instance) == PVTM)
 #define IS_TOUCH_SENSOR_INSTANCE(instance) ((instance) == TOUCH_SENSOR)
+#define IS_TSADC_INSTANCE(instance) ((instance) == TSADC)
 #define IS_PDM_INSTANCE(instance) ((instance) == PDM)
 #define IS_VAD_INSTANCE(instance) ((instance) == VAD)
 #define IS_LPW_SYSBUS_INSTANCE(instance) ((instance) == LPW_SYSBUS)
@@ -4497,8 +4524,8 @@ struct USB_HOST_CH_REG {
 #define GRF_SOC_CON28_DMASSWFWD_WIFISLVSWFWD_PWRSTALL_MASK (0x1U << GRF_SOC_CON28_DMASSWFWD_WIFISLVSWFWD_PWRSTALL_SHIFT) /* 0x00000004 */
 #define GRF_SOC_CON28_VADMSTSWFWD_PWRSTALL_SHIFT           (3U)
 #define GRF_SOC_CON28_VADMSTSWFWD_PWRSTALL_MASK            (0x1U << GRF_SOC_CON28_VADMSTSWFWD_PWRSTALL_SHIFT)           /* 0x00000008 */
-#define GRF_SOC_CON28_LPWSRAMSWLINKFWD_PWRSTALL_SHIFT      (4U)
-#define GRF_SOC_CON28_LPWSRAMSWLINKFWD_PWRSTALL_MASK       (0x1U << GRF_SOC_CON28_LPWSRAMSWLINKFWD_PWRSTALL_SHIFT)      /* 0x00000010 */
+#define GRF_SOC_CON28_WLANSRAMSWLINKFWD_PWRSTALL_SHIFT     (4U)
+#define GRF_SOC_CON28_WLANSRAMSWLINKFWD_PWRSTALL_MASK      (0x1U << GRF_SOC_CON28_WLANSRAMSWLINKFWD_PWRSTALL_SHIFT)     /* 0x00000010 */
 #define GRF_SOC_CON28_PERIMSTSWLINKFWD_PWRSALL_SHIFT       (5U)
 #define GRF_SOC_CON28_PERIMSTSWLINKFWD_PWRSALL_MASK        (0x1U << GRF_SOC_CON28_PERIMSTSWLINKFWD_PWRSALL_SHIFT)       /* 0x00000020 */
 /* SOC_CON29 */
@@ -4581,8 +4608,8 @@ struct USB_HOST_CH_REG {
 #define GRF_SOC_STATUS_DMASSWFWD_WIFISLVSWFWD_PWRACTIVE_MASK (0x1U << GRF_SOC_STATUS_DMASSWFWD_WIFISLVSWFWD_PWRACTIVE_SHIFT) /* 0x00400000 */
 #define GRF_SOC_STATUS_VADMSTSWFWD_PWRACTIVE_SHIFT         (23U)
 #define GRF_SOC_STATUS_VADMSTSWFWD_PWRACTIVE_MASK          (0x1U << GRF_SOC_STATUS_VADMSTSWFWD_PWRACTIVE_SHIFT)         /* 0x00800000 */
-#define GRF_SOC_STATUS_LPWSRAMSWLINKFWD_PWRACTIVE_SHIFT    (24U)
-#define GRF_SOC_STATUS_LPWSRAMSWLINKFWD_PWRACTIVE_MASK     (0x1U << GRF_SOC_STATUS_LPWSRAMSWLINKFWD_PWRACTIVE_SHIFT)    /* 0x01000000 */
+#define GRF_SOC_STATUS_WLANSRAMSWLINKFWD_PWRACTIVE_SHIFT   (24U)
+#define GRF_SOC_STATUS_WLANSRAMSWLINKFWD_PWRACTIVE_MASK    (0x1U << GRF_SOC_STATUS_WLANSRAMSWLINKFWD_PWRACTIVE_SHIFT)   /* 0x01000000 */
 #define GRF_SOC_STATUS_PERIMSTSWLINKFWD_PWRACTIVE_SHIFT    (25U)
 #define GRF_SOC_STATUS_PERIMSTSWLINKFWD_PWRACTIVE_MASK     (0x1U << GRF_SOC_STATUS_PERIMSTSWLINKFWD_PWRACTIVE_SHIFT)    /* 0x02000000 */
 /* MCU0_CON0 */
@@ -4795,55 +4822,57 @@ struct USB_HOST_CH_REG {
 /* GRF_FAST_BOOT_ADDR */
 #define GRF_GRF_FAST_BOOT_ADDR_GRF_FAST_BOOT_ADDR_SHIFT    (0U)
 #define GRF_GRF_FAST_BOOT_ADDR_GRF_FAST_BOOT_ADDR_MASK     (0xFFFFFFFFU << GRF_GRF_FAST_BOOT_ADDR_GRF_FAST_BOOT_ADDR_SHIFT) /* 0xFFFFFFFF */
-/* LPW_CON */
-#define GRF_LPW_CON_XTALMOD_0_SHIFT                        (0U)
-#define GRF_LPW_CON_XTALMOD_0_MASK                         (0x1U << GRF_LPW_CON_XTALMOD_0_SHIFT)                        /* 0x00000001 */
-#define GRF_LPW_CON_XTALMOD_1_SHIFT                        (1U)
-#define GRF_LPW_CON_XTALMOD_1_MASK                         (0x1U << GRF_LPW_CON_XTALMOD_1_SHIFT)                        /* 0x00000002 */
-#define GRF_LPW_CON_XTALMOD_2_SHIFT                        (2U)
-#define GRF_LPW_CON_XTALMOD_2_MASK                         (0x1U << GRF_LPW_CON_XTALMOD_2_SHIFT)                        /* 0x00000004 */
-#define GRF_LPW_CON_LPW_WRITE_INT_EN_SHIFT                 (3U)
-#define GRF_LPW_CON_LPW_WRITE_INT_EN_MASK                  (0x1U << GRF_LPW_CON_LPW_WRITE_INT_EN_SHIFT)                 /* 0x00000008 */
-#define GRF_LPW_CON_RPU_SLEEP_IRQ_EN_SHIFT                 (4U)
-#define GRF_LPW_CON_RPU_SLEEP_IRQ_EN_MASK                  (0x1U << GRF_LPW_CON_RPU_SLEEP_IRQ_EN_SHIFT)                 /* 0x00000010 */
-#define GRF_LPW_CON_RPU_WAKEUP_IRQ_EN_SHIFT                (5U)
-#define GRF_LPW_CON_RPU_WAKEUP_IRQ_EN_MASK                 (0x1U << GRF_LPW_CON_RPU_WAKEUP_IRQ_EN_SHIFT)                /* 0x00000020 */
-#define GRF_LPW_CON_RPU_READY_IRQ_EN_SHIFT                 (6U)
-#define GRF_LPW_CON_RPU_READY_IRQ_EN_MASK                  (0x1U << GRF_LPW_CON_RPU_READY_IRQ_EN_SHIFT)                 /* 0x00000040 */
-#define GRF_LPW_CON_LPW_EXT_IRQ_SHIFT                      (7U)
-#define GRF_LPW_CON_LPW_EXT_IRQ_MASK                       (0x1U << GRF_LPW_CON_LPW_EXT_IRQ_SHIFT)                      /* 0x00000080 */
-#define GRF_LPW_CON_LPW_REV_SHIFT                          (8U)
-#define GRF_LPW_CON_LPW_REV_MASK                           (0xFFU << GRF_LPW_CON_LPW_REV_SHIFT)                         /* 0x0000FF00 */
-/* LPWCLK_CON */
-#define GRF_LPWCLK_CON_LPW_SYS_CLK_GATE_SHIFT              (0U)
-#define GRF_LPWCLK_CON_LPW_SYS_CLK_GATE_MASK               (0x1U << GRF_LPWCLK_CON_LPW_SYS_CLK_GATE_SHIFT)              /* 0x00000001 */
-#define GRF_LPWCLK_CON_RPU_CLK_FLEVEL_SHIFT                (1U)
-#define GRF_LPWCLK_CON_RPU_CLK_FLEVEL_MASK                 (0x1U << GRF_LPWCLK_CON_RPU_CLK_FLEVEL_SHIFT)                /* 0x00000002 */
-#define GRF_LPWCLK_CON_RPU_CLK_FORCE_SHIFT                 (2U)
-#define GRF_LPWCLK_CON_RPU_CLK_FORCE_MASK                  (0x1U << GRF_LPWCLK_CON_RPU_CLK_FORCE_SHIFT)                 /* 0x00000004 */
-#define GRF_LPWCLK_CON_MCU_CLK_FLEVEL_SHIFT                (3U)
-#define GRF_LPWCLK_CON_MCU_CLK_FLEVEL_MASK                 (0x1U << GRF_LPWCLK_CON_MCU_CLK_FLEVEL_SHIFT)                /* 0x00000008 */
-#define GRF_LPWCLK_CON_MCU_CLK_FORCE_SHIFT                 (4U)
-#define GRF_LPWCLK_CON_MCU_CLK_FORCE_MASK                  (0x1U << GRF_LPWCLK_CON_MCU_CLK_FORCE_SHIFT)                 /* 0x00000010 */
-#define GRF_LPWCLK_CON_LPW_AON_WAKEUP_SHIFT                (5U)
-#define GRF_LPWCLK_CON_LPW_AON_WAKEUP_MASK                 (0x1U << GRF_LPWCLK_CON_LPW_AON_WAKEUP_SHIFT)                /* 0x00000020 */
-#define GRF_LPWCLK_CON_BT_PTI1_SHIFT                       (6U)
-#define GRF_LPWCLK_CON_BT_PTI1_MASK                        (0x1U << GRF_LPWCLK_CON_BT_PTI1_SHIFT)                       /* 0x00000040 */
-/* LPW_GPIO_IN */
-#define GRF_LPW_GPIO_IN_LPW_GPIO_IN_SHIFT                  (0U)
-#define GRF_LPW_GPIO_IN_LPW_GPIO_IN_MASK                   (0xFFFFFFFFU << GRF_LPW_GPIO_IN_LPW_GPIO_IN_SHIFT)           /* 0xFFFFFFFF */
-/* LPW_GPIO_OUT */
-#define GRF_LPW_GPIO_OUT_LPW_GPIO_OUT_SHIFT                (0U)
-#define GRF_LPW_GPIO_OUT_LPW_GPIO_OUT_MASK                 (0xFFFFFFFFU << GRF_LPW_GPIO_OUT_LPW_GPIO_OUT_SHIFT)         /* 0xFFFFFFFF */
-/* LPW_STATUS */
-#define GRF_LPW_STATUS_RPU_SLEEP_SHIFT                     (0U)
-#define GRF_LPW_STATUS_RPU_SLEEP_MASK                      (0x1U << GRF_LPW_STATUS_RPU_SLEEP_SHIFT)                     /* 0x00000001 */
-#define GRF_LPW_STATUS_RPU_WAKEUP_SHIFT                    (1U)
-#define GRF_LPW_STATUS_RPU_WAKEUP_MASK                     (0x1U << GRF_LPW_STATUS_RPU_WAKEUP_SHIFT)                    /* 0x00000002 */
-#define GRF_LPW_STATUS_RPU_READY_STATUS_SHIFT              (2U)
-#define GRF_LPW_STATUS_RPU_READY_STATUS_MASK               (0x1U << GRF_LPW_STATUS_RPU_READY_STATUS_SHIFT)              /* 0x00000004 */
-#define GRF_LPW_STATUS_LPW_MAC_PHY_DEBUG_BUS_SHIFT         (4U)
-#define GRF_LPW_STATUS_LPW_MAC_PHY_DEBUG_BUS_MASK          (0xFFFU << GRF_LPW_STATUS_LPW_MAC_PHY_DEBUG_BUS_SHIFT)       /* 0x0000FFF0 */
+/* WLAN_CON */
+#define GRF_WLAN_CON_XTALMOD_0_SHIFT                       (0U)
+#define GRF_WLAN_CON_XTALMOD_0_MASK                        (0x1U << GRF_WLAN_CON_XTALMOD_0_SHIFT)                       /* 0x00000001 */
+#define GRF_WLAN_CON_XTALMOD_1_SHIFT                       (1U)
+#define GRF_WLAN_CON_XTALMOD_1_MASK                        (0x1U << GRF_WLAN_CON_XTALMOD_1_SHIFT)                       /* 0x00000002 */
+#define GRF_WLAN_CON_XTALMOD_2_SHIFT                       (2U)
+#define GRF_WLAN_CON_XTALMOD_2_MASK                        (0x1U << GRF_WLAN_CON_XTALMOD_2_SHIFT)                       /* 0x00000004 */
+#define GRF_WLAN_CON_WLAN_WRITE_INT_EN_SHIFT               (3U)
+#define GRF_WLAN_CON_WLAN_WRITE_INT_EN_MASK                (0x1U << GRF_WLAN_CON_WLAN_WRITE_INT_EN_SHIFT)               /* 0x00000008 */
+#define GRF_WLAN_CON_RPU_SLEEP_IRQ_EN_SHIFT                (4U)
+#define GRF_WLAN_CON_RPU_SLEEP_IRQ_EN_MASK                 (0x1U << GRF_WLAN_CON_RPU_SLEEP_IRQ_EN_SHIFT)                /* 0x00000010 */
+#define GRF_WLAN_CON_RPU_WAKEUP_IRQ_EN_SHIFT               (5U)
+#define GRF_WLAN_CON_RPU_WAKEUP_IRQ_EN_MASK                (0x1U << GRF_WLAN_CON_RPU_WAKEUP_IRQ_EN_SHIFT)               /* 0x00000020 */
+#define GRF_WLAN_CON_RPU_READY_IRQ_EN_SHIFT                (6U)
+#define GRF_WLAN_CON_RPU_READY_IRQ_EN_MASK                 (0x1U << GRF_WLAN_CON_RPU_READY_IRQ_EN_SHIFT)                /* 0x00000040 */
+#define GRF_WLAN_CON_WLAN_EXT_IRQ_SHIFT                    (7U)
+#define GRF_WLAN_CON_WLAN_EXT_IRQ_MASK                     (0x1U << GRF_WLAN_CON_WLAN_EXT_IRQ_SHIFT)                    /* 0x00000080 */
+#define GRF_WLAN_CON_WLAN_REV_SHIFT                        (8U)
+#define GRF_WLAN_CON_WLAN_REV_MASK                         (0xFFU << GRF_WLAN_CON_WLAN_REV_SHIFT)                       /* 0x0000FF00 */
+/* WLANCLK_CON */
+#define GRF_WLANCLK_CON_WLAN_SYS_CLK_GATE_SHIFT            (0U)
+#define GRF_WLANCLK_CON_WLAN_SYS_CLK_GATE_MASK             (0x1U << GRF_WLANCLK_CON_WLAN_SYS_CLK_GATE_SHIFT)            /* 0x00000001 */
+#define GRF_WLANCLK_CON_RPU_CLK_FLEVEL_SHIFT               (1U)
+#define GRF_WLANCLK_CON_RPU_CLK_FLEVEL_MASK                (0x1U << GRF_WLANCLK_CON_RPU_CLK_FLEVEL_SHIFT)               /* 0x00000002 */
+#define GRF_WLANCLK_CON_RPU_CLK_FORCE_SHIFT                (2U)
+#define GRF_WLANCLK_CON_RPU_CLK_FORCE_MASK                 (0x1U << GRF_WLANCLK_CON_RPU_CLK_FORCE_SHIFT)                /* 0x00000004 */
+#define GRF_WLANCLK_CON_MCU_CLK_FLEVEL_SHIFT               (3U)
+#define GRF_WLANCLK_CON_MCU_CLK_FLEVEL_MASK                (0x1U << GRF_WLANCLK_CON_MCU_CLK_FLEVEL_SHIFT)               /* 0x00000008 */
+#define GRF_WLANCLK_CON_MCU_CLK_FORCE_SHIFT                (4U)
+#define GRF_WLANCLK_CON_MCU_CLK_FORCE_MASK                 (0x1U << GRF_WLANCLK_CON_MCU_CLK_FORCE_SHIFT)                /* 0x00000010 */
+#define GRF_WLANCLK_CON_WLAN_AON_WAKEUP_SHIFT              (5U)
+#define GRF_WLANCLK_CON_WLAN_AON_WAKEUP_MASK               (0x1U << GRF_WLANCLK_CON_WLAN_AON_WAKEUP_SHIFT)              /* 0x00000020 */
+#define GRF_WLANCLK_CON_BT_PTI1_SHIFT                      (6U)
+#define GRF_WLANCLK_CON_BT_PTI1_MASK                       (0x1U << GRF_WLANCLK_CON_BT_PTI1_SHIFT)                      /* 0x00000040 */
+/* WLAN_GPIO_IN */
+#define GRF_WLAN_GPIO_IN_WLAN_GPIO_IN_SHIFT                (0U)
+#define GRF_WLAN_GPIO_IN_WLAN_GPIO_IN_MASK                 (0xFFFFFFFFU << GRF_WLAN_GPIO_IN_WLAN_GPIO_IN_SHIFT)         /* 0xFFFFFFFF */
+/* WLAN_GPIO_OUT */
+#define GRF_WLAN_GPIO_OUT_WLAN_GPIO_OUT_SHIFT              (0U)
+#define GRF_WLAN_GPIO_OUT_WLAN_GPIO_OUT_MASK               (0xFFFFFFFFU << GRF_WLAN_GPIO_OUT_WLAN_GPIO_OUT_SHIFT)       /* 0xFFFFFFFF */
+/* WLAN_STATUS */
+#define GRF_WLAN_STATUS_RPU_SLEEP_SHIFT                    (0U)
+#define GRF_WLAN_STATUS_RPU_SLEEP_MASK                     (0x1U << GRF_WLAN_STATUS_RPU_SLEEP_SHIFT)                    /* 0x00000001 */
+#define GRF_WLAN_STATUS_RPU_WAKEUP_SHIFT                   (1U)
+#define GRF_WLAN_STATUS_RPU_WAKEUP_MASK                    (0x1U << GRF_WLAN_STATUS_RPU_WAKEUP_SHIFT)                   /* 0x00000002 */
+#define GRF_WLAN_STATUS_RPU_READY_STATUS_SHIFT             (2U)
+#define GRF_WLAN_STATUS_RPU_READY_STATUS_MASK              (0x1U << GRF_WLAN_STATUS_RPU_READY_STATUS_SHIFT)             /* 0x00000004 */
+#define GRF_WLAN_STATUS_WLAN_WRITE_DATA_INT_STATUS_SHIFT   (3U)
+#define GRF_WLAN_STATUS_WLAN_WRITE_DATA_INT_STATUS_MASK    (0x1U << GRF_WLAN_STATUS_WLAN_WRITE_DATA_INT_STATUS_SHIFT)   /* 0x00000008 */
+#define GRF_WLAN_STATUS_WLAN_MAC_PHY_DEBUG_BUS_SHIFT       (4U)
+#define GRF_WLAN_STATUS_WLAN_MAC_PHY_DEBUG_BUS_MASK        (0xFFFU << GRF_WLAN_STATUS_WLAN_MAC_PHY_DEBUG_BUS_SHIFT)     /* 0x0000FFF0 */
 /* USB2_DISCONNECT_CON */
 #define GRF_USB2_DISCONNECT_CON_DISCONNECT_FILTER_CON_SHIFT (0U)
 #define GRF_USB2_DISCONNECT_CON_DISCONNECT_FILTER_CON_MASK (0xFFFFFFFFU << GRF_USB2_DISCONNECT_CON_DISCONNECT_FILTER_CON_SHIFT) /* 0xFFFFFFFF */
@@ -6339,6 +6368,113 @@ struct USB_HOST_CH_REG {
 /* CH19_CNT_FILTER */
 #define TOUCH_SENSOR_CH19_CNT_FILTER_CH19_CNT_FILTER_SHIFT (0U)
 #define TOUCH_SENSOR_CH19_CNT_FILTER_CH19_CNT_FILTER_MASK  (0xFFFFU << TOUCH_SENSOR_CH19_CNT_FILTER_CH19_CNT_FILTER_SHIFT) /* 0x0000FFFF */
+/*****************************************TSADC******************************************/
+/* USER_CON */
+#define TSADC_USER_CON_ADC_INPUT_SRC_SEL_SHIFT             (0U)
+#define TSADC_USER_CON_ADC_INPUT_SRC_SEL_MASK              (0x7U << TSADC_USER_CON_ADC_INPUT_SRC_SEL_SHIFT)             /* 0x00000007 */
+#define TSADC_USER_CON_ADC_POWER_CTRL_SHIFT                (3U)
+#define TSADC_USER_CON_ADC_POWER_CTRL_MASK                 (0x1U << TSADC_USER_CON_ADC_POWER_CTRL_SHIFT)                /* 0x00000008 */
+#define TSADC_USER_CON_START_MODE_SHIFT                    (4U)
+#define TSADC_USER_CON_START_MODE_MASK                     (0x1U << TSADC_USER_CON_START_MODE_SHIFT)                    /* 0x00000010 */
+#define TSADC_USER_CON_START_SHIFT                         (5U)
+#define TSADC_USER_CON_START_MASK                          (0x1U << TSADC_USER_CON_START_SHIFT)                         /* 0x00000020 */
+#define TSADC_USER_CON_INTER_PD_SOC_SHIFT                  (6U)
+#define TSADC_USER_CON_INTER_PD_SOC_MASK                   (0x3FU << TSADC_USER_CON_INTER_PD_SOC_SHIFT)                 /* 0x00000FC0 */
+#define TSADC_USER_CON_ADC_STATUS_SHIFT                    (12U)
+#define TSADC_USER_CON_ADC_STATUS_MASK                     (0x1U << TSADC_USER_CON_ADC_STATUS_SHIFT)                    /* 0x00001000 */
+/* AUTO_CON */
+#define TSADC_AUTO_CON_AUTO_EN_SHIFT                       (0U)
+#define TSADC_AUTO_CON_AUTO_EN_MASK                        (0x1U << TSADC_AUTO_CON_AUTO_EN_SHIFT)                       /* 0x00000001 */
+#define TSADC_AUTO_CON_TSADC_Q_SEL_SHIFT                   (1U)
+#define TSADC_AUTO_CON_TSADC_Q_SEL_MASK                    (0x1U << TSADC_AUTO_CON_TSADC_Q_SEL_SHIFT)                   /* 0x00000002 */
+#define TSADC_AUTO_CON_SRC0_EN_SHIFT                       (4U)
+#define TSADC_AUTO_CON_SRC0_EN_MASK                        (0x1U << TSADC_AUTO_CON_SRC0_EN_SHIFT)                       /* 0x00000010 */
+#define TSADC_AUTO_CON_SRC1_EN_SHIFT                       (5U)
+#define TSADC_AUTO_CON_SRC1_EN_MASK                        (0x1U << TSADC_AUTO_CON_SRC1_EN_SHIFT)                       /* 0x00000020 */
+#define TSADC_AUTO_CON_TSHUT_PROLARITY_SHIFT               (8U)
+#define TSADC_AUTO_CON_TSHUT_PROLARITY_MASK                (0x1U << TSADC_AUTO_CON_TSHUT_PROLARITY_SHIFT)               /* 0x00000100 */
+#define TSADC_AUTO_CON_SRC0_LT_EN_SHIFT                    (12U)
+#define TSADC_AUTO_CON_SRC0_LT_EN_MASK                     (0x1U << TSADC_AUTO_CON_SRC0_LT_EN_SHIFT)                    /* 0x00001000 */
+#define TSADC_AUTO_CON_SRC1_LT_EN_SHIFT                    (13U)
+#define TSADC_AUTO_CON_SRC1_LT_EN_MASK                     (0x1U << TSADC_AUTO_CON_SRC1_LT_EN_SHIFT)                    /* 0x00002000 */
+#define TSADC_AUTO_CON_AUTO_STATUS_SHIFT                   (16U)
+#define TSADC_AUTO_CON_AUTO_STATUS_MASK                    (0x1U << TSADC_AUTO_CON_AUTO_STATUS_SHIFT)                   /* 0x00010000 */
+#define TSADC_AUTO_CON_SAMPLE_DLY_SEL_SHIFT                (17U)
+#define TSADC_AUTO_CON_SAMPLE_DLY_SEL_MASK                 (0x1U << TSADC_AUTO_CON_SAMPLE_DLY_SEL_SHIFT)                /* 0x00020000 */
+#define TSADC_AUTO_CON_LAST_TSHUT_2GPIO_SHIFT              (24U)
+#define TSADC_AUTO_CON_LAST_TSHUT_2GPIO_MASK               (0x1U << TSADC_AUTO_CON_LAST_TSHUT_2GPIO_SHIFT)              /* 0x01000000 */
+#define TSADC_AUTO_CON_LAST_TSHUT_2CRU_SHIFT               (25U)
+#define TSADC_AUTO_CON_LAST_TSHUT_2CRU_MASK                (0x1U << TSADC_AUTO_CON_LAST_TSHUT_2CRU_SHIFT)               /* 0x02000000 */
+/* INT_EN */
+#define TSADC_INT_EN_HT_INTEN_SRC0_SHIFT                   (0U)
+#define TSADC_INT_EN_HT_INTEN_SRC0_MASK                    (0x1U << TSADC_INT_EN_HT_INTEN_SRC0_SHIFT)                   /* 0x00000001 */
+#define TSADC_INT_EN_HT_INTEN_SRC1_SHIFT                   (1U)
+#define TSADC_INT_EN_HT_INTEN_SRC1_MASK                    (0x1U << TSADC_INT_EN_HT_INTEN_SRC1_SHIFT)                   /* 0x00000002 */
+#define TSADC_INT_EN_TSHUT_2GPIO_EN_SRC0_SHIFT             (4U)
+#define TSADC_INT_EN_TSHUT_2GPIO_EN_SRC0_MASK              (0x1U << TSADC_INT_EN_TSHUT_2GPIO_EN_SRC0_SHIFT)             /* 0x00000010 */
+#define TSADC_INT_EN_TSHUT_2GPIO_EN_SRC1_SHIFT             (5U)
+#define TSADC_INT_EN_TSHUT_2GPIO_EN_SRC1_MASK              (0x1U << TSADC_INT_EN_TSHUT_2GPIO_EN_SRC1_SHIFT)             /* 0x00000020 */
+#define TSADC_INT_EN_TSHUT_2CRU_EN_SRC0_SHIFT              (8U)
+#define TSADC_INT_EN_TSHUT_2CRU_EN_SRC0_MASK               (0x1U << TSADC_INT_EN_TSHUT_2CRU_EN_SRC0_SHIFT)              /* 0x00000100 */
+#define TSADC_INT_EN_TSHUT_2CRU_EN_SRC1_SHIFT              (9U)
+#define TSADC_INT_EN_TSHUT_2CRU_EN_SRC1_MASK               (0x1U << TSADC_INT_EN_TSHUT_2CRU_EN_SRC1_SHIFT)              /* 0x00000200 */
+#define TSADC_INT_EN_LT_INTEN_SRC0_SHIFT                   (12U)
+#define TSADC_INT_EN_LT_INTEN_SRC0_MASK                    (0x1U << TSADC_INT_EN_LT_INTEN_SRC0_SHIFT)                   /* 0x00001000 */
+#define TSADC_INT_EN_LT_INTEN_SRC1_SHIFT                   (13U)
+#define TSADC_INT_EN_LT_INTEN_SRC1_MASK                    (0x1U << TSADC_INT_EN_LT_INTEN_SRC1_SHIFT)                   /* 0x00002000 */
+#define TSADC_INT_EN_EOC_INT_EN_SHIFT                      (16U)
+#define TSADC_INT_EN_EOC_INT_EN_MASK                       (0x1U << TSADC_INT_EN_EOC_INT_EN_SHIFT)                      /* 0x00010000 */
+/* INT_PD */
+#define TSADC_INT_PD_HT_IRQ_SRC0_SHIFT                     (0U)
+#define TSADC_INT_PD_HT_IRQ_SRC0_MASK                      (0x1U << TSADC_INT_PD_HT_IRQ_SRC0_SHIFT)                     /* 0x00000001 */
+#define TSADC_INT_PD_HT_IRQ_SRC1_SHIFT                     (1U)
+#define TSADC_INT_PD_HT_IRQ_SRC1_MASK                      (0x1U << TSADC_INT_PD_HT_IRQ_SRC1_SHIFT)                     /* 0x00000002 */
+#define TSADC_INT_PD_TSHUT_O_SRC0_SHIFT                    (4U)
+#define TSADC_INT_PD_TSHUT_O_SRC0_MASK                     (0x1U << TSADC_INT_PD_TSHUT_O_SRC0_SHIFT)                    /* 0x00000010 */
+#define TSADC_INT_PD_TSHUT_O_SRC1_SHIFT                    (5U)
+#define TSADC_INT_PD_TSHUT_O_SRC1_MASK                     (0x1U << TSADC_INT_PD_TSHUT_O_SRC1_SHIFT)                    /* 0x00000020 */
+#define TSADC_INT_PD_LT_IRQ_SRC0_SHIFT                     (12U)
+#define TSADC_INT_PD_LT_IRQ_SRC0_MASK                      (0x1U << TSADC_INT_PD_LT_IRQ_SRC0_SHIFT)                     /* 0x00001000 */
+#define TSADC_INT_PD_LT_IRQ_SRC1_SHIFT                     (13U)
+#define TSADC_INT_PD_LT_IRQ_SRC1_MASK                      (0x1U << TSADC_INT_PD_LT_IRQ_SRC1_SHIFT)                     /* 0x00002000 */
+#define TSADC_INT_PD_EOC_INT_PD_SHIFT                      (16U)
+#define TSADC_INT_PD_EOC_INT_PD_MASK                       (0x1U << TSADC_INT_PD_EOC_INT_PD_SHIFT)                      /* 0x00010000 */
+/* DATA0 */
+#define TSADC_DATA0_ADC_DATA_SHIFT                         (0U)
+#define TSADC_DATA0_ADC_DATA_MASK                          (0xFFFU << TSADC_DATA0_ADC_DATA_SHIFT)                       /* 0x00000FFF */
+/* DATA1 */
+#define TSADC_DATA1_ADC_DATA_SHIFT                         (0U)
+#define TSADC_DATA1_ADC_DATA_MASK                          (0xFFFU << TSADC_DATA1_ADC_DATA_SHIFT)                       /* 0x00000FFF */
+/* COMP0_INT */
+#define TSADC_COMP0_INT_TSADC_COMP_SRC0_SHIFT              (0U)
+#define TSADC_COMP0_INT_TSADC_COMP_SRC0_MASK               (0xFFFU << TSADC_COMP0_INT_TSADC_COMP_SRC0_SHIFT)            /* 0x00000FFF */
+/* COMP1_INT */
+#define TSADC_COMP1_INT_TSADC_COMP_SRC1_SHIFT              (0U)
+#define TSADC_COMP1_INT_TSADC_COMP_SRC1_MASK               (0xFFFU << TSADC_COMP1_INT_TSADC_COMP_SRC1_SHIFT)            /* 0x00000FFF */
+/* COMP0_SHUT */
+#define TSADC_COMP0_SHUT_TSADC_COMP_SRC0_SHIFT             (0U)
+#define TSADC_COMP0_SHUT_TSADC_COMP_SRC0_MASK              (0xFFFU << TSADC_COMP0_SHUT_TSADC_COMP_SRC0_SHIFT)           /* 0x00000FFF */
+/* COMP1_SHUT */
+#define TSADC_COMP1_SHUT_TSADC_COMP_SRC1_SHIFT             (0U)
+#define TSADC_COMP1_SHUT_TSADC_COMP_SRC1_MASK              (0xFFFU << TSADC_COMP1_SHUT_TSADC_COMP_SRC1_SHIFT)           /* 0x00000FFF */
+/* HIGHT_INT_DEBOUNCE */
+#define TSADC_HIGHT_INT_DEBOUNCE_DEBOUNCE_SHIFT            (0U)
+#define TSADC_HIGHT_INT_DEBOUNCE_DEBOUNCE_MASK             (0xFFU << TSADC_HIGHT_INT_DEBOUNCE_DEBOUNCE_SHIFT)           /* 0x000000FF */
+/* HIGHT_TSHUT_DEBOUNCE */
+#define TSADC_HIGHT_TSHUT_DEBOUNCE_DEBOUNCE_SHIFT          (0U)
+#define TSADC_HIGHT_TSHUT_DEBOUNCE_DEBOUNCE_MASK           (0xFFU << TSADC_HIGHT_TSHUT_DEBOUNCE_DEBOUNCE_SHIFT)         /* 0x000000FF */
+/* AUTO_PERIOD */
+#define TSADC_AUTO_PERIOD_AUTO_PERIOD_SHIFT                (0U)
+#define TSADC_AUTO_PERIOD_AUTO_PERIOD_MASK                 (0xFFFFFFFFU << TSADC_AUTO_PERIOD_AUTO_PERIOD_SHIFT)         /* 0xFFFFFFFF */
+/* AUTO_PERIOD_HT */
+#define TSADC_AUTO_PERIOD_HT_AUTO_PERIOD_SHIFT             (0U)
+#define TSADC_AUTO_PERIOD_HT_AUTO_PERIOD_MASK              (0xFFFFFFFFU << TSADC_AUTO_PERIOD_HT_AUTO_PERIOD_SHIFT)      /* 0xFFFFFFFF */
+/* COMP0_LOW_INT */
+#define TSADC_COMP0_LOW_INT_TSADC_COMP_SRC0_SHIFT          (0U)
+#define TSADC_COMP0_LOW_INT_TSADC_COMP_SRC0_MASK           (0xFFFU << TSADC_COMP0_LOW_INT_TSADC_COMP_SRC0_SHIFT)        /* 0x00000FFF */
+/* COMP1_LOW_INT */
+#define TSADC_COMP1_LOW_INT_TSADC_COMP_SRC1_SHIFT          (0U)
+#define TSADC_COMP1_LOW_INT_TSADC_COMP_SRC1_MASK           (0xFFFU << TSADC_COMP1_LOW_INT_TSADC_COMP_SRC1_SHIFT)        /* 0x00000FFF */
 /**************************************I2S_TDM_8CH***************************************/
 /* TXCR */
 #define I2S_TDM_8CH_TXCR_VDW_SHIFT                         (0U)
