@@ -874,25 +874,6 @@ struct TSADC_REG {
     __IO uint32_t COMP0_LOW_INT;                      /* Address Offset: 0x0080 */
     __IO uint32_t COMP1_LOW_INT;                      /* Address Offset: 0x0084 */
 };
-/* I2S_TDM_8CH Register Structure Define */
-struct I2S_REG {
-    __IO uint32_t TXCR;                               /* Address Offset: 0x0000 */
-    __IO uint32_t RXCR;                               /* Address Offset: 0x0004 */
-    __IO uint32_t CKR;                                /* Address Offset: 0x0008 */
-    __IO uint32_t TXFIFOLR;                           /* Address Offset: 0x000C */
-    __IO uint32_t DMACR;                              /* Address Offset: 0x0010 */
-    __IO uint32_t INTCR;                              /* Address Offset: 0x0014 */
-    __IO uint32_t INTSR;                              /* Address Offset: 0x0018 */
-    __IO uint32_t XFER;                               /* Address Offset: 0x001C */
-    __IO uint32_t CLR;                                /* Address Offset: 0x0020 */
-    __IO uint32_t TXDR;                               /* Address Offset: 0x0024 */
-    __IO uint32_t RXDR;                               /* Address Offset: 0x0028 */
-    __IO uint32_t RXFIFOLR;                           /* Address Offset: 0x002C */
-    __IO uint32_t TDM_TXCTRL;                         /* Address Offset: 0x0030 */
-    __IO uint32_t TDM_RXCTRL;                         /* Address Offset: 0x0034 */
-    __IO uint32_t CLKDIV;                             /* Address Offset: 0x0038 */
-    __IO uint32_t VERSION;                            /* Address Offset: 0x003C */
-};
 /* PDM Register Structure Define */
 struct PDM_REG {
     __IO uint32_t SYSCONFIG;                          /* Address Offset: 0x0000 */
@@ -916,6 +897,27 @@ struct PDM_REG {
     __I  uint32_t DATA3L_REG;                         /* Address Offset: 0x0050 */
     __I  uint32_t DATA_VALID;                         /* Address Offset: 0x0054 */
     __I  uint32_t VERSION;                            /* Address Offset: 0x0058 */
+         uint32_t RESERVED1[233];                     /* Address Offset: 0x005C */
+    __I  uint32_t INCR_RXDR;                          /* Address Offset: 0x0400 */
+};
+/* I2STDM Register Structure Define */
+struct I2STDM_REG {
+    __IO uint32_t TXCR;                               /* Address Offset: 0x0000 */
+    __IO uint32_t RXCR;                               /* Address Offset: 0x0004 */
+    __IO uint32_t CKR;                                /* Address Offset: 0x0008 */
+    __IO uint32_t TXFIFOLR;                           /* Address Offset: 0x000C */
+    __IO uint32_t DMACR;                              /* Address Offset: 0x0010 */
+    __IO uint32_t INTCR;                              /* Address Offset: 0x0014 */
+    __IO uint32_t INTSR;                              /* Address Offset: 0x0018 */
+    __IO uint32_t XFER;                               /* Address Offset: 0x001C */
+    __IO uint32_t CLR;                                /* Address Offset: 0x0020 */
+    __IO uint32_t TXDR;                               /* Address Offset: 0x0024 */
+    __IO uint32_t RXDR;                               /* Address Offset: 0x0028 */
+    __IO uint32_t RXFIFOLR;                           /* Address Offset: 0x002C */
+    __IO uint32_t TDM_TXCTRL;                         /* Address Offset: 0x0030 */
+    __IO uint32_t TDM_RXCTRL;                         /* Address Offset: 0x0034 */
+    __IO uint32_t CLKDIV;                             /* Address Offset: 0x0038 */
+    __IO uint32_t VERSION;                            /* Address Offset: 0x003C */
 };
 /* VAD Register Structure Define */
 struct VAD_REG {
@@ -1273,7 +1275,7 @@ struct USB_HOST_CH_REG {
 #define TSADC_BASE          0x410A0000U /* TSADC base address */
 #define I2S0_BASE           0x41100000U /* I2S0 base address */
 #define I2S1_BASE           0x41110000U /* I2S1 base address */
-#define PDM_BASE            0x41120000U /* PDM base address */
+#define PDM0_BASE           0x41120000U /* PDM base address */
 #define VAD_BASE            0x41130000U /* VAD base address */
 #define LPW_SYSBUS_BASE     0x42000000U /* LPW_SYSBUS base address */
 #define LPW_PBUS_BASE       0x42040000U /* LPW_PBUS base address */
@@ -1328,9 +1330,9 @@ struct USB_HOST_CH_REG {
 #define PVTM                ((struct PVTM_REG *) PVTM_BASE)
 #define TOUCH_SENSOR        ((struct TOUCH_SENSOR_REG *) TOUCH_SENSOR_BASE)
 #define TSADC               ((struct TSADC_REG *) TSADC_BASE)
-#define I2S0                ((struct I2S_REG *) I2S0_BASE)
-#define I2S1                ((struct I2S_REG *) I2S1_BASE)
-#define PDM                 ((struct PDM_REG *) PDM_BASE)
+#define I2STDM0             ((struct I2STDM_REG *) I2S0_BASE)
+#define I2STDM1             ((struct I2STDM_REG *) I2S1_BASE)
+#define PDM0                ((struct PDM_REG *) PDM0_BASE)
 #define VAD                 ((struct VAD_REG *) VAD_BASE)
 #define LPW_SYSBUS          ((struct LPW_SYSBUS_REG *) LPW_SYSBUS_BASE)
 #define LPW_PBUS            ((struct LPW_PBUS_REG *) LPW_PBUS_BASE)
@@ -1350,7 +1352,7 @@ struct USB_HOST_CH_REG {
 #define IS_PVTM_INSTANCE(instance) ((instance) == PVTM)
 #define IS_TOUCH_SENSOR_INSTANCE(instance) ((instance) == TOUCH_SENSOR)
 #define IS_TSADC_INSTANCE(instance) ((instance) == TSADC)
-#define IS_PDM_INSTANCE(instance) ((instance) == PDM)
+#define IS_PDM_INSTANCE(instance) ((instance) == PDM0)
 #define IS_VAD_INSTANCE(instance) ((instance) == VAD)
 #define IS_LPW_SYSBUS_INSTANCE(instance) ((instance) == LPW_SYSBUS)
 #define IS_LPW_PBUS_INSTANCE(instance) ((instance) == LPW_PBUS)
@@ -1370,7 +1372,7 @@ struct USB_HOST_CH_REG {
 #define IS_ICACHE_INSTANCE(instance) ((instance) == ICACHE)
 #define IS_DCACHE_INSTANCE(instance) ((instance) == DCACHE)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
-#define IS_I2S_INSTANCE(instance) (((instance) == I2S0) || ((instance) == I2S1))
+#define IS_I2S_INSTANCE(instance) (((instance) == I2STDM0) || ((instance) == I2STDM1))
 #define IS_PCD_INSTANCE(instance) ((instance) == USB)
 #define IS_HCD_INSTANCE(instance) ((instance) == USB)
 /****************************************************************************************/
@@ -6750,6 +6752,176 @@ struct USB_HOST_CH_REG {
 /* VERSION */
 #define PDM_VERSION_VERSION_SHIFT                          (0U)
 #define PDM_VERSION_VERSION_MASK                           (0xFFFFFFFFU << PDM_VERSION_VERSION_SHIFT)                   /* 0xFFFFFFFF */
+/* INCR_RXDR */
+#define PDM_INCR_RXDR_RECEIVE_FIFO_DATA_SHIFT              (0U)
+#define PDM_INCR_RXDR_RECEIVE_FIFO_DATA_MASK               (0xFFFFFFFFU << PDM_INCR_RXDR_RECEIVE_FIFO_DATA_SHIFT)       /* 0xFFFFFFFF */
+/******************************************I2STDM*******************************************/
+/* TXCR */
+#define I2STDM_TXCR_VDW_SHIFT                                 (0U)
+#define I2STDM_TXCR_VDW_MASK                                  (0x1FU << I2STDM_TXCR_VDW_SHIFT)                                /* 0x0000001F */
+#define I2STDM_TXCR_TFS_SHIFT                                 (5U)
+#define I2STDM_TXCR_TFS_MASK                                  (0x3U << I2STDM_TXCR_TFS_SHIFT)                                 /* 0x00000060 */
+#define I2STDM_TXCR_PBM_SHIFT                                 (7U)
+#define I2STDM_TXCR_PBM_MASK                                  (0x3U << I2STDM_TXCR_PBM_SHIFT)                                 /* 0x00000180 */
+#define I2STDM_TXCR_IBM_SHIFT                                 (9U)
+#define I2STDM_TXCR_IBM_MASK                                  (0x3U << I2STDM_TXCR_IBM_SHIFT)                                 /* 0x00000600 */
+#define I2STDM_TXCR_FBM_SHIFT                                 (11U)
+#define I2STDM_TXCR_FBM_MASK                                  (0x1U << I2STDM_TXCR_FBM_SHIFT)                                 /* 0x00000800 */
+#define I2STDM_TXCR_SJM_SHIFT                                 (12U)
+#define I2STDM_TXCR_SJM_MASK                                  (0x1U << I2STDM_TXCR_SJM_SHIFT)                                 /* 0x00001000 */
+#define I2STDM_TXCR_HWT_SHIFT                                 (14U)
+#define I2STDM_TXCR_HWT_MASK                                  (0x1U << I2STDM_TXCR_HWT_SHIFT)                                 /* 0x00004000 */
+#define I2STDM_TXCR_TCSR_SHIFT                                (15U)
+#define I2STDM_TXCR_TCSR_MASK                                 (0x3U << I2STDM_TXCR_TCSR_SHIFT)                                /* 0x00018000 */
+#define I2STDM_TXCR_RCNT_SHIFT                                (17U)
+#define I2STDM_TXCR_RCNT_MASK                                 (0x3FU << I2STDM_TXCR_RCNT_SHIFT)                               /* 0x007E0000 */
+#define I2STDM_TXCR_TX_PATH_SELECT0_SHIFT                     (23U)
+#define I2STDM_TXCR_TX_PATH_SELECT0_MASK                      (0x3U << I2STDM_TXCR_TX_PATH_SELECT0_SHIFT)                     /* 0x01800000 */
+#define I2STDM_TXCR_TX_PATH_SELECT1_SHIFT                     (25U)
+#define I2STDM_TXCR_TX_PATH_SELECT1_MASK                      (0x3U << I2STDM_TXCR_TX_PATH_SELECT1_SHIFT)                     /* 0x06000000 */
+#define I2STDM_TXCR_TX_PATH_SELECT2_SHIFT                     (27U)
+#define I2STDM_TXCR_TX_PATH_SELECT2_MASK                      (0x3U << I2STDM_TXCR_TX_PATH_SELECT2_SHIFT)                     /* 0x18000000 */
+#define I2STDM_TXCR_TX_PATH_SELECT3_SHIFT                     (29U)
+#define I2STDM_TXCR_TX_PATH_SELECT3_MASK                      (0x3U << I2STDM_TXCR_TX_PATH_SELECT3_SHIFT)                     /* 0x60000000 */
+/* RXCR */
+#define I2STDM_RXCR_VDW_SHIFT                                 (0U)
+#define I2STDM_RXCR_VDW_MASK                                  (0x1FU << I2STDM_RXCR_VDW_SHIFT)                                /* 0x0000001F */
+#define I2STDM_RXCR_TFS_SHIFT                                 (5U)
+#define I2STDM_RXCR_TFS_MASK                                  (0x3U << I2STDM_RXCR_TFS_SHIFT)                                 /* 0x00000060 */
+#define I2STDM_RXCR_PBM_SHIFT                                 (7U)
+#define I2STDM_RXCR_PBM_MASK                                  (0x3U << I2STDM_RXCR_PBM_SHIFT)                                 /* 0x00000180 */
+#define I2STDM_RXCR_IBM_SHIFT                                 (9U)
+#define I2STDM_RXCR_IBM_MASK                                  (0x3U << I2STDM_RXCR_IBM_SHIFT)                                 /* 0x00000600 */
+#define I2STDM_RXCR_FBM_SHIFT                                 (11U)
+#define I2STDM_RXCR_FBM_MASK                                  (0x1U << I2STDM_RXCR_FBM_SHIFT)                                 /* 0x00000800 */
+#define I2STDM_RXCR_SJM_SHIFT                                 (12U)
+#define I2STDM_RXCR_SJM_MASK                                  (0x1U << I2STDM_RXCR_SJM_SHIFT)                                 /* 0x00001000 */
+#define I2STDM_RXCR_HWT_SHIFT                                 (14U)
+#define I2STDM_RXCR_HWT_MASK                                  (0x1U << I2STDM_RXCR_HWT_SHIFT)                                 /* 0x00004000 */
+#define I2STDM_RXCR_RCSR_SHIFT                                (15U)
+#define I2STDM_RXCR_RCSR_MASK                                 (0x3U << I2STDM_RXCR_RCSR_SHIFT)                                /* 0x00018000 */
+#define I2STDM_RXCR_RX_PATH_SELECT0_SHIFT                     (17U)
+#define I2STDM_RXCR_RX_PATH_SELECT0_MASK                      (0x3U << I2STDM_RXCR_RX_PATH_SELECT0_SHIFT)                     /* 0x00060000 */
+#define I2STDM_RXCR_RX_PATH_SELECT1_SHIFT                     (19U)
+#define I2STDM_RXCR_RX_PATH_SELECT1_MASK                      (0x3U << I2STDM_RXCR_RX_PATH_SELECT1_SHIFT)                     /* 0x00180000 */
+#define I2STDM_RXCR_RX_PATH_SELECT2_SHIFT                     (21U)
+#define I2STDM_RXCR_RX_PATH_SELECT2_MASK                      (0x3U << I2STDM_RXCR_RX_PATH_SELECT2_SHIFT)                     /* 0x00600000 */
+#define I2STDM_RXCR_RX_PATH_SELECT3_SHIFT                     (23U)
+#define I2STDM_RXCR_RX_PATH_SELECT3_MASK                      (0x3U << I2STDM_RXCR_RX_PATH_SELECT3_SHIFT)                     /* 0x01800000 */
+/* CKR */
+#define I2STDM_CKR_TSD_SHIFT                                  (0U)
+#define I2STDM_CKR_TSD_MASK                                   (0xFFU << I2STDM_CKR_TSD_SHIFT)                                 /* 0x000000FF */
+#define I2STDM_CKR_RSD_SHIFT                                  (8U)
+#define I2STDM_CKR_RSD_MASK                                   (0xFFU << I2STDM_CKR_RSD_SHIFT)                                 /* 0x0000FF00 */
+#define I2STDM_CKR_TLP_SHIFT                                  (24U)
+#define I2STDM_CKR_TLP_MASK                                   (0x1U << I2STDM_CKR_TLP_SHIFT)                                  /* 0x01000000 */
+#define I2STDM_CKR_RLP_SHIFT                                  (25U)
+#define I2STDM_CKR_RLP_MASK                                   (0x1U << I2STDM_CKR_RLP_SHIFT)                                  /* 0x02000000 */
+#define I2STDM_CKR_CKP_SHIFT                                  (26U)
+#define I2STDM_CKR_CKP_MASK                                   (0x1U << I2STDM_CKR_CKP_SHIFT)                                  /* 0x04000000 */
+#define I2STDM_CKR_MSS_SHIFT                                  (27U)
+#define I2STDM_CKR_MSS_MASK                                   (0x1U << I2STDM_CKR_MSS_SHIFT)                                  /* 0x08000000 */
+#define I2STDM_CKR_LRCK_COMMON_SHIFT                          (28U)
+#define I2STDM_CKR_LRCK_COMMON_MASK                           (0x3U << I2STDM_CKR_LRCK_COMMON_SHIFT)                          /* 0x30000000 */
+/* TXFIFOLR */
+#define I2STDM_TXFIFOLR_TFL0_SHIFT                            (0U)
+#define I2STDM_TXFIFOLR_TFL0_MASK                             (0x3FU << I2STDM_TXFIFOLR_TFL0_SHIFT)                           /* 0x0000003F */
+#define I2STDM_TXFIFOLR_TFL1_SHIFT                            (6U)
+#define I2STDM_TXFIFOLR_TFL1_MASK                             (0x3FU << I2STDM_TXFIFOLR_TFL1_SHIFT)                           /* 0x00000FC0 */
+#define I2STDM_TXFIFOLR_TFL2_SHIFT                            (12U)
+#define I2STDM_TXFIFOLR_TFL2_MASK                             (0x3FU << I2STDM_TXFIFOLR_TFL2_SHIFT)                           /* 0x0003F000 */
+#define I2STDM_TXFIFOLR_TFL3_SHIFT                            (18U)
+#define I2STDM_TXFIFOLR_TFL3_MASK                             (0x3FU << I2STDM_TXFIFOLR_TFL3_SHIFT)                           /* 0x00FC0000 */
+/* DMACR */
+#define I2STDM_DMACR_TDL_SHIFT                                (0U)
+#define I2STDM_DMACR_TDL_MASK                                 (0x1FU << I2STDM_DMACR_TDL_SHIFT)                               /* 0x0000001F */
+#define I2STDM_DMACR_TDE_SHIFT                                (8U)
+#define I2STDM_DMACR_TDE_MASK                                 (0x1U << I2STDM_DMACR_TDE_SHIFT)                                /* 0x00000100 */
+#define I2STDM_DMACR_RDL_SHIFT                                (16U)
+#define I2STDM_DMACR_RDL_MASK                                 (0x1FU << I2STDM_DMACR_RDL_SHIFT)                               /* 0x001F0000 */
+#define I2STDM_DMACR_RDE_SHIFT                                (24U)
+#define I2STDM_DMACR_RDE_MASK                                 (0x1U << I2STDM_DMACR_RDE_SHIFT)                                /* 0x01000000 */
+/* INTCR */
+#define I2STDM_INTCR_TXEIE_SHIFT                              (0U)
+#define I2STDM_INTCR_TXEIE_MASK                               (0x1U << I2STDM_INTCR_TXEIE_SHIFT)                              /* 0x00000001 */
+#define I2STDM_INTCR_TXUIE_SHIFT                              (1U)
+#define I2STDM_INTCR_TXUIE_MASK                               (0x1U << I2STDM_INTCR_TXUIE_SHIFT)                              /* 0x00000002 */
+#define I2STDM_INTCR_TXUIC_SHIFT                              (2U)
+#define I2STDM_INTCR_TXUIC_MASK                               (0x1U << I2STDM_INTCR_TXUIC_SHIFT)                              /* 0x00000004 */
+#define I2STDM_INTCR_TFT_SHIFT                                (4U)
+#define I2STDM_INTCR_TFT_MASK                                 (0x1FU << I2STDM_INTCR_TFT_SHIFT)                               /* 0x000001F0 */
+#define I2STDM_INTCR_RXFIE_SHIFT                              (16U)
+#define I2STDM_INTCR_RXFIE_MASK                               (0x1U << I2STDM_INTCR_RXFIE_SHIFT)                              /* 0x00010000 */
+#define I2STDM_INTCR_RXOIE_SHIFT                              (17U)
+#define I2STDM_INTCR_RXOIE_MASK                               (0x1U << I2STDM_INTCR_RXOIE_SHIFT)                              /* 0x00020000 */
+#define I2STDM_INTCR_RXOIC_SHIFT                              (18U)
+#define I2STDM_INTCR_RXOIC_MASK                               (0x1U << I2STDM_INTCR_RXOIC_SHIFT)                              /* 0x00040000 */
+#define I2STDM_INTCR_RFT_SHIFT                                (20U)
+#define I2STDM_INTCR_RFT_MASK                                 (0x1FU << I2STDM_INTCR_RFT_SHIFT)                               /* 0x01F00000 */
+/* INTSR */
+#define I2STDM_INTSR_TXEI_SHIFT                               (0U)
+#define I2STDM_INTSR_TXEI_MASK                                (0x1U << I2STDM_INTSR_TXEI_SHIFT)                               /* 0x00000001 */
+#define I2STDM_INTSR_TXUI_SHIFT                               (1U)
+#define I2STDM_INTSR_TXUI_MASK                                (0x1U << I2STDM_INTSR_TXUI_SHIFT)                               /* 0x00000002 */
+#define I2STDM_INTSR_RXFI_SHIFT                               (16U)
+#define I2STDM_INTSR_RXFI_MASK                                (0x1U << I2STDM_INTSR_RXFI_SHIFT)                               /* 0x00010000 */
+#define I2STDM_INTSR_RXOI_SHIFT                               (17U)
+#define I2STDM_INTSR_RXOI_MASK                                (0x1U << I2STDM_INTSR_RXOI_SHIFT)                               /* 0x00020000 */
+/* XFER */
+#define I2STDM_XFER_TXS_SHIFT                                 (0U)
+#define I2STDM_XFER_TXS_MASK                                  (0x1U << I2STDM_XFER_TXS_SHIFT)                                 /* 0x00000001 */
+#define I2STDM_XFER_RXS_SHIFT                                 (1U)
+#define I2STDM_XFER_RXS_MASK                                  (0x1U << I2STDM_XFER_RXS_SHIFT)                                 /* 0x00000002 */
+/* CLR */
+#define I2STDM_CLR_TXC_SHIFT                                  (0U)
+#define I2STDM_CLR_TXC_MASK                                   (0x1U << I2STDM_CLR_TXC_SHIFT)                                  /* 0x00000001 */
+#define I2STDM_CLR_RXC_SHIFT                                  (1U)
+#define I2STDM_CLR_RXC_MASK                                   (0x1U << I2STDM_CLR_RXC_SHIFT)                                  /* 0x00000002 */
+/* TXDR */
+#define I2STDM_TXDR_TXDR_SHIFT                                (0U)
+#define I2STDM_TXDR_TXDR_MASK                                 (0xFFFFFFFFU << I2STDM_TXDR_TXDR_SHIFT)                         /* 0xFFFFFFFF */
+/* RXDR */
+#define I2STDM_RXDR_RXDR_SHIFT                                (0U)
+#define I2STDM_RXDR_RXDR_MASK                                 (0xFFFFFFFFU << I2STDM_RXDR_RXDR_SHIFT)                         /* 0xFFFFFFFF */
+/* RXFIFOLR */
+#define I2STDM_RXFIFOLR_RFL0_SHIFT                            (0U)
+#define I2STDM_RXFIFOLR_RFL0_MASK                             (0x3FU << I2STDM_RXFIFOLR_RFL0_SHIFT)                           /* 0x0000003F */
+#define I2STDM_RXFIFOLR_RFL1_SHIFT                            (6U)
+#define I2STDM_RXFIFOLR_RFL1_MASK                             (0x3FU << I2STDM_RXFIFOLR_RFL1_SHIFT)                           /* 0x00000FC0 */
+#define I2STDM_RXFIFOLR_RFL2_SHIFT                            (12U)
+#define I2STDM_RXFIFOLR_RFL2_MASK                             (0x3FU << I2STDM_RXFIFOLR_RFL2_SHIFT)                           /* 0x0003F000 */
+#define I2STDM_RXFIFOLR_RFL3_SHIFT                            (18U)
+#define I2STDM_RXFIFOLR_RFL3_MASK                             (0x3FU << I2STDM_RXFIFOLR_RFL3_SHIFT)                           /* 0x00FC0000 */
+/* TDM_TXCTRL */
+#define I2STDM_TDM_TXCTRL_TDM_TX_FRAME_WIDTH_SHIFT            (0U)
+#define I2STDM_TDM_TXCTRL_TDM_TX_FRAME_WIDTH_MASK             (0x1FFU << I2STDM_TDM_TXCTRL_TDM_TX_FRAME_WIDTH_SHIFT)          /* 0x000001FF */
+#define I2STDM_TDM_TXCTRL_TDM_TX_SLOT_BIT_WIDTH_SHIFT         (9U)
+#define I2STDM_TDM_TXCTRL_TDM_TX_SLOT_BIT_WIDTH_MASK          (0x1FU << I2STDM_TDM_TXCTRL_TDM_TX_SLOT_BIT_WIDTH_SHIFT)        /* 0x00003E00 */
+#define I2STDM_TDM_TXCTRL_TDM_TX_SHIFT_CTRL_SHIFT             (14U)
+#define I2STDM_TDM_TXCTRL_TDM_TX_SHIFT_CTRL_MASK              (0x7U << I2STDM_TDM_TXCTRL_TDM_TX_SHIFT_CTRL_SHIFT)             /* 0x0001C000 */
+#define I2STDM_TDM_TXCTRL_TX_TDM_FSYNC_WIDTH_SEL0_SHIFT       (17U)
+#define I2STDM_TDM_TXCTRL_TX_TDM_FSYNC_WIDTH_SEL0_MASK        (0x1U << I2STDM_TDM_TXCTRL_TX_TDM_FSYNC_WIDTH_SEL0_SHIFT)       /* 0x00020000 */
+#define I2STDM_TDM_TXCTRL_TX_TDM_FSYNC_WIDTH_SEL1_SHIFT       (18U)
+#define I2STDM_TDM_TXCTRL_TX_TDM_FSYNC_WIDTH_SEL1_MASK        (0x7U << I2STDM_TDM_TXCTRL_TX_TDM_FSYNC_WIDTH_SEL1_SHIFT)       /* 0x001C0000 */
+/* TDM_RXCTRL */
+#define I2STDM_TDM_RXCTRL_TDM_RX_FRAME_WIDTH_SHIFT            (0U)
+#define I2STDM_TDM_RXCTRL_TDM_RX_FRAME_WIDTH_MASK             (0x1FFU << I2STDM_TDM_RXCTRL_TDM_RX_FRAME_WIDTH_SHIFT)          /* 0x000001FF */
+#define I2STDM_TDM_RXCTRL_TDM_RX_SLOT_BIT_WIDTH_SHIFT         (9U)
+#define I2STDM_TDM_RXCTRL_TDM_RX_SLOT_BIT_WIDTH_MASK          (0x1FU << I2STDM_TDM_RXCTRL_TDM_RX_SLOT_BIT_WIDTH_SHIFT)        /* 0x00003E00 */
+#define I2STDM_TDM_RXCTRL_TDM_RX_SHIFT_CTRL_SHIFT             (14U)
+#define I2STDM_TDM_RXCTRL_TDM_RX_SHIFT_CTRL_MASK              (0x7U << I2STDM_TDM_RXCTRL_TDM_RX_SHIFT_CTRL_SHIFT)             /* 0x0001C000 */
+#define I2STDM_TDM_RXCTRL_RX_TDM_FSYNC_WIDTH_SEL0_SHIFT       (17U)
+#define I2STDM_TDM_RXCTRL_RX_TDM_FSYNC_WIDTH_SEL0_MASK        (0x1U << I2STDM_TDM_RXCTRL_RX_TDM_FSYNC_WIDTH_SEL0_SHIFT)       /* 0x00020000 */
+#define I2STDM_TDM_RXCTRL_RX_TDM_FSYNC_WIDTH_SEL1_SHIFT       (18U)
+#define I2STDM_TDM_RXCTRL_RX_TDM_FSYNC_WIDTH_SEL1_MASK        (0x7U << I2STDM_TDM_RXCTRL_RX_TDM_FSYNC_WIDTH_SEL1_SHIFT)       /* 0x001C0000 */
+/* CLKDIV */
+#define I2STDM_CLKDIV_TX_MDIV_SHIFT                           (0U)
+#define I2STDM_CLKDIV_TX_MDIV_MASK                            (0xFFU << I2STDM_CLKDIV_TX_MDIV_SHIFT)                          /* 0x000000FF */
+#define I2STDM_CLKDIV_RX_MDIV_SHIFT                           (8U)
+#define I2STDM_CLKDIV_RX_MDIV_MASK                            (0xFFU << I2STDM_CLKDIV_RX_MDIV_SHIFT)                          /* 0x0000FF00 */
+/* VERSION */
+#define I2STDM_VERSION_I2S_VERSION_SHIFT                      (0U)
+#define I2STDM_VERSION_I2S_VERSION_MASK                       (0xFFFFFFFFU << I2STDM_VERSION_I2S_VERSION_SHIFT)               /* 0xFFFFFFFF */
 /******************************************VAD*******************************************/
 /* CONTROL */
 #define VAD_CONTROL_VAD_EN_SHIFT                           (0U)
