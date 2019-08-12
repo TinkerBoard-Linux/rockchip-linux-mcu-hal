@@ -694,6 +694,7 @@ struct CRU_REG {
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1))
 #define IS_WDT_INSTANCE(instance) (((instance) == WDT0) || ((instance) == WDT1))
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2))
+#define IS_PWM_INSTANCE(instance) ((instance) == PWM)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO0))
 /****************************************************************************************/
 /*                                                                                      */
