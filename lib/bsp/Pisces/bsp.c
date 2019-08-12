@@ -83,7 +83,7 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
     },
 };
 
-HAL_Status BSP_I2S_Init(void)
+HAL_Status BSP_I2STDM_Init(void)
 {
     /* CLK Init */
 
@@ -91,7 +91,7 @@ HAL_Status BSP_I2S_Init(void)
     return HAL_OK;
 }
 
-HAL_Status BSP_I2S_DeInit(void)
+HAL_Status BSP_I2STDM_DeInit(void)
 {
     /* CLK Init */
 
@@ -249,8 +249,8 @@ void BSP_DeInit(void)
     BSP_ACDCDIG_DeInit();
 #endif
 
-#ifdef HAL_I2S_MODULE_ENABLED
-    BSP_I2S_DeInit();
+#ifdef HAL_I2STDM_MODULE_ENABLED
+    BSP_I2STDM_DeInit();
 #endif
 
 #ifdef HAL_PDM_MODULE_ENABLED
@@ -276,8 +276,8 @@ void BSP_Init(void)
     BSP_PL330_Init();
 #endif
 
-#ifdef HAL_I2S_MODULE_ENABLED
-    BSP_I2S_Init();
+#ifdef HAL_I2STDM_MODULE_ENABLED
+    BSP_I2STDM_Init();
 #endif
 
 #ifdef HAL_PDM_MODULE_ENABLED
