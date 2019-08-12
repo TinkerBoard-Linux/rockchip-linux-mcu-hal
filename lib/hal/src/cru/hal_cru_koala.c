@@ -153,11 +153,21 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
     switch (clockName) {
     case CLK_UART0:
+        if (rate == PLL_INPUT_OSC_RATE) {
+            HAL_CRU_ClkSetMux(mux, UART0_CLK_SEL_XIN_OSC);
+
+            return HAL_OK;
+        }
         muxSrc = CLK_GET_MUX(CLK_UART0_SRC);
         divSrc = CLK_GET_DIV(CLK_UART0_SRC);
         divFrac = CLK_GET_DIV(CLK_UART0_FRAC);
         break;
     case CLK_UART1:
+        if (rate == PLL_INPUT_OSC_RATE) {
+            HAL_CRU_ClkSetMux(mux, UART1_CLK_SEL_XIN_OSC);
+
+            return HAL_OK;
+        }
         muxSrc = CLK_GET_MUX(CLK_UART1_SRC);
         divSrc = CLK_GET_DIV(CLK_UART1_SRC);
         divFrac = CLK_GET_DIV(CLK_UART1_FRAC);
