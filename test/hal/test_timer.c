@@ -9,7 +9,7 @@
 
 #ifdef HAL_TIMER_MODULE_ENABLED
 
-static uint32_t isrActive;
+static uint32_t isrActive, timeOut;
 
 static uint64_t TIMER_getReloadNum(struct TIMER_REG *pReg)
 {
@@ -22,7 +22,8 @@ static uint64_t TIMER_getReloadNum(struct TIMER_REG *pReg)
 
 HAL_Status HAL_TIMER0_Handler(void)
 {
-    HAL_TIMER_ClrInt(TIMER0);
+    if (HAL_TIMER_ClrInt(TIMER0))
+        timeOut++;
     isrActive++;
 
     return HAL_OK;
@@ -117,6 +118,7 @@ TEST(HAL_TIMER, TimerStartStop){
 
     /* test timer0 stop in IT mode */
     isrActive = 0;
+    timeOut = 0;
     HAL_TIMER_Init(TIMER0, TIMER_FREE_RUNNING);
     HAL_TIMER_SetCount(TIMER0, HAL_DivU64((uint64_t)PLL_INPUT_OSC_RATE, 1000)); /* Ms count */
     HAL_TIMER_Start_IT(TIMER0);
@@ -126,8 +128,8 @@ TEST(HAL_TIMER, TimerStartStop){
     HAL_TIMER_Stop_IT(TIMER0);
     ret = HAL_TIMER_GetCount(TIMER0);
     TEST_ASSERT(ret == HAL_TIMER_GetCount(TIMER0)); /* test stop*/
-    HAL_DBG("TimerStartStop test %d isrActive %lu\n", __LINE__, isrActive);
-    TEST_ASSERT(isrActive >= 998 && isrActive <= 1002);
+    HAL_DBG("TimerStartStop test %d isrActive %lu timeOut %lu\n", __LINE__, isrActive, timeOut);
+    TEST_ASSERT(isrActive >= 995 && isrActive <= 1005);
 }
 
 TEST_GROUP_RUNNER(HAL_TIMER){
