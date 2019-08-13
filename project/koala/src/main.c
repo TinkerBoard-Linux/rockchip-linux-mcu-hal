@@ -62,6 +62,40 @@ void UART_IRQHandler(void)
     HAL_UART_HandleIrq(pUart);
 }
 
+#define DUMP_CLK(NAME, ID, RATE) \
+    { .name = NAME, .clkId = ID, .initRate = RATE, }
+
+struct CLK_DUMP {
+    const char *name;
+    uint32_t clkId;
+    uint32_t initRate;
+};
+
+static const struct CLK_DUMP s_clkInits[] =
+{
+    DUMP_CLK("PLL_GPLL", PLL_GPLL, 104000000),
+    DUMP_CLK("HCLK_MCU", HCLK_MCU, 104000000),
+    DUMP_CLK("PCLK_MCU", PCLK_MCU, 26000000),
+    DUMP_CLK("CLK_BT52M", CLK_BT52M, 52000000),
+    DUMP_CLK("HCLK_BT", HCLK_BT, 104000000),
+    DUMP_CLK("PCLK_PMU", PCLK_PMU, 26000000),
+    DUMP_CLK("PLL_CPLL", PLL_CPLL, 240000000),
+    DUMP_CLK("CLK_DSP", CLK_DSP, 120000000),
+};
+
+void ClkInit(const struct CLK_DUMP *clkInits, int clkInitNum, bool clkDump)
+{
+    int i;
+
+    for (i = 0; i < clkInitNum; i++) {
+        if (clkInits[i].initRate) {
+            HAL_CRU_ClkSetFreq(clkInits[i].clkId, clkInits[i].initRate);
+        }
+        if (clkDump)
+            HAL_DBG("%s: %s = %ld\n", __func__, clkInits[i].name, HAL_CRU_ClkGetFreq(clkInits[i].clkId));
+    }
+}
+
 int main(void)
 {
     struct HAL_UART_CONFIG hal_uart_config = {
@@ -77,6 +111,8 @@ int main(void)
 
     /* BSP Init */
     BSP_Init();
+
+    ClkInit(s_clkInits, HAL_ARRAY_SIZE(s_clkInits), 0);
 
     /* UART Init */
     HAL_NVIC_SetIRQHandler(UART0_IRQn, UART_IRQHandler);
