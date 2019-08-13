@@ -621,6 +621,10 @@ struct CRU_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
+#define DSP_ITCM_BASE       0x30000000U /* DSP itcm base address */
+#define DSP_ITCM_END        0x3000ffffU /* DSP itcm end address */
+#define DSP_DTCM_BASE       0x30200000U /* DSP dtcm base address */
+#define DSP_DTCM_END        0x3023ffffU /* DSP dtcm end address */
 #define GRF_BASE            0x44300000U /* GRF base address */
 #define TIMER_BASE          0x44000000U /* TIMER base address */
 #define UART0_BASE          0x44010000U /* UART0 base address */

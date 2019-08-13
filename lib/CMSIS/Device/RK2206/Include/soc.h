@@ -1238,6 +1238,10 @@ struct USB_HOST_CH_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
+#define DSP_ITCM_BASE       0x20400000U /* DSP itcm base address */
+#define DSP_ITCM_END        0x20407fffU /* DSP itcm end address */
+#define DSP_DTCM_BASE       0x20600000U /* DSP dtcm base address */
+#define DSP_DTCM_END        0x2062ffffU /* DSP dtcm end address */
 #define TIMER0_BASE         0x40000000U /* TIMER0 base address */
 #define WDT0_BASE           0x40010000U /* WDT0 base address */
 #define WDT1_BASE           0x40020000U /* WDT1 base address */
