@@ -250,7 +250,7 @@ HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg)
     while (pReg->INTSTATUS && timeOut--)
         ;
 
-    if (pReg->INTSTATUS)
+    if (timeOut == 0)
         return HAL_TIMEOUT;
     else
         return HAL_OK;
