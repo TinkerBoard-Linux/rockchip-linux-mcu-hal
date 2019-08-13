@@ -129,7 +129,7 @@ TEST(HAL_TIMER, TimerStartStop){
     ret = HAL_TIMER_GetCount(TIMER0);
     TEST_ASSERT(ret == HAL_TIMER_GetCount(TIMER0)); /* test stop*/
     HAL_DBG("TimerStartStop test %d isrActive %lu timeOut %lu\n", __LINE__, isrActive, timeOut);
-    TEST_ASSERT(isrActive >= 995 && isrActive <= 1005);
+    TEST_ASSERT(isrActive >= 1000 && isrActive <= 1005);
 }
 
 TEST_GROUP_RUNNER(HAL_TIMER){
