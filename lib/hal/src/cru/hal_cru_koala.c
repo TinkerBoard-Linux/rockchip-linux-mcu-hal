@@ -200,8 +200,8 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         HAL_CRU_FracdivGetConfig(rate, s_cpllFreq, &n, &m);
         HAL_CRU_ClkSetDiv(divSrc, 1);
         HAL_CRU_ClkSetMux(muxSrc, UART0_CLK_SRC_SEL_CPLL);
-        CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
         HAL_CRU_ClkSetMux(mux, UART0_CLK_SEL_FRACTION);
+        CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
     }
 
     return HAL_OK;
