@@ -247,10 +247,13 @@ HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg)
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
     pReg->INTSTATUS = 0x1;
-    while (pReg->INTSTATUS || timeOut--)
+    while (pReg->INTSTATUS && timeOut--)
         ;
 
-    return HAL_OK;
+    if (pReg->INTSTATUS)
+        return HAL_TIMEOUT;
+    else
+        return HAL_OK;
 }
 
 /**
