@@ -58,7 +58,6 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
-#define __NEED_COPY_TO_RAM
 #define __STARTUP_CLEAR_BSS
 
 #ifdef __NEED_COPY_TO_RAM
