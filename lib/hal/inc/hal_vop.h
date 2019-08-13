@@ -117,6 +117,7 @@ struct CRTC_WIN_STATE {
     uint8_t alphaPreMul;
     uint8_t alphaSatMode;
     uint8_t globalAlphaValue;
+    uint32_t colorKey;
     uint32_t *lut;
 };
 

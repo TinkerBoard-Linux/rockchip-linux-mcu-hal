@@ -497,6 +497,9 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     VOP_Write(&g_VOP_RegMir.WIN0_ALPHA_CTRL + regOffset,
               &pReg->WIN0_ALPHA_CTRL + regOffset, val);
 
+    VOP_Write(&g_VOP_RegMir.WIN0_COLOR_KEY + regOffset,
+              &pReg->WIN0_COLOR_KEY + regOffset, pWinState->colorKey);
+
     if (IS_YUV_FORMAT(pWinState->hwFormat))
         y2r_en = true;
     VOP_MaskWrite(&g_VOP_RegMir.WIN0_CTRL[0] + regOffset,
