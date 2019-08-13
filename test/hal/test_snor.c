@@ -282,7 +282,7 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     pread = AlignUp(pread_t, 64);
     HAL_DBG("pwrite %p pread %p\n", pwrite, pread);
 
-    for (int32_t i = 0; i < (maxest_sector * (int32_t)nor->sectorSize / 4); i++)
+    for (int32_t i = 0; i < (maxest_sector * 1024); i++)
         pwrite32[i] = i;
 
     spi = (struct SNOR_HOST *)calloc(1, sizeof(struct SNOR_HOST));
