@@ -15,6 +15,8 @@
 .extern    __bss_end
 .extern    SystemInit
 
+.equ    CRU_SOFTRST4_CON,       0x44500310
+
 /**
  * Vector table
  */
@@ -63,6 +65,11 @@ __Vectors_End:
         .type    Reset_Handler, %function
         .globl   Reset_Handler
 Reset_Handler:
+	/* Deassert rest for dsp */
+	ldr	r0, =0x00060000
+	ldr	r1, =CRU_SOFTRST4_CON
+	str	r0, [r1]
+
         /* clear the bss segment */
         ldr     r0, =__bss_start
         ldr     r1, =__bss_end
