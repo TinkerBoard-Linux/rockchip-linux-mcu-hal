@@ -41,6 +41,12 @@
 #ifdef HAL_FSPI_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
+//#define FSPI_DEBUG
+#ifdef FSPI_DEBUG
+#define FSPI_DBG(...) HAL_DBG(__VA_ARGS__)
+#else
+#define FSPI_DBG(...)
+#endif
 
 /* FSPI_CTRL */
 #define FSPI_CTRL_SHIFTPHASE_NEGEDGE 1
@@ -79,13 +85,6 @@
 
 #define GET_MODE_CPHA_VAL(m) ((m) & 0x1)
 #define GET_MODE_CPOL_VAL(m) ((m) & 0x2)
-
-//#define FSPI_DEBUG
-#ifdef FSPI_DEBUG
-#define FSPI_DBG(...) FSPI_DBG(__VA_ARGS__)
-#else
-#define FSPI_DBG(...)
-#endif
 
 /********************* Private Structure Definition **************************/
 
@@ -236,7 +235,7 @@ static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *
     uint32_t *pData = (uint32_t *)data;
     struct FSPI_REG *pReg = host->instance;
 
-    /* FSPI_DBG("%s %p len %lx word0 %lx dir %lx\n", __func__, len, pData[0], dir); */
+    /* FSPI_DBG("%s %p len %lx word0 %lx dir %lx\n", __func__, pData, len, pData[0], dir); */
     if (dir == FSPI_WRITE) {
         words = (len + 3) >> 2;
         while (words) {
@@ -444,17 +443,23 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 {
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
     uint32_t ret = HAL_OK;
+    uint32_t dir = op->data.dir;
+    void *pData = NULL;
+
+    if (op->data.buf.in)
+        pData = (void *)op->data.buf.in;
+    else if (op->data.buf.out)
+        pData = (void *)op->data.buf.out;
 
     host->mode = spi->mode;
     FSPI_XferStart(host, op);
-    if (op->data.dir == SPI_MEM_DATA_IN)
-        ret = FSPI_XferData(host, op->data.nbytes, op->data.buf.in, FSPI_READ);
-    else if (op->data.buf.out)
-        ret = FSPI_XferData(host, op->data.nbytes, op->data.buf.in, FSPI_WRITE);
-    if (ret) {
-        FSPI_DBG("%s xfer data failed ret %ld\n", __func__, ret);
+    if (pData) {
+        ret = FSPI_XferData(host, op->data.nbytes, pData, dir);
+        if (ret) {
+            FSPI_DBG("%s xfer data failed ret %ld\n", __func__, ret);
 
-        return ret;
+            return ret;
+        }
     }
 
     return FSPI_XferDone(host);
