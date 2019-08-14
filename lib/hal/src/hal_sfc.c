@@ -309,16 +309,22 @@ HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 {
     struct HAL_SFC_HOST *host = (struct HAL_SFC_HOST *)spi->userdata;
     uint32_t ret = HAL_OK;
+    uint32_t dir = op->data.dir;
+    void *pData = NULL;
+
+    if (op->data.buf.in)
+        pData = (void *)op->data.buf.in;
+    else if (op->data.buf.out)
+        pData = (void *)op->data.buf.out;
 
     SFC_XferStart(host, op);
-    if (op->data.dir == SPI_MEM_DATA_IN)
-        ret = SFC_XferData(host, op->data.nbytes, op->data.buf.in, SFC_READ);
-    else if (op->data.buf.out)
-        ret = SFC_XferData(host, op->data.nbytes, op->data.buf.in, SFC_WRITE);
-    if (ret) {
-        HAL_DBG("%s xfer data failed ret %ld\n", __func__, ret);
+    if (pData) {
+        ret = SFC_XferData(host, op->data.nbytes, pData, dir);
+        if (ret) {
+            HAL_DBG("%s xfer data failed ret %ld\n", __func__, ret);
 
-        return ret;
+            return ret;
+        }
     }
 
     return SFC_XferDone(host);
