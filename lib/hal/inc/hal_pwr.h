@@ -38,6 +38,7 @@ typedef enum {
     PWR_CTRL_VOLT_RUN = 0, /* run mode voltage */
     PWR_CTRL_VOLT_SSPD, /* suspend mode voltage */
     PWR_CTRL_PWR_EN, /* enable a regulator */
+    PWR_CTRL_PWR_SSPD, /* suspend mode enable a regulator */
     PWR_CTRL_VOLT_ST, /* get a regulator state */
     PWR_CTRL_MAX
 } ePWR_CtrlType;
