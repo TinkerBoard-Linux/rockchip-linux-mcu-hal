@@ -86,6 +86,8 @@
 #define GET_MODE_CPHA_VAL(m) ((m) & 0x1)
 #define GET_MODE_CPOL_VAL(m) ((m) & 0x2)
 
+#define FSPI_NOR_FLASH_PAGE_SIZE 0x100
+
 /********************* Private Structure Definition **************************/
 
 typedef union {
@@ -143,16 +145,6 @@ static HAL_Status FSPI_ClearIsr(struct HAL_FSPI_HOST *host)
     host->instance->ICLR = 0xFFFFFFFF;
 
     return HAL_OK;
-}
-
-/**
- * @brief  Check internal data transmission finish interrupt.
- * @param  host: FSPI host.
- * @return HAL_Check.
- */
-static HAL_Check FSPI_IsDMAInterrupt(struct HAL_FSPI_HOST *host)
-{
-    return (HAL_Check)HAL_IS_BIT_SET(host->instance->ISR, FSPI_ISR_DMAS_ACTIVE);
 }
 
 static HAL_Status FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
@@ -228,7 +220,7 @@ static HAL_Status FSPI_XferStart(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *
  */
 static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *data, uint32_t dir)
 {
-    int32_t ret = HAL_OK;
+    HAL_Status ret = HAL_OK;
     __IO FSPIFSR_DATA fifostat;
     int32_t timeout = 0;
     uint32_t i, words;
@@ -305,13 +297,44 @@ static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *
     return ret;
 }
 
+#ifdef HAL_FSPI_DMA_ENABLED
+/**
+ * @brief  IO transfer by internal DMA.
+ * @param  host: FSPI host.
+ * @param  len: data n bytes.
+ * @param  data: transfer buffer.
+ * @param  dir: transfer direction.
+ * @return HAL_Status.
+ */
+static HAL_Status FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, void *data, uint32_t dir)
+{
+    HAL_Status ret = HAL_OK;
+    int32_t timeout = 0;
+    struct FSPI_REG *pReg = host->instance;
+
+    pReg->ICLR = 0xFFFFFFFF;
+    pReg->DMAADDR = (uint32_t)data;
+    pReg->DMATR = FSPI_DMATR_DMATR_START;
+
+    timeout = len * 10;
+    while ((!(pReg->RISR & FSPI_ISR_DMAS_ACTIVE)) && (timeout-- > 0))
+        HAL_DelayUs(1);
+
+    pReg->ICLR = 0xFFFFFFFF;
+    if (timeout <= 0)
+        ret = HAL_TIMEOUT;
+
+    return ret;
+}
+#endif
+
 /**
  * @brief  Wait for FSPI host transfer finished.
  * @return HAL_Status.
  */
 static HAL_Status FSPI_XferDone(struct HAL_FSPI_HOST *host)
 {
-    int32_t ret = HAL_OK;
+    HAL_Status ret = HAL_OK;
     int32_t timeout = 0;
     struct FSPI_REG *pReg = host->instance;
 
@@ -442,7 +465,7 @@ static HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 {
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
-    uint32_t ret = HAL_OK;
+    HAL_Status ret = HAL_OK;
     uint32_t dir = op->data.dir;
     void *pData = NULL;
 
@@ -454,6 +477,12 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
     host->mode = spi->mode;
     FSPI_XferStart(host, op);
     if (pData) {
+#if defined(HAL_FSPI_DMA_ENABLED)
+        if ((op->data.nbytes >= FSPI_NOR_FLASH_PAGE_SIZE) &&
+            (dir == SPI_MEM_DATA_IN))
+            ret = FSPI_XferData_DMA(host, op->data.nbytes, pData, dir);
+        else
+#endif
         ret = FSPI_XferData(host, op->data.nbytes, pData, dir);
         if (ret) {
             FSPI_DBG("%s xfer data failed ret %ld\n", __func__, ret);
@@ -561,7 +590,7 @@ HAL_Status HAL_FSPI_UnmaskDMAInterrupt(struct HAL_FSPI_HOST *host)
  */
 HAL_Status HAL_FSPI_IRQHelper(struct HAL_FSPI_HOST *host)
 {
-    HAL_ASSERT(FSPI_IsDMAInterrupt(host)); /* Only support TRANSM IT */
+    HAL_ASSERT(HAL_IS_BIT_SET(host->instance->ISR, FSPI_ISR_DMAS_ACTIVE)); /* Only support DMA IT */
     FSPI_ClearIsr(host);
 
     return HAL_OK;
