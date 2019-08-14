@@ -42,6 +42,7 @@ typedef enum {
 /***************************** Function Declare ******************************/
 
 HAL_Status HAL_Init(void);
+HAL_Status HAL_DeInit(void);
 HAL_Status HAL_InitTick(uint32_t tickPriority);
 HAL_Status HAL_IncTick(void);
 uint32_t HAL_GetTick(void);

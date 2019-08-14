@@ -50,7 +50,8 @@ static HAL_Status PSRAM_TEST(uint32_t testEndLBA)
                 HAL_DBG(
                     "check not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
                     testLBA, j, (uint32_t)pwrite32[j], (uint32_t)pread32[j]);
-                while (1);
+                while (1)
+                    ;
 
                 return HAL_ERROR;
             }
@@ -76,7 +77,8 @@ static HAL_Status PSRAM_TEST(uint32_t testEndLBA)
                 HAL_DBG(
                     "recheck not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
                     testLBA, j, (uint32_t)pread32[j], (uint32_t)pread32[j]);
-                while (1);
+                while (1)
+                    ;
 
                 return HAL_ERROR;
             }
@@ -122,7 +124,8 @@ TEST_GROUP_RUNNER(HAL_PSRAM){
     HAL_DBG("pwrite %p\n", pwrite);
     if (!pwrite) {
         HAL_DBG("malloc failed\n");
-        while (1);
+        while (1)
+            ;
     }
 
     ret = HAL_PSRAM_Init(sfcHost, 0);

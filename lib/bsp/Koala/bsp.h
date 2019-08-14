@@ -37,5 +37,6 @@ extern const struct HAL_PWM_DEV g_pwm0Dev;
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
+void BSP_DeInit(void);
 
 #endif

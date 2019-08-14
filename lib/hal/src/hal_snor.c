@@ -319,7 +319,7 @@ static HAL_Status SNOR_EraseBlk(struct SPI_NOR *nor, uint32_t addr)
     return SNOR_SPIMemExecOp(nor->spi, &op);
 }
 
-struct FLASH_INFO *SNOR_GerFlashInfo(uint8_t *flashId)
+static struct FLASH_INFO *SNOR_GerFlashInfo(uint8_t *flashId)
 {
     uint32_t i;
     uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);

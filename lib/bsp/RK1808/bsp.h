@@ -59,5 +59,6 @@ extern const struct HAL_UART_DEV g_uart7Dev;
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
+void BSP_DeInit(void);
 
 #endif

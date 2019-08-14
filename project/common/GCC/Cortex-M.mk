@@ -25,9 +25,12 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 
 CPU		+= -mthumb
 ASFLAGS         += $(CPU)
-CFLAGS		+= $(CPU) -std=c99 -O2 -g -Wformat=2 -Wall -Wextra -Wno-unused-parameter -Werror
+CFLAGS		+= $(CPU) -std=c99 -O2 -g
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc -nostartfiles
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
+
+HAL_CFLAGS	:= -Wformat=2 -Wall -Wextra -Wno-unused-parameter -Werror
+HAL_CFLAGS	+= -Wstrict-prototypes -Wmissing-prototypes
 
 LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC/gcc_arm$(if $(findstring 1,$(XIP)),_xip).ld
 
@@ -67,11 +70,7 @@ INCLUDES += \
 #############################################################################
 # Source Files
 #############################################################################
-DIRS := $(ROOT_PATH)/lib/hal/src \
-	$(ROOT_PATH)/lib/hal/src/*/ \
-	$(ROOT_PATH)/lib/bsp/$(PROJECT) \
-	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
-	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates \
+DIRS := \
 	$(ROOT_PATH)/test/unity/extras/fixture/src \
 	$(ROOT_PATH)/test/unity/src \
 	$(ROOT_PATH)/test/hal \
@@ -81,9 +80,21 @@ DIRS := $(ROOT_PATH)/lib/hal/src \
 	../src \
 	. \
 
-SRCS += $(basename $(foreach dir,$(DIRS),$(wildcard $(dir)/*.[cS])))
+HAL_DIRS := \
+	$(ROOT_PATH)/lib/hal/src \
+	$(ROOT_PATH)/lib/hal/src/* \
+	$(ROOT_PATH)/lib/bsp/$(PROJECT) \
+	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
+	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates \
 
+DIRS += $(HAL_DIRS)
+
+SRCS += $(basename $(foreach dir,$(DIRS),$(wildcard $(dir)/*.[cS])))
 OBJS := $(addsuffix .o,$(basename $(SRCS)))
+
+HAL_SRCS := $(basename $(foreach dir,$(HAL_DIRS),$(wildcard $(dir)/*.[cS])))
+HAL_OBJS := $(addsuffix .o,$(basename $(HAL_SRCS)))
+$(HAL_OBJS): CFLAGS += $(HAL_CFLAGS)
 
 CFLAGS	+= $(INCLUDES)
 

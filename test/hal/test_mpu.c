@@ -210,7 +210,6 @@ TEST(HAL_MPU, TC_MPU_Cache){
     /* tear down */
     __ISB();
 
-
     *uncacheVar = 0x0815U;
     HAL_DCACHE_Enable();
     HAL_DCACHE_CleanInvalidate();
@@ -287,8 +286,6 @@ TEST(HAL_MPU, TC_MPU_Priv){
 #undef ASSERT_MPU_REGION
 }
 
-
-
 TEST_GROUP_RUNNER(HAL_MPU){
     RUN_TEST_CASE(HAL_MPU, TC_MPU_SetClear);
     RUN_TEST_CASE(HAL_MPU, TC_MPU_Load);
@@ -297,4 +294,3 @@ TEST_GROUP_RUNNER(HAL_MPU){
 }
 
 #endif
-

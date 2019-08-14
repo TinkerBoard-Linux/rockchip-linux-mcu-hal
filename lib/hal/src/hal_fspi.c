@@ -138,7 +138,7 @@ static void FSPI_Reset(struct FSPI_REG *pReg)
  * @param  host: FSPI host.
  * @return HAL_Status.
  */
-HAL_Status FSPI_ClearIsr(struct HAL_FSPI_HOST *host)
+static HAL_Status FSPI_ClearIsr(struct HAL_FSPI_HOST *host)
 {
     host->instance->ICLR = 0xFFFFFFFF;
 
@@ -150,12 +150,12 @@ HAL_Status FSPI_ClearIsr(struct HAL_FSPI_HOST *host)
  * @param  host: FSPI host.
  * @return HAL_Check.
  */
-HAL_Check FSPI_IsDMAInterrupt(struct HAL_FSPI_HOST *host)
+static HAL_Check FSPI_IsDMAInterrupt(struct HAL_FSPI_HOST *host)
 {
     return (HAL_Check)HAL_IS_BIT_SET(host->instance->ISR, FSPI_ISR_DMAS_ACTIVE);
 }
 
-HAL_Status FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
+static HAL_Status FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
 {
     host->instance->DEVRGN = 25;    /* 32MB for each region */
     host->instance->DEVSIZE0 = 24;     /* 16MB for dev0 */
@@ -333,7 +333,7 @@ static HAL_Status FSPI_XferDone(struct HAL_FSPI_HOST *host)
  * @param  op: flash operation protocol.
  * @return HAL_Status.
  */
-HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *op)
+static HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *op)
 {
     FSPICMD_DATA FSPICmd;
     FSPICTRL_DATA FSPICtrl;
@@ -374,7 +374,7 @@ HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *op)
  * @param  on: 1 enable, 0 disable.
  * @return HAL_Status.
  */
-HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
+static HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 {
     FSPIXMMCCTRL_DATA xmmcCtrl;
     struct FSPI_REG *pReg = host->instance;

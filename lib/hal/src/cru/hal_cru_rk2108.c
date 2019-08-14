@@ -170,7 +170,7 @@ void HAL_CRU_AsInit(void)
  *     clk rate = pRate * numerator / denominator
  *     for a better jitter, pRate > 20 * rate
  */
-uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
+static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
 {
     uint32_t freq = 0;
     uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
@@ -259,7 +259,7 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
  *     if pRate > 20 * rate, select frac divider
  *     else select normal divider, but the clk rate may be not accurate
  */
-HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
+static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
     uint32_t muxSrc, mux = CLK_GET_MUX(clockName), muxOut = 0;
     uint32_t divSrc, divFrac;
@@ -344,7 +344,7 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
  *     denominator is frac register[15:0]
  *     clk rate = pRate * numerator / denominator
  */
-uint32_t HAL_CRU_ClkUsbGetFreq(eCLOCK_Name clockName)
+static uint32_t HAL_CRU_ClkUsbGetFreq(eCLOCK_Name clockName)
 {
     uint32_t freq = 0;
     uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
@@ -389,7 +389,7 @@ uint32_t HAL_CRU_ClkUsbGetFreq(eCLOCK_Name clockName)
  *     if rate is inpust osc rate, select input osc
  *     else select ifrac divider
  */
-HAL_Status HAL_CRU_ClkUsbSetFreq(eCLOCK_Name clockName, uint32_t rate)
+static HAL_Status HAL_CRU_ClkUsbSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
     uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
     uint32_t divFrac;

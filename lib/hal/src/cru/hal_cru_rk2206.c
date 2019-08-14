@@ -76,7 +76,7 @@ static struct PLL_SETUP VPLL = {
  *     clk rate = pRate * numerator / denominator
  *     for a better jitter, pRate > 20 * rate
  */
-uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
+static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
 {
     uint32_t freq = 0;
     uint32_t mux = CLK_GET_MUX(clockName);
@@ -147,7 +147,7 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
  *     if pRate > 20 * rate, select frac divider
  *     else select normal divider, but the clk rate may be not accurate
  */
-HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
+static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
     uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
     uint32_t divSrc, divFrac;

@@ -132,37 +132,6 @@ static uint32_t DSI_GetHcomponentLbcc(uint32_t hcomponent, uint16_t laneMbps, ui
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup DSI_Exported_Functions_Group1 Suspend and Resume Functions
-
- This section provides functions allowing to suspend and resume the module:
-
- *  @{
- */
-
-/**
- * @brief  suspend DSI.
- * @param  pReg: DSI reg base.
- * @return HAL_Status.
- * TODO:
- */
-HAL_Status HAL_DSI_Suspend(struct DSI_REG *pReg)
-{
-    return HAL_OK;
-}
-
-/**
- * @brief  resume DSI.
- * @param  pReg: DSI reg base.
- * @return HAL_Status.
- * TODO:
- */
-HAL_Status HAL_DSI_Resume(struct DSI_REG *pReg)
-{
-    return HAL_OK;
-}
-
-/** @} */
-
 /** @defgroup DSI_Exported_Functions_Group2 IO Functions
 
  This section provides functions allowing to IO controlling:

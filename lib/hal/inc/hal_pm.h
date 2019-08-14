@@ -27,6 +27,7 @@ void HAL_NVIC_SuspendSave(void);
 void HAL_NVIC_ResumeRestore(void);
 
 int HAL_CPU_SuspendEnter(uint32_t flag, int (*suspend)(uint32_t));
+void HAL_CPU_SuspendSave(uint32_t *ptr, uint32_t ptrsz, uint32_t sp, uint32_t *ptrSave);
 #endif
 
 #endif

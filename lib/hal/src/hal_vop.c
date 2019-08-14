@@ -529,37 +529,6 @@ static void VOP_SetWin(struct VOP_REG *pReg,
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup VOP_Exported_Functions_Group1 Suspend and Resume Functions
-
- This section provides functions allowing to suspend and resume the module:
-
- *  @{
- */
-
-/**
- * @brief  suspend VOP.
- * @param  pReg: VOP reg base.
- * @return HAL_Status.
- * TODO:
- */
-HAL_Status HAL_VOP_Suspend(struct VOP_REG *pReg)
-{
-    return HAL_OK;
-}
-
-/**
- * @brief  resume VOP.
- * @param  pReg: VOP reg base.
- * @return HAL_Status.
- * TODO:
- */
-HAL_Status HAL_VOP_Resume(struct VOP_REG *pReg)
-{
-    return HAL_OK;
-}
-
-/** @} */
-
 /** @defgroup VOP_Exported_Functions_Group2 get VOP Status and Errors Functions
 
  This section provides functions allowing to get VOP status:

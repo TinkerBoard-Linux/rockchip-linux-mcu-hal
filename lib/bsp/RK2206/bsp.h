@@ -39,5 +39,6 @@ extern struct HAL_I2STDM_DEV g_i2sTdm1Dev;
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
+void BSP_DeInit(void);
 
 #endif

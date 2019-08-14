@@ -192,56 +192,6 @@ static const struct DSP_OPS dspOps = {
     .ioctl = DSP_Ioctl,
 };
 
-/********************* Public Function Definition ****************************/
-/** @defgroup DSP_Exported_Functions_Group1 Suspend and Resume Functions
-
- This section provides functions allowing to suspend and resume the module:
-
- ...to do or delete this row
-
- *  @{
- */
-
-/**
- * @brief  dsp suspend.
- * @param  dsp: the handle of dsp.
- * @return HAL_Status
- */
-HAL_Status HAL_DSP_Supsend(struct DSP_DEV *dsp)
-{
-    return HAL_OK;
-}
-
-/**
- * @brief  dsp resume.
- * @param  dsp: the handle of dsp.
- * @return HAL_Status
- */
-HAL_Status HAL_DSP_Resume(struct DSP_DEV *dsp)
-{
-    return HAL_OK;
-}
-
-/** @} */
-
-/** @defgroup DSP_Exported_Functions_Group2 State and Errors Functions
-
- This section provides functions allowing to get the status of the module:
-
- *  @{
- */
-
-/** @} */
-
-/** @defgroup DSP_Exported_Functions_Group3 IO Functions
-
- This section provides functions allowing to IO controlling:
-
- *  @{
- */
-
-/** @} */
-
 /** @defgroup DSP_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:

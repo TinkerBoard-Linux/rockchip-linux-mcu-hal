@@ -503,7 +503,7 @@ HAL_Status HAL_MMC_ResetFifo(struct HAL_MMC_HOST *host)
  * @param  host: private hal host data.
  * @return HAL_Status.
  */
-HAL_Status HAL_MMC_Reset(struct HAL_MMC_HOST *host)
+static HAL_Status HAL_MMC_Reset(struct HAL_MMC_HOST *host)
 {
     uint32_t reg, loop = 5000;
     struct MMC_REG *pReg = host->pReg;

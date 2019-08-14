@@ -79,4 +79,3 @@ TEST_GROUP_RUNNER(HAL_CRU){
 }
 
 #endif
-

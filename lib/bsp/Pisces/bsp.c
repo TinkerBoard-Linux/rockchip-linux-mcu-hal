@@ -83,7 +83,7 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
     },
 };
 
-HAL_Status BSP_I2STDM_Init(void)
+static HAL_Status BSP_I2STDM_Init(void)
 {
     /* CLK Init */
 
@@ -91,7 +91,7 @@ HAL_Status BSP_I2STDM_Init(void)
     return HAL_OK;
 }
 
-HAL_Status BSP_I2STDM_DeInit(void)
+static HAL_Status BSP_I2STDM_DeInit(void)
 {
     /* CLK Init */
 
@@ -122,7 +122,7 @@ struct HAL_PDM_DEV g_pdm0Dev =
     },
 };
 
-HAL_Status BSP_PDM_Init(void)
+static HAL_Status BSP_PDM_Init(void)
 {
     /* CLK Init */
 
@@ -130,7 +130,7 @@ HAL_Status BSP_PDM_Init(void)
     return HAL_OK;
 }
 
-HAL_Status BSP_PDM_DeInit(void)
+static HAL_Status BSP_PDM_DeInit(void)
 {
     /* CLK Init */
 
@@ -184,14 +184,14 @@ struct HAL_VAD_DEV g_vadDev =
     .irq = VAD_IRQn,
 };
 
-HAL_Status BSP_VAD_Init(void)
+static HAL_Status BSP_VAD_Init(void)
 {
     /* CLK Init */
 
     return HAL_OK;
 }
 
-HAL_Status BSP_VAD_DeInit(void)
+static HAL_Status BSP_VAD_DeInit(void)
 {
     /* CLK Init */
 
