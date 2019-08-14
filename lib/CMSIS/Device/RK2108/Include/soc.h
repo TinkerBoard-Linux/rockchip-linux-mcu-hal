@@ -5266,6 +5266,7 @@ struct USB_HOST_CH_REG {
 #define TIMER_INTSTATUS_INTSTATUS_SHIFT                    (0U)
 #define TIMER_INTSTATUS_INTSTATUS_MASK                     (0x1U << TIMER_INTSTATUS_INTSTATUS_SHIFT)                    /* 0x00000001 */
 /******************************************WDT*******************************************/
+#define PCLK_WDT PCLK_LOGIC
 /* WDT_CR */
 #define WDT_WDT_CR_WDT_EN_SHIFT                            (0U)
 #define WDT_WDT_CR_WDT_EN_MASK                             (0x1U << WDT_WDT_CR_WDT_EN_SHIFT)                            /* 0x00000001 */
