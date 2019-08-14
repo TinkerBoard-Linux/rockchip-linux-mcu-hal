@@ -1827,6 +1827,8 @@ struct CRU_REG {
 #define UART_DLL_DLL_SHIFT                                 (0U)
 #define UART_DLL_DLL_MASK                                  (0xFFU << UART_DLL_DLL_SHIFT)                                /* 0x000000FF */
 /******************************************WDT*******************************************/
+#define WDT WDT0
+#define PCLK_WDT PCLK_MCU
 /* WDT_CR */
 #define WDT_WDT_CR_OFFSET                                  (0x0)
 #define WDT_WDT_CR_WDT_EN_SHIFT                            (0U)
