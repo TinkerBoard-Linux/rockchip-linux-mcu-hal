@@ -15,7 +15,7 @@ static uint8_t *pwrite;
 static uint8_t *pread;
 static uint32_t *pread32;
 static uint32_t *pwrite32;
-#define FLASH_SKIP_LBA 0x100 /* About 1M space skip */
+#define FLASH_SKIP_LBA 0x200 /* About 1M space skip */
 
 static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
 {
@@ -35,8 +35,13 @@ HAL_Status SNOR_SINGLE_TEST(void)
     memset(pread, 0, 256);
     ret = HAL_GetTick();
     memset(pread32, 0, 0x1000);
-    for (int i = 0; i < 1024; i++)
+    HAL_DBG("%lx\n", (uint32_t)pread32);
+    for (int i = 0; i < 1024; i++) {
+#ifdef HAL_FSPI_DMA_ENABLED
+        HAL_DCACHE_InvalidateByRange((uint32_t)pread32, 0x1000);
+#endif
         HAL_SNOR_ReadData(nor, testLba << 9, pread32, 0x1000);
+    }
 
     ret = HAL_GetTick() - ret;
     HAL_DBG("read %lu MB/s\n", 4 * 1000 / ret);
@@ -75,6 +80,9 @@ static HAL_Status SNOR_STRESS_RANDOM_TEST(uint32_t testEndLBA)
         if (ret != testSecCount)
             return ret;
         pread32[0] = -1;
+        #ifdef HAL_FSPI_DMA_ENABLED
+        HAL_DCACHE_InvalidateByRange((uint32_t)pread32, 0x1000);
+        #endif
         ret = HAL_SNOR_Read(nor, testLBA, testSecCount, pread32);
         if (ret != testSecCount)
             return ret;
