@@ -381,6 +381,10 @@ static HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP
 
     /* spitial setting */
     FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
+    if (op->cmd.opcode == SPINOR_OP_READ_1_4_4) {
+        FSPICmd.b.readmode = 1;
+        FSPICmd.b.dummybits = 4;
+    }
 
     /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
     /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
@@ -424,14 +428,17 @@ static HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 
         /* config ctroller */
         pReg->XMMC_CTRL = xmmcCtrl.d32;
+        pReg->EXT_AX = 0x5a << 8;
         /* config cs 0 */
         pReg->CTRL0 = host->xmmcDev[0].ctrl;
         pReg->XMMC_RCMD0 = host->xmmcDev[0].readCmd;
         pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
+        pReg->AX0 = 0;
         /* config cs 1 */
         pReg->CTRL1 = host->xmmcDev[1].ctrl;
         pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
         pReg->XMMC_WCMD1 = host->xmmcDev[1].writeCmd;
+        pReg->AX1 = 0;
 
         pReg->MODE = 1;
     } else {
