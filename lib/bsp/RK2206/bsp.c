@@ -71,6 +71,35 @@ const struct HAL_PINCTRL_DEV g_pinDev = {
 };
 #endif
 
+#ifdef HAL_PWM_MODULE_ENABLED
+const struct HAL_PWM_DEV g_pwm0Dev =
+{
+    .pReg = PWM0,
+    .clkID = CLK_PWM0,
+    .clkGateID = CLK_PWM0_PLL_GATE,
+    .pclkGateID = PCLK_PWM0_GATE,
+    .irqNum = PWM_4CH_0_IRQn,
+};
+
+const struct HAL_PWM_DEV g_pwm1Dev =
+{
+    .pReg = PWM1,
+    .clkID = CLK_PWM1,
+    .clkGateID = CLK_PWM1_PLL_GATE,
+    .pclkGateID = PCLK_PWM1_GATE,
+    .irqNum = PWM_4CH_1_IRQn,
+};
+
+const struct HAL_PWM_DEV g_pwm2Dev =
+{
+    .pReg = PWM2,
+    .clkID = CLK_PWM2,
+    .clkGateID = CLK_PWM2_PLL_GATE,
+    .pclkGateID = PCLK_PWM2_GATE,
+    .irqNum = PWM_4CH_2_IRQn,
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
