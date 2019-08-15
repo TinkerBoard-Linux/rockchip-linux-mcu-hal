@@ -366,12 +366,12 @@ static HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP
 
     /* set CMD */
     FSPICmd.b.cmd = op->cmd.opcode;
+    FSPICtrl.b.cmdlines = op->cmd.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
 
     /* set ADDR */
-    if (op->addr.nbytes) {
-        FSPICmd.b.addrbits = op->addr.nbytes == 4 ? FSPI_ADDR_32BITS : FSPI_ADDR_24BITS;
-        FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
-    }
+    FSPICmd.b.addrbits = op->addr.nbytes == 4 ? FSPI_ADDR_32BITS : FSPI_ADDR_24BITS;
+    FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+
     /* set DUMMY*/
     if (op->dummy.nbytes)
         FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
@@ -485,7 +485,7 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
 #endif
         ret = FSPI_XferData(host, op->data.nbytes, pData, dir);
         if (ret) {
-            FSPI_DBG("%s xfer data failed ret %ld\n", __func__, ret);
+            FSPI_DBG("%s xfer data failed ret %d\n", __func__, ret);
 
             return ret;
         }
