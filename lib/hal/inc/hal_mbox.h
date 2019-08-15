@@ -49,6 +49,8 @@ HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *pReg);
 HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *pReg, eMBOX_CH chan);
 HAL_Status HAL_MBOX_SendMsg(struct MBOX_REG *pReg, eMBOX_CH chan,
                             const struct MBOX_CMD_DAT *msg);
+HAL_Status HAL_MBOX_SendMsg2(struct MBOX_REG *pReg, eMBOX_CH chan,
+                             const struct MBOX_CMD_DAT *msg, uint8_t isA2B);
 HAL_Status HAL_MBOX_RegisterClient(struct MBOX_REG *pReg, eMBOX_CH chan,
                                    const struct MBOX_CLIENT *cl);
 HAL_Status HAL_MBOX_UnregisterClient(struct MBOX_REG *pReg, eMBOX_CH chan,

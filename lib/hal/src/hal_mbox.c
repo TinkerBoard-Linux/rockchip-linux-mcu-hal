@@ -190,6 +190,35 @@ This section provides functions allowing to send and receive mailbox message:
 */
 
 /**
+ * @brief  Mailbox send message with specified direction
+ * @param  pReg: mailbox base addr
+ * @param  chan: mailbox channel id
+ * @param  msg: the message to send
+ * @param  isA2B: the direction that message to send
+ * @return HAL_Status
+ */
+HAL_Status HAL_MBOX_SendMsg2(struct MBOX_REG *pReg, eMBOX_CH chan,
+                             const struct MBOX_CMD_DAT *msg, uint8_t isA2B)
+{
+    uint32_t status;
+
+    HAL_ASSERT(IS_MBOX_INSTANCE(pReg) && IS_VALID_CHAN(chan) && msg);
+
+    if (isA2B)
+        status = MBOX_A2BIntStGet(pReg);
+    else
+        status = MBOX_B2AIntStGet(pReg);
+
+    /* Previous message has not been consumed. */
+    if (status & (1UL << chan))
+        return HAL_BUSY;
+
+    MBOX_ChanSendMsg(pReg, chan, isA2B, msg);
+
+    return HAL_OK;
+}
+
+/**
  * @brief  Mailbox send message API
  * @param  pReg: mailbox base addr
  * @param  chan: mailbox channel id
@@ -200,7 +229,6 @@ HAL_Status HAL_MBOX_SendMsg(struct MBOX_REG *pReg, eMBOX_CH chan,
                             const struct MBOX_CMD_DAT *msg)
 {
     struct MBOX_DEV *pMBox;
-    uint32_t status;
 
     HAL_ASSERT(IS_MBOX_INSTANCE(pReg) && IS_VALID_CHAN(chan) && msg);
 
@@ -208,18 +236,7 @@ HAL_Status HAL_MBOX_SendMsg(struct MBOX_REG *pReg, eMBOX_CH chan,
     if (!pMBox)
         return HAL_NODEV;
 
-    if (pMBox->A2B)
-        status = MBOX_A2BIntStGet(pReg);
-    else
-        status = MBOX_B2AIntStGet(pReg);
-
-    /* Previous message has not been consumed. */
-    if (status & (1UL << chan))
-        return HAL_BUSY;
-
-    MBOX_ChanSendMsg(pReg, chan, pMBox->A2B, msg);
-
-    return HAL_OK;
+    return HAL_MBOX_SendMsg2(pReg, chan, msg, pMBox->A2B);
 }
 
 /**
