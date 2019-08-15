@@ -11,6 +11,14 @@
 /***************************** MACRO Definition ******************************/
 
 /***************************** Structure Definition **************************/
+#ifdef HAL_I2STDM_MODULE_ENABLED
+extern struct HAL_I2STDM_DEV g_i2sTdm0Dev;
+#endif
+
+#ifdef HAL_PDM_MODULE_ENABLED
+extern struct HAL_PDM_DEV g_pdm0Dev;
+#endif
+
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
 extern const struct HAL_PINCTRL_DEV g_pinDev;
 #endif

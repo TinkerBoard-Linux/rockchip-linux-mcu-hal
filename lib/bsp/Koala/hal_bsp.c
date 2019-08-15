@@ -5,6 +5,55 @@
 
 #include "hal_bsp.h"
 
+#ifdef HAL_I2STDM_MODULE_ENABLED
+struct HAL_I2STDM_DEV g_i2sTdm0Dev =
+{
+    .pReg = I2STDM0,
+    .mclkTx = CLK_I2S_TX,
+    .mclkTxGate = CLK_I2S_TX_SRC_GATE,
+    .mclkRx = CLK_I2S_RX,
+    .mclkRxGate = CLK_I2S_RX_SRC_GATE,
+    .hclk = HCLK_I2S_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM0->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_RX,
+        .dmac = DMA,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM0->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_TX,
+        .dmac = DMA,
+    },
+};
+#endif
+
+#ifdef HAL_PDM_MODULE_ENABLED
+struct HAL_PDM_DEV g_pdm0Dev =
+{
+    .pReg = PDM0,
+    .mclk = CLK_PDM,
+    .mclkRate = PDM_CLK_RATE,
+    .mclkGate = CLK_PDM_SRC_GATE,
+    .hclk = HCLK_PDM_GATE,
+    .reset = SRST_PDM,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(PDM0->RXFIFO_DATA_REG),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_PDM0,
+        .dmac = DMA,
+    },
+};
+#endif
+
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
 static struct PINCTRL_BANK_INFO pinBanks[] = {
     PIN_BANK_CFG_FLAGS(GPIO_BANK0, 32, GRF_BASE,
