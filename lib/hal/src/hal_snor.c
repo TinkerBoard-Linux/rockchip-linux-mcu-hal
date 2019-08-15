@@ -758,7 +758,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
                 nor->readOpcode = info->readCmd_4;
                 switch (nor->readOpcode) {
                 case SPINOR_OP_READ_1_4_4:
-                    nor->readDummy = 4;
+                    nor->readDummy = 6;
                     nor->readProto = SNOR_PROTO_1_4_4;
                     break;
                 case SPINOR_OP_READ_1_2_2:
