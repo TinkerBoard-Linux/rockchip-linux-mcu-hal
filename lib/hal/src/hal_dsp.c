@@ -229,7 +229,7 @@ HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
 #endif
 
 /**
- * @brief  Init dsp.
+ * @brief  Init dsp and deassert reset.
  * @param  dsp: the handle of dsp.
  * @return HAL_Status
  */
@@ -238,6 +238,9 @@ HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp)
     dsp->ops = &dspOps;
     dsp->grfReg = (struct GRF_REG *)(GRF_BASE);
     dsp->resetFlag = 0;
+
+    /* Deassert reset */
+    HAL_DSP_Enable(dsp, 0);
 
     return HAL_OK;
 }
@@ -299,7 +302,7 @@ HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr)
         WRITE_REG(GRF->DSP_CON[1], altAddr);
     }
 
-    /* Repeal reset */
+    /* Deassert reset */
 #if defined(RKMCU_RK2206)
     WRITE_REG_MASK_WE(CRU->CRU_SOFTRST_CON[4], setMask, 0);
 #elif (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
