@@ -272,8 +272,18 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
 
         /* Handle Suspend Interrupt */
         if (__HAL_PCD_GET_FLAG(pPCD, USB_OTG_GINTSTS_USBSUSP)) {
-            if ((USB_DEVICE->DSTS & USB_OTG_DSTS_SUSPSTS) == USB_OTG_DSTS_SUSPSTS)
+            if (((USB_DEVICE->DSTS & USB_OTG_DSTS_SUSPSTS) == USB_OTG_DSTS_SUSPSTS) &&
+                ((USB_DEVICE->DSTS & USB_OTG_DSTS_ENUMSPD) != USB_OTG_DSTS_ENUMSPD_0)) {
+                /*
+                 * If the Bvalid signal is always high, the usb core
+                 * will enter suspend state when disconnet from Host.
+                 */
+                HAL_DBG("USB Disconnect! DSTS: 0x%08lx\n", USB_DEVICE->DSTS);
+                HAL_PCD_DisconnectCallback(pPCD);
+                USB_StopDevice(pUSB);
+            } else {
                 HAL_PCD_SuspendCallback(pPCD);
+            }
 
             __HAL_PCD_CLEAR_FLAG(pPCD, USB_OTG_GINTSTS_USBSUSP);
         }
@@ -387,8 +397,11 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
         if (__HAL_PCD_GET_FLAG(pPCD, USB_OTG_GINTSTS_OTGINT)) {
             temp = pPCD->pReg->GOTGINT;
 
-            if ((temp & USB_OTG_GOTGINT_SEDET) == USB_OTG_GOTGINT_SEDET)
+            if ((temp & USB_OTG_GOTGINT_SEDET) == USB_OTG_GOTGINT_SEDET) {
+                HAL_DBG("USB Disconnect!\n");
                 HAL_PCD_DisconnectCallback(pPCD);
+                USB_StopDevice(pUSB);
+            }
 
             pPCD->pReg->GOTGINT |= temp;
         }

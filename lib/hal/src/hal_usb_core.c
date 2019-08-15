@@ -33,6 +33,19 @@
 /********************* Private Structure Definition **************************/
 /********************* Private Variable Definition ***************************/
 /********************* Private Function Definition ***************************/
+static HAL_Status USB_WaitBitSet(volatile uint32_t *reg, uint32_t bit, uint32_t timeout)
+{
+    uint32_t i;
+
+    for (i = 0; i <= timeout; i++) {
+        if (READ_BIT(*reg, bit))
+            return HAL_OK;
+        HAL_DelayUs(1);
+    }
+
+    return HAL_TIMEOUT;
+}
+
 static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB)
 {
     uint32_t count = 0;
@@ -47,7 +60,7 @@ static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB)
 
             return HAL_TIMEOUT;
         }
-    } while ((pUSB->GRSTCTL & USB_OTG_GRSTCTL_CSRST) == USB_OTG_GRSTCTL_CSRST);
+    } while (READ_BIT(pUSB->GRSTCTL, USB_OTG_GRSTCTL_CSRST));
 
     /* Wait for AHB master IDLE state. */
     count = 0;
@@ -58,9 +71,46 @@ static HAL_Status USB_CoreReset(struct USB_GLOBAL_REG *pUSB)
 
             return HAL_TIMEOUT;
         }
-    } while ((pUSB->GRSTCTL & USB_OTG_GRSTCTL_AHBIDL) == 0);
+    } while (!READ_BIT(pUSB->GRSTCTL, USB_OTG_GRSTCTL_AHBIDL));
 
     return HAL_OK;
+}
+
+static void USB_EPStopXfer(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
+{
+    if (pEP->isIn == 1) {
+        USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SNAK;
+        /* Wait for Nak effect */
+        if (USB_WaitBitSet(&USB_INEP(pEP->num)->DIEPINT, USB_OTG_DIEPINT_INEPNE, 100))
+            HAL_DBG("%s timeout DIEPINT.NAKEFF\n", __func__);
+
+        /* Disable in ep */
+        USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_EPDIS;
+        /* Wait for ep to be disabled */
+        if (USB_WaitBitSet(&USB_INEP(pEP->num)->DIEPINT, USB_OTG_DIEPINT_EPDISD, 100))
+            HAL_DBG("%s timeout DIEPCTL.EPDisable\n", __func__);
+        /* Clear EPDISBLD interrupt */
+        USB_INEP(pEP->num)->DIEPINT |= USB_OTG_DIEPINT_EPDISD;
+        /* Flush TX FIFO */
+        USB_FlushTxFifo(pUSB, pEP->txFIFONum);
+    } else {
+        if (!(pUSB->GINTSTS & USB_OTG_GINTSTS_BOUTNAKEFF)) {
+            USB_DEVICE->DCTL |= USB_OTG_DCTL_SGONAK;
+            /* Wait for global nak to take effect  */
+            if (USB_WaitBitSet(&pUSB->GINTSTS, USB_OTG_GINTSTS_BOUTNAKEFF, 100))
+                HAL_DBG("%s timeout GINTSTS.GOUTNAKEF\n", __func__);
+        }
+
+        /* Disable out ep */
+        USB_OUTEP(pEP->num)->DOEPCTL |= (USB_OTG_DOEPCTL_EPDIS | USB_OTG_DOEPCTL_SNAK);
+        /* Wait for ep to be disabled */
+        if (USB_WaitBitSet(&USB_OUTEP(pEP->num)->DOEPINT, USB_OTG_DOEPINT_EPDISD, 100))
+            HAL_DBG("%s: timeout DOEPCTL.EPDisable\n", __func__);
+        /* Clear EPDISBLD interrupt */
+        USB_OUTEP(pEP->num)->DOEPINT |= USB_OTG_DOEPINT_EPDISD;
+        /* Remove global NAKs */
+        USB_DEVICE->DCTL |= USB_OTG_DCTL_CGONAK;
+    }
 }
 
 #ifdef USB_M31PHY_BASE
@@ -438,13 +488,21 @@ HAL_Status USB_DeactivateEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP
 {
     /* Read DEPCTLn register */
     if (pEP->isIn == 1) {
-        USB_DEVICE->DEACHMSK &= ~(USB_OTG_DAINTMSK_IEPM & ((1 << (pEP->num))));
-        USB_DEVICE->DAINTMSK &= ~(USB_OTG_DAINTMSK_IEPM & ((1 << (pEP->num))));
+        if (USB_INEP(pEP->num)->DIEPCTL & USB_OTG_DIEPCTL_EPENA)
+            USB_EPStopXfer(pUSB, pEP);
+
         USB_INEP(pEP->num)->DIEPCTL &= ~USB_OTG_DIEPCTL_USBAEP;
+        USB_INEP(pEP->num)->DIEPCTL &= ~USB_OTG_DIEPCTL_EPENA;
+        USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SNAK;
+        USB_DEVICE->DAINTMSK &= ~(USB_OTG_DAINTMSK_IEPM & ((1 << (pEP->num))));
     } else {
-        USB_DEVICE->DEACHMSK &= ~(USB_OTG_DAINTMSK_OEPM & ((1 << (pEP->num)) << 16));
-        USB_DEVICE->DAINTMSK &= ~(USB_OTG_DAINTMSK_OEPM & ((1 << (pEP->num)) << 16));
+        if (USB_OUTEP(pEP->num)->DOEPCTL & USB_OTG_DOEPCTL_EPENA)
+            USB_EPStopXfer(pUSB, pEP);
+
         USB_OUTEP(pEP->num)->DOEPCTL &= ~USB_OTG_DOEPCTL_USBAEP;
+        USB_OUTEP(pEP->num)->DOEPCTL &= ~USB_OTG_DOEPCTL_EPENA;
+        USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SNAK;
+        USB_DEVICE->DAINTMSK &= ~(USB_OTG_DAINTMSK_OEPM & ((1 << (pEP->num)) << 16));
     }
 
     return HAL_OK;
@@ -462,10 +520,10 @@ HAL_Status USB_DeactivateDedicatedEndpoint(struct USB_GLOBAL_REG *pUSB,
     /* Read DEPCTLn register */
     if (pEP->isIn == 1) {
         USB_INEP(pEP->num)->DIEPCTL &= ~USB_OTG_DIEPCTL_USBAEP;
-        USB_DEVICE->DAINTMSK &= ~(USB_OTG_DAINTMSK_IEPM & ((1 << (pEP->num))));
+        USB_DEVICE->DEACHMSK &= ~(USB_OTG_DAINTMSK_IEPM & ((1 << (pEP->num))));
     } else {
         USB_OUTEP(pEP->num)->DOEPCTL &= ~USB_OTG_DOEPCTL_USBAEP;
-        USB_DEVICE->DAINTMSK &= ~(USB_OTG_DAINTMSK_OEPM & ((1 << (pEP->num)) << 16));
+        USB_DEVICE->DEACHMSK &= ~(USB_OTG_DAINTMSK_OEPM & ((1 << (pEP->num)) << 16));
     }
 
     return HAL_OK;
