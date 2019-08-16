@@ -202,6 +202,20 @@ static const struct DSP_OPS dspOps = {
  */
 
 #if (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
+
+/**
+ * @brief  Soft interrupt wakeup dsp.
+ * @return HAL_Status
+ */
+HAL_Status HAL_DSP_SoftWakeup(void)
+{
+    WRITE_REG_MASK_WE(PMU->DSPAPM_CON, PMU_DSPAPM_CON_PD_DSP_SFT_WAKEUP_MASK, 0);
+    WRITE_REG_MASK_WE(PMU->DSPAPM_CON, PMU_DSPAPM_CON_PD_DSP_SFT_WAKEUP_MASK,
+                      PMU_DSPAPM_CON_PD_DSP_SFT_WAKEUP_MASK);
+
+    return HAL_OK;
+}
+
 /**
  * @brief  Set tcm work mode for retention or power down.
  * @param  tcmSel: tcm "|" combination, such as DSP_DTCM0 | DSP_ITCM.

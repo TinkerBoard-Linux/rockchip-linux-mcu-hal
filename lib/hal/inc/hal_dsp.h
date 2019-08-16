@@ -74,6 +74,7 @@ struct DSP_DEV {
 /***************************** Function Declare ******************************/
 
 /** should hold lock to call these functions */
+HAL_Status HAL_DSP_SoftWakeup(void);
 HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode);
 HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp);
 HAL_Status HAL_DSP_DeInit(struct DSP_DEV *dsp);
