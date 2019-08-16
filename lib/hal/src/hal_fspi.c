@@ -670,6 +670,18 @@ HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint8_t cells)
     return HAL_OK;
 }
 
+/**
+ * @brief  Get FSPI XMMC status.
+ * @param  host: FSPI host.
+ * @return uiint32_t: XMMC status.
+ */
+uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host)
+{
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+
+    return (uint32_t)host->instance->XMMCSR;
+}
+
 /** @} */
 
 #endif
