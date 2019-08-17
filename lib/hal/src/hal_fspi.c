@@ -317,7 +317,7 @@ static HAL_Status FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, vo
     pReg->DMATR = FSPI_DMATR_DMATR_START;
 
     timeout = len * 10;
-    while ((!(pReg->RISR & FSPI_ISR_DMAS_ACTIVE)) && (timeout-- > 0))
+    while ((!(pReg->RISR & FSPI_ISR_TRANSS_MASK)) && (timeout-- > 0))
         HAL_DelayUs(1);
 
     pReg->ICLR = 0xFFFFFFFF;
