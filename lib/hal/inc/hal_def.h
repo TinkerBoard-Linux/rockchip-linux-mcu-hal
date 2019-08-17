@@ -46,6 +46,13 @@
 
 #define HAL_DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
 
+#define HAL_IS_ALIGNED(x, a) (((x) & (a - 1)) == 0)
+#ifdef CACHE_LINE_SIZE
+#define HAL_IS_CACHELINE_ALIGNED(x) HAL_IS_ALIGNED(x, CACHE_LINE_SIZE)
+#else
+#define HAL_IS_CACHELINE_ALIGNED(x) HAL_IS_ALIGNED(x, 4)
+#endif
+
 /* Compiller Macro */
 #ifdef __GNUC__
 #ifndef __unused
