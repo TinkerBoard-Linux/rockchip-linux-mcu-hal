@@ -149,25 +149,13 @@ struct PL330_DESC {
     uint32_t numPeriods;
     uint32_t bytesReq;
     void *mcBuf;
-    int mcBufLength;
-    int dmaStatus;
     PL330_Callback callback;
     void *cparam;
-    void *nextDesc;
 };
 
 struct PL330_XFER_SPEC {
     uint32_t ccr;
     struct PL330_DESC *desc;
-};
-
-/**
- * The PL330_MCBUF is the struct for a DMA program buffer.
- */
-struct PL330_MCBUF {
-    char buf[PL330_CHAN_BUF_LEN];
-    uint32_t len;
-    int allocated;
 };
 
 struct HAL_PL330_DEV;
@@ -181,9 +169,9 @@ struct PL330_CHAN {
     uint32_t fifoAddr;
     uint32_t brstSz;
     uint32_t brstLen;
-    struct PL330_MCBUF mcBufPool[PL330_MAX_CHAN_BUFS];
     struct PL330_DESC desc;
     struct HAL_PL330_DEV *pl330;
+    void *mcBuf;
     bool used;
 };
 

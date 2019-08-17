@@ -836,7 +836,8 @@ __STATIC_INLINE int _Setup_Loops(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     unsigned long c, bursts = BYTE_TO_BURST(x->length, ccr);
     int off = 0;
 
-    off += PL330_Instr_DMAFLUSHP(dryRun, &buf[off], pxs->desc->peri);
+    if (HAL_DMA_IsSlaveDirection(pxs->desc->dir))
+        off += PL330_Instr_DMAFLUSHP(dryRun, &buf[off], pxs->desc->peri);
 
     while (bursts) {
         c = bursts;
@@ -1120,52 +1121,6 @@ static void PL330_Read_Config(struct HAL_PL330_DEV *pl330)
 }
 
 /**
- * @brief Allocate a buffer of the DMA program buffer from the pool.
- *
- * @param pool: the DMA program pool.
- *
- * @return The allocated buffer, NULL if there is any error.
- */
-static void *PL330_BufPool_Allocate(struct PL330_MCBUF *pool)
-{
-    int i;
-
-    HAL_ASSERT(pool != NULL);
-
-    for (i = 0; i < PL330_MAX_CHAN_BUFS; i++) {
-        if (!pool[i].allocated) {
-            pool[i].allocated = 1;
-
-            return pool[i].buf;
-        }
-    }
-
-    return NULL;
-}
-
-/**
- * @brief Free a buffer of the DMA program buffer.
- *
- * @param pool: the DMA program pool.
- * @param buf: the DMA program buffer to be release.
- *
- * @return None
- */
-static void PL330_BufPool_Free(struct PL330_MCBUF *pool, void *buf)
-{
-    int i;
-
-    HAL_ASSERT(pool != NULL);
-
-    for (i = 0; i < PL330_MAX_CHAN_BUFS; i++) {
-        if (pool[i].buf == buf) {
-            if (pool[i].allocated)
-                pool[i].allocated = 0;
-        }
-    }
-}
-
-/**
  * @brief Construct the DMA program based on the DMA transfer.
  *
  * @param pl330: the handle of PL330.
@@ -1204,7 +1159,11 @@ static int PL330_BuildDmaProg(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
         off += _Setup_Xfer_Cyclic(dryRun, pl330, &buf[off], pxs, channel);
     }
 
-    HAL_DCACHE_CleanInvalidateByRange((uint32_t)buf, off);
+    /* make sure the buf and bufsize is cache line aligned. */
+    if (!dryRun) {
+        HAL_ASSERT(HAL_IS_CACHELINE_ALIGNED((uint32_t)buf));
+        HAL_DCACHE_CleanByRange((uint32_t)buf, PL330_CHAN_BUF_LEN);
+    }
 
     return off;
 }
@@ -1219,38 +1178,25 @@ static int PL330_BuildDmaProg(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
  * @return - HAL_OK on success.
  *         - HAL_ERROR on fail.
  */
-static int PL330_GenDmaProg(struct HAL_PL330_DEV *pl330, struct PL330_XFER_SPEC *pxs,
-                            uint32_t channel)
+static HAL_Status PL330_GenDmaProg(struct HAL_PL330_DEV *pl330, struct PL330_XFER_SPEC *pxs,
+                                   uint32_t channel)
 {
-    void *buf;
-    int progLen;
-    struct PL330_CHAN *pchan;
     struct PL330_DESC *desc = pxs->desc;
+    int len;
 
     HAL_ASSERT(pl330 != NULL);
     HAL_ASSERT(pxs != NULL);
     HAL_ASSERT(desc != NULL);
+    HAL_ASSERT(desc->mcBuf != NULL);
 
-    if (channel > PL330_CHANNELS_PER_DEV)
-        return HAL_ERROR;
-
-    pchan = pl330->chans + channel;
-
-    buf = PL330_BufPool_Allocate(pchan->mcBufPool);
-    if (buf == NULL)
-        return HAL_ERROR;
-
-    desc->mcBuf = buf;
-    progLen = PL330_BuildDmaProg(0, pl330, pxs, channel);
-    desc->mcBufLength = progLen;
-
-    if (progLen <= 0) {
-        PL330_BufPool_Free(pchan->mcBufPool, buf);
-        desc->mcBufLength = 0;
-        desc->mcBuf = NULL;
+    len = PL330_BuildDmaProg(1, pl330, pxs, channel);
+    if (len < 0 || len > PL330_CHAN_BUF_LEN) {
+        HAL_DBG_ERR("xfer size is too large, try to increase mc size\n");
 
         return HAL_ERROR;
     }
+
+    PL330_BuildDmaProg(0, pl330, pxs, channel);
 
     return HAL_OK;
 }
@@ -1312,6 +1258,22 @@ static int PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32_t addr
     WRITE_REG(reg->DBGCMD, 0);
 
     return 0;
+}
+
+static void PL330_CleanInvalidateDataBuf(struct PL330_DESC *desc)
+{
+    /* make sure the buf and bufsize cache line aligned. */
+    if (desc->rqcfg.srcInc) {
+        HAL_ASSERT(HAL_IS_CACHELINE_ALIGNED(desc->px.srcAddr));
+        HAL_ASSERT(HAL_IS_CACHELINE_ALIGNED(desc->px.length));
+        HAL_DCACHE_CleanByRange(desc->px.srcAddr, desc->px.length);
+    }
+
+    if (desc->rqcfg.dstInc) {
+        HAL_ASSERT(HAL_IS_CACHELINE_ALIGNED(desc->px.dstAddr));
+        HAL_ASSERT(HAL_IS_CACHELINE_ALIGNED(desc->px.length));
+        HAL_DCACHE_InvalidateByRange(desc->px.dstAddr, desc->px.length);
+    }
 }
 
 /********************* Public Function Definition ****************************/
@@ -1480,9 +1442,7 @@ HAL_Status HAL_PL330_DeInit(struct HAL_PL330_DEV *pl330)
  */
 HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
 {
-    int status = HAL_OK;
-    uint32_t mcBuf = 0;
-    uint32_t inten;
+    HAL_Status ret = HAL_OK;
     uint32_t ccr;
     struct PL330_XFER_SPEC xs;
     uint32_t channel = pchan->chanId;
@@ -1491,6 +1451,7 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
     struct DMA_REG *reg = pl330->pReg;
 
     HAL_ASSERT(pl330 != NULL);
+    HAL_ASSERT(pchan->mcBuf);
 
     if (pl330->pcfg.mode & DMAC_MODE_NS)
         desc->rqcfg.nonsecure = 1;
@@ -1501,35 +1462,16 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
 
     xs.ccr = ccr;
     xs.desc = desc;
-    desc->dmaStatus = HAL_ERROR;
+    desc->mcBuf = pchan->mcBuf;
 
-    if (!desc->mcBuf) {
-        status = PL330_GenDmaProg(pl330, &xs, channel);
-        if (status)
-            return HAL_ERROR;
-    }
+    ret = PL330_GenDmaProg(pl330, &xs, channel);
+    if (ret)
+        return HAL_ERROR;
 
-    mcBuf = (uint32_t)desc->mcBuf;
+    /* enable the interrupt */
+    SET_BIT(reg->INTEN, 0x01 << channel);
 
-    if (mcBuf) {
-        /* enable the interrupt */
-        inten = READ_REG(reg->INTEN);
-        inten |= 0x01 << channel;
-        WRITE_REG(reg->INTEN, inten);
-        inten = READ_REG(reg->INTEN);
-
-        if (desc->rqcfg.srcInc)
-            HAL_DCACHE_CleanInvalidateByRange(desc->px.srcAddr,
-                                              desc->px.length);
-        if (desc->rqcfg.dstInc)
-            HAL_DCACHE_InvalidateByRange(desc->px.dstAddr, desc->px.length);
-
-        status = PL330_Exec_DMAGO(pl330->pReg, channel, mcBuf);
-    } else {
-        status = HAL_ERROR;
-    }
-
-    return status;
+    return PL330_Exec_DMAGO(pl330->pReg, channel, (uint32_t)desc->mcBuf);
 }
 
 /**
@@ -1544,9 +1486,18 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
  */
 HAL_Status HAL_PL330_Stop(struct PL330_CHAN *pchan)
 {
+    uint32_t intEn = READ_REG(pchan->pl330->pReg->INTEN);
+
     HAL_ASSERT(pchan != NULL);
 
-    return PL330_Exec_DMAKILL(pchan->pl330->pReg, pchan->chanId, 1);
+    PL330_Exec_DMAKILL(pchan->pl330->pReg, pchan->chanId, 1);
+
+    if (intEn & (1 << pchan->chanId))
+        WRITE_REG(pchan->pl330->pReg->INTCLR, 1 << pchan->chanId);
+
+    WRITE_REG(pchan->pl330->pReg->INTEN, intEn & ~(1 << pchan->chanId));
+
+    return HAL_OK;
 }
 
 /**
@@ -1596,25 +1547,11 @@ HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
 
     for (ev = 0; ev < PL330_CHANNELS_PER_DEV; ev++) {
         if (val & (1 << ev)) { /* Event occurred */
-            struct PL330_CHAN *pchan = &pl330->chans[ev];
             uint32_t inten = READ_REG(reg->INTEN);
-            struct PL330_DESC *desc;
 
             /* Clear the event */
             if (inten & (1 << ev))
                 WRITE_REG(reg->INTCLR, 1 << ev);
-
-            desc = &pchan->desc;
-            if (desc) {
-                if (!desc->cyclic && desc->mcBuf) {
-                    PL330_BufPool_Free(pchan->mcBufPool, desc->mcBuf);
-                    desc->mcBuf = NULL;
-                }
-
-                desc->dmaStatus = 0;
-                /* if (desc->callback) */
-                /*    desc->callback(desc->cparam); */
-            }
         }
     }
 
@@ -1728,6 +1665,8 @@ HAL_Status HAL_PL330_PrepDmaCyclic(struct PL330_CHAN *pchan, uint32_t dmaAddr,
     HAL_ASSERT(len % periodLen == 0);
     HAL_ASSERT(direction == DMA_MEM_TO_DEV || direction == DMA_DEV_TO_MEM);
 
+    memset(desc, 0x0, sizeof(*desc));
+
     switch (direction) {
     case DMA_MEM_TO_DEV:
         desc->rqcfg.srcInc = 1;
@@ -1796,6 +1735,8 @@ HAL_Status HAL_PL330_PrepDmaSingle(struct PL330_CHAN *pchan, uint32_t dmaAddr,
     HAL_ASSERT(pl330 != NULL);
     HAL_ASSERT(direction == DMA_MEM_TO_DEV || direction == DMA_DEV_TO_MEM);
 
+    memset(desc, 0x0, sizeof(*desc));
+
     switch (direction) {
     case DMA_MEM_TO_DEV:
         desc->rqcfg.srcInc = 1;
@@ -1834,6 +1775,8 @@ HAL_Status HAL_PL330_PrepDmaSingle(struct PL330_CHAN *pchan, uint32_t dmaAddr,
     desc->callback = callback;
     desc->cparam = cparam;
 
+    PL330_CleanInvalidateDataBuf(desc);
+
     return HAL_OK;
 }
 
@@ -1861,6 +1804,8 @@ HAL_Status HAL_PL330_PrepDmaMemcpy(struct PL330_CHAN *pchan, uint32_t dst,
 
     HAL_ASSERT(pl330 != NULL);
     HAL_ASSERT(len > 0);
+
+    memset(desc, 0x0, sizeof(*desc));
 
     desc->px.srcAddr = src;
     desc->px.dstAddr = dst;
@@ -1896,6 +1841,8 @@ HAL_Status HAL_PL330_PrepDmaMemcpy(struct PL330_CHAN *pchan, uint32_t dst,
 
     desc->callback = callback;
     desc->cparam = cparam;
+
+    PL330_CleanInvalidateDataBuf(desc);
 
     return HAL_OK;
 }
