@@ -4,6 +4,7 @@
  */
 
 #include "soc.h"
+#include "hal_conf.h"
 
 uint32_t SystemCoreClock = 24000000;
 
@@ -41,6 +42,7 @@ void SystemInit(void)
 #endif
 #endif
 
+#if defined(HAL_ICACHE_MODULE_ENABLED)
     /* config icache: mpu disable, stb disable, write through, hot buffer enable */
     ICACHE->CACHE_CTRL |= ICACHE_CACHE_CTRL_CACHE_PF_EN_MASK |
                           (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK |
@@ -53,7 +55,9 @@ void SystemInit(void)
     } while (status == 0);
 
     ICACHE->CACHE_CTRL &= ~ICACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
+#endif
 
+#if defined(HAL_DCACHE_MODULE_ENABLED)
     /* stb enable, stb_entry=7, stb_timeout enable, write back */
     DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK | DCACHE_CACHE_CTRL_CACHE_PF_EN_MASK |
                           (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
@@ -71,4 +75,5 @@ void SystemInit(void)
     /* enable dap cache access for jtag protocol. don't modify the uncache data
      * by jtag, the data will be inconsistent. */
     GRF->MCU_CON[0] |= GRF_MCU_CON0_M4_DAP_DCACHE_MASK;
+#endif
 }
