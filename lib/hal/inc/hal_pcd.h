@@ -58,8 +58,9 @@ struct PCD_HANDLE {
     struct USB_OTG_CFG cfg;             /*!< PCD required parameters */
     struct USB_OTG_EP inEp[16];         /*!< IN endpoint parameters  */
     struct USB_OTG_EP outEp[16];        /*!< OUT endpoint parameters */
-    uint32_t setupBuf[8];               /*!< Setup packet buffer     */
     uint32_t irqno;                     /*!< irq number              */
+    HAL_CACHELINE_ALIGNED
+    uint8_t setupBuf[CACHE_LINE_SIZE];  /*!< Setup packet buffer     */
     void *pData;                        /*!< Pointer to upper stack Handler */
     ePCD_state pcdState;                /*!< PCD communication state */
     ePCD_lpmState lpmState;             /*!< LPM State               */

@@ -172,12 +172,12 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                             pPCD->outEp[epNum].pxferBuff += pPCD->outEp[epNum].xferCount;
                         }
 
-                        HAL_PCD_DataOutStageCallback(pPCD, epNum);
-                        if (pPCD->cfg.dmaEnable == 1) {
-                            if ((epNum == 0) && (pPCD->outEp[epNum].xferLen == 0)) {
-                                /* this is ZLP, so prepare EP0 for next setup */
-                                USB_EP0_OutStart(pPCD->pReg, 1, (uint8_t *)pPCD->setupBuf);
-                            }
+                        if ((pPCD->cfg.dmaEnable == 1) && (epNum == 0) &&
+                            (pPCD->outEp[epNum].xferLen == 0)) {
+                            /* this is ZLP, so prepare EP0 for next setup */
+                            USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
+                        } else {
+                            HAL_PCD_DataOutStageCallback(pPCD, epNum);
                         }
                     }
 
@@ -186,7 +186,6 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                         if (pPCD->cfg.dmaEnable == 1) {
                             if (USB_OUTEP(0)->DOEPINT & (1 << 15))
                                 CLEAR_OUT_EP_INTR(epNum, (1 << 15));
-
                             HAL_DCACHE_InvalidateByRange((uint32_t)(pPCD->setupBuf), sizeof(pPCD->setupBuf));
                         }
 
@@ -226,14 +225,12 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                         if (pPCD->cfg.dmaEnable == 1)
                             pPCD->inEp[epNum].pxferBuff += pPCD->inEp[epNum].maxPacket;
 
-                        HAL_PCD_DataInStageCallback(pPCD, epNum);
-
-                        if (pPCD->cfg.dmaEnable == 1) {
+                        if ((pPCD->cfg.dmaEnable == 1) && (epNum == 0) &&
+                            (pPCD->inEp[epNum].xferLen == 0)) {
                             /* this is ZLP, so prepare EP0 for next setup */
-                            if ((epNum == 0) && (pPCD->inEp[epNum].xferLen == 0)) {
-                                /* prepare to rx more setup packets */
-                                USB_EP0_OutStart(pPCD->pReg, 1, (uint8_t *)pPCD->setupBuf);
-                            }
+                            USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
+                        } else {
+                            HAL_PCD_DataInStageCallback(pPCD, epNum);
                         }
                     }
                     if ((epInt & USB_OTG_DIEPINT_TOC) == USB_OTG_DIEPINT_TOC)
@@ -343,8 +340,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
             }
 
             /* setup EP0 to receive SETUP packets */
-            USB_EP0_OutStart(pPCD->pReg, pPCD->cfg.dmaEnable,
-                             (uint8_t *)pPCD->setupBuf);
+            USB_EP0_OutStart(pPCD->pReg, pPCD->cfg.dmaEnable, pPCD->setupBuf);
 
             __HAL_PCD_CLEAR_FLAG(pPCD, USB_OTG_GINTSTS_ENUMDNE);
         }
@@ -363,7 +359,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                     pEP->xferCount += (temp & USB_OTG_GRXSTSP_BCNT) >> 4;
                 }
             } else if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_SETUP_UPDT) {
-                USB_ReadPacket(pUSB, (uint8_t *)pPCD->setupBuf, 8);
+                USB_ReadPacket(pUSB, pPCD->setupBuf, 8);
                 pEP->xferCount += (temp & USB_OTG_GRXSTSP_BCNT) >> 4;
             }
             USB_UNMASK_INTERRUPT(pPCD->pReg, USB_OTG_GINTSTS_RXFLVL);
@@ -863,7 +859,7 @@ HAL_Status HAL_PCD_EPSetStall(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 
     USB_EPSetStall(pPCD->pReg, pEP);
     if ((epAddr & 0x7F) == 0)
-        USB_EP0_OutStart(pPCD->pReg, pPCD->cfg.dmaEnable, (uint8_t *)pPCD->setupBuf);
+        USB_EP0_OutStart(pPCD->pReg, pPCD->cfg.dmaEnable, pPCD->setupBuf);
 
     return HAL_OK;
 }
