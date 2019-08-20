@@ -155,6 +155,36 @@ void HAL_CRU_AsInit(void)
 #endif
 
 /**
+ * @brief vop dclk enable.
+ * @param  gateId: gate id
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
+{
+    HAL_Status ret = HAL_OK;
+
+    ret = HAL_CRU_SetPllPowerUp(&CPLL);
+    HAL_CRU_ClkEnable(gateId);
+
+    return ret;
+}
+
+/**
+ * @brief vop dclk disable.
+ * @param  gateId: gate id
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId)
+{
+    HAL_Status ret = HAL_OK;
+
+    HAL_CRU_ClkDisable(gateId);
+    ret = HAL_CRU_SetPllPowerDown(&CPLL);
+
+    return ret;
+}
+
+/**
  * @brief Get frac clk freq.
  * @param  clockName: CLOCK_Name id
  * @return clk rate.

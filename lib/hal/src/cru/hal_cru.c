@@ -386,6 +386,44 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
 
     return HAL_OK;
 }
+
+/**
+ * @brief Set pll power up.
+ * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
+{
+    int delay = 2400;
+
+    /* Pll Power up */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+
+    /* Waiting for pll lock */
+    while (delay > 0) {
+        if (READ_REG(*(pSetup->conOffset2)) & (1 << pSetup->lockShift))
+            break;
+        HAL_CPUDelayUs(1000);
+        delay--;
+    }
+    if (delay == 0)
+        return HAL_TIMEOUT;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief Set pll power down.
+ * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
+{
+    /* Pll Power down */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+
+    return HAL_OK;
+}
 #else
 /**
  * @brief Get pll freq.
@@ -505,6 +543,49 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
 
     /* Force PLL into normal mode */
     WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief Set pll power up.
+ * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
+{
+    int delay = 2400;
+
+    /* Pll Power up */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+
+    /* Waiting for pll lock */
+    while (delay > 0) {
+        if (pSetup->stat0) {
+            if (READ_REG(*(pSetup->stat0)) & (1 << pSetup->lockShift))
+                break;
+        } else {
+            if (READ_REG(*(pSetup->conOffset1)) & (1 << pSetup->lockShift))
+                break;
+        }
+        HAL_CPUDelayUs(1000);
+        delay--;
+    }
+    if (delay == 0)
+        return HAL_TIMEOUT;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief Set pll power down.
+ * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
+{
+    /* Pll Power down */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
 
     return HAL_OK;
 }
@@ -769,6 +850,30 @@ HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t 
     }
 
     return HAL_ERROR;
+}
+
+/**
+ * @brief vop dclk enable.
+ * @param  gateId: gate id
+ * @return HAL_Status.
+ */
+__WEAK HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
+{
+    HAL_CRU_ClkEnable(gateId);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief vop dclk disable.
+ * @param  gateId: gate id
+ * @return HAL_Status.
+ */
+__WEAK HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId)
+{
+    HAL_CRU_ClkDisable(gateId);
+
+    return HAL_OK;
 }
 
 /**

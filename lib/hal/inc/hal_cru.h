@@ -119,6 +119,8 @@ typedef enum {
 /***************************** Function Declare ******************************/
 uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup);
 HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate);
+HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup);
+HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup);
 
 HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk);
 HAL_Status HAL_CRU_ClkEnable(uint32_t clk);
@@ -140,6 +142,9 @@ HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
 
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName);
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate);
+
+HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId);
+HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId);
 
 HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t pRate, uint32_t *bestdiv);
 
