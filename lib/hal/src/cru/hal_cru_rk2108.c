@@ -203,8 +203,8 @@ HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId)
 static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
 {
     uint32_t freq = 0;
-    uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
-    uint32_t divSrc, divFrac;
+    uint32_t muxSrc = 0, mux = CLK_GET_MUX(clockName);
+    uint32_t divSrc = 0, divFrac;
     uint32_t n, m, pRate;
 
     switch (clockName) {
