@@ -50,6 +50,10 @@ extern struct HAL_I2STDM_DEV g_i2sTdm0Dev;
 extern struct HAL_I2STDM_DEV g_i2sTdm1Dev;
 #endif
 
+#ifdef HAL_TSADC_MODULE_ENABLED
+extern const struct HAL_TSADC_DEV g_tsadcDev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);

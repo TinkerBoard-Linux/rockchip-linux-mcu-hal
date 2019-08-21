@@ -229,6 +229,20 @@ struct HAL_I2STDM_DEV g_i2sTdm1Dev =
 };
 #endif
 
+#ifdef HAL_TSADC_MODULE_ENABLED
+const struct HAL_TSADC_DEV g_tsadcDev =
+{
+    .sclkID = CLK_TSADC,
+    .sclkGateID = CLK_TSADC_GATE,
+    .pclkGateID = PCLK_TSADC_GATE,
+    .sclkResetID = SRST_TSADC,
+    .pclkResetID = SRST_P_TSADC,
+    .speed = 650000,
+    .polarity = TSHUT_LOW_ACTIVE,
+    .mode = TSHUT_MODE_CRU,
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }

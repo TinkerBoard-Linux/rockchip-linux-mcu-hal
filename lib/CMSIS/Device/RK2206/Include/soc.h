@@ -926,19 +926,16 @@ struct TSADC_REG {
          uint32_t RESERVED0010[4];                    /* Address Offset: 0x0010 */
     __IO uint32_t DATA[2];                            /* Address Offset: 0x0020 */
          uint32_t RESERVED0028[2];                    /* Address Offset: 0x0028 */
-    __IO uint32_t COMP0_INT;                          /* Address Offset: 0x0030 */
-    __IO uint32_t COMP1_INT;                          /* Address Offset: 0x0034 */
+    __IO uint32_t COMP_INT[2];                        /* Address Offset: 0x0030 */
          uint32_t RESERVED0038[2];                    /* Address Offset: 0x0038 */
-    __IO uint32_t COMP0_SHUT;                         /* Address Offset: 0x0040 */
-    __IO uint32_t COMP1_SHUT;                         /* Address Offset: 0x0044 */
+    __IO uint32_t COMP_SHUT[2];                       /* Address Offset: 0x0040 */
          uint32_t RESERVED0048[6];                    /* Address Offset: 0x0048 */
     __IO uint32_t HIGHT_INT_DEBOUNCE;                 /* Address Offset: 0x0060 */
     __IO uint32_t HIGHT_TSHUT_DEBOUNCE;               /* Address Offset: 0x0064 */
     __IO uint32_t AUTO_PERIOD;                        /* Address Offset: 0x0068 */
     __IO uint32_t AUTO_PERIOD_HT;                     /* Address Offset: 0x006C */
          uint32_t RESERVED0070[4];                    /* Address Offset: 0x0070 */
-    __IO uint32_t COMP0_LOW_INT;                      /* Address Offset: 0x0080 */
-    __IO uint32_t COMP1_LOW_INT;                      /* Address Offset: 0x0084 */
+    __IO uint32_t COMP_LOW_INT[2];                    /* Address Offset: 0x0080 */
 };
 /* PDM Register Structure Define */
 struct PDM_REG {
