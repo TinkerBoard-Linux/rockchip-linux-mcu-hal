@@ -48,13 +48,6 @@
 
 /********************* Private Function Definition ***************************/
 
-__WEAK void AssertFailed(const char *file, uint32_t line)
-{
-    HAL_DBG_ERR("assert failed at %s %lu\n", file, line);
-    while (1)
-        ;
-}
-
 /********************* Public Function Definition ****************************/
 
 /** @defgroup DEBUG_Exported_Functions_Group5 Other Functions
@@ -63,6 +56,20 @@ __WEAK void AssertFailed(const char *file, uint32_t line)
 
  *  @{
  */
+
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the HAL_ASSERT error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: HAL_ASSERT error line source number
+  * @retval None
+  */
+__WEAK void HAL_AssertFailed(const char *file, uint32_t line)
+{
+    HAL_DBG_ERR("assert failed at %s %lu\n", file, line);
+    while (1)
+        ;
+}
 
 /**
  * @brief  format hex print.

@@ -55,10 +55,10 @@
 #endif
 
 #if (HAL_DBG_ON && USE_FULL_ASSERT)
-#define HAL_ASSERT(expr)                                    \
-    do {                                                    \
-        if (!(expr))                                        \
-            AssertFailed((const char *)__FILE__, __LINE__); \
+#define HAL_ASSERT(expr)                                        \
+    do {                                                        \
+        if (!(expr))                                            \
+            HAL_AssertFailed((const char *)__FILE__, __LINE__); \
     } while (0)
 #else
 #define HAL_ASSERT(expr)
@@ -69,7 +69,7 @@
 /** @} */
 /***************************** Function Declare ******************************/
 
-extern void AssertFailed(const char *file, uint32_t line);
+void HAL_AssertFailed(const char *file, uint32_t line);
 HAL_Status HAL_DBG_HEX(char *s, void *buf, uint32_t width, uint32_t len);
 #ifdef __GNUC__
 __attribute__((__format__(printf, 1, 2)))
