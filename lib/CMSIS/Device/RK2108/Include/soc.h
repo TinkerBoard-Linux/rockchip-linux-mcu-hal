@@ -4870,6 +4870,11 @@ struct USB_HOST_CH_REG {
 #define DSI_PHY_ENABLECLK_MASK                             (0x1U << DSI_PHY_ENABLECLK_SHIFT)                            /* 0X00000004 */
 #define DSI_PHY_FORCEPLL_SHIFT                             (3U)
 #define DSI_PHY_FORCEPLL_MASK                              (0x1U << DSI_PHY_FORCEPLL_SHIFT)                             /* 0X00000008 */
+/* PHY_IF_CFG */
+#define DSI_PHY_N_LANES_SHIFT                              (0U)
+#define DSI_PHY_N_LANES_MASK                               (0x3U << DSI_PHY_N_LANES_SHIFT)                              /* 0X00000003 */
+#define DSI_PHY_STOP_WAIT_TIME_SHIFT                       (8U)
+#define DSI_PHY_STOP_WAIT_TIME_MASK                        (0xFFU << DSI_PHY_STOP_WAIT_TIME_SHIFT)                      /* 0X00FF0000 */
 /* INT_MSK0 */
 #define DSI_ACK_WITH_ERR_0_SHIFT                           (0U)
 #define DSI_ACK_WITH_ERR_0_MASK                            (0x1U << DSI_ACK_WITH_ERR_0_SHIFT)                           /* 0X00000001 */
