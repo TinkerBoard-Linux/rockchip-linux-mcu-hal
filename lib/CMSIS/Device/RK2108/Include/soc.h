@@ -89,6 +89,7 @@ typedef enum
     DSP_PFATAL_ERROR_IRQn       = 40,     /* DSP pfatal error                                           */
     PWM_IRQn                    = 41,     /* PWM                                                        */
     PWM_PWR_IRQn                = 42,     /* PWM PWR                                                    */
+    AUDIOPWM_IRQn               = 43,     /* AUDIOPWM                                                   */
     CIF_IRQn                    = 44,     /* CIF                                                        */
     SPIMST2_IRQn                = 45,     /* SPI Master 2                                               */
     KEY_CTRL_IRQn               = 46,     /* KEY Control                                                */
