@@ -65,10 +65,10 @@ __Vectors_End:
         .type    Reset_Handler, %function
         .globl   Reset_Handler
 Reset_Handler:
-	/* Deassert rest for dsp */
-	ldr	r0, =0x00060000
-	ldr	r1, =CRU_SOFTRST4_CON
-	str	r0, [r1]
+        /* Deassert reset for dsp */
+        ldr     r0, =0x00060000
+        ldr     r1, =CRU_SOFTRST4_CON
+        str     r0, [r1]
 
         /* clear the bss segment */
         ldr     r0, =__bss_start
