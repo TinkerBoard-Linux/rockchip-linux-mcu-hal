@@ -41,15 +41,22 @@
 
 #define HAL_BIT(nr)       (1UL << (nr))
 #define HAL_ARRAY_SIZE(a) (sizeof((a)) / sizeof((a)[0]))
+#define HAL_MAX(x, y)     ((x) > (y) ? (x) : (y))
 #define HAL_MIN(x, y)     ((x) < (y) ? (x) : (y))
 
 #define HAL_DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
 
-/* Compiller Marco */
+/* Compiller Macro */
 #ifdef __GNUC__
 #ifndef __unused
 #define __unused __attribute__((unused))
 #endif
+#endif
+
+#ifdef CACHE_LINE_SIZE
+#define HAL_CACHELINE_ALIGNED __ALIGNED(CACHE_LINE_SIZE)
+#else
+#define HAL_CACHELINE_ALIGNED
 #endif
 
 /***************************** Structure Definition **************************/
