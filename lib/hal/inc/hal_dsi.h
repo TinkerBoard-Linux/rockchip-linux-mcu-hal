@@ -82,7 +82,8 @@ HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_M31DphyPowerUp(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_M31DphyPowerDown(struct DSI_REG *pReg);
 uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps);
-HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg);
+HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg,
+                                    struct DISPLAY_MODE_INFO *pModeInfo);
 HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint16_t laneMbps);
 HAL_Status HAL_DSI_MsgHsModeConfig(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_MsgLpModeConfig(struct DSI_REG *pReg);

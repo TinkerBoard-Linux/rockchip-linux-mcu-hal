@@ -545,7 +545,6 @@ HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
                   1000 << DSI_LPRX_TO_CNT_SHIFT);
         WRITE_REG(pReg->BTA_TO_CNT, 0xd00);
     }
-
     if (pModeInfo->flags & DSI_CLOCK_NON_CONTINUOUS)
         DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_AUTO_CLKLANE_CTRL_MASK, 1);
 
@@ -636,14 +635,19 @@ HAL_Status HAL_DSI_VerticalTimingConfig(struct DSI_REG *pReg,
 /**
  * @brief  DSI Dphy Timing Config.
  * @param  pReg: DSI reg base.
+ * @param  pModeInfo: display mode info.
  * @return HAL_Status.
  */
-HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg)
+HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg,
+                                    struct DISPLAY_MODE_INFO *pModeInfo)
 {
-    WRITE_REG(pReg->PHY_TMR_LPCLK_CFG, 0x40 << DSI_PHY_LP2HS_TIME_SHIFT |
+    WRITE_REG(pReg->PHY_TMR_LPCLK_CFG, 0x40 << DSI_PHY_CLKLP2HS_TIME_SHIFT |
               0x40 << DSI_PHY_CLKHS2LP_TIME_SHIFT);
     WRITE_REG(pReg->PHY_TMR_CFG, 0x14 << DSI_PHY_HS2LP_TIME_SHIFT |
-              0x10 << DSI_PHY_CLKHS2LP_TIME_SHIFT | 10000 << DSI_MAX_RD_TIME_SHIFT);
+              0x10 << DSI_PHY_LP2HS_TIME_SHIFT | 10000 << DSI_MAX_RD_TIME_SHIFT);
+
+    if (pModeInfo->flags & DSI_MODE_VIDEO)
+        WRITE_REG(pReg->PHY_IF_CFG, 0x5 << DSI_PHY_STOP_WAIT_TIME_SHIFT | 0x3 << DSI_PHY_N_LANES_SHIFT);
 
     return HAL_OK;
 }
