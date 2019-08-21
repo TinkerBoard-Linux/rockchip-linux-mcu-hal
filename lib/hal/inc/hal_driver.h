@@ -149,6 +149,10 @@
 #include "hal_touchkey.h"
 #endif
 
+#ifdef HAL_TSADC_MODULE_ENABLED
+#include "hal_tsadc.h"
+#endif
+
 #ifdef HAL_SARADC_MODULE_ENABLED
 #include "hal_saradc.h"
 #endif
