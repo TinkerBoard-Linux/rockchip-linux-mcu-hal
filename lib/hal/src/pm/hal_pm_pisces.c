@@ -22,7 +22,7 @@
 
 #include "hal_base.h"
 
-#if defined(RKMCU_RK2108)
+#if defined(RKMCU_PISCES)
 
 /********************* Private MACRO Definition ******************************/
 /* for pm_runtime */
@@ -118,9 +118,6 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
             return HAL_BIT(PM_RUNTIME_TYPE_UART);
         } else if ((PM_UART_REQUESTED(pdata) & HAL_BIT(1)) &&
                    (UART_CLK_GET_MUX(CLK_UART1) != SCLK_UART1_SEL_XIN_OSC0_FUNC)) {
-            return HAL_BIT(PM_RUNTIME_TYPE_UART);
-        } else if ((PM_UART_REQUESTED(pdata) & HAL_BIT(2)) &&
-                   (UART_CLK_GET_MUX(CLK_UART2) != SCLK_UART2_SEL_XIN_OSC0_FUNC)) {
             return HAL_BIT(PM_RUNTIME_TYPE_UART);
         }
     }

@@ -6,6 +6,8 @@
 #ifndef _HAL_DRIVER_H_
 #define _HAL_DRIVER_H_
 
+#include "hal_pm.h"
+
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
 #include "hal_acdcdig.h"
 #endif
@@ -105,10 +107,6 @@
 
 #ifdef HAL_PMU_MODULE_ENABLED
 #include "hal_pd.h"
-#endif
-
-#ifdef HAL_PM_MODULE_ENABLED
-#include "hal_pm.h"
 #endif
 
 #ifdef HAL_PVTM_MODULE_ENABLED

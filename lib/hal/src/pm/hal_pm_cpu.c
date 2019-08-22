@@ -7,22 +7,90 @@
  *  @{
  */
 
-/** @addtogroup PM_CPU_SLEEP
+/** @addtogroup PM_CPU
  *  @{
  */
 
-/** @defgroup PM_CPU_SLEEP_How_To_Use How To Use
+/** @defgroup PM_CPU_How_To_Use How To Use
  *  @{
 
  The PM_CPU_SLEEP driver can be used as follows:
-
  - Invoke HAL_NVIC_SuspendSave() when NVIC needs to be save.
  - Invoke HAL_NVIC_ResumeRestore() when NVIC needs to be resume.
  - Invoke HAL_CPU_SuspendSave() when cpu may need save some info.
 
+ The PM_Runtime driver can be used as follows:
+ - Invoke HAL_PM_RuntimeRequest() when a device is in runtime.
+ - Invoke HAL_PM_RuntimeRelease() when a device is release runtime.
+ - Invoke HAL_PM_RuntimeGetData() when need get all of device status.
+
  @} */
 
 #include "hal_base.h"
+
+#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
+
+static struct PM_RUNTIME_INFO runtimeStatus;
+
+/** @defgroup PM_PM_RUNTIME_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
+/**
+ * @brief  request a runtime status by runtimeId.
+ * @param  runtimeId: a runtime request id.
+ * @return HAL_Status
+ */
+HAL_Status HAL_PM_RuntimeRequest(ePM_RUNTIME_ID runtimeId)
+{
+    uint8_t runtimeType, typeOffset;
+
+    HAL_ASSERT(runtimeId < PM_RUNTIME_ID_END);
+
+    runtimeType = PM_RUNTIME_ID_TO_TYPE(runtimeId);
+    typeOffset = PM_RUNTIME_ID_TO_TYPE_OFFSET(runtimeId);
+    HAL_ASSERT(runtimeType < PM_RUNTIME_TYPE_END);
+    HAL_ASSERT(typeOffset < PM_RUNTIME_PER_TYPE_NUM);
+
+    runtimeStatus.bits[runtimeType] |= HAL_BIT(typeOffset);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  release a runtime status by runtimeId.
+ * @param  runtimeId: a runtime request id.
+ * @return HAL_Status
+ */
+HAL_Status HAL_PM_RuntimeRelease(ePM_RUNTIME_ID runtimeId)
+{
+    uint8_t runtimeType, typeOffset;
+
+    HAL_ASSERT(runtimeId < PM_RUNTIME_ID_END);
+
+    runtimeType = PM_RUNTIME_ID_TO_TYPE(runtimeId);
+    typeOffset = PM_RUNTIME_ID_TO_TYPE_OFFSET(runtimeId);
+
+    HAL_ASSERT(runtimeType < PM_RUNTIME_TYPE_END);
+    HAL_ASSERT(typeOffset < PM_RUNTIME_PER_TYPE_NUM);
+
+    runtimeStatus.bits[runtimeType] &= ~HAL_BIT(typeOffset);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  get the runitme data poiniter.
+ * @return the runitme data poiniter.
+ */
+const struct PM_RUNTIME_INFO *HAL_PM_RuntimeGetData(void)
+{
+    return &runtimeStatus;
+}
+
+/** @} */
+
+#endif
 
 #if defined(HAL_PM_CPU_SLEEP_MODULE_ENABLED)
 #if defined(__CM3_REV) || defined(__CM4_REV)
