@@ -5,6 +5,24 @@
 
 #include "bsp.h"
 
+#ifdef HAL_AUDIOPWM_MODULE_ENABLED
+struct HAL_AUDIOPWM_DEV g_audioPwmDev =
+{
+    .pReg = AUDIOPWM,
+    .mclk = CLK_AUDIOPWM,
+    .mclkGate = HCLK_AUDIOPWM_GATE,
+    .hclk = HCLK_AUDIOPWM_GATE,
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(AUDIOPWM->FIFO_ENTRY),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_AUDIOPWM,
+        .dmac = DMA,
+    },
+};
+#endif
+
 #ifdef HAL_DWDMA_MODULE_ENABLED
 struct HAL_DWDMA_DEV g_dwDmaDev =
 {
