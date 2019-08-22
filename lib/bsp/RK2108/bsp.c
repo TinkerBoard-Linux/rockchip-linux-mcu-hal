@@ -167,6 +167,7 @@ struct HAL_PDM_DEV g_pdm0Dev =
 {
     .pReg = PDM0,
     .mclk = MCLK_PDM0,
+    .mclkGate = MCLK_PDM0_GATE,
 #ifdef IS_FPGA
     .mclkRate = PDM_FPGA_CLK_RATE,
 #else

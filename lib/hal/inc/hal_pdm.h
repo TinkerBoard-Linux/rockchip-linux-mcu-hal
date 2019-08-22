@@ -112,6 +112,7 @@ typedef enum {
 struct HAL_PDM_DEV {
     struct PDM_REG *pReg;
     uint32_t mclk;
+    uint32_t mclkGate;
     uint32_t mclkRate;
     uint32_t hclk;
     uint32_t reset;

@@ -122,7 +122,8 @@ struct HAL_PDM_DEV g_pdm0Dev =
 {
     .pReg = PDM0,
     .mclk = CLK_PDM,
-    .mclkRate = CLK_PDM_GATE,
+    .mclkGate = CLK_PDM_GATE,
+    .mclkRate = PDM_CLK_RATE,
     .hclk = HCLK_PDM_GATE,
     .reset = SRST_PDM_SRSTN,
     .rxDmaData =
