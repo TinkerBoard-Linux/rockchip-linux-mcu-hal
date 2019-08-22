@@ -299,7 +299,9 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         return HAL_OK;
     }
 
-    if ((!(s_gpllFreq % rate)) && ((s_gpllFreq / rate) < 31)) {
+    if (PLL_INPUT_OSC_RATE == rate) {
+        HAL_CRU_ClkSetMux(muxSrc, 2);
+    } else if ((!(s_gpllFreq % rate)) && ((s_gpllFreq / rate) < 31)) {
         HAL_CRU_ClkSetDiv(divSrc, s_gpllFreq / rate);
         HAL_CRU_ClkSetMux(muxSrc, 0);
         HAL_CRU_ClkSetMux(mux, 0);
