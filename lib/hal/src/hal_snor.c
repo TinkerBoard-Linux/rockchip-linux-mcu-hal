@@ -298,15 +298,23 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
                                              SPI_MEM_OP_DATA_IN(0, NULL, 1));
 
     /* get transfer protocols. */
-    op.cmd.opcode = SPINOR_OP_READ_1_4_4;
     op.cmd.buswidth = 1;
-    op.addr.buswidth = 4;
-    op.dummy.buswidth = 4;
-    op.data.buswidth = 4;
 
+    op.addr.buswidth = SNOR_GET_PROTOCOL_ADDR_BITS(nor->readProto);
+    op.dummy.buswidth = op.addr.buswidth;
+    op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
+    op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
+
+    /* Change to use EBh */
+    if (nor->spi->mode & SPI_TX_QUAD &&
+        nor->spi->mode & SPI_RX_QUAD) {
+        op.cmd.opcode = SPINOR_OP_READ_1_4_4;
+        op.addr.buswidth = 4;
+        op.dummy.buswidth = 4;
+        op.data.buswidth = 4;
+        op.dummy.nbytes = 3;
+    }
     /* HAL_SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
-    /* convert the dummy cycles to the number of bytes */
-    op.dummy.nbytes = 3;
 
     return SNOR_XipExecOp(nor->spi, &op, 0);
 }
