@@ -22,7 +22,7 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 
 CPU		= -march=armv7-a
 
-ASFLAGS		+= $(CPU)
+ASFLAGS		+= $(CPU) -D__ASSEMBLY__
 CFLAGS		+= $(CPU) -std=gnu99 -O2 -g -Wformat=2 -Wall -Wextra -Wno-unused-parameter -Werror
 LDFLAGS		+= $(CPU) -Wl,--gc-sections -lm -lgcc -nostartfiles
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
@@ -70,7 +70,7 @@ SRCS += $(basename $(foreach dir,$(DIRS),$(wildcard $(dir)/*.[cS])))
 
 OBJS := $(addsuffix .o,$(basename $(SRCS)))
 
-CFLAGS	+= $(INCLUDES)
+CPPFLAGS += $(INCLUDES)
 
 all: $(BIN)
 

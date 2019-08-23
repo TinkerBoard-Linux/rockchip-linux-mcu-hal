@@ -2,9 +2,13 @@
 /*
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
+
+#include "hal_conf.h"
+#include "soc.h"
+
 #if defined(HAL_PM_CPU_SLEEP_MODULE_ENABLED)
 #if defined(__CM3_REV) || defined(__CM4_REV)
-#if define (__GNUC__)
+#if defined(__GNUC__)
 .thumb
 .syntax unified
 

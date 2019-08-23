@@ -9,6 +9,7 @@
   extern "C" {
 #endif
 
+#ifndef __ASSEMBLY__
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
@@ -114,9 +115,11 @@ typedef enum
 
   NUM_INTERRUPTS         = 273
 } IRQn_Type;
+#endif /* __ASSEMBLY__ */
 
 #define __FPU_PRESENT        1U
 #define __CORTEX_A           7U        /* Cortex-A7 Core                          */
+#ifndef __ASSEMBLY__
 #include "core_ca.h"                   /* Cortex-A processor and core peripherals */
 #include "system_rk1808.h"
 
@@ -981,6 +984,7 @@ struct TIMER_REG {
          uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
     __O  uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
 };
+#endif /* __ASSEMBLY__ */
 /****************************************************************************************/
 /*                                                                                      */
 /*                                Module Address Section                                */
@@ -11067,6 +11071,7 @@ struct TIMER_REG {
 #define CLK(mux, div) \
     ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
 
+#ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
     PLL_APLL = 0U,
     PLL_DPLL,
@@ -11194,6 +11199,7 @@ typedef enum CLOCK_Name {
     CLK_UART0_FRAC       = CLK(0, CLK_UART0_FRAC_DIV),
     CLK_UART0            = CLK(CLK_UART0_SEL, 0),
 } eCLOCK_Name;
+#endif /* __ASSEMBLY__ */
 
 #ifdef __cplusplus
 }

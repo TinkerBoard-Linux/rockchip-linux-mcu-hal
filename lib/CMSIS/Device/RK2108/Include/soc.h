@@ -9,6 +9,7 @@
   extern "C" {
 #endif
 
+#ifndef __ASSEMBLY__
 /* ================================================================================ */
 /* ================                    DMA REQ                      =============== */
 /* ================================================================================ */
@@ -96,6 +97,7 @@ typedef enum
     FSPI1_IRQn                  = 47,     /* FSPI1                                                      */
     NUM_INTERRUPTS
 } IRQn_Type;
+#endif /* __ASSEMBLY__ */
 
 #define NVIC_PERIPH_IRQ_NUM MAX_IRQn
 #define NVIC_PERIPH_IRQ_OFFSET 16
@@ -111,6 +113,7 @@ typedef enum
 #define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used */
 #define __FPU_PRESENT             1U       /* FPU present                                  */
 
+#ifndef __ASSEMBLY__
 #include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
 #include "system_rk2108.h"
 /****************************************************************************************/
@@ -1060,6 +1063,7 @@ struct USB_HOST_CH_REG {
     __IO uint32_t HCDMA;                              /* Address Offset: 0x0514 */
          uint32_t RESERVED0[2];                       /* Address Offset: 0x0518 */
 };
+#endif /* __ASSEMBLY__ */
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -10368,6 +10372,7 @@ struct USB_HOST_CH_REG {
 #define CLK(mux, div) \
     ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
 
+#ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
     PLL_GPLL = 0U,
     PLL_CPLL,
@@ -10428,6 +10433,7 @@ typedef enum CLOCK_Name {
     SCLK_SFC1_SRC            = CLK(SCLK_SFC1_SEL, SCLK_SFC1_DIV),
     CLK_32K                  = CLK(0, XIN_OSC0_DIV),
 } eCLOCK_Name;
+#endif /* __ASSEMBLY__ */
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

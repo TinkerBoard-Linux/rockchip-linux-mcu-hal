@@ -9,6 +9,7 @@
   extern "C" {
 #endif
 
+#ifndef __ASSEMBLY__
 /* ================================================================================ */
 /* ================                    DMA REQ                      =============== */
 /* ================================================================================ */
@@ -77,6 +78,7 @@ typedef enum
     SPIMST2_IRQn                = 45,     /* SPI Master 2                                               */
     NUM_INTERRUPTS
 } IRQn_Type;
+#endif /* __ASSEMBLY__ */
 
 #define NVIC_PERIPH_IRQ_NUM MAX_IRQn
 #define NVIC_PERIPH_IRQ_OFFSET 16
@@ -92,6 +94,7 @@ typedef enum
 #define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used  */
 #define __FPU_PRESENT             1U       /* FPU present                                   */
 
+#ifndef __ASSEMBLY__
 #include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
 #include "system_pisces.h"
 /****************************************************************************************/
@@ -762,6 +765,7 @@ struct ACDCDIG_REG {
     __IO uint32_t I2STXCMD;                           /* Address Offset: 0x0080 */
     __IO uint32_t VERSION;                            /* Address Offset: 0x0084 */
 };
+#endif /* __ASSEMBLY__ */
 /****************************************************************************************/
 /*                                                                                      */
 /*                                Module Address Section                                */
@@ -7159,6 +7163,7 @@ struct ACDCDIG_REG {
 #define CLK(mux, div) \
     ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
 
+#ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
     PLL_GPLL = 0U,
     PLL_CPLL,
@@ -7199,6 +7204,7 @@ typedef enum CLOCK_Name {
     ACLK_LOGIC               = CLK(ACLK_LOGIC_SEL, ACLK_LOGIC_DIV),
     CLK_32K                  = CLK(0, XIN_OSC0_DIV),
 } eCLOCK_Name;
+#endif /* __ASSEMBLY__ */
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

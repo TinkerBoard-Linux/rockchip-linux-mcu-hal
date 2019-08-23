@@ -9,6 +9,7 @@
   extern "C" {
 #endif
 
+#ifndef __ASSEMBLY__
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
@@ -72,6 +73,7 @@ typedef enum
 
     /* Interrupts 10 .. 224 are left out */
 } IRQn_Type;
+#endif /* __ASSEMBLY__ */
 
 #define NVIC_PERIPH_IRQ_NUM MAX_IRQn
 #define NVIC_PERIPH_IRQ_OFFSET 16
@@ -110,9 +112,11 @@ typedef enum
 #define __Vendor_SysTickConfig \
     0U /* Set to 1 if different SysTick Config is used */
 
+#ifndef __ASSEMBLY__
 #include "core_cm3.h" /* Processor and core peripherals */
 #include "system_rk2106.h" /* System Header */
 #include <stdint.h>
+#endif /* __ASSEMBLY__ */
 
 /* --------  End of section using anonymous unions and disabling warnings  -------- */
 #if defined(__CC_ARM)
@@ -133,6 +137,7 @@ typedef enum
 #warning Not supported compiler type
 #endif
 
+#ifndef __ASSEMBLY__
 /* ================================================================================ */
 /* ================            Extend  Peripheral Resource         ================ */
 /* ================================================================================ */
@@ -431,6 +436,7 @@ struct SFC_REG {
     __O  uint32_t ADDR;                               /* Address Offset: 0x0104 */
     __IO uint32_t DATA;                               /* Address Offset: 0x0108 */
 };
+#endif /* __ASSEMBLY__ */
 /****************************************************************************************/
 /*                                                                                      */
 /*                                Module Address Section                                */
@@ -813,7 +819,9 @@ struct SFC_REG {
 
 #define SFC_CHIP_CNT                                       (1U)
 
+#ifndef __ASSEMBLY__
 typedef uint32_t eCLOCK_Name;
+#endif /* __ASSEMBLY__ */
 
 #ifdef __cplusplus
 }

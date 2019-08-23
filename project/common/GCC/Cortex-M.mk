@@ -24,7 +24,7 @@ OBJCOPY		= $(CROSS_COMPILE)objcopy
 OBJDUMP		= $(CROSS_COMPILE)objdump
 
 CPU		+= -mthumb
-ASFLAGS         += $(CPU)
+ASFLAGS         += $(CPU) -D__ASSEMBLY__
 CFLAGS		+= $(CPU) -std=c99 -O2 -g
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc -nostartfiles
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
@@ -96,7 +96,7 @@ HAL_SRCS := $(basename $(foreach dir,$(HAL_DIRS),$(wildcard $(dir)/*.[cS])))
 HAL_OBJS := $(addsuffix .o,$(basename $(HAL_SRCS)))
 $(HAL_OBJS): CFLAGS += $(HAL_CFLAGS)
 
-CFLAGS	+= $(INCLUDES)
+CPPFLAGS += $(INCLUDES)
 
 all: $(BIN)
 

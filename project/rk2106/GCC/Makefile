@@ -26,7 +26,7 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 
 CPU		= -mcpu=cortex-m3 -mthumb
 
-ASFLAGS         += $(CPU)
+ASFLAGS         += $(CPU) -D__ASSEMBLY__
 CFLAGS		+= $(CPU) -std=c99 -O2 -g -Wformat=2 -Wall -Wextra -Wno-unused-parameter -Werror
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc -nostartfiles
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
@@ -89,7 +89,7 @@ SRCS += $(basename $(foreach dir,$(DIRS),$(wildcard $(dir)/*.[cS])))
 
 OBJS := $(addsuffix .o,$(basename $(SRCS)))
 
-CFLAGS	+= $(INCLUDES)
+CPPFLAGS += $(INCLUDES)
 
 all: $(BIN)
 

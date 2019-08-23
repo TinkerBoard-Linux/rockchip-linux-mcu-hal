@@ -8,6 +8,7 @@
 #ifdef __cplusplus
   extern "C" {
 #endif
+#ifndef __ASSEMBLY__
 /* ================================================================================ */
 /* ================                    DMA REQ                      =============== */
 /* ================================================================================ */
@@ -79,6 +80,7 @@ typedef enum
     BLE_IRQn                  = 33,
     NUM_INTERRUPTS
 }IRQn_Type;
+#endif /* __ASSEMBLY__ */
 
 #define NVIC_PERIPH_IRQ_NUM MAX_IRQn
 #define NVIC_PERIPH_IRQ_OFFSET 16
@@ -92,6 +94,7 @@ typedef enum
 #define __NVIC_PRIO_BITS          3U       /* uses 3 Bits for the Priority Levels           */
 #define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used  */
 
+#ifndef __ASSEMBLY__
 #include "core_cm3.h"                      /* Processor and core peripherals                */
 #include "system_koala.h"                  /* System Header                                 */
 /****************************************************************************************/
@@ -615,6 +618,7 @@ struct CRU_REG {
     __IO uint32_t GLB_RST_CON;                        /* Address Offset: 0x0410 */
     __O  uint32_t GLB_RST_ST;                         /* Address Offset: 0x0414 */
 };
+#endif /* __ASSEMBLY__ */
 /****************************************************************************************/
 /*                                                                                      */
 /*                                Module Address Section                                */
@@ -5630,6 +5634,7 @@ struct CRU_REG {
 #define CLK(mux, div) \
     ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
 
+#ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
     PLL_CPLL = 0U,
     PLL_GPLL,
@@ -5674,6 +5679,7 @@ typedef enum CLOCK_Name {
     CLK_I2C1             = CLK(0, CLK_I2C1_DIV),
     CLK_BBGEN            = CLK(CLK_BBGEN_SEL, CLK_BBGEN_DIV),
 } eCLOCK_Name;
+#endif /* __ASSEMBLY__ */
 
 #ifdef __cplusplus
 }

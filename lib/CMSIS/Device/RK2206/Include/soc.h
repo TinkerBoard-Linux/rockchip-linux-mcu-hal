@@ -9,6 +9,7 @@
   extern "C" {
 #endif
 
+#ifndef __ASSEMBLY__
 /* ================================================================================ */
 /* ================                    DMA REQ                      =============== */
 /* ================================================================================ */
@@ -113,6 +114,7 @@ typedef enum
     TSADC_IRQn                  = 64,
     NUM_INTERRUPTS
 } IRQn_Type;
+#endif /* __ASSEMBLY__ */
 
 #define NVIC_PERIPH_IRQ_NUM MAX_IRQn
 #define NVIC_PERIPH_IRQ_OFFSET 16
@@ -129,6 +131,7 @@ typedef enum
 #define __FPU_PRESENT             1U       /* FPU present                                   */
 #define PLL_INPUT_OSC_RATE        (40000000U) /* RK2206 OSC Rate */
 
+#ifndef __ASSEMBLY__
 #include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
 #include "system_rk2206.h"
 
@@ -1217,6 +1220,7 @@ struct USB_HOST_CH_REG {
     __IO uint32_t HCDMA;                              /* Address Offset: 0x0514 */
          uint32_t RESERVED0[2];                       /* Address Offset: 0x0518 */
 };
+#endif /* __ASSEMBLY__ */
 /****************************************************************************************/
 /*                                                                                      */
 /*                                Module Address Section                                */
@@ -8842,6 +8846,7 @@ struct USB_HOST_CH_REG {
 #define CLK(mux, div) \
     ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
 
+#ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
     PLL_GPLL = 0U,
     PLL_VPLL,
@@ -8912,6 +8917,7 @@ typedef enum CLOCK_Name {
     CLK_OTG_USBPHY       = CLK(0, CLK_OTG_USBPHY_DIV),
     SCLK_M0              = CLK(0, SCLK_M0_DIV),
 } eCLOCK_Name;
+#endif /* __ASSEMBLY__ */
 
 /********************  Bit definition for USB_OTG_GOTGCTL register  ********************/
 #define USB_OTG_GOTGCTL_SRQSCS_SHIFT             (0U)
