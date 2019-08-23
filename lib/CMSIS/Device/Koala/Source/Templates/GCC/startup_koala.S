@@ -16,7 +16,7 @@
 .extern    SystemInit
 
 .equ    CRU_SOFTRST4_CON,       0x44500310
-
+.equ    GRF_DSP_CON0,           0x44300180
 /**
  * Vector table
  */
@@ -66,6 +66,9 @@ __Vectors_End:
         .globl   Reset_Handler
 Reset_Handler:
         /* Deassert reset for dsp */
+        ldr     r0, =0x00200020
+        ldr     r1, =GRF_DSP_CON0
+        str     r0, [r1]
         ldr     r0, =0x00060000
         ldr     r1, =CRU_SOFTRST4_CON
         str     r0, [r1]
