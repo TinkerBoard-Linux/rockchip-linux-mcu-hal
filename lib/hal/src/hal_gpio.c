@@ -430,8 +430,8 @@ void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, uint32_t pin)
         pGPIO->INT_MASK_H = pin | (pin >> 16);
     } else {
         pin &= 0x0000FFFF;
-        pGPIO->INT_EN_L = pin >> 16;
-        pGPIO->INT_MASK_L = pin | (pin >> 16);
+        pGPIO->INT_EN_L = pin << 16;
+        pGPIO->INT_MASK_L = pin | (pin << 16);
     }
 #else
     {
