@@ -474,21 +474,15 @@ void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank)
         pin = HAL_BIT(i);
 
         if ((stat & clear) != 0x0U) {
-            /* If gpio is level triggered, masked it at first */
-            if ((type & clear) == 0x0U)
-                HAL_GPIO_DisableIRQ(pGPIO, pin);
-
-            GPIO_SetEOI(pGPIO, pin);
+            /* If gpio is Edge-sensitive triggered, clear eoi */
+            if (type & clear)
+                GPIO_SetEOI(pGPIO, pin);
 
             /* Remove the pending interrupt bit from the clear */
             stat &= ~clear;
 
             /* And disptach the GPIO interrupt to the handler */
             HAL_GPIO_IRQDispatch(bank, i);
-
-            /* If gpio is level triggered, unmasked it at last */
-            if ((type & clear) == 0x0U)
-                HAL_GPIO_EnableIRQ(pGPIO, pin);
         }
     }
 }
