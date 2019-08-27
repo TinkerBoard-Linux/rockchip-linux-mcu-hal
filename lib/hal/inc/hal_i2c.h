@@ -15,6 +15,7 @@
 #define __HAL_I2C_H
 
 #include "hal_def.h"
+#include "hal_base.h"
 
 /***************************** MACRO Definition ******************************/
 /** @defgroup I2C_Exported_Definition_Group1 Basic Definition
@@ -83,6 +84,7 @@ struct HAL_I2C_DEV {
     uint32_t clkGateID;
     uint32_t pclkGateID;
     IRQn_Type irqNum;
+    ePM_RUNTIME_ID runtimeID;
 };
 
 /**

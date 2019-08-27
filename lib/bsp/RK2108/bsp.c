@@ -69,6 +69,7 @@ const struct HAL_I2C_DEV g_i2c0Dev =
     .clkGateID = CLK_I2C0_GATE,
     .pclkGateID = PCLK_I2C0_GATE,
     .irqNum = I2CMST0_IRQn,
+    .runtimeID = PM_RUNTIME_ID_I2C0,
 };
 
 const struct HAL_I2C_DEV g_i2c1Dev =
@@ -78,6 +79,7 @@ const struct HAL_I2C_DEV g_i2c1Dev =
     .clkGateID = CLK_I2C1_GATE,
     .pclkGateID = PCLK_I2C1_GATE,
     .irqNum = I2CMST1_IRQn,
+    .runtimeID = PM_RUNTIME_ID_I2C1,
 };
 
 const struct HAL_I2C_DEV g_i2c2Dev =
@@ -87,6 +89,7 @@ const struct HAL_I2C_DEV g_i2c2Dev =
     .clkGateID = CLK_I2C2_GATE,
     .pclkGateID = PCLK_I2C2_GATE,
     .irqNum = I2CMST2_IRQn,
+    .runtimeID = PM_RUNTIME_ID_I2C2,
 };
 #endif
 
@@ -398,6 +401,7 @@ const struct HAL_UART_DEV g_uart0Dev =
     .pclkGateID = PCLK_UART0_GATE,
     .irqNum = UART0_IRQn,
     .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART0,
 };
 
 const struct HAL_UART_DEV g_uart1Dev =
@@ -408,6 +412,7 @@ const struct HAL_UART_DEV g_uart1Dev =
     .pclkGateID = PCLK_UART1_GATE,
     .irqNum = UART1_IRQn,
     .isAutoFlow = false,
+    .runtimeID = PM_RUNTIME_ID_UART1,
 };
 
 const struct HAL_UART_DEV g_uart2Dev =
@@ -418,6 +423,7 @@ const struct HAL_UART_DEV g_uart2Dev =
     .pclkGateID = PCLK_UART2_GATE,
     .irqNum = UART2_IRQn,
     .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART2,
 };
 #endif
 

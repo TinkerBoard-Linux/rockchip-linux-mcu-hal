@@ -7,6 +7,7 @@
 #define _HAL_UART_H_
 
 #include "hal_def.h"
+#include "hal_base.h"
 
 /***************************** MACRO Definition ******************************/
 
@@ -205,6 +206,7 @@ struct HAL_UART_DEV {
 
     IRQn_Type irqNum;
     bool isAutoFlow;
+    ePM_RUNTIME_ID runtimeID;
 };
 
 /***************************** Function Declare ******************************/
