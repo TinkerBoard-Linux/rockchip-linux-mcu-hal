@@ -1544,24 +1544,24 @@ struct CRU_REG {
 #define GRF_BBGEN_STATUS_GRF_BBGEN_TDO_MASK                (0x1U << GRF_BBGEN_STATUS_GRF_BBGEN_TDO_SHIFT)               /* 0x00000010 */
 /* DLL_CON0 */
 #define GRF_DLL_CON0_OFFSET                                (0x2C0)
-#define GRF_DLL_CON0_PVTM_PMU_START_SHIFT                  (0U)
-#define GRF_DLL_CON0_PVTM_PMU_START_MASK                   (0x1U << GRF_DLL_CON0_PVTM_PMU_START_SHIFT)                  /* 0x00000001 */
-#define GRF_DLL_CON0_PMU_OSC_EN_SHIFT                      (1U)
-#define GRF_DLL_CON0_PMU_OSC_EN_MASK                       (0x1U << GRF_DLL_CON0_PMU_OSC_EN_SHIFT)                      /* 0x00000002 */
-#define GRF_DLL_CON0_PVTM_PMU_RING_SEL_SHIFT               (2U)
-#define GRF_DLL_CON0_PVTM_PMU_RING_SEL_MASK                (0x7U << GRF_DLL_CON0_PVTM_PMU_RING_SEL_SHIFT)               /* 0x0000001c */
+#define GRF_DLL_CON0_PVTM_START_SHIFT                      (0U)
+#define GRF_DLL_CON0_PVTM_START_MASK                       (0x1U << GRF_DLL_CON0_PVTM_START_SHIFT)                      /* 0x00000001 */
+#define GRF_DLL_CON0_PVTM_OSC_EN_SHIFT                     (1U)
+#define GRF_DLL_CON0_PVTM_OSC_EN_MASK                      (0x1U << GRF_DLL_CON0_PVTM_OSC_EN_SHIFT)                     /* 0x00000002 */
+#define GRF_DLL_CON0_PVTM_RING_SEL_SHIFT                   (2U)
+#define GRF_DLL_CON0_PVTM_RING_SEL_MASK                    (0x7U << GRF_DLL_CON0_PVTM_RING_SEL_SHIFT)                   /* 0x0000001c */
 /* DLL_CON1 */
 #define GRF_DLL_CON1_OFFSET                                (0x2C4)
-#define GRF_DLL_CON1_PVTM_PMU_CAL_CNT_SHIFT                (0U)
-#define GRF_DLL_CON1_PVTM_PMU_CAL_CNT_MASK                 (0xFFFFFFFFU << GRF_DLL_CON1_PVTM_PMU_CAL_CNT_SHIFT)         /* 0xFFFFFFFF */
+#define GRF_DLL_CON1_PVTM_CAL_CNT_SHIFT                    (0U)
+#define GRF_DLL_CON1_PVTM_CAL_CNT_MASK                     (0xFFFFFFFFU << GRF_DLL_CON1_PVTM_CAL_CNT_SHIFT)             /* 0xFFFFFFFF */
 /* DLL_STATUS0 */
 #define GRF_DLL_STATUS0_OFFSET                             (0x2C8)
-#define GRF_DLL_STATUS0_PVTM_PMU_FREQ_DONE_SHIFT           (0U)
-#define GRF_DLL_STATUS0_PVTM_PMU_FREQ_DONE_MASK            (0x1U << GRF_DLL_STATUS0_PVTM_PMU_FREQ_DONE_SHIFT)           /* 0x00000001 */
+#define GRF_DLL_STATUS0_PVTM_FREQ_DONE_SHIFT               (0U)
+#define GRF_DLL_STATUS0_PVTM_FREQ_DONE_MASK                (0x1U << GRF_DLL_STATUS0_PVTM_FREQ_DONE_SHIFT)               /* 0x00000001 */
 /* DLL_STATUS1 */
 #define GRF_DLL_STATUS1_OFFSET                             (0x2CC)
-#define GRF_DLL_STATUS1_PVTM_PMU_FREQ_CNT_SHIFT            (0U)
-#define GRF_DLL_STATUS1_PVTM_PMU_FREQ_CNT_MASK             (0xFFFFFFFFU << GRF_DLL_STATUS1_PVTM_PMU_FREQ_CNT_SHIFT)     /* 0xFFFFFFFF */
+#define GRF_DLL_STATUS1_PVTM_FREQ_CNT_SHIFT                (0U)
+#define GRF_DLL_STATUS1_PVTM_FREQ_CNT_MASK                 (0xFFFFFFFFU << GRF_DLL_STATUS1_PVTM_FREQ_CNT_SHIFT)         /* 0xFFFFFFFF */
 /* FAST_BOOT_EN */
 #define GRF_FAST_BOOT_EN_OFFSET                            (0x300)
 #define GRF_FAST_BOOT_EN_FAST_BOOT_EN_SHIFT                (0U)
