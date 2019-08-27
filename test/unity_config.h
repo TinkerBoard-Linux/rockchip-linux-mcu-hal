@@ -21,6 +21,8 @@
 #define XIP_MEM_BASE 0x60000000
 #elif defined(RKMCU_RK2206)
 #define XIP_MEM_BASE 0x10000000
+#elif defined(RKMCU_KOALA)
+#define XIP_MEM_BASE 0x50000000
 #endif
 
 #endif
