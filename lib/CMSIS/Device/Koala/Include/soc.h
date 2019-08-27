@@ -1548,8 +1548,8 @@ struct CRU_REG {
 #define GRF_DLL_CON0_PVTM_PMU_START_MASK                   (0x1U << GRF_DLL_CON0_PVTM_PMU_START_SHIFT)                  /* 0x00000001 */
 #define GRF_DLL_CON0_PMU_OSC_EN_SHIFT                      (1U)
 #define GRF_DLL_CON0_PMU_OSC_EN_MASK                       (0x1U << GRF_DLL_CON0_PMU_OSC_EN_SHIFT)                      /* 0x00000002 */
-#define GRF_DLL_CON0_PVTM_PMU_RING_SEL_SHIFT               (4U)
-#define GRF_DLL_CON0_PVTM_PMU_RING_SEL_MASK                (0x7U << GRF_DLL_CON0_PVTM_PMU_RING_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_DLL_CON0_PVTM_PMU_RING_SEL_SHIFT               (2U)
+#define GRF_DLL_CON0_PVTM_PMU_RING_SEL_MASK                (0x7U << GRF_DLL_CON0_PVTM_PMU_RING_SEL_SHIFT)               /* 0x0000001c */
 /* DLL_CON1 */
 #define GRF_DLL_CON1_OFFSET                                (0x2C4)
 #define GRF_DLL_CON1_PVTM_PMU_CAL_CNT_SHIFT                (0U)
