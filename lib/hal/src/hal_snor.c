@@ -299,15 +299,13 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
 
     /* get transfer protocols. */
     op.cmd.buswidth = 1;
-
     op.addr.buswidth = SNOR_GET_PROTOCOL_ADDR_BITS(nor->readProto);
     op.dummy.buswidth = op.addr.buswidth;
     op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
 
     /* Change to use EBh */
-    if (nor->spi->mode & SPI_TX_QUAD &&
-        nor->spi->mode & SPI_RX_QUAD) {
+    if (nor->spi->mode & SPI_RX_QUAD) {
         op.cmd.opcode = SPINOR_OP_READ_1_4_4;
         op.addr.buswidth = 4;
         op.dummy.buswidth = 4;
@@ -762,7 +760,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         nor->sectorSize = info->sectorSize * 512;
         nor->size = 1 << (info->density + 9);
         nor->eraseSize = nor->sectorSize;
-        if ((info->feature & FEA_4BIT_READ) && (nor->spi->mode & SPI_RX_QUAD)) {
+        if (nor->spi->mode & SPI_RX_QUAD) {
             if (SNOR_EnableQE(nor) == HAL_OK) {
                 nor->readOpcode = info->readCmd_4;
                 switch (nor->readOpcode) {
@@ -770,26 +768,28 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
                     nor->readDummy = 6;
                     nor->readProto = SNOR_PROTO_1_4_4;
                     break;
-                case SPINOR_OP_READ_1_2_2:
-                    nor->readDummy = 8;
-                    nor->readProto = SNOR_PROTO_1_2_2;
-                    break;
                 default:
                     nor->readDummy = 8;
                     nor->readProto = SNOR_PROTO_1_1_4;
                     break;
                 }
             }
+        } else if (nor->spi->mode & SPI_RX_DUAL) {
+            nor->readOpcode = SPINOR_OP_READ_1_1_2;
+            nor->readDummy = 8;
+            nor->readProto = SNOR_PROTO_1_1_2;
         }
-        if ((info->feature & FEA_4BIT_PROG) && (nor->spi->mode & SPI_TX_QUAD)) {
-            nor->programOpcode = info->progCmd_4;
-            switch (nor->programOpcode) {
-            case SPINOR_OP_PP_1_4_4:
-                nor->writeProto = SNOR_PROTO_1_4_4;
-                break;
-            default:
-                nor->writeProto = SNOR_PROTO_1_1_4;
-                break;
+        if (nor->spi->mode & SPI_TX_QUAD) {
+            if (SNOR_EnableQE(nor) == HAL_OK) {
+                nor->programOpcode = info->progCmd_4;
+                switch (nor->programOpcode) {
+                case SPINOR_OP_PP_1_4_4:
+                    nor->writeProto = SNOR_PROTO_1_4_4;
+                    break;
+                default:
+                    nor->writeProto = SNOR_PROTO_1_1_4;
+                    break;
+                }
             }
         }
         if (info->feature & FEA_4BYTE_ADDR)
