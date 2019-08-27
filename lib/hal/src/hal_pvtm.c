@@ -61,7 +61,7 @@ HAL_Status HAL_PVTM_GetFreqCnt(struct PVTM_REG *reg, uint32_t chn,
                       1 << PVTM_PVTM_CON0_PVTM_OSC_EN_SHIFT);
     WRITE_REG_MASK_WE(reg->PVTM_CON[0], PVTM_PVTM_CON0_PVTM_OSC_SEL_MASK,
                       chn << PVTM_PVTM_CON0_PVTM_OSC_SEL_SHIFT);
-    WRITE_REG(reg->PVTM_CON[1], timeUs * 24);
+    WRITE_REG(reg->PVTM_CON[1], PLL_INPUT_OSC_RATE / MHZ * timeUs);
     WRITE_REG_MASK_WE(reg->PVTM_CON[0], PVTM_PVTM_CON0_PVTM_START_MASK,
                       1 << PVTM_PVTM_CON0_PVTM_START_SHIFT);
 
