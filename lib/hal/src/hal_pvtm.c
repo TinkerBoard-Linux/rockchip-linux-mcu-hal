@@ -54,7 +54,7 @@ HAL_Status HAL_PVTM_GetFreqCnt(struct PVTM_REG *reg, uint32_t chn,
     if (!val)
         return HAL_INVAL;
 
-    if (READ_REG(reg->PVTM_CON[0]) | PVTM_PVTM_CON0_PVTM_START_MASK)
+    if (READ_REG(reg->PVTM_CON[0]) & PVTM_PVTM_CON0_PVTM_START_MASK)
         return HAL_BUSY;
 
     WRITE_REG_MASK_WE(reg->PVTM_CON[0], PVTM_PVTM_CON0_PVTM_OSC_EN_MASK,
