@@ -189,7 +189,12 @@ static HAL_Status FSPI_XferStart(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *
         FSPICmd.b.datasize = op->data.nbytes;
         if (op->data.dir == SPI_MEM_DATA_OUT)
             FSPICmd.b.rw = FSPI_WRITE;
-        FSPICtrl.b.datalines = op->data.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+        if (op->data.buswidth == 4)
+            FSPICtrl.b.datalines = FSPI_LINES_X4;
+        else if (op->data.buswidth == 2)
+            FSPICtrl.b.datalines = FSPI_LINES_X2;
+        else
+            FSPICtrl.b.datalines = FSPI_LINES_X1;
     }
 
     /* spitial setting */
@@ -377,7 +382,14 @@ static HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP
         FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
 
     /* set DATA */
-    FSPICtrl.b.datalines = op->data.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+    if (op->data.dir == SPI_MEM_DATA_OUT)
+        FSPICmd.b.rw = FSPI_WRITE;
+    if (op->data.buswidth == 4)
+        FSPICtrl.b.datalines = FSPI_LINES_X4;
+    else if (op->data.buswidth == 2)
+        FSPICtrl.b.datalines = FSPI_LINES_X2;
+    else
+        FSPICtrl.b.datalines = FSPI_LINES_X1;
 
     /* spitial setting */
     FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
