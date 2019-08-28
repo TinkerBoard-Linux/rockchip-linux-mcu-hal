@@ -86,54 +86,54 @@ struct FLASH_INFO {
 
 #define JEDEC_MFR(id) ((id >> 16) & 0xff)
 
-#define SPI_MEM_OP_FORMAT(__cmd, __addr, __dummy, __data) \
-    {                                                     \
-        .cmd = __cmd,                                     \
-        .addr = __addr,                                   \
-        .dummy = __dummy,                                 \
-        .data = __data,                                   \
+#define HAL_SPI_MEM_OP_FORMAT(__cmd, __addr, __dummy, __data) \
+    {                                                         \
+        .cmd = __cmd,                                         \
+        .addr = __addr,                                       \
+        .dummy = __dummy,                                     \
+        .data = __data,                                       \
     }
 
-#define SPI_MEM_OP_CMD(__opcode, __buswidth) \
-    {                                        \
-        .buswidth = __buswidth,              \
-        .opcode = __opcode,                  \
+#define HAL_SPI_MEM_OP_CMD(__opcode, __buswidth) \
+    {                                            \
+        .buswidth = __buswidth,                  \
+        .opcode = __opcode,                      \
     }
 
-#define SPI_MEM_OP_ADDR(__nbytes, __val, __buswidth) \
-    {                                                \
-        .nbytes = __nbytes,                          \
-        .val = __val,                                \
-        .buswidth = __buswidth,                      \
-    }
-
-#define SPI_MEM_OP_NO_ADDR { }
-
-#define SPI_MEM_OP_DUMMY(__nbytes, __buswidth) \
-    {                                          \
-        .nbytes = __nbytes,                    \
-        .buswidth = __buswidth,                \
-    }
-
-#define SPI_MEM_OP_NO_DUMMY { }
-
-#define SPI_MEM_OP_DATA_IN(__nbytes, __buf, __buswidth) \
-    {                                                   \
-        .dir = SPI_MEM_DATA_IN,                         \
-        .nbytes = __nbytes,                             \
-        .buf.in = __buf,                                \
-        .buswidth = __buswidth,                         \
-    }
-
-#define SPI_MEM_OP_DATA_OUT(__nbytes, __buf, __buswidth) \
+#define HAL_SPI_MEM_OP_ADDR(__nbytes, __val, __buswidth) \
     {                                                    \
-        .dir = SPI_MEM_DATA_OUT,                         \
         .nbytes = __nbytes,                              \
-        .buf.out = __buf,                                \
+        .val = __val,                                    \
         .buswidth = __buswidth,                          \
     }
 
-#define SPI_MEM_OP_NO_DATA { }
+#define HAL_SPI_MEM_OP_NO_ADDR { }
+
+#define HAL_SPI_MEM_OP_DUMMY(__nbytes, __buswidth) \
+    {                                              \
+        .nbytes = __nbytes,                        \
+        .buswidth = __buswidth,                    \
+    }
+
+#define HAL_SPI_MEM_OP_NO_DUMMY { }
+
+#define HAL_SPI_MEM_OP_DATA_IN(__nbytes, __buf, __buswidth) \
+    {                                                       \
+        .dir = HAL_SPI_MEM_DATA_IN,                         \
+        .nbytes = __nbytes,                                 \
+        .buf.in = __buf,                                    \
+        .buswidth = __buswidth,                             \
+    }
+
+#define HAL_SPI_MEM_OP_DATA_OUT(__nbytes, __buf, __buswidth) \
+    {                                                        \
+        .dir = HAL_SPI_MEM_DATA_OUT,                         \
+        .nbytes = __nbytes,                                  \
+        .buf.out = __buf,                                    \
+        .buswidth = __buswidth,                              \
+    }
+
+#define HAL_SPI_MEM_OP_NO_DATA { }
 
 #define READ_MAX_IOSIZE (1024 * 8) /* 8KB */
 /********************* Private Structure Definition **************************/
@@ -189,7 +189,7 @@ struct FLASH_INFO spiFlashbl[] = {
 };
 
 /********************* Private Function Definition ***************************/
-static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
+static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
     if (spi->xfer)
         return spi->xfer(spi, op);
@@ -197,7 +197,7 @@ static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op
         return HAL_ERROR;
 }
 
-static HAL_Status SNOR_XipExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on)
+static HAL_Status SNOR_XipExecOp(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)
 {
     if (spi->xipConfig)
         return spi->xipConfig(spi, op, on);
@@ -205,9 +205,9 @@ static HAL_Status SNOR_XipExecOp(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, u
         return HAL_ERROR;
 }
 
-static HAL_Status SNOR_ReadWriteReg(struct SPI_NOR *nor, struct SPI_MEM_OP *op, void *buf)
+static HAL_Status SNOR_ReadWriteReg(struct SPI_NOR *nor, struct HAL_SPI_MEM_OP *op, void *buf)
 {
-    if (op->data.dir == SPI_MEM_DATA_IN)
+    if (op->data.dir == HAL_SPI_MEM_DATA_IN)
         op->data.buf.in = buf;
     else
         op->data.buf.out = buf;
@@ -217,10 +217,10 @@ static HAL_Status SNOR_ReadWriteReg(struct SPI_NOR *nor, struct SPI_MEM_OP *op, 
 
 static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, int32_t len)
 {
-    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(code, 1),
-                                             SPI_MEM_OP_NO_ADDR,
-                                             SPI_MEM_OP_NO_DUMMY,
-                                             SPI_MEM_OP_DATA_IN(len, NULL, 1));
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(code, 1),
+                                                     HAL_SPI_MEM_OP_NO_ADDR,
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_DATA_IN(len, NULL, 1));
     int32_t ret;
 
     /* HAL_SNOR_DBG("%s %x %lx\n", __func__, code, len); */
@@ -233,10 +233,10 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, 
 
 static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint8_t opcode, uint8_t *buf, int32_t len)
 {
-    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(opcode, 1),
-                                             SPI_MEM_OP_NO_ADDR,
-                                             SPI_MEM_OP_NO_DUMMY,
-                                             SPI_MEM_OP_DATA_OUT(len, NULL, 1));
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(opcode, 1),
+                                                     HAL_SPI_MEM_OP_NO_ADDR,
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_DATA_OUT(len, NULL, 1));
 
     /* HAL_SNOR_DBG("%s %x %ld\n", __func__, opcode, len); */
 
@@ -245,10 +245,10 @@ static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint8_t opcode, uint8_t *bu
 
 static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, void *buf)
 {
-    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->readOpcode, 1),
-                                             SPI_MEM_OP_ADDR(nor->addrWidth, from, 1),
-                                             SPI_MEM_OP_DUMMY(nor->readDummy, 1),
-                                             SPI_MEM_OP_DATA_IN(len, buf, 1));
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(nor->readOpcode, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(nor->addrWidth, from, 1),
+                                                     HAL_SPI_MEM_OP_DUMMY(nor->readDummy, 1),
+                                                     HAL_SPI_MEM_OP_DATA_IN(len, buf, 1));
     int32_t ret;
 
     /* get transfer protocols. */
@@ -270,10 +270,10 @@ static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, v
 
 static int32_t SNOR_WriteData(struct SPI_NOR *nor, uint32_t to, uint32_t len, const uint8_t *buf)
 {
-    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->programOpcode, 1),
-                                             SPI_MEM_OP_ADDR(nor->addrWidth, to, 1),
-                                             SPI_MEM_OP_NO_DUMMY,
-                                             SPI_MEM_OP_DATA_OUT(len, buf, 1));
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(nor->programOpcode, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(nor->addrWidth, to, 1),
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_DATA_OUT(len, buf, 1));
     int32_t ret;
 
     /* get transfer protocols. */
@@ -292,10 +292,10 @@ static int32_t SNOR_WriteData(struct SPI_NOR *nor, uint32_t to, uint32_t len, co
 
 static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
 {
-    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->readOpcode, 1),
-                                             SPI_MEM_OP_ADDR(nor->addrWidth, 0, 1),
-                                             SPI_MEM_OP_DUMMY(nor->readDummy, 1),
-                                             SPI_MEM_OP_DATA_IN(0, NULL, 1));
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(nor->readOpcode, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(nor->addrWidth, 0, 1),
+                                                     HAL_SPI_MEM_OP_DUMMY(nor->readDummy, 1),
+                                                     HAL_SPI_MEM_OP_DATA_IN(0, NULL, 1));
 
     /* get transfer protocols. */
     op.cmd.buswidth = 1;
@@ -305,7 +305,7 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
 
     /* Change to use EBh */
-    if (nor->spi->mode & SPI_RX_QUAD) {
+    if (nor->spi->mode & HAL_SPI_RX_QUAD) {
         op.cmd.opcode = SPINOR_OP_READ_1_4_4;
         op.addr.buswidth = 4;
         op.dummy.buswidth = 4;
@@ -322,10 +322,10 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
  */
 static HAL_Status SNOR_EraseSec(struct SPI_NOR *nor, uint32_t addr)
 {
-    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->eraseOpcodeSec, 1),
-                                             SPI_MEM_OP_ADDR(nor->addrWidth, addr, 1),
-                                             SPI_MEM_OP_NO_DUMMY,
-                                             SPI_MEM_OP_NO_DATA);
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(nor->eraseOpcodeSec, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(nor->addrWidth, addr, 1),
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_NO_DATA);
 
     if (nor->erase)
         return nor->erase(nor, addr);
@@ -342,10 +342,10 @@ static HAL_Status SNOR_EraseSec(struct SPI_NOR *nor, uint32_t addr)
  */
 static HAL_Status SNOR_EraseBlk(struct SPI_NOR *nor, uint32_t addr)
 {
-    struct SPI_MEM_OP op = SPI_MEM_OP_FORMAT(SPI_MEM_OP_CMD(nor->eraseOpcodeSec, 1),
-                                             SPI_MEM_OP_ADDR(nor->addrWidth, addr, 1),
-                                             SPI_MEM_OP_NO_DUMMY,
-                                             SPI_MEM_OP_NO_DATA);
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(nor->eraseOpcodeSec, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(nor->addrWidth, addr, 1),
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_NO_DATA);
 
     if (nor->erase)
         return nor->erase(nor, addr);
@@ -760,7 +760,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         nor->sectorSize = info->sectorSize * 512;
         nor->size = 1 << (info->density + 9);
         nor->eraseSize = nor->sectorSize;
-        if (nor->spi->mode & SPI_RX_QUAD) {
+        if (nor->spi->mode & HAL_SPI_RX_QUAD) {
             if (SNOR_EnableQE(nor) == HAL_OK) {
                 nor->readOpcode = info->readCmd_4;
                 switch (nor->readOpcode) {
@@ -774,12 +774,12 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
                     break;
                 }
             }
-        } else if (nor->spi->mode & SPI_RX_DUAL) {
+        } else if (nor->spi->mode & HAL_SPI_RX_DUAL) {
             nor->readOpcode = SPINOR_OP_READ_1_1_2;
             nor->readDummy = 8;
             nor->readProto = SNOR_PROTO_1_1_2;
         }
-        if (nor->spi->mode & SPI_TX_QUAD) {
+        if (nor->spi->mode & HAL_SPI_TX_QUAD) {
             if (SNOR_EnableQE(nor) == HAL_OK) {
                 nor->programOpcode = info->progCmd_4;
                 switch (nor->programOpcode) {
@@ -806,12 +806,12 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         HAL_SNOR_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
         HAL_SNOR_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
         HAL_SNOR_DBG("nor->size: %ldMB\n", nor->size >> 20);
-        HAL_SNOR_DBG("xip enable: %lx\n", nor->spi->mode & SPI_XIP);
+        HAL_SNOR_DBG("xip enable: %lx\n", nor->spi->mode & HAL_SPI_XIP);
     } else {
         return HAL_NODEV;
     }
 
-    if (nor->spi->mode & SPI_XIP)
+    if (nor->spi->mode & HAL_SPI_XIP)
         SNOR_XipInit(nor);
 
     return HAL_OK;

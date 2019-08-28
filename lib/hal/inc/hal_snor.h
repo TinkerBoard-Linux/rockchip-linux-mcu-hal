@@ -104,71 +104,11 @@ struct SPI_NOR {
     uint32_t eraseSize;
 };
 
-enum SPI_MEM_DATA_DIR {
-    SPI_MEM_DATA_IN,
-    SPI_MEM_DATA_OUT,
-};
-
-struct SPI_MEM_OP {
-    struct {
-        uint8_t buswidth;
-        uint8_t opcode;
-    } cmd;
-
-    struct {
-        uint8_t nbytes;
-        uint8_t buswidth;
-        uint32_t val;
-    } addr;
-
-    struct {
-        uint8_t nbytes;
-        uint8_t buswidth;
-    } dummy;
-
-    struct {
-        uint8_t buswidth;
-        enum SPI_MEM_DATA_DIR dir;
-        unsigned int nbytes;
-        /* buf.{in,out} must be DMA-able. */
-        union {
-            void *in;
-            const void *out;
-        } buf;
-    } data;
-};
-
 typedef enum {
     ERASE_SECTOR = 0,
     ERASE_BLOCK64K,
     ERASE_CHIP
 } NOR_ERASE_TYPE;
-
-/** SNOR HOST mode */
-#define SPI_CPHA      HAL_BIT(0)            /* clock phase */
-#define SPI_CPOL      HAL_BIT(1)            /* clock polarity */
-#define SPI_MODE_0    (0|0)                 /* (original MicroWire) */
-#define SPI_MODE_1    (0|SPI_CPHA)
-#define SPI_MODE_2    (SPI_CPOL|0)
-#define SPI_MODE_3    (SPI_CPOL|SPI_CPHA)
-#define SPI_CS_HIGH   HAL_BIT(2)            /* CS active high */
-#define SPI_LSB_FIRST HAL_BIT(3)            /* per-word bits-on-wire */
-#define SPI_3WIRE     HAL_BIT(4)            /* SI/SO signals shared */
-#define SPI_LOOP      HAL_BIT(5)            /* loopback mode */
-#define SPI_SLAVE     HAL_BIT(6)            /* slave mode */
-#define SPI_PREAMBLE  HAL_BIT(7)            /* Skip preamble bytes */
-#define SPI_TX_BYTE   HAL_BIT(8)            /* transmit with 1 wire byte */
-#define SPI_TX_DUAL   HAL_BIT(9)            /* transmit with 2 wires */
-#define SPI_TX_QUAD   HAL_BIT(10)           /* transmit with 4 wires */
-#define SPI_RX_SLOW   HAL_BIT(11)           /* receive with 1 wire slow */
-#define SPI_RX_DUAL   HAL_BIT(12)           /* receive with 2 wires */
-#define SPI_RX_QUAD   HAL_BIT(13)           /* receive with 4 wires */
-#define SPI_XIP       HAL_BIT(14)           /* support spi flash xip mode */
-
-/** SNOR HOST xfer flags */
-#define SPI_XFER_BEGIN HAL_BIT(0)	/* Assert CS before transfer */
-#define SPI_XFER_END   HAL_BIT(1)	/* Deassert CS after transfer */
-#define SPI_XFER_ONCE  (SPI_XFER_BEGIN | SPI_XFER_END)
 
 struct SNOR_HOST {
     uint32_t max_hz;
@@ -177,8 +117,8 @@ struct SNOR_HOST {
     uint32_t max_read_size;
     uint32_t max_write_size;
     uint8_t flags;
-    HAL_Status (*xfer)(struct SNOR_HOST *spi, struct SPI_MEM_OP *op);
-    HAL_Status (*xipConfig)(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on);
+    HAL_Status (*xfer)(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op);
+    HAL_Status (*xipConfig)(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on);
 
     void *userdata;
 };

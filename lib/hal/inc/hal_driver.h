@@ -126,6 +126,7 @@
 #endif
 
 #ifdef HAL_SNOR_MODULE_ENABLED
+#include "hal_spi_mem.h"
 #include "hal_snor.h"
 #endif
 
@@ -138,6 +139,7 @@
 #endif
 
 #ifdef HAL_FSPI_MODULE_ENABLED
+#include "hal_spi_mem.h"
 #include "hal_fspi.h"
 #endif
 

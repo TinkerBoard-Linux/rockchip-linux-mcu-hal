@@ -134,9 +134,9 @@ TEST(HAL_LEAGACY, DataAccess){
     host->instance = FSPI0;
     HAL_FSPI_Init(host);
     nor->spi->userdata = (void *)host;
-    nor->spi->mode = SPI_MODE_3 | SPI_TX_QUAD | SPI_RX_QUAD;
+    nor->spi->mode = HAL_SPI_MODE_3 | HAL_SPI_TX_QUAD | HAL_SPI_RX_QUAD;
     nor->spi->xfer = HAL_FSPI_SpiXfer;
-    nor->spi->mode |= SPI_XIP;
+    nor->spi->mode |= HAL_SPI_XIP;
     nor->spi->xipConfig = HAL_FSPI_SpiXipConfig;
 
     /* Init spi nor abstract */

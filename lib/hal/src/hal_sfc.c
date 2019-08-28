@@ -129,7 +129,7 @@ HAL_Check SFC_IsDMAInterrupt(struct HAL_SFC_HOST *host)
  * @param  op: flash operation protocol.
  * @return HAL_Status.
  */
-static HAL_Status SFC_XferStart(struct HAL_SFC_HOST *host, struct SPI_MEM_OP *op)
+static HAL_Status SFC_XferStart(struct HAL_SFC_HOST *host, struct HAL_SPI_MEM_OP *op)
 {
     struct SFC_REG *pReg = host->instance;
     SFCCMD_DATA sfcCmd;
@@ -153,7 +153,7 @@ static HAL_Status SFC_XferStart(struct HAL_SFC_HOST *host, struct SPI_MEM_OP *op
     /* set DATA */
     if (op->data.nbytes) {
         sfcCmd.b.datasize = op->data.nbytes;
-        if (op->data.dir == SPI_MEM_DATA_OUT)
+        if (op->data.dir == HAL_SPI_MEM_DATA_OUT)
             sfcCmd.b.rw = SFC_WRITE;
         sfcCtrl.b.datalines = op->data.buswidth == 4 ? SFC_LINES_X4 : SFC_LINES_X1;
     }
@@ -305,7 +305,7 @@ static HAL_Status SFC_XferDone(struct HAL_SFC_HOST *host)
  * @param  op: flash operation protocol.
  * @return HAL_Status.
  */
-HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
+HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
     struct HAL_SFC_HOST *host = (struct HAL_SFC_HOST *)spi->userdata;
     uint32_t ret = HAL_OK;

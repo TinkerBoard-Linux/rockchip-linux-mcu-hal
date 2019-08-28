@@ -156,14 +156,24 @@ static HAL_Status FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
     return HAL_OK;
 }
 
-#ifdef HAL_SNOR_MODULE_ENABLED
+/********************* Public Function Definition ****************************/
+
+/** @defgroup FSPI_Exported_Functions_Group3 IO Functions
+
+ This section provides functions allowing to IO controlling:
+
+ - Operate in blocking mode (Normal) using HAL_FSPI_Request();
+
+ *  @{
+ */
+
 /**
  * @brief  Configuration register with flash operation protocol.
  * @param  host: FSPI host.
  * @param  op: flash operation protocol.
  * @return HAL_Status.
  */
-static HAL_Status FSPI_XferStart(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *op)
+HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op)
 {
     struct FSPI_REG *pReg = host->instance;
     FSPICMD_DATA FSPICmd;
@@ -187,7 +197,7 @@ static HAL_Status FSPI_XferStart(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *
     /* set DATA */
     if (op->data.nbytes) {
         FSPICmd.b.datasize = op->data.nbytes;
-        if (op->data.dir == SPI_MEM_DATA_OUT)
+        if (op->data.dir == HAL_SPI_MEM_DATA_OUT)
             FSPICmd.b.rw = FSPI_WRITE;
         if (op->data.buswidth == 4)
             FSPICtrl.b.datalines = FSPI_LINES_X4;
@@ -223,7 +233,7 @@ static HAL_Status FSPI_XferStart(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *
  * @param  dir: transfer direction.
  * @return HAL_Status.
  */
-static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *data, uint32_t dir)
+HAL_Status HAL_FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *data, uint32_t dir)
 {
     HAL_Status ret = HAL_OK;
     __IO FSPIFSR_DATA fifostat;
@@ -302,7 +312,6 @@ static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *
     return ret;
 }
 
-#ifdef HAL_FSPI_DMA_ENABLED
 /**
  * @brief  IO transfer by internal DMA.
  * @param  host: FSPI host.
@@ -311,7 +320,7 @@ static HAL_Status FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *
  * @param  dir: transfer direction.
  * @return HAL_Status.
  */
-static HAL_Status FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, void *data, uint32_t dir)
+HAL_Status HAL_FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, void *data, uint32_t dir)
 {
     HAL_Status ret = HAL_OK;
     int32_t timeout = 0;
@@ -331,13 +340,12 @@ static HAL_Status FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, vo
 
     return ret;
 }
-#endif
 
 /**
  * @brief  Wait for FSPI host transfer finished.
  * @return HAL_Status.
  */
-static HAL_Status FSPI_XferDone(struct HAL_FSPI_HOST *host)
+HAL_Status HAL_FSPI_XferDone(struct HAL_FSPI_HOST *host)
 {
     HAL_Status ret = HAL_OK;
     int32_t timeout = 0;
@@ -356,80 +364,13 @@ static HAL_Status FSPI_XferDone(struct HAL_FSPI_HOST *host)
 }
 
 /**
- * @brief  Set XMMC dev.
+ * @brief  SPI Nor flash data transmission interface to support open source specifications SNOR.
  * @param  host: FSPI host.
  * @param  op: flash operation protocol.
  * @return HAL_Status.
  */
-static HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP *op)
+HAL_Status HAL_FSPI_SpiXfer(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op)
 {
-    FSPICMD_DATA FSPICmd;
-    FSPICTRL_DATA FSPICtrl;
-
-    FSPICmd.d32 = 0;
-    FSPICtrl.d32 = 0;
-
-    /* set CMD */
-    FSPICmd.b.cmd = op->cmd.opcode;
-    FSPICtrl.b.cmdlines = op->cmd.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
-
-    /* set ADDR */
-    FSPICmd.b.addrbits = op->addr.nbytes == 4 ? FSPI_ADDR_32BITS : FSPI_ADDR_24BITS;
-    FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
-
-    /* set DUMMY*/
-    if (op->dummy.nbytes)
-        FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
-
-    /* set DATA */
-    if (op->data.dir == SPI_MEM_DATA_OUT)
-        FSPICmd.b.rw = FSPI_WRITE;
-    if (op->data.buswidth == 4)
-        FSPICtrl.b.datalines = FSPI_LINES_X4;
-    else if (op->data.buswidth == 2)
-        FSPICtrl.b.datalines = FSPI_LINES_X2;
-    else
-        FSPICtrl.b.datalines = FSPI_LINES_X1;
-
-    /* spitial setting */
-    FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
-    if (op->cmd.opcode == SPINOR_OP_READ_1_4_4) {
-        FSPICmd.b.readmode = 1;
-        FSPICmd.b.dummybits = 4;
-    }
-
-    /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
-    /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
-    host->xmmcDev[host->cs].type = DEV_NOR;
-    host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
-    host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
-
-    return HAL_OK;
-}
-
-#endif
-
-/********************* Public Function Definition ****************************/
-
-/** @defgroup FSPI_Exported_Functions_Group3 IO Functions
-
- This section provides functions allowing to IO controlling:
-
- - Operate in blocking mode (Normal) using HAL_FSPI_Request();
-
- *  @{
- */
-
-#ifdef HAL_SNOR_MODULE_ENABLED
-/**
- * @brief  SPI Nor flash data transmission interface to support open source specifications SNOR.
- * @param  spi: host abstract.
- * @param  op: flash operation protocol.
- * @return HAL_Status.
- */
-HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
-{
-    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
     HAL_Status ret = HAL_OK;
     uint32_t dir = op->data.dir;
     void *pData = NULL;
@@ -439,16 +380,15 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
     else if (op->data.buf.out)
         pData = (void *)op->data.buf.out;
 
-    host->mode = spi->mode;
-    FSPI_XferStart(host, op);
+    HAL_FSPI_XferStart(host, op);
     if (pData) {
 #if defined(HAL_FSPI_DMA_ENABLED)
         if ((op->data.nbytes >= FSPI_NOR_FLASH_PAGE_SIZE) &&
-            (dir == SPI_MEM_DATA_IN))
-            ret = FSPI_XferData_DMA(host, op->data.nbytes, pData, dir);
+            (dir == HAL_SPI_MEM_DATA_IN))
+            ret = HAL_FSPI_XferData_DMA(host, op->data.nbytes, pData, dir);
         else
 #endif
-        ret = FSPI_XferData(host, op->data.nbytes, pData, dir);
+        ret = HAL_FSPI_XferData(host, op->data.nbytes, pData, dir);
         if (ret) {
             FSPI_DBG("%s xfer data failed ret %d\n", __func__, ret);
 
@@ -456,26 +396,8 @@ HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op)
         }
     }
 
-    return FSPI_XferDone(host);
+    return HAL_FSPI_XferDone(host);
 }
-
-/**
- * @brief  SPI Nor flash XIP interface config to support open source specifications SNOR.
- * @param  spi: host abstract.
- * @param  op: flash operation protocol.
- * @param  on: 1 for XIP enable, 0 for XIP disable.
- * @return HAL_Status.
- */
-HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on)
-{
-    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
-
-    if (op)
-        FSPI_XmmcSetting(host, op);
-
-    return HAL_FSPI_XmmcRequest(host, on);
-}
-#endif
 
 /** @} */
 
@@ -557,6 +479,58 @@ HAL_Status HAL_FSPI_IRQHelper(struct HAL_FSPI_HOST *host)
 {
     HAL_ASSERT(HAL_IS_BIT_SET(host->instance->ISR, FSPI_ISR_DMAS_ACTIVE)); /* Only support DMA IT */
     FSPI_ClearIsr(host);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set XMMC dev.
+ * @param  host: FSPI host.
+ * @param  op: flash operation protocol.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op)
+{
+    FSPICMD_DATA FSPICmd;
+    FSPICTRL_DATA FSPICtrl;
+
+    FSPICmd.d32 = 0;
+    FSPICtrl.d32 = 0;
+
+    /* set CMD */
+    FSPICmd.b.cmd = op->cmd.opcode;
+    FSPICtrl.b.cmdlines = op->cmd.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+
+    /* set ADDR */
+    FSPICmd.b.addrbits = op->addr.nbytes == 4 ? FSPI_ADDR_32BITS : FSPI_ADDR_24BITS;
+    FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+
+    /* set DUMMY*/
+    if (op->dummy.nbytes)
+        FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
+
+    /* set DATA */
+    if (op->data.dir == HAL_SPI_MEM_DATA_OUT)
+        FSPICmd.b.rw = FSPI_WRITE;
+    if (op->data.buswidth == 4)
+        FSPICtrl.b.datalines = FSPI_LINES_X4;
+    else if (op->data.buswidth == 2)
+        FSPICtrl.b.datalines = FSPI_LINES_X2;
+    else
+        FSPICtrl.b.datalines = FSPI_LINES_X1;
+
+    /* spitial setting */
+    FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
+    if (op->addr.buswidth == 4) {
+        FSPICmd.b.readmode = 1;
+        FSPICmd.b.dummybits = 4;
+    }
+
+    /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
+    /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
+    host->xmmcDev[host->cs].type = DEV_NOR;
+    host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
+    host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
 
     return HAL_OK;
 }

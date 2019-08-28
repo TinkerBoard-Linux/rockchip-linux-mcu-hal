@@ -223,6 +223,24 @@ static HAL_Status FSPI_IRQHandler(void)
     return HAL_OK;
 }
 
+HAL_Status SPI_Xfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
+{
+    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
+
+    host->mode = spi->mode;
+    HAL_FSPI_SpiXfer(host, op);
+}
+
+HAL_Status SPI_XipConfig(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)
+{
+    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
+
+    if (op)
+        HAL_FSPI_XmmcSetting(host, op);
+
+    return HAL_FSPI_XmmcRequest(host, on);
+}
+
 static HAL_Status SNOR_Adapt(void)
 {
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)calloc(1, sizeof(*host));
@@ -234,15 +252,15 @@ static HAL_Status SNOR_Adapt(void)
     host->instance = FSPI0;
     HAL_FSPI_Init(host);
     nor->spi->userdata = (void *)host;
-    nor->spi->mode = SPI_MODE_3;
-    nor->spi->xfer = HAL_FSPI_SpiXfer;
+    nor->spi->mode = HAL_SPI_MODE_3;
+    nor->spi->xfer = SPI_Xfer;
     HAL_NVIC_ConfigExtIRQ(FSPI0_IRQn, (NVIC_IRQHandler) & FSPI_IRQHandler, NVIC_PERIPH_PRIO_DEFAULT, NVIC_PERIPH_SUB_PRIO_DEFAULT);
 
 #ifdef HAL_FSPI_TUNING_ENABLED
     uint8_t idByte[5];
     uint32_t i, j;
 
-    nor->spi->mode = SPI_MODE_0;
+    nor->spi->mode = HAL_SPI_MODE_0;
     HAL_SNOR_Init(nor);
     for (i = 0; i <= HAL_FSPI_MAX_DELAY_LINE_CELLS; i += 2) {
         HAL_FSPI_SetDelayLines(host, (uint8_t)i);
@@ -259,13 +277,13 @@ static HAL_Status SNOR_Adapt(void)
     HAL_FSPI_SetDelayLines(host, (uint8_t)((i + j) / 2));
     HAL_SNOR_ReadID(nor, idByte);
     if (!HAL_SNOR_IsFlashSupported(idByte))
-        nor->spi->mode = SPI_MODE_3;
+        nor->spi->mode = HAL_SPI_MODE_3;
 #endif
 
-    nor->spi->mode |= (SPI_TX_QUAD | SPI_RX_QUAD);
+    nor->spi->mode |= (HAL_SPI_TX_QUAD | HAL_SPI_RX_QUAD);
 #ifdef HAL_FSPI_XIP_ENABLE
-    nor->spi->mode |= SPI_XIP;
-    nor->spi->xipConfig = HAL_FSPI_SpiXipConfig;
+    nor->spi->mode |= HAL_SPI_XIP;
+    nor->spi->xipConfig = SPI_XipConfig;
 #endif
 
     /* Init spi nor abstract */

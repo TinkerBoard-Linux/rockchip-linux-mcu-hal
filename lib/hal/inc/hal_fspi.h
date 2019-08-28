@@ -96,13 +96,15 @@ struct HAL_FSPI_HOST {
 /***************************** Function Declare ******************************/
 HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host);
 HAL_Status HAL_FSPI_DeInit(struct HAL_FSPI_HOST *host);
-#ifdef HAL_SNOR_MODULE_ENABLED
-HAL_Status HAL_FSPI_SpiXfer(struct SNOR_HOST *spi, struct SPI_MEM_OP *op);
-HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, uint32_t on);
-#endif
+HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op);
+HAL_Status HAL_FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *data, uint32_t dir);
+HAL_Status HAL_FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, void *data, uint32_t dir);
+HAL_Status HAL_FSPI_XferDone(struct HAL_FSPI_HOST *host);
+HAL_Status HAL_FSPI_SpiXfer(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op);
 HAL_Status HAL_FSPI_IRQHelper(struct HAL_FSPI_HOST *host);
 HAL_Status HAL_FSPI_MaskDMAInterrupt(struct HAL_FSPI_HOST *host);
 HAL_Status HAL_FSPI_UnmaskDMAInterrupt(struct HAL_FSPI_HOST *host);
+HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op);
 HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on);
 HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint8_t cells);
 uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host);
