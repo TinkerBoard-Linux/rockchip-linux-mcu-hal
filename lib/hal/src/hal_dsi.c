@@ -368,9 +368,10 @@ HAL_Status HAL_DSI_M31DphyPowerDown(struct DSI_REG *pReg)
  * @brief  DSI m31 Dphy Init.
  * @param  pReg: DSI reg base.
  * @param  laneMbps: DSI per lane mbps.
+ * @param  refClkIn: Dphy ref clk in rate.
  * @return Actually DSI per lane mbps..
  */
-uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps)
+uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps, eDSI_DphyRefClk refClkIn)
 {
     uint32_t index, clkSel = 0;
     uint32_t lanebps = laneMbps * 1000000;
@@ -407,7 +408,8 @@ uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps)
 
         clkSel += pllClkSelTable[index - 1 ].pllClkSel;
     }
-    HAL_DBG("actually dsi mbps = %d, m31 dphy pll_clk_sel = %ld\n", laneMbps, clkSel);
+
+    HAL_DBG("actually dsi mbps = %d, m31 dphy_ref_clk = %d\n", laneMbps, refClkIn);
 
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_ENABLECLK_MASK, 0);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_RSTZ_MASK, 1);
@@ -418,9 +420,8 @@ uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps)
     WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PLL_CLK_SEL_MASK,
                       clkSel << GRF_DSI_CON0_DPHY_PLL_CLK_SEL_SHIFT);
 
-    /* Set dphy ref_clk_in = 27Mhz */
     WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_REFCLK_IN_SEL_MASK,
-                      0x5 << GRF_DSI_CON0_DPHY_REFCLK_IN_SEL_SHIFT);
+                      refClkIn << GRF_DSI_CON0_DPHY_REFCLK_IN_SEL_SHIFT);
 
     WRITE_REG_MASK_WE(gGrfReg->DSI_CON[2], GRF_DSI_CON2_DPHY_LANE_SWAP0_MASK |
                       GRF_DSI_CON2_DPHY_LANE_SWAP1_MASK | GRF_DSI_CON2_DPHY_LANE_SWAP2_MASK |

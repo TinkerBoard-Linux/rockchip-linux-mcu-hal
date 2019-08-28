@@ -75,6 +75,17 @@ typedef enum {
     MIPI_DSI_DCS_TEAR_MODE_VHBLANK,
 } eDSI_DcsTearMode;
 
+typedef enum {
+    DPHY_REF_CLK_IN_6000000,
+    DPHY_REF_CLK_IN_12000000,
+    DPHY_REF_CLK_IN_19200000,
+    DPHY_REF_CLK_IN_25000000,
+    DPHY_REF_CLK_IN_26000000,
+    DPHY_REF_CLK_IN_27000000,
+    DPHY_REF_CLK_IN_38400000,
+    DPHY_REF_CLK_IN_40000000,
+} eDSI_DphyRefClk;
+
 /** @} */
 /***************************** Function Declare ******************************/
 HAL_Status HAL_DSI_IrqEnable(struct DSI_REG *pReg);
@@ -82,7 +93,8 @@ HAL_Status HAL_DSI_IrqDisable(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_M31DphyPowerUp(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_M31DphyPowerDown(struct DSI_REG *pReg);
-uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps);
+uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps,
+                             eDSI_DphyRefClk refClkIn);
 HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg,
                                     struct DISPLAY_MODE_INFO *pModeInfo);
 HAL_Status HAL_DSI_Init(struct DSI_REG *pReg, uint16_t laneMbps);
