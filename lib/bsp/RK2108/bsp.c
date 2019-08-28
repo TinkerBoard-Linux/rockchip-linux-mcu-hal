@@ -32,7 +32,7 @@ struct HAL_AUDIOPWM_DEV g_audioPwmDev =
 {
     .pReg = AUDIOPWM,
     .mclk = CLK_AUDPWM,
-    .mclkGate = CLK_AUDPWM_DF_GATE,
+    .mclkGate = CLK_AUDPWM_FRAC_GATE,
     .hclk = HCLK_AUDPWM_GATE,
     .txDmaData =
     {
