@@ -25,6 +25,10 @@ extern const struct HAL_I2C_DEV g_i2c1Dev;
 extern const struct HAL_I2C_DEV g_i2c2Dev;
 #endif
 
+#ifdef HAL_PDM_MODULE_ENABLED
+extern struct HAL_PDM_DEV g_pdm0Dev;
+#endif
+
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
 extern const struct HAL_PINCTRL_DEV g_pinDev;
 #endif

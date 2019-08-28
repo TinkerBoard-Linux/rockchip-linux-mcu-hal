@@ -67,6 +67,29 @@ const struct HAL_I2C_DEV g_i2c2Dev =
 };
 #endif
 
+#ifdef HAL_PDM_MODULE_ENABLED
+struct HAL_PDM_DEV g_pdm0Dev =
+{
+    .pReg = PDM0,
+    .mclk = MCLK_PDM,
+#ifdef IS_FPGA
+    .mclkRate = PDM_FPGA_CLK_RATE,
+#else
+    .mclkRate = PDM_CLK_RATE,
+#endif
+    .hclk = HCLK_PDM_GATE,
+    .reset = SRST_M_PDM,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(PDM0->RXFIFO_DATA_REG),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_PDM,
+        .dmac = DMA,
+    },
+};
+#endif
+
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
 static struct PINCTRL_BANK_INFO pinBanks[] = {
     PIN_BANK_CFG_FLAGS(GPIO_BANK0, 32, GRF_BASE,
