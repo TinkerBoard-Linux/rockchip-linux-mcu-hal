@@ -7159,6 +7159,15 @@ struct ACDCDIG_REG {
 #define ACLK_LOGIC_SEL              0x010F0028
 #define ACLK_LOGIC_SEL_CLK_GPLL_MUX 0
 #define ACLK_LOGIC_SEL_CLK_CPLL_MUX 1
+/********Name=CLKSEL_CON41,Offset=0x124********/
+#define CLK_DPHY_REF_FRAC_SEL                    0x010A0029
+#define CLK_DPHY_REF_FRAC_SEL_CLK_GPLL_MUX       0
+#define CLK_DPHY_REF_FRAC_SEL_CLK_CPLL_MUX       1
+#define CLK_DPHY_REF_SEL                         0x010B0029
+#define CLK_DPHY_REF_SEL_XIN_OSC0_FUNC           0
+#define CLK_DPHY_REF_SEL_CLK_DPHY_REF_FRAC       1
+/********Name=CLKSEL_CON44,Offset=0x130********/
+#define CLK_DPHY_REF_FRAC_DIV 0x2000002C
 
 #define CLK(mux, div) \
     ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
@@ -7203,6 +7212,8 @@ typedef enum CLOCK_Name {
     PCLK_LOGIC               = CLK(PCLK_LOGIC_SEL, PCLK_LOGIC_DIV),
     ACLK_LOGIC               = CLK(ACLK_LOGIC_SEL, ACLK_LOGIC_DIV),
     CLK_32K                  = CLK(0, XIN_OSC0_DIV),
+    CLK_DPHY_REF_FRAC        = CLK(CLK_DPHY_REF_FRAC_SEL, CLK_DPHY_REF_FRAC_DIV),
+    CLK_DPHY_REF             = CLK(CLK_DPHY_REF_SEL, 0),
 } eCLOCK_Name;
 #endif /* __ASSEMBLY__ */
 #ifdef __cplusplus

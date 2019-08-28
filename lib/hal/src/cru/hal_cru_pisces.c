@@ -320,6 +320,84 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 }
 
 /**
+ * @brief Get DPHY clk freq.
+ * @param  clockName: CLOCK_Name id
+ * @return clk rate.
+ * How to calculate the Frac clk divider:
+ *     numerator is frac register[31:16]
+ *     denominator is frac register[15:0]
+ *     clk rate = pRate * numerator / denominator
+ */
+static uint32_t HAL_CRU_ClkDphyGetFreq(eCLOCK_Name clockName)
+{
+    uint32_t freq = 0;
+    uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
+    uint32_t divFrac;
+    uint32_t n, m, pRate;
+
+    switch (clockName) {
+    case CLK_DPHY_REF:
+        muxSrc = CLK_GET_MUX(CLK_DPHY_REF_FRAC);
+        divFrac = CLK_GET_DIV(CLK_DPHY_REF_FRAC);
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+    n = (CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0xffff0000) >> 16;
+    m = CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0x0000ffff;
+
+    if (HAL_CRU_ClkGetMux(muxSrc))
+        pRate = s_cpllFreq;
+    else
+        pRate = s_gpllFreq;
+
+    if (HAL_CRU_ClkGetMux(mux) == 0)
+        freq = PLL_INPUT_OSC_RATE;
+    else if (HAL_CRU_ClkGetMux(mux) == 1)
+        freq = (pRate / m) * n;
+
+    return freq;
+}
+
+/**
+ * @brief Set DPHY clk freq.
+ * @param  clockName: CLOCK_Name id.
+ * @param  rate: clk set rate
+ * @return HAL_Status.
+ * How to calculate the Frac clk divider:
+ *     if rate is inpust osc rate, select input osc
+ *     else select ifrac divider
+ */
+static HAL_Status HAL_CRU_ClkDphySetFreq(eCLOCK_Name clockName, uint32_t rate)
+{
+    uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
+    uint32_t divFrac;
+    uint32_t n = 0, m = 0, pRate = s_gpllFreq;
+
+    switch (clockName) {
+    case CLK_DPHY_REF:
+        muxSrc = CLK_GET_MUX(CLK_DPHY_REF_FRAC);
+        divFrac = CLK_GET_DIV(CLK_DPHY_REF_FRAC);
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    if (rate == PLL_INPUT_OSC_RATE) {
+        HAL_CRU_ClkSetMux(mux, 0);
+    } else {
+        HAL_CRU_FracdivGetConfig(rate, pRate, &n, &m);
+        HAL_CRU_ClkSetMux(muxSrc, 0);
+        CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
+        HAL_CRU_ClkSetMux(mux, 1);
+    }
+
+    return HAL_OK;
+}
+
+/**
  * @brief Get clk freq.
  * @param  clockName: CLOCK_Name id.
  * @return rate.
@@ -365,6 +443,10 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case CLK_GPIO_DBG1:
         pRate = PLL_INPUT_OSC_RATE;
         break;
+    case CLK_DPHY_REF:
+        freq = HAL_CRU_ClkDphyGetFreq(clockName);
+
+        return freq;
     default:
         break;
     }
@@ -434,6 +516,10 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_GPIO_DBG1:
         pRate = PLL_INPUT_OSC_RATE;
         break;
+    case CLK_DPHY_REF:
+        error = HAL_CRU_ClkDphySetFreq(clockName, rate);
+
+        return error;
     default:
         break;
     }
