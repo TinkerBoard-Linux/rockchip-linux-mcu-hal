@@ -407,60 +407,6 @@ static HAL_Status FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct SPI_MEM_OP
     return HAL_OK;
 }
 
-/**
- * @brief  Enable or Disable FSPI XIP interface.
- * @param  host: FSPI host.
- * @param  on: 1 enable, 0 disable.
- * @return HAL_Status.
- */
-static HAL_Status FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
-{
-    FSPIXMMCCTRL_DATA xmmcCtrl;
-    struct FSPI_REG *pReg = host->instance;
-
-    xmmcCtrl.d32 = pReg->XMMC_CTRL;
-
-    if (on) {
-        if (pReg->MODE & 0x1)
-            return HAL_INVAL;
-
-        if (host->xmmcDev[0].type == DEV_PSRAM || host->xmmcDev[1].type == DEV_PSRAM) {
-            xmmcCtrl.b.devHwEn = 1;
-            xmmcCtrl.b.prefetch = 0;
-            xmmcCtrl.b.uincrPrefetchEn = 1;
-            xmmcCtrl.b.uincrLen = 2;
-            xmmcCtrl.b.devWrapEn = 1;
-            xmmcCtrl.b.devIncrEn = 1;
-            xmmcCtrl.b.devUdfincrEn = 1;
-        } else {
-            xmmcCtrl.b.devHwEn = 0;
-            xmmcCtrl.b.prefetch = 1;
-        }
-        /* FSPI_DBG("%s enable 3 %lx %lx %lx\n", __func__, host->xmmcDev[0].ctrl, xmmcCtrl.d32, host->xmmcDev[0].readCmd); */
-
-        /* config ctroller */
-        pReg->XMMC_CTRL = xmmcCtrl.d32;
-        pReg->EXT_AX = 0x5a << 8;
-        /* config cs 0 */
-        pReg->CTRL0 = host->xmmcDev[0].ctrl;
-        pReg->XMMC_RCMD0 = host->xmmcDev[0].readCmd;
-        pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
-        pReg->AX0 = 0;
-        /* config cs 1 */
-        pReg->CTRL1 = host->xmmcDev[1].ctrl;
-        pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
-        pReg->XMMC_WCMD1 = host->xmmcDev[1].writeCmd;
-        pReg->AX1 = 0;
-
-        pReg->MODE = 1;
-    } else {
-        /* FSPI_DBG("%s diable\n", __func__); */
-        pReg->MODE = 0;
-    }
-
-    return HAL_OK;
-}
-
 #endif
 
 /********************* Public Function Definition ****************************/
@@ -527,7 +473,7 @@ HAL_Status HAL_FSPI_SpiXipConfig(struct SNOR_HOST *spi, struct SPI_MEM_OP *op, u
     if (op)
         FSPI_XmmcSetting(host, op);
 
-    return FSPI_XmmcRequest(host, on);
+    return HAL_FSPI_XmmcRequest(host, on);
 }
 #endif
 
@@ -624,7 +570,6 @@ HAL_Status HAL_FSPI_IRQHelper(struct HAL_FSPI_HOST *host)
  */
 HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 {
-    FSPICTRL_DATA ctrl;
     FSPIXMMCCTRL_DATA xmmcCtrl;
     struct FSPI_REG *pReg = host->instance;
 
@@ -646,26 +591,25 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
             xmmcCtrl.b.devHwEn = 0;
             xmmcCtrl.b.prefetch = 1;
         }
-
-        ctrl.d32 = host->xmmcDev[0].ctrl;
-        ctrl.b.sps = FSPI_CTRL_SHIFTPHASE_NEGEDGE;
-        ctrl.b.mode = 0;
-        ctrl.b.scic = 0;
-        ctrl.b.cmdlines = 0;
+        /* FSPI_DBG("%s enable 3 %lx %lx %lx\n", __func__, host->xmmcDev[0].ctrl, xmmcCtrl.d32, host->xmmcDev[0].readCmd); */
 
         /* config ctroller */
-        FSPI_XmmcDevRegionInit(host);
-        pReg->CTRL0 = ctrl.d32;
         pReg->XMMC_CTRL = xmmcCtrl.d32;
+        pReg->EXT_AX = 0x5a << 8;
         /* config cs 0 */
+        pReg->CTRL0 = host->xmmcDev[0].ctrl;
         pReg->XMMC_RCMD0 = host->xmmcDev[0].readCmd;
         pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
+        pReg->AX0 = 0;
         /* config cs 1 */
+        pReg->CTRL1 = host->xmmcDev[1].ctrl;
         pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
         pReg->XMMC_WCMD1 = host->xmmcDev[1].writeCmd;
+        pReg->AX1 = 0;
 
         pReg->MODE = 1;
     } else {
+        /* FSPI_DBG("%s diable\n", __func__); */
         pReg->MODE = 0;
     }
 
