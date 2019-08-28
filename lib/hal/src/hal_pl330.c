@@ -1559,6 +1559,40 @@ HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
 }
 
 /**
+ * @brief Set mc buf resource for chan
+ *
+ * @param pchan: the handle of struct PL330_CHAN.
+ * @param buf: mc buf addr.
+ *
+ * @return HAL_Status.
+ *
+ * @note must be invoked before function HAL_PL330_PrepDmaXXX.
+ */
+HAL_Status HAL_PL330_SetMcBuf(struct PL330_CHAN *pchan, void *buf)
+{
+    HAL_ASSERT(pchan);
+    HAL_ASSERT(buf);
+
+    pchan->mcBuf = buf;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief Get mc buf resource of chan
+ *
+ * @param pchan: the handle of struct PL330_CHAN.
+ *
+ * @return mc buf addr.
+ */
+void *HAL_PL330_GetMcBuf(struct PL330_CHAN *pchan)
+{
+    HAL_ASSERT(pchan);
+
+    return pchan->mcBuf;
+}
+
+/**
  * @brief Request a dma channel
  *
  * @param pl330: the handle of struct HAL_PL330_DEV.

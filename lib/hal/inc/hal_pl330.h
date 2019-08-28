@@ -221,6 +221,9 @@ HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330);
 uint32_t HAL_PL330_GetRawIrqStatus(struct HAL_PL330_DEV *pl330);
 HAL_Status HAL_PL330_ClearIrq(struct HAL_PL330_DEV *pl330, uint32_t irq);
 
+HAL_Status HAL_PL330_SetMcBuf(struct PL330_CHAN *pchan, void *buf);
+void *HAL_PL330_GetMcBuf(struct PL330_CHAN *pchan);
+
 #endif
 
 /** @} */
