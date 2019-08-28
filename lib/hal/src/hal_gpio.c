@@ -72,8 +72,12 @@ static uint32_t GPIO_GetIntType(struct GPIO_REG *pGPIO)
 
 #if (GPIO_VER_ID == 0x01000C2BU)
     type = (pGPIO->INT_TYPE_L & 0xffff) | ((pGPIO->INT_TYPE_H & 0xffff) << 16);
+    type |= (pGPIO->INT_BOTHEDGE_L & 0xffff) | ((pGPIO->INT_BOTHEDGE_H & 0xffff) << 16);
 #else
     type = pGPIO->INTTYPE_LEVEL;
+    #ifdef SOC_RK1808
+    type |= pGPIO->INT_BOTHEDGE;
+    #endif
 #endif
 
     return type;
