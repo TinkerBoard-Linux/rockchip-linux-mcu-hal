@@ -161,6 +161,7 @@ struct GRF_REG {
     __I  uint32_t BTDM_DIG;                           /* Address Offset: 0x0150 */
          uint32_t RESERVED0340[11];                   /* Address Offset: 0x0154 */
     __IO uint32_t DSP_CON[3];                         /* Address Offset: 0x0180 */
+         uint32_t RESERVED0396;                       /* Address Offset: 0x018C */
     __I  uint32_t DSP_STATUS[2];                      /* Address Offset: 0x0190 */
          uint32_t RESERVED0408[2];                    /* Address Offset: 0x0198 */
     __IO uint32_t MEM_CON[3];                         /* Address Offset: 0x01A0 */
