@@ -49,7 +49,7 @@ HAL_Status HAL_PVTM_GetFreqCnt(struct PVTM_REG *reg, uint32_t chn,
                                uint32_t timeUs, uint32_t *val)
 {
     HAL_Status ret = HAL_OK;
-    uint32_t start, timeoutMs;
+    int delayCount = 100;
 
     if (!val)
         return HAL_INVAL;
@@ -65,17 +65,18 @@ HAL_Status HAL_PVTM_GetFreqCnt(struct PVTM_REG *reg, uint32_t chn,
     WRITE_REG_MASK_WE(reg->PVTM_CON[0], PVTM_PVTM_CON0_PVTM_START_MASK,
                       1 << PVTM_PVTM_CON0_PVTM_START_SHIFT);
 
-    start = HAL_GetTick();
-    timeoutMs = (timeUs / 1000) + 1;
-    while (!(READ_REG(reg->PVTM_STATUS[0]) & PVTM_PVTM_STATUS0_PVTM_FREQ_DONE_MASK)) {
-        if ((HAL_GetTick() - start) > timeoutMs) {
-            ret = HAL_TIMEOUT;
+    HAL_DelayUs(timeUs);
+    while (delayCount > 0) {
+        if (READ_REG(reg->PVTM_STATUS[0]) &
+            PVTM_PVTM_STATUS0_PVTM_FREQ_DONE_MASK)
             break;
-        }
+        HAL_DelayUs(4);
+        delayCount--;
     }
-
-    if (ret == HAL_OK)
+    if (delayCount > 0)
         *val = READ_REG(reg->PVTM_STATUS[1]);
+    else
+        ret = HAL_TIMEOUT;
 
     WRITE_REG_MASK_WE(reg->PVTM_CON[0], PVTM_PVTM_CON0_PVTM_START_MASK,
                       0 << PVTM_PVTM_CON0_PVTM_START_SHIFT);
