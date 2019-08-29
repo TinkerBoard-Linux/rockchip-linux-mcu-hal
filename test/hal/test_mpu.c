@@ -3,9 +3,6 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 #include "hal_base.h"
-#ifndef USE_FULL_ASSERT
-#define USE_FULL_ASSERT 1
-#endif
 
 #if defined(HAL_ICACHE_MODULE_ENABLED) && defined(HAL_DCACHE_MODULE_ENABLED) && defined(MPU)
 

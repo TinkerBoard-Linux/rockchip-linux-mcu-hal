@@ -17,14 +17,14 @@
 /***************************** MACRO Definition ******************************/
 
 /* Run only for debugging, please refer to how-to-use for the definition of the specification. */
-//#define HAL_DBG_USING_RTT_SERIAL 1
-//#define HAL_DBG_USING_LIBC_PRINTF 1
-#if HAL_DBG_USING_RTT_SERIAL
+//#define HAL_DBG_USING_RTT_SERIAL
+//#define HAL_DBG_USING_LIBC_PRINTF
+#ifdef HAL_DBG_USING_RTT_SERIAL
 #include <rthw.h>
 #include <rtthread.h>
 
 #define HAL_SYSLOG rt_kprintf
-#elif HAL_DBG_USING_LIBC_PRINTF
+#elif defined(HAL_DBG_USING_LIBC_PRINTF)
 #define HAL_SYSLOG printf
 #endif
 
@@ -36,25 +36,25 @@
 #define HAL_SYSLOG HAL_DBG_Printf
 #endif
 
-#if (HAL_DBG_ON && HAL_DBG_INFO_ON)
+#if defined(HAL_DBG_ON) && defined(HAL_DBG_INFO_ON)
 #define HAL_DBG(fmt, arg...) HAL_SYSLOG("[HAL INFO] " fmt, ##arg)
 #else
 #define HAL_DBG(fmt, arg...) do { if (0) HAL_SYSLOG("[HAL INFO] " fmt, ##arg); } while (0)
 #endif
 
-#if (HAL_DBG_ON && HAL_DBG_WRN_ON)
+#if defined(HAL_DBG_ON) && defined(HAL_DBG_WRN_ON)
 #define HAL_DBG_WRN(fmt, arg...) HAL_SYSLOG("[HAL WARNING] " fmt, ##arg)
 #else
 #define HAL_DBG_WRN(fmt, arg...) do { if (0) HAL_SYSLOG("[HAL WARNING] " fmt, ##arg); } while (0)
 #endif
 
-#if (HAL_DBG_ON && HAL_DBG_ERR_ON)
+#if defined(HAL_DBG_ON) && defined(HAL_DBG_ERR_ON)
 #define HAL_DBG_ERR(fmt, arg...) HAL_SYSLOG("[HAL ERROR] " fmt, ##arg)
 #else
 #define HAL_DBG_ERR(fmt, arg...) do { if (0) HAL_SYSLOG("[HAL ERROR] " fmt, ##arg); } while (0)
 #endif
 
-#if (HAL_DBG_ON && USE_FULL_ASSERT)
+#if defined(HAL_DBG_ON) && defined(HAL_ASSERT_ON)
 #define HAL_ASSERT(expr)                                        \
     do {                                                        \
         if (!(expr))                                            \

@@ -9,11 +9,11 @@
 #define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
 /* DEG LEVEL */
-#define HAL_DBG_ON      1       /* the master switch for hal debug log, comment out it will disable all of hal log */
-#define HAL_DBG_INFO_ON 1       /* enable hal log with info level */
-#define HAL_DBG_WRN_ON  1       /* enable hal log with warning level */
-#define HAL_DBG_ERR_ON  1       /* enable hal log with error level */
-#define USE_FULL_ASSERT 1
+#define HAL_DBG_ON      /* the master switch for hal debug log, comment out it will disable all of hal log */
+#define HAL_DBG_INFO_ON /* enable hal log with info level */
+#define HAL_DBG_WRN_ON  /* enable hal log with warning level */
+#define HAL_DBG_ERR_ON  /* enable hal log with error level */
+#define HAL_ASSERT_ON
 
 #define HAL_CRU_MODULE_ENABLED
 #define HAL_PL330_MODULE_ENABLED

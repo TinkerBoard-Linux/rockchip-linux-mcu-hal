@@ -27,7 +27,7 @@
  - HAL_DBG_INFO_ON: information printing switch;
  - HAL_DBG_WRN_ON: information printing switch;
  - HAL_DBG_ERR_ON: information printing switch;
- - USE_FULL_ASSERT: use full-featured assert, or directly return inside HAL_ASSERT function.
+ - HAL_ASSERT_ON: Support assert.
 
  APIS:
 
@@ -82,7 +82,7 @@ __WEAK void HAL_AssertFailed(const char *file, uint32_t line)
  */
 HAL_Status HAL_DBG_HEX(char *s, void *buf, uint32_t width, uint32_t len)
 {
-#if HAL_DBG_ON
+#ifdef HAL_DBG_ON
     uint32_t i, j;
     unsigned char *p8 = (unsigned char *)buf;
     unsigned short *p16 = (unsigned short *)buf;
