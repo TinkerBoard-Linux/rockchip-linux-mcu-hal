@@ -1181,7 +1181,7 @@ static int PL330_BuildDmaProg(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
 static HAL_Status PL330_GenDmaProg(struct HAL_PL330_DEV *pl330, struct PL330_XFER_SPEC *pxs,
                                    uint32_t channel)
 {
-    struct PL330_DESC *desc = pxs->desc;
+    HAL_UNUSED struct PL330_DESC *desc = pxs->desc;
     int len;
 
     HAL_ASSERT(pl330 != NULL);

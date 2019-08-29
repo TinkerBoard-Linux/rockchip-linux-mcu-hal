@@ -534,7 +534,7 @@ HAL_Status HAL_DWDMA_PrepDmaCyclic(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
                                    eDMA_TRANSFER_DIRECTION direction,
                                    DMA_Callback callback, void *cparam)
 {
-    struct HAL_DWDMA_DEV *dw;
+    HAL_UNUSED struct HAL_DWDMA_DEV *dw;
     struct DMA_SLAVE_CONFIG *config;
     struct DW_DESC *desc, *last = NULL;
     uint32_t regWidth;

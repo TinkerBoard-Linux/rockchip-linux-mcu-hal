@@ -54,10 +54,10 @@
 #endif
 
 /* Compiller Macro */
-#ifdef __GNUC__
-#ifndef __unused
-#define __unused __attribute__((unused))
-#endif
+#if defined(__GNUC__) || defined(__clang__) || defined(__CC_ARM)
+#define HAL_UNUSED __attribute__((__unused__))
+#else
+#define HAL_UNUSED
 #endif
 
 #ifdef CACHE_LINE_SIZE
