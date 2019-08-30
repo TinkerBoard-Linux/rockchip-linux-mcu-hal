@@ -475,8 +475,10 @@ static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
 
     if (id == MID_GIGADEV ||
         id == MID_WINBOND ||
+        id == MID_XTX ||
         id == MID_MACRONIX ||
-        id == MID_PUYA) {
+        id == MID_PUYA ||
+        id == MID_XMC) {
         regIndex = nor->info->QEBits >> 3;
         bitOffset = nor->info->QEBits & 0x7;
         ret = SNOR_ReadStatus(nor, regIndex, &status);
@@ -486,6 +488,7 @@ static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
         if (status & (1 << bitOffset)) //is QE bit set
             return HAL_OK;
 
+        status |= (1 << bitOffset);
         ret = SNOR_WriteStatus(nor, regIndex, &status);
     }
 
