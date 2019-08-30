@@ -5680,6 +5680,11 @@ typedef enum CLOCK_Name {
     CLK_I2C1             = CLK(0, CLK_I2C1_DIV),
     CLK_BBGEN            = CLK(CLK_BBGEN_SEL, CLK_BBGEN_DIV),
 } eCLOCK_Name;
+
+#define CPU_CLK_ID       HCLK_MCU
+#define MEM_CLK_ID       -1
+#define DSP_CLK_ID       CLK_DSP
+
 #endif /* __ASSEMBLY__ */
 
 #ifdef __cplusplus
