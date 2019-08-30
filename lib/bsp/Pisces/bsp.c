@@ -274,6 +274,8 @@ void BSP_DeInit(void)
 
 void BSP_Init(void)
 {
+    PMU->SFT_CON = 0x00010001;
+
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
     BSP_ACDCDIG_Init();
 #endif
