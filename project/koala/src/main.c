@@ -129,3 +129,8 @@ int main(void)
 
     return 0;
 }
+
+int Main(void)
+{
+    return main();
+}

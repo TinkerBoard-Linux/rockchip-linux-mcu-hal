@@ -152,3 +152,8 @@ int _start(void)
 
     return 0;
 }
+
+int Main(void)
+{
+    return main();
+}
