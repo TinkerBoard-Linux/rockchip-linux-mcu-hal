@@ -146,10 +146,10 @@ struct FLASH_INFO spiFlashbl[] = {
     { 0xc84017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 14, 9, 0 },
     /* GD25Q127C and GD25Q128C*/
     { 0xc84018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 },
-    /* GD25Q256B/C/D */
-    { 0xc84019, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 16, 6, 0 },
+    /* GD25Q256B/C */
+    { 0xc84019, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x3C, 16, 6, 0 },
     /* GD25Q512MC */
-    { 0xc84020, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 17, 6, 0 },
+    { 0xc84020, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x3C, 17, 6, 0 },
     /* 25Q64JVSSIQ */
     { 0xef4017, 128, 8, 0x13, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 },
     /* 25Q128FV and 25Q128JV*/
@@ -309,8 +309,8 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
         op.cmd.opcode = SPINOR_OP_READ_1_4_4;
         op.addr.buswidth = 4;
         op.dummy.buswidth = 4;
+        op.dummy.nbytes = op.addr.nbytes == 4 ? 2 : 3;
         op.data.buswidth = 4;
-        op.dummy.nbytes = 3;
     }
     /* HAL_SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
 
@@ -496,45 +496,9 @@ static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
 }
 
 /* Enable/disable 4-byte addressing mode. */
-static HAL_Status SNOR_Set4byte(struct SPI_NOR *nor, const struct FLASH_INFO *info, int enable)
+static HAL_Status SNOR_Enter4byte(struct SPI_NOR *nor)
 {
-    int status;
-    bool need_wren = false;
-    uint8_t cmd;
-    uint8_t id = JEDEC_MFR(info->id);
-
-    switch (id) {
-    case MID_ST:
-    case MID_MICRON:
-        /* Some Micron need WREN command; all will accept it */
-        need_wren = HAL_TRUE;
-    /* fallthrough */
-    case MID_MACRONIX:
-    case MID_WINBOND:
-    case MID_GIGADEV:
-    case MID_PUYA:
-        if (need_wren)
-            SNOR_WriteEnable(nor);
-
-        cmd = enable ? SPINOR_OP_EN4B : SPINOR_OP_EX4B;
-        status = nor->writeReg(nor, cmd, NULL, 0);
-        if (!status && !enable &&
-            id == MID_WINBOND) {
-            /*
-             * On Winbond W25Q256FV, leaving 4byte mode causes
-             * the Extended Address Register to be set to 1, so all
-             * 3-byte-address reads come from the second 16M.
-             * We must clear the register to enable normal behavior.
-             */
-            SNOR_WriteEnable(nor);
-            nor->cmdBuf[0] = 0;
-            nor->writeReg(nor, SPINOR_OP_WREAR, nor->cmdBuf, 1);
-        }
-    default:
-        break;
-    }
-
-    return HAL_OK;
+    return nor->writeReg(nor, SPINOR_OP_EN4B, NULL, 0);
 }
 
 /**
@@ -799,8 +763,18 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
             nor->addrWidth = 4;
 
         if (info->feature & FEA_4BYTE_ADDR_MODE)
-            SNOR_Set4byte(nor, info, HAL_ENABLE);
+            SNOR_Enter4byte(nor);
 
+#ifdef HAL_SNOR_DEBUG
+        uint8_t status;
+
+        SNOR_ReadStatus(nor, 0, &status);
+        HAL_SNOR_DBG("status 0 : %x\n", status);
+        SNOR_ReadStatus(nor, 1, &status);
+        HAL_SNOR_DBG("status 1 : %x\n", status);
+        SNOR_ReadStatus(nor, 2, &status);
+        HAL_SNOR_DBG("status 2 : %x\n", status);
+#endif
         HAL_SNOR_DBG("nor->addrWidth: %x\n", nor->addrWidth);
         HAL_SNOR_DBG("nor->readProto: %x\n", nor->readProto);
         HAL_SNOR_DBG("nor->writeProto: %x\n", nor->writeProto);
