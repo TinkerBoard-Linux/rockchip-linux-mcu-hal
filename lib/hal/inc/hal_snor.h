@@ -23,8 +23,10 @@
 
 /***************************** Structure Definition **************************/
 
-/*  */
-#define SPI_NOR_MAX_CMD_SIZE    8
+#define SPI_NOR_MAX_CMD_SIZE 8
+#define SNOR_SPEED_MAX       133000000
+#define SNOR_SPEED_DEFAULT   80000000
+
 #define SNOR_PROTO_STR(a, b, c) ((a << 8) | (b << 4) | c)
 
 #define SNOR_GET_PROTOCOL_ADDR_BITS(proto) ((proto >> 4) & 0xf)
