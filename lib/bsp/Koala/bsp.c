@@ -105,6 +105,15 @@ const struct HAL_PWM_DEV g_pwm0Dev =
 };
 #endif
 
+#ifdef HAL_FSPI_MODULE_ENABLED
+struct HAL_FSPI_HOST g_fspi0Dev =
+{
+    .instance = FSPI0,
+    .sclkID = CLK_SFC,
+    .irqNum = FSPI0_IRQn,
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }

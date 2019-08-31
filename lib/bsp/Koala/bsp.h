@@ -34,6 +34,10 @@ extern const struct HAL_I2C_DEV g_i2c2Dev;
 extern const struct HAL_PWM_DEV g_pwm0Dev;
 #endif
 
+#ifdef HAL_FSPI_MODULE_ENABLED
+extern struct HAL_FSPI_HOST g_fspi0Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);

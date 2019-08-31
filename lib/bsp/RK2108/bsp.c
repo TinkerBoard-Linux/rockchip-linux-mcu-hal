@@ -421,6 +421,27 @@ const struct HAL_UART_DEV g_uart2Dev =
 };
 #endif
 
+#ifdef HAL_FSPI_MODULE_ENABLED
+struct HAL_FSPI_HOST g_fspi0Dev =
+{
+    .instance = FSPI0,
+    .sclkID = SCLK_SFC_SRC,
+    .irqNum = FSPI0_IRQn,
+};
+
+static HAL_Status BSP_FSPI_Init(void)
+{
+    return HAL_OK;
+}
+
+static HAL_Status BSP_FSPI_DeInit(void)
+{
+    /* CLK Init */
+
+    return HAL_OK;
+}
+#endif
+
 void BSP_DeInit(void)
 {
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
@@ -445,6 +466,10 @@ void BSP_DeInit(void)
 
 #ifdef HAL_PL330_MODULE_ENABLED
     BSP_PL330_DeInit();
+#endif
+
+#ifdef HAL_FSPI_MODULE_ENABLED
+    BSP_FSPI_DeInit();
 #endif
 }
 
@@ -476,6 +501,10 @@ void BSP_Init(void)
 
 #ifdef HAL_CRU_AS_FEATURE_ENABLED
     HAL_CRU_AsInit();
+#endif
+
+#ifdef HAL_FSPI_MODULE_ENABLED
+    BSP_FSPI_Init();
 #endif
 }
 
