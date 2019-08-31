@@ -54,13 +54,15 @@ struct FLASH_INFO {
     uint8_t reserved2;
 };
 
-#define FEA_READ_STATUE_MASK (0x3 << 0)
-#define FEA_STATUE_MODE1     0
-#define FEA_STATUE_MODE2     1
-#define FEA_4BIT_READ        (1 << 2)
-#define FEA_4BIT_PROG        (1 << 3)
-#define FEA_4BYTE_ADDR       (1 << 4)
-#define FEA_4BYTE_ADDR_MODE  (1 << 5)
+#define FEA_STATUE_MASK  (0x3 << 0)
+#define FEA_STATUE_MODE1 0  /* Readstatus0 05h-SR1, 35h-SR2, Writestatus0 01h-SR1, 31h-SR2 */
+#define FEA_STATUE_MODE2 1  /* Readstatus0 05h-SR1, 35h-SR2, Writestatus1 01h-SR1-SR2 */
+#define FEA_STATUE_MODE3 2  /* Readstatus1 05h-SR1, 15h-CR1, Writestatus1 01h-SR1-CR1 */
+#define FEA_4BIT_READ    HAL_BIT(2)
+#define FEA_4BIT_PROG    HAL_BIT(3)
+
+#define FEA_4BYTE_ADDR      HAL_BIT(4)
+#define FEA_4BYTE_ADDR_MODE HAL_BIT(5)
 
 /*Manufactory ID*/
 #define MID_WINBOND  0xEF
@@ -151,13 +153,13 @@ struct FLASH_INFO spiFlashbl[] = {
     /* GD25Q512MC */
     { 0xc84020, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x3C, 17, 6, 0 },
     /* 25Q64JVSSIQ */
-    { 0xef4017, 128, 8, 0x13, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 },
+    { 0xef4017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 },
     /* 25Q128FV and 25Q128JV*/
     { 0xef4018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 },
-    /* 25Q256FV */
+    /* 25Q256F/J */
     { 0xef4019, 128, 8, 0x13, 0x02, 0x6C, 0x32, 0x20, 0xD8, 0x3C, 16, 9, 0 },
     /* 25Q64FWSSIG */
-    { 0xef6017, 128, 8, 0x13, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 },
+    { 0xef6017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 },
     /* MX25L6433F */
     { 0xc22017, 128, 8, 0x03, 0x02, 0x6B, 0x38, 0x20, 0xD8, 0x0E, 14, 6, 0 },
     /* MX25L12835E/F MX25L12833FMI-10G */
@@ -404,6 +406,10 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
 static HAL_Status SNOR_ReadStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8_t *status)
 {
     uint8_t readStatCmd[] = { SPINOR_OP_RDSR, SPINOR_OP_RDSR1, SPINOR_OP_RDSR2 };
+    uint8_t i = nor->info->feature & FEA_STATUE_MASK;
+
+    if (i == FEA_STATUE_MODE3) /* Readstatus1 */
+        readStatCmd[1] = SPINOR_OP_RDCR;
 
     return nor->readReg(nor, readStatCmd[regIndex], status, 1);
 }
@@ -411,10 +417,10 @@ static HAL_Status SNOR_ReadStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8_
 static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8_t *status)
 {
     uint8_t WriteStatCmd[2] = { SPINOR_OP_WRSR, SPINOR_OP_WRSR1 };
-    uint8_t i = nor->info->feature & FEA_READ_STATUE_MASK;
+    uint8_t i = nor->info->feature & FEA_STATUE_MASK;
     int32_t ret;
 
-    if (i == 0) {
+    if (i == FEA_STATUE_MODE1) { /* Writestatus0 */
         SNOR_WriteEnable(nor);
 
         ret = nor->writeReg(nor, WriteStatCmd[regIndex], status, 1);
@@ -430,39 +436,24 @@ static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8
 
             return ret;
         }
-    } else if (i == 1) {
+    } else { /* Writestatus1 */
         uint8_t readIndex;
         uint8_t status2[2];
 
         readIndex = (regIndex == 0) ? 1 : 0;
-        ret = SNOR_ReadStatus(nor, readIndex, &status2[readIndex]); /* RDCR SR1 05h, RDCR SR2 35h */
+        ret = SNOR_ReadStatus(nor, readIndex, &status2[readIndex]);
         if (ret != HAL_OK)
             return ret;
 
         SNOR_WriteEnable(nor);
-        ret = nor->writeReg(nor, SPINOR_OP_WRSR, &status2[0], 2); /* WRSR 01h SR1,SR2 */
-        if (ret != HAL_OK)
-            return ret;
-
-        ret = SNOR_WaitBusy(nor, 10000);
-    } else {
-        uint8_t readIndex;
-        uint8_t status2[2];
-
-        readIndex = (regIndex == 0) ? 2 : 0;
-        ret = SNOR_ReadStatus(nor, readIndex, &status2[readIndex]); /* RDCR SR1 05h,RDCR CR1 15h */
-        if (ret != HAL_OK)
-            return ret;
-
-        SNOR_WriteEnable(nor);
-        ret = nor->writeReg(nor, SPINOR_OP_WRSR, &status2[0], 2); /* WRSR 01h SR1,CR1 */
+        ret = nor->writeReg(nor, SPINOR_OP_WRSR, &status2[0], 2);
         if (ret != HAL_OK)
             return ret;
 
         ret = SNOR_WaitBusy(nor, 10000);
     }
 
-    return 0;
+    return HAL_OK;
 }
 
 static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
