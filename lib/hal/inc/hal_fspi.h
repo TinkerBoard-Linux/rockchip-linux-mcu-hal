@@ -88,6 +88,8 @@ struct HAL_FSPI_HOST {
     uint32_t version;
     uint8_t cs;
     uint8_t mode;
+    eCLOCK_Name sclkID;
+    IRQn_Type irqNum;
     struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT];
 };
 
