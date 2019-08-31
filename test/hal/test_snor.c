@@ -3,6 +3,7 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "bsp.h"
 #include "hal_base.h"
 #include "unity.h"
 #include "unity_fixture.h"
@@ -243,13 +244,13 @@ HAL_Status SPI_XipConfig(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint3
 
 static HAL_Status SNOR_Adapt(void)
 {
-    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)calloc(1, sizeof(*host));
+    struct HAL_FSPI_HOST *host;
     uint32_t ret;
 
     TEST_ASSERT_NOT_NULL(host);
 
     /* Designated host to SNOR */
-    host->instance = FSPI0;
+    host = &g_fspi0Dev;
     HAL_FSPI_Init(host);
     nor->spi->userdata = (void *)host;
     nor->spi->mode = HAL_SPI_MODE_3;
@@ -333,7 +334,6 @@ TEST_GROUP_RUNNER(HAL_SNOR){
 
     free(pwrite_t);
     free(pread_t);
-    free(nor->spi->userdata);
     free(nor->spi);
     free(nor);
 }
