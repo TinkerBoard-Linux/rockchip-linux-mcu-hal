@@ -34,6 +34,9 @@
  - Initialize FSPI controller by calling HAL_FSPI_Init();
  - Configure XIP mode if needed by calling HAL_FSPI_XmmcRequest() which support for FSPI config FSPI directly.
 
+ Note.
+ - If Nor flash and psram place in one FSPI host, Nor flash for cs0 and psram for cs1.
+
  @} */
 
 #include "hal_base.h"
@@ -172,6 +175,7 @@ static HAL_Status FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
  * @param  host: FSPI host.
  * @param  op: flash operation protocol.
  * @return HAL_Status.
+ * @attention Set host->cs to select chip.
  */
 HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op)
 {
@@ -209,6 +213,7 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
 
     /* spitial setting */
     FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);;
+    FSPICmd.b.cs = host->cs;
 
     if (!(pReg->FSR & FSPI_FSR_TXES_EMPTY) || !(pReg->FSR & FSPI_FSR_RXES_EMPTY) || (pReg->SR & FSPI_SR_SR_BUSY))
         FSPI_Reset(pReg);
@@ -368,6 +373,7 @@ HAL_Status HAL_FSPI_XferDone(struct HAL_FSPI_HOST *host)
  * @param  host: FSPI host.
  * @param  op: flash operation protocol.
  * @return HAL_Status.
+ * @attention Set host->cs to select chip.
  */
 HAL_Status HAL_FSPI_SpiXfer(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op)
 {
@@ -488,6 +494,7 @@ HAL_Status HAL_FSPI_IRQHelper(struct HAL_FSPI_HOST *host)
  * @param  host: FSPI host.
  * @param  op: flash operation protocol.
  * @return HAL_Status.
+ * @attention Set host->cs to select chip.
  */
 HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op)
 {
@@ -540,7 +547,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
  * @param  host: FSPI host.
  * @param  on: 1 enable, 0 disable.
  * @return HAL_Status.
- * XIP configuration cannot be modified in XIP mode.
+ * XIP configuration cannot be modified in XIP mode, and all chip will be set.
  */
 HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 {
