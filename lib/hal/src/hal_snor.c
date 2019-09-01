@@ -16,11 +16,24 @@
 
  The SNOR driver can be used as follows:
 
- - Init a spi nor abstract:
-    - Malloc struct SPI_NOR nor by user;
-    - Designated host to struct SPI_NOR nor->spi by user;
-    - Init spi nor abstract by calling HAL_SNOR_Init();
+ API for user:
+
+ - Init a SPI Nor abstract:
+   - Malloc struct SPI_NOR nor by user;
+   - Designated host to struct SPI_NOR nor->spi by user;
+   - Init SPI Nor abstract by calling HAL_SNOR_Init();
  - Call the interface function like HAL_SNOR_Read().
+
+ Figure out following points for adding a new SPI Nor flash to flash info table:
+
+ - standard SPI (DI / DO), Quad SPI (D0 / D1/ D2 /D3) command
+ - feature
+   - [1, 0] status feature;
+   - [3, 2] quad r/w;
+   - [4] 4 bytes address;
+   - [5] should enter 4 bytes addr mode;
+ - density
+ - QE bit
 
  @} */
 
