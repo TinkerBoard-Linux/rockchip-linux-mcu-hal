@@ -16,6 +16,14 @@
 
  The PSRAM driver can be used as follows:
 
+ - Init a SPI psram abstract:
+     - Malloc struct SPI_PSRAM psram by user;
+     - Designated host to struct SPI_PSRAM psram->spi by user;
+     - Init spi nor abstract by calling HAL_PSRAM_Init();
+ - Enable or disable XIP:
+     - HAL_PSRAM_XIPEnable()
+     - HAL_PSRAM_XIPDisable()
+
  @} */
 
 #include "hal_base.h"
@@ -23,11 +31,18 @@
 #ifdef HAL_PSRAM_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-/*Command Set*/
-#define CMD_READ_JEDECID (0x9F)
+//#define HAL_PSRAM_DEBUG
+#ifdef HAL_PSRAM_DEBUG
+#define HAL_PSRAM_DBG(...) HAL_DBG(__VA_ARGS__)
+#else
+#define HAL_PSRAM_DBG(...) do { if (0) HAL_DBG(__VA_ARGS__); } while (0)
+#endif
 
-#define CMD_FAST_READ_A4 (0xEB)
-#define CMD_PAGE_PROG_A4 (0x38)
+/*Command Set*/
+#define PSRAM_OP_RDID       0x9F
+#define PSRAM_OP_READ_1_4_4 0xEB
+#define PSRAM_OP_PP_1_4_4   0x38
+#define PSRAM_OP_ENQPI      0x35
 
 /********************* Private Structure Definition **************************/
 
@@ -35,34 +50,110 @@
 
 /********************* Private Function Definition ***************************/
 
-static HAL_Status PSRAM_XmmcInit(struct HAL_FSPI_HOST *host, uint8_t cs)
+static HAL_Status PSRAM_SPIMemExecOp(struct PSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
-    FSPICMD_DATA readCmd, writeCmd;
-    FSPICTRL_DATA FSPItrl;
+    if (spi->xfer)
+        return spi->xfer(spi, op);
+    else
+        return HAL_ERROR;
+}
 
-    HAL_ASSERT(cs < FSPI_CHIP_CNT);
+static HAL_Status PSRAM_XipExecOp(struct PSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)
+{
+    if (spi->xipConfig)
+        return spi->xipConfig(spi, op, on);
+    else
+        return HAL_ERROR;
+}
 
-    readCmd.d32 = 0;
-    readCmd.b.cmd = CMD_FAST_READ_A4;
-    readCmd.b.dummybits = 6;
-    readCmd.b.addrbits = FSPI_ADDR_24BITS;
+static HAL_Status PSRAM_XmmcInit(struct SPI_PSRAM *psram)
+{
+    struct HAL_SPI_MEM_OP opRead = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(psram->readOpcode, 1),
+                                                         HAL_SPI_MEM_OP_ADDR(psram->addrWidth, 0, 1),
+                                                         HAL_SPI_MEM_OP_DUMMY(psram->readDummy, 1),
+                                                         HAL_SPI_MEM_OP_DATA_IN(0, NULL, 1));
+    struct HAL_SPI_MEM_OP opWrite = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(psram->programOpcode, 1),
+                                                          HAL_SPI_MEM_OP_ADDR(psram->addrWidth, 0, 1),
+                                                          HAL_SPI_MEM_OP_DUMMY(psram->programDummy, 1),
+                                                          HAL_SPI_MEM_OP_DATA_OUT(0, NULL, 1));
 
-    writeCmd.d32 = 0;
-    writeCmd.b.cmd = CMD_PAGE_PROG_A4;
-    writeCmd.b.dummybits = 0;
-    writeCmd.b.addrbits = FSPI_ADDR_24BITS;
+    /* get read transfer protocols. */
+    opRead.cmd.buswidth = PSRAM_GET_PROTOCOL_CMD_BITS(psram->readProto);
+    opRead.addr.buswidth = PSRAM_GET_PROTOCOL_ADDR_BITS(psram->readProto);
+    opRead.dummy.buswidth = opRead.addr.buswidth;
+    opRead.data.buswidth = PSRAM_GET_PROTOCOL_DATA_BITS(psram->readProto);
 
-    FSPItrl.d32 = 0;
-    FSPItrl.b.cmdlines = FSPI_LINES_X4;
-    FSPItrl.b.datalines = FSPI_LINES_X4;
-    FSPItrl.b.addrlines = FSPI_LINES_X4;
+    /* convert the dummy cycles to the number of bytes */
+    opRead.dummy.nbytes = (psram->readDummy * opRead.dummy.buswidth) / 8;
 
-    host->xmmcDev[cs].type = DEV_PSRAM;
-    host->xmmcDev[cs].ctrl = FSPItrl.d32;
-    host->xmmcDev[cs].readCmd = readCmd.d32;
-    host->xmmcDev[cs].writeCmd = writeCmd.d32;
+    /* HAL_PSRAM_DBG("%s %x %x %x %x\n", __func__, psram->readOpcode, psram->readDummy, op.dummy.buswidth, op.data.buswidth); */
+    PSRAM_XipExecOp(psram->spi, &opRead, 0);
+
+    /* get write transfer protocols. */
+    opWrite.cmd.buswidth = PSRAM_GET_PROTOCOL_CMD_BITS(psram->writeProto);
+    opWrite.addr.buswidth = PSRAM_GET_PROTOCOL_ADDR_BITS(psram->writeProto);
+    opWrite.dummy.buswidth = opWrite.addr.buswidth;
+    opWrite.data.buswidth = PSRAM_GET_PROTOCOL_DATA_BITS(psram->writeProto);
+    opWrite.dummy.nbytes = (psram->programDummy * opWrite.dummy.buswidth) / 8;
+
+    /* HAL_PSRAM_DBG("%s %x %x %x %x\n", __func__, psram->readOpcode, psram->readDummy, op.dummy.buswidth, op.data.buswidth); */
+    PSRAM_XipExecOp(psram->spi, &opWrite, 0);
 
     return HAL_OK;
+}
+
+static HAL_Status PSRAM_ReadWriteReg(struct SPI_PSRAM *psram, struct HAL_SPI_MEM_OP *op, void *buf)
+{
+    if (op->data.dir == HAL_SPI_MEM_DATA_IN)
+        op->data.buf.in = buf;
+    else
+        op->data.buf.out = buf;
+
+    return PSRAM_SPIMemExecOp(psram->spi, op);
+}
+
+static HAL_Status PSRAM_WriteReg(struct SPI_PSRAM *psram, uint8_t opcode, uint8_t *buf, int32_t len)
+{
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(opcode, 1),
+                                                     HAL_SPI_MEM_OP_NO_ADDR,
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_DATA_OUT(len, NULL, 1));
+
+    /* HAL_SNOR_DBG("%s %x %ld\n", __func__, opcode, len); */
+
+    return PSRAM_ReadWriteReg(psram, &op, buf);
+}
+
+static HAL_Status PSRAM_EnterQPI(struct SPI_PSRAM *psram)
+{
+    return PSRAM_WriteReg(psram, PSRAM_OP_ENQPI, NULL, 0);
+}
+
+static HAL_Status PSRAM_ReadID(struct SPI_PSRAM *psram, uint8_t *data)
+{
+    int32_t ret;
+    uint8_t *id = data;
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(PSRAM_OP_RDID, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(3, 0xa5a5a5a5, 1),
+                                                     HAL_SPI_MEM_OP_DUMMY(0, 1),
+                                                     HAL_SPI_MEM_OP_DATA_IN(2, data, 1));
+
+    /* get transfer protocols. */
+    op.cmd.buswidth = 1;
+    op.addr.buswidth = 1;
+    op.dummy.buswidth = 1;
+    op.data.buswidth = 1;
+
+    op.dummy.nbytes = 0;
+
+    ret = PSRAM_SPIMemExecOp(psram->spi, &op);
+    if (ret) {
+        HAL_PSRAM_DBG("error reading JEDEC ID%x %x\n", id[0], id[1]);
+
+        return HAL_ERROR;
+    }
+
+    return ret;
 }
 
 /********************* Public Function Definition ****************************/
@@ -77,32 +168,45 @@ static HAL_Status PSRAM_XmmcInit(struct HAL_FSPI_HOST *host, uint8_t cs)
 
 /**
  * @brief  Psram init.
- * @param  host: FSPI host.
- * @param  cs: chip select.
+ * @param  psram: psram dev.
  * @return HAL_Status
  */
-HAL_Status HAL_PSRAM_Init(struct HAL_FSPI_HOST *host, uint8_t cs)
+HAL_Status HAL_PSRAM_Init(struct SPI_PSRAM *psram)
 {
     uint8_t idByte[5];
 
-    HAL_FSPI_Init(host);
-    HAL_PSRAM_ReadID(host, idByte);
+    PSRAM_ReadID(psram, idByte);
+    HAL_PSRAM_DBG("SPI psram ID: %x %x\n", idByte[0], idByte[1]);
 
-    PSRAM_XmmcInit(host, cs);
+    /* Temporarily fixed configuration */
+    psram->addrWidth = 3;
+    psram->readOpcode = PSRAM_OP_READ_1_4_4;
+    psram->readProto = PSRAM_PROTO_4_4_4;
+    psram->readDummy = 6;
+    psram->programOpcode = PSRAM_OP_PP_1_4_4;
+    psram->writeProto = PSRAM_PROTO_4_4_4;
+    psram->programDummy = 0;
+
+    if (psram->readProto == PSRAM_PROTO_4_4_4 &&
+        psram->writeProto == PSRAM_PROTO_4_4_4)
+        PSRAM_EnterQPI(psram);
+    else
+        return HAL_ERROR;
+
+    PSRAM_XmmcInit(psram);
+    HAL_PSRAM_XIPEnable(psram);
 
     return HAL_OK;
 }
 
 /**
  * @brief  Psram deinit.
- * @param  host: FSPI host.
- * @param  cs: chip select.
+ * @param  psram: psram dev.
  * @return HAL_Status
  */
-HAL_Status HAL_PSRAM_DeInit(struct HAL_FSPI_HOST *host, uint8_t cs)
+HAL_Status HAL_PSRAM_DeInit(struct SPI_PSRAM *psram)
 {
-    HAL_FSPI_DeInit(host);
-    memset(&host->xmmcDev[cs], 0, sizeof(struct HAL_FSPI_XMMC_DEV));
+    /* TO-DO*/
 
     return HAL_OK;
 }
@@ -114,39 +218,24 @@ HAL_Status HAL_PSRAM_DeInit(struct HAL_FSPI_HOST *host, uint8_t cs)
 // */
 
 /**
- * @brief  Read psram ID.
- * @param  host: FSPI host.
- * @param  data: ID buffer.
- * @return HAL_Status
- */
-HAL_Status HAL_PSRAM_ReadID(struct HAL_FSPI_HOST *host, uint8_t *data)
-{
-    HAL_ASSERT(data != NULL);
-
-    /* to-do */
-
-    return HAL_OK;
-}
-
-/**
- * @brief  Psram XMMC mode enable.
- * @param  host: FSPI host.
+ * @brief  Psram XIP mode enable.
+ * @param  psram: psram dev.
  * @return HAL_Status
  * Access data in memory map mode.
  */
-HAL_Status HAL_PSRAM_XmmcEnable(struct HAL_FSPI_HOST *host)
+HAL_Status HAL_PSRAM_XIPEnable(struct SPI_PSRAM *psram)
 {
-    return HAL_FSPI_XmmcRequest(host, 1);
+    return PSRAM_XipExecOp(psram->spi, NULL, 1);
 }
 
 /**
- * @brief  Psram XMMC mode disable.
- * @param  host: FSPI host.
+ * @brief  Psram XIP mode disable.
+ * @param  psram: psram dev.
  * @return HAL_Status
  */
-HAL_Status HAL_PSRAM_XmmcDisable(struct HAL_FSPI_HOST *host)
+HAL_Status HAL_PSRAM_XIPDisable(struct SPI_PSRAM *psram)
 {
-    return HAL_FSPI_XmmcRequest(host, 0);
+    return PSRAM_XipExecOp(psram->spi, NULL, 0);
 }
 
 /** @} */

@@ -4,12 +4,13 @@
  */
 
 #include "hal_base.h"
+#include "hal_bsp.h"
 #include "unity.h"
 #include "unity_fixture.h"
 
 #ifdef HAL_PSRAM_MODULE_ENABLED
-static struct HAL_FSPI_HOST *sfcHost;
-#define maxest_sector 16
+static struct SPI_PSRAM *psram;
+#define maxest_sector 1
 static uint8_t *pwrite;
 static uint32_t *pread32;
 static uint32_t *pwrite32;
@@ -100,9 +101,9 @@ static HAL_Status PSRAM_TEST(uint32_t testEndLBA)
 TEST(HAL_PSRAM, PsramStressTest){
     uint32_t ret;
 
-    HAL_PSRAM_XmmcEnable(sfcHost);
+    HAL_PSRAM_XIPEnable(psram);
     ret = PSRAM_TEST(0x1000);
-    HAL_PSRAM_XmmcDisable(sfcHost);
+    HAL_PSRAM_XIPDisable(psram);
     TEST_ASSERT(ret == HAL_OK);
 }
 
@@ -111,30 +112,78 @@ static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
     return (uint8_t *)(((uintptr_t)ptr + align - 1) & ~(uintptr_t)(align - 1));
 }
 
+static HAL_Status SPI_Xfer(struct PSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op)
+{
+    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
+
+    host->mode = spi->mode;
+    host->cs = 1;
+    HAL_FSPI_SpiXfer(host, op);
+}
+
+static HAL_Status SPI_XipConfig(struct PSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)
+{
+    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
+
+    host->cs = 1;
+    if (op) {
+        host->xmmcDev[0].type = DEV_PSRAM;
+        HAL_FSPI_XmmcSetting(host, op);
+    }
+
+    return HAL_FSPI_XmmcRequest(host, on);
+}
+
+static HAL_Status PSRAM_Adapt(void)
+{
+    struct HAL_FSPI_HOST *host;
+    uint32_t ret;
+
+    /* Designated host to SPI PSRAM */
+    host = &g_fspi0Dev;
+    HAL_FSPI_Init(host);
+    psram->spi->userdata = (void *)host;
+    psram->spi->mode = HAL_SPI_MODE_3 | HAL_SPI_TX_QUAD | HAL_SPI_RX_QUAD;
+    psram->spi->xfer = SPI_Xfer;
+    psram->spi->xipConfig = SPI_XipConfig;
+
+    /* Init SPI psram abstract */
+    ret = HAL_PSRAM_Init(psram);
+
+    return ret;
+}
+
 /* Test code should be place in ram */
 TEST_GROUP_RUNNER(HAL_PSRAM){
+    struct PSRAM_HOST *spi;
     uint32_t ret;
     uint8_t *pwrite_t;
 
-    sfcHost = (struct HAL_FSPI_HOST *)malloc(sizeof(struct HAL_FSPI_HOST));
-    sfcHost->instance = FSPI0;
+    /* Config test buffer */
+    pwrite_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
+    TEST_ASSERT_NOT_NULL(pwrite_t);
+    pwrite = AlignUp(pwrite_t, 64);
 
-    pwrite_t = (uint8_t *)malloc(maxest_sector * 512 + 64);
-    pwrite = AlignUp(pwrite_t, CACHE_LINE_SIZE);
-    HAL_DBG("pwrite %p\n", pwrite);
-    if (!pwrite) {
-        HAL_DBG("malloc failed\n");
-        while (1)
-            ;
-    }
+    for (int32_t i = 0; i < (maxest_sector * 1024); i++)
+        pwrite32[i] = i;
 
-    ret = HAL_PSRAM_Init(sfcHost, 0);
+    spi = (struct PSRAM_HOST *)calloc(1, sizeof(struct PSRAM_HOST));
+    TEST_ASSERT_NOT_NULL(spi);
+    psram = (struct SPI_PSRAM *)calloc(1, sizeof(struct SPI_PSRAM));
+    TEST_ASSERT_NOT_NULL(psram);
+    psram->spi = spi;
+
+    ret = PSRAM_Adapt();
     TEST_ASSERT(ret == HAL_OK);
+
     RUN_TEST_CASE(HAL_PSRAM, PsramStressTest);
 
-    ret = HAL_PSRAM_DeInit(sfcHost, 0);
+    /* PSRAM deinit */
+    ret = HAL_PSRAM_DeInit(psram);
     TEST_ASSERT(ret == HAL_OK);
 
     free(pwrite_t);
+    free(psram->spi);
+    free(psram);
 }
 #endif
