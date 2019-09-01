@@ -113,11 +113,8 @@ typedef enum {
 } NOR_ERASE_TYPE;
 
 struct SNOR_HOST {
-    uint32_t max_hz;
     uint32_t speed;
     uint32_t mode;
-    uint32_t max_read_size;
-    uint32_t max_write_size;
     uint8_t flags;
     HAL_Status (*xfer)(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op);
     HAL_Status (*xipConfig)(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on);
