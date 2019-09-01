@@ -224,18 +224,20 @@ static HAL_Status FSPI_IRQHandler(void)
     return HAL_OK;
 }
 
-HAL_Status SPI_Xfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
+static HAL_Status SPI_Xfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
 
     host->mode = spi->mode;
+    host->cs = 0;
     HAL_FSPI_SpiXfer(host, op);
 }
 
-HAL_Status SPI_XipConfig(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)
+static HAL_Status SPI_XipConfig(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)
 {
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
 
+    host->cs = 0;
     if (op)
         HAL_FSPI_XmmcSetting(host, op);
 
@@ -246,8 +248,6 @@ static HAL_Status SNOR_Adapt(void)
 {
     struct HAL_FSPI_HOST *host;
     uint32_t ret;
-
-    TEST_ASSERT_NOT_NULL(host);
 
     /* Designated host to SNOR */
     host = &g_fspi0Dev;

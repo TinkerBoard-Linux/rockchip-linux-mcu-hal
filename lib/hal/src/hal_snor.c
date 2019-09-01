@@ -86,58 +86,8 @@ struct FLASH_INFO {
 #define SPINOR_OP_MAX_SIZE 0x40
 #define UINT_MAX           (~0U)
 
-#define JEDEC_MFR(id) ((id >> 16) & 0xff)
-
-#define HAL_SPI_MEM_OP_FORMAT(__cmd, __addr, __dummy, __data) \
-    {                                                         \
-        .cmd = __cmd,                                         \
-        .addr = __addr,                                       \
-        .dummy = __dummy,                                     \
-        .data = __data,                                       \
-    }
-
-#define HAL_SPI_MEM_OP_CMD(__opcode, __buswidth) \
-    {                                            \
-        .buswidth = __buswidth,                  \
-        .opcode = __opcode,                      \
-    }
-
-#define HAL_SPI_MEM_OP_ADDR(__nbytes, __val, __buswidth) \
-    {                                                    \
-        .nbytes = __nbytes,                              \
-        .val = __val,                                    \
-        .buswidth = __buswidth,                          \
-    }
-
-#define HAL_SPI_MEM_OP_NO_ADDR { }
-
-#define HAL_SPI_MEM_OP_DUMMY(__nbytes, __buswidth) \
-    {                                              \
-        .nbytes = __nbytes,                        \
-        .buswidth = __buswidth,                    \
-    }
-
-#define HAL_SPI_MEM_OP_NO_DUMMY { }
-
-#define HAL_SPI_MEM_OP_DATA_IN(__nbytes, __buf, __buswidth) \
-    {                                                       \
-        .dir = HAL_SPI_MEM_DATA_IN,                         \
-        .nbytes = __nbytes,                                 \
-        .buf.in = __buf,                                    \
-        .buswidth = __buswidth,                             \
-    }
-
-#define HAL_SPI_MEM_OP_DATA_OUT(__nbytes, __buf, __buswidth) \
-    {                                                        \
-        .dir = HAL_SPI_MEM_DATA_OUT,                         \
-        .nbytes = __nbytes,                                  \
-        .buf.out = __buf,                                    \
-        .buswidth = __buswidth,                              \
-    }
-
-#define HAL_SPI_MEM_OP_NO_DATA { }
-
 #define READ_MAX_IOSIZE (1024 * 8) /* 8KB */
+
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/

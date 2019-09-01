@@ -218,7 +218,7 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
     if (!(pReg->FSR & FSPI_FSR_TXES_EMPTY) || !(pReg->FSR & FSPI_FSR_RXES_EMPTY) || (pReg->SR & FSPI_SR_SR_BUSY))
         FSPI_Reset(pReg);
 
-    /* FSPI_DBG("%s 1 %lx %lx %lx\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
+    /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
     /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
 
     /* config FSPI */
@@ -537,7 +537,10 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
     host->xmmcDev[host->cs].type = DEV_NOR;
     host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
-    host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
+    if (op->data.dir == HAL_SPI_MEM_DATA_IN)
+        host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
+    else
+        host->xmmcDev[host->cs].writeCmd = FSPICmd.d32;
 
     return HAL_OK;
 }
