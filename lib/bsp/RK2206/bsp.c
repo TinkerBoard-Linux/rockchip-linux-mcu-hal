@@ -240,6 +240,7 @@ const struct HAL_TSADC_DEV g_tsadcDev =
     .speed = 650000,
     .polarity = TSHUT_LOW_ACTIVE,
     .mode = TSHUT_MODE_CRU,
+};
 #endif
 
 #ifdef HAL_FSPI_MODULE_ENABLED
