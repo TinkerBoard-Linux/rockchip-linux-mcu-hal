@@ -26,8 +26,8 @@
 
  - Invoke HAL_PWM_SetConfig() API and HAL_PWM_SetEnable() to start/stop:
      - Use HAL_PWM_SetConfig() to configurate the request mode;
-     - Use HAL_PWM_SetEnable() with true to start PWM;
-     - Use HAL_PWM_SetEnable() with false to stop PWM.
+     - Use HAL_PWM_Enable() to start PWM;
+     - Use HAL_PWM_Disable() to stop PWM.
 
  - Invoke HAL_PWM_DeInit() if necessary.
 
@@ -132,7 +132,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint32_t channel,
     HAL_ASSERT(pPWM != NULL);
     HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
     HAL_ASSERT(config != NULL);
-    HAL_DBG("channe=%ld, period_ns=%ld, duty_ns=%ld\n",
+    HAL_DBG("channel=%ld, period_ns=%ld, duty_ns=%ld\n",
             channel, config->periodNS, config->dutyNS);
 
     period = (uint64_t)((pPWM->freq / 1000) * config->periodNS) / 1000000;
@@ -157,52 +157,68 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint32_t channel,
     ctrl &= ~PWM_LOCK;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
 
-    HAL_DBG("channe=%ld, period=%lu, duty=%lu, polarity=%d\n",
+    HAL_DBG("channel=%ld, period=%lu, duty=%lu, polarity=%d\n",
             channel, period, duty, config->polarity);
 
     return HAL_OK;
 }
 
 /**
- * @brief  Enable/Disable PWM.
+ * @brief  Enable PWM.
  * @param  pPWM: pointer to a PWM_HANDLE structure that contains
  *               the information for PWM module.
  * @param  channel: PWM channle(0~3).
  * @param  mode: Current mode on for PWM.
- * @param  enable: Enable PWM yes or not.
  * @retval HAL status
  */
-HAL_Status HAL_PWM_SetEnable(struct PWM_HANDLE *pPWM, uint32_t channel,
-                             uint32_t mode, bool enable)
+HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, uint8_t mode)
 {
     uint32_t enable_conf, intEnable;
 
     HAL_ASSERT(pPWM != NULL);
     HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
-    HAL_DBG("channe=%ld, enable:=%d\n", channel, enable);
+    HAL_DBG("Enable channel=%d\n", channel);
 
     pPWM->mode[channel] = mode;
-    if (mode != HAL_PWM_CONTINUOUS)
+    if (pPWM->mode[channel] != HAL_PWM_CONTINUOUS) {
         intEnable = READ_REG(pPWM->pReg->INT_EN);
-
-    enable_conf = READ_REG(PWM_CTRL_REG(pPWM, channel));
-
-    if (enable) {
-        enable_conf |= mode | PWM_OUTPUT_LEFT | PWM_LP_DISABLE | PWM_ENABLE;
         /* Enable irq */
-        if (mode != HAL_PWM_CONTINUOUS)
-            intEnable |= PWM_INT_EN(channel);
-    } else {
-        enable_conf &= ~PWM_ENABLE;
-        /* Disable irq */
-        if (mode != HAL_PWM_CONTINUOUS)
-            intEnable &= ~PWM_INT_EN(channel);
+        intEnable |= PWM_INT_EN(channel);
+        WRITE_REG(pPWM->pReg->INT_EN, intEnable);
     }
 
-    if (mode != HAL_PWM_CONTINUOUS)
-        WRITE_REG(pPWM->pReg->INT_EN, intEnable);
-
+    enable_conf = READ_REG(PWM_CTRL_REG(pPWM, channel));
+    enable_conf |= mode | PWM_OUTPUT_LEFT | PWM_LP_DISABLE | PWM_ENABLE;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), enable_conf);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable PWM.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channle(0~3).
+ * @retval HAL status
+ */
+HAL_Status HAL_PWM_Disable(struct PWM_HANDLE *pPWM, uint8_t channel)
+{
+    uint32_t ctrl, intEnable;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+    HAL_DBG("Disable channel=%d\n", channel);
+
+    if (pPWM->mode[channel] != HAL_PWM_CONTINUOUS) {
+        intEnable = READ_REG(pPWM->pReg->INT_EN);
+        /* Disable irq */
+        intEnable &= ~PWM_INT_EN(channel);
+        WRITE_REG(pPWM->pReg->INT_EN, intEnable);
+    }
+
+    ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
+    ctrl &= ~PWM_ENABLE;
+    WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
 
     return HAL_OK;
 }
