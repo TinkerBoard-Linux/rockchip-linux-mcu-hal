@@ -36,6 +36,7 @@
 
  Note.
  - If Nor flash and psram place in one FSPI host, Nor flash for cs0 and psram for cs1.
+ - If psram is initial by preloader and work all the timer, set g_fspidev->xmmcDev[cs].type = DEV_PSRAM in bsp.c.
 
  @} */
 
@@ -550,7 +551,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
  * @param  host: FSPI host.
  * @param  on: 1 enable, 0 disable.
  * @return HAL_Status.
- * XIP configuration cannot be modified in XIP mode, and all chip will be set.
+ * If psram is initialized by preloader and work all the timer, set g_fspidev->xmmcDev[cs].type = DEV_PSRAM in bsp.c.
  */
 HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 {
@@ -581,16 +582,22 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
         pReg->XMMC_CTRL = xmmcCtrl.d32;
         pReg->EXT_AX = 0x5a << 8;
         /* config cs 0 */
-        pReg->CTRL0 = host->xmmcDev[0].ctrl;
-        pReg->XMMC_RCMD0 = host->xmmcDev[0].readCmd;
-        pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
-        pReg->AX0 = 0;
-        /* config cs 1 */
-        pReg->CTRL1 = host->xmmcDev[1].ctrl;
-        pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
-        pReg->XMMC_WCMD1 = host->xmmcDev[1].writeCmd;
-        pReg->AX1 = 0;
-
+        switch (host->cs) {
+        case 0:
+            pReg->CTRL0 = host->xmmcDev[0].ctrl;
+            pReg->XMMC_RCMD0 = host->xmmcDev[0].readCmd;
+            pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
+            pReg->AX0 = 0;
+            break;
+        case 1:
+            pReg->CTRL1 = host->xmmcDev[1].ctrl;
+            pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
+            pReg->XMMC_WCMD1 = host->xmmcDev[1].writeCmd;
+            pReg->AX1 = 0;
+            break;
+        default:
+            break;
+        }
         pReg->MODE = 1;
     } else {
         /* FSPI_DBG("%s diable\n", __func__); */
