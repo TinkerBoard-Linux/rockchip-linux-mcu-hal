@@ -977,15 +977,16 @@ struct AUDIOPWM_REG {
     __I  uint32_t VERSION;                            /* Address Offset: 0x0000 */
     __IO uint32_t XFER;                               /* Address Offset: 0x0004 */
     __IO uint32_t SRC_CFG;                            /* Address Offset: 0x0008 */
-         uint32_t RESERVED0;                          /* Address Offset: 0x000C */
+         uint32_t RESERVED000C;                       /* Address Offset: 0x000C */
     __IO uint32_t PWM_CFG;                            /* Address Offset: 0x0010 */
     __I  uint32_t PWM_ST;                             /* Address Offset: 0x0014 */
-    __IO uint32_t PWM_BUF[2];                         /* Address Offset: 0x0018 */
+    __I  uint32_t PWM_BUF_01;                         /* Address Offset: 0x0018 */
+    __I  uint32_t PWM_BUF_23;                         /* Address Offset: 0x001C */
     __IO uint32_t FIFO_CFG;                           /* Address Offset: 0x0020 */
-    __I  uint32_t FIFO_ST;                            /* Address Offset: 0x0024 */
+    __I  uint32_t FIFO_LVL;                           /* Address Offset: 0x0024 */
     __IO uint32_t FIFO_INT_EN;                        /* Address Offset: 0x0028 */
-    __O  uint32_t FIFO_INT_ST;                        /* Address Offset: 0x002C */
-         uint32_t RESERVED1[20];                      /* Address Offset: 0x0030 */
+    __IO uint32_t FIFO_INT_ST;                        /* Address Offset: 0x002C */
+         uint32_t RESERVED0030[20];                   /* Address Offset: 0x0030 */
     __O  uint32_t FIFO_ENTRY;                         /* Address Offset: 0x0080 */
 };
 /* USB_OTG_CORE Register Structure Define */
@@ -8600,14 +8601,17 @@ struct USB_HOST_CH_REG {
 
 /****************************************AUDIOPWM****************************************/
 /* VERSION */
+#define AUDIOPWM_VERSION_OFFSET                            (0x0)
 #define AUDIOPWM_VERSION_VERSION_SHIFT                     (0U)
 #define AUDIOPWM_VERSION_VERSION_MASK                      (0xFFFFFFFFU << AUDIOPWM_VERSION_VERSION_SHIFT)              /* 0xFFFFFFFF */
 /* XFER */
+#define AUDIOPWM_XFER_OFFSET                               (0x4)
 #define AUDIOPWM_XFER_START_SHIFT                          (0U)
 #define AUDIOPWM_XFER_START_MASK                           (0x1U << AUDIOPWM_XFER_START_SHIFT)                          /* 0x00000001 */
 #define AUDIOPWM_XFER_LSTOP_SHIFT                          (1U)
 #define AUDIOPWM_XFER_LSTOP_MASK                           (0x1U << AUDIOPWM_XFER_LSTOP_SHIFT)                          /* 0x00000002 */
 /* SRC_CFG */
+#define AUDIOPWM_SRC_CFG_OFFSET                            (0x8)
 #define AUDIOPWM_SRC_CFG_WIDTH_SHIFT                       (0U)
 #define AUDIOPWM_SRC_CFG_WIDTH_MASK                        (0x1FU << AUDIOPWM_SRC_CFG_WIDTH_SHIFT)                      /* 0x0000001F */
 #define AUDIOPWM_SRC_CFG_ALIGN_SHIFT                       (5U)
@@ -8615,44 +8619,51 @@ struct USB_HOST_CH_REG {
 #define AUDIOPWM_SRC_CFG_HALF_EN_SHIFT                     (6U)
 #define AUDIOPWM_SRC_CFG_HALF_EN_MASK                      (0x1U << AUDIOPWM_SRC_CFG_HALF_EN_SHIFT)                     /* 0x00000040 */
 /* PWM_CFG */
-#define AUDIOPWM_PWM_CFG_INTERPOLATE_RATE_SHIFT            (0U)
-#define AUDIOPWM_PWM_CFG_INTERPOLATE_RATE_MASK             (0xFU << AUDIOPWM_PWM_CFG_INTERPOLATE_RATE_SHIFT)            /* 0x0000000F */
-#define AUDIOPWM_PWM_CFG_LINEAR_INTERPOLATE_EN_SHIFT       (4U)
-#define AUDIOPWM_PWM_CFG_LINEAR_INTERPOLATE_EN_MASK        (0x1U << AUDIOPWM_PWM_CFG_LINEAR_INTERPOLATE_EN_SHIFT)       /* 0x00000010 */
-#define AUDIOPWM_PWM_CFG_PWM_OUT_SWAP_SHIFT                (5U)
-#define AUDIOPWM_PWM_CFG_PWM_OUT_SWAP_MASK                 (0x1U << AUDIOPWM_PWM_CFG_PWM_OUT_SWAP_SHIFT)                /* 0x00000020 */
-#define AUDIOPWM_PWM_CFG_PWM0_DIS_SHIFT                    (6U)
-#define AUDIOPWM_PWM_CFG_PWM0_DIS_MASK                     (0x1U << AUDIOPWM_PWM_CFG_PWM0_DIS_SHIFT)                    /* 0x00000040 */
-#define AUDIOPWM_PWM_CFG_PWM1_DIS_SHIFT                    (7U)
-#define AUDIOPWM_PWM_CFG_PWM1_DIS_MASK                     (0x1U << AUDIOPWM_PWM_CFG_PWM1_DIS_SHIFT)                    /* 0x00000080 */
-#define AUDIOPWM_PWM_CFG_SAMPLE_RATE_SHIFT                 (8U)
-#define AUDIOPWM_PWM_CFG_SAMPLE_RATE_MASK                  (0x3U << AUDIOPWM_PWM_CFG_SAMPLE_RATE_SHIFT)                 /* 0x00000300 */
+#define AUDIOPWM_PWM_CFG_OFFSET                            (0x10)
+#define AUDIOPWM_PWM_CFG_INTERP_RATE_SHIFT                 (0U)
+#define AUDIOPWM_PWM_CFG_INTERP_RATE_MASK                  (0xFU << AUDIOPWM_PWM_CFG_INTERP_RATE_SHIFT)                 /* 0x0000000F */
+#define AUDIOPWM_PWM_CFG_LINEAR_INTERP_EN_SHIFT            (4U)
+#define AUDIOPWM_PWM_CFG_LINEAR_INTERP_EN_MASK             (0x1U << AUDIOPWM_PWM_CFG_LINEAR_INTERP_EN_SHIFT)            /* 0x00000010 */
+#define AUDIOPWM_PWM_CFG_OUT_SWAP_SHIFT                    (5U)
+#define AUDIOPWM_PWM_CFG_OUT_SWAP_MASK                     (0x1U << AUDIOPWM_PWM_CFG_OUT_SWAP_SHIFT)                    /* 0x00000020 */
+#define AUDIOPWM_PWM_CFG_LEFT_DIS_SHIFT                    (6U)
+#define AUDIOPWM_PWM_CFG_LEFT_DIS_MASK                     (0x1U << AUDIOPWM_PWM_CFG_LEFT_DIS_SHIFT)                    /* 0x00000040 */
+#define AUDIOPWM_PWM_CFG_RIGHT_DIS_SHIFT                   (7U)
+#define AUDIOPWM_PWM_CFG_RIGHT_DIS_MASK                    (0x1U << AUDIOPWM_PWM_CFG_RIGHT_DIS_SHIFT)                   /* 0x00000080 */
+#define AUDIOPWM_PWM_CFG_SAMPLE_WIDTH_SHIFT                (8U)
+#define AUDIOPWM_PWM_CFG_SAMPLE_WIDTH_MASK                 (0x3U << AUDIOPWM_PWM_CFG_SAMPLE_WIDTH_SHIFT)                /* 0x00000300 */
 /* PWM_ST */
-#define AUDIOPWM_PWM_ST_RX_FIFO_BUSY_SHIFT                 (0U)
-#define AUDIOPWM_PWM_ST_RX_FIFO_BUSY_MASK                  (0x1U << AUDIOPWM_PWM_ST_RX_FIFO_BUSY_SHIFT)                 /* 0x00000001 */
+#define AUDIOPWM_PWM_ST_OFFSET                             (0x14)
+#define AUDIOPWM_PWM_ST_FIFO_BUSY_SHIFT                    (0U)
+#define AUDIOPWM_PWM_ST_FIFO_BUSY_MASK                     (0x1U << AUDIOPWM_PWM_ST_FIFO_BUSY_SHIFT)                    /* 0x00000001 */
 #define AUDIOPWM_PWM_ST_PWM_BUSY_SHIFT                     (1U)
 #define AUDIOPWM_PWM_ST_PWM_BUSY_MASK                      (0x1U << AUDIOPWM_PWM_ST_PWM_BUSY_SHIFT)                     /* 0x00000002 */
 /* PWM_BUF_01 */
+#define AUDIOPWM_PWM_BUF_01_OFFSET                         (0x18)
 #define AUDIOPWM_PWM_BUF_01_PWM_BUF_0_SHIFT                (0U)
 #define AUDIOPWM_PWM_BUF_01_PWM_BUF_0_MASK                 (0x7FFU << AUDIOPWM_PWM_BUF_01_PWM_BUF_0_SHIFT)              /* 0x000007FF */
 #define AUDIOPWM_PWM_BUF_01_PWM_BUF_1_SHIFT                (16U)
 #define AUDIOPWM_PWM_BUF_01_PWM_BUF_1_MASK                 (0x7FFU << AUDIOPWM_PWM_BUF_01_PWM_BUF_1_SHIFT)              /* 0x07FF0000 */
 /* PWM_BUF_23 */
+#define AUDIOPWM_PWM_BUF_23_OFFSET                         (0x1C)
 #define AUDIOPWM_PWM_BUF_23_PWM_BUF_2_SHIFT                (0U)
 #define AUDIOPWM_PWM_BUF_23_PWM_BUF_2_MASK                 (0x7FFU << AUDIOPWM_PWM_BUF_23_PWM_BUF_2_SHIFT)              /* 0x000007FF */
 #define AUDIOPWM_PWM_BUF_23_PWM_BUF_3_SHIFT                (16U)
 #define AUDIOPWM_PWM_BUF_23_PWM_BUF_3_MASK                 (0x7FFU << AUDIOPWM_PWM_BUF_23_PWM_BUF_3_SHIFT)              /* 0x07FF0000 */
 /* FIFO_CFG */
+#define AUDIOPWM_FIFO_CFG_OFFSET                           (0x20)
 #define AUDIOPWM_FIFO_CFG_DMA_WATERMARK_SHIFT              (0U)
 #define AUDIOPWM_FIFO_CFG_DMA_WATERMARK_MASK               (0x1FU << AUDIOPWM_FIFO_CFG_DMA_WATERMARK_SHIFT)             /* 0x0000001F */
-#define AUDIOPWM_FIFO_CFG_DMA_ENA_SHIFT                    (7U)
-#define AUDIOPWM_FIFO_CFG_DMA_ENA_MASK                     (0x1U << AUDIOPWM_FIFO_CFG_DMA_ENA_SHIFT)                    /* 0x00000080 */
+#define AUDIOPWM_FIFO_CFG_DMA_EN_SHIFT                     (7U)
+#define AUDIOPWM_FIFO_CFG_DMA_EN_MASK                      (0x1U << AUDIOPWM_FIFO_CFG_DMA_EN_SHIFT)                     /* 0x00000080 */
 #define AUDIOPWM_FIFO_CFG_ALMOST_FULL_WATERMARK_SHIFT      (8U)
 #define AUDIOPWM_FIFO_CFG_ALMOST_FULL_WATERMARK_MASK       (0x1FU << AUDIOPWM_FIFO_CFG_ALMOST_FULL_WATERMARK_SHIFT)     /* 0x00001F00 */
-/* FIFO_ST */
-#define AUDIOPWM_FIFO_ST_FIFO_UNUSED_WORD_SHIFT            (0U)
-#define AUDIOPWM_FIFO_ST_FIFO_UNUSED_WORD_MASK             (0x3FU << AUDIOPWM_FIFO_ST_FIFO_UNUSED_WORD_SHIFT)           /* 0x0000003F */
+/* FIFO_LVL */
+#define AUDIOPWM_FIFO_LVL_OFFSET                           (0x24)
+#define AUDIOPWM_FIFO_LVL_FIFO_SPACE2FULL_SHIFT            (0U)
+#define AUDIOPWM_FIFO_LVL_FIFO_SPACE2FULL_MASK             (0x3FU << AUDIOPWM_FIFO_LVL_FIFO_SPACE2FULL_SHIFT)           /* 0x0000003F */
 /* FIFO_INT_EN */
+#define AUDIOPWM_FIFO_INT_EN_OFFSET                        (0x28)
 #define AUDIOPWM_FIFO_INT_EN_FULL_INT_EN_SHIFT             (0U)
 #define AUDIOPWM_FIFO_INT_EN_FULL_INT_EN_MASK              (0x1U << AUDIOPWM_FIFO_INT_EN_FULL_INT_EN_SHIFT)             /* 0x00000001 */
 #define AUDIOPWM_FIFO_INT_EN_OVERRUN_INT_EN_SHIFT          (1U)
@@ -8660,6 +8671,7 @@ struct USB_HOST_CH_REG {
 #define AUDIOPWM_FIFO_INT_EN_EMPTY_INT_EN_SHIFT            (2U)
 #define AUDIOPWM_FIFO_INT_EN_EMPTY_INT_EN_MASK             (0x1U << AUDIOPWM_FIFO_INT_EN_EMPTY_INT_EN_SHIFT)            /* 0x00000004 */
 /* FIFO_INT_ST */
+#define AUDIOPWM_FIFO_INT_ST_OFFSET                        (0x2C)
 #define AUDIOPWM_FIFO_INT_ST_FULL_INT_ST_SHIFT             (0U)
 #define AUDIOPWM_FIFO_INT_ST_FULL_INT_ST_MASK              (0x1U << AUDIOPWM_FIFO_INT_ST_FULL_INT_ST_SHIFT)             /* 0x00000001 */
 #define AUDIOPWM_FIFO_INT_ST_OVERRUN_INT_ST_SHIFT          (1U)
@@ -8667,6 +8679,7 @@ struct USB_HOST_CH_REG {
 #define AUDIOPWM_FIFO_INT_ST_EMPTY_INT_ST_SHIFT            (2U)
 #define AUDIOPWM_FIFO_INT_ST_EMPTY_INT_ST_MASK             (0x1U << AUDIOPWM_FIFO_INT_ST_EMPTY_INT_ST_SHIFT)            /* 0x00000004 */
 /* FIFO_ENTRY */
+#define AUDIOPWM_FIFO_ENTRY_OFFSET                         (0x80)
 #define AUDIOPWM_FIFO_ENTRY_FIFO_DATA_ENTRY_SHIFT          (0U)
 #define AUDIOPWM_FIFO_ENTRY_FIFO_DATA_ENTRY_MASK           (0xFFFFFFFFU << AUDIOPWM_FIFO_ENTRY_FIFO_DATA_ENTRY_SHIFT)   /* 0xFFFFFFFF */
 
