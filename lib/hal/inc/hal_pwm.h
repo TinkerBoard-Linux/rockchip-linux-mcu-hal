@@ -42,13 +42,11 @@ struct HAL_PWM_DEV {
 /**
   * @brief  PWM handle Structure definition
   */
-
 struct HAL_PWM_CONFIG {
-    uint32_t channel;
+    uint8_t channel;
     uint32_t periodNS;
     uint32_t dutyNS;
     bool polarity;
-    uint32_t count;
 };
 
 /**
@@ -78,8 +76,9 @@ struct PWM_HANDLE {
 /***************************** Function Declare ******************************/
 
 HAL_Status HAL_PWM_IRQHandler(struct PWM_HANDLE *pPWM);
-HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint32_t channel,
+HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
                              const struct HAL_PWM_CONFIG *config);
+HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t count);
 HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, uint8_t mode);
 HAL_Status HAL_PWM_Disable(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *pReg, uint32_t freq);

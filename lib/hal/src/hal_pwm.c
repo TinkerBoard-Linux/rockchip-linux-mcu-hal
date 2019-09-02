@@ -123,7 +123,7 @@ HAL_Status HAL_PWM_IRQHandler(struct PWM_HANDLE *pPWM)
  * @param  config: Configuration for PWM.
  * @retval HAL status
  */
-HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint32_t channel,
+HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
                              const struct HAL_PWM_CONFIG *config)
 {
     unsigned long period, duty;
@@ -132,7 +132,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint32_t channel,
     HAL_ASSERT(pPWM != NULL);
     HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
     HAL_ASSERT(config != NULL);
-    HAL_DBG("channel=%ld, period_ns=%ld, duty_ns=%ld\n",
+    HAL_DBG("channel=%d, period_ns=%ld, duty_ns=%ld\n",
             channel, config->periodNS, config->dutyNS);
 
     period = (uint64_t)((pPWM->freq / 1000) * config->periodNS) / 1000000;
@@ -151,14 +151,34 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint32_t channel,
     else
         ctrl |= PWM_DUTY_POSTIVE | PWM_INACTIVE_NEGATIVE;
 
-    if (pPWM->mode[channel] == HAL_PWM_ONE_SHOT)
-        ctrl |= (config->count << PWM_PWM0_CTRL_RPT_SHIFT) & PWM_PWM0_CTRL_RPT_MASK;
-
     ctrl &= ~PWM_LOCK;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
 
-    HAL_DBG("channel=%ld, period=%lu, duty=%lu, polarity=%d\n",
+    HAL_DBG("channel=%d, period=%lu, duty=%lu, polarity=%d\n",
             channel, period, duty, config->polarity);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Configurate PWM oneshot mode.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channle(0~3).
+ * @param  count: (count + 1)repeated effective periods of output waveform
+ * @retval HAL status
+ */
+HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t count)
+{
+    uint32_t ctrl;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+    HAL_DBG("Oneshot count=%ld\n", count);
+
+    ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
+    ctrl |= (count << PWM_PWM0_CTRL_RPT_SHIFT) & PWM_PWM0_CTRL_RPT_MASK;
+    WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
 
     return HAL_OK;
 }
