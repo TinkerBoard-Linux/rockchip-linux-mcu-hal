@@ -49,6 +49,9 @@
 #define PWM_DISABLE (0 << PWM_PWM0_CTRL_PWM_EN_SHIFT)
 #define PWM_ENABLE  (1 << PWM_PWM0_CTRL_PWM_EN_SHIFT)
 
+#define PWM_MODE_SHIFT (1)
+#define PWM_MODE_MASK  (0x3U << PWM_MODE_SHIFT)
+
 #define PWM_DUTY_POSTIVE  (1 << PWM_PWM0_CTRL_DUTY_POL_SHIFT)
 #define PWM_DUTY_NEGATIVE (0 << PWM_PWM0_CTRL_DUTY_POL_SHIFT)
 #define PWM_DUTY_MASK     (1 << 3)
@@ -184,6 +187,26 @@ HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t
 }
 
 /**
+ * @brief  Get PWM mode.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channle(0~3).
+ * @retval HAL_PWM_Mode
+ */
+HAL_PWM_Mode HAL_PWM_GetMode(struct PWM_HANDLE *pPWM, uint8_t channel)
+{
+    uint32_t ctrl;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+    HAL_DBG("channel=%d\n", channel);
+
+    ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
+
+    return (ctrl >> PWM_MODE_SHIFT) & PWM_MODE_MASK;
+}
+
+/**
  * @brief  Enable PWM.
  * @param  pPWM: pointer to a PWM_HANDLE structure that contains
  *               the information for PWM module.
@@ -191,7 +214,7 @@ HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t
  * @param  mode: Current mode on for PWM.
  * @retval HAL status
  */
-HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, uint8_t mode)
+HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, HAL_PWM_Mode mode)
 {
     uint32_t enable_conf, intEnable;
 
