@@ -645,48 +645,55 @@ struct VOP_REG {
     __I  uint32_t VERSION;                            /* Address Offset: 0x0004 */
     __IO uint32_t DSP_BG;                             /* Address Offset: 0x0008 */
     __IO uint32_t MCU;                                /* Address Offset: 0x000C */
-    __IO uint32_t SYS_CTRL[3];                        /* Address Offset: 0x0010 */
-         uint32_t RESERVED0;                          /* Address Offset: 0x001C */
-    __IO uint32_t DSP_CTRL[3];                        /* Address Offset: 0x0020 */
+    __IO uint32_t SYS_CTRL0;                          /* Address Offset: 0x0010 */
+    __IO uint32_t SYS_CTRL1;                          /* Address Offset: 0x0014 */
+    __IO uint32_t SYS_CTRL2;                          /* Address Offset: 0x0018 */
+         uint32_t RESERVED001C;                       /* Address Offset: 0x001C */
+    __IO uint32_t DSP_CTRL0;                          /* Address Offset: 0x0020 */
+    __IO uint32_t DSP_CTRL1;                          /* Address Offset: 0x0024 */
+    __IO uint32_t DSP_CTRL2;                          /* Address Offset: 0x0028 */
     __IO uint32_t VOP_STATUS;                         /* Address Offset: 0x002C */
     __IO uint32_t LINE_FLAG;                          /* Address Offset: 0x0030 */
     __IO uint32_t INTR_EN;                            /* Address Offset: 0x0034 */
     __IO uint32_t INTR_CLEAR;                         /* Address Offset: 0x0038 */
     __IO uint32_t INTR_STATUS;                        /* Address Offset: 0x003C */
-    __IO uint32_t WIN0_CTRL[2];                       /* Address Offset: 0x0040 */
+    __IO uint32_t WIN0_CTRL0;                         /* Address Offset: 0x0040 */
+    __IO uint32_t WIN0_CTRL1;                         /* Address Offset: 0x0044 */
     __IO uint32_t WIN0_VIR;                           /* Address Offset: 0x0048 */
-         uint32_t RESERVED1;                          /* Address Offset: 0x004C */
+         uint32_t RESERVED004C;                       /* Address Offset: 0x004C */
     __IO uint32_t WIN0_YRGB_MST;                      /* Address Offset: 0x0050 */
     __IO uint32_t WIN0_DSP_INFO;                      /* Address Offset: 0x0054 */
     __IO uint32_t WIN0_DSP_ST;                        /* Address Offset: 0x0058 */
     __IO uint32_t WIN0_COLOR_KEY;                     /* Address Offset: 0x005C */
-         uint32_t RESERVED2[3];                       /* Address Offset: 0x0060 */
+         uint32_t RESERVED0060[3];                    /* Address Offset: 0x0060 */
     __IO uint32_t WIN0_ALPHA_CTRL;                    /* Address Offset: 0x006C */
     __IO uint32_t WIN0_CBCR_MST;                      /* Address Offset: 0x0070 */
     __IO uint32_t WIN0_YRGB_MST_RAW;                  /* Address Offset: 0x0074 */
     __IO uint32_t WIN0_CBCR_MST_RAW;                  /* Address Offset: 0x0078 */
     __IO uint32_t WIN0_LOOP_OFFSET;                   /* Address Offset: 0x007C */
-    __IO uint32_t WIN1_CTRL[2];                       /* Address Offset: 0x0080 */
+    __IO uint32_t WIN1_CTRL0;                         /* Address Offset: 0x0080 */
+    __IO uint32_t WIN1_CTRL1;                         /* Address Offset: 0x0084 */
     __IO uint32_t WIN1_VIR;                           /* Address Offset: 0x0088 */
-         uint32_t RESERVED3;                          /* Address Offset: 0x008C */
+         uint32_t RESERVED008C;                       /* Address Offset: 0x008C */
     __IO uint32_t WIN1_YRGB_MST;                      /* Address Offset: 0x0090 */
     __IO uint32_t WIN1_DSP_INFO;                      /* Address Offset: 0x0094 */
     __IO uint32_t WIN1_DSP_ST;                        /* Address Offset: 0x0098 */
     __IO uint32_t WIN1_COLOR_KEY;                     /* Address Offset: 0x009C */
-         uint32_t RESERVED4[3];                       /* Address Offset: 0x00A0 */
+         uint32_t RESERVED00A0[3];                    /* Address Offset: 0x00A0 */
     __IO uint32_t WIN1_ALPHA_CTRL;                    /* Address Offset: 0x00AC */
     __IO uint32_t WIN1_CBCR_MST;                      /* Address Offset: 0x00B0 */
     __IO uint32_t WIN1_YRGB_MST_RAW;                  /* Address Offset: 0x00B4 */
     __IO uint32_t WIN1_CBCR_MST_RAW;                  /* Address Offset: 0x00B8 */
     __IO uint32_t WIN1_LOOP_OFFSET;                   /* Address Offset: 0x00BC */
-    __IO uint32_t WIN2_CTRL[2];                       /* Address Offset: 0x00C0 */
+    __IO uint32_t WIN2_CTRL0;                         /* Address Offset: 0x00C0 */
+    __IO uint32_t WIN2_CTRL1;                         /* Address Offset: 0x00C4 */
     __IO uint32_t WIN2_VIR;                           /* Address Offset: 0x00C8 */
-         uint32_t RESERVED5;                          /* Address Offset: 0x00CC */
+         uint32_t RESERVED00CC;                       /* Address Offset: 0x00CC */
     __IO uint32_t WIN2_YRGB_MST;                      /* Address Offset: 0x00D0 */
     __IO uint32_t WIN2_DSP_INFO;                      /* Address Offset: 0x00D4 */
     __IO uint32_t WIN2_DSP_ST;                        /* Address Offset: 0x00D8 */
     __IO uint32_t WIN2_COLOR_KEY;                     /* Address Offset: 0x00DC */
-         uint32_t RESERVED6[3];                       /* Address Offset: 0x00E0 */
+         uint32_t RESERVED00E0[3];                    /* Address Offset: 0x00E0 */
     __IO uint32_t WIN2_ALPHA_CTRL;                    /* Address Offset: 0x00EC */
     __IO uint32_t WIN2_CBCR_MST;                      /* Address Offset: 0x00F0 */
     __IO uint32_t WIN2_YRGB_MST_RAW;                  /* Address Offset: 0x00F4 */
@@ -702,16 +709,21 @@ struct VOP_REG {
     __IO uint32_t PRE_HACT_ST_END;                    /* Address Offset: 0x011C */
     __IO uint32_t PRE_VTOTAL_VS_END;                  /* Address Offset: 0x0120 */
     __IO uint32_t PRE_VACT_ST_END;                    /* Address Offset: 0x0124 */
-         uint32_t RESERVED7[14];                      /* Address Offset: 0x0128 */
+         uint32_t RESERVED0128[14];                   /* Address Offset: 0x0128 */
     __IO uint32_t BCSH_CTRL;                          /* Address Offset: 0x0160 */
     __IO uint32_t BCSH_COL_BAR;                       /* Address Offset: 0x0164 */
     __IO uint32_t BCSH_BCS;                           /* Address Offset: 0x0168 */
     __IO uint32_t BCSH_H;                             /* Address Offset: 0x016C */
-    __IO uint32_t GAMMA_COE_WORD[4];                  /* Address Offset: 0x0170 */
+    __IO uint32_t GAMMA_COE_WORD0;                    /* Address Offset: 0x0170 */
+    __IO uint32_t GAMMA_COE_WORD1;                    /* Address Offset: 0x0174 */
+    __IO uint32_t GAMMA_COE_WORD2;                    /* Address Offset: 0x0178 */
+    __IO uint32_t GAMMA_COE_WORD3;                    /* Address Offset: 0x017C */
     __IO uint32_t POST_CTRL;                          /* Address Offset: 0x0180 */
-    __IO uint32_t COLOR_MATRIX_COE[3];                /* Address Offset: 0x0184 */
+    __IO uint32_t COLOR_MATRIX_COE0;                  /* Address Offset: 0x0184 */
+    __IO uint32_t COLOR_MATRIX_COE1;                  /* Address Offset: 0x0188 */
+    __IO uint32_t COLOR_MATRIX_COE2;                  /* Address Offset: 0x018C */
     __IO uint32_t MCU_WRITE_DATA;                     /* Address Offset: 0x0190 */
-         uint32_t RESERVED8[23];                      /* Address Offset: 0x0194 */
+         uint32_t RESERVED0194[23];                   /* Address Offset: 0x0194 */
     __I  uint32_t DBG_REG_SCAN_LINE;                  /* Address Offset: 0x01F0 */
     __IO uint32_t BLANKING_VALUE;                     /* Address Offset: 0x01F4 */
     __I  uint32_t FLAG_REG_FRM_VALID;                 /* Address Offset: 0x01F8 */
@@ -719,14 +731,18 @@ struct VOP_REG {
     __IO uint32_t WIN0_BPP_LUT[256];                  /* Address Offset: 0x0200 */
     __IO uint32_t WIN1_BPP_LUT[256];                  /* Address Offset: 0x0600 */
     __IO uint32_t DSC_SYS_CTRL0_IMD;                  /* Address Offset: 0x0A00 */
-    __IO uint32_t DSC_SYS_CTRL[3];                    /* Address Offset: 0x0A04 */
+    __IO uint32_t DSC_SYS_CTRL1;                      /* Address Offset: 0x0A04 */
+    __IO uint32_t DSC_SYS_CTRL2;                      /* Address Offset: 0x0A08 */
+    __IO uint32_t DSC_SYS_CTRL3;                      /* Address Offset: 0x0A0C */
     __IO uint32_t DSC_CFG[21];                        /* Address Offset: 0x0A10 */
-         uint32_t RESERVED11[3];                      /* Address Offset: 0x0A64 */
+         uint32_t RESERVED0A64[3];                    /* Address Offset: 0x0A64 */
     __IO uint32_t DSC_INT_EN;                         /* Address Offset: 0x0A70 */
     __IO uint32_t DSC_INT_CLR;                        /* Address Offset: 0x0A74 */
     __IO uint32_t DSC_INT_STATUS;                     /* Address Offset: 0x0A78 */
-         uint32_t RESERVED12;                         /* Address Offset: 0x0A7C */
-    __IO uint32_t DSC_DBG_STATUS[3];                  /* Address Offset: 0x0A80 */
+         uint32_t RESERVED0A7C;                       /* Address Offset: 0x0A7C */
+    __I  uint32_t DSC_DBG_STATUS0;                    /* Address Offset: 0x0A80 */
+    __I  uint32_t DSC_DBG_STATUS1;                    /* Address Offset: 0x0A84 */
+    __IO uint32_t DSC_DBG_STATUS2;                    /* Address Offset: 0x0A88 */
 };
 /* ACDCDIG Register Structure Define */
 struct ACDCDIG_REG {
