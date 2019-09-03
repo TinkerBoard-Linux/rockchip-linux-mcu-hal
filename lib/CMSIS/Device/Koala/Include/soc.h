@@ -85,6 +85,11 @@ typedef enum
 #define NVIC_PERIPH_IRQ_NUM MAX_IRQn
 #define NVIC_PERIPH_IRQ_OFFSET 16
 
+#define MAILBOX0_AP_IRQ0 MAILBOX_CA0_IRQn
+#define MAILBOX0_AP_IRQ1 MAILBOX_CA1_IRQn
+#define MAILBOX0_AP_IRQ2 MAILBOX_CA2_IRQn
+#define MAILBOX0_AP_IRQ3 MAILBOX_CA3_IRQn
+
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
 /* ================================================================================ */
@@ -171,8 +176,8 @@ struct GRF_REG {
     __IO uint32_t DSP_CON1;                           /* Address Offset: 0x0184 */
     __IO uint32_t DSP_CON2;                           /* Address Offset: 0x0188 */
          uint32_t RESERVED018C;                       /* Address Offset: 0x018C */
-    __I  uint32_t DSP_STATUS0;                        /* Address Offset: 0x0190 */
-    __I  uint32_t DSP_STATUS1;                        /* Address Offset: 0x0194 */
+    __I  uint32_t DSP_STAT0;                          /* Address Offset: 0x0190 */
+    __I  uint32_t DSP_STAT1;                          /* Address Offset: 0x0194 */
          uint32_t RESERVED0198[2];                    /* Address Offset: 0x0198 */
     __IO uint32_t MEM_CON0;                           /* Address Offset: 0x01A0 */
     __IO uint32_t MEM_CON1;                           /* Address Offset: 0x01A4 */
@@ -649,7 +654,7 @@ struct CRU_REG {
 #define DSP_ITCM_BASE       0x30000000U /* DSP itcm base address */
 #define DSP_ITCM_END        0x3000ffffU /* DSP itcm end address */
 #define DSP_DTCM_BASE       0x30200000U /* DSP dtcm base address */
-#define DSP_DTCM_END        0x3023ffffU /* DSP dtcm end address */
+#define DSP_DTCM_END        0x3027ffffU /* DSP dtcm end address */
 #define GRF_BASE            0x44300000U /* GRF base address */
 #define TIMER_BASE          0x44000000U /* TIMER base address */
 #define UART0_BASE          0x44010000U /* UART0 base address */
@@ -690,7 +695,7 @@ struct CRU_REG {
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define WDT0                ((struct WDT_REG *) WDT0_BASE)
 #define WDT1                ((struct WDT_REG *) WDT1_BASE)
-#define MBOX                ((struct MBOX_REG *) MBOX_BASE)
+#define MBOX0               ((struct MBOX_REG *) MBOX_BASE)
 #define SPI1                 ((struct SPI_REG *) SPI1_BASE)
 #define I2C0                ((struct I2C_REG *) I2C0_BASE)
 #define I2C1                ((struct I2C_REG *) I2C1_BASE)
@@ -710,7 +715,7 @@ struct CRU_REG {
 
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4))
-#define IS_MBOX_INSTANCE(instance) ((instance) == MBOX)
+#define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
 #define IS_SPI_INSTANCE(instance) ((instance) == SPI1)
 #define IS_EFUSE_INSTANCE(instance) ((instance) == EFUSE)
 #define IS_DMA_INSTANCE(instance) ((instance) == DMA)
@@ -1345,10 +1350,12 @@ struct CRU_REG {
 #define GRF_DSP_CON0_DSPGRF_BREAKOUTACK_MASK               (0x1U << GRF_DSP_CON0_DSPGRF_BREAKOUTACK_SHIFT)              /* 0x00000004 */
 #define GRF_DSP_CON0_REV_SHIFT                             (3U)
 #define GRF_DSP_CON0_REV_MASK                              (0x1U << GRF_DSP_CON0_REV_SHIFT)                             /* 0x00000008 */
-#define GRF_DSP_CON0_DSPGRF_STATVECTORSEL_SHIFT            (4U)
-#define GRF_DSP_CON0_DSPGRF_STATVECTORSEL_MASK             (0x1U << GRF_DSP_CON0_DSPGRF_STATVECTORSEL_SHIFT)            /* 0x00000010 */
-#define GRF_DSP_CON0_DSPGRF_RUNSTALL_SHIFT                 (5U)
-#define GRF_DSP_CON0_DSPGRF_RUNSTALL_MASK                  (0x1U << GRF_DSP_CON0_DSPGRF_RUNSTALL_SHIFT)                 /* 0x00000020 */
+#define GRF_DSP_CON0_STATVECTORSEL_SHIFT                   (4U)
+#define GRF_DSP_CON0_STATVECTORSEL_MASK                    (0x1U << GRF_DSP_CON0_STATVECTORSEL_SHIFT)                   /* 0x00000010 */
+#define GRF_DSP_CON0_RUNSTALL_SHIFT                        (5U)
+#define GRF_DSP_CON0_RUNSTALL_MASK                         (0x1U << GRF_DSP_CON0_RUNSTALL_SHIFT)                        /* 0x00000020 */
+#define GRF_DSP_CON0_WITRE_ENABLE_SHIFT                    (16U)
+#define GRF_DSP_CON0_WITRE_ENABLE_MASK                     (0x3FU << GRF_DSP_CON0_WITRE_ENABLE_SHIFT)                   /* 0x003F0000 */
 /* DSP_CON1 */
 #define GRF_DSP_CON1_OFFSET                                (0x184)
 #define GRF_DSP_CON1_DSPGRF_ALTRESETVEC_SHIFT              (0U)
@@ -1357,6 +1364,21 @@ struct CRU_REG {
 #define GRF_DSP_CON2_OFFSET                                (0x188)
 #define GRF_DSP_CON2_DSPGRF_MEMAUTOGATINGEN_SHIFT          (0U)
 #define GRF_DSP_CON2_DSPGRF_MEMAUTOGATINGEN_MASK           (0x7FU << GRF_DSP_CON2_DSPGRF_MEMAUTOGATINGEN_SHIFT)         /* 0x0000007F */
+#define GRF_DSP_CON2_ICACHE_MEM_AUTO_GATING_DISABLE_SHIFT  (0U)
+#define GRF_DSP_CON2_ICACHE_MEM_AUTO_GATING_DISABLE_MASK   (0x1U << GRF_DSP_CON2_ICACHE_MEM_AUTO_GATING_DISABLE_SHIFT)       /* 0x00000001 */
+#define GRF_DSP_CON2_ITAG_MEM_AUTO_GATING_DISABLE_SHIFT    (1U)
+#define GRF_DSP_CON2_ITAG_MEM_AUTO_GATING_DISABLE_MASK     (0x1U << GRF_DSP_CON2_ITAG_MEM_AUTO_GATING_DISABLE_SHIFT)         /* 0x00000002 */
+#define GRF_DSP_CON2_DCACHE_MEM_AUTO_GATING_DISABLE_SHIFT  (2U)
+#define GRF_DSP_CON2_DCACHE_MEM_AUTO_GATING_DISABLE_MASK   (0x1U << GRF_DSP_CON2_DCACHE_MEM_AUTO_GATING_DISABLE_SHIFT)       /* 0x00000004 */
+#define GRF_DSP_CON2_DTAG_MEM_AUTO_GATING_DISABLE_SHIFT    (3U)
+#define GRF_DSP_CON2_DTAG_MEM_AUTO_GATING_DISABLE_MASK     (0x1U << GRF_DSP_CON2_DTAG_MEM_AUTO_GATING_DISABLE_SHIFT)         /* 0x00000008 */
+#define GRF_DSP_CON2_PREFETCH_RAM_AUTO_GATING_DISABLE_SHIFT (4U)
+#define GRF_DSP_CON2_PREFETCH_RAM_AUTO_GATING_DISABLE_MASK (0x1U << GRF_DSP_CON2_PREFETCH_RAM_AUTO_GATING_DISABLE_SHIFT)     /* 0x00000010 */
+#define GRF_DSP_CON2_DTCM_MEM_AUTO_GATING_DISABLE_SHIFT    (5U)
+#define GRF_DSP_CON2_DTCM_MEM_AUTO_GATING_DISABLE_MASK     (0x1U << GRF_DSP_CON2_DTCM_MEM_AUTO_GATING_DISABLE_SHIFT)         /* 0x00000020 */
+#define GRF_DSP_CON2_ITCM_MEM_AUTO_GATING_DISABLE_SHIFT    (6U)
+#define GRF_DSP_CON2_ITCM_MEM_AUTO_GATING_DISABLE_MASK     (0x1U << GRF_DSP_CON2_ITCM_MEM_AUTO_GATING_DISABLE_SHIFT)         /* 0x00000040 */
+
 /* DSP_STATUS0 */
 #define GRF_DSP_STATUS0_OFFSET                             (0x190)
 #define GRF_DSP_STATUS0_DSPGRF_XOCDNODE_SHIFT              (0U)
@@ -5476,6 +5498,10 @@ typedef enum PD_Id {
 #define HCLK_INTC0_GATE          61
 #define HCLK_BT_TEST_GATE        62
 #define PCLK_GPIO2_GATE          63
+
+#define ACLK_DSP_GATE            ACLK_DSP_NOC_GATE
+#define PCLK_DSP_GATE            CLK_DSP_GATE
+
 /********Name=CLKGATE4_CON,Offset=0x210********/
 #define PCLK_PMU_NOC_GATE        64
 #define PCLK_PMUIP_GATE          65

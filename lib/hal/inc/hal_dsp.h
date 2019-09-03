@@ -73,6 +73,15 @@ typedef enum {
     ST_DSPAPM_DEIDLE
 } eDSP_powerSt;
 
+typedef enum    {
+    /* reset all clk of dsp */
+    DSP_RESET_MODE_RESET_ALL_CLK = 0,
+    /* reset parts of clk of dsp */
+    DSP_RESET_MODE_RESET_PART_CLK = 1,
+    /* do not reset any clk of dsp, dtcm is used by m3*/
+    DSP_RESET_MODE_NOT_RESET = 2,
+} eDSP_resetMode;
+
 struct DSP_OPS {
     int (*ioctl)(void *priv, int cmd, void *arg);
 };
@@ -83,7 +92,7 @@ struct DSP_OPS {
 struct DSP_DEV {
     struct GRF_REG *grfReg;    /**< grf register base */
     const struct DSP_OPS *ops; /**< dsp ops function */
-    int32_t resetFlag; /**< dsp have been reset flag */
+    eDSP_resetMode resetFlag; /**< dsp have been reset flag */
     void *privData; /**< dsp dev privData */
 };
 

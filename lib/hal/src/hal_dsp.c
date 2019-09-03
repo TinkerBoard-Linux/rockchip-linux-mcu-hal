@@ -180,6 +180,25 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
             WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, 0);
         break;
     }
+#elif defined(RKMCU_KOALA)
+    case DSP_IOCTL_SET_MEM_GATING:
+    {
+        uint32_t mask = 0;
+        mask |= GRF_DSP_CON2_ICACHE_MEM_AUTO_GATING_DISABLE_MASK |
+                GRF_DSP_CON2_ITAG_MEM_AUTO_GATING_DISABLE_MASK |
+                GRF_DSP_CON2_DCACHE_MEM_AUTO_GATING_DISABLE_MASK |
+                GRF_DSP_CON2_DTAG_MEM_AUTO_GATING_DISABLE_MASK |
+                GRF_DSP_CON2_PREFETCH_RAM_AUTO_GATING_DISABLE_MASK |
+                GRF_DSP_CON2_DTCM_MEM_AUTO_GATING_DISABLE_MASK |
+                GRF_DSP_CON2_ITCM_MEM_AUTO_GATING_DISABLE_MASK;
+        if ((uint32_t)arg) {
+            // set value 0 is enable
+            WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, 0);
+        } else {
+            WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, mask);
+        }
+        break;
+    }
 #endif
     default:
         break;
@@ -272,6 +291,21 @@ HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
 
     return HAL_OK;
 }
+#else
+HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
+{
+    return HAL_OK;
+}
+
+HAL_Status HAL_DSP_SoftWakeup(void)
+{
+    return HAL_OK;
+}
+
+HAL_Status HAL_DSP_WaitForPowerSt(eDSP_powerSt status, uint32_t timeout)
+{
+    return HAL_OK;
+}
 #endif
 
 /**
@@ -283,7 +317,27 @@ HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp)
 {
     dsp->ops = &dspOps;
     dsp->grfReg = (struct GRF_REG *)(GRF_BASE);
-    dsp->resetFlag = 0;
+    dsp->resetFlag = DSP_RESET_MODE_RESET_ALL_CLK;
+
+#if defined(RKMCU_KOALA)
+    /*
+     * check the value of CRU_SOFTRST4_CON,
+     * the default value of CRU_SOFTRST4_CON is 0x06,
+     * if m3 want use DTCM of dsp, it will reset dsp and
+     * reassert reset in startup_koala.S. So here,
+     * we check the value of CRU_SOFTRST4_CON to judge
+     * whether DTCM is used by m3
+     */
+    uint32_t setMask = CRU_SOFTRST4_CON_ARESETN_DSP_NOC_REQ_MASK |
+                       CRU_SOFTRST4_CON_RESETN_DSP_REQ_MASK |
+                       CRU_SOFTRST4_CON_RESETN_DSP_EXTCORE_REQ_MASK;
+    int value = READ_BIT(CRU->CRU_SOFTRST_CON[4], setMask);
+
+    /* value 0 means the dsp already be reseted and reasserted reset*/
+    if (value == 0) {
+        dsp->resetFlag = DSP_RESET_MODE_NOT_RESET;
+    }
+#endif
 
     /* Deassert reset */
     HAL_DSP_Enable(dsp, 0);
@@ -330,16 +384,36 @@ HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr)
               CRU_SOFTRST_CON04_ARESETN_HIFI3_NIU_MASK;
     WRITE_REG_MASK_WE(CRU->CRU_SOFTRST_CON[4], setMask, setMask);
 #elif (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
-    if (dsp->resetFlag == 0) {
+    if (dsp->resetFlag == DSP_RESET_MODE_RESET_ALL_CLK) {
         setMask = CRU_CRU_SOFTRST_CON00_DRESETN_DSP_MASK |
                   CRU_CRU_SOFTRST_CON00_BRESETN_DSP_MASK |
                   CRU_CRU_SOFTRST_CON00_ARESETN_DSP_NIU_MASK;
-        dsp->resetFlag = 1;
+        dsp->resetFlag = DSP_RESET_MODE_RESET_PART_CLK;
     } else {
         setMask = CRU_CRU_SOFTRST_CON00_DRESETN_DSP_MASK |
                   CRU_CRU_SOFTRST_CON00_BRESETN_DSP_MASK;
     }
     WRITE_REG_MASK_WE(CRU->CRU_SOFTRST_CON[0], setMask, setMask);
+#elif defined(RKMCU_KOALA)
+    /*
+     * dsp->resetFlag == DSP_RESET_MODE_NOT_RESET means the
+     * m3 is using the DTCM(the address is 0x30240000U ~ 0x3027ffffU) of dsp,
+     * so do not reset dsp here.
+     */
+    if (dsp->resetFlag != DSP_RESET_MODE_NOT_RESET) {
+        if (dsp->resetFlag == DSP_RESET_MODE_RESET_ALL_CLK) {
+            setMask = CRU_SOFTRST4_CON_ARESETN_DSP_NOC_REQ_MASK |
+                      CRU_SOFTRST4_CON_RESETN_DSP_REQ_MASK |
+                      CRU_SOFTRST4_CON_RESETN_DSP_EXTCORE_REQ_MASK;
+            dsp->resetFlag = DSP_RESET_MODE_RESET_PART_CLK;
+        } else {
+            setMask = CRU_SOFTRST4_CON_RESETN_DSP_REQ_MASK |
+                      CRU_SOFTRST4_CON_RESETN_DSP_EXTCORE_REQ_MASK;
+        }
+
+        // reset dsp
+        WRITE_REG_MASK_WE(CRU->CRU_SOFTRST_CON[4], setMask, setMask);
+    }
 #endif
 
     if (altAddr) {
@@ -349,7 +423,7 @@ HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr)
     }
 
     /* Deassert reset */
-#if defined(RKMCU_RK2206)
+#if (defined(RKMCU_RK2206) || defined(RKMCU_KOALA))
     WRITE_REG_MASK_WE(CRU->CRU_SOFTRST_CON[4], setMask, 0);
 #elif (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
     WRITE_REG_MASK_WE(CRU->CRU_SOFTRST_CON[0], setMask, 0);

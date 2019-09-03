@@ -102,6 +102,11 @@ typedef enum
 #define NVIC_PERIPH_IRQ_NUM MAX_IRQn
 #define NVIC_PERIPH_IRQ_OFFSET 16
 
+#define MAILBOX0_AP_IRQ0 MAILBOX0_AP_IRQn
+#define MAILBOX0_AP_IRQ1 MAILBOX0_AP_IRQn
+#define MAILBOX0_AP_IRQ2 MAILBOX0_AP_IRQn
+#define MAILBOX0_AP_IRQ3 MAILBOX0_AP_IRQn
+
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
 /* ================================================================================ */
