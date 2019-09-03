@@ -156,7 +156,7 @@ void HAL_TouchKey_ClearIntPos(uint32_t irq, struct TOUCH_SENSOR_REG *touchkey)
 {
     HAL_ASSERT(IS_TOUCH_SENSOR_INSTANCE(touchkey));
 
-    touchkey->CH_IRQ_CLEAR[0] = HAL_BIT(irq);
+    touchkey->CH_IRQ_CLEAR[0] = irq;
 }
 
 /**
@@ -168,7 +168,7 @@ void HAL_TouchKey_ClearIntNeg(uint32_t irq, struct TOUCH_SENSOR_REG *touchkey)
 {
     HAL_ASSERT(IS_TOUCH_SENSOR_INSTANCE(touchkey));
 
-    touchkey->CH_IRQ_CLEAR[1] = HAL_BIT(irq);
+    touchkey->CH_IRQ_CLEAR[1] = irq;
 }
 
 /**
