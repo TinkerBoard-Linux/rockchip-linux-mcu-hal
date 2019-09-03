@@ -382,6 +382,7 @@ HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad)
  */
 HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t kbytes)
 {
+#ifdef VAD_AUX_CONTROL_OFFSET
     struct VAD_REG *reg = vad->pReg;
 
     MODIFY_REG(reg->AUX_CONTROL, DATA_TRANS_KBYTE_THD_MASK,
@@ -390,6 +391,7 @@ HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t kbytes)
                DATA_TRANS_TRIG_INT_EN);
     MODIFY_REG(reg->INT, VAD_DATA_TRANS_INT_EN_MASK,
                VAD_DATA_TRANS_INT_EN);
+#endif
 
     return HAL_OK;
 }
@@ -402,6 +404,7 @@ HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t kbytes)
  */
 HAL_Status HAL_VAD_EnableBusMode(struct HAL_VAD_DEV *vad, uint8_t en)
 {
+#ifdef VAD_AUX_CONTROL_OFFSET
     struct VAD_REG *reg = vad->pReg;
 
     if (en)
@@ -410,6 +413,7 @@ HAL_Status HAL_VAD_EnableBusMode(struct HAL_VAD_DEV *vad, uint8_t en)
     else
         MODIFY_REG(reg->AUX_CONTROL, RAM_ITF_EN_MASK | BUS_WRITE_EN_MASK,
                    RAM_ITF_EN | BUS_WRITE_DIS);
+#endif
 
     return HAL_OK;
 }

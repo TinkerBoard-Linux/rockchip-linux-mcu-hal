@@ -7409,6 +7409,7 @@ struct HYPERBUS_REG {
 #define I2STDM_VERSION_I2S_VERSION_MASK                       (0xFFFFFFFFU << I2STDM_VERSION_I2S_VERSION_SHIFT)               /* 0xFFFFFFFF */
 /******************************************VAD*******************************************/
 /* CONTROL */
+#define VAD_CONTROL_OFFSET                                 (0x0)
 #define VAD_CONTROL_VAD_EN_SHIFT                           (0U)
 #define VAD_CONTROL_VAD_EN_MASK                            (0x1U << VAD_CONTROL_VAD_EN_SHIFT)                           /* 0x00000001 */
 #define VAD_CONTROL_SOURCE_SELECT_SHIFT                    (1U)
@@ -7434,9 +7435,11 @@ struct HYPERBUS_REG {
 #define VAD_CONTROL_VAD_DET_CHANNEL_SHIFT                  (29U)
 #define VAD_CONTROL_VAD_DET_CHANNEL_MASK                   (0x7U << VAD_CONTROL_VAD_DET_CHANNEL_SHIFT)                  /* 0xE0000000 */
 /* VS_ADDR */
+#define VAD_VS_ADDR_OFFSET                                 (0x4)
 #define VAD_VS_ADDR_VS_ADDR_SHIFT                          (0U)
 #define VAD_VS_ADDR_VS_ADDR_MASK                           (0xFFFFFFFFU << VAD_VS_ADDR_VS_ADDR_SHIFT)                   /* 0xFFFFFFFF */
 /* TIMEOUT */
+#define VAD_TIMEOUT_OFFSET                                 (0x4C)
 #define VAD_TIMEOUT_IDLE_TIMEOUT_THD_SHIFT                 (0U)
 #define VAD_TIMEOUT_IDLE_TIMEOUT_THD_MASK                  (0xFFFFFU << VAD_TIMEOUT_IDLE_TIMEOUT_THD_SHIFT)             /* 0x000FFFFF */
 #define VAD_TIMEOUT_WORK_TIMEOUT_THD_SHIFT                 (20U)
@@ -7446,15 +7449,19 @@ struct HYPERBUS_REG {
 #define VAD_TIMEOUT_WORK_TIMEOUT_EN_SHIFT                  (31U)
 #define VAD_TIMEOUT_WORK_TIMEOUT_EN_MASK                   (0x1U << VAD_TIMEOUT_WORK_TIMEOUT_EN_SHIFT)                  /* 0x80000000 */
 /* RAM_START_ADDR */
+#define VAD_RAM_START_ADDR_OFFSET                          (0x50)
 #define VAD_RAM_START_ADDR_RAM_START_ADDR_SHIFT            (0U)
 #define VAD_RAM_START_ADDR_RAM_START_ADDR_MASK             (0xFFFFFFFFU << VAD_RAM_START_ADDR_RAM_START_ADDR_SHIFT)     /* 0xFFFFFFFF */
 /* RAM_END_ADDR */
+#define VAD_RAM_END_ADDR_OFFSET                            (0x54)
 #define VAD_RAM_END_ADDR_RAM_END_ADDR_SHIFT                (0U)
 #define VAD_RAM_END_ADDR_RAM_END_ADDR_MASK                 (0xFFFFFFFFU << VAD_RAM_END_ADDR_RAM_END_ADDR_SHIFT)         /* 0xFFFFFFFF */
 /* RAM_CUR_ADDR */
+#define VAD_RAM_CUR_ADDR_OFFSET                            (0x58)
 #define VAD_RAM_CUR_ADDR_RAM_CUR_ADDR_SHIFT                (0U)
 #define VAD_RAM_CUR_ADDR_RAM_CUR_ADDR_MASK                 (0xFFFFFFFFU << VAD_RAM_CUR_ADDR_RAM_CUR_ADDR_SHIFT)         /* 0xFFFFFFFF */
 /* DET_CON0 */
+#define VAD_DET_CON0_OFFSET                                (0x5C)
 #define VAD_DET_CON0_GAIN_SHIFT                            (0U)
 #define VAD_DET_CON0_GAIN_MASK                             (0xFFFU << VAD_DET_CON0_GAIN_SHIFT)                          /* 0x00000FFF */
 #define VAD_DET_CON0_NOISE_LEVEL_SHIFT                     (12U)
@@ -7466,6 +7473,7 @@ struct HYPERBUS_REG {
 #define VAD_DET_CON0_VAD_THD_MODE_SHIFT                    (28U)
 #define VAD_DET_CON0_VAD_THD_MODE_MASK                     (0x3U << VAD_DET_CON0_VAD_THD_MODE_SHIFT)                    /* 0x30000000 */
 /* DET_CON1 */
+#define VAD_DET_CON1_OFFSET                                (0x60)
 #define VAD_DET_CON1_SOUND_THD_SHIFT                       (0U)
 #define VAD_DET_CON1_SOUND_THD_MASK                        (0xFFFFU << VAD_DET_CON1_SOUND_THD_SHIFT)                    /* 0x0000FFFF */
 #define VAD_DET_CON1_NOISE_SAMPLE_NUM_SHIFT                (16U)
@@ -7479,6 +7487,7 @@ struct HYPERBUS_REG {
 #define VAD_DET_CON1_MIN_NOISE_FIND_MODE_SHIFT             (30U)
 #define VAD_DET_CON1_MIN_NOISE_FIND_MODE_MASK              (0x1U << VAD_DET_CON1_MIN_NOISE_FIND_MODE_SHIFT)             /* 0x40000000 */
 /* DET_CON2 */
+#define VAD_DET_CON2_OFFSET                                (0x64)
 #define VAD_DET_CON2_NOISE_FRM_NUM_SHIFT                   (0U)
 #define VAD_DET_CON2_NOISE_FRM_NUM_MASK                    (0x7FU << VAD_DET_CON2_NOISE_FRM_NUM_SHIFT)                  /* 0x0000007F */
 #define VAD_DET_CON2_NOISE_ALPHA_SHIFT                     (8U)
@@ -7486,21 +7495,25 @@ struct HYPERBUS_REG {
 #define VAD_DET_CON2_IIR_ANUM_0_SHIFT                      (16U)
 #define VAD_DET_CON2_IIR_ANUM_0_MASK                       (0xFFFFU << VAD_DET_CON2_IIR_ANUM_0_SHIFT)                   /* 0xFFFF0000 */
 /* DET_CON3 */
+#define VAD_DET_CON3_OFFSET                                (0x68)
 #define VAD_DET_CON3_IIR_ANUM_1_SHIFT                      (0U)
 #define VAD_DET_CON3_IIR_ANUM_1_MASK                       (0xFFFFU << VAD_DET_CON3_IIR_ANUM_1_SHIFT)                   /* 0x0000FFFF */
 #define VAD_DET_CON3_IIR_ANUM_2_SHIFT                      (16U)
 #define VAD_DET_CON3_IIR_ANUM_2_MASK                       (0xFFFFU << VAD_DET_CON3_IIR_ANUM_2_SHIFT)                   /* 0xFFFF0000 */
 /* DET_CON4 */
+#define VAD_DET_CON4_OFFSET                                (0x6C)
 #define VAD_DET_CON4_IIR_ADEN_1_SHIFT                      (0U)
 #define VAD_DET_CON4_IIR_ADEN_1_MASK                       (0xFFFFU << VAD_DET_CON4_IIR_ADEN_1_SHIFT)                   /* 0x0000FFFF */
 #define VAD_DET_CON4_IIR_ADEN_2_SHIFT                      (16U)
 #define VAD_DET_CON4_IIR_ADEN_2_MASK                       (0xFFFFU << VAD_DET_CON4_IIR_ADEN_2_SHIFT)                   /* 0xFFFF0000 */
 /* DET_CON5 */
+#define VAD_DET_CON5_OFFSET                                (0x70)
 #define VAD_DET_CON5_NOISE_ABS_SHIFT                       (0U)
 #define VAD_DET_CON5_NOISE_ABS_MASK                        (0xFFFFU << VAD_DET_CON5_NOISE_ABS_SHIFT)                    /* 0x0000FFFF */
 #define VAD_DET_CON5_IIR_RESULT_SHIFT                      (16U)
 #define VAD_DET_CON5_IIR_RESULT_MASK                       (0xFFFFU << VAD_DET_CON5_IIR_RESULT_SHIFT)                   /* 0xFFFF0000 */
 /* INT */
+#define VAD_INT_OFFSET                                     (0x74)
 #define VAD_INT_VAD_DET_INT_EN_SHIFT                       (0U)
 #define VAD_INT_VAD_DET_INT_EN_MASK                        (0x1U << VAD_INT_VAD_DET_INT_EN_SHIFT)                       /* 0x00000001 */
 #define VAD_INT_ERROR_INT_EN_SHIFT                         (1U)
@@ -7528,6 +7541,7 @@ struct HYPERBUS_REG {
 #define VAD_INT_RAMP_LOOP_FLAG_BUS_SHIFT                   (12U)
 #define VAD_INT_RAMP_LOOP_FLAG_BUS_MASK                    (0x1U << VAD_INT_RAMP_LOOP_FLAG_BUS_SHIFT)                   /* 0x00001000 */
 /* AUX_CON0 */
+#define VAD_AUX_CON0_OFFSET                                (0x78)
 #define VAD_AUX_CON0_BUS_WRITE_EN_SHIFT                    (0U)
 #define VAD_AUX_CON0_BUS_WRITE_EN_MASK                     (0x1U << VAD_AUX_CON0_BUS_WRITE_EN_SHIFT)                    /* 0x00000001 */
 #define VAD_AUX_CON0_DIS_RAM_ITF_SHIFT                     (1U)
@@ -7549,26 +7563,33 @@ struct HYPERBUS_REG {
 #define VAD_AUX_CON0_SAMPLE_CNT_EN_SHIFT                   (29U)
 #define VAD_AUX_CON0_SAMPLE_CNT_EN_MASK                    (0x1U << VAD_AUX_CON0_SAMPLE_CNT_EN_SHIFT)                   /* 0x20000000 */
 /* SAMPLE_CNT */
+#define VAD_SAMPLE_CNT_OFFSET                              (0x7C)
 #define VAD_SAMPLE_CNT_SAMPLE_CNT_SHIFT                    (0U)
 #define VAD_SAMPLE_CNT_SAMPLE_CNT_MASK                     (0xFFFFFFFFU << VAD_SAMPLE_CNT_SAMPLE_CNT_SHIFT)             /* 0xFFFFFFFF */
 /* RAM_START_ADDR_BUS */
+#define VAD_RAM_START_ADDR_BUS_OFFSET                      (0x80)
 #define VAD_RAM_START_ADDR_BUS_RAM_START_ADDR_BUS_SHIFT    (0U)
 #define VAD_RAM_START_ADDR_BUS_RAM_START_ADDR_BUS_MASK     (0xFFFFFFFFU << VAD_RAM_START_ADDR_BUS_RAM_START_ADDR_BUS_SHIFT) /* 0xFFFFFFFF */
 /* RAM_END_ADDR_BUS */
+#define VAD_RAM_END_ADDR_BUS_OFFSET                        (0x84)
 #define VAD_RAM_END_ADDR_BUS_RAM_BEGIN_ADDR_BUS_SHIFT      (0U)
 #define VAD_RAM_END_ADDR_BUS_RAM_BEGIN_ADDR_BUS_MASK       (0xFFFFFFFFU << VAD_RAM_END_ADDR_BUS_RAM_BEGIN_ADDR_BUS_SHIFT) /* 0xFFFFFFFF */
 /* RAM_CUR_ADDR_BUS */
+#define VAD_RAM_CUR_ADDR_BUS_OFFSET                        (0x88)
 #define VAD_RAM_CUR_ADDR_BUS_RAM_CUR_ADDR_BUS_SHIFT        (0U)
 #define VAD_RAM_CUR_ADDR_BUS_RAM_CUR_ADDR_BUS_MASK         (0xFFFFFFFFU << VAD_RAM_CUR_ADDR_BUS_RAM_CUR_ADDR_BUS_SHIFT) /* 0xFFFFFFFF */
 /* AUX_CON1 */
+#define VAD_AUX_CON1_OFFSET                                (0x8C)
 #define VAD_AUX_CON1_DATA_TRANS_WORD_THD_SHIFT             (0U)
 #define VAD_AUX_CON1_DATA_TRANS_WORD_THD_MASK              (0xFFFFU << VAD_AUX_CON1_DATA_TRANS_WORD_THD_SHIFT)          /* 0x0000FFFF */
 #define VAD_AUX_CON1_DATA_TRANS_INT_MODE_SEL_SHIFT         (16U)
 #define VAD_AUX_CON1_DATA_TRANS_INT_MODE_SEL_MASK          (0x1U << VAD_AUX_CON1_DATA_TRANS_INT_MODE_SEL_SHIFT)         /* 0x00010000 */
 /* NOISE_FIRST_DATA */
+#define VAD_NOISE_FIRST_DATA_OFFSET                        (0x100)
 #define VAD_NOISE_FIRST_DATA_NOISE_FIRST_DATA_SHIFT        (0U)
 #define VAD_NOISE_FIRST_DATA_NOISE_FIRST_DATA_MASK         (0xFFFFU << VAD_NOISE_FIRST_DATA_NOISE_FIRST_DATA_SHIFT)     /* 0x0000FFFF */
 /* NOISE_LAST_DATA */
+#define VAD_NOISE_LAST_DATA_OFFSET                         (0x2FC)
 #define VAD_NOISE_LAST_DATA_NOISE_LAST_DATA_SHIFT          (0U)
 #define VAD_NOISE_LAST_DATA_NOISE_LAST_DATA_MASK           (0xFFFFU << VAD_NOISE_LAST_DATA_NOISE_LAST_DATA_SHIFT)       /* 0x0000FFFF */
 /***************************************LPW_SYSBUS***************************************/
