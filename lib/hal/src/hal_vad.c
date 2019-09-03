@@ -24,6 +24,48 @@
 
 /********************* Private MACRO Definition ******************************/
 
+/* CONTROL */
+#define VAD_CONTROL_VAD_DET_CHNL(x)         ((x) << VAD_CONTROL_VAD_DET_CHANNEL_SHIFT)
+#define VAD_CONTROL_VOICE_H16B              (0x0U << VAD_CONTROL_VOICE_24BIT_SAT_SHIFT)
+#define VAD_CONTROL_VOICE_SAT_24TO16        (0x1U << VAD_CONTROL_VOICE_24BIT_SAT_SHIFT)
+#define VAD_CONTROL_VOICE_24BIT_ALIGN_8_31B (0x0U << VAD_CONTROL_VOICE_24BIT_ALIGN_MODE_SHIFT)
+#define VAD_CONTROL_VOICE_24BIT_ALIGN_0_23B (0x1U << VAD_CONTROL_VOICE_24BIT_ALIGN_MODE_SHIFT)
+#define VAD_CONTROL_VOICE_CHNL_16B          (0x0U << VAD_CONTROL_VOICE_CHANNEL_BITWIDTH_SHIFT)
+#define VAD_CONTROL_VOICE_CHNL_24B          (0x1U << VAD_CONTROL_VOICE_CHANNEL_BITWIDTH_SHIFT)
+#define VAD_CONTROL_VOICE_CHNL_NUM(x)       ((x - 1) << VAD_CONTROL_VOICE_CHANNEL_NUM_SHIFT)
+#define VAD_CONTROL_VAD_MODE(x)             ((x) << VAD_CONTROL_VAD_MODE_SHIFT)
+#define VAD_CONTROL_SRC_ADDR_MODE_INC       (0x0U << VAD_CONTROL_SOURCE_FIXADDR_EN_SHIFT)
+#define VAD_CONTROL_SRC_ADDR_MODE_FIXED     (0x1U << VAD_CONTROL_SOURCE_FIXADDR_EN_SHIFT)
+#define VAD_CONTROL_INCR_BURST_LEN(x)       ((x - 1) << VAD_CONTROL_INCR_LENGTH_SHIFT)
+#define VAD_CONTROL_SRC_BURST_NUM(x)        ((x - 1) << VAD_CONTROL_SOURCE_BURST_NUM_SHIFT)
+#define VAD_CONTROL_SRC_BURST_SIGNLE        (0x0U << VAD_CONTROL_SOURCE_BURST_SHIFT)
+#define VAD_CONTROL_SRC_BURST_INCR          (0x1U << VAD_CONTROL_SOURCE_BURST_SHIFT)
+#define VAD_CONTROL_SRC_BURST_INCR4         (0x3U << VAD_CONTROL_SOURCE_BURST_SHIFT)
+#define VAD_CONTROL_SRC_BURST_INCR8         (0x5U << VAD_CONTROL_SOURCE_BURST_SHIFT)
+#define VAD_CONTROL_SRC_BURST_INCR16        (0x7U << VAD_CONTROL_SOURCE_BURST_SHIFT)
+#define VAD_CONTROL_SRC_SEL(x)              ((x) << VAD_CONTROL_SOURCE_SELECT_SHIFT)
+#define VAD_CONTROL_VAD_EN                  (0x1U << VAD_CONTROL_VAD_EN_SHIFT)
+#define VAD_CONTROL_VAD_DIS                 (0x0U << VAD_CONTROL_VAD_EN_SHIFT)
+/* INT */
+#define VAD_INT_VAD_DATA_TRANS_INT_EN (0x1U << VAD_INT_VAD_DATA_TRANS_INT_EN_SHIFT)
+#define VAD_INT_ERROR_INT_EN          (0x1U << VAD_INT_ERROR_INT_EN_SHIFT)
+#define VAD_INT_VAD_DET_INT_EN        (0x1U << VAD_INT_VAD_DET_INT_EN_SHIFT)
+/* AUX_CON0 */
+#ifdef VAD_AUX_CON0_OFFSET
+#define VAD_AUX_CON0_BUS_WRITE_EN            (0x1U << VAD_AUX_CON0_BUS_WRITE_EN_SHIFT)
+#define VAD_AUX_CON0_BUS_WRITE_DIS           (0x0U << VAD_AUX_CON0_BUS_WRITE_EN_SHIFT)
+#define VAD_AUX_CON0_RAM_ITF_EN              (0x0U << VAD_AUX_CON0_DIS_RAM_ITF_SHIFT)
+#define VAD_AUX_CON0_RAM_ITF_DIS             (0x1U << VAD_AUX_CON0_DIS_RAM_ITF_SHIFT)
+#define VAD_AUX_CON0_DATA_TRANS_TRIG_INT_EN  (0x1U << VAD_AUX_CON0_DATA_TRANS_TRIG_INT_EN_SHIFT)
+#define VAD_AUX_CON0_DATA_TRANS_TRIG_INT_DIS (0x0U << VAD_AUX_CON0_DATA_TRANS_TRIG_INT_EN_SHIFT)
+#endif
+/* AUX_CON1 */
+#ifdef VAD_AUX_CON1_OFFSET
+#define VAD_AUX_CON1_DATA_TRANS_WORD_THD(x)    ((x - 1) << VAD_AUX_CON1_DATA_TRANS_WORD_THD_SHIFT)
+#define VAD_AUX_CON1_DATA_TRANS_INT_MODE_KBYTE (0x0U << VAD_AUX_CON1_DATA_TRANS_INT_MODE_SEL_SHIFT)
+#define VAD_AUX_CON1_DATA_TRANS_INT_MODE_WORD  (0x1U << VAD_AUX_CON1_DATA_TRANS_INT_MODE_SEL_SHIFT)
+#endif
+
 /********************* Private Structure Definition **************************/
 
 /** audio source index : address mapping */
@@ -128,7 +170,7 @@ HAL_Status HAL_VAD_Init(struct HAL_VAD_DEV *vad)
 
     HAL_CRU_ClkEnable(vad->hclk);
 
-    vad->mode = STORE_DATA_ALL;
+    vad->mode = VAD_STOREMODE_AFTER_EN;
     vad->audioDetChnl = 0;
     vad->vswitch = 0;
 
@@ -136,12 +178,17 @@ HAL_Status HAL_VAD_Init(struct HAL_VAD_DEV *vad)
     WRITE_REG(reg->RAM_END_ADDR, vad->ramEndAddr);
     vad->vbuf.begin = vad->ramStartAddr;
     WRITE_REG(reg->VS_ADDR, vad->audioSrcAddr);
-    val = VAD_DET_CHNL(vad->audioDetChnl);
-    val |= AUDIO_SRC_SEL(vad->audioSrc);
-    val |= VAD_MODE(vad->mode);
-    val |= SRC_ADDR_MODE_INC | SRC_BURST_INCR;
-    mask = VAD_DET_CHNL_MASK | AUDIO_SRC_SEL_MASK |
-           VAD_MODE_MASK | SRC_ADDR_MODE_MASK | SRC_BURST_MASK;
+
+    val = VAD_CONTROL_VAD_DET_CHNL(vad->audioDetChnl);
+    val |= VAD_CONTROL_SRC_SEL(vad->audioSrc);
+    val |= VAD_CONTROL_VAD_MODE(vad->mode);
+    val |= VAD_CONTROL_SRC_ADDR_MODE_INC | VAD_CONTROL_SRC_BURST_INCR;
+
+    mask = VAD_CONTROL_VAD_DET_CHANNEL_MASK |
+           VAD_CONTROL_SOURCE_SELECT_MASK |
+           VAD_CONTROL_VAD_MODE_MASK |
+           VAD_CONTROL_SOURCE_FIXADDR_EN_MASK |
+           VAD_CONTROL_SOURCE_BURST_MASK;
 
     MODIFY_REG(reg->CONTROL, mask, val);
 
@@ -176,10 +223,10 @@ HAL_Status HAL_VAD_Start(struct HAL_VAD_DEV *vad)
     struct VAD_REG *reg = vad->pReg;
     uint32_t val, mask;
 
-    MODIFY_REG(reg->CONTROL, VAD_EN_MASK, VAD_EN);
+    MODIFY_REG(reg->CONTROL, VAD_CONTROL_VAD_EN_MASK, VAD_CONTROL_VAD_EN);
 
-    val = ERR_INT_EN | VAD_DET_INT_EN;
-    mask = ERR_INT_EN_MASK | VAD_DET_INT_EN_MASK;
+    val = VAD_INT_ERROR_INT_EN | VAD_INT_VAD_DET_INT_EN;
+    mask = VAD_INT_ERROR_INT_EN_MASK | VAD_INT_VAD_DET_INT_EN_MASK;
 
     MODIFY_REG(reg->INT, mask, val);
 
@@ -198,11 +245,11 @@ HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad)
     uint32_t val;
 
     val = READ_REG(reg->CONTROL);
-    if ((val & VAD_EN_MASK) == VAD_DISABLE)
+    if ((val & VAD_CONTROL_VAD_EN_MASK) == VAD_CONTROL_VAD_DIS)
         return 0;
-    MODIFY_REG(reg->CONTROL, VAD_EN_MASK, VAD_DISABLE);
+    MODIFY_REG(reg->CONTROL, VAD_CONTROL_VAD_EN_MASK, VAD_CONTROL_VAD_DIS);
     val = READ_REG(reg->CONTROL);
-    vad->h_16Bit = (val & AUDIO_24BIT_SAT_MASK) == AUDIO_H16B;
+    vad->h_16Bit = (val & VAD_CONTROL_VOICE_24BIT_SAT_MASK) == VAD_CONTROL_VOICE_H16B;
     val = READ_REG(reg->RAM_END_ADDR);
     vbuf->end = val + 0x8; /* ram_end_addr means the base of last entry */
     val = READ_REG(reg->INT);
@@ -242,11 +289,11 @@ HAL_Status HAL_VAD_Config(struct HAL_VAD_DEV *vad, struct AUDIO_PARAMS *params)
 
     switch (params->sampleBits) {
     case AUDIO_SAMPLEBITS_16:
-        val = AUDIO_CHNL_16B;
+        val = VAD_CONTROL_VOICE_CHNL_16B;
         vad->sampleBytes = 2;
         break;
     case AUDIO_SAMPLEBITS_32:
-        val = AUDIO_CHNL_24B;
+        val = VAD_CONTROL_VOICE_CHNL_24B;
         vad->sampleBytes = 4;
         break;
     default:
@@ -254,11 +301,13 @@ HAL_Status HAL_VAD_Config(struct HAL_VAD_DEV *vad, struct AUDIO_PARAMS *params)
         return HAL_INVAL;
     }
 
-    MODIFY_REG(reg->CONTROL, AUDIO_CHNL_BW_MASK, val);
+    MODIFY_REG(reg->CONTROL, VAD_CONTROL_VOICE_CHANNEL_BITWIDTH_MASK, val);
 
     channels = params->channels;
-    mask = AUDIO_CHNL_NUM_MASK | INCR_BURST_LEN_MASK;
-    val = AUDIO_CHNL_NUM(channels) | INCR_BURST_LEN(channels);
+    mask = VAD_CONTROL_VOICE_CHANNEL_NUM_MASK |
+           VAD_CONTROL_INCR_LENGTH_MASK;
+    val = VAD_CONTROL_VOICE_CHNL_NUM(channels) |
+          VAD_CONTROL_INCR_BURST_LEN(channels);
     vad->channels = channels;
     MODIFY_REG(reg->CONTROL, mask, val);
 
@@ -281,7 +330,8 @@ HAL_Status HAL_VAD_SetAudioSource(struct HAL_VAD_DEV *vad, uint32_t source)
     HAL_ASSERT(ret == HAL_OK);
 
     WRITE_REG(reg->VS_ADDR, vad->audioSrcAddr);
-    MODIFY_REG(reg->CONTROL, AUDIO_SRC_SEL_MASK, AUDIO_SRC_SEL(vad->audioSrc));
+    MODIFY_REG(reg->CONTROL, VAD_CONTROL_SOURCE_SELECT_MASK,
+               VAD_CONTROL_SRC_SEL(vad->audioSrc));
 
     return ret;
 }
@@ -289,15 +339,16 @@ HAL_Status HAL_VAD_SetAudioSource(struct HAL_VAD_DEV *vad, uint32_t source)
 /**
  * @brief  Set VAD work mode.
  * @param  vad: The handle of struct vad.
- * @param  mode: vad work mode, 0~2.
+ * @param  mode: vad store voice data mode.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_SetMode(struct HAL_VAD_DEV *vad, int mode)
+HAL_Status HAL_VAD_SetMode(struct HAL_VAD_DEV *vad, eVAD_storeMode mode)
 {
     struct VAD_REG *reg = vad->pReg;
 
     vad->mode = mode;
-    MODIFY_REG(reg->CONTROL, VAD_MODE_MASK, vad->mode << VAD_MODE_SHIFT);
+    MODIFY_REG(reg->CONTROL, VAD_CONTROL_VAD_MODE_MASK,
+               VAD_CONTROL_VAD_MODE(vad->mode));
 
     return HAL_OK;
 }
@@ -327,8 +378,8 @@ HAL_Status HAL_VAD_SetDetectChannel(struct HAL_VAD_DEV *vad, uint32_t detectChan
 
     vad->audioDetChnl = detectChannel;
 
-    MODIFY_REG(reg->CONTROL, VAD_DET_CHNL_MASK,
-               VAD_DET_CHNL(vad->audioDetChnl));
+    MODIFY_REG(reg->CONTROL, VAD_CONTROL_VAD_DET_CHANNEL_MASK,
+               VAD_CONTROL_VAD_DET_CHNL(vad->audioDetChnl));
 
     return HAL_OK;
 }
@@ -377,42 +428,65 @@ HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad)
 /**
  * @brief  enable periods data irq.
  * @param  vad: The handle of struct vad.
- * @param  kbytes: period size in units of kbytes.
+ * @param  words: period size in units of words(32 bits).
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t kbytes)
+HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t words)
 {
-#ifdef VAD_AUX_CONTROL_OFFSET
+#if defined(VAD_AUX_CON0_OFFSET) && defined(VAD_AUX_CON1_OFFSET)
     struct VAD_REG *reg = vad->pReg;
 
-    MODIFY_REG(reg->AUX_CONTROL, DATA_TRANS_KBYTE_THD_MASK,
-               DATA_TRANS_KBYTE_THD(kbytes));
-    MODIFY_REG(reg->AUX_CONTROL, DATA_TRANS_TRIG_INT_EN_MASK,
-               DATA_TRANS_TRIG_INT_EN);
-    MODIFY_REG(reg->INT, VAD_DATA_TRANS_INT_EN_MASK,
-               VAD_DATA_TRANS_INT_EN);
+    MODIFY_REG(reg->AUX_CON1,
+               VAD_AUX_CON1_DATA_TRANS_INT_MODE_SEL_MASK |
+               VAD_AUX_CON1_DATA_TRANS_WORD_THD_MASK,
+               VAD_AUX_CON1_DATA_TRANS_INT_MODE_WORD |
+               VAD_AUX_CON1_DATA_TRANS_WORD_THD(words));
+    MODIFY_REG(reg->AUX_CON0,
+               VAD_AUX_CON0_DATA_TRANS_TRIG_INT_EN_MASK,
+               VAD_AUX_CON0_DATA_TRANS_TRIG_INT_EN);
+    MODIFY_REG(reg->INT,
+               VAD_INT_VAD_DATA_TRANS_INT_EN_MASK,
+               VAD_INT_VAD_DATA_TRANS_INT_EN);
 #endif
 
     return HAL_OK;
 }
 
 /**
- * @brief  Enable store data through ahb bus or ram interface.
+ * @brief  Enable store data through ahb bus interface.
  * @param  vad: The handle of struct vad.
- * @param  en: enable flag.
  * @return HAL_Status
  */
-HAL_Status HAL_VAD_EnableBusMode(struct HAL_VAD_DEV *vad, uint8_t en)
+HAL_Status HAL_VAD_EnableBusMode(struct HAL_VAD_DEV *vad)
 {
-#ifdef VAD_AUX_CONTROL_OFFSET
+#if defined(VAD_AUX_CON0_OFFSET)
     struct VAD_REG *reg = vad->pReg;
 
-    if (en)
-        MODIFY_REG(reg->AUX_CONTROL, RAM_ITF_EN_MASK | BUS_WRITE_EN_MASK,
-                   RAM_ITF_DIS | BUS_WRITE_EN);
-    else
-        MODIFY_REG(reg->AUX_CONTROL, RAM_ITF_EN_MASK | BUS_WRITE_EN_MASK,
-                   RAM_ITF_EN | BUS_WRITE_DIS);
+    MODIFY_REG(reg->AUX_CON0,
+               VAD_AUX_CON0_DIS_RAM_ITF_MASK |
+               VAD_AUX_CON0_BUS_WRITE_EN_MASK,
+               VAD_AUX_CON0_RAM_ITF_DIS |
+               VAD_AUX_CON0_BUS_WRITE_EN);
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable store data through ahb bus interface.
+ * @param  vad: The handle of struct vad.
+ * @return HAL_Status
+ */
+HAL_Status HAL_VAD_DisableBusMode(struct HAL_VAD_DEV *vad)
+{
+#if defined(VAD_AUX_CON0_OFFSET)
+    struct VAD_REG *reg = vad->pReg;
+
+    MODIFY_REG(reg->AUX_CON0,
+               VAD_AUX_CON0_DIS_RAM_ITF_MASK |
+               VAD_AUX_CON0_BUS_WRITE_EN_MASK,
+               VAD_AUX_CON0_RAM_ITF_EN |
+               VAD_AUX_CON0_BUS_WRITE_DIS);
 #endif
 
     return HAL_OK;
