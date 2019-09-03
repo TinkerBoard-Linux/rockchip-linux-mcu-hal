@@ -83,11 +83,17 @@ typedef enum {
 } eVOP_MipiSwitchPath;
 
 struct CRTC_WIN_STATE {
-    bool winEn;
-    bool winUpdate;
-    uint8_t winId;
-    uint8_t zpos;
-    uint8_t format;
+    uint32_t winEn : 1;
+    uint32_t winUpdate : 1;
+    uint32_t winId : 3;
+    uint32_t zpos : 3;
+    uint32_t format : 6;
+    uint32_t alphaEn : 1;
+    uint32_t alphaMode : 1;
+    uint32_t globalAlphaValue : 8;
+    uint32_t alphaPreMul : 1;
+    uint32_t alphaSatMode : 1;
+
     uint32_t yrgbAddr;
     uint32_t cbcrAddr;
     uint32_t yrgbLength;
@@ -112,11 +118,6 @@ struct CRTC_WIN_STATE {
     uint16_t xLoopOffset;
     uint16_t yLoopOffset;
 
-    bool alphaEn;
-    uint8_t alphaMode;
-    uint8_t alphaPreMul;
-    uint8_t alphaSatMode;
-    uint8_t globalAlphaValue;
     uint32_t colorKey;
     uint32_t *lut;
 };
