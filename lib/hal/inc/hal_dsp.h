@@ -29,8 +29,6 @@
 
 #define DSP_TCM_SEL(a) (0x1 << a)
 
-/***************************** Structure Definition **************************/
-
 /**
  * enum DSP_TcmSel - dsp tcm select.
  */
@@ -45,6 +43,12 @@ typedef enum {
     DSP_DTCM7 = DSP_TCM_SEL(7),    /* 0x30270000 ~ 0x30280000 */
     DSP_ITCM  = DSP_TCM_SEL(8),    /* 0x30000000 ~ 0x30010000 */
 } eDSP_tcmSel;
+
+#define DSP_DTCM (DSP_DTCM0 | DSP_DTCM1 | DSP_DTCM2 | DSP_DTCM3 | \
+                  DSP_DTCM4 | DSP_DTCM5 | DSP_DTCM6 | DSP_DTCM7)
+#define DSP_TCM  (DSP_DTCM | DSP_ITCM)
+
+/***************************** Structure Definition **************************/
 
 /**
  * enum DSP_TcmMode - dsp memory work mode.
