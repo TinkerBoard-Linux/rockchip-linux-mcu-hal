@@ -4520,6 +4520,7 @@ typedef enum PD_Id {
 #define ACDCDIG_I2S_CLR_RXC_SHIFT                          (1U)
 #define ACDCDIG_I2S_CLR_RXC_MASK                           (0x1U << ACDCDIG_I2S_CLR_RXC_SHIFT)                          /* 0x00000002 */
 /* VERSION */
+#define ACDCDIG_VERSION_OFFSET                             (0x380)
 #define ACDCDIG_VERSION_VER_SHIFT                          (0U)
 #define ACDCDIG_VERSION_VER_MASK                           (0xFFU << ACDCDIG_VERSION_VER_SHIFT)                         /* 0x000000FF */
 
