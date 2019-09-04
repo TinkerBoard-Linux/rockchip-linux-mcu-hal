@@ -594,7 +594,7 @@ __STATIC_INLINE int PL330_Instr_DMAWFP(uint8_t dryRun, char *buf,
     return SZ_DMAWFP;
 }
 
-__STATIC_INLINE int _LDST_MemToMem(uint8_t dryRun, char *buf, int cyc)
+static int _LDST_MemToMem(uint8_t dryRun, char *buf, int cyc)
 {
     int off = 0;
 
@@ -606,8 +606,8 @@ __STATIC_INLINE int _LDST_MemToMem(uint8_t dryRun, char *buf, int cyc)
     return off;
 }
 
-__STATIC_INLINE int _LDST_DevToMem(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
-                                   char *buf, struct PL330_XFER_SPEC *pxs, int cyc)
+static int _LDST_DevToMem(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
+                          char *buf, struct PL330_XFER_SPEC *pxs, int cyc)
 {
     int off = 0;
     ePL330_COND cond = pl330->peripReqType;
@@ -622,8 +622,8 @@ __STATIC_INLINE int _LDST_DevToMem(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     return off;
 }
 
-__STATIC_INLINE int _LDST_MemToDev(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
-                                   char *buf, struct PL330_XFER_SPEC *pxs, int cyc)
+static int _LDST_MemToDev(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
+                          char *buf, struct PL330_XFER_SPEC *pxs, int cyc)
 {
     int off = 0;
     ePL330_COND cond = pl330->peripReqType;
@@ -638,8 +638,8 @@ __STATIC_INLINE int _LDST_MemToDev(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     return off;
 }
 
-__STATIC_INLINE int _Bursts(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
-                            char *buf, struct PL330_XFER_SPEC *pxs, int cyc)
+static int _Bursts(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
+                   char *buf, struct PL330_XFER_SPEC *pxs, int cyc)
 {
     int off = 0;
 
@@ -662,9 +662,9 @@ __STATIC_INLINE int _Bursts(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
 }
 
 /* Returns bytes consumed and updates bursts */
-__STATIC_INLINE int _Loop(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
-                          char *buf, unsigned long *bursts,
-                          struct PL330_XFER_SPEC *pxs)
+static int _Loop(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
+                 char *buf, unsigned long *bursts,
+                 struct PL330_XFER_SPEC *pxs)
 {
     int cyc, cycmax, szlp, szlpend, szbrst, off;
     uint32_t lcnt0, lcnt1, ljmp0, ljmp1;
@@ -728,8 +728,8 @@ __STATIC_INLINE int _Loop(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     return off;
 }
 
-__STATIC_INLINE int _Period(uint8_t dryRun, struct HAL_PL330_DEV *pl330, char *buf,
-                            unsigned long bursts, struct PL330_XFER_SPEC *pxs, int ev)
+static int _Period(uint8_t dryRun, struct HAL_PL330_DEV *pl330, char *buf,
+                   unsigned long bursts, struct PL330_XFER_SPEC *pxs, int ev)
 {
     unsigned int lcnt1, ljmp1;
     int cyc, off = 0;
@@ -785,9 +785,9 @@ __STATIC_INLINE int _Period(uint8_t dryRun, struct HAL_PL330_DEV *pl330, char *b
     return off;
 }
 
-__STATIC_INLINE int _Loop_Cyclic(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
-                                 char *buf, unsigned long bursts,
-                                 struct PL330_XFER_SPEC *pxs, int ev)
+static int _Loop_Cyclic(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
+                        char *buf, unsigned long bursts,
+                        struct PL330_XFER_SPEC *pxs, int ev)
 {
     int off, periods, residue, i;
     unsigned int lcnt0, ljmp0, ljmpfe;
@@ -828,8 +828,8 @@ __STATIC_INLINE int _Loop_Cyclic(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     return off;
 }
 
-__STATIC_INLINE int _Setup_Loops(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
-                                 char *buf, struct PL330_XFER_SPEC *pxs)
+static int _Setup_Loops(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
+                        char *buf, struct PL330_XFER_SPEC *pxs)
 {
     struct PL330_XFER *x = &pxs->desc->px;
     uint32_t ccr = pxs->ccr;
@@ -848,8 +848,8 @@ __STATIC_INLINE int _Setup_Loops(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     return off;
 }
 
-__STATIC_INLINE int _Setup_Xfer(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
-                                char *buf, struct PL330_XFER_SPEC *pxs)
+static int _Setup_Xfer(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
+                       char *buf, struct PL330_XFER_SPEC *pxs)
 {
     struct PL330_XFER *x = &pxs->desc->px;
     int off = 0;
@@ -879,8 +879,8 @@ __STATIC_INLINE int _Setup_Xfer(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     return off;
 }
 
-__STATIC_INLINE int _Setup_Xfer_Cyclic(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
-                                       char *buf, struct PL330_XFER_SPEC *pxs, int ev)
+static int _Setup_Xfer_Cyclic(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
+                              char *buf, struct PL330_XFER_SPEC *pxs, int ev)
 {
     struct PL330_XFER *x = &pxs->desc->px;
     uint32_t ccr = pxs->ccr;
@@ -935,7 +935,7 @@ __STATIC_INLINE uint32_t PL330_ToendianSwapSizeBits(uint32_t endianSwapSize)
  *
  * @return The burstSize bit encoding for the CCR.
  */
-__STATIC_INLINE uint32_t PL330_ToBurstSizeBits(uint32_t burstSize)
+static uint32_t PL330_ToBurstSizeBits(uint32_t burstSize)
 {
     switch (burstSize) {
     case 1:
@@ -975,7 +975,7 @@ __STATIC_INLINE uint32_t PL330_ToBurstSizeBits(uint32_t burstSize)
  *
  * @return The 32-bit CCR value.
  */
-__STATIC_INLINE uint32_t _Prepare_CCR(struct PL330_REQCFG *rqc)
+static uint32_t _Prepare_CCR(struct PL330_REQCFG *rqc)
 {
     uint32_t ccr = 0;
 
@@ -1008,8 +1008,8 @@ __STATIC_INLINE uint32_t _Prepare_CCR(struct PL330_REQCFG *rqc)
 }
 
 /* Call after fixing burst size */
-__STATIC_INLINE int getBurstLen(struct PL330_DESC *desc, struct HAL_PL330_DEV *pl330,
-                                uint32_t len)
+static int getBurstLen(struct PL330_DESC *desc, struct HAL_PL330_DEV *pl330,
+                       uint32_t len)
 {
     int burstLen;
 
