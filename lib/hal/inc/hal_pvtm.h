@@ -50,8 +50,8 @@ struct HAL_PVTM_DEV {
 
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_PVTM_GetFreqCnt(struct PVTM_REG *reg, uint32_t chn,
-                               uint32_t timeUs, uint32_t *val);
+HAL_Status HAL_PVTM_GetFreqCnt(ePVTM_ID id, uint32_t chn, uint32_t timeUs,
+                               uint32_t *val);
 
 #endif
 
