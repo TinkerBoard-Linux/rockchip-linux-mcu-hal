@@ -253,7 +253,7 @@ struct HAL_FSPI_HOST g_fspi0Dev =
 #endif
 
 #ifdef HAL_PVTM_MODULE_ENABLED
-static struct HAL_PVTM_INFO pvtmInfo[] =
+static const struct HAL_PVTM_INFO pvtmInfo[] =
 {
     /* core pvtm */
     {
