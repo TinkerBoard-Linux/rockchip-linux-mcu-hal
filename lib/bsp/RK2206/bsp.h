@@ -58,6 +58,10 @@ extern const struct HAL_TSADC_DEV g_tsadcDev;
 extern struct HAL_FSPI_HOST g_fspi0Dev;
 #endif
 
+#ifdef HAL_PVTM_MODULE_ENABLED
+extern const struct HAL_PVTM_DEV g_pvtmDev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
