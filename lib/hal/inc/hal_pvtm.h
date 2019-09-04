@@ -18,7 +18,35 @@
 
 /***************************** MACRO Definition ******************************/
 
+typedef enum {
+    PVTM_ID_CORE = 0,
+} ePVTM_ID;
+
 /***************************** Structure Definition **************************/
+
+struct HAL_PVTM_INFO {
+    __IO uint32_t *con0;
+    __IO uint32_t *con1;
+    __I uint32_t *sta0;
+    __I uint32_t *sta1;
+
+    ePVTM_ID pvtmId;
+    uint32_t clkGateID;
+
+    uint32_t startMask;
+    uint32_t startShift;
+    uint32_t enMask;
+    uint32_t enShift;
+    uint32_t selMask;
+    uint32_t selShift;
+    uint32_t doneMask;
+    uint32_t doneShift;
+};
+
+struct HAL_PVTM_DEV {
+    const struct HAL_PVTM_INFO *info;
+    uint8_t num;
+};
 
 /***************************** Function Declare ******************************/
 
