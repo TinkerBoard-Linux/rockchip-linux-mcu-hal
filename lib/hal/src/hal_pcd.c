@@ -720,7 +720,7 @@ HAL_Status HAL_PCD_EPOpen(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint16_t ep_m
     pEP->num = epAddr & 0x7F;
     pEP->isIn = (0x80 & epAddr) != 0;
     pEP->maxPacket = ep_mps;
-    pEP->type = epType;
+    pEP->type = epType & EP_TYPE_MSK;
 
     if (pEP->isIn) {
         /* Assign a Tx FIFO */
