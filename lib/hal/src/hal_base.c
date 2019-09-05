@@ -127,7 +127,7 @@ HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, uint32_t clkSource)
 
     SystemCoreClock = rate;   /* Update global SystemCoreClock */
 
-#ifdef __CORTEX_M
+#if defined(__CORTEX_M) && defined(HAL_SYSTICK_MODULE_ENABLED)
     HAL_ASSERT(IS_SYSTICK_SOURCE(clkSource));
     ret = HAL_SYSTICK_CLKSourceConfig(clkSource);
     if (ret == HAL_OK && clkSource == HAL_TICK_CLKSRC_EXT)
