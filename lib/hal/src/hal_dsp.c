@@ -226,7 +226,7 @@ HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
 {
     uint32_t sel;
 
-    HAL_ASSERT(!tcmSel);
+    HAL_ASSERT(tcmSel);
 
     /* Check itcm select */
     sel = tcmSel & DSP_ITCM;
