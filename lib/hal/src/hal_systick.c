@@ -33,8 +33,8 @@
 
  - Reset core rate by calling CRU module interface;
  - Update HAL global variable systemCoreClock by calling HAL_UpdateWithNewCoreRate();
- - Change systick clock source by calling HAL_SYSTICK_CLKSourceConfig();
- - Update systick reloader num in default frequency by calling
+ - Change SysTick clock source by calling HAL_SYSTICK_CLKSourceConfig();
+ - Update SysTick reloader num in default frequency by calling
     HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq())).
 
  @} */
@@ -59,7 +59,7 @@
  */
 
 /**
- * @brief  Init SysTick
+ * @brief  Init SysTick and enable SysTick.
  * @return HAL_Status: HAL_OK.
  * Reset SysTick to default setting.
  */
@@ -71,7 +71,7 @@ HAL_Status HAL_SYSTICK_Init(void)
     if (ret == HAL_OK)
         rate = PLL_INPUT_OSC_RATE;
 
-    HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq()));        /* Configure the SysTick to have interrupt in 1ms time basis */
+    HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq()));        /* Configure the SysTick to have interrupt in TickFreq time basis */
 
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
@@ -86,8 +86,8 @@ HAL_Status HAL_SYSTICK_Init(void)
  */
 
 /**
- * @brief  Config systick reload value.
- * @param  ticksNumb: systick reload value.
+ * @brief  Config SysTick reload value.
+ * @param  ticksNumb: SysTick reload value.
  * @return HAL_Status.
  */
 HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb)
@@ -97,7 +97,7 @@ HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb)
     }
 
     SysTick->LOAD = (uint32_t)(ticksNumb - 1UL);                      /* set reload register */
-    NVIC_SetPriority(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);  /* set Priority for Systick Interrupt */
+    NVIC_SetPriority(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);  /* set Priority for SysTick Interrupt */
     SysTick->VAL = 0UL;                                               /* Load the SysTick Counter Value */
     SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk |
                       SysTick_CTRL_ENABLE_Msk);                       /* Enable SysTick IRQ and SysTick Timer */
@@ -106,7 +106,7 @@ HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb)
 }
 
 /**
- * @brief  Config clock source type for Systick.
+ * @brief  Config clock source type for SysTick.
  * @param  clkSource: HAL_TICK_CLKSRC_CORE clock source is from core clk,
  *                    HAL_TICK_CLKSRC_EXT clock source is from external reference
  * @return HAL_OK if successful, HAL_INVAL if soc not support.

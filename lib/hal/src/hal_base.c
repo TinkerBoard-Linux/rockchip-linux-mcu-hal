@@ -14,17 +14,29 @@
 /** @defgroup HAL_BASE_How_To_Use How To Use
  *  @{
 
- The HAL_BASE driver can be used as follows:
+ HAL system support is including delay system, HAL tick system and global system clock,
 
-  - Initialize the HAL_BASE by calling HAL_Init():
-  - Get system time by calling HAL_GetTick();
-  - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs(), and HAL_CPUDelayUs();
-  - Update system with new core clock and new systick clock source by calling HAL_SystemCoreClockUpdate();
+ HAL system tick setting:
 
- Suggest:
+ - Attach HAL_IncTick() to system tick interrupt handler;
+ - Notify the HAL system the system's tick frequency by calling HAL_SetTickFreq() unless
+    it is the same as default value HAL_TICK_FREQ_1KHZ;
+ - If you need a more accurate delay system, specify SYS_TIMER in hal_conf.h.
 
-  - Blocking for a certain period of time to continuously query HW status, use HAL_GetTick()
-      to do timeout, this will be more accurate.
+ Init HAL system:
+
+ - Initialize the HAL system by calling HAL_Init():
+
+ Reset when SOC system is changed:
+
+ - Update system with new core clock and new SysTick clock source by calling HAL_SystemCoreClockUpdate();
+
+ APIs:
+
+ - Get system time by calling HAL_GetTick();
+ - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs(), and HAL_CPUDelayUs().
+ - Blocking for a certain period of time to continuously query HW status, use HAL_GetTick()
+ to do timeout, this will be more accurate.
 
  @} */
 
@@ -94,16 +106,12 @@ __STATIC_FORCEINLINE HAL_Status TimerDelayUs(uint32_t us)
 HAL_Status HAL_Init(void)
 {
 #ifdef __CORTEX_M
-
 #ifdef HAL_NVIC_MODULE_ENABLED
     /* Set Interrupt Group Priority */
     HAL_NVIC_Init();
 
     /* Set Interrupt Group Priority */
     HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_DEFAULT);
-#endif
-#ifdef HAL_SYSTICK_MODULE_ENABLED
-    HAL_SYSTICK_Init();
 #endif
 #endif
 
@@ -221,21 +229,8 @@ eHAL_tickFreq HAL_GetTickFreq(void)
  */
 __WEAK HAL_Status HAL_DelayMs(uint32_t ms)
 {
-#if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
     for (uint32_t i = 0; i < ms; i++)
         HAL_DelayUs(1000);
-#else
-    uint32_t startTick = HAL_GetTick();
-    uint32_t waitTick = ms;
-
-    /* Add a freq to guarantee minimum wait */
-    if (waitTick < HAL_MAX_DELAY) {
-        waitTick += (uint32_t)(uwTickFreq);
-    }
-
-    while ((HAL_GetTick() - startTick) < waitTick)
-        ;
-#endif
 
     return HAL_OK;
 }

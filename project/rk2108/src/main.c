@@ -113,6 +113,12 @@ void ClkInit(const struct CLK_DUMP *clkInits, int clkInitNum, bool clkDump)
     }
 }
 
+void HAL_TICK_IRQHandler(void)
+{
+    HAL_IncTick();
+    HAL_TIMER_ClrInt(TIMER4);
+}
+
 int main(void)
 {
     struct HAL_UART_CONFIG hal_uart_config = {
@@ -123,8 +129,20 @@ int main(void)
     };
 
     /* HAL BASE Init */
-    HAL_NVIC_SetIRQHandler(SysTick_IRQn, HAL_SYSTICK_IRQHandler);
     HAL_Init();
+
+    /* System tick init */
+#ifdef HAL_SYSTICK_MODULE_ENABLED
+    HAL_NVIC_SetIRQHandler(SysTick_IRQn, HAL_SYSTICK_IRQHandler);
+    HAL_SetTickFreq(HAL_TICK_FREQ_1KHZ);
+    HAL_SYSTICK_Init();
+#else
+    HAL_NVIC_ConfigExtIRQ(TIMER4_IRQn, (NVIC_IRQHandler)HAL_TICK_IRQHandler, NVIC_PRIORITYGROUP_DEFAULT, NVIC_PERIPH_PRIO_DEFAULT);
+    HAL_SetTickFreq(HAL_TICK_FREQ_1KHZ);
+    HAL_TIMER_Init(TIMER4, TIMER_FREE_RUNNING);
+    HAL_TIMER_SetCount(TIMER4, PLL_INPUT_OSC_RATE / (1000 / HAL_TICK_FREQ_1KHZ));
+    HAL_TIMER_Start_IT(TIMER4);
+#endif
 
     /* BSP Init */
     BSP_Init();

@@ -107,8 +107,14 @@ int main(void)
     };
 
     /* HAL BASE Init */
-    HAL_NVIC_SetIRQHandler(SysTick_IRQn, HAL_SYSTICK_IRQHandler);
     HAL_Init();
+
+    /* System tick init */
+#ifdef HAL_SYSTICK_MODULE_ENABLED
+    HAL_NVIC_SetIRQHandler(SysTick_IRQn, HAL_SYSTICK_IRQHandler);
+    HAL_SetTickFreq(HAL_TICK_FREQ_1KHZ);
+    HAL_SYSTICK_Init();
+#endif
 
     /* BSP Init */
     BSP_Init();
