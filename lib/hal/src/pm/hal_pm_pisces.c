@@ -274,11 +274,13 @@ uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 #endif
 
 #ifdef HAL_PM_SLEEP_MODULE_ENABLED
-int HAL_SYS_Suspend(uint32_t flag)
+int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 {
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
+    HAL_ASSERT(suspendInfo != NULL);
+
     HAL_NVIC_SuspendSave();
-    HAL_CPU_SuspendEnter(flag, SOC_SuspendEnter);
+    HAL_CPU_SuspendEnter(suspendInfo->suspendFlag, SOC_SuspendEnter);
     HAL_DCACHE_Enable();
     HAL_NVIC_ResumeRestore();
 #endif

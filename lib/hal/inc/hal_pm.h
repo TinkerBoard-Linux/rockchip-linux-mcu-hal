@@ -84,14 +84,26 @@ struct PM_RUNTIME_INFO {
     uint8_t bits[PM_RUNTIME_TYPE_END];
 };
 
+#ifdef HAL_PM_SLEEP_MODULE_ENABLED
+struct PM_SUSPEND_INFO {
+    union {
+        struct {
+            uint32_t uartChannel : 4;   /*!< bit:  0.. 3  uart debug channel num */
+            uint32_t uartValid : 1;     /*!< bit:      4  uart channel valid flag */
+            uint32_t _reserved : 27;    /*!< bit:  5..31  Reserved */
+        } flag;
+        uint32_t suspendFlag;
+    };
+};
+#endif
 /***************************** Function Declare ******************************/
 #ifdef HAL_PM_SLEEP_MODULE_ENABLED
 /**
  * @brief  it is the enterpoint for suspend invoked by a os's powermanager implement.
- * @param  flag: flag for controlling
+ * @param  suspendInfo: suspend information for controlling
  * @return HAL_Status
  */
-int HAL_SYS_Suspend(uint32_t flag);
+int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo);
 #endif
 
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
