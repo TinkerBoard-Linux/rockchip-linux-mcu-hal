@@ -1039,7 +1039,7 @@ struct TIMER_REG {
 #define TIMER_BASE          0xFF700000U /* TIMER base address */
 #define STIMER_BASE         0xFF710000U /* STIMER0-1 base address */
 #define WDT_BASE            0xFF720000U /* WDT base address */
-#define I2STDM0_BASE        0xFF7E0000U /* I2S0 base address */
+#define I2STDM0_BASE        0xFF7E0000U /* I2STDM0 base address */
 #define I2S1_BASE           0xFF7F0000U /* I2S1 base address */
 #define PDM0_BASE           0xFF800000U /* PDM base address */
 #define VAD_BASE            0xFF810000U /* VAD base address */

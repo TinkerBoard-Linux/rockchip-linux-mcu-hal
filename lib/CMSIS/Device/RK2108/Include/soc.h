@@ -1128,9 +1128,9 @@ struct USB_HOST_CH_REG {
 #define GPIO0_BASE          0x40D00000U /* GPIO0 base address */
 #define GPIO1_BASE          0x40D10000U /* GPIO1 base address */
 #define PDM0_BASE           0x41000000U /* PDM0 base address */
-#define I2S0_BASE           0x41010000U /* I2S0 base address */
+#define I2STDM0_BASE        0x41010000U /* I2STDM0 base address */
 #define VAD_BASE            0x41020000U /* VAD base address */
-#define I2S1_BASE           0x41030000U /* I2S1 base address */
+#define I2STDM1_BASE        0x41030000U /* I2STDM1 base address */
 #define VOP_BASE            0x41100000U /* VOP base address */
 #define CIF_BASE            0x41120000U /* CIF base address */
 #define AUDIOPWM_BASE       0x41200000U /* AUDIOPWM base address */
@@ -1176,9 +1176,9 @@ struct USB_HOST_CH_REG {
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define PDM0                ((struct PDM_REG *) PDM0_BASE)
-#define I2STDM0             ((struct I2STDM_REG *) I2S0_BASE)
+#define I2STDM0             ((struct I2STDM_REG *) I2STDM0_BASE)
 #define VAD                 ((struct VAD_REG *) VAD_BASE)
-#define I2STDM1             ((struct I2STDM_REG *) I2S1_BASE)
+#define I2STDM1             ((struct I2STDM_REG *) I2STDM1_BASE)
 #define VOP                 ((struct VOP_REG *) VOP_BASE)
 #define CIF                 ((struct CIF_REG *) CIF_BASE)
 #define ACDCDIG             ((struct ACDCDIG_REG *) ACDCDIG_BASE)

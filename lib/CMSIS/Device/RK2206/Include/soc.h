@@ -1363,8 +1363,8 @@ struct HYPERBUS_REG {
 #define PVTM_BASE           0x41080000U /* PVTM base address */
 #define TOUCH_SENSOR_BASE   0x41090000U /* TOUCH_SENSOR base address */
 #define TSADC_BASE          0x410A0000U /* TSADC base address */
-#define I2S0_BASE           0x41100000U /* I2S0 base address */
-#define I2S1_BASE           0x41110000U /* I2S1 base address */
+#define I2STDM0_BASE        0x41100000U /* I2STDM0 base address */
+#define I2STDM1_BASE        0x41110000U /* I2STDM1 base address */
 #define PDM0_BASE           0x41120000U /* PDM base address */
 #define VAD_BASE            0x41130000U /* VAD base address */
 #define LPW_SYSBUS_BASE     0x42000000U /* LPW_SYSBUS base address */
@@ -1422,8 +1422,8 @@ struct HYPERBUS_REG {
 #define PVTM                ((struct PVTM_REG *) PVTM_BASE)
 #define TOUCH_SENSOR        ((struct TOUCH_SENSOR_REG *) TOUCH_SENSOR_BASE)
 #define TSADC               ((struct TSADC_REG *) TSADC_BASE)
-#define I2STDM0             ((struct I2STDM_REG *) I2S0_BASE)
-#define I2STDM1             ((struct I2STDM_REG *) I2S1_BASE)
+#define I2STDM0             ((struct I2STDM_REG *) I2STDM0_BASE)
+#define I2STDM1             ((struct I2STDM_REG *) I2STDM1_BASE)
 #define PDM0                ((struct PDM_REG *) PDM0_BASE)
 #define VAD                 ((struct VAD_REG *) VAD_BASE)
 #define LPW_SYSBUS          ((struct LPW_SYSBUS_REG *) LPW_SYSBUS_BASE)
@@ -1465,7 +1465,7 @@ struct HYPERBUS_REG {
 #define IS_ICACHE_INSTANCE(instance) ((instance) == ICACHE)
 #define IS_DCACHE_INSTANCE(instance) ((instance) == DCACHE)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
-#define IS_I2S_INSTANCE(instance) (((instance) == I2STDM0) || ((instance) == I2STDM1))
+#define IS_I2STDM_INSTANCE(instance) (((instance) == I2STDM0) || ((instance) == I2STDM1))
 #define IS_PCD_INSTANCE(instance) ((instance) == USB)
 #define IS_HCD_INSTANCE(instance) ((instance) == USB)
 #define IS_HYPERBUS_INSTANCE(instance) ((instance) == HYPERBUS)

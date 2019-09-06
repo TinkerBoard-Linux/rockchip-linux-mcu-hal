@@ -650,8 +650,8 @@ struct CRU_REG {
 #define GPIO0_BASE          0x44320000U /* GPIO0 base address */
 #define PMU_BASE            0x44330000U /* PMU base address */
 #define I2C2_BASE           0x44350000U /* I2C2 base address */
-#define I2S_BASE            0x44420000U /* I2S base address */
-#define PDM_BASE            0x44440000U /* PDM base address */
+#define I2STDM0_BASE        0x44420000U /* I2STDM0 base address */
+#define PDM0_BASE           0x44440000U /* PDM0 base address */
 #define CRU_BASE            0x44500000U /* CRU base address */
 /****************************************************************************************/
 /*                                                                                      */
@@ -684,8 +684,8 @@ struct CRU_REG {
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define I2C2                ((struct I2C_REG *) I2C2_BASE)
-#define I2STDM              ((struct I2STDM_REG *) I2S_BASE)
-#define PDM                 ((struct PDM_REG *) PDM_BASE)
+#define I2STDM0             ((struct I2STDM_REG *) I2STDM0_BASE)
+#define PDM0                ((struct PDM_REG *) PDM0_BASE)
 #define CRU                 ((struct CRU_REG *) CRU_BASE)
 
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
@@ -697,8 +697,8 @@ struct CRU_REG {
 #define IS_FSPI_INSTANCE(instance) ((instance) == FSPI0)
 #define IS_INTC_INSTANCE(instance) ((instance) == INTC)
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
-#define IS_I2STDM_INSTANCE(instance) ((instance) == I2STDM)
-#define IS_PDM_INSTANCE(instance) ((instance) == PDM)
+#define IS_I2STDM_INSTANCE(instance) ((instance) == I2STDM0)
+#define IS_PDM_INSTANCE(instance) ((instance) == PDM0)
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1))
 #define IS_WDT_INSTANCE(instance) (((instance) == WDT0) || ((instance) == WDT1))
