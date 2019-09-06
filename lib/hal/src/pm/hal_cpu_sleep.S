@@ -15,6 +15,7 @@
 .global HAL_CPU_SuspendEnter
 .global HAL_CPU_ArchSuspend
 .global HAL_CPU_ArchResume
+.global HAL_CPU_DoResume
 
 .equ CPU_SUSPEND_SIZE, 4 * 6
 
@@ -58,7 +59,7 @@ HAL_CPU_SuspendEnter:
     stmfd sp !, {r4 - r12, lr}
     ldr r4, = CPU_SUSPEND_SIZE
      mov r5, sp
-    add r4, r4, #8
+    add r4, r4, #12
     sub sp, sp, r4
     stmfd sp !, {r0, r1}
     add r0, sp, #8

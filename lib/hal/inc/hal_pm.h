@@ -109,6 +109,7 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo);
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
 void HAL_CPU_ArchSuspend(uint32_t *ptr);
 void HAL_CPU_ArchResume(void);
+void HAL_CPU_DoResume(void);
 
 void HAL_NVIC_SuspendSave(void);
 void HAL_NVIC_ResumeRestore(void);

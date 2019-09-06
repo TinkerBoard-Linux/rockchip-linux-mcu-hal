@@ -82,11 +82,189 @@ static uint32_t PM_GetPllPostDivEven(uint32_t rateIn, uint32_t rateOut, uint32_t
 #endif
 
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
+
+static void SOC_GetWakeupStatus(struct PMU_REG *pPmu)
+{
+    HAL_DBG("\nwakeup source:\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_WAKEUP_PWRMODE_INT_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_GPIO_INT_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by gpio interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMEOUT_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by timeout\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_DSP_SFT_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by DSP software\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMER_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by timer interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_VAD_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by vad\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_WAKEUP_DSP_INT_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_GPIO_INT_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by gpio interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMEOUT_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by timeout\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_SFT_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by MCU software\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMER_STATUS_SHIFT))
+        HAL_DBG("\tauto power down state machine wakeup status by timer\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_VAD_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by vad\n");
+
+    pPmu->WAKEUP_STATUS = (1 << PMU_WAKEUP_STATUS_WAKEUP_PWRMODE_INT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_GPIO_INT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMEOUT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_DSP_SFT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMER_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_VAD_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_WAKEUP_DSP_INT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_GPIO_INT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMEOUT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_SFT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMER_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_VAD_STATUS_SHIFT);
+}
+
+static void SOC_FastBootConfig(struct GRF_REG *pGrf)
+{
+    pGrf->FAST_BOOT_ADDR = (uint32_t)HAL_CPU_DoResume;
+    pGrf->FAST_BOOT_EN = 1;
+}
+
+static void SOC_SleepModeInit(struct PMU_REG *pPmu)
+{
+    uint32_t mask = 0, value = 0;
+
+    mask = PMU_PWRMODE_CON_POWER_MODE_EN_MASK |
+           PMU_PWRMODE_CON_PLL_PD_EN_MASK |
+           PMU_PWRMODE_CON_LOGIC_PD_EN_MASK |
+           PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_MASK |
+           PMU_PWRMODE_CON_BYPASS_PLL_LOCK_MASK |
+           PMU_PWRMODE_CON_BYPASS_HF_EN_MASK |
+           PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_CFG_MASK |
+           PMU_PWRMODE_CON_SHRM_PD_EN_MASK |
+           PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_MASK;
+
+    value = (1 << PMU_PWRMODE_CON_POWER_MODE_EN_SHIFT) |
+            /*(1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT) |*/
+            (1 << PMU_PWRMODE_CON_PLL_PD_EN_SHIFT) |
+            (1 << PMU_PWRMODE_CON_LOGIC_PD_EN_SHIFT) |
+            (1 << PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_SHIFT) |
+            (1 << PMU_PWRMODE_CON_BYPASS_PLL_LOCK_SHIFT) |
+            /*(1 << PMU_PWRMODE_CON_BYPASS_HF_EN_SHIFT) |*/
+            (1 << PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_CFG_SHIFT) |
+            (1 << PMU_PWRMODE_CON_SHRM_PD_EN_SHIFT) |
+            (1 << PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_SHIFT);
+    pPmu->PWRMODE_CON = VAL_MASK_WE(mask, value);
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_LOGIC_PD_EN_SHIFT)) {
+        mask = PMU_BUS_CLR_CLR_LOGIC_MASK;
+        value = (1 << PMU_BUS_CLR_CLR_LOGIC_SHIFT);
+        pPmu->BUS_CLR |= VAL_MASK_WE(mask, value);
+    }
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_SHIFT)) {
+        mask = PMU_SHRM_CON1_PWRMODE_SHRM_PWRDWN_EN_MASK |
+               PMU_SHRM_CON1_PWRMODE_SHRM_RET2N_MASK;
+        value = (0xf << PMU_SHRM_CON1_PWRMODE_SHRM_PWRDWN_EN_SHIFT);
+        pPmu->SHRM_CON1 = VAL_MASK_WE(mask, value);
+
+        mask = PMU_BUS_CLR_CLR_SHRM_MASK;
+        value = (1 << PMU_BUS_CLR_CLR_SHRM_SHIFT);
+        pPmu->BUS_CLR |= VAL_MASK_WE(mask, value);
+    }
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_SHIFT)) {
+        mask = PMU_LDO_CON1_PWRMODE_LDOCORE_ADJ_MASK;
+        pPmu->LDO_CON[1] = VAL_MASK_WE(mask, 0x10);
+    }
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_PLL_PD_EN_SHIFT)) {
+        mask = PMU_PLL_CON_PLL_PD_CFG_MASK;
+        pPmu->PLL_CON = VAL_MASK_WE(mask, 0x05);
+    }
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT)) {
+        mask = PMU_SFT_CON_PMU_LF_MODE_CFG_MASK;
+        value = (1 << PMU_SFT_CON_PMU_LF_MODE_CFG_SHIFT);
+        pPmu->SFT_CON = VAL_MASK_WE(mask, value);
+    }
+}
+
+static void SOC_WakeupSourceConfig(struct PMU_REG *pPmu)
+{
+    uint32_t mask = 0, value = 0;
+
+    mask = PMU_WAKEUP_CFG6_GPIO_INT_EN_MASK |
+           PMU_WAKEUP_CFG6_TIMER_EN_MASK;
+    value = (1 << PMU_WAKEUP_CFG6_GPIO_INT_EN_SHIFT) |
+            (1 << PMU_WAKEUP_CFG6_TIMER_EN_SHIFT);
+    pPmu->WAKEUP_CFG6 = VAL_MASK_WE(mask, value);
+}
+
+static void SOC_SleepModeReinit(struct PMU_REG *pPmu)
+{
+    uint32_t mask = 0, value = 0;
+
+    mask = PMU_PWRMODE_CON_POWER_MODE_EN_MASK |
+           PMU_PWRMODE_CON_PLL_PD_EN_MASK |
+           PMU_PWRMODE_CON_LOGIC_PD_EN_MASK |
+           PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_MASK |
+           PMU_PWRMODE_CON_BYPASS_PLL_LOCK_MASK |
+           PMU_PWRMODE_CON_BYPASS_HF_EN_MASK |
+           PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_CFG_MASK |
+           PMU_PWRMODE_CON_SHRM_PD_EN_MASK |
+           PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_MASK;
+    pPmu->PWRMODE_CON = VAL_MASK_WE(mask, value);
+}
+
+static void SOC_PutChar(char c, struct UART_REG *pUart)
+{
+    if (pUart) {
+        pUart->THR = c;
+        while (pUart->USR & UART_USR_BUSY)
+            ;
+    }
+}
+
+static void SOC_UartSave(struct UART_REG *pUartSave, struct UART_REG *pUart)
+{
+    if (pUartSave && pUart) {
+        while (pUart->USR & UART_USR_BUSY)
+            ;
+        pUartSave->LCR = pUart->LCR;
+        pUartSave->LCR = pUart->LCR;
+        pUartSave->IER = pUart->IER;
+        pUartSave->MCR = pUart->MCR;
+        pUart->LCR = UART_LCR_DLAB;
+        pUartSave->DLL = pUart->DLL;
+        pUartSave->DLH = pUart->DLH;
+        pUart->LCR = pUartSave->LCR;
+    }
+}
+
+static void SOC_UartRestore(struct UART_REG *pUartSave, struct UART_REG *pUart)
+{
+    if (pUartSave && pUart) {
+        while (pUart->USR & UART_USR_BUSY)
+            ;
+        pUart->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
+        pUart->MCR = UART_MCR_LOOP;
+        pUart->LCR = UART_LCR_DLAB;
+        pUart->DLL = pUartSave->DLL;
+        pUart->DLH = pUartSave->DLH;
+        pUart->LCR = pUartSave->LCR;
+        pUart->IER = pUartSave->IER;
+        pUart->FCR = UART_FCR_ENABLE_FIFO;
+        pUart->MCR = pUartSave->MCR;
+    }
+}
+
 static int SOC_SuspendEnter(uint32_t flag)
 {
     HAL_DCACHE_CleanInvalidate();
-    HAL_DCACHE_Disable();
     __WFI();
+    HAL_CPU_DoResume();
 
     return HAL_OK;
 }
@@ -277,12 +455,53 @@ uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 {
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
+    struct PMU_REG *pPmu = PMU;
+    struct GRF_REG *pGrf = GRF;
+    struct UART_REG *pUart = NULL;
+    struct UART_REG pUartSave;
+
     HAL_ASSERT(suspendInfo != NULL);
 
+#ifdef HAL_SYSTICK_MODULE_ENABLED
+    SysTick->CTRL &= (~SysTick_CTRL_ENABLE_Msk);
+#endif
+
+#ifdef HAL_UART_MODULE_ENABLED
+    if (suspendInfo->flag.uartValid) {
+        if (suspendInfo->flag.uartChannel == 0)
+            pUart = UART0;
+        else if (suspendInfo->flag.uartChannel == 1)
+            pUart = UART1;
+    }
+#endif
+
+    SOC_PutChar('0', pUart);
+    SOC_SleepModeInit(pPmu);
+    SOC_FastBootConfig(pGrf);
+    SOC_PutChar('1', pUart);
+    SOC_WakeupSourceConfig(pPmu);
+    SOC_PutChar('2', pUart);
+    SOC_UartSave(&pUartSave, pUart);
+    SOC_PutChar('3', pUart);
     HAL_NVIC_SuspendSave();
+    SOC_PutChar('4', pUart);
     HAL_CPU_SuspendEnter(suspendInfo->suspendFlag, SOC_SuspendEnter);
+    SOC_UartRestore(&pUartSave, pUart);
+    SOC_PutChar('5', pUart);
     HAL_DCACHE_Enable();
+    HAL_ICACHE_Enable();
+    SOC_PutChar('4', pUart);
     HAL_NVIC_ResumeRestore();
+    SOC_PutChar('3', pUart);
+    SOC_SleepModeReinit(pPmu);
+    SOC_PutChar('2', pUart);
+#ifdef HAL_SYSTICK_MODULE_ENABLED
+    HAL_SYSTICK_Init();
+#endif
+    SOC_PutChar('1', pUart);
+    SOC_GetWakeupStatus(pPmu);
+    SOC_PutChar('0', pUart);
+    HAL_DBG("\n");
 #endif
 
     return HAL_OK;
