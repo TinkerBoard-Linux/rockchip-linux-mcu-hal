@@ -122,6 +122,11 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         }
     }
 
+    if (PM_INTF_REQUESTED(pdata) &
+        PM_RUNTIME_ID_TYPE_BIT_MSK(PM_RUNTIME_ID_SPI_APB)) {
+        return HAL_BIT(PM_RUNTIME_TYPE_INTF);
+    }
+
     if (PM_I2C_REQUESTED(pdata)) {
         return HAL_BIT(PM_RUNTIME_TYPE_I2C);
     }
@@ -149,7 +154,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
             VAL_MASK_WE(CRU_CRU_CLKSEL_CON02_SCLK_SHRM_DIV_MASK, 0);
 
         HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPD0_MASK));
-        HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPDSEL_SHIFT));
+        HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPDSEL_MASK));
 
         CRU->GPLL_CON[1] = VAL_MASK_WE(CRU_GPLL_CON1_PLLPD0_MASK,
                                        CRU_GPLL_CON1_PLLPD0_MASK);

@@ -23,10 +23,12 @@
 #define PM_RUNTIME_TYPE_TO_FIRST_ID(type) ((type) << PM_RUNTIME_TYPE_MUTI_SFT)
 #define PM_RUNTIME_ID_TO_TYPE(id)         ((id) >> PM_RUNTIME_TYPE_MUTI_SFT)
 #define PM_RUNTIME_ID_TO_TYPE_OFFSET(id)  ((id) % PM_RUNTIME_PER_TYPE_NUM)
+#define PM_RUNTIME_ID_TYPE_BIT_MSK(id)    HAL_BIT(((id) % PM_RUNTIME_PER_TYPE_NUM))
 
 #define PM_DISPLAY_REQUESTED(pdata) ((pdata)->bits[PM_RUNTIME_TYPE_DISPLAY])
 #define PM_UART_REQUESTED(pdata)    ((pdata)->bits[PM_RUNTIME_TYPE_UART])
 #define PM_I2C_REQUESTED(pdata)     ((pdata)->bits[PM_RUNTIME_TYPE_I2C])
+#define PM_INTF_REQUESTED(pdata)    ((pdata)->bits[PM_RUNTIME_TYPE_INTF])
 
 enum {
     PM_RUNTIME_TYPE_INTF = 0, /* normal interface */
@@ -52,7 +54,8 @@ typedef enum {
 typedef enum {
     /* the id = 0, is means invalid in */
     PM_RUNTIME_ID_INTF_INVLD = PM_RUNTIME_TYPE_TO_FIRST_ID(PM_RUNTIME_TYPE_INTF),
-    PM_RUNTIME_ID_VOP        = PM_RUNTIME_TYPE_TO_FIRST_ID(PM_RUNTIME_TYPE_DISPLAY),
+    PM_RUNTIME_ID_SPI_APB,
+    PM_RUNTIME_ID_VOP = PM_RUNTIME_TYPE_TO_FIRST_ID(PM_RUNTIME_TYPE_DISPLAY),
     PM_RUNTIME_ID_MIPI,
 
     PM_RUNTIME_ID_I2S = PM_RUNTIME_TYPE_TO_FIRST_ID(PM_RUNTIME_TYPE_AUDIO),
