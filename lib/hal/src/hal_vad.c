@@ -68,29 +68,20 @@
 
 /********************* Private Structure Definition **************************/
 
-/** audio source index : address mapping */
-struct AUDIO_SRC_ADDR_MAP {
-    uint32_t id;
-    uint32_t addr;
-};
-
 /********************* Private Variable Definition ***************************/
 
-static const struct AUDIO_SRC_ADDR_MAP addrMaps[] = {
-    { 1, I2S0_BASE + 0x800 }, /* i2s */
-    { 2, PDM0_BASE + 0x400 }, /* pdm */
-};
+__WEAK const struct AUDIO_SRC_ADDR_MAP g_audioSrcAddrMaps[] = { 0 };
 
 /********************* Private Function Definition ***************************/
 
 static HAL_Status VAD_Get_Audio_Src_Info(struct HAL_VAD_DEV *vad, uint32_t addr)
 {
-    uint32_t i;
+    const struct AUDIO_SRC_ADDR_MAP *item;
 
-    for (i = 0; i < HAL_ARRAY_SIZE(addrMaps); i++) {
-        if ((addrMaps[i].addr >> 12) == (addr >> 12)) {
-            vad->audioSrc = addrMaps[i].id;
-            vad->audioSrcAddr = addrMaps[i].addr;
+    for (item = g_audioSrcAddrMaps; item->addr != 0; item++) {
+        if ((item->addr >> 12) == (addr >> 12)) {
+            vad->audioSrc = item->id;
+            vad->audioSrcAddr = item->addr;
 
             return HAL_OK;
         }

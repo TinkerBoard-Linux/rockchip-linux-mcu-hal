@@ -32,6 +32,12 @@ typedef enum {
     VAD_STOREMODE_NONE, /**< don't store the audio data */
 } eVAD_storeMode;
 
+/** audio source index : address mapping */
+struct AUDIO_SRC_ADDR_MAP {
+    uint32_t id; /**< refer to reg VAD_CONTROL[3:1] */
+    uint32_t addr; /**< refer to reg VAD_CONTROL[3:1] */
+};
+
 /** vad buf description */
 struct VAD_BUF {
     uint32_t begin; /**< The physical ring buffer begin address */
