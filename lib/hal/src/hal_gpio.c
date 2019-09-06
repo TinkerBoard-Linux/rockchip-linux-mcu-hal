@@ -407,8 +407,8 @@ void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, uint32_t pin)
         pGPIO->INT_MASK_H = pin;
     } else {
         pin &= 0x0000FFFF;
-        pGPIO->INT_EN_L = pin | (pin >> 16);
-        pGPIO->INT_MASK_L = pin >> 16;
+        pGPIO->INT_EN_L = pin | (pin << 16);
+        pGPIO->INT_MASK_L = pin << 16;
     }
 #else
     {
