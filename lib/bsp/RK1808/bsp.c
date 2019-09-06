@@ -189,6 +189,15 @@ struct HAL_PL330_DEV g_pl330Dev =
 #endif
 
 #ifdef HAL_VAD_MODULE_ENABLED
+/* VAD_CONTROL[3:1]: voice source mapping */
+const struct AUDIO_SRC_ADDR_MAP g_audioSrcAddrMaps[] =
+{
+    { 1, I2STDM0_BASE + 0x800 },
+    { 3, I2S1_BASE + 0x800 },
+    { 4, PDM0_BASE + 0x400 },
+    { /* sentinel */ }
+};
+
 struct HAL_VAD_DEV g_vadDev =
 {
     .pReg = VAD,
