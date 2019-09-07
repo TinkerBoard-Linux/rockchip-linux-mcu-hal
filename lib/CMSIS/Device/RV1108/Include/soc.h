@@ -1298,6 +1298,7 @@ struct TIMER_REG {
 /****************************************************************************************/
 /******************************************I2S*******************************************/
 /* TXCR */
+#define I2S_TXCR_OFFSET                                    (0x0)
 #define I2S_TXCR_VDW_SHIFT                                 (0U)
 #define I2S_TXCR_VDW_MASK                                  (0x1FU << I2S_TXCR_VDW_SHIFT)                                /* 0x0000001F */
 #define I2S_TXCR_TFS_SHIFT                                 (5U)
@@ -1317,6 +1318,7 @@ struct TIMER_REG {
 #define I2S_TXCR_RCNT_SHIFT                                (17U)
 #define I2S_TXCR_RCNT_MASK                                 (0x3FU << I2S_TXCR_RCNT_SHIFT)                               /* 0x007E0000 */
 /* RXCR */
+#define I2S_RXCR_OFFSET                                    (0x4)
 #define I2S_RXCR_VDW_SHIFT                                 (0U)
 #define I2S_RXCR_VDW_MASK                                  (0x1FU << I2S_RXCR_VDW_SHIFT)                                /* 0x0000001F */
 #define I2S_RXCR_TFS_SHIFT                                 (5U)
@@ -1334,6 +1336,7 @@ struct TIMER_REG {
 #define I2S_RXCR_RCSR_SHIFT                                (15U)
 #define I2S_RXCR_RCSR_MASK                                 (0x3U << I2S_RXCR_RCSR_SHIFT)                                /* 0x00018000 */
 /* CKR */
+#define I2S_CKR_OFFSET                                     (0x8)
 #define I2S_CKR_TSD_SHIFT                                  (0U)
 #define I2S_CKR_TSD_MASK                                   (0xFFU << I2S_CKR_TSD_SHIFT)                                 /* 0x000000FF */
 #define I2S_CKR_RSD_SHIFT                                  (8U)
@@ -1351,6 +1354,7 @@ struct TIMER_REG {
 #define I2S_CKR_TRCM_SHIFT                                 (28U)
 #define I2S_CKR_TRCM_MASK                                  (0x3U << I2S_CKR_TRCM_SHIFT)                                 /* 0x30000000 */
 /* TXFIFOLR */
+#define I2S_TXFIFOLR_OFFSET                                (0xC)
 #define I2S_TXFIFOLR_TFL0_SHIFT                            (0U)
 #define I2S_TXFIFOLR_TFL0_MASK                             (0x3FU << I2S_TXFIFOLR_TFL0_SHIFT)                           /* 0x0000003F */
 #define I2S_TXFIFOLR_TFL1_SHIFT                            (6U)
@@ -1360,6 +1364,7 @@ struct TIMER_REG {
 #define I2S_TXFIFOLR_TFL3_SHIFT                            (18U)
 #define I2S_TXFIFOLR_TFL3_MASK                             (0x3FU << I2S_TXFIFOLR_TFL3_SHIFT)                           /* 0x00FC0000 */
 /* DMACR */
+#define I2S_DMACR_OFFSET                                   (0x10)
 #define I2S_DMACR_TDL_SHIFT                                (0U)
 #define I2S_DMACR_TDL_MASK                                 (0x1FU << I2S_DMACR_TDL_SHIFT)                               /* 0x0000001F */
 #define I2S_DMACR_TDE_SHIFT                                (8U)
@@ -1369,6 +1374,7 @@ struct TIMER_REG {
 #define I2S_DMACR_RDE_SHIFT                                (24U)
 #define I2S_DMACR_RDE_MASK                                 (0x1U << I2S_DMACR_RDE_SHIFT)                                /* 0x01000000 */
 /* INTCR */
+#define I2S_INTCR_OFFSET                                   (0x14)
 #define I2S_INTCR_TXEIE_SHIFT                              (0U)
 #define I2S_INTCR_TXEIE_MASK                               (0x1U << I2S_INTCR_TXEIE_SHIFT)                              /* 0x00000001 */
 #define I2S_INTCR_TXUIE_SHIFT                              (1U)
@@ -1386,6 +1392,7 @@ struct TIMER_REG {
 #define I2S_INTCR_RFT_SHIFT                                (20U)
 #define I2S_INTCR_RFT_MASK                                 (0x1FU << I2S_INTCR_RFT_SHIFT)                               /* 0x01F00000 */
 /* INTSR */
+#define I2S_INTSR_OFFSET                                   (0x18)
 #define I2S_INTSR_TXEI_SHIFT                               (0U)
 #define I2S_INTSR_TXEI_MASK                                (0x1U << I2S_INTSR_TXEI_SHIFT)                               /* 0x00000001 */
 #define I2S_INTSR_TXUI_SHIFT                               (1U)
@@ -1395,22 +1402,27 @@ struct TIMER_REG {
 #define I2S_INTSR_RXOI_SHIFT                               (17U)
 #define I2S_INTSR_RXOI_MASK                                (0x1U << I2S_INTSR_RXOI_SHIFT)                               /* 0x00020000 */
 /* XFER */
+#define I2S_XFER_OFFSET                                    (0x1C)
 #define I2S_XFER_TXS_SHIFT                                 (0U)
 #define I2S_XFER_TXS_MASK                                  (0x1U << I2S_XFER_TXS_SHIFT)                                 /* 0x00000001 */
 #define I2S_XFER_RXS_SHIFT                                 (1U)
 #define I2S_XFER_RXS_MASK                                  (0x1U << I2S_XFER_RXS_SHIFT)                                 /* 0x00000002 */
 /* CLR */
+#define I2S_CLR_OFFSET                                     (0x20)
 #define I2S_CLR_TXC_SHIFT                                  (0U)
 #define I2S_CLR_TXC_MASK                                   (0x1U << I2S_CLR_TXC_SHIFT)                                  /* 0x00000001 */
 #define I2S_CLR_RXC_SHIFT                                  (1U)
 #define I2S_CLR_RXC_MASK                                   (0x1U << I2S_CLR_RXC_SHIFT)                                  /* 0x00000002 */
 /* TXDR */
+#define I2S_TXDR_OFFSET                                    (0x24)
 #define I2S_TXDR_TXDR_SHIFT                                (0U)
 #define I2S_TXDR_TXDR_MASK                                 (0xFFFFFFFFU << I2S_TXDR_TXDR_SHIFT)                         /* 0xFFFFFFFF */
 /* RXDR */
+#define I2S_RXDR_OFFSET                                    (0x28)
 #define I2S_RXDR_RXDR_SHIFT                                (0U)
 #define I2S_RXDR_RXDR_MASK                                 (0xFFFFFFFFU << I2S_RXDR_RXDR_SHIFT)                         /* 0xFFFFFFFF */
 /* RXFIFOLR */
+#define I2S_RXFIFOLR_OFFSET                                (0x2C)
 #define I2S_RXFIFOLR_RFL0_SHIFT                            (0U)
 #define I2S_RXFIFOLR_RFL0_MASK                             (0x3FU << I2S_RXFIFOLR_RFL0_SHIFT)                           /* 0x0000003F */
 #define I2S_RXFIFOLR_RFL1_SHIFT                            (6U)
