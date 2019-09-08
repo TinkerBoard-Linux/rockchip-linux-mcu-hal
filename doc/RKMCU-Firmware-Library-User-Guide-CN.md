@@ -94,8 +94,8 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 │   │        ...
 │   ├── bsp
 │   │   └── RK2106
-│   │       ├── bsp.c
-│   │       └── bsp.h
+│   │       ├── hal_bsp.c
+│   │       └── hal_bsp.h
 │   └── hal
 │       ├── inc
 │       │   ├── hal_base.h
@@ -163,12 +163,12 @@ lib/hal目录包含HAL库的代码主体, 其中src目录直接包含所有模�
 
 ##1.5 BSP目录文件
 
-bsp库用来存放某个芯片公共的板级配置和dev资源，代码路径为./lib/bsp/project_name/bsp.c/h。
+bsp库用来存放某个芯片公共的板级配置和dev资源，代码路径为./lib/bsp/project_name/hal_bsp.c/h。
 
-| 文件  | 描述                                                         |
-| ----- | ------------------------------------------------------------ |
-| bsp.c | 某个芯片公共的板级配置、HAL驱动需求的可抽象化的相关模块资源（如i2c_dev）。 |
-| bsp.h | bsp.c头文件                                                  |
+| 文件     | 描述                                                         |
+| -------- | ------------------------------------------------------------ |
+| hal_bsp.c | 某个芯片公共的板级配置、HAL驱动需求的可抽象化的相关模块资源（如i2c_dev）。 |
+| hal_bsp.h | hal_bsp.c头文件                                                  |
 
 ## 1.6 test目录文件
 
@@ -744,7 +744,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 
 ## 3.7 文件布局
 
-### C代码源文件
+### 3.7.1 C代码源文件
 
 驱动代码要求私有宏, 结构体, 变量等定义放C代码开头部分, 然后是私有函数, 然后是公共的API函数.
 
@@ -767,7 +767,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 /********************* Public Function Definition ****************************/
 ```
 
-### 头文件
+### 3.7.2 头文件
 
 模块头文件 lib/hal/inc/hal_ppp.h作为对外API头文件声明, 应包含对外API函数声明, 及其需要使用的结构提和枚举类型，不可包含私有变量，宏或结构体.
 
@@ -799,7 +799,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 
 ## 3.8 模块驱动
 
-### 内容要求
+### 3.8.1 内容要求
 
 覆盖模块硬件所有功能(以公司发布TRM为准)，如有暂未覆盖内容，请填写todo list；
 模块驱动使用的设备ID由外部提供，驱动内部不设定义或限制，仅做合法性检查；
@@ -807,7 +807,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 跨模块调用内容，属于OS适配层, 如clock初始化，中断注册，互斥锁等，
 OS支持(如RT-Thread)部分，利用控制器状态防重入，原子操作可关中断，锁由OS适配层提供, HAL层不提供。
 
-### API接口内容要求
+### 3.8.2 API接口内容要求
 
 每个驱动应提供如下接口：
 
@@ -818,9 +818,9 @@ OS支持(如RT-Thread)部分，利用控制器状态防重入，原子操作可�
 - Suspend/Resume
 - 状态查询
 
-### 注释
+### 3.8.3 注释
 
-使用doxygen的分组功能，对内容进行分组并分别提供文档, 每个驱动提供以下注释：
+使用doxygen的分组功能，对内容进行分组并分别提供文档，详细参考 3.4 章节, 每个驱动提供以下注释：
 
 - 驱动使用指南(how to use this driver)
 - 初始化反初始化流程
@@ -828,15 +828,23 @@ OS支持(如RT-Thread)部分，利用控制器状态防重入，原子操作可�
 - Suspend/Resume流程及内容
 - 设备状态，错误，模式描述
 
-### 中断callback
+### 3.8.4 中断callback
 
 由于中断是由上一层代码做注册，所以HAL层不提供callback(需要记录函数指针和参数)，需要callback的实现形式为：
 上层(如rt-thread driver)须实现一个IrqHandler, 注册到对应模块中断，该IrqHandler包含HAL的IrqHandler用于硬件相关处理，另外加入软件逻辑完成锁，完成量，重复操作等功能。
 
-### 外部引用HAL代码
+### 3.8.4 外部引用HAL代码
 
 hal代码对外的头文件引用是统一的'hal_base.h'，不是各个驱动的头文件如'hal_uart.h'，否则可能会有包含错误出现。
 HAL对外的API需出现在各自头文件，如UART对外API出现在hal_uart.h，然后hal_uart.h被hal_base.h包含，参考3.7的包含关系。
+
+### 3.8.5 C 标准库库函数要求
+
+c 库函数使用过程需注意是否库函数仅能在特定情景下使用。
+
+**禁止使用 memcpy 或类似函数操作模块寄存器**
+
+因 memcpy 存在字节访问的可能，这样会导致不对齐的访问寄存器行为，最终导致系统出现异常，如有批量操作模块寄存器的行为，建议使用循环语句，自行确保访问对齐。
 
 ## 3.9 模块兼容性处理
 
@@ -888,13 +896,23 @@ API入口及其他需要检查参数合法性的地方使用HAL_ASSERT()进行�
 
 HAL_ASSERT()使用了weak函数AssertFailed，位于lib/hal/src/hal_debug.c，用户实现代码有不同需求时可以自己实现函数来override.
 
-## 4.2 系统Delay()
+## 4.2 延时系统
 
-HAL base提供基于系统tick的HAL_DelayUs()，可以在HAL driver中直接使用。
+HAL base提供基于 rk timer 或者 CPU loop 的延时系统，接口统一为 HAL_DelayUs() 和 HAL_DelayMs()，可在 HAL 层中直接使用。
 
-## 4.3 Interrupt
+## 4.3 系统时间及超时等待
 
-## 4.4 Malloc()
+可以同过 HAL_GetTick() 接口获取基于 rk timer 或者 system timer 的计时系统，返回为 ms 计时，用户可以通过 HAL_GetTick() 做超时等待，例如：
+
+```c
+uint32_t start, timeoutMs = 1000;
+
+start = HAL_GetTick();
+while (PD_ReadAck(pd) != idle) {
+    if ((HAL_GetTick() - start) > timeoutMs)
+        return HAL_TIMEOUT;
+}
+```
 
 # 5 单元测试
 
@@ -1030,7 +1048,7 @@ HAL层模块驱动中涉及的设备结构体资源，如AUDIOPWM驱动中使用
 
 **结构体实例**
 
-bsp.c中实现HAL层驱动所需结构体的，需有相应模块宏开关，结构体前缀为g_以提示为全局变量，建议存放寄存器基地址的地方直接使用寄存器结构体实例的指针。
+hal_bsp.c中实现HAL层驱动所需结构体的，需有相应模块宏开关，结构体前缀为g_以提示为全局变量，建议存放寄存器基地址的地方直接使用寄存器结构体实例的指针。
 
 ```C
 #ifdef HAL_AUDIOPWM_MODULE_ENABLED
@@ -1053,7 +1071,7 @@ const struct HAL_AUDIOPWM_DEV g_audioPwmDev =
 
 **结构体引用**
 
-bsp.h中提供结构体声明，需有相应模块宏开关。
+hal_bsp.h中提供结构体声明，需有相应模块宏开关。
 
 ```C
 #ifdef HAL_AUDIOPWM_MODULE_ENABLED
