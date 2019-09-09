@@ -271,7 +271,7 @@ HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
     struct MMC_REG *pReg = host->pReg;
 
     for (i = 0; i < size / 4; i++) {
-        #if MMC_WAIT_FOR_BR
+#if MMC_WAIT_FOR_BR
         retries = 0;
         do {
             fifo_available = MMC_GetWaterlevel(host);
@@ -281,11 +281,11 @@ HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
                 return HAL_TIMEOUT;
             }
         } while (!fifo_available);
-        #endif
+#endif
         *buf++ = READ_REG(pReg->FIFO_BASE);
     }
 
-    #if MMC_WAIT_FOR_BR
+#if MMC_WAIT_FOR_BR
     retries = 0;
     while (HAL_MMC_IsDataStateBusy(host)) {
         if (retries++ > 10000) {
@@ -295,7 +295,7 @@ HAL_Status HAL_MMC_ReadData(struct HAL_MMC_HOST *host, uint32_t *buf,
             return HAL_TIMEOUT;
         }
     }
-    #endif
+#endif
 
     return HAL_OK;
 }
@@ -346,7 +346,7 @@ HAL_Status HAL_MMC_InitDescriptors(struct HAL_MMC_HOST *host, uint32_t *buf,
  */
 HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
 {
-    uint32_t loop = 5000;
+    uint32_t timeoutMs = 5000, startTick;
     struct MMC_REG *pReg = host->pReg;
 
     /* Disable clock */
@@ -355,15 +355,13 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
 
     /* Inform CIU */
     WRITE_REG(pReg->CMD, HAL_BIT(31) | HAL_BIT(21));
+    startTick = HAL_GetTick();
     while (READ_REG(pReg->CMD) & HAL_BIT(31)) {
-        if (!loop) {
+        if ((HAL_GetTick() - startTick) > timeoutMs) {
             HAL_DBG_ERR("%s: update clock timeout\n", __func__);
 
             return HAL_TIMEOUT;
         }
-
-        HAL_DelayMs(1);
-        loop--;
     }
 
     /* Set clock to desired speed */
@@ -372,16 +370,13 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
     /* Inform CIU */
     WRITE_REG(pReg->CMD, HAL_BIT(31) | HAL_BIT(21));
 
-    loop = 5000;
+    startTick = HAL_GetTick();
     while (READ_REG(pReg->CMD) & HAL_BIT(31)) {
-        if (!loop) {
+        if ((HAL_GetTick() - startTick) > timeoutMs) {
             HAL_DBG_ERR("%s: update clock timeout\n", __func__);
 
             return HAL_TIMEOUT;
         }
-
-        HAL_DelayMs(1);
-        loop--;
     }
 
     /* Enable clock */
@@ -390,16 +385,13 @@ HAL_Status HAL_MMC_UpdateClockRegister(struct HAL_MMC_HOST *host, int32_t div)
     /* Inform CIU */
     WRITE_REG(pReg->CMD, HAL_BIT(31) | HAL_BIT(21));
 
-    loop = 5000;
+    startTick = HAL_GetTick();
     while (READ_REG(pReg->CMD) & HAL_BIT(31)) {
-        if (!loop) {
+        if ((HAL_GetTick() - startTick) > timeoutMs) {
             HAL_DBG_ERR("%s: update clock timeout\n", __func__);
 
             return HAL_TIMEOUT;
         }
-
-        HAL_DelayMs(1);
-        loop--;
     }
 
     return HAL_OK;
@@ -446,23 +438,21 @@ HAL_Status HAL_MMC_SetCardWidth(struct HAL_MMC_HOST *host, int32_t width)
 HAL_Status HAL_MMC_SendCommand(struct HAL_MMC_HOST *host, uint32_t cmd,
                                uint32_t arg, uint32_t flags)
 {
-    uint32_t loop = 5000;
     struct MMC_REG *pReg = host->pReg;
+    uint32_t timeoutMs = 5000, startTick;
 
     WRITE_REG(pReg->CMDARG, arg);
     flags |= MMC_CMD_USE_HOLD_REG | MMC_CMD_START_CMD | cmd;
 
     WRITE_REG(pReg->CMD, flags);
 
+    startTick = HAL_GetTick();
     while (READ_REG(pReg->CMD) & MMC_CMD_START_CMD) {
-        if (!loop) {
+        if ((HAL_GetTick() - startTick) > timeoutMs) {
             HAL_DBG_ERR("%s: send cmd timeout\n", __func__);
 
             return HAL_TIMEOUT;
         }
-
-        HAL_DelayMs(1);
-        loop--;
     }
 
     /* TODO: need check HLE_INT_STATUS */
@@ -476,23 +466,21 @@ HAL_Status HAL_MMC_SendCommand(struct HAL_MMC_HOST *host, uint32_t cmd,
  */
 HAL_Status HAL_MMC_ResetFifo(struct HAL_MMC_HOST *host)
 {
-    uint32_t reg, loop = 5000;
     struct MMC_REG *pReg = host->pReg;
+    uint32_t timeoutMs = 5000, reg, startTick;
 
     reg = READ_REG(pReg->CTRL);
     reg |= MMC_CTRL_FIFO_RESET;
     WRITE_REG(pReg->CTRL, reg);
 
     /* Wait until fifo reset finish */
+    startTick = HAL_GetTick();
     while (READ_REG(pReg->CTRL) & MMC_CTRL_FIFO_RESET) {
-        if (!loop) {
+        if ((HAL_GetTick() - startTick) > timeoutMs) {
             HAL_DBG_ERR("%s: FIFO reset timeout\n", __func__);
 
             return HAL_TIMEOUT;
         }
-
-        HAL_DelayMs(1);
-        loop--;
     }
 
     return HAL_OK;
@@ -505,37 +493,34 @@ HAL_Status HAL_MMC_ResetFifo(struct HAL_MMC_HOST *host)
  */
 static HAL_Status HAL_MMC_Reset(struct HAL_MMC_HOST *host)
 {
-    uint32_t reg, loop = 5000;
+    uint32_t reg, timeoutMs = 5000, startTick;;
     struct MMC_REG *pReg = host->pReg;
 
     reg = READ_REG(pReg->BMOD);
     reg |= MMC_BMOD_RESET;
     WRITE_REG(pReg->BMOD, reg);
 
+    startTick = HAL_GetTick();
     while (READ_REG(pReg->BMOD) & MMC_BMOD_RESET) {
-        if (!loop) {
+        if ((HAL_GetTick() - startTick) > timeoutMs) {
             HAL_DBG_ERR("%s: BMOD Software reset timeout\n", __func__);
 
             return HAL_TIMEOUT;
         }
-        HAL_DelayMs(1);
-        loop--;
     }
 
     reg = READ_REG(pReg->CTRL);
     reg |= MMC_CTRL_CONTROLLER_RESET | MMC_CTRL_FIFO_RESET | MMC_CTRL_DMA_RESET;
     WRITE_REG(pReg->CTRL, reg);
 
-    loop = 5000;
+    startTick = HAL_GetTick();
     while (READ_REG(pReg->CTRL) & (MMC_CTRL_CONTROLLER_RESET |
                                    MMC_CTRL_FIFO_RESET | MMC_CTRL_DMA_RESET)) {
-        if (!loop) {
+        if ((HAL_GetTick() - startTick) > timeoutMs) {
             HAL_DBG_ERR("%s: CTRL dma|fifo|ctrl reset timeout\n", __func__);
 
             return HAL_TIMEOUT;
         }
-        HAL_DelayMs(1);
-        loop--;
     }
 
     return HAL_OK;
