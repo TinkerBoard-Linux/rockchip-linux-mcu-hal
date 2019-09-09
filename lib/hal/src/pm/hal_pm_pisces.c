@@ -142,7 +142,9 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         clkSelCon2 = CRU->CRU_CLKSEL_CON[33] |
                      MASK_TO_WE(CRU_CRU_CLKSEL_CON02_SCLK_SHRM_DIV_MASK);
 
+#ifdef HAL_SYSTICK_MODULE_ENABLED
         HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_CORE);
+#endif
 
         CRU->CRU_MODE_CON00 =
             VAL_MASK_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK,
@@ -237,7 +239,9 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
             ;
         CRU->CRU_MODE_CON00 = cruMode;
 
+#ifdef HAL_SYSTICK_MODULE_ENABLED
         HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);
+#endif
     } else if (idleMode == PM_RUNTIME_IDLE_DEEP1) {
         CRU->CRU_CLKSEL_CON[33] = clkSelCon33;
         CRU->GPLL_CON[0] = gpllCon0;
