@@ -106,9 +106,150 @@ static struct PINCTRL_BANK_INFO pinBanks[] = {
                        0x0000, 0, 0),
 };
 
+static const struct PINCTRL_MUX_ROUTE_DATA muxRouteData[] = {
+    {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B6 | GPIO_PIN_B7,
+        .func = 2, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 0, 0x1), //UART0_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C6 | GPIO_PIN_C7,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 0, 0x1), //UART0_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C2 | GPIO_PIN_C3,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 1, 0x3), //UART1_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_A4 | GPIO_PIN_A5 | GPIO_PIN_A6 | GPIO_PIN_A7,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 2, 0x3), //UART1_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D0 | GPIO_PIN_D1,
+        .func = 4, .routeReg = 0x240, .routeVal = ROUTE_VAL(2, 2, 0x3), //UART1_M2
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D2 | GPIO_PIN_D3 | GPIO_PIN_D4 | GPIO_PIN_D5,
+        .func = 4, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 3, 0x1), //UART2_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B0 | GPIO_PIN_B1 | GPIO_PIN_B2 | GPIO_PIN_B3,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 3, 0x1), //UART2_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C0,
+        .func = 5, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 4, 0x1), //I2S_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C1 | GPIO_PIN_C2 | GPIO_PIN_C3 | GPIO_PIN_D4 | GPIO_PIN_D5 | GPIO_PIN_D6 | GPIO_PIN_D7,
+        .func = 6, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 4, 0x1), //I2S_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D2 | GPIO_PIN_D3 | GPIO_PIN_D4 | GPIO_PIN_D5 | GPIO_PIN_D6,
+        .func = 6, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 4, 0x1), //I2S_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B4,
+        .func = 5, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 5, 0x1), //TKEY0_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D0,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 5, 0x1), //TKEY0_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B5,
+        .func = 5, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 6, 0x1), //TKEY1_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D1,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 6, 0x1), //TKEY1_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B6,
+        .func = 5, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 7, 0x1), //TKEY2_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D2,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 7, 0x1), //TKEY2_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B7,
+        .func = 5, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 8, 0x1), //TKEY3_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D3,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 8, 0x1), //TKEY3_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C3,
+        .func = 7, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 9, 0x1), //TKEY4_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D4,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 9, 0x1), //TKEY4_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C4,
+        .func = 7, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 10, 0x1), //TKEY5_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D5,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 10, 0x1), //TKEY5_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C5,
+        .func = 7, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 11, 0x1), //TKEY6_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D6,
+        .func = 3, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 11, 0x1), //TKEY6_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D0 | GPIO_PIN_D1 | GPIO_PIN_D2 | GPIO_PIN_D3,
+        .func = 1, .routeReg = 0x240, .routeVal = ROUTE_VAL(0, 13, 0x1), //CODEC_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_A4 | GPIO_PIN_A5 | GPIO_PIN_A6 | GPIO_PIN_A7,
+        .func = 7, .routeReg = 0x240, .routeVal = ROUTE_VAL(1, 13, 0x1), //CODEC_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B7,
+        .func = 3, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 1, 0x1), //SPI0_MISO_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C3,
+        .func = 4, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 1, 0x1), //SPI0_MISO_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C7,
+        .func = 4, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 2, 0x3), //SPI1_MISO_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B3,
+        .func = 4, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 2, 0x3), //SPI1_MISO_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D4,
+        .func = 5, .routeReg = 0x204, .routeVal = ROUTE_VAL(2, 2, 0x3), //SPI1_MISO_M2
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C0,
+        .func = 2, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 4, 0x1), //PWM0_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B4,
+        .func = 1, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 4, 0x1), //PWM0_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C1,
+        .func = 2, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 5, 0x1), //PWM1_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B5,
+        .func = 1, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 5, 0x1), //PWM1_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B4 | GPIO_PIN_B5,
+        .func = 4, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 6, 0x3), //I2C0_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C6 | GPIO_PIN_C7,
+        .func = 5, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 6, 0x3), //I2C0_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_A0 | GPIO_PIN_A1,
+        .func = 3, .routeReg = 0x204, .routeVal = ROUTE_VAL(2, 6, 0x3), //I2C0_M2
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B6 | GPIO_PIN_B7,
+        .func = 4, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 8, 0x3), //I2C1_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C1 | GPIO_PIN_C2,
+        .func = 5, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 8, 0x3), //I2C1_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_A2 | GPIO_PIN_A3,
+        .func = 3, .routeReg = 0x204, .routeVal = ROUTE_VAL(2, 8, 0x3), //I2C1_M2
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_A5 | GPIO_PIN_A6 | GPIO_PIN_A7,
+        .func = 4, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 10, 0x1), //PDM_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_C3 | GPIO_PIN_C4 | GPIO_PIN_C5,
+        .func = 5, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 10, 0x1), //PDM_M1
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D5 | GPIO_PIN_D6,
+        .func = 1, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 12, 0x1), //I2C2_M0
+    }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_B4 | GPIO_PIN_B5,
+        .func = 8, .routeReg = 0x204, .routeVal = ROUTE_VAL(2, 12, 0x1), //I2C2_M1
+    },
+};
+
 const struct HAL_PINCTRL_DEV g_pinDev = {
     .banks = pinBanks,
     .banksNum = HAL_ARRAY_SIZE(pinBanks),
+    .muxRouteData = muxRouteData,
+    .muxRouteDataNum = HAL_ARRAY_SIZE(muxRouteData),
 };
 #endif
 
