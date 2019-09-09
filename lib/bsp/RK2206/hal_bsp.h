@@ -11,6 +11,10 @@
 /***************************** MACRO Definition ******************************/
 
 /***************************** Structure Definition **************************/
+#ifdef HAL_ACDCDIG_MODULE_ENABLED
+extern struct HAL_ACDCDIG_DEV g_acdcDigDev;
+#endif
+
 #ifdef HAL_AUDIOPWM_MODULE_ENABLED
 extern struct HAL_AUDIOPWM_DEV g_audioPwmDev;
 #endif
