@@ -265,17 +265,22 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
     uint32_t muxSrc, mux = CLK_GET_MUX(clockName), muxOut = 0;
     uint32_t divSrc, divFrac;
     uint32_t n = 0, m = 0, pRate = s_gpllFreq;
+    uint32_t gateId, fracGateId;
 
     switch (clockName) {
     case CLK_UART0:
         muxSrc = CLK_GET_MUX(CLK_UART0_SRC);
         divSrc = CLK_GET_DIV(CLK_UART0_SRC);
         divFrac = CLK_GET_DIV(CLK_UART0_FRAC);
+        gateId = CLK_UART0_GATE;
+        fracGateId = CLK_UART0_FRAC_GATE;
         break;
     case CLK_UART1:
         muxSrc = CLK_GET_MUX(CLK_UART1_SRC);
         divSrc = CLK_GET_DIV(CLK_UART1_SRC);
         divFrac = CLK_GET_DIV(CLK_UART1_FRAC);
+        gateId = CLK_UART1_GATE;
+        fracGateId = CLK_UART1_FRAC_GATE;
         break;
     case I2S_MCLKOUT:
         muxSrc = CLK_GET_MUX(CLK_I2S8CH_SRC);
@@ -283,6 +288,8 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         divFrac = CLK_GET_DIV(CLK_I2S8CH_FRAC);
         mux = CLK_GET_MUX(MCLK_I2S8CH);
         muxOut = CLK_GET_MUX(I2S_MCLKOUT);
+        gateId = CLK_I2S8CH_GATE;
+        fracGateId = CLK_I2S8CH_FRAC_GATE;
         break;
     case CLK_32K:
         divFrac = CLK_GET_DIV(CLK_32K);
@@ -299,12 +306,17 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         return HAL_OK;
     }
 
+    HAL_CRU_ClkEnable(gateId);
+    HAL_CRU_ClkEnable(fracGateId);
+
     if (PLL_INPUT_OSC_RATE == rate) {
         HAL_CRU_ClkSetMux(muxSrc, 2);
+        HAL_CRU_ClkDisable(gateId);
     } else if ((!(s_gpllFreq % rate)) && ((s_gpllFreq / rate) < 31)) {
         HAL_CRU_ClkSetDiv(divSrc, s_gpllFreq / rate);
         HAL_CRU_ClkSetMux(muxSrc, 0);
         HAL_CRU_ClkSetMux(mux, 0);
+        HAL_CRU_ClkDisable(fracGateId);
     } else {
         HAL_CRU_FracdivGetConfig(rate, pRate, &n, &m);
         HAL_CRU_ClkSetDiv(divSrc, 1);

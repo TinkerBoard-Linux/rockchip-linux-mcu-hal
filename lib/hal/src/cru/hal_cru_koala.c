@@ -150,52 +150,69 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
     uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
     uint32_t divSrc, divFrac;
     uint32_t n = 0, m = 0;
+    uint32_t gateId, fracGateId;
 
     switch (clockName) {
     case CLK_UART0:
         if (rate == PLL_INPUT_OSC_RATE) {
             HAL_CRU_ClkSetMux(mux, UART0_CLK_SEL_XIN_OSC);
+            HAL_CRU_ClkDisable(CLK_UART0_SRC_GATE);
 
             return HAL_OK;
         }
         muxSrc = CLK_GET_MUX(CLK_UART0_SRC);
         divSrc = CLK_GET_DIV(CLK_UART0_SRC);
         divFrac = CLK_GET_DIV(CLK_UART0_FRAC);
+        gateId = CLK_UART0_SRC_GATE;
+        fracGateId = CLK_UART0_FRAC_SRC_GATE;
         break;
     case CLK_UART1:
         if (rate == PLL_INPUT_OSC_RATE) {
             HAL_CRU_ClkSetMux(mux, UART1_CLK_SEL_XIN_OSC);
+            HAL_CRU_ClkDisable(CLK_UART1_SRC_GATE);
 
             return HAL_OK;
         }
         muxSrc = CLK_GET_MUX(CLK_UART1_SRC);
         divSrc = CLK_GET_DIV(CLK_UART1_SRC);
         divFrac = CLK_GET_DIV(CLK_UART1_FRAC);
+        gateId = CLK_UART1_SRC_GATE;
+        fracGateId = CLK_UART1_FRAC_SRC_GATE;
         break;
     case CLK_I2S_TX:
         muxSrc = CLK_GET_MUX(CLK_I2S_TX_SRC);
         divSrc = CLK_GET_DIV(CLK_I2S_TX_SRC);
         divFrac = CLK_GET_DIV(CLK_I2S_TX_FRAC);
+        gateId = CLK_I2S_TX_SRC_GATE;
+        fracGateId = CLK_I2S_TX_FRAC_SRC_GATE;
         break;
     case CLK_I2S_RX:
         muxSrc = CLK_GET_MUX(CLK_I2S_RX_SRC);
         divSrc = CLK_GET_DIV(CLK_I2S_RX_SRC);
         divFrac = CLK_GET_DIV(CLK_I2S_RX_FRAC);
+        gateId = CLK_I2S_RX_SRC_GATE;
+        fracGateId = CLK_I2S_RX_FRAC_SRC_GATE;
         break;
     case CLK_PDM:
         muxSrc = CLK_GET_MUX(CLK_PDM_SRC);
         divSrc = CLK_GET_DIV(CLK_PDM_SRC);
         divFrac = CLK_GET_DIV(CLK_PDM_FRAC);
+        gateId = CLK_PDM_SRC_GATE;
+        fracGateId = CLK_PDM_FRAC_SRC_GATE;
         break;
     default:
 
         return HAL_INVAL;
     }
 
+    HAL_CRU_ClkEnable(gateId);
+    HAL_CRU_ClkEnable(fracGateId);
+
     if ((!(s_cpllFreq % rate)) && ((s_cpllFreq / rate) < 16)) {
         HAL_CRU_ClkSetDiv(divSrc, s_cpllFreq / rate);
         HAL_CRU_ClkSetMux(muxSrc, UART0_CLK_SRC_SEL_CPLL);
         HAL_CRU_ClkSetMux(mux, UART0_CLK_SEL_INTEGRATION);
+        HAL_CRU_ClkDisable(fracGateId);
     } else {
         HAL_CRU_FracdivGetConfig(rate, s_cpllFreq, &n, &m);
         HAL_CRU_ClkSetDiv(divSrc, 1);
