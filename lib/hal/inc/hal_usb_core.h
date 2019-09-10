@@ -230,6 +230,15 @@ struct USB_OTG_HC {
     eUSB_OTG_hcState hcState;   /*!< Host Channel state. This parameter can be any value of @ref eUSB_OTG_hcState  */
 };
 
+/** USB HW information definition on a soc */
+struct HAL_USB_DEV {
+    struct USB_GLOBAL_REG *pReg;
+    uint32_t hclkGateID;
+    uint32_t utmiclkGateID;
+    IRQn_Type irqNum;
+    struct USB_OTG_CFG cfg;
+};
+
 /** @} */
 
 /***************************** Function Declare ******************************/
