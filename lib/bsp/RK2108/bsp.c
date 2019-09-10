@@ -435,6 +435,27 @@ const struct HAL_UART_DEV g_uart2Dev =
 };
 #endif
 
+#ifdef HAL_PCD_MODULE_ENABLED
+const struct HAL_USB_DEV g_usbdDev =
+{
+    .pReg = USB,
+    .hclkGateID = HCLK_USB2CTRL_GATE,
+    .utmiclkGateID = CLK_USB2CTRL_GATE,
+    .irqNum = USB_IRQn,
+    .cfg =
+    {
+        .epNum = 5,
+        .ep0Mps = USB_OTG_MAX_EP0_SIZE,
+        .phyif = USB_PHY_UTMI_WIDTH_16,
+        .speed = PCD_SPEED_HIGH,
+        .dmaEnable = true,
+        .sofEnable = false,
+        .lpmEnable = false,
+        .vbusSensingEnable = false,
+    },
+};
+#endif
+
 #ifdef HAL_FSPI_MODULE_ENABLED
 struct HAL_FSPI_HOST g_fspi0Dev =
 {

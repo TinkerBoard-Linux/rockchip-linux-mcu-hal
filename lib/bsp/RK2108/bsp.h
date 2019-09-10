@@ -56,6 +56,10 @@ extern const struct HAL_UART_DEV g_uart1Dev;
 extern const struct HAL_UART_DEV g_uart2Dev;
 #endif
 
+#ifdef HAL_PCD_MODULE_ENABLED
+extern const struct HAL_USB_DEV g_usbdDev;
+#endif
+
 #ifdef HAL_FSPI_MODULE_ENABLED
 extern struct HAL_FSPI_HOST g_fspi0Dev;
 #endif
