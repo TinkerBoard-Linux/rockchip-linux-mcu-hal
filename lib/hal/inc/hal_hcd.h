@@ -57,7 +57,6 @@ struct HCD_HANDLE {
     struct USB_OTG_HC hc[15];           /*!< Host channels parameters */
     eHCD_state hcdState;                /*!< HCD communication state  */
     void *pData;                        /*!< Pointer Stack Handler    */
-    uint32_t irqno;                     /*!< irq number               */
 };
 
 /** @} */
