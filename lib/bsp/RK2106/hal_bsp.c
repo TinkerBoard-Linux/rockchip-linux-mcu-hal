@@ -3,7 +3,7 @@
  * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
-#include "bsp.h"
+#include "hal_bsp.h"
 #include "hal_base.h"
 
 #ifdef HAL_UART_MODULE_ENABLED

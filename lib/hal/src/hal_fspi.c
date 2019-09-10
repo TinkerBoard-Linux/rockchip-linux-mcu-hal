@@ -36,7 +36,7 @@
 
  Note.
  - If Nor flash and psram place in one FSPI host, Nor flash for cs0 and psram for cs1.
- - If psram is initial by preloader and work all the timer, set g_fspidev->xmmcDev[cs].type = DEV_PSRAM in bsp.c.
+ - If psram is initial by preloader and work all the timer, set g_fspidev->xmmcDev[cs].type = DEV_PSRAM in hal_bsp.c.
 
  @} */
 
@@ -551,7 +551,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
  * @param  host: FSPI host.
  * @param  on: 1 enable, 0 disable.
  * @return HAL_Status.
- * If psram is initialized by preloader and work all the timer, set g_fspidev->xmmcDev[cs].type = DEV_PSRAM in bsp.c.
+ * If psram is initialized by preloader and work all the timer, set g_fspidev->xmmcDev[cs].type = DEV_PSRAM in hal_bsp.c.
  */
 HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 {

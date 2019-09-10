@@ -3,7 +3,7 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
-#include "bsp.h"
+#include "hal_bsp.h"
 
 #if defined(HAL_PINCTRL_MODULE_ENABLED)
 static struct PINCTRL_BANK_INFO pinBanks[] = {

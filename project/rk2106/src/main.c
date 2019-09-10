@@ -3,7 +3,7 @@
  * Copyright (c) 2018-2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
-#include "bsp.h"
+#include "hal_bsp.h"
 #include "hal_base.h"
 #include "unity_runner.h"
 

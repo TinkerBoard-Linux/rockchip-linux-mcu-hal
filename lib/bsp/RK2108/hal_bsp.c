@@ -3,7 +3,7 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
-#include "bsp.h"
+#include "hal_bsp.h"
 
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
 struct HAL_ACDCDIG_DEV g_acdcDigDev =

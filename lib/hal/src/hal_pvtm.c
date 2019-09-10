@@ -21,7 +21,7 @@
  @} */
 
 #include "hal_base.h"
-#include "bsp.h"
+#include "hal_bsp.h"
 
 #ifdef HAL_PVTM_MODULE_ENABLED
 
