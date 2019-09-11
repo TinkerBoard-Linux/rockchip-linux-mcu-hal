@@ -77,6 +77,7 @@ struct HAL_PDM_DEV g_pdm0Dev =
 #else
     .mclkRate = PDM_CLK_RATE,
 #endif
+    .mclkGate = MCLK_PDM_PLL_GATE,
     .hclk = HCLK_PDM_GATE,
     .reset = SRST_M_PDM,
     .rxDmaData =
