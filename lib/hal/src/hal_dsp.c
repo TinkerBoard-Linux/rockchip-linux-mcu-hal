@@ -133,7 +133,7 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
         uint32_t setBit = 0;
         if ((uint32_t)arg > 0)
             setBit = GRF_SOC_CON0_DSP_TCM_SEL0_MASK;
-        WRITE_REG_MASK_WE(GRF->SOC_CON[0],
+        WRITE_REG_MASK_WE(GRF->SOC_CON0,
                           GRF_SOC_CON0_DSP_TCM_SEL0_MASK, setBit);
         break;
     }
@@ -159,7 +159,7 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
         mask |= GRF_SOC_CON0_DSP_TCM_SEL1_MASK |
                 GRF_SOC_CON0_DSP_TCM_SEL2_MASK |
                 GRF_SOC_CON0_DSP_TCM_SEL3_MASK;
-        WRITE_REG_MASK_WE(GRF->SOC_CON[0], mask, setBit);
+        WRITE_REG_MASK_WE(GRF->SOC_CON0, mask, setBit);
         break;
     }
 #endif
@@ -175,9 +175,9 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
                 GRF_DSP_CON2_DTCM_MEM_AUTO_GATING_EN_MASK |
                 GRF_DSP_CON2_ITCM_MEM_AUTO_GATING_EN_MASK;
         if ((uint32_t)arg)
-            WRITE_REG_MASK_WE(GRF->DSP_CON[2], mask, mask);
+            WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, mask);
         else
-            WRITE_REG_MASK_WE(GRF->DSP_CON[2], mask, 0);
+            WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, 0);
         break;
     }
     case DSP_IOCTL_GET_POWER_ST:
@@ -299,7 +299,7 @@ HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr)
     uint32_t setMask = 0;
 
     /* Set dsp stall */
-    WRITE_REG_MASK_WE(GRF->DSP_CON[0], GRF_DSP_CON0_RUNSTALL_MASK,
+    WRITE_REG_MASK_WE(GRF->DSP_CON0, GRF_DSP_CON0_RUNSTALL_MASK,
                       GRF_DSP_CON0_RUNSTALL_MASK);
     /* Set dsp reset */
 #if defined(RKMCU_RK2206)
@@ -321,9 +321,9 @@ HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr)
 #endif
 
     if (altAddr) {
-        WRITE_REG_MASK_WE(GRF->DSP_CON[0], GRF_DSP_CON0_STATVECTORSEL_MASK,
+        WRITE_REG_MASK_WE(GRF->DSP_CON0, GRF_DSP_CON0_STATVECTORSEL_MASK,
                           GRF_DSP_CON0_STATVECTORSEL_MASK);
-        WRITE_REG(GRF->DSP_CON[1], altAddr);
+        WRITE_REG(GRF->DSP_CON1, altAddr);
     }
 
     /* Deassert reset */
@@ -353,7 +353,7 @@ HAL_Status HAL_DSP_Disable(struct DSP_DEV *dsp)
  */
 HAL_Status HAL_DSP_START(struct DSP_DEV *dsp)
 {
-    WRITE_REG_MASK_WE(GRF->DSP_CON[0], GRF_DSP_CON0_RUNSTALL_MASK, 0);
+    WRITE_REG_MASK_WE(GRF->DSP_CON0, GRF_DSP_CON0_RUNSTALL_MASK, 0);
 
     return HAL_OK;
 }
@@ -365,7 +365,7 @@ HAL_Status HAL_DSP_START(struct DSP_DEV *dsp)
  */
 HAL_Status HAL_DSP_STOP(struct DSP_DEV *dsp)
 {
-    WRITE_REG_MASK_WE(GRF->DSP_CON[0], GRF_DSP_CON0_RUNSTALL_MASK,
+    WRITE_REG_MASK_WE(GRF->DSP_CON0, GRF_DSP_CON0_RUNSTALL_MASK,
                       GRF_DSP_CON0_RUNSTALL_MASK);
 
     return HAL_OK;

@@ -134,7 +134,7 @@ struct BUS_GRF_REG {
     __IO uint32_t GPIO1A_IOMUX_H;                     /* Address Offset: 0x0004 */
     __IO uint32_t GPIO1B_IOMUX_L;                     /* Address Offset: 0x0008 */
     __IO uint32_t GPIO1B_IOMUX_H;                     /* Address Offset: 0x000C */
-         uint32_t RESERVED0[4];                       /* Address Offset: 0x0010 */
+         uint32_t RESERVED0010[4];                    /* Address Offset: 0x0010 */
     __IO uint32_t GPIO2A_IOMUX_L;                     /* Address Offset: 0x0020 */
     __IO uint32_t GPIO2A_IOMUX_H;                     /* Address Offset: 0x0024 */
     __IO uint32_t GPIO2B_IOMUX_L;                     /* Address Offset: 0x0028 */
@@ -142,7 +142,7 @@ struct BUS_GRF_REG {
     __IO uint32_t GPIO2C_IOMUX_L;                     /* Address Offset: 0x0030 */
     __IO uint32_t GPIO2C_IOMUX_H;                     /* Address Offset: 0x0034 */
     __IO uint32_t GPIO2D_IOMUX_L;                     /* Address Offset: 0x0038 */
-         uint32_t RESERVED1;                          /* Address Offset: 0x003C */
+         uint32_t RESERVED003C;                       /* Address Offset: 0x003C */
     __IO uint32_t GPIO3A_IOMUX_L;                     /* Address Offset: 0x0040 */
     __IO uint32_t GPIO3A_IOMUX_H;                     /* Address Offset: 0x0044 */
     __IO uint32_t GPIO3B_IOMUX_L;                     /* Address Offset: 0x0048 */
@@ -150,17 +150,17 @@ struct BUS_GRF_REG {
     __IO uint32_t GPIO3C_IOMUX_L;                     /* Address Offset: 0x0050 */
     __IO uint32_t GPIO3C_IOMUX_H;                     /* Address Offset: 0x0054 */
     __IO uint32_t GPIO3D_IOMUX_L;                     /* Address Offset: 0x0058 */
-         uint32_t RESERVED2;                          /* Address Offset: 0x005C */
+         uint32_t RESERVED005C;                       /* Address Offset: 0x005C */
     __IO uint32_t GPIO4A_IOMUX_L;                     /* Address Offset: 0x0060 */
     __IO uint32_t GPIO4A_IOMUX_H;                     /* Address Offset: 0x0064 */
     __IO uint32_t GPIO4B_IOMUX_L;                     /* Address Offset: 0x0068 */
     __IO uint32_t GPIO4B_IOMUX_H;                     /* Address Offset: 0x006C */
     __IO uint32_t GPIO4C_IOMUX_L;                     /* Address Offset: 0x0070 */
     __IO uint32_t GPIO4C_IOMUX_H;                     /* Address Offset: 0x0074 */
-         uint32_t RESERVED3[2];                       /* Address Offset: 0x0078 */
+         uint32_t RESERVED0078[2];                    /* Address Offset: 0x0078 */
     __IO uint32_t GPIO1A_P;                           /* Address Offset: 0x0080 */
     __IO uint32_t GPIO1B_P;                           /* Address Offset: 0x0084 */
-         uint32_t RESERVED4[2];                       /* Address Offset: 0x0088 */
+         uint32_t RESERVED0088[2];                    /* Address Offset: 0x0088 */
     __IO uint32_t GPIO2A_P;                           /* Address Offset: 0x0090 */
     __IO uint32_t GPIO2B_P;                           /* Address Offset: 0x0094 */
     __IO uint32_t GPIO2C_P;                           /* Address Offset: 0x0098 */
@@ -172,10 +172,10 @@ struct BUS_GRF_REG {
     __IO uint32_t GPIO4A_P;                           /* Address Offset: 0x00B0 */
     __IO uint32_t GPIO4B_P;                           /* Address Offset: 0x00B4 */
     __IO uint32_t GPIO4C_P;                           /* Address Offset: 0x00B8 */
-         uint32_t RESERVED5;                          /* Address Offset: 0x00BC */
+         uint32_t RESERVED00BC;                       /* Address Offset: 0x00BC */
     __IO uint32_t GPIO1A_SR;                          /* Address Offset: 0x00C0 */
     __IO uint32_t GPIO1B_SR;                          /* Address Offset: 0x00C4 */
-         uint32_t RESERVED6[2];                       /* Address Offset: 0x00C8 */
+         uint32_t RESERVED00C8[2];                    /* Address Offset: 0x00C8 */
     __IO uint32_t GPIO2A_SR;                          /* Address Offset: 0x00D0 */
     __IO uint32_t GPIO2B_SR;                          /* Address Offset: 0x00D4 */
     __IO uint32_t GPIO2C_SR;                          /* Address Offset: 0x00D8 */
@@ -187,7 +187,7 @@ struct BUS_GRF_REG {
     __IO uint32_t GPIO4A_SR;                          /* Address Offset: 0x00F0 */
     __IO uint32_t GPIO4B_SR;                          /* Address Offset: 0x00F4 */
     __IO uint32_t GPIO4C_SR;                          /* Address Offset: 0x00F8 */
-         uint32_t RESERVED7;                          /* Address Offset: 0x00FC */
+         uint32_t RESERVED00FC;                       /* Address Offset: 0x00FC */
     __IO uint32_t GPIO1A_SMT;                         /* Address Offset: 0x0100 */
     __IO uint32_t GPIO1B_SMT;                         /* Address Offset: 0x0104 */
     __IO uint32_t GPIO1C_SMT;                         /* Address Offset: 0x0108 */
@@ -203,10 +203,10 @@ struct BUS_GRF_REG {
     __IO uint32_t GPIO4A_SMT;                         /* Address Offset: 0x0130 */
     __IO uint32_t GPIO4B_SMT;                         /* Address Offset: 0x0134 */
     __IO uint32_t GPIO4C_SMT;                         /* Address Offset: 0x0138 */
-         uint32_t RESERVED8;                          /* Address Offset: 0x013C */
+         uint32_t RESERVED013C;                       /* Address Offset: 0x013C */
     __IO uint32_t GPIO1A_E;                           /* Address Offset: 0x0140 */
     __IO uint32_t GPIO1B_E;                           /* Address Offset: 0x0144 */
-         uint32_t RESERVED9[2];                       /* Address Offset: 0x0148 */
+         uint32_t RESERVED0148[2];                    /* Address Offset: 0x0148 */
     __IO uint32_t GPIO2A_E;                           /* Address Offset: 0x0150 */
     __IO uint32_t GPIO2B_E;                           /* Address Offset: 0x0154 */
     __IO uint32_t GPIO2C_E;                           /* Address Offset: 0x0158 */
@@ -218,32 +218,51 @@ struct BUS_GRF_REG {
     __IO uint32_t GPIO4A_E;                           /* Address Offset: 0x0170 */
     __IO uint32_t GPIO4B_E;                           /* Address Offset: 0x0174 */
     __IO uint32_t GPIO4C_E;                           /* Address Offset: 0x0178 */
-         uint32_t RESERVED10[5];                      /* Address Offset: 0x017C */
+         uint32_t RESERVED017C[5];                    /* Address Offset: 0x017C */
     __IO uint32_t IOFUNC_CON0;                        /* Address Offset: 0x0190 */
-         uint32_t RESERVED11[155];                    /* Address Offset: 0x0194 */
-    __IO uint32_t SOC_CON[6];                         /* Address Offset: 0x0400 */
-         uint32_t RESERVED12[6];                      /* Address Offset: 0x0418 */
-    __IO uint32_t VI_CON[2];                          /* Address Offset: 0x0430 */
+         uint32_t RESERVED0194[155];                  /* Address Offset: 0x0194 */
+    __IO uint32_t SOC_CON0;                           /* Address Offset: 0x0400 */
+    __IO uint32_t SOC_CON1;                           /* Address Offset: 0x0404 */
+    __IO uint32_t SOC_CON2;                           /* Address Offset: 0x0408 */
+    __IO uint32_t SOC_CON3;                           /* Address Offset: 0x040C */
+    __IO uint32_t SOC_CON4;                           /* Address Offset: 0x0410 */
+    __IO uint32_t SOC_CON5;                           /* Address Offset: 0x0414 */
+         uint32_t RESERVED0418[6];                    /* Address Offset: 0x0418 */
+    __IO uint32_t VI_CON0;                            /* Address Offset: 0x0430 */
+    __IO uint32_t VI_CON1;                            /* Address Offset: 0x0434 */
     __IO uint32_t VI_STATUS;                          /* Address Offset: 0x0438 */
-         uint32_t RESERVED13;                         /* Address Offset: 0x043C */
-    __IO uint32_t VO_CON[2];                          /* Address Offset: 0x0440 */
-         uint32_t RESERVED14[14];                     /* Address Offset: 0x0448 */
+         uint32_t RESERVED043C;                       /* Address Offset: 0x043C */
+    __IO uint32_t VO_CON0;                            /* Address Offset: 0x0440 */
+    __IO uint32_t VO_CON1;                            /* Address Offset: 0x0444 */
+         uint32_t RESERVED0448[14];                   /* Address Offset: 0x0448 */
     __IO uint32_t SOC_STATUS0;                        /* Address Offset: 0x0480 */
-         uint32_t RESERVED15[31];                     /* Address Offset: 0x0484 */
-    __IO uint32_t CPU_CON[3];                         /* Address Offset: 0x0500 */
-         uint32_t RESERVED16[5];                      /* Address Offset: 0x050C */
-    __IO uint32_t CPU_STATUS[2];                      /* Address Offset: 0x0520 */
-         uint32_t RESERVED17[2];                      /* Address Offset: 0x0528 */
-    __IO uint32_t SOC_NOC_CON[3];                     /* Address Offset: 0x0530 */
-         uint32_t RESERVED18[49];                     /* Address Offset: 0x053C */
-    __IO uint32_t RAM_CON[5];                         /* Address Offset: 0x0600 */
-         uint32_t RESERVED19[91];                     /* Address Offset: 0x0614 */
-    __IO uint32_t NPUPVTM_CON[2];                     /* Address Offset: 0x0780 */
-    __IO uint32_t NPUPVTM_STATUS[2];                  /* Address Offset: 0x0788 */
-         uint32_t RESERVED20[28];                     /* Address Offset: 0x0790 */
+         uint32_t RESERVED0484[31];                   /* Address Offset: 0x0484 */
+    __IO uint32_t CPU_CON0;                           /* Address Offset: 0x0500 */
+    __IO uint32_t CPU_CON1;                           /* Address Offset: 0x0504 */
+    __IO uint32_t CPU_CON2;                           /* Address Offset: 0x0508 */
+         uint32_t RESERVED050C[5];                    /* Address Offset: 0x050C */
+    __IO uint32_t CPU_STATUS0;                        /* Address Offset: 0x0520 */
+    __I  uint32_t CPU_STATUS1;                        /* Address Offset: 0x0524 */
+         uint32_t RESERVED0528[2];                    /* Address Offset: 0x0528 */
+    __IO uint32_t SOC_NOC_CON0;                       /* Address Offset: 0x0530 */
+    __IO uint32_t SOC_NOC_CON1;                       /* Address Offset: 0x0534 */
+    __IO uint32_t SOC_NOC_CON2;                       /* Address Offset: 0x0538 */
+         uint32_t RESERVED053C[49];                   /* Address Offset: 0x053C */
+    __IO uint32_t RAM_CON0;                           /* Address Offset: 0x0600 */
+    __IO uint32_t RAM_CON1;                           /* Address Offset: 0x0604 */
+    __IO uint32_t RAM_CON2;                           /* Address Offset: 0x0608 */
+    __IO uint32_t RAM_CON3;                           /* Address Offset: 0x060C */
+    __IO uint32_t RAM_CON4;                           /* Address Offset: 0x0610 */
+         uint32_t RESERVED0614[91];                   /* Address Offset: 0x0614 */
+    __IO uint32_t NPUPVTM_CON0;                       /* Address Offset: 0x0780 */
+    __IO uint32_t NPUPVTM_CON1;                       /* Address Offset: 0x0784 */
+    __IO uint32_t NPUPVTM_STATUS0;                    /* Address Offset: 0x0788 */
+    __IO uint32_t NPUPVTM_STATUS1;                    /* Address Offset: 0x078C */
+         uint32_t RESERVED0790[28];                   /* Address Offset: 0x0790 */
     __I  uint32_t CHIP_ID;                            /* Address Offset: 0x0800 */
-         uint32_t RESERVED21[63];                     /* Address Offset: 0x0804 */
-    __IO uint32_t MAC_CON[2];                         /* Address Offset: 0x0900 */
+         uint32_t RESERVED0804[63];                   /* Address Offset: 0x0804 */
+    __IO uint32_t MAC_CON0;                           /* Address Offset: 0x0900 */
+    __IO uint32_t MAC_CON1;                           /* Address Offset: 0x0904 */
 };
 /* USB2PHY_GRF Register Structure Define */
 struct USB2PHY_GRF_REG {
@@ -1151,6 +1170,7 @@ struct TIMER_REG {
 /****************************************************************************************/
 /****************************************BUS_GRF*****************************************/
 /* GPIO1A_IOMUX_L */
+#define BUS_GRF_GPIO1A_IOMUX_L_OFFSET                      (0x0)
 #define BUS_GRF_GPIO1A_IOMUX_L_GPIO1A0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO1A_IOMUX_L_GPIO1A0_SEL_MASK            (0xFU << BUS_GRF_GPIO1A_IOMUX_L_GPIO1A0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO1A_IOMUX_L_GPIO1A1_SEL_SHIFT           (4U)
@@ -1160,6 +1180,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1A_IOMUX_L_GPIO1A3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO1A_IOMUX_L_GPIO1A3_SEL_MASK            (0xFU << BUS_GRF_GPIO1A_IOMUX_L_GPIO1A3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO1A_IOMUX_H */
+#define BUS_GRF_GPIO1A_IOMUX_H_OFFSET                      (0x4)
 #define BUS_GRF_GPIO1A_IOMUX_H_GPIO1A4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO1A_IOMUX_H_GPIO1A4_SEL_MASK            (0xFU << BUS_GRF_GPIO1A_IOMUX_H_GPIO1A4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO1A_IOMUX_H_GPIO1A5_SEL_SHIFT           (4U)
@@ -1169,6 +1190,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1A_IOMUX_H_GPIO1A7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO1A_IOMUX_H_GPIO1A7_SEL_MASK            (0xFU << BUS_GRF_GPIO1A_IOMUX_H_GPIO1A7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO1B_IOMUX_L */
+#define BUS_GRF_GPIO1B_IOMUX_L_OFFSET                      (0x8)
 #define BUS_GRF_GPIO1B_IOMUX_L_GPIO1B0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO1B_IOMUX_L_GPIO1B0_SEL_MASK            (0xFU << BUS_GRF_GPIO1B_IOMUX_L_GPIO1B0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO1B_IOMUX_L_GPIO1B1_SEL_SHIFT           (4U)
@@ -1178,6 +1200,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1B_IOMUX_L_GPIO1B3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO1B_IOMUX_L_GPIO1B3_SEL_MASK            (0xFU << BUS_GRF_GPIO1B_IOMUX_L_GPIO1B3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO1B_IOMUX_H */
+#define BUS_GRF_GPIO1B_IOMUX_H_OFFSET                      (0xC)
 #define BUS_GRF_GPIO1B_IOMUX_H_GPIO1B4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO1B_IOMUX_H_GPIO1B4_SEL_MASK            (0xFU << BUS_GRF_GPIO1B_IOMUX_H_GPIO1B4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO1B_IOMUX_H_GPIO1B5_SEL_SHIFT           (4U)
@@ -1187,6 +1210,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1B_IOMUX_H_GPIO1B7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO1B_IOMUX_H_GPIO1B7_SEL_MASK            (0xFU << BUS_GRF_GPIO1B_IOMUX_H_GPIO1B7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO2A_IOMUX_L */
+#define BUS_GRF_GPIO2A_IOMUX_L_OFFSET                      (0x20)
 #define BUS_GRF_GPIO2A_IOMUX_L_GPIO2A0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO2A_IOMUX_L_GPIO2A0_SEL_MASK            (0xFU << BUS_GRF_GPIO2A_IOMUX_L_GPIO2A0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO2A_IOMUX_L_GPIO2A1_SEL_SHIFT           (4U)
@@ -1196,6 +1220,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2A_IOMUX_L_GPIO2A3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO2A_IOMUX_L_GPIO2A3_SEL_MASK            (0xFU << BUS_GRF_GPIO2A_IOMUX_L_GPIO2A3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO2A_IOMUX_H */
+#define BUS_GRF_GPIO2A_IOMUX_H_OFFSET                      (0x24)
 #define BUS_GRF_GPIO2A_IOMUX_H_GPIO2A4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO2A_IOMUX_H_GPIO2A4_SEL_MASK            (0xFU << BUS_GRF_GPIO2A_IOMUX_H_GPIO2A4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO2A_IOMUX_H_GPIO2A5_SEL_SHIFT           (4U)
@@ -1205,6 +1230,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2A_IOMUX_H_GPIO2A7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO2A_IOMUX_H_GPIO2A7_SEL_MASK            (0xFU << BUS_GRF_GPIO2A_IOMUX_H_GPIO2A7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO2B_IOMUX_L */
+#define BUS_GRF_GPIO2B_IOMUX_L_OFFSET                      (0x28)
 #define BUS_GRF_GPIO2B_IOMUX_L_GPIO2B0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO2B_IOMUX_L_GPIO2B0_SEL_MASK            (0xFU << BUS_GRF_GPIO2B_IOMUX_L_GPIO2B0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO2B_IOMUX_L_GPIO2B1_SEL_SHIFT           (4U)
@@ -1214,6 +1240,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2B_IOMUX_L_GPIO2B3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO2B_IOMUX_L_GPIO2B3_SEL_MASK            (0xFU << BUS_GRF_GPIO2B_IOMUX_L_GPIO2B3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO2B_IOMUX_H */
+#define BUS_GRF_GPIO2B_IOMUX_H_OFFSET                      (0x2C)
 #define BUS_GRF_GPIO2B_IOMUX_H_GPIO2B4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO2B_IOMUX_H_GPIO2B4_SEL_MASK            (0xFU << BUS_GRF_GPIO2B_IOMUX_H_GPIO2B4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO2B_IOMUX_H_GPIO2B5_SEL_SHIFT           (4U)
@@ -1223,6 +1250,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2B_IOMUX_H_GPIO2B7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO2B_IOMUX_H_GPIO2B7_SEL_MASK            (0xFU << BUS_GRF_GPIO2B_IOMUX_H_GPIO2B7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO2C_IOMUX_L */
+#define BUS_GRF_GPIO2C_IOMUX_L_OFFSET                      (0x30)
 #define BUS_GRF_GPIO2C_IOMUX_L_GPIO2C0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO2C_IOMUX_L_GPIO2C0_SEL_MASK            (0xFU << BUS_GRF_GPIO2C_IOMUX_L_GPIO2C0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO2C_IOMUX_L_GPIO2C1_SEL_SHIFT           (4U)
@@ -1232,6 +1260,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2C_IOMUX_L_GPIO2C3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO2C_IOMUX_L_GPIO2C3_SEL_MASK            (0xFU << BUS_GRF_GPIO2C_IOMUX_L_GPIO2C3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO2C_IOMUX_H */
+#define BUS_GRF_GPIO2C_IOMUX_H_OFFSET                      (0x34)
 #define BUS_GRF_GPIO2C_IOMUX_H_GPIO2C4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO2C_IOMUX_H_GPIO2C4_SEL_MASK            (0xFU << BUS_GRF_GPIO2C_IOMUX_H_GPIO2C4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO2C_IOMUX_H_GPIO2C5_SEL_SHIFT           (4U)
@@ -1241,11 +1270,13 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2C_IOMUX_H_GPIO2C7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO2C_IOMUX_H_GPIO2C7_SEL_MASK            (0xFU << BUS_GRF_GPIO2C_IOMUX_H_GPIO2C7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO2D_IOMUX_L */
+#define BUS_GRF_GPIO2D_IOMUX_L_OFFSET                      (0x38)
 #define BUS_GRF_GPIO2D_IOMUX_L_GPIO2D0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO2D_IOMUX_L_GPIO2D0_SEL_MASK            (0xFU << BUS_GRF_GPIO2D_IOMUX_L_GPIO2D0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO2D_IOMUX_L_GPIO2D1_SEL_SHIFT           (4U)
 #define BUS_GRF_GPIO2D_IOMUX_L_GPIO2D1_SEL_MASK            (0xFU << BUS_GRF_GPIO2D_IOMUX_L_GPIO2D1_SEL_SHIFT)           /* 0x000000F0 */
 /* GPIO3A_IOMUX_L */
+#define BUS_GRF_GPIO3A_IOMUX_L_OFFSET                      (0x40)
 #define BUS_GRF_GPIO3A_IOMUX_L_GPIO3A0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO3A_IOMUX_L_GPIO3A0_SEL_MASK            (0xFU << BUS_GRF_GPIO3A_IOMUX_L_GPIO3A0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO3A_IOMUX_L_GPIO3A1_SEL_SHIFT           (4U)
@@ -1255,6 +1286,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3A_IOMUX_L_GPIO3A3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO3A_IOMUX_L_GPIO3A3_SEL_MASK            (0xFU << BUS_GRF_GPIO3A_IOMUX_L_GPIO3A3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO3A_IOMUX_H */
+#define BUS_GRF_GPIO3A_IOMUX_H_OFFSET                      (0x44)
 #define BUS_GRF_GPIO3A_IOMUX_H_GPIO3A4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO3A_IOMUX_H_GPIO3A4_SEL_MASK            (0xFU << BUS_GRF_GPIO3A_IOMUX_H_GPIO3A4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO3A_IOMUX_H_GPIO3A5_SEL_SHIFT           (4U)
@@ -1264,6 +1296,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3A_IOMUX_H_GPIO3A7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO3A_IOMUX_H_GPIO3A7_SEL_MASK            (0xFU << BUS_GRF_GPIO3A_IOMUX_H_GPIO3A7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO3B_IOMUX_L */
+#define BUS_GRF_GPIO3B_IOMUX_L_OFFSET                      (0x48)
 #define BUS_GRF_GPIO3B_IOMUX_L_GPIO3B0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO3B_IOMUX_L_GPIO3B0_SEL_MASK            (0xFU << BUS_GRF_GPIO3B_IOMUX_L_GPIO3B0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO3B_IOMUX_L_GPIO3B1_SEL_SHIFT           (4U)
@@ -1273,6 +1306,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3B_IOMUX_L_GPIO3B3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO3B_IOMUX_L_GPIO3B3_SEL_MASK            (0xFU << BUS_GRF_GPIO3B_IOMUX_L_GPIO3B3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO3B_IOMUX_H */
+#define BUS_GRF_GPIO3B_IOMUX_H_OFFSET                      (0x4C)
 #define BUS_GRF_GPIO3B_IOMUX_H_GPIO3B4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO3B_IOMUX_H_GPIO3B4_SEL_MASK            (0xFU << BUS_GRF_GPIO3B_IOMUX_H_GPIO3B4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO3B_IOMUX_H_GPIO3B5_SEL_SHIFT           (4U)
@@ -1282,6 +1316,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3B_IOMUX_H_GPIO3B7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO3B_IOMUX_H_GPIO3B7_SEL_MASK            (0xFU << BUS_GRF_GPIO3B_IOMUX_H_GPIO3B7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO3C_IOMUX_L */
+#define BUS_GRF_GPIO3C_IOMUX_L_OFFSET                      (0x50)
 #define BUS_GRF_GPIO3C_IOMUX_L_GPIO3C0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO3C_IOMUX_L_GPIO3C0_SEL_MASK            (0xFU << BUS_GRF_GPIO3C_IOMUX_L_GPIO3C0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO3C_IOMUX_L_GPIO3C1_SEL_SHIFT           (4U)
@@ -1291,6 +1326,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3C_IOMUX_L_GPIO3C3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO3C_IOMUX_L_GPIO3C3_SEL_MASK            (0xFU << BUS_GRF_GPIO3C_IOMUX_L_GPIO3C3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO3C_IOMUX_H */
+#define BUS_GRF_GPIO3C_IOMUX_H_OFFSET                      (0x54)
 #define BUS_GRF_GPIO3C_IOMUX_H_GPIO3C4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO3C_IOMUX_H_GPIO3C4_SEL_MASK            (0xFU << BUS_GRF_GPIO3C_IOMUX_H_GPIO3C4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO3C_IOMUX_H_GPIO3C5_SEL_SHIFT           (4U)
@@ -1300,6 +1336,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3C_IOMUX_H_GPIO3C7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO3C_IOMUX_H_GPIO3C7_SEL_MASK            (0xFU << BUS_GRF_GPIO3C_IOMUX_H_GPIO3C7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO3D_IOMUX_L */
+#define BUS_GRF_GPIO3D_IOMUX_L_OFFSET                      (0x58)
 #define BUS_GRF_GPIO3D_IOMUX_L_GPIO3D0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO3D_IOMUX_L_GPIO3D0_SEL_MASK            (0xFU << BUS_GRF_GPIO3D_IOMUX_L_GPIO3D0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO3D_IOMUX_L_GPIO3D1_SEL_SHIFT           (4U)
@@ -1309,6 +1346,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3D_IOMUX_L_GPIO3D3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO3D_IOMUX_L_GPIO3D3_SEL_MASK            (0xFU << BUS_GRF_GPIO3D_IOMUX_L_GPIO3D3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO4A_IOMUX_L */
+#define BUS_GRF_GPIO4A_IOMUX_L_OFFSET                      (0x60)
 #define BUS_GRF_GPIO4A_IOMUX_L_GPIO4A0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO4A_IOMUX_L_GPIO4A0_SEL_MASK            (0xFU << BUS_GRF_GPIO4A_IOMUX_L_GPIO4A0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO4A_IOMUX_L_GPIO4A1_SEL_SHIFT           (4U)
@@ -1318,6 +1356,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4A_IOMUX_L_GPIO4A3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO4A_IOMUX_L_GPIO4A3_SEL_MASK            (0xFU << BUS_GRF_GPIO4A_IOMUX_L_GPIO4A3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO4A_IOMUX_H */
+#define BUS_GRF_GPIO4A_IOMUX_H_OFFSET                      (0x64)
 #define BUS_GRF_GPIO4A_IOMUX_H_GPIO4A4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO4A_IOMUX_H_GPIO4A4_SEL_MASK            (0xFU << BUS_GRF_GPIO4A_IOMUX_H_GPIO4A4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO4A_IOMUX_H_GPIO4A5_SEL_SHIFT           (4U)
@@ -1327,6 +1366,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4A_IOMUX_H_GPIO4A7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO4A_IOMUX_H_GPIO4A7_SEL_MASK            (0xFU << BUS_GRF_GPIO4A_IOMUX_H_GPIO4A7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO4B_IOMUX_L */
+#define BUS_GRF_GPIO4B_IOMUX_L_OFFSET                      (0x68)
 #define BUS_GRF_GPIO4B_IOMUX_L_GPIO4B0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO4B_IOMUX_L_GPIO4B0_SEL_MASK            (0xFU << BUS_GRF_GPIO4B_IOMUX_L_GPIO4B0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO4B_IOMUX_L_GPIO4B1_SEL_SHIFT           (4U)
@@ -1336,6 +1376,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4B_IOMUX_L_GPIO4B3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO4B_IOMUX_L_GPIO4B3_SEL_MASK            (0xFU << BUS_GRF_GPIO4B_IOMUX_L_GPIO4B3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO4B_IOMUX_H */
+#define BUS_GRF_GPIO4B_IOMUX_H_OFFSET                      (0x6C)
 #define BUS_GRF_GPIO4B_IOMUX_H_GPIO4B4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO4B_IOMUX_H_GPIO4B4_SEL_MASK            (0xFU << BUS_GRF_GPIO4B_IOMUX_H_GPIO4B4_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO4B_IOMUX_H_GPIO4B5_SEL_SHIFT           (4U)
@@ -1345,6 +1386,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4B_IOMUX_H_GPIO4B7_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO4B_IOMUX_H_GPIO4B7_SEL_MASK            (0xFU << BUS_GRF_GPIO4B_IOMUX_H_GPIO4B7_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO4C_IOMUX_L */
+#define BUS_GRF_GPIO4C_IOMUX_L_OFFSET                      (0x70)
 #define BUS_GRF_GPIO4C_IOMUX_L_GPIO4C0_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO4C_IOMUX_L_GPIO4C0_SEL_MASK            (0xFU << BUS_GRF_GPIO4C_IOMUX_L_GPIO4C0_SEL_SHIFT)           /* 0x0000000F */
 #define BUS_GRF_GPIO4C_IOMUX_L_GPIO4C1_SEL_SHIFT           (4U)
@@ -1354,9 +1396,11 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4C_IOMUX_L_GPIO4C3_SEL_SHIFT           (12U)
 #define BUS_GRF_GPIO4C_IOMUX_L_GPIO4C3_SEL_MASK            (0xFU << BUS_GRF_GPIO4C_IOMUX_L_GPIO4C3_SEL_SHIFT)           /* 0x0000F000 */
 /* GPIO4C_IOMUX_H */
+#define BUS_GRF_GPIO4C_IOMUX_H_OFFSET                      (0x74)
 #define BUS_GRF_GPIO4C_IOMUX_H_GPIO4C4_SEL_SHIFT           (0U)
 #define BUS_GRF_GPIO4C_IOMUX_H_GPIO4C4_SEL_MASK            (0xFU << BUS_GRF_GPIO4C_IOMUX_H_GPIO4C4_SEL_SHIFT)           /* 0x0000000F */
 /* GPIO1A_P */
+#define BUS_GRF_GPIO1A_P_OFFSET                            (0x80)
 #define BUS_GRF_GPIO1A_P_GPIO1A0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO1A_P_GPIO1A0_P_MASK                    (0x3U << BUS_GRF_GPIO1A_P_GPIO1A0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO1A_P_GPIO1A1_P_SHIFT                   (2U)
@@ -1374,6 +1418,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1A_P_GPIO1A7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO1A_P_GPIO1A7_P_MASK                    (0x3U << BUS_GRF_GPIO1A_P_GPIO1A7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO1B_P */
+#define BUS_GRF_GPIO1B_P_OFFSET                            (0x84)
 #define BUS_GRF_GPIO1B_P_GPIO1B0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO1B_P_GPIO1B0_P_MASK                    (0x3U << BUS_GRF_GPIO1B_P_GPIO1B0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO1B_P_GPIO1B1_P_SHIFT                   (2U)
@@ -1391,6 +1436,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1B_P_GPIO1B7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO1B_P_GPIO1B7_P_MASK                    (0x3U << BUS_GRF_GPIO1B_P_GPIO1B7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO2A_P */
+#define BUS_GRF_GPIO2A_P_OFFSET                            (0x90)
 #define BUS_GRF_GPIO2A_P_GPIO2A0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO2A_P_GPIO2A0_P_MASK                    (0x3U << BUS_GRF_GPIO2A_P_GPIO2A0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO2A_P_GPIO2A1_P_SHIFT                   (2U)
@@ -1408,6 +1454,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2A_P_GPIO2A7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO2A_P_GPIO2A7_P_MASK                    (0x3U << BUS_GRF_GPIO2A_P_GPIO2A7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO2B_P */
+#define BUS_GRF_GPIO2B_P_OFFSET                            (0x94)
 #define BUS_GRF_GPIO2B_P_GPIO2B0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO2B_P_GPIO2B0_P_MASK                    (0x3U << BUS_GRF_GPIO2B_P_GPIO2B0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO2B_P_GPIO2B1_P_SHIFT                   (2U)
@@ -1425,6 +1472,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2B_P_GPIO2B7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO2B_P_GPIO2B7_P_MASK                    (0x3U << BUS_GRF_GPIO2B_P_GPIO2B7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO2C_P */
+#define BUS_GRF_GPIO2C_P_OFFSET                            (0x98)
 #define BUS_GRF_GPIO2C_P_GPIO2C0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO2C_P_GPIO2C0_P_MASK                    (0x3U << BUS_GRF_GPIO2C_P_GPIO2C0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO2C_P_GPIO2C1_P_SHIFT                   (2U)
@@ -1442,6 +1490,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2C_P_GPIO2C7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO2C_P_GPIO2C7_P_MASK                    (0x3U << BUS_GRF_GPIO2C_P_GPIO2C7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO2D_P */
+#define BUS_GRF_GPIO2D_P_OFFSET                            (0x9C)
 #define BUS_GRF_GPIO2D_P_GPIO2D0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO2D_P_GPIO2D0_P_MASK                    (0x3U << BUS_GRF_GPIO2D_P_GPIO2D0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO2D_P_GPIO2D1_P_SHIFT                   (2U)
@@ -1459,6 +1508,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2D_P_GPIO2D7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO2D_P_GPIO2D7_P_MASK                    (0x3U << BUS_GRF_GPIO2D_P_GPIO2D7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO3A_P */
+#define BUS_GRF_GPIO3A_P_OFFSET                            (0xA0)
 #define BUS_GRF_GPIO3A_P_GPIO3A0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO3A_P_GPIO3A0_P_MASK                    (0x3U << BUS_GRF_GPIO3A_P_GPIO3A0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO3A_P_GPIO3A1_P_SHIFT                   (2U)
@@ -1476,6 +1526,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3A_P_GPIO3A7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO3A_P_GPIO3A7_P_MASK                    (0x3U << BUS_GRF_GPIO3A_P_GPIO3A7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO3B_P */
+#define BUS_GRF_GPIO3B_P_OFFSET                            (0xA4)
 #define BUS_GRF_GPIO3B_P_GPIO3B0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO3B_P_GPIO3B0_P_MASK                    (0x3U << BUS_GRF_GPIO3B_P_GPIO3B0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO3B_P_GPIO3B1_P_SHIFT                   (2U)
@@ -1493,6 +1544,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3B_P_GPIO3B7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO3B_P_GPIO3B7_P_MASK                    (0x3U << BUS_GRF_GPIO3B_P_GPIO3B7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO3C_P */
+#define BUS_GRF_GPIO3C_P_OFFSET                            (0xA8)
 #define BUS_GRF_GPIO3C_P_GPIO3C0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO3C_P_GPIO3C0_P_MASK                    (0x3U << BUS_GRF_GPIO3C_P_GPIO3C0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO3C_P_GPIO3C1_P_SHIFT                   (2U)
@@ -1510,6 +1562,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3C_P_GPIO3C7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO3C_P_GPIO3C7_P_MASK                    (0x3U << BUS_GRF_GPIO3C_P_GPIO3C7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO3D_P */
+#define BUS_GRF_GPIO3D_P_OFFSET                            (0xAC)
 #define BUS_GRF_GPIO3D_P_GPIO3D0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO3D_P_GPIO3D0_P_MASK                    (0x3U << BUS_GRF_GPIO3D_P_GPIO3D0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO3D_P_GPIO3D1_P_SHIFT                   (2U)
@@ -1527,6 +1580,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3D_P_GPIO3D7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO3D_P_GPIO3D7_P_MASK                    (0x3U << BUS_GRF_GPIO3D_P_GPIO3D7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO4A_P */
+#define BUS_GRF_GPIO4A_P_OFFSET                            (0xB0)
 #define BUS_GRF_GPIO4A_P_GPIO4A0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO4A_P_GPIO4A0_P_MASK                    (0x3U << BUS_GRF_GPIO4A_P_GPIO4A0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO4A_P_GPIO4A1_P_SHIFT                   (2U)
@@ -1544,6 +1598,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4A_P_GPIO4A7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO4A_P_GPIO4A7_P_MASK                    (0x3U << BUS_GRF_GPIO4A_P_GPIO4A7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO4B_P */
+#define BUS_GRF_GPIO4B_P_OFFSET                            (0xB4)
 #define BUS_GRF_GPIO4B_P_GPIO4B0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO4B_P_GPIO4B0_P_MASK                    (0x3U << BUS_GRF_GPIO4B_P_GPIO4B0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO4B_P_GPIO4B1_P_SHIFT                   (2U)
@@ -1561,6 +1616,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4B_P_GPIO4B7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO4B_P_GPIO4B7_P_MASK                    (0x3U << BUS_GRF_GPIO4B_P_GPIO4B7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO4C_P */
+#define BUS_GRF_GPIO4C_P_OFFSET                            (0xB8)
 #define BUS_GRF_GPIO4C_P_GPIO4C0_P_SHIFT                   (0U)
 #define BUS_GRF_GPIO4C_P_GPIO4C0_P_MASK                    (0x3U << BUS_GRF_GPIO4C_P_GPIO4C0_P_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO4C_P_GPIO4C1_P_SHIFT                   (2U)
@@ -1578,6 +1634,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4C_P_GPIO4C7_P_SHIFT                   (14U)
 #define BUS_GRF_GPIO4C_P_GPIO4C7_P_MASK                    (0x3U << BUS_GRF_GPIO4C_P_GPIO4C7_P_SHIFT)                   /* 0x0000C000 */
 /* GPIO1A_SR */
+#define BUS_GRF_GPIO1A_SR_OFFSET                           (0xC0)
 #define BUS_GRF_GPIO1A_SR_GPIO1A0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO1A_SR_GPIO1A0_SR_MASK                  (0x1U << BUS_GRF_GPIO1A_SR_GPIO1A0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO1A_SR_GPIO1A1_SR_SHIFT                 (1U)
@@ -1595,6 +1652,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1A_SR_GPIO1A7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO1A_SR_GPIO1A7_SR_MASK                  (0x1U << BUS_GRF_GPIO1A_SR_GPIO1A7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO1B_SR */
+#define BUS_GRF_GPIO1B_SR_OFFSET                           (0xC4)
 #define BUS_GRF_GPIO1B_SR_GPIO1B0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO1B_SR_GPIO1B0_SR_MASK                  (0x1U << BUS_GRF_GPIO1B_SR_GPIO1B0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO1B_SR_GPIO1B1_SR_SHIFT                 (1U)
@@ -1612,6 +1670,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1B_SR_GPIO1B7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO1B_SR_GPIO1B7_SR_MASK                  (0x1U << BUS_GRF_GPIO1B_SR_GPIO1B7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO2A_SR */
+#define BUS_GRF_GPIO2A_SR_OFFSET                           (0xD0)
 #define BUS_GRF_GPIO2A_SR_GPIO2A0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO2A_SR_GPIO2A0_SR_MASK                  (0x1U << BUS_GRF_GPIO2A_SR_GPIO2A0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO2A_SR_GPIO2A1_SR_SHIFT                 (1U)
@@ -1629,6 +1688,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2A_SR_GPIO2A7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO2A_SR_GPIO2A7_SR_MASK                  (0x1U << BUS_GRF_GPIO2A_SR_GPIO2A7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO2B_SR */
+#define BUS_GRF_GPIO2B_SR_OFFSET                           (0xD4)
 #define BUS_GRF_GPIO2B_SR_GPIO2B0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO2B_SR_GPIO2B0_SR_MASK                  (0x1U << BUS_GRF_GPIO2B_SR_GPIO2B0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO2B_SR_GPIO2B1_SR_SHIFT                 (1U)
@@ -1646,6 +1706,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2B_SR_GPIO2B7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO2B_SR_GPIO2B7_SR_MASK                  (0x1U << BUS_GRF_GPIO2B_SR_GPIO2B7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO2C_SR */
+#define BUS_GRF_GPIO2C_SR_OFFSET                           (0xD8)
 #define BUS_GRF_GPIO2C_SR_GPIO2C0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO2C_SR_GPIO2C0_SR_MASK                  (0x1U << BUS_GRF_GPIO2C_SR_GPIO2C0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO2C_SR_GPIO2C1_SR_SHIFT                 (1U)
@@ -1663,6 +1724,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2C_SR_GPIO2C7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO2C_SR_GPIO2C7_SR_MASK                  (0x1U << BUS_GRF_GPIO2C_SR_GPIO2C7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO2D_SR */
+#define BUS_GRF_GPIO2D_SR_OFFSET                           (0xDC)
 #define BUS_GRF_GPIO2D_SR_GPIO2D0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO2D_SR_GPIO2D0_SR_MASK                  (0x1U << BUS_GRF_GPIO2D_SR_GPIO2D0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO2D_SR_GPIO2D1_SR_SHIFT                 (1U)
@@ -1680,6 +1742,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2D_SR_GPIO2D7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO2D_SR_GPIO2D7_SR_MASK                  (0x1U << BUS_GRF_GPIO2D_SR_GPIO2D7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO3A_SR */
+#define BUS_GRF_GPIO3A_SR_OFFSET                           (0xE0)
 #define BUS_GRF_GPIO3A_SR_GPIO3A0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO3A_SR_GPIO3A0_SR_MASK                  (0x1U << BUS_GRF_GPIO3A_SR_GPIO3A0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO3A_SR_GPIO3A1_SR_SHIFT                 (1U)
@@ -1697,6 +1760,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3A_SR_GPIO3A7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO3A_SR_GPIO3A7_SR_MASK                  (0x1U << BUS_GRF_GPIO3A_SR_GPIO3A7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO3B_SR */
+#define BUS_GRF_GPIO3B_SR_OFFSET                           (0xE4)
 #define BUS_GRF_GPIO3B_SR_GPIO3B0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO3B_SR_GPIO3B0_SR_MASK                  (0x1U << BUS_GRF_GPIO3B_SR_GPIO3B0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO3B_SR_GPIO3B1_SR_SHIFT                 (1U)
@@ -1714,6 +1778,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3B_SR_GPIO3B7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO3B_SR_GPIO3B7_SR_MASK                  (0x1U << BUS_GRF_GPIO3B_SR_GPIO3B7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO3C_SR */
+#define BUS_GRF_GPIO3C_SR_OFFSET                           (0xE8)
 #define BUS_GRF_GPIO3C_SR_GPIO3C0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO3C_SR_GPIO3C0_SR_MASK                  (0x1U << BUS_GRF_GPIO3C_SR_GPIO3C0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO3C_SR_GPIO3C1_SR_SHIFT                 (1U)
@@ -1731,6 +1796,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3C_SR_GPIO3C7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO3C_SR_GPIO3C7_SR_MASK                  (0x1U << BUS_GRF_GPIO3C_SR_GPIO3C7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO3D_SR */
+#define BUS_GRF_GPIO3D_SR_OFFSET                           (0xEC)
 #define BUS_GRF_GPIO3D_SR_GPIO3D0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO3D_SR_GPIO3D0_SR_MASK                  (0x1U << BUS_GRF_GPIO3D_SR_GPIO3D0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO3D_SR_GPIO3D1_SR_SHIFT                 (1U)
@@ -1748,6 +1814,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3D_SR_GPIO3D7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO3D_SR_GPIO3D7_SR_MASK                  (0x1U << BUS_GRF_GPIO3D_SR_GPIO3D7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO4A_SR */
+#define BUS_GRF_GPIO4A_SR_OFFSET                           (0xF0)
 #define BUS_GRF_GPIO4A_SR_GPIO4A0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO4A_SR_GPIO4A0_SR_MASK                  (0x1U << BUS_GRF_GPIO4A_SR_GPIO4A0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO4A_SR_GPIO4A1_SR_SHIFT                 (1U)
@@ -1765,6 +1832,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4A_SR_GPIO4A7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO4A_SR_GPIO4A7_SR_MASK                  (0x1U << BUS_GRF_GPIO4A_SR_GPIO4A7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO4B_SR */
+#define BUS_GRF_GPIO4B_SR_OFFSET                           (0xF4)
 #define BUS_GRF_GPIO4B_SR_GPIO4B0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO4B_SR_GPIO4B0_SR_MASK                  (0x1U << BUS_GRF_GPIO4B_SR_GPIO4B0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO4B_SR_GPIO4B1_SR_SHIFT                 (1U)
@@ -1782,6 +1850,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4B_SR_GPIO4B7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO4B_SR_GPIO4B7_SR_MASK                  (0x1U << BUS_GRF_GPIO4B_SR_GPIO4B7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO4C_SR */
+#define BUS_GRF_GPIO4C_SR_OFFSET                           (0xF8)
 #define BUS_GRF_GPIO4C_SR_GPIO4C0_SR_SHIFT                 (0U)
 #define BUS_GRF_GPIO4C_SR_GPIO4C0_SR_MASK                  (0x1U << BUS_GRF_GPIO4C_SR_GPIO4C0_SR_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_GPIO4C_SR_GPIO4C1_SR_SHIFT                 (1U)
@@ -1799,6 +1868,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4C_SR_GPIO4C7_SR_SHIFT                 (7U)
 #define BUS_GRF_GPIO4C_SR_GPIO4C7_SR_MASK                  (0x1U << BUS_GRF_GPIO4C_SR_GPIO4C7_SR_SHIFT)                 /* 0x00000080 */
 /* GPIO1A_SMT */
+#define BUS_GRF_GPIO1A_SMT_OFFSET                          (0x100)
 #define BUS_GRF_GPIO1A_SMT_GPIO1A0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO1A_SMT_GPIO1A0_SMT_MASK                (0x1U << BUS_GRF_GPIO1A_SMT_GPIO1A0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO1A_SMT_GPIO1A1_SMT_SHIFT               (1U)
@@ -1816,6 +1886,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1A_SMT_GPIO1A7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO1A_SMT_GPIO1A7_SMT_MASK                (0x1U << BUS_GRF_GPIO1A_SMT_GPIO1A7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO1B_SMT */
+#define BUS_GRF_GPIO1B_SMT_OFFSET                          (0x104)
 #define BUS_GRF_GPIO1B_SMT_GPIO1B0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO1B_SMT_GPIO1B0_SMT_MASK                (0x1U << BUS_GRF_GPIO1B_SMT_GPIO1B0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO1B_SMT_GPIO1B1_SMT_SHIFT               (1U)
@@ -1833,6 +1904,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1B_SMT_GPIO1B7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO1B_SMT_GPIO1B7_SMT_MASK                (0x1U << BUS_GRF_GPIO1B_SMT_GPIO1B7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO1C_SMT */
+#define BUS_GRF_GPIO1C_SMT_OFFSET                          (0x108)
 #define BUS_GRF_GPIO1C_SMT_GPIO1C0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO1C_SMT_GPIO1C0_SMT_MASK                (0x1U << BUS_GRF_GPIO1C_SMT_GPIO1C0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO1C_SMT_GPIO1C1_SMT_SHIFT               (1U)
@@ -1850,6 +1922,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1C_SMT_GPIO1C7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO1C_SMT_GPIO1C7_SMT_MASK                (0x1U << BUS_GRF_GPIO1C_SMT_GPIO1C7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO1D_SMT */
+#define BUS_GRF_GPIO1D_SMT_OFFSET                          (0x10C)
 #define BUS_GRF_GPIO1D_SMT_GPIO1D0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO1D_SMT_GPIO1D0_SMT_MASK                (0x1U << BUS_GRF_GPIO1D_SMT_GPIO1D0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO1D_SMT_GPIO1D1_SMT_SHIFT               (1U)
@@ -1867,6 +1940,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1D_SMT_GPIO1D7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO1D_SMT_GPIO1D7_SMT_MASK                (0x1U << BUS_GRF_GPIO1D_SMT_GPIO1D7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO2A_SMT */
+#define BUS_GRF_GPIO2A_SMT_OFFSET                          (0x110)
 #define BUS_GRF_GPIO2A_SMT_GPIO2A0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO2A_SMT_GPIO2A0_SMT_MASK                (0x1U << BUS_GRF_GPIO2A_SMT_GPIO2A0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO2A_SMT_GPIO2A1_SMT_SHIFT               (1U)
@@ -1884,6 +1958,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2A_SMT_GPIO2A7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO2A_SMT_GPIO2A7_SMT_MASK                (0x1U << BUS_GRF_GPIO2A_SMT_GPIO2A7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO2B_SMT */
+#define BUS_GRF_GPIO2B_SMT_OFFSET                          (0x114)
 #define BUS_GRF_GPIO2B_SMT_GPIO2B0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO2B_SMT_GPIO2B0_SMT_MASK                (0x1U << BUS_GRF_GPIO2B_SMT_GPIO2B0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO2B_SMT_GPIO2B1_SMT_SHIFT               (1U)
@@ -1901,6 +1976,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2B_SMT_GPIO2B7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO2B_SMT_GPIO2B7_SMT_MASK                (0x1U << BUS_GRF_GPIO2B_SMT_GPIO2B7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO2C_SMT */
+#define BUS_GRF_GPIO2C_SMT_OFFSET                          (0x118)
 #define BUS_GRF_GPIO2C_SMT_GPIO2C0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO2C_SMT_GPIO2C0_SMT_MASK                (0x1U << BUS_GRF_GPIO2C_SMT_GPIO2C0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO2C_SMT_GPIO2C1_SMT_SHIFT               (1U)
@@ -1918,6 +1994,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2C_SMT_GPIO2C7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO2C_SMT_GPIO2C7_SMT_MASK                (0x1U << BUS_GRF_GPIO2C_SMT_GPIO2C7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO2D_SMT */
+#define BUS_GRF_GPIO2D_SMT_OFFSET                          (0x11C)
 #define BUS_GRF_GPIO2D_SMT_GPIO2D0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO2D_SMT_GPIO2D0_SMT_MASK                (0x1U << BUS_GRF_GPIO2D_SMT_GPIO2D0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO2D_SMT_GPIO2D1_SMT_SHIFT               (1U)
@@ -1935,6 +2012,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2D_SMT_GPIO2D7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO2D_SMT_GPIO2D7_SMT_MASK                (0x1U << BUS_GRF_GPIO2D_SMT_GPIO2D7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO3A_SMT */
+#define BUS_GRF_GPIO3A_SMT_OFFSET                          (0x120)
 #define BUS_GRF_GPIO3A_SMT_GPIO3A0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO3A_SMT_GPIO3A0_SMT_MASK                (0x1U << BUS_GRF_GPIO3A_SMT_GPIO3A0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO3A_SMT_GPIO3A1_SMT_SHIFT               (1U)
@@ -1952,6 +2030,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3A_SMT_GPIO3A7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO3A_SMT_GPIO3A7_SMT_MASK                (0x1U << BUS_GRF_GPIO3A_SMT_GPIO3A7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO3B_SMT */
+#define BUS_GRF_GPIO3B_SMT_OFFSET                          (0x124)
 #define BUS_GRF_GPIO3B_SMT_GPIO3B0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO3B_SMT_GPIO3B0_SMT_MASK                (0x1U << BUS_GRF_GPIO3B_SMT_GPIO3B0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO3B_SMT_GPIO3B1_SMT_SHIFT               (1U)
@@ -1969,6 +2048,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3B_SMT_GPIO3B7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO3B_SMT_GPIO3B7_SMT_MASK                (0x1U << BUS_GRF_GPIO3B_SMT_GPIO3B7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO3C_SMT */
+#define BUS_GRF_GPIO3C_SMT_OFFSET                          (0x128)
 #define BUS_GRF_GPIO3C_SMT_GPIO3C0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO3C_SMT_GPIO3C0_SMT_MASK                (0x1U << BUS_GRF_GPIO3C_SMT_GPIO3C0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO3C_SMT_GPIO3C1_SMT_SHIFT               (1U)
@@ -1986,6 +2066,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3C_SMT_GPIO3C7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO3C_SMT_GPIO3C7_SMT_MASK                (0x1U << BUS_GRF_GPIO3C_SMT_GPIO3C7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO3D_SMT */
+#define BUS_GRF_GPIO3D_SMT_OFFSET                          (0x12C)
 #define BUS_GRF_GPIO3D_SMT_GPIO3D0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO3D_SMT_GPIO3D0_SMT_MASK                (0x1U << BUS_GRF_GPIO3D_SMT_GPIO3D0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO3D_SMT_GPIO3D1_SMT_SHIFT               (1U)
@@ -2003,6 +2084,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3D_SMT_GPIO3D7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO3D_SMT_GPIO3D7_SMT_MASK                (0x1U << BUS_GRF_GPIO3D_SMT_GPIO3D7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO4A_SMT */
+#define BUS_GRF_GPIO4A_SMT_OFFSET                          (0x130)
 #define BUS_GRF_GPIO4A_SMT_GPIO4A0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO4A_SMT_GPIO4A0_SMT_MASK                (0x1U << BUS_GRF_GPIO4A_SMT_GPIO4A0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO4A_SMT_GPIO4A1_SMT_SHIFT               (1U)
@@ -2020,6 +2102,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4A_SMT_GPIO4A7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO4A_SMT_GPIO4A7_SMT_MASK                (0x1U << BUS_GRF_GPIO4A_SMT_GPIO4A7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO4B_SMT */
+#define BUS_GRF_GPIO4B_SMT_OFFSET                          (0x134)
 #define BUS_GRF_GPIO4B_SMT_GPIO4B0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO4B_SMT_GPIO4B0_SMT_MASK                (0x1U << BUS_GRF_GPIO4B_SMT_GPIO4B0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO4B_SMT_GPIO4B1_SMT_SHIFT               (1U)
@@ -2037,6 +2120,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4B_SMT_GPIO4B7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO4B_SMT_GPIO4B7_SMT_MASK                (0x1U << BUS_GRF_GPIO4B_SMT_GPIO4B7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO4C_SMT */
+#define BUS_GRF_GPIO4C_SMT_OFFSET                          (0x138)
 #define BUS_GRF_GPIO4C_SMT_GPIO4C0_SMT_SHIFT               (0U)
 #define BUS_GRF_GPIO4C_SMT_GPIO4C0_SMT_MASK                (0x1U << BUS_GRF_GPIO4C_SMT_GPIO4C0_SMT_SHIFT)               /* 0x00000001 */
 #define BUS_GRF_GPIO4C_SMT_GPIO4C1_SMT_SHIFT               (1U)
@@ -2054,6 +2138,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4C_SMT_GPIO4C7_SMT_SHIFT               (7U)
 #define BUS_GRF_GPIO4C_SMT_GPIO4C7_SMT_MASK                (0x1U << BUS_GRF_GPIO4C_SMT_GPIO4C7_SMT_SHIFT)               /* 0x00000080 */
 /* GPIO1A_E */
+#define BUS_GRF_GPIO1A_E_OFFSET                            (0x140)
 #define BUS_GRF_GPIO1A_E_GPIO1A0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO1A_E_GPIO1A0_E_MASK                    (0x3U << BUS_GRF_GPIO1A_E_GPIO1A0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO1A_E_GPIO1A1_E_SHIFT                   (2U)
@@ -2071,6 +2156,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1A_E_GPIO1A7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO1A_E_GPIO1A7_E_MASK                    (0x3U << BUS_GRF_GPIO1A_E_GPIO1A7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO1B_E */
+#define BUS_GRF_GPIO1B_E_OFFSET                            (0x144)
 #define BUS_GRF_GPIO1B_E_GPIO1B0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO1B_E_GPIO1B0_E_MASK                    (0x3U << BUS_GRF_GPIO1B_E_GPIO1B0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO1B_E_GPIO1B1_E_SHIFT                   (2U)
@@ -2088,6 +2174,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO1B_E_GPIO1B7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO1B_E_GPIO1B7_E_MASK                    (0x3U << BUS_GRF_GPIO1B_E_GPIO1B7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO2A_E */
+#define BUS_GRF_GPIO2A_E_OFFSET                            (0x150)
 #define BUS_GRF_GPIO2A_E_GPIO2A0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO2A_E_GPIO2A0_E_MASK                    (0x3U << BUS_GRF_GPIO2A_E_GPIO2A0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO2A_E_GPIO2A1_E_SHIFT                   (2U)
@@ -2105,6 +2192,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2A_E_GPIO2A7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO2A_E_GPIO2A7_E_MASK                    (0x3U << BUS_GRF_GPIO2A_E_GPIO2A7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO2B_E */
+#define BUS_GRF_GPIO2B_E_OFFSET                            (0x154)
 #define BUS_GRF_GPIO2B_E_GPIO2B0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO2B_E_GPIO2B0_E_MASK                    (0x3U << BUS_GRF_GPIO2B_E_GPIO2B0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO2B_E_GPIO2B1_E_SHIFT                   (2U)
@@ -2122,6 +2210,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2B_E_GPIO2B7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO2B_E_GPIO2B7_E_MASK                    (0x3U << BUS_GRF_GPIO2B_E_GPIO2B7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO2C_E */
+#define BUS_GRF_GPIO2C_E_OFFSET                            (0x158)
 #define BUS_GRF_GPIO2C_E_GPIO2C0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO2C_E_GPIO2C0_E_MASK                    (0x3U << BUS_GRF_GPIO2C_E_GPIO2C0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO2C_E_GPIO2C1_E_SHIFT                   (2U)
@@ -2139,6 +2228,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2C_E_GPIO2C7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO2C_E_GPIO2C7_E_MASK                    (0x3U << BUS_GRF_GPIO2C_E_GPIO2C7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO2D_E */
+#define BUS_GRF_GPIO2D_E_OFFSET                            (0x15C)
 #define BUS_GRF_GPIO2D_E_GPIO2D0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO2D_E_GPIO2D0_E_MASK                    (0x3U << BUS_GRF_GPIO2D_E_GPIO2D0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO2D_E_GPIO2D1_E_SHIFT                   (2U)
@@ -2156,6 +2246,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO2D_E_GPIO2D7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO2D_E_GPIO2D7_E_MASK                    (0x3U << BUS_GRF_GPIO2D_E_GPIO2D7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO3A_E */
+#define BUS_GRF_GPIO3A_E_OFFSET                            (0x160)
 #define BUS_GRF_GPIO3A_E_GPIO3A0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO3A_E_GPIO3A0_E_MASK                    (0x3U << BUS_GRF_GPIO3A_E_GPIO3A0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO3A_E_GPIO3A1_E_SHIFT                   (2U)
@@ -2173,6 +2264,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3A_E_GPIO3A7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO3A_E_GPIO3A7_E_MASK                    (0x3U << BUS_GRF_GPIO3A_E_GPIO3A7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO3B_E */
+#define BUS_GRF_GPIO3B_E_OFFSET                            (0x164)
 #define BUS_GRF_GPIO3B_E_GPIO3B0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO3B_E_GPIO3B0_E_MASK                    (0x3U << BUS_GRF_GPIO3B_E_GPIO3B0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO3B_E_GPIO3B1_E_SHIFT                   (2U)
@@ -2190,6 +2282,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3B_E_GPIO3B7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO3B_E_GPIO3B7_E_MASK                    (0x3U << BUS_GRF_GPIO3B_E_GPIO3B7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO3C_E */
+#define BUS_GRF_GPIO3C_E_OFFSET                            (0x168)
 #define BUS_GRF_GPIO3C_E_GPIO3C0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO3C_E_GPIO3C0_E_MASK                    (0x3U << BUS_GRF_GPIO3C_E_GPIO3C0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO3C_E_GPIO3C1_E_SHIFT                   (2U)
@@ -2207,6 +2300,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3C_E_GPIO3C7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO3C_E_GPIO3C7_E_MASK                    (0x3U << BUS_GRF_GPIO3C_E_GPIO3C7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO3D_E */
+#define BUS_GRF_GPIO3D_E_OFFSET                            (0x16C)
 #define BUS_GRF_GPIO3D_E_GPIO3D0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO3D_E_GPIO3D0_E_MASK                    (0x3U << BUS_GRF_GPIO3D_E_GPIO3D0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO3D_E_GPIO3D1_E_SHIFT                   (2U)
@@ -2224,6 +2318,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO3D_E_GPIO3D7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO3D_E_GPIO3D7_E_MASK                    (0x3U << BUS_GRF_GPIO3D_E_GPIO3D7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO4A_E */
+#define BUS_GRF_GPIO4A_E_OFFSET                            (0x170)
 #define BUS_GRF_GPIO4A_E_GPIO4A0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO4A_E_GPIO4A0_E_MASK                    (0x3U << BUS_GRF_GPIO4A_E_GPIO4A0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO4A_E_GPIO4A1_E_SHIFT                   (2U)
@@ -2241,6 +2336,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4A_E_GPIO4A7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO4A_E_GPIO4A7_E_MASK                    (0x3U << BUS_GRF_GPIO4A_E_GPIO4A7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO4B_E */
+#define BUS_GRF_GPIO4B_E_OFFSET                            (0x174)
 #define BUS_GRF_GPIO4B_E_GPIO4B0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO4B_E_GPIO4B0_E_MASK                    (0x3U << BUS_GRF_GPIO4B_E_GPIO4B0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO4B_E_GPIO4B1_E_SHIFT                   (2U)
@@ -2258,6 +2354,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4B_E_GPIO4B7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO4B_E_GPIO4B7_E_MASK                    (0x3U << BUS_GRF_GPIO4B_E_GPIO4B7_E_SHIFT)                   /* 0x0000C000 */
 /* GPIO4C_E */
+#define BUS_GRF_GPIO4C_E_OFFSET                            (0x178)
 #define BUS_GRF_GPIO4C_E_GPIO4C0_E_SHIFT                   (0U)
 #define BUS_GRF_GPIO4C_E_GPIO4C0_E_MASK                    (0x3U << BUS_GRF_GPIO4C_E_GPIO4C0_E_SHIFT)                   /* 0x00000003 */
 #define BUS_GRF_GPIO4C_E_GPIO4C1_E_SHIFT                   (2U)
@@ -2275,6 +2372,7 @@ struct TIMER_REG {
 #define BUS_GRF_GPIO4C_E_GPIO4C7_E_SHIFT                   (14U)
 #define BUS_GRF_GPIO4C_E_GPIO4C7_E_MASK                    (0x3U << BUS_GRF_GPIO4C_E_GPIO4C7_E_SHIFT)                   /* 0x0000C000 */
 /* IOFUNC_CON0 */
+#define BUS_GRF_IOFUNC_CON0_OFFSET                         (0x190)
 #define BUS_GRF_IOFUNC_CON0_I2S0_TX_LRCK_SEL_SHIFT         (0U)
 #define BUS_GRF_IOFUNC_CON0_I2S0_TX_LRCK_SEL_MASK          (0x3U << BUS_GRF_IOFUNC_CON0_I2S0_TX_LRCK_SEL_SHIFT)         /* 0x00000003 */
 #define BUS_GRF_IOFUNC_CON0_I2S0_MCLK_SEL_SHIFT            (2U)
@@ -2294,9 +2392,11 @@ struct TIMER_REG {
 #define BUS_GRF_IOFUNC_CON0_UART2_SEL_SHIFT                (14U)
 #define BUS_GRF_IOFUNC_CON0_UART2_SEL_MASK                 (0x3U << BUS_GRF_IOFUNC_CON0_UART2_SEL_SHIFT)                /* 0x0000C000 */
 /* SOC_CON0 */
+#define BUS_GRF_SOC_CON0_OFFSET                            (0x400)
 #define BUS_GRF_SOC_CON0_TSADC_TESTBIT_SHIFT               (0U)
 #define BUS_GRF_SOC_CON0_TSADC_TESTBIT_MASK                (0xFFFFU << BUS_GRF_SOC_CON0_TSADC_TESTBIT_SHIFT)            /* 0x0000FFFF */
 /* SOC_CON1 */
+#define BUS_GRF_SOC_CON1_OFFSET                            (0x404)
 #define BUS_GRF_SOC_CON1_TSADC_CHSEL_SHIFT                 (0U)
 #define BUS_GRF_SOC_CON1_TSADC_CHSEL_MASK                  (0x3U << BUS_GRF_SOC_CON1_TSADC_CHSEL_SHIFT)                 /* 0x00000003 */
 #define BUS_GRF_SOC_CON1_TSADC_TSEN_PD_0_SHIFT             (2U)
@@ -2314,6 +2414,7 @@ struct TIMER_REG {
 #define BUS_GRF_SOC_CON1_UART7_RTS_INV_SHIFT               (11U)
 #define BUS_GRF_SOC_CON1_UART7_RTS_INV_MASK                (0x1U << BUS_GRF_SOC_CON1_UART7_RTS_INV_SHIFT)               /* 0x00000800 */
 /* SOC_CON2 */
+#define BUS_GRF_SOC_CON2_OFFSET                            (0x408)
 #define BUS_GRF_SOC_CON2_UART1_CTS_INV_SHIFT               (2U)
 #define BUS_GRF_SOC_CON2_UART1_CTS_INV_MASK                (0x1U << BUS_GRF_SOC_CON2_UART1_CTS_INV_SHIFT)               /* 0x00000004 */
 #define BUS_GRF_SOC_CON2_UART1_RTS_INV_SHIFT               (3U)
@@ -2343,17 +2444,21 @@ struct TIMER_REG {
 #define BUS_GRF_SOC_CON2_SYSTEM_MEM_INTL_SHIFT             (15U)
 #define BUS_GRF_SOC_CON2_SYSTEM_MEM_INTL_MASK              (0x1U << BUS_GRF_SOC_CON2_SYSTEM_MEM_INTL_SHIFT)             /* 0x00008000 */
 /* SOC_CON3 */
+#define BUS_GRF_SOC_CON3_OFFSET                            (0x40C)
 #define BUS_GRF_SOC_CON3_SARADC_ANA_REG_SHIFT              (0U)
 #define BUS_GRF_SOC_CON3_SARADC_ANA_REG_MASK               (0xFFFFU << BUS_GRF_SOC_CON3_SARADC_ANA_REG_SHIFT)           /* 0x0000FFFF */
 /* SOC_CON4 */
+#define BUS_GRF_SOC_CON4_OFFSET                            (0x410)
 #define BUS_GRF_SOC_CON4_PMU_PWR_IDLE_REQ_SHIFT            (14U)
 #define BUS_GRF_SOC_CON4_PMU_PWR_IDLE_REQ_MASK             (0x1U << BUS_GRF_SOC_CON4_PMU_PWR_IDLE_REQ_SHIFT)            /* 0x00004000 */
 #define BUS_GRF_SOC_CON4_GIC_PWR_IDLE_REQ_SHIFT            (15U)
 #define BUS_GRF_SOC_CON4_GIC_PWR_IDLE_REQ_MASK             (0x1U << BUS_GRF_SOC_CON4_GIC_PWR_IDLE_REQ_SHIFT)            /* 0x00008000 */
 /* SOC_CON5 */
+#define BUS_GRF_SOC_CON5_OFFSET                            (0x414)
 #define BUS_GRF_SOC_CON5_SDCARD_DECTN_DLY_SHIFT            (0U)
 #define BUS_GRF_SOC_CON5_SDCARD_DECTN_DLY_MASK             (0xFFFFFFFFU << BUS_GRF_SOC_CON5_SDCARD_DECTN_DLY_SHIFT)     /* 0xFFFFFFFF */
 /* VI_CON0 */
+#define BUS_GRF_VI_CON0_OFFSET                             (0x430)
 #define BUS_GRF_VI_CON0_CSIPHY_FORCERXMODE_0_SHIFT         (0U)
 #define BUS_GRF_VI_CON0_CSIPHY_FORCERXMODE_0_MASK          (0x1U << BUS_GRF_VI_CON0_CSIPHY_FORCERXMODE_0_SHIFT)         /* 0x00000001 */
 #define BUS_GRF_VI_CON0_CSIPHY_FORCERXMODE_1_SHIFT         (1U)
@@ -2379,6 +2484,7 @@ struct TIMER_REG {
 #define BUS_GRF_VI_CON0_ISP_CIF_IF_DATAWIDTH_SHIFT         (13U)
 #define BUS_GRF_VI_CON0_ISP_CIF_IF_DATAWIDTH_MASK          (0x3U << BUS_GRF_VI_CON0_ISP_CIF_IF_DATAWIDTH_SHIFT)         /* 0x00006000 */
 /* VI_CON1 */
+#define BUS_GRF_VI_CON1_OFFSET                             (0x434)
 #define BUS_GRF_VI_CON1_CSIPHY_CLKLANE_NUM_SHIFT           (0U)
 #define BUS_GRF_VI_CON1_CSIPHY_CLKLANE_NUM_MASK            (0x7FU << BUS_GRF_VI_CON1_CSIPHY_CLKLANE_NUM_SHIFT)          /* 0x0000007F */
 #define BUS_GRF_VI_CON1_CIF_CLK_DELAY_EN_SHIFT             (8U)
@@ -2390,6 +2496,7 @@ struct TIMER_REG {
 #define BUS_GRF_VI_CON1_DVP_MAINPRESS_SHIFT                (13U)
 #define BUS_GRF_VI_CON1_DVP_MAINPRESS_MASK                 (0x3U << BUS_GRF_VI_CON1_DVP_MAINPRESS_SHIFT)                /* 0x00006000 */
 /* VI_STATUS */
+#define BUS_GRF_VI_STATUS_OFFSET                           (0x438)
 #define BUS_GRF_VI_STATUS_CSIPHY_ULPSACTIVENOT_0_SHIFT     (0U)
 #define BUS_GRF_VI_STATUS_CSIPHY_ULPSACTIVENOT_0_MASK      (0x1U << BUS_GRF_VI_STATUS_CSIPHY_ULPSACTIVENOT_0_SHIFT)     /* 0x00000001 */
 #define BUS_GRF_VI_STATUS_CSIPHY_ULPSACTIVENOT_1_SHIFT     (1U)
@@ -2413,6 +2520,7 @@ struct TIMER_REG {
 #define BUS_GRF_VI_STATUS_CSIPHY_ERRCONTENTIONLP1_0_SHIFT  (10U)
 #define BUS_GRF_VI_STATUS_CSIPHY_ERRCONTENTIONLP1_0_MASK   (0x1U << BUS_GRF_VI_STATUS_CSIPHY_ERRCONTENTIONLP1_0_SHIFT)  /* 0x00000400 */
 /* VO_CON0 */
+#define BUS_GRF_VO_CON0_OFFSET                             (0x440)
 #define BUS_GRF_VO_CON0_VOPRAW_DMA_FINISH_ENABLE_SHIFT     (0U)
 #define BUS_GRF_VO_CON0_VOPRAW_DMA_FINISH_ENABLE_MASK      (0x1U << BUS_GRF_VO_CON0_VOPRAW_DMA_FINISH_ENABLE_SHIFT)     /* 0x00000001 */
 #define BUS_GRF_VO_CON0_VOPLITE_DMA_FINISH_ENABLE_SHIFT    (1U)
@@ -2432,6 +2540,7 @@ struct TIMER_REG {
 #define BUS_GRF_VO_CON0_VOPLITE_PRESS_SHIFT                (14U)
 #define BUS_GRF_VO_CON0_VOPLITE_PRESS_MASK                 (0x3U << BUS_GRF_VO_CON0_VOPLITE_PRESS_SHIFT)                /* 0x0000C000 */
 /* VO_CON1 */
+#define BUS_GRF_VO_CON1_OFFSET                             (0x444)
 #define BUS_GRF_VO_CON1_RGB_BYPASS_SHIFT                   (3U)
 #define BUS_GRF_VO_CON1_RGB_BYPASS_MASK                    (0x1U << BUS_GRF_VO_CON1_RGB_BYPASS_SHIFT)                   /* 0x00000008 */
 #define BUS_GRF_VO_CON1_LCDC_DCLK_INV_SEL_SHIFT            (4U)
@@ -2459,6 +2568,7 @@ struct TIMER_REG {
 #define BUS_GRF_VO_CON1_DSIPHY_TXSKEWCALHS_3_SHIFT         (15U)
 #define BUS_GRF_VO_CON1_DSIPHY_TXSKEWCALHS_3_MASK          (0x1U << BUS_GRF_VO_CON1_DSIPHY_TXSKEWCALHS_3_SHIFT)         /* 0x00008000 */
 /* SOC_STATUS0 */
+#define BUS_GRF_SOC_STATUS0_OFFSET                         (0x480)
 #define BUS_GRF_SOC_STATUS0_APLL_LOCK_SHIFT                (0U)
 #define BUS_GRF_SOC_STATUS0_APLL_LOCK_MASK                 (0x1U << BUS_GRF_SOC_STATUS0_APLL_LOCK_SHIFT)                /* 0x00000001 */
 #define BUS_GRF_SOC_STATUS0_DPLL_LOCK_SHIFT                (1U)
@@ -2502,6 +2612,7 @@ struct TIMER_REG {
 #define BUS_GRF_SOC_STATUS0_NPU_DEBUG_SHIFT                (24U)
 #define BUS_GRF_SOC_STATUS0_NPU_DEBUG_MASK                 (0xFFU << BUS_GRF_SOC_STATUS0_NPU_DEBUG_SHIFT)               /* 0xFF000000 */
 /* CPU_CON0 */
+#define BUS_GRF_CPU_CON0_OFFSET                            (0x500)
 #define BUS_GRF_CPU_CON0_L1RSTDISABLE_SHIFT                (0U)
 #define BUS_GRF_CPU_CON0_L1RSTDISABLE_MASK                 (0x3U << BUS_GRF_CPU_CON0_L1RSTDISABLE_SHIFT)                /* 0x00000003 */
 #define BUS_GRF_CPU_CON0_L2RSTDISABLE_SHIFT                (4U)
@@ -2511,6 +2622,7 @@ struct TIMER_REG {
 #define BUS_GRF_CPU_CON0_CFGTE_SHIFT                       (12U)
 #define BUS_GRF_CPU_CON0_CFGTE_MASK                        (0x3U << BUS_GRF_CPU_CON0_CFGTE_SHIFT)                       /* 0x00003000 */
 /* CPU_CON1 */
+#define BUS_GRF_CPU_CON1_OFFSET                            (0x504)
 #define BUS_GRF_CPU_CON1_CLREXMONREQ_SHIFT                 (0U)
 #define BUS_GRF_CPU_CON1_CLREXMONREQ_MASK                  (0x1U << BUS_GRF_CPU_CON1_CLREXMONREQ_SHIFT)                 /* 0x00000001 */
 #define BUS_GRF_CPU_CON1_CFGSDISABLE_SHIFT                 (1U)
@@ -2532,6 +2644,7 @@ struct TIMER_REG {
 #define BUS_GRF_CPU_CON1_AWUSER_MODE_SHIFT                 (11U)
 #define BUS_GRF_CPU_CON1_AWUSER_MODE_MASK                  (0x1U << BUS_GRF_CPU_CON1_AWUSER_MODE_SHIFT)                 /* 0x00000800 */
 /* CPU_CON2 */
+#define BUS_GRF_CPU_CON2_OFFSET                            (0x508)
 #define BUS_GRF_CPU_CON2_CA35_MA_SAWL_SHIFT                (0U)
 #define BUS_GRF_CPU_CON2_CA35_MA_SAWL_MASK                 (0x1U << BUS_GRF_CPU_CON2_CA35_MA_SAWL_SHIFT)                /* 0x00000001 */
 #define BUS_GRF_CPU_CON2_CA35_MA_WL_SHIFT                  (1U)
@@ -2549,6 +2662,7 @@ struct TIMER_REG {
 #define BUS_GRF_CPU_CON2_CA35_L2D_MA_WRASD_SHIFT           (7U)
 #define BUS_GRF_CPU_CON2_CA35_L2D_MA_WRASD_MASK            (0x1U << BUS_GRF_CPU_CON2_CA35_L2D_MA_WRASD_SHIFT)           /* 0x00000080 */
 /* CPU_STATUS0 */
+#define BUS_GRF_CPU_STATUS0_OFFSET                         (0x520)
 #define BUS_GRF_CPU_STATUS0_SMPNAMP_SHIFT                  (0U)
 #define BUS_GRF_CPU_STATUS0_SMPNAMP_MASK                   (0x3U << BUS_GRF_CPU_STATUS0_SMPNAMP_SHIFT)                  /* 0x00000003 */
 #define BUS_GRF_CPU_STATUS0_GIC500_ECC_FATAL_SHIFT         (4U)
@@ -2566,6 +2680,7 @@ struct TIMER_REG {
 #define BUS_GRF_CPU_STATUS0_L2FLUSHDONE_SHIFT              (16U)
 #define BUS_GRF_CPU_STATUS0_L2FLUSHDONE_MASK               (0x1U << BUS_GRF_CPU_STATUS0_L2FLUSHDONE_SHIFT)              /* 0x00010000 */
 /* CPU_STATUS1 */
+#define BUS_GRF_CPU_STATUS1_OFFSET                         (0x524)
 #define BUS_GRF_CPU_STATUS1_STANDBYWFE_SHIFT               (0U)
 #define BUS_GRF_CPU_STATUS1_STANDBYWFE_MASK                (0x3U << BUS_GRF_CPU_STATUS1_STANDBYWFE_SHIFT)               /* 0x00000003 */
 #define BUS_GRF_CPU_STATUS1_STANDBYWFI_SHIFT               (4U)
@@ -2573,6 +2688,7 @@ struct TIMER_REG {
 #define BUS_GRF_CPU_STATUS1_STANDBYWFIL2_SHIFT             (12U)
 #define BUS_GRF_CPU_STATUS1_STANDBYWFIL2_MASK              (0x1U << BUS_GRF_CPU_STATUS1_STANDBYWFIL2_SHIFT)             /* 0x00001000 */
 /* SOC_NOC_CON0 */
+#define BUS_GRF_SOC_NOC_CON0_OFFSET                        (0x530)
 #define BUS_GRF_SOC_NOC_CON0_AUDIO_FWD_BUS_BUS_STALL_SHIFT (0U)
 #define BUS_GRF_SOC_NOC_CON0_AUDIO_FWD_BUS_BUS_STALL_MASK  (0x1U << BUS_GRF_SOC_NOC_CON0_AUDIO_FWD_BUS_BUS_STALL_SHIFT) /* 0x00000001 */
 #define BUS_GRF_SOC_NOC_CON0_BUS_FWD_AUDIO_AUDIO_STALL_SHIFT (1U)
@@ -2606,6 +2722,7 @@ struct TIMER_REG {
 #define BUS_GRF_SOC_NOC_CON0_SYSTEM_MEM_FWD_SYSTEM_MEM0_SYSTEM_MEM_S0_TPWRSTALL_SHIFT (15U)
 #define BUS_GRF_SOC_NOC_CON0_SYSTEM_MEM_FWD_SYSTEM_MEM0_SYSTEM_MEM_S0_TPWRSTALL_MASK (0x1U << BUS_GRF_SOC_NOC_CON0_SYSTEM_MEM_FWD_SYSTEM_MEM0_SYSTEM_MEM_S0_TPWRSTALL_SHIFT) /* 0x00008000 */
 /* SOC_NOC_CON1 */
+#define BUS_GRF_SOC_NOC_CON1_OFFSET                        (0x534)
 #define BUS_GRF_SOC_NOC_CON1_NPU_FWD_SYSTEM_MEM_SYSTEM_MEM_STALL_SHIFT (3U)
 #define BUS_GRF_SOC_NOC_CON1_NPU_FWD_SYSTEM_MEM_SYSTEM_MEM_STALL_MASK (0x1U << BUS_GRF_SOC_NOC_CON1_NPU_FWD_SYSTEM_MEM_SYSTEM_MEM_STALL_SHIFT) /* 0x00000008 */
 #define BUS_GRF_SOC_NOC_CON1_NPU_REQ_MSCH_STALL_SHIFT      (4U)
@@ -2631,6 +2748,7 @@ struct TIMER_REG {
 #define BUS_GRF_SOC_NOC_CON1_VIO_FWD_BUS_STALL_SHIFT       (15U)
 #define BUS_GRF_SOC_NOC_CON1_VIO_FWD_BUS_STALL_MASK        (0x1U << BUS_GRF_SOC_NOC_CON1_VIO_FWD_BUS_STALL_SHIFT)       /* 0x00008000 */
 /* SOC_NOC_CON2 */
+#define BUS_GRF_SOC_NOC_CON2_OFFSET                        (0x538)
 #define BUS_GRF_SOC_NOC_CON2_VPU_FWD_BUS_BUS_STALL_SHIFT   (0U)
 #define BUS_GRF_SOC_NOC_CON2_VPU_FWD_BUS_BUS_STALL_MASK    (0x1U << BUS_GRF_SOC_NOC_CON2_VPU_FWD_BUS_BUS_STALL_SHIFT)   /* 0x00000001 */
 #define BUS_GRF_SOC_NOC_CON2_PCIE_FWD_PCIE_USB_STALL_SHIFT (1U)
@@ -2642,6 +2760,7 @@ struct TIMER_REG {
 #define BUS_GRF_SOC_NOC_CON2_MSCH_SPLIT_SIZE_SHIFT         (14U)
 #define BUS_GRF_SOC_NOC_CON2_MSCH_SPLIT_SIZE_MASK          (0x3U << BUS_GRF_SOC_NOC_CON2_MSCH_SPLIT_SIZE_SHIFT)         /* 0x0000C000 */
 /* RAM_CON0 */
+#define BUS_GRF_RAM_CON0_OFFSET                            (0x600)
 #define BUS_GRF_RAM_CON0_SYSTEM_MEM_EMAS_SHIFT             (0U)
 #define BUS_GRF_RAM_CON0_SYSTEM_MEM_EMAS_MASK              (0x3U << BUS_GRF_RAM_CON0_SYSTEM_MEM_EMAS_SHIFT)             /* 0x00000003 */
 #define BUS_GRF_RAM_CON0_SYSTEM_MEM_EMA_SHIFT              (2U)
@@ -2661,6 +2780,7 @@ struct TIMER_REG {
 #define BUS_GRF_RAM_CON0_NPU_MA_TPB_SHIFT                  (13U)
 #define BUS_GRF_RAM_CON0_NPU_MA_TPB_MASK                   (0x1U << BUS_GRF_RAM_CON0_NPU_MA_TPB_SHIFT)                  /* 0x00002000 */
 /* RAM_CON1 */
+#define BUS_GRF_RAM_CON1_OFFSET                            (0x604)
 #define BUS_GRF_RAM_CON1_VIO_DP_EMAA_SHIFT                 (0U)
 #define BUS_GRF_RAM_CON1_VIO_DP_EMAA_MASK                  (0x7U << BUS_GRF_RAM_CON1_VIO_DP_EMAA_SHIFT)                 /* 0x00000007 */
 #define BUS_GRF_RAM_CON1_VIO_DP_EMAB_SHIFT                 (4U)
@@ -2674,6 +2794,7 @@ struct TIMER_REG {
 #define BUS_GRF_RAM_CON1_VIO_SP_EMAW_SHIFT                 (12U)
 #define BUS_GRF_RAM_CON1_VIO_SP_EMAW_MASK                  (0x3U << BUS_GRF_RAM_CON1_VIO_SP_EMAW_SHIFT)                 /* 0x00003000 */
 /* RAM_CON2 */
+#define BUS_GRF_RAM_CON2_OFFSET                            (0x608)
 #define BUS_GRF_RAM_CON2_GMAC_EMASA_SHIFT                  (0U)
 #define BUS_GRF_RAM_CON2_GMAC_EMASA_MASK                   (0x1U << BUS_GRF_RAM_CON2_GMAC_EMASA_SHIFT)                  /* 0x00000001 */
 #define BUS_GRF_RAM_CON2_GMAC_EMAA_0_SHIFT                 (1U)
@@ -2701,6 +2822,7 @@ struct TIMER_REG {
 #define BUS_GRF_RAM_CON2_BUS_EMAW_SHIFT                    (14U)
 #define BUS_GRF_RAM_CON2_BUS_EMAW_MASK                     (0x3U << BUS_GRF_RAM_CON2_BUS_EMAW_SHIFT)                    /* 0x0000C000 */
 /* RAM_CON3 */
+#define BUS_GRF_RAM_CON3_OFFSET                            (0x60C)
 #define BUS_GRF_RAM_CON3_BUS_EMAA_SHIFT                    (0U)
 #define BUS_GRF_RAM_CON3_BUS_EMAA_MASK                     (0x7U << BUS_GRF_RAM_CON3_BUS_EMAA_SHIFT)                    /* 0x00000007 */
 #define BUS_GRF_RAM_CON3_BUS_EMASA_SHIFT                   (3U)
@@ -2716,6 +2838,7 @@ struct TIMER_REG {
 #define BUS_GRF_RAM_CON3_AUDIO_MA_WRASD_SHIFT              (11U)
 #define BUS_GRF_RAM_CON3_AUDIO_MA_WRASD_MASK               (0x1U << BUS_GRF_RAM_CON3_AUDIO_MA_WRASD_SHIFT)              /* 0x00000800 */
 /* RAM_CON4 */
+#define BUS_GRF_RAM_CON4_OFFSET                            (0x610)
 #define BUS_GRF_RAM_CON4_VPU_EMA_SHIFT                     (0U)
 #define BUS_GRF_RAM_CON4_VPU_EMA_MASK                      (0x7U << BUS_GRF_RAM_CON4_VPU_EMA_SHIFT)                     /* 0x00000007 */
 #define BUS_GRF_RAM_CON4_VPU_EMAA_SHIFT                    (3U)
@@ -2731,6 +2854,7 @@ struct TIMER_REG {
 #define BUS_GRF_RAM_CON4_VPU_EMA_ROM_SHIFT                 (13U)
 #define BUS_GRF_RAM_CON4_VPU_EMA_ROM_MASK                  (0x7U << BUS_GRF_RAM_CON4_VPU_EMA_ROM_SHIFT)                 /* 0x0000E000 */
 /* NPUPVTM_CON0 */
+#define BUS_GRF_NPUPVTM_CON0_OFFSET                        (0x780)
 #define BUS_GRF_NPUPVTM_CON0_NPUPVTM_START_SHIFT           (0U)
 #define BUS_GRF_NPUPVTM_CON0_NPUPVTM_START_MASK            (0x1U << BUS_GRF_NPUPVTM_CON0_NPUPVTM_START_SHIFT)           /* 0x00000001 */
 #define BUS_GRF_NPUPVTM_CON0_NPUPVTM_OSC_EN_SHIFT          (1U)
@@ -2738,23 +2862,29 @@ struct TIMER_REG {
 #define BUS_GRF_NPUPVTM_CON0_NPUPVTM_OSC_SEL_SHIFT         (2U)
 #define BUS_GRF_NPUPVTM_CON0_NPUPVTM_OSC_SEL_MASK          (0x7U << BUS_GRF_NPUPVTM_CON0_NPUPVTM_OSC_SEL_SHIFT)         /* 0x0000001C */
 /* NPUPVTM_CON1 */
+#define BUS_GRF_NPUPVTM_CON1_OFFSET                        (0x784)
 #define BUS_GRF_NPUPVTM_CON1_NPUPVTM_CAL_CNT_SHIFT         (0U)
 #define BUS_GRF_NPUPVTM_CON1_NPUPVTM_CAL_CNT_MASK          (0xFFFFFFFFU << BUS_GRF_NPUPVTM_CON1_NPUPVTM_CAL_CNT_SHIFT)  /* 0xFFFFFFFF */
 /* NPUPVTM_STATUS0 */
+#define BUS_GRF_NPUPVTM_STATUS0_OFFSET                     (0x788)
 #define BUS_GRF_NPUPVTM_STATUS0_NPUPVTM_FREQ_DONE_SHIFT    (0U)
 #define BUS_GRF_NPUPVTM_STATUS0_NPUPVTM_FREQ_DONE_MASK     (0x1U << BUS_GRF_NPUPVTM_STATUS0_NPUPVTM_FREQ_DONE_SHIFT)    /* 0x00000001 */
 /* NPUPVTM_STATUS1 */
+#define BUS_GRF_NPUPVTM_STATUS1_OFFSET                     (0x78C)
 #define BUS_GRF_NPUPVTM_STATUS1_NPUPVTM_FREQ_CNT_SHIFT     (0U)
 #define BUS_GRF_NPUPVTM_STATUS1_NPUPVTM_FREQ_CNT_MASK      (0xFFFFFFFFU << BUS_GRF_NPUPVTM_STATUS1_NPUPVTM_FREQ_CNT_SHIFT) /* 0xFFFFFFFF */
 /* CHIP_ID */
+#define BUS_GRF_CHIP_ID_OFFSET                             (0x800)
 #define BUS_GRF_CHIP_ID_CHIP_ID_SHIFT                      (0U)
 #define BUS_GRF_CHIP_ID_CHIP_ID_MASK                       (0xFFFFFFFFU << BUS_GRF_CHIP_ID_CHIP_ID_SHIFT)               /* 0xFFFFFFFF */
 /* MAC_CON0 */
+#define BUS_GRF_MAC_CON0_OFFSET                            (0x900)
 #define BUS_GRF_MAC_CON0_GMAC2IO_CLK_TX_DL_CFG_SHIFT       (0U)
 #define BUS_GRF_MAC_CON0_GMAC2IO_CLK_TX_DL_CFG_MASK        (0xFFU << BUS_GRF_MAC_CON0_GMAC2IO_CLK_TX_DL_CFG_SHIFT)      /* 0x000000FF */
 #define BUS_GRF_MAC_CON0_GMAC2IO_CLK_RX_DL_CFG_SHIFT       (8U)
 #define BUS_GRF_MAC_CON0_GMAC2IO_CLK_RX_DL_CFG_MASK        (0xFFU << BUS_GRF_MAC_CON0_GMAC2IO_CLK_RX_DL_CFG_SHIFT)      /* 0x0000FF00 */
 /* MAC_CON1 */
+#define BUS_GRF_MAC_CON1_OFFSET                            (0x904)
 #define BUS_GRF_MAC_CON1_GMAC2IO_TXCLK_DLY_ENA_SHIFT       (0U)
 #define BUS_GRF_MAC_CON1_GMAC2IO_TXCLK_DLY_ENA_MASK        (0x1U << BUS_GRF_MAC_CON1_GMAC2IO_TXCLK_DLY_ENA_SHIFT)       /* 0x00000001 */
 #define BUS_GRF_MAC_CON1_GMAC2IO_RXCLK_DLY_ENA_SHIFT       (1U)
@@ -2765,6 +2895,7 @@ struct TIMER_REG {
 #define BUS_GRF_MAC_CON1_GMAC2IO_FLOWCTRL_MASK             (0x1U << BUS_GRF_MAC_CON1_GMAC2IO_FLOWCTRL_SHIFT)            /* 0x00000008 */
 #define BUS_GRF_MAC_CON1_GMAC2IO_PHY_INTF_SEL_SHIFT        (4U)
 #define BUS_GRF_MAC_CON1_GMAC2IO_PHY_INTF_SEL_MASK         (0x7U << BUS_GRF_MAC_CON1_GMAC2IO_PHY_INTF_SEL_SHIFT)        /* 0x00000070 */
+
 /**************************************USB2PHY_GRF***************************************/
 /* REG0 */
 #define USB2PHY_GRF_REG0_USBPHY_REG0_SHIFT                 (0U)

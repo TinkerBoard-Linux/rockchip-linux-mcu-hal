@@ -75,5 +75,5 @@ void SystemInit(void)
 
     /* enable dap cache access for jtag protocol. don't modify the uncache data
      * by jtag, the data will be inconsistent. */
-    GRF->MCU_CON[0] |= GRF_MCU_CON0_M4_DAP_DCACHE_MASK;
+    GRF->MCU_CON0 |= GRF_MCU_CON0_M4_DAP_DCACHE_MASK;
 }

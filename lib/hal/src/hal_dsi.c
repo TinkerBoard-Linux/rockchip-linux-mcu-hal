@@ -39,7 +39,6 @@ typedef enum {
 } eDSI_DpiColorCoding;
 
 /********************* Private Variable Definition ***************************/
-static struct GRF_REG * const gGrfReg = GRF;
 static const char * const DPHY_ERROR[] = {
     "ErrEsc escape entry error from Lane 0",
     "ErrSyncEsc low-power data transmission synchronization error from Lane 0",
@@ -334,14 +333,14 @@ HAL_Status HAL_DSI_M31DphyPowerUp(struct DSI_REG *pReg)
                             GRF_DSI_STATUS0_DPHY_STOPSTATE_MASK;
     uint32_t start;
 
-    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 1);
+    WRITE_REG_MASK_WE(GRF->DSI_CON0, GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 1);
 
     start = HAL_GetTick();
     /* *
      * There is no phy_lock signal interface in m31 dphy
      * Use each lane's stop state to judge dphy is ready
      */
-    while (READ_BIT(gGrfReg->DSI_STATUS[0], phyStopState) != phyStopState) {
+    while (READ_BIT(GRF->DSI_STATUS0, phyStopState) != phyStopState) {
         if (HAL_GetTick() - start > WAIT_PHY_READY_MS) {
             HAL_DBG_ERR("wait mipi dphy ready time out\n");
 
@@ -359,7 +358,7 @@ HAL_Status HAL_DSI_M31DphyPowerUp(struct DSI_REG *pReg)
  */
 HAL_Status HAL_DSI_M31DphyPowerDown(struct DSI_REG *pReg)
 {
-    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 0);
+    WRITE_REG_MASK_WE(GRF->DSI_CON0, GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 0);
 
     return HAL_OK;
 }
@@ -417,20 +416,20 @@ uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps, eDSI_DphyR
 
     HAL_DSI_M31DphyPowerDown(pReg);
 
-    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PLL_CLK_SEL_MASK,
+    WRITE_REG_MASK_WE(GRF->DSI_CON0, GRF_DSI_CON0_DPHY_PLL_CLK_SEL_MASK,
                       clkSel << GRF_DSI_CON0_DPHY_PLL_CLK_SEL_SHIFT);
 
-    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_REFCLK_IN_SEL_MASK,
+    WRITE_REG_MASK_WE(GRF->DSI_CON0, GRF_DSI_CON0_DPHY_REFCLK_IN_SEL_MASK,
                       refClkIn << GRF_DSI_CON0_DPHY_REFCLK_IN_SEL_SHIFT);
 
-    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[2], GRF_DSI_CON2_DPHY_LANE_SWAP0_MASK |
+    WRITE_REG_MASK_WE(GRF->DSI_CON2, GRF_DSI_CON2_DPHY_LANE_SWAP0_MASK |
                       GRF_DSI_CON2_DPHY_LANE_SWAP1_MASK | GRF_DSI_CON2_DPHY_LANE_SWAP2_MASK |
                       GRF_DSI_CON2_DPHY_LANE_SWAP3_MASK | GRF_DSI_CON2_DPHY_LANE_SWAP_CLK_MASK,
                       0 << GRF_DSI_CON2_DPHY_LANE_SWAP0_SHIFT | 1 << GRF_DSI_CON2_DPHY_LANE_SWAP1_SHIFT |
                       2 << GRF_DSI_CON2_DPHY_LANE_SWAP2_SHIFT | 3 << GRF_DSI_CON2_DPHY_LANE_SWAP3_SHIFT |
                       4 << GRF_DSI_CON2_DPHY_LANE_SWAP_CLK_SHIFT);
 
-    WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 1);
+    WRITE_REG_MASK_WE(GRF->DSI_CON0, GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 1);
 
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_RSTZ_PHY_SHUTDOWNZ_MASK, 0);
     DSI_UPDATE_BIT(pReg->PHY_RSTZ, DSI_PHY_RSTZ_PHY_RSTZ_MASK, 0);

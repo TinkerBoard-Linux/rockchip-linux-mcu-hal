@@ -122,7 +122,6 @@ struct DSC_PPS {
 };
 
 /********************* Private Variable Definition ***************************/
-static struct GRF_REG * const gGrfReg = GRF;
 static struct VOP_REG s_vopRegMir;
 static const char * const VOP_IRQs[] =
 {
@@ -615,41 +614,41 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
 
     switch (path) {
     case SWITCH_TO_INTERNAL_DPHY:
-        WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4],
+        WRITE_REG_MASK_WE(GRF->SOC_CON4,
                           GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_SEL_MASK,
                           GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_SEL_MASK);
 
-        WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0], GRF_DSI_CON0_DPHY_PHYRSTZ_MASK,
+        WRITE_REG_MASK_WE(GRF->DSI_CON0, GRF_DSI_CON0_DPHY_PHYRSTZ_MASK,
                           GRF_DSI_CON0_DPHY_PHYRSTZ_MASK);
 
-        WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK, 0);
+        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK, 0);
         HAL_DelayMs(1);
 #ifdef IS_FPGA
-        WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
+        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
                           GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK);
 #else
-        WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
+        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
                           0);
 #endif
-        WRITE_REG_MASK_WE(gGrfReg->SOC_CON[0], GRF_SOC_CON0_VOP_TE_SEL_MASK,
+        WRITE_REG_MASK_WE(GRF->SOC_CON0, GRF_SOC_CON0_VOP_TE_SEL_MASK,
                           1 << GRF_SOC_CON0_VOP_TE_SEL_SHIFT);
 
         break;
     case SWITCH_TO_AP_BYPASS:
-        WRITE_REG_MASK_WE(gGrfReg->SOC_CON[0], GRF_SOC_CON0_VOP_TE_SEL_MASK,
+        WRITE_REG_MASK_WE(GRF->SOC_CON0, GRF_SOC_CON0_VOP_TE_SEL_MASK,
                           0 << GRF_SOC_CON0_VOP_TE_SEL_SHIFT);
 
 #ifdef IS_FPGA
-        WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK, 0);
+        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK, 0);
 #else
-        WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
+        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
                           GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK);
 #endif
-        WRITE_REG_MASK_WE(gGrfReg->DSI_CON[0],
+        WRITE_REG_MASK_WE(GRF->DSI_CON0,
                           GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 0);
 
         HAL_DelayMs(1);
-        WRITE_REG_MASK_WE(gGrfReg->SOC_CON[4], GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK,
+        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK,
                           GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK);
         break;
     default:

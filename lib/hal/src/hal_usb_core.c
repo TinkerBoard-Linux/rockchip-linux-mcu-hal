@@ -116,11 +116,9 @@ static void USB_EPStopXfer(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
 #ifdef USB_M31PHY_BASE
 static HAL_Status USB_M31PHYInit(void)
 {
-    struct GRF_REG * const gGrfReg = GRF;
-
     HAL_CRU_ClkResetDeassert(SRST_USB2PHYPO);
     /* Select USB controller UTMI interface to phy */
-    WRITE_REG_MASK_WE(gGrfReg->USBPHY_CON[0], GRF_USBPHY_CON0_UTMI_SEL_MASK,
+    WRITE_REG_MASK_WE(GRF->USBPHY_CON0, GRF_USBPHY_CON0_UTMI_SEL_MASK,
                       0 << GRF_USBPHY_CON0_UTMI_SEL_SHIFT);
     /* Wait for UTMI clk stable */
     HAL_DelayMs(2);
