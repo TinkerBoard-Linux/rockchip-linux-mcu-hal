@@ -22,8 +22,8 @@
 
 /***************************** Function Declare ******************************/
 
-HAL_Status HAL_PD_On(uint32_t pd);
-HAL_Status HAL_PD_Off(uint32_t pd);
+HAL_Status HAL_PD_On(ePD_Id pd);
+HAL_Status HAL_PD_Off(ePD_Id pd);
 
 #endif
 

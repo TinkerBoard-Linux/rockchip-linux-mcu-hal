@@ -25,7 +25,7 @@ TEST(HAL_PD, PdPowerOff){
     uint32_t ret;
 
     /* check config para */
-    ret = HAL_PD_Off(PISCES_PD_AUDIO);
+    ret = HAL_PD_Off(PD_AUDIO);
     TEST_ASSERT(ret == HAL_OK);
 }
 
@@ -34,7 +34,7 @@ TEST(HAL_PD, PdPowerOn){
     uint32_t ret;
 
     /* check config para */
-    ret = HAL_PD_On(PISCES_PD_AUDIO);
+    ret = HAL_PD_On(PD_AUDIO);
     TEST_ASSERT(ret == HAL_OK);
 }
 

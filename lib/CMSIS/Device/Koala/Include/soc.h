@@ -5306,9 +5306,13 @@ struct CRU_REG {
 
 #define PLL_INPUT_OSC_RATE       (26 * MHZ)
 
-#define KOALA_PD_DSP 0x00000000U
-#define KOALA_PD_MCU 0x00011111U
-#define KOALA_PD_BT_AUDIO 0x00022222U
+#ifndef __ASSEMBLY__
+typedef enum PD_Id {
+    PD_DSP              = 0x80000000U,
+    PD_MCU              = 0x80011111U,
+    PD_BT_AUDIO         = 0x80022222U,
+} ePD_Id;
+#endif
 
 /********Name=SOFTRST0_CON,Offset=0x300********/
 #define SRST_M3_AUTOCLR          0

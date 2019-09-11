@@ -45,16 +45,18 @@
 #ifdef HAL_PMU_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
-#define PD_PWR_SHIFT  0U
-#define PD_PWR_MASK   0x0000000FU
-#define PD_ST_SHIFT   4U
-#define PD_ST_MASK    0x000000F0U
-#define PD_REQ_SHIFT  8U
-#define PD_REQ_MASK   0x00000F00U
-#define PD_IDLE_SHIFT 12U
-#define PD_IDLE_MASK  0x0000F000U
-#define PD_ACK_SHIFT  16U
-#define PD_ACK_MASK   0x000F0000U
+#define PD_PWR_SHIFT   0U
+#define PD_PWR_MASK    0x0000000FU
+#define PD_ST_SHIFT    4U
+#define PD_ST_MASK     0x000000F0U
+#define PD_REQ_SHIFT   8U
+#define PD_REQ_MASK    0x00000F00U
+#define PD_IDLE_SHIFT  12U
+#define PD_IDLE_MASK   0x0000F000U
+#define PD_ACK_SHIFT   16U
+#define PD_ACK_MASK    0x000F0000U
+#define PD_VALID_SHIFT 31U
+#define PD_VALID_MASK  0x80000000U
 
 #define PD_GET_PWR_SHIFT(x) (((uint32_t)(x)&PD_PWR_MASK) >> PD_PWR_SHIFT)
 #define PD_GET_ST_SHIFT(x)  (((uint32_t)(x)&PD_ST_MASK) >> PD_ST_SHIFT)
@@ -65,13 +67,16 @@
 #define PD_GET_IDLE_SHIFT(x) (((uint32_t)(x)&PD_IDLE_MASK) >> PD_IDLE_SHIFT)
 #endif
 #define PD_GET_ACK_SHIFT(x) (((uint32_t)(x)&PD_ACK_MASK) >> PD_ACK_SHIFT)
+
+#define PD_IS_INVALID(x) (!(((uint32_t)(x)&PD_VALID_MASK) >> PD_VALID_SHIFT))
+
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
 
-static HAL_Check PD_IsIdle(uint32_t pd)
+static HAL_Check PD_IsIdle(ePD_Id pd)
 {
     uint32_t idleShift = PD_GET_IDLE_SHIFT(pd);
 
@@ -79,14 +84,14 @@ static HAL_Check PD_IsIdle(uint32_t pd)
 }
 
 #if defined(SOC_RK1808)
-static HAL_Check PD_ReadAck(uint32_t pd)
+static HAL_Check PD_ReadAck(ePD_Id pd)
 {
     uint32_t ackShift = PD_GET_ACK_SHIFT(pd);
 
     return (HAL_Check)((PMU->BUS_IDLE_ST & (1 << ackShift)) >> ackShift);
 }
 #else
-static HAL_Check PD_ReadAck(uint32_t pd)
+static HAL_Check PD_ReadAck(ePD_Id pd)
 {
     uint32_t ackShift = PD_GET_ACK_SHIFT(pd);
 
@@ -94,7 +99,7 @@ static HAL_Check PD_ReadAck(uint32_t pd)
 }
 #endif
 
-static HAL_Check PD_IsOn(uint32_t pd)
+static HAL_Check PD_IsOn(ePD_Id pd)
 {
     uint32_t stShift = PD_GET_ST_SHIFT(pd);
 
@@ -106,7 +111,7 @@ static HAL_Check PD_IsOn(uint32_t pd)
     return (HAL_Check)(!((PMU->PWRDN_ST & (1 << stShift)) >> stShift));
 }
 
-static HAL_Status PD_IdleRequest(uint32_t pd, HAL_Check idle)
+static HAL_Status PD_IdleRequest(ePD_Id pd, HAL_Check idle)
 {
     uint32_t reqShift = PD_GET_REQ_SHIFT(pd);
     uint32_t start, timeoutMs = 1000;
@@ -133,7 +138,7 @@ static HAL_Status PD_IdleRequest(uint32_t pd, HAL_Check idle)
     return HAL_OK;
 }
 
-static HAL_Status PD_PowerOn(uint32_t pd, HAL_Check on)
+static HAL_Status PD_PowerOn(ePD_Id pd, HAL_Check on)
 {
     uint32_t pwrShift = PD_GET_PWR_SHIFT(pd);
     uint32_t start, timeoutMs = 1000;
@@ -164,9 +169,12 @@ static HAL_Status PD_PowerOn(uint32_t pd, HAL_Check on)
  * @param  pd: pd id
  * @return HAL_Status
  */
-HAL_Status HAL_PD_On(uint32_t pd)
+HAL_Status HAL_PD_On(ePD_Id pd)
 {
     HAL_Status error;
+
+    if (PD_IS_INVALID(pd))
+        return HAL_INVAL;
 
     if (PD_IsOn(pd))
         return HAL_OK;
@@ -186,9 +194,12 @@ HAL_Status HAL_PD_On(uint32_t pd)
  * @param  pd: pd id
  * @return HAL_Status
  */
-HAL_Status HAL_PD_Off(uint32_t pd)
+HAL_Status HAL_PD_Off(ePD_Id pd)
 {
     HAL_Status error;
+
+    if (PD_IS_INVALID(pd))
+        return HAL_INVAL;
 
     if (!PD_IsOn(pd))
         return HAL_OK;

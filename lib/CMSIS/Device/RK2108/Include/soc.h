@@ -4172,10 +4172,14 @@ struct USB_HOST_CH_REG {
 #define PMU_DSPTCM_CON3_DSPAPM_ITCM_RET2N_SHIFT            (10U)
 #define PMU_DSPTCM_CON3_DSPAPM_ITCM_RET2N_MASK             (0x1U << PMU_DSPTCM_CON3_DSPAPM_ITCM_RET2N_SHIFT)            /* 0x00000400 */
 
-#define PISCES_PD_DSP 0x00000000U
-#define PISCES_PD_LOGIC 0x00011111U
-#define PISCES_PD_SHRM 0x00022222U
-#define PISCES_PD_AUDIO 0x00033333U
+#ifndef __ASSEMBLY__
+typedef enum PD_Id {
+    PD_DSP              = 0x80000000U,
+    PD_LOGIC            = 0x80011111U,
+    PD_SHRM             = 0x80022222U,
+    PD_AUDIO            = 0x80033333U,
+} ePD_Id;
+#endif
 /****************************************SHAREMEM****************************************/
 /* RRA_SLT_LO */
 #define SHAREMEM_RRA_SLT_LO_REQ_SLOT0_SHIFT                (0U)
