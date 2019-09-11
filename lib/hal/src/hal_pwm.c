@@ -138,8 +138,8 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
     HAL_DBG("channel=%d, period_ns=%ld, duty_ns=%ld\n",
             channel, config->periodNS, config->dutyNS);
 
-    period = (uint64_t)((pPWM->freq / 1000) * config->periodNS) / 1000000;
-    duty = (uint64_t)((pPWM->freq / 1000) * config->dutyNS) / 1000000;
+    period = HAL_DivU64((uint64_t)pPWM->freq * config->periodNS, 1000000000);
+    duty = HAL_DivU64((uint64_t)pPWM->freq * config->dutyNS, 1000000000);
 
     ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
     ctrl |= PWM_LOCK;
@@ -164,7 +164,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
 }
 
 /**
- * @brief  Configurate PWM oneshot mode.
+ * @brief  Configurate PWM oneshot count.
  * @param  pPWM: pointer to a PWM_HANDLE structure that contains
  *               the information for PWM module.
  * @param  channel: PWM channle(0~3).
@@ -191,9 +191,9 @@ HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t
  * @param  pPWM: pointer to a PWM_HANDLE structure that contains
  *               the information for PWM module.
  * @param  channel: PWM channle(0~3).
- * @retval HAL_PWM_Mode
+ * @retval ePWM_Mode
  */
-HAL_PWM_Mode HAL_PWM_GetMode(struct PWM_HANDLE *pPWM, uint8_t channel)
+ePWM_Mode HAL_PWM_GetMode(struct PWM_HANDLE *pPWM, uint8_t channel)
 {
     uint32_t ctrl;
 
@@ -214,9 +214,9 @@ HAL_PWM_Mode HAL_PWM_GetMode(struct PWM_HANDLE *pPWM, uint8_t channel)
  * @param  mode: Current mode on for PWM.
  * @retval HAL status
  */
-HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, HAL_PWM_Mode mode)
+HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, ePWM_Mode mode)
 {
-    uint32_t enable_conf, intEnable;
+    uint32_t enableConf, intEnable;
 
     HAL_ASSERT(pPWM != NULL);
     HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
@@ -230,9 +230,9 @@ HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, HAL_PWM_Mode
         WRITE_REG(pPWM->pReg->INT_EN, intEnable);
     }
 
-    enable_conf = READ_REG(PWM_CTRL_REG(pPWM, channel));
-    enable_conf |= (mode << PWM_MODE_SHIFT) | PWM_OUTPUT_LEFT | PWM_LP_DISABLE | PWM_ENABLE;
-    WRITE_REG(PWM_CTRL_REG(pPWM, channel), enable_conf);
+    enableConf = READ_REG(PWM_CTRL_REG(pPWM, channel));
+    enableConf |= (mode << PWM_MODE_SHIFT) | PWM_OUTPUT_LEFT | PWM_LP_DISABLE | PWM_ENABLE;
+    WRITE_REG(PWM_CTRL_REG(pPWM, channel), enableConf);
 
     return HAL_OK;
 }
