@@ -30,6 +30,7 @@ struct HAL_I2S_DEV {
     uint32_t mclk;
     uint32_t mclkGate;
     uint32_t hclk;
+    ePD_Id pd;
     uint16_t bclkFs;
     struct AUDIO_DMA_DATA rxDmaData;
     struct AUDIO_DMA_DATA txDmaData;

@@ -60,6 +60,7 @@ struct HAL_VAD_DEV {
     uint32_t sampleBytes; /**< Bytes per sample */
     uint32_t bufferTime; /* Buffer time in msec */
     uint32_t hclk;
+    ePD_Id pd;
     uint8_t irq;  /**< irq number */
     struct VAD_BUF vbuf;
 

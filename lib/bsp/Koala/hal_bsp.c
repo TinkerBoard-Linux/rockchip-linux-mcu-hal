@@ -14,6 +14,7 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
     .mclkRx = CLK_I2S_RX,
     .mclkRxGate = CLK_I2S_RX_SRC_GATE,
     .hclk = HCLK_I2S_GATE,
+    .pd = PD_BT_AUDIO,
     .bclkFs = 64,
     .rxDmaData =
     {
@@ -42,6 +43,7 @@ struct HAL_PDM_DEV g_pdm0Dev =
     .mclkRate = PDM_CLK_RATE,
     .mclkGate = CLK_PDM_SRC_GATE,
     .hclk = HCLK_PDM_GATE,
+    .pd = PD_BT_AUDIO,
     .reset = SRST_PDM,
     .rxDmaData =
     {

@@ -32,6 +32,7 @@ struct HAL_I2STDM_DEV {
     uint32_t mclkRx;
     uint32_t mclkRxGate;
     uint32_t hclk;
+    ePD_Id pd;
     uint16_t bclkFs;
     eTRCM_modeType trcmMode;
     struct AUDIO_DMA_DATA rxDmaData;

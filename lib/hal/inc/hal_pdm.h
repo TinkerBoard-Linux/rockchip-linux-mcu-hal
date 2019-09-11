@@ -116,6 +116,7 @@ struct HAL_PDM_DEV {
     uint32_t mclkRate;
     uint32_t hclk;
     uint32_t reset;
+    ePD_Id pd;
     ePDM_MODE mode;
     struct AUDIO_DMA_DATA rxDmaData;
 };

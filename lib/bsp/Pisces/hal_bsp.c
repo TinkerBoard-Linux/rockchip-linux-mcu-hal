@@ -10,6 +10,7 @@ struct HAL_ACDCDIG_DEV g_acdcDigDev =
 {
     .pReg = ACDCDIG,
     .hclk = PCLK_ACDC_DIG_GATE,
+    .pd = PD_AUDIO,
 };
 
 static HAL_Status BSP_ACDCDIG_Init(void)
@@ -67,6 +68,7 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
     .mclkRx = I2S_MCLKOUT,
     .mclkRxGate = CLK_I2S8CH_GATE,
     .hclk = HCLK_I2S_8CH_GATE,
+    .pd = PD_AUDIO,
     .bclkFs = 64,
     .rxDmaData =
     {
@@ -115,6 +117,7 @@ struct HAL_PDM_DEV g_pdm0Dev =
     .mclkRate = PDM_CLK_RATE,
 #endif
     .hclk = HCLK_PDM0_GATE,
+    .pd = PD_AUDIO,
     .reset = SRST_M_PDM0,
     .rxDmaData =
     {
@@ -150,6 +153,7 @@ struct HAL_PL330_DEV g_pl330Dev =
     .peripReqType = BURST,
     .irq[0] = DMAC_IRQn,
     .irq[1] = DMAC_ABORT_IRQn,
+    .pd = PD_AUDIO,
 };
 
 static HAL_Status BSP_PL330_Init(void)
@@ -193,6 +197,7 @@ struct HAL_VAD_DEV g_vadDev =
 {
     .pReg = VAD,
     .hclk = HCLK_VAD_GATE,
+    .pd = PD_AUDIO,
     .irq = VAD_IRQn,
 };
 
