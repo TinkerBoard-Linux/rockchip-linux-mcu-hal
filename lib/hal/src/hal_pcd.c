@@ -141,22 +141,15 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
             while (epIntr) {
                 if (epIntr & 0x1) {
                     epInt = USB_ReadDevOutEPInterrupt(pPCD->pReg, epNum);
+                    /* Clear OUT endpoint interrupts */
+                    CLEAR_OUT_EP_INTR(epNum, epInt);
+
                     /* Don't process XferCompl interrupt if it is a setup packet */
                     if ((epNum == 0) && (epInt & (USB_OTG_DOEPINT_STUP |
-                                                  USB_OTG_DOEPINT_STUPPKTRCVD))) {
+                                                  USB_OTG_DOEPINT_STUPPKTRCVD)))
                         epInt &= ~USB_OTG_DOEPINT_XFRC;
-                        CLEAR_OUT_EP_INTR(epNum, USB_OTG_DOEPINT_XFRC);
-                    }
 
                     if ((epInt & USB_OTG_DOEPINT_XFRC) == USB_OTG_DOEPINT_XFRC) {
-                        CLEAR_OUT_EP_INTR(epNum, USB_OTG_DOEPINT_XFRC);
-
-                        /* setup/out transaction management for Core ID >= 310A */
-                        if (pPCD->cfg.dmaEnable == 1) {
-                            if (USB_OUTEP(0)->DOEPINT & (1 << 15))
-                                CLEAR_OUT_EP_INTR(epNum, (1 << 15));
-                        }
-
                         if (pPCD->cfg.dmaEnable == 1) {
                             if (pPCD->outEp[epNum].xferLen > 0) {
                                 pktCnt = HAL_DIV_ROUND_UP(pPCD->outEp[epNum].xferLen,
@@ -177,29 +170,18 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                             /* this is ZLP, so prepare EP0 for next setup */
                             USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
                         } else {
+                            pPCD->outEp[epNum].xferLen = 0;
                             HAL_PCD_DataOutStageCallback(pPCD, epNum);
                         }
                     }
 
                     if ((epInt & USB_OTG_DOEPINT_STUP) == USB_OTG_DOEPINT_STUP) {
-                        /* setup/out transaction management for Core ID >= 310A */
-                        if (pPCD->cfg.dmaEnable == 1) {
-                            if (USB_OUTEP(0)->DOEPINT & (1 << 15))
-                                CLEAR_OUT_EP_INTR(epNum, (1 << 15));
+                        if (pPCD->cfg.dmaEnable == 1)
                             HAL_DCACHE_InvalidateByRange((uint32_t)(pPCD->setupBuf), sizeof(pPCD->setupBuf));
-                        }
 
                         /* Inform the upper layer that a setup packet is available */
                         HAL_PCD_SetupStageCallback(pPCD);
-                        CLEAR_OUT_EP_INTR(epNum, USB_OTG_DOEPINT_STUP);
                     }
-
-                    if ((epInt & USB_OTG_DOEPINT_OTEPDIS) == USB_OTG_DOEPINT_OTEPDIS)
-                        CLEAR_OUT_EP_INTR(epNum, USB_OTG_DOEPINT_OTEPDIS);
-
-                    /* Clear Status Phase Received interrupt */
-                    if ((epInt & USB_OTG_DOEPINT_OTEPSPR) == USB_OTG_DOEPINT_OTEPSPR)
-                        CLEAR_OUT_EP_INTR(epNum, USB_OTG_DOEPINT_OTEPSPR);
                 }
                 epNum++;
                 epIntr >>= 1;
@@ -215,12 +197,12 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
             while (epIntr) {
                 if (epIntr & 0x1) { /* In ITR */
                     epInt = USB_ReadDevInEPInterrupt(pPCD->pReg, epNum);
+                    /* Clear IN endpoint interrupts */
+                    CLEAR_IN_EP_INTR(epNum, epInt);
 
                     if ((epInt & USB_OTG_DIEPINT_XFRC) == USB_OTG_DIEPINT_XFRC) {
                         fifoEmptyMsk = 0x1 << epNum;
                         USB_DEVICE->DIEPEMPMSK &= ~fifoEmptyMsk;
-
-                        CLEAR_IN_EP_INTR(epNum, USB_OTG_DIEPINT_XFRC);
 
                         if (pPCD->cfg.dmaEnable == 1)
                             pPCD->inEp[epNum].pxferBuff += pPCD->inEp[epNum].maxPacket;
@@ -230,20 +212,10 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                             /* this is ZLP, so prepare EP0 for next setup */
                             USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
                         } else {
+                            pPCD->inEp[epNum].xferLen = 0;
                             HAL_PCD_DataInStageCallback(pPCD, epNum);
                         }
                     }
-                    if ((epInt & USB_OTG_DIEPINT_TOC) == USB_OTG_DIEPINT_TOC)
-                        CLEAR_IN_EP_INTR(epNum, USB_OTG_DIEPINT_TOC);
-
-                    if ((epInt & USB_OTG_DIEPINT_ITTXFE) == USB_OTG_DIEPINT_ITTXFE)
-                        CLEAR_IN_EP_INTR(epNum, USB_OTG_DIEPINT_ITTXFE);
-
-                    if ((epInt & USB_OTG_DIEPINT_INEPNE) == USB_OTG_DIEPINT_INEPNE)
-                        CLEAR_IN_EP_INTR(epNum, USB_OTG_DIEPINT_INEPNE);
-
-                    if ((epInt & USB_OTG_DIEPINT_EPDISD) == USB_OTG_DIEPINT_EPDISD)
-                        CLEAR_IN_EP_INTR(epNum, USB_OTG_DIEPINT_EPDISD);
 
                     if ((epInt & USB_OTG_DIEPINT_TXFE) == USB_OTG_DIEPINT_TXFE)
                         PCD_WriteEmptyTxFifo(pPCD, epNum);

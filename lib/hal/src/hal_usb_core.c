@@ -629,8 +629,7 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
                 USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
         }
         /* EP enable */
-        USB_OUTEP(pEP->num)->DOEPCTL |= (USB_OTG_DOEPCTL_CNAK |
-                                         USB_OTG_DOEPCTL_EPENA);
+        USB_OUTEP(pEP->num)->DOEPCTL |= (USB_OTG_DOEPCTL_CNAK | USB_OTG_DOEPCTL_EPENA);
     }
 
     return HAL_OK;
@@ -695,19 +694,19 @@ HAL_Status USB_EP0StartXfer(struct USB_GLOBAL_REG *pUSB,
          */
         USB_OUTEP(pEP->num)->DOEPTSIZ &= ~(USB_OTG_DOEPTSIZ_XFRSIZ);
         USB_OUTEP(pEP->num)->DOEPTSIZ &= ~(USB_OTG_DOEPTSIZ_PKTCNT);
+        USB_OUTEP(pEP->num)->DOEPTSIZ &= ~(USB_OTG_DOEPTSIZ_STUPCNT);
 
         if (pEP->xferLen > 0)
             pEP->xferLen = pEP->maxPacket;
 
         USB_OUTEP(pEP->num)->DOEPTSIZ |= (USB_OTG_DOEPTSIZ_PKTCNT & (1 << 19));
-        USB_OUTEP(pEP->num)->DOEPTSIZ |= (USB_OTG_DOEPTSIZ_XFRSIZ & (pEP->maxPacket));
+        USB_OUTEP(pEP->num)->DOEPTSIZ |= (USB_OTG_DOEPTSIZ_XFRSIZ & pEP->xferLen);
 
         if (dma == 1)
             USB_OUTEP(pEP->num)->DOEPDMA = (uint32_t)(pEP->dmaAddr);
 
         /* EP enable */
-        USB_OUTEP(pEP->num)->DOEPCTL |= (USB_OTG_DOEPCTL_CNAK |
-                                         USB_OTG_DOEPCTL_EPENA);
+        USB_OUTEP(pEP->num)->DOEPCTL |= (USB_OTG_DOEPCTL_CNAK | USB_OTG_DOEPCTL_EPENA);
     }
 
     return HAL_OK;
@@ -933,7 +932,7 @@ uint32_t USB_ReadDevOutEPInterrupt(struct USB_GLOBAL_REG *pUSB, uint8_t epNum)
     uint32_t v;
 
     v = USB_OUTEP(epNum)->DOEPINT;
-    v &= USB_DEVICE->DOEPMSK;
+    v &= (USB_DEVICE->DOEPMSK | USB_OTG_DOEPINT_STUPPKTRCVD_MASK);
 
     return v;
 }
@@ -1015,11 +1014,10 @@ HAL_Status USB_EP0_OutStart(struct USB_GLOBAL_REG *pUSB,
     USB_OUTEP(0)->DOEPTSIZ = 0;
     USB_OUTEP(0)->DOEPTSIZ |= (USB_OTG_DOEPTSIZ_PKTCNT & (1 << 19));
     USB_OUTEP(0)->DOEPTSIZ |= (3 * 8);
-    USB_OUTEP(0)->DOEPTSIZ |= USB_OTG_DOEPTSIZ_STUPCNT;
 
     if (dma == 1) {
         USB_OUTEP(0)->DOEPDMA = (uint32_t)psetup;
-        /* EP enable */
+        /* EP enable, for Setup request do not clear NAK */
         USB_OUTEP(0)->DOEPCTL = USB_OTG_DOEPCTL_EPENA;
     }
 
