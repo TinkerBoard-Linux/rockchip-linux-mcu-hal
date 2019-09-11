@@ -135,8 +135,8 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
             setBit = GRF_SOC_CON0_DSP_TCM_SEL0_MASK;
         WRITE_REG_MASK_WE(GRF->SOC_CON[0],
                           GRF_SOC_CON0_DSP_TCM_SEL0_MASK, setBit);
+        break;
     }
-    break;
     case DSP_IOCTL_SET_DTCM_SIZE:
     {
         uint32_t sel = 0x7;
@@ -160,8 +160,8 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
                 GRF_SOC_CON0_DSP_TCM_SEL2_MASK |
                 GRF_SOC_CON0_DSP_TCM_SEL3_MASK;
         WRITE_REG_MASK_WE(GRF->SOC_CON[0], mask, setBit);
+        break;
     }
-    break;
 #endif
 #if (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
     case DSP_IOCTL_SET_MEM_GATING:
@@ -178,8 +178,18 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
             WRITE_REG_MASK_WE(GRF->DSP_CON[2], mask, mask);
         else
             WRITE_REG_MASK_WE(GRF->DSP_CON[2], mask, 0);
-    };
         break;
+    }
+    case DSP_IOCTL_GET_POWER_ST:
+    {
+        uint32_t val = READ_REG(PMU->POWER_ST);
+        val = (val & PMU_POWER_ST_DSP_POWER_STATE_MASK) >> PMU_POWER_ST_DSP_POWER_STATE_SHIFT;
+        if (arg)
+            *(uint32_t *)arg = val;
+        else
+            ret = HAL_INVAL;
+        break;
+    }
 #endif
     default:
         break;
