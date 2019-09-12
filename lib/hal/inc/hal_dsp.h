@@ -26,7 +26,6 @@
 #define DSP_IOCTL_SET_ITCM_SIZE  DSP_IOCTL(1)
 #define DSP_IOCTL_SET_DTCM_SIZE  DSP_IOCTL(2)
 #define DSP_IOCTL_SET_MEM_GATING DSP_IOCTL(3)
-#define DSP_IOCTL_GET_POWER_ST   DSP_IOCTL(4)
 
 #define DSP_TCM_SEL(a) (0x1 << a)
 
@@ -61,6 +60,19 @@ typedef enum    {
     PWR_DOWN_MODE
 } eDSP_tcmMode;
 
+typedef enum {
+    ST_DSPAPM_NORMAL = 0,
+    ST_DSPAPM_IDLW,
+    ST_DSPAPM_TCMPD_PRE,
+    ST_DSPAPM_TCMPD,
+    ST_DSPAPM_PD,
+    ST_DSPAPM_WAIT,
+    ST_DSPAPM_LDOADJ,
+    ST_DSPAPM_TCMUP,
+    ST_DSPAPM_UP,
+    ST_DSPAPM_DEIDLE
+} eDSP_powerSt;
+
 struct DSP_OPS {
     int (*ioctl)(void *priv, int cmd, void *arg);
 };
@@ -79,14 +91,16 @@ struct DSP_DEV {
 /***************************** Function Declare ******************************/
 
 /** should hold lock to call these functions */
+eDSP_powerSt HAL_DSP_GetPowerSt(void);
+HAL_Status HAL_DSP_WaitForPowerSt(eDSP_powerSt status, uint32_t timeout);
 HAL_Status HAL_DSP_SoftWakeup(void);
 HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode);
 HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp);
 HAL_Status HAL_DSP_DeInit(struct DSP_DEV *dsp);
 HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr);
 HAL_Status HAL_DSP_Disable(struct DSP_DEV *dsp);
-HAL_Status HAL_DSP_START(struct DSP_DEV *dsp);
-HAL_Status HAL_DSP_STOP(struct DSP_DEV *dsp);
+HAL_Status HAL_DSP_Start(struct DSP_DEV *dsp);
+HAL_Status HAL_DSP_Stop(struct DSP_DEV *dsp);
 
 #endif
 

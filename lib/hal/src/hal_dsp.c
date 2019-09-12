@@ -163,7 +163,7 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
         break;
     }
 #endif
-#if (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
+#if (defined(RKMCU_RK2108) || defined(RKMCU_PISCES) || defined(RKMCU_RK2206))
     case DSP_IOCTL_SET_MEM_GATING:
     {
         uint32_t mask = 0;
@@ -178,16 +178,6 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
             WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, mask);
         else
             WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, 0);
-        break;
-    }
-    case DSP_IOCTL_GET_POWER_ST:
-    {
-        uint32_t val = READ_REG(PMU->POWER_ST);
-        val = (val & PMU_POWER_ST_DSP_POWER_STATE_MASK) >> PMU_POWER_ST_DSP_POWER_STATE_SHIFT;
-        if (arg)
-            *(uint32_t *)arg = val;
-        else
-            ret = HAL_INVAL;
         break;
     }
 #endif
@@ -212,6 +202,38 @@ static const struct DSP_OPS dspOps = {
  */
 
 #if (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
+
+/**
+ * @brief  Get dsp power state.
+ * @return eDSP_powerSt
+ */
+eDSP_powerSt HAL_DSP_GetPowerSt(void)
+{
+    uint32_t val = READ_REG(PMU->POWER_ST);
+
+    val = (val & PMU_POWER_ST_DSP_POWER_STATE_MASK) >> PMU_POWER_ST_DSP_POWER_STATE_SHIFT;
+
+    return val;
+}
+
+/**
+ * @brief  Wait dsp power status be set.
+ * @param  st: wait status be set to this value.
+ * @param  timeout: timeout valuse, unit is ms.
+ * @return HAL_Status
+ */
+HAL_Status HAL_DSP_WaitForPowerSt(eDSP_powerSt status, uint32_t timeout)
+{
+    uint32_t start;
+
+    start = HAL_GetTick();
+    while (HAL_DSP_GetPowerSt() != status) {
+        if ((HAL_GetTick() - start) > timeout)
+            return HAL_TIMEOUT;
+    }
+
+    return HAL_OK;
+}
 
 /**
  * @brief  Soft interrupt wakeup dsp.
@@ -351,7 +373,7 @@ HAL_Status HAL_DSP_Disable(struct DSP_DEV *dsp)
  * @param  dsp: the handle of dsp.
  * @return HAL_Status
  */
-HAL_Status HAL_DSP_START(struct DSP_DEV *dsp)
+HAL_Status HAL_DSP_Start(struct DSP_DEV *dsp)
 {
     WRITE_REG_MASK_WE(GRF->DSP_CON0, GRF_DSP_CON0_RUNSTALL_MASK, 0);
 
@@ -363,7 +385,7 @@ HAL_Status HAL_DSP_START(struct DSP_DEV *dsp)
  * @param  dsp: the handle of dsp.
  * @return HAL_Status
  */
-HAL_Status HAL_DSP_STOP(struct DSP_DEV *dsp)
+HAL_Status HAL_DSP_Stop(struct DSP_DEV *dsp)
 {
     WRITE_REG_MASK_WE(GRF->DSP_CON0, GRF_DSP_CON0_RUNSTALL_MASK,
                       GRF_DSP_CON0_RUNSTALL_MASK);
