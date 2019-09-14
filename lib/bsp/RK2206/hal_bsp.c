@@ -223,6 +223,9 @@ static const struct PINCTRL_MUX_ROUTE_DATA muxRouteData[] = {
         .bank = GPIO_BANK0, .pin = GPIO_PIN_A0 | GPIO_PIN_A1,
         .func = 3, .routeReg = 0x204, .routeVal = ROUTE_VAL(2, 6, 0x3), //I2C0_M2
     }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D0 | GPIO_PIN_D1,
+        .func = 6, .routeReg = 0x204, .routeVal = ROUTE_VAL(3, 6, 0x3), //I2C0_M3
+    }, {
         .bank = GPIO_BANK0, .pin = GPIO_PIN_B6 | GPIO_PIN_B7,
         .func = 4, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 8, 0x3), //I2C1_M0
     }, {
