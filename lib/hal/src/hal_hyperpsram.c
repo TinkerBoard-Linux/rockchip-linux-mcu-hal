@@ -26,7 +26,7 @@
 
 /********************* Private MACRO Definition ******************************/
 /** Memory Base Address  */
-#define HYPERBUS_MBR0_BASE_ADDR_MASK (0xFFFFFF)
+#define HYPERBUS_MBR0_BASE_ADDR_MASK (0xFF000000UL)
 
 /** Memory Configuration Register0 */
 #define HYPERBUS_MCR0_MAXEN_CONF_LOW   (0x1 << HYPERBUS_MCR0_MAXEN_SHIFT)
@@ -79,9 +79,13 @@ struct HYPER_PSTRAM {
 /** HYPWEBUS psram chip features */
 static const struct HYPER_PSTRAM psramInfo[] =
 {
+    /**
+     * W956X8MKY must init first, or it will report a ahb bus error
+     * because of MTR error.
+     */
+    { W956X8MKY, MCR_TIMING_1_1_1_1_2_1_2, HYPERBUS_SPCSR_NOT_W955D8 },
     { S27KX0641, MCR_TIMING_1_1_1_1_2_1_1, HYPERBUS_SPCSR_NOT_W955D8 },
     { W955D8MKY, MCR_TIMING_1_1_1_1_2_1_1, HYPERBUS_SPCSR_IS_W955D8 },
-    { W956X8MKY, MCR_TIMING_1_1_1_1_2_1_2, HYPERBUS_SPCSR_NOT_W955D8 },
 };
 /********************* Private Function Definition ***************************/
 
@@ -173,7 +177,7 @@ static HAL_Status HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
 
     for (i = 0; i < HAL_ARRAY_SIZE(psramInfo); i++) {
         WRITE_REG(pReg->SPCSR, psramInfo[i].spc);
-        WRITE_REG(pReg->SPCSR, psramInfo[i].mtrTiming);
+        WRITE_REG(pReg->MTR[0], psramInfo[i].mtrTiming);
         if (HYPERPSRAM_CheckId(pReg, psramInfo[i].id, psramBase) == HAL_OK)
             break;
     }
