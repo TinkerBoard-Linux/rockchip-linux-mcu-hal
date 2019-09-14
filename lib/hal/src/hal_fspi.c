@@ -332,6 +332,7 @@ HAL_Status HAL_FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, void 
     int32_t timeout = 0;
     struct FSPI_REG *pReg = host->instance;
 
+    HAL_FSPI_UnmaskDMAInterrupt(host);
     pReg->ICLR = 0xFFFFFFFF;
     pReg->DMAADDR = (uint32_t)data;
     pReg->DMATR = FSPI_DMATR_DMATR_START;
@@ -472,7 +473,7 @@ HAL_Status HAL_FSPI_MaskDMAInterrupt(struct HAL_FSPI_HOST *host)
  */
 HAL_Status HAL_FSPI_UnmaskDMAInterrupt(struct HAL_FSPI_HOST *host)
 {
-    CLEAR_BIT(host->instance->IMR, FSPI_IMR_TRANSM_MASK);
+    CLEAR_BIT(host->instance->IMR, FSPI_IMR_DMAM_MASK);
 
     return HAL_OK;
 }
