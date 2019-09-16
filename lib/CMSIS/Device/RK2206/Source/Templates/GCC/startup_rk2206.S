@@ -58,7 +58,7 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
-#define __STARTUP_CLEAR_BSS
+                ldr   sp, =__StackTop      /* set stack pointer */
 
 #ifdef __NEED_COPY_TO_RAM
 /* Firstly it copies data from read only memory to RAM.
