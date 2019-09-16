@@ -10001,10 +10001,14 @@ struct TIMER_REG {
 #define CACHE_LINE_SHIFT                                   (6U)
 #define CACHE_LINE_SIZE                                    (0x1U << CACHE_LINE_SHIFT)
 
-#define RK1808_VD_NPU  0x000222FFU
-#define RK1808_PD_PCIE 0x00044499U
-#define RK1808_PD_VPU  0x000777DDU
-#define RK1808_PD_VIO  0x000888EEU
+#ifndef __ASSEMBLY__
+typedef enum PD_Id {
+    VD_NPU  = 0x800222FFU,
+    PD_PCIE = 0x80044499U,
+    PD_VPU  = 0x800777DDU,
+    PD_VIO  = 0x800888EEU,
+} ePD_Id;
+#endif
 
 /********Name=SOFTRST_CON0,Offset=0x300********/
 #define SRST_COREPO0_SRSTN                 0
