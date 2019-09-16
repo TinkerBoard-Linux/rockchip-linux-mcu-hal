@@ -4059,6 +4059,12 @@ struct HYPERBUS_REG {
 /* TIMEOUT_CNT */
 #define PMU_TIMEOUT_CNT_TIMEOUT_COUNT_SHIFT                (0U)
 #define PMU_TIMEOUT_CNT_TIMEOUT_COUNT_MASK                 (0xFFFFFFFFU << PMU_TIMEOUT_CNT_TIMEOUT_COUNT_SHIFT)         /* 0xFFFFFFFF */
+
+#ifndef __ASSEMBLY__
+typedef enum PD_Id {
+    PD_INVALID = 0,
+} ePD_Id;
+#endif
 /****************************************RK_GPIO*****************************************/
 /* SWPORT_DR_L */
 #define RK_GPIO_SWPORT_DR_L_GPIO_SWPORT_DR_LOW_SHIFT       (0U)
