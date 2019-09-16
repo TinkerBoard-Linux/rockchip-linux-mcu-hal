@@ -395,6 +395,12 @@ struct HAL_FSPI_HOST g_fspi0Dev =
     .sclkID = CLK_XIP_SFC0,
     .irqNum = FSPI0_IRQn,
 };
+struct HAL_FSPI_HOST g_fspi1Dev =
+{
+    .instance = FSPI1,
+    .sclkID = CLK_XIP_SFC1,
+    .irqNum = FSPI1_IRQn,
+};
 #endif
 
 #ifdef HAL_PVTM_MODULE_ENABLED
