@@ -127,6 +127,15 @@ struct AUDIO_DMA_DATA {
     struct DMA_REG *dmac; /**< dmac reg base ptr */
 };
 
+/**
+ * struct audio_gain_info - audio gain information struct.
+ */
+struct AUDIO_GAIN_INFO {
+    int32_t mindB; /**< The min dB and scaled 1000 times for interger handing. */
+    int32_t maxdB; /**< The max dB and scaled 1000 times for interger handing. */
+    int32_t step; /**< The step dB and scaled 1000 times for interger handing. */
+};
+
 /** @} */
 /***************************** Function Declare ******************************/
 

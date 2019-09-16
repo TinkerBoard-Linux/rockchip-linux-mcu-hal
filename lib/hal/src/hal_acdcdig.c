@@ -172,6 +172,15 @@
 #define ACDCDIG_I2STXCMD_TXC       (0x1U << ACDCDIG_I2STXCMD_TXC_SHIFT)
 #define ACDCDIG_I2STXCMD_TXS_STOP  (0x0U << ACDCDIG_I2STXCMD_TXS_SHIFT)
 #define ACDCDIG_I2STXCMD_TXS_START (0x1U << ACDCDIG_I2STXCMD_TXS_SHIFT)
+
+/**
+  * The range of gains.
+  * To avoid using decimals, the scaled 1000 times dB is like Linux ALSA TLV.
+  * min: -95.625dB, max: 95.625dB, step: 0.375dB.
+  */
+#define ACDCDIG_DB_MIN  (-95625)
+#define ACDCDIG_DB_MAX  (95625)
+#define ACDCDIG_DB_STEP (375)
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
@@ -475,6 +484,113 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
     }
 
     return ret;
+}
+
+/**
+ * @brief  Set Gain for acdcDig.
+ * @param  acdcDig: the handle of acdcDig.
+ * @param  stream: audio stream type.
+ * @param  dB: The gains of codec, range: -95625(-95.625dB) ~ 95625(95.625dB).
+ *             Similar to Linux ALSA TLV dBscale, they are scaled 1000 times
+ *             to avoid representation of fractional parts.
+ * @return HAL_Status
+ */
+HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
+                               eAUDIO_streamType stream, int dB)
+{
+    struct ACDCDIG_REG *reg = acdcDig->pReg;
+
+    switch (stream) {
+    case AUDIO_STREAM_PLAYBACK:
+        break;
+    case AUDIO_STREAM_CAPTURE:
+        if (dB > 0) {
+            if (dB > ACDCDIG_DB_MAX)
+                dB = ACDCDIG_DB_MAX;
+
+            dB = dB / ACDCDIG_DB_STEP;
+            MODIFY_REG(reg->ALC0,
+                       ACDCDIG_ALC0_ADCLV_GAIN_POL_MASK |
+                       ACDCDIG_ALC0_ADCRV_GAIN_POL_MASK,
+                       ACDCDIG_ALC0_ADCLV_GAIN_POL_POSITIVE |
+                       ACDCDIG_ALC0_ADCRV_GAIN_POL_POSITIVE);
+        } else {
+            if (dB < ACDCDIG_DB_MIN)
+                dB = ACDCDIG_DB_MIN;
+
+            dB = -(dB / ACDCDIG_DB_STEP);
+            MODIFY_REG(reg->ALC0,
+                       ACDCDIG_ALC0_ADCLV_GAIN_POL_MASK |
+                       ACDCDIG_ALC0_ADCRV_GAIN_POL_MASK,
+                       ACDCDIG_ALC0_ADCLV_GAIN_POL_NEGATIVE |
+                       ACDCDIG_ALC0_ADCRV_GAIN_POL_NEGATIVE);
+        }
+        MODIFY_REG(reg->ADCVOLL, ACDCDIG_ADCVOLL_ADCLV_MASK,
+                   ACDCDIG_ADCVOLL_ADCLV(dB));
+        MODIFY_REG(reg->ADCVOLR, ACDCDIG_ADCVOLR_ADCRV_MASK,
+                   ACDCDIG_ADCVOLR_ADCRV(dB));
+        break;
+    default:
+
+        return HAL_ERROR;
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get Gain for acdcDig.
+ * @param  acdcDig: the handle of acdcDig.
+ * @param  stream: audio stream type.
+ * @param  dB: The gains of codec, range: -95625(-95.625dB) ~ 95625(95.625dB).
+ *             Similar to Linux ALSA TLV dBscale, they are scaled 1000 times
+ *             to avoid representation of fractional parts.
+ * @return HAL_Status
+ */
+HAL_Status HAL_ACDCDIG_GetGain(struct HAL_ACDCDIG_DEV *acdcDig,
+                               eAUDIO_streamType stream, int *dB)
+{
+    struct ACDCDIG_REG *reg = acdcDig->pReg;
+    HAL_Status ret = HAL_OK;
+    uint8_t vol = 0;
+
+    if (!dB)
+        return HAL_ERROR;
+
+    switch (stream) {
+    case AUDIO_STREAM_PLAYBACK:
+        break;
+    case AUDIO_STREAM_CAPTURE:
+        vol = READ_REG(reg->ADCVOLL) & ACDCDIG_ADCVOLL_ADCLV_MASK;
+        if (READ_BIT(reg->ALC0, ACDCDIG_ALC0_ADCLV_GAIN_POL_MASK))
+            *dB = vol * ACDCDIG_DB_STEP; /* Positive gain */
+        else
+            *dB = -(vol * ACDCDIG_DB_STEP); /* Negative gain */
+        break;
+    default:
+        ret = HAL_ERROR;
+    }
+
+    return ret;
+}
+
+/**
+ * @brief  Get Gain informations from acdcDig.
+ * @param  acdcDig: the handle of acdcDig.
+ * @param  info: the handle of gain info.
+ * @return HAL_Status
+ */
+HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
+                                   struct AUDIO_GAIN_INFO *info)
+{
+    if (!info)
+        return HAL_ERROR;
+
+    info->mindB = ACDCDIG_DB_MIN;
+    info->maxdB = ACDCDIG_DB_MAX;
+    info->step = ACDCDIG_DB_STEP;
+
+    return HAL_OK;
 }
 
 /** @} */
