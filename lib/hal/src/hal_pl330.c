@@ -1079,44 +1079,32 @@ static int PL330_Exec_DMAKILL(struct DMA_REG *reg, uint32_t channel, uint32_t th
  */
 static void PL330_Read_Config(struct HAL_PL330_DEV *pl330)
 {
-    uint32_t val;
+    uint32_t val, crdn, cr;
     struct PL330_CONFIG *pcfg = &pl330->pcfg;
     struct DMA_REG *reg = pl330->pReg;
 
-    val = READ_REG(reg->CRDN) >> CRD_DATA_WIDTH_SHIFT;
-    val &= CRD_DATA_WIDTH_MASK;
+    crdn = READ_REG(reg->CRDN);
+    cr = READ_REG(reg->CR[0]);
+
+    val = (crdn >> CRD_DATA_WIDTH_SHIFT) & CRD_DATA_WIDTH_MASK;
     pcfg->dataBusWidth = 8 * (1 << val);
 
-    val = READ_REG(reg->CRDN) >> CRD_DATA_BUFF_SHIFT;
-    val &= CRD_DATA_BUFF_MASK;
-    pcfg->dataBufDep = val + 1;
+    pcfg->dataBufDep = ((crdn >> CRD_DATA_BUFF_SHIFT) & CRD_DATA_BUFF_MASK) + 1;
+    pcfg->numChan = ((cr >> CR0_NUM_CHANS_SHIFT) & CR0_NUM_CHANS_MASK) + 1;
 
-    val = READ_REG(reg->CR[0]) >> CR0_NUM_CHANS_SHIFT;
-    val &= CR0_NUM_CHANS_MASK;
-    val += 1;
-    pcfg->numChan = val;
-
-    val = READ_REG(reg->CR[0]);
-    if (val & CR0_PERIPH_REQ_SET) {
-        val = (val >> CR0_NUM_PERIPH_SHIFT) & CR0_NUM_PERIPH_MASK;
-        val += 1;
-        pcfg->numPeri = val;
+    if (cr & CR0_PERIPH_REQ_SET) {
+        pcfg->numPeri = ((cr >> CR0_NUM_PERIPH_SHIFT) & CR0_NUM_PERIPH_MASK) + 1;
         pcfg->periNs = READ_REG(reg->CR[4]);
     } else {
         pcfg->numPeri = 0;
     }
 
-    val = READ_REG(reg->CR[0]);
-    if (val & CR0_BOOT_MAN_NS)
+    if (cr & CR0_BOOT_MAN_NS)
         pcfg->mode |= DMAC_MODE_NS;
     else
         pcfg->mode &= ~DMAC_MODE_NS;
 
-    val = READ_REG(reg->CR[0]) >> CR0_NUM_EVENTS_SHIFT;
-    val &= CR0_NUM_EVENTS_MASK;
-    val += 1;
-    pcfg->numEvents = val;
-
+    pcfg->numEvents = ((cr >> CR0_NUM_EVENTS_SHIFT) & CR0_NUM_EVENTS_MASK) + 1;
     pcfg->irqNs = READ_REG(reg->CR[3]);
 }
 
