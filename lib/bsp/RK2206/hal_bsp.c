@@ -432,6 +432,27 @@ const struct HAL_PVTM_DEV g_pvtmDev =
 };
 #endif
 
+#ifdef HAL_PCD_MODULE_ENABLED
+const struct HAL_USB_DEV g_usbdDev =
+{
+    .pReg = USB,
+    .hclkGateID = HCLK_USBOTG_GATE,
+    .utmiclkGateID = HCLK_USBOTG_PMU_GATE,
+    .irqNum = USB2OTG_IRQn,
+    .cfg =
+    {
+        .epNum = 5,
+        .ep0Mps = USB_OTG_MAX_EP0_SIZE,
+        .phyif = USB_PHY_UTMI_WIDTH_16,
+        .speed = PCD_SPEED_HIGH,
+        .dmaEnable = true,
+        .sofEnable = false,
+        .lpmEnable = false,
+        .vbusSensingEnable = false,
+    },
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }
