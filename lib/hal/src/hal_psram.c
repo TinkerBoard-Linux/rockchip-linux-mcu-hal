@@ -40,9 +40,12 @@
 
 /*Command Set*/
 #define PSRAM_OP_RDID       0x9F
+#define PSRAM_OP_READ_1_1_1 0x0B
+#define PSRAM_OP_PP_1_1_1   0x02
 #define PSRAM_OP_READ_1_4_4 0xEB
 #define PSRAM_OP_PP_1_4_4   0x38
 #define PSRAM_OP_ENQPI      0x35
+#define PSRAM_OP_EIXTQPI    0xF5
 
 /********************* Private Structure Definition **************************/
 
@@ -86,7 +89,7 @@ static HAL_Status PSRAM_XmmcInit(struct SPI_PSRAM *psram)
     /* convert the dummy cycles to the number of bytes */
     opRead.dummy.nbytes = (psram->readDummy * opRead.dummy.buswidth) / 8;
 
-    /* HAL_PSRAM_DBG("%s %x %x %x %x\n", __func__, psram->readOpcode, psram->readDummy, op.dummy.buswidth, op.data.buswidth); */
+    /* HAL_PSRAM_DBG("%s %x %x %x %x\n", __func__, psram->readOpcode, psram->readDummy, opRead.dummy.buswidth, opRead.data.buswidth); */
     PSRAM_XipExecOp(psram->spi, &opRead, 0);
 
     /* get write transfer protocols. */
@@ -96,7 +99,7 @@ static HAL_Status PSRAM_XmmcInit(struct SPI_PSRAM *psram)
     opWrite.data.buswidth = PSRAM_GET_PROTOCOL_DATA_BITS(psram->writeProto);
     opWrite.dummy.nbytes = (psram->programDummy * opWrite.dummy.buswidth) / 8;
 
-    /* HAL_PSRAM_DBG("%s %x %x %x %x\n", __func__, psram->readOpcode, psram->readDummy, op.dummy.buswidth, op.data.buswidth); */
+    /* HAL_PSRAM_DBG("%s %x %x %x %x\n", __func__, psram->readOpcode, psram->readDummy, opWrite.dummy.buswidth, opWrite.data.buswidth); */
     PSRAM_XipExecOp(psram->spi, &opWrite, 0);
 
     return HAL_OK;
@@ -127,6 +130,11 @@ static HAL_Status PSRAM_WriteReg(struct SPI_PSRAM *psram, uint8_t opcode, uint8_
 static HAL_Status PSRAM_EnterQPI(struct SPI_PSRAM *psram)
 {
     return PSRAM_WriteReg(psram, PSRAM_OP_ENQPI, NULL, 0);
+}
+
+static HAL_Status PSRAM_ExitQPI(struct SPI_PSRAM *psram)
+{
+    return PSRAM_WriteReg(psram, PSRAM_OP_EIXTQPI, NULL, 0);
 }
 
 static HAL_Status PSRAM_ReadID(struct SPI_PSRAM *psram, uint8_t *data)
@@ -187,11 +195,19 @@ HAL_Status HAL_PSRAM_Init(struct SPI_PSRAM *psram)
     psram->writeProto = PSRAM_PROTO_4_4_4;
     psram->programDummy = 0;
 
+//    psram->addrWidth = 1;
+//    psram->readOpcode = PSRAM_OP_READ_1_1_1;
+//    psram->readProto = PSRAM_PROTO_1_1_1;
+//    psram->readDummy = 8;
+//    psram->programOpcode = PSRAM_OP_PP_1_1_1;
+//    psram->writeProto = PSRAM_PROTO_1_1_1;
+//    psram->programDummy = 0;
+
     if (psram->readProto == PSRAM_PROTO_4_4_4 &&
         psram->writeProto == PSRAM_PROTO_4_4_4)
         PSRAM_EnterQPI(psram);
     else
-        return HAL_ERROR;
+        PSRAM_ExitQPI(psram);
 
     PSRAM_XmmcInit(psram);
     HAL_PSRAM_XIPEnable(psram);

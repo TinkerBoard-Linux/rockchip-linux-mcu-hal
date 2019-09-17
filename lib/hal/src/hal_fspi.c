@@ -41,7 +41,6 @@
  @} */
 
 #include "hal_base.h"
-
 #ifdef HAL_FSPI_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
@@ -530,14 +529,13 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
 
     /* spitial setting */
     FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
-    if (op->addr.buswidth == 4) {
+    if (op->addr.buswidth == 4 && host->xmmcDev[host->cs].type == DEV_NOR) {
         FSPICmd.b.readmode = 1;
         FSPICmd.b.dummybits = 4;
     }
 
     /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
     /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
-    host->xmmcDev[host->cs].type = DEV_NOR;
     host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
     if (op->data.dir == HAL_SPI_MEM_DATA_IN)
         host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
@@ -577,7 +575,9 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
             xmmcCtrl.b.devHwEn = 0;
             xmmcCtrl.b.prefetch = 1;
         }
-        /* FSPI_DBG("%s enable 3 %lx %lx %lx\n", __func__, host->xmmcDev[0].ctrl, xmmcCtrl.d32, host->xmmcDev[0].readCmd); */
+        /* FSPI_DBG("%s enable 3 %lx %lx %lx %lx\n", __func__,
+                    host->xmmcDev[0].ctrl, xmmcCtrl.d32,
+                    host->xmmcDev[0].readCmd, host->xmmcDev[0].writeCmd); */
 
         /* config ctroller */
         pReg->XMMC_CTRL = xmmcCtrl.d32;

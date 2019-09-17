@@ -251,6 +251,7 @@ static HAL_Status SNOR_Adapt(void)
 
     /* Designated host to SNOR */
     host = &g_fspi0Dev;
+    host->xmmcDev[0].type = DEV_NOR;
     HAL_FSPI_Init(host);
     nor->spi->userdata = (void *)host;
     nor->spi->mode = HAL_SPI_MODE_3;
