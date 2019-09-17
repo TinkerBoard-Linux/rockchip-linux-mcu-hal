@@ -88,8 +88,7 @@ HAL_Check HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host)
 {
     struct MMC_REG *pReg = host->pReg;
 
-    return (READ_REG(pReg->STATUS) >> MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT) &
-           MMC_STATUS_DATA_STATE_MC_BUSY_MASK;
+    return READ_BIT(pReg->STATUS, MMC_STATUS_DATA_BUSY_MASK);
 }
 
 /** @} */
