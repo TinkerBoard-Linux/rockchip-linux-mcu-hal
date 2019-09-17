@@ -235,6 +235,9 @@ static const struct PINCTRL_MUX_ROUTE_DATA muxRouteData[] = {
         .bank = GPIO_BANK0, .pin = GPIO_PIN_A2 | GPIO_PIN_A3,
         .func = 3, .routeReg = 0x204, .routeVal = ROUTE_VAL(2, 8, 0x3), //I2C1_M2
     }, {
+        .bank = GPIO_BANK0, .pin = GPIO_PIN_D5 | GPIO_PIN_D6,
+        .func = 5, .routeReg = 0x204, .routeVal = ROUTE_VAL(3, 8, 0x3), //I2C1_M3
+    }, {
         .bank = GPIO_BANK0, .pin = GPIO_PIN_A5 | GPIO_PIN_A6 | GPIO_PIN_A7,
         .func = 4, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 10, 0x1), //PDM_M0
     }, {
@@ -242,10 +245,10 @@ static const struct PINCTRL_MUX_ROUTE_DATA muxRouteData[] = {
         .func = 5, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 10, 0x1), //PDM_M1
     }, {
         .bank = GPIO_BANK0, .pin = GPIO_PIN_D5 | GPIO_PIN_D6,
-        .func = 1, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 12, 0x1), //I2C2_M0
+        .func = 1, .routeReg = 0x204, .routeVal = ROUTE_VAL(0, 12, 0x1), //I2C2_M0
     }, {
         .bank = GPIO_BANK0, .pin = GPIO_PIN_B4 | GPIO_PIN_B5,
-        .func = 8, .routeReg = 0x204, .routeVal = ROUTE_VAL(2, 12, 0x1), //I2C2_M1
+        .func = 8, .routeReg = 0x204, .routeVal = ROUTE_VAL(1, 12, 0x1), //I2C2_M1
     },
 };
 
