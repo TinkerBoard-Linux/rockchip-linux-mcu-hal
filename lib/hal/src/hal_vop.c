@@ -782,9 +782,13 @@ HAL_Status HAL_VOP_EdpiFrmSt(struct VOP_REG *pReg)
 HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
                         struct DISPLAY_MODE_INFO *pModeInfo)
 {
+    uint32_t i = 0;
+    uint32_t *regMir = (uint32_t *)&s_vopRegMir;
+    uint32_t *vopReg = (uint32_t *)pReg;
     uint32_t regLen = sizeof(s_vopRegMir);
 
-    memcpy(&s_vopRegMir, pReg, regLen);
+    for (i = 0; i < regLen / 4; i++)
+        regMir[i] = vopReg[i];
 
     VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                   VOP_DSP_CTRL2_DSP_BLANK_EN_SHIFT,
