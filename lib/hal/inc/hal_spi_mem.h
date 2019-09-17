@@ -24,10 +24,10 @@
 /** SPI Memory host mode */
 #define HAL_SPI_CPHA      HAL_BIT(0)            /* clock phase */
 #define HAL_SPI_CPOL      HAL_BIT(1)            /* clock polarity */
-#define HAL_SPI_MODE_0    (0|0)                 /* (original MicroWire) */
-#define HAL_SPI_MODE_1    (0|HAL_SPI_CPHA)
-#define HAL_SPI_MODE_2    (HAL_SPI_CPOL|0)
-#define HAL_SPI_MODE_3    (HAL_SPI_CPOL|HAL_SPI_CPHA)
+#define HAL_SPI_MODE_0    (0 | 0)               /* (original MicroWire) */
+#define HAL_SPI_MODE_1    (0 | HAL_SPI_CPHA)
+#define HAL_SPI_MODE_2    (HAL_SPI_CPOL | 0)
+#define HAL_SPI_MODE_3    (HAL_SPI_CPOL | HAL_SPI_CPHA)
 #define HAL_SPI_CS_HIGH   HAL_BIT(2)            /* CS active high */
 #define HAL_SPI_LSB_FIRST HAL_BIT(3)            /* per-word bits-on-wire */
 #define HAL_SPI_3WIRE     HAL_BIT(4)            /* SI/SO signals shared */
@@ -43,8 +43,8 @@
 #define HAL_SPI_XIP       HAL_BIT(14)           /* support spi flash xip mode */
 
 /** SPI Memory host xfer flags */
-#define HAL_SPI_XFER_BEGIN HAL_BIT(0)	/* Assert CS before transfer */
-#define HAL_SPI_XFER_END   HAL_BIT(1)	/* Deassert CS after transfer */
+#define HAL_SPI_XFER_BEGIN HAL_BIT(0)   /* Assert CS before transfer */
+#define HAL_SPI_XFER_END   HAL_BIT(1)   /* Deassert CS after transfer */
 #define HAL_SPI_XFER_ONCE  (HAL_SPI_XFER_BEGIN | HAL_SPI_XFER_END)
 
 #define JEDEC_MFR(id) ((id >> 16) & 0xff)
@@ -70,7 +70,12 @@
         .buswidth = __buswidth,                          \
     }
 
-#define HAL_SPI_MEM_OP_NO_ADDR { }
+#define HAL_SPI_MEM_OP_NO_ADDR \
+    {                          \
+        .nbytes = 0,           \
+        .val = 0,              \
+        .buswidth = 0,         \
+    }
 
 #define HAL_SPI_MEM_OP_DUMMY(__nbytes, __buswidth) \
     {                                              \
@@ -78,7 +83,11 @@
         .buswidth = __buswidth,                    \
     }
 
-#define HAL_SPI_MEM_OP_NO_DUMMY { }
+#define HAL_SPI_MEM_OP_NO_DUMMY \
+    {                           \
+        .nbytes = 0,            \
+        .buswidth = 0,          \
+    }
 
 #define HAL_SPI_MEM_OP_DATA_IN(__nbytes, __buf, __buswidth) \
     {                                                       \
@@ -96,7 +105,13 @@
         .buswidth = __buswidth,                              \
     }
 
-#define HAL_SPI_MEM_OP_NO_DATA { }
+#define HAL_SPI_MEM_OP_NO_DATA \
+    {                          \
+        .dir = 0,              \
+        .nbytes = 0,           \
+        .buf.out = NULL,       \
+        .buswidth = 0,         \
+    }
 
 /***************************** Structure Definition **************************/
 
