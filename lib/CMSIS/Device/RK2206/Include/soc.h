@@ -795,8 +795,8 @@ struct CRU_REG {
          uint32_t RESERVED00A4[3];                    /* Address Offset: 0x00A4 */
     __IO uint32_t GLB_CNT_TH;                         /* Address Offset: 0x00B0 */
     __O  uint32_t GLB_RST_ST;                         /* Address Offset: 0x00B4 */
-    __IO uint32_t GLB_SRST_FST;                       /* Address Offset: 0x00B8 */
-    __IO uint32_t GLB_SRST_SND;                       /* Address Offset: 0x00BC */
+    __IO uint32_t GLB_SRST_FST_VALUE;                 /* Address Offset: 0x00B8 */
+    __IO uint32_t GLB_SRST_SND_VALUE;                 /* Address Offset: 0x00BC */
     __IO uint32_t GLB_RST_CON;                        /* Address Offset: 0x00C0 */
          uint32_t RESERVED00C4[15];                   /* Address Offset: 0x00C4 */
     __IO uint32_t CRU_CLKSEL_CON[37];                 /* Address Offset: 0x0100 */
@@ -5965,9 +5965,11 @@ typedef enum PD_Id {
 #define CRU_GLB_RST_ST_GLB_WDT2_RST_ST_SHIFT               (8U)
 #define CRU_GLB_RST_ST_GLB_WDT2_RST_ST_MASK                (0x1U << CRU_GLB_RST_ST_GLB_WDT2_RST_ST_SHIFT)               /* 0x00000100 */
 /* GLB_SRST_FST */
+#define CRU_GLB_SRST_FST_VALUE_OFFSET                      (0x0B8)
 #define CRU_GLB_SRST_FST_GLB_SRST_FST_SHIFT                (0U)
 #define CRU_GLB_SRST_FST_GLB_SRST_FST_MASK                 (0xFFFFU << CRU_GLB_SRST_FST_GLB_SRST_FST_SHIFT)             /* 0x0000FFFF */
 /* GLB_SRST_SND */
+#define CRU_GLB_SRST_SND_VALUE_OFFSET                      (0x0BC)
 #define CRU_GLB_SRST_SND_GLB_SRST_SND_SHIFT                (0U)
 #define CRU_GLB_SRST_SND_GLB_SRST_SND_MASK                 (0xFFFFU << CRU_GLB_SRST_SND_GLB_SRST_SND_SHIFT)             /* 0x0000FFFF */
 /* GLB_RST_CON */
