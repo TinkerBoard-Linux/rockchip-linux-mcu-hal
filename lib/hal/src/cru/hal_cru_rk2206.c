@@ -426,6 +426,32 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
             freq = s_gpllFreq / HAL_CRU_ClkGetDiv(CLK_GET_DIV(CLK_HIFI3_D));
 
         return freq;
+    case CLK_SDMMC:
+    case CLK_TIMER:
+    case CLK_PWM0:
+    case CLK_PWM1:
+    case CLK_PWM2:
+    case CLK_SPI0:
+    case CLK_SPI1:
+        if (HAL_CRU_ClkGetMux(clkMux))
+            pRate = PLL_INPUT_OSC_RATE;
+        break;
+    case CLK_I2C_CODEC:
+    case CLK_XIP_SFC0:
+    case CLK_XIP_SFC1:
+    case CLK_XIP_HYPERX8:
+        if (HAL_CRU_ClkGetMux(clkMux) == 3)
+            pRate = PLL_INPUT_OSC_RATE;
+        break;
+    case CLK_I2C0:
+    case CLK_I2C1:
+    case CLK_I2C2:
+    case CLK_VIP_OUT:
+    case HCLK_TOP_BUS:
+    case PCLK_TOP_BUS:
+        if (HAL_CRU_ClkGetMux(clkMux) == 2)
+            pRate = PLL_INPUT_OSC_RATE;
+        break;
     default:
         break;
     }
@@ -510,9 +536,9 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         break;
     case CLK_CRYPTO:
     case CLK_CRYPTO_PKA:
-        if (rate == 24) {
+        if (!(PLL_INPUT_OSC_RATE % rate)) {
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CRYPTO_D), 1);
-            HAL_CRU_ClkSetDiv(CLK_GET_DIV(CLK_CRYPTO_D), 1);
+            HAL_CRU_ClkSetDiv(CLK_GET_DIV(CLK_CRYPTO_D), PLL_INPUT_OSC_RATE / rate);
             HAL_CRU_ClkSetMux(clkMux, 0);
         } else if (!s_gpllFreq % rate) {
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CRYPTO_D), 0);
@@ -545,6 +571,38 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         }
 
         return HAL_OK;
+    case CLK_SDMMC:
+    case CLK_TIMER:
+    case CLK_PWM0:
+    case CLK_PWM1:
+    case CLK_PWM2:
+    case CLK_SPI0:
+    case CLK_SPI1:
+        if (!(PLL_INPUT_OSC_RATE % rate)) {
+            mux = 1;
+            pRate = PLL_INPUT_OSC_RATE;
+        }
+        break;
+    case CLK_I2C_CODEC:
+    case CLK_XIP_SFC0:
+    case CLK_XIP_SFC1:
+    case CLK_XIP_HYPERX8:
+        if (!(PLL_INPUT_OSC_RATE % rate)) {
+            mux = 3;
+            pRate = PLL_INPUT_OSC_RATE;
+        }
+        break;
+    case CLK_I2C0:
+    case CLK_I2C1:
+    case CLK_I2C2:
+    case CLK_VIP_OUT:
+    case HCLK_TOP_BUS:
+    case PCLK_TOP_BUS:
+        if (!(PLL_INPUT_OSC_RATE % rate)) {
+            mux = 2;
+            pRate = PLL_INPUT_OSC_RATE;
+        }
+        break;
     default:
         break;
     }
