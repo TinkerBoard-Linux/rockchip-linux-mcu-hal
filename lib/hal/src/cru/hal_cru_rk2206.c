@@ -21,11 +21,11 @@
 
 static struct PLL_CONFIG PLL_TABLE[] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
-    RK_PLL_RATE(491520000, 1, 24, 2, 1, 0, 9663676),
-    RK_PLL_RATE(451584000, 1, 22, 2, 1, 0, 9717363),
-    RK_PLL_RATE(384000000, 1, 48, 5, 1, 1, 0),
-    RK_PLL_RATE(297000000, 4, 297, 5, 2, 1, 0),
-    RK_PLL_RATE(288000000, 1, 36, 5, 1, 1, 0),
+    RK_PLL_RATE(491520000, 1, 12, 1, 1, 0, 4831838),
+    RK_PLL_RATE(451584000, 1, 11, 1, 1, 0, 4858681),
+    RK_PLL_RATE(384000000, 5, 48, 1, 1, 1, 0),
+    RK_PLL_RATE(297000000, 8, 297, 5, 1, 1, 0),
+    RK_PLL_RATE(288000000, 5, 72, 2, 1, 1, 0),
     { /* sentinel */ },
 };
 
