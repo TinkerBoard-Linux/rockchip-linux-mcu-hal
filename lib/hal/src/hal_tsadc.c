@@ -58,8 +58,8 @@ struct TSADC_CONFIG {
 
 static const struct TSADC_TABLE s_tsadcTable[] =
 {
-    { 389, -40000 },
-    { 679, 125000 },
+    { 3461, -40000 },
+    { 3751, 125000 },
 };
 
 static const struct TSADC_CONFIG s_tsadcConfig =
@@ -275,6 +275,9 @@ static void TSADC_EnAuto(bool enable)
     } else {
         CLEAR_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_AUTO_EN_MASK);
     }
+#endif
+#ifdef GRF_SOC_CON30_OFFSET
+    WRITE_REG_MASK_WE(GRF->SOC_CON30, GRF_SOC_CON30_GRF_TSADC_TSEN_PD_MASK, 0);
 #endif
 }
 
