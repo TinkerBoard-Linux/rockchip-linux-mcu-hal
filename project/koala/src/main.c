@@ -62,29 +62,29 @@ void UART_IRQHandler(void)
     HAL_UART_HandleIrq(pUart);
 }
 
-#define DUMP_CLK(NAME, ID, RATE) \
+#define INIT_CLK(NAME, ID, RATE) \
     { .name = NAME, .clkId = ID, .initRate = RATE, }
 
-struct CLK_DUMP {
+struct CLK_INIT {
     const char *name;
     uint32_t clkId;
     uint32_t initRate;
 };
 
-static const struct CLK_DUMP s_clkInits[] =
+static const struct CLK_INIT s_clkInits[] =
 {
-    DUMP_CLK("PLL_GPLL", PLL_GPLL, 104000000),
-    DUMP_CLK("HCLK_MCU", HCLK_MCU, 104000000),
-    DUMP_CLK("PCLK_MCU", PCLK_MCU, 26000000),
-    DUMP_CLK("CLK_BT52M", CLK_BT52M, 52000000),
-    DUMP_CLK("HCLK_BT", HCLK_BT, 104000000),
-    DUMP_CLK("PCLK_PMU", PCLK_PMU, 26000000),
-    DUMP_CLK("CLK_SFC", CLK_SFC, 104000000),
-    DUMP_CLK("PLL_CPLL", PLL_CPLL, 240000000),
-    DUMP_CLK("CLK_DSP", CLK_DSP, 120000000),
+    INIT_CLK("PLL_GPLL", PLL_GPLL, 104000000),
+    INIT_CLK("HCLK_MCU", HCLK_MCU, 104000000),
+    INIT_CLK("PCLK_MCU", PCLK_MCU, 26000000),
+    INIT_CLK("CLK_BT52M", CLK_BT52M, 52000000),
+    INIT_CLK("HCLK_BT", HCLK_BT, 104000000),
+    INIT_CLK("PCLK_PMU", PCLK_PMU, 26000000),
+    INIT_CLK("CLK_SFC", CLK_SFC, 104000000),
+    INIT_CLK("PLL_CPLL", PLL_CPLL, 240000000),
+    INIT_CLK("CLK_DSP", CLK_DSP, 120000000),
 };
 
-void ClkInit(const struct CLK_DUMP *clkInits, int clkInitNum, bool clkDump)
+void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
 {
     int i;
 

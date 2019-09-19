@@ -11,10 +11,10 @@
 
 /********************* Private Structure Definition **************************/
 
-#define DUMP_CLK(NAME, ID, RATE) \
+#define INIT_CLK(NAME, ID, RATE) \
     { .name = NAME, .clkId = ID, .initRate = RATE, }
 
-struct CLK_DUMP {
+struct CLK_INIT {
     const char *name;
     uint32_t clkId;
     uint32_t initRate;
@@ -24,29 +24,29 @@ struct CLK_DUMP {
 
 static struct UART_REG *pUart = UART0;
 
-static const struct CLK_DUMP s_clkInits[] =
+static const struct CLK_INIT s_clkInits[] =
 {
-    DUMP_CLK("SCLK_SHRM", SCLK_SHRM, 10 * MHZ),
-    DUMP_CLK("PCLK_SHRM", PCLK_SHRM, 10 * MHZ),
-    DUMP_CLK("PCLK_ALIVE", PCLK_ALIVE, 10 * MHZ),
-    DUMP_CLK("HCLK_ALIVE", HCLK_ALIVE, 10 * MHZ),
-    DUMP_CLK("HCLK_M4", HCLK_M4, 10 * MHZ),
-    DUMP_CLK("ACLK_LOGIC", ACLK_LOGIC, 10 * MHZ),
-    DUMP_CLK("HCLK_LOGIC", HCLK_LOGIC, 10 * MHZ),
-    DUMP_CLK("PCLK_LOGIC", PCLK_LOGIC, 10 * MHZ),
-    DUMP_CLK("CLK_SPI1", CLK_SPI1, 5 * MHZ),
-    DUMP_CLK("PLL_GPLL", PLL_GPLL, 1188 * MHZ),
-    DUMP_CLK("PLL_CPLL", PLL_CPLL, 1000 * MHZ),
-    DUMP_CLK("HCLK_M4", HCLK_M4, 300 * MHZ),
-    DUMP_CLK("ACLK_DSP", ACLK_DSP, 400 * MHZ),
-    DUMP_CLK("ACLK_LOGIC", ACLK_LOGIC, 300 * MHZ),
-    DUMP_CLK("HCLK_LOGIC", HCLK_LOGIC, 150 * MHZ),
-    DUMP_CLK("PCLK_LOGIC", PCLK_LOGIC, 150 * MHZ),
-    DUMP_CLK("SCLK_SHRM", SCLK_SHRM, 300 * MHZ),
-    DUMP_CLK("PCLK_SHRM", PCLK_SHRM, 100 * MHZ),
-    DUMP_CLK("PCLK_ALIVE", PCLK_ALIVE, 100 * MHZ),
-    DUMP_CLK("HCLK_ALIVE", HCLK_ALIVE, 100 * MHZ),
-    DUMP_CLK("CLK_SPI1", CLK_SPI1, 50 * MHZ),
+    INIT_CLK("SCLK_SHRM", SCLK_SHRM, 10 * MHZ),
+    INIT_CLK("PCLK_SHRM", PCLK_SHRM, 10 * MHZ),
+    INIT_CLK("PCLK_ALIVE", PCLK_ALIVE, 10 * MHZ),
+    INIT_CLK("HCLK_ALIVE", HCLK_ALIVE, 10 * MHZ),
+    INIT_CLK("HCLK_M4", HCLK_M4, 10 * MHZ),
+    INIT_CLK("ACLK_LOGIC", ACLK_LOGIC, 10 * MHZ),
+    INIT_CLK("HCLK_LOGIC", HCLK_LOGIC, 10 * MHZ),
+    INIT_CLK("PCLK_LOGIC", PCLK_LOGIC, 10 * MHZ),
+    INIT_CLK("CLK_SPI1", CLK_SPI1, 5 * MHZ),
+    INIT_CLK("PLL_GPLL", PLL_GPLL, 1188 * MHZ),
+    INIT_CLK("PLL_CPLL", PLL_CPLL, 1000 * MHZ),
+    INIT_CLK("HCLK_M4", HCLK_M4, 300 * MHZ),
+    INIT_CLK("ACLK_DSP", ACLK_DSP, 400 * MHZ),
+    INIT_CLK("ACLK_LOGIC", ACLK_LOGIC, 300 * MHZ),
+    INIT_CLK("HCLK_LOGIC", HCLK_LOGIC, 150 * MHZ),
+    INIT_CLK("PCLK_LOGIC", PCLK_LOGIC, 150 * MHZ),
+    INIT_CLK("SCLK_SHRM", SCLK_SHRM, 300 * MHZ),
+    INIT_CLK("PCLK_SHRM", PCLK_SHRM, 100 * MHZ),
+    INIT_CLK("PCLK_ALIVE", PCLK_ALIVE, 100 * MHZ),
+    INIT_CLK("HCLK_ALIVE", HCLK_ALIVE, 100 * MHZ),
+    INIT_CLK("CLK_SPI1", CLK_SPI1, 50 * MHZ),
 };
 
 /********************* Private Function Definition ***************************/
@@ -96,7 +96,7 @@ void UART_IRQHandler(void)
     HAL_UART_HandleIrq(pUart);
 }
 
-void ClkInit(const struct CLK_DUMP *clkInits, int clkInitNum, bool clkDump)
+void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
 {
     int32_t i;
 
