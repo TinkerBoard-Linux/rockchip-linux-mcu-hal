@@ -43,10 +43,17 @@
 #define UART_CLK_GET_MUX(clk) HAL_CRU_ClkGetMux(CLK_GET_MUX((clk)))
 #define GPLL_RUNTIME_RATE     (PLL_INPUT_OSC_RATE * 2)
 
+#define PVTM_KHZ          (1000)
+#define PVTM_CALC_CNT_KHZ (PLL_INPUT_OSC_RATE / PVTM_KHZ)
+#define PVTM_TARGET_KHZ   (32)
+#define PVTM_CALC_CNT     0x200
+
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
-
+#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
+static uint8_t pvtm32kEn = 0;
+#endif
 /********************* Private Function Definition ***************************/
 #ifdef HAL_PM_RUNTIME_MODULE_ENABLED
 static uint32_t PM_GetPllPostDivEven(uint32_t rateIn, uint32_t rateOut, uint32_t *postDiv1, uint32_t *postDiv2)
@@ -92,10 +99,60 @@ static int SOC_SuspendEnter(uint32_t flag)
 }
 #endif
 
+static void PVTM_ClkEnable(void)
+{
+    struct GRF_REG *pGrf = GRF;
+
+    pGrf->PVTM_CON0 = VAL_MASK_WE(GRF_PVTM_CON0_PVTM_OSC_EN_MASK,
+                                  GRF_PVTM_CON0_PVTM_OSC_EN_MASK);
+}
+
+static void PVTM_ClkDisable(void)
+{
+    struct GRF_REG *pGrf = GRF;
+
+    pGrf->PVTM_CON0 = VAL_MASK_WE(GRF_PVTM_CON0_PVTM_OSC_EN_MASK,
+                                  0);
+}
+
+static void PVTM_ClkRateConfig(uint32_t khz)
+{
+    uint32_t pvtm_freq_khz, pvtm_div;
+    struct GRF_REG *pGrf = GRF;
+
+    pGrf->PVTM_CON0 = 0xffff0000;
+    PVTM_ClkEnable();
+
+    pGrf->PVTM_CON1 = PVTM_CALC_CNT;
+
+    pGrf->PVTM_CON0 = VAL_MASK_WE(GRF_PVTM_CON0_PVTM_START_MASK,
+                                  GRF_PVTM_CON0_PVTM_START_MASK);
+
+    /* pmugrf_pvtm_st0 will be clear after PVTM start,
+         * which will cost about 6 cycles of pvtm at least.
+         * So we wait 30 cycles of pvtm for security.
+         */
+    while (pGrf->PVTM_STATUS1 < 30)
+        ;
+    while (!(pGrf->PVTM_STATUS0) & GRF_PVTM_STATUS0_PVTM_FREQ_DONE_MASK)
+        ;
+
+    pvtm_freq_khz =
+        ((pGrf->PVTM_STATUS1) * PVTM_CALC_CNT_KHZ + PVTM_CALC_CNT / 2) / PVTM_CALC_CNT;
+    pvtm_div = (pvtm_freq_khz + khz / 2) / khz;
+
+    if (pvtm_div > 0xfff)
+        pvtm_div = 0xfff;
+
+    pGrf->PVTM_CON0 = VAL_MASK_WE(GRF_PVTM_CON0_PVTM_START_MASK,
+                                  0);
+    pGrf->PVTM_CON0 = VAL_MASK_WE(GRF_PVTM_CON0_PVTM_CLKOUT_DIV_MASK,
+                                  pvtm_div << GRF_PVTM_CON0_PVTM_CLKOUT_DIV_SHIFT);
+}
+
 /** @defgroup PM_Exported_Functions_Group5 Other Functions
  *  @{
  */
-
 #ifdef HAL_PM_RUNTIME_MODULE_ENABLED
 static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 {
@@ -104,7 +161,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
     uint32_t clkSelCon33, clkSelCon2;
     uint32_t cruMode;
     uint32_t gpllRate, gpllRateNew;
-    uint32_t m4Rate, m4Div;
+    uint32_t mDiv;
 
     const struct PM_RUNTIME_INFO *pdata = HAL_PM_RuntimeGetData();
 
@@ -129,7 +186,16 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         return HAL_BIT(PM_RUNTIME_TYPE_I2C);
     }
 
-    if (idleMode == PM_RUNTIME_IDLE_DEEP) {
+    if (idleMode == PM_RUNTIME_IDLE_DEEP1) {
+        if (!pvtm32kEn) {
+            PVTM_ClkRateConfig(PVTM_TARGET_KHZ / 8);
+            pvtm32kEn = 1;
+        } else {
+            PVTM_ClkEnable();
+        }
+    }
+
+    if (idleMode == PM_RUNTIME_IDLE_DEEP || idleMode == PM_RUNTIME_IDLE_DEEP1) {
         cruMode = CRU->CRU_MODE_CON00 |
                   MASK_TO_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK);
         gpllCon1 = CRU->GPLL_CON[1] |
@@ -139,10 +205,6 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
                       MASK_TO_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK);
         clkSelCon2 = CRU->CRU_CLKSEL_CON[33] |
                      MASK_TO_WE(CRU_CRU_CLKSEL_CON02_SCLK_SHRM_DIV_MASK);
-
-#ifdef HAL_SYSTICK_MODULE_ENABLED
-        HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_CORE);
-#endif
 
         CRU->CRU_MODE_CON00 =
             VAL_MASK_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK,
@@ -158,36 +220,16 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 
         CRU->GPLL_CON[1] = VAL_MASK_WE(CRU_GPLL_CON1_PLLPD0_MASK,
                                        CRU_GPLL_CON1_PLLPD0_MASK);
-    } else if (idleMode == PM_RUNTIME_IDLE_DEEP1) {
-        gpllCon1 = 0;
-        m4Rate = HAL_CRU_ClkGetFreq(HCLK_M4);
-        gpllRate = HAL_CRU_ClkGetFreq(PLL_GPLL);
 
-        gpllCon0 = CRU->GPLL_CON[0] | MASK_TO_WE(CRU_GPLL_CON0_POSTDIV1_MASK);
-        gpllDiv1New = 6;
-
-        HAL_ASSERT(PLL_GET_POSTDIV1(gpllCon0) == 1);
-
-        if ((m4Rate / gpllDiv1New) < (PLL_INPUT_OSC_RATE * 2)) {
-            m4Div = (gpllRate / gpllDiv1New) / (PLL_INPUT_OSC_RATE * 2);
-            HAL_ASSERT((gpllRate / (gpllDiv1New * m4Div)) > (PLL_INPUT_OSC_RATE * 2));
-            if (m4Div != HAL_CRU_ClkGetDiv(CLK_GET_DIV(HCLK_M4)))
-                clkSelCon33 = CRU->CRU_CLKSEL_CON[33] |
-                              MASK_TO_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK);
-            else
-                clkSelCon33 = 0;
-        } else {
-            clkSelCon33 = 0;
-        }
-
-        CRU->GPLL_CON[0] = VAL_MASK_WE(CRU_GPLL_CON0_POSTDIV1_MASK,
-                                       gpllDiv1New << CRU_GPLL_CON0_POSTDIV1_SHIFT);
-        if (clkSelCon33)
-            CRU->CRU_CLKSEL_CON[33] = VAL_MASK_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK,
-                                                  m4Div << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
+        if (idleMode == PM_RUNTIME_IDLE_DEEP1)
+            CRU->CRU_MODE_CON00 =
+                VAL_MASK_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK,
+                            RK_PLL_MODE_DEEP << CRU_CRU_MODE_CON00_CLK_GPLL_MODE_SHIFT);
     } else if (idleMode == PM_RUNTIME_IDLE_NORMAL) {
-        m4Rate = HAL_CRU_ClkGetFreq(HCLK_M4);
-        HAL_ASSERT(HAL_CRU_ClkGetDiv(m4Rate > GPLL_RUNTIME_RATE));
+        cruMode = 0;
+        clkSelCon2 = 0;
+
+        HAL_ASSERT(HAL_CRU_ClkGetFreq(HCLK_M4) > GPLL_RUNTIME_RATE);
         gpllRate = HAL_CRU_ClkGetFreq(PLL_GPLL);
 
         gpllCon1 = CRU->GPLL_CON[1] |
@@ -204,10 +246,10 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
             return UINT32_MAX;
 
         gpllRateNew = gpllRate / (gpllDiv1New * gpllDiv2New);
-        m4Div = gpllRateNew / GPLL_RUNTIME_RATE;
+        mDiv = gpllRateNew / GPLL_RUNTIME_RATE;
 
-        HAL_ASSERT((gpllRateNew * m4Div) >= GPLL_RUNTIME_RATE);
-        HAL_ASSERT(m4Div > 0);
+        HAL_ASSERT((gpllRateNew * mDiv) >= GPLL_RUNTIME_RATE);
+        HAL_ASSERT(mDiv > 0);
 
         clkSelCon33 = CRU->CRU_CLKSEL_CON[33] |
                       MASK_TO_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK);
@@ -219,7 +261,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
                                        gpllDiv2New << CRU_GPLL_CON1_POSTDIV2_SHIFT);
 
         CRU->CRU_CLKSEL_CON[33] = VAL_MASK_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK,
-                                              (m4Div - 1) << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
+                                              (mDiv - 1) << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
     } else {
         return UINT32_MAX;
     }
@@ -227,7 +269,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
     __DSB();
     __WFI();
 
-    if (idleMode == PM_RUNTIME_IDLE_DEEP) {
+    if (idleMode == PM_RUNTIME_IDLE_DEEP || idleMode == PM_RUNTIME_IDLE_DEEP1) {
         CRU->GPLL_CON[1] = gpllCon1;
         CRU->CRU_CLKSEL_CON[33] = clkSelCon33;
         CRU->CRU_CLKSEL_CON[2] = clkSelCon2;
@@ -236,13 +278,8 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
                CRU_CPLL_CON1_PLL_LOCK_MASK)
             ;
         CRU->CRU_MODE_CON00 = cruMode;
-
-#ifdef HAL_SYSTICK_MODULE_ENABLED
-        HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);
-#endif
-    } else if (idleMode == PM_RUNTIME_IDLE_DEEP1) {
-        CRU->CRU_CLKSEL_CON[33] = clkSelCon33;
-        CRU->GPLL_CON[0] = gpllCon0;
+        if (idleMode == PM_RUNTIME_IDLE_DEEP1)
+            PVTM_ClkDisable();
     } else if (idleMode == PM_RUNTIME_IDLE_NORMAL) {
         CRU->CRU_CLKSEL_CON[33] = clkSelCon33;
         CRU->GPLL_CON[1] = gpllCon1;
@@ -266,7 +303,7 @@ uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         __WFI();
     }
 
-    return UINT32_MAX;
+    return ret;
 }
 
 #endif
