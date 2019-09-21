@@ -90,6 +90,7 @@ struct HAL_FSPI_HOST {
     uint8_t mode;
     eCLOCK_Name sclkID;
     IRQn_Type irqNum;
+    uint32_t xipMem0; /** FSPI XIP mapped memory(Under dcache) */
     struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT];
 };
 

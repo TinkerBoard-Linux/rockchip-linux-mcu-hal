@@ -467,6 +467,7 @@ struct HAL_FSPI_HOST g_fspi0Dev =
     .instance = FSPI0,
     .sclkID = SCLK_SFC_SRC,
     .irqNum = FSPI0_IRQn,
+    .xipMem0 = XIP_MAP0_BASE1,
 };
 
 static HAL_Status BSP_FSPI_Init(void)
