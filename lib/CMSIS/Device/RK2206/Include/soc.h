@@ -1365,12 +1365,14 @@ struct HYPERBUS_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
-#define XIP_MAP_BASE0       0x18000000U /* HYPERBUS/FSPI1 map address0 */
+#define XIP_MAP0_BASE0      0x10000000U /* FSPI0 map address0 */
+#define XIP_MAP1_BASE0      0x18000000U /* HYPERBUS/FSPI1 map address0 */
 #define DSP_ITCM_BASE       0x20400000U /* DSP itcm base address */
 #define DSP_ITCM_END        0x20407fffU /* DSP itcm end address */
 #define DSP_DTCM_BASE       0x20600000U /* DSP dtcm base address */
 #define DSP_DTCM_END        0x2062ffffU /* DSP dtcm end address */
-#define XIP_MAP_BASE1       0x38000000U /* HYPERBUS/FSPI1 map address1 */
+#define XIP_MAP0_BASE1      0x30000000U /* FSPI0 map address1 */
+#define XIP_MAP1_BASE1      0x38000000U /* HYPERBUS/FSPI1 map address1 */
 #define TIMER0_BASE         0x40000000U /* TIMER0 base address */
 #define WDT0_BASE           0x40010000U /* WDT0 base address */
 #define WDT1_BASE           0x40020000U /* WDT1 base address */

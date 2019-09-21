@@ -232,13 +232,17 @@ struct USB_HOST_CH_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
+#define XIP_MAP0_BASE0      0x18000000U /* FSPI0 map address0 */
+#define XIP_MAP1_BASE0      0x1C000000U /* FSPI1 map address0 */
 #define DSP_ITCM_BASE       0x30000000U /* DSP itcm base address */
 #define DSP_ITCM_END        0x3000ffffU /* DSP itcm end address */
 #define DSP_DTCM_BASE       0x30200000U /* DSP dtcm base address */
 #define DSP_DTCM_END        0x3027ffffU /* DSP dtcm end address */
 #define USB_M31PHY_BASE     0x400B0340U /* USB M31 PHY base address */
+#define SDIO_BASE           MMC_BASE    /* 0x40C90000U MMC base address */
 #define USB_BASE            0x41300000U /* USB base address */
-#define SDIO_BASE           MMC_BASE
+#define XIP_MAP0_BASE1      0x60000000U /* FSPI0 map address1 */
+#define XIP_MAP1_BASE1      0x64000000U /* FSPI1 map address1 */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */

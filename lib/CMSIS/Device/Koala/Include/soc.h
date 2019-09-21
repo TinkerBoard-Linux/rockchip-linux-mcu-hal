@@ -678,6 +678,7 @@ struct CRU_REG {
 #define I2STDM0_BASE        0x44420000U /* I2STDM0 base address */
 #define PDM0_BASE           0x44440000U /* PDM0 base address */
 #define CRU_BASE            0x44500000U /* CRU base address */
+#define XIP_MEM0_BASE0      0x50000000U /* FSPI0 map address0 */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
