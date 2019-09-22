@@ -194,11 +194,11 @@ HAL_Status HAL_TIMER_Stop_IT(struct TIMER_REG *pReg)
 /**
  * @brief  Set TIMER count number.
  * @param  pReg: Choose TIMER.
- * @param  usTick: TIMER counter loading number.
+ * @param  timerCount: TIMER counter loading number.
  * @return HAL_Status.
  * Set timer count number.
  */
-HAL_Status HAL_TIMER_SetCount(struct TIMER_REG *pReg, uint64_t usTick)
+HAL_Status HAL_TIMER_SetCount(struct TIMER_REG *pReg, uint64_t timerCount)
 {
     uint64_t loadCount = 0;
 
@@ -208,7 +208,7 @@ HAL_Status HAL_TIMER_SetCount(struct TIMER_REG *pReg, uint64_t usTick)
         return HAL_BUSY;
 #endif
 
-    loadCount = usTick;
+    loadCount = timerCount;
     pReg->LOAD_COUNT[0] = (loadCount & 0xffffffff);
     pReg->LOAD_COUNT[1] = ((loadCount >> 32) & 0xffffffff);
 
