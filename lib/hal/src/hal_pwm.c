@@ -231,6 +231,8 @@ HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, ePWM_Mode mo
     }
 
     enableConf = READ_REG(PWM_CTRL_REG(pPWM, channel));
+    /* clean mode */
+    enableConf &= ~PWM_MODE_MASK;
     enableConf |= (mode << PWM_MODE_SHIFT) | PWM_OUTPUT_LEFT | PWM_LP_DISABLE | PWM_ENABLE;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), enableConf);
 
