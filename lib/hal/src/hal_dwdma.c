@@ -546,7 +546,7 @@ HAL_Status HAL_DWDMA_PrepDmaCyclic(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
     dw = dwc->dw;
     config = &dwc->config;
 
-    HAL_ASSERT(!HAL_DMA_IsSlaveDirection(direction));
+    HAL_ASSERT(HAL_DMA_IsSlaveDirection(direction));
 
     dwc->direction = direction;
 
@@ -649,7 +649,7 @@ HAL_Status HAL_DWDMA_PrepDmaSingle(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
     dw = dwc->dw;
     config = &dwc->config;
 
-    HAL_ASSERT(!HAL_DMA_IsSlaveDirection(direction));
+    HAL_ASSERT(HAL_DMA_IsSlaveDirection(direction));
 
     dwc->direction = direction;
 
