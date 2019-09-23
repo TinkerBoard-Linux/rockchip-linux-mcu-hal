@@ -650,6 +650,8 @@ HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host)
 
     WRITE_REG(pReg->FIFOTH, reg);
 
+    WRITE_REG(pReg->TMOUT, MMC_TMOUT_RESPONSE_TIMEOUT_MASK | MMC_TMOUT_DATA_TIMEOUT_MASK);
+
     return HAL_OK;
 }
 
