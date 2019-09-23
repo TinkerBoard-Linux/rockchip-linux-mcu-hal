@@ -72,6 +72,9 @@
 #define PWM_SEL_SRC_CLK   (0 << PWM_PWM0_CTRL_CLK_SEL_SHIFT)
 #define PWM_SEL_SCALE_CLK (1 << PWM_PWM0_CTRL_CLK_SEL_SHIFT)
 
+#define PWM_CTRL_SCALE_SHIFT (PWM_PWM0_CTRL_SCALE_SHIFT)
+#define PWM_CTRL_SCALE_MASK  (PWM_PWM0_CTRL_SCALE_MASK)
+
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
@@ -181,6 +184,32 @@ HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t
 
     ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
     ctrl |= (count << PWM_PWM0_CTRL_RPT_SHIFT) & PWM_PWM0_CTRL_RPT_MASK;
+    WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Configurate PWM captured frequency.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channle(0~3).
+ * @param  freq: PWM use the frequency to capture data
+ * @retval HAL status
+ */
+HAL_Status HAL_PWM_SetCapturedFreq(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t freq)
+{
+    uint32_t ctrl;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+    HAL_ASSERT(freq != 0);
+    HAL_DBG("Captured freq=%ld\n", freq);
+
+    ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
+    ctrl &= ~PWM_CTRL_SCALE_MASK;
+    ctrl |= PWM_LP_ENABLE | PWM_SEL_SCALE_CLK;
+    ctrl |= ((pPWM->freq / (2 * freq)) << PWM_CTRL_SCALE_SHIFT) & PWM_CTRL_SCALE_MASK;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
 
     return HAL_OK;

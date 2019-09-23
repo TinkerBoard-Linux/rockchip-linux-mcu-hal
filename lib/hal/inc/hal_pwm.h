@@ -81,6 +81,7 @@ HAL_Status HAL_PWM_IRQHandler(struct PWM_HANDLE *pPWM);
 HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
                              const struct HAL_PWM_CONFIG *config);
 HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t count);
+HAL_Status HAL_PWM_SetCapturedFreq(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t freq);
 ePWM_Mode HAL_PWM_GetMode(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, ePWM_Mode mode);
 HAL_Status HAL_PWM_Disable(struct PWM_HANDLE *pPWM, uint8_t channel);
