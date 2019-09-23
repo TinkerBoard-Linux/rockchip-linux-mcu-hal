@@ -44,7 +44,8 @@
 #define PWM_DUTY_REG(pPWM, ch)   (pPWM->pReg->CHANNELS[ch].DUTY_LPR)
 #define PWM_CTRL_REG(pPWM, ch)   (pPWM->pReg->CHANNELS[ch].CTRL)
 
-#define PWM_INT_EN(ch) (1 << ch)
+#define PWM_INT_EN(ch)     (1 << ch)
+#define PWM_PWR_INT_EN(ch) (1 << (ch + 4 ))
 
 #define PWM_DISABLE (0 << PWM_PWM0_CTRL_PWM_EN_SHIFT)
 #define PWM_ENABLE  (1 << PWM_PWM0_CTRL_PWM_EN_SHIFT)
@@ -74,6 +75,8 @@
 
 #define PWM_CTRL_SCALE_SHIFT (PWM_PWM0_CTRL_SCALE_SHIFT)
 #define PWM_CTRL_SCALE_MASK  (PWM_PWM0_CTRL_SCALE_MASK)
+
+#define PWM_PWRMATCH_MAX_SHIFT (PWM_PWRMATCH_LPRE_CNT_MIN_SHIFT)
 
 /********************* Private Structure Definition **************************/
 
@@ -211,6 +214,45 @@ HAL_Status HAL_PWM_SetCapturedFreq(struct PWM_HANDLE *pPWM, uint8_t channel, uin
     ctrl |= PWM_LP_ENABLE | PWM_SEL_SCALE_CLK;
     ctrl |= ((pPWM->freq / (2 * freq)) << PWM_CTRL_SCALE_SHIFT) & PWM_CTRL_SCALE_MASK;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Configurate PWM matched setting.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channle(0~3).
+ * @param  data: matching configuration.
+ * @retval HAL status
+ */
+HAL_Status HAL_PWM_SetMatch(struct PWM_HANDLE *pPWM, uint8_t channel, const struct PWM_MATCH *data)
+{
+    uint8_t i;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+    HAL_ASSERT(data != NULL);
+    HAL_ASSERT(data->matchCount <= PWM_PWRMATCH_MAX_COUNT);
+
+    /* preloader low */
+    WRITE_REG(pPWM->pReg->PWRMATCH_LPRE, data->lpreMin | (data->lpreMax << PWM_PWRMATCH_MAX_SHIFT));
+    /* preloader high */
+    WRITE_REG(pPWM->pReg->PWRMATCH_HPRE, data->hpreMin | (data->hpreMax << PWM_PWRMATCH_MAX_SHIFT));
+    /* logic 0/1 low */
+    WRITE_REG(pPWM->pReg->PWRMATCH_LD, data->ldMin | (data->ldMax << PWM_PWRMATCH_MAX_SHIFT));
+    /* logic 0 high */
+    WRITE_REG(pPWM->pReg->PWRMATCH_HD_ZERO, data->hdZeroMin | (data->hdZeroMax << PWM_PWRMATCH_MAX_SHIFT));
+    /* logic 1 high */
+    WRITE_REG(pPWM->pReg->PWRMATCH_HD_ONE, data->hdOneMin | (data->hdOneMax << PWM_PWRMATCH_MAX_SHIFT));
+
+    for (i = 0; i < data->matchCount; i++)
+        WRITE_REG(pPWM->pReg->PWRMATCH_VALUE[i], data->match[i]);
+
+    /* Enable pwr irq */
+    SET_BIT(pPWM->pReg->INT_EN, PWM_PWR_INT_EN(channel));
+    /* Enable pwr */
+    SET_BIT(pPWM->pReg->PWRMATCH_CTRL, channel);
 
     return HAL_OK;
 }
