@@ -162,7 +162,7 @@ struct HAL_FSPI_HOST g_fspi0Dev =
     .instance = FSPI0,
     .sclkID = CLK_SFC,
     .irqNum = FSPI0_IRQn,
-    .xipMem0 = XIP_MEM0_BASE0,
+    .xipMem0 = XIP_MAP0_BASE0,
 };
 #endif
 
