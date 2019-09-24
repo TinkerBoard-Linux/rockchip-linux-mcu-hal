@@ -118,6 +118,10 @@ struct DSP_DEV {
     struct GRF_REG *grfReg;    /**< grf register base */
     const struct DSP_OPS *ops; /**< dsp ops function */
     eDSP_resetMode resetFlag; /**< dsp have been reset flag */
+    uint8_t mbox_isA2B;       /**< 1: AP to BB; 0: BB to AP */
+    struct MBOX_REG *mbox_reg;
+    uint8_t error_irq;
+    int mbox_irq[MBOX_CHAN_CNT];
     void *privData; /**< dsp dev privData */
 };
 
@@ -153,6 +157,20 @@ HAL_Status HAL_DSP_SoftWakeup(void);
  * @return HAL_Status
  */
 HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode);
+
+/**
+ * @brief  Control clk, pd and tcm on.
+ * @param  dsp: dsp device point.
+ * @return HAL_Status
+ */
+HAL_Status HAL_DSP_PowerOn(struct DSP_DEV *dsp);
+
+/**
+ * @brief  Control clk, pd and tcm off.
+ * @param  dsp: dsp device point.
+ * @return HAL_Status
+ */
+HAL_Status HAL_DSP_PowerOff(struct DSP_DEV *dsp);
 
 /**
  * @brief  Init dsp and deassert reset.

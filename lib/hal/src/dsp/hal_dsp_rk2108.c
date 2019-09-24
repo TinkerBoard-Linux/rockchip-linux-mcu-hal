@@ -209,11 +209,43 @@ HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
     return HAL_OK;
 }
 
+HAL_Status HAL_DSP_PowerOn(struct DSP_DEV *dsp)
+{
+    HAL_CRU_ClkEnable(ACLK_DSP_GATE);
+    HAL_CRU_ClkEnable(PCLK_DSP_GATE);
+#if defined(RT_USING_PMU)
+    HAL_PD_On(PD_DSP);
+#endif
+    HAL_DSP_SetTcmMode(DSP_TCM, NOR_MODE);
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_DSP_PowerOff(struct DSP_DEV *dsp)
+{
+    HAL_DSP_SetTcmMode(DSP_TCM, PWR_DOWN_MODE);
+#if defined(RT_USING_PMU)
+    HAL_PD_Off(PD_DSP);
+#endif
+    HAL_CRU_ClkDisable(ACLK_DSP_GATE);
+    HAL_CRU_ClkDisable(PCLK_DSP_GATE);
+
+    return HAL_OK;
+}
+
 HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp)
 {
     dsp->ops = &dspOps;
     dsp->grfReg = (struct GRF_REG *)(GRF_BASE);
     dsp->resetFlag = DSP_RESET_MODE_RESET_ALL_CLK;
+
+    dsp->mbox_isA2B = 1;
+    dsp->mbox_reg = MBOX0;
+    dsp->error_irq = DSP_PFATAL_ERROR_IRQn;
+    dsp->mbox_irq[0] = MAILBOX0_AP_IRQn;
+    dsp->mbox_irq[1] = MAILBOX0_AP_IRQn;
+    dsp->mbox_irq[2] = MAILBOX0_AP_IRQn;
+    dsp->mbox_irq[3] = MAILBOX0_AP_IRQn;
 
     /* Deassert reset */
     HAL_DSP_Enable(dsp, 0);

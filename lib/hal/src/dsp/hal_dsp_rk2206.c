@@ -156,11 +156,37 @@ HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
     return HAL_OK;
 }
 
+HAL_Status HAL_DSP_PowerOn(struct DSP_DEV *dsp)
+{
+    HAL_CRU_ClkEnable(HCLK_HIFI3_TCM_GATE);
+    HAL_CRU_ClkEnable(ACLK_HIFI3_NIU_GATE);
+    HAL_CRU_ClkEnable(CLK_HIFI3_DIV_GATE);
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_DSP_PowerOff(struct DSP_DEV *dsp)
+{
+    HAL_CRU_ClkDisable(CLK_HIFI3_DIV_GATE);
+    HAL_CRU_ClkDisable(ACLK_HIFI3_NIU_GATE);
+    HAL_CRU_ClkDisable(HCLK_HIFI3_TCM_GATE);
+
+    return HAL_OK;
+}
+
 HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp)
 {
     dsp->ops = &dspOps;
     dsp->grfReg = (struct GRF_REG *)(GRF_BASE);
     dsp->resetFlag = DSP_RESET_MODE_RESET_ALL_CLK;
+
+    dsp->mbox_isA2B = 1;
+    dsp->mbox_reg = MBOX1;
+    dsp->error_irq = DSP_ERROR_IRQn;
+    dsp->mbox_irq[0] = B2A1_INT0_IRQn;
+    dsp->mbox_irq[1] = B2A1_INT1_IRQn;
+    dsp->mbox_irq[2] = B2A1_INT2_IRQn;
+    dsp->mbox_irq[3] = B2A1_INT3_IRQn;
 
     /* Deassert reset */
     HAL_DSP_Enable(dsp, 0);
