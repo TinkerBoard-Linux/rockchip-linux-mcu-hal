@@ -583,7 +583,7 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
         }
 
         if (pEP->type == EP_TYPE_ISOC) {
-            if (USB_DEVICE->DSTS & (1 << 8))
+            if ((USB_DEVICE->DSTS & (1 << 8)) == 0)
                 USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SODDFRM;
             else
                 USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
@@ -621,7 +621,7 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
             USB_OUTEP(pEP->num)->DOEPDMA = (uint32_t)pEP->dmaAddr;
 
         if (pEP->type == EP_TYPE_ISOC) {
-            if (USB_DEVICE->DSTS & (1 << 8))
+            if ((USB_DEVICE->DSTS & (1 << 8)) == 0)
                 USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SODDFRM;
             else
                 USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
