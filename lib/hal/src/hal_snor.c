@@ -405,6 +405,7 @@ static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8
         uint8_t readIndex;
         uint8_t status2[2];
 
+        status2[regIndex] = *status;
         readIndex = (regIndex == 0) ? 1 : 0;
         ret = SNOR_ReadStatus(nor, readIndex, &status2[readIndex]);
         if (ret != HAL_OK)
