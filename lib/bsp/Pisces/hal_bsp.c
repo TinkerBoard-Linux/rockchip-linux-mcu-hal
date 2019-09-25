@@ -216,8 +216,8 @@ static HAL_Status BSP_VAD_DeInit(void)
 }
 #endif
 
-#if defined(HAL_PINCTRL_MODULE_ENABLED)
-static struct PINCTRL_BANK_INFO pinBanks[] = {
+#ifdef HAL_PINCTRL_MODULE_ENABLED
+static const struct PINCTRL_BANK_INFO pinBanks[] = {
     PIN_BANK_CFG_FLAGS(GPIO_BANK0, 32, GRF_BASE,
                        0x0000, 4, 4,
                        0x0080, 2, 8,
@@ -236,6 +236,16 @@ const struct HAL_PINCTRL_DEV g_pinDev = {
     .banks = pinBanks,
     .banksNum = HAL_ARRAY_SIZE(pinBanks),
 };
+
+static HAL_Status BSP_PINCTRL_Init(void)
+{
+    return HAL_OK;
+}
+
+static HAL_Status BSP_PINCTRL_DeInit(void)
+{
+    return HAL_OK;
+}
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED
@@ -283,11 +293,19 @@ void BSP_DeInit(void)
 #ifdef HAL_PL330_MODULE_ENABLED
     BSP_PL330_DeInit();
 #endif
+
+#ifdef HAL_PINCTRL_MODULE_ENABLED
+    BSP_PINCTRL_DeInit();
+#endif
 }
 
 void BSP_Init(void)
 {
     PMU->SFT_CON = 0x00010001;
+
+#ifdef HAL_PINCTRL_MODULE_ENABLED
+    BSP_PINCTRL_Init();
+#endif
 
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
     BSP_ACDCDIG_Init();

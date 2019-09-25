@@ -119,6 +119,10 @@ HAL_Status HAL_Init(void)
     HAL_TIMER_SysTimerInit(SYS_TIMER);
 #endif
 
+#ifdef HAL_PINCTRL_MODULE_ENABLED
+    HAL_PINCTRL_Init();
+#endif
+
     return HAL_OK;
 }
 

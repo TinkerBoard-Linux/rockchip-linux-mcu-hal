@@ -192,7 +192,7 @@ typedef enum {
 #define GPIO_PIN_D6 (0x40000000U)  /*!< Pin 30 selected   */
 #define GPIO_PIN_D7 (0x80000000U)  /*!< Pin 31 selected   */
 
-#define GPIO_PIN_All (0xFFFFFFFFU)  /*!< All pins selected */
+#define GPIO_PIN_ALL (0xFFFFFFFFU)  /*!< All pins selected */
 
 /** @} */
 

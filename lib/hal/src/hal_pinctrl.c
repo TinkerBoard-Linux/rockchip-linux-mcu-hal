@@ -434,6 +434,31 @@ HAL_Status HAL_PINCTRL_Resume(void)
 
 HAL_Status HAL_PINCTRL_Init(void)
 {
+#ifdef RKMCU_PISCES
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0, GPIO_PIN_ALL & ~(
+                             GPIO_PIN_C7 | // UART0_RX
+                             GPIO_PIN_D0 | // UART0_TX
+                             GPIO_PIN_D5 | // MIPI_SWITCH_CTRL
+                             GPIO_PIN_D6), // AUD_BY_CTRL
+                         PIN_CONFIG_MUX_FUNC0);
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK1, GPIO_PIN_ALL & ~(
+                             GPIO_PIN_A2 | // LCD_OUT_RESETN
+                             GPIO_PIN_A5 | // BOOT_DEV_SEL
+                             GPIO_PIN_A6 | // M4_DSP_JTAG_SEL
+                             GPIO_PIN_B2), // CLK_IN_SEL
+                         PIN_CONFIG_MUX_FUNC0);
+
+    HAL_PINCTRL_SetParam(GPIO_BANK0, GPIO_PIN_ALL & ~(
+                             GPIO_PIN_D5 | // MIPI_SWITCH_CTRL
+                             GPIO_PIN_D6), // AUD_BY_CTRL
+                         PIN_CONFIG_PUL_NORMAL);
+    HAL_PINCTRL_SetParam(GPIO_BANK1, GPIO_PIN_ALL & ~(
+                             GPIO_PIN_A5 | // BOOT_DEV_SEL
+                             GPIO_PIN_A6 | // M4_DSP_JTAG_SEL
+                             GPIO_PIN_B2), // CLK_IN_SEL
+                         PIN_CONFIG_PUL_NORMAL);
+#endif
+
     return HAL_OK;
 }
 
