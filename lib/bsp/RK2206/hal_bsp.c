@@ -458,6 +458,24 @@ const struct HAL_USB_DEV g_usbdDev =
 };
 #endif
 
+#ifdef HAL_VAD_MODULE_ENABLED
+/* VAD_CONTROL[3:1]: voice source mapping */
+const struct AUDIO_SRC_ADDR_MAP g_audioSrcAddrMaps[] =
+{
+    { 0, I2STDM0_BASE + 0x800 },
+    { 1, I2STDM1_BASE + 0x800 },
+    { 2, PDM0_BASE + 0x400 },
+    { /* sentinel */ }
+};
+
+struct HAL_VAD_DEV g_vadDev =
+{
+    .pReg = VAD,
+    .hclk = HCLK_VAD_GATE,
+    .irq = VAD_IRQn,
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }

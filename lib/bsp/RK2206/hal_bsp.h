@@ -67,6 +67,10 @@ extern const struct HAL_PVTM_DEV g_pvtmDev;
 extern const struct HAL_USB_DEV g_usbdDev;
 #endif
 
+#ifdef HAL_VAD_MODULE_ENABLED
+extern struct HAL_VAD_DEV g_vadDev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
