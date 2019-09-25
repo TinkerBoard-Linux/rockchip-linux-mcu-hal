@@ -178,6 +178,38 @@ static HAL_Status PINCTRL_AcquireParam(const struct PINCTRL_BANK_INFO *pBank, ui
     return HAL_OK;
 }
 
+#if defined(RKMCU_RK2206)
+#define GRF_SARADC_IEN_EN(x)  ((0x0U << GRF_SOC_CON15_GRF_SARADC_IEN_SHIFT) << (x))
+#define GRF_SARADC_IEN_DIS(x) ((0x1U << GRF_SOC_CON15_GRF_SARADC_IEN_SHIFT) << (x))
+#define IS_MUX_SARADC(m)      (m == PIN_CONFIG_MUX_FUNC1)
+
+/**
+ * @brief  Extra iomux for GPIO0-GPIO7 on rk2206 SoCs.
+ * @param  pBank: point to pin bank info.
+ * @param  pin: pin index, 0~31.
+ * @param  arg: multi params defined in @ref ePINCTRL_configParam,
+ */
+static void PINCTRL_ExtraSet(const struct PINCTRL_BANK_INFO *pBank, uint8_t pin, uint32_t arg)
+{
+    if (pin < 16 || pin > 23 || (pBank->channel != GPIO_BANK0))
+        return;
+
+    if (IS_MUX_SARADC(arg)) {
+        WRITE_REG_MASK_WE(GRF->SOC_CON15,
+                          GRF_SOC_CON15_GRF_SARADC_IEN_MASK,
+                          GRF_SARADC_IEN_DIS(pin - 16));
+    } else {
+        WRITE_REG_MASK_WE(GRF->SOC_CON15,
+                          GRF_SOC_CON15_GRF_SARADC_IEN_MASK,
+                          GRF_SARADC_IEN_EN(pin - 16));
+    }
+}
+#else
+static inline void PINCTRL_ExtraSet(const struct PINCTRL_BANK_INFO *pBank, uint8_t pin, uint32_t arg)
+{
+}
+#endif
+
 /**
  * @brief  Private function to set iomux for one pin.
  * @param  pBank: point to pin bank info.
@@ -193,6 +225,8 @@ static HAL_Status PINCTRL_SetMux(const struct PINCTRL_BANK_INFO *pBank,
     HAL_Status rc = HAL_OK;
 
     HAL_DBG("setting GPIO%d-%d to %d\n", pBank->channel, pin, param);
+
+    PINCTRL_ExtraSet(pBank, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_MUX_INFO, &reg, &bit, &mask);
     if (rc)
