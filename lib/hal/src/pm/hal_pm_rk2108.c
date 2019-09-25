@@ -53,9 +53,8 @@
 /********************* Private Variable Definition ***************************/
 #ifdef HAL_PM_RUNTIME_MODULE_ENABLED
 static uint8_t pvtm32kEn = 0;
-#endif
+
 /********************* Private Function Definition ***************************/
-#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
 static uint32_t PM_GetPllPostDivEven(uint32_t rateIn, uint32_t rateOut, uint32_t *postDiv1, uint32_t *postDiv2)
 {
     uint32_t div1, div2, div;
@@ -86,18 +85,6 @@ static uint32_t PM_GetPllPostDivEven(uint32_t rateIn, uint32_t rateOut, uint32_t
     else
         return 0;
 }
-#endif
-
-#ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
-static int SOC_SuspendEnter(uint32_t flag)
-{
-    HAL_DCACHE_CleanInvalidate();
-    HAL_DCACHE_Disable();
-    __WFI();
-
-    return HAL_OK;
-}
-#endif
 
 static void PVTM_ClkEnable(void)
 {
@@ -153,7 +140,6 @@ static void PVTM_ClkRateConfig(uint32_t khz)
 /** @defgroup PM_Exported_Functions_Group5 Other Functions
  *  @{
  */
-#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
 static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 {
     uint32_t gpllCon1, gpllDiv2, gpllDiv2New;
@@ -309,6 +295,17 @@ uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 #endif
 
 #ifdef HAL_PM_SLEEP_MODULE_ENABLED
+#ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
+static int SOC_SuspendEnter(uint32_t flag)
+{
+    HAL_DCACHE_CleanInvalidate();
+    HAL_DCACHE_Disable();
+    __WFI();
+
+    return HAL_OK;
+}
+#endif
+
 int HAL_SYS_Suspend(uint32_t flag)
 {
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
