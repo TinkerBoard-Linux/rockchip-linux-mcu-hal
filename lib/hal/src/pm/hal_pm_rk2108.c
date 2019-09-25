@@ -129,12 +129,12 @@ static void PVTM_ClkRateConfig(uint32_t khz)
                                   GRF_PVTM_CON0_PVTM_START_MASK);
 
     /* pmugrf_pvtm_st0 will be clear after PVTM start,
-         * which will cost about 6 cycles of pvtm at least.
-         * So we wait 30 cycles of pvtm for security.
-         */
+     * which will cost about 6 cycles of pvtm at least.
+     * So we wait 30 cycles of pvtm for security.
+     */
     while (pGrf->PVTM_STATUS1 < 30)
         ;
-    while (!(pGrf->PVTM_STATUS0) & GRF_PVTM_STATUS0_PVTM_FREQ_DONE_MASK)
+    while (!(pGrf->PVTM_STATUS0 & GRF_PVTM_STATUS0_PVTM_FREQ_DONE_MASK))
         ;
 
     pvtm_freq_khz =
