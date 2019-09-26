@@ -422,16 +422,27 @@ HAL_Status HAL_FSPI_SpiXfer(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *o
  */
 HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
 {
+    int32_t timeout = 0;
+    struct FSPI_REG *pReg;
+    HAL_Status ret = HAL_OK;
+
     if (!IS_FSPI_INSTANCE(host->instance))
         return HAL_INVAL;
 
-    host->instance->MODE = 0;
-    FSPI_Reset(host->instance);
-    FSPI_XmmcDevRegionInit(host);
-    host->instance->CTRL0 = 0;
-    host->version = host->instance->VER & FSPI_VER_VER_MASK;
+    pReg = host->instance;
+    pReg->MODE = 0;
+    while (pReg->SR & FSPI_SR_SR_BUSY) {
+        HAL_CPUDelayUs(1);
+        if (timeout++ > 1000) {
+            return HAL_TIMEOUT;
+        }
+    }
 
-    return HAL_OK;
+    FSPI_XmmcDevRegionInit(host);
+    pReg->CTRL0 = 0;
+    host->version = pReg->VER & FSPI_VER_VER_MASK;
+
+    return ret;
 }
 
 /**
@@ -529,6 +540,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
 
     /* spitial setting */
     FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
+    /* Avoid flash EBh CMD run into CONT mode, cont = 1, AX = 0, AX_SET_PAT = 0x5a */
     if (op->addr.buswidth == 4 && host->xmmcDev[host->cs].type == DEV_NOR) {
         FSPICmd.b.readmode = 1;
         FSPICmd.b.dummybits = 4;
@@ -556,6 +568,7 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 {
     FSPIXMMCCTRL_DATA xmmcCtrl;
     struct FSPI_REG *pReg = host->instance;
+    int timeout = 0;
 
     xmmcCtrl.d32 = pReg->XMMC_CTRL;
 
@@ -573,7 +586,8 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
             xmmcCtrl.b.devUdfincrEn = 1;
         } else {
             xmmcCtrl.b.devHwEn = 0;
-            xmmcCtrl.b.prefetch = 1;
+            if (host->version > FSPI_VER_VER_3)
+                xmmcCtrl.b.prefetch = 1;
         }
         /* FSPI_DBG("%s enable 3 %lx %lx %lx %lx\n", __func__,
                     host->xmmcDev[0].ctrl, xmmcCtrl.d32,
@@ -603,6 +617,12 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
     } else {
         /* FSPI_DBG("%s diable\n", __func__); */
         pReg->MODE = 0;
+        while (pReg->SR & FSPI_SR_SR_BUSY) {
+            HAL_CPUDelayUs(1);
+            if (timeout++ > 1000) {
+                return HAL_TIMEOUT;
+            }
+        }
     }
 
     return HAL_OK;
