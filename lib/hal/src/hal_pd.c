@@ -161,6 +161,7 @@ static HAL_Status PD_PowerOn(ePD_Id pd, HAL_Check on)
 /********************* Public Function Definition ****************************/
 
 /** @defgroup PD_Exported_Functions_Group5 Other Functions
+ *  @attention these APIs allow direct use in the HAL layer.
  *  @{
  */
 

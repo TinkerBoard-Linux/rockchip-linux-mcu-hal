@@ -84,6 +84,7 @@ static struct PLL_SETUP GPLL = {
  * @brief Get frac clk freq.
  * @param  clockName: CLOCK_Name id
  * @return clk rate.
+ * @attention these APIs allow direct use in the HAL layer.
  * How to calculate the Frac clk divider:
  *     numerator is frac register[31:16]
  *     denominator is frac register[15:0]
@@ -147,6 +148,7 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
  * @param  clockName: CLOCK_Name id.
  * @param  rate: clk set rate
  * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
  * How to calculate the Frac clk divider:
  *     if pRate > 20 * rate, select frac divider
  *     else select normal divider, but the clk rate may be not accurate
@@ -216,6 +218,7 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
  * @brief Get clk freq.
  * @param  clockName: CLOCK_Name id.
  * @return rate.
+ * @attention these APIs allow direct use in the HAL layer.
  */
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 {
@@ -308,6 +311,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
  * @param  clockName: CLOCK_Name id.
  * @param  rate: clk rate.
  * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
  */
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {

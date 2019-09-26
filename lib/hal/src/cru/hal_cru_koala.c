@@ -228,6 +228,7 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
  * @brief Get clk freq.
  * @param  clockName: CLOCK_Name id.
  * @return rate.
+ * @attention these APIs allow direct use in the HAL layer.
  */
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 {
@@ -345,6 +346,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
  * @param  clockName: CLOCK_Name id.
  * @param  rate: clk rate.
  * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
  */
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
@@ -500,6 +502,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
  * @brief wdt glbrst enable.
  * @param  wdtType: wdt reset type.
  * @return HAL_OK.
+ * @attention these APIs allow direct use in the HAL layer.
  */
 HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType)
 {

@@ -267,6 +267,7 @@ static const struct PLL_CONFIG *CRU_PllGetSettings(struct PLL_SETUP *pSetup,
 /********************* Public Function Definition ****************************/
 
 /** @defgroup CRU_Exported_Functions_Group5 Other Functions
+ *  @attention these APIs allow direct use in the HAL layer.
  *  @{
  */
 

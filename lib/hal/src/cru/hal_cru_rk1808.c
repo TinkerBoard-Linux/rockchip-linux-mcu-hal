@@ -120,6 +120,7 @@ static struct PLL_SETUP PPLL = {
  * @param  divName: div id(Contains div offset, shift, mask information)
  * @param  divValue: div value
  * @return NONE
+ * @attention these APIs allow direct use in the HAL layer.
  */
 HAL_Status HAL_PMUCRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
 {
@@ -140,6 +141,7 @@ HAL_Status HAL_PMUCRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
  * @brief  IP Clock get div API
  * @param  divName: div id(Contains div offset, shift, mask information)
  * @return div value
+ * @attention these APIs allow direct use in the HAL layer.
  */
 uint32_t HAL_PMUCRU_ClkGetDiv(uint32_t divName)
 {
@@ -158,6 +160,7 @@ uint32_t HAL_PMUCRU_ClkGetDiv(uint32_t divName)
  * @param  muxName: mux id(Contains mux offset, shift, mask information)
  * @param  muxValue: mux value
  * @return NONE
+ * @attention these APIs allow direct use in the HAL layer.
  */
 HAL_Status HAL_PMUCRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
 {
@@ -177,6 +180,7 @@ HAL_Status HAL_PMUCRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
  * @brief  IP Clock get mux API
  * @param  muxName: mux id(Contains mux offset, shift, mask information)
  * @return mux value
+ * @attention these APIs allow direct use in the HAL layer.
  */
 uint32_t HAL_PMUCRU_ClkGetMux(uint32_t muxName)
 {
@@ -194,6 +198,7 @@ uint32_t HAL_PMUCRU_ClkGetMux(uint32_t muxName)
  * @brief Get vop dclk freq.
  * @param  clockName: CLOCK_Name id
  * @return clk rate.
+ * @attention these APIs allow direct use in the HAL layer.
  * How to calculate the vop clk divider:
  *     if normal divider: rate = prate / div
  *     else frac divider:
@@ -248,6 +253,7 @@ uint32_t HAL_CRU_ClkVopGetFreq(eCLOCK_Name clockName)
  * @param  clockName: CLOCK_Name id.
  * @param  rate: clk set rate
  * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
  * How to calculate the vop clk divider:
  *     if gpll or cpll can aliquot rate, select normal divider
  *     else prate > 20 * rate, select frac divider
@@ -306,6 +312,7 @@ HAL_Status HAL_CRU_ClkVopSetFreq(eCLOCK_Name clockName, uint32_t rate)
  * @brief Get npu clk freq.
  * @param  clockName: CLOCK_Name id
  * @return clk rate.
+ * @attention these APIs allow direct use in the HAL layer.
  * How to calculate the Frac clk divider:
  *     if normal divider: rate = prate / div
  *     else np5 half divider:
@@ -340,6 +347,7 @@ uint32_t HAL_CRU_ClkNpuGetFreq(eCLOCK_Name clockName)
  * @param  clockName: CLOCK_Name id.
  * @param  rate: clk set rate
  * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
  * How to calculate the npu clk divider:
  *     if gpll or cpll can aliquot rate, select normal divider
  *     else select np5 half divider
@@ -404,6 +412,7 @@ HAL_Status HAL_CRU_ClkNpuSetFreq(eCLOCK_Name clockName, uint32_t rate)
  * @brief Get frac clk freq.
  * @param  clockName: CLOCK_Name id
  * @return clk rate.
+ * @attention these APIs allow direct use in the HAL layer.
  * How to calculate the Frac clk divider:
  *     numerator is frac register[31:16]
  *     denominator is frac register[15:0]
@@ -547,6 +556,7 @@ uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
  * @param  clockName: CLOCK_Name id.
  * @param  rate: clk set rate
  * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
  * How to calculate the Frac clk divider:
  *     if pRate > 20 * rate, select frac divider
  *     else select normal divider, but the clk rate may be not accurate
@@ -674,6 +684,7 @@ HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
  * @brief Get clk freq.
  * @param  clockName: CLOCK_Name id.
  * @return rate.
+ * @attention these APIs allow direct use in the HAL layer.
  */
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 {
@@ -843,6 +854,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
  * @param  clockName: CLOCK_Name id.
  * @param  rate: clk rate.
  * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
  */
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
