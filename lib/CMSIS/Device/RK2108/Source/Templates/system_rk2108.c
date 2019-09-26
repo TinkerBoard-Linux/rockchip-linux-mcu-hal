@@ -44,8 +44,7 @@ void SystemInit(void)
 
 #if defined(HAL_ICACHE_MODULE_ENABLED)
     /* config icache: mpu disable, stb disable, write through, hot buffer enable */
-    ICACHE->CACHE_CTRL |= ICACHE_CACHE_CTRL_CACHE_PF_EN_MASK |
-                          (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK |
+    ICACHE->CACHE_CTRL |= (ICACHE_CACHE_CTRL_CACHE_EN_MASK | ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK |
                            ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK);
     ICACHE->CACHE_CTRL &= (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
 
@@ -59,7 +58,7 @@ void SystemInit(void)
 
 #if defined(HAL_DCACHE_MODULE_ENABLED)
     /* stb enable, stb_entry=7, stb_timeout enable, write back */
-    DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK | DCACHE_CACHE_CTRL_CACHE_PF_EN_MASK |
+    DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK |
                           (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
                           DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK |
                           DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
