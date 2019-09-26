@@ -496,6 +496,10 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         s_vpllFreq = HAL_CRU_GetPllFreq(&VPLL);
 
         return error;
+    case HCLK_MCU_BUS:
+        HAL_SystemCoreClockUpdate(rate, HAL_TICK_CLKSRC_EXT);
+        break;
+
     case CLK_UART0:
     case CLK_UART1:
     case CLK_UART2:
