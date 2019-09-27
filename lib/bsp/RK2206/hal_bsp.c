@@ -335,6 +335,7 @@ const struct HAL_UART_DEV g_uart2Dev =
 struct HAL_I2STDM_DEV g_i2sTdm0Dev =
 {
     .pReg = I2STDM0,
+    .mclkOut = MCLKOUT_I2S8CH_0,
     .mclkTx = MCLK_I2S8CH_0_TX,
     .mclkTxGate = CLK_I2S8CH_0_TX_PLL_GATE,
     .mclkRx = MCLK_I2S8CH_0_RX,
