@@ -28,7 +28,7 @@
 
  - standard SPI (DI / DO), Quad SPI (D0 / D1/ D2 /D3) command
  - feature
-   - [1, 0] status feature;
+   - [1, 0] r/w status mode;
    - [3, 2] quad r/w;
    - [4] 4 bytes address;
    - [5] should enter 4 bytes addr mode;
@@ -67,13 +67,13 @@ struct FLASH_INFO {
     uint8_t reserved2;
 };
 
-#define FEA_STATUE_MASK  (0x3 << 0)
-#define FEA_STATUE_MODE1 0  /* Readstatus0 05h-SR1, 35h-SR2, Writestatus0 01h-SR1, 31h-SR2 */
-#define FEA_STATUE_MODE2 1  /* Readstatus0 05h-SR1, 35h-SR2, Writestatus1 01h-SR1-SR2 */
-#define FEA_STATUE_MODE3 2  /* Readstatus1 05h-SR1, 15h-CR1, Writestatus1 01h-SR1-CR1 */
-#define FEA_4BIT_READ    HAL_BIT(2)
-#define FEA_4BIT_PROG    HAL_BIT(3)
-
+/* FLASH_INFO feature */
+#define FEA_STATUE_MASK     (0x3 << 0)
+#define FEA_STATUE_MODE0    0  /* Readstatus0 05h-SR1, 35h-SR2, Writestatus0 01h-SR1, 31h-SR2 */
+#define FEA_STATUE_MODE1    1  /* Readstatus0 05h-SR1, 35h-SR2, Writestatus1 01h-SR1-SR2 */
+#define FEA_STATUE_MODE2    2  /* Readstatus1 05h-SR1, 15h-CR1, Writestatus1 01h-SR1-CR1 */
+#define FEA_4BIT_READ       HAL_BIT(2)
+#define FEA_4BIT_PROG       HAL_BIT(3)
 #define FEA_4BYTE_ADDR      HAL_BIT(4)
 #define FEA_4BYTE_ADDR_MODE HAL_BIT(5)
 
@@ -373,7 +373,7 @@ static HAL_Status SNOR_ReadStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8_
     uint8_t readStatCmd[] = { SPINOR_OP_RDSR, SPINOR_OP_RDSR1, SPINOR_OP_RDSR2 };
     uint8_t i = nor->info->feature & FEA_STATUE_MASK;
 
-    if (i == FEA_STATUE_MODE3) /* Readstatus1 */
+    if (i == FEA_STATUE_MODE2) /* Readstatus1 */
         readStatCmd[1] = SPINOR_OP_RDCR;
 
     return nor->readReg(nor, readStatCmd[regIndex], status, 1);
@@ -385,7 +385,7 @@ static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8
     uint8_t i = nor->info->feature & FEA_STATUE_MASK;
     int32_t ret;
 
-    if (i == FEA_STATUE_MODE1) { /* Writestatus0 */
+    if (i == FEA_STATUE_MODE0) { /* Writestatus0 */
         SNOR_WriteEnable(nor);
 
         ret = nor->writeReg(nor, WriteStatCmd[regIndex], status, 1);
