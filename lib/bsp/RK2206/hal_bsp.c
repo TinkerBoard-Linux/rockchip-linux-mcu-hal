@@ -336,9 +336,9 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
 {
     .pReg = I2STDM0,
     .mclkTx = MCLK_I2S8CH_0_TX,
-    .mclkTxGate = MCLK_I2S8CH_0_TX_GATE,
+    .mclkTxGate = CLK_I2S8CH_0_TX_PLL_GATE,
     .mclkRx = MCLK_I2S8CH_0_RX,
-    .mclkRxGate = MCLK_I2S8CH_0_RX_GATE,
+    .mclkRxGate = CLK_I2S8CH_0_RX_PLL_GATE,
     .hclk = HCLK_I2S0_GATE,
     .bclkFs = 64,
     .rxDmaData =
@@ -363,9 +363,9 @@ struct HAL_I2STDM_DEV g_i2sTdm1Dev =
 {
     .pReg = I2STDM1,
     .mclkTx = MCLK_I2S8CH_1_TX,
-    .mclkTxGate = MCLK_I2S8CH_1_TX_GATE,
+    .mclkTxGate = CLK_I2S8CH_1_TX_PLL_GATE,
     .mclkRx = MCLK_I2S8CH_1_RX,
-    .mclkRxGate = MCLK_I2S8CH_1_RX_GATE,
+    .mclkRxGate = CLK_I2S8CH_1_RX_PLL_GATE,
     .hclk = HCLK_I2S1_GATE,
     .bclkFs = 64,
     .rxDmaData =
