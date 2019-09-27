@@ -439,7 +439,6 @@ HAL_Status HAL_I2STDM_Config(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType st
     if (isMaster)
         I2STDM_SetSampleRate(i2sTdm, stream, params->sampleRate);
 
-    val = I2STDM_TXCR_VDW(params->sampleBits);
     switch (params->channels) {
     case 8:
         val |= I2STDM_CHN_8;
@@ -458,14 +457,17 @@ HAL_Status HAL_I2STDM_Config(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType st
         return HAL_INVAL;
     }
 
-    if (stream == AUDIO_STREAM_CAPTURE)
+    if (stream == AUDIO_STREAM_CAPTURE) {
+        val |= I2STDM_RXCR_VDW(params->sampleBits);
         MODIFY_REG(reg->RXCR,
                    I2STDM_RXCR_VDW_MASK | I2STDM_RXCR_RCSR_MASK,
                    val);
-    else
+    } else {
+        val |= I2STDM_TXCR_VDW(params->sampleBits);
         MODIFY_REG(reg->TXCR,
                    I2STDM_TXCR_VDW_MASK | I2STDM_TXCR_TCSR_MASK,
                    val);
+    }
 
     MODIFY_REG(reg->DMACR, I2STDM_DMACR_TDL_MASK, I2STDM_DMACR_TDL(I2STDM_DMA_BURST_SIZE));
     MODIFY_REG(reg->DMACR, I2STDM_DMACR_RDL_MASK, I2STDM_DMACR_RDL(I2STDM_DMA_BURST_SIZE));
