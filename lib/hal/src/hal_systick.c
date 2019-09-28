@@ -75,6 +75,7 @@ HAL_Status HAL_SYSTICK_Init(void)
 
     /*Configure the SysTick IRQ priority */
     HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
+    HAL_SYSTICK_Enable();
 
     return HAL_OK;
 }
@@ -99,8 +100,6 @@ HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb)
     SysTick->LOAD = (uint32_t)(ticksNumb - 1UL);                      /* set reload register */
     NVIC_SetPriority(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);  /* set Priority for SysTick Interrupt */
     SysTick->VAL = 0UL;                                               /* Load the SysTick Counter Value */
-    SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk |
-                      SysTick_CTRL_ENABLE_Msk);                       /* Enable SysTick IRQ and SysTick Timer */
 
     return HAL_OK;
 }
@@ -148,6 +147,18 @@ HAL_Check HAL_SYSTICK_IsExtRefClockEnabled(void)
 __WEAK void HAL_SYSTICK_IRQHandler(void)
 {
     HAL_IncTick();
+}
+
+/**
+ * @brief  Enable SysTick.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SYSTICK_Enable(void)
+{
+    SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk |
+                      SysTick_CTRL_ENABLE_Msk);                       /* Enable SysTick IRQ and SysTick Timer */
+
+    return HAL_OK;
 }
 
 /** @} */
