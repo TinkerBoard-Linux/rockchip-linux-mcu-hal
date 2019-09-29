@@ -586,8 +586,11 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
             xmmcCtrl.b.devUdfincrEn = 1;
         } else {
             xmmcCtrl.b.devHwEn = 0;
-            if (host->version > FSPI_VER_VER_3)
-                xmmcCtrl.b.prefetch = 1;
+#if !defined(HAL_DCACHE_MODULE_ENABLED) && (FSPI_VER == 3)
+            xmmcCtrl.b.prefetch = 0;
+#else
+            xmmcCtrl.b.prefetch = 1;
+#endif
         }
         /* FSPI_DBG("%s enable 3 %lx %lx %lx %lx\n", __func__,
                     host->xmmcDev[0].ctrl, xmmcCtrl.d32,
