@@ -43,7 +43,7 @@ struct HAL_DWDMA_DEV g_dwDmaDev =
     .irq[3] = DMAC_CH3_IRQn,
     .irq[4] = DMAC_CH4_IRQn,
     .irq[5] = DMAC_CH5_IRQn,
-    .dataWidth = 2, /**< 32 bits */
+    .dataWidth = 4, /**< bytes */
     .blockSize = 0xfff, /** ref to trm */
 };
 #endif
