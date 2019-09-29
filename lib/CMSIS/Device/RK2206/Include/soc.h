@@ -94,7 +94,7 @@ typedef enum
     ADUPWM_IRQn                 = 44,
     PVTM_IRQn                   = 45,
     CRYPTO_IRQn                 = 46,
-    CIF_IRQn                    = 47,
+    VICAP_IRQn                  = 47,
     PMU_IRQn                    = 48,
     GPIO0_IRQn                  = 49,
     GPIO1_IRQn                  = 50,
