@@ -255,8 +255,10 @@ HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *confi
     struct PDM_REG *reg = pdm->pReg;
     uint32_t val;
 
+    HAL_ASSERT(IS_PDM_INSTANCE(reg));
+
     HAL_CRU_ClkEnable(pdm->hclk);
-    HAL_PDM_Disable(pdm);
+
     val = config->clkInvert ? PDM_CKP_INVERTED : PDM_CKP_NORMAL;
     MODIFY_REG(reg->CLK_CTRL, PDM_CKP_MSK, val);
 
@@ -271,8 +273,6 @@ HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *confi
 HAL_Status HAL_PDM_DeInit(struct HAL_PDM_DEV *pdm)
 {
     HAL_ASSERT(IS_PDM_INSTANCE(pdm->pReg));
-
-    HAL_PDM_Disable(pdm);
 
     HAL_CRU_ClkDisable(pdm->hclk);
 
