@@ -43,9 +43,9 @@
         struct DMA_SLAVE_CONFIG *_config = &_dwc->config;         \
         bool _islave = HAL_DMA_IsSlaveDirection(_dwc->direction); \
         uint8_t _smSize = _islave ? _config->srcMaxBurst :        \
-            DWDMA_MSIZE_16;                                       \
+            DWDMA_MSIZE_256;                                      \
         uint8_t _dmSize = _islave ? _config->dstMaxBurst :        \
-            DWDMA_MSIZE_16;                                       \
+            DWDMA_MSIZE_256;                                      \
                                                                   \
         (DWC_CTLL_DST_MSIZE(_dmSize)                              \
          | DWC_CTLL_SRC_MSIZE(_smSize)                            \
