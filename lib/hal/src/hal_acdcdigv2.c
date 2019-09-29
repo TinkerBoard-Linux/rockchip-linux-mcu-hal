@@ -104,6 +104,7 @@
 /* GRF registers */
 #define GRF_CODEC_I2C_TRANS ((GRF_SOC_CON16_GRF_I2C_TRANS_REQ_MASK << 16) | (0 << GRF_SOC_CON16_GRF_I2C_TRANS_REQ_SHIFT))
 #define GRF_MCU_I2C_TRANS   ((GRF_SOC_CON16_GRF_I2C_TRANS_REQ_MASK << 16) | (1 << GRF_SOC_CON16_GRF_I2C_TRANS_REQ_SHIFT))
+
 /********************* Private Structure Definition **************************/
 
 /**
@@ -442,24 +443,42 @@ static HAL_Status ACDCDIG_DACCLKCTRL_Disable(struct HAL_ACDCDIG_DEV *acdcDig)
  * @return HAL_Status
  */
 static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
-                                          eAUDIO_streamType stream)
+                                          eAUDIO_streamType stream,
+                                          struct AUDIO_PARAMS *params)
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
 
-    /* Enable DACCLKCTRL by default. */
-    ACDCDIG_DACCLKCTRL_Enable(acdcDig);
-    if (stream == AUDIO_STREAM_CAPTURE)
-        ACDCDIG_ADCCLKCTRL_Enable(acdcDig);
-
     if (acdcDig->enabled == 0) {
-        MODIFY_REG(reg->SYSCTRL0,
-                   ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
-                   ACDCDIG_SYSCTRL0_SYNC_SEL_DAC | ACDCDIG_SYSCTRL0_CLK_SEL_DAC);
+        ACDCDIG_ADCCLKCTRL_Enable(acdcDig);
+        ACDCDIG_DACCLKCTRL_Enable(acdcDig);
+
+        /* Only select clock sync once before SYSCTRL0 is enabled. */
+        if (stream == AUDIO_STREAM_PLAYBACK) {
+            /* Select mclk_i2s0_tx as source. */
+            HAL_CRU_ClkSetMux(CLK_CODEC, CLK_CODEC_SEL_MCLK_I2S8CH_1_TX_MUX);
+            HAL_CRU_ClkSetFreq(CLK_CODEC, acdcDig->clkFreq);
+
+            /* Select clock sync is from DAC. */
+            MODIFY_REG(reg->SYSCTRL0,
+                       ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
+                       ACDCDIG_SYSCTRL0_SYNC_SEL_DAC | ACDCDIG_SYSCTRL0_CLK_SEL_DAC);
+        } else {
+            /* Select mclk_i2s0_rx as source. */
+            HAL_CRU_ClkSetMux(CLK_CODEC, CLK_CODEC_SEL_MCLK_I2S8CH_1_RX_MUX);
+            HAL_CRU_ClkSetFreq(CLK_CODEC, acdcDig->clkFreq);
+
+            /* Select clock sync is from ADC. */
+            MODIFY_REG(reg->SYSCTRL0,
+                       ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
+                       ACDCDIG_SYSCTRL0_SYNC_SEL_ADC | ACDCDIG_SYSCTRL0_CLK_SEL_ADC);
+        }
 
         MODIFY_REG(reg->SYSCTRL0,
                    ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
                    ACDCDIG_SYSCTRL0_GLB_CKE_EN);
     }
+
+    acdcDig->enabled++;
 
     return HAL_OK;
 }
@@ -527,8 +546,6 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
     struct ACDCDIG_REG *reg = acdcDig->pReg;
     HAL_Status ret = HAL_OK;
 
-    ACDCDIG_ClockSyncSelect(acdcDig, stream);
-
     /* The format is i2s by default */
     if (stream == AUDIO_STREAM_PLAYBACK) {
         MODIFY_REG(reg->I2S_XFER,
@@ -542,8 +559,6 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
                    ACDCDIG_I2S_XFER_TXS_MASK,
                    ACDCDIG_I2S_XFER_TXS_START);
     }
-
-    acdcDig->enabled++;
 
     return ret;
 }
@@ -592,9 +607,6 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig,
                    ACDCDIG_ADCDIGEN_ADC_GLB_DIS |
                    ACDCDIG_ADCDIGEN_ADC_L2_DIS |
                    ACDCDIG_ADCDIGEN_ADC_L0R1_DIS);
-
-        /* Usually, the ADCCLK is not sync source, so we can disble them. */
-        ACDCDIG_ADCCLKCTRL_Disable(acdcDig);
     }
 
     MODIFY_REG(reg->SYSCTRL0,
@@ -602,8 +614,10 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig,
                ACDCDIG_SYSCTRL0_GLB_CKE_DIS);
 
     acdcDig->enabled--;
-    if (acdcDig->enabled == 0)
+    if (acdcDig->enabled == 0) {
         ACDCDIG_DACCLKCTRL_Disable(acdcDig);
+        ACDCDIG_ADCCLKCTRL_Disable(acdcDig);
+    }
 
     return ret;
 }
@@ -618,6 +632,8 @@ HAL_Status HAL_ACDCDIG_SetClock(struct HAL_ACDCDIG_DEV *acdcDig,
                                 eAUDIO_streamType stream,
                                 uint32_t freq)
 {
+    acdcDig->clkFreq = freq;
+
     return HAL_OK;
 }
 
@@ -634,6 +650,8 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
     struct ACDCDIG_REG *reg = acdcDig->pReg;
     HAL_Status ret = HAL_OK;
     uint32_t srt = 0, val = 0;
+
+    ACDCDIG_ClockSyncSelect(acdcDig, stream, params);
 
     switch (params->sampleRate) {
     case AUDIO_SAMPLERATE_8000:
