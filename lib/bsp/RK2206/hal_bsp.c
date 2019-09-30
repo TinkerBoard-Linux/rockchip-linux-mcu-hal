@@ -10,7 +10,6 @@ struct HAL_ACDCDIG_DEV g_acdcDigDev =
 {
     .pReg = ACDCDIG,
     .hclk = PCLK_ACODEC_GATE,
-    .clkCodec = CLK_CODEC,
     .clkI2cCodec = CLK_I2C_CODEC,
 };
 #endif
