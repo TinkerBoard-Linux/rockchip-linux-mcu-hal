@@ -113,8 +113,8 @@ static void USB_EPStopXfer(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
     }
 }
 
-#ifdef USB_M31PHY_BASE
-static HAL_Status USB_M31PHYInit(void)
+#if defined(USB_M31PHY_BASE)
+static HAL_Status USB_PHYInit(void)
 {
     HAL_CRU_ClkResetDeassert(SRST_USB2PHYPO);
     /* Select USB controller UTMI interface to phy */
@@ -123,6 +123,35 @@ static HAL_Status USB_M31PHYInit(void)
     /* Wait for UTMI clk stable */
     HAL_DelayMs(2);
 
+    return HAL_OK;
+}
+#elif defined(RKMCU_RK2206)
+static HAL_Status USB_PHYInit(void)
+{
+    /* GRF, 0x0348: bit[3:0] = 0x01 */
+    WRITE_REG_MASK_WE(GRF->SOC_UOC2,
+                      GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_MASK |
+                      GRF_SOC_UOC2_GRF_CON_OTG_UTMI_SUSPEND_N_MASK,
+                      0x01U << GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_SHIFT);
+
+    /* Wait for UTMI clk stable */
+    HAL_CRU_ClkResetAssert(SRST_OTG_USBPHY);
+    HAL_DelayUs(15);
+
+    /* GRF, 0x0348: bit[3:0] = 0x02 */
+    WRITE_REG_MASK_WE(GRF->SOC_UOC2,
+                      GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_MASK |
+                      GRF_SOC_UOC2_GRF_CON_OTG_UTMI_SUSPEND_N_MASK,
+                      0x02U << GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_SHIFT);
+    HAL_DelayUs(1500);
+    HAL_CRU_ClkResetDeassert(SRST_OTG_USBPHY);
+    HAL_DelayUs(2);
+
+    return HAL_OK;
+}
+#else
+static HAL_Status USB_PHYInit(void)
+{
     return HAL_OK;
 }
 #endif
@@ -145,9 +174,7 @@ HAL_Status USB_CoreInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
 {
     uint32_t trdtim = 0, phyif = 0, toutcal = 0;
 
-#ifdef USB_M31PHY_BASE
-    USB_M31PHYInit();
-#endif
+    USB_PHYInit();
 
     /* Init The UTMI Interface */
     pUSB->GUSBCFG &= ~(USB_OTG_GUSBCFG_TSDPS |
@@ -1037,10 +1064,10 @@ HAL_Status USB_HostInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
     /* Restart the Phy Clock */
     USB_PCGCCTL = 0;
 
-    /* Disable the FS/LS support mode only */
+    /* Force Device Enumeration to FS/LS mode only */
     if (cfg.speed == USB_OTG_SPEED_FULL)
         USB_HOST->HCFG |= USB_OTG_HCFG_FSLSS;
-    else
+    else /* Set default Max speed support */
         USB_HOST->HCFG &= ~(USB_OTG_HCFG_FSLSS);
 
     /* Make sure the FIFOs are flushed. */
@@ -1049,7 +1076,7 @@ HAL_Status USB_HostInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
 
     /* Clear all pending HC Interrupts */
     for (i = 0; i < cfg.hcNum; i++) {
-        USB_HC(i)->HCINT = 0xFFFFFFFF;
+        USB_HC(i)->HCINT = 0xFFFFFFFFU;
         USB_HC(i)->HCINTMSK = 0;
     }
 
@@ -1062,14 +1089,14 @@ HAL_Status USB_HostInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
     pUSB->GINTMSK = 0;
 
     /* Clear any pending interrupts */
-    pUSB->GINTSTS = 0xFFFFFFFF;
+    pUSB->GINTSTS = 0xFFFFFFFFU;
 
     /* set Rx FIFO size */
-    pUSB->GRXFSIZ = (uint32_t)0x200;
-    pUSB->DIEPTXF0_HNPTXFSIZ = (uint32_t)(((0x100 << 16) &
-                                           USB_OTG_GNPTXFSIZ_NPTXFD) | 0x200);
-    pUSB->HPTXFSIZ = (uint32_t)(((0xE0 << 16) &
-                                 USB_OTG_HPTXFSIZ_PTXFD) | 0x300);
+    pUSB->GRXFSIZ = (uint32_t)0x200U;
+    pUSB->DIEPTXF0_HNPTXFSIZ = (uint32_t)(((0x100U << 16) &
+                                           USB_OTG_GNPTXFSIZ_NPTXFD) | 0x200U);
+    pUSB->HPTXFSIZ = (uint32_t)(((0xE0U << 16) &
+                                 USB_OTG_HPTXFSIZ_PTXFD) | 0x300U);
 
     /* Enable the common interrupts */
     if (cfg.dmaEnable == HAL_DISABLE)
@@ -1097,12 +1124,12 @@ HAL_Status USB_HostInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
 HAL_Status USB_InitFSLSPClkSel(struct USB_GLOBAL_REG *pUSB, uint8_t freq)
 {
     USB_HOST->HCFG &= ~(USB_OTG_HCFG_FSLSPCS);
-    USB_HOST->HCFG |= (freq & USB_OTG_HCFG_FSLSPCS);
+    USB_HOST->HCFG |= ((uint32_t)freq & USB_OTG_HCFG_FSLSPCS);
 
     if (freq == HCFG_48_MHZ)
-        USB_HOST->HFIR = (uint32_t)48000;
+        USB_HOST->HFIR = (uint32_t)48000U;
     else if (freq == HCFG_6_MHZ)
-        USB_HOST->HFIR = (uint32_t)6000;
+        USB_HOST->HFIR = (uint32_t)6000U;
 
     return HAL_OK;
 }
@@ -1219,8 +1246,10 @@ HAL_Status USB_HCInit(struct USB_GLOBAL_REG *pUSB,
                       uint8_t epType,
                       uint16_t mps)
 {
+    uint32_t HCcharEpDir, HCcharLowSpeed;
+
     /* Clear old interrupt conditions for this host channel. */
-    USB_HC(chNum)->HCINT = 0xFFFFFFFF;
+    USB_HC(chNum)->HCINT = 0xFFFFFFFFU;
 
     /* Enable channel interrupts required for this transfer. */
     switch (epType) {
@@ -1233,7 +1262,7 @@ HAL_Status USB_HCInit(struct USB_GLOBAL_REG *pUSB,
                                   USB_OTG_HCINTMSK_AHBERR |
                                   USB_OTG_HCINTMSK_NAKM;
 
-        if (epNum & 0x80) {
+        if (epNum & 0x80U) {
             USB_HC(chNum)->HCINTMSK |= USB_OTG_HCINTMSK_BBERRM;
         } else {
             USB_HC(chNum)->HCINTMSK |= (USB_OTG_HCINTMSK_NYET |
@@ -1248,7 +1277,7 @@ HAL_Status USB_HCInit(struct USB_GLOBAL_REG *pUSB,
                                   USB_OTG_HCINTMSK_NAKM |
                                   USB_OTG_HCINTMSK_AHBERR |
                                   USB_OTG_HCINTMSK_FRMORM;
-        if (epNum & 0x80)
+        if (epNum & 0x80U)
             USB_HC(chNum)->HCINTMSK |= USB_OTG_HCINTMSK_BBERRM;
 
         break;
@@ -1258,28 +1287,32 @@ HAL_Status USB_HCInit(struct USB_GLOBAL_REG *pUSB,
                                   USB_OTG_HCINTMSK_AHBERR |
                                   USB_OTG_HCINTMSK_FRMORM;
 
-        if (epNum & 0x80) {
+        if (epNum & 0x80U) {
             USB_HC(chNum)->HCINTMSK |= (USB_OTG_HCINTMSK_TXERRM |
                                         USB_OTG_HCINTMSK_BBERRM);
         }
         break;
+
+    default:
+
+        return HAL_ERROR;
     }
 
     /* Enable the top level host channel interrupt. */
-    USB_HOST->HAINTMSK |= (1 << chNum);
+    USB_HOST->HAINTMSK |= (1UL << (chNum & 0xFU));
 
     /* Make sure host channel interrupts are enabled. */
     pUSB->GINTMSK |= USB_OTG_GINTMSK_HCIM;
 
     /* Program the HCCHAR register */
-    USB_HC(chNum)->HCCHAR = (((devAddress << 22) & USB_OTG_HCCHAR_DAD) |
-                             (((epNum & 0x7F) << 11) & USB_OTG_HCCHAR_EPNUM) |
-                             ((((epNum & 0x80) == 0x80) << 15) &
-                              USB_OTG_HCCHAR_EPDIR) |
-                             (((speed == HPRT0_PRTSPD_LOW_SPEED) << 17) &
-                              USB_OTG_HCCHAR_LSDEV) |
-                             ((epType << 18) & USB_OTG_HCCHAR_EPTYP) |
-                             (mps & USB_OTG_HCCHAR_MPSIZ));
+    HCcharEpDir = (epNum & 0x80U) ? (0x1U << 15) & USB_OTG_HCCHAR_EPDIR : 0U;
+    HCcharLowSpeed = (speed == HPRT0_PRTSPD_LOW_SPEED) ? (0x1U << 17) & USB_OTG_HCCHAR_LSDEV : 0U;
+
+    USB_HC(chNum)->HCCHAR = (((uint32_t)devAddress << 22) & USB_OTG_HCCHAR_DAD) |
+                            ((((uint32_t)epNum & 0x7FU) << 11) & USB_OTG_HCCHAR_EPNUM) |
+                            (((uint32_t)epType << 18) & USB_OTG_HCCHAR_EPTYP) |
+                            ((uint32_t)mps & USB_OTG_HCCHAR_MPSIZ) |
+                            HCcharEpDir | HCcharLowSpeed;
 
     if (epType == EP_TYPE_INTR)
         USB_HC(chNum)->HCCHAR |= USB_OTG_HCCHAR_ODDFRM;
@@ -1320,32 +1353,34 @@ HAL_Status USB_HCStartXfer(struct USB_GLOBAL_REG *pUSB,
 
     /* Compute the expected number of packets associated to the transfer */
     if (pHC->xferLen > 0) {
-        numPackets = (pHC->xferLen + pHC->maxPacket - 1) / pHC->maxPacket;
+        numPackets = (uint16_t)((pHC->xferLen + pHC->maxPacket - 1) / pHC->maxPacket);
 
         if (numPackets > maxHcPktCnt) {
             numPackets = maxHcPktCnt;
-            pHC->xferLen = numPackets * pHC->maxPacket;
+            pHC->xferLen = (uint32_t)numPackets * pHC->maxPacket;
         }
     } else {
         numPackets = 1;
     }
 
     if (pHC->epIsIn)
-        pHC->xferLen = numPackets * pHC->maxPacket;
+        pHC->xferLen = (uint32_t)numPackets * pHC->maxPacket;
 
     /* Initialize the HCTSIZn register */
     USB_HC(pHC->chNum)->HCTSIZ = (((pHC->xferLen) & USB_OTG_HCTSIZ_XFRSIZ)) |
-                                 ((numPackets << 19) & USB_OTG_HCTSIZ_PKTCNT) |
-                                 (((pHC->dataPID) << 29) & USB_OTG_HCTSIZ_DPID);
+                                 (((uint32_t)numPackets << 19) & USB_OTG_HCTSIZ_PKTCNT) |
+                                 ((((uint32_t)pHC->dataPID) << 29) & USB_OTG_HCTSIZ_DPID);
 
     if (dma) {
+        HAL_DCACHE_CleanByRange((uint32_t)pHC->pxferBuff, pHC->xferLen);
+
         /* pxferBuff MUST be 32-bits aligned */
-        USB_HC(pHC->chNum)->HCDMA = (uint32_t)pHC->pxferBuff;
+        USB_HC(pHC->chNum)->HCDMA = (uint32_t)pHC->dmaAddr;
     }
 
-    isOddFrame = (USB_HOST->HFNUM & 0x01) ? 0 : 1;
+    isOddFrame = ((uint32_t)USB_HOST->HFNUM & 0x01) ? 0 : 1;
     USB_HC(pHC->chNum)->HCCHAR &= ~USB_OTG_HCCHAR_ODDFRM;
-    USB_HC(pHC->chNum)->HCCHAR |= (isOddFrame << 29);
+    USB_HC(pHC->chNum)->HCCHAR |= ((uint32_t)isOddFrame << 29);
 
     /* Set host channel enable */
     tmpReg = USB_HC(pHC->chNum)->HCCHAR;
@@ -1367,10 +1402,10 @@ HAL_Status USB_HCStartXfer(struct USB_GLOBAL_REG *pUSB,
             case EP_TYPE_CTRL:
             case EP_TYPE_BULK:
 
-                lenWords = (pHC->xferLen + 3) / 4;
+                lenWords = (uint16_t)((pHC->xferLen + 3) / 4);
 
                 /* check if there is enough space in FIFO space */
-                if (lenWords > (pUSB->HNPTXSTS & 0xFFFF)) {
+                if (lenWords > (pUSB->HNPTXSTS & 0xFFFFU)) {
                     /* need to process data in nptxfempty interrupt */
                     pUSB->GINTMSK |= USB_OTG_GINTMSK_NPTXFEM;
                 }
@@ -1378,9 +1413,9 @@ HAL_Status USB_HCStartXfer(struct USB_GLOBAL_REG *pUSB,
             /* Periodic transfer */
             case EP_TYPE_INTR:
             case EP_TYPE_ISOC:
-                lenWords = (pHC->xferLen + 3) / 4;
+                lenWords = (uint16_t)((pHC->xferLen + 3) / 4);
                 /* check if there is enough space in FIFO space */
-                if (lenWords > (USB_HOST->HPTXSTS & 0xFFFF)) {
+                if (lenWords > (USB_HOST->HPTXSTS & 0xFFFFU)) {
                     /* split the transfer */
                     /* need to process data in ptxfempty interrupt */
                     pUSB->GINTMSK |= USB_OTG_GINTMSK_PTXFEM;
@@ -1392,7 +1427,7 @@ HAL_Status USB_HCStartXfer(struct USB_GLOBAL_REG *pUSB,
             }
 
             /* Write packet into the Tx FIFO. */
-            USB_WritePacket(pUSB, pHC->pxferBuff, pHC->chNum, pHC->xferLen, 0);
+            USB_WritePacket(pUSB, pHC->pxferBuff, pHC->chNum, (uint16_t)pHC->xferLen, 0);
         }
     }
 
@@ -1406,7 +1441,7 @@ HAL_Status USB_HCStartXfer(struct USB_GLOBAL_REG *pUSB,
  */
 uint32_t USB_HCReadInterrupt(struct USB_GLOBAL_REG *pUSB)
 {
-    return ((USB_HOST->HAINT) & 0xFFFF);
+    return ((USB_HOST->HAINT) & 0xFFFFU);
 }
 
 /**
@@ -1419,15 +1454,13 @@ uint32_t USB_HCReadInterrupt(struct USB_GLOBAL_REG *pUSB)
 HAL_Status USB_HCHalt(struct USB_GLOBAL_REG *pUSB, uint8_t hcNum)
 {
     uint32_t count = 0;
+    uint32_t HcEpType = (USB_HC(hcNum)->HCCHAR & USB_OTG_HCCHAR_EPTYP) >> 18;
 
     /* Check for space in the request queue to issue the halt. */
-    if (((((USB_HC(hcNum)->HCCHAR) & USB_OTG_HCCHAR_EPTYP) >> 18)
-         == HCCHAR_CTRL) ||
-        (((((USB_HC(hcNum)->HCCHAR) & USB_OTG_HCCHAR_EPTYP) >> 18)
-          == HCCHAR_BULK))) {
+    if ((HcEpType == HCCHAR_CTRL) || (HcEpType == HCCHAR_BULK)) {
         USB_HC(hcNum)->HCCHAR |= USB_OTG_HCCHAR_CHDIS;
 
-        if ((pUSB->HNPTXSTS & 0xFFFF) == 0) {
+        if ((pUSB->HNPTXSTS & (0xFFU << 16)) == 0) {
             USB_HC(hcNum)->HCCHAR &= ~USB_OTG_HCCHAR_CHENA;
             USB_HC(hcNum)->HCCHAR |= USB_OTG_HCCHAR_CHENA;
             USB_HC(hcNum)->HCCHAR &= ~USB_OTG_HCCHAR_EPDIR;
@@ -1442,7 +1475,7 @@ HAL_Status USB_HCHalt(struct USB_GLOBAL_REG *pUSB, uint8_t hcNum)
     } else {
         USB_HC(hcNum)->HCCHAR |= USB_OTG_HCCHAR_CHDIS;
 
-        if ((USB_HOST->HPTXSTS & 0xFFFF) == 0) {
+        if ((USB_HOST->HPTXSTS & 0xFFU << 16) == 0) {
             USB_HC(hcNum)->HCCHAR &= ~USB_OTG_HCCHAR_CHENA;
             USB_HC(hcNum)->HCCHAR |= USB_OTG_HCCHAR_CHENA;
             USB_HC(hcNum)->HCCHAR &= ~USB_OTG_HCCHAR_EPDIR;
@@ -1526,8 +1559,8 @@ HAL_Status USB_StopHost(struct USB_GLOBAL_REG *pUSB)
     }
 
     /* Clear any pending Host interrupts */
-    USB_HOST->HAINT = 0xFFFFFFFF;
-    pUSB->GINTSTS = 0xFFFFFFFF;
+    USB_HOST->HAINT = 0xFFFFFFFFU;
+    pUSB->GINTSTS = 0xFFFFFFFFU;
     USB_EnableGlobalInt(pUSB);
 
     return HAL_OK;
