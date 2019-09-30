@@ -85,6 +85,8 @@
 
 /* I2S_TXCR0 */
 #define ACDCDIG_I2S_TXCR0_VDW(x) ((x - 1) << ACDCDIG_I2S_TXCR0_VDW_SHIFT)
+/* I2S_TXCR1 */
+#define ACDCDIG_I2S_TXCR1_TCSR(x) ((x) << ACDCDIG_I2S_TXCR1_TCSR_SHIFT)
 /* I2S_RXCR0 */
 #define ACDCDIG_I2S_RXCR0_VDW(x) ((x - 1) << ACDCDIG_I2S_RXCR0_VDW_SHIFT)
 /* I2S_CKR1 */
@@ -529,12 +531,6 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
 
     /* The format is i2s by default */
     if (stream == AUDIO_STREAM_PLAYBACK) {
-        /* There is MONO channel for DAC */
-        MODIFY_REG(reg->DACDIGEN,
-                   ACDCDIG_DACDIGEN_DAC_GLBEN_MASK |
-                   ACDCDIG_DACDIGEN_DACEN_L0_MASK,
-                   ACDCDIG_DACDIGEN_DAC_GLB_EN |
-                   ACDCDIG_DACDIGEN_DAC_L0_EN);
         MODIFY_REG(reg->I2S_XFER,
                    ACDCDIG_I2S_XFER_RXS_MASK,
                    ACDCDIG_I2S_XFER_RXS_START);
@@ -542,14 +538,6 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
         /* Just used for playback */
         ACDCDIG_I2C_Start(acdcDig);
     } else {
-        /* There is max 3 channel for ADC */
-        MODIFY_REG(reg->ADCDIGEN,
-                   ACDCDIG_ADCDIGEN_ADC_GLBEN_MASK |
-                   ACDCDIG_ADCDIGEN_ADCEN_L2_MASK |
-                   ACDCDIG_ADCDIGEN_ADCEN_L0R1_MASK,
-                   ACDCDIG_ADCDIGEN_ADC_GLB_EN |
-                   ACDCDIG_ADCDIGEN_ADC_L2_EN |
-                   ACDCDIG_ADCDIGEN_ADC_L0R1_EN);
         MODIFY_REG(reg->I2S_XFER,
                    ACDCDIG_I2S_XFER_TXS_MASK,
                    ACDCDIG_I2S_XFER_TXS_START);
@@ -645,7 +633,7 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
     HAL_Status ret = HAL_OK;
-    uint32_t srt = 0;
+    uint32_t srt = 0, val = 0;
 
     switch (params->sampleRate) {
     case AUDIO_SAMPLERATE_8000:
@@ -695,6 +683,13 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
             ret = HAL_INVAL;
             break;
         }
+
+        /* There is MONO channel for DAC */
+        MODIFY_REG(reg->DACDIGEN,
+                   ACDCDIG_DACDIGEN_DAC_GLBEN_MASK |
+                   ACDCDIG_DACDIGEN_DACEN_L0_MASK,
+                   ACDCDIG_DACDIGEN_DAC_GLB_EN |
+                   ACDCDIG_DACDIGEN_DAC_L0_EN);
     } else {
         MODIFY_REG(reg->ADCCFG1, ACDCDIG_ADCCFG1_ADCSRT_MASK,
                    ACDCDIG_ADCCFG1_ADCSRT(srt));
@@ -712,6 +707,34 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
             ret = HAL_INVAL;
             break;
         }
+
+        switch (params->channels) {
+        case 4:
+            srt = 1;
+            val = ACDCDIG_ADCDIGEN_ADC_GLB_EN |
+                  ACDCDIG_ADCDIGEN_ADC_L2_EN |
+                  ACDCDIG_ADCDIGEN_ADC_L0R1_EN;
+            break;
+        case 2:
+            srt = 0;
+            val = ACDCDIG_ADCDIGEN_ADC_GLB_EN |
+                  ACDCDIG_ADCDIGEN_ADC_L2_DIS |
+                  ACDCDIG_ADCDIGEN_ADC_L0R1_EN;
+            break;
+        default:
+
+            return HAL_INVAL;
+        }
+
+        /* There is max 3 channel for ADC */
+        MODIFY_REG(reg->ADCDIGEN,
+                   ACDCDIG_ADCDIGEN_ADC_GLBEN_MASK |
+                   ACDCDIG_ADCDIGEN_ADCEN_L2_MASK |
+                   ACDCDIG_ADCDIGEN_ADCEN_L0R1_MASK,
+                   val);
+
+        MODIFY_REG(reg->I2S_TXCR[1], ACDCDIG_I2S_TXCR1_TCSR_MASK,
+                   ACDCDIG_I2S_TXCR1_TCSR(srt));
     }
 
     return ret;
