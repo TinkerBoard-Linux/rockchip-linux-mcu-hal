@@ -1,5 +1,5 @@
-#ifndef __RK2108_USB_H
-#define __RK2108_USB_H
+#ifndef __RK2206_USB_H
+#define __RK2206_USB_H
 #ifdef __cplusplus
   extern "C" {
 #endif
@@ -1314,4 +1314,4 @@ struct USB_HOST_CH_REG {
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-#endif /* __RK2108_USB_H */
+#endif /* __RK2206_USB_H */
