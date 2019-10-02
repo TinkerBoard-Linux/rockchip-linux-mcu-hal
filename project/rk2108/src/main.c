@@ -134,8 +134,11 @@ int main(void)
     /* System tick init */
 #ifdef HAL_SYSTICK_MODULE_ENABLED
     HAL_NVIC_SetIRQHandler(SysTick_IRQn, HAL_SYSTICK_IRQHandler);
+    HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
     HAL_SetTickFreq(HAL_TICK_FREQ_1KHZ);
-    HAL_SYSTICK_Init();
+    HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);
+    HAL_SYSTICK_Config((PLL_INPUT_OSC_RATE / 1000) - 1);
+    HAL_SYSTICK_Enable();
 #else
     HAL_NVIC_ConfigExtIRQ(TIMER4_IRQn, (NVIC_IRQHandler)HAL_TICK_IRQHandler, NVIC_PRIORITYGROUP_DEFAULT, NVIC_PERIPH_PRIO_DEFAULT);
     HAL_SetTickFreq(HAL_TICK_FREQ_1KHZ);
