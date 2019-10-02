@@ -496,7 +496,8 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     SOC_SleepModeReinit(pPmu);
     SOC_PutChar('2', pUart);
 #ifdef HAL_SYSTICK_MODULE_ENABLED
-    HAL_SYSTICK_Init();
+    HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);
+    HAL_SYSTICK_Enable();
 #endif
     SOC_PutChar('1', pUart);
     SOC_GetWakeupStatus(pPmu);
