@@ -125,7 +125,9 @@ int main(void)
 #ifdef HAL_SYSTICK_MODULE_ENABLED
     HAL_NVIC_SetIRQHandler(SysTick_IRQn, HAL_SYSTICK_IRQHandler);
     HAL_SetTickFreq(HAL_TICK_FREQ_1KHZ);
-    HAL_SYSTICK_Init();
+    HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);
+    HAL_SYSTICK_Config((PLL_INPUT_OSC_RATE / 1000) - 1);
+    HAL_SYSTICK_Enable();
 #endif
 
     ClkInit(s_clkInits, HAL_ARRAY_SIZE(s_clkInits), 0);
