@@ -447,7 +447,7 @@ const struct HAL_PVTM_DEV g_pvtmDev =
 };
 #endif
 
-#ifdef HAL_PCD_MODULE_ENABLED
+#if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
 const struct HAL_USB_DEV g_usbdDev =
 {
     .pReg = USB,
@@ -459,7 +459,12 @@ const struct HAL_USB_DEV g_usbdDev =
         .epNum = 5,
         .ep0Mps = USB_OTG_MAX_EP0_SIZE,
         .phyif = USB_PHY_UTMI_WIDTH_16,
+#if defined(HAL_PCD_MODULE_ENABLED)
         .speed = PCD_SPEED_HIGH,
+#elif defined(HAL_HCD_MODULE_ENABLED)
+        .speed = HCD_SPEED_HIGH,
+        .hcNum = 8,
+#endif
         .dmaEnable = true,
         .sofEnable = false,
         .lpmEnable = false,

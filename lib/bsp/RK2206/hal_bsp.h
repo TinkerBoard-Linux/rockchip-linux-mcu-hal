@@ -67,7 +67,7 @@ extern struct HAL_FSPI_HOST g_fspi1Dev;
 extern const struct HAL_PVTM_DEV g_pvtmDev;
 #endif
 
-#ifdef HAL_PCD_MODULE_ENABLED
+#if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
 extern const struct HAL_USB_DEV g_usbdDev;
 #endif
 
