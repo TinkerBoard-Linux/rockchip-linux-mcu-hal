@@ -24,8 +24,44 @@
 
 /********************* Private MACRO Definition ******************************/
 
-#define PDM_DMA_BURST_SIZE   (8) /* size * width: 8*4 = 32 bytes */
-#define PDM_SIGNOFF_CLK_RATE (100000000)
+/* PDM_SYSCONFIG */
+#define PDM_SYSCONFIG_RX_START    (0x1 << PDM_SYSCONFIG_RX_START_SHIFT)
+#define PDM_SYSCONFIG_RX_STOP     (0x0 << PDM_SYSCONFIG_RX_START_SHIFT)
+#define PDM_SYSCONFIG_RX_CLR_WR   (0x1 << PDM_SYSCONFIG_RX_CLR_SHIFT)
+#define PDM_SYSCONFIG_RX_CLR_DONE (0x0 << PDM_SYSCONFIG_RX_CLR_SHIFT)
+
+/* PDM CTRL0 */
+#define PDM_CTRL0_PATH_MASK (0xf << 27)
+#define PDM_CTRL0_SJM_RJ    (0x0 << PDM_CTRL0_SJM_SEL_SHIFT)
+#define PDM_CTRL0_SJM_LJ    (0x1 << PDM_CTRL0_SJM_SEL_SHIFT)
+#define PDM_CTRL0_PATH3_EN  HAL_BIT(30)
+#define PDM_CTRL0_PATH2_EN  HAL_BIT(29)
+#define PDM_CTRL0_PATH1_EN  HAL_BIT(28)
+#define PDM_CTRL0_PATH0_EN  HAL_BIT(27)
+#define PDM_CTRL0_HWT_EN    (0x1 << PDM_CTRL0_HWT_EN_SHIFT)
+#define PDM_CTRL0_VDW(x)    ((x - 1) << PDM_CTRL0_DATA_VLD_WIDTH_SHIFT)
+
+/* PDM CLK CTRL */
+#define PDM_CLK_EN       (0x1 << PDM_CLK_CTRL_PDM_CLK_EN_SHIFT)
+#define PDM_CLK_DIS      (0x0 << PDM_CLK_CTRL_PDM_CLK_EN_SHIFT)
+#define PDM_CKP_MASK     HAL_BIT(3)
+#define PDM_CKP_NORMAL   (0x0 << 3)
+#define PDM_CKP_INVERTED HAL_BIT(3)
+
+/* PDM HPF CTRL */
+#define PDM_HPF_LE     (0x1 << PDM_HPF_CTRL_HPFLE_SHIFT)
+#define PDM_HPF_RE     (0x1 << PDM_HPF_CTRL_HPFRE_SHIFT)
+#define PDM_HPF_3P79HZ (0x0 << PDM_HPF_CTRL_HPF_CF_SHIFT)
+#define PDM_HPF_60HZ   (0x1 << PDM_HPF_CTRL_HPF_CF_SHIFT)
+#define PDM_HPF_243HZ  (0x2 << PDM_HPF_CTRL_HPF_CF_SHIFT)
+#define PDM_HPF_493HZ  (0x3 << PDM_HPF_CTRL_HPF_CF_SHIFT)
+
+/* PDM DMA CTRL */
+#define PDM_DMA_RD_EN  (0x1 << PDM_DMA_CTRL_RDE_SHIFT)
+#define PDM_DMA_RD_DIS (0x0 << PDM_DMA_CTRL_RDE_SHIFT)
+#define PDM_DMA_RDL(x) ((x - 1) << PDM_DMA_CTRL_RDL_SHIFT)
+
+#define PDM_DMA_BURST_SIZE (8) /* size * width: 8*4 = 32 bytes */
 
 /********************* Private Structure Definition **************************/
 
@@ -161,9 +197,9 @@ static HAL_Status PDM_ChangeClkFreq(struct HAL_PDM_DEV *pdm,
     HAL_CRU_FracdivGetConfig(clkOut, clkSrc, &n, &m);
     HAL_DBG("%s: n: 0x%lx, m: 0x%lx\n", __func__, n, m);
     old = READ_REG(reg->CTRL[1]);
-    val = (n << PDM_FD_NUMERATOR_SFT) |
-          (m << PDM_FD_DENOMINATOR_SFT);
-    mask = PDM_FD_NUMERATOR_MSK | PDM_FD_DENOMINATOR_MSK;
+    val = (n << PDM_CTRL1_FRAC_DIV_NUMERATOR_SHIFT) |
+          (m << PDM_CTRL1_FRAC_DIV_DENOMONATOR_SHIFT);
+    mask = PDM_CTRL1_FRAC_DIV_NUMERATOR_MASK | PDM_CTRL1_FRAC_DIV_DENOMONATOR_MASK;
     MODIFY_REG(reg->CTRL[1], mask, val);
 
 #ifdef PDM_CLK_CTRL_CIC_DS_RATIO_MASK
@@ -260,7 +296,7 @@ HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *confi
     HAL_CRU_ClkEnable(pdm->hclk);
 
     val = config->clkInvert ? PDM_CKP_INVERTED : PDM_CKP_NORMAL;
-    MODIFY_REG(reg->CLK_CTRL, PDM_CKP_MSK, val);
+    MODIFY_REG(reg->CLK_CTRL, PDM_CKP_MASK, val);
 
     return HAL_OK;
 }
@@ -297,9 +333,9 @@ HAL_Status HAL_PDM_Enable(struct HAL_PDM_DEV *pdm)
     HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
     MODIFY_REG(reg->DMA_CTRL,
-               PDM_DMA_RD_MSK, PDM_DMA_RD_EN);
+               PDM_DMA_CTRL_RDE_MASK, PDM_DMA_RD_EN);
     MODIFY_REG(reg->SYSCONFIG,
-               PDM_RX_MASK, PDM_RX_START);
+               PDM_SYSCONFIG_RX_START_MASK, PDM_SYSCONFIG_RX_START);
 
     return HAL_OK;
 }
@@ -316,10 +352,10 @@ HAL_Status HAL_PDM_Disable(struct HAL_PDM_DEV *pdm)
     HAL_ASSERT(IS_PDM_INSTANCE(reg));
 
     MODIFY_REG(reg->DMA_CTRL,
-               PDM_DMA_RD_MSK, PDM_DMA_RD_DIS);
+               PDM_DMA_CTRL_RDE_MASK, PDM_DMA_RD_DIS);
     MODIFY_REG(reg->SYSCONFIG,
-               PDM_RX_MASK | PDM_RX_CLR_MASK,
-               PDM_RX_STOP | PDM_RX_CLR_WR);
+               PDM_SYSCONFIG_RX_START_MASK | PDM_SYSCONFIG_RX_CLR_MASK,
+               PDM_SYSCONFIG_RX_STOP | PDM_SYSCONFIG_RX_CLR_WR);
 
     return HAL_OK;
 }
@@ -351,26 +387,27 @@ HAL_Status HAL_PDM_Config(struct HAL_PDM_DEV *pdm, struct AUDIO_PARAMS *params)
 #endif
 
     MODIFY_REG(reg->CTRL[0],
-               PDM_MODE_MSK, PDM_MODE_LJ);
+               PDM_CTRL0_SJM_SEL_MASK, PDM_CTRL0_SJM_LJ);
     MODIFY_REG(reg->HPF_CTRL,
-               PDM_HPF_CF_MSK, PDM_HPF_60HZ);
+               PDM_HPF_CTRL_HPF_CF_MASK, PDM_HPF_60HZ);
     MODIFY_REG(reg->HPF_CTRL,
-               PDM_HPF_LE | PDM_HPF_RE, PDM_HPF_LE | PDM_HPF_RE);
-    MODIFY_REG(reg->CLK_CTRL, PDM_CLK_EN, PDM_CLK_EN);
+               PDM_HPF_CTRL_HPFLE_MASK | PDM_HPF_CTRL_HPFRE_MASK,
+               PDM_HPF_LE | PDM_HPF_RE);
+    MODIFY_REG(reg->CLK_CTRL, PDM_CLK_CTRL_PDM_CLK_EN_MASK, PDM_CLK_EN);
 
-    val = PDM_VDW(params->sampleBits);
+    val = PDM_CTRL0_VDW(params->sampleBits);
     switch (params->channels) {
     case 8:
-        val |= PDM_PATH3_EN;
+        val |= PDM_CTRL0_PATH3_EN;
     /* fallthrough */
     case 6:
-        val |= PDM_PATH2_EN;
+        val |= PDM_CTRL0_PATH2_EN;
     /* fallthrough */
     case 4:
-        val |= PDM_PATH1_EN;
+        val |= PDM_CTRL0_PATH1_EN;
     /* fallthrough */
     case 2:
-        val |= PDM_PATH0_EN;
+        val |= PDM_CTRL0_PATH0_EN;
         break;
     default:
 
@@ -378,10 +415,10 @@ HAL_Status HAL_PDM_Config(struct HAL_PDM_DEV *pdm, struct AUDIO_PARAMS *params)
     }
 
     MODIFY_REG(reg->CTRL[0],
-               PDM_PATH_MSK | PDM_VDW_MSK,
+               PDM_CTRL0_PATH_MASK | PDM_CTRL0_DATA_VLD_WIDTH_MASK,
                val);
     /* all channels share the single FIFO */
-    MODIFY_REG(reg->DMA_CTRL, PDM_DMA_RDL_MSK,
+    MODIFY_REG(reg->DMA_CTRL, PDM_DMA_CTRL_RDL_MASK,
                PDM_DMA_RDL(8 * params->channels));
 
     return ret;
