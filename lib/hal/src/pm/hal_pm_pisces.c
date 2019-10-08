@@ -33,7 +33,7 @@
 
 #define PLL_POSTDIV1_SHIFT 12
 #define PLL_POSTDIV1_MASK  0x7 << PLL_POSTDIV1_SHIFT
-#define PLL_POSTDIV2_SHIFT 12
+#define PLL_POSTDIV2_SHIFT 6
 #define PLL_POSTDIV2_MASK  0x7 << PLL_POSTDIV2_SHIFT
 
 #define PLL_GET_POSTDIV1(x) \
@@ -279,10 +279,10 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 {
     uint32_t gpllCon1, gpllDiv2, gpllDiv2New;
     uint32_t gpllCon0 = 0, gpllDiv1, gpllDiv1New;
-    uint32_t clkSelCon33, clkSelCon2;
+    uint32_t clkSelCon2, clkSelCon33;
     uint32_t cruMode;
     uint32_t gpllRate, gpllRateNew;
-    uint32_t m4Rate, m4Div;
+    uint32_t mDiv;
 
     const struct PM_RUNTIME_INFO *pdata = HAL_PM_RuntimeGetData();
 
@@ -320,10 +320,6 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         clkSelCon2 = CRU->CRU_CLKSEL_CON[33] |
                      MASK_TO_WE(CRU_CRU_CLKSEL_CON02_SCLK_SHRM_DIV_MASK);
 
-#ifdef HAL_SYSTICK_MODULE_ENABLED
-        HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_CORE);
-#endif
-
         CRU->CRU_MODE_CON00 =
             VAL_MASK_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK,
                         RK_PLL_MODE_SLOW << CRU_CRU_MODE_CON00_CLK_GPLL_MODE_SHIFT);
@@ -338,36 +334,11 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 
         CRU->GPLL_CON[1] = VAL_MASK_WE(CRU_GPLL_CON1_PLLPD0_MASK,
                                        CRU_GPLL_CON1_PLLPD0_MASK);
-    } else if (idleMode == PM_RUNTIME_IDLE_DEEP1) {
-        gpllCon1 = 0;
-        m4Rate = HAL_CRU_ClkGetFreq(HCLK_M4);
-        gpllRate = HAL_CRU_ClkGetFreq(PLL_GPLL);
-
-        gpllCon0 = CRU->GPLL_CON[0] | MASK_TO_WE(CRU_GPLL_CON0_POSTDIV1_MASK);
-        gpllDiv1New = 6;
-
-        HAL_ASSERT(PLL_GET_POSTDIV1(gpllCon0) == 1);
-
-        if ((m4Rate / gpllDiv1New) < (PLL_INPUT_OSC_RATE * 2)) {
-            m4Div = (gpllRate / gpllDiv1New) / (PLL_INPUT_OSC_RATE * 2);
-            HAL_ASSERT((gpllRate / (gpllDiv1New * m4Div)) > (PLL_INPUT_OSC_RATE * 2));
-            if (m4Div != HAL_CRU_ClkGetDiv(CLK_GET_DIV(HCLK_M4)))
-                clkSelCon33 = CRU->CRU_CLKSEL_CON[33] |
-                              MASK_TO_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK);
-            else
-                clkSelCon33 = 0;
-        } else {
-            clkSelCon33 = 0;
-        }
-
-        CRU->GPLL_CON[0] = VAL_MASK_WE(CRU_GPLL_CON0_POSTDIV1_MASK,
-                                       gpllDiv1New << CRU_GPLL_CON0_POSTDIV1_SHIFT);
-        if (clkSelCon33)
-            CRU->CRU_CLKSEL_CON[33] = VAL_MASK_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK,
-                                                  m4Div << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
     } else if (idleMode == PM_RUNTIME_IDLE_NORMAL) {
-        m4Rate = HAL_CRU_ClkGetFreq(HCLK_M4);
-        HAL_ASSERT(HAL_CRU_ClkGetDiv(m4Rate > GPLL_RUNTIME_RATE));
+        cruMode = 0;
+        clkSelCon2 = 0;
+
+        HAL_ASSERT(HAL_CRU_ClkGetFreq(HCLK_M4) > GPLL_RUNTIME_RATE);
         gpllRate = HAL_CRU_ClkGetFreq(PLL_GPLL);
 
         gpllCon1 = CRU->GPLL_CON[1] |
@@ -384,10 +355,11 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
             return UINT32_MAX;
 
         gpllRateNew = gpllRate / (gpllDiv1New * gpllDiv2New);
-        m4Div = gpllRateNew / GPLL_RUNTIME_RATE;
-
-        HAL_ASSERT((gpllRateNew * m4Div) >= GPLL_RUNTIME_RATE);
-        HAL_ASSERT(m4Div > 0);
+        mDiv = gpllRateNew / GPLL_RUNTIME_RATE;
+        HAL_ASSERT(mDiv > 0);
+        HAL_ASSERT((gpllRateNew * mDiv) >= GPLL_RUNTIME_RATE);
+        if (mDiv > 0)
+            mDiv -= 1;
 
         clkSelCon33 = CRU->CRU_CLKSEL_CON[33] |
                       MASK_TO_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK);
@@ -399,7 +371,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
                                        gpllDiv2New << CRU_GPLL_CON1_POSTDIV2_SHIFT);
 
         CRU->CRU_CLKSEL_CON[33] = VAL_MASK_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK,
-                                              (m4Div - 1) << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
+                                              (mDiv) << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
     } else {
         return UINT32_MAX;
     }
@@ -408,6 +380,9 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
     __WFI();
 
     if (idleMode == PM_RUNTIME_IDLE_DEEP) {
+        CRU->CRU_MODE_CON00 =
+            VAL_MASK_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK,
+                        RK_PLL_MODE_SLOW << CRU_CRU_MODE_CON00_CLK_GPLL_MODE_SHIFT);
         CRU->GPLL_CON[1] = gpllCon1;
         CRU->CRU_CLKSEL_CON[33] = clkSelCon33;
         CRU->CRU_CLKSEL_CON[2] = clkSelCon2;
@@ -415,14 +390,8 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         while ((CRU->GPLL_CON[1] & CRU_CPLL_CON1_PLL_LOCK_MASK) !=
                CRU_CPLL_CON1_PLL_LOCK_MASK)
             ;
-        CRU->CRU_MODE_CON00 = cruMode;
 
-#ifdef HAL_SYSTICK_MODULE_ENABLED
-        HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);
-#endif
-    } else if (idleMode == PM_RUNTIME_IDLE_DEEP1) {
-        CRU->CRU_CLKSEL_CON[33] = clkSelCon33;
-        CRU->GPLL_CON[0] = gpllCon0;
+        CRU->CRU_MODE_CON00 = cruMode;
     } else if (idleMode == PM_RUNTIME_IDLE_NORMAL) {
         CRU->CRU_CLKSEL_CON[33] = clkSelCon33;
         CRU->GPLL_CON[1] = gpllCon1;
