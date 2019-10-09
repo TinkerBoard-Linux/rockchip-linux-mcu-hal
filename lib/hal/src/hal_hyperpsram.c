@@ -36,6 +36,10 @@
 #define HYPERBUS_MCR0_DEVTYPE_HYPERRAM (0x1 << HYPERBUS_MCR0_DEVTYPE_SHIFT)
 #define HYPERBUS_MCR0_WRAPSIZE_32BYTE  (0x3 << HYPERBUS_MCR0_WRAPSIZE_SHIFT)
 
+/** Memory Timing Register0 */
+#define HYPERBUS_MTR0_LTCY_MASK  (0xF << HYPERBUS_MTR0_LTCY_SHIFT)
+#define HYPERBUS_MTR0_LTCY_6_CLK (0x1)
+
 #define PSRAM_MCR_TIMER(rcshi, wcshi, rcss, WCSS, RCSH, WCSH, LTCY) ((rcshi << HYPERBUS_MTR0_RCSHI_SHIFT) | \
     (wcshi << HYPERBUS_MTR0_WCSHI_SHIFT) |                                                                  \
     (rcss << HYPERBUS_MTR0_RCSS_SHIFT) |                                                                    \
@@ -56,6 +60,24 @@
 /* TCSM */
 #define HYPERBUS_DEV_TCSM_4U (4000)
 #define HYPERBUS_DEV_TCSM_1U (1000)
+
+/* Hyper psram register */
+#define HYPERBUS_IR0_ADDR_OFFSET       (0x00)
+#define HYPERBUS_IR1_ADDR_OFFSET       (0x01)
+#define HYPERBUS_CR0_ADDR_OFFSET       (0x1000)
+#define HYPERBUS_CR1_ADDR_OFFSET       (0x2000)
+#define CR0_INITIAL_LATENCY_SHIFT      (0x4)
+#define CR0_INITIAL_LATENCY_MASK       (0xf << CR0_INITIAL_LATENCY_SHIFT)
+#define CR0_INITIAL_LATENCY_5_CLK      (0x0 << CR0_INITIAL_LATENCY_SHIFT)
+#define CR0_INITIAL_LATENCY_6_CLK      (0x1 << CR0_INITIAL_LATENCY_SHIFT)
+#define CR0_INITIAL_LATENCY_7_CLK      (0x2 << CR0_INITIAL_LATENCY_SHIFT)
+#define CR0_FIXED_LATENCY_ENABLE_SHIFT (0x3)
+#define CR0_FIXED_LATENCY_ENABLE_MASK  (0x1 << CR0_FIXED_LATENCY_ENABLE_SHIFT)
+#define CR0_FIXED_LATENCY_ENABLE_VARIABLE_LATENCY \
+    (0x0 << CR0_FIXED_LATENCY_ENABLE_SHIFT)
+#define CR0_FIXED_LATENCY_ENABLE_FIXED_LATENCY \
+    (0x1 << CR0_FIXED_LATENCY_ENABLE_SHIFT)
+#define HYPERPSRAM_TIMING_30NS (30)
 
 /********************* Private Structure Definition **************************/
 /** HYPERBUS DEVICE Psram ID definition */
@@ -115,16 +137,59 @@ static uint32_t HYPERPSRAM_GetDevId(struct HYPERBUS_REG *pReg, uint32_t psramBas
  * @param  pReg: Choose HYPERBUS.
  * @return HAL_Status.
  */
-static HAL_Status HYPERPSRAM_ModifyTcsm(struct HYPERBUS_REG *pReg)
+static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg)
 {
     uint32_t psramFreq, tmp;
+    uint32_t trwr, tacc, tal;
 
     if (pReg->MCR[0] & HYPERBUS_MCR0_MAXEN_CONF_LOW) {
-        psramFreq = HAL_CRU_ClkGetFreq(CLK_XIP_HYPERX8) / MHZ;
-        tmp = (HYPERBUS_DEV_TCSM_4U * psramFreq + 999) / 1000 - 1;
+        psramFreq = HAL_CRU_ClkGetFreq(CLK_XIP_HYPERX8) / MHZ / 2;
+
+        tmp = pReg->MTR[0] & HYPERBUS_MTR0_LTCY_MASK;
+        if (tmp < 3)
+            tal = 5 + tmp;
+        else if (tmp == 0xe)
+            tal = 3;
+        else if (tmp == 0xf)
+            tal = 4;
+        else
+            tal = 7;
+        tmp = (HYPERPSRAM_TIMING_30NS * psramFreq + 999) / 1000;
+        /* trwr: 30ns + 1tCK */
+        trwr = tmp + 1;
+        /* tacc: 30ns + 1tCK */
+        tacc = tmp + 1;
+        tmp = (HYPERBUS_DEV_TCSM_1U * psramFreq + 999) / 1000;
+        tmp = tmp - trwr - tacc - tal - 1;
+
+        if (tmp > 511)
+            tmp = 511;
+
         MODIFY_REG(pReg->MCR[0], HYPERBUS_MCR0_MAXLEN_MASK,
                    tmp << HYPERBUS_MCR0_MAXLEN_SHIFT);
     }
+
+    return HAL_OK;
+}
+
+static HAL_Status HYPERPSRAM_ModifyCR0(struct HYPERBUS_REG *pReg,
+                                       uint32_t psramBase)
+{
+    uint16_t cr0;
+
+    /* config to CR space */
+    MODIFY_REG(pReg->MCR[0], HYPERBUS_MCR0_CRT_MASK,
+               HYPERBUS_MCR0_CRT_CR_SPACE);
+    cr0 = (*(volatile uint16_t *)(psramBase + HYPERBUS_CR0_ADDR_OFFSET));
+    cr0 = (cr0 & (~CR0_INITIAL_LATENCY_MASK)) | CR0_INITIAL_LATENCY_6_CLK;
+    cr0 = (cr0 & (~CR0_FIXED_LATENCY_ENABLE_MASK)) |
+          CR0_FIXED_LATENCY_ENABLE_VARIABLE_LATENCY;
+    (*(volatile uint16_t *)(psramBase + HYPERBUS_CR0_ADDR_OFFSET)) = cr0;
+    /* config to memory space */
+    MODIFY_REG(pReg->MCR[0], HYPERBUS_MCR0_CRT_MASK,
+               HYPERBUS_MCR0_CRT_MEM_SPACE);
+    MODIFY_REG(pReg->MTR[0], HYPERBUS_MTR0_LTCY_MASK,
+               HYPERBUS_MTR0_LTCY_6_CLK << HYPERBUS_MTR0_LTCY_SHIFT);
 
     return HAL_OK;
 }
@@ -212,10 +277,12 @@ HAL_Status HAL_HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
 
     HYPERBUS_Init(pReg, psramBase);
 
-    if (HYPERPSRAM_Init(pReg, psramBase) == HAL_OK)
-        HYPERPSRAM_ModifyTcsm(pReg);
-    else
+    if (HYPERPSRAM_Init(pReg, psramBase) == HAL_OK) {
+        HYPERPSRAM_ModifyTiming(pReg);
+        HYPERPSRAM_ModifyCR0(pReg, psramBase);
+    } else {
         return HAL_ERROR;
+    }
 
     return HAL_OK;
 }
