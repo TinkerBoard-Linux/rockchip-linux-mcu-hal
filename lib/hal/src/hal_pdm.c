@@ -194,8 +194,12 @@ static HAL_Status PDM_ChangeClkFreq(struct HAL_PDM_DEV *pdm,
     clkOut = PDM_GetClk(pdm, params->sampleRate);
     HAL_ASSERT(clkOut);
     HAL_CRU_ClkSetFreq(pdm->mclk, clkSrc);
-    HAL_CRU_FracdivGetConfig(clkOut, clkSrc, &n, &m);
-    HAL_DBG("%s: n: 0x%lx, m: 0x%lx\n", __func__, n, m);
+    /* get real clk freq */
+    clkSrc = HAL_CRU_ClkGetFreq(pdm->mclk);
+    ret = HAL_CRU_FracdivGetConfig(clkOut, clkSrc, &n, &m);
+    if (ret)
+        return ret;
+    HAL_DBG("%s: clk: %lu, n: 0x%lx, m: 0x%lx\n", __func__, clkSrc, n, m);
     old = READ_REG(reg->CTRL[1]);
     val = (n << PDM_CTRL1_FRAC_DIV_NUMERATOR_SHIFT) |
           (m << PDM_CTRL1_FRAC_DIV_DENOMONATOR_SHIFT);
