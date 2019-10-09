@@ -378,6 +378,13 @@ HAL_Status HAL_DWDMA_Stop(struct DWDMA_CHAN *dwc)
     while (READ_REG(dw->pReg->CHENREG) & dwc->mask)
         ;
 
+    /* Clear channel interrupts. */
+    WRITE_REG(dw->pReg->CLEAR.TFR, dwc->mask);
+    WRITE_REG(dw->pReg->CLEAR.BLOCK, dwc->mask);
+    WRITE_REG(dw->pReg->CLEAR.SRCTRAN, dwc->mask);
+    WRITE_REG(dw->pReg->CLEAR.DSTTRAN, dwc->mask);
+    WRITE_REG(dw->pReg->CLEAR.ERR, dwc->mask);
+
     return HAL_OK;
 }
 
