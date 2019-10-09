@@ -33,7 +33,7 @@
 
 #define PLL_POSTDIV1_SHIFT 12
 #define PLL_POSTDIV1_MASK  0x7 << PLL_POSTDIV1_SHIFT
-#define PLL_POSTDIV2_SHIFT 12
+#define PLL_POSTDIV2_SHIFT 6
 #define PLL_POSTDIV2_MASK  0x7 << PLL_POSTDIV2_SHIFT
 
 #define PLL_GET_POSTDIV1(x) \
@@ -202,7 +202,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
             VAL_MASK_WE(CRU_CRU_CLKSEL_CON02_SCLK_SHRM_DIV_MASK, 0);
 
         HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPD0_MASK));
-        HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPDSEL_SHIFT));
+        HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPDSEL_MASK));
 
         CRU->GPLL_CON[1] = VAL_MASK_WE(CRU_GPLL_CON1_PLLPD0_MASK,
                                        CRU_GPLL_CON1_PLLPD0_MASK);
@@ -234,8 +234,11 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         gpllRateNew = gpllRate / (gpllDiv1New * gpllDiv2New);
         mDiv = gpllRateNew / GPLL_RUNTIME_RATE;
 
-        HAL_ASSERT((gpllRateNew * mDiv) >= GPLL_RUNTIME_RATE);
         HAL_ASSERT(mDiv > 0);
+        HAL_ASSERT((gpllRateNew * mDiv) >= GPLL_RUNTIME_RATE);
+
+        if (mDiv > 0)
+            mDiv -= 1;
 
         clkSelCon33 = CRU->CRU_CLKSEL_CON[33] |
                       MASK_TO_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK);
@@ -247,7 +250,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
                                        gpllDiv2New << CRU_GPLL_CON1_POSTDIV2_SHIFT);
 
         CRU->CRU_CLKSEL_CON[33] = VAL_MASK_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK,
-                                              (mDiv - 1) << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
+                                              mDiv << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
     } else {
         return UINT32_MAX;
     }
