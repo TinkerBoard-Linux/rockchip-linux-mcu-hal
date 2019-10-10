@@ -454,18 +454,18 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
 
         /* Only select clock sync once before SYSCTRL0 is enabled. */
         if (stream == AUDIO_STREAM_PLAYBACK) {
-            /* Select mclk_i2s0_tx as source. */
-            HAL_CRU_ClkSetMux(CLK_CODEC, CLK_CODEC_SEL_MCLK_I2S8CH_1_TX_MUX);
-            HAL_CRU_ClkSetFreq(CLK_CODEC, acdcDig->clkFreq);
+            /* Select mclk_i2s1_tx as source. */
+            HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_I2S8CH_1_TX_MUX);
+            HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_TX, acdcDig->clkFreq);
 
             /* Select clock sync is from DAC. */
             MODIFY_REG(reg->SYSCTRL0,
                        ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
                        ACDCDIG_SYSCTRL0_SYNC_SEL_DAC | ACDCDIG_SYSCTRL0_CLK_SEL_DAC);
         } else {
-            /* Select mclk_i2s0_rx as source. */
-            HAL_CRU_ClkSetMux(CLK_CODEC, CLK_CODEC_SEL_MCLK_I2S8CH_1_RX_MUX);
-            HAL_CRU_ClkSetFreq(CLK_CODEC, acdcDig->clkFreq);
+            /* Select mclk_i2s1_rx as source. */
+            HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_I2S8CH_1_RX_MUX);
+            HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_RX, acdcDig->clkFreq);
 
             /* Select clock sync is from ADC. */
             MODIFY_REG(reg->SYSCTRL0,
