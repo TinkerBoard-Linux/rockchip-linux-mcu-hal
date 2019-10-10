@@ -1126,20 +1126,23 @@ struct SPI2APB_REG {
 };
 /* HYPERBUS Register Structure Define */
 struct HYPERBUS_REG {
-    __IO uint32_t  CSR;                               /* Address Offset: 0x0000 */
-    __IO uint32_t  IEN;                               /* Address Offset: 0x0004 */
-    __I  uint32_t  ISR;                               /* Address Offset: 0x0008 */
-    __IO uint32_t  ICR;                               /* Address Offset: 0x000C */
-    __IO uint32_t  MBR[4];                            /* Address Offset: 0x0010 */
-    __IO uint32_t  MCR[4];                            /* Address Offset: 0x0020 */
-    __IO uint32_t  MTR[4];                            /* Address Offset: 0x0030 */
-    __IO uint32_t  GPOR;                              /* Address Offset: 0x0040 */
-    __IO uint32_t  WPR;                               /* Address Offset: 0x0044 */
-    __IO uint32_t  LBR;                               /* Address Offset: 0x0048 */
-    __IO uint32_t  TAR;                               /* Address Offset: 0x004C */
-    __IO uint32_t  RWDSIC;                            /* Address Offset: 0x0050 */
-    __IO uint32_t  CA2RSVD;                           /* Address Offset: 0x0054 */
-    __IO uint32_t  SPCSR;                             /* Address Offset: 0x0058 */
+    __I  uint32_t CSR;                                /* Address Offset: 0x0000 */
+    __IO uint32_t IEN;                                /* Address Offset: 0x0004 */
+    __IO uint32_t ISR;                                /* Address Offset: 0x0008 */
+         uint32_t RESERVED000C;                       /* Address Offset: 0x000C */
+    __IO uint32_t MBR[2];                             /* Address Offset: 0x0010 */
+         uint32_t RESERVED0018[2];                    /* Address Offset: 0x0018 */
+    __IO uint32_t MCR[2];                             /* Address Offset: 0x0020 */
+         uint32_t RESERVED0028[2];                    /* Address Offset: 0x0028 */
+    __IO uint32_t MTR[2];                             /* Address Offset: 0x0030 */
+         uint32_t RESERVED0038[2];                    /* Address Offset: 0x0038 */
+    __IO uint32_t GPOR;                               /* Address Offset: 0x0040 */
+    __IO uint32_t WPR;                                /* Address Offset: 0x0044 */
+    __IO uint32_t LBR;                                /* Address Offset: 0x0048 */
+    __IO uint32_t TAR;                                /* Address Offset: 0x004C */
+    __IO uint32_t RWDSIC;                             /* Address Offset: 0x0050 */
+    __IO uint32_t CA2RSVD;                            /* Address Offset: 0x0054 */
+    __IO uint32_t SPCSR;                              /* Address Offset: 0x0058 */
 };
 #endif /* __ASSEMBLY__ */
 /****************************************************************************************/
@@ -8924,32 +8927,141 @@ typedef enum PD_Id {
 #define SPI2APB_QUICK_REG2_QRV_SHIFT                       (0U)
 #define SPI2APB_QUICK_REG2_QRV_MASK                        (0xFFFFFFFFU << SPI2APB_QUICK_REG2_QRV_SHIFT)                /* 0xFFFFFFFF */
 /****************************************HYPERBUS*****************************************/
-/* MTR0 */
-#define HYPERBUS_MTR0_RCSHI_SHIFT                           (28U)
-#define HYPERBUS_MTR0_WCSHI_SHIFT                           (24U)
-#define HYPERBUS_MTR0_RCSS_SHIFT                            (20U)
-#define HYPERBUS_MTR0_WCSS_SHIFT                            (16U)
-#define HYPERBUS_MTR0_RCSH_SHIFT                            (12U)
-#define HYPERBUS_MTR0_WCSH_SHIFT                            (8U)
-#define HYPERBUS_MTR0_LTCY_SHIFT                            (0U)
+/* CSR */
+#define HYPERBUS_CSR_OFFSET                                (0x0)
+#define HYPERBUS_CSR                                       (0x0)
+#define HYPERBUS_CSR_RACT_SHIFT                            (0U)
+#define HYPERBUS_CSR_RACT_MASK                             (0x1U << HYPERBUS_CSR_RACT_SHIFT)                            /* 0x00000001 */
+#define HYPERBUS_CSR_RDECERR_SHIFT                         (8U)
+#define HYPERBUS_CSR_RDECERR_MASK                          (0x1U << HYPERBUS_CSR_RDECERR_SHIFT)                         /* 0x00000100 */
+#define HYPERBUS_CSR_RTRSERR_SHIFT                         (9U)
+#define HYPERBUS_CSR_RTRSERR_MASK                          (0x1U << HYPERBUS_CSR_RTRSERR_SHIFT)                         /* 0x00000200 */
+#define HYPERBUS_CSR_RRSTOERR_SHIFT                        (10U)
+#define HYPERBUS_CSR_RRSTOERR_MASK                         (0x1U << HYPERBUS_CSR_RRSTOERR_SHIFT)                        /* 0x00000400 */
+#define HYPERBUS_CSR_RDSSTALL_SHIFT                        (11U)
+#define HYPERBUS_CSR_RDSSTALL_MASK                         (0x1U << HYPERBUS_CSR_RDSSTALL_SHIFT)                        /* 0x00000800 */
+#define HYPERBUS_CSR_WACT_SHIFT                            (16U)
+#define HYPERBUS_CSR_WACT_MASK                             (0x1U << HYPERBUS_CSR_WACT_SHIFT)                            /* 0x00010000 */
+#define HYPERBUS_CSR_WDECERR_SHIFT                         (24U)
+#define HYPERBUS_CSR_WDECERR_MASK                          (0x1U << HYPERBUS_CSR_WDECERR_SHIFT)                         /* 0x01000000 */
+#define HYPERBUS_CSR_WTRSERR_SHIFT                         (25U)
+#define HYPERBUS_CSR_WTRSERR_MASK                          (0x1U << HYPERBUS_CSR_WTRSERR_SHIFT)                         /* 0x02000000 */
+#define HYPERBUS_CSR_WRSTOERR_SHIFT                        (26U)
+#define HYPERBUS_CSR_WRSTOERR_MASK                         (0x1U << HYPERBUS_CSR_WRSTOERR_SHIFT)                        /* 0x04000000 */
+/* IEN */
+#define HYPERBUS_IEN_OFFSET                                (0x4)
+#define HYPERBUS_IEN_RPCINTE_SHIFT                         (0U)
+#define HYPERBUS_IEN_RPCINTE_MASK                          (0x1U << HYPERBUS_IEN_RPCINTE_SHIFT)                         /* 0x00000001 */
+#define HYPERBUS_IEN_NTP_SHIFT                             (31U)
+#define HYPERBUS_IEN_NTP_MASK                              (0x1U << HYPERBUS_IEN_NTP_SHIFT)                             /* 0x80000000 */
+/* ISR */
+#define HYPERBUS_ISR_OFFSET                                (0x8)
+#define HYPERBUS_ISR_RPCINTS_SHIFT                         (0U)
+#define HYPERBUS_ISR_RPCINTS_MASK                          (0x1U << HYPERBUS_ISR_RPCINTS_SHIFT)                         /* 0x00000001 */
+/* MBR0 */
+#define HYPERBUS_MBR0_OFFSET                               (0x10)
+#define HYPERBUS_MBR0_BADDR_SHIFT                          (0U)
+#define HYPERBUS_MBR0_BADDR_MASK                           (0xFFFFFFFFU << HYPERBUS_MBR0_BADDR_SHIFT)                   /* 0xFFFFFFFF */
+/* MBR1 */
+#define HYPERBUS_MBR1_OFFSET                               (0x14)
+#define HYPERBUS_MBR1_BADDR_SHIFT                          (0U)
+#define HYPERBUS_MBR1_BADDR_MASK                           (0xFFFFFFFFU << HYPERBUS_MBR1_BADDR_SHIFT)                   /* 0xFFFFFFFF */
 /* MCR0 */
-#define HYPERBUS_MCR0_MAXEN_SHIFT                           (31U)
-#define HYPERBUS_MCR0_MAXLEN_SHIFT                          (18U)
-#define HYPERBUS_MCR0_MAXLEN_MASK                           (0x1FFU << HYPERBUS_MCR0_MAXLEN_SHIFT)
-#define HYPERBUS_MCR0_CRT_SHIFT                             (5U)
-#define HYPERBUS_MCR0_CRT_MASK                              (0x1U << HYPERBUS_MCR0_CRT_SHIFT)
-#define HYPERBUS_MCR0_DEVTYPE_SHIFT                         (4U)
-#define HYPERBUS_MCR0_WRAPSIZE_SHIFT                        (0U)
+#define HYPERBUS_MCR0_OFFSET                               (0x20)
+#define HYPERBUS_MCR0_WRAPSIZE_SHIFT                       (0U)
+#define HYPERBUS_MCR0_WRAPSIZE_MASK                        (0x3U << HYPERBUS_MCR0_WRAPSIZE_SHIFT)                       /* 0x00000003 */
+#define HYPERBUS_MCR0_DEVTYPE_SHIFT                        (4U)
+#define HYPERBUS_MCR0_DEVTYPE_MASK                         (0x1U << HYPERBUS_MCR0_DEVTYPE_SHIFT)                        /* 0x00000010 */
+#define HYPERBUS_MCR0_CRT_SHIFT                            (5U)
+#define HYPERBUS_MCR0_CRT_MASK                             (0x1U << HYPERBUS_MCR0_CRT_SHIFT)                            /* 0x00000020 */
+#define HYPERBUS_MCR0_ACS_SHIFT                            (16U)
+#define HYPERBUS_MCR0_ACS_MASK                             (0x1U << HYPERBUS_MCR0_ACS_SHIFT)                            /* 0x00010000 */
+#define HYPERBUS_MCR0_TCMO_SHIFT                           (17U)
+#define HYPERBUS_MCR0_TCMO_MASK                            (0x1U << HYPERBUS_MCR0_TCMO_SHIFT)                           /* 0x00020000 */
+#define HYPERBUS_MCR0_MAXLEN_SHIFT                         (18U)
+#define HYPERBUS_MCR0_MAXLEN_MASK                          (0x1FFU << HYPERBUS_MCR0_MAXLEN_SHIFT)                       /* 0x07FC0000 */
+#define HYPERBUS_MCR0_MAXEN_SHIFT                          (31U)
+#define HYPERBUS_MCR0_MAXEN_MASK                           (0x1U << HYPERBUS_MCR0_MAXEN_SHIFT)                          /* 0x80000000 */
+/* MCR1 */
+#define HYPERBUS_MCR1_OFFSET                               (0x24)
+#define HYPERBUS_MCR1_WRAPSIZE_SHIFT                       (0U)
+#define HYPERBUS_MCR1_WRAPSIZE_MASK                        (0x3U << HYPERBUS_MCR1_WRAPSIZE_SHIFT)                       /* 0x00000003 */
+#define HYPERBUS_MCR1_DEVTYPE_SHIFT                        (4U)
+#define HYPERBUS_MCR1_DEVTYPE_MASK                         (0x1U << HYPERBUS_MCR1_DEVTYPE_SHIFT)                        /* 0x00000010 */
+#define HYPERBUS_MCR1_CRT_SHIFT                            (5U)
+#define HYPERBUS_MCR1_CRT_MASK                             (0x1U << HYPERBUS_MCR1_CRT_SHIFT)                            /* 0x00000020 */
+#define HYPERBUS_MCR1_ACS_SHIFT                            (16U)
+#define HYPERBUS_MCR1_ACS_MASK                             (0x1U << HYPERBUS_MCR1_ACS_SHIFT)                            /* 0x00010000 */
+#define HYPERBUS_MCR1_TCMO_SHIFT                           (17U)
+#define HYPERBUS_MCR1_TCMO_MASK                            (0x1U << HYPERBUS_MCR1_TCMO_SHIFT)                           /* 0x00020000 */
+#define HYPERBUS_MCR1_MAXLEN_SHIFT                         (18U)
+#define HYPERBUS_MCR1_MAXLEN_MASK                          (0x1FFU << HYPERBUS_MCR1_MAXLEN_SHIFT)                       /* 0x07FC0000 */
+#define HYPERBUS_MCR1_MAXEN_SHIFT                          (31U)
+#define HYPERBUS_MCR1_MAXEN_MASK                           (0x1U << HYPERBUS_MCR1_MAXEN_SHIFT)                          /* 0x80000000 */
+/* MTR0 */
+#define HYPERBUS_MTR0_OFFSET                               (0x30)
+#define HYPERBUS_MTR0_LTCY_SHIFT                           (0U)
+#define HYPERBUS_MTR0_LTCY_MASK                            (0xFU << HYPERBUS_MTR0_LTCY_SHIFT)                           /* 0x0000000F */
+#define HYPERBUS_MTR0_WCSH_SHIFT                           (8U)
+#define HYPERBUS_MTR0_WCSH_MASK                            (0xFU << HYPERBUS_MTR0_WCSH_SHIFT)                           /* 0x00000F00 */
+#define HYPERBUS_MTR0_RCSH_SHIFT                           (12U)
+#define HYPERBUS_MTR0_RCSH_MASK                            (0xFU << HYPERBUS_MTR0_RCSH_SHIFT)                           /* 0x0000F000 */
+#define HYPERBUS_MTR0_WCSS_SHIFT                           (16U)
+#define HYPERBUS_MTR0_WCSS_MASK                            (0xFU << HYPERBUS_MTR0_WCSS_SHIFT)                           /* 0x000F0000 */
+#define HYPERBUS_MTR0_RCSS_SHIFT                           (20U)
+#define HYPERBUS_MTR0_RCSS_MASK                            (0xFU << HYPERBUS_MTR0_RCSS_SHIFT)                           /* 0x00F00000 */
+#define HYPERBUS_MTR0_WCSHI_SHIFT                          (24U)
+#define HYPERBUS_MTR0_WCSHI_MASK                           (0xFU << HYPERBUS_MTR0_WCSHI_SHIFT)                          /* 0x0F000000 */
+#define HYPERBUS_MTR0_RCSHI_SHIFT                          (28U)
+#define HYPERBUS_MTR0_RCSHI_MASK                           (0xFU << HYPERBUS_MTR0_RCSHI_SHIFT)                          /* 0xF0000000 */
+/* MTR1 */
+#define HYPERBUS_MTR1_OFFSET                               (0x34)
+#define HYPERBUS_MTR1_LTCY_SHIFT                           (0U)
+#define HYPERBUS_MTR1_LTCY_MASK                            (0xFU << HYPERBUS_MTR1_LTCY_SHIFT)                           /* 0x0000000F */
+#define HYPERBUS_MTR1_WCSH_SHIFT                           (8U)
+#define HYPERBUS_MTR1_WCSH_MASK                            (0xFU << HYPERBUS_MTR1_WCSH_SHIFT)                           /* 0x00000F00 */
+#define HYPERBUS_MTR1_RCSH_SHIFT                           (12U)
+#define HYPERBUS_MTR1_RCSH_MASK                            (0xFU << HYPERBUS_MTR1_RCSH_SHIFT)                           /* 0x0000F000 */
+#define HYPERBUS_MTR1_WCSS_SHIFT                           (16U)
+#define HYPERBUS_MTR1_WCSS_MASK                            (0xFU << HYPERBUS_MTR1_WCSS_SHIFT)                           /* 0x000F0000 */
+#define HYPERBUS_MTR1_RCSS_SHIFT                           (20U)
+#define HYPERBUS_MTR1_RCSS_MASK                            (0xFU << HYPERBUS_MTR1_RCSS_SHIFT)                           /* 0x00F00000 */
+#define HYPERBUS_MTR1_WCSHI_SHIFT                          (24U)
+#define HYPERBUS_MTR1_WCSHI_MASK                           (0xFU << HYPERBUS_MTR1_WCSHI_SHIFT)                          /* 0x0F000000 */
+#define HYPERBUS_MTR1_RCSHI_SHIFT                          (28U)
+#define HYPERBUS_MTR1_RCSHI_MASK                           (0xFU << HYPERBUS_MTR1_RCSHI_SHIFT)                          /* 0xF0000000 */
+/* GPOR */
+#define HYPERBUS_GPOR_OFFSET                               (0x40)
+#define HYPERBUS_GPOR_GPO_SHIFT                            (0U)
+#define HYPERBUS_GPOR_GPO_MASK                             (0x3U << HYPERBUS_GPOR_GPO_SHIFT)                            /* 0x00000003 */
+/* WPR */
+#define HYPERBUS_WPR_OFFSET                                (0x44)
+#define HYPERBUS_WPR_WP_SHIFT                              (0U)
+#define HYPERBUS_WPR_WP_MASK                               (0x1U << HYPERBUS_WPR_WP_SHIFT)                              /* 0x00000001 */
 /* LBR */
-#define HYPERBUS_LBR_LOOPBACK_SHIFT                         (0U)
-/* RWSDIC */
-#define HYPERBUS_RWSDIC_RXEND_CTRL_SHIFT                    (1U)
-#define HYPERBUS_RWSDIC_RXEND_CTRL_MASK                     (0x1U << HYPERBUS_RWSDIC_RXEND_CTRL_SHIFT)
-#define HYPERBUS_RWSDIC_RXSTART_CTRL_SHIFT                  (0U)
-#define HYPERBUS_RWSDIC_RXSTART_CTRL_MASK                   (0x1U << HYPERBUS_RWSDIC_RXSTART_CTRL_SHIFT)
+#define HYPERBUS_LBR_OFFSET                                (0x48)
+#define HYPERBUS_LBR_LOOPBACK_SHIFT                        (0U)
+#define HYPERBUS_LBR_LOOPBACK_MASK                         (0x1U << HYPERBUS_LBR_LOOPBACK_SHIFT)                        /* 0x00000001 */
+/* TAR */
+#define HYPERBUS_TAR_OFFSET                                (0x4C)
+#define HYPERBUS_TAR_WTA_SHIFT                             (0U)
+#define HYPERBUS_TAR_WTA_MASK                              (0x3U << HYPERBUS_TAR_WTA_SHIFT)                             /* 0x00000003 */
+#define HYPERBUS_TAR_RTA_SHIFT                             (4U)
+#define HYPERBUS_TAR_RTA_MASK                              (0x3U << HYPERBUS_TAR_RTA_SHIFT)                             /* 0x00000030 */
+/* RWDSIC */
+#define HYPERBUS_RWDSIC_OFFSET                             (0x50)
+#define HYPERBUS_RWDSIC_RXSTART_CTRL_SHIFT                 (0U)
+#define HYPERBUS_RWDSIC_RXSTART_CTRL_MASK                  (0x1U << HYPERBUS_RWDSIC_RXSTART_CTRL_SHIFT)                 /* 0x00000001 */
+#define HYPERBUS_RWDSIC_RXEND_CTRL_SHIFT                   (1U)
+#define HYPERBUS_RWDSIC_RXEND_CTRL_MASK                    (0x1U << HYPERBUS_RWDSIC_RXEND_CTRL_SHIFT)                   /* 0x00000002 */
+/* CA2RSVD */
+#define HYPERBUS_CA2RSVD_OFFSET                            (0x54)
+#define HYPERBUS_CA2RSVD_CA2_DATA_SHIFT                    (3U)
+#define HYPERBUS_CA2RSVD_CA2_DATA_MASK                     (0x1FFFU << HYPERBUS_CA2RSVD_CA2_DATA_SHIFT)                 /* 0x0000FFF8 */
 /* SPCSR */
-#define HYPERBUS_SPCSR_W955D8_CON_SHIFT                     (0U)
-#define HYPERBUS_SPCSR_W955D8_CON_MASK                      (0x3U << HYPERBUS_SPCSR_W955D8_CON_SHIFT)
+#define HYPERBUS_SPCSR_OFFSET                              (0x58)
+#define HYPERBUS_SPCSR_W955D8_CON_SHIFT                    (0U)
+#define HYPERBUS_SPCSR_W955D8_CON_MASK                     (0x3U << HYPERBUS_SPCSR_W955D8_CON_SHIFT)                    /* 0x00000003 */
 
 /********Name=SOFTRST_CON00,Offset=0x400********/
 #define SRST_H_MCU_BUS_AC 1
