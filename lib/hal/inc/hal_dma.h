@@ -67,6 +67,8 @@ struct DMA_SLAVE_CONFIG {
                             *  you don't overflow it.
                             */
     uint16_t dstMaxBurst; /**< The same as srcMaxBurst for destination. */
+    uint16_t srcInterlaceSize; /**< The interlace size for src mem increase */
+    uint16_t dstInterlaceSize; /**< The interlace size for dst mem increase */
 };
 
 /**

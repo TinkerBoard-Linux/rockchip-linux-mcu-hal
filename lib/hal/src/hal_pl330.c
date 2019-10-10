@@ -204,6 +204,22 @@ typedef enum {
 
 /********************* Private Function Definition ***************************/
 
+__STATIC_INLINE int PL330_Instr_DMAADDH(uint8_t dryRun, char *buf,
+                                        ePL330_DST da, uint16_t val)
+{
+    if (dryRun)
+        return SZ_DMAADDH;
+
+    *buf = CMD_DMAADDH;
+    *buf |= (da << 1);
+    *((uint16_t *)(buf + 1)) = val;
+
+    PL330_DBGCMD_DUMP(SZ_DMAADDH, "\tDMAADDH %s %u\n",
+                      da == DST ? "DA" : "SA", val);
+
+    return SZ_DMAADDH;
+}
+
 __STATIC_INLINE int PL330_Instr_DMAEND(uint8_t dryRun, char *buf)
 {
     if (dryRun)
@@ -617,6 +633,10 @@ static int _LDST_DevToMem(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
         off += PL330_Instr_DMALDP(dryRun, &buf[off], cond, pxs->desc->peri);
         off += PL330_Instr_DMAST(dryRun, &buf[off], ALWAYS);
         off += PL330_Instr_DMAFLUSHP(dryRun, &buf[off], pxs->desc->peri);
+        if (pxs->desc->dstInterlaceSize) {
+            off += PL330_Instr_DMAADDH(dryRun, &buf[off], DST,
+                                       pxs->desc->dstInterlaceSize);
+        }
     }
 
     return off;
@@ -633,6 +653,9 @@ static int _LDST_MemToDev(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
         off += PL330_Instr_DMALD(dryRun, &buf[off], ALWAYS);
         off += PL330_Instr_DMASTP(dryRun, &buf[off], cond, pxs->desc->peri);
         off += PL330_Instr_DMAFLUSHP(dryRun, &buf[off], pxs->desc->peri);
+        if (pxs->desc->srcInterlaceSize)
+            off += PL330_Instr_DMAADDH(dryRun, &buf[off], SRC,
+                                       pxs->desc->srcInterlaceSize);
     }
 
     return off;
@@ -761,7 +784,9 @@ static int _Period(uint8_t dryRun, struct HAL_PL330_DEV *pl330, char *buf,
                                     off - ljmp1);
     }
 
-    if (pl330->peripReqType == BURST) {
+    if (!pxs->desc->srcInterlaceSize &&
+        !pxs->desc->dstInterlaceSize &&
+        pl330->peripReqType == BURST) {
         unsigned int ccr = pxs->ccr;
         unsigned long c = 0;
 
@@ -839,6 +864,13 @@ static int _Setup_Loops(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     if (HAL_DMA_IsSlaveDirection(pxs->desc->dir))
         off += PL330_Instr_DMAFLUSHP(dryRun, &buf[off], pxs->desc->peri);
 
+    if (pxs->desc->dir == DMA_DEV_TO_MEM)
+        bursts = x->length / (BRST_SIZE(ccr) * BRST_LEN(ccr) +
+                              pxs->desc->dstInterlaceSize);
+    else if (pxs->desc->dir == DMA_MEM_TO_DEV)
+        bursts = x->length / (BRST_SIZE(ccr) * BRST_LEN(ccr) +
+                              pxs->desc->srcInterlaceSize);
+
     while (bursts) {
         c = bursts;
         off += _Loop(dryRun, pl330, &buf[off], &c, pxs);
@@ -862,7 +894,9 @@ static int _Setup_Xfer(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     /* Setup Loop(s) */
     off += _Setup_Loops(dryRun, pl330, &buf[off], pxs);
 
-    if (pl330->peripReqType == BURST) {
+    if (!pxs->desc->srcInterlaceSize &&
+        !pxs->desc->dstInterlaceSize &&
+        pl330->peripReqType == BURST) {
         unsigned int ccr = pxs->ccr;
         unsigned long c = 0;
 
@@ -886,6 +920,13 @@ static int _Setup_Xfer_Cyclic(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     uint32_t ccr = pxs->ccr;
     unsigned long bursts = BYTE_TO_BURST(x->length, ccr);
     int off = 0;
+
+    if (pxs->desc->dir == DMA_DEV_TO_MEM)
+        bursts = x->length / (BRST_SIZE(ccr) * BRST_LEN(ccr)
+                              + pxs->desc->dstInterlaceSize);
+    else if (pxs->desc->dir == DMA_MEM_TO_DEV)
+        bursts = x->length / (BRST_SIZE(ccr) * BRST_LEN(ccr)
+                              + pxs->desc->srcInterlaceSize);
 
     /* Setup Loop(s) */
     off += _Loop_Cyclic(dryRun, pl330, &buf[off], bursts, pxs, ev);
@@ -1660,6 +1701,8 @@ HAL_Status HAL_PL330_Config(struct PL330_CHAN *pchan, struct DMA_SLAVE_CONFIG *c
             pchan->brstSz = PL330_ToBurstSizeBits(config->dstAddrWidth);
         if (config->dstMaxBurst)
             pchan->brstLen = config->dstMaxBurst;
+        if (config->srcInterlaceSize)
+            pchan->srcInterlaceSize = config->srcInterlaceSize;
     } else if (config->direction == DMA_DEV_TO_MEM) {
         if (config->srcAddr)
             pchan->fifoAddr = config->srcAddr;
@@ -1667,6 +1710,8 @@ HAL_Status HAL_PL330_Config(struct PL330_CHAN *pchan, struct DMA_SLAVE_CONFIG *c
             pchan->brstSz = PL330_ToBurstSizeBits(config->srcAddrWidth);
         if (config->srcMaxBurst)
             pchan->brstLen = config->srcMaxBurst;
+        if (config->dstInterlaceSize)
+            pchan->dstInterlaceSize = config->dstInterlaceSize;
     }
 
     return HAL_OK;
@@ -1740,6 +1785,12 @@ HAL_Status HAL_PL330_PrepDmaCyclic(struct PL330_CHAN *pchan, uint32_t dmaAddr,
 
     desc->callback = callback;
     desc->cparam = cparam;
+
+    desc->srcInterlaceSize = pchan->srcInterlaceSize;
+    desc->dstInterlaceSize = pchan->dstInterlaceSize;
+
+    HAL_DBG("%s: srcInterlaceSize: %d, dstInterlaceSize: %d\n", __func__,
+            desc->srcInterlaceSize, desc->dstInterlaceSize);
 
     return HAL_OK;
 }

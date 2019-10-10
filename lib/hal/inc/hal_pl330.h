@@ -152,6 +152,8 @@ struct PL330_DESC {
     bool cyclic;
     uint32_t numPeriods;
     uint32_t bytesReq;
+    uint16_t srcInterlaceSize;
+    uint16_t dstInterlaceSize;
     void *mcBuf;
     PL330_Callback callback;
     void *cparam;
@@ -173,6 +175,8 @@ struct PL330_CHAN {
     uint32_t fifoAddr;
     uint32_t brstSz;
     uint32_t brstLen;
+    uint16_t srcInterlaceSize;
+    uint16_t dstInterlaceSize;
     struct PL330_DESC desc;
     struct HAL_PL330_DEV *pl330;
     void *mcBuf;
