@@ -192,6 +192,25 @@ static void DWC_initialize(struct DWDMA_CHAN *dwc)
         DW_CHAN_SET_BIT(dw->pReg->MASK.BLOCK, dwc->mask);
 }
 
+static void DWC_deinitialize(struct DWDMA_CHAN *dwc)
+{
+    struct HAL_DWDMA_DEV *dw = dwc->dw;
+
+    /* Disable interrupts */
+    DW_CHAN_CLEAR_BIT(dw->pReg->MASK.TFR, dwc->mask);
+    DW_CHAN_CLEAR_BIT(dw->pReg->MASK.ERR, dwc->mask);
+    if (dwc->cyclic)
+        DW_CHAN_CLEAR_BIT(dw->pReg->MASK.BLOCK, dwc->mask);
+
+    /* Clear interrupts. */
+    WRITE_REG(dw->pReg->CLEAR.TFR, dwc->mask);
+    WRITE_REG(dw->pReg->CLEAR.SRCTRAN, dwc->mask);
+    WRITE_REG(dw->pReg->CLEAR.DSTTRAN, dwc->mask);
+    WRITE_REG(dw->pReg->CLEAR.ERR, dwc->mask);
+    if (dwc->cyclic)
+        WRITE_REG(dw->pReg->CLEAR.BLOCK, dwc->mask);
+}
+
 static void DWC_HandleCyclic(struct HAL_DWDMA_DEV *dw, struct DWDMA_CHAN *dwc,
                              uint32_t statusBlock, uint32_t statusErr, uint32_t statusXfer)
 {
@@ -378,12 +397,7 @@ HAL_Status HAL_DWDMA_Stop(struct DWDMA_CHAN *dwc)
     while (READ_REG(dw->pReg->CHENREG) & dwc->mask)
         ;
 
-    /* Clear channel interrupts. */
-    WRITE_REG(dw->pReg->CLEAR.TFR, dwc->mask);
-    WRITE_REG(dw->pReg->CLEAR.BLOCK, dwc->mask);
-    WRITE_REG(dw->pReg->CLEAR.SRCTRAN, dwc->mask);
-    WRITE_REG(dw->pReg->CLEAR.DSTTRAN, dwc->mask);
-    WRITE_REG(dw->pReg->CLEAR.ERR, dwc->mask);
+    DWC_deinitialize(dwc);
 
     return HAL_OK;
 }
