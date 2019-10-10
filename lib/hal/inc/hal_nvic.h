@@ -19,20 +19,20 @@ typedef enum {
 } eNVIC_PriorityGroup;
 
 /* Default NVIC priority grouping */
-#ifndef NVIC_PRIORITYGROUP_DEFAULT
 #define NVIC_PRIORITYGROUP_DEFAULT NVIC_PRIORITYGROUP_5
-#endif
 
-#ifndef NVIC_PERIPH_PRIO_DEFAULT
-#define NVIC_PERIPH_PRIO_DEFAULT (4)    /* preempt priority */
-#endif
+/* preempt priority */
+#define NVIC_PERIPH_PRIO_LOWEST  (0xFFU)
+#define NVIC_PERIPH_PRIO_DEFAULT (0x4U)
+#define NVIC_PERIPH_PRIO_HIGHEST (0x0U)
 
-#ifndef NVIC_PERIPH_SUB_PRIO_DEFAULT    /* sub priority */
-#define NVIC_PERIPH_SUB_PRIO_DEFAULT (0xF)
-#endif
+/* sub priority */
+#define NVIC_PERIPH_SUB_PRIO_LOWEST  (0xFFU)
+#define NVIC_PERIPH_SUB_PRIO_DEFAULT (0xFFU)
+#define NVIC_PERIPH_SUB_PRIO_HIGHEST (0x0U)
 
-#define IS_NVIC_PREEMPTION_PRIORITY(PRIORITY) ((PRIORITY) < 0x10)
-#define IS_NVIC_SUB_PRIORITY(PRIORITY)        ((PRIORITY) < 0x10)
+#define IS_NVIC_PREEMPTION_PRIORITY(PRIORITY) ((PRIORITY) < 0x100U)
+#define IS_NVIC_SUB_PRIORITY(PRIORITY)        ((PRIORITY) < 0x100U)
 
 /** @brief Type define of NVIC interrupt handler */
 typedef void (*NVIC_IRQHandler)(void);
