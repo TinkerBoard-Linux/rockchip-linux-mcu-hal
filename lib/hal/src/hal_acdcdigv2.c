@@ -101,6 +101,11 @@
 #define ACDCDIG_I2S_CLR_RXC (0x1U << ACDCDIG_I2S_CLR_RXC_SHIFT)
 #define ACDCDIG_I2S_CLR_TXC (0x1U << ACDCDIG_I2S_CLR_TXC_SHIFT)
 
+/* The groups of mclk */
+#define ACDCDIG_GROUP0_MCLK 49152000
+#define ACDCDIG_GROUP1_MCLK 45158400
+#define ACDCDIG_GROUP2_MCLK 32768000
+
 /* GRF registers */
 #define GRF_CODEC_I2C_TRANS ((GRF_SOC_CON16_GRF_I2C_TRANS_REQ_MASK << 16) | (0 << GRF_SOC_CON16_GRF_I2C_TRANS_REQ_SHIFT))
 #define GRF_MCU_I2C_TRANS   ((GRF_SOC_CON16_GRF_I2C_TRANS_REQ_MASK << 16) | (1 << GRF_SOC_CON16_GRF_I2C_TRANS_REQ_SHIFT))
@@ -437,6 +442,45 @@ static HAL_Status ACDCDIG_DACCLKCTRL_Disable(struct HAL_ACDCDIG_DEV *acdcDig)
 }
 
 /**
+ * @brief  Match tht fit input mclk for codec during different sample rates.
+ * @param  sampleRate: sample rate.
+ * @return clkFreq
+ */
+static uint32_t ACDCDIG_MCLK_Match(eAUDIO_sampleRate sampleRate)
+{
+    uint32_t clkFreq;
+
+    switch (sampleRate) {
+    case AUDIO_SAMPLERATE_12000:
+    case AUDIO_SAMPLERATE_24000:
+    case AUDIO_SAMPLERATE_48000:
+    case AUDIO_SAMPLERATE_96000:
+    case AUDIO_SAMPLERATE_192000:
+        clkFreq = ACDCDIG_GROUP0_MCLK;
+        break;
+    case AUDIO_SAMPLERATE_11025:
+    case AUDIO_SAMPLERATE_22050:
+    case AUDIO_SAMPLERATE_44100:
+    case AUDIO_SAMPLERATE_88200:
+    case AUDIO_SAMPLERATE_176400:
+        clkFreq = ACDCDIG_GROUP1_MCLK;
+        break;
+    case AUDIO_SAMPLERATE_8000:
+    case AUDIO_SAMPLERATE_16000:
+    case AUDIO_SAMPLERATE_32000:
+    case AUDIO_SAMPLERATE_64000:
+    case AUDIO_SAMPLERATE_128000:
+        clkFreq = ACDCDIG_GROUP2_MCLK;
+        break;
+    default:
+        clkFreq = 0;
+        break;
+    }
+
+    return clkFreq;
+}
+
+/**
  * @brief  Select the type of clock sync from ADC or DAC.
  * @param  acdcDig: the handle of acdcDig.
  * @param  syncType: the type of clock sync.
@@ -447,6 +491,9 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
                                           struct AUDIO_PARAMS *params)
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
+
+    acdcDig->clkFreq = ACDCDIG_MCLK_Match(params->sampleRate);
+    HAL_ASSERT(acdcDig->clkFreq != 0);
 
     if (acdcDig->enabled == 0) {
         ACDCDIG_ADCCLKCTRL_Enable(acdcDig);
@@ -632,8 +679,6 @@ HAL_Status HAL_ACDCDIG_SetClock(struct HAL_ACDCDIG_DEV *acdcDig,
                                 eAUDIO_streamType stream,
                                 uint32_t freq)
 {
-    acdcDig->clkFreq = freq;
-
     return HAL_OK;
 }
 
