@@ -30,8 +30,8 @@ typedef enum {
 struct HAL_ACDCDIG_DEV {
     struct ACDCDIG_REG *pReg;
     uint32_t hclk;
-    uint32_t clkFreq;
     uint32_t clkI2cCodec;
+    uint16_t bclkFs;
     uint16_t i2cFlags;
     uint16_t enabled;
     eAUDIO_fmtType format;

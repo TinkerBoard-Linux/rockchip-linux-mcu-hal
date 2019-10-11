@@ -64,6 +64,8 @@
 #define ACDCDIG_ADCCLKCTRL_CKE_BCLKTX_DIS  (0x0U << ACDCDIG_ADCCLKCTRL_CKE_BCLKTX_SHIFT)
 #define ACDCDIG_ADCCLKCTRL_FILTER_DIS      (0x1U << ACDCDIG_ADCCLKCTRL_FILTER_GATE_EN_SHIFT)
 #define ACDCDIG_ADCCLKCTRL_FILTER_EN       (0x0U << ACDCDIG_ADCCLKCTRL_FILTER_GATE_EN_SHIFT)
+/* ADCSCLKTXINT_DIV */
+#define ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(x) ((x - 1) << ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_SHIFT)
 /* ADCCFG1 */
 #define ACDCDIG_ADCCFG1_ADCSRT(x) ((x) << ACDCDIG_ADCCFG1_ADCSRT_SHIFT)
 /* DACDIGEN */
@@ -80,6 +82,8 @@
 #define ACDCDIG_DACCLKCTRL_I2SRX_CKE_DIS  (0x0U << ACDCDIG_DACCLKCTRL_I2SRX_CKE_SHIFT)
 #define ACDCDIG_DACCLKCTRL_CKE_BCLKRX_EN  (0x1U << ACDCDIG_DACCLKCTRL_CKE_BCLKRX_SHIFT)
 #define ACDCDIG_DACCLKCTRL_CKE_BCLKRX_DIS (0x0U << ACDCDIG_DACCLKCTRL_CKE_BCLKRX_SHIFT)
+/* DACSCLKRXINT_DIV */
+#define ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV(x) ((x - 1) << ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV_SHIFT)
 /* DACCFG1 */
 #define ACDCDIG_DACCFG1_DACSRT(x) ((x) << ACDCDIG_DACCFG1_DACSRT_SHIFT)
 
@@ -89,6 +93,9 @@
 #define ACDCDIG_I2S_TXCR1_TCSR(x) ((x) << ACDCDIG_I2S_TXCR1_TCSR_SHIFT)
 /* I2S_RXCR0 */
 #define ACDCDIG_I2S_RXCR0_VDW(x) ((x - 1) << ACDCDIG_I2S_RXCR0_VDW_SHIFT)
+/* I2S_CKR0 */
+#define ACDCDIG_I2S_CKR0_RSD(x) (((x / 64) - 1) << ACDCDIG_I2S_CKR0_RSD_SHIFT)
+#define ACDCDIG_I2S_CKR0_TSD(x) (((x / 64) - 1) << ACDCDIG_I2S_CKR0_TSD_SHIFT)
 /* I2S_CKR1 */
 #define ACDCDIG_I2S_CKR1_MSS_SLAVE  (0x1U << ACDCDIG_I2S_CKR1_MSS_SHIFT)
 #define ACDCDIG_I2S_CKR1_MSS_MASTER (0x0U << ACDCDIG_I2S_CKR1_MSS_SHIFT)
@@ -444,11 +451,11 @@ static HAL_Status ACDCDIG_DACCLKCTRL_Disable(struct HAL_ACDCDIG_DEV *acdcDig)
 /**
  * @brief  Match tht fit input mclk for codec during different sample rates.
  * @param  sampleRate: sample rate.
- * @return clkFreq
+ * @return mclkRate
  */
 static uint32_t ACDCDIG_MCLK_Match(eAUDIO_sampleRate sampleRate)
 {
-    uint32_t clkFreq;
+    uint32_t mclkRate;
 
     switch (sampleRate) {
     case AUDIO_SAMPLERATE_12000:
@@ -456,28 +463,28 @@ static uint32_t ACDCDIG_MCLK_Match(eAUDIO_sampleRate sampleRate)
     case AUDIO_SAMPLERATE_48000:
     case AUDIO_SAMPLERATE_96000:
     case AUDIO_SAMPLERATE_192000:
-        clkFreq = ACDCDIG_GROUP0_MCLK;
+        mclkRate = ACDCDIG_GROUP0_MCLK;
         break;
     case AUDIO_SAMPLERATE_11025:
     case AUDIO_SAMPLERATE_22050:
     case AUDIO_SAMPLERATE_44100:
     case AUDIO_SAMPLERATE_88200:
     case AUDIO_SAMPLERATE_176400:
-        clkFreq = ACDCDIG_GROUP1_MCLK;
+        mclkRate = ACDCDIG_GROUP1_MCLK;
         break;
     case AUDIO_SAMPLERATE_8000:
     case AUDIO_SAMPLERATE_16000:
     case AUDIO_SAMPLERATE_32000:
     case AUDIO_SAMPLERATE_64000:
     case AUDIO_SAMPLERATE_128000:
-        clkFreq = ACDCDIG_GROUP2_MCLK;
+        mclkRate = ACDCDIG_GROUP2_MCLK;
         break;
     default:
-        clkFreq = 0;
+        mclkRate = 0;
         break;
     }
 
-    return clkFreq;
+    return mclkRate;
 }
 
 /**
@@ -488,12 +495,17 @@ static uint32_t ACDCDIG_MCLK_Match(eAUDIO_sampleRate sampleRate)
  */
 static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
                                           eAUDIO_streamType stream,
-                                          struct AUDIO_PARAMS *params)
+                                          eAUDIO_sampleRate sampleRate)
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
+    uint32_t mclkRate, bclkRate, divBclk;
 
-    acdcDig->clkFreq = ACDCDIG_MCLK_Match(params->sampleRate);
-    HAL_ASSERT(acdcDig->clkFreq != 0);
+    mclkRate = ACDCDIG_MCLK_Match(sampleRate);
+    HAL_ASSERT(mclkRate);
+
+    bclkRate = acdcDig->bclkFs * sampleRate;
+    HAL_ASSERT(bclkRate);
+    divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
 
     if (acdcDig->enabled == 0) {
         ACDCDIG_ADCCLKCTRL_Enable(acdcDig);
@@ -503,7 +515,13 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
         if (stream == AUDIO_STREAM_PLAYBACK) {
             /* Select mclk_i2s1_tx as source. */
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_I2S8CH_1_TX_MUX);
-            HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_TX, acdcDig->clkFreq);
+            HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_TX, mclkRate);
+
+            /* It is ignored when in slave mode. */
+            MODIFY_REG(reg->DACSCLKRXINT_DIV, ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV_MASK,
+                       ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV(divBclk));
+            MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_RSD_MASK,
+                       ACDCDIG_I2S_CKR0_RSD(acdcDig->bclkFs));
 
             /* Select clock sync is from DAC. */
             MODIFY_REG(reg->SYSCTRL0,
@@ -512,7 +530,13 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
         } else {
             /* Select mclk_i2s1_rx as source. */
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_I2S8CH_1_RX_MUX);
-            HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_RX, acdcDig->clkFreq);
+            HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_RX, mclkRate);
+
+            /* It is ignored when in slave mode. */
+            MODIFY_REG(reg->ADCSCLKTXINT_DIV, ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_MASK,
+                       ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(divBclk));
+            MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_TSD_MASK,
+                       ACDCDIG_I2S_CKR0_TSD(acdcDig->bclkFs));
 
             /* Select clock sync is from ADC. */
             MODIFY_REG(reg->SYSCTRL0,
@@ -696,7 +720,7 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
     HAL_Status ret = HAL_OK;
     uint32_t srt = 0, val = 0;
 
-    ACDCDIG_ClockSyncSelect(acdcDig, stream, params);
+    ACDCDIG_ClockSyncSelect(acdcDig, stream, params->sampleRate);
 
     if (stream == AUDIO_STREAM_PLAYBACK) {
         switch (params->sampleRate) {
