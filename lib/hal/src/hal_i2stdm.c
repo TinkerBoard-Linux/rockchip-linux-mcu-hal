@@ -288,6 +288,21 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
 
     HAL_CRU_ClkEnable(i2sTdm->hclk);
 
+    switch (config->format) {
+    case AUDIO_FMT_I2S:
+        MODIFY_REG(reg->TXCR, I2STDM_TXCR_TFS_MASK, I2STDM_TXCR_TFS_I2S);
+        MODIFY_REG(reg->RXCR, I2STDM_RXCR_TFS_MASK, I2STDM_RXCR_TFS_I2S);
+        break;
+
+    case AUDIO_FMT_PCM:
+        MODIFY_REG(reg->TXCR, I2STDM_TXCR_TFS_MASK, I2STDM_TXCR_TFS_PCM);
+        MODIFY_REG(reg->RXCR, I2STDM_RXCR_TFS_MASK, I2STDM_RXCR_TFS_PCM);
+        break;
+
+    default:
+        break;
+    }
+
     mask = I2STDM_CKR_MSS_MASK;
     val = isMaster ? I2STDM_CKR_MSS_MASTER : I2STDM_CKR_MSS_SLAVE;
     MODIFY_REG(reg->CKR, mask, val);
