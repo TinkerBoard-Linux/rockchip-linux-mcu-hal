@@ -653,38 +653,38 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
 
     ACDCDIG_ClockSyncSelect(acdcDig, stream, params);
 
-    switch (params->sampleRate) {
-    case AUDIO_SAMPLERATE_8000:
-    case AUDIO_SAMPLERATE_11025:
-        srt = 0;
-        break;
-    case AUDIO_SAMPLERATE_16000:
-    case AUDIO_SAMPLERATE_22050:
-        srt = 1;
-        break;
-    case AUDIO_SAMPLERATE_32000:
-        srt = 2;
-        break;
-    case AUDIO_SAMPLERATE_44100:
-    case AUDIO_SAMPLERATE_48000:
-        srt = 3;
-        break;
-    case AUDIO_SAMPLERATE_64000:
-    case AUDIO_SAMPLERATE_88200:
-    case AUDIO_SAMPLERATE_96000:
-        srt = 4;
-        break;
-    case AUDIO_SAMPLERATE_176400:
-    case AUDIO_SAMPLERATE_192000:
-        srt = 5;
-        break;
-    default:
-        ret = HAL_INVAL;
-        srt = 0;
-        break;
-    }
-
     if (stream == AUDIO_STREAM_PLAYBACK) {
+        switch (params->sampleRate) {
+        case AUDIO_SAMPLERATE_8000:
+        case AUDIO_SAMPLERATE_11025:
+        case AUDIO_SAMPLERATE_12000:
+            srt = 0;
+            break;
+        case AUDIO_SAMPLERATE_16000:
+        case AUDIO_SAMPLERATE_22050:
+        case AUDIO_SAMPLERATE_24000:
+            srt = 1;
+            break;
+        case AUDIO_SAMPLERATE_32000:
+        case AUDIO_SAMPLERATE_44100:
+        case AUDIO_SAMPLERATE_48000:
+            srt = 2;
+            break;
+        case AUDIO_SAMPLERATE_64000:
+        case AUDIO_SAMPLERATE_88200:
+        case AUDIO_SAMPLERATE_96000:
+            srt = 3;
+            break;
+        case AUDIO_SAMPLERATE_128000:
+        case AUDIO_SAMPLERATE_176400:
+        case AUDIO_SAMPLERATE_192000:
+            srt = 4;
+            break;
+        default:
+            ret = HAL_INVAL;
+            break;
+        }
+
         MODIFY_REG(reg->DACCFG1, ACDCDIG_DACCFG1_DACSRT_MASK,
                    ACDCDIG_DACCFG1_DACSRT(srt));
         switch (params->sampleBits) {
@@ -709,6 +709,39 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
                    ACDCDIG_DACDIGEN_DAC_GLB_EN |
                    ACDCDIG_DACDIGEN_DAC_L0_EN);
     } else {
+        switch (params->sampleRate) {
+        case AUDIO_SAMPLERATE_8000:
+        case AUDIO_SAMPLERATE_11025:
+        case AUDIO_SAMPLERATE_12000:
+            srt = 0;
+            break;
+        case AUDIO_SAMPLERATE_16000:
+        case AUDIO_SAMPLERATE_22050:
+        case AUDIO_SAMPLERATE_24000:
+            srt = 1;
+            break;
+        case AUDIO_SAMPLERATE_32000:
+            srt = 2;
+            break;
+        case AUDIO_SAMPLERATE_44100:
+        case AUDIO_SAMPLERATE_48000:
+            srt = 3;
+            break;
+        case AUDIO_SAMPLERATE_64000:
+        case AUDIO_SAMPLERATE_88200:
+        case AUDIO_SAMPLERATE_96000:
+            srt = 4;
+            break;
+        case AUDIO_SAMPLERATE_128000:
+        case AUDIO_SAMPLERATE_176400:
+        case AUDIO_SAMPLERATE_192000:
+            srt = 5;
+            break;
+        default:
+            ret = HAL_INVAL;
+            break;
+        }
+
         MODIFY_REG(reg->ADCCFG1, ACDCDIG_ADCCFG1_ADCSRT_MASK,
                    ACDCDIG_ADCCFG1_ADCSRT(srt));
         switch (params->sampleBits) {
