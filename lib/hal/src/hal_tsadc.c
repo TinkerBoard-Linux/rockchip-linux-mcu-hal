@@ -249,6 +249,7 @@ static int TSADC_GetTemp(const struct TSADC_CONFIG *config, int chn)
  */
 static void HAL_TSADC_Config(eTSADC_tshutPolarity polarity)
 {
+    /* set tshut_prolarity 0: Low active , 1: High active */
 #ifdef TSADC_AUTO_CON_TSHUT_PROLARITY_MASK
     CLEAR_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_TSHUT_PROLARITY_MASK);
     SET_BIT(TSADC->AUTO_CON, (polarity << TSADC_AUTO_CON_TSHUT_PROLARITY_SHIFT));
@@ -262,22 +263,46 @@ static void HAL_TSADC_Config(eTSADC_tshutPolarity polarity)
 
 /**
  * @brief tsadc enable auto mode.
- * @param enable: enable or disable tsadc
  */
-static void TSADC_EnAuto(bool enable)
+static void TSADC_EnAuto(void)
+{
+    /* enable tsadc pd */
+#ifdef GRF_SOC_CON30_OFFSET
+    WRITE_REG_MASK_WE(GRF->SOC_CON30, GRF_SOC_CON30_GRF_TSADC_TSEN_PD_MASK, 0 << GRF_SOC_CON30_GRF_TSADC_TSEN_PD_SHIFT);
+#endif
+
+    /* t_pd timing parameter */
+    HAL_DelayUs(10);
+
+    /* enable tsadc calibration */
+#ifdef GRF_SOC_CON31_OFFSET
+    WRITE_REG_MASK_WE(GRF->SOC_CON31, GRF_SOC_CON31_GRF_TSADC_ANA_REG2_MASK, 1 << GRF_SOC_CON31_GRF_TSADC_ANA_REG2_SHIFT);
+#endif
+
+#ifdef TSADC_AUTO_CON_AUTO_EN_MASK
+    /* enable tsadc auto mode */
+    SET_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_AUTO_EN_MASK);
+#endif
+
+#ifdef TSADC_AUTO_CON_TSADC_Q_SEL_MASK
+    /* set temperature coefficient positive or negative */
+    SET_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_TSADC_Q_SEL_MASK);
+#endif
+}
+
+/**
+ * @brief tsadc disable auto mode.
+ */
+static void TSADC_DisAuto(void)
 {
 #ifdef TSADC_AUTO_CON_AUTO_EN_MASK
-    if (enable) {
-        SET_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_AUTO_EN_MASK);
-#ifdef TSADC_AUTO_CON_TSADC_Q_SEL_MASK
-        SET_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_TSADC_Q_SEL_MASK);
+    /* disable tsadc auto mode */
+    CLEAR_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_AUTO_EN_MASK);
 #endif
-    } else {
-        CLEAR_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_AUTO_EN_MASK);
-    }
-#endif
+
+    /* disable tsadc pd */
 #ifdef GRF_SOC_CON30_OFFSET
-    WRITE_REG_MASK_WE(GRF->SOC_CON30, GRF_SOC_CON30_GRF_TSADC_TSEN_PD_MASK, 0);
+    WRITE_REG_MASK_WE(GRF->SOC_CON30, GRF_SOC_CON30_GRF_TSADC_TSEN_PD_MASK, 1 << GRF_SOC_CON30_GRF_TSADC_TSEN_PD_SHIFT);
 #endif
 }
 
@@ -351,7 +376,7 @@ HAL_Status HAL_TSADC_Enable_AUTO(int chn, eTSADC_tshutPolarity polarity, eTSADC_
     TSADC_IrqAck();
     TSADC_TshutTemp(&s_tsadcConfig, chn, TSADC_TSHUT_TEMP);
     TSADC_TshutMode(chn, mode);
-    TSADC_EnAuto(1);
+    TSADC_EnAuto();
     HAL_DelayMs(1);
 
     return HAL_OK;
@@ -380,7 +405,7 @@ HAL_Check HAL_TSADC_IsEnabled_AUTO(int chn)
  */
 HAL_Status HAL_TSADC_Disable_AUTO(int chn)
 {
-    TSADC_EnAuto(0);
+    TSADC_DisAuto();
 
     return HAL_OK;
 }
