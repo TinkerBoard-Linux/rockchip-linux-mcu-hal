@@ -92,6 +92,8 @@
 #define PLL_GET_DSMPD(x) (((uint32_t)(x) & (PLL_DSMPD_MASK)) >> PLL_DSMPD_SHIFT)
 #define PLL_GET_FRAC(x)  (((uint32_t)(x) & (PLL_FRAC_MASK)) >> PLL_FRAC_SHIFT)
 
+#define CRU_PLL_ROUND_UP_TO_KHZ(x) (HAL_DIV_ROUND_UP((x), KHZ) * KHZ)
+
 /********************* Private Structure Definition **************************/
 static struct PLL_CONFIG g_rockchipAutoTable;
 
@@ -315,6 +317,7 @@ uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
             rate += fracRate;
         }
         rate = rate / (postdDv1 * postDiv2);
+        rate = CRU_PLL_ROUND_UP_TO_KHZ(rate);
         break;
     case RK_PLL_MODE_DEEP:
     default:
@@ -469,6 +472,7 @@ uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
             rate += fracRate;
         }
         rate = rate / (postdDv1 * postDiv2);
+        rate = CRU_PLL_ROUND_UP_TO_KHZ(rate);
         break;
     case RK_PLL_MODE_DEEP:
     default:
