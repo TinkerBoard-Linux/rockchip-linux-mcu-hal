@@ -580,21 +580,18 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
  */
 HAL_Status HAL_ACDCDIG_Init(struct HAL_ACDCDIG_DEV *acdcDig, struct AUDIO_INIT_CONFIG *config)
 {
-    uint32_t mask = 0, val = 0;
-    bool isMaster = config->master;
-    bool clkInvert = config->clkInvert;
     struct ACDCDIG_REG *reg = acdcDig->pReg;
 
     HAL_CRU_ClkEnable(acdcDig->hclk);
     ACDCDIG_I2C_Init(acdcDig);
 
-    mask = ACDCDIG_I2S_CKR1_MSS_MASK;
-    val = isMaster ? ACDCDIG_I2S_CKR1_MSS_MASTER : ACDCDIG_I2S_CKR1_MSS_SLAVE;
-    MODIFY_REG(reg->I2S_CKR[1], mask, val);
+    MODIFY_REG(reg->I2S_CKR[1],
+               ACDCDIG_I2S_CKR1_MSS_MASK, config->master ?
+               ACDCDIG_I2S_CKR1_MSS_MASTER : ACDCDIG_I2S_CKR1_MSS_SLAVE);
 
-    mask = ACDCDIG_I2S_CKR1_TLP_MASK;
-    val = clkInvert ? ACDCDIG_I2S_CKR1_CKP_POS : ACDCDIG_I2S_CKR1_CKP_NEG;
-    MODIFY_REG(reg->I2S_CKR[1], mask, val);
+    MODIFY_REG(reg->I2S_CKR[1],
+               ACDCDIG_I2S_CKR1_CKP_MASK, config->clkInvert ?
+               ACDCDIG_I2S_CKR1_CKP_NEG : ACDCDIG_I2S_CKR1_CKP_POS);
 
     switch (config->format) {
     case AUDIO_FMT_I2S:
