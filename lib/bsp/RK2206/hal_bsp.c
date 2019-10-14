@@ -454,6 +454,7 @@ const struct HAL_USB_DEV g_usbdDev =
     .pReg = USB,
     .hclkGateID = HCLK_USBOTG_GATE,
     .utmiclkGateID = HCLK_USBOTG_PMU_GATE,
+    .usbPhyGateID = CLK_OTG_USBPHY_PLL_GATE,
     .irqNum = USB2OTG_IRQn,
     .cfg =
     {
