@@ -68,6 +68,18 @@
 #define ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(x) ((x - 1) << ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_SHIFT)
 /* ADCCFG1 */
 #define ACDCDIG_ADCCFG1_ADCSRT(x) ((x) << ACDCDIG_ADCCFG1_ADCSRT_SHIFT)
+/* ADCHPFEN */
+#define ACDCDIG_ADCHPFEN_HPFEN_L0  (0x1U << ACDCDIG_ADCHPFEN_HPFEN_L0_SHIFT)
+#define ACDCDIG_ADCHPFEN_HPFDIS_L0 (0x0U << ACDCDIG_ADCHPFEN_HPFEN_L0_SHIFT)
+#define ACDCDIG_ADCHPFEN_HPFEN_R1  (0x1U << ACDCDIG_ADCHPFEN_HPFEN_R1_SHIFT)
+#define ACDCDIG_ADCHPFEN_HPFDIS_R1 (0x0U << ACDCDIG_ADCHPFEN_HPFEN_R1_SHIFT)
+#define ACDCDIG_ADCHPFEN_HPFEN_L2  (0x1U << ACDCDIG_ADCHPFEN_HPFEN_L2_SHIFT)
+#define ACDCDIG_ADCHPFEN_HPFDIS_L2 (0x0U << ACDCDIG_ADCHPFEN_HPFEN_L2_SHIFT)
+/* ADCHPFCF */
+#define ACDCDIG_ADCHPFCF_HPFCF_3_79HZ (0x0U << ACDCDIG_ADCHPFCF_HPFCF_SHIFT)
+#define ACDCDIG_ADCHPFCF_HPFCF_60HZ   (0x1U << ACDCDIG_ADCHPFCF_HPFCF_SHIFT)
+#define ACDCDIG_ADCHPFCF_HPFCF_243HZ  (0x2U << ACDCDIG_ADCHPFCF_HPFCF_SHIFT)
+#define ACDCDIG_ADCHPFCF_HPFCF_493HZ  (0x3U << ACDCDIG_ADCHPFCF_HPFCF_SHIFT)
 /* DACDIGEN */
 #define ACDCDIG_DACDIGEN_DAC_GLB_EN  (0x1U << ACDCDIG_DACDIGEN_DAC_GLBEN_SHIFT)
 #define ACDCDIG_DACDIGEN_DAC_GLB_DIS (0x0U << ACDCDIG_DACDIGEN_DAC_GLBEN_SHIFT)
@@ -696,6 +708,15 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig,
                    ACDCDIG_I2S_CLR_RXC_MASK,
                    ACDCDIG_I2S_CLR_RXC);
 
+        /* Disable HPF for ADC */
+        MODIFY_REG(reg->ADCHPFEN,
+                   ACDCDIG_ADCHPFEN_HPFEN_L0_MASK |
+                   ACDCDIG_ADCHPFEN_HPFEN_R1_MASK |
+                   ACDCDIG_ADCHPFEN_HPFEN_L2_MASK,
+                   ACDCDIG_ADCHPFEN_HPFDIS_L0 |
+                   ACDCDIG_ADCHPFEN_HPFDIS_R1 |
+                   ACDCDIG_ADCHPFEN_HPFDIS_L2);
+
         /* There is max 3 channel for ADC */
         MODIFY_REG(reg->ADCDIGEN,
                    ACDCDIG_ADCDIGEN_ADC_GLBEN_MASK |
@@ -744,7 +765,7 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
     HAL_Status ret = HAL_OK;
-    uint32_t srt = 0, val = 0;
+    uint32_t srt = 0, val = 0, hpf = 0;
 
     ACDCDIG_ClockSyncSelect(acdcDig, stream, params->sampleRate);
 
@@ -860,12 +881,18 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
             val = ACDCDIG_ADCDIGEN_ADC_GLB_EN |
                   ACDCDIG_ADCDIGEN_ADC_L2_EN |
                   ACDCDIG_ADCDIGEN_ADC_L0R1_EN;
+            hpf = ACDCDIG_ADCHPFEN_HPFEN_L0 |
+                  ACDCDIG_ADCHPFEN_HPFEN_R1 |
+                  ACDCDIG_ADCHPFEN_HPFEN_L2;
             break;
         case 2:
             srt = 0;
             val = ACDCDIG_ADCDIGEN_ADC_GLB_EN |
                   ACDCDIG_ADCDIGEN_ADC_L2_DIS |
                   ACDCDIG_ADCDIGEN_ADC_L0R1_EN;
+            hpf = ACDCDIG_ADCHPFEN_HPFEN_L0 |
+                  ACDCDIG_ADCHPFEN_HPFEN_R1 |
+                  ACDCDIG_ADCHPFEN_HPFDIS_L2;
             break;
         default:
 
@@ -878,6 +905,16 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
                    ACDCDIG_ADCDIGEN_ADCEN_L2_MASK |
                    ACDCDIG_ADCDIGEN_ADCEN_L0R1_MASK,
                    val);
+
+        /* Enable HPF for ADC */
+        MODIFY_REG(reg->ADCHPFCF,
+                   ACDCDIG_ADCHPFCF_HPFCF_MASK,
+                   ACDCDIG_ADCHPFCF_HPFCF_60HZ);
+        MODIFY_REG(reg->ADCHPFEN,
+                   ACDCDIG_ADCHPFEN_HPFEN_L0_MASK |
+                   ACDCDIG_ADCHPFEN_HPFEN_R1_MASK |
+                   ACDCDIG_ADCHPFEN_HPFEN_L2_MASK,
+                   hpf);
 
         MODIFY_REG(reg->I2S_TXCR[1], ACDCDIG_I2S_TXCR1_TCSR_MASK,
                    ACDCDIG_I2S_TXCR1_TCSR(srt));
