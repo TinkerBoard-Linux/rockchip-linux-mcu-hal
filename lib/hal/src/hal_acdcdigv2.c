@@ -43,6 +43,9 @@
 #define ACDCDIG_SYSCTRL0_CLK_SEL_ADC  (0x0U << ACDCDIG_SYSCTRL0_CLK_SEL_SHIFT)
 #define ACDCDIG_SYSCTRL0_SYNC_SEL_DAC (0x1U << ACDCDIG_SYSCTRL0_SYNC_SEL_SHIFT)
 #define ACDCDIG_SYSCTRL0_SYNC_SEL_ADC (0x0U << ACDCDIG_SYSCTRL0_SYNC_SEL_SHIFT)
+/* ADCVUCTL */
+#define ACDCDIG_ADCVUCTL_ADC_ZDT_EN  (0x1U << ACDCDIG_ADCVUCTL_ADC_ZDT_SHIFT)
+#define ACDCDIG_ADCVUCTL_ADC_ZDT_DIS (0x0U << ACDCDIG_ADCVUCTL_ADC_ZDT_SHIFT)
 /* ADCDIGEN */
 #define ACDCDIG_ADCDIGEN_ADC_L0R1_EN  (0x1U << ACDCDIG_ADCDIGEN_ADCEN_L0R1_SHIFT)
 #define ACDCDIG_ADCDIGEN_ADC_L0R1_DIS (0x0U << ACDCDIG_ADCDIGEN_ADCEN_L0R1_SHIFT)
@@ -68,6 +71,15 @@
 #define ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(x) ((x - 1) << ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_SHIFT)
 /* ADCCFG1 */
 #define ACDCDIG_ADCCFG1_ADCSRT(x) ((x) << ACDCDIG_ADCCFG1_ADCSRT_SHIFT)
+/* ADCVOGP */
+#define ACDCDIG_ADCVOGP_VOLGPL0_POS_GAIN (0x1U << ACDCDIG_ADCVOGP_VOLGPL0_SHIFT)
+#define ACDCDIG_ADCVOGP_VOLGPL0_NEG_GAIN (0x0U << ACDCDIG_ADCVOGP_VOLGPL0_SHIFT)
+#define ACDCDIG_ADCVOGP_VOLGPR1_POS_GAIN (0x1U << ACDCDIG_ADCVOGP_VOLGPR1_SHIFT)
+#define ACDCDIG_ADCVOGP_VOLGPR1_NEG_GAIN (0x0U << ACDCDIG_ADCVOGP_VOLGPR1_SHIFT)
+#define ACDCDIG_ADCVOGP_VOLGPL2_POS_GAIN (0x1U << ACDCDIG_ADCVOGP_VOLGPL2_SHIFT)
+#define ACDCDIG_ADCVOGP_VOLGPL2_NEG_GAIN (0x0U << ACDCDIG_ADCVOGP_VOLGPL2_SHIFT)
+/* ADCVOLL0 / ADCVOLL1 / ADCVOLR0 */
+#define ACDCDIG_ADCVOL(x) ((x) << ACDCDIG_ADCVOGP_VOLGPL0_SHIFT)
 /* ADCHPFEN */
 #define ACDCDIG_ADCHPFEN_HPFEN_L0  (0x1U << ACDCDIG_ADCHPFEN_HPFEN_L0_SHIFT)
 #define ACDCDIG_ADCHPFEN_HPFDIS_L0 (0x0U << ACDCDIG_ADCHPFEN_HPFEN_L0_SHIFT)
@@ -80,6 +92,9 @@
 #define ACDCDIG_ADCHPFCF_HPFCF_60HZ   (0x1U << ACDCDIG_ADCHPFCF_HPFCF_SHIFT)
 #define ACDCDIG_ADCHPFCF_HPFCF_243HZ  (0x2U << ACDCDIG_ADCHPFCF_HPFCF_SHIFT)
 #define ACDCDIG_ADCHPFCF_HPFCF_493HZ  (0x3U << ACDCDIG_ADCHPFCF_HPFCF_SHIFT)
+/* DACVUCTL */
+#define ACDCDIG_DACVUCTL_DAC_ZDT_EN  (0x1U << ACDCDIG_DACVUCTL_DAC_ZDT_SHIFT)
+#define ACDCDIG_DACVUCTL_DAC_ZDT_DIS (0x0U << ACDCDIG_DACVUCTL_DAC_ZDT_SHIFT)
 /* DACDIGEN */
 #define ACDCDIG_DACDIGEN_DAC_GLB_EN  (0x1U << ACDCDIG_DACDIGEN_DAC_GLBEN_SHIFT)
 #define ACDCDIG_DACDIGEN_DAC_GLB_DIS (0x0U << ACDCDIG_DACDIGEN_DAC_GLBEN_SHIFT)
@@ -98,7 +113,11 @@
 #define ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV(x) ((x - 1) << ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV_SHIFT)
 /* DACCFG1 */
 #define ACDCDIG_DACCFG1_DACSRT(x) ((x) << ACDCDIG_DACCFG1_DACSRT_SHIFT)
-
+/* DACVOLL0 */
+#define ACDCDIG_DACVOL(x) ((x) << ACDCDIG_DACVOLL0_DACLV0_SHIFT)
+/* DACVOGP */
+#define ACDCDIG_DACVOGP_VOLGPL0_POS_GAIN (0x1U << ACDCDIG_DACVOGP_VOLGPL0_SHIFT)
+#define ACDCDIG_DACVOGP_VOLGPL0_NEG_GAIN (0x0U << ACDCDIG_DACVOGP_VOLGPL0_SHIFT)
 /* I2S_TXCR0 */
 #define ACDCDIG_I2S_TXCR0_VDW(x)          ((x - 1) << ACDCDIG_I2S_TXCR0_VDW_SHIFT)
 #define ACDCDIG_I2S_TXCR0_TFS_I2S         (0x0U << ACDCDIG_I2S_TXCR0_TFS_SHIFT)
@@ -147,6 +166,19 @@
 /* GRF registers */
 #define GRF_CODEC_I2C_TRANS ((GRF_SOC_CON16_GRF_I2C_TRANS_REQ_MASK << 16) | (0 << GRF_SOC_CON16_GRF_I2C_TRANS_REQ_SHIFT))
 #define GRF_MCU_I2C_TRANS   ((GRF_SOC_CON16_GRF_I2C_TRANS_REQ_MASK << 16) | (1 << GRF_SOC_CON16_GRF_I2C_TRANS_REQ_SHIFT))
+
+/**
+  * The range of gains.
+  * To avoid using decimals, the scaled 1000 times dB is like Linux ALSA TLV.
+  * min: -95.625dB, max: 95.625dB, step: 0.375dB.
+  */
+#define ACDCDIG_DB_MIN  (-95625)
+#define ACDCDIG_DB_MAX  (95625)
+#define ACDCDIG_DB_STEP (375)
+
+/* The monotonous max at 8-bit width */
+#define ACDCDIG_ADCVOL_MONO_MAX 0xffU
+#define ACDCDIG_DACVOL_MONO_MAX 0xffU
 
 /********************* Private Structure Definition **************************/
 
@@ -597,6 +629,12 @@ HAL_Status HAL_ACDCDIG_Init(struct HAL_ACDCDIG_DEV *acdcDig, struct AUDIO_INIT_C
     HAL_CRU_ClkEnable(acdcDig->hclk);
     ACDCDIG_I2C_Init(acdcDig);
 
+    /* Disable volume cross zero detect. */
+    MODIFY_REG(reg->ADCVUCTL,
+               ACDCDIG_ADCVUCTL_ADC_ZDT_MASK, ACDCDIG_ADCVUCTL_ADC_ZDT_DIS);
+    MODIFY_REG(reg->DACVUCTL,
+               ACDCDIG_DACVUCTL_DAC_ZDT_MASK, ACDCDIG_DACVUCTL_DAC_ZDT_DIS);
+
     MODIFY_REG(reg->I2S_CKR[1],
                ACDCDIG_I2S_CKR1_MSS_MASK, config->master ?
                ACDCDIG_I2S_CKR1_MSS_MASTER : ACDCDIG_I2S_CKR1_MSS_SLAVE);
@@ -958,6 +996,141 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
     }
 
     return ret;
+}
+
+/**
+ * @brief  Set Gain for acdcDig.
+ * @param  acdcDig: the handle of acdcDig.
+ * @param  stream: audio stream type.
+ * @param  dB: The gains of codec, range: -95625(-95.625dB) ~ 95625(95.625dB).
+ *             Similar to Linux ALSA TLV dB scale, they are scaled 1000 times
+ *             to avoid representation of fractional parts.
+ * @return HAL_Status
+ */
+HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
+                               eAUDIO_streamType stream, int dB)
+{
+    struct ACDCDIG_REG *reg = acdcDig->pReg;
+
+    switch (stream) {
+    case AUDIO_STREAM_PLAYBACK:
+        if (dB > 0) {
+            if (dB > ACDCDIG_DB_MAX)
+                dB = ACDCDIG_DB_MAX;
+
+            dB = dB / ACDCDIG_DB_STEP;
+            MODIFY_REG(reg->DACVOGP,
+                       ACDCDIG_DACVOGP_VOLGPL0_MASK,
+                       ACDCDIG_DACVOGP_VOLGPL0_POS_GAIN);
+        } else {
+            if (dB < ACDCDIG_DB_MIN)
+                dB = ACDCDIG_DB_MIN;
+
+            dB = -(dB / ACDCDIG_DB_STEP);
+            MODIFY_REG(reg->DACVOGP,
+                       ACDCDIG_DACVOGP_VOLGPL0_MASK,
+                       ACDCDIG_DACVOGP_VOLGPL0_NEG_GAIN);
+        }
+
+        WRITE_REG(reg->DACVOLL0, ACDCDIG_DACVOL(dB));
+        break;
+    case AUDIO_STREAM_CAPTURE:
+        if (dB > 0) {
+            if (dB > ACDCDIG_DB_MAX)
+                dB = ACDCDIG_DB_MAX;
+
+            dB = dB / ACDCDIG_DB_STEP;
+            MODIFY_REG(reg->ADCVOGP,
+                       ACDCDIG_ADCVOGP_VOLGPL0_MASK |
+                       ACDCDIG_ADCVOGP_VOLGPR1_MASK |
+                       ACDCDIG_ADCVOGP_VOLGPL2_MASK,
+                       ACDCDIG_ADCVOGP_VOLGPL0_POS_GAIN |
+                       ACDCDIG_ADCVOGP_VOLGPR1_POS_GAIN |
+                       ACDCDIG_ADCVOGP_VOLGPL2_POS_GAIN);
+        } else {
+            if (dB < ACDCDIG_DB_MIN)
+                dB = ACDCDIG_DB_MIN;
+
+            dB = -(dB / ACDCDIG_DB_STEP);
+            MODIFY_REG(reg->ADCVOGP,
+                       ACDCDIG_ADCVOGP_VOLGPL0_MASK |
+                       ACDCDIG_ADCVOGP_VOLGPR1_MASK |
+                       ACDCDIG_ADCVOGP_VOLGPL2_MASK,
+                       ACDCDIG_ADCVOGP_VOLGPL0_NEG_GAIN |
+                       ACDCDIG_ADCVOGP_VOLGPR1_NEG_GAIN |
+                       ACDCDIG_ADCVOGP_VOLGPL2_NEG_GAIN);
+        }
+        WRITE_REG(reg->ADCVOLL[0], ACDCDIG_ADCVOL(dB));
+        WRITE_REG(reg->ADCVOLL[1], ACDCDIG_ADCVOL(dB));
+        WRITE_REG(reg->ADCVOLR0, ACDCDIG_ADCVOL(dB));
+        break;
+    default:
+
+        return HAL_ERROR;
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get Gain for acdcDig.
+ * @param  acdcDig: the handle of acdcDig.
+ * @param  stream: audio stream type.
+ * @param  dB: The gains of codec, range: -95625(-95.625dB) ~ 95625(95.625dB).
+ *             Similar to Linux ALSA TLV dB scale, they are scaled 1000 times
+ *             to avoid representation of fractional parts.
+ * @return HAL_Status
+ */
+HAL_Status HAL_ACDCDIG_GetGain(struct HAL_ACDCDIG_DEV *acdcDig,
+                               eAUDIO_streamType stream, int *dB)
+{
+    struct ACDCDIG_REG *reg = acdcDig->pReg;
+    uint8_t vol;
+
+    if (!dB)
+        return HAL_ERROR;
+
+    switch (stream) {
+    case AUDIO_STREAM_PLAYBACK:
+        vol = READ_REG(reg->DACVOLL0);
+        if (READ_REG(reg->DACVOGP))
+            *dB = vol * ACDCDIG_DB_STEP; /* Positive gain */
+        else
+            *dB = -(vol * ACDCDIG_DB_STEP); /* Negative gain */
+        break;
+    case AUDIO_STREAM_CAPTURE:
+        /* There are the same volumes for 3ADCs */
+        vol = READ_REG(reg->ADCVOLL[0]);
+        if (READ_REG(reg->ADCVOGP))
+            *dB = vol * ACDCDIG_DB_STEP; /* Positive gain */
+        else
+            *dB = -(vol * ACDCDIG_DB_STEP); /* Negative gain */
+        break;
+    default:
+
+        return HAL_ERROR;
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get Gain informations from acdcDig.
+ * @param  acdcDig: the handle of acdcDig.
+ * @param  info: the handle of gain info.
+ * @return HAL_Status
+ */
+HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
+                                   struct AUDIO_GAIN_INFO *info)
+{
+    if (!info)
+        return HAL_ERROR;
+
+    info->mindB = ACDCDIG_DB_MIN;
+    info->maxdB = ACDCDIG_DB_MAX;
+    info->step = ACDCDIG_DB_STEP;
+
+    return HAL_OK;
 }
 
 /**
