@@ -7319,6 +7319,8 @@ typedef enum PD_Id {
 /* CTRL0 */
 #define PDM_CTRL0_DATA_VLD_WIDTH_SHIFT                     (0U)
 #define PDM_CTRL0_DATA_VLD_WIDTH_MASK                      (0x1FU << PDM_CTRL0_DATA_VLD_WIDTH_SHIFT)                    /* 0x0000001F */
+#define PDM_CTRL0_SAMPLE_RATE_SEL_SHIFT                    (5U)
+#define PDM_CTRL0_SAMPLE_RATE_SEL_MASK                     (0x7U << PDM_CTRL0_SAMPLE_RATE_SEL_SHIFT)                    /* 0x000000E0 */
 #define PDM_CTRL0_INT_DIV_CON_SHIFT                        (8U)
 #define PDM_CTRL0_INT_DIV_CON_MASK                         (0xFFU << PDM_CTRL0_INT_DIV_CON_SHIFT)                       /* 0x0000FF00 */
 #define PDM_CTRL0_HWT_EN_SHIFT                             (26U)
