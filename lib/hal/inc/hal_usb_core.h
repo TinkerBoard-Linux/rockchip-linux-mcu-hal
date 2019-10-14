@@ -235,6 +235,7 @@ struct HAL_USB_DEV {
     struct USB_GLOBAL_REG *pReg;
     uint32_t hclkGateID;
     uint32_t utmiclkGateID;
+    uint32_t usbPhyGateID;
     IRQn_Type irqNum;
     struct USB_OTG_CFG cfg;
 };
