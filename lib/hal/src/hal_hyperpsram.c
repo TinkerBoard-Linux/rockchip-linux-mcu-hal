@@ -134,16 +134,16 @@ static uint32_t HYPERPSRAM_GetDevId(struct HYPERBUS_REG *pReg, uint32_t psramBas
 /**
  * @brief  Hyperbus psram modify transaction maximum length/tcsm.
  * @param  pReg: Choose HYPERBUS.
+ * @param  psramFreq: HYPERPSRAM io clk frequency.The unit is Hz.
  * @return HAL_Status.
  */
-static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg)
+static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t psramFreq)
 {
-    uint32_t psramFreq, tmp;
+    uint32_t tmp;
     uint32_t trwr, tacc, tal;
 
+    psramFreq /= MHZ;
     if (pReg->MCR[0] & HYPERBUS_MCR0_MAXEN_CONF_LOW) {
-        psramFreq = HAL_CRU_ClkGetFreq(CLK_XIP_HYPERX8) / MHZ / 2;
-
         tmp = pReg->MTR[0] & HYPERBUS_MTR0_LTCY_MASK;
         if (tmp < 3)
             tal = 5 + tmp;
@@ -163,7 +163,6 @@ static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg)
 
         if (tmp > 511)
             tmp = 511;
-
         MODIFY_REG(pReg->MCR[0], HYPERBUS_MCR0_MAXLEN_MASK,
                    tmp << HYPERBUS_MCR0_MAXLEN_SHIFT);
     }
@@ -277,7 +276,7 @@ HAL_Status HAL_HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
     HYPERBUS_Init(pReg, psramBase);
 
     if (HYPERPSRAM_Init(pReg, psramBase) == HAL_OK) {
-        HYPERPSRAM_ModifyTiming(pReg);
+        HYPERPSRAM_ModifyTiming(pReg, PLL_INPUT_OSC_RATE / 2);
         HYPERPSRAM_ModifyCR0(pReg, psramBase);
     } else {
         return HAL_ERROR;
@@ -296,6 +295,20 @@ HAL_Status HAL_HYPERPSRAM_DeInit(struct HYPERBUS_REG *pReg)
     /* ...to do */
     return HAL_OK;
 }
+
+/**
+ * @brief  Hyperbus psram modify transaction maximum length/tcsm.
+ * @param  pReg: Choose HYPERBUS.
+ * @param  hyperFreq: HYPERBUS frequency.The unit is Hz.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t hyperFreq)
+{
+    HAL_ASSERT(IS_HYPERBUS_INSTANCE(pReg));
+
+    return HYPERPSRAM_ModifyTiming(pReg, hyperFreq / 2);
+}
+
 /** @} */
 
 #endif

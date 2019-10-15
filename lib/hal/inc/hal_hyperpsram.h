@@ -21,6 +21,7 @@
 /***************************** Function Declare ******************************/
 HAL_Status HAL_HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase);
 HAL_Status HAL_HYPERPSRAM_DeInit(struct HYPERBUS_REG *pReg);
+HAL_Status HAL_HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t hyperFreq);
 
 #endif
 
