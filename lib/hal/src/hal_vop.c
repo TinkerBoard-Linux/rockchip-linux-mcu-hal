@@ -610,6 +610,7 @@ HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId,
  */
 HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
 {
+#ifdef RKMCU_PISCES
     int i = 0;
 
     switch (path) {
@@ -621,7 +622,9 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
         WRITE_REG_MASK_WE(GRF->DSI_CON0, GRF_DSI_CON0_DPHY_PHYRSTZ_MASK,
                           GRF_DSI_CON0_DPHY_PHYRSTZ_MASK);
 
-        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK, 0);
+        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK,
+                          GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK);
+
         HAL_DelayMs(1);
 #ifdef IS_FPGA
         WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_MASK,
@@ -648,8 +651,8 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
                           GRF_DSI_CON0_DPHY_PHYRSTZ_MASK, 0);
 
         HAL_DelayMs(1);
-        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK,
-                          GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK);
+        WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_LCD_RESET_TE_BYPASS_MASK, 0);
+
         break;
     default:
         break;
@@ -662,6 +665,14 @@ HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path)
         }
         HAL_DelayMs(1);
     }
+
+    if (path == SWITCH_TO_INTERNAL_DPHY) {
+        WRITE_REG_MASK_WE(GRF->SOC_CON3, GRF_SOC_CON3_GRF_CON_MIPI_SWITCH_EN_PRO_BYP_MASK, 0);
+    } else {
+        WRITE_REG_MASK_WE(GRF->SOC_CON3, GRF_SOC_CON3_GRF_CON_MIPI_SWITCH_EN_PRO_BYP_MASK,
+                          GRF_SOC_CON3_GRF_CON_MIPI_SWITCH_EN_PRO_BYP_MASK);
+    }
+#endif
 
     return HAL_OK;
 }

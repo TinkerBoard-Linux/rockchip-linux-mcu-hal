@@ -134,7 +134,7 @@ struct GRF_REG {
     __IO uint32_t SOC_CON0;                           /* Address Offset: 0x0100 */
     __IO uint32_t SOC_CON1;                           /* Address Offset: 0x0104 */
     __IO uint32_t SOC_CON2;                           /* Address Offset: 0x0108 */
-         uint32_t RESERVED010C;                       /* Address Offset: 0x010C */
+    __IO uint32_t SOC_CON3;                           /* Address Offset: 0x010C */
     __IO uint32_t SOC_CON4;                           /* Address Offset: 0x0110 */
     __IO uint32_t SOC_CON5;                           /* Address Offset: 0x0114 */
          uint32_t RESERVED0118[10];                   /* Address Offset: 0x0118 */
@@ -2505,6 +2505,10 @@ struct ACDCDIG_REG {
 #define GRF_SOC_CON2_GRF_CON_PDM_COMB_BY_CLK_SEL_MASK      (0x1U << GRF_SOC_CON2_GRF_CON_PDM_COMB_BY_CLK_SEL_SHIFT)     /* 0x00004000 */
 #define GRF_SOC_CON2_GRF_CON_AUDIO_BYPASS_CTRL_SEL_SHIFT   (15U)
 #define GRF_SOC_CON2_GRF_CON_AUDIO_BYPASS_CTRL_SEL_MASK    (0x1U << GRF_SOC_CON2_GRF_CON_AUDIO_BYPASS_CTRL_SEL_SHIFT)   /* 0x00008000 */
+/* SOC_CON3 */
+#define GRF_SOC_CON3_OFFSET                                (0x10C)
+#define GRF_SOC_CON3_GRF_CON_MIPI_SWITCH_EN_PRO_BYP_SHIFT  (12U)
+#define GRF_SOC_CON3_GRF_CON_MIPI_SWITCH_EN_PRO_BYP_MASK   (0x1U << GRF_SOC_CON3_GRF_CON_MIPI_SWITCH_EN_PRO_BYP_SHIFT)  /* 0x00001000 */
 /* SOC_CON4 */
 #define GRF_SOC_CON4_OFFSET                                (0x110)
 #define GRF_SOC_CON4_GRF_CON_MIPI_SWITCH_CTRL_SHIFT        (0U)
