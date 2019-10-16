@@ -125,10 +125,12 @@ static int PDM_SampleRate(uint32_t sampleRate)
     switch (sampleRate) {
     case AUDIO_SAMPLERATE_8000:
     case AUDIO_SAMPLERATE_11025:
+    case AUDIO_SAMPLERATE_12000:
 
         return 0;
     case AUDIO_SAMPLERATE_16000:
     case AUDIO_SAMPLERATE_22050:
+    case AUDIO_SAMPLERATE_24000:
 
         return 1;
     case AUDIO_SAMPLERATE_32000:
@@ -143,6 +145,7 @@ static int PDM_SampleRate(uint32_t sampleRate)
     case AUDIO_SAMPLERATE_96000:
 
         return 4;
+    case AUDIO_SAMPLERATE_128000:
     case AUDIO_SAMPLERATE_176400:
     case AUDIO_SAMPLERATE_192000:
 
