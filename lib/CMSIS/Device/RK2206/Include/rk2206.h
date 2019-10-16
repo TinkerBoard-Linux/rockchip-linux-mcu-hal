@@ -7341,8 +7341,8 @@ typedef enum PD_Id {
 #define PDM_CTRL1_FRAC_DIV_NUMERATOR_SHIFT                 (16U)
 #define PDM_CTRL1_FRAC_DIV_NUMERATOR_MASK                  (0xFFFFU << PDM_CTRL1_FRAC_DIV_NUMERATOR_SHIFT)              /* 0xFFFF0000 */
 /* CLK_CTRL */
-#define PDM_CLK_CTRL_PDM_DS_RATIO_SHIFT                    (0U)
-#define PDM_CLK_CTRL_PDM_DS_RATIO_MASK                     (0x7U << PDM_CLK_CTRL_PDM_DS_RATIO_SHIFT)                    /* 0x00000007 */
+#define PDM_CLK_CTRL_CIC_DS_RATIO_SHIFT                    (0U)
+#define PDM_CLK_CTRL_CIC_DS_RATIO_MASK                     (0x7U << PDM_CLK_CTRL_CIC_DS_RATIO_SHIFT)                    /* 0x00000007 */
 #define PDM_CLK_CTRL_CLK_POLAR_SHIFT                       (3U)
 #define PDM_CLK_CTRL_CLK_POLAR_MASK                        (0x1U << PDM_CLK_CTRL_CLK_POLAR_SHIFT)                       /* 0x00000008 */
 #define PDM_CLK_CTRL_DIV_TYPE_SEL_SHIFT                    (4U)
