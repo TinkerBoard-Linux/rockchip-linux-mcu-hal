@@ -214,7 +214,6 @@ HAL_Status HAL_GPIO_SetPinsDirection(struct GPIO_REG *pGPIO, uint32_t mPins, eGP
     HAL_Status rc;
 
     HAL_ASSERT(IS_GPIO_INSTANCE(pGPIO));
-    HAL_ASSERT(IS_GPIO_PIN(mPins));
 
     for (pin = 0; pin < 32; pin++) {
         if (mPins & (1 << pin)) {
@@ -297,7 +296,6 @@ HAL_Status HAL_GPIO_SetPinsLevel(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_p
     HAL_Status rc;
 
     HAL_ASSERT(IS_GPIO_INSTANCE(pGPIO));
-    HAL_ASSERT(IS_GPIO_PIN(mPins));
 
     for (pin = 0; pin < 32; pin++) {
         if (mPins & (1 << pin)) {

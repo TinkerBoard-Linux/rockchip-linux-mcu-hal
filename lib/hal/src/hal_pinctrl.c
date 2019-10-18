@@ -514,7 +514,6 @@ HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
     HAL_Status rc;
 
     HAL_ASSERT(bank < GPIO_BANK_NUM);
-    HAL_ASSERT(IS_GPIO_PIN(mPins));
 
     for (pin = 0; pin < 32; pin++) {
         if (mPins & (1 << pin)) {
