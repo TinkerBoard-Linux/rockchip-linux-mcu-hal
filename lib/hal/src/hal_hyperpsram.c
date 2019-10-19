@@ -86,8 +86,8 @@ enum {
 };
 
 enum HYPER_MTR_TIMING {
-    MCR_TIMING_1_1_1_1_2_1_1 = PSRAM_MCR_TIMER(1, 1, 1, 1, 2, 1, 1),
-    MCR_TIMING_1_1_1_1_2_1_2 = PSRAM_MCR_TIMER(1, 1, 1, 1, 2, 1, 2),
+    MCR_TIMING_2_2_2_2_3_2_1 = PSRAM_MCR_TIMER(2, 2, 2, 2, 3, 2, 1),
+    MCR_TIMING_2_2_2_2_3_2_2 = PSRAM_MCR_TIMER(2, 2, 2, 2, 3, 2, 2),
 };
 
 struct HYPER_PSTRAM {
@@ -103,9 +103,9 @@ static const struct HYPER_PSTRAM psramInfo[] =
      * W956X8MKY must init first, or it will report a ahb bus error
      * because of MTR error.
      */
-    { W956X8MKY, MCR_TIMING_1_1_1_1_2_1_2, HYPERBUS_SPCSR_NOT_W955D8 },
-    { S27KX0641, MCR_TIMING_1_1_1_1_2_1_1, HYPERBUS_SPCSR_NOT_W955D8 },
-    { W955D8MKY, MCR_TIMING_1_1_1_1_2_1_1, HYPERBUS_SPCSR_IS_W955D8 },
+    { W956X8MKY, MCR_TIMING_2_2_2_2_3_2_2, HYPERBUS_SPCSR_NOT_W955D8 },
+    { S27KX0641, MCR_TIMING_2_2_2_2_3_2_1, HYPERBUS_SPCSR_NOT_W955D8 },
+    { W955D8MKY, MCR_TIMING_2_2_2_2_3_2_1, HYPERBUS_SPCSR_IS_W955D8 },
 };
 /********************* Private Function Definition ***************************/
 
