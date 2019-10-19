@@ -42,7 +42,7 @@
 #define I2STDM_TXCR_IBM_NORMAL    (0 << I2STDM_TXCR_IBM_SHIFT)
 #define I2STDM_TXCR_IBM_LSJM      (1 << I2STDM_TXCR_IBM_SHIFT)
 #define I2STDM_TXCR_IBM_RSJM      (2 << I2STDM_TXCR_IBM_SHIFT)
-#define I2STDM_TXCR_PBM_MODE(x)   (x << I2STDM_TXCR_PBM_SHIFT)
+#define I2STDM_TXCR_PBM_MODE(x)   ((x) << I2STDM_TXCR_PBM_SHIFT)
 #define I2STDM_TXCR_TFS_I2S       (0 << I2STDM_TXCR_TFS_SHIFT)
 #define I2STDM_TXCR_TFS_PCM       (1 << I2STDM_TXCR_TFS_SHIFT)
 #define I2STDM_TXCR_TFS_TDM_PCM   (2 << I2STDM_TXCR_TFS_SHIFT)
@@ -65,7 +65,7 @@
 #define I2STDM_RXCR_IBM_NORMAL    (0 << I2STDM_RXCR_IBM_SHIFT)
 #define I2STDM_RXCR_IBM_LSJM      (1 << I2STDM_RXCR_IBM_SHIFT)
 #define I2STDM_RXCR_IBM_RSJM      (2 << I2STDM_RXCR_IBM_SHIFT)
-#define I2STDM_RXCR_PBM_MODE(x)   (x << I2STDM_RXCR_PBM_SHIFT)
+#define I2STDM_RXCR_PBM_MODE(x)   ((x) << I2STDM_RXCR_PBM_SHIFT)
 #define I2STDM_RXCR_TFS_I2S       (0 << I2STDM_RXCR_TFS_SHIFT)
 #define I2STDM_RXCR_TFS_PCM       (1 << I2STDM_RXCR_TFS_SHIFT)
 #define I2STDM_RXCR_TFS_TDM_PCM   (2 << I2STDM_RXCR_TFS_SHIFT)
@@ -295,8 +295,19 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
         break;
 
     case AUDIO_FMT_PCM:
-        MODIFY_REG(reg->TXCR, I2STDM_TXCR_TFS_MASK, I2STDM_TXCR_TFS_PCM);
-        MODIFY_REG(reg->RXCR, I2STDM_RXCR_TFS_MASK, I2STDM_RXCR_TFS_PCM);
+    case AUDIO_FMT_PCM_DELAY1:
+    case AUDIO_FMT_PCM_DELAY2:
+    case AUDIO_FMT_PCM_DELAY3:
+        MODIFY_REG(reg->TXCR,
+                   I2STDM_TXCR_TFS_MASK |
+                   I2STDM_TXCR_PBM_MASK,
+                   I2STDM_TXCR_TFS_PCM |
+                   I2STDM_TXCR_PBM_MODE(config->format - AUDIO_FMT_PCM));
+        MODIFY_REG(reg->RXCR,
+                   I2STDM_RXCR_TFS_MASK |
+                   I2STDM_RXCR_TFS_PCM,
+                   I2STDM_RXCR_TFS_PCM |
+                   I2STDM_RXCR_PBM_MODE(config->format - AUDIO_FMT_PCM));
         break;
 
     default:
