@@ -76,7 +76,6 @@
     (0x0 << CR0_FIXED_LATENCY_ENABLE_SHIFT)
 #define CR0_FIXED_LATENCY_ENABLE_FIXED_LATENCY \
     (0x1 << CR0_FIXED_LATENCY_ENABLE_SHIFT)
-#define HYPERPSRAM_TIMING_30NS (30)
 
 /********************* Private Structure Definition **************************/
 /** HYPERBUS DEVICE Psram ID definition */
@@ -140,7 +139,7 @@ static uint32_t HYPERPSRAM_GetDevId(struct HYPERBUS_REG *pReg, uint32_t psramBas
 static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t psramFreq)
 {
     uint32_t tmp;
-    uint32_t trwr, tacc, tal;
+    uint32_t tcmd, tal;
 
     psramFreq /= MHZ;
     if (pReg->MCR[0] & HYPERBUS_MCR0_MAXEN_CONF_LOW) {
@@ -153,13 +152,10 @@ static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t ps
             tal = 4;
         else
             tal = 7;
-        tmp = (HYPERPSRAM_TIMING_30NS * psramFreq + 999) / 1000;
-        /* trwr: 30ns + 1tCK */
-        trwr = tmp + 1;
-        /* tacc: 30ns + 1tCK */
-        tacc = tmp + 1;
+        tcmd = 3;
+
         tmp = (HYPERBUS_DEV_TCSM_1U * psramFreq + 999) / 1000;
-        tmp = tmp - trwr - tacc - tal - 1;
+        tmp = tmp - tcmd - 2 * tal - 4;
 
         if (tmp > 511)
             tmp = 511;
