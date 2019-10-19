@@ -548,12 +548,6 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_I2S8CH_1_TX_MUX);
             HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_TX, mclkRate);
 
-            /* It is ignored when in slave mode. */
-            MODIFY_REG(reg->DACSCLKRXINT_DIV, ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV_MASK,
-                       ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV(divBclk));
-            MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_RSD_MASK,
-                       ACDCDIG_I2S_CKR0_RSD(acdcDig->bclkFs));
-
             /* Select clock sync is from DAC. */
             MODIFY_REG(reg->SYSCTRL0,
                        ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
@@ -563,17 +557,21 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_I2S8CH_1_RX_MUX);
             HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_RX, mclkRate);
 
-            /* It is ignored when in slave mode. */
-            MODIFY_REG(reg->ADCSCLKTXINT_DIV, ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_MASK,
-                       ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(divBclk));
-            MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_TSD_MASK,
-                       ACDCDIG_I2S_CKR0_TSD(acdcDig->bclkFs));
-
             /* Select clock sync is from ADC. */
             MODIFY_REG(reg->SYSCTRL0,
                        ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
                        ACDCDIG_SYSCTRL0_SYNC_SEL_ADC | ACDCDIG_SYSCTRL0_CLK_SEL_ADC);
         }
+
+        /* It is ignored when the codec is slave mode. */
+        MODIFY_REG(reg->DACSCLKRXINT_DIV, ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV_MASK,
+                   ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV(divBclk));
+        MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_RSD_MASK,
+                   ACDCDIG_I2S_CKR0_RSD(acdcDig->bclkFs));
+        MODIFY_REG(reg->ADCSCLKTXINT_DIV, ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_MASK,
+                   ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(divBclk));
+        MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_TSD_MASK,
+                   ACDCDIG_I2S_CKR0_TSD(acdcDig->bclkFs));
 
         MODIFY_REG(reg->SYSCTRL0,
                    ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
