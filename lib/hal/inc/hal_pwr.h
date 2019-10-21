@@ -54,7 +54,8 @@ typedef enum {
 #define PWR_FLG_ALWAYSON  (PWR_FLG_FIXED << 1)
 #define PWR_FLG_ENMASK    (PWR_FLG_ALWAYSON << 1)
 
-#define DESC_FLAG_LINEAR(flag) (PWR_FLG_LINEAR | PWR_FLG_VOLT_RUN | flag)
+#define DESC_FLAG_LINEAR(flag)   (PWR_FLG_LINEAR | PWR_FLG_VOLT_RUN | flag)
+#define DESC_FLAG_N_LINEAR(flag) (PWR_FLG_VOLT_RUN | flag)
 
 #define PWR_INTREG_SHIFT_RUN(reg, sft)            \
     .preg[PWR_CTRL_VOLT_RUN] = (uint32_t *)(reg), \
@@ -79,10 +80,31 @@ typedef enum {
         .stepVolt = (step)                   \
     }
 
+#define POWER_LINEAR_RANGE(_minUV, _minSel, _maxSel, _stepUV) \
+{                                                             \
+    .minUV = _minUV,                                          \
+    .minSel = _minSel,                                        \
+    .maxSel = _maxSel,                                        \
+    .uVStep = _stepUV,                                        \
+}
+
 /***************************** Structure Definition **************************/
+struct PWR_LINEAR_RANGE {
+    unsigned int minUV;
+    unsigned int minSel;
+    unsigned int maxSel;
+    unsigned int uVStep;
+};
+
+struct PWR_LINEAR_RANGE_TABLE {
+    int nEntry;
+    struct PWR_LINEAR_RANGE *entry;
+};
+
 union U_PWR_VOLT_LIST {
     int stepVolt;
     const uint32_t *voltTable;
+    struct PWR_LINEAR_RANGE_TABLE linearTables;
 };
 
 struct PWR_CTRL_INFO {
@@ -117,6 +139,9 @@ HAL_Check HAL_PWR_CheckDescByPwrId(struct PWR_INTREG_DESC *pdesc,
                                    ePWR_ID pwrId);
 uint32_t HAL_PWR_RoundVoltage(struct PWR_INTREG_DESC *desc, uint32_t volt);
 #endif
+
+int HAL_PWR_LinearRangeSelToVolt(const struct PWR_LINEAR_RANGE_TABLE *linearTables, uint32_t sel);
+int HAL_PWR_LinearRangeVoltToSel(const struct PWR_LINEAR_RANGE_TABLE *linearTables, uint32_t volt);
 
 #endif
 

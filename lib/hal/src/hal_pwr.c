@@ -30,6 +30,8 @@
 
 #include "hal_base.h"
 
+#ifdef HAL_PWR_MODULE_ENABLED
+
 #ifdef HAL_PWR_INTBUS_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
@@ -288,6 +290,76 @@ HAL_Check HAL_PWR_CheckDescByPwrId(struct PWR_INTREG_DESC *desc,
 
 #endif
 
+/**
+ * @brief  use linear ranges to convert seletor to voltage.
+ * @param  linearTables: the power linear range table pointer.
+ * @param  sel: the selector value to be converted
+ * @return seletor value.
+ */
+int HAL_PWR_LinearRangeSelToVolt(const struct PWR_LINEAR_RANGE_TABLE *linearTables, uint32_t sel)
+{
+    const struct PWR_LINEAR_RANGE *range;
+    int i;
+
+    HAL_ASSERT(linearTables);
+    HAL_ASSERT(linearTables->entry);
+
+    for (i = 0; i < linearTables->nEntry; i++) {
+        range = &linearTables->entry[i];
+        if (sel < range->minSel || sel > range->maxSel)
+            continue;
+
+        sel -= range->minSel;
+
+        return range->minUV + (range->uVStep * sel);
+    }
+
+    return HAL_INVAL;
+}
+/**
+ * @brief  use linear ranges to convert voltage to seletor.
+ * @param  linearTables: the power linear range table pointer.
+ * @param  volt: the volt value to be converted
+ * @return voltage value.
+ */
+int HAL_PWR_LinearRangeVoltToSel(const struct PWR_LINEAR_RANGE_TABLE *linearTables, uint32_t volt)
+{
+    const struct PWR_LINEAR_RANGE *range;
+    int ret = HAL_INVAL;
+    int voltage, i;
+
+    HAL_ASSERT(linearTables);
+    HAL_ASSERT(linearTables->entry);
+
+    for (i = 0; i < linearTables->nEntry; i++) {
+        int linear_max_uV;
+
+        range = &linearTables->entry[i];
+        linear_max_uV = range->minUV +
+                        (range->maxSel - range->minSel) * range->uVStep;
+
+        if (volt > linear_max_uV || volt < range->minUV)
+            continue;
+
+        /* range->uV_step == 0 means fixed voltage range */
+        if (range->uVStep == 0) {
+            ret = 0;
+        } else {
+            ret = HAL_DIV_ROUND_UP(volt - range->minUV,
+                                   range->uVStep);
+            if (ret < 0)
+                return ret;
+        }
+
+        ret += range->minSel;
+
+        break;
+    }
+
+    return ret;
+}
+
+#endif
 /** @} */
 
 /** @} */
