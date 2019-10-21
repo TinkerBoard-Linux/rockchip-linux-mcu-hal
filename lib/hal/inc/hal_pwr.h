@@ -32,6 +32,11 @@ typedef enum {
     PWR_ID_DSP_VCC_MIPI,
     PWR_ID_MEMORY, /* for share memory and sram */
     PWR_ID_TOP,
+    PWR_ID_BUCK_1V8, /* Usually as a transition between high and low voltage */
+    PWR_ID_VCCIO_3V3,
+    PWR_ID_VDD_1V1,
+    PWR_ID_VCCIO_1V8,
+    PWR_ID_VCCIO_1V8_PMU,
     PWR_ID_MAX,
 } ePWR_ID;
 
