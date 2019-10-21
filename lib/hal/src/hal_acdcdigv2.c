@@ -539,6 +539,8 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
     divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
 
     if (acdcDig->enabled == 0) {
+        bool codecIsMaster;
+
         ACDCDIG_ADCCLKCTRL_Enable(acdcDig);
         ACDCDIG_DACCLKCTRL_Enable(acdcDig);
 
@@ -564,14 +566,17 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
         }
 
         /* It is ignored when the codec is slave mode. */
-        MODIFY_REG(reg->DACSCLKRXINT_DIV, ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV_MASK,
-                   ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV(divBclk));
-        MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_RSD_MASK,
-                   ACDCDIG_I2S_CKR0_RSD(acdcDig->bclkFs));
-        MODIFY_REG(reg->ADCSCLKTXINT_DIV, ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_MASK,
-                   ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(divBclk));
-        MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_TSD_MASK,
-                   ACDCDIG_I2S_CKR0_TSD(acdcDig->bclkFs));
+        codecIsMaster = (READ_BIT(reg->I2S_CKR[1], ACDCDIG_I2S_CKR1_MSS_MASK) == ACDCDIG_I2S_CKR1_MSS_MASTER);
+        if (codecIsMaster) {
+            MODIFY_REG(reg->DACSCLKRXINT_DIV, ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV_MASK,
+                       ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV(divBclk));
+            MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_RSD_MASK,
+                       ACDCDIG_I2S_CKR0_RSD(acdcDig->bclkFs));
+            MODIFY_REG(reg->ADCSCLKTXINT_DIV, ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_MASK,
+                       ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(divBclk));
+            MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_TSD_MASK,
+                       ACDCDIG_I2S_CKR0_TSD(acdcDig->bclkFs));
+        }
 
         MODIFY_REG(reg->SYSCTRL0,
                    ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
