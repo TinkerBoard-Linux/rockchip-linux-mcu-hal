@@ -577,10 +577,6 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
             MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_TSD_MASK,
                        ACDCDIG_I2S_CKR0_TSD(acdcDig->bclkFs));
         }
-
-        MODIFY_REG(reg->SYSCTRL0,
-                   ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
-                   ACDCDIG_SYSCTRL0_GLB_CKE_EN);
     }
 
     acdcDig->enabled++;
@@ -670,6 +666,7 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
                               eAUDIO_streamType stream)
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
+    uint32_t val = READ_BIT(reg->SYSCTRL0, ACDCDIG_SYSCTRL0_GLB_CKE_EN);
     HAL_Status ret = HAL_OK;
 
     /* The format is i2s by default */
@@ -680,10 +677,53 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
 
         /* Just used for playback */
         ACDCDIG_I2C_Start(acdcDig);
+
+        /* Check GLB_CKE whether is enabled. */
+        if (!val)
+            MODIFY_REG(reg->SYSCTRL0,
+                       ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
+                       ACDCDIG_SYSCTRL0_GLB_CKE_EN);
+
+        /* There is MONO channel for DAC */
+        MODIFY_REG(reg->DACDIGEN,
+                   ACDCDIG_DACDIGEN_DAC_GLBEN_MASK |
+                   ACDCDIG_DACDIGEN_DACEN_L0_MASK,
+                   ACDCDIG_DACDIGEN_DAC_GLB_EN |
+                   ACDCDIG_DACDIGEN_DAC_L0_EN);
     } else {
         MODIFY_REG(reg->I2S_XFER,
                    ACDCDIG_I2S_XFER_TXS_MASK,
                    ACDCDIG_I2S_XFER_TXS_START);
+
+        /* Check GLB_CKE whether is enabled. */
+        if (!val)
+            MODIFY_REG(reg->SYSCTRL0,
+                       ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
+                       ACDCDIG_SYSCTRL0_GLB_CKE_EN);
+
+        val = READ_REG(reg->I2S_TXCR[1]) & ACDCDIG_I2S_TXCR1_TCSR_MASK;
+        switch (val >> ACDCDIG_I2S_TXCR1_TCSR_SHIFT) {
+        case 1: /* 4 channels */
+            val = ACDCDIG_ADCDIGEN_ADC_GLB_EN |
+                  ACDCDIG_ADCDIGEN_ADC_L2_EN |
+                  ACDCDIG_ADCDIGEN_ADC_L0R1_EN;
+            break;
+        case 0: /* 2 channels */
+            val = ACDCDIG_ADCDIGEN_ADC_GLB_EN |
+                  ACDCDIG_ADCDIGEN_ADC_L2_DIS |
+                  ACDCDIG_ADCDIGEN_ADC_L0R1_EN;
+            break;
+        default:
+
+            return HAL_INVAL;
+        }
+
+        /* There is max 3 channel for ADC */
+        MODIFY_REG(reg->ADCDIGEN,
+                   ACDCDIG_ADCDIGEN_ADC_GLBEN_MASK |
+                   ACDCDIG_ADCDIGEN_ADCEN_L2_MASK |
+                   ACDCDIG_ADCDIGEN_ADCEN_L0R1_MASK,
+                   val);
     }
 
     return ret;
@@ -782,7 +822,7 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
     HAL_Status ret = HAL_OK;
-    uint32_t srt = 0, val = 0, hpf = 0;
+    uint32_t srt = 0, hpf = 0;
 
     ACDCDIG_ClockSyncSelect(acdcDig, stream, params->sampleRate);
 
@@ -834,13 +874,6 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
             ret = HAL_INVAL;
             break;
         }
-
-        /* There is MONO channel for DAC */
-        MODIFY_REG(reg->DACDIGEN,
-                   ACDCDIG_DACDIGEN_DAC_GLBEN_MASK |
-                   ACDCDIG_DACDIGEN_DACEN_L0_MASK,
-                   ACDCDIG_DACDIGEN_DAC_GLB_EN |
-                   ACDCDIG_DACDIGEN_DAC_L0_EN);
     } else {
         switch (params->sampleRate) {
         case AUDIO_SAMPLERATE_8000:
@@ -895,18 +928,12 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
         switch (params->channels) {
         case 4:
             srt = 1;
-            val = ACDCDIG_ADCDIGEN_ADC_GLB_EN |
-                  ACDCDIG_ADCDIGEN_ADC_L2_EN |
-                  ACDCDIG_ADCDIGEN_ADC_L0R1_EN;
             hpf = ACDCDIG_ADCHPFEN_HPFEN_L0 |
                   ACDCDIG_ADCHPFEN_HPFEN_R1 |
                   ACDCDIG_ADCHPFEN_HPFEN_L2;
             break;
         case 2:
             srt = 0;
-            val = ACDCDIG_ADCDIGEN_ADC_GLB_EN |
-                  ACDCDIG_ADCDIGEN_ADC_L2_DIS |
-                  ACDCDIG_ADCDIGEN_ADC_L0R1_EN;
             hpf = ACDCDIG_ADCHPFEN_HPFEN_L0 |
                   ACDCDIG_ADCHPFEN_HPFEN_R1 |
                   ACDCDIG_ADCHPFEN_HPFDIS_L2;
@@ -915,13 +942,6 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
 
             return HAL_INVAL;
         }
-
-        /* There is max 3 channel for ADC */
-        MODIFY_REG(reg->ADCDIGEN,
-                   ACDCDIG_ADCDIGEN_ADC_GLBEN_MASK |
-                   ACDCDIG_ADCDIGEN_ADCEN_L2_MASK |
-                   ACDCDIG_ADCDIGEN_ADCEN_L0R1_MASK,
-                   val);
 
         /* Enable HPF for ADC */
         MODIFY_REG(reg->ADCHPFCF,
