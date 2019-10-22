@@ -422,9 +422,13 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         return freq;
     case CLK_HIFI3:
         if (HAL_CRU_ClkGetMux(CLK_GET_MUX(CLK_HIFI3_SRC)))
-            freq = s_vpllFreq / HAL_CRU_ClkGetDiv(CLK_GET_DIV(CLK_HIFI3_D));
+            pRate = s_vpllFreq;
         else
-            freq = s_gpllFreq / HAL_CRU_ClkGetDiv(CLK_GET_DIV(CLK_HIFI3_D));
+            pRate = s_gpllFreq;
+        if (HAL_CRU_ClkGetMux(clkMux))
+            freq = pRate * 2 / ((HAL_CRU_ClkGetDiv(CLK_GET_DIV(CLK_HIFI3_NP5)) - 1) * 2 + 3);
+        else
+            freq = pRate / HAL_CRU_ClkGetDiv(CLK_GET_DIV(CLK_HIFI3_D));
 
         return freq;
     case CLK_SDMMC:
@@ -564,16 +568,30 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return HAL_OK;
     case CLK_HIFI3:
-        if (!(s_gpllFreq % rate)) {
-            div = HAL_DIV_ROUND_UP(s_gpllFreq, rate);
-            HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_HIFI3_SRC), 0);
-            HAL_CRU_ClkSetDiv(CLK_GET_DIV(CLK_HIFI3_D), div);
-            HAL_CRU_ClkSetMux(clkMux, 0);
-        } else {
+        HAL_CRU_ClkEnable(CLK_HIFI3_DIV_GATE);
+        HAL_CRU_ClkEnable(CLK_HIFI3_NP5_DIV_GATE);
+        if (!(s_vpllFreq % rate)) {
             div = HAL_DIV_ROUND_UP(s_vpllFreq, rate);
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_HIFI3_SRC), 1);
             HAL_CRU_ClkSetDiv(CLK_GET_DIV(CLK_HIFI3_D), div);
             HAL_CRU_ClkSetMux(clkMux, 0);
+            HAL_CRU_ClkDisable(CLK_HIFI3_NP5_DIV_GATE);
+        } else if (HAL_CRU_ClkNp5BestDiv(CLK_HIFI3_NP5, rate, s_vpllFreq, &div) == HAL_OK) {
+            HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_HIFI3_SRC), 1);
+            HAL_CRU_ClkSetDiv(CLK_GET_DIV(CLK_HIFI3_NP5), div + 1);
+            HAL_CRU_ClkSetMux(clkMux, 1);
+            HAL_CRU_ClkDisable(CLK_HIFI3_DIV_GATE);
+        } else if (HAL_CRU_ClkNp5BestDiv(CLK_HIFI3_NP5, rate, s_gpllFreq, &div) == HAL_OK) {
+            HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_HIFI3_SRC), 0);
+            HAL_CRU_ClkSetDiv(CLK_GET_DIV(CLK_HIFI3_NP5), div + 1);
+            HAL_CRU_ClkSetMux(clkMux, 1);
+            HAL_CRU_ClkDisable(CLK_HIFI3_DIV_GATE);
+        } else {
+            div = HAL_DIV_ROUND_UP(s_gpllFreq, rate);
+            HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_HIFI3_SRC), 0);
+            HAL_CRU_ClkSetDiv(CLK_GET_DIV(CLK_HIFI3_D), div);
+            HAL_CRU_ClkSetMux(clkMux, 0);
+            HAL_CRU_ClkDisable(CLK_HIFI3_NP5_DIV_GATE);
         }
 
         return HAL_OK;

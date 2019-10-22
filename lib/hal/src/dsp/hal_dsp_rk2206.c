@@ -160,14 +160,14 @@ HAL_Status HAL_DSP_PowerOn(struct DSP_DEV *dsp)
 {
     HAL_CRU_ClkEnable(HCLK_HIFI3_TCM_GATE);
     HAL_CRU_ClkEnable(ACLK_HIFI3_NIU_GATE);
-    HAL_CRU_ClkEnable(CLK_HIFI3_DIV_GATE);
+    HAL_CRU_ClkEnable(CLK_HIFI3_GATE);
 
     return HAL_OK;
 }
 
 HAL_Status HAL_DSP_PowerOff(struct DSP_DEV *dsp)
 {
-    HAL_CRU_ClkDisable(CLK_HIFI3_DIV_GATE);
+    HAL_CRU_ClkDisable(CLK_HIFI3_GATE);
     HAL_CRU_ClkDisable(ACLK_HIFI3_NIU_GATE);
     HAL_CRU_ClkDisable(HCLK_HIFI3_TCM_GATE);
 
