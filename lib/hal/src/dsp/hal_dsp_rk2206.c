@@ -217,8 +217,7 @@ HAL_Status HAL_DSP_Enable(struct DSP_DEV *dsp, uint32_t altAddr)
                       GRF_DSP_CON0_RUNSTALL_MASK);
     /* Set dsp reset */
     setMask = CRU_SOFTRST_CON04_DRESETN_HIFI3_MASK |
-              CRU_SOFTRST_CON04_BRESETN_HIFI3_MASK |
-              CRU_SOFTRST_CON04_ARESETN_HIFI3_NIU_MASK;
+              CRU_SOFTRST_CON04_BRESETN_HIFI3_MASK;
     WRITE_REG_MASK_WE(CRU->CRU_SOFTRST_CON[4], setMask, setMask);
 
     if (altAddr) {
