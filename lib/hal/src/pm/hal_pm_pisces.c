@@ -136,6 +136,7 @@ static void SOC_SleepModeInit(struct PMU_REG *pPmu)
     uint32_t mask = 0, value = 0;
 
     mask = PMU_PWRMODE_CON_POWER_MODE_EN_MASK |
+           PMU_PWRMODE_CON_PMU_USE_LF_MASK |
            PMU_PWRMODE_CON_PLL_PD_EN_MASK |
            PMU_PWRMODE_CON_LOGIC_PD_EN_MASK |
            PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_MASK |
@@ -155,6 +156,13 @@ static void SOC_SleepModeInit(struct PMU_REG *pPmu)
             (1 << PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_CFG_SHIFT) |
             (1 << PMU_PWRMODE_CON_SHRM_PD_EN_SHIFT) |
             (1 << PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_SHIFT);
+
+    /* if PD_DSP and PD_AUDIO power down, PMU low frequency mode enable */
+    if (pPmu->PWRDN_ST &
+        ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT)))
+        value |= (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT) |
+                 (1 << PMU_PWRMODE_CON_BYPASS_HF_EN_SHIFT);
+
     pPmu->PWRMODE_CON = VAL_MASK_WE(mask, value);
 
     if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_LOGIC_PD_EN_SHIFT)) {
@@ -181,7 +189,12 @@ static void SOC_SleepModeInit(struct PMU_REG *pPmu)
 
     if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_PLL_PD_EN_SHIFT)) {
         mask = PMU_PLL_CON_PLL_PD_CFG_MASK;
-        pPmu->PLL_CON = VAL_MASK_WE(mask, 0x05);
+        /* if PD_DSP and PD_AUDIO power down, CPLL, GPLL and 32K PLL power down by hardware */
+        if (pPmu->PWRDN_ST &
+            ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT)))
+            pPmu->PLL_CON = VAL_MASK_WE(mask, 0x07);
+        else
+            pPmu->PLL_CON = VAL_MASK_WE(mask, 0x05);
     }
 
     if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT)) {
