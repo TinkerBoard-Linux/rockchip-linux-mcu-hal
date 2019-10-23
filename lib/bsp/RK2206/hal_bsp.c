@@ -308,6 +308,9 @@ const struct HAL_UART_DEV g_uart0Dev =
     .pclkGateID = PCLK_UART0_GATE,
     .irqNum = UART0_IRQn,
     .isAutoFlow = true,
+    .dmaTxReqNum = DMA_REQ_UART0_TX,
+    .dmaRxReqNum = DMA_REQ_UART0_RX,
+    .dmac = DMA,
 };
 
 const struct HAL_UART_DEV g_uart1Dev =
@@ -318,6 +321,9 @@ const struct HAL_UART_DEV g_uart1Dev =
     .pclkGateID = PCLK_UART1_GATE,
     .irqNum = UART1_IRQn,
     .isAutoFlow = true,
+    .dmaTxReqNum = DMA_REQ_UART1_TX,
+    .dmaRxReqNum = DMA_REQ_UART1_RX,
+    .dmac = DMA,
 };
 
 const struct HAL_UART_DEV g_uart2Dev =
@@ -328,6 +334,9 @@ const struct HAL_UART_DEV g_uart2Dev =
     .pclkGateID = PCLK_UART2_GATE,
     .irqNum = UART2_IRQn,
     .isAutoFlow = false,
+    .dmaTxReqNum = DMA_REQ_UART0_TX,     /* share num with uart0 */
+    .dmaRxReqNum = DMA_REQ_UART0_RX,     /* share num with uart0 */
+    .dmac = DMA,
 };
 #endif
 
