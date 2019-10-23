@@ -207,6 +207,9 @@ struct HAL_UART_DEV {
     IRQn_Type irqNum;
     bool isAutoFlow;
     ePM_RUNTIME_ID runtimeID;
+    DMA_REQ_Type dmaTxReqNum; /* peri dma tx request num */
+    DMA_REQ_Type dmaRxReqNum; /* peri dma rx request num */
+    struct DMA_REG *dmac; /* dmac reg base ptr */
 };
 
 /***************************** Function Declare ******************************/
