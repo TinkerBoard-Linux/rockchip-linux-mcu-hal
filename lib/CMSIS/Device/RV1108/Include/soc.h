@@ -19,6 +19,29 @@
 #define     __IO    volatile             /*!< \brief Defines 'read / write' permissions */
 
 #define __CORTEX_A           7U    /* Cortex-A7 Core                                */
+
+/* ================================================================================ */
+/* ================                       IRQ                      ================ */
+/* ================================================================================ */
+typedef enum {
+    DMA_REQ_I2S1_TX = 0,
+    DMA_REQ_I2S1_RX = 1,
+    DMA_REQ_UART0_TX = 2,
+    DMA_REQ_UART0_RX = 3,
+    DMA_REQ_UART1_TX = 4,
+    DMA_REQ_UART1_RX = 5,
+    DMA_REQ_UART2_TX = 6,
+    DMA_REQ_UART2_RX = 7,
+    DMA_REQ_SPI_TX = 8,
+    DMA_REQ_SPI_RX = 9,
+    DMA_REQ_I2S0_TX = 11,
+    DMA_REQ_I2S0_RX = 12,
+    DMA_REQ_PWM0_TX = 13,
+    DMA_REQ_PWM1_TX = 14,
+    DMA_REQ_I2S2_TX = 15,
+    DMA_REQ_I2S2_RX = 16,
+} DMA_REQ_Type;
+
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
