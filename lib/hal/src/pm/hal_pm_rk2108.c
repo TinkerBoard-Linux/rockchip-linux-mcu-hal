@@ -137,6 +137,16 @@ static void PVTM_ClkRateConfig(uint32_t khz)
                                   pvtm_div << GRF_PVTM_CON0_PVTM_CLKOUT_DIV_SHIFT);
 }
 
+static void PM_CruAsEnable(uint8_t en)
+{
+#ifdef HAL_CRU_AS_FEATURE_ENABLED
+    HAL_CRU_AsEnable(1, en);
+    HAL_CRU_AsEnable(2, en);
+    HAL_CRU_AsEnable(3, en);
+    HAL_CRU_AsEnable(4, en);
+#endif
+}
+
 /** @defgroup PM_Exported_Functions_Group5 Other Functions
  *  @{
  */
@@ -180,6 +190,8 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
             PVTM_ClkEnable();
         }
     }
+
+    PM_CruAsEnable(0);
 
     if (idleMode == PM_RUNTIME_IDLE_DEEP || idleMode == PM_RUNTIME_IDLE_DEEP1) {
         cruMode = CRU->CRU_MODE_CON00 |
@@ -252,7 +264,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         CRU->CRU_CLKSEL_CON[33] = VAL_MASK_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK,
                                               mDiv << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
     } else {
-        return UINT32_MAX;
+        goto _ret_err;
     }
 
     __DSB();
@@ -275,7 +287,12 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         CRU->GPLL_CON[0] = gpllCon0;
     }
 
+    PM_CruAsEnable(1);
+
     return 0;
+_ret_err:
+
+    return UINT32_MAX;
 }
 
 uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)

@@ -158,6 +158,14 @@ HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType);
  * @return HAL_Status.
  */
 void HAL_CRU_AsInit(void);
+
+/**
+ * @brief  it is for AS enable.
+ * @param  ch: channel
+ * @param  en: 1 is enable, 0 is disable.
+ * @return HAL_Status.
+ */
+void HAL_CRU_AsEnable(uint8_t ch, uint8_t en);
 #endif
 
 #endif
