@@ -105,6 +105,7 @@ struct I2C_HANDLE {
     struct I2C_REG *pReg;
     eI2C_Mode mode;
     eI2C_TransferType type;
+    eI2C_BusSpeed speed;
     struct I2C_MSG msg;
     eI2C_State state;
     uint32_t processed;

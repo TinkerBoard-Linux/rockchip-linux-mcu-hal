@@ -571,6 +571,9 @@ HAL_Status HAL_I2C_IRQHandler(struct I2C_HANDLE *pI2C)
              * Still return busy status, and would finish transfer
              * after the stop handled.
              */
+            if (pI2C->speed == I2C_100K)
+                HAL_DelayUs(1);
+
             I2C_Stop(pI2C, HAL_NODEV);
             goto out;
         }
@@ -735,6 +738,7 @@ HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, struct I2C_REG *pReg, uint32_t 
     HAL_ASSERT(pI2C != NULL);
 
     pI2C->pReg = pReg;
+    pI2C->speed = speed;
     HAL_ASSERT(IS_I2C_INSTANCE(pI2C->pReg));
 
     /* Init speed */
