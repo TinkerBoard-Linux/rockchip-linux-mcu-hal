@@ -89,7 +89,9 @@ static void CRU_AsConfig(uint8_t ch, uint32_t val1, uint32_t val2)
 {
     HAL_ASSERT(ch < 5);
     CRU->AS_CON[ch][1] = VAL_MASK_WE(CRU_AS0_CON1_AS_CTRL_MASK |
-                                     CRU_AS0_CON1_AS_CFG_MASK,
+                                     CRU_AS0_CON1_AS_CFG_MASK |
+                                     CRU_AS0_CON1_ASS_EN_MASK |
+                                     CRU_AS0_CON1_AS_EN_MASK,
                                      val1 << CRU_AS0_CON1_AS_CTRL_SHIFT |
                                      val2 << CRU_AS0_CON1_AS_CFG_SHIFT);
 }
@@ -106,8 +108,15 @@ static void CRU_AsCntConfig(uint8_t ch, uint32_t val1, uint32_t val2)
 
     CRU->AS_CON[ch][0] = val1 | (val2 << 16);
 }
+#endif
+/********************* Public Function Definition ****************************/
 
-static void CRU_AsEnable(uint8_t ch, uint8_t en)
+/** @defgroup CRU_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
+#ifdef HAL_CRU_AS_FEATURE_ENABLED
+void HAL_CRU_AsEnable(uint8_t ch, uint8_t en)
 {
     HAL_ASSERT(ch < 5);
 
@@ -121,36 +130,27 @@ static void CRU_AsEnable(uint8_t ch, uint8_t en)
                                          CRU_AS0_CON1_ASS_EN_MASK, 0);
 }
 
-#endif
-/********************* Public Function Definition ****************************/
-
-/** @defgroup CRU_Exported_Functions_Group5 Other Functions
- *  @{
- */
-
-#ifdef HAL_CRU_AS_FEATURE_ENABLED
 void HAL_CRU_AsInit(void)
 {
-    CRU_AsConfig(0, 0x7, CRU_AS_CFG_VAL2);
+    CRU_AsConfig(0, 0x77, CRU_AS_CFG_VAL2);
     CRU_AsCntConfig(0, 0x20, 0x18);
 
-    CRU_AsConfig(1, 0x1 << 4 | 0x1, CRU_AS_CFG_VAL2);
+    CRU_AsConfig(1, 0x99, CRU_AS_CFG_VAL2);
     CRU_AsCntConfig(1, 0x20, 0x18);
 
     CRU_AsConfig(2, 0x1, CRU_AS_CFG_VAL2);
     CRU_AsCntConfig(2, 0x20, 0x18);
 
-    CRU_AsConfig(3, 0x1 << 4 | 0x1, CRU_AS_CFG_VAL2);
+    CRU_AsConfig(3, 0x99, CRU_AS_CFG_VAL2);
     CRU_AsCntConfig(3, 0x20, 0x18);
 
-    CRU_AsConfig(4, 0x1 << 4 | 0x1 << 6 | 0x1, CRU_AS_CFG_VAL2);
+    CRU_AsConfig(4, 0x99, CRU_AS_CFG_VAL2);
     CRU_AsCntConfig(4, 0x20, 0x18);
 
-    CRU_AsEnable(0, 1);
-    CRU_AsEnable(1, 1);
-    CRU_AsEnable(2, 1);
-    CRU_AsEnable(3, 1);
-    CRU_AsEnable(4, 1);
+    HAL_CRU_AsEnable(1, 1);
+    HAL_CRU_AsEnable(2, 1);
+    HAL_CRU_AsEnable(3, 1);
+    HAL_CRU_AsEnable(4, 1);
 }
 #endif
 

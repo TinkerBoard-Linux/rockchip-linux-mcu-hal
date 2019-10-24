@@ -79,6 +79,16 @@ static uint32_t PM_GetPllPostDivEven(uint32_t rateIn, uint32_t rateOut, uint32_t
     else
         return 0;
 }
+
+static void PM_CruAsEnable(uint8_t en)
+{
+#ifdef HAL_CRU_AS_FEATURE_ENABLED
+    HAL_CRU_AsEnable(1, en);
+    HAL_CRU_AsEnable(2, en);
+    HAL_CRU_AsEnable(3, en);
+    HAL_CRU_AsEnable(4, en);
+#endif
+}
 #endif
 
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
@@ -322,6 +332,8 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         return HAL_BIT(PM_RUNTIME_TYPE_I2C);
     }
 
+    PM_CruAsEnable(0);
+
     if (idleMode == PM_RUNTIME_IDLE_DEEP) {
         cruMode = CRU->CRU_MODE_CON00 |
                   MASK_TO_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK);
@@ -386,7 +398,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         CRU->CRU_CLKSEL_CON[33] = VAL_MASK_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK,
                                               (mDiv) << CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_SHIFT);
     } else {
-        return UINT32_MAX;
+        goto _ret_err;
     }
 
     __DSB();
@@ -411,7 +423,12 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         CRU->GPLL_CON[0] = gpllCon0;
     }
 
+    PM_CruAsEnable(1);
+
     return 0;
+_ret_err:
+
+    return UINT32_MAX;
 }
 
 uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
