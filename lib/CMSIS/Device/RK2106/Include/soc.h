@@ -11,6 +11,31 @@
 
 #ifndef __ASSEMBLY__
 /* ================================================================================ */
+/* ================                    DMA REQ                      =============== */
+/* ================================================================================ */
+typedef enum {
+    DMA_REQ_I2S0_TX = 0,
+    DMA_REQ_I2S0_RX = 1,
+    DMA_REQ_I2S1_TX = 2,
+    DMA_REQ_I2S1_RX = 3,
+    DMA_REQ_SPI0_TX = 4,
+    DMA_REQ_SPI0_RX = 5,
+    DMA_REQ_SPI1_TX = 6,
+    DMA_REQ_SPI1_RX = 7,
+    DMA_REQ_UART0_TX = 8,
+    DMA_REQ_UART0_RX = 9,
+    DMA_REQ_UART2_TX = 8,
+    DMA_REQ_UART2_RX = 9,
+    DMA_REQ_UART1_TX = 10,
+    DMA_REQ_UART1_RX = 11,
+    DMA_REQ_SDMMC = 12,
+    DMA_REQ_EMMC = 13,
+    DMA_REQ_VOP = 14,
+    DMA_REQ_HIFI_RX = 0,
+    DMA_REQ_HIFI_TX = 1,
+} DMA_REQ_Type;
+
+/* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
 typedef enum
