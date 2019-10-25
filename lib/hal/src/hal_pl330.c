@@ -1581,6 +1581,20 @@ void *HAL_PL330_GetMcBuf(struct PL330_CHAN *pchan)
 }
 
 /**
+ * @brief Get desc resource of chan
+ *
+ * @param pchan: the handle of struct PL330_CHAN.
+ *
+ * @return desc ptr.
+ */
+const struct PL330_DESC *HAL_PL330_GetDesc(struct PL330_CHAN *pchan)
+{
+    HAL_ASSERT(pchan);
+
+    return &pchan->desc;
+}
+
+/**
  * @brief Request a dma channel
  *
  * @param pl330: the handle of struct HAL_PL330_DEV.
