@@ -178,7 +178,7 @@ HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
 
 /**
  * @brief vop dclk disable.
- * @param  gate: gate id
+ * @param  gateId: gate id
  * @return HAL_Status.
  * @attention these APIs allow direct use in the HAL layer.
  */
