@@ -326,15 +326,16 @@ int HAL_PWR_LinearRangeVoltToSel(const struct PWR_LINEAR_RANGE_TABLE *linearTabl
 {
     const struct PWR_LINEAR_RANGE *range;
     int ret = HAL_INVAL;
-    int voltage, i;
+    int i;
 
     HAL_ASSERT(linearTables);
     HAL_ASSERT(linearTables->entry);
 
     for (i = 0; i < linearTables->nEntry; i++) {
-        int linear_max_uV;
+        unsigned int linear_max_uV;
 
         range = &linearTables->entry[i];
+        HAL_ASSERT(range->maxSel >= range->minSel);
         linear_max_uV = range->minUV +
                         (range->maxSel - range->minSel) * range->uVStep;
 
