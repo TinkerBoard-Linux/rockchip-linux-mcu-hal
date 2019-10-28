@@ -123,7 +123,7 @@ struct DSC_PPS {
 
 /********************* Private Variable Definition ***************************/
 static struct VOP_REG s_vopRegMir;
-static const char * const VOP_IRQs[] =
+HAL_UNUSED static const char * const VOP_IRQs[] =
 {
     "frame start interrupt status!",
     "new frame start interrupt status!",
@@ -142,7 +142,7 @@ static const char * const VOP_IRQs[] =
 
 /********************* Private Function Definition ***************************/
 
-static void VOP_INIT_DSC_PPS(struct DSC_PPS *dscDefaultPps, int16_t w, int16_t h)
+HAL_UNUSED static void VOP_INIT_DSC_PPS(struct DSC_PPS *dscDefaultPps, int16_t w, int16_t h)
 {
     uint16_t rcBufThresh[14] = { 14, 28, 42, 56, 70, 84, 98, 105, 112, 119, 121, 123, 125, 126 };
     struct DSC_PPS_RC_RANGE_PARAMETER rcRangeParameter[15] = { { 0, 4, 2 },
@@ -224,15 +224,15 @@ __STATIC_INLINE int16_t VOP_Interpolate(int16_t x1, int16_t y1, int16_t x2,
     return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
 }
 
-static uint32_t VOP_MaskRead(__IO uint32_t hwReg,
-                             uint32_t shift, uint32_t mask)
+HAL_UNUSED static uint32_t VOP_MaskRead(__IO uint32_t hwReg,
+                                        uint32_t shift, uint32_t mask)
 {
     return (READ_REG(hwReg) & mask) >> shift;
 }
 
-static void VOP_MaskWriteNoBackup(__IO uint32_t *mirReg, __IO uint32_t *hwReg,
-                                  uint32_t shift, uint32_t mask,
-                                  uint32_t v)
+HAL_UNUSED static void VOP_MaskWriteNoBackup(__IO uint32_t *mirReg, __IO uint32_t *hwReg,
+                                             uint32_t shift, uint32_t mask,
+                                             uint32_t v)
 {
     uint32_t mirVal = *mirReg;
 
@@ -265,7 +265,7 @@ static void VOP_Write(__IO uint32_t *mirReg, __IO uint32_t *hwReg,
     WRITE_REG(*hwReg, v);
 }
 
-static uint8_t VOP_RbSwap(uint8_t format)
+HAL_UNUSED static uint8_t VOP_RbSwap(uint8_t format)
 {
     switch (format) {
     case VOP_FMT_ARGB8888:
@@ -277,7 +277,8 @@ static uint8_t VOP_RbSwap(uint8_t format)
         return 0;
     }
 }
-static uint8_t VOP_GetHorSubSampling(uint8_t format)
+
+HAL_UNUSED static uint8_t VOP_GetHorSubSampling(uint8_t format)
 {
     switch (format) {
     case VOP_FMT_YUV420SP:
@@ -300,7 +301,7 @@ static uint8_t VOP_GetHorSubSampling(uint8_t format)
     }
 }
 
-static uint8_t VOP_GetVerSubSampling(uint8_t format)
+HAL_UNUSED static uint8_t VOP_GetVerSubSampling(uint8_t format)
 {
     switch (format) {
     case VOP_FMT_YUV420SP:
@@ -319,7 +320,7 @@ static uint8_t VOP_GetVerSubSampling(uint8_t format)
     }
 }
 
-static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
+HAL_UNUSED static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
 {
     uint8_t val;
 
@@ -379,7 +380,7 @@ static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
     return val;
 }
 
-#ifndef CONFIG_MCU_RK2206
+#ifndef RKMCU_RK2206
 static void VOP_SetWinLoop(struct VOP_REG *pReg,
                            struct CRTC_WIN_STATE *pWinState)
 {
