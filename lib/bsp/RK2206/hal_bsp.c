@@ -502,6 +502,46 @@ struct HAL_VAD_DEV g_vadDev =
 };
 #endif
 
+#ifdef HAL_SPI_MODULE_ENABLED
+const struct HAL_SPI_DEV g_spiDev0 = {
+    .base = SPI0_BASE,
+    .clkId = CLK_SPI0,
+    .clkGateID = CLK_SPI0_PLL_GATE,
+    .pclkGateID = PCLK_SPI0_GATE,
+    .irqNum = SPIMST0_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI0_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI0_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI0_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI0_BASE + 0x800,
+    },
+};
+
+const struct HAL_SPI_DEV g_spiDev1 = {
+    .base = SPI1_BASE,
+    .clkId = CLK_SPI1,
+    .clkGateID = CLK_SPI1_PLL_GATE,
+    .pclkGateID = PCLK_SPI1_GATE,
+    .irqNum = SPIMST1_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI1_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI1_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI1_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI1_BASE + 0x800,
+    },
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }

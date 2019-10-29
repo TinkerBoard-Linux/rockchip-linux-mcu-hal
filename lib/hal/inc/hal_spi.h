@@ -95,6 +95,24 @@ struct SPI_CONFIG {
     uint32_t ssiType;          /* Specifies if the TI mode is enabled or not.*/
 };
 
+/* We have 2 DMA channels per SPI, one for RX and one for TX */
+struct HAL_SPI_DMA_INFO {
+    uint8_t channel;
+    uint8_t direction;
+    uint32_t addr;
+};
+
+struct HAL_SPI_DEV {
+    const uint32_t base;
+    const uint32_t clkId;
+    const uint32_t clkGateID;
+    const uint32_t pclkGateID;
+    const uint8_t irqNum;
+    const uint8_t isSlave;
+    const struct HAL_SPI_DMA_INFO txDma;
+    const struct HAL_SPI_DMA_INFO rxDma;
+};
+
 /** @brief  SPI handle Structure definition */
 struct SPI_HANDLE {
     struct SPI_REG *pReg;          /* Specifies SPI registers base address. */

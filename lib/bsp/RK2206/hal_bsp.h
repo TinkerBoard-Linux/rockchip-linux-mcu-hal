@@ -75,6 +75,11 @@ extern const struct HAL_USB_DEV g_usbdDev;
 extern struct HAL_VAD_DEV g_vadDev;
 #endif
 
+#ifdef HAL_SPI_MODULE_ENABLED
+extern const struct HAL_SPI_DEV g_spiDev0;
+extern const struct HAL_SPI_DEV g_spiDev1;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);
