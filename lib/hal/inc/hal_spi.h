@@ -63,6 +63,12 @@
 #define CR0_OPM_MASTER (0x00 << SPI_CTRLR0_OPM_SHIFT)
 #define CR0_OPM_SLAVE  (0x01 << SPI_CTRLR0_OPM_SHIFT)
 
+#define CR0_CSM(nCycles) ((nCycles << SPI_CTRLR0_CSM_SHIFT) & SPI_CTRLR0_CSM_MASK)
+#define CR0_CSM_0CYCLE   CR0_CSM(0)
+#define CR0_CSM_1CYCLE   CR0_CSM(1)
+#define CR0_CSM_2CYCLES  CR0_CSM(2)
+#define CR0_CSM_3CYCLES  CR0_CSM(3)
+
 /***************************** Structure Definition **************************/
 
 /** @brief  SPI Type definition */
@@ -93,6 +99,7 @@ struct SPI_CONFIG {
     uint32_t speed;            /* Specifies the Baud Rate prescaler value which will be
                                   used to configure the transmit and receive SCK clock. */
     uint32_t ssiType;          /* Specifies if the TI mode is enabled or not.*/
+    uint32_t csm;              /* Specifies Motorola SPI Master SS_N high cycles for each frame data is transfer. */
 };
 
 /* We have 2 DMA channels per SPI, one for RX and one for TX */

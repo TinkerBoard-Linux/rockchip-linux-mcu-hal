@@ -90,6 +90,40 @@
 #define SPI_TIMEOUT_ENABLE  (1 << SPI_TIMEOUT_TOE_SHIFT)
 #define SPI_TIMEOUT_DISABLE 0
 
+#define IS_SPI_MODE(__MODE__) (((__MODE__) == CR0_OPM_SLAVE) || \
+                               ((__MODE__) == CR0_OPM_MASTER))
+
+#define IS_SPI_DIRECTION(__MODE__) (((__MODE__) == CR0_XFM_TR)        || \
+                                    ((__MODE__) == CR0_XFM_TO) ||        \
+                                    ((__MODE__) == CR0_XFM_RO))
+
+#define IS_SPI_DATASIZE(__DATASIZE__) (((__DATASIZE__) == CR0_DATA_FRAME_SIZE_4BIT) || \
+                                       ((__DATASIZE__) == CR0_DATA_FRAME_SIZE_8BIT) || \
+                                       ((__DATASIZE__) == CR0_DATA_FRAME_SIZE_16BIT))
+
+#define IS_SPI_CPOL(__CPOL__) (((__CPOL__) == CR0_POLARITY_LOW) || \
+                               ((__CPOL__) == CR0_POLARITY_HIGH))
+
+#define IS_SPI_CPHA(__CPHA__) (((__CPHA__) == CR0_PHASE_1EDGE) || \
+                               ((__CPHA__) == CR0_PHASE_2EDGE))
+
+#define IS_SPI_FIRST_BIT(__BIT__) (((__BIT__) == CR0_FIRSTBIT_MSB) || \
+                                   ((__BIT__) == CR0_FIRSTBIT_LSB))
+
+#define IS_SPI_APBTRANSFORM(__MODE__) (((__MODE__) == CR0_BHT_16BIT) || \
+                                      ((__MODE__) == CR0_BHT_8BIT))
+
+#define IS_SPI_ENDIAN_MODE(__MODE__) (((__MODE__) == CR0_EM_BIG) || \
+                                      ((__MODE__) == CR0_EM_LITTLE))
+
+#define IS_SPI_SSD_BIT(__MODE__) (((__MODE__) == CR0_SSD_HALF) || \
+                                  ((__MODE__) == CR0_SSD_ONE))
+
+#define IS_SPI_CSM(__NCYCLES__) (((__NCYCLES__) == CR0_CSM_0CYCLE) ||  \
+                                 ((__NCYCLES__) == CR0_CSM_1CYCLE) ||  \
+                                 ((__NCYCLES__) == CR0_CSM_2CYCLES) || \
+                                 ((__NCYCLES__) == CR0_CSM_3CYCLES))
+
 /********************* Public Function Definition ****************************/
 
 /** @defgroup SPI_Exported_Functions_Group4 Init and DeInit Functions
@@ -124,6 +158,7 @@ HAL_Status HAL_SPI_Init(struct SPI_HANDLE *pSPI, uint32_t base, bool slave)
     pSPI->config.apbTransform = CR0_BHT_8BIT;
     pSPI->config.endianMode = CR0_EM_BIG;
     pSPI->config.ssd = CR0_SSD_ONE;
+    pSPI->config.csm = CR0_CSM_0CYCLE;
     pSPI->dmaBurstSize = 1;
 
     return HAL_OK;
@@ -648,6 +683,16 @@ HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, ui
 
     HAL_ASSERT(pSPI != NULL);
     HAL_ASSERT((pTxData != NULL) || (pRxData != NULL));
+    HAL_ASSERT(IS_SPI_MODE(pSPI->config.opMode));
+    HAL_ASSERT(IS_SPI_DIRECTION(pSPI->config.xfmMode));
+    HAL_ASSERT(IS_SPI_DATASIZE(pSPI->config.nBytes));
+    HAL_ASSERT(IS_SPI_CPOL(pSPI->config.clkPolarity));
+    HAL_ASSERT(IS_SPI_CPHA(pSPI->config.clkPhase));
+    HAL_ASSERT(IS_SPI_FIRST_BIT(pSPI->config.firstBit));
+    HAL_ASSERT(IS_SPI_ENDIAN_MODE(pSPI->config.endianMode));
+    HAL_ASSERT(IS_SPI_APBTRANSFORM(pSPI->config.apbTransform));
+    HAL_ASSERT(IS_SPI_SSD_BIT(pSPI->config.ssd));
+    HAL_ASSERT(IS_SPI_CSM(pSPI->config.csm));
 
     cr0 |= pSPI->config.opMode;
 
@@ -657,6 +702,9 @@ HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, ui
 
     /* Mode for polarity, phase, first bit and endian */
     cr0 |= pSPI->config.clkPolarity | pSPI->config.clkPhase | pSPI->config.firstBit;
+
+    /* Config CSM cycles */
+    cr0 |= pSPI->config.csm;
 
     /* div doesn't support odd number */
     div = HAL_DIV_ROUND_UP(pSPI->maxFreq, pSPI->config.speed);
