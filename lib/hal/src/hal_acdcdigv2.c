@@ -783,11 +783,11 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig,
         ACDCDIG_I2C_Stop(acdcDig);
 
         MODIFY_REG(reg->I2S_XFER,
-                   ACDCDIG_I2S_XFER_TXS_MASK,
-                   ACDCDIG_I2S_XFER_TXS_STOP);
+                   ACDCDIG_I2S_XFER_RXS_MASK,
+                   ACDCDIG_I2S_XFER_RXS_STOP);
         MODIFY_REG(reg->I2S_CLR,
-                   ACDCDIG_I2S_CLR_TXC_MASK,
-                   ACDCDIG_I2S_CLR_TXC);
+                   ACDCDIG_I2S_CLR_RXC_MASK,
+                   ACDCDIG_I2S_CLR_RXC);
 
         /* There is MONO channel for DAC */
         MODIFY_REG(reg->DACDIGEN,
@@ -797,11 +797,11 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig,
                    ACDCDIG_DACDIGEN_DAC_L0_DIS);
     } else {
         MODIFY_REG(reg->I2S_XFER,
-                   ACDCDIG_I2S_XFER_RXS_MASK,
-                   ACDCDIG_I2S_XFER_RXS_STOP);
+                   ACDCDIG_I2S_XFER_TXS_MASK,
+                   ACDCDIG_I2S_XFER_TXS_STOP);
         MODIFY_REG(reg->I2S_CLR,
-                   ACDCDIG_I2S_CLR_RXC_MASK,
-                   ACDCDIG_I2S_CLR_RXC);
+                   ACDCDIG_I2S_CLR_TXC_MASK,
+                   ACDCDIG_I2S_CLR_TXC);
 
         /* Disable HPF for ADC */
         MODIFY_REG(reg->ADCHPFEN,
@@ -822,12 +822,12 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig,
                    ACDCDIG_ADCDIGEN_ADC_L0R1_DIS);
     }
 
-    MODIFY_REG(reg->SYSCTRL0,
-               ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
-               ACDCDIG_SYSCTRL0_GLB_CKE_DIS);
-
     acdcDig->enabled--;
     if (acdcDig->enabled == 0) {
+        MODIFY_REG(reg->SYSCTRL0,
+                   ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
+                   ACDCDIG_SYSCTRL0_GLB_CKE_DIS);
+
         ACDCDIG_DACCLKCTRL_Disable(acdcDig);
         ACDCDIG_ADCCLKCTRL_Disable(acdcDig);
     }
