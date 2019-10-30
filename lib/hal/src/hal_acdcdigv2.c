@@ -180,6 +180,9 @@
 #define ACDCDIG_ADCVOL_MONO_MAX 0xffU
 #define ACDCDIG_DACVOL_MONO_MAX 0xffU
 
+/* Requested i2s mclk and mux. */
+#define CLK_CODEC_SEL_MCLK     MCLK_I2S8CH_1_TX
+#define CLK_CODEC_SEL_MCLK_MUX CLK_CODEC_SEL_MCLK_I2S8CH_1_TX_MUX
 /********************* Private Structure Definition **************************/
 
 /**
@@ -576,21 +579,17 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
         ACDCDIG_ADCCLKCTRL_Enable(acdcDig);
         ACDCDIG_DACCLKCTRL_Enable(acdcDig);
 
+        /* Select a remote i2s mclk source and set the mclk freq. */
+        HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_MUX);
+        HAL_CRU_ClkSetFreq(CLK_CODEC_SEL_MCLK, mclkRate);
+
         /* Only select clock sync once before SYSCTRL0 is enabled. */
         if (stream == AUDIO_STREAM_PLAYBACK) {
-            /* Select mclk_i2s1_tx as source. */
-            HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_I2S8CH_1_TX_MUX);
-            HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_TX, mclkRate);
-
             /* Select clock sync is from DAC. */
             MODIFY_REG(reg->SYSCTRL0,
                        ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
                        ACDCDIG_SYSCTRL0_SYNC_SEL_DAC | ACDCDIG_SYSCTRL0_CLK_SEL_DAC);
         } else {
-            /* Select mclk_i2s1_rx as source. */
-            HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_I2S8CH_1_RX_MUX);
-            HAL_CRU_ClkSetFreq(MCLK_I2S8CH_1_RX, mclkRate);
-
             /* Select clock sync is from ADC. */
             MODIFY_REG(reg->SYSCTRL0,
                        ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
