@@ -286,8 +286,6 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
     bool clkInvert = config->clkInvert;
     struct I2STDM_REG *reg = i2sTdm->pReg;
 
-    HAL_CRU_ClkEnable(i2sTdm->hclk);
-
     switch (config->format) {
     case AUDIO_FMT_I2S:
         MODIFY_REG(reg->TXCR, I2STDM_TXCR_TFS_MASK, I2STDM_TXCR_TFS_I2S);
@@ -337,8 +335,7 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
  */
 HAL_Status HAL_I2STDM_DeInit(struct HAL_I2STDM_DEV *i2sTdm)
 {
-    HAL_CRU_ClkDisable(i2sTdm->hclk);
-
+    /* Do nothing. */
     return HAL_OK;
 }
 
