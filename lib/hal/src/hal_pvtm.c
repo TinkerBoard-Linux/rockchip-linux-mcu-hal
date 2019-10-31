@@ -66,6 +66,8 @@ HAL_Status HAL_PVTM_GetFreqCnt(ePVTM_ID id, uint32_t chn, uint32_t timeUs,
         return HAL_INVAL;
 
     HAL_CRU_ClkEnable(info->clkGateID);
+    if (info->pclkGateID)
+        HAL_CRU_ClkEnable(info->pclkGateID);
 
     if (READ_REG(*(info->con0)) & info->startMask)
         WRITE_REG_MASK_WE(*(info->con0), info->startMask,
@@ -92,6 +94,8 @@ HAL_Status HAL_PVTM_GetFreqCnt(ePVTM_ID id, uint32_t chn, uint32_t timeUs,
     WRITE_REG_MASK_WE(*(info->con0), info->enMask, 0 << info->enShift);
 
     HAL_CRU_ClkDisable(info->clkGateID);
+    if (info->pclkGateID)
+        HAL_CRU_ClkDisable(info->pclkGateID);
 
     return ret;
 }

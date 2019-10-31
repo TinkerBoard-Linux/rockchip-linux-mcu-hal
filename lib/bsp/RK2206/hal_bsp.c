@@ -435,6 +435,7 @@ static const struct HAL_PVTM_INFO pvtmInfo[] =
     {
         .pvtmId = PVTM_ID_CORE,
         .clkGateID = CLK_PVTM_GATE,
+        .pclkGateID = PCLK_PVTM_GATE,
         .con0 = &(PVTM->PVTM_CON[0]),
         .con1 = &(PVTM->PVTM_CON[1]),
         .sta0 = &(PVTM->PVTM_STATUS[0]),

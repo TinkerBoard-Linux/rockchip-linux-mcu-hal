@@ -32,6 +32,7 @@ struct HAL_PVTM_INFO {
 
     ePVTM_ID pvtmId;
     uint32_t clkGateID;
+    uint32_t pclkGateID;
 
     uint32_t startMask;
     uint32_t startShift;
