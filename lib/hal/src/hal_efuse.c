@@ -42,42 +42,6 @@
  */
 
 /**
- * @brief  write one byte data to efuse.
- * @param  reg: efuse base address.
- * @param  offset: data offset in efuse.
- * @param  val: the data to be write.
- * @return HAL_Status.
- */
-HAL_Status HAL_EFUSE_WriteByte(struct EFUSE_CTL_REG *reg, uint32_t offset, uint8_t val)
-{
-    uint32_t i, addr;
-    uint32_t start, timeoutMs = 1;
-
-    HAL_ASSERT(IS_EFUSE_CTL_INSTANCE(reg));
-    HAL_ASSERT(offset < EFUSE_SEIZ_BYTE);
-
-    for (i = 0; i < 8; i++) {
-        if (val & (1 << i)) {
-            /* low 7 bits for row and high 3 bits for column in addr */
-            addr = offset | (i << 7);
-            addr = addr << EFUSE_CTL_AUTO_CTRL_ADDR_AUTO_SHIFT;
-            addr |= EFUSE_CTL_AUTO_CTRL_ADDR_AUTO_MASK;
-            WRITE_REG(reg->AUTO_CTRL, addr | (1 << EFUSE_CTL_AUTO_CTRL_ENB_SHIFT));
-
-            start = HAL_GetTick();
-            while (!(READ_REG(reg->INT_STATUS) | EFUSE_CTL_INT_STATUS_FINISH_INT_MASK)) {
-                if ((HAL_GetTick() - start) > timeoutMs)
-                    return HAL_TIMEOUT;
-            }
-
-            WRITE_REG(reg->INT_STATUS, 1 << EFUSE_CTL_INT_STATUS_FINISH_INT_SHIFT);
-        }
-    }
-
-    return HAL_OK;
-}
-
-/**
  * @brief  read one byte data from efuse.
  * @param  reg: efuse base address.
  * @param  offset: data offset in efuse.
@@ -87,7 +51,10 @@ HAL_Status HAL_EFUSE_WriteByte(struct EFUSE_CTL_REG *reg, uint32_t offset, uint8
 HAL_Status HAL_EFUSE_ReadByte(struct EFUSE_CTL_REG *reg, uint32_t offset, uint8_t *val)
 {
     uint32_t addr;
-    uint32_t start, timeoutMs = 1;
+    uint32_t start, timeoutMs = 20;
+
+    HAL_CRU_ClkEnable(CLK_EFUSE_GATE);
+    HAL_CRU_ClkEnable(PCLK_EFUSE_GATE);
 
     HAL_ASSERT(IS_EFUSE_CTL_INSTANCE(reg));
     HAL_ASSERT(offset < EFUSE_SEIZ_BYTE);
@@ -95,18 +62,26 @@ HAL_Status HAL_EFUSE_ReadByte(struct EFUSE_CTL_REG *reg, uint32_t offset, uint8_
 
     /* 8 column bits will output same time when read */
     addr = offset << EFUSE_CTL_AUTO_CTRL_ADDR_AUTO_SHIFT;
-    addr |= EFUSE_CTL_AUTO_CTRL_ADDR_AUTO_MASK;
+    addr &= EFUSE_CTL_AUTO_CTRL_ADDR_AUTO_MASK;
     WRITE_REG(reg->AUTO_CTRL, addr | (1 << EFUSE_CTL_AUTO_CTRL_ENB_SHIFT) |
               (1 << EFUSE_CTL_AUTO_CTRL_PG_R_SHIFT));
+    HAL_DelayUs(5);
 
     start = HAL_GetTick();
     while (!(READ_REG(reg->INT_STATUS) | EFUSE_CTL_INT_STATUS_FINISH_INT_MASK)) {
-        if ((HAL_GetTick() - start) > timeoutMs)
+        if ((HAL_GetTick() - start) > timeoutMs) {
+            HAL_CRU_ClkDisable(CLK_EFUSE_GATE);
+            HAL_CRU_ClkDisable(PCLK_EFUSE_GATE);
+
             return HAL_TIMEOUT;
+        }
     }
 
     *val = READ_REG(reg->DOUT);
     WRITE_REG(reg->INT_STATUS, 1 << EFUSE_CTL_INT_STATUS_FINISH_INT_SHIFT);
+
+    HAL_CRU_ClkDisable(CLK_EFUSE_GATE);
+    HAL_CRU_ClkDisable(PCLK_EFUSE_GATE);
 
     return HAL_OK;
 }
