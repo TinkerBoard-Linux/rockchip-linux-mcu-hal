@@ -67,6 +67,8 @@
 #define ACDCDIG_ADCCLKCTRL_CKE_BCLKTX_DIS  (0x0U << ACDCDIG_ADCCLKCTRL_CKE_BCLKTX_SHIFT)
 #define ACDCDIG_ADCCLKCTRL_FILTER_DIS      (0x1U << ACDCDIG_ADCCLKCTRL_FILTER_GATE_EN_SHIFT)
 #define ACDCDIG_ADCCLKCTRL_FILTER_EN       (0x0U << ACDCDIG_ADCCLKCTRL_FILTER_GATE_EN_SHIFT)
+/* ADCINT_DIV */
+#define ACDCDIG_ADCINT_DIV_INT_DIV(x) ((x - 1) << ACDCDIG_ADCINT_DIV_INT_DIV_CON_SHIFT)
 /* ADCSCLKTXINT_DIV */
 #define ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(x) ((x - 1) << ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_SHIFT)
 /* ADCCFG1 */
@@ -109,6 +111,8 @@
 #define ACDCDIG_DACCLKCTRL_I2SRX_CKE_DIS  (0x0U << ACDCDIG_DACCLKCTRL_I2SRX_CKE_SHIFT)
 #define ACDCDIG_DACCLKCTRL_CKE_BCLKRX_EN  (0x1U << ACDCDIG_DACCLKCTRL_CKE_BCLKRX_SHIFT)
 #define ACDCDIG_DACCLKCTRL_CKE_BCLKRX_DIS (0x0U << ACDCDIG_DACCLKCTRL_CKE_BCLKRX_SHIFT)
+/* DACINT_DIV */
+#define ACDCDIG_DACINT_DIV_INT_DIV(x) ((x - 1) << ACDCDIG_DACINT_DIV_INT_DIV_CON_SHIFT)
 /* DACSCLKRXINT_DIV */
 #define ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV(x) ((x - 1) << ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV_SHIFT)
 /* DACCFG1 */
@@ -162,6 +166,39 @@
 #define ACDCDIG_GROUP0_MCLK 49152000
 #define ACDCDIG_GROUP1_MCLK 45158400
 #define ACDCDIG_GROUP2_MCLK 32768000
+
+/* The groups of sync clock */
+#define ACDCDIG_GROUP0_SYNCCLK 6144000
+#define ACDCDIG_GROUP1_SYNCCLK 5644800
+#define ACDCDIG_GROUP2_SYNCCLK 4096000
+
+/* Match ACDCDIG_MCLK. */
+#ifdef HAL_ACDCDIG_MCLK_GROUP_ID
+#if (HAL_ACDCDIG_MCLK_GROUP_ID == 1)
+#define ACDCDIG_MCLK ACDCDIG_GROUP1_MCLK
+#elif (HAL_ACDCDIG_MCLK_GROUP_ID == 2)
+#define ACDCDIG_MCLK ACDCDIG_GROUP2_MCLK
+#else /* HAL_ACDCDIG_MCLK_GROUP_ID == 0 */
+#define ACDCDIG_MCLK ACDCDIG_GROUP0_MCLK
+#endif
+#else /* HAL_ACDCDIG_MCLK_GROUP_ID is not defined, select group0 mclk. */
+#define ACDCDIG_MCLK ACDCDIG_GROUP0_MCLK
+#endif
+
+/**
+  * The relationship between mclk and sampling rate is shown in the following
+  * table:
+  *
+  *          ACDC_CLK  D2A_CLK   D2A_SYNC Sample rates supported
+  *  Group0: 49.152MHz 49.152MHz 6.144MHz 12/24/48/96/192kHz
+  *  Group1: 45.154MHz 45.154MHz 5.644MHz 11.024/22.05/44.1/88.2/176.4kHz
+  *  Gruop2: 32.768MHz 32.768MHz 4.096MHz 8/16/32/64/128kHz
+  *
+  * The Group0 is the highest. Usually, if you need 48kHz to playback which
+  * belongs in Group0, it's better to use the unified group0 mclk as a base
+  * clock for playback and capture.
+  */
+#define ACDCDIG_MCLK_RATE ACDCDIG_GROUP0_MCLK
 
 /* GRF registers */
 #define GRF_CODEC_I2C_TRANS ((GRF_SOC_CON16_GRF_I2C_TRANS_REQ_MASK << 16) | (0 << GRF_SOC_CON16_GRF_I2C_TRANS_REQ_SHIFT))
@@ -515,45 +552,6 @@ static HAL_Status ACDCDIG_DACCLKCTRL_Disable(struct HAL_ACDCDIG_DEV *acdcDig)
 }
 
 /**
- * @brief  Match tht fit input mclk for codec during different sample rates.
- * @param  sampleRate: sample rate.
- * @return mclkRate
- */
-static uint32_t ACDCDIG_MCLK_Match(eAUDIO_sampleRate sampleRate)
-{
-    uint32_t mclkRate;
-
-    switch (sampleRate) {
-    case AUDIO_SAMPLERATE_12000:
-    case AUDIO_SAMPLERATE_24000:
-    case AUDIO_SAMPLERATE_48000:
-    case AUDIO_SAMPLERATE_96000:
-    case AUDIO_SAMPLERATE_192000:
-        mclkRate = ACDCDIG_GROUP0_MCLK;
-        break;
-    case AUDIO_SAMPLERATE_11025:
-    case AUDIO_SAMPLERATE_22050:
-    case AUDIO_SAMPLERATE_44100:
-    case AUDIO_SAMPLERATE_88200:
-    case AUDIO_SAMPLERATE_176400:
-        mclkRate = ACDCDIG_GROUP1_MCLK;
-        break;
-    case AUDIO_SAMPLERATE_8000:
-    case AUDIO_SAMPLERATE_16000:
-    case AUDIO_SAMPLERATE_32000:
-    case AUDIO_SAMPLERATE_64000:
-    case AUDIO_SAMPLERATE_128000:
-        mclkRate = ACDCDIG_GROUP2_MCLK;
-        break;
-    default:
-        mclkRate = 0;
-        break;
-    }
-
-    return mclkRate;
-}
-
-/**
  * @brief  Select the type of clock sync from ADC or DAC.
  * @param  acdcDig: the handle of acdcDig.
  * @param  syncType: the type of clock sync.
@@ -564,18 +562,55 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
                                           eAUDIO_sampleRate sampleRate)
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
-    uint32_t mclkRate, bclkRate, divBclk;
+    uint32_t mclkRate = ACDCDIG_MCLK_RATE;
+    uint32_t bclkRate, divBclk;
+    uint32_t syncClkRate, divSyncClk;
+    bool codecIsMaster;
 
-    mclkRate = ACDCDIG_MCLK_Match(sampleRate);
-    HAL_ASSERT(mclkRate);
+    syncClkRate = HAL_ACDCDIG_GetSyncClk(sampleRate);
+    HAL_ASSERT(syncClkRate != 0);
+    divSyncClk = HAL_DivRoundClosest(mclkRate, syncClkRate);
 
-    bclkRate = acdcDig->bclkFs * sampleRate;
-    HAL_ASSERT(bclkRate);
-    divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
+    /* Prepare ADCINT_DIV and DACINT_DIV before ADC/DACCLKCTRL are enabled. */
+    if (stream == AUDIO_STREAM_PLAYBACK)
+        MODIFY_REG(reg->DACINT_DIV,
+                   ACDCDIG_DACINT_DIV_INT_DIV_CON_MASK,
+                   ACDCDIG_DACINT_DIV_INT_DIV(divSyncClk));
+    else
+        MODIFY_REG(reg->ADCINT_DIV,
+                   ACDCDIG_ADCINT_DIV_INT_DIV_CON_MASK,
+                   ACDCDIG_ADCINT_DIV_INT_DIV(divSyncClk));
+
+    if (acdcDig->enabled) {
+        uint32_t adcIntDiv = READ_REG(reg->ADCINT_DIV) & ACDCDIG_ADCINT_DIV_INT_DIV_CON_MASK;
+        uint32_t dacIntDiv = READ_REG(reg->DACINT_DIV) & ACDCDIG_DACINT_DIV_INT_DIV_CON_MASK;
+
+        if (adcIntDiv != dacIntDiv) {
+            /**
+             * If the INT_DIVs are different, means that the sample rates
+             * (e.g. 16kHz and 48kHz) are in different mclk groups. Therefore,
+             * we need to reset GLB_CKE quickly here.
+             */
+            MODIFY_REG(reg->SYSCTRL0,
+                       ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
+                       ACDCDIG_SYSCTRL0_GLB_CKE_DIS);
+
+            while (READ_BIT(reg->ADCCLKCTRL, ACDCDIG_ADCCLKCTRL_ADC_SYNC_STATUS_MASK) ||
+                   READ_BIT(reg->DACCLKCTRL, ACDCDIG_DACCLKCTRL_DAC_SYNC_STATUS_MASK)) {
+                /**
+                 * Ensure both ADC nad DAC sync status are 0, and waiting time
+                 * is aboue some micro-seconds, so we don't need to add some
+                 * delay here, just waiting is fine.
+                 */
+            }
+
+            MODIFY_REG(reg->SYSCTRL0,
+                       ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
+                       ACDCDIG_SYSCTRL0_GLB_CKE_EN);
+        }
+    }
 
     if (acdcDig->enabled == 0) {
-        bool codecIsMaster;
-
         ACDCDIG_ADCCLKCTRL_Enable(acdcDig);
         ACDCDIG_DACCLKCTRL_Enable(acdcDig);
 
@@ -583,34 +618,32 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
         HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CODEC), CLK_CODEC_SEL_MCLK_MUX);
         HAL_CRU_ClkSetFreq(CLK_CODEC_SEL_MCLK, mclkRate);
 
-        /* Only select clock sync once before SYSCTRL0 is enabled. */
-        if (stream == AUDIO_STREAM_PLAYBACK) {
-            /* Select clock sync is from DAC. */
-            MODIFY_REG(reg->SYSCTRL0,
-                       ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
-                       ACDCDIG_SYSCTRL0_SYNC_SEL_DAC | ACDCDIG_SYSCTRL0_CLK_SEL_DAC);
-        } else {
-            /* Select clock sync is from ADC. */
-            MODIFY_REG(reg->SYSCTRL0,
-                       ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
-                       ACDCDIG_SYSCTRL0_SYNC_SEL_ADC | ACDCDIG_SYSCTRL0_CLK_SEL_ADC);
-        }
+        /* Select clock sync is from DAC. */
+        MODIFY_REG(reg->SYSCTRL0,
+                   ACDCDIG_SYSCTRL0_SYNC_SEL_MASK | ACDCDIG_SYSCTRL0_CLK_SEL_MASK,
+                   ACDCDIG_SYSCTRL0_SYNC_SEL_DAC | ACDCDIG_SYSCTRL0_CLK_SEL_DAC);
+    }
+    acdcDig->enabled++;
 
-        /* It is ignored when the codec is slave mode. */
-        codecIsMaster = (READ_BIT(reg->I2S_CKR[1], ACDCDIG_I2S_CKR1_MSS_MASK) == ACDCDIG_I2S_CKR1_MSS_MASTER);
-        if (codecIsMaster) {
+    bclkRate = acdcDig->bclkFs * sampleRate;
+    HAL_ASSERT(bclkRate);
+    divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
+
+    /* It is ignored when the codec is slave mode. */
+    codecIsMaster = (READ_BIT(reg->I2S_CKR[1], ACDCDIG_I2S_CKR1_MSS_MASK) == ACDCDIG_I2S_CKR1_MSS_MASTER);
+    if (codecIsMaster) {
+        if (stream == AUDIO_STREAM_PLAYBACK) {
             MODIFY_REG(reg->DACSCLKRXINT_DIV, ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV_MASK,
                        ACDCDIG_DACSCLKRXINT_DIV_SCKRXDIV(divBclk));
             MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_RSD_MASK,
                        ACDCDIG_I2S_CKR0_RSD(acdcDig->bclkFs));
+        } else {
             MODIFY_REG(reg->ADCSCLKTXINT_DIV, ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV_MASK,
                        ACDCDIG_ADCSCLKTXINT_DIV_SCKTXDIV(divBclk));
             MODIFY_REG(reg->I2S_CKR[0], ACDCDIG_I2S_CKR0_TSD_MASK,
                        ACDCDIG_I2S_CKR0_TSD(acdcDig->bclkFs));
         }
     }
-
-    acdcDig->enabled++;
 
     return HAL_OK;
 }
@@ -1177,6 +1210,45 @@ eACDCDIG_i2cUsed HAL_ACDCDIG_CheckI2C(struct HAL_ACDCDIG_DEV *acdcDig)
         i2cUsed = MCU_USE_I2C;
 
     return i2cUsed;
+}
+
+/**
+ * @brief  Get a suitable sync clock for codec during different sample rates.
+ * @param  sampleRate: sample rate.
+ * @return syncClkRate
+ */
+uint32_t HAL_ACDCDIG_GetSyncClk(eAUDIO_sampleRate sampleRate)
+{
+    uint32_t syncClkRate;
+
+    switch (sampleRate) {
+    case AUDIO_SAMPLERATE_12000:
+    case AUDIO_SAMPLERATE_24000:
+    case AUDIO_SAMPLERATE_48000:
+    case AUDIO_SAMPLERATE_96000:
+    case AUDIO_SAMPLERATE_192000:
+        syncClkRate = ACDCDIG_GROUP0_SYNCCLK;
+        break;
+    case AUDIO_SAMPLERATE_11025:
+    case AUDIO_SAMPLERATE_22050:
+    case AUDIO_SAMPLERATE_44100:
+    case AUDIO_SAMPLERATE_88200:
+    case AUDIO_SAMPLERATE_176400:
+        syncClkRate = ACDCDIG_GROUP1_SYNCCLK;
+        break;
+    case AUDIO_SAMPLERATE_8000:
+    case AUDIO_SAMPLERATE_16000:
+    case AUDIO_SAMPLERATE_32000:
+    case AUDIO_SAMPLERATE_64000:
+    case AUDIO_SAMPLERATE_128000:
+        syncClkRate = ACDCDIG_GROUP2_SYNCCLK;
+        break;
+    default:
+        syncClkRate = 0;
+        break;
+    }
+
+    return syncClkRate;
 }
 
 /** @} */

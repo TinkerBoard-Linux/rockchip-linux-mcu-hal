@@ -57,6 +57,7 @@ HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
                                    struct AUDIO_GAIN_INFO *info);
 HAL_Status HAL_ACDCDIG_RequestI2C(struct HAL_ACDCDIG_DEV *acdcDig, eACDCDIG_i2cUsed i2cUsed);
 eACDCDIG_i2cUsed HAL_ACDCDIG_CheckI2C(struct HAL_ACDCDIG_DEV *acdcDig);
+uint32_t HAL_ACDCDIG_GetSyncClk(eAUDIO_sampleRate sampleRate);
 
 #endif
 
