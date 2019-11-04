@@ -442,7 +442,10 @@ HAL_Status HAL_PINCTRL_Init(void)
                              GPIO_PIN_D6), // AUD_BY_CTRL
                          PIN_CONFIG_MUX_FUNC0);
     HAL_PINCTRL_SetIOMUX(GPIO_BANK1, GPIO_PIN_ALL & ~(
+                             GPIO_PIN_A0 | // LCD_IN_RESET_N
+                             GPIO_PIN_A1 | // LCD_IN_TE
                              GPIO_PIN_A2 | // LCD_OUT_RESETN
+                             GPIO_PIN_A3 | // LCD_OUT_TE
                              GPIO_PIN_A5 | // BOOT_DEV_SEL
                              GPIO_PIN_A6 | // M4_DSP_JTAG_SEL
                              GPIO_PIN_B2), // CLK_IN_SEL
