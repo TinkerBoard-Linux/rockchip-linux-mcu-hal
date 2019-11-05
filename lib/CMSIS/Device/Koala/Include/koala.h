@@ -5595,7 +5595,8 @@ typedef enum PD_Id {
 
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
-    PLL_CPLL = 0U,
+    CLK_INVALID = 0U,
+    PLL_CPLL,
     PLL_GPLL,
     CLK_32K              = CLK(CLK_32K_SRC_SEL, 0),
     HCLK_MCU             = CLK(HCLK_MCU_SRC_SEL, HCLK_MCU_DIV),

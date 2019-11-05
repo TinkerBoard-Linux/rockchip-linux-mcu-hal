@@ -11554,7 +11554,8 @@ struct AUDIOPWM_REG {
 
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
-    PLL_GPLL = 0U,
+    CLK_INVALID = 0U,
+    PLL_GPLL,
     PLL_CPLL,
     ACLK_DSP                 = CLK(ACLK_DSP_S_SEL, ACLK_DSP_S_DIV),
     PCLK_DSP                 = CLK(0, PCLK_DSP_DIV),

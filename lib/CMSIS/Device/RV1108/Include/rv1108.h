@@ -11362,7 +11362,8 @@ struct TIMER_REG {
 
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
-    PLL_APLL = 0U,
+    CLK_INVALID = 0U,
+    PLL_APLL,
     PLL_DPLL,
     PLL_GPLL,
     CLK_CPU         = CLK(CLK_CORE_PLL_SEL, CLK_CORE_DIV),
