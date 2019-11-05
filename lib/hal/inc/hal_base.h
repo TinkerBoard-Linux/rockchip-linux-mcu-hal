@@ -55,6 +55,7 @@ HAL_Status HAL_CPUDelayUs(uint32_t us);
 HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, uint32_t clkSource);
 
 uint64_t HAL_DivU64Rem(uint64_t numerator, uint32_t denominator, uint32_t *pRemainder);
+uint64_t HAL_GetSysTimerCount(void);
 
 /**
  * @brief  uint64_t numerator / uint32_t denominator

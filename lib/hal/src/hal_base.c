@@ -201,6 +201,22 @@ uint32_t HAL_GetTick(void)
 }
 
 /**
+ * @brief  Provides system timer count.
+ * @return uint64_t: timer count.
+ * @attention this API allow direct use in the HAL layer.
+ */
+uint64_t HAL_GetSysTimerCount(void)
+{
+#if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
+
+    return HAL_TIMER_GetCount(SYS_TIMER);
+#else
+
+    return 0llu;
+#endif
+}
+
+/**
   * @brief Set new tick frequency.
   * @return HAL_Status.
   */
