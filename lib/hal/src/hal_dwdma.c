@@ -109,6 +109,20 @@ __STATIC_INLINE void DW_ConvertBurst(uint16_t *maxburst)
     *maxburst = val;
 }
 
+/**
+ * Get burst len from bit.
+ * refer to MSIZE of register CTLx[13:11].
+ */
+__STATIC_INLINE uint32_t DW_GetBurstLength(uint32_t val)
+{
+    uint32_t len = 1;
+
+    if (val >= 1 && val <= 7)
+        len = 1 << (val + 1);
+
+    return len;
+}
+
 __STATIC_INLINE uint32_t DW_FFS(uint32_t word)
 {
 #ifdef __GNUC__
@@ -663,6 +677,7 @@ HAL_Status HAL_DWDMA_PrepDmaSingle(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
     uint32_t offset;
     uint32_t src, dst;
     uint32_t ctllo;
+    uint32_t burstLen;
     uint32_t i = 0;
 
     HAL_ASSERT(dwc);
@@ -675,6 +690,7 @@ HAL_Status HAL_DWDMA_PrepDmaSingle(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
     dwc->direction = direction;
 
     if (direction == DMA_MEM_TO_DEV) {
+        burstLen = config->dstMaxBurst;
         regWidth = DW_FFS(config->dstAddrWidth);
         src = dmaAddr;
         dst = config->dstAddr;
@@ -685,6 +701,7 @@ HAL_Status HAL_DWDMA_PrepDmaSingle(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
                  | DWC_CTLL_SRC_INC
                  | DWC_CTLL_FC_M2P);
     } else {
+        burstLen = config->srcMaxBurst;
         regWidth = DW_FFS(config->srcAddrWidth);
         src = config->srcAddr;
         dst = dmaAddr;
@@ -696,11 +713,12 @@ HAL_Status HAL_DWDMA_PrepDmaSingle(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
                  | DWC_CTLL_FC_P2M);
     }
 
+    burstLen = DW_GetBurstLength(burstLen);
+
     for (offset = 0; offset < len; offset += xferCount << regWidth) {
         xferCount = HAL_MIN((len - offset) >> regWidth, dw->blockSize);
-
+        xferCount &= ~(burstLen - 1);
         desc = &dwc->desc[i];
-
         desc->lli.sar = (ctllo & DWC_CTLL_SRC_FIX) ? src : src + offset;
         desc->lli.dar = (ctllo & DWC_CTLL_DST_FIX) ? dst : dst + offset;
         desc->lli.ctllo = ctllo;
