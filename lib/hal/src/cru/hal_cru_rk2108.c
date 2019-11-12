@@ -26,6 +26,8 @@ static struct PLL_CONFIG PLL_TABLE[] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
     RK_PLL_RATE(1188000000, 2, 99, 1, 1, 1, 0),
     RK_PLL_RATE(600000000, 3, 75, 1, 1, 1, 0),
+    RK_PLL_RATE(282240000, 1, 35, 3, 1, 0, 4697620),
+    RK_PLL_RATE(245760000, 1, 40, 4, 1, 0, 16106127),
     { /* sentinel */ },
 };
 
@@ -373,6 +375,11 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         HAL_CRU_ClkSetMux(muxSrc, 0);
         HAL_CRU_ClkSetMux(mux, 0);
         HAL_CRU_ClkDisable(fracGateId);
+    } else if ((!(s_cpllFreq % rate)) && ((s_cpllFreq / rate) < 31)) {
+        HAL_CRU_ClkSetDiv(divSrc, s_cpllFreq / rate);
+        HAL_CRU_ClkSetMux(muxSrc, 1);
+        HAL_CRU_ClkSetMux(mux, 0);
+        HAL_CRU_ClkDisable(fracGateId);
     } else {
         HAL_CRU_FracdivGetConfig(rate, pRate, &n, &m);
         HAL_CRU_ClkSetDiv(divSrc, 1);
@@ -640,6 +647,52 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         HAL_CRU_ClkSetMux(clkMux, mux);
     if (clkDiv)
         HAL_CRU_ClkSetDiv(clkDiv, div);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief pll output freq Compensation.
+ * @param  clockName: CLOCK_Name id.
+ * @param  ppm: Efforts to compensate.
+ * @return HAL_OK.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
+HAL_Status HAL_CRU_PllCompensation(eCLOCK_Name clockName, int ppm)
+{
+    __IO uint32_t *conOffset0, *conOffset2;
+    uint32_t frac, fbdiv;
+    uint64_t fracdiv;
+    long int m, n;
+
+    if ((ppm > 100) || (ppm < -100))
+        return HAL_INVAL;
+
+    switch (clockName) {
+    case PLL_GPLL:
+        conOffset0 = &(CRU->GPLL_CON[0]);
+        conOffset2 = &(CRU->GPLL_CON[2]);
+        break;
+    case PLL_CPLL:
+        conOffset0 = &(CRU->CPLL_CON[0]);
+        conOffset2 = &(CRU->CPLL_CON[2]);
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    frac = READ_REG(*conOffset2) & 0xffffff;
+    fbdiv = READ_REG(*conOffset0) & 0xfff;
+    m = frac * ppm;
+    n = ppm << 24;
+
+    fracdiv = (m / MHZ) + ((n / MHZ) * fbdiv) + frac;
+
+    if (fracdiv > 0xffffff)
+        return HAL_INVAL;
+
+    WRITE_REG(*conOffset2, (READ_REG(*conOffset2) & 0xff000000) | fracdiv);
 
     return HAL_OK;
 }

@@ -152,6 +152,8 @@ HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type);
 
 HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType);
 
+HAL_Status HAL_CRU_PllCompensation(eCLOCK_Name clockName, int ppm);
+
 #ifdef HAL_CRU_AS_FEATURE_ENABLED
 /**
  * @brief  it is for AS init.
