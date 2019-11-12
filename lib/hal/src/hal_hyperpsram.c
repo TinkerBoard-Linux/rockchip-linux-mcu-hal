@@ -141,7 +141,7 @@ static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t ps
     uint32_t tmp;
     uint32_t tcmd, tal;
 
-    psramFreq /= MHZ;
+    psramFreq /= 1000000;
     if (pReg->MCR[0] & HYPERBUS_MCR0_MAXEN_CONF_LOW) {
         tmp = pReg->MTR[0] & HYPERBUS_MTR0_LTCY_MASK;
         if (tmp < 3)
