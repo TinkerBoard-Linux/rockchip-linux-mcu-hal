@@ -131,6 +131,26 @@ const struct PM_RUNTIME_INFO *HAL_PM_RuntimeGetData(void);
 uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode);
 #endif
 
+/**
+ * @brief  it is for statting a pm timer .
+ * @param  timeoutCount: the next timeout count
+ * @param  needTimeout:  if ture, need to start a timer.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_PM_TimerStart(uint64_t timeoutCount, bool needTimeout);
+
+/**
+ * @brief  it is for stopping a pm timer .
+ * @return HAL_Status.
+ */
+HAL_Status HAL_PM_TimerStop(void);
+
+/**
+ * @brief  it is for getting the sleep time.
+ * @return the sleep time.
+ */
+uint64_t HAL_PM_GetTimerCount(void);
+
 #endif
 
 /** @} */
