@@ -129,75 +129,6 @@ static const struct I2C_SPEC_VALUES *I2C_GetSpec(eI2C_BusSpeed speed)
 }
 
 /**
-  * @brief  Auto adapte the clock div base on input clock rate and desired speed.
-  * @param  pI2C: pointer to a I2C_HANDLE structure that contains
-  *               the information for I2C module.
-  * @return HAL status
-  */
-static HAL_Status I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate, eI2C_BusSpeed speed)
-{
-    const struct I2C_SPEC_VALUES *spec;
-    uint32_t rateKHZ, speedKHZ;
-    uint32_t minTotalDIV, minLowDIV, minHighDIV, minHoldDIV;
-    uint32_t lowDIV, highDIV, extraDIV, extraLowDIV;
-    uint32_t minLowNS, minHighNS;
-    uint32_t startSetup = 0;
-
-    switch (speed) {
-    case I2C_1000K:
-        speedKHZ = 1000;
-        break;
-    case I2C_400K:
-        speedKHZ = 400;
-        break;
-    default:
-        /* default start setup time may not enough for 100K */
-        startSetup = 1;
-        speedKHZ = 100;
-        break;
-    }
-
-    rateKHZ = HAL_DIV_ROUND_UP(rate, 1000);
-    spec = I2C_GetSpec(speed);
-
-    minTotalDIV = HAL_DIV_ROUND_UP(rateKHZ, speedKHZ * 8);
-
-    minHighNS = spec->maxRiseNS + spec->minHighNS;
-    minHighDIV = HAL_DIV_ROUND_UP(rateKHZ * minHighNS, 8 * 1000000);
-
-    minLowNS = spec->maxFallNS + spec->minLowNS;
-    minLowDIV = HAL_DIV_ROUND_UP(rateKHZ * minLowNS, 8 * 1000000);
-
-    minHighDIV = (minHighDIV < 1) ? 2 : minHighDIV;
-    minLowDIV = (minLowDIV < 1) ? 2 : minLowDIV;
-
-    minHoldDIV = minHighDIV + minLowDIV;
-
-    if (minHoldDIV >= minTotalDIV) {
-        highDIV = minHighDIV;
-        lowDIV = minLowDIV;
-    } else {
-        extraDIV = minTotalDIV - minHoldDIV;
-        extraLowDIV = HAL_DIV_ROUND_UP(minLowDIV * extraDIV, minHoldDIV);
-
-        lowDIV = minLowDIV + extraLowDIV;
-        highDIV = minHighDIV + (extraDIV - extraLowDIV);
-    }
-
-    highDIV--;
-    lowDIV--;
-
-    if (highDIV > 0xffff || lowDIV > 0xffff)
-        return HAL_INVAL;
-
-    WRITE_REG(pI2C->pReg->CLKDIV, (highDIV << I2C_CLKDIV_CLKDIVH_SHIFT) | lowDIV);
-    /* 1 for data hold/setup time is enough */
-    WRITE_REG(pI2C->pReg->CON, REG_CON_SDA_CFG(1) | REG_CON_STA_CFG(startSetup));
-
-    return HAL_OK;
-}
-
-/**
   * @brief  Clean the I2C pending interrupt.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
@@ -536,6 +467,76 @@ static HAL_Status I2C_HandleStop(struct I2C_HANDLE *pI2C, uint32_t ipd)
  */
 
 /**
+  * @brief  Auto adapte the clock div base on input clock rate and desired speed.
+  * @param  pI2C: pointer to a I2C_HANDLE structure that contains
+  *               the information for I2C module.
+  * @param  rate: I2C sclk rate, unit is HZ.
+  * @return HAL status
+  */
+HAL_Status HAL_I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate)
+{
+    const struct I2C_SPEC_VALUES *spec;
+    uint32_t rateKHZ, speedKHZ;
+    uint32_t minTotalDIV, minLowDIV, minHighDIV, minHoldDIV;
+    uint32_t lowDIV, highDIV, extraDIV, extraLowDIV;
+    uint32_t minLowNS, minHighNS;
+    uint32_t startSetup = 0;
+
+    switch (pI2C->speed) {
+    case I2C_1000K:
+        speedKHZ = 1000;
+        break;
+    case I2C_400K:
+        speedKHZ = 400;
+        break;
+    default:
+        /* default start setup time may not enough for 100K */
+        startSetup = 1;
+        speedKHZ = 100;
+        break;
+    }
+
+    rateKHZ = HAL_DIV_ROUND_UP(rate, 1000);
+    spec = I2C_GetSpec(pI2C->speed);
+
+    minTotalDIV = HAL_DIV_ROUND_UP(rateKHZ, speedKHZ * 8);
+
+    minHighNS = spec->maxRiseNS + spec->minHighNS;
+    minHighDIV = HAL_DIV_ROUND_UP(rateKHZ * minHighNS, 8 * 1000000);
+
+    minLowNS = spec->maxFallNS + spec->minLowNS;
+    minLowDIV = HAL_DIV_ROUND_UP(rateKHZ * minLowNS, 8 * 1000000);
+
+    minHighDIV = (minHighDIV < 1) ? 2 : minHighDIV;
+    minLowDIV = (minLowDIV < 1) ? 2 : minLowDIV;
+
+    minHoldDIV = minHighDIV + minLowDIV;
+
+    if (minHoldDIV >= minTotalDIV) {
+        highDIV = minHighDIV;
+        lowDIV = minLowDIV;
+    } else {
+        extraDIV = minTotalDIV - minHoldDIV;
+        extraLowDIV = HAL_DIV_ROUND_UP(minLowDIV * extraDIV, minHoldDIV);
+
+        lowDIV = minLowDIV + extraLowDIV;
+        highDIV = minHighDIV + (extraDIV - extraLowDIV);
+    }
+
+    highDIV--;
+    lowDIV--;
+
+    if (highDIV > 0xffff || lowDIV > 0xffff)
+        return HAL_INVAL;
+
+    WRITE_REG(pI2C->pReg->CLKDIV, (highDIV << I2C_CLKDIV_CLKDIVH_SHIFT) | lowDIV);
+    /* 1 for data hold/setup time is enough */
+    WRITE_REG(pI2C->pReg->CON, REG_CON_SDA_CFG(1) | REG_CON_STA_CFG(startSetup));
+
+    return HAL_OK;
+}
+
+/**
   * @brief  Handle I2C interrupt for transfer.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.
@@ -742,7 +743,7 @@ HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, struct I2C_REG *pReg, uint32_t 
     HAL_ASSERT(IS_I2C_INSTANCE(pI2C->pReg));
 
     /* Init speed */
-    return I2C_AdaptDIV(pI2C, rate, speed);
+    return HAL_I2C_AdaptDIV(pI2C, rate);
 }
 
 /**

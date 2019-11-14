@@ -119,6 +119,7 @@ struct I2C_HANDLE {
 
 /***************************** Function Declare ******************************/
 
+HAL_Status HAL_I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate);
 HAL_Status HAL_I2C_IRQHandler(struct I2C_HANDLE *pI2C);
 HAL_Status HAL_I2C_ConfigureMode(struct I2C_HANDLE *pI2C, eI2C_Mode mode,
                                  uint32_t addr, uint32_t regAddr);
