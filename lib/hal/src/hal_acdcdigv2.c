@@ -220,6 +220,21 @@
 /* Requested i2s mclk and mux. */
 #define CLK_CODEC_SEL_MCLK     MCLK_I2S8CH_1_TX
 #define CLK_CODEC_SEL_MCLK_MUX CLK_CODEC_SEL_MCLK_I2S8CH_1_TX_MUX
+
+/**
+ * For compatibility, the sample rate modes are suitable for different
+ * scenarios.
+ */
+#ifndef HAL_ACDCDIG_SAMPLERATE_MODE
+#define HAL_ACDCDIG_FLIXIBLE_SAMPLERATE 0
+#define HAL_ACDCDIG_STRICT_SAMPLERATE   1
+#define HAL_ACDCDIG_SAMPLERATE_MODE     HAL_ACDCDIG_FLIXIBLE_SAMPLERATE
+#endif
+
+#if (HAL_ACDCDIG_SAMPLERATE_MODE == HAL_ACDCDIG_STRICT_SAMPLERATE)
+#define STRICT_SAMPLERATE_CAPTURE  AUDIO_SAMPLERATE_16000
+#define STRICT_SAMPLERATE_PLAYBACK AUDIO_SAMPLERATE_48000
+#endif
 /********************* Private Structure Definition **************************/
 
 /**
@@ -567,6 +582,33 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
     uint32_t syncClkRate, divSyncClk;
     bool codecIsMaster;
 
+#if (HAL_ACDCDIG_SAMPLERATE_MODE == HAL_ACDCDIG_STRICT_SAMPLERATE)
+    if (stream == AUDIO_STREAM_PLAYBACK) {
+        if (sampleRate != STRICT_SAMPLERATE_PLAYBACK)
+            return HAL_INVAL;
+    } else {
+        if (sampleRate != STRICT_SAMPLERATE_CAPTURE)
+            return HAL_INVAL;
+    }
+
+    if (acdcDig->enabled == 0) {
+        /* Prepare DACINT_DIV just once. */
+        syncClkRate = HAL_ACDCDIG_GetSyncClk(STRICT_SAMPLERATE_PLAYBACK);
+        HAL_ASSERT(syncClkRate != 0);
+        divSyncClk = HAL_DivRoundClosest(mclkRate, syncClkRate);
+        MODIFY_REG(reg->DACINT_DIV,
+                   ACDCDIG_DACINT_DIV_INT_DIV_CON_MASK,
+                   ACDCDIG_DACINT_DIV_INT_DIV(divSyncClk));
+
+        /* Prepare ADCINT_DIV just once. */
+        syncClkRate = HAL_ACDCDIG_GetSyncClk(STRICT_SAMPLERATE_CAPTURE);
+        HAL_ASSERT(syncClkRate != 0);
+        divSyncClk = HAL_DivRoundClosest(mclkRate, syncClkRate);
+        MODIFY_REG(reg->ADCINT_DIV,
+                   ACDCDIG_ADCINT_DIV_INT_DIV_CON_MASK,
+                   ACDCDIG_ADCINT_DIV_INT_DIV(divSyncClk));
+    }
+#else /* FLIXIBLE_SAMPLERATE */
     syncClkRate = HAL_ACDCDIG_GetSyncClk(sampleRate);
     HAL_ASSERT(syncClkRate != 0);
     divSyncClk = HAL_DivRoundClosest(mclkRate, syncClkRate);
@@ -609,6 +651,7 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
                        ACDCDIG_SYSCTRL0_GLB_CKE_EN);
         }
     }
+#endif
 
     if (acdcDig->enabled == 0) {
         ACDCDIG_ADCCLKCTRL_Enable(acdcDig);
