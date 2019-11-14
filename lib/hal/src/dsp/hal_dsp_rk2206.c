@@ -100,6 +100,17 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
             WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, 0);
         break;
     }
+    case DSP_IOCTL_SET_DVFS_ST:
+    {
+        if ((bool)arg == true) {
+            HAL_CRU_ClkDisable(CLK_HIFI3_GATE);
+            HAL_CRU_ClkDisable(ACLK_HIFI3_NIU_GATE);
+        } else {
+            HAL_CRU_ClkEnable(ACLK_HIFI3_NIU_GATE);
+            HAL_CRU_ClkEnable(CLK_HIFI3_GATE);
+        }
+        break;
+    }
     default:
         break;
     }
@@ -180,13 +191,14 @@ HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp)
     dsp->grfReg = (struct GRF_REG *)(GRF_BASE);
     dsp->resetFlag = DSP_RESET_MODE_RESET_ALL_CLK;
 
-    dsp->mbox_isA2B = 1;
-    dsp->mbox_reg = MBOX1;
-    dsp->error_irq = DSP_ERROR_IRQn;
-    dsp->mbox_irq[0] = B2A1_INT0_IRQn;
-    dsp->mbox_irq[1] = B2A1_INT1_IRQn;
-    dsp->mbox_irq[2] = B2A1_INT2_IRQn;
-    dsp->mbox_irq[3] = B2A1_INT3_IRQn;
+    dsp->mboxIsA2B = 1;
+    dsp->mboxReg = MBOX1;
+    dsp->errorIrq = DSP_ERROR_IRQn;
+    dsp->mboxIrq[0] = B2A1_INT0_IRQn;
+    dsp->mboxIrq[1] = B2A1_INT1_IRQn;
+    dsp->mboxIrq[2] = B2A1_INT2_IRQn;
+    dsp->mboxIrq[3] = B2A1_INT3_IRQn;
+    dsp->clkId = CLK_HIFI3;
 
     /* Deassert reset */
     HAL_DSP_Enable(dsp, 0);

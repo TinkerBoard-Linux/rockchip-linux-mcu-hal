@@ -26,6 +26,7 @@
 #define DSP_IOCTL_SET_ITCM_SIZE  DSP_IOCTL(1)
 #define DSP_IOCTL_SET_DTCM_SIZE  DSP_IOCTL(2)
 #define DSP_IOCTL_SET_MEM_GATING DSP_IOCTL(3)
+#define DSP_IOCTL_SET_DVFS_ST    DSP_IOCTL(4)
 
 #define DSP_TCM_SEL(a) (0x1 << a)
 
@@ -118,10 +119,11 @@ struct DSP_DEV {
     struct GRF_REG *grfReg;    /**< grf register base */
     const struct DSP_OPS *ops; /**< dsp ops function */
     eDSP_resetMode resetFlag; /**< dsp have been reset flag */
-    uint8_t mbox_isA2B;       /**< 1: AP to BB; 0: BB to AP */
-    struct MBOX_REG *mbox_reg;
-    uint8_t error_irq;
-    int mbox_irq[MBOX_CHAN_CNT];
+    uint8_t mboxIsA2B;       /**< 1: AP to BB; 0: BB to AP */
+    struct MBOX_REG *mboxReg;
+    uint8_t errorIrq;
+    int mboxIrq[MBOX_CHAN_CNT];
+    uint32_t clkId;
     void *privData; /**< dsp dev privData */
 };
 

@@ -239,13 +239,14 @@ HAL_Status HAL_DSP_Init(struct DSP_DEV *dsp)
     dsp->grfReg = (struct GRF_REG *)(GRF_BASE);
     dsp->resetFlag = DSP_RESET_MODE_RESET_ALL_CLK;
 
-    dsp->mbox_isA2B = 1;
-    dsp->mbox_reg = MBOX0;
-    dsp->error_irq = DSP_PFATAL_ERROR_IRQn;
-    dsp->mbox_irq[0] = MAILBOX0_AP_IRQn;
-    dsp->mbox_irq[1] = MAILBOX0_AP_IRQn;
-    dsp->mbox_irq[2] = MAILBOX0_AP_IRQn;
-    dsp->mbox_irq[3] = MAILBOX0_AP_IRQn;
+    dsp->mboxIsA2B = 1;
+    dsp->mboxReg = MBOX0;
+    dsp->errorIrq = DSP_PFATAL_ERROR_IRQn;
+    dsp->mboxIrq[0] = MAILBOX0_AP_IRQn;
+    dsp->mboxIrq[1] = MAILBOX0_AP_IRQn;
+    dsp->mboxIrq[2] = MAILBOX0_AP_IRQn;
+    dsp->mboxIrq[3] = MAILBOX0_AP_IRQn;
+    dsp->clkId = ACLK_DSP;
 
     /* Deassert reset */
     HAL_DSP_Enable(dsp, 0);
