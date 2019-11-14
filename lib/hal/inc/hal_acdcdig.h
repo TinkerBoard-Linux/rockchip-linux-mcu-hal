@@ -50,9 +50,9 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig, eAUDIO_streamTyp
 HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig, eAUDIO_streamType stream, struct AUDIO_PARAMS *params);
 HAL_Status HAL_ACDCDIG_SetClock(struct HAL_ACDCDIG_DEV *acdcDig, eAUDIO_streamType stream, uint32_t freq);
 HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
-                               eAUDIO_streamType stream, int dB);
+                               eAUDIO_streamType stream, struct AUDIO_DB_CONFIG *dBConfig);
 HAL_Status HAL_ACDCDIG_GetGain(struct HAL_ACDCDIG_DEV *acdcDig,
-                               eAUDIO_streamType stream, int *dB);
+                               eAUDIO_streamType stream, struct AUDIO_DB_CONFIG *dBConfig);
 HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
                                    struct AUDIO_GAIN_INFO *info);
 HAL_Status HAL_ACDCDIG_RequestI2C(struct HAL_ACDCDIG_DEV *acdcDig, eACDCDIG_i2cUsed i2cUsed);

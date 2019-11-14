@@ -136,6 +136,14 @@ struct AUDIO_GAIN_INFO {
     int32_t step; /**< The step dB and scaled 1000 times for interger handing. */
 };
 
+/**
+ * struct audio_gain_info - audio gain information struct.
+ */
+struct AUDIO_DB_CONFIG {
+    int dB; /**< The current dB and scaled 1000 times for interger handing. */
+    uint8_t ch; /**< The specified channel for ADC or DAC to set/get dB. */
+};
+
 /** @} */
 /***************************** Function Declare ******************************/
 

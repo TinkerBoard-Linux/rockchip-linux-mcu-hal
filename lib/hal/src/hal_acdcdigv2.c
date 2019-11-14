@@ -217,6 +217,10 @@
 #define ACDCDIG_ADCVOL_MONO_MAX 0xffU
 #define ACDCDIG_DACVOL_MONO_MAX 0xffU
 
+/* The number of ADC and DAC. */
+#define ACDCDIG_ADC_NUM 3
+#define ACDCDIG_DAC_NUM 1
+
 /* Requested i2s mclk and mux. */
 #define CLK_CODEC_SEL_MCLK     MCLK_I2S8CH_1_TX
 #define CLK_CODEC_SEL_MCLK_MUX CLK_CODEC_SEL_MCLK_I2S8CH_1_TX_MUX
@@ -1077,18 +1081,28 @@ HAL_Status HAL_ACDCDIG_Config(struct HAL_ACDCDIG_DEV *acdcDig,
  * @brief  Set Gain for acdcDig.
  * @param  acdcDig: the handle of acdcDig.
  * @param  stream: audio stream type.
- * @param  dB: The gains of codec, range: -95625(-95.625dB) ~ 95625(95.625dB).
- *             Similar to Linux ALSA TLV dB scale, they are scaled 1000 times
- *             to avoid representation of fractional parts.
+ * @param  dBConfig: The gains config of codec, it includes ADC/DAC channel,
+ *                   and the dB range is: -95625(-95.625dB) ~ 95625(95.625dB).
+ *                   Similar to Linux ALSA TLV dB scale, they are scaled 1000
+ *                   times to avoid representation of fractional parts.
  * @return HAL_Status
  */
 HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
-                               eAUDIO_streamType stream, int dB)
+                               eAUDIO_streamType stream,
+                               struct AUDIO_DB_CONFIG *dBConfig)
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
+    uint32_t mask, val;
+    int dB;
+
+    HAL_ASSERT(dBConfig != NULL);
+
+    dB = dBConfig->dB;
 
     switch (stream) {
     case AUDIO_STREAM_PLAYBACK:
+        HAL_ASSERT(dBConfig->ch <= ACDCDIG_DAC_NUM);
+
         if (dB > 0) {
             if (dB > ACDCDIG_DB_MAX)
                 dB = ACDCDIG_DB_MAX;
@@ -1110,34 +1124,72 @@ HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
         WRITE_REG(reg->DACVOLL0, ACDCDIG_DACVOL(dB));
         break;
     case AUDIO_STREAM_CAPTURE:
+        HAL_ASSERT(dBConfig->ch <= ACDCDIG_ADC_NUM);
+
         if (dB > 0) {
             if (dB > ACDCDIG_DB_MAX)
                 dB = ACDCDIG_DB_MAX;
 
             dB = dB / ACDCDIG_DB_STEP;
-            MODIFY_REG(reg->ADCVOGP,
-                       ACDCDIG_ADCVOGP_VOLGPL0_MASK |
+
+            if (dBConfig->ch == 0) {
+                mask = ACDCDIG_ADCVOGP_VOLGPL0_MASK;
+                val = ACDCDIG_ADCVOGP_VOLGPL0_POS_GAIN;
+                WRITE_REG(reg->ADCVOLL[0], ACDCDIG_ADCVOL(dB));
+            } else if (dBConfig->ch == 1) {
+                mask = ACDCDIG_ADCVOGP_VOLGPR1_MASK;
+                val = ACDCDIG_ADCVOGP_VOLGPR1_POS_GAIN;
+                WRITE_REG(reg->ADCVOLR0, ACDCDIG_ADCVOL(dB));
+            } else if (dBConfig->ch == 2) {
+                mask = ACDCDIG_ADCVOGP_VOLGPL2_MASK;
+                val = ACDCDIG_ADCVOGP_VOLGPL2_POS_GAIN;
+                WRITE_REG(reg->ADCVOLL[1], ACDCDIG_ADCVOL(dB));
+            } else {
+                /* The dBConfig->ch == 3 and set all ADC gains. */
+                mask = ACDCDIG_ADCVOGP_VOLGPL0_MASK |
                        ACDCDIG_ADCVOGP_VOLGPR1_MASK |
-                       ACDCDIG_ADCVOGP_VOLGPL2_MASK,
-                       ACDCDIG_ADCVOGP_VOLGPL0_POS_GAIN |
-                       ACDCDIG_ADCVOGP_VOLGPR1_POS_GAIN |
-                       ACDCDIG_ADCVOGP_VOLGPL2_POS_GAIN);
+                       ACDCDIG_ADCVOGP_VOLGPL2_MASK;
+                val = ACDCDIG_ADCVOGP_VOLGPL0_POS_GAIN |
+                      ACDCDIG_ADCVOGP_VOLGPR1_POS_GAIN |
+                      ACDCDIG_ADCVOGP_VOLGPL2_POS_GAIN;
+                WRITE_REG(reg->ADCVOLL[0], ACDCDIG_ADCVOL(dB));
+                WRITE_REG(reg->ADCVOLR0, ACDCDIG_ADCVOL(dB));
+                WRITE_REG(reg->ADCVOLL[1], ACDCDIG_ADCVOL(dB));
+            }
         } else {
             if (dB < ACDCDIG_DB_MIN)
                 dB = ACDCDIG_DB_MIN;
 
             dB = -(dB / ACDCDIG_DB_STEP);
-            MODIFY_REG(reg->ADCVOGP,
-                       ACDCDIG_ADCVOGP_VOLGPL0_MASK |
+
+            if (dBConfig->ch == 0) {
+                mask = ACDCDIG_ADCVOGP_VOLGPL0_MASK;
+                val = ACDCDIG_ADCVOGP_VOLGPL0_NEG_GAIN;
+                WRITE_REG(reg->ADCVOLL[0], ACDCDIG_ADCVOL(dB));
+            } else if (dBConfig->ch == 1) {
+                mask = ACDCDIG_ADCVOGP_VOLGPR1_MASK;
+                val = ACDCDIG_ADCVOGP_VOLGPR1_NEG_GAIN;
+                WRITE_REG(reg->ADCVOLR0, ACDCDIG_ADCVOL(dB));
+            } else if (dBConfig->ch == 2) {
+                mask = ACDCDIG_ADCVOGP_VOLGPL2_MASK;
+                val = ACDCDIG_ADCVOGP_VOLGPL2_NEG_GAIN;
+                WRITE_REG(reg->ADCVOLL[1], ACDCDIG_ADCVOL(dB));
+            } else {
+                /* The dBConfig->ch == 3 and set all ADC gains. */
+                mask = ACDCDIG_ADCVOGP_VOLGPL0_MASK |
                        ACDCDIG_ADCVOGP_VOLGPR1_MASK |
-                       ACDCDIG_ADCVOGP_VOLGPL2_MASK,
-                       ACDCDIG_ADCVOGP_VOLGPL0_NEG_GAIN |
-                       ACDCDIG_ADCVOGP_VOLGPR1_NEG_GAIN |
-                       ACDCDIG_ADCVOGP_VOLGPL2_NEG_GAIN);
+                       ACDCDIG_ADCVOGP_VOLGPL2_MASK;
+                val = ACDCDIG_ADCVOGP_VOLGPL0_NEG_GAIN |
+                      ACDCDIG_ADCVOGP_VOLGPR1_NEG_GAIN |
+                      ACDCDIG_ADCVOGP_VOLGPL2_NEG_GAIN;
+
+                WRITE_REG(reg->ADCVOLL[0], ACDCDIG_ADCVOL(dB));
+                WRITE_REG(reg->ADCVOLR0, ACDCDIG_ADCVOL(dB));
+                WRITE_REG(reg->ADCVOLL[1], ACDCDIG_ADCVOL(dB));
+            }
         }
-        WRITE_REG(reg->ADCVOLL[0], ACDCDIG_ADCVOL(dB));
-        WRITE_REG(reg->ADCVOLL[1], ACDCDIG_ADCVOL(dB));
-        WRITE_REG(reg->ADCVOLR0, ACDCDIG_ADCVOL(dB));
+
+        MODIFY_REG(reg->ADCVOGP, mask, val);
         break;
     default:
 
@@ -1151,35 +1203,47 @@ HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
  * @brief  Get Gain for acdcDig.
  * @param  acdcDig: the handle of acdcDig.
  * @param  stream: audio stream type.
- * @param  dB: The gains of codec, range: -95625(-95.625dB) ~ 95625(95.625dB).
- *             Similar to Linux ALSA TLV dB scale, they are scaled 1000 times
- *             to avoid representation of fractional parts.
+ * @param  dBConfig: The gains config of codec, it includes ADC/DAC channel,
+ *                   and the dB range is: -95625(-95.625dB) ~ 95625(95.625dB).
+ *                   Similar to Linux ALSA TLV dB scale, they are scaled 1000
+ *                   times to avoid representation of fractional parts.
  * @return HAL_Status
  */
 HAL_Status HAL_ACDCDIG_GetGain(struct HAL_ACDCDIG_DEV *acdcDig,
-                               eAUDIO_streamType stream, int *dB)
+                               eAUDIO_streamType stream,
+                               struct AUDIO_DB_CONFIG *dBConfig)
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
     uint8_t vol;
 
-    if (!dB)
-        return HAL_ERROR;
+    HAL_ASSERT(dBConfig != NULL);
 
     switch (stream) {
     case AUDIO_STREAM_PLAYBACK:
+        HAL_ASSERT(dBConfig->ch <= ACDCDIG_DAC_NUM);
+
         vol = READ_REG(reg->DACVOLL0);
         if (READ_REG(reg->DACVOGP))
-            *dB = vol * ACDCDIG_DB_STEP; /* Positive gain */
+            dBConfig->dB = vol * ACDCDIG_DB_STEP; /* Positive gain */
         else
-            *dB = -(vol * ACDCDIG_DB_STEP); /* Negative gain */
+            dBConfig->dB = -(vol * ACDCDIG_DB_STEP); /* Negative gain */
         break;
     case AUDIO_STREAM_CAPTURE:
+        /* Need to specify ADC channel here. */
+        HAL_ASSERT(dBConfig->ch < ACDCDIG_ADC_NUM);
+
         /* There are the same volumes for 3ADCs */
-        vol = READ_REG(reg->ADCVOLL[0]);
-        if (READ_REG(reg->ADCVOGP))
-            *dB = vol * ACDCDIG_DB_STEP; /* Positive gain */
+        if (dBConfig->ch == 0)
+            vol = READ_REG(reg->ADCVOLL[0]);
+        else if (dBConfig->ch == 1)
+            vol = READ_REG(reg->ADCVOLR0);
+        else /* The array ADCVOLL[1] is left channel 2 */
+            vol = READ_REG(reg->ADCVOLL[1]);
+
+        if (READ_BIT(reg->ADCVOGP, 1 << dBConfig->ch))
+            dBConfig->dB = vol * ACDCDIG_DB_STEP;   /* Positive gain */
         else
-            *dB = -(vol * ACDCDIG_DB_STEP); /* Negative gain */
+            dBConfig->dB = -(vol * ACDCDIG_DB_STEP);   /* Negative gain */
         break;
     default:
 
