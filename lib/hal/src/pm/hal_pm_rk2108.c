@@ -51,10 +51,15 @@
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
+static uint64_t pmTimerLastCount;
+static uint64_t pmTimerLowCount;
+static uint32_t pmTimerLowRate;
+
 #ifdef HAL_PM_RUNTIME_MODULE_ENABLED
 static uint8_t pvtm32kEn = 0;
-
+#endif
 /********************* Private Function Definition ***************************/
+#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
 static uint32_t PM_GetPllPostDivEven(uint32_t rateIn, uint32_t rateOut, uint32_t *postDiv1, uint32_t *postDiv2)
 {
     uint32_t div1, div2, div;
@@ -325,6 +330,31 @@ static int SOC_SuspendEnter(uint32_t flag)
     return HAL_OK;
 }
 #endif
+
+HAL_Status HAL_PM_TimerStart(uint64_t timeoutCount, bool needTimeout)
+{
+    pmTimerLastCount = HAL_GetSysTimerCount();
+    pmTimerLowCount = 0;
+
+    return 0;
+}
+
+HAL_Status HAL_PM_TimerStop(void)
+{
+    return 0;
+}
+
+uint64_t HAL_PM_GetTimerCount(void)
+{
+    uint64_t timerCount;
+
+    timerCount = HAL_GetSysTimerCount() - pmTimerLastCount;
+    if (pmTimerLowRate)
+        timerCount += HAL_DivU64(pmTimerLowCount * PLL_INPUT_OSC_RATE,
+                                 pmTimerLowRate) - pmTimerLowCount;
+
+    return timerCount;
+}
 
 int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 {
