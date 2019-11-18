@@ -26,6 +26,7 @@
 
 /********************* Private MACRO Definition ******************************/
 /* for pm_runtime */
+#define SLEEP_INPUT_RATE     32000
 #define EXPONENT_OF_FRAC_PLL 24
 #define RK_PLL_MODE_SLOW     0
 #define RK_PLL_MODE_NORMAL   1
@@ -43,8 +44,15 @@
 #define UART_CLK_GET_MUX(clk) HAL_CRU_ClkGetMux(CLK_GET_MUX((clk)))
 #define GPLL_RUNTIME_RATE     (PLL_INPUT_OSC_RATE * 2)
 
+#define SLEEP_COUNT_TO_MS(ms) (ms * SLEEP_INPUT_RATE / 1000)
 /********************* Private Structure Definition **************************/
-
+struct UART_REG_SAVE {
+    uint32_t DLL;
+    uint32_t DLH;
+    uint32_t IER;
+    uint32_t LCR;
+    uint32_t MCR;
+};
 /********************* Private Variable Definition ***************************/
 static uint64_t pmTimerLastCount;
 static uint64_t pmTimerLowCount;
@@ -164,7 +172,7 @@ static void SOC_SleepModeInit(struct PMU_REG *pPmu)
             (1 << PMU_PWRMODE_CON_PLL_PD_EN_SHIFT) |
             (1 << PMU_PWRMODE_CON_LOGIC_PD_EN_SHIFT) |
             (1 << PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_SHIFT) |
-            (1 << PMU_PWRMODE_CON_BYPASS_PLL_LOCK_SHIFT) |
+            /*(1 << PMU_PWRMODE_CON_BYPASS_PLL_LOCK_SHIFT) |*/
             /*(1 << PMU_PWRMODE_CON_BYPASS_HF_EN_SHIFT) |*/
             (1 << PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_CFG_SHIFT) |
             (1 << PMU_PWRMODE_CON_SHRM_PD_EN_SHIFT) |
@@ -172,10 +180,13 @@ static void SOC_SleepModeInit(struct PMU_REG *pPmu)
 
     /* if PD_DSP and PD_AUDIO power down, PMU low frequency mode enable */
     if (pPmu->PWRDN_ST &
-        ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT)))
-        value |= (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT) |
-                 (1 << PMU_PWRMODE_CON_BYPASS_HF_EN_SHIFT);
-
+        ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT))) {
+        value |= (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT);
+        pmTimerLowRate = SLEEP_INPUT_RATE;
+        pPmu->PWRMODE_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
+        pPmu->PLLLOCK_CNT = SLEEP_COUNT_TO_MS(1);
+        pPmu->DSP_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
+    }
     pPmu->PWRMODE_CON = VAL_MASK_WE(mask, value);
 
     if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_LOGIC_PD_EN_SHIFT)) {
@@ -248,20 +259,23 @@ static void SOC_PutChar(char c, struct UART_REG *pUart)
 {
     if (pUart) {
         pUart->THR = c;
-        while (pUart->USR & UART_USR_BUSY)
+        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY))
             ;
     }
 }
 
-static void SOC_UartSave(struct UART_REG *pUartSave, struct UART_REG *pUart)
+static void SOC_UartSave(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart)
 {
     if (pUartSave && pUart) {
-        while (pUart->USR & UART_USR_BUSY)
+        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY))
             ;
-        pUartSave->LCR = pUart->LCR;
         pUartSave->LCR = pUart->LCR;
         pUartSave->IER = pUart->IER;
         pUartSave->MCR = pUart->MCR;
+        if (pUart->USR & UART_USR_BUSY)
+            HAL_DelayMs(10);
+        if (pUart->USR & UART_USR_BUSY)
+            pUart->SRR = UART_SRR_XFR | UART_SRR_RFR;
         pUart->LCR = UART_LCR_DLAB;
         pUartSave->DLL = pUart->DLL;
         pUartSave->DLH = pUart->DLH;
@@ -269,11 +283,9 @@ static void SOC_UartSave(struct UART_REG *pUartSave, struct UART_REG *pUart)
     }
 }
 
-static void SOC_UartRestore(struct UART_REG *pUartSave, struct UART_REG *pUart)
+static void SOC_UartRestore(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart)
 {
     if (pUartSave && pUart) {
-        while (pUart->USR & UART_USR_BUSY)
-            ;
         pUart->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
         pUart->MCR = UART_MCR_LOOP;
         pUart->LCR = UART_LCR_DLAB;
@@ -485,13 +497,10 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     struct PMU_REG *pPmu = PMU;
     struct GRF_REG *pGrf = GRF;
     struct UART_REG *pUart = NULL;
-    struct UART_REG pUartSave;
+    struct UART_REG_SAVE pUartSave;
+    uint64_t timerCount;
 
     HAL_ASSERT(suspendInfo != NULL);
-
-#ifdef HAL_SYSTICK_MODULE_ENABLED
-    SysTick->CTRL &= (~SysTick_CTRL_ENABLE_Msk);
-#endif
 
 #ifdef HAL_UART_MODULE_ENABLED
     if (suspendInfo->flag.uartValid) {
@@ -504,28 +513,24 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 
     SOC_PutChar('0', pUart);
     SOC_SleepModeInit(pPmu);
-    SOC_FastBootConfig(pGrf);
     SOC_PutChar('1', pUart);
-    SOC_WakeupSourceConfig(pPmu);
+    SOC_FastBootConfig(pGrf);
     SOC_PutChar('2', pUart);
-    SOC_UartSave(&pUartSave, pUart);
+    SOC_WakeupSourceConfig(pPmu);
     SOC_PutChar('3', pUart);
     HAL_NVIC_SuspendSave();
     SOC_PutChar('4', pUart);
+    SOC_UartSave(&pUartSave, pUart);
+    timerCount = HAL_GetSysTimerCount();
     HAL_CPU_SuspendEnter(suspendInfo->suspendFlag, SOC_SuspendEnter);
+    pmTimerLowCount = HAL_GetSysTimerCount() - timerCount;
+    SOC_SleepModeReinit(pPmu);
     SOC_UartRestore(&pUartSave, pUart);
-    SOC_PutChar('5', pUart);
+    SOC_PutChar('3', pUart);
     HAL_DCACHE_Enable();
     HAL_ICACHE_Enable();
-    SOC_PutChar('4', pUart);
-    HAL_NVIC_ResumeRestore();
-    SOC_PutChar('3', pUart);
-    SOC_SleepModeReinit(pPmu);
     SOC_PutChar('2', pUart);
-#ifdef HAL_SYSTICK_MODULE_ENABLED
-    HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);
-    HAL_SYSTICK_Enable();
-#endif
+    HAL_NVIC_ResumeRestore();
     SOC_PutChar('1', pUart);
     SOC_GetWakeupStatus(pPmu);
     SOC_PutChar('0', pUart);
