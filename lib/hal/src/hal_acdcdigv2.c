@@ -21,6 +21,12 @@
 
  The ACDCDIG driver can be used as follows:
 
+ - Init ACDCDIG Codec during open audio device.
+ - Configure ACDCDIG with sample rate.
+ - Enable ACDCDIG and start playback or capture.
+ - Disable ACDCDIG and stop playback or capture.
+ - Deinit ACDCDIG Codec during close audio device.
+
  @} */
 
 /********************* Private MACRO Definition ******************************/
@@ -189,18 +195,19 @@
 #endif
 
 /**
-  * The relationship between mclk and sampling rate is shown in the following
-  * table:
-  *
-  *          ACDC_CLK  D2A_CLK   D2A_SYNC Sample rates supported
-  *  Group0: 49.152MHz 49.152MHz 6.144MHz 12/24/48/96/192kHz
-  *  Group1: 45.154MHz 45.154MHz 5.644MHz 11.024/22.05/44.1/88.2/176.4kHz
-  *  Gruop2: 32.768MHz 32.768MHz 4.096MHz 8/16/32/64/128kHz
-  *
-  * The Group0 is the highest. Usually, if you need 48kHz to playback which
-  * belongs in Group0, it's better to use the unified group0 mclk as a base
-  * clock for playback and capture.
-  */
+ * The relationship between mclk and sampling rate is shown in the following
+ * table:
+ *
+ * ```
+ *         ACDC_CLK  D2A_CLK   D2A_SYNC Sample rates supported
+ * Group0: 49.152MHz 49.152MHz 6.144MHz 12/24/48/96/192kHz
+ * Group1: 45.154MHz 45.154MHz 5.644MHz 11.024/22.05/44.1/88.2/176.4kHz
+ * Gruop2: 32.768MHz 32.768MHz 4.096MHz 8/16/32/64/128kHz
+ * ```
+ * The Group0 is the highest. Usually, if you need 48kHz to playback which
+ * belongs in Group0, it's better to use the unified group0 mclk as a base
+ * clock for playback and capture.
+ */
 #define ACDCDIG_MCLK_RATE ACDCDIG_GROUP0_MCLK
 
 /* GRF registers */
@@ -208,10 +215,10 @@
 #define GRF_MCU_I2C_TRANS   ((GRF_SOC_CON16_GRF_I2C_TRANS_REQ_MASK << 16) | (1 << GRF_SOC_CON16_GRF_I2C_TRANS_REQ_SHIFT))
 
 /**
-  * The range of gains.
-  * To avoid using decimals, the scaled 1000 times dB is like Linux ALSA TLV.
-  * min: -95.625dB, max: 95.625dB, step: 0.375dB.
-  */
+ * The range of gains.
+ * To avoid using decimals, the scaled 1000 times dB is like Linux ALSA TLV.
+ * min: -95.625dB, max: 95.625dB, step: 0.375dB.
+ */
 #define ACDCDIG_DB_MIN  (-95625)
 #define ACDCDIG_DB_MAX  (95625)
 #define ACDCDIG_DB_STEP (375)
@@ -248,21 +255,14 @@
 /********************* Private Structure Definition **************************/
 
 /**
-  * @brief ACDCDIG I2C transfer mode definition - These definitions are
-  * independent of the generic I2C driven.
-  */
+ * enum ACDCDIG I2C transfer mode definition - These definitions are
+ * independent of the generic I2C driven.
+ */
 typedef enum {
     ACDCDIG_I2C_100K = 0,
     ACDCDIG_I2C_400K,
     ACDCDIG_I2C_1000K
 } eACDCDIG_I2C_BusSpeed;
-
-struct I2C_SPEC_VALUES {
-    uint32_t minLowNS;
-    uint32_t minHighNS;
-    uint32_t maxRiseNS;
-    uint32_t maxFallNS;
-};
 
 /**
  * enum Clock Sync Type - indicate which clock sync is.
@@ -272,7 +272,15 @@ typedef enum {
     CLOCK_SYNC_DAC,
 } eClockSyncType;
 
+struct I2C_SPEC_VALUES {
+    uint32_t minLowNS;
+    uint32_t minHighNS;
+    uint32_t maxRiseNS;
+    uint32_t maxFallNS;
+};
+
 /********************* Private Variable Definition ***************************/
+
 static const struct I2C_SPEC_VALUES standardModeSpec = {
     .minLowNS = 4700,
     .minHighNS = 4000,
@@ -297,10 +305,10 @@ static const struct I2C_SPEC_VALUES fastModePlusSpec = {
 /********************* Private Function Definition ***************************/
 
 /**
-  * @brief  Get the I2C timing specification.
-  * @param  speed: desired I2C bus speed.
-  * @return matched i2c spec values
-  */
+ * @brief  Get the I2C timing specification.
+ * @param  speed: desired I2C bus speed.
+ * @return matched i2c spec values
+ */
 static const struct I2C_SPEC_VALUES *I2C_GetSpec(eACDCDIG_I2C_BusSpeed speed)
 {
     if (speed == ACDCDIG_I2C_1000K)
@@ -312,11 +320,13 @@ static const struct I2C_SPEC_VALUES *I2C_GetSpec(eACDCDIG_I2C_BusSpeed speed)
 }
 
 /**
-  * @brief  Auto adapte the clock div base on input clock rate and desired speed.
-  * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
-  *               the information for I2C module.
-  * @return HAL status
-  */
+ * @brief  Auto adapte the clock div base on input clock rate and desired speed.
+ * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
+ *               the information for I2C module.
+ * @param  rate: desired input clock rate for I2C.
+ * @param  speed: desired I2C bus speed.
+ * @return HAL status
+ */
 static HAL_Status ACDCDIG_I2C_AdaptDIV(struct HAL_ACDCDIG_DEV *acdcDig,
                                        uint32_t rate,
                                        eACDCDIG_I2C_BusSpeed speed)
@@ -386,11 +396,11 @@ static HAL_Status ACDCDIG_I2C_AdaptDIV(struct HAL_ACDCDIG_DEV *acdcDig,
 }
 
 /**
-  * @brief  Disable the I2C controller.
-  * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
-  *               the information for I2C module.
-  * @return HAL status
-  */
+ * @brief  Disable the I2C controller.
+ * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
+ *               the information for I2C module.
+ * @return HAL status
+ */
 static HAL_Status ACDCDIG_I2C_Disable(struct HAL_ACDCDIG_DEV *acdcDig)
 {
     uint32_t val = READ_REG(acdcDig->pReg->I2C_CON[1]) & REG_CON_TUNING_MASK;
@@ -401,11 +411,11 @@ static HAL_Status ACDCDIG_I2C_Disable(struct HAL_ACDCDIG_DEV *acdcDig)
 }
 
 /**
-  * @brief  Send I2C start signal.
-  * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
-  *               the information for I2C module.
-  * @return HAL status
-  */
+ * @brief  Send I2C start signal.
+ * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
+ *               the information for I2C module.
+ * @return HAL status
+ */
 static HAL_Status ACDCDIG_I2C_Start(struct HAL_ACDCDIG_DEV *acdcDig)
 {
     uint32_t val, ret;
@@ -431,12 +441,11 @@ static HAL_Status ACDCDIG_I2C_Start(struct HAL_ACDCDIG_DEV *acdcDig)
 }
 
 /**
-  * @brief  Send I2C stop signal.
-  * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
-  *               the information for I2C module.
-  * @param  error: report the error for the stop.
-  * @return HAL status
-  */
+ * @brief  Send I2C stop signal.
+ * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
+ *               the information for I2C module.
+ * @return HAL status
+ */
 static HAL_Status ACDCDIG_I2C_Stop(struct HAL_ACDCDIG_DEV *acdcDig)
 {
     uint32_t ctrl, ret;
@@ -459,13 +468,11 @@ static HAL_Status ACDCDIG_I2C_Stop(struct HAL_ACDCDIG_DEV *acdcDig)
 }
 
 /**
-  * @brief  Initialize the I2C according to the specified parameters.
-  * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
-  *               the information for I2C module.
-  * @param  rate: I2C bus input clock rate.
-  * @param  speed: I2C bus output speed.
-  * @return HAL status
-  */
+ * @brief  Initialize the I2C according to the specified parameters.
+ * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
+ *               the information for I2C module.
+ * @return HAL status
+ */
 static HAL_Status ACDCDIG_I2C_Init(struct HAL_ACDCDIG_DEV *acdcDig)
 {
     uint32_t i2cCodecRate = HAL_CRU_ClkGetFreq(acdcDig->clkI2cCodec);
@@ -475,11 +482,11 @@ static HAL_Status ACDCDIG_I2C_Init(struct HAL_ACDCDIG_DEV *acdcDig)
 }
 
 /**
-  * @brief  De Initialize the I2C peripheral.
-  * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
-  *               the information for I2C module.
-  * @return HAL status
-  */
+ * @brief  De Initialize the I2C peripheral.
+ * @param  acdcDig: pointer to a HAL_ACDCDIG_DEV structure that contains
+ *               the information for I2C module.
+ * @return HAL status
+ */
 static HAL_Status ACDCDIG_I2C_DeInit(struct HAL_ACDCDIG_DEV *acdcDig)
 {
     /* TO-DO */
@@ -579,7 +586,8 @@ static HAL_Status ACDCDIG_DACCLKCTRL_Disable(struct HAL_ACDCDIG_DEV *acdcDig)
 /**
  * @brief  Select the type of clock sync from ADC or DAC.
  * @param  acdcDig: the handle of acdcDig.
- * @param  syncType: the type of clock sync.
+ * @param  stream: audio stream type.
+ * @param  sampleRate: sample rate.
  * @return HAL_Status
  */
 static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
@@ -722,6 +730,62 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
     return HAL_OK;
 }
 
+/********************* Public Function Definition ****************************/
+
+/** @defgroup ACDCDIG_Exported_Functions_Group1 Suspend and Resume Functions
+
+ This section provides functions allowing to suspend and resume the module:
+
+ *  @{
+ */
+
+/**
+ * @brief  acdcDig suspend.
+ * @param  acdcDig: the handle of acdcDig.
+ * @return HAL_Status
+ */
+HAL_Status HAL_ACDCDIG_Supsend(struct HAL_ACDCDIG_DEV *acdcDig)
+{
+    return HAL_OK;
+}
+
+/**
+ * @brief  acdcDig resume.
+ * @param  acdcDig: the handle of acdcDig.
+ * @return HAL_Status
+ */
+HAL_Status HAL_ACDCDIG_Resume(struct HAL_ACDCDIG_DEV *acdcDig)
+{
+    return HAL_OK;
+}
+
+/** @} */
+
+/** @defgroup ACDCDIG_Exported_Functions_Group2 State and Errors Functions
+
+ This section provides functions allowing to get the status of the module:
+
+ *  @{
+ */
+
+/** @} */
+
+/** @defgroup ACDCDIG_Exported_Functions_Group3 IO Functions
+
+ This section provides functions allowing to IO controlling:
+
+ *  @{
+ */
+
+/** @} */
+
+/** @defgroup ACDCDIG_Exported_Functions_Group4 Init and DeInit Functions
+
+ This section provides functions allowing to init and deinit the module:
+
+ *  @{
+ */
+
 /**
  * @brief  Init acdcDig controller.
  * @param  acdcDig: the handle of acdcDig.
@@ -808,6 +872,7 @@ HAL_Status HAL_ACDCDIG_DeInit(struct HAL_ACDCDIG_DEV *acdcDig)
 /**
  * @brief  Enable acdcDig controller.
  * @param  acdcDig: the handle of acdcDig.
+ * @param  stream: audio stream type.
  * @return HAL_Status
  */
 HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
@@ -880,6 +945,7 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
 /**
  * @brief  Disable acdcDig controller.
  * @param  acdcDig: the handle of acdcDig.
+ * @param  stream: audio stream type.
  * @return HAL_Status
  */
 HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig,
@@ -948,7 +1014,8 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig,
 /**
  * @brief  Set acdcDig clock.
  * @param  acdcDig: the handle of acdcDig.
- * @param  params: audio params.
+ * @param  stream: audio stream type.
+ * @param  freq: audio clock freq.
  * @return HAL_Status
  */
 HAL_Status HAL_ACDCDIG_SetClock(struct HAL_ACDCDIG_DEV *acdcDig,
@@ -961,6 +1028,7 @@ HAL_Status HAL_ACDCDIG_SetClock(struct HAL_ACDCDIG_DEV *acdcDig,
 /**
  * @brief  Config acdcDig controller.
  * @param  acdcDig: the handle of acdcDig.
+ * @param  stream: audio stream type.
  * @param  params: audio params.
  * @return HAL_Status
  */
@@ -1305,6 +1373,7 @@ HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
 
 /**
  * @brief  Request ACDCDIG to use i2c by codec or MCU.
+ * @param  acdcDig: the handle of acdcDig.
  * @param  i2cUsed: codec or MCU to use i2c.
  * @return HAL_Status
  */

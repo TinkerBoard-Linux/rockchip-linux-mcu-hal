@@ -19,13 +19,18 @@
 #include "hal_audio.h"
 #include "hal_def.h"
 
+/***************************** MACRO Definition ******************************/
+/** @defgroup ACDCDIG_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
+
 /***************************** Structure Definition **************************/
 /**
   * @brief Indicate Which module use I2C
   */
 typedef enum {
-    CODEC_USE_I2C = 0,
-    MCU_USE_I2C,
+    CODEC_USE_I2C = 0, /**< Codec exclusive i2c by default. */
+    MCU_USE_I2C, /**< MCU exclusive i2c. */
 } eACDCDIG_i2cUsed;
 
 /** acdcDig dev struct */
