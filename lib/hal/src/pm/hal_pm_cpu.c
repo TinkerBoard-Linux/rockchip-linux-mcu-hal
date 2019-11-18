@@ -99,7 +99,7 @@ const struct PM_RUNTIME_INFO *HAL_PM_RuntimeGetData(void)
 
 #define NVIC_EXT_ISER_NUM (8)
 #define NVIC_EXT_IP_NUM   (240)
-
+#define SHP_NUM           (12)
 /********************* Private Structure Definition **************************/
 
 struct NVIC_SAVE_S {
@@ -113,6 +113,7 @@ struct NVIC_SAVE_S {
 
 static struct NVIC_SAVE_S nvicSave;
 static NVIC_Type *pnvic = NVIC;
+static uint8_t shprSave[SHP_NUM];
 
 /********************* Private Function Definition ***************************/
 
@@ -138,6 +139,8 @@ void HAL_NVIC_SuspendSave(void)
         nvicSave.ip[i] = pnvic->IP[i];
 
     nvicSave.pg = NVIC_GetPriorityGrouping();
+    for (i = 0; i < SHP_NUM; i++)
+        shprSave[i] = SCB->SHP[i];
 }
 
 /**
@@ -157,6 +160,9 @@ void HAL_NVIC_ResumeRestore(void)
 
     for (i = 0; i < NVIC_EXT_ISER_NUM; i++)
         pnvic->ISER[i] = nvicSave.iser[i];
+
+    for (i = 0; i < SHP_NUM; i++)
+        SCB->SHP[i] = shprSave[i];
 }
 
 /**
