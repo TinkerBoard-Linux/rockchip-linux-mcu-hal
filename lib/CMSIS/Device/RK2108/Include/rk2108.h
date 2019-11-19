@@ -383,7 +383,7 @@ struct ACDCDIG_REG {
     __IO uint32_t LILMT1;                             /* Address Offset: 0x0058 */
     __IO uint32_t LILMT2;                             /* Address Offset: 0x005C */
     __IO uint32_t LILMTNG1;                           /* Address Offset: 0x0060 */
-    __IO uint32_t LILMTNG2;                           /* Address Offset: 0x0064 */
+    __I  uint32_t LILMTNG2;                           /* Address Offset: 0x0064 */
     __IO uint32_t PDMCTRL;                            /* Address Offset: 0x0068 */
     __IO uint32_t I2SCKM;                             /* Address Offset: 0x006C */
     __IO uint32_t I2SDIV;                             /* Address Offset: 0x0070 */
@@ -391,7 +391,7 @@ struct ACDCDIG_REG {
     __IO uint32_t I2STXCR1;                           /* Address Offset: 0x0078 */
     __IO uint32_t I2STXCR2;                           /* Address Offset: 0x007C */
     __IO uint32_t I2STXCMD;                           /* Address Offset: 0x0080 */
-    __IO uint32_t VERSION;                            /* Address Offset: 0x0084 */
+    __I  uint32_t VERSION;                            /* Address Offset: 0x0084 */
 };
 /* UART Register Structure Define */
 struct UART_REG {
@@ -5193,14 +5193,14 @@ struct AUDIOPWM_REG {
 #define ACDCDIG_HPFCTRL_HPFLE_MASK                         (0x1U << ACDCDIG_HPFCTRL_HPFLE_SHIFT)                        /* 0x00000080 */
 /* ADCRVOLL */
 #define ACDCDIG_ADCRVOLL_OFFSET                            (0x44U)
-#define ACDCDIG_ADCRVOLL                                   (0xFFU)
+#define ACDCDIG_ADCRVOLL                                   (0x0U)
 #define ACDCDIG_ADCRVOLL_ADCRLV_SHIFT                      (0U)
-#define ACDCDIG_ADCRVOLL_ADCRLV_MASK                       (0xFFU << ACDCDIG_ADCRVOLL_ADCRLV_SHIFT)                     /* 0x000000FF */
+#define ACDCDIG_ADCRVOLL_ADCRLV_MASK                       (0x1U << ACDCDIG_ADCRVOLL_ADCRLV_SHIFT)                      /* 0x00000001 */
 /* ADCRVOLR */
 #define ACDCDIG_ADCRVOLR_OFFSET                            (0x48U)
-#define ACDCDIG_ADCRVOLR                                   (0xFFU)
+#define ACDCDIG_ADCRVOLR                                   (0x0U)
 #define ACDCDIG_ADCRVOLR_ADCRRV_SHIFT                      (0U)
-#define ACDCDIG_ADCRVOLR_ADCRRV_MASK                       (0xFFU << ACDCDIG_ADCRVOLR_ADCRRV_SHIFT)                     /* 0x000000FF */
+#define ACDCDIG_ADCRVOLR_ADCRRV_MASK                       (0x1U << ACDCDIG_ADCRVOLR_ADCRRV_SHIFT)                      /* 0x00000001 */
 /* PGACFG */
 #define ACDCDIG_PGACFG_OFFSET                              (0x4CU)
 #define ACDCDIG_PGACFG_PGA_R_DEC_SHIFT                     (0U)
@@ -5249,6 +5249,7 @@ struct AUDIOPWM_REG {
 #define ACDCDIG_LILMTNG1_NGCHL_LI_MASK                     (0x1U << ACDCDIG_LILMTNG1_NGCHL_LI_SHIFT)                    /* 0x00000080 */
 /* LILMTNG2 */
 #define ACDCDIG_LILMTNG2_OFFSET                            (0x64U)
+#define ACDCDIG_LILMTNG2                                   (0x0U)
 #define ACDCDIG_LILMTNG2_NGVALID_LI_SHIFT                  (0U)
 #define ACDCDIG_LILMTNG2_NGVALID_LI_MASK                   (0x1U << ACDCDIG_LILMTNG2_NGVALID_LI_SHIFT)                  /* 0x00000001 */
 /* PDMCTRL */
@@ -5301,6 +5302,7 @@ struct AUDIOPWM_REG {
 #define ACDCDIG_I2STXCMD_TXS_MASK                          (0x1U << ACDCDIG_I2STXCMD_TXS_SHIFT)                         /* 0x00000080 */
 /* VERSION */
 #define ACDCDIG_VERSION_OFFSET                             (0x84U)
+#define ACDCDIG_VERSION                                    (0x1U)
 #define ACDCDIG_VERSION_VER_SHIFT                          (0U)
 #define ACDCDIG_VERSION_VER_MASK                           (0xFFU << ACDCDIG_VERSION_VER_SHIFT)                         /* 0x000000FF */
 /******************************************UART******************************************/
