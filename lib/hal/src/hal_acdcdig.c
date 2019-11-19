@@ -21,7 +21,7 @@
 #include "hal_base.h"
 
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
-#if (ACDCDIG_VERSION_OFFSET == 0x84) /* ACDCDIGv1 */
+#if (ACDCDIG_VERSION == 0x1U) /* ACDCDIGv1 */
 
 /********************* Private MACRO Definition ******************************/
 /* VUCTL */
@@ -653,7 +653,7 @@ HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
 
 /** @} */
 
-#endif /* (ACDCDIG_VERSION_OFFSET == 0x84) */
+#endif /* (ACDCDIG_VERSION == 0x1U) */
 #endif
 
 /** @} */

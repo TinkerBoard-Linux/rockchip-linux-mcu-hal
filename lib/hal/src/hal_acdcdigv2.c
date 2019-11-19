@@ -21,7 +21,7 @@
 #include "hal_base.h"
 
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
-#if (ACDCDIG_VERSION_OFFSET == 0x380) /* ACDCDIGv2 */
+#if (ACDCDIG_VERSION == 0x2U) /* ACDCDIGv2 */
 
 /********************* Private MACRO Definition ******************************/
 /* REG_CON bits */
@@ -1363,7 +1363,7 @@ uint32_t HAL_ACDCDIG_GetSyncClk(eAUDIO_sampleRate sampleRate)
 
 /** @} */
 
-#endif /* (ACDCDIG_VERSION_OFFSET == 0x380) */
+#endif /* (ACDCDIG_VERSION == 0x2U) */
 #endif
 
 /** @} */
