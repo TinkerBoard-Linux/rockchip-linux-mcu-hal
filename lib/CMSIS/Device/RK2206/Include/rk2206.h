@@ -6798,25 +6798,30 @@ typedef enum PD_Id {
 #define CRU_SDMMC_CON01_SAMPLE_SEL_SHIFT                   (11U)
 #define CRU_SDMMC_CON01_SAMPLE_SEL_MASK                    (0x1U << CRU_SDMMC_CON01_SAMPLE_SEL_SHIFT)                   /* 0x00000800 */
 /******************************************PVTM******************************************/
-/* PVTM_VERSION */
-#define PVTM_PVTM_VERSION_VERSION_SHIFT                    (0U)
-#define PVTM_PVTM_VERSION_VERSION_MASK                     (0xFFFFU << PVTM_PVTM_VERSION_VERSION_SHIFT)                 /* 0x0000FFFF */
-/* PVTM_CON0 */
-#define PVTM_PVTM_CON0_PVTM_START_SHIFT                    (0U)
-#define PVTM_PVTM_CON0_PVTM_START_MASK                     (0x1U << PVTM_PVTM_CON0_PVTM_START_SHIFT)                    /* 0x00000001 */
-#define PVTM_PVTM_CON0_PVTM_OSC_EN_SHIFT                   (1U)
-#define PVTM_PVTM_CON0_PVTM_OSC_EN_MASK                    (0x1U << PVTM_PVTM_CON0_PVTM_OSC_EN_SHIFT)                   /* 0x00000002 */
-#define PVTM_PVTM_CON0_PVTM_OSC_SEL_SHIFT                  (2U)
-#define PVTM_PVTM_CON0_PVTM_OSC_SEL_MASK                   (0x3U << PVTM_PVTM_CON0_PVTM_OSC_SEL_SHIFT)                  /* 0x0000000C */
-/* PVTM_CON1 */
-#define PVTM_PVTM_CON1_PVTM_CAL_CNT_SHIFT                  (0U)
-#define PVTM_PVTM_CON1_PVTM_CAL_CNT_MASK                   (0xFFFFFFFFU << PVTM_PVTM_CON1_PVTM_CAL_CNT_SHIFT)           /* 0xFFFFFFFF */
-/* PVTM_STATUS0 */
-#define PVTM_PVTM_STATUS0_PVTM_FREQ_DONE_SHIFT             (0U)
-#define PVTM_PVTM_STATUS0_PVTM_FREQ_DONE_MASK              (0x1U << PVTM_PVTM_STATUS0_PVTM_FREQ_DONE_SHIFT)             /* 0x00000001 */
-/* PVTM_STATUS1 */
-#define PVTM_PVTM_STATUS1_PVTM_FREQ_CNT_SHIFT              (0U)
-#define PVTM_PVTM_STATUS1_PVTM_FREQ_CNT_MASK               (0xFFFFFFFFU << PVTM_PVTM_STATUS1_PVTM_FREQ_CNT_SHIFT)       /* 0xFFFFFFFF */
+/* VERSION */
+#define PVTM_VERSION_OFFSET                                (0x0U)
+#define PVTM_VERSION_VERSION_SHIFT                         (0U)
+#define PVTM_VERSION_VERSION_MASK                          (0xFFFFU << PVTM_VERSION_VERSION_SHIFT)                      /* 0x0000FFFF */
+/* CON0 */
+#define PVTM_CON0_OFFSET                                   (0x4U)
+#define PVTM_CON0_PVTM_START_SHIFT                         (0U)
+#define PVTM_CON0_PVTM_START_MASK                          (0x1U << PVTM_CON0_PVTM_START_SHIFT)                         /* 0x00000001 */
+#define PVTM_CON0_PVTM_OSC_EN_SHIFT                        (1U)
+#define PVTM_CON0_PVTM_OSC_EN_MASK                         (0x1U << PVTM_CON0_PVTM_OSC_EN_SHIFT)                        /* 0x00000002 */
+#define PVTM_CON0_PVTM_OSC_SEL_SHIFT                       (2U)
+#define PVTM_CON0_PVTM_OSC_SEL_MASK                        (0x3U << PVTM_CON0_PVTM_OSC_SEL_SHIFT)                       /* 0x0000000C */
+/* CON1 */
+#define PVTM_CON1_OFFSET                                   (0x8U)
+#define PVTM_CON1_PVTM_CAL_CNT_SHIFT                       (0U)
+#define PVTM_CON1_PVTM_CAL_CNT_MASK                        (0xFFFFFFFFU << PVTM_CON1_PVTM_CAL_CNT_SHIFT)                /* 0xFFFFFFFF */
+/* STATUS0 */
+#define PVTM_STATUS0_OFFSET                                (0x80U)
+#define PVTM_STATUS0_PVTM_FREQ_DONE_SHIFT                  (0U)
+#define PVTM_STATUS0_PVTM_FREQ_DONE_MASK                   (0x1U << PVTM_STATUS0_PVTM_FREQ_DONE_SHIFT)                  /* 0x00000001 */
+/* STATUS1 */
+#define PVTM_STATUS1_OFFSET                                (0x84U)
+#define PVTM_STATUS1_PVTM_FREQ_CNT_SHIFT                   (0U)
+#define PVTM_STATUS1_PVTM_FREQ_CNT_MASK                    (0xFFFFFFFFU << PVTM_STATUS1_PVTM_FREQ_CNT_SHIFT)            /* 0xFFFFFFFF */
 /**************************************TOUCH_SENSOR**************************************/
 /* CH_START */
 #define TOUCH_SENSOR_CH_START_START_SHIFT                  (0U)
