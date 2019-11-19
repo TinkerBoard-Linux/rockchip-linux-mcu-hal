@@ -774,15 +774,15 @@ struct ACDCDIG_REG {
     __IO uint32_t ALC2;                               /* Address Offset: 0x0038 */
     __IO uint32_t ADCNG;                              /* Address Offset: 0x003C */
     __IO uint32_t HPFCTRL;                            /* Address Offset: 0x0040 */
-    __IO uint32_t ADCRVOLL;                           /* Address Offset: 0x0044 */
-    __IO uint32_t ADCRVOLR;                           /* Address Offset: 0x0048 */
+    __I  uint32_t ADCRVOLL;                           /* Address Offset: 0x0044 */
+    __I  uint32_t ADCRVOLR;                           /* Address Offset: 0x0048 */
     __IO uint32_t PGACFG;                             /* Address Offset: 0x004C */
     __IO uint32_t PGAGAINL;                           /* Address Offset: 0x0050 */
     __IO uint32_t PGAGAINR;                           /* Address Offset: 0x0054 */
     __IO uint32_t LILMT1;                             /* Address Offset: 0x0058 */
     __IO uint32_t LILMT2;                             /* Address Offset: 0x005C */
     __IO uint32_t LILMTNG1;                           /* Address Offset: 0x0060 */
-    __IO uint32_t LILMTNG2;                           /* Address Offset: 0x0064 */
+    __I  uint32_t LILMTNG2;                           /* Address Offset: 0x0064 */
     __IO uint32_t PDMCTRL;                            /* Address Offset: 0x0068 */
     __IO uint32_t I2SCKM;                             /* Address Offset: 0x006C */
     __IO uint32_t I2SDIV;                             /* Address Offset: 0x0070 */
@@ -790,7 +790,7 @@ struct ACDCDIG_REG {
     __IO uint32_t I2STXCR1;                           /* Address Offset: 0x0078 */
     __IO uint32_t I2STXCR2;                           /* Address Offset: 0x007C */
     __IO uint32_t I2STXCMD;                           /* Address Offset: 0x0080 */
-    __IO uint32_t VERSION;                            /* Address Offset: 0x0084 */
+    __I  uint32_t VERSION;                            /* Address Offset: 0x0084 */
 };
 #endif /* __ASSEMBLY__ */
 /****************************************************************************************/
@@ -7022,7 +7022,7 @@ typedef enum PD_Id {
 #define VOP_DSC_DBG_STATUS2_CE_MASK                        (0x1U << VOP_DSC_DBG_STATUS2_CE_SHIFT)                       /* 0x00000040 */
 /****************************************ACDCDIG*****************************************/
 /* VUCTL */
-#define ACDCDIG_VUCTL_OFFSET                               (0x0)
+#define ACDCDIG_VUCTL_OFFSET                               (0x0U)
 #define ACDCDIG_VUCTL_ADCZDT_SHIFT                         (0U)
 #define ACDCDIG_VUCTL_ADCZDT_MASK                          (0x1U << ACDCDIG_VUCTL_ADCZDT_SHIFT)                         /* 0x00000001 */
 #define ACDCDIG_VUCTL_ADCFADE_SHIFT                        (1U)
@@ -7030,17 +7030,17 @@ typedef enum PD_Id {
 #define ACDCDIG_VUCTL_ADC_BYPS_SHIFT                       (2U)
 #define ACDCDIG_VUCTL_ADC_BYPS_MASK                        (0x1U << ACDCDIG_VUCTL_ADC_BYPS_SHIFT)                       /* 0x00000004 */
 /* VUCTIME */
-#define ACDCDIG_VUCTIME_OFFSET                             (0x4)
+#define ACDCDIG_VUCTIME_OFFSET                             (0x4U)
 #define ACDCDIG_VUCTIME_VUCT_SHIFT                         (0U)
 #define ACDCDIG_VUCTIME_VUCT_MASK                          (0xFFU << ACDCDIG_VUCTIME_VUCT_SHIFT)                        /* 0x000000FF */
 /* DIGEN */
-#define ACDCDIG_DIGEN_OFFSET                               (0x8)
+#define ACDCDIG_DIGEN_OFFSET                               (0x8U)
 #define ACDCDIG_DIGEN_I2STX_EN_SHIFT                       (0U)
 #define ACDCDIG_DIGEN_I2STX_EN_MASK                        (0x1U << ACDCDIG_DIGEN_I2STX_EN_SHIFT)                       /* 0x00000001 */
 #define ACDCDIG_DIGEN_ADC_EN_SHIFT                         (1U)
 #define ACDCDIG_DIGEN_ADC_EN_MASK                          (0x1U << ACDCDIG_DIGEN_ADC_EN_SHIFT)                         /* 0x00000002 */
 /* CLKCTRL */
-#define ACDCDIG_CLKCTRL_OFFSET                             (0xC)
+#define ACDCDIG_CLKCTRL_OFFSET                             (0xCU)
 #define ACDCDIG_CLKCTRL_FILTER_GATE_EN_SHIFT               (2U)
 #define ACDCDIG_CLKCTRL_FILTER_GATE_EN_MASK                (0x1U << ACDCDIG_CLKCTRL_FILTER_GATE_EN_SHIFT)               /* 0x00000004 */
 #define ACDCDIG_CLKCTRL_CKE_BCLK_SHIFT                     (3U)
@@ -7052,11 +7052,11 @@ typedef enum PD_Id {
 #define ACDCDIG_CLKCTRL_CIC_DS_RATIO_SHIFT                 (6U)
 #define ACDCDIG_CLKCTRL_CIC_DS_RATIO_MASK                  (0x3U << ACDCDIG_CLKCTRL_CIC_DS_RATIO_SHIFT)                 /* 0x000000C0 */
 /* CLKDIV */
-#define ACDCDIG_CLKDIV_OFFSET                              (0x10)
+#define ACDCDIG_CLKDIV_OFFSET                              (0x10U)
 #define ACDCDIG_CLKDIV_INT_DIV_CON_SHIFT                   (0U)
 #define ACDCDIG_CLKDIV_INT_DIV_CON_MASK                    (0xFU << ACDCDIG_CLKDIV_INT_DIV_CON_SHIFT)                   /* 0x0000000F */
 /* REFCFG */
-#define ACDCDIG_REFCFG_OFFSET                              (0x14)
+#define ACDCDIG_REFCFG_OFFSET                              (0x14U)
 #define ACDCDIG_REFCFG_REF_TOP_TRIM_SHIFT                  (0U)
 #define ACDCDIG_REFCFG_REF_TOP_TRIM_MASK                   (0xFU << ACDCDIG_REFCFG_REF_TOP_TRIM_SHIFT)                  /* 0x0000000F */
 #define ACDCDIG_REFCFG_REF_ANA_TRIM_SHIFT                  (4U)
@@ -7064,7 +7064,7 @@ typedef enum PD_Id {
 #define ACDCDIG_REFCFG_REF_TOP_PWD_SHIFT                   (6U)
 #define ACDCDIG_REFCFG_REF_TOP_PWD_MASK                    (0x1U << ACDCDIG_REFCFG_REF_TOP_PWD_SHIFT)                   /* 0x00000040 */
 /* ADCCFG0 */
-#define ACDCDIG_ADCCFG0_OFFSET                             (0x18)
+#define ACDCDIG_ADCCFG0_OFFSET                             (0x18U)
 #define ACDCDIG_ADCCFG0_ADC_DITH_SEL_SHIFT                 (0U)
 #define ACDCDIG_ADCCFG0_ADC_DITH_SEL_MASK                  (0x7U << ACDCDIG_ADCCFG0_ADC_DITH_SEL_SHIFT)                 /* 0x00000007 */
 #define ACDCDIG_ADCCFG0_ADC_DITH_EN_SHIFT                  (3U)
@@ -7078,7 +7078,7 @@ typedef enum PD_Id {
 #define ACDCDIG_ADCCFG0_ADC_PWD_L_SHIFT                    (7U)
 #define ACDCDIG_ADCCFG0_ADC_PWD_L_MASK                     (0x1U << ACDCDIG_ADCCFG0_ADC_PWD_L_SHIFT)                    /* 0x00000080 */
 /* ADCCFG1 */
-#define ACDCDIG_ADCCFG1_OFFSET                             (0x1C)
+#define ACDCDIG_ADCCFG1_OFFSET                             (0x1CU)
 #define ACDCDIG_ADCCFG1_ADC_BOOST_VAGOP_SHIFT              (0U)
 #define ACDCDIG_ADCCFG1_ADC_BOOST_VAGOP_MASK               (0x1U << ACDCDIG_ADCCFG1_ADC_BOOST_VAGOP_SHIFT)              /* 0x00000001 */
 #define ACDCDIG_ADCCFG1_ADC_BOOST_OPAMP_SHIFT              (1U)
@@ -7088,7 +7088,7 @@ typedef enum PD_Id {
 #define ACDCDIG_ADCCFG1_ADC_ATTN_ALLIBIAS_SHIFT            (3U)
 #define ACDCDIG_ADCCFG1_ADC_ATTN_ALLIBIAS_MASK             (0x1U << ACDCDIG_ADCCFG1_ADC_ATTN_ALLIBIAS_SHIFT)            /* 0x00000008 */
 /* ADCCFG2 */
-#define ACDCDIG_ADCCFG2_OFFSET                             (0x20)
+#define ACDCDIG_ADCCFG2_OFFSET                             (0x20U)
 #define ACDCDIG_ADCCFG2_CT_ADC_BOOST_SHIFT                 (0U)
 #define ACDCDIG_ADCCFG2_CT_ADC_BOOST_MASK                  (0x1U << ACDCDIG_ADCCFG2_CT_ADC_BOOST_SHIFT)                 /* 0x00000001 */
 #define ACDCDIG_ADCCFG2_CT_ADC_ATTN_SHIFT                  (1U)
@@ -7102,7 +7102,7 @@ typedef enum PD_Id {
 #define ACDCDIG_ADCCFG2_CT_ADC_PWD_SHIFT                   (5U)
 #define ACDCDIG_ADCCFG2_CT_ADC_PWD_MASK                    (0x1U << ACDCDIG_ADCCFG2_CT_ADC_PWD_SHIFT)                   /* 0x00000020 */
 /* ADCCFG3 */
-#define ACDCDIG_ADCCFG3_OFFSET                             (0x24)
+#define ACDCDIG_ADCCFG3_OFFSET                             (0x24U)
 #define ACDCDIG_ADCCFG3_FIR_COM_BPS_SHIFT                  (0U)
 #define ACDCDIG_ADCCFG3_FIR_COM_BPS_MASK                   (0x1U << ACDCDIG_ADCCFG3_FIR_COM_BPS_SHIFT)                  /* 0x00000001 */
 #define ACDCDIG_ADCCFG3_SIG_SCALE_MODE_SHIFT               (1U)
@@ -7110,15 +7110,15 @@ typedef enum PD_Id {
 #define ACDCDIG_ADCCFG3_ADCSRT_SHIFT                       (2U)
 #define ACDCDIG_ADCCFG3_ADCSRT_MASK                        (0x7U << ACDCDIG_ADCCFG3_ADCSRT_SHIFT)                       /* 0x0000001C */
 /* ADCVOLL */
-#define ACDCDIG_ADCVOLL_OFFSET                             (0x28)
+#define ACDCDIG_ADCVOLL_OFFSET                             (0x28U)
 #define ACDCDIG_ADCVOLL_ADCLV_SHIFT                        (0U)
 #define ACDCDIG_ADCVOLL_ADCLV_MASK                         (0xFFU << ACDCDIG_ADCVOLL_ADCLV_SHIFT)                       /* 0x000000FF */
 /* ADCVOLR */
-#define ACDCDIG_ADCVOLR_OFFSET                             (0x2C)
+#define ACDCDIG_ADCVOLR_OFFSET                             (0x2CU)
 #define ACDCDIG_ADCVOLR_ADCRV_SHIFT                        (0U)
 #define ACDCDIG_ADCVOLR_ADCRV_MASK                         (0xFFU << ACDCDIG_ADCVOLR_ADCRV_SHIFT)                       /* 0x000000FF */
 /* ALC0 */
-#define ACDCDIG_ALC0_OFFSET                                (0x30)
+#define ACDCDIG_ALC0_OFFSET                                (0x30U)
 #define ACDCDIG_ALC0_ADCRV_GAIN_POL_SHIFT                  (4U)
 #define ACDCDIG_ALC0_ADCRV_GAIN_POL_MASK                   (0x1U << ACDCDIG_ALC0_ADCRV_GAIN_POL_SHIFT)                  /* 0x00000010 */
 #define ACDCDIG_ALC0_ADCLV_GAIN_POL_SHIFT                  (5U)
@@ -7128,13 +7128,13 @@ typedef enum PD_Id {
 #define ACDCDIG_ALC0_ALCL_SHIFT                            (7U)
 #define ACDCDIG_ALC0_ALCL_MASK                             (0x1U << ACDCDIG_ALC0_ALCL_SHIFT)                            /* 0x00000080 */
 /* ALC1 */
-#define ACDCDIG_ALC1_OFFSET                                (0x34)
+#define ACDCDIG_ALC1_OFFSET                                (0x34U)
 #define ACDCDIG_ALC1_ALCRRATE_SHIFT                        (0U)
 #define ACDCDIG_ALC1_ALCRRATE_MASK                         (0xFU << ACDCDIG_ALC1_ALCRRATE_SHIFT)                        /* 0x0000000F */
 #define ACDCDIG_ALC1_ALCARATE_SHIFT                        (4U)
 #define ACDCDIG_ALC1_ALCARATE_MASK                         (0xFU << ACDCDIG_ALC1_ALCARATE_SHIFT)                        /* 0x000000F0 */
 /* ALC2 */
-#define ACDCDIG_ALC2_OFFSET                                (0x38)
+#define ACDCDIG_ALC2_OFFSET                                (0x38U)
 #define ACDCDIG_ALC2_ALCMIN_SHIFT                          (0U)
 #define ACDCDIG_ALC2_ALCMIN_MASK                           (0x7U << ACDCDIG_ALC2_ALCMIN_SHIFT)                          /* 0x00000007 */
 #define ACDCDIG_ALC2_ALCMAX_SHIFT                          (4U)
@@ -7142,7 +7142,7 @@ typedef enum PD_Id {
 #define ACDCDIG_ALC2_NGVALID_SHIFT                         (7U)
 #define ACDCDIG_ALC2_NGVALID_MASK                          (0x1U << ACDCDIG_ALC2_NGVALID_SHIFT)                         /* 0x00000080 */
 /* ADCNG */
-#define ACDCDIG_ADCNG_OFFSET                               (0x3C)
+#define ACDCDIG_ADCNG_OFFSET                               (0x3CU)
 #define ACDCDIG_ADCNG_NGDLY_SHIFT                          (0U)
 #define ACDCDIG_ADCNG_NGDLY_MASK                           (0x3U << ACDCDIG_ADCNG_NGDLY_SHIFT)                          /* 0x00000003 */
 #define ACDCDIG_ADCNG_NGGATE_SHIFT                         (2U)
@@ -7154,7 +7154,7 @@ typedef enum PD_Id {
 #define ACDCDIG_ADCNG_NGCHL_SHIFT                          (7U)
 #define ACDCDIG_ADCNG_NGCHL_MASK                           (0x1U << ACDCDIG_ADCNG_NGCHL_SHIFT)                          /* 0x00000080 */
 /* HPFCTRL */
-#define ACDCDIG_HPFCTRL_OFFSET                             (0x40)
+#define ACDCDIG_HPFCTRL_OFFSET                             (0x40U)
 #define ACDCDIG_HPFCTRL_HPFCF_SHIFT                        (4U)
 #define ACDCDIG_HPFCTRL_HPFCF_MASK                         (0x3U << ACDCDIG_HPFCTRL_HPFCF_SHIFT)                        /* 0x00000030 */
 #define ACDCDIG_HPFCTRL_HPFRE_SHIFT                        (6U)
@@ -7162,15 +7162,17 @@ typedef enum PD_Id {
 #define ACDCDIG_HPFCTRL_HPFLE_SHIFT                        (7U)
 #define ACDCDIG_HPFCTRL_HPFLE_MASK                         (0x1U << ACDCDIG_HPFCTRL_HPFLE_SHIFT)                        /* 0x00000080 */
 /* ADCRVOLL */
-#define ACDCDIG_ADCRVOLL_OFFSET                            (0x44)
+#define ACDCDIG_ADCRVOLL_OFFSET                            (0x44U)
+#define ACDCDIG_ADCRVOLL                                   (0x0U)
 #define ACDCDIG_ADCRVOLL_ADCRLV_SHIFT                      (0U)
 #define ACDCDIG_ADCRVOLL_ADCRLV_MASK                       (0x1U << ACDCDIG_ADCRVOLL_ADCRLV_SHIFT)                      /* 0x00000001 */
 /* ADCRVOLR */
-#define ACDCDIG_ADCRVOLR_OFFSET                            (0x48)
+#define ACDCDIG_ADCRVOLR_OFFSET                            (0x48U)
+#define ACDCDIG_ADCRVOLR                                   (0x0U)
 #define ACDCDIG_ADCRVOLR_ADCRRV_SHIFT                      (0U)
 #define ACDCDIG_ADCRVOLR_ADCRRV_MASK                       (0x1U << ACDCDIG_ADCRVOLR_ADCRRV_SHIFT)                      /* 0x00000001 */
 /* PGACFG */
-#define ACDCDIG_PGACFG_OFFSET                              (0x4C)
+#define ACDCDIG_PGACFG_OFFSET                              (0x4CU)
 #define ACDCDIG_PGACFG_PGA_R_DEC_SHIFT                     (0U)
 #define ACDCDIG_PGACFG_PGA_R_DEC_MASK                      (0x3U << ACDCDIG_PGACFG_PGA_R_DEC_SHIFT)                     /* 0x00000003 */
 #define ACDCDIG_PGACFG_PGA_L_DEC_SHIFT                     (2U)
@@ -7182,15 +7184,15 @@ typedef enum PD_Id {
 #define ACDCDIG_PGACFG_PGA_CHOP_EN_SHIFT                   (6U)
 #define ACDCDIG_PGACFG_PGA_CHOP_EN_MASK                    (0x1U << ACDCDIG_PGACFG_PGA_CHOP_EN_SHIFT)                   /* 0x00000040 */
 /* PGAGAINL */
-#define ACDCDIG_PGAGAINL_OFFSET                            (0x50)
+#define ACDCDIG_PGAGAINL_OFFSET                            (0x50U)
 #define ACDCDIG_PGAGAINL_PGA_GAIN_L_SHIFT                  (0U)
 #define ACDCDIG_PGAGAINL_PGA_GAIN_L_MASK                   (0x1FU << ACDCDIG_PGAGAINL_PGA_GAIN_L_SHIFT)                 /* 0x0000001F */
 /* PGAGAINR */
-#define ACDCDIG_PGAGAINR_OFFSET                            (0x54)
+#define ACDCDIG_PGAGAINR_OFFSET                            (0x54U)
 #define ACDCDIG_PGAGAINR_PGA_GAIN_R_SHIFT                  (0U)
 #define ACDCDIG_PGAGAINR_PGA_GAIN_R_MASK                   (0x1FU << ACDCDIG_PGAGAINR_PGA_GAIN_R_SHIFT)                 /* 0x0000001F */
 /* LILMT1 */
-#define ACDCDIG_LILMT1_OFFSET                              (0x58)
+#define ACDCDIG_LILMT1_OFFSET                              (0x58U)
 #define ACDCDIG_LILMT1_MIN_LILMT_SHIFT                     (0U)
 #define ACDCDIG_LILMT1_MIN_LILMT_MASK                      (0x7U << ACDCDIG_LILMT1_MIN_LILMT_SHIFT)                     /* 0x00000007 */
 #define ACDCDIG_LILMT1_MAX_LILMT_SHIFT                     (4U)
@@ -7198,13 +7200,13 @@ typedef enum PD_Id {
 #define ACDCDIG_LILMT1_LMT_EN_SHIFT                        (7U)
 #define ACDCDIG_LILMT1_LMT_EN_MASK                         (0x1U << ACDCDIG_LILMT1_LMT_EN_SHIFT)                        /* 0x00000080 */
 /* LILMT2 */
-#define ACDCDIG_LILMT2_OFFSET                              (0x5C)
+#define ACDCDIG_LILMT2_OFFSET                              (0x5CU)
 #define ACDCDIG_LILMT2_RLS_RATE_SHIFT                      (0U)
 #define ACDCDIG_LILMT2_RLS_RATE_MASK                       (0xFU << ACDCDIG_LILMT2_RLS_RATE_SHIFT)                      /* 0x0000000F */
 #define ACDCDIG_LILMT2_ATK_RATE_SHIFT                      (4U)
 #define ACDCDIG_LILMT2_ATK_RATE_MASK                       (0xFU << ACDCDIG_LILMT2_ATK_RATE_SHIFT)                      /* 0x000000F0 */
 /* LILMTNG1 */
-#define ACDCDIG_LILMTNG1_OFFSET                            (0x60)
+#define ACDCDIG_LILMTNG1_OFFSET                            (0x60U)
 #define ACDCDIG_LILMTNG1_NGDLY_LI_SHIFT                    (0U)
 #define ACDCDIG_LILMTNG1_NGDLY_LI_MASK                     (0x3U << ACDCDIG_LILMTNG1_NGDLY_LI_SHIFT)                    /* 0x00000003 */
 #define ACDCDIG_LILMTNG1_NGGATE_LI_SHIFT                   (2U)
@@ -7216,11 +7218,12 @@ typedef enum PD_Id {
 #define ACDCDIG_LILMTNG1_NGCHL_LI_SHIFT                    (7U)
 #define ACDCDIG_LILMTNG1_NGCHL_LI_MASK                     (0x1U << ACDCDIG_LILMTNG1_NGCHL_LI_SHIFT)                    /* 0x00000080 */
 /* LILMTNG2 */
-#define ACDCDIG_LILMTNG2_OFFSET                            (0x64)
+#define ACDCDIG_LILMTNG2_OFFSET                            (0x64U)
+#define ACDCDIG_LILMTNG2                                   (0x0U)
 #define ACDCDIG_LILMTNG2_NGVALID_LI_SHIFT                  (0U)
 #define ACDCDIG_LILMTNG2_NGVALID_LI_MASK                   (0x1U << ACDCDIG_LILMTNG2_NGVALID_LI_SHIFT)                  /* 0x00000001 */
 /* PDMCTRL */
-#define ACDCDIG_PDMCTRL_OFFSET                             (0x68)
+#define ACDCDIG_PDMCTRL_OFFSET                             (0x68U)
 #define ACDCDIG_PDMCTRL_PDM_LR_SEL_SHIFT                   (0U)
 #define ACDCDIG_PDMCTRL_PDM_LR_SEL_MASK                    (0x1U << ACDCDIG_PDMCTRL_PDM_LR_SEL_SHIFT)                   /* 0x00000001 */
 #define ACDCDIG_PDMCTRL_PDM_MODE_SHIFT                     (1U)
@@ -7228,23 +7231,23 @@ typedef enum PD_Id {
 #define ACDCDIG_PDMCTRL_PDM_EN_SHIFT                       (2U)
 #define ACDCDIG_PDMCTRL_PDM_EN_MASK                        (0x1U << ACDCDIG_PDMCTRL_PDM_EN_SHIFT)                       /* 0x00000004 */
 /* I2SCKM */
-#define ACDCDIG_I2SCKM_OFFSET                              (0x6C)
+#define ACDCDIG_I2SCKM_OFFSET                              (0x6CU)
 #define ACDCDIG_I2SCKM_I2SMST_SHIFT                        (0U)
 #define ACDCDIG_I2SCKM_I2SMST_MASK                         (0x1U << ACDCDIG_I2SCKM_I2SMST_SHIFT)                        /* 0x00000001 */
 #define ACDCDIG_I2SCKM_SCK_P_SHIFT                         (1U)
 #define ACDCDIG_I2SCKM_SCK_P_MASK                          (0x1U << ACDCDIG_I2SCKM_SCK_P_SHIFT)                         /* 0x00000002 */
 /* I2SDIV */
-#define ACDCDIG_I2SDIV_OFFSET                              (0x70)
+#define ACDCDIG_I2SDIV_OFFSET                              (0x70U)
 #define ACDCDIG_I2SDIV_SCKDIV_SHIFT                        (0U)
 #define ACDCDIG_I2SDIV_SCKDIV_MASK                         (0xFFU << ACDCDIG_I2SDIV_SCKDIV_SHIFT)                       /* 0x000000FF */
 /* I2STXCR0 */
-#define ACDCDIG_I2STXCR0_OFFSET                            (0x74)
+#define ACDCDIG_I2STXCR0_OFFSET                            (0x74U)
 #define ACDCDIG_I2STXCR0_TXRL_P_SHIFT                      (0U)
 #define ACDCDIG_I2STXCR0_TXRL_P_MASK                       (0x1U << ACDCDIG_I2STXCR0_TXRL_P_SHIFT)                      /* 0x00000001 */
 #define ACDCDIG_I2STXCR0_SCKDTX_SHIFT                      (1U)
 #define ACDCDIG_I2STXCR0_SCKDTX_MASK                       (0x3U << ACDCDIG_I2STXCR0_SCKDTX_SHIFT)                      /* 0x00000006 */
 /* I2STXCR1 */
-#define ACDCDIG_I2STXCR1_OFFSET                            (0x78)
+#define ACDCDIG_I2STXCR1_OFFSET                            (0x78U)
 #define ACDCDIG_I2STXCR1_LSB_SHIFT                         (0U)
 #define ACDCDIG_I2STXCR1_LSB_MASK                          (0x1U << ACDCDIG_I2STXCR1_LSB_SHIFT)                         /* 0x00000001 */
 #define ACDCDIG_I2STXCR1_EXRL_SHIFT                        (1U)
@@ -7256,11 +7259,11 @@ typedef enum PD_Id {
 #define ACDCDIG_I2STXCR1_TFS_SHIFT                         (6U)
 #define ACDCDIG_I2STXCR1_TFS_MASK                          (0x1U << ACDCDIG_I2STXCR1_TFS_SHIFT)                         /* 0x00000040 */
 /* I2STXCR2 */
-#define ACDCDIG_I2STXCR2_OFFSET                            (0x7C)
+#define ACDCDIG_I2STXCR2_OFFSET                            (0x7CU)
 #define ACDCDIG_I2STXCR2_VDW_SHIFT                         (0U)
 #define ACDCDIG_I2STXCR2_VDW_MASK                          (0x1FU << ACDCDIG_I2STXCR2_VDW_SHIFT)                        /* 0x0000001F */
 /* I2STXCMD */
-#define ACDCDIG_I2STXCMD_OFFSET                            (0x80)
+#define ACDCDIG_I2STXCMD_OFFSET                            (0x80U)
 #define ACDCDIG_I2STXCMD_RCNT_SHIFT                        (0U)
 #define ACDCDIG_I2STXCMD_RCNT_MASK                         (0x3FU << ACDCDIG_I2STXCMD_RCNT_SHIFT)                       /* 0x0000003F */
 #define ACDCDIG_I2STXCMD_TXC_SHIFT                         (6U)
@@ -7268,9 +7271,10 @@ typedef enum PD_Id {
 #define ACDCDIG_I2STXCMD_TXS_SHIFT                         (7U)
 #define ACDCDIG_I2STXCMD_TXS_MASK                          (0x1U << ACDCDIG_I2STXCMD_TXS_SHIFT)                         /* 0x00000080 */
 /* VERSION */
-#define ACDCDIG_VERSION_OFFSET                             (0x84)
+#define ACDCDIG_VERSION_OFFSET                             (0x84U)
+#define ACDCDIG_VERSION                                    (0x1U)
 #define ACDCDIG_VERSION_VER_SHIFT                          (0U)
-#define ACDCDIG_VERSION_VER_MASK                           (0xFFU << ACDCDIG_VERSION_VER_SHIFT)                          /* 0x000000FF */
+#define ACDCDIG_VERSION_VER_MASK                           (0xFFU << ACDCDIG_VERSION_VER_SHIFT)                         /* 0x000000FF */
 
 
 /********Name=SOFTRST_CON00,Offset=0x200********/
