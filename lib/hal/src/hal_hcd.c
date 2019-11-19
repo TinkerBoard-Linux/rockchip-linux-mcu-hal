@@ -743,9 +743,9 @@ static void HCD_HC_OUT_IRQHandler(struct HCD_HANDLE *pHCD, uint8_t chNum)
         __HAL_HCD_UNMASK_HALT_HC_INT(chNum);
     } else if ((USB_HC(chNum)->HCINT) & USB_OTG_HCINT_ACK) {
         __HAL_HCD_CLEAR_HC_INT(chNum, USB_OTG_HCINT_ACK);
-        if (pHCD->hc[chNum].doPing == 1) {
+        if (pHCD->hc[chNum].doPing == 1 && !pHCD->cfg.dmaEnable) {
             pHCD->hc[chNum].doPing = 0;
-            pHCD->hc[chNum].hcState = URB_NOTREADY;
+            pHCD->hc[chNum].urbState = URB_NOTREADY;
             __HAL_HCD_UNMASK_HALT_HC_INT(chNum);
             USB_HCHalt(pHCD->pReg, chNum);
         }
