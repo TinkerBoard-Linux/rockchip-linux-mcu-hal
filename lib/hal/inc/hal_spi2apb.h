@@ -54,6 +54,9 @@ HAL_Status HAL_SPI2APB_WriteReg2(struct SPI2APB_REG *pReg, uint32_t value);
 uint32_t HAL_SPI2APB_ReadStatus(struct SPI2APB_REG *pReg);
 uint32_t HAL_SPI2APB_ReadReg0(struct SPI2APB_REG *pReg);
 uint32_t HAL_SPI2APB_ReadReg1(struct SPI2APB_REG *pReg);
+HAL_Status HAL_SPI2APB_Suspend(struct SPI2APB_REG *pReg, uint32_t *regTbl);
+HAL_Status HAL_SPI2APB_Resume(struct SPI2APB_REG *pReg, uint32_t *regTbl);
+
 #endif
 
 /** @} */

@@ -23,6 +23,8 @@
  - Invoke HAL_SPI2APB_ReadReg0() to read reg0.
  - Invoke HAL_SPI2APB_ReadReg1() to read reg1.
  - Invoke HAL_SPI2APB_WriteReg2() to write value into reg2.
+ - Invoke HAL_SPI2APB_Suspend() to stored reg value while suspend
+ - Invoke HAL_SPI2APB_Resume() to resume reg value while resume
 
  @} */
 
@@ -30,7 +32,49 @@
 
 #ifdef HAL_SPI2APB_MODULE_ENABLED
 
-/** @defgroup SPI2APB_Exported_Definition_Group3 IO Functions
+/********************* Public Function Definition ****************************/
+/** @defgroup SPI2APB_Exported_Functions_Group1 Suspend and Resume Functions
+
+ This section provides functions allowing to suspend and resume the module:
+
+ *  @{
+ */
+
+/**
+ * @brief SPI2APB Suspend
+ * @param pReg: pointer to a SPI2APB register base.
+ * @param regTbl: use for save reg value, the size is two 32bits.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SPI2APB_Suspend(struct SPI2APB_REG *pReg, uint32_t *regTbl)
+{
+    HAL_ASSERT(IS_SPI2APB_INSTANCE(pReg) && regTbl);
+
+    regTbl[0] = READ_REG(pReg->CTRL0);
+    regTbl[1] = READ_REG(pReg->IMR);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief SPI2APB Resume
+ * @param pReg: pointer to a SPI2APB register base.
+ * @param regTbl: use for restore the reg value, the size is two 32bits.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SPI2APB_Resume(struct SPI2APB_REG *pReg, uint32_t *regTbl)
+{
+    HAL_ASSERT(IS_SPI2APB_INSTANCE(pReg) && regTbl);
+
+    WRITE_REG(pReg->CTRL0, regTbl[0]);
+    WRITE_REG(pReg->IMR, regTbl[1]);
+
+    return HAL_OK;
+}
+
+/** @} */
+
+/** @defgroup SPI2APB_Exported_Functions_Group3 IO Functions
 
  This section provides functions allowing to IO controlling:
 
