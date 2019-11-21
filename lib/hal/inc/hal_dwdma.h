@@ -181,6 +181,10 @@ struct HAL_DWDMA_DEV {
  *  @{
  */
 
+uint32_t HAL_DWDMA_GetRawBlockStatus(struct HAL_DWDMA_DEV *dw);
+uint32_t HAL_DWDMA_GetRawErrStatus(struct HAL_DWDMA_DEV *dw);
+uint32_t HAL_DWDMA_GetRawXferStatus(struct HAL_DWDMA_DEV *dw);
+
 HAL_Status HAL_DWDMA_Init(struct HAL_DWDMA_DEV *dw);
 HAL_Status HAL_DWDMA_DeInit(struct HAL_DWDMA_DEV *dw);
 

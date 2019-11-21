@@ -282,6 +282,42 @@ static void DWC_HandleXfer(struct HAL_DWDMA_DEV *dw, struct DWDMA_CHAN *dwc)
  */
 
 /**
+ * @brief DW DMA Get Raw Block Status
+ *
+ * @param dw: the handle of dw dma.
+ *
+ * @return raw block status
+ */
+uint32_t HAL_DWDMA_GetRawBlockStatus(struct HAL_DWDMA_DEV *dw)
+{
+    return READ_REG(dw->pReg->RAW.BLOCK);
+}
+
+/**
+ * @brief DW DMA Get Raw Err Status
+ *
+ * @param dw: the handle of dw dma.
+ *
+ * @return raw err status
+ */
+uint32_t HAL_DWDMA_GetRawErrStatus(struct HAL_DWDMA_DEV *dw)
+{
+    return READ_REG(dw->pReg->RAW.ERR);
+}
+
+/**
+ * @brief DW DMA Get Raw Xfer Status
+ *
+ * @param dw: the handle of dw dma.
+ *
+ * @return raw xfer status
+ */
+uint32_t HAL_DWDMA_GetRawXferStatus(struct HAL_DWDMA_DEV *dw)
+{
+    return READ_REG(dw->pReg->RAW.TFR);
+}
+
+/**
  * @brief Initializes a specific dw dma.
  *
  * @param dw: the handle of dw dma.
