@@ -208,8 +208,11 @@ uint32_t HAL_GetTick(void)
 uint64_t HAL_GetSysTimerCount(void)
 {
 #if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
+    uint64_t count = HAL_TIMER_GetCount(SYS_TIMER);
+    if (count >> 62)
+        count = ~count;
 
-    return HAL_TIMER_GetCount(SYS_TIMER);
+    return count;
 #else
 
     return 0llu;
