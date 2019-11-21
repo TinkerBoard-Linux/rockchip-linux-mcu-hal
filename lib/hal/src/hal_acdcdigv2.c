@@ -242,6 +242,9 @@
 #define STRICT_SAMPLERATE_CAPTURE  AUDIO_SAMPLERATE_16000
 #define STRICT_SAMPLERATE_PLAYBACK AUDIO_SAMPLERATE_48000
 #endif
+
+/* This is checking sync status count for wait a while. */
+#define SYNC_STATUS_COUNT 50
 /********************* Private Structure Definition **************************/
 
 /**
@@ -633,6 +636,7 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
     if (acdcDig->enabled) {
         uint32_t adcIntDiv = READ_REG(reg->ADCINT_DIV) & ACDCDIG_ADCINT_DIV_INT_DIV_CON_MASK;
         uint32_t dacIntDiv = READ_REG(reg->DACINT_DIV) & ACDCDIG_DACINT_DIV_INT_DIV_CON_MASK;
+        int syncCount = SYNC_STATUS_COUNT;
 
         if (adcIntDiv != dacIntDiv) {
             /**
@@ -648,9 +652,14 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
                    READ_BIT(reg->DACCLKCTRL, ACDCDIG_DACCLKCTRL_DAC_SYNC_STATUS_MASK)) {
                 /**
                  * Ensure both ADC nad DAC sync status are 0, and waiting time
-                 * is aboue some micro-seconds, so we don't need to add some
-                 * delay here, just waiting is fine.
+                 * is about 50us here.
+                 *
+                 * It will return invalid if count is timeout.
                  */
+                if (syncCount-- <= 0)
+                    return HAL_INVAL;
+
+                HAL_DelayUs(1);
             }
 
             MODIFY_REG(reg->SYSCTRL0,
