@@ -26,6 +26,7 @@
 
 /********************* Private MACRO Definition ******************************/
 /* for pm_runtime */
+#define SLEEP_INPUT_RATE     32000
 #define EXPONENT_OF_FRAC_PLL 24
 #define RK_PLL_MODE_SLOW     0
 #define RK_PLL_MODE_NORMAL   1
@@ -48,49 +49,25 @@
 #define PVTM_TARGET_KHZ   (32)
 #define PVTM_CALC_CNT     0x200
 
+#define SLEEP_COUNT_TO_MS(ms) (ms * SLEEP_INPUT_RATE / 1000)
 /********************* Private Structure Definition **************************/
-
+struct UART_REG_SAVE {
+    uint32_t DLL;
+    uint32_t DLH;
+    uint32_t IER;
+    uint32_t LCR;
+    uint32_t MCR;
+};
 /********************* Private Variable Definition ***************************/
 static uint64_t pmTimerLastCount;
 static uint64_t pmTimerLowCount;
 static uint32_t pmTimerLowRate;
 
-#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
+#if defined(HAL_PM_RUNTIME_MODULE_ENABLED) || defined(HAL_PM_SLEEP_MODULE_ENABLED)
 static uint8_t pvtm32kEn = 0;
 #endif
 /********************* Private Function Definition ***************************/
-#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
-static uint32_t PM_GetPllPostDivEven(uint32_t rateIn, uint32_t rateOut, uint32_t *postDiv1, uint32_t *postDiv2)
-{
-    uint32_t div1, div2, div;
-
-    div = rateIn / rateOut;
-    if (div < 7) {
-        *postDiv1 = div;
-        *postDiv2 = 1;
-
-        return 0;
-    }
-
-    for (div2 = 2; div2 <= 6;) {
-        div1 = div / div2;
-        if (div1 <= 7) {
-            break;
-        }
-        div2 += 2;
-    }
-    if (div1 < div2)
-        return 2;
-
-    *postDiv1 = div1;
-    *postDiv2 = div2;
-
-    if ((div1 * div2) != div)
-        return 1;
-    else
-        return 0;
-}
-
+#if defined(HAL_PM_RUNTIME_MODULE_ENABLED) || defined(HAL_PM_SLEEP_MODULE_ENABLED)
 static void PVTM_ClkEnable(void)
 {
     struct GRF_REG *pGrf = GRF;
@@ -140,6 +117,39 @@ static void PVTM_ClkRateConfig(uint32_t khz)
                                   0);
     pGrf->PVTM_CON0 = VAL_MASK_WE(GRF_PVTM_CON0_PVTM_CLKOUT_DIV_MASK,
                                   pvtm_div << GRF_PVTM_CON0_PVTM_CLKOUT_DIV_SHIFT);
+}
+#endif
+
+#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
+static uint32_t PM_GetPllPostDivEven(uint32_t rateIn, uint32_t rateOut, uint32_t *postDiv1, uint32_t *postDiv2)
+{
+    uint32_t div1, div2, div;
+
+    div = rateIn / rateOut;
+    if (div < 7) {
+        *postDiv1 = div;
+        *postDiv2 = 1;
+
+        return 0;
+    }
+
+    for (div2 = 2; div2 <= 6;) {
+        div1 = div / div2;
+        if (div1 <= 7) {
+            break;
+        }
+        div2 += 2;
+    }
+    if (div1 < div2)
+        return 2;
+
+    *postDiv1 = div1;
+    *postDiv2 = div2;
+
+    if ((div1 * div2) != div)
+        return 1;
+    else
+        return 0;
 }
 
 static void PM_CruAsEnable(uint8_t en)
@@ -320,12 +330,218 @@ uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 #endif
 
 #ifdef HAL_PM_SLEEP_MODULE_ENABLED
+static void SOC_GetWakeupStatus(struct PMU_REG *pPmu)
+{
+    HAL_DBG("\nwakeup source:\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_WAKEUP_PWRMODE_INT_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_GPIO_INT_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by gpio interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMEOUT_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by timeout\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_DSP_SFT_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by DSP software\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMER_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by timer interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_VAD_STATUS_SHIFT))
+        HAL_DBG("\tPower mode state machine wakeup status by vad\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_WAKEUP_DSP_INT_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_GPIO_INT_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by gpio interrupt\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMEOUT_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by timeout\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_SFT_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by MCU software\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMER_STATUS_SHIFT))
+        HAL_DBG("\tauto power down state machine wakeup status by timer\n");
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_VAD_STATUS_SHIFT))
+        HAL_DBG("\tDSP auto power down state machine wakeup status by vad\n");
+
+    pPmu->WAKEUP_STATUS = (1 << PMU_WAKEUP_STATUS_WAKEUP_PWRMODE_INT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_GPIO_INT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMEOUT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_DSP_SFT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMER_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_VAD_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_WAKEUP_DSP_INT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_GPIO_INT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMEOUT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_SFT_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMER_STATUS_SHIFT) |
+                          (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_VAD_STATUS_SHIFT);
+}
+
+static void SOC_FastBootConfig(struct GRF_REG *pGrf)
+{
+    pGrf->FAST_BOOT_ADDR = (uint32_t)HAL_CPU_DoResume;
+    pGrf->FAST_BOOT_EN = 1;
+}
+
+static void SOC_SleepModeInit(struct PMU_REG *pPmu)
+{
+    uint32_t mask = 0, value = 0;
+
+    mask = PMU_PWRMODE_CON_POWER_MODE_EN_MASK |
+           PMU_PWRMODE_CON_OSC_DISABLE_MASK |
+           PMU_PWRMODE_CON_PMU_USE_LF_MASK |
+           PMU_PWRMODE_CON_PLL_PD_EN_MASK |
+           PMU_PWRMODE_CON_LOGIC_PD_EN_MASK |
+           PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_MASK |
+           PMU_PWRMODE_CON_BYPASS_PLL_LOCK_MASK |
+           PMU_PWRMODE_CON_BYPASS_HF_EN_MASK |
+           PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_CFG_MASK |
+           PMU_PWRMODE_CON_SHRM_PD_EN_MASK |
+           PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_MASK;
+
+    value = (1 << PMU_PWRMODE_CON_POWER_MODE_EN_SHIFT) |
+            /*(1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT) |*/
+            (1 << PMU_PWRMODE_CON_PLL_PD_EN_SHIFT) |
+            (1 << PMU_PWRMODE_CON_LOGIC_PD_EN_SHIFT) |
+            (1 << PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_SHIFT) |
+            /*(1 << PMU_PWRMODE_CON_BYPASS_PLL_LOCK_SHIFT) |*/
+            /*(1 << PMU_PWRMODE_CON_BYPASS_HF_EN_SHIFT) |*/
+            (1 << PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_CFG_SHIFT) |
+            (1 << PMU_PWRMODE_CON_SHRM_PD_EN_SHIFT) |
+            (1 << PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_SHIFT);
+
+    /* if PD_DSP and PD_AUDIO power down, PMU low frequency mode enable */
+    if (pPmu->PWRDN_ST &
+        ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT))) {
+        value |= (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT);// |
+        // (1 << PMU_PWRMODE_CON_OSC_DISABLE_SHIFT);
+        pmTimerLowRate = SLEEP_INPUT_RATE;
+        pPmu->PWRMODE_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
+        pPmu->PLLLOCK_CNT = SLEEP_COUNT_TO_MS(1);
+        pPmu->DSP_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
+
+        if (!pvtm32kEn) {
+            PVTM_ClkRateConfig(PVTM_TARGET_KHZ);
+            pvtm32kEn = 1;
+        } else {
+            PVTM_ClkEnable();
+        }
+    }
+    pPmu->PWRMODE_CON = VAL_MASK_WE(mask, value);
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_LOGIC_PD_EN_SHIFT)) {
+        mask = PMU_BUS_CLR_CLR_LOGIC_MASK;
+        value = (1 << PMU_BUS_CLR_CLR_LOGIC_SHIFT);
+        pPmu->BUS_CLR |= VAL_MASK_WE(mask, value);
+    }
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_SHIFT)) {
+        mask = PMU_SHRM_CON1_PWRMODE_SHRM_PWRDWN_EN_MASK |
+               PMU_SHRM_CON1_PWRMODE_SHRM_RET2N_MASK;
+        value = (0xf << PMU_SHRM_CON1_PWRMODE_SHRM_PWRDWN_EN_SHIFT);
+        pPmu->SHRM_CON1 = VAL_MASK_WE(mask, value);
+
+        mask = PMU_BUS_CLR_CLR_SHRM_MASK;
+        value = (1 << PMU_BUS_CLR_CLR_SHRM_SHIFT);
+        pPmu->BUS_CLR |= VAL_MASK_WE(mask, value);
+    }
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_SHIFT)) {
+        mask = PMU_LDO_CON1_PWRMODE_LDOCORE_ADJ_MASK;
+        pPmu->LDO_CON[1] = VAL_MASK_WE(mask, 0x10);
+    }
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_PLL_PD_EN_SHIFT)) {
+        mask = PMU_PLL_CON_PLL_PD_CFG_MASK;
+        /* if PD_DSP and PD_AUDIO power down, CPLL, GPLL and 32K PLL power down by hardware */
+        if (pPmu->PWRDN_ST &
+            ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT)))
+            pPmu->PLL_CON = VAL_MASK_WE(mask, 0x07);
+        else
+            pPmu->PLL_CON = VAL_MASK_WE(mask, 0x05);
+    }
+
+    if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT)) {
+        mask = PMU_SFT_CON_PMU_LF_MODE_CFG_MASK;
+        value = (1 << PMU_SFT_CON_PMU_LF_MODE_CFG_SHIFT);
+        pPmu->SFT_CON = VAL_MASK_WE(mask, value);
+    }
+}
+
+static void SOC_WakeupSourceConfig(struct PMU_REG *pPmu)
+{
+    uint32_t mask = 0, value = 0;
+
+    mask = PMU_WAKEUP_CFG6_GPIO_INT_EN_MASK |
+           PMU_WAKEUP_CFG6_TIMER_EN_MASK;
+    value = (1 << PMU_WAKEUP_CFG6_GPIO_INT_EN_SHIFT) |
+            (1 << PMU_WAKEUP_CFG6_TIMER_EN_SHIFT);
+    pPmu->WAKEUP_CFG6 = VAL_MASK_WE(mask, value);
+}
+
+static void SOC_SleepModeReinit(struct PMU_REG *pPmu)
+{
+    uint32_t mask = 0, value = 0;
+
+    mask = PMU_PWRMODE_CON_POWER_MODE_EN_MASK |
+           PMU_PWRMODE_CON_PLL_PD_EN_MASK |
+           PMU_PWRMODE_CON_LOGIC_PD_EN_MASK |
+           PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_MASK |
+           PMU_PWRMODE_CON_BYPASS_PLL_LOCK_MASK |
+           PMU_PWRMODE_CON_BYPASS_HF_EN_MASK |
+           PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_CFG_MASK |
+           PMU_PWRMODE_CON_SHRM_PD_EN_MASK |
+           PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_MASK;
+    pPmu->PWRMODE_CON = VAL_MASK_WE(mask, value);
+    if (pPmu->PWRDN_ST &
+        ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT)))
+        PVTM_ClkDisable();
+}
+
+static void SOC_PutChar(char c, struct UART_REG *pUart)
+{
+    if (pUart) {
+        pUart->THR = c;
+        while ((pUart->USR & UART_USR_BUSY))
+            ;
+    }
+}
+
+static void SOC_UartSave(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart)
+{
+    if (pUartSave && pUart) {
+        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY))
+            ;
+        pUartSave->LCR = pUart->LCR;
+        pUartSave->IER = pUart->IER;
+        pUartSave->MCR = pUart->MCR;
+        if (pUart->USR & UART_USR_BUSY)
+            HAL_DelayMs(10);
+        if (pUart->USR & UART_USR_BUSY)
+            pUart->SRR = UART_SRR_XFR | UART_SRR_RFR;
+        pUart->LCR = UART_LCR_DLAB;
+        pUartSave->DLL = pUart->DLL;
+        pUartSave->DLH = pUart->DLH;
+        pUart->LCR = pUartSave->LCR;
+    }
+}
+
+static void SOC_UartRestore(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart)
+{
+    if (pUartSave && pUart) {
+        pUart->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
+        pUart->MCR = UART_MCR_LOOP;
+        pUart->LCR = UART_LCR_DLAB;
+        pUart->DLL = pUartSave->DLL;
+        pUart->DLH = pUartSave->DLH;
+        pUart->LCR = pUartSave->LCR;
+        pUart->IER = pUartSave->IER;
+        pUart->FCR = UART_FCR_ENABLE_FIFO;
+        pUart->MCR = pUartSave->MCR;
+    }
+}
+
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
 static int SOC_SuspendEnter(uint32_t flag)
 {
     HAL_DCACHE_CleanInvalidate();
-    HAL_DCACHE_Disable();
     __WFI();
+    HAL_CPU_DoResume();
 
     return HAL_OK;
 }
@@ -359,12 +575,62 @@ uint64_t HAL_PM_GetTimerCount(void)
 int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 {
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
+    struct PMU_REG *pPmu = PMU;
+    struct GRF_REG *pGrf = GRF;
+    struct UART_REG *pUart = NULL;
+    struct UART_REG_SAVE pUartSave;
+    uint64_t timerCount;
+    uint32_t ret = 0;
+
     HAL_ASSERT(suspendInfo != NULL);
 
+#ifdef HAL_SYSTICK_MODULE_ENABLED
+    SysTick->CTRL &= (~SysTick_CTRL_ENABLE_Msk);
+#endif
+
+#ifdef HAL_UART_MODULE_ENABLED
+    if (suspendInfo->flag.uartValid) {
+        if (suspendInfo->flag.uartChannel == 0)
+            pUart = UART0;
+        else if (suspendInfo->flag.uartChannel == 1)
+            pUart = UART1;
+        else if (suspendInfo->flag.uartChannel == 2)
+            pUart = UART2;
+    }
+#endif
+
+    SOC_PutChar('0', pUart);
+    SOC_SleepModeInit(pPmu);
+    SOC_PutChar('1', pUart);
+    SOC_FastBootConfig(pGrf);
+    SOC_PutChar('2', pUart);
+    SOC_WakeupSourceConfig(pPmu);
+    SOC_PutChar('3', pUart);
     HAL_NVIC_SuspendSave();
-    HAL_CPU_SuspendEnter(suspendInfo->suspendFlag, SOC_SuspendEnter);
+    SOC_PutChar('4', pUart);
+    SOC_UartSave(&pUartSave, pUart);
+    timerCount = HAL_GetSysTimerCount();
+    ret = HAL_CPU_SuspendEnter(suspendInfo->suspendFlag, SOC_SuspendEnter);
+    pmTimerLowCount = HAL_GetSysTimerCount() - timerCount;
+    SOC_SleepModeReinit(pPmu);
+    SOC_UartRestore(&pUartSave, pUart);
+    SOC_PutChar('3', pUart);
     HAL_DCACHE_Enable();
+
+    if (!ret) {
+        HAL_ICACHE_Enable();
+    }
+    SOC_PutChar('2', pUart);
     HAL_NVIC_ResumeRestore();
+    SOC_PutChar('1', pUart);
+    SOC_GetWakeupStatus(pPmu);
+    SOC_PutChar('0', pUart);
+#ifdef HAL_SYSTICK_MODULE_ENABLED
+    HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);
+    HAL_SYSTICK_Enable();
+#endif
+
+    HAL_DBG("\n");
 #endif
 
     return HAL_OK;
