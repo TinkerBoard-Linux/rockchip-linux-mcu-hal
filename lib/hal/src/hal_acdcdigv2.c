@@ -708,7 +708,9 @@ HAL_Status HAL_ACDCDIG_Init(struct HAL_ACDCDIG_DEV *acdcDig, struct AUDIO_INIT_C
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
 
-    HAL_CRU_ClkEnable(acdcDig->hclk);
+    if (acdcDig->enabled == 0)
+        HAL_CRU_ClkEnable(acdcDig->hclk);
+
     ACDCDIG_I2C_Init(acdcDig);
 
     /* Disable volume cross zero detect. */
@@ -766,7 +768,9 @@ HAL_Status HAL_ACDCDIG_DeInit(struct HAL_ACDCDIG_DEV *acdcDig)
 {
     ACDCDIG_I2C_Disable(acdcDig);
     ACDCDIG_I2C_DeInit(acdcDig);
-    HAL_CRU_ClkDisable(acdcDig->hclk);
+
+    if (acdcDig->enabled == 0)
+        HAL_CRU_ClkDisable(acdcDig->hclk);
 
     return HAL_OK;
 }
