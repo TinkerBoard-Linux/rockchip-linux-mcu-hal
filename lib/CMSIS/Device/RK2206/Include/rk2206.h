@@ -77,12 +77,12 @@ struct TIMER_REG {
 };
 /* WDT Register Structure Define */
 struct WDT_REG {
-    __IO uint32_t WDT_CR;                             /* Address Offset: 0x0000 */
-    __IO uint32_t WDT_TORR;                           /* Address Offset: 0x0004 */
-    __I  uint32_t WDT_CCVR;                           /* Address Offset: 0x0008 */
-    __O  uint32_t WDT_CRR;                            /* Address Offset: 0x000C */
-    __I  uint32_t WDT_STAT;                           /* Address Offset: 0x0010 */
-    __I  uint32_t WDT_EOI;                            /* Address Offset: 0x0014 */
+    __IO uint32_t CR;                             /* Address Offset: 0x0000 */
+    __IO uint32_t TORR;                           /* Address Offset: 0x0004 */
+    __I  uint32_t CCVR;                           /* Address Offset: 0x0008 */
+    __O  uint32_t CRR;                            /* Address Offset: 0x000C */
+    __I  uint32_t STAT;                           /* Address Offset: 0x0010 */
+    __I  uint32_t EOI;                            /* Address Offset: 0x0014 */
 };
 /* RKI2C_20180130 Register Structure Define */
 struct RKI2C_20180130_REG {
@@ -1329,27 +1329,27 @@ struct HYPERBUS_REG {
 #define TIMER_INTSTATUS_INTSTATUS_MASK                     (0x1U << TIMER_INTSTATUS_INTSTATUS_SHIFT)                    /* 0x00000001 */
 /******************************************WDT*******************************************/
 /* WDT_CR */
-#define WDT_WDT_CR_WDT_EN_SHIFT                            (0U)
-#define WDT_WDT_CR_WDT_EN_MASK                             (0x1U << WDT_WDT_CR_WDT_EN_SHIFT)                            /* 0x00000001 */
-#define WDT_WDT_CR_RESP_MODE_SHIFT                         (1U)
-#define WDT_WDT_CR_RESP_MODE_MASK                          (0x1U << WDT_WDT_CR_RESP_MODE_SHIFT)                         /* 0x00000002 */
-#define WDT_WDT_CR_RST_PLUSE_LENTH_SHIFT                   (2U)
-#define WDT_WDT_CR_RST_PLUSE_LENTH_MASK                    (0x3U << WDT_WDT_CR_RST_PLUSE_LENTH_SHIFT)                   /* 0x0000000C */
+#define WDT_CR_WDT_EN_SHIFT                            (0U)
+#define WDT_CR_WDT_EN_MASK                             (0x1U << WDT_CR_WDT_EN_SHIFT)                            /* 0x00000001 */
+#define WDT_CR_RESP_MODE_SHIFT                         (1U)
+#define WDT_CR_RESP_MODE_MASK                          (0x1U << WDT_CR_RESP_MODE_SHIFT)                         /* 0x00000002 */
+#define WDT_CR_RST_PLUSE_LENTH_SHIFT                   (2U)
+#define WDT_CR_RST_PLUSE_LENTH_MASK                    (0x3U << WDT_CR_RST_PLUSE_LENTH_SHIFT)                   /* 0x0000000C */
 /* WDT_TORR */
-#define WDT_WDT_TORR_TIMEOUT_PERIOD_SHIFT                  (0U)
-#define WDT_WDT_TORR_TIMEOUT_PERIOD_MASK                   (0xFU << WDT_WDT_TORR_TIMEOUT_PERIOD_SHIFT)                  /* 0x0000000F */
+#define WDT_TORR_TIMEOUT_PERIOD_SHIFT                  (0U)
+#define WDT_TORR_TIMEOUT_PERIOD_MASK                   (0xFU << WDT_TORR_TIMEOUT_PERIOD_SHIFT)                  /* 0x0000000F */
 /* WDT_CCVR */
-#define WDT_WDT_CCVR_CUR_CNT_SHIFT                         (0U)
-#define WDT_WDT_CCVR_CUR_CNT_MASK                          (0xFFFFFFFFU << WDT_WDT_CCVR_CUR_CNT_SHIFT)                  /* 0xFFFFFFFF */
+#define WDT_CCVR_CUR_CNT_SHIFT                         (0U)
+#define WDT_CCVR_CUR_CNT_MASK                          (0xFFFFFFFFU << WDT_CCVR_CUR_CNT_SHIFT)                  /* 0xFFFFFFFF */
 /* WDT_CRR */
-#define WDT_WDT_CRR_CNT_RESTART_SHIFT                      (0U)
-#define WDT_WDT_CRR_CNT_RESTART_MASK                       (0xFFU << WDT_WDT_CRR_CNT_RESTART_SHIFT)                     /* 0x000000FF */
+#define WDT_CRR_CNT_RESTART_SHIFT                      (0U)
+#define WDT_CRR_CNT_RESTART_MASK                       (0xFFU << WDT_CRR_CNT_RESTART_SHIFT)                     /* 0x000000FF */
 /* WDT_STAT */
-#define WDT_WDT_STAT_WDT_STATUS_SHIFT                      (0U)
-#define WDT_WDT_STAT_WDT_STATUS_MASK                       (0x1U << WDT_WDT_STAT_WDT_STATUS_SHIFT)                      /* 0x00000001 */
+#define WDT_STAT_WDT_STATUS_SHIFT                      (0U)
+#define WDT_STAT_WDT_STATUS_MASK                       (0x1U << WDT_STAT_WDT_STATUS_SHIFT)                      /* 0x00000001 */
 /* WDT_EOI */
-#define WDT_WDT_EOI_WDT_INT_CLR_SHIFT                      (0U)
-#define WDT_WDT_EOI_WDT_INT_CLR_MASK                       (0x1U << WDT_WDT_EOI_WDT_INT_CLR_SHIFT)                      /* 0x00000001 */
+#define WDT_EOI_WDT_INT_CLR_SHIFT                      (0U)
+#define WDT_EOI_WDT_INT_CLR_MASK                       (0x1U << WDT_EOI_WDT_INT_CLR_SHIFT)                      /* 0x00000001 */
 /******************************************I2C*******************************************/
 /* CON */
 #define I2C_CON_I2C_EN_SHIFT                               (0U)

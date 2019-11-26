@@ -379,12 +379,12 @@ struct TIMER_REG {
 /* WDT Register Structure Define */
 struct WDT_REG
 {
-    __IO uint32_t WDT_CR;
-    __IO uint32_t WDT_TORR;
-    __I  uint32_t WDT_CCVR;
-    __IO uint32_t WDT_CRR;
-    __I  uint32_t WDT_STAT;
-    __I  uint32_t WDT_EOI;
+    __IO uint32_t CR;
+    __IO uint32_t TORR;
+    __I  uint32_t CCVR;
+    __IO uint32_t CRR;
+    __I  uint32_t STAT;
+    __I  uint32_t EOI;
 };
 
 /* MBOX Register struct define */
