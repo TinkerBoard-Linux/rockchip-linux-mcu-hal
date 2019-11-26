@@ -74,7 +74,7 @@ static void WDT_SetTop(uint32_t top_s)
      * CP_WDT_DUAL_TOP in WDT_COMP_PARAMS_1).  On those we
      * effectively get a pat of the watchdog right here.
      */
-    pWDT->WDT_TORR = top_Val | top_Val << WDT_WDT_TORR_TIMEOUT_PERIOD_SHIFT;
+    pWDT->TORR = top_Val | top_Val << WDT_TORR_TIMEOUT_PERIOD_SHIFT;
     HAL_WDT_KeepAlive();
 }
 
@@ -131,7 +131,7 @@ HAL_Status HAL_WDT_SetTimeout(uint32_t top)
  */
 HAL_Status HAL_WDT_KeepAlive(void)
 {
-    pWDT->WDT_CRR = WDOG_COUNTER_RESTART_KICK_VALUE;
+    pWDT->CRR = WDOG_COUNTER_RESTART_KICK_VALUE;
 
     return HAL_OK;
 }
@@ -143,16 +143,16 @@ HAL_Status HAL_WDT_KeepAlive(void)
  */
 HAL_Status HAL_WDT_Start(enum WDT_RESP_MODE mode)
 {
-    uint32_t tmp = pWDT->WDT_CR;
+    uint32_t tmp = pWDT->CR;
 
     if (mode == INDIRECT_SYSTEM_RESET)
-        tmp |= WDT_WDT_CR_RESP_MODE_MASK;
+        tmp |= WDT_CR_RESP_MODE_MASK;
     else if (mode == DIRECT_SYSTEM_RESET)
-        tmp &= ~WDT_WDT_CR_RESP_MODE_MASK;
+        tmp &= ~WDT_CR_RESP_MODE_MASK;
 
-    tmp |= WDT_WDT_CR_WDT_EN_MASK;
+    tmp |= WDT_CR_WDT_EN_MASK;
 
-    pWDT->WDT_CR = tmp;
+    pWDT->CR = tmp;
 
     return HAL_OK;
 }
@@ -163,7 +163,7 @@ HAL_Status HAL_WDT_Start(enum WDT_RESP_MODE mode)
  */
 uint32_t HAL_WDT_ClearInterrupt(void)
 {
-    return pWDT->WDT_EOI;
+    return pWDT->EOI;
 }
 
 /**
@@ -172,7 +172,7 @@ uint32_t HAL_WDT_ClearInterrupt(void)
  */
 uint32_t HAL_WDT_GetIntStatus(void)
 {
-    return pWDT->WDT_STAT;
+    return pWDT->STAT;
 }
 
 /** @} */
