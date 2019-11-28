@@ -623,15 +623,30 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
     HAL_ASSERT(syncClkRate != 0);
     divSyncClk = HAL_DivRoundClosest(mclkRate, syncClkRate);
 
-    /* Prepare ADCINT_DIV and DACINT_DIV before ADC/DACCLKCTRL are enabled. */
-    if (stream == AUDIO_STREAM_PLAYBACK)
+    if (acdcDig->enabled == 0) {
+        /**
+         * The ADC sync clk is from DACCLK, so we need to prepare both DAC and
+         * ADC INT DIV here during capture only.
+         */
         MODIFY_REG(reg->DACINT_DIV,
                    ACDCDIG_DACINT_DIV_INT_DIV_CON_MASK,
                    ACDCDIG_DACINT_DIV_INT_DIV(divSyncClk));
-    else
         MODIFY_REG(reg->ADCINT_DIV,
                    ACDCDIG_ADCINT_DIV_INT_DIV_CON_MASK,
                    ACDCDIG_ADCINT_DIV_INT_DIV(divSyncClk));
+    } else {
+        /**
+         * Prepare ADCINT_DIV or DACINT_DIV after the other stream are enabled.
+         */
+        if (stream == AUDIO_STREAM_PLAYBACK)
+            MODIFY_REG(reg->DACINT_DIV,
+                       ACDCDIG_DACINT_DIV_INT_DIV_CON_MASK,
+                       ACDCDIG_DACINT_DIV_INT_DIV(divSyncClk));
+        else
+            MODIFY_REG(reg->ADCINT_DIV,
+                       ACDCDIG_ADCINT_DIV_INT_DIV_CON_MASK,
+                       ACDCDIG_ADCINT_DIV_INT_DIV(divSyncClk));
+    }
 
     if (acdcDig->enabled) {
         uint32_t adcIntDiv = READ_REG(reg->ADCINT_DIV) & ACDCDIG_ADCINT_DIV_INT_DIV_CON_MASK;
