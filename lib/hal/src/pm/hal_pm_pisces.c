@@ -55,8 +55,6 @@ struct UART_REG_SAVE {
 };
 /********************* Private Variable Definition ***************************/
 static uint64_t pmTimerLastCount;
-static uint64_t pmTimerLowCount;
-static uint32_t pmTimerLowRate;
 
 /********************* Private Function Definition ***************************/
 #ifdef HAL_PM_RUNTIME_MODULE_ENABLED
@@ -182,7 +180,6 @@ static void SOC_SleepModeInit(struct PMU_REG *pPmu)
     if (pPmu->PWRDN_ST &
         ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT))) {
         value |= (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT);
-        pmTimerLowRate = SLEEP_INPUT_RATE;
         pPmu->PWRMODE_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
         pPmu->PLLLOCK_CNT = SLEEP_COUNT_TO_MS(1);
         pPmu->DSP_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
@@ -469,7 +466,6 @@ uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 HAL_Status HAL_PM_TimerStart(uint64_t timeoutCount, bool needTimeout)
 {
     pmTimerLastCount = HAL_GetSysTimerCount();
-    pmTimerLowCount = 0;
 
     return 0;
 }
@@ -484,9 +480,6 @@ uint64_t HAL_PM_GetTimerCount(void)
     uint64_t timerCount;
 
     timerCount = HAL_GetSysTimerCount() - pmTimerLastCount;
-    if (pmTimerLowRate)
-        timerCount += HAL_DivU64(pmTimerLowCount * PLL_INPUT_OSC_RATE,
-                                 pmTimerLowRate) - pmTimerLowCount;
 
     return timerCount;
 }
@@ -498,7 +491,6 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     struct GRF_REG *pGrf = GRF;
     struct UART_REG *pUart = NULL;
     struct UART_REG_SAVE pUartSave;
-    uint64_t timerCount;
 
     HAL_ASSERT(suspendInfo != NULL);
 
@@ -521,9 +513,7 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     HAL_NVIC_SuspendSave();
     SOC_PutChar('4', pUart);
     SOC_UartSave(&pUartSave, pUart);
-    timerCount = HAL_GetSysTimerCount();
     HAL_CPU_SuspendEnter(suspendInfo->suspendFlag, SOC_SuspendEnter);
-    pmTimerLowCount = HAL_GetSysTimerCount() - timerCount;
     SOC_SleepModeReinit(pPmu);
     SOC_UartRestore(&pUartSave, pUart);
     SOC_PutChar('3', pUart);
