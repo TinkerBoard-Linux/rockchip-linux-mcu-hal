@@ -113,7 +113,7 @@ struct NVIC_SAVE_S {
 
 static struct NVIC_SAVE_S nvicSave;
 static NVIC_Type *pnvic = NVIC;
-static uint8_t shprSave[SHP_NUM];
+static SCB_Type scbSave;
 
 /********************* Private Function Definition ***************************/
 
@@ -139,8 +139,6 @@ void HAL_NVIC_SuspendSave(void)
         nvicSave.ip[i] = pnvic->IP[i];
 
     nvicSave.pg = NVIC_GetPriorityGrouping();
-    for (i = 0; i < SHP_NUM; i++)
-        shprSave[i] = SCB->SHP[i];
 }
 
 /**
@@ -160,9 +158,50 @@ void HAL_NVIC_ResumeRestore(void)
 
     for (i = 0; i < NVIC_EXT_ISER_NUM; i++)
         pnvic->ISER[i] = nvicSave.iser[i];
+}
 
+/**
+ * @brief  save scb registers for resume nvic.
+ * @return null
+ */
+void HAL_SCB_SuspendSave(void)
+{
+    int i;
+
+    scbSave.ICSR = SCB->ICSR;
+    scbSave.AIRCR = SCB->AIRCR;
+    scbSave.SCR = SCB->SCR;
     for (i = 0; i < SHP_NUM; i++)
-        SCB->SHP[i] = shprSave[i];
+        scbSave.SHP[i] = SCB->SHP[i];
+    scbSave.SHCSR = SCB->SHCSR;
+    scbSave.CFSR = SCB->CFSR;
+    scbSave.DFSR = SCB->DFSR;
+    scbSave.MMFAR = SCB->MMFAR;
+    scbSave.BFAR = SCB->BFAR;
+    scbSave.AFSR = SCB->AFSR;
+    scbSave.CPACR = SCB->CPACR;
+}
+
+/**
+ * @brief  resume nvic registers.
+ * @return null
+ */
+void HAL_SCB_ResumeRestore(void)
+{
+    int i;
+
+    SCB->ICSR = scbSave.ICSR;
+    SCB->AIRCR = scbSave.AIRCR;
+    SCB->SCR = scbSave.SCR;
+    for (i = 0; i < SHP_NUM; i++)
+        SCB->SHP[i] = scbSave.SHP[i];
+    SCB->SHCSR = scbSave.SHCSR;
+    SCB->CFSR = scbSave.CFSR;
+    SCB->DFSR = scbSave.DFSR;
+    SCB->MMFAR = scbSave.MMFAR;
+    SCB->BFAR = scbSave.BFAR;
+    SCB->AFSR = scbSave.AFSR;
+    SCB->CPACR = scbSave.CPACR;
 }
 
 /**

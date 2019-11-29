@@ -512,13 +512,17 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     SOC_PutChar('3', pUart);
     HAL_NVIC_SuspendSave();
     SOC_PutChar('4', pUart);
+    HAL_SCB_SuspendSave();
+    SOC_PutChar('5', pUart);
     SOC_UartSave(&pUartSave, pUart);
     HAL_CPU_SuspendEnter(suspendInfo->suspendFlag, SOC_SuspendEnter);
     SOC_SleepModeReinit(pPmu);
     SOC_UartRestore(&pUartSave, pUart);
-    SOC_PutChar('3', pUart);
+    SOC_PutChar('4', pUart);
     HAL_DCACHE_Enable();
     HAL_ICACHE_Enable();
+    SOC_PutChar('3', pUart);
+    HAL_SCB_ResumeRestore();
     SOC_PutChar('2', pUart);
     HAL_NVIC_ResumeRestore();
     SOC_PutChar('1', pUart);
