@@ -173,7 +173,19 @@ HAL_Status HAL_MBOX_Suspend(struct MBOX_REG *pReg)
 
 HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg)
 {
+    struct MBOX_DEV *pMBox;
+    eMBOX_CH chan;
+
     HAL_ASSERT(IS_MBOX_INSTANCE(pReg));
+
+    pMBox = MBOX_FindEntry(pReg);
+    if (!pMBox)
+        return HAL_NODEV;
+
+    for (chan = 0; chan < MBOX_CH_MAX; chan++) {
+        if (pMBox->chans[chan].client)
+            MBOX_ChanEnable(pReg, chan, pMBox->A2B);
+    }
 
     return HAL_OK;
 }
