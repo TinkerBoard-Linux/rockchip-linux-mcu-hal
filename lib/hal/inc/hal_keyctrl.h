@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_KEYCTRL_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -31,3 +33,5 @@ uint32_t HAL_KeyCtrl_GetValue(struct KEY_CTRL_REG *reg);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_KEYCTRL_MODULE_ENABLED */

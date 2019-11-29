@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_I2S_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The I2S driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_I2S_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -352,8 +352,8 @@ HAL_Status HAL_I2S_Config(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream,
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_I2S_MODULE_ENABLED */

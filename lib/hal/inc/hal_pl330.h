@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_PL330_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -231,3 +233,6 @@ const struct PL330_DESC *HAL_PL330_GetDesc(struct PL330_CHAN *pchan);
 /** @} */
 
 /** @} */
+
+#endif
+/* HAL_PL330_MODULE_ENABLED */

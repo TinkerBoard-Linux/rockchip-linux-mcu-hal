@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_SFC_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -27,10 +31,6 @@
  - DMA mode: Handling interrupt return in DMA mode SFC request.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_SFC_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -415,8 +415,8 @@ HAL_Status HAL_SFC_IRQHelper(struct HAL_SFC_HOST *host)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SFC_MODULE_ENABLED */

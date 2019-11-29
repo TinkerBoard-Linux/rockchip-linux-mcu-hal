@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_MBOX_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -63,3 +65,5 @@ HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_MBOX_MODULE_ENABLED */

@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_HWSPINLOCK_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -27,3 +29,5 @@ uint32_t HAL_HWSpinlock_GetOwner(uint32_t LockID);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_HWSPINLOCK_MODULE_ENABLED */

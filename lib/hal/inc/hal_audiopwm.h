@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_AUDIOPWM_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -49,3 +51,5 @@ HAL_Status HAL_AUDIOPWM_Config(struct HAL_AUDIOPWM_DEV *audioPwm, struct AUDIO_P
 /** @} */
 
 /** @} */
+
+#endif /* HAL_AUDIOPWM_MODULE_ENABLED */

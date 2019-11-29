@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PDM_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The PDM driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_PDM_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -433,8 +433,8 @@ HAL_Status HAL_PDM_Config(struct HAL_PDM_DEV *pdm, struct AUDIO_PARAMS *params)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PDM_MODULE_ENABLED */

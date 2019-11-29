@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_GPIO_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -27,10 +31,6 @@
    4) HAL_GPIO_IRQDispatch to dispatch GPIO IRQ, should be implemented by User.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_GPIO_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #define UNUSED(X) (void)(X)      /* To avoid gcc/g++ warnings */
@@ -490,7 +490,8 @@ void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank)
 }
 /** @} */
 
-#endif
 /** @} */
 
 /** @} */
+
+#endif /* HAL_GPIO_MODULE_ENABLED */

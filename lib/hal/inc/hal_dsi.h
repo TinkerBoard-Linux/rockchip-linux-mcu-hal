@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_DSI_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -128,3 +130,5 @@ HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
 /** @} */
 
 /** @} */
+
+#endif /* HAL_DSI_MODULE_ENABLED */

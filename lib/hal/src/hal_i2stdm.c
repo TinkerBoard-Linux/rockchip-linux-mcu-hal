@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_I2STDM_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The I2STDM driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_I2STDM_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -500,8 +500,8 @@ HAL_Status HAL_I2STDM_Config(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType st
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_I2STDM_MODULE_ENABLED */

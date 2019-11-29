@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_CRYPTO_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -255,3 +257,5 @@ HAL_Status HAL_CRYPTO_ClearISR(struct CRYPTO_DEV *pCrypto);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_CRYPTO_MODULE_ENABLED */

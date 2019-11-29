@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_CRU_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -33,10 +37,6 @@
  - More details refer to APIs' descriptions as below.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_CRU_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #if defined(SOC_RV1108)
@@ -902,8 +902,8 @@ HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_CRU_MODULE_ENABLED */

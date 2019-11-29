@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_SNOR_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -37,9 +41,6 @@
 
  @} */
 
-#include "hal_base.h"
-
-#ifdef HAL_SNOR_MODULE_ENABLED
 /********************* Private MACRO Definition ******************************/
 //#define HAL_SNOR_DEBUG
 #ifdef HAL_SNOR_DEBUG
@@ -838,8 +839,8 @@ HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SNOR_MODULE_ENABLED */

@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_PSRAM_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -72,3 +74,5 @@ HAL_Status HAL_PSRAM_XIPDisable(struct SPI_PSRAM *psram);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PSRAM_MODULE_ENABLED */

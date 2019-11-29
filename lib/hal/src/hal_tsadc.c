@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_TSADC_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -20,10 +24,6 @@
  - More details refer to APIs' descriptions as below.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_TSADC_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -426,8 +426,8 @@ int HAL_TSADC_GetTemperature_AUTO(int chn)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_TSADC_MODULE_ENABLED */

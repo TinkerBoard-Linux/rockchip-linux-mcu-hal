@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_EFUSE_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -19,10 +23,6 @@
  - invoke efuse functions to read data form efuse or write data to efuse.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_EFUSE_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #define BIT_PER_BYTE    8
@@ -88,8 +88,8 @@ HAL_Status HAL_EFUSE_ReadByte(struct EFUSE_CTL_REG *reg, uint32_t offset, uint8_
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_EFUSE_MODULE_ENABLED */

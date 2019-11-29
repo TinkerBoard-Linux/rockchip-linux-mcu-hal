@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PSRAM_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -25,10 +29,6 @@
      - HAL_PSRAM_XIPDisable()
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_PSRAM_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 //#define HAL_PSRAM_DEBUG
@@ -256,8 +256,8 @@ HAL_Status HAL_PSRAM_XIPDisable(struct SPI_PSRAM *psram)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PSRAM_MODULE_ENABLED */

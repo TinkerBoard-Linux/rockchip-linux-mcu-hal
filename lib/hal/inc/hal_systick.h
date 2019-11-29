@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_SYSTICK_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -45,3 +47,5 @@ HAL_Status HAL_SYSTICK_Enable(void);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SYSTICK_MODULE_ENABLED */

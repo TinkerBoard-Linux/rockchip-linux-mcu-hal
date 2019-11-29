@@ -3,6 +3,8 @@
  * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -39,8 +41,6 @@
  to do timeout, this will be more accurate.
 
  @} */
-
-#include "hal_base.h"
 
 /********************* Private MACRO Definition ******************************/
 

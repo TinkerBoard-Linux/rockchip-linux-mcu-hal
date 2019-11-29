@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_VAD_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -101,3 +103,5 @@ HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_VAD_MODULE_ENABLED */

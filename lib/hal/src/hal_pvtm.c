@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PVTM_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -20,10 +24,7 @@
 
  @} */
 
-#include "hal_base.h"
 #include "hal_bsp.h"
-
-#ifdef HAL_PVTM_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -102,8 +103,8 @@ HAL_Status HAL_PVTM_GetFreqCnt(ePVTM_ID id, uint32_t chn, uint32_t timeUs,
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PVTM_MODULE_ENABLED */

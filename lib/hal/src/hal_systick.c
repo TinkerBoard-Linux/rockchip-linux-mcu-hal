@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_SYSTICK_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -38,10 +42,6 @@
     HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq())).
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_SYSTICK_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #define SYSTICK_INT_PRIORITY 0x0FU
@@ -163,8 +163,8 @@ HAL_Status HAL_SYSTICK_Enable(void)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SYSTICK_MODULE_ENABLED */

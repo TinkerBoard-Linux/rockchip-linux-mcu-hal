@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PCD_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -39,10 +43,6 @@
    ```
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_PCD_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -959,8 +959,8 @@ static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum)
     return HAL_OK;
 }
 
+/** @} */
+
+/** @} */
+
 #endif /* HAL_PCD_MODULE_ENABLED */
-
-/** @} */
-
-/** @} */

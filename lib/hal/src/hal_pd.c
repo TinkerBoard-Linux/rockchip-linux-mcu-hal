@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PMU_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -39,10 +43,6 @@
  - More details refer to APIs' descriptions as below.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_PMU_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #define PD_PWR_SHIFT   0U
@@ -217,8 +217,8 @@ HAL_Status HAL_PD_Off(ePD_Id pd)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PMU_MODULE_ENABLED */

@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#if (defined(RKMCU_PISCES) ||  defined(RKMCU_RK2108)) && defined(HAL_DSP_MODULE_ENABLED)
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The DSP driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#if (defined(RKMCU_PISCES) ||  defined(RKMCU_RK2108)) && defined(HAL_DSP_MODULE_ENABLED)
 
 /********************* Private MACRO Definition ******************************/
 
@@ -321,8 +321,8 @@ HAL_Status HAL_DSP_Stop(struct DSP_DEV *dsp)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* RKMCU_RK2108 && HAL_DSP_MODULE_ENABLED */

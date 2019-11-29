@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_SPI2APB_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -27,10 +31,6 @@
  - Invoke HAL_SPI2APB_Resume() to resume reg value while resume
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_SPI2APB_MODULE_ENABLED
 
 /********************* Public Function Definition ****************************/
 /** @defgroup SPI2APB_Exported_Functions_Group1 Suspend and Resume Functions
@@ -181,8 +181,8 @@ HAL_Status HAL_SPI2APB_WriteReg2(struct SPI2APB_REG *pReg, uint32_t value)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SPI2APB_MODULE_ENABLED */

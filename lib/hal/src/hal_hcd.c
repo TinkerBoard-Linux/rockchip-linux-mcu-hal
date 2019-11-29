@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_HCD_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -35,10 +39,6 @@
      - HAL_HCD_Start();
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_HCD_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 /********************* Private Structure Definition **************************/
@@ -931,8 +931,8 @@ static void HCD_Port_IRQHandler(struct HCD_HANDLE *pHCD)
     USB_HPRT0 = hprt0Modify;
 }
 
+/** @} */
+
+/** @} */
+
 #endif /* HAL_HCD_MODULE_ENABLED */
-
-/** @} */
-
-/** @} */

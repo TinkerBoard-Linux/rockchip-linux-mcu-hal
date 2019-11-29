@@ -3,6 +3,9 @@
 /*
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
+
+#ifdef HAL_PMU_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -30,3 +33,5 @@ HAL_Status HAL_PD_Off(ePD_Id pd);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PMU_MODULE_ENABLED */

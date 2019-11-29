@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_PCD_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -106,3 +108,5 @@ ePCD_state HAL_PCD_GetState(struct PCD_HANDLE *pPCD);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PCD_MODULE_ENABLED */

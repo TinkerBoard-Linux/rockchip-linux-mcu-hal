@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
+#ifdef HAL_DWDMA_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -203,3 +205,5 @@ HAL_Status HAL_DWDMA_IrqHandler(struct HAL_DWDMA_DEV *dw, uint32_t chanId);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_DWDMA_MODULE_ENABLED */

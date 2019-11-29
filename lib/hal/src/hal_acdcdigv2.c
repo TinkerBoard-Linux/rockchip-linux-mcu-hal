@@ -3,6 +3,11 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_ACDCDIG_MODULE_ENABLED
+#if (ACDCDIG_VERSION == 0x2U) /* ACDCDIGv2 */
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,11 +22,6 @@
  The ACDCDIG driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_ACDCDIG_MODULE_ENABLED
-#if (ACDCDIG_VERSION == 0x2U) /* ACDCDIGv2 */
 
 /********************* Private MACRO Definition ******************************/
 /* REG_CON bits */
@@ -1391,9 +1391,9 @@ uint32_t HAL_ACDCDIG_GetSyncClk(eAUDIO_sampleRate sampleRate)
 
 /** @} */
 
+/** @} */
+
+/** @} */
+
 #endif /* (ACDCDIG_VERSION == 0x2U) */
-#endif
-
-/** @} */
-
-/** @} */
+#endif /* HAL_ACDCDIG_MODULE_ENABLED */

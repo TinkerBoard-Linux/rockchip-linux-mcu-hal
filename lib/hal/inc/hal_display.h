@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#if defined(HAL_VOP_MODULE_ENABLED) || defined(HAL_DSI_MODULE_ENABLED)
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -112,3 +114,5 @@ struct DISPLAY_RECT {
 /** @} */
 
 /** @} */
+
+#endif /* HAL_VOP_MODULE_ENABLED || HAL_DSI_MODULE_ENABLED */

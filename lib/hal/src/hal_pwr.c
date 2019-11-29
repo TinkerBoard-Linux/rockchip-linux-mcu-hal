@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PWR_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -27,10 +31,6 @@
  - Invoke HAL_PWR_RoundVoltage to check the volt is valid or not.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_PWR_MODULE_ENABLED
 
 #ifdef HAL_PWR_INTBUS_MODULE_ENABLED
 
@@ -360,7 +360,8 @@ int HAL_PWR_LinearRangeVoltToSel(const struct PWR_LINEAR_RANGE_TABLE *linearTabl
     return ret;
 }
 
-#endif
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PWR_MODULE_ENABLED */

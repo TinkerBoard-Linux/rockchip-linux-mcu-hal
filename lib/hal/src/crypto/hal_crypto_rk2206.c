@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#if defined(RKMCU_RK2206) && defined(HAL_CRYPTO_MODULE_ENABLED)
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The CRYPTO driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#if defined(RKMCU_RK2206) && defined(HAL_CRYPTO_MODULE_ENABLED)
 
 /********************* Private MACRO Definition ******************************/
 #define _SBF(s, v) ((v) << (s))
@@ -673,8 +673,8 @@ HAL_Status HAL_CRYPTO_ClearISR(struct CRYPTO_DEV *pCrypto)
 }
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* MCU_RK2206 && HAL_CRU_MODULE_ENABLED */

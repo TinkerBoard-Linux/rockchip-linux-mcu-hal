@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_WDT_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -42,3 +44,5 @@ uint32_t HAL_WDT_GetIntStatus(void);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_WDT_MODULE_ENABLED */

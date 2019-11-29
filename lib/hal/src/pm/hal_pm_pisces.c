@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#if defined(RKMCU_PISCES)
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -19,10 +23,6 @@
  - Invoke HAL_SYS_Suspend() when system will enter suspend.
 
  @} */
-
-#include "hal_base.h"
-
-#if defined(RKMCU_PISCES)
 
 /********************* Private MACRO Definition ******************************/
 /* for pm_runtime */
@@ -537,8 +537,8 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* RKMCU_PISCES */

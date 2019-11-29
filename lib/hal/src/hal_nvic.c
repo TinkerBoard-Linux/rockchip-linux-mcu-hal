@@ -3,6 +3,10 @@
  * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_NVIC_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,12 +21,6 @@
  The NVIC driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_NVIC_MODULE_ENABLED
-
-#include "hal_uart.h"
 
 /********************* Private MACRO Definition ******************************/
 
@@ -207,8 +205,8 @@ HAL_Status HAL_NVIC_Init(void)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_NVIC_MODULE_ENABLED */

@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_PWM_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
   * @{
   */
@@ -118,3 +120,5 @@ HAL_Status HAL_PWM_DeInit(struct PWM_HANDLE *pPWM);
 /**
   * @}
   */
+
+#endif /* HAL_PWM_MODULE_ENABLED */

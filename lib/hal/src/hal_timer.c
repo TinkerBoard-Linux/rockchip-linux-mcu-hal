@@ -3,6 +3,10 @@
  * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_TIMER_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -27,10 +31,6 @@
  - SYS_TIMER is a rk timer fixed to serve the delay system. Invoke HAL_TIMER_SysTimerInit() to init.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_TIMER_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #define TIMER_CONTROLREG_TIMER_MODE_FREE_RUNNING (0x0U << TIMER_CONTROLREG_TIMER_MODE_SHIFT)
@@ -282,8 +282,8 @@ __WEAK HAL_Status HAL_TIMER1_Handler(void)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_TIMER_MODULE_ENABLED */

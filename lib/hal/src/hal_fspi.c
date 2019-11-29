@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_FSPI_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -39,9 +43,6 @@
  - If psram is initial by preloader and work all the timer, set g_fspidev->xmmcDev[cs].type = DEV_PSRAM in hal_bsp.c.
 
  @} */
-
-#include "hal_base.h"
-#ifdef HAL_FSPI_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 //#define FSPI_DEBUG
@@ -662,8 +663,8 @@ uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_FSPI_MODULE_ENABLED */

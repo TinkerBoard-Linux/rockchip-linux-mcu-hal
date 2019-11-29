@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_WDT_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The WDT driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_WDT_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -177,8 +177,8 @@ uint32_t HAL_WDT_GetIntStatus(void)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_WDT_MODULE_ENABLED */

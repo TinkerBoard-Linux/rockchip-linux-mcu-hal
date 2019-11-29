@@ -1053,4 +1053,4 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
 /** @} */
 
-#endif
+#endif /* SOC_RK1808 && HAL_CRU_MODULE_ENABLED */

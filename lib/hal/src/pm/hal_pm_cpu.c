@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -25,10 +29,6 @@
  - Invoke HAL_PM_RuntimeGetData() when need get all of device status.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_PM_RUNTIME_MODULE_ENABLED
 
 static struct PM_RUNTIME_INFO runtimeStatus;
 
@@ -223,8 +223,9 @@ void HAL_CPU_SuspendSave(uint32_t *ptr, uint32_t ptrsz, uint32_t sp, uint32_t *p
 /** @} */
 
 #endif /* __CM3_REV || __CM4_REV */
+
+/** @} */
+
+/** @} */
+
 #endif /* HAL_PM_CPU_SLEEP_MODULE_ENABLED */
-
-/** @} */
-
-/** @} */

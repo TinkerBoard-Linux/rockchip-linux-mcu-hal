@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_KEYCTRL_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The KEYCTRL driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_KEYCTRL_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -111,8 +111,8 @@ uint32_t HAL_KeyCtrl_GetValue(struct KEY_CTRL_REG *reg)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_KEYCTRL_MODULE_ENABLED */

@@ -2,6 +2,9 @@
 /*
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
+
+#ifdef HAL_CRU_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -175,3 +178,5 @@ void HAL_CRU_AsEnable(uint8_t ch, uint8_t en);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_CRU_MODULE_ENABLED */

@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -24,10 +28,6 @@
  - The upper HAL HCD/PCD driver will call the right routines for its internal processes.
 
  @} */
-
-#include "hal_base.h"
-
-#if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
 
 /********************* Private MACRO Definition ******************************/
 /********************* Private Structure Definition **************************/
@@ -1568,8 +1568,8 @@ HAL_Status USB_StopHost(struct USB_GLOBAL_REG *pUSB)
 
 /** @} */
 
+/** @} */
+
+/** @} */
+
 #endif /* defined (HAL_PCD_MODULE_ENABLED) || defined (HAL_HCD_MODULE_ENABLED) */
-
-/** @} */
-
-/** @} */

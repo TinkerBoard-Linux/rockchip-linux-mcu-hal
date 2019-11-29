@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -300,3 +302,5 @@ HAL_Status USB_StopHost(struct USB_GLOBAL_REG *pUSB);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PCD_MODULE_ENABLED || HAL_HCD_MODULE_ENABLED */

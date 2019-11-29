@@ -2,6 +2,9 @@
 /*
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
+
+#ifdef HAL_TSADC_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -54,3 +57,5 @@ int HAL_TSADC_GetTemperature_AUTO(int chn);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_TSADC_MODULE_ENABLED */

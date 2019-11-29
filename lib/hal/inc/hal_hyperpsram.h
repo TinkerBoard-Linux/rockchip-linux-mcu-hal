@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_HYPERPSRAM_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -16,8 +18,6 @@
 
 #include "hal_base.h"
 
-#ifdef HAL_HYPERPSRAM_MODULE_ENABLED
-
 /***************************** Function Declare ******************************/
 HAL_Status HAL_HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase);
 HAL_Status HAL_HYPERPSRAM_DeInit(struct HYPERBUS_REG *pReg);
@@ -25,8 +25,8 @@ HAL_Status HAL_HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t hyper
 
 #endif
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_HYPERPSRAM_MODULE_ENABLED */

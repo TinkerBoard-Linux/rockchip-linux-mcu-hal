@@ -3,12 +3,26 @@
  * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_NVIC_MODULE_ENABLED
+
+/** @addtogroup RK_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup NVIC
+ *  @{
+ */
+
 #ifndef _HAL_NVIC_H_
 #define _HAL_NVIC_H_
 
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
+/** @defgroup NVIC_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
+
 typedef enum {
     NVIC_PRIORITYGROUP_0 = (0x7U), /*!< 0 bits pre-emption, 8 bits subpriority*/
     NVIC_PRIORITYGROUP_1 = (0x6U), /*!< 1 bits pre-emption, 7 bits subpriority*/
@@ -38,6 +52,9 @@ typedef enum {
 typedef void (*NVIC_IRQHandler)(void);
 
 /***************************** Structure Definition **************************/
+
+/** @} */
+
 /***************************** Function Declare ******************************/
 
 HAL_Status HAL_NVIC_SetIRQHandler(IRQn_Type IRQn, NVIC_IRQHandler handler);
@@ -56,3 +73,9 @@ HAL_Status HAL_NVIC_ConfigExtIRQ(IRQn_Type IRQn, NVIC_IRQHandler handler,
 HAL_Status HAL_NVIC_Init(void);
 
 #endif
+
+/** @} */
+
+/** @} */
+
+#endif /* HAL_NVIC_MODULE_ENABLED */

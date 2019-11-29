@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_SARADC_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The SARADC driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_SARADC_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -137,8 +137,8 @@ void HAL_SARADC_IrqHandler(struct SARADC_REG *reg)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SARADC_MODULE_ENABLED */

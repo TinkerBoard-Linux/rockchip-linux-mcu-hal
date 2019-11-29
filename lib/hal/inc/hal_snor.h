@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_SNOR_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -144,3 +146,5 @@ HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SNOR_MODULE_ENABLED */

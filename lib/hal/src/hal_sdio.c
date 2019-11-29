@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_SDIO_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The SDIO driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_SDIO_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #define MMC_FIFOTH_DMA_MULTIPLE_TRANSACTION_SIZE_8 (0x2U)
@@ -669,8 +669,8 @@ HAL_Status HAL_MMC_DeInit(struct HAL_MMC_HOST *host)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SDIO_MODULE_ENABLED */

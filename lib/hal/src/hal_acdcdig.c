@@ -3,6 +3,11 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_ACDCDIG_MODULE_ENABLED
+#if (ACDCDIG_VERSION == 0x1U) /* ACDCDIGv1 */
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,11 +22,6 @@
  The ACDCDIG driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_ACDCDIG_MODULE_ENABLED
-#if (ACDCDIG_VERSION == 0x1U) /* ACDCDIGv1 */
 
 /********************* Private MACRO Definition ******************************/
 /* VUCTL */
@@ -653,9 +653,9 @@ HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
 
 /** @} */
 
+/** @} */
+
+/** @} */
+
 #endif /* (ACDCDIG_VERSION == 0x1U) */
-#endif
-
-/** @} */
-
-/** @} */
+#endif /* HAL_ACDCDIG_MODULE_ENABLED */

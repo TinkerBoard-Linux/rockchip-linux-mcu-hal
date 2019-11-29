@@ -595,4 +595,4 @@ HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType)
 
 /** @} */
 
-#endif
+#endif /* RKMCU_PISCES && HAL_CRU_MODULE_ENABLED */

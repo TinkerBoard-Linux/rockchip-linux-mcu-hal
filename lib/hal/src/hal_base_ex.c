@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,8 +19,6 @@
  The HAL_BASE_EX driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
 
 /********************* Private MACRO Definition ******************************/
 

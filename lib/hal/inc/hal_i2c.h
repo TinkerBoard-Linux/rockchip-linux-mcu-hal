@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_I2C_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
   * @{
   */
@@ -141,3 +143,5 @@ HAL_Status HAL_I2C_DeInit(struct I2C_HANDLE *pI2C);
 /**
   * @}
   */
+
+#endif /* HAL_I2C_MODULE_ENABLED */

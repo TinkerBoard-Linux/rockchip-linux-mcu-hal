@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#if defined(HAL_SNOR_MODULE_ENABLED) || defined(HAL_PSRAM_MODULE_ENABLED)
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -156,3 +158,5 @@ struct HAL_SPI_MEM_OP {
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SNOR_MODULE_ENABLED || HAL_PSRAM_MODULE_ENABLED */

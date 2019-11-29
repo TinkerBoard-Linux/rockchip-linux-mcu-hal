@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_INTC_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -16,8 +18,6 @@
 
 #include "hal_base.h"
 #include "hal_def.h"
-
-#ifdef HAL_INTC_MODULE_ENABLED
 
 /***************************** MACRO Definition ******************************/
 
@@ -246,8 +246,8 @@ __STATIC_INLINE void HAL_INTC_UnmaskAllRQ()
 
 #endif
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_INTC_MODULE_ENABLED */

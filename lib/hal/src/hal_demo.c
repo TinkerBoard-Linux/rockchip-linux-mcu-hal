@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_DEMO_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The DEMO driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_DEMO_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -154,8 +154,8 @@ HAL_Status HAL_DEMO_CommonFunction(uint32_t inputTest)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_DEMO_MODULE_ENABLED */

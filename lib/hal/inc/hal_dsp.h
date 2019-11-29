@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_DSP_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -222,3 +224,5 @@ HAL_Status HAL_DSP_Stop(struct DSP_DEV *dsp);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_DSP_MODULE_ENABLED */

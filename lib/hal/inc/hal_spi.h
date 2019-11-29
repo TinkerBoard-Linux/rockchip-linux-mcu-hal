@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_SPI_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  * @{
  */
@@ -160,3 +162,5 @@ bool HAL_SPI_IsDmaXfer(struct SPI_HANDLE *pSPI);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SPI_MODULE_ENABLED */

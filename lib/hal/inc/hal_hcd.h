@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_HCD_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -104,3 +106,5 @@ uint32_t HAL_HCD_GetCurrentSpeed(struct HCD_HANDLE *pHCD);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_HCD_MODULE_ENABLED */

@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PINCTRL_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -39,10 +43,6 @@ Example:
                           PIN_CONFIG_SRT_FAST |
                           PIN_CONFIG_SMT_ENABLE);
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_PINCTRL_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #define PIN_READ(r)           (*(volatile uint32_t *)(r))
@@ -540,8 +540,8 @@ HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PINCTRL_MODULE_ENABLED */

@@ -740,4 +740,4 @@ HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType)
 
 /** @} */
 
-#endif
+#endif /* RKMCU_RK2108 && HAL_CRU_MODULE_ENABLED */

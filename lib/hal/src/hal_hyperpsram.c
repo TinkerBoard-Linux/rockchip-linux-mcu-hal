@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_HYPERPSRAM_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -19,11 +23,6 @@
   - Initialize the HYPERPSRAM (HAL_HYPERPSRAM_Init()):
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_HYPERPSRAM_MODULE_ENABLED
-
 /********************* Private MACRO Definition ******************************/
 /** Memory Base Address  */
 #define HYPERBUS_MBR0_BASE_ADDR_MASK (0xFF000000UL)
@@ -307,8 +306,8 @@ HAL_Status HAL_HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t hyper
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_HYPERPSRAM_MODULE_ENABLED */

@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_VOP_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -18,10 +22,7 @@
 
  @} */
 
-#include "hal_base.h"
 #include "hal_math.h"
-
-#ifdef HAL_VOP_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #define VOP_WIN_YUV4_FORMAT HAL_BIT(4)
@@ -1824,8 +1825,9 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
 #endif
 
 /** @} */
-#endif
 
 /** @} */
 
 /** @} */
+
+#endif /* HAL_VOP_MODULE_ENABLED */

@@ -3,6 +3,10 @@
  * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_UART_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The UART driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_UART_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 /********************* Private Structure Definition **************************/
@@ -449,8 +449,8 @@ HAL_Status HAL_UART_HandleIrq(struct UART_REG *pReg)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_UART_MODULE_ENABLED */

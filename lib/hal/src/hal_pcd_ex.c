@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PCD_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -18,10 +22,6 @@
  The PCD Extended HAL driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_PCD_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 /********************* Private Structure Definition **************************/
@@ -131,8 +131,8 @@ __WEAK void HAL_PCDEx_LPM_Callback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg)
 
 /** @} */
 
+/** @} */
+
+/** @} */
+
 #endif /* HAL_PCD_MODULE_ENABLED */
-
-/** @} */
-
-/** @} */

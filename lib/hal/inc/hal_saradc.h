@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_SARADC_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -41,3 +43,5 @@ void HAL_SARADC_ClearIrq(struct SARADC_REG *reg);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SARADC_MODULE_ENABLED */

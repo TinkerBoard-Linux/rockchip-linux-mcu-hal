@@ -3,6 +3,16 @@
  * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_UART_MODULE_ENABLED
+
+/** @addtogroup RK_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup UART
+ *  @{
+ */
+
 #ifndef _HAL_UART_H_
 #define _HAL_UART_H_
 
@@ -10,6 +20,9 @@
 #include "hal_base.h"
 
 /***************************** MACRO Definition ******************************/
+/** @defgroup UART_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
 
 /* Out: Interrupt Enable Register */
 #define UART_IER_PTIME 0x80 /* Enable Programmable THRE Interrupt Mode */
@@ -212,6 +225,8 @@ struct HAL_UART_DEV {
     struct DMA_REG *dmac; /* dmac reg base ptr */
 };
 
+/** @} */
+
 /***************************** Function Declare ******************************/
 void HAL_UART_EnableIrq(struct UART_REG *pReg, uint32_t uartIntNumb);
 void HAL_UART_DisableIrq(struct UART_REG *pReg, uint32_t uartIntNumb);
@@ -233,3 +248,9 @@ HAL_Status HAL_UART_DeInit(struct UART_REG *pReg);
 HAL_Status HAL_UART_Suspend(struct UART_REG *pReg);
 HAL_Status HAL_UART_Resume(struct UART_REG *pReg);
 #endif
+
+/** @} */
+
+/** @} */
+
+#endif /* HAL_UART_MODULE_ENABLED */

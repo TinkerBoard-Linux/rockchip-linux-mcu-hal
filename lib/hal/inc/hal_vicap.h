@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
+#if defined(HAL_VICAP_MODULE_ENABLED)
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -242,3 +244,5 @@ HAL_Status HAL_VICAP_DeInit(struct VICAP_REG *pReg);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_VICAP_MODULE_ENABLED */

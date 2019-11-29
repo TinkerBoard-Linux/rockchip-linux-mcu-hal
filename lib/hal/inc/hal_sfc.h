@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_SFC_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -103,3 +105,5 @@ HAL_Status HAL_SFC_UnmaskDMAInterrupt(struct HAL_SFC_HOST *host);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SFC_MODULE_ENABLED */

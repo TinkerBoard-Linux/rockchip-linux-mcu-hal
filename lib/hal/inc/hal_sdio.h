@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_SDIO_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -198,3 +200,5 @@ HAL_Check HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_SDIO_MODULE_ENABLED */

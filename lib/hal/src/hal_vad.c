@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_VAD_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The VAD driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_VAD_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -485,8 +485,8 @@ HAL_Status HAL_VAD_DisableBusMode(struct HAL_VAD_DEV *vad)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_VAD_MODULE_ENABLED */

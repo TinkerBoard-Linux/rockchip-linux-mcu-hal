@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_VICAP_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The VICAP hal driver interfaces can be called directly by os.
 
  @} */
-
-#include "hal_base.h"
-
-#if defined(HAL_VICAP_MODULE_ENABLED)
 
 /********************* Private MACRO Definition ******************************/
 #define VICAP_DVP_WATER_LINE_HURRY_VAL_MAX (0x3)
@@ -1022,8 +1022,8 @@ HAL_Status HAL_VICAP_ClearIrqStatus(struct VICAP_REG *pReg, uint32_t mask)
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_VICAP_MODULE_ENABLED */

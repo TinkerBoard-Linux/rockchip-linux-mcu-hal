@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_DWDMA_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -27,10 +31,6 @@
  - More details refer to APIs' descriptions as below.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_DWDMA_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -826,8 +826,8 @@ HAL_Status HAL_DWDMA_PrepDmaMemcpy(struct DWDMA_CHAN *dwc, uint32_t dst,
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_DWDMA_MODULE_ENABLED */

@@ -533,4 +533,4 @@ HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType)
 
 /** @} */
 
-#endif
+#endif /* RKMCU_KOALA && HAL_CRU_MODULE_ENABLED */

@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#ifdef HAL_FSPI_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -116,3 +118,5 @@ uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host);
 /** @} */
 
 /** @} */
+
+#endif /* HAL_FSPI_MODULE_ENABLED */

@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_PL330_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -27,10 +31,6 @@
  - More details refer to APIs' descriptions as below.
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_PL330_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 
@@ -1885,8 +1885,8 @@ HAL_Status HAL_PL330_PrepDmaMemcpy(struct PL330_CHAN *pchan, uint32_t dst,
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_PL330_MODULE_ENABLED */

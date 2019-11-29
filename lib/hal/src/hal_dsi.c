@@ -3,6 +3,10 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_base.h"
+
+#ifdef HAL_DSI_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -17,10 +21,6 @@
  The DSI driver can be used as follows:
 
  @} */
-
-#include "hal_base.h"
-
-#ifdef HAL_DSI_MODULE_ENABLED
 
 /********************* Private MACRO Definition ******************************/
 #define DSI_UPDATE_BIT(REG, SHIFT, VAL) \
@@ -695,8 +695,8 @@ HAL_Status HAL_DSI_Disable(struct DSI_REG *pReg,
 
 /** @} */
 
-#endif
-
 /** @} */
 
 /** @} */
+
+#endif /* HAL_DSI_MODULE_ENABLED */
