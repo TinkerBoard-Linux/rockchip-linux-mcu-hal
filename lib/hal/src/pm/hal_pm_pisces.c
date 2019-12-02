@@ -316,10 +316,17 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
     uint32_t gpllCon0 = 0, gpllDiv1, gpllDiv1New;
     uint32_t clkSelCon2, clkSelCon33;
     uint32_t cruMode;
-    uint32_t gpllRate, gpllRateNew;
+    uint32_t gpllRateNew;
     uint32_t mDiv;
-
+    static uint32_t gpllRate;
     const struct PM_RUNTIME_INFO *pdata = HAL_PM_RuntimeGetData();
+
+#ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
+    uint32_t tmpDiv;
+    static uint32_t pmDynWdtFreqNor;
+    static uint32_t pmWdtFreq;
+    static uint32_t pmDynWdtFreq;
+#endif
 
     if (PM_DISPLAY_REQUESTED(pdata)) {
         return HAL_BIT(PM_RUNTIME_TYPE_DISPLAY);
@@ -346,6 +353,18 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 
     PM_CruAsEnable(0);
 
+    if (!gpllRate)
+        gpllRate = HAL_CRU_ClkGetFreq(PLL_GPLL);
+
+#ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
+    if (!pmWdtFreq) {
+        pmWdtFreq = HAL_CRU_ClkGetFreq(PCLK_WDT);
+        tmpDiv = (gpllRate / pmWdtFreq);
+        pmDynWdtFreq = PLL_INPUT_OSC_RATE / tmpDiv;
+        pmDynWdtFreqNor = GPLL_RUNTIME_RATE / tmpDiv;
+    }
+#endif
+
     if (idleMode == PM_RUNTIME_IDLE_DEEP) {
         cruMode = CRU->CRU_MODE_CON00 |
                   MASK_TO_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK);
@@ -369,6 +388,9 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPD0_MASK));
         HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPDSEL_MASK));
 
+#ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
+        HAL_WDT_DynFreqUpdata(pmDynWdtFreq);
+#endif
         CRU->GPLL_CON[1] = VAL_MASK_WE(CRU_GPLL_CON1_PLLPD0_MASK,
                                        CRU_GPLL_CON1_PLLPD0_MASK);
     } else if (idleMode == PM_RUNTIME_IDLE_NORMAL) {
@@ -376,7 +398,6 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         clkSelCon2 = 0;
 
         HAL_ASSERT(HAL_CRU_ClkGetFreq(HCLK_M4) > GPLL_RUNTIME_RATE);
-        gpllRate = HAL_CRU_ClkGetFreq(PLL_GPLL);
 
         gpllCon1 = CRU->GPLL_CON[1] |
                    MASK_TO_WE(CRU_GPLL_CON1_POSTDIV2_MASK);
@@ -398,6 +419,9 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         if (mDiv > 0)
             mDiv -= 1;
 
+#ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
+        HAL_WDT_DynFreqUpdata(pmDynWdtFreqNor);
+#endif
         clkSelCon33 = CRU->CRU_CLKSEL_CON[33] |
                       MASK_TO_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK);
 
@@ -434,7 +458,9 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         CRU->GPLL_CON[1] = gpllCon1;
         CRU->GPLL_CON[0] = gpllCon0;
     }
-
+#ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
+    HAL_WDT_DynFreqResume();
+#endif
     PM_CruAsEnable(1);
 
     return 0;
