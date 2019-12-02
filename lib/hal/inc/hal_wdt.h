@@ -40,6 +40,8 @@ HAL_Status HAL_WDT_KeepAlive(void);
 HAL_Status HAL_WDT_Start(enum WDT_RESP_MODE mode);
 uint32_t HAL_WDT_ClearInterrupt(void);
 uint32_t HAL_WDT_GetIntStatus(void);
+HAL_Status HAL_WDT_DynFreqUpdata(uint32_t freq);
+HAL_Status HAL_WDT_DynFreqResume(void);
 
 #endif
 
