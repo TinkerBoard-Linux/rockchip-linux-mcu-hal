@@ -138,6 +138,71 @@ typedef enum
 #include "rk2206.h"
 #include "rk2206_usb.h"
 
+/****************************************************************************************/
+/*                                                                                      */
+/*                               Module Structure Section                               */
+/*                                                                                      */
+/****************************************************************************************/
+
+/****************************************************************************************/
+/*                                                                                      */
+/*                                Module Address Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/* Memory Base */
+#define XIP_MAP0_BASE0      0x10000000U /* FSPI0 map address0 */
+#define XIP_MAP1_BASE0      0x18000000U /* HYPERBUS/FSPI1 map address0 */
+#define DSP_ITCM_BASE       0x20400000U /* DSP itcm base address */
+#define DSP_ITCM_END        0x20407fffU /* DSP itcm end address */
+#define DSP_DTCM_BASE       0x20600000U /* DSP dtcm base address */
+#define DSP_DTCM_END        0x2062ffffU /* DSP dtcm end address */
+#define XIP_MAP0_BASE1      0x30000000U /* FSPI0 map address1 */
+#define XIP_MAP1_BASE1      0x38000000U /* HYPERBUS/FSPI1 map address1 */
+#define SDMMC_BASE          MMC_BASE    /* MMC base address */
+#define USB_BASE            0X43040000U /* USB base address */
+/****************************************************************************************/
+/*                                                                                      */
+/*                               Module Variable Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/* Module Variable Define */
+#define USB                 ((struct USB_GLOBAL_REG *) USB_BASE)
+
+#define IS_PCD_INSTANCE(instance) ((instance) == USB)
+#define IS_HCD_INSTANCE(instance) ((instance) == USB)
+
+/****************************************************************************************/
+/*                                                                                      */
+/*                               Register Bitmap Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/*****************************************CACHE******************************************/
+/* CACHE LINE SIZE */
+#define CACHE_LINE_SHIFT                (5U)
+#define CACHE_LINE_SIZE                 (0x1U << CACHE_LINE_SHIFT)
+#define CACHE_LINE_ADDR_MASK            (0xFFFFFFFFU << CACHE_LINE_SHIFT)
+#define CACHE_M_CLEAN                   0x0U
+#define CACHE_M_INVALID                 0x2U
+#define CACHE_M_CLEAN_INVALID           0x4U
+#define CACHE_M_INVALID_ALL             0x6U
+
+#define CACHE_REVISION                  DCACHE_REVISION
+/*****************************************TIMER******************************************/
+#define TIMER_CHAN_CNT   7
+/*****************************************MBOX*******************************************/
+#define MBOX_CNT             2
+#define MBOX_CHAN_CNT        4
+/*****************************************DMA********************************************/
+#define DMA_NUM_CHANNELS     6
+/*****************************************FSPI*******************************************/
+#define FSPI_CHIP_CNT                                       (0x2U)
+/*****************************************PMU********************************************/
+#ifndef __ASSEMBLY__
+typedef enum PD_Id {
+    PD_INVALID = 0,
+} ePD_Id;
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
