@@ -31,6 +31,7 @@
 #define PM_UART_REQUESTED(pdata)    ((pdata)->bits[PM_RUNTIME_TYPE_UART])
 #define PM_I2C_REQUESTED(pdata)     ((pdata)->bits[PM_RUNTIME_TYPE_I2C])
 #define PM_INTF_REQUESTED(pdata)    ((pdata)->bits[PM_RUNTIME_TYPE_INTF])
+#define PM_HS_INTF_REQUESTED(pdata) ((pdata)->bits[PM_RUNTIME_TYPE_HS_INTF])
 
 enum {
     PM_RUNTIME_TYPE_INTF = 0, /* normal interface */

@@ -204,6 +204,10 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         return HAL_BIT(PM_RUNTIME_TYPE_I2C);
     }
 
+    if (PM_HS_INTF_REQUESTED(pdata)) {
+        return HAL_BIT(PM_RUNTIME_TYPE_HS_INTF);
+    }
+
     if (idleMode == PM_RUNTIME_IDLE_DEEP1) {
         if (!pvtm32kEn) {
             PVTM_ClkRateConfig(PVTM_TARGET_KHZ / 8);
