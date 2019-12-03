@@ -213,7 +213,7 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
     }
 
     /* spitial setting */
-    FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);;
+    FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
     FSPICmd.b.cs = host->cs;
 
     if (!(pReg->FSR & FSPI_FSR_TXES_EMPTY) || !(pReg->FSR & FSPI_FSR_RXES_EMPTY) || (pReg->SR & FSPI_SR_SR_BUSY))
@@ -642,9 +642,25 @@ HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint8_t cells)
 {
     HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
     if (host->cs == 0)
-        host->instance->DLL_CTRL0 = 1 << 8 | cells;
+        WRITE_REG(host->instance->DLL_CTRL0, 1 << FSPI_DLL_CTRL0_SCLK_SMP_SEL_SHIFT | cells);
     else
-        host->instance->DLL_CTRL1 = 1 << 8 | cells;
+        WRITE_REG(host->instance->DLL_CTRL1, 1 << FSPI_DLL_CTRL0_SCLK_SMP_SEL_SHIFT | cells);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable FSPI delay line function.
+ * @param  host: FSPI host.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_FSPI_DLLDisable(struct HAL_FSPI_HOST *host)
+{
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+    if (host->cs == 0)
+        CLEAR_REG(host->instance->DLL_CTRL0);
+    else
+        CLEAR_REG(host->instance->DLL_CTRL1);
 
     return HAL_OK;
 }
