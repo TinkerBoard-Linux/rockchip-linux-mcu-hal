@@ -545,4 +545,16 @@ void BSP_DeInit(void)
 
 void BSP_Init(void)
 {
+    /* Enable bootrom/ahbbuffer/intmem0/intmem1/intmem1_vad memory auto gating */
+    WRITE_REG_MASK_WE(GRF->SOC_CON2,
+                      GRF_SOC_CON2_BOOTROM_MEMAUTO_GATING_EN_MASK |
+                      GRF_SOC_CON2_AHBBUFFER_MEMAUTO_GATING_EN_MASK |
+                      GRF_SOC_CON2_INTMEM0_MEMAUTO_GATING_EN_MASK |
+                      GRF_SOC_CON2_INTMEM1_MEMAUTO_GATING_EN_MASK |
+                      GRF_SOC_CON2_INTMEM1_VAD_MEMAUTO_GATING_EN_MASK,
+                      0 << GRF_SOC_CON2_BOOTROM_MEMAUTO_GATING_EN_SHIFT |
+                      0 << GRF_SOC_CON2_AHBBUFFER_MEMAUTO_GATING_EN_SHIFT |
+                      0 << GRF_SOC_CON2_INTMEM0_MEMAUTO_GATING_EN_SHIFT |
+                      0 << GRF_SOC_CON2_INTMEM1_MEMAUTO_GATING_EN_SHIFT |
+                      0 << GRF_SOC_CON2_INTMEM1_VAD_MEMAUTO_GATING_EN_SHIFT);
 }
