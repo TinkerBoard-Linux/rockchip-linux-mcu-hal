@@ -548,7 +548,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     /* Avoid flash EBh CMD run into CONT mode, cont = 1, AX = 0, AX_SET_PAT = 0x5a */
     if (op->addr.buswidth == 4 && host->xmmcDev[host->cs].type == DEV_NOR) {
         FSPICmd.b.readmode = 1;
-        FSPICmd.b.dummybits = 4;
+        FSPICmd.b.dummybits -= 2; /* Dummy 2bits M7-0 */
     }
 
     /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
@@ -581,6 +581,7 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
         if (pReg->MODE & 0x1)
             return HAL_INVAL;
 
+        /* FSPI controller config */
         if (host->xmmcDev[0].type == DEV_PSRAM || host->xmmcDev[1].type == DEV_PSRAM) {
             xmmcCtrl.b.devHwEn = 1;
             xmmcCtrl.b.prefetch = 0;
@@ -595,37 +596,41 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
             xmmcCtrl.b.prefetch = 0;
 #else
             xmmcCtrl.b.prefetch = 1;
+            WRITE_REG(pReg->SCLK_INATM_CNT, 0x20);
+            SET_BIT(pReg->TME0, FSPI_TME0_SCLK_INATM_EN_MASK);
+            SET_BIT(pReg->TME1, FSPI_TME0_SCLK_INATM_EN_MASK);
 #endif
         }
+        WRITE_REG(pReg->XMMC_CTRL, xmmcCtrl.d32);
+
+        /* FSPI continuous mode disabled */
+        WRITE_REG(pReg->EXT_AX, 0x5a << FSPI_EXT_AX_AX_SETUP_PAT_SHIFT);
+
+        /* FSPI device config */
         /* FSPI_DBG("%s enable 3 %lx %lx %lx %lx\n", __func__,
                     host->xmmcDev[0].ctrl, xmmcCtrl.d32,
                     host->xmmcDev[0].readCmd, host->xmmcDev[0].writeCmd); */
-
-        /* config ctroller */
-        pReg->XMMC_CTRL = xmmcCtrl.d32;
-        pReg->EXT_AX = 0x5a << 8;
-        /* config cs 0 */
         switch (host->cs) {
         case 0:
-            pReg->CTRL0 = host->xmmcDev[0].ctrl;
-            pReg->XMMC_RCMD0 = host->xmmcDev[0].readCmd;
-            pReg->XMMC_WCMD0 = host->xmmcDev[0].writeCmd;
-            pReg->AX0 = 0;
+            WRITE_REG(pReg->CTRL0, host->xmmcDev[0].ctrl);
+            WRITE_REG(pReg->XMMC_RCMD0, host->xmmcDev[0].readCmd);
+            WRITE_REG(pReg->XMMC_WCMD0, host->xmmcDev[0].writeCmd);
+            CLEAR_REG(pReg->AX0);
             break;
         case 1:
-            pReg->CTRL1 = host->xmmcDev[1].ctrl;
-            pReg->XMMC_RCMD1 = host->xmmcDev[1].readCmd;
-            pReg->XMMC_WCMD1 = host->xmmcDev[1].writeCmd;
-            pReg->AX1 = 0;
+            WRITE_REG(pReg->CTRL1, host->xmmcDev[1].ctrl);
+            WRITE_REG(pReg->XMMC_RCMD1, host->xmmcDev[1].readCmd);
+            WRITE_REG(pReg->XMMC_WCMD1, host->xmmcDev[1].writeCmd);
+            CLEAR_REG(pReg->AX1);
             break;
         default:
             break;
         }
-        pReg->MODE = 1;
+        WRITE_REG(pReg->MODE, 1);
     } else {
         /* FSPI_DBG("%s diable\n", __func__); */
-        pReg->MODE = 0;
-        while (pReg->SR & FSPI_SR_SR_BUSY) {
+        WRITE_REG(pReg->MODE, 0);
+        while (READ_REG(pReg->SR) & FSPI_SR_SR_BUSY) {
             HAL_CPUDelayUs(1);
             if (timeout++ > 1000) {
                 return HAL_TIMEOUT;
