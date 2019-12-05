@@ -10,15 +10,20 @@
  * The file hal_conf.h.template is the summary of all the driver modules in
  * the HAL, the hal_conf of each specific chip only needs to extract the
  * macro definition of the corresponding module.
+ * Rules:
+ *     1.Including three part: soc config, driver config and driver sub config.
+ *     2.For the optional configuration, add a prominent note.
  */
 
-/* HAL SOC Config */
+/************************ HAL SOC Config **************************************/
+
 //#define RKMCU_PISCES
 //#define RKMCU_RK2108
 //#define RKMCU_KOALA
 //#define RKMCU_RK2206
 
-/* HAL Driver Config */
+/************************ HAL Driver Config ***********************************/
+
 #define HAL_ACDCDIG_MODULE_ENABLED
 #define HAL_AUDIOPWM_MODULE_ENABLED
 #define HAL_CRU_MODULE_ENABLED
@@ -71,15 +76,14 @@
 #define HAL_VOP_MODULE_ENABLED
 #define HAL_WDT_MODULE_ENABLED
 
-/* HAL_DEG Config */
-#define HAL_SYSLOG printf
+/********************* HAL Driver Subtitude Config ****************************/
+
+#define HAL_SYSLOG printf /* Redirect HAL print function */
 #define HAL_DBG_ON
 #define HAL_DBG_INFO_ON
 #define HAL_DBG_WRN_ON
 #define HAL_DBG_ERR_ON
 #define HAL_ASSERT_ON
-
-/* HAL Driver Subtitude Config */
 
 #ifdef HAL_FSPI_MODULE_ENABLED
 #define HAL_FSPI_XIP_ENABLE /* FSPI supports XIP by default */
@@ -90,8 +94,8 @@
 #endif
 
 #ifdef HAL_SNOR_MODULE_ENABLED
-#define HAL_SNOR_FSPI_HOST /* SNOR Choose FSPI Host: FSPI */
-//#define HAL_SNOR_SPI_HOST /* SNOR Choose SPI Host: SPI */
+#define HAL_SNOR_FSPI_HOST /* Choose SNOR Host: FSPI */
+//#define HAL_SNOR_SPI_HOST /* Choose SNOR Host: SPI */
 #endif
 
 #ifdef HAL_TIMER_MODULE_ENABLED
