@@ -48,9 +48,9 @@
 
 #define HAL_IS_ALIGNED(x, a) (((x) & (a - 1)) == 0)
 #ifdef CACHE_LINE_SIZE
-#define HAL_IS_CACHELINE_ALIGNED(x) HAL_IS_ALIGNED(x, CACHE_LINE_SIZE)
+#define HAL_IS_CACHELINE_ALIGNED(x) HAL_IS_ALIGNED((uint32_t)(x), CACHE_LINE_SIZE)
 #else
-#define HAL_IS_CACHELINE_ALIGNED(x) HAL_IS_ALIGNED(x, 4)
+#define HAL_IS_CACHELINE_ALIGNED(x) HAL_IS_ALIGNED((uint32_t)(x), 4)
 #endif
 
 /* Compiller Macro */
