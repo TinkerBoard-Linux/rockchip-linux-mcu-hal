@@ -590,6 +590,13 @@ bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI)
 {
     HAL_ASSERT(pSPI != NULL);
 
+#ifdef HAL_DCACHE_MODULE_ENABLED
+    if (!HAL_IS_CACHELINE_ALIGNED(pSPI->pRxBuffer) ||
+        !HAL_IS_CACHELINE_ALIGNED(pSPI->pTxBuffer) ||
+        !HAL_IS_CACHELINE_ALIGNED(pSPI->len))
+        return false;
+#endif
+
     return (pSPI->len > HAL_SPI_FIFO_LENGTH);
 }
 
