@@ -4,6 +4,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_conf.h"
+
 #ifdef HAL_PMU_MODULE_ENABLED
 
 /** @addtogroup RK_HAL_Driver

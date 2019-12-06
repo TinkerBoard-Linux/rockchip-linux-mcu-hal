@@ -2,6 +2,7 @@
 /*
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
+#include "hal_conf.h"
 
 #ifdef HAL_EFUSE_MODULE_ENABLED
 

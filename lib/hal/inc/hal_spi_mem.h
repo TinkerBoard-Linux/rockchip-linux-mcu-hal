@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_conf.h"
+
 #if defined(HAL_SNOR_MODULE_ENABLED) || defined(HAL_PSRAM_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver

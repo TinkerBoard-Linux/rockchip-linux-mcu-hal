@@ -3,6 +3,8 @@
  * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
  */
 
+#include "hal_conf.h"
+
 #ifdef HAL_UART_MODULE_ENABLED
 
 /** @addtogroup RK_HAL_Driver

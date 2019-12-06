@@ -3,6 +3,8 @@
  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
  */
 
+#include "hal_conf.h"
+
 #if defined(HAL_VICAP_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver
