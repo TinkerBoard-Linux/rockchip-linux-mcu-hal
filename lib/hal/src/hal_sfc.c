@@ -32,6 +32,9 @@
 
  @} */
 
+/** @defgroup SFC_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /* SFC_CTRL */
@@ -286,6 +289,7 @@ static HAL_Status SFC_XferDone(struct HAL_SFC_HOST *host)
 }
 #endif
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup SFC_Exported_Functions_Group3 IO Functions

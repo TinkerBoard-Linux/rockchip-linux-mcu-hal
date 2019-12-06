@@ -15,6 +15,9 @@
  *  @{
  */
 
+/** @defgroup CRU_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define DCLK_LCDC_PLL_LIMIT_FREQ 800 * 1000000
 #define CRU_AS_CFG_VAL2          0x1
@@ -109,6 +112,7 @@ static void CRU_AsCntConfig(uint8_t ch, uint32_t val1, uint32_t val2)
     CRU->AS_CON[ch][0] = val1 | (val2 << 16);
 }
 #endif
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup CRU_Exported_Functions_Group5 Other Functions

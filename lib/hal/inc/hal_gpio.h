@@ -19,6 +19,9 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
+/** @defgroup GPIO_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
 
 #ifndef GPIO_VER_ID
 #define GPIO_VER_ID (0U)
@@ -31,11 +34,9 @@
 #define GPIO_BANK_SHIFT (5) /* Bits 5-7: GPIO Port number: 0 - 7 */
 #define GPIO_BANK_MASK  (0x7 << GPIO_BANK_SHIFT)
 
-/** @defgroup GPIO_Exported_Definition_Group1 Basic Definition
- *  @{
- */
 #define BANK_PIN(BANK, PIN) ((((BANK) << GPIO_BANK_SHIFT) & GPIO_BANK_MASK) + (((PIN) << GPIO_PIN_SHIFT) & GPIO_PIN_MASK))
 
+/***************************** Structure Definition **************************/
 /** GPIO pin levle */
 typedef enum {
     GPIO_LOW,
@@ -135,7 +136,7 @@ typedef enum {
                               ((PIN) == GPIO_PIN_D7))
 
 /** @} */
-
+/***************************** Function Declare ******************************/
 /** @defgroup GPIO_Exported_Definition_Group2 Public Functions Declare.
  *  @{
  */
@@ -151,17 +152,12 @@ uint32_t HAL_GPIO_GetBankLevel(struct GPIO_REG *pGPIO);
 void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, uint32_t pin);
 void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, uint32_t pin);
 void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank);
-/** @} */
-
-/** @defgroup GPIO_Exported_Definition_Group3 Internal Public Functions Declare.
- *  Only used by user driver, not API for module driver.
- *  @{
- */
 
 HAL_Status HAL_GPIO_SetIntType(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_intType mode);
 
 /* The parameter pin for this function is special, it's 0~31. */
 void HAL_GPIO_IRQDispatch(eGPIO_bankId bank, uint32_t pin);
+
 /** @} */
 
 #endif

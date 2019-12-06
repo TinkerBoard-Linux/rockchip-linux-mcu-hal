@@ -44,6 +44,9 @@
 
  @} */
 
+/** @defgroup PD_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define PD_PWR_SHIFT   0U
 #define PD_PWR_MASK    0x0000000FU
@@ -158,6 +161,7 @@ static HAL_Status PD_PowerOn(ePD_Id pd, HAL_Check on)
     return HAL_OK;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup PD_Exported_Functions_Group5 Other Functions

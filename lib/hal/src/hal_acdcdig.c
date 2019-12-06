@@ -23,6 +23,9 @@
 
  @} */
 
+/** @defgroup ACDCDIG_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 /* VUCTL */
 #define ACDCDIG_VUCTL_ADCZDT_EN   (0x1U << ACDCDIG_VUCTL_ADCZDT_SHIFT)
@@ -190,6 +193,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup ACDCDIG_Exported_Functions_Group1 Suspend and Resume Functions
 

@@ -40,6 +40,9 @@
 
  @} */
 
+/** @defgroup HCD_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 /********************* Private Structure Definition **************************/
 /********************* Private Variable Definition ***************************/
@@ -49,6 +52,7 @@ static void HCD_HC_OUT_IRQHandler(struct HCD_HANDLE *pHCD, uint8_t chNum);
 static void HCD_RXQLVL_IRQHandler(struct HCD_HANDLE *pHCD);
 static void HCD_Port_IRQHandler(struct HCD_HANDLE *pHCD);
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup HCD_Exported_Functions_Group2 State and Errors Functions
  *  @brief    HCD State functions

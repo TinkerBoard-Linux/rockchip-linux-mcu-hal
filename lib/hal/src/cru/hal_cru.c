@@ -38,6 +38,9 @@
 
  @} */
 
+/** @defgroup CRU_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #if defined(SOC_RV1108)
 #define PWRDOWN_SHIT       0
@@ -266,6 +269,7 @@ static const struct PLL_CONFIG *CRU_PllGetSettings(struct PLL_SETUP *pSetup,
     else
         return rateTable;
 }
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup CRU_Exported_Functions_Group5 Other Functions

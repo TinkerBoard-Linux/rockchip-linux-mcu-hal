@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup VICAP_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define VICAP_DVP_WATER_LINE_HURRY_VAL_MAX (0x3)
 
@@ -31,6 +34,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup VICAP_Exported_Functions_Group2 State and Errors Functions

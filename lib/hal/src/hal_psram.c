@@ -30,6 +30,9 @@
 
  @} */
 
+/** @defgroup PSRAM_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 //#define HAL_PSRAM_DEBUG
 #ifdef HAL_PSRAM_DEBUG
@@ -164,6 +167,7 @@ static HAL_Status PSRAM_ReadID(struct SPI_PSRAM *psram, uint8_t *data)
     return ret;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup PSRAM_Exported_Functions_Group4 Init and DeInit Functions
 

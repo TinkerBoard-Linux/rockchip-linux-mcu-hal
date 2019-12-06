@@ -24,6 +24,9 @@
 
 #include "hal_math.h"
 
+/** @defgroup VOP_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define VOP_WIN_YUV4_FORMAT HAL_BIT(4)
 #define VOP_WIN_BPPX_FORMAT HAL_BIT(5)
@@ -529,6 +532,7 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                       VOP_WIN0_CTRL0_WIN0_BPP_SWAP_MASK, 0);
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup VOP_Exported_Functions_Group2 get VOP Status and Errors Functions

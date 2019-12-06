@@ -66,6 +66,9 @@ struct HCD_HANDLE {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup HCD_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status HAL_HCD_Init(struct HCD_HANDLE *pHCD);
 HAL_Status HAL_HCD_DeInit(struct HCD_HANDLE *pHCD);
 HAL_Status HAL_HCD_HCInit(struct HCD_HANDLE *pHCD,
@@ -102,6 +105,8 @@ eUSB_OTG_hcState HAL_HCD_HCGetState(struct HCD_HANDLE *pHCD, uint8_t chNum);
 uint32_t HAL_HCD_HCGetXferCount(struct HCD_HANDLE *pHCD, uint8_t chNum);
 uint32_t HAL_HCD_GetCurrentFrame(struct HCD_HANDLE *pHCD);
 uint32_t HAL_HCD_GetCurrentSpeed(struct HCD_HANDLE *pHCD);
+
+/** @} */
 
 #endif /* _HAL_HCD_H_ */
 

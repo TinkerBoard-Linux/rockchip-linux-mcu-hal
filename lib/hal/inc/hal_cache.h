@@ -43,7 +43,7 @@ struct CACHE_PMU_CNT {
 };
 
 /** @} */
-/***************************** Function Declare ******************************/
+/********************* Public Function Definition ****************************/
 /** @defgroup CACHE_Exported_Functions_Group5 Other Functions
  *  @attention these APIs allow direct use in the HAL layer
  *  @{

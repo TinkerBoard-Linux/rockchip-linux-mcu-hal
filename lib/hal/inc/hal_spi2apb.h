@@ -50,6 +50,9 @@
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup SPI2APB_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_SPI2APB_Configurate(struct SPI2APB_REG *pReg, uint32_t ctrl);
 HAL_Status HAL_SPI2APB_UnmaskIrq(struct SPI2APB_REG *pReg, bool unmask);
@@ -60,6 +63,8 @@ uint32_t HAL_SPI2APB_ReadReg0(struct SPI2APB_REG *pReg);
 uint32_t HAL_SPI2APB_ReadReg1(struct SPI2APB_REG *pReg);
 HAL_Status HAL_SPI2APB_Suspend(struct SPI2APB_REG *pReg, uint32_t *regTbl);
 HAL_Status HAL_SPI2APB_Resume(struct SPI2APB_REG *pReg, uint32_t *regTbl);
+
+/** @} */
 
 #endif
 

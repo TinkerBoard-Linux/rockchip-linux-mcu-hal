@@ -32,6 +32,9 @@
 
  @} */
 
+/** @defgroup TIMER_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define TIMER_CONTROLREG_TIMER_MODE_FREE_RUNNING (0x0U << TIMER_CONTROLREG_TIMER_MODE_SHIFT)
 
@@ -46,6 +49,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup TIMER_Exported_Functions_Group4 Init and DeInit Functions

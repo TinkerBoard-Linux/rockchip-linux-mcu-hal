@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup SDIO_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define MMC_FIFOTH_DMA_MULTIPLE_TRANSACTION_SIZE_8 (0x2U)
 
@@ -42,6 +45,7 @@ static inline uint32_t MMC_IsFifoEmpty(struct HAL_MMC_HOST *host)
            MMC_STATUS_FIFO_EMPTY_MASK;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup SDIO_Exported_Functions_Group2 State and Errors Functions

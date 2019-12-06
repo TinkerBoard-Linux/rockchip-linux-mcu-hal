@@ -177,6 +177,9 @@ struct HAL_DWDMA_DEV {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup DWDMA_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_DWDMA_Init(struct HAL_DWDMA_DEV *dw);
 HAL_Status HAL_DWDMA_DeInit(struct HAL_DWDMA_DEV *dw);
@@ -201,6 +204,8 @@ HAL_Status HAL_DWDMA_PrepDmaSingle(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
                                    DMA_Callback callback, void *cparam);
 
 HAL_Status HAL_DWDMA_IrqHandler(struct HAL_DWDMA_DEV *dw, uint32_t chanId);
+
+/** @} */
 
 #endif
 

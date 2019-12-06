@@ -15,6 +15,9 @@
  *  @{
  */
 
+/** @defgroup CRU_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/
@@ -60,6 +63,7 @@ static struct PLL_SETUP VPLL = {
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup CRU_Exported_Functions_Group5 Other Functions

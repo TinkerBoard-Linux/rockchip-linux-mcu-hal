@@ -101,6 +101,9 @@ struct HAL_FSPI_HOST {
 #define HAL_FSPI_MAX_DELAY_LINE_CELLS (0xFFU)
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup FSPI_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host);
 HAL_Status HAL_FSPI_DeInit(struct HAL_FSPI_HOST *host);
 HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op);
@@ -116,6 +119,9 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on);
 HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint8_t cells);
 HAL_Status HAL_FSPI_DLLDisable(struct HAL_FSPI_HOST *host);
 uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host);
+
+/** @} */
+
 #endif
 
 /** @} */

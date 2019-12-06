@@ -32,6 +32,9 @@
 
  @} */
 
+/** @defgroup DWDMA_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define DW_CHAN_SET_BIT(reg, mask) \
@@ -259,6 +262,7 @@ static void DWC_HandleXfer(struct HAL_DWDMA_DEV *dw, struct DWDMA_CHAN *dwc)
         dwc->callback(dwc->cparam);
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup DWDMA_Exported_Functions_Group2 State and Errors Functions

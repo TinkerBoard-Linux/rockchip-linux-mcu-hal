@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup TOUCHKEY_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define TOUCHKEY_CHANNEL_PER_REGISTER 16
@@ -37,6 +40,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup TOUCHKEY_Exported_Functions_Group4 Init and DeInit

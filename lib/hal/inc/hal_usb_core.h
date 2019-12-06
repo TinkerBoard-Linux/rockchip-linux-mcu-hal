@@ -247,6 +247,9 @@ struct HAL_USB_DEV {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup USB_CORE_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status USB_CoreInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg);
 HAL_Status USB_DevInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg);
 HAL_Status USB_EnableGlobalInt(struct USB_GLOBAL_REG *pUSB);
@@ -298,6 +301,8 @@ uint32_t USB_HCReadInterrupt(struct USB_GLOBAL_REG *pUSB);
 HAL_Status USB_HCHalt(struct USB_GLOBAL_REG *pUSB, uint8_t hcNum);
 HAL_Status USB_DoPing(struct USB_GLOBAL_REG *pUSB, uint8_t chNum);
 HAL_Status USB_StopHost(struct USB_GLOBAL_REG *pUSB);
+
+/** @} */
 
 #endif /* _HAL_USB_CORE_H_ */
 

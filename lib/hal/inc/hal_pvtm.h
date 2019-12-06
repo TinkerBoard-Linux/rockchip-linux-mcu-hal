@@ -54,9 +54,14 @@ struct HAL_PVTM_DEV {
 };
 
 /***************************** Function Declare ******************************/
+/** @defgroup PVTM_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_PVTM_GetFreqCnt(ePVTM_ID id, uint32_t chn, uint32_t timeUs,
                                uint32_t *val);
+
+/** @} */
 
 #endif
 

@@ -21,6 +21,10 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
+/** @defgroup WDT_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
+
 /***************************** Structure Definition **************************/
 
 enum WDT_RESP_MODE {
@@ -32,7 +36,11 @@ enum WDT_RESP_MODE {
     INDIRECT_SYSTEM_RESET,
 };
 
+/** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup WDT_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_WDT_Init(uint32_t freq, struct WDT_REG *wdt);
 HAL_Status HAL_WDT_SetTimeout(uint32_t top);
@@ -42,6 +50,8 @@ uint32_t HAL_WDT_ClearInterrupt(void);
 uint32_t HAL_WDT_GetIntStatus(void);
 HAL_Status HAL_WDT_DynFreqUpdata(uint32_t freq);
 HAL_Status HAL_WDT_DynFreqResume(void);
+
+/** @} */
 
 #endif
 

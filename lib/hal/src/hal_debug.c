@@ -40,6 +40,9 @@
 
 #include "hal_base.h"
 
+/** @defgroup DEBUG_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/
@@ -48,6 +51,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup DEBUG_Exported_Functions_Group5 Other Functions

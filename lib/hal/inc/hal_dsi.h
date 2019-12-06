@@ -90,6 +90,9 @@ typedef enum {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup DSI_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status HAL_DSI_IrqEnable(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_IrqDisable(struct DSI_REG *pReg);
 HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg);
@@ -125,6 +128,9 @@ HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
                                    uint16_t laneMbps,
                                    struct DISPLAY_MODE_INFO *pModeInfo,
                                    struct DISPLAY_RECT *pDisplayRect);
+
+/** @} */
+
 #endif
 
 /** @} */

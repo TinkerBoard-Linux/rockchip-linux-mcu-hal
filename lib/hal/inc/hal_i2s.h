@@ -42,6 +42,9 @@ struct HAL_I2S_DEV {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup I2S_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_I2S_Supsend(struct HAL_I2S_DEV *i2s);
 HAL_Status HAL_I2S_Resume(struct HAL_I2S_DEV *i2s);
@@ -51,6 +54,8 @@ HAL_Status HAL_I2S_Enable(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream);
 HAL_Status HAL_I2S_Disable(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream);
 HAL_Status HAL_I2S_Config(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream,
                           struct AUDIO_PARAMS *params);
+
+/** @} */
 
 #endif
 

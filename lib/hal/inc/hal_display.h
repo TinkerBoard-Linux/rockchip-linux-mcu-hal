@@ -107,6 +107,12 @@ struct DISPLAY_RECT {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup DISPLAY_Public_Function_Declare Public Function Declare
+ *  @{
+ */
+
+/** @} */
+
 #endif
 
 /** @} */

@@ -202,6 +202,9 @@ struct HAL_PL330_DEV {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup PL330_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_PL330_Init(struct HAL_PL330_DEV *pl330);
 HAL_Status HAL_PL330_DeInit(struct HAL_PL330_DEV *pl330);
@@ -233,6 +236,8 @@ HAL_Status HAL_PL330_ClearIrq(struct HAL_PL330_DEV *pl330, uint32_t irq);
 HAL_Status HAL_PL330_SetMcBuf(struct PL330_CHAN *pchan, void *buf);
 void *HAL_PL330_GetMcBuf(struct PL330_CHAN *pchan);
 const struct PL330_DESC *HAL_PL330_GetDesc(struct PL330_CHAN *pchan);
+
+/** @} */
 
 #endif
 

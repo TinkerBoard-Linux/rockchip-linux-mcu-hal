@@ -26,6 +26,9 @@
 /***************************** Structure Definition **************************/
 
 /***************************** Function Declare ******************************/
+/** @defgroup TOUCHKEY_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_TouchKey_Init(uint32_t chn_num, struct TOUCH_SENSOR_REG *touchkey);
 HAL_Status HAL_TouchKey_DeInit(struct TOUCH_SENSOR_REG *touchkey);
@@ -40,6 +43,8 @@ uint32_t HAL_TouchKey_GetRawCount(uint32_t idx, struct TOUCH_SENSOR_REG *touchke
 uint32_t HAL_TouchKey_GetDcCount(uint32_t idx, struct TOUCH_SENSOR_REG *touchkey);
 uint32_t HAL_TouchKey_GetDoCount(uint32_t idx, struct TOUCH_SENSOR_REG *touchkey);
 uint32_t HAL_TouchKey_GetFilterCount(uint32_t idx, struct TOUCH_SENSOR_REG *touchkey);
+
+/** @} */
 
 #endif
 

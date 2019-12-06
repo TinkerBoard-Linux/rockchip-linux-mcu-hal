@@ -56,6 +56,9 @@
 
  @} */
 
+/** @defgroup Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define HAL_SPI_FIFO_LENGTH 64
@@ -124,6 +127,7 @@
                                  ((__NCYCLES__) == CR0_CSM_2CYCLES) || \
                                  ((__NCYCLES__) == CR0_CSM_3CYCLES))
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup SPI_Exported_Functions_Group4 Init and DeInit Functions

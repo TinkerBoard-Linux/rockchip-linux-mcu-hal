@@ -230,6 +230,9 @@ struct HAL_UART_DEV {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup UART_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 void HAL_UART_EnableIrq(struct UART_REG *pReg, uint32_t uartIntNumb);
 void HAL_UART_DisableIrq(struct UART_REG *pReg, uint32_t uartIntNumb);
 void HAL_UART_EnableLoopback(struct UART_REG *pReg);
@@ -249,6 +252,9 @@ HAL_Status HAL_UART_Init(const struct HAL_UART_DEV *dev, const struct HAL_UART_C
 HAL_Status HAL_UART_DeInit(struct UART_REG *pReg);
 HAL_Status HAL_UART_Suspend(struct UART_REG *pReg);
 HAL_Status HAL_UART_Resume(struct UART_REG *pReg);
+
+/** @} */
+
 #endif
 
 /** @} */

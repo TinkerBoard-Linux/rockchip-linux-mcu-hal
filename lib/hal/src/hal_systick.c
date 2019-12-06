@@ -43,6 +43,9 @@
 
  @} */
 
+/** @defgroup SYSTICK_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define SYSTICK_INT_PRIORITY 0x0FU
 
@@ -52,6 +55,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup SYSTICK_Exported_Functions_Group4 Init and DeInit Functions

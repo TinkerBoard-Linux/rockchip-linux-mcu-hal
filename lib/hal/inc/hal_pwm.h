@@ -100,6 +100,9 @@ struct PWM_HANDLE {
   */
 
 /***************************** Function Declare ******************************/
+/** @defgroup PWM_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_PWM_IRQHandler(struct PWM_HANDLE *pPWM);
 HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
@@ -112,6 +115,8 @@ HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, ePWM_Mode mo
 HAL_Status HAL_PWM_Disable(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *pReg, uint32_t freq);
 HAL_Status HAL_PWM_DeInit(struct PWM_HANDLE *pPWM);
+
+/** @} */
 
 #endif
 

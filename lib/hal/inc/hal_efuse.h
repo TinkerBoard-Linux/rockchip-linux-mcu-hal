@@ -24,8 +24,13 @@
 /***************************** Structure Definition **************************/
 
 /***************************** Function Declare ******************************/
+/** @defgroup EFUSE_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_EFUSE_ReadByte(struct EFUSE_CTL_REG *reg, uint32_t offset, uint8_t *val);
+
+/** @} */
 
 #endif
 

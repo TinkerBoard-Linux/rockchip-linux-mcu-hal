@@ -100,6 +100,9 @@ struct PM_SUSPEND_INFO {
 };
 #endif
 /***************************** Function Declare ******************************/
+/** @defgroup PM_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 #ifdef HAL_PM_SLEEP_MODULE_ENABLED
 /**
  * @brief  it is the enterpoint for suspend invoked by a os's powermanager implement.
@@ -156,6 +159,8 @@ HAL_Status HAL_PM_TimerStop(void);
  * @return the sleep time.
  */
 uint64_t HAL_PM_GetTimerCount(void);
+
+/** @} */
 
 #endif
 

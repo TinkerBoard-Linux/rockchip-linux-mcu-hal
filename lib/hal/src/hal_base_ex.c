@@ -20,6 +20,9 @@
 
  @} */
 
+/** @defgroup HAL_BASE_EX_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/
@@ -28,6 +31,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ***************************/
 /** @defgroup HAL_BASE_EX_Exported_Functions_Group5 Other Functions
  *  @{

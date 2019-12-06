@@ -44,6 +44,9 @@
 
  @} */
 
+/** @defgroup PCD_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/
@@ -53,6 +56,7 @@
 /********************* Private Function Definition ***************************/
 static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum);
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup PCD_Exported_Functions_Group2 State and Errors Functions
  *  @brief    Peripheral State functions

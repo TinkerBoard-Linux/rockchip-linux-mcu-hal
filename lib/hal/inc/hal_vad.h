@@ -79,6 +79,9 @@ struct HAL_VAD_DEV {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup VAD_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_VAD_Init(struct HAL_VAD_DEV *vad);
 HAL_Status HAL_VAD_DeInit(struct HAL_VAD_DEV *vad);
@@ -99,6 +102,8 @@ HAL_Status HAL_VAD_EnableBusMode(struct HAL_VAD_DEV *vad);
 HAL_Status HAL_VAD_DisableBusMode(struct HAL_VAD_DEV *vad);
 
 HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad);
+
+/** @} */
 
 #endif
 

@@ -179,6 +179,9 @@ struct VOP_POST_CLIP_INFO {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup VOP_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_VOP_SetArea(struct VOP_REG *pReg,
                            struct DISPLAY_RECT *display_rect);
@@ -239,6 +242,9 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
 HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val);
 HAL_Status HAL_VOP_SetSplit(struct VOP_REG *pReg, eVOP_McuSplit mode);
+
+/** @} */
+
 #endif
 
 /** @} */

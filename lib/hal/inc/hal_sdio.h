@@ -167,6 +167,9 @@ struct HAL_MMC_HOST {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup SDIO_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host);
 HAL_Status HAL_MMC_DeInit(struct HAL_MMC_HOST *host);
@@ -196,6 +199,8 @@ uint32_t HAL_MMC_GetInterruptMask(struct HAL_MMC_HOST *host);
 uint32_t HAL_MMC_GetUnmaskedInterrupt(struct HAL_MMC_HOST *host);
 HAL_Status HAL_MMC_PowerCtrl(struct HAL_MMC_HOST *host, bool on);
 HAL_Check HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host);
+
+/** @} */
 
 #endif
 

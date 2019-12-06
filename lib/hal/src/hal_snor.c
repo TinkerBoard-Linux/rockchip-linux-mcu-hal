@@ -41,6 +41,9 @@
 
  @} */
 
+/** @defgroup SNOR_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 //#define HAL_SNOR_DEBUG
 #ifdef HAL_SNOR_DEBUG
@@ -459,6 +462,15 @@ static HAL_Status SNOR_Enter4byte(struct SPI_NOR *nor)
     return nor->writeReg(nor, SPINOR_OP_EN4B, NULL, 0);
 }
 
+/** @} */
+/********************* Public Function Definition ****************************/
+/** @defgroup SNOR_Exported_Functions_Group3 IO Functions
+
+ This section provides functions allowing to init and deinit the module:
+
+ *  @{
+ */
+
 /**
  * @brief  Flash continuous writing.
  * @param  nor: nor dev.
@@ -633,6 +645,8 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
 
     return nSec;
 }
+
+/** @} */
 
 /** @defgroup SNOR_Exported_Functions_Group4 Init and DeInit Functions
 

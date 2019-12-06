@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup WDT_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #if 0
@@ -136,6 +139,8 @@ static void WDT_dynFreqSetTargetTick(void)
                    wdtDynFreq.targetTick);
 }
 #endif
+
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup WDT_Exported_Functions_Group4 Init and DeInit

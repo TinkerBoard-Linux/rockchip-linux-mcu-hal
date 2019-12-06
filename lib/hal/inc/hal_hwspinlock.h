@@ -21,10 +21,15 @@
 #include "hal_def.h"
 
 /***************************** Function Declare ******************************/
+/** @defgroup HWSpinlock_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Check HAL_HWSpinlock_TryLock(uint32_t LockID);
 void HAL_HWSpinlock_Unlock(uint32_t LockID);
 uint32_t HAL_HWSpinlock_GetOwner(uint32_t LockID);
+
+/** @} */
 
 #endif
 

@@ -32,6 +32,9 @@
 
  @} */
 
+/** @defgroup PL330_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #ifdef PL330_DEBUG_MCGEN
@@ -1305,6 +1308,7 @@ static void PL330_CleanInvalidateDataBuf(struct PL330_DESC *desc)
     }
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup PL330_Exported_Functions_Group2 State and Errors Functions

@@ -24,6 +24,9 @@
 
  @} */
 
+/** @defgroup EFUSE_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define BIT_PER_BYTE    8
 #define EFUSE_SIZE_BIT  ((EFUSE_CTL_AUTO_CTRL_ADDR_AUTO_MASK >> \
@@ -36,6 +39,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup EFUSE_Exported_Functions_Group3 IO Functions
  *  @{

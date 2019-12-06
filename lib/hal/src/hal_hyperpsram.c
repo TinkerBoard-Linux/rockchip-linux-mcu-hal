@@ -23,6 +23,9 @@
   - Initialize the HYPERPSRAM (HAL_HYPERPSRAM_Init()):
 
  @} */
+/** @defgroup HYPERPSRAM_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 /** Memory Base Address  */
 #define HYPERBUS_MBR0_BASE_ADDR_MASK (0xFF000000UL)
@@ -249,6 +252,7 @@ static HAL_Status HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
     }
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup DEMO_Exported_Functions_Group4 Init and DeInit Functions

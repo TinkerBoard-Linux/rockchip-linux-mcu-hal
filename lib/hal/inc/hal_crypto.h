@@ -157,6 +157,9 @@ typedef enum {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup CRYPTO_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 /**
  * @brief  Init crypto and deassert reset.
@@ -251,6 +254,8 @@ HAL_Status HAL_CRYPTO_ReadTagReg(struct CRYPTO_DEV *pCrypto,
  * @return HAL_Status
  */
 HAL_Status HAL_CRYPTO_ClearISR(struct CRYPTO_DEV *pCrypto);
+
+/** @} */
 
 #endif
 

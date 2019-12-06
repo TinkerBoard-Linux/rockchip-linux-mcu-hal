@@ -68,6 +68,9 @@
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup DEBUG_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 void HAL_AssertFailed(const char *file, uint32_t line);
 HAL_Status HAL_DBG_HEX(char *s, void *buf, uint32_t width, uint32_t len);
@@ -75,6 +78,8 @@ HAL_Status HAL_DBG_HEX(char *s, void *buf, uint32_t width, uint32_t len);
 __attribute__((__format__(printf, 1, 2)))
 #endif
 int32_t HAL_DBG_Printf(const char *format, ...);
+
+/** @} */
 
 #endif
 

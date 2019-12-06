@@ -47,6 +47,9 @@
 
  @} */
 
+/** @defgroup I2C_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /* REG_CON bits */
@@ -457,6 +460,7 @@ static HAL_Status I2C_HandleStop(struct I2C_HANDLE *pI2C, uint32_t ipd)
     return pI2C->error ? pI2C->error : HAL_OK;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup I2C_Exported_Functions_Group3 IO Functions

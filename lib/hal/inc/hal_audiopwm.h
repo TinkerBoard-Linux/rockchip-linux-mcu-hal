@@ -37,6 +37,9 @@ struct HAL_AUDIOPWM_DEV {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup AUDIOPWM_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_AUDIOPWM_Supsend(struct HAL_AUDIOPWM_DEV *audioPwm);
 HAL_Status HAL_AUDIOPWM_Resume(struct HAL_AUDIOPWM_DEV *audioPwm);
@@ -45,6 +48,8 @@ HAL_Status HAL_AUDIOPWM_DeInit(struct HAL_AUDIOPWM_DEV *audioPwm);
 HAL_Status HAL_AUDIOPWM_Enable(struct HAL_AUDIOPWM_DEV *audioPwm);
 HAL_Status HAL_AUDIOPWM_Disable(struct HAL_AUDIOPWM_DEV *audioPwm);
 HAL_Status HAL_AUDIOPWM_Config(struct HAL_AUDIOPWM_DEV *audioPwm, struct AUDIO_PARAMS *params);
+
+/** @} */
 
 #endif
 

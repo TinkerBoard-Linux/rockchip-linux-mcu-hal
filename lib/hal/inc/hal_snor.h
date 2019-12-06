@@ -129,6 +129,9 @@ struct SNOR_HOST {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup SNOR_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor);
 HAL_Status HAL_SNOR_DeInit(struct SPI_NOR *nor);
 uint32_t HAL_SNOR_GetCapacity(struct SPI_NOR *nor);
@@ -142,6 +145,8 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE Era
 HAL_Status HAL_SNOR_XIPEnable(struct SPI_NOR *nor);
 HAL_Status HAL_SNOR_XIPDisable(struct SPI_NOR *nor);
 HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId);
+
+/** @} */
 
 #endif
 

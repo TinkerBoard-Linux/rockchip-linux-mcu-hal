@@ -25,6 +25,7 @@
  @} */
 
 /********************* Private MACRO Definition ******************************/
+
 /* for pm_runtime */
 #define SLEEP_INPUT_RATE     32000
 #define EXPONENT_OF_FRAC_PLL 24
@@ -305,10 +306,6 @@ static int SOC_SuspendEnter(uint32_t flag)
 }
 #endif
 
-/** @defgroup PM_Exported_Functions_Group5 Other Functions
- *  @{
- */
-
 #ifdef HAL_PM_RUNTIME_MODULE_ENABLED
 static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 {
@@ -564,8 +561,6 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     return HAL_OK;
 }
 #endif
-
-/** @} */
 
 /** @} */
 

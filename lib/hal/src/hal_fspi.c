@@ -44,6 +44,9 @@
 
  @} */
 
+/** @defgroup FSPI_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 //#define FSPI_DEBUG
 #ifdef FSPI_DEBUG
@@ -160,6 +163,7 @@ static HAL_Status FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
     return HAL_OK;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup FSPI_Exported_Functions_Group3 IO Functions

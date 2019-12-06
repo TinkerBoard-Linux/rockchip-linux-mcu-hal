@@ -94,6 +94,9 @@ struct HAL_SFC_HOST {
 };
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup SFC_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status HAL_SFC_Init(struct HAL_SFC_HOST *host);
 HAL_Status HAL_SFC_DeInit(struct HAL_SFC_HOST *host);
 #ifdef HAL_SNOR_MODULE_ENABLED
@@ -102,6 +105,9 @@ HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op);
 HAL_Status HAL_SFC_IRQHelper(struct HAL_SFC_HOST *host);
 HAL_Status HAL_SFC_MaskDMAInterrupt(struct HAL_SFC_HOST *host);
 HAL_Status HAL_SFC_UnmaskDMAInterrupt(struct HAL_SFC_HOST *host);
+
+/** @} */
+
 #endif
 
 /** @} */

@@ -37,6 +37,9 @@
 
  @} */
 
+/** @defgroup PWM_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define PWM_CNT_REG(pPWM, ch)    (pPWM->pReg->CHANNELS[ch].CNT)
@@ -84,6 +87,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup PWM_Exported_Functions_Group3 IO Functions

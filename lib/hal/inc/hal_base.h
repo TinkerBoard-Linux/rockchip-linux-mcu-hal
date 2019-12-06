@@ -40,6 +40,9 @@ typedef enum {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup HAL_BASE_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_Init(void);
 HAL_Status HAL_DeInit(void);
@@ -56,6 +59,13 @@ HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, uint32_t clkSource);
 
 uint64_t HAL_DivU64Rem(uint64_t numerator, uint32_t denominator, uint32_t *pRemainder);
 uint64_t HAL_GetSysTimerCount(void);
+
+/** @} */
+
+/********************* Public Function Definition ***************************/
+/** @defgroup HAL_BASE_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
 
 /**
  * @brief  uint64_t numerator / uint32_t denominator
@@ -78,6 +88,8 @@ __STATIC_INLINE uint32_t HAL_DivRoundClosest(uint32_t numerator, uint32_t denomi
 {
     return (numerator + (denominator / 2)) / denominator;
 }
+
+/** @} */
 
 #endif
 

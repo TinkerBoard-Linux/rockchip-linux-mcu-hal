@@ -50,10 +50,16 @@ struct HAL_TSADC_DEV {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup TSADC_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status HAL_TSADC_Enable_AUTO(int chn, eTSADC_tshutPolarity polarity, eTSADC_tshutMode mode);
 HAL_Status HAL_TSADC_Disable_AUTO(int chn);
 HAL_Check HAL_TSADC_IsEnabled_AUTO(int chn);
 int HAL_TSADC_GetTemperature_AUTO(int chn);
+
+/** @} */
+
 #endif
 
 /** @} */

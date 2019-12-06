@@ -44,11 +44,16 @@ typedef enum {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup PCDEx_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status HAL_PCDEx_SetTxFiFo(struct PCD_HANDLE *pPCD, uint8_t fifo, uint16_t size);
 HAL_Status HAL_PCDEx_SetRxFiFo(struct PCD_HANDLE *pPCD, uint16_t size);
 HAL_Status HAL_PCDEx_ActivateLPM(struct PCD_HANDLE *pPCD);
 HAL_Status HAL_PCDEx_DeActivateLPM(struct PCD_HANDLE *pPCD);
 void HAL_PCDEx_LPM_Callback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg);
+
+/** @} */
 
 #endif /* _HAL_PCD_EX_H_ */
 

@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup UART_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 /********************* Private Structure Definition **************************/
 /********************* Private Variable Definition ***************************/
@@ -102,6 +105,7 @@ static int32_t UART_SetLcrReg(struct UART_REG *pReg, uint8_t byteSize,
     return (bRet);
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup UART_Exported_Functions_Group1 Suspend and Resume Functions
@@ -137,7 +141,7 @@ HAL_Status HAL_UART_Resume(struct UART_REG *pReg)
 }
 /** @} */
 
-/** @defgroup UART_Exported_Functions_Group2 get uart status Functions
+/** @defgroup UART_Exported_Functions_Group2 State and Errors Functions
 
  This section provides functions allowing to get uart status:
 

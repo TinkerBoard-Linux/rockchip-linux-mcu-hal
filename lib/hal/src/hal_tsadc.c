@@ -25,6 +25,9 @@
 
  @} */
 
+/** @defgroup TSADC_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define TSADC_USER_SRC_EN(chn)       HAL_BIT(chn)
@@ -344,6 +347,7 @@ static void TSADC_TshutMode(int chn, eTSADC_tshutMode mode)
     }
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup TSADC_Exported_Functions_Group5 Other Functions

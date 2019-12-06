@@ -15,6 +15,9 @@
  *  @{
  */
 
+/** @defgroup CRU_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define DCLK_LCDC_PLL_LIMIT_FREQ 800 * 1000000
 
@@ -109,6 +112,7 @@ static struct PLL_SETUP PPLL = {
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup CRU_Exported_Functions_Group5 Other Functions

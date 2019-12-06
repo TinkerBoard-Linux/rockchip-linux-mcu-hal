@@ -25,6 +25,7 @@
  @} */
 
 /********************* Private MACRO Definition ******************************/
+
 /* for pm_runtime */
 #define SLEEP_INPUT_RATE     32000
 #define EXPONENT_OF_FRAC_PLL 24
@@ -162,9 +163,6 @@ static void PM_CruAsEnable(uint8_t en)
 #endif
 }
 
-/** @defgroup PM_Exported_Functions_Group5 Other Functions
- *  @{
- */
 static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 {
     uint32_t gpllCon1, gpllDiv2, gpllDiv2New;
@@ -669,8 +667,6 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     return HAL_OK;
 }
 #endif
-
-/** @} */
 
 /** @} */
 

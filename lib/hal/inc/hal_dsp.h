@@ -131,6 +131,9 @@ struct DSP_DEV {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup DSP_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 /** should hold lock to call these functions */
 
@@ -218,6 +221,8 @@ HAL_Status HAL_DSP_Start(struct DSP_DEV *dsp);
  * @return HAL_Status
  */
 HAL_Status HAL_DSP_Stop(struct DSP_DEV *dsp);
+
+/** @} */
 
 #endif
 

@@ -26,9 +26,14 @@
 /***************************** Structure Definition **************************/
 
 /***************************** Function Declare ******************************/
+/** @defgroup PD_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_PD_On(ePD_Id pd);
 HAL_Status HAL_PD_Off(ePD_Id pd);
+
+/** @} */
 
 #endif
 

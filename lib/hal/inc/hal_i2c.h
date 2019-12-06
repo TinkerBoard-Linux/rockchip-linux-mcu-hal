@@ -117,11 +117,12 @@ struct I2C_HANDLE {
     bool isLastMSG;
 };
 
-/**
-  * @}
-  */
+/** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup I2C_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate);
 HAL_Status HAL_I2C_IRQHandler(struct I2C_HANDLE *pI2C);
@@ -136,14 +137,12 @@ HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, struct I2C_REG *pReg, uint32_t 
                         eI2C_BusSpeed speed);
 HAL_Status HAL_I2C_DeInit(struct I2C_HANDLE *pI2C);
 
+/** @} */
+
 #endif
 
-/**
-  * @}
-  */
+/** @} */
 
-/**
-  * @}
-  */
+/** @} */
 
 #endif /* HAL_I2C_MODULE_ENABLED */

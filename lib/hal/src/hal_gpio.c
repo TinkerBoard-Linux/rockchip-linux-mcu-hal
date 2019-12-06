@@ -32,6 +32,9 @@
 
  @} */
 
+/** @defgroup GPIO_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define UNUSED(X) (void)(X)      /* To avoid gcc/g++ warnings */
 
@@ -93,6 +96,7 @@ static uint32_t GPIO_GetIntStatus(struct GPIO_REG *pGPIO)
     return pGPIO->INT_STATUS;
 }
 
+/** @} */
 /********************* Public Function Definition ***************************/
 
 /** @defgroup GPIO_Exported_Functions_Group1 State and Errors Functions

@@ -15,7 +15,10 @@
  *  @{
  */
 
-/***************************** MACRO Definition ******************************/
+/** @defgroup HWSpinlock_Private_Definition Private Definition
+ *  @{
+ */
+/********************* Private MACRO Definition ******************************/
 
 #ifndef HWSPINLOCK
 #define HWSPINLOCK GRF->HW_SPINLOCK
@@ -32,6 +35,7 @@
  */
 static const uint8_t g_OwnerID = HAL_HWSPINLOCK_OWNER_ID;
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup HWSpinlock_Exported_Functions_Group1 TryLock and Unlock Functions

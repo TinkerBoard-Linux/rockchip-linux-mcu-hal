@@ -133,6 +133,9 @@ struct PWR_INTREG_DESC {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup PWR_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 #ifdef HAL_PWR_INTBUS_MODULE_ENABLED
 int HAL_PWR_GetEnableState(struct PWR_INTREG_DESC *desc);
 uint32_t HAL_PWR_GetVoltage(struct PWR_INTREG_DESC *desc);
@@ -149,6 +152,8 @@ uint32_t HAL_PWR_RoundVoltage(struct PWR_INTREG_DESC *desc, uint32_t volt);
 
 int HAL_PWR_LinearRangeSelToVolt(const struct PWR_LINEAR_RANGE_TABLE *linearTables, uint32_t sel);
 int HAL_PWR_LinearRangeVoltToSel(const struct PWR_LINEAR_RANGE_TABLE *linearTables, uint32_t volt);
+
+/** @} */
 
 #endif
 

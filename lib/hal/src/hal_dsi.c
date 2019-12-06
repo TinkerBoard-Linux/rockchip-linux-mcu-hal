@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup DSI_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define DSI_UPDATE_BIT(REG, SHIFT, VAL) \
                  VAL ? SET_BIT(REG, SHIFT) : CLEAR_BIT(REG, SHIFT)
@@ -129,6 +132,7 @@ static uint32_t DSI_GetHcomponentLbcc(uint32_t hcomponent, uint16_t laneMbps, ui
     return lbcc;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup DSI_Exported_Functions_Group2 IO Functions

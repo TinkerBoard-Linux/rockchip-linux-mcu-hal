@@ -44,6 +44,9 @@ Example:
                           PIN_CONFIG_SMT_ENABLE);
  @} */
 
+/** @defgroup PINCTRL_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define PIN_READ(r)           (*(volatile uint32_t *)(r))
 #define PIN_WRITE(r, b, w, v) (*(volatile uint32_t *)(r) = (((w) << (16) | (v)) << (b)))
@@ -406,6 +409,7 @@ static HAL_Status PINCTRL_SetPinIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t p
     return PINCTRL_SetMux(&ctrl->banks[bank], pin, (uint8_t)((param & MASK_MUX) >> SHIFT_MUX));
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup PINCTRL_Exported_Functions_Group1 Suspend and Resume Functions

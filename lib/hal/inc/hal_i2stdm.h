@@ -46,6 +46,9 @@ struct HAL_I2STDM_DEV {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup I2STDM_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_I2STDM_Supsend(struct HAL_I2STDM_DEV *i2sTdm);
 HAL_Status HAL_I2STDM_Resume(struct HAL_I2STDM_DEV *i2sTdm);
@@ -57,6 +60,8 @@ HAL_Status HAL_I2STDM_TxRxEnable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamTyp
 HAL_Status HAL_I2STDM_TxRxDisable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream, bool doXfer);
 HAL_Status HAL_I2STDM_Config(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream,
                              struct AUDIO_PARAMS *params);
+
+/** @} */
 
 #endif
 

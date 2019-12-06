@@ -30,6 +30,9 @@
 /***************************** Structure Definition **************************/
 
 /********************* Public Function Definition ****************************/
+/** @defgroup INTC_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
 
 /**
  * @brief  INTC Enable Interrupt.
@@ -245,6 +248,8 @@ __STATIC_INLINE void HAL_INTC_UnmaskAllRQ()
     INTC->INTC_IRQ_INTMASK_L = 0x00000000;
     INTC->INTC_IRQ_INTMASK_H = 0x00000000;
 }
+
+/** @} */
 
 #endif
 

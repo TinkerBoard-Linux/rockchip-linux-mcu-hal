@@ -95,6 +95,9 @@ const struct PM_RUNTIME_INFO *HAL_PM_RuntimeGetData(void)
 #if defined(HAL_PM_CPU_SLEEP_MODULE_ENABLED)
 #if defined(__CM3_REV) || defined(__CM4_REV)
 
+/** @defgroup PM_CPU_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define NVIC_EXT_ISER_NUM (8)
@@ -117,6 +120,8 @@ static SCB_Type scbSave;
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
+/********************* Public Function Definition ***************************/
 /** @defgroup PM_CPU_SLEEP_Exported_Functions_Group5 Other Functions
  *  @{
  */

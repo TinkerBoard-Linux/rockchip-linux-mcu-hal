@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup VAD_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /* CONTROL */
@@ -90,6 +93,7 @@ static HAL_Status VAD_Get_Audio_Src_Info(struct HAL_VAD_DEV *vad, uint32_t addr)
     return HAL_ERROR;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup VAD_Exported_Functions_Group1 Suspend and Resume Functions
 

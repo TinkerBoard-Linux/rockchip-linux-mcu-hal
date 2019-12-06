@@ -58,6 +58,9 @@ typedef void (*NVIC_IRQHandler)(void);
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup NVIC_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_NVIC_SetIRQHandler(IRQn_Type IRQn, NVIC_IRQHandler handler);
 NVIC_IRQHandler HAL_NVIC_GetIRQHandler(IRQn_Type IRQn);
@@ -73,6 +76,8 @@ HAL_Status HAL_NVIC_ClearPendingIRQ(IRQn_Type IRQn);
 HAL_Status HAL_NVIC_ConfigExtIRQ(IRQn_Type IRQn, NVIC_IRQHandler handler,
                                  uint32_t preemptPriority, uint32_t subPriority);
 HAL_Status HAL_NVIC_Init(void);
+
+/** @} */
 
 #endif
 

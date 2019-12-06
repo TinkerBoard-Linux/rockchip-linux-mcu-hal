@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup I2STDM_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define I2STDM_DMA_BURST_SIZE (8) /* size * width: 8*4 = 32 bytes */
@@ -214,6 +217,7 @@ static HAL_Status I2STDM_SetSampleRate(struct HAL_I2STDM_DEV *i2sTdm,
     return ret;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup I2STDM_Exported_Functions_Group1 Suspend and Resume Functions
 

@@ -120,6 +120,9 @@ typedef enum {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup CRU_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup);
 HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate);
 HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup);
@@ -172,6 +175,8 @@ void HAL_CRU_AsInit(void);
  */
 void HAL_CRU_AsEnable(uint8_t ch, uint8_t en);
 #endif
+
+/** @} */
 
 #endif
 

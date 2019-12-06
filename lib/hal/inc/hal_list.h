@@ -17,7 +17,6 @@ struct HAL_LIST_NODE {
 typedef struct HAL_LIST_NODE HAL_LIST;
 
 /***************************** Function Declare ******************************/
-
 /**
  * @brief cast a member of a structure out to the containing structure
  * @param ptr:    the pointer to the member.

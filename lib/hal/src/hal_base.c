@@ -42,6 +42,9 @@
 
  @} */
 
+/** @defgroup HAL_BASE_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define HAL_TICK_FREQ_DEFAULT HAL_TICK_FREQ_1KHZ
@@ -91,6 +94,7 @@ __STATIC_FORCEINLINE HAL_Status TimerDelayUs(uint32_t us)
 }
 #endif
 
+/** @} */
 /********************* Public Function Definition ***************************/
 /** @defgroup HAL_BASE_Exported_Functions_Group4 Init and DeInit Functions
 

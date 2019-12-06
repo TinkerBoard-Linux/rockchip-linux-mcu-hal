@@ -146,6 +146,11 @@ struct AUDIO_DB_CONFIG {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup AUDIO_Public_Function_Declare Public Function Declare
+ *  @{
+ */
+
+/** @} */
 
 #endif
 

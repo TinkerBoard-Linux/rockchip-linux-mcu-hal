@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup CRYPTO_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 #define _SBF(s, v) ((v) << (s))
 
@@ -454,6 +457,7 @@ static HAL_Status CRYPTO_AesHashDeinit(void)
     return HAL_NOSYS;
 }
 
+/** @} */
 /********************* Public Function Definition ***************************/
 
 /** @defgroup CRYPTO_Exported_Functions_Group4 Init and DeInit Functions

@@ -52,6 +52,9 @@ struct HAL_PDM_DEV {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup PDM_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_PDM_Supsend(struct HAL_PDM_DEV *pdm);
 HAL_Status HAL_PDM_Resume(struct HAL_PDM_DEV *pdm);
@@ -60,6 +63,8 @@ HAL_Status HAL_PDM_DeInit(struct HAL_PDM_DEV *pdm);
 HAL_Status HAL_PDM_Enable(struct HAL_PDM_DEV *pdm);
 HAL_Status HAL_PDM_Disable(struct HAL_PDM_DEV *pdm);
 HAL_Status HAL_PDM_Config(struct HAL_PDM_DEV *pdm, struct AUDIO_PARAMS *params);
+
+/** @} */
 
 #endif
 

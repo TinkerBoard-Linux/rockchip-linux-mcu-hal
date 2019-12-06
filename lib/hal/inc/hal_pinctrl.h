@@ -253,6 +253,9 @@ extern const struct HAL_PINCTRL_DEV g_pinDev;
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup PINCTRL_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_PINCTRL_Suspend(void);
 HAL_Status HAL_PINCTRL_Resume(void);
@@ -262,6 +265,8 @@ HAL_Status HAL_PINCTRL_DeInit(void);
 
 HAL_Status HAL_PINCTRL_SetParam(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_configParam param);
 HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_configParam param);
+
+/** @} */
 
 #endif /* __HAL_PINCTRL_H__ */
 

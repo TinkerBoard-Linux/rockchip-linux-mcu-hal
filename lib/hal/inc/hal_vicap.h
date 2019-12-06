@@ -182,6 +182,9 @@ struct VICAP_WATERLINE_INFO {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup VICAP_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status HAL_VICAP_SetAxiBurstType(struct VICAP_REG *pReg, eVICAP_axiBurstType type);
 HAL_Status HAL_VICAP_SetCaptureEnable(struct VICAP_REG *pReg, bool enable);
 HAL_Status HAL_VICAP_SetWorkmode(struct VICAP_REG *pReg, eVICAP_workMode workMode);
@@ -240,6 +243,8 @@ uint32_t HAL_VICAP_GetDMAIdleStatus(struct VICAP_REG *pReg);
 HAL_Status HAL_VICAP_IrqHandler(struct VICAP_REG *pReg);
 HAL_Status HAL_VICAP_Init(struct VICAP_REG *pReg);
 HAL_Status HAL_VICAP_DeInit(struct VICAP_REG *pReg);
+
+/** @} */
 
 #endif
 

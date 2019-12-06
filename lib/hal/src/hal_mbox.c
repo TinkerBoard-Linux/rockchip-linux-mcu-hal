@@ -32,6 +32,9 @@
 
  @} */
 
+/** @defgroup Mailbox_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define IS_VALID_CHAN(n) (((uint32_t)(n)) < MBOX_CHAN_CNT)
@@ -155,6 +158,7 @@ static HAL_Status MBOX_RecvMsg(struct MBOX_DEV *mbox, eMBOX_CH chan)
     return HAL_OK;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup MBox_Exported_Functions_Group1 Suspend and Resume Functions
@@ -191,7 +195,6 @@ HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg)
 }
 
 /** @} */
-
 /********************* Public Function Definition ****************************/
 
 /** @defgroup MBox_Exported_Functions_Group2 Send and Receive Functions

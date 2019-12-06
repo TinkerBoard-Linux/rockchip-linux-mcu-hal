@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup I2S_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define I2S_DMA_BURST_SIZE (8) /* size * width: 8*4 = 32 bytes */
@@ -152,6 +155,7 @@ static HAL_Status I2S_SetSampleRate(struct HAL_I2S_DEV *i2s,
     return ret;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup I2S_Exported_Functions_Group1 Suspend and Resume Functions
 

@@ -78,12 +78,17 @@ typedef void (*DMA_Callback)(void *cparam);
 
 /** @} */
 
-/***************************** Function Declare ******************************/
+/********************* Public Function Definition ****************************/
+/** @defgroup DMA_Exported_Functions_Group5 Other Functions
+ *  @{
+*/
 
 __STATIC_INLINE bool HAL_DMA_IsSlaveDirection(eDMA_TRANSFER_DIRECTION direction)
 {
     return (direction == DMA_MEM_TO_DEV) || (direction == DMA_DEV_TO_MEM);
 }
+
+/** @} */
 
 #endif
 

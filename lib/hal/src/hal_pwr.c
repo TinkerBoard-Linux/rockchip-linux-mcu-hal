@@ -34,6 +34,9 @@
 
 #ifdef HAL_PWR_INTBUS_MODULE_ENABLED
 
+/** @defgroup PWR_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define WM_SET_BITS(msk, shift, bits) ((msk <<(shift + 16)) | (bits << shift))
@@ -127,6 +130,7 @@ static HAL_Status PWR_EnableDisable(struct PWR_INTREG_DESC *desc, uint32_t enabl
     return HAL_OK;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup PWR_Exported_Functions_Group2 State and Errors Functions
 

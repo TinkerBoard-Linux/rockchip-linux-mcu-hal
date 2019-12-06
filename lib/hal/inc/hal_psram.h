@@ -65,11 +65,16 @@ struct SPI_PSRAM {
 };
 
 /***************************** Function Declare ******************************/
+/** @defgroup PSRAM_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_PSRAM_Init(struct SPI_PSRAM *psram);
 HAL_Status HAL_PSRAM_DeInit(struct SPI_PSRAM *psram);
 HAL_Status HAL_PSRAM_XIPEnable(struct SPI_PSRAM *psram);
 HAL_Status HAL_PSRAM_XIPDisable(struct SPI_PSRAM *psram);
+
+/** @} */
 
 #endif
 

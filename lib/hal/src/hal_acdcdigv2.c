@@ -29,6 +29,9 @@
 
  @} */
 
+/** @defgroup ACDCDIG_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 /* REG_CON bits */
 #define REG_CON_EN         (0x1 << ACDCDIG_I2C_CON0_I2C_EN_SHIFT)
@@ -730,6 +733,7 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
     return HAL_OK;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 /** @defgroup ACDCDIG_Exported_Functions_Group1 Suspend and Resume Functions

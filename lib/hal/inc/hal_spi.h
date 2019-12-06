@@ -141,6 +141,9 @@ struct SPI_HANDLE {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup SPI_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_SPI_Init(struct SPI_HANDLE *pSPI, uint32_t base, bool slave);
 HAL_Status HAL_SPI_DeInit(struct SPI_HANDLE *pSPI);
@@ -158,6 +161,8 @@ uint32_t HAL_SPI_CalculateTimeout(struct SPI_HANDLE *pSPI);
 bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI);
 bool HAL_SPI_IsSlave(struct SPI_HANDLE *pSPI);
 bool HAL_SPI_IsDmaXfer(struct SPI_HANDLE *pSPI);
+
+/** @} */
 
 #endif
 

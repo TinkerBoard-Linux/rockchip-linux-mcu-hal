@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup PDM_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /* PDM_SYSCONFIG */
@@ -228,6 +231,7 @@ static HAL_Status PDM_ChangeClkFreq(struct HAL_PDM_DEV *pdm,
     return ret;
 }
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup PDM_Exported_Functions_Group1 Suspend and Resume Functions
 

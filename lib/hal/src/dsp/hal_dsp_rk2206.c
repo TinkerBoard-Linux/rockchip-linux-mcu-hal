@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup DSP_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 #define TCM_SEL_ALIGN (64 * 1024)
@@ -118,6 +121,7 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
     return ret;
 }
 
+/** @} */
 /********************* Public Function Definition ***************************/
 
 /** @defgroup DSP_Exported_Functions_Group4 Init and DeInit Functions

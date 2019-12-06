@@ -74,6 +74,9 @@ struct PCD_HANDLE {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup PCD_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 HAL_Status HAL_PCD_Init(struct PCD_HANDLE *pPCD);
 HAL_Status HAL_PCD_DeInit(struct PCD_HANDLE *pPCD);
 HAL_Status HAL_PCD_Start(struct PCD_HANDLE *pPCD);
@@ -104,6 +107,8 @@ HAL_Status HAL_PCD_EPFlush(struct PCD_HANDLE *pPCD, uint8_t epAddr);
 HAL_Status HAL_PCD_ActivateRemoteWakeup(struct PCD_HANDLE *pPCD);
 HAL_Status HAL_PCD_DeActivateRemoteWakeup(struct PCD_HANDLE *pPCD);
 ePCD_state HAL_PCD_GetState(struct PCD_HANDLE *pPCD);
+
+/** @} */
 
 #endif /* _HAL_PCD_H_ */
 

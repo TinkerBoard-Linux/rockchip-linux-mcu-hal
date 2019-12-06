@@ -29,6 +29,9 @@
 
  @} */
 
+/** @defgroup USB_CORE_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 /********************* Private Structure Definition **************************/
 /********************* Private Variable Definition ***************************/
@@ -156,6 +159,7 @@ static HAL_Status USB_PHYInit(void)
 }
 #endif
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup USB_CORE_Exported_Functions_Group4 Init and DeInit Functions
 

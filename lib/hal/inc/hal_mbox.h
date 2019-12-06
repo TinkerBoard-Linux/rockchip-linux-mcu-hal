@@ -46,6 +46,9 @@ struct MBOX_CLIENT {
 /** @} */
 
 /***************************** Function Declare ******************************/
+/** @defgroup Mailbox_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg);
 HAL_Status HAL_MBOX_Init(struct MBOX_REG *pReg, uint8_t isA2B);
@@ -61,6 +64,8 @@ HAL_Status HAL_MBOX_UnregisterClient(struct MBOX_REG *pReg, eMBOX_CH chan,
                                      const struct MBOX_CLIENT *cl);
 HAL_Status HAL_MBOX_Suspend(struct MBOX_REG *pReg);
 HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg);
+
+/** @} */
 
 #endif
 

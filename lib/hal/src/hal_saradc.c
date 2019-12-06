@@ -22,6 +22,9 @@
 
  @} */
 
+/** @defgroup SARADC_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/
@@ -30,6 +33,7 @@
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup SARADC_Exported_Functions_Group5 Other Functions
 

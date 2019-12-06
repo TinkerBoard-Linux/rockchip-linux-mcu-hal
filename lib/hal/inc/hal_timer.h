@@ -36,6 +36,9 @@ typedef enum {
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup TIMER_Public_Function_Declare Public Function Declare
+ *  @{
+ */
 
 HAL_Status HAL_TIMER_Stop(struct TIMER_REG *pReg);
 HAL_Status HAL_TIMER_Start(struct TIMER_REG *pReg);
@@ -49,6 +52,8 @@ HAL_Status HAL_TIMER_Init(struct TIMER_REG *pReg, eTIMER_MODE mode);
 HAL_Status HAL_TIMER_SysTimerInit(struct TIMER_REG *pReg);
 HAL_Status HAL_TIMER_DeInit(struct TIMER_REG *pReg);
 HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg);
+
+/** @} */
 
 #endif
 
