@@ -805,6 +805,8 @@ struct ACDCDIG_REG {
 #define DSP_DTCM_END        0x3027ffffU /* DSP dtcm end address */
 #define ICACHE_BASE         0x40000000U /* ICACHE base address */
 #define DCACHE_BASE         0x40004000U /* DCACHE base address */
+#define INTC0_BASE          0x40010000U /* INTC0(DSP) base address */
+#define INTC1_BASE          0x40020000U /* INTC1(AP) base address */
 #define CRU_BASE            0x40050000U /* CRU base address */
 #define GRF_BASE            0x400B0000U /* GRF base address */
 #define MBOX0_BASE          0x40100000U /* MBOX0 base address */
