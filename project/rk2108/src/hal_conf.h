@@ -68,4 +68,8 @@
 #define HAL_FSPI_XIP_ENABLE
 #endif
 
+#ifdef HAL_WDT_MODULE_ENABLED
+#define HAL_WDT_DYNFREQ_FEATURE_ENABLED
+#endif
+
 #endif
