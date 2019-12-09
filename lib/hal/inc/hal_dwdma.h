@@ -153,6 +153,7 @@ struct DWDMA_CHAN {
     uint8_t periId;
 
     bool cyclic;
+    bool paused;
 
     DMA_Callback callback;
     void *cparam;
@@ -190,6 +191,8 @@ HAL_Status HAL_DWDMA_DeInit(struct HAL_DWDMA_DEV *dw);
 
 HAL_Status HAL_DWDMA_Start(struct DWDMA_CHAN *dwc);
 HAL_Status HAL_DWDMA_Stop(struct DWDMA_CHAN *dwc);
+HAL_Status HAL_DWDMA_Pause(struct DWDMA_CHAN *dwc);
+HAL_Status HAL_DWDMA_Resume(struct DWDMA_CHAN *dwc);
 
 struct DWDMA_CHAN *HAL_DWDMA_RequestChannel(struct HAL_DWDMA_DEV *dma, DMA_REQ_Type id);
 HAL_Status HAL_DWDMA_ReleaseChannel(struct DWDMA_CHAN *dwc);

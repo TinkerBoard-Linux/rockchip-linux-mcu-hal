@@ -190,9 +190,11 @@ static void DWC_initialize(struct DWDMA_CHAN *dwc)
 
     switch (dwc->direction) {
     case DMA_MEM_TO_DEV:
+        cfglo |= DWC_CFGL_RELOAD_DAR;
         cfghi |= DWC_CFGH_DST_PER(dwc->periId);
         break;
     case DMA_DEV_TO_MEM:
+        cfglo |= DWC_CFGL_RELOAD_SAR;
         cfghi |= DWC_CFGH_SRC_PER(dwc->periId);
         break;
     default:
@@ -232,15 +234,17 @@ static void DWC_HandleCyclic(struct HAL_DWDMA_DEV *dw, struct DWDMA_CHAN *dwc,
                              uint32_t statusBlock, uint32_t statusErr, uint32_t statusXfer)
 {
     if (statusBlock & dwc->mask) {
-        WRITE_REG(dw->pReg->CLEAR.BLOCK, dwc->mask);
         if (dwc->callback)
             dwc->callback(dwc->cparam);
+        if (!dwc->paused)
+            WRITE_REG(dw->pReg->CLEAR.BLOCK, dwc->mask);
     }
 
     /* TODO: execption handler */
     HAL_ASSERT(!statusErr && !statusXfer);
 
-    DW_CHAN_SET_BIT(dw->pReg->MASK.BLOCK, dwc->mask);
+    if (!dwc->paused)
+        DW_CHAN_SET_BIT(dw->pReg->MASK.BLOCK, dwc->mask);
 }
 
 static void DWC_HandleError(struct HAL_DWDMA_DEV *dw, struct DWDMA_CHAN *dwc)
@@ -391,6 +395,44 @@ HAL_Status HAL_DWDMA_DeInit(struct HAL_DWDMA_DEV *dw)
  */
 
 /**
+ * @brief Pause the dma chan.
+ *
+ * @param dwc: the handle of dma chan.
+ *
+ * @return
+ *        - HAL_OK on success
+ *        - HAL_ERROR on other failures
+ */
+HAL_Status HAL_DWDMA_Pause(struct DWDMA_CHAN *dwc)
+{
+    dwc->paused = true;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief Resume the dma chan.
+ *
+ * @param dwc: the handle of dma chan.
+ *
+ * @return
+ *        - HAL_OK on success
+ *        - HAL_ERROR on other failures
+ */
+HAL_Status HAL_DWDMA_Resume(struct DWDMA_CHAN *dwc)
+{
+    if (!dwc->paused)
+        return HAL_OK;
+
+    dwc->paused = false;
+
+    WRITE_REG(dwc->dw->pReg->CLEAR.BLOCK, dwc->mask);
+    DW_CHAN_SET_BIT(dwc->dw->pReg->MASK.BLOCK, dwc->mask);
+
+    return HAL_OK;
+}
+
+/**
  * @brief Start to run the dma chan.
  *
  * @param dwc: the handle of dma chan.
@@ -420,8 +462,18 @@ HAL_Status HAL_DWDMA_Start(struct DWDMA_CHAN *dwc)
     DWC_initialize(dwc);
 
     WRITE_REG(dwc->creg->LLP, (uint32_t)&dwc->desc[0]);
-    WRITE_REG(dwc->creg->CTL_LO,
-              DWC_CTLL_LLP_D_EN | DWC_CTLL_LLP_S_EN);
+
+    switch (dwc->direction) {
+    case DMA_MEM_TO_DEV:
+        WRITE_REG(dwc->creg->CTL_LO, DWC_CTLL_LLP_S_EN);
+        break;
+    case DMA_DEV_TO_MEM:
+        WRITE_REG(dwc->creg->CTL_LO, DWC_CTLL_LLP_D_EN);
+        break;
+    default:
+        break;
+    }
+
     WRITE_REG(dwc->creg->CTL_HI, 0);
 
     DW_CHAN_SET_BIT(dw->pReg->CHENREG, dwc->mask);
@@ -625,10 +677,13 @@ HAL_Status HAL_DWDMA_PrepDmaCyclic(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
 
     dwc->direction = direction;
 
-    if (direction == DMA_MEM_TO_DEV)
+    if (direction == DMA_MEM_TO_DEV) {
         regWidth = DW_FFS(config->dstAddrWidth);
-    else
+        WRITE_REG(dwc->creg->DAR, config->dstAddr);
+    } else {
         regWidth = DW_FFS(config->srcAddrWidth);
+        WRITE_REG(dwc->creg->SAR, config->srcAddr);
+    }
 
     periods = len / periodLen;
 
@@ -654,6 +709,8 @@ HAL_Status HAL_DWDMA_PrepDmaCyclic(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
                                | DWC_CTLL_INT_EN
                                | DWC_CTLL_FC_M2P);
 
+            desc->lli.ctllo &= ~DWC_CTLL_LLP_D_EN;
+
             break;
         case DMA_DEV_TO_MEM:
             desc->lli.dar = dmaAddr + (periodLen * i);
@@ -665,6 +722,8 @@ HAL_Status HAL_DWDMA_PrepDmaCyclic(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
                                | DWC_CTLL_SRC_FIX
                                | DWC_CTLL_INT_EN
                                | DWC_CTLL_FC_P2M);
+
+            desc->lli.ctllo &= ~DWC_CTLL_LLP_S_EN;
 
             break;
         default:
