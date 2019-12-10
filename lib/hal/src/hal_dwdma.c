@@ -577,6 +577,7 @@ struct DWDMA_CHAN *HAL_DWDMA_RequestChannel(struct HAL_DWDMA_DEV *dw, DMA_REQ_Ty
             continue;
 
         dwc->periId = id;
+        dwc->chanId = i;
         dw->used |= dwc->mask;
         break;
     }

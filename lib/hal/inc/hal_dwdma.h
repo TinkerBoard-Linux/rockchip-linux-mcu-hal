@@ -151,6 +151,7 @@ struct DWDMA_CHAN {
     uint8_t srcMaster;
     uint8_t dstMaster;
     uint8_t periId;
+    uint8_t chanId;
 
     bool cyclic;
     bool paused;
