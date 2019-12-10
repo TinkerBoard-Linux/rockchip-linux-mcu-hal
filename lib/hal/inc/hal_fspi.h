@@ -83,6 +83,7 @@ typedef enum {
 struct HAL_FSPI_XMMC_DEV {
     eFSPI_devType type;
     uint32_t ctrl;
+    uint32_t xmmcCtrl;
     uint32_t readCmd;
     uint32_t writeCmd;
 };
@@ -91,7 +92,7 @@ struct HAL_FSPI_HOST {
     struct FSPI_REG *instance;
     uint32_t version;
     uint8_t cs;
-    uint8_t mode;
+    uint8_t mode; /** HAL_SPI_MEM SPI Memory host mode */
     eCLOCK_Name sclkID;
     IRQn_Type irqNum;
     uint32_t xipMem0; /** FSPI XIP mapped memory(Under dcache) */

@@ -90,9 +90,6 @@
 #define FSPI_VER_VER_1 1
 #define FSPI_VER_VER_3 3
 
-#define GET_MODE_CPHA_VAL(m) ((m) & 0x1)
-#define GET_MODE_CPOL_VAL(m) ((m) & 0x2)
-
 #define FSPI_NOR_FLASH_PAGE_SIZE 0x100
 
 /********************* Private Structure Definition **************************/
@@ -130,16 +127,16 @@ typedef union {
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
-static void FSPI_Reset(struct FSPI_REG *pReg)
+static void FSPI_Reset(struct HAL_FSPI_HOST *host)
 {
     int32_t timeout = 10000;
 
-    pReg->RCVR = FSPI_RCVR_RCVR_RESET;
-    while ((pReg->RCVR == FSPI_RCVR_RCVR_RESET) && (timeout > 0)) {
+    host->instance->RCVR = FSPI_RCVR_RCVR_RESET;
+    while ((host->instance->RCVR == FSPI_RCVR_RCVR_RESET) && (timeout > 0)) {
         HAL_CPUDelayUs(1);
         timeout--;
     }
-    pReg->ICLR = 0xFFFFFFFF;
+    host->instance->ICLR = 0xFFFFFFFF;
 }
 
 /**
@@ -154,13 +151,43 @@ static HAL_Status FSPI_ClearIsr(struct HAL_FSPI_HOST *host)
     return HAL_OK;
 }
 
-static HAL_Status FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
+static void FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
 {
     host->instance->DEVRGN = 25;    /* 32MB for each region */
     host->instance->DEVSIZE0 = 24;     /* 16MB for dev0 */
     host->instance->DEVSIZE1 = 24;     /* 16MB for dev1 */
+}
 
-    return HAL_OK;
+static void FSPI_TimeOutInit(struct HAL_FSPI_HOST *host)
+{
+    WRITE_REG(host->instance->SCLK_INATM_CNT, 0x20);
+    SET_BIT(host->instance->TME0, FSPI_TME0_SCLK_INATM_EN_MASK);
+    SET_BIT(host->instance->TME1, FSPI_TME0_SCLK_INATM_EN_MASK);
+}
+
+static void FSPI_ContModeInit(struct HAL_FSPI_HOST *host)
+{
+    /* Setup when FSPI->AX = 0xa5, Cancel when FSPI->AX = 0x0 */
+    WRITE_REG(host->instance->EXT_AX, 0xa5 << FSPI_EXT_AX_AX_SETUP_PAT_SHIFT |
+              0x5a << FSPI_EXT_AX_AX_CANCEL_PAT_SHIFT);
+    /* Skip Continuous mode in default */
+    switch (host->cs) {
+    case 0:
+        WRITE_REG(host->instance->AX0, 0 << FSPI_AX0_AX_SHIFT);
+        break;
+    case 1:
+        WRITE_REG(host->instance->AX1, 0 << FSPI_AX1_AX_SHIFT);
+        break;
+    default:
+        break;
+    }
+}
+
+static void FSPI_ContModeDeInit(struct HAL_FSPI_HOST *host)
+{
+    /* FSPI avoid setup pattern match with FSPI->AX */
+    WRITE_REG(host->instance->EXT_AX, 0x77 << FSPI_EXT_AX_AX_SETUP_PAT_SHIFT |
+              0x88 << FSPI_EXT_AX_AX_CANCEL_PAT_SHIFT);
 }
 
 /** @} */
@@ -217,11 +244,11 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
     }
 
     /* spitial setting */
-    FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
+    FSPICtrl.b.sps = host->mode & HAL_SPI_CPHA;
     FSPICmd.b.cs = host->cs;
 
     if (!(pReg->FSR & FSPI_FSR_TXES_EMPTY) || !(pReg->FSR & FSPI_FSR_RXES_EMPTY) || (pReg->SR & FSPI_SR_SR_BUSY))
-        FSPI_Reset(pReg);
+        FSPI_Reset(host);
 
     /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
     /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
@@ -387,6 +414,8 @@ HAL_Status HAL_FSPI_SpiXfer(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *o
     uint32_t dir = op->data.dir;
     void *pData = NULL;
 
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+
     if (op->data.buf.in)
         pData = (void *)op->data.buf.in;
     else if (op->data.buf.out)
@@ -431,8 +460,7 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
     struct FSPI_REG *pReg;
     HAL_Status ret = HAL_OK;
 
-    if (!IS_FSPI_INSTANCE(host->instance))
-        return HAL_INVAL;
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
 
     pReg = host->instance;
     pReg->MODE = 0;
@@ -442,7 +470,7 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
             return HAL_TIMEOUT;
         }
     }
-
+    FSPI_ContModeInit(host);
     FSPI_XmmcDevRegionInit(host);
     pReg->CTRL0 = 0;
     host->version = pReg->VER & FSPI_VER_VER_MASK;
@@ -457,8 +485,11 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
  */
 HAL_Status HAL_FSPI_DeInit(struct HAL_FSPI_HOST *host)
 {
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+
     host->instance->MODE = 0;
-    FSPI_Reset(host->instance);
+    FSPI_ContModeDeInit(host);
+    FSPI_Reset(host);
 
     return HAL_OK;
 }
@@ -517,6 +548,9 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
 {
     FSPICMD_DATA FSPICmd;
     FSPICTRL_DATA FSPICtrl;
+    FSPIXMMCCTRL_DATA xmmcCtrl;
+
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
 
     FSPICmd.d32 = 0;
     FSPICtrl.d32 = 0;
@@ -524,14 +558,18 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     /* set CMD */
     FSPICmd.b.cmd = op->cmd.opcode;
     FSPICtrl.b.cmdlines = op->cmd.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+    if (op->addr.buswidth == 4 && host->xmmcDev[host->cs].type == DEV_NOR) {
+        FSPICmd.b.readmode = 1;
+    }
 
     /* set ADDR */
     FSPICmd.b.addrbits = op->addr.nbytes == 4 ? FSPI_ADDR_32BITS : FSPI_ADDR_24BITS;
     FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
 
     /* set DUMMY*/
-    if (op->dummy.nbytes)
-        FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
+    FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
+    if (FSPICmd.b.readmode)
+        FSPICmd.b.dummybits -= 2; /* M7-0 ocuppy Dummy 2 cycles  */
 
     /* set DATA */
     if (op->data.dir == HAL_SPI_MEM_DATA_OUT)
@@ -543,17 +581,27 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     else
         FSPICtrl.b.datalines = FSPI_LINES_X1;
 
-    /* spitial setting */
-    FSPICtrl.b.sps = GET_MODE_CPHA_VAL(host->mode);
-    /* Avoid flash EBh CMD run into CONT mode, cont = 1, AX = 0, AX_SET_PAT = 0x5a */
-    if (op->addr.buswidth == 4 && host->xmmcDev[host->cs].type == DEV_NOR) {
-        FSPICmd.b.readmode = 1;
-        FSPICmd.b.dummybits -= 2; /* Dummy 2bits M7-0 */
+    /* set XMMC */
+    if (host->xmmcDev[0].type == DEV_PSRAM || host->xmmcDev[1].type == DEV_PSRAM) {
+        xmmcCtrl.b.devHwEn = 1;
+        xmmcCtrl.b.prefetch = 0;
+    } else {
+        xmmcCtrl.b.devHwEn = 0;
+#if !defined(HAL_DCACHE_MODULE_ENABLED) && (FSPI_VER == 3)
+        xmmcCtrl.b.prefetch = 0;
+#else
+        xmmcCtrl.b.prefetch = 1;
+        FSPI_TimeOutInit(host);
+#endif
     }
+
+    /* spetial setting */
+    FSPICtrl.b.sps = host->mode & HAL_SPI_CPHA;
 
     /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
     /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
     host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
+    host->xmmcDev[host->cs].xmmcCtrl = xmmcCtrl.d32;
     if (op->data.dir == HAL_SPI_MEM_DATA_IN)
         host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
     else
@@ -571,40 +619,17 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
  */
 HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 {
-    FSPIXMMCCTRL_DATA xmmcCtrl;
     struct FSPI_REG *pReg = host->instance;
     int timeout = 0;
-
-    xmmcCtrl.d32 = pReg->XMMC_CTRL;
 
     if (on) {
         if (pReg->MODE & 0x1)
             return HAL_INVAL;
 
-        /* FSPI controller config */
-        if (host->xmmcDev[0].type == DEV_PSRAM || host->xmmcDev[1].type == DEV_PSRAM) {
-            xmmcCtrl.b.devHwEn = 1;
-            xmmcCtrl.b.prefetch = 0;
-            xmmcCtrl.b.uincrPrefetchEn = 1;
-            xmmcCtrl.b.uincrLen = 2;
-            xmmcCtrl.b.devWrapEn = 1;
-            xmmcCtrl.b.devIncrEn = 1;
-            xmmcCtrl.b.devUdfincrEn = 1;
-        } else {
-            xmmcCtrl.b.devHwEn = 0;
-#if !defined(HAL_DCACHE_MODULE_ENABLED) && (FSPI_VER == 3)
-            xmmcCtrl.b.prefetch = 0;
-#else
-            xmmcCtrl.b.prefetch = 1;
-            WRITE_REG(pReg->SCLK_INATM_CNT, 0x20);
-            SET_BIT(pReg->TME0, FSPI_TME0_SCLK_INATM_EN_MASK);
-            SET_BIT(pReg->TME1, FSPI_TME0_SCLK_INATM_EN_MASK);
-#endif
-        }
-        WRITE_REG(pReg->XMMC_CTRL, xmmcCtrl.d32);
-
-        /* FSPI continuous mode disabled */
-        WRITE_REG(pReg->EXT_AX, 0x5a << FSPI_EXT_AX_AX_SETUP_PAT_SHIFT);
+        /* FSPI xmmcCtrl config */
+        MODIFY_REG(pReg->XMMC_CTRL, FSPI_XMMC_CTRL_DEV_HWEN_MASK |
+                   FSPI_XMMC_CTRL_PFT_EN_MASK,
+                   host->xmmcDev[0].xmmcCtrl);
 
         /* FSPI device config */
         /* FSPI_DBG("%s enable 3 %lx %lx %lx %lx\n", __func__,
@@ -615,13 +640,11 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
             WRITE_REG(pReg->CTRL0, host->xmmcDev[0].ctrl);
             WRITE_REG(pReg->XMMC_RCMD0, host->xmmcDev[0].readCmd);
             WRITE_REG(pReg->XMMC_WCMD0, host->xmmcDev[0].writeCmd);
-            CLEAR_REG(pReg->AX0);
             break;
         case 1:
             WRITE_REG(pReg->CTRL1, host->xmmcDev[1].ctrl);
             WRITE_REG(pReg->XMMC_RCMD1, host->xmmcDev[1].readCmd);
             WRITE_REG(pReg->XMMC_WCMD1, host->xmmcDev[1].writeCmd);
-            CLEAR_REG(pReg->AX1);
             break;
         default:
             break;
