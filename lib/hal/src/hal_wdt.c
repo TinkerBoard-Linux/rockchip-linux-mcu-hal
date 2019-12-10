@@ -107,14 +107,13 @@ static uint32_t WDT_getTopMsecVal(uint32_t topMsec, uint32_t freq)
     if (cycles < 0xffff) {
         topVal = 0;
     } else {
-        topVal = fls(cycles) - 16;
+        topVal = 16 - __CLZ(cycles);
     }
 
     HAL_ASSERT(topVal <= WDT_MAX_TOP);
-    HAL_ASSERT(fls(0x8) == 4);
 
     WDT_DYNCLK_DBG("  WDT_getTopMsecVal %u %u; 0x%x; %u,%u\n",
-                   topMsec, (freq / 1000), cycles, fls(cycles), topVal);
+                   topMsec, (freq / 1000), cycles, 32 - __CLZ(cycles), topVal);
 
     return topVal;
 }
