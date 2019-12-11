@@ -11,19 +11,19 @@
  *  @{
  */
 
-/** @addtogroup Mailbox
+/** @addtogroup MBOX
  *  @{
  */
 
-/** @defgroup Mailbox_How_To_Use How To Use
+/** @defgroup MBOX_How_To_Use How To Use
  *  @{
 
  The Mbox driver can be used as follows:
 
- - Invoke HAL_MBOX_Init in driver wrapper file to initialize mailbox.
- - Invoke HAL_MBOX_RegisterClient in protocol layer to register mailbox
+ - Invoke HAL_MBOX_Init() in driver wrapper file to initialize mailbox.
+ - Invoke HAL_MBOX_RegisterClient() in protocol layer to register mailbox
      client (user).
- - Protocol layer call HAL_MBOX_SendMsg to send mailbox message and receive
+ - Protocol layer call HAL_MBOX_SendMsg() to send mailbox message and receive
      message via interrupt handler.
  - Using destroy related function to finish resource release work.
  - Mailbox driver is just responsible for passing simple command data, and
@@ -32,7 +32,7 @@
 
  @} */
 
-/** @defgroup Mailbox_Private_Definition Private Definition
+/** @defgroup MBOX_Private_Definition Private Definition
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
@@ -161,7 +161,7 @@ static HAL_Status MBOX_RecvMsg(struct MBOX_DEV *mbox, eMBOX_CH chan)
 /** @} */
 /********************* Public Function Definition ****************************/
 
-/** @defgroup MBox_Exported_Functions_Group1 Suspend and Resume Functions
+/** @defgroup MBOX_Exported_Functions_Group1 Suspend and Resume Functions
 
 This section provides functions allowing to suspend and resume the module:
 
@@ -197,7 +197,7 @@ HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg)
 /** @} */
 /********************* Public Function Definition ****************************/
 
-/** @defgroup MBox_Exported_Functions_Group2 Send and Receive Functions
+/** @defgroup MBOX_Exported_Functions_Group2 Send and Receive Functions
 
 This section provides functions allowing to send and receive mailbox message:
 
@@ -275,7 +275,7 @@ HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *pReg, eMBOX_CH chan)
 
 /** @} */
 
-/** @defgroup MBox_Exported_Functions_Group3 Interrupt Handle Functions
+/** @defgroup MBOX_Exported_Functions_Group3 Interrupt Handle Functions
 
  This section provides functions allowing to handle interrupt request:
 
@@ -321,7 +321,7 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
 
 /** @} */
 
-/** @defgroup MBox_Exported_Functions_Group4 Init and DeInit Functions
+/** @defgroup MBOX_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 
@@ -386,7 +386,7 @@ HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *pReg)
 
 /** @} */
 
-/** @defgroup MBox_Exported_Functions_Group5 Register and Unregister Functions
+/** @defgroup MBOX_Exported_Functions_Group5 Register and Unregister Functions
 
  This section provides functions allowing to register/unregister mbox client:
 

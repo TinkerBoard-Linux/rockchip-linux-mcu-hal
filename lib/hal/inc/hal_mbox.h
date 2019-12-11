@@ -11,7 +11,7 @@
  *  @{
  */
 
-/** @addtogroup Mailbox
+/** @addtogroup MBOX
  *  @{
  */
 
@@ -20,7 +20,7 @@
 
 #include "hal_def.h"
 
-/** @defgroup MBox_Exported_Definition_Group1 Basic Definition
+/** @defgroup MBOX_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 
@@ -46,7 +46,7 @@ struct MBOX_CLIENT {
 /** @} */
 
 /***************************** Function Declare ******************************/
-/** @defgroup Mailbox_Public_Function_Declare Public Function Declare
+/** @defgroup MBOX_Public_Function_Declare Public Function Declare
  *  @{
  */
 
