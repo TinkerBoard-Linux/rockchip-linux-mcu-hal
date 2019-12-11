@@ -513,6 +513,37 @@ HAL_Status HAL_DWDMA_Stop(struct DWDMA_CHAN *dwc)
 }
 
 /**
+ * @brief Handle dma chan
+ *
+ * @param dw: the handle of dw dma.
+ * @param chanId: the chan num.
+ *
+ * @return
+ *        - HAL_OK on success.
+ *        - HAL_ERROR on fail.
+ */
+HAL_Status HAL_DWDMA_HandleChan(struct HAL_DWDMA_DEV *dw, uint32_t chanId)
+{
+    struct DWDMA_CHAN *dwc = &dw->chan[chanId];
+    uint32_t statusBlock;
+    uint32_t statusXfer;
+    uint32_t statusErr;
+
+    statusBlock = READ_REG(dw->pReg->RAW.BLOCK);
+    statusXfer = READ_REG(dw->pReg->RAW.TFR);
+    statusErr = READ_REG(dw->pReg->RAW.ERR);
+
+    if (dwc->cyclic)
+        DWC_HandleCyclic(dw, dwc, statusBlock, statusXfer, statusXfer);
+    else if (statusErr & dwc->mask)
+        DWC_HandleError(dw, dwc);
+    else if (statusXfer & dwc->mask)
+        DWC_HandleXfer(dw, dwc);
+
+    return HAL_OK;
+}
+
+/**
  * @brief dw dma IrqHandler
  *
  * @param dw: the handle of dw dma.
@@ -525,24 +556,12 @@ HAL_Status HAL_DWDMA_Stop(struct DWDMA_CHAN *dwc)
 HAL_Status HAL_DWDMA_IrqHandler(struct HAL_DWDMA_DEV *dw, uint32_t chanId)
 {
     struct DWDMA_CHAN *dwc = &dw->chan[chanId];
-    uint32_t statusBlock;
-    uint32_t statusXfer;
-    uint32_t statusErr;
 
     DW_CHAN_CLEAR_BIT(dw->pReg->MASK.TFR, dwc->mask);
     DW_CHAN_CLEAR_BIT(dw->pReg->MASK.BLOCK, dwc->mask);
     DW_CHAN_CLEAR_BIT(dw->pReg->MASK.ERR, dwc->mask);
 
-    statusBlock = READ_REG(dw->pReg->RAW.BLOCK);
-    statusXfer = READ_REG(dw->pReg->RAW.TFR);
-    statusErr = READ_REG(dw->pReg->RAW.ERR);
-
-    if (dwc->cyclic)
-        DWC_HandleCyclic(dw, dwc, statusBlock, statusXfer, statusXfer);
-    else if (statusErr & dwc->mask)
-        DWC_HandleError(dw, dwc);
-    else if (statusXfer & dwc->mask)
-        DWC_HandleXfer(dw, dwc);
+    HAL_DWDMA_HandleChan(dw, chanId);
 
     /* Re-enable interrupts */
     DW_CHAN_SET_BIT(dw->pReg->MASK.TFR, dwc->mask);

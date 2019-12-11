@@ -211,6 +211,7 @@ HAL_Status HAL_DWDMA_PrepDmaSingle(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
                                    eDMA_TRANSFER_DIRECTION direction,
                                    DMA_Callback callback, void *cparam);
 
+HAL_Status HAL_DWDMA_HandleChan(struct HAL_DWDMA_DEV *dw, uint32_t chanId);
 HAL_Status HAL_DWDMA_IrqHandler(struct HAL_DWDMA_DEV *dw, uint32_t chanId);
 
 /** @} */
