@@ -54,6 +54,7 @@ struct PSRAM_HOST {
 
 struct SPI_PSRAM {
     struct PSRAM_HOST *spi;
+    uint8_t id[2];
     uint8_t addrWidth;
     uint8_t readOpcode;
     uint8_t readDummy;

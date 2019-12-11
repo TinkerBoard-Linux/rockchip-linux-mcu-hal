@@ -189,6 +189,8 @@ HAL_Status HAL_PSRAM_Init(struct SPI_PSRAM *psram)
 
     PSRAM_ReadID(psram, idByte);
     HAL_PSRAM_DBG("SPI psram ID: %x %x\n", idByte[0], idByte[1]);
+    psram->id[0] = idByte[0];
+    psram->id[1] = idByte[1];
 
     /* Temporarily fixed configuration */
     psram->addrWidth = 3;
