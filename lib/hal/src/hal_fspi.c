@@ -158,7 +158,7 @@ static void FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
     host->instance->DEVSIZE1 = 24;     /* 16MB for dev1 */
 }
 
-static void FSPI_TimeOutInit(struct HAL_FSPI_HOST *host)
+HAL_UNUSED static void FSPI_TimeOutInit(struct HAL_FSPI_HOST *host)
 {
     WRITE_REG(host->instance->SCLK_INATM_CNT, 0x20);
     SET_BIT(host->instance->TME0, FSPI_TME0_SCLK_INATM_EN_MASK);
