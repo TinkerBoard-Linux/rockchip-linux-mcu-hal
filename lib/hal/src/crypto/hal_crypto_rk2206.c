@@ -223,9 +223,9 @@
 #define LLI_ADDR_ALIGN_SIZE  8
 #define DATA_ADDR_ALIGN_SIZE 8
 
-#define RK_GET_CRYPTO_MODE(mode)           (mode&RK_CRYPTO_MODE_MASK)
-#define RK_IS_CRYPTO_USE_ROOT_KEY(mode)    (!!(mode&RK_CRYPTO_KEY_ROOT))
-#define RK_IS_CRYPTO_USE_PRIVATE_KEY(mode) (!!(mode&RK_CRYPTO_KEY_PRIVATE))
+#define RK_GET_CRYPTO_MODE(mode)           (mode & RK_CRYPTO_MODE_MASK)
+#define RK_IS_CRYPTO_USE_ROOT_KEY(mode)    (!!(mode & RK_CRYPTO_KEY_ROOT))
+#define RK_IS_CRYPTO_USE_PRIVATE_KEY(mode) (!!(mode & RK_CRYPTO_KEY_PRIVATE))
 
 #define IS_NEED_TAG(crypto_mode) (crypto_mode == CRYPTO_MODE_CCM ||  \
                                   crypto_mode == CRYPTO_MODE_GCM ||  \
@@ -280,6 +280,12 @@ static HAL_Status CRYPTO_CipherDeinit(void);
 static HAL_Status CRYPTO_HashDeinit(void);
 static HAL_Status CRYPTO_AesHashDeinit(void);
 
+static const uint32_t gs_CipherMode2BcMode[CRYPTO_MODE_CIPHER_MAX] = {
+    CRYPTO_BC_ECB, CRYPTO_BC_CBC, CRYPTO_BC_CFB, CRYPTO_BC_OFB,
+    CRYPTO_BC_CTS, CRYPTO_BC_CTR, CRYPTO_BC_XTS, CRYPTO_BC_CCM,
+    CRYPTO_BC_GCM, CRYPTO_BC_CMAC, CRYPTO_BC_CBC_MAC
+};
+
 static const uint32_t gs_HashMode2BcMode[CRYPTO_MODE_HASH_MAX] = {
     CRYPTO_MD5, CRYPTO_SHA1, CRYPTO_SHA224, CRYPTO_SHA256,
     CRYPTO_SHA384, CRYPTO_SHA512, CRYPTO_SHA512_224, CRYPTO_SHA512_256
@@ -311,7 +317,6 @@ static const P_DEINIT_FUNC gs_CryptoDeinitFuncs[CRYPTO_ALGO_MAX] = {
 };
 
 /********************* Private Function Definition ***************************/
-
 static uint32_t Byte2Word(const uint8_t *ch, uint32_t endian)
 {
     uint32_t w = 0;
@@ -353,29 +358,260 @@ static inline void CRYPTO_WriteKey(uint32_t keyChn, const uint8_t *key,
 {
     uint8_t tmpBuf[4] = { 0, 0, 0, 0 };
     uint32_t i, j, k;
+    uint32_t offset;
+
+    /* every KEY channel has 4 word reg */
+    offset = keyChn * 4;
 
     for (i = 0; i < keyLen / 4; i++)
-        WRITE_REG(CRYPTO->CHN_KEY[i], Byte2Word(key + i * 4, BIG_ENDIAN));
+        WRITE_REG(CRYPTO->CHN_KEY[i + offset], Byte2Word(key + i * 4, BIG_ENDIAN));
 
     k = keyLen % 4;
     if (k) {
         for (j = 0; j < k; j++)
             tmpBuf[j] = key[i * 4 + j];
 
-        WRITE_REG(CRYPTO->CHN_KEY[i], Byte2Word(tmpBuf, BIG_ENDIAN));
+        WRITE_REG(CRYPTO->CHN_KEY[i + offset], Byte2Word(tmpBuf, BIG_ENDIAN));
     }
+}
+
+static void CRYPTO_SetIV(uint32_t chn, const uint8_t *iv,
+                         uint32_t ivLen)
+{
+    uint8_t tmpBuf[4];
+    uint32_t i;
+
+    /* write iv data to reg */
+    for (i = 0; i < ivLen / 4; i++)
+        WRITE_REG(CRYPTO->CHN_IV[i], Byte2Word(iv + i * 4, BIG_ENDIAN));
+
+    if (ivLen % 4) {
+        memset(tmpBuf, 0x00, sizeof(tmpBuf));
+        memcpy((uint8_t *)tmpBuf,
+               (uint8_t *)iv + (ivLen / 4) * 4, ivLen % 4);
+        WRITE_REG(CRYPTO->CHN_IV[i], Byte2Word(tmpBuf, BIG_ENDIAN));
+    }
+
+    if (ivLen == 0) {
+        for (i = 0; i < RK_AES_BLOCK_SIZE / 4; i++)
+            WRITE_REG(CRYPTO->CHN_IV[i], 0);
+    }
+
+    WRITE_REG(CRYPTO->CHN_IV_LEN_0, ivLen);
+}
+
+static int CRYPTO_CCM128SetIV(uint8_t *ivBuf,
+                              uint8_t *nonce, uint32_t nLen, uint32_t mLen)
+{
+    uint32_t L = ivBuf[0] & 7;  /* the L parameter */
+
+    if (nLen < (14 - L))
+        return -1;                  /* nonce is too short */
+
+    if (sizeof(mLen) == 8 && L >= 3) {
+        ivBuf[8] = (uint8_t)(mLen >> (56 % (sizeof(mLen) * 8)));
+        ivBuf[9] = (uint8_t)(mLen >> (48 % (sizeof(mLen) * 8)));
+        ivBuf[10] = (uint8_t)(mLen >> (40 % (sizeof(mLen) * 8)));
+        ivBuf[11] = (uint8_t)(mLen >> (32 % (sizeof(mLen) * 8)));
+    }
+
+    ivBuf[12] = (uint8_t)(mLen >> 24);
+    ivBuf[13] = (uint8_t)(mLen >> 16);
+    ivBuf[14] = (uint8_t)(mLen >> 8);
+    ivBuf[15] = (uint8_t)mLen;
+
+    ivBuf[0] &= ~0x40;  /* clear Adata flag */
+    memcpy(&ivBuf[1], nonce, 14 - L);
+
+    return 0;
+}
+
+static int CRYPTO_CipherInit(uint32_t chn, const uint8_t *key1,
+                             const uint8_t *key2, uint32_t keyLen,
+                             const uint8_t *iv, uint32_t ivLen,
+                             uint32_t algo, uint32_t mode, uint32_t isDec)
+{
+    uint32_t cryptoMode = RK_GET_CRYPTO_MODE(mode);
+    uint32_t regCtrl = 0;
+    uint32_t keyChnTmp = chn;
+
+    /*
+    IMSG("chn = %u, key1 = %p, key2 = %p, keyLen = %u,
+         iv = %p, ivLen = %u, algo = %08x, mode = %08x, isDec = %08x\n",
+        chn, key1, key2, keyLen, iv, ivLen, algo, mode, isDec);
+    */
+    if (algo != CRYPTO_ALGO_DES && algo != CRYPTO_ALGO_TDES && algo != CRYPTO_ALGO_AES)
+        return HAL_INVAL;
+
+    HAL_ASSERT(cryptoMode < CRYPTO_MODE_CIPHER_MAX);
+
+    if (keyLen > RK_AES_BLOCK_SIZE)
+        keyChnTmp = 2 * chn;
+
+    switch (algo) {
+    case CRYPTO_ALGO_DES:
+        regCtrl |= CRYPTO_BC_DES;
+        break;
+    case CRYPTO_ALGO_TDES:
+        regCtrl |= CRYPTO_BC_TDES;
+        break;
+    case CRYPTO_ALGO_AES:
+        regCtrl |= CRYPTO_BC_AES;
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    if (algo == CRYPTO_ALGO_AES) {
+        switch (keyLen) {
+        case RK_AES_KEYSIZE_128:
+            regCtrl |= CRYPTO_BC_128_bit_key;
+            break;
+        case RK_AES_KEYSIZE_192:
+            regCtrl |= CRYPTO_BC_192_bit_key;
+            break;
+        case RK_AES_KEYSIZE_256:
+            regCtrl |= CRYPTO_BC_256_bit_key;
+            break;
+        default:
+
+            return HAL_INVAL;
+        }
+    }
+
+    regCtrl |= gs_CipherMode2BcMode[cryptoMode];
+    regCtrl |= CRYPTO_BC_ENABLE;
+
+    if (isDec)
+        regCtrl |= CRYPTO_BC_DECRYPT;
+
+    /* write key data to reg */
+    if (cryptoMode != CRYPTO_MODE_CIPHER_XTS) {
+        CRYPTO_WriteKey(keyChnTmp, key1, keyLen);
+    } else {
+        CRYPTO_WriteKey(keyChnTmp, key1, keyLen);
+        CRYPTO_WriteKey(keyChnTmp + 4, key2, keyLen);
+    }
+
+    /* set iv reg */
+    CRYPTO_SetIV(chn, iv, ivLen);
+
+    /* din_swap set 1, dout_swap set 1, default 1. */
+    WRITE_REG_MASK_WE(CRYPTO->BC_CTL, CRYPTO_WRITE_MASK_ALL, regCtrl);
+    WRITE_REG_MASK_WE(CRYPTO->FIFO_CTL,
+                      CRYPTO_FIFO_CTL_DIN_BYTESWAP_MASK |
+                      CRYPTO_FIFO_CTL_DOUT_BYTESWAP_MASK,
+                      CRYPTO_DOIN_BYTESWAP | CRYPTO_DOUT_BYTESWAP);
+    WRITE_REG_MASK_WE(CRYPTO->HASH_CTL, CRYPTO_WRITE_MASK_ALL, 0);
+
+    regCtrl = CRYPTO_ZERO_ERR_INT_EN |
+              CRYPTO_LIST_ERR_INT_EN |
+              CRYPTO_SRC_ERR_INT_EN |
+              CRYPTO_DST_ERR_INT_EN |
+              CRYPTO_DST_ITEM_INT_EN;
+
+    if (cryptoMode == CRYPTO_MODE_CIPHER_CMAC || cryptoMode == CRYPTO_MODE_CIPHER_CBC_MAC)
+        regCtrl |= CRYPTO_SRC_ITEM_INT_EN;
+    else
+        regCtrl |= CRYPTO_DST_ITEM_INT_EN;
+
+    WRITE_REG(CRYPTO->DMA_INT_EN, regCtrl);
+
+    return HAL_OK;
 }
 
 static HAL_Status CRYPTO_DesInit(uint32_t chn, uint32_t mode, void *pInfo)
 {
-    ///TODO:
-    return HAL_NOSYS;
+    struct CRYPTO_INFO_DES *des = (struct CRYPTO_INFO_DES *)pInfo;
+    HAL_Status ret = HAL_OK;
+    uint8_t tmpKey[RK_TDES_EDE_KEYSIZE];
+
+    if (!IS_DES_SUPPORTED_MODE(mode))
+        return HAL_INVAL;
+
+    if (mode != CRYPTO_MODE_CIPHER_ECB && des->ivLen != RK_DES_BLOCK_SIZE)
+        return HAL_INVAL;
+
+    if (des->keyLen == RK_DES_BLOCK_SIZE) {
+        return CRYPTO_CipherInit(chn, des->key, NULL, RK_DES_KEYSIZE, des->iv,
+                                 RK_DES_BLOCK_SIZE, CRYPTO_ALGO_DES,
+                                 mode, des->isDecrypt);
+    } else if (des->keyLen == 2 * RK_DES_BLOCK_SIZE) {
+        memcpy(tmpKey, (uint8_t *)des->key, 16);
+        memcpy(tmpKey + 16, (uint8_t *)des->key, 8);
+
+        return CRYPTO_CipherInit(chn, tmpKey, NULL,
+                                 RK_TDES_EDE_KEYSIZE, des->iv,
+                                 RK_DES_BLOCK_SIZE, CRYPTO_ALGO_TDES,
+                                 mode, des->isDecrypt);
+    } else if (des->keyLen == 3 * RK_DES_BLOCK_SIZE) {
+        return CRYPTO_CipherInit(chn, des->key, NULL,
+                                 RK_TDES_EDE_KEYSIZE, des->iv,
+                                 RK_DES_BLOCK_SIZE, CRYPTO_ALGO_TDES,
+                                 mode, des->isDecrypt);
+    } else {
+        return HAL_INVAL;
+    }
+
+    return ret;
 }
 
 static HAL_Status CRYPTO_AesInit(uint32_t chn, uint32_t mode, void *pInfo)
 {
-    ///TODO:
-    return HAL_NOSYS;
+    struct CRYPTO_INFO_AES *pAes = (struct CRYPTO_INFO_AES *)pInfo;
+    uint32_t cryptoMode = RK_GET_CRYPTO_MODE(mode);
+    int ret;
+
+    if (pAes->ivLen > RK_AES_BLOCK_SIZE)
+        return HAL_INVAL;
+
+    if (cryptoMode != CRYPTO_MODE_CIPHER_ECB
+        && cryptoMode != CRYPTO_MODE_CIPHER_CMAC
+        && cryptoMode != CRYPTO_MODE_CIPHER_CBC_MAC) {
+        if (!pAes->ivLen)
+            return HAL_INVAL;
+
+        if (cryptoMode != CRYPTO_MODE_CIPHER_CCM
+            && cryptoMode != CRYPTO_MODE_CIPHER_GCM
+            && pAes->ivLen != RK_AES_BLOCK_SIZE)
+            return HAL_INVAL;
+    } else {
+        pAes->ivLen = 0;
+    }
+
+    if (cryptoMode == CRYPTO_MODE_CIPHER_XTS) {
+        if (pAes->keyLen != RK_AES_KEYSIZE_128 &&
+            pAes->keyLen != RK_AES_KEYSIZE_256)
+            return HAL_INVAL;
+    } else {
+        if (pAes->keyLen != RK_AES_KEYSIZE_128 &&
+            pAes->keyLen != RK_AES_KEYSIZE_192 &&
+            pAes->keyLen != RK_AES_KEYSIZE_256)
+            return HAL_INVAL;
+    }
+
+    if (cryptoMode == CRYPTO_MODE_CIPHER_CCM) {
+        uint32_t L;
+        uint8_t ivBuf[RK_AES_BLOCK_SIZE];
+
+        memset(ivBuf, 0x00, sizeof(ivBuf));
+
+        L = 15 - pAes->ivLen;
+        ivBuf[0] = ((uint8_t)(L - 1) & 7);
+        ret = CRYPTO_CCM128SetIV(ivBuf, (uint8_t *)pAes->iv, pAes->ivLen, 0);
+        if (ret)
+            return ret;
+
+        ret = CRYPTO_CipherInit(chn, pAes->key1, pAes->key2, pAes->keyLen, ivBuf,
+                                RK_AES_BLOCK_SIZE, CRYPTO_ALGO_AES, mode,
+                                pAes->isDecrypt);
+    } else {
+        ret = CRYPTO_CipherInit(chn, pAes->key1, pAes->key2, pAes->keyLen,
+                                pAes->iv, pAes->ivLen, CRYPTO_ALGO_AES, mode, pAes->isDecrypt);
+    }
+
+    return ret;
 }
 
 static HAL_Status CRYPTO_HashInit(uint32_t chn, uint32_t mode, void *pInfo)
@@ -433,14 +669,92 @@ static HAL_Status CRYPTO_HmacInit(uint32_t chn, uint32_t mode, void *pInfo)
 
 static HAL_Status CRYPTO_AesHashInit(uint32_t chn, uint32_t mode, void *pInfo)
 {
-    ///TODO:
-    return HAL_NOSYS;
+    struct CRYPTO_INFO_AES_HASH *pAesHash = (struct CRYPTO_INFO_AES_HASH *)pInfo;
+    uint32_t cryptoMode = 0, regCtrl = 0;
+    int ret;
+
+    cryptoMode = RK_GET_CRYPTO_MODE(mode);
+
+    HAL_ASSERT(cryptoMode < CRYPTO_MODE_HASH_MAX);
+
+    if (cryptoMode != CRYPTO_MODE_CIPHER_ECB &&
+        (pAesHash->ivLen == 0))
+        return HAL_INVAL;
+
+    if (cryptoMode == CRYPTO_MODE_CIPHER_CCM ||
+        cryptoMode == CRYPTO_MODE_CIPHER_GCM ||
+        cryptoMode == CRYPTO_MODE_CIPHER_CTS ||
+        cryptoMode == CRYPTO_MODE_CIPHER_XTS ||
+        cryptoMode == CRYPTO_MODE_CIPHER_CMAC ||
+        cryptoMode == CRYPTO_MODE_CIPHER_CBC_MAC)
+        return HAL_INVAL;
+
+    /* din_swap set 1, dout_swap set 1, default 1. */
+    WRITE_REG_MASK_WE(CRYPTO->FIFO_CTL,
+                      CRYPTO_FIFO_CTL_DIN_BYTESWAP_MASK |
+                      CRYPTO_FIFO_CTL_DOUT_BYTESWAP_MASK,
+                      CRYPTO_DOIN_BYTESWAP | CRYPTO_DOUT_BYTESWAP);
+
+    regCtrl |= CRYPTO_BC_AES;
+    switch (pAesHash->keyLen) {
+    case RK_AES_KEYSIZE_128:
+        regCtrl |= CRYPTO_BC_128_bit_key;
+        break;
+    case RK_AES_KEYSIZE_192:
+        regCtrl |= CRYPTO_BC_192_bit_key;
+        break;
+    case RK_AES_KEYSIZE_256:
+        regCtrl |= CRYPTO_BC_256_bit_key;
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    regCtrl |= gs_CipherMode2BcMode[cryptoMode];
+    regCtrl |= CRYPTO_BC_ENABLE;
+
+    /* write key data to reg */
+    CRYPTO_WriteKey(chn, pAesHash->key, pAesHash->keyLen);
+
+    /* set iv reg */
+    CRYPTO_SetIV(chn, pAesHash->iv, pAesHash->ivLen);
+
+    if (pAesHash->isDecrypt)
+        regCtrl |= CRYPTO_BC_DECRYPT;
+
+    WRITE_REG_MASK_WE(CRYPTO->BC_CTL, CRYPTO_WRITE_MASK_ALL, regCtrl);
+
+    CRYPTO_CLEAR_REGS(CRYPTO->HASH_DOUT);
+
+    /* set hash reg */
+    regCtrl = gs_HashMode2BcMode[mode] | CRYPTO_HW_PAD_ENABLE | CRYPTO_HASH_ENABLE;
+
+    if (pAesHash->RxTx != RK_AES_HASH_RX)
+        regCtrl |= CRYPTO_HASH_SRC_SEL;
+
+    WRITE_REG_MASK_WE(CRYPTO->HASH_CTL, CRYPTO_WRITE_MASK_ALL, regCtrl);
+
+    regCtrl = CRYPTO_ZERO_ERR_INT_EN |
+              CRYPTO_LIST_ERR_INT_EN |
+              CRYPTO_SRC_ERR_INT_EN |
+              CRYPTO_DST_ERR_INT_EN |
+              CRYPTO_SRC_ITEM_INT_EN |
+              CRYPTO_LIST_DONE_INT_EN;
+
+    WRITE_REG_MASK_WE(CRYPTO->DMA_INT_EN, CRYPTO_WRITE_MASK_ALL, regCtrl);
+
+    ret = 0;
+
+    return ret;
 }
 
 static HAL_Status CRYPTO_CipherDeinit(void)
 {
-    ///TODO:
-    return HAL_NOSYS;
+    WRITE_REG_MASK_WE(CRYPTO->BC_CTL, CRYPTO_WRITE_MASK_ALL, 0);
+    CLEAR_REG(CRYPTO->DMA_INT_EN);
+
+    return HAL_OK;
 }
 
 static HAL_Status CRYPTO_HashDeinit(void)
@@ -453,8 +767,11 @@ static HAL_Status CRYPTO_HashDeinit(void)
 
 static HAL_Status CRYPTO_AesHashDeinit(void)
 {
-    ///TODO:
-    return HAL_NOSYS;
+    WRITE_REG_MASK_WE(CRYPTO->BC_CTL, CRYPTO_WRITE_MASK_ALL, 0);
+    WRITE_REG_MASK_WE(CRYPTO->HASH_CTL, CRYPTO_WRITE_MASK_ALL, 0);
+    CLEAR_REG(CRYPTO->DMA_INT_EN);
+
+    return HAL_OK;
 }
 
 /** @} */
@@ -493,20 +810,30 @@ HAL_Status HAL_CRYPTO_AlgoInit(struct CRYPTO_DEV *pCrypto,
                                struct CRYPTO_ALGO_CONFIG *pConfig)
 {
     struct CRYPTO_V2_PRIV_DATA *pPriv;
-    int ret = HAL_ERROR;
+    HAL_Status ret = HAL_ERROR;
 
     HAL_ASSERT(pCrypto);
     HAL_ASSERT(pConfig);
     HAL_ASSERT(pConfig->algo < CRYPTO_ALGO_MAX);
+
+    WRITE_REG_MASK_WE(CRYPTO->RST_CTL,
+                      CRYPTO_RST_CTL_SW_CC_RESET_MASK |
+                      CRYPTO_RST_CTL_SW_RNG_RESET_MASK |
+                      CRYPTO_RST_CTL_SW_PKA_RESET_MASK,
+                      CRYPTO_SW_CC_RESET |
+                      CRYPTO_SW_RNG_RESET |
+                      CRYPTO_SW_PKA_RESET);
 
     memset(pCrypto->privData, 0x00, pCrypto->privDataSize);
     pPriv = (struct CRYPTO_V2_PRIV_DATA *)pCrypto->privData;
 
     ret = gs_CryptoInitFuncs[pConfig->algo](pConfig->chn, pConfig->mode,
                                             &pConfig->info);
-    pPriv->algo = pConfig->algo;
-    pPriv->mode = pConfig->mode;
-    pPriv->chn = pConfig->chn;
+    if (ret == HAL_OK) {
+        pPriv->algo = pConfig->algo;
+        pPriv->mode = pConfig->mode;
+        pPriv->chn = pConfig->chn;
+    }
 
     return ret;
 }
@@ -514,6 +841,7 @@ HAL_Status HAL_CRYPTO_AlgoInit(struct CRYPTO_DEV *pCrypto,
 HAL_Status HAL_CRYPTO_AlgoDeInit(struct CRYPTO_DEV *pCrypto)
 {
     struct CRYPTO_V2_PRIV_DATA *pPriv;
+    HAL_Status ret = HAL_ERROR;
 
     HAL_ASSERT(pCrypto);
 
@@ -523,7 +851,11 @@ HAL_Status HAL_CRYPTO_AlgoDeInit(struct CRYPTO_DEV *pCrypto)
 
     pPriv = (struct CRYPTO_V2_PRIV_DATA *)pCrypto->privData;
 
-    return gs_CryptoDeinitFuncs[pPriv->algo]();
+    ret = gs_CryptoDeinitFuncs[pPriv->algo]();
+
+    memset(pCrypto->privData, 0x00, pCrypto->privDataSize);
+
+    return ret;
 }
 
 HAL_Status HAL_CRYPTO_DMAConfig(struct CRYPTO_DEV *pCrypto,
@@ -552,6 +884,17 @@ HAL_Status HAL_CRYPTO_DMAConfig(struct CRYPTO_DEV *pCrypto,
     }
 
     switch (pPriv->algo) {
+    case CRYPTO_ALGO_DES:
+    case CRYPTO_ALGO_AES:
+    case CRYPTO_ALGO_AES_HASH:
+        if (pPriv->mode == CRYPTO_MODE_CIPHER_CMAC || pPriv->mode == CRYPTO_MODE_CIPHER_CBC_MAC) {
+            pPriv->exp_IntStatus = CRYPTO_SRC_ITEM_DONE_INT_ST;
+            pPriv->lliDesc.dmaCtrl = LLI_DMA_CTRL_SRC_DONE;
+        } else {
+            pPriv->exp_IntStatus = CRYPTO_DST_ITEM_DONE_INT_ST;
+            pPriv->lliDesc.dmaCtrl = LLI_DMA_CTRL_DST_DONE;
+        }
+        break;
     case CRYPTO_ALGO_HASH:
     case CRYPTO_ALGO_HMAC:
         pPriv->exp_IntStatus = CRYPTO_SRC_ITEM_DONE_INT_ST;
@@ -600,11 +943,10 @@ HAL_Check HAL_CRYPTO_CheckIntStatus(struct CRYPTO_DEV *pCrypto)
 
     pPriv = (struct CRYPTO_V2_PRIV_DATA *)pCrypto->privData;
 
-    if (pPriv->exp_IntStatus == pPriv->reg_IntStatus) {
+    if (pPriv->exp_IntStatus == pPriv->reg_IntStatus)
         return HAL_TRUE;
-    } else {
+    else
         return HAL_FALSE;
-    }
 }
 
 HAL_Check HAL_CRYPTO_CheckHashValid(struct CRYPTO_DEV *pCrypto)

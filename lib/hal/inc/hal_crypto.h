@@ -95,7 +95,7 @@ struct CRYPTO_ALGO_CONFIG {
 
     union {
         struct CRYPTO_INFO_DES des;
-        struct CRYPTO_INFO_DES aes;
+        struct CRYPTO_INFO_AES aes;
         struct CRYPTO_INFO_HASH hash;
         struct CRYPTO_INFO_HMAC hmac;
         struct CRYPTO_INFO_AES_HASH AesHash;
