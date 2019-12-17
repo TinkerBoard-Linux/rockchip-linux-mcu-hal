@@ -630,6 +630,7 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
         MODIFY_REG(pReg->XMMC_CTRL, FSPI_XMMC_CTRL_DEV_HWEN_MASK |
                    FSPI_XMMC_CTRL_PFT_EN_MASK,
                    host->xmmcDev[0].xmmcCtrl);
+        FSPI_ContModeInit(host);
 
         /* FSPI device config */
         /* FSPI_DBG("%s enable 3 %lx %lx %lx %lx\n", __func__,
