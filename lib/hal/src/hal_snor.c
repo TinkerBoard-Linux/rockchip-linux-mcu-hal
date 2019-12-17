@@ -171,6 +171,18 @@ struct FLASH_INFO spiFlashbl[] = {
     { 0x1c3817, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 0, 0 },
     /* P25Q64H */
     { 0x856017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 },
+    /* EN25QH256A */
+    { 0x1c7019, 128, 8, 0x13, 0x12, 0x6C, 0x34, 0x21, 0xDC, 0x3C, 16, 0, 0 },
+    /* FM25Q64A */
+    { 0xf83217, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 14, 9, 0 },
+    /* ZB25VQ64 */
+    { 0x5e4017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 },
+    /* ZB25VQ128 */
+    { 0x5e4018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 },
+    /* BH25Q128AS */
+    { 0x684018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x04, 15, 9, 0 },
+    /* BH25Q64BS */
+    { 0x684017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x04, 14, 9, 0 },
 };
 
 /********************* Private Function Definition ***************************/
@@ -446,26 +458,18 @@ static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
     int regIndex;
     int bitOffset;
     uint8_t status;
-    uint8_t id = JEDEC_MFR(nor->info->id);
 
-    if (id == MID_GIGADEV ||
-        id == MID_WINBOND ||
-        id == MID_XTX ||
-        id == MID_MACRONIX ||
-        id == MID_PUYA ||
-        id == MID_XMC) {
-        regIndex = nor->info->QEBits >> 3;
-        bitOffset = nor->info->QEBits & 0x7;
-        ret = SNOR_ReadStatus(nor, regIndex, &status);
-        if (ret != HAL_OK)
-            return ret;
+    regIndex = nor->info->QEBits >> 3;
+    bitOffset = nor->info->QEBits & 0x7;
+    ret = SNOR_ReadStatus(nor, regIndex, &status);
+    if (ret != HAL_OK)
+        return ret;
 
-        if (status & (1 << bitOffset)) //is QE bit set
-            return HAL_OK;
+    if (status & (1 << bitOffset)) //is QE bit set
+        return HAL_OK;
 
-        status |= (1 << bitOffset);
-        ret = SNOR_WriteStatus(nor, regIndex, &status);
-    }
+    status |= (1 << bitOffset);
+    ret = SNOR_WriteStatus(nor, regIndex, &status);
 
     return ret;
 }
@@ -713,7 +717,8 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         nor->sectorSize = info->sectorSize * 512;
         nor->size = 1 << (info->density + 9);
         nor->eraseSize = nor->sectorSize;
-        if (nor->spi->mode & HAL_SPI_RX_QUAD) {
+        if (nor->spi->mode & HAL_SPI_RX_QUAD &&
+            info->QEBits) {
             if (SNOR_EnableQE(nor) == HAL_OK) {
                 nor->readOpcode = info->readCmd_4;
                 switch (nor->readOpcode) {
@@ -732,7 +737,8 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
             nor->readDummy = 8;
             nor->readProto = SNOR_PROTO_1_1_2;
         }
-        if (nor->spi->mode & HAL_SPI_TX_QUAD) {
+        if (nor->spi->mode & HAL_SPI_TX_QUAD &&
+            info->QEBits) {
             if (SNOR_EnableQE(nor) == HAL_OK) {
                 nor->programOpcode = info->progCmd_4;
                 switch (nor->programOpcode) {
