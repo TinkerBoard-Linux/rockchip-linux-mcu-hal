@@ -470,6 +470,10 @@ HAL_Status HAL_DWDMA_Start(struct DWDMA_CHAN *dwc)
     case DMA_DEV_TO_MEM:
         WRITE_REG(dwc->creg->CTL_LO, DWC_CTLL_LLP_D_EN);
         break;
+    case DMA_MEM_TO_MEM:
+        WRITE_REG(dwc->creg->CTL_LO,
+                  DWC_CTLL_LLP_D_EN | DWC_CTLL_LLP_S_EN);
+        break;
     default:
         break;
     }
