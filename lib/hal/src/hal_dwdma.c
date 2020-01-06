@@ -190,11 +190,11 @@ static void DWC_initialize(struct DWDMA_CHAN *dwc)
 
     switch (dwc->direction) {
     case DMA_MEM_TO_DEV:
-        cfglo |= DWC_CFGL_RELOAD_DAR;
+        cfglo |= dwc->cyclic ? DWC_CFGL_RELOAD_DAR : 0;
         cfghi |= DWC_CFGH_DST_PER(dwc->periId);
         break;
     case DMA_DEV_TO_MEM:
-        cfglo |= DWC_CFGL_RELOAD_SAR;
+        cfglo |= dwc->cyclic ? DWC_CFGL_RELOAD_SAR : 0;
         cfghi |= DWC_CFGH_SRC_PER(dwc->periId);
         break;
     default:
@@ -218,16 +218,14 @@ static void DWC_deinitialize(struct DWDMA_CHAN *dwc)
     /* Disable interrupts */
     DW_CHAN_CLEAR_BIT(dw->pReg->MASK.TFR, dwc->mask);
     DW_CHAN_CLEAR_BIT(dw->pReg->MASK.ERR, dwc->mask);
-    if (dwc->cyclic)
-        DW_CHAN_CLEAR_BIT(dw->pReg->MASK.BLOCK, dwc->mask);
+    DW_CHAN_CLEAR_BIT(dw->pReg->MASK.BLOCK, dwc->mask);
 
     /* Clear interrupts. */
     WRITE_REG(dw->pReg->CLEAR.TFR, dwc->mask);
     WRITE_REG(dw->pReg->CLEAR.SRCTRAN, dwc->mask);
     WRITE_REG(dw->pReg->CLEAR.DSTTRAN, dwc->mask);
     WRITE_REG(dw->pReg->CLEAR.ERR, dwc->mask);
-    if (dwc->cyclic)
-        WRITE_REG(dw->pReg->CLEAR.BLOCK, dwc->mask);
+    WRITE_REG(dw->pReg->CLEAR.BLOCK, dwc->mask);
 }
 
 static void DWC_HandleCyclic(struct HAL_DWDMA_DEV *dw, struct DWDMA_CHAN *dwc,
@@ -446,6 +444,8 @@ HAL_Status HAL_DWDMA_Start(struct DWDMA_CHAN *dwc)
 {
     struct HAL_DWDMA_DEV *dw;
     struct DMA_REG *reg;
+    struct DW_DESC *desc = &dwc->desc[0];
+    uint32_t ctllo = desc->lli.ctllo;
 
     HAL_ASSERT(dwc);
 
@@ -461,23 +461,25 @@ HAL_Status HAL_DWDMA_Start(struct DWDMA_CHAN *dwc)
 
     DWC_initialize(dwc);
 
-    WRITE_REG(dwc->creg->LLP, (uint32_t)&dwc->desc[0]);
+    desc = &dwc->desc[0];
+    WRITE_REG(dwc->creg->LLP, (uint32_t)desc);
 
+    ctllo = desc->lli.ctllo;
     switch (dwc->direction) {
     case DMA_MEM_TO_DEV:
-        WRITE_REG(dwc->creg->CTL_LO, DWC_CTLL_LLP_S_EN);
+        ctllo |= DWC_CTLL_LLP_S_EN;
         break;
     case DMA_DEV_TO_MEM:
-        WRITE_REG(dwc->creg->CTL_LO, DWC_CTLL_LLP_D_EN);
+        ctllo |= DWC_CTLL_LLP_D_EN;
         break;
     case DMA_MEM_TO_MEM:
-        WRITE_REG(dwc->creg->CTL_LO,
-                  DWC_CTLL_LLP_D_EN | DWC_CTLL_LLP_S_EN);
+        ctllo |= DWC_CTLL_LLP_D_EN | DWC_CTLL_LLP_S_EN;
         break;
     default:
         break;
     }
 
+    WRITE_REG(dwc->creg->CTL_LO, ctllo);
     WRITE_REG(dwc->creg->CTL_HI, 0);
 
     DW_CHAN_SET_BIT(dw->pReg->CHENREG, dwc->mask);
