@@ -93,7 +93,7 @@ enum HYPER_MTR_TIMING {
 };
 
 struct HYPER_PSTRAM {
-    uint32_t id;
+    uint16_t id;
     uint32_t mtrTiming;
     uint32_t spc;
 };
@@ -117,7 +117,7 @@ static const struct HYPER_PSTRAM psramInfo[] =
  * @param  psramBase: Choose psram map base addr.
  * @return PsramID: psram device id
  */
-static uint32_t HYPERPSRAM_GetDevId(struct HYPERBUS_REG *pReg, uint32_t psramBase)
+static uint16_t HYPERPSRAM_GetDevId(struct HYPERBUS_REG *pReg, uint32_t psramBase)
 {
     uint16_t psramId;
 
@@ -129,7 +129,7 @@ static uint32_t HYPERPSRAM_GetDevId(struct HYPERBUS_REG *pReg, uint32_t psramBas
     MODIFY_REG(pReg->MCR[0], HYPERBUS_MCR0_CRT_MASK,
                HYPERBUS_MCR0_CRT_MEM_SPACE);
 
-    return (uint32_t)(psramId & HYPERBUS_DEV_ID_MASK);
+    return (psramId & HYPERBUS_DEV_ID_MASK);
 }
 
 /**
@@ -211,22 +211,6 @@ static HAL_Status HYPERBUS_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
 }
 
 /**
- * @brief  Hyperbus psram check id.
- * @param  pReg: Choose HYPERBUS
- * @param  PsramID: Choose psram device id.
- * @param  psramBase: Choose psram map base addr.
- * @return HAL_Status.
- */
-static HAL_Status HYPERPSRAM_CheckId(struct HYPERBUS_REG *pReg,
-                                     uint32_t psramId, uint32_t psramBase)
-{
-    if (HYPERPSRAM_GetDevId(pReg, psramBase) == psramId)
-        return HAL_OK;
-    else
-        return HAL_ERROR;
-}
-
-/**
  * @brief  Hyperbus psram init.
  * @param  pReg: Choose HYPERBUS.
  * @param  psramBase: Choose psram map base addr.
@@ -235,14 +219,17 @@ static HAL_Status HYPERPSRAM_CheckId(struct HYPERBUS_REG *pReg,
 static HAL_Status HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
 {
     uint32_t i;
+    uint16_t detect_id;
 
     for (i = 0; i < HAL_ARRAY_SIZE(psramInfo); i++) {
         WRITE_REG(pReg->SPCSR, psramInfo[i].spc);
         WRITE_REG(pReg->MTR[0], psramInfo[i].mtrTiming);
-        if (HYPERPSRAM_CheckId(pReg, psramInfo[i].id, psramBase) == HAL_OK)
+        detect_id = HYPERPSRAM_GetDevId(pReg, psramBase);
+        if (detect_id == psramInfo[i].id)
             break;
     }
 
+    HAL_DBG("HYPERBUS PSRAM id: %x\n", detect_id);
     if (i == HAL_ARRAY_SIZE(psramInfo)) {
         HAL_DBG("HYPERPSRAM: unknow psram device\n");
 
