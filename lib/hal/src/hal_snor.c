@@ -139,6 +139,8 @@ struct FLASH_INFO spiFlashbl[] = {
     { 0xef4018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 },
     /* 25Q256F/J */
     { 0xef4019, 128, 8, 0x13, 0x02, 0x6C, 0x32, 0x20, 0xD8, 0x3C, 16, 9, 0 },
+    /* 25Q32JW */
+    { 0xef6016, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 13, 9, 0 },
     /* 25Q64FWSSIG */
     { 0xef6017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 9, 0 },
     /* MX25L6433F */
@@ -699,7 +701,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     HAL_SNOR_DBG("SPI Nor ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
 
     if ((idByte[0] == 0xFF) || (idByte[0] == 0x00))
-        return HAL_NODEV;
+        return HAL_ERROR;
 
     info = SNOR_GerFlashInfo(idByte);
     if (info) {
