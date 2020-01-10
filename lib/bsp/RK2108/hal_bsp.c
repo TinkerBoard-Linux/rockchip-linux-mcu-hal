@@ -483,6 +483,46 @@ static HAL_Status BSP_FSPI_DeInit(void)
 }
 #endif
 
+#ifdef HAL_SPI_MODULE_ENABLED
+const struct HAL_SPI_DEV g_spiDev1 = {
+    .base = SPI1_BASE,
+    .clkId = CLK_SPI1,
+    .clkGateID = CLK_SPI1_GATE,
+    .pclkGateID = PCLK_SPI1_GATE,
+    .irqNum = SPIMST1_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI1_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI1_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI1_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI1_BASE + 0x800,
+    },
+};
+
+const struct HAL_SPI_DEV g_spiDev2 = {
+    .base = SPI2_BASE,
+    .clkId = CLK_SPI2,
+    .clkGateID = CLK_SPI2_GATE,
+    .pclkGateID = PCLK_SPI2_GATE,
+    .irqNum = SPIMST2_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI2_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI2_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI2_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI2_BASE + 0x800,
+    },
+};
+#endif
+
 void BSP_DeInit(void)
 {
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
