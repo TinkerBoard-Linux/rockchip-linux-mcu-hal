@@ -418,6 +418,10 @@ struct HAL_FSPI_HOST g_fspi0Dev =
     .sclkID = CLK_XIP_SFC0,
     .irqNum = FSPI0_IRQn,
     .xipMem0 = XIP_MAP0_BASE1,
+    .xmmcDev[0] =
+    {
+        .type = DEV_NOR,
+    },
 };
 struct HAL_FSPI_HOST g_fspi1Dev =
 {
@@ -425,6 +429,10 @@ struct HAL_FSPI_HOST g_fspi1Dev =
     .sclkID = CLK_XIP_SFC1,
     .irqNum = FSPI1_IRQn,
     .xipMem0 = XIP_MAP1_BASE1,
+    .xmmcDev[0] =
+    {
+        .type = DEV_PSRAM,
+    },
 };
 #endif
 
