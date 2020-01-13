@@ -30,6 +30,52 @@
 /********************* Private Structure Definition **************************/
 /********************* Private Variable Definition ***************************/
 /********************* Private Function Definition ***************************/
+#ifdef USB_M31PHY_BASE
+static ePCD_bcdMsg USB_M31phyBcdDetect(struct PCD_HANDLE *pPCD)
+{
+    uint32_t lineState;
+    ePCD_bcdMsg msg;
+
+    /*
+     * Put the PHY in normal mode and suspend mode,
+     * set the utmi termselect to FS/LS termination,
+     * set the utmi xcvrselect to  FS transceiver,
+     * disable DP/DM pulldown resistor.
+     */
+    WRITE_REG_MASK_WE(GRF->USBPHY_CON0,
+                      GRF_USBPHY_CON0_UTMI_SEL_MASK |
+                      GRF_USBPHY_CON0_UTMI_SUSPEND_N_MASK |
+                      GRF_USBPHY_CON0_UTMI_OPMODE_MASK |
+                      GRF_USBPHY_CON0_UTMI_XCVRSELECT_MASK |
+                      GRF_USBPHY_CON0_UTMI_TERMSELECT_MASK |
+                      GRF_USBPHY_CON0_UTMI_DPPULLDOWN_MASK |
+                      GRF_USBPHY_CON0_UTMI_DMPULLDOWN_MASK,
+                      0x051U << GRF_USBPHY_CON0_UTMI_SEL_SHIFT);
+
+    /* Enable usb connect to pull up DP or DM */
+    USB_DevConnect(pPCD->pReg);
+
+    /* Wait for 40ms */
+    HAL_DelayMs(40);
+
+    /* Voltage Source on DP or DM, Probe on DP and DM */
+    lineState = READ_BIT(GRF->USBPHY_STATUS0, GRF_USBPHY_STATUS0_UTMI_LINESTATE_MASK) >>
+                GRF_USBPHY_STATUS0_UTMI_LINESTATE_SHIFT;
+    switch (lineState) {
+    case 1:
+        msg = PCD_BCD_STD_DOWNSTREAM_PORT;
+        break;
+    case 3:
+        msg = PCD_BCD_DEDICATED_CHARGING_PORT;
+        break;
+    default:
+        msg = PCD_BCD_STD_DOWNSTREAM_PORT;
+        break;
+    }
+
+    return msg;
+}
+#endif
 /** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup PCDEx_Exported_Functions_Group5 Other Function
@@ -125,12 +171,46 @@ HAL_Status HAL_PCDEx_DeActivateLPM(struct PCD_HANDLE *pPCD)
  * @param  msg LPM message
  * @return None
  */
-__WEAK void HAL_PCDEx_LPM_Callback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg)
+__WEAK void HAL_PCDEx_LpmCallback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg)
 {
     /*
      * NOTE : This function Should not be modified, when the callback is needed,
-     *        the HAL_PCDEx_LPM_Callback could be implemented in the user file
+     *        the HAL_PCDEx_LpmCallback could be implemented in the user file
      */
+}
+
+/**
+ * @brief  Send BatteryCharging message to user layer callback.
+ * @param  pPCD PCD handle
+ * @param  msg bcd message
+ * @return None
+ */
+__WEAK void HAL_PCDEx_BcdCallback(struct PCD_HANDLE *pPCD, ePCD_bcdMsg msg)
+{
+    /*
+     * NOTE : This function Should not be modified, when the callback is needed,
+     *        the HAL_PCDEx_BcdCallback could be implemented in the user file
+     */
+}
+
+/**
+ * @brief  Handle BatteryCharging Process.
+ * @param  pPCD PCD handle
+ * @return HAL status
+ */
+HAL_Status HAL_PCDEx_BcdDetect(struct PCD_HANDLE *pPCD)
+{
+    ePCD_bcdMsg msg = PCD_BCD_DEFAULT_STATE;
+
+#if defined(USB_M31PHY_BASE)
+    msg = USB_M31phyBcdDetect(pPCD);
+#else
+    /* TODO: the other PHYs (e.g. INNO, NaNeng...) */
+#endif
+
+    HAL_PCDEx_BcdCallback(pPCD, msg);
+
+    return HAL_OK;
 }
 
 /** @} */

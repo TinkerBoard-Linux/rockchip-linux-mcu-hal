@@ -236,7 +236,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
 
             if (pPCD->lpmState == LPM_L1) {
                 pPCD->lpmState = LPM_L0;
-                HAL_PCDEx_LPM_Callback(pPCD, PCD_LPM_L0_ACTIVE);
+                HAL_PCDEx_LpmCallback(pPCD, PCD_LPM_L0_ACTIVE);
             } else {
                 HAL_PCD_ResumeCallback(pPCD);
             }
@@ -266,7 +266,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
             __HAL_PCD_CLEAR_FLAG(pPCD, USB_OTG_GINTSTS_LPMINT);
             if (pPCD->lpmState == LPM_L0) {
                 pPCD->lpmState = LPM_L1;
-                HAL_PCDEx_LPM_Callback(pPCD, PCD_LPM_L1_ACTIVE);
+                HAL_PCDEx_LpmCallback(pPCD, PCD_LPM_L1_ACTIVE);
             } else {
                 HAL_PCD_SuspendCallback(pPCD);
             }

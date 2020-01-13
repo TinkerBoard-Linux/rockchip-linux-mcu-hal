@@ -56,6 +56,17 @@ typedef enum {
     LPM_L3 = 0x03U, /* off */
 } ePCD_lpmState;
 
+/** PCD BCD State Structure definition */
+typedef enum {
+    PCD_BCD_ERROR                    = 0xFF,
+    PCD_BCD_CONTACT_DETECTION        = 0xFE,
+    PCD_BCD_STD_DOWNSTREAM_PORT      = 0xFD,
+    PCD_BCD_CHARGING_DOWNSTREAM_PORT = 0xFC,
+    PCD_BCD_DEDICATED_CHARGING_PORT  = 0xFB,
+    PCD_BCD_FLOATING_CHARGING_PORT   = 0xFA,
+    PCD_BCD_DEFAULT_STATE            = 0x00,
+} ePCD_bcdMsg;
+
 /** PCD Handle Structure definition */
 struct PCD_HANDLE {
     struct USB_GLOBAL_REG *pReg;        /*!< Register base address   */
@@ -67,6 +78,7 @@ struct PCD_HANDLE {
     void *pData;                        /*!< Pointer to upper stack Handler */
     ePCD_state pcdState;                /*!< PCD communication state */
     ePCD_lpmState lpmState;             /*!< LPM State               */
+    ePCD_bcdMsg bcdState;               /*!< BCD State               */
 };
 
 #include "hal_pcd_ex.h"
