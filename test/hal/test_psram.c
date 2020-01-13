@@ -8,22 +8,22 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-#ifdef HAL_PSRAM_MODULE_ENABLED
-static struct SPI_PSRAM *psram;
+#ifdef HAL_QPIPSRAM_MODULE_ENABLED
+static struct QPI_PSRAM *psram;
 #define maxest_sector 1
 static uint8_t *pwrite;
 static uint32_t *pread32;
 static uint32_t *pwrite32;
 
-TEST_GROUP(HAL_PSRAM);
+TEST_GROUP(HAL_QPIPSRAM);
 
-TEST_SETUP(HAL_PSRAM){
+TEST_SETUP(HAL_QPIPSRAM){
 }
 
-TEST_TEAR_DOWN(HAL_PSRAM){
+TEST_TEAR_DOWN(HAL_QPIPSRAM){
 }
 
-static HAL_Status PSRAM_TEST(uint32_t testEndLBA)
+static HAL_Status QPIPSRAM_TEST(uint32_t testEndLBA)
 {
     uint32_t i, j;
     uint32_t testLBA = 0;
@@ -96,12 +96,12 @@ static HAL_Status PSRAM_TEST(uint32_t testEndLBA)
 }
 
 /* PSRAM test case 0 */
-TEST(HAL_PSRAM, PsramStressTest){
+TEST(HAL_QPIPSRAM, PsramStressTest){
     uint32_t ret;
 
-    HAL_PSRAM_XIPEnable(psram);
-    ret = PSRAM_TEST(0x1000);
-    HAL_PSRAM_XIPDisable(psram);
+    HAL_QPIPSRAM_XIPEnable(psram);
+    ret = QPIPSRAM_TEST(0x1000);
+    HAL_QPIPSRAM_XIPDisable(psram);
     TEST_ASSERT(ret == HAL_OK);
 }
 
@@ -110,7 +110,7 @@ static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
     return (uint8_t *)(((uintptr_t)ptr + align - 1) & ~(uintptr_t)(align - 1));
 }
 
-static HAL_Status SPI_Xfer(struct PSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op)
+static HAL_Status SPI_Xfer(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
 
@@ -119,7 +119,7 @@ static HAL_Status SPI_Xfer(struct PSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op)
     HAL_FSPI_SpiXfer(host, op);
 }
 
-static HAL_Status SPI_XipConfig(struct PSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)
+static HAL_Status SPI_XipConfig(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)
 {
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)spi->userdata;
 
@@ -132,7 +132,7 @@ static HAL_Status SPI_XipConfig(struct PSRAM_HOST *spi, struct HAL_SPI_MEM_OP *o
     return HAL_FSPI_XmmcRequest(host, on);
 }
 
-static HAL_Status PSRAM_Adapt(void)
+static HAL_Status QPIPSRAM_Adapt(void)
 {
     struct HAL_FSPI_HOST *host;
     uint32_t ret;
@@ -147,14 +147,14 @@ static HAL_Status PSRAM_Adapt(void)
     psram->spi->xipConfig = SPI_XipConfig;
 
     /* Init SPI psram abstract */
-    ret = HAL_PSRAM_Init(psram);
+    ret = HAL_QPIPSRAM_Init(psram);
 
     return ret;
 }
 
 /* Test code should be place in ram */
-TEST_GROUP_RUNNER(HAL_PSRAM){
-    struct PSRAM_HOST *spi;
+TEST_GROUP_RUNNER(HAL_QPIPSRAM){
+    struct QPIPSRAM_HOST *spi;
     uint32_t ret;
     uint8_t *pwrite_t;
 
@@ -167,19 +167,19 @@ TEST_GROUP_RUNNER(HAL_PSRAM){
     for (int32_t i = 0; i < (maxest_sector * 1024); i++)
         pwrite32[i] = i;
 
-    spi = (struct PSRAM_HOST *)calloc(1, sizeof(struct PSRAM_HOST));
+    spi = (struct QPIPSRAM_HOST *)calloc(1, sizeof(struct QPIPSRAM_HOST));
     TEST_ASSERT_NOT_NULL(spi);
-    psram = (struct SPI_PSRAM *)calloc(1, sizeof(struct SPI_PSRAM));
+    psram = (struct QPI_PSRAM *)calloc(1, sizeof(struct QPI_PSRAM));
     TEST_ASSERT_NOT_NULL(psram);
     psram->spi = spi;
 
-    ret = PSRAM_Adapt();
+    ret = QPIPSRAM_Adapt();
     TEST_ASSERT(ret == HAL_OK);
 
-    RUN_TEST_CASE(HAL_PSRAM, PsramStressTest);
+    RUN_TEST_CASE(HAL_QPIPSRAM, PsramStressTest);
 
     /* PSRAM deinit */
-    ret = HAL_PSRAM_DeInit(psram);
+    ret = HAL_QPIPSRAM_DeInit(psram);
     TEST_ASSERT(ret == HAL_OK);
 
     free(pwrite_t);

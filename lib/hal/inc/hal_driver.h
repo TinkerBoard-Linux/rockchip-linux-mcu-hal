@@ -141,8 +141,8 @@
 #include "hal_fspi.h"
 #endif
 
-#ifdef HAL_PSRAM_MODULE_ENABLED
-#include "hal_psram.h"
+#ifdef HAL_QPIPSRAM_MODULE_ENABLED
+#include "hal_qpipsram.h"
 #endif
 
 #ifdef HAL_TOUCHKEY_MODULE_ENABLED

@@ -5,7 +5,7 @@
 
 #include "hal_conf.h"
 
-#if defined(HAL_SNOR_MODULE_ENABLED) || defined(HAL_PSRAM_MODULE_ENABLED)
+#if defined(HAL_SNOR_MODULE_ENABLED) || defined(HAL_QPIPSRAM_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver
  *  @{
@@ -161,4 +161,4 @@ struct HAL_SPI_MEM_OP {
 
 /** @} */
 
-#endif /* HAL_SNOR_MODULE_ENABLED || HAL_PSRAM_MODULE_ENABLED */
+#endif /* HAL_SNOR_MODULE_ENABLED || HAL_QPIPSRAM_MODULE_ENABLED */

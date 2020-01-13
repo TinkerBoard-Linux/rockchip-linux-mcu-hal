@@ -16,7 +16,7 @@ static void RunAllTests(void)
 #ifdef HAL_TIMER_MODULE_ENABLED
     RUN_TEST_GROUP(HAL_TIMER);
 #endif
-#if defined(HAL_PSRAM_MODULE_ENABLED) && defined(UNITY_HAL_PSRAM)
+#if defined(HAL_QPIPSRAM_MODULE_ENABLED) && defined(UNITY_HAL_PSRAM)
     RUN_TEST_GROUP(HAL_PSRAM);
 #endif
 #ifdef HAL_SNOR_MODULE_ENABLED
