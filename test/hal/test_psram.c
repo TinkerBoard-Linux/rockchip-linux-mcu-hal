@@ -29,6 +29,7 @@ static HAL_Status QPIPSRAM_TEST(uint32_t testEndLBA)
     uint32_t testLBA = 0;
     uint32_t testSecCount = 1;
     uint32_t printFlag;
+    struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)psram->spi->userdata;
 
     pwrite32 = (uint32_t *)pwrite;
 
@@ -39,7 +40,7 @@ static HAL_Status QPIPSRAM_TEST(uint32_t testEndLBA)
     HAL_DBG("testLBA = %lx\n", testLBA);
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        pread32 = (uint32_t *)(XIP_MEM_BASE + testLBA * 512);
+        pread32 = (uint32_t *)(host->xipMem0 + testLBA * 512);
         for (i = 0; i < (maxest_sector * 128); i++)
             pread32[i] = pwrite32[i];
         for (j = 0; j < testSecCount * 128; j++) {
@@ -68,7 +69,7 @@ static HAL_Status QPIPSRAM_TEST(uint32_t testEndLBA)
     testSecCount = 1;
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        pread32 = (uint32_t *)(XIP_MEM_BASE + testLBA * 512);
+        pread32 = (uint32_t *)(host->xipMem0 + testLBA * 512);
         for (j = 0; j < testSecCount * 128; j++) {
             if (pwrite32[j] != pread32[j]) {
                 HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * 128);
@@ -138,8 +139,13 @@ static HAL_Status QPIPSRAM_Adapt(void)
     uint32_t ret;
 
     /* Designated host to SPI PSRAM */
-    host = &g_fspi0Dev;
-    host->xmmcDev[0].type = DEV_PSRAM;
+#ifdef FSPI1
+    if (g_fspi1Dev.xmmcDev[0].type == DEV_PSRAM)
+        host = &g_fspi1Dev;
+#elif FSPI0
+    else if (g_fspi0Dev.xmmcDev[0].type == DEV_PSRAM)
+        host = &g_fspi0Dev;
+#endif
     HAL_FSPI_Init(host);
     psram->spi->userdata = (void *)host;
     psram->spi->mode = HAL_SPI_MODE_3 | HAL_SPI_TX_QUAD | HAL_SPI_RX_QUAD;

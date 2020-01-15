@@ -14,15 +14,9 @@
 //#define UNITY_HAL_COREMARK
 //#define UNITY_HAL_DATA_ACCESS
 #define UNITY_HAL_THROUGHPUT
-//#define UNITY_HAL_PSRAM
+#define UNITY_HAL_PSRAM
+#define UNITY_HAL_SPIFLASH
 
 /************** HAL Macro Define *****************/
-#if defined(RKMCU_RK2108)
-#define XIP_MEM_BASE 0x60000000
-#elif defined(RKMCU_RK2206)
-#define XIP_MEM_BASE 0x10000000
-#elif defined(RKMCU_KOALA)
-#define XIP_MEM_BASE 0x50000000
-#endif
 
 #endif
