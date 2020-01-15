@@ -62,6 +62,7 @@ extern const struct HAL_USB_DEV g_usbdDev;
 
 #ifdef HAL_FSPI_MODULE_ENABLED
 extern struct HAL_FSPI_HOST g_fspi0Dev;
+extern struct HAL_FSPI_HOST g_fspi1Dev;
 #endif
 
 #ifdef HAL_SPI_MODULE_ENABLED
