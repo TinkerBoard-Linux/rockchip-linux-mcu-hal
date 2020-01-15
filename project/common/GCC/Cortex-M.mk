@@ -74,6 +74,7 @@ DIRS := \
 	$(ROOT_PATH)/test/unity/extras/fixture/src \
 	$(ROOT_PATH)/test/unity/src \
 	$(ROOT_PATH)/test/hal \
+	$(ROOT_PATH)/test/hal/psram \
 	$(ROOT_PATH)/test \
 	$(ROOT_PATH)/test/coremark \
 	$(ROOT_PATH)/test/coremark/barebones \

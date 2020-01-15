@@ -19,6 +19,9 @@ static void RunAllTests(void)
 #if defined(HAL_QPIPSRAM_MODULE_ENABLED) && defined(UNITY_HAL_QPIPSRAM)
     RUN_TEST_GROUP(HAL_QPIPSRAM);
 #endif
+#if defined(HAL_HYPERPSRAM_MODULE_ENABLED) && defined(UNITY_HAL_HYPERPSRAM)
+    RUN_TEST_GROUP(HAL_HYPERPSRAM);
+#endif
 #if defined(HAL_SNOR_MODULE_ENABLED) && defined(UNITY_HAL_SPIFLASH)
     RUN_TEST_GROUP(HAL_SNOR);
 #endif

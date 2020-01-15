@@ -7,7 +7,7 @@
 #define UNITY_CONFIG_H
 
 /************** Unity Config *********************/
-#define UNITY_INT_WIDTH 32
+#define UNITY_INT_WIDTH      32
 #define UNITY_OUTPUT_CHAR(a) printf
 
 /************** HAL Module config ****************/
@@ -17,7 +17,7 @@
 #define UNITY_HAL_THROUGHPUT
 #define UNITY_HAL_PSRAM
 #define UNITY_HAL_SPIFLASH
-
+#define UNITY_HAL_HYPERPSRAM
 /************** HAL Macro Define *****************/
 
 #endif
