@@ -42,15 +42,8 @@ static ePCD_bcdMsg USB_M31phyBcdDetect(struct PCD_HANDLE *pPCD)
      * set the utmi xcvrselect to  FS transceiver,
      * disable DP/DM pulldown resistor.
      */
-    WRITE_REG_MASK_WE(GRF->USBPHY_CON0,
-                      GRF_USBPHY_CON0_UTMI_SEL_MASK |
-                      GRF_USBPHY_CON0_UTMI_SUSPEND_N_MASK |
-                      GRF_USBPHY_CON0_UTMI_OPMODE_MASK |
-                      GRF_USBPHY_CON0_UTMI_XCVRSELECT_MASK |
-                      GRF_USBPHY_CON0_UTMI_TERMSELECT_MASK |
-                      GRF_USBPHY_CON0_UTMI_DPPULLDOWN_MASK |
-                      GRF_USBPHY_CON0_UTMI_DMPULLDOWN_MASK,
-                      0x051U << GRF_USBPHY_CON0_UTMI_SEL_SHIFT);
+    WRITE_REG_MASK_WE(USB_PHY_CON_BASE, USB_PHY_SUSPEND_MASK,
+                      0x051U << USB_PHY_CON_SHIFT);
 
     /* Enable usb connect to pull up DP or DM */
     USB_DevConnect(pPCD->pReg);
@@ -59,8 +52,8 @@ static ePCD_bcdMsg USB_M31phyBcdDetect(struct PCD_HANDLE *pPCD)
     HAL_DelayMs(40);
 
     /* Voltage Source on DP or DM, Probe on DP and DM */
-    lineState = READ_BIT(GRF->USBPHY_STATUS0, GRF_USBPHY_STATUS0_UTMI_LINESTATE_MASK) >>
-                GRF_USBPHY_STATUS0_UTMI_LINESTATE_SHIFT;
+    lineState = READ_BIT(USB_PHY_STATUS_BASE, USB_PHY_LINESTATE_MASK) >>
+                USB_PHY_LINESTATE_SHIFT;
     switch (lineState) {
     case 1:
         msg = PCD_BCD_STD_DOWNSTREAM_PORT;
