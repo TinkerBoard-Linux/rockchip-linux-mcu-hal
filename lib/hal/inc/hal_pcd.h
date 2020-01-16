@@ -18,7 +18,7 @@
 #ifndef _HAL_PCD_H_
 #define _HAL_PCD_H_
 
-#include "hal_usb_core.h"
+#include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
 /** @defgroup PCD_Exported_Definition_Group1 Basic Definition

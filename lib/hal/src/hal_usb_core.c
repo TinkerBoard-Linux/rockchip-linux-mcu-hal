@@ -116,49 +116,6 @@ static void USB_EPStopXfer(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP)
     }
 }
 
-#if defined(USB_M31PHY_BASE)
-static HAL_Status USB_PHYInit(void)
-{
-    HAL_CRU_ClkResetDeassert(SRST_USB2PHYPO);
-    /* Select USB controller UTMI interface to phy */
-    WRITE_REG_MASK_WE(GRF->USBPHY_CON0, GRF_USBPHY_CON0_UTMI_SEL_MASK,
-                      0 << GRF_USBPHY_CON0_UTMI_SEL_SHIFT);
-    /* Wait for UTMI clk stable */
-    HAL_DelayMs(2);
-
-    return HAL_OK;
-}
-#elif defined(RKMCU_RK2206)
-static HAL_Status USB_PHYInit(void)
-{
-    /* GRF, 0x0348: bit[3:0] = 0x01 */
-    WRITE_REG_MASK_WE(GRF->SOC_UOC2,
-                      GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_MASK |
-                      GRF_SOC_UOC2_GRF_CON_OTG_UTMI_SUSPEND_N_MASK,
-                      0x01U << GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_SHIFT);
-
-    /* Wait for UTMI clk stable */
-    HAL_CRU_ClkResetAssert(SRST_OTG_USBPHY);
-    HAL_DelayUs(15);
-
-    /* GRF, 0x0348: bit[3:0] = 0x02 */
-    WRITE_REG_MASK_WE(GRF->SOC_UOC2,
-                      GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_MASK |
-                      GRF_SOC_UOC2_GRF_CON_OTG_UTMI_SUSPEND_N_MASK,
-                      0x02U << GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_SHIFT);
-    HAL_DelayUs(1500);
-    HAL_CRU_ClkResetDeassert(SRST_OTG_USBPHY);
-    HAL_DelayUs(2);
-
-    return HAL_OK;
-}
-#else
-static HAL_Status USB_PHYInit(void)
-{
-    return HAL_OK;
-}
-#endif
-
 /** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup USB_CORE_Exported_Functions_Group4 Init and DeInit Functions
@@ -178,7 +135,7 @@ HAL_Status USB_CoreInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
 {
     uint32_t trdtim = 0, phyif = 0, toutcal = 0;
 
-    USB_PHYInit();
+    HAL_USB_PhyInit();
 
     /* Init The UTMI Interface */
     pUSB->GUSBCFG &= ~(USB_OTG_GUSBCFG_TSDPS |

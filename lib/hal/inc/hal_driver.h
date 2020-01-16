@@ -53,6 +53,11 @@
 #include "hal_pinctrl.h"
 #endif
 
+#if defined(HAL_HCD_MODULE_ENABLED) || defined(HAL_PCD_MODULE_ENABLED)
+#include "hal_usb_core.h"
+#include "hal_usb_phy.h"
+#endif
+
 #ifdef HAL_HCD_MODULE_ENABLED
 #include "hal_hcd.h"
 #endif
