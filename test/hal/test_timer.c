@@ -9,6 +9,10 @@
 
 #ifdef HAL_TIMER_MODULE_ENABLED
 
+#ifndef PLL_INPUT_OSC_RATE
+#define PLL_INPUT_OSC_RATE (24 * 1000 * 1000)
+#endif
+
 struct TIMER_REG *timerDev;
 static uint32_t isrActive, timeOut;
 
