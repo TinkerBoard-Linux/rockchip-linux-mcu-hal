@@ -60,9 +60,9 @@ struct UART_REG_SAVE {
     uint32_t MCR;
 };
 /********************* Private Variable Definition ***************************/
-static uint64_t pmTimerLastCount;
-static uint64_t pmTimerLowCount;
-static uint32_t pmTimerLowRate;
+HAL_UNUSED static uint64_t pmTimerLastCount;
+HAL_UNUSED static uint64_t pmTimerLowCount;
+HAL_UNUSED static uint32_t pmTimerLowRate;
 
 #if defined(HAL_PM_RUNTIME_MODULE_ENABLED) || defined(HAL_PM_SLEEP_MODULE_ENABLED)
 static uint8_t pvtm32kEn = 0;
