@@ -159,7 +159,9 @@ typedef enum
 #define XIP_MAP0_BASE1      0x30000000U /* FSPI0 map address1 */
 #define XIP_MAP1_BASE1      0x38000000U /* HYPERBUS/FSPI1 map address1 */
 #define SDMMC_BASE          MMC_BASE    /* MMC base address */
-#define USB_BASE            0X43040000U /* USB base address */
+#define USB_BASE            0x43040000U /* USB base address */
+#define USB_SNPS_PHY_BASE   0x41050340U /* USB SYSNOPSYS PHY base address */
+#define USB_PHY_CON_BASE    (GRF->SOC_UOC2) /* USB PHY control base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -202,6 +204,14 @@ typedef enum PD_Id {
     PD_INVALID = 0,
 } ePD_Id;
 #endif
+/*****************************************USB********************************************/
+#define USB_PHY_SUSPEND_MASK \
+    (GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_MASK | GRF_SOC_UOC2_GRF_CON_OTG_UTMI_SUSPEND_N_MASK)
+#define USB_PHY_RESUME_MASK \
+    (GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_MASK | GRF_SOC_UOC2_GRF_CON_OTG_UTMI_SUSPEND_N_MASK)
+#define USB_PHY_CON_SHIFT                       GRF_SOC_UOC2_OTGPHY_SOFT_CON_SEL_SHIFT
+#define USB_PHY_SUSPEND_VAL                     0x01U
+#define USB_PHY_RESUME_VAL                      0x02U
 
 #ifdef __cplusplus
 }

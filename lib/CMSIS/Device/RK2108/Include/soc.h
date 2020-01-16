@@ -148,6 +148,8 @@ typedef enum
 #define USB_BASE            0x41300000U /* USB base address */
 #define XIP_MAP0_BASE1      0x60000000U /* FSPI0 map address1 */
 #define XIP_MAP1_BASE1      0x64000000U /* FSPI1 map address1 */
+#define USB_PHY_CON_BASE    (GRF->USBPHY_CON0) /* USB PHY control base address */
+#define USB_PHY_STATUS_BASE (GRF->USBPHY_STATUS0) /* USB PHY status base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -207,6 +209,18 @@ typedef enum PD_Id {
 /****************************************MBOX********************************************/
 #define MBOX_CNT             2
 #define MBOX_CHAN_CNT        4
+/****************************************USB********************************************/
+#define USB_PHY_SUSPEND_MASK \
+    (GRF_USBPHY_CON0_UTMI_SEL_MASK | GRF_USBPHY_CON0_UTMI_SUSPEND_N_MASK | \
+     GRF_USBPHY_CON0_UTMI_OPMODE_MASK | GRF_USBPHY_CON0_UTMI_XCVRSELECT_MASK | \
+     GRF_USBPHY_CON0_UTMI_TERMSELECT_MASK | GRF_USBPHY_CON0_UTMI_DPPULLDOWN_MASK |\
+     GRF_USBPHY_CON0_UTMI_DMPULLDOWN_MASK)
+#define USB_PHY_RESUME_MASK                     GRF_USBPHY_CON0_UTMI_SEL_MASK
+#define USB_PHY_CON_SHIFT                       GRF_USBPHY_CON0_UTMI_SEL_SHIFT
+#define USB_PHY_LINESTATE_MASK                  GRF_USBPHY_STATUS0_UTMI_LINESTATE_MASK
+#define USB_PHY_LINESTATE_SHIFT                 GRF_USBPHY_STATUS0_UTMI_LINESTATE_SHIFT
+#define USB_PHY_SUSPEND_VAL                     0x1d1U
+#define USB_PHY_RESUME_VAL                      0
 
 #ifdef __cplusplus
 }
