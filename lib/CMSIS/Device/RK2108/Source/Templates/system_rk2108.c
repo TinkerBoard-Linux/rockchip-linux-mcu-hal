@@ -28,7 +28,9 @@ void SystemCoreClockUpdate(void)
  *----------------------------------------------------------------------------*/
 void SystemInit(void)
 {
+#if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
     uint32_t status;
+#endif
 
 #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
     SCB->CPACR |= ((3UL << 10 * 2) | (3UL << 11 * 2));  /* set CP10 and CP11 Full Access */
