@@ -11,6 +11,7 @@
 #define UNITY_OUTPUT_CHAR(a) printf
 
 /************** HAL Module config ****************/
+//#define UNITY_HAL_LEAGACY
 //#define UNITY_HAL_COREMARK
 //#define UNITY_HAL_DATA_ACCESS
 #define UNITY_HAL_THROUGHPUT

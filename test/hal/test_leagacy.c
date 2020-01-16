@@ -7,7 +7,7 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-#if defined(RKMCU_PISCES) || defined(RKMCU_RK2108)
+#ifdef UNITY_HAL_LEAGACY
 
 #ifdef UNITY_HAL_COREMARK
 #include "coremark.h"

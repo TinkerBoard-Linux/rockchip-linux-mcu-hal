@@ -10,7 +10,7 @@
 
 static void RunAllTests(void)
 {
-#if defined(RKMCU_PISCES) || defined(RKMCU_RK2108)
+#ifdef UNITY_HAL_LEAGACY
     RUN_TEST_GROUP(HAL_LEAGACY);
 #endif
 #ifdef HAL_TIMER_MODULE_ENABLED
