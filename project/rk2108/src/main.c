@@ -136,7 +136,7 @@ int main(void)
     HAL_NVIC_SetIRQHandler(SysTick_IRQn, HAL_SYSTICK_IRQHandler);
     HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
     HAL_SetTickFreq(HAL_TICK_FREQ_1KHZ);
-    HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);
+    HAL_SYSTICK_CLKSourceConfig(HAL_SYSTICK_CLKSRC_EXT);
     HAL_SYSTICK_Config((PLL_INPUT_OSC_RATE / 1000) - 1);
     HAL_SYSTICK_Enable();
 #else

@@ -37,6 +37,12 @@ typedef enum {
     HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ
 } eHAL_tickFreq;
 
+typedef enum {
+    HAL_TICK_CLKSRC_CORE,
+    HAL_TICK_CLKSRC_EXT
+} eHAL_tickClkSource;
+#define IS_SYSTICK_SOURCE(s) (((s) == HAL_TICK_CLKSRC_CORE) || ((s) == HAL_TICK_CLKSRC_EXT))
+
 /** @} */
 
 /***************************** Function Declare ******************************/
@@ -55,7 +61,7 @@ eHAL_tickFreq HAL_GetTickFreq(void);
 HAL_Status HAL_DelayUs(uint32_t us);
 HAL_Status HAL_DelayMs(uint32_t ms);
 HAL_Status HAL_CPUDelayUs(uint32_t us);
-HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, uint32_t clkSource);
+HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, eHAL_tickClkSource clkSource);
 
 uint64_t HAL_DivU64Rem(uint64_t numerator, uint32_t denominator, uint32_t *pRemainder);
 uint64_t HAL_GetSysTimerCount(void);

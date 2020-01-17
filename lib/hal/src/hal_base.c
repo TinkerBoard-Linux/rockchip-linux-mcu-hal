@@ -136,7 +136,7 @@ HAL_Status HAL_Init(void)
  * @param  clkSource: new systick clock source.
  * @return HAL_OK.
  */
-HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, uint32_t clkSource)
+HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, eHAL_tickClkSource clkSource)
 {
     uint32_t rate = hz;
     uint32_t ret = HAL_OK;

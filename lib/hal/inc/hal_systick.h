@@ -28,11 +28,9 @@
 /***************************** Structure Definition **************************/
 
 typedef enum {
-    HAL_TICK_CLKSRC_CORE,
-    HAL_TICK_CLKSRC_EXT
-} eHAL_tickClkSource;
-
-#define IS_SYSTICK_SOURCE(s) (((s) == HAL_TICK_CLKSRC_CORE) || ((s) == HAL_TICK_CLKSRC_EXT))
+    HAL_SYSTICK_CLKSRC_CORE,
+    HAL_SYSTICK_CLKSRC_EXT
+} eHAL_systickClkSource;
 
 /** @} */
 /***************************** Function Declare ******************************/
@@ -42,7 +40,7 @@ typedef enum {
 
 HAL_Status HAL_SYSTICK_Init(void);
 HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb);
-HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_tickClkSource clkSource);
+HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_systickClkSource clkSource);
 HAL_Check HAL_SYSTICK_IsExtRefClockEnabled(void);
 void HAL_SYSTICK_IRQHandler(void);
 HAL_Status HAL_SYSTICK_Enable(void);

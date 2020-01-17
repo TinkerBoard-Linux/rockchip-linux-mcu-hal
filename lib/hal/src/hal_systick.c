@@ -71,7 +71,7 @@ HAL_Status HAL_SYSTICK_Init(void)
 {
     uint32_t ret, rate = SystemCoreClock;
 
-    ret = HAL_SYSTICK_CLKSourceConfig(HAL_TICK_CLKSRC_EXT);       /* Choose external clock source */
+    ret = HAL_SYSTICK_CLKSourceConfig(HAL_SYSTICK_CLKSRC_EXT);       /* Choose external clock source */
     if (ret == HAL_OK)
         rate = PLL_INPUT_OSC_RATE;
 
@@ -110,13 +110,13 @@ HAL_Status HAL_SYSTICK_Config(uint32_t ticksNumb)
 
 /**
  * @brief  Config clock source type for SysTick.
- * @param  clkSource: HAL_TICK_CLKSRC_CORE clock source is from core clk,
- *                    HAL_TICK_CLKSRC_EXT clock source is from external reference
+ * @param  clkSource: HAL_SYSTICK_CLKSRC_CORE clock source is from core clk,
+ *                    HAL_SYSTICK_CLKSRC_EXT clock source is from external reference
  * @return HAL_OK if successful, HAL_INVAL if soc not support.
  */
-HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_tickClkSource clkSource)
+HAL_Status HAL_SYSTICK_CLKSourceConfig(eHAL_systickClkSource clkSource)
 {
-    if (clkSource == HAL_TICK_CLKSRC_CORE) {
+    if (clkSource == HAL_SYSTICK_CLKSRC_CORE) {
         SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
     } else {
         if (SysTick->CALIB & SysTick_CALIB_NOREF_Msk)
