@@ -41,6 +41,7 @@
 #define RK_HASH_SHA512_224_SIZE 28
 #define RK_HASH_SHA512_256_SIZE 32
 
+#define RK_TRNG_MAX_SIZE 32
 /***************************** Structure Definition **************************/
 
 /**
@@ -279,6 +280,15 @@ HAL_Status HAL_CRYPTO_ExptMod(struct CRYPTO_DEV *pCrypto,
                               struct CRYPTO_BIGNUM *pN,
                               struct CRYPTO_BIGNUM *pOut,
                               struct CRYPTO_BIGNUM *pTmp);
+
+/**
+ * @brief  get TRNG data
+ * @param  pCrypto: the handle of crypto.
+ * @param  pTrng: trng buffer.
+ * @param  len: trng buffer length.
+ * @return HAL_Status
+ */
+HAL_Status HAL_CRYPTO_Trng(struct CRYPTO_DEV *pCrypto, uint8_t *pTrng, uint32_t len);
 
 /** @} */
 

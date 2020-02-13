@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
+ * Copyright (c) 2020 Fuzhou Rockchip Electronics Co., Ltd
  */
 
 #include "hal_base.h"
@@ -167,10 +167,10 @@
 #define CRYPTO_HASH_IS_VALID HAL_BIT(CRYPTO_HASH_VALID_HASH_VALID_SHIFT)
 
 /* RNG_CTL */
-#define CRYPTO_RNG_64_bit_len        _SBF(CRYPTO_RNG_CTL_RNG_LEN_SHIFT, 0x00)
-#define CRYPTO_RNG_128_bit_len       _SBF(CRYPTO_RNG_CTL_RNG_LEN_SHIFT, 0x01)
-#define CRYPTO_RNG_192_bit_len       _SBF(CRYPTO_RNG_CTL_RNG_LEN_SHIFT, 0x02)
-#define CRYPTO_RNG_256_bit_len       _SBF(CRYPTO_RNG_CTL_RNG_LEN_SHIFT, 0x03)
+#define CRYPTO_RNG_64_BIT_LEN        _SBF(CRYPTO_RNG_CTL_RNG_LEN_SHIFT, 0x00)
+#define CRYPTO_RNG_128_BIT_LEN       _SBF(CRYPTO_RNG_CTL_RNG_LEN_SHIFT, 0x01)
+#define CRYPTO_RNG_192_BIT_LEN       _SBF(CRYPTO_RNG_CTL_RNG_LEN_SHIFT, 0x02)
+#define CRYPTO_RNG_256_BIT_LEN       _SBF(CRYPTO_RNG_CTL_RNG_LEN_SHIFT, 0x03)
 #define CRYPTO_RNG_FATESY_SOC_RING   _SBF(CRYPTO_RNG_CTL_RING_SEL_SHIFT, 0x00)
 #define CRYPTO_RNG_SLOWER_SOC_RING_0 _SBF(CRYPTO_RNG_CTL_RING_SEL_SHIFT, 0x01)
 #define CRYPTO_RNG_SLOWER_SOC_RING_1 _SBF(CRYPTO_RNG_CTL_RING_SEL_SHIFT, 0x02)
@@ -819,12 +819,8 @@ HAL_Status HAL_CRYPTO_AlgoInit(struct CRYPTO_DEV *pCrypto,
     HAL_ASSERT(pConfig->algo < CRYPTO_ALGO_MAX);
 
     WRITE_REG_MASK_WE(CRYPTO->RST_CTL,
-                      CRYPTO_RST_CTL_SW_CC_RESET_MASK |
-                      CRYPTO_RST_CTL_SW_RNG_RESET_MASK |
-                      CRYPTO_RST_CTL_SW_PKA_RESET_MASK,
-                      CRYPTO_SW_CC_RESET |
-                      CRYPTO_SW_RNG_RESET |
-                      CRYPTO_SW_PKA_RESET);
+                      CRYPTO_RST_CTL_SW_CC_RESET_MASK,
+                      CRYPTO_SW_CC_RESET);
 
     memset(pCrypto->privData, 0x00, pCrypto->privDataSize);
     pPriv = (struct CRYPTO_V2_PRIV_DATA *)pCrypto->privData;
@@ -1001,6 +997,44 @@ HAL_Status HAL_CRYPTO_ReadTagReg(struct CRYPTO_DEV *pCrypto,
 {
     ///TODO:
     return HAL_NOSYS;
+}
+
+HAL_Status HAL_CRYPTO_Trng(struct CRYPTO_DEV *pCrypto, uint8_t *pTrng, uint32_t len)
+{
+    uint32_t i, ctrl = 0;
+    uint32_t buf[8];
+
+    HAL_ASSERT(pCrypto);
+    HAL_ASSERT(pTrng);
+
+    if (len > RK_TRNG_MAX_SIZE)
+        return HAL_ERROR;
+
+    memset(buf, 0, sizeof(buf));
+
+    /* enable osc_ring to get entropy, sample period is set as 100 */
+    WRITE_REG(CRYPTO->RNG_SAMPLE_CNT, 100);
+
+    ctrl |= CRYPTO_RNG_256_BIT_LEN;
+    ctrl |= CRYPTO_RNG_SLOWER_SOC_RING_0;
+    ctrl |= CRYPTO_RNG_ENABLE;
+    ctrl |= CRYPTO_RNG_START;
+
+    WRITE_REG_MASK_WE(CRYPTO->RNG_CTL, CRYPTO_WRITE_MASK_ALL, ctrl);
+
+    while (READ_REG(CRYPTO->RNG_CTL) & CRYPTO_RNG_START)
+        ;
+
+    for (i = 0; i < 8; i++) {
+        buf[i] = READ_REG(CRYPTO->RNG_DOUT[i]);
+    }
+
+    /* close TRNG */
+    WRITE_REG(CRYPTO->RNG_CTL, 0 | CRYPTO_WRITE_MASK_ALL);
+
+    memcpy(pTrng, buf, len);
+
+    return HAL_OK;
 }
 
 HAL_Status HAL_CRYPTO_ClearISR(struct CRYPTO_DEV *pCrypto)
