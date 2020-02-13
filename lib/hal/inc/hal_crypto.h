@@ -44,13 +44,21 @@
 /***************************** Structure Definition **************************/
 
 /**
- * struct CRYPTO_DEV - dsp dev struct.
+ * struct CRYPTO_DEV - crypto dev struct.
  */
 struct CRYPTO_DEV {
     void *privData; /**< crypto dev privData */
     uint32_t privDataSize;
     uint32_t privAlign;
     uint32_t dataAlign;
+};
+
+/**
+ * struct CRYPTO_BIGNUM - crypto bignum struct.
+ */
+struct CRYPTO_BIGNUM {
+    uint32_t nWords;
+    uint32_t *data;
 };
 
 struct CRYPTO_INFO_DES {
@@ -254,6 +262,23 @@ HAL_Status HAL_CRYPTO_ReadTagReg(struct CRYPTO_DEV *pCrypto,
  * @return HAL_Status
  */
 HAL_Status HAL_CRYPTO_ClearISR(struct CRYPTO_DEV *pCrypto);
+
+/**
+ * @brief  calculate exp mod. pOut = pIn ^ pE mod pN
+ * @param  pCrypto: the handle of crypto.
+ * @param  pIn: the point of input data bignum.
+ * @param  pE: the point of exponent bignum.
+ * @param  pN: the point of modulus bignum.
+ * @param  pOut: the point of outputs bignum.
+ * @param  pTmp: the point of tmpdata bignum.
+ * @return HAL_Status
+ */
+HAL_Status HAL_CRYPTO_ExptMod(struct CRYPTO_DEV *pCrypto,
+                              struct CRYPTO_BIGNUM *pIn,
+                              struct CRYPTO_BIGNUM *pE,
+                              struct CRYPTO_BIGNUM *pN,
+                              struct CRYPTO_BIGNUM *pOut,
+                              struct CRYPTO_BIGNUM *pTmp);
 
 /** @} */
 
