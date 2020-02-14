@@ -16,7 +16,15 @@ struct HAL_ACDCDIG_DEV g_acdcDigDev =
 static HAL_Status BSP_ACDCDIG_Init(void)
 {
     /* codec adc enable(analog mic) */
-    GRF->SOC_CON2 = HAL_BIT(2) << 16 | HAL_BIT(2);
+#ifdef RT_USING_ACDCDIG_I2STDM0
+    WRITE_REG_MASK_WE(GRF->SOC_CON2, GRF_SOC_CON2_GRF_CON_CODEC_SEL_MASK,
+                      1 << GRF_SOC_CON2_GRF_CON_CODEC_SEL_SHIFT);
+#elif  defined(RT_USING_ACDCDIG_I2STDM1)
+    WRITE_REG_MASK_WE(GRF->SOC_CON2, GRF_SOC_CON2_GRF_CON_CODEC_SEL_MASK,
+                      0 << GRF_SOC_CON2_GRF_CON_CODEC_SEL_SHIFT);
+    WRITE_REG_MASK_WE(GRF->SOC_CON4, GRF_SOC_CON4_GRF_CON_I2S1_SDI2_FROM_IO_MASK,
+                      0x0 << GRF_SOC_CON4_GRF_CON_I2S1_SDI2_FROM_IO_SHIFT);
+#endif
 
     return HAL_OK;
 }
