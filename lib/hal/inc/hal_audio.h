@@ -105,6 +105,22 @@ struct AUDIO_INIT_CONFIG {
     uint32_t clkInvert : 1;
     eAUDIO_fmtType format;
     eTRCM_modeType trcmMode;
+    uint16_t txMap; /**< route mapping of PATHx to SDOx, 4 bits per path.
+                      *  |15:12|11:8|7:4|3:0|-->|p3|p2|p1|p0|
+                      *  each path can choose one sdo as its sink.
+                      *  e.g.
+                      *  txMap = 0x3210: p3->sdo3, p2->sdo2, p1->sdo1, p0->sdo0
+                      *  txMap = 0x3012: p3->sdo3, p2->sdo0, p1->sdo1, p0->sdo2
+                      *  txMap = 0x0: ignored
+                      */
+    uint16_t rxMap; /**< route mapping of SDIx to PATHx, 4 bits per path.
+                      *  |15:12|11:8|7:4|3:0|-->|p3|p2|p1|p0|
+                      *  each path can choose one sdi as its source.
+                      *  e.g.
+                      *  rxMap = 0x3210: p3<-sdi3, p2<-sdi2, p1<-sdi1, p0<-sdi0
+                      *  rxMap = 0x3012: p3<-sdi3, p2<-sdi0, p1<-sdi1, p0<-sdi2
+                      *  rxMap = 0x0: ignored
+                      */
 };
 
 /**

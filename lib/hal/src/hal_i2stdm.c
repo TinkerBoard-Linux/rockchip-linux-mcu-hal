@@ -288,6 +288,8 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
     uint32_t mask = 0, val = 0;
     bool isMaster = config->master;
     bool clkInvert = config->clkInvert;
+    uint16_t rxMap = config->rxMap;
+    uint16_t txMap = config->txMap;
     struct I2STDM_REG *reg = i2sTdm->pReg;
 
     switch (config->format) {
@@ -328,6 +330,29 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
     i2sTdm->trcmMode = config->trcmMode;
     MODIFY_REG(reg->CKR, I2STDM_CKR_LRCK_COMMON_MASK,
                i2sTdm->trcmMode << I2STDM_CKR_LRCK_COMMON_SHIFT);
+
+    /* channel re-mapping */
+    if (txMap)
+        MODIFY_REG(reg->TXCR,
+                   I2STDM_TXCR_PATH_MASK(0) |
+                   I2STDM_TXCR_PATH_MASK(1) |
+                   I2STDM_TXCR_PATH_MASK(2) |
+                   I2STDM_TXCR_PATH_MASK(3),
+                   I2STDM_TXCR_PATH(0, txMap & 0x3) |
+                   I2STDM_TXCR_PATH(1, (txMap >> 4) & 0x3) |
+                   I2STDM_TXCR_PATH(2, (txMap >> 8) & 0x3) |
+                   I2STDM_TXCR_PATH(3, (txMap >> 12) & 0x3));
+
+    if (rxMap)
+        MODIFY_REG(reg->RXCR,
+                   I2STDM_RXCR_PATH_MASK(0) |
+                   I2STDM_RXCR_PATH_MASK(1) |
+                   I2STDM_RXCR_PATH_MASK(2) |
+                   I2STDM_RXCR_PATH_MASK(3),
+                   I2STDM_RXCR_PATH(0, rxMap & 0x3) |
+                   I2STDM_RXCR_PATH(1, (rxMap >> 4) & 0x3) |
+                   I2STDM_RXCR_PATH(2, (rxMap >> 8) & 0x3) |
+                   I2STDM_RXCR_PATH(3, (rxMap >> 12) & 0x3));
 
     return HAL_OK;
 }
