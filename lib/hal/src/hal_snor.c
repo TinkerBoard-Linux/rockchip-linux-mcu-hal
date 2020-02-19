@@ -167,6 +167,8 @@ struct FLASH_INFO spiFlashbl[] = {
     { 0x1c7017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 14, 0, 0 },
     /* EN25QH128A */
     { 0x1c7018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 0, 0 },
+    /* EN25QH32B */
+    { 0x1c7016, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 13, 0, 0 },
     /* EN25S32A */
     { 0x1c3816, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 13, 0, 0 },
     /* EN25S64A */
@@ -686,6 +688,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
 {
     uint8_t idByte[5];
     struct FLASH_INFO *info;
+    int32_t ret = HAL_OK;
 
     if (!nor->spi) {
         HAL_SNOR_DBG("%s no host\n", __func__);
@@ -719,9 +722,11 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         nor->sectorSize = info->sectorSize * 512;
         nor->size = 1 << (info->density + 9);
         nor->eraseSize = nor->sectorSize;
-        if (nor->spi->mode & HAL_SPI_RX_QUAD &&
-            info->QEBits) {
-            if (SNOR_EnableQE(nor) == HAL_OK) {
+        if (nor->spi->mode & HAL_SPI_RX_QUAD) {
+            ret = HAL_OK;
+            if (info->QEBits)
+                ret = SNOR_EnableQE(nor);
+            if (ret == HAL_OK) {
                 nor->readOpcode = info->readCmd_4;
                 switch (nor->readOpcode) {
                 case SPINOR_OP_READ_1_4_4:
