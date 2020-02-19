@@ -786,6 +786,11 @@ static HAL_Status CRYPTO_AesHashDeinit(void)
  *  @{
  */
 
+/**
+ * @brief  Init crypto and deassert reset.
+ * @param  pCrypto: the handle of crypto.
+ * @return HAL_Status
+ */
 HAL_Status HAL_CRYPTO_Init(struct CRYPTO_DEV *pCrypto)
 {
     HAL_ASSERT(pCrypto);
@@ -797,6 +802,11 @@ HAL_Status HAL_CRYPTO_Init(struct CRYPTO_DEV *pCrypto)
     return HAL_OK;
 }
 
+/**
+ * @brief  DeInit crypto.
+ * @param  pCrypto: the handle of crypto.
+ * @return HAL_Status
+ */
 HAL_Status HAL_CRYPTO_DeInit(struct CRYPTO_DEV *pCrypto)
 {
     HAL_ASSERT(pCrypto);
@@ -807,6 +817,13 @@ HAL_Status HAL_CRYPTO_DeInit(struct CRYPTO_DEV *pCrypto)
 
 /** @defgroup CRYPTO_Exported_Functions_Group5 Other Functions
  *  @{
+ */
+
+/**
+ * @brief  init crypto algo config.
+ * @param  pCrypto: the handle of crypto.
+ * @param  pConfig: algo config info.
+ * @return HAL_Status
  */
 HAL_Status HAL_CRYPTO_AlgoInit(struct CRYPTO_DEV *pCrypto,
                                struct CRYPTO_ALGO_CONFIG *pConfig)
@@ -836,6 +853,11 @@ HAL_Status HAL_CRYPTO_AlgoInit(struct CRYPTO_DEV *pCrypto,
     return ret;
 }
 
+/**
+ * @brief  deinit crypto algo config.
+ * @param  pCrypto: the handle of crypto.
+ * @return HAL_Status
+ */
 HAL_Status HAL_CRYPTO_AlgoDeInit(struct CRYPTO_DEV *pCrypto)
 {
     struct CRYPTO_V2_PRIV_DATA *pPriv;
@@ -856,6 +878,12 @@ HAL_Status HAL_CRYPTO_AlgoDeInit(struct CRYPTO_DEV *pCrypto)
     return ret;
 }
 
+/**
+ * @brief  set crypto dma config.
+ * @param  pCrypto: the handle of crypto.
+ * @param  pConfig: dma config info.
+ * @return HAL_Status
+ */
 HAL_Status HAL_CRYPTO_DMAConfig(struct CRYPTO_DEV *pCrypto,
                                 struct CRYPTO_DMA_CONFIG *pConfig)
 {
@@ -913,6 +941,11 @@ HAL_Status HAL_CRYPTO_DMAConfig(struct CRYPTO_DEV *pCrypto,
     return HAL_OK;
 }
 
+/**
+ * @brief  start crypto calculate.
+ * @param  pCrypto: the handle of crypto.
+ * @return HAL_Status
+ */
 HAL_Status HAL_CRYPTO_DMAStart(struct CRYPTO_DEV *pCrypto)
 {
     struct CRYPTO_V2_PRIV_DATA *pPriv;
@@ -933,6 +966,11 @@ HAL_Status HAL_CRYPTO_DMAStart(struct CRYPTO_DEV *pCrypto)
     return HAL_OK;
 }
 
+/**
+ * @brief  check interrupt status.
+ * @param  pCrypto: the handle of crypto.
+ * @return HAL_Check
+ */
 HAL_Check HAL_CRYPTO_CheckIntStatus(struct CRYPTO_DEV *pCrypto)
 {
     struct CRYPTO_V2_PRIV_DATA *pPriv;
@@ -947,6 +985,11 @@ HAL_Check HAL_CRYPTO_CheckIntStatus(struct CRYPTO_DEV *pCrypto)
         return HAL_FALSE;
 }
 
+/**
+ * @brief  check whether hash flag is valid.
+ * @param  pCrypto: the handle of crypto.
+ * @return HAL_Check
+ */
 HAL_Check HAL_CRYPTO_CheckHashValid(struct CRYPTO_DEV *pCrypto)
 {
     HAL_ASSERT(pCrypto);
@@ -957,6 +1000,11 @@ HAL_Check HAL_CRYPTO_CheckHashValid(struct CRYPTO_DEV *pCrypto)
         return HAL_FALSE;
 }
 
+/**
+* @brief  check whether tag flag is valid.
+* @param  pCrypto: the handle of crypto.
+* @return HAL_Check
+*/
 HAL_Check HAL_CRYPTO_CheckTagValid(struct CRYPTO_DEV *pCrypto)
 {
     HAL_ASSERT(pCrypto);
@@ -966,7 +1014,13 @@ HAL_Check HAL_CRYPTO_CheckTagValid(struct CRYPTO_DEV *pCrypto)
     else
         return HAL_FALSE;
 }
-
+/**
+ * @brief  read hash value from regs.
+ * @param  pCrypto: the handle of crypto.
+ * @param  out: hash value buffer.
+ * @param  outLen: hash value length.
+ * @return HAL_Status
+ */
 HAL_Status HAL_CRYPTO_ReadHashReg(struct CRYPTO_DEV *pCrypto,
                                   uint8_t *out, uint32_t *outLen)
 {
@@ -992,6 +1046,13 @@ HAL_Status HAL_CRYPTO_ReadHashReg(struct CRYPTO_DEV *pCrypto,
     return HAL_OK;
 }
 
+/**
+ * @brief  read tag value from regs.
+ * @param  pCrypto: the handle of crypto.
+ * @param  out: tag value buffer.
+ * @param  outLen: tag value length.
+ * @return HAL_Status
+ */
 HAL_Status HAL_CRYPTO_ReadTagReg(struct CRYPTO_DEV *pCrypto,
                                  uint8_t *out, uint32_t *outLen)
 {
@@ -999,6 +1060,13 @@ HAL_Status HAL_CRYPTO_ReadTagReg(struct CRYPTO_DEV *pCrypto,
     return HAL_NOSYS;
 }
 
+/**
+ * @brief  get TRNG data
+ * @param  pCrypto: the handle of crypto.
+ * @param  pTrng: trng buffer.
+ * @param  len: trng buffer length.
+ * @return HAL_Status
+ */
 HAL_Status HAL_CRYPTO_Trng(struct CRYPTO_DEV *pCrypto, uint8_t *pTrng, uint32_t len)
 {
     uint32_t i, ctrl = 0;
@@ -1037,6 +1105,11 @@ HAL_Status HAL_CRYPTO_Trng(struct CRYPTO_DEV *pCrypto, uint8_t *pTrng, uint32_t 
     return HAL_OK;
 }
 
+/**
+ * @brief  clear interrupt status.
+ * @param  pCrypto: the handle of crypto.
+ * @return HAL_Status
+ */
 HAL_Status HAL_CRYPTO_ClearISR(struct CRYPTO_DEV *pCrypto)
 {
     struct CRYPTO_V2_PRIV_DATA *pPriv;
