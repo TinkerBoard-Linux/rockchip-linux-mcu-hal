@@ -652,7 +652,6 @@ static HAL_Status CRYPTO_HmacInit(uint32_t chn, uint32_t mode, void *pInfo)
     regCtrl |= (CRYPTO_HASH_ENABLE | CRYPTO_HW_PAD_ENABLE);
 
     CRYPTO_CLEAR_REGS(CRYPTO->HASH_DOUT);
-    CRYPTO_CLEAR_REGS(CRYPTO->CHN_KEY);
 
     CRYPTO_WriteKey(chn, pHmac->key, pHmac->keyLen);
 
@@ -838,6 +837,8 @@ HAL_Status HAL_CRYPTO_AlgoInit(struct CRYPTO_DEV *pCrypto,
     WRITE_REG_MASK_WE(CRYPTO->RST_CTL,
                       CRYPTO_RST_CTL_SW_CC_RESET_MASK,
                       CRYPTO_SW_CC_RESET);
+
+    CRYPTO_CLEAR_REGS(CRYPTO->CHN_KEY);
 
     memset(pCrypto->privData, 0x00, pCrypto->privDataSize);
     pPriv = (struct CRYPTO_V2_PRIV_DATA *)pCrypto->privData;

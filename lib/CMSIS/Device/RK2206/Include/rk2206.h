@@ -1073,8 +1073,7 @@ struct CRYPTO_REG {
          uint32_t RESERVED0054[43];                   /* Address Offset: 0x0054 */
     __IO uint32_t CHN_IV[4];                          /* Address Offset: 0x0100 */
          uint32_t RESERVED0110[28];                   /* Address Offset: 0x0110 */
-    __IO uint32_t CHN_KEY[4];                         /* Address Offset: 0x0180 */
-         uint32_t RESERVED0190[28];                   /* Address Offset: 0x0190 */
+    __IO uint32_t CHN_KEY[32];                        /* Address Offset: 0x0180 */
     __IO uint32_t CHN_PKEY[4];                        /* Address Offset: 0x0200 */
          uint32_t RESERVED0210[28];                   /* Address Offset: 0x0210 */
     __IO uint32_t CHN_PC_LEN[2];                      /* Address Offset: 0x0280 */
