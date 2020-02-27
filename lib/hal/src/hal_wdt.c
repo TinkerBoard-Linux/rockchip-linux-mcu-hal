@@ -304,6 +304,15 @@ uint32_t HAL_WDT_GetIntStatus(void)
     return pWDT->STAT;
 }
 
+/**
+ * @brief  Get timeleft
+ * @return Current count value that indicate Timeleft(second) = pWDT->CCVR / dwWdt.freq
+ */
+uint32_t HAL_WDT_GetTimeLeft(void)
+{
+    return pWDT->CCVR;
+}
+
 /** @} */
 
 /** @} */
