@@ -57,7 +57,7 @@ static __IO uint32_t uwTick;
 static eHAL_tickFreq uwTickFreq = HAL_TICK_FREQ_DEFAULT;
 
 /********************* Private Function Definition ***************************/
-#ifdef __GNUC__
+#if ((defined(ARCH_ARM) || defined(__CORTEX_A) || defined(__CORTEX_M)) && defined(__GNUC__))
 static void CPUCycleLoop(uint32_t cycles)
 {
     __ASM volatile (
@@ -71,6 +71,27 @@ static void CPUCycleLoop(uint32_t cycles)
         "subs r0, r0, #2\n\t"   //    1    2    Decrement the counter by 2.
         "bne  1b\n\t"           //   (1)2  2    2 CPU cycles (if branch is taken).
         "nop\n\t"               //    1    2    Loop alignment padding.
+        "2:"
+        : : "r" (cycles)
+        );
+}
+#elif defined(ARCH_RISCV)
+static void CPUCycleLoop(uint32_t cycles)
+{
+    asm volatile (
+        "mv   a0, %0\n\t"
+        "addi a0, a0, 2\n\t"   //    1    2    Round to the nearest multiple of 4.
+        "li   a1, 4\n\t"
+        "div  a0, a0, a1\n\t"  //    1    2    Divide by 4 and set flags.
+        "li   a1, 2\n\t"
+        "bnez a0, 1f\n\t"      //    2    2    Skip if 0.
+        "j    2f\n\t"
+        ".align 6\n\t"
+        "1:\n\t"
+        "addi a0, a0, 1\n\t"   //    1    2    Increment the counter.
+        "sub  a0, a0, a1\n\t"  //    1    2    Decrement the counter by 2.
+        "bnez a0, 1b\n\t"      //   (1)2  2    2 CPU cycles (if branch is taken).
+        "nop\n\t"              //    1    2    Loop alignment padding.
         "2:"
         : : "r" (cycles)
         );
