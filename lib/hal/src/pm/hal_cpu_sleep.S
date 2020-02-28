@@ -4,11 +4,13 @@
  */
 
 #include "hal_conf.h"
-#include "soc.h"
 
 #if defined(HAL_PM_CPU_SLEEP_MODULE_ENABLED)
+#include "soc.h"
+
 #if defined(__CM3_REV) || defined(__CM4_REV)
 #if defined(__GNUC__)
+
 .thumb
 .syntax unified
 
