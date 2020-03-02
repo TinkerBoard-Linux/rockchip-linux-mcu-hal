@@ -18,7 +18,9 @@
 #define     __O     volatile             /*!< \brief Defines 'write only' permissions */
 #define     __IO    volatile             /*!< \brief Defines 'read / write' permissions */
 
+#ifdef ARCH_ARM
 #define __CORTEX_A           7U    /* Cortex-A7 Core                                */
+#endif
 
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
