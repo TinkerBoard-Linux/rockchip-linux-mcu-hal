@@ -122,7 +122,7 @@ struct FLASH_INFO {
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
-struct FLASH_INFO spiFlashbl[] = {
+static const struct FLASH_INFO spiFlashbl[] = {
     /* GD25Q32B */
     { 0xc84016, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 13, 9, 0 },
     /* GD25Q64B */
@@ -362,7 +362,7 @@ static HAL_Status SNOR_EraseBlk(struct SPI_NOR *nor, uint32_t addr)
     return SNOR_SPIMemExecOp(nor->spi, &op);
 }
 
-static struct FLASH_INFO *SNOR_GerFlashInfo(uint8_t *flashId)
+static const struct FLASH_INFO *SNOR_GerFlashInfo(uint8_t *flashId)
 {
     uint32_t i;
     uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
@@ -691,7 +691,7 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
 HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
 {
     uint8_t idByte[5];
-    struct FLASH_INFO *info;
+    const struct FLASH_INFO *info;
     int32_t ret = HAL_OK;
 
     if (!nor->spi) {
