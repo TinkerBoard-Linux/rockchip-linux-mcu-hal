@@ -56,6 +56,8 @@ typedef enum
   I2C3_IRQn              = 39,      /*!< I2C3 Interrupt              */
   I2C4_IRQn              = 40,      /*!< I2C4 Interrupt              */
   I2C5_IRQn              = 41,      /*!< I2C5 Interrupt              */
+  SPI0_IRQn              = 42,      /*!< SPI0 Interrupt              */
+  SPI1_IRQn              = 43,      /*!< SPI1 Interrupt              */
   GPIO0_IRQn             = 66,      /*!< GPIO0 Interrupt             */
   GPIO1_IRQn             = 67,      /*!< GPIO1 Interrupt             */
   GPIO2_IRQn             = 68,      /*!< GPIO2 Interrupt             */
