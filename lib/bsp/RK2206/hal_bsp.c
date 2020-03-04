@@ -48,6 +48,18 @@ struct HAL_DWDMA_DEV g_dwDmaDev =
 };
 #endif
 
+#ifdef HAL_HYPERPSRAM_MODULE_ENABLED
+HAL_SECTION_SRAM_DATA
+struct HAL_HYPERPSRAM_DEV g_hyperpsramDev =
+{
+    .pReg = HYPERBUS,
+    .clkID = CLK_XIP_HYPERX8,
+    .aclkGateID = ACLK_XIP_HYPERX8_GATE,
+    .hyperMem[0] = XIP_MAP1_BASE0,
+    .psramFreq = PLL_INPUT_OSC_RATE / 2,
+};
+#endif
+
 #ifdef HAL_I2C_MODULE_ENABLED
 const struct HAL_I2C_DEV g_i2c0Dev =
 {

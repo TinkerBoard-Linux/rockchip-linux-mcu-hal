@@ -23,6 +23,10 @@ extern struct HAL_AUDIOPWM_DEV g_audioPwmDev;
 extern struct HAL_DWDMA_DEV g_dwDmaDev;
 #endif
 
+#ifdef HAL_HYPERPSRAM_MODULE_ENABLED
+extern struct HAL_HYPERPSRAM_DEV g_hyperpsramDev;
+#endif
+
 #ifdef HAL_I2C_MODULE_ENABLED
 extern const struct HAL_I2C_DEV g_i2c0Dev;
 extern const struct HAL_I2C_DEV g_i2c1Dev;

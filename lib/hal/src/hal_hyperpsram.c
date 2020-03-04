@@ -85,6 +85,11 @@
 #define CR0_BURST_LENGTH_16BYTE  (0x2 << CR0_BURST_LENGTH_SHIFT)
 #define CR0_BURST_LENGTH_32BYTE  (0x3 << CR0_BURST_LENGTH_SHIFT)
 
+#define SIZE_128MBYTE (0x08000000)
+#define SIZE_1MBYTE   (0x00100000)
+#define PATTERN1      (0x00000000)
+#define PATTERN2      (0x5aa5f00f)
+
 /********************* Private Structure Definition **************************/
 /** HYPERBUS DEVICE Psram ID definition */
 enum {
@@ -115,6 +120,7 @@ static const struct HYPER_PSTRAM psramInfo[] =
     { S27KX0641, MCR_TIMING_2_2_2_2_3_2_1, HYPERBUS_SPCSR_NOT_W955D8 },
     { W955D8MKY, MCR_TIMING_2_2_2_2_3_2_1, HYPERBUS_SPCSR_IS_W955D8 },
 };
+
 /********************* Private Function Definition ***************************/
 
 /**
@@ -141,16 +147,26 @@ static uint16_t HYPERPSRAM_GetDevId(struct HYPERBUS_REG *pReg, uint32_t psramBas
 /**
  * @brief  Hyperbus psram modify transaction maximum length/tcsm.
  * @param  pReg: Choose HYPERBUS.
- * @param  psramFreq: HYPERPSRAM io clk frequency.The unit is Hz.
+ * @param  psramDev: psram device info.
  * @return HAL_Status.
  */
-static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t psramFreq)
+static HAL_Status HYPERPSRAM_ModifyTiming(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 {
-    uint32_t tmp;
+    uint32_t tmp, maxLength;
     uint32_t tcmd, tal;
+    uint32_t freqMhz = pHyperPsramDev->psramFreq / 1000000;
+    struct HYPERBUS_REG *pReg = pHyperPsramDev->pReg;
 
-    psramFreq /= 1000000;
     if (pReg->MCR[0] & HYPERBUS_MCR0_MAXEN_CONF_LOW) {
+        if (pHyperPsramDev->psramChip.id == W955D8MKY)
+            /*
+             * The max length must less 63(128bytes) for W955D8MKY.
+             * The peripherals like DMA access psram must be 128 address aligned.
+             */
+            maxLength = 63;
+        else
+            maxLength = 511;
+
         tmp = pReg->MTR[0] & HYPERBUS_MTR0_LTCY_MASK;
         if (tmp < 3)
             tal = 5 + tmp;
@@ -162,11 +178,11 @@ static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t ps
             tal = 7;
         tcmd = 3;
 
-        tmp = (HYPERBUS_DEV_TCSM_1U * psramFreq + 999) / 1000;
+        tmp = (HYPERBUS_DEV_TCSM_1U * freqMhz + 999) / 1000;
         tmp = tmp - tcmd - 2 * tal - 4;
 
-        if (tmp > 511)
-            tmp = 511;
+        if (tmp > maxLength)
+            tmp = maxLength;
         MODIFY_REG(pReg->MCR[0], HYPERBUS_MCR0_MAXLEN_MASK,
                    tmp << HYPERBUS_MCR0_MAXLEN_SHIFT);
     }
@@ -174,20 +190,20 @@ static HAL_Status HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t ps
     return HAL_OK;
 }
 
-static HAL_Status HYPERPSRAM_ModifyCR0(struct HYPERBUS_REG *pReg,
-                                       uint32_t psramBase)
+static HAL_Status HYPERPSRAM_ModifyCR0(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 {
     uint16_t cr0;
+    struct HYPERBUS_REG *pReg = pHyperPsramDev->pReg;
 
     /* config to CR space */
     MODIFY_REG(pReg->MCR[0], HYPERBUS_MCR0_CRT_MASK,
                HYPERBUS_MCR0_CRT_CR_SPACE);
-    cr0 = (*(volatile uint16_t *)(psramBase + HYPERBUS_CR0_ADDR_OFFSET));
+    cr0 = (*(volatile uint16_t *)(pHyperPsramDev->hyperMem[0] + HYPERBUS_CR0_ADDR_OFFSET));
     cr0 = (cr0 & (~CR0_INITIAL_LATENCY_MASK)) | CR0_INITIAL_LATENCY_6_CLK;
     cr0 = (cr0 & (~CR0_FIXED_LATENCY_ENABLE_MASK)) |
           CR0_FIXED_LATENCY_ENABLE_VARIABLE_LATENCY;
     cr0 = (cr0 & (~CR0_BURST_LENGTH_MASK)) | CR0_BURST_LENGTH_128BYTE;
-    (*(volatile uint16_t *)(psramBase + HYPERBUS_CR0_ADDR_OFFSET)) = cr0;
+    (*(volatile uint16_t *)(pHyperPsramDev->hyperMem[0] + HYPERBUS_CR0_ADDR_OFFSET)) = cr0;
     /* config to memory space */
     MODIFY_REG(pReg->MCR[0], HYPERBUS_MCR0_CRT_MASK,
                HYPERBUS_MCR0_CRT_MEM_SPACE);
@@ -203,9 +219,10 @@ static HAL_Status HYPERPSRAM_ModifyCR0(struct HYPERBUS_REG *pReg,
  * @param  psramBase: Choose psram map base addr.
  * @return HAL_Status.
  */
-static HAL_Status HYPERBUS_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
+static HAL_Status HYPERBUS_Init(struct HYPERBUS_REG *pReg,
+                                uint32_t hyperMem)
 {
-    WRITE_REG(pReg->MBR[0], psramBase & HYPERBUS_MBR0_BASE_ADDR_MASK);
+    WRITE_REG(pReg->MBR[0], hyperMem & HYPERBUS_MBR0_BASE_ADDR_MASK);
     WRITE_REG(pReg->RWDSIC, HYPERBUS_RWDSIC_RXEND_CTRL_MASK |
               HYPERBUS_RWDSIC_RXSTART_CTRL_MASK);
     WRITE_REG(pReg->LBR, HYPERBUS_LBR_DIS_LOOPBACK);
@@ -218,30 +235,63 @@ static HAL_Status HYPERBUS_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
 }
 
 /**
- * @brief  Hyperbus psram init.
- * @param  pReg: Choose HYPERBUS.
- * @param  psramBase: Choose psram map base addr.
+ * @brief  Hyperbus psram cap detect.
+ * @param  psramDev: psram device info.
  * @return HAL_Status.
  */
-static HAL_Status HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
+static HAL_Status HYPERPSRAM_CapDetect(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
+{
+    uint32_t *p1 = (uint32_t *)pHyperPsramDev->hyperMem[0];
+    uint32_t *p2;
+    uint32_t cap = 0;
+
+    for (cap = SIZE_128MBYTE; cap >= SIZE_1MBYTE; cap >>= 1) {
+        p2 = (uint32_t *)((pHyperPsramDev->hyperMem[0] + cap - 0x4) & 0x3);
+        *p1 = PATTERN1;
+        *p2 = PATTERN2;
+        if ((*p1 == PATTERN1) && (*p2 == PATTERN2))
+            break;
+    }
+    if (cap >= SIZE_1MBYTE) {
+        pHyperPsramDev->psramChip.cap = cap;
+
+        return HAL_OK;
+    } else {
+        return HAL_ERROR;
+    }
+}
+
+/**
+ * @brief  Hyperbus psram init.
+ * @param  pReg: Choose HYPERBUS.
+ * @param  psramDev: psram device info.
+ * @return HAL_Status.
+ */
+static HAL_Status HYPERPSRAM_Init(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 {
     uint32_t i;
     uint16_t detect_id;
+    struct HYPERBUS_REG *pReg = pHyperPsramDev->pReg;
+    struct HYPERPSRAM_CHIP_INFO *psramChip = &pHyperPsramDev->psramChip;
 
     for (i = 0; i < HAL_ARRAY_SIZE(psramInfo); i++) {
         WRITE_REG(pReg->SPCSR, psramInfo[i].spc);
         WRITE_REG(pReg->MTR[0], psramInfo[i].mtrTiming);
-        detect_id = HYPERPSRAM_GetDevId(pReg, psramBase);
+        detect_id = HYPERPSRAM_GetDevId(pReg, pHyperPsramDev->hyperMem[0]);
         if (detect_id == psramInfo[i].id)
             break;
     }
 
+    psramChip->id = detect_id;
+    psramChip->spc = psramInfo[i].spc;
     HAL_DBG("HYPERBUS PSRAM id: %x\n", detect_id);
     if (i == HAL_ARRAY_SIZE(psramInfo)) {
         HAL_DBG("HYPERPSRAM: unknow psram device\n");
 
         return HAL_ERROR;
     } else {
+        HYPERPSRAM_CapDetect(pHyperPsramDev);
+
         return HAL_OK;
     }
 }
@@ -258,19 +308,19 @@ static HAL_Status HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
 
 /**
  * @brief  Hyperbus init.
- * @param  pReg: Choose HYPERBUS.
- * @param  psramBase: Choose psram map base addr.
+ * @param  pHyperPsramDev: pointer to a HYPERPSRAM structure that contains
+ *               the information for HYPERPSRAM module.
  * @return HAL_Status.
  */
-HAL_Status HAL_HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
+HAL_Status HAL_HYPERPSRAM_Init(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 {
-    HAL_ASSERT(IS_HYPERBUS_INSTANCE(pReg));
+    HAL_ASSERT(IS_HYPERBUS_INSTANCE(pHyperPsramDev->pReg));
 
-    HYPERBUS_Init(pReg, psramBase);
+    HYPERBUS_Init(pHyperPsramDev->pReg, pHyperPsramDev->hyperMem[0]);
 
-    if (HYPERPSRAM_Init(pReg, psramBase) == HAL_OK) {
-        HYPERPSRAM_ModifyTiming(pReg, PLL_INPUT_OSC_RATE / 2);
-        HYPERPSRAM_ModifyCR0(pReg, psramBase);
+    if (HYPERPSRAM_Init(pHyperPsramDev) == HAL_OK) {
+        HYPERPSRAM_ModifyTiming(pHyperPsramDev);
+        HYPERPSRAM_ModifyCR0(pHyperPsramDev);
     } else {
         return HAL_ERROR;
     }
@@ -280,26 +330,43 @@ HAL_Status HAL_HYPERPSRAM_Init(struct HYPERBUS_REG *pReg, uint32_t psramBase)
 
 /**
  * @brief  Hyperbus reinit.
- * @param  pReg: Choose HYPERBUS.
+ * @param  pHyperPsramDev: pointer to a HYPERPSRAM structure that contains
+ *               the information for HYPERPSRAM module.
  * @return HAL_Status
  */
-HAL_Status HAL_HYPERPSRAM_DeInit(struct HYPERBUS_REG *pReg)
+HAL_Status HAL_HYPERPSRAM_DeInit(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 {
     /* ...to do */
     return HAL_OK;
 }
 
 /**
+ * @brief  Hyperbus reinit.
+ * @param  pHyperPsramDev: pointer to a HYPERPSRAM structure that contains
+ *               the information for HYPERPSRAM module.
+ * @return HAL_Status
+ */
+HAL_Status HAL_HYPERPSRAM_ReInit(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
+{
+    HAL_ASSERT(IS_HYPERBUS_INSTANCE(pHyperPsramDev->pReg));
+
+    pHyperPsramDev->psramChip.id = HYPERPSRAM_GetDevId(pHyperPsramDev->pReg,
+                                                       pHyperPsramDev->hyperMem[0]);
+
+    return HAL_OK;
+}
+
+/**
  * @brief  Hyperbus psram modify transaction maximum length/tcsm.
- * @param  pReg: Choose HYPERBUS.
- * @param  hyperFreq: HYPERBUS frequency.The unit is Hz.
+ * @param  pHyperPsramDev: pointer to a HYPERPSRAM structure that contains
+ *               the information for HYPERPSRAM module.
  * @return HAL_Status.
  */
-HAL_Status HAL_HYPERPSRAM_ModifyTiming(struct HYPERBUS_REG *pReg, uint32_t hyperFreq)
+HAL_Status HAL_HYPERPSRAM_ModifyTiming(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 {
-    HAL_ASSERT(IS_HYPERBUS_INSTANCE(pReg));
+    HAL_ASSERT(IS_HYPERBUS_INSTANCE(pHyperPsramDev->pReg));
 
-    return HYPERPSRAM_ModifyTiming(pReg, hyperFreq / 2);
+    return HYPERPSRAM_ModifyTiming(pHyperPsramDev);
 }
 
 /** @} */

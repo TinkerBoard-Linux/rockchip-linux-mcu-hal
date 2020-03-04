@@ -29,11 +29,21 @@ struct hyperbus_slt_test_list hyperbus_tests[] = {
 
 static HAL_Status HYPERPSRAM_ModifyInit(void)
 {
-    struct HYPERBUS_REG *pReg = (void *)HYPERBUS_BASE;
-
-    HAL_HYPERPSRAM_ModifyTiming(pReg, HAL_CRU_ClkGetFreq(CLK_XIP_HYPERX8));
+    g_hyperpsramDev.psramFreq = HAL_CRU_ClkGetFreq(g_hyperpsramDev.clkID) / 2;
+    HAL_HYPERPSRAM_ModifyTiming(&g_hyperpsramDev);
 
     return HAL_OK;
+}
+
+static HAL_Status HYPERPSRAM_ReInit(void)
+{
+    if (HAL_HYPERPSRAM_ReInit(&g_hyperpsramDev) == HAL_OK) {
+        HYPERPSRAM_ModifyInit();
+
+        return HAL_OK;
+    } else {
+        return HAL_ERROR;
+    }
 }
 
 static int test_early_init(void)
@@ -45,7 +55,7 @@ static int test_early_init(void)
     HAL_DCACHE_Enable();
 #endif
     HYPERPSRAM_FreqImprove(300);
-    HYPERPSRAM_ModifyInit();
+    HYPERPSRAM_ReInit();
 
     return 0;
 }
