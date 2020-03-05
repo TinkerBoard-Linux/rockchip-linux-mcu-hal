@@ -530,6 +530,11 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                       &pReg->WIN0_CTRL0 + regOffset,
                       VOP_WIN0_CTRL0_WIN0_BPP_SWAP_SHIFT,
                       VOP_WIN0_CTRL0_WIN0_BPP_SWAP_MASK, 0);
+
+    VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+                  VOP_DSP_CTRL2_DSP_LAYER1_SEL_SHIFT + pWinState->zpos * 2,
+                  VOP_DSP_CTRL2_DSP_LAYER1_SEL_MASK << pWinState->zpos * 2,
+                  pWinState->winId + 1);
 }
 
 /** @} */
@@ -821,19 +826,6 @@ HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
                   VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_SHIFT,
                   VOP_SYS_CTRL2_IMD_DSP_TIMING_IMD_MASK,
                   1);
-
-    VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
-                  VOP_DSP_CTRL2_DSP_LAYER1_SEL_SHIFT,
-                  VOP_DSP_CTRL2_DSP_LAYER1_SEL_MASK,
-                  1);
-    VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
-                  VOP_DSP_CTRL2_DSP_LAYER2_SEL_SHIFT,
-                  VOP_DSP_CTRL2_DSP_LAYER2_SEL_MASK,
-                  2);
-    VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
-                  VOP_DSP_CTRL2_DSP_LAYER3_SEL_SHIFT,
-                  VOP_DSP_CTRL2_DSP_LAYER3_SEL_MASK,
-                  3);
 
     if (pModeInfo->flags & DSC_ENABLE)
         HAL_VOP_DscInit(pReg, pModeInfo);
