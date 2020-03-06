@@ -83,7 +83,7 @@
 #define RK_PLL_MODE_SLOW                  0
 #define RK_PLL_MODE_NORMAL                1
 #define RK_PLL_MODE_DEEP                  2
-#define PLL_GET_PLLMODE(val, shift, mask) (((uint32_t)(val)&mask) >> shift)
+#define PLL_GET_PLLMODE(val, shift, mask) (((uint32_t)(val) & mask) >> shift)
 
 #define PLL_GET_FBDIV(x) (((uint32_t)(x) & (PLL_FBDIV_MASK)) >> PLL_FBDIV_SHIFT)
 #define PLL_GET_REFDIV(x) \
@@ -610,21 +610,19 @@ HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk)
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
 
-#if defined(CRU_PMU_CLKGATE_CON0_OFFSET)
-    if (clk >= HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16) {
-        index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
-        shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
-
-        return (HAL_Check)(
-            !((CRU->PMU_CLKGATE_CON[index] & (1 << shift)) >> shift));
-    } else {
-        return (HAL_Check)(
-            !((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
-    }
+#ifdef CRU_GATE_CON_CNT
+    if (index < CRU_GATE_CON_CNT)
+        return (HAL_Check)(!((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
+    else
+#ifdef PMUCRU_BASE
+        return (HAL_Check)(!((PMUCRU->CRU_CLKGATE_CON[index - CRU_GATE_CON_CNT] & (1 << shift)) >> shift));
+#else
+        return (HAL_Check)(!((CRU->PMU_CLKGATE_CON[index - CRU_GATE_CON_CNT] & (1 << shift)) >> shift));
 #endif
+#else
 
-    return (HAL_Check)(
-        !((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
+    return (HAL_Check)(!((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
+#endif
 }
 
 /**
@@ -637,20 +635,18 @@ HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
 
-#if defined(CRU_PMU_CLKGATE_CON0_OFFSET)
-    if (clk >= HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16) {
-        index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
-        shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
-
-        CRU->PMU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
-    } else {
+#ifdef CRU_GATE_CON_CNT
+    if (index < CRU_GATE_CON_CNT)
         CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
-    }
-
-    return HAL_OK;
+    else
+#ifdef PMUCRU_BASE
+        PMUCRU->CRU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = VAL_MASK_WE(1U << shift, 0U << shift);
+#else
+        CRU->PMU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = VAL_MASK_WE(1U << shift, 0U << shift);
 #endif
-
+#else
     CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
+#endif
 
     return HAL_OK;
 }
@@ -665,20 +661,18 @@ HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
 
-#if defined(CRU_PMU_CLKGATE_CON0_OFFSET)
-    if (clk >= HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16) {
-        index = CLK_GATE_GET_REG_OFFSET(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
-        shift = CLK_GATE_GET_BITS_SHIFT(clk - HAL_ARRAY_SIZE(CRU->CRU_CLKGATE_CON) * 16);
-
-        CRU->PMU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
-    } else {
+#ifdef CRU_GATE_CON_CNT
+    if (index < CRU_GATE_CON_CNT)
         CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
-    }
-
-    return HAL_OK;
+    else
+#ifdef PMUCRU_BASE
+        PMUCRU->CRU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = VAL_MASK_WE(1U << shift, 1U << shift);
+#else
+        CRU->PMU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = VAL_MASK_WE(1U << shift, 1U << shift);
 #endif
-
+#else
     CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
+#endif
 
     return HAL_OK;
 }
@@ -693,7 +687,15 @@ HAL_Check HAL_CRU_ClkIsReset(uint32_t clk)
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
 
+#ifdef CRU_SRST_CON_CNT
+    if (index < CRU_SRST_CON_CNT)
+        return (HAL_Check)((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift);
+    else
+        return (HAL_Check)((PMUCRU->CRU_CLKGATE_CON[index - CRU_SRST_CON_CNT] & (1 << shift)) >> shift);
+#else
+
     return (HAL_Check)((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift);
+#endif
 }
 
 /**
@@ -707,7 +709,14 @@ HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk)
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
 
     HAL_ASSERT(shift < 16);
+#ifdef CRU_SRST_CON_CNT
+    if (index < CRU_SRST_CON_CNT)
+        CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
+    else
+        PMUCRU->CRU_SOFTRST_CON[index - CRU_SRST_CON_CNT] = VAL_MASK_WE(1U << shift, 1U << shift);
+#else
     CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
+#endif
 
     return HAL_OK;
 }
@@ -723,7 +732,14 @@ HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
 
     HAL_ASSERT(shift < 16);
+#ifdef CRU_SRST_CON_CNT
+    if (index < CRU_SRST_CON_CNT)
+        CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
+    else
+        PMUCRU->CRU_SOFTRST_CON[index - CRU_SRST_CON_CNT] = VAL_MASK_WE(1U << shift, 0U << shift);
+#else
     CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
+#endif
 
     return HAL_OK;
 }
@@ -745,7 +761,18 @@ HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
     if (divValue > mask)
         divValue = mask;
 
+#ifdef CRU_CLK_DIV_CON_CNT
+    if (index < CRU_CLK_DIV_CON_CNT)
+        CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
+    else
+#ifdef PMUCRU_BASE
+        PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
+#else
+        CRU->PMU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
+#endif
+#else
     CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
+#endif
 
     return HAL_OK;
 }
@@ -764,7 +791,19 @@ uint32_t HAL_CRU_ClkGetDiv(uint32_t divName)
     HAL_ASSERT(shift < 16);
     mask = CLK_DIV_GET_MASK(divName);
 
+#ifdef CRU_CLK_DIV_CON_CNT
+    if (index < CRU_CLK_DIV_CON_CNT)
+        return ((((CRU->CRU_CLKSEL_CON[index]) & mask) >> shift) + 1);
+    else
+#ifdef PMUCRU_BASE
+        return ((((PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT]) & mask) >> shift) + 1);
+#else
+        return ((((CRU->PMU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT]) & mask) >> shift) + 1);
+#endif
+#else
+
     return ((((CRU->CRU_CLKSEL_CON[index]) & mask) >> shift) + 1);
+#endif
 }
 
 /**
@@ -783,7 +822,18 @@ HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
     HAL_ASSERT(shift < 16);
     mask = CLK_MUX_GET_MASK(muxName);
 
+#ifdef CRU_CLK_SEL_CON_CNT
+    if (index < CRU_CLK_DIV_CON_CNT)
+        CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, muxValue << shift);
+    else
+#ifdef PMUCRU_BASE
+        PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] = VAL_MASK_WE(mask, muxValue << shift);
+#else
+        CRU->PMU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] = VAL_MASK_WE(mask, muxValue << shift);
+#endif
+#else
     CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, muxValue << shift);
+#endif
 
     return HAL_OK;
 }
@@ -803,7 +853,19 @@ uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
     HAL_ASSERT(shift < 16);
     mask = CLK_MUX_GET_MASK(muxName);
 
+#ifdef CRU_CLK_SEL_CON_CNT
+    if (index < CRU_CLK_SEL_CON_CNT)
+        return ((CRU->CRU_CLKSEL_CON[index] & mask) >> shift);
+    else
+#ifdef PMUCRU_BASE
+        return ((PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] & mask) >> shift);
+#else
+        return ((CRU->PMU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] & mask) >> shift);
+#endif
+#else
+
     return ((CRU->CRU_CLKSEL_CON[index] & mask) >> shift);
+#endif
 }
 
 /**
