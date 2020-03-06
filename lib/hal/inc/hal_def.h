@@ -66,6 +66,38 @@
 #define HAL_CACHELINE_ALIGNED
 #endif
 
+#ifdef HAL_SRAM_SECTION_ENABLED
+#define HAL_SECTION_SRAM_CODE   __attribute__((section(".sram_code")))
+#define HAL_SECTION_SRAM_RODATA __attribute__((section(".sram_rodata")))
+#define HAL_SECTION_SRAM_DATA   __attribute__((section(".sram_data")))
+#define HAL_SECTION_SRAM_BSS    __attribute__((section(".sram_bss")))
+#else
+#define HAL_SECTION_SRAM_CODE
+#define HAL_SECTION_SRAM_RODATA
+#define HAL_SECTION_SRAM_DATA
+#define HAL_SECTION_SRAM_BSS
+#endif
+
+#ifdef HAL_PSRAM_SECTION_ENABLED
+#define HAL_SECTION_PSRAM_CODE   __attribute__((section(".psram_code")))
+#define HAL_SECTION_PSRAM_RODATA __attribute__((section(".psram_rodata")))
+#define HAL_SECTION_PSRAM_DATA   __attribute__((section(".psram_data")))
+#define HAL_SECTION_PSRAM_BSS    __attribute__((section(".psram_bss")))
+#else
+#define HAL_SECTION_PSRAM_CODE
+#define HAL_SECTION_PSRAM_RODATA
+#define HAL_SECTION_PSRAM_DATA
+#define HAL_SECTION_PSRAM_BSS
+#endif
+
+#ifdef HAL_XIP_SECTION_ENABLED
+#define HAL_SECTION_XIP_CODE   __attribute__((section(".xip_code")))
+#define HAL_SECTION_XIP_RODATA __attribute__((section(".xip_rodata")))
+#else
+#define HAL_SECTION_XIP_CODE
+#define HAL_SECTION_XIP_RODATA
+#endif
+
 /***************************** Structure Definition **************************/
 typedef enum {
     HAL_FALSE = 0x00U,
