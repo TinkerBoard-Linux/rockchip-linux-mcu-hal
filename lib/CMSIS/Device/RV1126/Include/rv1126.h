@@ -472,7 +472,7 @@ struct MBOX_REG {
 #define I2C3_BASE           0xFF520000U /* I2C3 base address */
 #define I2C4_BASE           0xFF530000U /* I2C4 base address */
 #define I2C5_BASE           0xFF540000U /* I2C5 base address */
-#define SPI1_BASE           0xFF580000U /* SPI1 base address */
+#define SPI1_BASE           0xFF5B0000U /* SPI1 base address */
 #define GPIO1_BASE          0xFF620000U /* GPIO1 base address */
 #define GPIO2_BASE          0xFF630000U /* GPIO2 base address */
 #define GPIO3_BASE          0xFF640000U /* GPIO3 base address */
