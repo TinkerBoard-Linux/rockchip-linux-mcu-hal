@@ -122,7 +122,7 @@ struct FLASH_INFO {
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
-static const struct FLASH_INFO spiFlashbl[] = {
+static const struct FLASH_INFO s_spiFlashbl[] = {
     /* GD25Q32B */
     { 0xc84016, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 13, 9, 0 },
     /* GD25Q64B */
@@ -192,6 +192,13 @@ static const struct FLASH_INFO spiFlashbl[] = {
     /* BH25Q64BS */
     { 0x684017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x04, 14, 9, 0 },
 };
+
+/* Support single line case
+ * - id: get from SPI Nor device information
+ * - capacity: initial by SPI Nor id byte
+ * - QE bits: no need
+ * */
+static struct FLASH_INFO s_commonSpiFlash = { 0, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x00, 0, 0, 0 };
 
 /********************* Private Function Definition ***************************/
 static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
@@ -367,9 +374,9 @@ static const struct FLASH_INFO *SNOR_GerFlashInfo(uint8_t *flashId)
     uint32_t i;
     uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
 
-    for (i = 0; i < HAL_ARRAY_SIZE(spiFlashbl); i++) {
-        if (spiFlashbl[i].id == id)
-            return &spiFlashbl[i];
+    for (i = 0; i < HAL_ARRAY_SIZE(s_spiFlashbl); i++) {
+        if (s_spiFlashbl[i].id == id)
+            return &s_spiFlashbl[i];
     }
 
     return NULL;
@@ -711,85 +718,90 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         return HAL_ERROR;
 
     info = SNOR_GerFlashInfo(idByte);
-    if (info) {
-        nor->info = info;
-        nor->pageSize = 256;
-        nor->addrWidth = 3;
-        nor->eraseOpcodeSec = info->sectorEraseCmd;
-        nor->eraseOpcodeBlk = info->blockEraseCmd;
-        nor->readOpcode = info->readCmd;
-        nor->readProto = SNOR_PROTO_1_1_1;
-        nor->readDummy = 0;
-        nor->programOpcode = info->progCmd;
-        nor->writeProto = SNOR_PROTO_1_1_1;
-        nor->name = "spi-nor";
-        nor->sectorSize = info->sectorSize * 512;
-        nor->size = 1 << (info->density + 9);
-        nor->eraseSize = nor->sectorSize;
-        if (nor->spi->mode & HAL_SPI_RX_QUAD) {
-            ret = HAL_OK;
-            if (info->QEBits)
-                ret = SNOR_EnableQE(nor);
-            if (ret == HAL_OK) {
-                nor->readOpcode = info->readCmd_4;
-                switch (nor->readOpcode) {
-                case SPINOR_OP_READ_1_4_4:
-                    nor->readDummy = 6;
-                    nor->readProto = SNOR_PROTO_1_4_4;
-                    break;
-                default:
-                    nor->readDummy = 8;
-                    nor->readProto = SNOR_PROTO_1_1_4;
-                    break;
-                }
-            }
-        } else if (nor->spi->mode & HAL_SPI_RX_DUAL) {
-            nor->readOpcode = SPINOR_OP_READ_1_1_2;
-            nor->readDummy = 8;
-            nor->readProto = SNOR_PROTO_1_1_2;
-        }
-        if (nor->spi->mode & HAL_SPI_TX_QUAD &&
-            info->QEBits) {
-            if (SNOR_EnableQE(nor) == HAL_OK) {
-                nor->programOpcode = info->progCmd_4;
-                switch (nor->programOpcode) {
-                case SPINOR_OP_PP_1_4_4:
-                    nor->writeProto = SNOR_PROTO_1_4_4;
-                    break;
-                default:
-                    nor->writeProto = SNOR_PROTO_1_1_4;
-                    break;
-                }
-            }
-        }
-        if (info->feature & FEA_4BYTE_ADDR)
-            nor->addrWidth = 4;
+    if (!info) {
+        if (nor->spi->mode & HAL_SPI_RX_QUAD ||
+            nor->spi->mode & HAL_SPI_TX_QUAD)
+            return HAL_NODEV;
+        s_commonSpiFlash.id = (idByte[0] << 16) | (idByte[1] << 8) | idByte[2];
+        s_commonSpiFlash.density = idByte[1] - 9;
+        info = &s_commonSpiFlash;
+    }
 
-        if (info->feature & FEA_4BYTE_ADDR_MODE)
-            SNOR_Enter4byte(nor);
+    nor->info = info;
+    nor->pageSize = 256;
+    nor->addrWidth = 3;
+    nor->eraseOpcodeSec = info->sectorEraseCmd;
+    nor->eraseOpcodeBlk = info->blockEraseCmd;
+    nor->readOpcode = info->readCmd;
+    nor->readProto = SNOR_PROTO_1_1_1;
+    nor->readDummy = 0;
+    nor->programOpcode = info->progCmd;
+    nor->writeProto = SNOR_PROTO_1_1_1;
+    nor->name = "spi-nor";
+    nor->sectorSize = info->sectorSize * 512;
+    nor->size = 1 << (info->density + 9);
+    nor->eraseSize = nor->sectorSize;
+    if (nor->spi->mode & HAL_SPI_RX_QUAD) {
+        ret = HAL_OK;
+        if (info->QEBits)
+            ret = SNOR_EnableQE(nor);
+        if (ret == HAL_OK) {
+            nor->readOpcode = info->readCmd_4;
+            switch (nor->readOpcode) {
+            case SPINOR_OP_READ_1_4_4:
+                nor->readDummy = 6;
+                nor->readProto = SNOR_PROTO_1_4_4;
+                break;
+            default:
+                nor->readDummy = 8;
+                nor->readProto = SNOR_PROTO_1_1_4;
+                break;
+            }
+        }
+    } else if (nor->spi->mode & HAL_SPI_RX_DUAL) {
+        nor->readOpcode = SPINOR_OP_READ_1_1_2;
+        nor->readDummy = 8;
+        nor->readProto = SNOR_PROTO_1_1_2;
+    }
+    if (nor->spi->mode & HAL_SPI_TX_QUAD &&
+        info->QEBits) {
+        if (SNOR_EnableQE(nor) == HAL_OK) {
+            nor->programOpcode = info->progCmd_4;
+            switch (nor->programOpcode) {
+            case SPINOR_OP_PP_1_4_4:
+                nor->writeProto = SNOR_PROTO_1_4_4;
+                break;
+            default:
+                nor->writeProto = SNOR_PROTO_1_1_4;
+                break;
+            }
+        }
+    }
+    if (info->feature & FEA_4BYTE_ADDR)
+        nor->addrWidth = 4;
+
+    if (info->feature & FEA_4BYTE_ADDR_MODE)
+        SNOR_Enter4byte(nor);
 
 #ifdef HAL_SNOR_DEBUG
-        uint8_t status;
+    uint8_t status;
 
-        SNOR_ReadStatus(nor, 0, &status);
-        HAL_SNOR_DBG("status 0 : %x\n", status);
-        SNOR_ReadStatus(nor, 1, &status);
-        HAL_SNOR_DBG("status 1 : %x\n", status);
-        SNOR_ReadStatus(nor, 2, &status);
-        HAL_SNOR_DBG("status 2 : %x\n", status);
+    SNOR_ReadStatus(nor, 0, &status);
+    HAL_SNOR_DBG("status 0 : %x\n", status);
+    SNOR_ReadStatus(nor, 1, &status);
+    HAL_SNOR_DBG("status 1 : %x\n", status);
+    SNOR_ReadStatus(nor, 2, &status);
+    HAL_SNOR_DBG("status 2 : %x\n", status);
 #endif
-        HAL_SNOR_DBG("nor->addrWidth: %x\n", nor->addrWidth);
-        HAL_SNOR_DBG("nor->readProto: %x\n", nor->readProto);
-        HAL_SNOR_DBG("nor->writeProto: %x\n", nor->writeProto);
-        HAL_SNOR_DBG("nor->readCmd: %x\n", nor->readOpcode);
-        HAL_SNOR_DBG("nor->programCmd: %x\n", nor->programOpcode);
-        HAL_SNOR_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
-        HAL_SNOR_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
-        HAL_SNOR_DBG("nor->size: %ldMB\n", nor->size >> 20);
-        HAL_SNOR_DBG("xip enable: %lx\n", nor->spi->mode & HAL_SPI_XIP);
-    } else {
-        return HAL_NODEV;
-    }
+    HAL_SNOR_DBG("nor->addrWidth: %x\n", nor->addrWidth);
+    HAL_SNOR_DBG("nor->readProto: %x\n", nor->readProto);
+    HAL_SNOR_DBG("nor->writeProto: %x\n", nor->writeProto);
+    HAL_SNOR_DBG("nor->readCmd: %x\n", nor->readOpcode);
+    HAL_SNOR_DBG("nor->programCmd: %x\n", nor->programOpcode);
+    HAL_SNOR_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
+    HAL_SNOR_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
+    HAL_SNOR_DBG("nor->size: %ldMB\n", nor->size >> 20);
+    HAL_SNOR_DBG("xip enable: %lx\n", nor->spi->mode & HAL_SPI_XIP);
 
     if (nor->spi->mode & HAL_SPI_XIP)
         SNOR_XipInit(nor);
@@ -874,8 +886,8 @@ HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId)
     uint32_t i;
     uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
 
-    for (i = 0; i < HAL_ARRAY_SIZE(spiFlashbl); i++) {
-        if (spiFlashbl[i].id == id)
+    for (i = 0; i < HAL_ARRAY_SIZE(s_spiFlashbl); i++) {
+        if (s_spiFlashbl[i].id == id)
             return HAL_TRUE;
     }
 
