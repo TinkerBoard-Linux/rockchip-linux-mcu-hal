@@ -361,11 +361,11 @@ struct PMUCRU_REG {
          uint32_t RESERVED002C;                       /* Address Offset: 0x002C */
     __IO uint32_t GPLL_OFFSETCAL_STATUS;              /* Address Offset: 0x0030 */
          uint32_t RESERVED0034[51];                   /* Address Offset: 0x0034 */
-    __IO uint32_t CLKSEL_CON[12];                     /* Address Offset: 0x0100 */
+    __IO uint32_t CRU_CLKSEL_CON[12];                 /* Address Offset: 0x0100 */
          uint32_t RESERVED0138[18];                   /* Address Offset: 0x0138 */
-    __IO uint32_t CLKGATE_CON[3];                     /* Address Offset: 0x0180 */
+    __IO uint32_t CRU_CLKGATE_CON[3];                 /* Address Offset: 0x0180 */
          uint32_t RESERVED018C[29];                   /* Address Offset: 0x018C */
-    __IO uint32_t SOFTRST_CON[2];                     /* Address Offset: 0x0200 */
+    __IO uint32_t CRU_SOFTRST_CON[2];                 /* Address Offset: 0x0200 */
          uint32_t RESERVED0208[14];                   /* Address Offset: 0x0208 */
     __IO uint32_t AUTOCS_PMU_PCLK_CON[2];             /* Address Offset: 0x0240 */
 };
@@ -391,38 +391,7 @@ struct CRU_REG {
          uint32_t RESERVED02E4[7];                    /* Address Offset: 0x02E4 */
     __IO uint32_t CRU_SOFTRST_CON[15];                /* Address Offset: 0x0300 */
          uint32_t RESERVED033C[17];                   /* Address Offset: 0x033C */
-    __IO uint32_t SSCGTBL_CON0;                       /* Address Offset: 0x0380 */
-    __IO uint32_t SSCGTBL_CON1;                       /* Address Offset: 0x0384 */
-    __IO uint32_t SSCGTBL_CON2;                       /* Address Offset: 0x0388 */
-    __IO uint32_t SSCGTBL_CON3;                       /* Address Offset: 0x038C */
-    __IO uint32_t SSCGTBL_CON4;                       /* Address Offset: 0x0390 */
-    __IO uint32_t SSCGTBL_CON5;                       /* Address Offset: 0x0394 */
-    __IO uint32_t SSCGTBL_CON6;                       /* Address Offset: 0x0398 */
-    __IO uint32_t SSCGTBL_CON7;                       /* Address Offset: 0x039C */
-    __IO uint32_t SSCGTBL_CON8;                       /* Address Offset: 0x03A0 */
-    __IO uint32_t SSCGTBL_CON9;                       /* Address Offset: 0x03A4 */
-    __IO uint32_t SSCGTBL_CON10;                      /* Address Offset: 0x03A8 */
-    __IO uint32_t SSCGTBL_CON11;                      /* Address Offset: 0x03AC */
-    __IO uint32_t SSCGTBL_CON12;                      /* Address Offset: 0x03B0 */
-    __IO uint32_t SSCGTBL_CON13;                      /* Address Offset: 0x03B4 */
-    __IO uint32_t SSCGTBL_CON14;                      /* Address Offset: 0x03B8 */
-    __IO uint32_t SSCGTBL_CON15;                      /* Address Offset: 0x03BC */
-    __IO uint32_t SSCGTBL_CON16;                      /* Address Offset: 0x03C0 */
-    __IO uint32_t SSCGTBL_CON17;                      /* Address Offset: 0x03C4 */
-    __IO uint32_t SSCGTBL_CON18;                      /* Address Offset: 0x03C8 */
-    __IO uint32_t SSCGTBL_CON19;                      /* Address Offset: 0x03CC */
-    __IO uint32_t SSCGTBL_CON20;                      /* Address Offset: 0x03D0 */
-    __IO uint32_t SSCGTBL_CON21;                      /* Address Offset: 0x03D4 */
-    __IO uint32_t SSCGTBL_CON22;                      /* Address Offset: 0x03D8 */
-    __IO uint32_t SSCGTBL_CON23;                      /* Address Offset: 0x03DC */
-    __IO uint32_t SSCGTBL_CON24;                      /* Address Offset: 0x03E0 */
-    __IO uint32_t SSCGTBL_CON25;                      /* Address Offset: 0x03E4 */
-    __IO uint32_t SSCGTBL_CON26;                      /* Address Offset: 0x03E8 */
-    __IO uint32_t SSCGTBL_CON27;                      /* Address Offset: 0x03EC */
-    __IO uint32_t SSCGTBL_CON28;                      /* Address Offset: 0x03F0 */
-    __IO uint32_t SSCGTBL_CON29;                      /* Address Offset: 0x03F4 */
-    __IO uint32_t SSCGTBL_CON30;                      /* Address Offset: 0x03F8 */
-    __IO uint32_t SSCGTBL_CON31;                      /* Address Offset: 0x03FC */
+    __IO uint32_t SSCGTBL_CON[32];                    /* Address Offset: 0x0380 */
     __IO uint32_t GLB_CNT_TH;                         /* Address Offset: 0x0400 */
     __IO uint32_t GLB_RST_ST;                         /* Address Offset: 0x0404 */
     __IO uint32_t GLB_SRST_FST_VALUE;                 /* Address Offset: 0x0408 */
@@ -5559,8 +5528,8 @@ struct MBOX_REG {
 #define CRU_GATE_CON18_HCLK_PDNVM_EN_MASK                  (0x1U << CRU_GATE_CON18_HCLK_PDNVM_EN_SHIFT)                 /* 0x00000002 */
 #define CRU_GATE_CON18_HCLK_PDNVM_NIU_EN_SHIFT             (3U)
 #define CRU_GATE_CON18_HCLK_PDNVM_NIU_EN_MASK              (0x1U << CRU_GATE_CON18_HCLK_PDNVM_NIU_EN_SHIFT)             /* 0x00000008 */
-#define CRU_GATE_CON18_HCLK_SDCARD_EN_SHIFT                (4U)
-#define CRU_GATE_CON18_HCLK_SDCARD_EN_MASK                 (0x1U << CRU_GATE_CON18_HCLK_SDCARD_EN_SHIFT)                /* 0x00000010 */
+#define CRU_GATE_CON18_HCLK_SDMMC_EN_SHIFT                 (4U)
+#define CRU_GATE_CON18_HCLK_SDMMC_EN_MASK                  (0x1U << CRU_GATE_CON18_HCLK_SDMMC_EN_SHIFT)                 /* 0x00000010 */
 #define CRU_GATE_CON18_CCLKIN_SDMMC_EN_SHIFT               (5U)
 #define CRU_GATE_CON18_CCLKIN_SDMMC_EN_MASK                (0x1U << CRU_GATE_CON18_CCLKIN_SDMMC_EN_SHIFT)               /* 0x00000020 */
 #define CRU_GATE_CON18_HCLK_SDIO_EN_SHIFT                  (6U)
@@ -6113,8 +6082,8 @@ struct MBOX_REG {
 #define CRU_SOFTRST_CON11_ARESETN_PDGMAC_NIU_MASK          (0x1U << CRU_SOFTRST_CON11_ARESETN_PDGMAC_NIU_SHIFT)         /* 0x00001000 */
 #define CRU_SOFTRST_CON11_PRESETN_PDGMAC_NIU_SHIFT         (13U)
 #define CRU_SOFTRST_CON11_PRESETN_PDGMAC_NIU_MASK          (0x1U << CRU_SOFTRST_CON11_PRESETN_PDGMAC_NIU_SHIFT)         /* 0x00002000 */
-#define CRU_SOFTRST_CON11_RESETN_MAC_PTPREF_SHIFT          (14U)
-#define CRU_SOFTRST_CON11_RESETN_MAC_PTPREF_MASK           (0x1U << CRU_SOFTRST_CON11_RESETN_MAC_PTPREF_SHIFT)          /* 0x00004000 */
+#define CRU_SOFTRST_CON11_ARESETN_GMAC_REQ_SHIFT           (14U)
+#define CRU_SOFTRST_CON11_ARESETN_GMAC_REQ_MASK            (0x1U << CRU_SOFTRST_CON11_ARESETN_GMAC_REQ_SHIFT)           /* 0x00004000 */
 /* SOFTRST_CON12 */
 #define CRU_SOFTRST_CON12_OFFSET                           (0x330U)
 #define CRU_SOFTRST_CON12_PRESETN_DDR_DFICTL_SHIFT         (1U)
