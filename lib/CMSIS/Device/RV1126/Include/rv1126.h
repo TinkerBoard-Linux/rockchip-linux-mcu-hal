@@ -293,6 +293,52 @@ struct I2C_REG {
     __I  uint32_t ST;                                 /* Address Offset: 0x0220 */
     __IO uint32_t DBGCTRL;                            /* Address Offset: 0x0224 */
 };
+/* UART Register Structure Define */
+struct UART_REG {
+    union {
+        __I  uint32_t RBR;                                /* Address Offset: 0x0000 */
+        __IO uint32_t DLL;                                /* Address Offset: 0x0000 */
+        __O  uint32_t THR;                                /* Address Offset: 0x0000 */
+    };
+    union {
+        __IO uint32_t DLH;                                /* Address Offset: 0x0004 */
+        __IO uint32_t IER;                                /* Address Offset: 0x0004 */
+    };
+    union {
+        __O  uint32_t FCR;                                /* Address Offset: 0x0008 */
+        __I  uint32_t IIR;                                /* Address Offset: 0x0008 */
+    };
+    __IO uint32_t LCR;                                /* Address Offset: 0x000C */
+    __IO uint32_t MCR;                                /* Address Offset: 0x0010 */
+    __I  uint32_t LSR;                                /* Address Offset: 0x0014 */
+    __I  uint32_t MSR;                                /* Address Offset: 0x0018 */
+    __IO uint32_t SCR;                                /* Address Offset: 0x001C */
+         uint32_t RESERVED0020[4];                    /* Address Offset: 0x0020 */
+    union {
+        __I  uint32_t SRBR;                               /* Address Offset: 0x0030 */
+        __O  uint32_t STHR;                               /* Address Offset: 0x0030 */
+    };
+         uint32_t RESERVED0034[15];                   /* Address Offset: 0x0034 */
+    __IO uint32_t FAR;                                /* Address Offset: 0x0070 */
+    __I  uint32_t TFR;                                /* Address Offset: 0x0074 */
+    __O  uint32_t RFW;                                /* Address Offset: 0x0078 */
+    __I  uint32_t USR;                                /* Address Offset: 0x007C */
+    __I  uint32_t TFL;                                /* Address Offset: 0x0080 */
+    __I  uint32_t RFL;                                /* Address Offset: 0x0084 */
+    __O  uint32_t SRR;                                /* Address Offset: 0x0088 */
+    __IO uint32_t SRTS;                               /* Address Offset: 0x008C */
+    __IO uint32_t SBCR;                               /* Address Offset: 0x0090 */
+    __IO uint32_t SDMAM;                              /* Address Offset: 0x0094 */
+    __IO uint32_t SFE;                                /* Address Offset: 0x0098 */
+    __IO uint32_t SRT;                                /* Address Offset: 0x009C */
+    __IO uint32_t STET;                               /* Address Offset: 0x00A0 */
+    __IO uint32_t HTX;                                /* Address Offset: 0x00A4 */
+    __O  uint32_t DMASA;                              /* Address Offset: 0x00A8 */
+         uint32_t RESERVED00AC[18];                   /* Address Offset: 0x00AC */
+    __I  uint32_t CPR;                                /* Address Offset: 0x00F4 */
+    __I  uint32_t UCV;                                /* Address Offset: 0x00F8 */
+    __I  uint32_t CTR;                                /* Address Offset: 0x00FC */
+};
 /* SPI Register Structure Define */
 struct SPI_REG {
     __IO uint32_t CTRLR[2];                           /* Address Offset: 0x0000 */
@@ -433,6 +479,7 @@ struct MBOX_REG {
 #define PMU_BASE            0xFF3E0000U /* PMU base address */
 #define I2C0_BASE           0xFF3F0000U /* I2C0 base address */
 #define I2C2_BASE           0xFF400000U /* I2C2 base address */
+#define UART1_BASE          0xFF410000U /* UART1 base address */
 #define SPI0_BASE           0xFF450000U /* SPI0 base address */
 #define GPIO0_BASE          0xFF460000U /* GPIO0 base address */
 #define PMUCRU_BASE         0xFF480000U /* PMUCRU base address */
@@ -441,6 +488,11 @@ struct MBOX_REG {
 #define I2C3_BASE           0xFF520000U /* I2C3 base address */
 #define I2C4_BASE           0xFF530000U /* I2C4 base address */
 #define I2C5_BASE           0xFF540000U /* I2C5 base address */
+#define UART0_BASE          0xFF560000U /* UART0 base address */
+#define UART2_BASE          0xFF570000U /* UART2 base address */
+#define UART3_BASE          0xFF580000U /* UART3 base address */
+#define UART4_BASE          0xFF590000U /* UART4 base address */
+#define UART5_BASE          0xFF5A0000U /* UART5 base address */
 #define SPI1_BASE           0xFF5B0000U /* SPI1 base address */
 #define GPIO1_BASE          0xFF620000U /* GPIO1 base address */
 #define GPIO2_BASE          0xFF630000U /* GPIO2 base address */
@@ -458,6 +510,7 @@ struct MBOX_REG {
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define I2C0                ((struct I2C_REG *) I2C0_BASE)
 #define I2C2                ((struct I2C_REG *) I2C2_BASE)
+#define UART1               ((struct UART_REG *) UART1_BASE)
 #define SPI0                ((struct SPI_REG *) SPI0_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define PMUCRU              ((struct PMUCRU_REG *) PMUCRU_BASE)
@@ -466,6 +519,11 @@ struct MBOX_REG {
 #define I2C3                ((struct I2C_REG *) I2C3_BASE)
 #define I2C4                ((struct I2C_REG *) I2C4_BASE)
 #define I2C5                ((struct I2C_REG *) I2C5_BASE)
+#define UART0               ((struct UART_REG *) UART0_BASE)
+#define UART2               ((struct UART_REG *) UART2_BASE)
+#define UART3               ((struct UART_REG *) UART3_BASE)
+#define UART4               ((struct UART_REG *) UART4_BASE)
+#define UART5               ((struct UART_REG *) UART5_BASE)
 #define SPI1                ((struct SPI_REG *) SPI1_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
@@ -479,6 +537,7 @@ struct MBOX_REG {
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX)
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C2) || ((instance) == I2C1) || ((instance) == I2C3) || ((instance) == I2C4) || ((instance) == I2C5))
+#define IS_UART_INSTANCE(instance) (((instance) == UART1) || ((instance) == UART0) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
 /****************************************************************************************/
@@ -3598,6 +3657,255 @@ struct MBOX_REG {
 #define I2C_DBGCTRL_NAK_RELEASE_SCL_MASK                   (0x1U << I2C_DBGCTRL_NAK_RELEASE_SCL_SHIFT)                  /* 0x00002000 */
 #define I2C_DBGCTRL_H0_CHECK_SCL_SHIFT                     (14U)
 #define I2C_DBGCTRL_H0_CHECK_SCL_MASK                      (0x1U << I2C_DBGCTRL_H0_CHECK_SCL_SHIFT)                     /* 0x00004000 */
+/******************************************UART******************************************/
+/* RBR */
+#define UART_RBR_OFFSET                                    (0x0U)
+#define UART_RBR                                           (0x0U)
+#define UART_RBR_DATA_INPUT_SHIFT                          (0U)
+#define UART_RBR_DATA_INPUT_MASK                           (0xFFU << UART_RBR_DATA_INPUT_SHIFT)                         /* 0x000000FF */
+/* DLL */
+#define UART_DLL_OFFSET                                    (0x0U)
+#define UART_DLL_BAUD_RATE_DIVISOR_L_SHIFT                 (0U)
+#define UART_DLL_BAUD_RATE_DIVISOR_L_MASK                  (0xFFU << UART_DLL_BAUD_RATE_DIVISOR_L_SHIFT)                /* 0x000000FF */
+/* THR */
+#define UART_THR_OFFSET                                    (0x0U)
+#define UART_THR_DATA_OUTPUT_SHIFT                         (0U)
+#define UART_THR_DATA_OUTPUT_MASK                          (0xFFU << UART_THR_DATA_OUTPUT_SHIFT)                        /* 0x000000FF */
+/* DLH */
+#define UART_DLH_OFFSET                                    (0x4U)
+#define UART_DLH_BAUD_RATE_DIVISOR_H_SHIFT                 (0U)
+#define UART_DLH_BAUD_RATE_DIVISOR_H_MASK                  (0xFFU << UART_DLH_BAUD_RATE_DIVISOR_H_SHIFT)                /* 0x000000FF */
+/* IER */
+#define UART_IER_OFFSET                                    (0x4U)
+#define UART_IER_RECEIVE_DATA_AVAILABLE_INT_EN_SHIFT       (0U)
+#define UART_IER_RECEIVE_DATA_AVAILABLE_INT_EN_MASK        (0x1U << UART_IER_RECEIVE_DATA_AVAILABLE_INT_EN_SHIFT)       /* 0x00000001 */
+#define UART_IER_TRANS_HOLD_EMPTY_INT_EN_SHIFT             (1U)
+#define UART_IER_TRANS_HOLD_EMPTY_INT_EN_MASK              (0x1U << UART_IER_TRANS_HOLD_EMPTY_INT_EN_SHIFT)             /* 0x00000002 */
+#define UART_IER_RECEIVE_LINE_STATUS_INT_EN_SHIFT          (2U)
+#define UART_IER_RECEIVE_LINE_STATUS_INT_EN_MASK           (0x1U << UART_IER_RECEIVE_LINE_STATUS_INT_EN_SHIFT)          /* 0x00000004 */
+#define UART_IER_MODEM_STATUS_INT_EN_SHIFT                 (3U)
+#define UART_IER_MODEM_STATUS_INT_EN_MASK                  (0x1U << UART_IER_MODEM_STATUS_INT_EN_SHIFT)                 /* 0x00000008 */
+#define UART_IER_PROG_THRE_INT_EN_SHIFT                    (7U)
+#define UART_IER_PROG_THRE_INT_EN_MASK                     (0x1U << UART_IER_PROG_THRE_INT_EN_SHIFT)                    /* 0x00000080 */
+/* FCR */
+#define UART_FCR_OFFSET                                    (0x8U)
+#define UART_FCR_FIFO_EN_SHIFT                             (0U)
+#define UART_FCR_FIFO_EN_MASK                              (0x1U << UART_FCR_FIFO_EN_SHIFT)                             /* 0x00000001 */
+#define UART_FCR_RCVR_FIFO_RESET_SHIFT                     (1U)
+#define UART_FCR_RCVR_FIFO_RESET_MASK                      (0x1U << UART_FCR_RCVR_FIFO_RESET_SHIFT)                     /* 0x00000002 */
+#define UART_FCR_XMIT_FIFO_RESET_SHIFT                     (2U)
+#define UART_FCR_XMIT_FIFO_RESET_MASK                      (0x1U << UART_FCR_XMIT_FIFO_RESET_SHIFT)                     /* 0x00000004 */
+#define UART_FCR_DMA_MODE_SHIFT                            (3U)
+#define UART_FCR_DMA_MODE_MASK                             (0x1U << UART_FCR_DMA_MODE_SHIFT)                            /* 0x00000008 */
+#define UART_FCR_TX_EMPTY_TRIGGER_SHIFT                    (4U)
+#define UART_FCR_TX_EMPTY_TRIGGER_MASK                     (0x3U << UART_FCR_TX_EMPTY_TRIGGER_SHIFT)                    /* 0x00000030 */
+#define UART_FCR_RCVR_TRIGGER_SHIFT                        (6U)
+#define UART_FCR_RCVR_TRIGGER_MASK                         (0x3U << UART_FCR_RCVR_TRIGGER_SHIFT)                        /* 0x000000C0 */
+/* IIR */
+#define UART_IIR_OFFSET                                    (0x8U)
+#define UART_IIR                                           (0x1U)
+#define UART_IIR_INT_ID_SHIFT                              (0U)
+#define UART_IIR_INT_ID_MASK                               (0xFU << UART_IIR_INT_ID_SHIFT)                              /* 0x0000000F */
+#define UART_IIR_FIFOS_EN_SHIFT                            (6U)
+#define UART_IIR_FIFOS_EN_MASK                             (0x3U << UART_IIR_FIFOS_EN_SHIFT)                            /* 0x000000C0 */
+/* LCR */
+#define UART_LCR_OFFSET                                    (0xCU)
+#define UART_LCR_DATA_LENGTH_SEL_SHIFT                     (0U)
+#define UART_LCR_DATA_LENGTH_SEL_MASK                      (0x3U << UART_LCR_DATA_LENGTH_SEL_SHIFT)                     /* 0x00000003 */
+#define UART_LCR_STOP_BITS_NUM_SHIFT                       (2U)
+#define UART_LCR_STOP_BITS_NUM_MASK                        (0x1U << UART_LCR_STOP_BITS_NUM_SHIFT)                       /* 0x00000004 */
+#define UART_LCR_PARITY_EN_SHIFT                           (3U)
+#define UART_LCR_PARITY_EN_MASK                            (0x1U << UART_LCR_PARITY_EN_SHIFT)                           /* 0x00000008 */
+#define UART_LCR_EVEN_PARITY_SEL_SHIFT                     (4U)
+#define UART_LCR_EVEN_PARITY_SEL_MASK                      (0x1U << UART_LCR_EVEN_PARITY_SEL_SHIFT)                     /* 0x00000010 */
+#define UART_LCR_BREAK_CTRL_SHIFT                          (6U)
+#define UART_LCR_BREAK_CTRL_MASK                           (0x1U << UART_LCR_BREAK_CTRL_SHIFT)                          /* 0x00000040 */
+#define UART_LCR_DIV_LAT_ACCESS_SHIFT                      (7U)
+#define UART_LCR_DIV_LAT_ACCESS_MASK                       (0x1U << UART_LCR_DIV_LAT_ACCESS_SHIFT)                      /* 0x00000080 */
+/* MCR */
+#define UART_MCR_OFFSET                                    (0x10U)
+#define UART_MCR_DATA_TERMINAL_READY_SHIFT                 (0U)
+#define UART_MCR_DATA_TERMINAL_READY_MASK                  (0x1U << UART_MCR_DATA_TERMINAL_READY_SHIFT)                 /* 0x00000001 */
+#define UART_MCR_REQ_TO_SEND_SHIFT                         (1U)
+#define UART_MCR_REQ_TO_SEND_MASK                          (0x1U << UART_MCR_REQ_TO_SEND_SHIFT)                         /* 0x00000002 */
+#define UART_MCR_OUT1_SHIFT                                (2U)
+#define UART_MCR_OUT1_MASK                                 (0x1U << UART_MCR_OUT1_SHIFT)                                /* 0x00000004 */
+#define UART_MCR_OUT2_SHIFT                                (3U)
+#define UART_MCR_OUT2_MASK                                 (0x1U << UART_MCR_OUT2_SHIFT)                                /* 0x00000008 */
+#define UART_MCR_LOOPBACK_SHIFT                            (4U)
+#define UART_MCR_LOOPBACK_MASK                             (0x1U << UART_MCR_LOOPBACK_SHIFT)                            /* 0x00000010 */
+#define UART_MCR_AUTO_FLOW_CTRL_EN_SHIFT                   (5U)
+#define UART_MCR_AUTO_FLOW_CTRL_EN_MASK                    (0x1U << UART_MCR_AUTO_FLOW_CTRL_EN_SHIFT)                   /* 0x00000020 */
+#define UART_MCR_SIR_MODE_EN_SHIFT                         (6U)
+#define UART_MCR_SIR_MODE_EN_MASK                          (0x1U << UART_MCR_SIR_MODE_EN_SHIFT)                         /* 0x00000040 */
+/* LSR */
+#define UART_LSR_OFFSET                                    (0x14U)
+#define UART_LSR                                           (0x60U)
+#define UART_LSR_DATA_READY_SHIFT                          (0U)
+#define UART_LSR_DATA_READY_MASK                           (0x1U << UART_LSR_DATA_READY_SHIFT)                          /* 0x00000001 */
+#define UART_LSR_OVERRUN_ERROR_SHIFT                       (1U)
+#define UART_LSR_OVERRUN_ERROR_MASK                        (0x1U << UART_LSR_OVERRUN_ERROR_SHIFT)                       /* 0x00000002 */
+#define UART_LSR_PARITY_EROR_SHIFT                         (2U)
+#define UART_LSR_PARITY_EROR_MASK                          (0x1U << UART_LSR_PARITY_EROR_SHIFT)                         /* 0x00000004 */
+#define UART_LSR_FRAMING_ERROR_SHIFT                       (3U)
+#define UART_LSR_FRAMING_ERROR_MASK                        (0x1U << UART_LSR_FRAMING_ERROR_SHIFT)                       /* 0x00000008 */
+#define UART_LSR_BREAK_INT_SHIFT                           (4U)
+#define UART_LSR_BREAK_INT_MASK                            (0x1U << UART_LSR_BREAK_INT_SHIFT)                           /* 0x00000010 */
+#define UART_LSR_TRANS_HOLD_REG_EMPTY_SHIFT                (5U)
+#define UART_LSR_TRANS_HOLD_REG_EMPTY_MASK                 (0x1U << UART_LSR_TRANS_HOLD_REG_EMPTY_SHIFT)                /* 0x00000020 */
+#define UART_LSR_TRANS_EMPTY_SHIFT                         (6U)
+#define UART_LSR_TRANS_EMPTY_MASK                          (0x1U << UART_LSR_TRANS_EMPTY_SHIFT)                         /* 0x00000040 */
+#define UART_LSR_RECEIVER_FIFO_ERROR_SHIFT                 (7U)
+#define UART_LSR_RECEIVER_FIFO_ERROR_MASK                  (0x1U << UART_LSR_RECEIVER_FIFO_ERROR_SHIFT)                 /* 0x00000080 */
+/* MSR */
+#define UART_MSR_OFFSET                                    (0x18U)
+#define UART_MSR                                           (0x0U)
+#define UART_MSR_DELTA_CLEAR_TO_SEND_SHIFT                 (0U)
+#define UART_MSR_DELTA_CLEAR_TO_SEND_MASK                  (0x1U << UART_MSR_DELTA_CLEAR_TO_SEND_SHIFT)                 /* 0x00000001 */
+#define UART_MSR_DELTA_DATA_SET_READY_SHIFT                (1U)
+#define UART_MSR_DELTA_DATA_SET_READY_MASK                 (0x1U << UART_MSR_DELTA_DATA_SET_READY_SHIFT)                /* 0x00000002 */
+#define UART_MSR_TRAILING_EDGE_RING_INDICATOR_SHIFT        (2U)
+#define UART_MSR_TRAILING_EDGE_RING_INDICATOR_MASK         (0x1U << UART_MSR_TRAILING_EDGE_RING_INDICATOR_SHIFT)        /* 0x00000004 */
+#define UART_MSR_DELTA_DATA_CARRIER_DETECT_SHIFT           (3U)
+#define UART_MSR_DELTA_DATA_CARRIER_DETECT_MASK            (0x1U << UART_MSR_DELTA_DATA_CARRIER_DETECT_SHIFT)           /* 0x00000008 */
+#define UART_MSR_CLEAR_TO_SEND_SHIFT                       (4U)
+#define UART_MSR_CLEAR_TO_SEND_MASK                        (0x1U << UART_MSR_CLEAR_TO_SEND_SHIFT)                       /* 0x00000010 */
+#define UART_MSR_DATA_SET_READY_SHIFT                      (5U)
+#define UART_MSR_DATA_SET_READY_MASK                       (0x1U << UART_MSR_DATA_SET_READY_SHIFT)                      /* 0x00000020 */
+#define UART_MSR_RING_INDICATOR_SHIFT                      (6U)
+#define UART_MSR_RING_INDICATOR_MASK                       (0x1U << UART_MSR_RING_INDICATOR_SHIFT)                      /* 0x00000040 */
+#define UART_MSR_DATA_CARRIOR_DETECT_SHIFT                 (7U)
+#define UART_MSR_DATA_CARRIOR_DETECT_MASK                  (0x1U << UART_MSR_DATA_CARRIOR_DETECT_SHIFT)                 /* 0x00000080 */
+/* SCR */
+#define UART_SCR_OFFSET                                    (0x1CU)
+#define UART_SCR_TEMP_STORE_SPACE_SHIFT                    (0U)
+#define UART_SCR_TEMP_STORE_SPACE_MASK                     (0xFFU << UART_SCR_TEMP_STORE_SPACE_SHIFT)                   /* 0x000000FF */
+/* SRBR */
+#define UART_SRBR_OFFSET                                   (0x30U)
+#define UART_SRBR                                          (0x0U)
+#define UART_SRBR_SHADOW_RBR_SHIFT                         (0U)
+#define UART_SRBR_SHADOW_RBR_MASK                          (0xFFU << UART_SRBR_SHADOW_RBR_SHIFT)                        /* 0x000000FF */
+/* STHR */
+#define UART_STHR_OFFSET                                   (0x30U)
+#define UART_STHR_SHADOW_THR_SHIFT                         (0U)
+#define UART_STHR_SHADOW_THR_MASK                          (0xFFU << UART_STHR_SHADOW_THR_SHIFT)                        /* 0x000000FF */
+/* FAR */
+#define UART_FAR_OFFSET                                    (0x70U)
+#define UART_FAR_FIFO_ACCESS_TEST_EN_SHIFT                 (0U)
+#define UART_FAR_FIFO_ACCESS_TEST_EN_MASK                  (0x1U << UART_FAR_FIFO_ACCESS_TEST_EN_SHIFT)                 /* 0x00000001 */
+/* TFR */
+#define UART_TFR_OFFSET                                    (0x74U)
+#define UART_TFR                                           (0x0U)
+#define UART_TFR_TRANS_FIFO_READ_SHIFT                     (0U)
+#define UART_TFR_TRANS_FIFO_READ_MASK                      (0xFFU << UART_TFR_TRANS_FIFO_READ_SHIFT)                    /* 0x000000FF */
+/* RFW */
+#define UART_RFW_OFFSET                                    (0x78U)
+#define UART_RFW_RECEIVE_FIFO_WRITE_SHIFT                  (0U)
+#define UART_RFW_RECEIVE_FIFO_WRITE_MASK                   (0xFFU << UART_RFW_RECEIVE_FIFO_WRITE_SHIFT)                 /* 0x000000FF */
+#define UART_RFW_RECEIVE_FIFO_PARITY_ERROR_SHIFT           (8U)
+#define UART_RFW_RECEIVE_FIFO_PARITY_ERROR_MASK            (0x1U << UART_RFW_RECEIVE_FIFO_PARITY_ERROR_SHIFT)           /* 0x00000100 */
+#define UART_RFW_RECEIVE_FIFO_FRAMING_ERROR_SHIFT          (9U)
+#define UART_RFW_RECEIVE_FIFO_FRAMING_ERROR_MASK           (0x1U << UART_RFW_RECEIVE_FIFO_FRAMING_ERROR_SHIFT)          /* 0x00000200 */
+/* USR */
+#define UART_USR_OFFSET                                    (0x7CU)
+#define UART_USR                                           (0x6U)
+#define UART_USR_UART_BUSY_SHIFT                           (0U)
+#define UART_USR_UART_BUSY_MASK                            (0x1U << UART_USR_UART_BUSY_SHIFT)                           /* 0x00000001 */
+#define UART_USR_TRANS_FIFO_NOT_FULL_SHIFT                 (1U)
+#define UART_USR_TRANS_FIFO_NOT_FULL_MASK                  (0x1U << UART_USR_TRANS_FIFO_NOT_FULL_SHIFT)                 /* 0x00000002 */
+#define UART_USR_TRASN_FIFO_EMPTY_SHIFT                    (2U)
+#define UART_USR_TRASN_FIFO_EMPTY_MASK                     (0x1U << UART_USR_TRASN_FIFO_EMPTY_SHIFT)                    /* 0x00000004 */
+#define UART_USR_RECEIVE_FIFO_NOT_EMPTY_SHIFT              (3U)
+#define UART_USR_RECEIVE_FIFO_NOT_EMPTY_MASK               (0x1U << UART_USR_RECEIVE_FIFO_NOT_EMPTY_SHIFT)              /* 0x00000008 */
+#define UART_USR_RECEIVE_FIFO_FULL_SHIFT                   (4U)
+#define UART_USR_RECEIVE_FIFO_FULL_MASK                    (0x1U << UART_USR_RECEIVE_FIFO_FULL_SHIFT)                   /* 0x00000010 */
+/* TFL */
+#define UART_TFL_OFFSET                                    (0x80U)
+#define UART_TFL                                           (0x0U)
+#define UART_TFL_TRANS_FIFO_LEVEL_SHIFT                    (0U)
+#define UART_TFL_TRANS_FIFO_LEVEL_MASK                     (0x3FU << UART_TFL_TRANS_FIFO_LEVEL_SHIFT)                   /* 0x0000003F */
+/* RFL */
+#define UART_RFL_OFFSET                                    (0x84U)
+#define UART_RFL                                           (0x0U)
+#define UART_RFL_RECEIVE_FIFO_LEVEL_SHIFT                  (0U)
+#define UART_RFL_RECEIVE_FIFO_LEVEL_MASK                   (0x3FU << UART_RFL_RECEIVE_FIFO_LEVEL_SHIFT)                 /* 0x0000003F */
+/* SRR */
+#define UART_SRR_OFFSET                                    (0x88U)
+#define UART_SRR_UART_RESET_SHIFT                          (0U)
+#define UART_SRR_UART_RESET_MASK                           (0x1U << UART_SRR_UART_RESET_SHIFT)                          /* 0x00000001 */
+#define UART_SRR_RCVR_FIFO_RESET_SHIFT                     (1U)
+#define UART_SRR_RCVR_FIFO_RESET_MASK                      (0x1U << UART_SRR_RCVR_FIFO_RESET_SHIFT)                     /* 0x00000002 */
+#define UART_SRR_XMIT_FIFO_RESET_SHIFT                     (2U)
+#define UART_SRR_XMIT_FIFO_RESET_MASK                      (0x1U << UART_SRR_XMIT_FIFO_RESET_SHIFT)                     /* 0x00000004 */
+/* SRTS */
+#define UART_SRTS_OFFSET                                   (0x8CU)
+#define UART_SRTS_SHADOW_REQ_TO_SEND_SHIFT                 (0U)
+#define UART_SRTS_SHADOW_REQ_TO_SEND_MASK                  (0x1U << UART_SRTS_SHADOW_REQ_TO_SEND_SHIFT)                 /* 0x00000001 */
+/* SBCR */
+#define UART_SBCR_OFFSET                                   (0x90U)
+#define UART_SBCR_SHADOW_BREAK_CTRL_SHIFT                  (0U)
+#define UART_SBCR_SHADOW_BREAK_CTRL_MASK                   (0x1U << UART_SBCR_SHADOW_BREAK_CTRL_SHIFT)                  /* 0x00000001 */
+/* SDMAM */
+#define UART_SDMAM_OFFSET                                  (0x94U)
+#define UART_SDMAM_SHADOW_DMA_MODE_SHIFT                   (0U)
+#define UART_SDMAM_SHADOW_DMA_MODE_MASK                    (0x1U << UART_SDMAM_SHADOW_DMA_MODE_SHIFT)                   /* 0x00000001 */
+/* SFE */
+#define UART_SFE_OFFSET                                    (0x98U)
+#define UART_SFE_SHADOW_FIFO_EN_SHIFT                      (0U)
+#define UART_SFE_SHADOW_FIFO_EN_MASK                       (0x1U << UART_SFE_SHADOW_FIFO_EN_SHIFT)                      /* 0x00000001 */
+/* SRT */
+#define UART_SRT_OFFSET                                    (0x9CU)
+#define UART_SRT_SHADOW_RCVR_TRIGGER_SHIFT                 (0U)
+#define UART_SRT_SHADOW_RCVR_TRIGGER_MASK                  (0x3U << UART_SRT_SHADOW_RCVR_TRIGGER_SHIFT)                 /* 0x00000003 */
+/* STET */
+#define UART_STET_OFFSET                                   (0xA0U)
+#define UART_STET_SHADOW_TX_EMPTY_TRIGGER_SHIFT            (0U)
+#define UART_STET_SHADOW_TX_EMPTY_TRIGGER_MASK             (0x3U << UART_STET_SHADOW_TX_EMPTY_TRIGGER_SHIFT)            /* 0x00000003 */
+/* HTX */
+#define UART_HTX_OFFSET                                    (0xA4U)
+#define UART_HTX_HALT_TX_EN_SHIFT                          (0U)
+#define UART_HTX_HALT_TX_EN_MASK                           (0x1U << UART_HTX_HALT_TX_EN_SHIFT)                          /* 0x00000001 */
+/* DMASA */
+#define UART_DMASA_OFFSET                                  (0xA8U)
+#define UART_DMASA_DMA_SOFTWARE_ACK_SHIFT                  (0U)
+#define UART_DMASA_DMA_SOFTWARE_ACK_MASK                   (0x1U << UART_DMASA_DMA_SOFTWARE_ACK_SHIFT)                  /* 0x00000001 */
+/* CPR */
+#define UART_CPR_OFFSET                                    (0xF4U)
+#define UART_CPR                                           (0x0U)
+#define UART_CPR_APB_DATA_WIDTH_SHIFT                      (0U)
+#define UART_CPR_APB_DATA_WIDTH_MASK                       (0x3U << UART_CPR_APB_DATA_WIDTH_SHIFT)                      /* 0x00000003 */
+#define UART_CPR_AFCE_MODE_SHIFT                           (4U)
+#define UART_CPR_AFCE_MODE_MASK                            (0x1U << UART_CPR_AFCE_MODE_SHIFT)                           /* 0x00000010 */
+#define UART_CPR_THRE_MODE_SHIFT                           (5U)
+#define UART_CPR_THRE_MODE_MASK                            (0x1U << UART_CPR_THRE_MODE_SHIFT)                           /* 0x00000020 */
+#define UART_CPR_SIR_MODE_SHIFT                            (6U)
+#define UART_CPR_SIR_MODE_MASK                             (0x1U << UART_CPR_SIR_MODE_SHIFT)                            /* 0x00000040 */
+#define UART_CPR_SIR_LP_MODE_SHIFT                         (7U)
+#define UART_CPR_SIR_LP_MODE_MASK                          (0x1U << UART_CPR_SIR_LP_MODE_SHIFT)                         /* 0x00000080 */
+#define UART_CPR_NEW_FEAT_SHIFT                            (8U)
+#define UART_CPR_NEW_FEAT_MASK                             (0x1U << UART_CPR_NEW_FEAT_SHIFT)                            /* 0x00000100 */
+#define UART_CPR_FIFO_ACCESS_SHIFT                         (9U)
+#define UART_CPR_FIFO_ACCESS_MASK                          (0x1U << UART_CPR_FIFO_ACCESS_SHIFT)                         /* 0x00000200 */
+#define UART_CPR_FIFO_STAT_SHIFT                           (10U)
+#define UART_CPR_FIFO_STAT_MASK                            (0x1U << UART_CPR_FIFO_STAT_SHIFT)                           /* 0x00000400 */
+#define UART_CPR_SHADOW_SHIFT                              (11U)
+#define UART_CPR_SHADOW_MASK                               (0x1U << UART_CPR_SHADOW_SHIFT)                              /* 0x00000800 */
+#define UART_CPR_UART_ADD_ENCODED_PARAMS_SHIFT             (12U)
+#define UART_CPR_UART_ADD_ENCODED_PARAMS_MASK              (0x1U << UART_CPR_UART_ADD_ENCODED_PARAMS_SHIFT)             /* 0x00001000 */
+#define UART_CPR_DMA_EXTRA_SHIFT                           (13U)
+#define UART_CPR_DMA_EXTRA_MASK                            (0x1U << UART_CPR_DMA_EXTRA_SHIFT)                           /* 0x00002000 */
+#define UART_CPR_FIFO_MODE_SHIFT                           (16U)
+#define UART_CPR_FIFO_MODE_MASK                            (0xFFU << UART_CPR_FIFO_MODE_SHIFT)                          /* 0x00FF0000 */
+/* UCV */
+#define UART_UCV_OFFSET                                    (0xF8U)
+#define UART_UCV                                           (0x330372AU)
+#define UART_UCV_VER_SHIFT                                 (0U)
+#define UART_UCV_VER_MASK                                  (0xFFFFFFFFU << UART_UCV_VER_SHIFT)                          /* 0xFFFFFFFF */
+/* CTR */
+#define UART_CTR_OFFSET                                    (0xFCU)
+#define UART_CTR                                           (0x44570110U)
+#define UART_CTR_PERIPHERAL_ID_SHIFT                       (0U)
+#define UART_CTR_PERIPHERAL_ID_MASK                        (0xFFFFFFFFU << UART_CTR_PERIPHERAL_ID_SHIFT)                /* 0xFFFFFFFF */
 /******************************************SPI*******************************************/
 /* CTRLR0 */
 #define SPI_CTRLR0_OFFSET                                  (0x0U)
