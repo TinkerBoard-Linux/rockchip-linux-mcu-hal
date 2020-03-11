@@ -77,6 +77,48 @@ typedef enum
 #endif /* __ASSEMBLY__ */
 #include "rv1126.h"
 
+/****************************************************************************************/
+/*                                                                                      */
+/*                               Register Bitmap Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/******************************************CRU*******************************************/
+#define CRU_SRST_CON_CNT    15
+#define CRU_GATE_CON_CNT    25
+#define CRU_CLK_DIV_CON_CNT 78
+#define CRU_CLK_SEL_CON_CNT 78
+#define CLK(mux, div) \
+    ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
+#ifndef __ASSEMBLY__
+typedef enum CLOCK_Name {
+    CLK_INVALID = 0U,
+    PLL_APLL,
+    PLL_CPLL,
+    PLL_HPLL,
+    PLL_GPLL,
+    ARMCLK,
+    PCLK_DBG        = CLK(0, PCLK_DBG_PRE_DIV),
+    HCLK_PDCORE     = CLK(0, HCLK_PDCORE_NIU_DIV),
+    ACLK_PDBUS      = CLK(ACLK_PDBUS_PRE_SEL, ACLK_PDBUS_PRE_DIV),
+    HCLK_PDBUS      = CLK(HCLK_PDBUS_PRE_SEL, HCLK_PDBUS_PRE_DIV),
+    PCLK_PDBUS      = CLK(PCLK_PDBUS_PRE_SEL, PCLK_PDBUS_PRE_DIV),
+    ACLK_PDPHP      = CLK(ACLK_PDPHP_SEL, ACLK_PDPHP_DIV),
+    HCLK_PDPHP      = CLK(0, HCLK_PDPHP_DIV),
+    HCLK_PDAUDIO    = CLK(0, HCLK_PDAUDIO_DIV),
+    PCLK_PDPMU      = CLK(0, PCLK_PDPMU_PRE_DIV),
+    CLK_SPI0        = CLK(CLK_SPI0_SEL, CLK_SPI0_DIV),
+    CLK_SPI1        = CLK(CLK_SPI1_SEL, CLK_SPI1_DIV),
+    CLK_I2C0        = CLK(0, CLK_I2C0_DIV),
+    CLK_I2C1        = CLK(0, CLK_I2C1_DIV),
+    CLK_I2C2        = CLK(0, CLK_I2C2_DIV),
+    CLK_I2C3        = CLK(0, CLK_I2C3_DIV),
+    CLK_I2C4        = CLK(0, CLK_I2C4_DIV),
+    CLK_I2C5        = CLK(0, CLK_I2C5_DIV),
+    CLK_OSC0_DIV32K = CLK(CLK_DEEPSLOW_SEL, 0),
+    CLK_RTC32K      = CLK(0, CLK_OSC0_DIV32K_DIV),
+} eCLOCK_Name;
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
