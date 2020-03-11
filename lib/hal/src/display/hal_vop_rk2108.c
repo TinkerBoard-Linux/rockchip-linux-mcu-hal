@@ -5,7 +5,7 @@
 
 #include "hal_base.h"
 
-#ifdef HAL_VOP_MODULE_ENABLED
+#if defined(HAL_VOP_MODULE_ENABLED) && (defined(RKMCU_RK2108) || defined(RKMCU_RK2206) || defined(RKMCU_PISCES))
 
 /** @addtogroup RK_HAL_Driver
  *  @{
