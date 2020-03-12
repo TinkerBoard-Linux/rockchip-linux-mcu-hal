@@ -182,7 +182,7 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 
 以RK2106为例：
 
-![5](Rockchip_User_Guide_HAL_CN\5.jpg)
+![5](Rockchip_User_Guide_HAL_CN/file_structure.jpg)
 
 ### 1.3 SOC目录文件
 
@@ -983,7 +983,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 
 头文件包含关系示例如下：
 
-![header](Rockchip_User_Guide_HAL_CN\header_call.jpg)
+![header](Rockchip_User_Guide_HAL_CN/header_call.jpg)
 
 其中芯片的选择和模块选择统一位于hal_conf.h。
 
