@@ -137,7 +137,12 @@ static HAL_Status QPIPSRAM_EnterQPI(struct QPI_PSRAM *psram)
 
 static HAL_Status QPIPSRAM_ExitQPI(struct QPI_PSRAM *psram)
 {
-    return QPIPSRAM_WriteReg(psram, QPIPSRAM_OP_EIXTQPI, NULL, 0);
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(QPIPSRAM_OP_EIXTQPI, 4),
+                                                     HAL_SPI_MEM_OP_NO_ADDR,
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_NO_DATA);
+
+    return QPIPSRAM_SPIMemExecOp(psram->spi, &op);
 }
 
 static HAL_Status QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data)
@@ -187,27 +192,31 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
 {
     uint8_t idByte[5];
 
+    QPIPSRAM_ExitQPI(psram);
     QPIPSRAM_ReadID(psram, idByte);
-    HAL_QPIPSRAM_DBG("SPI psram ID: %x %x\n", idByte[0], idByte[1]);
+    HAL_QPIPSRAM_DBG("QPIPsram ID: %x %x\n", idByte[0], idByte[1]);
     psram->id[0] = idByte[0];
     psram->id[1] = idByte[1];
 
     /* Temporarily fixed configuration */
-    psram->addrWidth = 3;
-    psram->readOpcode = QPIPSRAM_OP_READ_1_4_4;
-    psram->readProto = QPIPSRAM_PROTO_4_4_4;
-    psram->readDummy = 6;
-    psram->programOpcode = QPIPSRAM_OP_PP_1_4_4;
-    psram->writeProto = QPIPSRAM_PROTO_4_4_4;
-    psram->programDummy = 0;
-
-//    psram->addrWidth = 1;
-//    psram->readOpcode = QPIPSRAM_OP_READ_1_1_1;
-//    psram->readProto = QPIPSRAM_PROTO_1_1_1;
-//    psram->readDummy = 8;
-//    psram->programOpcode = QPIPSRAM_OP_PP_1_1_1;
-//    psram->writeProto = QPIPSRAM_PROTO_1_1_1;
-//    psram->programDummy = 0;
+    if (psram->spi->mode & HAL_SPI_TX_QUAD &&
+        psram->spi->mode & HAL_SPI_RX_QUAD) {
+        psram->addrWidth = 3;
+        psram->readOpcode = QPIPSRAM_OP_READ_1_4_4;
+        psram->readProto = QPIPSRAM_PROTO_4_4_4;
+        psram->readDummy = 6;
+        psram->programOpcode = QPIPSRAM_OP_PP_1_4_4;
+        psram->writeProto = QPIPSRAM_PROTO_4_4_4;
+        psram->programDummy = 0;
+    } else {
+        psram->addrWidth = 1;
+        psram->readOpcode = QPIPSRAM_OP_READ_1_1_1;
+        psram->readProto = QPIPSRAM_PROTO_1_1_1;
+        psram->readDummy = 8;
+        psram->programOpcode = QPIPSRAM_OP_PP_1_1_1;
+        psram->writeProto = QPIPSRAM_PROTO_1_1_1;
+        psram->programDummy = 0;
+    }
 
     if (psram->readProto == QPIPSRAM_PROTO_4_4_4 &&
         psram->writeProto == QPIPSRAM_PROTO_4_4_4)
