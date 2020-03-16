@@ -151,11 +151,28 @@ static HAL_Status FSPI_ClearIsr(struct HAL_FSPI_HOST *host)
     return HAL_OK;
 }
 
+/*
+ * VER 3: FSPI0 1/2 map space avail , FSPI1 1/4 map space avail:
+ *   FSPI0: CS divide in average, each CS up to 16MB
+ *   FSPI1-n: all map space in CS0
+ * VER 4: Keep in default value, 4 CS, TBD
+ * VER 5: It's configurable, 1/2/4 CS, TBD
+ */
 static void FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
 {
-    host->instance->DEVRGN = 25;    /* 32MB for each region */
-    host->instance->DEVSIZE0 = 24;     /* 16MB for dev0 */
-    host->instance->DEVSIZE1 = 24;     /* 16MB for dev1 */
+    if (host->version <= FSPI_VER_VER_3) {
+        if (host->instance == FSPI0) {
+            host->instance->DEVRGN = 25;
+            host->instance->DEVSIZE0 = 24;
+            host->instance->DEVSIZE1 = 24;
+        } else {
+#ifdef FSPI1
+            host->instance->DEVRGN = 24;
+            host->instance->DEVSIZE0 = 24;
+            host->instance->DEVSIZE1 = 0;
+#endif
+        }
+    }
 }
 
 HAL_UNUSED static void FSPI_TimeOutInit(struct HAL_FSPI_HOST *host)
@@ -475,9 +492,9 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
         }
     }
     FSPI_ContModeInit(host);
-    FSPI_XmmcDevRegionInit(host);
     pReg->CTRL0 = 0;
     host->version = pReg->VER & FSPI_VER_VER_MASK;
+    FSPI_XmmcDevRegionInit(host);
 
     return ret;
 }
