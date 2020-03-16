@@ -220,6 +220,10 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
 
     /* set CMD */
     FSPICmd.b.cmd = op->cmd.opcode;
+    if (op->cmd.buswidth == 4) {
+        FSPICtrl.b.cmdlines = FSPI_LINES_X4;
+        FSPICtrl.b.datalines = FSPI_LINES_X4; /* cmdlines work with datalines */
+    }
 
     /* set ADDR */
     if (op->addr.nbytes) {
