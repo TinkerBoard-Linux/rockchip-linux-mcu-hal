@@ -427,6 +427,9 @@ const struct HAL_TSADC_DEV g_tsadcDev =
 struct HAL_FSPI_HOST g_fspi0Dev =
 {
     .instance = FSPI0,
+    .sclkGate = CLK_XIP_SFC0_DT50_GATE,
+    .hclkGate = HCLK_SFC0_GATE,
+    .xipClkGate = HCLK_SFC0_XIP_GATE,
     .sclkID = CLK_XIP_SFC0,
     .irqNum = FSPI0_IRQn,
     .xipMem0 = XIP_MAP0_BASE1,
@@ -438,6 +441,9 @@ struct HAL_FSPI_HOST g_fspi0Dev =
 struct HAL_FSPI_HOST g_fspi1Dev =
 {
     .instance = FSPI1,
+    .sclkGate = CLK_XIP_SFC1_DT50_GATE,
+    .hclkGate = HCLK_SFC1_GATE,
+    .xipClkGate = HCLK_SFC1_XIP_GATE,
     .sclkID = CLK_XIP_SFC1,
     .irqNum = FSPI1_IRQn,
     .xipMem0 = XIP_MAP1_BASE1,
