@@ -88,15 +88,18 @@ struct HAL_FSPI_XMMC_DEV {
     uint32_t writeCmd;
 };
 
+/** XIP may be not accessble, so place it in sram or psram */
 struct HAL_FSPI_HOST {
     struct FSPI_REG *instance;
-    uint32_t version;
-    uint8_t cs;
-    uint8_t mode; /** HAL_SPI_MEM SPI Memory host mode */
+    uint32_t sclkGate;
+    uint32_t hclkGate;
+    uint32_t xipClkGate;
     eCLOCK_Name sclkID;
     IRQn_Type irqNum;
     uint32_t xipMem0; /** FSPI XIP mapped memory(Under dcache) */
-    struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT];
+    uint8_t cs; /** Should be defined by user in each operation */
+    uint8_t mode; /** Should be defined by user, referring to hal_spi_mem.h */
+    struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT]; /** Set depend on corresponding device */
 };
 
 #define HAL_FSPI_MAX_DELAY_LINE_CELLS (0xFFU)
