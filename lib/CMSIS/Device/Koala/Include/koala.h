@@ -3933,7 +3933,7 @@ struct CRU_REG {
 #define FSPI_TME1_SCLK_INATM_EN_SHIFT                      (1U)
 #define FSPI_TME1_SCLK_INATM_EN_MASK                       (0x1U << FSPI_TME1_SCLK_INATM_EN_SHIFT)                      /* 0x00000002 */
 
-#define FSPI_CHIP_CNT                                      (0x1U)
+#define FSPI_CHIP_CNT                                      (0x2U)
 /******************************************INTC******************************************/
 /* IRQ_INTEN_L */
 #define INTC_IRQ_INTEN_L_OFFSET                            (0x0)
