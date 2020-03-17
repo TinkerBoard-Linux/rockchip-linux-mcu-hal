@@ -74,6 +74,7 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram);
 HAL_Status HAL_QPIPSRAM_DeInit(struct QPI_PSRAM *psram);
 HAL_Status HAL_QPIPSRAM_XIPEnable(struct QPI_PSRAM *psram);
 HAL_Status HAL_QPIPSRAM_XIPDisable(struct QPI_PSRAM *psram);
+HAL_Check HAL_QPIPSRAM_IsPsramSupported(uint8_t *id);
 
 /** @} */
 

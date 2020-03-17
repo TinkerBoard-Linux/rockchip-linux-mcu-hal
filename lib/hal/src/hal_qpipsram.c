@@ -52,7 +52,17 @@
 
 /********************* Private Structure Definition **************************/
 
+struct QPI_PSRAM_ID {
+    uint8_t id;
+    uint8_t kgdId;
+};
+
 /********************* Private Variable Definition ***************************/
+
+static const struct QPI_PSRAM_ID qpiPsramId[] =
+{
+    { 0x0D, 0x5D },
+};
 
 /********************* Private Function Definition ***************************/
 
@@ -198,6 +208,9 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
     psram->id[0] = idByte[0];
     psram->id[1] = idByte[1];
 
+    if (!HAL_QPIPSRAM_IsPsramSupported(idByte))
+        return HAL_NODEV;
+
     /* Temporarily fixed configuration */
     if (psram->spi->mode & HAL_SPI_TX_QUAD &&
         psram->spi->mode & HAL_SPI_RX_QUAD) {
@@ -267,6 +280,27 @@ HAL_Status HAL_QPIPSRAM_XIPEnable(struct QPI_PSRAM *psram)
 HAL_Status HAL_QPIPSRAM_XIPDisable(struct QPI_PSRAM *psram)
 {
     return QPIPSRAM_XipExecOp(psram->spi, NULL, 0);
+}
+
+/**
+ * @brief  Check if psram support.
+ * @param  id: psram id.
+ * @return HAL_Check.
+ */
+HAL_Check HAL_QPIPSRAM_IsPsramSupported(uint8_t *id)
+{
+    uint32_t i;
+
+    if (!id)
+        return HAL_FALSE;
+
+    for (i = 0; i < HAL_ARRAY_SIZE(qpiPsramId); i++) {
+        if ((id[0] == qpiPsramId[i].id) &&
+            (id[1] == qpiPsramId[i].kgdId))
+            return HAL_TRUE;
+    }
+
+    return HAL_FALSE;
 }
 
 /** @} */
