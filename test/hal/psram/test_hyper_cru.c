@@ -5,7 +5,7 @@
 #include "hal_base.h"
 #include "hal_bsp.h"
 
-#ifdef RKMCU_RK2206
+#if defined(RKMCU_RK2206) && defined(HAL_CRU_MODULE_ENABLED)
 static struct PLL_CONFIG pConfig;
 
 static HAL_Status CRU_GPLL_SetFreq(struct PLL_CONFIG *pll_CFG)
