@@ -361,7 +361,7 @@ uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 #endif
 
 #ifdef HAL_PM_SLEEP_MODULE_ENABLED
-static void SOC_GetWakeupStatus(struct PMU_REG *pPmu)
+HAL_UNUSED static void SOC_GetWakeupStatus(struct PMU_REG *pPmu)
 {
     HAL_DBG("\nwakeup source:\n");
     if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_WAKEUP_PWRMODE_INT_STATUS_SHIFT))
@@ -403,13 +403,15 @@ static void SOC_GetWakeupStatus(struct PMU_REG *pPmu)
                           (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_VAD_STATUS_SHIFT);
 }
 
-static void SOC_FastBootConfig(struct GRF_REG *pGrf)
+HAL_UNUSED static void SOC_FastBootConfig(struct GRF_REG *pGrf)
 {
+#ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
     pGrf->FAST_BOOT_ADDR = (uint32_t)HAL_CPU_DoResume;
     pGrf->FAST_BOOT_EN = 1;
+#endif
 }
 
-static void SOC_SleepModeInit(struct PMU_REG *pPmu)
+HAL_UNUSED static void SOC_SleepModeInit(struct PMU_REG *pPmu)
 {
     uint32_t mask = 0, value = 0;
 
@@ -494,7 +496,7 @@ static void SOC_SleepModeInit(struct PMU_REG *pPmu)
     }
 }
 
-static void SOC_WakeupSourceConfig(struct PMU_REG *pPmu)
+HAL_UNUSED static void SOC_WakeupSourceConfig(struct PMU_REG *pPmu)
 {
     uint32_t mask = 0, value = 0;
 
@@ -505,7 +507,7 @@ static void SOC_WakeupSourceConfig(struct PMU_REG *pPmu)
     pPmu->WAKEUP_CFG6 = VAL_MASK_WE(mask, value);
 }
 
-static void SOC_SleepModeReinit(struct PMU_REG *pPmu)
+HAL_UNUSED static void SOC_SleepModeReinit(struct PMU_REG *pPmu)
 {
     uint32_t mask = 0, value = 0;
 
@@ -524,7 +526,7 @@ static void SOC_SleepModeReinit(struct PMU_REG *pPmu)
         PVTM_ClkDisable();
 }
 
-static void SOC_PutChar(char c, struct UART_REG *pUart)
+HAL_UNUSED static void SOC_PutChar(char c, struct UART_REG *pUart)
 {
     if (pUart) {
         pUart->THR = c;
@@ -533,7 +535,7 @@ static void SOC_PutChar(char c, struct UART_REG *pUart)
     }
 }
 
-static void SOC_UartSave(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart)
+HAL_UNUSED static void SOC_UartSave(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart)
 {
     if (pUartSave && pUart) {
         while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY))
@@ -552,7 +554,7 @@ static void SOC_UartSave(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart
     }
 }
 
-static void SOC_UartRestore(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart)
+HAL_UNUSED static void SOC_UartRestore(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart)
 {
     if (pUartSave && pUart) {
         pUart->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
