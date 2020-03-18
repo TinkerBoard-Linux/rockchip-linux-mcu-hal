@@ -147,6 +147,7 @@
 #endif
 
 #ifdef HAL_QPIPSRAM_MODULE_ENABLED
+#include "hal_spi_mem.h"
 #include "hal_qpipsram.h"
 #endif
 
