@@ -39,8 +39,9 @@
 #include "hal_dsp.h"
 #endif
 
-#ifdef HAL_DWDMA_MODULE_ENABLED
 #include "hal_dma.h"
+
+#ifdef HAL_DWDMA_MODULE_ENABLED
 #include "hal_dwdma.h"
 #endif
 
@@ -106,7 +107,6 @@
 #endif
 
 #ifdef HAL_PL330_MODULE_ENABLED
-#include "hal_dma.h"
 #include "hal_pl330.h"
 #endif
 
