@@ -56,6 +56,7 @@ struct HAL_HYPERPSRAM_DEV g_hyperpsramDev =
     .clkID = CLK_XIP_HYPERX8,
     .aclkGateID = ACLK_XIP_HYPERX8_GATE,
     .hyperMem[0] = XIP_MAP1_BASE0,
+    .hyperMaxFreq = 300000000,
     .psramFreq = PLL_INPUT_OSC_RATE / 2,
 };
 #endif

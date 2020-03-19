@@ -41,6 +41,7 @@ struct HAL_HYPERPSRAM_DEV {
     uint32_t hyperMem[2]; /**< The hyperbus psram base address
                             *  which should be initialized by device.
                             */
+    uint32_t hyperMaxFreq; /**< The user setting hyperbus max frequency, unit Hz */
     uint32_t psramFreq; /**< The hyperbus psram frequency which
                           *  should initialized by device.
                           */

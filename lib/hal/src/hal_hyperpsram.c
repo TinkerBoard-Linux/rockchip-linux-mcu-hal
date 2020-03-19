@@ -350,8 +350,12 @@ HAL_Status HAL_HYPERPSRAM_ReInit(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 {
     HAL_ASSERT(IS_HYPERBUS_INSTANCE(pHyperPsramDev->pReg));
 
+    HAL_CRU_ClkSetFreq(pHyperPsramDev->clkID, pHyperPsramDev->hyperMaxFreq);
+    pHyperPsramDev->psramFreq = HAL_CRU_ClkGetFreq(pHyperPsramDev->clkID) / 2;
+
     pHyperPsramDev->psramChip.id = HYPERPSRAM_GetDevId(pHyperPsramDev->pReg,
                                                        pHyperPsramDev->hyperMem[0]);
+    HYPERPSRAM_ModifyTiming(pHyperPsramDev);
 
     return HAL_OK;
 }
