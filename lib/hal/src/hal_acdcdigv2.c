@@ -257,6 +257,7 @@
 #define SYNC_STATUS_COUNT 50
 /********************* Private Structure Definition **************************/
 
+#ifdef HAL_I2C_MODULE_ENABLED
 /**
  * enum ACDCDIG I2C transfer mode definition - These definitions are
  * independent of the generic I2C driven.
@@ -495,6 +496,7 @@ static HAL_Status ACDCDIG_I2C_DeInit(struct HAL_ACDCDIG_DEV *acdcDig)
     /* TO-DO */
     return HAL_OK;
 }
+#endif /* HAL_I2C_MODULE_ENABLED */
 
 /**
  * @brief  Enable ACDCDIG DACCLKCTRL.
@@ -803,7 +805,9 @@ HAL_Status HAL_ACDCDIG_Init(struct HAL_ACDCDIG_DEV *acdcDig, struct AUDIO_INIT_C
     if (acdcDig->enabled == 0)
         HAL_CRU_ClkEnable(acdcDig->hclk);
 
+#ifdef HAL_I2C_MODULE_ENABLED
     ACDCDIG_I2C_Init(acdcDig);
+#endif
 
     /* Disable volume cross zero detect. */
     MODIFY_REG(reg->ADCVUCTL,
@@ -858,8 +862,10 @@ HAL_Status HAL_ACDCDIG_Init(struct HAL_ACDCDIG_DEV *acdcDig, struct AUDIO_INIT_C
  */
 HAL_Status HAL_ACDCDIG_DeInit(struct HAL_ACDCDIG_DEV *acdcDig)
 {
+#ifdef HAL_I2C_MODULE_ENABLED
     ACDCDIG_I2C_Disable(acdcDig);
     ACDCDIG_I2C_DeInit(acdcDig);
+#endif /* HAL_I2C_MODULE_ENABLED */
 
     if (acdcDig->enabled == 0)
         HAL_CRU_ClkDisable(acdcDig->hclk);
@@ -892,8 +898,10 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
                    ACDCDIG_I2S_XFER_RXS_MASK,
                    ACDCDIG_I2S_XFER_RXS_START);
 
+#ifdef HAL_I2C_MODULE_ENABLED
         /* Just used for playback */
         ACDCDIG_I2C_Start(acdcDig);
+#endif
 
         /* Check GLB_CKE whether is enabled. */
         if (!val)
@@ -959,8 +967,10 @@ HAL_Status HAL_ACDCDIG_Disable(struct HAL_ACDCDIG_DEV *acdcDig,
     HAL_Status ret = HAL_OK;
 
     if (stream == AUDIO_STREAM_PLAYBACK) {
+#ifdef HAL_I2C_MODULE_ENABLED
         /* Just used for playback */
         ACDCDIG_I2C_Stop(acdcDig);
+#endif /* HAL_I2C_MODULE_ENABLED */
 
         MODIFY_REG(reg->I2S_XFER,
                    ACDCDIG_I2S_XFER_RXS_MASK,
@@ -1384,6 +1394,7 @@ HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
 HAL_Status HAL_ACDCDIG_RequestI2C(struct HAL_ACDCDIG_DEV *acdcDig,
                                   eACDCDIG_i2cUsed i2cUsed)
 {
+#ifdef HAL_I2C_MODULE_ENABLED
     struct GRF_REG *pGRF = (struct GRF_REG *)(GRF_BASE);
     uint32_t val = GRF_CODEC_I2C_TRANS;
 
@@ -1399,6 +1410,7 @@ HAL_Status HAL_ACDCDIG_RequestI2C(struct HAL_ACDCDIG_DEV *acdcDig,
         val = GRF_MCU_I2C_TRANS;
 
     WRITE_REG(pGRF->SOC_CON16, val);
+#endif /* HAL_I2C_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -1409,6 +1421,7 @@ HAL_Status HAL_ACDCDIG_RequestI2C(struct HAL_ACDCDIG_DEV *acdcDig,
  */
 eACDCDIG_i2cUsed HAL_ACDCDIG_CheckI2C(struct HAL_ACDCDIG_DEV *acdcDig)
 {
+#ifdef HAL_I2C_MODULE_ENABLED
     struct GRF_REG *pGRF = (struct GRF_REG *)(GRF_BASE);
     eACDCDIG_i2cUsed i2cUsed = CODEC_USE_I2C;
     uint32_t status;
@@ -1421,6 +1434,11 @@ eACDCDIG_i2cUsed HAL_ACDCDIG_CheckI2C(struct HAL_ACDCDIG_DEV *acdcDig)
         i2cUsed = MCU_USE_I2C;
 
     return i2cUsed;
+#else
+
+    /* Here return MCU_USE_I2C directly if codec doesn't reference I2C. */
+    return MCU_USE_I2C;
+#endif
 }
 
 /**
