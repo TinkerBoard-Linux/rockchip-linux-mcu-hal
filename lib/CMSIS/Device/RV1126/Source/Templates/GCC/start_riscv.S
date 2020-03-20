@@ -9,8 +9,8 @@
 # define SREG     sw
 # define REGBYTES 4
 
-.globl _start, main, sc_exit, entry
-.weak sc_exit, SystemInit, entry
+.globl _start
+.weak sc_exit, SystemInit, entry, main
 .text
 /* skip supervisor & hypervisor & user vectors */
 j _start
@@ -62,6 +62,8 @@ sw zero, 0 (a1)
 add a1, a1, 4
 4 :
 bne a1, a2, 3b
+sw zero, 0 (a1)
+
 auipc gp, % hi(_gp)
 addi gp, gp, % lo(_gp)
 la sp, __C_STACK_TOP__
@@ -69,6 +71,7 @@ la sp, __C_STACK_TOP__
 li a0, 0
 li a1, 0
 call SystemInit
+call entry
 call main
 j sc_exit
 
@@ -84,7 +87,8 @@ fence
 ret
 
 SystemInit:
-call entry
+entry:
+ret
 
 sc_exit:
 j sc_exit
