@@ -283,13 +283,13 @@ static HAL_Status HYPERPSRAM_Init(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
     }
 
     psramChip->id = detect_id;
-    psramChip->spc = psramInfo[i].spc;
     HAL_DBG("HYPERBUS PSRAM id: %x\n", detect_id);
     if (i == HAL_ARRAY_SIZE(psramInfo)) {
         HAL_DBG("HYPERPSRAM: unknow psram device\n");
 
         return HAL_ERROR;
     } else {
+        psramChip->spc = psramInfo[i].spc;
         HYPERPSRAM_CapDetect(pHyperPsramDev);
 
         return HAL_OK;
