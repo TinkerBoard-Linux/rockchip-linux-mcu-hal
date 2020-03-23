@@ -630,13 +630,13 @@ static HAL_Status PKA_SetMapTab(struct PKA_REGS_MAP *pRegsMap,
         curAddr = curAddr + defaultMaxSize / 8;
         WRITE_REG(CRYPTO->PKA_MEM_MAP[31], curAddr);
         *pCountOfRegs = defaultCountOfRegs;
-        WRITE_REG(CRYPTO->N_NP_TO_T1_ADDR, (uint32_t)RK_PKA_N_NP_T0_T1_REG_DEFAULT_VAL);
+        WRITE_REG(CRYPTO->N_NP_T0_T1_ADDR, (uint32_t)RK_PKA_N_NP_T0_T1_REG_DEFAULT_VAL);
     }
 
     if (isDefaultMap == 0) {
         for (i = 0; i < *pCountOfRegs; i++)
             WRITE_REG(CRYPTO->PKA_MEM_MAP[pRegsMap->regesNum[i]], pRegsMap->regsAddr[i]);
-        WRITE_REG(CRYPTO->N_NP_TO_T1_ADDR, N_NP_T0_T1);
+        WRITE_REG(CRYPTO->N_NP_T0_T1_ADDR, N_NP_T0_T1);
     }
 
     return error;

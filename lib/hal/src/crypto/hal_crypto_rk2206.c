@@ -39,6 +39,13 @@
         CLEAR_REG(regs[i]);                    \
 } while(0)
 
+#define CRYPTO_CLEAR_KEY_REGS(regs) do {              \
+    uint32_t i, j;                                    \
+    for (i = 0; i < HAL_ARRAY_SIZE(regs); i++)        \
+        for (j = 0; j < HAL_ARRAY_SIZE(regs[0]); j++) \
+            CLEAR_REG(regs[i][j]);                    \
+} while(0)
+
 #define CRYPTO_WRITE_MASK_ALL (0xffffu)
 
 /* CLK_CTL */
@@ -360,20 +367,16 @@ static inline void CRYPTO_WriteKey(uint32_t keyChn, const uint8_t *key,
 {
     uint8_t tmpBuf[4] = { 0, 0, 0, 0 };
     uint32_t i, j, k;
-    uint32_t offset;
-
-    /* every KEY channel has 4 word reg */
-    offset = keyChn * 4;
 
     for (i = 0; i < keyLen / 4; i++)
-        WRITE_REG(CRYPTO->CHN_KEY[i + offset], Byte2Word(key + i * 4, BIG_ENDIAN));
+        WRITE_REG(CRYPTO->CHN_KEY[keyChn][i], Byte2Word(key + i * 4, BIG_ENDIAN));
 
     k = keyLen % 4;
     if (k) {
         for (j = 0; j < k; j++)
             tmpBuf[j] = key[i * 4 + j];
 
-        WRITE_REG(CRYPTO->CHN_KEY[i + offset], Byte2Word(tmpBuf, BIG_ENDIAN));
+        WRITE_REG(CRYPTO->CHN_KEY[keyChn][i], Byte2Word(tmpBuf, BIG_ENDIAN));
     }
 }
 
@@ -385,21 +388,19 @@ static void CRYPTO_SetIV(uint32_t chn, const uint8_t *iv,
 
     /* write iv data to reg */
     for (i = 0; i < ivLen / 4; i++)
-        WRITE_REG(CRYPTO->CHN_IV[i], Byte2Word(iv + i * 4, BIG_ENDIAN));
+        WRITE_REG(CRYPTO->CHN_IV[chn][i], Byte2Word(iv + i * 4, BIG_ENDIAN));
 
     if (ivLen % 4) {
         memset(tmpBuf, 0x00, sizeof(tmpBuf));
         memcpy((uint8_t *)tmpBuf,
                (uint8_t *)iv + (ivLen / 4) * 4, ivLen % 4);
-        WRITE_REG(CRYPTO->CHN_IV[i], Byte2Word(tmpBuf, BIG_ENDIAN));
+        WRITE_REG(CRYPTO->CHN_IV[chn][i], Byte2Word(tmpBuf, BIG_ENDIAN));
     }
 
-    if (ivLen == 0) {
-        for (i = 0; i < RK_AES_BLOCK_SIZE / 4; i++)
-            WRITE_REG(CRYPTO->CHN_IV[i], 0);
-    }
+    if (ivLen == 0)
+        CRYPTO_CLEAR_REGS(CRYPTO->CHN_IV[chn]);
 
-    WRITE_REG(CRYPTO->CHN_IV_LEN_0, ivLen);
+    WRITE_REG(CRYPTO->CHN_IV_LEN[chn], ivLen);
 }
 
 static int CRYPTO_CCM128SetIV(uint8_t *ivBuf,
@@ -838,7 +839,7 @@ HAL_Status HAL_CRYPTO_AlgoInit(struct CRYPTO_DEV *pCrypto,
                       CRYPTO_RST_CTL_SW_CC_RESET_MASK,
                       CRYPTO_SW_CC_RESET);
 
-    CRYPTO_CLEAR_REGS(CRYPTO->CHN_KEY);
+    CRYPTO_CLEAR_KEY_REGS(CRYPTO->CHN_KEY);
 
     memset(pCrypto->privData, 0x00, pCrypto->privDataSize);
     pPriv = (struct CRYPTO_V2_PRIV_DATA *)pCrypto->privData;

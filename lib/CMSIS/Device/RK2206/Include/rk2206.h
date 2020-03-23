@@ -1058,32 +1058,26 @@ struct CRYPTO_REG {
     __O  uint32_t DMA_INT_ST;                         /* Address Offset: 0x000C */
     __IO uint32_t DMA_CTL;                            /* Address Offset: 0x0010 */
     __IO uint32_t DMA_LLI_ADDR;                       /* Address Offset: 0x0014 */
-    __IO uint32_t DMA_ST;                             /* Address Offset: 0x0018 */
+    __I  uint32_t DMA_ST;                             /* Address Offset: 0x0018 */
     __I  uint32_t DMA_STATE;                          /* Address Offset: 0x001C */
-    __IO uint32_t DMA_LLI_RADDR;                      /* Address Offset: 0x0020 */
-    __IO uint32_t DMA_SRC_RADDR;                      /* Address Offset: 0x0024 */
-    __IO uint32_t DMA_DST_WADDR;                      /* Address Offset: 0x0028 */
+    __I  uint32_t DMA_LLI_RADDR;                      /* Address Offset: 0x0020 */
+    __I  uint32_t DMA_SRC_RADDR;                      /* Address Offset: 0x0024 */
+    __I  uint32_t DMA_DST_WADDR;                      /* Address Offset: 0x0028 */
     __I  uint32_t DMA_ITEM_ID;                        /* Address Offset: 0x002C */
          uint32_t RESERVED0030[4];                    /* Address Offset: 0x0030 */
     __IO uint32_t FIFO_CTL;                           /* Address Offset: 0x0040 */
     __IO uint32_t BC_CTL;                             /* Address Offset: 0x0044 */
     __IO uint32_t HASH_CTL;                           /* Address Offset: 0x0048 */
     __I  uint32_t CIPHER_ST;                          /* Address Offset: 0x004C */
-    __IO uint32_t CIPHER_STATE;                       /* Address Offset: 0x0050 */
+    __I  uint32_t CIPHER_STATE;                       /* Address Offset: 0x0050 */
          uint32_t RESERVED0054[43];                   /* Address Offset: 0x0054 */
-    __IO uint32_t CHN_IV[4];                          /* Address Offset: 0x0100 */
-         uint32_t RESERVED0110[28];                   /* Address Offset: 0x0110 */
-    __IO uint32_t CHN_KEY[32];                        /* Address Offset: 0x0180 */
-    __IO uint32_t CHN_PKEY[4];                        /* Address Offset: 0x0200 */
-         uint32_t RESERVED0210[28];                   /* Address Offset: 0x0210 */
-    __IO uint32_t CHN_PC_LEN[2];                      /* Address Offset: 0x0280 */
-         uint32_t RESERVED0288[14];                   /* Address Offset: 0x0288 */
-    __IO uint32_t CHN_ADA_LEN[2];                     /* Address Offset: 0x02C0 */
-         uint32_t RESERVED02C8[14];                   /* Address Offset: 0x02C8 */
-    __IO uint32_t CHN_IV_LEN_0;                       /* Address Offset: 0x0300 */
-         uint32_t RESERVED0304[7];                    /* Address Offset: 0x0304 */
-    __I  uint32_t CHN_TAG[4];                         /* Address Offset: 0x0320 */
-         uint32_t RESERVED0330[28];                   /* Address Offset: 0x0330 */
+    __IO uint32_t CHN_IV[8][4];                       /* Address Offset: 0x0100 */
+    __IO uint32_t CHN_KEY[8][4];                      /* Address Offset: 0x0180 */
+    __IO uint32_t CHN_PKEY[8][4];                     /* Address Offset: 0x0200 */
+    __IO uint32_t CHN_PC_LEN[8][2];                   /* Address Offset: 0x0280 */
+    __IO uint32_t CHN_AAD_LEN[8][2];                  /* Address Offset: 0x02C0 */
+    __IO uint32_t CHN_IV_LEN[8][1];                   /* Address Offset: 0x0300 */
+    __I  uint32_t CHN_TAG[8][4];                      /* Address Offset: 0x0320 */
     __I  uint32_t HASH_DOUT[16];                      /* Address Offset: 0x03A0 */
     __O  uint32_t TAG_VALID;                          /* Address Offset: 0x03E0 */
     __O  uint32_t HASH_VALID;                         /* Address Offset: 0x03E4 */
@@ -1104,7 +1098,7 @@ struct CRYPTO_REG {
          uint32_t RESERVED04AC[213];                  /* Address Offset: 0x04AC */
     __IO uint32_t PKA_MEM_MAP[32];                    /* Address Offset: 0x0800 */
     __O  uint32_t PKA_OPCODE;                         /* Address Offset: 0x0880 */
-    __IO uint32_t N_NP_TO_T1_ADDR;                    /* Address Offset: 0x0884 */
+    __IO uint32_t N_NP_T0_T1_ADDR;                    /* Address Offset: 0x0884 */
     __I  uint32_t PKA_STATUS;                         /* Address Offset: 0x0888 */
     __O  uint32_t PKA_SW_RESET;                       /* Address Offset: 0x088C */
     __IO uint32_t PKA_L[8];                           /* Address Offset: 0x0890 */
