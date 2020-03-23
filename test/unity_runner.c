@@ -7,6 +7,7 @@
 
 #include "unity.h"
 #include "unity_fixture.h"
+#include "unity_runner.h"
 
 static void RunAllTests(void)
 {

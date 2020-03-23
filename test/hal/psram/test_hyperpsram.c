@@ -135,8 +135,8 @@ TEST(HAL_HYPERPSRAM, HYPERPSRAM_Test) {
         if (!ret) {
             HAL_DBG("    ok\n");
         } else {
-            HAL_DBG("    fail\n", hyperbus_tests[i].name);
-            HAL_DBG("test done. result fail.\n", ret);
+            HAL_DBG("    fail %s\n", hyperbus_tests[i].name);
+            HAL_DBG("test done. result fail.%lx\n", ret);
 
             return;
         }

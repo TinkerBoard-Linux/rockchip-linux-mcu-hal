@@ -23,9 +23,9 @@ static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
     return (uint8_t *)(((uintptr_t)ptr + align - 1) & ~(uintptr_t)(align - 1));
 }
 
-HAL_Status SNOR_SINGLE_TEST(void)
+static HAL_Status SNOR_SINGLE_TEST(void)
 {
-    uint32_t ret, testLba = FLASH_SKIP_LBA;
+    uint32_t testLba = FLASH_SKIP_LBA;
 
     pwrite32[0] = testLba;
     HAL_SNOR_Erase(nor, testLba << 9, 0);
@@ -225,7 +225,8 @@ static HAL_Status SPI_Xfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
 
     host->mode = spi->mode;
     host->cs = 0;
-    HAL_FSPI_SpiXfer(host, op);
+
+    return HAL_FSPI_SpiXfer(host, op);
 }
 
 static HAL_Status SPI_XipConfig(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)

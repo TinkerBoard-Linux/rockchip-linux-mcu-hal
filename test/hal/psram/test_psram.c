@@ -28,7 +28,6 @@ union {
     uint32_t val;
 } mword16;
 
-static unsigned int y = 1U;
 uint16_t MarchC_data[] = { 0x0000, 0xffff, 0x5555, 0xaaaa, 0x3333, 0xcccc,
                            0x0f0f, 0xf0f0, 0x00ff, 0xff00 };
 
@@ -101,8 +100,8 @@ static int compare_regions(uint32_t *bufa, uint32_t *bufb, size_t count)
 #endif
     for (i = 0; i < count; i++, p1++, p2++) {
         if (*p1 != *p2) {
-            HAL_DBG(
-                "FAILURE: 0x%08lx != 0x%08lx at offset 0x%08lx. addr:0x%08lx or 0x%08lx\n",
+            printf(
+                "FAILURE: 0x%08lx != 0x%08lx at offset 0x%08lx. addr:%p or %p\n",
                 (uint32_t)*p1, (uint32_t)*p2,
                 (uint32_t)(i * sizeof(uint32_t)), bufa + i, bufb + i);
             ret = PSRAM_MEMTESTER_ERR;
@@ -115,7 +114,6 @@ static int compare_regions(uint32_t *bufa, uint32_t *bufb, size_t count)
 static int test_random_value(uint32_t *bufa, uint32_t *bufb, uint32_t count)
 {
     uint32_t i;
-    uint32_t j = 0;
     uint32_t *p1 = bufa;
     uint32_t *p2 = bufb;
 
@@ -446,7 +444,7 @@ static int test_8bit_wide_random(uint32_t *bufa, uint32_t *bufb, uint32_t count)
     uint8_t *p1, *t;
     uint32_t *p2;
     int attempt;
-    uint32_t b, j = 0;
+    uint32_t b;
     uint32_t i;
 
     for (attempt = 0; attempt < 2; attempt++) {
@@ -475,8 +473,7 @@ static int test_16bit_wide_random(uint32_t *bufa, uint32_t *bufb, uint32_t count
     uint16_t *p1, *t;
     uint32_t *p2;
     int attempt;
-    uint32_t b, j = 0;
-    uint32_t i;
+    uint32_t b, i;
 
     for (attempt = 0; attempt < 2; attempt++) {
         if (attempt & 1) {

@@ -117,7 +117,8 @@ static HAL_Status SPI_Xfer(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op)
 
     host->mode = spi->mode;
     host->cs = 0;
-    HAL_FSPI_SpiXfer(host, op);
+
+    return HAL_FSPI_SpiXfer(host, op);
 }
 
 static HAL_Status SPI_XipConfig(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)

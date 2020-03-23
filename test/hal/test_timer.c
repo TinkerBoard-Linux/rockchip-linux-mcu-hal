@@ -33,7 +33,7 @@ static HAL_Status TIMER_SetReloadNum(struct TIMER_REG *pReg, uint64_t currentVal
     return HAL_OK;
 }
 
-HAL_Status HAL_TIMER_Handler(void)
+static HAL_Status HAL_TIMER_Handler(void)
 {
     if (HAL_TIMER_ClrInt(timerDev))
         timeOut++;
@@ -134,7 +134,7 @@ TEST(HAL_TIMER, TimerStartStop){
     TEST_ASSERT(isrActive >= 1000 && isrActive <= 1005);
 }
 
-void TIMER_TestLoop(int32_t num, struct TIMER_REG *t, IRQn_Type irq)
+static void TIMER_TestLoop(int32_t num, struct TIMER_REG *t, IRQn_Type irq)
 {
     timerDev = t;
     HAL_DBG("%s TIMER%ld\n", __func__, num);
