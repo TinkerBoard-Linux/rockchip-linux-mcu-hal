@@ -347,6 +347,7 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
  * @return rate.
  * @attention these APIs allow direct use in the HAL layer.
  */
+HAL_SECTION_SRAM_CODE
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 {
     uint32_t freq;

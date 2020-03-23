@@ -773,6 +773,7 @@ uint32_t HAL_CRU_ClkGetDiv(uint32_t divName)
  * @param  muxValue: mux value
  * @return NONE
  */
+HAL_SECTION_SRAM_CODE
 HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
 {
     uint32_t shift, mask, index;
@@ -792,6 +793,7 @@ HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
  * @param  muxName: mux id(Contains mux offset, shift, mask information)
  * @return mux value
  */
+HAL_SECTION_SRAM_CODE
 uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
 {
     uint32_t shift, mask, index;
