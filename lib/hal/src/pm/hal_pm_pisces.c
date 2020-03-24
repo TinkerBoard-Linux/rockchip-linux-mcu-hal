@@ -376,7 +376,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 
         clkSelCon33 = CRU->CRU_CLKSEL_CON[33] |
                       MASK_TO_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK);
-        clkSelCon2 = CRU->CRU_CLKSEL_CON[33] |
+        clkSelCon2 = CRU->CRU_CLKSEL_CON[2] |
                      MASK_TO_WE(CRU_CRU_CLKSEL_CON02_SCLK_SHRM_DIV_MASK);
 
         CRU->CRU_MODE_CON00 =
