@@ -52,52 +52,26 @@ ifeq ($(QUIET), y)
 endif
 
 #############################################################################
-# Head files
+# Source code and include
 #############################################################################
-INCLUDES += \
--I"$(ROOT_PATH)/lib/hal/inc" \
--I"$(ROOT_PATH)/lib/bsp/$(PROJECT)" \
--I"$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Include" \
--I"$(ROOT_PATH)/lib/CMSIS/Core/Include" \
--I"$(ROOT_PATH)/lib/CMSIS/Device" \
--I"$(ROOT_PATH)/test/unity/src" \
--I"$(ROOT_PATH)/test/unity/extras/fixture/src" \
--I"$(ROOT_PATH)/test" \
--I"$(ROOT_PATH)/test/coremark" \
--I"$(ROOT_PATH)/test/coremark/barebones" \
+INCLUDES := \
 -I"../src" \
 
-#############################################################################
-# Source Files
-#############################################################################
-DIRS := \
-	$(ROOT_PATH)/test/unity/extras/fixture/src \
-	$(ROOT_PATH)/test/unity/src \
-	$(ROOT_PATH)/test/hal \
-	$(ROOT_PATH)/test/hal/psram \
-	$(ROOT_PATH)/test \
-	$(ROOT_PATH)/test/coremark \
-	$(ROOT_PATH)/test/coremark/barebones \
-	../src \
-	. \
+SRC_DIRS := \
+    ../src \
 
-HAL_DIRS := \
-	$(ROOT_PATH)/lib/hal/src \
-	$(ROOT_PATH)/lib/hal/src/* \
-	$(ROOT_PATH)/lib/bsp/$(PROJECT) \
-	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
-	$(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates \
+export HAL_PATH := $(ROOT_PATH)
+include $(HAL_PATH)/tools/build_lib.mk
+include $(HAL_PATH)/tools/build_test.mk
+SRC_DIRS += $(HAL_LIB_SRC)
+SRC_DIRS += $(HAL_TEST_SRC)
+INCLUDES += $(HAL_LIB_INC)
+INCLUDES += $(HAL_TEST_INC)
 
-DIRS += $(HAL_DIRS)
-
-SRCS += $(basename $(foreach dir,$(DIRS),$(wildcard $(dir)/*.[cS])))
-OBJS := $(addsuffix .o,$(basename $(SRCS)))
-
-HAL_SRCS := $(basename $(foreach dir,$(HAL_DIRS),$(wildcard $(dir)/*.[cS])))
-HAL_OBJS := $(addsuffix .o,$(basename $(HAL_SRCS)))
-$(HAL_OBJS): CFLAGS += $(HAL_CFLAGS)
-
-CPPFLAGS += $(INCLUDES)
+SRCS += $(basename $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.[cS])))
+OBJS += $(addsuffix .o,$(basename $(SRCS)))
+CFLAGS += $(INCLUDES)
+ASFLAGS += $(INCLUDES)
 
 all: $(BIN)
 
