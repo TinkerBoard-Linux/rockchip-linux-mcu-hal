@@ -2,7 +2,8 @@
 
 # Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
 
-PROJECT		:= Pisces
-CPU		:= -mcpu=cortex-m4
+PROJECT := Pisces
+SOC := Pisces
+CPU := -mcpu=cortex-m4
 
 include ../../common/GCC/Cortex-M.mk
