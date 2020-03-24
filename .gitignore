@@ -46,6 +46,8 @@
 #
 !.gitignore
 !.mailmap
+!.gitattributes
+!.tag
 
 # stgit generated dirs
 patches-*
