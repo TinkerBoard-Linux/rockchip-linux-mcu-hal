@@ -2,7 +2,8 @@
 
 # Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
 
-PROJECT		:= Koala
-CPU		:= -mcpu=cortex-m3
+PROJECT := Koala
+SOC := Koala
+CPU := -mcpu=cortex-m3
 
 include ../../common/GCC/Cortex-M.mk

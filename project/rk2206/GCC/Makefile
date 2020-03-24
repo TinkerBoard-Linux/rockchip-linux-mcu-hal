@@ -2,7 +2,8 @@
 
 # Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
 
-PROJECT		:= RK2206
-CPU		:= -mcpu=cortex-m4
+PROJECT := RK2206
+SOC := RK2206
+CPU := -mcpu=cortex-m4
 
 include ../../common/GCC/Cortex-M.mk
