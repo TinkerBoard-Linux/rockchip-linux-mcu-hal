@@ -167,7 +167,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 {
     uint32_t gpllCon1, gpllDiv2, gpllDiv2New;
     uint32_t gpllCon0 = 0, gpllDiv1, gpllDiv1New;
-    uint32_t clkSelCon33, clkSelCon2;
+    uint32_t clkSelCon2 = 0, clkSelCon33 = 0, clkSelCon40 = 0;
     uint32_t cruMode;
     uint32_t gpllRateNew;
     uint32_t mDiv;
@@ -227,7 +227,6 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         pmDynWdtFreqNor = GPLL_RUNTIME_RATE / tmpDiv;
     }
 #endif
-
     if (idleMode == PM_RUNTIME_IDLE_DEEP || idleMode == PM_RUNTIME_IDLE_DEEP1) {
         cruMode = CRU->CRU_MODE_CON00 |
                   MASK_TO_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK);
@@ -238,6 +237,8 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
                       MASK_TO_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK);
         clkSelCon2 = CRU->CRU_CLKSEL_CON[2] |
                      MASK_TO_WE(CRU_CRU_CLKSEL_CON02_SCLK_SHRM_DIV_MASK);
+        clkSelCon40 = CRU->CRU_CLKSEL_CON[40] |
+                      MASK_TO_WE(CRU_CRU_CLKSEL_CON40_ACLK_LOGIC_DIV_MASK);
 
         CRU->CRU_MODE_CON00 =
             VAL_MASK_WE(CRU_CRU_MODE_CON00_CLK_GPLL_MODE_MASK,
@@ -247,6 +248,8 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
             VAL_MASK_WE(CRU_CRU_CLKSEL_CON33_HCLK_M4_DIV_MASK, 0);
         CRU->CRU_CLKSEL_CON[2] =
             VAL_MASK_WE(CRU_CRU_CLKSEL_CON02_SCLK_SHRM_DIV_MASK, 0);
+        CRU->CRU_CLKSEL_CON[40] =
+            VAL_MASK_WE(CRU_CRU_CLKSEL_CON40_ACLK_LOGIC_DIV_MASK, 0);
 
         HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPD0_MASK));
         HAL_ASSERT(!(CRU->GPLL_CON[1] & CRU_GPLL_CON1_PLLPDSEL_MASK));
@@ -317,6 +320,7 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         CRU->GPLL_CON[1] = gpllCon1;
         CRU->CRU_CLKSEL_CON[33] = clkSelCon33;
         CRU->CRU_CLKSEL_CON[2] = clkSelCon2;
+        CRU->CRU_CLKSEL_CON[40] = clkSelCon40;
 
         while ((CRU->GPLL_CON[1] & CRU_CPLL_CON1_PLL_LOCK_MASK) !=
                CRU_CPLL_CON1_PLL_LOCK_MASK)
