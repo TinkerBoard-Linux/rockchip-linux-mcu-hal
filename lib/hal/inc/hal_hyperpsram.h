@@ -38,6 +38,7 @@ struct HAL_HYPERPSRAM_DEV {
     struct HYPERPSRAM_CHIP_INFO psramChip;
     uint32_t clkID; /**< The hyperbus clk id */
     uint32_t aclkGateID; /**< The hyperbus aclk gate id */
+    uint32_t sclkGateID; /**< The hyperbus sclk gate id */
     uint32_t hyperMem[2]; /**< The hyperbus psram base address
                             *  which should be initialized by device.
                             */

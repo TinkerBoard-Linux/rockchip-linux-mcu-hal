@@ -296,6 +296,18 @@ static HAL_Status HYPERPSRAM_Init(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
     }
 }
 
+static HAL_Status HYPERPSRAM_IdCheck(uint16_t id)
+{
+    uint32_t i;
+
+    for (i = 0; i < HAL_ARRAY_SIZE(psramInfo); i++) {
+        if (id == psramInfo[i].id)
+            return HAL_OK;
+    }
+
+    return HAL_ERROR;
+}
+
 /** @} */
 /********************* Public Function Definition ****************************/
 
@@ -336,7 +348,9 @@ HAL_Status HAL_HYPERPSRAM_Init(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
  */
 HAL_Status HAL_HYPERPSRAM_DeInit(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 {
-    /* ...to do */
+    HAL_CRU_ClkDisable(pHyperPsramDev->aclkGateID);
+    HAL_CRU_ClkDisable(pHyperPsramDev->sclkGateID);
+
     return HAL_OK;
 }
 
@@ -350,14 +364,20 @@ HAL_Status HAL_HYPERPSRAM_ReInit(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 {
     HAL_ASSERT(IS_HYPERBUS_INSTANCE(pHyperPsramDev->pReg));
 
-    HAL_CRU_ClkSetFreq(pHyperPsramDev->clkID, pHyperPsramDev->hyperMaxFreq);
-    pHyperPsramDev->psramFreq = HAL_CRU_ClkGetFreq(pHyperPsramDev->clkID) / 2;
-
+    HAL_CRU_ClkEnable(pHyperPsramDev->aclkGateID);
+    HAL_CRU_ClkEnable(pHyperPsramDev->sclkGateID);
     pHyperPsramDev->psramChip.id = HYPERPSRAM_GetDevId(pHyperPsramDev->pReg,
                                                        pHyperPsramDev->hyperMem[0]);
-    HYPERPSRAM_ModifyTiming(pHyperPsramDev);
+    if (HYPERPSRAM_IdCheck(pHyperPsramDev->psramChip.id) == HAL_OK) {
+        HAL_CRU_ClkSetFreq(pHyperPsramDev->clkID, pHyperPsramDev->hyperMaxFreq);
+        pHyperPsramDev->psramFreq = HAL_CRU_ClkGetFreq(pHyperPsramDev->clkID) / 2;
+        HYPERPSRAM_ModifyTiming(pHyperPsramDev);
 
-    return HAL_OK;
+        return HAL_OK;
+    }
+    HAL_HYPERPSRAM_DeInit(pHyperPsramDev);
+
+    return HAL_ERROR;
 }
 
 /**
