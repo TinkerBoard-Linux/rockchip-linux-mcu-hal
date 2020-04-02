@@ -318,10 +318,10 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
 
     /* Change to use EBh */
     if (nor->spi->mode & HAL_SPI_RX_QUAD) {
-        op.cmd.opcode = SPINOR_OP_READ_1_4_4;
+        op.cmd.opcode = op.addr.nbytes == 4 ? SPINOR_OP_READ_EC : SPINOR_OP_READ_1_4_4;
         op.addr.buswidth = 4;
         op.dummy.buswidth = 4;
-        op.dummy.nbytes = op.addr.nbytes == 4 ? 2 : 3;
+        op.dummy.nbytes = 3;
         op.data.buswidth = 4;
     }
     /* HAL_SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
