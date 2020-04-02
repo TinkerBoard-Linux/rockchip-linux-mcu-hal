@@ -85,10 +85,11 @@
 #define CR0_BURST_LENGTH_16BYTE  (0x2 << CR0_BURST_LENGTH_SHIFT)
 #define CR0_BURST_LENGTH_32BYTE  (0x3 << CR0_BURST_LENGTH_SHIFT)
 
-#define SIZE_128MBYTE (0x08000000)
-#define SIZE_1MBYTE   (0x00100000)
-#define PATTERN1      (0x00000000)
-#define PATTERN2      (0x5aa5f00f)
+#define SIZE_128MBYTE         (0x08000000)
+#define SIZE_1MBYTE           (0x00100000)
+#define PATTERN1              (0x00000000)
+#define PATTERN2              (0x5aa5f00f)
+#define HYPERBUS_REG_AVA_FLAG (PATTERN2)
 
 /********************* Private Structure Definition **************************/
 /** HYPERBUS DEVICE Psram ID definition */
@@ -391,6 +392,56 @@ HAL_Status HAL_HYPERPSRAM_ModifyTiming(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev
     HAL_ASSERT(IS_HYPERBUS_INSTANCE(pHyperPsramDev->pReg));
 
     return HYPERPSRAM_ModifyTiming(pHyperPsramDev);
+}
+
+/**
+ * @brief  Hyperbus psram suspend.
+ * @param  pHyperPsramDev: pointer to a HYPERPSRAM structure that contains
+ *               the information for HYPERPSRAM module.
+ * @return HAL_Status
+ * save hyperbus register to sram
+ */
+HAL_Status HAL_HYPERPSRAM_Suspend(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
+{
+    uint32_t i;
+    volatile uint32_t *p1, *p2;
+
+    HAL_ASSERT(IS_HYPERBUS_INSTANCE(pHyperPsramDev->pReg));
+
+    p1 = (uint32_t *)&pHyperPsramDev->hyperResumeReg.hyperbus;
+    p2 = (uint32_t *)pHyperPsramDev->pReg;
+    for (i = 0; i < (sizeof(pHyperPsramDev->hyperResumeReg.hyperbus) / 4); i++)
+        *p1++ = *p2++;
+
+    pHyperPsramDev->hyperResumeReg.available = HYPERBUS_REG_AVA_FLAG;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Hyperbus psram resume.
+ * @param  pHyperPsramDev: pointer to a HYPERPSRAM structure that contains
+ *               the information for HYPERPSRAM module.
+ * @return HAL_Status
+ * recovery hyperbus register
+ */
+HAL_Status HAL_HYPERPSRAM_Resume(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
+{
+    uint32_t i;
+    volatile uint32_t *p1, *p2;
+
+    HAL_ASSERT(IS_HYPERBUS_INSTANCE(pHyperPsramDev->pReg));
+
+    if (pHyperPsramDev->hyperResumeReg.available == HYPERBUS_REG_AVA_FLAG) {
+        p1 = (uint32_t *)&pHyperPsramDev->hyperResumeReg.hyperbus;
+        p2 = (uint32_t *)pHyperPsramDev->pReg;
+        for (i = 0; i < (sizeof(pHyperPsramDev->hyperResumeReg.hyperbus) / 4); i++)
+            *p2++ = *p1++;
+
+        return HAL_OK;
+    } else {
+        return HAL_ERROR;
+    }
 }
 
 /** @} */

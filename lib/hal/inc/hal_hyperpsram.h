@@ -31,11 +31,20 @@ struct HYPERPSRAM_CHIP_INFO {
 };
 
 /**
+  * @brief  HYPERPSRAM register saving definition
+  */
+struct HYPERPSRAM_RESUME_REG {
+    uint32_t available;
+    struct HYPERBUS_REG hyperbus;
+};
+
+/**
   * @brief  HYPERPSRAM information definition
   */
 struct HAL_HYPERPSRAM_DEV {
     struct HYPERBUS_REG *pReg;
     struct HYPERPSRAM_CHIP_INFO psramChip;
+    struct HYPERPSRAM_RESUME_REG hyperResumeReg;
     uint32_t clkID; /**< The hyperbus clk id */
     uint32_t aclkGateID; /**< The hyperbus aclk gate id */
     uint32_t sclkGateID; /**< The hyperbus sclk gate id */
@@ -56,6 +65,8 @@ HAL_Status HAL_HYPERPSRAM_Init(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev);
 HAL_Status HAL_HYPERPSRAM_DeInit(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev);
 HAL_Status HAL_HYPERPSRAM_ReInit(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev);
 HAL_Status HAL_HYPERPSRAM_ModifyTiming(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev);
+HAL_Status HAL_HYPERPSRAM_Suspend(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev);
+HAL_Status HAL_HYPERPSRAM_Resume(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev);
 
 /** @} */
 
