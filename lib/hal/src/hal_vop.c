@@ -1384,6 +1384,22 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
                       VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
                       OUTPUT_MODE_888);
         break;
+    case MEDIA_BUS_FMT_SRGB666_3X8:
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+                      VOP_DSP_CTRL2_DITHER_DOWN_MODE_SHIFT,
+                      VOP_DSP_CTRL2_DITHER_DOWN_MODE_MASK,
+                      RGB888TORGB666);
+
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+                      VOP_DSP_CTRL2_DITHER_DOWN_SHIFT,
+                      VOP_DSP_CTRL2_DITHER_DOWN_MASK,
+                      1);
+
+        VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
+                      VOP_DSP_CTRL2_DSP_OUT_MODE_SHIFT,
+                      VOP_DSP_CTRL2_DSP_OUT_MODE_MASK,
+                      OUT_MODE_S888);
+        break;
     case MEDIA_BUS_FMT_SRGB888_3X8:
         VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                       VOP_DSP_CTRL2_DITHER_DOWN_SHIFT,
