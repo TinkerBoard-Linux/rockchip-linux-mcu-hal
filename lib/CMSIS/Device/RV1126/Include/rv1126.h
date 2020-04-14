@@ -551,8 +551,8 @@ struct VOP_REG {
     __IO uint32_t WIN0_CTRL1;                         /* Address Offset: 0x0054 */
     __IO uint32_t WIN0_COLOR_KEY;                     /* Address Offset: 0x0058 */
     __IO uint32_t WIN0_VIR;                           /* Address Offset: 0x005C */
-    __IO uint32_t WIN0_YRGB_MST0;                     /* Address Offset: 0x0060 */
-    __IO uint32_t WIN0_CBR_MST0;                      /* Address Offset: 0x0064 */
+    __IO uint32_t WIN0_YRGB_MST;                      /* Address Offset: 0x0060 */
+    __IO uint32_t WIN0_CBR_MST;                       /* Address Offset: 0x0064 */
     __IO uint32_t WIN0_ACT_INFO;                      /* Address Offset: 0x0068 */
     __IO uint32_t WIN0_DSP_INFO;                      /* Address Offset: 0x006C */
     __IO uint32_t WIN0_DSP_ST;                        /* Address Offset: 0x0070 */
