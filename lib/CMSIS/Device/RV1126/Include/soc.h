@@ -58,6 +58,28 @@ typedef enum {
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
+#ifdef ARCH_RISCV
+typedef enum
+{
+/******  Platform Exceptions Numbers ***************************************************/
+  I2C0_IRQn              = 4,      /*!< I2C0 Interrupt              */
+  I2C1_IRQn              = 5,      /*!< I2C1 Interrupt              */
+  I2C2_IRQn              = 6,      /*!< I2C2 Interrupt              */
+  I2C3_IRQn              = 7,      /*!< I2C3 Interrupt              */
+  I2C4_IRQn              = 8,      /*!< I2C4 Interrupt              */
+  I2C5_IRQn              = 9,      /*!< I2C5 Interrupt              */
+  SPI0_IRQn              = 10,      /*!< SPI0 Interrupt              */
+  SPI1_IRQn              = 11,      /*!< SPI1 Interrupt              */
+  GPIO0_IRQn             = 34,      /*!< GPIO0 Interrupt             */
+  GPIO1_IRQn             = 35,      /*!< GPIO1 Interrupt             */
+  GPIO2_IRQn             = 36,      /*!< GPIO2 Interrupt             */
+  GPIO3_IRQn             = 37,      /*!< GPIO3 Interrupt             */
+  GPIO4_IRQn             = 38,      /*!< GPIO4 Interrupt             */
+  MAILBOX0_AP_IRQn       = 111,     /*!< MAILBOX0_AP Interrupt       */
+  MAILBOX0_BB_IRQn       = 112,     /*!< MAILBOX0_BB Interrupt       */
+  NUM_INTERRUPTS         = 128,
+} IRQn_Type;
+#else
 typedef enum
 {
 /*******  SGI Interrupts Numbers  ***************************************************/
@@ -100,7 +122,7 @@ typedef enum
   MAILBOX0_BB_IRQn       = 144,     /*!< MAILBOX0_BB Interrupt       */
   NUM_INTERRUPTS         = 256,
 } IRQn_Type;
-
+#endif
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
 /* ================================================================================ */
