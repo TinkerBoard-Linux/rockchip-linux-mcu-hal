@@ -280,7 +280,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case ACLK_PDBUS:
     case HCLK_PDBUS:
     case PCLK_PDBUS:
-    case ACLK_PDPHP
+    case ACLK_PDPHP:
         pRate = s_gpllFreq;
         mux = ACLK_PDBUS_PRE_SEL_CLK_GPLL_MUX;
         break;
