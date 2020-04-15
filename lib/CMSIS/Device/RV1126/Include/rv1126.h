@@ -467,7 +467,7 @@ struct PMUCRU_REG {
          uint32_t RESERVED002C;                       /* Address Offset: 0x002C */
     __IO uint32_t GPLL_OFFSETCAL_STATUS;              /* Address Offset: 0x0030 */
          uint32_t RESERVED0034[51];                   /* Address Offset: 0x0034 */
-    __IO uint32_t CRU_CLKSEL_CON[12];                 /* Address Offset: 0x0100 */
+    __IO uint32_t CRU_CLKSEL_CON[14];                 /* Address Offset: 0x0100 */
          uint32_t RESERVED0138[18];                   /* Address Offset: 0x0138 */
     __IO uint32_t CRU_CLKGATE_CON[3];                 /* Address Offset: 0x0180 */
          uint32_t RESERVED018C[29];                   /* Address Offset: 0x018C */
@@ -491,9 +491,9 @@ struct CRU_REG {
     __IO uint32_t HPLL_OFFSETCAL_STATUS;              /* Address Offset: 0x008C */
     __IO uint32_t MODE_CON01;                         /* Address Offset: 0x0090 */
          uint32_t RESERVED0094[27];                   /* Address Offset: 0x0094 */
-    __IO uint32_t CRU_CLKSEL_CON[75];                 /* Address Offset: 0x0100 */
+    __IO uint32_t CRU_CLKSEL_CON[78];                 /* Address Offset: 0x0100 */
          uint32_t RESERVED0238[18];                   /* Address Offset: 0x0238 */
-    __IO uint32_t CRU_CLKGATE_CON[24];                /* Address Offset: 0x0280 */
+    __IO uint32_t CRU_CLKGATE_CON[25];                /* Address Offset: 0x0280 */
          uint32_t RESERVED02E4[7];                    /* Address Offset: 0x02E4 */
     __IO uint32_t CRU_SOFTRST_CON[15];                /* Address Offset: 0x0300 */
          uint32_t RESERVED033C[17];                   /* Address Offset: 0x033C */
