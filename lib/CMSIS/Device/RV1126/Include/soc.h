@@ -169,8 +169,8 @@ typedef enum CLOCK_Name {
     CLK_I2C3        = CLK(0, CLK_I2C3_DIV),
     CLK_I2C4        = CLK(0, CLK_I2C4_DIV),
     CLK_I2C5        = CLK(0, CLK_I2C5_DIV),
-    CLK_OSC0_DIV32K = CLK(CLK_DEEPSLOW_SEL, 0),
-    CLK_RTC32K      = CLK(0, CLK_OSC0_DIV32K_DIV),
+    CLK_OSC0_DIV32K = CLK(0, CLK_OSC0_DIV32K_DIV),
+    CLK_RTC32K      = CLK(CLK_DEEPSLOW_SEL, 0),
 } eCLOCK_Name;
 #endif
 
