@@ -16,6 +16,8 @@
 #ifndef __HAL_PINCTRL_H__
 #define __HAL_PINCTRL_H__
 
+#include "hal_def.h"
+
 /***************************** MACRO Definition ******************************/
 /** @defgroup PINCTRL_Exported_Definition_Group1 Basic Definition
  *  @{
@@ -197,9 +199,6 @@ typedef enum {
 #define GPIO_PIN_ALL (0xFFFFFFFFU)  /*!< All pins selected */
 
 /** @} */
-
-#define IS_GPIO_PIN(PIN)      ((PIN) != 0x00000000U)
-#define IS_GPIO_HIGH_PIN(PIN) IS_GPIO_PIN(((PIN) & 0xFFFF0000U))
 
 #define ROUTE_VAL(v, s, m) (((v) << (s)) | (m) << ((s) + 16))
 

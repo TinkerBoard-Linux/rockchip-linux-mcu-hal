@@ -70,26 +70,6 @@ typedef enum {
     GPIO_INT_TYPE_DEFAULT      = GPIO_INT_TYPE_SENSE_MASK,
 } eGPIO_intType;
 
-/** GPIO bank */
-typedef enum {
-    #ifdef GPIO0
-    GPIO_BANK0 = 0,
-    #endif
-    #ifdef GPIO1
-    GPIO_BANK1 = 1,
-    #endif
-    #ifdef GPIO2
-    GPIO_BANK2 = 2,
-    #endif
-    #ifdef GPIO3
-    GPIO_BANK3 = 3,
-    #endif
-    #ifdef GPIO4
-    GPIO_BANK4 = 4,
-    #endif
-    GPIO_BANK_NUM
-} eGPIO_bankId;
-
 typedef enum {
     GPIO_INT_MODE_EDGE_RISING,
     GPIO_INT_MODE_EDGE_FALLING,
@@ -101,6 +81,9 @@ typedef enum {
 
 #define IS_GPIO_PIN_DIR(ACTION)   (((ACTION) == GPIO_IN) || ((ACTION) == GPIO_OUT))
 #define IS_GPIO_PIN_LEVEL(ACTION) (((ACTION) == GPIO_LOW) || ((ACTION) == GPIO_HIGH))
+
+#define IS_GPIO_PIN(PIN)      ((PIN) != 0x00000000U)
+#define IS_GPIO_HIGH_PIN(PIN) IS_GPIO_PIN(((PIN) & 0xFFFF0000U))
 
 #define IS_GET_GPIO_PIN(PIN) (((PIN) == GPIO_PIN_A0) || \
                               ((PIN) == GPIO_PIN_A1) || \

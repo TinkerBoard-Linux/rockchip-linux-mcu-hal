@@ -124,6 +124,25 @@ typedef enum {
     HAL_LOCKED   = 0x01U
 } HAL_LockStatus;
 
+typedef enum {
+#ifdef GPIO0
+    GPIO_BANK0 = 0,
+#endif
+#ifdef GPIO1
+    GPIO_BANK1 = 1,
+#endif
+#ifdef GPIO2
+    GPIO_BANK2 = 2,
+#endif
+#ifdef GPIO3
+    GPIO_BANK3 = 3,
+#endif
+#ifdef GPIO4
+    GPIO_BANK4 = 4,
+#endif
+    GPIO_BANK_NUM
+} eGPIO_bankId;
+
 typedef void (*pFunc)(void);
 
 /***************************** Function Declare ******************************/

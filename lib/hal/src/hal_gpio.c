@@ -449,7 +449,7 @@ void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, uint32_t pin)
 
 /**
  * @brief  GPIO IRQ callbacks.
- * @param  bank: The pointer of GPIO struct.
+ * @param  bank: The bank id.
  * @param  pin: The true pin index.
  * NOTE: This function Should not be modified, when the callback is needed,
  *       the HAL_GPIO_IRQDispatch could be implemented in the user file.
@@ -463,7 +463,7 @@ __WEAK void HAL_GPIO_IRQDispatch(eGPIO_bankId bank, uint32_t pin)
 /**
  * @brief  GPIO IRQ hanlder.
  * @param  pGPIO: The pointer of GPIO struct.
- * @param  bank: The bank id defined in @ref eGPIO_bankId.
+ * @param  bank: The bank id.
  */
 void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank)
 {
