@@ -161,7 +161,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 {
     uint32_t clkMux = CLK_GET_MUX(clockName);
     uint32_t clkDiv = CLK_GET_DIV(clockName);
-    uint32_t pRate = 0, freq;
+    uint32_t pRate = 0, sel, freq;
 
     if (!s_cpllFreq)
         s_cpllFreq = HAL_CRU_GetPllFreq(&CPLL);
@@ -219,6 +219,18 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
             pRate = PLL_INPUT_OSC_RATE;
         else
             pRate = s_gpllFreq;
+        break;
+    case ACLK_PDVI:
+    case ACLK_PDISPP:
+    case CLK_ISP:
+    case CLK_ISPP:
+        sel = HAL_CRU_ClkGetMux(clkMux);
+        if (sel == ACLK_PDVI_DIV_SEL_CLK_CPLL_MUX)
+            pRate = s_cpllFreq;
+        else if (sel == ACLK_PDVI_DIV_SEL_CLK_GPLL_MUX)
+            pRate = s_gpllFreq;
+        else
+            pRate = s_hpllFreq;
         break;
     case CLK_OSC0_DIV32K:
     case CLK_RTC32K:
@@ -334,6 +346,18 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         } else {
             pRate = s_cpllFreq;
             mux = DCLK_VOP_DIV_SEL_CLK_CPLL_MUX;
+        }
+        break;
+    case ACLK_PDVI:
+    case ACLK_PDISPP:
+    case CLK_ISP:
+    case CLK_ISPP:
+        if (!(s_cpllFreq % rate)) {
+            pRate = s_cpllFreq;
+            mux = ACLK_PDVI_DIV_SEL_CLK_CPLL_MUX;
+        } else {
+            pRate = s_gpllFreq;
+            mux = ACLK_PDVI_DIV_SEL_CLK_GPLL_MUX;
         }
         break;
     default:
