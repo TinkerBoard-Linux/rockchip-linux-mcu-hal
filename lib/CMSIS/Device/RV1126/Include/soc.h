@@ -178,6 +178,10 @@ typedef enum CLOCK_Name {
     CLK_OSC0_DIV32K = CLK(0, CLK_OSC0_DIV32K_DIV),
     CLK_RTC32K      = CLK(CLK_DEEPSLOW_SEL, 0),
 } eCLOCK_Name;
+
+#define ACLK_VOP   ACLK_PDVO
+#define DCLK_VOP_S DCLK_VOP
+
 #endif
 
 #ifdef __cplusplus
