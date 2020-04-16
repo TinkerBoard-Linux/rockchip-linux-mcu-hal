@@ -38,6 +38,7 @@ static struct PLL_CONFIG PLL_TABLE[] = {
 
 static uint32_t s_apllFreq;
 static uint32_t s_cpllFreq;
+static uint32_t s_hpllFreq;
 static uint32_t s_gpllFreq;
 
 static struct PLL_SETUP APLL = {
@@ -61,6 +62,18 @@ static struct PLL_SETUP CPLL = {
     .modeShift = 4,
     .lockShift = 10,
     .modeMask = 0x3 << 4,
+    .rateTable = PLL_TABLE,
+};
+
+static struct PLL_SETUP HPLL = {
+    .conOffset0 = &(CRU->HPLL_CON[0]),
+    .conOffset1 = &(CRU->HPLL_CON[1]),
+    .conOffset2 = &(CRU->HPLL_CON[2]),
+    .conOffset3 = &(CRU->HPLL_CON[3]),
+    .modeOffset = &(CRU->MODE_CON01),
+    .modeShift = 6,
+    .lockShift = 10,
+    .modeMask = 0x3 << 6,
     .rateTable = PLL_TABLE,
 };
 
@@ -167,6 +180,11 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         s_cpllFreq = freq;
 
         return freq;
+    case PLL_HPLL:
+        freq = HAL_CRU_GetPllFreq(&HPLL);
+        s_hpllFreq = freq;
+
+        return freq;
     case PLL_GPLL:
         freq = HAL_CRU_GetPllFreq(&GPLL);
         s_gpllFreq = freq;
@@ -259,6 +277,11 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case PLL_CPLL:
         error = HAL_CRU_SetPllFreq(&CPLL, rate);
         s_cpllFreq = HAL_CRU_GetPllFreq(&CPLL);
+
+        return error;
+    case PLL_HPLL:
+        error = HAL_CRU_SetPllFreq(&HPLL, rate);
+        s_hpllFreq = HAL_CRU_GetPllFreq(&HPLL);
 
         return error;
     case PLL_GPLL:
