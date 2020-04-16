@@ -289,8 +289,15 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         s_gpllFreq = HAL_CRU_GetPllFreq(&GPLL);
 
         return error;
-    case HCLK_PDCORE:
+    case ACLK_PDBUS:
+    case PCLK_PDBUS:
+        pRate = s_cpllFreq;
+        mux = ACLK_PDBUS_PRE_SEL_CLK_CPLL_MUX;
+        break;
+    case HCLK_PDBUS:
+    case ACLK_PDPHP:
     case HCLK_PDPHP:
+    case HCLK_PDCORE:
     case HCLK_PDAUDIO:
     case PCLK_PDPMU:
     case CLK_I2C0:
@@ -299,14 +306,8 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_I2C3:
     case CLK_I2C4:
     case CLK_I2C5:
-        pRate = s_cpllFreq;
-        break;
-    case ACLK_PDBUS:
-    case HCLK_PDBUS:
-    case PCLK_PDBUS:
-    case ACLK_PDPHP:
         pRate = s_gpllFreq;
-        mux = ACLK_PDBUS_PRE_SEL_CLK_GPLL_MUX;
+        mux = HCLK_PDBUS_PRE_SEL_CLK_GPLL_MUX;
         break;
     case CLK_SPI0:
     case CLK_SPI1:
