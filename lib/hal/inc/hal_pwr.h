@@ -44,6 +44,9 @@ typedef enum {
     PWR_ID_VCC_1V8_LDO,
     PWR_ID_VCC33_CODEC,
     PWR_ID_VCC33_AUDIO,
+    PWR_ID_VCC1,
+    PWR_ID_VLDO3,
+    PWR_ID_VLDO6,
     PWR_ID_MAX,
 } ePWR_ID;
 
