@@ -107,7 +107,6 @@ const struct PM_RUNTIME_INFO *HAL_PM_RuntimeGetData(void)
 
 struct NVIC_SAVE_S {
     uint32_t iser[NVIC_EXT_ISER_NUM];/* Interrupt Set Enable Register */
-    uint32_t icer[NVIC_EXT_ISER_NUM];/* Interrupt Clear Enable Register */
     uint8_t ip[NVIC_EXT_IP_NUM]; /* Interrupt Priority Register */
     uint32_t pg;  /* Interrupt Priority Group Register */
 };
@@ -137,9 +136,6 @@ void HAL_NVIC_SuspendSave(void)
     for (i = 0; i < NVIC_EXT_ISER_NUM; i++)
         nvicSave.iser[i] = pnvic->ISER[i];
 
-    for (i = 0; i < NVIC_EXT_ISER_NUM; i++)
-        nvicSave.icer[i] = pnvic->ICER[i];
-
     for (i = 0; i < NVIC_EXT_IP_NUM; i++)
         nvicSave.ip[i] = pnvic->IP[i];
 
@@ -159,7 +155,7 @@ void HAL_NVIC_ResumeRestore(void)
         pnvic->IP[i] = nvicSave.ip[i];
 
     for (i = 0; i < NVIC_EXT_ISER_NUM; i++)
-        pnvic->ICER[i] = nvicSave.icer[i];
+        pnvic->ICER[i] = 0xffffffff;
 
     for (i = 0; i < NVIC_EXT_ISER_NUM; i++)
         pnvic->ISER[i] = nvicSave.iser[i];
