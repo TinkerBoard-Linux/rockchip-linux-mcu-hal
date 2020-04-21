@@ -165,7 +165,8 @@ struct HAL_FSPI_HOST g_fspi0Dev =
     .xipClkGate = HCLK_SFC_XIP_GATE,
     .sclkID = CLK_SFC,
     .irqNum = FSPI0_IRQn,
-    .xipMem0 = XIP_MAP0_BASE0,
+    .xipMemData = XIP_MAP0_BASE0,
+    .xipMemCode = XIP_MAP0_BASE0,
     .xmmcDev[0] =
     {
         .type = DEV_NOR,

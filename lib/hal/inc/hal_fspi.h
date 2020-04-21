@@ -96,7 +96,8 @@ struct HAL_FSPI_HOST {
     uint32_t xipClkGate;
     eCLOCK_Name sclkID;
     IRQn_Type irqNum;
-    uint32_t xipMem0; /** FSPI XIP mapped memory(Under dcache) */
+    uint32_t xipMemCode; /** Better under icache */
+    uint32_t xipMemData; /** Better under dcache */
     uint8_t cs; /** Should be defined by user in each operation */
     uint8_t mode; /** Should be defined by user, referring to hal_spi_mem.h */
     struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT]; /** Set depend on corresponding device */
