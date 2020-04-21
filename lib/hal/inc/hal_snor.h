@@ -121,7 +121,8 @@ struct SNOR_HOST {
     uint32_t speed;
     uint32_t mode;
     uint8_t flags;
-    uint32_t xipMem; /** XIP mapped memory */
+    uint32_t xipMem; /** XIP data mapped memory */
+    uint32_t xipMemCode; /** XIP code mapped memory */
     HAL_Status (*xfer)(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op);
     HAL_Status (*xipConfig)(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on);
 
