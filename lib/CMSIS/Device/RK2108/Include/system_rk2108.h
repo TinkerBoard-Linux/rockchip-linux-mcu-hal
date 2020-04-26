@@ -12,6 +12,7 @@ extern "C" {
 
 extern uint32_t SystemCoreClock; /*!< System Clock Frequency (Core Clock) */
 
+extern void CacheInit(void);
 extern void SystemInit(void);
 extern void SystemCoreClockUpdate(void);
 

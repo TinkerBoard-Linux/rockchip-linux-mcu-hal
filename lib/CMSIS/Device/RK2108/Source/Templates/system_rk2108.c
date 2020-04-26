@@ -4,7 +4,7 @@
  */
 
 #include "soc.h"
-#include "hal_conf.h"
+#include "hal_base.h"
 
 uint32_t SystemCoreClock = 24000000;
 
@@ -16,32 +16,10 @@ extern uint32_t __Vectors[];
 extern const uint32_t __vector_remap__[];
 #endif
 
-/*----------------------------------------------------------------------------
-  System Core Clock update function
- *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate(void)
-{
-}
-
-/*----------------------------------------------------------------------------
-  System initialization function
- *----------------------------------------------------------------------------*/
-void SystemInit(void)
+void CacheInit(void)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
     uint32_t status;
-#endif
-
-#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
-    SCB->CPACR |= ((3UL << 10 * 2) | (3UL << 11 * 2));  /* set CP10 and CP11 Full Access */
-#endif
-
-#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-#ifdef __STARTUP_COPY_MULTIPLE
-    SCB->VTOR = (uint32_t)(__vector_remap__);
-#else
-    SCB->VTOR = (uint32_t)__Vectors;
-#endif
 #endif
 
 #if defined(HAL_ICACHE_MODULE_ENABLED)
@@ -76,5 +54,30 @@ void SystemInit(void)
     /* enable dap cache access for jtag protocol. don't modify the uncache data
      * by jtag, the data will be inconsistent. */
     GRF->MCU_CON0 |= GRF_MCU_CON0_M4_DAP_DCACHE_MASK;
+#endif
+}
+
+/*----------------------------------------------------------------------------
+  System Core Clock update function
+ *----------------------------------------------------------------------------*/
+void SystemCoreClockUpdate(void)
+{
+}
+
+/*----------------------------------------------------------------------------
+  System initialization function
+ *----------------------------------------------------------------------------*/
+void SystemInit(void)
+{
+#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
+    SCB->CPACR |= ((3UL << 10 * 2) | (3UL << 11 * 2));  /* set CP10 and CP11 Full Access */
+#endif
+
+#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+#ifdef __STARTUP_COPY_MULTIPLE
+    SCB->VTOR = (uint32_t)(__vector_remap__);
+#else
+    SCB->VTOR = (uint32_t)__Vectors;
+#endif
 #endif
 }

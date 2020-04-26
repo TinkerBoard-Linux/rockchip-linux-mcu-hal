@@ -49,6 +49,7 @@ __Vectors_End:
                 .fnstart
 Reset_Handler:
                 ldr   sp, =__StackTop      /* set stack pointer */
+                bl    CacheInit
 
 /* Firstly it copies data from read only memory to RAM.
  * There are two schemes to copy. One can copy more than one sections.
