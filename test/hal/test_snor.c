@@ -144,7 +144,7 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
         if (testLBA < FLASH_SKIP_LBA)
             continue;
         pwrite32[0] = testLBA;
-        pread32 = (uint32_t *)(host->xipMem0 + testLBA * nor->sectorSize);
+        pread32 = (uint32_t *)(host->xipMemData + testLBA * nor->sectorSize);
         for (j = 0; j < testSecCount * nor->sectorSize / 4; j++) {
             if (pwrite32[j] != pread32[j]) {
                 HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * nor->sectorSize / 4);

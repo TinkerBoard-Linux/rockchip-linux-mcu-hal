@@ -40,7 +40,7 @@ static HAL_Status QPIPSRAM_TEST(uint32_t testEndLBA)
     HAL_DBG("testLBA = %lx\n", testLBA);
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        pread32 = (uint32_t *)(host->xipMem0 + testLBA * 512);
+        pread32 = (uint32_t *)(host->xipMemData + testLBA * 512);
         for (i = 0; i < (maxest_sector * 128); i++)
             pread32[i] = pwrite32[i];
         for (j = 0; j < testSecCount * 128; j++) {
@@ -69,7 +69,7 @@ static HAL_Status QPIPSRAM_TEST(uint32_t testEndLBA)
     testSecCount = 1;
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
-        pread32 = (uint32_t *)(host->xipMem0 + testLBA * 512);
+        pread32 = (uint32_t *)(host->xipMemData + testLBA * 512);
         for (j = 0; j < testSecCount * 128; j++) {
             if (pwrite32[j] != pread32[j]) {
                 HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * 128);
