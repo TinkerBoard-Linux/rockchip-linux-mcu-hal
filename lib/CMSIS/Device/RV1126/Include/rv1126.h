@@ -236,8 +236,8 @@ struct GRF_REG {
     __IO uint32_t PMU_SOC_CON2;                       /* Address Offset: 0x20108 */
     __IO uint32_t PMU_SOC_CON3;                       /* Address Offset: 0x2010C */
     __IO uint32_t PMU_SOC_CON4;                       /* Address Offset: 0x20110 */
-    __IO uint32_t PMU_SOC_CON5;                       /* Address Offset: 0x20114 */
-    __IO uint32_t PMU_SOC_CON6;                       /* Address Offset: 0x20118 */
+    __IO uint32_t PMU_IOFUNC_CON4;                    /* Address Offset: 0x20114 */
+    __IO uint32_t PMU_IOFUNC_CON5;                    /* Address Offset: 0x20118 */
          uint32_t RESERVED2011C[9];                   /* Address Offset: 0x2011C */
     __IO uint32_t IO_VSEL;                            /* Address Offset: 0x20140 */
     __IO uint32_t IO_VRET;                            /* Address Offset: 0x20144 */
@@ -3280,48 +3280,48 @@ struct VOP_REG {
 #define GRF_PMU_SOC_CON4_OFFSET                            (0x20110U)
 #define GRF_PMU_SOC_CON4_PMUSRAM_SPRACFG_SHIFT             (0U)
 #define GRF_PMU_SOC_CON4_PMUSRAM_SPRACFG_MASK              (0x3FFFU << GRF_PMU_SOC_CON4_PMUSRAM_SPRACFG_SHIFT)          /* 0x00003FFF */
-/* PMU_SOC_CON5 */
-#define GRF_PMU_SOC_CON5_OFFSET                            (0x20114U)
-#define GRF_PMU_SOC_CON5_PWM0_IOMUX_SEL_SHIFT              (0U)
-#define GRF_PMU_SOC_CON5_PWM0_IOMUX_SEL_MASK               (0x1U << GRF_PMU_SOC_CON5_PWM0_IOMUX_SEL_SHIFT)              /* 0x00000001 */
-#define GRF_PMU_SOC_CON5_PWM1_IOMUX_SEL_SHIFT              (2U)
-#define GRF_PMU_SOC_CON5_PWM1_IOMUX_SEL_MASK               (0x1U << GRF_PMU_SOC_CON5_PWM1_IOMUX_SEL_SHIFT)              /* 0x00000004 */
-#define GRF_PMU_SOC_CON5_PWM2_IOMUX_SEL_SHIFT              (4U)
-#define GRF_PMU_SOC_CON5_PWM2_IOMUX_SEL_MASK               (0x1U << GRF_PMU_SOC_CON5_PWM2_IOMUX_SEL_SHIFT)              /* 0x00000010 */
-#define GRF_PMU_SOC_CON5_PWM3_IOMUX_SEL_SHIFT              (6U)
-#define GRF_PMU_SOC_CON5_PWM3_IOMUX_SEL_MASK               (0x1U << GRF_PMU_SOC_CON5_PWM3_IOMUX_SEL_SHIFT)              /* 0x00000040 */
-#define GRF_PMU_SOC_CON5_PWM4_IOMUX_SEL_SHIFT              (8U)
-#define GRF_PMU_SOC_CON5_PWM4_IOMUX_SEL_MASK               (0x1U << GRF_PMU_SOC_CON5_PWM4_IOMUX_SEL_SHIFT)              /* 0x00000100 */
-#define GRF_PMU_SOC_CON5_PWM5_IOMUX_SEL_SHIFT              (10U)
-#define GRF_PMU_SOC_CON5_PWM5_IOMUX_SEL_MASK               (0x1U << GRF_PMU_SOC_CON5_PWM5_IOMUX_SEL_SHIFT)              /* 0x00000400 */
-#define GRF_PMU_SOC_CON5_PWM6_IOMUX_SEL_SHIFT              (12U)
-#define GRF_PMU_SOC_CON5_PWM6_IOMUX_SEL_MASK               (0x1U << GRF_PMU_SOC_CON5_PWM6_IOMUX_SEL_SHIFT)              /* 0x00001000 */
-#define GRF_PMU_SOC_CON5_PWM7_IOMUX_SEL_SHIFT              (14U)
-#define GRF_PMU_SOC_CON5_PWM7_IOMUX_SEL_MASK               (0x1U << GRF_PMU_SOC_CON5_PWM7_IOMUX_SEL_SHIFT)              /* 0x00004000 */
-/* PMU_SOC_CON6 */
-#define GRF_PMU_SOC_CON6_OFFSET                            (0x20118U)
-#define GRF_PMU_SOC_CON6_SPI0_IOMUX_SEL_SHIFT              (0U)
-#define GRF_PMU_SOC_CON6_SPI0_IOMUX_SEL_MASK               (0x3U << GRF_PMU_SOC_CON6_SPI0_IOMUX_SEL_SHIFT)              /* 0x00000003 */
-#define GRF_PMU_SOC_CON6_UART1_IOMUX_SEL_SHIFT             (2U)
-#define GRF_PMU_SOC_CON6_UART1_IOMUX_SEL_MASK              (0x1U << GRF_PMU_SOC_CON6_UART1_IOMUX_SEL_SHIFT)             /* 0x00000004 */
-#define GRF_PMU_SOC_CON6_I2C2_IOMUX_SEL_SHIFT              (4U)
-#define GRF_PMU_SOC_CON6_I2C2_IOMUX_SEL_MASK               (0x1U << GRF_PMU_SOC_CON6_I2C2_IOMUX_SEL_SHIFT)              /* 0x00000010 */
-#define GRF_PMU_SOC_CON6_PWM0_SWITCH_SEL_SHIFT             (8U)
-#define GRF_PMU_SOC_CON6_PWM0_SWITCH_SEL_MASK              (0x1U << GRF_PMU_SOC_CON6_PWM0_SWITCH_SEL_SHIFT)             /* 0x00000100 */
-#define GRF_PMU_SOC_CON6_PWM1_SWITCH_SEL_SHIFT             (9U)
-#define GRF_PMU_SOC_CON6_PWM1_SWITCH_SEL_MASK              (0x1U << GRF_PMU_SOC_CON6_PWM1_SWITCH_SEL_SHIFT)             /* 0x00000200 */
-#define GRF_PMU_SOC_CON6_PWM2_SWITCH_SEL_SHIFT             (10U)
-#define GRF_PMU_SOC_CON6_PWM2_SWITCH_SEL_MASK              (0x1U << GRF_PMU_SOC_CON6_PWM2_SWITCH_SEL_SHIFT)             /* 0x00000400 */
-#define GRF_PMU_SOC_CON6_PWM3_SWITCH_SEL_SHIFT             (11U)
-#define GRF_PMU_SOC_CON6_PWM3_SWITCH_SEL_MASK              (0x1U << GRF_PMU_SOC_CON6_PWM3_SWITCH_SEL_SHIFT)             /* 0x00000800 */
-#define GRF_PMU_SOC_CON6_PWM4_SWITCH_SEL_SHIFT             (12U)
-#define GRF_PMU_SOC_CON6_PWM4_SWITCH_SEL_MASK              (0x1U << GRF_PMU_SOC_CON6_PWM4_SWITCH_SEL_SHIFT)             /* 0x00001000 */
-#define GRF_PMU_SOC_CON6_PWM5_SWITCH_SEL_SHIFT             (13U)
-#define GRF_PMU_SOC_CON6_PWM5_SWITCH_SEL_MASK              (0x1U << GRF_PMU_SOC_CON6_PWM5_SWITCH_SEL_SHIFT)             /* 0x00002000 */
-#define GRF_PMU_SOC_CON6_PWM6_SWITCH_SEL_SHIFT             (14U)
-#define GRF_PMU_SOC_CON6_PWM6_SWITCH_SEL_MASK              (0x1U << GRF_PMU_SOC_CON6_PWM6_SWITCH_SEL_SHIFT)             /* 0x00004000 */
-#define GRF_PMU_SOC_CON6_PWM7_SWITCH_SEL_SHIFT             (15U)
-#define GRF_PMU_SOC_CON6_PWM7_SWITCH_SEL_MASK              (0x1U << GRF_PMU_SOC_CON6_PWM7_SWITCH_SEL_SHIFT)             /* 0x00008000 */
+/* PMU_IOFUNC_CON4 */
+#define GRF_PMU_IOFUNC_CON4_OFFSET                         (0x20114U)
+#define GRF_PMU_IOFUNC_CON4_PWM0_IOMUX_SEL_SHIFT           (0U)
+#define GRF_PMU_IOFUNC_CON4_PWM0_IOMUX_SEL_MASK            (0x1U << GRF_PMU_IOFUNC_CON4_PWM0_IOMUX_SEL_SHIFT)           /* 0x00000001 */
+#define GRF_PMU_IOFUNC_CON4_PWM1_IOMUX_SEL_SHIFT           (2U)
+#define GRF_PMU_IOFUNC_CON4_PWM1_IOMUX_SEL_MASK            (0x1U << GRF_PMU_IOFUNC_CON4_PWM1_IOMUX_SEL_SHIFT)           /* 0x00000004 */
+#define GRF_PMU_IOFUNC_CON4_PWM2_IOMUX_SEL_SHIFT           (4U)
+#define GRF_PMU_IOFUNC_CON4_PWM2_IOMUX_SEL_MASK            (0x1U << GRF_PMU_IOFUNC_CON4_PWM2_IOMUX_SEL_SHIFT)           /* 0x00000010 */
+#define GRF_PMU_IOFUNC_CON4_PWM3_IOMUX_SEL_SHIFT           (6U)
+#define GRF_PMU_IOFUNC_CON4_PWM3_IOMUX_SEL_MASK            (0x1U << GRF_PMU_IOFUNC_CON4_PWM3_IOMUX_SEL_SHIFT)           /* 0x00000040 */
+#define GRF_PMU_IOFUNC_CON4_PWM4_IOMUX_SEL_SHIFT           (8U)
+#define GRF_PMU_IOFUNC_CON4_PWM4_IOMUX_SEL_MASK            (0x1U << GRF_PMU_IOFUNC_CON4_PWM4_IOMUX_SEL_SHIFT)           /* 0x00000100 */
+#define GRF_PMU_IOFUNC_CON4_PWM5_IOMUX_SEL_SHIFT           (10U)
+#define GRF_PMU_IOFUNC_CON4_PWM5_IOMUX_SEL_MASK            (0x1U << GRF_PMU_IOFUNC_CON4_PWM5_IOMUX_SEL_SHIFT)           /* 0x00000400 */
+#define GRF_PMU_IOFUNC_CON4_PWM6_IOMUX_SEL_SHIFT           (12U)
+#define GRF_PMU_IOFUNC_CON4_PWM6_IOMUX_SEL_MASK            (0x1U << GRF_PMU_IOFUNC_CON4_PWM6_IOMUX_SEL_SHIFT)           /* 0x00001000 */
+#define GRF_PMU_IOFUNC_CON4_PWM7_IOMUX_SEL_SHIFT           (14U)
+#define GRF_PMU_IOFUNC_CON4_PWM7_IOMUX_SEL_MASK            (0x1U << GRF_PMU_IOFUNC_CON4_PWM7_IOMUX_SEL_SHIFT)           /* 0x00004000 */
+/* PMU_IOFUNC_CON5 */
+#define GRF_PMU_IOFUNC_CON5_OFFSET                         (0x20118U)
+#define GRF_PMU_IOFUNC_CON5_SPI0_IOMUX_SEL_SHIFT           (0U)
+#define GRF_PMU_IOFUNC_CON5_SPI0_IOMUX_SEL_MASK            (0x3U << GRF_PMU_IOFUNC_CON5_SPI0_IOMUX_SEL_SHIFT)           /* 0x00000003 */
+#define GRF_PMU_IOFUNC_CON5_UART1_IOMUX_SEL_SHIFT          (2U)
+#define GRF_PMU_IOFUNC_CON5_UART1_IOMUX_SEL_MASK           (0x1U << GRF_PMU_IOFUNC_CON5_UART1_IOMUX_SEL_SHIFT)          /* 0x00000004 */
+#define GRF_PMU_IOFUNC_CON5_I2C2_IOMUX_SEL_SHIFT           (4U)
+#define GRF_PMU_IOFUNC_CON5_I2C2_IOMUX_SEL_MASK            (0x1U << GRF_PMU_IOFUNC_CON5_I2C2_IOMUX_SEL_SHIFT)           /* 0x00000010 */
+#define GRF_PMU_IOFUNC_CON5_PWM0_SWITCH_SEL_SHIFT          (8U)
+#define GRF_PMU_IOFUNC_CON5_PWM0_SWITCH_SEL_MASK           (0x1U << GRF_PMU_IOFUNC_CON5_PWM0_SWITCH_SEL_SHIFT)          /* 0x00000100 */
+#define GRF_PMU_IOFUNC_CON5_PWM1_SWITCH_SEL_SHIFT          (9U)
+#define GRF_PMU_IOFUNC_CON5_PWM1_SWITCH_SEL_MASK           (0x1U << GRF_PMU_IOFUNC_CON5_PWM1_SWITCH_SEL_SHIFT)          /* 0x00000200 */
+#define GRF_PMU_IOFUNC_CON5_PWM2_SWITCH_SEL_SHIFT          (10U)
+#define GRF_PMU_IOFUNC_CON5_PWM2_SWITCH_SEL_MASK           (0x1U << GRF_PMU_IOFUNC_CON5_PWM2_SWITCH_SEL_SHIFT)          /* 0x00000400 */
+#define GRF_PMU_IOFUNC_CON5_PWM3_SWITCH_SEL_SHIFT          (11U)
+#define GRF_PMU_IOFUNC_CON5_PWM3_SWITCH_SEL_MASK           (0x1U << GRF_PMU_IOFUNC_CON5_PWM3_SWITCH_SEL_SHIFT)          /* 0x00000800 */
+#define GRF_PMU_IOFUNC_CON5_PWM4_SWITCH_SEL_SHIFT          (12U)
+#define GRF_PMU_IOFUNC_CON5_PWM4_SWITCH_SEL_MASK           (0x1U << GRF_PMU_IOFUNC_CON5_PWM4_SWITCH_SEL_SHIFT)          /* 0x00001000 */
+#define GRF_PMU_IOFUNC_CON5_PWM5_SWITCH_SEL_SHIFT          (13U)
+#define GRF_PMU_IOFUNC_CON5_PWM5_SWITCH_SEL_MASK           (0x1U << GRF_PMU_IOFUNC_CON5_PWM5_SWITCH_SEL_SHIFT)          /* 0x00002000 */
+#define GRF_PMU_IOFUNC_CON5_PWM6_SWITCH_SEL_SHIFT          (14U)
+#define GRF_PMU_IOFUNC_CON5_PWM6_SWITCH_SEL_MASK           (0x1U << GRF_PMU_IOFUNC_CON5_PWM6_SWITCH_SEL_SHIFT)          /* 0x00004000 */
+#define GRF_PMU_IOFUNC_CON5_PWM7_SWITCH_SEL_SHIFT          (15U)
+#define GRF_PMU_IOFUNC_CON5_PWM7_SWITCH_SEL_MASK           (0x1U << GRF_PMU_IOFUNC_CON5_PWM7_SWITCH_SEL_SHIFT)          /* 0x00008000 */
 /* IO_VSEL */
 #define GRF_IO_VSEL_OFFSET                                 (0x20140U)
 #define GRF_IO_VSEL_FLASH_VOSEL_SHIFT                      (0U)
@@ -3360,10 +3360,6 @@ struct VOP_REG {
 #define GRF_IO_VRET_VCCIO6_RET_MASK                        (0x1U << GRF_IO_VRET_VCCIO6_RET_SHIFT)                       /* 0x00000040 */
 #define GRF_IO_VRET_VCCIO7_RET_SHIFT                       (7U)
 #define GRF_IO_VRET_VCCIO7_RET_MASK                        (0x1U << GRF_IO_VRET_VCCIO7_RET_SHIFT)                       /* 0x00000080 */
-#define GRF_IO_VRET_PMUIO0_RET_SHIFT                       (8U)
-#define GRF_IO_VRET_PMUIO0_RET_MASK                        (0x1U << GRF_IO_VRET_PMUIO0_RET_SHIFT)                       /* 0x00000100 */
-#define GRF_IO_VRET_PMUIO1_RET_SHIFT                       (9U)
-#define GRF_IO_VRET_PMUIO1_RET_MASK                        (0x1U << GRF_IO_VRET_PMUIO1_RET_SHIFT)                       /* 0x00000200 */
 /* PMUPVTM_CLKDIV */
 #define GRF_PMUPVTM_CLKDIV_OFFSET                          (0x20180U)
 #define GRF_PMUPVTM_CLKDIV_PMUPVTM_CLKOUT_DIV_SHIFT        (2U)
