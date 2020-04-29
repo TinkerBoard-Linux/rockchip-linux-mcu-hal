@@ -80,6 +80,7 @@ enum SPI_NOR_PROTOCOL {
 #define SPINOR_OP_CLFSR      0x50	/* Clear flag status register */
 #define SPINOR_OP_RDEAR      0xc8	/* Read Extended Address Register */
 #define SPINOR_OP_WREAR      0xc5	/* Write Extended Address Register */
+#define SPINOR_OP_READ_UUID  0x4b       /* Read SPI Nor UUID */
 
 struct SPI_NOR {
     struct SNOR_HOST *spi;
@@ -147,6 +148,7 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE Era
 HAL_Status HAL_SNOR_XIPEnable(struct SPI_NOR *nor);
 HAL_Status HAL_SNOR_XIPDisable(struct SPI_NOR *nor);
 HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId);
+HAL_Status HAL_SNOR_ReaduUUID(struct SPI_NOR *nor, void *buf);
 
 /** @} */
 

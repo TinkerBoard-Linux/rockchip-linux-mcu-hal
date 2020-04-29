@@ -902,6 +902,16 @@ HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId)
     return HAL_FALSE;
 }
 
+HAL_Status HAL_SNOR_ReaduUUID(struct SPI_NOR *nor, void *buf)
+{
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(SPINOR_OP_READ_UUID, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(4, 0, 1),
+                                                     HAL_SPI_MEM_OP_DUMMY(0, 1),
+                                                     HAL_SPI_MEM_OP_DATA_IN(8, buf, 1));
+
+    return SNOR_SPIMemExecOp(nor->spi, &op);
+}
+
 /** @} */
 
 /** @} */
