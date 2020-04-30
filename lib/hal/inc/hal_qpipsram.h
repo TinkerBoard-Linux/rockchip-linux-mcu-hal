@@ -61,8 +61,19 @@ struct QPI_PSRAM {
     uint8_t programOpcode;
     uint8_t programDummy;
 
+    HAL_Status (*readReg)(struct QPI_PSRAM *psram, uint8_t opcode, uint8_t *buf, uint32_t len);
+    HAL_Status (*writeReg)(struct QPI_PSRAM *psram, uint8_t opcode, uint8_t *buf, uint32_t len);
+
+    int32_t (*read)(struct QPI_PSRAM *psram, uint32_t from,
+                    uint32_t len, uint8_t *read_buf);
+    int32_t (*write)(struct QPI_PSRAM *psram, uint32_t to,
+                     uint32_t len, const uint8_t *write_buf);
+
     enum QPIPSRAM_PROTOCOL readProto;
     enum QPIPSRAM_PROTOCOL writeProto;
+
+    uint32_t size;
+    uint32_t pageSize;
 };
 
 /***************************** Function Declare ******************************/
@@ -75,6 +86,9 @@ HAL_Status HAL_QPIPSRAM_DeInit(struct QPI_PSRAM *psram);
 HAL_Status HAL_QPIPSRAM_XIPEnable(struct QPI_PSRAM *psram);
 HAL_Status HAL_QPIPSRAM_XIPDisable(struct QPI_PSRAM *psram);
 HAL_Check HAL_QPIPSRAM_IsPsramSupported(uint8_t *id);
+int32_t HAL_QPIPSRAM_ReadData(struct QPI_PSRAM *psram, uint32_t from, void *buf, uint32_t len);
+int32_t HAL_QPIPSRAM_ProgData(struct QPI_PSRAM *psram, uint32_t to, void *buf, uint32_t len);
+uint32_t HAL_QPIPSRAM_GetCapacity(struct QPI_PSRAM *psram);
 
 /** @} */
 

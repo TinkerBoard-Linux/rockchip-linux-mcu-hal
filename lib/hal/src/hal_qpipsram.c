@@ -23,7 +23,7 @@
  - Init a SPI psram abstract:
      - Malloc struct QPI_PSRAM psram by user;
      - Designated host to struct QPI_PSRAM psram->spi by user;
-     - Init spi nor abstract by calling HAL_QPIPSRAM_Init();
+     - Init spi psram abstract by calling HAL_QPIPSRAM_Init();
  - Enable or disable XIP:
      - HAL_QPIPSRAM_XIPEnable()
      - HAL_QPIPSRAM_XIPDisable()
@@ -49,6 +49,14 @@
 #define QPIPSRAM_OP_PP_1_4_4   0x38
 #define QPIPSRAM_OP_ENQPI      0x35
 #define QPIPSRAM_OP_EIXTQPI    0xF5
+
+#define QPIPSRAM_READWRITE_MAX_IOSIZE (1024 * 8) /* 8KB */
+
+#define QPIPSRAM_SIZE_MAX 0x2000000 /* 32MB */
+#define QPIPSRAM_SIZE_MIN 0x80000 /* 512KB */
+
+#define QPIPSRAM_PSRAM_PAGE_SIZE_MAX 0x400 /* 1024B */
+#define QPIPSRAM_PSRAM_PAGE_SIZE_MIN 0x200 /* 512B */
 
 /********************* Private Structure Definition **************************/
 
@@ -128,21 +136,68 @@ static HAL_Status QPIPSRAM_ReadWriteReg(struct QPI_PSRAM *psram, struct HAL_SPI_
     return QPIPSRAM_SPIMemExecOp(psram->spi, op);
 }
 
-static HAL_Status QPIPSRAM_WriteReg(struct QPI_PSRAM *psram, uint8_t opcode, uint8_t *buf, int32_t len)
+static HAL_Status QPIPSRAM_WriteReg(struct QPI_PSRAM *psram, uint8_t opcode, uint8_t *buf, uint32_t len)
 {
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(opcode, 1),
                                                      HAL_SPI_MEM_OP_NO_ADDR,
                                                      HAL_SPI_MEM_OP_NO_DUMMY,
                                                      HAL_SPI_MEM_OP_DATA_OUT(len, NULL, 1));
 
-    /* HAL_SNOR_DBG("%s %x %ld\n", __func__, opcode, len); */
+    /* HAL_QPIPSRAM_DBG("%s %x %ld\n", __func__, opcode, len); */
 
     return QPIPSRAM_ReadWriteReg(psram, &op, buf);
 }
 
+static int32_t QPIPSRAM_ReadData(struct QPI_PSRAM *psram, uint32_t from, uint32_t len, uint8_t *buf)
+{
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(psram->readOpcode, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(psram->addrWidth, from, 1),
+                                                     HAL_SPI_MEM_OP_DUMMY(psram->readDummy, 1),
+                                                     HAL_SPI_MEM_OP_DATA_IN(len, buf, 1));
+    int32_t ret;
+
+    /* get transfer protocols. */
+    op.cmd.buswidth = 1;
+    op.addr.buswidth = QPIPSRAM_GET_PROTOCOL_ADDR_BITS(psram->readProto);
+    op.dummy.buswidth = op.addr.buswidth;
+    op.data.buswidth = QPIPSRAM_GET_PROTOCOL_DATA_BITS(psram->readProto);
+
+    /* HAL_QPIPSRAM_DBG("%s %x %lx %lx %lx\n", __func__, psram->readDummy, op.data.nbytes, from, op.addr.val); */
+    /* convert the dummy cycles to the number of bytes */
+    op.dummy.nbytes = (psram->readDummy * op.dummy.buswidth) / 8;
+
+    ret = QPIPSRAM_SPIMemExecOp(psram->spi, &op);
+    if (ret)
+        return 0;
+
+    return len;
+}
+
+static int32_t QPIPSRAM_WriteData(struct QPI_PSRAM *psram, uint32_t to, uint32_t len, const uint8_t *buf)
+{
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(psram->programOpcode, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(psram->addrWidth, to, 1),
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_DATA_OUT(len, buf, 1));
+    int32_t ret;
+
+    /* get transfer protocols. */
+    op.cmd.buswidth = 1;
+    op.addr.buswidth = QPIPSRAM_GET_PROTOCOL_ADDR_BITS(psram->writeProto);
+    op.data.buswidth = QPIPSRAM_GET_PROTOCOL_DATA_BITS(psram->writeProto);
+
+    op.data.nbytes = len < op.data.nbytes ? len : op.data.nbytes;
+
+    ret = QPIPSRAM_SPIMemExecOp(psram->spi, &op);
+    if (ret)
+        return 0;
+
+    return op.data.nbytes;
+}
+
 static HAL_Status QPIPSRAM_EnterQPI(struct QPI_PSRAM *psram)
 {
-    return QPIPSRAM_WriteReg(psram, QPIPSRAM_OP_ENQPI, NULL, 0);
+    return psram->writeReg(psram, QPIPSRAM_OP_ENQPI, NULL, 0);
 }
 
 static HAL_Status QPIPSRAM_ExitQPI(struct QPI_PSRAM *psram)
@@ -155,14 +210,14 @@ static HAL_Status QPIPSRAM_ExitQPI(struct QPI_PSRAM *psram)
     return QPIPSRAM_SPIMemExecOp(psram->spi, &op);
 }
 
-static HAL_Status QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data)
+static HAL_Status QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data, uint8_t len)
 {
     int32_t ret;
     uint8_t *id = data;
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(QPIPSRAM_OP_RDID, 1),
                                                      HAL_SPI_MEM_OP_ADDR(3, 0xa5a5a5a5, 1),
                                                      HAL_SPI_MEM_OP_DUMMY(0, 1),
-                                                     HAL_SPI_MEM_OP_DATA_IN(2, data, 1));
+                                                     HAL_SPI_MEM_OP_DATA_IN(len, data, 1));
 
     /* get transfer protocols. */
     op.cmd.buswidth = 1;
@@ -182,8 +237,154 @@ static HAL_Status QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data)
     return ret;
 }
 
+static uint32_t QPIPSRAM_PageSizeDetect(struct QPI_PSRAM *psram)
+{
+    uint32_t off;
+    uint8_t pattern[2], read;
+
+    for (off = QPIPSRAM_PSRAM_PAGE_SIZE_MIN; off <= QPIPSRAM_PSRAM_PAGE_SIZE_MAX; off <<= 1) {
+        pattern[0] = 0;
+        HAL_QPIPSRAM_ProgData(psram, 0, &pattern, 1);
+        pattern[0] = 0x5a;
+        pattern[1] = 0xa5;
+        HAL_QPIPSRAM_ProgData(psram, off - 1, &pattern, 2);
+        HAL_QPIPSRAM_ProgData(psram, 0, &read, 1);
+        if (read == pattern[1])
+            return off;
+    }
+
+    return QPIPSRAM_READWRITE_MAX_IOSIZE;
+}
+
+static uint32_t QPIPSRAM_SizeDetect(struct QPI_PSRAM *psram)
+{
+    uint32_t size;
+    uint8_t pattern, read[16], off = 0;
+    uint32_t total = 0;
+
+    for (size = QPIPSRAM_SIZE_MIN; size <= QPIPSRAM_SIZE_MAX; size <<= 1) {
+        total++;
+    }
+
+    if (total > sizeof(read))
+        return 0;
+
+    memset(read, 0, total);
+    HAL_QPIPSRAM_ProgData(psram, 0, read, total);
+
+    pattern = 0xa5;
+    off = 0;
+    for (size = QPIPSRAM_SIZE_MIN; size <= QPIPSRAM_SIZE_MAX; size <<= 1) {
+        HAL_QPIPSRAM_ProgData(psram, size + off, &pattern, 1);
+        off++;
+    }
+
+    HAL_QPIPSRAM_ReadData(psram, 0, read, total);
+    HAL_DBG_HEX("r: ", read, 1, total);
+    off = 0;
+    for (size = QPIPSRAM_SIZE_MIN; size <= QPIPSRAM_SIZE_MAX; size <<= 1) {
+        /* HAL_QPIPSRAM_DBG("%x %x %x %x\n", pattern[0], pattern[1], read[off], read[off + 1]); */
+        if (read[off] == pattern)
+            return size;
+        off++;
+    }
+
+    return 0;
+}
+
 /** @} */
 /********************* Public Function Definition ****************************/
+/** @defgroup QPIPSRAM_Exported_Functions_Group3 IO Functions
+
+ This section provides functions allowing to init and deinit the module:
+
+ *  @{
+ */
+
+/**
+ * @brief  QPIPsram read data in SPI mode.
+ * @param  psram: psram dev.
+ * @param  from: byte address.
+ * @param  buf: source address.
+ * @param  len: number of bytes.
+ * @return If the transfer is successful, return the transfer length, or error code.
+ */
+int32_t HAL_QPIPSRAM_ReadData(struct QPI_PSRAM *psram, uint32_t from, void *buf, uint32_t len)
+{
+    int32_t ret;
+    uint8_t *pBuf = (uint8_t *)buf;
+    uint32_t size, remain = len;
+    uint32_t off;
+
+    /* HAL_QPIPSRAM_DBG("%s from 0x%08lx, len %lx\n", __func__, from, len); */
+    if (from >= psram->size || len > psram->size || (from + len) > psram->size)
+        return HAL_INVAL;
+
+    off = from & (psram->pageSize - 1);
+
+    while (remain) {
+        size = HAL_MIN(psram->pageSize, remain);
+        if (off && ((off + size) > psram->pageSize)) {
+            size = psram->pageSize - off;
+            off = 0;
+        }
+        ret = psram->read(psram, from, size, pBuf);
+        if (ret != (int32_t)size) {
+            HAL_QPIPSRAM_DBG("%s %lu ret= %ld %ld\n", __func__, from >> 9, ret, (int32_t)size);
+
+            return ret;
+        }
+        remain -= size;
+        from += size;
+        pBuf += size;
+    }
+
+    return len;
+}
+
+/**
+ * @brief  QPIPsram write data in SPI mode.
+ * @param  psram: psram dev.
+ * @param  to: byte address.
+ * @param  buf: source address.
+ * @param  len: number of bytes.
+ * @return If the transfer is successful, return the transfer length, or error code.
+ */
+int32_t HAL_QPIPSRAM_ProgData(struct QPI_PSRAM *psram, uint32_t to, void *buf, uint32_t len)
+{
+    int32_t ret;
+    uint8_t *pBuf = (uint8_t *)buf;
+    uint32_t size, remain = len;
+    uint32_t off;
+
+    /* HAL_QPIPSRAM_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
+    if (to >= psram->size || len > psram->size || (to + len) > psram->size)
+        return HAL_INVAL;
+
+    off = to & (psram->pageSize - 1);
+
+    while (remain) {
+        size = HAL_MIN(psram->pageSize, remain);
+        if (off && ((off + size) > psram->pageSize)) {
+            size = psram->pageSize - off;
+            off = 0;
+        }
+        ret = psram->write(psram, to, size, pBuf);
+        if (ret != (int32_t)size) {
+            HAL_QPIPSRAM_DBG("%s %lu ret= %ld %ld\n", __func__, to >> 9, ret, (int32_t)size);
+
+            return ret;
+        }
+        remain -= size;
+        to += size;
+        pBuf += size;
+    }
+
+    return len;
+}
+
+/** @} */
+
 /** @defgroup QPIPSRAM_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
@@ -200,11 +401,21 @@ static HAL_Status QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data)
  */
 HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
 {
-    uint8_t idByte[5];
+    uint8_t idByte[3];
+
+    if (!psram->spi) {
+        HAL_QPIPSRAM_DBG("%s no host\n", __func__);
+
+        return HAL_INVAL;
+    }
+
+    psram->read = QPIPSRAM_ReadData;
+    psram->write = QPIPSRAM_WriteData;
+    psram->writeReg = QPIPSRAM_WriteReg;
 
     QPIPSRAM_ExitQPI(psram);
-    QPIPSRAM_ReadID(psram, idByte);
-    HAL_QPIPSRAM_DBG("QPIPsram ID: %x %x\n", idByte[0], idByte[1]);
+    QPIPSRAM_ReadID(psram, idByte, sizeof(idByte));
+    HAL_QPIPSRAM_DBG("QPIPsram ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
     psram->id[0] = idByte[0];
     psram->id[1] = idByte[1];
 
@@ -216,13 +427,19 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
         psram->spi->mode & HAL_SPI_RX_QUAD) {
         psram->addrWidth = 3;
         psram->readOpcode = QPIPSRAM_OP_READ_1_4_4;
-        psram->readProto = QPIPSRAM_PROTO_4_4_4;
+        if (psram->spi->mode & HAL_SPI_XIP)
+            psram->readProto = QPIPSRAM_PROTO_4_4_4;
+        else
+            psram->readProto = QPIPSRAM_PROTO_1_4_4;
         psram->readDummy = 6;
         psram->programOpcode = QPIPSRAM_OP_PP_1_4_4;
-        psram->writeProto = QPIPSRAM_PROTO_4_4_4;
+        if (psram->spi->mode & HAL_SPI_XIP)
+            psram->writeProto = QPIPSRAM_PROTO_4_4_4;
+        else
+            psram->writeProto = QPIPSRAM_PROTO_1_4_4;
         psram->programDummy = 0;
     } else {
-        psram->addrWidth = 1;
+        psram->addrWidth = 3;
         psram->readOpcode = QPIPSRAM_OP_READ_1_1_1;
         psram->readProto = QPIPSRAM_PROTO_1_1_1;
         psram->readDummy = 8;
@@ -237,8 +454,36 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
     else
         QPIPSRAM_ExitQPI(psram);
 
+    switch (idByte[2] >> 7) {
+    case 7:
+        psram->size = 0x100000;
+        psram->pageSize = 512;
+        break;
+    case 0:
+        psram->size = 0x200000;
+        psram->pageSize = 512;
+        break;
+    case 1:
+        psram->size = 0x400000;
+        psram->pageSize = 1024;
+        break;
+    case 2:
+        psram->size = 0x800000;
+        psram->pageSize = 1024;
+        break;
+    default:
+        psram->size = QPIPSRAM_SIZE_MAX * 2;
+        psram->pageSize = QPIPSRAM_READWRITE_MAX_IOSIZE;
+        psram->size = QPIPSRAM_SizeDetect(psram);
+        psram->pageSize = QPIPSRAM_PageSizeDetect(psram);
+    }
+
+    HAL_QPIPSRAM_DBG("QPIPsram size= 0x%xB\n", psram->size);
+    HAL_QPIPSRAM_DBG("QPIPsram page size= 0x%xB\n", psram->pageSize);
+
     QPIPSRAM_XmmcInit(psram);
-    HAL_QPIPSRAM_XIPEnable(psram);
+    if (psram->spi->mode & HAL_SPI_XIP)
+        HAL_QPIPSRAM_XIPEnable(psram);
 
     return HAL_OK;
 }
@@ -301,6 +546,16 @@ HAL_Check HAL_QPIPSRAM_IsPsramSupported(uint8_t *id)
     }
 
     return HAL_FALSE;
+}
+
+/**
+ * @brief  Get psram capacity.
+ * @param  psram: psram dev.
+ * @return uint32_t: psram capacity, n bytes.
+ */
+uint32_t HAL_QPIPSRAM_GetCapacity(struct QPI_PSRAM *psram)
+{
+    return psram->size;
 }
 
 /** @} */
