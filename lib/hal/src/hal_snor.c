@@ -527,7 +527,7 @@ int32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_
     uint32_t size, remain = len;
 
     /* HAL_SNOR_DBG("%s from 0x%08lx, len %lx\n", __func__, from, len); */
-    if ((from + len) > nor->size)
+    if (from >= nor->size || len > nor->size || (from + len) > nor->size)
         return HAL_INVAL;
 
     while (remain) {
@@ -561,7 +561,7 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
     uint32_t size, remain = len;
 
     /* HAL_SNOR_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
-    if ((to + len) > nor->size)
+    if (to >= nor->size || len > nor->size || (to + len) > nor->size)
         return HAL_INVAL;
 
     while (remain) {
@@ -595,6 +595,9 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE era
     int32_t timeout[] = { 400, 2000, 40000 };
 
     /* HAL_SNOR_DBG("%s addr %lx\n", __func__, addr); */
+    if (addr >= nor->size)
+        return HAL_INVAL;
+
     SNOR_WriteEnable(nor);
     if (eraseType == ERASE_SECTOR)
         ret = SNOR_EraseSec(nor, addr);
@@ -619,12 +622,9 @@ int32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pD
     int32_t ret = HAL_OK;
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
-    if ((sec + nSec) * nor->sectorSize > nor->size)
-        return HAL_INVAL;
-
     ret = HAL_SNOR_ReadData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
     if (ret != (int32_t)(nSec * nor->sectorSize))
-        return HAL_ERROR;
+        return ret;
 
     return nSec;
 }
@@ -642,12 +642,9 @@ int32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *p
     int32_t ret = HAL_OK;
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
-    if ((sec + nSec) * nor->sectorSize > nor->size)
-        return HAL_INVAL;
-
     ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
     if (ret != (int32_t)(nSec * nor->sectorSize))
-        return HAL_ERROR;
+        return ret;
 
     return nSec;
 }
@@ -667,9 +664,6 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
     uint32_t remaining = nSec;
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
-    if ((sec + nSec) * nor->sectorSize > nor->size)
-        return HAL_INVAL;
-
     while (remaining) {
         ret = HAL_SNOR_Erase(nor, sec * nor->sectorSize, ERASE_SECTOR);
         if (ret != HAL_OK)
@@ -677,7 +671,7 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
 
         ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, (void *)pBuf, nor->sectorSize);
         if (ret != (int32_t)(nor->sectorSize))
-            return HAL_ERROR;
+            return ret;
 
         pBuf += nor->sectorSize;
         remaining--;
