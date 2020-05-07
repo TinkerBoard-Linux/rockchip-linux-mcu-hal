@@ -117,6 +117,9 @@
         .buswidth = 0,         \
     }
 
+/* Max len case: cmd(1) + addr(4) + dummy(4) */
+#define HAL_SPI_OP_LEN_MAX 0x10
+
 /***************************** Structure Definition **************************/
 
 enum SPI_MEM_DATA_DIR {
