@@ -624,6 +624,14 @@ struct VOP_REG {
     __IO uint32_t MMU_AUTO_GATING;                    /* Address Offset: 0x0F24 */
     __IO uint32_t MMU_CFG_DONE;                       /* Address Offset: 0x0F28 */
 };
+/* TIMER Register Structure Define */
+struct TIMER_REG {
+    __IO uint32_t LOAD_COUNT[2];                      /* Address Offset: 0x0000 */
+    __I  uint32_t CURRENT_VALUE[2];                   /* Address Offset: 0x0008 */
+    __IO uint32_t CONTROLREG;                         /* Address Offset: 0x0010 */
+         uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
+    __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
+};
 #endif /*  __ASSEMBLY__  */
 /****************************************************************************************/
 /*                                                                                      */
@@ -656,6 +664,12 @@ struct VOP_REG {
 #define GPIO4_BASE          0xFF650000U /* GPIO4 base address */
 #define MBOX_BASE           0xFF6A0000U /* MBOX base address */
 #define VOP_BASE            0xFFB00000U /* VOP base address */
+#define TIMER0_BASE         0xFF660000U /* TIMER0 base address */
+#define TIMER1_BASE         0xFF660020U /* TIMER1 base address */
+#define TIMER2_BASE         0xFF660040U /* TIMER2 base address */
+#define TIMER3_BASE         0xFF660060U /* TIMER3 base address */
+#define TIMER4_BASE         0xFF660080U /* TIMER4 base address */
+#define TIMER5_BASE         0xFF6600A0U /* TIMER5 base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -688,6 +702,12 @@ struct VOP_REG {
 #define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
 #define MBOX                ((struct MBOX_REG *) MBOX_BASE)
 #define VOP                 ((struct VOP_REG *) VOP_BASE)
+#define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
+#define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
+#define TIMER2              ((struct TIMER_REG *) TIMER2_BASE)
+#define TIMER3              ((struct TIMER_REG *) TIMER3_BASE)
+#define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
+#define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
 
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
@@ -699,6 +719,7 @@ struct VOP_REG {
 #define IS_UART_INSTANCE(instance) (((instance) == UART1) || ((instance) == UART0) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
+#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
@@ -8929,6 +8950,37 @@ struct VOP_REG {
 #define VOP_MMU_CFG_DONE_OFFSET                            (0xF28U)
 #define VOP_MMU_CFG_DONE_REG_LOAD_MMU_EN_SHIFT             (0U)
 #define VOP_MMU_CFG_DONE_REG_LOAD_MMU_EN_MASK              (0x1U << VOP_MMU_CFG_DONE_REG_LOAD_MMU_EN_SHIFT)             /* 0x00000001 */
+/*****************************************TIMER******************************************/
+/* LOAD_COUNT0 */
+#define TIMER_LOAD_COUNT0_OFFSET                           (0x0U)
+#define TIMER_LOAD_COUNT0_COUNT0_SHIFT                     (0U)
+#define TIMER_LOAD_COUNT0_COUNT0_MASK                      (0xFFFFFFFFU << TIMER_LOAD_COUNT0_COUNT0_SHIFT)              /* 0xFFFFFFFF */
+/* LOAD_COUNT1 */
+#define TIMER_LOAD_COUNT1_OFFSET                           (0x4U)
+#define TIMER_LOAD_COUNT1_COUNT1_SHIFT                     (0U)
+#define TIMER_LOAD_COUNT1_COUNT1_MASK                      (0xFFFFFFFFU << TIMER_LOAD_COUNT1_COUNT1_SHIFT)              /* 0xFFFFFFFF */
+/* CURRENT_VALUE0 */
+#define TIMER_CURRENT_VALUE0_OFFSET                        (0x8U)
+#define TIMER_CURRENT_VALUE0                               (0x0U)
+#define TIMER_CURRENT_VALUE0_CURRENT_VALUE0_SHIFT          (0U)
+#define TIMER_CURRENT_VALUE0_CURRENT_VALUE0_MASK           (0xFFFFFFFFU << TIMER_CURRENT_VALUE0_CURRENT_VALUE0_SHIFT)   /* 0xFFFFFFFF */
+/* CURRENT_VALUE1 */
+#define TIMER_CURRENT_VALUE1_OFFSET                        (0xCU)
+#define TIMER_CURRENT_VALUE1                               (0x0U)
+#define TIMER_CURRENT_VALUE1_CURRENT_VALUE1_SHIFT          (0U)
+#define TIMER_CURRENT_VALUE1_CURRENT_VALUE1_MASK           (0xFFFFFFFFU << TIMER_CURRENT_VALUE1_CURRENT_VALUE1_SHIFT)   /* 0xFFFFFFFF */
+/* CONTROLREG */
+#define TIMER_CONTROLREG_OFFSET                            (0x10U)
+#define TIMER_CONTROLREG_TIMER_ENABLE_SHIFT                (0U)
+#define TIMER_CONTROLREG_TIMER_ENABLE_MASK                 (0x1U << TIMER_CONTROLREG_TIMER_ENABLE_SHIFT)                /* 0x00000001 */
+#define TIMER_CONTROLREG_TIMER_MODE_SHIFT                  (1U)
+#define TIMER_CONTROLREG_TIMER_MODE_MASK                   (0x1U << TIMER_CONTROLREG_TIMER_MODE_SHIFT)                  /* 0x00000002 */
+#define TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT              (2U)
+#define TIMER_CONTROLREG_TIMER_INT_MASK_MASK               (0x1U << TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT)              /* 0x00000004 */
+/* INTSTATUS */
+#define TIMER_INTSTATUS_OFFSET                             (0x18U)
+#define TIMER_INTSTATUS_INT_PD_SHIFT                       (0U)
+#define TIMER_INTSTATUS_INT_PD_MASK                        (0x1U << TIMER_INTSTATUS_INT_PD_SHIFT)                       /* 0x00000001 */
 
 /********Name=SOFTRST_CON00,Offset=0x300********/
 #define SRST_NCOREPORESET0 0
