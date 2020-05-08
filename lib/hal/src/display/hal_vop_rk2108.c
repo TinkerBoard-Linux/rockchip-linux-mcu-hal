@@ -604,6 +604,12 @@ HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId,
     uint16_t i;
     uint32_t regOffset = winId * 0x400 / 4;
 
+    if (winId == VOP_WIN2) {
+        HAL_DBG_ERR("win2 unsupport lut!\n");
+
+        return HAL_INVAL;
+    }
+
     for (i = 0; i < lut_size; i++) {
         VOP_Write(&s_vopRegMir.WIN0_BPP_LUT[i] + regOffset,
                   &pReg->WIN0_BPP_LUT[i] + regOffset,
