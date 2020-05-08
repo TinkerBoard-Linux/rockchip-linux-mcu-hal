@@ -129,7 +129,7 @@ static const struct FLASH_INFO s_spiFlashbl[] = {
     { 0xc84017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 14, 9, 0 },
     /* GD25Q127C and GD25Q128C*/
     { 0xc84018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 },
-    /* GD25Q256B/C */
+    /* GD25Q256B/C/D */
     { 0xc84019, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 16, 6, 0 },
     /* GD25Q512MC */
     { 0xc84020, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x3C, 17, 6, 0 },
@@ -503,6 +503,44 @@ static HAL_Status SNOR_Enter4byte(struct SPI_NOR *nor)
     return nor->writeReg(nor, SPINOR_OP_EN4B, NULL, 0);
 }
 
+__STATIC_INLINE HAL_Status SNOR_ReadSFDP(struct SPI_NOR *nor, uint32_t addr, uint8_t *data)
+{
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(SPINOR_OP_READ_SFDP, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(3, addr, 1),
+                                                     HAL_SPI_MEM_OP_DUMMY(1, 1),
+                                                     HAL_SPI_MEM_OP_DATA_IN(1, data, 1));
+
+    return SNOR_SPIMemExecOp(nor->spi, &op);
+}
+
+static HAL_Status SNOR_ReadMinorRevision(struct SPI_NOR *nor, uint8_t *ver)
+{
+    if (!ver)
+        return HAL_INVAL;
+
+    return SNOR_ReadSFDP(nor, 0x09, ver);
+}
+
+static HAL_Status SNOR_InfoAdjust(struct SPI_NOR *nor, struct FLASH_INFO *info)
+{
+    uint32_t ret;
+    uint8_t ver;
+
+    switch (info->id) {
+    case 0xc84019:
+        ret = SNOR_ReadMinorRevision(nor, &ver);
+        if (ret == HAL_OK && ver == 0x06) {
+            info->QEBits = 9;
+            info->progCmd_4 = 0x34;
+        }
+        break;
+    default:
+        break;
+    }
+
+    return 0;
+}
+
 /** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup SNOR_Exported_Functions_Group3 IO Functions
@@ -729,6 +767,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         info = &s_commonSpiFlash;
     }
 
+    SNOR_InfoAdjust(nor, (struct FLASH_INFO *)info);
     nor->info = info;
     nor->pageSize = 256;
     nor->addrWidth = 3;
@@ -896,7 +935,7 @@ HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId)
     return HAL_FALSE;
 }
 
-HAL_Status HAL_SNOR_ReaduUUID(struct SPI_NOR *nor, void *buf)
+HAL_Status HAL_SNOR_ReadUUID(struct SPI_NOR *nor, void *buf)
 {
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(SPINOR_OP_READ_UUID, 1),
                                                      HAL_SPI_MEM_OP_ADDR(4, 0, 1),
