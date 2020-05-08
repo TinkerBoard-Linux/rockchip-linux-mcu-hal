@@ -138,9 +138,10 @@ static void TIMER_TestLoop(int32_t num, struct TIMER_REG *t, IRQn_Type irq)
 {
     timerDev = t;
     HAL_DBG("%s TIMER%ld\n", __func__, num);
+#ifdef HAL_NVIC_MODULE_ENABLED
     HAL_NVIC_ConfigExtIRQ(irq, (NVIC_IRQHandler) & HAL_TIMER_Handler,
                           NVIC_PERIPH_PRIO_DEFAULT, NVIC_PERIPH_SUB_PRIO_DEFAULT);
-
+#endif
     RUN_TEST_CASE(HAL_TIMER, TimerInit);
     RUN_TEST_CASE(HAL_TIMER, TimerSetCount);
     RUN_TEST_CASE(HAL_TIMER, TimerStartStop);
