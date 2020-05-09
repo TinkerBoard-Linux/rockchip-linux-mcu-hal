@@ -555,7 +555,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CRYPTO_D), 1);
             HAL_CRU_ClkSetDiv(CLK_GET_DIV(CLK_CRYPTO_D), PLL_INPUT_OSC_RATE / rate);
             HAL_CRU_ClkSetMux(clkMux, 0);
-        } else if (!s_gpllFreq % rate) {
+        } else if (!(s_gpllFreq % rate)) {
             HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_CRYPTO_D), 0);
             HAL_CRU_ClkSetDiv(CLK_GET_DIV(CLK_CRYPTO_D), s_gpllFreq / rate);
             HAL_CRU_ClkSetMux(clkMux, 0);
