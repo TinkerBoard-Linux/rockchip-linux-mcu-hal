@@ -454,7 +454,7 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
     else
         QPIPSRAM_ExitQPI(psram);
 
-    switch (idByte[2] >> 7) {
+    switch (idByte[2] >> 5) {
     case 7:
         psram->size = 0x100000;
         psram->pageSize = 512;
