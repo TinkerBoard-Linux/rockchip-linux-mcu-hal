@@ -81,6 +81,9 @@ typedef enum
   GPIO2_IRQn             = 36,      /*!< GPIO2 Interrupt             */
   GPIO3_IRQn             = 37,      /*!< GPIO3 Interrupt             */
   GPIO4_IRQn             = 38,      /*!< GPIO4 Interrupt             */
+  ISP_IRQn               = 52,      /*!< ISP Interrupt               */
+  MI_ISP_IRQn            = 54,      /*!< MI ISP Interrupt            */
+  MIPI_ISP_IRQn          = 55,      /*!< MIPI ISP Interrupt          */
   VOP_IRQn               = 59,      /*!< VOP Interrupt               */
   MAILBOX0_AP_IRQn       = 111,     /*!< MAILBOX0_AP Interrupt       */
   MAILBOX0_BB_IRQn       = 112,     /*!< MAILBOX0_BB Interrupt       */
@@ -131,6 +134,9 @@ typedef enum
   GPIO2_IRQn             = 68,      /*!< GPIO2 Interrupt             */
   GPIO3_IRQn             = 69,      /*!< GPIO3 Interrupt             */
   GPIO4_IRQn             = 70,      /*!< GPIO4 Interrupt             */
+  ISP_IRQn               = 84,      /*!< ISP Interrupt               */
+  MI_ISP_IRQn            = 86,      /*!< MI ISP Interrupt            */
+  MIPI_ISP_IRQn          = 87,      /*!< MIPI ISP Interrupt          */
   VOP_IRQn               = 91,      /*!< VOP Interrupt               */
   MAILBOX0_AP_IRQn       = 143,     /*!< MAILBOX0_AP Interrupt       */
   MAILBOX0_BB_IRQn       = 144,     /*!< MAILBOX0_BB Interrupt       */
