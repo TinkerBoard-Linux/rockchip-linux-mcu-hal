@@ -189,7 +189,7 @@ static HAL_Status I2C_Start(struct I2C_HANDLE *pI2C)
         WRITE_REG(pI2C->pReg->IEN, REG_INT_START);
 
     /* enable adapter with correct mode, send START condition */
-    val |= REG_CON_EN | REG_CON_MOD(pI2C->mode) | REG_CON_START;
+    val |= REG_CON_EN | REG_CON_MOD(pI2C->mode) | REG_CON_START | pI2C->cfg;
 
     /* if we want to react to NACK, set ACTACK bit */
     if (!(pI2C->msg.flags & HAL_I2C_M_IGNORE_NAK))
@@ -533,6 +533,7 @@ HAL_Status HAL_I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate)
     if (highDIV > 0xffff || lowDIV > 0xffff)
         return HAL_INVAL;
 
+    pI2C->cfg = REG_CON_SDA_CFG(1) | REG_CON_STA_CFG(startSetup);
     WRITE_REG(pI2C->pReg->CLKDIV, (highDIV << I2C_CLKDIV_CLKDIVH_SHIFT) | lowDIV);
     /* 1 for data hold/setup time is enough */
     WRITE_REG(pI2C->pReg->CON, REG_CON_SDA_CFG(1) | REG_CON_STA_CFG(startSetup));
@@ -714,6 +715,111 @@ HAL_Status HAL_I2C_Close(struct I2C_HANDLE *pI2C)
 
     I2C_DisableIRQ(pI2C);
     I2C_Disable(pI2C);
+
+    return HAL_OK;
+}
+
+/**
+  * @brief  Handle I2C write finish for transfer.
+  * @param  pI2C: pointer to a I2C_HANDLE structure that contains
+  *               the information for I2C module.
+  * @return HAL status
+  */
+HAL_Status HAL_I2C_WriteFinish(struct I2C_HANDLE *pI2C)
+{
+    if (READ_REG(pI2C->pReg->IPD) & REG_INT_MBTF)
+        return HAL_OK;
+
+    return HAL_BUSY;
+}
+
+/**
+  * @brief  Handle I2C write stop finish for transfer.
+  * @param  pI2C: pointer to a I2C_HANDLE structure that contains
+  *               the information for I2C module.
+  * @return HAL status
+  */
+HAL_Status HAL_I2C_StopFinish(struct I2C_HANDLE *pI2C)
+{
+    if (REG_INT_STOP & READ_REG(pI2C->pReg->IPD))
+        return HAL_OK;
+
+    return HAL_BUSY;
+}
+
+/**
+  * @brief  Send I2C start TX.
+  * @param  pI2C: pointer to a I2C_HANDLE structure that contains
+  *               the information for I2C module.
+  * @param  addr: device address
+  * @param  buf: data buffer pointer
+  * @param  len: data byte length
+  * @return HAL status
+  */
+HAL_Status HAL_I2C_StartTX(struct I2C_HANDLE *pI2C, uint16_t addr,
+                           uint8_t *buf, uint16_t len)
+{
+    uint32_t i, j;
+    uint32_t val, cnt = 0;
+    uint8_t byte;
+
+    pI2C->processed = 0;
+    I2C_CleanIPD(pI2C);
+    for (i = 0; i < MAX_TX_DATA_REGISTER_CNT; ++i) {
+        val = 0;
+        for (j = 0; j < 4; ++j) {
+            if ((pI2C->processed == len) && (cnt != 0))
+                break;
+
+            if (pI2C->processed == 0 && cnt == 0)
+                byte = (addr & 0x7f) << 1;
+            else
+                byte = buf[pI2C->processed++];
+
+            val |= byte << (j * 8);
+            cnt++;
+        }
+
+        WRITE_REG(pI2C->pReg->TXDATA[i], val);
+        if (pI2C->processed == len)
+            break;
+    }
+
+    /* enable adapter with correct mode 0, send START condition */
+    WRITE_REG(pI2C->pReg->CON, REG_CON_EN | REG_CON_START | pI2C->cfg);
+    WRITE_REG(pI2C->pReg->MTXCNT, cnt);
+
+    return HAL_OK;
+}
+
+/**
+  * @brief  Send I2C stop TX.
+  * @param  pI2C: pointer to a I2C_HANDLE structure that contains
+  *               the information for I2C module.
+  * @return HAL status
+  */
+HAL_Status HAL_I2C_StopTX(struct I2C_HANDLE *pI2C)
+{
+    uint32_t ctrl;
+
+    ctrl = READ_REG(pI2C->pReg->CON);
+    ctrl &= ~REG_CON_START;
+    ctrl |= REG_CON_STOP;
+    WRITE_REG(pI2C->pReg->CON, ctrl);
+
+    return HAL_OK;
+}
+
+/**
+  * @brief  Send I2C close TX.
+  * @param  pI2C: pointer to a I2C_HANDLE structure that contains
+  *               the information for I2C module.
+  * @return HAL status
+  */
+HAL_Status HAL_I2C_CloseTX(struct I2C_HANDLE *pI2C)
+{
+    WRITE_REG(pI2C->pReg->MTXCNT, 0);
+    WRITE_REG(pI2C->pReg->CON, 0);
 
     return HAL_OK;
 }

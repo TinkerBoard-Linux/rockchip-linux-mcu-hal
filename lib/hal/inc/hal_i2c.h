@@ -112,6 +112,7 @@ struct I2C_HANDLE {
     eI2C_BusSpeed speed;
     struct I2C_MSG msg;
     eI2C_State state;
+    uint32_t cfg;
     uint32_t processed;
     int32_t error;
     bool isLastMSG;
@@ -133,6 +134,12 @@ HAL_Status HAL_I2C_SetupMsg(struct I2C_HANDLE *pI2C, uint16_t addr, uint8_t *buf
 HAL_Status HAL_I2C_Transfer(struct I2C_HANDLE *pI2C, eI2C_TransferType type, bool last);
 HAL_Status HAL_I2C_ForceStop(struct I2C_HANDLE *pI2C);
 HAL_Status HAL_I2C_Close(struct I2C_HANDLE *pI2C);
+HAL_Status HAL_I2C_WriteFinish(struct I2C_HANDLE *pI2C);
+HAL_Status HAL_I2C_StopFinish(struct I2C_HANDLE *pI2C);
+HAL_Status HAL_I2C_StartTX(struct I2C_HANDLE *pI2C, uint16_t addr,
+                           uint8_t *buf, uint16_t len);
+HAL_Status HAL_I2C_StopTX(struct I2C_HANDLE *pI2C);
+HAL_Status HAL_I2C_CloseTX(struct I2C_HANDLE *pI2C);
 HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, struct I2C_REG *pReg, uint32_t rate,
                         eI2C_BusSpeed speed);
 HAL_Status HAL_I2C_DeInit(struct I2C_HANDLE *pI2C);
