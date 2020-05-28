@@ -748,6 +748,34 @@ HAL_Status HAL_I2C_StopFinish(struct I2C_HANDLE *pI2C)
 }
 
 /**
+  * @brief  Send I2C start TX with u32 buffer.
+  * @param  pI2C: pointer to a I2C_HANDLE structure that contains
+  *               the information for I2C module.
+  * @param  buf: data buffer include device addr and register addr.
+  * @param  len32: buffer word length.
+  * @param  len8: buffer byte length.
+  * @return HAL status
+  */
+HAL_Status HAL_I2C_StartTXU32(struct I2C_HANDLE *pI2C, uint32_t *buf,
+                              uint16_t len32, uint16_t len8)
+{
+    int i;
+
+    HAL_ASSERT(len32 <= MAX_TX_DATA_REGISTER_CNT);
+
+    I2C_CleanIPD(pI2C);
+
+    for (i = 0; i < len32; i++)
+        WRITE_REG(pI2C->pReg->TXDATA[i], buf[i]);
+
+    /* enable adapter with correct mode 0, send START condition */
+    WRITE_REG(pI2C->pReg->CON, REG_CON_EN | REG_CON_START | pI2C->cfg);
+    WRITE_REG(pI2C->pReg->MTXCNT, len8);
+
+    return HAL_OK;
+}
+
+/**
   * @brief  Send I2C start TX.
   * @param  pI2C: pointer to a I2C_HANDLE structure that contains
   *               the information for I2C module.

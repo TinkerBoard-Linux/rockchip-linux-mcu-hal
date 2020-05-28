@@ -138,6 +138,8 @@ HAL_Status HAL_I2C_WriteFinish(struct I2C_HANDLE *pI2C);
 HAL_Status HAL_I2C_StopFinish(struct I2C_HANDLE *pI2C);
 HAL_Status HAL_I2C_StartTX(struct I2C_HANDLE *pI2C, uint16_t addr,
                            uint8_t *buf, uint16_t len);
+HAL_Status HAL_I2C_StartTXU32(struct I2C_HANDLE *pI2C, uint32_t *buf,
+                              uint16_t len32, uint16_t len8);
 HAL_Status HAL_I2C_StopTX(struct I2C_HANDLE *pI2C);
 HAL_Status HAL_I2C_CloseTX(struct I2C_HANDLE *pI2C);
 HAL_Status HAL_I2C_Init(struct I2C_HANDLE *pI2C, struct I2C_REG *pReg, uint32_t rate,
