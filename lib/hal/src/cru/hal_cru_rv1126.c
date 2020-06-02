@@ -304,11 +304,11 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return error;
     case ACLK_PDBUS:
-    case PCLK_PDBUS:
         pRate = s_cpllFreq;
         mux = ACLK_PDBUS_PRE_SEL_CLK_CPLL_MUX;
         break;
     case HCLK_PDBUS:
+    case PCLK_PDBUS:
     case ACLK_PDPHP:
     case HCLK_PDPHP:
     case HCLK_PDCORE:
