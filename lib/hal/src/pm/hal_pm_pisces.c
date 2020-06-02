@@ -354,6 +354,10 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         return HAL_BIT(PM_RUNTIME_TYPE_HS_INTF);
     }
 
+    if (PM_SPI_REQUESTED(pdata)) {
+        return HAL_BIT(PM_RUNTIME_TYPE_SPI);
+    }
+
     PM_CruAsEnable(0);
 
     if (!gpllRate)
