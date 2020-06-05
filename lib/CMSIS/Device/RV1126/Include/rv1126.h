@@ -632,6 +632,132 @@ struct TIMER_REG {
          uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
     __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
 };
+/* CTRL Register Structure Define */
+struct CTRL_REG {
+    __IO uint32_t VI_ISP_EN;                          /* Address Offset: 0x0000 */
+    __IO uint32_t VI_ISP_PATH;                        /* Address Offset: 0x0004 */
+    __I  uint32_t VI_ID;                              /* Address Offset: 0x0008 */
+    __IO uint32_t VI_ISP_CLK_CTRL;                    /* Address Offset: 0x000C */
+    __IO uint32_t VI_ICCL;                            /* Address Offset: 0x0010 */
+    __IO uint32_t VI_IRCL;                            /* Address Offset: 0x0014 */
+    __IO uint32_t VI_DPCL;                            /* Address Offset: 0x0018 */
+    __IO uint32_t SWS_CFG;                            /* Address Offset: 0x001C */
+    __IO uint32_t LVDS_CTRL;                          /* Address Offset: 0x0020 */
+    __IO uint32_t LVDS_SAV_EAV_ACT;                   /* Address Offset: 0x0024 */
+    __IO uint32_t LVDS_SAV_EAV_BLK;                   /* Address Offset: 0x0028 */
+};
+/* ISP Register Structure Define */
+struct ISP_REG {
+    __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
+    __IO uint32_t ACQ_PROP;                           /* Address Offset: 0x0004 */
+    __IO uint32_t ACQ_H_OFFS;                         /* Address Offset: 0x0008 */
+    __IO uint32_t ACQ_V_OFFS;                         /* Address Offset: 0x000C */
+    __IO uint32_t ACQ_H_SIZE;                         /* Address Offset: 0x0010 */
+    __IO uint32_t ACQ_V_SIZE;                         /* Address Offset: 0x0014 */
+    __IO uint32_t ACQ_NR_FRAMES;                      /* Address Offset: 0x0018 */
+    __IO uint32_t GAMMA_DX_LO;                        /* Address Offset: 0x001C */
+    __IO uint32_t GAMMA_DX_HI;                        /* Address Offset: 0x0020 */
+    __IO uint32_t GAMMA_R_Y_0;                        /* Address Offset: 0x0024 */
+    __IO uint32_t GAMMA_R_Y_1;                        /* Address Offset: 0x0028 */
+    __IO uint32_t GAMMA_R_Y_2;                        /* Address Offset: 0x002C */
+    __IO uint32_t GAMMA_R_Y_3;                        /* Address Offset: 0x0030 */
+    __IO uint32_t GAMMA_R_Y_4;                        /* Address Offset: 0x0034 */
+    __IO uint32_t GAMMA_R_Y_5;                        /* Address Offset: 0x0038 */
+    __IO uint32_t GAMMA_R_Y_6;                        /* Address Offset: 0x003C */
+    __IO uint32_t GAMMA_R_Y_7;                        /* Address Offset: 0x0040 */
+    __IO uint32_t GAMMA_R_Y_8;                        /* Address Offset: 0x0044 */
+    __IO uint32_t GAMMA_R_Y_9;                        /* Address Offset: 0x0048 */
+    __IO uint32_t GAMMA_R_Y_10;                       /* Address Offset: 0x004C */
+    __IO uint32_t GAMMA_R_Y_11;                       /* Address Offset: 0x0050 */
+    __IO uint32_t GAMMA_R_Y_12;                       /* Address Offset: 0x0054 */
+    __IO uint32_t GAMMA_R_Y_13;                       /* Address Offset: 0x0058 */
+    __IO uint32_t GAMMA_R_Y_14;                       /* Address Offset: 0x005C */
+    __IO uint32_t GAMMA_R_Y_15;                       /* Address Offset: 0x0060 */
+    __IO uint32_t GAMMA_R_Y_16;                       /* Address Offset: 0x0064 */
+    __IO uint32_t GAMMA_G_Y_0;                        /* Address Offset: 0x0068 */
+    __IO uint32_t GAMMA_G_Y_1;                        /* Address Offset: 0x006C */
+    __IO uint32_t GAMMA_G_Y_2;                        /* Address Offset: 0x0070 */
+    __IO uint32_t GAMMA_G_Y_3;                        /* Address Offset: 0x0074 */
+    __IO uint32_t GAMMA_G_Y_4;                        /* Address Offset: 0x0078 */
+    __IO uint32_t GAMMA_G_Y_5;                        /* Address Offset: 0x007C */
+    __IO uint32_t GAMMA_G_Y_6;                        /* Address Offset: 0x0080 */
+    __IO uint32_t GAMMA_G_Y_7;                        /* Address Offset: 0x0084 */
+    __IO uint32_t GAMMA_G_Y_8;                        /* Address Offset: 0x0088 */
+    __IO uint32_t GAMMA_G_Y_9;                        /* Address Offset: 0x008C */
+    __IO uint32_t GAMMA_G_Y_10;                       /* Address Offset: 0x0090 */
+    __IO uint32_t GAMMA_G_Y_11;                       /* Address Offset: 0x0094 */
+    __IO uint32_t GAMMA_G_Y_12;                       /* Address Offset: 0x0098 */
+    __IO uint32_t GAMMA_G_Y_13;                       /* Address Offset: 0x009C */
+    __IO uint32_t GAMMA_G_Y_14;                       /* Address Offset: 0x00A0 */
+    __IO uint32_t GAMMA_G_Y_15;                       /* Address Offset: 0x00A4 */
+    __IO uint32_t GAMMA_G_Y_16;                       /* Address Offset: 0x00A8 */
+    __IO uint32_t GAMMA_B_Y_0;                        /* Address Offset: 0x00AC */
+    __IO uint32_t GAMMA_B_Y_1;                        /* Address Offset: 0x00B0 */
+    __IO uint32_t GAMMA_B_Y_2;                        /* Address Offset: 0x00B4 */
+    __IO uint32_t GAMMA_B_Y_3;                        /* Address Offset: 0x00B8 */
+    __IO uint32_t GAMMA_B_Y_4;                        /* Address Offset: 0x00BC */
+    __IO uint32_t GAMMA_B_Y_5;                        /* Address Offset: 0x00C0 */
+    __IO uint32_t GAMMA_B_Y_6;                        /* Address Offset: 0x00C4 */
+    __IO uint32_t GAMMA_B_Y_7;                        /* Address Offset: 0x00C8 */
+    __IO uint32_t GAMMA_B_Y_8;                        /* Address Offset: 0x00CC */
+    __IO uint32_t GAMMA_B_Y_9;                        /* Address Offset: 0x00D0 */
+    __IO uint32_t GAMMA_B_Y_10;                       /* Address Offset: 0x00D4 */
+    __IO uint32_t GAMMA_B_Y_11;                       /* Address Offset: 0x00D8 */
+    __IO uint32_t GAMMA_B_Y_12;                       /* Address Offset: 0x00DC */
+    __IO uint32_t GAMMA_B_Y_13;                       /* Address Offset: 0x00E0 */
+    __IO uint32_t GAMMA_B_Y_14;                       /* Address Offset: 0x00E4 */
+    __IO uint32_t GAMMA_B_Y_15;                       /* Address Offset: 0x00E8 */
+    __IO uint32_t GAMMA_B_Y_16;                       /* Address Offset: 0x00EC */
+         uint32_t RESERVED00F0[8];                    /* Address Offset: 0x00F0 */
+    __IO uint32_t ISP_AWB_PROP;                       /* Address Offset: 0x0110 */
+    __IO uint32_t ISP_AWB_H_OFFS;                     /* Address Offset: 0x0114 */
+    __IO uint32_t ISP_AWB_V_OFFS;                     /* Address Offset: 0x0118 */
+    __IO uint32_t ISP_AWB_H_SIZE;                     /* Address Offset: 0x011C */
+    __IO uint32_t ISP_AWB_V_SIZE;                     /* Address Offset: 0x0120 */
+    __IO uint32_t ISP_AWB_FRAMES;                     /* Address Offset: 0x0124 */
+    __IO uint32_t ISP_AWB_REF;                        /* Address Offset: 0x0128 */
+    __IO uint32_t ISP_AWB_THRESH;                     /* Address Offset: 0x012C */
+         uint32_t RESERVED0130[2];                    /* Address Offset: 0x0130 */
+    __IO uint32_t AWB_GAIN_G;                         /* Address Offset: 0x0138 */
+    __IO uint32_t AWB_GAIN_RB;                        /* Address Offset: 0x013C */
+    __I  uint32_t AWB_WHITE_CNT;                      /* Address Offset: 0x0140 */
+    __I  uint32_t AWB_MEAN;                           /* Address Offset: 0x0144 */
+         uint32_t RESERVED0148[10];                   /* Address Offset: 0x0148 */
+    __IO uint32_t CC_COEFF_0;                         /* Address Offset: 0x0170 */
+    __IO uint32_t CC_COEFF_1;                         /* Address Offset: 0x0174 */
+    __IO uint32_t CC_COEFF_2;                         /* Address Offset: 0x0178 */
+    __IO uint32_t CC_COEFF_3;                         /* Address Offset: 0x017C */
+    __IO uint32_t CC_COEFF_4;                         /* Address Offset: 0x0180 */
+    __IO uint32_t CC_COEFF_5;                         /* Address Offset: 0x0184 */
+    __IO uint32_t CC_COEFF_6;                         /* Address Offset: 0x0188 */
+    __IO uint32_t CC_COEFF_7;                         /* Address Offset: 0x018C */
+    __IO uint32_t CC_COEFF_8;                         /* Address Offset: 0x0190 */
+    __IO uint32_t OUT_H_OFFS;                         /* Address Offset: 0x0194 */
+    __IO uint32_t OUT_V_OFFS;                         /* Address Offset: 0x0198 */
+    __IO uint32_t OUT_H_SIZE;                         /* Address Offset: 0x019C */
+    __IO uint32_t OUT_V_SIZE;                         /* Address Offset: 0x01A0 */
+    __IO uint32_t DEMOSAIC;                           /* Address Offset: 0x01A4 */
+    __I  uint32_t FLAGS_SHD;                          /* Address Offset: 0x01A8 */
+    __I  uint32_t OUT_H_OFFS_SHD;                     /* Address Offset: 0x01AC */
+    __I  uint32_t OUT_V_OFFS_SHD;                     /* Address Offset: 0x01B0 */
+    __I  uint32_t OUT_H_SIZE_SHD;                     /* Address Offset: 0x01B4 */
+    __I  uint32_t OUT_V_SIZE_SHD;                     /* Address Offset: 0x01B8 */
+    __IO uint32_t ISP_IMSC;                           /* Address Offset: 0x01BC */
+    __I  uint32_t ISP_RIS;                            /* Address Offset: 0x01C0 */
+    __I  uint32_t ISP_MIS;                            /* Address Offset: 0x01C4 */
+    __O  uint32_t ISP_ICR;                            /* Address Offset: 0x01C8 */
+    __O  uint32_t ISP_ISR;                            /* Address Offset: 0x01CC */
+    __IO uint32_t ISP3A_IMSC;                         /* Address Offset: 0x01D0 */
+    __I  uint32_t ISP3A_RIS;                          /* Address Offset: 0x01D4 */
+    __I  uint32_t ISP3A_MIS;                          /* Address Offset: 0x01D8 */
+    __O  uint32_t ISP3A_ICR;                          /* Address Offset: 0x01DC */
+         uint32_t RESERVED01E0[23];                   /* Address Offset: 0x01E0 */
+    __I  uint32_t ERR;                                /* Address Offset: 0x023C */
+    __O  uint32_t ERR_CLR;                            /* Address Offset: 0x0240 */
+    __I  uint32_t FRAME_COUNT;                        /* Address Offset: 0x0244 */
+         uint32_t RESERVED0248[3];                    /* Address Offset: 0x0248 */
+    __IO uint32_t DEBUG1;                             /* Address Offset: 0x0254 */
+};
 #endif /*  __ASSEMBLY__  */
 /****************************************************************************************/
 /*                                                                                      */
@@ -670,6 +796,9 @@ struct TIMER_REG {
 #define TIMER3_BASE         0xFF660060U /* TIMER3 base address */
 #define TIMER4_BASE         0xFF660080U /* TIMER4 base address */
 #define TIMER5_BASE         0xFF6600A0U /* TIMER5 base address */
+#define CTRL_0000_BASE      0xFFB50000U /* CTRL_0000 base address */
+#define ISP_0400_BASE       0xFFB50400U /* ISP_0400 base address */
+
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -708,6 +837,8 @@ struct TIMER_REG {
 #define TIMER3              ((struct TIMER_REG *) TIMER3_BASE)
 #define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
+#define CTRL_0000           ((struct CTRL_REG *) CTRL_0000_BASE)
+#define ISP_0400            ((struct ISP_REG *) ISP_0400_BASE)
 
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
@@ -720,6 +851,9 @@ struct TIMER_REG {
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
+#define IS_CTRL_0000_INSTANCE(instance) ((instance) == CTRL_0000)
+#define IS_ISP_0400_INSTANCE(instance) ((instance) == ISP_0400)
+
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
@@ -8981,6 +9115,1172 @@ struct TIMER_REG {
 #define TIMER_INTSTATUS_OFFSET                             (0x18U)
 #define TIMER_INTSTATUS_INT_PD_SHIFT                       (0U)
 #define TIMER_INTSTATUS_INT_PD_MASK                        (0x1U << TIMER_INTSTATUS_INT_PD_SHIFT)                       /* 0x00000001 */
+/******************************************CTRL******************************************/
+/* VI_ISP_EN */
+#define CTRL_VI_ISP_EN_OFFSET                              (0x0U)
+#define CTRL_VI_ISP_EN_VI_CCL_DIS_SHIFT                    (0U)
+#define CTRL_VI_ISP_EN_VI_CCL_DIS_MASK                     (0x1U << CTRL_VI_ISP_EN_VI_CCL_DIS_SHIFT)                    /* 0x00000001 */
+#define CTRL_VI_ISP_EN_ISP_EN_SEL_SHIFT                    (1U)
+#define CTRL_VI_ISP_EN_ISP_EN_SEL_MASK                     (0x1U << CTRL_VI_ISP_EN_ISP_EN_SEL_SHIFT)                    /* 0x00000002 */
+#define CTRL_VI_ISP_EN_ISP_BLS_EN_SHIFT                    (5U)
+#define CTRL_VI_ISP_EN_ISP_BLS_EN_MASK                     (0x1U << CTRL_VI_ISP_EN_ISP_BLS_EN_SHIFT)                    /* 0x00000020 */
+#define CTRL_VI_ISP_EN_ISP_GAMMA_IN_EN_SHIFT               (6U)
+#define CTRL_VI_ISP_EN_ISP_GAMMA_IN_EN_MASK                (0x1U << CTRL_VI_ISP_EN_ISP_GAMMA_IN_EN_SHIFT)               /* 0x00000040 */
+#define CTRL_VI_ISP_EN_ISP_DPCC_EN_SHIFT                   (7U)
+#define CTRL_VI_ISP_EN_ISP_DPCC_EN_MASK                    (0x1U << CTRL_VI_ISP_EN_ISP_DPCC_EN_SHIFT)                   /* 0x00000080 */
+#define CTRL_VI_ISP_EN_ISP_HDRMGE_EN_SHIFT                 (8U)
+#define CTRL_VI_ISP_EN_ISP_HDRMGE_EN_MASK                  (0x1U << CTRL_VI_ISP_EN_ISP_HDRMGE_EN_SHIFT)                 /* 0x00000100 */
+#define CTRL_VI_ISP_EN_ISP_RAWNR_EN_SHIFT                  (9U)
+#define CTRL_VI_ISP_EN_ISP_RAWNR_EN_MASK                   (0x1U << CTRL_VI_ISP_EN_ISP_RAWNR_EN_SHIFT)                  /* 0x00000200 */
+#define CTRL_VI_ISP_EN_ISP_LSC_EN_SHIFT                    (10U)
+#define CTRL_VI_ISP_EN_ISP_LSC_EN_MASK                     (0x1U << CTRL_VI_ISP_EN_ISP_LSC_EN_SHIFT)                    /* 0x00000400 */
+#define CTRL_VI_ISP_EN_ISP_HDRTMO_EN_SHIFT                 (11U)
+#define CTRL_VI_ISP_EN_ISP_HDRTMO_EN_MASK                  (0x1U << CTRL_VI_ISP_EN_ISP_HDRTMO_EN_SHIFT)                 /* 0x00000800 */
+#define CTRL_VI_ISP_EN_ISP_GIC_EN_SHIFT                    (12U)
+#define CTRL_VI_ISP_EN_ISP_GIC_EN_MASK                     (0x1U << CTRL_VI_ISP_EN_ISP_GIC_EN_SHIFT)                    /* 0x00001000 */
+#define CTRL_VI_ISP_EN_ISP_DEBAYER_EN_SHIFT                (13U)
+#define CTRL_VI_ISP_EN_ISP_DEBAYER_EN_MASK                 (0x1U << CTRL_VI_ISP_EN_ISP_DEBAYER_EN_SHIFT)                /* 0x00002000 */
+#define CTRL_VI_ISP_EN_ISP_CCM_EN_SHIFT                    (14U)
+#define CTRL_VI_ISP_EN_ISP_CCM_EN_MASK                     (0x1U << CTRL_VI_ISP_EN_ISP_CCM_EN_SHIFT)                    /* 0x00004000 */
+#define CTRL_VI_ISP_EN_ISP_GAMMA12_EN_SHIFT                (15U)
+#define CTRL_VI_ISP_EN_ISP_GAMMA12_EN_MASK                 (0x1U << CTRL_VI_ISP_EN_ISP_GAMMA12_EN_SHIFT)                /* 0x00008000 */
+#define CTRL_VI_ISP_EN_ISP_RKWDR_EN_SHIFT                  (16U)
+#define CTRL_VI_ISP_EN_ISP_RKWDR_EN_MASK                   (0x1U << CTRL_VI_ISP_EN_ISP_RKWDR_EN_SHIFT)                  /* 0x00010000 */
+#define CTRL_VI_ISP_EN_ISP_DHAZ_EN_SHIFT                   (17U)
+#define CTRL_VI_ISP_EN_ISP_DHAZ_EN_MASK                    (0x1U << CTRL_VI_ISP_EN_ISP_DHAZ_EN_SHIFT)                   /* 0x00020000 */
+#define CTRL_VI_ISP_EN_ISP_3DLUT_EN_SHIFT                  (18U)
+#define CTRL_VI_ISP_EN_ISP_3DLUT_EN_MASK                   (0x1U << CTRL_VI_ISP_EN_ISP_3DLUT_EN_SHIFT)                  /* 0x00040000 */
+#define CTRL_VI_ISP_EN_ISP_AWB_EN_SHIFT                    (20U)
+#define CTRL_VI_ISP_EN_ISP_AWB_EN_MASK                     (0x1U << CTRL_VI_ISP_EN_ISP_AWB_EN_SHIFT)                    /* 0x00100000 */
+#define CTRL_VI_ISP_EN_ISP_CP_EN_SHIFT                     (21U)
+#define CTRL_VI_ISP_EN_ISP_CP_EN_MASK                      (0x1U << CTRL_VI_ISP_EN_ISP_CP_EN_SHIFT)                     /* 0x00200000 */
+#define CTRL_VI_ISP_EN_ISP_RSZ_EN_SHIFT                    (22U)
+#define CTRL_VI_ISP_EN_ISP_RSZ_EN_MASK                     (0x1U << CTRL_VI_ISP_EN_ISP_RSZ_EN_SHIFT)                    /* 0x00400000 */
+#define CTRL_VI_ISP_EN_ISP_EFF_EN_SHIFT                    (24U)
+#define CTRL_VI_ISP_EN_ISP_EFF_EN_MASK                     (0x1U << CTRL_VI_ISP_EN_ISP_EFF_EN_SHIFT)                    /* 0x01000000 */
+#define CTRL_VI_ISP_EN_ISP_IMP_EN_SHIFT                    (25U)
+#define CTRL_VI_ISP_EN_ISP_IMP_EN_MASK                     (0x1U << CTRL_VI_ISP_EN_ISP_IMP_EN_SHIFT)                    /* 0x02000000 */
+#define CTRL_VI_ISP_EN_ISP_GAIN_EN_SHIFT                   (27U)
+#define CTRL_VI_ISP_EN_ISP_GAIN_EN_MASK                    (0x1U << CTRL_VI_ISP_EN_ISP_GAIN_EN_SHIFT)                   /* 0x08000000 */
+#define CTRL_VI_ISP_EN_ISP_LDCH_EN_SHIFT                   (28U)
+#define CTRL_VI_ISP_EN_ISP_LDCH_EN_MASK                    (0x1U << CTRL_VI_ISP_EN_ISP_LDCH_EN_SHIFT)                   /* 0x10000000 */
+/* VI_ISP_PATH */
+#define CTRL_VI_ISP_PATH_OFFSET                            (0x4U)
+#define CTRL_VI_ISP_PATH_SW_3A_RAWAE3_SEL_SHIFT            (16U)
+#define CTRL_VI_ISP_PATH_SW_3A_RAWAE3_SEL_MASK             (0x3U << CTRL_VI_ISP_PATH_SW_3A_RAWAE3_SEL_SHIFT)            /* 0x00030000 */
+#define CTRL_VI_ISP_PATH_SW_3A_RAWAF_SEL_SHIFT             (18U)
+#define CTRL_VI_ISP_PATH_SW_3A_RAWAF_SEL_MASK              (0x3U << CTRL_VI_ISP_PATH_SW_3A_RAWAF_SEL_SHIFT)             /* 0x000C0000 */
+#define CTRL_VI_ISP_PATH_SW_3A_RAWAWB_SEL_SHIFT            (20U)
+#define CTRL_VI_ISP_PATH_SW_3A_RAWAWB_SEL_MASK             (0x3U << CTRL_VI_ISP_PATH_SW_3A_RAWAWB_SEL_SHIFT)            /* 0x00300000 */
+#define CTRL_VI_ISP_PATH_SW_3A_RAWAE012_SWAP_SHIFT         (22U)
+#define CTRL_VI_ISP_PATH_SW_3A_RAWAE012_SWAP_MASK          (0x3U << CTRL_VI_ISP_PATH_SW_3A_RAWAE012_SWAP_SHIFT)         /* 0x00C00000 */
+/* VI_ID */
+#define CTRL_VI_ID_OFFSET                                  (0x8U)
+#define CTRL_VI_ID                                         (0x2001909U)
+#define CTRL_VI_ID_RO_ISP_VERSION_DATE_SHIFT               (0U)
+#define CTRL_VI_ID_RO_ISP_VERSION_DATE_MASK                (0xFFFFU << CTRL_VI_ID_RO_ISP_VERSION_DATE_SHIFT)            /* 0x0000FFFF */
+#define CTRL_VI_ID_RO_ISP_VERSION_MINOR_SHIFT              (16U)
+#define CTRL_VI_ID_RO_ISP_VERSION_MINOR_MASK               (0xFFU << CTRL_VI_ID_RO_ISP_VERSION_MINOR_SHIFT)             /* 0x00FF0000 */
+#define CTRL_VI_ID_RO_ISP_VERSION_MAJOR_SHIFT              (24U)
+#define CTRL_VI_ID_RO_ISP_VERSION_MAJOR_MASK               (0xFFU << CTRL_VI_ID_RO_ISP_VERSION_MAJOR_SHIFT)             /* 0xFF000000 */
+/* VI_ISP_CLK_CTRL */
+#define CTRL_VI_ISP_CLK_CTRL_OFFSET                        (0xCU)
+#define CTRL_VI_ISP_CLK_CTRL_ISP_RAW_CLK_ON_SHIFT          (0U)
+#define CTRL_VI_ISP_CLK_CTRL_ISP_RAW_CLK_ON_MASK           (0x1U << CTRL_VI_ISP_CLK_CTRL_ISP_RAW_CLK_ON_SHIFT)          /* 0x00000001 */
+#define CTRL_VI_ISP_CLK_CTRL_ISP_RGB_CLK_ON_SHIFT          (1U)
+#define CTRL_VI_ISP_CLK_CTRL_ISP_RGB_CLK_ON_MASK           (0x1U << CTRL_VI_ISP_CLK_CTRL_ISP_RGB_CLK_ON_SHIFT)          /* 0x00000002 */
+#define CTRL_VI_ISP_CLK_CTRL_ISP_YUV_CLK_ON_SHIFT          (2U)
+#define CTRL_VI_ISP_CLK_CTRL_ISP_YUV_CLK_ON_MASK           (0x1U << CTRL_VI_ISP_CLK_CTRL_ISP_YUV_CLK_ON_SHIFT)          /* 0x00000004 */
+#define CTRL_VI_ISP_CLK_CTRL_ISP_3A_CLK_ON_SHIFT           (3U)
+#define CTRL_VI_ISP_CLK_CTRL_ISP_3A_CLK_ON_MASK            (0x1U << CTRL_VI_ISP_CLK_CTRL_ISP_3A_CLK_ON_SHIFT)           /* 0x00000008 */
+#define CTRL_VI_ISP_CLK_CTRL_MIPI_RAM_CLK_ON_SHIFT         (4U)
+#define CTRL_VI_ISP_CLK_CTRL_MIPI_RAM_CLK_ON_MASK          (0x1U << CTRL_VI_ISP_CLK_CTRL_MIPI_RAM_CLK_ON_SHIFT)         /* 0x00000010 */
+#define CTRL_VI_ISP_CLK_CTRL_ISP_FIFO_RAM_CLK_ON_SHIFT     (5U)
+#define CTRL_VI_ISP_CLK_CTRL_ISP_FIFO_RAM_CLK_ON_MASK      (0x1U << CTRL_VI_ISP_CLK_CTRL_ISP_FIFO_RAM_CLK_ON_SHIFT)     /* 0x00000020 */
+#define CTRL_VI_ISP_CLK_CTRL_ISP_DEM_RAM_CLK_ON_SHIFT      (6U)
+#define CTRL_VI_ISP_CLK_CTRL_ISP_DEM_RAM_CLK_ON_MASK       (0x1U << CTRL_VI_ISP_CLK_CTRL_ISP_DEM_RAM_CLK_ON_SHIFT)      /* 0x00000040 */
+#define CTRL_VI_ISP_CLK_CTRL_ISP_DPCC_RAM_CLK_ON_SHIFT     (7U)
+#define CTRL_VI_ISP_CLK_CTRL_ISP_DPCC_RAM_CLK_ON_MASK      (0x1U << CTRL_VI_ISP_CLK_CTRL_ISP_DPCC_RAM_CLK_ON_SHIFT)     /* 0x00000080 */
+#define CTRL_VI_ISP_CLK_CTRL_ISP_IE_RAM_CLK_ON_SHIFT       (8U)
+#define CTRL_VI_ISP_CLK_CTRL_ISP_IE_RAM_CLK_ON_MASK        (0x1U << CTRL_VI_ISP_CLK_CTRL_ISP_IE_RAM_CLK_ON_SHIFT)       /* 0x00000100 */
+#define CTRL_VI_ISP_CLK_CTRL_RSZ_RAM_CLK_ON_SHIFT          (9U)
+#define CTRL_VI_ISP_CLK_CTRL_RSZ_RAM_CLK_ON_MASK           (0x1U << CTRL_VI_ISP_CLK_CTRL_RSZ_RAM_CLK_ON_SHIFT)          /* 0x00000200 */
+#define CTRL_VI_ISP_CLK_CTRL_JPEG_RAM_CLK_ON_SHIFT         (10U)
+#define CTRL_VI_ISP_CLK_CTRL_JPEG_RAM_CLK_ON_MASK          (0x1U << CTRL_VI_ISP_CLK_CTRL_JPEG_RAM_CLK_ON_SHIFT)         /* 0x00000400 */
+#define CTRL_VI_ISP_CLK_CTRL_ACLK_ISP_CLK_ON_SHIFT         (11U)
+#define CTRL_VI_ISP_CLK_CTRL_ACLK_ISP_CLK_ON_MASK          (0x1U << CTRL_VI_ISP_CLK_CTRL_ACLK_ISP_CLK_ON_SHIFT)         /* 0x00000800 */
+#define CTRL_VI_ISP_CLK_CTRL_LDC_RAM_CLK_ON_SHIFT          (12U)
+#define CTRL_VI_ISP_CLK_CTRL_LDC_RAM_CLK_ON_MASK           (0x1U << CTRL_VI_ISP_CLK_CTRL_LDC_RAM_CLK_ON_SHIFT)          /* 0x00001000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_LDC_CLK_ON_SHIFT           (13U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_LDC_CLK_ON_MASK            (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_LDC_CLK_ON_SHIFT)           /* 0x00002000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_MP_CLK_ON_SHIFT            (14U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_MP_CLK_ON_MASK             (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_MP_CLK_ON_SHIFT)            /* 0x00004000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_JPEG_CLK_ON_SHIFT          (15U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_JPEG_CLK_ON_MASK           (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_JPEG_CLK_ON_SHIFT)          /* 0x00008000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_DP_CLK_ON_SHIFT            (16U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_DP_CLK_ON_MASK             (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_DP_CLK_ON_SHIFT)            /* 0x00010000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_Y12_CLK_ON_SHIFT           (17U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_Y12_CLK_ON_MASK            (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_Y12_CLK_ON_SHIFT)           /* 0x00020000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_SP_CLK_ON_SHIFT            (18U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_SP_CLK_ON_MASK             (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_SP_CLK_ON_SHIFT)            /* 0x00040000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_RAW0_CLK_ON_SHIFT          (19U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_RAW0_CLK_ON_MASK           (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_RAW0_CLK_ON_SHIFT)          /* 0x00080000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_RAW1_CLK_ON_SHIFT          (20U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_RAW1_CLK_ON_MASK           (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_RAW1_CLK_ON_SHIFT)          /* 0x00100000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_READ_CLK_ON_SHIFT          (21U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_READ_CLK_ON_MASK           (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_READ_CLK_ON_SHIFT)          /* 0x00200000 */
+#define CTRL_VI_ISP_CLK_CTRL_MI_RAWRD_CLK_ON_SHIFT         (22U)
+#define CTRL_VI_ISP_CLK_CTRL_MI_RAWRD_CLK_ON_MASK          (0x1U << CTRL_VI_ISP_CLK_CTRL_MI_RAWRD_CLK_ON_SHIFT)         /* 0x00400000 */
+#define CTRL_VI_ISP_CLK_CTRL_CP_CLK_ALWAYSON_SHIFT         (23U)
+#define CTRL_VI_ISP_CLK_CTRL_CP_CLK_ALWAYSON_MASK          (0x1U << CTRL_VI_ISP_CLK_CTRL_CP_CLK_ALWAYSON_SHIFT)         /* 0x00800000 */
+#define CTRL_VI_ISP_CLK_CTRL_IE_CLK_ALWAYSON_SHIFT         (24U)
+#define CTRL_VI_ISP_CLK_CTRL_IE_CLK_ALWAYSON_MASK          (0x1U << CTRL_VI_ISP_CLK_CTRL_IE_CLK_ALWAYSON_SHIFT)         /* 0x01000000 */
+#define CTRL_VI_ISP_CLK_CTRL_SI_CLK_ALWAYSON_SHIFT         (25U)
+#define CTRL_VI_ISP_CLK_CTRL_SI_CLK_ALWAYSON_MASK          (0x1U << CTRL_VI_ISP_CLK_CTRL_SI_CLK_ALWAYSON_SHIFT)         /* 0x02000000 */
+#define CTRL_VI_ISP_CLK_CTRL_RSZM_CLK_ALWAYSON_SHIFT       (26U)
+#define CTRL_VI_ISP_CLK_CTRL_RSZM_CLK_ALWAYSON_MASK        (0x1U << CTRL_VI_ISP_CLK_CTRL_RSZM_CLK_ALWAYSON_SHIFT)       /* 0x04000000 */
+#define CTRL_VI_ISP_CLK_CTRL_DPMUX_CLK_ALWAYSON_SHIFT      (27U)
+#define CTRL_VI_ISP_CLK_CTRL_DPMUX_CLK_ALWAYSON_MASK       (0x1U << CTRL_VI_ISP_CLK_CTRL_DPMUX_CLK_ALWAYSON_SHIFT)      /* 0x08000000 */
+#define CTRL_VI_ISP_CLK_CTRL_JPEG_CLK_ALWAYSON_SHIFT       (28U)
+#define CTRL_VI_ISP_CLK_CTRL_JPEG_CLK_ALWAYSON_MASK        (0x1U << CTRL_VI_ISP_CLK_CTRL_JPEG_CLK_ALWAYSON_SHIFT)       /* 0x10000000 */
+#define CTRL_VI_ISP_CLK_CTRL_RSZS_CLK_ALWAYSON_SHIFT       (29U)
+#define CTRL_VI_ISP_CLK_CTRL_RSZS_CLK_ALWAYSON_MASK        (0x1U << CTRL_VI_ISP_CLK_CTRL_RSZS_CLK_ALWAYSON_SHIFT)       /* 0x20000000 */
+#define CTRL_VI_ISP_CLK_CTRL_MIPI_CLK_ALWAYSON_SHIFT       (30U)
+#define CTRL_VI_ISP_CLK_CTRL_MIPI_CLK_ALWAYSON_MASK        (0x1U << CTRL_VI_ISP_CLK_CTRL_MIPI_CLK_ALWAYSON_SHIFT)       /* 0x40000000 */
+#define CTRL_VI_ISP_CLK_CTRL_MARVINMI_CLK_ALWAYSON_SHIFT   (31U)
+#define CTRL_VI_ISP_CLK_CTRL_MARVINMI_CLK_ALWAYSON_MASK    (0x1U << CTRL_VI_ISP_CLK_CTRL_MARVINMI_CLK_ALWAYSON_SHIFT)   /* 0x80000000 */
+/* VI_ICCL */
+#define CTRL_VI_ICCL_OFFSET                                (0x10U)
+#define CTRL_VI_ICCL_VI_ISP_CLK_ENABLE_SHIFT               (0U)
+#define CTRL_VI_ICCL_VI_ISP_CLK_ENABLE_MASK                (0x1U << CTRL_VI_ICCL_VI_ISP_CLK_ENABLE_SHIFT)               /* 0x00000001 */
+#define CTRL_VI_ICCL_VI_CP_CLK_ENABLE_SHIFT                (1U)
+#define CTRL_VI_ICCL_VI_CP_CLK_ENABLE_MASK                 (0x1U << CTRL_VI_ICCL_VI_CP_CLK_ENABLE_SHIFT)                /* 0x00000002 */
+#define CTRL_VI_ICCL_VI_MRSZ_CLK_ENABLE_SHIFT              (3U)
+#define CTRL_VI_ICCL_VI_MRSZ_CLK_ENABLE_MASK               (0x1U << CTRL_VI_ICCL_VI_MRSZ_CLK_ENABLE_SHIFT)              /* 0x00000008 */
+#define CTRL_VI_ICCL_VI_SRSZ_CLK_ENABLE_SHIFT              (4U)
+#define CTRL_VI_ICCL_VI_SRSZ_CLK_ENABLE_MASK               (0x1U << CTRL_VI_ICCL_VI_SRSZ_CLK_ENABLE_SHIFT)              /* 0x00000010 */
+#define CTRL_VI_ICCL_VI_JPEG_CLK_ENABLE_SHIFT              (5U)
+#define CTRL_VI_ICCL_VI_JPEG_CLK_ENABLE_MASK               (0x1U << CTRL_VI_ICCL_VI_JPEG_CLK_ENABLE_SHIFT)              /* 0x00000020 */
+#define CTRL_VI_ICCL_VI_MI_CLK_ENABLE_SHIFT                (6U)
+#define CTRL_VI_ICCL_VI_MI_CLK_ENABLE_MASK                 (0x1U << CTRL_VI_ICCL_VI_MI_CLK_ENABLE_SHIFT)                /* 0x00000040 */
+#define CTRL_VI_ICCL_VI_IE_CLK_ENABLE_SHIFT                (8U)
+#define CTRL_VI_ICCL_VI_IE_CLK_ENABLE_MASK                 (0x1U << CTRL_VI_ICCL_VI_IE_CLK_ENABLE_SHIFT)                /* 0x00000100 */
+#define CTRL_VI_ICCL_VI_SIMP_CLK_ENABLE_SHIFT              (9U)
+#define CTRL_VI_ICCL_VI_SIMP_CLK_ENABLE_MASK               (0x1U << CTRL_VI_ICCL_VI_SIMP_CLK_ENABLE_SHIFT)              /* 0x00000200 */
+#define CTRL_VI_ICCL_VI_SMIA_CLK_ENABLE_SHIFT              (10U)
+#define CTRL_VI_ICCL_VI_SMIA_CLK_ENABLE_MASK               (0x1U << CTRL_VI_ICCL_VI_SMIA_CLK_ENABLE_SHIFT)              /* 0x00000400 */
+#define CTRL_VI_ICCL_VI_MIPI_CLK_ENABLE_SHIFT              (11U)
+#define CTRL_VI_ICCL_VI_MIPI_CLK_ENABLE_MASK               (0x1U << CTRL_VI_ICCL_VI_MIPI_CLK_ENABLE_SHIFT)              /* 0x00000800 */
+#define CTRL_VI_ICCL_VI_MPFBC_CLK_ENABLE_SHIFT             (14U)
+#define CTRL_VI_ICCL_VI_MPFBC_CLK_ENABLE_MASK              (0x1U << CTRL_VI_ICCL_VI_MPFBC_CLK_ENABLE_SHIFT)             /* 0x00004000 */
+/* VI_IRCL */
+#define CTRL_VI_IRCL_OFFSET                                (0x14U)
+#define CTRL_VI_IRCL_VI_ISP_SOFT_RST_SHIFT                 (0U)
+#define CTRL_VI_IRCL_VI_ISP_SOFT_RST_MASK                  (0x1U << CTRL_VI_IRCL_VI_ISP_SOFT_RST_SHIFT)                 /* 0x00000001 */
+#define CTRL_VI_IRCL_VI_CP_SOFT_RST_SHIFT                  (1U)
+#define CTRL_VI_IRCL_VI_CP_SOFT_RST_MASK                   (0x1U << CTRL_VI_IRCL_VI_CP_SOFT_RST_SHIFT)                  /* 0x00000002 */
+#define CTRL_VI_IRCL_VI_YCS_SOFT_RST_SHIFT                 (2U)
+#define CTRL_VI_IRCL_VI_YCS_SOFT_RST_MASK                  (0x1U << CTRL_VI_IRCL_VI_YCS_SOFT_RST_SHIFT)                 /* 0x00000004 */
+#define CTRL_VI_IRCL_VI_MRSZ_SOFT_RST_SHIFT                (3U)
+#define CTRL_VI_IRCL_VI_MRSZ_SOFT_RST_MASK                 (0x1U << CTRL_VI_IRCL_VI_MRSZ_SOFT_RST_SHIFT)                /* 0x00000008 */
+#define CTRL_VI_IRCL_VI_SRSZ_SOFT_RST_SHIFT                (4U)
+#define CTRL_VI_IRCL_VI_SRSZ_SOFT_RST_MASK                 (0x1U << CTRL_VI_IRCL_VI_SRSZ_SOFT_RST_SHIFT)                /* 0x00000010 */
+#define CTRL_VI_IRCL_VI_JPEG_SOFT_RST_SHIFT                (5U)
+#define CTRL_VI_IRCL_VI_JPEG_SOFT_RST_MASK                 (0x1U << CTRL_VI_IRCL_VI_JPEG_SOFT_RST_SHIFT)                /* 0x00000020 */
+#define CTRL_VI_IRCL_VI_MI_SOFT_RST_SHIFT                  (6U)
+#define CTRL_VI_IRCL_VI_MI_SOFT_RST_MASK                   (0x1U << CTRL_VI_IRCL_VI_MI_SOFT_RST_SHIFT)                  /* 0x00000040 */
+#define CTRL_VI_IRCL_VI_MARVIN_RST_SHIFT                   (7U)
+#define CTRL_VI_IRCL_VI_MARVIN_RST_MASK                    (0x1U << CTRL_VI_IRCL_VI_MARVIN_RST_SHIFT)                   /* 0x00000080 */
+#define CTRL_VI_IRCL_VI_IE_SOFT_RST_SHIFT                  (8U)
+#define CTRL_VI_IRCL_VI_IE_SOFT_RST_MASK                   (0x1U << CTRL_VI_IRCL_VI_IE_SOFT_RST_SHIFT)                  /* 0x00000100 */
+#define CTRL_VI_IRCL_VI_SIMP_SOFT_RST_SHIFT                (9U)
+#define CTRL_VI_IRCL_VI_SIMP_SOFT_RST_MASK                 (0x1U << CTRL_VI_IRCL_VI_SIMP_SOFT_RST_SHIFT)                /* 0x00000200 */
+#define CTRL_VI_IRCL_VI_SMIA_SOFT_RST_SHIFT                (10U)
+#define CTRL_VI_IRCL_VI_SMIA_SOFT_RST_MASK                 (0x1U << CTRL_VI_IRCL_VI_SMIA_SOFT_RST_SHIFT)                /* 0x00000400 */
+#define CTRL_VI_IRCL_VI_MIPI_SOFT_RST_SHIFT                (11U)
+#define CTRL_VI_IRCL_VI_MIPI_SOFT_RST_MASK                 (0x1U << CTRL_VI_IRCL_VI_MIPI_SOFT_RST_SHIFT)                /* 0x00000800 */
+#define CTRL_VI_IRCL_VI_3A_SOFT_RST_SHIFT                  (13U)
+#define CTRL_VI_IRCL_VI_3A_SOFT_RST_MASK                   (0x1U << CTRL_VI_IRCL_VI_3A_SOFT_RST_SHIFT)                  /* 0x00002000 */
+/* VI_DPCL */
+#define CTRL_VI_DPCL_OFFSET                                (0x18U)
+#define CTRL_VI_DPCL_VI_MP_MUX_SHIFT                       (0U)
+#define CTRL_VI_DPCL_VI_MP_MUX_MASK                        (0x3U << CTRL_VI_DPCL_VI_MP_MUX_SHIFT)                       /* 0x00000003 */
+#define CTRL_VI_DPCL_VI_CHAN_MODE_SHIFT                    (2U)
+#define CTRL_VI_DPCL_VI_CHAN_MODE_MASK                     (0x3U << CTRL_VI_DPCL_VI_CHAN_MODE_SHIFT)                    /* 0x0000000C */
+#define CTRL_VI_DPCL_VI_DMA_SWITCH_SHIFT                   (4U)
+#define CTRL_VI_DPCL_VI_DMA_SWITCH_MASK                    (0x7U << CTRL_VI_DPCL_VI_DMA_SWITCH_SHIFT)                   /* 0x00000070 */
+#define CTRL_VI_DPCL_IF_SELECT_SHIFT                       (8U)
+#define CTRL_VI_DPCL_IF_SELECT_MASK                        (0x3U << CTRL_VI_DPCL_IF_SELECT_SHIFT)                       /* 0x00000300 */
+#define CTRL_VI_DPCL_VI_DMA_IEMUX_SHIFT                    (10U)
+#define CTRL_VI_DPCL_VI_DMA_IEMUX_MASK                     (0x1U << CTRL_VI_DPCL_VI_DMA_IEMUX_SHIFT)                    /* 0x00000400 */
+#define CTRL_VI_DPCL_VI_DMA_SPMUX_SHIFT                    (11U)
+#define CTRL_VI_DPCL_VI_DMA_SPMUX_MASK                     (0x1U << CTRL_VI_DPCL_VI_DMA_SPMUX_SHIFT)                    /* 0x00000800 */
+#define CTRL_VI_DPCL_VI_OLD_MI_SEL_WR_SHIFT                (12U)
+#define CTRL_VI_DPCL_VI_OLD_MI_SEL_WR_MASK                 (0x1U << CTRL_VI_DPCL_VI_OLD_MI_SEL_WR_SHIFT)                /* 0x00001000 */
+#define CTRL_VI_DPCL_VI_OLD_MI_SEL_RD_SHIFT                (13U)
+#define CTRL_VI_DPCL_VI_OLD_MI_SEL_RD_MASK                 (0x1U << CTRL_VI_DPCL_VI_OLD_MI_SEL_RD_SHIFT)                /* 0x00002000 */
+#define CTRL_VI_DPCL_VI_MI_DEBUG_MODE_SHIFT                (14U)
+#define CTRL_VI_DPCL_VI_MI_DEBUG_MODE_MASK                 (0x1U << CTRL_VI_DPCL_VI_MI_DEBUG_MODE_SHIFT)                /* 0x00004000 */
+/* SWS_CFG */
+#define CTRL_SWS_CFG_OFFSET                                (0x1CU)
+#define CTRL_SWS_CFG_SW_SWS_EN_SHIFT                       (0U)
+#define CTRL_SWS_CFG_SW_SWS_EN_MASK                        (0x1U << CTRL_SWS_CFG_SW_SWS_EN_SHIFT)                       /* 0x00000001 */
+#define CTRL_SWS_CFG_SW_ISP2PP_PIPE_EN_SHIFT               (1U)
+#define CTRL_SWS_CFG_SW_ISP2PP_PIPE_EN_MASK                (0x1U << CTRL_SWS_CFG_SW_ISP2PP_PIPE_EN_SHIFT)               /* 0x00000002 */
+#define CTRL_SWS_CFG_SW_MIPI_DROP_FRM_DIS_SHIFT            (2U)
+#define CTRL_SWS_CFG_SW_MIPI_DROP_FRM_DIS_MASK             (0x1U << CTRL_SWS_CFG_SW_MIPI_DROP_FRM_DIS_SHIFT)            /* 0x00000004 */
+#define CTRL_SWS_CFG_SW_SENSOR_ID_SHIFT                    (4U)
+#define CTRL_SWS_CFG_SW_SENSOR_ID_MASK                     (0x3U << CTRL_SWS_CFG_SW_SENSOR_ID_SHIFT)                    /* 0x00000030 */
+#define CTRL_SWS_CFG_SW_SWS_TMO_DDR_RD_SHIFT               (8U)
+#define CTRL_SWS_CFG_SW_SWS_TMO_DDR_RD_MASK                (0x1U << CTRL_SWS_CFG_SW_SWS_TMO_DDR_RD_SHIFT)               /* 0x00000100 */
+#define CTRL_SWS_CFG_SW_SWS_WDR_DDR_RD_SHIFT               (9U)
+#define CTRL_SWS_CFG_SW_SWS_WDR_DDR_RD_MASK                (0x1U << CTRL_SWS_CFG_SW_SWS_WDR_DDR_RD_SHIFT)               /* 0x00000200 */
+#define CTRL_SWS_CFG_SW_SWS_DHAZ_DDR_RD_SHIFT              (10U)
+#define CTRL_SWS_CFG_SW_SWS_DHAZ_DDR_RD_MASK               (0x1U << CTRL_SWS_CFG_SW_SWS_DHAZ_DDR_RD_SHIFT)              /* 0x00000400 */
+#define CTRL_SWS_CFG_SW_SWS_ISP_DDRLOAD_DIS_SHIFT          (11U)
+#define CTRL_SWS_CFG_SW_SWS_ISP_DDRLOAD_DIS_MASK           (0x1U << CTRL_SWS_CFG_SW_SWS_ISP_DDRLOAD_DIS_SHIFT)          /* 0x00000800 */
+#define CTRL_SWS_CFG_SW_SWS_DMA_START_MODE_SHIFT           (12U)
+#define CTRL_SWS_CFG_SW_SWS_DMA_START_MODE_MASK            (0x3U << CTRL_SWS_CFG_SW_SWS_DMA_START_MODE_SHIFT)           /* 0x00003000 */
+#define CTRL_SWS_CFG_SW_ISP2PP_DIFX16_SHIFT                (16U)
+#define CTRL_SWS_CFG_SW_ISP2PP_DIFX16_MASK                 (0xFFU << CTRL_SWS_CFG_SW_ISP2PP_DIFX16_SHIFT)               /* 0x00FF0000 */
+#define CTRL_SWS_CFG_SW_3A_DDR_WRITE_EN_SHIFT              (24U)
+#define CTRL_SWS_CFG_SW_3A_DDR_WRITE_EN_MASK               (0x1U << CTRL_SWS_CFG_SW_3A_DDR_WRITE_EN_SHIFT)              /* 0x01000000 */
+#define CTRL_SWS_CFG_DHAZ_RD_ERROR_SHIFT                   (28U)
+#define CTRL_SWS_CFG_DHAZ_RD_ERROR_MASK                    (0x1U << CTRL_SWS_CFG_DHAZ_RD_ERROR_SHIFT)                   /* 0x10000000 */
+#define CTRL_SWS_CFG_SWS_WORKING_SHIFT                     (29U)
+#define CTRL_SWS_CFG_SWS_WORKING_MASK                      (0x1U << CTRL_SWS_CFG_SWS_WORKING_SHIFT)                     /* 0x20000000 */
+#define CTRL_SWS_CFG_SW_SWS_EN_SHD_SHIFT                   (30U)
+#define CTRL_SWS_CFG_SW_SWS_EN_SHD_MASK                    (0x1U << CTRL_SWS_CFG_SW_SWS_EN_SHD_SHIFT)                   /* 0x40000000 */
+#define CTRL_SWS_CFG_ISP2PP_HOLD_SHIFT                     (31U)
+#define CTRL_SWS_CFG_ISP2PP_HOLD_MASK                      (0x1U << CTRL_SWS_CFG_ISP2PP_HOLD_SHIFT)                     /* 0x80000000 */
+/* LVDS_CTRL */
+#define CTRL_LVDS_CTRL_OFFSET                              (0x20U)
+#define CTRL_LVDS_CTRL_SW_LVDS_CAP_EN_SHIFT                (0U)
+#define CTRL_LVDS_CTRL_SW_LVDS_CAP_EN_MASK                 (0x1U << CTRL_LVDS_CTRL_SW_LVDS_CAP_EN_SHIFT)                /* 0x00000001 */
+#define CTRL_LVDS_CTRL_SW_LVDS_MODE_SHIFT                  (1U)
+#define CTRL_LVDS_CTRL_SW_LVDS_MODE_MASK                   (0x1U << CTRL_LVDS_CTRL_SW_LVDS_MODE_SHIFT)                  /* 0x00000002 */
+#define CTRL_LVDS_CTRL_SW_LVDS_WIDTH_SHIFT                 (2U)
+#define CTRL_LVDS_CTRL_SW_LVDS_WIDTH_MASK                  (0x3U << CTRL_LVDS_CTRL_SW_LVDS_WIDTH_SHIFT)                 /* 0x0000000C */
+#define CTRL_LVDS_CTRL_SW_LVDS_LANE_EN_SHIFT               (4U)
+#define CTRL_LVDS_CTRL_SW_LVDS_LANE_EN_MASK                (0xFU << CTRL_LVDS_CTRL_SW_LVDS_LANE_EN_SHIFT)               /* 0x000000F0 */
+#define CTRL_LVDS_CTRL_SW_LVDS_MAIN_LANE_SHIFT             (8U)
+#define CTRL_LVDS_CTRL_SW_LVDS_MAIN_LANE_MASK              (0x3U << CTRL_LVDS_CTRL_SW_LVDS_MAIN_LANE_SHIFT)             /* 0x00000300 */
+#define CTRL_LVDS_CTRL_SW_LVDS_START_X_SHIFT               (10U)
+#define CTRL_LVDS_CTRL_SW_LVDS_START_X_MASK                (0x7FFU << CTRL_LVDS_CTRL_SW_LVDS_START_X_SHIFT)             /* 0x001FFC00 */
+#define CTRL_LVDS_CTRL_SW_LVDS_START_Y_SHIFT               (21U)
+#define CTRL_LVDS_CTRL_SW_LVDS_START_Y_MASK                (0x7FFU << CTRL_LVDS_CTRL_SW_LVDS_START_Y_SHIFT)             /* 0xFFE00000 */
+/* LVDS_SAV_EAV_ACT */
+#define CTRL_LVDS_SAV_EAV_ACT_OFFSET                       (0x24U)
+#define CTRL_LVDS_SAV_EAV_ACT_SW_LVDS_SAV_ACT_SHIFT        (0U)
+#define CTRL_LVDS_SAV_EAV_ACT_SW_LVDS_SAV_ACT_MASK         (0xFFFU << CTRL_LVDS_SAV_EAV_ACT_SW_LVDS_SAV_ACT_SHIFT)      /* 0x00000FFF */
+#define CTRL_LVDS_SAV_EAV_ACT_SW_LVDS_EAV_ACT_SHIFT        (16U)
+#define CTRL_LVDS_SAV_EAV_ACT_SW_LVDS_EAV_ACT_MASK         (0xFFFU << CTRL_LVDS_SAV_EAV_ACT_SW_LVDS_EAV_ACT_SHIFT)      /* 0x0FFF0000 */
+/* LVDS_SAV_EAV_BLK */
+#define CTRL_LVDS_SAV_EAV_BLK_OFFSET                       (0x28U)
+#define CTRL_LVDS_SAV_EAV_BLK_SW_LVDS_SAV_BLK_SHIFT        (0U)
+#define CTRL_LVDS_SAV_EAV_BLK_SW_LVDS_SAV_BLK_MASK         (0xFFFU << CTRL_LVDS_SAV_EAV_BLK_SW_LVDS_SAV_BLK_SHIFT)      /* 0x00000FFF */
+#define CTRL_LVDS_SAV_EAV_BLK_SW_LVDS_EAV_BLK_SHIFT        (16U)
+#define CTRL_LVDS_SAV_EAV_BLK_SW_LVDS_EAV_BLK_MASK         (0xFFFU << CTRL_LVDS_SAV_EAV_BLK_SW_LVDS_EAV_BLK_SHIFT)      /* 0x0FFF0000 */
+/******************************************ISP*******************************************/
+/* CTRL */
+#define ISP_CTRL_OFFSET                                    (0x0U)
+#define ISP_CTRL_ISP_ENABLE_SHIFT                          (0U)
+#define ISP_CTRL_ISP_ENABLE_MASK                           (0x1U << ISP_CTRL_ISP_ENABLE_SHIFT)                          /* 0x00000001 */
+#define ISP_CTRL_ISP_MODE_SHIFT                            (1U)
+#define ISP_CTRL_ISP_MODE_MASK                             (0x7U << ISP_CTRL_ISP_MODE_SHIFT)                            /* 0x0000000E */
+#define ISP_CTRL_ISP_INFORM_ENABLE_SHIFT                   (4U)
+#define ISP_CTRL_ISP_INFORM_ENABLE_MASK                    (0x1U << ISP_CTRL_ISP_INFORM_ENABLE_SHIFT)                   /* 0x00000010 */
+#define ISP_CTRL_ISP_GAMMA_IN_ENABLE_SHIFT                 (6U)
+#define ISP_CTRL_ISP_GAMMA_IN_ENABLE_MASK                  (0x1U << ISP_CTRL_ISP_GAMMA_IN_ENABLE_SHIFT)                 /* 0x00000040 */
+#define ISP_CTRL_ISP_AWB_ENABLE_SHIFT                      (7U)
+#define ISP_CTRL_ISP_AWB_ENABLE_MASK                       (0x1U << ISP_CTRL_ISP_AWB_ENABLE_SHIFT)                      /* 0x00000080 */
+#define ISP_CTRL_ISP_CFG_UPD_PERMANENT_SHIFT               (8U)
+#define ISP_CTRL_ISP_CFG_UPD_PERMANENT_MASK                (0x1U << ISP_CTRL_ISP_CFG_UPD_PERMANENT_SHIFT)               /* 0x00000100 */
+#define ISP_CTRL_ISP_CFG_UPD_SHIFT                         (9U)
+#define ISP_CTRL_ISP_CFG_UPD_MASK                          (0x1U << ISP_CTRL_ISP_CFG_UPD_SHIFT)                         /* 0x00000200 */
+#define ISP_CTRL_ISP_GEN_CFG_UPD_SHIFT                     (10U)
+#define ISP_CTRL_ISP_GEN_CFG_UPD_MASK                      (0x1U << ISP_CTRL_ISP_GEN_CFG_UPD_SHIFT)                     /* 0x00000400 */
+#define ISP_CTRL_ISP_FLASH_MODE_SHIFT                      (12U)
+#define ISP_CTRL_ISP_FLASH_MODE_MASK                       (0x1U << ISP_CTRL_ISP_FLASH_MODE_SHIFT)                      /* 0x00001000 */
+#define ISP_CTRL_ISP_CSM_Y_RANGE_SHIFT                     (13U)
+#define ISP_CTRL_ISP_CSM_Y_RANGE_MASK                      (0x1U << ISP_CTRL_ISP_CSM_Y_RANGE_SHIFT)                     /* 0x00002000 */
+#define ISP_CTRL_ISP_CSM_C_RANGE_SHIFT                     (14U)
+#define ISP_CTRL_ISP_CSM_C_RANGE_MASK                      (0x1U << ISP_CTRL_ISP_CSM_C_RANGE_SHIFT)                     /* 0x00004000 */
+#define ISP_CTRL_CTRL_RESERVED_2_SHIFT                     (15U)
+#define ISP_CTRL_CTRL_RESERVED_2_MASK                      (0x1U << ISP_CTRL_CTRL_RESERVED_2_SHIFT)                     /* 0x00008000 */
+#define ISP_CTRL_CTRL_RESERVED_1_SHIFT                     (16U)
+#define ISP_CTRL_CTRL_RESERVED_1_MASK                      (0x1U << ISP_CTRL_CTRL_RESERVED_1_SHIFT)                     /* 0x00010000 */
+#define ISP_CTRL_SW_NOC_HURRY_R_MODE_SHIFT                 (18U)
+#define ISP_CTRL_SW_NOC_HURRY_R_MODE_MASK                  (0x7U << ISP_CTRL_SW_NOC_HURRY_R_MODE_SHIFT)                 /* 0x001C0000 */
+#define ISP_CTRL_SW_NOC_HURRY_W_MODE_SHIFT                 (21U)
+#define ISP_CTRL_SW_NOC_HURRY_W_MODE_MASK                  (0x7U << ISP_CTRL_SW_NOC_HURRY_W_MODE_SHIFT)                 /* 0x00E00000 */
+#define ISP_CTRL_SW_Y12_YOUT_ENABLE_SHIFT                  (24U)
+#define ISP_CTRL_SW_Y12_YOUT_ENABLE_MASK                   (0x1U << ISP_CTRL_SW_Y12_YOUT_ENABLE_SHIFT)                  /* 0x01000000 */
+#define ISP_CTRL_SW_Y12_COUT_ENABLE_SHIFT                  (25U)
+#define ISP_CTRL_SW_Y12_COUT_ENABLE_MASK                   (0x1U << ISP_CTRL_SW_Y12_COUT_ENABLE_SHIFT)                  /* 0x02000000 */
+#define ISP_CTRL_SW_RGB_OUT_SEL_SHIFT                      (26U)
+#define ISP_CTRL_SW_RGB_OUT_SEL_MASK                       (0x1U << ISP_CTRL_SW_RGB_OUT_SEL_SHIFT)                      /* 0x04000000 */
+#define ISP_CTRL_SW_Y12_CSM1_Y_RANGE_SHIFT                 (27U)
+#define ISP_CTRL_SW_Y12_CSM1_Y_RANGE_MASK                  (0x1U << ISP_CTRL_SW_Y12_CSM1_Y_RANGE_SHIFT)                 /* 0x08000000 */
+#define ISP_CTRL_SW_Y12_CSM1_C_RANGE_SHIFT                 (28U)
+#define ISP_CTRL_SW_Y12_CSM1_C_RANGE_MASK                  (0x1U << ISP_CTRL_SW_Y12_CSM1_C_RANGE_SHIFT)                 /* 0x10000000 */
+#define ISP_CTRL_SW_NOC_HURRY_W_VALUE_SHIFT                (30U)
+#define ISP_CTRL_SW_NOC_HURRY_W_VALUE_MASK                 (0x3U << ISP_CTRL_SW_NOC_HURRY_W_VALUE_SHIFT)                /* 0xC0000000 */
+/* ACQ_PROP */
+#define ISP_ACQ_PROP_OFFSET                                (0x4U)
+#define ISP_ACQ_PROP_SAMPLE_EDGE_SHIFT                     (0U)
+#define ISP_ACQ_PROP_SAMPLE_EDGE_MASK                      (0x1U << ISP_ACQ_PROP_SAMPLE_EDGE_SHIFT)                     /* 0x00000001 */
+#define ISP_ACQ_PROP_HSYNC_POL_SHIFT                       (1U)
+#define ISP_ACQ_PROP_HSYNC_POL_MASK                        (0x1U << ISP_ACQ_PROP_HSYNC_POL_SHIFT)                       /* 0x00000002 */
+#define ISP_ACQ_PROP_VSYNC_POL_SHIFT                       (2U)
+#define ISP_ACQ_PROP_VSYNC_POL_MASK                        (0x1U << ISP_ACQ_PROP_VSYNC_POL_SHIFT)                       /* 0x00000004 */
+#define ISP_ACQ_PROP_BAYER_PAT_SHIFT                       (3U)
+#define ISP_ACQ_PROP_BAYER_PAT_MASK                        (0x3U << ISP_ACQ_PROP_BAYER_PAT_SHIFT)                       /* 0x00000018 */
+#define ISP_ACQ_PROP_CONV_422_SHIFT                        (5U)
+#define ISP_ACQ_PROP_CONV_422_MASK                         (0x3U << ISP_ACQ_PROP_CONV_422_SHIFT)                        /* 0x00000060 */
+#define ISP_ACQ_PROP_CCIR_SEQ_SHIFT                        (7U)
+#define ISP_ACQ_PROP_CCIR_SEQ_MASK                         (0x3U << ISP_ACQ_PROP_CCIR_SEQ_SHIFT)                        /* 0x00000180 */
+#define ISP_ACQ_PROP_FIELD_SELECTION_SHIFT                 (9U)
+#define ISP_ACQ_PROP_FIELD_SELECTION_MASK                  (0x3U << ISP_ACQ_PROP_FIELD_SELECTION_SHIFT)                 /* 0x00000600 */
+#define ISP_ACQ_PROP_FIELD_INV_SHIFT                       (11U)
+#define ISP_ACQ_PROP_FIELD_INV_MASK                        (0x1U << ISP_ACQ_PROP_FIELD_INV_SHIFT)                       /* 0x00000800 */
+#define ISP_ACQ_PROP_INPUT_SELECTION_SHIFT                 (12U)
+#define ISP_ACQ_PROP_INPUT_SELECTION_MASK                  (0x7U << ISP_ACQ_PROP_INPUT_SELECTION_SHIFT)                 /* 0x00007000 */
+#define ISP_ACQ_PROP_DMA_RGB_SELECTION_SHIFT               (15U)
+#define ISP_ACQ_PROP_DMA_RGB_SELECTION_MASK                (0x1U << ISP_ACQ_PROP_DMA_RGB_SELECTION_SHIFT)               /* 0x00008000 */
+#define ISP_ACQ_PROP_DMA_YUV_SELECTION_SHIFT               (16U)
+#define ISP_ACQ_PROP_DMA_YUV_SELECTION_MASK                (0x1U << ISP_ACQ_PROP_DMA_YUV_SELECTION_SHIFT)               /* 0x00010000 */
+#define ISP_ACQ_PROP_SW_Y12_UV_DS_MODE_SHIFT               (19U)
+#define ISP_ACQ_PROP_SW_Y12_UV_DS_MODE_MASK                (0x1U << ISP_ACQ_PROP_SW_Y12_UV_DS_MODE_SHIFT)               /* 0x00080000 */
+#define ISP_ACQ_PROP_SW_BT1120_EN_SHIFT                    (20U)
+#define ISP_ACQ_PROP_SW_BT1120_EN_MASK                     (0x1U << ISP_ACQ_PROP_SW_BT1120_EN_SHIFT)                    /* 0x00100000 */
+#define ISP_ACQ_PROP_SW_DUALEDGE_EN_SHIFT                  (21U)
+#define ISP_ACQ_PROP_SW_DUALEDGE_EN_MASK                   (0x1U << ISP_ACQ_PROP_SW_DUALEDGE_EN_SHIFT)                  /* 0x00200000 */
+#define ISP_ACQ_PROP_SW_BT_1120_YC_SWAP_SHIFT              (22U)
+#define ISP_ACQ_PROP_SW_BT_1120_YC_SWAP_MASK               (0x1U << ISP_ACQ_PROP_SW_BT_1120_YC_SWAP_SHIFT)              /* 0x00400000 */
+/* ACQ_H_OFFS */
+#define ISP_ACQ_H_OFFS_OFFSET                              (0x8U)
+#define ISP_ACQ_H_OFFS_ACQ_H_OFFS_SHIFT                    (0U)
+#define ISP_ACQ_H_OFFS_ACQ_H_OFFS_MASK                     (0x7FFFU << ISP_ACQ_H_OFFS_ACQ_H_OFFS_SHIFT)                 /* 0x00007FFF */
+/* ACQ_V_OFFS */
+#define ISP_ACQ_V_OFFS_OFFSET                              (0xCU)
+#define ISP_ACQ_V_OFFS_ACQ_V_OFFS_SHIFT                    (0U)
+#define ISP_ACQ_V_OFFS_ACQ_V_OFFS_MASK                     (0x3FFFU << ISP_ACQ_V_OFFS_ACQ_V_OFFS_SHIFT)                 /* 0x00003FFF */
+/* ACQ_H_SIZE */
+#define ISP_ACQ_H_SIZE_OFFSET                              (0x10U)
+#define ISP_ACQ_H_SIZE_ACQ_H_SIZE_SHIFT                    (0U)
+#define ISP_ACQ_H_SIZE_ACQ_H_SIZE_MASK                     (0x7FFFU << ISP_ACQ_H_SIZE_ACQ_H_SIZE_SHIFT)                 /* 0x00007FFF */
+/* ACQ_V_SIZE */
+#define ISP_ACQ_V_SIZE_OFFSET                              (0x14U)
+#define ISP_ACQ_V_SIZE_ACQ_V_SIZE_SHIFT                    (0U)
+#define ISP_ACQ_V_SIZE_ACQ_V_SIZE_MASK                     (0x3FFFU << ISP_ACQ_V_SIZE_ACQ_V_SIZE_SHIFT)                 /* 0x00003FFF */
+/* ACQ_NR_FRAMES */
+#define ISP_ACQ_NR_FRAMES_OFFSET                           (0x18U)
+#define ISP_ACQ_NR_FRAMES_ACQ_NR_FRAMES_SHIFT              (0U)
+#define ISP_ACQ_NR_FRAMES_ACQ_NR_FRAMES_MASK               (0x3FFU << ISP_ACQ_NR_FRAMES_ACQ_NR_FRAMES_SHIFT)            /* 0x000003FF */
+/* GAMMA_DX_LO */
+#define ISP_GAMMA_DX_LO_OFFSET                             (0x1CU)
+#define ISP_GAMMA_DX_LO_GAMMA_DX_1_SHIFT                   (0U)
+#define ISP_GAMMA_DX_LO_GAMMA_DX_1_MASK                    (0x7U << ISP_GAMMA_DX_LO_GAMMA_DX_1_SHIFT)                   /* 0x00000007 */
+#define ISP_GAMMA_DX_LO_GAMMA_DX_2_SHIFT                   (4U)
+#define ISP_GAMMA_DX_LO_GAMMA_DX_2_MASK                    (0x7U << ISP_GAMMA_DX_LO_GAMMA_DX_2_SHIFT)                   /* 0x00000070 */
+#define ISP_GAMMA_DX_LO_GAMMA_DX_3_SHIFT                   (8U)
+#define ISP_GAMMA_DX_LO_GAMMA_DX_3_MASK                    (0x7U << ISP_GAMMA_DX_LO_GAMMA_DX_3_SHIFT)                   /* 0x00000700 */
+#define ISP_GAMMA_DX_LO_GAMMA_DX_4_SHIFT                   (12U)
+#define ISP_GAMMA_DX_LO_GAMMA_DX_4_MASK                    (0x7U << ISP_GAMMA_DX_LO_GAMMA_DX_4_SHIFT)                   /* 0x00007000 */
+#define ISP_GAMMA_DX_LO_GAMMA_DX_5_SHIFT                   (16U)
+#define ISP_GAMMA_DX_LO_GAMMA_DX_5_MASK                    (0x7U << ISP_GAMMA_DX_LO_GAMMA_DX_5_SHIFT)                   /* 0x00070000 */
+#define ISP_GAMMA_DX_LO_GAMMA_DX_6_SHIFT                   (20U)
+#define ISP_GAMMA_DX_LO_GAMMA_DX_6_MASK                    (0x7U << ISP_GAMMA_DX_LO_GAMMA_DX_6_SHIFT)                   /* 0x00700000 */
+#define ISP_GAMMA_DX_LO_GAMMA_DX_7_SHIFT                   (24U)
+#define ISP_GAMMA_DX_LO_GAMMA_DX_7_MASK                    (0x7U << ISP_GAMMA_DX_LO_GAMMA_DX_7_SHIFT)                   /* 0x07000000 */
+#define ISP_GAMMA_DX_LO_GAMMA_DX_8_SHIFT                   (28U)
+#define ISP_GAMMA_DX_LO_GAMMA_DX_8_MASK                    (0x7U << ISP_GAMMA_DX_LO_GAMMA_DX_8_SHIFT)                   /* 0x70000000 */
+/* GAMMA_DX_HI */
+#define ISP_GAMMA_DX_HI_OFFSET                             (0x20U)
+#define ISP_GAMMA_DX_HI_GAMMA_DX_9_SHIFT                   (0U)
+#define ISP_GAMMA_DX_HI_GAMMA_DX_9_MASK                    (0x7U << ISP_GAMMA_DX_HI_GAMMA_DX_9_SHIFT)                   /* 0x00000007 */
+#define ISP_GAMMA_DX_HI_GAMMA_DX_10_SHIFT                  (4U)
+#define ISP_GAMMA_DX_HI_GAMMA_DX_10_MASK                   (0x7U << ISP_GAMMA_DX_HI_GAMMA_DX_10_SHIFT)                  /* 0x00000070 */
+#define ISP_GAMMA_DX_HI_GAMMA_DX_11_SHIFT                  (8U)
+#define ISP_GAMMA_DX_HI_GAMMA_DX_11_MASK                   (0x7U << ISP_GAMMA_DX_HI_GAMMA_DX_11_SHIFT)                  /* 0x00000700 */
+#define ISP_GAMMA_DX_HI_GAMMA_DX_12_SHIFT                  (12U)
+#define ISP_GAMMA_DX_HI_GAMMA_DX_12_MASK                   (0x7U << ISP_GAMMA_DX_HI_GAMMA_DX_12_SHIFT)                  /* 0x00007000 */
+#define ISP_GAMMA_DX_HI_GAMMA_DX_13_SHIFT                  (16U)
+#define ISP_GAMMA_DX_HI_GAMMA_DX_13_MASK                   (0x7U << ISP_GAMMA_DX_HI_GAMMA_DX_13_SHIFT)                  /* 0x00070000 */
+#define ISP_GAMMA_DX_HI_GAMMA_DX_14_SHIFT                  (20U)
+#define ISP_GAMMA_DX_HI_GAMMA_DX_14_MASK                   (0x7U << ISP_GAMMA_DX_HI_GAMMA_DX_14_SHIFT)                  /* 0x00700000 */
+#define ISP_GAMMA_DX_HI_GAMMA_DX_15_SHIFT                  (24U)
+#define ISP_GAMMA_DX_HI_GAMMA_DX_15_MASK                   (0x7U << ISP_GAMMA_DX_HI_GAMMA_DX_15_SHIFT)                  /* 0x07000000 */
+#define ISP_GAMMA_DX_HI_GAMMA_DX_16_SHIFT                  (28U)
+#define ISP_GAMMA_DX_HI_GAMMA_DX_16_MASK                   (0x7U << ISP_GAMMA_DX_HI_GAMMA_DX_16_SHIFT)                  /* 0x70000000 */
+/* GAMMA_R_Y_0 */
+#define ISP_GAMMA_R_Y_0_OFFSET                             (0x24U)
+#define ISP_GAMMA_R_Y_0_GAMMA_R_Y_0_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_0_GAMMA_R_Y_0_MASK                   (0xFFFU << ISP_GAMMA_R_Y_0_GAMMA_R_Y_0_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_1 */
+#define ISP_GAMMA_R_Y_1_OFFSET                             (0x28U)
+#define ISP_GAMMA_R_Y_1_GAMMA_R_Y_1_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_1_GAMMA_R_Y_1_MASK                   (0xFFFU << ISP_GAMMA_R_Y_1_GAMMA_R_Y_1_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_2 */
+#define ISP_GAMMA_R_Y_2_OFFSET                             (0x2CU)
+#define ISP_GAMMA_R_Y_2_GAMMA_R_Y_2_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_2_GAMMA_R_Y_2_MASK                   (0xFFFU << ISP_GAMMA_R_Y_2_GAMMA_R_Y_2_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_3 */
+#define ISP_GAMMA_R_Y_3_OFFSET                             (0x30U)
+#define ISP_GAMMA_R_Y_3_GAMMA_R_Y_3_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_3_GAMMA_R_Y_3_MASK                   (0xFFFU << ISP_GAMMA_R_Y_3_GAMMA_R_Y_3_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_4 */
+#define ISP_GAMMA_R_Y_4_OFFSET                             (0x34U)
+#define ISP_GAMMA_R_Y_4_GAMMA_R_Y_4_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_4_GAMMA_R_Y_4_MASK                   (0xFFFU << ISP_GAMMA_R_Y_4_GAMMA_R_Y_4_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_5 */
+#define ISP_GAMMA_R_Y_5_OFFSET                             (0x38U)
+#define ISP_GAMMA_R_Y_5_GAMMA_R_Y_5_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_5_GAMMA_R_Y_5_MASK                   (0xFFFU << ISP_GAMMA_R_Y_5_GAMMA_R_Y_5_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_6 */
+#define ISP_GAMMA_R_Y_6_OFFSET                             (0x3CU)
+#define ISP_GAMMA_R_Y_6_GAMMA_R_Y_6_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_6_GAMMA_R_Y_6_MASK                   (0xFFFU << ISP_GAMMA_R_Y_6_GAMMA_R_Y_6_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_7 */
+#define ISP_GAMMA_R_Y_7_OFFSET                             (0x40U)
+#define ISP_GAMMA_R_Y_7_GAMMA_R_Y_7_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_7_GAMMA_R_Y_7_MASK                   (0xFFFU << ISP_GAMMA_R_Y_7_GAMMA_R_Y_7_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_8 */
+#define ISP_GAMMA_R_Y_8_OFFSET                             (0x44U)
+#define ISP_GAMMA_R_Y_8_GAMMA_R_Y_8_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_8_GAMMA_R_Y_8_MASK                   (0xFFFU << ISP_GAMMA_R_Y_8_GAMMA_R_Y_8_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_9 */
+#define ISP_GAMMA_R_Y_9_OFFSET                             (0x48U)
+#define ISP_GAMMA_R_Y_9_GAMMA_R_Y_9_SHIFT                  (0U)
+#define ISP_GAMMA_R_Y_9_GAMMA_R_Y_9_MASK                   (0xFFFU << ISP_GAMMA_R_Y_9_GAMMA_R_Y_9_SHIFT)                /* 0x00000FFF */
+/* GAMMA_R_Y_10 */
+#define ISP_GAMMA_R_Y_10_OFFSET                            (0x4CU)
+#define ISP_GAMMA_R_Y_10_GAMMA_R_Y_10_SHIFT                (0U)
+#define ISP_GAMMA_R_Y_10_GAMMA_R_Y_10_MASK                 (0xFFFU << ISP_GAMMA_R_Y_10_GAMMA_R_Y_10_SHIFT)              /* 0x00000FFF */
+/* GAMMA_R_Y_11 */
+#define ISP_GAMMA_R_Y_11_OFFSET                            (0x50U)
+#define ISP_GAMMA_R_Y_11_GAMMA_R_Y_11_SHIFT                (0U)
+#define ISP_GAMMA_R_Y_11_GAMMA_R_Y_11_MASK                 (0xFFFU << ISP_GAMMA_R_Y_11_GAMMA_R_Y_11_SHIFT)              /* 0x00000FFF */
+/* GAMMA_R_Y_12 */
+#define ISP_GAMMA_R_Y_12_OFFSET                            (0x54U)
+#define ISP_GAMMA_R_Y_12_GAMMA_R_Y_12_SHIFT                (0U)
+#define ISP_GAMMA_R_Y_12_GAMMA_R_Y_12_MASK                 (0xFFFU << ISP_GAMMA_R_Y_12_GAMMA_R_Y_12_SHIFT)              /* 0x00000FFF */
+/* GAMMA_R_Y_13 */
+#define ISP_GAMMA_R_Y_13_OFFSET                            (0x58U)
+#define ISP_GAMMA_R_Y_13_GAMMA_R_Y_13_SHIFT                (0U)
+#define ISP_GAMMA_R_Y_13_GAMMA_R_Y_13_MASK                 (0xFFFU << ISP_GAMMA_R_Y_13_GAMMA_R_Y_13_SHIFT)              /* 0x00000FFF */
+/* GAMMA_R_Y_14 */
+#define ISP_GAMMA_R_Y_14_OFFSET                            (0x5CU)
+#define ISP_GAMMA_R_Y_14_GAMMA_R_Y_14_SHIFT                (0U)
+#define ISP_GAMMA_R_Y_14_GAMMA_R_Y_14_MASK                 (0xFFFU << ISP_GAMMA_R_Y_14_GAMMA_R_Y_14_SHIFT)              /* 0x00000FFF */
+/* GAMMA_R_Y_15 */
+#define ISP_GAMMA_R_Y_15_OFFSET                            (0x60U)
+#define ISP_GAMMA_R_Y_15_GAMMA_R_Y_15_SHIFT                (0U)
+#define ISP_GAMMA_R_Y_15_GAMMA_R_Y_15_MASK                 (0xFFFU << ISP_GAMMA_R_Y_15_GAMMA_R_Y_15_SHIFT)              /* 0x00000FFF */
+/* GAMMA_R_Y_16 */
+#define ISP_GAMMA_R_Y_16_OFFSET                            (0x64U)
+#define ISP_GAMMA_R_Y_16_GAMMA_R_Y_16_SHIFT                (0U)
+#define ISP_GAMMA_R_Y_16_GAMMA_R_Y_16_MASK                 (0xFFFU << ISP_GAMMA_R_Y_16_GAMMA_R_Y_16_SHIFT)              /* 0x00000FFF */
+/* GAMMA_G_Y_0 */
+#define ISP_GAMMA_G_Y_0_OFFSET                             (0x68U)
+#define ISP_GAMMA_G_Y_0_GAMMA_G_Y_0_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_0_GAMMA_G_Y_0_MASK                   (0xFFFU << ISP_GAMMA_G_Y_0_GAMMA_G_Y_0_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_1 */
+#define ISP_GAMMA_G_Y_1_OFFSET                             (0x6CU)
+#define ISP_GAMMA_G_Y_1_GAMMA_G_Y_1_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_1_GAMMA_G_Y_1_MASK                   (0xFFFU << ISP_GAMMA_G_Y_1_GAMMA_G_Y_1_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_2 */
+#define ISP_GAMMA_G_Y_2_OFFSET                             (0x70U)
+#define ISP_GAMMA_G_Y_2_GAMMA_G_Y_2_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_2_GAMMA_G_Y_2_MASK                   (0xFFFU << ISP_GAMMA_G_Y_2_GAMMA_G_Y_2_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_3 */
+#define ISP_GAMMA_G_Y_3_OFFSET                             (0x74U)
+#define ISP_GAMMA_G_Y_3_GAMMA_G_Y_3_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_3_GAMMA_G_Y_3_MASK                   (0xFFFU << ISP_GAMMA_G_Y_3_GAMMA_G_Y_3_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_4 */
+#define ISP_GAMMA_G_Y_4_OFFSET                             (0x78U)
+#define ISP_GAMMA_G_Y_4_GAMMA_G_Y_4_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_4_GAMMA_G_Y_4_MASK                   (0xFFFU << ISP_GAMMA_G_Y_4_GAMMA_G_Y_4_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_5 */
+#define ISP_GAMMA_G_Y_5_OFFSET                             (0x7CU)
+#define ISP_GAMMA_G_Y_5_GAMMA_G_Y_5_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_5_GAMMA_G_Y_5_MASK                   (0xFFFU << ISP_GAMMA_G_Y_5_GAMMA_G_Y_5_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_6 */
+#define ISP_GAMMA_G_Y_6_OFFSET                             (0x80U)
+#define ISP_GAMMA_G_Y_6_GAMMA_G_Y_6_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_6_GAMMA_G_Y_6_MASK                   (0xFFFU << ISP_GAMMA_G_Y_6_GAMMA_G_Y_6_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_7 */
+#define ISP_GAMMA_G_Y_7_OFFSET                             (0x84U)
+#define ISP_GAMMA_G_Y_7_GAMMA_G_Y_7_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_7_GAMMA_G_Y_7_MASK                   (0xFFFU << ISP_GAMMA_G_Y_7_GAMMA_G_Y_7_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_8 */
+#define ISP_GAMMA_G_Y_8_OFFSET                             (0x88U)
+#define ISP_GAMMA_G_Y_8_GAMMA_G_Y_8_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_8_GAMMA_G_Y_8_MASK                   (0xFFFU << ISP_GAMMA_G_Y_8_GAMMA_G_Y_8_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_9 */
+#define ISP_GAMMA_G_Y_9_OFFSET                             (0x8CU)
+#define ISP_GAMMA_G_Y_9_GAMMA_G_Y_9_SHIFT                  (0U)
+#define ISP_GAMMA_G_Y_9_GAMMA_G_Y_9_MASK                   (0xFFFU << ISP_GAMMA_G_Y_9_GAMMA_G_Y_9_SHIFT)                /* 0x00000FFF */
+/* GAMMA_G_Y_10 */
+#define ISP_GAMMA_G_Y_10_OFFSET                            (0x90U)
+#define ISP_GAMMA_G_Y_10_GAMMA_G_Y_10_SHIFT                (0U)
+#define ISP_GAMMA_G_Y_10_GAMMA_G_Y_10_MASK                 (0xFFFU << ISP_GAMMA_G_Y_10_GAMMA_G_Y_10_SHIFT)              /* 0x00000FFF */
+/* GAMMA_G_Y_11 */
+#define ISP_GAMMA_G_Y_11_OFFSET                            (0x94U)
+#define ISP_GAMMA_G_Y_11_GAMMA_G_Y_11_SHIFT                (0U)
+#define ISP_GAMMA_G_Y_11_GAMMA_G_Y_11_MASK                 (0xFFFU << ISP_GAMMA_G_Y_11_GAMMA_G_Y_11_SHIFT)              /* 0x00000FFF */
+/* GAMMA_G_Y_12 */
+#define ISP_GAMMA_G_Y_12_OFFSET                            (0x98U)
+#define ISP_GAMMA_G_Y_12_GAMMA_G_Y_12_SHIFT                (0U)
+#define ISP_GAMMA_G_Y_12_GAMMA_G_Y_12_MASK                 (0xFFFU << ISP_GAMMA_G_Y_12_GAMMA_G_Y_12_SHIFT)              /* 0x00000FFF */
+/* GAMMA_G_Y_13 */
+#define ISP_GAMMA_G_Y_13_OFFSET                            (0x9CU)
+#define ISP_GAMMA_G_Y_13_GAMMA_G_Y_13_SHIFT                (0U)
+#define ISP_GAMMA_G_Y_13_GAMMA_G_Y_13_MASK                 (0xFFFU << ISP_GAMMA_G_Y_13_GAMMA_G_Y_13_SHIFT)              /* 0x00000FFF */
+/* GAMMA_G_Y_14 */
+#define ISP_GAMMA_G_Y_14_OFFSET                            (0xA0U)
+#define ISP_GAMMA_G_Y_14_GAMMA_G_Y_14_SHIFT                (0U)
+#define ISP_GAMMA_G_Y_14_GAMMA_G_Y_14_MASK                 (0xFFFU << ISP_GAMMA_G_Y_14_GAMMA_G_Y_14_SHIFT)              /* 0x00000FFF */
+/* GAMMA_G_Y_15 */
+#define ISP_GAMMA_G_Y_15_OFFSET                            (0xA4U)
+#define ISP_GAMMA_G_Y_15_GAMMA_G_Y_15_SHIFT                (0U)
+#define ISP_GAMMA_G_Y_15_GAMMA_G_Y_15_MASK                 (0xFFFU << ISP_GAMMA_G_Y_15_GAMMA_G_Y_15_SHIFT)              /* 0x00000FFF */
+/* GAMMA_G_Y_16 */
+#define ISP_GAMMA_G_Y_16_OFFSET                            (0xA8U)
+#define ISP_GAMMA_G_Y_16_GAMMA_G_Y_16_SHIFT                (0U)
+#define ISP_GAMMA_G_Y_16_GAMMA_G_Y_16_MASK                 (0xFFFU << ISP_GAMMA_G_Y_16_GAMMA_G_Y_16_SHIFT)              /* 0x00000FFF */
+/* GAMMA_B_Y_0 */
+#define ISP_GAMMA_B_Y_0_OFFSET                             (0xACU)
+#define ISP_GAMMA_B_Y_0_GAMMA_B_Y_0_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_0_GAMMA_B_Y_0_MASK                   (0xFFFU << ISP_GAMMA_B_Y_0_GAMMA_B_Y_0_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_1 */
+#define ISP_GAMMA_B_Y_1_OFFSET                             (0xB0U)
+#define ISP_GAMMA_B_Y_1_GAMMA_B_Y_1_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_1_GAMMA_B_Y_1_MASK                   (0xFFFU << ISP_GAMMA_B_Y_1_GAMMA_B_Y_1_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_2 */
+#define ISP_GAMMA_B_Y_2_OFFSET                             (0xB4U)
+#define ISP_GAMMA_B_Y_2_GAMMA_B_Y_2_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_2_GAMMA_B_Y_2_MASK                   (0xFFFU << ISP_GAMMA_B_Y_2_GAMMA_B_Y_2_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_3 */
+#define ISP_GAMMA_B_Y_3_OFFSET                             (0xB8U)
+#define ISP_GAMMA_B_Y_3_GAMMA_B_Y_3_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_3_GAMMA_B_Y_3_MASK                   (0xFFFU << ISP_GAMMA_B_Y_3_GAMMA_B_Y_3_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_4 */
+#define ISP_GAMMA_B_Y_4_OFFSET                             (0xBCU)
+#define ISP_GAMMA_B_Y_4_GAMMA_B_Y_4_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_4_GAMMA_B_Y_4_MASK                   (0xFFFU << ISP_GAMMA_B_Y_4_GAMMA_B_Y_4_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_5 */
+#define ISP_GAMMA_B_Y_5_OFFSET                             (0xC0U)
+#define ISP_GAMMA_B_Y_5_GAMMA_B_Y_5_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_5_GAMMA_B_Y_5_MASK                   (0xFFFU << ISP_GAMMA_B_Y_5_GAMMA_B_Y_5_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_6 */
+#define ISP_GAMMA_B_Y_6_OFFSET                             (0xC4U)
+#define ISP_GAMMA_B_Y_6_GAMMA_B_Y_6_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_6_GAMMA_B_Y_6_MASK                   (0xFFFU << ISP_GAMMA_B_Y_6_GAMMA_B_Y_6_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_7 */
+#define ISP_GAMMA_B_Y_7_OFFSET                             (0xC8U)
+#define ISP_GAMMA_B_Y_7_GAMMA_B_Y_7_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_7_GAMMA_B_Y_7_MASK                   (0xFFFU << ISP_GAMMA_B_Y_7_GAMMA_B_Y_7_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_8 */
+#define ISP_GAMMA_B_Y_8_OFFSET                             (0xCCU)
+#define ISP_GAMMA_B_Y_8_GAMMA_B_Y_8_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_8_GAMMA_B_Y_8_MASK                   (0xFFFU << ISP_GAMMA_B_Y_8_GAMMA_B_Y_8_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_9 */
+#define ISP_GAMMA_B_Y_9_OFFSET                             (0xD0U)
+#define ISP_GAMMA_B_Y_9_GAMMA_B_Y_9_SHIFT                  (0U)
+#define ISP_GAMMA_B_Y_9_GAMMA_B_Y_9_MASK                   (0xFFFU << ISP_GAMMA_B_Y_9_GAMMA_B_Y_9_SHIFT)                /* 0x00000FFF */
+/* GAMMA_B_Y_10 */
+#define ISP_GAMMA_B_Y_10_OFFSET                            (0xD4U)
+#define ISP_GAMMA_B_Y_10_GAMMA_B_Y_10_SHIFT                (0U)
+#define ISP_GAMMA_B_Y_10_GAMMA_B_Y_10_MASK                 (0xFFFU << ISP_GAMMA_B_Y_10_GAMMA_B_Y_10_SHIFT)              /* 0x00000FFF */
+/* GAMMA_B_Y_11 */
+#define ISP_GAMMA_B_Y_11_OFFSET                            (0xD8U)
+#define ISP_GAMMA_B_Y_11_GAMMA_B_Y_11_SHIFT                (0U)
+#define ISP_GAMMA_B_Y_11_GAMMA_B_Y_11_MASK                 (0xFFFU << ISP_GAMMA_B_Y_11_GAMMA_B_Y_11_SHIFT)              /* 0x00000FFF */
+/* GAMMA_B_Y_12 */
+#define ISP_GAMMA_B_Y_12_OFFSET                            (0xDCU)
+#define ISP_GAMMA_B_Y_12_GAMMA_B_Y_12_SHIFT                (0U)
+#define ISP_GAMMA_B_Y_12_GAMMA_B_Y_12_MASK                 (0xFFFU << ISP_GAMMA_B_Y_12_GAMMA_B_Y_12_SHIFT)              /* 0x00000FFF */
+/* GAMMA_B_Y_13 */
+#define ISP_GAMMA_B_Y_13_OFFSET                            (0xE0U)
+#define ISP_GAMMA_B_Y_13_GAMMA_B_Y_13_SHIFT                (0U)
+#define ISP_GAMMA_B_Y_13_GAMMA_B_Y_13_MASK                 (0xFFFU << ISP_GAMMA_B_Y_13_GAMMA_B_Y_13_SHIFT)              /* 0x00000FFF */
+/* GAMMA_B_Y_14 */
+#define ISP_GAMMA_B_Y_14_OFFSET                            (0xE4U)
+#define ISP_GAMMA_B_Y_14_GAMMA_B_Y_14_SHIFT                (0U)
+#define ISP_GAMMA_B_Y_14_GAMMA_B_Y_14_MASK                 (0xFFFU << ISP_GAMMA_B_Y_14_GAMMA_B_Y_14_SHIFT)              /* 0x00000FFF */
+/* GAMMA_B_Y_15 */
+#define ISP_GAMMA_B_Y_15_OFFSET                            (0xE8U)
+#define ISP_GAMMA_B_Y_15_GAMMA_B_Y_15_SHIFT                (0U)
+#define ISP_GAMMA_B_Y_15_GAMMA_B_Y_15_MASK                 (0xFFFU << ISP_GAMMA_B_Y_15_GAMMA_B_Y_15_SHIFT)              /* 0x00000FFF */
+/* GAMMA_B_Y_16 */
+#define ISP_GAMMA_B_Y_16_OFFSET                            (0xECU)
+#define ISP_GAMMA_B_Y_16_GAMMA_B_Y_16_SHIFT                (0U)
+#define ISP_GAMMA_B_Y_16_GAMMA_B_Y_16_MASK                 (0xFFFU << ISP_GAMMA_B_Y_16_GAMMA_B_Y_16_SHIFT)              /* 0x00000FFF */
+/* ISP_AWB_PROP */
+#define ISP_ISP_AWB_PROP_OFFSET                            (0x110U)
+#define ISP_ISP_AWB_PROP_AWB_MODE_SHIFT                    (0U)
+#define ISP_ISP_AWB_PROP_AWB_MODE_MASK                     (0x3U << ISP_ISP_AWB_PROP_AWB_MODE_SHIFT)                    /* 0x00000003 */
+#define ISP_ISP_AWB_PROP_AWB_MAX_EN_SHIFT                  (2U)
+#define ISP_ISP_AWB_PROP_AWB_MAX_EN_MASK                   (0x1U << ISP_ISP_AWB_PROP_AWB_MAX_EN_SHIFT)                  /* 0x00000004 */
+#define ISP_ISP_AWB_PROP_AWB_MEAS_MODE_SHIFT               (31U)
+#define ISP_ISP_AWB_PROP_AWB_MEAS_MODE_MASK                (0x1U << ISP_ISP_AWB_PROP_AWB_MEAS_MODE_SHIFT)               /* 0x80000000 */
+/* ISP_AWB_H_OFFS */
+#define ISP_ISP_AWB_H_OFFS_OFFSET                          (0x114U)
+#define ISP_ISP_AWB_H_OFFS_AWB_H_OFFS_SHIFT                (0U)
+#define ISP_ISP_AWB_H_OFFS_AWB_H_OFFS_MASK                 (0x1FFFU << ISP_ISP_AWB_H_OFFS_AWB_H_OFFS_SHIFT)             /* 0x00001FFF */
+/* ISP_AWB_V_OFFS */
+#define ISP_ISP_AWB_V_OFFS_OFFSET                          (0x118U)
+#define ISP_ISP_AWB_V_OFFS_AWB_V_OFFS_SHIFT                (0U)
+#define ISP_ISP_AWB_V_OFFS_AWB_V_OFFS_MASK                 (0x1FFFU << ISP_ISP_AWB_V_OFFS_AWB_V_OFFS_SHIFT)             /* 0x00001FFF */
+/* ISP_AWB_H_SIZE */
+#define ISP_ISP_AWB_H_SIZE_OFFSET                          (0x11CU)
+#define ISP_ISP_AWB_H_SIZE_AWB_H_SIZE_SHIFT                (0U)
+#define ISP_ISP_AWB_H_SIZE_AWB_H_SIZE_MASK                 (0x3FFFU << ISP_ISP_AWB_H_SIZE_AWB_H_SIZE_SHIFT)             /* 0x00003FFF */
+/* ISP_AWB_V_SIZE */
+#define ISP_ISP_AWB_V_SIZE_OFFSET                          (0x120U)
+#define ISP_ISP_AWB_V_SIZE_AWB_V_SIZE_SHIFT                (0U)
+#define ISP_ISP_AWB_V_SIZE_AWB_V_SIZE_MASK                 (0x3FFFU << ISP_ISP_AWB_V_SIZE_AWB_V_SIZE_SHIFT)             /* 0x00003FFF */
+/* ISP_AWB_FRAMES */
+#define ISP_ISP_AWB_FRAMES_OFFSET                          (0x124U)
+#define ISP_ISP_AWB_FRAMES_AWB_FRAMES_SHIFT                (0U)
+#define ISP_ISP_AWB_FRAMES_AWB_FRAMES_MASK                 (0x7U << ISP_ISP_AWB_FRAMES_AWB_FRAMES_SHIFT)                /* 0x00000007 */
+/* ISP_AWB_REF */
+#define ISP_ISP_AWB_REF_OFFSET                             (0x128U)
+#define ISP_ISP_AWB_REF_AWB_REF_CB__MAX_B_SHIFT            (0U)
+#define ISP_ISP_AWB_REF_AWB_REF_CB__MAX_B_MASK             (0xFFU << ISP_ISP_AWB_REF_AWB_REF_CB__MAX_B_SHIFT)           /* 0x000000FF */
+#define ISP_ISP_AWB_REF_AWB_REF_CB__MAX_R_SHIFT            (8U)
+#define ISP_ISP_AWB_REF_AWB_REF_CB__MAX_R_MASK             (0xFFU << ISP_ISP_AWB_REF_AWB_REF_CB__MAX_R_SHIFT)           /* 0x0000FF00 */
+/* ISP_AWB_THRESH */
+#define ISP_ISP_AWB_THRESH_OFFSET                          (0x12CU)
+#define ISP_ISP_AWB_THRESH_AWB_MIN_C_SHIFT                 (0U)
+#define ISP_ISP_AWB_THRESH_AWB_MIN_C_MASK                  (0xFFU << ISP_ISP_AWB_THRESH_AWB_MIN_C_SHIFT)                /* 0x000000FF */
+#define ISP_ISP_AWB_THRESH_AWB_MAX_CSUM_SHIFT              (8U)
+#define ISP_ISP_AWB_THRESH_AWB_MAX_CSUM_MASK               (0xFFU << ISP_ISP_AWB_THRESH_AWB_MAX_CSUM_SHIFT)             /* 0x0000FF00 */
+#define ISP_ISP_AWB_THRESH_AWB_MIN_Y__MAX_G_SHIFT          (16U)
+#define ISP_ISP_AWB_THRESH_AWB_MIN_Y__MAX_G_MASK           (0xFFU << ISP_ISP_AWB_THRESH_AWB_MIN_Y__MAX_G_SHIFT)         /* 0x00FF0000 */
+#define ISP_ISP_AWB_THRESH_AWB_MAX_Y_SHIFT                 (24U)
+#define ISP_ISP_AWB_THRESH_AWB_MAX_Y_MASK                  (0xFFU << ISP_ISP_AWB_THRESH_AWB_MAX_Y_SHIFT)                /* 0xFF000000 */
+/* AWB_GAIN_G */
+#define ISP_AWB_GAIN_G_OFFSET                              (0x138U)
+#define ISP_AWB_GAIN_G_AWB_GAIN_GB_SHIFT                   (0U)
+#define ISP_AWB_GAIN_G_AWB_GAIN_GB_MASK                    (0x3FFU << ISP_AWB_GAIN_G_AWB_GAIN_GB_SHIFT)                 /* 0x000003FF */
+#define ISP_AWB_GAIN_G_AWB_GAIN_GR_SHIFT                   (16U)
+#define ISP_AWB_GAIN_G_AWB_GAIN_GR_MASK                    (0x3FFU << ISP_AWB_GAIN_G_AWB_GAIN_GR_SHIFT)                 /* 0x03FF0000 */
+/* AWB_GAIN_RB */
+#define ISP_AWB_GAIN_RB_OFFSET                             (0x13CU)
+#define ISP_AWB_GAIN_RB_AWB_GAIN_B_SHIFT                   (0U)
+#define ISP_AWB_GAIN_RB_AWB_GAIN_B_MASK                    (0x3FFU << ISP_AWB_GAIN_RB_AWB_GAIN_B_SHIFT)                 /* 0x000003FF */
+#define ISP_AWB_GAIN_RB_AWB_GAIN_R_SHIFT                   (16U)
+#define ISP_AWB_GAIN_RB_AWB_GAIN_R_MASK                    (0x3FFU << ISP_AWB_GAIN_RB_AWB_GAIN_R_SHIFT)                 /* 0x03FF0000 */
+/* AWB_WHITE_CNT */
+#define ISP_AWB_WHITE_CNT_OFFSET                           (0x140U)
+#define ISP_AWB_WHITE_CNT                                  (0x0U)
+#define ISP_AWB_WHITE_CNT_AWB_WHITE_CNT_SHIFT              (0U)
+#define ISP_AWB_WHITE_CNT_AWB_WHITE_CNT_MASK               (0x3FFFFFFU << ISP_AWB_WHITE_CNT_AWB_WHITE_CNT_SHIFT)        /* 0x03FFFFFF */
+/* AWB_MEAN */
+#define ISP_AWB_MEAN_OFFSET                                (0x144U)
+#define ISP_AWB_MEAN                                       (0x0U)
+#define ISP_AWB_MEAN_AWB_MEAN_CR_R_SHIFT                   (0U)
+#define ISP_AWB_MEAN_AWB_MEAN_CR_R_MASK                    (0xFFU << ISP_AWB_MEAN_AWB_MEAN_CR_R_SHIFT)                  /* 0x000000FF */
+#define ISP_AWB_MEAN_AWB_MEAN_CB__B_SHIFT                  (8U)
+#define ISP_AWB_MEAN_AWB_MEAN_CB__B_MASK                   (0xFFU << ISP_AWB_MEAN_AWB_MEAN_CB__B_SHIFT)                 /* 0x0000FF00 */
+#define ISP_AWB_MEAN_AWB_MEAN_Y__G_SHIFT                   (16U)
+#define ISP_AWB_MEAN_AWB_MEAN_Y__G_MASK                    (0xFFU << ISP_AWB_MEAN_AWB_MEAN_Y__G_SHIFT)                  /* 0x00FF0000 */
+/* CC_COEFF_0 */
+#define ISP_CC_COEFF_0_OFFSET                              (0x170U)
+#define ISP_CC_COEFF_0_CC_COEFF_0_SHIFT                    (0U)
+#define ISP_CC_COEFF_0_CC_COEFF_0_MASK                     (0x1FFU << ISP_CC_COEFF_0_CC_COEFF_0_SHIFT)                  /* 0x000001FF */
+#define ISP_CC_COEFF_0_SW_Y12_CC_COEFF_0_SHIFT             (16U)
+#define ISP_CC_COEFF_0_SW_Y12_CC_COEFF_0_MASK              (0x1FFFU << ISP_CC_COEFF_0_SW_Y12_CC_COEFF_0_SHIFT)          /* 0x1FFF0000 */
+/* CC_COEFF_1 */
+#define ISP_CC_COEFF_1_OFFSET                              (0x174U)
+#define ISP_CC_COEFF_1_CC_COEFF_1_SHIFT                    (0U)
+#define ISP_CC_COEFF_1_CC_COEFF_1_MASK                     (0x1FFU << ISP_CC_COEFF_1_CC_COEFF_1_SHIFT)                  /* 0x000001FF */
+#define ISP_CC_COEFF_1_SW_Y12_CC_COEFF_1_SHIFT             (16U)
+#define ISP_CC_COEFF_1_SW_Y12_CC_COEFF_1_MASK              (0x1FFFU << ISP_CC_COEFF_1_SW_Y12_CC_COEFF_1_SHIFT)          /* 0x1FFF0000 */
+/* CC_COEFF_2 */
+#define ISP_CC_COEFF_2_OFFSET                              (0x178U)
+#define ISP_CC_COEFF_2_CC_COEFF_2_SHIFT                    (0U)
+#define ISP_CC_COEFF_2_CC_COEFF_2_MASK                     (0x1FFU << ISP_CC_COEFF_2_CC_COEFF_2_SHIFT)                  /* 0x000001FF */
+#define ISP_CC_COEFF_2_SW_Y12_CC_COEFF_2_SHIFT             (16U)
+#define ISP_CC_COEFF_2_SW_Y12_CC_COEFF_2_MASK              (0x1FFFU << ISP_CC_COEFF_2_SW_Y12_CC_COEFF_2_SHIFT)          /* 0x1FFF0000 */
+/* CC_COEFF_3 */
+#define ISP_CC_COEFF_3_OFFSET                              (0x17CU)
+#define ISP_CC_COEFF_3_CC_COEFF_3_SHIFT                    (0U)
+#define ISP_CC_COEFF_3_CC_COEFF_3_MASK                     (0x1FFU << ISP_CC_COEFF_3_CC_COEFF_3_SHIFT)                  /* 0x000001FF */
+#define ISP_CC_COEFF_3_SW_Y12_CC_COEFF_3_SHIFT             (16U)
+#define ISP_CC_COEFF_3_SW_Y12_CC_COEFF_3_MASK              (0x1FFU << ISP_CC_COEFF_3_SW_Y12_CC_COEFF_3_SHIFT)           /* 0x01FF0000 */
+/* CC_COEFF_4 */
+#define ISP_CC_COEFF_4_OFFSET                              (0x180U)
+#define ISP_CC_COEFF_4_CC_COEFF_4_SHIFT                    (0U)
+#define ISP_CC_COEFF_4_CC_COEFF_4_MASK                     (0x1FFU << ISP_CC_COEFF_4_CC_COEFF_4_SHIFT)                  /* 0x000001FF */
+#define ISP_CC_COEFF_4_SW_Y12_CC_COEFF_4_SHIFT             (16U)
+#define ISP_CC_COEFF_4_SW_Y12_CC_COEFF_4_MASK              (0x1FFU << ISP_CC_COEFF_4_SW_Y12_CC_COEFF_4_SHIFT)           /* 0x01FF0000 */
+/* CC_COEFF_5 */
+#define ISP_CC_COEFF_5_OFFSET                              (0x184U)
+#define ISP_CC_COEFF_5_CC_COEFF_5_SHIFT                    (0U)
+#define ISP_CC_COEFF_5_CC_COEFF_5_MASK                     (0x1FFU << ISP_CC_COEFF_5_CC_COEFF_5_SHIFT)                  /* 0x000001FF */
+#define ISP_CC_COEFF_5_SW_Y12_CC_COEFF_5_SHIFT             (16U)
+#define ISP_CC_COEFF_5_SW_Y12_CC_COEFF_5_MASK              (0x1FFU << ISP_CC_COEFF_5_SW_Y12_CC_COEFF_5_SHIFT)           /* 0x01FF0000 */
+/* CC_COEFF_6 */
+#define ISP_CC_COEFF_6_OFFSET                              (0x188U)
+#define ISP_CC_COEFF_6_CC_COEFF_6_SHIFT                    (0U)
+#define ISP_CC_COEFF_6_CC_COEFF_6_MASK                     (0x1FFU << ISP_CC_COEFF_6_CC_COEFF_6_SHIFT)                  /* 0x000001FF */
+#define ISP_CC_COEFF_6_SW_Y12_CC_COEFF_6_SHIFT             (16U)
+#define ISP_CC_COEFF_6_SW_Y12_CC_COEFF_6_MASK              (0x1FFU << ISP_CC_COEFF_6_SW_Y12_CC_COEFF_6_SHIFT)           /* 0x01FF0000 */
+/* CC_COEFF_7 */
+#define ISP_CC_COEFF_7_OFFSET                              (0x18CU)
+#define ISP_CC_COEFF_7_CC_COEFF_7_SHIFT                    (0U)
+#define ISP_CC_COEFF_7_CC_COEFF_7_MASK                     (0x1FFU << ISP_CC_COEFF_7_CC_COEFF_7_SHIFT)                  /* 0x000001FF */
+#define ISP_CC_COEFF_7_SW_Y12_CC_COEFF_7_SHIFT             (16U)
+#define ISP_CC_COEFF_7_SW_Y12_CC_COEFF_7_MASK              (0x1FFU << ISP_CC_COEFF_7_SW_Y12_CC_COEFF_7_SHIFT)           /* 0x01FF0000 */
+/* CC_COEFF_8 */
+#define ISP_CC_COEFF_8_OFFSET                              (0x190U)
+#define ISP_CC_COEFF_8_CC_COEFF_8_SHIFT                    (0U)
+#define ISP_CC_COEFF_8_CC_COEFF_8_MASK                     (0x1FFU << ISP_CC_COEFF_8_CC_COEFF_8_SHIFT)                  /* 0x000001FF */
+#define ISP_CC_COEFF_8_SW_Y12_CC_COEFF_8_SHIFT             (16U)
+#define ISP_CC_COEFF_8_SW_Y12_CC_COEFF_8_MASK              (0x1FFU << ISP_CC_COEFF_8_SW_Y12_CC_COEFF_8_SHIFT)           /* 0x01FF0000 */
+/* OUT_H_OFFS */
+#define ISP_OUT_H_OFFS_OFFSET                              (0x194U)
+#define ISP_OUT_H_OFFS_ISP_OUT_H_OFFS_SHIFT                (0U)
+#define ISP_OUT_H_OFFS_ISP_OUT_H_OFFS_MASK                 (0x3FFFU << ISP_OUT_H_OFFS_ISP_OUT_H_OFFS_SHIFT)             /* 0x00003FFF */
+/* OUT_V_OFFS */
+#define ISP_OUT_V_OFFS_OFFSET                              (0x198U)
+#define ISP_OUT_V_OFFS_ISP_OUT_V_OFFS_SHIFT                (0U)
+#define ISP_OUT_V_OFFS_ISP_OUT_V_OFFS_MASK                 (0x3FFFU << ISP_OUT_V_OFFS_ISP_OUT_V_OFFS_SHIFT)             /* 0x00003FFF */
+/* OUT_H_SIZE */
+#define ISP_OUT_H_SIZE_OFFSET                              (0x19CU)
+#define ISP_OUT_H_SIZE_ISP_OUT_H_SIZE_SHIFT                (0U)
+#define ISP_OUT_H_SIZE_ISP_OUT_H_SIZE_MASK                 (0x7FFFU << ISP_OUT_H_SIZE_ISP_OUT_H_SIZE_SHIFT)             /* 0x00007FFF */
+/* OUT_V_SIZE */
+#define ISP_OUT_V_SIZE_OFFSET                              (0x1A0U)
+#define ISP_OUT_V_SIZE_ISP_OUT_V_SIZE_SHIFT                (0U)
+#define ISP_OUT_V_SIZE_ISP_OUT_V_SIZE_MASK                 (0x3FFFU << ISP_OUT_V_SIZE_ISP_OUT_V_SIZE_SHIFT)             /* 0x00003FFF */
+/* DEMOSAIC */
+#define ISP_DEMOSAIC_OFFSET                                (0x1A4U)
+#define ISP_DEMOSAIC_DEMOSAIC_TH_SHIFT                     (0U)
+#define ISP_DEMOSAIC_DEMOSAIC_TH_MASK                      (0xFFU << ISP_DEMOSAIC_DEMOSAIC_TH_SHIFT)                    /* 0x000000FF */
+#define ISP_DEMOSAIC_SW_IMAGE_DEM_SEL_SHIFT                (8U)
+#define ISP_DEMOSAIC_SW_IMAGE_DEM_SEL_MASK                 (0x1U << ISP_DEMOSAIC_SW_IMAGE_DEM_SEL_SHIFT)                /* 0x00000100 */
+#define ISP_DEMOSAIC_DEMOSAIC_BYPASS_SHIFT                 (10U)
+#define ISP_DEMOSAIC_DEMOSAIC_BYPASS_MASK                  (0x1U << ISP_DEMOSAIC_DEMOSAIC_BYPASS_SHIFT)                 /* 0x00000400 */
+/* FLAGS_SHD */
+#define ISP_FLAGS_SHD_OFFSET                               (0x1A8U)
+#define ISP_FLAGS_SHD                                      (0x0U)
+#define ISP_FLAGS_SHD_ISP_ENABLE_SHD_SHIFT                 (0U)
+#define ISP_FLAGS_SHD_ISP_ENABLE_SHD_MASK                  (0x1U << ISP_FLAGS_SHD_ISP_ENABLE_SHD_SHIFT)                 /* 0x00000001 */
+#define ISP_FLAGS_SHD_ISP_INFORM_ENABLE_SHD_SHIFT          (1U)
+#define ISP_FLAGS_SHD_ISP_INFORM_ENABLE_SHD_MASK           (0x1U << ISP_FLAGS_SHD_ISP_INFORM_ENABLE_SHD_SHIFT)          /* 0x00000002 */
+#define ISP_FLAGS_SHD_INFORM_FIELD_SHIFT                   (2U)
+#define ISP_FLAGS_SHD_INFORM_FIELD_MASK                    (0x1U << ISP_FLAGS_SHD_INFORM_FIELD_SHIFT)                   /* 0x00000004 */
+#define ISP_FLAGS_SHD_S_DATA_SHIFT                         (16U)
+#define ISP_FLAGS_SHD_S_DATA_MASK                          (0xFFFU << ISP_FLAGS_SHD_S_DATA_SHIFT)                       /* 0x0FFF0000 */
+#define ISP_FLAGS_SHD_S_VSYNC_SHIFT                        (30U)
+#define ISP_FLAGS_SHD_S_VSYNC_MASK                         (0x1U << ISP_FLAGS_SHD_S_VSYNC_SHIFT)                        /* 0x40000000 */
+#define ISP_FLAGS_SHD_S_HSYNC_SHIFT                        (31U)
+#define ISP_FLAGS_SHD_S_HSYNC_MASK                         (0x1U << ISP_FLAGS_SHD_S_HSYNC_SHIFT)                        /* 0x80000000 */
+/* OUT_H_OFFS_SHD */
+#define ISP_OUT_H_OFFS_SHD_OFFSET                          (0x1ACU)
+#define ISP_OUT_H_OFFS_SHD                                 (0x0U)
+#define ISP_OUT_H_OFFS_SHD_ISP_OUT_H_OFFS_SHD_SHIFT        (0U)
+#define ISP_OUT_H_OFFS_SHD_ISP_OUT_H_OFFS_SHD_MASK         (0x3FFFU << ISP_OUT_H_OFFS_SHD_ISP_OUT_H_OFFS_SHD_SHIFT)     /* 0x00003FFF */
+/* OUT_V_OFFS_SHD */
+#define ISP_OUT_V_OFFS_SHD_OFFSET                          (0x1B0U)
+#define ISP_OUT_V_OFFS_SHD                                 (0x0U)
+#define ISP_OUT_V_OFFS_SHD_ISP_OUT_V_OFFS_SHD_SHIFT        (0U)
+#define ISP_OUT_V_OFFS_SHD_ISP_OUT_V_OFFS_SHD_MASK         (0x3FFFU << ISP_OUT_V_OFFS_SHD_ISP_OUT_V_OFFS_SHD_SHIFT)     /* 0x00003FFF */
+/* OUT_H_SIZE_SHD */
+#define ISP_OUT_H_SIZE_SHD_OFFSET                          (0x1B4U)
+#define ISP_OUT_H_SIZE_SHD                                 (0x0U)
+#define ISP_OUT_H_SIZE_SHD_ISP_OUT_H_SIZE_SHD_SHIFT        (0U)
+#define ISP_OUT_H_SIZE_SHD_ISP_OUT_H_SIZE_SHD_MASK         (0x7FFFU << ISP_OUT_H_SIZE_SHD_ISP_OUT_H_SIZE_SHD_SHIFT)     /* 0x00007FFF */
+/* OUT_V_SIZE_SHD */
+#define ISP_OUT_V_SIZE_SHD_OFFSET                          (0x1B8U)
+#define ISP_OUT_V_SIZE_SHD                                 (0x0U)
+#define ISP_OUT_V_SIZE_SHD_ISP_OUT_V_SIZE_SHD_SHIFT        (0U)
+#define ISP_OUT_V_SIZE_SHD_ISP_OUT_V_SIZE_SHD_MASK         (0x3FFFU << ISP_OUT_V_SIZE_SHD_ISP_OUT_V_SIZE_SHD_SHIFT)     /* 0x00003FFF */
+/* ISP_IMSC */
+#define ISP_ISP_IMSC_OFFSET                                (0x1BCU)
+#define ISP_ISP_IMSC_IMSC_ISP_OFF_SHIFT                    (0U)
+#define ISP_ISP_IMSC_IMSC_ISP_OFF_MASK                     (0x1U << ISP_ISP_IMSC_IMSC_ISP_OFF_SHIFT)                    /* 0x00000001 */
+#define ISP_ISP_IMSC_IMSC_FRAME_SHIFT                      (1U)
+#define ISP_ISP_IMSC_IMSC_FRAME_MASK                       (0x1U << ISP_ISP_IMSC_IMSC_FRAME_SHIFT)                      /* 0x00000002 */
+#define ISP_ISP_IMSC_IMSC_DATA_LOSS_SHIFT                  (2U)
+#define ISP_ISP_IMSC_IMSC_DATA_LOSS_MASK                   (0x1U << ISP_ISP_IMSC_IMSC_DATA_LOSS_SHIFT)                  /* 0x00000004 */
+#define ISP_ISP_IMSC_IMSC_PIC_SIZE_ERR_SHIFT               (3U)
+#define ISP_ISP_IMSC_IMSC_PIC_SIZE_ERR_MASK                (0x1U << ISP_ISP_IMSC_IMSC_PIC_SIZE_ERR_SHIFT)               /* 0x00000008 */
+#define ISP_ISP_IMSC_IMSC_AWB_DONE_SHIFT                   (4U)
+#define ISP_ISP_IMSC_IMSC_AWB_DONE_MASK                    (0x1U << ISP_ISP_IMSC_IMSC_AWB_DONE_SHIFT)                   /* 0x00000010 */
+#define ISP_ISP_IMSC_IMSC_FRAME_IN_SHIFT                   (5U)
+#define ISP_ISP_IMSC_IMSC_FRAME_IN_MASK                    (0x1U << ISP_ISP_IMSC_IMSC_FRAME_IN_SHIFT)                   /* 0x00000020 */
+#define ISP_ISP_IMSC_IMSC_V_START_SHIFT                    (6U)
+#define ISP_ISP_IMSC_IMSC_V_START_MASK                     (0x1U << ISP_ISP_IMSC_IMSC_V_START_SHIFT)                    /* 0x00000040 */
+#define ISP_ISP_IMSC_IMSC_H_START_SHIFT                    (7U)
+#define ISP_ISP_IMSC_IMSC_H_START_MASK                     (0x1U << ISP_ISP_IMSC_IMSC_H_START_SHIFT)                    /* 0x00000080 */
+#define ISP_ISP_IMSC_IMSC_FLASH_ON_SHIFT                   (8U)
+#define ISP_ISP_IMSC_IMSC_FLASH_ON_MASK                    (0x1U << ISP_ISP_IMSC_IMSC_FLASH_ON_SHIFT)                   /* 0x00000100 */
+#define ISP_ISP_IMSC_IMSC_FLASH_OFF_SHIFT                  (9U)
+#define ISP_ISP_IMSC_IMSC_FLASH_OFF_MASK                   (0x1U << ISP_ISP_IMSC_IMSC_FLASH_OFF_SHIFT)                  /* 0x00000200 */
+#define ISP_ISP_IMSC_IMSC_SHUTTER_ON_SHIFT                 (10U)
+#define ISP_ISP_IMSC_IMSC_SHUTTER_ON_MASK                  (0x1U << ISP_ISP_IMSC_IMSC_SHUTTER_ON_SHIFT)                 /* 0x00000400 */
+#define ISP_ISP_IMSC_IMSC_SHUTTER_OFF_SHIFT                (11U)
+#define ISP_ISP_IMSC_IMSC_SHUTTER_OFF_MASK                 (0x1U << ISP_ISP_IMSC_IMSC_SHUTTER_OFF_SHIFT)                /* 0x00000800 */
+#define ISP_ISP_IMSC_IMSC_AFM_SUM_OF_SHIFT                 (12U)
+#define ISP_ISP_IMSC_IMSC_AFM_SUM_OF_MASK                  (0x1U << ISP_ISP_IMSC_IMSC_AFM_SUM_OF_SHIFT)                 /* 0x00001000 */
+#define ISP_ISP_IMSC_IMSC_AFM_LUM_OF_SHIFT                 (13U)
+#define ISP_ISP_IMSC_IMSC_AFM_LUM_OF_MASK                  (0x1U << ISP_ISP_IMSC_IMSC_AFM_LUM_OF_SHIFT)                 /* 0x00002000 */
+#define ISP_ISP_IMSC_IMSC_AFM_FIN_SHIFT                    (14U)
+#define ISP_ISP_IMSC_IMSC_AFM_FIN_MASK                     (0x1U << ISP_ISP_IMSC_IMSC_AFM_FIN_SHIFT)                    /* 0x00004000 */
+#define ISP_ISP_IMSC_IMSC_HIST_MEASURE_RDY_SHIFT           (15U)
+#define ISP_ISP_IMSC_IMSC_HIST_MEASURE_RDY_MASK            (0x1U << ISP_ISP_IMSC_IMSC_HIST_MEASURE_RDY_SHIFT)           /* 0x00008000 */
+#define ISP_ISP_IMSC_IMSC_LSC_LUT_ERR_SHIFT                (16U)
+#define ISP_ISP_IMSC_IMSC_LSC_LUT_ERR_MASK                 (0x1U << ISP_ISP_IMSC_IMSC_LSC_LUT_ERR_SHIFT)                /* 0x00010000 */
+#define ISP_ISP_IMSC_IMSC_FLASH_CAP_SHIFT                  (17U)
+#define ISP_ISP_IMSC_IMSC_FLASH_CAP_MASK                   (0x1U << ISP_ISP_IMSC_IMSC_FLASH_CAP_SHIFT)                  /* 0x00020000 */
+#define ISP_ISP_IMSC_IMSC_EXP_END_SHIFT                    (18U)
+#define ISP_ISP_IMSC_IMSC_EXP_END_MASK                     (0x1U << ISP_ISP_IMSC_IMSC_EXP_END_SHIFT)                    /* 0x00040000 */
+#define ISP_ISP_IMSC_IMSC_HDR_DONE_SHIFT                   (20U)
+#define ISP_ISP_IMSC_IMSC_HDR_DONE_MASK                    (0x1U << ISP_ISP_IMSC_IMSC_HDR_DONE_SHIFT)                   /* 0x00100000 */
+#define ISP_ISP_IMSC_IMSC_DHAZ_DONE_SHIFT                  (21U)
+#define ISP_ISP_IMSC_IMSC_DHAZ_DONE_MASK                   (0x1U << ISP_ISP_IMSC_IMSC_DHAZ_DONE_SHIFT)                  /* 0x00200000 */
+#define ISP_ISP_IMSC_IMSC_GAIN_DONE_SHIFT                  (22U)
+#define ISP_ISP_IMSC_IMSC_GAIN_DONE_MASK                   (0x1U << ISP_ISP_IMSC_IMSC_GAIN_DONE_SHIFT)                  /* 0x00400000 */
+/* ISP_RIS */
+#define ISP_ISP_RIS_OFFSET                                 (0x1C0U)
+#define ISP_ISP_RIS                                        (0x0U)
+#define ISP_ISP_RIS_RIS_ISP_OFF_SHIFT                      (0U)
+#define ISP_ISP_RIS_RIS_ISP_OFF_MASK                       (0x1U << ISP_ISP_RIS_RIS_ISP_OFF_SHIFT)                      /* 0x00000001 */
+#define ISP_ISP_RIS_RIS_FRAME_SHIFT                        (1U)
+#define ISP_ISP_RIS_RIS_FRAME_MASK                         (0x1U << ISP_ISP_RIS_RIS_FRAME_SHIFT)                        /* 0x00000002 */
+#define ISP_ISP_RIS_RIS_DATA_LOSS_SHIFT                    (2U)
+#define ISP_ISP_RIS_RIS_DATA_LOSS_MASK                     (0x1U << ISP_ISP_RIS_RIS_DATA_LOSS_SHIFT)                    /* 0x00000004 */
+#define ISP_ISP_RIS_RIS_PIC_SIZE_ERR_SHIFT                 (3U)
+#define ISP_ISP_RIS_RIS_PIC_SIZE_ERR_MASK                  (0x1U << ISP_ISP_RIS_RIS_PIC_SIZE_ERR_SHIFT)                 /* 0x00000008 */
+#define ISP_ISP_RIS_RIS_AWB_DONE_SHIFT                     (4U)
+#define ISP_ISP_RIS_RIS_AWB_DONE_MASK                      (0x1U << ISP_ISP_RIS_RIS_AWB_DONE_SHIFT)                     /* 0x00000010 */
+#define ISP_ISP_RIS_RIS_FRAME_IN_SHIFT                     (5U)
+#define ISP_ISP_RIS_RIS_FRAME_IN_MASK                      (0x1U << ISP_ISP_RIS_RIS_FRAME_IN_SHIFT)                     /* 0x00000020 */
+#define ISP_ISP_RIS_RIS_V_START_SHIFT                      (6U)
+#define ISP_ISP_RIS_RIS_V_START_MASK                       (0x1U << ISP_ISP_RIS_RIS_V_START_SHIFT)                      /* 0x00000040 */
+#define ISP_ISP_RIS_RIS_H_START_SHIFT                      (7U)
+#define ISP_ISP_RIS_RIS_H_START_MASK                       (0x1U << ISP_ISP_RIS_RIS_H_START_SHIFT)                      /* 0x00000080 */
+#define ISP_ISP_RIS_RIS_FLASH_ON_SHIFT                     (8U)
+#define ISP_ISP_RIS_RIS_FLASH_ON_MASK                      (0x1U << ISP_ISP_RIS_RIS_FLASH_ON_SHIFT)                     /* 0x00000100 */
+#define ISP_ISP_RIS_RIS_FLASH_OFF_SHIFT                    (9U)
+#define ISP_ISP_RIS_RIS_FLASH_OFF_MASK                     (0x1U << ISP_ISP_RIS_RIS_FLASH_OFF_SHIFT)                    /* 0x00000200 */
+#define ISP_ISP_RIS_RIS_SHUTTER_ON_SHIFT                   (10U)
+#define ISP_ISP_RIS_RIS_SHUTTER_ON_MASK                    (0x1U << ISP_ISP_RIS_RIS_SHUTTER_ON_SHIFT)                   /* 0x00000400 */
+#define ISP_ISP_RIS_RIS_SHUTTER_OFF_SHIFT                  (11U)
+#define ISP_ISP_RIS_RIS_SHUTTER_OFF_MASK                   (0x1U << ISP_ISP_RIS_RIS_SHUTTER_OFF_SHIFT)                  /* 0x00000800 */
+#define ISP_ISP_RIS_RIS_AFM_SUM_OF_SHIFT                   (12U)
+#define ISP_ISP_RIS_RIS_AFM_SUM_OF_MASK                    (0x1U << ISP_ISP_RIS_RIS_AFM_SUM_OF_SHIFT)                   /* 0x00001000 */
+#define ISP_ISP_RIS_RIS_AFM_LUM_OF_SHIFT                   (13U)
+#define ISP_ISP_RIS_RIS_AFM_LUM_OF_MASK                    (0x1U << ISP_ISP_RIS_RIS_AFM_LUM_OF_SHIFT)                   /* 0x00002000 */
+#define ISP_ISP_RIS_RIS_AFM_FIN_SHIFT                      (14U)
+#define ISP_ISP_RIS_RIS_AFM_FIN_MASK                       (0x1U << ISP_ISP_RIS_RIS_AFM_FIN_SHIFT)                      /* 0x00004000 */
+#define ISP_ISP_RIS_RIS_HIST_MEASURE_RDY_SHIFT             (15U)
+#define ISP_ISP_RIS_RIS_HIST_MEASURE_RDY_MASK              (0x1U << ISP_ISP_RIS_RIS_HIST_MEASURE_RDY_SHIFT)             /* 0x00008000 */
+#define ISP_ISP_RIS_RIS_LSC_LUT_ERR_SHIFT                  (16U)
+#define ISP_ISP_RIS_RIS_LSC_LUT_ERR_MASK                   (0x1U << ISP_ISP_RIS_RIS_LSC_LUT_ERR_SHIFT)                  /* 0x00010000 */
+#define ISP_ISP_RIS_RIS_FLASH_CAP_SHIFT                    (17U)
+#define ISP_ISP_RIS_RIS_FLASH_CAP_MASK                     (0x1U << ISP_ISP_RIS_RIS_FLASH_CAP_SHIFT)                    /* 0x00020000 */
+#define ISP_ISP_RIS_RIS_EXP_END_SHIFT                      (18U)
+#define ISP_ISP_RIS_RIS_EXP_END_MASK                       (0x1U << ISP_ISP_RIS_RIS_EXP_END_SHIFT)                      /* 0x00040000 */
+#define ISP_ISP_RIS_RIS_HDR_DONE_SHIFT                     (20U)
+#define ISP_ISP_RIS_RIS_HDR_DONE_MASK                      (0x1U << ISP_ISP_RIS_RIS_HDR_DONE_SHIFT)                     /* 0x00100000 */
+#define ISP_ISP_RIS_RIS_DHAZ_DONE_SHIFT                    (21U)
+#define ISP_ISP_RIS_RIS_DHAZ_DONE_MASK                     (0x1U << ISP_ISP_RIS_RIS_DHAZ_DONE_SHIFT)                    /* 0x00200000 */
+#define ISP_ISP_RIS_RIS_GAIN_DONE_SHIFT                    (22U)
+#define ISP_ISP_RIS_RIS_GAIN_DONE_MASK                     (0x1U << ISP_ISP_RIS_RIS_GAIN_DONE_SHIFT)                    /* 0x00400000 */
+/* ISP_MIS */
+#define ISP_ISP_MIS_OFFSET                                 (0x1C4U)
+#define ISP_ISP_MIS                                        (0x0U)
+#define ISP_ISP_MIS_MIS_ISP_OFF_SHIFT                      (0U)
+#define ISP_ISP_MIS_MIS_ISP_OFF_MASK                       (0x1U << ISP_ISP_MIS_MIS_ISP_OFF_SHIFT)                      /* 0x00000001 */
+#define ISP_ISP_MIS_MIS_FRAME_SHIFT                        (1U)
+#define ISP_ISP_MIS_MIS_FRAME_MASK                         (0x1U << ISP_ISP_MIS_MIS_FRAME_SHIFT)                        /* 0x00000002 */
+#define ISP_ISP_MIS_MIS_DATA_LOSS_SHIFT                    (2U)
+#define ISP_ISP_MIS_MIS_DATA_LOSS_MASK                     (0x1U << ISP_ISP_MIS_MIS_DATA_LOSS_SHIFT)                    /* 0x00000004 */
+#define ISP_ISP_MIS_MIS_PIC_SIZE_ERR_SHIFT                 (3U)
+#define ISP_ISP_MIS_MIS_PIC_SIZE_ERR_MASK                  (0x1U << ISP_ISP_MIS_MIS_PIC_SIZE_ERR_SHIFT)                 /* 0x00000008 */
+#define ISP_ISP_MIS_MIS_AWB_DONE_SHIFT                     (4U)
+#define ISP_ISP_MIS_MIS_AWB_DONE_MASK                      (0x1U << ISP_ISP_MIS_MIS_AWB_DONE_SHIFT)                     /* 0x00000010 */
+#define ISP_ISP_MIS_MIS_FRAME_IN_SHIFT                     (5U)
+#define ISP_ISP_MIS_MIS_FRAME_IN_MASK                      (0x1U << ISP_ISP_MIS_MIS_FRAME_IN_SHIFT)                     /* 0x00000020 */
+#define ISP_ISP_MIS_MIS_V_START_SHIFT                      (6U)
+#define ISP_ISP_MIS_MIS_V_START_MASK                       (0x1U << ISP_ISP_MIS_MIS_V_START_SHIFT)                      /* 0x00000040 */
+#define ISP_ISP_MIS_MIS_H_START_SHIFT                      (7U)
+#define ISP_ISP_MIS_MIS_H_START_MASK                       (0x1U << ISP_ISP_MIS_MIS_H_START_SHIFT)                      /* 0x00000080 */
+#define ISP_ISP_MIS_MIS_FLASH_ON_SHIFT                     (8U)
+#define ISP_ISP_MIS_MIS_FLASH_ON_MASK                      (0x1U << ISP_ISP_MIS_MIS_FLASH_ON_SHIFT)                     /* 0x00000100 */
+#define ISP_ISP_MIS_MIS_FLASH_OFF_SHIFT                    (9U)
+#define ISP_ISP_MIS_MIS_FLASH_OFF_MASK                     (0x1U << ISP_ISP_MIS_MIS_FLASH_OFF_SHIFT)                    /* 0x00000200 */
+#define ISP_ISP_MIS_MIS_SHUTTER_ON_SHIFT                   (10U)
+#define ISP_ISP_MIS_MIS_SHUTTER_ON_MASK                    (0x1U << ISP_ISP_MIS_MIS_SHUTTER_ON_SHIFT)                   /* 0x00000400 */
+#define ISP_ISP_MIS_MIS_SHUTTER_OFF_SHIFT                  (11U)
+#define ISP_ISP_MIS_MIS_SHUTTER_OFF_MASK                   (0x1U << ISP_ISP_MIS_MIS_SHUTTER_OFF_SHIFT)                  /* 0x00000800 */
+#define ISP_ISP_MIS_MIS_AFM_SUM_OF_SHIFT                   (12U)
+#define ISP_ISP_MIS_MIS_AFM_SUM_OF_MASK                    (0x1U << ISP_ISP_MIS_MIS_AFM_SUM_OF_SHIFT)                   /* 0x00001000 */
+#define ISP_ISP_MIS_MIS_AFM_LUM_OF_SHIFT                   (13U)
+#define ISP_ISP_MIS_MIS_AFM_LUM_OF_MASK                    (0x1U << ISP_ISP_MIS_MIS_AFM_LUM_OF_SHIFT)                   /* 0x00002000 */
+#define ISP_ISP_MIS_MIS_AFM_FIN_SHIFT                      (14U)
+#define ISP_ISP_MIS_MIS_AFM_FIN_MASK                       (0x1U << ISP_ISP_MIS_MIS_AFM_FIN_SHIFT)                      /* 0x00004000 */
+#define ISP_ISP_MIS_MIS_HIST_MEASURE_RDY_SHIFT             (15U)
+#define ISP_ISP_MIS_MIS_HIST_MEASURE_RDY_MASK              (0x1U << ISP_ISP_MIS_MIS_HIST_MEASURE_RDY_SHIFT)             /* 0x00008000 */
+#define ISP_ISP_MIS_MIS_LSC_LUT_ERR_SHIFT                  (16U)
+#define ISP_ISP_MIS_MIS_LSC_LUT_ERR_MASK                   (0x1U << ISP_ISP_MIS_MIS_LSC_LUT_ERR_SHIFT)                  /* 0x00010000 */
+#define ISP_ISP_MIS_MIS_FLASH_CAP_SHIFT                    (17U)
+#define ISP_ISP_MIS_MIS_FLASH_CAP_MASK                     (0x1U << ISP_ISP_MIS_MIS_FLASH_CAP_SHIFT)                    /* 0x00020000 */
+#define ISP_ISP_MIS_MIS_EXP_END_SHIFT                      (18U)
+#define ISP_ISP_MIS_MIS_EXP_END_MASK                       (0x1U << ISP_ISP_MIS_MIS_EXP_END_SHIFT)                      /* 0x00040000 */
+#define ISP_ISP_MIS_MIS_HDR_DONE_SHIFT                     (20U)
+#define ISP_ISP_MIS_MIS_HDR_DONE_MASK                      (0x1U << ISP_ISP_MIS_MIS_HDR_DONE_SHIFT)                     /* 0x00100000 */
+#define ISP_ISP_MIS_MIS_DHAZ_DONE_SHIFT                    (21U)
+#define ISP_ISP_MIS_MIS_DHAZ_DONE_MASK                     (0x1U << ISP_ISP_MIS_MIS_DHAZ_DONE_SHIFT)                    /* 0x00200000 */
+#define ISP_ISP_MIS_MIS_GAIN_DONE_SHIFT                    (22U)
+#define ISP_ISP_MIS_MIS_GAIN_DONE_MASK                     (0x1U << ISP_ISP_MIS_MIS_GAIN_DONE_SHIFT)                    /* 0x00400000 */
+/* ISP_ICR */
+#define ISP_ISP_ICR_OFFSET                                 (0x1C8U)
+#define ISP_ISP_ICR_ICR_ISP_OFF_SHIFT                      (0U)
+#define ISP_ISP_ICR_ICR_ISP_OFF_MASK                       (0x1U << ISP_ISP_ICR_ICR_ISP_OFF_SHIFT)                      /* 0x00000001 */
+#define ISP_ISP_ICR_ICR_FRAME_SHIFT                        (1U)
+#define ISP_ISP_ICR_ICR_FRAME_MASK                         (0x1U << ISP_ISP_ICR_ICR_FRAME_SHIFT)                        /* 0x00000002 */
+#define ISP_ISP_ICR_ICR_DATA_LOSS_SHIFT                    (2U)
+#define ISP_ISP_ICR_ICR_DATA_LOSS_MASK                     (0x1U << ISP_ISP_ICR_ICR_DATA_LOSS_SHIFT)                    /* 0x00000004 */
+#define ISP_ISP_ICR_ICR_PIC_SIZE_ERR_SHIFT                 (3U)
+#define ISP_ISP_ICR_ICR_PIC_SIZE_ERR_MASK                  (0x1U << ISP_ISP_ICR_ICR_PIC_SIZE_ERR_SHIFT)                 /* 0x00000008 */
+#define ISP_ISP_ICR_ICR_AWB_DONE_SHIFT                     (4U)
+#define ISP_ISP_ICR_ICR_AWB_DONE_MASK                      (0x1U << ISP_ISP_ICR_ICR_AWB_DONE_SHIFT)                     /* 0x00000010 */
+#define ISP_ISP_ICR_ICR_FRAME_IN_SHIFT                     (5U)
+#define ISP_ISP_ICR_ICR_FRAME_IN_MASK                      (0x1U << ISP_ISP_ICR_ICR_FRAME_IN_SHIFT)                     /* 0x00000020 */
+#define ISP_ISP_ICR_ICR_V_START_SHIFT                      (6U)
+#define ISP_ISP_ICR_ICR_V_START_MASK                       (0x1U << ISP_ISP_ICR_ICR_V_START_SHIFT)                      /* 0x00000040 */
+#define ISP_ISP_ICR_ICR_H_START_SHIFT                      (7U)
+#define ISP_ISP_ICR_ICR_H_START_MASK                       (0x1U << ISP_ISP_ICR_ICR_H_START_SHIFT)                      /* 0x00000080 */
+#define ISP_ISP_ICR_ICR_FLASH_ON_SHIFT                     (8U)
+#define ISP_ISP_ICR_ICR_FLASH_ON_MASK                      (0x1U << ISP_ISP_ICR_ICR_FLASH_ON_SHIFT)                     /* 0x00000100 */
+#define ISP_ISP_ICR_ICR_FLASH_OFF_SHIFT                    (9U)
+#define ISP_ISP_ICR_ICR_FLASH_OFF_MASK                     (0x1U << ISP_ISP_ICR_ICR_FLASH_OFF_SHIFT)                    /* 0x00000200 */
+#define ISP_ISP_ICR_ICR_SHUTTER_ON_SHIFT                   (10U)
+#define ISP_ISP_ICR_ICR_SHUTTER_ON_MASK                    (0x1U << ISP_ISP_ICR_ICR_SHUTTER_ON_SHIFT)                   /* 0x00000400 */
+#define ISP_ISP_ICR_ICR_SHUTTER_OFF_SHIFT                  (11U)
+#define ISP_ISP_ICR_ICR_SHUTTER_OFF_MASK                   (0x1U << ISP_ISP_ICR_ICR_SHUTTER_OFF_SHIFT)                  /* 0x00000800 */
+#define ISP_ISP_ICR_ICR_AFM_SUM_OF_SHIFT                   (12U)
+#define ISP_ISP_ICR_ICR_AFM_SUM_OF_MASK                    (0x1U << ISP_ISP_ICR_ICR_AFM_SUM_OF_SHIFT)                   /* 0x00001000 */
+#define ISP_ISP_ICR_ICR_AFM_LUM_OF_SHIFT                   (13U)
+#define ISP_ISP_ICR_ICR_AFM_LUM_OF_MASK                    (0x1U << ISP_ISP_ICR_ICR_AFM_LUM_OF_SHIFT)                   /* 0x00002000 */
+#define ISP_ISP_ICR_ICR_AFM_FIN_SHIFT                      (14U)
+#define ISP_ISP_ICR_ICR_AFM_FIN_MASK                       (0x1U << ISP_ISP_ICR_ICR_AFM_FIN_SHIFT)                      /* 0x00004000 */
+#define ISP_ISP_ICR_ICR_HIST_MEASURE_RDY_SHIFT             (15U)
+#define ISP_ISP_ICR_ICR_HIST_MEASURE_RDY_MASK              (0x1U << ISP_ISP_ICR_ICR_HIST_MEASURE_RDY_SHIFT)             /* 0x00008000 */
+#define ISP_ISP_ICR_ICR_LSC_LUT_ERR_SHIFT                  (16U)
+#define ISP_ISP_ICR_ICR_LSC_LUT_ERR_MASK                   (0x1U << ISP_ISP_ICR_ICR_LSC_LUT_ERR_SHIFT)                  /* 0x00010000 */
+#define ISP_ISP_ICR_ICR_FLASH_CAP_SHIFT                    (17U)
+#define ISP_ISP_ICR_ICR_FLASH_CAP_MASK                     (0x1U << ISP_ISP_ICR_ICR_FLASH_CAP_SHIFT)                    /* 0x00020000 */
+#define ISP_ISP_ICR_ICR_EXP_END_SHIFT                      (18U)
+#define ISP_ISP_ICR_ICR_EXP_END_MASK                       (0x1U << ISP_ISP_ICR_ICR_EXP_END_SHIFT)                      /* 0x00040000 */
+#define ISP_ISP_ICR_ICR_HDR_DONE_SHIFT                     (20U)
+#define ISP_ISP_ICR_ICR_HDR_DONE_MASK                      (0x1U << ISP_ISP_ICR_ICR_HDR_DONE_SHIFT)                     /* 0x00100000 */
+#define ISP_ISP_ICR_ICR_DHAZ_DONE_SHIFT                    (21U)
+#define ISP_ISP_ICR_ICR_DHAZ_DONE_MASK                     (0x1U << ISP_ISP_ICR_ICR_DHAZ_DONE_SHIFT)                    /* 0x00200000 */
+#define ISP_ISP_ICR_ICR_GAIN_DONE_SHIFT                    (22U)
+#define ISP_ISP_ICR_ICR_GAIN_DONE_MASK                     (0x1U << ISP_ISP_ICR_ICR_GAIN_DONE_SHIFT)                    /* 0x00400000 */
+/* ISP_ISR */
+#define ISP_ISP_ISR_OFFSET                                 (0x1CCU)
+#define ISP_ISP_ISR_ISR_ISP_OFF_SHIFT                      (0U)
+#define ISP_ISP_ISR_ISR_ISP_OFF_MASK                       (0x1U << ISP_ISP_ISR_ISR_ISP_OFF_SHIFT)                      /* 0x00000001 */
+#define ISP_ISP_ISR_ISR_FRAME_SHIFT                        (1U)
+#define ISP_ISP_ISR_ISR_FRAME_MASK                         (0x1U << ISP_ISP_ISR_ISR_FRAME_SHIFT)                        /* 0x00000002 */
+#define ISP_ISP_ISR_ISR_DATA_LOSS_SHIFT                    (2U)
+#define ISP_ISP_ISR_ISR_DATA_LOSS_MASK                     (0x1U << ISP_ISP_ISR_ISR_DATA_LOSS_SHIFT)                    /* 0x00000004 */
+#define ISP_ISP_ISR_ISR_PIC_SIZE_ERR_SHIFT                 (3U)
+#define ISP_ISP_ISR_ISR_PIC_SIZE_ERR_MASK                  (0x1U << ISP_ISP_ISR_ISR_PIC_SIZE_ERR_SHIFT)                 /* 0x00000008 */
+#define ISP_ISP_ISR_ISR_AWB_DONE_SHIFT                     (4U)
+#define ISP_ISP_ISR_ISR_AWB_DONE_MASK                      (0x1U << ISP_ISP_ISR_ISR_AWB_DONE_SHIFT)                     /* 0x00000010 */
+#define ISP_ISP_ISR_ISR_FRAME_IN_SHIFT                     (5U)
+#define ISP_ISP_ISR_ISR_FRAME_IN_MASK                      (0x1U << ISP_ISP_ISR_ISR_FRAME_IN_SHIFT)                     /* 0x00000020 */
+#define ISP_ISP_ISR_ISR_V_START_SHIFT                      (6U)
+#define ISP_ISP_ISR_ISR_V_START_MASK                       (0x1U << ISP_ISP_ISR_ISR_V_START_SHIFT)                      /* 0x00000040 */
+#define ISP_ISP_ISR_ISR_H_START_SHIFT                      (7U)
+#define ISP_ISP_ISR_ISR_H_START_MASK                       (0x1U << ISP_ISP_ISR_ISR_H_START_SHIFT)                      /* 0x00000080 */
+#define ISP_ISP_ISR_ISR_FLASH_ON_SHIFT                     (8U)
+#define ISP_ISP_ISR_ISR_FLASH_ON_MASK                      (0x1U << ISP_ISP_ISR_ISR_FLASH_ON_SHIFT)                     /* 0x00000100 */
+#define ISP_ISP_ISR_ISR_FLASH_OFF_SHIFT                    (9U)
+#define ISP_ISP_ISR_ISR_FLASH_OFF_MASK                     (0x1U << ISP_ISP_ISR_ISR_FLASH_OFF_SHIFT)                    /* 0x00000200 */
+#define ISP_ISP_ISR_ISR_SHUTTER_ON_SHIFT                   (10U)
+#define ISP_ISP_ISR_ISR_SHUTTER_ON_MASK                    (0x1U << ISP_ISP_ISR_ISR_SHUTTER_ON_SHIFT)                   /* 0x00000400 */
+#define ISP_ISP_ISR_ISR_SHUTTER_OFF_SHIFT                  (11U)
+#define ISP_ISP_ISR_ISR_SHUTTER_OFF_MASK                   (0x1U << ISP_ISP_ISR_ISR_SHUTTER_OFF_SHIFT)                  /* 0x00000800 */
+#define ISP_ISP_ISR_ISR_AFM_SUM_OF_SHIFT                   (12U)
+#define ISP_ISP_ISR_ISR_AFM_SUM_OF_MASK                    (0x1U << ISP_ISP_ISR_ISR_AFM_SUM_OF_SHIFT)                   /* 0x00001000 */
+#define ISP_ISP_ISR_ISR_AFM_LUM_OF_SHIFT                   (13U)
+#define ISP_ISP_ISR_ISR_AFM_LUM_OF_MASK                    (0x1U << ISP_ISP_ISR_ISR_AFM_LUM_OF_SHIFT)                   /* 0x00002000 */
+#define ISP_ISP_ISR_ISR_AFM_FIN_SHIFT                      (14U)
+#define ISP_ISP_ISR_ISR_AFM_FIN_MASK                       (0x1U << ISP_ISP_ISR_ISR_AFM_FIN_SHIFT)                      /* 0x00004000 */
+#define ISP_ISP_ISR_ISR_HIST_MEASURE_RDY_SHIFT             (15U)
+#define ISP_ISP_ISR_ISR_HIST_MEASURE_RDY_MASK              (0x1U << ISP_ISP_ISR_ISR_HIST_MEASURE_RDY_SHIFT)             /* 0x00008000 */
+#define ISP_ISP_ISR_ISR_LSC_LUT_ERR_SHIFT                  (16U)
+#define ISP_ISP_ISR_ISR_LSC_LUT_ERR_MASK                   (0x1U << ISP_ISP_ISR_ISR_LSC_LUT_ERR_SHIFT)                  /* 0x00010000 */
+#define ISP_ISP_ISR_ISR_FLASH_CAP_SHIFT                    (17U)
+#define ISP_ISP_ISR_ISR_FLASH_CAP_MASK                     (0x1U << ISP_ISP_ISR_ISR_FLASH_CAP_SHIFT)                    /* 0x00020000 */
+#define ISP_ISP_ISR_ISR_EXP_END_SHIFT                      (18U)
+#define ISP_ISP_ISR_ISR_EXP_END_MASK                       (0x1U << ISP_ISP_ISR_ISR_EXP_END_SHIFT)                      /* 0x00040000 */
+#define ISP_ISP_ISR_ISR_HDR_DONE_SHIFT                     (20U)
+#define ISP_ISP_ISR_ISR_HDR_DONE_MASK                      (0x1U << ISP_ISP_ISR_ISR_HDR_DONE_SHIFT)                     /* 0x00100000 */
+#define ISP_ISP_ISR_ISR_DHAZ_DONE_SHIFT                    (21U)
+#define ISP_ISP_ISR_ISR_DHAZ_DONE_MASK                     (0x1U << ISP_ISP_ISR_ISR_DHAZ_DONE_SHIFT)                    /* 0x00200000 */
+#define ISP_ISP_ISR_ISR_GAIN_DONE_SHIFT                    (22U)
+#define ISP_ISP_ISR_ISR_GAIN_DONE_MASK                     (0x1U << ISP_ISP_ISR_ISR_GAIN_DONE_SHIFT)                    /* 0x00400000 */
+/* ISP3A_IMSC */
+#define ISP_ISP3A_IMSC_OFFSET                              (0x1D0U)
+#define ISP_ISP3A_IMSC_IMSC_RAWAE_BIG_DONE_SHIFT           (0U)
+#define ISP_ISP3A_IMSC_IMSC_RAWAE_BIG_DONE_MASK            (0x1U << ISP_ISP3A_IMSC_IMSC_RAWAE_BIG_DONE_SHIFT)           /* 0x00000001 */
+#define ISP_ISP3A_IMSC_IMSC_RAWAE_CH0_DONE_SHIFT           (1U)
+#define ISP_ISP3A_IMSC_IMSC_RAWAE_CH0_DONE_MASK            (0x1U << ISP_ISP3A_IMSC_IMSC_RAWAE_CH0_DONE_SHIFT)           /* 0x00000002 */
+#define ISP_ISP3A_IMSC_IMSC_RAWAE_CH1_DONE_SHIFT           (2U)
+#define ISP_ISP3A_IMSC_IMSC_RAWAE_CH1_DONE_MASK            (0x1U << ISP_ISP3A_IMSC_IMSC_RAWAE_CH1_DONE_SHIFT)           /* 0x00000004 */
+#define ISP_ISP3A_IMSC_IMSC_RAWAE_CH2_DONE_SHIFT           (3U)
+#define ISP_ISP3A_IMSC_IMSC_RAWAE_CH2_DONE_MASK            (0x1U << ISP_ISP3A_IMSC_IMSC_RAWAE_CH2_DONE_SHIFT)           /* 0x00000008 */
+#define ISP_ISP3A_IMSC_IMSC_RAWHIST_BIG_DONE_SHIFT         (4U)
+#define ISP_ISP3A_IMSC_IMSC_RAWHIST_BIG_DONE_MASK          (0x1U << ISP_ISP3A_IMSC_IMSC_RAWHIST_BIG_DONE_SHIFT)         /* 0x00000010 */
+#define ISP_ISP3A_IMSC_IMSC_RAWHIST_CH0_DONE_SHIFT         (5U)
+#define ISP_ISP3A_IMSC_IMSC_RAWHIST_CH0_DONE_MASK          (0x1U << ISP_ISP3A_IMSC_IMSC_RAWHIST_CH0_DONE_SHIFT)         /* 0x00000020 */
+#define ISP_ISP3A_IMSC_IMSC_RAWHIST_CH1_DONE_SHIFT         (6U)
+#define ISP_ISP3A_IMSC_IMSC_RAWHIST_CH1_DONE_MASK          (0x1U << ISP_ISP3A_IMSC_IMSC_RAWHIST_CH1_DONE_SHIFT)         /* 0x00000040 */
+#define ISP_ISP3A_IMSC_IMSC_RAWHIST_CH2_DONE_SHIFT         (7U)
+#define ISP_ISP3A_IMSC_IMSC_RAWHIST_CH2_DONE_MASK          (0x1U << ISP_ISP3A_IMSC_IMSC_RAWHIST_CH2_DONE_SHIFT)         /* 0x00000080 */
+#define ISP_ISP3A_IMSC_IMSC_RAWAF_SUM_OF_SHIFT             (8U)
+#define ISP_ISP3A_IMSC_IMSC_RAWAF_SUM_OF_MASK              (0x1U << ISP_ISP3A_IMSC_IMSC_RAWAF_SUM_OF_SHIFT)             /* 0x00000100 */
+#define ISP_ISP3A_IMSC_IMSC_RAWAF_LUM_OF_SHIFT             (9U)
+#define ISP_ISP3A_IMSC_IMSC_RAWAF_LUM_OF_MASK              (0x1U << ISP_ISP3A_IMSC_IMSC_RAWAF_LUM_OF_SHIFT)             /* 0x00000200 */
+#define ISP_ISP3A_IMSC_IMSC_RAWAF_DONE_SHIFT               (10U)
+#define ISP_ISP3A_IMSC_IMSC_RAWAF_DONE_MASK                (0x1U << ISP_ISP3A_IMSC_IMSC_RAWAF_DONE_SHIFT)               /* 0x00000400 */
+#define ISP_ISP3A_IMSC_IMSC_RAWAWB_DONE_SHIFT              (11U)
+#define ISP_ISP3A_IMSC_IMSC_RAWAWB_DONE_MASK               (0x1U << ISP_ISP3A_IMSC_IMSC_RAWAWB_DONE_SHIFT)              /* 0x00000800 */
+#define ISP_ISP3A_IMSC_IMSC_SWS_3A_DDR_DONE_SHIFT          (12U)
+#define ISP_ISP3A_IMSC_IMSC_SWS_3A_DDR_DONE_MASK           (0x1U << ISP_ISP3A_IMSC_IMSC_SWS_3A_DDR_DONE_SHIFT)          /* 0x00001000 */
+/* ISP3A_RIS */
+#define ISP_ISP3A_RIS_OFFSET                               (0x1D4U)
+#define ISP_ISP3A_RIS                                      (0x0U)
+#define ISP_ISP3A_RIS_RIS_RAWAE_BIG_DONE_SHIFT             (0U)
+#define ISP_ISP3A_RIS_RIS_RAWAE_BIG_DONE_MASK              (0x1U << ISP_ISP3A_RIS_RIS_RAWAE_BIG_DONE_SHIFT)             /* 0x00000001 */
+#define ISP_ISP3A_RIS_RIS_RAWAE_CH0_DONE_SHIFT             (1U)
+#define ISP_ISP3A_RIS_RIS_RAWAE_CH0_DONE_MASK              (0x1U << ISP_ISP3A_RIS_RIS_RAWAE_CH0_DONE_SHIFT)             /* 0x00000002 */
+#define ISP_ISP3A_RIS_RIS_RAWAE_CH1_DONE_SHIFT             (2U)
+#define ISP_ISP3A_RIS_RIS_RAWAE_CH1_DONE_MASK              (0x1U << ISP_ISP3A_RIS_RIS_RAWAE_CH1_DONE_SHIFT)             /* 0x00000004 */
+#define ISP_ISP3A_RIS_RIS_RAWAE_CH2_DONE_SHIFT             (3U)
+#define ISP_ISP3A_RIS_RIS_RAWAE_CH2_DONE_MASK              (0x1U << ISP_ISP3A_RIS_RIS_RAWAE_CH2_DONE_SHIFT)             /* 0x00000008 */
+#define ISP_ISP3A_RIS_RIS_RAWHIST_BIG_DONE_SHIFT           (4U)
+#define ISP_ISP3A_RIS_RIS_RAWHIST_BIG_DONE_MASK            (0x1U << ISP_ISP3A_RIS_RIS_RAWHIST_BIG_DONE_SHIFT)           /* 0x00000010 */
+#define ISP_ISP3A_RIS_RIS_RAWHIST_CH0_DONE_SHIFT           (5U)
+#define ISP_ISP3A_RIS_RIS_RAWHIST_CH0_DONE_MASK            (0x1U << ISP_ISP3A_RIS_RIS_RAWHIST_CH0_DONE_SHIFT)           /* 0x00000020 */
+#define ISP_ISP3A_RIS_RIS_RAWHIST_CH1_DONE_SHIFT           (6U)
+#define ISP_ISP3A_RIS_RIS_RAWHIST_CH1_DONE_MASK            (0x1U << ISP_ISP3A_RIS_RIS_RAWHIST_CH1_DONE_SHIFT)           /* 0x00000040 */
+#define ISP_ISP3A_RIS_RIS_RAWHIST_CH2_DONE_SHIFT           (7U)
+#define ISP_ISP3A_RIS_RIS_RAWHIST_CH2_DONE_MASK            (0x1U << ISP_ISP3A_RIS_RIS_RAWHIST_CH2_DONE_SHIFT)           /* 0x00000080 */
+#define ISP_ISP3A_RIS_RIS_RAWAF_SUM_OF_SHIFT               (8U)
+#define ISP_ISP3A_RIS_RIS_RAWAF_SUM_OF_MASK                (0x1U << ISP_ISP3A_RIS_RIS_RAWAF_SUM_OF_SHIFT)               /* 0x00000100 */
+#define ISP_ISP3A_RIS_RIS_RAWAF_LUM_OF_SHIFT               (9U)
+#define ISP_ISP3A_RIS_RIS_RAWAF_LUM_OF_MASK                (0x1U << ISP_ISP3A_RIS_RIS_RAWAF_LUM_OF_SHIFT)               /* 0x00000200 */
+#define ISP_ISP3A_RIS_RIS_RAWAF_DONE_SHIFT                 (10U)
+#define ISP_ISP3A_RIS_RIS_RAWAF_DONE_MASK                  (0x1U << ISP_ISP3A_RIS_RIS_RAWAF_DONE_SHIFT)                 /* 0x00000400 */
+#define ISP_ISP3A_RIS_RIS_RAWAWB_DONE_SHIFT                (11U)
+#define ISP_ISP3A_RIS_RIS_RAWAWB_DONE_MASK                 (0x1U << ISP_ISP3A_RIS_RIS_RAWAWB_DONE_SHIFT)                /* 0x00000800 */
+#define ISP_ISP3A_RIS_RIS_SWS_3A_DDR_DONE_SHIFT            (12U)
+#define ISP_ISP3A_RIS_RIS_SWS_3A_DDR_DONE_MASK             (0x1U << ISP_ISP3A_RIS_RIS_SWS_3A_DDR_DONE_SHIFT)            /* 0x00001000 */
+/* ISP3A_MIS */
+#define ISP_ISP3A_MIS_OFFSET                               (0x1D8U)
+#define ISP_ISP3A_MIS                                      (0x0U)
+#define ISP_ISP3A_MIS_MIS_RAWAE_BIG_DONE_SHIFT             (0U)
+#define ISP_ISP3A_MIS_MIS_RAWAE_BIG_DONE_MASK              (0x1U << ISP_ISP3A_MIS_MIS_RAWAE_BIG_DONE_SHIFT)             /* 0x00000001 */
+#define ISP_ISP3A_MIS_MIS_RAWAE_CH0_DONE_SHIFT             (1U)
+#define ISP_ISP3A_MIS_MIS_RAWAE_CH0_DONE_MASK              (0x1U << ISP_ISP3A_MIS_MIS_RAWAE_CH0_DONE_SHIFT)             /* 0x00000002 */
+#define ISP_ISP3A_MIS_MIS_RAWAE_CH1_DONE_SHIFT             (2U)
+#define ISP_ISP3A_MIS_MIS_RAWAE_CH1_DONE_MASK              (0x1U << ISP_ISP3A_MIS_MIS_RAWAE_CH1_DONE_SHIFT)             /* 0x00000004 */
+#define ISP_ISP3A_MIS_MIS_RAWAE_CH2_DONE_SHIFT             (3U)
+#define ISP_ISP3A_MIS_MIS_RAWAE_CH2_DONE_MASK              (0x1U << ISP_ISP3A_MIS_MIS_RAWAE_CH2_DONE_SHIFT)             /* 0x00000008 */
+#define ISP_ISP3A_MIS_MIS_RAWHIST_BIG_DONE_SHIFT           (4U)
+#define ISP_ISP3A_MIS_MIS_RAWHIST_BIG_DONE_MASK            (0x1U << ISP_ISP3A_MIS_MIS_RAWHIST_BIG_DONE_SHIFT)           /* 0x00000010 */
+#define ISP_ISP3A_MIS_MIS_RAWHIST_CH0_DONE_SHIFT           (5U)
+#define ISP_ISP3A_MIS_MIS_RAWHIST_CH0_DONE_MASK            (0x1U << ISP_ISP3A_MIS_MIS_RAWHIST_CH0_DONE_SHIFT)           /* 0x00000020 */
+#define ISP_ISP3A_MIS_MIS_RAWHIST_CH1_DONE_SHIFT           (6U)
+#define ISP_ISP3A_MIS_MIS_RAWHIST_CH1_DONE_MASK            (0x1U << ISP_ISP3A_MIS_MIS_RAWHIST_CH1_DONE_SHIFT)           /* 0x00000040 */
+#define ISP_ISP3A_MIS_MIS_RAWHIST_CH2_DONE_SHIFT           (7U)
+#define ISP_ISP3A_MIS_MIS_RAWHIST_CH2_DONE_MASK            (0x1U << ISP_ISP3A_MIS_MIS_RAWHIST_CH2_DONE_SHIFT)           /* 0x00000080 */
+#define ISP_ISP3A_MIS_MIS_RAWAF_SUM_OF_SHIFT               (8U)
+#define ISP_ISP3A_MIS_MIS_RAWAF_SUM_OF_MASK                (0x1U << ISP_ISP3A_MIS_MIS_RAWAF_SUM_OF_SHIFT)               /* 0x00000100 */
+#define ISP_ISP3A_MIS_MIS_RAWAF_LUM_OF_SHIFT               (9U)
+#define ISP_ISP3A_MIS_MIS_RAWAF_LUM_OF_MASK                (0x1U << ISP_ISP3A_MIS_MIS_RAWAF_LUM_OF_SHIFT)               /* 0x00000200 */
+#define ISP_ISP3A_MIS_MIS_RAWAF_DONE_SHIFT                 (10U)
+#define ISP_ISP3A_MIS_MIS_RAWAF_DONE_MASK                  (0x1U << ISP_ISP3A_MIS_MIS_RAWAF_DONE_SHIFT)                 /* 0x00000400 */
+#define ISP_ISP3A_MIS_MIS_RAWAWB_DONE_SHIFT                (11U)
+#define ISP_ISP3A_MIS_MIS_RAWAWB_DONE_MASK                 (0x1U << ISP_ISP3A_MIS_MIS_RAWAWB_DONE_SHIFT)                /* 0x00000800 */
+#define ISP_ISP3A_MIS_MIS_SWS_3A_DDR_DONE_SHIFT            (12U)
+#define ISP_ISP3A_MIS_MIS_SWS_3A_DDR_DONE_MASK             (0x1U << ISP_ISP3A_MIS_MIS_SWS_3A_DDR_DONE_SHIFT)            /* 0x00001000 */
+/* ISP3A_ICR */
+#define ISP_ISP3A_ICR_OFFSET                               (0x1DCU)
+#define ISP_ISP3A_ICR_ICR_RAWAE_BIG_DONE_SHIFT             (0U)
+#define ISP_ISP3A_ICR_ICR_RAWAE_BIG_DONE_MASK              (0x1U << ISP_ISP3A_ICR_ICR_RAWAE_BIG_DONE_SHIFT)             /* 0x00000001 */
+#define ISP_ISP3A_ICR_ICR_RAWAE_CH0_DONE_SHIFT             (1U)
+#define ISP_ISP3A_ICR_ICR_RAWAE_CH0_DONE_MASK              (0x1U << ISP_ISP3A_ICR_ICR_RAWAE_CH0_DONE_SHIFT)             /* 0x00000002 */
+#define ISP_ISP3A_ICR_ICR_RAWAE_CH1_DONE_SHIFT             (2U)
+#define ISP_ISP3A_ICR_ICR_RAWAE_CH1_DONE_MASK              (0x1U << ISP_ISP3A_ICR_ICR_RAWAE_CH1_DONE_SHIFT)             /* 0x00000004 */
+#define ISP_ISP3A_ICR_ICR_RAWAE_CH2_DONE_SHIFT             (3U)
+#define ISP_ISP3A_ICR_ICR_RAWAE_CH2_DONE_MASK              (0x1U << ISP_ISP3A_ICR_ICR_RAWAE_CH2_DONE_SHIFT)             /* 0x00000008 */
+#define ISP_ISP3A_ICR_ICR_RAWHIST_BIG_DONE_SHIFT           (4U)
+#define ISP_ISP3A_ICR_ICR_RAWHIST_BIG_DONE_MASK            (0x1U << ISP_ISP3A_ICR_ICR_RAWHIST_BIG_DONE_SHIFT)           /* 0x00000010 */
+#define ISP_ISP3A_ICR_ICR_RAWHIST_CH0_DONE_SHIFT           (5U)
+#define ISP_ISP3A_ICR_ICR_RAWHIST_CH0_DONE_MASK            (0x1U << ISP_ISP3A_ICR_ICR_RAWHIST_CH0_DONE_SHIFT)           /* 0x00000020 */
+#define ISP_ISP3A_ICR_ICR_RAWHIST_CH1_DONE_SHIFT           (6U)
+#define ISP_ISP3A_ICR_ICR_RAWHIST_CH1_DONE_MASK            (0x1U << ISP_ISP3A_ICR_ICR_RAWHIST_CH1_DONE_SHIFT)           /* 0x00000040 */
+#define ISP_ISP3A_ICR_ICR_RAWHIST_CH2_DONE_SHIFT           (7U)
+#define ISP_ISP3A_ICR_ICR_RAWHIST_CH2_DONE_MASK            (0x1U << ISP_ISP3A_ICR_ICR_RAWHIST_CH2_DONE_SHIFT)           /* 0x00000080 */
+#define ISP_ISP3A_ICR_ICR_RAWAF_SUM_OF_SHIFT               (8U)
+#define ISP_ISP3A_ICR_ICR_RAWAF_SUM_OF_MASK                (0x1U << ISP_ISP3A_ICR_ICR_RAWAF_SUM_OF_SHIFT)               /* 0x00000100 */
+#define ISP_ISP3A_ICR_ICR_RAWAF_LUM_OF_SHIFT               (9U)
+#define ISP_ISP3A_ICR_ICR_RAWAF_LUM_OF_MASK                (0x1U << ISP_ISP3A_ICR_ICR_RAWAF_LUM_OF_SHIFT)               /* 0x00000200 */
+#define ISP_ISP3A_ICR_ICR_RAWAF_DONE_SHIFT                 (10U)
+#define ISP_ISP3A_ICR_ICR_RAWAF_DONE_MASK                  (0x1U << ISP_ISP3A_ICR_ICR_RAWAF_DONE_SHIFT)                 /* 0x00000400 */
+#define ISP_ISP3A_ICR_ICR_RAWAWB_DONE_SHIFT                (11U)
+#define ISP_ISP3A_ICR_ICR_RAWAWB_DONE_MASK                 (0x1U << ISP_ISP3A_ICR_ICR_RAWAWB_DONE_SHIFT)                /* 0x00000800 */
+#define ISP_ISP3A_ICR_ICR_SWS_3A_DDR_DONE_SHIFT            (12U)
+#define ISP_ISP3A_ICR_ICR_SWS_3A_DDR_DONE_MASK             (0x1U << ISP_ISP3A_ICR_ICR_SWS_3A_DDR_DONE_SHIFT)            /* 0x00001000 */
+/* ERR */
+#define ISP_ERR_OFFSET                                     (0x23CU)
+#define ISP_ERR                                            (0x0U)
+#define ISP_ERR_INFORM_SIZE_ERR_SHIFT                      (0U)
+#define ISP_ERR_INFORM_SIZE_ERR_MASK                       (0x1U << ISP_ERR_INFORM_SIZE_ERR_SHIFT)                      /* 0x00000001 */
+#define ISP_ERR_IS_SIZE_ERR_SHIFT                          (1U)
+#define ISP_ERR_IS_SIZE_ERR_MASK                           (0x1U << ISP_ERR_IS_SIZE_ERR_SHIFT)                          /* 0x00000002 */
+#define ISP_ERR_OUTFORM_SIZE_ERR_SHIFT                     (2U)
+#define ISP_ERR_OUTFORM_SIZE_ERR_MASK                      (0x1U << ISP_ERR_OUTFORM_SIZE_ERR_SHIFT)                     /* 0x00000004 */
+#define ISP_ERR_LSC_LUT_ERR_SHIFT                          (3U)
+#define ISP_ERR_LSC_LUT_ERR_MASK                           (0x1U << ISP_ERR_LSC_LUT_ERR_SHIFT)                          /* 0x00000008 */
+#define ISP_ERR_RAWLSC_LUT_ERR_SHIFT                       (4U)
+#define ISP_ERR_RAWLSC_LUT_ERR_MASK                        (0x1U << ISP_ERR_RAWLSC_LUT_ERR_SHIFT)                       /* 0x00000010 */
+/* ERR_CLR */
+#define ISP_ERR_CLR_OFFSET                                 (0x240U)
+#define ISP_ERR_CLR_INFORM_SIZE_ERR_CLR_SHIFT              (0U)
+#define ISP_ERR_CLR_INFORM_SIZE_ERR_CLR_MASK               (0x1U << ISP_ERR_CLR_INFORM_SIZE_ERR_CLR_SHIFT)              /* 0x00000001 */
+#define ISP_ERR_CLR_IS_SIZE_ERR_CLR_SHIFT                  (1U)
+#define ISP_ERR_CLR_IS_SIZE_ERR_CLR_MASK                   (0x1U << ISP_ERR_CLR_IS_SIZE_ERR_CLR_SHIFT)                  /* 0x00000002 */
+#define ISP_ERR_CLR_OUTFORM_SIZE_ERR_CLR_SHIFT             (2U)
+#define ISP_ERR_CLR_OUTFORM_SIZE_ERR_CLR_MASK              (0x1U << ISP_ERR_CLR_OUTFORM_SIZE_ERR_CLR_SHIFT)             /* 0x00000004 */
+#define ISP_ERR_CLR_LSC_LUT_ERR_CLR_SHIFT                  (3U)
+#define ISP_ERR_CLR_LSC_LUT_ERR_CLR_MASK                   (0x1U << ISP_ERR_CLR_LSC_LUT_ERR_CLR_SHIFT)                  /* 0x00000008 */
+#define ISP_ERR_CLR_RAWLSC_LUT_ERR_CLR_SHIFT               (4U)
+#define ISP_ERR_CLR_RAWLSC_LUT_ERR_CLR_MASK                (0x1U << ISP_ERR_CLR_RAWLSC_LUT_ERR_CLR_SHIFT)               /* 0x00000010 */
+/* FRAME_COUNT */
+#define ISP_FRAME_COUNT_OFFSET                             (0x244U)
+#define ISP_FRAME_COUNT                                    (0x0U)
+#define ISP_FRAME_COUNT_FRAME_COUNTER_SHIFT                (0U)
+#define ISP_FRAME_COUNT_FRAME_COUNTER_MASK                 (0x3FFU << ISP_FRAME_COUNT_FRAME_COUNTER_SHIFT)              /* 0x000003FF */
+/* DEBUG1 */
+#define ISP_DEBUG1_OFFSET                                  (0x254U)
+#define ISP_DEBUG1_RO_FIFO_SPACE2FULL_SHIFT                (0U)
+#define ISP_DEBUG1_RO_FIFO_SPACE2FULL_MASK                 (0xFU << ISP_DEBUG1_RO_FIFO_SPACE2FULL_SHIFT)                /* 0x0000000F */
 
 /********Name=SOFTRST_CON00,Offset=0x300********/
 #define SRST_NCOREPORESET0 0
