@@ -639,18 +639,20 @@ HAL_Status HAL_DSI_VerticalTimingConfig(struct DSI_REG *pReg,
  * @brief  DSI Dphy Timing Config.
  * @param  pReg: DSI reg base.
  * @param  pModeInfo: display mode info.
+ * @param  lanes: number of mipi data lines.
  * @return HAL_Status.
  */
 HAL_Status HAL_DSI_DphyTimingConfig(struct DSI_REG *pReg,
-                                    struct DISPLAY_MODE_INFO *pModeInfo)
+                                    struct DISPLAY_MODE_INFO *pModeInfo,
+                                    uint8_t lanes)
 {
     WRITE_REG(pReg->PHY_TMR_LPCLK_CFG, 0x40 << DSI_PHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_SHIFT |
               0x40 << DSI_PHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME_SHIFT);
     WRITE_REG(pReg->PHY_TMR_CFG, 0x14 << DSI_PHY_TMR_CFG_PHY_HS2LP_TIME_SHIFT |
               0x10 << DSI_PHY_TMR_CFG_PHY_LP2HS_TIME_SHIFT | 10000 << DSI_PHY_TMR_CFG_MAX_RD_TIME_SHIFT);
 
-    if (pModeInfo->flags & DSI_MODE_VIDEO)
-        WRITE_REG(pReg->PHY_IF_CFG, 0x5 << DSI_PHY_IF_CFG_PHY_STOP_WAIT_TIME_SHIFT | 0x3 << DSI_PHY_IF_CFG_N_LANES_SHIFT);
+    WRITE_REG(pReg->PHY_IF_CFG, 0x5 << DSI_PHY_IF_CFG_PHY_STOP_WAIT_TIME_SHIFT |
+              (lanes - 1) << DSI_PHY_IF_CFG_N_LANES_SHIFT);
 
     return HAL_OK;
 }
