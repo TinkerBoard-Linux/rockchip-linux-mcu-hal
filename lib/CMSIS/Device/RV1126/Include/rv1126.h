@@ -758,6 +758,304 @@ struct ISP_REG {
          uint32_t RESERVED0248[3];                    /* Address Offset: 0x0248 */
     __IO uint32_t DEBUG1;                             /* Address Offset: 0x0254 */
 };
+/* MI Register Structure Define */
+struct MI_REG {
+    __IO uint32_t MI_WR_CTRL;                         /* Address Offset: 0x0000 */
+    __IO uint32_t MI_WR_INIT;                         /* Address Offset: 0x0004 */
+    __IO uint32_t MI_MP_WR_Y_BASE;                    /* Address Offset: 0x0008 */
+    __IO uint32_t MI_MP_WR_Y_SIZE;                    /* Address Offset: 0x000C */
+    __IO uint32_t MI_MP_WR_Y_OFFS_CNT;                /* Address Offset: 0x0010 */
+    __I  uint32_t MI_MP_WR_Y_OFFS_CNT_START;          /* Address Offset: 0x0014 */
+    __IO uint32_t MI_MP_WR_Y_IRQ_OFFS;                /* Address Offset: 0x0018 */
+    __IO uint32_t MI_MP_WR_CB_BASE;                   /* Address Offset: 0x001C */
+    __IO uint32_t MI_MP_WR_CB_SIZE;                   /* Address Offset: 0x0020 */
+    __IO uint32_t MI_MP_WR_CB_OFFS_CNT;               /* Address Offset: 0x0024 */
+    __I  uint32_t MI_MP_WR_CB_OFFS_CNT_START;         /* Address Offset: 0x0028 */
+    __IO uint32_t MI_MP_WR_CR_BASE;                   /* Address Offset: 0x002C */
+    __IO uint32_t MI_MP_WR_CR_SIZE;                   /* Address Offset: 0x0030 */
+    __IO uint32_t MI_MP_WR_CR_OFFS_CNT;               /* Address Offset: 0x0034 */
+    __I  uint32_t MI_MP_WR_CR_OFFS_CNT_START;         /* Address Offset: 0x0038 */
+    __IO uint32_t MI_SP_WR_Y_BASE;                    /* Address Offset: 0x003C */
+    __IO uint32_t MI_SP_WR_Y_SIZE;                    /* Address Offset: 0x0040 */
+    __IO uint32_t MI_SP_WR_Y_OFFS_CNT;                /* Address Offset: 0x0044 */
+    __I  uint32_t MI_SP_WR_Y_OFFS_CNT_START;          /* Address Offset: 0x0048 */
+    __IO uint32_t MI_SP_WR_Y_LLENGTH;                 /* Address Offset: 0x004C */
+    __IO uint32_t MI_SP_WR_CB_BASE;                   /* Address Offset: 0x0050 */
+    __IO uint32_t MI_SP_WR_CB_SIZE;                   /* Address Offset: 0x0054 */
+    __IO uint32_t MI_SP_WR_CB_OFFS_CNT;               /* Address Offset: 0x0058 */
+    __I  uint32_t MI_SP_WR_CB_OFFS_CNT_START;         /* Address Offset: 0x005C */
+    __IO uint32_t MI_SP_WR_CR_BASE;                   /* Address Offset: 0x0060 */
+    __IO uint32_t MI_SP_WR_CR_SIZE;                   /* Address Offset: 0x0064 */
+    __IO uint32_t MI_SP_WR_CR_OFFS_CNT;               /* Address Offset: 0x0068 */
+    __I  uint32_t MI_SP_WR_CR_OFFS_CNT_START;         /* Address Offset: 0x006C */
+    __I  uint32_t MI_WR_BYTE_CNT;                     /* Address Offset: 0x0070 */
+    __I  uint32_t MI_WR_CTRL_SHD;                     /* Address Offset: 0x0074 */
+    __I  uint32_t MI_MP_WR_Y_BASE_SHD;                /* Address Offset: 0x0078 */
+    __I  uint32_t MI_MP_WR_Y_SIZE_SHD;                /* Address Offset: 0x007C */
+    __I  uint32_t MI_MP_WR_Y_OFFS_CNT_SHD;            /* Address Offset: 0x0080 */
+    __I  uint32_t MI_MP_WR_Y_IRQ_OFFS_SHD;            /* Address Offset: 0x0084 */
+    __I  uint32_t MI_MP_WR_CB_BASE_SHD;               /* Address Offset: 0x0088 */
+    __I  uint32_t MI_MP_WR_CB_SIZE_SHD;               /* Address Offset: 0x008C */
+    __I  uint32_t MI_MP_WR_CB_OFFS_CNT_SHD;           /* Address Offset: 0x0090 */
+    __I  uint32_t MI_MP_WR_CR_BASE_SHD;               /* Address Offset: 0x0094 */
+    __I  uint32_t MI_MP_WR_CR_SIZE_SHD;               /* Address Offset: 0x0098 */
+    __I  uint32_t MI_MP_WR_CR_OFFS_CNT_SHD;           /* Address Offset: 0x009C */
+    __I  uint32_t MI_SP_WR_Y_BASE_SHD;                /* Address Offset: 0x00A0 */
+    __I  uint32_t MI_SP_WR_Y_SIZE_SHD;                /* Address Offset: 0x00A4 */
+    __I  uint32_t MI_SP_WR_Y_OFFS_CNT_SHD;            /* Address Offset: 0x00A8 */
+         uint32_t RESERVED00AC;                       /* Address Offset: 0x00AC */
+    __I  uint32_t MI_SP_WR_CB_BASE_AD_SHD;            /* Address Offset: 0x00B0 */
+    __I  uint32_t MI_SP_WR_CB_SIZE_SHD;               /* Address Offset: 0x00B4 */
+    __I  uint32_t MI_SP_WR_CB_OFFS_CNT_SHD;           /* Address Offset: 0x00B8 */
+    __I  uint32_t MI_SP_WR_CR_BASE_AD_SHD;            /* Address Offset: 0x00BC */
+    __I  uint32_t MI_SP_WR_CR_SIZE_SHD;               /* Address Offset: 0x00C0 */
+    __I  uint32_t MI_SP_WR_CR_OFFS_CNT_SHD;           /* Address Offset: 0x00C4 */
+    __IO uint32_t MI_RD_Y_PIC_START_AD;               /* Address Offset: 0x00C8 */
+    __IO uint32_t MI_RD_Y_PIC_WIDTH;                  /* Address Offset: 0x00CC */
+    __IO uint32_t MI_RD_Y_LLENGTH;                    /* Address Offset: 0x00D0 */
+    __IO uint32_t MI_RD_Y_PIC_SIZE;                   /* Address Offset: 0x00D4 */
+    __IO uint32_t MI_RD_CB_PIC_START_AD;              /* Address Offset: 0x00D8 */
+         uint32_t RESERVED00DC[3];                    /* Address Offset: 0x00DC */
+    __IO uint32_t MI_RD_CR_PIC_START_AD;              /* Address Offset: 0x00E8 */
+         uint32_t RESERVED00EC[3];                    /* Address Offset: 0x00EC */
+    __IO uint32_t MI_IMSC;                            /* Address Offset: 0x00F8 */
+    __I  uint32_t MI_RIS;                             /* Address Offset: 0x00FC */
+    __I  uint32_t MI_MIS;                             /* Address Offset: 0x0100 */
+    __IO uint32_t MI_ICR;                             /* Address Offset: 0x0104 */
+    __IO uint32_t MI_ISR;                             /* Address Offset: 0x0108 */
+    __I  uint32_t MI_STATUS;                          /* Address Offset: 0x010C */
+    __O  uint32_t MI_STATUS_CLR;                      /* Address Offset: 0x0110 */
+    __IO uint32_t MI_SP_WR_Y_PIC_WIDTH;               /* Address Offset: 0x0114 */
+    __IO uint32_t MI_SP_WR_Y_PIC_HEIGHT;              /* Address Offset: 0x0118 */
+    __IO uint32_t MI_SP_WR_Y_PIC_SIZE;                /* Address Offset: 0x011C */
+    __IO uint32_t MI_RD_CTRL;                         /* Address Offset: 0x0120 */
+    __O  uint32_t MI_RD_START;                        /* Address Offset: 0x0124 */
+    __I  uint32_t MI_RD_STATUS;                       /* Address Offset: 0x0128 */
+    __I  uint32_t MI_WR_PIXEL_CNT;                    /* Address Offset: 0x012C */
+    __IO uint32_t MI_MP_WR_Y_BASE2;                   /* Address Offset: 0x0130 */
+    __IO uint32_t MI_MP_WR_CB_BASE2;                  /* Address Offset: 0x0134 */
+    __IO uint32_t MI_MP_WR_CR_BASE2;                  /* Address Offset: 0x0138 */
+    __IO uint32_t MI_SP_WR_Y_BASE2;                   /* Address Offset: 0x013C */
+    __IO uint32_t MI_SP_WR_CB_BASE2;                  /* Address Offset: 0x0140 */
+    __IO uint32_t MI_SP_WR_CR_BASE2;                  /* Address Offset: 0x0144 */
+    __IO uint32_t MI_WR_XTD_FORMAT_CTRL;              /* Address Offset: 0x0148 */
+         uint32_t RESERVED014C[2];                    /* Address Offset: 0x014C */
+    __I  uint32_t MI_WR_ID;                           /* Address Offset: 0x0154 */
+         uint32_t RESERVED0158[34];                   /* Address Offset: 0x0158 */
+    __IO uint32_t MI_MP_WR_Y_IRQ_OFFS2;               /* Address Offset: 0x01E0 */
+    __I  uint32_t MI_MP_WR_Y_IRQ_OFFS2_SHD;           /* Address Offset: 0x01E4 */
+         uint32_t RESERVED01E8[134];                  /* Address Offset: 0x01E8 */
+    __IO uint32_t MI_WR_CTRL2;                        /* Address Offset: 0x0400 */
+    __I  uint32_t MI_WR_ID2;                          /* Address Offset: 0x0404 */
+    __IO uint32_t MI_RD_CTRL2;                        /* Address Offset: 0x0408 */
+    __I  uint32_t MI_RD_ID;                           /* Address Offset: 0x040C */
+         uint32_t RESERVED0410[3];                    /* Address Offset: 0x0410 */
+    __IO uint32_t MI_RD_FIFO_LEVEL;                   /* Address Offset: 0x041C */
+    __IO uint32_t RAW0_WR_BASE;                       /* Address Offset: 0x0420 */
+    __IO uint32_t RAW0_WR_SIZE;                       /* Address Offset: 0x0424 */
+    __IO uint32_t RAW0_WR_LENGTH;                     /* Address Offset: 0x0428 */
+    __I  uint32_t RAW0_WR_BASE_SHD;                   /* Address Offset: 0x042C */
+    __IO uint32_t RAW1_WR_BASE;                       /* Address Offset: 0x0430 */
+    __IO uint32_t RAW1_WR_SIZE;                       /* Address Offset: 0x0434 */
+    __IO uint32_t RAW1_WR_LENGTH;                     /* Address Offset: 0x0438 */
+    __I  uint32_t RAW1_WR_BASE_SHD;                   /* Address Offset: 0x043C */
+    __IO uint32_t RAW2_WR_BASE;                       /* Address Offset: 0x0440 */
+    __IO uint32_t RAW2_WR_SIZE;                       /* Address Offset: 0x0444 */
+    __IO uint32_t RAW2_WR_LENGTH;                     /* Address Offset: 0x0448 */
+    __I  uint32_t RAW2_WR_BASE_SHD;                   /* Address Offset: 0x044C */
+    __IO uint32_t RAW3_WR_BASE;                       /* Address Offset: 0x0450 */
+    __IO uint32_t RAW3_WR_SIZE;                       /* Address Offset: 0x0454 */
+    __IO uint32_t RAW3_WR_LENGTH;                     /* Address Offset: 0x0458 */
+    __I  uint32_t RAW3_WR_BASE_SHD;                   /* Address Offset: 0x045C */
+    __I  uint32_t RW0_WR_LAST_FRAME_ADDR;             /* Address Offset: 0x0460 */
+    __I  uint32_t RW1_WR_LAST_FRAME_ADDR;             /* Address Offset: 0x0464 */
+    __I  uint32_t RW2_WR_LAST_FRAME_ADDR;             /* Address Offset: 0x0468 */
+    __I  uint32_t RW3_WR_LAST_FRAME_ADDR;             /* Address Offset: 0x046C */
+    __IO uint32_t RAW0_RD_BASE;                       /* Address Offset: 0x0470 */
+    __IO uint32_t RAW0_RD_LENGTH;                     /* Address Offset: 0x0474 */
+    __IO uint32_t RAW0_RD_BASE_SHD;                   /* Address Offset: 0x0478 */
+         uint32_t RESERVED047C;                       /* Address Offset: 0x047C */
+    __IO uint32_t RAW1_RD_BASE;                       /* Address Offset: 0x0480 */
+    __IO uint32_t RAW1_RD_LENGTH;                     /* Address Offset: 0x0484 */
+    __IO uint32_t RAW1_RD_BASE_SHD;                   /* Address Offset: 0x0488 */
+         uint32_t RESERVED048C;                       /* Address Offset: 0x048C */
+    __IO uint32_t RAWS_RD_BASE;                       /* Address Offset: 0x0490 */
+    __IO uint32_t RAWS_RD_LENGTH;                     /* Address Offset: 0x0494 */
+    __IO uint32_t RAWS_RD_BASE_SHD;                   /* Address Offset: 0x0498 */
+         uint32_t RESERVED049C[25];                   /* Address Offset: 0x049C */
+    __IO uint32_t RAWFBC_WR_BURST_LEN;                /* Address Offset: 0x0500 */
+    __IO uint32_t RAWFBC_RD_BURST_LEN;                /* Address Offset: 0x0504 */
+         uint32_t RESERVED0508[2];                    /* Address Offset: 0x0508 */
+    __IO uint32_t RAW0FBC_WR_BASE;                    /* Address Offset: 0x0510 */
+    __IO uint32_t RAW1FBC_WR_BASE;                    /* Address Offset: 0x0514 */
+    __IO uint32_t RAW0FBC_RD_BASE;                    /* Address Offset: 0x0518 */
+    __IO uint32_t RAW1FBC_RD_BASE;                    /* Address Offset: 0x051C */
+    __IO uint32_t RAW0FBC_WR_BASE_SHD;                /* Address Offset: 0x0520 */
+    __IO uint32_t RAW1FBC_WR_BASE_SHD;                /* Address Offset: 0x0524 */
+    __IO uint32_t RAW0FBC_RD_BASE_SHD;                /* Address Offset: 0x0528 */
+    __IO uint32_t RAW1FBC_RD_BASE_SHD;                /* Address Offset: 0x052C */
+         uint32_t RESERVED0530[4];                    /* Address Offset: 0x0530 */
+    __IO uint32_t LUT_3D_RD_BASE;                     /* Address Offset: 0x0540 */
+    __IO uint32_t LUT_LSC_RD_BASE;                    /* Address Offset: 0x0544 */
+    __IO uint32_t LUT_LDCH_RD_BASE;                   /* Address Offset: 0x0548 */
+         uint32_t RESERVED054C;                       /* Address Offset: 0x054C */
+    __IO uint32_t LUT_3D_RD_WSIZE;                    /* Address Offset: 0x0550 */
+    __IO uint32_t LUT_LSC_RD_WSIZE;                   /* Address Offset: 0x0554 */
+    __IO uint32_t LUT_LDCH_RD_H_WSIZE;                /* Address Offset: 0x0558 */
+    __IO uint32_t LUT_LDCH_RD_V_SIZE;                 /* Address Offset: 0x055C */
+    __IO uint32_t DBR_WR_BASE;                        /* Address Offset: 0x0560 */
+    __IO uint32_t DBR_WR_SIZE;                        /* Address Offset: 0x0564 */
+    __IO uint32_t DBR_WR_LENGTH;                      /* Address Offset: 0x0568 */
+    __I  uint32_t DBR_WR_BASE_SHD;                    /* Address Offset: 0x056C */
+    __IO uint32_t DBR_RD_BASE;                        /* Address Offset: 0x0570 */
+    __IO uint32_t DBR_RD_LENGTH;                      /* Address Offset: 0x0574 */
+    __IO uint32_t DBR_RD_BASE_SHD;                    /* Address Offset: 0x0578 */
+    __IO uint32_t SWS_3A_WR_BASE;                     /* Address Offset: 0x057C */
+    __IO uint32_t GAIN_WR_BASE;                       /* Address Offset: 0x0580 */
+    __IO uint32_t GAIN_WR_SIZE;                       /* Address Offset: 0x0584 */
+    __IO uint32_t GAIN_WR_LENGTH;                     /* Address Offset: 0x0588 */
+         uint32_t RESERVED058C;                       /* Address Offset: 0x058C */
+    __I  uint32_t GAIN_WR_BASE_SHD;                   /* Address Offset: 0x0590 */
+    __IO uint32_t GAIN_WR_BASE2;                      /* Address Offset: 0x0594 */
+};
+/* CSI2RX Register Structure Define */
+struct CSI2RX_REG {
+    __IO uint32_t CTRL0;                              /* Address Offset: 0x0000 */
+    __IO uint32_t CTRL1;                              /* Address Offset: 0x0004 */
+    __IO uint32_t CTRL2;                              /* Address Offset: 0x0008 */
+         uint32_t RESERVED000C;                       /* Address Offset: 0x000C */
+    __IO uint32_t CSI2_RESETN;                        /* Address Offset: 0x0010 */
+    __I  uint32_t PHY_STATE_RO;                       /* Address Offset: 0x0014 */
+    __IO uint32_t DATA_IDS_1;                         /* Address Offset: 0x0018 */
+    __IO uint32_t DATA_IDS_2;                         /* Address Offset: 0x001C */
+    __I  uint32_t ERR_PHY;                            /* Address Offset: 0x0020 */
+    __I  uint32_t ERR_PACKET;                         /* Address Offset: 0x0024 */
+    __IO uint32_t ERR_OVERFLOW;                       /* Address Offset: 0x0028 */
+    __I  uint32_t ERR_STAT;                           /* Address Offset: 0x002C */
+    __IO uint32_t MASK_PHY;                           /* Address Offset: 0x0030 */
+    __IO uint32_t MASK_PACKET;                        /* Address Offset: 0x0034 */
+    __IO uint32_t MASK_OVERFLOW;                      /* Address Offset: 0x0038 */
+    __IO uint32_t MASK_STAT;                          /* Address Offset: 0x003C */
+    __IO uint32_t RAW0_WR_CTRL;                       /* Address Offset: 0x0040 */
+    __I  uint32_t RAW0_WR_LINECNT_RO;                 /* Address Offset: 0x0044 */
+    __IO uint32_t RAW0_WR_PIC_SIZE;                   /* Address Offset: 0x0048 */
+    __IO uint32_t RAW0_WR_PIC_OFF;                    /* Address Offset: 0x004C */
+    __IO uint32_t RAW1_WR_CTRL;                       /* Address Offset: 0x0050 */
+    __I  uint32_t RAW1_WR_LINECNT_RO;                 /* Address Offset: 0x0054 */
+    __IO uint32_t RAW1_WR_PIC_SIZE;                   /* Address Offset: 0x0058 */
+    __IO uint32_t RAW1_WR_PIC_OFF;                    /* Address Offset: 0x005C */
+    __IO uint32_t RAW2_WR_CTRL;                       /* Address Offset: 0x0060 */
+    __I  uint32_t RAW2_WR_LINECNT_RO;                 /* Address Offset: 0x0064 */
+    __IO uint32_t RAW2_WR_PIC_SIZE;                   /* Address Offset: 0x0068 */
+    __IO uint32_t RAW2_WR_PIC_OFF;                    /* Address Offset: 0x006C */
+    __IO uint32_t RAW3_WR_CTRL;                       /* Address Offset: 0x0070 */
+    __I  uint32_t RAW3_WR_LINECNT_RO;                 /* Address Offset: 0x0074 */
+    __IO uint32_t RAW3_WR_PIC_SIZE;                   /* Address Offset: 0x0078 */
+    __IO uint32_t RAW3_WR_PIC_OFF;                    /* Address Offset: 0x007C */
+    __IO uint32_t RAW_RD_CTRL;                        /* Address Offset: 0x0080 */
+    __I  uint32_t RAW_RD_LINECNT_RO;                  /* Address Offset: 0x0084 */
+    __IO uint32_t RAW_RD_PIC_SIZE;                    /* Address Offset: 0x0088 */
+    __I  uint32_t RAW2_RD_LINECNT_RO;                 /* Address Offset: 0x008C */
+    __IO uint32_t RAWFBC_CTRL;                        /* Address Offset: 0x0090 */
+    __IO uint32_t ESPHDR_LCNT;                        /* Address Offset: 0x0094 */
+    __IO uint32_t ESPHDR_IDCD;                        /* Address Offset: 0x0098 */
+         uint32_t RESERVED009C;                       /* Address Offset: 0x009C */
+    __I  uint32_t VC0_FRAME_NUM_RO;                   /* Address Offset: 0x00A0 */
+    __I  uint32_t VC1_FRAME_NUM_RO;                   /* Address Offset: 0x00A4 */
+    __I  uint32_t VC2_FRAME_NUM_RO;                   /* Address Offset: 0x00A8 */
+    __I  uint32_t VC3_FRAME_NUM_RO;                   /* Address Offset: 0x00AC */
+    __I  uint32_t ISP_LINECNT_RO;                     /* Address Offset: 0x00B0 */
+    __I  uint32_t RAW_WR_IBUF_STATUS_RO;              /* Address Offset: 0x00B4 */
+    __I  uint32_t RAW_WR_IBUF3_STATUS_RO;             /* Address Offset: 0x00B8 */
+         uint32_t RESERVED00BC[2];                    /* Address Offset: 0x00BC */
+    __I  uint32_t CUR_HEADER_RO;                      /* Address Offset: 0x00C4 */
+    __IO uint32_t RAWFBC_EN_SHD;                      /* Address Offset: 0x00C8 */
+         uint32_t RESERVED00CC;                       /* Address Offset: 0x00CC */
+    __IO uint32_t FPN_CTRL;                           /* Address Offset: 0x00D0 */
+    __IO uint32_t FPN_TABLE_CTRL;                     /* Address Offset: 0x00D4 */
+    __IO uint32_t FPN_TABLE_DATA;                     /* Address Offset: 0x00D8 */
+         uint32_t RESERVED00DC[5];                    /* Address Offset: 0x00DC */
+    __IO uint32_t CSI_Y_STAT_CTRL;                    /* Address Offset: 0x00F0 */
+    __I  uint32_t CSI_Y_STAT_RO;                      /* Address Offset: 0x00F4 */
+         uint32_t RESERVED00F8;                       /* Address Offset: 0x00F8 */
+    __I  uint32_t VERSION;                            /* Address Offset: 0x00FC */
+};
+/* DPHYRX Register Structure Define */
+struct DPHYRX_REG {
+    __IO uint32_t LANE_EN;                            /* Address Offset: 0x0000 */
+         uint32_t RESERVED0004[12];                   /* Address Offset: 0x0004 */
+    __IO uint32_t DIGITAL_CLK_PHASE;                  /* Address Offset: 0x0034 */
+    __IO uint32_t LANE_CLK_3_PHASE;                   /* Address Offset: 0x0038 */
+    __IO uint32_t LANE_2_1_0_PHASE;                   /* Address Offset: 0x003C */
+         uint32_t RESERVED0040[2];                    /* Address Offset: 0x0040 */
+    __IO uint32_t DIGITAL_CLK_REVERSE;                /* Address Offset: 0x0048 */
+         uint32_t RESERVED004C[13];                   /* Address Offset: 0x004C */
+    __IO uint32_t MIPI_LVDS_ENABLE;                   /* Address Offset: 0x0080 */
+         uint32_t RESERVED0084[41];                   /* Address Offset: 0x0084 */
+    __IO uint32_t LANE_CK_MODE;                       /* Address Offset: 0x0128 */
+         uint32_t RESERVED012C[3];                    /* Address Offset: 0x012C */
+    __IO uint32_t LANE_CK_MSB;                        /* Address Offset: 0x0138 */
+         uint32_t RESERVED013C;                       /* Address Offset: 0x013C */
+    __IO uint32_t LANE_CK_TTAGO;                      /* Address Offset: 0x0140 */
+    __IO uint32_t LANE_CK_TTASURE;                    /* Address Offset: 0x0144 */
+    __IO uint32_t LANE_CK_TTAWAIT;                    /* Address Offset: 0x0148 */
+         uint32_t RESERVED014C[5];                    /* Address Offset: 0x014C */
+    __IO uint32_t LANE_CK_THSSETTLE;                  /* Address Offset: 0x0160 */
+         uint32_t RESERVED0164;                       /* Address Offset: 0x0164 */
+    __IO uint32_t LANE_CK_CAL_EN;                     /* Address Offset: 0x0168 */
+         uint32_t RESERVED016C[19];                   /* Address Offset: 0x016C */
+    __IO uint32_t LANE_0_MSB;                         /* Address Offset: 0x01B8 */
+         uint32_t RESERVED01BC;                       /* Address Offset: 0x01BC */
+    __IO uint32_t LANE_0_TTAGO;                       /* Address Offset: 0x01C0 */
+    __IO uint32_t LANE_0_TTASURE;                     /* Address Offset: 0x01C4 */
+    __IO uint32_t LANE_0_TTAWAIT;                     /* Address Offset: 0x01C8 */
+         uint32_t RESERVED01CC[5];                    /* Address Offset: 0x01CC */
+    __IO uint32_t LANE_0_THSSETTLE;                   /* Address Offset: 0x01E0 */
+         uint32_t RESERVED01E4;                       /* Address Offset: 0x01E4 */
+    __IO uint32_t LANE_0_CAL_EN;                      /* Address Offset: 0x01E8 */
+         uint32_t RESERVED01EC[19];                   /* Address Offset: 0x01EC */
+    __IO uint32_t LANE_1_MSB;                         /* Address Offset: 0x0238 */
+         uint32_t RESERVED023C;                       /* Address Offset: 0x023C */
+    __IO uint32_t LANE_1_TTAGO;                       /* Address Offset: 0x0240 */
+    __IO uint32_t LANE_1_TTASURE;                     /* Address Offset: 0x0244 */
+    __IO uint32_t LANE_1_TTAWAIT;                     /* Address Offset: 0x0248 */
+         uint32_t RESERVED024C[5];                    /* Address Offset: 0x024C */
+    __IO uint32_t LANE_1_THSSETTLE;                   /* Address Offset: 0x0260 */
+         uint32_t RESERVED0264;                       /* Address Offset: 0x0264 */
+    __IO uint32_t LANE_1_CAL_EN;                      /* Address Offset: 0x0268 */
+         uint32_t RESERVED026C[19];                   /* Address Offset: 0x026C */
+    __IO uint32_t LANE_2_MSB;                         /* Address Offset: 0x02B8 */
+         uint32_t RESERVED02BC;                       /* Address Offset: 0x02BC */
+    __IO uint32_t LANE_2_TTAGO;                       /* Address Offset: 0x02C0 */
+    __IO uint32_t LANE_2_TTASURE;                     /* Address Offset: 0x02C4 */
+    __IO uint32_t LANE_2_TTAWAIT;                     /* Address Offset: 0x02C8 */
+    __IO uint32_t MIPI_LVDS_MODEL;                    /* Address Offset: 0x02CC */
+         uint32_t RESERVED02D0[4];                    /* Address Offset: 0x02D0 */
+    __IO uint32_t LANE_2_THSSETTLE;                   /* Address Offset: 0x02E0 */
+         uint32_t RESERVED02E4;                       /* Address Offset: 0x02E4 */
+    __IO uint32_t LANE_2_CAL_EN;                      /* Address Offset: 0x02E8 */
+         uint32_t RESERVED02EC[5];                    /* Address Offset: 0x02EC */
+    __IO uint32_t LVDS_MODE;                          /* Address Offset: 0x0300 */
+         uint32_t RESERVED0304[13];                   /* Address Offset: 0x0304 */
+    __IO uint32_t LANE_3_MSB;                         /* Address Offset: 0x0338 */
+         uint32_t RESERVED033C;                       /* Address Offset: 0x033C */
+    __IO uint32_t LANE_3_TTAGO;                       /* Address Offset: 0x0340 */
+    __IO uint32_t LANE_3_TTASURE;                     /* Address Offset: 0x0344 */
+    __IO uint32_t LANE_3_TTAWAIT;                     /* Address Offset: 0x0348 */
+         uint32_t RESERVED034C[5];                    /* Address Offset: 0x034C */
+    __IO uint32_t LANE_3_THSSETTLE;                   /* Address Offset: 0x0360 */
+         uint32_t RESERVED0364;                       /* Address Offset: 0x0364 */
+    __IO uint32_t LANE_3_CAL_EN;                      /* Address Offset: 0x0368 */
+};
+/* ISP_DEBAYER Register Structure Define */
+struct ISP_DEBAYER_REG {
+    __IO uint32_t CONTROL;                            /* Address Offset: 0x0000 */
+    __IO uint32_t G_INTERP;                           /* Address Offset: 0x0004 */
+    __IO uint32_t G_INTERP_FILTER1;                   /* Address Offset: 0x0008 */
+    __IO uint32_t G_INTERP_FILTER2;                   /* Address Offset: 0x000C */
+    __IO uint32_t OFFSET;                             /* Address Offset: 0x0010 */
+    __IO uint32_t C_FILTER;                           /* Address Offset: 0x0014 */
+};
 #endif /*  __ASSEMBLY__  */
 /****************************************************************************************/
 /*                                                                                      */
@@ -774,6 +1072,8 @@ struct ISP_REG {
 #define GPIO0_BASE          0xFF460000U /* GPIO0 base address */
 #define PMUCRU_BASE         0xFF480000U /* PMUCRU base address */
 #define CRU_BASE            0xFF490000U /* CRU base address */
+#define DPHYRX0_BASE        0xFF4B0000U /* DPHYRX0 base address */
+#define DPHYRX1_BASE        0xFF4B8000U /* DPHYRX1 base address */
 #define I2C1_BASE           0xFF510000U /* I2C1 base address */
 #define I2C3_BASE           0xFF520000U /* I2C3 base address */
 #define I2C4_BASE           0xFF530000U /* I2C4 base address */
@@ -798,6 +1098,9 @@ struct ISP_REG {
 #define TIMER5_BASE         0xFF6600A0U /* TIMER5 base address */
 #define CTRL_0000_BASE      0xFFB50000U /* CTRL_0000 base address */
 #define ISP_0400_BASE       0xFFB50400U /* ISP_0400 base address */
+#define MI_1400_BASE        0xFFB51400U /* MI_1400 base address */
+#define CSI2RX_1C00_BASE    0xFFB51C00U /* CSI2RX_1C00 base address */
+#define ISP_DEBAYER_2500_BASE 0xFFB52500U /* ISP_DEBAYER_2500 base address */
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -815,6 +1118,8 @@ struct ISP_REG {
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
 #define PMUCRU              ((struct PMUCRU_REG *) PMUCRU_BASE)
 #define CRU                 ((struct CRU_REG *) CRU_BASE)
+#define DPHYRX0             ((struct DPHYRX_REG *) DPHYRX0_BASE)
+#define DPHYRX1             ((struct DPHYRX_REG *) DPHYRX1_BASE)
 #define I2C1                ((struct I2C_REG *) I2C1_BASE)
 #define I2C3                ((struct I2C_REG *) I2C3_BASE)
 #define I2C4                ((struct I2C_REG *) I2C4_BASE)
@@ -839,6 +1144,9 @@ struct ISP_REG {
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
 #define CTRL_0000           ((struct CTRL_REG *) CTRL_0000_BASE)
 #define ISP_0400            ((struct ISP_REG *) ISP_0400_BASE)
+#define MI_1400             ((struct MI_REG *) MI_1400_BASE)
+#define CSI2RX_1C00         ((struct CSI2RX_REG *) CSI2RX_1C00_BASE)
+#define ISP_DEBAYER_2500    ((struct ISP_DEBAYER_REG *) ISP_DEBAYER_2500_BASE)
 
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
@@ -846,6 +1154,7 @@ struct ISP_REG {
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX)
 #define IS_VOP_INSTANCE(instance) ((instance) == VOP)
+#define IS_DPHYRX_INSTANCE(instance) (((instance) == DPHYRX0) || ((instance) == DPHYRX1))
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C2) || ((instance) == I2C1) || ((instance) == I2C3) || ((instance) == I2C4) || ((instance) == I2C5))
 #define IS_UART_INSTANCE(instance) (((instance) == UART1) || ((instance) == UART0) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1))
@@ -853,6 +1162,9 @@ struct ISP_REG {
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_CTRL_0000_INSTANCE(instance) ((instance) == CTRL_0000)
 #define IS_ISP_0400_INSTANCE(instance) ((instance) == ISP_0400)
+#define IS_MI_1400_INSTANCE(instance) ((instance) == MI_1400)
+#define IS_CSI2RX_1C00_INSTANCE(instance) ((instance) == CSI2RX_1C00)
+#define IS_ISP_DEBAYER_2500_INSTANCE(instance) ((instance) == ISP_DEBAYER_2500)
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -10281,6 +10593,1864 @@ struct ISP_REG {
 #define ISP_DEBUG1_OFFSET                                  (0x254U)
 #define ISP_DEBUG1_RO_FIFO_SPACE2FULL_SHIFT                (0U)
 #define ISP_DEBUG1_RO_FIFO_SPACE2FULL_MASK                 (0xFU << ISP_DEBUG1_RO_FIFO_SPACE2FULL_SHIFT)                /* 0x0000000F */
+/*******************************************MI*******************************************/
+/* MI_WR_CTRL */
+#define MI_MI_WR_CTRL_OFFSET                               (0x0U)
+#define MI_MI_WR_CTRL_SW_MI_WR_PATH_ENABLE_SHIFT           (0U)
+#define MI_MI_WR_CTRL_SW_MI_WR_PATH_ENABLE_MASK            (0xFU << MI_MI_WR_CTRL_SW_MI_WR_PATH_ENABLE_SHIFT)           /* 0x0000000F */
+#define MI_MI_WR_CTRL_SW_MI_WR_H_FLIP_SHIFT                (4U)
+#define MI_MI_WR_CTRL_SW_MI_WR_H_FLIP_MASK                 (0x1U << MI_MI_WR_CTRL_SW_MI_WR_H_FLIP_SHIFT)                /* 0x00000010 */
+#define MI_MI_WR_CTRL_SW_MI_WR_V_FLIP_SHIFT                (5U)
+#define MI_MI_WR_CTRL_SW_MI_WR_V_FLIP_MASK                 (0x1U << MI_MI_WR_CTRL_SW_MI_WR_V_FLIP_SHIFT)                /* 0x00000020 */
+#define MI_MI_WR_CTRL_SW_MI_WR_ROT_SHIFT                   (6U)
+#define MI_MI_WR_CTRL_SW_MI_WR_ROT_MASK                    (0x1U << MI_MI_WR_CTRL_SW_MI_WR_ROT_SHIFT)                   /* 0x00000040 */
+#define MI_MI_WR_CTRL_SW_MI_WR_BYTE_SWAP_SHIFT             (7U)
+#define MI_MI_WR_CTRL_SW_MI_WR_BYTE_SWAP_MASK              (0x1U << MI_MI_WR_CTRL_SW_MI_WR_BYTE_SWAP_SHIFT)             /* 0x00000080 */
+#define MI_MI_WR_CTRL_SW_MI_WR_Y_FULL_RANGE_SHIFT          (8U)
+#define MI_MI_WR_CTRL_SW_MI_WR_Y_FULL_RANGE_MASK           (0x1U << MI_MI_WR_CTRL_SW_MI_WR_Y_FULL_RANGE_SHIFT)          /* 0x00000100 */
+#define MI_MI_WR_CTRL_SW_MI_WR_CBCR_FULL_RANGE_SHIFT       (9U)
+#define MI_MI_WR_CTRL_SW_MI_WR_CBCR_FULL_RANGE_MASK        (0x1U << MI_MI_WR_CTRL_SW_MI_WR_CBCR_FULL_RANGE_SHIFT)       /* 0x00000200 */
+#define MI_MI_WR_CTRL_SW_MI_WR_422NONCOSITED_SHIFT         (10U)
+#define MI_MI_WR_CTRL_SW_MI_WR_422NONCOSITED_MASK          (0x1U << MI_MI_WR_CTRL_SW_MI_WR_422NONCOSITED_SHIFT)         /* 0x00000400 */
+#define MI_MI_WR_CTRL_SW_MP_WR_PINGPONG_EN_SHIFT           (11U)
+#define MI_MI_WR_CTRL_SW_MP_WR_PINGPONG_EN_MASK            (0x1U << MI_MI_WR_CTRL_SW_MP_WR_PINGPONG_EN_SHIFT)           /* 0x00000800 */
+#define MI_MI_WR_CTRL_SW_SP_WR_PINGPONG_EN_SHIFT           (12U)
+#define MI_MI_WR_CTRL_SW_SP_WR_PINGPONG_EN_MASK            (0x1U << MI_MI_WR_CTRL_SW_SP_WR_PINGPONG_EN_SHIFT)           /* 0x00001000 */
+#define MI_MI_WR_CTRL_SW_MP_WR_AUTO_UPD_SHIFT              (13U)
+#define MI_MI_WR_CTRL_SW_MP_WR_AUTO_UPD_MASK               (0x1U << MI_MI_WR_CTRL_SW_MP_WR_AUTO_UPD_SHIFT)              /* 0x00002000 */
+#define MI_MI_WR_CTRL_SW_SP_WR_AUTO_UPD_SHIFT              (14U)
+#define MI_MI_WR_CTRL_SW_SP_WR_AUTO_UPD_MASK               (0x1U << MI_MI_WR_CTRL_SW_SP_WR_AUTO_UPD_SHIFT)              /* 0x00004000 */
+#define MI_MI_WR_CTRL_SW_MI_WR_LAST_PIXEL_SIG_EN_SHIFT     (15U)
+#define MI_MI_WR_CTRL_SW_MI_WR_LAST_PIXEL_SIG_EN_MASK      (0x1U << MI_MI_WR_CTRL_SW_MI_WR_LAST_PIXEL_SIG_EN_SHIFT)     /* 0x00008000 */
+#define MI_MI_WR_CTRL_SW_MI_WR_BURST_LEN_LUM_SHIFT         (16U)
+#define MI_MI_WR_CTRL_SW_MI_WR_BURST_LEN_LUM_MASK          (0x3U << MI_MI_WR_CTRL_SW_MI_WR_BURST_LEN_LUM_SHIFT)         /* 0x00030000 */
+#define MI_MI_WR_CTRL_SW_MI_WR_BURST_LEN_CHROM_SHIFT       (18U)
+#define MI_MI_WR_CTRL_SW_MI_WR_BURST_LEN_CHROM_MASK        (0x3U << MI_MI_WR_CTRL_SW_MI_WR_BURST_LEN_CHROM_SHIFT)       /* 0x000C0000 */
+#define MI_MI_WR_CTRL_SW_MI_WR_INIT_BASE_EN_SHIFT          (20U)
+#define MI_MI_WR_CTRL_SW_MI_WR_INIT_BASE_EN_MASK           (0x1U << MI_MI_WR_CTRL_SW_MI_WR_INIT_BASE_EN_SHIFT)          /* 0x00100000 */
+#define MI_MI_WR_CTRL_SW_MI_WR_INIT_OFFSET_EN_SHIFT        (21U)
+#define MI_MI_WR_CTRL_SW_MI_WR_INIT_OFFSET_EN_MASK         (0x1U << MI_MI_WR_CTRL_SW_MI_WR_INIT_OFFSET_EN_SHIFT)        /* 0x00200000 */
+#define MI_MI_WR_CTRL_SW_MP_WR_FORMAT_SHIFT                (22U)
+#define MI_MI_WR_CTRL_SW_MP_WR_FORMAT_MASK                 (0x3U << MI_MI_WR_CTRL_SW_MP_WR_FORMAT_SHIFT)                /* 0x00C00000 */
+#define MI_MI_WR_CTRL_SW_SP_WR_FORMAT_SHIFT                (24U)
+#define MI_MI_WR_CTRL_SW_SP_WR_FORMAT_MASK                 (0x3U << MI_MI_WR_CTRL_SW_SP_WR_FORMAT_SHIFT)                /* 0x03000000 */
+#define MI_MI_WR_CTRL_SW_SP_WR_INPUT_FORMAT_SHIFT          (26U)
+#define MI_MI_WR_CTRL_SW_SP_WR_INPUT_FORMAT_MASK           (0x3U << MI_MI_WR_CTRL_SW_SP_WR_INPUT_FORMAT_SHIFT)          /* 0x0C000000 */
+#define MI_MI_WR_CTRL_SW_SP_WR_OUTPUT_FORMAT_SHIFT         (28U)
+#define MI_MI_WR_CTRL_SW_SP_WR_OUTPUT_FORMAT_MASK          (0x7U << MI_MI_WR_CTRL_SW_SP_WR_OUTPUT_FORMAT_SHIFT)         /* 0x70000000 */
+/* MI_WR_INIT */
+#define MI_MI_WR_INIT_OFFSET                               (0x4U)
+#define MI_MI_WR_INIT_SW_Y12_YENABLE_SHIFT                 (0U)
+#define MI_MI_WR_INIT_SW_Y12_YENABLE_MASK                  (0x1U << MI_MI_WR_INIT_SW_Y12_YENABLE_SHIFT)                 /* 0x00000001 */
+#define MI_MI_WR_INIT_SW_Y12_CENABLE_SHIFT                 (1U)
+#define MI_MI_WR_INIT_SW_Y12_CENABLE_MASK                  (0x1U << MI_MI_WR_INIT_SW_Y12_CENABLE_SHIFT)                 /* 0x00000002 */
+#define MI_MI_WR_INIT_SW_MI_SKIP_SHIFT                     (2U)
+#define MI_MI_WR_INIT_SW_MI_SKIP_MASK                      (0x1U << MI_MI_WR_INIT_SW_MI_SKIP_SHIFT)                     /* 0x00000004 */
+#define MI_MI_WR_INIT_SW_Y12_ENDIAN_MODE_SHIFT             (3U)
+#define MI_MI_WR_INIT_SW_Y12_ENDIAN_MODE_MASK              (0x1U << MI_MI_WR_INIT_SW_Y12_ENDIAN_MODE_SHIFT)             /* 0x00000008 */
+#define MI_MI_WR_INIT_SW_MI_CFG_UPD_SHIFT                  (4U)
+#define MI_MI_WR_INIT_SW_MI_CFG_UPD_MASK                   (0x1U << MI_MI_WR_INIT_SW_MI_CFG_UPD_SHIFT)                  /* 0x00000010 */
+#define MI_MI_WR_INIT_SW_MI_UPDATE_MODE_SHIFT              (5U)
+#define MI_MI_WR_INIT_SW_MI_UPDATE_MODE_MASK               (0x1U << MI_MI_WR_INIT_SW_MI_UPDATE_MODE_SHIFT)              /* 0x00000020 */
+#define MI_MI_WR_INIT_SW_MI_UPDATE_LAST_PIXEL_EN_SHIFT     (6U)
+#define MI_MI_WR_INIT_SW_MI_UPDATE_LAST_PIXEL_EN_MASK      (0x1U << MI_MI_WR_INIT_SW_MI_UPDATE_LAST_PIXEL_EN_SHIFT)     /* 0x00000040 */
+#define MI_MI_WR_INIT_SW_RGB_PATH_ALPHA_VALUE_SHIFT        (8U)
+#define MI_MI_WR_INIT_SW_RGB_PATH_ALPHA_VALUE_MASK         (0xFFU << MI_MI_WR_INIT_SW_RGB_PATH_ALPHA_VALUE_SHIFT)       /* 0x0000FF00 */
+/* MI_MP_WR_Y_BASE */
+#define MI_MI_MP_WR_Y_BASE_OFFSET                          (0x8U)
+#define MI_MI_MP_WR_Y_BASE_SW_MP_WR_Y_BASE_SHIFT           (3U)
+#define MI_MI_MP_WR_Y_BASE_SW_MP_WR_Y_BASE_MASK            (0x1FFFFFFFU << MI_MI_MP_WR_Y_BASE_SW_MP_WR_Y_BASE_SHIFT)    /* 0xFFFFFFF8 */
+/* MI_MP_WR_Y_SIZE */
+#define MI_MI_MP_WR_Y_SIZE_OFFSET                          (0xCU)
+#define MI_MI_MP_WR_Y_SIZE_SW_MP_WR_Y_SIZE_SHIFT           (3U)
+#define MI_MI_MP_WR_Y_SIZE_SW_MP_WR_Y_SIZE_MASK            (0x3FFFFFFU << MI_MI_MP_WR_Y_SIZE_SW_MP_WR_Y_SIZE_SHIFT)     /* 0x1FFFFFF8 */
+/* MI_MP_WR_Y_OFFS_CNT */
+#define MI_MI_MP_WR_Y_OFFS_CNT_OFFSET                      (0x10U)
+#define MI_MI_MP_WR_Y_OFFS_CNT_SW_MP_WR_Y_OFFS_CNT_SHIFT   (3U)
+#define MI_MI_MP_WR_Y_OFFS_CNT_SW_MP_WR_Y_OFFS_CNT_MASK    (0x3FFFFFFU << MI_MI_MP_WR_Y_OFFS_CNT_SW_MP_WR_Y_OFFS_CNT_SHIFT) /* 0x1FFFFFF8 */
+/* MI_MP_WR_Y_OFFS_CNT_START */
+#define MI_MI_MP_WR_Y_OFFS_CNT_START_OFFSET                (0x14U)
+#define MI_MI_MP_WR_Y_OFFS_CNT_START                       (0x0U)
+#define MI_MI_MP_WR_Y_OFFS_CNT_START_SW_MP_WR_Y_OFFS_CNT_START_SHIFT (3U)
+#define MI_MI_MP_WR_Y_OFFS_CNT_START_SW_MP_WR_Y_OFFS_CNT_START_MASK (0x3FFFFFFU << MI_MI_MP_WR_Y_OFFS_CNT_START_SW_MP_WR_Y_OFFS_CNT_START_SHIFT) /* 0x1FFFFFF8 */
+/* MI_MP_WR_Y_IRQ_OFFS */
+#define MI_MI_MP_WR_Y_IRQ_OFFS_OFFSET                      (0x18U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS_SW_MP_WR_Y_IRQ_OFFS_SHIFT   (3U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS_SW_MP_WR_Y_IRQ_OFFS_MASK    (0x3FFFFFFU << MI_MI_MP_WR_Y_IRQ_OFFS_SW_MP_WR_Y_IRQ_OFFS_SHIFT) /* 0x1FFFFFF8 */
+/* MI_MP_WR_CB_BASE */
+#define MI_MI_MP_WR_CB_BASE_OFFSET                         (0x1CU)
+#define MI_MI_MP_WR_CB_BASE_SW_MP_WR_CB_BASE_SHIFT         (3U)
+#define MI_MI_MP_WR_CB_BASE_SW_MP_WR_CB_BASE_MASK          (0x1FFFFFFFU << MI_MI_MP_WR_CB_BASE_SW_MP_WR_CB_BASE_SHIFT)  /* 0xFFFFFFF8 */
+/* MI_MP_WR_CB_SIZE */
+#define MI_MI_MP_WR_CB_SIZE_OFFSET                         (0x20U)
+#define MI_MI_MP_WR_CB_SIZE_SW_MP_WR_CB_SIZE_SHIFT         (3U)
+#define MI_MI_MP_WR_CB_SIZE_SW_MP_WR_CB_SIZE_MASK          (0x1FFFFFFU << MI_MI_MP_WR_CB_SIZE_SW_MP_WR_CB_SIZE_SHIFT)   /* 0x0FFFFFF8 */
+/* MI_MP_WR_CB_OFFS_CNT */
+#define MI_MI_MP_WR_CB_OFFS_CNT_OFFSET                     (0x24U)
+#define MI_MI_MP_WR_CB_OFFS_CNT_SW_MP_WR_CB_OFFS_CNT_SHIFT (3U)
+#define MI_MI_MP_WR_CB_OFFS_CNT_SW_MP_WR_CB_OFFS_CNT_MASK  (0x1FFFFFFU << MI_MI_MP_WR_CB_OFFS_CNT_SW_MP_WR_CB_OFFS_CNT_SHIFT) /* 0x0FFFFFF8 */
+/* MI_MP_WR_CB_OFFS_CNT_START */
+#define MI_MI_MP_WR_CB_OFFS_CNT_START_OFFSET               (0x28U)
+#define MI_MI_MP_WR_CB_OFFS_CNT_START                      (0x0U)
+#define MI_MI_MP_WR_CB_OFFS_CNT_START_SW_MP_WR_CB_OFFS_CNT_START_SHIFT (3U)
+#define MI_MI_MP_WR_CB_OFFS_CNT_START_SW_MP_WR_CB_OFFS_CNT_START_MASK (0x1FFFFFFU << MI_MI_MP_WR_CB_OFFS_CNT_START_SW_MP_WR_CB_OFFS_CNT_START_SHIFT) /* 0x0FFFFFF8 */
+/* MI_MP_WR_CR_BASE */
+#define MI_MI_MP_WR_CR_BASE_OFFSET                         (0x2CU)
+#define MI_MI_MP_WR_CR_BASE_SW_MP_WR_CR_BASE_SHIFT         (3U)
+#define MI_MI_MP_WR_CR_BASE_SW_MP_WR_CR_BASE_MASK          (0x1FFFFFFFU << MI_MI_MP_WR_CR_BASE_SW_MP_WR_CR_BASE_SHIFT)  /* 0xFFFFFFF8 */
+/* MI_MP_WR_CR_SIZE */
+#define MI_MI_MP_WR_CR_SIZE_OFFSET                         (0x30U)
+#define MI_MI_MP_WR_CR_SIZE_SW_MP_WR_CR_SIZE_SHIFT         (3U)
+#define MI_MI_MP_WR_CR_SIZE_SW_MP_WR_CR_SIZE_MASK          (0x1FFFFFFU << MI_MI_MP_WR_CR_SIZE_SW_MP_WR_CR_SIZE_SHIFT)   /* 0x0FFFFFF8 */
+/* MI_MP_WR_CR_OFFS_CNT */
+#define MI_MI_MP_WR_CR_OFFS_CNT_OFFSET                     (0x34U)
+#define MI_MI_MP_WR_CR_OFFS_CNT_SW_MP_WR_CR_OFFS_CNT_SHIFT (3U)
+#define MI_MI_MP_WR_CR_OFFS_CNT_SW_MP_WR_CR_OFFS_CNT_MASK  (0x1FFFFFFU << MI_MI_MP_WR_CR_OFFS_CNT_SW_MP_WR_CR_OFFS_CNT_SHIFT) /* 0x0FFFFFF8 */
+/* MI_MP_WR_CR_OFFS_CNT_START */
+#define MI_MI_MP_WR_CR_OFFS_CNT_START_OFFSET               (0x38U)
+#define MI_MI_MP_WR_CR_OFFS_CNT_START                      (0x0U)
+#define MI_MI_MP_WR_CR_OFFS_CNT_START_SW_MP_WR_CR_OFFS_CNT_START_SHIFT (3U)
+#define MI_MI_MP_WR_CR_OFFS_CNT_START_SW_MP_WR_CR_OFFS_CNT_START_MASK (0x1FFFFFFU << MI_MI_MP_WR_CR_OFFS_CNT_START_SW_MP_WR_CR_OFFS_CNT_START_SHIFT) /* 0x0FFFFFF8 */
+/* MI_SP_WR_Y_BASE */
+#define MI_MI_SP_WR_Y_BASE_OFFSET                          (0x3CU)
+#define MI_MI_SP_WR_Y_BASE_SW_SP_WR_Y_BASE_SHIFT           (3U)
+#define MI_MI_SP_WR_Y_BASE_SW_SP_WR_Y_BASE_MASK            (0x1FFFFFFFU << MI_MI_SP_WR_Y_BASE_SW_SP_WR_Y_BASE_SHIFT)    /* 0xFFFFFFF8 */
+/* MI_SP_WR_Y_SIZE */
+#define MI_MI_SP_WR_Y_SIZE_OFFSET                          (0x40U)
+#define MI_MI_SP_WR_Y_SIZE_SW_SP_WR_Y_SIZE_SHIFT           (3U)
+#define MI_MI_SP_WR_Y_SIZE_SW_SP_WR_Y_SIZE_MASK            (0x3FFFFFFU << MI_MI_SP_WR_Y_SIZE_SW_SP_WR_Y_SIZE_SHIFT)     /* 0x1FFFFFF8 */
+/* MI_SP_WR_Y_OFFS_CNT */
+#define MI_MI_SP_WR_Y_OFFS_CNT_OFFSET                      (0x44U)
+#define MI_MI_SP_WR_Y_OFFS_CNT_SW_SP_WR_Y_OFFS_CNT_SHIFT   (3U)
+#define MI_MI_SP_WR_Y_OFFS_CNT_SW_SP_WR_Y_OFFS_CNT_MASK    (0x3FFFFFFU << MI_MI_SP_WR_Y_OFFS_CNT_SW_SP_WR_Y_OFFS_CNT_SHIFT) /* 0x1FFFFFF8 */
+/* MI_SP_WR_Y_OFFS_CNT_START */
+#define MI_MI_SP_WR_Y_OFFS_CNT_START_OFFSET                (0x48U)
+#define MI_MI_SP_WR_Y_OFFS_CNT_START                       (0x0U)
+#define MI_MI_SP_WR_Y_OFFS_CNT_START_SW_SP_Y_OFFS_CNT_START_SHIFT (3U)
+#define MI_MI_SP_WR_Y_OFFS_CNT_START_SW_SP_Y_OFFS_CNT_START_MASK (0x3FFFFFFU << MI_MI_SP_WR_Y_OFFS_CNT_START_SW_SP_Y_OFFS_CNT_START_SHIFT) /* 0x1FFFFFF8 */
+/* MI_SP_WR_Y_LLENGTH */
+#define MI_MI_SP_WR_Y_LLENGTH_OFFSET                       (0x4CU)
+#define MI_MI_SP_WR_Y_LLENGTH_SW_SP_WR_Y_LLENGTH_SHIFT     (0U)
+#define MI_MI_SP_WR_Y_LLENGTH_SW_SP_WR_Y_LLENGTH_MASK      (0x7FFFU << MI_MI_SP_WR_Y_LLENGTH_SW_SP_WR_Y_LLENGTH_SHIFT)  /* 0x00007FFF */
+/* MI_SP_WR_CB_BASE */
+#define MI_MI_SP_WR_CB_BASE_OFFSET                         (0x50U)
+#define MI_MI_SP_WR_CB_BASE_SW_SP_WR_CB_BASE_SHIFT         (3U)
+#define MI_MI_SP_WR_CB_BASE_SW_SP_WR_CB_BASE_MASK          (0x1FFFFFFFU << MI_MI_SP_WR_CB_BASE_SW_SP_WR_CB_BASE_SHIFT)  /* 0xFFFFFFF8 */
+/* MI_SP_WR_CB_SIZE */
+#define MI_MI_SP_WR_CB_SIZE_OFFSET                         (0x54U)
+#define MI_MI_SP_WR_CB_SIZE_SW_SP_WR_CB_SIZE_SHIFT         (3U)
+#define MI_MI_SP_WR_CB_SIZE_SW_SP_WR_CB_SIZE_MASK          (0x1FFFFFFU << MI_MI_SP_WR_CB_SIZE_SW_SP_WR_CB_SIZE_SHIFT)   /* 0x0FFFFFF8 */
+/* MI_SP_WR_CB_OFFS_CNT */
+#define MI_MI_SP_WR_CB_OFFS_CNT_OFFSET                     (0x58U)
+#define MI_MI_SP_WR_CB_OFFS_CNT_SP_CB_OFFS_CNT_INIT_SHIFT  (3U)
+#define MI_MI_SP_WR_CB_OFFS_CNT_SP_CB_OFFS_CNT_INIT_MASK   (0x1FFFFFFU << MI_MI_SP_WR_CB_OFFS_CNT_SP_CB_OFFS_CNT_INIT_SHIFT) /* 0x0FFFFFF8 */
+/* MI_SP_WR_CB_OFFS_CNT_START */
+#define MI_MI_SP_WR_CB_OFFS_CNT_START_OFFSET               (0x5CU)
+#define MI_MI_SP_WR_CB_OFFS_CNT_START                      (0x0U)
+#define MI_MI_SP_WR_CB_OFFS_CNT_START_SW_SP_WR_CB_OFFS_CNT_START_SHIFT (3U)
+#define MI_MI_SP_WR_CB_OFFS_CNT_START_SW_SP_WR_CB_OFFS_CNT_START_MASK (0x1FFFFFFU << MI_MI_SP_WR_CB_OFFS_CNT_START_SW_SP_WR_CB_OFFS_CNT_START_SHIFT) /* 0x0FFFFFF8 */
+/* MI_SP_WR_CR_BASE */
+#define MI_MI_SP_WR_CR_BASE_OFFSET                         (0x60U)
+#define MI_MI_SP_WR_CR_BASE_SW_SP_WR_CR_BASE_SHIFT         (3U)
+#define MI_MI_SP_WR_CR_BASE_SW_SP_WR_CR_BASE_MASK          (0x1FFFFFFFU << MI_MI_SP_WR_CR_BASE_SW_SP_WR_CR_BASE_SHIFT)  /* 0xFFFFFFF8 */
+/* MI_SP_WR_CR_SIZE */
+#define MI_MI_SP_WR_CR_SIZE_OFFSET                         (0x64U)
+#define MI_MI_SP_WR_CR_SIZE_SW_SP_WR_CR_SIZE_SHIFT         (3U)
+#define MI_MI_SP_WR_CR_SIZE_SW_SP_WR_CR_SIZE_MASK          (0x1FFFFFFU << MI_MI_SP_WR_CR_SIZE_SW_SP_WR_CR_SIZE_SHIFT)   /* 0x0FFFFFF8 */
+/* MI_SP_WR_CR_OFFS_CNT */
+#define MI_MI_SP_WR_CR_OFFS_CNT_OFFSET                     (0x68U)
+#define MI_MI_SP_WR_CR_OFFS_CNT_SW_SP_WR_CR_OFFS_CNT_SHIFT (3U)
+#define MI_MI_SP_WR_CR_OFFS_CNT_SW_SP_WR_CR_OFFS_CNT_MASK  (0x1FFFFFFU << MI_MI_SP_WR_CR_OFFS_CNT_SW_SP_WR_CR_OFFS_CNT_SHIFT) /* 0x0FFFFFF8 */
+/* MI_SP_WR_CR_OFFS_CNT_START */
+#define MI_MI_SP_WR_CR_OFFS_CNT_START_OFFSET               (0x6CU)
+#define MI_MI_SP_WR_CR_OFFS_CNT_START                      (0x0U)
+#define MI_MI_SP_WR_CR_OFFS_CNT_START_SW_SP_WR_CR_OFFS_CNT_START_SHIFT (3U)
+#define MI_MI_SP_WR_CR_OFFS_CNT_START_SW_SP_WR_CR_OFFS_CNT_START_MASK (0x1FFFFFFU << MI_MI_SP_WR_CR_OFFS_CNT_START_SW_SP_WR_CR_OFFS_CNT_START_SHIFT) /* 0x0FFFFFF8 */
+/* MI_WR_BYTE_CNT */
+#define MI_MI_WR_BYTE_CNT_OFFSET                           (0x70U)
+#define MI_MI_WR_BYTE_CNT                                  (0x0U)
+#define MI_MI_WR_BYTE_CNT_BYTE_CNT_SHIFT                   (0U)
+#define MI_MI_WR_BYTE_CNT_BYTE_CNT_MASK                    (0xFFFFFFFU << MI_MI_WR_BYTE_CNT_BYTE_CNT_SHIFT)             /* 0x0FFFFFFF */
+/* MI_WR_CTRL_SHD */
+#define MI_MI_WR_CTRL_SHD_OFFSET                           (0x74U)
+#define MI_MI_WR_CTRL_SHD                                  (0x0U)
+#define MI_MI_WR_CTRL_SHD_PATH_ENABLE_IN_SHIFT             (0U)
+#define MI_MI_WR_CTRL_SHD_PATH_ENABLE_IN_MASK              (0xFU << MI_MI_WR_CTRL_SHD_PATH_ENABLE_IN_SHIFT)             /* 0x0000000F */
+#define MI_MI_WR_CTRL_SHD_RO_Y12_YENABLE_IN_SHIFT          (4U)
+#define MI_MI_WR_CTRL_SHD_RO_Y12_YENABLE_IN_MASK           (0x1U << MI_MI_WR_CTRL_SHD_RO_Y12_YENABLE_IN_SHIFT)          /* 0x00000010 */
+#define MI_MI_WR_CTRL_SHD_RO_Y12_CENABLE_IN_SHIFT          (5U)
+#define MI_MI_WR_CTRL_SHD_RO_Y12_CENABLE_IN_MASK           (0x1U << MI_MI_WR_CTRL_SHD_RO_Y12_CENABLE_IN_SHIFT)          /* 0x00000020 */
+#define MI_MI_WR_CTRL_SHD_PATH_ENABLE_OUT_SHIFT            (16U)
+#define MI_MI_WR_CTRL_SHD_PATH_ENABLE_OUT_MASK             (0xFU << MI_MI_WR_CTRL_SHD_PATH_ENABLE_OUT_SHIFT)            /* 0x000F0000 */
+#define MI_MI_WR_CTRL_SHD_RO_Y12_YENABLE_OUT_SHIFT         (20U)
+#define MI_MI_WR_CTRL_SHD_RO_Y12_YENABLE_OUT_MASK          (0x1U << MI_MI_WR_CTRL_SHD_RO_Y12_YENABLE_OUT_SHIFT)         /* 0x00100000 */
+#define MI_MI_WR_CTRL_SHD_RO_Y12_CENABLE_OUT_SHIFT         (21U)
+#define MI_MI_WR_CTRL_SHD_RO_Y12_CENABLE_OUT_MASK          (0x1U << MI_MI_WR_CTRL_SHD_RO_Y12_CENABLE_OUT_SHIFT)         /* 0x00200000 */
+/* MI_MP_WR_Y_BASE_SHD */
+#define MI_MI_MP_WR_Y_BASE_SHD_OFFSET                      (0x78U)
+#define MI_MI_MP_WR_Y_BASE_SHD                             (0x0U)
+#define MI_MI_MP_WR_Y_BASE_SHD_SW_MP_WR_Y_BASE_SHD_SHIFT   (3U)
+#define MI_MI_MP_WR_Y_BASE_SHD_SW_MP_WR_Y_BASE_SHD_MASK    (0x1FFFFFFFU << MI_MI_MP_WR_Y_BASE_SHD_SW_MP_WR_Y_BASE_SHD_SHIFT) /* 0xFFFFFFF8 */
+/* MI_MP_WR_Y_SIZE_SHD */
+#define MI_MI_MP_WR_Y_SIZE_SHD_OFFSET                      (0x7CU)
+#define MI_MI_MP_WR_Y_SIZE_SHD                             (0x0U)
+#define MI_MI_MP_WR_Y_SIZE_SHD_SW_MP_WR_Y_SIZE_SHD_SHIFT   (3U)
+#define MI_MI_MP_WR_Y_SIZE_SHD_SW_MP_WR_Y_SIZE_SHD_MASK    (0x3FFFFFFU << MI_MI_MP_WR_Y_SIZE_SHD_SW_MP_WR_Y_SIZE_SHD_SHIFT) /* 0x1FFFFFF8 */
+/* MI_MP_WR_Y_OFFS_CNT_SHD */
+#define MI_MI_MP_WR_Y_OFFS_CNT_SHD_OFFSET                  (0x80U)
+#define MI_MI_MP_WR_Y_OFFS_CNT_SHD                         (0x0U)
+#define MI_MI_MP_WR_Y_OFFS_CNT_SHD_SW_MP_WR_Y_OFFS_CNT_SHD_SHIFT (3U)
+#define MI_MI_MP_WR_Y_OFFS_CNT_SHD_SW_MP_WR_Y_OFFS_CNT_SHD_MASK (0x3FFFFFFU << MI_MI_MP_WR_Y_OFFS_CNT_SHD_SW_MP_WR_Y_OFFS_CNT_SHD_SHIFT) /* 0x1FFFFFF8 */
+/* MI_MP_WR_Y_IRQ_OFFS_SHD */
+#define MI_MI_MP_WR_Y_IRQ_OFFS_SHD_OFFSET                  (0x84U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS_SHD                         (0x0U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS_SHD_SW_MP_WR_Y_IRQ_OFFS_SHD_SHIFT (3U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS_SHD_SW_MP_WR_Y_IRQ_OFFS_SHD_MASK (0x3FFFFFFU << MI_MI_MP_WR_Y_IRQ_OFFS_SHD_SW_MP_WR_Y_IRQ_OFFS_SHD_SHIFT) /* 0x1FFFFFF8 */
+/* MI_MP_WR_CB_BASE_SHD */
+#define MI_MI_MP_WR_CB_BASE_SHD_OFFSET                     (0x88U)
+#define MI_MI_MP_WR_CB_BASE_SHD                            (0x0U)
+#define MI_MI_MP_WR_CB_BASE_SHD_SW_MP_WR_CB_BASE_SHD_SHIFT (3U)
+#define MI_MI_MP_WR_CB_BASE_SHD_SW_MP_WR_CB_BASE_SHD_MASK  (0x1FFFFFFFU << MI_MI_MP_WR_CB_BASE_SHD_SW_MP_WR_CB_BASE_SHD_SHIFT) /* 0xFFFFFFF8 */
+/* MI_MP_WR_CB_SIZE_SHD */
+#define MI_MI_MP_WR_CB_SIZE_SHD_OFFSET                     (0x8CU)
+#define MI_MI_MP_WR_CB_SIZE_SHD                            (0x0U)
+#define MI_MI_MP_WR_CB_SIZE_SHD_SW_MP_WR_CB_SIZE_SHD_SHIFT (3U)
+#define MI_MI_MP_WR_CB_SIZE_SHD_SW_MP_WR_CB_SIZE_SHD_MASK  (0x1FFFFFFU << MI_MI_MP_WR_CB_SIZE_SHD_SW_MP_WR_CB_SIZE_SHD_SHIFT) /* 0x0FFFFFF8 */
+/* MI_MP_WR_CB_OFFS_CNT_SHD */
+#define MI_MI_MP_WR_CB_OFFS_CNT_SHD_OFFSET                 (0x90U)
+#define MI_MI_MP_WR_CB_OFFS_CNT_SHD                        (0x0U)
+#define MI_MI_MP_WR_CB_OFFS_CNT_SHD_SW_MP_WR_CB_OFFS_CNT_SHD_SHIFT (3U)
+#define MI_MI_MP_WR_CB_OFFS_CNT_SHD_SW_MP_WR_CB_OFFS_CNT_SHD_MASK (0x1FFFFFFU << MI_MI_MP_WR_CB_OFFS_CNT_SHD_SW_MP_WR_CB_OFFS_CNT_SHD_SHIFT) /* 0x0FFFFFF8 */
+/* MI_MP_WR_CR_BASE_SHD */
+#define MI_MI_MP_WR_CR_BASE_SHD_OFFSET                     (0x94U)
+#define MI_MI_MP_WR_CR_BASE_SHD                            (0x0U)
+#define MI_MI_MP_WR_CR_BASE_SHD_SW_MP_WR_CR_BASE_SHD_SHIFT (3U)
+#define MI_MI_MP_WR_CR_BASE_SHD_SW_MP_WR_CR_BASE_SHD_MASK  (0x1FFFFFFFU << MI_MI_MP_WR_CR_BASE_SHD_SW_MP_WR_CR_BASE_SHD_SHIFT) /* 0xFFFFFFF8 */
+/* MI_MP_WR_CR_SIZE_SHD */
+#define MI_MI_MP_WR_CR_SIZE_SHD_OFFSET                     (0x98U)
+#define MI_MI_MP_WR_CR_SIZE_SHD                            (0x0U)
+#define MI_MI_MP_WR_CR_SIZE_SHD_SW_MP_WR_CR_SIZE_SHD_SHIFT (3U)
+#define MI_MI_MP_WR_CR_SIZE_SHD_SW_MP_WR_CR_SIZE_SHD_MASK  (0x1FFFFFFU << MI_MI_MP_WR_CR_SIZE_SHD_SW_MP_WR_CR_SIZE_SHD_SHIFT) /* 0x0FFFFFF8 */
+/* MI_MP_WR_CR_OFFS_CNT_SHD */
+#define MI_MI_MP_WR_CR_OFFS_CNT_SHD_OFFSET                 (0x9CU)
+#define MI_MI_MP_WR_CR_OFFS_CNT_SHD                        (0x0U)
+#define MI_MI_MP_WR_CR_OFFS_CNT_SHD_SW_MP_WR_CR_OFFS_CNT_SHD_SHIFT (3U)
+#define MI_MI_MP_WR_CR_OFFS_CNT_SHD_SW_MP_WR_CR_OFFS_CNT_SHD_MASK (0x1FFFFFFU << MI_MI_MP_WR_CR_OFFS_CNT_SHD_SW_MP_WR_CR_OFFS_CNT_SHD_SHIFT) /* 0x0FFFFFF8 */
+/* MI_SP_WR_Y_BASE_SHD */
+#define MI_MI_SP_WR_Y_BASE_SHD_OFFSET                      (0xA0U)
+#define MI_MI_SP_WR_Y_BASE_SHD                             (0x0U)
+#define MI_MI_SP_WR_Y_BASE_SHD_SW_SP_WR_Y_BASE_SHD_SHIFT   (3U)
+#define MI_MI_SP_WR_Y_BASE_SHD_SW_SP_WR_Y_BASE_SHD_MASK    (0x1FFFFFFFU << MI_MI_SP_WR_Y_BASE_SHD_SW_SP_WR_Y_BASE_SHD_SHIFT) /* 0xFFFFFFF8 */
+/* MI_SP_WR_Y_SIZE_SHD */
+#define MI_MI_SP_WR_Y_SIZE_SHD_OFFSET                      (0xA4U)
+#define MI_MI_SP_WR_Y_SIZE_SHD                             (0x0U)
+#define MI_MI_SP_WR_Y_SIZE_SHD_SW_SP_WR_Y_SIZE_SHD_SHIFT   (3U)
+#define MI_MI_SP_WR_Y_SIZE_SHD_SW_SP_WR_Y_SIZE_SHD_MASK    (0x3FFFFFFU << MI_MI_SP_WR_Y_SIZE_SHD_SW_SP_WR_Y_SIZE_SHD_SHIFT) /* 0x1FFFFFF8 */
+/* MI_SP_WR_Y_OFFS_CNT_SHD */
+#define MI_MI_SP_WR_Y_OFFS_CNT_SHD_OFFSET                  (0xA8U)
+#define MI_MI_SP_WR_Y_OFFS_CNT_SHD                         (0x0U)
+#define MI_MI_SP_WR_Y_OFFS_CNT_SHD_SW_SP_WR_Y_OFFS_CNT_SHD_SHIFT (3U)
+#define MI_MI_SP_WR_Y_OFFS_CNT_SHD_SW_SP_WR_Y_OFFS_CNT_SHD_MASK (0x3FFFFFFU << MI_MI_SP_WR_Y_OFFS_CNT_SHD_SW_SP_WR_Y_OFFS_CNT_SHD_SHIFT) /* 0x1FFFFFF8 */
+/* MI_SP_WR_CB_BASE_AD_SHD */
+#define MI_MI_SP_WR_CB_BASE_AD_SHD_OFFSET                  (0xB0U)
+#define MI_MI_SP_WR_CB_BASE_AD_SHD                         (0x0U)
+#define MI_MI_SP_WR_CB_BASE_AD_SHD_SW_SP_WR_CB_BASE_SHD_SHIFT (3U)
+#define MI_MI_SP_WR_CB_BASE_AD_SHD_SW_SP_WR_CB_BASE_SHD_MASK (0x1FFFFFFFU << MI_MI_SP_WR_CB_BASE_AD_SHD_SW_SP_WR_CB_BASE_SHD_SHIFT) /* 0xFFFFFFF8 */
+/* MI_SP_WR_CB_SIZE_SHD */
+#define MI_MI_SP_WR_CB_SIZE_SHD_OFFSET                     (0xB4U)
+#define MI_MI_SP_WR_CB_SIZE_SHD                            (0x0U)
+#define MI_MI_SP_WR_CB_SIZE_SHD_SW_SP_WR_CB_SIZE_SHD_SHIFT (3U)
+#define MI_MI_SP_WR_CB_SIZE_SHD_SW_SP_WR_CB_SIZE_SHD_MASK  (0x1FFFFFFU << MI_MI_SP_WR_CB_SIZE_SHD_SW_SP_WR_CB_SIZE_SHD_SHIFT) /* 0x0FFFFFF8 */
+/* MI_SP_WR_CB_OFFS_CNT_SHD */
+#define MI_MI_SP_WR_CB_OFFS_CNT_SHD_OFFSET                 (0xB8U)
+#define MI_MI_SP_WR_CB_OFFS_CNT_SHD                        (0x0U)
+#define MI_MI_SP_WR_CB_OFFS_CNT_SHD_SW_SP_WR_CB_OFFS_CNT_SHD_SHIFT (3U)
+#define MI_MI_SP_WR_CB_OFFS_CNT_SHD_SW_SP_WR_CB_OFFS_CNT_SHD_MASK (0x1FFFFFFU << MI_MI_SP_WR_CB_OFFS_CNT_SHD_SW_SP_WR_CB_OFFS_CNT_SHD_SHIFT) /* 0x0FFFFFF8 */
+/* MI_SP_WR_CR_BASE_AD_SHD */
+#define MI_MI_SP_WR_CR_BASE_AD_SHD_OFFSET                  (0xBCU)
+#define MI_MI_SP_WR_CR_BASE_AD_SHD                         (0x0U)
+#define MI_MI_SP_WR_CR_BASE_AD_SHD_SW_SP_WR_CR_BASE_SHD_SHIFT (3U)
+#define MI_MI_SP_WR_CR_BASE_AD_SHD_SW_SP_WR_CR_BASE_SHD_MASK (0x1FFFFFFFU << MI_MI_SP_WR_CR_BASE_AD_SHD_SW_SP_WR_CR_BASE_SHD_SHIFT) /* 0xFFFFFFF8 */
+/* MI_SP_WR_CR_SIZE_SHD */
+#define MI_MI_SP_WR_CR_SIZE_SHD_OFFSET                     (0xC0U)
+#define MI_MI_SP_WR_CR_SIZE_SHD                            (0x0U)
+#define MI_MI_SP_WR_CR_SIZE_SHD_SW_SP_WR_CR_SIZE_SHD_SHIFT (3U)
+#define MI_MI_SP_WR_CR_SIZE_SHD_SW_SP_WR_CR_SIZE_SHD_MASK  (0x1FFFFFFU << MI_MI_SP_WR_CR_SIZE_SHD_SW_SP_WR_CR_SIZE_SHD_SHIFT) /* 0x0FFFFFF8 */
+/* MI_SP_WR_CR_OFFS_CNT_SHD */
+#define MI_MI_SP_WR_CR_OFFS_CNT_SHD_OFFSET                 (0xC4U)
+#define MI_MI_SP_WR_CR_OFFS_CNT_SHD                        (0x0U)
+#define MI_MI_SP_WR_CR_OFFS_CNT_SHD_SW_SP_WR_CR_OFFS_CNT_SHD_SHIFT (3U)
+#define MI_MI_SP_WR_CR_OFFS_CNT_SHD_SW_SP_WR_CR_OFFS_CNT_SHD_MASK (0x1FFFFFFU << MI_MI_SP_WR_CR_OFFS_CNT_SHD_SW_SP_WR_CR_OFFS_CNT_SHD_SHIFT) /* 0x0FFFFFF8 */
+/* MI_RD_Y_PIC_START_AD */
+#define MI_MI_RD_Y_PIC_START_AD_OFFSET                     (0xC8U)
+#define MI_MI_RD_Y_PIC_START_AD_SW_MI_RD_Y_PIC_START_AD_SHIFT (0U)
+#define MI_MI_RD_Y_PIC_START_AD_SW_MI_RD_Y_PIC_START_AD_MASK (0xFFFFFFFFU << MI_MI_RD_Y_PIC_START_AD_SW_MI_RD_Y_PIC_START_AD_SHIFT) /* 0xFFFFFFFF */
+/* MI_RD_Y_PIC_WIDTH */
+#define MI_MI_RD_Y_PIC_WIDTH_OFFSET                        (0xCCU)
+#define MI_MI_RD_Y_PIC_WIDTH_SW_MI_RD_Y_PIC_WIDTH_SHIFT    (0U)
+#define MI_MI_RD_Y_PIC_WIDTH_SW_MI_RD_Y_PIC_WIDTH_MASK     (0x7FFFU << MI_MI_RD_Y_PIC_WIDTH_SW_MI_RD_Y_PIC_WIDTH_SHIFT) /* 0x00007FFF */
+/* MI_RD_Y_LLENGTH */
+#define MI_MI_RD_Y_LLENGTH_OFFSET                          (0xD0U)
+#define MI_MI_RD_Y_LLENGTH_SW_MI_RD_Y_LLENGTH_SHIFT        (0U)
+#define MI_MI_RD_Y_LLENGTH_SW_MI_RD_Y_LLENGTH_MASK         (0x7FFFU << MI_MI_RD_Y_LLENGTH_SW_MI_RD_Y_LLENGTH_SHIFT)     /* 0x00007FFF */
+/* MI_RD_Y_PIC_SIZE */
+#define MI_MI_RD_Y_PIC_SIZE_OFFSET                         (0xD4U)
+#define MI_MI_RD_Y_PIC_SIZE_SW_MI_RD_Y_PIC_SIZE_SHIFT      (0U)
+#define MI_MI_RD_Y_PIC_SIZE_SW_MI_RD_Y_PIC_SIZE_MASK       (0xFFFFFFFU << MI_MI_RD_Y_PIC_SIZE_SW_MI_RD_Y_PIC_SIZE_SHIFT) /* 0x0FFFFFFF */
+/* MI_RD_CB_PIC_START_AD */
+#define MI_MI_RD_CB_PIC_START_AD_OFFSET                    (0xD8U)
+#define MI_MI_RD_CB_PIC_START_AD_SW_MI_RD_CB_PIC_START_AD_SHIFT (0U)
+#define MI_MI_RD_CB_PIC_START_AD_SW_MI_RD_CB_PIC_START_AD_MASK (0xFFFFFFFFU << MI_MI_RD_CB_PIC_START_AD_SW_MI_RD_CB_PIC_START_AD_SHIFT) /* 0xFFFFFFFF */
+/* MI_RD_CR_PIC_START_AD */
+#define MI_MI_RD_CR_PIC_START_AD_OFFSET                    (0xE8U)
+#define MI_MI_RD_CR_PIC_START_AD_SW_MI_RD_CR_PIC_START_AD_SHIFT (0U)
+#define MI_MI_RD_CR_PIC_START_AD_SW_MI_RD_CR_PIC_START_AD_MASK (0xFFFFFFFFU << MI_MI_RD_CR_PIC_START_AD_SW_MI_RD_CR_PIC_START_AD_SHIFT) /* 0xFFFFFFFF */
+/* MI_IMSC */
+#define MI_MI_IMSC_OFFSET                                  (0xF8U)
+#define MI_MI_IMSC_MP_FRAME_END_SHIFT                      (0U)
+#define MI_MI_IMSC_MP_FRAME_END_MASK                       (0x1U << MI_MI_IMSC_MP_FRAME_END_SHIFT)                      /* 0x00000001 */
+#define MI_MI_IMSC_SP_FRAME_END_SHIFT                      (1U)
+#define MI_MI_IMSC_SP_FRAME_END_MASK                       (0x1U << MI_MI_IMSC_SP_FRAME_END_SHIFT)                      /* 0x00000002 */
+#define MI_MI_IMSC_MBLK_LINE_SHIFT                         (2U)
+#define MI_MI_IMSC_MBLK_LINE_MASK                          (0x1U << MI_MI_IMSC_MBLK_LINE_SHIFT)                         /* 0x00000004 */
+#define MI_MI_IMSC_FILL_MP_Y_SHIFT                         (3U)
+#define MI_MI_IMSC_FILL_MP_Y_MASK                          (0x1U << MI_MI_IMSC_FILL_MP_Y_SHIFT)                         /* 0x00000008 */
+#define MI_MI_IMSC_WRAP_MP_Y_SHIFT                         (4U)
+#define MI_MI_IMSC_WRAP_MP_Y_MASK                          (0x1U << MI_MI_IMSC_WRAP_MP_Y_SHIFT)                         /* 0x00000010 */
+#define MI_MI_IMSC_WRAP_MP_CB_SHIFT                        (5U)
+#define MI_MI_IMSC_WRAP_MP_CB_MASK                         (0x1U << MI_MI_IMSC_WRAP_MP_CB_SHIFT)                        /* 0x00000020 */
+#define MI_MI_IMSC_WRAP_MP_CR_SHIFT                        (6U)
+#define MI_MI_IMSC_WRAP_MP_CR_MASK                         (0x1U << MI_MI_IMSC_WRAP_MP_CR_SHIFT)                        /* 0x00000040 */
+#define MI_MI_IMSC_WRAP_SP_Y_SHIFT                         (7U)
+#define MI_MI_IMSC_WRAP_SP_Y_MASK                          (0x1U << MI_MI_IMSC_WRAP_SP_Y_SHIFT)                         /* 0x00000080 */
+#define MI_MI_IMSC_WRAP_SP_CB_SHIFT                        (8U)
+#define MI_MI_IMSC_WRAP_SP_CB_MASK                         (0x1U << MI_MI_IMSC_WRAP_SP_CB_SHIFT)                        /* 0x00000100 */
+#define MI_MI_IMSC_WRAP_SP_CR_SHIFT                        (9U)
+#define MI_MI_IMSC_WRAP_SP_CR_MASK                         (0x1U << MI_MI_IMSC_WRAP_SP_CR_SHIFT)                        /* 0x00000200 */
+#define MI_MI_IMSC_FILL_MP_Y2_SHIFT                        (10U)
+#define MI_MI_IMSC_FILL_MP_Y2_MASK                         (0x1U << MI_MI_IMSC_FILL_MP_Y2_SHIFT)                        /* 0x00000400 */
+#define MI_MI_IMSC_DMA_READY_SHIFT                         (11U)
+#define MI_MI_IMSC_DMA_READY_MASK                          (0x1U << MI_MI_IMSC_DMA_READY_SHIFT)                         /* 0x00000800 */
+#define MI_MI_IMSC_SW_Y12Y_FRAME_END_EN_SHIFT              (12U)
+#define MI_MI_IMSC_SW_Y12Y_FRAME_END_EN_MASK               (0x1U << MI_MI_IMSC_SW_Y12Y_FRAME_END_EN_SHIFT)              /* 0x00001000 */
+#define MI_MI_IMSC_SW_Y12C_FRAME_END_EN_SHIFT              (13U)
+#define MI_MI_IMSC_SW_Y12C_FRAME_END_EN_MASK               (0x1U << MI_MI_IMSC_SW_Y12C_FRAME_END_EN_SHIFT)              /* 0x00002000 */
+#define MI_MI_IMSC_SW_ALL_FRAME_END_EN_SHIFT               (14U)
+#define MI_MI_IMSC_SW_ALL_FRAME_END_EN_MASK                (0x1U << MI_MI_IMSC_SW_ALL_FRAME_END_EN_SHIFT)               /* 0x00004000 */
+#define MI_MI_IMSC_RAW0_WR_FRAME_END_SHIFT                 (16U)
+#define MI_MI_IMSC_RAW0_WR_FRAME_END_MASK                  (0x1U << MI_MI_IMSC_RAW0_WR_FRAME_END_SHIFT)                 /* 0x00010000 */
+#define MI_MI_IMSC_RAW1_WR_FRAME_END_SHIFT                 (17U)
+#define MI_MI_IMSC_RAW1_WR_FRAME_END_MASK                  (0x1U << MI_MI_IMSC_RAW1_WR_FRAME_END_SHIFT)                 /* 0x00020000 */
+#define MI_MI_IMSC_RAW2_WR_FRAME_END_SHIFT                 (18U)
+#define MI_MI_IMSC_RAW2_WR_FRAME_END_MASK                  (0x1U << MI_MI_IMSC_RAW2_WR_FRAME_END_SHIFT)                 /* 0x00040000 */
+#define MI_MI_IMSC_RAW3_WR_FRAME_END_SHIFT                 (19U)
+#define MI_MI_IMSC_RAW3_WR_FRAME_END_MASK                  (0x1U << MI_MI_IMSC_RAW3_WR_FRAME_END_SHIFT)                 /* 0x00080000 */
+#define MI_MI_IMSC_DBR_WR_FRAME_END_SHIFT                  (20U)
+#define MI_MI_IMSC_DBR_WR_FRAME_END_MASK                   (0x1U << MI_MI_IMSC_DBR_WR_FRAME_END_SHIFT)                  /* 0x00100000 */
+#define MI_MI_IMSC_GAIN_WR_FRAME_END_SHIFT                 (21U)
+#define MI_MI_IMSC_GAIN_WR_FRAME_END_MASK                  (0x1U << MI_MI_IMSC_GAIN_WR_FRAME_END_SHIFT)                 /* 0x00200000 */
+#define MI_MI_IMSC_MPFBC_WR_FRAME_END_SHIFT                (31U)
+#define MI_MI_IMSC_MPFBC_WR_FRAME_END_MASK                 (0x1U << MI_MI_IMSC_MPFBC_WR_FRAME_END_SHIFT)                /* 0x80000000 */
+/* MI_RIS */
+#define MI_MI_RIS_OFFSET                                   (0xFCU)
+#define MI_MI_RIS                                          (0x0U)
+#define MI_MI_RIS_MP_FRAME_END_SHIFT                       (0U)
+#define MI_MI_RIS_MP_FRAME_END_MASK                        (0x1U << MI_MI_RIS_MP_FRAME_END_SHIFT)                       /* 0x00000001 */
+#define MI_MI_RIS_SP_FRAME_END_SHIFT                       (1U)
+#define MI_MI_RIS_SP_FRAME_END_MASK                        (0x1U << MI_MI_RIS_SP_FRAME_END_SHIFT)                       /* 0x00000002 */
+#define MI_MI_RIS_MBLK_LINE_SHIFT                          (2U)
+#define MI_MI_RIS_MBLK_LINE_MASK                           (0x1U << MI_MI_RIS_MBLK_LINE_SHIFT)                          /* 0x00000004 */
+#define MI_MI_RIS_FILL_MP_Y_SHIFT                          (3U)
+#define MI_MI_RIS_FILL_MP_Y_MASK                           (0x1U << MI_MI_RIS_FILL_MP_Y_SHIFT)                          /* 0x00000008 */
+#define MI_MI_RIS_WRAP_MP_Y_SHIFT                          (4U)
+#define MI_MI_RIS_WRAP_MP_Y_MASK                           (0x1U << MI_MI_RIS_WRAP_MP_Y_SHIFT)                          /* 0x00000010 */
+#define MI_MI_RIS_WRAP_MP_CB_SHIFT                         (5U)
+#define MI_MI_RIS_WRAP_MP_CB_MASK                          (0x1U << MI_MI_RIS_WRAP_MP_CB_SHIFT)                         /* 0x00000020 */
+#define MI_MI_RIS_WRAP_MP_CR_SHIFT                         (6U)
+#define MI_MI_RIS_WRAP_MP_CR_MASK                          (0x1U << MI_MI_RIS_WRAP_MP_CR_SHIFT)                         /* 0x00000040 */
+#define MI_MI_RIS_WRAP_SP_Y_SHIFT                          (7U)
+#define MI_MI_RIS_WRAP_SP_Y_MASK                           (0x1U << MI_MI_RIS_WRAP_SP_Y_SHIFT)                          /* 0x00000080 */
+#define MI_MI_RIS_WRAP_SP_CB_SHIFT                         (8U)
+#define MI_MI_RIS_WRAP_SP_CB_MASK                          (0x1U << MI_MI_RIS_WRAP_SP_CB_SHIFT)                         /* 0x00000100 */
+#define MI_MI_RIS_WRAP_SP_CR_SHIFT                         (9U)
+#define MI_MI_RIS_WRAP_SP_CR_MASK                          (0x1U << MI_MI_RIS_WRAP_SP_CR_SHIFT)                         /* 0x00000200 */
+#define MI_MI_RIS_FILL_MP_Y2_SHIFT                         (10U)
+#define MI_MI_RIS_FILL_MP_Y2_MASK                          (0x1U << MI_MI_RIS_FILL_MP_Y2_SHIFT)                         /* 0x00000400 */
+#define MI_MI_RIS_DMA_READY_SHIFT                          (11U)
+#define MI_MI_RIS_DMA_READY_MASK                           (0x1U << MI_MI_RIS_DMA_READY_SHIFT)                          /* 0x00000800 */
+#define MI_MI_RIS_RO_Y12Y_FRAME_END_RAWSTS_SHIFT           (12U)
+#define MI_MI_RIS_RO_Y12Y_FRAME_END_RAWSTS_MASK            (0x1U << MI_MI_RIS_RO_Y12Y_FRAME_END_RAWSTS_SHIFT)           /* 0x00001000 */
+#define MI_MI_RIS_RO_Y12C_FRAME_END_RAWSTS_SHIFT           (13U)
+#define MI_MI_RIS_RO_Y12C_FRAME_END_RAWSTS_MASK            (0x1U << MI_MI_RIS_RO_Y12C_FRAME_END_RAWSTS_SHIFT)           /* 0x00002000 */
+#define MI_MI_RIS_RO_ALL_FRAME_END_RAWSTS_SHIFT            (14U)
+#define MI_MI_RIS_RO_ALL_FRAME_END_RAWSTS_MASK             (0x1U << MI_MI_RIS_RO_ALL_FRAME_END_RAWSTS_SHIFT)            /* 0x00004000 */
+#define MI_MI_RIS_RAW0_WR_FRAME_END_SHIFT                  (16U)
+#define MI_MI_RIS_RAW0_WR_FRAME_END_MASK                   (0x1U << MI_MI_RIS_RAW0_WR_FRAME_END_SHIFT)                  /* 0x00010000 */
+#define MI_MI_RIS_RAW1_WR_FRAME_END_SHIFT                  (17U)
+#define MI_MI_RIS_RAW1_WR_FRAME_END_MASK                   (0x1U << MI_MI_RIS_RAW1_WR_FRAME_END_SHIFT)                  /* 0x00020000 */
+#define MI_MI_RIS_RAW2_WR_FRAME_END_SHIFT                  (18U)
+#define MI_MI_RIS_RAW2_WR_FRAME_END_MASK                   (0x1U << MI_MI_RIS_RAW2_WR_FRAME_END_SHIFT)                  /* 0x00040000 */
+#define MI_MI_RIS_RAW3_WR_FRAME_END_SHIFT                  (19U)
+#define MI_MI_RIS_RAW3_WR_FRAME_END_MASK                   (0x1U << MI_MI_RIS_RAW3_WR_FRAME_END_SHIFT)                  /* 0x00080000 */
+#define MI_MI_RIS_DBR_WR_FRAME_END_SHIFT                   (20U)
+#define MI_MI_RIS_DBR_WR_FRAME_END_MASK                    (0x1U << MI_MI_RIS_DBR_WR_FRAME_END_SHIFT)                   /* 0x00100000 */
+#define MI_MI_RIS_GAIN_WR_FRAME_END_SHIFT                  (21U)
+#define MI_MI_RIS_GAIN_WR_FRAME_END_MASK                   (0x1U << MI_MI_RIS_GAIN_WR_FRAME_END_SHIFT)                  /* 0x00200000 */
+#define MI_MI_RIS_MPFBC_WR_FRAME_END_SHIFT                 (31U)
+#define MI_MI_RIS_MPFBC_WR_FRAME_END_MASK                  (0x1U << MI_MI_RIS_MPFBC_WR_FRAME_END_SHIFT)                 /* 0x80000000 */
+/* MI_MIS */
+#define MI_MI_MIS_OFFSET                                   (0x100U)
+#define MI_MI_MIS                                          (0x0U)
+#define MI_MI_MIS_MP_FRAME_END_SHIFT                       (0U)
+#define MI_MI_MIS_MP_FRAME_END_MASK                        (0x1U << MI_MI_MIS_MP_FRAME_END_SHIFT)                       /* 0x00000001 */
+#define MI_MI_MIS_SP_FRAME_END_SHIFT                       (1U)
+#define MI_MI_MIS_SP_FRAME_END_MASK                        (0x1U << MI_MI_MIS_SP_FRAME_END_SHIFT)                       /* 0x00000002 */
+#define MI_MI_MIS_MBLK_LINE_SHIFT                          (2U)
+#define MI_MI_MIS_MBLK_LINE_MASK                           (0x1U << MI_MI_MIS_MBLK_LINE_SHIFT)                          /* 0x00000004 */
+#define MI_MI_MIS_FILL_MP_Y_SHIFT                          (3U)
+#define MI_MI_MIS_FILL_MP_Y_MASK                           (0x1U << MI_MI_MIS_FILL_MP_Y_SHIFT)                          /* 0x00000008 */
+#define MI_MI_MIS_WRAP_MP_Y_SHIFT                          (4U)
+#define MI_MI_MIS_WRAP_MP_Y_MASK                           (0x1U << MI_MI_MIS_WRAP_MP_Y_SHIFT)                          /* 0x00000010 */
+#define MI_MI_MIS_WRAP_MP_CB_SHIFT                         (5U)
+#define MI_MI_MIS_WRAP_MP_CB_MASK                          (0x1U << MI_MI_MIS_WRAP_MP_CB_SHIFT)                         /* 0x00000020 */
+#define MI_MI_MIS_WRAP_MP_CR_SHIFT                         (6U)
+#define MI_MI_MIS_WRAP_MP_CR_MASK                          (0x1U << MI_MI_MIS_WRAP_MP_CR_SHIFT)                         /* 0x00000040 */
+#define MI_MI_MIS_WRAP_SP_Y_SHIFT                          (7U)
+#define MI_MI_MIS_WRAP_SP_Y_MASK                           (0x1U << MI_MI_MIS_WRAP_SP_Y_SHIFT)                          /* 0x00000080 */
+#define MI_MI_MIS_WRAP_SP_CB_SHIFT                         (8U)
+#define MI_MI_MIS_WRAP_SP_CB_MASK                          (0x1U << MI_MI_MIS_WRAP_SP_CB_SHIFT)                         /* 0x00000100 */
+#define MI_MI_MIS_WRAP_SP_CR_SHIFT                         (9U)
+#define MI_MI_MIS_WRAP_SP_CR_MASK                          (0x1U << MI_MI_MIS_WRAP_SP_CR_SHIFT)                         /* 0x00000200 */
+#define MI_MI_MIS_FILL_MP_Y2_SHIFT                         (10U)
+#define MI_MI_MIS_FILL_MP_Y2_MASK                          (0x1U << MI_MI_MIS_FILL_MP_Y2_SHIFT)                         /* 0x00000400 */
+#define MI_MI_MIS_DMA_READY_SHIFT                          (11U)
+#define MI_MI_MIS_DMA_READY_MASK                           (0x1U << MI_MI_MIS_DMA_READY_SHIFT)                          /* 0x00000800 */
+#define MI_MI_MIS_RO_Y12Y_FRAME_END_STS_SHIFT              (12U)
+#define MI_MI_MIS_RO_Y12Y_FRAME_END_STS_MASK               (0x1U << MI_MI_MIS_RO_Y12Y_FRAME_END_STS_SHIFT)              /* 0x00001000 */
+#define MI_MI_MIS_RO_Y12C_FRAME_END_STS_SHIFT              (13U)
+#define MI_MI_MIS_RO_Y12C_FRAME_END_STS_MASK               (0x1U << MI_MI_MIS_RO_Y12C_FRAME_END_STS_SHIFT)              /* 0x00002000 */
+#define MI_MI_MIS_RO_ALL_FRAME_END_STS_SHIFT               (14U)
+#define MI_MI_MIS_RO_ALL_FRAME_END_STS_MASK                (0x1U << MI_MI_MIS_RO_ALL_FRAME_END_STS_SHIFT)               /* 0x00004000 */
+#define MI_MI_MIS_RAW0_WR_FRAME_END_SHIFT                  (16U)
+#define MI_MI_MIS_RAW0_WR_FRAME_END_MASK                   (0x1U << MI_MI_MIS_RAW0_WR_FRAME_END_SHIFT)                  /* 0x00010000 */
+#define MI_MI_MIS_RAW1_WR_FRAME_END_SHIFT                  (17U)
+#define MI_MI_MIS_RAW1_WR_FRAME_END_MASK                   (0x1U << MI_MI_MIS_RAW1_WR_FRAME_END_SHIFT)                  /* 0x00020000 */
+#define MI_MI_MIS_RAW2_WR_FRAME_END_SHIFT                  (18U)
+#define MI_MI_MIS_RAW2_WR_FRAME_END_MASK                   (0x1U << MI_MI_MIS_RAW2_WR_FRAME_END_SHIFT)                  /* 0x00040000 */
+#define MI_MI_MIS_RAW3_WR_FRAME_END_SHIFT                  (19U)
+#define MI_MI_MIS_RAW3_WR_FRAME_END_MASK                   (0x1U << MI_MI_MIS_RAW3_WR_FRAME_END_SHIFT)                  /* 0x00080000 */
+#define MI_MI_MIS_DBR_WR_FRAME_END_SHIFT                   (20U)
+#define MI_MI_MIS_DBR_WR_FRAME_END_MASK                    (0x1U << MI_MI_MIS_DBR_WR_FRAME_END_SHIFT)                   /* 0x00100000 */
+#define MI_MI_MIS_GAIN_WR_FRAME_END_SHIFT                  (21U)
+#define MI_MI_MIS_GAIN_WR_FRAME_END_MASK                   (0x1U << MI_MI_MIS_GAIN_WR_FRAME_END_SHIFT)                  /* 0x00200000 */
+#define MI_MI_MIS_MPFBC_WR_FRAME_END_SHIFT                 (31U)
+#define MI_MI_MIS_MPFBC_WR_FRAME_END_MASK                  (0x1U << MI_MI_MIS_MPFBC_WR_FRAME_END_SHIFT)                 /* 0x80000000 */
+/* MI_ICR */
+#define MI_MI_ICR_OFFSET                                   (0x104U)
+#define MI_MI_ICR_MP_FRAME_END_SHIFT                       (0U)
+#define MI_MI_ICR_MP_FRAME_END_MASK                        (0x1U << MI_MI_ICR_MP_FRAME_END_SHIFT)                       /* 0x00000001 */
+#define MI_MI_ICR_SP_FRAME_END_SHIFT                       (1U)
+#define MI_MI_ICR_SP_FRAME_END_MASK                        (0x1U << MI_MI_ICR_SP_FRAME_END_SHIFT)                       /* 0x00000002 */
+#define MI_MI_ICR_MBLK_LINE_SHIFT                          (2U)
+#define MI_MI_ICR_MBLK_LINE_MASK                           (0x1U << MI_MI_ICR_MBLK_LINE_SHIFT)                          /* 0x00000004 */
+#define MI_MI_ICR_FILL_MP_Y_SHIFT                          (3U)
+#define MI_MI_ICR_FILL_MP_Y_MASK                           (0x1U << MI_MI_ICR_FILL_MP_Y_SHIFT)                          /* 0x00000008 */
+#define MI_MI_ICR_WRAP_MP_Y_SHIFT                          (4U)
+#define MI_MI_ICR_WRAP_MP_Y_MASK                           (0x1U << MI_MI_ICR_WRAP_MP_Y_SHIFT)                          /* 0x00000010 */
+#define MI_MI_ICR_WRAP_MP_CB_SHIFT                         (5U)
+#define MI_MI_ICR_WRAP_MP_CB_MASK                          (0x1U << MI_MI_ICR_WRAP_MP_CB_SHIFT)                         /* 0x00000020 */
+#define MI_MI_ICR_WRAP_MP_CR_SHIFT                         (6U)
+#define MI_MI_ICR_WRAP_MP_CR_MASK                          (0x1U << MI_MI_ICR_WRAP_MP_CR_SHIFT)                         /* 0x00000040 */
+#define MI_MI_ICR_WRAP_SP_Y_SHIFT                          (7U)
+#define MI_MI_ICR_WRAP_SP_Y_MASK                           (0x1U << MI_MI_ICR_WRAP_SP_Y_SHIFT)                          /* 0x00000080 */
+#define MI_MI_ICR_WRAP_SP_CB_SHIFT                         (8U)
+#define MI_MI_ICR_WRAP_SP_CB_MASK                          (0x1U << MI_MI_ICR_WRAP_SP_CB_SHIFT)                         /* 0x00000100 */
+#define MI_MI_ICR_WRAP_SP_CR_SHIFT                         (9U)
+#define MI_MI_ICR_WRAP_SP_CR_MASK                          (0x1U << MI_MI_ICR_WRAP_SP_CR_SHIFT)                         /* 0x00000200 */
+#define MI_MI_ICR_FILL_MP_Y2_SHIFT                         (10U)
+#define MI_MI_ICR_FILL_MP_Y2_MASK                          (0x1U << MI_MI_ICR_FILL_MP_Y2_SHIFT)                         /* 0x00000400 */
+#define MI_MI_ICR_DMA_READY_SHIFT                          (11U)
+#define MI_MI_ICR_DMA_READY_MASK                           (0x1U << MI_MI_ICR_DMA_READY_SHIFT)                          /* 0x00000800 */
+#define MI_MI_ICR_SW_Y12Y_FRAME_END_CLR_SHIFT              (12U)
+#define MI_MI_ICR_SW_Y12Y_FRAME_END_CLR_MASK               (0x1U << MI_MI_ICR_SW_Y12Y_FRAME_END_CLR_SHIFT)              /* 0x00001000 */
+#define MI_MI_ICR_SW_Y12C_FRAME_END_CLR_SHIFT              (13U)
+#define MI_MI_ICR_SW_Y12C_FRAME_END_CLR_MASK               (0x1U << MI_MI_ICR_SW_Y12C_FRAME_END_CLR_SHIFT)              /* 0x00002000 */
+#define MI_MI_ICR_SW_ALL_FRAME_END_CLR_SHIFT               (14U)
+#define MI_MI_ICR_SW_ALL_FRAME_END_CLR_MASK                (0x1U << MI_MI_ICR_SW_ALL_FRAME_END_CLR_SHIFT)               /* 0x00004000 */
+#define MI_MI_ICR_RAW0_WR_FRAME_END_SHIFT                  (16U)
+#define MI_MI_ICR_RAW0_WR_FRAME_END_MASK                   (0x1U << MI_MI_ICR_RAW0_WR_FRAME_END_SHIFT)                  /* 0x00010000 */
+#define MI_MI_ICR_RAW1_WR_FRAME_END_SHIFT                  (17U)
+#define MI_MI_ICR_RAW1_WR_FRAME_END_MASK                   (0x1U << MI_MI_ICR_RAW1_WR_FRAME_END_SHIFT)                  /* 0x00020000 */
+#define MI_MI_ICR_RAW2_WR_FRAME_END_SHIFT                  (18U)
+#define MI_MI_ICR_RAW2_WR_FRAME_END_MASK                   (0x1U << MI_MI_ICR_RAW2_WR_FRAME_END_SHIFT)                  /* 0x00040000 */
+#define MI_MI_ICR_RAW3_WR_FRAME_END_SHIFT                  (19U)
+#define MI_MI_ICR_RAW3_WR_FRAME_END_MASK                   (0x1U << MI_MI_ICR_RAW3_WR_FRAME_END_SHIFT)                  /* 0x00080000 */
+#define MI_MI_ICR_DBR_WR_FRAME_END_SHIFT                   (20U)
+#define MI_MI_ICR_DBR_WR_FRAME_END_MASK                    (0x1U << MI_MI_ICR_DBR_WR_FRAME_END_SHIFT)                   /* 0x00100000 */
+#define MI_MI_ICR_GAIN_WR_FRAME_END_SHIFT                  (21U)
+#define MI_MI_ICR_GAIN_WR_FRAME_END_MASK                   (0x1U << MI_MI_ICR_GAIN_WR_FRAME_END_SHIFT)                  /* 0x00200000 */
+#define MI_MI_ICR_MPFBC_WR_FRAME_END_SHIFT                 (31U)
+#define MI_MI_ICR_MPFBC_WR_FRAME_END_MASK                  (0x1U << MI_MI_ICR_MPFBC_WR_FRAME_END_SHIFT)                 /* 0x80000000 */
+/* MI_ISR */
+#define MI_MI_ISR_OFFSET                                   (0x108U)
+#define MI_MI_ISR_MP_FRAME_END_SHIFT                       (0U)
+#define MI_MI_ISR_MP_FRAME_END_MASK                        (0x1U << MI_MI_ISR_MP_FRAME_END_SHIFT)                       /* 0x00000001 */
+#define MI_MI_ISR_SP_FRAME_END_SHIFT                       (1U)
+#define MI_MI_ISR_SP_FRAME_END_MASK                        (0x1U << MI_MI_ISR_SP_FRAME_END_SHIFT)                       /* 0x00000002 */
+#define MI_MI_ISR_MBLK_LINE_SHIFT                          (2U)
+#define MI_MI_ISR_MBLK_LINE_MASK                           (0x1U << MI_MI_ISR_MBLK_LINE_SHIFT)                          /* 0x00000004 */
+#define MI_MI_ISR_FILL_MP_Y_SHIFT                          (3U)
+#define MI_MI_ISR_FILL_MP_Y_MASK                           (0x1U << MI_MI_ISR_FILL_MP_Y_SHIFT)                          /* 0x00000008 */
+#define MI_MI_ISR_WRAP_MP_Y_SHIFT                          (4U)
+#define MI_MI_ISR_WRAP_MP_Y_MASK                           (0x1U << MI_MI_ISR_WRAP_MP_Y_SHIFT)                          /* 0x00000010 */
+#define MI_MI_ISR_WRAP_MP_CB_SHIFT                         (5U)
+#define MI_MI_ISR_WRAP_MP_CB_MASK                          (0x1U << MI_MI_ISR_WRAP_MP_CB_SHIFT)                         /* 0x00000020 */
+#define MI_MI_ISR_WRAP_MP_CR_SHIFT                         (6U)
+#define MI_MI_ISR_WRAP_MP_CR_MASK                          (0x1U << MI_MI_ISR_WRAP_MP_CR_SHIFT)                         /* 0x00000040 */
+#define MI_MI_ISR_WRAP_SP_Y_SHIFT                          (7U)
+#define MI_MI_ISR_WRAP_SP_Y_MASK                           (0x1U << MI_MI_ISR_WRAP_SP_Y_SHIFT)                          /* 0x00000080 */
+#define MI_MI_ISR_WRAP_SP_CB_SHIFT                         (8U)
+#define MI_MI_ISR_WRAP_SP_CB_MASK                          (0x1U << MI_MI_ISR_WRAP_SP_CB_SHIFT)                         /* 0x00000100 */
+#define MI_MI_ISR_WRAP_SP_CR_SHIFT                         (9U)
+#define MI_MI_ISR_WRAP_SP_CR_MASK                          (0x1U << MI_MI_ISR_WRAP_SP_CR_SHIFT)                         /* 0x00000200 */
+#define MI_MI_ISR_FILL_MP_Y2_SHIFT                         (10U)
+#define MI_MI_ISR_FILL_MP_Y2_MASK                          (0x1U << MI_MI_ISR_FILL_MP_Y2_SHIFT)                         /* 0x00000400 */
+#define MI_MI_ISR_DMA_READY_SHIFT                          (11U)
+#define MI_MI_ISR_DMA_READY_MASK                           (0x1U << MI_MI_ISR_DMA_READY_SHIFT)                          /* 0x00000800 */
+#define MI_MI_ISR_SW_Y12Y_FRAME_END_SET_SHIFT              (12U)
+#define MI_MI_ISR_SW_Y12Y_FRAME_END_SET_MASK               (0x1U << MI_MI_ISR_SW_Y12Y_FRAME_END_SET_SHIFT)              /* 0x00001000 */
+#define MI_MI_ISR_SW_Y12C_FRAME_END_SET_SHIFT              (13U)
+#define MI_MI_ISR_SW_Y12C_FRAME_END_SET_MASK               (0x1U << MI_MI_ISR_SW_Y12C_FRAME_END_SET_SHIFT)              /* 0x00002000 */
+#define MI_MI_ISR_SW_ALL_FRAME_END_SET_SHIFT               (14U)
+#define MI_MI_ISR_SW_ALL_FRAME_END_SET_MASK                (0x1U << MI_MI_ISR_SW_ALL_FRAME_END_SET_SHIFT)               /* 0x00004000 */
+#define MI_MI_ISR_RAW0_WR_FRAME_END_SHIFT                  (16U)
+#define MI_MI_ISR_RAW0_WR_FRAME_END_MASK                   (0x1U << MI_MI_ISR_RAW0_WR_FRAME_END_SHIFT)                  /* 0x00010000 */
+#define MI_MI_ISR_RAW1_WR_FRAME_END_SHIFT                  (17U)
+#define MI_MI_ISR_RAW1_WR_FRAME_END_MASK                   (0x1U << MI_MI_ISR_RAW1_WR_FRAME_END_SHIFT)                  /* 0x00020000 */
+#define MI_MI_ISR_RAW2_WR_FRAME_END_SHIFT                  (18U)
+#define MI_MI_ISR_RAW2_WR_FRAME_END_MASK                   (0x1U << MI_MI_ISR_RAW2_WR_FRAME_END_SHIFT)                  /* 0x00040000 */
+#define MI_MI_ISR_RAW3_WR_FRAME_END_SHIFT                  (19U)
+#define MI_MI_ISR_RAW3_WR_FRAME_END_MASK                   (0x1U << MI_MI_ISR_RAW3_WR_FRAME_END_SHIFT)                  /* 0x00080000 */
+#define MI_MI_ISR_DBR_WR_FRAME_END_SHIFT                   (20U)
+#define MI_MI_ISR_DBR_WR_FRAME_END_MASK                    (0x1U << MI_MI_ISR_DBR_WR_FRAME_END_SHIFT)                   /* 0x00100000 */
+#define MI_MI_ISR_GAIN_WR_FRAME_END_SHIFT                  (21U)
+#define MI_MI_ISR_GAIN_WR_FRAME_END_MASK                   (0x1U << MI_MI_ISR_GAIN_WR_FRAME_END_SHIFT)                  /* 0x00200000 */
+#define MI_MI_ISR_MPFBC_WR_FRAME_END_SHIFT                 (31U)
+#define MI_MI_ISR_MPFBC_WR_FRAME_END_MASK                  (0x1U << MI_MI_ISR_MPFBC_WR_FRAME_END_SHIFT)                 /* 0x80000000 */
+/* MI_STATUS */
+#define MI_MI_STATUS_OFFSET                                (0x10CU)
+#define MI_MI_STATUS                                       (0x0U)
+#define MI_MI_STATUS_MP_Y_FIFO_FULL_SHIFT                  (0U)
+#define MI_MI_STATUS_MP_Y_FIFO_FULL_MASK                   (0x1U << MI_MI_STATUS_MP_Y_FIFO_FULL_SHIFT)                  /* 0x00000001 */
+#define MI_MI_STATUS_MP_CB_FIFO_FULL_SHIFT                 (1U)
+#define MI_MI_STATUS_MP_CB_FIFO_FULL_MASK                  (0x1U << MI_MI_STATUS_MP_CB_FIFO_FULL_SHIFT)                 /* 0x00000002 */
+#define MI_MI_STATUS_MP_CR_FIFO_FULL_SHIFT                 (2U)
+#define MI_MI_STATUS_MP_CR_FIFO_FULL_MASK                  (0x1U << MI_MI_STATUS_MP_CR_FIFO_FULL_SHIFT)                 /* 0x00000004 */
+#define MI_MI_STATUS_SP_Y_FIFO_FULL_SHIFT                  (4U)
+#define MI_MI_STATUS_SP_Y_FIFO_FULL_MASK                   (0x1U << MI_MI_STATUS_SP_Y_FIFO_FULL_SHIFT)                  /* 0x00000010 */
+#define MI_MI_STATUS_SP_CB_FIFO_FULL_SHIFT                 (5U)
+#define MI_MI_STATUS_SP_CB_FIFO_FULL_MASK                  (0x1U << MI_MI_STATUS_SP_CB_FIFO_FULL_SHIFT)                 /* 0x00000020 */
+#define MI_MI_STATUS_SP_CR_FIFO_FULL_SHIFT                 (6U)
+#define MI_MI_STATUS_SP_CR_FIFO_FULL_MASK                  (0x1U << MI_MI_STATUS_SP_CR_FIFO_FULL_SHIFT)                 /* 0x00000040 */
+#define MI_MI_STATUS_RAW0_WR_Y_FIFO_FULL_SHIFT             (8U)
+#define MI_MI_STATUS_RAW0_WR_Y_FIFO_FULL_MASK              (0x1U << MI_MI_STATUS_RAW0_WR_Y_FIFO_FULL_SHIFT)             /* 0x00000100 */
+#define MI_MI_STATUS_RAW1_WR_Y_FIFO_FULL_SHIFT             (9U)
+#define MI_MI_STATUS_RAW1_WR_Y_FIFO_FULL_MASK              (0x1U << MI_MI_STATUS_RAW1_WR_Y_FIFO_FULL_SHIFT)             /* 0x00000200 */
+#define MI_MI_STATUS_RAW2_WR_Y_FIFO_FULL_SHIFT             (10U)
+#define MI_MI_STATUS_RAW2_WR_Y_FIFO_FULL_MASK              (0x1U << MI_MI_STATUS_RAW2_WR_Y_FIFO_FULL_SHIFT)             /* 0x00000400 */
+#define MI_MI_STATUS_RAW3_WR_Y_FIFO_FULL_SHIFT             (11U)
+#define MI_MI_STATUS_RAW3_WR_Y_FIFO_FULL_MASK              (0x1U << MI_MI_STATUS_RAW3_WR_Y_FIFO_FULL_SHIFT)             /* 0x00000800 */
+#define MI_MI_STATUS_DBR_WR_Y_FIFO_FULL_SHIFT              (12U)
+#define MI_MI_STATUS_DBR_WR_Y_FIFO_FULL_MASK               (0x1U << MI_MI_STATUS_DBR_WR_Y_FIFO_FULL_SHIFT)              /* 0x00001000 */
+/* MI_STATUS_CLR */
+#define MI_MI_STATUS_CLR_OFFSET                            (0x110U)
+#define MI_MI_STATUS_CLR_MP_Y_FIFO_FULL_SHIFT              (0U)
+#define MI_MI_STATUS_CLR_MP_Y_FIFO_FULL_MASK               (0x1U << MI_MI_STATUS_CLR_MP_Y_FIFO_FULL_SHIFT)              /* 0x00000001 */
+#define MI_MI_STATUS_CLR_MP_CB_FIFO_FULL_SHIFT             (1U)
+#define MI_MI_STATUS_CLR_MP_CB_FIFO_FULL_MASK              (0x1U << MI_MI_STATUS_CLR_MP_CB_FIFO_FULL_SHIFT)             /* 0x00000002 */
+#define MI_MI_STATUS_CLR_MP_CR_FIFO_FULL_SHIFT             (2U)
+#define MI_MI_STATUS_CLR_MP_CR_FIFO_FULL_MASK              (0x1U << MI_MI_STATUS_CLR_MP_CR_FIFO_FULL_SHIFT)             /* 0x00000004 */
+#define MI_MI_STATUS_CLR_SP_Y_FIFO_FULL_SHIFT              (4U)
+#define MI_MI_STATUS_CLR_SP_Y_FIFO_FULL_MASK               (0x1U << MI_MI_STATUS_CLR_SP_Y_FIFO_FULL_SHIFT)              /* 0x00000010 */
+#define MI_MI_STATUS_CLR_SP_CB_FIFO_FULL_SHIFT             (5U)
+#define MI_MI_STATUS_CLR_SP_CB_FIFO_FULL_MASK              (0x1U << MI_MI_STATUS_CLR_SP_CB_FIFO_FULL_SHIFT)             /* 0x00000020 */
+#define MI_MI_STATUS_CLR_SP_CR_FIFO_FULL_SHIFT             (6U)
+#define MI_MI_STATUS_CLR_SP_CR_FIFO_FULL_MASK              (0x1U << MI_MI_STATUS_CLR_SP_CR_FIFO_FULL_SHIFT)             /* 0x00000040 */
+#define MI_MI_STATUS_CLR_RAW0_WR_Y_FIFO_FULL_SHIFT         (8U)
+#define MI_MI_STATUS_CLR_RAW0_WR_Y_FIFO_FULL_MASK          (0x1U << MI_MI_STATUS_CLR_RAW0_WR_Y_FIFO_FULL_SHIFT)         /* 0x00000100 */
+#define MI_MI_STATUS_CLR_RAW1_WR_Y_FIFO_FULL_SHIFT         (9U)
+#define MI_MI_STATUS_CLR_RAW1_WR_Y_FIFO_FULL_MASK          (0x1U << MI_MI_STATUS_CLR_RAW1_WR_Y_FIFO_FULL_SHIFT)         /* 0x00000200 */
+#define MI_MI_STATUS_CLR_RAW2_WR_Y_FIFO_FULL_SHIFT         (10U)
+#define MI_MI_STATUS_CLR_RAW2_WR_Y_FIFO_FULL_MASK          (0x1U << MI_MI_STATUS_CLR_RAW2_WR_Y_FIFO_FULL_SHIFT)         /* 0x00000400 */
+#define MI_MI_STATUS_CLR_RAW3_WR_Y_FIFO_FULL_SHIFT         (11U)
+#define MI_MI_STATUS_CLR_RAW3_WR_Y_FIFO_FULL_MASK          (0x1U << MI_MI_STATUS_CLR_RAW3_WR_Y_FIFO_FULL_SHIFT)         /* 0x00000800 */
+#define MI_MI_STATUS_CLR_DBR_WR_Y_FIFO_FULL_SHIFT          (12U)
+#define MI_MI_STATUS_CLR_DBR_WR_Y_FIFO_FULL_MASK           (0x1U << MI_MI_STATUS_CLR_DBR_WR_Y_FIFO_FULL_SHIFT)          /* 0x00001000 */
+/* MI_SP_WR_Y_PIC_WIDTH */
+#define MI_MI_SP_WR_Y_PIC_WIDTH_OFFSET                     (0x114U)
+#define MI_MI_SP_WR_Y_PIC_WIDTH_SW_SP_WR_Y_PIC_WIDTH_SHIFT (0U)
+#define MI_MI_SP_WR_Y_PIC_WIDTH_SW_SP_WR_Y_PIC_WIDTH_MASK  (0x7FFFU << MI_MI_SP_WR_Y_PIC_WIDTH_SW_SP_WR_Y_PIC_WIDTH_SHIFT) /* 0x00007FFF */
+/* MI_SP_WR_Y_PIC_HEIGHT */
+#define MI_MI_SP_WR_Y_PIC_HEIGHT_OFFSET                    (0x118U)
+#define MI_MI_SP_WR_Y_PIC_HEIGHT_SW_SP_WR_Y_PIC_HEIGHT_SHIFT (0U)
+#define MI_MI_SP_WR_Y_PIC_HEIGHT_SW_SP_WR_Y_PIC_HEIGHT_MASK (0x7FFFU << MI_MI_SP_WR_Y_PIC_HEIGHT_SW_SP_WR_Y_PIC_HEIGHT_SHIFT) /* 0x00007FFF */
+/* MI_SP_WR_Y_PIC_SIZE */
+#define MI_MI_SP_WR_Y_PIC_SIZE_OFFSET                      (0x11CU)
+#define MI_MI_SP_WR_Y_PIC_SIZE_SW_SP_WR_Y_PIC_SIZE_SHIFT   (0U)
+#define MI_MI_SP_WR_Y_PIC_SIZE_SW_SP_WR_Y_PIC_SIZE_MASK    (0x1FFFFFFU << MI_MI_SP_WR_Y_PIC_SIZE_SW_SP_WR_Y_PIC_SIZE_SHIFT) /* 0x01FFFFFF */
+/* MI_RD_CTRL */
+#define MI_MI_RD_CTRL_OFFSET                               (0x120U)
+#define MI_MI_RD_CTRL_SW_MI_RD_BURST_LEN_LUM_SHIFT         (0U)
+#define MI_MI_RD_CTRL_SW_MI_RD_BURST_LEN_LUM_MASK          (0x3U << MI_MI_RD_CTRL_SW_MI_RD_BURST_LEN_LUM_SHIFT)         /* 0x00000003 */
+#define MI_MI_RD_CTRL_SW_MI_RD_BURST_LEN_CHROM_SHIFT       (2U)
+#define MI_MI_RD_CTRL_SW_MI_RD_BURST_LEN_CHROM_MASK        (0x3U << MI_MI_RD_CTRL_SW_MI_RD_BURST_LEN_CHROM_SHIFT)       /* 0x0000000C */
+#define MI_MI_RD_CTRL_SW_MI_RD_FORMAT_SHIFT                (4U)
+#define MI_MI_RD_CTRL_SW_MI_RD_FORMAT_MASK                 (0x3U << MI_MI_RD_CTRL_SW_MI_RD_FORMAT_SHIFT)                /* 0x00000030 */
+#define MI_MI_RD_CTRL_SW_MI_RD_INOUT_FORMAT_SHIFT          (6U)
+#define MI_MI_RD_CTRL_SW_MI_RD_INOUT_FORMAT_MASK           (0x3U << MI_MI_RD_CTRL_SW_MI_RD_INOUT_FORMAT_SHIFT)          /* 0x000000C0 */
+#define MI_MI_RD_CTRL_SW_MI_RD_BYTE_SWAP_SHIFT             (8U)
+#define MI_MI_RD_CTRL_SW_MI_RD_BYTE_SWAP_MASK              (0x1U << MI_MI_RD_CTRL_SW_MI_RD_BYTE_SWAP_SHIFT)             /* 0x00000100 */
+#define MI_MI_RD_CTRL_SW_MI_RD_CONTINUOUS_EN_SHIFT         (9U)
+#define MI_MI_RD_CTRL_SW_MI_RD_CONTINUOUS_EN_MASK          (0x1U << MI_MI_RD_CTRL_SW_MI_RD_CONTINUOUS_EN_SHIFT)         /* 0x00000200 */
+#define MI_MI_RD_CTRL_SW_MI_RD_FRAME_END_DISABLE_SHIFT     (10U)
+#define MI_MI_RD_CTRL_SW_MI_RD_FRAME_END_DISABLE_MASK      (0x1U << MI_MI_RD_CTRL_SW_MI_RD_FRAME_END_DISABLE_SHIFT)     /* 0x00000400 */
+#define MI_MI_RD_CTRL_SW_MI_RD_RGB_FORMAT_SHIFT            (12U)
+#define MI_MI_RD_CTRL_SW_MI_RD_RGB_FORMAT_MASK             (0x3U << MI_MI_RD_CTRL_SW_MI_RD_RGB_FORMAT_SHIFT)            /* 0x00003000 */
+#define MI_MI_RD_CTRL_SW_MI_RD_START_SEL_SHIFT             (14U)
+#define MI_MI_RD_CTRL_SW_MI_RD_START_SEL_MASK              (0x3U << MI_MI_RD_CTRL_SW_MI_RD_START_SEL_SHIFT)             /* 0x0000C000 */
+/* MI_RD_START */
+#define MI_MI_RD_START_OFFSET                              (0x124U)
+#define MI_MI_RD_START_SW_MI_RD_START_PRE_SHIFT            (0U)
+#define MI_MI_RD_START_SW_MI_RD_START_PRE_MASK             (0x1U << MI_MI_RD_START_SW_MI_RD_START_PRE_SHIFT)            /* 0x00000001 */
+/* MI_RD_STATUS */
+#define MI_MI_RD_STATUS_OFFSET                             (0x128U)
+#define MI_MI_RD_STATUS                                    (0x0U)
+#define MI_MI_RD_STATUS_SW_MI_RD_ACTIVE_SHIFT              (0U)
+#define MI_MI_RD_STATUS_SW_MI_RD_ACTIVE_MASK               (0x1U << MI_MI_RD_STATUS_SW_MI_RD_ACTIVE_SHIFT)              /* 0x00000001 */
+/* MI_WR_PIXEL_CNT */
+#define MI_MI_WR_PIXEL_CNT_OFFSET                          (0x12CU)
+#define MI_MI_WR_PIXEL_CNT                                 (0x0U)
+#define MI_MI_WR_PIXEL_CNT_PIX_CNT_SHIFT                   (0U)
+#define MI_MI_WR_PIXEL_CNT_PIX_CNT_MASK                    (0xFFFFFFFU << MI_MI_WR_PIXEL_CNT_PIX_CNT_SHIFT)             /* 0x0FFFFFFF */
+/* MI_MP_WR_Y_BASE2 */
+#define MI_MI_MP_WR_Y_BASE2_OFFSET                         (0x130U)
+#define MI_MI_MP_WR_Y_BASE2_SW_MP_WR_Y_BASE2_SHIFT         (4U)
+#define MI_MI_MP_WR_Y_BASE2_SW_MP_WR_Y_BASE2_MASK          (0xFFFFFFFU << MI_MI_MP_WR_Y_BASE2_SW_MP_WR_Y_BASE2_SHIFT)   /* 0xFFFFFFF0 */
+/* MI_MP_WR_CB_BASE2 */
+#define MI_MI_MP_WR_CB_BASE2_OFFSET                        (0x134U)
+#define MI_MI_MP_WR_CB_BASE2_SW_MP_WR_CB_BASE2_SHIFT       (4U)
+#define MI_MI_MP_WR_CB_BASE2_SW_MP_WR_CB_BASE2_MASK        (0xFFFFFFFU << MI_MI_MP_WR_CB_BASE2_SW_MP_WR_CB_BASE2_SHIFT) /* 0xFFFFFFF0 */
+/* MI_MP_WR_CR_BASE2 */
+#define MI_MI_MP_WR_CR_BASE2_OFFSET                        (0x138U)
+#define MI_MI_MP_WR_CR_BASE2_SW_MP_WR_CR_BASE2_SHIFT       (4U)
+#define MI_MI_MP_WR_CR_BASE2_SW_MP_WR_CR_BASE2_MASK        (0xFFFFFFFU << MI_MI_MP_WR_CR_BASE2_SW_MP_WR_CR_BASE2_SHIFT) /* 0xFFFFFFF0 */
+/* MI_SP_WR_Y_BASE2 */
+#define MI_MI_SP_WR_Y_BASE2_OFFSET                         (0x13CU)
+#define MI_MI_SP_WR_Y_BASE2_SW_MP_WR_Y_BASE2_SHIFT         (4U)
+#define MI_MI_SP_WR_Y_BASE2_SW_MP_WR_Y_BASE2_MASK          (0xFFFFFFFU << MI_MI_SP_WR_Y_BASE2_SW_MP_WR_Y_BASE2_SHIFT)   /* 0xFFFFFFF0 */
+/* MI_SP_WR_CB_BASE2 */
+#define MI_MI_SP_WR_CB_BASE2_OFFSET                        (0x140U)
+#define MI_MI_SP_WR_CB_BASE2_SW_MP_WR_CB_BASE2_SHIFT       (4U)
+#define MI_MI_SP_WR_CB_BASE2_SW_MP_WR_CB_BASE2_MASK        (0xFFFFFFFU << MI_MI_SP_WR_CB_BASE2_SW_MP_WR_CB_BASE2_SHIFT) /* 0xFFFFFFF0 */
+/* MI_SP_WR_CR_BASE2 */
+#define MI_MI_SP_WR_CR_BASE2_OFFSET                        (0x144U)
+#define MI_MI_SP_WR_CR_BASE2_SW_MP_WR_CR_BASE2_SHIFT       (4U)
+#define MI_MI_SP_WR_CR_BASE2_SW_MP_WR_CR_BASE2_MASK        (0xFFFFFFFU << MI_MI_SP_WR_CR_BASE2_SW_MP_WR_CR_BASE2_SHIFT) /* 0xFFFFFFF0 */
+/* MI_WR_XTD_FORMAT_CTRL */
+#define MI_MI_WR_XTD_FORMAT_CTRL_OFFSET                    (0x148U)
+#define MI_MI_WR_XTD_FORMAT_CTRL_SW_MI_WR_NV21_MAIN_SHIFT  (0U)
+#define MI_MI_WR_XTD_FORMAT_CTRL_SW_MI_WR_NV21_MAIN_MASK   (0x1U << MI_MI_WR_XTD_FORMAT_CTRL_SW_MI_WR_NV21_MAIN_SHIFT)  /* 0x00000001 */
+#define MI_MI_WR_XTD_FORMAT_CTRL_SW_MI_WR_NV21_SELF_SHIFT  (1U)
+#define MI_MI_WR_XTD_FORMAT_CTRL_SW_MI_WR_NV21_SELF_MASK   (0x1U << MI_MI_WR_XTD_FORMAT_CTRL_SW_MI_WR_NV21_SELF_SHIFT)  /* 0x00000002 */
+#define MI_MI_WR_XTD_FORMAT_CTRL_SW_MI_WR_NV21_DMA_READ_SHIFT (2U)
+#define MI_MI_WR_XTD_FORMAT_CTRL_SW_MI_WR_NV21_DMA_READ_MASK (0x1U << MI_MI_WR_XTD_FORMAT_CTRL_SW_MI_WR_NV21_DMA_READ_SHIFT) /* 0x00000004 */
+#define MI_MI_WR_XTD_FORMAT_CTRL_SW_Y12_UV_SWAP_SHIFT      (3U)
+#define MI_MI_WR_XTD_FORMAT_CTRL_SW_Y12_UV_SWAP_MASK       (0x1U << MI_MI_WR_XTD_FORMAT_CTRL_SW_Y12_UV_SWAP_SHIFT)      /* 0x00000008 */
+/* MI_WR_ID */
+#define MI_MI_WR_ID_OFFSET                                 (0x154U)
+#define MI_MI_WR_ID                                        (0x0U)
+#define MI_MI_WR_ID_SW_MPY_WR_AXI_ID_SHIFT                 (8U)
+#define MI_MI_WR_ID_SW_MPY_WR_AXI_ID_MASK                  (0xFU << MI_MI_WR_ID_SW_MPY_WR_AXI_ID_SHIFT)                 /* 0x00000F00 */
+#define MI_MI_WR_ID_SW_MPCB_WR_AXI_ID_SHIFT                (12U)
+#define MI_MI_WR_ID_SW_MPCB_WR_AXI_ID_MASK                 (0xFU << MI_MI_WR_ID_SW_MPCB_WR_AXI_ID_SHIFT)                /* 0x0000F000 */
+#define MI_MI_WR_ID_SW_MPCR_WR_AXI_ID_SHIFT                (16U)
+#define MI_MI_WR_ID_SW_MPCR_WR_AXI_ID_MASK                 (0xFU << MI_MI_WR_ID_SW_MPCR_WR_AXI_ID_SHIFT)                /* 0x000F0000 */
+#define MI_MI_WR_ID_SW_SPY_WR_AXI_ID_SHIFT                 (20U)
+#define MI_MI_WR_ID_SW_SPY_WR_AXI_ID_MASK                  (0xFU << MI_MI_WR_ID_SW_SPY_WR_AXI_ID_SHIFT)                 /* 0x00F00000 */
+#define MI_MI_WR_ID_SW_SPCB_WR_AXI_ID_SHIFT                (24U)
+#define MI_MI_WR_ID_SW_SPCB_WR_AXI_ID_MASK                 (0xFU << MI_MI_WR_ID_SW_SPCB_WR_AXI_ID_SHIFT)                /* 0x0F000000 */
+#define MI_MI_WR_ID_SW_SPCR_WR_AXI_ID_SHIFT                (28U)
+#define MI_MI_WR_ID_SW_SPCR_WR_AXI_ID_MASK                 (0xFU << MI_MI_WR_ID_SW_SPCR_WR_AXI_ID_SHIFT)                /* 0xF0000000 */
+/* MI_MP_WR_Y_IRQ_OFFS2 */
+#define MI_MI_MP_WR_Y_IRQ_OFFS2_OFFSET                     (0x1E0U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS2_SW_MP_WR_Y_IRQ_OFFS2_SHIFT (3U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS2_SW_MP_WR_Y_IRQ_OFFS2_MASK  (0x3FFFFFFU << MI_MI_MP_WR_Y_IRQ_OFFS2_SW_MP_WR_Y_IRQ_OFFS2_SHIFT) /* 0x1FFFFFF8 */
+/* MI_MP_WR_Y_IRQ_OFFS2_SHD */
+#define MI_MI_MP_WR_Y_IRQ_OFFS2_SHD_OFFSET                 (0x1E4U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS2_SHD                        (0x0U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS2_SHD_SW_MP_WR_Y_IRQ_OFFS2_SHD_SHIFT (3U)
+#define MI_MI_MP_WR_Y_IRQ_OFFS2_SHD_SW_MP_WR_Y_IRQ_OFFS2_SHD_MASK (0x3FFFFFFU << MI_MI_MP_WR_Y_IRQ_OFFS2_SHD_SW_MP_WR_Y_IRQ_OFFS2_SHD_SHIFT) /* 0x1FFFFFF8 */
+/* MI_WR_CTRL2 */
+#define MI_MI_WR_CTRL2_OFFSET                              (0x400U)
+#define MI_MI_WR_CTRL2_SW_RAW0_WR_AUTO_UPD_SHIFT           (0U)
+#define MI_MI_WR_CTRL2_SW_RAW0_WR_AUTO_UPD_MASK            (0x1U << MI_MI_WR_CTRL2_SW_RAW0_WR_AUTO_UPD_SHIFT)           /* 0x00000001 */
+#define MI_MI_WR_CTRL2_SW_RAW1_WR_AUTO_UPD_SHIFT           (1U)
+#define MI_MI_WR_CTRL2_SW_RAW1_WR_AUTO_UPD_MASK            (0x1U << MI_MI_WR_CTRL2_SW_RAW1_WR_AUTO_UPD_SHIFT)           /* 0x00000002 */
+#define MI_MI_WR_CTRL2_SW_RAW2_WR_AUTO_UPD_SHIFT           (2U)
+#define MI_MI_WR_CTRL2_SW_RAW2_WR_AUTO_UPD_MASK            (0x1U << MI_MI_WR_CTRL2_SW_RAW2_WR_AUTO_UPD_SHIFT)           /* 0x00000004 */
+#define MI_MI_WR_CTRL2_SW_RAW3_WR_AUTO_UPD_SHIFT           (3U)
+#define MI_MI_WR_CTRL2_SW_RAW3_WR_AUTO_UPD_MASK            (0x1U << MI_MI_WR_CTRL2_SW_RAW3_WR_AUTO_UPD_SHIFT)           /* 0x00000008 */
+#define MI_MI_WR_CTRL2_SW_MIMUX_EN_SHIFT                   (8U)
+#define MI_MI_WR_CTRL2_SW_MIMUX_EN_MASK                    (0x1U << MI_MI_WR_CTRL2_SW_MIMUX_EN_SHIFT)                   /* 0x00000100 */
+#define MI_MI_WR_CTRL2_SW_MIMUX_BYTE_SWAP_SHIFT            (9U)
+#define MI_MI_WR_CTRL2_SW_MIMUX_BYTE_SWAP_MASK             (0x1U << MI_MI_WR_CTRL2_SW_MIMUX_BYTE_SWAP_SHIFT)            /* 0x00000200 */
+#define MI_MI_WR_CTRL2_SW_DBR_WR_AUTO_UPD_SHIFT            (10U)
+#define MI_MI_WR_CTRL2_SW_DBR_WR_AUTO_UPD_MASK             (0x1U << MI_MI_WR_CTRL2_SW_DBR_WR_AUTO_UPD_SHIFT)            /* 0x00000400 */
+#define MI_MI_WR_CTRL2_SW_GAIN_WR_PINGPONG_EN_SHIFT        (12U)
+#define MI_MI_WR_CTRL2_SW_GAIN_WR_PINGPONG_EN_MASK         (0x1U << MI_MI_WR_CTRL2_SW_GAIN_WR_PINGPONG_EN_SHIFT)        /* 0x00001000 */
+#define MI_MI_WR_CTRL2_SW_GAIN_WR_AUTO_UPD_SHIFT           (13U)
+#define MI_MI_WR_CTRL2_SW_GAIN_WR_AUTO_UPD_MASK            (0x1U << MI_MI_WR_CTRL2_SW_GAIN_WR_AUTO_UPD_SHIFT)           /* 0x00002000 */
+/* MI_WR_ID2 */
+#define MI_MI_WR_ID2_OFFSET                                (0x404U)
+#define MI_MI_WR_ID2                                       (0x0U)
+#define MI_MI_WR_ID2_SW_RAW0_WR_AXI_ID_SHIFT               (4U)
+#define MI_MI_WR_ID2_SW_RAW0_WR_AXI_ID_MASK                (0xFU << MI_MI_WR_ID2_SW_RAW0_WR_AXI_ID_SHIFT)               /* 0x000000F0 */
+#define MI_MI_WR_ID2_SW_RAW1_WR_AXI_ID_SHIFT               (8U)
+#define MI_MI_WR_ID2_SW_RAW1_WR_AXI_ID_MASK                (0xFU << MI_MI_WR_ID2_SW_RAW1_WR_AXI_ID_SHIFT)               /* 0x00000F00 */
+#define MI_MI_WR_ID2_SW_RAW2_WR_AXI_ID_SHIFT               (12U)
+#define MI_MI_WR_ID2_SW_RAW2_WR_AXI_ID_MASK                (0xFU << MI_MI_WR_ID2_SW_RAW2_WR_AXI_ID_SHIFT)               /* 0x0000F000 */
+#define MI_MI_WR_ID2_SW_RAW3_WR_AXI_ID_SHIFT               (16U)
+#define MI_MI_WR_ID2_SW_RAW3_WR_AXI_ID_MASK                (0xFU << MI_MI_WR_ID2_SW_RAW3_WR_AXI_ID_SHIFT)               /* 0x000F0000 */
+#define MI_MI_WR_ID2_SW_DBR_WR_AXI_ID_SHIFT                (20U)
+#define MI_MI_WR_ID2_SW_DBR_WR_AXI_ID_MASK                 (0xFU << MI_MI_WR_ID2_SW_DBR_WR_AXI_ID_SHIFT)                /* 0x00F00000 */
+/* MI_RD_CTRL2 */
+#define MI_MI_RD_CTRL2_OFFSET                              (0x408U)
+#define MI_MI_RD_CTRL2_RAW0_RW_ONE_ADDR_EN_SHIFT           (0U)
+#define MI_MI_RD_CTRL2_RAW0_RW_ONE_ADDR_EN_MASK            (0x1U << MI_MI_RD_CTRL2_RAW0_RW_ONE_ADDR_EN_SHIFT)           /* 0x00000001 */
+#define MI_MI_RD_CTRL2_RAW1_RW_ONE_ADDR_EN_SHIFT           (1U)
+#define MI_MI_RD_CTRL2_RAW1_RW_ONE_ADDR_EN_MASK            (0x1U << MI_MI_RD_CTRL2_RAW1_RW_ONE_ADDR_EN_SHIFT)           /* 0x00000002 */
+#define MI_MI_RD_CTRL2_RAW2_RW_ONE_ADDR_EN_SHIFT           (2U)
+#define MI_MI_RD_CTRL2_RAW2_RW_ONE_ADDR_EN_MASK            (0x1U << MI_MI_RD_CTRL2_RAW2_RW_ONE_ADDR_EN_SHIFT)           /* 0x00000004 */
+#define MI_MI_RD_CTRL2_DBR_RW_ONE_ADDR_EN_SHIFT            (3U)
+#define MI_MI_RD_CTRL2_DBR_RW_ONE_ADDR_EN_MASK             (0x1U << MI_MI_RD_CTRL2_DBR_RW_ONE_ADDR_EN_SHIFT)            /* 0x00000008 */
+#define MI_MI_RD_CTRL2_SW_RAW0_RD_BURST_LEN_SHIFT          (8U)
+#define MI_MI_RD_CTRL2_SW_RAW0_RD_BURST_LEN_MASK           (0x3U << MI_MI_RD_CTRL2_SW_RAW0_RD_BURST_LEN_SHIFT)          /* 0x00000300 */
+#define MI_MI_RD_CTRL2_SW_RAW1_RD_BURST_LEN_SHIFT          (10U)
+#define MI_MI_RD_CTRL2_SW_RAW1_RD_BURST_LEN_MASK           (0x3U << MI_MI_RD_CTRL2_SW_RAW1_RD_BURST_LEN_SHIFT)          /* 0x00000C00 */
+#define MI_MI_RD_CTRL2_SW_RAWS_RD_BURST_LEN_SHIFT          (12U)
+#define MI_MI_RD_CTRL2_SW_RAWS_RD_BURST_LEN_MASK           (0x3U << MI_MI_RD_CTRL2_SW_RAWS_RD_BURST_LEN_SHIFT)          /* 0x00003000 */
+#define MI_MI_RD_CTRL2_SW_DBR_RD_BURST_LEN_SHIFT           (14U)
+#define MI_MI_RD_CTRL2_SW_DBR_RD_BURST_LEN_MASK            (0x3U << MI_MI_RD_CTRL2_SW_DBR_RD_BURST_LEN_SHIFT)           /* 0x0000C000 */
+#define MI_MI_RD_CTRL2_SW_LUT_RD_BURST_LEN_SHIFT           (16U)
+#define MI_MI_RD_CTRL2_SW_LUT_RD_BURST_LEN_MASK            (0x3U << MI_MI_RD_CTRL2_SW_LUT_RD_BURST_LEN_SHIFT)           /* 0x00030000 */
+/* MI_RD_ID */
+#define MI_MI_RD_ID_OFFSET                                 (0x40CU)
+#define MI_MI_RD_ID                                        (0x0U)
+#define MI_MI_RD_ID_SW_RAW0_RD_AXI_ID_SHIFT                (0U)
+#define MI_MI_RD_ID_SW_RAW0_RD_AXI_ID_MASK                 (0xFU << MI_MI_RD_ID_SW_RAW0_RD_AXI_ID_SHIFT)                /* 0x0000000F */
+#define MI_MI_RD_ID_SW_RAW1_RD_AXI_ID_SHIFT                (4U)
+#define MI_MI_RD_ID_SW_RAW1_RD_AXI_ID_MASK                 (0xFU << MI_MI_RD_ID_SW_RAW1_RD_AXI_ID_SHIFT)                /* 0x000000F0 */
+#define MI_MI_RD_ID_SW_RAWS_RD_AXI_ID_SHIFT                (8U)
+#define MI_MI_RD_ID_SW_RAWS_RD_AXI_ID_MASK                 (0xFU << MI_MI_RD_ID_SW_RAWS_RD_AXI_ID_SHIFT)                /* 0x00000F00 */
+#define MI_MI_RD_ID_SW_DBR_RD_AXI_ID_SHIFT                 (12U)
+#define MI_MI_RD_ID_SW_DBR_RD_AXI_ID_MASK                  (0xFU << MI_MI_RD_ID_SW_DBR_RD_AXI_ID_SHIFT)                 /* 0x0000F000 */
+#define MI_MI_RD_ID_SW_LUT_RD_AXI_ID_SHIFT                 (16U)
+#define MI_MI_RD_ID_SW_LUT_RD_AXI_ID_MASK                  (0xFU << MI_MI_RD_ID_SW_LUT_RD_AXI_ID_SHIFT)                 /* 0x000F0000 */
+/* MI_RD_FIFO_LEVEL */
+#define MI_MI_RD_FIFO_LEVEL_OFFSET                         (0x41CU)
+#define MI_MI_RD_FIFO_LEVEL_SW_RAW0_RD_LEVEL_SHIFT         (0U)
+#define MI_MI_RD_FIFO_LEVEL_SW_RAW0_RD_LEVEL_MASK          (0x1FU << MI_MI_RD_FIFO_LEVEL_SW_RAW0_RD_LEVEL_SHIFT)        /* 0x0000001F */
+#define MI_MI_RD_FIFO_LEVEL_SW_RAW1_RD_LEVEL_SHIFT         (7U)
+#define MI_MI_RD_FIFO_LEVEL_SW_RAW1_RD_LEVEL_MASK          (0x1FU << MI_MI_RD_FIFO_LEVEL_SW_RAW1_RD_LEVEL_SHIFT)        /* 0x00000F80 */
+#define MI_MI_RD_FIFO_LEVEL_SW_RAWS_RD_LEVEL_SHIFT         (12U)
+#define MI_MI_RD_FIFO_LEVEL_SW_RAWS_RD_LEVEL_MASK          (0x1FU << MI_MI_RD_FIFO_LEVEL_SW_RAWS_RD_LEVEL_SHIFT)        /* 0x0001F000 */
+#define MI_MI_RD_FIFO_LEVEL_SW_DBR_RD_LEVEL_SHIFT          (19U)
+#define MI_MI_RD_FIFO_LEVEL_SW_DBR_RD_LEVEL_MASK           (0x1FU << MI_MI_RD_FIFO_LEVEL_SW_DBR_RD_LEVEL_SHIFT)         /* 0x00F80000 */
+#define MI_MI_RD_FIFO_LEVEL_SW_LUT_RD_LEVEL_SHIFT          (24U)
+#define MI_MI_RD_FIFO_LEVEL_SW_LUT_RD_LEVEL_MASK           (0x1FU << MI_MI_RD_FIFO_LEVEL_SW_LUT_RD_LEVEL_SHIFT)         /* 0x1F000000 */
+/* RAW0_WR_BASE */
+#define MI_RAW0_WR_BASE_OFFSET                             (0x420U)
+#define MI_RAW0_WR_BASE_SW_RAW0_WR_BASE_SHIFT              (4U)
+#define MI_RAW0_WR_BASE_SW_RAW0_WR_BASE_MASK               (0xFFFFFFFU << MI_RAW0_WR_BASE_SW_RAW0_WR_BASE_SHIFT)        /* 0xFFFFFFF0 */
+/* RAW0_WR_SIZE */
+#define MI_RAW0_WR_SIZE_OFFSET                             (0x424U)
+#define MI_RAW0_WR_SIZE_SW_RAW0_WR_SIZE_SHIFT              (4U)
+#define MI_RAW0_WR_SIZE_SW_RAW0_WR_SIZE_MASK               (0xFFFFFFU << MI_RAW0_WR_SIZE_SW_RAW0_WR_SIZE_SHIFT)         /* 0x0FFFFFF0 */
+/* RAW0_WR_LENGTH */
+#define MI_RAW0_WR_LENGTH_OFFSET                           (0x428U)
+#define MI_RAW0_WR_LENGTH_SW_RAW0_WR_LENGTH_SHIFT          (4U)
+#define MI_RAW0_WR_LENGTH_SW_RAW0_WR_LENGTH_MASK           (0xFFU << MI_RAW0_WR_LENGTH_SW_RAW0_WR_LENGTH_SHIFT)         /* 0x00000FF0 */
+/* RAW0_WR_BASE_SHD */
+#define MI_RAW0_WR_BASE_SHD_OFFSET                         (0x42CU)
+#define MI_RAW0_WR_BASE_SHD                                (0x0U)
+#define MI_RAW0_WR_BASE_SHD_SW_RAW0_WR_BASE_SHD_SHIFT      (4U)
+#define MI_RAW0_WR_BASE_SHD_SW_RAW0_WR_BASE_SHD_MASK       (0xFFFFFFFU << MI_RAW0_WR_BASE_SHD_SW_RAW0_WR_BASE_SHD_SHIFT) /* 0xFFFFFFF0 */
+/* RAW1_WR_BASE */
+#define MI_RAW1_WR_BASE_OFFSET                             (0x430U)
+#define MI_RAW1_WR_BASE_SW_RAW1_WR_BASE_SHIFT              (4U)
+#define MI_RAW1_WR_BASE_SW_RAW1_WR_BASE_MASK               (0xFFFFFFFU << MI_RAW1_WR_BASE_SW_RAW1_WR_BASE_SHIFT)        /* 0xFFFFFFF0 */
+/* RAW1_WR_SIZE */
+#define MI_RAW1_WR_SIZE_OFFSET                             (0x434U)
+#define MI_RAW1_WR_SIZE_SW_RAW1_WR_SIZE_SHIFT              (4U)
+#define MI_RAW1_WR_SIZE_SW_RAW1_WR_SIZE_MASK               (0xFFFFFFU << MI_RAW1_WR_SIZE_SW_RAW1_WR_SIZE_SHIFT)         /* 0x0FFFFFF0 */
+/* RAW1_WR_LENGTH */
+#define MI_RAW1_WR_LENGTH_OFFSET                           (0x438U)
+#define MI_RAW1_WR_LENGTH_SW_RAW1_WR_LENGTH_SHIFT          (4U)
+#define MI_RAW1_WR_LENGTH_SW_RAW1_WR_LENGTH_MASK           (0xFFU << MI_RAW1_WR_LENGTH_SW_RAW1_WR_LENGTH_SHIFT)         /* 0x00000FF0 */
+/* RAW1_WR_BASE_SHD */
+#define MI_RAW1_WR_BASE_SHD_OFFSET                         (0x43CU)
+#define MI_RAW1_WR_BASE_SHD                                (0x0U)
+#define MI_RAW1_WR_BASE_SHD_RAW1_WR_BASE_SHD_SHIFT         (4U)
+#define MI_RAW1_WR_BASE_SHD_RAW1_WR_BASE_SHD_MASK          (0xFFFFFFFU << MI_RAW1_WR_BASE_SHD_RAW1_WR_BASE_SHD_SHIFT)   /* 0xFFFFFFF0 */
+/* RAW2_WR_BASE */
+#define MI_RAW2_WR_BASE_OFFSET                             (0x440U)
+#define MI_RAW2_WR_BASE_SW_RAW2_WR_BASE_SHIFT              (4U)
+#define MI_RAW2_WR_BASE_SW_RAW2_WR_BASE_MASK               (0xFFFFFFFU << MI_RAW2_WR_BASE_SW_RAW2_WR_BASE_SHIFT)        /* 0xFFFFFFF0 */
+/* RAW2_WR_SIZE */
+#define MI_RAW2_WR_SIZE_OFFSET                             (0x444U)
+#define MI_RAW2_WR_SIZE_SW_RAW2_WR_SIZE_SHIFT              (4U)
+#define MI_RAW2_WR_SIZE_SW_RAW2_WR_SIZE_MASK               (0xFFFFFFU << MI_RAW2_WR_SIZE_SW_RAW2_WR_SIZE_SHIFT)         /* 0x0FFFFFF0 */
+/* RAW2_WR_LENGTH */
+#define MI_RAW2_WR_LENGTH_OFFSET                           (0x448U)
+#define MI_RAW2_WR_LENGTH_SW_RAW2_WR_LENGTH_SHIFT          (4U)
+#define MI_RAW2_WR_LENGTH_SW_RAW2_WR_LENGTH_MASK           (0xFFU << MI_RAW2_WR_LENGTH_SW_RAW2_WR_LENGTH_SHIFT)         /* 0x00000FF0 */
+/* RAW2_WR_BASE_SHD */
+#define MI_RAW2_WR_BASE_SHD_OFFSET                         (0x44CU)
+#define MI_RAW2_WR_BASE_SHD                                (0x0U)
+#define MI_RAW2_WR_BASE_SHD_RAW2_WR_BASE_SHD_SHIFT         (4U)
+#define MI_RAW2_WR_BASE_SHD_RAW2_WR_BASE_SHD_MASK          (0xFFFFFFFU << MI_RAW2_WR_BASE_SHD_RAW2_WR_BASE_SHD_SHIFT)   /* 0xFFFFFFF0 */
+/* RAW3_WR_BASE */
+#define MI_RAW3_WR_BASE_OFFSET                             (0x450U)
+#define MI_RAW3_WR_BASE_SW_RAW3_WR_BASE_SHIFT              (4U)
+#define MI_RAW3_WR_BASE_SW_RAW3_WR_BASE_MASK               (0xFFFFFFFU << MI_RAW3_WR_BASE_SW_RAW3_WR_BASE_SHIFT)        /* 0xFFFFFFF0 */
+/* RAW3_WR_SIZE */
+#define MI_RAW3_WR_SIZE_OFFSET                             (0x454U)
+#define MI_RAW3_WR_SIZE_SW_RAW3_WR_SIZE_SHIFT              (4U)
+#define MI_RAW3_WR_SIZE_SW_RAW3_WR_SIZE_MASK               (0xFFFFFFU << MI_RAW3_WR_SIZE_SW_RAW3_WR_SIZE_SHIFT)         /* 0x0FFFFFF0 */
+/* RAW3_WR_LENGTH */
+#define MI_RAW3_WR_LENGTH_OFFSET                           (0x458U)
+#define MI_RAW3_WR_LENGTH_SW_RAW3_WR_LENGTH_SHIFT          (4U)
+#define MI_RAW3_WR_LENGTH_SW_RAW3_WR_LENGTH_MASK           (0xFFU << MI_RAW3_WR_LENGTH_SW_RAW3_WR_LENGTH_SHIFT)         /* 0x00000FF0 */
+/* RAW3_WR_BASE_SHD */
+#define MI_RAW3_WR_BASE_SHD_OFFSET                         (0x45CU)
+#define MI_RAW3_WR_BASE_SHD                                (0x0U)
+#define MI_RAW3_WR_BASE_SHD_RAW3_WR_BASE_SHD_SHIFT         (4U)
+#define MI_RAW3_WR_BASE_SHD_RAW3_WR_BASE_SHD_MASK          (0xFFFFFFFU << MI_RAW3_WR_BASE_SHD_RAW3_WR_BASE_SHD_SHIFT)   /* 0xFFFFFFF0 */
+/* RW0_WR_LAST_FRAME_ADDR */
+#define MI_RW0_WR_LAST_FRAME_ADDR_OFFSET                   (0x460U)
+#define MI_RW0_WR_LAST_FRAME_ADDR                          (0x0U)
+#define MI_RW0_WR_LAST_FRAME_ADDR_STAT_RAW0_LAST_FRAME_WADDR_SHIFT (4U)
+#define MI_RW0_WR_LAST_FRAME_ADDR_STAT_RAW0_LAST_FRAME_WADDR_MASK (0xFFFFFFFU << MI_RW0_WR_LAST_FRAME_ADDR_STAT_RAW0_LAST_FRAME_WADDR_SHIFT) /* 0xFFFFFFF0 */
+/* RW1_WR_LAST_FRAME_ADDR */
+#define MI_RW1_WR_LAST_FRAME_ADDR_OFFSET                   (0x464U)
+#define MI_RW1_WR_LAST_FRAME_ADDR                          (0x0U)
+#define MI_RW1_WR_LAST_FRAME_ADDR_STAT_RAW1_LAST_FRAME_WADDR_SHIFT (4U)
+#define MI_RW1_WR_LAST_FRAME_ADDR_STAT_RAW1_LAST_FRAME_WADDR_MASK (0xFFFFFFFU << MI_RW1_WR_LAST_FRAME_ADDR_STAT_RAW1_LAST_FRAME_WADDR_SHIFT) /* 0xFFFFFFF0 */
+/* RW2_WR_LAST_FRAME_ADDR */
+#define MI_RW2_WR_LAST_FRAME_ADDR_OFFSET                   (0x468U)
+#define MI_RW2_WR_LAST_FRAME_ADDR                          (0x0U)
+#define MI_RW2_WR_LAST_FRAME_ADDR_STAT_RAW2_LAST_FRAME_WADDR_SHIFT (4U)
+#define MI_RW2_WR_LAST_FRAME_ADDR_STAT_RAW2_LAST_FRAME_WADDR_MASK (0xFFFFFFFU << MI_RW2_WR_LAST_FRAME_ADDR_STAT_RAW2_LAST_FRAME_WADDR_SHIFT) /* 0xFFFFFFF0 */
+/* RW3_WR_LAST_FRAME_ADDR */
+#define MI_RW3_WR_LAST_FRAME_ADDR_OFFSET                   (0x46CU)
+#define MI_RW3_WR_LAST_FRAME_ADDR                          (0x0U)
+#define MI_RW3_WR_LAST_FRAME_ADDR_STAT_RAW3_LAST_FRAME_WADDR_SHIFT (4U)
+#define MI_RW3_WR_LAST_FRAME_ADDR_STAT_RAW3_LAST_FRAME_WADDR_MASK (0xFFFFFFFU << MI_RW3_WR_LAST_FRAME_ADDR_STAT_RAW3_LAST_FRAME_WADDR_SHIFT) /* 0xFFFFFFF0 */
+/* RAW0_RD_BASE */
+#define MI_RAW0_RD_BASE_OFFSET                             (0x470U)
+#define MI_RAW0_RD_BASE_SW_RAW0_RD_BASE_SHIFT              (0U)
+#define MI_RAW0_RD_BASE_SW_RAW0_RD_BASE_MASK               (0xFFFFFFFFU << MI_RAW0_RD_BASE_SW_RAW0_RD_BASE_SHIFT)       /* 0xFFFFFFFF */
+/* RAW0_RD_LENGTH */
+#define MI_RAW0_RD_LENGTH_OFFSET                           (0x474U)
+#define MI_RAW0_RD_LENGTH_SW_RAW0_RD_LENGTH_SHIFT          (0U)
+#define MI_RAW0_RD_LENGTH_SW_RAW0_RD_LENGTH_MASK           (0x3FFFU << MI_RAW0_RD_LENGTH_SW_RAW0_RD_LENGTH_SHIFT)       /* 0x00003FFF */
+/* RAW0_RD_BASE_SHD */
+#define MI_RAW0_RD_BASE_SHD_OFFSET                         (0x478U)
+#define MI_RAW0_RD_BASE_SHD_SW_RAW0_RD_BASE_SHD_SHIFT      (0U)
+#define MI_RAW0_RD_BASE_SHD_SW_RAW0_RD_BASE_SHD_MASK       (0xFFFFFFFFU << MI_RAW0_RD_BASE_SHD_SW_RAW0_RD_BASE_SHD_SHIFT) /* 0xFFFFFFFF */
+/* RAW1_RD_BASE */
+#define MI_RAW1_RD_BASE_OFFSET                             (0x480U)
+#define MI_RAW1_RD_BASE_SW_RAW1_RD_BASE_SHIFT              (0U)
+#define MI_RAW1_RD_BASE_SW_RAW1_RD_BASE_MASK               (0xFFFFFFFFU << MI_RAW1_RD_BASE_SW_RAW1_RD_BASE_SHIFT)       /* 0xFFFFFFFF */
+/* RAW1_RD_LENGTH */
+#define MI_RAW1_RD_LENGTH_OFFSET                           (0x484U)
+#define MI_RAW1_RD_LENGTH_SW_RAW1_RD_LENGTH_SHIFT          (0U)
+#define MI_RAW1_RD_LENGTH_SW_RAW1_RD_LENGTH_MASK           (0x3FFFU << MI_RAW1_RD_LENGTH_SW_RAW1_RD_LENGTH_SHIFT)       /* 0x00003FFF */
+/* RAW1_RD_BASE_SHD */
+#define MI_RAW1_RD_BASE_SHD_OFFSET                         (0x488U)
+#define MI_RAW1_RD_BASE_SHD_SW_RAW1_RD_BASE_SHD_SHIFT      (0U)
+#define MI_RAW1_RD_BASE_SHD_SW_RAW1_RD_BASE_SHD_MASK       (0xFFFFFFFFU << MI_RAW1_RD_BASE_SHD_SW_RAW1_RD_BASE_SHD_SHIFT) /* 0xFFFFFFFF */
+/* RAWS_RD_BASE */
+#define MI_RAWS_RD_BASE_OFFSET                             (0x490U)
+#define MI_RAWS_RD_BASE_SW_RAWS_RD_BASE_SHIFT              (0U)
+#define MI_RAWS_RD_BASE_SW_RAWS_RD_BASE_MASK               (0xFFFFFFFFU << MI_RAWS_RD_BASE_SW_RAWS_RD_BASE_SHIFT)       /* 0xFFFFFFFF */
+/* RAWS_RD_LENGTH */
+#define MI_RAWS_RD_LENGTH_OFFSET                           (0x494U)
+#define MI_RAWS_RD_LENGTH_SW_RAWS_RD_LENGTH_SHIFT          (0U)
+#define MI_RAWS_RD_LENGTH_SW_RAWS_RD_LENGTH_MASK           (0x3FFFU << MI_RAWS_RD_LENGTH_SW_RAWS_RD_LENGTH_SHIFT)       /* 0x00003FFF */
+/* RAWS_RD_BASE_SHD */
+#define MI_RAWS_RD_BASE_SHD_OFFSET                         (0x498U)
+#define MI_RAWS_RD_BASE_SHD_SW_RAWS_RD_BASE_SHD_SHIFT      (0U)
+#define MI_RAWS_RD_BASE_SHD_SW_RAWS_RD_BASE_SHD_MASK       (0xFFFFFFFFU << MI_RAWS_RD_BASE_SHD_SW_RAWS_RD_BASE_SHD_SHIFT) /* 0xFFFFFFFF */
+/* RAWFBC_WR_BURST_LEN */
+#define MI_RAWFBC_WR_BURST_LEN_OFFSET                      (0x500U)
+#define MI_RAWFBC_WR_BURST_LEN_SW_RAWFBC_WR_HEAD_BURST_LEN_SHIFT (0U)
+#define MI_RAWFBC_WR_BURST_LEN_SW_RAWFBC_WR_HEAD_BURST_LEN_MASK (0x1FU << MI_RAWFBC_WR_BURST_LEN_SW_RAWFBC_WR_HEAD_BURST_LEN_SHIFT) /* 0x0000001F */
+#define MI_RAWFBC_WR_BURST_LEN_SW_RAWFBC_WR_PAYLOAD_BURST_LEN_SHIFT (8U)
+#define MI_RAWFBC_WR_BURST_LEN_SW_RAWFBC_WR_PAYLOAD_BURST_LEN_MASK (0x1FU << MI_RAWFBC_WR_BURST_LEN_SW_RAWFBC_WR_PAYLOAD_BURST_LEN_SHIFT) /* 0x00001F00 */
+/* RAWFBC_RD_BURST_LEN */
+#define MI_RAWFBC_RD_BURST_LEN_OFFSET                      (0x504U)
+#define MI_RAWFBC_RD_BURST_LEN_SW_RAWFBC_RD_HEAD_BURST_LEN_SHIFT (0U)
+#define MI_RAWFBC_RD_BURST_LEN_SW_RAWFBC_RD_HEAD_BURST_LEN_MASK (0x1FU << MI_RAWFBC_RD_BURST_LEN_SW_RAWFBC_RD_HEAD_BURST_LEN_SHIFT) /* 0x0000001F */
+#define MI_RAWFBC_RD_BURST_LEN_SW_RAWFBC_RD_PAYLOAD_BURST_LEN_SHIFT (8U)
+#define MI_RAWFBC_RD_BURST_LEN_SW_RAWFBC_RD_PAYLOAD_BURST_LEN_MASK (0x1FU << MI_RAWFBC_RD_BURST_LEN_SW_RAWFBC_RD_PAYLOAD_BURST_LEN_SHIFT) /* 0x00001F00 */
+/* RAW0FBC_WR_BASE */
+#define MI_RAW0FBC_WR_BASE_OFFSET                          (0x510U)
+#define MI_RAW0FBC_WR_BASE_SW_RAW0FBCE_WR_BASE_SHIFT       (0U)
+#define MI_RAW0FBC_WR_BASE_SW_RAW0FBCE_WR_BASE_MASK        (0xFFFFFFFU << MI_RAW0FBC_WR_BASE_SW_RAW0FBCE_WR_BASE_SHIFT) /* 0x0FFFFFFF */
+/* RAW1FBC_WR_BASE */
+#define MI_RAW1FBC_WR_BASE_OFFSET                          (0x514U)
+#define MI_RAW1FBC_WR_BASE_SW_RAW1FBCE_WR_BASE_SHIFT       (0U)
+#define MI_RAW1FBC_WR_BASE_SW_RAW1FBCE_WR_BASE_MASK        (0xFFFFFFFU << MI_RAW1FBC_WR_BASE_SW_RAW1FBCE_WR_BASE_SHIFT) /* 0x0FFFFFFF */
+/* RAW0FBC_RD_BASE */
+#define MI_RAW0FBC_RD_BASE_OFFSET                          (0x518U)
+#define MI_RAW0FBC_RD_BASE_SW_RAW0FBCD_RD_BASE_SHIFT       (0U)
+#define MI_RAW0FBC_RD_BASE_SW_RAW0FBCD_RD_BASE_MASK        (0xFFFFFFFU << MI_RAW0FBC_RD_BASE_SW_RAW0FBCD_RD_BASE_SHIFT) /* 0x0FFFFFFF */
+/* RAW1FBC_RD_BASE */
+#define MI_RAW1FBC_RD_BASE_OFFSET                          (0x51CU)
+#define MI_RAW1FBC_RD_BASE_SW_RAW1FBCD_RD_BASE_SHIFT       (0U)
+#define MI_RAW1FBC_RD_BASE_SW_RAW1FBCD_RD_BASE_MASK        (0xFFFFFFFU << MI_RAW1FBC_RD_BASE_SW_RAW1FBCD_RD_BASE_SHIFT) /* 0x0FFFFFFF */
+/* RAW0FBC_WR_BASE_SHD */
+#define MI_RAW0FBC_WR_BASE_SHD_OFFSET                      (0x520U)
+#define MI_RAW0FBC_WR_BASE_SHD_SW_RAW0FBCE_WR_BASE_SHD_SHIFT (0U)
+#define MI_RAW0FBC_WR_BASE_SHD_SW_RAW0FBCE_WR_BASE_SHD_MASK (0x1FU << MI_RAW0FBC_WR_BASE_SHD_SW_RAW0FBCE_WR_BASE_SHD_SHIFT) /* 0x0000001F */
+/* RAW1FBC_WR_BASE_SHD */
+#define MI_RAW1FBC_WR_BASE_SHD_OFFSET                      (0x524U)
+#define MI_RAW1FBC_WR_BASE_SHD_SW_RAW1FBCE_WR_BASE_SHD_SHIFT (0U)
+#define MI_RAW1FBC_WR_BASE_SHD_SW_RAW1FBCE_WR_BASE_SHD_MASK (0x1FU << MI_RAW1FBC_WR_BASE_SHD_SW_RAW1FBCE_WR_BASE_SHD_SHIFT) /* 0x0000001F */
+/* RAW0FBC_RD_BASE_SHD */
+#define MI_RAW0FBC_RD_BASE_SHD_OFFSET                      (0x528U)
+#define MI_RAW0FBC_RD_BASE_SHD_SW_RAW0FBCD_RD_BASE_SHD_SHIFT (0U)
+#define MI_RAW0FBC_RD_BASE_SHD_SW_RAW0FBCD_RD_BASE_SHD_MASK (0x1FU << MI_RAW0FBC_RD_BASE_SHD_SW_RAW0FBCD_RD_BASE_SHD_SHIFT) /* 0x0000001F */
+/* RAW1FBC_RD_BASE_SHD */
+#define MI_RAW1FBC_RD_BASE_SHD_OFFSET                      (0x52CU)
+#define MI_RAW1FBC_RD_BASE_SHD_SW_RAW1FBCD_RD_BASE_SHD_SHIFT (0U)
+#define MI_RAW1FBC_RD_BASE_SHD_SW_RAW1FBCD_RD_BASE_SHD_MASK (0x1FU << MI_RAW1FBC_RD_BASE_SHD_SW_RAW1FBCD_RD_BASE_SHD_SHIFT) /* 0x0000001F */
+/* LUT_3D_RD_BASE */
+#define MI_LUT_3D_RD_BASE_OFFSET                           (0x540U)
+#define MI_LUT_3D_RD_BASE_SW_3DLUT_RD_BASE_SHIFT           (0U)
+#define MI_LUT_3D_RD_BASE_SW_3DLUT_RD_BASE_MASK            (0xFFFFFFFFU << MI_LUT_3D_RD_BASE_SW_3DLUT_RD_BASE_SHIFT)    /* 0xFFFFFFFF */
+/* LUT_LSC_RD_BASE */
+#define MI_LUT_LSC_RD_BASE_OFFSET                          (0x544U)
+#define MI_LUT_LSC_RD_BASE_SW_LSCLUT_RD_BASE_SHIFT         (0U)
+#define MI_LUT_LSC_RD_BASE_SW_LSCLUT_RD_BASE_MASK          (0xFFFFFFFFU << MI_LUT_LSC_RD_BASE_SW_LSCLUT_RD_BASE_SHIFT)  /* 0xFFFFFFFF */
+/* LUT_LDCH_RD_BASE */
+#define MI_LUT_LDCH_RD_BASE_OFFSET                         (0x548U)
+#define MI_LUT_LDCH_RD_BASE_SW_LDCH_RD_BASE_SHIFT          (0U)
+#define MI_LUT_LDCH_RD_BASE_SW_LDCH_RD_BASE_MASK           (0xFFFFFFFFU << MI_LUT_LDCH_RD_BASE_SW_LDCH_RD_BASE_SHIFT)   /* 0xFFFFFFFF */
+/* LUT_3D_RD_WSIZE */
+#define MI_LUT_3D_RD_WSIZE_OFFSET                          (0x550U)
+#define MI_LUT_3D_RD_WSIZE_SW_3D_LUT_WSIZE_SHIFT           (0U)
+#define MI_LUT_3D_RD_WSIZE_SW_3D_LUT_WSIZE_MASK            (0xFFFU << MI_LUT_3D_RD_WSIZE_SW_3D_LUT_WSIZE_SHIFT)         /* 0x00000FFF */
+/* LUT_LSC_RD_WSIZE */
+#define MI_LUT_LSC_RD_WSIZE_OFFSET                         (0x554U)
+#define MI_LUT_LSC_RD_WSIZE_SW_LSC_LUT_WSIZE_SHIFT         (0U)
+#define MI_LUT_LSC_RD_WSIZE_SW_LSC_LUT_WSIZE_MASK          (0xFFFU << MI_LUT_LSC_RD_WSIZE_SW_LSC_LUT_WSIZE_SHIFT)       /* 0x00000FFF */
+/* LUT_LDCH_RD_H_WSIZE */
+#define MI_LUT_LDCH_RD_H_WSIZE_OFFSET                      (0x558U)
+#define MI_LUT_LDCH_RD_H_WSIZE_SW_LDCH_LUT_H_WSIZE_SHIFT   (0U)
+#define MI_LUT_LDCH_RD_H_WSIZE_SW_LDCH_LUT_H_WSIZE_MASK    (0xFFFU << MI_LUT_LDCH_RD_H_WSIZE_SW_LDCH_LUT_H_WSIZE_SHIFT) /* 0x00000FFF */
+/* LUT_LDCH_RD_V_SIZE */
+#define MI_LUT_LDCH_RD_V_SIZE_OFFSET                       (0x55CU)
+#define MI_LUT_LDCH_RD_V_SIZE_SW_LDCH_LUT_V_SIZE_SHIFT     (0U)
+#define MI_LUT_LDCH_RD_V_SIZE_SW_LDCH_LUT_V_SIZE_MASK      (0x3FFFU << MI_LUT_LDCH_RD_V_SIZE_SW_LDCH_LUT_V_SIZE_SHIFT)  /* 0x00003FFF */
+/* DBR_WR_BASE */
+#define MI_DBR_WR_BASE_OFFSET                              (0x560U)
+#define MI_DBR_WR_BASE_SW_DBR_WR_BASE_SHIFT                (4U)
+#define MI_DBR_WR_BASE_SW_DBR_WR_BASE_MASK                 (0xFFFFFFFU << MI_DBR_WR_BASE_SW_DBR_WR_BASE_SHIFT)          /* 0xFFFFFFF0 */
+/* DBR_WR_SIZE */
+#define MI_DBR_WR_SIZE_OFFSET                              (0x564U)
+#define MI_DBR_WR_SIZE_SW_DBR_WR_SIZE_SHIFT                (4U)
+#define MI_DBR_WR_SIZE_SW_DBR_WR_SIZE_MASK                 (0xFFFFFFU << MI_DBR_WR_SIZE_SW_DBR_WR_SIZE_SHIFT)           /* 0x0FFFFFF0 */
+/* DBR_WR_LENGTH */
+#define MI_DBR_WR_LENGTH_OFFSET                            (0x568U)
+#define MI_DBR_WR_LENGTH_SW_DBR_WR_LENGTH_SHIFT            (4U)
+#define MI_DBR_WR_LENGTH_SW_DBR_WR_LENGTH_MASK             (0xFFU << MI_DBR_WR_LENGTH_SW_DBR_WR_LENGTH_SHIFT)           /* 0x00000FF0 */
+/* DBR_WR_BASE_SHD */
+#define MI_DBR_WR_BASE_SHD_OFFSET                          (0x56CU)
+#define MI_DBR_WR_BASE_SHD                                 (0x0U)
+#define MI_DBR_WR_BASE_SHD_DBR_WR_BASE_SHD_SHIFT           (4U)
+#define MI_DBR_WR_BASE_SHD_DBR_WR_BASE_SHD_MASK            (0xFFFFFFFU << MI_DBR_WR_BASE_SHD_DBR_WR_BASE_SHD_SHIFT)     /* 0xFFFFFFF0 */
+/* DBR_RD_BASE */
+#define MI_DBR_RD_BASE_OFFSET                              (0x570U)
+#define MI_DBR_RD_BASE_SW_DBR_RD_BASE_SHIFT                (0U)
+#define MI_DBR_RD_BASE_SW_DBR_RD_BASE_MASK                 (0xFFFFFFFFU << MI_DBR_RD_BASE_SW_DBR_RD_BASE_SHIFT)         /* 0xFFFFFFFF */
+/* DBR_RD_LENGTH */
+#define MI_DBR_RD_LENGTH_OFFSET                            (0x574U)
+#define MI_DBR_RD_LENGTH_SW_DBR_RD_LENGTH_SHIFT            (0U)
+#define MI_DBR_RD_LENGTH_SW_DBR_RD_LENGTH_MASK             (0x3FFFU << MI_DBR_RD_LENGTH_SW_DBR_RD_LENGTH_SHIFT)         /* 0x00003FFF */
+/* DBR_RD_BASE_SHD */
+#define MI_DBR_RD_BASE_SHD_OFFSET                          (0x578U)
+#define MI_DBR_RD_BASE_SHD_DBR_RD_BASE_SHD_SHIFT           (0U)
+#define MI_DBR_RD_BASE_SHD_DBR_RD_BASE_SHD_MASK            (0xFFFFFFFFU << MI_DBR_RD_BASE_SHD_DBR_RD_BASE_SHD_SHIFT)    /* 0xFFFFFFFF */
+/* SWS_3A_WR_BASE */
+#define MI_SWS_3A_WR_BASE_OFFSET                           (0x57CU)
+#define MI_SWS_3A_WR_BASE_SWS_3A_WR_BASE_SHIFT             (4U)
+#define MI_SWS_3A_WR_BASE_SWS_3A_WR_BASE_MASK              (0xFFFFFFFU << MI_SWS_3A_WR_BASE_SWS_3A_WR_BASE_SHIFT)       /* 0xFFFFFFF0 */
+/* GAIN_WR_BASE */
+#define MI_GAIN_WR_BASE_OFFSET                             (0x580U)
+#define MI_GAIN_WR_BASE_SW_GAIN_WR_BASE_SHIFT              (4U)
+#define MI_GAIN_WR_BASE_SW_GAIN_WR_BASE_MASK               (0xFFFFFFFU << MI_GAIN_WR_BASE_SW_GAIN_WR_BASE_SHIFT)        /* 0xFFFFFFF0 */
+/* GAIN_WR_SIZE */
+#define MI_GAIN_WR_SIZE_OFFSET                             (0x584U)
+#define MI_GAIN_WR_SIZE_SW_GAIN_WR_SIZE_SHIFT              (4U)
+#define MI_GAIN_WR_SIZE_SW_GAIN_WR_SIZE_MASK               (0xFFFFFFU << MI_GAIN_WR_SIZE_SW_GAIN_WR_SIZE_SHIFT)         /* 0x0FFFFFF0 */
+/* GAIN_WR_LENGTH */
+#define MI_GAIN_WR_LENGTH_OFFSET                           (0x588U)
+#define MI_GAIN_WR_LENGTH_SW_GAIN_WR_LENGTH_SHIFT          (4U)
+#define MI_GAIN_WR_LENGTH_SW_GAIN_WR_LENGTH_MASK           (0xFFU << MI_GAIN_WR_LENGTH_SW_GAIN_WR_LENGTH_SHIFT)         /* 0x00000FF0 */
+/* GAIN_WR_BASE_SHD */
+#define MI_GAIN_WR_BASE_SHD_OFFSET                         (0x590U)
+#define MI_GAIN_WR_BASE_SHD                                (0x0U)
+#define MI_GAIN_WR_BASE_SHD_GAIN_WR_BASE_SHD_SHIFT         (4U)
+#define MI_GAIN_WR_BASE_SHD_GAIN_WR_BASE_SHD_MASK          (0xFFFFFFFU << MI_GAIN_WR_BASE_SHD_GAIN_WR_BASE_SHD_SHIFT)   /* 0xFFFFFFF0 */
+/* GAIN_WR_BASE2 */
+#define MI_GAIN_WR_BASE2_OFFSET                            (0x594U)
+#define MI_GAIN_WR_BASE2_SW_GAIN_WR_BASE_SHIFT             (4U)
+#define MI_GAIN_WR_BASE2_SW_GAIN_WR_BASE_MASK              (0xFFFFFFFU << MI_GAIN_WR_BASE2_SW_GAIN_WR_BASE_SHIFT)       /* 0xFFFFFFF0 */
+/*****************************************CSI2RX*****************************************/
+/* CTRL0 */
+#define CSI2RX_CTRL0_OFFSET                                (0x0U)
+#define CSI2RX_CTRL0_SW_CSI2RX_EN_P_SHIFT                  (0U)
+#define CSI2RX_CTRL0_SW_CSI2RX_EN_P_MASK                   (0x1U << CSI2RX_CTRL0_SW_CSI2RX_EN_P_SHIFT)                  /* 0x00000001 */
+#define CSI2RX_CTRL0_SW_HDR_ESP_MODE_SHIFT                 (2U)
+#define CSI2RX_CTRL0_SW_HDR_ESP_MODE_MASK                  (0x3U << CSI2RX_CTRL0_SW_HDR_ESP_MODE_SHIFT)                 /* 0x0000000C */
+#define CSI2RX_CTRL0_SW_CSI_2ECC_BYPASS_SHIFT              (4U)
+#define CSI2RX_CTRL0_SW_CSI_2ECC_BYPASS_MASK               (0x3U << CSI2RX_CTRL0_SW_CSI_2ECC_BYPASS_SHIFT)              /* 0x00000030 */
+#define CSI2RX_CTRL0_SW_CSI_DBG_BYPASS_SHIFT               (6U)
+#define CSI2RX_CTRL0_SW_CSI_DBG_BYPASS_MASK                (0x1U << CSI2RX_CTRL0_SW_CSI_DBG_BYPASS_SHIFT)               /* 0x00000040 */
+#define CSI2RX_CTRL0_SW_CSI_RO_PHYIO_EN_SHIFT              (7U)
+#define CSI2RX_CTRL0_SW_CSI_RO_PHYIO_EN_MASK               (0x1U << CSI2RX_CTRL0_SW_CSI_RO_PHYIO_EN_SHIFT)              /* 0x00000080 */
+#define CSI2RX_CTRL0_SW_IBUF_OP_MODE_SHIFT                 (8U)
+#define CSI2RX_CTRL0_SW_IBUF_OP_MODE_MASK                  (0xFU << CSI2RX_CTRL0_SW_IBUF_OP_MODE_SHIFT)                 /* 0x00000F00 */
+#define CSI2RX_CTRL0_SW_DMA_2FRM_MODE_SHIFT                (12U)
+#define CSI2RX_CTRL0_SW_DMA_2FRM_MODE_MASK                 (0x3U << CSI2RX_CTRL0_SW_DMA_2FRM_MODE_SHIFT)                /* 0x00003000 */
+#define CSI2RX_CTRL0_MIPI_WORKING_SHIFT                    (31U)
+#define CSI2RX_CTRL0_MIPI_WORKING_MASK                     (0x1U << CSI2RX_CTRL0_MIPI_WORKING_SHIFT)                    /* 0x80000000 */
+/* CTRL1 */
+#define CSI2RX_CTRL1_OFFSET                                (0x4U)
+#define CSI2RX_CTRL1_SW_CSI_LANE_SHIFT                     (0U)
+#define CSI2RX_CTRL1_SW_CSI_LANE_MASK                      (0x3U << CSI2RX_CTRL1_SW_CSI_LANE_SHIFT)                     /* 0x00000003 */
+#define CSI2RX_CTRL1_SW_CSI_CHAN0_SEL_SHIFT                (4U)
+#define CSI2RX_CTRL1_SW_CSI_CHAN0_SEL_MASK                 (0x7U << CSI2RX_CTRL1_SW_CSI_CHAN0_SEL_SHIFT)                /* 0x00000070 */
+#define CSI2RX_CTRL1_SW_CSI_CHAN1_SEL_SHIFT                (8U)
+#define CSI2RX_CTRL1_SW_CSI_CHAN1_SEL_MASK                 (0x7U << CSI2RX_CTRL1_SW_CSI_CHAN1_SEL_SHIFT)                /* 0x00000700 */
+#define CSI2RX_CTRL1_SW_CSI_CHAN2_SEL_SHIFT                (12U)
+#define CSI2RX_CTRL1_SW_CSI_CHAN2_SEL_MASK                 (0x7U << CSI2RX_CTRL1_SW_CSI_CHAN2_SEL_SHIFT)                /* 0x00007000 */
+#define CSI2RX_CTRL1_SW_CSI_CHAN3_SEL_SHIFT                (16U)
+#define CSI2RX_CTRL1_SW_CSI_CHAN3_SEL_MASK                 (0x7U << CSI2RX_CTRL1_SW_CSI_CHAN3_SEL_SHIFT)                /* 0x00070000 */
+#define CSI2RX_CTRL1_SW_IBUF_LVL0_SEL0_SHIFT               (20U)
+#define CSI2RX_CTRL1_SW_IBUF_LVL0_SEL0_MASK                (0x1U << CSI2RX_CTRL1_SW_IBUF_LVL0_SEL0_SHIFT)               /* 0x00100000 */
+#define CSI2RX_CTRL1_SW_IBUF_LVL0_SEL1_SHIFT               (21U)
+#define CSI2RX_CTRL1_SW_IBUF_LVL0_SEL1_MASK                (0x1U << CSI2RX_CTRL1_SW_IBUF_LVL0_SEL1_SHIFT)               /* 0x00200000 */
+#define CSI2RX_CTRL1_SW_IBUF_LVL0_SEL2_SHIFT               (22U)
+#define CSI2RX_CTRL1_SW_IBUF_LVL0_SEL2_MASK                (0x1U << CSI2RX_CTRL1_SW_IBUF_LVL0_SEL2_SHIFT)               /* 0x00400000 */
+#define CSI2RX_CTRL1_SW_IBUF_LVL0_SEL3_SHIFT               (23U)
+#define CSI2RX_CTRL1_SW_IBUF_LVL0_SEL3_MASK                (0x1U << CSI2RX_CTRL1_SW_IBUF_LVL0_SEL3_SHIFT)               /* 0x00800000 */
+#define CSI2RX_CTRL1_SW_IBUF_LVL1_SEL0_SHIFT               (24U)
+#define CSI2RX_CTRL1_SW_IBUF_LVL1_SEL0_MASK                (0x3U << CSI2RX_CTRL1_SW_IBUF_LVL1_SEL0_SHIFT)               /* 0x03000000 */
+#define CSI2RX_CTRL1_SW_IBUF_LVL1_SEL1_SHIFT               (26U)
+#define CSI2RX_CTRL1_SW_IBUF_LVL1_SEL1_MASK                (0x3U << CSI2RX_CTRL1_SW_IBUF_LVL1_SEL1_SHIFT)               /* 0x0C000000 */
+#define CSI2RX_CTRL1_SW_IBUF_LVL1_SEL2_SHIFT               (28U)
+#define CSI2RX_CTRL1_SW_IBUF_LVL1_SEL2_MASK                (0x3U << CSI2RX_CTRL1_SW_IBUF_LVL1_SEL2_SHIFT)               /* 0x30000000 */
+/* CTRL2 */
+#define CSI2RX_CTRL2_OFFSET                                (0x8U)
+#define CSI2RX_CTRL2_SW_CSI_ISP_LINECNT_SHIFT              (0U)
+#define CSI2RX_CTRL2_SW_CSI_ISP_LINECNT_MASK               (0x3FFFU << CSI2RX_CTRL2_SW_CSI_ISP_LINECNT_SHIFT)           /* 0x00003FFF */
+/* CSI2_RESETN */
+#define CSI2RX_CSI2_RESETN_OFFSET                          (0x10U)
+#define CSI2RX_CSI2_RESETN_SW_CSI_RXBYTE_RST_N_SHIFT       (0U)
+#define CSI2RX_CSI2_RESETN_SW_CSI_RXBYTE_RST_N_MASK        (0x1U << CSI2RX_CSI2_RESETN_SW_CSI_RXBYTE_RST_N_SHIFT)       /* 0x00000001 */
+#define CSI2RX_CSI2_RESETN_SW_CSI_FIFO_CLR_N_SHIFT         (1U)
+#define CSI2RX_CSI2_RESETN_SW_CSI_FIFO_CLR_N_MASK          (0x1U << CSI2RX_CSI2_RESETN_SW_CSI_FIFO_CLR_N_SHIFT)         /* 0x00000002 */
+/* PHY_STATE_RO */
+#define CSI2RX_PHY_STATE_RO_OFFSET                         (0x14U)
+#define CSI2RX_PHY_STATE_RO                                (0x0U)
+#define CSI2RX_PHY_STATE_RO_RO_PHY_STATE_SHIFT             (0U)
+#define CSI2RX_PHY_STATE_RO_RO_PHY_STATE_MASK              (0xFFFU << CSI2RX_PHY_STATE_RO_RO_PHY_STATE_SHIFT)           /* 0x00000FFF */
+/* DATA_IDS_1 */
+#define CSI2RX_DATA_IDS_1_OFFSET                           (0x18U)
+#define CSI2RX_DATA_IDS_1_SW_CSI_ID0_SHIFT                 (0U)
+#define CSI2RX_DATA_IDS_1_SW_CSI_ID0_MASK                  (0xFFU << CSI2RX_DATA_IDS_1_SW_CSI_ID0_SHIFT)                /* 0x000000FF */
+#define CSI2RX_DATA_IDS_1_SW_CSI_ID1_SHIFT                 (8U)
+#define CSI2RX_DATA_IDS_1_SW_CSI_ID1_MASK                  (0xFFU << CSI2RX_DATA_IDS_1_SW_CSI_ID1_SHIFT)                /* 0x0000FF00 */
+#define CSI2RX_DATA_IDS_1_SW_CSI_ID2_SHIFT                 (16U)
+#define CSI2RX_DATA_IDS_1_SW_CSI_ID2_MASK                  (0xFFU << CSI2RX_DATA_IDS_1_SW_CSI_ID2_SHIFT)                /* 0x00FF0000 */
+#define CSI2RX_DATA_IDS_1_SW_CSI_ID3_SHIFT                 (24U)
+#define CSI2RX_DATA_IDS_1_SW_CSI_ID3_MASK                  (0xFFU << CSI2RX_DATA_IDS_1_SW_CSI_ID3_SHIFT)                /* 0xFF000000 */
+/* DATA_IDS_2 */
+#define CSI2RX_DATA_IDS_2_OFFSET                           (0x1CU)
+#define CSI2RX_DATA_IDS_2_SW_CSI_ID4_SHIFT                 (0U)
+#define CSI2RX_DATA_IDS_2_SW_CSI_ID4_MASK                  (0xFFU << CSI2RX_DATA_IDS_2_SW_CSI_ID4_SHIFT)                /* 0x000000FF */
+#define CSI2RX_DATA_IDS_2_SW_CSI_ID5_SHIFT                 (8U)
+#define CSI2RX_DATA_IDS_2_SW_CSI_ID5_MASK                  (0xFFU << CSI2RX_DATA_IDS_2_SW_CSI_ID5_SHIFT)                /* 0x0000FF00 */
+#define CSI2RX_DATA_IDS_2_SW_CSI_ID6_SHIFT                 (16U)
+#define CSI2RX_DATA_IDS_2_SW_CSI_ID6_MASK                  (0xFFU << CSI2RX_DATA_IDS_2_SW_CSI_ID6_SHIFT)                /* 0x00FF0000 */
+#define CSI2RX_DATA_IDS_2_SW_CSI_ID7_SHIFT                 (24U)
+#define CSI2RX_DATA_IDS_2_SW_CSI_ID7_MASK                  (0xFFU << CSI2RX_DATA_IDS_2_SW_CSI_ID7_SHIFT)                /* 0xFF000000 */
+/* ERR_PHY */
+#define CSI2RX_ERR_PHY_OFFSET                              (0x20U)
+#define CSI2RX_ERR_PHY                                     (0x0U)
+#define CSI2RX_ERR_PHY_PHY_ERRSOTHS_SHIFT                  (0U)
+#define CSI2RX_ERR_PHY_PHY_ERRSOTHS_MASK                   (0xFU << CSI2RX_ERR_PHY_PHY_ERRSOTHS_SHIFT)                  /* 0x0000000F */
+#define CSI2RX_ERR_PHY_PHY_ERRSOTSYNCHS_SHIFT              (4U)
+#define CSI2RX_ERR_PHY_PHY_ERRSOTSYNCHS_MASK               (0xFU << CSI2RX_ERR_PHY_PHY_ERRSOTSYNCHS_SHIFT)              /* 0x000000F0 */
+#define CSI2RX_ERR_PHY_PHY_ERREOTSYNCHS_SHIFT              (8U)
+#define CSI2RX_ERR_PHY_PHY_ERREOTSYNCHS_MASK               (0xFU << CSI2RX_ERR_PHY_PHY_ERREOTSYNCHS_SHIFT)              /* 0x00000F00 */
+#define CSI2RX_ERR_PHY_PHY_ERRESC_SHIFT                    (12U)
+#define CSI2RX_ERR_PHY_PHY_ERRESC_MASK                     (0xFU << CSI2RX_ERR_PHY_PHY_ERRESC_SHIFT)                    /* 0x0000F000 */
+#define CSI2RX_ERR_PHY_PHY_ERRCONTROL_SHIFT                (20U)
+#define CSI2RX_ERR_PHY_PHY_ERRCONTROL_MASK                 (0xFU << CSI2RX_ERR_PHY_PHY_ERRCONTROL_SHIFT)                /* 0x00F00000 */
+/* ERR_PACKET */
+#define CSI2RX_ERR_PACKET_OFFSET                           (0x24U)
+#define CSI2RX_ERR_PACKET                                  (0x0U)
+#define CSI2RX_ERR_PACKET_ERR_F_BNDRY_MATCH_SHIFT          (0U)
+#define CSI2RX_ERR_PACKET_ERR_F_BNDRY_MATCH_MASK           (0xFU << CSI2RX_ERR_PACKET_ERR_F_BNDRY_MATCH_SHIFT)          /* 0x0000000F */
+#define CSI2RX_ERR_PACKET_ERR_F_SEQ_SHIFT                  (4U)
+#define CSI2RX_ERR_PACKET_ERR_F_SEQ_MASK                   (0xFU << CSI2RX_ERR_PACKET_ERR_F_SEQ_SHIFT)                  /* 0x000000F0 */
+#define CSI2RX_ERR_PACKET_ERR_FRAME_DATA_SHIFT             (8U)
+#define CSI2RX_ERR_PACKET_ERR_FRAME_DATA_MASK              (0xFU << CSI2RX_ERR_PACKET_ERR_FRAME_DATA_SHIFT)             /* 0x00000F00 */
+#define CSI2RX_ERR_PACKET_ERR_ID_SHIFT                     (12U)
+#define CSI2RX_ERR_PACKET_ERR_ID_MASK                      (0xFU << CSI2RX_ERR_PACKET_ERR_ID_SHIFT)                     /* 0x0000F000 */
+#define CSI2RX_ERR_PACKET_ECC_1BIT_ERROR_SHIFT             (16U)
+#define CSI2RX_ERR_PACKET_ECC_1BIT_ERROR_MASK              (0xFU << CSI2RX_ERR_PACKET_ECC_1BIT_ERROR_SHIFT)             /* 0x000F0000 */
+#define CSI2RX_ERR_PACKET_ECC_2BIT_ERROR_SHIFT             (20U)
+#define CSI2RX_ERR_PACKET_ECC_2BIT_ERROR_MASK              (0x1U << CSI2RX_ERR_PACKET_ECC_2BIT_ERROR_SHIFT)             /* 0x00100000 */
+#define CSI2RX_ERR_PACKET_CHECKSUM_ERROR_SHIFT             (24U)
+#define CSI2RX_ERR_PACKET_CHECKSUM_ERROR_MASK              (0xFU << CSI2RX_ERR_PACKET_CHECKSUM_ERROR_SHIFT)             /* 0x0F000000 */
+/* ERR_OVERFLOW */
+#define CSI2RX_ERR_OVERFLOW_OFFSET                         (0x28U)
+#define CSI2RX_ERR_OVERFLOW_AFIFO0_OVERFLOW_SHIFT          (0U)
+#define CSI2RX_ERR_OVERFLOW_AFIFO0_OVERFLOW_MASK           (0x1U << CSI2RX_ERR_OVERFLOW_AFIFO0_OVERFLOW_SHIFT)          /* 0x00000001 */
+#define CSI2RX_ERR_OVERFLOW_AFIFO10_OVERFLOW_SHIFT         (4U)
+#define CSI2RX_ERR_OVERFLOW_AFIFO10_OVERFLOW_MASK          (0x1U << CSI2RX_ERR_OVERFLOW_AFIFO10_OVERFLOW_SHIFT)         /* 0x00000010 */
+#define CSI2RX_ERR_OVERFLOW_AFIFO11_OVERFLOW_SHIFT         (5U)
+#define CSI2RX_ERR_OVERFLOW_AFIFO11_OVERFLOW_MASK          (0x1U << CSI2RX_ERR_OVERFLOW_AFIFO11_OVERFLOW_SHIFT)         /* 0x00000020 */
+#define CSI2RX_ERR_OVERFLOW_AFIFO12_OVERFLOW_SHIFT         (6U)
+#define CSI2RX_ERR_OVERFLOW_AFIFO12_OVERFLOW_MASK          (0x1U << CSI2RX_ERR_OVERFLOW_AFIFO12_OVERFLOW_SHIFT)         /* 0x00000040 */
+#define CSI2RX_ERR_OVERFLOW_AFIFO13_OVERFLOW_SHIFT         (7U)
+#define CSI2RX_ERR_OVERFLOW_AFIFO13_OVERFLOW_MASK          (0x1U << CSI2RX_ERR_OVERFLOW_AFIFO13_OVERFLOW_SHIFT)         /* 0x00000080 */
+#define CSI2RX_ERR_OVERFLOW_LAFIFO10_OVERFLOW_SHIFT        (8U)
+#define CSI2RX_ERR_OVERFLOW_LAFIFO10_OVERFLOW_MASK         (0x1U << CSI2RX_ERR_OVERFLOW_LAFIFO10_OVERFLOW_SHIFT)        /* 0x00000100 */
+#define CSI2RX_ERR_OVERFLOW_LAFIFO11_OVERFLOW_SHIFT        (9U)
+#define CSI2RX_ERR_OVERFLOW_LAFIFO11_OVERFLOW_MASK         (0x1U << CSI2RX_ERR_OVERFLOW_LAFIFO11_OVERFLOW_SHIFT)        /* 0x00000200 */
+#define CSI2RX_ERR_OVERFLOW_LAFIFO12_OVERFLOW_SHIFT        (10U)
+#define CSI2RX_ERR_OVERFLOW_LAFIFO12_OVERFLOW_MASK         (0x1U << CSI2RX_ERR_OVERFLOW_LAFIFO12_OVERFLOW_SHIFT)        /* 0x00000400 */
+#define CSI2RX_ERR_OVERFLOW_LAFIFO13_OVERFLOW_SHIFT        (11U)
+#define CSI2RX_ERR_OVERFLOW_LAFIFO13_OVERFLOW_MASK         (0x1U << CSI2RX_ERR_OVERFLOW_LAFIFO13_OVERFLOW_SHIFT)        /* 0x00000800 */
+#define CSI2RX_ERR_OVERFLOW_AFIFO20_OVERFLOW_SHIFT         (12U)
+#define CSI2RX_ERR_OVERFLOW_AFIFO20_OVERFLOW_MASK          (0x1U << CSI2RX_ERR_OVERFLOW_AFIFO20_OVERFLOW_SHIFT)         /* 0x00001000 */
+#define CSI2RX_ERR_OVERFLOW_AFIFO21_OVERFLOW_SHIFT         (13U)
+#define CSI2RX_ERR_OVERFLOW_AFIFO21_OVERFLOW_MASK          (0x1U << CSI2RX_ERR_OVERFLOW_AFIFO21_OVERFLOW_SHIFT)         /* 0x00002000 */
+#define CSI2RX_ERR_OVERFLOW_AFIFO22_OVERFLOW_SHIFT         (14U)
+#define CSI2RX_ERR_OVERFLOW_AFIFO22_OVERFLOW_MASK          (0x1U << CSI2RX_ERR_OVERFLOW_AFIFO22_OVERFLOW_SHIFT)         /* 0x00004000 */
+#define CSI2RX_ERR_OVERFLOW_IBUFX3_OVERFLOW_SHIFT          (16U)
+#define CSI2RX_ERR_OVERFLOW_IBUFX3_OVERFLOW_MASK           (0x7U << CSI2RX_ERR_OVERFLOW_IBUFX3_OVERFLOW_SHIFT)          /* 0x00070000 */
+#define CSI2RX_ERR_OVERFLOW_IBUF3R_OVERFLOW_SHIFT          (19U)
+#define CSI2RX_ERR_OVERFLOW_IBUF3R_OVERFLOW_MASK           (0x1U << CSI2RX_ERR_OVERFLOW_IBUF3R_OVERFLOW_SHIFT)          /* 0x00080000 */
+#define CSI2RX_ERR_OVERFLOW_Y_STAT_AFIFOX3_OVERFLOW_SHIFT  (20U)
+#define CSI2RX_ERR_OVERFLOW_Y_STAT_AFIFOX3_OVERFLOW_MASK   (0x7U << CSI2RX_ERR_OVERFLOW_Y_STAT_AFIFOX3_OVERFLOW_SHIFT)  /* 0x00700000 */
+/* ERR_STAT */
+#define CSI2RX_ERR_STAT_OFFSET                             (0x2CU)
+#define CSI2RX_ERR_STAT                                    (0x0U)
+#define CSI2RX_ERR_STAT_RAW0_WR_FRAME_END_SHIFT            (0U)
+#define CSI2RX_ERR_STAT_RAW0_WR_FRAME_END_MASK             (0x1U << CSI2RX_ERR_STAT_RAW0_WR_FRAME_END_SHIFT)            /* 0x00000001 */
+#define CSI2RX_ERR_STAT_RAW1_WR_FRAME_END_SHIFT            (1U)
+#define CSI2RX_ERR_STAT_RAW1_WR_FRAME_END_MASK             (0x1U << CSI2RX_ERR_STAT_RAW1_WR_FRAME_END_SHIFT)            /* 0x00000002 */
+#define CSI2RX_ERR_STAT_RAW2_WR_FRAME_END_SHIFT            (2U)
+#define CSI2RX_ERR_STAT_RAW2_WR_FRAME_END_MASK             (0x1U << CSI2RX_ERR_STAT_RAW2_WR_FRAME_END_SHIFT)            /* 0x00000004 */
+#define CSI2RX_ERR_STAT_RAW3_WR_FRAME_END_SHIFT            (3U)
+#define CSI2RX_ERR_STAT_RAW3_WR_FRAME_END_MASK             (0x1U << CSI2RX_ERR_STAT_RAW3_WR_FRAME_END_SHIFT)            /* 0x00000008 */
+#define CSI2RX_ERR_STAT_RAW0_RD_FRAME_END_SHIFT            (4U)
+#define CSI2RX_ERR_STAT_RAW0_RD_FRAME_END_MASK             (0x1U << CSI2RX_ERR_STAT_RAW0_RD_FRAME_END_SHIFT)            /* 0x00000010 */
+#define CSI2RX_ERR_STAT_RAW1_RD_FRAME_END_SHIFT            (5U)
+#define CSI2RX_ERR_STAT_RAW1_RD_FRAME_END_MASK             (0x1U << CSI2RX_ERR_STAT_RAW1_RD_FRAME_END_SHIFT)            /* 0x00000020 */
+#define CSI2RX_ERR_STAT_RAW2_RD_FRAME_END_SHIFT            (6U)
+#define CSI2RX_ERR_STAT_RAW2_RD_FRAME_END_MASK             (0x1U << CSI2RX_ERR_STAT_RAW2_RD_FRAME_END_SHIFT)            /* 0x00000040 */
+#define CSI2RX_ERR_STAT_RAW0_WR_H_SIZE_ERR_SHIFT           (8U)
+#define CSI2RX_ERR_STAT_RAW0_WR_H_SIZE_ERR_MASK            (0x1U << CSI2RX_ERR_STAT_RAW0_WR_H_SIZE_ERR_SHIFT)           /* 0x00000100 */
+#define CSI2RX_ERR_STAT_RAW1_WR_H_SIZE_ERR_SHIFT           (9U)
+#define CSI2RX_ERR_STAT_RAW1_WR_H_SIZE_ERR_MASK            (0x1U << CSI2RX_ERR_STAT_RAW1_WR_H_SIZE_ERR_SHIFT)           /* 0x00000200 */
+#define CSI2RX_ERR_STAT_RAW2_WR_H_SIZE_ERR_SHIFT           (10U)
+#define CSI2RX_ERR_STAT_RAW2_WR_H_SIZE_ERR_MASK            (0x1U << CSI2RX_ERR_STAT_RAW2_WR_H_SIZE_ERR_SHIFT)           /* 0x00000400 */
+#define CSI2RX_ERR_STAT_RAW3_WR_H_SIZE_ERR_SHIFT           (11U)
+#define CSI2RX_ERR_STAT_RAW3_WR_H_SIZE_ERR_MASK            (0x1U << CSI2RX_ERR_STAT_RAW3_WR_H_SIZE_ERR_SHIFT)           /* 0x00000800 */
+#define CSI2RX_ERR_STAT_RAW0_WR_V_SIZE_ERR_SHIFT           (12U)
+#define CSI2RX_ERR_STAT_RAW0_WR_V_SIZE_ERR_MASK            (0x1U << CSI2RX_ERR_STAT_RAW0_WR_V_SIZE_ERR_SHIFT)           /* 0x00001000 */
+#define CSI2RX_ERR_STAT_RAW1_WR_V_SIZE_ERR_SHIFT           (13U)
+#define CSI2RX_ERR_STAT_RAW1_WR_V_SIZE_ERR_MASK            (0x1U << CSI2RX_ERR_STAT_RAW1_WR_V_SIZE_ERR_SHIFT)           /* 0x00002000 */
+#define CSI2RX_ERR_STAT_RAW2_WR_V_SIZE_ERR_SHIFT           (14U)
+#define CSI2RX_ERR_STAT_RAW2_WR_V_SIZE_ERR_MASK            (0x1U << CSI2RX_ERR_STAT_RAW2_WR_V_SIZE_ERR_SHIFT)           /* 0x00004000 */
+#define CSI2RX_ERR_STAT_RAW3_WR_V_SIZE_ERR_SHIFT           (15U)
+#define CSI2RX_ERR_STAT_RAW3_WR_V_SIZE_ERR_MASK            (0x1U << CSI2RX_ERR_STAT_RAW3_WR_V_SIZE_ERR_SHIFT)           /* 0x00008000 */
+#define CSI2RX_ERR_STAT_MIPI_LINECNT_SHIFT                 (16U)
+#define CSI2RX_ERR_STAT_MIPI_LINECNT_MASK                  (0x1U << CSI2RX_ERR_STAT_MIPI_LINECNT_SHIFT)                 /* 0x00010000 */
+#define CSI2RX_ERR_STAT_MIPI_FRAME_ST_VC_SHIFT             (20U)
+#define CSI2RX_ERR_STAT_MIPI_FRAME_ST_VC_MASK              (0xFU << CSI2RX_ERR_STAT_MIPI_FRAME_ST_VC_SHIFT)             /* 0x00F00000 */
+#define CSI2RX_ERR_STAT_MIPI_FRAME_END_VC_SHIFT            (24U)
+#define CSI2RX_ERR_STAT_MIPI_FRAME_END_VC_MASK             (0xFU << CSI2RX_ERR_STAT_MIPI_FRAME_END_VC_SHIFT)            /* 0x0F000000 */
+#define CSI2RX_ERR_STAT_Y_STAT_END_SHIFT                   (28U)
+#define CSI2RX_ERR_STAT_Y_STAT_END_MASK                    (0x7U << CSI2RX_ERR_STAT_Y_STAT_END_SHIFT)                   /* 0x70000000 */
+/* MASK_PHY */
+#define CSI2RX_MASK_PHY_OFFSET                             (0x30U)
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRSOTHS_SHIFT         (0U)
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRSOTHS_MASK          (0xFU << CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRSOTHS_SHIFT)         /* 0x0000000F */
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRSOTSYNCHS_SHIFT     (4U)
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRSOTSYNCHS_MASK      (0xFU << CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRSOTSYNCHS_SHIFT)     /* 0x000000F0 */
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERREOTSYNCHS_SHIFT     (8U)
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERREOTSYNCHS_MASK      (0xFU << CSI2RX_MASK_PHY_SW_IMSK_PHY_ERREOTSYNCHS_SHIFT)     /* 0x00000F00 */
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRESC_SHIFT           (12U)
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRESC_MASK            (0xFU << CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRESC_SHIFT)           /* 0x0000F000 */
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRCONTROL_SHIFT       (20U)
+#define CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRCONTROL_MASK        (0xFU << CSI2RX_MASK_PHY_SW_IMSK_PHY_ERRCONTROL_SHIFT)       /* 0x00F00000 */
+/* MASK_PACKET */
+#define CSI2RX_MASK_PACKET_OFFSET                          (0x34U)
+#define CSI2RX_MASK_PACKET_SW_IMSK_ERR_F_BNDRY_MATCH_SHIFT (0U)
+#define CSI2RX_MASK_PACKET_SW_IMSK_ERR_F_BNDRY_MATCH_MASK  (0xFU << CSI2RX_MASK_PACKET_SW_IMSK_ERR_F_BNDRY_MATCH_SHIFT) /* 0x0000000F */
+#define CSI2RX_MASK_PACKET_SW_IMSK_ERR_F_SEQ_SHIFT         (4U)
+#define CSI2RX_MASK_PACKET_SW_IMSK_ERR_F_SEQ_MASK          (0xFU << CSI2RX_MASK_PACKET_SW_IMSK_ERR_F_SEQ_SHIFT)         /* 0x000000F0 */
+#define CSI2RX_MASK_PACKET_SW_IMSK_ERR_FRAME_DATA_SHIFT    (8U)
+#define CSI2RX_MASK_PACKET_SW_IMSK_ERR_FRAME_DATA_MASK     (0xFU << CSI2RX_MASK_PACKET_SW_IMSK_ERR_FRAME_DATA_SHIFT)    /* 0x00000F00 */
+#define CSI2RX_MASK_PACKET_SW_IMSK_ERR_ID_SHIFT            (12U)
+#define CSI2RX_MASK_PACKET_SW_IMSK_ERR_ID_MASK             (0xFU << CSI2RX_MASK_PACKET_SW_IMSK_ERR_ID_SHIFT)            /* 0x0000F000 */
+#define CSI2RX_MASK_PACKET_SW_IMSK_ECC_1BIT_ERROR_SHIFT    (16U)
+#define CSI2RX_MASK_PACKET_SW_IMSK_ECC_1BIT_ERROR_MASK     (0xFU << CSI2RX_MASK_PACKET_SW_IMSK_ECC_1BIT_ERROR_SHIFT)    /* 0x000F0000 */
+#define CSI2RX_MASK_PACKET_SW_IMSK_ECC_2BIT_ERROR_SHIFT    (20U)
+#define CSI2RX_MASK_PACKET_SW_IMSK_ECC_2BIT_ERROR_MASK     (0x1U << CSI2RX_MASK_PACKET_SW_IMSK_ECC_2BIT_ERROR_SHIFT)    /* 0x00100000 */
+#define CSI2RX_MASK_PACKET_SW_IMSK_CHECKSUM_ERROR_SHIFT    (24U)
+#define CSI2RX_MASK_PACKET_SW_IMSK_CHECKSUM_ERROR_MASK     (0xFU << CSI2RX_MASK_PACKET_SW_IMSK_CHECKSUM_ERROR_SHIFT)    /* 0x0F000000 */
+/* MASK_OVERFLOW */
+#define CSI2RX_MASK_OVERFLOW_OFFSET                        (0x38U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO0_OVERFLOW_SHIFT (0U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO0_OVERFLOW_MASK  (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO0_OVERFLOW_SHIFT) /* 0x00000001 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO10_OVERFLOW_SHIFT (4U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO10_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO10_OVERFLOW_SHIFT) /* 0x00000010 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO11_OVERFLOW_SHIFT (5U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO11_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO11_OVERFLOW_SHIFT) /* 0x00000020 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO12_OVERFLOW_SHIFT (6U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO12_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO12_OVERFLOW_SHIFT) /* 0x00000040 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO13_OVERFLOW_SHIFT (7U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO13_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO13_OVERFLOW_SHIFT) /* 0x00000080 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO10_OVERFLOW_SHIFT (8U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO10_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO10_OVERFLOW_SHIFT) /* 0x00000100 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO11_OVERFLOW_SHIFT (9U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO11_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO11_OVERFLOW_SHIFT) /* 0x00000200 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO12_OVERFLOW_SHIFT (10U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO12_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO12_OVERFLOW_SHIFT) /* 0x00000400 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO13_OVERFLOW_SHIFT (11U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO13_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_LAFIFO13_OVERFLOW_SHIFT) /* 0x00000800 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO20_OVERFLOW_SHIFT (12U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO20_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO20_OVERFLOW_SHIFT) /* 0x00001000 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO21_OVERFLOW_SHIFT (13U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO21_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO21_OVERFLOW_SHIFT) /* 0x00002000 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO22_OVERFLOW_SHIFT (14U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO22_OVERFLOW_MASK (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_AFIFO22_OVERFLOW_SHIFT) /* 0x00004000 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_IBUFX3_OVERFLOW_SHIFT (16U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_IBUFX3_OVERFLOW_MASK  (0x7U << CSI2RX_MASK_OVERFLOW_SW_IMSK_IBUFX3_OVERFLOW_SHIFT) /* 0x00070000 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_IBUF3R_OVERFLOW_SHIFT (19U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_IBUF3R_OVERFLOW_MASK  (0x1U << CSI2RX_MASK_OVERFLOW_SW_IMSK_IBUF3R_OVERFLOW_SHIFT) /* 0x00080000 */
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_Y_STAT_AFIFOX3_OVERFLOW_SHIFT (20U)
+#define CSI2RX_MASK_OVERFLOW_SW_IMSK_Y_STAT_AFIFOX3_OVERFLOW_MASK (0x7U << CSI2RX_MASK_OVERFLOW_SW_IMSK_Y_STAT_AFIFOX3_OVERFLOW_SHIFT) /* 0x00700000 */
+/* MASK_STAT */
+#define CSI2RX_MASK_STAT_OFFSET                            (0x3CU)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW0_WR_FRAME_END_SHIFT   (0U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW0_WR_FRAME_END_MASK    (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW0_WR_FRAME_END_SHIFT)   /* 0x00000001 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW1_WR_FRAME_END_SHIFT   (1U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW1_WR_FRAME_END_MASK    (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW1_WR_FRAME_END_SHIFT)   /* 0x00000002 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW2_WR_FRAME_END_SHIFT   (2U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW2_WR_FRAME_END_MASK    (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW2_WR_FRAME_END_SHIFT)   /* 0x00000004 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW3_WR_FRAME_END_SHIFT   (3U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW3_WR_FRAME_END_MASK    (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW3_WR_FRAME_END_SHIFT)   /* 0x00000008 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW0_RD_FRAME_END_SHIFT   (4U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW0_RD_FRAME_END_MASK    (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW0_RD_FRAME_END_SHIFT)   /* 0x00000010 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW1_RD_FRAME_END_SHIFT   (5U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW1_RD_FRAME_END_MASK    (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW1_RD_FRAME_END_SHIFT)   /* 0x00000020 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW2_RD_FRAME_END_SHIFT   (6U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW2_RD_FRAME_END_MASK    (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW2_RD_FRAME_END_SHIFT)   /* 0x00000040 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW0_WR_H_SIZE_ERR_SHIFT  (8U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW0_WR_H_SIZE_ERR_MASK   (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW0_WR_H_SIZE_ERR_SHIFT)  /* 0x00000100 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW1_WR_H_SIZE_ERR_SHIFT  (9U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW1_WR_H_SIZE_ERR_MASK   (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW1_WR_H_SIZE_ERR_SHIFT)  /* 0x00000200 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW2_WR_H_SIZE_ERR_SHIFT  (10U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW2_WR_H_SIZE_ERR_MASK   (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW2_WR_H_SIZE_ERR_SHIFT)  /* 0x00000400 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW3_WR_H_SIZE_ERR_SHIFT  (11U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW3_WR_H_SIZE_ERR_MASK   (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW3_WR_H_SIZE_ERR_SHIFT)  /* 0x00000800 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW0_WR_V_SIZE_ERR_SHIFT  (12U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW0_WR_V_SIZE_ERR_MASK   (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW0_WR_V_SIZE_ERR_SHIFT)  /* 0x00001000 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW1_WR_V_SIZE_ERR_SHIFT  (13U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW1_WR_V_SIZE_ERR_MASK   (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW1_WR_V_SIZE_ERR_SHIFT)  /* 0x00002000 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW2_WR_V_SIZE_ERR_SHIFT  (14U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW2_WR_V_SIZE_ERR_MASK   (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW2_WR_V_SIZE_ERR_SHIFT)  /* 0x00004000 */
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW3_WR_V_SIZE_ERR_SHIFT  (15U)
+#define CSI2RX_MASK_STAT_SW_IMSK_RAW3_WR_V_SIZE_ERR_MASK   (0x1U << CSI2RX_MASK_STAT_SW_IMSK_RAW3_WR_V_SIZE_ERR_SHIFT)  /* 0x00008000 */
+#define CSI2RX_MASK_STAT_SW_IMSK_CSI_ISP_LINECNT_SHIFT     (16U)
+#define CSI2RX_MASK_STAT_SW_IMSK_CSI_ISP_LINECNT_MASK      (0x1U << CSI2RX_MASK_STAT_SW_IMSK_CSI_ISP_LINECNT_SHIFT)     /* 0x00010000 */
+#define CSI2RX_MASK_STAT_SW_IMSK_MIPI_FRAME_ST_VC_SHIFT    (20U)
+#define CSI2RX_MASK_STAT_SW_IMSK_MIPI_FRAME_ST_VC_MASK     (0xFU << CSI2RX_MASK_STAT_SW_IMSK_MIPI_FRAME_ST_VC_SHIFT)    /* 0x00F00000 */
+#define CSI2RX_MASK_STAT_SW_IMSK_MIPI_FRAME_END_VC_SHIFT   (24U)
+#define CSI2RX_MASK_STAT_SW_IMSK_MIPI_FRAME_END_VC_MASK    (0xFU << CSI2RX_MASK_STAT_SW_IMSK_MIPI_FRAME_END_VC_SHIFT)   /* 0x0F000000 */
+#define CSI2RX_MASK_STAT_SW_IMSK_Y_STAT_END_SHIFT          (28U)
+#define CSI2RX_MASK_STAT_SW_IMSK_Y_STAT_END_MASK           (0x7U << CSI2RX_MASK_STAT_SW_IMSK_Y_STAT_END_SHIFT)          /* 0x70000000 */
+/* RAW0_WR_CTRL */
+#define CSI2RX_RAW0_WR_CTRL_OFFSET                         (0x40U)
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_EN_ORG_SHIFT    (0U)
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_EN_ORG_MASK     (0x1U << CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_EN_ORG_SHIFT)    /* 0x00000001 */
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_SIMG_MOD_SHIFT  (1U)
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_SIMG_MOD_MASK   (0x1U << CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_SIMG_MOD_SHIFT)  /* 0x00000002 */
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_SIMG_SWP_SHIFT  (2U)
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_SIMG_SWP_MASK   (0x1U << CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_SIMG_SWP_SHIFT)  /* 0x00000004 */
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_H_OUT_SHIFT     (3U)
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_H_OUT_MASK      (0x1U << CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_H_OUT_SHIFT)     /* 0x00000008 */
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_CRC_OUT_SHIFT   (4U)
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_CRC_OUT_MASK    (0x1U << CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_CRC_OUT_SHIFT)   /* 0x00000010 */
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_CHAN_SHIFT      (8U)
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_CHAN_MASK       (0xFFU << CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_CHAN_SHIFT)     /* 0x0000FF00 */
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW16_ID_SHIFT          (16U)
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW16_ID_MASK           (0x3FU << CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW16_ID_SHIFT)         /* 0x003F0000 */
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_EN_SHD_SHIFT    (31U)
+#define CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_EN_SHD_MASK     (0x1U << CSI2RX_RAW0_WR_CTRL_SW_CSI_RAW0_WR_EN_SHD_SHIFT)    /* 0x80000000 */
+/* RAW0_WR_LINECNT_RO */
+#define CSI2RX_RAW0_WR_LINECNT_RO_OFFSET                   (0x44U)
+#define CSI2RX_RAW0_WR_LINECNT_RO                          (0x0U)
+#define CSI2RX_RAW0_WR_LINECNT_RO_RO_RAW0_WR_LINE_CNT_SHIFT (0U)
+#define CSI2RX_RAW0_WR_LINECNT_RO_RO_RAW0_WR_LINE_CNT_MASK (0x3FFFU << CSI2RX_RAW0_WR_LINECNT_RO_RO_RAW0_WR_LINE_CNT_SHIFT) /* 0x00003FFF */
+/* RAW0_WR_PIC_SIZE */
+#define CSI2RX_RAW0_WR_PIC_SIZE_OFFSET                     (0x48U)
+#define CSI2RX_RAW0_WR_PIC_SIZE_SW_CSI_RAW0_WR_H_SIZE_ORG_SHIFT (0U)
+#define CSI2RX_RAW0_WR_PIC_SIZE_SW_CSI_RAW0_WR_H_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW0_WR_PIC_SIZE_SW_CSI_RAW0_WR_H_SIZE_ORG_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW0_WR_PIC_SIZE_SW_CSI_RAW0_WR_V_SIZE_ORG_SHIFT (16U)
+#define CSI2RX_RAW0_WR_PIC_SIZE_SW_CSI_RAW0_WR_V_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW0_WR_PIC_SIZE_SW_CSI_RAW0_WR_V_SIZE_ORG_SHIFT) /* 0x3FFF0000 */
+/* RAW0_WR_PIC_OFF */
+#define CSI2RX_RAW0_WR_PIC_OFF_OFFSET                      (0x4CU)
+#define CSI2RX_RAW0_WR_PIC_OFF_SW_CSI_RAW0_WR_H_OFF_SHIFT  (0U)
+#define CSI2RX_RAW0_WR_PIC_OFF_SW_CSI_RAW0_WR_H_OFF_MASK   (0x3FFFU << CSI2RX_RAW0_WR_PIC_OFF_SW_CSI_RAW0_WR_H_OFF_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW0_WR_PIC_OFF_SW_CSI_RAW0_WR_V_OFF_SHIFT  (16U)
+#define CSI2RX_RAW0_WR_PIC_OFF_SW_CSI_RAW0_WR_V_OFF_MASK   (0x3FFFU << CSI2RX_RAW0_WR_PIC_OFF_SW_CSI_RAW0_WR_V_OFF_SHIFT) /* 0x3FFF0000 */
+/* RAW1_WR_CTRL */
+#define CSI2RX_RAW1_WR_CTRL_OFFSET                         (0x50U)
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_DAMTX1_EN_ORG_SHIFT     (0U)
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_DAMTX1_EN_ORG_MASK      (0x1U << CSI2RX_RAW1_WR_CTRL_SW_CSI_DAMTX1_EN_ORG_SHIFT)     /* 0x00000001 */
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_SIMG_MOD_SHIFT  (1U)
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_SIMG_MOD_MASK   (0x1U << CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_SIMG_MOD_SHIFT)  /* 0x00000002 */
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_SIMG_SWP_SHIFT  (2U)
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_SIMG_SWP_MASK   (0x1U << CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_SIMG_SWP_SHIFT)  /* 0x00000004 */
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_H_OUT_SHIFT     (3U)
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_H_OUT_MASK      (0x1U << CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_H_OUT_SHIFT)     /* 0x00000008 */
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_CRC_OUT_SHIFT   (4U)
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_CRC_OUT_MASK    (0x1U << CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_CRC_OUT_SHIFT)   /* 0x00000010 */
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_CHAN_SHIFT      (8U)
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_CHAN_MASK       (0xFFU << CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_CHAN_SHIFT)     /* 0x0000FF00 */
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_EN_SHD_SHIFT    (31U)
+#define CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_EN_SHD_MASK     (0x1U << CSI2RX_RAW1_WR_CTRL_SW_CSI_RAW1_WR_EN_SHD_SHIFT)    /* 0x80000000 */
+/* RAW1_WR_LINECNT_RO */
+#define CSI2RX_RAW1_WR_LINECNT_RO_OFFSET                   (0x54U)
+#define CSI2RX_RAW1_WR_LINECNT_RO                          (0x0U)
+#define CSI2RX_RAW1_WR_LINECNT_RO_RO_RAW1_WR_LINE_CNT_SHIFT (0U)
+#define CSI2RX_RAW1_WR_LINECNT_RO_RO_RAW1_WR_LINE_CNT_MASK (0x3FFFU << CSI2RX_RAW1_WR_LINECNT_RO_RO_RAW1_WR_LINE_CNT_SHIFT) /* 0x00003FFF */
+/* RAW1_WR_PIC_SIZE */
+#define CSI2RX_RAW1_WR_PIC_SIZE_OFFSET                     (0x58U)
+#define CSI2RX_RAW1_WR_PIC_SIZE_SW_CSI_RAW1_WR_H_SIZE_ORG_SHIFT (0U)
+#define CSI2RX_RAW1_WR_PIC_SIZE_SW_CSI_RAW1_WR_H_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW1_WR_PIC_SIZE_SW_CSI_RAW1_WR_H_SIZE_ORG_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW1_WR_PIC_SIZE_SW_CSI_RAW1_WR_V_SIZE_ORG_SHIFT (16U)
+#define CSI2RX_RAW1_WR_PIC_SIZE_SW_CSI_RAW1_WR_V_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW1_WR_PIC_SIZE_SW_CSI_RAW1_WR_V_SIZE_ORG_SHIFT) /* 0x3FFF0000 */
+/* RAW1_WR_PIC_OFF */
+#define CSI2RX_RAW1_WR_PIC_OFF_OFFSET                      (0x5CU)
+#define CSI2RX_RAW1_WR_PIC_OFF_SW_CSI_RAW1_WR_H_OFF_SHIFT  (0U)
+#define CSI2RX_RAW1_WR_PIC_OFF_SW_CSI_RAW1_WR_H_OFF_MASK   (0x3FFFU << CSI2RX_RAW1_WR_PIC_OFF_SW_CSI_RAW1_WR_H_OFF_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW1_WR_PIC_OFF_SW_CSI_RAW1_WR_V_OFF_SHIFT  (16U)
+#define CSI2RX_RAW1_WR_PIC_OFF_SW_CSI_RAW1_WR_V_OFF_MASK   (0x3FFFU << CSI2RX_RAW1_WR_PIC_OFF_SW_CSI_RAW1_WR_V_OFF_SHIFT) /* 0x3FFF0000 */
+/* RAW2_WR_CTRL */
+#define CSI2RX_RAW2_WR_CTRL_OFFSET                         (0x60U)
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_DAMTX2_EN_ORG_SHIFT     (0U)
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_DAMTX2_EN_ORG_MASK      (0x1U << CSI2RX_RAW2_WR_CTRL_SW_CSI_DAMTX2_EN_ORG_SHIFT)     /* 0x00000001 */
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_SIMG_MOD_SHIFT  (1U)
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_SIMG_MOD_MASK   (0x1U << CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_SIMG_MOD_SHIFT)  /* 0x00000002 */
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_SIMG_SWP_SHIFT  (2U)
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_SIMG_SWP_MASK   (0x1U << CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_SIMG_SWP_SHIFT)  /* 0x00000004 */
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_H_OUT_SHIFT     (3U)
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_H_OUT_MASK      (0x1U << CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_H_OUT_SHIFT)     /* 0x00000008 */
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_CRC_OUT_SHIFT   (4U)
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_CRC_OUT_MASK    (0x1U << CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_CRC_OUT_SHIFT)   /* 0x00000010 */
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_CHAN_SHIFT      (8U)
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_CHAN_MASK       (0xFFU << CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_CHAN_SHIFT)     /* 0x0000FF00 */
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_EN_SHD_SHIFT    (31U)
+#define CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_EN_SHD_MASK     (0x1U << CSI2RX_RAW2_WR_CTRL_SW_CSI_RAW2_WR_EN_SHD_SHIFT)    /* 0x80000000 */
+/* RAW2_WR_LINECNT_RO */
+#define CSI2RX_RAW2_WR_LINECNT_RO_OFFSET                   (0x64U)
+#define CSI2RX_RAW2_WR_LINECNT_RO                          (0x0U)
+#define CSI2RX_RAW2_WR_LINECNT_RO_RO_RAW2_WR_LINE_CNT_SHIFT (0U)
+#define CSI2RX_RAW2_WR_LINECNT_RO_RO_RAW2_WR_LINE_CNT_MASK (0x3FFFU << CSI2RX_RAW2_WR_LINECNT_RO_RO_RAW2_WR_LINE_CNT_SHIFT) /* 0x00003FFF */
+/* RAW2_WR_PIC_SIZE */
+#define CSI2RX_RAW2_WR_PIC_SIZE_OFFSET                     (0x68U)
+#define CSI2RX_RAW2_WR_PIC_SIZE_SW_CSI_RAW2_WR_H_SIZE_ORG_SHIFT (0U)
+#define CSI2RX_RAW2_WR_PIC_SIZE_SW_CSI_RAW2_WR_H_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW2_WR_PIC_SIZE_SW_CSI_RAW2_WR_H_SIZE_ORG_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW2_WR_PIC_SIZE_SW_CSI_RAW2_WR_V_SIZE_ORG_SHIFT (16U)
+#define CSI2RX_RAW2_WR_PIC_SIZE_SW_CSI_RAW2_WR_V_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW2_WR_PIC_SIZE_SW_CSI_RAW2_WR_V_SIZE_ORG_SHIFT) /* 0x3FFF0000 */
+/* RAW2_WR_PIC_OFF */
+#define CSI2RX_RAW2_WR_PIC_OFF_OFFSET                      (0x6CU)
+#define CSI2RX_RAW2_WR_PIC_OFF_SW_CSI_RAW2_WR_H_OFF_SHIFT  (0U)
+#define CSI2RX_RAW2_WR_PIC_OFF_SW_CSI_RAW2_WR_H_OFF_MASK   (0x3FFFU << CSI2RX_RAW2_WR_PIC_OFF_SW_CSI_RAW2_WR_H_OFF_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW2_WR_PIC_OFF_SW_CSI_RAW2_WR_V_OFF_SHIFT  (16U)
+#define CSI2RX_RAW2_WR_PIC_OFF_SW_CSI_RAW2_WR_V_OFF_MASK   (0x3FFFU << CSI2RX_RAW2_WR_PIC_OFF_SW_CSI_RAW2_WR_V_OFF_SHIFT) /* 0x3FFF0000 */
+/* RAW3_WR_CTRL */
+#define CSI2RX_RAW3_WR_CTRL_OFFSET                         (0x70U)
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_DAMTX3_EN_ORG_SHIFT     (0U)
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_DAMTX3_EN_ORG_MASK      (0x1U << CSI2RX_RAW3_WR_CTRL_SW_CSI_DAMTX3_EN_ORG_SHIFT)     /* 0x00000001 */
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_SIMG_MOD_SHIFT  (1U)
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_SIMG_MOD_MASK   (0x1U << CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_SIMG_MOD_SHIFT)  /* 0x00000002 */
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_SIMG_SWP_SHIFT  (2U)
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_SIMG_SWP_MASK   (0x1U << CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_SIMG_SWP_SHIFT)  /* 0x00000004 */
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_H_OUT_SHIFT     (3U)
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_H_OUT_MASK      (0x1U << CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_H_OUT_SHIFT)     /* 0x00000008 */
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_CRC_OUT_SHIFT   (4U)
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_CRC_OUT_MASK    (0x1U << CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_CRC_OUT_SHIFT)   /* 0x00000010 */
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_CHAN_SHIFT      (8U)
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_CHAN_MASK       (0xFFU << CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_CHAN_SHIFT)     /* 0x0000FF00 */
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_EN_SHD_SHIFT    (31U)
+#define CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_EN_SHD_MASK     (0x1U << CSI2RX_RAW3_WR_CTRL_SW_CSI_RAW3_WR_EN_SHD_SHIFT)    /* 0x80000000 */
+/* RAW3_WR_LINECNT_RO */
+#define CSI2RX_RAW3_WR_LINECNT_RO_OFFSET                   (0x74U)
+#define CSI2RX_RAW3_WR_LINECNT_RO                          (0x0U)
+#define CSI2RX_RAW3_WR_LINECNT_RO_RO_RAW3_WR_LINE_CNT_SHIFT (0U)
+#define CSI2RX_RAW3_WR_LINECNT_RO_RO_RAW3_WR_LINE_CNT_MASK (0x3FFFU << CSI2RX_RAW3_WR_LINECNT_RO_RO_RAW3_WR_LINE_CNT_SHIFT) /* 0x00003FFF */
+/* RAW3_WR_PIC_SIZE */
+#define CSI2RX_RAW3_WR_PIC_SIZE_OFFSET                     (0x78U)
+#define CSI2RX_RAW3_WR_PIC_SIZE_SW_CSI_RAW3_WR_H_SIZE_ORG_SHIFT (0U)
+#define CSI2RX_RAW3_WR_PIC_SIZE_SW_CSI_RAW3_WR_H_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW3_WR_PIC_SIZE_SW_CSI_RAW3_WR_H_SIZE_ORG_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW3_WR_PIC_SIZE_SW_CSI_RAW3_WR_V_SIZE_ORG_SHIFT (16U)
+#define CSI2RX_RAW3_WR_PIC_SIZE_SW_CSI_RAW3_WR_V_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW3_WR_PIC_SIZE_SW_CSI_RAW3_WR_V_SIZE_ORG_SHIFT) /* 0x3FFF0000 */
+/* RAW3_WR_PIC_OFF */
+#define CSI2RX_RAW3_WR_PIC_OFF_OFFSET                      (0x7CU)
+#define CSI2RX_RAW3_WR_PIC_OFF_SW_CSI_RAW3_WR_H_OFF_SHIFT  (0U)
+#define CSI2RX_RAW3_WR_PIC_OFF_SW_CSI_RAW3_WR_H_OFF_MASK   (0x3FFFU << CSI2RX_RAW3_WR_PIC_OFF_SW_CSI_RAW3_WR_H_OFF_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW3_WR_PIC_OFF_SW_CSI_RAW3_WR_V_OFF_SHIFT  (16U)
+#define CSI2RX_RAW3_WR_PIC_OFF_SW_CSI_RAW3_WR_V_OFF_MASK   (0x3FFFU << CSI2RX_RAW3_WR_PIC_OFF_SW_CSI_RAW3_WR_V_OFF_SHIFT) /* 0x3FFF0000 */
+/* RAW_RD_CTRL */
+#define CSI2RX_RAW_RD_CTRL_OFFSET                          (0x80U)
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW0_RD_EN_ORG_SHIFT     (0U)
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW0_RD_EN_ORG_MASK      (0x1U << CSI2RX_RAW_RD_CTRL_SW_CSI_RAW0_RD_EN_ORG_SHIFT)     /* 0x00000001 */
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW1_RD_EN_ORG_SHIFT     (1U)
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW1_RD_EN_ORG_MASK      (0x1U << CSI2RX_RAW_RD_CTRL_SW_CSI_RAW1_RD_EN_ORG_SHIFT)     /* 0x00000002 */
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW2_RD_EN_ORG_SHIFT     (2U)
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW2_RD_EN_ORG_MASK      (0x1U << CSI2RX_RAW_RD_CTRL_SW_CSI_RAW2_RD_EN_ORG_SHIFT)     /* 0x00000004 */
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW_RD_SIMG_MOD_SHIFT    (3U)
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW_RD_SIMG_MOD_MASK     (0x1U << CSI2RX_RAW_RD_CTRL_SW_CSI_RAW_RD_SIMG_MOD_SHIFT)    /* 0x00000008 */
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW_RD_SIMG_SWP_SHIFT    (4U)
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW_RD_SIMG_SWP_MASK     (0x1U << CSI2RX_RAW_RD_CTRL_SW_CSI_RAW_RD_SIMG_SWP_SHIFT)    /* 0x00000010 */
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW_RD_CHAN_SEL_SHIFT    (5U)
+#define CSI2RX_RAW_RD_CTRL_SW_CSI_RAW_RD_CHAN_SEL_MASK     (0x7U << CSI2RX_RAW_RD_CTRL_SW_CSI_RAW_RD_CHAN_SEL_SHIFT)    /* 0x000000E0 */
+/* RAW_RD_LINECNT_RO */
+#define CSI2RX_RAW_RD_LINECNT_RO_OFFSET                    (0x84U)
+#define CSI2RX_RAW_RD_LINECNT_RO                           (0x0U)
+#define CSI2RX_RAW_RD_LINECNT_RO_RO_RAW0_RD_ISP_LINE_CNT_SHIFT (0U)
+#define CSI2RX_RAW_RD_LINECNT_RO_RO_RAW0_RD_ISP_LINE_CNT_MASK (0x3FFFU << CSI2RX_RAW_RD_LINECNT_RO_RO_RAW0_RD_ISP_LINE_CNT_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW_RD_LINECNT_RO_RO_RAW1_RD_ISP_LINE_CNT_SHIFT (16U)
+#define CSI2RX_RAW_RD_LINECNT_RO_RO_RAW1_RD_ISP_LINE_CNT_MASK (0x3FFFU << CSI2RX_RAW_RD_LINECNT_RO_RO_RAW1_RD_ISP_LINE_CNT_SHIFT) /* 0x3FFF0000 */
+/* RAW_RD_PIC_SIZE */
+#define CSI2RX_RAW_RD_PIC_SIZE_OFFSET                      (0x88U)
+#define CSI2RX_RAW_RD_PIC_SIZE_SW_CSI_RAW_RD_H_SIZE_ORG_SHIFT (0U)
+#define CSI2RX_RAW_RD_PIC_SIZE_SW_CSI_RAW_RD_H_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW_RD_PIC_SIZE_SW_CSI_RAW_RD_H_SIZE_ORG_SHIFT) /* 0x00003FFF */
+#define CSI2RX_RAW_RD_PIC_SIZE_SW_CSI_RAW_RD_V_SIZE_ORG_SHIFT (16U)
+#define CSI2RX_RAW_RD_PIC_SIZE_SW_CSI_RAW_RD_V_SIZE_ORG_MASK (0x3FFFU << CSI2RX_RAW_RD_PIC_SIZE_SW_CSI_RAW_RD_V_SIZE_ORG_SHIFT) /* 0x3FFF0000 */
+/* RAW2_RD_LINECNT_RO */
+#define CSI2RX_RAW2_RD_LINECNT_RO_OFFSET                   (0x8CU)
+#define CSI2RX_RAW2_RD_LINECNT_RO                          (0x0U)
+#define CSI2RX_RAW2_RD_LINECNT_RO_RO_RAW2_RD_ISP_LINE_CNT_SHIFT (0U)
+#define CSI2RX_RAW2_RD_LINECNT_RO_RO_RAW2_RD_ISP_LINE_CNT_MASK (0x3FFFU << CSI2RX_RAW2_RD_LINECNT_RO_RO_RAW2_RD_ISP_LINE_CNT_SHIFT) /* 0x00003FFF */
+/* RAWFBC_CTRL */
+#define CSI2RX_RAWFBC_CTRL_OFFSET                          (0x90U)
+#define CSI2RX_RAWFBC_CTRL_SW_RAW_OUT_EN_SHIFT             (0U)
+#define CSI2RX_RAWFBC_CTRL_SW_RAW_OUT_EN_MASK              (0x1U << CSI2RX_RAWFBC_CTRL_SW_RAW_OUT_EN_SHIFT)             /* 0x00000001 */
+#define CSI2RX_RAWFBC_CTRL_SW_RAWFBC_EN_SHIFT              (1U)
+#define CSI2RX_RAWFBC_CTRL_SW_RAWFBC_EN_MASK               (0x1U << CSI2RX_RAWFBC_CTRL_SW_RAWFBC_EN_SHIFT)              /* 0x00000002 */
+#define CSI2RX_RAWFBC_CTRL_SW_RAWFBC_HEAD_DIFF_EN_SHIFT    (4U)
+#define CSI2RX_RAWFBC_CTRL_SW_RAWFBC_HEAD_DIFF_EN_MASK     (0x1U << CSI2RX_RAWFBC_CTRL_SW_RAWFBC_HEAD_DIFF_EN_SHIFT)    /* 0x00000010 */
+#define CSI2RX_RAWFBC_CTRL_SW_RAWFBC_HEAD_DIFF_NUM_SHIFT   (8U)
+#define CSI2RX_RAWFBC_CTRL_SW_RAWFBC_HEAD_DIFF_NUM_MASK    (0x3U << CSI2RX_RAWFBC_CTRL_SW_RAWFBC_HEAD_DIFF_NUM_SHIFT)   /* 0x00000300 */
+/* ESPHDR_LCNT */
+#define CSI2RX_ESPHDR_LCNT_OFFSET                          (0x94U)
+#define CSI2RX_ESPHDR_LCNT_SW_CSI_ESP_LCNT_PADPIX_SHIFT    (0U)
+#define CSI2RX_ESPHDR_LCNT_SW_CSI_ESP_LCNT_PADPIX_MASK     (0xFFFU << CSI2RX_ESPHDR_LCNT_SW_CSI_ESP_LCNT_PADPIX_SHIFT)  /* 0x00000FFF */
+#define CSI2RX_ESPHDR_LCNT_SW_CSI_ESP_LCNT_PADNUM_SHIFT    (12U)
+#define CSI2RX_ESPHDR_LCNT_SW_CSI_ESP_LCNT_PADNUM_MASK     (0x3FU << CSI2RX_ESPHDR_LCNT_SW_CSI_ESP_LCNT_PADNUM_SHIFT)   /* 0x0003F000 */
+/* ESPHDR_IDCD */
+#define CSI2RX_ESPHDR_IDCD_OFFSET                          (0x98U)
+#define CSI2RX_ESPHDR_IDCD_SW_CSI_ESP_IDCD_OBPIX_SHIFT     (0U)
+#define CSI2RX_ESPHDR_IDCD_SW_CSI_ESP_IDCD_OBPIX_MASK      (0x7FU << CSI2RX_ESPHDR_IDCD_SW_CSI_ESP_IDCD_OBPIX_SHIFT)    /* 0x0000007F */
+#define CSI2RX_ESPHDR_IDCD_SW_CSI_ESP_IDCD_EFPIX_SHIFT     (16U)
+#define CSI2RX_ESPHDR_IDCD_SW_CSI_ESP_IDCD_EFPIX_MASK      (0x7FU << CSI2RX_ESPHDR_IDCD_SW_CSI_ESP_IDCD_EFPIX_SHIFT)    /* 0x007F0000 */
+/* VC0_FRAME_NUM_RO */
+#define CSI2RX_VC0_FRAME_NUM_RO_OFFSET                     (0xA0U)
+#define CSI2RX_VC0_FRAME_NUM_RO                            (0x0U)
+#define CSI2RX_VC0_FRAME_NUM_RO_RO_CSI_VC0_FE_NUM_SHIFT    (0U)
+#define CSI2RX_VC0_FRAME_NUM_RO_RO_CSI_VC0_FE_NUM_MASK     (0xFFFFU << CSI2RX_VC0_FRAME_NUM_RO_RO_CSI_VC0_FE_NUM_SHIFT) /* 0x0000FFFF */
+#define CSI2RX_VC0_FRAME_NUM_RO_RO_CSI_VC0_FS_NUM_SHIFT    (16U)
+#define CSI2RX_VC0_FRAME_NUM_RO_RO_CSI_VC0_FS_NUM_MASK     (0xFFFFU << CSI2RX_VC0_FRAME_NUM_RO_RO_CSI_VC0_FS_NUM_SHIFT) /* 0xFFFF0000 */
+/* VC1_FRAME_NUM_RO */
+#define CSI2RX_VC1_FRAME_NUM_RO_OFFSET                     (0xA4U)
+#define CSI2RX_VC1_FRAME_NUM_RO                            (0x0U)
+#define CSI2RX_VC1_FRAME_NUM_RO_RO_CSI_VC1_FE_NUM_SHIFT    (0U)
+#define CSI2RX_VC1_FRAME_NUM_RO_RO_CSI_VC1_FE_NUM_MASK     (0xFFFFU << CSI2RX_VC1_FRAME_NUM_RO_RO_CSI_VC1_FE_NUM_SHIFT) /* 0x0000FFFF */
+#define CSI2RX_VC1_FRAME_NUM_RO_RO_CSI_VC1_FS_NUM_SHIFT    (16U)
+#define CSI2RX_VC1_FRAME_NUM_RO_RO_CSI_VC1_FS_NUM_MASK     (0xFFFFU << CSI2RX_VC1_FRAME_NUM_RO_RO_CSI_VC1_FS_NUM_SHIFT) /* 0xFFFF0000 */
+/* VC2_FRAME_NUM_RO */
+#define CSI2RX_VC2_FRAME_NUM_RO_OFFSET                     (0xA8U)
+#define CSI2RX_VC2_FRAME_NUM_RO                            (0x0U)
+#define CSI2RX_VC2_FRAME_NUM_RO_RO_CSI_VC2_FE_NUM_SHIFT    (0U)
+#define CSI2RX_VC2_FRAME_NUM_RO_RO_CSI_VC2_FE_NUM_MASK     (0xFFFFU << CSI2RX_VC2_FRAME_NUM_RO_RO_CSI_VC2_FE_NUM_SHIFT) /* 0x0000FFFF */
+#define CSI2RX_VC2_FRAME_NUM_RO_RO_CSI_VC2_FS_NUM_SHIFT    (16U)
+#define CSI2RX_VC2_FRAME_NUM_RO_RO_CSI_VC2_FS_NUM_MASK     (0xFFFFU << CSI2RX_VC2_FRAME_NUM_RO_RO_CSI_VC2_FS_NUM_SHIFT) /* 0xFFFF0000 */
+/* VC3_FRAME_NUM_RO */
+#define CSI2RX_VC3_FRAME_NUM_RO_OFFSET                     (0xACU)
+#define CSI2RX_VC3_FRAME_NUM_RO                            (0x0U)
+#define CSI2RX_VC3_FRAME_NUM_RO_RO_CSI_VC3_FE_NUM_SHIFT    (0U)
+#define CSI2RX_VC3_FRAME_NUM_RO_RO_CSI_VC3_FE_NUM_MASK     (0xFFFFU << CSI2RX_VC3_FRAME_NUM_RO_RO_CSI_VC3_FE_NUM_SHIFT) /* 0x0000FFFF */
+#define CSI2RX_VC3_FRAME_NUM_RO_RO_CSI_VC3_FS_NUM_SHIFT    (16U)
+#define CSI2RX_VC3_FRAME_NUM_RO_RO_CSI_VC3_FS_NUM_MASK     (0xFFFFU << CSI2RX_VC3_FRAME_NUM_RO_RO_CSI_VC3_FS_NUM_SHIFT) /* 0xFFFF0000 */
+/* ISP_LINECNT_RO */
+#define CSI2RX_ISP_LINECNT_RO_OFFSET                       (0xB0U)
+#define CSI2RX_ISP_LINECNT_RO                              (0x0U)
+#define CSI2RX_ISP_LINECNT_RO_RO_CSI_ISP_LINE_CNT_SHIFT    (0U)
+#define CSI2RX_ISP_LINECNT_RO_RO_CSI_ISP_LINE_CNT_MASK     (0x3FFFU << CSI2RX_ISP_LINECNT_RO_RO_CSI_ISP_LINE_CNT_SHIFT) /* 0x00003FFF */
+/* RAW_WR_IBUF_STATUS_RO */
+#define CSI2RX_RAW_WR_IBUF_STATUS_RO_OFFSET                (0xB4U)
+#define CSI2RX_RAW_WR_IBUF_STATUS_RO                       (0x0U)
+#define CSI2RX_RAW_WR_IBUF_STATUS_RO_RO_IBUF_DEBUG_STATUS_SHIFT (0U)
+#define CSI2RX_RAW_WR_IBUF_STATUS_RO_RO_IBUF_DEBUG_STATUS_MASK (0xFFFFFFU << CSI2RX_RAW_WR_IBUF_STATUS_RO_RO_IBUF_DEBUG_STATUS_SHIFT) /* 0x00FFFFFF */
+#define CSI2RX_RAW_WR_IBUF_STATUS_RO_RO_R0FIFO_SPACE2FULL_SHIFT (24U)
+#define CSI2RX_RAW_WR_IBUF_STATUS_RO_RO_R0FIFO_SPACE2FULL_MASK (0xFU << CSI2RX_RAW_WR_IBUF_STATUS_RO_RO_R0FIFO_SPACE2FULL_SHIFT) /* 0x0F000000 */
+#define CSI2RX_RAW_WR_IBUF_STATUS_RO_RO_R1FIFO_SPACE2FULL_SHIFT (28U)
+#define CSI2RX_RAW_WR_IBUF_STATUS_RO_RO_R1FIFO_SPACE2FULL_MASK (0xFU << CSI2RX_RAW_WR_IBUF_STATUS_RO_RO_R1FIFO_SPACE2FULL_SHIFT) /* 0xF0000000 */
+/* RAW_WR_IBUF3_STATUS_RO */
+#define CSI2RX_RAW_WR_IBUF3_STATUS_RO_OFFSET               (0xB8U)
+#define CSI2RX_RAW_WR_IBUF3_STATUS_RO                      (0x0U)
+#define CSI2RX_RAW_WR_IBUF3_STATUS_RO_RO_IBUF3_DEBUG_STATUS_SHIFT (0U)
+#define CSI2RX_RAW_WR_IBUF3_STATUS_RO_RO_IBUF3_DEBUG_STATUS_MASK (0x7FU << CSI2RX_RAW_WR_IBUF3_STATUS_RO_RO_IBUF3_DEBUG_STATUS_SHIFT) /* 0x0000007F */
+#define CSI2RX_RAW_WR_IBUF3_STATUS_RO_RO_R2FIFO_SPACE2FULL_SHIFT (7U)
+#define CSI2RX_RAW_WR_IBUF3_STATUS_RO_RO_R2FIFO_SPACE2FULL_MASK (0xFU << CSI2RX_RAW_WR_IBUF3_STATUS_RO_RO_R2FIFO_SPACE2FULL_SHIFT) /* 0x00000780 */
+#define CSI2RX_RAW_WR_IBUF3_STATUS_RO_RO_R3FIFO_SPACE2FULL_SHIFT (11U)
+#define CSI2RX_RAW_WR_IBUF3_STATUS_RO_RO_R3FIFO_SPACE2FULL_MASK (0xFU << CSI2RX_RAW_WR_IBUF3_STATUS_RO_RO_R3FIFO_SPACE2FULL_SHIFT) /* 0x00007800 */
+/* CUR_HEADER_RO */
+#define CSI2RX_CUR_HEADER_RO_OFFSET                        (0xC4U)
+#define CSI2RX_CUR_HEADER_RO                               (0x0U)
+#define CSI2RX_CUR_HEADER_RO_RO_CSI_CUR_HEADER_SHIFT       (0U)
+#define CSI2RX_CUR_HEADER_RO_RO_CSI_CUR_HEADER_MASK        (0xFFFFFFFFU << CSI2RX_CUR_HEADER_RO_RO_CSI_CUR_HEADER_SHIFT) /* 0xFFFFFFFF */
+/* RAWFBC_EN_SHD */
+#define CSI2RX_RAWFBC_EN_SHD_OFFSET                        (0xC8U)
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW0FBCE_EN_SHD_SHIFT      (0U)
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW0FBCE_EN_SHD_MASK       (0x1U << CSI2RX_RAWFBC_EN_SHD_SW_RAW0FBCE_EN_SHD_SHIFT)      /* 0x00000001 */
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAWFBCE1_EN_SHD_SHIFT      (1U)
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAWFBCE1_EN_SHD_MASK       (0x1U << CSI2RX_RAWFBC_EN_SHD_SW_RAWFBCE1_EN_SHD_SHIFT)      /* 0x00000002 */
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW0FBCD_EN_SHD_SHIFT      (2U)
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW0FBCD_EN_SHD_MASK       (0x1U << CSI2RX_RAWFBC_EN_SHD_SW_RAW0FBCD_EN_SHD_SHIFT)      /* 0x00000004 */
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW1FBCD_EN_SHD_SHIFT      (3U)
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW1FBCD_EN_SHD_MASK       (0x1U << CSI2RX_RAWFBC_EN_SHD_SW_RAW1FBCD_EN_SHD_SHIFT)      /* 0x00000008 */
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW0_OUT_EN_SHD_SHIFT      (4U)
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW0_OUT_EN_SHD_MASK       (0x1U << CSI2RX_RAWFBC_EN_SHD_SW_RAW0_OUT_EN_SHD_SHIFT)      /* 0x00000010 */
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW1_OUT_EN_SHD_SHIFT      (5U)
+#define CSI2RX_RAWFBC_EN_SHD_SW_RAW1_OUT_EN_SHD_MASK       (0x1U << CSI2RX_RAWFBC_EN_SHD_SW_RAW1_OUT_EN_SHD_SHIFT)      /* 0x00000020 */
+/* FPN_CTRL */
+#define CSI2RX_FPN_CTRL_OFFSET                             (0xD0U)
+#define CSI2RX_FPN_CTRL_SW_FPN_EN_SHIFT                    (0U)
+#define CSI2RX_FPN_CTRL_SW_FPN_EN_MASK                     (0x1U << CSI2RX_FPN_CTRL_SW_FPN_EN_SHIFT)                    /* 0x00000001 */
+#define CSI2RX_FPN_CTRL_SW_CFPN_N_SHIFT                    (1U)
+#define CSI2RX_FPN_CTRL_SW_CFPN_N_MASK                     (0x1U << CSI2RX_FPN_CTRL_SW_CFPN_N_SHIFT)                    /* 0x00000002 */
+#define CSI2RX_FPN_CTRL_SW_FPN_BITS_SHIFT                  (2U)
+#define CSI2RX_FPN_CTRL_SW_FPN_BITS_MASK                   (0x3U << CSI2RX_FPN_CTRL_SW_FPN_BITS_SHIFT)                  /* 0x0000000C */
+/* FPN_TABLE_CTRL */
+#define CSI2RX_FPN_TABLE_CTRL_OFFSET                       (0xD4U)
+#define CSI2RX_FPN_TABLE_CTRL_SW_FPN_CFG_ING_SHIFT         (0U)
+#define CSI2RX_FPN_TABLE_CTRL_SW_FPN_CFG_ING_MASK          (0x1U << CSI2RX_FPN_TABLE_CTRL_SW_FPN_CFG_ING_SHIFT)         /* 0x00000001 */
+/* FPN_TABLE_DATA */
+#define CSI2RX_FPN_TABLE_DATA_OFFSET                       (0xD8U)
+#define CSI2RX_FPN_TABLE_DATA_SW_FPN_TABLE_DATA_SHIFT      (0U)
+#define CSI2RX_FPN_TABLE_DATA_SW_FPN_TABLE_DATA_MASK       (0xFFFFFFFFU << CSI2RX_FPN_TABLE_DATA_SW_FPN_TABLE_DATA_SHIFT) /* 0xFFFFFFFF */
+/* CSI_Y_STAT_CTRL */
+#define CSI2RX_CSI_Y_STAT_CTRL_OFFSET                      (0xF0U)
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_EN_SHIFT          (0U)
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_EN_MASK           (0x1U << CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_EN_SHIFT)          /* 0x00000001 */
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_RD_EN_SHIFT       (1U)
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_RD_EN_MASK        (0x1U << CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_RD_EN_SHIFT)       /* 0x00000002 */
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_INT_MODE_SHIFT    (2U)
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_INT_MODE_MASK     (0x3U << CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_INT_MODE_SHIFT)    /* 0x0000000C */
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_RD_FRM_ID_SHIFT   (4U)
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_RD_FRM_ID_MASK    (0x3U << CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_RD_FRM_ID_SHIFT)   /* 0x00000030 */
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_RD_TILE_ID_SHIFT  (6U)
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_RD_TILE_ID_MASK   (0x3U << CSI2RX_CSI_Y_STAT_CTRL_SW_Y_STAT_RD_TILE_ID_SHIFT)  /* 0x000000C0 */
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_BLACK_LEVEL_R_SHIFT      (8U)
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_BLACK_LEVEL_R_MASK       (0x1FU << CSI2RX_CSI_Y_STAT_CTRL_SW_BLACK_LEVEL_R_SHIFT)     /* 0x00001F00 */
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_BLACK_LEVEL_G_SHIFT      (16U)
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_BLACK_LEVEL_G_MASK       (0x1FU << CSI2RX_CSI_Y_STAT_CTRL_SW_BLACK_LEVEL_G_SHIFT)     /* 0x001F0000 */
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_BLACK_LEVEL_B_SHIFT      (24U)
+#define CSI2RX_CSI_Y_STAT_CTRL_SW_BLACK_LEVEL_B_MASK       (0x1FU << CSI2RX_CSI_Y_STAT_CTRL_SW_BLACK_LEVEL_B_SHIFT)     /* 0x1F000000 */
+/* CSI_Y_STAT_RO */
+#define CSI2RX_CSI_Y_STAT_RO_OFFSET                        (0xF4U)
+#define CSI2RX_CSI_Y_STAT_RO                               (0x0U)
+#define CSI2RX_CSI_Y_STAT_RO_RO_Y_STAT_BUF_RDATA_SHIFT     (0U)
+#define CSI2RX_CSI_Y_STAT_RO_RO_Y_STAT_BUF_RDATA_MASK      (0xFFFFFFFFU << CSI2RX_CSI_Y_STAT_RO_RO_Y_STAT_BUF_RDATA_SHIFT) /* 0xFFFFFFFF */
+/* VERSION */
+#define CSI2RX_VERSION_OFFSET                              (0xFCU)
+#define CSI2RX_VERSION                                     (0x2021812U)
+#define CSI2RX_VERSION_VERSION_ID_SHIFT                    (0U)
+#define CSI2RX_VERSION_VERSION_ID_MASK                     (0xFFFFFFFFU << CSI2RX_VERSION_VERSION_ID_SHIFT)             /* 0xFFFFFFFF */
+/*****************************************DPHYRX*****************************************/
+/* LANE_EN */
+#define DPHYRX_LANE_EN_OFFSET                              (0x0U)
+#define DPHYRX_LANE_EN_LANE_EN_0_SHIFT                     (2U)
+#define DPHYRX_LANE_EN_LANE_EN_0_MASK                      (0x1U << DPHYRX_LANE_EN_LANE_EN_0_SHIFT)                     /* 0x00000004 */
+#define DPHYRX_LANE_EN_LANE_EN_1_SHIFT                     (3U)
+#define DPHYRX_LANE_EN_LANE_EN_1_MASK                      (0x1U << DPHYRX_LANE_EN_LANE_EN_1_SHIFT)                     /* 0x00000008 */
+#define DPHYRX_LANE_EN_LANE_EN_2_SHIFT                     (4U)
+#define DPHYRX_LANE_EN_LANE_EN_2_MASK                      (0x1U << DPHYRX_LANE_EN_LANE_EN_2_SHIFT)                     /* 0x00000010 */
+#define DPHYRX_LANE_EN_LANE_EN_3_SHIFT                     (5U)
+#define DPHYRX_LANE_EN_LANE_EN_3_MASK                      (0x1U << DPHYRX_LANE_EN_LANE_EN_3_SHIFT)                     /* 0x00000020 */
+#define DPHYRX_LANE_EN_LANE_EN_CK_SHIFT                    (6U)
+#define DPHYRX_LANE_EN_LANE_EN_CK_MASK                     (0x1U << DPHYRX_LANE_EN_LANE_EN_CK_SHIFT)                    /* 0x00000040 */
+/* DIGITAL_CLK_PHASE */
+#define DPHYRX_DIGITAL_CLK_PHASE_OFFSET                    (0x34U)
+#define DPHYRX_DIGITAL_CLK_PHASE_DIGITAL_CLK_PHASE_SHIFT   (0U)
+#define DPHYRX_DIGITAL_CLK_PHASE_DIGITAL_CLK_PHASE_MASK    (0x3U << DPHYRX_DIGITAL_CLK_PHASE_DIGITAL_CLK_PHASE_SHIFT)   /* 0x00000003 */
+/* LANE_CLK_3_PHASE */
+#define DPHYRX_LANE_CLK_3_PHASE_OFFSET                     (0x38U)
+#define DPHYRX_LANE_CLK_3_PHASE_LANE_2_PHASE_MSB_SHIFT     (0U)
+#define DPHYRX_LANE_CLK_3_PHASE_LANE_2_PHASE_MSB_MASK      (0x1U << DPHYRX_LANE_CLK_3_PHASE_LANE_2_PHASE_MSB_SHIFT)     /* 0x00000001 */
+#define DPHYRX_LANE_CLK_3_PHASE_LANE_3_PHASE_SHIFT         (1U)
+#define DPHYRX_LANE_CLK_3_PHASE_LANE_3_PHASE_MASK          (0x7U << DPHYRX_LANE_CLK_3_PHASE_LANE_3_PHASE_SHIFT)         /* 0x0000000E */
+#define DPHYRX_LANE_CLK_3_PHASE_LANE_CLK_PHASE_SHIFT       (4U)
+#define DPHYRX_LANE_CLK_3_PHASE_LANE_CLK_PHASE_MASK        (0x7U << DPHYRX_LANE_CLK_3_PHASE_LANE_CLK_PHASE_SHIFT)       /* 0x00000070 */
+/* LANE_2_1_0_PHASE */
+#define DPHYRX_LANE_2_1_0_PHASE_OFFSET                     (0x3CU)
+#define DPHYRX_LANE_2_1_0_PHASE_LANE_0_PHASE_SHIFT         (0U)
+#define DPHYRX_LANE_2_1_0_PHASE_LANE_0_PHASE_MASK          (0x7U << DPHYRX_LANE_2_1_0_PHASE_LANE_0_PHASE_SHIFT)         /* 0x00000007 */
+#define DPHYRX_LANE_2_1_0_PHASE_LANE_1_PHASE_SHIFT         (3U)
+#define DPHYRX_LANE_2_1_0_PHASE_LANE_1_PHASE_MASK          (0x7U << DPHYRX_LANE_2_1_0_PHASE_LANE_1_PHASE_SHIFT)         /* 0x00000038 */
+#define DPHYRX_LANE_2_1_0_PHASE_LANE_2_PHASE_SHIFT         (6U)
+#define DPHYRX_LANE_2_1_0_PHASE_LANE_2_PHASE_MASK          (0x3U << DPHYRX_LANE_2_1_0_PHASE_LANE_2_PHASE_SHIFT)         /* 0x000000C0 */
+/* DIGITAL_CLK_REVERSE */
+#define DPHYRX_DIGITAL_CLK_REVERSE_OFFSET                  (0x48U)
+#define DPHYRX_DIGITAL_CLK_REVERSE_DIGITAL_CLK_REVERSE_SHIFT (7U)
+#define DPHYRX_DIGITAL_CLK_REVERSE_DIGITAL_CLK_REVERSE_MASK (0x1U << DPHYRX_DIGITAL_CLK_REVERSE_DIGITAL_CLK_REVERSE_SHIFT) /* 0x00000080 */
+/* MIPI_LVDS_ENABLE */
+#define DPHYRX_MIPI_LVDS_ENABLE_OFFSET                     (0x80U)
+#define DPHYRX_MIPI_LVDS_ENABLE_MIPI_EN_SHIFT              (0U)
+#define DPHYRX_MIPI_LVDS_ENABLE_MIPI_EN_MASK               (0x1U << DPHYRX_MIPI_LVDS_ENABLE_MIPI_EN_SHIFT)              /* 0x00000001 */
+#define DPHYRX_MIPI_LVDS_ENABLE_LVDS_REG_EN_SHIFT          (5U)
+#define DPHYRX_MIPI_LVDS_ENABLE_LVDS_REG_EN_MASK           (0x1U << DPHYRX_MIPI_LVDS_ENABLE_LVDS_REG_EN_SHIFT)          /* 0x00000020 */
+/* LANE_CK_MODE */
+#define DPHYRX_LANE_CK_MODE_OFFSET                         (0x128U)
+#define DPHYRX_LANE_CK_MODE_LANE_CK_MODE_SHIFT             (4U)
+#define DPHYRX_LANE_CK_MODE_LANE_CK_MODE_MASK              (0x3U << DPHYRX_LANE_CK_MODE_LANE_CK_MODE_SHIFT)             /* 0x00000030 */
+/* LANE_CK_MSB */
+#define DPHYRX_LANE_CK_MSB_OFFSET                          (0x138U)
+#define DPHYRX_LANE_CK_MSB_LANE_CK_MSB_SHIFT               (6U)
+#define DPHYRX_LANE_CK_MSB_LANE_CK_MSB_MASK                (0x1U << DPHYRX_LANE_CK_MSB_LANE_CK_MSB_SHIFT)               /* 0x00000040 */
+/* LANE_CK_TTAGO */
+#define DPHYRX_LANE_CK_TTAGO_OFFSET                        (0x140U)
+#define DPHYRX_LANE_CK_TTAGO_LANE_CK_TTAGO_SHIFT           (0U)
+#define DPHYRX_LANE_CK_TTAGO_LANE_CK_TTAGO_MASK            (0x3FU << DPHYRX_LANE_CK_TTAGO_LANE_CK_TTAGO_SHIFT)          /* 0x0000003F */
+/* LANE_CK_TTASURE */
+#define DPHYRX_LANE_CK_TTASURE_OFFSET                      (0x144U)
+#define DPHYRX_LANE_CK_TTASURE_LANE_CK_TTASURE_SHIFT       (0U)
+#define DPHYRX_LANE_CK_TTASURE_LANE_CK_TTASURE_MASK        (0x3FU << DPHYRX_LANE_CK_TTASURE_LANE_CK_TTASURE_SHIFT)      /* 0x0000003F */
+/* LANE_CK_TTAWAIT */
+#define DPHYRX_LANE_CK_TTAWAIT_OFFSET                      (0x148U)
+#define DPHYRX_LANE_CK_TTAWAIT_LANE_CK_TTAWAIT_SHIFT       (0U)
+#define DPHYRX_LANE_CK_TTAWAIT_LANE_CK_TTAWAIT_MASK        (0x3FU << DPHYRX_LANE_CK_TTAWAIT_LANE_CK_TTAWAIT_SHIFT)      /* 0x0000003F */
+/* LANE_CK_THSSETTLE */
+#define DPHYRX_LANE_CK_THSSETTLE_OFFSET                    (0x160U)
+#define DPHYRX_LANE_CK_THSSETTLE_LANE_CK_THSSETTLE_SHIFT   (0U)
+#define DPHYRX_LANE_CK_THSSETTLE_LANE_CK_THSSETTLE_MASK    (0x3FU << DPHYRX_LANE_CK_THSSETTLE_LANE_CK_THSSETTLE_SHIFT)  /* 0x0000003F */
+/* LANE_CK_CAL_EN */
+#define DPHYRX_LANE_CK_CAL_EN_OFFSET                       (0x168U)
+#define DPHYRX_LANE_CK_CAL_EN_LANE_CK_CAL_EN_SHIFT         (7U)
+#define DPHYRX_LANE_CK_CAL_EN_LANE_CK_CAL_EN_MASK          (0x1U << DPHYRX_LANE_CK_CAL_EN_LANE_CK_CAL_EN_SHIFT)         /* 0x00000080 */
+/* LANE_0_MSB */
+#define DPHYRX_LANE_0_MSB_OFFSET                           (0x1B8U)
+#define DPHYRX_LANE_0_MSB_LANE_0_MSB_SHIFT                 (6U)
+#define DPHYRX_LANE_0_MSB_LANE_0_MSB_MASK                  (0x1U << DPHYRX_LANE_0_MSB_LANE_0_MSB_SHIFT)                 /* 0x00000040 */
+/* LANE_0_TTAGO */
+#define DPHYRX_LANE_0_TTAGO_OFFSET                         (0x1C0U)
+#define DPHYRX_LANE_0_TTAGO_LANE_0_TTAGO_SHIFT             (0U)
+#define DPHYRX_LANE_0_TTAGO_LANE_0_TTAGO_MASK              (0x3FU << DPHYRX_LANE_0_TTAGO_LANE_0_TTAGO_SHIFT)            /* 0x0000003F */
+/* LANE_0_TTASURE */
+#define DPHYRX_LANE_0_TTASURE_OFFSET                       (0x1C4U)
+#define DPHYRX_LANE_0_TTASURE_LANE_0_TTASURE_SHIFT         (0U)
+#define DPHYRX_LANE_0_TTASURE_LANE_0_TTASURE_MASK          (0x3FU << DPHYRX_LANE_0_TTASURE_LANE_0_TTASURE_SHIFT)        /* 0x0000003F */
+/* LANE_0_TTAWAIT */
+#define DPHYRX_LANE_0_TTAWAIT_OFFSET                       (0x1C8U)
+#define DPHYRX_LANE_0_TTAWAIT_LANE_0_TTAWAIT_SHIFT         (0U)
+#define DPHYRX_LANE_0_TTAWAIT_LANE_0_TTAWAIT_MASK          (0x3FU << DPHYRX_LANE_0_TTAWAIT_LANE_0_TTAWAIT_SHIFT)        /* 0x0000003F */
+/* LANE_0_THSSETTLE */
+#define DPHYRX_LANE_0_THSSETTLE_OFFSET                     (0x1E0U)
+#define DPHYRX_LANE_0_THSSETTLE_LANE_0_THSSETTLE_SHIFT     (0U)
+#define DPHYRX_LANE_0_THSSETTLE_LANE_0_THSSETTLE_MASK      (0x3FU << DPHYRX_LANE_0_THSSETTLE_LANE_0_THSSETTLE_SHIFT)    /* 0x0000003F */
+/* LANE_0_CAL_EN */
+#define DPHYRX_LANE_0_CAL_EN_OFFSET                        (0x1E8U)
+#define DPHYRX_LANE_0_CAL_EN_LANE_0_CAL_EN_SHIFT           (7U)
+#define DPHYRX_LANE_0_CAL_EN_LANE_0_CAL_EN_MASK            (0x1U << DPHYRX_LANE_0_CAL_EN_LANE_0_CAL_EN_SHIFT)           /* 0x00000080 */
+/* LANE_1_MSB */
+#define DPHYRX_LANE_1_MSB_OFFSET                           (0x238U)
+#define DPHYRX_LANE_1_MSB_LANE_1_MSB_SHIFT                 (6U)
+#define DPHYRX_LANE_1_MSB_LANE_1_MSB_MASK                  (0x1U << DPHYRX_LANE_1_MSB_LANE_1_MSB_SHIFT)                 /* 0x00000040 */
+/* LANE_1_TTAGO */
+#define DPHYRX_LANE_1_TTAGO_OFFSET                         (0x240U)
+#define DPHYRX_LANE_1_TTAGO_LANE_1_TTAGO_SHIFT             (0U)
+#define DPHYRX_LANE_1_TTAGO_LANE_1_TTAGO_MASK              (0x3FU << DPHYRX_LANE_1_TTAGO_LANE_1_TTAGO_SHIFT)            /* 0x0000003F */
+/* LANE_1_TTASURE */
+#define DPHYRX_LANE_1_TTASURE_OFFSET                       (0x244U)
+#define DPHYRX_LANE_1_TTASURE_LANE_1_TTASURE_SHIFT         (0U)
+#define DPHYRX_LANE_1_TTASURE_LANE_1_TTASURE_MASK          (0x3FU << DPHYRX_LANE_1_TTASURE_LANE_1_TTASURE_SHIFT)        /* 0x0000003F */
+/* LANE_1_TTAWAIT */
+#define DPHYRX_LANE_1_TTAWAIT_OFFSET                       (0x248U)
+#define DPHYRX_LANE_1_TTAWAIT_LANE_1_TTAWAIT_SHIFT         (0U)
+#define DPHYRX_LANE_1_TTAWAIT_LANE_1_TTAWAIT_MASK          (0x3FU << DPHYRX_LANE_1_TTAWAIT_LANE_1_TTAWAIT_SHIFT)        /* 0x0000003F */
+/* LANE_1_THSSETTLE */
+#define DPHYRX_LANE_1_THSSETTLE_OFFSET                     (0x260U)
+#define DPHYRX_LANE_1_THSSETTLE_LANE_1_THSSETTLE_SHIFT     (0U)
+#define DPHYRX_LANE_1_THSSETTLE_LANE_1_THSSETTLE_MASK      (0x3FU << DPHYRX_LANE_1_THSSETTLE_LANE_1_THSSETTLE_SHIFT)    /* 0x0000003F */
+/* LANE_1_CAL_EN */
+#define DPHYRX_LANE_1_CAL_EN_OFFSET                        (0x268U)
+#define DPHYRX_LANE_1_CAL_EN_LANE_1_CAL_EN_SHIFT           (7U)
+#define DPHYRX_LANE_1_CAL_EN_LANE_1_CAL_EN_MASK            (0x1U << DPHYRX_LANE_1_CAL_EN_LANE_1_CAL_EN_SHIFT)           /* 0x00000080 */
+/* LANE_2_MSB */
+#define DPHYRX_LANE_2_MSB_OFFSET                           (0x2B8U)
+#define DPHYRX_LANE_2_MSB_LANE_2_MSB_SHIFT                 (6U)
+#define DPHYRX_LANE_2_MSB_LANE_2_MSB_MASK                  (0x1U << DPHYRX_LANE_2_MSB_LANE_2_MSB_SHIFT)                 /* 0x00000040 */
+/* LANE_2_TTAGO */
+#define DPHYRX_LANE_2_TTAGO_OFFSET                         (0x2C0U)
+#define DPHYRX_LANE_2_TTAGO_LANE_2_TTAGO_SHIFT             (0U)
+#define DPHYRX_LANE_2_TTAGO_LANE_2_TTAGO_MASK              (0x3FU << DPHYRX_LANE_2_TTAGO_LANE_2_TTAGO_SHIFT)            /* 0x0000003F */
+/* LANE_2_TTASURE */
+#define DPHYRX_LANE_2_TTASURE_OFFSET                       (0x2C4U)
+#define DPHYRX_LANE_2_TTASURE_LANE_2_TTASURE_SHIFT         (0U)
+#define DPHYRX_LANE_2_TTASURE_LANE_2_TTASURE_MASK          (0x3FU << DPHYRX_LANE_2_TTASURE_LANE_2_TTASURE_SHIFT)        /* 0x0000003F */
+/* LANE_2_TTAWAIT */
+#define DPHYRX_LANE_2_TTAWAIT_OFFSET                       (0x2C8U)
+#define DPHYRX_LANE_2_TTAWAIT_LANE_2_TTAWAIT_SHIFT         (0U)
+#define DPHYRX_LANE_2_TTAWAIT_LANE_2_TTAWAIT_MASK          (0x3FU << DPHYRX_LANE_2_TTAWAIT_LANE_2_TTAWAIT_SHIFT)        /* 0x0000003F */
+/* MIPI_LVDS_MODEL */
+#define DPHYRX_MIPI_LVDS_MODEL_OFFSET                      (0x2CCU)
+#define DPHYRX_MIPI_LVDS_MODEL_MIPI_MODEL_EN_SHIFT         (1U)
+#define DPHYRX_MIPI_LVDS_MODEL_MIPI_MODEL_EN_MASK          (0x1U << DPHYRX_MIPI_LVDS_MODEL_MIPI_MODEL_EN_SHIFT)         /* 0x00000002 */
+#define DPHYRX_MIPI_LVDS_MODEL_LVDS_MODEL_EN_SHIFT         (2U)
+#define DPHYRX_MIPI_LVDS_MODEL_LVDS_MODEL_EN_MASK          (0x1U << DPHYRX_MIPI_LVDS_MODEL_LVDS_MODEL_EN_SHIFT)         /* 0x00000004 */
+/* LANE_2_THSSETTLE */
+#define DPHYRX_LANE_2_THSSETTLE_OFFSET                     (0x2E0U)
+#define DPHYRX_LANE_2_THSSETTLE_LANE_2_THSSETTLE_SHIFT     (0U)
+#define DPHYRX_LANE_2_THSSETTLE_LANE_2_THSSETTLE_MASK      (0x3FU << DPHYRX_LANE_2_THSSETTLE_LANE_2_THSSETTLE_SHIFT)    /* 0x0000003F */
+/* LANE_2_CAL_EN */
+#define DPHYRX_LANE_2_CAL_EN_OFFSET                        (0x2E8U)
+#define DPHYRX_LANE_2_CAL_EN_LANE_2_CAL_EN_SHIFT           (7U)
+#define DPHYRX_LANE_2_CAL_EN_LANE_2_CAL_EN_MASK            (0x1U << DPHYRX_LANE_2_CAL_EN_LANE_2_CAL_EN_SHIFT)           /* 0x00000080 */
+/* LVDS_MODE */
+#define DPHYRX_LVDS_MODE_OFFSET                            (0x300U)
+#define DPHYRX_LVDS_MODE_LVDS_EN_SHIFT                     (0U)
+#define DPHYRX_LVDS_MODE_LVDS_EN_MASK                      (0x1U << DPHYRX_LVDS_MODE_LVDS_EN_SHIFT)                     /* 0x00000001 */
+#define DPHYRX_LVDS_MODE_LVDS_MODE_SHIFT                   (4U)
+#define DPHYRX_LVDS_MODE_LVDS_MODE_MASK                    (0x3U << DPHYRX_LVDS_MODE_LVDS_MODE_SHIFT)                   /* 0x00000030 */
+/* LANE_3_MSB */
+#define DPHYRX_LANE_3_MSB_OFFSET                           (0x338U)
+#define DPHYRX_LANE_3_MSB_LANE_3_MSB_SHIFT                 (6U)
+#define DPHYRX_LANE_3_MSB_LANE_3_MSB_MASK                  (0x1U << DPHYRX_LANE_3_MSB_LANE_3_MSB_SHIFT)                 /* 0x00000040 */
+/* LANE_3_TTAGO */
+#define DPHYRX_LANE_3_TTAGO_OFFSET                         (0x340U)
+#define DPHYRX_LANE_3_TTAGO_LANE_3_TTAGO_SHIFT             (0U)
+#define DPHYRX_LANE_3_TTAGO_LANE_3_TTAGO_MASK              (0x3FU << DPHYRX_LANE_3_TTAGO_LANE_3_TTAGO_SHIFT)            /* 0x0000003F */
+/* LANE_3_TTASURE */
+#define DPHYRX_LANE_3_TTASURE_OFFSET                       (0x344U)
+#define DPHYRX_LANE_3_TTASURE_LANE_3_TTASURE_SHIFT         (0U)
+#define DPHYRX_LANE_3_TTASURE_LANE_3_TTASURE_MASK          (0x3FU << DPHYRX_LANE_3_TTASURE_LANE_3_TTASURE_SHIFT)        /* 0x0000003F */
+/* LANE_3_TTAWAIT */
+#define DPHYRX_LANE_3_TTAWAIT_OFFSET                       (0x348U)
+#define DPHYRX_LANE_3_TTAWAIT_LANE_0_TTAWAIT_SHIFT         (0U)
+#define DPHYRX_LANE_3_TTAWAIT_LANE_0_TTAWAIT_MASK          (0x3FU << DPHYRX_LANE_3_TTAWAIT_LANE_0_TTAWAIT_SHIFT)        /* 0x0000003F */
+/* LANE_3_THSSETTLE */
+#define DPHYRX_LANE_3_THSSETTLE_OFFSET                     (0x360U)
+#define DPHYRX_LANE_3_THSSETTLE_LANE_3_THSSETTLE_SHIFT     (0U)
+#define DPHYRX_LANE_3_THSSETTLE_LANE_3_THSSETTLE_MASK      (0x3FU << DPHYRX_LANE_3_THSSETTLE_LANE_3_THSSETTLE_SHIFT)    /* 0x0000003F */
+/* LANE_3_CAL_EN */
+#define DPHYRX_LANE_3_CAL_EN_OFFSET                        (0x368U)
+#define DPHYRX_LANE_3_CAL_EN_LANE_3_CAL_EN_SHIFT           (7U)
+#define DPHYRX_LANE_3_CAL_EN_LANE_3_CAL_EN_MASK            (0x1U << DPHYRX_LANE_3_CAL_EN_LANE_3_CAL_EN_SHIFT)
+/**************************************ISP_DEBAYER***************************************/
+/* CONTROL */
+#define ISP_DEBAYER_CONTROL_OFFSET                         (0x0U)
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_EN_SHIFT            (0U)
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_EN_MASK             (0x1U << ISP_DEBAYER_CONTROL_SW_DEBAYER_EN_SHIFT)            /* 0x00000001 */
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_G_EN_SHIFT   (4U)
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_G_EN_MASK    (0x1U << ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_G_EN_SHIFT)   /* 0x00000010 */
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_C_EN_SHIFT   (8U)
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_C_EN_MASK    (0x1U << ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_C_EN_SHIFT)   /* 0x00000100 */
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_EN_SHD_SHIFT        (24U)
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_EN_SHD_MASK         (0x1U << ISP_DEBAYER_CONTROL_SW_DEBAYER_EN_SHD_SHIFT)        /* 0x01000000 */
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_G_EN_SHD_SHIFT (25U)
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_G_EN_SHD_MASK (0x1U << ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_G_EN_SHD_SHIFT) /* 0x02000000 */
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_C_EN_SHD_SHIFT (26U)
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_C_EN_SHD_MASK (0x1U << ISP_DEBAYER_CONTROL_SW_DEBAYER_FILTER_C_EN_SHD_SHIFT) /* 0x04000000 */
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_WORKING_SHIFT       (27U)
+#define ISP_DEBAYER_CONTROL_SW_DEBAYER_WORKING_MASK        (0x1U << ISP_DEBAYER_CONTROL_SW_DEBAYER_WORKING_SHIFT)       /* 0x08000000 */
+/* G_INTERP */
+#define ISP_DEBAYER_G_INTERP_OFFSET                        (0x4U)
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_CLIP_EN_SHIFT      (0U)
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_CLIP_EN_MASK       (0x1U << ISP_DEBAYER_G_INTERP_SW_DEBAYER_CLIP_EN_SHIFT)      /* 0x00000001 */
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_MAX_RATIO_SHIFT    (1U)
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_MAX_RATIO_MASK     (0x7U << ISP_DEBAYER_G_INTERP_SW_DEBAYER_MAX_RATIO_SHIFT)    /* 0x0000000E */
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_DIST_SCALE_SHIFT   (4U)
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_DIST_SCALE_MASK    (0xFU << ISP_DEBAYER_G_INTERP_SW_DEBAYER_DIST_SCALE_SHIFT)   /* 0x000000F0 */
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_THED0_SHIFT        (8U)
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_THED0_MASK         (0xFU << ISP_DEBAYER_G_INTERP_SW_DEBAYER_THED0_SHIFT)        /* 0x00000F00 */
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_THED1_SHIFT        (12U)
+#define ISP_DEBAYER_G_INTERP_SW_DEBAYER_THED1_MASK         (0xFU << ISP_DEBAYER_G_INTERP_SW_DEBAYER_THED1_SHIFT)        /* 0x0000F000 */
+/* G_INTERP_FILTER1 */
+#define ISP_DEBAYER_G_INTERP_FILTER1_OFFSET                (0x8U)
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE1_SHIFT (0U)
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE1_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE1_SHIFT) /* 0x0000000F */
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE2_SHIFT (4U)
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE2_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE2_SHIFT) /* 0x000000F0 */
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE3_SHIFT (8U)
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE3_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE3_SHIFT) /* 0x00000F00 */
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE4_SHIFT (12U)
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE4_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE4_SHIFT) /* 0x0000F000 */
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE5_SHIFT (16U)
+#define ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE5_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER1_SW_DEBAYER_FILTER1_COE5_SHIFT) /* 0x000F0000 */
+/* G_INTERP_FILTER2 */
+#define ISP_DEBAYER_G_INTERP_FILTER2_OFFSET                (0xCU)
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE1_SHIFT (0U)
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE1_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE1_SHIFT) /* 0x0000000F */
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE2_SHIFT (4U)
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE2_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE2_SHIFT) /* 0x000000F0 */
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE3_SHIFT (8U)
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE3_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE3_SHIFT) /* 0x00000F00 */
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE4_SHIFT (12U)
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE4_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE4_SHIFT) /* 0x0000F000 */
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE5_SHIFT (16U)
+#define ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE5_MASK (0xFU << ISP_DEBAYER_G_INTERP_FILTER2_SW_DEBAYER_FILTER2_COE5_SHIFT) /* 0x000F0000 */
+/* OFFSET */
+#define ISP_DEBAYER_OFFSET_OFFSET                          (0x10U)
+#define ISP_DEBAYER_OFFSET_SW_DEBAYER_OFFSET_SHIFT         (0U)
+#define ISP_DEBAYER_OFFSET_SW_DEBAYER_OFFSET_MASK          (0x1FU << ISP_DEBAYER_OFFSET_SW_DEBAYER_OFFSET_SHIFT)        /* 0x0000001F */
+#define ISP_DEBAYER_OFFSET_SW_DEBAYER_GAIN_OFFSET_SHIFT    (8U)
+#define ISP_DEBAYER_OFFSET_SW_DEBAYER_GAIN_OFFSET_MASK     (0xFU << ISP_DEBAYER_OFFSET_SW_DEBAYER_GAIN_OFFSET_SHIFT)    /* 0x00000F00 */
+#define ISP_DEBAYER_OFFSET_SW_DEBAYER_HF_OFFSET_SHIFT      (16U)
+#define ISP_DEBAYER_OFFSET_SW_DEBAYER_HF_OFFSET_MASK       (0xFFFFU << ISP_DEBAYER_OFFSET_SW_DEBAYER_HF_OFFSET_SHIFT)   /* 0xFFFF0000 */
+/* C_FILTER */
+#define ISP_DEBAYER_C_FILTER_OFFSET                        (0x14U)
+#define ISP_DEBAYER_C_FILTER_SW_DEBAYER_ORDER_MIN_SHIFT    (0U)
+#define ISP_DEBAYER_C_FILTER_SW_DEBAYER_ORDER_MIN_MASK     (0x1FU << ISP_DEBAYER_C_FILTER_SW_DEBAYER_ORDER_MIN_SHIFT)   /* 0x0000001F */
+#define ISP_DEBAYER_C_FILTER_SW_DEBAYER_ORDER_MAX_SHIFT    (8U)
+#define ISP_DEBAYER_C_FILTER_SW_DEBAYER_ORDER_MAX_MASK     (0x1FU << ISP_DEBAYER_C_FILTER_SW_DEBAYER_ORDER_MAX_SHIFT)   /* 0x00001F00 */
+#define ISP_DEBAYER_C_FILTER_SW_DEBAYER_SHIFT_NUM_SHIFT    (16U)
+#define ISP_DEBAYER_C_FILTER_SW_DEBAYER_SHIFT_NUM_MASK     (0x3U << ISP_DEBAYER_C_FILTER_SW_DEBAYER_SHIFT_NUM_SHIFT)    /* 0x00030000 */
 
 /********Name=SOFTRST_CON00,Offset=0x300********/
 #define SRST_NCOREPORESET0 0
