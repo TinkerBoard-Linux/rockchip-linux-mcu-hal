@@ -121,7 +121,7 @@ static HAL_Status DSI_WaitFifoEmpty(struct DSI_REG *pReg)
     return HAL_OK;
 }
 
-static uint32_t DSI_GetHcomponentLbcc(uint32_t hcomponent, uint16_t laneMbps, uint16_t clk)
+static uint32_t DSI_GetHcomponentLbcc(uint32_t hcomponent, uint16_t laneMbps, uint32_t clk)
 {
     uint32_t lbcc;
     uint64_t lbccTmp;
@@ -576,7 +576,7 @@ HAL_Status HAL_DSI_LineTimerConfig(struct DSI_REG *pReg,
 {
     uint16_t hsa = pModeInfo->crtcHsyncEnd - pModeInfo->crtcHsyncStart;
     uint16_t hbp = pModeInfo->crtcHtotal - pModeInfo->crtcHsyncEnd;
-    uint16_t clk = pModeInfo->crtcClock;
+    uint32_t clk = pModeInfo->crtcClock;
     uint32_t lpcc;
 
     lpcc = DSI_GetHcomponentLbcc(hsa, laneMbps, clk);
@@ -596,7 +596,7 @@ HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
 {
     uint16_t hsa = pModeInfo->crtcHsyncEnd - pModeInfo->crtcHsyncStart;
     uint16_t hbp = pDisplayRect->w - pModeInfo->crtcHsyncEnd;
-    uint16_t clk = pModeInfo->crtcClock;
+    uint32_t clk = pModeInfo->crtcClock;
     uint32_t lpcc;
 
     DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, DSI_CMD_MODE_CFG_TEAR_FX_EN_MASK, 0);
@@ -605,7 +605,6 @@ HAL_Status HAL_DSI_UpdateLineTimer(struct DSI_REG *pReg,
     DSI_UPDATE_BIT(pReg->CMD_MODE_CFG, DSI_CMD_MODE_CFG_TEAR_FX_EN_MASK, 1);
 
     lpcc = DSI_GetHcomponentLbcc(hsa, laneMbps, clk);
-
     WRITE_REG(pReg->VID_HSA_TIME, lpcc);
     lpcc = DSI_GetHcomponentLbcc(hbp, laneMbps, clk);
     WRITE_REG(pReg->VID_HBP_TIME, lpcc);
