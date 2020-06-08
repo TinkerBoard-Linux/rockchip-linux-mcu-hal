@@ -63,6 +63,7 @@ struct UART_REG_SAVE {
 HAL_UNUSED static uint64_t pmTimerLastCount;
 HAL_UNUSED static uint64_t pmTimerLowCount;
 HAL_UNUSED static uint32_t pmTimerLowRate;
+HAL_UNUSED static uint32_t pmIRQPendingFlag;
 
 #if defined(HAL_PM_RUNTIME_MODULE_ENABLED) || defined(HAL_PM_SLEEP_MODULE_ENABLED)
 static uint8_t pvtm32kEn = 0;
@@ -442,19 +443,19 @@ HAL_UNUSED static void SOC_SleepModeInit(struct PMU_REG *pPmu)
             (1 << PMU_PWRMODE_CON_PWRMODE_LDO_ADJ_EN_SHIFT) |
             /*(1 << PMU_PWRMODE_CON_BYPASS_PLL_LOCK_SHIFT) |*/
             /*(1 << PMU_PWRMODE_CON_BYPASS_HF_EN_SHIFT) |*/
-            (1 << PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_CFG_SHIFT) |
             (1 << PMU_PWRMODE_CON_SHRM_PD_EN_SHIFT) |
             (1 << PMU_PWRMODE_CON_SHRM_MEM_RETPD_EN_SHIFT);
 
     /* if PD_DSP and PD_AUDIO power down, PMU low frequency mode enable */
     if (pPmu->PWRDN_ST &
         ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT))) {
-        value |= (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT);// |
-        // (1 << PMU_PWRMODE_CON_OSC_DISABLE_SHIFT);
+        value |= (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT) |
+                 (1 << PMU_PWRMODE_CON_OSC_DISABLE_SHIFT);
         pmTimerLowRate = SLEEP_INPUT_RATE;
         pPmu->PWRMODE_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
         pPmu->PLLLOCK_CNT = SLEEP_COUNT_TO_MS(1);
         pPmu->DSP_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
+        pPmu->OSC_CNT = SLEEP_COUNT_TO_MS(1);
 
         if (!pvtm32kEn) {
             PVTM_ClkRateConfig(PVTM_TARGET_KHZ);
@@ -582,6 +583,10 @@ static int SOC_SuspendEnter(uint32_t flag)
 {
     HAL_DCACHE_CleanInvalidate();
     __WFI();
+
+    /* The PD_LOGIC power down when in power mode, the code will not execute
+     */
+    pmIRQPendingFlag = 1;
     HAL_CPU_DoResume();
 
     return HAL_OK;
@@ -621,7 +626,6 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     struct UART_REG *pUart = NULL;
     struct UART_REG_SAVE pUartSave;
     uint64_t timerCount;
-    uint32_t ret = 0;
 
     HAL_ASSERT(suspendInfo != NULL);
 
@@ -649,18 +653,23 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     SOC_PutChar('3', pUart);
     HAL_NVIC_SuspendSave();
     SOC_PutChar('4', pUart);
+    HAL_SCB_SuspendSave();
+    SOC_PutChar('5', pUart);
     SOC_UartSave(&pUartSave, pUart);
     timerCount = HAL_GetSysTimerCount();
-    ret = HAL_CPU_SuspendEnter(suspendInfo->suspendFlag, SOC_SuspendEnter);
+    HAL_CPU_SuspendEnter(suspendInfo->suspendFlag, SOC_SuspendEnter);
     pmTimerLowCount = HAL_GetSysTimerCount() - timerCount;
     SOC_SleepModeReinit(pPmu);
     SOC_UartRestore(&pUartSave, pUart);
-    SOC_PutChar('3', pUart);
+    SOC_PutChar('5', pUart);
     HAL_DCACHE_Enable();
-
-    if (!ret) {
+    if (pmIRQPendingFlag == 0) {
+        SOC_PutChar('4', pUart);
         HAL_ICACHE_Enable();
     }
+    pmIRQPendingFlag = 0;
+    SOC_PutChar('3', pUart);
+    HAL_SCB_ResumeRestore();
     SOC_PutChar('2', pUart);
     HAL_NVIC_ResumeRestore();
     SOC_PutChar('1', pUart);
