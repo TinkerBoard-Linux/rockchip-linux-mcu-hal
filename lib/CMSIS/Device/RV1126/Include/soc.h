@@ -151,6 +151,7 @@ typedef enum
 #include "system_rv1126.h"
 #endif /* __ASSEMBLY__ */
 #include "rv1126.h"
+#include "rv1126_pinctrl.h"
 
 /****************************************************************************************/
 /*                                                                                      */
