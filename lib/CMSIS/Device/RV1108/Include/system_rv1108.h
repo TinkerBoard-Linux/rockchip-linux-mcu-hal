@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
+ * Copyright (c) 2020 Rockchip Electronics Co., Ltd
  */
 
 #ifndef __SYSTEM_RV1108_H_

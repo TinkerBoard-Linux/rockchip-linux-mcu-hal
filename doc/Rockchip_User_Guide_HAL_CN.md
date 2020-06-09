@@ -2,17 +2,15 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V2.2.0
+发布版本：V2.3.0
 
-日期：2020-01-13
+日期：2020-06-09
 
-文件密级：公开资料
-
----
+文件密级：□绝密   □秘密   □内部资料   ■公开
 
 **免责声明**
 
-本文档按“现状”提供，福州瑞芯微电子股份有限公司（“本公司”，下同）不对本文档的任何陈述、信息和内容的准确性、可靠性、完整性、适销性、特定目的性和非侵权性提供任何明示或暗示的声明或保证。本文档仅作为使用指导的参考。
+本文档按“现状”提供，瑞芯微电子股份有限公司（“本公司”，下同）不对本文档的任何陈述、信息和内容的准确性、可靠性、完整性、适销性、特定目的性和非侵权性提供任何明示或暗示的声明或保证。本文档仅作为使用指导的参考。
 
 由于产品版本升级或其他原因，本文档将可能在未经任何通知的情况下，不定期进行更新或修改。
 
@@ -22,13 +20,13 @@
 
 本文档可能提及的其他所有注册商标或商标，由其各自拥有者所有。
 
-**版权所有© 2019福州瑞芯微电子股份有限公司**
+**版权所有 © 2020 瑞芯微电子股份有限公司**
 
 超越合理使用范畴，非经本公司书面许可，任何单位和个人不得擅自摘抄、复制本文档内容的部分或全部，并不得以任何形式传播。
 
-福州瑞芯微电子股份有限公司
+瑞芯微电子股份有限公司
 
-Fuzhou Rockchip Electronics Co., Ltd.
+Rockchip Electronics Co., Ltd.
 
 地址：     福建省福州市铜盘路软件园A区18号
 
@@ -50,8 +48,8 @@ Fuzhou Rockchip Electronics Co., Ltd.
 
 **产品版本**
 
-| **芯片名称** | **内核版本**    |
-| ------------ | --------------- |
+| **芯片名称** | **内核版本** |
+| ------------ | ------------ |
 | RK2108       | 裸系统、RTOS |
 | Pisces       | 裸系统、RTOS |
 | RK2206       | 裸系统、RTOS |
@@ -61,52 +59,55 @@ Fuzhou Rockchip Electronics Co., Ltd.
 本文档（本指南）主要适用于以下工程师：
 
 技术支持工程师
-软件开发工程师
 
----
+软件开发工程师
 
 **修订记录**
 
-| **版本号** | **作者** | **修改日期** | **修改说明** |
-| ---------- | --------| ---------- | ------------ |
-| V0.0.1 | 2018.11 | Jon Lin  | 提供基础代码结构说明和基本规范 |
-| V1.0.0 | 2018.11 | Kever Yang | 重构文档并确定编程规范 |
-| V1.0.1 | 2019.03 | Kever Yang | 新增和完善目录结构，代码规范，单元测试 |
-| V2.0.0 | 2019.04 | Jon Lin | 新增代码兼容性规范 |
-| V2.0.1 | 2019.05 | Jon Lin | 新增BSP库规范 |
-| V2.0.2 | 2019.12 | Jon Lin | 新增 hal_conf.h.template 文件规范 |
-| V2.1.0 | 2020.01 | Jon Lin | 修改文档规范 |
-| V2.2.0 | 2020.01 | Jon Lin | 新增固件库裸系统移植说明 |
-**目录**
+| **版本号** | **作者** | **修改日期** | **修改说明**                           |
+| ---------- | -------- | ------------ | -------------------------------------- |
+| V0.0.1     | 2018.11  | Jon Lin      | 提供基础代码结构说明和基本规范         |
+| V1.0.0     | 2018.11  | Kever Yang   | 重构文档并确定编程规范                 |
+| V1.0.1     | 2019.03  | Kever Yang   | 新增和完善目录结构，代码规范，单元测试 |
+| V2.0.0     | 2019.04  | Jon Lin      | 新增代码兼容性规范                     |
+| V2.0.1     | 2019.05  | Jon Lin      | 新增BSP库规范                          |
+| V2.0.2     | 2019.12  | Jon Lin      | 新增 hal_conf.h.template 文件规范      |
+| V2.1.0     | 2020.01  | Jon Lin      | 修改文档规范                           |
+| V2.2.0     | 2020.01  | Jon Lin      | 新增固件库裸系统移植说明               |
+| V2.3.0     | 2020.06  | Tao Huang    | 调整格式                               |
 
 ---
+
+**目录**
+
 [TOC]
+
 ---
 
 ## 术语/缩写
 
-| 缩写    | 详细描述   |
-| ------- | ---- |
-| ADC     | Analog-to-digital converter |
-| CAN     | Controller area network　|
-| CPAL  | Core Peripheral Access Layer |
-| CRU     | Clock and Reset Unit |
-| DMA     | Direct Memory Access |
-| GPIO    | General purpose I/Os |
-| GRF     | General Register File |
-| HAL   | Hardware Abstract Layer |
-| I2C     | Inter-integrated circuit |
-| I2S    | Inter-integrated sound |
-| NVIC    | Nested Vectored Interrupt Controller |
-| PWM     | Pulse Width Modulation |
-| RTC     | Real-time clock |
-| SFC     | Serial Flash Controller |
-| SPI     | Serial Peripheral interface |
-| SysTick | System tick timer |
-| UART   | Universal asynchronous receiver/transmitter |
-| USB     | Universal Serial Bus |
-| VOP     | Video Output Processor |
-| WDG   | watchdog |
+| 缩写    | 详细描述                                    |
+| ------- | ------------------------------------------- |
+| ADC     | Analog-to-digital converter                 |
+| CAN     | Controller area network                     |
+| CPAL    | Core Peripheral Access Layer                |
+| CRU     | Clock and Reset Unit                        |
+| DMA     | Direct Memory Access                        |
+| GPIO    | General purpose I/Os                        |
+| GRF     | General Register File                       |
+| HAL     | Hardware Abstract Layer                     |
+| I2C     | Inter-integrated circuit                    |
+| I2S     | Inter-integrated sound                      |
+| NVIC    | Nested Vectored Interrupt Controller        |
+| PWM     | Pulse Width Modulation                      |
+| RTC     | Real-time clock                             |
+| SFC     | Serial Flash Controller                     |
+| SPI     | Serial Peripheral interface                 |
+| SysTick | System tick timer                           |
+| UART    | Universal asynchronous receiver/transmitter |
+| USB     | Universal Serial Bus                        |
+| VOP     | Video Output Processor                      |
+| WDG     | watchdog                                    |
 
 ---
 
@@ -169,14 +170,14 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 
 ```
 
-| 目录    | 内容     |
-| -------- | ---- |
-| doc     | 项目相关文档     |
-| lib     | 用于集成到rt-thread, zephyr等RTOS的lib目录     |
-| lib/CMSIS     | 以ARM CMSIS5为base, 加上Rockchip SoC定义    |
-| lib/hal     | MCU的HAL驱动库代码     |
-| lib/bsp     | MCU的芯片公共BSP配置的代码     |
-| test     | HAL驱动的驱动测试代码     |
+| 目录      | 内容                                       |
+| --------- | ------------------------------------------ |
+| doc       | 项目相关文档                               |
+| lib       | 用于集成到rt-thread, zephyr等RTOS的lib目录 |
+| lib/CMSIS | 以ARM CMSIS5为base, 加上Rockchip SoC定义   |
+| lib/hal   | MCU的HAL驱动库代码                         |
+| lib/bsp   | MCU的芯片公共BSP配置的代码                 |
+| test      | HAL驱动的驱动测试代码                      |
 
 ### 1.2 库组成预览
 
@@ -193,7 +194,7 @@ lib/CMSIS/Device目录存放SoC相关的硬件信息,寄存器定义文件以及
 | *startup_rk2106.S*   | 包含重置处理程序和异常向量的工具链特定文件,根据需求调整堆栈大小。 |
 | *system_rk2106.c/.h* | 包含：系统start up汇编文件中在跳转main前调用的SystemInit()。 |
 | *gcc_arm.ld*         | 链接脚本                                                     |
-| *soc.h*      | 存放中断号、模块基地址、寄存器结构体、位宏信息的头文件，HAL库统一引用 |
+| *soc.h*              | 存放中断号、模块基地址、寄存器结构体、位宏信息的头文件，HAL库统一引用 |
 
 ### 1.4 HAL目录文件
 
@@ -214,10 +215,10 @@ lib/hal目录包含HAL库的代码主体, 其中src目录直接包含所有模�
 
 bsp库用来存放某个芯片公共的板级配置和dev资源，代码路径为./lib/bsp/project_name/hal_bsp.c/h。
 
-| 文件     | 描述                                                         |
-| -------- | ------------------------------------------------------------ |
+| 文件      | 描述                                                         |
+| --------- | ------------------------------------------------------------ |
 | hal_bsp.c | 某个芯片公共的板级配置、HAL驱动需求的可抽象化的相关模块资源（如i2c_dev）。 |
-| hal_bsp.h | hal_bsp.c头文件                                                  |
+| hal_bsp.h | hal_bsp.c头文件                                              |
 
 ### 1.6 test目录文件
 
@@ -473,7 +474,7 @@ int retValue, varNum;
 
 ```c
 /*
- * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
+ * Copyright (c) 2020 Rockchip Electronics Co., Ltd
  */
 ```
 
@@ -941,7 +942,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 ```c
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
+ * Copyright (c) 2020 Rockchip Electronics Co., Ltd
  */
 
 #include "hal_base.h"
@@ -964,7 +965,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 ```c
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
+ * Copyright (c) 2020 Rockchip Electronics Co., Ltd
  */
 
 #ifndef _HAL_UART_H_
