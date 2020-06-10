@@ -1457,6 +1457,8 @@ HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK,
                   0x1);
+    WRITE_REG_MASK_WE(GRF->SOC_CON0, GRF_SOC_CON0_VOP_TE_SEL_MASK,
+                      1 << GRF_SOC_CON0_VOP_TE_SEL_SHIFT);
 
     return HAL_OK;
 }
