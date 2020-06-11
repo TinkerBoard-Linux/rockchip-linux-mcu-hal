@@ -366,8 +366,25 @@ static HAL_Status SNOR_EraseSec(struct SPI_NOR *nor, uint32_t addr)
  */
 static HAL_Status SNOR_EraseBlk(struct SPI_NOR *nor, uint32_t addr)
 {
-    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(nor->eraseOpcodeSec, 1),
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(nor->eraseOpcodeBlk, 1),
                                                      HAL_SPI_MEM_OP_ADDR(nor->addrWidth, addr, 1),
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_NO_DATA);
+
+    if (nor->erase)
+        return nor->erase(nor, addr);
+
+    /*
+     * Default implementation, if driver doesn't have a specialized HW
+     * control
+     */
+    return SNOR_SPIMemExecOp(nor->spi, &op);
+}
+
+static HAL_Status SNOR_EraseChip(struct SPI_NOR *nor, uint32_t addr)
+{
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(SPINOR_OP_CHIP_ERASE, 1),
+                                                     HAL_SPI_MEM_OP_NO_ADDR,
                                                      HAL_SPI_MEM_OP_NO_DUMMY,
                                                      HAL_SPI_MEM_OP_NO_DATA);
 
@@ -643,8 +660,10 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE era
     SNOR_WriteEnable(nor);
     if (eraseType == ERASE_SECTOR)
         ret = SNOR_EraseSec(nor, addr);
-    else
+    else if (eraseType == ERASE_BLOCK64K)
         ret = SNOR_EraseBlk(nor, addr);
+    else
+        ret = SNOR_EraseChip(nor, addr);
     if (ret != HAL_OK)
         return ret;
 
