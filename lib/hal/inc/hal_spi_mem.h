@@ -83,12 +83,14 @@
 
 #define HAL_SPI_MEM_OP_DUMMY(__nbytes, __buswidth) \
     {                                              \
+        .a2dIdle = 0,                              \
         .nbytes = __nbytes,                        \
         .buswidth = __buswidth,                    \
     }
 
 #define HAL_SPI_MEM_OP_NO_DUMMY \
     {                           \
+        .a2dIdle = 0,           \
         .nbytes = 0,            \
         .buswidth = 0,          \
     }
@@ -140,6 +142,7 @@ struct HAL_SPI_MEM_OP {
     } addr;
 
     struct {
+        uint8_t a2dIdle;
         uint8_t nbytes;
         uint8_t buswidth;
     } dummy;

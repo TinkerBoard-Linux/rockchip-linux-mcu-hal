@@ -334,6 +334,10 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
     }
     /* HAL_SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
 
+    /* special setting */
+    if (nor->info->id == 0x1c7017)
+        op.dummy.a2dIdle = 1;
+
     return SNOR_XipExecOp(nor->spi, &op, 0);
 }
 

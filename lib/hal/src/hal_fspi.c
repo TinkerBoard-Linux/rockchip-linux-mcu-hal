@@ -586,6 +586,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
 
     /* set DUMMY*/
+    FSPICtrl.b.scic = op->dummy.a2dIdle;
     FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
     if (FSPICmd.b.readmode)
         FSPICmd.b.dummybits -= 2; /* M7-0 ocuppy Dummy 2 cycles  */
