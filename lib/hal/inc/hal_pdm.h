@@ -31,12 +31,6 @@
 #define PDM_CLK_RATE      (100000000)
 /***************************** Structure Definition **************************/
 
-typedef enum {
-    PDM_NORMAL_MODE = 0, /**< normal mode: 2.048/2.8224M/3.072M clk */
-    PDM_LOW_MODE, /**< lower power mode: 1.024M/1.4112M/1.536M clk */
-    PDM_HIGH_MODE, /**< high mode: 4.096M/5.6448M/6.144M clk */
-} ePDM_MODE;
-
 /** pdm dev struct */
 struct HAL_PDM_DEV {
     struct PDM_REG *pReg;
@@ -46,7 +40,7 @@ struct HAL_PDM_DEV {
     uint32_t hclk;
     uint32_t reset;
     ePD_Id pd;
-    ePDM_MODE mode;
+    ePDM_mode mode;
     struct AUDIO_DMA_DATA rxDmaData;
 };
 

@@ -309,6 +309,8 @@ HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *confi
     val = config->clkInvert ? PDM_CKP_INVERTED : PDM_CKP_NORMAL;
     MODIFY_REG(reg->CLK_CTRL, PDM_CKP_MASK, val);
 
+    pdm->mode = config->pdmMode;
+
     return HAL_OK;
 }
 

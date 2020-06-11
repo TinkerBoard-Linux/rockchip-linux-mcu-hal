@@ -98,6 +98,15 @@ typedef enum {
 } eTRCM_modeType;
 
 /**
+ * enum ePDM_mode - PDM modes
+ */
+typedef enum {
+    PDM_NORMAL_MODE = 0, /**< normal mode: 2.048/2.8224M/3.072M clk */
+    PDM_LOW_MODE, /**< lower power mode: 1.024M/1.4112M/1.536M clk */
+    PDM_HIGH_MODE, /**< high mode: 4.096M/5.6448M/6.144M clk */
+} ePDM_mode;
+
+/**
  * struct AUDIO_INIT_CONFIG - init config for dai/codec init.
  */
 struct AUDIO_INIT_CONFIG {
@@ -105,6 +114,7 @@ struct AUDIO_INIT_CONFIG {
     uint32_t clkInvert : 1;
     eAUDIO_fmtType format;
     eTRCM_modeType trcmMode;
+    ePDM_mode pdmMode;
     uint16_t txMap; /**< route mapping of PATHx to SDOx, 4 bits per path.
                       *  |15:12|11:8|7:4|3:0|-->|p3|p2|p1|p0|
                       *  each path can choose one sdo as its sink.
