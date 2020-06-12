@@ -270,10 +270,16 @@ HAL_Status HAL_SPI_FlushFifo(struct SPI_HANDLE *pSPI)
 uint32_t HAL_SPI_CalculateTimeout(struct SPI_HANDLE *pSPI)
 {
     uint32_t timeout;
+    uint32_t div, speed;
 
     HAL_ASSERT(pSPI != NULL);
 
-    timeout = pSPI->len * 8 * 1000 / pSPI->config.speed;
+    div = HAL_DIV_ROUND_UP(pSPI->maxFreq, pSPI->config.speed);
+    div = (div + 1) & 0xfffe;
+
+    speed = pSPI->maxFreq / div;
+
+    timeout = pSPI->len * 8 * 1000 / speed;
     timeout += timeout + 100; /* some tolerance */
 
     return timeout;

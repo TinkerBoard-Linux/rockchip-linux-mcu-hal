@@ -25,8 +25,8 @@
  *  @{
  */
 
-#define HAL_SPI_MASTER_MAX_SCLK_OUT 100000000
-#define HAL_SPI_SLAVE_MAX_SCLK_OUT  20000000
+#define HAL_SPI_MASTER_MAX_SCLK_OUT 50000000 /* Max io clock in master mode */
+#define HAL_SPI_SLAVE_MAX_SCLK_OUT  20000000 /* Max io in clock in slave mode */
 
 #define CR0_DATA_FRAME_SIZE_4BIT  (0x00 << SPI_CTRLR0_DFS_SHIFT)
 #define CR0_DATA_FRAME_SIZE_8BIT  (0x01 << SPI_CTRLR0_DFS_SHIFT)
