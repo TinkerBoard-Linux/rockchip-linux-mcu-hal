@@ -559,6 +559,8 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case ACLK_DSP:
     case HCLK_AUDIO:
     case MCLK_PDM0:
+    case SCLK_SFC_SRC:
+    case SCLK_SFC1_SRC:
         if (HAL_CRU_ClkGetMux(clkMux))
             pRate = s_cpllFreq;
         else
@@ -657,6 +659,16 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         error = HAL_CRU_ClkFracSetFreq(clockName, rate);
         pRate = s_cpllFreq;
         mux = 1;
+        break;
+    case SCLK_SFC_SRC:
+    case SCLK_SFC1_SRC:
+        if (s_cpllFreq == PLL_INPUT_OSC_RATE) {
+            pRate = s_gpllFreq;
+            mux = 0;
+        } else {
+            pRate = s_cpllFreq;
+            mux = 1;
+        }
         break;
     case CLK_PWM:
         if (rate <= PLL_INPUT_OSC_RATE) {
