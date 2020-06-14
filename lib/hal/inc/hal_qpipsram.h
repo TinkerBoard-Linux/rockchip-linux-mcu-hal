@@ -40,12 +40,17 @@ enum QPIPSRAM_PROTOCOL {
     QPIPSRAM_PROTO_8_8_8 = QPIPSRAM_PROTO_STR(8, 8, 8),
 };
 
+#define QPIPSRAM_SPEED_MAX     133000000
+#define QPIPSRAM_SPEED_DEFAULT 80000000
+
 /***************************** Structure Definition **************************/
 
 struct QPIPSRAM_HOST {
     uint32_t speed;
     uint32_t mode;
     uint8_t flags;
+    uint32_t xipMem; /** XIP data mapped memory */
+    uint32_t xipMemCode; /** XIP code mapped memory */
     HAL_Status (*xfer)(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op);
     HAL_Status (*xipConfig)(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on);
 
