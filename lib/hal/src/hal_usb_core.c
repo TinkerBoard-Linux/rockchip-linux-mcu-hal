@@ -208,14 +208,28 @@ HAL_Status USB_DisableGlobalInt(struct USB_GLOBAL_REG *pUSB)
  */
 HAL_Status USB_SetCurrentMode(struct USB_GLOBAL_REG *pUSB, eUSB_OTG_mode mode)
 {
+    uint32_t start, timeoutMs = 110;
+
     pUSB->GUSBCFG &= ~(USB_OTG_GUSBCFG_FHMOD | USB_OTG_GUSBCFG_FDMOD);
 
     if (mode == USB_OTG_HOST_MODE)
         pUSB->GUSBCFG |= USB_OTG_GUSBCFG_FHMOD;
     else if (mode == USB_OTG_DEVICE_MODE)
         pUSB->GUSBCFG |= USB_OTG_GUSBCFG_FDMOD;
+    else
+        goto out;
 
-    HAL_DelayMs(50);
+    /* Wait for the controller mode */
+    start = HAL_GetTick();
+    while (USB_GetMode(pUSB) != mode) {
+        if ((HAL_GetTick() - start) > timeoutMs) {
+            HAL_DBG_ERR("%s: force mode timeout\n", __func__);
+
+            return HAL_TIMEOUT;
+        }
+    }
+
+out:
 
     return HAL_OK;
 }
@@ -843,7 +857,6 @@ HAL_Status USB_SetDevAddress(struct USB_GLOBAL_REG *pUSB, uint8_t address)
 HAL_Status USB_DevConnect(struct USB_GLOBAL_REG *pUSB)
 {
     USB_DEVICE->DCTL &= ~USB_OTG_DCTL_SDIS;
-    HAL_DelayMs(3);
 
     return HAL_OK;
 }
@@ -958,8 +971,8 @@ void USB_ClearInterrupts(struct USB_GLOBAL_REG *pUSB, uint32_t interrupt)
  * @param  pUSB  Selected device
  * @return return core mode : Host or Device
  *          This parameter can be one of these values:
- *           0 : Host
- *           1 : Device
+ *           0 : Device
+ *           1 : Host
  */
 uint32_t USB_GetMode(struct USB_GLOBAL_REG *pUSB)
 {
