@@ -160,7 +160,7 @@ static void PM_PutChar(char c)
         pUart->THR = c;
         if (c == '\n')
             pUart->THR = '\r';
-        while (pUart->USR & UART_USR_BUSY)
+        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY))
             ;
     }
 }
