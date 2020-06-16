@@ -576,7 +576,7 @@ static int PMU_SleepConfig(void)
 
     /* set autowakeup time */
     if (cfg & SLP_TIME_OUT_WKUP)
-        pmuWkupCfg = PMU_WAKEUP_CFG_TIMEOUT_EN_MASK;
+        pmuWkupCfg |= PMU_WAKEUP_CFG_TIMEOUT_EN_MASK;
 
     if (pmuWkupCfg & PMU_WAKEUP_CFG_TIMEOUT_EN_MASK)
         pPmu->TIMEOUT_CNT = clkFreqKhz * 2000;
