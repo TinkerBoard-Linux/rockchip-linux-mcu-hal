@@ -130,7 +130,7 @@ struct RK_SLEEP_DATA {
 
 /********************* Private Variable Definition ***************************/
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
-static struct RKPM_MODE_CTRL pmModeCtrl;
+static struct SLEEP_CONFIG_DATA *sleepConfig;
 static struct RK_SLEEP_DATA sleepData;
 static struct UART_SAVE debugPortSave;
 static struct SCB_SAVE scbData;
@@ -275,30 +275,32 @@ static void PM_UartRestore(void)
 
 static int PM_ModeInit(void)
 {
-    pmModeCtrl.suspendMode =
-        SLP_PMU_HW_ARM_PD |
-        SLP_PMU_DIS_OSC |
-        SLP_PMU_PMUALIVE_32K |
-        /* SLP_TIME_OUT_WKUP | */
-        SLP_PMU_DBG
-        /* | SLP_PMU_TST_CLK */
-    ;
+    if (!sleepConfig->suspendMode)
+        sleepConfig->suspendMode =
+            SLP_PMU_HW_ARM_PD |
+            SLP_PMU_DIS_OSC |
+            SLP_PMU_PMUALIVE_32K |
+            /* SLP_TIME_OUT_WKUP | */
+            SLP_PMU_DBG
+            /* | SLP_PMU_TST_CLK */
+        ;
 
-    pmModeCtrl.suspendWkupCfg =
-        PMU_WAKEUP_CFG_M4_INT_EN_MASK |
-        PMU_WAKEUP_CFG_M0_INT_EN_MASK
-        /* | PMU_WAKEUP_CFG_TIMEOUT_EN_MASK */
-    ;
+    if (!sleepConfig->suspendWkupSrc)
+        sleepConfig->suspendWkupSrc =
+            PMU_WAKEUP_CFG_M4_INT_EN_MASK |
+            PMU_WAKEUP_CFG_M0_INT_EN_MASK
+            /* | PMU_WAKEUP_CFG_TIMEOUT_EN_MASK */
+        ;
 
     return 0;
 }
 
-static void PMU_SleepEnterInfo(uint32_t cfg)
+static void PMU_SleepEnterInfo(uint32_t mode)
 {
     static uint32_t sleepCnt;
 
     PM_PutChar('(');
-    PM_PrintHex(cfg);
+    PM_PrintHex(mode);
     PM_PutChar(' ');
     PM_PrintDec(++sleepCnt);
     PM_PutChar(')');
@@ -340,7 +342,7 @@ void SOC_ClkGateSuspend(void)
         sleepData.cruClkgtSave[i] =
             pCru->CRU_CLKGATE_CON[i];
 
-        if (pmModeCtrl.suspendMode & SLP_PMU_DIS_OSC)
+        if (sleepConfig->suspendMode & SLP_PMU_DIS_OSC)
             pCru->CRU_CLKGATE_CON[i] = 0xffff0000;
         else
             pCru->CRU_CLKGATE_CON[i] = 0xffff0000 | ~clkUngtMsk[i];
@@ -366,7 +368,7 @@ static void PMU_Clk32kConfig(void)
     pCru->CRU_CLKSEL_CON[0] =
         VAL_MASK_WE(0x3 << 5, 2 << 5);
 
-    if (pmModeCtrl.suspendMode & SLP_PMU_TST_CLK) {
+    if (sleepConfig->suspendMode & SLP_PMU_TST_CLK) {
         pCru->CRU_CLKSEL_CON[35] = 0x01ff0010;
         pGrf->GPIO0A_IOMUX_H = 0xf0006000;
     }
@@ -514,8 +516,8 @@ static int PMU_SleepConfig(void)
 {
     uint32_t pwrmodeCon;
     uint32_t clkFreqKhz;
-    uint32_t cfg = pmModeCtrl.suspendMode;
-    uint32_t pmuWkupCfg = pmModeCtrl.suspendWkupCfg;
+    uint32_t mode = sleepConfig->suspendMode;
+    uint32_t pmuWkupCfg = sleepConfig->suspendWkupSrc;
 
     pGrf->GRF_FAST_BOOT_ADDR = (uint32_t)HAL_CPU_DoResume;
     pGrf->GRF_FAST_BOOT = 1;
@@ -545,18 +547,18 @@ static int PMU_SleepConfig(void)
         /* | PMU_PWRMODE_CON_SRAM_RET_EN_MASK */
     ;
 
-    if (cfg & SLP_PMU_HW_ARM_PD)
+    if (mode & SLP_PMU_HW_ARM_PD)
         pwrmodeCon |=
             PMU_PWRMODE_CON_MCU_PD_EN_MASK;
 
     /* pmu debug pin iomux */
-    if (cfg & SLP_PMU_DBG) {
+    if (mode & SLP_PMU_DBG) {
         sleepData.gpio0aIomuxL = pGrf->GPIO0A_IOMUX_L;
         pGrf->GPIO0A_IOMUX_L = VAL_MASK_WE(0xf << 12, 5 << 12);
         pPmu->INFO_TX_CON = 0xffff4001;
     }
 
-    if (cfg & SLP_PMU_DIS_OSC) {
+    if (mode & SLP_PMU_DIS_OSC) {
         pwrmodeCon |= PMU_PWRMODE_CON_OSC_40M_GATE_EN_MASK |
                       PMU_PWRMODE_CON_OSC_DIS_MASK |
                       PMU_PWRMODE_CON_RF_VDD18_DIS_MASK;
@@ -567,7 +569,7 @@ static int PMU_SleepConfig(void)
                          HAL_BIT(14);
     }
 
-    if (cfg & SLP_PMU_PMUALIVE_32K) {
+    if (mode & SLP_PMU_PMUALIVE_32K) {
         pwrmodeCon |= PMU_PWRMODE_CON_PMU_USE_LF_MASK;
         clkFreqKhz = 32;
     } else {
@@ -575,7 +577,7 @@ static int PMU_SleepConfig(void)
     }
 
     /* set autowakeup time */
-    if (cfg & SLP_TIME_OUT_WKUP)
+    if (mode & SLP_TIME_OUT_WKUP)
         pmuWkupCfg |= PMU_WAKEUP_CFG_TIMEOUT_EN_MASK;
 
     if (pmuWkupCfg & PMU_WAKEUP_CFG_TIMEOUT_EN_MASK)
@@ -599,9 +601,9 @@ static int PMU_SleepConfig(void)
 
 static int PMU_SleepRestore(void)
 {
-    uint32_t cfg = pmModeCtrl.suspendMode;
+    uint32_t mode = sleepConfig->suspendMode;
 
-    if (cfg & SLP_PMU_DBG) {
+    if (mode & SLP_PMU_DBG) {
         pGrf->GPIO0A_IOMUX_L = VAL_MASK_WE(0xf << 12, sleepData.gpio0aIomuxL);
     }
 
@@ -756,11 +758,13 @@ static int SOC_SuspendEnter(uint32_t flag)
 int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 {
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
-    uint32_t mode = pmModeCtrl.suspendMode;
+    uint32_t mode;
+
+    sleepConfig = HAL_SYS_GetSuspendConfig();
 
     PM_ModeInit();
 
-    mode = pmModeCtrl.suspendMode;
+    mode = sleepConfig->suspendMode;
 
     PM_UartSave();
     PM_UartInit();
