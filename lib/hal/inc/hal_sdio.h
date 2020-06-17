@@ -160,6 +160,8 @@ struct HAL_MMC_HOST {
     uint32_t powerPin;
     uint32_t resetPin;
     uint32_t frequency;
+    uint32_t cachedDiv;
+    uint32_t cachedBw;
     MMC_DMA_DESCRIPTORS *descriptors;
     void (*MMC_Reset)(struct HAL_MMC_HOST *host);
 };
