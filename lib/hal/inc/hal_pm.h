@@ -34,6 +34,10 @@
 #define PM_HS_INTF_REQUESTED(pdata) ((pdata)->bits[PM_RUNTIME_TYPE_HS_INTF])
 #define PM_SPI_REQUESTED(pdata)     ((pdata)->bits[PM_RUNTIME_TYPE_SPI])
 
+/* suspend config id */
+#define PM_SLEEP_MODE_CONFIG   0x01
+#define PM_SLEEP_WAKEUP_SOURCE 0x02
+
 enum {
     PM_RUNTIME_TYPE_INTF = 0, /* normal interface */
     PM_RUNTIME_TYPE_DISPLAY,
@@ -102,6 +106,11 @@ struct PM_SUSPEND_INFO {
         uint32_t suspendFlag;
     };
 };
+
+struct SLEEP_CONFIG_DATA {
+    uint32_t suspendMode;
+    uint32_t suspendWkupSrc;
+};
 #endif
 /***************************** Function Declare ******************************/
 /** @defgroup PM_Public_Function_Declare Public Function Declare
@@ -114,6 +123,8 @@ struct PM_SUSPEND_INFO {
  * @return HAL_Status
  */
 int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo);
+struct SLEEP_CONFIG_DATA *HAL_SYS_GetSuspendConfig(void);
+HAL_Status HAL_SYS_SuspendConfig(uint32_t id, uint32_t data);
 #endif
 
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED

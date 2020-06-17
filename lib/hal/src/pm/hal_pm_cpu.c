@@ -92,6 +92,53 @@ const struct PM_RUNTIME_INFO *HAL_PM_RuntimeGetData(void)
 
 #endif
 
+#ifdef HAL_PM_SLEEP_MODULE_ENABLED
+
+/********************* Private Variable Definition ***************************/
+static struct SLEEP_CONFIG_DATA sleepConfigData;
+
+/********************* Public Function Definition ***************************/
+/** @defgroup PM_CPU_SLEEP_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
+/**
+ * @brief  get sleepConfigData.
+ * @return addr of sleepConfigData.
+ */
+struct SLEEP_CONFIG_DATA *HAL_SYS_GetSuspendConfig(void)
+{
+    return &sleepConfigData;
+}
+
+/**
+ * @brief  config parameters to control suspend flow.
+ * @param  id: select parameters to be config.
+ * @param  data: data assigned to parameters.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SYS_SuspendConfig(uint32_t id, uint32_t data)
+{
+    switch (id) {
+    case PM_SLEEP_MODE_CONFIG:
+        sleepConfigData.suspendMode = data;
+        break;
+
+    case PM_SLEEP_WAKEUP_SOURCE:
+        sleepConfigData.suspendWkupSrc = data;
+        break;
+
+    default:
+        break;
+    }
+
+    return HAL_OK;
+}
+
+/** @} */
+
+#endif /* HAL_PM_SLEEP_MODULE_ENABLED */
+
 #if defined(HAL_PM_CPU_SLEEP_MODULE_ENABLED)
 #if defined(__CM3_REV) || defined(__CM4_REV)
 
