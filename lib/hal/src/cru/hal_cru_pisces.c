@@ -168,7 +168,6 @@ HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
 {
     HAL_Status ret = HAL_OK;
 
-    ret = HAL_CRU_SetPllPowerUp(&CPLL);
     HAL_CRU_ClkEnable(gateId);
 
     return ret;
@@ -185,7 +184,6 @@ HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId)
     HAL_Status ret = HAL_OK;
 
     HAL_CRU_ClkDisable(gateId);
-    ret = HAL_CRU_SetPllPowerDown(&CPLL);
 
     return ret;
 }
