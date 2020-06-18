@@ -140,6 +140,11 @@
 #include "hal_sfc.h"
 #endif
 
+#ifdef HAL_SPINAND_MODULE_ENABLED
+#include "hal_spi_mem.h"
+#include "hal_spinand.h"
+#endif
+
 #ifdef HAL_SYSTICK_MODULE_ENABLED
 #include "hal_systick.h"
 #endif
