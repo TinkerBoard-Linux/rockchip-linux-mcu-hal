@@ -251,6 +251,4 @@ HAL_Status HAL_VOP_SetSplit(struct VOP_REG *pReg, eVOP_McuSplit mode);
 
 /** @} */
 
-/** @} */
-
 #endif /* HAL_VOP_MODULE_ENABLED */
