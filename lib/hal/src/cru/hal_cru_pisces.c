@@ -159,10 +159,6 @@ void HAL_CRU_AsInit(void)
 #endif
 
 /**
- * @brief vop dclk enable.
- * @param  gateId: gate id
- * @return HAL_Status.
- * @attention these APIs allow direct use in the HAL layer.
  */
 HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
 {
@@ -173,12 +169,6 @@ HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
     return ret;
 }
 
-/**
- * @brief vop dclk disable.
- * @param  gateId: gate id
- * @return HAL_Status.
- * @attention these APIs allow direct use in the HAL layer.
- */
 HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId)
 {
     HAL_Status ret = HAL_OK;

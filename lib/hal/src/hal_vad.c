@@ -312,8 +312,8 @@ HAL_Status HAL_VAD_Config(struct HAL_VAD_DEV *vad, struct AUDIO_PARAMS *params)
 /**
  * @brief  Set the audio stream source for VAD.
  * @param  vad: The handle of struct vad.
- @ @param  source: The audio controllers' base addr.
-           depends on bit SOURCE_FIXADDR_EN in register 'VAD_CONTROL'.
+ * @param  source: The audio controllers' base addr.
+ *         depends on bit SOURCE_FIXADDR_EN in register 'VAD_CONTROL'.
  * @return HAL_Status
  */
 HAL_Status HAL_VAD_SetAudioSource(struct HAL_VAD_DEV *vad, uint32_t source)

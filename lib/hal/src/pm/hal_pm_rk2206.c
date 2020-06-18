@@ -753,11 +753,6 @@ static int SOC_SuspendEnter(uint32_t flag)
 
 /********************* Public Function Definition ****************************/
 
-/**
- * @brief  it is the enterpoint for suspend invoked by a os's powermanager implement.
- * @param  suspendInfo: info for controlling
- * @return HAL_Status
- */
 int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 {
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED

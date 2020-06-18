@@ -959,7 +959,6 @@ uint32_t USB_ReadDevInEPInterrupt(struct USB_GLOBAL_REG *pUSB, uint8_t epNum)
  * @brief  USB_ClearInterrupts: clear a USB interrupt
  * @param  pUSB  Selected device
  * @param  interrupt  interrupt flag
- * @return None
  */
 void USB_ClearInterrupts(struct USB_GLOBAL_REG *pUSB, uint32_t interrupt)
 {

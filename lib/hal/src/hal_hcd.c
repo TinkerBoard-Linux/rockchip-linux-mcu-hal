@@ -275,7 +275,6 @@ HAL_Status HAL_HCD_HCSubmitRequest(struct HCD_HANDLE *pHCD,
 /**
  * @brief  Handle HCD interrupt request.
  * @param  pHCD HCD handle
- * @return None
  */
 void HAL_HCD_IRQHandler(struct HCD_HANDLE *pHCD)
 {
@@ -354,7 +353,6 @@ void HAL_HCD_IRQHandler(struct HCD_HANDLE *pHCD)
 /**
  * @brief  SOF callback.
  * @param  pHCD HCD handle
- * @return None
  */
 __WEAK void HAL_HCD_SOF_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -367,7 +365,6 @@ __WEAK void HAL_HCD_SOF_Callback(struct HCD_HANDLE *pHCD)
 /**
  * @brief Connection Event callback.
  * @param  pHCD HCD handle
- * @return None
  */
 __WEAK void HAL_HCD_Connect_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -380,7 +377,6 @@ __WEAK void HAL_HCD_Connect_Callback(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Disconnection Event callback.
  * @param  pHCD HCD handle
- * @return None
  */
 __WEAK void HAL_HCD_Disconnect_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -393,7 +389,6 @@ __WEAK void HAL_HCD_Disconnect_Callback(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Port Enabled  Event callback.
  * @param  pHCD: HCD handle
- * @return None
  */
 __WEAK void HAL_HCD_PortEnabled_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -406,7 +401,6 @@ __WEAK void HAL_HCD_PortEnabled_Callback(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Port Disabled  Event callback.
  * @param  pHCD: HCD handle
- * @return None
  */
 __WEAK void HAL_HCD_PortDisabled_Callback(struct HCD_HANDLE *pHCD)
 {
@@ -429,7 +423,6 @@ __WEAK void HAL_HCD_PortDisabled_Callback(struct HCD_HANDLE *pHCD)
  *            URB_NYET/
  *            URB_ERROR/
  *            URB_STALL/
- * @return None
  */
 __WEAK void HAL_HCD_HCNotifyURBChange_Callback(struct HCD_HANDLE *pHCD, uint8_t chNum, eUSB_OTG_urbState urbState)
 {
@@ -886,7 +879,6 @@ static void HCD_RXQLVL_IRQHandler(struct HCD_HANDLE *pHCD)
 /**
  * @brief  Handle Host Port interrupt requests.
  * @param  pHCD HCD handle
- * @return None
  */
 static void HCD_Port_IRQHandler(struct HCD_HANDLE *pHCD)
 {

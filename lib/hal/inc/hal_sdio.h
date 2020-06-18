@@ -21,7 +21,7 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
-/** @defgroup DEMO_Exported_Definition_Group1 Basic Definition
+/** @defgroup SDIO_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 

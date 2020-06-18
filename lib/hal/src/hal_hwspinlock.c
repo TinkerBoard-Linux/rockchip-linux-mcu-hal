@@ -68,7 +68,6 @@ HAL_Check HAL_HWSpinlock_TryLock(uint32_t LockID)
 /**
  * @brief  HWSpinlock Unlock API
  * @param  LockID: The Lock ID which try to unlock.
- * @return None.
  */
 void HAL_HWSpinlock_Unlock(uint32_t LockID)
 {

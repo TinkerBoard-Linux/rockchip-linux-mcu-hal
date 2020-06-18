@@ -1153,4 +1153,4 @@ exit:
 
 /** @} */
 
-#endif /* RKMCU_RK2206 && HAL_DEMO_MODULE_ENABLED */
+#endif /* RKMCU_RK2206 && HAL_CRYPTO_MODULE_ENABLED */

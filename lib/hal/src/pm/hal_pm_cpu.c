@@ -127,7 +127,6 @@ static SCB_Type scbSave;
 
 /**
  * @brief  save nvic registers for resume nvic.
- * @return null
  */
 void HAL_NVIC_SuspendSave(void)
 {
@@ -144,7 +143,6 @@ void HAL_NVIC_SuspendSave(void)
 
 /**
  * @brief  resume nvic registers.
- * @return null
  */
 void HAL_NVIC_ResumeRestore(void)
 {
@@ -163,7 +161,6 @@ void HAL_NVIC_ResumeRestore(void)
 
 /**
  * @brief  save scb registers for resume nvic.
- * @return null
  */
 void HAL_SCB_SuspendSave(void)
 {
@@ -185,7 +182,6 @@ void HAL_SCB_SuspendSave(void)
 
 /**
  * @brief  resume nvic registers.
- * @return null
  */
 void HAL_SCB_ResumeRestore(void)
 {
@@ -211,7 +207,6 @@ void HAL_SCB_ResumeRestore(void)
  * @param  ptrsz: size of the mem for saving
  * @param  sp: the system stack needed be saved
  * @param  ptrSave: save the param ptr.
- * @return null
  */
 void HAL_CPU_SuspendSave(uint32_t *ptr, uint32_t ptrsz, uint32_t sp, uint32_t *ptrSave)
 {

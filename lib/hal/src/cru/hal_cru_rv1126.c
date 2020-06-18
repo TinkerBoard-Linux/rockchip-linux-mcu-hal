@@ -96,6 +96,10 @@ static struct PLL_SETUP GPLL = {
 /** @} */
 /********************* Public Function Definition ****************************/
 
+/** @defgroup CRU_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
 /**
  * @brief Get frac clk freq.
  * @param  clockName: CLOCK_Name id

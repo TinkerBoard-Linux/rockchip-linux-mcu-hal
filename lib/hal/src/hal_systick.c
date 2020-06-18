@@ -147,7 +147,6 @@ HAL_Check HAL_SYSTICK_IsExtRefClockEnabled(void)
 
 /**
  * @brief  Core internal SysTick IRQ handler
- * @return None
  * Count plus 1.
  */
 __WEAK void HAL_SYSTICK_IRQHandler(void)

@@ -19,7 +19,7 @@
 #define _HAL_VOP_H_
 
 /***************************** MACRO Definition ******************************/
-/** @defgroup DEMO_Exported_Definition_Group1 Basic Definition
+/** @defgroup VOP_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 

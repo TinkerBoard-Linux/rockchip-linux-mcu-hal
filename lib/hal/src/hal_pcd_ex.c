@@ -162,7 +162,6 @@ HAL_Status HAL_PCDEx_DeActivateLPM(struct PCD_HANDLE *pPCD)
  * @brief  Send LPM message to user layer callback.
  * @param  pPCD PCD handle
  * @param  msg LPM message
- * @return None
  */
 __WEAK void HAL_PCDEx_LpmCallback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg)
 {
@@ -176,7 +175,6 @@ __WEAK void HAL_PCDEx_LpmCallback(struct PCD_HANDLE *pPCD, ePCD_lpmMsg msg)
  * @brief  Send BatteryCharging message to user layer callback.
  * @param  pPCD PCD handle
  * @param  msg bcd message
- * @return None
  */
 __WEAK void HAL_PCDEx_BcdCallback(struct PCD_HANDLE *pPCD, ePCD_bcdMsg msg)
 {

@@ -17,7 +17,7 @@
 #define _HAL_DISPLAY_H_
 
 /***************************** MACRO Definition ******************************/
-/** @defgroup DEMO_Exported_Definition_Group1 Basic Definition
+/** @defgroup DISPLAY_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 

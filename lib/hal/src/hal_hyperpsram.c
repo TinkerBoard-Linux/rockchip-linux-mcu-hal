@@ -312,7 +312,7 @@ static HAL_Status HYPERPSRAM_IdCheck(uint16_t id)
 /** @} */
 /********************* Public Function Definition ****************************/
 
-/** @defgroup DEMO_Exported_Functions_Group4 Init and DeInit Functions
+/** @defgroup HYPERPSRAM_Exported_Functions_Group4 Init and DeInit Functions
 
  This section provides functions allowing to init and deinit the module:
 

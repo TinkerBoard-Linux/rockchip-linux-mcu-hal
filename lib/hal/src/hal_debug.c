@@ -66,7 +66,6 @@
   *         where the HAL_ASSERT error has occurred.
   * @param  file: pointer to the source file name
   * @param  line: HAL_ASSERT error line source number
-  * @retval None
   */
 __WEAK void HAL_AssertFailed(const char *file, uint32_t line)
 {

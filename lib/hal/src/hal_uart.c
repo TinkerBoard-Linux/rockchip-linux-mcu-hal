@@ -208,7 +208,6 @@ uint32_t HAL_UART_GetMsr(struct UART_REG *pReg)
   * @brief  send one character
   * @param  pReg: uart reg base
   * @param  c: the character to be sent
-  * @return none
   */
 void HAL_UART_SerialOutChar(struct UART_REG *pReg, char c)
 {
@@ -356,7 +355,6 @@ HAL_Status HAL_UART_DeInit(struct UART_REG *pReg)
   * @brief  enable uart sub interrupt
   * @param  pReg: uart reg base
   * @param  uartIntNumb: uart irq num, such as UART_IER_RDI
-  * @return none
   */
 void HAL_UART_EnableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
 {
@@ -368,7 +366,6 @@ void HAL_UART_EnableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
   * @brief  disable uart sub interrupt
   * @param  pReg: uart reg base
   * @param  uartIntNumb: uart irq num, such as UART_IER_RDI
-  * @return none
   */
 void HAL_UART_DisableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
 {
@@ -379,7 +376,6 @@ void HAL_UART_DisableIrq(struct UART_REG *pReg, uint32_t uartIntNumb)
 /**
   * @brief  enable uart loop back mode
   * @param  pReg: uart reg base
-  * @return none
   */
 void HAL_UART_EnableLoopback(struct UART_REG *pReg)
 {
@@ -390,7 +386,6 @@ void HAL_UART_EnableLoopback(struct UART_REG *pReg)
 /**
   * @brief  disable uart loop back mode
   * @param  pReg: uart reg base
-  * @return none
   */
 void HAL_UART_DisableLoopback(struct UART_REG *pReg)
 {
@@ -401,7 +396,6 @@ void HAL_UART_DisableLoopback(struct UART_REG *pReg)
 /**
   * @brief  enable uart hardware auto flow control
   * @param  pReg: uart reg base
-  * @return none
   */
 void HAL_UART_EnableAutoFlowControl(struct UART_REG *pReg)
 {
@@ -412,7 +406,6 @@ void HAL_UART_EnableAutoFlowControl(struct UART_REG *pReg)
 /**
   * @brief  disable uart hardware auto flow control
   * @param  pReg: uart reg base
-  * @return none
   */
 void HAL_UART_DisableAutoFlowControl(struct UART_REG *pReg)
 {

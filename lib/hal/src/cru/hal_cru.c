@@ -929,6 +929,7 @@ HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t 
  * @brief vop dclk enable.
  * @param  gateId: gate id
  * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
  */
 __WEAK HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
 {
@@ -941,6 +942,7 @@ __WEAK HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
  * @brief vop dclk disable.
  * @param  gateId: gate id
  * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
  */
 __WEAK HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId)
 {
