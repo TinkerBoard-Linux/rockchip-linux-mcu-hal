@@ -48,7 +48,7 @@
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
-//#define FSPI_DEBUG
+// #define FSPI_DEBUG
 #ifdef FSPI_DEBUG
 #define FSPI_DBG(...) HAL_DBG(__VA_ARGS__)
 #else
@@ -243,9 +243,18 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
 
     /* set ADDR */
     if (op->addr.nbytes) {
-        FSPICmd.b.addrbits = op->addr.nbytes == 4 ? FSPI_ADDR_32BITS : FSPI_ADDR_24BITS;
+        if (op->addr.nbytes == 4) {
+            FSPICmd.b.addrbits = FSPI_ADDR_32BITS;
+        } else if (op->addr.nbytes == 3) {
+            FSPICmd.b.addrbits = FSPI_ADDR_24BITS;
+        } else {
+            FSPICmd.b.addrbits = FSPI_ADDR_XBITS;
+            pReg->ABIT0 = op->addr.nbytes * 8 - 1;
+        }
+
         FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
     }
+
     /* set DUMMY*/
     if (op->dummy.nbytes)
         FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
@@ -266,12 +275,14 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
     /* spitial setting */
     FSPICtrl.b.sps = host->mode & HAL_SPI_CPHA;
     FSPICmd.b.cs = host->cs;
+    if (op->data.nbytes == 0 && op->addr.nbytes)
+        FSPICmd.b.rw = FSPI_WRITE;
 
     if (!(pReg->FSR & FSPI_FSR_TXES_EMPTY) || !(pReg->FSR & FSPI_FSR_RXES_EMPTY) || (pReg->SR & FSPI_SR_SR_BUSY))
         FSPI_Reset(host);
 
-    /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
-    /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
+    // FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes);
+    // FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val);
 
     /* config FSPI */
     pReg->CTRL0 = FSPICtrl.d32;
