@@ -159,6 +159,14 @@ struct HAL_SPI_MEM_OP {
     } data;
 };
 
+#define HAL_SPI_MEM_OP(__cmd, __addr, __dummy, __data) \
+    {                                                  \
+        .cmd = __cmd,                                  \
+        .addr = __addr,                                \
+        .dummy = __dummy,                              \
+        .data = __data,                                \
+    }
+
 /** @} */
 
 #endif
