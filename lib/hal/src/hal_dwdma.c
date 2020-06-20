@@ -336,6 +336,10 @@ HAL_Status HAL_DWDMA_Init(struct HAL_DWDMA_DEV *dw)
 
     HAL_ASSERT(dw);
 
+#ifdef HAL_DWDMA_BLOCK_ALIGN_SZ
+    HAL_ASSERT(HAL_DWDMA_BLOCK_ALIGN_SZ);
+    dw->blockSize &= ~(HAL_DWDMA_BLOCK_ALIGN_SZ - 1);
+#endif
     /* Calculate all channel mask before DMA setup */
     dw->allChanMask = (1 << DMA_NUM_CHANNELS) - 1;
     /* Force dma off, just in case */
@@ -714,6 +718,9 @@ HAL_Status HAL_DWDMA_PrepDmaCyclic(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
     periods = len / periodLen;
 
     /* Check for too big/unaligned periods and unaligned DMA buffer. */
+#ifdef HAL_DWDMA_BLOCK_ALIGN_SZ
+    HAL_ASSERT(HAL_IS_ALIGNED(periodLen, HAL_DWDMA_BLOCK_ALIGN_SZ));
+#endif
     HAL_ASSERT(periodLen <= (dw->blockSize << regWidth));
     HAL_ASSERT(!(periodLen & ((1 << regWidth) - 1)));
     HAL_ASSERT(!(dmaAddr & ((1 << regWidth) - 1)));
