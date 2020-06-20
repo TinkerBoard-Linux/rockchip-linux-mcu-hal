@@ -860,7 +860,6 @@ HAL_Status HAL_DWDMA_PrepDmaSingle(struct DWDMA_CHAN *dwc, uint32_t dmaAddr,
 
     last->lli.ctllo |= DWC_CTLL_INT_EN;
     last->lli.llp = 0;
-    dwc->desc[0].totalLen = len;
 
     dwc->callback = callback;
     dwc->cparam = cparam;
@@ -938,7 +937,6 @@ HAL_Status HAL_DWDMA_PrepDmaMemcpy(struct DWDMA_CHAN *dwc, uint32_t dst,
 
     last->lli.ctllo |= DWC_CTLL_INT_EN;
     last->lli.llp = 0;
-    dwc->desc[0].totalLen = len;
 
     dwc->callback = callback;
     dwc->cparam = cparam;

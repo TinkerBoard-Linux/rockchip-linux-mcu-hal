@@ -134,7 +134,6 @@ struct DW_DESC {
     struct DW_LLI lli;
 
     uint32_t len;
-    uint32_t totalLen;
 };
 
 /**
