@@ -50,6 +50,10 @@
 #define PLL_LOCKED_TIMEOUT    600000U
 #define MAX_PMU_ST_WAIT_COUNT 500
 #define MAX_IDLE_WAIT_COUNT   1000
+#ifndef CPU_SLEEP_TIMEOUT_TIME
+/*cpu deep sleep go on this time will auto wake up, the unit ms*/
+#define CPU_SLEEP_TIMEOUT_TIME 2000
+#endif
 
 #define UART_FIFO_EMPTY (HAL_BIT(6) | HAL_BIT(5))
 
@@ -581,7 +585,7 @@ static int PMU_SleepConfig(void)
         pmuWkupCfg |= PMU_WAKEUP_CFG_TIMEOUT_EN_MASK;
 
     if (pmuWkupCfg & PMU_WAKEUP_CFG_TIMEOUT_EN_MASK)
-        pPmu->TIMEOUT_CNT = clkFreqKhz * 2000;
+        pPmu->TIMEOUT_CNT = clkFreqKhz * CPU_SLEEP_TIMEOUT_TIME;
 
     pPmu->OSC_CNT = clkFreqKhz * 32;
 
