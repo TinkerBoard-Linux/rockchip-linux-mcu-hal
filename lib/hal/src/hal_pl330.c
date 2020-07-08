@@ -1538,15 +1538,12 @@ HAL_Status HAL_PL330_Stop(struct PL330_CHAN *pchan)
  *
  * @param pl330: the handle of pl330.
  *
- * @return
- *        - HAL_OK on success.
- *        - HAL_ERROR on fail.
+ * @return: raw irq status
  */
-HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
+uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
 {
-    int ret = HAL_OK;
     struct DMA_REG *reg = pl330->pReg;
-    uint32_t val;
+    uint32_t val, inten;
     unsigned int ev, i = 0;
 
     val = READ_REG(reg->FSRD) & 0x1;
@@ -1577,18 +1574,18 @@ HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
 
     /* Check which event happened i.e, thread notified */
     val = READ_REG(reg->EVENT_RIS);
+    inten = READ_REG(reg->INTEN);
 
     for (ev = 0; ev < PL330_CHANNELS_PER_DEV; ev++) {
         if (val & (1 << ev)) { /* Event occurred */
-            uint32_t inten = READ_REG(reg->INTEN);
-
             /* Clear the event */
             if (inten & (1 << ev))
                 WRITE_REG(reg->INTCLR, 1 << ev);
         }
     }
 
-    return ret;
+    /* return raw irq status */
+    return val;
 }
 
 /**

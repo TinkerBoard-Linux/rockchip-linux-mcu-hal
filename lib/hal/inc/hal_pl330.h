@@ -229,7 +229,7 @@ HAL_Status HAL_PL330_PrepDmaSingle(struct PL330_CHAN *pchan, uint32_t dmaAddr,
                                    PL330_Callback callback, void *cparam);
 int HAL_PL330_GetPosition(struct PL330_CHAN *pchan);
 
-HAL_Status HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330);
+uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330);
 uint32_t HAL_PL330_GetRawIrqStatus(struct HAL_PL330_DEV *pl330);
 HAL_Status HAL_PL330_ClearIrq(struct HAL_PL330_DEV *pl330, uint32_t irq);
 
