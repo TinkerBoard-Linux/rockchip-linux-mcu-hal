@@ -116,26 +116,56 @@ static int32_t UART_SetLcrReg(struct UART_REG *pReg, uint8_t byteSize,
  */
 /**
   * @brief  suspend uart
-  * @param  pReg: uart reg base
-  * @return HAL_OK for reserve
+  * @param  pReg:      uart reg base
+  * @param  pUartSave: save uart reg
+  * @return HAL_OK
   */
-HAL_Status HAL_UART_Suspend(struct UART_REG *pReg)
+HAL_Status HAL_UART_Suspend(struct UART_REG *pReg, struct UART_SAVE_CONFIG *pUartSave)
 {
-    /* ...to do */
     HAL_ASSERT(IS_UART_INSTANCE(pReg));
+    if (pUartSave && pReg) {
+        while (!(pReg->USR & UART_USR_TX_FIFO_EMPTY))
+            ;
+        pUartSave->LCR = pReg->LCR;
+        pUartSave->IER = pReg->IER;
+        pUartSave->MCR = pReg->MCR;
+        if (pReg->USR & UART_USR_BUSY)
+            HAL_DelayMs(10);
+        if (pReg->USR & UART_USR_BUSY)
+            pReg->SRR = UART_SRR_XFR | UART_SRR_RFR;
+        pReg->LCR = UART_LCR_DLAB;
+        pUartSave->DLL = pReg->DLL;
+        pUartSave->DLH = pReg->DLH;
+        pUartSave->SRT = pReg->SRT;
+        pUartSave->STET = pReg->STET;
+        pReg->LCR = pUartSave->LCR;
+    }
 
     return HAL_OK;
 }
 
 /**
   * @brief  resume uart
-  * @param  pReg: uart reg base
-  * @return HAL_OK for reserve
+  * @param  pReg:      uart reg base
+  * @param  pUartSave: save uart reg
+  * @return HAL_OK
   */
-HAL_Status HAL_UART_Resume(struct UART_REG *pReg)
+HAL_Status HAL_UART_Resume(struct UART_REG *pReg, struct UART_SAVE_CONFIG *pUartSave)
 {
-    /* ...to do */
     HAL_ASSERT(IS_UART_INSTANCE(pReg));
+    if (pUartSave && pReg) {
+        pReg->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
+        pReg->MCR = UART_MCR_LOOP;
+        pReg->LCR = UART_LCR_DLAB;
+        pReg->DLL = pUartSave->DLL;
+        pReg->DLH = pUartSave->DLH;
+        pReg->LCR = pUartSave->LCR;
+        pReg->IER = pUartSave->IER;
+        pReg->FCR = UART_FCR_ENABLE_FIFO;
+        pReg->MCR = pUartSave->MCR;
+        pReg->SRT = pUartSave->SRT;
+        pReg->STET = pUartSave->STET;
+    }
 
     return HAL_OK;
 }

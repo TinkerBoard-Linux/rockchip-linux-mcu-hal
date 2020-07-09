@@ -227,6 +227,19 @@ struct HAL_UART_DEV {
     struct DMA_REG *dmac; /* dmac reg base ptr */
 };
 
+/**
+  * @brief  Save UART regist
+  */
+struct UART_SAVE_CONFIG {
+    uint32_t DLL;
+    uint32_t DLH;
+    uint32_t IER;
+    uint32_t LCR;
+    uint32_t MCR;
+    uint32_t SRT;
+    uint32_t STET;
+};
+
 /** @} */
 
 /***************************** Function Declare ******************************/
@@ -250,8 +263,8 @@ HAL_Status HAL_UART_HandleIrq(struct UART_REG *pReg);
 void HAL_UART_Reset(struct UART_REG *pReg);
 HAL_Status HAL_UART_Init(const struct HAL_UART_DEV *dev, const struct HAL_UART_CONFIG *config);
 HAL_Status HAL_UART_DeInit(struct UART_REG *pReg);
-HAL_Status HAL_UART_Suspend(struct UART_REG *pReg);
-HAL_Status HAL_UART_Resume(struct UART_REG *pReg);
+HAL_Status HAL_UART_Suspend(struct UART_REG *pReg, struct UART_SAVE_CONFIG *pUartSave);
+HAL_Status HAL_UART_Resume(struct UART_REG *pReg, struct UART_SAVE_CONFIG *pUartSave);
 
 /** @} */
 
