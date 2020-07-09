@@ -127,6 +127,12 @@
                                  ((__NCYCLES__) == CR0_CSM_2CYCLES) || \
                                  ((__NCYCLES__) == CR0_CSM_3CYCLES))
 
+/*
+ * About 200us cost for calling DMA function in each SPI DMA xfer in whtch it
+ * can transfer 10Kbps in 50MHz IO rate. Unless DMA large data, or it's CPU waste.
+ */
+#define HAL_SPI_DMA_SIZE_MIN 512
+
 /** @} */
 /********************* Public Function Definition ****************************/
 
@@ -607,7 +613,7 @@ bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI)
         return false;
 #endif
 
-    return (pSPI->len > HAL_SPI_FIFO_LENGTH);
+    return (pSPI->len > HAL_SPI_DMA_SIZE_MIN);
 }
 
 /**
