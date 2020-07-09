@@ -790,7 +790,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
             nor->spi->mode & HAL_SPI_TX_QUAD)
             return HAL_NODEV;
         s_commonSpiFlash.id = (idByte[0] << 16) | (idByte[1] << 8) | idByte[2];
-        s_commonSpiFlash.density = idByte[1] - 9;
+        s_commonSpiFlash.density = idByte[2] - 9;
         info = &s_commonSpiFlash;
     }
 
