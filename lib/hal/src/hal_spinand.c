@@ -56,7 +56,6 @@
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
-// #define HAL_SPINAND_DEBUG
 #ifdef HAL_SPINAND_DEBUG
 #define HAL_SPINAND_DBG(...) HAL_DBG(__VA_ARGS__)
 #else
@@ -237,6 +236,8 @@ static const struct SPINAND_INFO s_spiNandTable[] = {
     { 0xE521, 4, 0x40, 1, 1024, 0x0C, 18, 0x4, 0xB0, { 0x04, 0x14, 0xFF, 0xFF }, &SPINAND_GetEccStatus1 },
     /* W25N01GW */
     { 0xEFBA, 4, 0x40, 1, 1024, 0x4C, 18, 0x1, 0xFF, { 0x04, 0x14, 0x24, 0xFF }, &SPINAND_GetEccStatus1 },
+    /* DS35M2GA-1B */
+    { 0xE522, 4, 0x40, 2, 1024, 0x0C, 19, 0x4, 0xB0, { 0x04, 0x14, 0xFF, 0xFF }, &SPINAND_GetEccStatus1 },
 };
 
 /********************* Private Function Definition ***************************/
