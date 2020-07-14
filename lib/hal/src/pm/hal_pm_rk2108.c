@@ -412,11 +412,18 @@ HAL_UNUSED static void SOC_GetWakeupStatus(struct PMU_REG *pPmu)
                           (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_VAD_STATUS_SHIFT);
 }
 
-HAL_UNUSED static void SOC_FastBootConfig(struct GRF_REG *pGrf)
+HAL_UNUSED static void SOC_FastBootEnable(struct GRF_REG *pGrf)
 {
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
     pGrf->FAST_BOOT_ADDR = (uint32_t)HAL_CPU_DoResume;
     pGrf->FAST_BOOT_EN = 1;
+#endif
+}
+
+HAL_UNUSED static void SOC_FastBootDisable(struct GRF_REG *pGrf)
+{
+#ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
+    pGrf->FAST_BOOT_EN = 0;
 #endif
 }
 
@@ -647,7 +654,7 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     SOC_PutChar('0', pUart);
     SOC_SleepModeInit(pPmu);
     SOC_PutChar('1', pUart);
-    SOC_FastBootConfig(pGrf);
+    SOC_FastBootEnable(pGrf);
     SOC_PutChar('2', pUart);
     SOC_WakeupSourceConfig(pPmu);
     SOC_PutChar('3', pUart);
@@ -674,6 +681,7 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     HAL_NVIC_ResumeRestore();
     SOC_PutChar('1', pUart);
     SOC_GetWakeupStatus(pPmu);
+    SOC_FastBootDisable(pGrf);
     SOC_PutChar('0', pUart);
 #ifdef HAL_SYSTICK_MODULE_ENABLED
     HAL_SYSTICK_CLKSourceConfig(HAL_SYSTICK_CLKSRC_EXT);
