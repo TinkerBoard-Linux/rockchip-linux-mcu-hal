@@ -36,11 +36,14 @@ static ePCD_bcdMsg USB_M31phyBcdDetect(struct PCD_HANDLE *pPCD)
     uint32_t lineState;
     ePCD_bcdMsg msg;
 
+    HAL_USB_PhyInit();
+
     /*
-     * Put the PHY in normal mode and suspend mode,
-     * set the utmi termselect to FS/LS termination,
-     * set the utmi xcvrselect to  FS transceiver,
-     * disable DP/DM pulldown resistor.
+     * Put the PHY in normal operation of OpMode, and
+     * set the PHY to enter the suspend mode to disable
+     * connect to USB Host, and set the utmi termselect
+     * to FS/LS termination, and set the utmi xcvrselect
+     * to FS transceiver, disable DP/DM pulldown resistor.
      */
     WRITE_REG_MASK_WE(USB_PHY_CON_BASE, USB_PHY_SUSPEND_MASK,
                       0x051U << USB_PHY_CON_SHIFT);
