@@ -2,7 +2,7 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V2.3.1
+发布版本：V2.4.0
 
 日期：2020-07-20
 
@@ -76,6 +76,7 @@ Rockchip Electronics Co., Ltd.
 | V2.2.0     | 2020.01  | Jon Lin      | 新增固件库裸系统移植说明               |
 | V2.3.0     | 2020.06  | Tao Huang    | 调整格式                               |
 | V2.3.1     | 2020.07  | Tao Huang    | 调整格式                               |
+| V2.4.0     | 2020.07  | Tao Huang    | 强调排版风格遵守 MISRA-C               |
 
 ---
 
@@ -481,7 +482,7 @@ int retValue, varNum;
 
 ### 排版
 
-项目使用 uncrustify 工具辅助排版, 整体排版风格包括空行，空格，括号等的使用参考 Linux kernel 的 coding style, 本文档仅单独说明不一样的部分.
+项目使用 uncrustify 工具辅助排版, 整体排版风格包括空行，空格，括号等的使用参考 Linux kernel 的 coding style, 但如果和 MISRA-C 标准冲突，则使用 MISRA-C 标准的要求。本文档仅单独说明不一样的部分.
 
 ```shell
 # Ubuntu/Debian下面直接安装
