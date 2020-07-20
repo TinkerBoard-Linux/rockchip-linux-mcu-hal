@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2020 Rockchip Electronics Co., Ltd
+ * Copyright (c) 2020 Rockchip Electronics Co., Ltd.
  */
 
 #if defined(HAL_VOP_MODULE_ENABLED) || defined(HAL_DSI_MODULE_ENABLED)

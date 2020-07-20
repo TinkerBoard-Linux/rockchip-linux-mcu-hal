@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2020 Rockchip Electronics Co., Ltd
+ * Copyright (c) 2020 Rockchip Electronics Co., Ltd.
  */
 #ifndef __RV1126_PINCTRL_H__
 #define __RV1126_PINCTRL_H__
