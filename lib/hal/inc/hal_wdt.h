@@ -43,6 +43,7 @@ enum WDT_RESP_MODE {
  */
 
 HAL_Status HAL_WDT_Init(uint32_t freq, struct WDT_REG *wdt);
+uint32_t HAL_WDT_GetTimeout(void);
 HAL_Status HAL_WDT_SetTimeout(uint32_t top);
 HAL_Status HAL_WDT_KeepAlive(void);
 HAL_Status HAL_WDT_Start(enum WDT_RESP_MODE mode);

@@ -199,6 +199,15 @@ HAL_Status HAL_WDT_SetTimeout(uint32_t top)
 }
 
 /**
+ * @brief  Get WDT timeout period
+ * @return Timeout period
+ */
+uint32_t HAL_WDT_GetTimeout(void)
+{
+    return WDT_TopInSeconds(pWDT->TORR);
+}
+
+/**
  * @brief  Keep WDT alive
  * @return HAL_Status
  */
