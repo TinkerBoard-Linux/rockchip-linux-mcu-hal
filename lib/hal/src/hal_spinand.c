@@ -551,13 +551,13 @@ static HAL_Status SPINAND_QuadEnable(struct SPI_NAND *spinand)
     int ret = HAL_OK;
     uint8_t status;
 
-    ret = SPINAND_ReadStatus(spinand, 1, &status);
+    ret = SPINAND_ReadStatus(spinand, 0xB0, &status);
     if (ret != HAL_OK)
         return ret;
 
     status |= 1;
 
-    return SPINAND_WriteStatus(spinand, 1, status);
+    return SPINAND_WriteStatus(spinand, 0xB0, status);
 }
 
 static HAL_Status SPINAND_WriteEnableOp(struct SPI_NAND *spinand)
@@ -927,7 +927,7 @@ HAL_Status HAL_SPINAND_Init(struct SPI_NAND *spinand)
 
     SPINAND_ReadStatus(spinand, 0xA0, &status);
     HAL_SPINAND_DBG("SPI Nand A0 = 0x%x\n", status);
-    SPINAND_ReadStatus(spinand, 1, &status);
+    SPINAND_ReadStatus(spinand, 0xB0, &status);
     HAL_SPINAND_DBG("SPI Nand B0 = 0x%x\n", status);
     HAL_SPINAND_DBG("readLines = %x\n", spinand->readLines);
     HAL_SPINAND_DBG("progLines = %x\n", spinand->progLines);
