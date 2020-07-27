@@ -5,6 +5,17 @@
 
 #include "hal_bsp.h"
 
+#ifdef HAL_UART_MODULE_ENABLED
+const struct HAL_UART_DEV g_uart0Dev =
+{
+    .pReg = UART0,
+    .sclkID = CLK_UART0,
+    .irqNum = UART0_IRQn,
+    .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART0,
+};
+#endif
+
 #ifdef HAL_I2C_MODULE_ENABLED
 const struct HAL_I2C_DEV g_i2c0Dev =
 {

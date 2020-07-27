@@ -85,6 +85,8 @@ typedef enum
 #define RV32C_ISA          1U
 #define RV32E_ISA          0U
 
+#define MAX_INTERRUPT_VECTOR    64U
+
 #ifndef __ASSEMBLY__
 #include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
 #include "system_swallow.h"

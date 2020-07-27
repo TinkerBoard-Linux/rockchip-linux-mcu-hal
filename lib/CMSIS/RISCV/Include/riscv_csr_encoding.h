@@ -996,6 +996,13 @@
 #define IPIC_SOI      0xbf5
 #define IPIC_IDX      0xbf6
 #define IPIC_ICSR     0xbf7
+#define IPIC_IPR1     0xbf8
+#define IPIC_IPR2     0xbf9
+#define IPIC_IPR3     0xbfa
+#define IPIC_ISVR1    0xbfb
+#define IPIC_ISVR2    0xbfc
+#define IPIC_ISVR3    0xbfd
+
 #define IPIC_ICSR_IP  (1 << 0)
 #define IPIC_ICSR_IE  (1 << 1)
 #define IPIC_ICSR_IM  (1 << 2)
