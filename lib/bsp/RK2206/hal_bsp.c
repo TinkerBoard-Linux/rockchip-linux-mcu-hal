@@ -497,7 +497,7 @@ const struct HAL_USB_DEV g_usbdDev =
     .irqNum = USB2OTG_IRQn,
     .cfg =
     {
-        .epNum = 5,
+        .epNum = 10,
         .ep0Mps = USB_OTG_MAX_EP0_SIZE,
         .phyif = USB_PHY_UTMI_WIDTH_16,
         .speed = USB_OTG_SPEED_HIGH,
@@ -506,6 +506,7 @@ const struct HAL_USB_DEV g_usbdDev =
         .sofEnable = false,
         .lpmEnable = false,
         .vbusSensingEnable = false,
+        .suspendEnable = false,
     },
 };
 #endif
