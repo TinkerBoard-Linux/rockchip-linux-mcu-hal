@@ -244,7 +244,8 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
 
         /* Handle Suspend Interrupt */
         if (__HAL_PCD_GET_FLAG(pPCD, USB_OTG_GINTSTS_USBSUSP)) {
-            if (((USB_DEVICE->DSTS & USB_OTG_DSTS_SUSPSTS) == USB_OTG_DSTS_SUSPSTS) &&
+            if (!pPCD->cfg.suspendEnable &&
+                ((USB_DEVICE->DSTS & USB_OTG_DSTS_SUSPSTS) == USB_OTG_DSTS_SUSPSTS) &&
                 ((USB_DEVICE->DSTS & USB_OTG_DSTS_ENUMSPD) != USB_OTG_DSTS_ENUMSPD_0)) {
                 /*
                  * If the Bvalid signal is always high, the usb core

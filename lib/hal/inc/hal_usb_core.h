@@ -181,6 +181,7 @@ struct USB_OTG_CFG {
     uint32_t sofEnable : 1;         /*!< Enable or disable the output of the SOF signal.                    */
     uint32_t lpmEnable : 1;         /*!< Enable or disable Link Power Management.                           */
     uint32_t vbusSensingEnable : 1; /*!< Enable or disable the VBUS Sensing feature.                        */
+    uint32_t suspendEnable : 1;     /*!< Enable or disable the auto suspend feature.                        */
 };
 
 /** EP Initialization Structure definition */
