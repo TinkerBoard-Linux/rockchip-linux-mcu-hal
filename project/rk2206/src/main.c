@@ -101,11 +101,6 @@ int main(void)
     return 0;
 }
 
-int _start(void)
-{
-    return main();
-}
-
 int Main(void)
 {
     return main();
