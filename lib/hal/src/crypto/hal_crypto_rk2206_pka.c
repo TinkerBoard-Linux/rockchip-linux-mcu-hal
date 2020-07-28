@@ -361,8 +361,9 @@ static void PKA_WordMemcpy(uint32_t *pDst, uint32_t *pSrc, uint32_t size)
     uint32_t i;
 
     /* execute the word memcopy */
-    for (i = 0; i < size; i++)
+    for (i = 0; i < size; i++) {
         pDst[i] = pSrc[i];
+    }
 } /* END OF PKA_WordMemcpy */
 
 /* ------------------------------------------------------------
@@ -379,8 +380,9 @@ static void PKA_WordMemset(uint32_t *pBuff, uint32_t val, uint32_t size)
     uint32_t i;
 
     /* execute the reverse memcopy */
-    for (i = 0; i < size; i++)
+    for (i = 0; i < size; i++) {
         pBuff[i] = val;
+    }
 } /* END OF PKA_WordMemset */
 
 static void PKA_RamCtrlEnable(void)
@@ -562,24 +564,28 @@ static HAL_Status PKA_SetSizeTab(uint32_t *pRegsSizes, uint32_t countOfSizes,
     maxSize = 0;
     minSize = 0xFFFFFFFF;
 
-    if (isDefaultMap > 1)
+    if (isDefaultMap > 1) {
         return HAL_ERROR;
+    }
 
     /* 1. Case of user defined settings */
     if (isDefaultMap == 0) {
         /* find maximal and minimal sizes  */
         for (i = 0; i < countOfSizes; i++) {
             if (maxSize < pRegsSizes[i] &&
-                pRegsSizes[i] != 0xFFFFFFFF)
+                pRegsSizes[i] != 0xFFFFFFFF) {
                 maxSize = pRegsSizes[i];
+            }
 
-            if (minSize > pRegsSizes[i])
+            if (minSize > pRegsSizes[i]) {
                 minSize = pRegsSizes[i];
+            }
         }
 
         /* set sizes into PKA registers sizes table */
-        for (i = 0; i < countOfSizes; i++)
+        for (i = 0; i < countOfSizes; i++) {
             WRITE_REG(CRYPTO->PKA_L[i], pRegsSizes[i]);
+        }
     } else {
         /* 2. Case of default settings */
         maxSizeWords = (maxSizeBits + 31) / 32;
@@ -593,8 +599,9 @@ static HAL_Status PKA_SetSizeTab(uint32_t *pRegsSizes, uint32_t countOfSizes,
         countOfSizes = 2;
     }
 
-    for (i = countOfSizes; i < 8; i++)
+    for (i = countOfSizes; i < 8; i++) {
         WRITE_REG(CRYPTO->PKA_L[i], 0xFFFFFFFF);
+    }
 
     return error;
 }
@@ -634,8 +641,9 @@ static HAL_Status PKA_SetMapTab(struct PKA_REGS_MAP *pRegsMap,
     }
 
     if (isDefaultMap == 0) {
-        for (i = 0; i < *pCountOfRegs; i++)
+        for (i = 0; i < *pCountOfRegs; i++) {
             WRITE_REG(CRYPTO->PKA_MEM_MAP[pRegsMap->regesNum[i]], pRegsMap->regsAddr[i]);
+        }
         WRITE_REG(CRYPTO->N_NP_T0_T1_ADDR, N_NP_T0_T1);
     }
 
@@ -661,8 +669,9 @@ static HAL_Status PKA_ClearBlockOfRegs(uint8_t firstReg, uint8_t countOfRegs,
     }
 
     /* clear ordinary registers */
-    for (i = 0; i < countOfRegs; i++)
+    for (i = 0; i < countOfRegs; i++) {
         RK_PKA_Clr(lenId, firstReg + i /*regNum*/, 0 /*tag*/);
+    }
 
     /* clear PKA temp registers using macros (without PKA operations */
     if (countTemps > 0) {
@@ -697,14 +706,16 @@ static HAL_Status PKA_Init(uint32_t *pRegsSizes, uint32_t countOfSizes,
     error = PKA_SetSizeTab(pRegsSizes, countOfSizes,
                            opSizeBits, isDefaultMap);
 
-    if (error != HAL_OK)
+    if (error != HAL_OK) {
         return error;
+    }
 
     error = PKA_SetMapTab(pRegsMap, &countOfRegs, regSizeWords,
                           N_NP_T0_T1, isDefaultMap);
 
-    if (error != HAL_OK)
+    if (error != HAL_OK) {
         return error;
+    }
 
     /* set size of register into RegsSizesTable */
     WRITE_REG(CRYPTO->PKA_L[3], 32 * regSizeWords);
@@ -832,17 +843,19 @@ static HAL_Status PKA_DivLongNum(uint8_t lenId, int8_t opA, uint32_t s,
     /*----------------------------------------------------*/
     for (i = 0; i < nWords; i++) {
         /* 3.1 set shift value s1  */
-        if (i > 0)
+        if (i > 0) {
             s1 = 32;
-        else
+        } else {
             s1 = nBits;
+        }
 
         /* 3.2. shift: rT1 = rT1 * 2**s1 (in code (s1-1),
          * because PKA performs s+1 shifts)
          */
-        if (s1 > 0)
+        if (s1 > 0) {
             RK_PKA_SHL0(lenId + 1, rT1 /*opA*/, (s1 - 1) /*s*/,
                         rT1 /*res*/, 0 /*tag*/);
+        }
 
         /* 3.3. perform PKA_OPCODE_MOD_DIV for calculating a quotient
          * rT2 = floor(rT1 / N)
@@ -852,9 +865,10 @@ static HAL_Status PKA_DivLongNum(uint8_t lenId, int8_t opA, uint32_t s,
                    0 /*tag*/);
 
         /* 3.4. res = res * 2**s1 + res;   */
-        if (s1 > 0)
+        if (s1 > 0) {
             RK_PKA_SHL0(lenId + 1, res /*opA*/, (s1 - 1) /*s*/,
                         res /*res*/, 0 /*tag*/);
+        }
 
         RK_PKA_Add(lenId + 1, res /*opA*/, rT2 /*opB*/, res /*res*/,
                    0 /*tag*/);
@@ -894,14 +908,16 @@ static uint32_t PKA_CalcAndInitNP(uint32_t lenId, uint32_t modSizeBits,
     RK_PKA_Set0(lenId + 1, rT0 /*opA*/, rT0 /*res*/, 0 /*tag*/);
 
     /* shift 1 to numBits+31 position */
-    if (numBits > 0)
+    if (numBits > 0) {
         RK_PKA_SHL0(lenId + 1, rT0 /*opA*/, numBits - 1 /*s*/,
                     rT0 /*res*/, 0 /*tag*/);
+    }
 
     /* shift to word position */
-    for (i = 0; i < numWords; i++)
+    for (i = 0; i < numWords; i++) {
         RK_PKA_SHL0(lenId + 1, rT0 /*opA*/, 31 /*s*/,
                     rT0 /*res*/, 0 /*tag*/);
+    }
 
     /*-------------------------------------------------------------------*/
     /* Step 3.  Dividing:  (opA * 2**s) / N                             */
@@ -988,10 +1004,11 @@ static HAL_Status PKA_InitModop(uint32_t *pN, uint32_t nSizeBits,
 static uint32_t PKA_BN_CheckSize(uint32_t *data, uint32_t maxWordSize)
 {
     for (int64_t i = (maxWordSize - 1); i >= 0; i--) {
-        if (data[i] == 0)
+        if (data[i] == 0) {
             continue;
-        else
+        } else {
             return (uint32_t)(i + 1);
+        }
     }
 
     return 0;
@@ -1009,15 +1026,17 @@ static int PKA_BN_HighestBitIndex(const struct CRYPTO_BIGNUM *src)
     uint32_t w;
     uint32_t b;
 
-    if (PKA_BIGNUM_IS_ZERO(src))
+    if (PKA_BIGNUM_IS_ZERO(src)) {
         return -1;
+    }
 
     w = PKA_BIGNUM_MSW(src);
 
     for (b = 0; b < RK_WORD_SIZE; b++) {
         w >>= 1;
-        if (w == 0)
+        if (w == 0) {
             break;
+        }
     }
 
     return (int)(PKA_BIGNUM_SIZE(src) - 1) * RK_WORD_SIZE + b;
@@ -1036,8 +1055,9 @@ static HAL_Status PKA_Mod(struct CRYPTO_BIGNUM *m_a, struct CRYPTO_BIGNUM *m_b,
     }
 
     max_word_size = PKA_BIGNUM_SIZE(m_a);
-    if (max_word_size < PKA_BIGNUM_SIZE(m_b))
+    if (max_word_size < PKA_BIGNUM_SIZE(m_b)) {
         max_word_size = PKA_BIGNUM_SIZE(m_b);
+    }
 
     error = RK_PKA_DefaultInitPKA(max_word_size * 32, max_word_size + 1);
     if (error != HAL_OK) {
@@ -1099,10 +1119,12 @@ HAL_Status HAL_CRYPTO_ExptMod(struct CRYPTO_DEV *pCrypto,
     }
 
     maxWordSize = PKA_BIGNUM_SIZE(pTmp);
-    if (maxWordSize < PKA_BIGNUM_SIZE(pE))
+    if (maxWordSize < PKA_BIGNUM_SIZE(pE)) {
         maxWordSize = PKA_BIGNUM_SIZE(pE);
-    if (maxWordSize < PKA_BIGNUM_SIZE(pN))
+    }
+    if (maxWordSize < PKA_BIGNUM_SIZE(pN)) {
         maxWordSize = PKA_BIGNUM_SIZE(pN);
+    }
 
     error = RK_PKA_DefaultInitPKA(maxWordSize * 32, maxWordSize + 1);
     if (error != HAL_OK) {

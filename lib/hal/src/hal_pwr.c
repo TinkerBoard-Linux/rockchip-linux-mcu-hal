@@ -60,8 +60,9 @@ static HAL_Status PWR_SetVoltage_Linear(struct PWR_INTREG_DESC *desc, uint32_t v
 
     delta = volt - desc->minVolt;
     mod = delta % desc->volt_list.stepVolt;
-    if (mod)
+    if (mod) {
         return HAL_INVAL;
+    }
 
     val = delta / desc->volt_list.stepVolt;
 
@@ -120,10 +121,11 @@ static HAL_Status PWR_EnableDisable(struct PWR_INTREG_DESC *desc, uint32_t enabl
 
     preg = desc->preg[PWR_CTRL_PWR_EN];
 
-    if (enable)
+    if (enable) {
         val = WM_SET_BIT(desc->shift[PWR_CTRL_PWR_EN]);
-    else
+    } else {
         val = WM_CLR_BIT(desc->shift[PWR_CTRL_PWR_EN]);
+    }
 
     WRITE_REG(*preg, val);
 
@@ -163,10 +165,11 @@ int HAL_PWR_GetEnableState(struct PWR_INTREG_DESC *desc)
 uint32_t HAL_PWR_GetVoltage(struct PWR_INTREG_DESC *desc)
 {
     HAL_ASSERT(desc);
-    if (desc->flag & PWR_FLG_LINEAR)
+    if (desc->flag & PWR_FLG_LINEAR) {
         return PWR_GetVoltageLinear(desc, PWR_CTRL_VOLT_RUN);
-    else
+    } else {
         return 0;
+    }
 }
 
 /**
@@ -178,10 +181,11 @@ uint32_t HAL_PWR_GetVoltage(struct PWR_INTREG_DESC *desc)
 uint32_t HAL_PWR_RoundVoltage(struct PWR_INTREG_DESC *desc, uint32_t volt)
 {
     HAL_ASSERT(desc);
-    if (desc->flag & PWR_FLG_LINEAR)
+    if (desc->flag & PWR_FLG_LINEAR) {
         return PWR_RoundVoltage_Linear(desc, volt);
-    else
+    } else {
         return 0;
+    }
 }
 
 /**
@@ -192,10 +196,11 @@ uint32_t HAL_PWR_RoundVoltage(struct PWR_INTREG_DESC *desc, uint32_t volt)
 uint32_t HAL_PWR_GetVoltageSuspend(struct PWR_INTREG_DESC *desc)
 {
     HAL_ASSERT(desc);
-    if (desc->flag & PWR_FLG_LINEAR)
+    if (desc->flag & PWR_FLG_LINEAR) {
         return PWR_GetVoltageLinear(desc, PWR_CTRL_VOLT_SSPD);
-    else
+    } else {
         return 0;
+    }
 }
 
 /**
@@ -207,10 +212,11 @@ uint32_t HAL_PWR_GetVoltageReal(struct PWR_INTREG_DESC *desc)
 {
     HAL_ASSERT(desc);
     if ((desc->flag & (PWR_FLG_LINEAR | PWR_FLG_VOLT_ST)) ==
-        (PWR_FLG_LINEAR | PWR_FLG_VOLT_ST))
+        (PWR_FLG_LINEAR | PWR_FLG_VOLT_ST)) {
         return PWR_GetVoltageLinear(desc, PWR_CTRL_VOLT_ST);
-    else
+    } else {
         return 0;
+    }
 }
 
 /** @} */
@@ -229,10 +235,11 @@ HAL_Status HAL_PWR_SetVoltage(struct PWR_INTREG_DESC *desc, uint32_t volt)
 {
     HAL_ASSERT(desc);
 
-    if (desc->flag & PWR_FLG_LINEAR)
+    if (desc->flag & PWR_FLG_LINEAR) {
         return PWR_SetVoltage_Linear(desc, volt, PWR_CTRL_VOLT_RUN);
-    else
+    } else {
         return HAL_NODEV;
+    }
 }
 
 /**
@@ -245,10 +252,11 @@ HAL_Status HAL_PWR_SetVoltageSuspend(struct PWR_INTREG_DESC *desc,
                                      uint32_t volt)
 {
     HAL_ASSERT(desc);
-    if (desc->flag & PWR_FLG_LINEAR)
+    if (desc->flag & PWR_FLG_LINEAR) {
         return PWR_SetVoltage_Linear(desc, volt, PWR_CTRL_VOLT_SSPD);
-    else
+    } else {
         return HAL_NODEV;
+    }
 }
 
 /**
@@ -284,10 +292,11 @@ HAL_Status HAL_PWR_Disable(struct PWR_INTREG_DESC *desc)
 HAL_Check HAL_PWR_CheckDescByPwrId(struct PWR_INTREG_DESC *desc,
                                    ePWR_ID pwrId)
 {
-    if (desc->info.pwrId == pwrId)
+    if (desc->info.pwrId == pwrId) {
         return HAL_TRUE;
-    else
+    } else {
         return HAL_FALSE;
+    }
 }
 
 /** @} */
@@ -310,8 +319,9 @@ int HAL_PWR_LinearRangeSelToVolt(const struct PWR_LINEAR_RANGE_TABLE *linearTabl
 
     for (i = 0; i < linearTables->nEntry; i++) {
         range = &linearTables->entry[i];
-        if (sel < range->minSel || sel > range->maxSel)
+        if (sel < range->minSel || sel > range->maxSel) {
             continue;
+        }
 
         sel -= range->minSel;
 
@@ -343,8 +353,9 @@ int HAL_PWR_LinearRangeVoltToSel(const struct PWR_LINEAR_RANGE_TABLE *linearTabl
         linear_max_uV = range->minUV +
                         (range->maxSel - range->minSel) * range->uVStep;
 
-        if (volt > linear_max_uV || volt < range->minUV)
+        if (volt > linear_max_uV || volt < range->minUV) {
             continue;
+        }
 
         /* range->uV_step == 0 means fixed voltage range */
         if (range->uVStep == 0) {
@@ -352,8 +363,9 @@ int HAL_PWR_LinearRangeVoltToSel(const struct PWR_LINEAR_RANGE_TABLE *linearTabl
         } else {
             ret = HAL_DIV_ROUND_UP(volt - range->minUV,
                                    range->uVStep);
-            if (ret < 0)
+            if (ret < 0) {
                 return ret;
+            }
         }
 
         ret += range->minSel;

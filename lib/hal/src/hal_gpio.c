@@ -222,8 +222,9 @@ HAL_Status HAL_GPIO_SetPinsDirection(struct GPIO_REG *pGPIO, uint32_t mPins, eGP
     for (pin = 0; pin < 32; pin++) {
         if (mPins & (1 << pin)) {
             rc = HAL_GPIO_SetPinDirection(pGPIO, (1 << pin), pinDir);
-            if (rc)
+            if (rc) {
                 return rc;
+            }
         }
     }
 
@@ -304,8 +305,9 @@ HAL_Status HAL_GPIO_SetPinsLevel(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_p
     for (pin = 0; pin < 32; pin++) {
         if (mPins & (1 << pin)) {
             rc = HAL_GPIO_SetPinLevel(pGPIO, (1 << pin), pinLevel);
-            if (rc)
+            if (rc) {
                 return rc;
+            }
         }
     }
 
@@ -481,8 +483,9 @@ void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank)
 
         if ((stat & clear) != 0x0U) {
             /* If gpio is Edge-sensitive triggered, clear eoi */
-            if (type & clear)
+            if (type & clear) {
                 GPIO_SetEOI(pGPIO, pin);
+            }
 
             /* Remove the pending interrupt bit from the clear */
             stat &= ~clear;

@@ -128,12 +128,14 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
     /* ensure that we are in device mode */
     if (USB_GetMode(pPCD->pReg) == USB_OTG_MODE_DEVICE) {
         /* avoid spurious interrupt */
-        if (__HAL_PCD_IS_INVALID_INTERRUPT(pPCD))
+        if (__HAL_PCD_IS_INVALID_INTERRUPT(pPCD)) {
             return;
+        }
 
-        if (__HAL_PCD_GET_FLAG(pPCD, USB_OTG_GINTSTS_MMIS))
+        if (__HAL_PCD_GET_FLAG(pPCD, USB_OTG_GINTSTS_MMIS)) {
             /* incorrect mode, acknowledge the interrupt */
             __HAL_PCD_CLEAR_FLAG(pPCD, USB_OTG_GINTSTS_MMIS);
+        }
 
         if (__HAL_PCD_GET_FLAG(pPCD, USB_OTG_GINTSTS_OEPINT)) {
             epNum = 0;
@@ -149,8 +151,9 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
 
                     /* Don't process XferCompl interrupt if it is a setup packet */
                     if ((epNum == 0) && (epInt & (USB_OTG_DOEPINT_STUP |
-                                                  USB_OTG_DOEPINT_STUPPKTRCVD)))
+                                                  USB_OTG_DOEPINT_STUPPKTRCVD))) {
                         epInt &= ~USB_OTG_DOEPINT_XFRC;
+                    }
 
                     if ((epInt & USB_OTG_DOEPINT_XFRC) == USB_OTG_DOEPINT_XFRC) {
                         if (pPCD->cfg.dmaEnable == 1) {
@@ -179,8 +182,9 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                     }
 
                     if ((epInt & USB_OTG_DOEPINT_STUP) == USB_OTG_DOEPINT_STUP) {
-                        if (pPCD->cfg.dmaEnable == 1)
+                        if (pPCD->cfg.dmaEnable == 1) {
                             HAL_DCACHE_InvalidateByRange((uint32_t)(pPCD->setupBuf), sizeof(pPCD->setupBuf));
+                        }
 
                         /* Inform the upper layer that a setup packet is available */
                         HAL_PCD_SetupStageCallback(pPCD);
@@ -207,8 +211,9 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                         fifoEmptyMsk = 0x1 << epNum;
                         USB_DEVICE->DIEPEMPMSK &= ~fifoEmptyMsk;
 
-                        if (pPCD->cfg.dmaEnable == 1)
+                        if (pPCD->cfg.dmaEnable == 1) {
                             pPCD->inEp[epNum].pxferBuff += pPCD->inEp[epNum].maxPacket;
+                        }
 
                         if ((pPCD->cfg.dmaEnable == 1) && (epNum == 0) &&
                             (pPCD->inEp[epNum].xferLen == 0)) {
@@ -220,8 +225,9 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                         }
                     }
 
-                    if ((epInt & USB_OTG_DIEPINT_TXFE) == USB_OTG_DIEPINT_TXFE)
+                    if ((epInt & USB_OTG_DIEPINT_TXFE) == USB_OTG_DIEPINT_TXFE) {
                         PCD_WriteEmptyTxFifo(pPCD, epNum);
+                    }
                 }
                 epNum++;
                 epIntr >>= 1;
@@ -593,8 +599,9 @@ HAL_Status HAL_PCD_Init(struct PCD_HANDLE *pPCD)
     pPCD->pcdState = HAL_PCD_STATE_READY;
 
     /* Activate LPM */
-    if (pPCD->cfg.lpmEnable == 1)
+    if (pPCD->cfg.lpmEnable == 1) {
         HAL_PCDEx_ActivateLPM(pPCD);
+    }
 
     USB_DevDisconnect(pPCD->pReg);
 
@@ -677,10 +684,11 @@ HAL_Status HAL_PCD_EPOpen(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint16_t ep_m
     HAL_Status ret = HAL_OK;
     struct USB_OTG_EP *pEP;
 
-    if ((epAddr & 0x80) == 0x80)
+    if ((epAddr & 0x80) == 0x80) {
         pEP = &pPCD->inEp[epAddr & 0x7F];
-    else
+    } else {
         pEP = &pPCD->outEp[epAddr & 0x7F];
+    }
 
     pEP->num = epAddr & 0x7F;
     pEP->isIn = (0x80 & epAddr) != 0;
@@ -693,8 +701,9 @@ HAL_Status HAL_PCD_EPOpen(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint16_t ep_m
     }
 
     /* Set initial data PID. */
-    if (epType == EP_TYPE_BULK)
+    if (epType == EP_TYPE_BULK) {
         pEP->dataPID = 0;
+    }
 
     USB_ActivateEndpoint(pPCD->pReg, pEP);
 
@@ -711,10 +720,11 @@ HAL_Status HAL_PCD_EPClose(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 {
     struct USB_OTG_EP *pEP;
 
-    if ((epAddr & 0x80) == 0x80)
+    if ((epAddr & 0x80) == 0x80) {
         pEP = &pPCD->inEp[epAddr & 0x7F];
-    else
+    } else {
         pEP = &pPCD->outEp[epAddr & 0x7F];
+    }
 
     pEP->num = epAddr & 0x7F;
     pEP->isIn = (0x80 & epAddr) != 0;
@@ -745,13 +755,15 @@ HAL_Status HAL_PCD_EPReceive(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint8_t *p
     pEP->isIn = 0;
     pEP->num = epAddr & 0x7F;
 
-    if (pPCD->cfg.dmaEnable == 1)
+    if (pPCD->cfg.dmaEnable == 1) {
         pEP->dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pBuf);
+    }
 
-    if ((epAddr & 0x7F) == 0)
+    if ((epAddr & 0x7F) == 0) {
         USB_EP0StartXfer(pPCD->pReg, pEP, pPCD->cfg.dmaEnable);
-    else
+    } else {
         USB_EPStartXfer(pPCD->pReg, pEP, pPCD->cfg.dmaEnable);
+    }
 
     return HAL_OK;
 }
@@ -789,13 +801,15 @@ HAL_Status HAL_PCD_EPTransmit(struct PCD_HANDLE *pPCD, uint8_t epAddr,
     pEP->isIn = 1;
     pEP->num = epAddr & 0x7F;
 
-    if (pPCD->cfg.dmaEnable == 1)
+    if (pPCD->cfg.dmaEnable == 1) {
         pEP->dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pBuf);
+    }
 
-    if ((epAddr & 0x7F) == 0)
+    if ((epAddr & 0x7F) == 0) {
         USB_EP0StartXfer(pPCD->pReg, pEP, pPCD->cfg.dmaEnable);
-    else
+    } else {
         USB_EPStartXfer(pPCD->pReg, pEP, pPCD->cfg.dmaEnable);
+    }
 
     return HAL_OK;
 }
@@ -810,21 +824,24 @@ HAL_Status HAL_PCD_EPSetStall(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 {
     struct USB_OTG_EP *pEP;
 
-    if ((epAddr & 0x0F) > pPCD->cfg.epNum)
+    if ((epAddr & 0x0F) > pPCD->cfg.epNum) {
         return HAL_ERROR;
+    }
 
-    if ((0x80 & epAddr) == 0x80)
+    if ((0x80 & epAddr) == 0x80) {
         pEP = &pPCD->inEp[epAddr & 0x7F];
-    else
+    } else {
         pEP = &pPCD->outEp[epAddr];
+    }
 
     pEP->isStall = 1;
     pEP->num = epAddr & 0x7F;
     pEP->isIn = ((epAddr & 0x80) == 0x80);
 
     USB_EPSetStall(pPCD->pReg, pEP);
-    if ((epAddr & 0x7F) == 0)
+    if ((epAddr & 0x7F) == 0) {
         USB_EP0_OutStart(pPCD->pReg, pPCD->cfg.dmaEnable, pPCD->setupBuf);
+    }
 
     return HAL_OK;
 }
@@ -839,13 +856,15 @@ HAL_Status HAL_PCD_EPClrStall(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 {
     struct USB_OTG_EP *pEP;
 
-    if ((epAddr & 0x0F) > pPCD->cfg.epNum)
+    if ((epAddr & 0x0F) > pPCD->cfg.epNum) {
         return HAL_ERROR;
+    }
 
-    if ((0x80 & epAddr) == 0x80)
+    if ((0x80 & epAddr) == 0x80) {
         pEP = &pPCD->inEp[epAddr & 0x7F];
-    else
+    } else {
         pEP = &pPCD->outEp[epAddr];
+    }
 
     pEP->isStall = 0;
     pEP->num = epAddr & 0x7F;
@@ -864,10 +883,11 @@ HAL_Status HAL_PCD_EPClrStall(struct PCD_HANDLE *pPCD, uint8_t epAddr)
  */
 HAL_Status HAL_PCD_EPFlush(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 {
-    if ((epAddr & 0x80) == 0x80)
+    if ((epAddr & 0x80) == 0x80) {
         USB_FlushTxFifo(pPCD->pReg, epAddr & 0x7F);
-    else
+    } else {
         USB_FlushRxFifo(pPCD->pReg);
+    }
 
     return HAL_OK;
 }
@@ -922,8 +942,9 @@ static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum)
     pEP = &pPCD->inEp[epNum];
     len = pEP->xferLen - pEP->xferCount;
 
-    if (len > pEP->maxPacket)
+    if (len > pEP->maxPacket) {
         len = pEP->maxPacket;
+    }
 
     lenWords = (len + 3) / 4;
 
@@ -933,8 +954,9 @@ static HAL_Status PCD_WriteEmptyTxFifo(struct PCD_HANDLE *pPCD, uint32_t epNum)
         /* Write the FIFO */
         len = pEP->xferLen - pEP->xferCount;
 
-        if (len > pEP->maxPacket)
+        if (len > pEP->maxPacket) {
             len = pEP->maxPacket;
+        }
 
         lenWords = (len + 3) / 4;
 

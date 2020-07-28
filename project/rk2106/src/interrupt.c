@@ -16,6 +16,7 @@ ExecFunPtr exceptions_table[NUM_INTERRUPTS] = {
 
 void IntDefaultHandler(void)
 {
-    while (1)
+    while (1) {
         ;
+    }
 }

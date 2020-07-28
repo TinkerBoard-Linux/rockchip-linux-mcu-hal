@@ -69,8 +69,9 @@ HAL_Status HAL_TIMER_Init(struct TIMER_REG *pReg, eTIMER_MODE mode)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 #ifdef SYS_TIMER
-    if (pReg == SYS_TIMER)
+    if (pReg == SYS_TIMER) {
         return HAL_BUSY;
+    }
 #endif
 
     WRITE_REG(pReg->CONTROLREG, mode << TIMER_CONTROLREG_TIMER_MODE_SHIFT);
@@ -105,8 +106,9 @@ HAL_Status HAL_TIMER_DeInit(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 #ifdef SYS_TIMER
-    if (pReg == SYS_TIMER)
+    if (pReg == SYS_TIMER) {
         return HAL_BUSY;
+    }
 #endif
 
     WRITE_REG(pReg->CONTROLREG, 0);
@@ -129,8 +131,9 @@ HAL_Status HAL_TIMER_Start(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 #ifdef SYS_TIMER
-    if (pReg == SYS_TIMER)
+    if (pReg == SYS_TIMER) {
         return HAL_BUSY;
+    }
 #endif
 
     CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_INT_MASK_MASK);
@@ -149,8 +152,9 @@ HAL_Status HAL_TIMER_Stop(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 #ifdef SYS_TIMER
-    if (pReg == SYS_TIMER)
+    if (pReg == SYS_TIMER) {
         return HAL_BUSY;
+    }
 #endif
 
     CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_MASK);
@@ -167,8 +171,9 @@ HAL_Status HAL_TIMER_Start_IT(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 #ifdef SYS_TIMER
-    if (pReg == SYS_TIMER)
+    if (pReg == SYS_TIMER) {
         return HAL_BUSY;
+    }
 #endif
 
     SET_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_ENABLED | TIMER_CONTROLREG_TIMER_INT_MASK_UNMASK);
@@ -186,8 +191,9 @@ HAL_Status HAL_TIMER_Stop_IT(struct TIMER_REG *pReg)
 {
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 #ifdef SYS_TIMER
-    if (pReg == SYS_TIMER)
+    if (pReg == SYS_TIMER) {
         return HAL_BUSY;
+    }
 #endif
 
     CLEAR_BIT(pReg->CONTROLREG, TIMER_CONTROLREG_TIMER_ENABLE_MASK);
@@ -208,8 +214,9 @@ HAL_Status HAL_TIMER_SetCount(struct TIMER_REG *pReg, uint64_t timerCount)
 
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 #ifdef SYS_TIMER
-    if (pReg == SYS_TIMER)
+    if (pReg == SYS_TIMER) {
         return HAL_BUSY;
+    }
 #endif
 
     loadCount = timerCount;
@@ -251,13 +258,15 @@ HAL_Status HAL_TIMER_ClrInt(struct TIMER_REG *pReg)
     HAL_ASSERT(IS_TIMER_INSTANCE(pReg));
 
     pReg->INTSTATUS = 0x1;
-    while (pReg->INTSTATUS && timeOut--)
+    while (pReg->INTSTATUS && timeOut--) {
         ;
+    }
 
-    if (timeOut == 0)
+    if (timeOut == 0) {
         return HAL_TIMEOUT;
-    else
+    } else {
         return HAL_OK;
+    }
 }
 
 /**

@@ -97,8 +97,9 @@ __STATIC_INLINE HAL_FuncStatus HAL_MPU_IsEnable(void)
     HAL_FuncStatus ret = HAL_DISABLE;
 
 #ifdef MPU
-    if (MPU->CTRL & MPU_CTRL_ENABLE_Msk)
+    if (MPU->CTRL & MPU_CTRL_ENABLE_Msk) {
         ret = HAL_ENABLE;
+    }
 #endif
 
     return ret;
@@ -124,8 +125,9 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_Enable(void)
     ICACHE->CACHE_CTRL &= (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
 
     /* if mpu has been enable, we will enable cache mpu function */
-    if (HAL_MPU_IsEnable())
+    if (HAL_MPU_IsEnable()) {
         ICACHE->CACHE_CTRL |= ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
+    }
 
     do {
         status =
@@ -198,8 +200,9 @@ __STATIC_FORCEINLINE HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
     uint32_t offset = 0;
     uint32_t status = 0;
 
-    if (sizeByte == 0)
+    if (sizeByte == 0) {
         return HAL_OK;
+    }
 
     address = HAL_CpuAddrToDmaAddr(address);
 
@@ -400,8 +403,9 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_Enable(void)
     DCACHE->STB_TIMEOUT_CTRL = 1;
 
     /* if mpu has been enable, we will enable cache mpu function */
-    if (HAL_MPU_IsEnable())
+    if (HAL_MPU_IsEnable()) {
         DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
+    }
 
     do {
         status =
@@ -474,8 +478,9 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
     uint32_t offset = 0;
     uint32_t status = 0;
 
-    if (sizeByte == 0)
+    if (sizeByte == 0) {
         return HAL_OK;
+    }
 
     offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
@@ -512,8 +517,9 @@ __STATIC_FORCEINLINE HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
     uint32_t offset = 0;
     uint32_t status = 0;
 
-    if (sizeByte == 0)
+    if (sizeByte == 0) {
         return HAL_OK;
+    }
 
     offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
@@ -550,8 +556,9 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     uint32_t offset = 0;
     uint32_t status = 0;
 
-    if (sizeByte == 0)
+    if (sizeByte == 0) {
         return HAL_OK;
+    }
 
     offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |

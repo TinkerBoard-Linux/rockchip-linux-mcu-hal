@@ -179,11 +179,13 @@ void HAL_NVIC_SuspendSave(void)
 {
     int i;
 
-    for (i = 0; i < NVIC_EXT_ISER_NUM; i++)
+    for (i = 0; i < NVIC_EXT_ISER_NUM; i++) {
         nvicSave.iser[i] = pnvic->ISER[i];
+    }
 
-    for (i = 0; i < NVIC_EXT_IP_NUM; i++)
+    for (i = 0; i < NVIC_EXT_IP_NUM; i++) {
         nvicSave.ip[i] = pnvic->IP[i];
+    }
 
     nvicSave.pg = NVIC_GetPriorityGrouping();
 }
@@ -196,14 +198,17 @@ void HAL_NVIC_ResumeRestore(void)
     int i;
 
     NVIC_SetPriorityGrouping(nvicSave.pg);
-    for (i = 0; i < NVIC_EXT_IP_NUM; i++)
+    for (i = 0; i < NVIC_EXT_IP_NUM; i++) {
         pnvic->IP[i] = nvicSave.ip[i];
+    }
 
-    for (i = 0; i < NVIC_EXT_ISER_NUM; i++)
+    for (i = 0; i < NVIC_EXT_ISER_NUM; i++) {
         pnvic->ICER[i] = 0xffffffff;
+    }
 
-    for (i = 0; i < NVIC_EXT_ISER_NUM; i++)
+    for (i = 0; i < NVIC_EXT_ISER_NUM; i++) {
         pnvic->ISER[i] = nvicSave.iser[i];
+    }
 }
 
 /**
@@ -216,8 +221,9 @@ void HAL_SCB_SuspendSave(void)
     scbSave.ICSR = SCB->ICSR;
     scbSave.AIRCR = SCB->AIRCR;
     scbSave.SCR = SCB->SCR;
-    for (i = 0; i < SHP_NUM; i++)
+    for (i = 0; i < SHP_NUM; i++) {
         scbSave.SHP[i] = SCB->SHP[i];
+    }
     scbSave.SHCSR = SCB->SHCSR;
     scbSave.CFSR = SCB->CFSR;
     scbSave.DFSR = SCB->DFSR;
@@ -237,8 +243,9 @@ void HAL_SCB_ResumeRestore(void)
     SCB->ICSR = scbSave.ICSR;
     SCB->AIRCR = scbSave.AIRCR;
     SCB->SCR = scbSave.SCR;
-    for (i = 0; i < SHP_NUM; i++)
+    for (i = 0; i < SHP_NUM; i++) {
         SCB->SHP[i] = scbSave.SHP[i];
+    }
     SCB->SHCSR = scbSave.SHCSR;
     SCB->CFSR = scbSave.CFSR;
     SCB->DFSR = scbSave.DFSR;

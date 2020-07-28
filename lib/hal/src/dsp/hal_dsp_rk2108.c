@@ -118,8 +118,9 @@ static HAL_Status DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
             break;
         }
     }
-    if (mask0)
+    if (mask0) {
         WRITE_REG_MASK_WE(PMU->DSPTCM_CON[0], mask0, value0);
+    }
     WRITE_REG_MASK_WE(PMU->DSPTCM_CON[1], mask1, value1);
 
     return HAL_OK;
@@ -140,10 +141,11 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
                 GRF_DSP_CON2_PREFETCH_RAM_AUTO_GATING_EN_MASK |
                 GRF_DSP_CON2_DTCM_MEM_AUTO_GATING_EN_MASK |
                 GRF_DSP_CON2_ITCM_MEM_AUTO_GATING_EN_MASK;
-        if ((uint32_t)arg)
+        if ((uint32_t)arg) {
             WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, mask);
-        else
+        } else {
             WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, 0);
+        }
         break;
     }
     default:
@@ -178,8 +180,9 @@ HAL_Status HAL_DSP_WaitForPowerSt(eDSP_powerSt status, uint32_t timeout)
 
     start = HAL_GetTick();
     while (HAL_DSP_GetPowerSt() != status) {
-        if ((HAL_GetTick() - start) > timeout)
+        if ((HAL_GetTick() - start) > timeout) {
             return HAL_TIMEOUT;
+        }
     }
 
     return HAL_OK;
@@ -202,13 +205,15 @@ HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
 
     /* Check itcm select */
     sel = tcmSel & DSP_ITCM;
-    if (sel)
+    if (sel) {
         DSP_SetTcmMode(sel, mode);
+    }
 
     /* Check dtcm select */
     sel = tcmSel & ~sel;
-    if (sel)
+    if (sel) {
         DSP_SetTcmMode(sel, mode);
+    }
 
     return HAL_OK;
 }

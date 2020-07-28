@@ -104,8 +104,9 @@ void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
         if (clkInits[i].initRate) {
             HAL_CRU_ClkSetFreq(clkInits[i].clkId, clkInits[i].initRate);
         }
-        if (clkDump)
+        if (clkDump) {
             HAL_DBG("%s: %s = %ld\n", __func__, clkInits[i].name, HAL_CRU_ClkGetFreq(clkInits[i].clkId));
+        }
     }
 }
 
@@ -149,8 +150,9 @@ int main(void)
     /* Unity Test  */
     test_main();
 
-    while (1)
+    while (1) {
         ;
+    }
 
     return 0;
 }

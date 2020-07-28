@@ -167,8 +167,9 @@ HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, eHAL_tickClkSource clkSource)
 #if defined(__CORTEX_M) && defined(HAL_SYSTICK_MODULE_ENABLED)
     HAL_ASSERT(IS_SYSTICK_SOURCE(clkSource));
     ret = HAL_SYSTICK_CLKSourceConfig(clkSource);
-    if (ret == HAL_OK && clkSource == HAL_TICK_CLKSRC_EXT)
+    if (ret == HAL_OK && clkSource == HAL_TICK_CLKSRC_EXT) {
         rate = PLL_INPUT_OSC_RATE;
+    }
     HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq()));
     ret = HAL_OK;
 #endif
@@ -215,8 +216,9 @@ uint32_t HAL_GetTick(void)
     uint64_t tick = HAL_TIMER_GetCount(SYS_TIMER);
     uint32_t base = PLL_INPUT_OSC_RATE / 1000;
 
-    if (tick >> 62)
+    if (tick >> 62) {
         tick = ~tick;
+    }
 
     return (uint32_t)HAL_DivU64(tick, base);
 #else
@@ -234,8 +236,9 @@ uint64_t HAL_GetSysTimerCount(void)
 {
 #if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
     uint64_t count = HAL_TIMER_GetCount(SYS_TIMER);
-    if (count >> 62)
+    if (count >> 62) {
         count = ~count;
+    }
 
     return count;
 #else
@@ -277,8 +280,9 @@ eHAL_tickFreq HAL_GetTickFreq(void)
  */
 __WEAK HAL_Status HAL_DelayMs(uint32_t ms)
 {
-    for (uint32_t i = 0; i < ms; i++)
+    for (uint32_t i = 0; i < ms; i++) {
         HAL_DelayUs(1000);
+    }
 
     return HAL_OK;
 }

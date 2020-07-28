@@ -223,26 +223,29 @@ static struct FLASH_INFO s_commonSpiFlash = { 0, 128, 8, 0x03, 0x02, 0x6B, 0x32,
 /********************* Private Function Definition ***************************/
 static HAL_Status SNOR_SPIMemExecOp(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
-    if (spi->xfer)
+    if (spi->xfer) {
         return spi->xfer(spi, op);
-    else
+    } else {
         return HAL_ERROR;
+    }
 }
 
 static HAL_Status SNOR_XipExecOp(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on)
 {
-    if (spi->xipConfig)
+    if (spi->xipConfig) {
         return spi->xipConfig(spi, op, on);
-    else
+    } else {
         return HAL_ERROR;
+    }
 }
 
 static HAL_Status SNOR_ReadWriteReg(struct SPI_NOR *nor, struct HAL_SPI_MEM_OP *op, void *buf)
 {
-    if (op->data.dir == HAL_SPI_MEM_DATA_IN)
+    if (op->data.dir == HAL_SPI_MEM_DATA_IN) {
         op->data.buf.in = buf;
-    else
+    } else {
         op->data.buf.out = buf;
+    }
 
     return SNOR_SPIMemExecOp(nor->spi, op);
 }
@@ -257,8 +260,9 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, 
 
     /* HAL_SNOR_DBG("%s %x %lx\n", __func__, code, len); */
     ret = SNOR_ReadWriteReg(nor, &op, val);
-    if (ret)
+    if (ret) {
         HAL_SNOR_DBG("error %ld reading %x\n", ret, code);
+    }
 
     return ret;
 }
@@ -294,8 +298,9 @@ static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, v
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
 
     ret = SNOR_SPIMemExecOp(nor->spi, &op);
-    if (ret)
+    if (ret) {
         return 0;
+    }
 
     return len;
 }
@@ -316,8 +321,9 @@ static int32_t SNOR_WriteData(struct SPI_NOR *nor, uint32_t to, uint32_t len, co
     op.data.nbytes = len < op.data.nbytes ? len : op.data.nbytes;
 
     ret = SNOR_SPIMemExecOp(nor->spi, &op);
-    if (ret)
+    if (ret) {
         return 0;
+    }
 
     return op.data.nbytes;
 }
@@ -347,8 +353,9 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
     /* HAL_SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
 
     /* special setting */
-    if (nor->info->id == 0x1c7017)
+    if (nor->info->id == 0x1c7017) {
         op.dummy.a2dIdle = 1;
+    }
 
     return SNOR_XipExecOp(nor->spi, &op, 0);
 }
@@ -363,8 +370,9 @@ static HAL_Status SNOR_EraseSec(struct SPI_NOR *nor, uint32_t addr)
                                                      HAL_SPI_MEM_OP_NO_DUMMY,
                                                      HAL_SPI_MEM_OP_NO_DATA);
 
-    if (nor->erase)
+    if (nor->erase) {
         return nor->erase(nor, addr);
+    }
 
     /*
      * Default implementation, if driver doesn't have a specialized HW
@@ -383,8 +391,9 @@ static HAL_Status SNOR_EraseBlk(struct SPI_NOR *nor, uint32_t addr)
                                                      HAL_SPI_MEM_OP_NO_DUMMY,
                                                      HAL_SPI_MEM_OP_NO_DATA);
 
-    if (nor->erase)
+    if (nor->erase) {
         return nor->erase(nor, addr);
+    }
 
     /*
      * Default implementation, if driver doesn't have a specialized HW
@@ -400,8 +409,9 @@ static HAL_Status SNOR_EraseChip(struct SPI_NOR *nor, uint32_t addr)
                                                      HAL_SPI_MEM_OP_NO_DUMMY,
                                                      HAL_SPI_MEM_OP_NO_DATA);
 
-    if (nor->erase)
+    if (nor->erase) {
         return nor->erase(nor, addr);
+    }
 
     /*
      * Default implementation, if driver doesn't have a specialized HW
@@ -416,8 +426,9 @@ static const struct FLASH_INFO *SNOR_GerFlashInfo(uint8_t *flashId)
     uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
 
     for (i = 0; i < HAL_ARRAY_SIZE(s_spiFlashbl); i++) {
-        if (s_spiFlashbl[i].id == id)
+        if (s_spiFlashbl[i].id == id) {
             return &s_spiFlashbl[i];
+        }
     }
 
     return NULL;
@@ -441,11 +452,13 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
     /* HAL_SNOR_DBG("%s %lx\n", __func__, timeout); */
     for (i = 0; i < timeout; i++) {
         ret = nor->readReg(nor, SPINOR_OP_RDSR, &status, 1);
-        if (ret != HAL_OK)
+        if (ret != HAL_OK) {
             return ret;
+        }
 
-        if ((status & 0x01) == 0)
+        if ((status & 0x01) == 0) {
             return HAL_OK;
+        }
 
         HAL_CPUDelayUs(1);
     }
@@ -459,8 +472,9 @@ static HAL_Status SNOR_ReadStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8_
     uint8_t readStatCmd[] = { SPINOR_OP_RDSR, SPINOR_OP_RDSR1, SPINOR_OP_RDSR2 };
     uint8_t i = nor->info->feature & FEA_STATUE_MASK;
 
-    if (i == FEA_STATUE_MODE2) /* Readstatus1 */
+    if (i == FEA_STATUE_MODE2) { /* Readstatus1 */
         readStatCmd[1] = SPINOR_OP_RDCR;
+    }
 
     return nor->readReg(nor, readStatCmd[regIndex], status, 1);
 }
@@ -494,13 +508,15 @@ static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8
         status2[regIndex] = *status;
         readIndex = (regIndex == 0) ? 1 : 0;
         ret = SNOR_ReadStatus(nor, readIndex, &status2[readIndex]);
-        if (ret != HAL_OK)
+        if (ret != HAL_OK) {
             return ret;
+        }
 
         SNOR_WriteEnable(nor);
         ret = nor->writeReg(nor, SPINOR_OP_WRSR, &status2[0], 2);
-        if (ret != HAL_OK)
+        if (ret != HAL_OK) {
             return ret;
+        }
 
         ret = SNOR_WaitBusy(nor, 10000);
     }
@@ -518,11 +534,13 @@ static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
     regIndex = nor->info->QEBits >> 3;
     bitOffset = nor->info->QEBits & 0x7;
     ret = SNOR_ReadStatus(nor, regIndex, &status);
-    if (ret != HAL_OK)
+    if (ret != HAL_OK) {
         return ret;
+    }
 
-    if (status & (1 << bitOffset)) //is QE bit set
+    if (status & (1 << bitOffset)) { //is QE bit set
         return HAL_OK;
+    }
 
     status |= (1 << bitOffset);
     ret = SNOR_WriteStatus(nor, regIndex, &status);
@@ -548,8 +566,9 @@ __STATIC_INLINE HAL_Status SNOR_ReadSFDP(struct SPI_NOR *nor, uint32_t addr, uin
 
 static HAL_Status SNOR_ReadMinorRevision(struct SPI_NOR *nor, uint8_t *ver)
 {
-    if (!ver)
+    if (!ver) {
         return HAL_INVAL;
+    }
 
     return SNOR_ReadSFDP(nor, 0x09, ver);
 }
@@ -598,8 +617,9 @@ int32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_
     uint32_t size, remain = len;
 
     /* HAL_SNOR_DBG("%s from 0x%08lx, len %lx\n", __func__, from, len); */
-    if (from >= nor->size || len > nor->size || (from + len) > nor->size)
+    if (from >= nor->size || len > nor->size || (from + len) > nor->size) {
         return HAL_INVAL;
+    }
 
     while (remain) {
         size = HAL_MIN(READ_MAX_IOSIZE, remain);
@@ -632,8 +652,9 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
     uint32_t size, remain = len;
 
     /* HAL_SNOR_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
-    if (to >= nor->size || len > nor->size || (to + len) > nor->size)
+    if (to >= nor->size || len > nor->size || (to + len) > nor->size) {
         return HAL_INVAL;
+    }
 
     while (remain) {
         size = HAL_MIN(nor->pageSize, remain);
@@ -666,18 +687,21 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE era
     int32_t timeout[] = { 400, 2000, 40000 };
 
     /* HAL_SNOR_DBG("%s addr %lx\n", __func__, addr); */
-    if (addr >= nor->size)
+    if (addr >= nor->size) {
         return HAL_INVAL;
+    }
 
     SNOR_WriteEnable(nor);
-    if (eraseType == ERASE_SECTOR)
+    if (eraseType == ERASE_SECTOR) {
         ret = SNOR_EraseSec(nor, addr);
-    else if (eraseType == ERASE_BLOCK64K)
+    } else if (eraseType == ERASE_BLOCK64K) {
         ret = SNOR_EraseBlk(nor, addr);
-    else
+    } else {
         ret = SNOR_EraseChip(nor, addr);
-    if (ret != HAL_OK)
+    }
+    if (ret != HAL_OK) {
         return ret;
+    }
 
     return SNOR_WaitBusy(nor, timeout[eraseType] * 1000);
 }
@@ -696,8 +720,9 @@ int32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pD
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     ret = HAL_SNOR_ReadData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
-    if (ret != (int32_t)(nSec * nor->sectorSize))
+    if (ret != (int32_t)(nSec * nor->sectorSize)) {
         return ret;
+    }
 
     return nSec;
 }
@@ -716,8 +741,9 @@ int32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *p
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
-    if (ret != (int32_t)(nSec * nor->sectorSize))
+    if (ret != (int32_t)(nSec * nor->sectorSize)) {
         return ret;
+    }
 
     return nSec;
 }
@@ -739,12 +765,14 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     while (remaining) {
         ret = HAL_SNOR_Erase(nor, sec * nor->sectorSize, ERASE_SECTOR);
-        if (ret != HAL_OK)
+        if (ret != HAL_OK) {
             return ret;
+        }
 
         ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, (void *)pBuf, nor->sectorSize);
-        if (ret != (int32_t)(nor->sectorSize))
+        if (ret != (int32_t)(nor->sectorSize)) {
             return ret;
+        }
 
         pBuf += nor->sectorSize;
         remaining--;
@@ -789,14 +817,16 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     HAL_SNOR_ReadID(nor, idByte);
     HAL_SNOR_DBG("SPI Nor ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
 
-    if ((idByte[0] == 0xFF) || (idByte[0] == 0x00))
+    if ((idByte[0] == 0xFF) || (idByte[0] == 0x00)) {
         return HAL_ERROR;
+    }
 
     info = SNOR_GerFlashInfo(idByte);
     if (!info) {
         if (nor->spi->mode & HAL_SPI_RX_QUAD ||
-            nor->spi->mode & HAL_SPI_TX_QUAD)
+            nor->spi->mode & HAL_SPI_TX_QUAD) {
             return HAL_NODEV;
+        }
         s_commonSpiFlash.id = (idByte[0] << 16) | (idByte[1] << 8) | idByte[2];
         s_commonSpiFlash.density = idByte[2] - 9;
         info = &s_commonSpiFlash;
@@ -819,8 +849,9 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     nor->eraseSize = nor->sectorSize;
     if (nor->spi->mode & HAL_SPI_RX_QUAD) {
         ret = HAL_OK;
-        if (info->QEBits)
+        if (info->QEBits) {
             ret = SNOR_EnableQE(nor);
+        }
         if (ret == HAL_OK) {
             nor->readOpcode = info->readCmd_4;
             switch (nor->readOpcode) {
@@ -853,11 +884,13 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
             }
         }
     }
-    if (info->feature & FEA_4BYTE_ADDR)
+    if (info->feature & FEA_4BYTE_ADDR) {
         nor->addrWidth = 4;
+    }
 
-    if (info->feature & FEA_4BYTE_ADDR_MODE)
+    if (info->feature & FEA_4BYTE_ADDR_MODE) {
         SNOR_Enter4byte(nor);
+    }
 
 #ifdef HAL_SNOR_DEBUG
     uint8_t status;
@@ -879,8 +912,9 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     HAL_SNOR_DBG("nor->size: %ldMB\n", nor->size >> 20);
     HAL_SNOR_DBG("xip enable: %lx\n", nor->spi->mode & HAL_SPI_XIP);
 
-    if (nor->spi->mode & HAL_SPI_XIP)
+    if (nor->spi->mode & HAL_SPI_XIP) {
         SNOR_XipInit(nor);
+    }
 
     return HAL_OK;
 }
@@ -963,8 +997,9 @@ HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId)
     uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
 
     for (i = 0; i < HAL_ARRAY_SIZE(s_spiFlashbl); i++) {
-        if (s_spiFlashbl[i].id == id)
+        if (s_spiFlashbl[i].id == id) {
             return HAL_TRUE;
+        }
     }
 
     return HAL_FALSE;

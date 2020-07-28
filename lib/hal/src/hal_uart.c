@@ -97,8 +97,9 @@ static int32_t UART_SetLcrReg(struct UART_REG *pReg, uint8_t byteSize,
         break;
     }
 
-    if (stopBits == UART_ONE_AND_HALF_OR_TWO_STOPBIT)
+    if (stopBits == UART_ONE_AND_HALF_OR_TWO_STOPBIT) {
         lcr |= UART_LCR_STOP;
+    }
 
     pReg->LCR = lcr;
 
@@ -124,15 +125,18 @@ HAL_Status HAL_UART_Suspend(struct UART_REG *pReg, struct UART_SAVE_CONFIG *pUar
 {
     HAL_ASSERT(IS_UART_INSTANCE(pReg));
     if (pUartSave && pReg) {
-        while (!(pReg->USR & UART_USR_TX_FIFO_EMPTY))
+        while (!(pReg->USR & UART_USR_TX_FIFO_EMPTY)) {
             ;
+        }
         pUartSave->LCR = pReg->LCR;
         pUartSave->IER = pReg->IER;
         pUartSave->MCR = pReg->MCR;
-        if (pReg->USR & UART_USR_BUSY)
+        if (pReg->USR & UART_USR_BUSY) {
             HAL_DelayMs(10);
-        if (pReg->USR & UART_USR_BUSY)
+        }
+        if (pReg->USR & UART_USR_BUSY) {
             pReg->SRR = UART_SRR_XFR | UART_SRR_RFR;
+        }
         pReg->LCR = UART_LCR_DLAB;
         pUartSave->DLL = pReg->DLL;
         pUartSave->DLH = pReg->DLH;
@@ -243,8 +247,9 @@ void HAL_UART_SerialOutChar(struct UART_REG *pReg, char c)
 {
     HAL_ASSERT(IS_UART_INSTANCE(pReg));
 
-    while (!(pReg->USR & UART_USR_TX_FIFO_NOT_FULL))
+    while (!(pReg->USR & UART_USR_TX_FIFO_NOT_FULL)) {
         ;
+    }
     pReg->THR = (uint32_t)c;
 }
 
@@ -262,8 +267,9 @@ int HAL_UART_SerialOut(struct UART_REG *pReg, const uint8_t *pdata, uint32_t cnt
     HAL_ASSERT(IS_UART_INSTANCE(pReg));
 
     while (cnt--) {
-        while (!(pReg->USR & UART_USR_TX_FIFO_NOT_FULL))
+        while (!(pReg->USR & UART_USR_TX_FIFO_NOT_FULL)) {
             ;
+        }
         pReg->THR = *pdata++;
         dwRealSize++;
     }
@@ -338,10 +344,11 @@ HAL_Status HAL_UART_Init(const struct HAL_UART_DEV *dev, const struct HAL_UART_C
         uint32_t rate;
 
         /* set sclk according to uart baud rate */
-        if (config->baudRate <= 115200)
+        if (config->baudRate <= 115200) {
             rate = PLL_INPUT_OSC_RATE;
-        else
+        } else {
             rate = config->baudRate * 16;
+        }
         HAL_CRU_ClkSetFreq(dev->sclkID, rate);
         newRate = HAL_CRU_ClkGetFreq(dev->sclkID);
         HAL_ASSERT(rate == newRate);

@@ -138,8 +138,9 @@ static void VOP_MaskWrite(__IO uint32_t *mirReg, __IO uint32_t *hwReg,
 static void VOP_Write(__IO uint32_t *mirReg, __IO uint32_t *hwReg,
                       uint32_t v)
 {
-    if (mirReg)
+    if (mirReg) {
         *mirReg = v;
+    }
     WRITE_REG(*hwReg, v);
 }
 
@@ -217,10 +218,11 @@ HAL_UNUSED static uint8_t VOP_GetFormatLength(uint8_t format, uint8_t plane)
 
 static inline bool IS_Valid_Win(int winId)
 {
-    if ((winId != VOP_WIN0) && (winId != VOP_WIN2))
+    if ((winId != VOP_WIN0) && (winId != VOP_WIN2)) {
         return false;
-    else
+    } else {
         return true;
+    }
 }
 static void VOP_SetWin(struct VOP_REG *pReg,
                        struct CRTC_WIN_STATE *pWinState,
@@ -230,8 +232,9 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     uint32_t yStride, cbcrStride;
     uint32_t regOffset;
 
-    if (!IS_Valid_Win(pWinState->winId))
+    if (!IS_Valid_Win(pWinState->winId)) {
         return;
+    }
 
     regOffset = (pWinState->winId == VOP_WIN2) ? 0x50 : 0;
 
@@ -240,11 +243,13 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                   VOP_WIN0_CTRL0_WIN0_EN_SHIFT,
                   VOP_WIN0_CTRL0_WIN0_EN_MASK, pWinState->winEn);
 
-    if (!pWinState->winEn)
+    if (!pWinState->winEn) {
         return;
+    }
 
-    if ((pWinState->winId == VOP_WIN2) && (pWinState->hwFormat > VOP_FMT_RGB565))
+    if ((pWinState->winId == VOP_WIN2) && (pWinState->hwFormat > VOP_FMT_RGB565)) {
         return;
+    }
 
     VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                   &pReg->WIN0_CTRL0 + regOffset,
@@ -254,10 +259,11 @@ static void VOP_SetWin(struct VOP_REG *pReg,
     yStride = pWinState->stride;
 
     if ((pWinState->hwFormat == VOP_FMT_YUV444SP) ||
-        (pWinState->hwFormat == VOP_FMT_YUV444SP_4))
+        (pWinState->hwFormat == VOP_FMT_YUV444SP_4)) {
         cbcrStride = 2 * yStride;
-    else
+    } else {
         cbcrStride = yStride;
+    }
     VOP_Write(&s_vopRegMir.WIN0_VIR + regOffset,
               &pReg->WIN0_VIR + regOffset, cbcrStride << 16 | yStride);
     VOP_Write(&s_vopRegMir.WIN0_YRGB_MST + regOffset,
@@ -456,8 +462,9 @@ HAL_Status HAL_VOP_Init(struct VOP_REG *pReg,
     uint32_t *vopReg = (uint32_t *)pReg;
     uint32_t regLen = sizeof(s_vopRegMir) >> 2;
 
-    for (i = 0; i < regLen; i++)
+    for (i = 0; i < regLen; i++) {
         regMir[i] = vopReg[i];
+    }
 
     VOP_MaskWrite(&s_vopRegMir.DSP_CTRL2, &pReg->DSP_CTRL2,
                   VOP_DSP_CTRL2_DSP_BLANK_EN_SHIFT,
@@ -594,8 +601,9 @@ HAL_Status HAL_VOP_PostBCSH(struct VOP_REG *pReg,
     bool bcshEn = false;
 
     if ((pBCSHInfo->brightness != 50) || (pBCSHInfo->contrast != 50) ||
-        (pBCSHInfo->satCon != 50) || (pBCSHInfo->hue != 50))
+        (pBCSHInfo->satCon != 50) || (pBCSHInfo->hue != 50)) {
         bcshEn = true;
+    }
 
     brightness = VOP_Interpolate(0, -31, 100, 31, pBCSHInfo->brightness);
     contrast = VOP_Interpolate(0, 0, 100, 511, pBCSHInfo->contrast);

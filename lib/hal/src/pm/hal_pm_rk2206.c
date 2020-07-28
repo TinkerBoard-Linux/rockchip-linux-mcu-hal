@@ -162,10 +162,12 @@ static void PM_PutChar(char c)
 {
     if (pUart) {
         pUart->THR = c;
-        if (c == '\n')
+        if (c == '\n') {
             pUart->THR = '\r';
-        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY))
+        }
+        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY)) {
             ;
+        }
     }
 }
 
@@ -201,8 +203,9 @@ static void PM_PrintDec(int dec)
         dec = -dec;
     }
 
-    for (i = 1; tmp / 10; tmp /= 10, i *= 10)
+    for (i = 1; tmp / 10; tmp /= 10, i *= 10) {
         ;
+    }
 
     for (; i >= 1; i /= 10) {
         PM_PutChar('0' + (char)(dec / i));
@@ -217,8 +220,9 @@ static void PM_RegsdDump(uint32_t base,
     uint32_t i;
 
     for (i = startOffset; i <= endOffset; i += 4) {
-        if ((i - startOffset) % 32 == 0)
+        if ((i - startOffset) % 32 == 0) {
             PM_PutChar('\n');
+        }
         PM_PrintHex(base + i);
         PM_PutChar(' ');
         PM_PrintHex(*(uint32_t *)(base + i));
@@ -232,8 +236,9 @@ static void PM_RegsdDump(uint32_t base,
 
 static void PM_UartInit(void)
 {
-    while (pUart->USR & UART_USR_BUSY)
+    while (pUart->USR & UART_USR_BUSY) {
         ;
+    }
 
     pUart->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
     pUart->IER = 0;
@@ -248,8 +253,9 @@ static void PM_UartInit(void)
 
 static void PM_UartSave(void)
 {
-    while (pUart->USR & UART_USR_BUSY)
+    while (pUart->USR & UART_USR_BUSY) {
         ;
+    }
 
     debugPortSave.lcr = pUart->LCR;
     debugPortSave.ier = pUart->IER;
@@ -262,8 +268,9 @@ static void PM_UartSave(void)
 
 static void PM_UartRestore(void)
 {
-    while (pUart->USR & UART_USR_BUSY)
+    while (pUart->USR & UART_USR_BUSY) {
         ;
+    }
 
     pUart->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
 
@@ -279,7 +286,7 @@ static void PM_UartRestore(void)
 
 static int PM_ModeInit(void)
 {
-    if (!sleepConfig->suspendMode)
+    if (!sleepConfig->suspendMode) {
         sleepConfig->suspendMode =
             SLP_PMU_HW_ARM_PD |
             SLP_PMU_DIS_OSC |
@@ -288,13 +295,15 @@ static int PM_ModeInit(void)
             SLP_PMU_DBG
             /* | SLP_PMU_TST_CLK */
         ;
+    }
 
-    if (!sleepConfig->suspendWkupSrc)
+    if (!sleepConfig->suspendWkupSrc) {
         sleepConfig->suspendWkupSrc =
             PMU_WAKEUP_CFG_M4_INT_EN_MASK |
             PMU_WAKEUP_CFG_M0_INT_EN_MASK
             /* | PMU_WAKEUP_CFG_TIMEOUT_EN_MASK */
         ;
+    }
 
     return 0;
 }
@@ -346,10 +355,11 @@ void SOC_ClkGateSuspend(void)
         sleepData.cruClkgtSave[i] =
             pCru->CRU_CLKGATE_CON[i];
 
-        if (sleepConfig->suspendMode & SLP_PMU_DIS_OSC)
+        if (sleepConfig->suspendMode & SLP_PMU_DIS_OSC) {
             pCru->CRU_CLKGATE_CON[i] = 0xffff0000;
-        else
+        } else {
             pCru->CRU_CLKGATE_CON[i] = 0xffff0000 | ~clkUngtMsk[i];
+        }
     }
 }
 
@@ -357,8 +367,9 @@ void SOC_ClkGateResume(void)
 {
     int i;
 
-    for (i = 0; i < CRU_CLKGATES_CON_CNT; i++)
+    for (i = 0; i < CRU_CLKGATES_CON_CNT; i++) {
         pCru->CRU_CLKGATE_CON[i] = 0xffff0000 | sleepData.cruClkgtSave[i];
+    }
 }
 
 static void PMU_Clk32kConfig(void)
@@ -406,10 +417,11 @@ static void PMU_BusIdleReq(ePMU_BusId bus, ePMU_BusState state)
 
     busIdleReq = pPmu->SFT_CON;
 
-    if (state)
+    if (state) {
         busIdleReq |= HAL_BIT(bus);
-    else
+    } else {
         busIdleReq &= ~HAL_BIT(bus);
+    }
 
     pPmu->SFT_CON = busIdleReq;
 
@@ -419,11 +431,12 @@ static void PMU_BusIdleReq(ePMU_BusId bus, ePMU_BusState state)
         waitCnt++;
     }
 
-    if (PMU_BusIdleSt(bus) != state)
+    if (PMU_BusIdleSt(bus) != state) {
         HAL_DBG_WRN("%s:idle_st=0x%x, idle_st1=0x%x, bus_id=%d\n",
                     __func__,
                     pPmu->BUS_IDLE_ST,
                     bus);
+    }
 }
 
 static int PMU_PowerDomainCtr(ePMU_PdId pd, ePMU_PdState pdState)
@@ -434,10 +447,11 @@ static int PMU_PowerDomainCtr(ePMU_PdId pd, ePMU_PdState pdState)
 
     val = pPmu->SFT_CON;
 
-    if (pdState == PMU_PD_OFF)
+    if (pdState == PMU_PD_OFF) {
         val |= HAL_BIT(pd + 8);
-    else
+    } else {
         val &= ~HAL_BIT(pd + 8);
+    }
 
     pPmu->SFT_CON = val;
     __DSB();
@@ -460,11 +474,13 @@ static int PMU_SetPowerDomain(ePMU_PdId pdId, ePMU_PdState pdState)
 {
     uint32_t state;
 
-    if (PMU_PowerDomainSt(pdId) == pdState)
+    if (PMU_PowerDomainSt(pdId) == pdState) {
         goto out;
+    }
 
-    if (pdState == PMU_PD_ON)
+    if (pdState == PMU_PD_ON) {
         PMU_PowerDomainCtr(pdId, pdState);
+    }
 
     state = (pdState == PMU_PD_OFF) ? BUS_IDLE : BUS_ACTIVE;
 
@@ -482,8 +498,9 @@ static int PMU_SetPowerDomain(ePMU_PdId pdId, ePMU_PdState pdState)
         break;
     }
 
-    if (pdState == PMU_PD_OFF)
+    if (pdState == PMU_PD_OFF) {
         PMU_PowerDomainCtr(pdId, pdState);
+    }
 
 out:
 
@@ -509,11 +526,13 @@ static void PMU_PowerDomainsResume(void)
 {
     uint32_t i;
 
-    if (!(pmuPowerdomainState & HAL_BIT(PMU_PD_PERI + 7)))
+    if (!(pmuPowerdomainState & HAL_BIT(PMU_PD_PERI + 7))) {
         PMU_SetPowerDomain(PMU_PD_PERI, PMU_PD_ON);
+    }
 
-    for (i = 0; i < CRU_CLKGATES_CON_CNT; i++)
+    for (i = 0; i < CRU_CLKGATES_CON_CNT; i++) {
         pCru->CRU_CLKGATE_CON[i] = 0xffff0000 | sleepData.cruClkGateCon[i];
+    }
 }
 
 static int PMU_SleepConfig(void)
@@ -551,9 +570,10 @@ static int PMU_SleepConfig(void)
         /* | PMU_PWRMODE_CON_SRAM_RET_EN_MASK */
     ;
 
-    if (mode & SLP_PMU_HW_ARM_PD)
+    if (mode & SLP_PMU_HW_ARM_PD) {
         pwrmodeCon |=
             PMU_PWRMODE_CON_MCU_PD_EN_MASK;
+    }
 
     /* pmu debug pin iomux */
     if (mode & SLP_PMU_DBG) {
@@ -581,11 +601,13 @@ static int PMU_SleepConfig(void)
     }
 
     /* set autowakeup time */
-    if (mode & SLP_TIME_OUT_WKUP)
+    if (mode & SLP_TIME_OUT_WKUP) {
         pmuWkupCfg |= PMU_WAKEUP_CFG_TIMEOUT_EN_MASK;
+    }
 
-    if (pmuWkupCfg & PMU_WAKEUP_CFG_TIMEOUT_EN_MASK)
+    if (pmuWkupCfg & PMU_WAKEUP_CFG_TIMEOUT_EN_MASK) {
         pPmu->TIMEOUT_CNT = clkFreqKhz * CPU_SLEEP_TIMEOUT_TIME;
+    }
 
     pPmu->OSC_CNT = clkFreqKhz * 32;
 
@@ -623,18 +645,21 @@ static inline void SOC_PllWaitLock(uint32_t pllId)
     uint32_t pllCon1 = 0;
 
     while (delay > 0) {
-        if (pllId == GPLL_ID)
+        if (pllId == GPLL_ID) {
             pllCon1 = pCru->GPLL_CON[1];
-        else if (pllId == VPLL_ID)
+        } else if (pllId == VPLL_ID) {
             pllCon1 = pCru->VPLL_CON[1];
+        }
 
-        if (pllCon1 & PLL_LOCK_MSK)
+        if (pllCon1 & PLL_LOCK_MSK) {
             break;
+        }
         delay--;
     }
 
-    if (delay == 0)
+    if (delay == 0) {
         HAL_DBG_ERR("Can't wait pll:%d lock\n", pllId);
+    }
 }
 
 static inline void SOC_PllSetMode(uint32_t pllId, uint32_t mode)
@@ -645,10 +670,11 @@ static inline void SOC_PllSetMode(uint32_t pllId, uint32_t mode)
 
 static inline void SOC_PllSuspend(uint32_t pllId)
 {
-    if (pllId == GPLL_ID)
+    if (pllId == GPLL_ID) {
         sleepData.cruPllsConSave[pllId] = pCru->GPLL_CON[1];
-    else if (pllId == VPLL_ID)
+    } else if (pllId == VPLL_ID) {
         sleepData.cruPllsConSave[pllId] = pCru->VPLL_CON[1];
+    }
 
     /* slow mode */
     SOC_PllSetMode(pllId, SLOW_MODE);
@@ -660,8 +686,9 @@ static inline void SOC_PllResume(uint32_t pllId)
 
     mode = (sleepData.cruModeSave >> pll_mode_shift(pllId)) & 0x3;
     /* if pll locked before suspend, we should wait atfer resume */
-    if (sleepData.cruPllsConSave[pllId] & PLL_LOCK_MSK)
+    if (sleepData.cruPllsConSave[pllId] & PLL_LOCK_MSK) {
         SOC_PllWaitLock(pllId);
+    }
 
     SOC_PllSetMode(pllId, mode);
 }
@@ -703,8 +730,9 @@ static void SOC_ScbSuspend(void)
 {
     int i;
 
-    for (i = 0; i < 12; i++)
+    for (i = 0; i < 12; i++) {
         scbData.shp[i] = SCB->SHP[i];
+    }
 
     scbData.aircr = SCB->AIRCR;
     scbData.ccr = SCB->CCR;
@@ -716,8 +744,9 @@ static void SOC_ScbResume(void)
 {
     int i;
 
-    for (i = 0; i < 12; i++)
+    for (i = 0; i < 12; i++) {
         SCB->SHP[i] = scbData.shp[i];
+    }
 
     SCB->AIRCR = scbData.aircr & 0x700 | 0x05fa0000;
     SCB->CCR = scbData.ccr;
@@ -788,8 +817,9 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     SOC_ClkGateSuspend();
     PM_PutChar('3');
 
-    if (mode & SLP_PMU_PMUALIVE_32K)
+    if (mode & SLP_PMU_PMUALIVE_32K) {
         PMU_Clk32kConfig();
+    }
     PM_PutChar('4');
 
     PMU_SleepConfig();

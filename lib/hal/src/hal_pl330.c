@@ -210,8 +210,9 @@ typedef enum {
 __STATIC_INLINE int PL330_Instr_DMAADDH(uint8_t dryRun, char *buf,
                                         ePL330_DST da, uint16_t val)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAADDH;
+    }
 
     *buf = CMD_DMAADDH;
     *buf |= (da << 1);
@@ -225,8 +226,9 @@ __STATIC_INLINE int PL330_Instr_DMAADDH(uint8_t dryRun, char *buf,
 
 __STATIC_INLINE int PL330_Instr_DMAEND(uint8_t dryRun, char *buf)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAEND;
+    }
     /*
      * DMAEND encoding:
      * 7 6 5 4 3 2 1 0
@@ -250,8 +252,9 @@ __STATIC_INLINE void PL330_Memcpy4(char *dst, char *src)
 __STATIC_INLINE int PL330_Instr_DMAGO(uint8_t dryRun, char *buf, uint8_t cn,
                                       uint32_t imm, uint8_t ns)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAGO;
+    }
     /*
      * DMAGO encoding:
      * 15 14 13 12 11 10 09 08 07 06 05 04 03 02 01 00
@@ -272,8 +275,9 @@ __STATIC_INLINE int PL330_Instr_DMAGO(uint8_t dryRun, char *buf, uint8_t cn,
 __STATIC_INLINE int PL330_Instr_DMALP(uint8_t dryRun, char *buf, uint8_t lc,
                                       uint16_t loops)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMALP;
+    }
     /*
      * DMALP encoding
      * 15   ...   8 7 6 5 4 3 2 1  0
@@ -290,8 +294,9 @@ __STATIC_INLINE int PL330_Instr_DMALP(uint8_t dryRun, char *buf, uint8_t lc,
 __STATIC_INLINE int PL330_Instr_DMAMOV(uint8_t dryRun, char *buf, uint8_t rd,
                                        uint32_t imm)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAMOV;
+    }
     /*
      * DMAMOV encoding
      * 15 4 3 2 1 10 ... 8 7 6 5 4 3 2 1 0
@@ -314,8 +319,9 @@ __STATIC_INLINE int PL330_Instr_DMAMOV(uint8_t dryRun, char *buf, uint8_t rd,
 
 __STATIC_INLINE int PL330_Instr_DMANOP(uint8_t dryRun, char *buf)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMANOP;
+    }
     /*
      * DMANOP encoding
      * 7 6 5 4 3 2 1 0
@@ -330,8 +336,9 @@ __STATIC_INLINE int PL330_Instr_DMANOP(uint8_t dryRun, char *buf)
 
 __STATIC_INLINE int PL330_Instr_DMARMB(uint8_t dryRun, char *buf)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMARMB;
+    }
     /*
      * DMARMB encoding
      * 7 6 5 4 3 2 1 0
@@ -346,8 +353,9 @@ __STATIC_INLINE int PL330_Instr_DMARMB(uint8_t dryRun, char *buf)
 
 __STATIC_INLINE int PL330_Instr_DMASEV(uint8_t dryRun, char *buf, uint8_t event)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMASEV;
+    }
     /*
      * DMASEV encoding
      * 15 4 3 2 1  10 9 8 7 6 5 4 3 2 1 0
@@ -363,8 +371,9 @@ __STATIC_INLINE int PL330_Instr_DMASEV(uint8_t dryRun, char *buf, uint8_t event)
 
 __STATIC_INLINE int PL330_Instr_DMAWMB(uint8_t dryRun, char *buf)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAWMB;
+    }
     /*
      * DMAWMB encoding
      * 7 6 5 4 3 2 1 0
@@ -380,8 +389,9 @@ __STATIC_INLINE int PL330_Instr_DMAWMB(uint8_t dryRun, char *buf)
 __STATIC_INLINE int PL330_Instr_DMAFLUSHP(uint8_t dryRun, char *buf,
                                           uint8_t peri)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAFLUSHP;
+    }
     /*
      * DMAFLUSHP encoding
      * 15 4 3 2 1  10 9 8 7 6 5 4 3 2 1 0
@@ -401,8 +411,9 @@ __STATIC_INLINE int PL330_Instr_DMAFLUSHP(uint8_t dryRun, char *buf,
 __STATIC_INLINE int PL330_Instr_DMALD(uint8_t dryRun, char *buf,
                                       ePL330_COND cond)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMALD;
+    }
     /*
      * DMALD encoding
      * 7 6 5 4 3 2 1  0
@@ -410,10 +421,11 @@ __STATIC_INLINE int PL330_Instr_DMALD(uint8_t dryRun, char *buf,
      */
     *buf = CMD_DMALD;
 
-    if (cond == SINGLE)
+    if (cond == SINGLE) {
         *buf |= (0 << 1) | (1 << 0);
-    else if (cond == BURST)
+    } else if (cond == BURST) {
         *buf |= (1 << 1) | (1 << 0);
+    }
 
     PL330_DBGCMD_DUMP(SZ_DMALD, "\tDMALD%c\n",
                       cond == SINGLE ? 'S' : (cond == BURST ? 'B' : 'A'));
@@ -424,8 +436,9 @@ __STATIC_INLINE int PL330_Instr_DMALD(uint8_t dryRun, char *buf,
 __STATIC_INLINE int PL330_Instr_DMALDP(uint8_t dryRun, char *buf,
                                        ePL330_COND cond, uint8_t peri)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMALDP;
+    }
     /*
      * DMALDP encoding
      * 15 4 3 2 1  10 9 8 7 6 5 4 3 2 1  0
@@ -433,8 +446,9 @@ __STATIC_INLINE int PL330_Instr_DMALDP(uint8_t dryRun, char *buf,
      */
     *buf = CMD_DMALDP;
 
-    if (cond == BURST)
+    if (cond == BURST) {
         *buf |= (1 << 1);
+    }
 
     peri &= 0x1f;
     peri <<= 3;
@@ -450,8 +464,9 @@ __STATIC_INLINE int PL330_Instr_DMALPEND(uint8_t dryRun, char *buf,
                                          ePL330_COND cond, bool forever,
                                          uint32_t loop, uint8_t bjump)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMALPEND;
+    }
     /*
      * DMALPEND encoding
      * 15       ...        8 7 6 5 4  3 2  1  0
@@ -459,16 +474,19 @@ __STATIC_INLINE int PL330_Instr_DMALPEND(uint8_t dryRun, char *buf,
      */
     *buf = CMD_DMALPEND;
 
-    if (loop)
+    if (loop) {
         *buf |= (1 << 2);
+    }
 
-    if (!forever)
+    if (!forever) {
         *buf |= (1 << 4);
+    }
 
-    if (cond == SINGLE)
+    if (cond == SINGLE) {
         *buf |= (0 << 1) | (1 << 0);
-    else if (cond == BURST)
+    } else if (cond == BURST) {
         *buf |= (1 << 1) | (1 << 0);
+    }
 
     *(buf + 1) = bjump;
 
@@ -482,8 +500,9 @@ __STATIC_INLINE int PL330_Instr_DMALPEND(uint8_t dryRun, char *buf,
 
 __STATIC_INLINE int PL330_Instr_DMAKILL(uint8_t dryRun, char *buf)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAKILL;
+    }
     /*
      * DMAKILL encoding
      * 7 6 5 4 3 2 1 0
@@ -497,8 +516,9 @@ __STATIC_INLINE int PL330_Instr_DMAKILL(uint8_t dryRun, char *buf)
 __STATIC_INLINE int PL330_Instr_DMAST(uint8_t dryRun, char *buf,
                                       ePL330_COND cond)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAST;
+    }
     /*
      * DMAST encoding
      * 7 6 5 4 3 2 1  0
@@ -506,10 +526,11 @@ __STATIC_INLINE int PL330_Instr_DMAST(uint8_t dryRun, char *buf,
      */
     *buf = CMD_DMAST;
 
-    if (cond == SINGLE)
+    if (cond == SINGLE) {
         *buf |= (0 << 1) | (1 << 0);
-    else if (cond == BURST)
+    } else if (cond == BURST) {
         *buf |= (1 << 1) | (1 << 0);
+    }
 
     PL330_DBGCMD_DUMP(SZ_DMAST, "\tDMAST%c\n",
                       cond == SINGLE ? 'S' : (cond == BURST ? 'B' : 'A'));
@@ -520,8 +541,9 @@ __STATIC_INLINE int PL330_Instr_DMAST(uint8_t dryRun, char *buf,
 __STATIC_INLINE int PL330_Instr_DMASTP(uint8_t dryRun, char *buf,
                                        ePL330_COND cond, uint8_t peri)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMASTP;
+    }
     /*
      * DMASTP encoding
      * 15 4 3 2 1  10 9 8 7 6 5 4 3 2 1  0
@@ -529,8 +551,9 @@ __STATIC_INLINE int PL330_Instr_DMASTP(uint8_t dryRun, char *buf,
      */
     *buf = CMD_DMASTP;
 
-    if (cond == BURST)
+    if (cond == BURST) {
         *buf |= (1 << 1);
+    }
 
     peri &= 0x1f;
     peri <<= 3;
@@ -544,8 +567,9 @@ __STATIC_INLINE int PL330_Instr_DMASTP(uint8_t dryRun, char *buf,
 
 __STATIC_INLINE int PL330_Instr_DMASTZ(uint8_t dryRun, char *buf)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMASTZ;
+    }
     /*
      * DMASTZ encoding
      * 7 6 5 4 3 2 1 0
@@ -561,8 +585,9 @@ __STATIC_INLINE int PL330_Instr_DMASTZ(uint8_t dryRun, char *buf)
 __STATIC_INLINE int PL330_Instr_DMAWFE(uint8_t dryRun, char *buf, uint8_t ev,
                                        uint32_t invalidate)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAWFE;
+    }
     /*
      * DMAWFE encoding
      * 15 4 3 2 1  10 9 8 7 6 5 4 3 2 1 0
@@ -574,8 +599,9 @@ __STATIC_INLINE int PL330_Instr_DMAWFE(uint8_t dryRun, char *buf, uint8_t ev,
     ev <<= 3;
     *(buf + 1) = ev;
 
-    if (invalidate)
+    if (invalidate) {
         *(buf + 1) |= (1 << 1);
+    }
 
     PL330_DBGCMD_DUMP(SZ_DMAWFE, "\tDMAWFE %u%s\n", ev >> 3,
                       invalidate ? ", I" : "");
@@ -586,8 +612,9 @@ __STATIC_INLINE int PL330_Instr_DMAWFE(uint8_t dryRun, char *buf, uint8_t ev,
 __STATIC_INLINE int PL330_Instr_DMAWFP(uint8_t dryRun, char *buf,
                                        ePL330_COND cond, uint8_t peri)
 {
-    if (dryRun)
+    if (dryRun) {
         return SZ_DMAWFP;
+    }
     /*
      * DMAWFP encoding
      * 15 4 3 2 1  10 9 8 7 6 5 4 3 2 1  0
@@ -595,12 +622,13 @@ __STATIC_INLINE int PL330_Instr_DMAWFP(uint8_t dryRun, char *buf,
      */
     *buf = CMD_DMAWFP;
 
-    if (cond == SINGLE)
+    if (cond == SINGLE) {
         *buf |= (0 << 1) | (0 << 0);
-    else if (cond == BURST)
+    } else if (cond == BURST) {
         *buf |= (1 << 1) | (0 << 0);
-    else
+    } else {
         *buf |= (0 << 1) | (1 << 0);
+    }
 
     peri &= 0x1f;
     peri <<= 3;
@@ -656,9 +684,10 @@ static int _LDST_MemToDev(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
         off += PL330_Instr_DMALD(dryRun, &buf[off], ALWAYS);
         off += PL330_Instr_DMASTP(dryRun, &buf[off], cond, pxs->desc->peri);
         off += PL330_Instr_DMAFLUSHP(dryRun, &buf[off], pxs->desc->peri);
-        if (pxs->desc->srcInterlaceSize)
+        if (pxs->desc->srcInterlaceSize) {
             off += PL330_Instr_DMAADDH(dryRun, &buf[off], SRC,
                                        pxs->desc->srcInterlaceSize);
+        }
     }
 
     return off;
@@ -695,8 +724,9 @@ static int _Loop(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     int cyc, cycmax, szlp, szlpend, szbrst, off;
     uint32_t lcnt0, lcnt1, ljmp0, ljmp1;
 
-    if (*bursts == 1)
+    if (*bursts == 1) {
         return _Bursts(dryRun, pl330, buf, pxs, 1);
+    }
 
     /* Max iterations possible in DMALP is 256 */
     if (*bursts >= 256 * 256) {
@@ -744,12 +774,14 @@ static int _Loop(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     off +=
         PL330_Instr_DMALPEND(dryRun, &buf[off], ALWAYS, false, 1, off - ljmp1);
 
-    if (lcnt0)
+    if (lcnt0) {
         off += PL330_Instr_DMALPEND(dryRun, &buf[off], ALWAYS, false, 0,
                                     off - ljmp0);
+    }
     *bursts = lcnt1 * cyc;
-    if (lcnt0)
+    if (lcnt0) {
         *bursts *= lcnt0;
+    }
 
     return off;
 }
@@ -841,14 +873,16 @@ static int _Loop_Cyclic(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     off += PL330_Instr_DMALP(dryRun, &buf[off], 0, lcnt0);
     ljmp0 = off;
 
-    for (i = 0; i < periods; i++)
+    for (i = 0; i < periods; i++) {
         off += _Period(dryRun, pl330, &buf[off], bursts, pxs, ev);
+    }
 
     off +=
         PL330_Instr_DMALPEND(dryRun, &buf[off], ALWAYS, false, 0, off - ljmp0);
 
-    for (i = 0; i < residue; i++)
+    for (i = 0; i < residue; i++) {
         off += _Period(dryRun, pl330, &buf[off], bursts, pxs, ev);
+    }
 
     off +=
         PL330_Instr_DMALPEND(dryRun, &buf[off], ALWAYS, true, 1, off - ljmpfe);
@@ -864,15 +898,17 @@ static int _Setup_Loops(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     unsigned long c, bursts = BYTE_TO_BURST(x->length, ccr);
     int off = 0;
 
-    if (HAL_DMA_IsSlaveDirection(pxs->desc->dir))
+    if (HAL_DMA_IsSlaveDirection(pxs->desc->dir)) {
         off += PL330_Instr_DMAFLUSHP(dryRun, &buf[off], pxs->desc->peri);
+    }
 
-    if (pxs->desc->dir == DMA_DEV_TO_MEM)
+    if (pxs->desc->dir == DMA_DEV_TO_MEM) {
         bursts = x->length / (BRST_SIZE(ccr) * BRST_LEN(ccr) +
                               pxs->desc->dstInterlaceSize);
-    else if (pxs->desc->dir == DMA_MEM_TO_DEV)
+    } else if (pxs->desc->dir == DMA_MEM_TO_DEV) {
         bursts = x->length / (BRST_SIZE(ccr) * BRST_LEN(ccr) +
                               pxs->desc->srcInterlaceSize);
+    }
 
     while (bursts) {
         c = bursts;
@@ -924,12 +960,13 @@ static int _Setup_Xfer_Cyclic(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     unsigned long bursts = BYTE_TO_BURST(x->length, ccr);
     int off = 0;
 
-    if (pxs->desc->dir == DMA_DEV_TO_MEM)
+    if (pxs->desc->dir == DMA_DEV_TO_MEM) {
         bursts = x->length / (BRST_SIZE(ccr) * BRST_LEN(ccr)
                               + pxs->desc->dstInterlaceSize);
-    else if (pxs->desc->dir == DMA_MEM_TO_DEV)
+    } else if (pxs->desc->dir == DMA_MEM_TO_DEV) {
         bursts = x->length / (BRST_SIZE(ccr) * BRST_LEN(ccr)
                               + pxs->desc->srcInterlaceSize);
+    }
 
     /* Setup Loop(s) */
     off += _Loop_Cyclic(dryRun, pl330, &buf[off], bursts, pxs, ev);
@@ -1023,19 +1060,24 @@ static uint32_t _Prepare_CCR(struct PL330_REQCFG *rqc)
 {
     uint32_t ccr = 0;
 
-    if (rqc->srcInc)
+    if (rqc->srcInc) {
         ccr |= CC_SRCINC;
+    }
 
-    if (rqc->dstInc)
+    if (rqc->dstInc) {
         ccr |= CC_DSTINC;
+    }
 
     /* We set same protection levels for Src and DST for now */
-    if (rqc->privileged)
+    if (rqc->privileged) {
         ccr |= CC_SRCPRI | CC_DSTPRI;
-    if (rqc->nonsecure)
+    }
+    if (rqc->nonsecure) {
         ccr |= CC_SRCNS | CC_DSTNS;
-    if (rqc->insnaccess)
+    }
+    if (rqc->insnaccess) {
         ccr |= CC_SRCIA | CC_DSTIA;
+    }
 
     ccr |= (((rqc->brstLen - 1) & 0xf) << CC_SRCBRSTLEN_SHFT);
     ccr |= (((rqc->brstLen - 1) & 0xf) << CC_DSTBRSTLEN_SHFT);
@@ -1062,12 +1104,14 @@ static int getBurstLen(struct PL330_DESC *desc, struct HAL_PL330_DEV *pl330,
     burstLen >>= desc->rqcfg.brstSize;
 
     /* src/dst_burst_len can't be more than 16 */
-    if (burstLen > 16)
+    if (burstLen > 16) {
         burstLen = 16;
+    }
 
     while (burstLen > 1) {
-        if (!(len % (burstLen << desc->rqcfg.brstSize)))
+        if (!(len % (burstLen << desc->rqcfg.brstSize))) {
             break;
+        }
         burstLen--;
     }
 
@@ -1094,8 +1138,9 @@ static int PL330_Exec_DMAKILL(struct DMA_REG *reg, uint32_t channel, uint32_t th
     /* wait while debug status is busy */
     waitCount = 0;
     while ((READ_REG(reg->DBGSTATUS) & PL330_DBGSTATUS_BUSY) &&
-           (waitCount < PL330_MAX_WAIT))
+           (waitCount < PL330_MAX_WAIT)) {
         waitCount++;
+    }
 
     if (waitCount >= PL330_MAX_WAIT) {
         /* wait time out */
@@ -1143,10 +1188,11 @@ static void PL330_Read_Config(struct HAL_PL330_DEV *pl330)
         pcfg->numPeri = 0;
     }
 
-    if (cr & CR0_BOOT_MAN_NS)
+    if (cr & CR0_BOOT_MAN_NS) {
         pcfg->mode |= DMAC_MODE_NS;
-    else
+    } else {
         pcfg->mode &= ~DMAC_MODE_NS;
+    }
 
     pcfg->numEvents = ((cr >> CR0_NUM_EVENTS_SHIFT) & CR0_NUM_EVENTS_MASK) + 1;
     pcfg->irqNs = READ_REG(reg->CR[3]);
@@ -1177,8 +1223,9 @@ static int PL330_BuildDmaProg(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
 
     if (pl330->peripReqType != BURST) {
         /* Error if xfer length is not aligned at burst size */
-        if (x->length % (BRST_SIZE(pxs->ccr) * BRST_LEN(pxs->ccr)))
+        if (x->length % (BRST_SIZE(pxs->ccr) * BRST_LEN(pxs->ccr))) {
             return HAL_ERROR;
+        }
     }
 
     if (!pxs->desc->cyclic) {
@@ -1437,8 +1484,9 @@ HAL_Status HAL_PL330_DeInit(struct HAL_PL330_DEV *pl330)
     /* Kill the dma channel threads */
     for (i = 0; i < PL330_CHANNELS_PER_DEV; i++) {
         while ((READ_REG(reg->DBGSTATUS) & PL330_DBGSTATUS_BUSY) &&
-               (waitCount < PL330_MAX_WAIT))
+               (waitCount < PL330_MAX_WAIT)) {
             waitCount++;
+        }
 
         dbgInst = PL330_DBGINST0(0, 0x01, i, 1);
         WRITE_REG(reg->DBGINST[0], dbgInst);
@@ -1486,10 +1534,11 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
     HAL_ASSERT(pl330 != NULL);
     HAL_ASSERT(pchan->mcBuf);
 
-    if (pl330->pcfg.mode & DMAC_MODE_NS)
+    if (pl330->pcfg.mode & DMAC_MODE_NS) {
         desc->rqcfg.nonsecure = 1;
-    else
+    } else {
         desc->rqcfg.nonsecure = 0;
+    }
 
     ccr = _Prepare_CCR(&desc->rqcfg);
 
@@ -1498,8 +1547,9 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
     desc->mcBuf = pchan->mcBuf;
 
     ret = PL330_GenDmaProg(pl330, &xs, channel);
-    if (ret)
+    if (ret) {
         return HAL_ERROR;
+    }
 
     /* enable the interrupt */
     SET_BIT(reg->INTEN, 0x01 << channel);
@@ -1525,8 +1575,9 @@ HAL_Status HAL_PL330_Stop(struct PL330_CHAN *pchan)
 
     PL330_Exec_DMAKILL(pchan->pl330->pReg, pchan->chanId, 1);
 
-    if (intEn & (1 << pchan->chanId))
+    if (intEn & (1 << pchan->chanId)) {
         WRITE_REG(pchan->pl330->pReg->INTCLR, 1 << pchan->chanId);
+    }
 
     WRITE_REG(pchan->pl330->pReg->INTEN, intEn & ~(1 << pchan->chanId));
 
@@ -1579,8 +1630,9 @@ uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
     for (ev = 0; ev < PL330_CHANNELS_PER_DEV; ev++) {
         if (val & (1 << ev)) { /* Event occurred */
             /* Clear the event */
-            if (inten & (1 << ev))
+            if (inten & (1 << ev)) {
                 WRITE_REG(reg->INTCLR, 1 << ev);
+            }
         }
     }
 
@@ -1650,8 +1702,9 @@ struct PL330_CHAN *HAL_PL330_RequestChannel(struct HAL_PL330_DEV *pl330, DMA_REQ
     struct PL330_CHAN *pchan = NULL;
 
     for (i = 0; i < PL330_CHANNELS_PER_DEV; i++) {
-        if (pl330->chans[i].used)
+        if (pl330->chans[i].used) {
             continue;
+        }
         pchan = &pl330->chans[i];
         pchan->used = true;
         pchan->periId = id;
@@ -1696,23 +1749,31 @@ HAL_Status HAL_PL330_Config(struct PL330_CHAN *pchan, struct DMA_SLAVE_CONFIG *c
     HAL_ASSERT(pchan);
 
     if (config->direction == DMA_MEM_TO_DEV) {
-        if (config->dstAddr)
+        if (config->dstAddr) {
             pchan->fifoAddr = config->dstAddr;
-        if (config->dstAddrWidth)
+        }
+        if (config->dstAddrWidth) {
             pchan->brstSz = PL330_ToBurstSizeBits(config->dstAddrWidth);
-        if (config->dstMaxBurst)
+        }
+        if (config->dstMaxBurst) {
             pchan->brstLen = config->dstMaxBurst;
-        if (config->srcInterlaceSize)
+        }
+        if (config->srcInterlaceSize) {
             pchan->srcInterlaceSize = config->srcInterlaceSize;
+        }
     } else if (config->direction == DMA_DEV_TO_MEM) {
-        if (config->srcAddr)
+        if (config->srcAddr) {
             pchan->fifoAddr = config->srcAddr;
-        if (config->srcAddrWidth)
+        }
+        if (config->srcAddrWidth) {
             pchan->brstSz = PL330_ToBurstSizeBits(config->srcAddrWidth);
-        if (config->srcMaxBurst)
+        }
+        if (config->srcMaxBurst) {
             pchan->brstLen = config->srcMaxBurst;
-        if (config->dstInterlaceSize)
+        }
+        if (config->dstInterlaceSize) {
             pchan->dstInterlaceSize = config->dstInterlaceSize;
+        }
     }
 
     return HAL_OK;
@@ -1771,10 +1832,11 @@ HAL_Status HAL_PL330_PrepDmaCyclic(struct PL330_CHAN *pchan, uint32_t dmaAddr,
     desc->dir = direction;
     desc->rqcfg.brstSize = pchan->brstSz;
 
-    if (pl330->peripReqType == BURST)
+    if (pl330->peripReqType == BURST) {
         desc->rqcfg.brstLen = pchan->brstLen;
-    else
+    } else {
         desc->rqcfg.brstLen = 1;
+    }
 
     desc->bytesReq = len;
     desc->px.srcAddr = src;
@@ -1847,10 +1909,11 @@ HAL_Status HAL_PL330_PrepDmaSingle(struct PL330_CHAN *pchan, uint32_t dmaAddr,
     desc->dir = direction;
     desc->rqcfg.brstSize = pchan->brstSz;
 
-    if (pl330->peripReqType == BURST)
+    if (pl330->peripReqType == BURST) {
         desc->rqcfg.brstLen = pchan->brstLen;
-    else
+    } else {
         desc->rqcfg.brstLen = 1;
+    }
 
     desc->bytesReq = len;
     desc->px.srcAddr = src;
@@ -1910,19 +1973,22 @@ HAL_Status HAL_PL330_PrepDmaMemcpy(struct PL330_CHAN *pchan, uint32_t dst,
      * parameters because our DMA programming algorithm doesn't cope with
      * transfers which straddle an entry in the DMA device's MFIFO.
      */
-    while ((src | dst | len) & (burst - 1))
+    while ((src | dst | len) & (burst - 1)) {
         burst /= 2;
+    }
 
     desc->rqcfg.brstSize = 0;
-    while (burst != (1 << desc->rqcfg.brstSize))
+    while (burst != (1 << desc->rqcfg.brstSize)) {
         desc->rqcfg.brstSize++;
+    }
 
     /*
      * If burst size is smaller than bus width then make sure we only
      * transfer one at a time to avoid a burst stradling an MFIFO entry.
      */
-    if (desc->rqcfg.brstSize * 8 < pl330->pcfg.dataBusWidth)
+    if (desc->rqcfg.brstSize * 8 < pl330->pcfg.dataBusWidth) {
         desc->rqcfg.brstLen = 1;
+    }
 
     desc->rqcfg.brstLen = getBurstLen(desc, pl330, len);
     desc->bytesReq = len;

@@ -123,12 +123,13 @@ static const struct I2C_SPEC_VALUES fastModePlusSpec = {
   */
 static const struct I2C_SPEC_VALUES *I2C_GetSpec(eI2C_BusSpeed speed)
 {
-    if (speed == I2C_1000K)
+    if (speed == I2C_1000K) {
         return &fastModePlusSpec;
-    else if (speed == I2C_400K)
+    } else if (speed == I2C_400K) {
         return &fastModeSpec;
-    else
+    } else {
         return &standardModeSpec;
+    }
 }
 
 /**
@@ -185,15 +186,17 @@ static HAL_Status I2C_Start(struct I2C_HANDLE *pI2C)
     I2C_CleanIPD(pI2C);
 
     pI2C->state = STATE_START;
-    if (pI2C->type == I2C_IT)
+    if (pI2C->type == I2C_IT) {
         WRITE_REG(pI2C->pReg->IEN, REG_INT_START);
+    }
 
     /* enable adapter with correct mode, send START condition */
     val |= REG_CON_EN | REG_CON_MOD(pI2C->mode) | REG_CON_START | pI2C->cfg;
 
     /* if we want to react to NACK, set ACTACK bit */
-    if (!(pI2C->msg.flags & HAL_I2C_M_IGNORE_NAK))
+    if (!(pI2C->msg.flags & HAL_I2C_M_IGNORE_NAK)) {
         val |= REG_CON_ACTACK;
+    }
 
     WRITE_REG(pI2C->pReg->CON, val);
 
@@ -215,9 +218,10 @@ static HAL_Status I2C_Stop(struct I2C_HANDLE *pI2C, HAL_Status error)
     pI2C->error = error;
 
     if (pI2C->isLastMSG || error) {
-        if (pI2C->type == I2C_IT)
+        if (pI2C->type == I2C_IT) {
             /* Enable stop interrupt */
             WRITE_REG(pI2C->pReg->IEN, REG_INT_STOP);
+        }
 
         pI2C->state = STATE_STOP;
 
@@ -293,21 +297,24 @@ static HAL_Status I2C_FillTransmitBuf(struct I2C_HANDLE *pI2C)
     for (i = 0; i < MAX_TX_DATA_REGISTER_CNT; ++i) {
         val = 0;
         for (j = 0; j < 4; ++j) {
-            if ((pI2C->processed == pI2C->msg.len) && (cnt != 0))
+            if ((pI2C->processed == pI2C->msg.len) && (cnt != 0)) {
                 break;
+            }
 
-            if (pI2C->processed == 0 && cnt == 0)
+            if (pI2C->processed == 0 && cnt == 0) {
                 byte = (pI2C->msg.addr & 0x7f) << 1;
-            else
+            } else {
                 byte = pI2C->msg.buf[pI2C->processed++];
+            }
 
             val |= byte << (j * 8);
             cnt++;
         }
 
         WRITE_REG(pI2C->pReg->TXDATA[i], val);
-        if (pI2C->processed == pI2C->msg.len)
+        if (pI2C->processed == pI2C->msg.len) {
             break;
+        }
     }
 
     WRITE_REG(pI2C->pReg->MTXCNT, cnt);
@@ -340,14 +347,16 @@ static HAL_Status I2C_HandleStart(struct I2C_HANDLE *pI2C, uint32_t ipd)
 
     /* enable appropriate interrupts and transition */
     if (pI2C->mode == REG_CON_MOD_TX) {
-        if (pI2C->type == I2C_IT)
+        if (pI2C->type == I2C_IT) {
             WRITE_REG(pI2C->pReg->IEN, REG_INT_MBTF | REG_INT_NAKRCV);
+        }
         pI2C->state = STATE_WRITE;
         I2C_FillTransmitBuf(pI2C);
     } else {
         /* in any other case, we are going to be reading. */
-        if (pI2C->type == I2C_IT)
+        if (pI2C->type == I2C_IT) {
             WRITE_REG(pI2C->pReg->IEN, REG_INT_MBRF | REG_INT_NAKRCV);
+        }
         pI2C->state = STATE_READ;
         I2C_PrepareRead(pI2C);
     }
@@ -399,20 +408,23 @@ static HAL_Status I2C_HandleRead(struct I2C_HANDLE *pI2C, uint32_t ipd)
     uint8_t byte;
 
     /* we only care for MBRF here. */
-    if (!(ipd & REG_INT_MBRF))
+    if (!(ipd & REG_INT_MBRF)) {
         return HAL_BUSY;
+    }
 
     /* ack interrupt */
     WRITE_REG(pI2C->pReg->IPD, REG_INT_MBRF);
 
     /* Can only handle a maximum of 32 bytes at a time */
-    if (len > 32)
+    if (len > 32) {
         len = 32;
+    }
 
     /* read the data from receive buffer */
     for (i = 0; i < len; ++i) {
-        if (i % 4 == 0)
+        if (i % 4 == 0) {
             val = READ_REG(pI2C->pReg->RXDATA[i / 4]);
+        }
 
         byte = (val >> ((i % 4) * 8)) & 0xff;
         pI2C->msg.buf[pI2C->processed++] = byte;
@@ -530,8 +542,9 @@ HAL_Status HAL_I2C_AdaptDIV(struct I2C_HANDLE *pI2C, uint32_t rate)
     highDIV--;
     lowDIV--;
 
-    if (highDIV > 0xffff || lowDIV > 0xffff)
+    if (highDIV > 0xffff || lowDIV > 0xffff) {
         return HAL_INVAL;
+    }
 
     pI2C->cfg = REG_CON_SDA_CFG(1) | REG_CON_STA_CFG(startSetup);
     WRITE_REG(pI2C->pReg->CLKDIV, (highDIV << I2C_CLKDIV_CLKDIVH_SHIFT) | lowDIV);
@@ -577,8 +590,9 @@ HAL_Status HAL_I2C_IRQHandler(struct I2C_HANDLE *pI2C)
              * Still return busy status, and would finish transfer
              * after the stop handled.
              */
-            if (pI2C->speed == I2C_100K)
+            if (pI2C->speed == I2C_100K) {
                 HAL_DelayUs(1);
+            }
 
             I2C_Stop(pI2C, HAL_NODEV);
             goto out;
@@ -586,8 +600,9 @@ HAL_Status HAL_I2C_IRQHandler(struct I2C_HANDLE *pI2C)
     }
 
     /* is there anything left to handle? */
-    if ((ipd & REG_INT_ALL) == 0)
+    if ((ipd & REG_INT_ALL) == 0) {
         goto out;
+    }
 
     switch (pI2C->state) {
     case STATE_START:
@@ -727,8 +742,9 @@ HAL_Status HAL_I2C_Close(struct I2C_HANDLE *pI2C)
   */
 HAL_Status HAL_I2C_WriteFinish(struct I2C_HANDLE *pI2C)
 {
-    if (READ_REG(pI2C->pReg->IPD) & REG_INT_MBTF)
+    if (READ_REG(pI2C->pReg->IPD) & REG_INT_MBTF) {
         return HAL_OK;
+    }
 
     return HAL_BUSY;
 }
@@ -741,8 +757,9 @@ HAL_Status HAL_I2C_WriteFinish(struct I2C_HANDLE *pI2C)
   */
 HAL_Status HAL_I2C_StopFinish(struct I2C_HANDLE *pI2C)
 {
-    if (REG_INT_STOP & READ_REG(pI2C->pReg->IPD))
+    if (REG_INT_STOP & READ_REG(pI2C->pReg->IPD)) {
         return HAL_OK;
+    }
 
     return HAL_BUSY;
 }
@@ -765,8 +782,9 @@ HAL_Status HAL_I2C_StartTXU32(struct I2C_HANDLE *pI2C, uint32_t *buf,
 
     I2C_CleanIPD(pI2C);
 
-    for (i = 0; i < len32; i++)
+    for (i = 0; i < len32; i++) {
         WRITE_REG(pI2C->pReg->TXDATA[i], buf[i]);
+    }
 
     /* enable adapter with correct mode 0, send START condition */
     WRITE_REG(pI2C->pReg->CON, REG_CON_EN | REG_CON_START | pI2C->cfg);
@@ -796,21 +814,24 @@ HAL_Status HAL_I2C_StartTX(struct I2C_HANDLE *pI2C, uint16_t addr,
     for (i = 0; i < MAX_TX_DATA_REGISTER_CNT; ++i) {
         val = 0;
         for (j = 0; j < 4; ++j) {
-            if ((pI2C->processed == len) && (cnt != 0))
+            if ((pI2C->processed == len) && (cnt != 0)) {
                 break;
+            }
 
-            if (pI2C->processed == 0 && cnt == 0)
+            if (pI2C->processed == 0 && cnt == 0) {
                 byte = (addr & 0x7f) << 1;
-            else
+            } else {
                 byte = buf[pI2C->processed++];
+            }
 
             val |= byte << (j * 8);
             cnt++;
         }
 
         WRITE_REG(pI2C->pReg->TXDATA[i], val);
-        if (pI2C->processed == len)
+        if (pI2C->processed == len) {
             break;
+        }
     }
 
     /* enable adapter with correct mode 0, send START condition */

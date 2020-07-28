@@ -80,16 +80,18 @@ static uint32_t PM_GetPllPostDivEven(uint32_t rateIn, uint32_t rateOut, uint32_t
         }
         div2 += 2;
     }
-    if (div1 < div2)
+    if (div1 < div2) {
         return 2;
+    }
 
     *postDiv1 = div1;
     *postDiv2 = div2;
 
-    if ((div1 * div2) != div)
+    if ((div1 * div2) != div) {
         return 1;
-    else
+    } else {
         return 0;
+    }
 }
 
 static void PM_CruAsEnable(uint8_t en)
@@ -108,30 +110,42 @@ static void PM_CruAsEnable(uint8_t en)
 static void SOC_GetWakeupStatus(struct PMU_REG *pPmu)
 {
     HAL_DBG("\nwakeup source:\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_WAKEUP_PWRMODE_INT_STATUS_SHIFT))
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_WAKEUP_PWRMODE_INT_STATUS_SHIFT)) {
         HAL_DBG("\tPower mode state machine wakeup status by interrupt\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_GPIO_INT_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_GPIO_INT_STATUS_SHIFT)) {
         HAL_DBG("\tPower mode state machine wakeup status by gpio interrupt\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMEOUT_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMEOUT_STATUS_SHIFT)) {
         HAL_DBG("\tPower mode state machine wakeup status by timeout\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_DSP_SFT_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_DSP_SFT_STATUS_SHIFT)) {
         HAL_DBG("\tPower mode state machine wakeup status by DSP software\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMER_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_TIMER_STATUS_SHIFT)) {
         HAL_DBG("\tPower mode state machine wakeup status by timer interrupt\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_VAD_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_VAD_STATUS_SHIFT)) {
         HAL_DBG("\tPower mode state machine wakeup status by vad\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_WAKEUP_DSP_INT_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_WAKEUP_DSP_INT_STATUS_SHIFT)) {
         HAL_DBG("\tDSP auto power down state machine wakeup status by interrupt\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_GPIO_INT_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_GPIO_INT_STATUS_SHIFT)) {
         HAL_DBG("\tDSP auto power down state machine wakeup status by gpio interrupt\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMEOUT_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMEOUT_STATUS_SHIFT)) {
         HAL_DBG("\tDSP auto power down state machine wakeup status by timeout\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_SFT_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_SFT_STATUS_SHIFT)) {
         HAL_DBG("\tDSP auto power down state machine wakeup status by MCU software\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMER_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_TIMER_STATUS_SHIFT)) {
         HAL_DBG("\tauto power down state machine wakeup status by timer\n");
-    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_VAD_STATUS_SHIFT))
+    }
+    if (pPmu->WAKEUP_STATUS & (1 << PMU_WAKEUP_STATUS_DSP_WAKEUP_VAD_STATUS_SHIFT)) {
         HAL_DBG("\tDSP auto power down state machine wakeup status by vad\n");
+    }
 
     pPmu->WAKEUP_STATUS = (1 << PMU_WAKEUP_STATUS_WAKEUP_PWRMODE_INT_STATUS_SHIFT) |
                           (1 << PMU_WAKEUP_STATUS_PWRMODE_WAKEUP_GPIO_INT_STATUS_SHIFT) |
@@ -215,10 +229,11 @@ static void SOC_SleepModeInit(struct PMU_REG *pPmu)
         mask = PMU_PLL_CON_PLL_PD_CFG_MASK;
         /* if PD_DSP and PD_AUDIO power down, CPLL, GPLL and 32K PLL power down by hardware */
         if (pPmu->PWRDN_ST &
-            ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT)))
+            ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT))) {
             pPmu->PLL_CON = VAL_MASK_WE(mask, 0x07);
-        else
+        } else {
             pPmu->PLL_CON = VAL_MASK_WE(mask, 0x05);
+        }
     }
 
     if (pPmu->PWRMODE_CON & (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT)) {
@@ -259,23 +274,27 @@ static void SOC_PutChar(char c, struct UART_REG *pUart)
 {
     if (pUart) {
         pUart->THR = c;
-        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY))
+        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY)) {
             ;
+        }
     }
 }
 
 static void SOC_UartSave(struct UART_REG_SAVE *pUartSave, struct UART_REG *pUart)
 {
     if (pUartSave && pUart) {
-        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY))
+        while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY)) {
             ;
+        }
         pUartSave->LCR = pUart->LCR;
         pUartSave->IER = pUart->IER;
         pUartSave->MCR = pUart->MCR;
-        if (pUart->USR & UART_USR_BUSY)
+        if (pUart->USR & UART_USR_BUSY) {
             HAL_DelayMs(10);
-        if (pUart->USR & UART_USR_BUSY)
+        }
+        if (pUart->USR & UART_USR_BUSY) {
             pUart->SRR = UART_SRR_XFR | UART_SRR_RFR;
+        }
         pUart->LCR = UART_LCR_DLAB;
         pUartSave->DLL = pUart->DLL;
         pUartSave->DLH = pUart->DLH;
@@ -360,8 +379,9 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 
     PM_CruAsEnable(0);
 
-    if (!gpllRate)
+    if (!gpllRate) {
         gpllRate = HAL_CRU_ClkGetFreq(PLL_GPLL);
+    }
 
 #ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
     if (!pmWdtFreq) {
@@ -420,15 +440,17 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 
         gpllRate = (gpllRate * gpllDiv1 * gpllDiv2);
 
-        if (PM_GetPllPostDivEven(gpllRate, GPLL_RUNTIME_RATE, &gpllDiv1New, &gpllDiv2New) >= 2)
+        if (PM_GetPllPostDivEven(gpllRate, GPLL_RUNTIME_RATE, &gpllDiv1New, &gpllDiv2New) >= 2) {
             return UINT32_MAX;
+        }
 
         gpllRateNew = gpllRate / (gpllDiv1New * gpllDiv2New);
         mDiv = gpllRateNew / GPLL_RUNTIME_RATE;
         HAL_ASSERT(mDiv > 0);
         HAL_ASSERT((gpllRateNew * mDiv) >= GPLL_RUNTIME_RATE);
-        if (mDiv > 0)
+        if (mDiv > 0) {
             mDiv -= 1;
+        }
 
 #ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
         HAL_WDT_DynFreqUpdata(pmDynWdtFreqNor);
@@ -461,8 +483,9 @@ static uint32_t PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
         CRU->CRU_CLKSEL_CON[40] = clkSelCon40;
 
         while ((CRU->GPLL_CON[1] & CRU_CPLL_CON1_PLL_LOCK_MASK) !=
-               CRU_CPLL_CON1_PLL_LOCK_MASK)
+               CRU_CPLL_CON1_PLL_LOCK_MASK) {
             ;
+        }
 
         CRU->CRU_MODE_CON00 = cruMode;
     } else if (idleMode == PM_RUNTIME_IDLE_NORMAL) {
@@ -485,10 +508,11 @@ uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 {
     uint32_t ret;
 
-    if (idleMode)
+    if (idleMode) {
         ret = PM_RuntimeEnter(idleMode);
-    else
+    } else {
         ret = UINT32_MAX;
+    }
 
     if (!idleMode || ret) {
         __DSB();
@@ -534,10 +558,11 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 
 #ifdef HAL_UART_MODULE_ENABLED
     if (suspendInfo->flag.uartValid) {
-        if (suspendInfo->flag.uartChannel == 0)
+        if (suspendInfo->flag.uartChannel == 0) {
             pUart = UART0;
-        else if (suspendInfo->flag.uartChannel == 1)
+        } else if (suspendInfo->flag.uartChannel == 1) {
             pUart = UART1;
+        }
     }
 #endif
 

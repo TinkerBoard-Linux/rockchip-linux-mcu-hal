@@ -47,8 +47,9 @@ TEST(HAL_PL330, MemcpyTest){
     uint32_t ret, i;
     struct PL330_CHAN *pchan;
 
-    for (i = 0; i < TSIZE; i++)
+    for (i = 0; i < TSIZE; i++) {
         src[i] = i;
+    }
 
     pchan = HAL_PL330_RequestChannel(s_pl330, 0);
     TEST_ASSERT_NOT_NULL(pchan);

@@ -44,12 +44,13 @@ static int _HAL_Sin(int angles)
 {
     int ret;
 
-    if (angles > 180)
+    if (angles > 180) {
         ret = -SinTable[angles - 180];
-    else if (angles > 90)
+    } else if (angles > 90) {
         ret = SinTable[180 - angles];
-    else
+    } else {
         ret = SinTable[angles];
+    }
 
     return ret;
 }

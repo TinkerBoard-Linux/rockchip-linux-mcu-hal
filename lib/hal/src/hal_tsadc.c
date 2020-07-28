@@ -201,20 +201,22 @@ static uint32_t TSADC_TempToCode(const struct TSADC_CONFIG *config, int temp)
     high = config->length - 1;
 
     /* Return mask code data when the temp is over table range */
-    if (temp < config->table[low].temp || temp > config->table[high].temp)
+    if (temp < config->table[low].temp || temp > config->table[high].temp) {
         return error;
+    }
 
 #ifdef TSADC_NONLINEAR
     uint32_t mid = (low + high) / 2;
 
     while (low <= high) {
         HAL_ASSERT(mid >= 0 && mid <= (config->length - 1));
-        if (temp == config->table[mid].temp)
+        if (temp == config->table[mid].temp) {
             return config->table[mid].code;
-        else if (temp < config->table[mid].temp)
+        } else if (temp < config->table[mid].temp) {
             high = mid - 1;
-        else
+        } else {
             low = mid + 1;
+        }
         mid = (low + high) / 2;
     }
 
@@ -224,8 +226,9 @@ static uint32_t TSADC_TempToCode(const struct TSADC_CONFIG *config, int temp)
 
     HAL_ASSERT(kNum != 0);
     code = (temp - bNum) / kNum;
-    if (code > 0)
+    if (code > 0) {
         error = code;
+    }
 
     return error;
 #endif

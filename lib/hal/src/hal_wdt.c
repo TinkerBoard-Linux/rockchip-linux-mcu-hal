@@ -86,11 +86,12 @@ static void WDT_SetTop(uint32_t top_s)
      * Iterate over the timeout values until we find the closest match. We
      * always look for >=.
      */
-    for (i = 0; i <= WDT_MAX_TOP; ++i)
+    for (i = 0; i <= WDT_MAX_TOP; ++i) {
         if (WDT_TopInSeconds(i) >= top_s) {
             top_Val = i;
             break;
         }
+    }
     /*
      * Set the new value in the watchdog.  Some versions of dwWdt
      * have have TOPINIT in the TIMEOUT_RANGE register (as per
@@ -221,10 +222,11 @@ HAL_Status HAL_WDT_Start(enum WDT_RESP_MODE mode)
 {
     uint32_t tmp = pWDT->CR;
 
-    if (mode == INDIRECT_SYSTEM_RESET)
+    if (mode == INDIRECT_SYSTEM_RESET) {
         tmp |= WDT_CR_RESP_MODE_MASK;
-    else if (mode == DIRECT_SYSTEM_RESET)
+    } else if (mode == DIRECT_SYSTEM_RESET) {
         tmp &= ~WDT_CR_RESP_MODE_MASK;
+    }
 
     tmp |= WDT_CR_WDT_EN_MASK;
 
@@ -248,8 +250,9 @@ HAL_Status HAL_WDT_DynFreqUpdata(uint32_t freq)
     uint32_t topDynMs;
     uint32_t curTick;
 
-    if (!wdtDynFreq.targetTick)
+    if (!wdtDynFreq.targetTick) {
         return HAL_INVAL;
+    }
 
     curTick = HAL_GetTick();
 
@@ -279,8 +282,9 @@ HAL_Status HAL_WDT_DynFreqUpdata(uint32_t freq)
 HAL_Status HAL_WDT_DynFreqResume(void)
 {
 #ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
-    if (HAL_WDT_DynFreqUpdata(dwWdt.freq) == HAL_OK)
+    if (HAL_WDT_DynFreqUpdata(dwWdt.freq) == HAL_OK) {
         WDT_SetTop(wdtDynFreq.topSec);
+    }
 #endif
 
     return HAL_OK;

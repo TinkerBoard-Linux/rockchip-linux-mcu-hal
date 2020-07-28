@@ -64,8 +64,9 @@ HAL_Status HAL_TouchKey_Init(uint32_t chn_num, struct TOUCH_SENSOR_REG *touchkey
 
     HAL_ASSERT(IS_TOUCH_SENSOR_INSTANCE(touchkey));
 
-    if (chn_num > HAL_TOUCHKEY_MAX_CHANNEL)
+    if (chn_num > HAL_TOUCHKEY_MAX_CHANNEL) {
         chn_num = HAL_TOUCHKEY_MAX_CHANNEL;
+    }
 
     touchkey->CH_CHARGE_THRESHOLD = TOUCHKEY_FILTER_THRESHOLD;
     touchkey->CH_DIV = (TOUCHKEY_INPUT_CLK / TOUCHKEY_OUTPUT_CLK) / 2;

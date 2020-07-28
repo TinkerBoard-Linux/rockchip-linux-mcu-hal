@@ -58,8 +58,9 @@ HAL_Status HAL_SARADC_Start(struct SARADC_REG *reg, eSARADC_mode mode, uint32_t 
 
     value = chn & SARADC_CTRL_ADC_INPUT_SRC_SEL_MASK;
 
-    if (mode == SARADC_INT_MOD)
+    if (mode == SARADC_INT_MOD) {
         value |= SARADC_CTRL_INT_EN_MASK;
+    }
 
     value |= SARADC_CTRL_ADC_POWER_CTRL_MASK;
 

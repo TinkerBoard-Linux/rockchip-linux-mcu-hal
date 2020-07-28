@@ -34,8 +34,9 @@ static void *AllocBuffer(void * *buf1_, int32_t size)
     char * *buf1 = (char * *)buf1_;
     char *buf, *ptr;
 
-    if (!buf1 || size < 0)
+    if (!buf1 || size < 0) {
         size = 0;
+    }
 
     ptr = buf = (char *)malloc(size + CACHE_LINE_SIZE);
     memset(buf, 0xCC, size + CACHE_LINE_SIZE);
@@ -49,8 +50,9 @@ static uint32_t MyCpy(uint32_t *dst, uint32_t *src, uint32_t size)
 {
     uint32_t i;
 
-    for (i = 0; i < (size / 4); i++)
+    for (i = 0; i < (size / 4); i++) {
         dst[i] = src[i];
+    }
 
     return 0;
 }
@@ -83,10 +85,11 @@ static void DataAccessHelper(uint32_t *srcbuf, uint32_t *dstbuf, uint32_t (*f)(u
             pmuStatus[1].rdHit - pmuStatus[0].rdHit,
             pmuStatus[1].rdNum - pmuStatus[0].rdNum);
     HAL_DBG("PMU read miss penalty %lu\n", pmuStatus[1].rdMissPenalty - pmuStatus[0].rdMissPenalty);
-    if (timCount[1] > timCount[0])
+    if (timCount[1] > timCount[0]) {
         gap = timCount[1] - timCount[0];
-    else
+    } else {
         gap = timCount[0] - timCount[1];
+    }
     us = HAL_DivU64(gap, PLL_INPUT_OSC_RATE / 1000000);
     HAL_DBG("data %d bytes, cost %ld us(gap %lld), about %ld KB/s\n", BUFFER_SIZE, us, gap, 1000000 / us * BUFFER_SIZE / 1024);
 
@@ -97,10 +100,11 @@ static void DataAccessHelper(uint32_t *srcbuf, uint32_t *dstbuf, uint32_t (*f)(u
             pmuStatus[3].rdHit - pmuStatus[2].rdHit,
             pmuStatus[3].rdNum - pmuStatus[2].rdNum);
     HAL_DBG("PMU read miss penalty %lu\n", pmuStatus[3].rdMissPenalty - pmuStatus[2].rdMissPenalty);
-    if (timCount[3] > timCount[2])
+    if (timCount[3] > timCount[2]) {
         gap = timCount[3] - timCount[2];
-    else
+    } else {
         gap = timCount[2] - timCount[3];
+    }
     us = HAL_DivU64(gap, PLL_INPUT_OSC_RATE / 1000000);
     HAL_DBG("data %d bytes, cost %ld us(gap %lld), about %ld KB/s\n", BUFFER_SIZE, us, gap, 1000000 / us * BUFFER_SIZE / 1024);
     HAL_ICACHE_DisablePMU();

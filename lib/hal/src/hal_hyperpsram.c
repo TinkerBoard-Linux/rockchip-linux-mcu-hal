@@ -159,31 +159,34 @@ static HAL_Status HYPERPSRAM_ModifyTiming(struct HAL_HYPERPSRAM_DEV *pHyperPsram
     struct HYPERBUS_REG *pReg = pHyperPsramDev->pReg;
 
     if (pReg->MCR[0] & HYPERBUS_MCR0_MAXEN_CONF_LOW) {
-        if (pHyperPsramDev->psramChip.id == W955D8MKY)
+        if (pHyperPsramDev->psramChip.id == W955D8MKY) {
             /*
              * The max length must less 63(128bytes) for W955D8MKY.
              * The peripherals like DMA access psram must be 128 address aligned.
              */
             maxLength = 63;
-        else
+        } else {
             maxLength = 511;
+        }
 
         tmp = pReg->MTR[0] & HYPERBUS_MTR0_LTCY_MASK;
-        if (tmp < 3)
+        if (tmp < 3) {
             tal = 5 + tmp;
-        else if (tmp == 0xe)
+        } else if (tmp == 0xe) {
             tal = 3;
-        else if (tmp == 0xf)
+        } else if (tmp == 0xf) {
             tal = 4;
-        else
+        } else {
             tal = 7;
+        }
         tcmd = 3;
 
         tmp = (HYPERBUS_DEV_TCSM_1U * freqMhz + 999) / 1000;
         tmp = tmp - tcmd - 2 * tal - 4;
 
-        if (tmp > maxLength)
+        if (tmp > maxLength) {
             tmp = maxLength;
+        }
         MODIFY_REG(pReg->MCR[0], HYPERBUS_MCR0_MAXLEN_MASK,
                    tmp << HYPERBUS_MCR0_MAXLEN_SHIFT);
     }
@@ -250,8 +253,9 @@ static HAL_Status HYPERPSRAM_CapDetect(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev
         p2 = (uint32_t *)((pHyperPsramDev->hyperMem[0] + cap - 0x4) & 0x3);
         *p1 = PATTERN1;
         *p2 = PATTERN2;
-        if ((*p1 == PATTERN1) && (*p2 == PATTERN2))
+        if ((*p1 == PATTERN1) && (*p2 == PATTERN2)) {
             break;
+        }
     }
     if (cap >= SIZE_1MBYTE) {
         pHyperPsramDev->psramChip.cap = cap;
@@ -279,8 +283,9 @@ static HAL_Status HYPERPSRAM_Init(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
         WRITE_REG(pReg->SPCSR, psramInfo[i].spc);
         WRITE_REG(pReg->MTR[0], psramInfo[i].mtrTiming);
         detect_id = HYPERPSRAM_GetDevId(pReg, pHyperPsramDev->hyperMem[0]);
-        if (detect_id == psramInfo[i].id)
+        if (detect_id == psramInfo[i].id) {
             break;
+        }
     }
 
     psramChip->id = detect_id;
@@ -302,8 +307,9 @@ static HAL_Status HYPERPSRAM_IdCheck(uint16_t id)
     uint32_t i;
 
     for (i = 0; i < HAL_ARRAY_SIZE(psramInfo); i++) {
-        if (id == psramInfo[i].id)
+        if (id == psramInfo[i].id) {
             return HAL_OK;
+        }
     }
 
     return HAL_ERROR;
@@ -410,8 +416,9 @@ HAL_Status HAL_HYPERPSRAM_Suspend(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
 
     p1 = (uint32_t *)&pHyperPsramDev->hyperResumeReg.hyperbus;
     p2 = (uint32_t *)pHyperPsramDev->pReg;
-    for (i = 0; i < (sizeof(pHyperPsramDev->hyperResumeReg.hyperbus) / 4); i++)
+    for (i = 0; i < (sizeof(pHyperPsramDev->hyperResumeReg.hyperbus) / 4); i++) {
         *p1++ = *p2++;
+    }
 
     pHyperPsramDev->hyperResumeReg.available = HYPERBUS_REG_AVA_FLAG;
 
@@ -435,8 +442,9 @@ HAL_Status HAL_HYPERPSRAM_Resume(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
     if (pHyperPsramDev->hyperResumeReg.available == HYPERBUS_REG_AVA_FLAG) {
         p1 = (uint32_t *)&pHyperPsramDev->hyperResumeReg.hyperbus;
         p2 = (uint32_t *)pHyperPsramDev->pReg;
-        for (i = 0; i < (sizeof(pHyperPsramDev->hyperResumeReg.hyperbus) / 4); i++)
+        for (i = 0; i < (sizeof(pHyperPsramDev->hyperResumeReg.hyperbus) / 4); i++) {
             *p2++ = *p1++;
+        }
 
         return HAL_OK;
     } else {

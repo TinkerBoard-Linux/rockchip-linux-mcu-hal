@@ -578,10 +578,11 @@ inline HAL_Status HAL_MMC_PowerCtrl(struct HAL_MMC_HOST *host, bool on)
     struct MMC_REG *pReg = host->pReg;
 
     reg = READ_REG(pReg->PWREN);
-    if (on)
+    if (on) {
         reg |= HAL_BIT(0);
-    else
+    } else {
         reg &= ~HAL_BIT(0);
+    }
 
     WRITE_REG(pReg->PWREN, reg);
 
@@ -607,8 +608,9 @@ HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host)
     uint32_t reg;
     struct MMC_REG *pReg;
 
-    if (host->MMC_Reset)
+    if (host->MMC_Reset) {
         host->MMC_Reset(host);
+    }
 
     HAL_ASSERT(host->pReg != 0x0);
 

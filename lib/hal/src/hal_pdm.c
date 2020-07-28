@@ -96,8 +96,9 @@ static uint32_t PDM_GetClk(struct HAL_PDM_DEV *pdm, uint32_t sr)
 
     count = HAL_ARRAY_SIZE(clkRef);
     for (i = 0; i < count; i++) {
-        if (sr % clkRef[i].sr)
+        if (sr % clkRef[i].sr) {
             continue;
+        }
         div = sr / clkRef[i].sr;
         if ((div & (div - 1)) == 0) {
             clk = clkRef[i].clkOut;
@@ -203,8 +204,9 @@ static HAL_Status PDM_ChangeClkFreq(struct HAL_PDM_DEV *pdm,
     /* get real clk freq */
     clkSrc = HAL_CRU_ClkGetFreq(pdm->mclk);
     ret = HAL_CRU_FracdivGetConfig(clkOut, clkSrc, &n, &m);
-    if (ret)
+    if (ret) {
         return ret;
+    }
     HAL_DBG("%s: clk: %lu, n: 0x%lx, m: 0x%lx\n", __func__, clkSrc, n, m);
     old = READ_REG(reg->CTRL[1]);
     val = (n << PDM_CTRL1_FRAC_DIV_NUMERATOR_SHIFT) |

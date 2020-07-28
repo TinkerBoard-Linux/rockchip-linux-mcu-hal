@@ -21,8 +21,9 @@ static struct UART_REG *pUart = UART0;
 int __wrap_puts(const char *s)
 {
     while (*s != '\0') {
-        if (*s == '\n')
+        if (*s == '\n') {
             HAL_UART_SerialOutChar(pUart, '\r');
+        }
 
         HAL_UART_SerialOutChar(pUart, *s);
         ++s;

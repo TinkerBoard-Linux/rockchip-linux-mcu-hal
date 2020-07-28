@@ -73,8 +73,9 @@ uint64_t HAL_DivU64Rem(uint64_t numerator, uint32_t denominator, uint32_t *pRema
         d >>= 1;
     } while (d);
 
-    if (pRemainder)
+    if (pRemainder) {
         *pRemainder = remainder;
+    }
 
     return result;
 }

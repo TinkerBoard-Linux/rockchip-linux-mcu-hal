@@ -154,17 +154,23 @@ HAL_Status HAL_DSI_IrqHandler(struct DSI_REG *pReg)
     intSt0 = READ_REG(pReg->INT_ST0);
     intSt1 = READ_REG(pReg->INT_ST1);
 
-    for (i = 0; i < HAL_ARRAY_SIZE(ACK_WITH_ERR); i++)
-        if (intSt0 & HAL_BIT(i))
+    for (i = 0; i < HAL_ARRAY_SIZE(ACK_WITH_ERR); i++) {
+        if (intSt0 & HAL_BIT(i)) {
             HAL_DBG_ERR("DSI Irq: %s\n", ACK_WITH_ERR[i]);
+        }
+    }
 
-    for (i = 0; i < HAL_ARRAY_SIZE(DPHY_ERROR); i++)
-        if (intSt0 & HAL_BIT(16 + i))
+    for (i = 0; i < HAL_ARRAY_SIZE(DPHY_ERROR); i++) {
+        if (intSt0 & HAL_BIT(16 + i)) {
             HAL_DBG_ERR("DSI Irq: %s\n", DPHY_ERROR[i]);
+        }
+    }
 
-    for (i = 0; i < HAL_ARRAY_SIZE(ERROR_REPORT); i++)
-        if (intSt1 & HAL_BIT(i))
+    for (i = 0; i < HAL_ARRAY_SIZE(ERROR_REPORT); i++) {
+        if (intSt1 & HAL_BIT(i)) {
             HAL_DBG_ERR("DSI Irq: %s\n", ERROR_REPORT[i]);
+        }
+    }
 
     return HAL_OK;
 }
@@ -184,8 +190,9 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t dataType,
     HAL_Status ret;
 
     ret = DSI_WaitFifoNotFull(pReg, DSI_CMD_PKT_STATUS_GEN_CMD_FULL_MASK);
-    if (ret != HAL_OK)
+    if (ret != HAL_OK) {
         return ret;
+    }
     val = (0x0 << 6) | dataType;
     switch (dataType) {
     case MIPI_DSI_DCS_COMPRESSION_MODE:
@@ -205,8 +212,9 @@ HAL_Status HAL_DSI_SendPacket(struct DSI_REG *pReg, uint8_t dataType,
     {
         /* Send payload */
         ret = DSI_WaitFifoNotFull(pReg, DSI_CMD_PKT_STATUS_GEN_PLD_W_FULL_MASK);
-        if (ret != HAL_OK)
+        if (ret != HAL_OK) {
             return ret;
+        }
 
         val |= (payloadLen << 8);
         while (payloadLen) {
@@ -400,9 +408,11 @@ uint16_t HAL_DSI_M31DphyInit(struct DSI_REG *pReg, uint16_t laneMbps, eDSI_DphyR
         clkSel = 692;
         laneMbps = 1500;
     } else {
-        for (index = 0; index < HAL_ARRAY_SIZE(pllClkSelTable); index++)
-            if (lanebps < pllClkSelTable[index].maxLanebps)
+        for (index = 0; index < HAL_ARRAY_SIZE(pllClkSelTable); index++) {
+            if (lanebps < pllClkSelTable[index].maxLanebps) {
                 break;
+            }
+        }
         clkSel = HAL_DIV_ROUND_UP((lanebps - pllClkSelTable[index - 1 ].maxLanebps),
                                   (312500 << (index - 1)));
 
@@ -515,8 +525,9 @@ HAL_Status HAL_DSI_PacketHandlerConfig(struct DSI_REG *pReg,
 {
     uint32_t val = DSI_PCKHDL_CFG_BTA_EN_MASK | DSI_PCKHDL_CFG_ECC_RX_EN_MASK | DSI_PCKHDL_CFG_CRC_RX_EN_MASK | DSI_PCKHDL_CFG_EOTP_TX_EN_MASK;
 
-    if (pModeInfo->flags & DSI_MODE_EOT_PACKET)
+    if (pModeInfo->flags & DSI_MODE_EOT_PACKET) {
         val &= ~DSI_PCKHDL_CFG_EOTP_TX_EN_MASK;
+    }
     WRITE_REG(pReg->PCKHDL_CFG, val);
 
     return HAL_OK;
@@ -535,12 +546,13 @@ HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
                    DSI_VID_MODE_CFG_LP_VACT_EN_MASK | DSI_VID_MODE_CFG_LP_HBP_EN_MASK | DSI_VID_MODE_CFG_LP_HFP_EN_MASK;
 
     if (pModeInfo->flags & DSI_MODE_VIDEO) {
-        if (pModeInfo->flags & DSI_MODE_VIDEO_BURST)
+        if (pModeInfo->flags & DSI_MODE_VIDEO_BURST) {
             val |= 0x2 << DSI_VID_MODE_CFG_VID_MODE_TYPE_SHIFT;
-        else if (pModeInfo->flags & DSI_MODE_VIDEO_SYNC_PULSE)
+        } else if (pModeInfo->flags & DSI_MODE_VIDEO_SYNC_PULSE) {
             val |= 0 << DSI_VID_MODE_CFG_VID_MODE_TYPE_SHIFT;
-        else
+        } else {
             val |= DSI_VID_MODE_CFG_VID_MODE_TYPE_MASK;
+        }
 
         WRITE_REG(pReg->VID_MODE_CFG, val);
         WRITE_REG(pReg->VID_PKT_SIZE, pModeInfo->crtcHdisplay);
@@ -549,13 +561,15 @@ HAL_Status HAL_DSI_ModeConfig(struct DSI_REG *pReg,
                   1000 << DSI_TO_CNT_CFG_LPRX_TO_CNT_SHIFT);
         WRITE_REG(pReg->BTA_TO_CNT, 0xd00);
     }
-    if (pModeInfo->flags & DSI_CLOCK_NON_CONTINUOUS)
+    if (pModeInfo->flags & DSI_CLOCK_NON_CONTINUOUS) {
         DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_LPCLK_CTRL_AUTO_CLKLANE_CTRL_MASK, 1);
+    }
 
-    if (pModeInfo->flags & DSI_MODE_LPM)
+    if (pModeInfo->flags & DSI_MODE_LPM) {
         HAL_DSI_MsgLpModeConfig(pReg);
-    else
+    } else {
         HAL_DSI_MsgHsModeConfig(pReg);
+    }
 
     DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_MODE_CFG_CMD_VIDEO_MODE_MASK, 1);
     WRITE_REG(pReg->PWR_UP, 0x1);
@@ -667,9 +681,9 @@ HAL_Status HAL_DSI_Enable(struct DSI_REG *pReg,
                           struct DISPLAY_MODE_INFO *pModeInfo)
 {
     DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_LPCLK_CTRL_PHY_TXREQUESTCLKHS_MASK, 1);
-    if (pModeInfo->flags & DSI_MODE_VIDEO)
+    if (pModeInfo->flags & DSI_MODE_VIDEO) {
         DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_MODE_CFG_CMD_VIDEO_MODE_MASK, 0);
-    else {
+    } else {
         DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_MODE_CFG_CMD_VIDEO_MODE_MASK, 1);
         WRITE_REG(pReg->EDPI_CMD_SIZE, pModeInfo->crtcHdisplay);
     }
@@ -688,9 +702,9 @@ HAL_Status HAL_DSI_Disable(struct DSI_REG *pReg,
                            struct DISPLAY_MODE_INFO *pModeInfo)
 {
     DSI_UPDATE_BIT(pReg->LPCLK_CTRL, DSI_LPCLK_CTRL_PHY_TXREQUESTCLKHS_MASK, 0);
-    if (pModeInfo->flags & DSI_MODE_VIDEO)
+    if (pModeInfo->flags & DSI_MODE_VIDEO) {
         DSI_UPDATE_BIT(pReg->MODE_CFG, DSI_MODE_CFG_CMD_VIDEO_MODE_MASK, 1);
-    else {
+    } else {
         WRITE_REG(pReg->EDPI_CMD_SIZE, 0);
     }
     WRITE_REG(pReg->PWR_UP, 0x0);

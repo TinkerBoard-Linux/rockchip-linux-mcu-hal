@@ -108,8 +108,9 @@ static HAL_Check PD_IsOn(ePD_Id pd)
 
     /* check idle status for idle-only domains */
 
-    if (stShift > 16)
+    if (stShift > 16) {
         return !PD_IsIdle(pd);
+    }
 
     return (HAL_Check)(!((PMU->PWRDN_ST & (1 << stShift)) >> stShift));
 }
@@ -119,8 +120,9 @@ static HAL_Status PD_IdleRequest(ePD_Id pd, HAL_Check idle)
     uint32_t reqShift = PD_GET_REQ_SHIFT(pd);
     uint32_t start, timeoutMs = 1000;
 
-    if (reqShift > 16)
+    if (reqShift > 16) {
         return HAL_INVAL;
+    }
 
     PMU->BUS_IDLE_REQ = VAL_MASK_WE(1U << reqShift, (idle ? 1U : 0U) << reqShift);
 
@@ -128,14 +130,16 @@ static HAL_Status PD_IdleRequest(ePD_Id pd, HAL_Check idle)
     start = HAL_GetTick();
 
     while (PD_ReadAck(pd) != idle) {
-        if ((HAL_GetTick() - start) > timeoutMs)
+        if ((HAL_GetTick() - start) > timeoutMs) {
             return HAL_TIMEOUT;
+        }
     }
 
     start = HAL_GetTick();
     while (PD_IsIdle(pd) != idle) {
-        if ((HAL_GetTick() - start) > timeoutMs)
+        if ((HAL_GetTick() - start) > timeoutMs) {
             return HAL_TIMEOUT;
+        }
     }
 
     return HAL_OK;
@@ -146,16 +150,18 @@ static HAL_Status PD_PowerOn(ePD_Id pd, HAL_Check on)
     uint32_t pwrShift = PD_GET_PWR_SHIFT(pd);
     uint32_t start, timeoutMs = 1000;
 
-    if (pwrShift > 16)
+    if (pwrShift > 16) {
         return HAL_INVAL;
+    }
 
     PMU->PWRDN_CON = VAL_MASK_WE(1U << pwrShift, (on ? 0U : 1U) << pwrShift);
 
     start = HAL_GetTick();
 
     while (PD_IsOn(pd) != on) {
-        if ((HAL_GetTick() - start) > timeoutMs)
+        if ((HAL_GetTick() - start) > timeoutMs) {
             return HAL_TIMEOUT;
+        }
     }
 
     return HAL_OK;
@@ -178,15 +184,18 @@ HAL_Status HAL_PD_On(ePD_Id pd)
 {
     HAL_Status error;
 
-    if (PD_IS_INVALID(pd))
+    if (PD_IS_INVALID(pd)) {
         return HAL_INVAL;
+    }
 
-    if (PD_IsOn(pd))
+    if (PD_IsOn(pd)) {
         return HAL_OK;
+    }
 
     error = PD_PowerOn(pd, HAL_TRUE);
-    if (error)
+    if (error) {
         return error;
+    }
 
     /* if powering up, leave idle mode */
     error = PD_IdleRequest(pd, HAL_FALSE);
@@ -203,16 +212,19 @@ HAL_Status HAL_PD_Off(ePD_Id pd)
 {
     HAL_Status error;
 
-    if (PD_IS_INVALID(pd))
+    if (PD_IS_INVALID(pd)) {
         return HAL_INVAL;
+    }
 
-    if (!PD_IsOn(pd))
+    if (!PD_IsOn(pd)) {
         return HAL_OK;
+    }
 
     /* if powering down, idle request to NIU first */
     error = PD_IdleRequest(pd, HAL_TRUE);
-    if (error)
+    if (error) {
         return error;
+    }
 
     error = PD_PowerOn(pd, HAL_FALSE);
 

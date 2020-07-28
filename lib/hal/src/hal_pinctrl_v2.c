@@ -362,14 +362,17 @@ static HAL_Status PINCTRL_SetPinParam(eGPIO_bankId bank, uint8_t pin, uint32_t p
 {
     HAL_Status rc = HAL_OK;
 
-    if (param & FLAG_MUX)
+    if (param & FLAG_MUX) {
         rc |= PINCTRL_SetIOMUX(bank, pin, (uint8_t)((param & MASK_MUX) >> SHIFT_MUX));
+    }
 
-    if (param & FLAG_PUL)
+    if (param & FLAG_PUL) {
         rc |= PINCTRL_SetPUPD(bank, pin, (uint8_t)((param & MASK_PUL) >> SHIFT_PUL));
+    }
 
-    if (param & FLAG_DRV)
+    if (param & FLAG_DRV) {
         rc |= PINCTRL_SetDS(bank, pin, (uint8_t)((param & MASK_DRV) >> SHIFT_DRV));
+    }
 
     return rc;
 }
@@ -452,14 +455,16 @@ HAL_Status HAL_PINCTRL_SetParam(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
 
     HAL_ASSERT(bank < GPIO_BANK_NUM);
 
-    if (!(param & (FLAG_MUX | FLAG_PUL | FLAG_DRV | FLAG_SRT | FLAG_SMT)))
+    if (!(param & (FLAG_MUX | FLAG_PUL | FLAG_DRV | FLAG_SRT | FLAG_SMT))) {
         return HAL_OK;
+    }
 
     for (pin = 0; pin < 32; pin++) {
         if (mPins & (1 << pin)) {
             rc = PINCTRL_SetPinParam(bank, pin, param);
-            if (rc)
+            if (rc) {
                 return rc;
+            }
         }
     }
 

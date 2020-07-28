@@ -192,10 +192,11 @@ HAL_Status HAL_HCD_HCSubmitRequest(struct HCD_HANDLE *pHCD,
     pHCD->hc[chNum].epIsIn = direction;
     pHCD->hc[chNum].epType = epType;
 
-    if (token == 0)
+    if (token == 0) {
         pHCD->hc[chNum].dataPID = HC_PID_SETUP;
-    else
+    } else {
         pHCD->hc[chNum].dataPID = HC_PID_DATA1;
+    }
 
     /* Manage Data Toggle */
     switch (epType) {
@@ -226,10 +227,11 @@ HAL_Status HAL_HCD_HCSubmitRequest(struct HCD_HANDLE *pHCD,
                 pHCD->hc[chNum].dataPID = HC_PID_DATA1;
             }
         } else {
-            if (pHCD->hc[chNum].toggleIn == 0)
+            if (pHCD->hc[chNum].toggleIn == 0) {
                 pHCD->hc[chNum].dataPID = HC_PID_DATA0;
-            else
+            } else {
                 pHCD->hc[chNum].dataPID = HC_PID_DATA1;
+            }
         }
 
         break;
@@ -244,10 +246,11 @@ HAL_Status HAL_HCD_HCSubmitRequest(struct HCD_HANDLE *pHCD,
                 pHCD->hc[chNum].dataPID = HC_PID_DATA1;
             }
         } else {
-            if (pHCD->hc[chNum].toggleIn == 0)
+            if (pHCD->hc[chNum].toggleIn == 0) {
                 pHCD->hc[chNum].dataPID = HC_PID_DATA0;
-            else
+            } else {
                 pHCD->hc[chNum].dataPID = HC_PID_DATA1;
+            }
         }
         break;
 
@@ -266,8 +269,9 @@ HAL_Status HAL_HCD_HCSubmitRequest(struct HCD_HANDLE *pHCD,
     pHCD->hc[chNum].chNum = chNum;
     pHCD->hc[chNum].hcState = HC_IDLE;
 
-    if (pHCD->cfg.dmaEnable == 1)
+    if (pHCD->cfg.dmaEnable == 1) {
         pHCD->hc[chNum].dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pbuff);
+    }
 
     return USB_HCStartXfer(pHCD->pReg, &(pHCD->hc[chNum]), (uint8_t)pHCD->cfg.dmaEnable);
 }
@@ -284,24 +288,29 @@ void HAL_HCD_IRQHandler(struct HCD_HANDLE *pHCD)
     /* ensure that we are in device mode */
     if (USB_GetMode(pHCD->pReg) == USB_OTG_MODE_HOST) {
         /* avoid spurious interrupt */
-        if (__HAL_HCD_IS_INVALID_INTERRUPT(pHCD))
+        if (__HAL_HCD_IS_INVALID_INTERRUPT(pHCD)) {
             return;
+        }
 
-        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_PXFR_INCOMPISOOUT))
+        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_PXFR_INCOMPISOOUT)) {
             /* incorrect mode, acknowledge the interrupt */
             __HAL_HCD_CLEAR_FLAG(pHCD, USB_OTG_GINTSTS_PXFR_INCOMPISOOUT);
+        }
 
-        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_IISOIXFR))
+        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_IISOIXFR)) {
             /* incorrect mode, acknowledge the interrupt */
             __HAL_HCD_CLEAR_FLAG(pHCD, USB_OTG_GINTSTS_IISOIXFR);
+        }
 
-        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_PTXFE))
+        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_PTXFE)) {
             /* incorrect mode, acknowledge the interrupt */
             __HAL_HCD_CLEAR_FLAG(pHCD, USB_OTG_GINTSTS_PTXFE);
+        }
 
-        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_MMIS))
+        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_MMIS)) {
             /* incorrect mode, acknowledge the interrupt */
             __HAL_HCD_CLEAR_FLAG(pHCD, USB_OTG_GINTSTS_MMIS);
+        }
 
         /* Handle Host Disconnect Interrupts */
         if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_DISCINT)) {
@@ -316,8 +325,9 @@ void HAL_HCD_IRQHandler(struct HCD_HANDLE *pHCD)
         }
 
         /* Handle Host Port Interrupts */
-        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_HPRTINT))
+        if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_HPRTINT)) {
             HCD_Port_IRQHandler(pHCD);
+        }
 
         /* Handle Host SOF Interrupts */
         if (__HAL_HCD_GET_FLAG(pHCD, USB_OTG_GINTSTS_SOF)) {
@@ -330,10 +340,11 @@ void HAL_HCD_IRQHandler(struct HCD_HANDLE *pHCD)
             interrupt = USB_HCReadInterrupt(pHCD->pReg);
             for (i = 0; i < pHCD->cfg.hcNum; i++) {
                 if (interrupt & (1UL << (i & 0xFU))) {
-                    if ((USB_HC(i)->HCCHAR) & USB_OTG_HCCHAR_EPDIR)
+                    if ((USB_HC(i)->HCCHAR) & USB_OTG_HCCHAR_EPDIR) {
                         HCD_HC_IN_IRQHandler(pHCD, (uint8_t)i);
-                    else
+                    } else {
                         HCD_HC_OUT_IRQHandler(pHCD, (uint8_t)i);
+                    }
                 }
             }
             __HAL_HCD_CLEAR_FLAG(pHCD, USB_OTG_GINTSTS_HCINT);
@@ -773,8 +784,9 @@ static void HCD_HC_OUT_IRQHandler(struct HCD_HANDLE *pHCD, uint8_t chNum)
         pHCD->hc[chNum].hcState = HC_NAK;
 
         if (pHCD->hc[chNum].doPing == 0) {
-            if (pHCD->hc[chNum].speed == HCD_SPEED_HIGH)
+            if (pHCD->hc[chNum].speed == HCD_SPEED_HIGH) {
                 pHCD->hc[chNum].doPing = 1;
+            }
         }
         __HAL_HCD_UNMASK_HALT_HC_INT(chNum);
         USB_HCHalt(pHCD->pReg, chNum);
@@ -920,8 +932,9 @@ static void HCD_Port_IRQHandler(struct HCD_HANDLE *pHCD)
     }
 
     /* Check For an overcurrent */
-    if ((hprt0 & USB_OTG_HPRT_POCCHNG) == USB_OTG_HPRT_POCCHNG)
+    if ((hprt0 & USB_OTG_HPRT_POCCHNG) == USB_OTG_HPRT_POCCHNG) {
         hprt0Modify |= USB_OTG_HPRT_POCCHNG;
+    }
 
     /* Clear Port Interrupts */
     USB_HPRT0 = hprt0Modify;

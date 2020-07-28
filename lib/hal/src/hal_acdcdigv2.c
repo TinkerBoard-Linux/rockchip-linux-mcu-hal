@@ -315,12 +315,13 @@ static const struct I2C_SPEC_VALUES fastModePlusSpec = {
  */
 static const struct I2C_SPEC_VALUES *I2C_GetSpec(eACDCDIG_I2C_BusSpeed speed)
 {
-    if (speed == ACDCDIG_I2C_1000K)
+    if (speed == ACDCDIG_I2C_1000K) {
         return &fastModePlusSpec;
-    else if (speed == ACDCDIG_I2C_400K)
+    } else if (speed == ACDCDIG_I2C_400K) {
         return &fastModeSpec;
-    else
+    } else {
         return &standardModeSpec;
+    }
 }
 
 /**
@@ -386,8 +387,9 @@ static HAL_Status ACDCDIG_I2C_AdaptDIV(struct HAL_ACDCDIG_DEV *acdcDig,
     highDIV--;
     lowDIV--;
 
-    if (highDIV > 0xffff || lowDIV > 0xffff)
+    if (highDIV > 0xffff || lowDIV > 0xffff) {
         return HAL_INVAL;
+    }
 
     WRITE_REG(acdcDig->pReg->I2C_CLKDIVL[0], (lowDIV & 0xff));
     WRITE_REG(acdcDig->pReg->I2C_CLKDIVL[1], ((lowDIV >> 8) & 0xff));
@@ -427,8 +429,9 @@ static HAL_Status ACDCDIG_I2C_Start(struct HAL_ACDCDIG_DEV *acdcDig)
     return HAL_OK; /* FIXME: the i2c is used by MCU */
 
     ret = HAL_ACDCDIG_RequestI2C(acdcDig, CODEC_USE_I2C);
-    if (ret != HAL_OK)
+    if (ret != HAL_OK) {
         return ret;
+    }
 
     val = READ_REG(acdcDig->pReg->I2C_CON[0]) & REG_CON_TUNING_MASK;
 
@@ -436,8 +439,9 @@ static HAL_Status ACDCDIG_I2C_Start(struct HAL_ACDCDIG_DEV *acdcDig)
     val |= REG_CON_EN | REG_CON_MOD_TXONLY | REG_CON_START;
 
     /* if we want to react to NACK, set ACTACK bit */
-    if (!(acdcDig->i2cFlags & HAL_I2C_M_IGNORE_NAK))
+    if (!(acdcDig->i2cFlags & HAL_I2C_M_IGNORE_NAK)) {
         val |= REG_CON_ACTACK;
+    }
 
     WRITE_REG(acdcDig->pReg->I2C_CON[0], val);
 
@@ -457,8 +461,9 @@ static HAL_Status ACDCDIG_I2C_Stop(struct HAL_ACDCDIG_DEV *acdcDig)
     return HAL_OK; /* FIXME: the i2c is used by MCU */
 
     ret = HAL_ACDCDIG_RequestI2C(acdcDig, CODEC_USE_I2C);
-    if (ret != HAL_OK)
+    if (ret != HAL_OK) {
         return ret;
+    }
 
     /*
      * To start the next message. The HW is actually not capable of REPEATED
@@ -607,11 +612,13 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
 
 #if (HAL_ACDCDIG_SAMPLERATE_MODE == HAL_ACDCDIG_STRICT_SAMPLERATE)
     if (stream == AUDIO_STREAM_PLAYBACK) {
-        if (sampleRate != STRICT_SAMPLERATE_PLAYBACK)
+        if (sampleRate != STRICT_SAMPLERATE_PLAYBACK) {
             return HAL_INVAL;
+        }
     } else {
-        if (sampleRate != STRICT_SAMPLERATE_CAPTURE)
+        if (sampleRate != STRICT_SAMPLERATE_CAPTURE) {
             return HAL_INVAL;
+        }
     }
 
     if (acdcDig->enabled == 0) {
@@ -651,14 +658,15 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
         /**
          * Prepare ADCINT_DIV or DACINT_DIV after the other stream are enabled.
          */
-        if (stream == AUDIO_STREAM_PLAYBACK)
+        if (stream == AUDIO_STREAM_PLAYBACK) {
             MODIFY_REG(reg->DACINT_DIV,
                        ACDCDIG_DACINT_DIV_INT_DIV_CON_MASK,
                        ACDCDIG_DACINT_DIV_INT_DIV(divSyncClk));
-        else
+        } else {
             MODIFY_REG(reg->ADCINT_DIV,
                        ACDCDIG_ADCINT_DIV_INT_DIV_CON_MASK,
                        ACDCDIG_ADCINT_DIV_INT_DIV(divSyncClk));
+        }
     }
 
     if (acdcDig->enabled) {
@@ -684,8 +692,9 @@ static HAL_Status ACDCDIG_ClockSyncSelect(struct HAL_ACDCDIG_DEV *acdcDig,
                  *
                  * It will return invalid if count is timeout.
                  */
-                if (syncCount-- <= 0)
+                if (syncCount-- <= 0) {
                     return HAL_INVAL;
+                }
 
                 HAL_DelayUs(1);
             }
@@ -802,8 +811,9 @@ HAL_Status HAL_ACDCDIG_Init(struct HAL_ACDCDIG_DEV *acdcDig, struct AUDIO_INIT_C
 {
     struct ACDCDIG_REG *reg = acdcDig->pReg;
 
-    if (acdcDig->enabled == 0)
+    if (acdcDig->enabled == 0) {
         HAL_CRU_ClkEnable(acdcDig->hclk);
+    }
 
 #ifdef HAL_I2C_MODULE_ENABLED
     ACDCDIG_I2C_Init(acdcDig);
@@ -867,8 +877,9 @@ HAL_Status HAL_ACDCDIG_DeInit(struct HAL_ACDCDIG_DEV *acdcDig)
     ACDCDIG_I2C_DeInit(acdcDig);
 #endif /* HAL_I2C_MODULE_ENABLED */
 
-    if (acdcDig->enabled == 0)
+    if (acdcDig->enabled == 0) {
         HAL_CRU_ClkDisable(acdcDig->hclk);
+    }
 
     return HAL_OK;
 }
@@ -904,10 +915,11 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
 #endif
 
         /* Check GLB_CKE whether is enabled. */
-        if (!val)
+        if (!val) {
             MODIFY_REG(reg->SYSCTRL0,
                        ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
                        ACDCDIG_SYSCTRL0_GLB_CKE_EN);
+        }
 
         /* There is MONO channel for DAC */
         MODIFY_REG(reg->DACDIGEN,
@@ -921,10 +933,11 @@ HAL_Status HAL_ACDCDIG_Enable(struct HAL_ACDCDIG_DEV *acdcDig,
                    ACDCDIG_I2S_XFER_TXS_START);
 
         /* Check GLB_CKE whether is enabled. */
-        if (!val)
+        if (!val) {
             MODIFY_REG(reg->SYSCTRL0,
                        ACDCDIG_SYSCTRL0_GLB_CKE_MASK,
                        ACDCDIG_SYSCTRL0_GLB_CKE_EN);
+        }
 
         val = READ_REG(reg->I2S_TXCR[1]) & ACDCDIG_I2S_TXCR1_TCSR_MASK;
         switch (val >> ACDCDIG_I2S_TXCR1_TCSR_SHIFT) {
@@ -1217,16 +1230,18 @@ HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
         HAL_ASSERT(dBConfig->ch <= ACDCDIG_DAC_NUM);
 
         if (dB > 0) {
-            if (dB > ACDCDIG_DB_MAX)
+            if (dB > ACDCDIG_DB_MAX) {
                 dB = ACDCDIG_DB_MAX;
+            }
 
             dB = dB / ACDCDIG_DB_STEP;
             MODIFY_REG(reg->DACVOGP,
                        ACDCDIG_DACVOGP_VOLGPL0_MASK,
                        ACDCDIG_DACVOGP_VOLGPL0_POS_GAIN);
         } else {
-            if (dB < ACDCDIG_DB_MIN)
+            if (dB < ACDCDIG_DB_MIN) {
                 dB = ACDCDIG_DB_MIN;
+            }
 
             dB = -(dB / ACDCDIG_DB_STEP);
             MODIFY_REG(reg->DACVOGP,
@@ -1240,8 +1255,9 @@ HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
         HAL_ASSERT(dBConfig->ch <= ACDCDIG_ADC_NUM);
 
         if (dB > 0) {
-            if (dB > ACDCDIG_DB_MAX)
+            if (dB > ACDCDIG_DB_MAX) {
                 dB = ACDCDIG_DB_MAX;
+            }
 
             dB = dB / ACDCDIG_DB_STEP;
 
@@ -1270,8 +1286,9 @@ HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
                 WRITE_REG(reg->ADCVOLL[1], ACDCDIG_ADCVOL(dB));
             }
         } else {
-            if (dB < ACDCDIG_DB_MIN)
+            if (dB < ACDCDIG_DB_MIN) {
                 dB = ACDCDIG_DB_MIN;
+            }
 
             dB = -(dB / ACDCDIG_DB_STEP);
 
@@ -1336,27 +1353,30 @@ HAL_Status HAL_ACDCDIG_GetGain(struct HAL_ACDCDIG_DEV *acdcDig,
         HAL_ASSERT(dBConfig->ch <= ACDCDIG_DAC_NUM);
 
         vol = READ_REG(reg->DACVOLL0);
-        if (READ_REG(reg->DACVOGP))
+        if (READ_REG(reg->DACVOGP)) {
             dBConfig->dB = vol * ACDCDIG_DB_STEP; /* Positive gain */
-        else
+        } else {
             dBConfig->dB = -(vol * ACDCDIG_DB_STEP); /* Negative gain */
+        }
         break;
     case AUDIO_STREAM_CAPTURE:
         /* Need to specify ADC channel here. */
         HAL_ASSERT(dBConfig->ch < ACDCDIG_ADC_NUM);
 
         /* There are the same volumes for 3ADCs */
-        if (dBConfig->ch == 0)
+        if (dBConfig->ch == 0) {
             vol = READ_REG(reg->ADCVOLL[0]);
-        else if (dBConfig->ch == 1)
+        } else if (dBConfig->ch == 1) {
             vol = READ_REG(reg->ADCVOLR0);
-        else /* The array ADCVOLL[1] is left channel 2 */
+        } else { /* The array ADCVOLL[1] is left channel 2 */
             vol = READ_REG(reg->ADCVOLL[1]);
+        }
 
-        if (READ_BIT(reg->ADCVOGP, 1 << dBConfig->ch))
+        if (READ_BIT(reg->ADCVOGP, 1 << dBConfig->ch)) {
             dBConfig->dB = vol * ACDCDIG_DB_STEP;   /* Positive gain */
-        else
+        } else {
             dBConfig->dB = -(vol * ACDCDIG_DB_STEP);   /* Negative gain */
+        }
         break;
     default:
 
@@ -1375,8 +1395,9 @@ HAL_Status HAL_ACDCDIG_GetGain(struct HAL_ACDCDIG_DEV *acdcDig,
 HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
                                    struct AUDIO_GAIN_INFO *info)
 {
-    if (!info)
+    if (!info) {
         return HAL_ERROR;
+    }
 
     info->mindB = ACDCDIG_DB_MIN;
     info->maxdB = ACDCDIG_DB_MAX;
@@ -1403,11 +1424,13 @@ HAL_Status HAL_ACDCDIG_RequestI2C(struct HAL_ACDCDIG_DEV *acdcDig,
                ((i2cUsed == MCU_USE_I2C)));
 
     /* Checking the I2C whether is busy */
-    if (READ_BIT((acdcDig->pReg->I2C_CON[0]), I2C_CON_START_MASK))
+    if (READ_BIT((acdcDig->pReg->I2C_CON[0]), I2C_CON_START_MASK)) {
         return HAL_BUSY;
+    }
 
-    if (i2cUsed == MCU_USE_I2C)
+    if (i2cUsed == MCU_USE_I2C) {
         val = GRF_MCU_I2C_TRANS;
+    }
 
     WRITE_REG(pGRF->SOC_CON16, val);
 #endif /* HAL_I2C_MODULE_ENABLED */
@@ -1430,8 +1453,9 @@ eACDCDIG_i2cUsed HAL_ACDCDIG_CheckI2C(struct HAL_ACDCDIG_DEV *acdcDig)
 
     status = READ_BIT(pGRF->SOC_STATUS,
                       GRF_SOC_STATUS_GRF_CODEC_I2C_TRANS_ACK_MASK);
-    if (status)
+    if (status) {
         i2cUsed = MCU_USE_I2C;
+    }
 
     return i2cUsed;
 #else

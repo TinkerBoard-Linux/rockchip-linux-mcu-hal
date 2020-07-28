@@ -321,8 +321,9 @@ HAL_Status HAL_I2S_Config(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream,
     bool isMaster;
 
     isMaster = (READ_BIT(reg->CKR, I2S_CKR_MSS_MASK) == I2S_CKR_MSS_MASTER);
-    if (isMaster)
+    if (isMaster) {
         I2S_SetSampleRate(i2s, params->sampleRate);
+    }
 
     val = I2S_TXCR_VDW(params->sampleBits);
     switch (params->channels) {
@@ -343,10 +344,11 @@ HAL_Status HAL_I2S_Config(struct HAL_I2S_DEV *i2s, eAUDIO_streamType stream,
         return HAL_INVAL;
     }
 
-    if (stream == AUDIO_STREAM_CAPTURE)
+    if (stream == AUDIO_STREAM_CAPTURE) {
         MODIFY_REG(reg->RXCR, I2S_RXCR_VDW_MASK | I2S_RXCR_RCSR_MASK, val);
-    else
+    } else {
         MODIFY_REG(reg->TXCR, I2S_TXCR_VDW_MASK | I2S_TXCR_TCSR_MASK, val);
+    }
 
     MODIFY_REG(reg->DMACR, I2S_DMACR_TDL_MASK, I2S_DMACR_TDL(I2S_DMA_BURST_SIZE));
     MODIFY_REG(reg->DMACR, I2S_DMACR_RDL_MASK, I2S_DMACR_RDL(I2S_DMA_BURST_SIZE));

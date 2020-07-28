@@ -35,8 +35,9 @@ static HAL_Status TIMER_SetReloadNum(struct TIMER_REG *pReg, uint64_t currentVal
 
 static HAL_Status HAL_TIMER_Handler(void)
 {
-    if (HAL_TIMER_ClrInt(timerDev))
+    if (HAL_TIMER_ClrInt(timerDev)) {
         timeOut++;
+    }
     isrActive++;
 
     return HAL_OK;
@@ -69,8 +70,9 @@ TEST(HAL_TIMER, TimerInit){
     HAL_TIMER_Start(timerDev);
     HAL_DelayMs(1000);
     ret = HAL_TIMER_GetCount(timerDev);
-    if (!ret)
+    if (!ret) {
         ret = HAL_TIMER_GetCount(timerDev); /* Avoiding Small Probability Events */
+    }
     TEST_ASSERT(ret > 0);
     HAL_TIMER_Stop(timerDev);
 

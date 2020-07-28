@@ -58,8 +58,9 @@ HAL_Status HAL_PVTM_GetFreqCnt(ePVTM_ID id, uint32_t chn, uint32_t timeUs,
     const struct HAL_PVTM_INFO *info = NULL;
     int i, delayCount = 100;
 
-    if (!val)
+    if (!val) {
         return HAL_INVAL;
+    }
 
     for (i = 0; i < g_pvtmDev.num; i++) {
         if (id == g_pvtmDev.info[i].pvtmId) {
@@ -67,16 +68,19 @@ HAL_Status HAL_PVTM_GetFreqCnt(ePVTM_ID id, uint32_t chn, uint32_t timeUs,
             break;
         }
     }
-    if (!info)
+    if (!info) {
         return HAL_INVAL;
+    }
 
     HAL_CRU_ClkEnable(info->clkGateID);
-    if (info->pclkGateID)
+    if (info->pclkGateID) {
         HAL_CRU_ClkEnable(info->pclkGateID);
+    }
 
-    if (READ_REG(*(info->con0)) & info->startMask)
+    if (READ_REG(*(info->con0)) & info->startMask) {
         WRITE_REG_MASK_WE(*(info->con0), info->startMask,
                           0 << info->startShift);
+    }
 
     WRITE_REG_MASK_WE(*(info->con0), info->enMask, 1 << info->enShift);
     WRITE_REG_MASK_WE(*(info->con0), info->selMask, chn << info->selShift);
@@ -85,22 +89,25 @@ HAL_Status HAL_PVTM_GetFreqCnt(ePVTM_ID id, uint32_t chn, uint32_t timeUs,
 
     HAL_DelayUs(timeUs);
     while (delayCount > 0) {
-        if (READ_REG(*(info->sta0)) & info->doneMask)
+        if (READ_REG(*(info->sta0)) & info->doneMask) {
             break;
+        }
         HAL_DelayUs(4);
         delayCount--;
     }
-    if (delayCount > 0)
+    if (delayCount > 0) {
         *val = READ_REG(*(info->sta1));
-    else
+    } else {
         ret = HAL_TIMEOUT;
+    }
 
     WRITE_REG_MASK_WE(*(info->con0), info->startMask, 0 << info->startShift);
     WRITE_REG_MASK_WE(*(info->con0), info->enMask, 0 << info->enShift);
 
     HAL_CRU_ClkDisable(info->clkGateID);
-    if (info->pclkGateID)
+    if (info->pclkGateID) {
         HAL_CRU_ClkDisable(info->pclkGateID);
+    }
 
     return ret;
 }

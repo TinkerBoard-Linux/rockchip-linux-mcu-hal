@@ -83,8 +83,9 @@ static HAL_Status PINCTRL_AcquireMuxRoute(const struct PINCTRL_BANK_INFO *pBank,
     for (i = 0; i < ctrl->muxRouteDataNum; i++) {
         data = &ctrl->muxRouteData[i];
         if (data->bank == pBank->channel &&
-            data->pin & (1 << pin) && data->func == mux)
+            data->pin & (1 << pin) && data->func == mux) {
             break;
+        }
     }
 
     if (i >= ctrl->muxRouteDataNum) {
@@ -126,8 +127,9 @@ static HAL_Status PINCTRL_RectifyMuxParams(const struct PINCTRL_BANK_INFO *pBank
     for (i = 0; i < ctrl->muxRecalDataNum; i++) {
         data = &ctrl->muxRecalData[i];
         if (data->bank == pBank->channel &&
-            data->pin == pin)
+            data->pin == pin) {
             break;
+        }
     }
 
     if (i >= ctrl->muxRecalDataNum) {
@@ -163,8 +165,9 @@ static HAL_Status PINCTRL_AcquireParam(const struct PINCTRL_BANK_INFO *pBank, ui
     uint8_t bitVal;
 
     /* The '0' value means nothing to set */
-    if (paramBit <= 0)
+    if (paramBit <= 0) {
         return HAL_ERROR;
+    }
 
     /* GRF(PMUGRF) address + mux offset + pin offset */
     regVal = pBank->grfBase;
@@ -195,8 +198,9 @@ static HAL_Status PINCTRL_AcquireParam(const struct PINCTRL_BANK_INFO *pBank, ui
  */
 static void PINCTRL_ExtraSet(const struct PINCTRL_BANK_INFO *pBank, uint8_t pin, uint32_t arg)
 {
-    if (pin < 16 || pin > 23 || (pBank->channel != GPIO_BANK0))
+    if (pin < 16 || pin > 23 || (pBank->channel != GPIO_BANK0)) {
         return;
+    }
 
     if (IS_MUX_SARADC(arg)) {
         WRITE_REG_MASK_WE(GRF->SOC_CON15,
@@ -231,12 +235,14 @@ static HAL_Status PINCTRL_SetMux(const struct PINCTRL_BANK_INFO *pBank,
     HAL_DBG("setting GPIO%d-%d to %d\n", pBank->channel, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_MUX_INFO, &reg, &bit, &mask);
-    if (rc)
+    if (rc) {
         HAL_DBG("Warning: Acquire Mux Param failed\n");
+    }
 
     rc = PINCTRL_RectifyMuxParams(pBank, pin, &reg, &bit, &mask);
-    if (rc == HAL_OK)
+    if (rc == HAL_OK) {
         HAL_DBG("Warning: Param is rectified\n");
+    }
 
     PIN_WRITE(reg, bit, mask, param);
 
@@ -265,8 +271,9 @@ static uint32_t PINCTRL_SetDrive(const struct PINCTRL_BANK_INFO *pBank,
     HAL_DBG("setting GPIO%d-%d drive to %d\n", pBank->channel, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_DRV_INFO, &reg, &bit, &mask);
-    if (rc)
+    if (rc) {
         goto exit;
+    }
 
     PIN_WRITE(reg, bit, mask, param);
 exit:
@@ -291,8 +298,9 @@ static HAL_Status PINCTRL_SetPull(const struct PINCTRL_BANK_INFO *pBank,
     HAL_DBG("setting GPIO%d-%d pull to %d\n", pBank->channel, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_PUL_INFO, &reg, &bit, &mask);
-    if (rc)
+    if (rc) {
         goto exit;
+    }
 
     PIN_WRITE(reg, bit, mask, param);
 exit:
@@ -317,8 +325,9 @@ static HAL_Status PINCTRL_SetSchmitt(const struct PINCTRL_BANK_INFO *pBank,
     HAL_DBG("setting GPIO%d-%d schmitt to %d\n", pBank->channel, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_SMT_INFO, &reg, &bit, &mask);
-    if (rc)
+    if (rc) {
         goto exit;
+    }
 
     PIN_WRITE(reg, bit, mask, param);
 exit:
@@ -343,8 +352,9 @@ static HAL_Status PINCTRL_SetSlewRate(const struct PINCTRL_BANK_INFO *pBank,
     HAL_DBG("setting GPIO%d-%d slewrate to %d\n", pBank->channel, pin, param);
 
     rc = PINCTRL_AcquireParam(pBank, pin, GRF_SRT_INFO, &reg, &bit, &mask);
-    if (rc)
+    if (rc) {
         goto exit;
+    }
 
     PIN_WRITE(reg, bit, mask, param);
 exit:
@@ -364,17 +374,21 @@ static HAL_Status PINCTRL_SetParam(const struct PINCTRL_BANK_INFO *pBank,
 {
     HAL_Status rc = HAL_OK;
 
-    if (param & FLAG_PUL)
+    if (param & FLAG_PUL) {
         rc |= PINCTRL_SetPull(pBank, pin, (uint8_t)((param & MASK_PUL) >> SHIFT_PUL));
+    }
 
-    if (param & FLAG_DRV)
+    if (param & FLAG_DRV) {
         rc |= PINCTRL_SetDrive(pBank, pin, (uint8_t)((param & MASK_DRV) >> SHIFT_DRV));
+    }
 
-    if (param & FLAG_SMT)
+    if (param & FLAG_SMT) {
         rc |= PINCTRL_SetSchmitt(pBank, pin, (uint8_t)((param & MASK_SMT) >> SHIFT_SMT));
+    }
 
-    if (param & FLAG_SRT)
+    if (param & FLAG_SRT) {
         rc |= PINCTRL_SetSlewRate(pBank, pin, (uint8_t)((param & MASK_SRT) >> SHIFT_SRT));
+    }
 
     return rc;
 }
@@ -501,8 +515,9 @@ HAL_Status HAL_PINCTRL_SetParam(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
     for (pin = 0; pin < 32; pin++) {
         if (mPins & (1 << pin)) {
             rc = PINCTRL_SetPinParam(bank, pin, param);
-            if (rc)
+            if (rc) {
                 return rc;
+            }
         }
     }
 
@@ -526,8 +541,9 @@ HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
     for (pin = 0; pin < 32; pin++) {
         if (mPins & (1 << pin)) {
             rc = PINCTRL_SetPinIOMUX(bank, pin, param);
-            if (rc)
+            if (rc) {
                 return rc;
+            }
         }
     }
 

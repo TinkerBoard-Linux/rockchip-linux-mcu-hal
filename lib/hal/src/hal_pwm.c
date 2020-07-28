@@ -117,10 +117,11 @@ HAL_Status HAL_PWM_IRQHandler(struct PWM_HANDLE *pPWM)
                 (pPWM->mode[i] == HAL_PWM_CAPTURE)) {
                 pPWM->result[i].active = true;
                 pPWM->result[i].pol = status & (1 << (i + 8));
-                if (pPWM->result[i].pol)
+                if (pPWM->result[i].pol) {
                     pPWM->result[i].period = READ_REG(PWM_PERIOD_REG(pPWM, i));
-                else
+                } else {
                     pPWM->result[i].period = READ_REG(PWM_DUTY_REG(pPWM, i));
+                }
             }
         }
     }
@@ -159,10 +160,11 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
     WRITE_REG(PWM_DUTY_REG(pPWM, channel), duty);
 
     ctrl &= ~(PWM_DUTY_MASK | PWM_INACTIVE_MASK);
-    if (config->polarity)
+    if (config->polarity) {
         ctrl |= PWM_DUTY_NEGATIVE | PWM_INACTIVE_POSTIVE;
-    else
+    } else {
         ctrl |= PWM_DUTY_POSTIVE | PWM_INACTIVE_NEGATIVE;
+    }
 
     ctrl &= ~PWM_LOCK;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
@@ -250,8 +252,9 @@ HAL_Status HAL_PWM_SetMatch(struct PWM_HANDLE *pPWM, uint8_t channel, const stru
     /* logic 1 high */
     WRITE_REG(pPWM->pReg->PWRMATCH_HD_ONE, data->hdOneMin | (data->hdOneMax << PWM_PWRMATCH_MAX_SHIFT));
 
-    for (i = 0; i < data->matchCount; i++)
+    for (i = 0; i < data->matchCount; i++) {
         WRITE_REG(pPWM->pReg->PWRMATCH_VALUE[i], data->match[i]);
+    }
 
     /* Enable pwr irq */
     SET_BIT(pPWM->pReg->INT_EN, PWM_PWR_INT_EN(channel));

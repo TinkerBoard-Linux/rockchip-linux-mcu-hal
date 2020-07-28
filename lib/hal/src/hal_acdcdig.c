@@ -272,12 +272,13 @@ HAL_Status HAL_ACDCDIG_Init(struct HAL_ACDCDIG_DEV *acdcDig, struct AUDIO_INIT_C
     case AUDIO_FMT_I2S:
         MODIFY_REG(reg->PDMCTRL, ACDCDIG_PDMCTRL_PDM_MODE_MASK,
                    ACDCDIG_PDMCTRL_PDM_MODE_I2S);
-        if (config->master)
+        if (config->master) {
             MODIFY_REG(reg->I2SCKM, ACDCDIG_I2SCKM_I2SMST_MASK,
                        ACDCDIG_I2SCKM_I2SMST_MASK);
-        else
+        } else {
             MODIFY_REG(reg->I2SCKM, ACDCDIG_I2SCKM_I2SMST_MASK,
                        ACDCDIG_I2SCKM_I2SMST_SLAVE);
+        }
         break;
     case AUDIO_FMT_PDM:
         MODIFY_REG(reg->PDMCTRL, ACDCDIG_PDMCTRL_PDM_MODE_MASK,
@@ -533,8 +534,9 @@ HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
         HAL_ASSERT(dBConfig->ch <= ACDCDIG_ADC_NUM);
 
         if (dB > 0) {
-            if (dB > ACDCDIG_DB_MAX)
+            if (dB > ACDCDIG_DB_MAX) {
                 dB = ACDCDIG_DB_MAX;
+            }
 
             dB = dB / ACDCDIG_DB_STEP;
 
@@ -560,8 +562,9 @@ HAL_Status HAL_ACDCDIG_SetGain(struct HAL_ACDCDIG_DEV *acdcDig,
                            ACDCDIG_ADCVOLR_ADCRV(dB));
             }
         } else {
-            if (dB < ACDCDIG_DB_MIN)
+            if (dB < ACDCDIG_DB_MIN) {
                 dB = ACDCDIG_DB_MIN;
+            }
 
             dB = -(dB / ACDCDIG_DB_STEP);
 
@@ -628,16 +631,18 @@ HAL_Status HAL_ACDCDIG_GetGain(struct HAL_ACDCDIG_DEV *acdcDig,
         /* There are the same volumes for 2ADCs */
         if (dBConfig->ch == 0) {
             vol = READ_REG(reg->ADCVOLL) & ACDCDIG_ADCVOLL_ADCLV_MASK;
-            if (READ_BIT(reg->ALC0, ACDCDIG_ALC0_ADCLV_GAIN_POL_MASK))
+            if (READ_BIT(reg->ALC0, ACDCDIG_ALC0_ADCLV_GAIN_POL_MASK)) {
                 dBConfig->dB = vol * ACDCDIG_DB_STEP; /* Positive gain */
-            else
+            } else {
                 dBConfig->dB = -(vol * ACDCDIG_DB_STEP); /* Negative gain */
+            }
         } else {  /* ch == 1 */
             vol = READ_REG(reg->ADCVOLR) & ACDCDIG_ADCVOLR_ADCRV_MASK;
-            if (READ_BIT(reg->ALC0, ACDCDIG_ALC0_ADCRV_GAIN_POL_MASK))
+            if (READ_BIT(reg->ALC0, ACDCDIG_ALC0_ADCRV_GAIN_POL_MASK)) {
                 dBConfig->dB = vol * ACDCDIG_DB_STEP; /* Positive gain */
-            else
+            } else {
                 dBConfig->dB = -(vol * ACDCDIG_DB_STEP); /* Negative gain */
+            }
         }
         break;
     default:
@@ -656,8 +661,9 @@ HAL_Status HAL_ACDCDIG_GetGain(struct HAL_ACDCDIG_DEV *acdcDig,
 HAL_Status HAL_ACDCDIG_GetGainInfo(struct HAL_ACDCDIG_DEV *acdcDig,
                                    struct AUDIO_GAIN_INFO *info)
 {
-    if (!info)
+    if (!info) {
         return HAL_ERROR;
+    }
 
     info->mindB = ACDCDIG_DB_MIN;
     info->maxdB = ACDCDIG_DB_MAX;

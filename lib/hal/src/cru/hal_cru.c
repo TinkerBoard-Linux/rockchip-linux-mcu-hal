@@ -192,12 +192,14 @@ static const struct PLL_CONFIG *CRU_PllSetByAuto(uint32_t finHz,
     uint32_t clkGcd = 0;
     HAL_Status error;
 
-    if (finHz == 0 || foutHz == 0 || foutHz == finHz)
+    if (finHz == 0 || foutHz == 0 || foutHz == finHz) {
         return NULL;
+    }
 
     error = CRU_PllSetPostDiv(foutHz, &postDiv1, &postDiv2, &foutVco);
-    if (error)
+    if (error) {
         return NULL;
+    }
     rateTable->postDiv1 = postDiv1;
     rateTable->postDiv2 = postDiv2;
     rateTable->dsmpd = 1;
@@ -223,8 +225,9 @@ static const struct PLL_CONFIG *CRU_PllSetByAuto(uint32_t finHz,
         frac64 = rateTable->fbDiv << EXPONENT_OF_FRAC_PLL;
         frac64 = fin64 - frac64;
         rateTable->frac = frac64;
-        if (rateTable->frac > 0)
+        if (rateTable->frac > 0) {
             rateTable->dsmpd = 0;
+        }
     } else {
         clkGcd = CRU_Gcd(finHz / MHZ, foutVco / MHZ);
         rateTable->refDiv = finHz / MHZ / clkGcd;
@@ -236,8 +239,9 @@ static const struct PLL_CONFIG *CRU_PllSetByAuto(uint32_t finHz,
         frac64 = frac64 * rateTable->refDiv;
         frac64 = HAL_DivU64(frac64 << EXPONENT_OF_FRAC_PLL, fin64);
         rateTable->frac = frac64;
-        if (rateTable->frac > 0)
+        if (rateTable->frac > 0) {
             rateTable->dsmpd = 0;
+        }
     }
 
     return rateTable;
@@ -256,18 +260,21 @@ static const struct PLL_CONFIG *CRU_PllGetSettings(struct PLL_SETUP *pSetup,
 {
     const struct PLL_CONFIG *rateTable = pSetup->rateTable;
 
-    if (rateTable == NULL)
+    if (rateTable == NULL) {
         return CRU_PllSetByAuto(PLL_INPUT_OSC_RATE, rate);
+    }
 
     while (rateTable->rate) {
-        if (rateTable->rate == rate)
+        if (rateTable->rate == rate) {
             break;
+        }
         rateTable++;
     }
-    if (rateTable->rate != rate)
+    if (rateTable->rate != rate) {
         return CRU_PllSetByAuto(PLL_INPUT_OSC_RATE, rate);
-    else
+    } else {
         return rateTable;
+    }
 }
 /** @} */
 /********************* Public Function Definition ****************************/
@@ -350,16 +357,18 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     const struct PLL_CONFIG *pConfig;
     int delay = 2400;
 
-    if (rate == HAL_CRU_GetPllFreq(pSetup))
+    if (rate == HAL_CRU_GetPllFreq(pSetup)) {
         return HAL_OK;
-    else if (rate < MIN_FOUT_FREQ)
+    } else if (rate < MIN_FOUT_FREQ) {
         return HAL_INVAL;
-    else if (rate > MAX_FOUT_FREQ)
+    } else if (rate > MAX_FOUT_FREQ) {
         return HAL_INVAL;
+    }
 
     pConfig = CRU_PllGetSettings(pSetup, rate);
-    if (!pConfig)
+    if (!pConfig) {
         return HAL_ERROR;
+    }
 
     /* Force PLL into slow mode to ensure output stable clock */
     WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift);
@@ -374,20 +383,23 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     WRITE_REG_MASK_WE(*(pSetup->conOffset0), PLL_FBDIV_MASK, pConfig->fbDiv << PLL_FBDIV_SHIFT);
     WRITE_REG_MASK_WE(*(pSetup->conOffset3), PLL_DSMPD_MASK, pConfig->dsmpd << PLL_DSMPD_SHIFT);
 
-    if (pConfig->frac)
+    if (pConfig->frac) {
         WRITE_REG(*(pSetup->conOffset2), (READ_REG(*(pSetup->conOffset2)) & 0xff000000) | pConfig->frac);
+    }
 
     WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
-        if (READ_REG(*(pSetup->conOffset2)) & (1 << pSetup->lockShift))
+        if (READ_REG(*(pSetup->conOffset2)) & (1 << pSetup->lockShift)) {
             break;
+        }
         HAL_CPUDelayUs(1000);
         delay--;
     }
-    if (delay == 0)
+    if (delay == 0) {
         return HAL_TIMEOUT;
+    }
 
     /* Force PLL into normal mode */
     WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift);
@@ -409,13 +421,15 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
 
     /* Waiting for pll lock */
     while (delay > 0) {
-        if (READ_REG(*(pSetup->conOffset2)) & (1 << pSetup->lockShift))
+        if (READ_REG(*(pSetup->conOffset2)) & (1 << pSetup->lockShift)) {
             break;
+        }
         HAL_CPUDelayUs(1000);
         delay--;
     }
-    if (delay == 0)
+    if (delay == 0) {
         return HAL_TIMEOUT;
+    }
 
     return HAL_OK;
 }
@@ -505,16 +519,18 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     const struct PLL_CONFIG *pConfig;
     int delay = 2400;
 
-    if (rate == HAL_CRU_GetPllFreq(pSetup))
+    if (rate == HAL_CRU_GetPllFreq(pSetup)) {
         return HAL_OK;
-    else if (rate < MIN_FOUT_FREQ)
+    } else if (rate < MIN_FOUT_FREQ) {
         return HAL_INVAL;
-    else if (rate > MAX_FOUT_FREQ)
+    } else if (rate > MAX_FOUT_FREQ) {
         return HAL_INVAL;
+    }
 
     pConfig = CRU_PllGetSettings(pSetup, rate);
-    if (!pConfig)
+    if (!pConfig) {
         return HAL_ERROR;
+    }
 
     /* Force PLL into slow mode to ensure output stable clock */
     WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift);
@@ -529,8 +545,9 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     WRITE_REG_MASK_WE(*(pSetup->conOffset0), PLL_FBDIV_MASK, pConfig->fbDiv << PLL_FBDIV_SHIFT);
     WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLL_DSMPD_MASK, pConfig->dsmpd << PLL_DSMPD_SHIFT);
 
-    if (pConfig->frac)
+    if (pConfig->frac) {
         WRITE_REG(*(pSetup->conOffset2), (READ_REG(*(pSetup->conOffset2)) & 0xff000000) | pConfig->frac);
+    }
 
     /* Pll Power up */
     WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
@@ -538,17 +555,20 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     /* Waiting for pll lock */
     while (delay > 0) {
         if (pSetup->stat0) {
-            if (READ_REG(*(pSetup->stat0)) & (1 << pSetup->lockShift))
+            if (READ_REG(*(pSetup->stat0)) & (1 << pSetup->lockShift)) {
                 break;
+            }
         } else {
-            if (READ_REG(*(pSetup->conOffset1)) & (1 << pSetup->lockShift))
+            if (READ_REG(*(pSetup->conOffset1)) & (1 << pSetup->lockShift)) {
                 break;
+            }
         }
         HAL_CPUDelayUs(1000);
         delay--;
     }
-    if (delay == 0)
+    if (delay == 0) {
         return HAL_TIMEOUT;
+    }
 
     /* Force PLL into normal mode */
     WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift);
@@ -571,17 +591,20 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
     /* Waiting for pll lock */
     while (delay > 0) {
         if (pSetup->stat0) {
-            if (READ_REG(*(pSetup->stat0)) & (1 << pSetup->lockShift))
+            if (READ_REG(*(pSetup->stat0)) & (1 << pSetup->lockShift)) {
                 break;
+            }
         } else {
-            if (READ_REG(*(pSetup->conOffset1)) & (1 << pSetup->lockShift))
+            if (READ_REG(*(pSetup->conOffset1)) & (1 << pSetup->lockShift)) {
                 break;
+            }
         }
         HAL_CPUDelayUs(1000);
         delay--;
     }
-    if (delay == 0)
+    if (delay == 0) {
         return HAL_TIMEOUT;
+    }
 
     return HAL_OK;
 }
@@ -609,20 +632,23 @@ HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk)
 {
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
+    HAL_Check ret;
 
 #ifdef CRU_GATE_CON_CNT
-    if (index < CRU_GATE_CON_CNT)
-        return (HAL_Check)(!((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
-    else
+    if (index < CRU_GATE_CON_CNT) {
+        ret = (HAL_Check)(!((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
+    } else {
 #ifdef PMUCRU_BASE
-        return (HAL_Check)(!((PMUCRU->CRU_CLKGATE_CON[index - CRU_GATE_CON_CNT] & (1 << shift)) >> shift));
+        ret = (HAL_Check)(!((PMUCRU->CRU_CLKGATE_CON[index - CRU_GATE_CON_CNT] & (1 << shift)) >> shift));
 #else
-        return (HAL_Check)(!((CRU->PMU_CLKGATE_CON[index - CRU_GATE_CON_CNT] & (1 << shift)) >> shift));
+        ret = (HAL_Check)(!((CRU->PMU_CLKGATE_CON[index - CRU_GATE_CON_CNT] & (1 << shift)) >> shift));
 #endif
+    }
 #else
+    ret = (HAL_Check)(!((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
+#endif
 
-    return (HAL_Check)(!((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
-#endif
+    return ret;
 }
 
 /**
@@ -636,14 +662,15 @@ HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
 
 #ifdef CRU_GATE_CON_CNT
-    if (index < CRU_GATE_CON_CNT)
+    if (index < CRU_GATE_CON_CNT) {
         CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
-    else
+    } else {
 #ifdef PMUCRU_BASE
         PMUCRU->CRU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = VAL_MASK_WE(1U << shift, 0U << shift);
 #else
         CRU->PMU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = VAL_MASK_WE(1U << shift, 0U << shift);
 #endif
+    }
 #else
     CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
 #endif
@@ -662,14 +689,15 @@ HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
 
 #ifdef CRU_GATE_CON_CNT
-    if (index < CRU_GATE_CON_CNT)
+    if (index < CRU_GATE_CON_CNT) {
         CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
-    else
+    } else {
 #ifdef PMUCRU_BASE
         PMUCRU->CRU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = VAL_MASK_WE(1U << shift, 1U << shift);
 #else
         CRU->PMU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = VAL_MASK_WE(1U << shift, 1U << shift);
 #endif
+    }
 #else
     CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
 #endif
@@ -686,16 +714,19 @@ HAL_Check HAL_CRU_ClkIsReset(uint32_t clk)
 {
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
+    HAL_Check ret;
 
 #ifdef CRU_SRST_CON_CNT
-    if (index < CRU_SRST_CON_CNT)
-        return (HAL_Check)((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift);
-    else
-        return (HAL_Check)((PMUCRU->CRU_CLKGATE_CON[index - CRU_SRST_CON_CNT] & (1 << shift)) >> shift);
+    if (index < CRU_SRST_CON_CNT) {
+        ret = (HAL_Check)((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift);
+    } else {
+        ret = (HAL_Check)((PMUCRU->CRU_CLKGATE_CON[index - CRU_SRST_CON_CNT] & (1 << shift)) >> shift);
+    }
 #else
-
-    return (HAL_Check)((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift);
+    ret = (HAL_Check)((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift);
 #endif
+
+    return ret;
 }
 
 /**
@@ -710,10 +741,11 @@ HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk)
 
     HAL_ASSERT(shift < 16);
 #ifdef CRU_SRST_CON_CNT
-    if (index < CRU_SRST_CON_CNT)
+    if (index < CRU_SRST_CON_CNT) {
         CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
-    else
+    } else {
         PMUCRU->CRU_SOFTRST_CON[index - CRU_SRST_CON_CNT] = VAL_MASK_WE(1U << shift, 1U << shift);
+    }
 #else
     CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
 #endif
@@ -733,10 +765,11 @@ HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
 
     HAL_ASSERT(shift < 16);
 #ifdef CRU_SRST_CON_CNT
-    if (index < CRU_SRST_CON_CNT)
+    if (index < CRU_SRST_CON_CNT) {
         CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
-    else
+    } else {
         PMUCRU->CRU_SOFTRST_CON[index - CRU_SRST_CON_CNT] = VAL_MASK_WE(1U << shift, 0U << shift);
+    }
 #else
     CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
 #endif
@@ -758,18 +791,20 @@ HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
     HAL_ASSERT(shift < 16);
     mask = CLK_DIV_GET_MASK(divName);
-    if (divValue > mask)
+    if (divValue > mask) {
         divValue = mask;
+    }
 
 #ifdef CRU_CLK_DIV_CON_CNT
-    if (index < CRU_CLK_DIV_CON_CNT)
+    if (index < CRU_CLK_DIV_CON_CNT) {
         CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
-    else
+    } else {
 #ifdef PMUCRU_BASE
         PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
 #else
         CRU->PMU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
 #endif
+    }
 #else
     CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, (divValue - 1U) << shift);
 #endif
@@ -784,7 +819,7 @@ HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
  */
 uint32_t HAL_CRU_ClkGetDiv(uint32_t divName)
 {
-    uint32_t shift, mask, index;
+    uint32_t shift, mask, index, divValue;
 
     index = CLK_DIV_GET_REG_OFFSET(divName);
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
@@ -792,18 +827,20 @@ uint32_t HAL_CRU_ClkGetDiv(uint32_t divName)
     mask = CLK_DIV_GET_MASK(divName);
 
 #ifdef CRU_CLK_DIV_CON_CNT
-    if (index < CRU_CLK_DIV_CON_CNT)
-        return ((((CRU->CRU_CLKSEL_CON[index]) & mask) >> shift) + 1);
-    else
+    if (index < CRU_CLK_DIV_CON_CNT) {
+        divValue = ((((CRU->CRU_CLKSEL_CON[index]) & mask) >> shift) + 1);
+    } else {
 #ifdef PMUCRU_BASE
-        return ((((PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT]) & mask) >> shift) + 1);
+        divValue = ((((PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT]) & mask) >> shift) + 1);
 #else
-        return ((((CRU->PMU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT]) & mask) >> shift) + 1);
+        divValue = ((((CRU->PMU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT]) & mask) >> shift) + 1);
 #endif
+    }
 #else
+    divValue = ((((CRU->CRU_CLKSEL_CON[index]) & mask) >> shift) + 1);
+#endif
 
-    return ((((CRU->CRU_CLKSEL_CON[index]) & mask) >> shift) + 1);
-#endif
+    return divValue;
 }
 
 /**
@@ -823,14 +860,15 @@ HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
     mask = CLK_MUX_GET_MASK(muxName);
 
 #ifdef CRU_CLK_SEL_CON_CNT
-    if (index < CRU_CLK_DIV_CON_CNT)
+    if (index < CRU_CLK_DIV_CON_CNT) {
         CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, muxValue << shift);
-    else
+    } else {
 #ifdef PMUCRU_BASE
         PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] = VAL_MASK_WE(mask, muxValue << shift);
 #else
         CRU->PMU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] = VAL_MASK_WE(mask, muxValue << shift);
 #endif
+    }
 #else
     CRU->CRU_CLKSEL_CON[index] = VAL_MASK_WE(mask, muxValue << shift);
 #endif
@@ -846,7 +884,7 @@ HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
 HAL_SECTION_SRAM_CODE
 uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
 {
-    uint32_t shift, mask, index;
+    uint32_t shift, mask, index, muxValue;
 
     index = CLK_MUX_GET_REG_OFFSET(muxName);
     shift = CLK_MUX_GET_BITS_SHIFT(muxName);
@@ -854,18 +892,20 @@ uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
     mask = CLK_MUX_GET_MASK(muxName);
 
 #ifdef CRU_CLK_SEL_CON_CNT
-    if (index < CRU_CLK_SEL_CON_CNT)
-        return ((CRU->CRU_CLKSEL_CON[index] & mask) >> shift);
-    else
+    if (index < CRU_CLK_SEL_CON_CNT) {
+        muxValue = ((CRU->CRU_CLKSEL_CON[index] & mask) >> shift);
+    } else {
 #ifdef PMUCRU_BASE
-        return ((PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] & mask) >> shift);
+        muxValue = ((PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] & mask) >> shift);
 #else
-        return ((CRU->PMU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] & mask) >> shift);
+        muxValue = ((CRU->PMU_CLKSEL_CON[index - CRU_CLK_SEL_CON_CNT] & mask) >> shift);
 #endif
+    }
 #else
+    muxValue = ((CRU->CRU_CLKSEL_CON[index] & mask) >> shift);
+#endif
 
-    return ((CRU->CRU_CLKSEL_CON[index] & mask) >> shift);
-#endif
+    return muxValue;
 }
 
 /**
@@ -894,8 +934,9 @@ HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
         *numerator *= 4;
         *denominator *= 4;
     }
-    if (*numerator > 0xffff || *denominator > 0xffff)
+    if (*numerator > 0xffff || *denominator > 0xffff) {
         return HAL_INVAL;
+    }
 
     return HAL_OK;
 }
@@ -959,12 +1000,14 @@ __WEAK HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId)
 HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type)
 {
 #ifdef CRU_GLB_SRST_FST_VALUE_OFFSET
-    if (type == GLB_SRST_FST)
+    if (type == GLB_SRST_FST) {
         CRU->GLB_SRST_FST_VALUE = GLB_SRST_FST;
+    }
 #endif
 #ifdef CRU_GLB_SRST_SND_VALUE_OFFSET
-    if (type == GLB_SRST_SND)
+    if (type == GLB_SRST_SND) {
         CRU->GLB_SRST_SND_VALUE = GLB_SRST_SND;
+    }
 #endif
 
     return HAL_INVAL;

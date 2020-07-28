@@ -337,10 +337,11 @@ HAL_Status HAL_VICAP_SetCaptureEnable(struct VICAP_REG *pReg, bool enable)
     HAL_ASSERT(IS_VICAP_INSTANCE(pReg));
 
     regVal = READ_REG(pReg->DVP_CTRL);
-    if (enable)
+    if (enable) {
         regVal |= VICAP_DVP_CTRL_CAP_EN_MASK;
-    else
+    } else {
         regVal &= ~VICAP_DVP_CTRL_CAP_EN_MASK;
+    }
     WRITE_REG(pReg->DVP_CTRL, regVal);
 
     return HAL_OK;
@@ -882,13 +883,15 @@ HAL_Status HAL_VICAP_SetWaterLine(struct VICAP_REG *pReg,
     CLEAR_BIT(regVal, VICAP_DVP_WATER_LINE_HURRY_EN_MASK |
               VICAP_DVP_WATER_LINE_HURRY_VALUE_MASK |
               VICAP_DVP_WATER_LINE_WATER_LINE_MASK);
-    if (info->enable)
+    if (info->enable) {
         SET_BIT(regVal, VICAP_DVP_WATER_LINE_HURRY_EN_MASK);
-    else
+    } else {
         CLEAR_BIT(regVal, VICAP_DVP_WATER_LINE_HURRY_EN_MASK);
+    }
 
-    if (info->hurryValue > VICAP_DVP_WATER_LINE_HURRY_VAL_MAX)
+    if (info->hurryValue > VICAP_DVP_WATER_LINE_HURRY_VAL_MAX) {
         info->hurryValue = VICAP_DVP_WATER_LINE_HURRY_VAL_MAX;
+    }
     regVal |= (info->hurryValue << VICAP_DVP_WATER_LINE_HURRY_VALUE_SHIFT);
 
     regVal |= (info->level << VICAP_DVP_WATER_LINE_WATER_LINE_SHIFT);

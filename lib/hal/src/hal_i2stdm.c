@@ -171,10 +171,11 @@ static HAL_Status I2STDM_SetSampleRate(struct HAL_I2STDM_DEV *i2sTdm,
     HAL_Status ret = HAL_OK;
 
     if (i2sTdm->trcmMode) {
-        if (i2sTdm->trcmMode == TRCM_TXONLY)
+        if (i2sTdm->trcmMode == TRCM_TXONLY) {
             mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkTx);
-        else
+        } else {
             mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkRx);
+        }
 
         bclkRate = i2sTdm->bclkFs * sampleRate;
         HAL_ASSERT(bclkRate != 0);
@@ -187,10 +188,11 @@ static HAL_Status I2STDM_SetSampleRate(struct HAL_I2STDM_DEV *i2sTdm,
                    I2STDM_CKR_TSD_MASK | I2STDM_CKR_RSD_MASK,
                    I2STDM_CKR_TSD(divLrck) | I2STDM_CKR_RSD(divLrck));
     } else {
-        if (stream == AUDIO_STREAM_PLAYBACK)
+        if (stream == AUDIO_STREAM_PLAYBACK) {
             mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkTx);
-        else
+        } else {
             mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkRx);
+        }
 
         bclkRate = i2sTdm->bclkFs * sampleRate;
         HAL_ASSERT(bclkRate != 0);
@@ -332,7 +334,7 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
                i2sTdm->trcmMode << I2STDM_CKR_LRCK_COMMON_SHIFT);
 
     /* channel re-mapping */
-    if (txMap)
+    if (txMap) {
         MODIFY_REG(reg->TXCR,
                    I2STDM_TXCR_PATH_MASK(0) |
                    I2STDM_TXCR_PATH_MASK(1) |
@@ -342,8 +344,9 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
                    I2STDM_TXCR_PATH(1, (txMap >> 4) & 0x3) |
                    I2STDM_TXCR_PATH(2, (txMap >> 8) & 0x3) |
                    I2STDM_TXCR_PATH(3, (txMap >> 12) & 0x3));
+    }
 
-    if (rxMap)
+    if (rxMap) {
         MODIFY_REG(reg->RXCR,
                    I2STDM_RXCR_PATH_MASK(0) |
                    I2STDM_RXCR_PATH_MASK(1) |
@@ -353,6 +356,7 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
                    I2STDM_RXCR_PATH(1, (rxMap >> 4) & 0x3) |
                    I2STDM_RXCR_PATH(2, (rxMap >> 8) & 0x3) |
                    I2STDM_RXCR_PATH(3, (rxMap >> 12) & 0x3));
+    }
 
     return HAL_OK;
 }
@@ -432,14 +436,16 @@ HAL_Status HAL_I2STDM_TxRxEnable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamTyp
 {
     struct I2STDM_REG *reg = i2sTdm->pReg;
 
-    if (stream == AUDIO_STREAM_PLAYBACK)
+    if (stream == AUDIO_STREAM_PLAYBACK) {
         MODIFY_REG(reg->DMACR, I2STDM_DMACR_TDE_MASK, I2STDM_DMACR_TDE_ENABLE);
-    else
+    } else {
         MODIFY_REG(reg->DMACR, I2STDM_DMACR_RDE_MASK, I2STDM_DMACR_RDE_ENABLE);
+    }
 
-    if (doXfer)
+    if (doXfer) {
         MODIFY_REG(reg->XFER, I2STDM_XFER_TXS_MASK | I2STDM_XFER_RXS_MASK,
                    I2STDM_XFER_TXS_START | I2STDM_XFER_RXS_START);
+    }
 
     return HAL_OK;
 }
@@ -456,10 +462,11 @@ HAL_Status HAL_I2STDM_TxRxDisable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamTy
 {
     struct I2STDM_REG *reg = i2sTdm->pReg;
 
-    if (stream == AUDIO_STREAM_PLAYBACK)
+    if (stream == AUDIO_STREAM_PLAYBACK) {
         MODIFY_REG(reg->DMACR, I2STDM_DMACR_TDE_MASK, I2STDM_DMACR_TDE_DISABLE);
-    else
+    } else {
         MODIFY_REG(reg->DMACR, I2STDM_DMACR_RDE_MASK, I2STDM_DMACR_RDE_DISABLE);
+    }
 
     if (doXfer) {
         MODIFY_REG(reg->XFER, I2STDM_XFER_TXS_MASK | I2STDM_XFER_RXS_MASK,
@@ -488,8 +495,9 @@ HAL_Status HAL_I2STDM_Config(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType st
     bool isMaster;
 
     isMaster = (READ_BIT(reg->CKR, I2STDM_CKR_MSS_MASK) == I2STDM_CKR_MSS_MASTER);
-    if (isMaster)
+    if (isMaster) {
         I2STDM_SetSampleRate(i2sTdm, stream, params->sampleRate);
+    }
 
     switch (params->channels) {
     case 8:

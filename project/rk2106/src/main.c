@@ -87,8 +87,9 @@ int main(void)
     /* Unity Test  */
     test_main();
 
-    while (1)
+    while (1) {
         ;
+    }
 
     return 0;
 }

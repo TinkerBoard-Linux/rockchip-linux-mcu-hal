@@ -240,8 +240,9 @@ HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad)
     uint32_t val;
 
     val = READ_REG(reg->CONTROL);
-    if ((val & VAD_CONTROL_VAD_EN_MASK) == VAD_CONTROL_VAD_DIS)
+    if ((val & VAD_CONTROL_VAD_EN_MASK) == VAD_CONTROL_VAD_DIS) {
         return 0;
+    }
     MODIFY_REG(reg->CONTROL, VAD_CONTROL_VAD_EN_MASK, VAD_CONTROL_VAD_DIS);
     val = READ_REG(reg->CONTROL);
     vad->h_16Bit = (val & VAD_CONTROL_VOICE_24BIT_SAT_MASK) == VAD_CONTROL_VOICE_H16B;

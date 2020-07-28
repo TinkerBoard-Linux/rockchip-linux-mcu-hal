@@ -243,10 +243,11 @@ static const struct SPINAND_INFO s_spiNandTable[] = {
 /********************* Private Function Definition ***************************/
 static HAL_Status SPINAND_SPIMemExecOp(struct SPI_NAND_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
-    if (spi->xfer)
+    if (spi->xfer) {
         return spi->xfer(spi, op);
-    else
+    } else {
         return HAL_ERROR;
+    }
 }
 
 static HAL_Status SPINAND_ReadRegOp(struct SPI_NAND *spinand, uint8_t reg, uint8_t *val)
@@ -288,17 +289,19 @@ static int32_t SPINAND_GetEccStatus0(struct SPI_NAND *spinand)
     uint8_t ecc, status;
 
     ret = SPINAND_ReadStatus(spinand, 0xC0, &status);
-    if (ret)
+    if (ret) {
         return SPINAND_ECC_ERROR;
+    }
 
     ecc = (status >> 4) & 0x03;
 
-    if (ecc <= 1)
+    if (ecc <= 1) {
         ret = SPINAND_ECC_OK;
-    else if (ecc == 2)
+    } else if (ecc == 2) {
         ret = SPINAND_ECC_ERROR;
-    else
+    } else {
         ret = SPINAND_ECC_REFRESH;
+    }
 
     HAL_SPINAND_DBG("%s C0 %x\n", __func__, status);
 
@@ -320,17 +323,19 @@ static int32_t SPINAND_GetEccStatus1(struct SPI_NAND *spinand)
     uint8_t ecc, status;
 
     ret = SPINAND_ReadStatus(spinand, 0xC0, &status);
-    if (ret)
+    if (ret) {
         return SPINAND_ECC_ERROR;
+    }
 
     ecc = (status >> 4) & 0x03;
 
-    if (ecc == 0)
+    if (ecc == 0) {
         ret = SPINAND_ECC_OK;
-    else if (ecc == 1)
+    } else if (ecc == 1) {
         ret = SPINAND_ECC_REFRESH;
-    else
+    } else {
         ret = SPINAND_ECC_ERROR;
+    }
 
     HAL_SPINAND_DBG("%s C0 %x\n", __func__, status);
 
@@ -352,20 +357,23 @@ static int32_t SPINAND_GetEccStatus2(struct SPI_NAND *spinand)
     int32_t ret;
     uint8_t ecc, status, status1;
 
-    if (SPINAND_ReadStatus(spinand, 0xC0, &status) == HAL_OK)
+    if (SPINAND_ReadStatus(spinand, 0xC0, &status) == HAL_OK) {
         return SPINAND_ECC_ERROR;
-    if (SPINAND_ReadStatus(spinand, 0xF0, &status1) == HAL_OK)
+    }
+    if (SPINAND_ReadStatus(spinand, 0xF0, &status1) == HAL_OK) {
         return SPINAND_ECC_ERROR;
+    }
 
     ecc = (status >> 4) & 0x03;
     ecc = (ecc << 2) | ((status1 >> 4) & 0x03);
 
-    if (ecc < 7)
+    if (ecc < 7) {
         ret = SPINAND_ECC_OK;
-    else if (ecc == 7)
+    } else if (ecc == 7) {
         ret = SPINAND_ECC_REFRESH;
-    else
+    } else {
         ret = SPINAND_ECC_ERROR;
+    }
 
     HAL_SPINAND_DBG("%s C0 %x, F0 %x\n", __func__, status, status1);
 
@@ -388,20 +396,23 @@ static int32_t SPINAND_GetEccStatus3(struct SPI_NAND *spinand)
     int32_t ret;
     uint8_t ecc, status, status1;
 
-    if (SPINAND_ReadStatus(spinand, 0xC0, &status) == HAL_OK)
+    if (SPINAND_ReadStatus(spinand, 0xC0, &status) == HAL_OK) {
         return SPINAND_ECC_ERROR;
-    if (SPINAND_ReadStatus(spinand, 0xF0, &status1) == HAL_OK)
+    }
+    if (SPINAND_ReadStatus(spinand, 0xF0, &status1) == HAL_OK) {
         return SPINAND_ECC_ERROR;
+    }
 
     ecc = (status >> 4) & 0x03;
     ecc = (ecc << 2) | ((status1 >> 4) & 0x03);
 
-    if (ecc < 7)
+    if (ecc < 7) {
         ret = SPINAND_ECC_OK;
-    else if (ecc == 7 || ecc >= 12)
+    } else if (ecc == 7 || ecc >= 12) {
         ret = SPINAND_ECC_REFRESH;
-    else
+    } else {
         ret = SPINAND_ECC_ERROR;
+    }
 
     HAL_SPINAND_DBG("%s C0 %x, F0 %x\n", __func__, status, status1);
 
@@ -426,16 +437,18 @@ static int32_t SPINAND_GetEccStatus4(struct SPI_NAND *spinand)
     uint8_t ecc, status;
 
     ret = SPINAND_ReadStatus(spinand, 0xC0, &status);
-    if (ret)
+    if (ret) {
         return SPINAND_ECC_ERROR;
+    }
 
     ecc = (status >> 2) & 0x0f;
-    if (ecc < 7)
+    if (ecc < 7) {
         ret = SPINAND_ECC_OK;
-    else if (ecc == 7 || ecc == 12)
+    } else if (ecc == 7 || ecc == 12) {
         ret = SPINAND_ECC_REFRESH;
-    else
+    } else {
         ret = SPINAND_ECC_ERROR;
+    }
 
     HAL_SPINAND_DBG("%s C0 %x\n", __func__, status);
 
@@ -460,17 +473,19 @@ static int32_t SPINAND_GetEccStatus5(struct SPI_NAND *spinand)
     uint8_t ecc, status;
 
     ret = SPINAND_ReadStatus(spinand, 0xC0, &status);
-    if (ret)
+    if (ret) {
         return SPINAND_ECC_ERROR;
+    }
 
     ecc = (status >> 4) & 0x07;
 
-    if (ecc < 4)
+    if (ecc < 4) {
         ret = SPINAND_ECC_OK;
-    else if (ecc == 4)
+    } else if (ecc == 4) {
         ret = SPINAND_ECC_REFRESH;
-    else
+    } else {
         ret = SPINAND_ECC_ERROR;
+    }
 
     HAL_SPINAND_DBG("%s C0 %x\n", __func__, status);
 
@@ -487,12 +502,14 @@ static HAL_Status SPINAND_WaitBusy(struct SPI_NAND *spinand, uint8_t *data, uint
     *data = 0;
     for (i = 0; i < timeout; i++) {
         ret = SPINAND_ReadStatus(spinand, 0xC0, &status);
-        if (ret != HAL_OK)
+        if (ret != HAL_OK) {
             return ret;
+        }
 
         *data = status;
-        if ((status & 0x01) == 0)
+        if ((status & 0x01) == 0) {
             return HAL_OK;
+        }
 
         HAL_CPUDelayUs(1);
     }
@@ -552,8 +569,9 @@ static HAL_Status SPINAND_QuadEnable(struct SPI_NAND *spinand)
     uint8_t status;
 
     ret = SPINAND_ReadStatus(spinand, 0xB0, &status);
-    if (ret != HAL_OK)
+    if (ret != HAL_OK) {
         return ret;
+    }
 
     status |= 1;
 
@@ -573,8 +591,9 @@ static const struct SPINAND_INFO *SPINAND_GerFlashInfo(uint8_t *flashId)
     uint32_t id = (flashId[0] << 8) | (flashId[1] << 0);
 
     for (i = 0; i < HAL_ARRAY_SIZE(s_spiNandTable); i++) {
-        if (s_spiNandTable[i].id == id)
+        if (s_spiNandTable[i].id == id) {
             return &s_spiNandTable[i];
+        }
     }
 
     return NULL;
@@ -600,19 +619,23 @@ HAL_Status HAL_SPINAND_EraseBlock(struct SPI_NAND *spinand, uint32_t addr)
     HAL_SPINAND_DBG("%s %x\n", __func__, addr);
 
     ret = SPINAND_WriteEnableOp(spinand);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     ret = SPINAND_EraseOp(spinand, addr);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     ret = SPINAND_WaitBusy(spinand, &status, 1000 * 1000);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
-    if (status & SPINAND_ERASE_FAIL)
+    if (status & SPINAND_ERASE_FAIL) {
         return SPINAND_ERASE_FAIL;
+    }
 
     return ret;
 }
@@ -634,18 +657,21 @@ int32_t HAL_SPINAND_ReadPageRaw(struct SPI_NAND *spinand, uint32_t addr, void *p
     HAL_SPINAND_DBG("%s %x\n", __func__, addr);
 
     ret = SPINAND_LoadPageOp(spinand, addr);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     ret = SPINAND_WaitBusy(spinand, &status, 1000 * 1000);
-    if (ret < 0)
+    if (ret < 0) {
         return ret;
+    }
 
     addrMix = spinand->planePerDie == 1 ? 0 : ((addr >> 6) & 0x1) << 12;
     ret = SPINAND_ReadFromCacheOp(spinand, addrMix, pData,
                                   spinand->secPerPage * SPINAND_SECTOR_FULL_SIZE);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     return spinand->eccStatus(spinand);
 }
@@ -679,8 +705,9 @@ int32_t HAL_SPINAND_ReadPage(struct SPI_NAND *spinand, uint32_t addr,
         pSpare[3] = pageBuf[(dataSize + meta->off3) / 4];
     }
 
-    if (ret != SPINAND_ECC_OK)
+    if (ret != SPINAND_ECC_OK) {
         HAL_SPINAND_DBG("%s[0x%x], ret=0x%x\n", __func__, addr, ret);
+    }
 
     return ret;
 }
@@ -724,25 +751,30 @@ HAL_Status HAL_SPINAND_ProgPageRaw(struct SPI_NAND *spinand, uint32_t addr, cons
     HAL_SPINAND_DBG("%s %x\n", __func__, addr);
 
     ret = SPINAND_WriteEnableOp(spinand);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     addrMix = spinand->planePerDie == 1 ? 0 : ((addr >> 6) & 0x1) << 12;
     ret = SPINAND_WriteToCacheOp(spinand, addrMix, (uint32_t *)pData,
                                  spinand->secPerPage * SPINAND_SECTOR_FULL_SIZE);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     ret = SPINAND_ProgOp(spinand, addr);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     ret = SPINAND_WaitBusy(spinand, &status, 1000 * 1000);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
-    if (status & SPINAND_PROG_FAIL)
+    if (status & SPINAND_PROG_FAIL) {
         return SPINAND_PROG_FAIL;
+    }
 
     return ret;
 }
@@ -823,8 +855,9 @@ HAL_Check HAL_SPINAND_IsBad(struct SPI_NAND *spinand, uint32_t addr)
     addrMix |= spinand->planePerDie == 1 ? 0 : ((addr >> 6) & 0x1) << 12;
     SPINAND_ReadFromCacheOp(spinand, addrMix, (uint32_t *)marker, sizeof(marker));
 
-    if (marker[0] != 0xff || marker[1] != 0xff)
+    if (marker[0] != 0xff || marker[1] != 0xff) {
         return HAL_TRUE;
+    }
 
     return HAL_FALSE;
 }
@@ -845,25 +878,30 @@ HAL_Status HAL_SPINAND_MarkBad(struct SPI_NAND *spinand, uint32_t addr)
     HAL_SPINAND_DBG("%s %x\n", __func__, addr);
 
     ret = SPINAND_WriteEnableOp(spinand);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     addrMix = spinand->secPerPage * SPINAND_SECTOR_SIZE;
     addrMix |= spinand->planePerDie == 1 ? 0 : ((addr >> 6) & 0x1) << 12;
     ret = SPINAND_WriteToCacheOp(spinand, addrMix, (uint32_t *)marker, sizeof(marker));
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     ret = SPINAND_ProgOp(spinand, addr);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
     ret = SPINAND_WaitBusy(spinand, &status, 1000 * 1000);
-    if (ret)
+    if (ret) {
         return ret;
+    }
 
-    if (status & SPINAND_PROG_FAIL)
+    if (status & SPINAND_PROG_FAIL) {
         return SPINAND_PROG_FAIL;
+    }
 
     return ret;
 }
@@ -892,12 +930,14 @@ HAL_Status HAL_SPINAND_Init(struct SPI_NAND *spinand)
     HAL_SPINAND_ReadID(spinand, idByte);
     HAL_SPINAND_DBG("SPI Nand ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
 
-    if ((idByte[0] == 0xFF) || (idByte[0] == 0x00))
+    if ((idByte[0] == 0xFF) || (idByte[0] == 0x00)) {
         return HAL_ERROR;
+    }
 
     info = SPINAND_GerFlashInfo(idByte);
-    if (!info)
+    if (!info) {
         return HAL_INVAL;
+    }
 
     spinand->size = (1 << info->density) << 9;
     spinand->secPerPage = info->secPerPage;

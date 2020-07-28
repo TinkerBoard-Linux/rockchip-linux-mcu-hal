@@ -111,11 +111,13 @@ static void CRU_AsCntConfig(uint8_t ch, uint32_t val1, uint32_t val2)
 {
     HAL_ASSERT(ch < 5);
 
-    if (val1 >= CRU_AS_CNT_MSK)
+    if (val1 >= CRU_AS_CNT_MSK) {
         val1 = CRU->AS_CON[ch][0] & CRU_AS_CNT_MSK;
+    }
 
-    if (val2 >= CRU_AS_CNT_MSK)
+    if (val2 >= CRU_AS_CNT_MSK) {
         val2 = (CRU->AS_CON[ch][0] >> 16) & CRU_AS_CNT_MSK;
+    }
 
     CRU->AS_CON[ch][0] = val1 | (val2 << 16);
 }
@@ -132,14 +134,15 @@ void HAL_CRU_AsEnable(uint8_t ch, uint8_t en)
 {
     HAL_ASSERT(ch < 5);
 
-    if (en)
+    if (en) {
         CRU->AS_CON[ch][1] = VAL_MASK_WE(CRU_AS0_CON1_AS_EN_MASK |
                                          CRU_AS0_CON1_ASS_EN_MASK,
                                          CRU_AS0_CON1_AS_EN_MASK |
                                          CRU_AS0_CON1_ASS_EN_MASK);
-    else
+    } else {
         CRU->AS_CON[ch][1] = VAL_MASK_WE(CRU_AS0_CON1_AS_EN_MASK |
                                          CRU_AS0_CON1_ASS_EN_MASK, 0);
+    }
 }
 
 void HAL_CRU_AsInit(void)
@@ -263,23 +266,26 @@ static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         freq = (pRate / m) * n;
         break;
     case CLK_AUDPWM:
-        if (HAL_CRU_ClkGetMux(mux) == 0)
+        if (HAL_CRU_ClkGetMux(mux) == 0) {
             freq = s_gpllFreq / HAL_CRU_ClkGetDiv(divSrc);
-        else if (HAL_CRU_ClkGetMux(mux) == 1)
+        } else if (HAL_CRU_ClkGetMux(mux) == 1) {
             freq = (s_gpllFreq / m) * n;
+        }
         break;
     default:
-        if (HAL_CRU_ClkGetMux(muxSrc))
+        if (HAL_CRU_ClkGetMux(muxSrc)) {
             pRate = s_cpllFreq / HAL_CRU_ClkGetDiv(divSrc);
-        else
+        } else {
             pRate = s_gpllFreq / HAL_CRU_ClkGetDiv(divSrc);
+        }
 
-        if (HAL_CRU_ClkGetMux(mux) == 0)
+        if (HAL_CRU_ClkGetMux(mux) == 0) {
             freq = pRate;
-        else if (HAL_CRU_ClkGetMux(mux) == 1)
+        } else if (HAL_CRU_ClkGetMux(mux) == 1) {
             freq = (pRate / m) * n;
-        else if (HAL_CRU_ClkGetMux(mux) == 2)
+        } else if (HAL_CRU_ClkGetMux(mux) == 2) {
             freq = PLL_INPUT_OSC_RATE;
+        }
         break;
     }
 
@@ -407,8 +413,9 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
             CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
             HAL_CRU_ClkSetMux(mux, 1);
         }
-        if (muxOut)
+        if (muxOut) {
             HAL_CRU_ClkSetMux(muxOut, 0);
+        }
 
         return HAL_OK;
     case CLK_32K:
@@ -456,15 +463,17 @@ static uint32_t HAL_CRU_ClkUsbGetFreq(eCLOCK_Name clockName)
     n = (CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0xffff0000) >> 16;
     m = CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0x0000ffff;
 
-    if (HAL_CRU_ClkGetMux(muxSrc))
+    if (HAL_CRU_ClkGetMux(muxSrc)) {
         pRate = s_cpllFreq;
-    else
+    } else {
         pRate = s_gpllFreq;
+    }
 
-    if (HAL_CRU_ClkGetMux(mux) == 0)
+    if (HAL_CRU_ClkGetMux(mux) == 0) {
         freq = PLL_INPUT_OSC_RATE;
-    else if (HAL_CRU_ClkGetMux(mux) == 1)
+    } else if (HAL_CRU_ClkGetMux(mux) == 1) {
         freq = (pRate / m) * n;
+    }
 
     return freq;
 }
@@ -523,10 +532,12 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     uint32_t clkDiv = CLK_GET_DIV(clockName);
     uint32_t pRate = s_gpllFreq;
 
-    if (!s_gpllFreq)
+    if (!s_gpllFreq) {
         s_gpllFreq = HAL_CRU_GetPllFreq(&GPLL);
-    if (!s_cpllFreq)
+    }
+    if (!s_cpllFreq) {
         s_cpllFreq = HAL_CRU_GetPllFreq(&CPLL);
+    }
 
     switch (clockName) {
     case PLL_GPLL:
@@ -540,8 +551,9 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 
         return freq;
     case DCLK_VOP_S:
-        if (HAL_CRU_ClkGetMux(clkMux))
+        if (HAL_CRU_ClkGetMux(clkMux)) {
             pRate = s_cpllFreq;
+        }
 
         freq = pRate / HAL_CRU_ClkGetDiv(clkDiv);
 
@@ -561,15 +573,17 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case MCLK_PDM0:
     case SCLK_SFC_SRC:
     case SCLK_SFC1_SRC:
-        if (HAL_CRU_ClkGetMux(clkMux))
+        if (HAL_CRU_ClkGetMux(clkMux)) {
             pRate = s_cpllFreq;
-        else
+        } else {
             pRate = s_gpllFreq;
+        }
         break;
     case CLK_PWM:
         mux = HAL_CRU_ClkGetMux(clkMux);
-        if (mux)
+        if (mux) {
             pRate = PLL_INPUT_OSC_RATE;
+        }
         break;
     case CLK_GPIO_DBG0:
     case CLK_GPIO_DBG1:
@@ -582,20 +596,23 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         return freq;
     case CLK_CIFOUT:
         mux = HAL_CRU_ClkGetMux(clkMux);
-        if (mux == 2)
+        if (mux == 2) {
             pRate = PLL_INPUT_OSC_RATE;
+        }
         break;
     default:
         break;
     }
 
-    if ((clkMux == 0) && (clkDiv == 0))
+    if ((clkMux == 0) && (clkDiv == 0)) {
         return 0;
+    }
 
-    if (clkDiv)
+    if (clkDiv) {
         freq = pRate / (HAL_CRU_ClkGetDiv(clkDiv));
-    else
+    } else {
         freq = pRate;
+    }
 
     return freq;
 }
@@ -614,10 +631,12 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     uint32_t clkDiv = CLK_GET_DIV(clockName), div = 0;
     uint32_t pRate = s_gpllFreq;
 
-    if (!s_gpllFreq)
+    if (!s_gpllFreq) {
         s_gpllFreq = HAL_CRU_GetPllFreq(&GPLL);
-    if (!s_cpllFreq)
+    }
+    if (!s_cpllFreq) {
         s_cpllFreq = HAL_CRU_GetPllFreq(&CPLL);
+    }
 
     switch (clockName) {
     case PLL_GPLL:
@@ -695,14 +714,17 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         break;
     }
 
-    if ((clkMux == 0) && (clkDiv == 0))
+    if ((clkMux == 0) && (clkDiv == 0)) {
         return HAL_INVAL;
+    }
 
     div = HAL_DIV_ROUND_UP(pRate, rate);
-    if (clkMux)
+    if (clkMux) {
         HAL_CRU_ClkSetMux(clkMux, mux);
-    if (clkDiv)
+    }
+    if (clkDiv) {
         HAL_CRU_ClkSetDiv(clkDiv, div);
+    }
 
     return HAL_OK;
 }
@@ -721,8 +743,9 @@ HAL_Status HAL_CRU_PllCompensation(eCLOCK_Name clockName, int ppm)
     uint64_t fracdiv;
     long int m, n;
 
-    if ((ppm > 100) || (ppm < -100))
+    if ((ppm > 100) || (ppm < -100)) {
         return HAL_INVAL;
+    }
 
     switch (clockName) {
     case PLL_GPLL:
@@ -745,8 +768,9 @@ HAL_Status HAL_CRU_PllCompensation(eCLOCK_Name clockName, int ppm)
 
     fracdiv = (m / MHZ) + ((n / MHZ) * fbdiv) + frac;
 
-    if (fracdiv > 0xffffff)
+    if (fracdiv > 0xffffff) {
         return HAL_INVAL;
+    }
 
     WRITE_REG(*conOffset2, (READ_REG(*conOffset2) & 0xff000000) | fracdiv);
 

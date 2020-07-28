@@ -130,10 +130,11 @@ HAL_Status HAL_SPI2APB_UnmaskIrq(struct SPI2APB_REG *pReg, bool unmask)
 {
     HAL_ASSERT(IS_SPI2APB_INSTANCE(pReg));
 
-    if (unmask)
+    if (unmask) {
         WRITE_REG(pReg->IMR, 0x1);
-    else
+    } else {
         WRITE_REG(pReg->IMR, 0x0);
+    }
 
     return HAL_OK;
 }

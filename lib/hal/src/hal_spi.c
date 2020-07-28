@@ -159,10 +159,11 @@ HAL_Status HAL_SPI_Init(struct SPI_HANDLE *pSPI, uint32_t base, bool slave)
     pSPI->pReg = (struct SPI_REG *)base;
     HAL_ASSERT(IS_SPI_INSTANCE(pSPI->pReg));
 
-    if (slave)
+    if (slave) {
         pSPI->config.opMode = CR0_OPM_SLAVE;
-    else
+    } else {
         pSPI->config.opMode = CR0_OPM_MASTER;
+    }
 
     /* Default config */
     pSPI->config.apbTransform = CR0_BHT_8BIT;
@@ -241,10 +242,11 @@ HAL_Status HAL_SPI_SetCS(struct SPI_HANDLE *pSPI, char select, bool enable)
 
     ser = READ_REG(pSPI->pReg->SER) & SPI_SER_SER_MASK;
 
-    if (enable)
+    if (enable) {
         ser |= 1 << select;
-    else
+    } else {
         ser &= ~(1 << select);
+    }
 
     WRITE_REG(pSPI->pReg->SER, ser);
 
@@ -261,8 +263,9 @@ HAL_Status HAL_SPI_FlushFifo(struct SPI_HANDLE *pSPI)
 {
     HAL_ASSERT(pSPI != NULL);
 
-    while (READ_REG(pSPI->pReg->RXFLR))
+    while (READ_REG(pSPI->pReg->RXFLR)) {
         READ_REG(pSPI->pReg->RXDR);
+    }
 
     return HAL_OK;
 }
@@ -302,11 +305,13 @@ HAL_Status HAL_SPI_QueryBusState(struct SPI_HANDLE *pSPI)
     HAL_ASSERT(pSPI != NULL);
 
     if (pSPI->config.opMode == CR0_OPM_SLAVE) {
-        if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_STB_BUSY))
+        if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_STB_BUSY)) {
             return HAL_OK;
+        }
     } else {
-        if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_BUSY))
+        if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_BUSY)) {
             return HAL_OK;
+        }
     }
 
     return HAL_BUSY;
@@ -354,10 +359,11 @@ static HAL_Status HAL_SPI_PioWrite(struct SPI_HANDLE *pSPI)
     uint32_t txw = 0;
 
     while (max--) {
-        if (pSPI->config.nBytes == 1)
+        if (pSPI->config.nBytes == 1) {
             txw = *(uint8_t *)(pSPI->pTxBuffer);
-        else
+        } else {
             txw = *(uint16_t *)(pSPI->pTxBuffer);
+        }
 
         WRITE_REG(pSPI->pReg->TXDR, txw);
         pSPI->pTxBuffer += pSPI->config.nBytes;
@@ -379,10 +385,11 @@ static HAL_Status HAL_SPI_PioRead(struct SPI_HANDLE *pSPI)
 
     while (max--) {
         rxw = READ_REG(pSPI->pReg->RXDR);
-        if (pSPI->config.nBytes == 1)
+        if (pSPI->config.nBytes == 1) {
             *(uint8_t *)(pSPI->pRxBuffer) = (uint8_t)rxw;
-        else
+        } else {
             *(uint16_t *)(pSPI->pRxBuffer) = (uint16_t)rxw;
+        }
         pSPI->pRxBuffer += pSPI->config.nBytes;
     }
 
@@ -495,8 +502,9 @@ HAL_Status HAL_SPI_IrqHandler(struct SPI_HANDLE *pSPI)
             left = (left > int_level) ? int_level : left;
             WRITE_REG(pSPI->pReg->RXFTLR, left);
 
-            if (pSPI->config.xfmMode == CR0_XFM_TR)
+            if (pSPI->config.xfmMode == CR0_XFM_TR) {
                 HAL_SPI_PioWrite(pSPI);
+            }
         } else {
             result = HAL_OK;
             goto out;
@@ -543,13 +551,15 @@ HAL_Status HAL_SPI_ItTransfer(struct SPI_HANDLE *pSPI)
         rxLevel = HAL_SPI_FIFO_LENGTH / 2;
         rxLevel = (tempLevel > rxLevel) ? rxLevel : tempLevel;
 
-        if (rxLevel != READ_REG(pSPI->pReg->RXFTLR))
+        if (rxLevel != READ_REG(pSPI->pReg->RXFTLR)) {
             WRITE_REG(pSPI->pReg->RXFTLR, rxLevel);
+        }
 
         HAL_SPI_EnableChip(pSPI, 1);
 
-        if (pSPI->config.xfmMode == CR0_XFM_TR)
+        if (pSPI->config.xfmMode == CR0_XFM_TR) {
             HAL_SPI_PioWrite(pSPI);
+        }
 
         newMask = SPI_INT_RXFI | SPI_INT_RXOI | SPI_INT_RXUI;
     } else {
@@ -557,8 +567,9 @@ HAL_Status HAL_SPI_ItTransfer(struct SPI_HANDLE *pSPI)
         txLevel = HAL_SPI_FIFO_LENGTH / 2;
         txLevel = (tempLevel > txLevel) ? txLevel : tempLevel;
 
-        if (txLevel != READ_REG(pSPI->pReg->TXFTLR))
+        if (txLevel != READ_REG(pSPI->pReg->TXFTLR)) {
             WRITE_REG(pSPI->pReg->TXFTLR, txLevel);
+        }
 
         HAL_SPI_EnableChip(pSPI, 1);
         HAL_SPI_PioWrite(pSPI);
@@ -609,8 +620,9 @@ bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI)
 #ifdef HAL_DCACHE_MODULE_ENABLED
     if (!HAL_IS_CACHELINE_ALIGNED(pSPI->pRxBuffer) ||
         !HAL_IS_CACHELINE_ALIGNED(pSPI->pTxBuffer) ||
-        !HAL_IS_CACHELINE_ALIGNED(pSPI->len))
+        !HAL_IS_CACHELINE_ALIGNED(pSPI->len)) {
         return false;
+    }
 #endif
 
     return (pSPI->len > HAL_SPI_DMA_SIZE_MIN);
@@ -630,10 +642,12 @@ HAL_Status HAL_SPI_DmaTransfer(struct SPI_HANDLE *pSPI)
 
     pSPI->type = SPI_DMA;
     if (HAL_SPI_CanDma(pSPI)) {
-        if (pSPI->pTxBuffer)
+        if (pSPI->pTxBuffer) {
             dmacr |= SPI_DMACR_TX_ENABLE;
-        if (pSPI->pRxBuffer)
+        }
+        if (pSPI->pRxBuffer) {
             dmacr |= SPI_DMACR_RX_ENABLE;
+        }
     }
 
     WRITE_REG(pSPI->pReg->DMACR, dmacr);
@@ -654,8 +668,9 @@ HAL_Status HAL_SPI_Stop(struct SPI_HANDLE *pSPI)
     HAL_ASSERT(pSPI != NULL);
 
     /* IRQ disabled moved to handler is better than here */
-    if (pSPI->type == SPI_DMA)
+    if (pSPI->type == SPI_DMA) {
         WRITE_REG(pSPI->pReg->DMACR, 0);
+    }
 
     HAL_SPI_EnableChip(pSPI, 0);
 
@@ -672,12 +687,13 @@ static HAL_Status HAL_SPI_ConfigureTransferMode(struct SPI_HANDLE *pSPI)
 {
     uint32_t cr0;
 
-    if (pSPI->pTxBuffer && pSPI->pRxBuffer)
+    if (pSPI->pTxBuffer && pSPI->pRxBuffer) {
         pSPI->config.xfmMode = CR0_XFM_TR;
-    else if (pSPI->pTxBuffer)
+    } else if (pSPI->pTxBuffer) {
         pSPI->config.xfmMode = CR0_XFM_TO;
-    else if (pSPI->pRxBuffer)
+    } else if (pSPI->pRxBuffer) {
         pSPI->config.xfmMode = CR0_XFM_RO;
+    }
 
     cr0 = READ_REG(pSPI->pReg->CTRLR[0]);
     cr0 &= ~SPI_CTRLR0_XFM_MASK;
@@ -752,12 +768,13 @@ HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, ui
     HAL_SPI_ConfigureTransferMode(pSPI);
 
     if (pSPI->config.xfmMode == CR0_XFM_RO) {
-        if (pSPI->config.nBytes == 1)
+        if (pSPI->config.nBytes == 1) {
             WRITE_REG(pSPI->pReg->CTRLR[1], pSPI->len - 1);
-        else if (pSPI->config.nBytes == 2)
+        } else if (pSPI->config.nBytes == 2) {
             WRITE_REG(pSPI->pReg->CTRLR[1], (pSPI->len / 2) - 1);
-        else
+        } else {
             WRITE_REG(pSPI->pReg->CTRLR[1], (pSPI->len * 2) - 1);
+        }
     }
 
     return HAL_OK;

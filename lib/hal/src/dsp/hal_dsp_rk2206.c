@@ -56,8 +56,9 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
     case DSP_IOCTL_SET_ITCM_SIZE:
     {
         uint32_t setBit = 0;
-        if ((uint32_t)arg > 0)
+        if ((uint32_t)arg > 0) {
             setBit = GRF_SOC_CON0_DSP_TCM_SEL0_MASK;
+        }
         WRITE_REG_MASK_WE(GRF->SOC_CON0,
                           GRF_SOC_CON0_DSP_TCM_SEL0_MASK, setBit);
         break;
@@ -69,17 +70,21 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
         uint32_t mask = 0;
         uint32_t num = ((uint32_t)arg + TCM_SEL_ALIGN) / (TCM_SEL_ALIGN + 1);
 
-        if (num > TCM_MAX_NUM)
+        if (num > TCM_MAX_NUM) {
             num = TCM_MAX_NUM;
+        }
         num = TCM_MAX_NUM - num;
         sel = sel >> num;                   /* Get sel */
 
-        if (sel & 0x1)
+        if (sel & 0x1) {
             setBit |= GRF_SOC_CON0_DSP_TCM_SEL1_MASK;
-        if (sel & 0x2)
+        }
+        if (sel & 0x2) {
             setBit |= GRF_SOC_CON0_DSP_TCM_SEL2_MASK;
-        if (sel & 0x4)
+        }
+        if (sel & 0x4) {
             setBit |= GRF_SOC_CON0_DSP_TCM_SEL3_MASK;
+        }
 
         mask |= GRF_SOC_CON0_DSP_TCM_SEL1_MASK |
                 GRF_SOC_CON0_DSP_TCM_SEL2_MASK |
@@ -97,10 +102,11 @@ static int DSP_Ioctl(void *priv, int cmd, void *arg)
                 GRF_DSP_CON2_PREFETCH_RAM_AUTO_GATING_EN_MASK |
                 GRF_DSP_CON2_DTCM_MEM_AUTO_GATING_EN_MASK |
                 GRF_DSP_CON2_ITCM_MEM_AUTO_GATING_EN_MASK;
-        if ((uint32_t)arg)
+        if ((uint32_t)arg) {
             WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, mask);
-        else
+        } else {
             WRITE_REG_MASK_WE(GRF->DSP_CON2, mask, 0);
+        }
         break;
     }
     case DSP_IOCTL_SET_DVFS_ST:
@@ -143,8 +149,9 @@ HAL_Status HAL_DSP_SoftWakeup(void)
 
 HAL_Status HAL_DSP_SetTcmMode(uint32_t tcmSel, eDSP_tcmMode mode)
 {
-    if (tcmSel > 0xffff)
+    if (tcmSel > 0xffff) {
         return HAL_INVAL;
+    }
     switch (mode) {
     case NOR_MODE:
         WRITE_REG_MASK_WE(GRF->SOC_CON14, tcmSel, 0);

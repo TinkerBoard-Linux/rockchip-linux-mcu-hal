@@ -150,22 +150,25 @@ static HAL_Status SFC_XferStart(struct HAL_SFC_HOST *host, struct HAL_SPI_MEM_OP
         sfcCtrl.b.addrlines = op->addr.buswidth == 4 ? SFC_LINES_X4 : SFC_LINES_X1;
     }
     /* set DUMMY*/
-    if (op->dummy.nbytes)
+    if (op->dummy.nbytes) {
         sfcCmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
+    }
 
     /* set DATA */
     if (op->data.nbytes) {
         sfcCmd.b.datasize = op->data.nbytes;
-        if (op->data.dir == HAL_SPI_MEM_DATA_OUT)
+        if (op->data.dir == HAL_SPI_MEM_DATA_OUT) {
             sfcCmd.b.rw = SFC_WRITE;
+        }
         sfcCtrl.b.datalines = op->data.buswidth == 4 ? SFC_LINES_X4 : SFC_LINES_X1;
     }
 
     /* spitial setting */
     sfcCtrl.b.sps = SFC_CTRL_SHIFTPHASE_NEGEDGE;
 
-    if (!(pReg->FSR & SFC_FSR_TXES_EMPTY) || !(pReg->FSR & SFC_FSR_RXES_EMPTY) || (pReg->SR & SFC_SR_SR_BUSY))
+    if (!(pReg->FSR & SFC_FSR_TXES_EMPTY) || !(pReg->FSR & SFC_FSR_RXES_EMPTY) || (pReg->SR & SFC_SR_SR_BUSY)) {
         SFC_Reset(pReg);
+    }
 
     /* HAL_DBG("%s 1 %lx %lx %lx\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
     /* HAL_DBG("%s 2 %lx %lx %lx\n", __func__, sfcCtrl.d32, sfcCmd.d32, op->addr.val); */
@@ -173,8 +176,9 @@ static HAL_Status SFC_XferStart(struct HAL_SFC_HOST *host, struct HAL_SPI_MEM_OP
     /* config SFC */
     pReg->CTRL = sfcCtrl.d32;
     pReg->CMD = sfcCmd.d32;
-    if (op->addr.nbytes)
+    if (op->addr.nbytes) {
         pReg->ADDR = op->addr.val;
+    }
 
     return HAL_OK;
 }
@@ -208,8 +212,9 @@ static HAL_Status SFC_XferData(struct HAL_SFC_HOST *host, uint32_t len, void *da
                     pReg->DATA = *pData++;
                     words--;
                 }
-                if (words == 0)
+                if (words == 0) {
                     break;
+                }
                 timeout = 0;
             } else {
                 HAL_DelayUs(1);
@@ -232,8 +237,9 @@ static HAL_Status SFC_XferData(struct HAL_SFC_HOST *host, uint32_t len, void *da
                     *pData++ = pReg->DATA;
                     words--;
                 }
-                if (0 == words)
+                if (0 == words) {
                     break;
+                }
                 timeout = 0;
             } else {
                 HAL_DelayUs(1);
@@ -250,8 +256,9 @@ static HAL_Status SFC_XferData(struct HAL_SFC_HOST *host, uint32_t len, void *da
             if (fifostat.b.rxlevel > 0) {
                 uint8_t *pData1 = (uint8_t *)pData;
                 words = pReg->DATA;
-                for (i = 0; i < bytes; i++)
+                for (i = 0; i < bytes; i++) {
                     pData1[i] = (uint8_t)((words >> (i * 8)) & 0xFF);
+                }
                 break;
             } else {
                 HAL_DelayUs(1);
@@ -316,10 +323,11 @@ HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
     uint32_t dir = op->data.dir;
     void *pData = NULL;
 
-    if (op->data.buf.in)
+    if (op->data.buf.in) {
         pData = (void *)op->data.buf.in;
-    else if (op->data.buf.out)
+    } else if (op->data.buf.out) {
         pData = (void *)op->data.buf.out;
+    }
 
     SFC_XferStart(host, op);
     if (pData) {

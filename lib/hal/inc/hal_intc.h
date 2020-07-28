@@ -43,10 +43,11 @@ __STATIC_INLINE void HAL_INTC_EnableIRQ(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         INTC->INTC_IRQ_INTEN_L |= (1UL << IRQn);
-    else
+    } else {
         INTC->INTC_IRQ_INTEN_H |= (1UL << (IRQn - L32));
+    }
 }
 
 /**
@@ -58,10 +59,11 @@ __STATIC_INLINE void HAL_INTC_DisableIRQ(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         INTC->INTC_IRQ_INTEN_L &= ~(1UL << IRQn);
-    else
+    } else {
         INTC->INTC_IRQ_INTEN_H &= ~(1UL << (IRQn - L32));
+    }
 }
 
 /**
@@ -73,10 +75,11 @@ __STATIC_INLINE void HAL_INTC_MaskIRQ(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         INTC->INTC_IRQ_INTMASK_L |= (1UL << IRQn);
-    else
+    } else {
         INTC->INTC_IRQ_INTMASK_H |= (1UL << (IRQn - L32));
+    }
 }
 
 /**
@@ -88,10 +91,11 @@ __STATIC_INLINE void HAL_INTC_UnmaskIRQ(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         INTC->INTC_IRQ_INTMASK_L &= ~(1UL << IRQn);
-    else
+    } else {
         INTC->INTC_IRQ_INTMASK_H &= ~(1UL << (IRQn - L32));
+    }
 }
 
 /**
@@ -103,10 +107,11 @@ __STATIC_INLINE void HAL_INTC_SetSoftwareIRQ(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         INTC->INTC_IRQ_INTFORCE_L |= (1UL << IRQn);
-    else
+    } else {
         INTC->INTC_IRQ_INTFORCE_H |= (1UL << (IRQn - L32));
+    }
 }
 
 /**
@@ -118,10 +123,11 @@ __STATIC_INLINE void HAL_INTC_ClearSoftwareIRQ(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         INTC->INTC_IRQ_INTFORCE_L &= ~(1UL << IRQn);
-    else
+    } else {
         INTC->INTC_IRQ_INTFORCE_H &= ~(1UL << (IRQn - L32));
+    }
 }
 
 /**
@@ -133,8 +139,9 @@ __STATIC_INLINE uint32_t HAL_INTC_GetStatus(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         return (INTC->INTC_IRQ_STATUS_L & (1UL << IRQn)) ? 1UL : 0UL;
+    }
 
     return (INTC->INTC_IRQ_STATUS_H & (1UL << (IRQn - L32))) ? 1UL : 0UL;
 }
@@ -148,8 +155,9 @@ __STATIC_INLINE uint32_t HAL_INTC_GetRawStatus(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         return (INTC->INTC_IRQ_RAWSTATUS_L & (1UL << IRQn)) ? 1UL : 0UL;
+    }
 
     return (INTC->INTC_IRQ_RAWSTATUS_H & (1UL << (IRQn - L32))) ? 1UL : 0UL;
 }
@@ -163,8 +171,9 @@ __STATIC_INLINE uint32_t HAL_INTC_GetMaskStatus(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         return (INTC->INTC_IRQ_MASKSTATUS_L & (1UL << IRQn)) ? 1UL : 0UL;
+    }
 
     return (INTC->INTC_IRQ_MASKSTATUS_H & (1UL << (IRQn - L32))) ? 1UL : 0UL;
 }
@@ -178,8 +187,9 @@ __STATIC_INLINE uint32_t HAL_INTC_GetFinalStatus(IRQn_Type IRQn)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if ((int32_t)IRQn < L32)
+    if ((int32_t)IRQn < L32) {
         return (INTC->INTC_IRQ_FINALSTATUS_L & (1UL << IRQn)) ? 1UL : 0UL;
+    }
 
     return (INTC->INTC_IRQ_FINALSTATUS_H & (1UL << (IRQn - L32))) ? 1UL : 0UL;
 }
@@ -191,8 +201,9 @@ __STATIC_INLINE uint32_t HAL_INTC_GetFinalStatus(IRQn_Type IRQn)
  */
 __STATIC_INLINE void HAL_INTC_SetPriorityLevel(uint8_t plevel)
 {
-    if (plevel >= 0 && plevel <= 0x0f)
+    if (plevel >= 0 && plevel <= 0x0f) {
         INTC->INTC_IRQ_PLEVEL = plevel & 0x0fUL;
+    }
 }
 
 /**
@@ -205,8 +216,9 @@ __STATIC_INLINE void HAL_INTC_SetPriority(IRQn_Type IRQn, uint8_t priority)
 {
     HAL_ASSERT(IS_VALID_IRQ(IRQn));
 
-    if (priority >= 0 && priority <= 0x0f)
+    if (priority >= 0 && priority <= 0x0f) {
         INTC->INTC_IRQ_PR_N[IRQn] = priority & 0x0fUL;
+    }
 }
 
 /**
