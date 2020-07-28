@@ -3,7 +3,8 @@
 # Copyright (c) 2020 Rockchip Electronics Co., Ltd.
 
 #-------------------------------------------------------------------------
-# set HAL_PATH and SOC
+# Set HAL_PATH and SOC
+# Due to the serious customization of startup file, it is not provided as a general part
 #-------------------------------------------------------------------------
 HAL_LIB_INC += \
 -I"$(HAL_PATH)/lib/hal/inc" \
