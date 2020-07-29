@@ -4,6 +4,7 @@
  */
 
 #include "hal_base.h"
+#include <hal_bsp.h>
 
 #if defined(RKMCU_RK2108)
 
@@ -701,10 +702,13 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     SOC_SleepModeReinit(pPmu);
     SOC_UartRestore(&pUartSave, pUart);
     SOC_PutChar('5', pUart);
-    HAL_DCACHE_Enable();
     if (pmIRQPendingFlag == 0) {
         SOC_PutChar('4', pUart);
+        BSP_MPU_Init();
+        HAL_DCACHE_Enable();
+        HAL_DCACHE_EnableInt();
         HAL_ICACHE_Enable();
+        HAL_ICACHE_EnableInt();
     }
     pmIRQPendingFlag = 0;
     SOC_PutChar('3', pUart);
