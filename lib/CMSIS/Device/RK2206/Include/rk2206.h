@@ -11028,7 +11028,7 @@ struct SPI2APB_REG {
 #define OUTCLOCK_TEST_SEL_CLK_OTG_USBPHY   31U
 
 #define CLK(mux, div) \
-    ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
+    (((mux) & 0x0F0F00FFU) | (((div) & 0xFFU) << 8) | (((div) & 0x0F0F0000U) << 4))
 
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {

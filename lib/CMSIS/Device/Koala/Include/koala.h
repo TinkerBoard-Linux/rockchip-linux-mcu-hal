@@ -5591,7 +5591,7 @@ typedef enum PD_Id {
 /********Name=CLKSEL17_CON,Offset=0x144********/
 
 #define CLK(mux, div) \
-    ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
+    (((mux) & 0x0F0F00FFU) | (((div) & 0xFFU) << 8) | (((div) & 0x0F0F0000U) << 4))
 
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
