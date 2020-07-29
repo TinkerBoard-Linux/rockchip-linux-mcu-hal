@@ -544,6 +544,10 @@ const struct HAL_SPI_DEV g_spiDev2 = {
 };
 #endif
 
+__WEAK void BSP_MPU_Init(void)
+{
+}
+
 void BSP_DeInit(void)
 {
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
@@ -577,6 +581,8 @@ void BSP_DeInit(void)
 
 void BSP_Init(void)
 {
+    BSP_MPU_Init();
+
 #ifdef HAL_ACDCDIG_MODULE_ENABLED
     BSP_ACDCDIG_Init();
 #endif

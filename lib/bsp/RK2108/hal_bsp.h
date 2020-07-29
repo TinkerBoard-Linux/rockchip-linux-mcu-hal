@@ -72,6 +72,7 @@ extern const struct HAL_SPI_DEV g_spiDev2;
 
 /***************************** Function Declare ******************************/
 
+void BSP_MPU_Init(void);
 void BSP_Init(void);
 void BSP_DeInit(void);
 void BSP_SetLoaderFlag(void);
