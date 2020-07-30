@@ -42,20 +42,20 @@
 #define DW_CHAN_CLEAR_BIT(reg, mask) \
     WRITE_REG(reg, ((mask) << 8) | 0)
 
-#define DWC_DEFAULT_CTLLO(_dwc) ({                                \
-        struct DMA_SLAVE_CONFIG *_config = &_dwc->config;         \
-        bool _islave = HAL_DMA_IsSlaveDirection(_dwc->direction); \
-        uint8_t _smSize = _islave ? _config->srcMaxBurst :        \
-            DWDMA_MSIZE_256;                                      \
-        uint8_t _dmSize = _islave ? _config->dstMaxBurst :        \
-            DWDMA_MSIZE_256;                                      \
-                                                                  \
-        (DWC_CTLL_DST_MSIZE(_dmSize)                              \
-         | DWC_CTLL_SRC_MSIZE(_smSize)                            \
-         | DWC_CTLL_LLP_D_EN                                      \
-         | DWC_CTLL_LLP_S_EN                                      \
-         | DWC_CTLL_DMS(_dwc->dstMaster)                          \
-         | DWC_CTLL_SMS(_dwc->srcMaster));                        \
+#define DWC_DEFAULT_CTLLO(_dwc) ({                                  \
+        struct DMA_SLAVE_CONFIG *_config = &(_dwc)->config;         \
+        bool _islave = HAL_DMA_IsSlaveDirection((_dwc)->direction); \
+        uint8_t _smSize = _islave ? _config->srcMaxBurst :          \
+            DWDMA_MSIZE_256;                                        \
+        uint8_t _dmSize = _islave ? _config->dstMaxBurst :          \
+            DWDMA_MSIZE_256;                                        \
+                                                                    \
+        (DWC_CTLL_DST_MSIZE(_dmSize)                                \
+         | DWC_CTLL_SRC_MSIZE(_smSize)                              \
+         | DWC_CTLL_LLP_D_EN                                        \
+         | DWC_CTLL_LLP_S_EN                                        \
+         | DWC_CTLL_DMS((_dwc)->dstMaster)                          \
+         | DWC_CTLL_SMS((_dwc)->srcMaster));                        \
     })
 
 /********************* Private Structure Definition **************************/

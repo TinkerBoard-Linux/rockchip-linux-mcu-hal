@@ -45,7 +45,7 @@
 #define UART_CLK_GET_MUX(clk) HAL_CRU_ClkGetMux(CLK_GET_MUX((clk)))
 #define GPLL_RUNTIME_RATE     (PLL_INPUT_OSC_RATE * 2)
 
-#define SLEEP_COUNT_TO_MS(ms) (ms * SLEEP_INPUT_RATE / 1000)
+#define SLEEP_COUNT_TO_MS(ms) ((ms) * SLEEP_INPUT_RATE / 1000)
 /********************* Private Structure Definition **************************/
 struct UART_REG_SAVE {
     uint32_t DLL;

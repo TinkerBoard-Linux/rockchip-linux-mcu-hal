@@ -188,7 +188,7 @@ static HAL_Status PINCTRL_AcquireParam(const struct PINCTRL_BANK_INFO *pBank, ui
 #define GRF_SARADC_IEN_EN(x)   ((0x0U << GRF_SOC_CON15_GRF_SARADC_IEN_SHIFT) << (x))
 #define GRF_SARADC_IEN_DIS(x)  ((0x1U << GRF_SOC_CON15_GRF_SARADC_IEN_SHIFT) << (x))
 #define GRF_SARADC_IEN_MASK(x) ((0x1U << GRF_SOC_CON15_GRF_SARADC_IEN_SHIFT) << (x))
-#define IS_MUX_SARADC(m)       (m == PIN_CONFIG_MUX_FUNC1)
+#define IS_MUX_SARADC(m)       ((m) == PIN_CONFIG_MUX_FUNC1)
 
 /**
  * @brief  Extra iomux for GPIO0_C0-GPIO0_C7 on rk2206 SoCs.

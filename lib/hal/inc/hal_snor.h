@@ -31,10 +31,10 @@
 #define SNOR_SPEED_MAX       133000000
 #define SNOR_SPEED_DEFAULT   80000000
 
-#define SNOR_PROTO_STR(a, b, c) ((a << 8) | (b << 4) | c)
+#define SNOR_PROTO_STR(a, b, c) (((a) << 8) | ((b) << 4) | (c))
 
-#define SNOR_GET_PROTOCOL_ADDR_BITS(proto) ((proto >> 4) & 0xf)
-#define SNOR_GET_PROTOCOL_DATA_BITS(proto) (proto & 0xf)
+#define SNOR_GET_PROTOCOL_ADDR_BITS(proto) (((proto) >> 4) & 0xf)
+#define SNOR_GET_PROTOCOL_DATA_BITS(proto) ((proto) & 0xf)
 
 enum SPI_NOR_PROTOCOL {
     SNOR_PROTO_1_1_1 = SNOR_PROTO_STR(1, 1, 1),

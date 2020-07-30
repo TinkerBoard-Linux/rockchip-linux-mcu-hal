@@ -22,10 +22,10 @@
 
 /***************************** MACRO Definition ******************************/
 
-#define QPIPSRAM_PROTO_STR(a, b, c)            ((a << 8) | (b << 4) | c)
-#define QPIPSRAM_GET_PROTOCOL_CMD_BITS(proto)  ((proto >> 8) & 0xf)
-#define QPIPSRAM_GET_PROTOCOL_ADDR_BITS(proto) ((proto >> 4) & 0xf)
-#define QPIPSRAM_GET_PROTOCOL_DATA_BITS(proto) (proto & 0xf)
+#define QPIPSRAM_PROTO_STR(a, b, c)            (((a) << 8) | ((b) << 4) | (c))
+#define QPIPSRAM_GET_PROTOCOL_CMD_BITS(proto)  (((proto) >> 8) & 0xf)
+#define QPIPSRAM_GET_PROTOCOL_ADDR_BITS(proto) (((proto) >> 4) & 0xf)
+#define QPIPSRAM_GET_PROTOCOL_DATA_BITS(proto) ((proto) & 0xf)
 
 enum QPIPSRAM_PROTOCOL {
     QPIPSRAM_PROTO_1_1_1 = QPIPSRAM_PROTO_STR(1, 1, 1),

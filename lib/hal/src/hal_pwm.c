@@ -47,8 +47,8 @@
 #define PWM_DUTY_REG(pPWM, ch)   (pPWM->pReg->CHANNELS[ch].DUTY_LPR)
 #define PWM_CTRL_REG(pPWM, ch)   (pPWM->pReg->CHANNELS[ch].CTRL)
 
-#define PWM_INT_EN(ch)     (1 << ch)
-#define PWM_PWR_INT_EN(ch) (1 << (ch + 4 ))
+#define PWM_INT_EN(ch)     (1 << (ch))
+#define PWM_PWR_INT_EN(ch) (1 << ((ch) + 4 ))
 
 #define PWM_DISABLE (0 << PWM_PWM0_CTRL_PWM_EN_SHIFT)
 #define PWM_ENABLE  (1 << PWM_PWM0_CTRL_PWM_EN_SHIFT)

@@ -22,7 +22,7 @@
 /** @defgroup DSP_Exported_Definition_Group1 Basic Definition
  *  @{
  */
-#define DSP_IOCTL(a) (0x1000 + a)
+#define DSP_IOCTL(a) (0x1000 + (a))
 
 /** general cmd for dsp control */
 #define DSP_IOCTL_SET_ITCM_SIZE  DSP_IOCTL(1)
@@ -30,7 +30,7 @@
 #define DSP_IOCTL_SET_MEM_GATING DSP_IOCTL(3)
 #define DSP_IOCTL_SET_DVFS_ST    DSP_IOCTL(4)
 
-#define DSP_TCM_SEL(a) (0x1 << a)
+#define DSP_TCM_SEL(a) (0x1 << (a))
 
 /**
  * enum DSP_TcmSel - dsp tcm select.

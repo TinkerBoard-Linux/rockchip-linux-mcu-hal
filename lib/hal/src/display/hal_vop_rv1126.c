@@ -29,8 +29,8 @@
  */
 /********************* Private MACRO Definition ******************************/
 
-#define IS_YUV_FORMAT(x) ((x >= VOP_FMT_YUV420SP) && (x <= VOP_FMT_VYUY422_4)) ? 1 : 0
-#define IS_BPP_FORMAT(x) ((x >= VOP_FMT_1BPP) && (x <= VOP_FMT_8BPP)) ? 1 : 0
+#define IS_YUV_FORMAT(x) (((x) >= VOP_FMT_YUV420SP) && ((x) <= VOP_FMT_VYUY422_4)) ? 1 : 0
+#define IS_BPP_FORMAT(x) (((x) >= VOP_FMT_1BPP) && ((x) <= VOP_FMT_8BPP)) ? 1 : 0
 
 #define MCU_CS_STR 1
 #define MCU_CS_END 7

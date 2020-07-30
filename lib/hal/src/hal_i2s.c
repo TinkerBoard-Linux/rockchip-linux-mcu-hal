@@ -36,7 +36,7 @@
 #define I2S_TXCR_PATH_SHIFT(x) (23 + (x) * 2)
 #define I2S_TXCR_PATH_MASK(x)  (0x3 << I2S_TXCR_PATH_SHIFT(x))
 #define I2S_TXCR_PATH(x, v)    ((v) << I2S_TXCR_PATH_SHIFT(x))
-#define I2S_TXCR_CSR(x)        (x << I2S_TXCR_TCSR_SHIFT)
+#define I2S_TXCR_CSR(x)        ((x) << I2S_TXCR_TCSR_SHIFT)
 #define I2S_TXCR_HWT           (1 << I2S_TXCR_HWT_SHIFT)
 #define I2S_TXCR_SJM_R         (0 << I2S_TXCR_SJM_SHIFT)
 #define I2S_TXCR_SJM_L         (1 << I2S_TXCR_SJM_SHIFT)
@@ -45,12 +45,12 @@
 #define I2S_TXCR_IBM_NORMAL    (0 << I2S_TXCR_IBM_SHIFT)
 #define I2S_TXCR_IBM_LSJM      (1 << I2S_TXCR_IBM_SHIFT)
 #define I2S_TXCR_IBM_RSJM      (2 << I2S_TXCR_IBM_SHIFT)
-#define I2S_TXCR_PBM_MODE(x)   (x << I2S_TXCR_PBM_SHIFT)
+#define I2S_TXCR_PBM_MODE(x)   ((x) << I2S_TXCR_PBM_SHIFT)
 #define I2S_TXCR_TFS_I2S       (0 << I2S_TXCR_TFS_SHIFT)
 #define I2S_TXCR_TFS_PCM       (1 << I2S_TXCR_TFS_SHIFT)
 #define I2S_TXCR_TFS_TDM_PCM   (2 << I2S_TXCR_TFS_SHIFT)
 #define I2S_TXCR_TFS_TDM_I2S   (3 << I2S_TXCR_TFS_SHIFT)
-#define I2S_TXCR_VDW(x)        ((x - 1) << I2S_TXCR_VDW_SHIFT)
+#define I2S_TXCR_VDW(x)        (((x) - 1) << I2S_TXCR_VDW_SHIFT)
 
 /*
  * RXCR
@@ -59,7 +59,7 @@
 #define I2S_RXCR_PATH_SHIFT(x) (17 + (x) * 2)
 #define I2S_RXCR_PATH_MASK(x)  (0x3 << I2S_RXCR_PATH_SHIFT(x))
 #define I2S_RXCR_PATH(x, v)    ((v) << I2S_RXCR_PATH_SHIFT(x))
-#define I2S_RXCR_CSR(x)        (x << I2S_RXCR_RCSR_SHIFT)
+#define I2S_RXCR_CSR(x)        ((x) << I2S_RXCR_RCSR_SHIFT)
 #define I2S_RXCR_HWT           (1 << I2S_RXCR_HWT_SHIFT)
 #define I2S_RXCR_SJM_R         (0 << I2S_RXCR_SJM_SHIFT)
 #define I2S_RXCR_SJM_L         (1 << I2S_RXCR_SJM_SHIFT)
@@ -68,18 +68,18 @@
 #define I2S_RXCR_IBM_NORMAL    (0 << I2S_RXCR_IBM_SHIFT)
 #define I2S_RXCR_IBM_LSJM      (1 << I2S_RXCR_IBM_SHIFT)
 #define I2S_RXCR_IBM_RSJM      (2 << I2S_RXCR_IBM_SHIFT)
-#define I2S_RXCR_PBM_MODE(x)   (x << I2S_RXCR_PBM_SHIFT)
+#define I2S_RXCR_PBM_MODE(x)   ((x) << I2S_RXCR_PBM_SHIFT)
 #define I2S_RXCR_TFS_I2S       (0 << I2S_RXCR_TFS_SHIFT)
 #define I2S_RXCR_TFS_PCM       (1 << I2S_RXCR_TFS_SHIFT)
 #define I2S_RXCR_TFS_TDM_PCM   (2 << I2S_RXCR_TFS_SHIFT)
 #define I2S_RXCR_TFS_TDM_I2S   (3 << I2S_RXCR_TFS_SHIFT)
-#define I2S_RXCR_VDW(x)        ((x - 1) << I2S_RXCR_VDW_SHIFT)
+#define I2S_RXCR_VDW(x)        (((x) - 1) << I2S_RXCR_VDW_SHIFT)
 
 /*
  * CKR
  * clock generation register
  */
-#define I2S_CKR_TRCM(x)     (x << I2S_CKR_TRCM_SHIFT)
+#define I2S_CKR_TRCM(x)     ((x) << I2S_CKR_TRCM_SHIFT)
 #define I2S_CKR_TRCM_TXRX   (0 << I2S_CKR_TRCM_SHIFT)
 #define I2S_CKR_TRCM_TXONLY (1 << I2S_CKR_TRCM_SHIFT)
 #define I2S_CKR_TRCM_RXONLY (2 << I2S_CKR_TRCM_SHIFT)
@@ -91,9 +91,9 @@
 #define I2S_CKR_RLP_OPPSITE (1 << I2S_CKR_RLP_SHIFT)
 #define I2S_CKR_TLP_NORMAL  (0 << I2S_CKR_TLP_SHIFT)
 #define I2S_CKR_TLP_OPPSITE (1 << I2S_CKR_TLP_SHIFT)
-#define I2S_CKR_MDIV(x)     ((x - 1) << I2S_CKR_MDIV_SHIFT)
-#define I2S_CKR_RSD(x)      ((x - 1) << I2S_CKR_RSD_SHIFT)
-#define I2S_CKR_TSD(x)      ((x - 1) << I2S_CKR_TSD_SHIFT)
+#define I2S_CKR_MDIV(x)     (((x) - 1) << I2S_CKR_MDIV_SHIFT)
+#define I2S_CKR_RSD(x)      (((x) - 1) << I2S_CKR_RSD_SHIFT)
+#define I2S_CKR_TSD(x)      (((x) - 1) << I2S_CKR_TSD_SHIFT)
 
 /*
  * DMACR
@@ -101,7 +101,7 @@
  */
 #define I2S_DMACR_RDE_DISABLE (0 << I2S_DMACR_RDE_SHIFT)
 #define I2S_DMACR_RDE_ENABLE  (1 << I2S_DMACR_RDE_SHIFT)
-#define I2S_DMACR_RDL(x)      ((x - 1) << I2S_DMACR_RDL_SHIFT)
+#define I2S_DMACR_RDL(x)      (((x) - 1) << I2S_DMACR_RDL_SHIFT)
 #define I2S_DMACR_TDE_DISABLE (0 << I2S_DMACR_TDE_SHIFT)
 #define I2S_DMACR_TDE_ENABLE  (1 << I2S_DMACR_TDE_SHIFT)
 #define I2S_DMACR_TDL(x)      ((x) << I2S_DMACR_TDL_SHIFT)

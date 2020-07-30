@@ -69,8 +69,8 @@ typedef enum {
 #define PWR_FLG_ALWAYSON  (PWR_FLG_FIXED << 1)
 #define PWR_FLG_ENMASK    (PWR_FLG_ALWAYSON << 1)
 
-#define DESC_FLAG_LINEAR(flag)   (PWR_FLG_LINEAR | PWR_FLG_VOLT_RUN | flag)
-#define DESC_FLAG_N_LINEAR(flag) (PWR_FLG_VOLT_RUN | flag)
+#define DESC_FLAG_LINEAR(flag)   (PWR_FLG_LINEAR | PWR_FLG_VOLT_RUN | (flag))
+#define DESC_FLAG_N_LINEAR(flag) (PWR_FLG_VOLT_RUN | (flag))
 
 #define PWR_INTREG_SHIFT_RUN(reg, sft)            \
     .preg[PWR_CTRL_VOLT_RUN] = (uint32_t *)(reg), \

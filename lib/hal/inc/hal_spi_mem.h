@@ -51,7 +51,7 @@
 #define HAL_SPI_XFER_END   HAL_BIT(1)   /* Deassert CS after transfer */
 #define HAL_SPI_XFER_ONCE  (HAL_SPI_XFER_BEGIN | HAL_SPI_XFER_END)
 
-#define JEDEC_MFR(id) ((id >> 16) & 0xff)
+#define JEDEC_MFR(id) (((id) >> 16) & 0xff)
 
 #define HAL_SPI_MEM_OP_FORMAT(__cmd, __addr, __dummy, __data) \
     {                                                         \

@@ -207,20 +207,20 @@
 #define LLI_ADDR_ALIGN_SIZE  8
 #define DATA_ADDR_ALIGN_SIZE 8
 
-#define RK_GET_CRYPTO_MODE(mode)           (mode & RK_CRYPTO_MODE_MASK)
-#define RK_IS_CRYPTO_USE_ROOT_KEY(mode)    (!!(mode & RK_CRYPTO_KEY_ROOT))
-#define RK_IS_CRYPTO_USE_PRIVATE_KEY(mode) (!!(mode & RK_CRYPTO_KEY_PRIVATE))
+#define RK_GET_CRYPTO_MODE(mode)           ((mode) & RK_CRYPTO_MODE_MASK)
+#define RK_IS_CRYPTO_USE_ROOT_KEY(mode)    (!!((mode) & RK_CRYPTO_KEY_ROOT))
+#define RK_IS_CRYPTO_USE_PRIVATE_KEY(mode) (!!((mode) & RK_CRYPTO_KEY_PRIVATE))
 
-#define IS_NEED_TAG(crypto_mode) (crypto_mode == CRYPTO_MODE_CCM ||  \
-                                  crypto_mode == CRYPTO_MODE_GCM ||  \
-                                  crypto_mode == CRYPTO_MODE_CMAC || \
-                                  crypto_mode == RK_CIPHER_CBC_MAC)
+#define IS_NEED_TAG(crypto_mode) ((crypto_mode) == CRYPTO_MODE_CCM ||  \
+                                  (crypto_mode) == CRYPTO_MODE_GCM ||  \
+                                  (crypto_mode) == CRYPTO_MODE_CMAC || \
+                                  (crypto_mode) == RK_CIPHER_CBC_MAC)
 
-#define IS_DES_SUPPORTED_MODE(crypto_mode)                                 \
-                                 (crypto_mode == CRYPTO_MODE_CIPHER_ECB || \
-                                  crypto_mode == CRYPTO_MODE_CIPHER_CBC || \
-                                  crypto_mode == CRYPTO_MODE_CIPHER_CFB || \
-                                  crypto_mode == CRYPTO_MODE_CIPHER_OFB)
+#define IS_DES_SUPPORTED_MODE(crypto_mode)                                   \
+                                 ((crypto_mode) == CRYPTO_MODE_CIPHER_ECB || \
+                                  (crypto_mode) == CRYPTO_MODE_CIPHER_CBC || \
+                                  (crypto_mode) == CRYPTO_MODE_CIPHER_CFB || \
+                                  (crypto_mode) == CRYPTO_MODE_CIPHER_OFB)
 
 /********************* Private Structure Definition **************************/
 #ifndef LITTLE_ENDIAN
