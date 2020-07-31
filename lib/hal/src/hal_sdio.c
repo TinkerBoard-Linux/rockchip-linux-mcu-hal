@@ -612,7 +612,7 @@ HAL_Status HAL_MMC_Init(struct HAL_MMC_HOST *host)
         host->MMC_Reset(host);
     }
 
-    HAL_ASSERT(host->pReg != 0x0);
+    HAL_ASSERT(host->pReg != NULL);
 
     pReg = host->pReg;
 
