@@ -20,10 +20,10 @@
 /* SOC OPS Marco */
 #define SET_BIT(REG, BIT)    ((*(volatile uint32_t *)&(REG)) |= (BIT))
 #define CLEAR_BIT(REG, MASK) ((*(volatile uint32_t *)&(REG)) &= ~(MASK))
-#define READ_BIT(REG, MASK)  ((*(volatile uint32_t *)&(REG)) & (MASK))
+#define READ_BIT(REG, MASK)  ((*(volatile const uint32_t *)&(REG)) & (MASK))
 #define CLEAR_REG(REG)       ((*(volatile uint32_t *)&(REG)) = (0x0))
 #define WRITE_REG(REG, VAL)  ((*(volatile uint32_t *)&(REG)) = (VAL))
-#define READ_REG(REG)        ((*(volatile uint32_t *)&(REG)))
+#define READ_REG(REG)        ((*(volatile const uint32_t *)&(REG)))
 #define MODIFY_REG(REG, CLEARMASK, SETMASK) \
         WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
 #define POSITION_VAL(VAL) (__CLZ(__RBIT(VAL)))
