@@ -360,9 +360,9 @@ static HAL_Status HAL_SPI_PioWrite(struct SPI_HANDLE *pSPI)
 
     while (max--) {
         if (pSPI->config.nBytes == 1) {
-            txw = *(uint8_t *)(pSPI->pTxBuffer);
+            txw = *(const uint8_t *)(pSPI->pTxBuffer);
         } else {
-            txw = *(uint16_t *)(pSPI->pTxBuffer);
+            txw = *(const uint16_t *)(pSPI->pTxBuffer);
         }
 
         WRITE_REG(pSPI->pReg->TXDR, txw);
