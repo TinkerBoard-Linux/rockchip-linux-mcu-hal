@@ -564,35 +564,6 @@ __STATIC_INLINE HAL_Status SNOR_ReadSFDP(struct SPI_NOR *nor, uint32_t addr, uin
     return SNOR_SPIMemExecOp(nor->spi, &op);
 }
 
-static HAL_Status SNOR_ReadMinorRevision(struct SPI_NOR *nor, uint8_t *ver)
-{
-    if (!ver) {
-        return HAL_INVAL;
-    }
-
-    return SNOR_ReadSFDP(nor, 0x09, ver);
-}
-
-static HAL_Status SNOR_InfoAdjust(struct SPI_NOR *nor, struct FLASH_INFO *info)
-{
-    uint32_t ret;
-    uint8_t ver;
-
-    switch (info->id) {
-    case 0xc84019:
-        ret = SNOR_ReadMinorRevision(nor, &ver);
-        if (ret == HAL_OK && ver == 0x06) {
-            info->QEBits = 9;
-            info->progCmd_4 = 0x34;
-        }
-        break;
-    default:
-        break;
-    }
-
-    return 0;
-}
-
 /** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup SNOR_Exported_Functions_Group3 IO Functions
@@ -832,7 +803,6 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         info = &s_commonSpiFlash;
     }
 
-    SNOR_InfoAdjust(nor, (struct FLASH_INFO *)info);
     nor->info = info;
     nor->pageSize = 256;
     nor->addrWidth = 3;
