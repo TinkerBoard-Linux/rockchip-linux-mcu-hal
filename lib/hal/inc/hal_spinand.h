@@ -82,18 +82,14 @@ struct SPI_NAND {
  */
 
 HAL_Status HAL_SPINAND_EraseBlock(struct SPI_NAND *spinand, uint32_t addr);
-int32_t HAL_SPINAND_ReadPageRaw(struct SPI_NAND *spinand, uint32_t addr, void *pData);
-HAL_Status HAL_SPINAND_ProgPageRaw(struct SPI_NAND *spinand, uint32_t addr, const void *pData);
-int32_t HAL_SPINAND_ReadPage(struct SPI_NAND *spinand, uint32_t addr, uint32_t *pData, uint32_t *pSpare);
-HAL_Status HAL_SPINAND_ProgPage(struct SPI_NAND *spinand, uint32_t addr, const uint32_t *pData, const uint32_t *pSpare);
+int32_t HAL_SPINAND_ReadPageRaw(struct SPI_NAND *spinand, uint32_t addr, void *pData, bool oob);
+HAL_Status HAL_SPINAND_ProgPageRaw(struct SPI_NAND *spinand, uint32_t addr, const void *pData, bool oob);
 HAL_Status HAL_SPINAND_Init(struct SPI_NAND *nor);
 HAL_Status HAL_SPINAND_DeInit(struct SPI_NAND *nor);
 HAL_Status HAL_SPINAND_ReadID(struct SPI_NAND *spinand, uint8_t *data);
 uint32_t HAL_SPINAND_GetCapacity(struct SPI_NAND *spinand);
 HAL_Check HAL_SPINAND_IsBad(struct SPI_NAND *spinand, uint32_t addr);
 HAL_Status HAL_SPINAND_MarkBad(struct SPI_NAND *spinand, uint32_t addr);
-HAL_Status HAL_SPINAND_PageReadSpareAutoPlace(struct SPI_NAND *spinand, uint32_t *pageBuf, uint32_t *pSpare);
-HAL_Status HAL_SPINAND_PageProgSpareAutoPlace(struct SPI_NAND *spinand, uint32_t *pageBuf, uint32_t *pSpare);
 
 /** @} */
 

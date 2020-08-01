@@ -645,14 +645,15 @@ HAL_Status HAL_SPINAND_EraseBlock(struct SPI_NAND *spinand, uint32_t addr)
  * @param  spinand: SPI_NAND dev.
  * @param  addr: page address.
  * @param  pData: destination address.
+ * @param  oob: whether pData including oob data.
  * @return return value < 0: transfer error, return HAL_Status;
  *   return value >= 0: transfer ok, return ecc status, check SPINAND_ECC_XXXX;
  */
-int32_t HAL_SPINAND_ReadPageRaw(struct SPI_NAND *spinand, uint32_t addr, void *pData)
+int32_t HAL_SPINAND_ReadPageRaw(struct SPI_NAND *spinand, uint32_t addr, void *pData, bool oob)
 {
     uint8_t status;
     int ret;
-    uint32_t addrMix;
+    uint32_t addrMix, size;
 
     HAL_SPINAND_DBG("%s %x\n", __func__, addr);
 
@@ -667,8 +668,8 @@ int32_t HAL_SPINAND_ReadPageRaw(struct SPI_NAND *spinand, uint32_t addr, void *p
     }
 
     addrMix = spinand->planePerDie == 1 ? 0 : ((addr >> 6) & 0x1) << 12;
-    ret = SPINAND_ReadFromCacheOp(spinand, addrMix, pData,
-                                  spinand->secPerPage * SPINAND_SECTOR_FULL_SIZE);
+    size = oob ? spinand->secPerPage * SPINAND_SECTOR_FULL_SIZE : spinand->secPerPage * SPINAND_SECTOR_SIZE;
+    ret = SPINAND_ReadFromCacheOp(spinand, addrMix, pData, size);
     if (ret) {
         return ret;
     }
@@ -677,76 +678,18 @@ int32_t HAL_SPINAND_ReadPageRaw(struct SPI_NAND *spinand, uint32_t addr, void *p
 }
 
 /**
- * @brief  SPI Nand page read  with auto meta area set.
- * @param  spinand: SPI_NAND dev.
- * @param  addr: page address.
- * @param  pData: data destination address.
- * @param  pSpare: spare destination address, atleast spinand->secPerPage * 2.
- * @return return value < 0: transfer error, return HAL_Status;
- *   return value >= 0: transfer ok, return ecc status, check SPINAND_ECC_XXXX;
- */
-int32_t HAL_SPINAND_ReadPage(struct SPI_NAND *spinand, uint32_t addr,
-                             uint32_t *pData, uint32_t *pSpare)
-{
-    uint32_t secPerPage = spinand->secPerPage;
-    uint32_t dataSize = secPerPage * SPINAND_SECTOR_SIZE;
-    struct META_AREA *meta = &spinand->meta;
-    uint32_t *pageBuf = spinand->pageBuf;
-    int32_t ret;
-
-    HAL_ASSERT(pData != pageBuf);
-
-    ret = HAL_SPINAND_ReadPageRaw(spinand, addr, pageBuf);
-    memcpy(pData, pageBuf, dataSize);
-    pSpare[0] = pageBuf[(dataSize + meta->off0) / 4];
-    pSpare[1] = pageBuf[(dataSize + meta->off1) / 4];
-    if (spinand->secPerPage == 8) {
-        pSpare[2] = pageBuf[(dataSize + meta->off2) / 4];
-        pSpare[3] = pageBuf[(dataSize + meta->off3) / 4];
-    }
-
-    if (ret != SPINAND_ECC_OK) {
-        HAL_SPINAND_DBG("%s[0x%x], ret=0x%x\n", __func__, addr, ret);
-    }
-
-    return ret;
-}
-
-/**
- * @brief  Get SPI Nand page buffer meta area data.
- * @param  spinand: SPI_NAND dev.
- * @param  pageBuf: pageBuf destination.
- * @param  pSpare: spare destination address, atleast spinand->secPerPage * 2.
- * @return HAL_OK.
- */
-HAL_Status HAL_SPINAND_PageReadSpareAutoPlace(struct SPI_NAND *spinand, uint32_t *pageBuf, uint32_t *pSpare)
-{
-    uint32_t secPerPage = spinand->secPerPage;
-    uint32_t dataSize = secPerPage * SPINAND_SECTOR_SIZE;
-    struct META_AREA *meta = &spinand->meta;
-
-    pSpare[0] = pageBuf[(dataSize + meta->off0) / 4];
-    pSpare[1] = pageBuf[(dataSize + meta->off1) / 4];
-    if (spinand->secPerPage == 8) {
-        pSpare[2] = pageBuf[(dataSize + meta->off2) / 4];
-        pSpare[3] = pageBuf[(dataSize + meta->off3) / 4];
-    }
-
-    return HAL_OK;
-}
-
-/**
  * @brief  SPI Nand raw page program.
  * @param  spinand: SPI_NAND dev.
  * @param  addr: page address.
  * @param  pData: source address.
+ * @param  oob: whether pData including oob data.
  * @return HAL_Status.
  */
-HAL_Status HAL_SPINAND_ProgPageRaw(struct SPI_NAND *spinand, uint32_t addr, const void *pData)
+HAL_Status HAL_SPINAND_ProgPageRaw(struct SPI_NAND *spinand, uint32_t addr, const void *pData, bool oob)
 {
     uint8_t status;
     int ret;
-    uint32_t addrMix;
+    uint32_t addrMix, size;
 
     HAL_SPINAND_DBG("%s %x\n", __func__, addr);
 
@@ -756,8 +699,8 @@ HAL_Status HAL_SPINAND_ProgPageRaw(struct SPI_NAND *spinand, uint32_t addr, cons
     }
 
     addrMix = spinand->planePerDie == 1 ? 0 : ((addr >> 6) & 0x1) << 12;
-    ret = SPINAND_WriteToCacheOp(spinand, addrMix, (uint32_t *)pData,
-                                 spinand->secPerPage * SPINAND_SECTOR_FULL_SIZE);
+    size = oob ? spinand->secPerPage * SPINAND_SECTOR_FULL_SIZE : spinand->secPerPage * SPINAND_SECTOR_SIZE;
+    ret = SPINAND_WriteToCacheOp(spinand, addrMix, (uint32_t *)pData, size);
     if (ret) {
         return ret;
     }
@@ -777,60 +720,6 @@ HAL_Status HAL_SPINAND_ProgPageRaw(struct SPI_NAND *spinand, uint32_t addr, cons
     }
 
     return ret;
-}
-
-/**
- * @brief  SPI Nand page program with auto meta area set.
- * @param  spinand: SPI_NAND dev.
- * @param  addr: page address.
- * @param  pData: data destination address.
- * @param  pSpare: spare destination address, atleast spinand->secPerPage * 2.
- * @return HAL_Status.
- */
-HAL_Status HAL_SPINAND_ProgPage(struct SPI_NAND *spinand, uint32_t addr,
-                                const uint32_t *pData, const uint32_t *pSpare)
-{
-    uint32_t secPerPage = spinand->secPerPage;
-    uint32_t dataSize = secPerPage * SPINAND_SECTOR_SIZE;
-    struct META_AREA *meta = &spinand->meta;
-    uint32_t *pageBuf = spinand->pageBuf;
-
-    HAL_ASSERT(pData != pageBuf);
-
-    memcpy(pageBuf, pData, dataSize);
-    memset(&pageBuf[dataSize / 4], 0xff, secPerPage * 16);
-    pageBuf[(dataSize + meta->off0) / 4] = pSpare[0];
-    pageBuf[(dataSize + meta->off1) / 4] = pSpare[1];
-    if (secPerPage == 8) {
-        pageBuf[(dataSize + meta->off2) / 4] = pSpare[2];
-        pageBuf[(dataSize + meta->off3) / 4] = pSpare[3];
-    }
-
-    return HAL_SPINAND_ProgPageRaw(spinand, addr, pageBuf);
-}
-
-/**
- * @brief  Set SPI Nand page buffer meta area data.
- * @param  spinand: SPI_NAND dev.
- * @param  pData: data destination point.
- * @param  pSpare: spare destination address, atleast spinand->secPerPage * 2.
- * @return HAL_Status.
- */
-HAL_Status HAL_SPINAND_PageProgSpareAutoPlace(struct SPI_NAND *spinand, uint32_t *pageBuf, uint32_t *pSpare)
-{
-    uint32_t secPerPage = spinand->secPerPage;
-    uint32_t dataSize = secPerPage * SPINAND_SECTOR_SIZE;
-    struct META_AREA *meta = &spinand->meta;
-
-    memset(&pageBuf[dataSize / 4], 0xff, secPerPage * 16);
-    pageBuf[(dataSize + meta->off0) / 4] = pSpare[0];
-    pageBuf[(dataSize + meta->off1) / 4] = pSpare[1];
-    if (secPerPage == 8) {
-        pageBuf[(dataSize + meta->off2) / 4] = pSpare[2];
-        pageBuf[(dataSize + meta->off3) / 4] = pSpare[3];
-    }
-
-    return HAL_OK;
 }
 
 /**
