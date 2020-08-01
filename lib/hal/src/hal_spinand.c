@@ -696,7 +696,7 @@ int32_t HAL_SPINAND_ReadPage(struct SPI_NAND *spinand, uint32_t addr,
 
     HAL_ASSERT(pData != pageBuf);
 
-    ret = HAL_SPINAND_ProgPageRaw(spinand, addr, pageBuf);
+    ret = HAL_SPINAND_ReadPageRaw(spinand, addr, pageBuf);
     memcpy(pData, pageBuf, dataSize);
     pSpare[0] = pageBuf[(dataSize + meta->off0) / 4];
     pSpare[1] = pageBuf[(dataSize + meta->off1) / 4];
