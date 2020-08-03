@@ -243,7 +243,7 @@ uint64_t HAL_GetSysTimerCount(void)
     return count;
 #else
 
-    return 0llu;
+    return 0LLU;
 #endif
 }
 
