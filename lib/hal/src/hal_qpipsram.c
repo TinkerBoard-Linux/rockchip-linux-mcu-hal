@@ -519,7 +519,7 @@ HAL_Status HAL_QPIPSRAM_DeInit(struct QPI_PSRAM *psram)
 
 /** @defgroup QPIPSRAM_Exported_Functions_Group5 Other Functions
  *  @{
-// */
+ */
 
 /**
  * @brief  Psram XIP mode enable.
