@@ -440,9 +440,6 @@ HAL_Status HAL_VAD_SetPeriodSize(struct HAL_VAD_DEV *vad, uint32_t words)
     MODIFY_REG(reg->AUX_CON0,
                VAD_AUX_CON0_DATA_TRANS_TRIG_INT_EN_MASK,
                VAD_AUX_CON0_DATA_TRANS_TRIG_INT_EN);
-    MODIFY_REG(reg->INT,
-               VAD_INT_VAD_DATA_TRANS_INT_EN_MASK,
-               VAD_INT_VAD_DATA_TRANS_INT_EN);
 #endif
 
     return HAL_OK;
