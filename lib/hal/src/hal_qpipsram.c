@@ -38,7 +38,7 @@
 #ifdef HAL_QPIPSRAM_DEBUG
 #define HAL_QPIPSRAM_DBG(...) HAL_DBG(__VA_ARGS__)
 #else
-#define HAL_QPIPSRAM_DBG(...) do { if (0) HAL_DBG(__VA_ARGS__); } while (0)
+#define HAL_QPIPSRAM_DBG(...) do { if (0) { HAL_DBG(__VA_ARGS__); } } while (0)
 #endif
 
 /*Command Set*/

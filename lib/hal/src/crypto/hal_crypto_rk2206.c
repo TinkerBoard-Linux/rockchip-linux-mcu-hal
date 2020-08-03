@@ -33,17 +33,20 @@
 #define ROUNDDOWN(x, y) (((x) / (y)) * (y))
 #endif
 
-#define CRYPTO_CLEAR_REGS(regs) do {           \
-    uint32_t i;                                \
-    for (i = 0; i < HAL_ARRAY_SIZE(regs); i++) \
-        CLEAR_REG(regs[i]);                    \
+#define CRYPTO_CLEAR_REGS(regs) do {             \
+    uint32_t i;                                  \
+    for (i = 0; i < HAL_ARRAY_SIZE(regs); i++) { \
+        CLEAR_REG(regs[i]);                      \
+    }                                            \
 } while(0)
 
-#define CRYPTO_CLEAR_KEY_REGS(regs) do {              \
-    uint32_t i, j;                                    \
-    for (i = 0; i < HAL_ARRAY_SIZE(regs); i++)        \
-        for (j = 0; j < HAL_ARRAY_SIZE(regs[0]); j++) \
-            CLEAR_REG(regs[i][j]);                    \
+#define CRYPTO_CLEAR_KEY_REGS(regs) do {                \
+    uint32_t i, j;                                      \
+    for (i = 0; i < HAL_ARRAY_SIZE(regs); i++) {        \
+        for (j = 0; j < HAL_ARRAY_SIZE(regs[0]); j++) { \
+            CLEAR_REG(regs[i][j]);                      \
+        }                                               \
+    }                                                   \
 } while(0)
 
 #define CRYPTO_WRITE_MASK_ALL (0xffffu)

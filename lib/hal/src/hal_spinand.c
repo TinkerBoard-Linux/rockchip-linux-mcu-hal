@@ -59,7 +59,7 @@
 #ifdef HAL_SPINAND_DEBUG
 #define HAL_SPINAND_DBG(...) HAL_DBG(__VA_ARGS__)
 #else
-#define HAL_SPINAND_DBG(...) do { if (0) HAL_DBG(__VA_ARGS__); } while (0)
+#define HAL_SPINAND_DBG(...) do { if (0) { HAL_DBG(__VA_ARGS__); } } while (0)
 #endif
 
 /* FLASH_INFO feature */
