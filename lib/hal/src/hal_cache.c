@@ -93,6 +93,7 @@ uint32_t HAL_CpuAddrToDmaAddr(uint32_t cpuAddr)
     return sramAddr;
 }
 
+#ifdef MPU
 /**
  * @brief  check mpu is enable.
  * @return HAL_ENABLE if mpu enable.
@@ -101,14 +102,13 @@ __STATIC_INLINE HAL_FuncStatus HAL_MPU_IsEnable(void)
 {
     HAL_FuncStatus ret = HAL_DISABLE;
 
-#ifdef MPU
     if (MPU->CTRL & MPU_CTRL_ENABLE_Msk) {
         ret = HAL_ENABLE;
     }
-#endif
 
     return ret;
 }
+#endif
 
 /**
  * @brief  enable icache.
@@ -132,9 +132,11 @@ HAL_Status HAL_ICACHE_Enable(void)
     ICACHE->CACHE_CTRL &= (~ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK);
 
     /* if mpu has been enable, we will enable cache mpu function */
+#ifdef MPU
     if (HAL_MPU_IsEnable()) {
         ICACHE->CACHE_CTRL |= ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
     }
+#endif
 
     do {
         status =
@@ -467,9 +469,11 @@ HAL_Status HAL_DCACHE_Enable(void)
     DCACHE->STB_TIMEOUT_CTRL = 1;
 
     /* if mpu has been enable, we will enable cache mpu function */
+#ifdef MPU
     if (HAL_MPU_IsEnable()) {
         DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
     }
+#endif
 
     do {
         status =

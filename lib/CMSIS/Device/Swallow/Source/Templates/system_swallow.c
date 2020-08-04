@@ -4,6 +4,7 @@
  */
 
 #include "soc.h"
+#include "hal_base.h"
 
 uint32_t SystemCoreClock = 150000000;
 
@@ -26,8 +27,7 @@ void SystemInit(void)
     /* stb enable, stb_entry=7, stb_timeout enable, write back */
     DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK |
                           (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
-                          DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK |
-                          DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK;
+                          DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK;
     DCACHE->STB_TIMEOUT_CTRL = 1;
 
     do {

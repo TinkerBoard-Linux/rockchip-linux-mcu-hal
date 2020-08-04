@@ -112,6 +112,7 @@ typedef enum
 #define CACHE_M_INVALID                 0x2U
 #define CACHE_M_CLEAN_INVALID           0x4U
 #define CACHE_M_INVALID_ALL             0x6U
+#define CACHE_REVISION                  (0x00000100U)
 
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
