@@ -92,11 +92,24 @@ typedef enum
 #include "system_swallow.h"
 #endif /* __ASSEMBLY__ */
 #include "swallow.h"
+#include "swallow_usb.h"
 
 #define XIP_MAP_BASE       0x10000000U
 #define SRAM2_MAP_BASE     0x000A0000U
 #define SRAM1_MAP_BASE     0x00060000U
 #define SRAM0_MAP_BASE     0x00020000U
+#define USB_BASE           0x40180000U
+
+/****************************************************************************************/
+/*                                                                                      */
+/*                               Module Variable Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/* Module Variable Define */
+#define USB                 ((struct USB_GLOBAL_REG *) USB_BASE)
+
+#define IS_PCD_INSTANCE(instance) ((instance) == USB)
+#define IS_HCD_INSTANCE(instance) ((instance) == USB)
 
 /****************************************************************************************/
 /*                                                                                      */
