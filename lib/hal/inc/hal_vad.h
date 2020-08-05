@@ -102,6 +102,7 @@ HAL_Status HAL_VAD_EnableBusMode(struct HAL_VAD_DEV *vad);
 HAL_Status HAL_VAD_DisableBusMode(struct HAL_VAD_DEV *vad);
 
 HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad);
+HAL_Status HAL_VAD_GetCurAddr(struct HAL_VAD_DEV *vad, uint32_t *addr);
 
 /** @} */
 

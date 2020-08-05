@@ -422,6 +422,21 @@ HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad)
 }
 
 /**
+ * @brief  Get vad current address.
+ * @param  vad: The handle of struct HAL_VAD_DEV.
+ * @param  addr: The pointer to save current address.
+ * @return HAL_Status
+ */
+HAL_Status HAL_VAD_GetCurAddr(struct HAL_VAD_DEV *vad, uint32_t *addr)
+{
+    struct VAD_REG *reg = vad->pReg;
+
+    *addr = READ_REG(reg->RAM_CUR_ADDR);
+
+    return HAL_OK;
+}
+
+/**
  * @brief  enable periods data irq.
  * @param  vad: The handle of struct vad.
  * @param  words: period size in units of words(32 bits).
