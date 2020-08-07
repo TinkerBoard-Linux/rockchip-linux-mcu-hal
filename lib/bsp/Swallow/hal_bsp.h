@@ -26,6 +26,10 @@ extern const struct HAL_SPI_DEV g_spiDev0;
 extern const struct HAL_SPI_DEV g_spiDev1;
 #endif
 
+#ifdef HAL_PCD_MODULE_ENABLED
+extern const struct HAL_USB_DEV g_usbdDev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 #endif

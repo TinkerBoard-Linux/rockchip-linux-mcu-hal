@@ -76,5 +76,27 @@ const struct HAL_SPI_DEV g_spiDev1 = {
         .addr = SPI1_BASE + 0x800,
     },
 };
+#endif
 
+#ifdef HAL_PCD_MODULE_ENABLED
+const struct HAL_USB_DEV g_usbdDev =
+{
+    .pReg = USB,
+    /* FIXME: adds CLK ID later when TRM gets ready. */
+    /* .hclkGateID = 0, */
+    /* .utmiclkGateID = 0, */
+    .irqNum = USB_IRQn,
+    .cfg =
+    {
+        .epNum = 10,
+        .ep0Mps = USB_OTG_MAX_EP0_SIZE,
+        .phyif = USB_PHY_UTMI_WIDTH_16,
+        .speed = PCD_SPEED_HIGH,
+        .dmaEnable = true,
+        .sofEnable = false,
+        .lpmEnable = false,
+        .vbusSensingEnable = false,
+        .suspendEnable = false,
+    },
+};
 #endif
