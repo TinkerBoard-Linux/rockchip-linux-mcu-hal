@@ -63,6 +63,16 @@ HAL_Status HAL_USB_PhyResume(void)
 
     return HAL_OK;
 }
+#else
+HAL_Status HAL_USB_PhySuspend(void)
+{
+    return HAL_OK;
+}
+
+HAL_Status HAL_USB_PhyResume(void)
+{
+    return HAL_OK;
+}
 #endif
 
 /** @} */
