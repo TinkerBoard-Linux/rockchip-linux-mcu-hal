@@ -12,5 +12,6 @@
 /* HAL Driver Config */
 #define HAL_TIMER_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
+#define HAL_PCD_MODULE_ENABLED
 
 #endif
