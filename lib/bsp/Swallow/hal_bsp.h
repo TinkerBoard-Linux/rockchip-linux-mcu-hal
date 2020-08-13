@@ -30,6 +30,10 @@ extern const struct HAL_SPI_DEV g_spiDev1;
 extern const struct HAL_USB_DEV g_usbdDev;
 #endif
 
+#ifdef HAL_FSPI_MODULE_ENABLED
+extern struct HAL_FSPI_HOST g_fspi0Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 #endif

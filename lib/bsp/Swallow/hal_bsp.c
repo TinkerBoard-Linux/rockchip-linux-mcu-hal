@@ -100,3 +100,21 @@ const struct HAL_USB_DEV g_usbdDev =
     },
 };
 #endif
+
+#ifdef HAL_FSPI_MODULE_ENABLED
+struct HAL_FSPI_HOST g_fspi0Dev =
+{
+    .instance = FSPI0,
+    .sclkGate = 0,
+    .hclkGate = 0,
+    .xipClkGate = 0,
+    .sclkID = SCLK_SFC_SRC,
+    .irqNum = FSPI0_IRQn,
+    .xipMemCode = XIP_MAP_BASE,
+    .xipMemData = XIP_MAP_BASE,
+    .xmmcDev[0] =
+    {
+        .type = DEV_NOR,
+    },
+};
+#endif
