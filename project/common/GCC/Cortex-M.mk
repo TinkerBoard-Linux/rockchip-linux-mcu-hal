@@ -56,13 +56,14 @@ endif
 #############################################################################
 INCLUDES := \
 -I"../src" \
+-I"$(ROOT_PATH)/lib/CMSIS/Core/Include" \
 
 SRC_DIRS := \
     ../src \
     $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
 
 export HAL_PATH := $(ROOT_PATH)
-include $(HAL_PATH)/tools/build_lib_arm.mk
+include $(HAL_PATH)/tools/build_lib.mk
 include $(HAL_PATH)/tools/build_test.mk
 SRC_DIRS += $(HAL_LIB_SRC)
 SRC_DIRS += $(HAL_TEST_SRC)

@@ -3,6 +3,7 @@
 # Copyright (c) 2020 Rockchip Electronics Co., Ltd.
 
 PROJECT		:= RV1126
+SOC		:= RV1126
 CPU		:= -march=rv32imac -mabi=ilp32 -DARCH_RISCV
 
 include ../../common/GCC/riscv.mk
