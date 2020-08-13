@@ -3,6 +3,7 @@
 # Copyright (c) 2020 Rockchip Electronics Co., Ltd.
 
 PROJECT		:= Swallow
+SOC		:= Swallow
 CPU		:= -march=rv32imac -mabi=ilp32 -DARCH_RISCV
 
 include ../../common/GCC/riscv.mk
