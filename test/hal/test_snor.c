@@ -264,8 +264,9 @@ static HAL_Status SNOR_Adapt(void)
     nor->spi->userdata = (void *)host;
     nor->spi->mode = HAL_SPI_MODE_3;
     nor->spi->xfer = SPI_Xfer;
+#ifdef HAL_NVIC_MODULE_ENABLED
     HAL_NVIC_ConfigExtIRQ(FSPI0_IRQn, (NVIC_IRQHandler) & FSPI_IRQHandler, NVIC_PERIPH_PRIO_DEFAULT, NVIC_PERIPH_SUB_PRIO_DEFAULT);
-
+#endif
 #ifdef HAL_FSPI_TUNING_ENABLED
     uint8_t idByte[5];
     uint32_t i, j;
