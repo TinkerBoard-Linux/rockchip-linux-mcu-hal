@@ -16,11 +16,7 @@
 #ifndef __ASSEMBLY__
 /* CRU Register Structure Define */
 struct CRU_REG {
-    __IO uint32_t GPLL_CON00;                         /* Address Offset: 0x0000 */
-    __IO uint32_t GPLL_CON01;                         /* Address Offset: 0x0004 */
-    __IO uint32_t GPLL_CON02;                         /* Address Offset: 0x0008 */
-    __IO uint32_t GPLL_CON03;                         /* Address Offset: 0x000C */
-    __IO uint32_t GPLL_CON04;                         /* Address Offset: 0x0010 */
+    __IO uint32_t GPLL_CON[5];                        /* Address Offset: 0x0000 */
          uint32_t RESERVED0014[35];                   /* Address Offset: 0x0014 */
     __IO uint32_t MODE_CON00;                         /* Address Offset: 0x00A0 */
          uint32_t RESERVED00A4[3];                    /* Address Offset: 0x00A4 */
@@ -30,26 +26,9 @@ struct CRU_REG {
     __IO uint32_t GLB_SRST_SND;                       /* Address Offset: 0x00BC */
     __IO uint32_t GLB_RST_CON;                        /* Address Offset: 0x00C0 */
          uint32_t RESERVED00C4[15];                   /* Address Offset: 0x00C4 */
-    __IO uint32_t CLKSEL_CON00;                       /* Address Offset: 0x0100 */
-    __IO uint32_t CLKSEL_CON01;                       /* Address Offset: 0x0104 */
-    __IO uint32_t CLKSEL_CON02;                       /* Address Offset: 0x0108 */
-    __IO uint32_t CLKSEL_CON03;                       /* Address Offset: 0x010C */
-    __IO uint32_t CLKSEL_CON04;                       /* Address Offset: 0x0110 */
-    __IO uint32_t CLKSEL_CON05;                       /* Address Offset: 0x0114 */
-    __IO uint32_t CLKSEL_CON06;                       /* Address Offset: 0x0118 */
-    __IO uint32_t CLKSEL_CON07;                       /* Address Offset: 0x011C */
-    __IO uint32_t CLKSEL_CON08;                       /* Address Offset: 0x0120 */
-    __IO uint32_t CLKSEL_CON09;                       /* Address Offset: 0x0124 */
-    __IO uint32_t CLKSEL_CON10;                       /* Address Offset: 0x0128 */
-    __IO uint32_t CLKSEL_CON11;                       /* Address Offset: 0x012C */
+    __IO uint32_t CRU_CLKSEL_CON[12];                 /* Address Offset: 0x0100 */
          uint32_t RESERVED0130[116];                  /* Address Offset: 0x0130 */
-    __IO uint32_t GATE_CON00;                         /* Address Offset: 0x0300 */
-    __IO uint32_t GATE_CON01;                         /* Address Offset: 0x0304 */
-    __IO uint32_t GATE_CON02;                         /* Address Offset: 0x0308 */
-    __IO uint32_t GATE_CON03;                         /* Address Offset: 0x030C */
-    __IO uint32_t GATE_CON04;                         /* Address Offset: 0x0310 */
-    __IO uint32_t GATE_CON05;                         /* Address Offset: 0x0314 */
-    __IO uint32_t GATE_CON06;                         /* Address Offset: 0x0318 */
+    __IO uint32_t CRU_CLKGATE_CON[7];                 /* Address Offset: 0x0300 */
          uint32_t RESERVED031C[25];                   /* Address Offset: 0x031C */
     __IO uint32_t SSCGTBL0_3;                         /* Address Offset: 0x0380 */
     __IO uint32_t SSCGTBL4_7;                         /* Address Offset: 0x0384 */
@@ -83,13 +62,7 @@ struct CRU_REG {
     __IO uint32_t SSCGTBL116_119;                     /* Address Offset: 0x03F4 */
     __IO uint32_t SSCGTBL120_123;                     /* Address Offset: 0x03F8 */
     __IO uint32_t SSCGTBL124_127;                     /* Address Offset: 0x03FC */
-    __IO uint32_t SOFTRST_CON00;                      /* Address Offset: 0x0400 */
-    __IO uint32_t SOFTRST_CON01;                      /* Address Offset: 0x0404 */
-    __IO uint32_t SOFTRST_CON02;                      /* Address Offset: 0x0408 */
-    __IO uint32_t SOFTRST_CON03;                      /* Address Offset: 0x040C */
-    __IO uint32_t SOFTRST_CON04;                      /* Address Offset: 0x0410 */
-    __IO uint32_t SOFTRST_CON05;                      /* Address Offset: 0x0414 */
-    __IO uint32_t SOFTRST_CON06;                      /* Address Offset: 0x0418 */
+    __IO uint32_t CRU_SOFTRST_CON[7];                 /* Address Offset: 0x0400 */
 };
 /* GRF Register Structure Define */
 struct GRF_REG {
