@@ -10,7 +10,6 @@ HAL_LIB_INC += \
 -I"$(HAL_PATH)/lib/hal/inc" \
 -I"$(HAL_PATH)/lib/bsp/$(SOC)" \
 -I"$(HAL_PATH)/lib/CMSIS/Device/$(SOC)/Include" \
--I"$(HAL_PATH)/lib/CMSIS/Core/Include" \
 -I"$(HAL_PATH)/lib/CMSIS/Device" \
 
 HAL_LIB_SRC += \
