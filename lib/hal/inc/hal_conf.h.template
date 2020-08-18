@@ -21,6 +21,8 @@
 //#define RKMCU_RK2108
 //#define RKMCU_KOALA
 //#define RKMCU_RK2206
+//#define SOC_RV1126
+//#define SOC_SWALLOW
 
 /************************ HAL Driver Config ***********************************/
 
