@@ -1269,23 +1269,9 @@ struct I2C_REG {
     __I  uint32_t FCNT;                               /* Address Offset: 0x0020 */
     __IO uint32_t SCL_OE_DB;                          /* Address Offset: 0x0024 */
          uint32_t RESERVED0028[54];                   /* Address Offset: 0x0028 */
-    __IO uint32_t TXDATA0;                            /* Address Offset: 0x0100 */
-    __IO uint32_t TXDATA1;                            /* Address Offset: 0x0104 */
-    __IO uint32_t TXDATA2;                            /* Address Offset: 0x0108 */
-    __IO uint32_t TXDATA3;                            /* Address Offset: 0x010C */
-    __IO uint32_t TXDATA4;                            /* Address Offset: 0x0110 */
-    __IO uint32_t TXDATA5;                            /* Address Offset: 0x0114 */
-    __IO uint32_t TXDATA6;                            /* Address Offset: 0x0118 */
-    __IO uint32_t TXDATA7;                            /* Address Offset: 0x011C */
+    __IO uint32_t TXDATA[8];                          /* Address Offset: 0x0100 */
          uint32_t RESERVED0120[56];                   /* Address Offset: 0x0120 */
-    __I  uint32_t RXDATA0;                            /* Address Offset: 0x0200 */
-    __I  uint32_t RXDATA1;                            /* Address Offset: 0x0204 */
-    __I  uint32_t RXDATA2;                            /* Address Offset: 0x0208 */
-    __I  uint32_t RXDATA3;                            /* Address Offset: 0x020C */
-    __I  uint32_t RXDATA4;                            /* Address Offset: 0x0210 */
-    __I  uint32_t RXDATA5;                            /* Address Offset: 0x0214 */
-    __I  uint32_t RXDATA6;                            /* Address Offset: 0x0218 */
-    __I  uint32_t RXDATA7;                            /* Address Offset: 0x021C */
+    __I  uint32_t RXDATA[8];                          /* Address Offset: 0x0200 */
     __I  uint32_t ST;                                 /* Address Offset: 0x0220 */
     __IO uint32_t DBGCTRL;                            /* Address Offset: 0x0224 */
 };
