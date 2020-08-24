@@ -32,12 +32,17 @@ int __wrap_puts(const char *s)
     return 0;
 }
 
+int entry(void)
+{
+    return 0;
+}
+
 int main(void)
 {
     /* Uart is initialized by pre-loader,
      * use it to print debug info directly.
      */
-    printf("Hello RISC-V\n");
+    printf("Hello Swallow\n");
 
     return 0;
 }

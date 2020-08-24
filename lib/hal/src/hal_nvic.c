@@ -48,7 +48,12 @@
  */
 HAL_Status HAL_NVIC_SetIRQHandler(IRQn_Type IRQn, NVIC_IRQHandler handler)
 {
+#if __VTOR_PRESENT
     uint32_t *vectors = (uint32_t *)SCB->VTOR;
+#else
+    /* cortex m0 has no vtor, the vector table alway based 0x0*/
+    uint32_t *vectors = (uint32_t *)0x0U;
+#endif
 
     vectors[IRQn + NVIC_PERIPH_IRQ_OFFSET] = (uint32_t)handler;
 
@@ -62,7 +67,12 @@ HAL_Status HAL_NVIC_SetIRQHandler(IRQn_Type IRQn, NVIC_IRQHandler handler)
  */
 NVIC_IRQHandler HAL_NVIC_GetIRQHandler(IRQn_Type IRQn)
 {
+#if __VTOR_PRESENT
     uint32_t *vectors = (uint32_t *)SCB->VTOR;
+#else
+    /* cortex m0 has no vtor, the vector table alway based 0x0*/
+    uint32_t *vectors = (uint32_t *)0x0U;
+#endif
 
     return (NVIC_IRQHandler)(vectors[IRQn + NVIC_PERIPH_IRQ_OFFSET]);
 }

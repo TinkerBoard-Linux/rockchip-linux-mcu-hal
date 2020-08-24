@@ -35,5 +35,6 @@ extern struct HAL_FSPI_HOST g_fspi0Dev;
 #endif
 
 /***************************** Function Declare ******************************/
+void BSP_Init(void);
 
 #endif

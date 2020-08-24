@@ -1197,6 +1197,35 @@ struct WDT_REG {
     __I  uint32_t STAT;                               /* Address Offset: 0x0010 */
     __I  uint32_t EOI;                                /* Address Offset: 0x0014 */
 };
+/* INTC Register Structure Define */
+struct INTC_REG {
+    __IO uint32_t IRQ_INTEN_L;                        /* Address Offset: 0x0000 */
+    __IO uint32_t IRQ_INTEN_H;                        /* Address Offset: 0x0004 */
+    __IO uint32_t IRQ_INTMASK_L;                      /* Address Offset: 0x0008 */
+    __IO uint32_t IRQ_INTMASK_H;                      /* Address Offset: 0x000C */
+    __IO uint32_t IRQ_INTFORCE_L;                     /* Address Offset: 0x0010 */
+    __IO uint32_t IRQ_INTFORCE_H;                     /* Address Offset: 0x0014 */
+    __I  uint32_t IRQ_RAWSTATUS_L;                    /* Address Offset: 0x0018 */
+    __I  uint32_t IRQ_RAWSTATUS_H;                    /* Address Offset: 0x001C */
+    __I  uint32_t IRQ_STATUS_L;                       /* Address Offset: 0x0020 */
+    __I  uint32_t IRQ_STATUS_H;                       /* Address Offset: 0x0024 */
+    __I  uint32_t IRQ_MASKSTATUS_L;                   /* Address Offset: 0x0028 */
+    __I  uint32_t IRQ_MASKSTATUS_H;                   /* Address Offset: 0x002C */
+    __I  uint32_t IRQ_FINALSTATUS_L;                  /* Address Offset: 0x0030 */
+    __I  uint32_t IRQ_FINALSTATUS_H;                  /* Address Offset: 0x0034 */
+         uint32_t RESERVED0038[34];                   /* Address Offset: 0x0038 */
+    __IO uint32_t FIQ_INTEN;                          /* Address Offset: 0x00C0 */
+    __IO uint32_t FIQ_INTMASK;                        /* Address Offset: 0x00C4 */
+    __IO uint32_t FIQ_INTFORCE;                       /* Address Offset: 0x00C8 */
+    __I  uint32_t FIQ_RAWSTATUS;                      /* Address Offset: 0x00CC */
+    __I  uint32_t FIQ_STATUS;                         /* Address Offset: 0x00D0 */
+    __I  uint32_t FIQ_FINALSTATUS;                    /* Address Offset: 0x00D4 */
+    __IO uint32_t IRQ_PLEVEL;                         /* Address Offset: 0x00D8 */
+         uint32_t RESERVED00DC[3];                    /* Address Offset: 0x00DC */
+    __IO uint32_t IRQ_PR_OFFSET[196];                 /* Address Offset: 0x00E8 */
+    __I  uint32_t AHB_ICTL_COMP_VERSION;              /* Address Offset: 0x03F8 */
+    __I  uint32_t ICTL_COMP_TYPE;                     /* Address Offset: 0x03FC */
+};
 /* I2C Register Structure Define */
 struct I2C_REG {
     __IO uint32_t CON;                                /* Address Offset: 0x0000 */
@@ -1416,6 +1445,7 @@ struct CSI2HOST_REG {
 #define TIMER4_BASE                    0x40000080U /* TIMER4 base address */
 #define TIMER5_BASE                    0x400000A0U /* TIMER5 base address */
 #define WDT_BASE                       0x40020000U /* WDT base address */
+#define INTC_BASE                      0x40030000U /* INTC base address */
 #define I2C0_BASE                      0x40040000U /* I2C0 base address */
 #define I2C1_BASE                      0x40050000U /* I2C1 base address */
 #define UART0_BASE                     0x40070000U /* UART0 base address */
@@ -1468,6 +1498,7 @@ struct CSI2HOST_REG {
 #define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
 #define WDT                 ((struct WDT_REG *) WDT_BASE)
+#define INTC0               ((struct INTC_REG *) INTC_BASE)
 #define I2C0                ((struct I2C_REG *) I2C0_BASE)
 #define I2C1                ((struct I2C_REG *) I2C1_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
@@ -1504,6 +1535,7 @@ struct CSI2HOST_REG {
 #define IS_ISP_DPCC_INSTANCE(instance) ((instance) == ISP_DPCC)
 #define IS_ISP_WDR_INSTANCE(instance) ((instance) == ISP_WDR)
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
+#define IS_INTC_INSTANCE(instance) ((instance) == INTC)
 #define IS_SARADC_INSTANCE(instance) ((instance) == SARADC)
 #define IS_CSI2HOST_INSTANCE(instance) ((instance) == CSI2HOST)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
@@ -8905,6 +8937,116 @@ struct CSI2HOST_REG {
 #define WDT_EOI                                            (0x0U)
 #define WDT_EOI_WDT_INT_CLR_SHIFT                          (0U)
 #define WDT_EOI_WDT_INT_CLR_MASK                           (0x1U << WDT_EOI_WDT_INT_CLR_SHIFT)                          /* 0x00000001 */
+/******************************************INTC******************************************/
+/* IRQ_INTEN_L */
+#define INTC_IRQ_INTEN_L_OFFSET                            (0x0U)
+#define INTC_IRQ_INTEN_L_IRQ_INTEN_L_SHIFT                 (0U)
+#define INTC_IRQ_INTEN_L_IRQ_INTEN_L_MASK                  (0xFFFFFFFFU << INTC_IRQ_INTEN_L_IRQ_INTEN_L_SHIFT)          /* 0xFFFFFFFF */
+/* IRQ_INTEN_H */
+#define INTC_IRQ_INTEN_H_OFFSET                            (0x4U)
+#define INTC_IRQ_INTEN_H_IRQ_INTEN_H_SHIFT                 (0U)
+#define INTC_IRQ_INTEN_H_IRQ_INTEN_H_MASK                  (0xFFFFFFFFU << INTC_IRQ_INTEN_H_IRQ_INTEN_H_SHIFT)          /* 0xFFFFFFFF */
+/* IRQ_INTMASK_L */
+#define INTC_IRQ_INTMASK_L_OFFSET                          (0x8U)
+#define INTC_IRQ_INTMASK_L_IRQ_INTMASK_L_SHIFT             (0U)
+#define INTC_IRQ_INTMASK_L_IRQ_INTMASK_L_MASK              (0xFFFFFFFFU << INTC_IRQ_INTMASK_L_IRQ_INTMASK_L_SHIFT)      /* 0xFFFFFFFF */
+/* IRQ_INTMASK_H */
+#define INTC_IRQ_INTMASK_H_OFFSET                          (0xCU)
+#define INTC_IRQ_INTMASK_H_IRQ_INTMASK_H_SHIFT             (0U)
+#define INTC_IRQ_INTMASK_H_IRQ_INTMASK_H_MASK              (0xFFFFFFFFU << INTC_IRQ_INTMASK_H_IRQ_INTMASK_H_SHIFT)      /* 0xFFFFFFFF */
+/* IRQ_INTFORCE_L */
+#define INTC_IRQ_INTFORCE_L_OFFSET                         (0x10U)
+#define INTC_IRQ_INTFORCE_L_IRQ_INTFORCE_L_SHIFT           (0U)
+#define INTC_IRQ_INTFORCE_L_IRQ_INTFORCE_L_MASK            (0xFFFFFFFFU << INTC_IRQ_INTFORCE_L_IRQ_INTFORCE_L_SHIFT)    /* 0xFFFFFFFF */
+/* IRQ_INTFORCE_H */
+#define INTC_IRQ_INTFORCE_H_OFFSET                         (0x14U)
+#define INTC_IRQ_INTFORCE_H_IRQ_INTFORCE_H_SHIFT           (0U)
+#define INTC_IRQ_INTFORCE_H_IRQ_INTFORCE_H_MASK            (0xFFFFFFFFU << INTC_IRQ_INTFORCE_H_IRQ_INTFORCE_H_SHIFT)    /* 0xFFFFFFFF */
+/* IRQ_RAWSTATUS_L */
+#define INTC_IRQ_RAWSTATUS_L_OFFSET                        (0x18U)
+#define INTC_IRQ_RAWSTATUS_L                               (0x0U)
+#define INTC_IRQ_RAWSTATUS_L_IRQ_RAWSTATUS_L_SHIFT         (0U)
+#define INTC_IRQ_RAWSTATUS_L_IRQ_RAWSTATUS_L_MASK          (0xFFFFFFFFU << INTC_IRQ_RAWSTATUS_L_IRQ_RAWSTATUS_L_SHIFT)  /* 0xFFFFFFFF */
+/* IRQ_RAWSTATUS_H */
+#define INTC_IRQ_RAWSTATUS_H_OFFSET                        (0x1CU)
+#define INTC_IRQ_RAWSTATUS_H                               (0x0U)
+#define INTC_IRQ_RAWSTATUS_H_IRQ_RAWSTATUS_H_SHIFT         (0U)
+#define INTC_IRQ_RAWSTATUS_H_IRQ_RAWSTATUS_H_MASK          (0xFFFFFFFFU << INTC_IRQ_RAWSTATUS_H_IRQ_RAWSTATUS_H_SHIFT)  /* 0xFFFFFFFF */
+/* IRQ_STATUS_L */
+#define INTC_IRQ_STATUS_L_OFFSET                           (0x20U)
+#define INTC_IRQ_STATUS_L                                  (0x0U)
+#define INTC_IRQ_STATUS_L_IRQ_STATUS_L_SHIFT               (0U)
+#define INTC_IRQ_STATUS_L_IRQ_STATUS_L_MASK                (0xFFFFFFFFU << INTC_IRQ_STATUS_L_IRQ_STATUS_L_SHIFT)        /* 0xFFFFFFFF */
+/* IRQ_STATUS_H */
+#define INTC_IRQ_STATUS_H_OFFSET                           (0x24U)
+#define INTC_IRQ_STATUS_H                                  (0x0U)
+#define INTC_IRQ_STATUS_H_IRQ_STATUS_H_SHIFT               (0U)
+#define INTC_IRQ_STATUS_H_IRQ_STATUS_H_MASK                (0xFFFFFFFFU << INTC_IRQ_STATUS_H_IRQ_STATUS_H_SHIFT)        /* 0xFFFFFFFF */
+/* IRQ_MASKSTATUS_L */
+#define INTC_IRQ_MASKSTATUS_L_OFFSET                       (0x28U)
+#define INTC_IRQ_MASKSTATUS_L                              (0x0U)
+#define INTC_IRQ_MASKSTATUS_L_IRQ_MASKSTATUS_L_SHIFT       (0U)
+#define INTC_IRQ_MASKSTATUS_L_IRQ_MASKSTATUS_L_MASK        (0xFFFFFFFFU << INTC_IRQ_MASKSTATUS_L_IRQ_MASKSTATUS_L_SHIFT) /* 0xFFFFFFFF */
+/* IRQ_MASKSTATUS_H */
+#define INTC_IRQ_MASKSTATUS_H_OFFSET                       (0x2CU)
+#define INTC_IRQ_MASKSTATUS_H                              (0x0U)
+#define INTC_IRQ_MASKSTATUS_H_IRQ_MASKSTATUS_H_SHIFT       (0U)
+#define INTC_IRQ_MASKSTATUS_H_IRQ_MASKSTATUS_H_MASK        (0xFFFFFFFFU << INTC_IRQ_MASKSTATUS_H_IRQ_MASKSTATUS_H_SHIFT) /* 0xFFFFFFFF */
+/* IRQ_FINALSTATUS_L */
+#define INTC_IRQ_FINALSTATUS_L_OFFSET                      (0x30U)
+#define INTC_IRQ_FINALSTATUS_L                             (0x0U)
+#define INTC_IRQ_FINALSTATUS_L_IRQ_FINALSTATUS_L_SHIFT     (0U)
+#define INTC_IRQ_FINALSTATUS_L_IRQ_FINALSTATUS_L_MASK      (0xFFFFFFFFU << INTC_IRQ_FINALSTATUS_L_IRQ_FINALSTATUS_L_SHIFT) /* 0xFFFFFFFF */
+/* IRQ_FINALSTATUS_H */
+#define INTC_IRQ_FINALSTATUS_H_OFFSET                      (0x34U)
+#define INTC_IRQ_FINALSTATUS_H                             (0x0U)
+#define INTC_IRQ_FINALSTATUS_H_IRQ_FINALSTATUS_H_SHIFT     (0U)
+#define INTC_IRQ_FINALSTATUS_H_IRQ_FINALSTATUS_H_MASK      (0xFFFFFFFFU << INTC_IRQ_FINALSTATUS_H_IRQ_FINALSTATUS_H_SHIFT) /* 0xFFFFFFFF */
+/* FIQ_INTEN */
+#define INTC_FIQ_INTEN_OFFSET                              (0xC0U)
+#define INTC_FIQ_INTEN_FIQ_INTEN_SHIFT                     (0U)
+#define INTC_FIQ_INTEN_FIQ_INTEN_MASK                      (0x3U << INTC_FIQ_INTEN_FIQ_INTEN_SHIFT)                     /* 0x00000003 */
+/* FIQ_INTMASK */
+#define INTC_FIQ_INTMASK_OFFSET                            (0xC4U)
+#define INTC_FIQ_INTMASK_FIQ_INTMASK_SHIFT                 (0U)
+#define INTC_FIQ_INTMASK_FIQ_INTMASK_MASK                  (0x3U << INTC_FIQ_INTMASK_FIQ_INTMASK_SHIFT)                 /* 0x00000003 */
+/* FIQ_INTFORCE */
+#define INTC_FIQ_INTFORCE_OFFSET                           (0xC8U)
+#define INTC_FIQ_INTFORCE_FIQ_INTFORCE_SHIFT               (0U)
+#define INTC_FIQ_INTFORCE_FIQ_INTFORCE_MASK                (0x3U << INTC_FIQ_INTFORCE_FIQ_INTFORCE_SHIFT)               /* 0x00000003 */
+/* FIQ_RAWSTATUS */
+#define INTC_FIQ_RAWSTATUS_OFFSET                          (0xCCU)
+#define INTC_FIQ_RAWSTATUS                                 (0x0U)
+#define INTC_FIQ_RAWSTATUS_FIQ_RAWSTATUS_SHIFT             (0U)
+#define INTC_FIQ_RAWSTATUS_FIQ_RAWSTATUS_MASK              (0x3U << INTC_FIQ_RAWSTATUS_FIQ_RAWSTATUS_SHIFT)             /* 0x00000003 */
+/* FIQ_STATUS */
+#define INTC_FIQ_STATUS_OFFSET                             (0xD0U)
+#define INTC_FIQ_STATUS                                    (0x0U)
+#define INTC_FIQ_STATUS_FIQ_STATUS_SHIFT                   (0U)
+#define INTC_FIQ_STATUS_FIQ_STATUS_MASK                    (0x3U << INTC_FIQ_STATUS_FIQ_STATUS_SHIFT)                   /* 0x00000003 */
+/* FIQ_FINALSTATUS */
+#define INTC_FIQ_FINALSTATUS_OFFSET                        (0xD4U)
+#define INTC_FIQ_FINALSTATUS                               (0x0U)
+#define INTC_FIQ_FINALSTATUS_FIQ_FINALSTATUS_SHIFT         (0U)
+#define INTC_FIQ_FINALSTATUS_FIQ_FINALSTATUS_MASK          (0x3U << INTC_FIQ_FINALSTATUS_FIQ_FINALSTATUS_SHIFT)         /* 0x00000003 */
+/* IRQ_PLEVEL */
+#define INTC_IRQ_PLEVEL_OFFSET                             (0xD8U)
+#define INTC_IRQ_PLEVEL_IRQ_PLEVEL_SHIFT                   (0U)
+#define INTC_IRQ_PLEVEL_IRQ_PLEVEL_MASK                    (0xFU << INTC_IRQ_PLEVEL_IRQ_PLEVEL_SHIFT)                   /* 0x0000000F */
+/* IRQ_PR_OFFSET */
+#define INTC_IRQ_PR_OFFSET_OFFSET                          (0xE8U)
+#define INTC_IRQ_PR_OFFSET_IRQ_PR_OFFSET_SHIFT             (0U)
+#define INTC_IRQ_PR_OFFSET_IRQ_PR_OFFSET_MASK              (0xFU << INTC_IRQ_PR_OFFSET_IRQ_PR_OFFSET_SHIFT)             /* 0x0000000F */
+/* AHB_ICTL_COMP_VERSION */
+#define INTC_AHB_ICTL_COMP_VERSION_OFFSET                  (0x3F8U)
+#define INTC_AHB_ICTL_COMP_VERSION                         (0x3230342AU)
+#define INTC_AHB_ICTL_COMP_VERSION_AHB_ICTL_COMP_VERSION_SHIFT (0U)
+#define INTC_AHB_ICTL_COMP_VERSION_AHB_ICTL_COMP_VERSION_MASK (0xFFFFFFFFU << INTC_AHB_ICTL_COMP_VERSION_AHB_ICTL_COMP_VERSION_SHIFT) /* 0xFFFFFFFF */
+/* ICTL_COMP_TYPE */
+#define INTC_ICTL_COMP_TYPE_OFFSET                         (0x3FCU)
+#define INTC_ICTL_COMP_TYPE                                (0x44571120U)
+#define INTC_ICTL_COMP_TYPE_ICTL_COMP_TYPE_SHIFT           (0U)
+#define INTC_ICTL_COMP_TYPE_ICTL_COMP_TYPE_MASK            (0xFFFFFFFFU << INTC_ICTL_COMP_TYPE_ICTL_COMP_TYPE_SHIFT)    /* 0xFFFFFFFF */
 /******************************************I2C*******************************************/
 /* CON */
 #define I2C_CON_OFFSET                                     (0x0U)

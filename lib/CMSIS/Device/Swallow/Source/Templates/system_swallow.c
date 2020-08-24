@@ -6,7 +6,7 @@
 #include "soc.h"
 #include "hal_base.h"
 
-uint32_t SystemCoreClock = 150000000;
+uint32_t SystemCoreClock = 30000000;
 
 /*----------------------------------------------------------------------------
   System Core Clock update function
@@ -20,6 +20,7 @@ void SystemCoreClockUpdate(void)
  *----------------------------------------------------------------------------*/
 void SystemInit(void)
 {
+    GRF->SOC_CON5 = 0x00010001;
 // Swallow a unified I/D CACHE, so we only need enable dcache
 #if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
     uint32_t status;

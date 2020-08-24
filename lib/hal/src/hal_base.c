@@ -58,6 +58,21 @@ static eHAL_tickFreq uwTickFreq = HAL_TICK_FREQ_DEFAULT;
 
 /********************* Private Function Definition ***************************/
 #if ((defined(ARCH_ARM) || defined(__CORTEX_A) || defined(__CORTEX_M)) && defined(__GNUC__))
+#if __CORTEX_M == 0U
+static void CPUCycleLoop(uint32_t cycles)
+{
+    uint32_t count;
+
+    if (cycles < 100U) {
+        return;
+    }
+
+    count = cycles / 3;
+    while (count-- > 0) {
+        __asm volatile ("nop");
+    }
+}
+#else
 static void CPUCycleLoop(uint32_t cycles)
 {
     __ASM volatile (
@@ -75,6 +90,7 @@ static void CPUCycleLoop(uint32_t cycles)
         : : "r" (cycles)
         );
 }
+#endif
 #elif defined(ARCH_RISCV)
 static void CPUCycleLoop(uint32_t cycles)
 {

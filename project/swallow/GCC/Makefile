@@ -4,6 +4,6 @@
 
 PROJECT		:= Swallow
 SOC		:= Swallow
-CPU		:= -march=rv32imac -mabi=ilp32 -DARCH_RISCV
+CPU		:= -mcpu=cortex-m0 -mthumb
 
-include ../../common/GCC/riscv.mk
+include ../../common/GCC/Cortex-M.mk

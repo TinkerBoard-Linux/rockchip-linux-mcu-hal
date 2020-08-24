@@ -35,43 +35,66 @@ typedef enum {
 /* ================================================================================ */
 typedef enum
 {
+/* -------------------  Processor Exceptions Numbers  ----------------------------- */
+  NonMaskableInt_IRQn       = -14,     /*  2 Non Maskable Interrupt */
+  HardFault_IRQn            = -13,     /*  3 HardFault Interrupt */
+
+
+
+  SVCall_IRQn               =  -5,     /* 11 SV Call Interrupt */
+
+  PendSV_IRQn               =  -2,     /* 14 Pend SV Interrupt */
+  SysTick_IRQn              =  -1,     /* 15 System Tick Interrupt */
+
 /******  Platform Exceptions Numbers ***************************************************/
   SARADC_IRQn              = 0,      /*!< SARADC Interrupt              */
   WDT_IRQn                 = 1,      /*!< WDT Interrupt                 */
-  I2C0_IRQn                = 2,      /*!< I2C0 Interrupt                */
-  I2C1_IRQn                = 3,      /*!< I2C1 Interrupt                */
-  TIMER0_IRQn              = 4,      /*!< TIMER0 Interrupt              */
-  TIMER1_IRQn              = 5,      /*!< TIMER1 Interrupt              */
-  TIMER2_IRQn              = 6,      /*!< TIMER2 Interrupt              */
-  TIMER3_IRQn              = 7,      /*!< TIMER3 Interrupt              */
-  TIMER4_IRQn              = 8,      /*!< TIMER4 Interrupt              */
-  TIMER5_IRQn              = 9,      /*!< TIMER5 Interrupt              */
-  UART0_IRQn               = 10,     /*!< UART0 Interrupt               */
-  JPEG0_IRQn               = 11,     /*!< JPEG0 Interrupt               */
-  JPEG1_IRQn               = 12,     /*!< JPEG1 Interrupt               */
-  SPI0_IRQn                = 13,     /*!< SPI0 Interrupt                */
-  SPI1_IRQn                = 14,     /*!< SPI1 Interrupt                */
-  PWM_IRQn                 = 15,     /*!< PWM Interrupt                 */
-  FSPI0_IRQn               = 16,     /*!< FSPI0 Interrupt               */
-  CACHE_IRQn               = 17,     /*!< CACHE Interrupt               */
-  ISP_IRQn                 = 18,     /*!< ISP Interrupt                 */
-  VICAP_IRQn               = 19,     /*!< VICAP Interrupt               */
-  USB_IRQn                 = 20,     /*!< USB Interrupt                 */
-  USB_BVALID_IRQn          = 21,     /*!< USB BVALID Interrupt          */
-  USB_ID_IRQn              = 22,     /*!< USB ID Interrupt              */
-  USB_LINESTATE_IRQn       = 23,     /*!< USB LINESTATE Interrupt       */
-  USB_DISCONNECT_IRQn      = 24,     /*!< USB DISCONNECT Interrupt      */
-  GPIO0_IRQn               = 25,     /*!< GPIO0 Interrupt               */
-  GPIO1_IRQn               = 26,     /*!< GPIO1 Interrupt               */
-  CSI2HOST0_IRQn           = 27,     /*!< CSI2HOST0 Interrupt           */
-  CSI2HOST1_IRQn           = 28,     /*!< CSI2HOST1 Interrupt           */
-  JSHASH_IRQn              = 29,     /*!< JSHASH Interrupt              */
-  DMAC0_IRQn               = 30,     /*!< DMAC0 Interrupt               */
-  DMAC1_IRQn               = 31,     /*!< DMAC1 Interrupt               */
-  DMAC2_IRQn               = 32,     /*!< DMAC2 Interrupt               */
-  AHB_ARB_IRQn             = 33,     /*!< DMAC3 Interrupt               */
-  NUM_INTERRUPTS           = 34,
+  TIMER0_IRQn              = 2,      /*!< TIMER0 Interrupt              */
+  TIMER1_IRQn              = 3,      /*!< TIMER1 Interrupt              */
+  TIMER2_IRQn              = 4,      /*!< TIMER2 Interrupt              */
+  TIMER3_IRQn              = 5,      /*!< TIMER3 Interrupt              */
+  TIMER4_IRQn              = 6,      /*!< TIMER4 Interrupt              */
+  TIMER5_IRQn              = 7,      /*!< TIMER5 Interrupt              */
+  JPEG0_IRQn               = 8,      /*!< JPEG0 Interrupt               */
+  JPEG1_IRQn               = 9,      /*!< JPEG1 Interrupt               */
+  PWM_IRQn                 = 10,     /*!< PWM Interrupt                 */
+  FSPI0_IRQn               = 11,     /*!< FSPI0 Interrupt               */
+  CACHE_IRQn               = 12,     /*!< CACHE Interrupt               */
+  ISP_IRQn                 = 13,     /*!< ISP Interrupt                 */
+  VICAP_IRQn               = 14,     /*!< VICAP Interrupt               */
+  USB_IRQn                 = 15,     /*!< USB Interrupt                 */
+  USB_BVALID_IRQn          = 16,     /*!< USB BVALID Interrupt          */
+  USB_ID_IRQn              = 17,     /*!< USB ID Interrupt              */
+  USB_LINESTATE_IRQn       = 18,     /*!< USB LINESTATE Interrupt       */
+  USB_DISCONNECT_IRQn      = 19,     /*!< USB DISCONNECT Interrupt      */
+  CSI2HOST0_IRQn           = 20,     /*!< CSI2HOST0 Interrupt           */
+  CSI2HOST1_IRQn           = 21,     /*!< CSI2HOST1 Interrupt           */
+  DMAC0_IRQn               = 22,     /*!< DMAC0 Interrupt               */
+  DMAC1_IRQn               = 23,     /*!< DMAC1 Interrupt               */
+  DMAC2_IRQn               = 24,     /*!< DMAC2 Interrupt               */
+  BUFFER_MANAGER_CH0_IRQn  = 25,     /*!< BUFFER MANAGER CHANEL 0       */
+  BUFFER_MANAGER_CH1_IRQn  = 26,     /*!< BUFFER MANAGER CHANEL 1       */
+  BUFFER_MANAGER_CH2_IRQn  = 27,     /*!< BUFFER MANAGER CHANEL 2       */
+  BUFFER_MANAGER_CH3_IRQn  = 28,     /*!< BUFFER MANAGER CHANEL 3       */
+  BUFFER_MANAGER_CH4_IRQn  = 29,     /*!< BUFFER MANAGER CHANEL 4       */
+  BUFFER_MANAGER_CH5_IRQn  = 30,     /*!< BUFFER MANAGER CHANEL 5       */
+  INTC0_IRQn               = 31,     /*!< External IRQ controller 0     */
+  NUM_INTERRUPTS           = 32,     /*!< Number of internal IRQ        */
+  I2C0_IRQn                = 32,     /*!< I2C0 Interrupt                */
+  I2C1_IRQn                = 33,     /*!< I2C1 Interrupt                */
+  UART0_IRQn               = 34,     /*!< UART0 Interrupt               */
+  SPI0_IRQn                = 35,     /*!< SPI0 Interrupt                */
+  SPI1_IRQn                = 36,     /*!< SPI1 Interrupt                */
+  GPIO0_IRQn               = 37,     /*!< GPIO0 Interrupt               */
+  GPIO1_IRQn               = 38,     /*!< GPIO1 Interrupt               */
+  CKCAL_IRQn               = 39,     /*!< JSHASH Interrupt              */
+  AHB_ARB_IRQn             = 40,     /*!< AHB ARB Interrupt             */
+  TOTAL_INTERRUPTS         = 41,     /*!< Total Interrupt               */
 } IRQn_Type;
+
+#define EXT_INTERRUPT            1U
+#define NUM_INTC                 (NUM_INTERRUPTS - INTC0_IRQn)
+#define NUM_EXT_INTERRUPTS       (TOTAL_INTERRUPTS - NUM_INTERRUPTS)
 
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
@@ -79,16 +102,18 @@ typedef enum
 
 #define PLL_INPUT_OSC_RATE       (24 * 1000 * 1000)
 
-#define RISC_V             1U
-#define RV32I_ISA          1U
-#define RV32M_ISA          1U
-#define RV32C_ISA          1U
-#define RV32E_ISA          0U
+/* --------  Configuration of Core Peripherals  ----------------------------------- */
+#define __CM0_REV                 0x0000U   /* Core revision r0p0 */
+#define __MPU_PRESENT             0U        /* no MPU present */
+#define __VTOR_PRESENT            0U        /* no VTOR present */
+#define __NVIC_PRIO_BITS          2U        /* Number of Bits used for Priority Levels */
+#define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
 
+#define NVIC_PERIPH_IRQ_OFFSET  16U
 #define MAX_INTERRUPT_VECTOR    64U
 
 #ifndef __ASSEMBLY__
-#include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
+#include "core_cm0.h"                       /* Processor and core peripherals */
 #include "system_swallow.h"
 #endif /* __ASSEMBLY__ */
 #include "swallow.h"

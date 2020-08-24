@@ -118,3 +118,7 @@ struct HAL_FSPI_HOST g_fspi0Dev =
     },
 };
 #endif
+
+void BSP_Init(void)
+{
+}
