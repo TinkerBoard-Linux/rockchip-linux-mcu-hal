@@ -34,12 +34,21 @@ typedef enum {
     NVIC_PRIORITYGROUP_5 = (0x2U), /*!< 5 bits pre-emption, 3 bits subpriority*/
 } eNVIC_PriorityGroup;
 
-/* Default NVIC priority grouping */
-#define NVIC_PRIORITYGROUP_DEFAULT NVIC_PRIORITYGROUP_5
+#ifndef NVIC_PRIORITYGROUP_DEFAULT
+#define NVIC_PRIORITYGROUP_DEFAULT NVIC_PRIORITYGROUP_5 /** Can be redefined in soc.h */
+#endif
 
 /* preempt priority */
-#define NVIC_PERIPH_PRIO_LOWEST  (0xFFU)
-#define NVIC_PERIPH_PRIO_DEFAULT (0x4U)
+#define NVIC_PERIPH_PRIO_LOWEST (0xFFU)
+#ifndef NVIC_PERIPH_PRIO_DEFAULT
+#if (__NVIC_PRIO_BITS == 2U)
+#define NVIC_PERIPH_PRIO_DEFAULT (0x2U) /** Can be redefined in soc.h */
+#elif (__NVIC_PRIO_BITS == 3U)
+#define NVIC_PERIPH_PRIO_DEFAULT (0x4U) /** Can be redefined in soc.h */
+#else
+#define NVIC_PERIPH_PRIO_DEFAULT (0xFFU) /** Can be redefined in soc.h */
+#endif
+#endif
 #define NVIC_PERIPH_PRIO_HIGHEST (0x0U)
 
 /* sub priority */
