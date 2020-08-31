@@ -18,6 +18,10 @@
 
 #include "hal_cache.h"
 
+#ifdef HAL_BUFFER_MANAGE_MODULE_ENABLED
+#include "hal_buffer_manage.h"
+#endif
+
 #ifdef HAL_CRU_MODULE_ENABLED
 #include "hal_cru.h"
 #endif
