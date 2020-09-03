@@ -124,6 +124,7 @@ typedef enum
 #define SRAM1_MAP_BASE     0x00060000U
 #define SRAM0_MAP_BASE     0x00020000U
 #define USB_BASE           0x40180000U
+#define USB_INNO_PHY_BASE  0x40250100U /* USB Innosilicon PHY base address */
 
 /****************************************************************************************/
 /*                                                                                      */

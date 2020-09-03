@@ -122,6 +122,19 @@ HAL_Status HAL_USB_PhyInit(void)
 
     return HAL_OK;
 }
+#elif defined(USB_INNO_PHY_BASE)
+HAL_Status HAL_USB_PhyInit(void)
+{
+    /* Reset USB PHY only for Swallow FPGA */
+#if defined(SOC_SWALLOW) && defined(IS_FPGA)
+    *(volatile uint32_t *)(CRU_BASE + 0x1004U) = 0x1;
+    HAL_DelayUs(500);
+    *(volatile uint32_t *)(CRU_BASE + 0x1004U) = 0x0;
+    HAL_DelayUs(2000);
+#endif
+
+    return HAL_OK;
+}
 #else
 HAL_Status HAL_USB_PhyInit(void)
 {
