@@ -441,6 +441,37 @@ HAL_Status HAL_VAD_GetCurAddr(struct HAL_VAD_DEV *vad, uint32_t *addr)
 }
 
 /**
+ * @brief  Enable vad interrupt.
+ * @param  vad: The handle of struct HAL_VAD_DEV.
+ * @param  type: Interrupt type.
+ * @param  enable: Enable flag.
+ * @return HAL_Status
+ */
+HAL_Status HAL_VAD_EnableInt(struct HAL_VAD_DEV *vad, eVAD_intType type, uint32_t enable)
+{
+    struct VAD_REG *reg = vad->pReg;
+    uint32_t mask, val;
+
+    switch (type) {
+    case VAD_INTTYPE_DET:
+        mask = VAD_INT_VAD_DET_INT_EN_MASK;
+        val = (enable & 0x1) << VAD_INT_VAD_DET_INT_EN_SHIFT;
+        break;
+    case VAD_INTTYPE_TRANS:
+        mask = VAD_INT_VAD_DATA_TRANS_INT_EN_MASK;
+        val = (enable & 0x1) << VAD_INT_VAD_DATA_TRANS_INT_EN_SHIFT;
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    MODIFY_REG(reg->INT, mask, val);
+
+    return HAL_OK;
+}
+
+/**
  * @brief  enable periods data irq.
  * @param  vad: The handle of struct vad.
  * @param  words: period size in units of words(32 bits).

@@ -36,6 +36,14 @@ typedef enum {
     VAD_STOREMODE_NONE, /**< don't store the audio data */
 } eVAD_storeMode;
 
+/**
+ * enum VAD_intType - the type of vad interrupt.
+ */
+typedef enum {
+    VAD_INTTYPE_DET, /**< vad detect interrupt */
+    VAD_INTTYPE_TRANS, /**< vad data transfer interrupt */
+} eVAD_intType;
+
 /** audio source index : address mapping */
 struct AUDIO_SRC_ADDR_MAP {
     uint32_t id; /**< refer to reg VAD_CONTROL[3:1] */
@@ -103,6 +111,7 @@ HAL_Status HAL_VAD_DisableBusMode(struct HAL_VAD_DEV *vad);
 
 HAL_Status HAL_VAD_IrqHandler(struct HAL_VAD_DEV *vad);
 HAL_Status HAL_VAD_GetCurAddr(struct HAL_VAD_DEV *vad, uint32_t *addr);
+HAL_Status HAL_VAD_EnableInt(struct HAL_VAD_DEV *vad, eVAD_intType type, uint32_t enable);
 
 /** @} */
 
