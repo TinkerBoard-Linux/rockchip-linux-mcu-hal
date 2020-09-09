@@ -391,6 +391,10 @@ HAL_Status HAL_VAD_ConfigRingBuffer(struct HAL_VAD_DEV *vad, uint32_t start, uin
 {
     struct VAD_REG *reg = vad->pReg;
 
+    vad->vbuf.begin = start;
+    vad->vbuf.end = end;
+    vad->vbuf.size = end - start;
+
     vad->ramStartAddr = start;
     /* ramEndAddr means the last entry address to store data,
      * so need minus 0x8.
