@@ -393,6 +393,19 @@ struct FSPI_REG {
     __IO uint32_t DEVSIZE1;                           /* Address Offset: 0x0264 */
     __IO uint32_t TME1;                               /* Address Offset: 0x0268 */
 };
+/* CKCAL Register Structure Define */
+struct CKCAL_REG {
+    __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
+    __IO uint32_t RESULT_CTRL;                        /* Address Offset: 0x0004 */
+    __IO uint32_t STATE;                              /* Address Offset: 0x0008 */
+    __IO uint32_t SEL;                                /* Address Offset: 0x000C */
+    __IO uint32_t BASE_ADDR;                          /* Address Offset: 0x0010 */
+    __IO uint32_t LEN;                                /* Address Offset: 0x0014 */
+    __IO uint32_t INI_DATA;                           /* Address Offset: 0x0018 */
+    __IO uint32_t BURST;                              /* Address Offset: 0x001C */
+    __IO uint32_t RESULT;                             /* Address Offset: 0x0020 */
+    __IO uint32_t INT_EN;                             /* Address Offset: 0x0024 */
+};
 /* JPEG_ENC Register Structure Define */
 struct JPEG_ENC_REG {
     __IO uint32_t SWREG_0;                            /* Address Offset: 0x0000 */
@@ -1433,6 +1446,7 @@ struct CSI2HOST_REG {
 #define CACHE_BASE                     0x40100000U /* CACHE base address */
 #define DMA_BASE                       0x40110000U /* DMA base address */
 #define FSPI0_BASE                     0x40120000U /* FSPI0 base address */
+#define CKCAL_BASE                     0x40130000U /* CKCAL base address */
 #define JPEG_ENC0_BASE                 0x40140000U /* JPEG_ENC0 base address */
 #define JPEG_ENC1_BASE                 0x40150000U /* JPEG_ENC1 base address */
 #define VICAP_LITE_BASE                0x40160000U /* VICAP_LITE base address */
@@ -1488,6 +1502,7 @@ struct CSI2HOST_REG {
 #define DCACHE              ((struct CACHE_REG *) CACHE_BASE)
 #define DMA                 ((struct DMA_REG *) DMA_BASE)
 #define FSPI0               ((struct FSPI_REG *) FSPI0_BASE)
+#define CKCAL               ((struct CKCAL_REG *) CKCAL_BASE)
 #define JPEG_ENC0           ((struct JPEG_ENC_REG *) JPEG_ENC0_BASE)
 #define JPEG_ENC1           ((struct JPEG_ENC_REG *) JPEG_ENC1_BASE)
 #define VICAP_LITE          ((struct VICAP_LITE_REG *) VICAP_LITE_BASE)
@@ -1533,6 +1548,7 @@ struct CSI2HOST_REG {
 #define IS_USB_GRF_INSTANCE(instance) ((instance) == USB_GRF)
 #define IS_CACHE_INSTANCE(instance) ((instance) == CACHE)
 #define IS_DMA_INSTANCE(instance) ((instance) == DMA)
+#define IS_CKCAL_INSTANCE(instance) ((instance) == CKCAL)
 #define IS_VICAP_LITE_INSTANCE(instance) ((instance) == VICAP_LITE)
 #define IS_ISP_MAIN_CTRL_INSTANCE(instance) ((instance) == ISP_MAIN_CTRL)
 #define IS_ISP_IMG_EFF_INSTANCE(instance) ((instance) == ISP_IMG_EFF)
@@ -4155,6 +4171,51 @@ struct CSI2HOST_REG {
 #define FSPI_TME1_OFFSET                                   (0x268U)
 #define FSPI_TME1_SCLK_INATM_EN_SHIFT                      (1U)
 #define FSPI_TME1_SCLK_INATM_EN_MASK                       (0x1U << FSPI_TME1_SCLK_INATM_EN_SHIFT)                      /* 0x00000002 */
+/*****************************************CKCAL******************************************/
+/* CTRL */
+#define CKCAL_CTRL_OFFSET                                  (0x0U)
+#define CKCAL_CTRL_START_SHIFT                             (0U)
+#define CKCAL_CTRL_START_MASK                              (0x1U << CKCAL_CTRL_START_SHIFT)                             /* 0x00000001 */
+/* RESULT_CTRL */
+#define CKCAL_RESULT_CTRL_OFFSET                           (0x4U)
+#define CKCAL_RESULT_CTRL_RESULT_SEL_SHIFT                 (0U)
+#define CKCAL_RESULT_CTRL_RESULT_SEL_MASK                  (0x1U << CKCAL_RESULT_CTRL_RESULT_SEL_SHIFT)                 /* 0x00000001 */
+/* STATE */
+#define CKCAL_STATE_OFFSET                                 (0x8U)
+#define CKCAL_STATE_DONE_SHIFT                             (0U)
+#define CKCAL_STATE_DONE_MASK                              (0x1U << CKCAL_STATE_DONE_SHIFT)                             /* 0x00000001 */
+#define CKCAL_STATE_ERROR_SHIFT                            (1U)
+#define CKCAL_STATE_ERROR_MASK                             (0x1U << CKCAL_STATE_ERROR_SHIFT)                            /* 0x00000002 */
+/* SEL */
+#define CKCAL_SEL_OFFSET                                   (0xCU)
+#define CKCAL_SEL_ALGO_SEL_SHIFT                           (0U)
+#define CKCAL_SEL_ALGO_SEL_MASK                            (0x3U << CKCAL_SEL_ALGO_SEL_SHIFT)                           /* 0x00000003 */
+/* BASE_ADDR */
+#define CKCAL_BASE_ADDR_OFFSET                             (0x10U)
+#define CKCAL_BASE_ADDR_BASE_ADDR_SHIFT                    (0U)
+#define CKCAL_BASE_ADDR_BASE_ADDR_MASK                     (0xFFFFFFFFU << CKCAL_BASE_ADDR_BASE_ADDR_SHIFT)             /* 0xFFFFFFFF */
+/* LEN */
+#define CKCAL_LEN_OFFSET                                   (0x14U)
+#define CKCAL_LEN_LENGTH_SHIFT                             (0U)
+#define CKCAL_LEN_LENGTH_MASK                              (0x3FFFFFFU << CKCAL_LEN_LENGTH_SHIFT)                       /* 0x03FFFFFF */
+/* INI_DATA */
+#define CKCAL_INI_DATA_OFFSET                              (0x18U)
+#define CKCAL_INI_DATA_INITIAL_DATA_SHIFT                  (0U)
+#define CKCAL_INI_DATA_INITIAL_DATA_MASK                   (0xFFFFFFFFU << CKCAL_INI_DATA_INITIAL_DATA_SHIFT)           /* 0xFFFFFFFF */
+/* BURST */
+#define CKCAL_BURST_OFFSET                                 (0x1CU)
+#define CKCAL_BURST_BURST_TYPE_SHIFT                       (0U)
+#define CKCAL_BURST_BURST_TYPE_MASK                        (0x3U << CKCAL_BURST_BURST_TYPE_SHIFT)                       /* 0x00000003 */
+/* RESULT */
+#define CKCAL_RESULT_OFFSET                                (0x20U)
+#define CKCAL_RESULT_RESULT_SHIFT                          (0U)
+#define CKCAL_RESULT_RESULT_MASK                           (0xFFFFFFFFU << CKCAL_RESULT_RESULT_SHIFT)                   /* 0xFFFFFFFF */
+/* INT_EN */
+#define CKCAL_INT_EN_OFFSET                                (0x24U)
+#define CKCAL_INT_EN_DONE_INT_EN_SHIFT                     (0U)
+#define CKCAL_INT_EN_DONE_INT_EN_MASK                      (0x1U << CKCAL_INT_EN_DONE_INT_EN_SHIFT)                     /* 0x00000001 */
+#define CKCAL_INT_EN_ERROR_INT_EN_SHIFT                    (1U)
+#define CKCAL_INT_EN_ERROR_INT_EN_MASK                     (0x1U << CKCAL_INT_EN_ERROR_INT_EN_SHIFT)                    /* 0x00000002 */
 /****************************************JPEG_ENC****************************************/
 /* SWREG_0 */
 #define JPEG_ENC_SWREG_0_OFFSET                            (0x0U)
