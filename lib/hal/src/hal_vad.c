@@ -441,6 +441,21 @@ HAL_Status HAL_VAD_GetCurAddr(struct HAL_VAD_DEV *vad, uint32_t *addr)
 }
 
 /**
+ * @brief  Get vad interupt register status.
+ * @param  vad: The handle of struct HAL_VAD_DEV.
+ * @param  status: The pointer to save interrupt register status.
+ * @return HAL_Status
+ */
+HAL_Status HAL_VAD_GetIrqStatus(struct HAL_VAD_DEV *vad, uint32_t *status)
+{
+    struct VAD_REG *reg = vad->pReg;
+
+    *status = READ_REG(reg->INT);
+
+    return HAL_OK;
+}
+
+/**
  * @brief  Enable vad interrupt.
  * @param  vad: The handle of struct HAL_VAD_DEV.
  * @param  type: Interrupt type.
