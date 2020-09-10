@@ -97,6 +97,7 @@ HAL_Status HAL_VAD_Supsend(struct HAL_VAD_DEV *vad);
 HAL_Status HAL_VAD_Resume(struct HAL_VAD_DEV *vad);
 HAL_Status HAL_VAD_Start(struct HAL_VAD_DEV *vad);
 HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad);
+HAL_Status HAL_VAD_Pause(struct HAL_VAD_DEV *vad);
 HAL_Status HAL_VAD_SetAudioSource(struct HAL_VAD_DEV *vad, uint32_t source);
 HAL_Status HAL_VAD_SetMode(struct HAL_VAD_DEV *vad, eVAD_storeMode mode);
 HAL_Status HAL_VAD_SetBufferTime(struct HAL_VAD_DEV *vad, uint32_t bufferTime);

@@ -273,6 +273,25 @@ HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad)
 }
 
 /**
+ * @brief  Pause VAD.
+ * @param  vad: The handle of struct vad.
+ * @return HAL_Status
+ */
+HAL_Status HAL_VAD_Pause(struct HAL_VAD_DEV *vad)
+{
+    struct VAD_REG *reg = vad->pReg;
+    uint32_t val;
+
+    val = READ_REG(reg->CONTROL);
+    if ((val & VAD_CONTROL_VAD_EN_MASK) == VAD_CONTROL_VAD_DIS) {
+        return 0;
+    }
+    MODIFY_REG(reg->CONTROL, VAD_CONTROL_VAD_EN_MASK, VAD_CONTROL_VAD_DIS);
+
+    return HAL_OK;
+}
+
+/**
  * @brief  Config params for VAD.
  * @param  vad: The handle of struct vad.
  * @param  params: The audio params.
