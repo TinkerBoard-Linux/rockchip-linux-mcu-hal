@@ -1477,7 +1477,7 @@ struct CSI2HOST_REG {
 #define TIMER5_BASE                    0x400000A0U /* TIMER5 base address */
 #define BUFFER_MANAGE_BASE             0x40010000U /* BUFFER_MANAGE base address */
 #define WDT_BASE                       0x40020000U /* WDT base address */
-#define INTC_BASE                      0x40030000U /* INTC base address */
+#define INTC0_BASE                     0x40030000U /* INTC0 base address */
 #define I2C0_BASE                      0x40040000U /* I2C0 base address */
 #define I2C1_BASE                      0x40050000U /* I2C1 base address */
 #define UART0_BASE                     0x40070000U /* UART0 base address */
@@ -1533,7 +1533,7 @@ struct CSI2HOST_REG {
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
 #define BUFFER_MANAGE       ((struct BUFFER_MANAGE_REG *) BUFFER_MANAGE_BASE)
 #define WDT                 ((struct WDT_REG *) WDT_BASE)
-#define INTC0               ((struct INTC_REG *) INTC_BASE)
+#define INTC0               ((struct INTC_REG *) INTC0_BASE)
 #define I2C0                ((struct I2C_REG *) I2C0_BASE)
 #define I2C1                ((struct I2C_REG *) I2C1_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
@@ -1570,7 +1570,7 @@ struct CSI2HOST_REG {
 #define IS_ISP_DPCC_INSTANCE(instance) ((instance) == ISP_DPCC)
 #define IS_ISP_WDR_INSTANCE(instance) ((instance) == ISP_WDR)
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
-#define IS_INTC_INSTANCE(instance) ((instance) == INTC)
+#define IS_INTC_INSTANCE(instance) ((instance) == INTC0)
 #define IS_SARADC_INSTANCE(instance) ((instance) == SARADC)
 #define IS_CSI2HOST_INSTANCE(instance) ((instance) == CSI2HOST)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
