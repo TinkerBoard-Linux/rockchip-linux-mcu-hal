@@ -393,8 +393,8 @@ struct FSPI_REG {
     __IO uint32_t DEVSIZE1;                           /* Address Offset: 0x0264 */
     __IO uint32_t TME1;                               /* Address Offset: 0x0268 */
 };
-/* VEPU Register Structure Define */
-struct VEPU_REG {
+/* JPEG_ENC Register Structure Define */
+struct JPEG_ENC_REG {
     __IO uint32_t SWREG_0;                            /* Address Offset: 0x0000 */
     __IO uint32_t SWREG_1;                            /* Address Offset: 0x0004 */
     __IO uint32_t SWREG_2;                            /* Address Offset: 0x0008 */
@@ -1433,7 +1433,8 @@ struct CSI2HOST_REG {
 #define CACHE_BASE                     0x40100000U /* CACHE base address */
 #define DMA_BASE                       0x40110000U /* DMA base address */
 #define FSPI0_BASE                     0x40120000U /* FSPI0 base address */
-#define VEPU_BASE                      0x40140000U /* VEPU base address */
+#define JPEG_ENC0_BASE                 0x40140000U /* JPEG_ENC0 base address */
+#define JPEG_ENC1_BASE                 0x40150000U /* JPEG_ENC1 base address */
 #define VICAP_LITE_BASE                0x40160000U /* VICAP_LITE base address */
 #define ISP_MAIN_CTRL_BASE             0x40170000U /* ISP_MAIN_CTRL base address */
 #define ISP_IMG_EFF_BASE               0x40170200U /* ISP_IMG_EFF base address */
@@ -1487,7 +1488,8 @@ struct CSI2HOST_REG {
 #define DCACHE              ((struct CACHE_REG *) CACHE_BASE)
 #define DMA                 ((struct DMA_REG *) DMA_BASE)
 #define FSPI0               ((struct FSPI_REG *) FSPI0_BASE)
-#define VEPU                ((struct VEPU_REG *) VEPU_BASE)
+#define JPEG_ENC0           ((struct JPEG_ENC_REG *) JPEG_ENC0_BASE)
+#define JPEG_ENC1           ((struct JPEG_ENC_REG *) JPEG_ENC1_BASE)
 #define VICAP_LITE          ((struct VICAP_LITE_REG *) VICAP_LITE_BASE)
 #define ISP_MAIN_CTRL       ((struct ISP_MAIN_CTRL_REG *) ISP_MAIN_CTRL_BASE)
 #define ISP_IMG_EFF         ((struct ISP_IMG_EFF_REG *) ISP_IMG_EFF_BASE)
@@ -1531,7 +1533,6 @@ struct CSI2HOST_REG {
 #define IS_USB_GRF_INSTANCE(instance) ((instance) == USB_GRF)
 #define IS_CACHE_INSTANCE(instance) ((instance) == CACHE)
 #define IS_DMA_INSTANCE(instance) ((instance) == DMA)
-#define IS_VEPU_INSTANCE(instance) ((instance) == VEPU)
 #define IS_VICAP_LITE_INSTANCE(instance) ((instance) == VICAP_LITE)
 #define IS_ISP_MAIN_CTRL_INSTANCE(instance) ((instance) == ISP_MAIN_CTRL)
 #define IS_ISP_IMG_EFF_INSTANCE(instance) ((instance) == ISP_IMG_EFF)
@@ -1558,6 +1559,7 @@ struct CSI2HOST_REG {
 #define IS_CSI2HOST_INSTANCE(instance) ((instance) == CSI2HOST)
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1))
 #define IS_FSPI_INSTANCE(instance) ((instance) == FSPI0)
+#define IS_JPEG_ENC_INSTANCE(instance) (((instance) == JPEG_ENC0) || ((instance) == JPEG_ENC1))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_BUFFER_MANAGE_INSTANCE(instance) ((instance) == BUFFER_MANAGE)
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1))
@@ -4153,629 +4155,629 @@ struct CSI2HOST_REG {
 #define FSPI_TME1_OFFSET                                   (0x268U)
 #define FSPI_TME1_SCLK_INATM_EN_SHIFT                      (1U)
 #define FSPI_TME1_SCLK_INATM_EN_MASK                       (0x1U << FSPI_TME1_SCLK_INATM_EN_SHIFT)                      /* 0x00000002 */
-/******************************************VEPU******************************************/
+/****************************************JPEG_ENC****************************************/
 /* SWREG_0 */
-#define VEPU_SWREG_0_OFFSET                                (0x0U)
-#define VEPU_SWREG_0_SW_JPEG_LUMA_QUANT1_SHIFT             (0U)
-#define VEPU_SWREG_0_SW_JPEG_LUMA_QUANT1_MASK              (0xFFFFFFFFU << VEPU_SWREG_0_SW_JPEG_LUMA_QUANT1_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_0_OFFSET                            (0x0U)
+#define JPEG_ENC_SWREG_0_SW_JPEG_LUMA_QUANT1_SHIFT         (0U)
+#define JPEG_ENC_SWREG_0_SW_JPEG_LUMA_QUANT1_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_0_SW_JPEG_LUMA_QUANT1_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_1 */
-#define VEPU_SWREG_1_OFFSET                                (0x4U)
-#define VEPU_SWREG_1_SW_JPEG_LUMA_QUANT2_SHIFT             (0U)
-#define VEPU_SWREG_1_SW_JPEG_LUMA_QUANT2_MASK              (0xFFFFFFFFU << VEPU_SWREG_1_SW_JPEG_LUMA_QUANT2_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_1_OFFSET                            (0x4U)
+#define JPEG_ENC_SWREG_1_SW_JPEG_LUMA_QUANT2_SHIFT         (0U)
+#define JPEG_ENC_SWREG_1_SW_JPEG_LUMA_QUANT2_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_1_SW_JPEG_LUMA_QUANT2_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_2 */
-#define VEPU_SWREG_2_OFFSET                                (0x8U)
-#define VEPU_SWREG_2_SW_JPEG_LUMA_QUANT3_SHIFT             (0U)
-#define VEPU_SWREG_2_SW_JPEG_LUMA_QUANT3_MASK              (0xFFFFFFFFU << VEPU_SWREG_2_SW_JPEG_LUMA_QUANT3_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_2_OFFSET                            (0x8U)
+#define JPEG_ENC_SWREG_2_SW_JPEG_LUMA_QUANT3_SHIFT         (0U)
+#define JPEG_ENC_SWREG_2_SW_JPEG_LUMA_QUANT3_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_2_SW_JPEG_LUMA_QUANT3_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_3 */
-#define VEPU_SWREG_3_OFFSET                                (0xCU)
-#define VEPU_SWREG_3_SW_JPEG_LUMA_QUANT4_SHIFT             (0U)
-#define VEPU_SWREG_3_SW_JPEG_LUMA_QUANT4_MASK              (0xFFFFFFFFU << VEPU_SWREG_3_SW_JPEG_LUMA_QUANT4_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_3_OFFSET                            (0xCU)
+#define JPEG_ENC_SWREG_3_SW_JPEG_LUMA_QUANT4_SHIFT         (0U)
+#define JPEG_ENC_SWREG_3_SW_JPEG_LUMA_QUANT4_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_3_SW_JPEG_LUMA_QUANT4_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_4 */
-#define VEPU_SWREG_4_OFFSET                                (0x10U)
-#define VEPU_SWREG_4_SW_JPEG_LUMA_QUANT5_SHIFT             (0U)
-#define VEPU_SWREG_4_SW_JPEG_LUMA_QUANT5_MASK              (0xFFFFFFFFU << VEPU_SWREG_4_SW_JPEG_LUMA_QUANT5_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_4_OFFSET                            (0x10U)
+#define JPEG_ENC_SWREG_4_SW_JPEG_LUMA_QUANT5_SHIFT         (0U)
+#define JPEG_ENC_SWREG_4_SW_JPEG_LUMA_QUANT5_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_4_SW_JPEG_LUMA_QUANT5_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_5 */
-#define VEPU_SWREG_5_OFFSET                                (0x14U)
-#define VEPU_SWREG_5_SW_JPEG_LUMA_QUANT6_SHIFT             (0U)
-#define VEPU_SWREG_5_SW_JPEG_LUMA_QUANT6_MASK              (0xFFFFFFFFU << VEPU_SWREG_5_SW_JPEG_LUMA_QUANT6_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_5_OFFSET                            (0x14U)
+#define JPEG_ENC_SWREG_5_SW_JPEG_LUMA_QUANT6_SHIFT         (0U)
+#define JPEG_ENC_SWREG_5_SW_JPEG_LUMA_QUANT6_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_5_SW_JPEG_LUMA_QUANT6_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_6 */
-#define VEPU_SWREG_6_OFFSET                                (0x18U)
-#define VEPU_SWREG_6_SW_JPEG_LUMA_QUANT7_SHIFT             (0U)
-#define VEPU_SWREG_6_SW_JPEG_LUMA_QUANT7_MASK              (0xFFFFFFFFU << VEPU_SWREG_6_SW_JPEG_LUMA_QUANT7_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_6_OFFSET                            (0x18U)
+#define JPEG_ENC_SWREG_6_SW_JPEG_LUMA_QUANT7_SHIFT         (0U)
+#define JPEG_ENC_SWREG_6_SW_JPEG_LUMA_QUANT7_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_6_SW_JPEG_LUMA_QUANT7_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_7 */
-#define VEPU_SWREG_7_OFFSET                                (0x1CU)
-#define VEPU_SWREG_7_SW_JPEG_LUMA_QUANT8_SHIFT             (0U)
-#define VEPU_SWREG_7_SW_JPEG_LUMA_QUANT8_MASK              (0xFFFFFFFFU << VEPU_SWREG_7_SW_JPEG_LUMA_QUANT8_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_7_OFFSET                            (0x1CU)
+#define JPEG_ENC_SWREG_7_SW_JPEG_LUMA_QUANT8_SHIFT         (0U)
+#define JPEG_ENC_SWREG_7_SW_JPEG_LUMA_QUANT8_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_7_SW_JPEG_LUMA_QUANT8_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_8 */
-#define VEPU_SWREG_8_OFFSET                                (0x20U)
-#define VEPU_SWREG_8_SW_JPEG_LUMA_QUANT9_SHIFT             (0U)
-#define VEPU_SWREG_8_SW_JPEG_LUMA_QUANT9_MASK              (0xFFFFFFFFU << VEPU_SWREG_8_SW_JPEG_LUMA_QUANT9_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_8_OFFSET                            (0x20U)
+#define JPEG_ENC_SWREG_8_SW_JPEG_LUMA_QUANT9_SHIFT         (0U)
+#define JPEG_ENC_SWREG_8_SW_JPEG_LUMA_QUANT9_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_8_SW_JPEG_LUMA_QUANT9_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_9 */
-#define VEPU_SWREG_9_OFFSET                                (0x24U)
-#define VEPU_SWREG_9_SW_JPEG_LUMA_QUANT10_SHIFT            (0U)
-#define VEPU_SWREG_9_SW_JPEG_LUMA_QUANT10_MASK             (0xFFFFFFFFU << VEPU_SWREG_9_SW_JPEG_LUMA_QUANT10_SHIFT)     /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_9_OFFSET                            (0x24U)
+#define JPEG_ENC_SWREG_9_SW_JPEG_LUMA_QUANT10_SHIFT        (0U)
+#define JPEG_ENC_SWREG_9_SW_JPEG_LUMA_QUANT10_MASK         (0xFFFFFFFFU << JPEG_ENC_SWREG_9_SW_JPEG_LUMA_QUANT10_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_10 */
-#define VEPU_SWREG_10_OFFSET                               (0x28U)
-#define VEPU_SWREG_10_SW_JPEG_LUMA_QUANT11_SHIFT           (0U)
-#define VEPU_SWREG_10_SW_JPEG_LUMA_QUANT11_MASK            (0xFFFFFFFFU << VEPU_SWREG_10_SW_JPEG_LUMA_QUANT11_SHIFT)    /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_10_OFFSET                           (0x28U)
+#define JPEG_ENC_SWREG_10_SW_JPEG_LUMA_QUANT11_SHIFT       (0U)
+#define JPEG_ENC_SWREG_10_SW_JPEG_LUMA_QUANT11_MASK        (0xFFFFFFFFU << JPEG_ENC_SWREG_10_SW_JPEG_LUMA_QUANT11_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_11 */
-#define VEPU_SWREG_11_OFFSET                               (0x2CU)
-#define VEPU_SWREG_11_SW_JPEG_LUMA_QUANT12_SHIFT           (0U)
-#define VEPU_SWREG_11_SW_JPEG_LUMA_QUANT12_MASK            (0xFFFFFFFFU << VEPU_SWREG_11_SW_JPEG_LUMA_QUANT12_SHIFT)    /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_11_OFFSET                           (0x2CU)
+#define JPEG_ENC_SWREG_11_SW_JPEG_LUMA_QUANT12_SHIFT       (0U)
+#define JPEG_ENC_SWREG_11_SW_JPEG_LUMA_QUANT12_MASK        (0xFFFFFFFFU << JPEG_ENC_SWREG_11_SW_JPEG_LUMA_QUANT12_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_12 */
-#define VEPU_SWREG_12_OFFSET                               (0x30U)
-#define VEPU_SWREG_12_SW_JPEG_LUMA_QUANT13_SHIFT           (0U)
-#define VEPU_SWREG_12_SW_JPEG_LUMA_QUANT13_MASK            (0xFFFFFFFFU << VEPU_SWREG_12_SW_JPEG_LUMA_QUANT13_SHIFT)    /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_12_OFFSET                           (0x30U)
+#define JPEG_ENC_SWREG_12_SW_JPEG_LUMA_QUANT13_SHIFT       (0U)
+#define JPEG_ENC_SWREG_12_SW_JPEG_LUMA_QUANT13_MASK        (0xFFFFFFFFU << JPEG_ENC_SWREG_12_SW_JPEG_LUMA_QUANT13_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_13 */
-#define VEPU_SWREG_13_OFFSET                               (0x34U)
-#define VEPU_SWREG_13_SW_JPEG_LUMA_QUANT14_SHIFT           (0U)
-#define VEPU_SWREG_13_SW_JPEG_LUMA_QUANT14_MASK            (0xFFFFFFFFU << VEPU_SWREG_13_SW_JPEG_LUMA_QUANT14_SHIFT)    /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_13_OFFSET                           (0x34U)
+#define JPEG_ENC_SWREG_13_SW_JPEG_LUMA_QUANT14_SHIFT       (0U)
+#define JPEG_ENC_SWREG_13_SW_JPEG_LUMA_QUANT14_MASK        (0xFFFFFFFFU << JPEG_ENC_SWREG_13_SW_JPEG_LUMA_QUANT14_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_14 */
-#define VEPU_SWREG_14_OFFSET                               (0x38U)
-#define VEPU_SWREG_14_SW_JPEG_LUMA_QUANT15_SHIFT           (0U)
-#define VEPU_SWREG_14_SW_JPEG_LUMA_QUANT15_MASK            (0xFFFFFFFFU << VEPU_SWREG_14_SW_JPEG_LUMA_QUANT15_SHIFT)    /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_14_OFFSET                           (0x38U)
+#define JPEG_ENC_SWREG_14_SW_JPEG_LUMA_QUANT15_SHIFT       (0U)
+#define JPEG_ENC_SWREG_14_SW_JPEG_LUMA_QUANT15_MASK        (0xFFFFFFFFU << JPEG_ENC_SWREG_14_SW_JPEG_LUMA_QUANT15_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_15 */
-#define VEPU_SWREG_15_OFFSET                               (0x3CU)
-#define VEPU_SWREG_15_SW_JPEG_LUMA_QUANT16_SHIFT           (0U)
-#define VEPU_SWREG_15_SW_JPEG_LUMA_QUANT16_MASK            (0xFFU << VEPU_SWREG_15_SW_JPEG_LUMA_QUANT16_SHIFT)          /* 0x000000FF */
+#define JPEG_ENC_SWREG_15_OFFSET                           (0x3CU)
+#define JPEG_ENC_SWREG_15_SW_JPEG_LUMA_QUANT16_SHIFT       (0U)
+#define JPEG_ENC_SWREG_15_SW_JPEG_LUMA_QUANT16_MASK        (0xFFU << JPEG_ENC_SWREG_15_SW_JPEG_LUMA_QUANT16_SHIFT)      /* 0x000000FF */
 /* SWREG_16 */
-#define VEPU_SWREG_16_OFFSET                               (0x40U)
-#define VEPU_SWREG_16_SW_JPEG_CHROMA_QUANT1_SHIFT          (0U)
-#define VEPU_SWREG_16_SW_JPEG_CHROMA_QUANT1_MASK           (0xFFFFFFFFU << VEPU_SWREG_16_SW_JPEG_CHROMA_QUANT1_SHIFT)   /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_16_OFFSET                           (0x40U)
+#define JPEG_ENC_SWREG_16_SW_JPEG_CHROMA_QUANT1_SHIFT      (0U)
+#define JPEG_ENC_SWREG_16_SW_JPEG_CHROMA_QUANT1_MASK       (0xFFFFFFFFU << JPEG_ENC_SWREG_16_SW_JPEG_CHROMA_QUANT1_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_17 */
-#define VEPU_SWREG_17_OFFSET                               (0x44U)
-#define VEPU_SWREG_17_SW_JPEG_CHROMA_QUANT2_SHIFT          (0U)
-#define VEPU_SWREG_17_SW_JPEG_CHROMA_QUANT2_MASK           (0xFFFFFFFFU << VEPU_SWREG_17_SW_JPEG_CHROMA_QUANT2_SHIFT)   /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_17_OFFSET                           (0x44U)
+#define JPEG_ENC_SWREG_17_SW_JPEG_CHROMA_QUANT2_SHIFT      (0U)
+#define JPEG_ENC_SWREG_17_SW_JPEG_CHROMA_QUANT2_MASK       (0xFFFFFFFFU << JPEG_ENC_SWREG_17_SW_JPEG_CHROMA_QUANT2_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_18 */
-#define VEPU_SWREG_18_OFFSET                               (0x48U)
-#define VEPU_SWREG_18_SW_JPEG_CHROMA_QUANT3_SHIFT          (0U)
-#define VEPU_SWREG_18_SW_JPEG_CHROMA_QUANT3_MASK           (0xFFFFFFFFU << VEPU_SWREG_18_SW_JPEG_CHROMA_QUANT3_SHIFT)   /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_18_OFFSET                           (0x48U)
+#define JPEG_ENC_SWREG_18_SW_JPEG_CHROMA_QUANT3_SHIFT      (0U)
+#define JPEG_ENC_SWREG_18_SW_JPEG_CHROMA_QUANT3_MASK       (0xFFFFFFFFU << JPEG_ENC_SWREG_18_SW_JPEG_CHROMA_QUANT3_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_19 */
-#define VEPU_SWREG_19_OFFSET                               (0x4CU)
-#define VEPU_SWREG_19_SW_JPEG_CHROMA_QUANT4_SHIFT          (0U)
-#define VEPU_SWREG_19_SW_JPEG_CHROMA_QUANT4_MASK           (0xFFFFFFFFU << VEPU_SWREG_19_SW_JPEG_CHROMA_QUANT4_SHIFT)   /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_19_OFFSET                           (0x4CU)
+#define JPEG_ENC_SWREG_19_SW_JPEG_CHROMA_QUANT4_SHIFT      (0U)
+#define JPEG_ENC_SWREG_19_SW_JPEG_CHROMA_QUANT4_MASK       (0xFFFFFFFFU << JPEG_ENC_SWREG_19_SW_JPEG_CHROMA_QUANT4_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_20 */
-#define VEPU_SWREG_20_OFFSET                               (0x50U)
-#define VEPU_SWREG_20_SW_JPEG_CHROMA_QUANT5_SHIFT          (0U)
-#define VEPU_SWREG_20_SW_JPEG_CHROMA_QUANT5_MASK           (0xFFFFFFFFU << VEPU_SWREG_20_SW_JPEG_CHROMA_QUANT5_SHIFT)   /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_20_OFFSET                           (0x50U)
+#define JPEG_ENC_SWREG_20_SW_JPEG_CHROMA_QUANT5_SHIFT      (0U)
+#define JPEG_ENC_SWREG_20_SW_JPEG_CHROMA_QUANT5_MASK       (0xFFFFFFFFU << JPEG_ENC_SWREG_20_SW_JPEG_CHROMA_QUANT5_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_21 */
-#define VEPU_SWREG_21_OFFSET                               (0x54U)
-#define VEPU_SWREG_21_SW_JPEG_CHROMA_QUANT6_SHIFT          (0U)
-#define VEPU_SWREG_21_SW_JPEG_CHROMA_QUANT6_MASK           (0xFFFFFFFFU << VEPU_SWREG_21_SW_JPEG_CHROMA_QUANT6_SHIFT)   /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_21_OFFSET                           (0x54U)
+#define JPEG_ENC_SWREG_21_SW_JPEG_CHROMA_QUANT6_SHIFT      (0U)
+#define JPEG_ENC_SWREG_21_SW_JPEG_CHROMA_QUANT6_MASK       (0xFFFFFFFFU << JPEG_ENC_SWREG_21_SW_JPEG_CHROMA_QUANT6_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_22 */
-#define VEPU_SWREG_22_OFFSET                               (0x58U)
-#define VEPU_SWREG_22_SW_JPEG_CHROMA_QUANT7_SHIFT          (0U)
-#define VEPU_SWREG_22_SW_JPEG_CHROMA_QUANT7_MASK           (0xFFFFFFFFU << VEPU_SWREG_22_SW_JPEG_CHROMA_QUANT7_SHIFT)   /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_22_OFFSET                           (0x58U)
+#define JPEG_ENC_SWREG_22_SW_JPEG_CHROMA_QUANT7_SHIFT      (0U)
+#define JPEG_ENC_SWREG_22_SW_JPEG_CHROMA_QUANT7_MASK       (0xFFFFFFFFU << JPEG_ENC_SWREG_22_SW_JPEG_CHROMA_QUANT7_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_23 */
-#define VEPU_SWREG_23_OFFSET                               (0x5CU)
-#define VEPU_SWREG_23_SW_JPEG_CHROMA_QUANT8_SHIFT          (0U)
-#define VEPU_SWREG_23_SW_JPEG_CHROMA_QUANT8_MASK           (0xFFFFFFFFU << VEPU_SWREG_23_SW_JPEG_CHROMA_QUANT8_SHIFT)   /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_23_OFFSET                           (0x5CU)
+#define JPEG_ENC_SWREG_23_SW_JPEG_CHROMA_QUANT8_SHIFT      (0U)
+#define JPEG_ENC_SWREG_23_SW_JPEG_CHROMA_QUANT8_MASK       (0xFFFFFFFFU << JPEG_ENC_SWREG_23_SW_JPEG_CHROMA_QUANT8_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_24 */
-#define VEPU_SWREG_24_OFFSET                               (0x60U)
-#define VEPU_SWREG_24_SW_JPEG_CHROMA_QUANT9_SHIFT          (0U)
-#define VEPU_SWREG_24_SW_JPEG_CHROMA_QUANT9_MASK           (0xFFFFFFFFU << VEPU_SWREG_24_SW_JPEG_CHROMA_QUANT9_SHIFT)   /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_24_OFFSET                           (0x60U)
+#define JPEG_ENC_SWREG_24_SW_JPEG_CHROMA_QUANT9_SHIFT      (0U)
+#define JPEG_ENC_SWREG_24_SW_JPEG_CHROMA_QUANT9_MASK       (0xFFFFFFFFU << JPEG_ENC_SWREG_24_SW_JPEG_CHROMA_QUANT9_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_25 */
-#define VEPU_SWREG_25_OFFSET                               (0x64U)
-#define VEPU_SWREG_25_SW_JPEG_CHROMA_QUANT10_SHIFT         (0U)
-#define VEPU_SWREG_25_SW_JPEG_CHROMA_QUANT10_MASK          (0xFFFFFFFFU << VEPU_SWREG_25_SW_JPEG_CHROMA_QUANT10_SHIFT)  /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_25_OFFSET                           (0x64U)
+#define JPEG_ENC_SWREG_25_SW_JPEG_CHROMA_QUANT10_SHIFT     (0U)
+#define JPEG_ENC_SWREG_25_SW_JPEG_CHROMA_QUANT10_MASK      (0xFFFFFFFFU << JPEG_ENC_SWREG_25_SW_JPEG_CHROMA_QUANT10_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_26 */
-#define VEPU_SWREG_26_OFFSET                               (0x68U)
-#define VEPU_SWREG_26_SW_JPEG_CHROMA_QUANT11_SHIFT         (0U)
-#define VEPU_SWREG_26_SW_JPEG_CHROMA_QUANT11_MASK          (0x1FFU << VEPU_SWREG_26_SW_JPEG_CHROMA_QUANT11_SHIFT)       /* 0x000001FF */
+#define JPEG_ENC_SWREG_26_OFFSET                           (0x68U)
+#define JPEG_ENC_SWREG_26_SW_JPEG_CHROMA_QUANT11_SHIFT     (0U)
+#define JPEG_ENC_SWREG_26_SW_JPEG_CHROMA_QUANT11_MASK      (0x1FFU << JPEG_ENC_SWREG_26_SW_JPEG_CHROMA_QUANT11_SHIFT)   /* 0x000001FF */
 /* SWREG_27 */
-#define VEPU_SWREG_27_OFFSET                               (0x6CU)
-#define VEPU_SWREG_27_SW_JPEG_CHROMA_QUANT11_SHIFT         (0U)
-#define VEPU_SWREG_27_SW_JPEG_CHROMA_QUANT11_MASK          (0xFFFFFFFFU << VEPU_SWREG_27_SW_JPEG_CHROMA_QUANT11_SHIFT)  /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_27_OFFSET                           (0x6CU)
+#define JPEG_ENC_SWREG_27_SW_JPEG_CHROMA_QUANT11_SHIFT     (0U)
+#define JPEG_ENC_SWREG_27_SW_JPEG_CHROMA_QUANT11_MASK      (0xFFFFFFFFU << JPEG_ENC_SWREG_27_SW_JPEG_CHROMA_QUANT11_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_28 */
-#define VEPU_SWREG_28_OFFSET                               (0x70U)
-#define VEPU_SWREG_28_SW_JPEG_CHROMA_QUANT13_SHIFT         (0U)
-#define VEPU_SWREG_28_SW_JPEG_CHROMA_QUANT13_MASK          (0xFFFU << VEPU_SWREG_28_SW_JPEG_CHROMA_QUANT13_SHIFT)       /* 0x00000FFF */
+#define JPEG_ENC_SWREG_28_OFFSET                           (0x70U)
+#define JPEG_ENC_SWREG_28_SW_JPEG_CHROMA_QUANT13_SHIFT     (0U)
+#define JPEG_ENC_SWREG_28_SW_JPEG_CHROMA_QUANT13_MASK      (0xFFFU << JPEG_ENC_SWREG_28_SW_JPEG_CHROMA_QUANT13_SHIFT)   /* 0x00000FFF */
 /* SWREG_29 */
-#define VEPU_SWREG_29_OFFSET                               (0x74U)
-#define VEPU_SWREG_29_SW_JPEG_CHROMA_QUANT14_SHIFT         (0U)
-#define VEPU_SWREG_29_SW_JPEG_CHROMA_QUANT14_MASK          (0xFFFFFFFFU << VEPU_SWREG_29_SW_JPEG_CHROMA_QUANT14_SHIFT)  /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_29_OFFSET                           (0x74U)
+#define JPEG_ENC_SWREG_29_SW_JPEG_CHROMA_QUANT14_SHIFT     (0U)
+#define JPEG_ENC_SWREG_29_SW_JPEG_CHROMA_QUANT14_MASK      (0xFFFFFFFFU << JPEG_ENC_SWREG_29_SW_JPEG_CHROMA_QUANT14_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_30 */
-#define VEPU_SWREG_30_OFFSET                               (0x78U)
-#define VEPU_SWREG_30_SW_JPEG_CHROMA_QUANT15_SHIFT         (0U)
-#define VEPU_SWREG_30_SW_JPEG_CHROMA_QUANT15_MASK          (0xFFFU << VEPU_SWREG_30_SW_JPEG_CHROMA_QUANT15_SHIFT)       /* 0x00000FFF */
+#define JPEG_ENC_SWREG_30_OFFSET                           (0x78U)
+#define JPEG_ENC_SWREG_30_SW_JPEG_CHROMA_QUANT15_SHIFT     (0U)
+#define JPEG_ENC_SWREG_30_SW_JPEG_CHROMA_QUANT15_MASK      (0xFFFU << JPEG_ENC_SWREG_30_SW_JPEG_CHROMA_QUANT15_SHIFT)   /* 0x00000FFF */
 /* SWREG_31 */
-#define VEPU_SWREG_31_OFFSET                               (0x7CU)
-#define VEPU_SWREG_31_SW_JPEG_CHROMA_QUANT16_SHIFT         (0U)
-#define VEPU_SWREG_31_SW_JPEG_CHROMA_QUANT16_MASK          (0xFFFFFFFFU << VEPU_SWREG_31_SW_JPEG_CHROMA_QUANT16_SHIFT)  /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_31_OFFSET                           (0x7CU)
+#define JPEG_ENC_SWREG_31_SW_JPEG_CHROMA_QUANT16_SHIFT     (0U)
+#define JPEG_ENC_SWREG_31_SW_JPEG_CHROMA_QUANT16_MASK      (0xFFFFFFFFU << JPEG_ENC_SWREG_31_SW_JPEG_CHROMA_QUANT16_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_44 */
-#define VEPU_SWREG_44_OFFSET                               (0xB0U)
-#define VEPU_SWREG_44_INTRA_SLICE_BMP0_SHIFT               (0U)
-#define VEPU_SWREG_44_INTRA_SLICE_BMP0_MASK                (0xFFFFFFFFU << VEPU_SWREG_44_INTRA_SLICE_BMP0_SHIFT)        /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_44_OFFSET                           (0xB0U)
+#define JPEG_ENC_SWREG_44_INTRA_SLICE_BMP0_SHIFT           (0U)
+#define JPEG_ENC_SWREG_44_INTRA_SLICE_BMP0_MASK            (0xFFFFFFFFU << JPEG_ENC_SWREG_44_INTRA_SLICE_BMP0_SHIFT)    /* 0xFFFFFFFF */
 /* SWREG_45 */
-#define VEPU_SWREG_45_OFFSET                               (0xB4U)
-#define VEPU_SWREG_45_INTRA_SLICE_BMP1_SHIFT               (0U)
-#define VEPU_SWREG_45_INTRA_SLICE_BMP1_MASK                (0xFFFFFFFFU << VEPU_SWREG_45_INTRA_SLICE_BMP1_SHIFT)        /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_45_OFFSET                           (0xB4U)
+#define JPEG_ENC_SWREG_45_INTRA_SLICE_BMP1_SHIFT           (0U)
+#define JPEG_ENC_SWREG_45_INTRA_SLICE_BMP1_MASK            (0xFFFFFFFFU << JPEG_ENC_SWREG_45_INTRA_SLICE_BMP1_SHIFT)    /* 0xFFFFFFFF */
 /* SWREG_46 */
-#define VEPU_SWREG_46_OFFSET                               (0xB8U)
-#define VEPU_SWREG_46_INTRA_RIGHT_MB_AREA_SHIFT            (0U)
-#define VEPU_SWREG_46_INTRA_RIGHT_MB_AREA_MASK             (0xFFU << VEPU_SWREG_46_INTRA_RIGHT_MB_AREA_SHIFT)           /* 0x000000FF */
-#define VEPU_SWREG_46_INTRA_LEFT_MB_AREA_SHIFT             (8U)
-#define VEPU_SWREG_46_INTRA_LEFT_MB_AREA_MASK              (0xFFU << VEPU_SWREG_46_INTRA_LEFT_MB_AREA_SHIFT)            /* 0x0000FF00 */
-#define VEPU_SWREG_46_INTRA_DOWN_MB_AREA_SHIFT             (16U)
-#define VEPU_SWREG_46_INTRA_DOWN_MB_AREA_MASK              (0xFFU << VEPU_SWREG_46_INTRA_DOWN_MB_AREA_SHIFT)            /* 0x00FF0000 */
-#define VEPU_SWREG_46_INTRA_UP_MB_AREA_SHIFT               (24U)
-#define VEPU_SWREG_46_INTRA_UP_MB_AREA_MASK                (0xFFU << VEPU_SWREG_46_INTRA_UP_MB_AREA_SHIFT)              /* 0xFF000000 */
+#define JPEG_ENC_SWREG_46_OFFSET                           (0xB8U)
+#define JPEG_ENC_SWREG_46_INTRA_RIGHT_MB_AREA_SHIFT        (0U)
+#define JPEG_ENC_SWREG_46_INTRA_RIGHT_MB_AREA_MASK         (0xFFU << JPEG_ENC_SWREG_46_INTRA_RIGHT_MB_AREA_SHIFT)       /* 0x000000FF */
+#define JPEG_ENC_SWREG_46_INTRA_LEFT_MB_AREA_SHIFT         (8U)
+#define JPEG_ENC_SWREG_46_INTRA_LEFT_MB_AREA_MASK          (0xFFU << JPEG_ENC_SWREG_46_INTRA_LEFT_MB_AREA_SHIFT)        /* 0x0000FF00 */
+#define JPEG_ENC_SWREG_46_INTRA_DOWN_MB_AREA_SHIFT         (16U)
+#define JPEG_ENC_SWREG_46_INTRA_DOWN_MB_AREA_MASK          (0xFFU << JPEG_ENC_SWREG_46_INTRA_DOWN_MB_AREA_SHIFT)        /* 0x00FF0000 */
+#define JPEG_ENC_SWREG_46_INTRA_UP_MB_AREA_SHIFT           (24U)
+#define JPEG_ENC_SWREG_46_INTRA_UP_MB_AREA_MASK            (0xFFU << JPEG_ENC_SWREG_46_INTRA_UP_MB_AREA_SHIFT)          /* 0xFF000000 */
 /* SWREG_47 */
-#define VEPU_SWREG_47_OFFSET                               (0xBCU)
-#define VEPU_SWREG_47_CIR_INTRA_MB_ITVL_SHIFT              (0U)
-#define VEPU_SWREG_47_CIR_INTRA_MB_ITVL_MASK               (0xFFFFU << VEPU_SWREG_47_CIR_INTRA_MB_ITVL_SHIFT)           /* 0x0000FFFF */
-#define VEPU_SWREG_47_CIR_FIRST_INTRA_SHIFT                (16U)
-#define VEPU_SWREG_47_CIR_FIRST_INTRA_MASK                 (0xFFFFU << VEPU_SWREG_47_CIR_FIRST_INTRA_SHIFT)             /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_47_OFFSET                           (0xBCU)
+#define JPEG_ENC_SWREG_47_CIR_INTRA_MB_ITVL_SHIFT          (0U)
+#define JPEG_ENC_SWREG_47_CIR_INTRA_MB_ITVL_MASK           (0xFFFFU << JPEG_ENC_SWREG_47_CIR_INTRA_MB_ITVL_SHIFT)       /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_47_CIR_FIRST_INTRA_SHIFT            (16U)
+#define JPEG_ENC_SWREG_47_CIR_FIRST_INTRA_MASK             (0xFFFFU << JPEG_ENC_SWREG_47_CIR_FIRST_INTRA_SHIFT)         /* 0xFFFF0000 */
 /* SWREG_48 */
-#define VEPU_SWREG_48_OFFSET                               (0xC0U)
-#define VEPU_SWREG_48_LUMA_IN_ST_ADR_SHIFT                 (0U)
-#define VEPU_SWREG_48_LUMA_IN_ST_ADR_MASK                  (0xFFFFFFFFU << VEPU_SWREG_48_LUMA_IN_ST_ADR_SHIFT)          /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_48_OFFSET                           (0xC0U)
+#define JPEG_ENC_SWREG_48_LUMA_IN_ST_ADR_SHIFT             (0U)
+#define JPEG_ENC_SWREG_48_LUMA_IN_ST_ADR_MASK              (0xFFFFFFFFU << JPEG_ENC_SWREG_48_LUMA_IN_ST_ADR_SHIFT)      /* 0xFFFFFFFF */
 /* SWREG_49 */
-#define VEPU_SWREG_49_OFFSET                               (0xC4U)
-#define VEPU_SWREG_49_CB_IN_ST_ADR_SHIFT                   (0U)
-#define VEPU_SWREG_49_CB_IN_ST_ADR_MASK                    (0xFFFFFFFFU << VEPU_SWREG_49_CB_IN_ST_ADR_SHIFT)            /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_49_OFFSET                           (0xC4U)
+#define JPEG_ENC_SWREG_49_CB_IN_ST_ADR_SHIFT               (0U)
+#define JPEG_ENC_SWREG_49_CB_IN_ST_ADR_MASK                (0xFFFFFFFFU << JPEG_ENC_SWREG_49_CB_IN_ST_ADR_SHIFT)        /* 0xFFFFFFFF */
 /* SWREG_50 */
-#define VEPU_SWREG_50_OFFSET                               (0xC8U)
-#define VEPU_SWREG_50_CR_IN_ST_ADR_SHIFT                   (0U)
-#define VEPU_SWREG_50_CR_IN_ST_ADR_MASK                    (0xFFFFFFFFU << VEPU_SWREG_50_CR_IN_ST_ADR_SHIFT)            /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_50_OFFSET                           (0xC8U)
+#define JPEG_ENC_SWREG_50_CR_IN_ST_ADR_SHIFT               (0U)
+#define JPEG_ENC_SWREG_50_CR_IN_ST_ADR_MASK                (0xFFFFFFFFU << JPEG_ENC_SWREG_50_CR_IN_ST_ADR_SHIFT)        /* 0xFFFFFFFF */
 /* SWREG_51 */
-#define VEPU_SWREG_51_OFFSET                               (0xCCU)
-#define VEPU_SWREG_51_STRM_HEADER_LEFT_HBITS_SHIFT         (0U)
-#define VEPU_SWREG_51_STRM_HEADER_LEFT_HBITS_MASK          (0xFFFFFFFFU << VEPU_SWREG_51_STRM_HEADER_LEFT_HBITS_SHIFT)  /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_51_OFFSET                           (0xCCU)
+#define JPEG_ENC_SWREG_51_STRM_HEADER_LEFT_HBITS_SHIFT     (0U)
+#define JPEG_ENC_SWREG_51_STRM_HEADER_LEFT_HBITS_MASK      (0xFFFFFFFFU << JPEG_ENC_SWREG_51_STRM_HEADER_LEFT_HBITS_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_52 */
-#define VEPU_SWREG_52_OFFSET                               (0xD0U)
-#define VEPU_SWREG_52_STRM_HEADER_LEFT_LBITS_SHIFT         (0U)
-#define VEPU_SWREG_52_STRM_HEADER_LEFT_LBITS_MASK          (0xFFFFFFFFU << VEPU_SWREG_52_STRM_HEADER_LEFT_LBITS_SHIFT)  /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_52_OFFSET                           (0xD0U)
+#define JPEG_ENC_SWREG_52_STRM_HEADER_LEFT_LBITS_SHIFT     (0U)
+#define JPEG_ENC_SWREG_52_STRM_HEADER_LEFT_LBITS_MASK      (0xFFFFFFFFU << JPEG_ENC_SWREG_52_STRM_HEADER_LEFT_LBITS_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_53 */
-#define VEPU_SWREG_53_OFFSET                               (0xD4U)
-#define VEPU_SWREG_53_STRM_BUFSIZE_LMT_SHIFT               (0U)
-#define VEPU_SWREG_53_STRM_BUFSIZE_LMT_MASK                (0xFFFFFFFFU << VEPU_SWREG_53_STRM_BUFSIZE_LMT_SHIFT)        /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_53_OFFSET                           (0xD4U)
+#define JPEG_ENC_SWREG_53_STRM_BUFSIZE_LMT_SHIFT           (0U)
+#define JPEG_ENC_SWREG_53_STRM_BUFSIZE_LMT_MASK            (0xFFFFFFFFU << JPEG_ENC_SWREG_53_STRM_BUFSIZE_LMT_SHIFT)    /* 0xFFFFFFFF */
 /* SWREG_54 */
-#define VEPU_SWREG_54_OFFSET                               (0xD8U)
-#define VEPU_SWREG_54_BURST_DISABLE_SHIFT                  (0U)
-#define VEPU_SWREG_54_BURST_DISABLE_MASK                   (0x1U << VEPU_SWREG_54_BURST_DISABLE_SHIFT)                  /* 0x00000001 */
-#define VEPU_SWREG_54_BURST_DISCARD_SHIFT                  (1U)
-#define VEPU_SWREG_54_BURST_DISCARD_MASK                   (0x1U << VEPU_SWREG_54_BURST_DISCARD_SHIFT)                  /* 0x00000002 */
-#define VEPU_SWREG_54_BURST_INCR_MOD_SEL_SHIFT             (2U)
-#define VEPU_SWREG_54_BURST_INCR_MOD_SEL_MASK              (0x1U << VEPU_SWREG_54_BURST_INCR_MOD_SEL_SHIFT)             /* 0x00000004 */
-#define VEPU_SWREG_54_BURST_LEN_SHIFT                      (8U)
-#define VEPU_SWREG_54_BURST_LEN_MASK                       (0x3FU << VEPU_SWREG_54_BURST_LEN_SHIFT)                     /* 0x00003F00 */
-#define VEPU_SWREG_54_AXI_WR_ID_SHIFT                      (16U)
-#define VEPU_SWREG_54_AXI_WR_ID_MASK                       (0xFFU << VEPU_SWREG_54_AXI_WR_ID_SHIFT)                     /* 0x00FF0000 */
-#define VEPU_SWREG_54_AXI_RD_ID_SHIFT                      (24U)
-#define VEPU_SWREG_54_AXI_RD_ID_MASK                       (0xFFU << VEPU_SWREG_54_AXI_RD_ID_SHIFT)                     /* 0xFF000000 */
+#define JPEG_ENC_SWREG_54_OFFSET                           (0xD8U)
+#define JPEG_ENC_SWREG_54_BURST_DISABLE_SHIFT              (0U)
+#define JPEG_ENC_SWREG_54_BURST_DISABLE_MASK               (0x1U << JPEG_ENC_SWREG_54_BURST_DISABLE_SHIFT)              /* 0x00000001 */
+#define JPEG_ENC_SWREG_54_BURST_DISCARD_SHIFT              (1U)
+#define JPEG_ENC_SWREG_54_BURST_DISCARD_MASK               (0x1U << JPEG_ENC_SWREG_54_BURST_DISCARD_SHIFT)              /* 0x00000002 */
+#define JPEG_ENC_SWREG_54_BURST_INCR_MOD_SEL_SHIFT         (2U)
+#define JPEG_ENC_SWREG_54_BURST_INCR_MOD_SEL_MASK          (0x1U << JPEG_ENC_SWREG_54_BURST_INCR_MOD_SEL_SHIFT)         /* 0x00000004 */
+#define JPEG_ENC_SWREG_54_BURST_LEN_SHIFT                  (8U)
+#define JPEG_ENC_SWREG_54_BURST_LEN_MASK                   (0x3FU << JPEG_ENC_SWREG_54_BURST_LEN_SHIFT)                 /* 0x00003F00 */
+#define JPEG_ENC_SWREG_54_AXI_WR_ID_SHIFT                  (16U)
+#define JPEG_ENC_SWREG_54_AXI_WR_ID_MASK                   (0xFFU << JPEG_ENC_SWREG_54_AXI_WR_ID_SHIFT)                 /* 0x00FF0000 */
+#define JPEG_ENC_SWREG_54_AXI_RD_ID_SHIFT                  (24U)
+#define JPEG_ENC_SWREG_54_AXI_RD_ID_MASK                   (0xFFU << JPEG_ENC_SWREG_54_AXI_RD_ID_SHIFT)                 /* 0xFF000000 */
 /* SWREG_55 */
-#define VEPU_SWREG_55_OFFSET                               (0xDCU)
-#define VEPU_SWREG_55_QP_ADJST_SHIFT                       (0U)
-#define VEPU_SWREG_55_QP_ADJST_MASK                        (0xFU << VEPU_SWREG_55_QP_ADJST_SHIFT)                       /* 0x0000000F */
-#define VEPU_SWREG_55_ROI_DLT_QP2_SHIFT                    (8U)
-#define VEPU_SWREG_55_ROI_DLT_QP2_MASK                     (0xFU << VEPU_SWREG_55_ROI_DLT_QP2_SHIFT)                    /* 0x00000F00 */
-#define VEPU_SWREG_55_ROI_DLT_QP1_SHIFT                    (12U)
-#define VEPU_SWREG_55_ROI_DLT_QP1_MASK                     (0xFU << VEPU_SWREG_55_ROI_DLT_QP1_SHIFT)                    /* 0x0000F000 */
+#define JPEG_ENC_SWREG_55_OFFSET                           (0xDCU)
+#define JPEG_ENC_SWREG_55_QP_ADJST_SHIFT                   (0U)
+#define JPEG_ENC_SWREG_55_QP_ADJST_MASK                    (0xFU << JPEG_ENC_SWREG_55_QP_ADJST_SHIFT)                   /* 0x0000000F */
+#define JPEG_ENC_SWREG_55_ROI_DLT_QP2_SHIFT                (8U)
+#define JPEG_ENC_SWREG_55_ROI_DLT_QP2_MASK                 (0xFU << JPEG_ENC_SWREG_55_ROI_DLT_QP2_SHIFT)                /* 0x00000F00 */
+#define JPEG_ENC_SWREG_55_ROI_DLT_QP1_SHIFT                (12U)
+#define JPEG_ENC_SWREG_55_ROI_DLT_QP1_MASK                 (0xFU << JPEG_ENC_SWREG_55_ROI_DLT_QP1_SHIFT)                /* 0x0000F000 */
 /* SWREG_56 */
-#define VEPU_SWREG_56_OFFSET                               (0xE0U)
-#define VEPU_SWREG_56_LUMA_REF_ST_ADR_SHIFT                (0U)
-#define VEPU_SWREG_56_LUMA_REF_ST_ADR_MASK                 (0xFFFFFFFFU << VEPU_SWREG_56_LUMA_REF_ST_ADR_SHIFT)         /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_56_OFFSET                           (0xE0U)
+#define JPEG_ENC_SWREG_56_LUMA_REF_ST_ADR_SHIFT            (0U)
+#define JPEG_ENC_SWREG_56_LUMA_REF_ST_ADR_MASK             (0xFFFFFFFFU << JPEG_ENC_SWREG_56_LUMA_REF_ST_ADR_SHIFT)     /* 0xFFFFFFFF */
 /* SWREG_57 */
-#define VEPU_SWREG_57_OFFSET                               (0xE4U)
-#define VEPU_SWREG_57_CHROMA_REF_ST_ADR_SHIFT              (0U)
-#define VEPU_SWREG_57_CHROMA_REF_ST_ADR_MASK               (0xFFFFFFFFU << VEPU_SWREG_57_CHROMA_REF_ST_ADR_SHIFT)       /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_57_OFFSET                           (0xE4U)
+#define JPEG_ENC_SWREG_57_CHROMA_REF_ST_ADR_SHIFT          (0U)
+#define JPEG_ENC_SWREG_57_CHROMA_REF_ST_ADR_MASK           (0xFFFFFFFFU << JPEG_ENC_SWREG_57_CHROMA_REF_ST_ADR_SHIFT)   /* 0xFFFFFFFF */
 /* SWREG_58 */
-#define VEPU_SWREG_58_OFFSET                               (0xE8U)
-#define VEPU_SWREG_58_QP_SUM_DIV2_SHIFT                    (11U)
-#define VEPU_SWREG_58_QP_SUM_DIV2_MASK                     (0x1FFFFFU << VEPU_SWREG_58_QP_SUM_DIV2_SHIFT)               /* 0xFFFFF800 */
+#define JPEG_ENC_SWREG_58_OFFSET                           (0xE8U)
+#define JPEG_ENC_SWREG_58_QP_SUM_DIV2_SHIFT                (11U)
+#define JPEG_ENC_SWREG_58_QP_SUM_DIV2_MASK                 (0x1FFFFFU << JPEG_ENC_SWREG_58_QP_SUM_DIV2_SHIFT)           /* 0xFFFFF800 */
 /* SWREG_59 */
-#define VEPU_SWREG_59_OFFSET                               (0xECU)
-#define VEPU_SWREG_59_H264_SLICE_NUM_SHIFT                 (8U)
-#define VEPU_SWREG_59_H264_SLICE_NUM_MASK                  (0x7FU << VEPU_SWREG_59_H264_SLICE_NUM_SHIFT)                /* 0x00007F00 */
-#define VEPU_SWREG_59_H264_STRM_MOD_SEL_SHIFT              (15U)
-#define VEPU_SWREG_59_H264_STRM_MOD_SEL_MASK               (0x1U << VEPU_SWREG_59_H264_STRM_MOD_SEL_SHIFT)              /* 0x00008000 */
-#define VEPU_SWREG_59_H264_RES_INTERMOD_4X4_SHIFT          (16U)
-#define VEPU_SWREG_59_H264_RES_INTERMOD_4X4_MASK           (0x1U << VEPU_SWREG_59_H264_RES_INTERMOD_4X4_SHIFT)          /* 0x00010000 */
-#define VEPU_SWREG_59_H264_TRFMOD_8X8_SHIFT                (17U)
-#define VEPU_SWREG_59_H264_TRFMOD_8X8_MASK                 (0x1U << VEPU_SWREG_59_H264_TRFMOD_8X8_SHIFT)                /* 0x00020000 */
-#define VEPU_SWREG_59_ENTRY_CODE_FMT_SHIFT                 (20U)
-#define VEPU_SWREG_59_ENTRY_CODE_FMT_MASK                  (0x1U << VEPU_SWREG_59_ENTRY_CODE_FMT_SHIFT)                 /* 0x00100000 */
-#define VEPU_SWREG_59_H264_CABAC_IDC_SHIFT                 (21U)
-#define VEPU_SWREG_59_H264_CABAC_IDC_MASK                  (0x3U << VEPU_SWREG_59_H264_CABAC_IDC_SHIFT)                 /* 0x00600000 */
-#define VEPU_SWREG_59_DBLKING_FLT_MODE_SHIFT               (24U)
-#define VEPU_SWREG_59_DBLKING_FLT_MODE_MASK                (0x3U << VEPU_SWREG_59_DBLKING_FLT_MODE_SHIFT)               /* 0x03000000 */
-#define VEPU_SWREG_59_H264_QURT_PIXMV_DIS_SHIFT            (28U)
-#define VEPU_SWREG_59_H264_QURT_PIXMV_DIS_MASK             (0x1U << VEPU_SWREG_59_H264_QURT_PIXMV_DIS_SHIFT)            /* 0x10000000 */
+#define JPEG_ENC_SWREG_59_OFFSET                           (0xECU)
+#define JPEG_ENC_SWREG_59_H264_SLICE_NUM_SHIFT             (8U)
+#define JPEG_ENC_SWREG_59_H264_SLICE_NUM_MASK              (0x7FU << JPEG_ENC_SWREG_59_H264_SLICE_NUM_SHIFT)            /* 0x00007F00 */
+#define JPEG_ENC_SWREG_59_H264_STRM_MOD_SEL_SHIFT          (15U)
+#define JPEG_ENC_SWREG_59_H264_STRM_MOD_SEL_MASK           (0x1U << JPEG_ENC_SWREG_59_H264_STRM_MOD_SEL_SHIFT)          /* 0x00008000 */
+#define JPEG_ENC_SWREG_59_H264_RES_INTERMOD_4X4_SHIFT      (16U)
+#define JPEG_ENC_SWREG_59_H264_RES_INTERMOD_4X4_MASK       (0x1U << JPEG_ENC_SWREG_59_H264_RES_INTERMOD_4X4_SHIFT)      /* 0x00010000 */
+#define JPEG_ENC_SWREG_59_H264_TRFMOD_8X8_SHIFT            (17U)
+#define JPEG_ENC_SWREG_59_H264_TRFMOD_8X8_MASK             (0x1U << JPEG_ENC_SWREG_59_H264_TRFMOD_8X8_SHIFT)            /* 0x00020000 */
+#define JPEG_ENC_SWREG_59_ENTRY_CODE_FMT_SHIFT             (20U)
+#define JPEG_ENC_SWREG_59_ENTRY_CODE_FMT_MASK              (0x1U << JPEG_ENC_SWREG_59_ENTRY_CODE_FMT_SHIFT)             /* 0x00100000 */
+#define JPEG_ENC_SWREG_59_H264_CABAC_IDC_SHIFT             (21U)
+#define JPEG_ENC_SWREG_59_H264_CABAC_IDC_MASK              (0x3U << JPEG_ENC_SWREG_59_H264_CABAC_IDC_SHIFT)             /* 0x00600000 */
+#define JPEG_ENC_SWREG_59_DBLKING_FLT_MODE_SHIFT           (24U)
+#define JPEG_ENC_SWREG_59_DBLKING_FLT_MODE_MASK            (0x3U << JPEG_ENC_SWREG_59_DBLKING_FLT_MODE_SHIFT)           /* 0x03000000 */
+#define JPEG_ENC_SWREG_59_H264_QURT_PIXMV_DIS_SHIFT        (28U)
+#define JPEG_ENC_SWREG_59_H264_QURT_PIXMV_DIS_MASK         (0x1U << JPEG_ENC_SWREG_59_H264_QURT_PIXMV_DIS_SHIFT)        /* 0x10000000 */
 /* SWREG_60 */
-#define VEPU_SWREG_60_OFFSET                               (0xF0U)
-#define VEPU_SWREG_60_BOT_SPILL_SHIFT                      (0U)
-#define VEPU_SWREG_60_BOT_SPILL_MASK                       (0xFU << VEPU_SWREG_60_BOT_SPILL_SHIFT)                      /* 0x0000000F */
-#define VEPU_SWREG_60_RIGHT_SPILL_SHIFT                    (4U)
-#define VEPU_SWREG_60_RIGHT_SPILL_MASK                     (0x3U << VEPU_SWREG_60_RIGHT_SPILL_SHIFT)                    /* 0x00000030 */
-#define VEPU_SWREG_60_SKIP_MB_MODE_SHIFT                   (8U)
-#define VEPU_SWREG_60_SKIP_MB_MODE_MASK                    (0xFFU << VEPU_SWREG_60_SKIP_MB_MODE_SHIFT)                  /* 0x0000FF00 */
-#define VEPU_SWREG_60_STRM_ST_OFFSET_SHIFT                 (16U)
-#define VEPU_SWREG_60_STRM_ST_OFFSET_MASK                  (0x3FU << VEPU_SWREG_60_STRM_ST_OFFSET_SHIFT)                /* 0x003F0000 */
+#define JPEG_ENC_SWREG_60_OFFSET                           (0xF0U)
+#define JPEG_ENC_SWREG_60_BOT_SPILL_SHIFT                  (0U)
+#define JPEG_ENC_SWREG_60_BOT_SPILL_MASK                   (0xFU << JPEG_ENC_SWREG_60_BOT_SPILL_SHIFT)                  /* 0x0000000F */
+#define JPEG_ENC_SWREG_60_RIGHT_SPILL_SHIFT                (4U)
+#define JPEG_ENC_SWREG_60_RIGHT_SPILL_MASK                 (0x3U << JPEG_ENC_SWREG_60_RIGHT_SPILL_SHIFT)                /* 0x00000030 */
+#define JPEG_ENC_SWREG_60_SKIP_MB_MODE_SHIFT               (8U)
+#define JPEG_ENC_SWREG_60_SKIP_MB_MODE_MASK                (0xFFU << JPEG_ENC_SWREG_60_SKIP_MB_MODE_SHIFT)              /* 0x0000FF00 */
+#define JPEG_ENC_SWREG_60_STRM_ST_OFFSET_SHIFT             (16U)
+#define JPEG_ENC_SWREG_60_STRM_ST_OFFSET_MASK              (0x3FU << JPEG_ENC_SWREG_60_STRM_ST_OFFSET_SHIFT)            /* 0x003F0000 */
 /* SWREG_61 */
-#define VEPU_SWREG_61_OFFSET                               (0xF4U)
-#define VEPU_SWREG_61_ROW_LEN_IN_LUMA_SHIFT                (0U)
-#define VEPU_SWREG_61_ROW_LEN_IN_LUMA_MASK                 (0x3FFFU << VEPU_SWREG_61_ROW_LEN_IN_LUMA_SHIFT)             /* 0x00003FFF */
-#define VEPU_SWREG_61_OFFSET_IN_LUMA_SHIFT                 (16U)
-#define VEPU_SWREG_61_OFFSET_IN_LUMA_MASK                  (0x7U << VEPU_SWREG_61_OFFSET_IN_LUMA_SHIFT)                 /* 0x00070000 */
-#define VEPU_SWREG_61_OFFSET_IN_CHROMA_SHIFT               (20U)
-#define VEPU_SWREG_61_OFFSET_IN_CHROMA_MASK                (0x7U << VEPU_SWREG_61_OFFSET_IN_CHROMA_SHIFT)               /* 0x00700000 */
+#define JPEG_ENC_SWREG_61_OFFSET                           (0xF4U)
+#define JPEG_ENC_SWREG_61_ROW_LEN_IN_LUMA_SHIFT            (0U)
+#define JPEG_ENC_SWREG_61_ROW_LEN_IN_LUMA_MASK             (0x3FFFU << JPEG_ENC_SWREG_61_ROW_LEN_IN_LUMA_SHIFT)         /* 0x00003FFF */
+#define JPEG_ENC_SWREG_61_OFFSET_IN_LUMA_SHIFT             (16U)
+#define JPEG_ENC_SWREG_61_OFFSET_IN_LUMA_MASK              (0x7U << JPEG_ENC_SWREG_61_OFFSET_IN_LUMA_SHIFT)             /* 0x00070000 */
+#define JPEG_ENC_SWREG_61_OFFSET_IN_CHROMA_SHIFT           (20U)
+#define JPEG_ENC_SWREG_61_OFFSET_IN_CHROMA_MASK            (0x7U << JPEG_ENC_SWREG_61_OFFSET_IN_CHROMA_SHIFT)           /* 0x00700000 */
 /* SWREG_62 */
-#define VEPU_SWREG_62_OFFSET                               (0xF8U)
-#define VEPU_SWREG_62_RC_SUM_SHIFT                         (0U)
-#define VEPU_SWREG_62_RC_SUM_MASK                          (0x3FFFFFU << VEPU_SWREG_62_RC_SUM_SHIFT)                    /* 0x003FFFFF */
+#define JPEG_ENC_SWREG_62_OFFSET                           (0xF8U)
+#define JPEG_ENC_SWREG_62_RC_SUM_SHIFT                     (0U)
+#define JPEG_ENC_SWREG_62_RC_SUM_MASK                      (0x3FFFFFU << JPEG_ENC_SWREG_62_RC_SUM_SHIFT)                /* 0x003FFFFF */
 /* SWREG_63 */
-#define VEPU_SWREG_63_OFFSET                               (0xFCU)
-#define VEPU_SWREG_63_RECON_LUMA_ST_ADR_SHIFT              (0U)
-#define VEPU_SWREG_63_RECON_LUMA_ST_ADR_MASK               (0xFFFFFFFFU << VEPU_SWREG_63_RECON_LUMA_ST_ADR_SHIFT)       /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_63_OFFSET                           (0xFCU)
+#define JPEG_ENC_SWREG_63_RECON_LUMA_ST_ADR_SHIFT          (0U)
+#define JPEG_ENC_SWREG_63_RECON_LUMA_ST_ADR_MASK           (0xFFFFFFFFU << JPEG_ENC_SWREG_63_RECON_LUMA_ST_ADR_SHIFT)   /* 0xFFFFFFFF */
 /* SWREG_64 */
-#define VEPU_SWREG_64_OFFSET                               (0x100U)
-#define VEPU_SWREG_64_RECON_CHROMA_ST_ADR_SHIFT            (0U)
-#define VEPU_SWREG_64_RECON_CHROMA_ST_ADR_MASK             (0xFFFFFFFFU << VEPU_SWREG_64_RECON_CHROMA_ST_ADR_SHIFT)     /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_64_OFFSET                           (0x100U)
+#define JPEG_ENC_SWREG_64_RECON_CHROMA_ST_ADR_SHIFT        (0U)
+#define JPEG_ENC_SWREG_64_RECON_CHROMA_ST_ADR_MASK         (0xFFFFFFFFU << JPEG_ENC_SWREG_64_RECON_CHROMA_ST_ADR_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_65_REUSE */
-#define VEPU_SWREG_65_REUSE_OFFSET                         (0x104U)
-#define VEPU_SWREG_65_REUSE_H264_CHKPT_2_SHIFT             (0U)
-#define VEPU_SWREG_65_REUSE_H264_CHKPT_2_MASK              (0xFFFFU << VEPU_SWREG_65_REUSE_H264_CHKPT_2_SHIFT)          /* 0x0000FFFF */
-#define VEPU_SWREG_65_REUSE_H264_CHKPT_1_SHIFT             (16U)
-#define VEPU_SWREG_65_REUSE_H264_CHKPT_1_MASK              (0xFFFFU << VEPU_SWREG_65_REUSE_H264_CHKPT_1_SHIFT)          /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_65_REUSE_OFFSET                     (0x104U)
+#define JPEG_ENC_SWREG_65_REUSE_H264_CHKPT_2_SHIFT         (0U)
+#define JPEG_ENC_SWREG_65_REUSE_H264_CHKPT_2_MASK          (0xFFFFU << JPEG_ENC_SWREG_65_REUSE_H264_CHKPT_2_SHIFT)      /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_65_REUSE_H264_CHKPT_1_SHIFT         (16U)
+#define JPEG_ENC_SWREG_65_REUSE_H264_CHKPT_1_MASK          (0xFFFFU << JPEG_ENC_SWREG_65_REUSE_H264_CHKPT_1_SHIFT)      /* 0xFFFF0000 */
 /* SWREG_66_REUSE */
-#define VEPU_SWREG_66_REUSE_OFFSET                         (0x108U)
-#define VEPU_SWREG_66_REUSE_H264_CHKPT_4_SHIFT             (0U)
-#define VEPU_SWREG_66_REUSE_H264_CHKPT_4_MASK              (0xFFFFU << VEPU_SWREG_66_REUSE_H264_CHKPT_4_SHIFT)          /* 0x0000FFFF */
-#define VEPU_SWREG_66_REUSE_H264_CHKPT_3_SHIFT             (16U)
-#define VEPU_SWREG_66_REUSE_H264_CHKPT_3_MASK              (0xFFFFU << VEPU_SWREG_66_REUSE_H264_CHKPT_3_SHIFT)          /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_66_REUSE_OFFSET                     (0x108U)
+#define JPEG_ENC_SWREG_66_REUSE_H264_CHKPT_4_SHIFT         (0U)
+#define JPEG_ENC_SWREG_66_REUSE_H264_CHKPT_4_MASK          (0xFFFFU << JPEG_ENC_SWREG_66_REUSE_H264_CHKPT_4_SHIFT)      /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_66_REUSE_H264_CHKPT_3_SHIFT         (16U)
+#define JPEG_ENC_SWREG_66_REUSE_H264_CHKPT_3_MASK          (0xFFFFU << JPEG_ENC_SWREG_66_REUSE_H264_CHKPT_3_SHIFT)      /* 0xFFFF0000 */
 /* SWREG_67_REUSE */
-#define VEPU_SWREG_67_REUSE_OFFSET                         (0x10CU)
-#define VEPU_SWREG_67_REUSE_H264_CHKPT_6_SHIFT             (0U)
-#define VEPU_SWREG_67_REUSE_H264_CHKPT_6_MASK              (0xFFFFU << VEPU_SWREG_67_REUSE_H264_CHKPT_6_SHIFT)          /* 0x0000FFFF */
-#define VEPU_SWREG_67_REUSE_H264_CHKPT_5_SHIFT             (16U)
-#define VEPU_SWREG_67_REUSE_H264_CHKPT_5_MASK              (0xFFFFU << VEPU_SWREG_67_REUSE_H264_CHKPT_5_SHIFT)          /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_67_REUSE_OFFSET                     (0x10CU)
+#define JPEG_ENC_SWREG_67_REUSE_H264_CHKPT_6_SHIFT         (0U)
+#define JPEG_ENC_SWREG_67_REUSE_H264_CHKPT_6_MASK          (0xFFFFU << JPEG_ENC_SWREG_67_REUSE_H264_CHKPT_6_SHIFT)      /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_67_REUSE_H264_CHKPT_5_SHIFT         (16U)
+#define JPEG_ENC_SWREG_67_REUSE_H264_CHKPT_5_MASK          (0xFFFFU << JPEG_ENC_SWREG_67_REUSE_H264_CHKPT_5_SHIFT)      /* 0xFFFF0000 */
 /* SWREG_68_REUSE */
-#define VEPU_SWREG_68_REUSE_OFFSET                         (0x110U)
-#define VEPU_SWREG_68_REUSE_H264_CHKPT_8_SHIFT             (0U)
-#define VEPU_SWREG_68_REUSE_H264_CHKPT_8_MASK              (0xFFFFU << VEPU_SWREG_68_REUSE_H264_CHKPT_8_SHIFT)          /* 0x0000FFFF */
-#define VEPU_SWREG_68_REUSE_H264_CHKPT_7_SHIFT             (16U)
-#define VEPU_SWREG_68_REUSE_H264_CHKPT_7_MASK              (0xFFFFU << VEPU_SWREG_68_REUSE_H264_CHKPT_7_SHIFT)          /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_68_REUSE_OFFSET                     (0x110U)
+#define JPEG_ENC_SWREG_68_REUSE_H264_CHKPT_8_SHIFT         (0U)
+#define JPEG_ENC_SWREG_68_REUSE_H264_CHKPT_8_MASK          (0xFFFFU << JPEG_ENC_SWREG_68_REUSE_H264_CHKPT_8_SHIFT)      /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_68_REUSE_H264_CHKPT_7_SHIFT         (16U)
+#define JPEG_ENC_SWREG_68_REUSE_H264_CHKPT_7_MASK          (0xFFFFU << JPEG_ENC_SWREG_68_REUSE_H264_CHKPT_7_SHIFT)      /* 0xFFFF0000 */
 /* SWREG_69_REUSE */
-#define VEPU_SWREG_69_REUSE_OFFSET                         (0x114U)
-#define VEPU_SWREG_69_REUSE_H264_CHKPT_10_SHIFT            (0U)
-#define VEPU_SWREG_69_REUSE_H264_CHKPT_10_MASK             (0xFFFFU << VEPU_SWREG_69_REUSE_H264_CHKPT_10_SHIFT)         /* 0x0000FFFF */
-#define VEPU_SWREG_69_REUSE_H264_CHKPT_9_SHIFT             (16U)
-#define VEPU_SWREG_69_REUSE_H264_CHKPT_9_MASK              (0xFFFFU << VEPU_SWREG_69_REUSE_H264_CHKPT_9_SHIFT)          /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_69_REUSE_OFFSET                     (0x114U)
+#define JPEG_ENC_SWREG_69_REUSE_H264_CHKPT_10_SHIFT        (0U)
+#define JPEG_ENC_SWREG_69_REUSE_H264_CHKPT_10_MASK         (0xFFFFU << JPEG_ENC_SWREG_69_REUSE_H264_CHKPT_10_SHIFT)     /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_69_REUSE_H264_CHKPT_9_SHIFT         (16U)
+#define JPEG_ENC_SWREG_69_REUSE_H264_CHKPT_9_MASK          (0xFFFFU << JPEG_ENC_SWREG_69_REUSE_H264_CHKPT_9_SHIFT)      /* 0xFFFF0000 */
 /* SWREG_70_REUSE */
-#define VEPU_SWREG_70_REUSE_OFFSET                         (0x118U)
-#define VEPU_SWREG_70_REUSE_H264_ERRCHKPT_2_SHIFT          (0U)
-#define VEPU_SWREG_70_REUSE_H264_ERRCHKPT_2_MASK           (0xFFFFU << VEPU_SWREG_70_REUSE_H264_ERRCHKPT_2_SHIFT)       /* 0x0000FFFF */
-#define VEPU_SWREG_70_REUSE_H264_ERRCHKPT_1_SHIFT          (16U)
-#define VEPU_SWREG_70_REUSE_H264_ERRCHKPT_1_MASK           (0xFFFFU << VEPU_SWREG_70_REUSE_H264_ERRCHKPT_1_SHIFT)       /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_70_REUSE_OFFSET                     (0x118U)
+#define JPEG_ENC_SWREG_70_REUSE_H264_ERRCHKPT_2_SHIFT      (0U)
+#define JPEG_ENC_SWREG_70_REUSE_H264_ERRCHKPT_2_MASK       (0xFFFFU << JPEG_ENC_SWREG_70_REUSE_H264_ERRCHKPT_2_SHIFT)   /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_70_REUSE_H264_ERRCHKPT_1_SHIFT      (16U)
+#define JPEG_ENC_SWREG_70_REUSE_H264_ERRCHKPT_1_MASK       (0xFFFFU << JPEG_ENC_SWREG_70_REUSE_H264_ERRCHKPT_1_SHIFT)   /* 0xFFFF0000 */
 /* SWREG_71_REUSE */
-#define VEPU_SWREG_71_REUSE_OFFSET                         (0x11CU)
-#define VEPU_SWREG_71_REUSE_H264_ERRCHKPT_4_SHIFT          (0U)
-#define VEPU_SWREG_71_REUSE_H264_ERRCHKPT_4_MASK           (0xFFFFU << VEPU_SWREG_71_REUSE_H264_ERRCHKPT_4_SHIFT)       /* 0x0000FFFF */
-#define VEPU_SWREG_71_REUSE_H264_ERRCHKPT_3_SHIFT          (16U)
-#define VEPU_SWREG_71_REUSE_H264_ERRCHKPT_3_MASK           (0xFFFFU << VEPU_SWREG_71_REUSE_H264_ERRCHKPT_3_SHIFT)       /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_71_REUSE_OFFSET                     (0x11CU)
+#define JPEG_ENC_SWREG_71_REUSE_H264_ERRCHKPT_4_SHIFT      (0U)
+#define JPEG_ENC_SWREG_71_REUSE_H264_ERRCHKPT_4_MASK       (0xFFFFU << JPEG_ENC_SWREG_71_REUSE_H264_ERRCHKPT_4_SHIFT)   /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_71_REUSE_H264_ERRCHKPT_3_SHIFT      (16U)
+#define JPEG_ENC_SWREG_71_REUSE_H264_ERRCHKPT_3_MASK       (0xFFFFU << JPEG_ENC_SWREG_71_REUSE_H264_ERRCHKPT_3_SHIFT)   /* 0xFFFF0000 */
 /* SWREG_72_REUSE */
-#define VEPU_SWREG_72_REUSE_OFFSET                         (0x120U)
-#define VEPU_SWREG_72_REUSE_H264_ERRCHKPT_6_SHIFT          (0U)
-#define VEPU_SWREG_72_REUSE_H264_ERRCHKPT_6_MASK           (0xFFFFU << VEPU_SWREG_72_REUSE_H264_ERRCHKPT_6_SHIFT)       /* 0x0000FFFF */
-#define VEPU_SWREG_72_REUSE_H264_ERRCHKPT_5_SHIFT          (16U)
-#define VEPU_SWREG_72_REUSE_H264_ERRCHKPT_5_MASK           (0xFFFFU << VEPU_SWREG_72_REUSE_H264_ERRCHKPT_5_SHIFT)       /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_72_REUSE_OFFSET                     (0x120U)
+#define JPEG_ENC_SWREG_72_REUSE_H264_ERRCHKPT_6_SHIFT      (0U)
+#define JPEG_ENC_SWREG_72_REUSE_H264_ERRCHKPT_6_MASK       (0xFFFFU << JPEG_ENC_SWREG_72_REUSE_H264_ERRCHKPT_6_SHIFT)   /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_72_REUSE_H264_ERRCHKPT_5_SHIFT      (16U)
+#define JPEG_ENC_SWREG_72_REUSE_H264_ERRCHKPT_5_MASK       (0xFFFFU << JPEG_ENC_SWREG_72_REUSE_H264_ERRCHKPT_5_SHIFT)   /* 0xFFFF0000 */
 /* SWREG_73_REUSE */
-#define VEPU_SWREG_73_REUSE_OFFSET                         (0x124U)
-#define VEPU_SWREG_73_REUSE_CHKQP_7_SHIFT                  (0U)
-#define VEPU_SWREG_73_REUSE_CHKQP_7_MASK                   (0xFU << VEPU_SWREG_73_REUSE_CHKQP_7_SHIFT)                  /* 0x0000000F */
-#define VEPU_SWREG_73_REUSE_CHKQP_6_SHIFT                  (4U)
-#define VEPU_SWREG_73_REUSE_CHKQP_6_MASK                   (0xFU << VEPU_SWREG_73_REUSE_CHKQP_6_SHIFT)                  /* 0x000000F0 */
-#define VEPU_SWREG_73_REUSE_CHKQP_5_SHIFT                  (8U)
-#define VEPU_SWREG_73_REUSE_CHKQP_5_MASK                   (0xFU << VEPU_SWREG_73_REUSE_CHKQP_5_SHIFT)                  /* 0x00000F00 */
-#define VEPU_SWREG_73_REUSE_CHKQP_4_SHIFT                  (12U)
-#define VEPU_SWREG_73_REUSE_CHKQP_4_MASK                   (0xFU << VEPU_SWREG_73_REUSE_CHKQP_4_SHIFT)                  /* 0x0000F000 */
-#define VEPU_SWREG_73_REUSE_CHKQP_3_SHIFT                  (16U)
-#define VEPU_SWREG_73_REUSE_CHKQP_3_MASK                   (0xFU << VEPU_SWREG_73_REUSE_CHKQP_3_SHIFT)                  /* 0x000F0000 */
-#define VEPU_SWREG_73_REUSE_CHKQP_2_SHIFT                  (20U)
-#define VEPU_SWREG_73_REUSE_CHKQP_2_MASK                   (0xFU << VEPU_SWREG_73_REUSE_CHKQP_2_SHIFT)                  /* 0x00F00000 */
-#define VEPU_SWREG_73_REUSE_CHKQP_1_SHIFT                  (24U)
-#define VEPU_SWREG_73_REUSE_CHKQP_1_MASK                   (0xFU << VEPU_SWREG_73_REUSE_CHKQP_1_SHIFT)                  /* 0x0F000000 */
+#define JPEG_ENC_SWREG_73_REUSE_OFFSET                     (0x124U)
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_7_SHIFT              (0U)
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_7_MASK               (0xFU << JPEG_ENC_SWREG_73_REUSE_CHKQP_7_SHIFT)              /* 0x0000000F */
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_6_SHIFT              (4U)
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_6_MASK               (0xFU << JPEG_ENC_SWREG_73_REUSE_CHKQP_6_SHIFT)              /* 0x000000F0 */
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_5_SHIFT              (8U)
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_5_MASK               (0xFU << JPEG_ENC_SWREG_73_REUSE_CHKQP_5_SHIFT)              /* 0x00000F00 */
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_4_SHIFT              (12U)
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_4_MASK               (0xFU << JPEG_ENC_SWREG_73_REUSE_CHKQP_4_SHIFT)              /* 0x0000F000 */
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_3_SHIFT              (16U)
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_3_MASK               (0xFU << JPEG_ENC_SWREG_73_REUSE_CHKQP_3_SHIFT)              /* 0x000F0000 */
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_2_SHIFT              (20U)
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_2_MASK               (0xFU << JPEG_ENC_SWREG_73_REUSE_CHKQP_2_SHIFT)              /* 0x00F00000 */
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_1_SHIFT              (24U)
+#define JPEG_ENC_SWREG_73_REUSE_CHKQP_1_MASK               (0xFU << JPEG_ENC_SWREG_73_REUSE_CHKQP_1_SHIFT)              /* 0x0F000000 */
 /* SWREG_74 */
-#define VEPU_SWREG_74_OFFSET                               (0x128U)
-#define VEPU_SWREG_74_NAL_MODE_SHIFT                       (0U)
-#define VEPU_SWREG_74_NAL_MODE_MASK                        (0x1U << VEPU_SWREG_74_NAL_MODE_SHIFT)                       /* 0x00000001 */
-#define VEPU_SWREG_74_IMG_IN_ROT_SHIFT                     (2U)
-#define VEPU_SWREG_74_IMG_IN_ROT_MASK                      (0x3U << VEPU_SWREG_74_IMG_IN_ROT_SHIFT)                     /* 0x0000000C */
-#define VEPU_SWREG_74_IMG_FMT_IN_SHIFT                     (4U)
-#define VEPU_SWREG_74_IMG_FMT_IN_MASK                      (0xFU << VEPU_SWREG_74_IMG_FMT_IN_SHIFT)                     /* 0x000000F0 */
-#define VEPU_SWREG_74_ENCODERED_SLICES_SHIFT               (16U)
-#define VEPU_SWREG_74_ENCODERED_SLICES_MASK                (0xFFU << VEPU_SWREG_74_ENCODERED_SLICES_SHIFT)              /* 0x00FF0000 */
-#define VEPU_SWREG_74_MAD_THSLD_SHIFT                      (24U)
-#define VEPU_SWREG_74_MAD_THSLD_MASK                       (0x3FU << VEPU_SWREG_74_MAD_THSLD_SHIFT)                     /* 0x3F000000 */
+#define JPEG_ENC_SWREG_74_OFFSET                           (0x128U)
+#define JPEG_ENC_SWREG_74_NAL_MODE_SHIFT                   (0U)
+#define JPEG_ENC_SWREG_74_NAL_MODE_MASK                    (0x1U << JPEG_ENC_SWREG_74_NAL_MODE_SHIFT)                   /* 0x00000001 */
+#define JPEG_ENC_SWREG_74_IMG_IN_ROT_SHIFT                 (2U)
+#define JPEG_ENC_SWREG_74_IMG_IN_ROT_MASK                  (0x3U << JPEG_ENC_SWREG_74_IMG_IN_ROT_SHIFT)                 /* 0x0000000C */
+#define JPEG_ENC_SWREG_74_IMG_FMT_IN_SHIFT                 (4U)
+#define JPEG_ENC_SWREG_74_IMG_FMT_IN_MASK                  (0xFU << JPEG_ENC_SWREG_74_IMG_FMT_IN_SHIFT)                 /* 0x000000F0 */
+#define JPEG_ENC_SWREG_74_ENCODERED_SLICES_SHIFT           (16U)
+#define JPEG_ENC_SWREG_74_ENCODERED_SLICES_MASK            (0xFFU << JPEG_ENC_SWREG_74_ENCODERED_SLICES_SHIFT)          /* 0x00FF0000 */
+#define JPEG_ENC_SWREG_74_MAD_THSLD_SHIFT                  (24U)
+#define JPEG_ENC_SWREG_74_MAD_THSLD_MASK                   (0x3FU << JPEG_ENC_SWREG_74_MAD_THSLD_SHIFT)                 /* 0x3F000000 */
 /* SWREG_75 */
-#define VEPU_SWREG_75_OFFSET                               (0x12CU)
-#define VEPU_SWREG_75_INTERMOD_SHIFT                       (0U)
-#define VEPU_SWREG_75_INTERMOD_MASK                        (0xFFFFU << VEPU_SWREG_75_INTERMOD_SHIFT)                    /* 0x0000FFFF */
-#define VEPU_SWREG_75_INTRAMOD_16X16_SHIFT                 (16U)
-#define VEPU_SWREG_75_INTRAMOD_16X16_MASK                  (0xFFFFU << VEPU_SWREG_75_INTRAMOD_16X16_SHIFT)              /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_75_OFFSET                           (0x12CU)
+#define JPEG_ENC_SWREG_75_INTERMOD_SHIFT                   (0U)
+#define JPEG_ENC_SWREG_75_INTERMOD_MASK                    (0xFFFFU << JPEG_ENC_SWREG_75_INTERMOD_SHIFT)                /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_75_INTRAMOD_16X16_SHIFT             (16U)
+#define JPEG_ENC_SWREG_75_INTRAMOD_16X16_MASK              (0xFFFFU << JPEG_ENC_SWREG_75_INTRAMOD_16X16_SHIFT)          /* 0xFFFF0000 */
 /* SWREG_76_REUSE */
-#define VEPU_SWREG_76_REUSE_OFFSET                         (0x130U)
-#define VEPU_SWREG_76_REUSE_CONSTR_INTRA_PRED_SHIFT        (0U)
-#define VEPU_SWREG_76_REUSE_CONSTR_INTRA_PRED_MASK         (0x1U << VEPU_SWREG_76_REUSE_CONSTR_INTRA_PRED_SHIFT)        /* 0x00000001 */
-#define VEPU_SWREG_76_REUSE_IDR_PICID_SHIFT                (1U)
-#define VEPU_SWREG_76_REUSE_IDR_PICID_MASK                 (0xFU << VEPU_SWREG_76_REUSE_IDR_PICID_SHIFT)                /* 0x0000001E */
-#define VEPU_SWREG_76_REUSE_SW_QPASS_SHIFT                 (8U)
-#define VEPU_SWREG_76_REUSE_SW_QPASS_MASK                  (0x1U << VEPU_SWREG_76_REUSE_SW_QPASS_SHIFT)                 /* 0x00000100 */
-#define VEPU_SWREG_76_REUSE_QP_OFFSET_CH_SHIFT             (13U)
-#define VEPU_SWREG_76_REUSE_QP_OFFSET_CH_MASK              (0x1FU << VEPU_SWREG_76_REUSE_QP_OFFSET_CH_SHIFT)            /* 0x0003E000 */
-#define VEPU_SWREG_76_REUSE_SLICE_FLT_BETA_SHIFT           (18U)
-#define VEPU_SWREG_76_REUSE_SLICE_FLT_BETA_MASK            (0xFU << VEPU_SWREG_76_REUSE_SLICE_FLT_BETA_SHIFT)           /* 0x003C0000 */
-#define VEPU_SWREG_76_REUSE_SLICE_FLT_ALPHA_SHIFT          (22U)
-#define VEPU_SWREG_76_REUSE_SLICE_FLT_ALPHA_MASK           (0xFU << VEPU_SWREG_76_REUSE_SLICE_FLT_ALPHA_SHIFT)          /* 0x03C00000 */
-#define VEPU_SWREG_76_REUSE_PPS_INIT_QP_SHIFT              (26U)
-#define VEPU_SWREG_76_REUSE_PPS_INIT_QP_MASK               (0x3FU << VEPU_SWREG_76_REUSE_PPS_INIT_QP_SHIFT)             /* 0xFC000000 */
+#define JPEG_ENC_SWREG_76_REUSE_OFFSET                     (0x130U)
+#define JPEG_ENC_SWREG_76_REUSE_CONSTR_INTRA_PRED_SHIFT    (0U)
+#define JPEG_ENC_SWREG_76_REUSE_CONSTR_INTRA_PRED_MASK     (0x1U << JPEG_ENC_SWREG_76_REUSE_CONSTR_INTRA_PRED_SHIFT)    /* 0x00000001 */
+#define JPEG_ENC_SWREG_76_REUSE_IDR_PICID_SHIFT            (1U)
+#define JPEG_ENC_SWREG_76_REUSE_IDR_PICID_MASK             (0xFU << JPEG_ENC_SWREG_76_REUSE_IDR_PICID_SHIFT)            /* 0x0000001E */
+#define JPEG_ENC_SWREG_76_REUSE_SW_QPASS_SHIFT             (8U)
+#define JPEG_ENC_SWREG_76_REUSE_SW_QPASS_MASK              (0x1U << JPEG_ENC_SWREG_76_REUSE_SW_QPASS_SHIFT)             /* 0x00000100 */
+#define JPEG_ENC_SWREG_76_REUSE_QP_OFFSET_CH_SHIFT         (13U)
+#define JPEG_ENC_SWREG_76_REUSE_QP_OFFSET_CH_MASK          (0x1FU << JPEG_ENC_SWREG_76_REUSE_QP_OFFSET_CH_SHIFT)        /* 0x0003E000 */
+#define JPEG_ENC_SWREG_76_REUSE_SLICE_FLT_BETA_SHIFT       (18U)
+#define JPEG_ENC_SWREG_76_REUSE_SLICE_FLT_BETA_MASK        (0xFU << JPEG_ENC_SWREG_76_REUSE_SLICE_FLT_BETA_SHIFT)       /* 0x003C0000 */
+#define JPEG_ENC_SWREG_76_REUSE_SLICE_FLT_ALPHA_SHIFT      (22U)
+#define JPEG_ENC_SWREG_76_REUSE_SLICE_FLT_ALPHA_MASK       (0xFU << JPEG_ENC_SWREG_76_REUSE_SLICE_FLT_ALPHA_SHIFT)      /* 0x03C00000 */
+#define JPEG_ENC_SWREG_76_REUSE_PPS_INIT_QP_SHIFT          (26U)
+#define JPEG_ENC_SWREG_76_REUSE_PPS_INIT_QP_MASK           (0x3FU << JPEG_ENC_SWREG_76_REUSE_PPS_INIT_QP_SHIFT)         /* 0xFC000000 */
 /* SWREG_77 */
-#define VEPU_SWREG_77_OFFSET                               (0x134U)
-#define VEPU_SWREG_77_OUTPUT_STRM_ST_ADR_SHIFT             (0U)
-#define VEPU_SWREG_77_OUTPUT_STRM_ST_ADR_MASK              (0xFFFFFFFFU << VEPU_SWREG_77_OUTPUT_STRM_ST_ADR_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_77_OFFSET                           (0x134U)
+#define JPEG_ENC_SWREG_77_OUTPUT_STRM_ST_ADR_SHIFT         (0U)
+#define JPEG_ENC_SWREG_77_OUTPUT_STRM_ST_ADR_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_77_OUTPUT_STRM_ST_ADR_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_78 */
-#define VEPU_SWREG_78_OFFSET                               (0x138U)
-#define VEPU_SWREG_78_OUTPUT_CTRL_ST_ADR_SHIFT             (0U)
-#define VEPU_SWREG_78_OUTPUT_CTRL_ST_ADR_MASK              (0xFFFFFFFFU << VEPU_SWREG_78_OUTPUT_CTRL_ST_ADR_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_78_OFFSET                           (0x138U)
+#define JPEG_ENC_SWREG_78_OUTPUT_CTRL_ST_ADR_SHIFT         (0U)
+#define JPEG_ENC_SWREG_78_OUTPUT_CTRL_ST_ADR_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_78_OUTPUT_CTRL_ST_ADR_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_79 */
-#define VEPU_SWREG_79_OFFSET                               (0x13CU)
-#define VEPU_SWREG_79_NEXT_LUMA_ST_ADR_SHIFT               (0U)
-#define VEPU_SWREG_79_NEXT_LUMA_ST_ADR_MASK                (0xFFFFFFFFU << VEPU_SWREG_79_NEXT_LUMA_ST_ADR_SHIFT)        /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_79_OFFSET                           (0x13CU)
+#define JPEG_ENC_SWREG_79_NEXT_LUMA_ST_ADR_SHIFT           (0U)
+#define JPEG_ENC_SWREG_79_NEXT_LUMA_ST_ADR_MASK            (0xFFFFFFFFU << JPEG_ENC_SWREG_79_NEXT_LUMA_ST_ADR_SHIFT)    /* 0xFFFFFFFF */
 /* SWREG_80 */
-#define VEPU_SWREG_80_OFFSET                               (0x140U)
-#define VEPU_SWREG_80_MV_OUT_ST_ADR_SHIFT                  (0U)
-#define VEPU_SWREG_80_MV_OUT_ST_ADR_MASK                   (0xFFFFFFFFU << VEPU_SWREG_80_MV_OUT_ST_ADR_SHIFT)           /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_80_OFFSET                           (0x140U)
+#define JPEG_ENC_SWREG_80_MV_OUT_ST_ADR_SHIFT              (0U)
+#define JPEG_ENC_SWREG_80_MV_OUT_ST_ADR_MASK               (0xFFFFFFFFU << JPEG_ENC_SWREG_80_MV_OUT_ST_ADR_SHIFT)       /* 0xFFFFFFFF */
 /* SWREG_81 */
-#define VEPU_SWREG_81_OFFSET                               (0x144U)
-#define VEPU_SWREG_81_CABAC_TABLE_ST_ADR_SHIFT             (0U)
-#define VEPU_SWREG_81_CABAC_TABLE_ST_ADR_MASK              (0xFFFFFFFFU << VEPU_SWREG_81_CABAC_TABLE_ST_ADR_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_81_OFFSET                           (0x144U)
+#define JPEG_ENC_SWREG_81_CABAC_TABLE_ST_ADR_SHIFT         (0U)
+#define JPEG_ENC_SWREG_81_CABAC_TABLE_ST_ADR_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_81_CABAC_TABLE_ST_ADR_SHIFT)  /* 0xFFFFFFFF */
 /* SWREG_82 */
-#define VEPU_SWREG_82_OFFSET                               (0x148U)
-#define VEPU_SWREG_82_FIRST_ROI_RMB_SHIFT                  (0U)
-#define VEPU_SWREG_82_FIRST_ROI_RMB_MASK                   (0xFFU << VEPU_SWREG_82_FIRST_ROI_RMB_SHIFT)                 /* 0x000000FF */
-#define VEPU_SWREG_82_FIRST_ROI_LMB_SHIFT                  (8U)
-#define VEPU_SWREG_82_FIRST_ROI_LMB_MASK                   (0xFFU << VEPU_SWREG_82_FIRST_ROI_LMB_SHIFT)                 /* 0x0000FF00 */
-#define VEPU_SWREG_82_FIRST_ROI_BMB_SHIFT                  (16U)
-#define VEPU_SWREG_82_FIRST_ROI_BMB_MASK                   (0xFFU << VEPU_SWREG_82_FIRST_ROI_BMB_SHIFT)                 /* 0x00FF0000 */
-#define VEPU_SWREG_82_FIRST_ROI_TMB_SHIFT                  (24U)
-#define VEPU_SWREG_82_FIRST_ROI_TMB_MASK                   (0xFFU << VEPU_SWREG_82_FIRST_ROI_TMB_SHIFT)                 /* 0xFF000000 */
+#define JPEG_ENC_SWREG_82_OFFSET                           (0x148U)
+#define JPEG_ENC_SWREG_82_FIRST_ROI_RMB_SHIFT              (0U)
+#define JPEG_ENC_SWREG_82_FIRST_ROI_RMB_MASK               (0xFFU << JPEG_ENC_SWREG_82_FIRST_ROI_RMB_SHIFT)             /* 0x000000FF */
+#define JPEG_ENC_SWREG_82_FIRST_ROI_LMB_SHIFT              (8U)
+#define JPEG_ENC_SWREG_82_FIRST_ROI_LMB_MASK               (0xFFU << JPEG_ENC_SWREG_82_FIRST_ROI_LMB_SHIFT)             /* 0x0000FF00 */
+#define JPEG_ENC_SWREG_82_FIRST_ROI_BMB_SHIFT              (16U)
+#define JPEG_ENC_SWREG_82_FIRST_ROI_BMB_MASK               (0xFFU << JPEG_ENC_SWREG_82_FIRST_ROI_BMB_SHIFT)             /* 0x00FF0000 */
+#define JPEG_ENC_SWREG_82_FIRST_ROI_TMB_SHIFT              (24U)
+#define JPEG_ENC_SWREG_82_FIRST_ROI_TMB_MASK               (0xFFU << JPEG_ENC_SWREG_82_FIRST_ROI_TMB_SHIFT)             /* 0xFF000000 */
 /* SWREG_83 */
-#define VEPU_SWREG_83_OFFSET                               (0x14CU)
-#define VEPU_SWREG_83_SECOND_ROI_TMB_SHIFT                 (0U)
-#define VEPU_SWREG_83_SECOND_ROI_TMB_MASK                  (0xFFU << VEPU_SWREG_83_SECOND_ROI_TMB_SHIFT)                /* 0x000000FF */
-#define VEPU_SWREG_83_SECOND_ROI_LMB_SHIFT                 (8U)
-#define VEPU_SWREG_83_SECOND_ROI_LMB_MASK                  (0xFFU << VEPU_SWREG_83_SECOND_ROI_LMB_SHIFT)                /* 0x0000FF00 */
-#define VEPU_SWREG_83_SECOND_ROI_BMB_SHIFT                 (16U)
-#define VEPU_SWREG_83_SECOND_ROI_BMB_MASK                  (0xFFU << VEPU_SWREG_83_SECOND_ROI_BMB_SHIFT)                /* 0x00FF0000 */
-#define VEPU_SWREG_83_SECOND_ROI_RMB_SHIFT                 (24U)
-#define VEPU_SWREG_83_SECOND_ROI_RMB_MASK                  (0xFFU << VEPU_SWREG_83_SECOND_ROI_RMB_SHIFT)                /* 0xFF000000 */
+#define JPEG_ENC_SWREG_83_OFFSET                           (0x14CU)
+#define JPEG_ENC_SWREG_83_SECOND_ROI_TMB_SHIFT             (0U)
+#define JPEG_ENC_SWREG_83_SECOND_ROI_TMB_MASK              (0xFFU << JPEG_ENC_SWREG_83_SECOND_ROI_TMB_SHIFT)            /* 0x000000FF */
+#define JPEG_ENC_SWREG_83_SECOND_ROI_LMB_SHIFT             (8U)
+#define JPEG_ENC_SWREG_83_SECOND_ROI_LMB_MASK              (0xFFU << JPEG_ENC_SWREG_83_SECOND_ROI_LMB_SHIFT)            /* 0x0000FF00 */
+#define JPEG_ENC_SWREG_83_SECOND_ROI_BMB_SHIFT             (16U)
+#define JPEG_ENC_SWREG_83_SECOND_ROI_BMB_MASK              (0xFFU << JPEG_ENC_SWREG_83_SECOND_ROI_BMB_SHIFT)            /* 0x00FF0000 */
+#define JPEG_ENC_SWREG_83_SECOND_ROI_RMB_SHIFT             (24U)
+#define JPEG_ENC_SWREG_83_SECOND_ROI_RMB_MASK              (0xFFU << JPEG_ENC_SWREG_83_SECOND_ROI_RMB_SHIFT)            /* 0xFF000000 */
 /* SWREG_84 */
-#define VEPU_SWREG_84_OFFSET                               (0x150U)
-#define VEPU_SWREG_84_STAB_MATRIX1_SHIFT                   (0U)
-#define VEPU_SWREG_84_STAB_MATRIX1_MASK                    (0xFFFFFFU << VEPU_SWREG_84_STAB_MATRIX1_SHIFT)              /* 0x00FFFFFF */
+#define JPEG_ENC_SWREG_84_OFFSET                           (0x150U)
+#define JPEG_ENC_SWREG_84_STAB_MATRIX1_SHIFT               (0U)
+#define JPEG_ENC_SWREG_84_STAB_MATRIX1_MASK                (0xFFFFFFU << JPEG_ENC_SWREG_84_STAB_MATRIX1_SHIFT)          /* 0x00FFFFFF */
 /* SWREG_85 */
-#define VEPU_SWREG_85_OFFSET                               (0x154U)
-#define VEPU_SWREG_85_STAB_MATRIX2_SHIFT                   (0U)
-#define VEPU_SWREG_85_STAB_MATRIX2_MASK                    (0xFFFFFFU << VEPU_SWREG_85_STAB_MATRIX2_SHIFT)              /* 0x00FFFFFF */
+#define JPEG_ENC_SWREG_85_OFFSET                           (0x154U)
+#define JPEG_ENC_SWREG_85_STAB_MATRIX2_SHIFT               (0U)
+#define JPEG_ENC_SWREG_85_STAB_MATRIX2_MASK                (0xFFFFFFU << JPEG_ENC_SWREG_85_STAB_MATRIX2_SHIFT)          /* 0x00FFFFFF */
 /* SWREG_86 */
-#define VEPU_SWREG_86_OFFSET                               (0x158U)
-#define VEPU_SWREG_86_STAB_MATRIX3_SHIFT                   (0U)
-#define VEPU_SWREG_86_STAB_MATRIX3_MASK                    (0xFFFFFFU << VEPU_SWREG_86_STAB_MATRIX3_SHIFT)              /* 0x00FFFFFF */
+#define JPEG_ENC_SWREG_86_OFFSET                           (0x158U)
+#define JPEG_ENC_SWREG_86_STAB_MATRIX3_SHIFT               (0U)
+#define JPEG_ENC_SWREG_86_STAB_MATRIX3_MASK                (0xFFFFFFU << JPEG_ENC_SWREG_86_STAB_MATRIX3_SHIFT)          /* 0x00FFFFFF */
 /* SWREG_87 */
-#define VEPU_SWREG_87_OFFSET                               (0x15CU)
-#define VEPU_SWREG_87_STAB_MATRIX4_SHIFT                   (0U)
-#define VEPU_SWREG_87_STAB_MATRIX4_MASK                    (0xFFFFFFU << VEPU_SWREG_87_STAB_MATRIX4_SHIFT)              /* 0x00FFFFFF */
+#define JPEG_ENC_SWREG_87_OFFSET                           (0x15CU)
+#define JPEG_ENC_SWREG_87_STAB_MATRIX4_SHIFT               (0U)
+#define JPEG_ENC_SWREG_87_STAB_MATRIX4_MASK                (0xFFFFFFU << JPEG_ENC_SWREG_87_STAB_MATRIX4_SHIFT)          /* 0x00FFFFFF */
 /* SWREG_88 */
-#define VEPU_SWREG_88_OFFSET                               (0x160U)
-#define VEPU_SWREG_88_STAB_MATRIX5_SHIFT                   (0U)
-#define VEPU_SWREG_88_STAB_MATRIX5_MASK                    (0xFFFFFFU << VEPU_SWREG_88_STAB_MATRIX5_SHIFT)              /* 0x00FFFFFF */
+#define JPEG_ENC_SWREG_88_OFFSET                           (0x160U)
+#define JPEG_ENC_SWREG_88_STAB_MATRIX5_SHIFT               (0U)
+#define JPEG_ENC_SWREG_88_STAB_MATRIX5_MASK                (0xFFFFFFU << JPEG_ENC_SWREG_88_STAB_MATRIX5_SHIFT)          /* 0x00FFFFFF */
 /* SWREG_89 */
-#define VEPU_SWREG_89_OFFSET                               (0x164U)
-#define VEPU_SWREG_89_STAB_MATRIX6_SHIFT                   (0U)
-#define VEPU_SWREG_89_STAB_MATRIX6_MASK                    (0xFFFFFFU << VEPU_SWREG_89_STAB_MATRIX6_SHIFT)              /* 0x00FFFFFF */
+#define JPEG_ENC_SWREG_89_OFFSET                           (0x164U)
+#define JPEG_ENC_SWREG_89_STAB_MATRIX6_SHIFT               (0U)
+#define JPEG_ENC_SWREG_89_STAB_MATRIX6_MASK                (0xFFFFFFU << JPEG_ENC_SWREG_89_STAB_MATRIX6_SHIFT)          /* 0x00FFFFFF */
 /* SWREG_90 */
-#define VEPU_SWREG_90_OFFSET                               (0x168U)
-#define VEPU_SWREG_90_STAB_MATRIX7_SHIFT                   (0U)
-#define VEPU_SWREG_90_STAB_MATRIX7_MASK                    (0xFFFFFFU << VEPU_SWREG_90_STAB_MATRIX7_SHIFT)              /* 0x00FFFFFF */
+#define JPEG_ENC_SWREG_90_OFFSET                           (0x168U)
+#define JPEG_ENC_SWREG_90_STAB_MATRIX7_SHIFT               (0U)
+#define JPEG_ENC_SWREG_90_STAB_MATRIX7_MASK                (0xFFFFFFU << JPEG_ENC_SWREG_90_STAB_MATRIX7_SHIFT)          /* 0x00FFFFFF */
 /* SWREG_91 */
-#define VEPU_SWREG_91_OFFSET                               (0x16CU)
-#define VEPU_SWREG_91_STAB_MATRIX8_SHIFT                   (0U)
-#define VEPU_SWREG_91_STAB_MATRIX8_MASK                    (0xFFFFFFU << VEPU_SWREG_91_STAB_MATRIX8_SHIFT)              /* 0x00FFFFFF */
+#define JPEG_ENC_SWREG_91_OFFSET                           (0x16CU)
+#define JPEG_ENC_SWREG_91_STAB_MATRIX8_SHIFT               (0U)
+#define JPEG_ENC_SWREG_91_STAB_MATRIX8_MASK                (0xFFFFFFU << JPEG_ENC_SWREG_91_STAB_MATRIX8_SHIFT)          /* 0x00FFFFFF */
 /* SWREG_92 */
-#define VEPU_SWREG_92_OFFSET                               (0x170U)
-#define VEPU_SWREG_92_STAB_MATRIX9_SHIFT                   (0U)
-#define VEPU_SWREG_92_STAB_MATRIX9_MASK                    (0xFFFFFFU << VEPU_SWREG_92_STAB_MATRIX9_SHIFT)              /* 0x00FFFFFF */
-#define VEPU_SWREG_92_STAB_GMV_VRTL_SHIFT                  (26U)
-#define VEPU_SWREG_92_STAB_GMV_VRTL_MASK                   (0x3FU << VEPU_SWREG_92_STAB_GMV_VRTL_SHIFT)                 /* 0xFC000000 */
+#define JPEG_ENC_SWREG_92_OFFSET                           (0x170U)
+#define JPEG_ENC_SWREG_92_STAB_MATRIX9_SHIFT               (0U)
+#define JPEG_ENC_SWREG_92_STAB_MATRIX9_MASK                (0xFFFFFFU << JPEG_ENC_SWREG_92_STAB_MATRIX9_SHIFT)          /* 0x00FFFFFF */
+#define JPEG_ENC_SWREG_92_STAB_GMV_VRTL_SHIFT              (26U)
+#define JPEG_ENC_SWREG_92_STAB_GMV_VRTL_MASK               (0x3FU << JPEG_ENC_SWREG_92_STAB_GMV_VRTL_SHIFT)             /* 0xFC000000 */
 /* SWREG_93 */
-#define VEPU_SWREG_93_OFFSET                               (0x174U)
-#define VEPU_SWREG_93_STAB_MOTION_SUM_SHIFT                (0U)
-#define VEPU_SWREG_93_STAB_MOTION_SUM_MASK                 (0xFFFFFFFFU << VEPU_SWREG_93_STAB_MOTION_SUM_SHIFT)         /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_93_OFFSET                           (0x174U)
+#define JPEG_ENC_SWREG_93_STAB_MOTION_SUM_SHIFT            (0U)
+#define JPEG_ENC_SWREG_93_STAB_MOTION_SUM_MASK             (0xFFFFFFFFU << JPEG_ENC_SWREG_93_STAB_MOTION_SUM_SHIFT)     /* 0xFFFFFFFF */
 /* SWREG_94 */
-#define VEPU_SWREG_94_OFFSET                               (0x178U)
-#define VEPU_SWREG_94_STAB_HOR_GMV_SHIFT                   (0U)
-#define VEPU_SWREG_94_STAB_HOR_GMV_MASK                    (0x3FU << VEPU_SWREG_94_STAB_HOR_GMV_SHIFT)                  /* 0x0000003F */
-#define VEPU_SWREG_94_STAB_MOD_SEL_SHIFT                   (6U)
-#define VEPU_SWREG_94_STAB_MOD_SEL_MASK                    (0x3U << VEPU_SWREG_94_STAB_MOD_SEL_SHIFT)                   /* 0x000000C0 */
-#define VEPU_SWREG_94_STAB_MIN_VALUE_SHIFT                 (8U)
-#define VEPU_SWREG_94_STAB_MIN_VALUE_MASK                  (0xFFFFFFU << VEPU_SWREG_94_STAB_MIN_VALUE_SHIFT)            /* 0xFFFFFF00 */
+#define JPEG_ENC_SWREG_94_OFFSET                           (0x178U)
+#define JPEG_ENC_SWREG_94_STAB_HOR_GMV_SHIFT               (0U)
+#define JPEG_ENC_SWREG_94_STAB_HOR_GMV_MASK                (0x3FU << JPEG_ENC_SWREG_94_STAB_HOR_GMV_SHIFT)              /* 0x0000003F */
+#define JPEG_ENC_SWREG_94_STAB_MOD_SEL_SHIFT               (6U)
+#define JPEG_ENC_SWREG_94_STAB_MOD_SEL_MASK                (0x3U << JPEG_ENC_SWREG_94_STAB_MOD_SEL_SHIFT)               /* 0x000000C0 */
+#define JPEG_ENC_SWREG_94_STAB_MIN_VALUE_SHIFT             (8U)
+#define JPEG_ENC_SWREG_94_STAB_MIN_VALUE_MASK              (0xFFFFFFU << JPEG_ENC_SWREG_94_STAB_MIN_VALUE_SHIFT)        /* 0xFFFFFF00 */
 /* SWREG_95 */
-#define VEPU_SWREG_95_OFFSET                               (0x17CU)
-#define VEPU_SWREG_95_RGB2YUV_COE1_SHIFT                   (0U)
-#define VEPU_SWREG_95_RGB2YUV_COE1_MASK                    (0xFFFFU << VEPU_SWREG_95_RGB2YUV_COE1_SHIFT)                /* 0x0000FFFF */
-#define VEPU_SWREG_95_RGB2YUV_COE2_SHIFT                   (16U)
-#define VEPU_SWREG_95_RGB2YUV_COE2_MASK                    (0xFFFFU << VEPU_SWREG_95_RGB2YUV_COE2_SHIFT)                /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_95_OFFSET                           (0x17CU)
+#define JPEG_ENC_SWREG_95_RGB2YUV_COE1_SHIFT               (0U)
+#define JPEG_ENC_SWREG_95_RGB2YUV_COE1_MASK                (0xFFFFU << JPEG_ENC_SWREG_95_RGB2YUV_COE1_SHIFT)            /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_95_RGB2YUV_COE2_SHIFT               (16U)
+#define JPEG_ENC_SWREG_95_RGB2YUV_COE2_MASK                (0xFFFFU << JPEG_ENC_SWREG_95_RGB2YUV_COE2_SHIFT)            /* 0xFFFF0000 */
 /* SWREG_96 */
-#define VEPU_SWREG_96_OFFSET                               (0x180U)
-#define VEPU_SWREG_96_RGB2YUV_COE3_SHIFT                   (0U)
-#define VEPU_SWREG_96_RGB2YUV_COE3_MASK                    (0xFFFFU << VEPU_SWREG_96_RGB2YUV_COE3_SHIFT)                /* 0x0000FFFF */
-#define VEPU_SWREG_96_RGB2YUV_COE5_SHIFT                   (16U)
-#define VEPU_SWREG_96_RGB2YUV_COE5_MASK                    (0xFFFFU << VEPU_SWREG_96_RGB2YUV_COE5_SHIFT)                /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_96_OFFSET                           (0x180U)
+#define JPEG_ENC_SWREG_96_RGB2YUV_COE3_SHIFT               (0U)
+#define JPEG_ENC_SWREG_96_RGB2YUV_COE3_MASK                (0xFFFFU << JPEG_ENC_SWREG_96_RGB2YUV_COE3_SHIFT)            /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_96_RGB2YUV_COE5_SHIFT               (16U)
+#define JPEG_ENC_SWREG_96_RGB2YUV_COE5_MASK                (0xFFFFU << JPEG_ENC_SWREG_96_RGB2YUV_COE5_SHIFT)            /* 0xFFFF0000 */
 /* SWREG_97 */
-#define VEPU_SWREG_97_OFFSET                               (0x184U)
-#define VEPU_SWREG_97_RGB2YUV_COE6_SHIFT                   (0U)
-#define VEPU_SWREG_97_RGB2YUV_COE6_MASK                    (0xFFFFU << VEPU_SWREG_97_RGB2YUV_COE6_SHIFT)                /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_97_OFFSET                           (0x184U)
+#define JPEG_ENC_SWREG_97_RGB2YUV_COE6_SHIFT               (0U)
+#define JPEG_ENC_SWREG_97_RGB2YUV_COE6_MASK                (0xFFFFU << JPEG_ENC_SWREG_97_RGB2YUV_COE6_SHIFT)            /* 0x0000FFFF */
 /* SWREG_98 */
-#define VEPU_SWREG_98_OFFSET                               (0x188U)
-#define VEPU_SWREG_98_RCMPT_MASK_POSTITION_SHIFT           (0U)
-#define VEPU_SWREG_98_RCMPT_MASK_POSTITION_MASK            (0x1FU << VEPU_SWREG_98_RCMPT_MASK_POSTITION_SHIFT)          /* 0x0000001F */
-#define VEPU_SWREG_98_GCMPT_MASK_POSTITION_SHIFT           (8U)
-#define VEPU_SWREG_98_GCMPT_MASK_POSTITION_MASK            (0x1FU << VEPU_SWREG_98_GCMPT_MASK_POSTITION_SHIFT)          /* 0x00001F00 */
-#define VEPU_SWREG_98_BCMPT_MASK_POSTITION_SHIFT           (16U)
-#define VEPU_SWREG_98_BCMPT_MASK_POSTITION_MASK            (0x1FU << VEPU_SWREG_98_BCMPT_MASK_POSTITION_SHIFT)          /* 0x001F0000 */
+#define JPEG_ENC_SWREG_98_OFFSET                           (0x188U)
+#define JPEG_ENC_SWREG_98_RCMPT_MASK_POSTITION_SHIFT       (0U)
+#define JPEG_ENC_SWREG_98_RCMPT_MASK_POSTITION_MASK        (0x1FU << JPEG_ENC_SWREG_98_RCMPT_MASK_POSTITION_SHIFT)      /* 0x0000001F */
+#define JPEG_ENC_SWREG_98_GCMPT_MASK_POSTITION_SHIFT       (8U)
+#define JPEG_ENC_SWREG_98_GCMPT_MASK_POSTITION_MASK        (0x1FU << JPEG_ENC_SWREG_98_GCMPT_MASK_POSTITION_SHIFT)      /* 0x00001F00 */
+#define JPEG_ENC_SWREG_98_BCMPT_MASK_POSTITION_SHIFT       (16U)
+#define JPEG_ENC_SWREG_98_BCMPT_MASK_POSTITION_MASK        (0x1FU << JPEG_ENC_SWREG_98_BCMPT_MASK_POSTITION_SHIFT)      /* 0x001F0000 */
 /* SWREG_99 */
-#define VEPU_SWREG_99_OFFSET                               (0x18CU)
-#define VEPU_SWREG_99_MUTIMV_EN_SHIFT                      (0U)
-#define VEPU_SWREG_99_MUTIMV_EN_MASK                       (0x1U << VEPU_SWREG_99_MUTIMV_EN_SHIFT)                      /* 0x00000001 */
-#define VEPU_SWREG_99_MV_4P_PLY_SHIFT                      (1U)
-#define VEPU_SWREG_99_MV_4P_PLY_MASK                       (0x3FFU << VEPU_SWREG_99_MV_4P_PLY_SHIFT)                    /* 0x000007FE */
-#define VEPU_SWREG_99_MV_1P_4P_PLY_SHIFT                   (11U)
-#define VEPU_SWREG_99_MV_1P_4P_PLY_MASK                    (0x3FFU << VEPU_SWREG_99_MV_1P_4P_PLY_SHIFT)                 /* 0x001FF800 */
-#define VEPU_SWREG_99_MV_1P_PLY_SHIFT                      (21U)
-#define VEPU_SWREG_99_MV_1P_PLY_MASK                       (0x3FFU << VEPU_SWREG_99_MV_1P_PLY_SHIFT)                    /* 0x7FE00000 */
+#define JPEG_ENC_SWREG_99_OFFSET                           (0x18CU)
+#define JPEG_ENC_SWREG_99_MUTIMV_EN_SHIFT                  (0U)
+#define JPEG_ENC_SWREG_99_MUTIMV_EN_MASK                   (0x1U << JPEG_ENC_SWREG_99_MUTIMV_EN_SHIFT)                  /* 0x00000001 */
+#define JPEG_ENC_SWREG_99_MV_4P_PLY_SHIFT                  (1U)
+#define JPEG_ENC_SWREG_99_MV_4P_PLY_MASK                   (0x3FFU << JPEG_ENC_SWREG_99_MV_4P_PLY_SHIFT)                /* 0x000007FE */
+#define JPEG_ENC_SWREG_99_MV_1P_4P_PLY_SHIFT               (11U)
+#define JPEG_ENC_SWREG_99_MV_1P_4P_PLY_MASK                (0x3FFU << JPEG_ENC_SWREG_99_MV_1P_4P_PLY_SHIFT)             /* 0x001FF800 */
+#define JPEG_ENC_SWREG_99_MV_1P_PLY_SHIFT                  (21U)
+#define JPEG_ENC_SWREG_99_MV_1P_PLY_MASK                   (0x3FFU << JPEG_ENC_SWREG_99_MV_1P_PLY_SHIFT)                /* 0x7FE00000 */
 /* SWREG_100_REUSE */
-#define VEPU_SWREG_100_REUSE_OFFSET                        (0x190U)
-#define VEPU_SWREG_100_REUSE_H264_CHKPT_DISTANCE_SHIFT     (0U)
-#define VEPU_SWREG_100_REUSE_H264_CHKPT_DISTANCE_MASK      (0x1FFFU << VEPU_SWREG_100_REUSE_H264_CHKPT_DISTANCE_SHIFT)  /* 0x00001FFF */
-#define VEPU_SWREG_100_REUSE_H264_MIN_QP_SHIFT             (14U)
-#define VEPU_SWREG_100_REUSE_H264_MIN_QP_MASK              (0x3FU << VEPU_SWREG_100_REUSE_H264_MIN_QP_SHIFT)            /* 0x000FC000 */
-#define VEPU_SWREG_100_REUSE_H264_MAX_QP_SHIFT             (20U)
-#define VEPU_SWREG_100_REUSE_H264_MAX_QP_MASK              (0x3FU << VEPU_SWREG_100_REUSE_H264_MAX_QP_SHIFT)            /* 0x03F00000 */
-#define VEPU_SWREG_100_REUSE_H264_INIT_LUMA_QP_SHIFT       (26U)
-#define VEPU_SWREG_100_REUSE_H264_INIT_LUMA_QP_MASK        (0x3FU << VEPU_SWREG_100_REUSE_H264_INIT_LUMA_QP_SHIFT)      /* 0xFC000000 */
+#define JPEG_ENC_SWREG_100_REUSE_OFFSET                    (0x190U)
+#define JPEG_ENC_SWREG_100_REUSE_H264_CHKPT_DISTANCE_SHIFT (0U)
+#define JPEG_ENC_SWREG_100_REUSE_H264_CHKPT_DISTANCE_MASK  (0x1FFFU << JPEG_ENC_SWREG_100_REUSE_H264_CHKPT_DISTANCE_SHIFT) /* 0x00001FFF */
+#define JPEG_ENC_SWREG_100_REUSE_H264_MIN_QP_SHIFT         (14U)
+#define JPEG_ENC_SWREG_100_REUSE_H264_MIN_QP_MASK          (0x3FU << JPEG_ENC_SWREG_100_REUSE_H264_MIN_QP_SHIFT)        /* 0x000FC000 */
+#define JPEG_ENC_SWREG_100_REUSE_H264_MAX_QP_SHIFT         (20U)
+#define JPEG_ENC_SWREG_100_REUSE_H264_MAX_QP_MASK          (0x3FU << JPEG_ENC_SWREG_100_REUSE_H264_MAX_QP_SHIFT)        /* 0x03F00000 */
+#define JPEG_ENC_SWREG_100_REUSE_H264_INIT_LUMA_QP_SHIFT   (26U)
+#define JPEG_ENC_SWREG_100_REUSE_H264_INIT_LUMA_QP_MASK    (0x3FU << JPEG_ENC_SWREG_100_REUSE_H264_INIT_LUMA_QP_SHIFT)  /* 0xFC000000 */
 /* SWREG_101_READ */
-#define VEPU_SWREG_101_READ_OFFSET                         (0x194U)
-#define VEPU_SWREG_101_READ                                (0x1F522780U)
-#define VEPU_SWREG_101_READ_MAX_VID_WIDTH_SHIFT            (0U)
-#define VEPU_SWREG_101_READ_MAX_VID_WIDTH_MASK             (0xFFFU << VEPU_SWREG_101_READ_MAX_VID_WIDTH_SHIFT)          /* 0x00000FFF */
-#define VEPU_SWREG_101_READ_HW_CONFIG_SHIFT                (12U)
-#define VEPU_SWREG_101_READ_HW_CONFIG_MASK                 (0xFFFFFU << VEPU_SWREG_101_READ_HW_CONFIG_SHIFT)            /* 0xFFFFF000 */
+#define JPEG_ENC_SWREG_101_READ_OFFSET                     (0x194U)
+#define JPEG_ENC_SWREG_101_READ                            (0x1F522780U)
+#define JPEG_ENC_SWREG_101_READ_MAX_VID_WIDTH_SHIFT        (0U)
+#define JPEG_ENC_SWREG_101_READ_MAX_VID_WIDTH_MASK         (0xFFFU << JPEG_ENC_SWREG_101_READ_MAX_VID_WIDTH_SHIFT)      /* 0x00000FFF */
+#define JPEG_ENC_SWREG_101_READ_HW_CONFIG_SHIFT            (12U)
+#define JPEG_ENC_SWREG_101_READ_HW_CONFIG_MASK             (0xFFFFFU << JPEG_ENC_SWREG_101_READ_HW_CONFIG_SHIFT)        /* 0xFFFFF000 */
 /* SWREG_102 */
-#define VEPU_SWREG_102_OFFSET                              (0x198U)
-#define VEPU_SWREG_102_MVC_INTER_VIEW_FLAG_SHIFT           (0U)
-#define VEPU_SWREG_102_MVC_INTER_VIEW_FLAG_MASK            (0x1U << VEPU_SWREG_102_MVC_INTER_VIEW_FLAG_SHIFT)           /* 0x00000001 */
-#define VEPU_SWREG_102_MVC_TEMPORAL_ID_SHIFT               (1U)
-#define VEPU_SWREG_102_MVC_TEMPORAL_ID_MASK                (0x7U << VEPU_SWREG_102_MVC_TEMPORAL_ID_SHIFT)               /* 0x0000000E */
-#define VEPU_SWREG_102_MVC_PRIORITY_ID_SHIFT               (4U)
-#define VEPU_SWREG_102_MVC_PRIORITY_ID_MASK                (0x7U << VEPU_SWREG_102_MVC_PRIORITY_ID_SHIFT)               /* 0x00000070 */
-#define VEPU_SWREG_102_MVC_ANCHOR_PIC_FLAG_SHIFT           (7U)
-#define VEPU_SWREG_102_MVC_ANCHOR_PIC_FLAG_MASK            (0x1U << VEPU_SWREG_102_MVC_ANCHOR_PIC_FLAG_SHIFT)           /* 0x00000080 */
-#define VEPU_SWREG_102_MVC_VIEW_ID_SHIFT                   (8U)
-#define VEPU_SWREG_102_MVC_VIEW_ID_MASK                    (0x7U << VEPU_SWREG_102_MVC_VIEW_ID_SHIFT)                   /* 0x00000700 */
-#define VEPU_SWREG_102_MV_PLY_4X4_SHIFT                    (11U)
-#define VEPU_SWREG_102_MV_PLY_4X4_MASK                     (0x1FFU << VEPU_SWREG_102_MV_PLY_4X4_SHIFT)                  /* 0x000FF800 */
-#define VEPU_SWREG_102_MV_FAVOR_16X16_SHIFT                (20U)
-#define VEPU_SWREG_102_MV_FAVOR_16X16_MASK                 (0xFU << VEPU_SWREG_102_MV_FAVOR_16X16_SHIFT)                /* 0x00F00000 */
+#define JPEG_ENC_SWREG_102_OFFSET                          (0x198U)
+#define JPEG_ENC_SWREG_102_MVC_INTER_VIEW_FLAG_SHIFT       (0U)
+#define JPEG_ENC_SWREG_102_MVC_INTER_VIEW_FLAG_MASK        (0x1U << JPEG_ENC_SWREG_102_MVC_INTER_VIEW_FLAG_SHIFT)       /* 0x00000001 */
+#define JPEG_ENC_SWREG_102_MVC_TEMPORAL_ID_SHIFT           (1U)
+#define JPEG_ENC_SWREG_102_MVC_TEMPORAL_ID_MASK            (0x7U << JPEG_ENC_SWREG_102_MVC_TEMPORAL_ID_SHIFT)           /* 0x0000000E */
+#define JPEG_ENC_SWREG_102_MVC_PRIORITY_ID_SHIFT           (4U)
+#define JPEG_ENC_SWREG_102_MVC_PRIORITY_ID_MASK            (0x7U << JPEG_ENC_SWREG_102_MVC_PRIORITY_ID_SHIFT)           /* 0x00000070 */
+#define JPEG_ENC_SWREG_102_MVC_ANCHOR_PIC_FLAG_SHIFT       (7U)
+#define JPEG_ENC_SWREG_102_MVC_ANCHOR_PIC_FLAG_MASK        (0x1U << JPEG_ENC_SWREG_102_MVC_ANCHOR_PIC_FLAG_SHIFT)       /* 0x00000080 */
+#define JPEG_ENC_SWREG_102_MVC_VIEW_ID_SHIFT               (8U)
+#define JPEG_ENC_SWREG_102_MVC_VIEW_ID_MASK                (0x7U << JPEG_ENC_SWREG_102_MVC_VIEW_ID_SHIFT)               /* 0x00000700 */
+#define JPEG_ENC_SWREG_102_MV_PLY_4X4_SHIFT                (11U)
+#define JPEG_ENC_SWREG_102_MV_PLY_4X4_MASK                 (0x1FFU << JPEG_ENC_SWREG_102_MV_PLY_4X4_SHIFT)              /* 0x000FF800 */
+#define JPEG_ENC_SWREG_102_MV_FAVOR_16X16_SHIFT            (20U)
+#define JPEG_ENC_SWREG_102_MV_FAVOR_16X16_MASK             (0xFU << JPEG_ENC_SWREG_102_MV_FAVOR_16X16_SHIFT)            /* 0x00F00000 */
 /* SWREG_103 */
-#define VEPU_SWREG_103_OFFSET                              (0x19CU)
-#define VEPU_SWREG_103_ENC_EN_SHIFT                        (0U)
-#define VEPU_SWREG_103_ENC_EN_MASK                         (0x1U << VEPU_SWREG_103_ENC_EN_SHIFT)                        /* 0x00000001 */
-#define VEPU_SWREG_103_ENC_FMT_SHIFT                       (4U)
-#define VEPU_SWREG_103_ENC_FMT_MASK                        (0x3U << VEPU_SWREG_103_ENC_FMT_SHIFT)                       /* 0x00000030 */
-#define VEPU_SWREG_103_ENC_FRAME_TYPE_SHIFT                (6U)
-#define VEPU_SWREG_103_ENC_FRAME_TYPE_MASK                 (0x3U << VEPU_SWREG_103_ENC_FRAME_TYPE_SHIFT)                /* 0x000000C0 */
-#define VEPU_SWREG_103_ENC_WIDTH_SHIFT                     (8U)
-#define VEPU_SWREG_103_ENC_WIDTH_MASK                      (0x1FFU << VEPU_SWREG_103_ENC_WIDTH_SHIFT)                   /* 0x0001FF00 */
-#define VEPU_SWREG_103_ENC_HEIGHT_SHIFT                    (20U)
-#define VEPU_SWREG_103_ENC_HEIGHT_MASK                     (0x1FFU << VEPU_SWREG_103_ENC_HEIGHT_SHIFT)                  /* 0x1FF00000 */
+#define JPEG_ENC_SWREG_103_OFFSET                          (0x19CU)
+#define JPEG_ENC_SWREG_103_ENC_EN_SHIFT                    (0U)
+#define JPEG_ENC_SWREG_103_ENC_EN_MASK                     (0x1U << JPEG_ENC_SWREG_103_ENC_EN_SHIFT)                    /* 0x00000001 */
+#define JPEG_ENC_SWREG_103_ENC_FMT_SHIFT                   (4U)
+#define JPEG_ENC_SWREG_103_ENC_FMT_MASK                    (0x3U << JPEG_ENC_SWREG_103_ENC_FMT_SHIFT)                   /* 0x00000030 */
+#define JPEG_ENC_SWREG_103_ENC_FRAME_TYPE_SHIFT            (6U)
+#define JPEG_ENC_SWREG_103_ENC_FRAME_TYPE_MASK             (0x3U << JPEG_ENC_SWREG_103_ENC_FRAME_TYPE_SHIFT)            /* 0x000000C0 */
+#define JPEG_ENC_SWREG_103_ENC_WIDTH_SHIFT                 (8U)
+#define JPEG_ENC_SWREG_103_ENC_WIDTH_MASK                  (0x1FFU << JPEG_ENC_SWREG_103_ENC_WIDTH_SHIFT)               /* 0x0001FF00 */
+#define JPEG_ENC_SWREG_103_ENC_HEIGHT_SHIFT                (20U)
+#define JPEG_ENC_SWREG_103_ENC_HEIGHT_MASK                 (0x1FFU << JPEG_ENC_SWREG_103_ENC_HEIGHT_SHIFT)              /* 0x1FF00000 */
 /* SWREG_104 */
-#define VEPU_SWREG_104_OFFSET                              (0x1A0U)
-#define VEPU_SWREG_104_MB_CNT_SHIFT                        (0U)
-#define VEPU_SWREG_104_MB_CNT_MASK                         (0xFFFFU << VEPU_SWREG_104_MB_CNT_SHIFT)                     /* 0x0000FFFF */
-#define VEPU_SWREG_104_MB_COUNT_OUT_SHIFT                  (16U)
-#define VEPU_SWREG_104_MB_COUNT_OUT_MASK                   (0xFFFFU << VEPU_SWREG_104_MB_COUNT_OUT_SHIFT)               /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_104_OFFSET                          (0x1A0U)
+#define JPEG_ENC_SWREG_104_MB_CNT_SHIFT                    (0U)
+#define JPEG_ENC_SWREG_104_MB_CNT_MASK                     (0xFFFFU << JPEG_ENC_SWREG_104_MB_CNT_SHIFT)                 /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_104_MB_COUNT_OUT_SHIFT              (16U)
+#define JPEG_ENC_SWREG_104_MB_COUNT_OUT_MASK               (0xFFFFU << JPEG_ENC_SWREG_104_MB_COUNT_OUT_SHIFT)           /* 0xFFFF0000 */
 /* SWREG_105 */
-#define VEPU_SWREG_105_OFFSET                              (0x1A4U)
-#define VEPU_SWREG_105_TEST_LEN_SHIFT                      (0U)
-#define VEPU_SWREG_105_TEST_LEN_MASK                       (0x3FFFFU << VEPU_SWREG_105_TEST_LEN_SHIFT)                  /* 0x0003FFFF */
-#define VEPU_SWREG_105_COHER_TEST_MEM_SHIFT                (18U)
-#define VEPU_SWREG_105_COHER_TEST_MEM_MASK                 (0x1U << VEPU_SWREG_105_COHER_TEST_MEM_SHIFT)                /* 0x00040000 */
-#define VEPU_SWREG_105_COHER_TEST_REG_SHIFT                (19U)
-#define VEPU_SWREG_105_COHER_TEST_REG_MASK                 (0x1U << VEPU_SWREG_105_COHER_TEST_REG_SHIFT)                /* 0x00080000 */
-#define VEPU_SWREG_105_TEST_COUNTER_SHIFT                  (20U)
-#define VEPU_SWREG_105_TEST_COUNTER_MASK                   (0xFU << VEPU_SWREG_105_TEST_COUNTER_SHIFT)                  /* 0x00F00000 */
-#define VEPU_SWREG_105_TEST_IRQ_SHIFT                      (24U)
-#define VEPU_SWREG_105_TEST_IRQ_MASK                       (0x1U << VEPU_SWREG_105_TEST_IRQ_SHIFT)                      /* 0x01000000 */
-#define VEPU_SWREG_105_SWAP32_OUT_SHIFT                    (26U)
-#define VEPU_SWREG_105_SWAP32_OUT_MASK                     (0x1U << VEPU_SWREG_105_SWAP32_OUT_SHIFT)                    /* 0x04000000 */
-#define VEPU_SWREG_105_SWAP16_OUT_SHIFT                    (27U)
-#define VEPU_SWREG_105_SWAP16_OUT_MASK                     (0x1U << VEPU_SWREG_105_SWAP16_OUT_SHIFT)                    /* 0x08000000 */
-#define VEPU_SWREG_105_SWAP8_OUT_SHIFT                     (28U)
-#define VEPU_SWREG_105_SWAP8_OUT_MASK                      (0x1U << VEPU_SWREG_105_SWAP8_OUT_SHIFT)                     /* 0x10000000 */
-#define VEPU_SWREG_105_SWAP32_IN_SHIFT                     (29U)
-#define VEPU_SWREG_105_SWAP32_IN_MASK                      (0x1U << VEPU_SWREG_105_SWAP32_IN_SHIFT)                     /* 0x20000000 */
-#define VEPU_SWREG_105_SWAP16_IN_SHIFT                     (30U)
-#define VEPU_SWREG_105_SWAP16_IN_MASK                      (0x1U << VEPU_SWREG_105_SWAP16_IN_SHIFT)                     /* 0x40000000 */
-#define VEPU_SWREG_105_SWAP8_IN_SHIFT                      (31U)
-#define VEPU_SWREG_105_SWAP8_IN_MASK                       (0x1U << VEPU_SWREG_105_SWAP8_IN_SHIFT)                      /* 0x80000000 */
+#define JPEG_ENC_SWREG_105_OFFSET                          (0x1A4U)
+#define JPEG_ENC_SWREG_105_TEST_LEN_SHIFT                  (0U)
+#define JPEG_ENC_SWREG_105_TEST_LEN_MASK                   (0x3FFFFU << JPEG_ENC_SWREG_105_TEST_LEN_SHIFT)              /* 0x0003FFFF */
+#define JPEG_ENC_SWREG_105_COHER_TEST_MEM_SHIFT            (18U)
+#define JPEG_ENC_SWREG_105_COHER_TEST_MEM_MASK             (0x1U << JPEG_ENC_SWREG_105_COHER_TEST_MEM_SHIFT)            /* 0x00040000 */
+#define JPEG_ENC_SWREG_105_COHER_TEST_REG_SHIFT            (19U)
+#define JPEG_ENC_SWREG_105_COHER_TEST_REG_MASK             (0x1U << JPEG_ENC_SWREG_105_COHER_TEST_REG_SHIFT)            /* 0x00080000 */
+#define JPEG_ENC_SWREG_105_TEST_COUNTER_SHIFT              (20U)
+#define JPEG_ENC_SWREG_105_TEST_COUNTER_MASK               (0xFU << JPEG_ENC_SWREG_105_TEST_COUNTER_SHIFT)              /* 0x00F00000 */
+#define JPEG_ENC_SWREG_105_TEST_IRQ_SHIFT                  (24U)
+#define JPEG_ENC_SWREG_105_TEST_IRQ_MASK                   (0x1U << JPEG_ENC_SWREG_105_TEST_IRQ_SHIFT)                  /* 0x01000000 */
+#define JPEG_ENC_SWREG_105_SWAP32_OUT_SHIFT                (26U)
+#define JPEG_ENC_SWREG_105_SWAP32_OUT_MASK                 (0x1U << JPEG_ENC_SWREG_105_SWAP32_OUT_SHIFT)                /* 0x04000000 */
+#define JPEG_ENC_SWREG_105_SWAP16_OUT_SHIFT                (27U)
+#define JPEG_ENC_SWREG_105_SWAP16_OUT_MASK                 (0x1U << JPEG_ENC_SWREG_105_SWAP16_OUT_SHIFT)                /* 0x08000000 */
+#define JPEG_ENC_SWREG_105_SWAP8_OUT_SHIFT                 (28U)
+#define JPEG_ENC_SWREG_105_SWAP8_OUT_MASK                  (0x1U << JPEG_ENC_SWREG_105_SWAP8_OUT_SHIFT)                 /* 0x10000000 */
+#define JPEG_ENC_SWREG_105_SWAP32_IN_SHIFT                 (29U)
+#define JPEG_ENC_SWREG_105_SWAP32_IN_MASK                  (0x1U << JPEG_ENC_SWREG_105_SWAP32_IN_SHIFT)                 /* 0x20000000 */
+#define JPEG_ENC_SWREG_105_SWAP16_IN_SHIFT                 (30U)
+#define JPEG_ENC_SWREG_105_SWAP16_IN_MASK                  (0x1U << JPEG_ENC_SWREG_105_SWAP16_IN_SHIFT)                 /* 0x40000000 */
+#define JPEG_ENC_SWREG_105_SWAP8_IN_SHIFT                  (31U)
+#define JPEG_ENC_SWREG_105_SWAP8_IN_MASK                   (0x1U << JPEG_ENC_SWREG_105_SWAP8_IN_SHIFT)                  /* 0x80000000 */
 /* SWREG_106_REUSE */
-#define VEPU_SWREG_106_REUSE_OFFSET                        (0x1A8U)
-#define VEPU_SWREG_106_REUSE_FRAME_NUM_SHIFT               (0U)
-#define VEPU_SWREG_106_REUSE_FRAME_NUM_MASK                (0xFFFFU << VEPU_SWREG_106_REUSE_FRAME_NUM_SHIFT)            /* 0x0000FFFF */
-#define VEPU_SWREG_106_REUSE_INTRA_PRED_MODE_SHIFT         (16U)
-#define VEPU_SWREG_106_REUSE_INTRA_PRED_MODE_MASK          (0xFFU << VEPU_SWREG_106_REUSE_INTRA_PRED_MODE_SHIFT)        /* 0x00FF0000 */
-#define VEPU_SWREG_106_REUSE_PIC_PARA_ID_SHIFT             (24U)
-#define VEPU_SWREG_106_REUSE_PIC_PARA_ID_MASK              (0xFFU << VEPU_SWREG_106_REUSE_PIC_PARA_ID_SHIFT)            /* 0xFF000000 */
+#define JPEG_ENC_SWREG_106_REUSE_OFFSET                    (0x1A8U)
+#define JPEG_ENC_SWREG_106_REUSE_FRAME_NUM_SHIFT           (0U)
+#define JPEG_ENC_SWREG_106_REUSE_FRAME_NUM_MASK            (0xFFFFU << JPEG_ENC_SWREG_106_REUSE_FRAME_NUM_SHIFT)        /* 0x0000FFFF */
+#define JPEG_ENC_SWREG_106_REUSE_INTRA_PRED_MODE_SHIFT     (16U)
+#define JPEG_ENC_SWREG_106_REUSE_INTRA_PRED_MODE_MASK      (0xFFU << JPEG_ENC_SWREG_106_REUSE_INTRA_PRED_MODE_SHIFT)    /* 0x00FF0000 */
+#define JPEG_ENC_SWREG_106_REUSE_PIC_PARA_ID_SHIFT         (24U)
+#define JPEG_ENC_SWREG_106_REUSE_PIC_PARA_ID_MASK          (0xFFU << JPEG_ENC_SWREG_106_REUSE_PIC_PARA_ID_SHIFT)        /* 0xFF000000 */
 /* SWREG_107_REUSE */
-#define VEPU_SWREG_107_REUSE_OFFSET                        (0x1ACU)
-#define VEPU_SWREG_107_REUSE_MV_PLY_8X4_4X8_SHIFT          (0U)
-#define VEPU_SWREG_107_REUSE_MV_PLY_8X4_4X8_MASK           (0x3FFU << VEPU_SWREG_107_REUSE_MV_PLY_8X4_4X8_SHIFT)        /* 0x000003FF */
-#define VEPU_SWREG_107_REUSE_MV_PLY_8X8_SHIFT              (10U)
-#define VEPU_SWREG_107_REUSE_MV_PLY_8X8_MASK               (0x3FFU << VEPU_SWREG_107_REUSE_MV_PLY_8X8_SHIFT)            /* 0x000FFC00 */
-#define VEPU_SWREG_107_REUSE_MV_PLY_16X8_8X16_SHIFT        (20U)
-#define VEPU_SWREG_107_REUSE_MV_PLY_16X8_8X16_MASK         (0x3FFU << VEPU_SWREG_107_REUSE_MV_PLY_16X8_8X16_SHIFT)      /* 0x3FF00000 */
+#define JPEG_ENC_SWREG_107_REUSE_OFFSET                    (0x1ACU)
+#define JPEG_ENC_SWREG_107_REUSE_MV_PLY_8X4_4X8_SHIFT      (0U)
+#define JPEG_ENC_SWREG_107_REUSE_MV_PLY_8X4_4X8_MASK       (0x3FFU << JPEG_ENC_SWREG_107_REUSE_MV_PLY_8X4_4X8_SHIFT)    /* 0x000003FF */
+#define JPEG_ENC_SWREG_107_REUSE_MV_PLY_8X8_SHIFT          (10U)
+#define JPEG_ENC_SWREG_107_REUSE_MV_PLY_8X8_MASK           (0x3FFU << JPEG_ENC_SWREG_107_REUSE_MV_PLY_8X8_SHIFT)        /* 0x000FFC00 */
+#define JPEG_ENC_SWREG_107_REUSE_MV_PLY_16X8_8X16_SHIFT    (20U)
+#define JPEG_ENC_SWREG_107_REUSE_MV_PLY_16X8_8X16_MASK     (0x3FFU << JPEG_ENC_SWREG_107_REUSE_MV_PLY_16X8_8X16_SHIFT)  /* 0x3FF00000 */
 /* SWREG_108_REUSE */
-#define VEPU_SWREG_108_REUSE_OFFSET                        (0x1B0U)
-#define VEPU_SWREG_108_REUSE_INTRA_SLICE_BMP2_SHIFT        (0U)
-#define VEPU_SWREG_108_REUSE_INTRA_SLICE_BMP2_MASK         (0xFFFFFFFFU << VEPU_SWREG_108_REUSE_INTRA_SLICE_BMP2_SHIFT) /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_108_REUSE_OFFSET                    (0x1B0U)
+#define JPEG_ENC_SWREG_108_REUSE_INTRA_SLICE_BMP2_SHIFT    (0U)
+#define JPEG_ENC_SWREG_108_REUSE_INTRA_SLICE_BMP2_MASK     (0xFFFFFFFFU << JPEG_ENC_SWREG_108_REUSE_INTRA_SLICE_BMP2_SHIFT) /* 0xFFFFFFFF */
 /* SWREG_109 */
-#define VEPU_SWREG_109_OFFSET                              (0x1B4U)
-#define VEPU_SWREG_109_ENC_IRQ_SHIFT                       (0U)
-#define VEPU_SWREG_109_ENC_IRQ_MASK                        (0x1U << VEPU_SWREG_109_ENC_IRQ_SHIFT)                       /* 0x00000001 */
-#define VEPU_SWREG_109_IRQ_FRAME_RDY_SHIFT                 (1U)
-#define VEPU_SWREG_109_IRQ_FRAME_RDY_MASK                  (0x1U << VEPU_SWREG_109_IRQ_FRAME_RDY_SHIFT)                 /* 0x00000002 */
-#define VEPU_SWREG_109_IRQ_SLICE_READY_SHIFT               (2U)
-#define VEPU_SWREG_109_IRQ_SLICE_READY_MASK                (0x1U << VEPU_SWREG_109_IRQ_SLICE_READY_SHIFT)               /* 0x00000004 */
-#define VEPU_SWREG_109_FUSE_INT_SHIFT                      (3U)
-#define VEPU_SWREG_109_FUSE_INT_MASK                       (0x1U << VEPU_SWREG_109_FUSE_INT_SHIFT)                      /* 0x00000008 */
-#define VEPU_SWREG_109_IRQ_BUS_ERROR_SHIFT                 (4U)
-#define VEPU_SWREG_109_IRQ_BUS_ERROR_MASK                  (0x1U << VEPU_SWREG_109_IRQ_BUS_ERROR_SHIFT)                 /* 0x00000010 */
-#define VEPU_SWREG_109_IRQ_BUFFER_FULL_SHIFT               (5U)
-#define VEPU_SWREG_109_IRQ_BUFFER_FULL_MASK                (0x1U << VEPU_SWREG_109_IRQ_BUFFER_FULL_SHIFT)               /* 0x00000020 */
-#define VEPU_SWREG_109_IRQ_TIMEOUT_SHIFT                   (6U)
-#define VEPU_SWREG_109_IRQ_TIMEOUT_MASK                    (0x1U << VEPU_SWREG_109_IRQ_TIMEOUT_SHIFT)                   /* 0x00000040 */
-#define VEPU_SWREG_109_IRQ_DIS_SHIFT                       (8U)
-#define VEPU_SWREG_109_IRQ_DIS_MASK                        (0x1U << VEPU_SWREG_109_IRQ_DIS_SHIFT)                       /* 0x00000100 */
-#define VEPU_SWREG_109_IRQ_CLR_SHIFT                       (9U)
-#define VEPU_SWREG_109_IRQ_CLR_MASK                        (0x1U << VEPU_SWREG_109_IRQ_CLR_SHIFT)                       /* 0x00000200 */
-#define VEPU_SWREG_109_INT_TIMEOUT_EN_SHIFT                (10U)
-#define VEPU_SWREG_109_INT_TIMEOUT_EN_MASK                 (0x1U << VEPU_SWREG_109_INT_TIMEOUT_EN_SHIFT)                /* 0x00000400 */
-#define VEPU_SWREG_109_CLK_GATING_EN_SHIFT                 (12U)
-#define VEPU_SWREG_109_CLK_GATING_EN_MASK                  (0x1U << VEPU_SWREG_109_CLK_GATING_EN_SHIFT)                 /* 0x00001000 */
-#define VEPU_SWREG_109_SLICE_RDYINT_EN_SHIFT               (16U)
-#define VEPU_SWREG_109_SLICE_RDYINT_EN_MASK                (0x1U << VEPU_SWREG_109_SLICE_RDYINT_EN_SHIFT)               /* 0x00010000 */
-#define VEPU_SWREG_109_ROCON_WRITE_DIS_SHIFT               (20U)
-#define VEPU_SWREG_109_ROCON_WRITE_DIS_MASK                (0x1U << VEPU_SWREG_109_ROCON_WRITE_DIS_SHIFT)               /* 0x00100000 */
-#define VEPU_SWREG_109_MV_SAD_WREN_SHIFT                   (24U)
-#define VEPU_SWREG_109_MV_SAD_WREN_MASK                    (0x1U << VEPU_SWREG_109_MV_SAD_WREN_SHIFT)                   /* 0x01000000 */
-#define VEPU_SWREG_109_INT_NON_SHIFT                       (28U)
-#define VEPU_SWREG_109_INT_NON_MASK                        (0x1U << VEPU_SWREG_109_INT_NON_SHIFT)                       /* 0x10000000 */
+#define JPEG_ENC_SWREG_109_OFFSET                          (0x1B4U)
+#define JPEG_ENC_SWREG_109_ENC_IRQ_SHIFT                   (0U)
+#define JPEG_ENC_SWREG_109_ENC_IRQ_MASK                    (0x1U << JPEG_ENC_SWREG_109_ENC_IRQ_SHIFT)                   /* 0x00000001 */
+#define JPEG_ENC_SWREG_109_IRQ_FRAME_RDY_SHIFT             (1U)
+#define JPEG_ENC_SWREG_109_IRQ_FRAME_RDY_MASK              (0x1U << JPEG_ENC_SWREG_109_IRQ_FRAME_RDY_SHIFT)             /* 0x00000002 */
+#define JPEG_ENC_SWREG_109_IRQ_SLICE_READY_SHIFT           (2U)
+#define JPEG_ENC_SWREG_109_IRQ_SLICE_READY_MASK            (0x1U << JPEG_ENC_SWREG_109_IRQ_SLICE_READY_SHIFT)           /* 0x00000004 */
+#define JPEG_ENC_SWREG_109_FUSE_INT_SHIFT                  (3U)
+#define JPEG_ENC_SWREG_109_FUSE_INT_MASK                   (0x1U << JPEG_ENC_SWREG_109_FUSE_INT_SHIFT)                  /* 0x00000008 */
+#define JPEG_ENC_SWREG_109_IRQ_BUS_ERROR_SHIFT             (4U)
+#define JPEG_ENC_SWREG_109_IRQ_BUS_ERROR_MASK              (0x1U << JPEG_ENC_SWREG_109_IRQ_BUS_ERROR_SHIFT)             /* 0x00000010 */
+#define JPEG_ENC_SWREG_109_IRQ_BUFFER_FULL_SHIFT           (5U)
+#define JPEG_ENC_SWREG_109_IRQ_BUFFER_FULL_MASK            (0x1U << JPEG_ENC_SWREG_109_IRQ_BUFFER_FULL_SHIFT)           /* 0x00000020 */
+#define JPEG_ENC_SWREG_109_IRQ_TIMEOUT_SHIFT               (6U)
+#define JPEG_ENC_SWREG_109_IRQ_TIMEOUT_MASK                (0x1U << JPEG_ENC_SWREG_109_IRQ_TIMEOUT_SHIFT)               /* 0x00000040 */
+#define JPEG_ENC_SWREG_109_IRQ_DIS_SHIFT                   (8U)
+#define JPEG_ENC_SWREG_109_IRQ_DIS_MASK                    (0x1U << JPEG_ENC_SWREG_109_IRQ_DIS_SHIFT)                   /* 0x00000100 */
+#define JPEG_ENC_SWREG_109_IRQ_CLR_SHIFT                   (9U)
+#define JPEG_ENC_SWREG_109_IRQ_CLR_MASK                    (0x1U << JPEG_ENC_SWREG_109_IRQ_CLR_SHIFT)                   /* 0x00000200 */
+#define JPEG_ENC_SWREG_109_INT_TIMEOUT_EN_SHIFT            (10U)
+#define JPEG_ENC_SWREG_109_INT_TIMEOUT_EN_MASK             (0x1U << JPEG_ENC_SWREG_109_INT_TIMEOUT_EN_SHIFT)            /* 0x00000400 */
+#define JPEG_ENC_SWREG_109_CLK_GATING_EN_SHIFT             (12U)
+#define JPEG_ENC_SWREG_109_CLK_GATING_EN_MASK              (0x1U << JPEG_ENC_SWREG_109_CLK_GATING_EN_SHIFT)             /* 0x00001000 */
+#define JPEG_ENC_SWREG_109_SLICE_RDYINT_EN_SHIFT           (16U)
+#define JPEG_ENC_SWREG_109_SLICE_RDYINT_EN_MASK            (0x1U << JPEG_ENC_SWREG_109_SLICE_RDYINT_EN_SHIFT)           /* 0x00010000 */
+#define JPEG_ENC_SWREG_109_ROCON_WRITE_DIS_SHIFT           (20U)
+#define JPEG_ENC_SWREG_109_ROCON_WRITE_DIS_MASK            (0x1U << JPEG_ENC_SWREG_109_ROCON_WRITE_DIS_SHIFT)           /* 0x00100000 */
+#define JPEG_ENC_SWREG_109_MV_SAD_WREN_SHIFT               (24U)
+#define JPEG_ENC_SWREG_109_MV_SAD_WREN_MASK                (0x1U << JPEG_ENC_SWREG_109_MV_SAD_WREN_SHIFT)               /* 0x01000000 */
+#define JPEG_ENC_SWREG_109_INT_NON_SHIFT                   (28U)
+#define JPEG_ENC_SWREG_109_INT_NON_MASK                    (0x1U << JPEG_ENC_SWREG_109_INT_NON_SHIFT)                   /* 0x10000000 */
 /* SWREG_110_READ */
-#define VEPU_SWREG_110_READ_OFFSET                         (0x1B8U)
-#define VEPU_SWREG_110_READ                                (0x48311220U)
-#define VEPU_SWREG_110_READ_SYNTHESIS_SHIFT                (0U)
-#define VEPU_SWREG_110_READ_SYNTHESIS_MASK                 (0xFU << VEPU_SWREG_110_READ_SYNTHESIS_SHIFT)                /* 0x0000000F */
-#define VEPU_SWREG_110_READ_MINOR_NUM_SHIFT                (4U)
-#define VEPU_SWREG_110_READ_MINOR_NUM_MASK                 (0xFFU << VEPU_SWREG_110_READ_MINOR_NUM_SHIFT)               /* 0x00000FF0 */
-#define VEPU_SWREG_110_READ_MAJOR_NUM_SHIFT                (12U)
-#define VEPU_SWREG_110_READ_MAJOR_NUM_MASK                 (0xFU << VEPU_SWREG_110_READ_MAJOR_NUM_SHIFT)                /* 0x0000F000 */
-#define VEPU_SWREG_110_READ_PROD_ID_SHIFT                  (16U)
-#define VEPU_SWREG_110_READ_PROD_ID_MASK                   (0xFFFFU << VEPU_SWREG_110_READ_PROD_ID_SHIFT)               /* 0xFFFF0000 */
+#define JPEG_ENC_SWREG_110_READ_OFFSET                     (0x1B8U)
+#define JPEG_ENC_SWREG_110_READ                            (0x48311220U)
+#define JPEG_ENC_SWREG_110_READ_SYNTHESIS_SHIFT            (0U)
+#define JPEG_ENC_SWREG_110_READ_SYNTHESIS_MASK             (0xFU << JPEG_ENC_SWREG_110_READ_SYNTHESIS_SHIFT)            /* 0x0000000F */
+#define JPEG_ENC_SWREG_110_READ_MINOR_NUM_SHIFT            (4U)
+#define JPEG_ENC_SWREG_110_READ_MINOR_NUM_MASK             (0xFFU << JPEG_ENC_SWREG_110_READ_MINOR_NUM_SHIFT)           /* 0x00000FF0 */
+#define JPEG_ENC_SWREG_110_READ_MAJOR_NUM_SHIFT            (12U)
+#define JPEG_ENC_SWREG_110_READ_MAJOR_NUM_MASK             (0xFU << JPEG_ENC_SWREG_110_READ_MAJOR_NUM_SHIFT)            /* 0x0000F000 */
+#define JPEG_ENC_SWREG_110_READ_PROD_ID_SHIFT              (16U)
+#define JPEG_ENC_SWREG_110_READ_PROD_ID_MASK               (0xFFFFU << JPEG_ENC_SWREG_110_READ_PROD_ID_SHIFT)           /* 0xFFFF0000 */
 /* SWREG_120_183 */
-#define VEPU_SWREG_120_183_OFFSET                          (0x1E0U)
-#define VEPU_SWREG_120_183_DMV_PLY_TABLE_SHIFT             (0U)
-#define VEPU_SWREG_120_183_DMV_PLY_TABLE_MASK              (0xFFFFFFFFU << VEPU_SWREG_120_183_DMV_PLY_TABLE_SHIFT)      /* 0xFFFFFFFF */
+#define JPEG_ENC_SWREG_120_183_OFFSET                      (0x1E0U)
+#define JPEG_ENC_SWREG_120_183_DMV_PLY_TABLE_SHIFT         (0U)
+#define JPEG_ENC_SWREG_120_183_DMV_PLY_TABLE_MASK          (0xFFFFFFFFU << JPEG_ENC_SWREG_120_183_DMV_PLY_TABLE_SHIFT)  /* 0xFFFFFFFF */
 /***************************************VICAP_LITE***************************************/
 /* MIPI_ID0_CTRL0 */
 #define VICAP_LITE_MIPI_ID0_CTRL0_OFFSET                   (0x80U)
