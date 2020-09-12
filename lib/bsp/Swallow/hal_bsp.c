@@ -21,7 +21,7 @@ const struct HAL_I2C_DEV g_i2c0Dev =
 {
     .pReg = I2C0,
     .clkID = CLK_I2C0,
-    .clkGateID = CLK_I2C0_GATE,
+    .clkGateID = CLK_I2C0_PLL_GATE,
     .pclkGateID = PCLK_I2C0_GATE,
     .irqNum = I2C0_IRQn,
     .runtimeID = PM_RUNTIME_ID_I2C0,
@@ -31,7 +31,7 @@ const struct HAL_I2C_DEV g_i2c1Dev =
 {
     .pReg = I2C1,
     .clkID = CLK_I2C1,
-    .clkGateID = CLK_I2C1_GATE,
+    .clkGateID = CLK_I2C1_PLL_GATE,
     .pclkGateID = PCLK_I2C1_GATE,
     .irqNum = I2C1_IRQn,
     .runtimeID = PM_RUNTIME_ID_I2C1,

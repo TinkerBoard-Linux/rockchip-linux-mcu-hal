@@ -34,7 +34,7 @@ static struct PLL_SETUP GPLL = {
     .conOffset0 = &(CRU->GPLL_CON[0]),
     .conOffset1 = &(CRU->GPLL_CON[1]),
     .conOffset2 = &(CRU->GPLL_CON[2]),
-    .modeOffset = &(CRU->CRU_MODE_CON00),
+    .modeOffset = &(CRU->MODE_CON00),
     .modeShift = 0,
     .lockShift = 10,
     .modeMask = 0x3 << 0,
@@ -239,7 +239,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         }
         break;
     case CLK_I2C0:
-    case CLK_I2C0:
+    case CLK_I2C1:
         if (HAL_CRU_ClkGetMux(clkMux) == 2) {
             pRate = PLL_INPUT_OSC_RATE;
         } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
@@ -346,7 +346,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         }
         break;
     case CLK_I2C0:
-    case CLK_I2C0:
+    case CLK_I2C1:
         if (!(PLL_INPUT_OSC_RATE % rate)) {
             pRate = PLL_INPUT_OSC_RATE;
             mux = CLK_I2C0_SEL_XIN_OSC0_FUNC;
