@@ -254,13 +254,40 @@ HAL_Check HAL_BUFMGR_WCHStsIsBufFull(uint32_t sts, int idx)
 
 /**
  * @brief  Check WCH Buffer Status Is EOH Or Not
+ * @param  chan: write channel id
+ * @param  block: write channel block id
  * @param  sts: interrupt status
  * @param  idx: buffer index
  * @return HAL_TRUE or HAL_FALSE
  */
-HAL_Check HAL_BUFMGR_WCHStsIsEOH(uint32_t sts, int idx)
+HAL_Check HAL_BUFMGR_WCHStsIsEOH(int chan, int block, uint32_t sts, int idx)
 {
-    return (sts & HAL_BUFMGR_WCH_STS_EOH_BIT(idx) ? HAL_TRUE : HAL_FALSE);
+    uint32_t fSize, bSize;
+    struct BUFFER_MANAGE_REG *pBufMgr;
+
+    if (sts & HAL_BUFMGR_WCH_STS_EOH_BIT(idx)) {
+        return HAL_TRUE;
+    } else if (sts & HAL_BUFMGR_WCH_STS_EOF_BIT(idx)) {
+        /*
+         * FIXME:
+         * The Buffer Manger missed tagging the EOH flag when the frame size
+         * is less then the buffer size. In this case, the EOH and EOF tag
+         * are both needed to tag for the buffer. So tag the EOH by software
+         * checking as a workaround.
+         */
+        pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
+        fSize = pBufMgr->WCH_MBLK0_STATUS3 &
+                BUFFER_MANAGE_WCH_MBLK_STATUS3_FRAM_END_COUNTER_MASK;
+        bSize = (pBufMgr->WCH_MBLK0_CON0 &
+                 BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_SIZE_MASK) >>
+                BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_SIZE_SHIFT;
+
+        if (fSize <= bSize) {
+            return HAL_TRUE;
+        }
+    }
+
+    return HAL_FALSE;
 }
 
 /**

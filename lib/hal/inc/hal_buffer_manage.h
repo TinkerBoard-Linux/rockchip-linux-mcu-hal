@@ -51,7 +51,7 @@ HAL_Status HAL_BUFMGR_WCHIntAllEn(int chan, int block, uint8_t en);
 HAL_Check HAL_BUFMGR_WCHIntStsIsOVFL(uint32_t sts);
 HAL_Check HAL_BUFMGR_WCHIntStsIsFull(uint32_t sts, int idx);
 HAL_Check HAL_BUFMGR_WCHStsIsBufFull(uint32_t sts, int idx);
-HAL_Check HAL_BUFMGR_WCHStsIsEOH(uint32_t sts, int idx);
+HAL_Check HAL_BUFMGR_WCHStsIsEOH(int chan, int block, uint32_t sts, int idx);
 HAL_Check HAL_BUFMGR_WCHStsIsEOF(uint32_t sts, int idx);
 
 /** @} */
