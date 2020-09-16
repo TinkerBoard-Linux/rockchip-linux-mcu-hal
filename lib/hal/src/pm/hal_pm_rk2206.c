@@ -39,6 +39,7 @@
 #define SLP_TIME_OUT_WKUP    HAL_BIT(25)
 #define SLP_PMU_DBG          HAL_BIT(26)
 #define SLP_PMU_TST_CLK      HAL_BIT(27)
+#define SLP_PMU_VAD_WKUP     HAL_BIT(28)
 
 #define PLL_CON(i)           ((i) * 4)
 #define PLL_CON_CNT          5
@@ -141,10 +142,10 @@ static struct SCB_SAVE scbData;
 static struct SYSTICK_SAVE systickData;
 static uint32_t pmuPowerdomainState;
 static uint32_t clkUngtMsk[CRU_CLKGATES_CON_CNT] = {
-    0x1fff, 0x003f, 0xffff, 0x0000,
-    0x0000, 0x0000, 0x0000, 0xffff,
-    0x00ff, 0x0000, 0x0000, 0xff1f,
-    0x0000
+    0x001f, 0x1fff, 0xffff, 0x3887,
+    0xfff0, 0x7f3f, 0xffff, 0x000f,
+    0x3b00, 0xffff, 0xffff, 0xffff,
+    0x0310,
 };
 
 static struct PMU_REG *pPmu = PMU;
@@ -557,7 +558,7 @@ static int PMU_SleepConfig(void)
         /* PMU_PWRMODE_CON_NOC_AUTO_CON_TOP_MASK | */
         PMU_PWRMODE_CON_CLK_CORE_SRC_GATE_MASK |
         /* PMU_PWRMODE_CON_CLK_TOP_SRC_GATE_MASK | */
-        /* PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_MASK | */
+        PMU_PWRMODE_CON_GLOBAL_INT_DISABLE_MASK |
         /* PMU_PWRMODE_CON_MCU_PD_EN_MASK | */
         /* PMU_PWRMODE_CON_RF_RESET_EN_MASK | */
         /* PMU_PWRMODE_CON_AON_RESET_EN_MASK | */
@@ -618,9 +619,16 @@ static int PMU_SleepConfig(void)
     pPmu->PLLLOCK_CNT = clkFreqKhz * 5;
     pPmu->PLLRST_CNT = clkFreqKhz * 2;
 
-    pPmu->PWRMODE_CON = pwrmodeCon;
+    if (mode & SLP_PMU_VAD_WKUP) {
+        pPmu->PWRMODE_CON =
+            pwrmodeCon & ~(PMU_PWRMODE_CON_CLR_TOP_MASK | PMU_PWRMODE_CON_GPLL_PD_EN_MASK);
+        pPmu->RET_CON = 0x0;
+    } else {
+        pPmu->PWRMODE_CON = pwrmodeCon;
+        pPmu->RET_CON = 0xff0;
+    }
+
     pPmu->WAKEUP_CFG = pmuWkupCfg;
-    pPmu->RET_CON = 0xff0;
 
     return 0;
 }
@@ -698,22 +706,27 @@ static void PM_PllsSuspend(void)
     sleepData.cruModeSave = pCru->MODE_CON00;
     sleepData.clkSelCon2 = pCru->CRU_CLKSEL_CON[2];
 
-    SOC_PllSuspend(GPLL_ID);
     SOC_PllSuspend(VPLL_ID);
 
-    /* core */
-    pCru->CRU_CLKSEL_CON[2] =
-        VAL_MASK_WE(0x1f1f, 0);
+    if (!(sleepConfig->suspendMode & SLP_PMU_VAD_WKUP)) {
+        SOC_PllSuspend(GPLL_ID);
+        /* core */
+        pCru->CRU_CLKSEL_CON[2] =
+            VAL_MASK_WE(0x1f1f, 0);
+    }
 }
 
 static void PM_PllsResume(void)
 {
-    /* core */
-    pCru->CRU_CLKSEL_CON[2] =
-        VAL_MASK_WE(0x1f1f, sleepData.clkSelCon2);
+    if (!(sleepConfig->suspendMode & SLP_PMU_VAD_WKUP)) {
+        /* core */
+        pCru->CRU_CLKSEL_CON[2] =
+            VAL_MASK_WE(0x1f1f, sleepData.clkSelCon2);
+
+        SOC_PllResume(GPLL_ID);
+    }
 
     SOC_PllResume(VPLL_ID);
-    SOC_PllResume(GPLL_ID);
 }
 
 static void SOC_MpuDis(void)
