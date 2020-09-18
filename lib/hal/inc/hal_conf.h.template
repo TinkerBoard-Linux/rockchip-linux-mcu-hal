@@ -96,6 +96,10 @@
 #define HAL_HWSPINLOCK_OWNER_ID 1
 #endif
 
+#ifdef HAL_QPIPSRAM_MODULE_ENABLED
+#define HAL_QPIPSRAM_HALF_SLEEP_ENABLED /* If support half sleep, configure it */
+#endif
+
 #ifdef HAL_SNOR_MODULE_ENABLED
 #define HAL_SNOR_FSPI_HOST /* Choose SNOR Host: FSPI */
 //#define HAL_SNOR_SPI_HOST /* Choose SNOR Host: SPI */
@@ -110,4 +114,5 @@ endif
 #ifdef HAL_WDT_MODULE_ENABLED
 #define HAL_WDT_DYNFREQ_FEATURE_ENABLED
 #endif
+
 #endif

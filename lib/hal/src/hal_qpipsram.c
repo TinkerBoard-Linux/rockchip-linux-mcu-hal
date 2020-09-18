@@ -49,6 +49,7 @@
 #define QPIPSRAM_OP_PP_1_4_4   0x38
 #define QPIPSRAM_OP_ENQPI      0x35
 #define QPIPSRAM_OP_EIXTQPI    0xF5
+#define QPIPSRAM_OP_HALFSLEEP  0xC0
 
 #define QPIPSRAM_READWRITE_MAX_IOSIZE (1024 * 8) /* 8KB */
 
@@ -215,6 +216,13 @@ static HAL_Status QPIPSRAM_ExitQPI(struct QPI_PSRAM *psram)
     return QPIPSRAM_SPIMemExecOp(psram->spi, &op);
 }
 
+#ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
+static HAL_Status QPIPSRAM_HalfSleep(struct QPI_PSRAM *psram)
+{
+    return psram->writeReg(psram, QPIPSRAM_OP_HALFSLEEP, NULL, 0);
+}
+#endif
+
 static HAL_Status QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data, uint8_t len)
 {
     int32_t ret;
@@ -242,6 +250,7 @@ static HAL_Status QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data, uint8_
     return ret;
 }
 
+#ifndef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
 static uint32_t QPIPSRAM_PageSizeDetect(struct QPI_PSRAM *psram)
 {
     uint32_t off;
@@ -299,6 +308,7 @@ static uint32_t QPIPSRAM_SizeDetect(struct QPI_PSRAM *psram)
 
     return 0;
 }
+#endif
 
 /** @} */
 /********************* Public Function Definition ****************************/
@@ -423,6 +433,11 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
     psram->write = QPIPSRAM_WriteData;
     psram->writeReg = QPIPSRAM_WriteReg;
 
+#ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
+    psram->writeReg(psram, 0xff, NULL, 0);
+    HAL_CPUDelayUs(150);
+#endif
+
     QPIPSRAM_ExitQPI(psram);
     QPIPSRAM_ReadID(psram, idByte, sizeof(idByte));
     HAL_QPIPSRAM_DBG("QPIPsram ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
@@ -488,8 +503,10 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
     default:
         psram->size = QPIPSRAM_SIZE_MAX * 2;
         psram->pageSize = QPIPSRAM_READWRITE_MAX_IOSIZE;
+#ifndef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
         psram->size = QPIPSRAM_SizeDetect(psram);
         psram->pageSize = QPIPSRAM_PageSizeDetect(psram);
+#endif
     }
 
     HAL_QPIPSRAM_DBG("QPIPsram size= 0x%xB\n", psram->size);
@@ -526,9 +543,25 @@ HAL_Status HAL_QPIPSRAM_DeInit(struct QPI_PSRAM *psram)
  * @param  psram: psram dev.
  * @return HAL_Status
  * Access data in memory map mode.
+ *  Adding half sleep resume cs# and clock redundancy.
  */
 HAL_Status HAL_QPIPSRAM_XIPEnable(struct QPI_PSRAM *psram)
 {
+#ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
+    HAL_Status ret;
+
+    if (psram->readProto == QPIPSRAM_PROTO_4_4_4 &&
+        psram->writeProto == QPIPSRAM_PROTO_4_4_4) {
+        psram->writeReg(psram, 0xff, NULL, 0);
+        HAL_CPUDelayUs(150);
+
+        ret = QPIPSRAM_EnterQPI(psram);
+        if (ret) {
+            return ret;
+        }
+    }
+#endif
+
     return QPIPSRAM_XipExecOp(psram->spi, NULL, 1);
 }
 
@@ -536,10 +569,30 @@ HAL_Status HAL_QPIPSRAM_XIPEnable(struct QPI_PSRAM *psram)
  * @brief  Psram XIP mode disable.
  * @param  psram: psram dev.
  * @return HAL_Status
+ * Adding half sleep suspend try.
  */
 HAL_Status HAL_QPIPSRAM_XIPDisable(struct QPI_PSRAM *psram)
 {
-    return QPIPSRAM_XipExecOp(psram->spi, NULL, 0);
+    HAL_Status ret;
+
+    ret = QPIPSRAM_XipExecOp(psram->spi, NULL, 0);
+    if (ret) {
+        return ret;
+    }
+
+#ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
+    if (psram->readProto == QPIPSRAM_PROTO_4_4_4 &&
+        psram->writeProto == QPIPSRAM_PROTO_4_4_4) {
+        ret = QPIPSRAM_ExitQPI(psram);
+        if (ret) {
+            return ret;
+        }
+
+        ret = QPIPSRAM_HalfSleep(psram);
+    }
+#endif
+
+    return ret;
 }
 
 /**
