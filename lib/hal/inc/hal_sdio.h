@@ -163,6 +163,7 @@ struct HAL_MMC_HOST {
     uint32_t cachedDiv;
     uint32_t cachedBw;
     MMC_DMA_DESCRIPTORS *descriptors;
+    bool keepPowerInSuspend;
     void (*MMC_Reset)(struct HAL_MMC_HOST *host);
 };
 
