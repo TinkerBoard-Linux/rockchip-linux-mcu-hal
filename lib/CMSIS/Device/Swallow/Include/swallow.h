@@ -10828,10 +10828,13 @@ struct CSI2HOST_REG {
 #define CLK_TIMER_SEL_CLK_GPLL_MUX  0U
 #define CLK_TIMER_SEL_XIN_OSC0_FUNC 1U
 /********Name=CLKSEL_CON07,Offset=0x11C********/
-#define CLK_XIP_SFC_SEL                0x02060007U
-#define CLK_XIP_SFC_SEL_CLK_GPLL_MUX   0U
-#define CLK_XIP_SFC_SEL_CLK_USBPLL_MUX 1U
-#define CLK_XIP_SFC_SEL_XIN_OSC0_FUNC  2U
+#define CLK_XIP_SFC_SEL                 0x02060007U
+#define CLK_XIP_SFC_SEL_CLK_GPLL_MUX    0U
+#define CLK_XIP_SFC_SEL_CLK_USBPLL_MUX  1U
+#define CLK_XIP_SFC_SEL_XIN_OSC0_FUNC   2U
+#define CLK_ISP_SEL                     0x010F0007U
+#define CLK_ISP_SEL_CLK_ISP_DIV_OUT     0U
+#define CLK_ISP_SEL_CLK_USBPLL_MUX_DIV2 1U
 /********Name=CLKSEL_CON08,Offset=0x120********/
 #define CLK_VIP_OUT_SEL                0x020E0008U
 #define CLK_VIP_OUT_SEL_CLK_GPLL_MUX   0U

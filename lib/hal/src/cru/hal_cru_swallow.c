@@ -254,6 +254,13 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
             pRate = s_usbphyFreq;
         }
         break;
+    case CLK_ISP:
+        if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            return s_usbphyFreq / 2;
+        } else {
+            pRate = s_gpllFreq;
+        }
+        break;
     default:
 
         break;
@@ -369,6 +376,17 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         } else {
             pRate = s_gpllFreq;
             mux = CLK_XIP_SFC_SEL_CLK_GPLL_MUX;
+        }
+        break;
+    case CLK_ISP:
+        if (rate == s_usbphyFreq / 2) {
+            pRate = s_usbphyFreq / 2;
+            mux = CLK_ISP_SEL_CLK_USBPLL_MUX_DIV2;
+
+            return HAL_CRU_ClkSetMux(clkMux, mux);
+        } else {
+            pRate = s_gpllFreq;
+            mux = CLK_ISP_SEL_CLK_ISP_DIV_OUT;
         }
         break;
     default:
