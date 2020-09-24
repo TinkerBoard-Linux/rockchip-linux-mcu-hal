@@ -67,7 +67,7 @@ struct QPI_PSRAM_ID {
 
 /********************* Private Variable Definition ***************************/
 
-static const struct QPI_PSRAM_ID qpiPsramId[] =
+HAL_SECTION_SRAM_CODE static const struct QPI_PSRAM_ID qpiPsramId[] =
 {
     { 0x0D, 0x5D },
 };
