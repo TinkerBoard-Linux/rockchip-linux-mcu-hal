@@ -94,6 +94,7 @@ HAL_Check HAL_QPIPSRAM_IsPsramSupported(uint8_t *id);
 int32_t HAL_QPIPSRAM_ReadData(struct QPI_PSRAM *psram, uint32_t from, void *buf, uint32_t len);
 int32_t HAL_QPIPSRAM_ProgData(struct QPI_PSRAM *psram, uint32_t to, void *buf, uint32_t len);
 uint32_t HAL_QPIPSRAM_GetCapacity(struct QPI_PSRAM *psram);
+HAL_Status HAL_QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data, uint8_t len);
 
 /** @} */
 

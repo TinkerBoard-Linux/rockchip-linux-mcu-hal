@@ -34,7 +34,7 @@
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
-//#define HAL_QPIPSRAM_DEBUG
+#define HAL_QPIPSRAM_DEBUG
 #ifdef HAL_QPIPSRAM_DEBUG
 #define HAL_QPIPSRAM_DBG(...) HAL_DBG(__VA_ARGS__)
 #else
@@ -222,33 +222,6 @@ static HAL_Status QPIPSRAM_HalfSleep(struct QPI_PSRAM *psram)
     return psram->writeReg(psram, QPIPSRAM_OP_HALFSLEEP, NULL, 0);
 }
 #endif
-
-static HAL_Status QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data, uint8_t len)
-{
-    int32_t ret;
-    uint8_t *id = data;
-    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(QPIPSRAM_OP_RDID, 1),
-                                                     HAL_SPI_MEM_OP_ADDR(3, 0xa5a5a5a5, 1),
-                                                     HAL_SPI_MEM_OP_DUMMY(0, 1),
-                                                     HAL_SPI_MEM_OP_DATA_IN(len, data, 1));
-
-    /* get transfer protocols. */
-    op.cmd.buswidth = 1;
-    op.addr.buswidth = 1;
-    op.dummy.buswidth = 1;
-    op.data.buswidth = 1;
-
-    op.dummy.nbytes = 0;
-
-    ret = QPIPSRAM_SPIMemExecOp(psram->spi, &op);
-    if (ret) {
-        HAL_QPIPSRAM_DBG("error reading JEDEC ID%x %x\n", id[0], id[1]);
-
-        return HAL_ERROR;
-    }
-
-    return ret;
-}
 
 #ifndef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
 static uint32_t QPIPSRAM_PageSizeDetect(struct QPI_PSRAM *psram)
@@ -439,7 +412,7 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
 #endif
 
     QPIPSRAM_ExitQPI(psram);
-    QPIPSRAM_ReadID(psram, idByte, sizeof(idByte));
+    HAL_QPIPSRAM_ReadID(psram, idByte, sizeof(idByte));
     HAL_QPIPSRAM_DBG("QPIPsram ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
     psram->id[0] = idByte[0];
     psram->id[1] = idByte[1];
@@ -509,8 +482,8 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
 #endif
     }
 
-    HAL_QPIPSRAM_DBG("QPIPsram size= 0x%xB\n", psram->size);
-    HAL_QPIPSRAM_DBG("QPIPsram page size= 0x%xB\n", psram->pageSize);
+    HAL_QPIPSRAM_DBG("QPIPsram size= 0x%x Bytes\n", psram->size);
+    HAL_QPIPSRAM_DBG("QPIPsram page size= 0x%x Bytes\n", psram->pageSize);
 
     QPIPSRAM_XmmcInit(psram);
     if (psram->spi->mode & HAL_SPI_XIP) {
@@ -626,6 +599,40 @@ HAL_Check HAL_QPIPSRAM_IsPsramSupported(uint8_t *id)
 uint32_t HAL_QPIPSRAM_GetCapacity(struct QPI_PSRAM *psram)
 {
     return psram->size;
+}
+
+/**
+ * @brief  Get psram capacity.
+ * @param  psram: psram dev.
+ * @param  data: id buffer
+ * @param  len: id length
+ * @return uint32_t: psram capacity, n bytes.
+ */
+HAL_Status HAL_QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data, uint8_t len)
+{
+    int32_t ret;
+    uint8_t *id = data;
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(QPIPSRAM_OP_RDID, 1),
+                                                     HAL_SPI_MEM_OP_ADDR(3, 0xa5a5a5a5, 1),
+                                                     HAL_SPI_MEM_OP_DUMMY(0, 1),
+                                                     HAL_SPI_MEM_OP_DATA_IN(len, data, 1));
+
+    /* get transfer protocols. */
+    op.cmd.buswidth = 1;
+    op.addr.buswidth = 1;
+    op.dummy.buswidth = 1;
+    op.data.buswidth = 1;
+
+    op.dummy.nbytes = 0;
+
+    ret = QPIPSRAM_SPIMemExecOp(psram->spi, &op);
+    if (ret) {
+        HAL_QPIPSRAM_DBG("error reading JEDEC ID%x %x\n", id[0], id[1]);
+
+        return HAL_ERROR;
+    }
+
+    return ret;
 }
 
 /** @} */
