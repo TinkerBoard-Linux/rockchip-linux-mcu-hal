@@ -101,6 +101,7 @@ struct HAL_FSPI_HOST {
     uint32_t xipMemData; /** Better under dcache */
     uint8_t cs; /** Should be defined by user in each operation */
     uint8_t mode; /** Should be defined by user, referring to hal_spi_mem.h */
+    uint8_t cell; /* Record DLL cell for PM resume */
     struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT]; /** Set depend on corresponding device */
 };
 
