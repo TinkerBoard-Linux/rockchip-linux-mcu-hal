@@ -511,7 +511,7 @@ static HAL_Status SPINAND_WaitBusy(struct SPI_NAND *spinand, uint8_t *data, uint
             return HAL_OK;
         }
 
-        HAL_CPUDelayUs(1);
+        HAL_DelayUs(1);
     }
     HAL_SPINAND_DBG("%s error %ld\n", __func__, timeout);
 
