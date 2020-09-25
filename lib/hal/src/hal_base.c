@@ -327,6 +327,10 @@ HAL_Status HAL_DelayUs(uint32_t us)
  * @return HAL_Status: HAL_OK.
  * @attention this API allow direct use in the HAL layer. The longer the delay,
  *  the more accurate. Actual delay is greater than the parameter.
+ *  During delay, CPU rate change result in delay imprecise, so call it in
+ *  following case:
+ *    1.IRQ disable
+ *    2.CRU code
  */
 HAL_Status HAL_CPUDelayUs(uint32_t us)
 {
