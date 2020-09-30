@@ -20,7 +20,8 @@ void SystemCoreClockUpdate(void)
  *----------------------------------------------------------------------------*/
 void SystemInit(void)
 {
-    GRF->SOC_CON5 = 0x00010001;
+    GRF->SOC_CON5 = GRF_SOC_CON5_SOC_REMAP_MASK | 1 << 16;
+    __DSB();
 // Swallow a unified I/D CACHE, so we only need enable dcache
 #if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
     uint32_t status;

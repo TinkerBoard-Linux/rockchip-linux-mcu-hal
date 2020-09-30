@@ -102,12 +102,12 @@ struct GRF_REG {
     __IO uint32_t SOC_CON3;                           /* Address Offset: 0x020C */
     __IO uint32_t SOC_CON4;                           /* Address Offset: 0x0210 */
     __IO uint32_t SOC_CON5;                           /* Address Offset: 0x0214 */
-    __IO uint32_t SOC_CON6;                           /* Address Offset: 0x0218 */
-         uint32_t RESERVED021C[25];                   /* Address Offset: 0x021C */
+         uint32_t RESERVED0218[26];                   /* Address Offset: 0x0218 */
     __IO uint32_t SOC_STATUS0;                        /* Address Offset: 0x0280 */
          uint32_t RESERVED0284[31];                   /* Address Offset: 0x0284 */
     __IO uint32_t MCU_STATUS0;                        /* Address Offset: 0x0300 */
-         uint32_t RESERVED0304[15];                   /* Address Offset: 0x0304 */
+    __I  uint32_t MCU_STATUS1;                        /* Address Offset: 0x0304 */
+         uint32_t RESERVED0308[14];                   /* Address Offset: 0x0308 */
     __IO uint32_t UOC_CON0;                           /* Address Offset: 0x0340 */
          uint32_t RESERVED0344[47];                   /* Address Offset: 0x0344 */
     __IO uint32_t FAST_BOOT;                          /* Address Offset: 0x0400 */
@@ -2515,52 +2515,46 @@ struct CSI2HOST_REG {
 #define GRF_SOC_CON0_DPHY_RX1_CLK_INV_SEL_MASK             (0x1U << GRF_SOC_CON0_DPHY_RX1_CLK_INV_SEL_SHIFT)            /* 0x00000200 */
 #define GRF_SOC_CON0_GRF_HOST_ARB_PAUSE_SHIFT              (10U)
 #define GRF_SOC_CON0_GRF_HOST_ARB_PAUSE_MASK               (0x1U << GRF_SOC_CON0_GRF_HOST_ARB_PAUSE_SHIFT)              /* 0x00000400 */
+#define GRF_SOC_CON0_TCM_AUTO_EN_SHIFT                     (11U)
+#define GRF_SOC_CON0_TCM_AUTO_EN_MASK                      (0x1U << GRF_SOC_CON0_TCM_AUTO_EN_SHIFT)                     /* 0x00000800 */
+#define GRF_SOC_CON0_INTMEM0_SEL_SHIFT                     (12U)
+#define GRF_SOC_CON0_INTMEM0_SEL_MASK                      (0x3U << GRF_SOC_CON0_INTMEM0_SEL_SHIFT)                     /* 0x00003000 */
+#define GRF_SOC_CON0_WDT_SPEED_UP_SHIFT                    (14U)
+#define GRF_SOC_CON0_WDT_SPEED_UP_MASK                     (0x1U << GRF_SOC_CON0_WDT_SPEED_UP_SHIFT)                    /* 0x00004000 */
+#define GRF_SOC_CON0_WDT_PAUSE_SHIFT                       (15U)
+#define GRF_SOC_CON0_WDT_PAUSE_MASK                        (0x1U << GRF_SOC_CON0_WDT_PAUSE_SHIFT)                       /* 0x00008000 */
 /* SOC_CON1 */
 #define GRF_SOC_CON1_OFFSET                                (0x204U)
 #define GRF_SOC_CON1_UART_SIN_SEL_SHIFT                    (0U)
 #define GRF_SOC_CON1_UART_SIN_SEL_MASK                     (0x1U << GRF_SOC_CON1_UART_SIN_SEL_SHIFT)                    /* 0x00000001 */
 /* SOC_CON2 */
 #define GRF_SOC_CON2_OFFSET                                (0x208U)
-#define GRF_SOC_CON2_GRF_DPH_RX0_TURNREQUEST_SHIFT         (0U)
-#define GRF_SOC_CON2_GRF_DPH_RX0_TURNREQUEST_MASK          (0xFU << GRF_SOC_CON2_GRF_DPH_RX0_TURNREQUEST_SHIFT)         /* 0x0000000F */
+#define GRF_SOC_CON2_DPHY_RX0_TESTDIN_SHIFT                (0U)
+#define GRF_SOC_CON2_DPHY_RX0_TESTDIN_MASK                 (0xFFU << GRF_SOC_CON2_DPHY_RX0_TESTDIN_SHIFT)               /* 0x000000FF */
+#define GRF_SOC_CON2_DPHY_RX0_TESTEN_SHIFT                 (8U)
+#define GRF_SOC_CON2_DPHY_RX0_TESTEN_MASK                  (0x1U << GRF_SOC_CON2_DPHY_RX0_TESTEN_SHIFT)                 /* 0x00000100 */
+#define GRF_SOC_CON2_DPHY_RX0_TESTCLK_SHIFT                (9U)
+#define GRF_SOC_CON2_DPHY_RX0_TESTCLK_MASK                 (0x1U << GRF_SOC_CON2_DPHY_RX0_TESTCLK_SHIFT)                /* 0x00000200 */
+#define GRF_SOC_CON2_DPHY_RX0_TESTCLR_SHIFT                (10U)
+#define GRF_SOC_CON2_DPHY_RX0_TESTCLR_MASK                 (0x1U << GRF_SOC_CON2_DPHY_RX0_TESTCLR_SHIFT)                /* 0x00000400 */
 /* SOC_CON3 */
 #define GRF_SOC_CON3_OFFSET                                (0x20CU)
-#define GRF_SOC_CON3_DPHY_RX0_TESTDIN_SHIFT                (0U)
-#define GRF_SOC_CON3_DPHY_RX0_TESTDIN_MASK                 (0xFFU << GRF_SOC_CON3_DPHY_RX0_TESTDIN_SHIFT)               /* 0x000000FF */
-#define GRF_SOC_CON3_DPHY_RX0_TESTEN_SHIFT                 (8U)
-#define GRF_SOC_CON3_DPHY_RX0_TESTEN_MASK                  (0x1U << GRF_SOC_CON3_DPHY_RX0_TESTEN_SHIFT)                 /* 0x00000100 */
-#define GRF_SOC_CON3_DPHY_RX0_TESTCLK_SHIFT                (9U)
-#define GRF_SOC_CON3_DPHY_RX0_TESTCLK_MASK                 (0x1U << GRF_SOC_CON3_DPHY_RX0_TESTCLK_SHIFT)                /* 0x00000200 */
-#define GRF_SOC_CON3_DPHY_RX0_TESTCLR_SHIFT                (10U)
-#define GRF_SOC_CON3_DPHY_RX0_TESTCLR_MASK                 (0x1U << GRF_SOC_CON3_DPHY_RX0_TESTCLR_SHIFT)                /* 0x00000400 */
+#define GRF_SOC_CON3_DPHY_RX0_ENABLE_SHIFT                 (0U)
+#define GRF_SOC_CON3_DPHY_RX0_ENABLE_MASK                  (0x3U << GRF_SOC_CON3_DPHY_RX0_ENABLE_SHIFT)                 /* 0x00000003 */
 /* SOC_CON4 */
 #define GRF_SOC_CON4_OFFSET                                (0x210U)
-#define GRF_SOC_CON4_DPHY_RX0_ENABLE_SHIFT                 (0U)
-#define GRF_SOC_CON4_DPHY_RX0_ENABLE_MASK                  (0xFU << GRF_SOC_CON4_DPHY_RX0_ENABLE_SHIFT)                 /* 0x0000000F */
-#define GRF_SOC_CON4_DPHY_RX0_FORCEXMODE_SHIFT             (4U)
-#define GRF_SOC_CON4_DPHY_RX0_FORCEXMODE_MASK              (0xFU << GRF_SOC_CON4_DPHY_RX0_FORCEXMODE_SHIFT)             /* 0x000000F0 */
-#define GRF_SOC_CON4_DPHY_RX0_FORCETXSTOPMODE_SHIFT        (8U)
-#define GRF_SOC_CON4_DPHY_RX0_FORCETXSTOPMODE_MASK         (0xFU << GRF_SOC_CON4_DPHY_RX0_FORCETXSTOPMODE_SHIFT)        /* 0x00000F00 */
-#define GRF_SOC_CON4_DPHY_RX0_TURNDIABLE_SHIFT             (12U)
-#define GRF_SOC_CON4_DPHY_RX0_TURNDIABLE_MASK              (0xFU << GRF_SOC_CON4_DPHY_RX0_TURNDIABLE_SHIFT)             /* 0x0000F000 */
+#define GRF_SOC_CON4_DPHY_RX1_ERR_CONTROL_SHIFT            (0U)
+#define GRF_SOC_CON4_DPHY_RX1_ERR_CONTROL_MASK             (0xFU << GRF_SOC_CON4_DPHY_RX1_ERR_CONTROL_SHIFT)            /* 0x0000000F */
+#define GRF_SOC_CON4_DPHY_RX1_ENABLE_SEL_SHIFT             (4U)
+#define GRF_SOC_CON4_DPHY_RX1_ENABLE_SEL_MASK              (0x1U << GRF_SOC_CON4_DPHY_RX1_ENABLE_SEL_SHIFT)             /* 0x00000010 */
+#define GRF_SOC_CON4_DPHY_RX1_S_ENABLECLK_SHIFT            (5U)
+#define GRF_SOC_CON4_DPHY_RX1_S_ENABLECLK_MASK             (0x1U << GRF_SOC_CON4_DPHY_RX1_S_ENABLECLK_SHIFT)            /* 0x00000020 */
+#define GRF_SOC_CON4_DPHY_RX1_ENABLE_SHIFT                 (7U)
+#define GRF_SOC_CON4_DPHY_RX1_ENABLE_MASK                  (0x3U << GRF_SOC_CON4_DPHY_RX1_ENABLE_SHIFT)                 /* 0x00000180 */
 /* SOC_CON5 */
 #define GRF_SOC_CON5_OFFSET                                (0x214U)
-#define GRF_SOC_CON5_DPHY_RX1_TRUNREQUEST_SHIFT            (0U)
-#define GRF_SOC_CON5_DPHY_RX1_TRUNREQUEST_MASK             (0xFU << GRF_SOC_CON5_DPHY_RX1_TRUNREQUEST_SHIFT)            /* 0x0000000F */
-#define GRF_SOC_CON5_DPHY_RX1_ERR_CONTROL_SEL_SHIFT        (4U)
-#define GRF_SOC_CON5_DPHY_RX1_ERR_CONTROL_SEL_MASK         (0x1U << GRF_SOC_CON5_DPHY_RX1_ERR_CONTROL_SEL_SHIFT)        /* 0x00000010 */
-#define GRF_SOC_CON5_DPHY_RX1_ERR_CONTROL_SHIFT            (8U)
-#define GRF_SOC_CON5_DPHY_RX1_ERR_CONTROL_MASK             (0xFU << GRF_SOC_CON5_DPHY_RX1_ERR_CONTROL_SHIFT)            /* 0x00000F00 */
-/* SOC_CON6 */
-#define GRF_SOC_CON6_OFFSET                                (0x218U)
-#define GRF_SOC_CON6_DPHY_RX1_ENABLE_SHIFT                 (0U)
-#define GRF_SOC_CON6_DPHY_RX1_ENABLE_MASK                  (0xFU << GRF_SOC_CON6_DPHY_RX1_ENABLE_SHIFT)                 /* 0x0000000F */
-#define GRF_SOC_CON6_DPHY_RX1_FORCEXMODE_SHIFT             (4U)
-#define GRF_SOC_CON6_DPHY_RX1_FORCEXMODE_MASK              (0xFU << GRF_SOC_CON6_DPHY_RX1_FORCEXMODE_SHIFT)             /* 0x000000F0 */
-#define GRF_SOC_CON6_DPHY_RX0_FORCETXSTOPMODE_SHIFT        (8U)
-#define GRF_SOC_CON6_DPHY_RX0_FORCETXSTOPMODE_MASK         (0xFU << GRF_SOC_CON6_DPHY_RX0_FORCETXSTOPMODE_SHIFT)        /* 0x00000F00 */
-#define GRF_SOC_CON6_DPHY_RX0_TURNDIABLE_SHIFT             (12U)
-#define GRF_SOC_CON6_DPHY_RX0_TURNDIABLE_MASK              (0xFU << GRF_SOC_CON6_DPHY_RX0_TURNDIABLE_SHIFT)             /* 0x0000F000 */
+#define GRF_SOC_CON5_SOC_REMAP_SHIFT                       (0U)
+#define GRF_SOC_CON5_SOC_REMAP_MASK                        (0x1U << GRF_SOC_CON5_SOC_REMAP_SHIFT)                       /* 0x00000001 */
 /* SOC_STATUS0 */
 #define GRF_SOC_STATUS0_OFFSET                             (0x280U)
 #define GRF_SOC_STATUS0_GPLL_LOCK_SHIFT                    (0U)
@@ -2593,12 +2587,21 @@ struct CSI2HOST_REG {
 #define GRF_SOC_STATUS0_CACHE_IDLE_MASK                    (0x1U << GRF_SOC_STATUS0_CACHE_IDLE_SHIFT)                   /* 0x00004000 */
 #define GRF_SOC_STATUS0_SCR0_RST_N_STS_SHIFT               (15U)
 #define GRF_SOC_STATUS0_SCR0_RST_N_STS_MASK                (0x1U << GRF_SOC_STATUS0_SCR0_RST_N_STS_SHIFT)               /* 0x00008000 */
+#define GRF_SOC_STATUS0_JPEG0_LOW_CLK_FLAG_ACLK_PD_SHIFT   (16U)
+#define GRF_SOC_STATUS0_JPEG0_LOW_CLK_FLAG_ACLK_PD_MASK    (0x1U << GRF_SOC_STATUS0_JPEG0_LOW_CLK_FLAG_ACLK_PD_SHIFT)   /* 0x00010000 */
+#define GRF_SOC_STATUS0_JPEG1_LOW_CLK_FLAG_ACLK_PD_SHIFT   (17U)
+#define GRF_SOC_STATUS0_JPEG1_LOW_CLK_FLAG_ACLK_PD_MASK    (0x1U << GRF_SOC_STATUS0_JPEG1_LOW_CLK_FLAG_ACLK_PD_SHIFT)   /* 0x00020000 */
 /* MCU_STATUS0 */
 #define GRF_MCU_STATUS0_OFFSET                             (0x300U)
 #define GRF_MCU_STATUS0_SCR0_SLEEP_SHIFT                   (0U)
 #define GRF_MCU_STATUS0_SCR0_SLEEP_MASK                    (0x1U << GRF_MCU_STATUS0_SCR0_SLEEP_SHIFT)                   /* 0x00000001 */
 #define GRF_MCU_STATUS0_SCR0_RST_N_STS_SHIFT               (1U)
 #define GRF_MCU_STATUS0_SCR0_RST_N_STS_MASK                (0x1U << GRF_MCU_STATUS0_SCR0_RST_N_STS_SHIFT)               /* 0x00000002 */
+/* MCU_STATUS1 */
+#define GRF_MCU_STATUS1_OFFSET                             (0x304U)
+#define GRF_MCU_STATUS1                                    (0x0U)
+#define GRF_MCU_STATUS1_DPHY_RX0_TESTDOUT_SHIFT            (0U)
+#define GRF_MCU_STATUS1_DPHY_RX0_TESTDOUT_MASK             (0xFFU << GRF_MCU_STATUS1_DPHY_RX0_TESTDOUT_SHIFT)           /* 0x000000FF */
 /* UOC_CON0 */
 #define GRF_UOC_CON0_OFFSET                                (0x340U)
 #define GRF_UOC_CON0_USB2OTG_SCALEDOWN_MODE_SHIFT          (0U)
@@ -2615,12 +2618,24 @@ struct CSI2HOST_REG {
 #define GRF_FAST_BOOT_ADDR_GRF_FAST_BOOT_ADDR_MASK         (0xFFFFFFFFU << GRF_FAST_BOOT_ADDR_GRF_FAST_BOOT_ADDR_SHIFT) /* 0xFFFFFFFF */
 /* MCU_CON0 */
 #define GRF_MCU_CON0_OFFSET                                (0x500U)
-#define GRF_MCU_CON0_SCR0_FUSE_IDCODE_SHIFT                (0U)
-#define GRF_MCU_CON0_SCR0_FUSE_IDCODE_MASK                 (0xFFFFFFFFU << GRF_MCU_CON0_SCR0_FUSE_IDCODE_SHIFT)         /* 0xFFFFFFFF */
+#define GRF_MCU_CON0_GRF_CON_M0_STALIB_SHIFT               (0U)
+#define GRF_MCU_CON0_GRF_CON_M0_STALIB_MASK                (0x3FFFFFFU << GRF_MCU_CON0_GRF_CON_M0_STALIB_SHIFT)         /* 0x03FFFFFF */
 /* MCU_CON1 */
 #define GRF_MCU_CON1_OFFSET                                (0x504U)
-#define GRF_MCU_CON1_SCR0_SOFT_IRQ_SHIFT                   (1U)
-#define GRF_MCU_CON1_SCR0_SOFT_IRQ_MASK                    (0x1U << GRF_MCU_CON1_SCR0_SOFT_IRQ_SHIFT)                   /* 0x00000002 */
+#define GRF_MCU_CON1_GRF_CON_M0_DBGRESTART_SHIFT           (0U)
+#define GRF_MCU_CON1_GRF_CON_M0_DBGRESTART_MASK            (0x1U << GRF_MCU_CON1_GRF_CON_M0_DBGRESTART_SHIFT)           /* 0x00000001 */
+#define GRF_MCU_CON1_GRF_CON_M0_EDBGRP_SHIFT               (1U)
+#define GRF_MCU_CON1_GRF_CON_M0_EDBGRP_MASK                (0x1U << GRF_MCU_CON1_GRF_CON_M0_EDBGRP_SHIFT)               /* 0x00000002 */
+#define GRF_MCU_CON1_GRF_CON_M0_NMI_SHIFT                  (2U)
+#define GRF_MCU_CON1_GRF_CON_M0_NMI_MASK                   (0x1U << GRF_MCU_CON1_GRF_CON_M0_NMI_SHIFT)                  /* 0x00000004 */
+#define GRF_MCU_CON1_GRF_CON_M0_RXEV_SHIFT                 (3U)
+#define GRF_MCU_CON1_GRF_CON_M0_RXEV_MASK                  (0x1U << GRF_MCU_CON1_GRF_CON_M0_RXEV_SHIFT)                 /* 0x00000008 */
+#define GRF_MCU_CON1_GRF_CON_M0_SLEEPHOLDREQN_SHIFT        (4U)
+#define GRF_MCU_CON1_GRF_CON_M0_SLEEPHOLDREQN_MASK         (0x1U << GRF_MCU_CON1_GRF_CON_M0_SLEEPHOLDREQN_SHIFT)        /* 0x00000010 */
+#define GRF_MCU_CON1_GRF_CON_M0_WICENREQ_SHIFT             (5U)
+#define GRF_MCU_CON1_GRF_CON_M0_WICENREQ_MASK              (0x1U << GRF_MCU_CON1_GRF_CON_M0_WICENREQ_SHIFT)             /* 0x00000020 */
+#define GRF_MCU_CON1_GRF_CON_M0_IRQLATENCY_SHIFT           (7U)
+#define GRF_MCU_CON1_GRF_CON_M0_IRQLATENCY_MASK            (0xFFU << GRF_MCU_CON1_GRF_CON_M0_IRQLATENCY_SHIFT)          /* 0x00007F80 */
 /* OS_REG0 */
 #define GRF_OS_REG0_OFFSET                                 (0x800U)
 #define GRF_OS_REG0_OS_REGISTER0_SHIFT                     (0U)
