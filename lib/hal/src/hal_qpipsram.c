@@ -161,7 +161,7 @@ static int32_t QPIPSRAM_ReadData(struct QPI_PSRAM *psram, uint32_t from, uint32_
     int32_t ret;
 
     /* get transfer protocols. */
-    op.cmd.buswidth = 1;
+    op.cmd.buswidth = QPIPSRAM_GET_PROTOCOL_CMD_BITS(psram->readProto);
     op.addr.buswidth = QPIPSRAM_GET_PROTOCOL_ADDR_BITS(psram->readProto);
     op.dummy.buswidth = op.addr.buswidth;
     op.data.buswidth = QPIPSRAM_GET_PROTOCOL_DATA_BITS(psram->readProto);
@@ -187,7 +187,7 @@ static int32_t QPIPSRAM_WriteData(struct QPI_PSRAM *psram, uint32_t to, uint32_t
     int32_t ret;
 
     /* get transfer protocols. */
-    op.cmd.buswidth = 1;
+    op.cmd.buswidth = QPIPSRAM_GET_PROTOCOL_CMD_BITS(psram->writeProto);
     op.addr.buswidth = QPIPSRAM_GET_PROTOCOL_ADDR_BITS(psram->writeProto);
     op.data.buswidth = QPIPSRAM_GET_PROTOCOL_DATA_BITS(psram->writeProto);
 
