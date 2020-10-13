@@ -52,6 +52,7 @@ uint32_t HAL_WDT_GetIntStatus(void);
 uint32_t HAL_WDT_GetTimeLeft(void);
 HAL_Status HAL_WDT_DynFreqUpdata(uint32_t freq);
 HAL_Status HAL_WDT_DynFreqResume(void);
+HAL_Status HAL_WDT_SetTopMsec(uint32_t topMsec, uint32_t freq);
 
 /** @} */
 

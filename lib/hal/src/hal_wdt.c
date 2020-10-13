@@ -101,7 +101,6 @@ static void WDT_SetTop(uint32_t top_s)
     pWDT->TORR = top_Val | top_Val << WDT_TORR_TIMEOUT_PERIOD_SHIFT;
 }
 
-#ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
 static uint32_t WDT_getTopMsecVal(uint32_t topMsec, uint32_t freq)
 {
     uint32_t cycles, topVal;
@@ -122,14 +121,7 @@ static uint32_t WDT_getTopMsecVal(uint32_t topMsec, uint32_t freq)
     return topVal;
 }
 
-static void WDT_SetTopMsec(uint32_t topMsec, uint32_t freq)
-{
-    uint32_t topVal;
-
-    topVal = WDT_getTopMsecVal(topMsec, freq);
-    pWDT->TORR = topVal | topVal << WDT_TORR_TIMEOUT_PERIOD_SHIFT;
-}
-
+#ifdef HAL_WDT_DYNFREQ_FEATURE_ENABLED
 static void WDT_dynFreqSetTargetTick(void)
 {
     wdtDynFreq.targetTick = HAL_GetTick() + SEC_TO_HAL_TICK(wdtDynFreq.topSec);
@@ -193,6 +185,24 @@ HAL_Status HAL_WDT_SetTimeout(uint32_t top)
     wdtDynFreq.topSec = top;
 #endif
     WDT_SetTop(top);
+    HAL_WDT_KeepAlive();
+
+    return HAL_OK;
+}
+
+/**
+ * @brief Set WDT timeout period in msec
+ * @param topMsec: timeout period in msec
+ * @param freq: clock frequency of watchdog
+ * @return HAL_Status
+ */
+HAL_Status HAL_WDT_SetTopMsec(uint32_t topMsec, uint32_t freq)
+{
+    uint32_t topVal;
+
+    topVal = WDT_getTopMsecVal(topMsec, freq);
+    pWDT->TORR = topVal | topVal << WDT_TORR_TIMEOUT_PERIOD_SHIFT;
+
     HAL_WDT_KeepAlive();
 
     return HAL_OK;
@@ -271,7 +281,7 @@ HAL_Status HAL_WDT_DynFreqUpdata(uint32_t freq)
 
     if (curTick <= wdtDynFreq.targetTickMargin) {
         topDynMs = wdtDynFreq.targetTick - curTick;
-        WDT_SetTopMsec(topDynMs, freq);
+        HAL_WDT_SetTopMsec(topDynMs, freq);
     } else {
         WDT_DYNCLK_DBG("  WDT_DynClkUpdata: %u %u %u\n",
                        curTick, wdtDynFreq.targetTick, wdtDynFreq.limitVal);
