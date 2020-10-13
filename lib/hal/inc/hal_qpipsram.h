@@ -49,6 +49,7 @@ struct QPIPSRAM_HOST {
     uint32_t speed;
     uint32_t mode;
     uint8_t flags;
+    uint8_t cs;
     uint32_t xipMem; /** XIP data mapped memory */
     uint32_t xipMemCode; /** XIP code mapped memory */
     HAL_Status (*xfer)(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op);
