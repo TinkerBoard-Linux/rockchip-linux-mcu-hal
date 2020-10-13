@@ -161,14 +161,14 @@ static void FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
 {
 #if (FSPI_VER == FSPI_VER_VER_3)
     if (host->instance == FSPI0) {
-        host->instance->DEVRGN = 25;
+        host->instance->DEVRGN = 24;
         host->instance->DEVSIZE0 = 24;
         host->instance->DEVSIZE1 = 24;
     } else {
 #ifdef FSPI1
-        host->instance->DEVRGN = 24;
-        host->instance->DEVSIZE0 = 24;
-        host->instance->DEVSIZE1 = 0;
+        host->instance->DEVRGN = 23;
+        host->instance->DEVSIZE0 = 23;
+        host->instance->DEVSIZE1 = 23;
 #endif
     }
 #endif /* FSPI_VER == FSPI_VER_VER_3 */
@@ -287,10 +287,19 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
     }
 
     // FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes);
-    // FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val);
+    // FSPI_DBG("%s 2 %lx %lx %lx %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val, host->cs);
 
     /* config FSPI */
-    pReg->CTRL0 = FSPICtrl.d32;
+    switch (host->cs) {
+    case 0:
+        pReg->CTRL0 = FSPICtrl.d32;
+        break;
+    case 1:
+        pReg->CTRL1 = FSPICtrl.d32;
+        break;
+    default:
+        break;
+    }
     pReg->CMD = FSPICmd.d32;
     if (op->addr.nbytes) {
         pReg->ADDR = op->addr.val;
@@ -646,7 +655,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
     /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
     host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
-    host->xmmcDev[host->cs].xmmcCtrl = xmmcCtrl.d32;
+    host->xmmcCtrl = xmmcCtrl.d32;
     if (op->data.dir == HAL_SPI_MEM_DATA_IN) {
         host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
     } else {
@@ -676,27 +685,22 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
         /* FSPI xmmcCtrl config */
         MODIFY_REG(pReg->XMMC_CTRL, FSPI_XMMC_CTRL_DEV_HWEN_MASK |
                    FSPI_XMMC_CTRL_PFT_EN_MASK,
-                   host->xmmcDev[0].xmmcCtrl);
+                   host->xmmcCtrl);
         FSPI_ContModeInit(host);
 
         /* FSPI device config */
-        /* FSPI_DBG("%s enable 3 %lx %lx %lx %lx\n", __func__,
-                    host->xmmcDev[0].ctrl, xmmcCtrl.d32,
+        /* FSPI_DBG("%s %p enable 3 %lx %lx %lx %lx\n", __func__,
+                    host->instance,
+                    host->xmmcDev[0].ctrl, host->cs,
                     host->xmmcDev[0].readCmd, host->xmmcDev[0].writeCmd); */
-        switch (host->cs) {
-        case 0:
-            WRITE_REG(pReg->CTRL0, host->xmmcDev[0].ctrl);
-            WRITE_REG(pReg->XMMC_RCMD0, host->xmmcDev[0].readCmd);
-            WRITE_REG(pReg->XMMC_WCMD0, host->xmmcDev[0].writeCmd);
-            break;
-        case 1:
-            WRITE_REG(pReg->CTRL1, host->xmmcDev[1].ctrl);
-            WRITE_REG(pReg->XMMC_RCMD1, host->xmmcDev[1].readCmd);
-            WRITE_REG(pReg->XMMC_WCMD1, host->xmmcDev[1].writeCmd);
-            break;
-        default:
-            break;
-        }
+        WRITE_REG(pReg->CTRL0, host->xmmcDev[0].ctrl);
+        WRITE_REG(pReg->XMMC_RCMD0, host->xmmcDev[0].readCmd);
+        WRITE_REG(pReg->XMMC_WCMD0, host->xmmcDev[0].writeCmd);
+
+        WRITE_REG(pReg->CTRL1, host->xmmcDev[1].ctrl);
+        WRITE_REG(pReg->XMMC_RCMD1, host->xmmcDev[1].readCmd);
+        WRITE_REG(pReg->XMMC_WCMD1, host->xmmcDev[1].writeCmd);
+
         WRITE_REG(pReg->MODE, 1);
     } else {
         /* FSPI_DBG("%s diable\n", __func__); */
