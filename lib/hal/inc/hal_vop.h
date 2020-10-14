@@ -199,6 +199,7 @@ HAL_Status HAL_VOP_EdpiFrmSt(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_PowerOn(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_PowerOff(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_EnableFsIrq(struct VOP_REG *pReg);
+HAL_Status HAL_VOP_EnableFrmFshIrq(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_DisableFsIrq(struct VOP_REG *pReg);
 HAL_Status HAL_VOP_EnableLineIrq(struct VOP_REG *pReg,
                                  uint32_t lineFlag0, uint32_t lineFlag1);

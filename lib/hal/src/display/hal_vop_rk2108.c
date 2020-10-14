@@ -572,8 +572,8 @@ uint32_t HAL_VOP_GetScanLine(struct VOP_REG *pReg)
 uint8_t HAL_VOP_CommitPrepare(struct VOP_REG *pReg)
 {
     return VOP_MaskRead(pReg->INTR_STATUS,
-                        VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_RAW_STS_SHIFT,
-                        VOP_INTR_STATUS_DSP_HOLD_VALID_INTR_RAW_STS_MASK);
+                        VOP_INTR_STATUS_DMA_FRM_FSH_INTR_RAW_STS_SHIFT,
+                        VOP_INTR_STATUS_DMA_FRM_FSH_INTR_RAW_STS_MASK);
 }
 
 /**
@@ -1566,6 +1566,32 @@ HAL_Status HAL_VOP_DisableFsIrq(struct VOP_REG *pReg)
 {
     VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_FS0_INTR_EN_SHIFT,
                   VOP_INTR_EN_FS0_INTR_EN_MASK, 0);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Enable VOP frame finish interrupt.
+ * @param  pReg: VOP reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_EnableFrmFshIrq(struct VOP_REG *pReg)
+{
+    VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_DMA_FRM_FSH_INTR_EN_SHIFT,
+                  VOP_INTR_EN_DMA_FRM_FSH_INTR_EN_MASK, 1);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable VOP frame finish interrupt.
+ * @param  pReg: VOP reg base.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_DisableFrmFshIrq(struct VOP_REG *pReg)
+{
+    VOP_MaskWrite(NULL, &pReg->INTR_EN, VOP_INTR_EN_DMA_FRM_FSH_INTR_EN_SHIFT,
+                  VOP_INTR_EN_DMA_FRM_FSH_INTR_EN_MASK, 0);
 
     return HAL_OK;
 }
