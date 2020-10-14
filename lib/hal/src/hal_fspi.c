@@ -357,11 +357,31 @@ HAL_Status HAL_FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *dat
             fifostat.d32 = pReg->FSR;
             if (fifostat.b.rxlevel > 0) {
                 uint32_t count = HAL_MIN(words, fifostat.b.rxlevel);
-
-                for (i = 0; i < count; i++) {
+                if (count == 15) { /* Reduce CPU cost */
                     *pData++ = pReg->DATA;
-                    words--;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    *pData++ = pReg->DATA;
+                    words -= 15;
+                } else {
+                    for (i = 0; i < count; i++) {
+                        *pData++ = pReg->DATA;
+                    }
+                    words -= count;
                 }
+
                 if (0 == words) {
                     break;
                 }
