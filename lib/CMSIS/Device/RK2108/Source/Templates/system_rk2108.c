@@ -64,6 +64,10 @@ void SystemCoreClockUpdate(void)
 {
 }
 
+#if defined(__ICCARM__)
+extern int __ICFEDIT_intvec_start__;
+#endif
+
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
@@ -74,10 +78,17 @@ void SystemInit(void)
 #endif
 
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+    __DMB();
+#if defined(__ICCARM__)
+    memcpy((void *)SRAM_IADDR_START, (void *)__ICFEDIT_intvec_start__, 0x100);
+    SCB->VTOR = SRAM_IADDR_START;
+#else
 #ifdef __STARTUP_COPY_MULTIPLE
     SCB->VTOR = (uint32_t)(__vector_remap__);
 #else
     SCB->VTOR = (uint32_t)__Vectors;
 #endif
+#endif
+    __DSB();
 #endif
 }

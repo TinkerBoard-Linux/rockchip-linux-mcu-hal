@@ -261,7 +261,7 @@ const struct AUDIO_SRC_ADDR_MAP g_audioSrcAddrMaps[] =
 {
     { 1, I2STDM0_BASE + 0x800 },
     { 2, PDM0_BASE + 0x400 },
-    { /* sentinel */ }
+    { 0 /* sentinel */ }
 };
 
 struct HAL_VAD_DEV g_vadDev =
