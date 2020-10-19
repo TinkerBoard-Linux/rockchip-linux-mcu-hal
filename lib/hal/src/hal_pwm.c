@@ -281,7 +281,7 @@ ePWM_Mode HAL_PWM_GetMode(struct PWM_HANDLE *pPWM, uint8_t channel)
 
     ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
 
-    return (ctrl >> PWM_MODE_SHIFT) & PWM_MODE_MASK;
+    return (ePWM_Mode)((ctrl >> PWM_MODE_SHIFT) & PWM_MODE_MASK);
 }
 
 /**
