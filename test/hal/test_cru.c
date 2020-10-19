@@ -9,7 +9,7 @@
 
 #if defined(HAL_CRU_MODULE_ENABLED) && (defined(RKMCU_PISCES) || defined(RKMCU_RK2108))
 
-static uint32_t isrActive;
+HAL_UNUSED static uint32_t isrActive;
 
 TEST_GROUP(HAL_CRU);
 

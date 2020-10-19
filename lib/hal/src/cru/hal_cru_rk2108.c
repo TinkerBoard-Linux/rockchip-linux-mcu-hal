@@ -254,7 +254,7 @@ static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         break;
     default:
 
-        return HAL_INVAL;
+        return 0;
     }
 
     n = (CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0xffff0000) >> 16;
@@ -427,8 +427,6 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return HAL_INVAL;
     }
-
-    return HAL_OK;
 }
 
 /**
@@ -458,7 +456,7 @@ static uint32_t HAL_CRU_ClkUsbGetFreq(eCLOCK_Name clockName)
         break;
     default:
 
-        return HAL_INVAL;
+        return 0;
     }
     n = (CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0xffff0000) >> 16;
     m = CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0x0000ffff;
