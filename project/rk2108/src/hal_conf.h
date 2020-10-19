@@ -51,7 +51,7 @@
 #define HAL_WDT_MODULE_ENABLED
 
 /* HAL_DEG SUB CONFIG */
-#define HAL_SYSLOG printf
+#define HAL_DBG_USING_LIBC_PRINTF
 #define HAL_DBG_ON
 #define HAL_DBG_INFO_ON
 #define HAL_DBG_WRN_ON
