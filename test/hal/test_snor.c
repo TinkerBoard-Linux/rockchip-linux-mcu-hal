@@ -10,6 +10,8 @@
 
 #ifdef HAL_SNOR_MODULE_ENABLED
 
+struct SPI_NOR nor_buf;
+struct SNOR_HOST nor_spi_buf;
 struct SPI_NOR *nor;
 #define maxest_sector 4
 static uint8_t *pwrite;
@@ -299,6 +301,9 @@ static HAL_Status SNOR_Adapt(void)
 }
 #endif
 
+uint8_t buffer_temp1[maxest_sector * 4096 + 64];
+uint8_t buffer_temp2[maxest_sector * 4096 + 64];
+
 /* Test code should be place in ram */
 TEST_GROUP_RUNNER(HAL_SNOR){
     struct SNOR_HOST *spi;
@@ -306,8 +311,8 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     uint8_t *pwrite_t, *pread_t;
 
     /* Config test buffer */
-    pwrite_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
-    pread_t = (uint8_t *)malloc(maxest_sector * 4096 + 64);
+    pwrite_t = (uint8_t *)buffer_temp1;
+    pread_t = (uint8_t *)buffer_temp2;
     TEST_ASSERT_NOT_NULL(pwrite_t);
     TEST_ASSERT_NOT_NULL(pread_t);
     pwrite = AlignUp(pwrite_t, 64);
@@ -318,9 +323,11 @@ TEST_GROUP_RUNNER(HAL_SNOR){
         pwrite32[i] = i;
     }
 
-    spi = (struct SNOR_HOST *)calloc(1, sizeof(struct SNOR_HOST));
+    spi = &nor_spi_buf;
+    memset(spi, 0, sizeof(struct SNOR_HOST));
     TEST_ASSERT_NOT_NULL(spi);
-    nor = (struct SPI_NOR *)calloc(1, sizeof(struct SPI_NOR));
+    nor = &nor_buf;
+    memset(spi, 0, sizeof(struct SPI_NOR));
     TEST_ASSERT_NOT_NULL(nor);
     nor->spi = spi;
 #if defined(HAL_SNOR_FSPI_HOST)
