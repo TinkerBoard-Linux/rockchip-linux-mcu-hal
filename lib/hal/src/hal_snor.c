@@ -256,12 +256,12 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, 
                                                      HAL_SPI_MEM_OP_NO_ADDR,
                                                      HAL_SPI_MEM_OP_NO_DUMMY,
                                                      HAL_SPI_MEM_OP_DATA_IN(len, NULL, 1));
-    int32_t ret;
+    HAL_Status ret;
 
     /* HAL_SNOR_DBG("%s %x %lx\n", __func__, code, len); */
     ret = SNOR_ReadWriteReg(nor, &op, val);
     if (ret) {
-        HAL_SNOR_DBG("error %ld reading %x\n", ret, code);
+        HAL_SNOR_DBG("error %d reading %x\n", ret, code);
     }
 
     return ret;
@@ -445,7 +445,7 @@ static HAL_Status SNOR_WriteEnable(struct SPI_NOR *nor)
  */
 static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
 {
-    int32_t ret;
+    HAL_Status ret;
     uint32_t i;
     uint8_t status;
 
@@ -483,7 +483,7 @@ static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8
 {
     uint8_t WriteStatCmd[2] = { SPINOR_OP_WRSR, SPINOR_OP_WRSR1 };
     uint8_t i = nor->info->feature & FEA_STATUE_MASK;
-    int32_t ret;
+    HAL_Status ret;
 
     if (i == FEA_STATUE_MODE0) { /* Writestatus0 */
         SNOR_WriteEnable(nor);
@@ -526,7 +526,7 @@ static HAL_Status SNOR_WriteStatus(struct SPI_NOR *nor, uint32_t regIndex, uint8
 
 static HAL_Status SNOR_EnableQE(struct SPI_NOR *nor)
 {
-    int32_t ret = HAL_OK;
+    HAL_Status ret = HAL_OK;
     int regIndex;
     int bitOffset;
     uint8_t status;
@@ -554,7 +554,7 @@ static HAL_Status SNOR_Enter4byte(struct SPI_NOR *nor)
     return nor->writeReg(nor, SPINOR_OP_EN4B, NULL, 0);
 }
 
-__STATIC_INLINE HAL_Status SNOR_ReadSFDP(struct SPI_NOR *nor, uint32_t addr, uint8_t *data)
+HAL_UNUSED __STATIC_INLINE HAL_Status SNOR_ReadSFDP(struct SPI_NOR *nor, uint32_t addr, uint8_t *data)
 {
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(SPINOR_OP_READ_SFDP, 1),
                                                      HAL_SPI_MEM_OP_ADDR(3, addr, 1),
@@ -654,7 +654,7 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
  */
 HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE eraseType)
 {
-    int32_t ret;
+    HAL_Status ret;
     int32_t timeout[] = { 400, 2000, 40000 };
 
     /* HAL_SNOR_DBG("%s addr %lx\n", __func__, addr); */

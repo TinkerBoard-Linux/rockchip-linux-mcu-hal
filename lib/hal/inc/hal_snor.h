@@ -101,7 +101,7 @@ struct SPI_NOR {
                     uint32_t len, uint8_t *read_buf);
     int32_t (*write)(struct SPI_NOR *nor, uint32_t to,
                      uint32_t len, const uint8_t *write_buf);
-    int32_t (*erase)(struct SPI_NOR *nor, uint32_t offs);
+    HAL_Status (*erase)(struct SPI_NOR *nor, uint32_t offs);
 
     enum SPI_NOR_PROTOCOL readProto;
     enum SPI_NOR_PROTOCOL writeProto;
