@@ -111,12 +111,12 @@
         .buswidth = __buswidth,                              \
     }
 
-#define HAL_SPI_MEM_OP_NO_DATA \
-    {                          \
-        .dir = 0,              \
-        .nbytes = 0,           \
-        .buf.out = NULL,       \
-        .buswidth = 0,         \
+#define HAL_SPI_MEM_OP_NO_DATA      \
+    {                               \
+        .dir = HAL_SPI_MEM_DATA_IN, \
+        .nbytes = 0,                \
+        .buf.out = NULL,            \
+        .buswidth = 0,              \
     }
 
 /* Max len case: cmd(1) + addr(4) + dummy(4) */
