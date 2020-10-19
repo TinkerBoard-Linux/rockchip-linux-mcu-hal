@@ -41,8 +41,9 @@ static HAL_Status QPIPSRAM_TEST(uint32_t testEndLBA)
     for (testLBA = 0; (testLBA + testSecCount) < testEndLBA;) {
         pwrite32[0] = testLBA;
         pread32 = (uint32_t *)(host->xipMemData + testLBA * 512);
-        for (i = 0; i < (maxest_sector * 128); i++)
+        for (i = 0; i < (maxest_sector * 128); i++) {
             pread32[i] = pwrite32[i];
+        }
         for (j = 0; j < testSecCount * 128; j++) {
             if (pwrite32[j] != pread32[j]) {
                 HAL_DBG_HEX("w:", pwrite32, 4, testSecCount * 128);
@@ -50,19 +51,20 @@ static HAL_Status QPIPSRAM_TEST(uint32_t testEndLBA)
                 HAL_DBG(
                     "check not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
                     testLBA, j, (uint32_t)pwrite32[j], (uint32_t)pread32[j]);
-                while (1)
+                while (1) {
                     ;
-
-                return HAL_ERROR;
+                }
             }
         }
         printFlag = testLBA & 0x1FF;
-        if (printFlag < testSecCount)
+        if (printFlag < testSecCount) {
             HAL_DBG("testLBA = %lx\n", testLBA);
+        }
         testLBA += testSecCount;
         testSecCount++;
-        if (testSecCount > maxest_sector)
+        if (testSecCount > maxest_sector) {
             testSecCount = 1;
+        }
     }
     HAL_DBG("---------Test ftl check---------\n");
 
@@ -77,19 +79,20 @@ static HAL_Status QPIPSRAM_TEST(uint32_t testEndLBA)
                 HAL_DBG(
                     "recheck not match:row=%lx, num=%lx, write=%lx, read=%lx\n",
                     testLBA, j, (uint32_t)pread32[j], (uint32_t)pread32[j]);
-                while (1)
+                while (1) {
                     ;
-
-                return HAL_ERROR;
+                }
             }
         }
         printFlag = testLBA & 0x1FF;
-        if (printFlag < testSecCount)
+        if (printFlag < testSecCount) {
             HAL_DBG("testLBA = %lx\n", testLBA);
+        }
         testLBA += testSecCount;
         testSecCount++;
-        if (testSecCount > maxest_sector)
+        if (testSecCount > maxest_sector) {
             testSecCount = 1;
+        }
     }
     HAL_DBG("---------Test end---------\n");
 
@@ -137,15 +140,17 @@ static HAL_Status SPI_XipConfig(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP
 static HAL_Status QPIPSRAM_Adapt(void)
 {
     struct HAL_FSPI_HOST *host;
-    uint32_t ret;
+    HAL_Status ret;
 
     /* Designated host to SPI PSRAM */
 #ifdef FSPI1
-    if (g_fspi1Dev.xmmcDev[0].type == DEV_PSRAM)
+    if (g_fspi1Dev.xmmcDev[0].type == DEV_PSRAM) {
         host = &g_fspi1Dev;
+    }
 #elif FSPI0
-    else if (g_fspi0Dev.xmmcDev[0].type == DEV_PSRAM)
+    else if (g_fspi0Dev.xmmcDev[0].type == DEV_PSRAM) {
         host = &g_fspi0Dev;
+    }
 #endif
     HAL_FSPI_Init(host);
     psram->spi->userdata = (void *)host;
@@ -171,8 +176,9 @@ TEST_GROUP_RUNNER(HAL_QPIPSRAM){
     pwrite32 = (uint32_t *)pwrite;
     HAL_DBG("pwrite %p %p\n", pwrite, pwrite32);
 
-    for (int32_t i = 0; i < (maxest_sector * 1024); i++)
+    for (int32_t i = 0; i < (maxest_sector * 1024); i++) {
         pwrite32[i] = i;
+    }
 
     spi = (struct QPIPSRAM_HOST *)calloc(1, sizeof(struct QPIPSRAM_HOST));
     TEST_ASSERT_NOT_NULL(spi);
