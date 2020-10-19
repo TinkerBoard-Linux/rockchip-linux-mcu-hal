@@ -28,7 +28,7 @@ static HAL_Status SNOR_SINGLE_TEST(void)
     uint32_t testLba = FLASH_SKIP_LBA;
 
     pwrite32[0] = testLba;
-    HAL_SNOR_Erase(nor, testLba << 9, 0);
+    HAL_SNOR_Erase(nor, testLba << 9, ERASE_SECTOR);
     HAL_SNOR_ProgData(nor, testLba << 9, pwrite32, 0x1000);
     memset(pread, 0, 256);
     memset(pread32, 0, 0x1000);
@@ -50,8 +50,6 @@ static HAL_Status SNOR_SINGLE_TEST(void)
             while (1) {
                 ;
             }
-
-            return HAL_ERROR;
         }
     }
     HAL_DBG("SNOR Single test success\n");
@@ -75,7 +73,7 @@ static HAL_Status SNOR_STRESS_RANDOM_TEST(uint32_t testEndLBA)
         pwrite32[0] = testLBA;
         ret = HAL_SNOR_OverWrite(nor, testLBA, testSecCount, pwrite32);
         if (ret != testSecCount) {
-            return ret;
+            return HAL_ERROR;
         }
         pread32[0] = -1;
         #ifdef HAL_FSPI_DMA_ENABLED
@@ -83,7 +81,7 @@ static HAL_Status SNOR_STRESS_RANDOM_TEST(uint32_t testEndLBA)
         #endif
         ret = HAL_SNOR_Read(nor, testLBA, testSecCount, pread32);
         if (ret != testSecCount) {
-            return ret;
+            return HAL_ERROR;
         }
         for (j = 0; j < testSecCount * (int32_t)nor->sectorSize / 4; j++) {
             if (pwrite32[j] != pread32[j]) {
@@ -95,8 +93,6 @@ static HAL_Status SNOR_STRESS_RANDOM_TEST(uint32_t testEndLBA)
                 while (1) {
                     ;
                 }
-
-                return HAL_ERROR;
             }
         }
         HAL_DBG("testCount= %lx testLBA= %lx\n", testCount, testLBA);
@@ -110,7 +106,7 @@ static HAL_Status SNOR_STRESS_RANDOM_TEST(uint32_t testEndLBA)
 #ifdef HAL_FSPI_XIP_ENABLE
 static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
 {
-    uint32_t j, ret;
+    int32_t j, ret;
     uint32_t testLBA = 0;
     uint32_t testCount, testSecCount = 1;
     struct HAL_FSPI_HOST *host = (struct HAL_FSPI_HOST *)nor->spi->userdata;
@@ -120,12 +116,12 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
         pwrite32[0] = testLBA;
         ret = HAL_SNOR_OverWrite(nor, testLBA, testSecCount, pwrite32);
         if (ret != testSecCount) {
-            return ret;
+            return HAL_ERROR;
         }
         pread32[0] = -1;
         ret = HAL_SNOR_Read(nor, testLBA, testSecCount, pread32);
         if (ret != testSecCount) {
-            return ret;
+            return HAL_ERROR;
         }
         for (j = 0; j < testSecCount * (int32_t)nor->sectorSize / 4; j++) {
             if (pwrite32[j] != pread32[j]) {
@@ -137,8 +133,6 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
                 while (1) {
                     ;
                 }
-
-                return HAL_ERROR;
             }
         }
         HAL_DBG("testLBA = %lx\n", testLBA);
@@ -164,8 +158,6 @@ static HAL_Status SNOR_XIP_RANDOM_TEST(uint32_t testEndLBA)
                 while (1) {
                     ;
                 }
-
-                return HAL_ERROR;
             }
         }
         HAL_DBG("testCount= %lx testLBA = %lx\n", testCount, testLBA);
@@ -255,7 +247,7 @@ static HAL_Status SPI_XipConfig(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op
 static HAL_Status SNOR_Adapt(void)
 {
     struct HAL_FSPI_HOST *host;
-    uint32_t ret;
+    HAL_Status ret;
 
     /* Designated host to SNOR */
     host = &g_fspi0Dev;
