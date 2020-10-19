@@ -54,6 +54,8 @@ int fputc(int ch, FILE *f)
     }
 
     HAL_UART_SerialOutChar(pUart, (char)ch);
+
+    return 0;
 }
 #endif
 
@@ -67,7 +69,7 @@ void UART_IRQHandler(void)
 
 struct CLK_INIT {
     const char *name;
-    uint32_t clkId;
+    eCLOCK_Name clkId;
     uint32_t initRate;
 };
 
@@ -120,7 +122,7 @@ void HAL_TICK_IRQHandler(void)
     HAL_TIMER_ClrInt(TIMER4);
 }
 
-int main(void)
+void main(void)
 {
     struct HAL_UART_CONFIG hal_uart_config = {
         .baudRate = UART_BR_115200,
@@ -165,11 +167,11 @@ int main(void)
     while (1) {
         ;
     }
-
-    return 0;
 }
 
 int Main(void)
 {
-    return main();
+    main();
+
+    return 0;
 }
