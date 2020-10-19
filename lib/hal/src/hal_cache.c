@@ -385,19 +385,19 @@ HAL_Status HAL_ICACHE_DisableInt(void)
  */
 HAL_Check HAL_ICACHE_GetInt(void)
 {
+    uint32_t status = 0;
+
 #if defined(ICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    uint32_t status = 0;
 
     status = ICACHE->CACHE_INT_ST & ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK;
 
+#endif
+
+#endif
+
     return status ? HAL_TRUE : HAL_FALSE;
-#endif
-
-#endif
-
-    return HAL_FALSE;
 }
 
 /**
@@ -407,19 +407,19 @@ HAL_Check HAL_ICACHE_GetInt(void)
  */
 uint32_t HAL_ICACHE_GetErrAddr(void)
 {
+    uint32_t address = -1;
+
 #if defined(ICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    uint32_t address;
 
     address = ICACHE->CACHE_ERR_HADDR;
 
+#endif
+
+#endif
+
     return address;
-#endif
-
-#endif
-
-    return -1;
 }
 
 /**
@@ -840,19 +840,19 @@ HAL_Status HAL_DCACHE_DisableInt(void)
  */
 HAL_Check HAL_DCACHE_GetInt(void)
 {
+    uint32_t status = 0;
+
 #if defined(DCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    uint32_t status = 0;
 
     status = DCACHE->CACHE_INT_ST & DCACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK;
 
+#endif
+
+#endif
+
     return status ? HAL_TRUE : HAL_FALSE;
-#endif
-
-#endif
-
-    return HAL_FALSE;
 }
 
 /**
@@ -885,19 +885,19 @@ HAL_Status HAL_DCACHE_ClearInt(void)
  */
 uint32_t HAL_DCACHE_GetErrAddr(void)
 {
+    uint32_t address = -1;
+
 #if defined(DCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
-    uint32_t address;
 
     address = DCACHE->CACHE_ERR_HADDR;
 
+#endif
+
+#endif
+
     return address;
-#endif
-
-#endif
-
-    return -1;
 }
 
 /** @} */
