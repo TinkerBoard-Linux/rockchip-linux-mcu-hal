@@ -109,7 +109,7 @@ static HAL_Check PD_IsOn(ePD_Id pd)
     /* check idle status for idle-only domains */
 
     if (stShift > 16) {
-        return !PD_IsIdle(pd);
+        return PD_IsIdle(pd) ? HAL_FALSE : HAL_TRUE;
     }
 
     return (HAL_Check)(!((PMU->PWRDN_ST & (1 << stShift)) >> stShift));
