@@ -610,7 +610,7 @@ uint32_t HAL_QPIPSRAM_GetCapacity(struct QPI_PSRAM *psram)
  */
 HAL_Status HAL_QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data, uint8_t len)
 {
-    int32_t ret;
+    HAL_Status ret;
     uint8_t *id = data;
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(QPIPSRAM_OP_RDID, 1),
                                                      HAL_SPI_MEM_OP_ADDR(3, 0xa5a5a5a5, 1),
