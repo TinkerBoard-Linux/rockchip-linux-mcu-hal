@@ -173,22 +173,23 @@ HAL_Status HAL_Init(void)
  * @param  clkSource: new systick clock source.
  * @return HAL_OK.
  */
-HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, eHAL_tickClkSource clkSource)
+HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, eHAL_systickClkSource clkSource)
 {
     uint32_t rate = hz;
-    uint32_t ret = HAL_OK;
-
-    SystemCoreClock = rate;   /* Update global SystemCoreClock */
+    HAL_Status ret = HAL_OK;
 
 #if defined(__CORTEX_M) && defined(HAL_SYSTICK_MODULE_ENABLED)
-    HAL_ASSERT(IS_SYSTICK_SOURCE(clkSource));
     ret = HAL_SYSTICK_CLKSourceConfig(clkSource);
-    if (ret == HAL_OK && clkSource == HAL_TICK_CLKSRC_EXT) {
+    if (ret == HAL_OK && clkSource == HAL_SYSTICK_CLKSRC_EXT) {
         rate = PLL_INPUT_OSC_RATE;
     }
     HAL_SYSTICK_Config(rate / (1000 / HAL_GetTickFreq()));
     ret = HAL_OK;
 #endif
+
+    if (ret == HAL_OK) {
+        SystemCoreClock = rate;   /* Update global SystemCoreClock */
+    }
 
     return ret;
 }

@@ -102,6 +102,13 @@
 #define HAL_SECTION_XIP_RODATA
 #endif
 
+typedef enum {
+    HAL_SYSTICK_CLKSRC_CORE,
+    HAL_SYSTICK_CLKSRC_EXT
+} eHAL_systickClkSource;
+
+#define IS_SYSTICK_SOURCE(s) (((s) == HAL_SYSTICK_CLKSRC_CORE) || ((s) == HAL_SYSTICK_CLKSRC_EXT))
+
 /***************************** Structure Definition **************************/
 typedef enum {
     HAL_FALSE = 0x00U,

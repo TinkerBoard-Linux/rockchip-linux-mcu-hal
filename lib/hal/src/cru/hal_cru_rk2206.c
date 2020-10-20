@@ -527,7 +527,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return error;
     case HCLK_MCU_BUS:
-        HAL_SystemCoreClockUpdate(rate, HAL_TICK_CLKSRC_EXT);
+        HAL_SystemCoreClockUpdate(rate, HAL_SYSTICK_CLKSRC_EXT);
         break;
 
     case CLK_UART0:

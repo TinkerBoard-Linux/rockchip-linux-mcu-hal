@@ -27,11 +27,6 @@
 
 /***************************** Structure Definition **************************/
 
-typedef enum {
-    HAL_SYSTICK_CLKSRC_CORE,
-    HAL_SYSTICK_CLKSRC_EXT
-} eHAL_systickClkSource;
-
 /** @} */
 /***************************** Function Declare ******************************/
 /** @defgroup SYSTICK_Public_Function_Declare Public Function Declare

@@ -560,7 +560,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     }
 
     if (clockName == HCLK_M4) {
-        HAL_SystemCoreClockUpdate(rate, HAL_TICK_CLKSRC_EXT);
+        HAL_SystemCoreClockUpdate(rate, HAL_SYSTICK_CLKSRC_EXT);
     }
 
     return HAL_OK;
