@@ -28,7 +28,11 @@
         WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
 #define POSITION_VAL(VAL) (__CLZ(__RBIT(VAL)))
 
-#define MASK_TO_WE(msk)                  (__builtin_constant_p(msk) ? ((msk) > 0xFFFFU ? 0 : ((msk) << 16)) : ((msk) << 16))
+#if defined(__GNUC__) || defined(__CC_ARM)
+#define MASK_TO_WE(msk) (__builtin_constant_p(msk) ? ((msk) > 0xFFFFU ? 0 : ((msk) << 16)) : ((msk) << 16))
+#else
+#define MASK_TO_WE(msk) ((msk) << 16)
+#endif
 #define VAL_MASK_WE(msk, val)            ((MASK_TO_WE(msk)) | (val))
 #define WRITE_REG_MASK_WE(reg, msk, val) WRITE_REG(reg, (VAL_MASK_WE(msk, val)))
 
