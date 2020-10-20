@@ -80,9 +80,9 @@ typedef enum {
 } eVOP_BcshVideoMode;
 
 struct DSC_PPS_RC_RANGE_PARAMETER {
-    char rangeMinQp;
-    char rangeMaxQp;
-    char rangeBpgOffset;
+    uint8_t rangeMinQp;
+    uint8_t rangeMaxQp;
+    int8_t rangeBpgOffset;
 };
 
 struct DSC_PPS_RC_PARAMETER_SET {
