@@ -51,7 +51,7 @@ TEST(HAL_PL330, MemcpyTest){
         src[i] = i;
     }
 
-    pchan = HAL_PL330_RequestChannel(s_pl330, 0);
+    pchan = HAL_PL330_RequestChannel(s_pl330, (DMA_REQ_Type)0);
     TEST_ASSERT_NOT_NULL(pchan);
 
     ret = HAL_PL330_PrepDmaMemcpy(pchan, (uint32_t)&dst, (uint32_t)&src,
