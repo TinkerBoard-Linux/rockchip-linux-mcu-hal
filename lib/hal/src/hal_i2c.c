@@ -690,7 +690,7 @@ HAL_Status HAL_I2C_Transfer(struct I2C_HANDLE *pI2C, eI2C_TransferType type, boo
 
     /* Reset value */
     pI2C->processed = 0;
-    pI2C->error = 0;
+    pI2C->error = HAL_OK;
     pI2C->state = STATE_IDLE;
 
     I2C_Start(pI2C);

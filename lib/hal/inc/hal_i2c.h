@@ -114,7 +114,7 @@ struct I2C_HANDLE {
     eI2C_State state;
     uint32_t cfg;
     uint32_t processed;
-    int32_t error;
+    HAL_Status error;
     bool isLastMSG;
 };
 
