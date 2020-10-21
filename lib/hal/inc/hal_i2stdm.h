@@ -32,9 +32,9 @@
 struct HAL_I2STDM_DEV {
     struct I2STDM_REG *pReg;
     uint32_t mclkOut;
-    uint32_t mclkTx;
+    eCLOCK_Name mclkTx;
     uint32_t mclkTxGate;
-    uint32_t mclkRx;
+    eCLOCK_Name mclkRx;
     uint32_t mclkRxGate;
     uint32_t hclk;
     ePD_Id pd;

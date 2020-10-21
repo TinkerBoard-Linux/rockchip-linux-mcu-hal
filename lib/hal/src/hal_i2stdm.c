@@ -328,7 +328,7 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
     val = clkInvert ? I2STDM_CKR_CKP_POS : I2STDM_CKR_CKP_NEG;
     MODIFY_REG(reg->CKR, mask, val);
 
-    HAL_ASSERT((config->trcmMode >= TRCM_NONE) && (config->trcmMode <= TRCM_RXONLY));
+    HAL_ASSERT(config->trcmMode <= TRCM_RXONLY);
     i2sTdm->trcmMode = config->trcmMode;
     MODIFY_REG(reg->CKR, I2STDM_CKR_LRCK_COMMON_MASK,
                i2sTdm->trcmMode << I2STDM_CKR_LRCK_COMMON_SHIFT);
