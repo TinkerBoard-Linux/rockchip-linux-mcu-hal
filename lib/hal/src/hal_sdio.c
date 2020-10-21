@@ -37,7 +37,7 @@ static inline uint32_t MMC_GetWaterlevel(struct HAL_MMC_HOST *host)
            MMC_STATUS_FIFO_COUNT_MASK;
 }
 
-static inline uint32_t MMC_IsFifoEmpty(struct HAL_MMC_HOST *host)
+HAL_UNUSED static inline uint32_t MMC_IsFifoEmpty(struct HAL_MMC_HOST *host)
 {
     struct MMC_REG *pReg = host->pReg;
 
@@ -91,9 +91,12 @@ uint32_t HAL_MMC_GetResponse(struct HAL_MMC_HOST *host, int32_t respNum)
 HAL_Check HAL_MMC_IsDataStateBusy(struct HAL_MMC_HOST *host)
 {
     struct MMC_REG *pReg = host->pReg;
+    uint32_t ret;
 
-    return READ_BIT(pReg->STATUS, MMC_STATUS_DATA_BUSY_MASK) ||
-           READ_BIT(pReg->STATUS, MMC_STATUS_DATA_STATE_MC_BUSY_MASK);
+    ret = READ_BIT(pReg->STATUS, MMC_STATUS_DATA_BUSY_MASK) ||
+          READ_BIT(pReg->STATUS, MMC_STATUS_DATA_STATE_MC_BUSY_MASK);
+
+    return ret ? HAL_TRUE : HAL_FALSE;
 }
 
 /** @} */
