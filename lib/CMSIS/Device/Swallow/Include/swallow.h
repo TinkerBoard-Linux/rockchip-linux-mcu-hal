@@ -1229,6 +1229,7 @@ struct I2C_REG {
     __I  uint32_t RXDATA[8];                          /* Address Offset: 0x0200 */
     __I  uint32_t ST;                                 /* Address Offset: 0x0220 */
     __IO uint32_t DBGCTRL;                            /* Address Offset: 0x0224 */
+    __IO uint32_t CON1;                               /* Address Offset: 0x0228 */
 };
 /* UART Register Structure Define */
 struct UART_REG {
@@ -9452,6 +9453,14 @@ struct CSI2HOST_REG {
 #define I2C_DBGCTRL_NAK_RELEASE_SCL_MASK                   (0x1U << I2C_DBGCTRL_NAK_RELEASE_SCL_SHIFT)                  /* 0x00002000 */
 #define I2C_DBGCTRL_H0_CHECK_SCL_SHIFT                     (14U)
 #define I2C_DBGCTRL_H0_CHECK_SCL_MASK                      (0x1U << I2C_DBGCTRL_H0_CHECK_SCL_SHIFT)                     /* 0x00004000 */
+/* CON1 */
+#define I2C_CON1_OFFSET                                    (0x228U)
+#define I2C_CON1_AUTO STOP_SHIFT                           (0U)
+#define I2C_CON1_AUTO STOP_MASK                            (0x1U << I2C_CON1_AUTO STOP_SHIFT)                           /* 0x00000001 */
+#define I2C_CON1_AUTO STOP TX END_SHIFT                    (1U)
+#define I2C_CON1_AUTO STOP TX END_MASK                     (0x1U << I2C_CON1_AUTO STOP TX END_SHIFT)                    /* 0x00000002 */
+#define I2C_CON1_AUTO STOP NAK_SHIFT                       (2U)
+#define I2C_CON1_AUTO STOP NAK_MASK                        (0x1U << I2C_CON1_AUTO STOP NAK_SHIFT)                       /* 0x00000004 */
 /******************************************UART******************************************/
 /* RBR */
 #define UART_RBR_OFFSET                                    (0x0U)
