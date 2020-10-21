@@ -193,7 +193,7 @@ struct HAL_PL330_DEV {
     struct PL330_CHAN chans[PL330_CHANNELS_PER_DEV];
     struct PL330_CONFIG pcfg;
     ePL330_COND peripReqType;
-    uint8_t irq[PL330_NR_IRQS];
+    IRQn_Type irq[PL330_NR_IRQS];
     ePD_Id pd;
 
     void *priv;

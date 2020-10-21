@@ -317,7 +317,7 @@ __STATIC_INLINE int PL330_Instr_DMAMOV(uint8_t dryRun, char *buf, uint8_t rd,
     return SZ_DMAMOV;
 }
 
-__STATIC_INLINE int PL330_Instr_DMANOP(uint8_t dryRun, char *buf)
+HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMANOP(uint8_t dryRun, char *buf)
 {
     if (dryRun) {
         return SZ_DMANOP;
@@ -334,7 +334,7 @@ __STATIC_INLINE int PL330_Instr_DMANOP(uint8_t dryRun, char *buf)
     return SZ_DMANOP;
 }
 
-__STATIC_INLINE int PL330_Instr_DMARMB(uint8_t dryRun, char *buf)
+HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMARMB(uint8_t dryRun, char *buf)
 {
     if (dryRun) {
         return SZ_DMARMB;
@@ -369,7 +369,7 @@ __STATIC_INLINE int PL330_Instr_DMASEV(uint8_t dryRun, char *buf, uint8_t event)
     return SZ_DMASEV;
 }
 
-__STATIC_INLINE int PL330_Instr_DMAWMB(uint8_t dryRun, char *buf)
+HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMAWMB(uint8_t dryRun, char *buf)
 {
     if (dryRun) {
         return SZ_DMAWMB;
@@ -498,7 +498,7 @@ __STATIC_INLINE int PL330_Instr_DMALPEND(uint8_t dryRun, char *buf,
     return SZ_DMALPEND;
 }
 
-__STATIC_INLINE int PL330_Instr_DMAKILL(uint8_t dryRun, char *buf)
+HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMAKILL(uint8_t dryRun, char *buf)
 {
     if (dryRun) {
         return SZ_DMAKILL;
@@ -565,7 +565,7 @@ __STATIC_INLINE int PL330_Instr_DMASTP(uint8_t dryRun, char *buf,
     return SZ_DMASTP;
 }
 
-__STATIC_INLINE int PL330_Instr_DMASTZ(uint8_t dryRun, char *buf)
+HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMASTZ(uint8_t dryRun, char *buf)
 {
     if (dryRun) {
         return SZ_DMASTZ;
@@ -582,8 +582,8 @@ __STATIC_INLINE int PL330_Instr_DMASTZ(uint8_t dryRun, char *buf)
     return SZ_DMASTZ;
 }
 
-__STATIC_INLINE int PL330_Instr_DMAWFE(uint8_t dryRun, char *buf, uint8_t ev,
-                                       uint32_t invalidate)
+HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMAWFE(uint8_t dryRun, char *buf, uint8_t ev,
+                                                  uint32_t invalidate)
 {
     if (dryRun) {
         return SZ_DMAWFE;
@@ -982,7 +982,7 @@ static int _Setup_Xfer_Cyclic(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
  *
  * @return The endian swap size bit encoding for the CCR.
  */
-__STATIC_INLINE uint32_t PL330_ToendianSwapSizeBits(uint32_t endianSwapSize)
+HAL_UNUSED __STATIC_INLINE uint32_t PL330_ToendianSwapSizeBits(uint32_t endianSwapSize)
 {
     switch (endianSwapSize) {
     case 0:
@@ -1287,9 +1287,9 @@ static HAL_Status PL330_GenDmaProg(struct HAL_PL330_DEV *pl330, struct PL330_XFE
  * @param channel: the DMA channel number.
  * @param addr: DMA program starting address, this should be DMA address
  *
- * @return 0 on success, -1 on time out
+ * @return HAL_OK on success, HAL_ERROR on time out
  */
-static int PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32_t addr)
+static HAL_Status PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32_t addr)
 {
     char buf[8];
     uint32_t dbgInst0;
@@ -1311,7 +1311,7 @@ static int PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32_t addr
     if (waitCount >= PL330_MAX_WAIT) {
         HAL_DBG("PL330 device at %p debug status busy time out\r\n", reg);
 
-        return -1;
+        return HAL_ERROR;
     }
 
     /* write debug instruction 0 */
@@ -1330,13 +1330,13 @@ static int PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32_t addr
     if (waitCount >= PL330_MAX_WAIT) {
         HAL_DBG("PL330 device at %p debug status busy time out\r\n", reg);
 
-        return -1;
+        return HAL_ERROR;
     }
 
     /* run the command in DbgInst0 and DbgInst1 */
     WRITE_REG(reg->DBGCMD, 0);
 
-    return 0;
+    return HAL_OK;
 }
 
 static void PL330_CleanInvalidateDataBuf(struct PL330_DESC *desc)
@@ -1602,8 +1602,9 @@ uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
         /*
          * if DMA manager is fault
          */
-        HAL_DBG("pl330 %p fault with type: 0x%lx at pc 0x%lx\n", pl330->pReg,
-                READ_REG(reg->FTRD), READ_REG(reg->DPC));
+        HAL_DBG("pl330 %p fault with type: 0x%lx ", pl330->pReg,
+                READ_REG(reg->FTRD));
+        HAL_DBG("at pc 0x%lx\n", READ_REG(reg->DPC));
         /* kill the DMA manager thread */
         /* Should we disable interrupt?*/
         PL330_Exec_DMAKILL(pl330->pReg, 0, 0);
@@ -1613,8 +1614,9 @@ uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
     if (val) {
         while (i < pl330->pcfg.numChan) {
             if (val & (1 << i)) {
-                HAL_DBG("Reset Channel-%d\t CS-%lx FTC-%lx\n", i,
-                        READ_REG(reg->CHAN_STS[i].CSR), READ_REG(reg->FTR[i]));
+                HAL_DBG("Reset Channel-%d\t CS-%lx ", i,
+                        READ_REG(reg->CHAN_STS[i].CSR));
+                HAL_DBG("FTC-%lx\n", READ_REG(reg->FTR[i]));
                 /* kill the channel thread */
                 /* Should we disable interrupt? */
                 PL330_Exec_DMAKILL(pl330->pReg, i, 1);
