@@ -34,7 +34,7 @@
 /** pdm dev struct */
 struct HAL_PDM_DEV {
     struct PDM_REG *pReg;
-    uint32_t mclk;
+    eCLOCK_Name mclk;
     uint32_t mclkGate;
     uint32_t mclkRate;
     uint32_t hclk;
