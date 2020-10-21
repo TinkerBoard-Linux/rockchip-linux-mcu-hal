@@ -241,7 +241,7 @@ HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad)
 
     val = READ_REG(reg->CONTROL);
     if ((val & VAD_CONTROL_VAD_EN_MASK) == VAD_CONTROL_VAD_DIS) {
-        return 0;
+        return HAL_OK;
     }
     MODIFY_REG(reg->CONTROL, VAD_CONTROL_VAD_EN_MASK, VAD_CONTROL_VAD_DIS);
     val = READ_REG(reg->CONTROL);
@@ -256,7 +256,7 @@ HAL_Status HAL_VAD_Stop(struct HAL_VAD_DEV *vad)
         vbuf->size = 0;
         vbuf->cur = vbuf->begin;
 
-        return 0;
+        return HAL_OK;
     }
     vbuf->cur = val;
 
@@ -284,7 +284,7 @@ HAL_Status HAL_VAD_Pause(struct HAL_VAD_DEV *vad)
 
     val = READ_REG(reg->CONTROL);
     if ((val & VAD_CONTROL_VAD_EN_MASK) == VAD_CONTROL_VAD_DIS) {
-        return 0;
+        return HAL_OK;
     }
     MODIFY_REG(reg->CONTROL, VAD_CONTROL_VAD_EN_MASK, VAD_CONTROL_VAD_DIS);
 
