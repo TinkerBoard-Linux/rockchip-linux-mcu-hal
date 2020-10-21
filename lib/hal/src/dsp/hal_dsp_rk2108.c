@@ -171,7 +171,7 @@ eDSP_powerSt HAL_DSP_GetPowerSt(void)
 
     val = (val & PMU_POWER_ST_DSP_POWER_STATE_MASK) >> PMU_POWER_ST_DSP_POWER_STATE_SHIFT;
 
-    return val;
+    return (eDSP_powerSt)val;
 }
 
 HAL_Status HAL_DSP_WaitForPowerSt(eDSP_powerSt status, uint32_t timeout)
