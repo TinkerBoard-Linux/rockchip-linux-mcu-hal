@@ -182,7 +182,7 @@ HAL_Status HAL_MBOX_Suspend(struct MBOX_REG *pReg)
 HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg)
 {
     struct MBOX_DEV *pMBox;
-    eMBOX_CH chan;
+    uint32_t chan;
 
     HAL_ASSERT(IS_MBOX_INSTANCE(pReg));
 
@@ -193,7 +193,7 @@ HAL_Status HAL_MBOX_Resume(struct MBOX_REG *pReg)
 
     for (chan = 0; chan < MBOX_CH_MAX; chan++) {
         if (pMBox->chans[chan].client) {
-            MBOX_ChanEnable(pReg, chan, pMBox->A2B);
+            MBOX_ChanEnable(pReg, (eMBOX_CH)chan, pMBox->A2B);
         }
     }
 
@@ -302,8 +302,8 @@ HAL_Status HAL_MBOX_RecvMsg(struct MBOX_REG *pReg, eMBOX_CH chan)
 HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
 {
     struct MBOX_DEV *pMBox;
-    eMBOX_CH chan;
-    int ret = HAL_OK;
+    uint32_t chan;
+    HAL_Status ret = HAL_OK;
 
     if (irq < 0 || !IS_MBOX_INSTANCE(pReg)) {
         return HAL_INVAL;
@@ -319,12 +319,12 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
             continue;
         }
 
-        if (!MBOX_ChanIntStGet(pReg, chan, pMBox->A2B)) {
+        if (!MBOX_ChanIntStGet(pReg, (eMBOX_CH)chan, pMBox->A2B)) {
             continue;
         }
 
-        ret = MBOX_RecvMsg(pMBox, chan);
-        MBOX_ChanIntStClear(pReg, chan, pMBox->A2B);
+        ret = MBOX_RecvMsg(pMBox, (eMBOX_CH)chan);
+        MBOX_ChanIntStClear(pReg, (eMBOX_CH)chan, pMBox->A2B);
 
         if (ret) {
             break;
@@ -352,7 +352,7 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
 HAL_Status HAL_MBOX_Init(struct MBOX_REG *pReg, uint8_t isA2B)
 {
     struct MBOX_DEV *pMBox = NULL;
-    eMBOX_CH chan;
+    uint32_t chan;
     int i;
 
     HAL_ASSERT(IS_MBOX_INSTANCE(pReg));
@@ -386,7 +386,7 @@ HAL_Status HAL_MBOX_Init(struct MBOX_REG *pReg, uint8_t isA2B)
 HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *pReg)
 {
     struct MBOX_DEV *pMBox;
-    eMBOX_CH chan;
+    uint32_t chan;
 
     HAL_ASSERT(IS_MBOX_INSTANCE(pReg));
     pMBox = MBOX_FindEntry(pReg);
