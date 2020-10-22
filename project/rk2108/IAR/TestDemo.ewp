@@ -350,6 +350,9 @@
                     <state>$PROJ_DIR$\..\..\..\lib\bsp\RK2108</state>
                     <state>$PROJ_DIR$\..\..\..\lib\hal\inc</state>
                     <state>$PROJ_DIR$\..\src</state>
+                    <state>$PROJ_DIR$\..\..\..\test</state>
+                    <state>$PROJ_DIR$\..\..\..\test\unity\src</state>
+                    <state>$PROJ_DIR$\..\..\..\test\unity\extras\fixture\src</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -623,7 +626,9 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>D:\rtthread\bsp\rockchip\common\hal\project\rk2108\src</state>
+                    <state>D:\rtthread\bsp\rockchip\common\hal\lib\hal\inc</state>
+                    <state>D:\rtthread\bsp\rockchip\common\hal\lib\CMSIS\Device\RK2108\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -776,7 +781,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>D:\rtthread\bsp\rockchip\common\hal\lib\CMSIS\Device\RK2108\Source\Templates\IAR\iar_link.icf</state>
+                    <state>$PROJ_DIR$\..\..\..\lib\CMSIS\Device\RK2108\Source\Templates\IAR\iar_link.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1125,7 +1130,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state></state>
+                    <state>8.50.6.28950</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -1137,7 +1142,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state></state>
+                    <state>Default	None</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -1171,7 +1176,7 @@
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
-                    <state></state>
+                    <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
@@ -1197,7 +1202,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>-</state>
+                    <state>Default	None</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -1388,7 +1393,7 @@
                 </option>
                 <option>
                     <name>OutputFile</name>
-                    <state></state>
+                    <state>$FILE_BNAME$.o</state>
                 </option>
                 <option>
                     <name>CCLibConfigHeader</name>
@@ -1429,7 +1434,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>1</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CompilerMisraRules98</name>
@@ -1662,7 +1667,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state></state>
+                    <state>$FILE_BNAME$.o</state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -1767,7 +1772,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>###Unitialized###</state>
+                    <state>TestDemo.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
@@ -2333,6 +2338,9 @@
                 <name>$PROJ_DIR$\..\..\..\lib\hal\inc\hal_systick.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\lib\hal\inc\hal_textrw.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\lib\hal\inc\hal_timer.h</name>
             </file>
             <file>
@@ -2375,18 +2383,18 @@
                 </file>
             </group>
             <group>
-                <name>dsp</name>
-                <file>
-                    <name>$PROJ_DIR$\..\..\..\lib\hal\src\dsp\hal_dsp_rk2108.c</name>
-                </file>
-            </group>
-            <group>
                 <name>display</name>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\lib\hal\src\display\hal_dsi.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\lib\hal\src\display\hal_vop_rk2108.c</name>
+                </file>
+            </group>
+            <group>
+                <name>dsp</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\lib\hal\src\dsp\hal_dsp_rk2108.c</name>
                 </file>
             </group>
             <file>
@@ -2537,5 +2545,101 @@
                 <name>$PROJ_DIR$\..\..\..\lib\hal\src\hal_wdt.c</name>
             </file>
         </group>
+    </group>
+    <group>
+        <name>test</name>
+        <group>
+            <name>test_case</name>
+            <group>
+                <name>psram</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\hal\psram\test_hyper_cru.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\hal\psram\test_hyper_cru.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\hal\psram\test_hyperpsram.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\hal\psram\test_hyperpsram.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\hal\psram\test_psram.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\hal\psram\test_psram.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\hal\psram\test_qpipsram.c</name>
+                </file>
+            </group>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\test\hal\test_cru.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\test\hal\test_leagacy.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\test\hal\test_pd.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\test\hal\test_pl330.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\test\hal\test_snor.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\test\hal\test_timer.c</name>
+            </file>
+        </group>
+        <group>
+            <name>unity</name>
+            <group>
+                <name>extras</name>
+                <group>
+                    <name>fixture</name>
+                    <group>
+                        <name>src</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\..\test\unity\extras\fixture\src\unity_fixture.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\..\test\unity\extras\fixture\src\unity_fixture.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\..\test\unity\extras\fixture\src\unity_fixture_internals.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\..\test\unity\extras\fixture\src\unity_fixture_malloc_overrides.h</name>
+                        </file>
+                    </group>
+                </group>
+            </group>
+            <group>
+                <name>src</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\unity\src\unity.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\unity\src\unity.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\test\unity\src\unity_internals.h</name>
+                </file>
+            </group>
+        </group>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\test\unity_config.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\test\unity_port.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\test\unity_runner.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\test\unity_runner.h</name>
+        </file>
     </group>
 </project>

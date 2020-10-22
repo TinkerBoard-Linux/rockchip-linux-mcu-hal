@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "D:\rtthread\bsp\rockchip\common\hal\project\rk2108\IAR\settings\TestDemo.Debug.general.xcl" --backend -f "D:\rtthread\bsp\rockchip\common\hal\project\rk2108\IAR\settings\TestDemo.Debug.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "\\192.168.0.102\home1\rtos\swallow\bsp\rockchip\common\hal\project\rk2108\IAR\settings\TestDemo.Debug.general.xcl" --backend -f "\\192.168.0.102\home1\rtos\swallow\bsp\rockchip\common\hal\project\rk2108\IAR\settings\TestDemo.Debug.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "D:\rtthread\bsp\rockchip\common\hal\project\rk2108\IAR\settings\TestDemo.Debug.general.xcl" --debug_file=$debugfile --backend -f "D:\rtthread\bsp\rockchip\common\hal\project\rk2108\IAR\settings\TestDemo.Debug.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "\\192.168.0.102\home1\rtos\swallow\bsp\rockchip\common\hal\project\rk2108\IAR\settings\TestDemo.Debug.general.xcl" --debug_file=$debugfile --backend -f "\\192.168.0.102\home1\rtos\swallow\bsp\rockchip\common\hal\project\rk2108\IAR\settings\TestDemo.Debug.driver.xcl" 
 }
