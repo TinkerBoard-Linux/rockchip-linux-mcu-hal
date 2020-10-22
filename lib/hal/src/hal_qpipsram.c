@@ -407,8 +407,12 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
     psram->writeReg = QPIPSRAM_WriteReg;
 
 #ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
+    uint32_t loop = 15;
+
     psram->writeReg(psram, 0xff, NULL, 0);
-    HAL_CPUDelayUs(150);
+reinit:
+    HAL_CPUDelayUs(10);
+    loop--;
 #endif
 
     QPIPSRAM_ExitQPI(psram);
@@ -418,6 +422,12 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
     psram->id[1] = idByte[1];
 
     if (!HAL_QPIPSRAM_IsPsramSupported(idByte)) {
+#ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
+        if (loop) {
+            goto reinit;
+        }
+#endif
+
         return HAL_NODEV;
     }
 
