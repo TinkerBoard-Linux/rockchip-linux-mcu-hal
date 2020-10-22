@@ -1287,7 +1287,7 @@ static HAL_Status PL330_GenDmaProg(struct HAL_PL330_DEV *pl330, struct PL330_XFE
  * @param channel: the DMA channel number.
  * @param addr: DMA program starting address, this should be DMA address
  *
- * @return HAL_OK on success, HAL_ERROR on time out
+ * @return HAL_OK on success, HAL_TIMEOUT on time out
  */
 static HAL_Status PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32_t addr)
 {
@@ -1311,7 +1311,7 @@ static HAL_Status PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32
     if (waitCount >= PL330_MAX_WAIT) {
         HAL_DBG("PL330 device at %p debug status busy time out\r\n", reg);
 
-        return HAL_ERROR;
+        return HAL_TIMEOUT;
     }
 
     /* write debug instruction 0 */
@@ -1330,7 +1330,7 @@ static HAL_Status PL330_Exec_DMAGO(struct DMA_REG *reg, uint32_t channel, uint32
     if (waitCount >= PL330_MAX_WAIT) {
         HAL_DBG("PL330 device at %p debug status busy time out\r\n", reg);
 
-        return HAL_ERROR;
+        return HAL_TIMEOUT;
     }
 
     /* run the command in DbgInst0 and DbgInst1 */
@@ -1602,9 +1602,8 @@ uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
         /*
          * if DMA manager is fault
          */
-        HAL_DBG("pl330 %p fault with type: 0x%lx ", pl330->pReg,
-                READ_REG(reg->FTRD));
-        HAL_DBG("at pc 0x%lx\n", READ_REG(reg->DPC));
+        HAL_DBG("Fault Type: 0x%lx\n", READ_REG(reg->FTRD));
+        HAL_DBG("Fault PC 0x%lx\n", READ_REG(reg->DPC));
         /* kill the DMA manager thread */
         /* Should we disable interrupt?*/
         PL330_Exec_DMAKILL(pl330->pReg, 0, 0);
@@ -1614,9 +1613,10 @@ uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
     if (val) {
         while (i < pl330->pcfg.numChan) {
             if (val & (1 << i)) {
-                HAL_DBG("Reset Channel-%d\t CS-%lx ", i,
-                        READ_REG(reg->CHAN_STS[i].CSR));
-                HAL_DBG("FTC-%lx\n", READ_REG(reg->FTR[i]));
+                HAL_DBG("Reset Channel-%d\t CS-%lx\n",
+                        i, READ_REG(reg->CHAN_STS[i].CSR));
+                HAL_DBG("Reset Channel-%d\t FTC-%lx\n",
+                        i, READ_REG(reg->FTR[i]));
                 /* kill the channel thread */
                 /* Should we disable interrupt? */
                 PL330_Exec_DMAKILL(pl330->pReg, i, 1);
