@@ -240,7 +240,7 @@ HAL_Status HAL_VOP_PolarityInit(struct VOP_REG *pReg,
 HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
                               struct DISPLAY_MODE_INFO *pModeInfo,
                               uint16_t BusFormat);
-HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg);
+HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg, uint8_t triggerMode);
 HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val);
 HAL_Status HAL_VOP_SetSplit(struct VOP_REG *pReg, eVOP_McuSplit mode);
 

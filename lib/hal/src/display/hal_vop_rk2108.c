@@ -1450,9 +1450,12 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
 /**
  * @brief  VOP edpi init.
  * @param  pReg: VOP reg base.
+ * @param  triggerMode: VOP new frame trigger mode,default is 0,
+           0: TE trigger, VOP commit new frame time depend on TE + wms_st
+           1: gpio trigger, VOP commit new frame time depend on gpio connect to panel TE pin
  * @return HAL_Status.
  */
-HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
+HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg, uint8_t triggerMode)
 {
     VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_DPHY_FRM_SWITCH_EN_SHIFT,
@@ -1461,11 +1464,11 @@ HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
     VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_TE_EN_MASK,
-                  1);
+                  !triggerMode);
     VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_CTRL_MODE_MASK,
-                  1);
+                  !triggerMode);
     VOP_MaskWrite(&s_vopRegMir.SYS_CTRL2, &pReg->SYS_CTRL2,
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_SHIFT,
                   VOP_SYS_CTRL2_IMD_EDPI_WMS_MODE_MASK,
