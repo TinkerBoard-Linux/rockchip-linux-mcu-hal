@@ -250,7 +250,7 @@ static HAL_Status SNOR_ReadWriteReg(struct SPI_NOR *nor, struct HAL_SPI_MEM_OP *
     return SNOR_SPIMemExecOp(nor->spi, op);
 }
 
-static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, int32_t len)
+static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, uint32_t len)
 {
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(code, 1),
                                                      HAL_SPI_MEM_OP_NO_ADDR,
@@ -267,7 +267,7 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint8_t code, uint8_t *val, 
     return ret;
 }
 
-static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint8_t opcode, uint8_t *buf, int32_t len)
+static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint8_t opcode, uint8_t *buf, uint32_t len)
 {
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(opcode, 1),
                                                      HAL_SPI_MEM_OP_NO_ADDR,
@@ -279,7 +279,7 @@ static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint8_t opcode, uint8_t *bu
     return SNOR_ReadWriteReg(nor, &op, buf);
 }
 
-static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, void *buf)
+static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, uint8_t *buf)
 {
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(nor->readOpcode, 1),
                                                      HAL_SPI_MEM_OP_ADDR(nor->addrWidth, from, 1),
@@ -780,10 +780,10 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
 
         return HAL_INVAL;
     }
-    nor->read = (void *)SNOR_ReadData;
-    nor->write = (void *)SNOR_WriteData;
-    nor->readReg = (void *)SNOR_ReadReg;
-    nor->writeReg = (void *)SNOR_WriteReg;
+    nor->read = SNOR_ReadData;
+    nor->write = SNOR_WriteData;
+    nor->readReg = SNOR_ReadReg;
+    nor->writeReg = SNOR_WriteReg;
 
     HAL_SNOR_ReadID(nor, idByte);
     HAL_SNOR_DBG("SPI Nor ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
