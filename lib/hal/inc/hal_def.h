@@ -58,7 +58,7 @@
 #endif
 
 /* Compiller Macro */
-#if defined(__GNUC__) || defined(__clang__) || defined(__CC_ARM)
+#if defined(__GNUC__) || defined(__clang__) || defined(__CC_ARM) || defined(__ICCARM__)
 #define HAL_UNUSED __attribute__((__unused__))
 #else
 #define HAL_UNUSED
