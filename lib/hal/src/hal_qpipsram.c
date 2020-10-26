@@ -411,7 +411,6 @@ HAL_Status HAL_QPIPSRAM_Init(struct QPI_PSRAM *psram)
 
     psram->writeReg(psram, 0xff, NULL, 0);
 reinit:
-    HAL_CPUDelayUs(10);
     loop--;
 #endif
 
@@ -424,6 +423,7 @@ reinit:
     if (!HAL_QPIPSRAM_IsPsramSupported(idByte)) {
 #ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
         if (loop) {
+            HAL_CPUDelayUs(10);
             goto reinit;
         }
 #endif
