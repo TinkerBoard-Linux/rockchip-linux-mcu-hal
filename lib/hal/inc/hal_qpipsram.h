@@ -54,6 +54,8 @@ struct QPIPSRAM_HOST {
     uint32_t xipMemCode; /** XIP code mapped memory */
     HAL_Status (*xfer)(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op);
     HAL_Status (*xipConfig)(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on);
+    void (*cs_gpio_take)(void);
+    void (*cs_gpio_release)(void);
 
     void *userdata;
 };

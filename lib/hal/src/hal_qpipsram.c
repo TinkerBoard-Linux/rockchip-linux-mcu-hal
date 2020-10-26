@@ -34,7 +34,7 @@
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
-#define HAL_QPIPSRAM_DEBUG
+// #define HAL_QPIPSRAM_DEBUG
 #ifdef HAL_QPIPSRAM_DEBUG
 #define HAL_QPIPSRAM_DBG(...) HAL_DBG(__VA_ARGS__)
 #else
