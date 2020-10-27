@@ -792,9 +792,12 @@ HAL_Status HAL_VOP_OutputInit(struct VOP_REG *pReg,
 /**
  * @brief  VOP edpi init.
  * @param  pReg: VOP reg base.
+ * @param  triggerMode: VOP new frame trigger mode,default is 0,
+ *         0: TE trigger, VOP commit new frame time depend on TE + wms_st
+ *         1: gpio trigger, VOP commit new frame time depend on gpio connect to panel TE pin
  * @return HAL_Status.
  */
-HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg)
+HAL_Status HAL_VOP_EdpiInit(struct VOP_REG *pReg, uint8_t triggerMode)
 {
     return HAL_OK;
 }
