@@ -438,7 +438,7 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                        struct DISPLAY_MODE_INFO *pModeInfo)
 {
     uint32_t val, dspInfo, dspSt, dspStx, dspSty, cfgFormat;
-    bool bppFormat, yuv4Format, y2r_en = false, lut_en = false;
+    bool bppFormat, yuv4Format, y2r_en = false;
     uint32_t regOffset = pWinState->winId * 0x40 / 4;
     uint32_t yStride, cbcrStride = 0;
 
@@ -517,14 +517,6 @@ static void VOP_SetWin(struct VOP_REG *pReg,
                   VOP_WIN0_CTRL0_WIN0_Y2R_EN_MASK,
                   y2r_en);
 
-    if (IS_BPP_FORMAT(pWinState->hwFormat)) {
-        lut_en = true;
-    }
-    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
-                  &pReg->WIN0_CTRL0 + regOffset,
-                  VOP_WIN0_CTRL0_WIN0_LUT_EN_SHIFT,
-                  VOP_WIN0_CTRL0_WIN0_LUT_EN_MASK,
-                  lut_en);
     if (pWinState->hwFormat == VOP_FMT_1BPP) {
         VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
                       &pReg->WIN0_CTRL0 + regOffset,
@@ -597,7 +589,7 @@ uint8_t HAL_VOP_CommitPost(struct VOP_REG *pReg)
  *  @{
  */
 /**
- * @brief  Load VOP bpp format lut.
+ * @brief  Load VOP bpp format lut, and enable lut.
  * @param  pReg: VOP reg base.
  * @param  winId: VOP win id.
  * @param  lut: look up table.
@@ -621,6 +613,38 @@ HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId,
                   &pReg->WIN0_BPP_LUT[i] + regOffset,
                   lut[i]);
     }
+
+    regOffset = winId * 0x40 / 4;
+    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
+                  &pReg->WIN0_CTRL0 + regOffset,
+                  VOP_WIN0_CTRL0_WIN0_LUT_EN_SHIFT,
+                  VOP_WIN0_CTRL0_WIN0_LUT_EN_MASK,
+                  1);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable VOP bpp format lut.
+ * @param  pReg: VOP reg base.
+ * @param  winId: VOP win id.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_DisableLut(struct VOP_REG *pReg, uint8_t winId)
+{
+    uint32_t regOffset = winId * 0x40 / 4;
+
+    if (winId == VOP_WIN2) {
+        HAL_DBG_ERR("win2 unsupport lut!\n");
+
+        return HAL_INVAL;
+    }
+
+    VOP_MaskWrite(&s_vopRegMir.WIN0_CTRL0 + regOffset,
+                  &pReg->WIN0_CTRL0 + regOffset,
+                  VOP_WIN0_CTRL0_WIN0_LUT_EN_SHIFT,
+                  VOP_WIN0_CTRL0_WIN0_LUT_EN_MASK,
+                  0);
 
     return HAL_OK;
 }

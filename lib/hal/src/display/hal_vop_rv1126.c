@@ -362,6 +362,17 @@ HAL_Status HAL_VOP_LoadLut(struct VOP_REG *pReg, uint8_t winId,
 }
 
 /**
+ * @brief  Disable VOP bpp format lut.
+ * @param  pReg: VOP reg base.
+ * @param  winId: VOP win id.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_VOP_DisableLut(struct VOP_REG *pReg, uint8_t winId)
+{
+    return HAL_OK;
+}
+
+/**
  * @brief  VOP MIPI switch.
  * @param  pReg: VOP reg base.
  * @param  path: mipi switch direction.
