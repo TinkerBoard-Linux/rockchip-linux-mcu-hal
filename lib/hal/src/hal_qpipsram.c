@@ -285,6 +285,75 @@ static uint32_t QPIPSRAM_SizeDetect(struct QPI_PSRAM *psram)
 
 /** @} */
 /********************* Public Function Definition ****************************/
+/** @defgroup QPISPRAM_Exported_Functions_Group1 Suspend and Resume Functions
+
+ This section provides functions allowing to suspend and resume the module:
+
+ *  @{
+ */
+
+/**
+ * @brief  QPIPsram suspend.
+ * @param  psram: psram dev.
+ * @return HAL_Status
+ */
+HAL_Status HAL_QPIPSRAM_Supsend(struct QPI_PSRAM *psram)
+{
+    HAL_Status ret = HAL_OK;
+
+    if (psram->spi->mode & HAL_SPI_XIP) {
+        ret = HAL_QPIPSRAM_XIPDisable(psram);
+        if (ret) {
+            return ret;
+        }
+    }
+
+#ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
+    if (psram->readProto == QPIPSRAM_PROTO_4_4_4 &&
+        psram->writeProto == QPIPSRAM_PROTO_4_4_4) {
+        ret = QPIPSRAM_ExitQPI(psram);
+        if (ret) {
+            return ret;
+        }
+
+        ret = QPIPSRAM_HalfSleep(psram);
+    }
+#endif
+
+    return ret;
+}
+
+/**
+ * @brief  QPIPsram resume.
+ * @param  psram: psram dev.
+ * @return HAL_Status
+ */
+HAL_Status HAL_QPIPSRAM_Resume(struct QPI_PSRAM *psram)
+{
+    HAL_Status ret = HAL_OK;
+
+#ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
+    if (psram->readProto == QPIPSRAM_PROTO_4_4_4 &&
+        psram->writeProto == QPIPSRAM_PROTO_4_4_4) {
+        psram->writeReg(psram, 0xff, NULL, 0);
+        HAL_CPUDelayUs(150);
+
+        ret = QPIPSRAM_EnterQPI(psram);
+        if (ret) {
+            return ret;
+        }
+    }
+#endif
+
+    if (psram->spi->mode & HAL_SPI_XIP) {
+        ret = HAL_QPIPSRAM_XIPEnable(psram);
+    }
+
+    return ret;
+}
+
+/** @} */
+
 /** @defgroup QPIPSRAM_Exported_Functions_Group3 IO Functions
 
  This section provides functions allowing to init and deinit the module:
@@ -530,21 +599,6 @@ HAL_Status HAL_QPIPSRAM_DeInit(struct QPI_PSRAM *psram)
  */
 HAL_Status HAL_QPIPSRAM_XIPEnable(struct QPI_PSRAM *psram)
 {
-#ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
-    HAL_Status ret;
-
-    if (psram->readProto == QPIPSRAM_PROTO_4_4_4 &&
-        psram->writeProto == QPIPSRAM_PROTO_4_4_4) {
-        psram->writeReg(psram, 0xff, NULL, 0);
-        HAL_CPUDelayUs(150);
-
-        ret = QPIPSRAM_EnterQPI(psram);
-        if (ret) {
-            return ret;
-        }
-    }
-#endif
-
     return QPIPSRAM_XipExecOp(psram->spi, NULL, 1);
 }
 
@@ -556,26 +610,7 @@ HAL_Status HAL_QPIPSRAM_XIPEnable(struct QPI_PSRAM *psram)
  */
 HAL_Status HAL_QPIPSRAM_XIPDisable(struct QPI_PSRAM *psram)
 {
-    HAL_Status ret;
-
-    ret = QPIPSRAM_XipExecOp(psram->spi, NULL, 0);
-    if (ret) {
-        return ret;
-    }
-
-#ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
-    if (psram->readProto == QPIPSRAM_PROTO_4_4_4 &&
-        psram->writeProto == QPIPSRAM_PROTO_4_4_4) {
-        ret = QPIPSRAM_ExitQPI(psram);
-        if (ret) {
-            return ret;
-        }
-
-        ret = QPIPSRAM_HalfSleep(psram);
-    }
-#endif
-
-    return ret;
+    return QPIPSRAM_XipExecOp(psram->spi, NULL, 0);
 }
 
 /**
