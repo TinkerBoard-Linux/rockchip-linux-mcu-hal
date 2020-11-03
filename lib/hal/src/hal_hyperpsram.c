@@ -315,6 +315,34 @@ static HAL_Status HYPERPSRAM_IdCheck(uint16_t id)
     return HAL_ERROR;
 }
 
+static HAL_Status HAL_HYPERPSRAM_SetDelayline(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
+{
+    uint8_t delay_line;
+
+    /*
+     * The delay line range[0x0e, 0x00] in psram io clk 150MHz
+     * [0x20, 0x00] in psram io clk 96MHz
+     * failed in 85C,set to 0x3.
+     */
+    if (pHyperPsramDev->psramFreq >= 120000000) {
+        delay_line = 0x0;
+    } else {
+        delay_line = 0x3;
+    }
+
+    WRITE_REG_MASK_WE(GRF->SOC_CON3, GRF_SOC_CON3_GRF_RPC_INITIAL_STATE_MASK |
+                      GRF_SOC_CON3_GRF_RDS_CLK_SMP_SEL_MASK |
+                      GRF_SOC_CON3_GRF_CON_RDS_DELAY_ADJ_MASK,
+                      0x1 << GRF_SOC_CON3_GRF_RPC_INITIAL_STATE_SHIFT |
+                      0x1 << GRF_SOC_CON3_GRF_RDS_CLK_SMP_SEL_SHIFT |
+                      delay_line << GRF_SOC_CON3_GRF_CON_RDS_DELAY_ADJ_SHIFT);
+    HAL_CPUDelayUs(1);
+    WRITE_REG_MASK_WE(GRF->SOC_CON3, GRF_SOC_CON3_GRF_RPC_INITIAL_STATE_MASK,
+                      0x0 << GRF_SOC_CON3_GRF_RPC_INITIAL_STATE_SHIFT);
+
+    return HAL_OK;
+}
+
 /** @} */
 /********************* Public Function Definition ****************************/
 
@@ -340,6 +368,7 @@ HAL_Status HAL_HYPERPSRAM_Init(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
     if (HYPERPSRAM_Init(pHyperPsramDev) == HAL_OK) {
         HYPERPSRAM_ModifyTiming(pHyperPsramDev);
         HYPERPSRAM_ModifyCR0(pHyperPsramDev);
+        HAL_HYPERPSRAM_SetDelayline(pHyperPsramDev);
     } else {
         return HAL_ERROR;
     }
@@ -379,6 +408,7 @@ HAL_Status HAL_HYPERPSRAM_ReInit(struct HAL_HYPERPSRAM_DEV *pHyperPsramDev)
         HAL_CRU_ClkSetFreq(pHyperPsramDev->clkID, pHyperPsramDev->hyperMaxFreq);
         pHyperPsramDev->psramFreq = HAL_CRU_ClkGetFreq(pHyperPsramDev->clkID) / 2;
         HYPERPSRAM_ModifyTiming(pHyperPsramDev);
+        HAL_HYPERPSRAM_SetDelayline(pHyperPsramDev);
 
         return HAL_OK;
     }
