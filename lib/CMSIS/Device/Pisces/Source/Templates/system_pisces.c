@@ -5,8 +5,9 @@
 
 #include "soc.h"
 #include "hal_conf.h"
+#include "hal_def.h"
 
-uint32_t SystemCoreClock = 24000000;
+HAL_SECTION_SRAM_DATA uint32_t SystemCoreClock = 24000000;
 
 /*----------------------------------------------------------------------------
   Externals

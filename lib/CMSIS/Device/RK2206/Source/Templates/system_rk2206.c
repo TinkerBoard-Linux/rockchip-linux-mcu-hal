@@ -5,8 +5,9 @@
 
 #include "soc.h"
 #include "hal_conf.h"
+#include "hal_def.h"
 
-uint32_t SystemCoreClock = PLL_INPUT_OSC_RATE;
+HAL_SECTION_SRAM_DATA uint32_t SystemCoreClock = PLL_INPUT_OSC_RATE;
 
 /*----------------------------------------------------------------------------
   Externals
