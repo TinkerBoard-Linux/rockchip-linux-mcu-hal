@@ -231,6 +231,7 @@ HAL_Status HAL_TIMER_SetCount(struct TIMER_REG *pReg, uint64_t timerCount)
  * @param  pReg: Choose TIMER.
  * @return uint64_t: Current conut number.
  */
+HAL_SECTION_SRAM_CODE
 uint64_t HAL_TIMER_GetCount(struct TIMER_REG *pReg)
 {
     uint32_t high, low, temp;
