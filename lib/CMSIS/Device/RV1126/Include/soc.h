@@ -81,6 +81,7 @@ typedef enum
   GPIO2_IRQn             = 36,      /*!< GPIO2 Interrupt             */
   GPIO3_IRQn             = 37,      /*!< GPIO3 Interrupt             */
   GPIO4_IRQn             = 38,      /*!< GPIO4 Interrupt             */
+  SARADC_IRQn            = 40,      /*!< SARADC Interrupt	     */
   ISP_IRQn               = 52,      /*!< ISP Interrupt               */
   MI_ISP_IRQn            = 54,      /*!< MI ISP Interrupt            */
   MIPI_ISP_IRQn          = 55,      /*!< MIPI ISP Interrupt          */
@@ -134,6 +135,7 @@ typedef enum
   GPIO2_IRQn             = 68,      /*!< GPIO2 Interrupt             */
   GPIO3_IRQn             = 69,      /*!< GPIO3 Interrupt             */
   GPIO4_IRQn             = 70,      /*!< GPIO4 Interrupt             */
+  SARADC_IRQn            = 72,      /*!< SARADC Interrupt	     */
   ISP_IRQn               = 84,      /*!< ISP Interrupt               */
   MI_ISP_IRQn            = 86,      /*!< MI ISP Interrupt            */
   MIPI_ISP_IRQn          = 87,      /*!< MIPI ISP Interrupt          */

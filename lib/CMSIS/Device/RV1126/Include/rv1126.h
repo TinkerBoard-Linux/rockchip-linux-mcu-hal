@@ -528,6 +528,13 @@ struct MBOX_REG {
          uint32_t RESERVED0050[44];                   /* Address Offset: 0x0050 */
     __IO uint32_t ATOMIC_LOCK[32];                    /* Address Offset: 0x0100 */
 };
+/* SARADC Register Structure Define */
+struct SARADC_REG {
+    __I  uint32_t DATA;                               /* Address Offset: 0x0000 */
+    __I  uint32_t STAS;                               /* Address Offset: 0x0004 */
+    __IO uint32_t CTRL;                               /* Address Offset: 0x0008 */
+    __IO uint32_t DLY_PU_SOC;                         /* Address Offset: 0x000C */
+};
 /* VOP Register Structure Define */
 struct VOP_REG {
     __IO uint32_t REG_CFG_DONE;                       /* Address Offset: 0x0000 */
@@ -1084,6 +1091,7 @@ struct ISP_DEBAYER_REG {
 #define UART4_BASE          0xFF590000U /* UART4 base address */
 #define UART5_BASE          0xFF5A0000U /* UART5 base address */
 #define SPI1_BASE           0xFF5B0000U /* SPI1 base address */
+#define SARADC_BASE         0xFF5E0000U /* SARADC base address */
 #define GPIO1_BASE          0xFF620000U /* GPIO1 base address */
 #define GPIO2_BASE          0xFF630000U /* GPIO2 base address */
 #define GPIO3_BASE          0xFF640000U /* GPIO3 base address */
@@ -1130,6 +1138,7 @@ struct ISP_DEBAYER_REG {
 #define UART4               ((struct UART_REG *) UART4_BASE)
 #define UART5               ((struct UART_REG *) UART5_BASE)
 #define SPI1                ((struct SPI_REG *) SPI1_BASE)
+#define SARADC              ((struct SARADC_REG *) SARADC_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
@@ -1165,6 +1174,7 @@ struct ISP_DEBAYER_REG {
 #define IS_MI_1400_INSTANCE(instance) ((instance) == MI_1400)
 #define IS_CSI2RX_1C00_INSTANCE(instance) ((instance) == CSI2RX_1C00)
 #define IS_ISP_DEBAYER_2500_INSTANCE(instance) ((instance) == ISP_DEBAYER_2500)
+#define IS_SARADC_INSTANCE(instance) ((instance) == SARADC)
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -5258,6 +5268,31 @@ struct ISP_DEBAYER_REG {
 #define SPI_RXDR                                           (0x0U)
 #define SPI_RXDR_RXDR_SHIFT                                (0U)
 #define SPI_RXDR_RXDR_MASK                                 (0xFFFFU << SPI_RXDR_RXDR_SHIFT)                             /* 0x0000FFFF */
+/*****************************************SARADC*****************************************/
+/* DATA */
+#define SARADC_DATA_OFFSET                                 (0x0U)
+#define SARADC_DATA                                        (0x0U)
+#define SARADC_DATA_ADC_DATA_SHIFT                         (0U)
+#define SARADC_DATA_ADC_DATA_MASK                          (0x3FFU << SARADC_DATA_ADC_DATA_SHIFT)                       /* 0x000003FF */
+/* STAS */
+#define SARADC_STAS_OFFSET                                 (0x4U)
+#define SARADC_STAS                                        (0x0U)
+#define SARADC_STAS_ADC_STATUS_SHIFT                       (0U)
+#define SARADC_STAS_ADC_STATUS_MASK                        (0x1U << SARADC_STAS_ADC_STATUS_SHIFT)                       /* 0x00000001 */
+/* CTRL */
+#define SARADC_CTRL_OFFSET                                 (0x8U)
+#define SARADC_CTRL_ADC_INPUT_SRC_SEL_SHIFT                (0U)
+#define SARADC_CTRL_ADC_INPUT_SRC_SEL_MASK                 (0x7U << SARADC_CTRL_ADC_INPUT_SRC_SEL_SHIFT)                /* 0x00000007 */
+#define SARADC_CTRL_ADC_POWER_CTRL_SHIFT                   (3U)
+#define SARADC_CTRL_ADC_POWER_CTRL_MASK                    (0x1U << SARADC_CTRL_ADC_POWER_CTRL_SHIFT)                   /* 0x00000008 */
+#define SARADC_CTRL_INT_EN_SHIFT                           (5U)
+#define SARADC_CTRL_INT_EN_MASK                            (0x1U << SARADC_CTRL_INT_EN_SHIFT)                           /* 0x00000020 */
+#define SARADC_CTRL_INT_STATUS_SHIFT                       (6U)
+#define SARADC_CTRL_INT_STATUS_MASK                        (0x1U << SARADC_CTRL_INT_STATUS_SHIFT)                       /* 0x00000040 */
+/* DLY_PU_SOC */
+#define SARADC_DLY_PU_SOC_OFFSET                           (0xCU)
+#define SARADC_DLY_PU_SOC_DLY_PU_SOC_SHIFT                 (0U)
+#define SARADC_DLY_PU_SOC_DLY_PU_SOC_MASK                  (0x3FU << SARADC_DLY_PU_SOC_DLY_PU_SOC_SHIFT)                /* 0x0000003F */
 /******************************************GPIO******************************************/
 /* SWPORT_DR_L */
 #define GPIO_SWPORT_DR_L_OFFSET                            (0x0U)
