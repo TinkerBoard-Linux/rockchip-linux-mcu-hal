@@ -32,11 +32,11 @@
                 </option>
                 <option>
                     <name>MacOverride</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>MacFile</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\FlashRK2108Setup.mac</state>
                 </option>
                 <option>
                     <name>MemOverride</name>

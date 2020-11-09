@@ -781,7 +781,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\..\..\..\lib\CMSIS\Device\RK2108\Source\Templates\IAR\iar_link.icf</state>
+                    <state>D:\rtthread\bsp\rockchip\common\hal\lib\CMSIS\Device\RK2108\Source\Templates\IAR\iar_link.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
