@@ -345,7 +345,7 @@ static void PMU_SleepFinishInfo(void)
     PM_PutChar('\n');
 
     /* Clear all interrupt status */
-    pPmu->INT_ST = 0xff;
+    pPmu->INT_ST = 0x1eff;
 }
 
 void SOC_ClkGateSuspend(void)
