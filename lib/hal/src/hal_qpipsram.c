@@ -223,7 +223,6 @@ static HAL_Status QPIPSRAM_HalfSleep(struct QPI_PSRAM *psram)
 }
 #endif
 
-#ifndef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
 static uint32_t QPIPSRAM_PageSizeDetect(struct QPI_PSRAM *psram)
 {
     uint32_t off;
@@ -281,7 +280,6 @@ static uint32_t QPIPSRAM_SizeDetect(struct QPI_PSRAM *psram)
 
     return 0;
 }
-#endif
 
 /** @} */
 /********************* Public Function Definition ****************************/
@@ -555,10 +553,10 @@ reinit:
     default:
         psram->size = QPIPSRAM_SIZE_MAX * 2;
         psram->pageSize = QPIPSRAM_READWRITE_MAX_IOSIZE;
-#ifndef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
-        psram->size = QPIPSRAM_SizeDetect(psram);
-        psram->pageSize = QPIPSRAM_PageSizeDetect(psram);
-#endif
+        if (!(psram->spi->mode & HAL_SPI_XIP)) {
+            psram->size = QPIPSRAM_SizeDetect(psram);
+            psram->pageSize = QPIPSRAM_PageSizeDetect(psram);
+        }
     }
 
     HAL_QPIPSRAM_DBG("QPIPsram size= 0x%x Bytes\n", psram->size);
