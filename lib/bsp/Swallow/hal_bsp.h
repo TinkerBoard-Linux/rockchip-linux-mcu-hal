@@ -12,6 +12,10 @@
 
 /***************************** Structure Definition **************************/
 
+#ifdef HAL_DWDMA_MODULE_ENABLED
+extern struct HAL_DWDMA_DEV g_dwDmaDev;
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 extern const struct HAL_UART_DEV g_uart0Dev;
 #endif

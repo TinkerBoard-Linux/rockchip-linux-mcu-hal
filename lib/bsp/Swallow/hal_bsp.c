@@ -5,6 +5,18 @@
 
 #include "hal_bsp.h"
 
+#ifdef HAL_DWDMA_MODULE_ENABLED
+struct HAL_DWDMA_DEV g_dwDmaDev =
+{
+    .pReg = DMA,
+    .irq[0] = DMAC0_IRQn,
+    .irq[1] = DMAC1_IRQn,
+    .irq[2] = DMAC2_IRQn,
+    .dataWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+    .blockSize = 0xfff, /** ref to trm */
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
