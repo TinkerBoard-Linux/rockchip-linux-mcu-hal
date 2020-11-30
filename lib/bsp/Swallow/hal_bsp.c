@@ -117,9 +117,9 @@ const struct HAL_USB_DEV g_usbdDev =
 struct HAL_FSPI_HOST g_fspi0Dev =
 {
     .instance = FSPI0,
-    .sclkGate = 0,
-    .hclkGate = 0,
-    .xipClkGate = 0,
+    .sclkGate = CLK_XIP_SFC_DT50_GATE,
+    .hclkGate = HCLK_SFC_GATE,
+    .xipClkGate = HCLK_SFC_XIP_GATE,
     .sclkID = CLK_XIP_SFC,
     .irqNum = FSPI0_IRQn,
     .xipMemCode = XIP_MAP_BASE,
