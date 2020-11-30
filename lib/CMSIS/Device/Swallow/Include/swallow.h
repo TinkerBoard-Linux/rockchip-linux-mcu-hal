@@ -9455,12 +9455,12 @@ struct CSI2HOST_REG {
 #define I2C_DBGCTRL_H0_CHECK_SCL_MASK                      (0x1U << I2C_DBGCTRL_H0_CHECK_SCL_SHIFT)                     /* 0x00004000 */
 /* CON1 */
 #define I2C_CON1_OFFSET                                    (0x228U)
-#define I2C_CON1_AUTO STOP_SHIFT                           (0U)
-#define I2C_CON1_AUTO STOP_MASK                            (0x1U << I2C_CON1_AUTO STOP_SHIFT)                           /* 0x00000001 */
-#define I2C_CON1_AUTO STOP TX END_SHIFT                    (1U)
-#define I2C_CON1_AUTO STOP TX END_MASK                     (0x1U << I2C_CON1_AUTO STOP TX END_SHIFT)                    /* 0x00000002 */
-#define I2C_CON1_AUTO STOP NAK_SHIFT                       (2U)
-#define I2C_CON1_AUTO STOP NAK_MASK                        (0x1U << I2C_CON1_AUTO STOP NAK_SHIFT)                       /* 0x00000004 */
+#define I2C_CON1_AUTO_STOP_SHIFT                           (0U)
+#define I2C_CON1_AUTO_STOP_MASK                            (0x1U << I2C_CON1_AUTO_STOP_SHIFT)                           /* 0x00000001 */
+#define I2C_CON1_AUTO_STOP_TX_END_SHIFT                    (1U)
+#define I2C_CON1_AUTO_STOP_TX_END_MASK                     (0x1U << I2C_CON1_AUTO_STOP_TX_END_SHIFT)                    /* 0x00000002 */
+#define I2C_CON1_AUTO_STOP_NAK_SHIFT                       (2U)
+#define I2C_CON1_AUTO_STOP_NAK_MASK                        (0x1U << I2C_CON1_AUTO_STOP_NAK_SHIFT)                       /* 0x00000004 */
 /******************************************UART******************************************/
 /* RBR */
 #define UART_RBR_OFFSET                                    (0x0U)
