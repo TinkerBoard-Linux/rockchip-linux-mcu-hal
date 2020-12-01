@@ -133,6 +133,11 @@ struct RK_SLEEP_DATA {
     uint32_t mpuCtrl;
 };
 
+struct TIMER_REG_SAVE {
+    uint32_t loadCnt[2];
+    uint32_t ctrlReg;
+};
+
 /********************* Private Variable Definition ***************************/
 #ifdef HAL_PM_CPU_SLEEP_MODULE_ENABLED
 static struct SLEEP_CONFIG_DATA *sleepConfig;
@@ -140,6 +145,7 @@ static struct RK_SLEEP_DATA sleepData;
 static struct UART_SAVE debugPortSave;
 static struct SCB_SAVE scbData;
 static struct SYSTICK_SAVE systickData;
+static struct TIMER_REG_SAVE systimerData;
 static uint32_t pmuPowerdomainState;
 static uint32_t clkUngtMsk[CRU_CLKGATES_CON_CNT] = {
     0x001f, 0x1fff, 0xffff, 0x3887,
@@ -156,6 +162,7 @@ static struct UART_REG *pUart = UART0;
 static struct CRU_REG *pCru = CRU;
 static struct GRF_REG *pGrf = GRF;
 static struct PVTM_REG *pPvtm = PVTM;
+static struct TIMER_REG *ptimer6 = TIMER6;
 
 /********************* Private Function Definition ***************************/
 
@@ -283,6 +290,24 @@ static void PM_UartRestore(void)
     pUart->IER = debugPortSave.ier;
     pUart->FCR = UART_FCR_ENABLE_FIFO;
     pUart->MCR = debugPortSave.mcr;
+}
+
+static void PM_SystimerSave(void)
+{
+    struct TIMER_REG *sysTimer = SYS_TIMER;
+
+    systimerData.loadCnt[0] = sysTimer->LOAD_COUNT[0];
+    systimerData.loadCnt[1] = sysTimer->LOAD_COUNT[1];
+    systimerData.ctrlReg = sysTimer->CONTROLREG;
+}
+
+static void PM_SystimerRestore(void)
+{
+    struct TIMER_REG *sysTimer = SYS_TIMER;
+
+    sysTimer->LOAD_COUNT[0] = systimerData.loadCnt[0];
+    sysTimer->LOAD_COUNT[1] = systimerData.loadCnt[1];
+    sysTimer->CONTROLREG = systimerData.ctrlReg;
 }
 
 static int PM_ModeInit(void)
@@ -536,6 +561,21 @@ static void PMU_PowerDomainsResume(void)
     }
 }
 
+static void PM_TimerCh6WkupInit(uint32_t cnt)
+{
+    /* select timer1 clk from 32k or 40M */
+    if (sleepConfig->suspendMode & SLP_PMU_PMUALIVE_32K) {
+        pCru->CRU_CLKSEL_CON[15] = 0xcf008000;
+    } else {
+        pCru->CRU_CLKSEL_CON[15] = 0xcf004000;
+    }
+
+    ptimer6->CONTROLREG = 0;
+    ptimer6->LOAD_COUNT[0] = cnt;
+    ptimer6->LOAD_COUNT[1] = 0;
+    ptimer6->CONTROLREG = 0x7;
+}
+
 static int PMU_SleepConfig(void)
 {
     uint32_t pwrmodeCon;
@@ -601,9 +641,9 @@ static int PMU_SleepConfig(void)
         clkFreqKhz = 40000;
     }
 
-    /* set autowakeup time */
-    if (mode & SLP_TIME_OUT_WKUP) {
-        pmuWkupCfg |= PMU_WAKEUP_CFG_TIMEOUT_EN_MASK;
+    /* config timer6 wakeup */
+    if (sleepConfig->suspendMode & SLP_TIME_OUT_WKUP) {
+        PM_TimerCh6WkupInit(clkFreqKhz * CPU_SLEEP_TIMEOUT_TIME);
     }
 
     if (pmuWkupCfg & PMU_WAKEUP_CFG_TIMEOUT_EN_MASK) {
@@ -786,8 +826,9 @@ static void SOC_SystickResume(void)
 
 static int SOC_SuspendEnter(uint32_t flag)
 {
-    HAL_DCACHE_CleanInvalidate();
     PM_PutChar('a');
+
+    HAL_DCACHE_CleanInvalidate();
 
     __WFI();
     PM_PutChar('b');
@@ -851,6 +892,7 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
         PM_PutChar('8');
         SOC_ScbSuspend();
         PM_PutChar('9');
+        PM_SystimerSave();
     }
 
     PM_PutChar('S');
@@ -859,6 +901,7 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     if (mode & SLP_PMU_HW_ARM_PD) {
         PM_UartInit();
         PM_PutChar('a');
+        PM_SystimerRestore();
 
         HAL_DCACHE_Enable();
         HAL_ICACHE_Enable();
