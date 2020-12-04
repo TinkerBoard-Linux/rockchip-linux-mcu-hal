@@ -94,9 +94,8 @@ const struct HAL_SPI_DEV g_spiDev1 = {
 const struct HAL_USB_DEV g_usbdDev =
 {
     .pReg = USB,
-    /* FIXME: adds CLK ID later when TRM gets ready. */
-    /* .hclkGateID = 0, */
-    /* .utmiclkGateID = 0, */
+    .hclkGateID = HCLK_USB_GATE,
+    .utmiclkGateID = HCLK_USB_PMU_GATE,
     .irqNum = USB_IRQn,
     .cfg =
     {
