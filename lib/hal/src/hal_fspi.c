@@ -257,7 +257,17 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
 
     /* set DUMMY*/
     if (op->dummy.nbytes) {
-        FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
+        switch (op->dummy.buswidth) {
+        case 4:
+            FSPICmd.b.dummybits = op->dummy.nbytes * 2;
+            break;
+        case 2:
+            FSPICmd.b.dummybits = op->dummy.nbytes * 4;
+            break;
+        default:
+            FSPICmd.b.dummybits = op->dummy.nbytes * 8;
+            break;
+        }
     }
 
     /* set DATA */
@@ -639,7 +649,17 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
 
     /* set DUMMY*/
     FSPICtrl.b.scic = op->dummy.a2dIdle;
-    FSPICmd.b.dummybits = (op->dummy.nbytes * 8) / (op->dummy.buswidth);
+    switch (op->dummy.buswidth) {
+    case 4:
+        FSPICmd.b.dummybits = op->dummy.nbytes * 2;
+        break;
+    case 2:
+        FSPICmd.b.dummybits = op->dummy.nbytes * 4;
+        break;
+    default:
+        FSPICmd.b.dummybits = op->dummy.nbytes * 8;
+        break;
+    }
     if (FSPICmd.b.readmode) {
         FSPICmd.b.dummybits -= 2; /* M7-0 ocuppy Dummy 2 cycles  */
     }

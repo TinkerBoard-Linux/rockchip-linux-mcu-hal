@@ -314,7 +314,7 @@ static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, u
 
     /* HAL_SNOR_DBG("%s %x %lx %lx %lx\n", __func__, nor->readDummy, op.data.nbytes, from, op.addr.val); */
     /* convert the dummy cycles to the number of bytes */
-    op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
+    op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) >> 3;
 
     ret = SNOR_SPIMemExecOp(nor->spi, &op);
     if (ret) {
@@ -359,7 +359,7 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
     op.addr.buswidth = SNOR_GET_PROTOCOL_ADDR_BITS(nor->readProto);
     op.dummy.buswidth = op.addr.buswidth;
     op.data.buswidth = SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto);
-    op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) / 8;
+    op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) >> 3;
 
     /* Change to use EBh */
     if (nor->spi->mode & HAL_SPI_RX_QUAD) {
