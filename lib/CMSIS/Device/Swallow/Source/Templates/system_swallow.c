@@ -6,7 +6,7 @@
 #include "soc.h"
 #include "hal_base.h"
 
-uint32_t SystemCoreClock = 30000000;
+HAL_SECTION_SRAM_DATA uint32_t SystemCoreClock = 30000000;
 
 /*----------------------------------------------------------------------------
   System Core Clock update function
