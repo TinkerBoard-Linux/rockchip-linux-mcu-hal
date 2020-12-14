@@ -48,7 +48,7 @@ typedef enum
 
 /******  Platform Exceptions Numbers ***************************************************/
   SARADC_IRQn              = 0,      /*!< SARADC Interrupt              */
-  WDT_IRQn                 = 1,      /*!< WDT Interrupt                 */
+  WDT0_IRQn                = 1,      /*!< WDT Interrupt                 */
   TIMER0_IRQn              = 2,      /*!< TIMER0 Interrupt              */
   TIMER1_IRQn              = 3,      /*!< TIMER1 Interrupt              */
   TIMER2_IRQn              = 4,      /*!< TIMER2 Interrupt              */
@@ -158,6 +158,9 @@ typedef enum
 #define DMA_NUM_CHANNELS                                    (0x3U)
 /*****************************************FSPI*******************************************/
 #define FSPI_CHIP_CNT                                       (0x1U)
+/*****************************************WDT********************************************/
+#define PCLK_WDT0_GATE PCLK_WDT_GATE
+#define PCLK_WDT HCLK_LOGIC_BUS
 
 #define CLK(mux, div) \
     (((mux) & 0x0F0F00FFU) | (((div) & 0xFFU) << 8) | (((div) & 0x0F0F0000U) << 4))
