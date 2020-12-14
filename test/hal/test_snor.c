@@ -18,7 +18,7 @@ static uint8_t *pwrite;
 static uint8_t *pread;
 static uint32_t *pread32;
 static uint32_t *pwrite32;
-#define FLASH_SKIP_LBA 0x200 /* About 1M space skip */
+#define FLASH_SKIP_LBA 0x100 /* About 1M space skip */
 
 static uint8_t *AlignUp(uint8_t *ptr, int32_t align)
 {
@@ -319,15 +319,11 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     pread = AlignUp(pread_t, 64);
     HAL_DBG("pwrite %p pread %p\n", pwrite, pread);
 
-    for (int32_t i = 0; i < (maxest_sector * 1024); i++) {
-        pwrite32[i] = i;
-    }
-
     spi = &nor_spi_buf;
     memset(spi, 0, sizeof(struct SNOR_HOST));
     TEST_ASSERT_NOT_NULL(spi);
     nor = &nor_buf;
-    memset(spi, 0, sizeof(struct SNOR_HOST));
+    memset(nor, 0, sizeof(struct SPI_NOR));
     TEST_ASSERT_NOT_NULL(nor);
     nor->spi = spi;
 #if defined(HAL_SNOR_FSPI_HOST)
