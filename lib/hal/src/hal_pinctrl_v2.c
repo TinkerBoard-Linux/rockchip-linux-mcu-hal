@@ -5,7 +5,7 @@
 
 #include "hal_base.h"
 
-#if defined(HAL_PINCTRL_MODULE_ENABLED) && defined(SOC_RV1126)
+#if defined(HAL_PINCTRL_MODULE_ENABLED) && (defined(SOC_RV1126) || defined(SOC_SWALLOW))
 
 /** @addtogroup RK_HAL_Driver
  *  @{
@@ -239,7 +239,7 @@ static HAL_Status PINCTRL_SetIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t data
  */
 static HAL_Status PINCTRL_SetDS(eGPIO_bankId bank, uint8_t pin, uint32_t data)
 {
-#ifndef RKMCU_RK2108
+#if !defined(RKMCU_RK2108) && !defined(SOC_SWALLOW)
     HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / DS_WIDTH), data, DS_WIDTH));
 
     switch (bank) {
