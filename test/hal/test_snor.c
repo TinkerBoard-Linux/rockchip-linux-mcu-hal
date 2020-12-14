@@ -327,7 +327,7 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     memset(spi, 0, sizeof(struct SNOR_HOST));
     TEST_ASSERT_NOT_NULL(spi);
     nor = &nor_buf;
-    memset(spi, 0, sizeof(struct SPI_NOR));
+    memset(spi, 0, sizeof(struct SNOR_HOST));
     TEST_ASSERT_NOT_NULL(nor);
     nor->spi = spi;
 #if defined(HAL_SNOR_FSPI_HOST)
@@ -345,8 +345,6 @@ TEST_GROUP_RUNNER(HAL_SNOR){
     ret = HAL_SNOR_DeInit(nor);
     TEST_ASSERT(ret == HAL_OK);
 
-    free(pwrite_t);
-    free(pread_t);
     free(nor->spi);
     free(nor);
 }
