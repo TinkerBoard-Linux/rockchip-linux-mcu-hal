@@ -337,7 +337,11 @@ HAL_Status HAL_CPUDelayUs(uint32_t us)
 {
     volatile uint32_t cycles;
 
+#if (__CORTEX_M == 0)
+    cycles = (uint32_t)HAL_DivU64((uint64_t)SystemCoreClock, 1000000) * us; /* Add few cycles penalty */
+#else
     cycles = SystemCoreClock / 1000000 * us; /* Add few cycles penalty */
+#endif
 
     CPUCycleLoop(cycles);
 
