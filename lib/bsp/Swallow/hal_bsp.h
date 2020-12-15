@@ -40,5 +40,6 @@ extern struct HAL_FSPI_HOST g_fspi0Dev;
 
 /***************************** Function Declare ******************************/
 void BSP_Init(void);
+void BSP_SetLoaderFlag(void);
 
 #endif

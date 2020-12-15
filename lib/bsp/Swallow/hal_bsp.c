@@ -133,3 +133,8 @@ struct HAL_FSPI_HOST g_fspi0Dev =
 void BSP_Init(void)
 {
 }
+
+void BSP_SetLoaderFlag(void)
+{
+    GRF->OS_REG0 = SYS_UPGRADE_FLAG;
+}
