@@ -161,6 +161,8 @@ typedef enum
 /*****************************************WDT********************************************/
 #define PCLK_WDT0_GATE PCLK_WDT_GATE
 #define PCLK_WDT HCLK_LOGIC_BUS
+/*****************************************TIMER******************************************/
+#define TIMER_CHAN_CNT   6
 
 #define CLK(mux, div) \
     (((mux) & 0x0F0F00FFU) | (((div) & 0xFFU) << 8) | (((div) & 0x0F0F0000U) << 4))
