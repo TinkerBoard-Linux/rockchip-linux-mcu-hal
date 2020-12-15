@@ -91,6 +91,7 @@ struct GRF_REG {
     __IO uint32_t GPIO1B_P;                           /* Address Offset: 0x0114 */
     __IO uint32_t GPIO1C_P;                           /* Address Offset: 0x0118 */
     __IO uint32_t GPIO1D_P;                           /* Address Offset: 0x011C */
+         uint32_t RESERVED0120[24];                   /* Address Offset: 0x0120 */
     __IO uint32_t GPIO0A_IE;                          /* Address Offset: 0x0180 */
     __IO uint32_t GPIO0B_IE;                          /* Address Offset: 0x0184 */
     __IO uint32_t GPIO0C_IE;                          /* Address Offset: 0x0188 */
