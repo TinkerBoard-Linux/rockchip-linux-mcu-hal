@@ -126,6 +126,7 @@ typedef enum
 #define SRAM2_MAP_SIZE     (160 * 1024U)
 #define SRAM1_MAP_SIZE     (160 * 1024U)
 #define USB_BASE           0x40180000U
+#define USB_PHY_CON_BASE   (USB_GRF->CON0) /* USB PHY control base address */
 #define USB_INNO_PHY_BASE  0x40250100U /* USB Innosilicon PHY base address */
 
 /****************************************************************************************/
@@ -166,6 +167,16 @@ typedef enum
 #define PCLK_WDT CLK_WDT
 /*****************************************TIMER******************************************/
 #define TIMER_CHAN_CNT   6
+/*****************************************USB********************************************/
+#define USB_PHY_SUSPEND_MASK \
+    (USB_GRF_CON0_USBOTG_UTMI_SEL_MASK | USB_GRF_CON0_USBOTG_UTMI_SUSPEND_N_MASK | \
+     USB_GRF_CON0_USBOTG_UTMI_OPMODE_MASK | USB_GRF_CON0_USBOTG_UTMI_XCVRSELECT_MASK | \
+     USB_GRF_CON0_USBOTG_UTMI_TERMSELECT_MASK | USB_GRF_CON0_USBOTG_UTMI_DPPULLDOWN_MASK |\
+     USB_GRF_CON0_USBOTG_UTMI_DMPULLDOWN_MASK)
+#define USB_PHY_RESUME_MASK                     USB_GRF_CON0_USBOTG_UTMI_SEL_MASK
+#define USB_PHY_CON_SHIFT                       USB_GRF_CON0_USBOTG_UTMI_SEL_SHIFT
+#define USB_PHY_SUSPEND_VAL                     0x1d1U
+#define USB_PHY_RESUME_VAL                      0
 
 #define CLK(mux, div) \
     (((mux) & 0x0F0F00FFU) | (((div) & 0xFFU) << 8) | (((div) & 0x0F0F0000U) << 4))

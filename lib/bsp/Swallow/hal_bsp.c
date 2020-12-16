@@ -140,8 +140,25 @@ const struct HAL_CKCAL_DEV g_ckcalDev =
 
 #endif
 
+#ifdef HAL_PCD_MODULE_ENABLED
+static void BSP_U2PHY_Init(void)
+{
+    /*
+     * Turn off differential receiver to save power, active low.
+     * USBGRF, 0x0018: bit[2] = 1'b0
+     */
+    WRITE_REG_MASK_WE(USB_GRF->REG6, 0x4U, 0U);
+
+    /* Turn off PHY port 1 to save power, not used */
+    WRITE_REG_MASK_WE(USB_GRF->CON1, 0x1FFU, 0x1d1U);
+}
+#endif
+
 void BSP_Init(void)
 {
+#ifdef HAL_PCD_MODULE_ENABLED
+    BSP_U2PHY_Init();
+#endif
 }
 
 void BSP_SetLoaderFlag(void)
