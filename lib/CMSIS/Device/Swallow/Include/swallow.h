@@ -2554,7 +2554,7 @@ struct CSI2HOST_REG {
 #define GRF_SOC_CON4_DPHY_RX1_ENABLE_SEL_MASK              (0x1U << GRF_SOC_CON4_DPHY_RX1_ENABLE_SEL_SHIFT)             /* 0x00000010 */
 #define GRF_SOC_CON4_DPHY_RX1_S_ENABLECLK_SHIFT            (5U)
 #define GRF_SOC_CON4_DPHY_RX1_S_ENABLECLK_MASK             (0x1U << GRF_SOC_CON4_DPHY_RX1_S_ENABLECLK_SHIFT)            /* 0x00000020 */
-#define GRF_SOC_CON4_DPHY_RX1_ENABLE_SHIFT                 (7U)
+#define GRF_SOC_CON4_DPHY_RX1_ENABLE_SHIFT                 (8U)
 #define GRF_SOC_CON4_DPHY_RX1_ENABLE_MASK                  (0x3U << GRF_SOC_CON4_DPHY_RX1_ENABLE_SHIFT)                 /* 0x00000180 */
 /* SOC_CON5 */
 #define GRF_SOC_CON5_OFFSET                                (0x214U)
