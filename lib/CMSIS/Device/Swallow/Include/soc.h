@@ -171,6 +171,7 @@ typedef enum
 typedef enum CLOCK_Name {
     CLK_INVALID = 0U,
     PLL_GPLL,
+    CLK_WDT,
     PLL_GPLL_NP5   = CLK(0U, CLK_GPLL_MUX_NP5_DIV),
     PCLK_LOGIC_BUS = CLK(0U, PCLK_LOGIC_BUS_DIV),
     CLK_SARADC     = CLK(0U, CLK_SARADC_DIV),

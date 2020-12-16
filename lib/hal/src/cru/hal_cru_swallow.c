@@ -218,6 +218,9 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         freq = HAL_CRU_ClkFracGetFreq(clockName);
 
         return freq;
+    case CLK_WDT:
+
+        return PLL_INPUT_OSC_RATE;
     case HCLK_MCU_BUS:
         if (HAL_CRU_ClkGetMux(clkMux) == 2) {
             pRate = s_usbphyFreq;
@@ -319,6 +322,9 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         error = HAL_CRU_ClkFracSetFreq(clockName, rate);
 
         return error;
+    case CLK_WDT:
+
+        return HAL_OK;
     case HCLK_MCU_BUS:
         if (!(s_usbphyFreq % rate)) {
             pRate = s_usbphyFreq;
