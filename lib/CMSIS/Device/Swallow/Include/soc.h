@@ -160,7 +160,7 @@ typedef enum
 #define FSPI_CHIP_CNT                                       (0x1U)
 /*****************************************WDT********************************************/
 #define PCLK_WDT0_GATE PCLK_WDT_GATE
-#define PCLK_WDT HCLK_LOGIC_BUS
+#define PCLK_WDT CLK_WDT
 /*****************************************TIMER******************************************/
 #define TIMER_CHAN_CNT   6
 
