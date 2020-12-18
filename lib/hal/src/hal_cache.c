@@ -188,6 +188,14 @@ HAL_Status HAL_ICACHE_Invalidate(void)
     uint32_t status = 0;
     unsigned long flags;
 
+    if ((uint32_t)DCACHE == (uint32_t)ICACHE) {
+        if (DCACHE->CACHE_CTRL & DCACHE_CACHE_CTRL_CACHE_WT_EN_MASK) {
+            return HAL_OK;
+        } else {
+            return HAL_INVAL;
+        }
+    }
+
     flags = HAL_SYS_EnterCriticalSection();
 
     ICACHE->CACHE_MAINTAIN[0] =
@@ -524,6 +532,14 @@ HAL_Status HAL_DCACHE_Invalidate(void)
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status = 0;
     unsigned long flags;
+
+    if ((uint32_t)DCACHE == (uint32_t)ICACHE) {
+        if (DCACHE->CACHE_CTRL & DCACHE_CACHE_CTRL_CACHE_WT_EN_MASK) {
+            return HAL_OK;
+        } else {
+            return HAL_INVAL;
+        }
+    }
 
     flags = HAL_SYS_EnterCriticalSection();
 
