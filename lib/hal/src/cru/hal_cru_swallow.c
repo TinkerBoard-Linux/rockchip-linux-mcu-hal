@@ -23,7 +23,8 @@
 /********************* Private Structure Definition **************************/
 static struct PLL_CONFIG PLL_TABLE[] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
-    RK_PLL_RATE(297000000, 1, 99, 8, 1, 1, 0),
+    RK_PLL_RATE(297000000, 2, 99, 4, 1, 1, 0),
+    RK_PLL_RATE(250000000, 2, 125, 6, 1, 1, 0),
     { /* sentinel */ },
 };
 
