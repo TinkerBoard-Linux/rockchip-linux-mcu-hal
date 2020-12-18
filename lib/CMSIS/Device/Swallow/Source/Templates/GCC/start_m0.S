@@ -104,7 +104,6 @@ Reset_Handler:
                 msr      msp, r3
                 bl       SystemInit
                 bl       entry
-                bl       main
 
                 .fnend
                 .size    Reset_Handler, . - Reset_Handler
