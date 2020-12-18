@@ -109,8 +109,14 @@ __STATIC_INLINE void HAL_INTC_SetSoftwareIRQ(struct INTC_REG *INTC, uint8_t IRQn
 
     if (IRQn < L32) {
         INTC->IRQ_INTFORCE_L |= (1UL << IRQn);
+        while (!(INTC->IRQ_INTFORCE_L & (1UL << IRQn))) {
+            ;
+        }
     } else {
         INTC->IRQ_INTFORCE_H |= (1UL << (IRQn - L32));
+        while (!(INTC->IRQ_INTFORCE_H & (1UL << (IRQn - L32)))) {
+            ;
+        }
     }
 }
 
@@ -125,8 +131,14 @@ __STATIC_INLINE void HAL_INTC_ClearSoftwareIRQ(struct INTC_REG *INTC, uint8_t IR
 
     if (IRQn < L32) {
         INTC->IRQ_INTFORCE_L &= ~(1UL << IRQn);
+        while (INTC->IRQ_INTFORCE_L & (1UL << IRQn)) {
+            ;
+        }
     } else {
         INTC->IRQ_INTFORCE_H &= ~(1UL << (IRQn - L32));
+        while (INTC->IRQ_INTFORCE_H & (1UL << (IRQn - L32))) {
+            ;
+        }
     }
 }
 
