@@ -50,22 +50,40 @@ Example:
  */
 /********************* Private MACRO Definition ******************************/
 
-#ifdef GRF_IOMUX_W
-#define IOMUX_WIDTH GRF_IOMUX_W
+#ifdef GRF_IOMUX_BIT_PER_PIN
+#define IOMUX_BIT_PER_PIN GRF_IOMUX_BIT_PER_PIN
 #else
-#define IOMUX_WIDTH (4)
+#define IOMUX_BIT_PER_PIN (4)
 #endif
 
-#ifdef GRF_DS_W
-#define DS_WIDTH GRF_DS_W
+#ifdef GRF_DS_BIT_PER_PIN
+#define DS_BIT_PER_PIN GRF_DS_BIT_PER_PIN
 #else
-#define DS_WIDTH (4)
+#define DS_BIT_PER_PIN (4)
 #endif
 
-#ifdef GRF_P_W
-#define PULL_WIDTH GRF_P_W
+#ifdef GRF_PULL_BIT_PER_PIN
+#define PULL_BIT_PER_PIN GRF_PULL_BIT_PER_PIN
 #else
-#define PULL_WIDTH (2)
+#define PULL_BIT_PER_PIN (2)
+#endif
+
+#ifdef GRF_IOMUX_PIN_PER_REG
+#define IOMUX_PIN_PER_REG GRF_IOMUX_PIN_PER_REG
+#else
+#define IOMUX_PIN_PER_REG (16 / IOMUX_BIT_PER_PIN)
+#endif
+
+#ifdef GRF_DS_PIN_PER_REG
+#define DS_PIN_PER_REG GRF_DS_PIN_PER_REG
+#else
+#define DS_PIN_PER_REG (16 / DS_BIT_PER_PIN)
+#endif
+
+#ifdef GRF_PULL_PIN_PER_REG
+#define PULL_PIN_PER_REG GRF_PULL_PIN_PER_REG
+#else
+#define PULL_PIN_PER_REG (16 / PULL_BIT_PER_PIN)
 #endif
 
 #define _TO_MASK(w)         ((1U << (w)) - 1U)
@@ -95,13 +113,13 @@ Example:
 #define SET_P_L(_B, _P, p, v, w)     _PINCTRL_WRITE(P_L(_B, _P), RK_GEN_VAL(p, v, w))
 #define SET_P_(_B, _P, p, v, w)      _PINCTRL_WRITE(P(_B, _P), RK_GEN_VAL(p, v, w))
 
-#define RK_SET_IOMUX_H(B, P, p, v) SET_IOMUX_H(B, P, p % (16 / IOMUX_WIDTH), v, IOMUX_WIDTH)
-#define RK_SET_IOMUX_L(B, P, p, v) SET_IOMUX_L(B, P, p % (16 / IOMUX_WIDTH), v, IOMUX_WIDTH)
-#define RK_SET_DS_H(B, P, p, v)    SET_DS_H(B, P, p % (16 / DS_WIDTH), v, DS_WIDTH)
-#define RK_SET_DS_L(B, P, p, v)    SET_DS_L(B, P, p % (16 / DS_WIDTH), v, DS_WIDTH)
-#define RK_SET_P_H(B, P, p, v)     SET_P_H(B, P, p % (16 / PULL_WIDTH), v, PULL_WIDTH)
-#define RK_SET_P_L(B, P, p, v)     SET_P_L(B, P, p % (16 / PULL_WIDTH), v, PULL_WIDTH)
-#define RK_SET_P(B, P, p, v)       SET_P_(B, P, p % (16 / PULL_WIDTH), v, PULL_WIDTH)
+#define RK_SET_IOMUX_H(B, P, p, v) SET_IOMUX_H(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#define RK_SET_IOMUX_L(B, P, p, v) SET_IOMUX_L(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#define RK_SET_DS_H(B, P, p, v)    SET_DS_H(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
+#define RK_SET_DS_L(B, P, p, v)    SET_DS_L(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
+#define RK_SET_P_H(B, P, p, v)     SET_P_H(B, P, p % PULL_PIN_PER_REG, v, PULL_BIT_PER_PIN)
+#define RK_SET_P_L(B, P, p, v)     SET_P_L(B, P, p % PULL_PIN_PER_REG, v, PULL_BIT_PER_PIN)
+#define RK_SET_P(B, P, p, v)       SET_P_(B, P, p % PULL_PIN_PER_REG, v, PULL_BIT_PER_PIN)
 
 #define SET_IOMUX(_GPIO, _PORT, pin, val)       \
 {                                               \
@@ -178,7 +196,7 @@ Example:
  */
 static HAL_Status PINCTRL_SetIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t data)
 {
-    HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / IOMUX_WIDTH), data, IOMUX_WIDTH));
+    HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / IOMUX_BIT_PER_PIN), data, IOMUX_BIT_PER_PIN));
 
     switch (bank) {
 #ifdef GPIO0
@@ -240,7 +258,7 @@ static HAL_Status PINCTRL_SetIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t data
 static HAL_Status PINCTRL_SetDS(eGPIO_bankId bank, uint8_t pin, uint32_t data)
 {
 #if !defined(RKMCU_RK2108) && !defined(SOC_SWALLOW)
-    HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / DS_WIDTH), data, DS_WIDTH));
+    HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / DS_BIT_PER_PIN), data, DS_BIT_PER_PIN));
 
     switch (bank) {
 #ifdef GPIO0
@@ -307,7 +325,7 @@ static void PINCTRL_SetP_RV1126(uint8_t pin, uint32_t data)
  */
 static HAL_Status PINCTRL_SetPUPD(eGPIO_bankId bank, uint8_t pin, uint32_t data)
 {
-    HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / PULL_WIDTH), data, PULL_WIDTH));
+    HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / PULL_BIT_PER_PIN), data, PULL_BIT_PER_PIN));
 
     switch (bank) {
 #ifdef GPIO0
