@@ -158,6 +158,9 @@ typedef enum
 #define DMA_NUM_CHANNELS                                    (0x3U)
 /*****************************************FSPI*******************************************/
 #define FSPI_CHIP_CNT                                       (0x1U)
+/*****************************************GRF********************************************/
+#define GRF_PULL_BIT_PER_PIN 1
+#define GRF_PULL_PIN_PER_REG 8
 /*****************************************WDT********************************************/
 #define PCLK_WDT0_GATE PCLK_WDT_GATE
 #define PCLK_WDT CLK_WDT
