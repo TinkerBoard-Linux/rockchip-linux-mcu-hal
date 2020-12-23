@@ -334,20 +334,6 @@ static inline uint32_t HAL_SPI_TxMax(struct SPI_HANDLE *pSPI)
 }
 
 /**
-  * @brief  The max amount of data can be read in blocking mode.
-  * @param  pSPI: pointer to a SPI_Handle structure that contains
-  *               the configuration information for SPI module.
-  * @return Max bytes can xfer.
-  */
-static inline uint32_t HAL_SPI_RxMax(struct SPI_HANDLE *pSPI)
-{
-    uint32_t rxLeft = (pSPI->pRxBufferEnd - pSPI->pRxBuffer) / pSPI->config.nBytes;
-    uint32_t rxRoom = READ_REG(pSPI->pReg->RXFLR);
-
-    return HAL_MIN(rxLeft, rxRoom);
-}
-
-/**
   * @brief  Send an amount of data in blocking mode.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
@@ -373,24 +359,68 @@ static HAL_Status HAL_SPI_PioWrite(struct SPI_HANDLE *pSPI)
 }
 
 /**
-  * @brief  Read an amount of data in blocking mode.
+  * @brief  Read an amount of data(byte) in blocking mode.
   * @param  pSPI: pointer to a SPI_Handle structure that contains
   *               the configuration information for SPI module.
   * @return HAL status
   */
-static HAL_Status HAL_SPI_PioRead(struct SPI_HANDLE *pSPI)
+static HAL_Status HAL_SPI_PioReadByte(struct SPI_HANDLE *pSPI)
 {
-    uint32_t max = HAL_SPI_RxMax(pSPI);
+    uint32_t rxLeft = pSPI->pRxBufferEnd - pSPI->pRxBuffer;
+    uint32_t rxRoom = READ_REG(pSPI->pReg->RXFLR);
+    uint32_t max = HAL_MIN(rxLeft, rxRoom);
     uint32_t rxw;
 
+    while (max > 7) {
+        *(pSPI->pRxBuffer + 0) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 1) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 2) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 3) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 4) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 5) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 6) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 7) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        pSPI->pRxBuffer += 8;
+        max -= 8;
+    }
+
     while (max--) {
-        rxw = READ_REG(pSPI->pReg->RXDR);
-        if (pSPI->config.nBytes == 1) {
-            *(uint8_t *)(pSPI->pRxBuffer) = (uint8_t)rxw;
-        } else {
-            *(uint16_t *)(pSPI->pRxBuffer) = (uint16_t)rxw;
-        }
-        pSPI->pRxBuffer += pSPI->config.nBytes;
+        *pSPI->pRxBuffer = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        pSPI->pRxBuffer++;
+    }
+
+    return HAL_OK;
+}
+
+/**
+  * @brief  Read an amount of data(short) in blocking mode.
+  * @param  pSPI: pointer to a SPI_Handle structure that contains
+  *               the configuration information for SPI module.
+  * @return HAL status
+  */
+static HAL_Status HAL_SPI_PioReadShort(struct SPI_HANDLE *pSPI)
+{
+    uint32_t rxLeft = (pSPI->pRxBufferEnd - pSPI->pRxBuffer) >> 1;
+    uint32_t rxRoom = READ_REG(pSPI->pReg->RXFLR);
+    uint32_t max = HAL_MIN(rxLeft, rxRoom);
+    uint32_t rxw;
+
+    while (max > 7) {
+        *((uint16_t *)pSPI->pRxBuffer + 0) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 1) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 2) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 3) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 4) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 5) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 6) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 7) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        pSPI->pRxBuffer += 16;
+        max -= 8;
+    }
+
+    while (max--) {
+        *((uint16_t *)pSPI->pRxBuffer) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        pSPI->pRxBuffer += 2;
     }
 
     return HAL_OK;
@@ -419,7 +449,11 @@ HAL_Status HAL_SPI_PioTransfer(struct SPI_HANDLE *pSPI)
 
         if (pSPI->pRxBuffer) {
             remain = pSPI->pRxBufferEnd - pSPI->pRxBuffer;
-            HAL_SPI_PioRead(pSPI);
+            if (pSPI->config.nBytes == 1) {
+                HAL_SPI_PioReadByte(pSPI);
+            } else {
+                HAL_SPI_PioReadShort(pSPI);
+            }
         }
     } while (remain);
 
@@ -494,7 +528,11 @@ HAL_Status HAL_SPI_IrqHandler(struct SPI_HANDLE *pSPI)
 
     if (irqStatus & SPI_INT_RXFI) {
         HAL_SPI_MaskIntr(pSPI, SPI_INT_RXFI);
-        HAL_SPI_PioRead(pSPI);
+        if (pSPI->config.nBytes == 1) {
+            HAL_SPI_PioReadByte(pSPI);
+        } else {
+            HAL_SPI_PioReadShort(pSPI);
+        }
         HAL_SPI_UnmaskIntr(pSPI, SPI_INT_RXFI);
 
         if (pSPI->pRxBufferEnd > pSPI->pRxBuffer) {
