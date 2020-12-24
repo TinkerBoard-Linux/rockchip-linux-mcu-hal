@@ -38,6 +38,10 @@ extern const struct HAL_USB_DEV g_usbdDev;
 extern struct HAL_FSPI_HOST g_fspi0Dev;
 #endif
 
+#ifdef HAL_CKCAL_MODULE_ENABLED
+extern const struct HAL_CKCAL_DEV g_ckcalDev;
+#endif
+
 /***************************** Function Declare ******************************/
 void BSP_Init(void);
 void BSP_SetLoaderFlag(void);

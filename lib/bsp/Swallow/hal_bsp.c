@@ -130,6 +130,16 @@ struct HAL_FSPI_HOST g_fspi0Dev =
 };
 #endif
 
+#ifdef HAL_CKCAL_MODULE_ENABLED
+
+const struct HAL_CKCAL_DEV g_ckcalDev =
+{
+    .pReg = CKCAL,
+    .irqNum = CKCAL_IRQn,
+};
+
+#endif
+
 void BSP_Init(void)
 {
 }
