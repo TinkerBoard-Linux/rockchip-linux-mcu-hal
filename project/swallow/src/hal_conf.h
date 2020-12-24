@@ -12,6 +12,7 @@
 #define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
+#define HAL_CKCAL_MODULE_ENABLED
 #define HAL_BUFFER_MANAGE_MODULE_ENABLED
 #define HAL_FSPI_MODULE_ENABLED
 #define HAL_NVIC_MODULE_ENABLED
