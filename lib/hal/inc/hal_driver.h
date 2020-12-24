@@ -22,6 +22,10 @@
 #include "hal_buffer_manage.h"
 #endif
 
+#ifdef HAL_CKCAL_MODULE_ENABLED
+#include "hal_ckcal.h"
+#endif
+
 #ifdef HAL_CRU_MODULE_ENABLED
 #include "hal_cru.h"
 #endif
