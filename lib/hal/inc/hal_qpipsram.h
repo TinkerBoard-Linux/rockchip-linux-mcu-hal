@@ -100,6 +100,8 @@ uint32_t HAL_QPIPSRAM_GetCapacity(struct QPI_PSRAM *psram);
 HAL_Status HAL_QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data, uint8_t len);
 HAL_Status HAL_QPIPSRAM_Supsend(struct QPI_PSRAM *psram);
 HAL_Status HAL_QPIPSRAM_Resume(struct QPI_PSRAM *psram);
+HAL_Status HAL_QPIPSRAM_EnterQPI(struct QPI_PSRAM *psram);
+HAL_Status HAL_QPIPSRAM_ExitQPI(struct QPI_PSRAM *psram);
 
 /** @} */
 

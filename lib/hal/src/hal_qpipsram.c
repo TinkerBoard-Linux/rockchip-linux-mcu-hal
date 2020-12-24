@@ -201,21 +201,6 @@ static int32_t QPIPSRAM_WriteData(struct QPI_PSRAM *psram, uint32_t to, uint32_t
     return op.data.nbytes;
 }
 
-static HAL_Status QPIPSRAM_EnterQPI(struct QPI_PSRAM *psram)
-{
-    return psram->writeReg(psram, QPIPSRAM_OP_ENQPI, NULL, 0);
-}
-
-static HAL_Status QPIPSRAM_ExitQPI(struct QPI_PSRAM *psram)
-{
-    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(QPIPSRAM_OP_EIXTQPI, 4),
-                                                     HAL_SPI_MEM_OP_NO_ADDR,
-                                                     HAL_SPI_MEM_OP_NO_DUMMY,
-                                                     HAL_SPI_MEM_OP_NO_DATA);
-
-    return QPIPSRAM_SPIMemExecOp(psram->spi, &op);
-}
-
 #ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
 static HAL_Status QPIPSRAM_HalfSleep(struct QPI_PSRAM *psram)
 {
@@ -309,7 +294,7 @@ HAL_Status HAL_QPIPSRAM_Supsend(struct QPI_PSRAM *psram)
 #ifdef HAL_QPIPSRAM_HALF_SLEEP_ENABLED
     if (psram->readProto == QPIPSRAM_PROTO_4_4_4 &&
         psram->writeProto == QPIPSRAM_PROTO_4_4_4) {
-        ret = QPIPSRAM_ExitQPI(psram);
+        ret = HAL_QPIPSRAM_ExitQPI(psram);
         if (ret) {
             return ret;
         }
@@ -336,7 +321,7 @@ HAL_Status HAL_QPIPSRAM_Resume(struct QPI_PSRAM *psram)
         psram->writeReg(psram, 0xff, NULL, 0);
         HAL_CPUDelayUs(150);
 
-        ret = QPIPSRAM_EnterQPI(psram);
+        ret = HAL_QPIPSRAM_EnterQPI(psram);
         if (ret) {
             return ret;
         }
@@ -481,7 +466,7 @@ reinit:
     loop--;
 #endif
 
-    QPIPSRAM_ExitQPI(psram);
+    HAL_QPIPSRAM_ExitQPI(psram);
     HAL_QPIPSRAM_ReadID(psram, idByte, sizeof(idByte));
     HAL_QPIPSRAM_DBG("QPIPsram ID: %x %x %x\n", idByte[0], idByte[1], idByte[2]);
     psram->id[0] = idByte[0];
@@ -528,9 +513,9 @@ reinit:
 
     if (psram->readProto == QPIPSRAM_PROTO_4_4_4 &&
         psram->writeProto == QPIPSRAM_PROTO_4_4_4) {
-        QPIPSRAM_EnterQPI(psram);
+        HAL_QPIPSRAM_EnterQPI(psram);
     } else {
-        QPIPSRAM_ExitQPI(psram);
+        HAL_QPIPSRAM_ExitQPI(psram);
     }
 
     switch (idByte[2] >> 5) {
@@ -676,6 +661,31 @@ HAL_Status HAL_QPIPSRAM_ReadID(struct QPI_PSRAM *psram, uint8_t *data, uint8_t l
     }
 
     return ret;
+}
+
+/**
+ * @brief  Enter QPI mode.
+ * @param  psram: psram dev.
+ * @return HAL_Status
+ */
+HAL_Status HAL_QPIPSRAM_EnterQPI(struct QPI_PSRAM *psram)
+{
+    return psram->writeReg(psram, QPIPSRAM_OP_ENQPI, NULL, 0);
+}
+
+/**
+ * @brief  Exit QPI mode.
+ * @param  psram: psram dev.
+ * @return HAL_Status
+ */
+HAL_Status HAL_QPIPSRAM_ExitQPI(struct QPI_PSRAM *psram)
+{
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(QPIPSRAM_OP_EIXTQPI, 4),
+                                                     HAL_SPI_MEM_OP_NO_ADDR,
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_NO_DATA);
+
+    return QPIPSRAM_SPIMemExecOp(psram->spi, &op);
 }
 
 /** @} */
