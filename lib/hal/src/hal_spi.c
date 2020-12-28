@@ -369,7 +369,6 @@ static HAL_Status HAL_SPI_PioReadByte(struct SPI_HANDLE *pSPI)
     uint32_t rxLeft = pSPI->pRxBufferEnd - pSPI->pRxBuffer;
     uint32_t rxRoom = READ_REG(pSPI->pReg->RXFLR);
     uint32_t max = HAL_MIN(rxLeft, rxRoom);
-    uint32_t rxw;
 
     while (max > 7) {
         *(pSPI->pRxBuffer + 0) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
@@ -403,7 +402,6 @@ static HAL_Status HAL_SPI_PioReadShort(struct SPI_HANDLE *pSPI)
     uint32_t rxLeft = (pSPI->pRxBufferEnd - pSPI->pRxBuffer) >> 1;
     uint32_t rxRoom = READ_REG(pSPI->pReg->RXFLR);
     uint32_t max = HAL_MIN(rxLeft, rxRoom);
-    uint32_t rxw;
 
     while (max > 7) {
         *((uint16_t *)pSPI->pRxBuffer + 0) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
