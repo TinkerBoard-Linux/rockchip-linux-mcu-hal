@@ -216,7 +216,8 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                         }
 
                         if ((pPCD->cfg.dmaEnable == 1) && (epNum == 0) &&
-                            (pPCD->inEp[epNum].xferLen == 0)) {
+                            (pPCD->inEp[epNum].xferLen == 0) &&
+                            ((pPCD->setupBuf[0] & 0x80) == 0)) {
                             /* this is ZLP, so prepare EP0 for next setup */
                             USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
                         } else {
