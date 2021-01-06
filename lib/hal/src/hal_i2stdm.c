@@ -287,37 +287,94 @@ HAL_Status HAL_I2STDM_Resume(struct HAL_I2STDM_DEV *i2sTdm)
  */
 HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONFIG *config)
 {
-    uint32_t mask = 0, val = 0;
+    uint32_t mask = 0, val = 0, tdmVal = 0;
     bool isMaster = config->master;
     bool clkInvert = config->clkInvert;
     uint16_t rxMap = config->rxMap;
     uint16_t txMap = config->txMap;
     struct I2STDM_REG *reg = i2sTdm->pReg;
 
+    mask = I2STDM_TXCR_TFS_MASK;
+
     switch (config->format) {
     case AUDIO_FMT_I2S:
-        MODIFY_REG(reg->TXCR, I2STDM_TXCR_TFS_MASK, I2STDM_TXCR_TFS_I2S);
-        MODIFY_REG(reg->RXCR, I2STDM_RXCR_TFS_MASK, I2STDM_RXCR_TFS_I2S);
+        val = I2STDM_TXCR_TFS_I2S;
         break;
 
     case AUDIO_FMT_PCM:
+    /* fallthrough */
     case AUDIO_FMT_PCM_DELAY1:
+    /* fallthrough */
     case AUDIO_FMT_PCM_DELAY2:
+    /* fallthrough */
     case AUDIO_FMT_PCM_DELAY3:
-        MODIFY_REG(reg->TXCR,
-                   I2STDM_TXCR_TFS_MASK |
-                   I2STDM_TXCR_PBM_MASK,
-                   I2STDM_TXCR_TFS_PCM |
-                   I2STDM_TXCR_PBM_MODE(config->format - AUDIO_FMT_PCM));
-        MODIFY_REG(reg->RXCR,
-                   I2STDM_RXCR_TFS_MASK |
-                   I2STDM_RXCR_TFS_PCM,
-                   I2STDM_RXCR_TFS_PCM |
-                   I2STDM_RXCR_PBM_MODE(config->format - AUDIO_FMT_PCM));
+        mask |= I2STDM_TXCR_PBM_MASK;
+        val = I2STDM_TXCR_TFS_PCM |
+              I2STDM_TXCR_PBM_MODE(config->format - AUDIO_FMT_PCM);
+        break;
+
+    case AUDIO_FMT_TDM_PCM:
+    /* fallthrough */
+    case AUDIO_FMT_TDM_PCM_L_SHIFT_MODE0:
+    /* fallthrough */
+    case AUDIO_FMT_TDM_PCM_L_SHIFT_MODE1:
+    /* fallthrough */
+    case AUDIO_FMT_TDM_PCM_L_SHIFT_MODE2:
+    /* fallthrough */
+    case AUDIO_FMT_TDM_PCM_L_SHIFT_MODE3:
+        i2sTdm->isTdm = true;
+        val = I2STDM_TXCR_TFS_TDM_PCM;
+        tdmVal = TDM_SHIFT_CTRL(config->format - AUDIO_FMT_TDM_PCM);
+        break;
+
+    case AUDIO_FMT_TDM_I2S_HALF_FRAME:
+        i2sTdm->isTdm = true;
+        val = I2STDM_TXCR_TFS_TDM_I2S;
+        tdmVal = TDM_SHIFT_CTRL(0) | TDM_FSYNC_WIDTH_HALF_FRAME;
+        break;
+
+    case AUDIO_FMT_TDM_I2S_ONE_FRAME:
+        i2sTdm->isTdm = true;
+        val = I2STDM_TXCR_TFS_TDM_I2S;
+        tdmVal = TDM_SHIFT_CTRL(0) | TDM_FSYNC_WIDTH_ONE_FRAME;
+        break;
+
+    case AUDIO_FMT_TDM_LEFT_J_HALF_FRAME:
+        i2sTdm->isTdm = true;
+        val = I2STDM_TXCR_TFS_TDM_I2S;
+        tdmVal = TDM_SHIFT_CTRL(1) | TDM_FSYNC_WIDTH_HALF_FRAME;
+        break;
+
+    case AUDIO_FMT_TDM_LEFT_J_ONE_FRAME:
+        i2sTdm->isTdm = true;
+        val = I2STDM_TXCR_TFS_TDM_I2S;
+        tdmVal = TDM_SHIFT_CTRL(1) | TDM_FSYNC_WIDTH_ONE_FRAME;
+        break;
+
+    case AUDIO_FMT_TDM_RIGHT_J_HALF_FRAME:
+        i2sTdm->isTdm = true;
+        val = I2STDM_TXCR_TFS_TDM_I2S;
+        tdmVal = TDM_SHIFT_CTRL(2) | TDM_FSYNC_WIDTH_HALF_FRAME;
+        break;
+
+    case AUDIO_FMT_TDM_RIGHT_J_ONE_FRAME:
+        i2sTdm->isTdm = true;
+        val = I2STDM_TXCR_TFS_TDM_I2S;
+        tdmVal = TDM_SHIFT_CTRL(2) | TDM_FSYNC_WIDTH_ONE_FRAME;
         break;
 
     default:
+        val = I2STDM_TXCR_TFS_I2S;
         break;
+    }
+
+    MODIFY_REG(reg->TXCR, mask, val);
+    MODIFY_REG(reg->RXCR, mask, val);
+
+    if (i2sTdm->isTdm) {
+        mask = TDM_FSYNC_WIDTH_SEL0_MSK | TDM_SHIFT_CTRL_MSK;
+        MODIFY_REG(reg->TDM_TXCTRL, mask, tdmVal);
+        MODIFY_REG(reg->TDM_RXCTRL, mask, tdmVal);
     }
 
     mask = I2STDM_CKR_MSS_MASK;
@@ -490,9 +547,18 @@ HAL_Status HAL_I2STDM_Config(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType st
                              struct AUDIO_PARAMS *params)
 {
     struct I2STDM_REG *reg = i2sTdm->pReg;
-    uint32_t val = 0;
+    uint32_t val = 0, mask = 0;
     HAL_Status ret = HAL_OK;
     bool isMaster;
+
+    if (i2sTdm->isTdm) {
+        i2sTdm->bclkFs = params->channels * params->sampleBits;
+        mask = TDM_SLOT_BIT_WIDTH_MSK | TDM_FRAME_WIDTH_MSK;
+        val = TDM_SLOT_BIT_WIDTH(params->sampleBits) |
+              TDM_FRAME_WIDTH(i2sTdm->bclkFs);
+        MODIFY_REG(reg->TDM_TXCTRL, mask, val);
+        MODIFY_REG(reg->TDM_RXCTRL, mask, val);
+    }
 
     isMaster = (READ_BIT(reg->CKR, I2STDM_CKR_MSS_MASK) == I2STDM_CKR_MSS_MASTER);
     if (isMaster) {
@@ -501,16 +567,16 @@ HAL_Status HAL_I2STDM_Config(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType st
 
     switch (params->channels) {
     case 8:
-        val |= I2STDM_CHN_8;
+        val = I2STDM_CHN_8;
         break;
     case 6:
-        val |= I2STDM_CHN_6;
+        val = I2STDM_CHN_6;
         break;
     case 4:
-        val |= I2STDM_CHN_4;
+        val = I2STDM_CHN_4;
         break;
     case 2:
-        val |= I2STDM_CHN_2;
+        val = I2STDM_CHN_2;
         break;
     default:
 

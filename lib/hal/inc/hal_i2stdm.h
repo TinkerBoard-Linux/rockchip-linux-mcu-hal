@@ -40,6 +40,7 @@ struct HAL_I2STDM_DEV {
     ePD_Id pd;
     uint16_t bclkFs;
     eTRCM_modeType trcmMode;
+    bool isTdm;
     struct AUDIO_DMA_DATA rxDmaData;
     struct AUDIO_DMA_DATA txDmaData;
 };
