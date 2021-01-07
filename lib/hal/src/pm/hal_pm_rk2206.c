@@ -244,7 +244,7 @@ static void PM_RegsdDump(uint32_t base,
 
 static void PM_UartInit(void)
 {
-    while (pUart->USR & UART_USR_BUSY) {
+    while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY)) {
         ;
     }
 
@@ -261,7 +261,7 @@ static void PM_UartInit(void)
 
 static void PM_UartSave(void)
 {
-    while (pUart->USR & UART_USR_BUSY) {
+    while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY)) {
         ;
     }
 
@@ -276,7 +276,7 @@ static void PM_UartSave(void)
 
 static void PM_UartRestore(void)
 {
-    while (pUart->USR & UART_USR_BUSY) {
+    while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY)) {
         ;
     }
 
