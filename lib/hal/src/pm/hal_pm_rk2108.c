@@ -63,7 +63,6 @@ struct UART_REG_SAVE {
 /********************* Private Variable Definition ***************************/
 HAL_UNUSED static uint64_t pmTimerLastCount;
 HAL_UNUSED static uint64_t pmTimerLowCount;
-HAL_UNUSED static uint32_t pmTimerLowRate;
 HAL_UNUSED static uint32_t pmIRQPendingFlag;
 
 #if defined(HAL_PM_RUNTIME_MODULE_ENABLED) || defined(HAL_PM_SLEEP_MODULE_ENABLED)
@@ -483,7 +482,6 @@ HAL_UNUSED static void SOC_SleepModeInit(struct PMU_REG *pPmu)
         ((1 << PMU_PWRDN_ST_PD_AUDIO_PWR_STAT_SHIFT) | (1 << PMU_PWRDN_ST_PD_DSP_PWR_STAT_SHIFT))) {
         value |= (1 << PMU_PWRMODE_CON_PMU_USE_LF_SHIFT) |
                  (1 << PMU_PWRMODE_CON_OSC_DISABLE_SHIFT);
-        pmTimerLowRate = SLEEP_INPUT_RATE;
         pPmu->PWRMODE_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
         pPmu->PLLLOCK_CNT = SLEEP_COUNT_TO_MS(1);
         pPmu->DSP_LDO_ADJ_CNT = SLEEP_COUNT_TO_MS(1);
@@ -646,15 +644,7 @@ HAL_Status HAL_PM_TimerStop(void)
 
 uint64_t HAL_PM_GetTimerCount(void)
 {
-    uint64_t timerCount;
-
-    timerCount = HAL_GetSysTimerCount() - pmTimerLastCount;
-    if (pmTimerLowRate) {
-        timerCount += HAL_DivU64(pmTimerLowCount * PLL_INPUT_OSC_RATE,
-                                 pmTimerLowRate) - pmTimerLowCount;
-    }
-
-    return timerCount;
+    return HAL_GetSysTimerCount() - pmTimerLastCount;
 }
 
 int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
