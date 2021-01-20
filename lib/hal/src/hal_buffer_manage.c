@@ -122,10 +122,10 @@ HAL_Status HAL_BUFMGR_WCHPpBufEn(int chan, int block, uint8_t en)
 
     if (en) {
         pBufMgr->WCH_MBLK0_CON0 |=
-            0x1U << BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_ENABLE_SHIFT;
+            BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_ENABLE_MASK;
     } else {
-        pBufMgr->WCH_MBLK0_CON0 |=
-            0x0U << BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_ENABLE_SHIFT;
+        pBufMgr->WCH_MBLK0_CON0 &=
+            ~BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_ENABLE_MASK;
     }
 
     return HAL_OK;
