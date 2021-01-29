@@ -1,23 +1,32 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2020 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
  */
 
 #include "soc.h"
 
-uint32_t SystemCoreClock = 150000000;
+#define  SYSTEM_CLOCK  150000000U
+
+/*----------------------------------------------------------------------------
+  System Core Clock Variable
+ *----------------------------------------------------------------------------*/
+uint32_t SystemCoreClock = SYSTEM_CLOCK;
 
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate(void)
+void SystemCoreClockUpdate (void)
 {
+    SystemCoreClock = SYSTEM_CLOCK;
 }
 
 /*----------------------------------------------------------------------------
-  System initialization function
+  System Initialization
  *----------------------------------------------------------------------------*/
-void SystemInit(void)
+void SystemInit (void)
 {
+/* do not use global variables because this function is called before
+   reaching pre-main. RW section may be overwritten afterwards.          */
 
+    /* to do */
 }
