@@ -61,7 +61,6 @@ INCLUDES := \
 
 SRC_DIRS := \
     ../src \
-    $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
 
 export HAL_PATH := $(ROOT_PATH)
 include $(HAL_PATH)/tools/build_lib.mk
@@ -72,6 +71,7 @@ INCLUDES += $(HAL_LIB_INC)
 INCLUDES += $(HAL_TEST_INC)
 
 SRCS += $(basename $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.[cS])))
+SRCS += $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC/start_riscv.S
 OBJS += $(addsuffix .o,$(basename $(SRCS)))
 CFLAGS += $(INCLUDES)
 ASFLAGS += $(INCLUDES)
