@@ -129,5 +129,8 @@ SECTIONS
     {
         . = ALIGN(16);
         PROVIDE(__heap_start = .);
+        . = ORIGIN(DRAM) + LENGTH(DRAM);
+        PROVIDE(__heap_end = .);
+        end = __heap_end;
     } > DRAM
 }
