@@ -148,6 +148,7 @@ ee_u16 core_bench_list(core_results *res, ee_s16 finder_idx)
     ee_s16 i;
 
     info.idx = finder_idx;
+    info.data16 = 0;
     /* find <find_num> values in the list, and change the list each time (reverse and cache if value found) */
     for (i = 0; i < find_num; i++)
     {
