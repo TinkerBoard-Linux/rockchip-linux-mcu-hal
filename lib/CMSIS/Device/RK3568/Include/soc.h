@@ -88,9 +88,62 @@ typedef enum
 /*                                                                                      */
 /****************************************************************************************/
 /******************************************CRU*******************************************/
+#define PLL_INPUT_OSC_RATE (24 * 1000 * 1000)
+
+#define CRU_SRST_CON_CNT    29
+#define CRU_GATE_CON_CNT    35
+#define CRU_CLK_DIV_CON_CNT 84
+#define CRU_CLK_SEL_CON_CNT 84
+
+#define CLK(mux, div) \
+    (((mux) & 0x0F0F00FFU) | (((div) & 0xFFU) << 8) | (((div) & 0x0F0F0000U) << 4))
+
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
     CLK_INVALID = 0U,
+    PLL_APLL,
+    PLL_CPLL,
+    PLL_GPLL,
+    PLL_NPLL,
+    PLL_VPLL,
+    PLL_PPLL,
+    PLL_HPLL,
+    CLK_WDT,
+    CLK_I2C        = CLK(CLK_I2C_SEL, 0U),
+    CLK_PWM1       = CLK(CLK_PWM1_SEL, 0U),
+    CLK_PWM2       = CLK(CLK_PWM2_SEL, 0U),
+    CLK_PWM3       = CLK(CLK_PWM3_SEL, 0U),
+    CLK_SPI0       = CLK(CLK_SPI0_SEL, 0U),
+    CLK_SPI1       = CLK(CLK_SPI1_SEL, 0U),
+    CLK_SPI2       = CLK(CLK_SPI2_SEL, 0U),
+    CLK_SPI3       = CLK(CLK_SPI3_SEL, 0U),
+    CLK_UART1_SRC  = CLK(CLK_UART1_SRC_SEL, CLK_UART1_SRC_DIV),
+    CLK_UART1_FRAC = CLK(0U, CLK_UART1_FRAC_DIV),
+    CLK_UART1      = CLK(SCLK_UART1_SEL, 0U),
+    CLK_UART2_SRC  = CLK(CLK_UART2_SRC_SEL, CLK_UART2_SRC_DIV),
+    CLK_UART2_FRAC = CLK(0U, CLK_UART2_FRAC_DIV),
+    CLK_UART2      = CLK(SCLK_UART2_SEL, 0U),
+    CLK_UART3_SRC  = CLK(CLK_UART3_SRC_SEL, CLK_UART3_SRC_DIV),
+    CLK_UART3_FRAC = CLK(0U, CLK_UART3_FRAC_DIV),
+    CLK_UART3      = CLK(SCLK_UART3_SEL, 0U),
+    CLK_UART4_SRC  = CLK(CLK_UART4_SRC_SEL, CLK_UART4_SRC_DIV),
+    CLK_UART4_FRAC = CLK(0U, CLK_UART4_FRAC_DIV),
+    CLK_UART4      = CLK(SCLK_UART4_SEL, 0U),
+    CLK_UART5_SRC  = CLK(CLK_UART5_SRC_SEL, CLK_UART5_SRC_DIV),
+    CLK_UART5_FRAC = CLK(0U, CLK_UART5_FRAC_DIV),
+    CLK_UART5      = CLK(SCLK_UART5_SEL, 0U),
+    CLK_UART6_SRC  = CLK(CLK_UART6_SRC_SEL, CLK_UART6_SRC_DIV),
+    CLK_UART6_FRAC = CLK(0U, CLK_UART6_FRAC_DIV),
+    CLK_UART6      = CLK(SCLK_UART6_SEL, 0U),
+    CLK_UART7_SRC  = CLK(CLK_UART7_SRC_SEL, CLK_UART7_SRC_DIV),
+    CLK_UART7_FRAC = CLK(0U, CLK_UART7_FRAC_DIV),
+    CLK_UART7      = CLK(SCLK_UART7_SEL, 0U),
+    CLK_UART8_SRC  = CLK(CLK_UART8_SRC_SEL, CLK_UART8_SRC_DIV),
+    CLK_UART8_FRAC = CLK(0U, CLK_UART8_FRAC_DIV),
+    CLK_UART8      = CLK(SCLK_UART8_SEL, 0U),
+    CLK_UART9_SRC  = CLK(CLK_UART9_SRC_SEL, CLK_UART9_SRC_DIV),
+    CLK_UART9_FRAC = CLK(0U, CLK_UART9_FRAC_DIV),
+    CLK_UART9      = CLK(SCLK_UART9_SEL, 0U),
 } eCLOCK_Name;
 #endif
 
