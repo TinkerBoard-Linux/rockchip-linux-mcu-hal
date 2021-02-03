@@ -10,6 +10,7 @@
 #define SOC_RK3568
 
 /* HAL Driver Config */
+#define HAL_CRU_MODULE_ENABLED
 #define HAL_TIMER_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 

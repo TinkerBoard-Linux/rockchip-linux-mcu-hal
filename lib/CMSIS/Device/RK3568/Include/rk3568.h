@@ -134,7 +134,7 @@ struct CRU_REG {
     uint32_t RESERVED00E4[7];                         /* Address Offset: 0x00E4 */
     __IO uint32_t CRU_CLKSEL_CON[85];                 /* Address Offset: 0x0100 */
     uint32_t RESERVED0254[43];                        /* Address Offset: 0x0254 */
-    __IO uint32_t CRU_GATE_CON[36];                   /* Address Offset: 0x0300 */
+    __IO uint32_t CRU_CLKGATE_CON[36];                /* Address Offset: 0x0300 */
     uint32_t RESERVED0390[28];                        /* Address Offset: 0x0390 */
     __IO uint32_t CRU_SOFTRST_CON[30];                /* Address Offset: 0x0400 */
     uint32_t RESERVED0478[2];                         /* Address Offset: 0x0478 */
