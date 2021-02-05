@@ -9,9 +9,9 @@
 const struct HAL_UART_DEV g_uart2Dev =
 {
     .pReg = UART2,
-    .sclkID = 0,//CLK_UART2,
-    .sclkGateID = 0,//CLK_UART2_PMU_GATE,
-    .pclkGateID = 0,//PCLK_PMU_UART2_GATE,
+    .sclkID = CLK_UART2,
+    .sclkGateID = SCLK_UART2_GATE,
+    .pclkGateID = PCLK_UART2_GATE,
     .irqNum = UART2_IRQn,
     .isAutoFlow = false,
 };
