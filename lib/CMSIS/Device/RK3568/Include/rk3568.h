@@ -99,31 +99,31 @@ struct PMU_GRF_REG {
 /* PMUCRU Register Structure Define */
 struct PMUCRU_REG {
     __IO uint32_t PPLL_CON[5];                        /* Address Offset: 0x0000 */
-    uint32_t RESERVED0014[11];                        /* Address Offset: 0x0014 */
+         uint32_t RESERVED0014[11];                   /* Address Offset: 0x0014 */
     __IO uint32_t HPLL_CON[5];                        /* Address Offset: 0x0040 */
-    uint32_t RESERVED0054[11];                        /* Address Offset: 0x0054 */
+         uint32_t RESERVED0054[11];                   /* Address Offset: 0x0054 */
     __IO uint32_t MODE_CON00;                         /* Address Offset: 0x0080 */
-    uint32_t RESERVED0084[31];                        /* Address Offset: 0x0084 */
+         uint32_t RESERVED0084[31];                   /* Address Offset: 0x0084 */
     __IO uint32_t CRU_CLKSEL_CON[10];                 /* Address Offset: 0x0100 */
-    uint32_t RESERVED0128[22];                        /* Address Offset: 0x0128 */
+         uint32_t RESERVED0128[22];                   /* Address Offset: 0x0128 */
     __IO uint32_t CRU_CLKGATE_CON[3];                 /* Address Offset: 0x0180 */
-    uint32_t RESERVED018C[29];                        /* Address Offset: 0x018C */
+         uint32_t RESERVED018C[29];                   /* Address Offset: 0x018C */
     __IO uint32_t CRU_SOFTRST_CON[1];                 /* Address Offset: 0x0200 */
 };
 /* CRU Register Structure Define */
 struct CRU_REG {
     __IO uint32_t APLL_CON[5];                        /* Address Offset: 0x0000 */
-    uint32_t RESERVED0014[3];                         /* Address Offset: 0x0014 */
+         uint32_t RESERVED0014[3];                    /* Address Offset: 0x0014 */
     __IO uint32_t DPLL_CON[5];                        /* Address Offset: 0x0020 */
-    uint32_t RESERVED0034[3];                         /* Address Offset: 0x0034 */
+         uint32_t RESERVED0034[3];                    /* Address Offset: 0x0034 */
     __IO uint32_t GPLL_CON[5];                        /* Address Offset: 0x0040 */
-    uint32_t RESERVED0054[3];                         /* Address Offset: 0x0054 */
+         uint32_t RESERVED0054[3];                    /* Address Offset: 0x0054 */
     __IO uint32_t CPLL_CON[5];                        /* Address Offset: 0x0060 */
-    uint32_t RESERVED0074[3];                         /* Address Offset: 0x0074 */
+         uint32_t RESERVED0074[3];                    /* Address Offset: 0x0074 */
     __IO uint32_t NPLL_CON[2];                        /* Address Offset: 0x0080 */
-    uint32_t RESERVED0088[6];                         /* Address Offset: 0x0088 */
+         uint32_t RESERVED0088[6];                    /* Address Offset: 0x0088 */
     __IO uint32_t VPLL_CON[2];                        /* Address Offset: 0x00A0 */
-    uint32_t RESERVED00A8[6];                         /* Address Offset: 0x00A8 */
+         uint32_t RESERVED00A8[6];                    /* Address Offset: 0x00A8 */
     __IO uint32_t MODE_CON00;                         /* Address Offset: 0x00C0 */
     __IO uint32_t MISC_CON[3];                        /* Address Offset: 0x00C4 */
     __IO uint32_t GLB_CNT_TH;                         /* Address Offset: 0x00D0 */
@@ -131,13 +131,13 @@ struct CRU_REG {
     __IO uint32_t GLB_SRST_SND;                       /* Address Offset: 0x00D8 */
     __IO uint32_t GLB_RST_CON;                        /* Address Offset: 0x00DC */
     __IO uint32_t GLB_RST_ST;                         /* Address Offset: 0x00E0 */
-    uint32_t RESERVED00E4[7];                         /* Address Offset: 0x00E4 */
+         uint32_t RESERVED00E4[7];                    /* Address Offset: 0x00E4 */
     __IO uint32_t CRU_CLKSEL_CON[85];                 /* Address Offset: 0x0100 */
-    uint32_t RESERVED0254[43];                        /* Address Offset: 0x0254 */
+         uint32_t RESERVED0254[43];                   /* Address Offset: 0x0254 */
     __IO uint32_t CRU_CLKGATE_CON[36];                /* Address Offset: 0x0300 */
-    uint32_t RESERVED0390[28];                        /* Address Offset: 0x0390 */
+         uint32_t RESERVED0390[28];                   /* Address Offset: 0x0390 */
     __IO uint32_t CRU_SOFTRST_CON[30];                /* Address Offset: 0x0400 */
-    uint32_t RESERVED0478[2];                         /* Address Offset: 0x0478 */
+         uint32_t RESERVED0478[2];                    /* Address Offset: 0x0478 */
     __IO uint32_t SSGTBL0_3;                          /* Address Offset: 0x0480 */
     __IO uint32_t SSGTBL4_7;                          /* Address Offset: 0x0484 */
     __IO uint32_t SSGTBL8_11;                         /* Address Offset: 0x0488 */
@@ -190,7 +190,7 @@ struct CRU_REG {
     __IO uint32_t AUTOCS_GPLL_CON1;                   /* Address Offset: 0x0544 */
     __IO uint32_t AUTOCS_CPLL_CON0;                   /* Address Offset: 0x0548 */
     __IO uint32_t AUTOCS_CPLL_CON1;                   /* Address Offset: 0x054C */
-    uint32_t RESERVED0550[12];                        /* Address Offset: 0x0550 */
+         uint32_t RESERVED0550[12];                   /* Address Offset: 0x0550 */
     __IO uint32_t SDMMC0_CON[2];                      /* Address Offset: 0x0580 */
     __IO uint32_t SDMMC1_CON[2];                      /* Address Offset: 0x0588 */
     __IO uint32_t SDMMC2_CON[2];                      /* Address Offset: 0x0590 */
@@ -341,6 +341,8 @@ struct UART_REG {
 /* Memory Base */
 #define PMU_GRF_BASE        0xFDC20000U /* PMU_GRF base address */
 #define PMUCRU_BASE         0xFDD00000U /* PMUCRU base address */
+#define TIMER6_BASE         0xFDD1C000U /* TIMER6 base address */
+#define TIMER7_BASE         0xFDD1C020U /* TIMER7 base address */
 #define CRU_BASE            0xFDD20000U /* CRU base address */
 #define PMU_BASE            0xFDD90000U /* PMU base address */
 #define PMU_NS_BASE         0xFDD90000U /* PMU_NS base address */
@@ -351,8 +353,6 @@ struct UART_REG {
 #define TIMER4_BASE         0xFE5F0080U /* TIMER4 base address */
 #define TIMER5_BASE         0xFE5F00A0U /* TIMER5 base address */
 #define UART2_BASE          0xFE660000U /* UART2 base address */
-#define TIMER6_BASE         0xFDD1C000U /* TIMER6 base address */
-#define TIMER7_BASE         0xFDD1C020U /* TIMER7 base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -524,6 +524,8 @@ struct UART_REG {
 #define PMU_GRF_GPIO0D_P_GPIO0D0_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D0_P_SHIFT)                   /* 0x00000003 */
 #define PMU_GRF_GPIO0D_P_GPIO0D1_P_SHIFT                   (2U)
 #define PMU_GRF_GPIO0D_P_GPIO0D1_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D1_P_SHIFT)                   /* 0x0000000C */
+#define PMU_GRF_GPIO0D_P_GPIO0D2_P_SHIFT                   (4U)
+#define PMU_GRF_GPIO0D_P_GPIO0D2_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D2_P_SHIFT)                   /* 0x00000030 */
 #define PMU_GRF_GPIO0D_P_GPIO0D3_P_SHIFT                   (6U)
 #define PMU_GRF_GPIO0D_P_GPIO0D3_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D3_P_SHIFT)                   /* 0x000000C0 */
 #define PMU_GRF_GPIO0D_P_GPIO0D4_P_SHIFT                   (8U)
@@ -2789,16 +2791,16 @@ struct UART_REG {
 #define CRU_GATE_CON07_CLK_I2S3_2CH_TX_FRAC_EN_MASK        (0x1U << CRU_GATE_CON07_CLK_I2S3_2CH_TX_FRAC_EN_SHIFT)       /* 0x00000020 */
 #define CRU_GATE_CON07_MCLK_I2S3_2CH_TX_EN_SHIFT           (6U)
 #define CRU_GATE_CON07_MCLK_I2S3_2CH_TX_EN_MASK            (0x1U << CRU_GATE_CON07_MCLK_I2S3_2CH_TX_EN_SHIFT)           /* 0x00000040 */
-#define CRU_GATE_CON07_I2S3_MCLKOUT_TX_EN_SHIFT           (7U)
-#define CRU_GATE_CON07_I2S3_MCLKOUT_TX_EN_MASK            (0x1U << CRU_GATE_CON07_I2S3_MCLKOUT_TX_EN_SHIFT)           /* 0x00000080 */
+#define CRU_GATE_CON07_I2S3_MCLKOUT_TX_EN_SHIFT            (7U)
+#define CRU_GATE_CON07_I2S3_MCLKOUT_TX_EN_MASK             (0x1U << CRU_GATE_CON07_I2S3_MCLKOUT_TX_EN_SHIFT)            /* 0x00000080 */
 #define CRU_GATE_CON07_CLK_I2S3_2CH_RX_SRC_EN_SHIFT        (8U)
 #define CRU_GATE_CON07_CLK_I2S3_2CH_RX_SRC_EN_MASK         (0x1U << CRU_GATE_CON07_CLK_I2S3_2CH_RX_SRC_EN_SHIFT)        /* 0x00000100 */
 #define CRU_GATE_CON07_CLK_I2S3_2CH_RX_FRAC_EN_SHIFT       (9U)
 #define CRU_GATE_CON07_CLK_I2S3_2CH_RX_FRAC_EN_MASK        (0x1U << CRU_GATE_CON07_CLK_I2S3_2CH_RX_FRAC_EN_SHIFT)       /* 0x00000200 */
 #define CRU_GATE_CON07_MCLK_I2S3_2CH_RX_EN_SHIFT           (10U)
 #define CRU_GATE_CON07_MCLK_I2S3_2CH_RX_EN_MASK            (0x1U << CRU_GATE_CON07_MCLK_I2S3_2CH_RX_EN_SHIFT)           /* 0x00000400 */
-#define CRU_GATE_CON07_I2S3_MCLKOUT_RX_EN_SHIFT           (11U)
-#define CRU_GATE_CON07_I2S3_MCLKOUT_RX_EN_MASK            (0x1U << CRU_GATE_CON07_I2S3_MCLKOUT_RX_EN_SHIFT)           /* 0x00000800 */
+#define CRU_GATE_CON07_I2S3_MCLKOUT_RX_EN_SHIFT            (11U)
+#define CRU_GATE_CON07_I2S3_MCLKOUT_RX_EN_MASK             (0x1U << CRU_GATE_CON07_I2S3_MCLKOUT_RX_EN_SHIFT)            /* 0x00000800 */
 #define CRU_GATE_CON07_HCLK_VAD_EN_SHIFT                   (12U)
 #define CRU_GATE_CON07_HCLK_VAD_EN_MASK                    (0x1U << CRU_GATE_CON07_HCLK_VAD_EN_SHIFT)                   /* 0x00001000 */
 #define CRU_GATE_CON07_HCLK_SPDIF_8CH_EN_SHIFT             (13U)
