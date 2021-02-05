@@ -341,7 +341,7 @@ struct UART_REG {
 /* Memory Base */
 #define PMU_GRF_BASE        0xFDC20000U /* PMU_GRF base address */
 #define PMUCRU_BASE         0xFDD00000U /* PMUCRU base address */
-#define CRU_BASE            0xFDD10000U /* CRU base address */
+#define CRU_BASE            0xFDD20000U /* CRU base address */
 #define PMU_BASE            0xFDD90000U /* PMU base address */
 #define PMU_NS_BASE         0xFDD90000U /* PMU_NS base address */
 #define TIMER0_BASE         0xFE5F0000U /* TIMER0 base address */
