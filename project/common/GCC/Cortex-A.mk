@@ -23,7 +23,7 @@ STRIP		= $(CROSS_COMPILE)strip
 OBJCOPY		= $(CROSS_COMPILE)objcopy
 OBJDUMP		= $(CROSS_COMPILE)objdump
 
-CPU		+= -ftree-vectorize -ffast-math
+CPU		+= -ftree-vectorize -ffast-math -marm
 ASFLAGS		+= $(CPU) -c -x assembler-with-cpp -D__ASSEMBLY__
 CFLAGS		+= $(CPU) -std=gnu99 -O2 -g
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc
