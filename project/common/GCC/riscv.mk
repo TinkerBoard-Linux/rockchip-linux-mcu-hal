@@ -32,7 +32,7 @@ OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 HAL_CFLAGS	:= -Wformat=2 -Wall -Wextra -Wno-unused-parameter -Werror
 HAL_CFLAGS	+= -Wstrict-prototypes -Wmissing-prototypes
 
-LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC/gcc_riscv.ld
+LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_riscv.ld
 
 #############################################################################
 # Output files
@@ -71,7 +71,7 @@ INCLUDES += $(HAL_LIB_INC)
 INCLUDES += $(HAL_TEST_INC)
 
 SRCS += $(basename $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.[cS])))
-SRCS += $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC/start_riscv.S
+SRCS += $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/start_riscv.S
 OBJS += $(addsuffix .o,$(basename $(SRCS)))
 CFLAGS += $(INCLUDES)
 ASFLAGS += $(INCLUDES)

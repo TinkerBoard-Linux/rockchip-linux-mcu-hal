@@ -32,7 +32,7 @@ OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 HAL_CFLAGS	:= -Wformat=2 -Wall -Wextra -Wno-unused-parameter -Werror
 HAL_CFLAGS	+= -Wstrict-prototypes -Wmissing-prototypes
 
-LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC/gcc_arm$(if $(findstring 1,$(XIP)),_xip).ld
+LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_arm$(if $(findstring 1,$(XIP)),_xip).ld
 
 #############################################################################
 # Output files
@@ -60,7 +60,7 @@ INCLUDES := \
 
 SRC_DIRS := \
     ../src \
-    $(ROOT_PATH)/lib/CMSIS/Device/$(PROJECT)/Source/Templates/GCC \
+    $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC \
 
 export HAL_PATH := $(ROOT_PATH)
 include $(HAL_PATH)/tools/build_lib.mk
