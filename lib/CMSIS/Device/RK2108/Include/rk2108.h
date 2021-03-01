@@ -1,3 +1,8 @@
+/* SPDX-License-Identifier: BSD-3-Clause */
+/*
+ * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
+ */
+
 #ifndef __RK2108_H
 #define __RK2108_H
 #ifdef __cplusplus
