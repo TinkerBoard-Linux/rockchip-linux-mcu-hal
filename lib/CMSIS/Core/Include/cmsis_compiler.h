@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler generic header file
- * @version  V5.0.4
- * @date     10. January 2018
+ * @version  V5.1.0
+ * @date     09. October 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -123,6 +123,10 @@
   #ifndef   __RESTRICT
     #define __RESTRICT                             __restrict
   #endif
+  #ifndef   __COMPILER_BARRIER
+    #warning No compiler specific solution for __COMPILER_BARRIER. __COMPILER_BARRIER is ignored.
+    #define __COMPILER_BARRIER()                   (void)0
+  #endif
 
 
 /*
@@ -192,6 +196,10 @@
     #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
     #define __RESTRICT
   #endif
+  #ifndef   __COMPILER_BARRIER
+    #warning No compiler specific solution for __COMPILER_BARRIER. __COMPILER_BARRIER is ignored.
+    #define __COMPILER_BARRIER()                   (void)0
+  #endif
 
 
 /*
@@ -259,6 +267,10 @@
   #ifndef   __RESTRICT
     #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
     #define __RESTRICT
+  #endif
+  #ifndef   __COMPILER_BARRIER
+    #warning No compiler specific solution for __COMPILER_BARRIER. __COMPILER_BARRIER is ignored.
+    #define __COMPILER_BARRIER()                   (void)0
   #endif
 
 
