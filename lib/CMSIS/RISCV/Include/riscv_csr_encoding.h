@@ -1,5 +1,5 @@
 /**
-  * Copyright (c) 2019 Rockchip Electronic Co.,Ltd
+  * Copyright (c) 2019-2021 Rockchip Electronic Co.,Ltd
   *
   * SPDX-License-Identifier: Apache-2.0
   ******************************************************************************
