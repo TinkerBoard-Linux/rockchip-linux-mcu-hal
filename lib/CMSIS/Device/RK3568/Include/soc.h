@@ -146,6 +146,9 @@ typedef enum CLOCK_Name {
     CLK_UART9      = CLK(SCLK_UART9_SEL, 0U),
 } eCLOCK_Name;
 #endif
+/****************************************MBOX********************************************/
+#define MBOX_CNT             2
+#define MBOX_CHAN_CNT        4
 
 #ifdef __cplusplus
 }
