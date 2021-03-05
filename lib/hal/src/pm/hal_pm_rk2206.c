@@ -252,6 +252,12 @@ static void PM_UartInit(void)
         ;
     }
 
+    /**
+     * Uart becomes no_busy at least one byte of transfer time after fifo_empty.
+     * The time is 86us if baud_rate=115200, so 1ms is enough.
+     */
+    HAL_DelayMs(1);
+
     pUart->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
     pUart->IER = 0;
     pUart->MCR = UART_MCR_LOOP;
@@ -269,6 +275,11 @@ static void PM_UartSave(void)
         ;
     }
 
+    /**
+     * Uart becomes no_busy at least one byte of transfer time after fifo_empty.
+     * The time is 86us if baud_rate=115200, so 1ms is enough.
+     */
+    HAL_DelayMs(1);
     debugPortSave.lcr = pUart->LCR;
     debugPortSave.ier = pUart->IER;
     debugPortSave.mcr = pUart->MCR;
@@ -283,6 +294,12 @@ static void PM_UartRestore(void)
     while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY)) {
         ;
     }
+
+    /**
+     * Uart becomes no_busy at least one byte of transfer time after fifo_empty.
+     * The time is 86us if baud_rate=115200, so 1ms is enough.
+     */
+    HAL_DelayMs(1);
 
     pUart->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
 
