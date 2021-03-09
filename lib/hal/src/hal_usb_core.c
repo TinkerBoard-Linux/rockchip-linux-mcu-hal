@@ -602,10 +602,14 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
         }
 
         if (pEP->type == EP_TYPE_ISOC) {
-            if ((USB_DEVICE->DSTS & (1 << 8)) == 0) {
-                USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SODDFRM;
-            } else {
+            if (USB_GetDevSpeed(pUSB) == USB_OTG_SPEED_HIGH) {
                 USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
+            } else {
+                if ((USB_DEVICE->DSTS & (1 << 8)) == 0) {
+                    USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SODDFRM;
+                } else {
+                    USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
+                }
             }
         }
 
