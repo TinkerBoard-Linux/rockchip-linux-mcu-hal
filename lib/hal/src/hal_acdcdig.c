@@ -303,6 +303,9 @@ HAL_Status HAL_ACDCDIG_Init(struct HAL_ACDCDIG_DEV *acdcDig, struct AUDIO_INIT_C
     /* hpf en */
     MODIFY_REG(reg->HPFCTRL, ACDCDIG_HPFCTRL_HPFLE_MASK | ACDCDIG_HPFCTRL_HPFRE_MASK,
                ACDCDIG_HPFCTRL_HPFLE_EN | ACDCDIG_HPFCTRL_HPFRE_EN);
+    /* opamp bias current: 160% */
+    MODIFY_REG(reg->REFCFG, ACDCDIG_REFCFG_REF_TOP_TRIM_MASK,
+               ACDCDIG_REFCFG_REF_TOP_TRIM(0x9));
 
     return ret;
 }
