@@ -9,6 +9,8 @@ HAL_TEST_INC += \
 -I"$(HAL_PATH)/test/unity/src" \
 -I"$(HAL_PATH)/test/unity/extras/fixture/src" \
 -I"$(HAL_PATH)/test" \
+-I"$(HAL_PATH)/test/coremark" \
+-I"$(HAL_PATH)/test/coremark/barebones" \
 
 HAL_TEST_SRC += \
     $(HAL_PATH)/test/unity/extras/fixture/src \
@@ -16,3 +18,5 @@ HAL_TEST_SRC += \
     $(HAL_PATH)/test/hal \
     $(HAL_PATH)/test/hal/psram \
     $(HAL_PATH)/test \
+    $(HAL_PATH)/test/coremark \
+    $(HAL_PATH)/test/coremark/barebones \
