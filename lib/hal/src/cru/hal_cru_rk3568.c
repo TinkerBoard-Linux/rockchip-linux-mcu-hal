@@ -434,6 +434,17 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         freq = HAL_CRU_ClkFracGetFreq(clockName);
 
         return freq;
+    case CLK_CAN0:
+    case CLK_CAN1:
+    case CLK_CAN2:
+        if (HAL_CRU_ClkGetMux(clkMux)) {
+            pRate = s_cpllFreq;
+        } else {
+            pRate = s_gpllFreq;
+        }
+
+        break;
+
     default:
         break;
     }
@@ -497,6 +508,19 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         error = HAL_CRU_ClkFracSetFreq(clockName, rate);
 
         return error;
+
+    case CLK_CAN0:
+    case CLK_CAN1:
+    case CLK_CAN2:
+        if (s_cpllFreq % rate == 0) {
+            pRate = s_cpllFreq;
+            mux = 1;
+        } else {
+            pRate = s_gpllFreq;
+            mux = 0;
+        }
+
+        break;
 
     default:
         break;
