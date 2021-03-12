@@ -286,6 +286,66 @@ struct TIMER_REG {
          uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
     __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
 };
+/* CAN Register Structure Define */
+struct CAN_REG {
+    __IO uint32_t MODE;                               /* Address Offset: 0x0000 */
+    __IO uint32_t CMD;                                /* Address Offset: 0x0004 */
+    __I  uint32_t STATE;                              /* Address Offset: 0x0008 */
+    __IO uint32_t INT;                                /* Address Offset: 0x000C */
+    __IO uint32_t INT_MASK;                           /* Address Offset: 0x0010 */
+    __IO uint32_t DMA_CTRL;                           /* Address Offset: 0x0014 */
+    __IO uint32_t BITTIMING;                          /* Address Offset: 0x0018 */
+         uint32_t RESERVED001C[3];                    /* Address Offset: 0x001C */
+    __I  uint32_t ARBITFAIL;                          /* Address Offset: 0x0028 */
+    __IO uint32_t ERROR_CODE;                         /* Address Offset: 0x002C */
+         uint32_t RESERVED0030;                       /* Address Offset: 0x0030 */
+    __I  uint32_t RXERRORCNT;                         /* Address Offset: 0x0034 */
+    __I  uint32_t TXERRORCNT;                         /* Address Offset: 0x0038 */
+    __IO uint32_t IDCODE;                             /* Address Offset: 0x003C */
+    __IO uint32_t IDMASK;                             /* Address Offset: 0x0040 */
+         uint32_t RESERVED0044[3];                    /* Address Offset: 0x0044 */
+    __IO uint32_t TXFRAMEINFO;                        /* Address Offset: 0x0050 */
+    __IO uint32_t TXID;                               /* Address Offset: 0x0054 */
+    __IO uint32_t TXDATA0;                            /* Address Offset: 0x0058 */
+    __IO uint32_t TXDATA1;                            /* Address Offset: 0x005C */
+    __I  uint32_t RXFRAMEINFO;                        /* Address Offset: 0x0060 */
+    __I  uint32_t RXID;                               /* Address Offset: 0x0064 */
+    __I  uint32_t RXDATA0;                            /* Address Offset: 0x0068 */
+    __I  uint32_t RXDATA1;                            /* Address Offset: 0x006C */
+    __I  uint32_t RTL_VERSION;                        /* Address Offset: 0x0070 */
+         uint32_t RESERVED0074[35];                   /* Address Offset: 0x0074 */
+    __IO uint32_t FD_NOMINAL_BITTIMING;               /* Address Offset: 0x0100 */
+    __IO uint32_t FD_DATA_BITTIMING;                  /* Address Offset: 0x0104 */
+    __IO uint32_t TRANSMIT_DELAY_COMPENSATION;        /* Address Offset: 0x0108 */
+    __IO uint32_t TIMESTAMP_CTRL;                     /* Address Offset: 0x010C */
+    __IO uint32_t TIMESTAMP;                          /* Address Offset: 0x0110 */
+    __IO uint32_t TXEVENT_FIFO_CTRL;                  /* Address Offset: 0x0114 */
+    __IO uint32_t RX_FIFO_CTRL;                       /* Address Offset: 0x0118 */
+    __IO uint32_t AFR_CTRL;                           /* Address Offset: 0x011C */
+    __IO uint32_t IDCODE0;                            /* Address Offset: 0x0120 */
+    __IO uint32_t IDMASK0;                            /* Address Offset: 0x0124 */
+    __IO uint32_t IDCODE1;                            /* Address Offset: 0x0128 */
+    __IO uint32_t IDMASK1;                            /* Address Offset: 0x012C */
+    __IO uint32_t IDCODE2;                            /* Address Offset: 0x0130 */
+    __IO uint32_t IDMASK2;                            /* Address Offset: 0x0134 */
+    __IO uint32_t IDCODE3;                            /* Address Offset: 0x0138 */
+    __IO uint32_t IDMASK3;                            /* Address Offset: 0x013C */
+    __IO uint32_t IDCODE4;                            /* Address Offset: 0x0140 */
+    __IO uint32_t IDMASK4;                            /* Address Offset: 0x0144 */
+         uint32_t RESERVED0148[46];                   /* Address Offset: 0x0148 */
+    __IO uint32_t FD_TXFRAMEINFO;                     /* Address Offset: 0x0200 */
+    __IO uint32_t FD_TXID;                            /* Address Offset: 0x0204 */
+    __IO uint32_t FD_TXDATA[16];                      /* Address Offset: 0x0208 */
+         uint32_t RESERVED0248[46];                   /* Address Offset: 0x0248 */
+    __IO uint32_t FD_RXFRAMEINFO;                     /* Address Offset: 0x0300 */
+    __I  uint32_t FD_RXID;                            /* Address Offset: 0x0304 */
+    __I  uint32_t FD_RXTIMESTAMP;                     /* Address Offset: 0x0308 */
+    __I  uint32_t FD_RXDATA[16];                      /* Address Offset: 0x030C */
+         uint32_t RESERVED034C[45];                   /* Address Offset: 0x034C */
+    __I  uint32_t RX_FIFO_RDATA;                      /* Address Offset: 0x0400 */
+         uint32_t RESERVED0404[63];                   /* Address Offset: 0x0404 */
+    __I  uint32_t TXE_FIFO_RDATA;                     /* Address Offset: 0x0500 */
+};
 /* UART Register Structure Define */
 struct UART_REG {
     union {
@@ -361,6 +421,9 @@ struct MBOX_REG {
 #define CRU_BASE            0xFDD20000U /* CRU base address */
 #define PMU_BASE            0xFDD90000U /* PMU base address */
 #define PMU_NS_BASE         0xFDD90000U /* PMU_NS base address */
+#define CAN0_BASE           0xFE570000U /* CAN0 base address */
+#define CAN1_BASE           0xFE580000U /* CAN1 base address */
+#define CAN2_BASE           0xFE590000U /* CAN2 base address */
 #define TIMER0_BASE         0xFE5F0000U /* TIMER0 base address */
 #define TIMER1_BASE         0xFE5F0020U /* TIMER1 base address */
 #define TIMER2_BASE         0xFE5F0040U /* TIMER2 base address */
@@ -381,6 +444,9 @@ struct MBOX_REG {
 #define CRU                 ((struct CRU_REG *) CRU_BASE)
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define PMU_NS              ((struct PMU_NS_REG *) PMU_NS_BASE)
+#define CAN0                ((struct CAN_REG *) CAN0_BASE)
+#define CAN1                ((struct CAN_REG *) CAN1_BASE)
+#define CAN2                ((struct CAN_REG *) CAN2_BASE)
 #define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
 #define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
 #define TIMER2              ((struct TIMER_REG *) TIMER2_BASE)
@@ -396,6 +462,7 @@ struct MBOX_REG {
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
 #define IS_PMU_NS_INSTANCE(instance) ((instance) == PMU_NS)
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7))
+#define IS_CAN_INSTANCE(instance) (((instance) == CAN0) || ((instance) == CAN1) || ((instance) == CAN2))
 #define IS_UART_INSTANCE(instance) ((instance) == UART2)
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
 /****************************************************************************************/
@@ -5662,6 +5729,530 @@ struct MBOX_REG {
 #define PMU_DBG_PWR_CON_CPU3_DBG_PWRUP_REQ_ENA_MASK        (0x1U << PMU_DBG_PWR_CON_CPU3_DBG_PWRUP_REQ_ENA_SHIFT)       /* 0x00000008 */
 #define PMU_DBG_PWR_CON_CLUSTER_DBG_PWRUP_REQ_ENA_SHIFT    (4U)
 #define PMU_DBG_PWR_CON_CLUSTER_DBG_PWRUP_REQ_ENA_MASK     (0x1U << PMU_DBG_PWR_CON_CLUSTER_DBG_PWRUP_REQ_ENA_SHIFT)    /* 0x00000010 */
+/******************************************CAN*******************************************/
+/* MODE */
+#define CAN_MODE_OFFSET                                    (0x0U)
+#define CAN_MODE_WORK_MODE_SHIFT                           (0U)
+#define CAN_MODE_WORK_MODE_MASK                            (0x1U << CAN_MODE_WORK_MODE_SHIFT)                           /* 0x00000001 */
+#define CAN_MODE_SLEEP_MODE_SHIFT                          (1U)
+#define CAN_MODE_SLEEP_MODE_MASK                           (0x1U << CAN_MODE_SLEEP_MODE_SHIFT)                          /* 0x00000002 */
+#define CAN_MODE_SELF_TEST_SHIFT                           (2U)
+#define CAN_MODE_SELF_TEST_MASK                            (0x1U << CAN_MODE_SELF_TEST_SHIFT)                           /* 0x00000004 */
+#define CAN_MODE_SILENT_MODE_SHIFT                         (3U)
+#define CAN_MODE_SILENT_MODE_MASK                          (0x1U << CAN_MODE_SILENT_MODE_SHIFT)                         /* 0x00000008 */
+#define CAN_MODE_LBACK_MODE_SHIFT                          (4U)
+#define CAN_MODE_LBACK_MODE_MASK                           (0x1U << CAN_MODE_LBACK_MODE_SHIFT)                          /* 0x00000010 */
+#define CAN_MODE_RXSTX_MODE_SHIFT                          (5U)
+#define CAN_MODE_RXSTX_MODE_MASK                           (0x1U << CAN_MODE_RXSTX_MODE_SHIFT)                          /* 0x00000020 */
+#define CAN_MODE_TXORDER_MODE_SHIFT                        (6U)
+#define CAN_MODE_TXORDER_MODE_MASK                         (0x1U << CAN_MODE_TXORDER_MODE_SHIFT)                        /* 0x00000040 */
+#define CAN_MODE_RXSORT_MODE_SHIFT                         (7U)
+#define CAN_MODE_RXSORT_MODE_MASK                          (0x1U << CAN_MODE_RXSORT_MODE_SHIFT)                         /* 0x00000080 */
+#define CAN_MODE_COVER_MODE_SHIFT                          (8U)
+#define CAN_MODE_COVER_MODE_MASK                           (0x1U << CAN_MODE_COVER_MODE_SHIFT)                          /* 0x00000100 */
+#define CAN_MODE_OVLD_MODE_SHIFT                           (9U)
+#define CAN_MODE_OVLD_MODE_MASK                            (0x1U << CAN_MODE_OVLD_MODE_SHIFT)                           /* 0x00000200 */
+#define CAN_MODE_AUTO_RETX_MODE_SHIFT                      (10U)
+#define CAN_MODE_AUTO_RETX_MODE_MASK                       (0x1U << CAN_MODE_AUTO_RETX_MODE_SHIFT)                      /* 0x00000400 */
+#define CAN_MODE_AUTO_BUS_ON_SHIFT                         (11U)
+#define CAN_MODE_AUTO_BUS_ON_MASK                          (0x1U << CAN_MODE_AUTO_BUS_ON_SHIFT)                         /* 0x00000800 */
+#define CAN_MODE_SPACE_RX_MODE_SHIFT                       (12U)
+#define CAN_MODE_SPACE_RX_MODE_MASK                        (0x1U << CAN_MODE_SPACE_RX_MODE_SHIFT)                       /* 0x00001000 */
+#define CAN_MODE_BRSD_SHIFT                                (13U)
+#define CAN_MODE_BRSD_MASK                                 (0x1U << CAN_MODE_BRSD_SHIFT)                                /* 0x00002000 */
+#define CAN_MODE_DPEE_SHIFT                                (14U)
+#define CAN_MODE_DPEE_MASK                                 (0x1U << CAN_MODE_DPEE_SHIFT)                                /* 0x00004000 */
+#define CAN_MODE_CAN_FD_MODE_ENABLE_SHIFT                  (15U)
+#define CAN_MODE_CAN_FD_MODE_ENABLE_MASK                   (0x1U << CAN_MODE_CAN_FD_MODE_ENABLE_SHIFT)                  /* 0x00008000 */
+/* CMD */
+#define CAN_CMD_OFFSET                                     (0x4U)
+#define CAN_CMD_TX0_REQ_SHIFT                              (0U)
+#define CAN_CMD_TX0_REQ_MASK                               (0x1U << CAN_CMD_TX0_REQ_SHIFT)                              /* 0x00000001 */
+#define CAN_CMD_TX1_REQ_SHIFT                              (1U)
+#define CAN_CMD_TX1_REQ_MASK                               (0x1U << CAN_CMD_TX1_REQ_SHIFT)                              /* 0x00000002 */
+/* STATE */
+#define CAN_STATE_OFFSET                                   (0x8U)
+#define CAN_STATE                                          (0x0U)
+#define CAN_STATE_RX_BUFFER_FULL_SHIFT                     (0U)
+#define CAN_STATE_RX_BUFFER_FULL_MASK                      (0x1U << CAN_STATE_RX_BUFFER_FULL_SHIFT)                     /* 0x00000001 */
+#define CAN_STATE_TX_BUFFER_FULL_SHIFT                     (1U)
+#define CAN_STATE_TX_BUFFER_FULL_MASK                      (0x1U << CAN_STATE_TX_BUFFER_FULL_SHIFT)                     /* 0x00000002 */
+#define CAN_STATE_RX_PERIOD_SHIFT                          (2U)
+#define CAN_STATE_RX_PERIOD_MASK                           (0x1U << CAN_STATE_RX_PERIOD_SHIFT)                          /* 0x00000004 */
+#define CAN_STATE_TX_PERIOD_SHIFT                          (3U)
+#define CAN_STATE_TX_PERIOD_MASK                           (0x1U << CAN_STATE_TX_PERIOD_SHIFT)                          /* 0x00000008 */
+#define CAN_STATE_ERROR_WARNING_STATE_SHIFT                (4U)
+#define CAN_STATE_ERROR_WARNING_STATE_MASK                 (0x1U << CAN_STATE_ERROR_WARNING_STATE_SHIFT)                /* 0x00000010 */
+#define CAN_STATE_BUS_OFF_STATE_SHIFT                      (5U)
+#define CAN_STATE_BUS_OFF_STATE_MASK                       (0x1U << CAN_STATE_BUS_OFF_STATE_SHIFT)                      /* 0x00000020 */
+#define CAN_STATE_SLEEP_STATE_SHIFT                        (6U)
+#define CAN_STATE_SLEEP_STATE_MASK                         (0x1U << CAN_STATE_SLEEP_STATE_SHIFT)                        /* 0x00000040 */
+/* INT */
+#define CAN_INT_OFFSET                                     (0xCU)
+#define CAN_INT_RX_FINISH_INT_SHIFT                        (0U)
+#define CAN_INT_RX_FINISH_INT_MASK                         (0x1U << CAN_INT_RX_FINISH_INT_SHIFT)                        /* 0x00000001 */
+#define CAN_INT_TX_FINISH_INT_SHIFT                        (1U)
+#define CAN_INT_TX_FINISH_INT_MASK                         (0x1U << CAN_INT_TX_FINISH_INT_SHIFT)                        /* 0x00000002 */
+#define CAN_INT_ERROR_WARNING_INT_SHIFT                    (2U)
+#define CAN_INT_ERROR_WARNING_INT_MASK                     (0x1U << CAN_INT_ERROR_WARNING_INT_SHIFT)                    /* 0x00000004 */
+#define CAN_INT_OVERLOAD_INT_SHIFT                         (3U)
+#define CAN_INT_OVERLOAD_INT_MASK                          (0x1U << CAN_INT_OVERLOAD_INT_SHIFT)                         /* 0x00000008 */
+#define CAN_INT_PASSIVE_ERROR_INT_SHIFT                    (4U)
+#define CAN_INT_PASSIVE_ERROR_INT_MASK                     (0x1U << CAN_INT_PASSIVE_ERROR_INT_SHIFT)                    /* 0x00000010 */
+#define CAN_INT_TX_ARBIT_FAIL_INT_SHIFT                    (5U)
+#define CAN_INT_TX_ARBIT_FAIL_INT_MASK                     (0x1U << CAN_INT_TX_ARBIT_FAIL_INT_SHIFT)                    /* 0x00000020 */
+#define CAN_INT_ERROR_INT_SHIFT                            (6U)
+#define CAN_INT_ERROR_INT_MASK                             (0x1U << CAN_INT_ERROR_INT_SHIFT)                            /* 0x00000040 */
+#define CAN_INT_RX_FIFO_FULL_INT_SHIFT                     (7U)
+#define CAN_INT_RX_FIFO_FULL_INT_MASK                      (0x1U << CAN_INT_RX_FIFO_FULL_INT_SHIFT)                     /* 0x00000080 */
+#define CAN_INT_RX_FIFO_OVERFLOW_INT_SHIFT                 (8U)
+#define CAN_INT_RX_FIFO_OVERFLOW_INT_MASK                  (0x1U << CAN_INT_RX_FIFO_OVERFLOW_INT_SHIFT)                 /* 0x00000100 */
+#define CAN_INT_BUS_OFF_INT_SHIFT                          (9U)
+#define CAN_INT_BUS_OFF_INT_MASK                           (0x1U << CAN_INT_BUS_OFF_INT_SHIFT)                          /* 0x00000200 */
+#define CAN_INT_BUS_OFF_RECOVERY_INT_SHIFT                 (10U)
+#define CAN_INT_BUS_OFF_RECOVERY_INT_MASK                  (0x1U << CAN_INT_BUS_OFF_RECOVERY_INT_SHIFT)                 /* 0x00000400 */
+#define CAN_INT_TIMESTAMP_COUNTER_OVERFLOW_INT_SHIFT       (11U)
+#define CAN_INT_TIMESTAMP_COUNTER_OVERFLOW_INT_MASK        (0x1U << CAN_INT_TIMESTAMP_COUNTER_OVERFLOW_INT_SHIFT)       /* 0x00000800 */
+#define CAN_INT_TX_EVENT_FIFO_OVERFLOW_INT_SHIFT           (12U)
+#define CAN_INT_TX_EVENT_FIFO_OVERFLOW_INT_MASK            (0x1U << CAN_INT_TX_EVENT_FIFO_OVERFLOW_INT_SHIFT)           /* 0x00001000 */
+#define CAN_INT_TX_EVENT_FIFO_FULL_INT_SHIFT               (13U)
+#define CAN_INT_TX_EVENT_FIFO_FULL_INT_MASK                (0x1U << CAN_INT_TX_EVENT_FIFO_FULL_INT_SHIFT)               /* 0x00002000 */
+#define CAN_INT_WAKEUP_INT_SHIFT                           (14U)
+#define CAN_INT_WAKEUP_INT_MASK                            (0x1U << CAN_INT_WAKEUP_INT_SHIFT)                           /* 0x00004000 */
+/* INT_MASK */
+#define CAN_INT_MASK_OFFSET                                (0x10U)
+#define CAN_INT_MASK_RX_FINISH_INT_MASK_SHIFT              (0U)
+#define CAN_INT_MASK_RX_FINISH_INT_MASK_MASK               (0x1U << CAN_INT_MASK_RX_FINISH_INT_MASK_SHIFT)              /* 0x00000001 */
+#define CAN_INT_MASK_TX_FINISH_INT_MASK_SHIFT              (1U)
+#define CAN_INT_MASK_TX_FINISH_INT_MASK_MASK               (0x1U << CAN_INT_MASK_TX_FINISH_INT_MASK_SHIFT)              /* 0x00000002 */
+#define CAN_INT_MASK_ERROR_WARNING_INT_MASK_SHIFT          (2U)
+#define CAN_INT_MASK_ERROR_WARNING_INT_MASK_MASK           (0x1U << CAN_INT_MASK_ERROR_WARNING_INT_MASK_SHIFT)          /* 0x00000004 */
+#define CAN_INT_MASK_RX_BUFFER_OVERFLOW_INT_MASK_SHIFT     (3U)
+#define CAN_INT_MASK_RX_BUFFER_OVERFLOW_INT_MASK_MASK      (0x1U << CAN_INT_MASK_RX_BUFFER_OVERFLOW_INT_MASK_SHIFT)     /* 0x00000008 */
+#define CAN_INT_MASK_PASSIVE_ERROR_INT_MASK_SHIFT          (4U)
+#define CAN_INT_MASK_PASSIVE_ERROR_INT_MASK_MASK           (0x1U << CAN_INT_MASK_PASSIVE_ERROR_INT_MASK_SHIFT)          /* 0x00000010 */
+#define CAN_INT_MASK_TX_ARBIT_FAIL_INT_MASK_SHIFT          (5U)
+#define CAN_INT_MASK_TX_ARBIT_FAIL_INT_MASK_MASK           (0x1U << CAN_INT_MASK_TX_ARBIT_FAIL_INT_MASK_SHIFT)          /* 0x00000020 */
+#define CAN_INT_MASK_ERROR_INT_MASK_SHIFT                  (6U)
+#define CAN_INT_MASK_ERROR_INT_MASK_MASK                   (0x1U << CAN_INT_MASK_ERROR_INT_MASK_SHIFT)                  /* 0x00000040 */
+#define CAN_INT_MASK_RX_FIFO_FULL_INT_MASK_SHIFT           (7U)
+#define CAN_INT_MASK_RX_FIFO_FULL_INT_MASK_MASK            (0x1U << CAN_INT_MASK_RX_FIFO_FULL_INT_MASK_SHIFT)           /* 0x00000080 */
+#define CAN_INT_MASK_RX_FIFO_OVERFLOW_INT_MASK_SHIFT       (8U)
+#define CAN_INT_MASK_RX_FIFO_OVERFLOW_INT_MASK_MASK        (0x1U << CAN_INT_MASK_RX_FIFO_OVERFLOW_INT_MASK_SHIFT)       /* 0x00000100 */
+#define CAN_INT_MASK_BUS_OFF_INT_MASK_SHIFT                (9U)
+#define CAN_INT_MASK_BUS_OFF_INT_MASK_MASK                 (0x1U << CAN_INT_MASK_BUS_OFF_INT_MASK_SHIFT)                /* 0x00000200 */
+#define CAN_INT_MASK_BUS_OFF_RECOVERY_INT_MASK_SHIFT       (10U)
+#define CAN_INT_MASK_BUS_OFF_RECOVERY_INT_MASK_MASK        (0x1U << CAN_INT_MASK_BUS_OFF_RECOVERY_INT_MASK_SHIFT)       /* 0x00000400 */
+#define CAN_INT_MASK_TIMESTAMP_COUNTER_OVERFLOW_INT_MASK_SHIFT (11U)
+#define CAN_INT_MASK_TIMESTAMP_COUNTER_OVERFLOW_INT_MASK_MASK (0x1U << CAN_INT_MASK_TIMESTAMP_COUNTER_OVERFLOW_INT_MASK_SHIFT) /* 0x00000800 */
+#define CAN_INT_MASK_TX_EVENT_FIFO_OVERFLOW_INT_MASK_SHIFT (12U)
+#define CAN_INT_MASK_TX_EVENT_FIFO_OVERFLOW_INT_MASK_MASK  (0x1U << CAN_INT_MASK_TX_EVENT_FIFO_OVERFLOW_INT_MASK_SHIFT) /* 0x00001000 */
+#define CAN_INT_MASK_TX_EVENT_FIFO_FULL_INT_MASK_SHIFT     (13U)
+#define CAN_INT_MASK_TX_EVENT_FIFO_FULL_INT_MASK_MASK      (0x1U << CAN_INT_MASK_TX_EVENT_FIFO_FULL_INT_MASK_SHIFT)     /* 0x00002000 */
+#define CAN_INT_MASK_WAKEUP_INT_MASK_SHIFT                 (14U)
+#define CAN_INT_MASK_WAKEUP_INT_MASK_MASK                  (0x1U << CAN_INT_MASK_WAKEUP_INT_MASK_SHIFT)                 /* 0x00004000 */
+/* DMA_CTRL */
+#define CAN_DMA_CTRL_OFFSET                                (0x14U)
+#define CAN_DMA_CTRL_DMA_TX_MODE_SHIFT                     (0U)
+#define CAN_DMA_CTRL_DMA_TX_MODE_MASK                      (0x1U << CAN_DMA_CTRL_DMA_TX_MODE_SHIFT)                     /* 0x00000001 */
+#define CAN_DMA_CTRL_DMA_RX_MODE_SHIFT                     (1U)
+#define CAN_DMA_CTRL_DMA_RX_MODE_MASK                      (0x1U << CAN_DMA_CTRL_DMA_RX_MODE_SHIFT)                     /* 0x00000002 */
+/* BITTIMING */
+#define CAN_BITTIMING_OFFSET                               (0x18U)
+#define CAN_BITTIMING_TSEG1_SHIFT                          (0U)
+#define CAN_BITTIMING_TSEG1_MASK                           (0xFU << CAN_BITTIMING_TSEG1_SHIFT)                          /* 0x0000000F */
+#define CAN_BITTIMING_TSEG2_SHIFT                          (4U)
+#define CAN_BITTIMING_TSEG2_MASK                           (0x7U << CAN_BITTIMING_TSEG2_SHIFT)                          /* 0x00000070 */
+#define CAN_BITTIMING_BRP_SHIFT                            (8U)
+#define CAN_BITTIMING_BRP_MASK                             (0x3FU << CAN_BITTIMING_BRP_SHIFT)                           /* 0x00003F00 */
+#define CAN_BITTIMING_SJW_SHIFT                            (14U)
+#define CAN_BITTIMING_SJW_MASK                             (0x3U << CAN_BITTIMING_SJW_SHIFT)                            /* 0x0000C000 */
+#define CAN_BITTIMING_SAMPLE_MODE_SHIFT                    (16U)
+#define CAN_BITTIMING_SAMPLE_MODE_MASK                     (0x1U << CAN_BITTIMING_SAMPLE_MODE_SHIFT)                    /* 0x00010000 */
+/* ARBITFAIL */
+#define CAN_ARBITFAIL_OFFSET                               (0x28U)
+#define CAN_ARBITFAIL                                      (0x0U)
+#define CAN_ARBITFAIL_ARBIT_FAIL_CODE_SHIFT                (0U)
+#define CAN_ARBITFAIL_ARBIT_FAIL_CODE_MASK                 (0x7FU << CAN_ARBITFAIL_ARBIT_FAIL_CODE_SHIFT)               /* 0x0000007F */
+/* ERROR_CODE */
+#define CAN_ERROR_CODE_OFFSET                              (0x2CU)
+#define CAN_ERROR_CODE_RX_ERROR_POSITION_SHIFT             (0U)
+#define CAN_ERROR_CODE_RX_ERROR_POSITION_MASK              (0xFFFFU << CAN_ERROR_CODE_RX_ERROR_POSITION_SHIFT)          /* 0x0000FFFF */
+#define CAN_ERROR_CODE_TX_ERROR_POSITION_SHIFT             (16U)
+#define CAN_ERROR_CODE_TX_ERROR_POSITION_MASK              (0x1FFU << CAN_ERROR_CODE_TX_ERROR_POSITION_SHIFT)           /* 0x01FF0000 */
+#define CAN_ERROR_CODE_ERROR_DIRECTION_SHIFT               (25U)
+#define CAN_ERROR_CODE_ERROR_DIRECTION_MASK                (0x1U << CAN_ERROR_CODE_ERROR_DIRECTION_SHIFT)               /* 0x02000000 */
+#define CAN_ERROR_CODE_ERROR_TYPE_SHIFT                    (26U)
+#define CAN_ERROR_CODE_ERROR_TYPE_MASK                     (0x7U << CAN_ERROR_CODE_ERROR_TYPE_SHIFT)                    /* 0x1C000000 */
+#define CAN_ERROR_CODE_ERROR_PHASE_SHIFT                   (29U)
+#define CAN_ERROR_CODE_ERROR_PHASE_MASK                    (0x1U << CAN_ERROR_CODE_ERROR_PHASE_SHIFT)                   /* 0x20000000 */
+/* RXERRORCNT */
+#define CAN_RXERRORCNT_OFFSET                              (0x34U)
+#define CAN_RXERRORCNT                                     (0x0U)
+#define CAN_RXERRORCNT_RX_ERR_CNT_SHIFT                    (0U)
+#define CAN_RXERRORCNT_RX_ERR_CNT_MASK                     (0xFFU << CAN_RXERRORCNT_RX_ERR_CNT_SHIFT)                   /* 0x000000FF */
+/* TXERRORCNT */
+#define CAN_TXERRORCNT_OFFSET                              (0x38U)
+#define CAN_TXERRORCNT                                     (0x0U)
+#define CAN_TXERRORCNT_TX_ERR_CNT_SHIFT                    (0U)
+#define CAN_TXERRORCNT_TX_ERR_CNT_MASK                     (0x1FFU << CAN_TXERRORCNT_TX_ERR_CNT_SHIFT)                  /* 0x000001FF */
+/* IDCODE */
+#define CAN_IDCODE_OFFSET                                  (0x3CU)
+#define CAN_IDCODE_ID_CODE_SHIFT                           (0U)
+#define CAN_IDCODE_ID_CODE_MASK                            (0x1FFFFFFFU << CAN_IDCODE_ID_CODE_SHIFT)                    /* 0x1FFFFFFF */
+/* IDMASK */
+#define CAN_IDMASK_OFFSET                                  (0x40U)
+#define CAN_IDMASK_ID_MASK_SHIFT                           (0U)
+#define CAN_IDMASK_ID_MASK_MASK                            (0x1FFFFFFFU << CAN_IDMASK_ID_MASK_SHIFT)                    /* 0x1FFFFFFF */
+/* TXFRAMEINFO */
+#define CAN_TXFRAMEINFO_OFFSET                             (0x50U)
+#define CAN_TXFRAMEINFO_TXDATA_LENGTH_SHIFT                (0U)
+#define CAN_TXFRAMEINFO_TXDATA_LENGTH_MASK                 (0xFU << CAN_TXFRAMEINFO_TXDATA_LENGTH_SHIFT)                /* 0x0000000F */
+#define CAN_TXFRAMEINFO_TX_RTR_SHIFT                       (6U)
+#define CAN_TXFRAMEINFO_TX_RTR_MASK                        (0x1U << CAN_TXFRAMEINFO_TX_RTR_SHIFT)                       /* 0x00000040 */
+#define CAN_TXFRAMEINFO_TXFRAME_FORMAT_SHIFT               (7U)
+#define CAN_TXFRAMEINFO_TXFRAME_FORMAT_MASK                (0x1U << CAN_TXFRAMEINFO_TXFRAME_FORMAT_SHIFT)               /* 0x00000080 */
+/* TXID */
+#define CAN_TXID_OFFSET                                    (0x54U)
+#define CAN_TXID_TX_ID_SHIFT                               (0U)
+#define CAN_TXID_TX_ID_MASK                                (0x1FFFFFFFU << CAN_TXID_TX_ID_SHIFT)                        /* 0x1FFFFFFF */
+/* TXDATA0 */
+#define CAN_TXDATA0_OFFSET                                 (0x58U)
+#define CAN_TXDATA0_TX_DATA0_SHIFT                         (0U)
+#define CAN_TXDATA0_TX_DATA0_MASK                          (0xFFFFFFFFU << CAN_TXDATA0_TX_DATA0_SHIFT)                  /* 0xFFFFFFFF */
+/* TXDATA1 */
+#define CAN_TXDATA1_OFFSET                                 (0x5CU)
+#define CAN_TXDATA1_TX_DATA1_SHIFT                         (0U)
+#define CAN_TXDATA1_TX_DATA1_MASK                          (0xFFFFFFFFU << CAN_TXDATA1_TX_DATA1_SHIFT)                  /* 0xFFFFFFFF */
+/* RXFRAMEINFO */
+#define CAN_RXFRAMEINFO_OFFSET                             (0x60U)
+#define CAN_RXFRAMEINFO                                    (0x0U)
+#define CAN_RXFRAMEINFO_RXDATA_LENGTH_SHIFT                (0U)
+#define CAN_RXFRAMEINFO_RXDATA_LENGTH_MASK                 (0xFU << CAN_RXFRAMEINFO_RXDATA_LENGTH_SHIFT)                /* 0x0000000F */
+#define CAN_RXFRAMEINFO_RX_RTR_SHIFT                       (6U)
+#define CAN_RXFRAMEINFO_RX_RTR_MASK                        (0x1U << CAN_RXFRAMEINFO_RX_RTR_SHIFT)                       /* 0x00000040 */
+#define CAN_RXFRAMEINFO_RXFRAME_FORMAT_SHIFT               (7U)
+#define CAN_RXFRAMEINFO_RXFRAME_FORMAT_MASK                (0x1U << CAN_RXFRAMEINFO_RXFRAME_FORMAT_SHIFT)               /* 0x00000080 */
+/* RXID */
+#define CAN_RXID_OFFSET                                    (0x64U)
+#define CAN_RXID                                           (0x0U)
+#define CAN_RXID_RX_ID_SHIFT                               (0U)
+#define CAN_RXID_RX_ID_MASK                                (0x1FFFFFFFU << CAN_RXID_RX_ID_SHIFT)                        /* 0x1FFFFFFF */
+/* RXDATA0 */
+#define CAN_RXDATA0_OFFSET                                 (0x68U)
+#define CAN_RXDATA0                                        (0x0U)
+#define CAN_RXDATA0_RX_DATA0_SHIFT                         (0U)
+#define CAN_RXDATA0_RX_DATA0_MASK                          (0xFFFFFFFFU << CAN_RXDATA0_RX_DATA0_SHIFT)                  /* 0xFFFFFFFF */
+/* RXDATA1 */
+#define CAN_RXDATA1_OFFSET                                 (0x6CU)
+#define CAN_RXDATA1                                        (0x0U)
+#define CAN_RXDATA1_RX_DATA1_SHIFT                         (0U)
+#define CAN_RXDATA1_RX_DATA1_MASK                          (0xFFFFFFFFU << CAN_RXDATA1_RX_DATA1_SHIFT)                  /* 0xFFFFFFFF */
+/* RTL_VERSION */
+#define CAN_RTL_VERSION_OFFSET                             (0x70U)
+#define CAN_RTL_VERSION                                    (0x21U)
+#define CAN_RTL_VERSION_VERSION_SHIFT                      (0U)
+#define CAN_RTL_VERSION_VERSION_MASK                       (0xFFFFFFFFU << CAN_RTL_VERSION_VERSION_SHIFT)               /* 0xFFFFFFFF */
+/* FD_NOMINAL_BITTIMING */
+#define CAN_FD_NOMINAL_BITTIMING_OFFSET                    (0x100U)
+#define CAN_FD_NOMINAL_BITTIMING_TSEG1_SHIFT               (0U)
+#define CAN_FD_NOMINAL_BITTIMING_TSEG1_MASK                (0xFFU << CAN_FD_NOMINAL_BITTIMING_TSEG1_SHIFT)              /* 0x000000FF */
+#define CAN_FD_NOMINAL_BITTIMING_TSEG2_SHIFT               (8U)
+#define CAN_FD_NOMINAL_BITTIMING_TSEG2_MASK                (0x7FU << CAN_FD_NOMINAL_BITTIMING_TSEG2_SHIFT)              /* 0x00007F00 */
+#define CAN_FD_NOMINAL_BITTIMING_BRQ_SHIFT                 (16U)
+#define CAN_FD_NOMINAL_BITTIMING_BRQ_MASK                  (0xFFU << CAN_FD_NOMINAL_BITTIMING_BRQ_SHIFT)                /* 0x00FF0000 */
+#define CAN_FD_NOMINAL_BITTIMING_SJW_SHIFT                 (24U)
+#define CAN_FD_NOMINAL_BITTIMING_SJW_MASK                  (0x7FU << CAN_FD_NOMINAL_BITTIMING_SJW_SHIFT)                /* 0x7F000000 */
+#define CAN_FD_NOMINAL_BITTIMING_SAMPLE_MODE_SHIFT         (31U)
+#define CAN_FD_NOMINAL_BITTIMING_SAMPLE_MODE_MASK          (0x1U << CAN_FD_NOMINAL_BITTIMING_SAMPLE_MODE_SHIFT)         /* 0x80000000 */
+/* FD_DATA_BITTIMING */
+#define CAN_FD_DATA_BITTIMING_OFFSET                       (0x104U)
+#define CAN_FD_DATA_BITTIMING_TSEG1_SHIFT                  (0U)
+#define CAN_FD_DATA_BITTIMING_TSEG1_MASK                   (0x1FU << CAN_FD_DATA_BITTIMING_TSEG1_SHIFT)                 /* 0x0000001F */
+#define CAN_FD_DATA_BITTIMING_TSEG2_SHIFT                  (5U)
+#define CAN_FD_DATA_BITTIMING_TSEG2_MASK                   (0xFU << CAN_FD_DATA_BITTIMING_TSEG2_SHIFT)                  /* 0x000001E0 */
+#define CAN_FD_DATA_BITTIMING_BRQ_SHIFT                    (9U)
+#define CAN_FD_DATA_BITTIMING_BRQ_MASK                     (0xFFU << CAN_FD_DATA_BITTIMING_BRQ_SHIFT)                   /* 0x0001FE00 */
+#define CAN_FD_DATA_BITTIMING_SJW_SHIFT                    (17U)
+#define CAN_FD_DATA_BITTIMING_SJW_MASK                     (0xFU << CAN_FD_DATA_BITTIMING_SJW_SHIFT)                    /* 0x001E0000 */
+#define CAN_FD_DATA_BITTIMING_SAMPLE_MODE_SHIFT            (21U)
+#define CAN_FD_DATA_BITTIMING_SAMPLE_MODE_MASK             (0x1U << CAN_FD_DATA_BITTIMING_SAMPLE_MODE_SHIFT)            /* 0x00200000 */
+/* TRANSMIT_DELAY_COMPENSATION */
+#define CAN_TRANSMIT_DELAY_COMPENSATION_OFFSET             (0x108U)
+#define CAN_TRANSMIT_DELAY_COMPENSATION_TDC_ENABLE_SHIFT   (0U)
+#define CAN_TRANSMIT_DELAY_COMPENSATION_TDC_ENABLE_MASK    (0x1U << CAN_TRANSMIT_DELAY_COMPENSATION_TDC_ENABLE_SHIFT)   /* 0x00000001 */
+#define CAN_TRANSMIT_DELAY_COMPENSATION_TDC_OFFSET_SHIFT   (1U)
+#define CAN_TRANSMIT_DELAY_COMPENSATION_TDC_OFFSET_MASK    (0x3FU << CAN_TRANSMIT_DELAY_COMPENSATION_TDC_OFFSET_SHIFT)  /* 0x0000007E */
+/* TIMESTAMP_CTRL */
+#define CAN_TIMESTAMP_CTRL_OFFSET                          (0x10CU)
+#define CAN_TIMESTAMP_CTRL_TIME_BASE_COUNTER_ENABLE_SHIFT  (0U)
+#define CAN_TIMESTAMP_CTRL_TIME_BASE_COUNTER_ENABLE_MASK   (0x1U << CAN_TIMESTAMP_CTRL_TIME_BASE_COUNTER_ENABLE_SHIFT)  /* 0x00000001 */
+#define CAN_TIMESTAMP_CTRL_TIME_BASE_COUNTER_PRESCALE_SHIFT (1U)
+#define CAN_TIMESTAMP_CTRL_TIME_BASE_COUNTER_PRESCALE_MASK (0x3FU << CAN_TIMESTAMP_CTRL_TIME_BASE_COUNTER_PRESCALE_SHIFT) /* 0x0000007E */
+/* TIMESTAMP */
+#define CAN_TIMESTAMP_OFFSET                               (0x110U)
+#define CAN_TIMESTAMP_TIME_BASE_COUNTER_SHIFT              (0U)
+#define CAN_TIMESTAMP_TIME_BASE_COUNTER_MASK               (0xFFFFFFFFU << CAN_TIMESTAMP_TIME_BASE_COUNTER_SHIFT)       /* 0xFFFFFFFF */
+/* TXEVENT_FIFO_CTRL */
+#define CAN_TXEVENT_FIFO_CTRL_OFFSET                       (0x114U)
+#define CAN_TXEVENT_FIFO_CTRL_TXE_FIFO_ENABLE_SHIFT        (0U)
+#define CAN_TXEVENT_FIFO_CTRL_TXE_FIFO_ENABLE_MASK         (0x1U << CAN_TXEVENT_FIFO_CTRL_TXE_FIFO_ENABLE_SHIFT)        /* 0x00000001 */
+#define CAN_TXEVENT_FIFO_CTRL_TXE_FIFO_WATERMARK_SHIFT     (1U)
+#define CAN_TXEVENT_FIFO_CTRL_TXE_FIFO_WATERMARK_MASK      (0xFU << CAN_TXEVENT_FIFO_CTRL_TXE_FIFO_WATERMARK_SHIFT)     /* 0x0000001E */
+#define CAN_TXEVENT_FIFO_CTRL_TXE_FIFO_CNT_SHIFT           (5U)
+#define CAN_TXEVENT_FIFO_CTRL_TXE_FIFO_CNT_MASK            (0xFU << CAN_TXEVENT_FIFO_CTRL_TXE_FIFO_CNT_SHIFT)           /* 0x000001E0 */
+/* RX_FIFO_CTRL */
+#define CAN_RX_FIFO_CTRL_OFFSET                            (0x118U)
+#define CAN_RX_FIFO_CTRL_RX_FIFO_ENABLE_SHIFT              (0U)
+#define CAN_RX_FIFO_CTRL_RX_FIFO_ENABLE_MASK               (0x1U << CAN_RX_FIFO_CTRL_RX_FIFO_ENABLE_SHIFT)              /* 0x00000001 */
+#define CAN_RX_FIFO_CTRL_RX_FIFO_FULL_WATERMARK_SHIFT      (1U)
+#define CAN_RX_FIFO_CTRL_RX_FIFO_FULL_WATERMARK_MASK       (0x7U << CAN_RX_FIFO_CTRL_RX_FIFO_FULL_WATERMARK_SHIFT)      /* 0x0000000E */
+#define CAN_RX_FIFO_CTRL_RX_FIFO_CNT_SHIFT                 (4U)
+#define CAN_RX_FIFO_CTRL_RX_FIFO_CNT_MASK                  (0x7U << CAN_RX_FIFO_CTRL_RX_FIFO_CNT_SHIFT)                 /* 0x00000070 */
+/* AFR_CTRL */
+#define CAN_AFR_CTRL_OFFSET                                (0x11CU)
+#define CAN_AFR_CTRL_UAF1_SHIFT                            (0U)
+#define CAN_AFR_CTRL_UAF1_MASK                             (0x1U << CAN_AFR_CTRL_UAF1_SHIFT)                            /* 0x00000001 */
+#define CAN_AFR_CTRL_UAF2_SHIFT                            (1U)
+#define CAN_AFR_CTRL_UAF2_MASK                             (0x1U << CAN_AFR_CTRL_UAF2_SHIFT)                            /* 0x00000002 */
+#define CAN_AFR_CTRL_UAF3_SHIFT                            (2U)
+#define CAN_AFR_CTRL_UAF3_MASK                             (0x1U << CAN_AFR_CTRL_UAF3_SHIFT)                            /* 0x00000004 */
+#define CAN_AFR_CTRL_UAF4_SHIFT                            (3U)
+#define CAN_AFR_CTRL_UAF4_MASK                             (0x1U << CAN_AFR_CTRL_UAF4_SHIFT)                            /* 0x00000008 */
+#define CAN_AFR_CTRL_UAF5_SHIFT                            (4U)
+#define CAN_AFR_CTRL_UAF5_MASK                             (0x1U << CAN_AFR_CTRL_UAF5_SHIFT)                            /* 0x00000010 */
+/* IDCODE0 */
+#define CAN_IDCODE0_OFFSET                                 (0x120U)
+#define CAN_IDCODE0_ID_CODE_SHIFT                          (0U)
+#define CAN_IDCODE0_ID_CODE_MASK                           (0x1FFFFFFFU << CAN_IDCODE0_ID_CODE_SHIFT)                   /* 0x1FFFFFFF */
+/* IDMASK0 */
+#define CAN_IDMASK0_OFFSET                                 (0x124U)
+#define CAN_IDMASK0_ID_MASK_SHIFT                          (0U)
+#define CAN_IDMASK0_ID_MASK_MASK                           (0x1FFFFFFFU << CAN_IDMASK0_ID_MASK_SHIFT)                   /* 0x1FFFFFFF */
+/* IDCODE1 */
+#define CAN_IDCODE1_OFFSET                                 (0x128U)
+#define CAN_IDCODE1_ID_CODE_SHIFT                          (0U)
+#define CAN_IDCODE1_ID_CODE_MASK                           (0x1FFFFFFFU << CAN_IDCODE1_ID_CODE_SHIFT)                   /* 0x1FFFFFFF */
+/* IDMASK1 */
+#define CAN_IDMASK1_OFFSET                                 (0x12CU)
+#define CAN_IDMASK1_ID_MASK_SHIFT                          (0U)
+#define CAN_IDMASK1_ID_MASK_MASK                           (0x1FFFFFFFU << CAN_IDMASK1_ID_MASK_SHIFT)                   /* 0x1FFFFFFF */
+/* IDCODE2 */
+#define CAN_IDCODE2_OFFSET                                 (0x130U)
+#define CAN_IDCODE2_ID_CODE_SHIFT                          (0U)
+#define CAN_IDCODE2_ID_CODE_MASK                           (0x1FFFFFFFU << CAN_IDCODE2_ID_CODE_SHIFT)                   /* 0x1FFFFFFF */
+/* IDMASK2 */
+#define CAN_IDMASK2_OFFSET                                 (0x134U)
+#define CAN_IDMASK2_ID_MASK_SHIFT                          (0U)
+#define CAN_IDMASK2_ID_MASK_MASK                           (0x1FFFFFFFU << CAN_IDMASK2_ID_MASK_SHIFT)                   /* 0x1FFFFFFF */
+/* IDCODE3 */
+#define CAN_IDCODE3_OFFSET                                 (0x138U)
+#define CAN_IDCODE3_ID_CODE_SHIFT                          (0U)
+#define CAN_IDCODE3_ID_CODE_MASK                           (0x1FFFFFFFU << CAN_IDCODE3_ID_CODE_SHIFT)                   /* 0x1FFFFFFF */
+/* IDMASK3 */
+#define CAN_IDMASK3_OFFSET                                 (0x13CU)
+#define CAN_IDMASK3_ID_MASK_SHIFT                          (0U)
+#define CAN_IDMASK3_ID_MASK_MASK                           (0x1FFFFFFFU << CAN_IDMASK3_ID_MASK_SHIFT)                   /* 0x1FFFFFFF */
+/* IDCODE4 */
+#define CAN_IDCODE4_OFFSET                                 (0x140U)
+#define CAN_IDCODE4_ID_CODE_SHIFT                          (0U)
+#define CAN_IDCODE4_ID_CODE_MASK                           (0x1FFFFFFFU << CAN_IDCODE4_ID_CODE_SHIFT)                   /* 0x1FFFFFFF */
+/* IDMASK4 */
+#define CAN_IDMASK4_OFFSET                                 (0x144U)
+#define CAN_IDMASK4_ID_MASK_SHIFT                          (0U)
+#define CAN_IDMASK4_ID_MASK_MASK                           (0x1FFFFFFFU << CAN_IDMASK4_ID_MASK_SHIFT)                   /* 0x1FFFFFFF */
+/* FD_TXFRAMEINFO */
+#define CAN_FD_TXFRAMEINFO_OFFSET                          (0x200U)
+#define CAN_FD_TXFRAMEINFO_TXDATA_LENGTH_SHIFT             (0U)
+#define CAN_FD_TXFRAMEINFO_TXDATA_LENGTH_MASK              (0xFU << CAN_FD_TXFRAMEINFO_TXDATA_LENGTH_SHIFT)             /* 0x0000000F */
+#define CAN_FD_TXFRAMEINFO_TX_BRS_SHIFT                    (4U)
+#define CAN_FD_TXFRAMEINFO_TX_BRS_MASK                     (0x1U << CAN_FD_TXFRAMEINFO_TX_BRS_SHIFT)                    /* 0x00000010 */
+#define CAN_FD_TXFRAMEINFO_TX_FDF_SHIFT                    (5U)
+#define CAN_FD_TXFRAMEINFO_TX_FDF_MASK                     (0x1U << CAN_FD_TXFRAMEINFO_TX_FDF_SHIFT)                    /* 0x00000020 */
+#define CAN_FD_TXFRAMEINFO_TX_RTR_SHIFT                    (6U)
+#define CAN_FD_TXFRAMEINFO_TX_RTR_MASK                     (0x1U << CAN_FD_TXFRAMEINFO_TX_RTR_SHIFT)                    /* 0x00000040 */
+#define CAN_FD_TXFRAMEINFO_TXFRAME_FORMAT_SHIFT            (7U)
+#define CAN_FD_TXFRAMEINFO_TXFRAME_FORMAT_MASK             (0x1U << CAN_FD_TXFRAMEINFO_TXFRAME_FORMAT_SHIFT)            /* 0x00000080 */
+/* FD_TXID */
+#define CAN_FD_TXID_OFFSET                                 (0x204U)
+#define CAN_FD_TXID_TX_ID_SHIFT                            (0U)
+#define CAN_FD_TXID_TX_ID_MASK                             (0x1FFFFFFFU << CAN_FD_TXID_TX_ID_SHIFT)                     /* 0x1FFFFFFF */
+/* FD_TXDATA0 */
+#define CAN_FD_TXDATA0_OFFSET                              (0x208U)
+#define CAN_FD_TXDATA0_TX_DATA0_SHIFT                      (0U)
+#define CAN_FD_TXDATA0_TX_DATA0_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA0_TX_DATA0_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA1 */
+#define CAN_FD_TXDATA1_OFFSET                              (0x20CU)
+#define CAN_FD_TXDATA1_TX_DATA1_SHIFT                      (0U)
+#define CAN_FD_TXDATA1_TX_DATA1_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA1_TX_DATA1_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA2 */
+#define CAN_FD_TXDATA2_OFFSET                              (0x210U)
+#define CAN_FD_TXDATA2_TX_DATA2_SHIFT                      (0U)
+#define CAN_FD_TXDATA2_TX_DATA2_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA2_TX_DATA2_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA3 */
+#define CAN_FD_TXDATA3_OFFSET                              (0x214U)
+#define CAN_FD_TXDATA3_TX_DATA3_SHIFT                      (0U)
+#define CAN_FD_TXDATA3_TX_DATA3_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA3_TX_DATA3_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA4 */
+#define CAN_FD_TXDATA4_OFFSET                              (0x218U)
+#define CAN_FD_TXDATA4_TX_DATA4_SHIFT                      (0U)
+#define CAN_FD_TXDATA4_TX_DATA4_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA4_TX_DATA4_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA5 */
+#define CAN_FD_TXDATA5_OFFSET                              (0x21CU)
+#define CAN_FD_TXDATA5_TX_DATA5_SHIFT                      (0U)
+#define CAN_FD_TXDATA5_TX_DATA5_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA5_TX_DATA5_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA6 */
+#define CAN_FD_TXDATA6_OFFSET                              (0x220U)
+#define CAN_FD_TXDATA6_TX_DATA6_SHIFT                      (0U)
+#define CAN_FD_TXDATA6_TX_DATA6_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA6_TX_DATA6_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA7 */
+#define CAN_FD_TXDATA7_OFFSET                              (0x224U)
+#define CAN_FD_TXDATA7_TX_DATA7_SHIFT                      (0U)
+#define CAN_FD_TXDATA7_TX_DATA7_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA7_TX_DATA7_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA8 */
+#define CAN_FD_TXDATA8_OFFSET                              (0x228U)
+#define CAN_FD_TXDATA8_TX_DATA8_SHIFT                      (0U)
+#define CAN_FD_TXDATA8_TX_DATA8_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA8_TX_DATA8_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA9 */
+#define CAN_FD_TXDATA9_OFFSET                              (0x22CU)
+#define CAN_FD_TXDATA9_TX_DATA9_SHIFT                      (0U)
+#define CAN_FD_TXDATA9_TX_DATA9_MASK                       (0xFFFFFFFFU << CAN_FD_TXDATA9_TX_DATA9_SHIFT)               /* 0xFFFFFFFF */
+/* FD_TXDATA10 */
+#define CAN_FD_TXDATA10_OFFSET                             (0x230U)
+#define CAN_FD_TXDATA10_TX_DATA10_SHIFT                    (0U)
+#define CAN_FD_TXDATA10_TX_DATA10_MASK                     (0xFFFFFFFFU << CAN_FD_TXDATA10_TX_DATA10_SHIFT)             /* 0xFFFFFFFF */
+/* FD_TXDATA11 */
+#define CAN_FD_TXDATA11_OFFSET                             (0x234U)
+#define CAN_FD_TXDATA11_TX_DATA11_SHIFT                    (0U)
+#define CAN_FD_TXDATA11_TX_DATA11_MASK                     (0xFFFFFFFFU << CAN_FD_TXDATA11_TX_DATA11_SHIFT)             /* 0xFFFFFFFF */
+/* FD_TXDATA12 */
+#define CAN_FD_TXDATA12_OFFSET                             (0x238U)
+#define CAN_FD_TXDATA12_TX_DATA12_SHIFT                    (0U)
+#define CAN_FD_TXDATA12_TX_DATA12_MASK                     (0xFFFFFFFFU << CAN_FD_TXDATA12_TX_DATA12_SHIFT)             /* 0xFFFFFFFF */
+/* FD_TXDATA13 */
+#define CAN_FD_TXDATA13_OFFSET                             (0x23CU)
+#define CAN_FD_TXDATA13_TX_DATA13_SHIFT                    (0U)
+#define CAN_FD_TXDATA13_TX_DATA13_MASK                     (0xFFFFFFFFU << CAN_FD_TXDATA13_TX_DATA13_SHIFT)             /* 0xFFFFFFFF */
+/* FD_TXDATA14 */
+#define CAN_FD_TXDATA14_OFFSET                             (0x240U)
+#define CAN_FD_TXDATA14_TX_DATA14_SHIFT                    (0U)
+#define CAN_FD_TXDATA14_TX_DATA14_MASK                     (0xFFFFFFFFU << CAN_FD_TXDATA14_TX_DATA14_SHIFT)             /* 0xFFFFFFFF */
+/* FD_TXDATA15 */
+#define CAN_FD_TXDATA15_OFFSET                             (0x244U)
+#define CAN_FD_TXDATA15_TX_DATA15_SHIFT                    (0U)
+#define CAN_FD_TXDATA15_TX_DATA15_MASK                     (0xFFFFFFFFU << CAN_FD_TXDATA15_TX_DATA15_SHIFT)             /* 0xFFFFFFFF */
+/* FD_RXFRAMEINFO */
+#define CAN_FD_RXFRAMEINFO_OFFSET                          (0x300U)
+#define CAN_FD_RXFRAMEINFO_RXDATA_LENGTH_SHIFT             (0U)
+#define CAN_FD_RXFRAMEINFO_RXDATA_LENGTH_MASK              (0xFU << CAN_FD_RXFRAMEINFO_RXDATA_LENGTH_SHIFT)             /* 0x0000000F */
+#define CAN_FD_RXFRAMEINFO_RX_BRS_SHIFT                    (4U)
+#define CAN_FD_RXFRAMEINFO_RX_BRS_MASK                     (0x1U << CAN_FD_RXFRAMEINFO_RX_BRS_SHIFT)                    /* 0x00000010 */
+#define CAN_FD_RXFRAMEINFO_RX_FDF_SHIFT                    (5U)
+#define CAN_FD_RXFRAMEINFO_RX_FDF_MASK                     (0x1U << CAN_FD_RXFRAMEINFO_RX_FDF_SHIFT)                    /* 0x00000020 */
+#define CAN_FD_RXFRAMEINFO_RX_RTR_SHIFT                    (6U)
+#define CAN_FD_RXFRAMEINFO_RX_RTR_MASK                     (0x1U << CAN_FD_RXFRAMEINFO_RX_RTR_SHIFT)                    /* 0x00000040 */
+#define CAN_FD_RXFRAMEINFO_RXFRAME_FORMAT_SHIFT            (7U)
+#define CAN_FD_RXFRAMEINFO_RXFRAME_FORMAT_MASK             (0x1U << CAN_FD_RXFRAMEINFO_RXFRAME_FORMAT_SHIFT)            /* 0x00000080 */
+/* FD_RXID */
+#define CAN_FD_RXID_OFFSET                                 (0x304U)
+#define CAN_FD_RXID                                        (0x0U)
+#define CAN_FD_RXID_RX_ID_SHIFT                            (0U)
+#define CAN_FD_RXID_RX_ID_MASK                             (0x1FFFFFFFU << CAN_FD_RXID_RX_ID_SHIFT)                     /* 0x1FFFFFFF */
+/* FD_RXTIMESTAMP */
+#define CAN_FD_RXTIMESTAMP_OFFSET                          (0x308U)
+#define CAN_FD_RXTIMESTAMP                                 (0x0U)
+#define CAN_FD_RXTIMESTAMP_TIMESTAMP_SHIFT                 (0U)
+#define CAN_FD_RXTIMESTAMP_TIMESTAMP_MASK                  (0xFFFFFFFFU << CAN_FD_RXTIMESTAMP_TIMESTAMP_SHIFT)          /* 0xFFFFFFFF */
+/* FD_RXDATA0 */
+#define CAN_FD_RXDATA0_OFFSET                              (0x30CU)
+#define CAN_FD_RXDATA0                                     (0x0U)
+#define CAN_FD_RXDATA0_RX_DATA0_SHIFT                      (0U)
+#define CAN_FD_RXDATA0_RX_DATA0_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA0_RX_DATA0_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA1 */
+#define CAN_FD_RXDATA1_OFFSET                              (0x310U)
+#define CAN_FD_RXDATA1                                     (0x0U)
+#define CAN_FD_RXDATA1_RX_DATA1_SHIFT                      (0U)
+#define CAN_FD_RXDATA1_RX_DATA1_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA1_RX_DATA1_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA2 */
+#define CAN_FD_RXDATA2_OFFSET                              (0x314U)
+#define CAN_FD_RXDATA2                                     (0x0U)
+#define CAN_FD_RXDATA2_RX_DATA2_SHIFT                      (0U)
+#define CAN_FD_RXDATA2_RX_DATA2_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA2_RX_DATA2_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA3 */
+#define CAN_FD_RXDATA3_OFFSET                              (0x318U)
+#define CAN_FD_RXDATA3                                     (0x0U)
+#define CAN_FD_RXDATA3_RX_DATA3_SHIFT                      (0U)
+#define CAN_FD_RXDATA3_RX_DATA3_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA3_RX_DATA3_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA4 */
+#define CAN_FD_RXDATA4_OFFSET                              (0x31CU)
+#define CAN_FD_RXDATA4                                     (0x0U)
+#define CAN_FD_RXDATA4_RX_DATA4_SHIFT                      (0U)
+#define CAN_FD_RXDATA4_RX_DATA4_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA4_RX_DATA4_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA5 */
+#define CAN_FD_RXDATA5_OFFSET                              (0x320U)
+#define CAN_FD_RXDATA5                                     (0x0U)
+#define CAN_FD_RXDATA5_RX_DATA5_SHIFT                      (0U)
+#define CAN_FD_RXDATA5_RX_DATA5_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA5_RX_DATA5_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA6 */
+#define CAN_FD_RXDATA6_OFFSET                              (0x324U)
+#define CAN_FD_RXDATA6                                     (0x0U)
+#define CAN_FD_RXDATA6_RX_DATA6_SHIFT                      (0U)
+#define CAN_FD_RXDATA6_RX_DATA6_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA6_RX_DATA6_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA7 */
+#define CAN_FD_RXDATA7_OFFSET                              (0x328U)
+#define CAN_FD_RXDATA7                                     (0x0U)
+#define CAN_FD_RXDATA7_RX_DATA7_SHIFT                      (0U)
+#define CAN_FD_RXDATA7_RX_DATA7_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA7_RX_DATA7_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA8 */
+#define CAN_FD_RXDATA8_OFFSET                              (0x32CU)
+#define CAN_FD_RXDATA8                                     (0x0U)
+#define CAN_FD_RXDATA8_RX_DATA8_SHIFT                      (0U)
+#define CAN_FD_RXDATA8_RX_DATA8_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA8_RX_DATA8_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA9 */
+#define CAN_FD_RXDATA9_OFFSET                              (0x330U)
+#define CAN_FD_RXDATA9                                     (0x0U)
+#define CAN_FD_RXDATA9_RX_DATA9_SHIFT                      (0U)
+#define CAN_FD_RXDATA9_RX_DATA9_MASK                       (0xFFFFFFFFU << CAN_FD_RXDATA9_RX_DATA9_SHIFT)               /* 0xFFFFFFFF */
+/* FD_RXDATA10 */
+#define CAN_FD_RXDATA10_OFFSET                             (0x334U)
+#define CAN_FD_RXDATA10                                    (0x0U)
+#define CAN_FD_RXDATA10_RX_DATA10_SHIFT                    (0U)
+#define CAN_FD_RXDATA10_RX_DATA10_MASK                     (0xFFFFFFFFU << CAN_FD_RXDATA10_RX_DATA10_SHIFT)             /* 0xFFFFFFFF */
+/* FD_RXDATA11 */
+#define CAN_FD_RXDATA11_OFFSET                             (0x338U)
+#define CAN_FD_RXDATA11                                    (0x0U)
+#define CAN_FD_RXDATA11_RX_DATA11_SHIFT                    (0U)
+#define CAN_FD_RXDATA11_RX_DATA11_MASK                     (0xFFFFFFFFU << CAN_FD_RXDATA11_RX_DATA11_SHIFT)             /* 0xFFFFFFFF */
+/* FD_RXDATA12 */
+#define CAN_FD_RXDATA12_OFFSET                             (0x33CU)
+#define CAN_FD_RXDATA12                                    (0x0U)
+#define CAN_FD_RXDATA12_RX_DATA12_SHIFT                    (0U)
+#define CAN_FD_RXDATA12_RX_DATA12_MASK                     (0xFFFFFFFFU << CAN_FD_RXDATA12_RX_DATA12_SHIFT)             /* 0xFFFFFFFF */
+/* FD_RXDATA13 */
+#define CAN_FD_RXDATA13_OFFSET                             (0x340U)
+#define CAN_FD_RXDATA13                                    (0x0U)
+#define CAN_FD_RXDATA13_RX_DATA13_SHIFT                    (0U)
+#define CAN_FD_RXDATA13_RX_DATA13_MASK                     (0xFFFFFFFFU << CAN_FD_RXDATA13_RX_DATA13_SHIFT)             /* 0xFFFFFFFF */
+/* FD_RXDATA14 */
+#define CAN_FD_RXDATA14_OFFSET                             (0x344U)
+#define CAN_FD_RXDATA14                                    (0x0U)
+#define CAN_FD_RXDATA14_RX_DATA14_SHIFT                    (0U)
+#define CAN_FD_RXDATA14_RX_DATA14_MASK                     (0xFFFFFFFFU << CAN_FD_RXDATA14_RX_DATA14_SHIFT)             /* 0xFFFFFFFF */
+/* FD_RXDATA15 */
+#define CAN_FD_RXDATA15_OFFSET                             (0x348U)
+#define CAN_FD_RXDATA15                                    (0x0U)
+#define CAN_FD_RXDATA15_RX_DATA15_SHIFT                    (0U)
+#define CAN_FD_RXDATA15_RX_DATA15_MASK                     (0xFFFFFFFFU << CAN_FD_RXDATA15_RX_DATA15_SHIFT)             /* 0xFFFFFFFF */
+/* RX_FIFO_RDATA */
+#define CAN_RX_FIFO_RDATA_OFFSET                           (0x400U)
+#define CAN_RX_FIFO_RDATA                                  (0x0U)
+#define CAN_RX_FIFO_RDATA_RX_FIFO_RDATA_SHIFT              (0U)
+#define CAN_RX_FIFO_RDATA_RX_FIFO_RDATA_MASK               (0xFFFFFFFFU << CAN_RX_FIFO_RDATA_RX_FIFO_RDATA_SHIFT)       /* 0xFFFFFFFF */
+/* TXE_FIFO_RDATA */
+#define CAN_TXE_FIFO_RDATA_OFFSET                          (0x500U)
+#define CAN_TXE_FIFO_RDATA                                 (0x0U)
+#define CAN_TXE_FIFO_RDATA_TXE_FIFO_RDATA_SHIFT            (0U)
+#define CAN_TXE_FIFO_RDATA_TXE_FIFO_RDATA_MASK             (0xFFFFFFFFU << CAN_TXE_FIFO_RDATA_TXE_FIFO_RDATA_SHIFT)     /* 0xFFFFFFFF */
 /*****************************************TIMER******************************************/
 /* LOAD_COUNT0 */
 #define TIMER_LOAD_COUNT0_OFFSET                           (0x0U)
