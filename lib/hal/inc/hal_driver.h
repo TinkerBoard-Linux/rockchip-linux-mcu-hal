@@ -105,6 +105,10 @@
 #include "hal_intc.h"
 #endif
 
+#ifdef HAL_GIC_MODULE_ENABLED
+#include "hal_gic.h"
+#endif
+
 #ifdef HAL_MBOX_MODULE_ENABLED
 #include "hal_mbox.h"
 #endif
