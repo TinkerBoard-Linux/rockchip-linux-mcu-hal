@@ -2,7 +2,8 @@
 /*
  * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
  */
-#include "soc.h"
+
+#include "hal_base.h"
 
 /*----------------------------------------------------------------------------
   Internal References
@@ -17,8 +18,90 @@ void Undef_Handler (void) __attribute__ ((weak, alias("Default_Handler")));
 void SVC_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
 void PAbt_Handler  (void) __attribute__ ((weak, alias("Default_Handler")));
 void DAbt_Handler  (void) __attribute__ ((weak, alias("Default_Handler")));
-void IRQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
 void FIQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
+
+#ifndef HAL_GIC_MODULE_ENABLED
+void IRQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
+#else
+#ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
+void IRQ_HardIrqPreemptHandler(uint32_t irqn)
+{
+  GIC_IRQHandler handler;
+
+  __ASM volatile (
+  "cpsie  i                                       \n"
+  );
+  handler = HAL_GIC_GetHandler(irqn);
+  if (handler) {
+    handler(irqn);
+  }
+}
+#else
+void IRQ_HardIrqHandler(void){
+  uint32_t irqn;
+  GIC_IRQHandler handler;
+
+  irqn = HAL_GIC_GetActiveIRQ();
+
+  if (irqn >= IRQ_GIC_LINE_COUNT)
+    return;
+
+  handler = HAL_GIC_GetHandler(irqn);
+  if (handler)
+    handler(irqn);
+
+  HAL_GIC_EndOfInterrupt(irqn);
+}
+#endif
+
+void IRQ_Handler(void)
+{
+#ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
+  __ASM volatile (
+  "sub    lr, lr, #4                                \n"
+  "stm    sp, {r0, lr}                              \n" // save r0, lr, spsr
+  "mrs    lr, SPSR                                  \n"
+  "str    lr, [sp, #8]                              \n"
+  "mrs    r0, CPSR                                  \n"
+  "eor    r0, r0, #1                                \n"
+  "msr    SPSR_fsxc, r0                             \n" // set spsr to svc mode
+  "mov    r0, sp                                    \n"
+  "ldr    lr, =hw_irq                               \n"
+  "movs   pc, lr                                    \n" // switch to svc mode
+  "hw_irq:                                          \n"
+  "sub    sp, sp, #72                               \n"
+  "stmia  sp, {r1 - r12}                            \n" // save the cpu context
+  "ldmia  r0, {r3 - r5}                             \n"
+  "add    r7, sp, #48                               \n"
+  "add    r2, sp, #72                               \n"
+  "str    r3, [sp, #-4]!                            \n"
+  "mov    r3, lr                                    \n"
+  "stmia  r7, {r2 - r5}                             \n"
+  "mrc    p15, 0, r6, c12, c12, 0                   \n" // get the irq id
+  "cmp    r6, #1020                                 \n"
+  "bhs    IRQ_HandlerEnd                            \n"
+  "mrc    p15, 0, r2, c12, c11, 3                   \n" // get the running priority
+  "mrc    p15, 0, r7, c4, c6, 0                     \n" // get the interrupt priority mask
+  "mcr    p15, 0, r2, c4, c6, 0                     \n" // set the interrupt priority mask
+  "mcr    p15, 0, r6, c12, c12, 1                   \n" // end of interrupt
+  "mov    r0, r6                                    \n"
+  "bl     IRQ_HardIrqPreemptHandler                 \n"
+  "mcr    p15, 0, r6, c12, c11, 1                   \n" // set the interrupt priority mask
+  "mcr    p15, 0, r7, c4, c6, 0                     \n" // deactivate interrupt
+  "IRQ_HandlerEnd:                                  \n"
+  "msr    spsr_cxsf, r5                             \n" // restore the spsr
+  "ldmia  sp, {r0 - pc}^                            \n" // restore the CPU context then exit irq handler
+  );
+#else
+  __ASM volatile (
+  "stmfd  sp!, {r0-r12,lr}                          \n" // save the CPU context
+  "bl     IRQ_HardIrqHandler                        \n"
+  "ldmfd  sp!, {r0-r12,lr}                          \n" // restore the CPU context
+  "subs   pc,  lr, #4                               \n"
+  );
+#endif
+}
+#endif
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector Table
