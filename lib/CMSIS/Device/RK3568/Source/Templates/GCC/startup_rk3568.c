@@ -5,17 +5,6 @@
 #include "soc.h"
 
 /*----------------------------------------------------------------------------
-  Definitions
- *----------------------------------------------------------------------------*/
-#define USR_MODE 0x10            // User mode
-#define FIQ_MODE 0x11            // Fast Interrupt Request mode
-#define IRQ_MODE 0x12            // Interrupt Request mode
-#define SVC_MODE 0x13            // Supervisor mode
-#define ABT_MODE 0x17            // Abort mode
-#define UND_MODE 0x1B            // Undefined Instruction mode
-#define SYS_MODE 0x1F            // System mode
-
-/*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
 void Vectors       (void) __attribute__ ((section("RESET")));
@@ -76,18 +65,19 @@ void Reset_Handler(void) {
   "MCR    p15, 0, R0, c12, c0, 0                   \n"
 
   // Setup Stack for each exceptional mode
-  "CPS    #0x11                                    \n"
+  "CPS    #0x11                                    \n"  // FIQ
   "LDR    SP, =Image$$FIQ_STACK$$ZI$$Limit         \n"
-  "CPS    #0x12                                    \n"
+  "CPS    #0x12                                    \n"  // IRQ
   "LDR    SP, =Image$$IRQ_STACK$$ZI$$Limit         \n"
-  "CPS    #0x13                                    \n"
+  "CPS    #0x13                                    \n"  // SVC
   "LDR    SP, =Image$$SVC_STACK$$ZI$$Limit         \n"
-  "CPS    #0x17                                    \n"
+  "CPS    #0x17                                    \n"  // ABT
   "LDR    SP, =Image$$ABT_STACK$$ZI$$Limit         \n"
-  "CPS    #0x1B                                    \n"
+  "CPS    #0x1B                                    \n"  // UND
   "LDR    SP, =Image$$UND_STACK$$ZI$$Limit         \n"
-  "CPS    #0x1F                                    \n"
+  "CPS    #0x1F                                    \n"  // SYS
   "LDR    SP, =Image$$SYS_STACK$$ZI$$Limit         \n"
+  "CPS    #0x13                                    \n"  // SVC
 
   // Call DataInit
   "BL     DataInit                                 \n"
