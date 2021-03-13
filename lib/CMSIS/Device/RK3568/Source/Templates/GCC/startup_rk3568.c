@@ -89,6 +89,9 @@ void Reset_Handler(void) {
   "CPS    #0x1F                                    \n"
   "LDR    SP, =Image$$SYS_STACK$$ZI$$Limit         \n"
 
+  // Call DataInit
+  "BL     DataInit                                 \n"
+
   // Call SystemInit
   "BL     SystemInit                               \n"
 

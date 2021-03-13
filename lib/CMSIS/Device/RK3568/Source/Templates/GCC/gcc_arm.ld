@@ -53,7 +53,17 @@ SECTIONS
     } > DRAM
     __exidx_end = .;
 
-    . = ALIGN(16);
+    .zero.table :
+    {
+        . = ALIGN(4);
+        __zero_table_start__ = .;
+        LONG (__bss_start__)
+        LONG (__bss_end__ - __bss_start__)
+        __zero_table_end__ = .;
+    } > DRAM
+
+    . = ALIGN(4);
+
     .data :
     {
         *(.data)
@@ -65,6 +75,7 @@ SECTIONS
     } > DRAM
 
     . = ALIGN(16);
+
     .ctors :
     {
         PROVIDE(__ctors_start__ = .);
@@ -84,12 +95,13 @@ SECTIONS
     . = ALIGN(16);
     .bss (NOLOAD) :
     {
-        PROVIDE(__bss_start = .);
+        PROVIDE(__bss_start__ = .);
         *(.bss)
         *(.bss.*)
         *(.dynbss)
+        *(COMMON)
         . = ALIGN(16);
-        PROVIDE(__bss_end = .);
+        PROVIDE(__bss_end__ = .);
     } > DRAM
     _end = .;
 

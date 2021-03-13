@@ -30,3 +30,23 @@ void SystemInit (void)
 
     /* to do */
 }
+
+void DataInit (void)
+{
+#ifndef ARCH_RISCV
+
+    typedef struct {
+        unsigned long* dest;
+        unsigned long  wlen;
+    } __zero_table_t;
+
+    extern const __zero_table_t __zero_table_start__;
+    extern const __zero_table_t __zero_table_end__;
+
+    for (__zero_table_t const* pTable = &__zero_table_start__; pTable < &__zero_table_end__; ++pTable) {
+        for (unsigned long i = 0u; i < pTable->wlen; ++i) {
+            pTable->dest[i] = 0u;
+        }
+    }
+#endif /* ARCH_RISCV */
+}
