@@ -68,6 +68,17 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
+static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
+    GIC_AMP_IRQ_CFG(0, 0),
+};
+
+static struct GIC_IRQ_AMP_CTRL irqConfig = {
+    .cpuAff = CPU_GET_AFFINITY(1, 0),
+    .defPrio = 0xd0,
+    .defRouteAff = CPU_GET_AFFINITY(1, 0),
+    .irqsCfg = &irqsConfig[0],
+};
+
 void main(void)
 {
     struct HAL_UART_CONFIG hal_uart_config = {
@@ -86,6 +97,7 @@ void main(void)
     /* UART Init */
     UART2_IOMUX_Init();
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
+    HAL_GIC_Init(HAL_CPU_TOPOLOGY_getCurrentCpuId(), &irqConfig);
     printf("Hello RK3568 Bare-metal using RK_HAL!\n");
 
     while (1) {
