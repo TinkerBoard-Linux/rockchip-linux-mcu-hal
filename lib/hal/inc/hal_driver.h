@@ -26,6 +26,10 @@
 #include "hal_ckcal.h"
 #endif
 
+#ifdef HAL_CPU_TOPOLOGY_MODULE_ENABLED
+#include "hal_cpu_topology.h"
+#endif
+
 #ifdef HAL_CRU_MODULE_ENABLED
 #include "hal_cru.h"
 #endif
