@@ -69,7 +69,8 @@ typedef enum
   UART7_IRQn             = 155,      /*!< UART7  Interrupt            */
   UART8_IRQn             = 156,      /*!< UART8  Interrupt            */
   UART9_IRQn             = 157,      /*!< UART9  Interrupt            */
-  NUM_INTERRUPTS         = 283,
+  RSVD0_IRQn             = 283,      /*!< RSVD0  Interrupt            */
+  NUM_INTERRUPTS         = 352,
 } IRQn_Type;
 
 /* ================================================================================ */
@@ -84,6 +85,15 @@ typedef enum
 #include "system_rk3568.h"
 #endif /* __ASSEMBLY__ */
 #include "rk3568.h"
+
+/****************************************************************************************/
+/*                                                                                      */
+/*                                Module Address Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/* Memory Base */
+#define GIC_DISTRIBUTOR_BASE    0xFD400000 /* GICD base address */
+#define GIC_REDISTRIBUTOR_BASE  0xFD460000 /* GICR base address */
 
 /****************************************************************************************/
 /*                                                                                      */
