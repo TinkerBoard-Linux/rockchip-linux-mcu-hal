@@ -58,7 +58,7 @@ SECTIONS
         . = ALIGN(4);
         __zero_table_start__ = .;
         LONG (__bss_start__)
-        LONG (__bss_end__ - __bss_start__)
+        LONG ((__bss_end__ - __bss_start__) / 4)
         __zero_table_end__ = .;
     } > DRAM
 
