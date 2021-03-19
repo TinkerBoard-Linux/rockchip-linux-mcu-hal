@@ -18,8 +18,8 @@
 
 #include "hal_cache.h"
 
-#ifdef HAL_BUFFER_MANAGE_MODULE_ENABLED
-#include "hal_buffer_manage.h"
+#ifdef HAL_BUFMGR_MODULE_ENABLED
+#include "hal_bufmgr.h"
 #endif
 
 #ifdef HAL_CKCAL_MODULE_ENABLED

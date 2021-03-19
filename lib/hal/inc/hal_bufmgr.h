@@ -3,38 +3,38 @@
  * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
-#ifdef HAL_BUFFER_MANAGE_MODULE_ENABLED
+#ifdef HAL_BUFMGR_MODULE_ENABLED
 
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
 
-/** @addtogroup BUFFER_MANAGER
+/** @addtogroup BUFMGR
  *  @{
  */
 
-#ifndef __HAL_BUFFER_MANAGER_H__
-#define __HAL_BUFFER_MANAGER_H__
+#ifndef __HAL_BUFMGR_H__
+#define __HAL_BUFMGR_H__
 
 /***************************** MACRO Definition ******************************/
-/** @defgroup BUFFER_MANAGER_Exported_Definition_Group1 Basic Definition
+/** @defgroup BUFMGR_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 
 #define HAL_BUFMGR_WCH_INTSTS_FULL_BIT(n) \
     (1U << (n))
 #define HAL_BUFMGR_WCH_STS_FULL_BIT(n) \
-    (1U << (n + BUFFER_MANAGE_WCH_MBLK_INTSTS_PPBUF0_FULL_STATUS_SHIFT))
+    (1U << (n + BUFFER_MANAGER_WCH_MBLK_INTSTS_PPBUF0_FULL_STATUS_SHIFT))
 #define HAL_BUFMGR_WCH_STS_EOH_BIT(n) \
-    (1U << (n + BUFFER_MANAGE_WCH_MBLK_INTSTS_PPBUF0_FIRST_FLAG_STATUS_SHIFT))
+    (1U << (n + BUFFER_MANAGER_WCH_MBLK_INTSTS_PPBUF0_FIRST_FLAG_STATUS_SHIFT))
 #define HAL_BUFMGR_WCH_STS_EOF_BIT(n) \
-    (1U << (n + BUFFER_MANAGE_WCH_MBLK_INTSTS_PPBUF0_LAST_FLAG_STATUS_SHIFT))
+    (1U << (n + BUFFER_MANAGER_WCH_MBLK_INTSTS_PPBUF0_LAST_FLAG_STATUS_SHIFT))
 #define HAL_BUFMGR_WCH_INTSTS_OVFL_BIT \
-    (BUFFER_MANAGE_WCH_MBLK_INTSTS_PPBUF_OVERFLOW_INTSTS_MASK)
+    (BUFFER_MANAGER_WCH_MBLK_INTSTS_PPBUF_OVERFLOW_INTSTS_MASK)
 
 /** @} */
 /***************************** Function Declare ******************************/
-/** @defgroup BUFFER_MANAGER_Public_Function_Declare Public Function Declare
+/** @defgroup BUFMGR_Public_Function_Declare Public Function Declare
  *  @{
  */
 
@@ -56,10 +56,10 @@ HAL_Check HAL_BUFMGR_WCHStsIsEOF(uint32_t sts, int idx);
 
 /** @} */
 
-#endif /* HAL_BUFFER_MANAGE_MODULE_ENABLED */
+#endif /* HAL_BUFMGR_MODULE_ENABLED */
 
 /** @} */
 
 /** @} */
 
-#endif /* __HAL_BUFFER_MANAGER_H__ */
+#endif /* __HAL_BUFMGR_H__ */

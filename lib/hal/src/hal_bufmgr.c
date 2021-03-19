@@ -5,33 +5,33 @@
 
 #include "hal_base.h"
 
-#ifdef HAL_BUFFER_MANAGE_MODULE_ENABLED
+#ifdef HAL_BUFMGR_MODULE_ENABLED
 
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
 
-/** @addtogroup BUFFER_MANAGER
+/** @addtogroup BUFMGR
  *  @{
  */
 
-/** @defgroup BUFFER_MANAGER_Private_Definition Private Definition
+/** @defgroup BUFMGR_Private_Definition Private Definition
  *  @{
  */
 
 /******************** Private Variable Definition ***********************/
 
-static struct BUFFER_MANAGE_REG *HAL_BUFMGR_ParseBase(int chan, int block)
+static struct BUFFER_MANAGER_REG *HAL_BUFMGR_ParseBase(int chan, int block)
 {
-    return (struct BUFFER_MANAGE_REG *)(BUFFER_MANAGE_BASE +
-                                        (chan * 0x80U + block * 0x40U));
+    return (struct BUFFER_MANAGER_REG *)(BUFFER_MANAGER_BASE +
+                                         (chan * 0x80U + block * 0x40U));
 }
 
 /** @} */
 
 /********************* Public Function Definition ****************************/
 
-/** @defgroup BUFFER_MANAGER_Exported_Functions_Group1 WCH Related Functions
+/** @defgroup BUFMGR_Exported_Functions_Group1 WCH Related Functions
 
 This section provides functions allowing to operate WCH of the Buffer Manager:
 
@@ -47,9 +47,9 @@ This section provides functions allowing to operate WCH of the Buffer Manager:
  */
 HAL_Status HAL_BUFMGR_WCHIntStsClr(int chan, int block, uint32_t val)
 {
-    struct BUFFER_MANAGE_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
+    struct BUFFER_MANAGER_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
 
-    pBufMgr->WCH_MBLK0_INTSTS = val;
+    pBufMgr->WCH_MBLK_INTSTS = val;
 
     return HAL_OK;
 }
@@ -93,17 +93,17 @@ HAL_Status HAL_BUFMGR_WCHIntStsAllClr(int chan, int block)
  */
 HAL_Status HAL_BUFMGR_WCHIntAllEn(int chan, int block, uint8_t en)
 {
-    struct BUFFER_MANAGE_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
+    struct BUFFER_MANAGER_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
 
     if (en) {
-        pBufMgr->WCH_MBLK0_INT_EN =
-            BUFFER_MANAGE_WCH_MBLK_INT_EN_PPBUF0_FULL_INT_EN_MASK |
-            BUFFER_MANAGE_WCH_MBLK_INT_EN_PPBUF1_FULL_INT_EN_MASK |
-            BUFFER_MANAGE_WCH_MBLK_INT_EN_PPBUF2_FULL_INT_EN_MASK |
-            BUFFER_MANAGE_WCH_MBLK_INT_EN_PPBUF3_FULL_INT_EN_MASK |
-            BUFFER_MANAGE_WCH_MBLK_INT_EN_PPBUF_OVERFLOW_INT_EN_MASK;
+        pBufMgr->WCH_MBLK_INT_EN =
+            BUFFER_MANAGER_WCH_MBLK_INT_EN_PPBUF0_FULL_INT_EN_MASK |
+            BUFFER_MANAGER_WCH_MBLK_INT_EN_PPBUF1_FULL_INT_EN_MASK |
+            BUFFER_MANAGER_WCH_MBLK_INT_EN_PPBUF2_FULL_INT_EN_MASK |
+            BUFFER_MANAGER_WCH_MBLK_INT_EN_PPBUF3_FULL_INT_EN_MASK |
+            BUFFER_MANAGER_WCH_MBLK_INT_EN_PPBUF_OVERFLOW_INT_EN_MASK;
     } else {
-        pBufMgr->WCH_MBLK0_INT_EN = 0x0U;
+        pBufMgr->WCH_MBLK_INT_EN = 0x0U;
     }
 
     return HAL_OK;
@@ -118,14 +118,14 @@ HAL_Status HAL_BUFMGR_WCHIntAllEn(int chan, int block, uint8_t en)
  */
 HAL_Status HAL_BUFMGR_WCHPpBufEn(int chan, int block, uint8_t en)
 {
-    struct BUFFER_MANAGE_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
+    struct BUFFER_MANAGER_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
 
     if (en) {
-        pBufMgr->WCH_MBLK0_CON0 |=
-            BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_ENABLE_MASK;
+        pBufMgr->WCH_MBLK_CON0 |=
+            BUFFER_MANAGER_WCH_MBLK_CON0_PPBUF_ENABLE_MASK;
     } else {
-        pBufMgr->WCH_MBLK0_CON0 &=
-            ~BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_ENABLE_MASK;
+        pBufMgr->WCH_MBLK_CON0 &=
+            ~BUFFER_MANAGER_WCH_MBLK_CON0_PPBUF_ENABLE_MASK;
     }
 
     return HAL_OK;
@@ -139,10 +139,10 @@ HAL_Status HAL_BUFMGR_WCHPpBufEn(int chan, int block, uint8_t en)
  */
 uint32_t HAL_BUFMGR_WCHEndBufLenGet(int chan, int block)
 {
-    struct BUFFER_MANAGE_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
+    struct BUFFER_MANAGER_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
 
-    return pBufMgr->WCH_MBLK0_STATUS1 &
-           BUFFER_MANAGE_WCH_MBLK_STATUS1_PPBUF_LAST_DCOUNTER_MASK;
+    return pBufMgr->WCH_MBLK_STATUS1 &
+           BUFFER_MANAGER_WCH_MBLK_STATUS1_PPBUF_LAST_DCOUNTER_MASK;
 }
 
 /**
@@ -153,11 +153,11 @@ uint32_t HAL_BUFMGR_WCHEndBufLenGet(int chan, int block)
  */
 uint32_t HAL_BUFMGR_WCHCurBufIdxGet(int chan, int block)
 {
-    struct BUFFER_MANAGE_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
+    struct BUFFER_MANAGER_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
 
-    return ((pBufMgr->WCH_MBLK0_STATUS0 &
-             BUFFER_MANAGE_WCH_MBLK_STATUS0_PPBUF_CUR_INDEX_MASK) >>
-            BUFFER_MANAGE_WCH_MBLK_STATUS0_PPBUF_CUR_INDEX_SHIFT);
+    return ((pBufMgr->WCH_MBLK_STATUS0 &
+             BUFFER_MANAGER_WCH_MBLK_STATUS0_PPBUF_CUR_INDEX_MASK) >>
+            BUFFER_MANAGER_WCH_MBLK_STATUS0_PPBUF_CUR_INDEX_SHIFT);
 }
 
 /**
@@ -168,9 +168,9 @@ uint32_t HAL_BUFMGR_WCHCurBufIdxGet(int chan, int block)
  */
 uint32_t HAL_BUFMGR_WCHIntStsGet(int chan, int block)
 {
-    struct BUFFER_MANAGE_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
+    struct BUFFER_MANAGER_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
 
-    return pBufMgr->WCH_MBLK0_INTSTS & 0x1FFFFU;
+    return pBufMgr->WCH_MBLK_INTSTS & 0x1FFFFU;
 }
 
 /**
@@ -181,11 +181,11 @@ uint32_t HAL_BUFMGR_WCHIntStsGet(int chan, int block)
  */
 uint32_t HAL_BUFMGR_WCHBufSizeGet(int chan, int block)
 {
-    struct BUFFER_MANAGE_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
+    struct BUFFER_MANAGER_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
 
-    return ((pBufMgr->WCH_MBLK0_CON0 &
-             BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_SIZE_MASK) >>
-            BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_SIZE_SHIFT);
+    return ((pBufMgr->WCH_MBLK_CON0 &
+             BUFFER_MANAGER_WCH_MBLK_CON0_PPBUF_SIZE_MASK) >>
+            BUFFER_MANAGER_WCH_MBLK_CON0_PPBUF_SIZE_SHIFT);
 }
 
 /**
@@ -197,21 +197,21 @@ uint32_t HAL_BUFMGR_WCHBufSizeGet(int chan, int block)
  */
 uint32_t HAL_BUFMGR_WCHBufAddrGet(int chan, int block, int idx)
 {
-    struct BUFFER_MANAGE_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
+    struct BUFFER_MANAGER_REG *pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
     uint32_t addr = 0;
 
     switch (idx) {
     case 0:
-        addr = pBufMgr->WCH_MBLK0_CON1;
+        addr = pBufMgr->WCH_MBLK_CON1;
         break;
     case 1:
-        addr = pBufMgr->WCH_MBLK0_CON2;
+        addr = pBufMgr->WCH_MBLK_CON2;
         break;
     case 2:
-        addr = pBufMgr->WCH_MBLK0_CON3;
+        addr = pBufMgr->WCH_MBLK_CON3;
         break;
     case 3:
-        addr = pBufMgr->WCH_MBLK0_CON4;
+        addr = pBufMgr->WCH_MBLK_CON4;
         break;
     default:
         break;
@@ -263,7 +263,7 @@ HAL_Check HAL_BUFMGR_WCHStsIsBufFull(uint32_t sts, int idx)
 HAL_Check HAL_BUFMGR_WCHStsIsEOH(int chan, int block, uint32_t sts, int idx)
 {
     uint32_t fSize, bSize;
-    struct BUFFER_MANAGE_REG *pBufMgr;
+    struct BUFFER_MANAGER_REG *pBufMgr;
 
     if (sts & HAL_BUFMGR_WCH_STS_EOH_BIT(idx)) {
         return HAL_TRUE;
@@ -276,11 +276,11 @@ HAL_Check HAL_BUFMGR_WCHStsIsEOH(int chan, int block, uint32_t sts, int idx)
          * checking as a workaround.
          */
         pBufMgr = HAL_BUFMGR_ParseBase(chan, block);
-        fSize = pBufMgr->WCH_MBLK0_STATUS3 &
-                BUFFER_MANAGE_WCH_MBLK_STATUS3_FRAM_END_COUNTER_MASK;
-        bSize = (pBufMgr->WCH_MBLK0_CON0 &
-                 BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_SIZE_MASK) >>
-                BUFFER_MANAGE_WCH_MBLK_CON0_PPBUF_SIZE_SHIFT;
+        fSize = pBufMgr->WCH_MBLK_STATUS3 &
+                BUFFER_MANAGER_WCH_MBLK_STATUS3_FRAME_END_COUNTER_MASK;
+        bSize = (pBufMgr->WCH_MBLK_CON0 &
+                 BUFFER_MANAGER_WCH_MBLK_CON0_PPBUF_SIZE_MASK) >>
+                BUFFER_MANAGER_WCH_MBLK_CON0_PPBUF_SIZE_SHIFT;
 
         if (fSize <= bSize) {
             return HAL_TRUE;
@@ -307,4 +307,4 @@ HAL_Check HAL_BUFMGR_WCHStsIsEOF(uint32_t sts, int idx)
 
 /** @} */
 
-#endif /* HAL_BUFFER_MANAGE_MODULE_ENABLED */
+#endif /* HAL_BUFMGR_MODULE_ENABLED */
