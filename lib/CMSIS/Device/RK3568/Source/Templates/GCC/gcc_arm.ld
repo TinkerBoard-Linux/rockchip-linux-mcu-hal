@@ -6,8 +6,8 @@
 /* Program Entry, set to mark it as "used" and avoid gc */
 MEMORY
 {
-    SRAM  (rxw) : ORIGIN = 0xfdcc0000, LENGTH = 64K /* system sram 64k */
-    DRAM  (rxw) : ORIGIN = 0x00a00000, LENGTH = 1M  /* DRAM */
+    SRAM  (rxw) : ORIGIN = 0xfdcc0000, LENGTH = 64K   /* system sram 64k */
+    DRAM  (rxw) : ORIGIN = 0x00a00000, LENGTH = 512K  /* DRAM */
 }
 
 ENTRY(Reset_Handler)
