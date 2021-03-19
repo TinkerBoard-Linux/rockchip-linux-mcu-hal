@@ -3,6 +3,8 @@
  * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
+#include "hal_conf.h"
+
 #if defined(HAL_VOP_MODULE_ENABLED) || defined(HAL_DSI_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver
@@ -115,8 +117,6 @@ struct DISPLAY_RECT {
 /** @} */
 
 #endif
-
-/** @} */
 
 /** @} */
 

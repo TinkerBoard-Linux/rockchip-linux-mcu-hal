@@ -3,6 +3,8 @@
  * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
+#include "hal_conf.h"
+
 #ifdef HAL_CRU_MODULE_ENABLED
 
 /** @addtogroup RK_HAL_Driver
@@ -163,7 +165,6 @@ HAL_Status HAL_CRU_PllCompensation(eCLOCK_Name clockName, int ppm);
 #ifdef HAL_CRU_AS_FEATURE_ENABLED
 /**
  * @brief  it is for AS init.
- * @return HAL_Status.
  */
 void HAL_CRU_AsInit(void);
 
@@ -171,7 +172,6 @@ void HAL_CRU_AsInit(void);
  * @brief  it is for AS enable.
  * @param  ch: channel
  * @param  en: 1 is enable, 0 is disable.
- * @return HAL_Status.
  */
 void HAL_CRU_AsEnable(uint8_t ch, uint8_t en);
 #endif
