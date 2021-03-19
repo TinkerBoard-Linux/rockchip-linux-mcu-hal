@@ -14,8 +14,8 @@
 /*                                                                                      */
 /****************************************************************************************/
 #ifndef __ASSEMBLY__
-/* PMU_GRF Register Structure Define */
-struct PMU_GRF_REG {
+/* GRF Register Structure Define */
+struct GRF_REG {
     __IO uint32_t GPIO0A_IOMUX_L;                     /* Address Offset: 0x0000 */
     __IO uint32_t GPIO0A_IOMUX_H;                     /* Address Offset: 0x0004 */
     __IO uint32_t GPIO0B_IOMUX_L;                     /* Address Offset: 0x0008 */
@@ -57,44 +57,284 @@ struct PMU_GRF_REG {
     __IO uint32_t GPIO0C_DS_2;                        /* Address Offset: 0x0098 */
     __IO uint32_t GPIO0C_DS_3;                        /* Address Offset: 0x009C */
     __IO uint32_t GPIO0D_DS_0;                        /* Address Offset: 0x00A0 */
-         uint32_t RESERVED00A4[23];                   /* Address Offset: 0x00A4 */
-    __IO uint32_t SOC_CON0;                           /* Address Offset: 0x0100 */
-    __IO uint32_t SOC_CON1;                           /* Address Offset: 0x0104 */
-    __IO uint32_t SOC_CON2;                           /* Address Offset: 0x0108 */
-    __IO uint32_t SOC_CON3;                           /* Address Offset: 0x010C */
-    __IO uint32_t SOC_CON4;                           /* Address Offset: 0x0110 */
-    __IO uint32_t SOC_CON5;                           /* Address Offset: 0x0114 */
-         uint32_t RESERVED0118[2];                    /* Address Offset: 0x0118 */
-    __I  uint32_t SOC_STATUS;                         /* Address Offset: 0x0120 */
-         uint32_t RESERVED0124[7];                    /* Address Offset: 0x0124 */
-    __IO uint32_t IO_VSEL0;                           /* Address Offset: 0x0140 */
-    __IO uint32_t IO_VSEL1;                           /* Address Offset: 0x0144 */
-    __IO uint32_t IO_VSEL2;                           /* Address Offset: 0x0148 */
-         uint32_t RESERVED014C[13];                   /* Address Offset: 0x014C */
-    __IO uint32_t DLL_CON0;                           /* Address Offset: 0x0180 */
-         uint32_t RESERVED0184[31];                   /* Address Offset: 0x0184 */
-    __IO uint32_t OS_REG0;                            /* Address Offset: 0x0200 */
-    __IO uint32_t OS_REG1;                            /* Address Offset: 0x0204 */
-    __IO uint32_t OS_REG2;                            /* Address Offset: 0x0208 */
-    __IO uint32_t OS_REG3;                            /* Address Offset: 0x020C */
-    __IO uint32_t OS_REG4;                            /* Address Offset: 0x0210 */
-    __IO uint32_t OS_REG5;                            /* Address Offset: 0x0214 */
-    __IO uint32_t OS_REG6;                            /* Address Offset: 0x0218 */
-    __IO uint32_t OS_REG7;                            /* Address Offset: 0x021C */
-    __IO uint32_t OS_REG8;                            /* Address Offset: 0x0220 */
-    __IO uint32_t OS_REG9;                            /* Address Offset: 0x0224 */
-    __IO uint32_t OS_REG10;                           /* Address Offset: 0x0228 */
-    __IO uint32_t OS_REG11;                           /* Address Offset: 0x022C */
-    __IO uint32_t RESET_FUNCTION_STATUS;              /* Address Offset: 0x0230 */
-    __IO uint32_t RESET_FUNCTION_CLR;                 /* Address Offset: 0x0234 */
-         uint32_t RESERVED0238[82];                   /* Address Offset: 0x0238 */
-    __IO uint32_t SIG_DETECT_CON;                     /* Address Offset: 0x0380 */
-         uint32_t RESERVED0384[3];                    /* Address Offset: 0x0384 */
-    __IO uint32_t SIG_DETECT_STATUS;                  /* Address Offset: 0x0390 */
-         uint32_t RESERVED0394[3];                    /* Address Offset: 0x0394 */
-    __IO uint32_t SIG_DETECT_STATUS_CLEAR;            /* Address Offset: 0x03A0 */
-         uint32_t RESERVED03A4[3];                    /* Address Offset: 0x03A4 */
-    __IO uint32_t SDMMC_DET_COUNTER;                  /* Address Offset: 0x03B0 */
+    __IO uint32_t SOC_CON0;                           /* Address Offset: 0x00A4 */
+    __IO uint32_t SOC_CON1;                           /* Address Offset: 0x00A8 */
+    __IO uint32_t SOC_CON2;                           /* Address Offset: 0x00AC */
+    __IO uint32_t SOC_CON3;                           /* Address Offset: 0x00B0 */
+    __IO uint32_t SOC_CON4;                           /* Address Offset: 0x00B4 */
+    __IO uint32_t SOC_CON5;                           /* Address Offset: 0x00B8 */
+    __I  uint32_t SOC_STATUS;                         /* Address Offset: 0x00BC */
+    __IO uint32_t IO_VSEL0;                           /* Address Offset: 0x00C0 */
+    __IO uint32_t IO_VSEL1;                           /* Address Offset: 0x00C4 */
+    __IO uint32_t IO_VSEL2;                           /* Address Offset: 0x00C8 */
+    __IO uint32_t DLL_CON0;                           /* Address Offset: 0x00CC */
+    __IO uint32_t OS_REG0;                            /* Address Offset: 0x00D0 */
+    __IO uint32_t OS_REG1;                            /* Address Offset: 0x00D4 */
+    __IO uint32_t OS_REG2;                            /* Address Offset: 0x00D8 */
+    __IO uint32_t OS_REG3;                            /* Address Offset: 0x00DC */
+    __IO uint32_t OS_REG4;                            /* Address Offset: 0x00E0 */
+    __IO uint32_t OS_REG5;                            /* Address Offset: 0x00E4 */
+    __IO uint32_t OS_REG6;                            /* Address Offset: 0x00E8 */
+    __IO uint32_t OS_REG7;                            /* Address Offset: 0x00EC */
+    __IO uint32_t OS_REG8;                            /* Address Offset: 0x00F0 */
+    __IO uint32_t OS_REG9;                            /* Address Offset: 0x00F4 */
+    __IO uint32_t OS_REG10;                           /* Address Offset: 0x00F8 */
+    __IO uint32_t OS_REG11;                           /* Address Offset: 0x00FC */
+    __IO uint32_t RESET_FUNCTION_STATUS;              /* Address Offset: 0x0100 */
+    __IO uint32_t RESET_FUNCTION_CLR;                 /* Address Offset: 0x0104 */
+    __IO uint32_t SIG_DETECT_CON;                     /* Address Offset: 0x0108 */
+    __IO uint32_t SIG_DETECT_STATUS;                  /* Address Offset: 0x010C */
+    __IO uint32_t SIG_DETECT_STATUS_CLEAR;            /* Address Offset: 0x0110 */
+    __IO uint32_t SDMMC_DET_COUNTER;                  /* Address Offset: 0x0114 */
+         uint32_t RESERVED0118[65466];                /* Address Offset: 0x0118 */
+    __IO uint32_t GPIO1A_IOMUX_L;                     /* Address Offset: 0x40000 */
+    __IO uint32_t GPIO1A_IOMUX_H;                     /* Address Offset: 0x40004 */
+    __IO uint32_t GPIO1B_IOMUX_L;                     /* Address Offset: 0x40008 */
+    __IO uint32_t GPIO1B_IOMUX_H;                     /* Address Offset: 0x4000C */
+    __IO uint32_t GPIO1C_IOMUX_L;                     /* Address Offset: 0x40010 */
+    __IO uint32_t GPIO1C_IOMUX_H;                     /* Address Offset: 0x40014 */
+    __IO uint32_t GPIO1D_IOMUX_L;                     /* Address Offset: 0x40018 */
+    __IO uint32_t GPIO1D_IOMUX_H;                     /* Address Offset: 0x4001C */
+    __IO uint32_t GPIO2A_IOMUX_L;                     /* Address Offset: 0x40020 */
+    __IO uint32_t GPIO2A_IOMUX_H;                     /* Address Offset: 0x40024 */
+    __IO uint32_t GPIO2B_IOMUX_L;                     /* Address Offset: 0x40028 */
+    __IO uint32_t GPIO2B_IOMUX_H;                     /* Address Offset: 0x4002C */
+    __IO uint32_t GPIO2C_IOMUX_L;                     /* Address Offset: 0x40030 */
+    __IO uint32_t GPIO2C_IOMUX_H;                     /* Address Offset: 0x40034 */
+    __IO uint32_t GPIO2D_IOMUX_L;                     /* Address Offset: 0x40038 */
+    __IO uint32_t GPIO2D_IOMUX_H;                     /* Address Offset: 0x4003C */
+    __IO uint32_t GPIO3A_IOMUX_L;                     /* Address Offset: 0x40040 */
+    __IO uint32_t GPIO3A_IOMUX_H;                     /* Address Offset: 0x40044 */
+    __IO uint32_t GPIO3B_IOMUX_L;                     /* Address Offset: 0x40048 */
+    __IO uint32_t GPIO3B_IOMUX_H;                     /* Address Offset: 0x4004C */
+    __IO uint32_t GPIO3C_IOMUX_L;                     /* Address Offset: 0x40050 */
+    __IO uint32_t GPIO3C_IOMUX_H;                     /* Address Offset: 0x40054 */
+    __IO uint32_t GPIO3D_IOMUX_L;                     /* Address Offset: 0x40058 */
+    __IO uint32_t GPIO3D_IOMUX_H;                     /* Address Offset: 0x4005C */
+    __IO uint32_t GPIO4A_IOMUX_L;                     /* Address Offset: 0x40060 */
+    __IO uint32_t GPIO4A_IOMUX_H;                     /* Address Offset: 0x40064 */
+    __IO uint32_t GPIO4B_IOMUX_L;                     /* Address Offset: 0x40068 */
+    __IO uint32_t GPIO4B_IOMUX_H;                     /* Address Offset: 0x4006C */
+    __IO uint32_t GPIO4C_IOMUX_L;                     /* Address Offset: 0x40070 */
+    __IO uint32_t GPIO4C_IOMUX_H;                     /* Address Offset: 0x40074 */
+    __IO uint32_t GPIO4D_IOMUX_L;                     /* Address Offset: 0x40078 */
+    __IO uint32_t GPIO1A_P;                           /* Address Offset: 0x4007C */
+    __IO uint32_t GPIO1B_P;                           /* Address Offset: 0x40080 */
+    __IO uint32_t GPIO1C_P;                           /* Address Offset: 0x40084 */
+    __IO uint32_t GPIO1D_P;                           /* Address Offset: 0x40088 */
+    __IO uint32_t GPIO2A_P;                           /* Address Offset: 0x4008C */
+    __IO uint32_t GPIO2B_P;                           /* Address Offset: 0x40090 */
+    __IO uint32_t GPIO2C_P;                           /* Address Offset: 0x40094 */
+    __IO uint32_t GPIO2D_P;                           /* Address Offset: 0x40098 */
+    __IO uint32_t GPIO3A_P;                           /* Address Offset: 0x4009C */
+    __IO uint32_t GPIO3B_P;                           /* Address Offset: 0x400A0 */
+    __IO uint32_t GPIO3C_P;                           /* Address Offset: 0x400A4 */
+    __IO uint32_t GPIO3D_P;                           /* Address Offset: 0x400A8 */
+    __IO uint32_t GPIO4A_P;                           /* Address Offset: 0x400AC */
+    __IO uint32_t GPIO4B_P;                           /* Address Offset: 0x400B0 */
+    __IO uint32_t GPIO4C_P;                           /* Address Offset: 0x400B4 */
+    __IO uint32_t GPIO4D_P;                           /* Address Offset: 0x400B8 */
+    __IO uint32_t GPIO1A_IE;                          /* Address Offset: 0x400BC */
+    __IO uint32_t GPIO1B_IE;                          /* Address Offset: 0x400C0 */
+    __IO uint32_t GPIO1C_IE;                          /* Address Offset: 0x400C4 */
+    __IO uint32_t GPIO1D_IE;                          /* Address Offset: 0x400C8 */
+    __IO uint32_t GPIO2A_IE;                          /* Address Offset: 0x400CC */
+    __IO uint32_t GPIO2B_IE;                          /* Address Offset: 0x400D0 */
+    __IO uint32_t GPIO2C_IE;                          /* Address Offset: 0x400D4 */
+    __IO uint32_t GPIO2D_IE;                          /* Address Offset: 0x400D8 */
+    __IO uint32_t GPIO3A_IE;                          /* Address Offset: 0x400DC */
+    __IO uint32_t GPIO3B_IE;                          /* Address Offset: 0x400E0 */
+    __IO uint32_t GPIO3C_IE;                          /* Address Offset: 0x400E4 */
+    __IO uint32_t GPIO3D_IE;                          /* Address Offset: 0x400E8 */
+    __IO uint32_t GPIO4A_IE;                          /* Address Offset: 0x400EC */
+    __IO uint32_t GPIO4B_IE;                          /* Address Offset: 0x400F0 */
+    __IO uint32_t GPIO4C_IE;                          /* Address Offset: 0x400F4 */
+    __IO uint32_t GPIO4D_IE;                          /* Address Offset: 0x400F8 */
+    __IO uint32_t GPIO1A_OPD;                         /* Address Offset: 0x400FC */
+    __IO uint32_t GPIO1B_OPD;                         /* Address Offset: 0x40100 */
+    __IO uint32_t GPIO1C_OPD;                         /* Address Offset: 0x40104 */
+    __IO uint32_t GPIO1D_OPD;                         /* Address Offset: 0x40108 */
+    __IO uint32_t GPIO2A_OPD;                         /* Address Offset: 0x4010C */
+    __IO uint32_t GPIO2B_OPD;                         /* Address Offset: 0x40110 */
+    __IO uint32_t GPIO2C_OPD;                         /* Address Offset: 0x40114 */
+    __IO uint32_t GPIO2D_OPD;                         /* Address Offset: 0x40118 */
+    __IO uint32_t GPIO3A_OPD;                         /* Address Offset: 0x4011C */
+    __IO uint32_t GPIO3B_OPD;                         /* Address Offset: 0x40120 */
+    __IO uint32_t GPIO3C_OPD;                         /* Address Offset: 0x40124 */
+    __IO uint32_t GPIO3D_OPD;                         /* Address Offset: 0x40128 */
+    __IO uint32_t GPIO4A_OPD;                         /* Address Offset: 0x4012C */
+    __IO uint32_t GPIO4B_OPD;                         /* Address Offset: 0x40130 */
+    __IO uint32_t GPIO4C_OPD;                         /* Address Offset: 0x40134 */
+    __IO uint32_t GPIO4D_OPD;                         /* Address Offset: 0x40138 */
+    __IO uint32_t GPIO1A_SUS;                         /* Address Offset: 0x4013C */
+    __IO uint32_t GPIO1B_SUS;                         /* Address Offset: 0x40140 */
+    __IO uint32_t GPIO1C_SUS;                         /* Address Offset: 0x40144 */
+    __IO uint32_t GPIO1D_SUS;                         /* Address Offset: 0x40148 */
+    __IO uint32_t GPIO2A_SUS;                         /* Address Offset: 0x4014C */
+    __IO uint32_t GPIO2B_SUS;                         /* Address Offset: 0x40150 */
+    __IO uint32_t GPIO2C_SUS;                         /* Address Offset: 0x40154 */
+    __IO uint32_t GPIO2D_SUS;                         /* Address Offset: 0x40158 */
+    __IO uint32_t GPIO3A_SUS;                         /* Address Offset: 0x4015C */
+    __IO uint32_t GPIO3B_SUS;                         /* Address Offset: 0x40160 */
+    __IO uint32_t GPIO3C_SUS;                         /* Address Offset: 0x40164 */
+    __IO uint32_t GPIO3D_SUS;                         /* Address Offset: 0x40168 */
+    __IO uint32_t GPIO4A_SUS;                         /* Address Offset: 0x4016C */
+    __IO uint32_t GPIO4B_SUS;                         /* Address Offset: 0x40170 */
+    __IO uint32_t GPIO4C_SUS;                         /* Address Offset: 0x40174 */
+    __IO uint32_t GPIO4D_SUS;                         /* Address Offset: 0x40178 */
+    __IO uint32_t GPIO1A_SL;                          /* Address Offset: 0x4017C */
+    __IO uint32_t GPIO1B_SL;                          /* Address Offset: 0x40180 */
+    __IO uint32_t GPIO1C_SL;                          /* Address Offset: 0x40184 */
+    __IO uint32_t GPIO1D_SL;                          /* Address Offset: 0x40188 */
+    __IO uint32_t GPIO2A_SL;                          /* Address Offset: 0x4018C */
+    __IO uint32_t GPIO2B_SL;                          /* Address Offset: 0x40190 */
+    __IO uint32_t GPIO2C_SL;                          /* Address Offset: 0x40194 */
+    __IO uint32_t GPIO2D_SL;                          /* Address Offset: 0x40198 */
+    __IO uint32_t GPIO3A_SL;                          /* Address Offset: 0x4019C */
+    __IO uint32_t GPIO3B_SL;                          /* Address Offset: 0x401A0 */
+    __IO uint32_t GPIO3C_SL;                          /* Address Offset: 0x401A4 */
+    __IO uint32_t GPIO3D_SL;                          /* Address Offset: 0x401A8 */
+    __IO uint32_t GPIO4A_SL;                          /* Address Offset: 0x401AC */
+    __IO uint32_t GPIO4B_SL;                          /* Address Offset: 0x401B0 */
+    __IO uint32_t GPIO4C_SL;                          /* Address Offset: 0x401B4 */
+    __IO uint32_t GPIO4D_SL;                          /* Address Offset: 0x401B8 */
+    __IO uint32_t GPIO1A_DS_0;                        /* Address Offset: 0x401BC */
+    __IO uint32_t GPIO1A_DS_1;                        /* Address Offset: 0x401C0 */
+    __IO uint32_t GPIO1A_DS_2;                        /* Address Offset: 0x401C4 */
+    __IO uint32_t GPIO1A_DS_3;                        /* Address Offset: 0x401C8 */
+    __IO uint32_t GPIO1B_DS_0;                        /* Address Offset: 0x401CC */
+    __IO uint32_t GPIO1B_DS_1;                        /* Address Offset: 0x401D0 */
+    __IO uint32_t GPIO1B_DS_2;                        /* Address Offset: 0x401D4 */
+    __IO uint32_t GPIO1B_DS_3;                        /* Address Offset: 0x401D8 */
+    __IO uint32_t GPIO1C_DS_0;                        /* Address Offset: 0x401DC */
+    __IO uint32_t GPIO1C_DS_1;                        /* Address Offset: 0x401E0 */
+    __IO uint32_t GPIO1C_DS_2;                        /* Address Offset: 0x401E4 */
+    __IO uint32_t GPIO1C_DS_3;                        /* Address Offset: 0x401E8 */
+    __IO uint32_t GPIO1D_DS_0;                        /* Address Offset: 0x401EC */
+    __IO uint32_t GPIO1D_DS_1;                        /* Address Offset: 0x401F0 */
+    __IO uint32_t GPIO1D_DS_2;                        /* Address Offset: 0x401F4 */
+    __IO uint32_t GPIO1D_DS_3;                        /* Address Offset: 0x401F8 */
+    __IO uint32_t GPIO2A_DS_0;                        /* Address Offset: 0x401FC */
+    __IO uint32_t GPIO2A_DS_1;                        /* Address Offset: 0x40200 */
+    __IO uint32_t GPIO2A_DS_2;                        /* Address Offset: 0x40204 */
+    __IO uint32_t GPIO2A_DS_3;                        /* Address Offset: 0x40208 */
+    __IO uint32_t GPIO2B_DS_0;                        /* Address Offset: 0x4020C */
+    __IO uint32_t GPIO2B_DS_1;                        /* Address Offset: 0x40210 */
+    __IO uint32_t GPIO2B_DS_2;                        /* Address Offset: 0x40214 */
+    __IO uint32_t GPIO2B_DS_3;                        /* Address Offset: 0x40218 */
+    __IO uint32_t GPIO2C_DS_0;                        /* Address Offset: 0x4021C */
+    __IO uint32_t GPIO2C_DS_1;                        /* Address Offset: 0x40220 */
+    __IO uint32_t GPIO2C_DS_2;                        /* Address Offset: 0x40224 */
+    __IO uint32_t GPIO2C_DS_3;                        /* Address Offset: 0x40228 */
+    __IO uint32_t GPIO2D_DS_0;                        /* Address Offset: 0x4022C */
+    __IO uint32_t GPIO2D_DS_1;                        /* Address Offset: 0x40230 */
+    __IO uint32_t GPIO2D_DS_2;                        /* Address Offset: 0x40234 */
+    __IO uint32_t GPIO2D_DS_3;                        /* Address Offset: 0x40238 */
+    __IO uint32_t GPIO3A_DS_0;                        /* Address Offset: 0x4023C */
+    __IO uint32_t GPIO3A_DS_1;                        /* Address Offset: 0x40240 */
+    __IO uint32_t GPIO3A_DS_2;                        /* Address Offset: 0x40244 */
+    __IO uint32_t GPIO3A_DS_3;                        /* Address Offset: 0x40248 */
+    __IO uint32_t GPIO3B_DS_0;                        /* Address Offset: 0x4024C */
+    __IO uint32_t GPIO3B_DS_1;                        /* Address Offset: 0x40250 */
+    __IO uint32_t GPIO3B_DS_2;                        /* Address Offset: 0x40254 */
+    __IO uint32_t GPIO3B_DS_3;                        /* Address Offset: 0x40258 */
+    __IO uint32_t GPIO3C_DS_0;                        /* Address Offset: 0x4025C */
+    __IO uint32_t GPIO3C_DS_1;                        /* Address Offset: 0x40260 */
+    __IO uint32_t GPIO3C_DS_2;                        /* Address Offset: 0x40264 */
+    __IO uint32_t GPIO3C_DS_3;                        /* Address Offset: 0x40268 */
+    __IO uint32_t GPIO3D_DS_0;                        /* Address Offset: 0x4026C */
+    __IO uint32_t GPIO3D_DS_1;                        /* Address Offset: 0x40270 */
+    __IO uint32_t GPIO3D_DS_2;                        /* Address Offset: 0x40274 */
+    __IO uint32_t GPIO3D_DS_3;                        /* Address Offset: 0x40278 */
+    __IO uint32_t GPIO4A_DS_0;                        /* Address Offset: 0x4027C */
+    __IO uint32_t GPIO4A_DS_1;                        /* Address Offset: 0x40280 */
+    __IO uint32_t GPIO4A_DS_2;                        /* Address Offset: 0x40284 */
+    __IO uint32_t GPIO4A_DS_3;                        /* Address Offset: 0x40288 */
+    __IO uint32_t GPIO4B_DS_0;                        /* Address Offset: 0x4028C */
+    __IO uint32_t GPIO4B_DS_1;                        /* Address Offset: 0x40290 */
+    __IO uint32_t GPIO4B_DS_2;                        /* Address Offset: 0x40294 */
+    __IO uint32_t GPIO4B_DS_3;                        /* Address Offset: 0x40298 */
+    __IO uint32_t GPIO4C_DS_0;                        /* Address Offset: 0x4029C */
+    __IO uint32_t GPIO4C_DS_1;                        /* Address Offset: 0x402A0 */
+    __IO uint32_t GPIO4C_DS_2;                        /* Address Offset: 0x402A4 */
+    __IO uint32_t GPIO4C_DS_3;                        /* Address Offset: 0x402A8 */
+    __IO uint32_t GPIO4D_DS_0;                        /* Address Offset: 0x402AC */
+    __IO uint32_t GPIO4D_DS_1;                        /* Address Offset: 0x402B0 */
+    __IO uint32_t GPIO4D_DS_2;                        /* Address Offset: 0x402B4 */
+    __IO uint32_t GPIO4D_DS_3;                        /* Address Offset: 0x402B8 */
+    __IO uint32_t IOFUNC_SEL0;                        /* Address Offset: 0x402BC */
+    __IO uint32_t IOFUNC_SEL1;                        /* Address Offset: 0x402C0 */
+    __IO uint32_t IOFUNC_SEL2;                        /* Address Offset: 0x402C4 */
+    __IO uint32_t IOFUNC_SEL3;                        /* Address Offset: 0x402C8 */
+    __IO uint32_t IOFUNC_SEL4;                        /* Address Offset: 0x402CC */
+    __IO uint32_t IOFUNC_SEL5;                        /* Address Offset: 0x402D0 */
+    __IO uint32_t VI_CON0;                            /* Address Offset: 0x402D4 */
+    __IO uint32_t VI_CON1;                            /* Address Offset: 0x402D8 */
+    __IO uint32_t VI_STATUS0;                         /* Address Offset: 0x402DC */
+    __IO uint32_t VO_CON0;                            /* Address Offset: 0x402E0 */
+    __IO uint32_t VO_CON1;                            /* Address Offset: 0x402E4 */
+    __IO uint32_t VO_CON2;                            /* Address Offset: 0x402E8 */
+    __IO uint32_t MAC0_CON0;                          /* Address Offset: 0x402EC */
+    __IO uint32_t MAC0_CON1;                          /* Address Offset: 0x402F0 */
+    __IO uint32_t MAC1_CON0;                          /* Address Offset: 0x402F4 */
+    __IO uint32_t MAC1_CON1;                          /* Address Offset: 0x402F8 */
+    __IO uint32_t BIU_CON0;                           /* Address Offset: 0x402FC */
+    __IO uint32_t BIU_CON1;                           /* Address Offset: 0x40300 */
+    __IO uint32_t BIU_CON2;                           /* Address Offset: 0x40304 */
+    __IO uint32_t GIC_CON0;                           /* Address Offset: 0x40308 */
+    __IO uint32_t GIC_CON1;                           /* Address Offset: 0x4030C */
+    __IO uint32_t GIC_CON2;                           /* Address Offset: 0x40310 */
+    __IO uint32_t GPU_CON0;                           /* Address Offset: 0x40314 */
+    __IO uint32_t GPU_CON1;                           /* Address Offset: 0x40318 */
+    __IO uint32_t CPU_CON0;                           /* Address Offset: 0x4031C */
+    __IO uint32_t CPU_STATUS0;                        /* Address Offset: 0x40320 */
+    __IO uint32_t SOC_CON10;                          /* Address Offset: 0x40324 */
+    __IO uint32_t SOC_CON11;                          /* Address Offset: 0x40328 */
+    __IO uint32_t SOC_CON12;                          /* Address Offset: 0x4032C */
+    __IO uint32_t SOC_CON13;                          /* Address Offset: 0x40330 */
+    __IO uint32_t SOC_CON14;                          /* Address Offset: 0x40334 */
+    __IO uint32_t SOC_CON15;                          /* Address Offset: 0x40338 */
+    __IO uint32_t SOC_CON16;                          /* Address Offset: 0x4033C */
+    __IO uint32_t SOC_STATUS0;                        /* Address Offset: 0x40340 */
+    __IO uint32_t RAM_CON;                            /* Address Offset: 0x40344 */
+    __IO uint32_t CORE_RAM_CON;                       /* Address Offset: 0x40348 */
+    __IO uint32_t TSADC_CON;                          /* Address Offset: 0x4034C */
+    __IO uint32_t SARADC_CON;                         /* Address Offset: 0x40350 */
+    __IO uint32_t GPUPVTPLL_CON0;                     /* Address Offset: 0x40354 */
+    __IO uint32_t GPUPVTPLL_CON1;                     /* Address Offset: 0x40358 */
+    __IO uint32_t GPUPVTPLL_CON2;                     /* Address Offset: 0x4035C */
+    __IO uint32_t GPUPVTPLL_CON3;                     /* Address Offset: 0x40360 */
+    __IO uint32_t NPUPVTPLL_CON0;                     /* Address Offset: 0x40364 */
+    __IO uint32_t NPUPVTPLL_CON1;                     /* Address Offset: 0x40368 */
+    __IO uint32_t NPUPVTPLL_CON2;                     /* Address Offset: 0x4036C */
+    __IO uint32_t NPUPVTPLL_CON3;                     /* Address Offset: 0x40370 */
+    __IO uint32_t CHIP_ID;                            /* Address Offset: 0x40374 */
+    __IO uint32_t GPIO1C5_DS;                         /* Address Offset: 0x40378 */
+    __IO uint32_t GPIO2A2_DS;                         /* Address Offset: 0x4037C */
+    __IO uint32_t GPIO2B0_DS;                         /* Address Offset: 0x40380 */
+    __IO uint32_t GPIO3A0_DS;                         /* Address Offset: 0x40384 */
+    __IO uint32_t GPIO3A6_DS;                         /* Address Offset: 0x40388 */
+    __IO uint32_t GPIO4A0_DS;                         /* Address Offset: 0x4038C */
+    __IO uint32_t DMAC0_CON0;                         /* Address Offset: 0x40390 */
+    __IO uint32_t DMAC0_CON1;                         /* Address Offset: 0x40394 */
+    __IO uint32_t DMAC0_CON2;                         /* Address Offset: 0x40398 */
+    __IO uint32_t DMAC0_CON3;                         /* Address Offset: 0x4039C */
+    __IO uint32_t DMAC0_CON4;                         /* Address Offset: 0x403A0 */
+    __IO uint32_t DMAC0_CON5;                         /* Address Offset: 0x403A4 */
+    __IO uint32_t DMAC0_CON6;                         /* Address Offset: 0x403A8 */
+    __IO uint32_t DMAC0_CON7;                         /* Address Offset: 0x403AC */
+    __IO uint32_t DMAC0_CON8;                         /* Address Offset: 0x403B0 */
+    __IO uint32_t DMAC0_CON9;                         /* Address Offset: 0x403B4 */
+    __IO uint32_t DMAC1_CON0;                         /* Address Offset: 0x403B8 */
+    __IO uint32_t DMAC1_CON1;                         /* Address Offset: 0x403BC */
+    __IO uint32_t DMAC1_CON2;                         /* Address Offset: 0x403C0 */
+    __IO uint32_t DMAC1_CON3;                         /* Address Offset: 0x403C4 */
+    __IO uint32_t DMAC1_CON4;                         /* Address Offset: 0x403C8 */
+    __IO uint32_t DMAC1_CON5;                         /* Address Offset: 0x403CC */
+    __IO uint32_t DMAC1_CON6;                         /* Address Offset: 0x403D0 */
+    __IO uint32_t DMAC1_CON7;                         /* Address Offset: 0x403D4 */
+    __IO uint32_t DMAC1_CON8;                         /* Address Offset: 0x403D8 */
+    __IO uint32_t DMAC1_CON9;                         /* Address Offset: 0x403DC */
 };
 /* PMUCRU Register Structure Define */
 struct PMUCRU_REG {
@@ -434,7 +674,7 @@ struct MBOX_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
-#define PMU_GRF_BASE        0xFDC20000U /* PMU_GRF base address */
+#define GRF_BASE            0xFDC20000U /* GRF base address */
 #define PMUCRU_BASE         0xFDD00000U /* PMUCRU base address */
 #define TIMER6_BASE         0xFDD1C000U /* TIMER6 base address */
 #define TIMER7_BASE         0xFDD1C020U /* TIMER7 base address */
@@ -460,7 +700,7 @@ struct MBOX_REG {
 /****************************************************************************************/
 /* Module Variable Define */
 
-#define PMU_GRF             ((struct PMU_GRF_REG *) PMU_GRF_BASE)
+#define GRF                 ((struct GRF_REG *) GRF_BASE)
 #define PMUCRU              ((struct PMUCRU_REG *) PMUCRU_BASE)
 #define CRU                 ((struct CRU_REG *) CRU_BASE)
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
@@ -478,7 +718,7 @@ struct MBOX_REG {
 #define TSADC               ((struct TSADC_REG *) TSADC_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
 
-#define IS_PMU_GRF_INSTANCE(instance) ((instance) == PMU_GRF)
+#define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_PMUCRU_INSTANCE(instance) ((instance) == PMUCRU)
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
@@ -493,762 +733,3814 @@ struct MBOX_REG {
 /*                               Register Bitmap Section                                */
 /*                                                                                      */
 /****************************************************************************************/
-/****************************************PMU_GRF*****************************************/
+/******************************************GRF*******************************************/
 /* GPIO0A_IOMUX_L */
-#define PMU_GRF_GPIO0A_IOMUX_L_OFFSET                      (0x0U)
-#define PMU_GRF_GPIO0A_IOMUX_L_GPIO0A0_SEL_SHIFT           (0U)
-#define PMU_GRF_GPIO0A_IOMUX_L_GPIO0A0_SEL_MASK            (0x7U << PMU_GRF_GPIO0A_IOMUX_L_GPIO0A0_SEL_SHIFT)           /* 0x00000007 */
-#define PMU_GRF_GPIO0A_IOMUX_L_GPIO0A1_SEL_SHIFT           (4U)
-#define PMU_GRF_GPIO0A_IOMUX_L_GPIO0A1_SEL_MASK            (0x7U << PMU_GRF_GPIO0A_IOMUX_L_GPIO0A1_SEL_SHIFT)           /* 0x00000070 */
-#define PMU_GRF_GPIO0A_IOMUX_L_GPIO0A2_SEL_SHIFT           (8U)
-#define PMU_GRF_GPIO0A_IOMUX_L_GPIO0A2_SEL_MASK            (0x7U << PMU_GRF_GPIO0A_IOMUX_L_GPIO0A2_SEL_SHIFT)           /* 0x00000700 */
-#define PMU_GRF_GPIO0A_IOMUX_L_GPIO0A3_SEL_SHIFT           (12U)
-#define PMU_GRF_GPIO0A_IOMUX_L_GPIO0A3_SEL_MASK            (0x7U << PMU_GRF_GPIO0A_IOMUX_L_GPIO0A3_SEL_SHIFT)           /* 0x00007000 */
+#define GRF_GPIO0A_IOMUX_L_OFFSET                          (0x0U)
+#define GRF_GPIO0A_IOMUX_L_GPIO0A0_SEL_SHIFT               (0U)
+#define GRF_GPIO0A_IOMUX_L_GPIO0A0_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_L_GPIO0A0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO0A_IOMUX_L_GPIO0A1_SEL_SHIFT               (4U)
+#define GRF_GPIO0A_IOMUX_L_GPIO0A1_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_L_GPIO0A1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO0A_IOMUX_L_GPIO0A2_SEL_SHIFT               (8U)
+#define GRF_GPIO0A_IOMUX_L_GPIO0A2_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_L_GPIO0A2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO0A_IOMUX_L_GPIO0A3_SEL_SHIFT               (12U)
+#define GRF_GPIO0A_IOMUX_L_GPIO0A3_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_L_GPIO0A3_SEL_SHIFT)               /* 0x00007000 */
 /* GPIO0A_IOMUX_H */
-#define PMU_GRF_GPIO0A_IOMUX_H_OFFSET                      (0x4U)
-#define PMU_GRF_GPIO0A_IOMUX_H_GPIO0A4_SEL_SHIFT           (0U)
-#define PMU_GRF_GPIO0A_IOMUX_H_GPIO0A4_SEL_MASK            (0x7U << PMU_GRF_GPIO0A_IOMUX_H_GPIO0A4_SEL_SHIFT)           /* 0x00000007 */
-#define PMU_GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_SHIFT           (4U)
-#define PMU_GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_MASK            (0x7U << PMU_GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_SHIFT)           /* 0x00000070 */
-#define PMU_GRF_GPIO0A_IOMUX_H_GPIO0A6_SEL_SHIFT           (8U)
-#define PMU_GRF_GPIO0A_IOMUX_H_GPIO0A6_SEL_MASK            (0x7U << PMU_GRF_GPIO0A_IOMUX_H_GPIO0A6_SEL_SHIFT)           /* 0x00000700 */
-#define PMU_GRF_GPIO0A_IOMUX_H_GPIO0A7_SEL_SHIFT           (12U)
-#define PMU_GRF_GPIO0A_IOMUX_H_GPIO0A7_SEL_MASK            (0x7U << PMU_GRF_GPIO0A_IOMUX_H_GPIO0A7_SEL_SHIFT)           /* 0x00007000 */
+#define GRF_GPIO0A_IOMUX_H_OFFSET                          (0x4U)
+#define GRF_GPIO0A_IOMUX_H_GPIO0A4_SEL_SHIFT               (0U)
+#define GRF_GPIO0A_IOMUX_H_GPIO0A4_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_H_GPIO0A4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_SHIFT               (4U)
+#define GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_H_GPIO0A5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO0A_IOMUX_H_GPIO0A6_SEL_SHIFT               (8U)
+#define GRF_GPIO0A_IOMUX_H_GPIO0A6_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_H_GPIO0A6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO0A_IOMUX_H_GPIO0A7_SEL_SHIFT               (12U)
+#define GRF_GPIO0A_IOMUX_H_GPIO0A7_SEL_MASK                (0x7U << GRF_GPIO0A_IOMUX_H_GPIO0A7_SEL_SHIFT)               /* 0x00007000 */
 /* GPIO0B_IOMUX_L */
-#define PMU_GRF_GPIO0B_IOMUX_L_OFFSET                      (0x8U)
-#define PMU_GRF_GPIO0B_IOMUX_L_GPIO0B0_SEL_SHIFT           (0U)
-#define PMU_GRF_GPIO0B_IOMUX_L_GPIO0B0_SEL_MASK            (0x7U << PMU_GRF_GPIO0B_IOMUX_L_GPIO0B0_SEL_SHIFT)           /* 0x00000007 */
-#define PMU_GRF_GPIO0B_IOMUX_L_GPIO0B1_SEL_SHIFT           (4U)
-#define PMU_GRF_GPIO0B_IOMUX_L_GPIO0B1_SEL_MASK            (0x7U << PMU_GRF_GPIO0B_IOMUX_L_GPIO0B1_SEL_SHIFT)           /* 0x00000070 */
-#define PMU_GRF_GPIO0B_IOMUX_L_GPIO0B2_SEL_SHIFT           (8U)
-#define PMU_GRF_GPIO0B_IOMUX_L_GPIO0B2_SEL_MASK            (0x7U << PMU_GRF_GPIO0B_IOMUX_L_GPIO0B2_SEL_SHIFT)           /* 0x00000700 */
-#define PMU_GRF_GPIO0B_IOMUX_L_GPIO0B3_SEL_SHIFT           (12U)
-#define PMU_GRF_GPIO0B_IOMUX_L_GPIO0B3_SEL_MASK            (0x7U << PMU_GRF_GPIO0B_IOMUX_L_GPIO0B3_SEL_SHIFT)           /* 0x00007000 */
+#define GRF_GPIO0B_IOMUX_L_OFFSET                          (0x8U)
+#define GRF_GPIO0B_IOMUX_L_GPIO0B0_SEL_SHIFT               (0U)
+#define GRF_GPIO0B_IOMUX_L_GPIO0B0_SEL_MASK                (0x7U << GRF_GPIO0B_IOMUX_L_GPIO0B0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO0B_IOMUX_L_GPIO0B1_SEL_SHIFT               (4U)
+#define GRF_GPIO0B_IOMUX_L_GPIO0B1_SEL_MASK                (0x7U << GRF_GPIO0B_IOMUX_L_GPIO0B1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO0B_IOMUX_L_GPIO0B2_SEL_SHIFT               (8U)
+#define GRF_GPIO0B_IOMUX_L_GPIO0B2_SEL_MASK                (0x7U << GRF_GPIO0B_IOMUX_L_GPIO0B2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO0B_IOMUX_L_GPIO0B3_SEL_SHIFT               (12U)
+#define GRF_GPIO0B_IOMUX_L_GPIO0B3_SEL_MASK                (0x7U << GRF_GPIO0B_IOMUX_L_GPIO0B3_SEL_SHIFT)               /* 0x00007000 */
 /* GPIO0B_IOMUX_H */
-#define PMU_GRF_GPIO0B_IOMUX_H_OFFSET                      (0xCU)
-#define PMU_GRF_GPIO0B_IOMUX_H_GPIO0B4_SEL_SHIFT           (0U)
-#define PMU_GRF_GPIO0B_IOMUX_H_GPIO0B4_SEL_MASK            (0x7U << PMU_GRF_GPIO0B_IOMUX_H_GPIO0B4_SEL_SHIFT)           /* 0x00000007 */
-#define PMU_GRF_GPIO0B_IOMUX_H_GPIO0B5_SEL_SHIFT           (4U)
-#define PMU_GRF_GPIO0B_IOMUX_H_GPIO0B5_SEL_MASK            (0x7U << PMU_GRF_GPIO0B_IOMUX_H_GPIO0B5_SEL_SHIFT)           /* 0x00000070 */
-#define PMU_GRF_GPIO0B_IOMUX_H_GPIO0B6_SEL_SHIFT           (8U)
-#define PMU_GRF_GPIO0B_IOMUX_H_GPIO0B6_SEL_MASK            (0x7U << PMU_GRF_GPIO0B_IOMUX_H_GPIO0B6_SEL_SHIFT)           /* 0x00000700 */
-#define PMU_GRF_GPIO0B_IOMUX_H_GPIO0B7_SEL_SHIFT           (12U)
-#define PMU_GRF_GPIO0B_IOMUX_H_GPIO0B7_SEL_MASK            (0x7U << PMU_GRF_GPIO0B_IOMUX_H_GPIO0B7_SEL_SHIFT)           /* 0x00007000 */
+#define GRF_GPIO0B_IOMUX_H_OFFSET                          (0xCU)
+#define GRF_GPIO0B_IOMUX_H_GPIO0B4_SEL_SHIFT               (0U)
+#define GRF_GPIO0B_IOMUX_H_GPIO0B4_SEL_MASK                (0x7U << GRF_GPIO0B_IOMUX_H_GPIO0B4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO0B_IOMUX_H_GPIO0B5_SEL_SHIFT               (4U)
+#define GRF_GPIO0B_IOMUX_H_GPIO0B5_SEL_MASK                (0x7U << GRF_GPIO0B_IOMUX_H_GPIO0B5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO0B_IOMUX_H_GPIO0B6_SEL_SHIFT               (8U)
+#define GRF_GPIO0B_IOMUX_H_GPIO0B6_SEL_MASK                (0x7U << GRF_GPIO0B_IOMUX_H_GPIO0B6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO0B_IOMUX_H_GPIO0B7_SEL_SHIFT               (12U)
+#define GRF_GPIO0B_IOMUX_H_GPIO0B7_SEL_MASK                (0x7U << GRF_GPIO0B_IOMUX_H_GPIO0B7_SEL_SHIFT)               /* 0x00007000 */
 /* GPIO0C_IOMUX_L */
-#define PMU_GRF_GPIO0C_IOMUX_L_OFFSET                      (0x10U)
-#define PMU_GRF_GPIO0C_IOMUX_L_GPIO0C0_SEL_SHIFT           (0U)
-#define PMU_GRF_GPIO0C_IOMUX_L_GPIO0C0_SEL_MASK            (0x7U << PMU_GRF_GPIO0C_IOMUX_L_GPIO0C0_SEL_SHIFT)           /* 0x00000007 */
-#define PMU_GRF_GPIO0C_IOMUX_L_GPIO0C1_SEL_SHIFT           (4U)
-#define PMU_GRF_GPIO0C_IOMUX_L_GPIO0C1_SEL_MASK            (0x7U << PMU_GRF_GPIO0C_IOMUX_L_GPIO0C1_SEL_SHIFT)           /* 0x00000070 */
-#define PMU_GRF_GPIO0C_IOMUX_L_GPIO0C2_SEL_SHIFT           (8U)
-#define PMU_GRF_GPIO0C_IOMUX_L_GPIO0C2_SEL_MASK            (0x7U << PMU_GRF_GPIO0C_IOMUX_L_GPIO0C2_SEL_SHIFT)           /* 0x00000700 */
-#define PMU_GRF_GPIO0C_IOMUX_L_GPIO0C3_SEL_SHIFT           (12U)
-#define PMU_GRF_GPIO0C_IOMUX_L_GPIO0C3_SEL_MASK            (0x7U << PMU_GRF_GPIO0C_IOMUX_L_GPIO0C3_SEL_SHIFT)           /* 0x00007000 */
+#define GRF_GPIO0C_IOMUX_L_OFFSET                          (0x10U)
+#define GRF_GPIO0C_IOMUX_L_GPIO0C0_SEL_SHIFT               (0U)
+#define GRF_GPIO0C_IOMUX_L_GPIO0C0_SEL_MASK                (0x7U << GRF_GPIO0C_IOMUX_L_GPIO0C0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO0C_IOMUX_L_GPIO0C1_SEL_SHIFT               (4U)
+#define GRF_GPIO0C_IOMUX_L_GPIO0C1_SEL_MASK                (0x7U << GRF_GPIO0C_IOMUX_L_GPIO0C1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO0C_IOMUX_L_GPIO0C2_SEL_SHIFT               (8U)
+#define GRF_GPIO0C_IOMUX_L_GPIO0C2_SEL_MASK                (0x7U << GRF_GPIO0C_IOMUX_L_GPIO0C2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO0C_IOMUX_L_GPIO0C3_SEL_SHIFT               (12U)
+#define GRF_GPIO0C_IOMUX_L_GPIO0C3_SEL_MASK                (0x7U << GRF_GPIO0C_IOMUX_L_GPIO0C3_SEL_SHIFT)               /* 0x00007000 */
 /* GPIO0C_IOMUX_H */
-#define PMU_GRF_GPIO0C_IOMUX_H_OFFSET                      (0x14U)
-#define PMU_GRF_GPIO0C_IOMUX_H_GPIO0C4_SEL_SHIFT           (0U)
-#define PMU_GRF_GPIO0C_IOMUX_H_GPIO0C4_SEL_MASK            (0x7U << PMU_GRF_GPIO0C_IOMUX_H_GPIO0C4_SEL_SHIFT)           /* 0x00000007 */
-#define PMU_GRF_GPIO0C_IOMUX_H_GPIO0C5_SEL_SHIFT           (4U)
-#define PMU_GRF_GPIO0C_IOMUX_H_GPIO0C5_SEL_MASK            (0x7U << PMU_GRF_GPIO0C_IOMUX_H_GPIO0C5_SEL_SHIFT)           /* 0x00000070 */
-#define PMU_GRF_GPIO0C_IOMUX_H_GPIO0C6_SEL_SHIFT           (8U)
-#define PMU_GRF_GPIO0C_IOMUX_H_GPIO0C6_SEL_MASK            (0x7U << PMU_GRF_GPIO0C_IOMUX_H_GPIO0C6_SEL_SHIFT)           /* 0x00000700 */
-#define PMU_GRF_GPIO0C_IOMUX_H_GPIO0C7_SEL_SHIFT           (12U)
-#define PMU_GRF_GPIO0C_IOMUX_H_GPIO0C7_SEL_MASK            (0x7U << PMU_GRF_GPIO0C_IOMUX_H_GPIO0C7_SEL_SHIFT)           /* 0x00007000 */
+#define GRF_GPIO0C_IOMUX_H_OFFSET                          (0x14U)
+#define GRF_GPIO0C_IOMUX_H_GPIO0C4_SEL_SHIFT               (0U)
+#define GRF_GPIO0C_IOMUX_H_GPIO0C4_SEL_MASK                (0x7U << GRF_GPIO0C_IOMUX_H_GPIO0C4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO0C_IOMUX_H_GPIO0C5_SEL_SHIFT               (4U)
+#define GRF_GPIO0C_IOMUX_H_GPIO0C5_SEL_MASK                (0x7U << GRF_GPIO0C_IOMUX_H_GPIO0C5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO0C_IOMUX_H_GPIO0C6_SEL_SHIFT               (8U)
+#define GRF_GPIO0C_IOMUX_H_GPIO0C6_SEL_MASK                (0x7U << GRF_GPIO0C_IOMUX_H_GPIO0C6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO0C_IOMUX_H_GPIO0C7_SEL_SHIFT               (12U)
+#define GRF_GPIO0C_IOMUX_H_GPIO0C7_SEL_MASK                (0x7U << GRF_GPIO0C_IOMUX_H_GPIO0C7_SEL_SHIFT)               /* 0x00007000 */
 /* GPIO0D_IOMUX_L */
-#define PMU_GRF_GPIO0D_IOMUX_L_OFFSET                      (0x18U)
-#define PMU_GRF_GPIO0D_IOMUX_L_GPIO0D0_SEL_SHIFT           (0U)
-#define PMU_GRF_GPIO0D_IOMUX_L_GPIO0D0_SEL_MASK            (0x7U << PMU_GRF_GPIO0D_IOMUX_L_GPIO0D0_SEL_SHIFT)           /* 0x00000007 */
-#define PMU_GRF_GPIO0D_IOMUX_L_GPIO0D1_SEL_SHIFT           (4U)
-#define PMU_GRF_GPIO0D_IOMUX_L_GPIO0D1_SEL_MASK            (0x7U << PMU_GRF_GPIO0D_IOMUX_L_GPIO0D1_SEL_SHIFT)           /* 0x00000070 */
-#define PMU_GRF_GPIO0D_IOMUX_L_GPIO0D3_SEL_SHIFT           (12U)
-#define PMU_GRF_GPIO0D_IOMUX_L_GPIO0D3_SEL_MASK            (0x7U << PMU_GRF_GPIO0D_IOMUX_L_GPIO0D3_SEL_SHIFT)           /* 0x00007000 */
+#define GRF_GPIO0D_IOMUX_L_OFFSET                          (0x18U)
+#define GRF_GPIO0D_IOMUX_L_GPIO0D0_SEL_SHIFT               (0U)
+#define GRF_GPIO0D_IOMUX_L_GPIO0D0_SEL_MASK                (0x7U << GRF_GPIO0D_IOMUX_L_GPIO0D0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO0D_IOMUX_L_GPIO0D1_SEL_SHIFT               (4U)
+#define GRF_GPIO0D_IOMUX_L_GPIO0D1_SEL_MASK                (0x7U << GRF_GPIO0D_IOMUX_L_GPIO0D1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO0D_IOMUX_L_GPIO0D3_SEL_SHIFT               (12U)
+#define GRF_GPIO0D_IOMUX_L_GPIO0D3_SEL_MASK                (0x7U << GRF_GPIO0D_IOMUX_L_GPIO0D3_SEL_SHIFT)               /* 0x00007000 */
 /* GPIO0D_IOMUX_H */
-#define PMU_GRF_GPIO0D_IOMUX_H_OFFSET                      (0x1CU)
-#define PMU_GRF_GPIO0D_IOMUX_H_GPIO0D4_SEL_SHIFT           (0U)
-#define PMU_GRF_GPIO0D_IOMUX_H_GPIO0D4_SEL_MASK            (0x7U << PMU_GRF_GPIO0D_IOMUX_H_GPIO0D4_SEL_SHIFT)           /* 0x00000007 */
-#define PMU_GRF_GPIO0D_IOMUX_H_GPIO0D5_SEL_SHIFT           (4U)
-#define PMU_GRF_GPIO0D_IOMUX_H_GPIO0D5_SEL_MASK            (0x7U << PMU_GRF_GPIO0D_IOMUX_H_GPIO0D5_SEL_SHIFT)           /* 0x00000070 */
-#define PMU_GRF_GPIO0D_IOMUX_H_GPIO0D6_SEL_SHIFT           (8U)
-#define PMU_GRF_GPIO0D_IOMUX_H_GPIO0D6_SEL_MASK            (0x7U << PMU_GRF_GPIO0D_IOMUX_H_GPIO0D6_SEL_SHIFT)           /* 0x00000700 */
+#define GRF_GPIO0D_IOMUX_H_OFFSET                          (0x1CU)
+#define GRF_GPIO0D_IOMUX_H_GPIO0D4_SEL_SHIFT               (0U)
+#define GRF_GPIO0D_IOMUX_H_GPIO0D4_SEL_MASK                (0x7U << GRF_GPIO0D_IOMUX_H_GPIO0D4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO0D_IOMUX_H_GPIO0D5_SEL_SHIFT               (4U)
+#define GRF_GPIO0D_IOMUX_H_GPIO0D5_SEL_MASK                (0x7U << GRF_GPIO0D_IOMUX_H_GPIO0D5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO0D_IOMUX_H_GPIO0D6_SEL_SHIFT               (8U)
+#define GRF_GPIO0D_IOMUX_H_GPIO0D6_SEL_MASK                (0x7U << GRF_GPIO0D_IOMUX_H_GPIO0D6_SEL_SHIFT)               /* 0x00000700 */
 /* GPIO0A_P */
-#define PMU_GRF_GPIO0A_P_OFFSET                            (0x20U)
-#define PMU_GRF_GPIO0A_P_GPIO0A0_P_SHIFT                   (0U)
-#define PMU_GRF_GPIO0A_P_GPIO0A0_P_MASK                    (0x3U << PMU_GRF_GPIO0A_P_GPIO0A0_P_SHIFT)                   /* 0x00000003 */
-#define PMU_GRF_GPIO0A_P_GPIO0A1_P_SHIFT                   (2U)
-#define PMU_GRF_GPIO0A_P_GPIO0A1_P_MASK                    (0x3U << PMU_GRF_GPIO0A_P_GPIO0A1_P_SHIFT)                   /* 0x0000000C */
-#define PMU_GRF_GPIO0A_P_GPIO0A2_P_SHIFT                   (4U)
-#define PMU_GRF_GPIO0A_P_GPIO0A2_P_MASK                    (0x3U << PMU_GRF_GPIO0A_P_GPIO0A2_P_SHIFT)                   /* 0x00000030 */
-#define PMU_GRF_GPIO0A_P_GPIO0A3_P_SHIFT                   (6U)
-#define PMU_GRF_GPIO0A_P_GPIO0A3_P_MASK                    (0x3U << PMU_GRF_GPIO0A_P_GPIO0A3_P_SHIFT)                   /* 0x000000C0 */
-#define PMU_GRF_GPIO0A_P_GPIO0A4_P_SHIFT                   (8U)
-#define PMU_GRF_GPIO0A_P_GPIO0A4_P_MASK                    (0x3U << PMU_GRF_GPIO0A_P_GPIO0A4_P_SHIFT)                   /* 0x00000300 */
-#define PMU_GRF_GPIO0A_P_GPIO0A5_P_SHIFT                   (10U)
-#define PMU_GRF_GPIO0A_P_GPIO0A5_P_MASK                    (0x3U << PMU_GRF_GPIO0A_P_GPIO0A5_P_SHIFT)                   /* 0x00000C00 */
-#define PMU_GRF_GPIO0A_P_GPIO0A6_P_SHIFT                   (12U)
-#define PMU_GRF_GPIO0A_P_GPIO0A6_P_MASK                    (0x3U << PMU_GRF_GPIO0A_P_GPIO0A6_P_SHIFT)                   /* 0x00003000 */
-#define PMU_GRF_GPIO0A_P_GPIO0A7_P_SHIFT                   (14U)
-#define PMU_GRF_GPIO0A_P_GPIO0A7_P_MASK                    (0x3U << PMU_GRF_GPIO0A_P_GPIO0A7_P_SHIFT)                   /* 0x0000C000 */
+#define GRF_GPIO0A_P_OFFSET                                (0x20U)
+#define GRF_GPIO0A_P_GPIO0A0_P_SHIFT                       (0U)
+#define GRF_GPIO0A_P_GPIO0A0_P_MASK                        (0x3U << GRF_GPIO0A_P_GPIO0A0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO0A_P_GPIO0A1_P_SHIFT                       (2U)
+#define GRF_GPIO0A_P_GPIO0A1_P_MASK                        (0x3U << GRF_GPIO0A_P_GPIO0A1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO0A_P_GPIO0A2_P_SHIFT                       (4U)
+#define GRF_GPIO0A_P_GPIO0A2_P_MASK                        (0x3U << GRF_GPIO0A_P_GPIO0A2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO0A_P_GPIO0A3_P_SHIFT                       (6U)
+#define GRF_GPIO0A_P_GPIO0A3_P_MASK                        (0x3U << GRF_GPIO0A_P_GPIO0A3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO0A_P_GPIO0A4_P_SHIFT                       (8U)
+#define GRF_GPIO0A_P_GPIO0A4_P_MASK                        (0x3U << GRF_GPIO0A_P_GPIO0A4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO0A_P_GPIO0A5_P_SHIFT                       (10U)
+#define GRF_GPIO0A_P_GPIO0A5_P_MASK                        (0x3U << GRF_GPIO0A_P_GPIO0A5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO0A_P_GPIO0A6_P_SHIFT                       (12U)
+#define GRF_GPIO0A_P_GPIO0A6_P_MASK                        (0x3U << GRF_GPIO0A_P_GPIO0A6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO0A_P_GPIO0A7_P_SHIFT                       (14U)
+#define GRF_GPIO0A_P_GPIO0A7_P_MASK                        (0x3U << GRF_GPIO0A_P_GPIO0A7_P_SHIFT)                       /* 0x0000C000 */
 /* GPIO0B_P */
-#define PMU_GRF_GPIO0B_P_OFFSET                            (0x24U)
-#define PMU_GRF_GPIO0B_P_GPIO0B0_P_SHIFT                   (0U)
-#define PMU_GRF_GPIO0B_P_GPIO0B0_P_MASK                    (0x3U << PMU_GRF_GPIO0B_P_GPIO0B0_P_SHIFT)                   /* 0x00000003 */
-#define PMU_GRF_GPIO0B_P_GPIO0B1_P_SHIFT                   (2U)
-#define PMU_GRF_GPIO0B_P_GPIO0B1_P_MASK                    (0x3U << PMU_GRF_GPIO0B_P_GPIO0B1_P_SHIFT)                   /* 0x0000000C */
-#define PMU_GRF_GPIO0B_P_GPIO0B2_P_SHIFT                   (4U)
-#define PMU_GRF_GPIO0B_P_GPIO0B2_P_MASK                    (0x3U << PMU_GRF_GPIO0B_P_GPIO0B2_P_SHIFT)                   /* 0x00000030 */
-#define PMU_GRF_GPIO0B_P_GPIO0B3_P_SHIFT                   (6U)
-#define PMU_GRF_GPIO0B_P_GPIO0B3_P_MASK                    (0x3U << PMU_GRF_GPIO0B_P_GPIO0B3_P_SHIFT)                   /* 0x000000C0 */
-#define PMU_GRF_GPIO0B_P_GPIO0B4_P_SHIFT                   (8U)
-#define PMU_GRF_GPIO0B_P_GPIO0B4_P_MASK                    (0x3U << PMU_GRF_GPIO0B_P_GPIO0B4_P_SHIFT)                   /* 0x00000300 */
-#define PMU_GRF_GPIO0B_P_GPIO0B5_P_SHIFT                   (10U)
-#define PMU_GRF_GPIO0B_P_GPIO0B5_P_MASK                    (0x3U << PMU_GRF_GPIO0B_P_GPIO0B5_P_SHIFT)                   /* 0x00000C00 */
-#define PMU_GRF_GPIO0B_P_GPIO0B6_P_SHIFT                   (12U)
-#define PMU_GRF_GPIO0B_P_GPIO0B6_P_MASK                    (0x3U << PMU_GRF_GPIO0B_P_GPIO0B6_P_SHIFT)                   /* 0x00003000 */
-#define PMU_GRF_GPIO0B_P_GPIO0B7_P_SHIFT                   (14U)
-#define PMU_GRF_GPIO0B_P_GPIO0B7_P_MASK                    (0x3U << PMU_GRF_GPIO0B_P_GPIO0B7_P_SHIFT)                   /* 0x0000C000 */
+#define GRF_GPIO0B_P_OFFSET                                (0x24U)
+#define GRF_GPIO0B_P_GPIO0B0_P_SHIFT                       (0U)
+#define GRF_GPIO0B_P_GPIO0B0_P_MASK                        (0x3U << GRF_GPIO0B_P_GPIO0B0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO0B_P_GPIO0B1_P_SHIFT                       (2U)
+#define GRF_GPIO0B_P_GPIO0B1_P_MASK                        (0x3U << GRF_GPIO0B_P_GPIO0B1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO0B_P_GPIO0B2_P_SHIFT                       (4U)
+#define GRF_GPIO0B_P_GPIO0B2_P_MASK                        (0x3U << GRF_GPIO0B_P_GPIO0B2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO0B_P_GPIO0B3_P_SHIFT                       (6U)
+#define GRF_GPIO0B_P_GPIO0B3_P_MASK                        (0x3U << GRF_GPIO0B_P_GPIO0B3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO0B_P_GPIO0B4_P_SHIFT                       (8U)
+#define GRF_GPIO0B_P_GPIO0B4_P_MASK                        (0x3U << GRF_GPIO0B_P_GPIO0B4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO0B_P_GPIO0B5_P_SHIFT                       (10U)
+#define GRF_GPIO0B_P_GPIO0B5_P_MASK                        (0x3U << GRF_GPIO0B_P_GPIO0B5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO0B_P_GPIO0B6_P_SHIFT                       (12U)
+#define GRF_GPIO0B_P_GPIO0B6_P_MASK                        (0x3U << GRF_GPIO0B_P_GPIO0B6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO0B_P_GPIO0B7_P_SHIFT                       (14U)
+#define GRF_GPIO0B_P_GPIO0B7_P_MASK                        (0x3U << GRF_GPIO0B_P_GPIO0B7_P_SHIFT)                       /* 0x0000C000 */
 /* GPIO0C_P */
-#define PMU_GRF_GPIO0C_P_OFFSET                            (0x28U)
-#define PMU_GRF_GPIO0C_P_GPIO0C0_P_SHIFT                   (0U)
-#define PMU_GRF_GPIO0C_P_GPIO0C0_P_MASK                    (0x3U << PMU_GRF_GPIO0C_P_GPIO0C0_P_SHIFT)                   /* 0x00000003 */
-#define PMU_GRF_GPIO0C_P_GPIO0C1_P_SHIFT                   (2U)
-#define PMU_GRF_GPIO0C_P_GPIO0C1_P_MASK                    (0x3U << PMU_GRF_GPIO0C_P_GPIO0C1_P_SHIFT)                   /* 0x0000000C */
-#define PMU_GRF_GPIO0C_P_GPIO0C2_P_SHIFT                   (4U)
-#define PMU_GRF_GPIO0C_P_GPIO0C2_P_MASK                    (0x3U << PMU_GRF_GPIO0C_P_GPIO0C2_P_SHIFT)                   /* 0x00000030 */
-#define PMU_GRF_GPIO0C_P_GPIO0C3_P_SHIFT                   (6U)
-#define PMU_GRF_GPIO0C_P_GPIO0C3_P_MASK                    (0x3U << PMU_GRF_GPIO0C_P_GPIO0C3_P_SHIFT)                   /* 0x000000C0 */
-#define PMU_GRF_GPIO0C_P_GPIO0C4_P_SHIFT                   (8U)
-#define PMU_GRF_GPIO0C_P_GPIO0C4_P_MASK                    (0x3U << PMU_GRF_GPIO0C_P_GPIO0C4_P_SHIFT)                   /* 0x00000300 */
-#define PMU_GRF_GPIO0C_P_GPIO0C5_P_SHIFT                   (10U)
-#define PMU_GRF_GPIO0C_P_GPIO0C5_P_MASK                    (0x3U << PMU_GRF_GPIO0C_P_GPIO0C5_P_SHIFT)                   /* 0x00000C00 */
-#define PMU_GRF_GPIO0C_P_GPIO0C6_P_SHIFT                   (12U)
-#define PMU_GRF_GPIO0C_P_GPIO0C6_P_MASK                    (0x3U << PMU_GRF_GPIO0C_P_GPIO0C6_P_SHIFT)                   /* 0x00003000 */
-#define PMU_GRF_GPIO0C_P_GPIO0C7_P_SHIFT                   (14U)
-#define PMU_GRF_GPIO0C_P_GPIO0C7_P_MASK                    (0x3U << PMU_GRF_GPIO0C_P_GPIO0C7_P_SHIFT)                   /* 0x0000C000 */
+#define GRF_GPIO0C_P_OFFSET                                (0x28U)
+#define GRF_GPIO0C_P_GPIO0C0_P_SHIFT                       (0U)
+#define GRF_GPIO0C_P_GPIO0C0_P_MASK                        (0x3U << GRF_GPIO0C_P_GPIO0C0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO0C_P_GPIO0C1_P_SHIFT                       (2U)
+#define GRF_GPIO0C_P_GPIO0C1_P_MASK                        (0x3U << GRF_GPIO0C_P_GPIO0C1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO0C_P_GPIO0C2_P_SHIFT                       (4U)
+#define GRF_GPIO0C_P_GPIO0C2_P_MASK                        (0x3U << GRF_GPIO0C_P_GPIO0C2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO0C_P_GPIO0C3_P_SHIFT                       (6U)
+#define GRF_GPIO0C_P_GPIO0C3_P_MASK                        (0x3U << GRF_GPIO0C_P_GPIO0C3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO0C_P_GPIO0C4_P_SHIFT                       (8U)
+#define GRF_GPIO0C_P_GPIO0C4_P_MASK                        (0x3U << GRF_GPIO0C_P_GPIO0C4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO0C_P_GPIO0C5_P_SHIFT                       (10U)
+#define GRF_GPIO0C_P_GPIO0C5_P_MASK                        (0x3U << GRF_GPIO0C_P_GPIO0C5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO0C_P_GPIO0C6_P_SHIFT                       (12U)
+#define GRF_GPIO0C_P_GPIO0C6_P_MASK                        (0x3U << GRF_GPIO0C_P_GPIO0C6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO0C_P_GPIO0C7_P_SHIFT                       (14U)
+#define GRF_GPIO0C_P_GPIO0C7_P_MASK                        (0x3U << GRF_GPIO0C_P_GPIO0C7_P_SHIFT)                       /* 0x0000C000 */
 /* GPIO0D_P */
-#define PMU_GRF_GPIO0D_P_OFFSET                            (0x2CU)
-#define PMU_GRF_GPIO0D_P_GPIO0D0_P_SHIFT                   (0U)
-#define PMU_GRF_GPIO0D_P_GPIO0D0_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D0_P_SHIFT)                   /* 0x00000003 */
-#define PMU_GRF_GPIO0D_P_GPIO0D1_P_SHIFT                   (2U)
-#define PMU_GRF_GPIO0D_P_GPIO0D1_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D1_P_SHIFT)                   /* 0x0000000C */
-#define PMU_GRF_GPIO0D_P_GPIO0D2_P_SHIFT                   (4U)
-#define PMU_GRF_GPIO0D_P_GPIO0D2_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D2_P_SHIFT)                   /* 0x00000030 */
-#define PMU_GRF_GPIO0D_P_GPIO0D3_P_SHIFT                   (6U)
-#define PMU_GRF_GPIO0D_P_GPIO0D3_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D3_P_SHIFT)                   /* 0x000000C0 */
-#define PMU_GRF_GPIO0D_P_GPIO0D4_P_SHIFT                   (8U)
-#define PMU_GRF_GPIO0D_P_GPIO0D4_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D4_P_SHIFT)                   /* 0x00000300 */
-#define PMU_GRF_GPIO0D_P_GPIO0D5_P_SHIFT                   (10U)
-#define PMU_GRF_GPIO0D_P_GPIO0D5_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D5_P_SHIFT)                   /* 0x00000C00 */
-#define PMU_GRF_GPIO0D_P_GPIO0D6_P_SHIFT                   (12U)
-#define PMU_GRF_GPIO0D_P_GPIO0D6_P_MASK                    (0x3U << PMU_GRF_GPIO0D_P_GPIO0D6_P_SHIFT)                   /* 0x00003000 */
+#define GRF_GPIO0D_P_OFFSET                                (0x2CU)
+#define GRF_GPIO0D_P_GPIO0D0_P_SHIFT                       (0U)
+#define GRF_GPIO0D_P_GPIO0D0_P_MASK                        (0x3U << GRF_GPIO0D_P_GPIO0D0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO0D_P_GPIO0D1_P_SHIFT                       (2U)
+#define GRF_GPIO0D_P_GPIO0D1_P_MASK                        (0x3U << GRF_GPIO0D_P_GPIO0D1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO0D_P_GPIO0D2_P_SHIFT                       (4U)
+#define GRF_GPIO0D_P_GPIO0D2_P_MASK                        (0x3U << GRF_GPIO0D_P_GPIO0D2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO0D_P_GPIO0D3_P_SHIFT                       (6U)
+#define GRF_GPIO0D_P_GPIO0D3_P_MASK                        (0x3U << GRF_GPIO0D_P_GPIO0D3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO0D_P_GPIO0D4_P_SHIFT                       (8U)
+#define GRF_GPIO0D_P_GPIO0D4_P_MASK                        (0x3U << GRF_GPIO0D_P_GPIO0D4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO0D_P_GPIO0D5_P_SHIFT                       (10U)
+#define GRF_GPIO0D_P_GPIO0D5_P_MASK                        (0x3U << GRF_GPIO0D_P_GPIO0D5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO0D_P_GPIO0D6_P_SHIFT                       (12U)
+#define GRF_GPIO0D_P_GPIO0D6_P_MASK                        (0x3U << GRF_GPIO0D_P_GPIO0D6_P_SHIFT)                       /* 0x00003000 */
 /* GPIO0A_IE */
-#define PMU_GRF_GPIO0A_IE_OFFSET                           (0x30U)
-#define PMU_GRF_GPIO0A_IE_GPIO0A0_IE_SHIFT                 (0U)
-#define PMU_GRF_GPIO0A_IE_GPIO0A0_IE_MASK                  (0x3U << PMU_GRF_GPIO0A_IE_GPIO0A0_IE_SHIFT)                 /* 0x00000003 */
-#define PMU_GRF_GPIO0A_IE_GPIO0A1_IE_SHIFT                 (2U)
-#define PMU_GRF_GPIO0A_IE_GPIO0A1_IE_MASK                  (0x3U << PMU_GRF_GPIO0A_IE_GPIO0A1_IE_SHIFT)                 /* 0x0000000C */
-#define PMU_GRF_GPIO0A_IE_GPIO0A2_IE_SHIFT                 (4U)
-#define PMU_GRF_GPIO0A_IE_GPIO0A2_IE_MASK                  (0x3U << PMU_GRF_GPIO0A_IE_GPIO0A2_IE_SHIFT)                 /* 0x00000030 */
-#define PMU_GRF_GPIO0A_IE_GPIO0A3_IE_SHIFT                 (6U)
-#define PMU_GRF_GPIO0A_IE_GPIO0A3_IE_MASK                  (0x3U << PMU_GRF_GPIO0A_IE_GPIO0A3_IE_SHIFT)                 /* 0x000000C0 */
-#define PMU_GRF_GPIO0A_IE_GPIO0A4_IE_SHIFT                 (8U)
-#define PMU_GRF_GPIO0A_IE_GPIO0A4_IE_MASK                  (0x3U << PMU_GRF_GPIO0A_IE_GPIO0A4_IE_SHIFT)                 /* 0x00000300 */
-#define PMU_GRF_GPIO0A_IE_GPIO0A5_IE_SHIFT                 (10U)
-#define PMU_GRF_GPIO0A_IE_GPIO0A5_IE_MASK                  (0x3U << PMU_GRF_GPIO0A_IE_GPIO0A5_IE_SHIFT)                 /* 0x00000C00 */
-#define PMU_GRF_GPIO0A_IE_GPIO0A6_IE_SHIFT                 (12U)
-#define PMU_GRF_GPIO0A_IE_GPIO0A6_IE_MASK                  (0x3U << PMU_GRF_GPIO0A_IE_GPIO0A6_IE_SHIFT)                 /* 0x00003000 */
-#define PMU_GRF_GPIO0A_IE_GPIO0A7_IE_SHIFT                 (14U)
-#define PMU_GRF_GPIO0A_IE_GPIO0A7_IE_MASK                  (0x3U << PMU_GRF_GPIO0A_IE_GPIO0A7_IE_SHIFT)                 /* 0x0000C000 */
+#define GRF_GPIO0A_IE_OFFSET                               (0x30U)
+#define GRF_GPIO0A_IE_GPIO0A0_IE_SHIFT                     (0U)
+#define GRF_GPIO0A_IE_GPIO0A0_IE_MASK                      (0x3U << GRF_GPIO0A_IE_GPIO0A0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO0A_IE_GPIO0A1_IE_SHIFT                     (2U)
+#define GRF_GPIO0A_IE_GPIO0A1_IE_MASK                      (0x3U << GRF_GPIO0A_IE_GPIO0A1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO0A_IE_GPIO0A2_IE_SHIFT                     (4U)
+#define GRF_GPIO0A_IE_GPIO0A2_IE_MASK                      (0x3U << GRF_GPIO0A_IE_GPIO0A2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO0A_IE_GPIO0A3_IE_SHIFT                     (6U)
+#define GRF_GPIO0A_IE_GPIO0A3_IE_MASK                      (0x3U << GRF_GPIO0A_IE_GPIO0A3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO0A_IE_GPIO0A4_IE_SHIFT                     (8U)
+#define GRF_GPIO0A_IE_GPIO0A4_IE_MASK                      (0x3U << GRF_GPIO0A_IE_GPIO0A4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO0A_IE_GPIO0A5_IE_SHIFT                     (10U)
+#define GRF_GPIO0A_IE_GPIO0A5_IE_MASK                      (0x3U << GRF_GPIO0A_IE_GPIO0A5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO0A_IE_GPIO0A6_IE_SHIFT                     (12U)
+#define GRF_GPIO0A_IE_GPIO0A6_IE_MASK                      (0x3U << GRF_GPIO0A_IE_GPIO0A6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO0A_IE_GPIO0A7_IE_SHIFT                     (14U)
+#define GRF_GPIO0A_IE_GPIO0A7_IE_MASK                      (0x3U << GRF_GPIO0A_IE_GPIO0A7_IE_SHIFT)                     /* 0x0000C000 */
 /* GPIO0B_IE */
-#define PMU_GRF_GPIO0B_IE_OFFSET                           (0x34U)
-#define PMU_GRF_GPIO0B_IE_GPIO0B0_IE_SHIFT                 (0U)
-#define PMU_GRF_GPIO0B_IE_GPIO0B0_IE_MASK                  (0x3U << PMU_GRF_GPIO0B_IE_GPIO0B0_IE_SHIFT)                 /* 0x00000003 */
-#define PMU_GRF_GPIO0B_IE_GPIO0B1_IE_SHIFT                 (2U)
-#define PMU_GRF_GPIO0B_IE_GPIO0B1_IE_MASK                  (0x3U << PMU_GRF_GPIO0B_IE_GPIO0B1_IE_SHIFT)                 /* 0x0000000C */
-#define PMU_GRF_GPIO0B_IE_GPIO0B2_IE_SHIFT                 (4U)
-#define PMU_GRF_GPIO0B_IE_GPIO0B2_IE_MASK                  (0x3U << PMU_GRF_GPIO0B_IE_GPIO0B2_IE_SHIFT)                 /* 0x00000030 */
-#define PMU_GRF_GPIO0B_IE_GPIO0B3_IE_SHIFT                 (6U)
-#define PMU_GRF_GPIO0B_IE_GPIO0B3_IE_MASK                  (0x3U << PMU_GRF_GPIO0B_IE_GPIO0B3_IE_SHIFT)                 /* 0x000000C0 */
-#define PMU_GRF_GPIO0B_IE_GPIO0B4_IE_SHIFT                 (8U)
-#define PMU_GRF_GPIO0B_IE_GPIO0B4_IE_MASK                  (0x3U << PMU_GRF_GPIO0B_IE_GPIO0B4_IE_SHIFT)                 /* 0x00000300 */
-#define PMU_GRF_GPIO0B_IE_GPIO0B5_IE_SHIFT                 (10U)
-#define PMU_GRF_GPIO0B_IE_GPIO0B5_IE_MASK                  (0x3U << PMU_GRF_GPIO0B_IE_GPIO0B5_IE_SHIFT)                 /* 0x00000C00 */
-#define PMU_GRF_GPIO0B_IE_GPIO0B6_IE_SHIFT                 (12U)
-#define PMU_GRF_GPIO0B_IE_GPIO0B6_IE_MASK                  (0x3U << PMU_GRF_GPIO0B_IE_GPIO0B6_IE_SHIFT)                 /* 0x00003000 */
-#define PMU_GRF_GPIO0B_IE_GPIO0B7_IE_SHIFT                 (14U)
-#define PMU_GRF_GPIO0B_IE_GPIO0B7_IE_MASK                  (0x3U << PMU_GRF_GPIO0B_IE_GPIO0B7_IE_SHIFT)                 /* 0x0000C000 */
+#define GRF_GPIO0B_IE_OFFSET                               (0x34U)
+#define GRF_GPIO0B_IE_GPIO0B0_IE_SHIFT                     (0U)
+#define GRF_GPIO0B_IE_GPIO0B0_IE_MASK                      (0x3U << GRF_GPIO0B_IE_GPIO0B0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO0B_IE_GPIO0B1_IE_SHIFT                     (2U)
+#define GRF_GPIO0B_IE_GPIO0B1_IE_MASK                      (0x3U << GRF_GPIO0B_IE_GPIO0B1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO0B_IE_GPIO0B2_IE_SHIFT                     (4U)
+#define GRF_GPIO0B_IE_GPIO0B2_IE_MASK                      (0x3U << GRF_GPIO0B_IE_GPIO0B2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO0B_IE_GPIO0B3_IE_SHIFT                     (6U)
+#define GRF_GPIO0B_IE_GPIO0B3_IE_MASK                      (0x3U << GRF_GPIO0B_IE_GPIO0B3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO0B_IE_GPIO0B4_IE_SHIFT                     (8U)
+#define GRF_GPIO0B_IE_GPIO0B4_IE_MASK                      (0x3U << GRF_GPIO0B_IE_GPIO0B4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO0B_IE_GPIO0B5_IE_SHIFT                     (10U)
+#define GRF_GPIO0B_IE_GPIO0B5_IE_MASK                      (0x3U << GRF_GPIO0B_IE_GPIO0B5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO0B_IE_GPIO0B6_IE_SHIFT                     (12U)
+#define GRF_GPIO0B_IE_GPIO0B6_IE_MASK                      (0x3U << GRF_GPIO0B_IE_GPIO0B6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO0B_IE_GPIO0B7_IE_SHIFT                     (14U)
+#define GRF_GPIO0B_IE_GPIO0B7_IE_MASK                      (0x3U << GRF_GPIO0B_IE_GPIO0B7_IE_SHIFT)                     /* 0x0000C000 */
 /* GPIO0C_IE */
-#define PMU_GRF_GPIO0C_IE_OFFSET                           (0x38U)
-#define PMU_GRF_GPIO0C_IE_GPIO0C0_IE_SHIFT                 (0U)
-#define PMU_GRF_GPIO0C_IE_GPIO0C0_IE_MASK                  (0x3U << PMU_GRF_GPIO0C_IE_GPIO0C0_IE_SHIFT)                 /* 0x00000003 */
-#define PMU_GRF_GPIO0C_IE_GPIO0C1_IE_SHIFT                 (2U)
-#define PMU_GRF_GPIO0C_IE_GPIO0C1_IE_MASK                  (0x3U << PMU_GRF_GPIO0C_IE_GPIO0C1_IE_SHIFT)                 /* 0x0000000C */
-#define PMU_GRF_GPIO0C_IE_GPIO0C2_IE_SHIFT                 (4U)
-#define PMU_GRF_GPIO0C_IE_GPIO0C2_IE_MASK                  (0x3U << PMU_GRF_GPIO0C_IE_GPIO0C2_IE_SHIFT)                 /* 0x00000030 */
-#define PMU_GRF_GPIO0C_IE_GPIO0C3_IE_SHIFT                 (6U)
-#define PMU_GRF_GPIO0C_IE_GPIO0C3_IE_MASK                  (0x3U << PMU_GRF_GPIO0C_IE_GPIO0C3_IE_SHIFT)                 /* 0x000000C0 */
-#define PMU_GRF_GPIO0C_IE_GPIO0C4_IE_SHIFT                 (8U)
-#define PMU_GRF_GPIO0C_IE_GPIO0C4_IE_MASK                  (0x3U << PMU_GRF_GPIO0C_IE_GPIO0C4_IE_SHIFT)                 /* 0x00000300 */
-#define PMU_GRF_GPIO0C_IE_GPIO0C5_IE_SHIFT                 (10U)
-#define PMU_GRF_GPIO0C_IE_GPIO0C5_IE_MASK                  (0x3U << PMU_GRF_GPIO0C_IE_GPIO0C5_IE_SHIFT)                 /* 0x00000C00 */
-#define PMU_GRF_GPIO0C_IE_GPIO0C6_IE_SHIFT                 (12U)
-#define PMU_GRF_GPIO0C_IE_GPIO0C6_IE_MASK                  (0x3U << PMU_GRF_GPIO0C_IE_GPIO0C6_IE_SHIFT)                 /* 0x00003000 */
-#define PMU_GRF_GPIO0C_IE_GPIO0C7_IE_SHIFT                 (14U)
-#define PMU_GRF_GPIO0C_IE_GPIO0C7_IE_MASK                  (0x3U << PMU_GRF_GPIO0C_IE_GPIO0C7_IE_SHIFT)                 /* 0x0000C000 */
+#define GRF_GPIO0C_IE_OFFSET                               (0x38U)
+#define GRF_GPIO0C_IE_GPIO0C0_IE_SHIFT                     (0U)
+#define GRF_GPIO0C_IE_GPIO0C0_IE_MASK                      (0x3U << GRF_GPIO0C_IE_GPIO0C0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO0C_IE_GPIO0C1_IE_SHIFT                     (2U)
+#define GRF_GPIO0C_IE_GPIO0C1_IE_MASK                      (0x3U << GRF_GPIO0C_IE_GPIO0C1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO0C_IE_GPIO0C2_IE_SHIFT                     (4U)
+#define GRF_GPIO0C_IE_GPIO0C2_IE_MASK                      (0x3U << GRF_GPIO0C_IE_GPIO0C2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO0C_IE_GPIO0C3_IE_SHIFT                     (6U)
+#define GRF_GPIO0C_IE_GPIO0C3_IE_MASK                      (0x3U << GRF_GPIO0C_IE_GPIO0C3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO0C_IE_GPIO0C4_IE_SHIFT                     (8U)
+#define GRF_GPIO0C_IE_GPIO0C4_IE_MASK                      (0x3U << GRF_GPIO0C_IE_GPIO0C4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO0C_IE_GPIO0C5_IE_SHIFT                     (10U)
+#define GRF_GPIO0C_IE_GPIO0C5_IE_MASK                      (0x3U << GRF_GPIO0C_IE_GPIO0C5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO0C_IE_GPIO0C6_IE_SHIFT                     (12U)
+#define GRF_GPIO0C_IE_GPIO0C6_IE_MASK                      (0x3U << GRF_GPIO0C_IE_GPIO0C6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO0C_IE_GPIO0C7_IE_SHIFT                     (14U)
+#define GRF_GPIO0C_IE_GPIO0C7_IE_MASK                      (0x3U << GRF_GPIO0C_IE_GPIO0C7_IE_SHIFT)                     /* 0x0000C000 */
 /* GPIO0D_IE */
-#define PMU_GRF_GPIO0D_IE_OFFSET                           (0x3CU)
-#define PMU_GRF_GPIO0D_IE_GPIO0D0_IE_SHIFT                 (0U)
-#define PMU_GRF_GPIO0D_IE_GPIO0D0_IE_MASK                  (0x3U << PMU_GRF_GPIO0D_IE_GPIO0D0_IE_SHIFT)                 /* 0x00000003 */
-#define PMU_GRF_GPIO0D_IE_GPIO0D1_IE_SHIFT                 (2U)
-#define PMU_GRF_GPIO0D_IE_GPIO0D1_IE_MASK                  (0x3U << PMU_GRF_GPIO0D_IE_GPIO0D1_IE_SHIFT)                 /* 0x0000000C */
+#define GRF_GPIO0D_IE_OFFSET                               (0x3CU)
+#define GRF_GPIO0D_IE_GPIO0D0_IE_SHIFT                     (0U)
+#define GRF_GPIO0D_IE_GPIO0D0_IE_MASK                      (0x3U << GRF_GPIO0D_IE_GPIO0D0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO0D_IE_GPIO0D1_IE_SHIFT                     (2U)
+#define GRF_GPIO0D_IE_GPIO0D1_IE_MASK                      (0x3U << GRF_GPIO0D_IE_GPIO0D1_IE_SHIFT)                     /* 0x0000000C */
 /* GPIO0A_OPD */
-#define PMU_GRF_GPIO0A_OPD_OFFSET                          (0x40U)
-#define PMU_GRF_GPIO0A_OPD_GPIO0A0_OPD_SHIFT               (0U)
-#define PMU_GRF_GPIO0A_OPD_GPIO0A0_OPD_MASK                (0x1U << PMU_GRF_GPIO0A_OPD_GPIO0A0_OPD_SHIFT)               /* 0x00000001 */
-#define PMU_GRF_GPIO0A_OPD_GPIO0A1_OPD_SHIFT               (1U)
-#define PMU_GRF_GPIO0A_OPD_GPIO0A1_OPD_MASK                (0x1U << PMU_GRF_GPIO0A_OPD_GPIO0A1_OPD_SHIFT)               /* 0x00000002 */
-#define PMU_GRF_GPIO0A_OPD_GPIO0A2_OPD_SHIFT               (2U)
-#define PMU_GRF_GPIO0A_OPD_GPIO0A2_OPD_MASK                (0x1U << PMU_GRF_GPIO0A_OPD_GPIO0A2_OPD_SHIFT)               /* 0x00000004 */
-#define PMU_GRF_GPIO0A_OPD_GPIO0A3_OPD_SHIFT               (3U)
-#define PMU_GRF_GPIO0A_OPD_GPIO0A3_OPD_MASK                (0x1U << PMU_GRF_GPIO0A_OPD_GPIO0A3_OPD_SHIFT)               /* 0x00000008 */
-#define PMU_GRF_GPIO0A_OPD_GPIO0A4_OPD_SHIFT               (4U)
-#define PMU_GRF_GPIO0A_OPD_GPIO0A4_OPD_MASK                (0x1U << PMU_GRF_GPIO0A_OPD_GPIO0A4_OPD_SHIFT)               /* 0x00000010 */
-#define PMU_GRF_GPIO0A_OPD_GPIO0A5_OPD_SHIFT               (5U)
-#define PMU_GRF_GPIO0A_OPD_GPIO0A5_OPD_MASK                (0x1U << PMU_GRF_GPIO0A_OPD_GPIO0A5_OPD_SHIFT)               /* 0x00000020 */
-#define PMU_GRF_GPIO0A_OPD_GPIO0A6_OPD_SHIFT               (6U)
-#define PMU_GRF_GPIO0A_OPD_GPIO0A6_OPD_MASK                (0x1U << PMU_GRF_GPIO0A_OPD_GPIO0A6_OPD_SHIFT)               /* 0x00000040 */
-#define PMU_GRF_GPIO0A_OPD_GPIO0A7_OPD_SHIFT               (7U)
-#define PMU_GRF_GPIO0A_OPD_GPIO0A7_OPD_MASK                (0x1U << PMU_GRF_GPIO0A_OPD_GPIO0A7_OPD_SHIFT)               /* 0x00000080 */
+#define GRF_GPIO0A_OPD_OFFSET                              (0x40U)
+#define GRF_GPIO0A_OPD_GPIO0A0_OPD_SHIFT                   (0U)
+#define GRF_GPIO0A_OPD_GPIO0A0_OPD_MASK                    (0x1U << GRF_GPIO0A_OPD_GPIO0A0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO0A_OPD_GPIO0A1_OPD_SHIFT                   (1U)
+#define GRF_GPIO0A_OPD_GPIO0A1_OPD_MASK                    (0x1U << GRF_GPIO0A_OPD_GPIO0A1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO0A_OPD_GPIO0A2_OPD_SHIFT                   (2U)
+#define GRF_GPIO0A_OPD_GPIO0A2_OPD_MASK                    (0x1U << GRF_GPIO0A_OPD_GPIO0A2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO0A_OPD_GPIO0A3_OPD_SHIFT                   (3U)
+#define GRF_GPIO0A_OPD_GPIO0A3_OPD_MASK                    (0x1U << GRF_GPIO0A_OPD_GPIO0A3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO0A_OPD_GPIO0A4_OPD_SHIFT                   (4U)
+#define GRF_GPIO0A_OPD_GPIO0A4_OPD_MASK                    (0x1U << GRF_GPIO0A_OPD_GPIO0A4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO0A_OPD_GPIO0A5_OPD_SHIFT                   (5U)
+#define GRF_GPIO0A_OPD_GPIO0A5_OPD_MASK                    (0x1U << GRF_GPIO0A_OPD_GPIO0A5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO0A_OPD_GPIO0A6_OPD_SHIFT                   (6U)
+#define GRF_GPIO0A_OPD_GPIO0A6_OPD_MASK                    (0x1U << GRF_GPIO0A_OPD_GPIO0A6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO0A_OPD_GPIO0A7_OPD_SHIFT                   (7U)
+#define GRF_GPIO0A_OPD_GPIO0A7_OPD_MASK                    (0x1U << GRF_GPIO0A_OPD_GPIO0A7_OPD_SHIFT)                   /* 0x00000080 */
 /* GPIO0B_OPD */
-#define PMU_GRF_GPIO0B_OPD_OFFSET                          (0x44U)
-#define PMU_GRF_GPIO0B_OPD_GPIO0B0_OPD_SHIFT               (0U)
-#define PMU_GRF_GPIO0B_OPD_GPIO0B0_OPD_MASK                (0x1U << PMU_GRF_GPIO0B_OPD_GPIO0B0_OPD_SHIFT)               /* 0x00000001 */
-#define PMU_GRF_GPIO0B_OPD_GPIO0B1_OPD_SHIFT               (1U)
-#define PMU_GRF_GPIO0B_OPD_GPIO0B1_OPD_MASK                (0x1U << PMU_GRF_GPIO0B_OPD_GPIO0B1_OPD_SHIFT)               /* 0x00000002 */
-#define PMU_GRF_GPIO0B_OPD_GPIO0B2_OPD_SHIFT               (2U)
-#define PMU_GRF_GPIO0B_OPD_GPIO0B2_OPD_MASK                (0x1U << PMU_GRF_GPIO0B_OPD_GPIO0B2_OPD_SHIFT)               /* 0x00000004 */
-#define PMU_GRF_GPIO0B_OPD_GPIO0B3_OPD_SHIFT               (3U)
-#define PMU_GRF_GPIO0B_OPD_GPIO0B3_OPD_MASK                (0x1U << PMU_GRF_GPIO0B_OPD_GPIO0B3_OPD_SHIFT)               /* 0x00000008 */
-#define PMU_GRF_GPIO0B_OPD_GPIO0B4_OPD_SHIFT               (4U)
-#define PMU_GRF_GPIO0B_OPD_GPIO0B4_OPD_MASK                (0x1U << PMU_GRF_GPIO0B_OPD_GPIO0B4_OPD_SHIFT)               /* 0x00000010 */
-#define PMU_GRF_GPIO0B_OPD_GPIO0B5_OPD_SHIFT               (5U)
-#define PMU_GRF_GPIO0B_OPD_GPIO0B5_OPD_MASK                (0x1U << PMU_GRF_GPIO0B_OPD_GPIO0B5_OPD_SHIFT)               /* 0x00000020 */
-#define PMU_GRF_GPIO0B_OPD_GPIO0B6_OPD_SHIFT               (6U)
-#define PMU_GRF_GPIO0B_OPD_GPIO0B6_OPD_MASK                (0x1U << PMU_GRF_GPIO0B_OPD_GPIO0B6_OPD_SHIFT)               /* 0x00000040 */
-#define PMU_GRF_GPIO0B_OPD_GPIO0B7_OPD_SHIFT               (7U)
-#define PMU_GRF_GPIO0B_OPD_GPIO0B7_OPD_MASK                (0x1U << PMU_GRF_GPIO0B_OPD_GPIO0B7_OPD_SHIFT)               /* 0x00000080 */
+#define GRF_GPIO0B_OPD_OFFSET                              (0x44U)
+#define GRF_GPIO0B_OPD_GPIO0B0_OPD_SHIFT                   (0U)
+#define GRF_GPIO0B_OPD_GPIO0B0_OPD_MASK                    (0x1U << GRF_GPIO0B_OPD_GPIO0B0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO0B_OPD_GPIO0B1_OPD_SHIFT                   (1U)
+#define GRF_GPIO0B_OPD_GPIO0B1_OPD_MASK                    (0x1U << GRF_GPIO0B_OPD_GPIO0B1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO0B_OPD_GPIO0B2_OPD_SHIFT                   (2U)
+#define GRF_GPIO0B_OPD_GPIO0B2_OPD_MASK                    (0x1U << GRF_GPIO0B_OPD_GPIO0B2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO0B_OPD_GPIO0B3_OPD_SHIFT                   (3U)
+#define GRF_GPIO0B_OPD_GPIO0B3_OPD_MASK                    (0x1U << GRF_GPIO0B_OPD_GPIO0B3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO0B_OPD_GPIO0B4_OPD_SHIFT                   (4U)
+#define GRF_GPIO0B_OPD_GPIO0B4_OPD_MASK                    (0x1U << GRF_GPIO0B_OPD_GPIO0B4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO0B_OPD_GPIO0B5_OPD_SHIFT                   (5U)
+#define GRF_GPIO0B_OPD_GPIO0B5_OPD_MASK                    (0x1U << GRF_GPIO0B_OPD_GPIO0B5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO0B_OPD_GPIO0B6_OPD_SHIFT                   (6U)
+#define GRF_GPIO0B_OPD_GPIO0B6_OPD_MASK                    (0x1U << GRF_GPIO0B_OPD_GPIO0B6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO0B_OPD_GPIO0B7_OPD_SHIFT                   (7U)
+#define GRF_GPIO0B_OPD_GPIO0B7_OPD_MASK                    (0x1U << GRF_GPIO0B_OPD_GPIO0B7_OPD_SHIFT)                   /* 0x00000080 */
 /* GPIO0C_OPD */
-#define PMU_GRF_GPIO0C_OPD_OFFSET                          (0x48U)
-#define PMU_GRF_GPIO0C_OPD_GPIO0C0_OPD_SHIFT               (0U)
-#define PMU_GRF_GPIO0C_OPD_GPIO0C0_OPD_MASK                (0x1U << PMU_GRF_GPIO0C_OPD_GPIO0C0_OPD_SHIFT)               /* 0x00000001 */
-#define PMU_GRF_GPIO0C_OPD_GPIO0C1_OPD_SHIFT               (1U)
-#define PMU_GRF_GPIO0C_OPD_GPIO0C1_OPD_MASK                (0x1U << PMU_GRF_GPIO0C_OPD_GPIO0C1_OPD_SHIFT)               /* 0x00000002 */
-#define PMU_GRF_GPIO0C_OPD_GPIO0C2_OPD_SHIFT               (2U)
-#define PMU_GRF_GPIO0C_OPD_GPIO0C2_OPD_MASK                (0x1U << PMU_GRF_GPIO0C_OPD_GPIO0C2_OPD_SHIFT)               /* 0x00000004 */
-#define PMU_GRF_GPIO0C_OPD_GPIO0C3_OPD_SHIFT               (3U)
-#define PMU_GRF_GPIO0C_OPD_GPIO0C3_OPD_MASK                (0x1U << PMU_GRF_GPIO0C_OPD_GPIO0C3_OPD_SHIFT)               /* 0x00000008 */
-#define PMU_GRF_GPIO0C_OPD_GPIO0C4_OPD_SHIFT               (4U)
-#define PMU_GRF_GPIO0C_OPD_GPIO0C4_OPD_MASK                (0x1U << PMU_GRF_GPIO0C_OPD_GPIO0C4_OPD_SHIFT)               /* 0x00000010 */
-#define PMU_GRF_GPIO0C_OPD_GPIO0C5_OPD_SHIFT               (5U)
-#define PMU_GRF_GPIO0C_OPD_GPIO0C5_OPD_MASK                (0x1U << PMU_GRF_GPIO0C_OPD_GPIO0C5_OPD_SHIFT)               /* 0x00000020 */
-#define PMU_GRF_GPIO0C_OPD_GPIO0C6_OPD_SHIFT               (6U)
-#define PMU_GRF_GPIO0C_OPD_GPIO0C6_OPD_MASK                (0x1U << PMU_GRF_GPIO0C_OPD_GPIO0C6_OPD_SHIFT)               /* 0x00000040 */
-#define PMU_GRF_GPIO0C_OPD_GPIO0C7_OPD_SHIFT               (7U)
-#define PMU_GRF_GPIO0C_OPD_GPIO0C7_OPD_MASK                (0x1U << PMU_GRF_GPIO0C_OPD_GPIO0C7_OPD_SHIFT)               /* 0x00000080 */
+#define GRF_GPIO0C_OPD_OFFSET                              (0x48U)
+#define GRF_GPIO0C_OPD_GPIO0C0_OPD_SHIFT                   (0U)
+#define GRF_GPIO0C_OPD_GPIO0C0_OPD_MASK                    (0x1U << GRF_GPIO0C_OPD_GPIO0C0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO0C_OPD_GPIO0C1_OPD_SHIFT                   (1U)
+#define GRF_GPIO0C_OPD_GPIO0C1_OPD_MASK                    (0x1U << GRF_GPIO0C_OPD_GPIO0C1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO0C_OPD_GPIO0C2_OPD_SHIFT                   (2U)
+#define GRF_GPIO0C_OPD_GPIO0C2_OPD_MASK                    (0x1U << GRF_GPIO0C_OPD_GPIO0C2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO0C_OPD_GPIO0C3_OPD_SHIFT                   (3U)
+#define GRF_GPIO0C_OPD_GPIO0C3_OPD_MASK                    (0x1U << GRF_GPIO0C_OPD_GPIO0C3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO0C_OPD_GPIO0C4_OPD_SHIFT                   (4U)
+#define GRF_GPIO0C_OPD_GPIO0C4_OPD_MASK                    (0x1U << GRF_GPIO0C_OPD_GPIO0C4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO0C_OPD_GPIO0C5_OPD_SHIFT                   (5U)
+#define GRF_GPIO0C_OPD_GPIO0C5_OPD_MASK                    (0x1U << GRF_GPIO0C_OPD_GPIO0C5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO0C_OPD_GPIO0C6_OPD_SHIFT                   (6U)
+#define GRF_GPIO0C_OPD_GPIO0C6_OPD_MASK                    (0x1U << GRF_GPIO0C_OPD_GPIO0C6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO0C_OPD_GPIO0C7_OPD_SHIFT                   (7U)
+#define GRF_GPIO0C_OPD_GPIO0C7_OPD_MASK                    (0x1U << GRF_GPIO0C_OPD_GPIO0C7_OPD_SHIFT)                   /* 0x00000080 */
 /* GPIO0D_OPD */
-#define PMU_GRF_GPIO0D_OPD_OFFSET                          (0x4CU)
-#define PMU_GRF_GPIO0D_OPD_GPIO0D0_OPD_SHIFT               (0U)
-#define PMU_GRF_GPIO0D_OPD_GPIO0D0_OPD_MASK                (0x1U << PMU_GRF_GPIO0D_OPD_GPIO0D0_OPD_SHIFT)               /* 0x00000001 */
-#define PMU_GRF_GPIO0D_OPD_GPIO0D1_OPD_SHIFT               (1U)
-#define PMU_GRF_GPIO0D_OPD_GPIO0D1_OPD_MASK                (0x1U << PMU_GRF_GPIO0D_OPD_GPIO0D1_OPD_SHIFT)               /* 0x00000002 */
+#define GRF_GPIO0D_OPD_OFFSET                              (0x4CU)
+#define GRF_GPIO0D_OPD_GPIO0D0_OPD_SHIFT                   (0U)
+#define GRF_GPIO0D_OPD_GPIO0D0_OPD_MASK                    (0x1U << GRF_GPIO0D_OPD_GPIO0D0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO0D_OPD_GPIO0D1_OPD_SHIFT                   (1U)
+#define GRF_GPIO0D_OPD_GPIO0D1_OPD_MASK                    (0x1U << GRF_GPIO0D_OPD_GPIO0D1_OPD_SHIFT)                   /* 0x00000002 */
 /* GPIO0A_SUS */
-#define PMU_GRF_GPIO0A_SUS_OFFSET                          (0x50U)
-#define PMU_GRF_GPIO0A_SUS_GPIO0A0_SUS_SHIFT               (0U)
-#define PMU_GRF_GPIO0A_SUS_GPIO0A0_SUS_MASK                (0x1U << PMU_GRF_GPIO0A_SUS_GPIO0A0_SUS_SHIFT)               /* 0x00000001 */
-#define PMU_GRF_GPIO0A_SUS_GPIO0A1_SUS_SHIFT               (1U)
-#define PMU_GRF_GPIO0A_SUS_GPIO0A1_SUS_MASK                (0x1U << PMU_GRF_GPIO0A_SUS_GPIO0A1_SUS_SHIFT)               /* 0x00000002 */
-#define PMU_GRF_GPIO0A_SUS_GPIO0A2_SUS_SHIFT               (2U)
-#define PMU_GRF_GPIO0A_SUS_GPIO0A2_SUS_MASK                (0x1U << PMU_GRF_GPIO0A_SUS_GPIO0A2_SUS_SHIFT)               /* 0x00000004 */
-#define PMU_GRF_GPIO0A_SUS_GPIO0A3_SUS_SHIFT               (3U)
-#define PMU_GRF_GPIO0A_SUS_GPIO0A3_SUS_MASK                (0x1U << PMU_GRF_GPIO0A_SUS_GPIO0A3_SUS_SHIFT)               /* 0x00000008 */
-#define PMU_GRF_GPIO0A_SUS_GPIO0A4_SUS_SHIFT               (4U)
-#define PMU_GRF_GPIO0A_SUS_GPIO0A4_SUS_MASK                (0x1U << PMU_GRF_GPIO0A_SUS_GPIO0A4_SUS_SHIFT)               /* 0x00000010 */
-#define PMU_GRF_GPIO0A_SUS_GPIO0A5_SUS_SHIFT               (5U)
-#define PMU_GRF_GPIO0A_SUS_GPIO0A5_SUS_MASK                (0x1U << PMU_GRF_GPIO0A_SUS_GPIO0A5_SUS_SHIFT)               /* 0x00000020 */
-#define PMU_GRF_GPIO0A_SUS_GPIO0A6_SUS_SHIFT               (6U)
-#define PMU_GRF_GPIO0A_SUS_GPIO0A6_SUS_MASK                (0x1U << PMU_GRF_GPIO0A_SUS_GPIO0A6_SUS_SHIFT)               /* 0x00000040 */
-#define PMU_GRF_GPIO0A_SUS_GPIO0A7_SUS_SHIFT               (7U)
-#define PMU_GRF_GPIO0A_SUS_GPIO0A7_SUS_MASK                (0x1U << PMU_GRF_GPIO0A_SUS_GPIO0A7_SUS_SHIFT)               /* 0x00000080 */
+#define GRF_GPIO0A_SUS_OFFSET                              (0x50U)
+#define GRF_GPIO0A_SUS_GPIO0A0_SUS_SHIFT                   (0U)
+#define GRF_GPIO0A_SUS_GPIO0A0_SUS_MASK                    (0x1U << GRF_GPIO0A_SUS_GPIO0A0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO0A_SUS_GPIO0A1_SUS_SHIFT                   (1U)
+#define GRF_GPIO0A_SUS_GPIO0A1_SUS_MASK                    (0x1U << GRF_GPIO0A_SUS_GPIO0A1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO0A_SUS_GPIO0A2_SUS_SHIFT                   (2U)
+#define GRF_GPIO0A_SUS_GPIO0A2_SUS_MASK                    (0x1U << GRF_GPIO0A_SUS_GPIO0A2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO0A_SUS_GPIO0A3_SUS_SHIFT                   (3U)
+#define GRF_GPIO0A_SUS_GPIO0A3_SUS_MASK                    (0x1U << GRF_GPIO0A_SUS_GPIO0A3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO0A_SUS_GPIO0A4_SUS_SHIFT                   (4U)
+#define GRF_GPIO0A_SUS_GPIO0A4_SUS_MASK                    (0x1U << GRF_GPIO0A_SUS_GPIO0A4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO0A_SUS_GPIO0A5_SUS_SHIFT                   (5U)
+#define GRF_GPIO0A_SUS_GPIO0A5_SUS_MASK                    (0x1U << GRF_GPIO0A_SUS_GPIO0A5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO0A_SUS_GPIO0A6_SUS_SHIFT                   (6U)
+#define GRF_GPIO0A_SUS_GPIO0A6_SUS_MASK                    (0x1U << GRF_GPIO0A_SUS_GPIO0A6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO0A_SUS_GPIO0A7_SUS_SHIFT                   (7U)
+#define GRF_GPIO0A_SUS_GPIO0A7_SUS_MASK                    (0x1U << GRF_GPIO0A_SUS_GPIO0A7_SUS_SHIFT)                   /* 0x00000080 */
 /* GPIO0B_SUS */
-#define PMU_GRF_GPIO0B_SUS_OFFSET                          (0x54U)
-#define PMU_GRF_GPIO0B_SUS_GPIO0B0_SUS_SHIFT               (0U)
-#define PMU_GRF_GPIO0B_SUS_GPIO0B0_SUS_MASK                (0x1U << PMU_GRF_GPIO0B_SUS_GPIO0B0_SUS_SHIFT)               /* 0x00000001 */
-#define PMU_GRF_GPIO0B_SUS_GPIO0B1_SUS_SHIFT               (1U)
-#define PMU_GRF_GPIO0B_SUS_GPIO0B1_SUS_MASK                (0x1U << PMU_GRF_GPIO0B_SUS_GPIO0B1_SUS_SHIFT)               /* 0x00000002 */
-#define PMU_GRF_GPIO0B_SUS_GPIO0B2_SUS_SHIFT               (2U)
-#define PMU_GRF_GPIO0B_SUS_GPIO0B2_SUS_MASK                (0x1U << PMU_GRF_GPIO0B_SUS_GPIO0B2_SUS_SHIFT)               /* 0x00000004 */
-#define PMU_GRF_GPIO0B_SUS_GPIO0B3_SUS_SHIFT               (3U)
-#define PMU_GRF_GPIO0B_SUS_GPIO0B3_SUS_MASK                (0x1U << PMU_GRF_GPIO0B_SUS_GPIO0B3_SUS_SHIFT)               /* 0x00000008 */
-#define PMU_GRF_GPIO0B_SUS_GPIO0B4_SUS_SHIFT               (4U)
-#define PMU_GRF_GPIO0B_SUS_GPIO0B4_SUS_MASK                (0x1U << PMU_GRF_GPIO0B_SUS_GPIO0B4_SUS_SHIFT)               /* 0x00000010 */
-#define PMU_GRF_GPIO0B_SUS_GPIO0B5_SUS_SHIFT               (5U)
-#define PMU_GRF_GPIO0B_SUS_GPIO0B5_SUS_MASK                (0x1U << PMU_GRF_GPIO0B_SUS_GPIO0B5_SUS_SHIFT)               /* 0x00000020 */
-#define PMU_GRF_GPIO0B_SUS_GPIO0B6_SUS_SHIFT               (6U)
-#define PMU_GRF_GPIO0B_SUS_GPIO0B6_SUS_MASK                (0x1U << PMU_GRF_GPIO0B_SUS_GPIO0B6_SUS_SHIFT)               /* 0x00000040 */
-#define PMU_GRF_GPIO0B_SUS_GPIO0B7_SUS_SHIFT               (7U)
-#define PMU_GRF_GPIO0B_SUS_GPIO0B7_SUS_MASK                (0x1U << PMU_GRF_GPIO0B_SUS_GPIO0B7_SUS_SHIFT)               /* 0x00000080 */
+#define GRF_GPIO0B_SUS_OFFSET                              (0x54U)
+#define GRF_GPIO0B_SUS_GPIO0B0_SUS_SHIFT                   (0U)
+#define GRF_GPIO0B_SUS_GPIO0B0_SUS_MASK                    (0x1U << GRF_GPIO0B_SUS_GPIO0B0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO0B_SUS_GPIO0B1_SUS_SHIFT                   (1U)
+#define GRF_GPIO0B_SUS_GPIO0B1_SUS_MASK                    (0x1U << GRF_GPIO0B_SUS_GPIO0B1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO0B_SUS_GPIO0B2_SUS_SHIFT                   (2U)
+#define GRF_GPIO0B_SUS_GPIO0B2_SUS_MASK                    (0x1U << GRF_GPIO0B_SUS_GPIO0B2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO0B_SUS_GPIO0B3_SUS_SHIFT                   (3U)
+#define GRF_GPIO0B_SUS_GPIO0B3_SUS_MASK                    (0x1U << GRF_GPIO0B_SUS_GPIO0B3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO0B_SUS_GPIO0B4_SUS_SHIFT                   (4U)
+#define GRF_GPIO0B_SUS_GPIO0B4_SUS_MASK                    (0x1U << GRF_GPIO0B_SUS_GPIO0B4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO0B_SUS_GPIO0B5_SUS_SHIFT                   (5U)
+#define GRF_GPIO0B_SUS_GPIO0B5_SUS_MASK                    (0x1U << GRF_GPIO0B_SUS_GPIO0B5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO0B_SUS_GPIO0B6_SUS_SHIFT                   (6U)
+#define GRF_GPIO0B_SUS_GPIO0B6_SUS_MASK                    (0x1U << GRF_GPIO0B_SUS_GPIO0B6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO0B_SUS_GPIO0B7_SUS_SHIFT                   (7U)
+#define GRF_GPIO0B_SUS_GPIO0B7_SUS_MASK                    (0x1U << GRF_GPIO0B_SUS_GPIO0B7_SUS_SHIFT)                   /* 0x00000080 */
 /* GPIO0C_SUS */
-#define PMU_GRF_GPIO0C_SUS_OFFSET                          (0x58U)
-#define PMU_GRF_GPIO0C_SUS_GPIO0C0_SUS_SHIFT               (0U)
-#define PMU_GRF_GPIO0C_SUS_GPIO0C0_SUS_MASK                (0x1U << PMU_GRF_GPIO0C_SUS_GPIO0C0_SUS_SHIFT)               /* 0x00000001 */
-#define PMU_GRF_GPIO0C_SUS_GPIO0C1_SUS_SHIFT               (1U)
-#define PMU_GRF_GPIO0C_SUS_GPIO0C1_SUS_MASK                (0x1U << PMU_GRF_GPIO0C_SUS_GPIO0C1_SUS_SHIFT)               /* 0x00000002 */
-#define PMU_GRF_GPIO0C_SUS_GPIO0C2_SUS_SHIFT               (2U)
-#define PMU_GRF_GPIO0C_SUS_GPIO0C2_SUS_MASK                (0x1U << PMU_GRF_GPIO0C_SUS_GPIO0C2_SUS_SHIFT)               /* 0x00000004 */
-#define PMU_GRF_GPIO0C_SUS_GPIO0C3_SUS_SHIFT               (3U)
-#define PMU_GRF_GPIO0C_SUS_GPIO0C3_SUS_MASK                (0x1U << PMU_GRF_GPIO0C_SUS_GPIO0C3_SUS_SHIFT)               /* 0x00000008 */
-#define PMU_GRF_GPIO0C_SUS_GPIO0C4_SUS_SHIFT               (4U)
-#define PMU_GRF_GPIO0C_SUS_GPIO0C4_SUS_MASK                (0x1U << PMU_GRF_GPIO0C_SUS_GPIO0C4_SUS_SHIFT)               /* 0x00000010 */
-#define PMU_GRF_GPIO0C_SUS_GPIO0C5_SUS_SHIFT               (5U)
-#define PMU_GRF_GPIO0C_SUS_GPIO0C5_SUS_MASK                (0x1U << PMU_GRF_GPIO0C_SUS_GPIO0C5_SUS_SHIFT)               /* 0x00000020 */
-#define PMU_GRF_GPIO0C_SUS_GPIO0C6_SUS_SHIFT               (6U)
-#define PMU_GRF_GPIO0C_SUS_GPIO0C6_SUS_MASK                (0x1U << PMU_GRF_GPIO0C_SUS_GPIO0C6_SUS_SHIFT)               /* 0x00000040 */
-#define PMU_GRF_GPIO0C_SUS_GPIO0C7_SUS_SHIFT               (7U)
-#define PMU_GRF_GPIO0C_SUS_GPIO0C7_SUS_MASK                (0x1U << PMU_GRF_GPIO0C_SUS_GPIO0C7_SUS_SHIFT)               /* 0x00000080 */
+#define GRF_GPIO0C_SUS_OFFSET                              (0x58U)
+#define GRF_GPIO0C_SUS_GPIO0C0_SUS_SHIFT                   (0U)
+#define GRF_GPIO0C_SUS_GPIO0C0_SUS_MASK                    (0x1U << GRF_GPIO0C_SUS_GPIO0C0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO0C_SUS_GPIO0C1_SUS_SHIFT                   (1U)
+#define GRF_GPIO0C_SUS_GPIO0C1_SUS_MASK                    (0x1U << GRF_GPIO0C_SUS_GPIO0C1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO0C_SUS_GPIO0C2_SUS_SHIFT                   (2U)
+#define GRF_GPIO0C_SUS_GPIO0C2_SUS_MASK                    (0x1U << GRF_GPIO0C_SUS_GPIO0C2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO0C_SUS_GPIO0C3_SUS_SHIFT                   (3U)
+#define GRF_GPIO0C_SUS_GPIO0C3_SUS_MASK                    (0x1U << GRF_GPIO0C_SUS_GPIO0C3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO0C_SUS_GPIO0C4_SUS_SHIFT                   (4U)
+#define GRF_GPIO0C_SUS_GPIO0C4_SUS_MASK                    (0x1U << GRF_GPIO0C_SUS_GPIO0C4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO0C_SUS_GPIO0C5_SUS_SHIFT                   (5U)
+#define GRF_GPIO0C_SUS_GPIO0C5_SUS_MASK                    (0x1U << GRF_GPIO0C_SUS_GPIO0C5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO0C_SUS_GPIO0C6_SUS_SHIFT                   (6U)
+#define GRF_GPIO0C_SUS_GPIO0C6_SUS_MASK                    (0x1U << GRF_GPIO0C_SUS_GPIO0C6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO0C_SUS_GPIO0C7_SUS_SHIFT                   (7U)
+#define GRF_GPIO0C_SUS_GPIO0C7_SUS_MASK                    (0x1U << GRF_GPIO0C_SUS_GPIO0C7_SUS_SHIFT)                   /* 0x00000080 */
 /* GPIO0D_SUS */
-#define PMU_GRF_GPIO0D_SUS_OFFSET                          (0x5CU)
-#define PMU_GRF_GPIO0D_SUS_GPIO0D0_SUS_SHIFT               (0U)
-#define PMU_GRF_GPIO0D_SUS_GPIO0D0_SUS_MASK                (0x1U << PMU_GRF_GPIO0D_SUS_GPIO0D0_SUS_SHIFT)               /* 0x00000001 */
-#define PMU_GRF_GPIO0D_SUS_GPIO0D1_SUS_SHIFT               (1U)
-#define PMU_GRF_GPIO0D_SUS_GPIO0D1_SUS_MASK                (0x1U << PMU_GRF_GPIO0D_SUS_GPIO0D1_SUS_SHIFT)               /* 0x00000002 */
+#define GRF_GPIO0D_SUS_OFFSET                              (0x5CU)
+#define GRF_GPIO0D_SUS_GPIO0D0_SUS_SHIFT                   (0U)
+#define GRF_GPIO0D_SUS_GPIO0D0_SUS_MASK                    (0x1U << GRF_GPIO0D_SUS_GPIO0D0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO0D_SUS_GPIO0D1_SUS_SHIFT                   (1U)
+#define GRF_GPIO0D_SUS_GPIO0D1_SUS_MASK                    (0x1U << GRF_GPIO0D_SUS_GPIO0D1_SUS_SHIFT)                   /* 0x00000002 */
 /* GPIO0A_SL */
-#define PMU_GRF_GPIO0A_SL_OFFSET                           (0x60U)
-#define PMU_GRF_GPIO0A_SL_GPIO0A0_SL_SHIFT                 (0U)
-#define PMU_GRF_GPIO0A_SL_GPIO0A0_SL_MASK                  (0x3U << PMU_GRF_GPIO0A_SL_GPIO0A0_SL_SHIFT)                 /* 0x00000003 */
-#define PMU_GRF_GPIO0A_SL_GPIO0A1_SL_SHIFT                 (2U)
-#define PMU_GRF_GPIO0A_SL_GPIO0A1_SL_MASK                  (0x3U << PMU_GRF_GPIO0A_SL_GPIO0A1_SL_SHIFT)                 /* 0x0000000C */
-#define PMU_GRF_GPIO0A_SL_GPIO0A2_SL_SHIFT                 (4U)
-#define PMU_GRF_GPIO0A_SL_GPIO0A2_SL_MASK                  (0x3U << PMU_GRF_GPIO0A_SL_GPIO0A2_SL_SHIFT)                 /* 0x00000030 */
-#define PMU_GRF_GPIO0A_SL_GPIO0A3_SL_SHIFT                 (6U)
-#define PMU_GRF_GPIO0A_SL_GPIO0A3_SL_MASK                  (0x3U << PMU_GRF_GPIO0A_SL_GPIO0A3_SL_SHIFT)                 /* 0x000000C0 */
-#define PMU_GRF_GPIO0A_SL_GPIO0A4_SL_SHIFT                 (8U)
-#define PMU_GRF_GPIO0A_SL_GPIO0A4_SL_MASK                  (0x3U << PMU_GRF_GPIO0A_SL_GPIO0A4_SL_SHIFT)                 /* 0x00000300 */
-#define PMU_GRF_GPIO0A_SL_GPIO0A5_SL_SHIFT                 (10U)
-#define PMU_GRF_GPIO0A_SL_GPIO0A5_SL_MASK                  (0x3U << PMU_GRF_GPIO0A_SL_GPIO0A5_SL_SHIFT)                 /* 0x00000C00 */
-#define PMU_GRF_GPIO0A_SL_GPIO0A6_SL_SHIFT                 (12U)
-#define PMU_GRF_GPIO0A_SL_GPIO0A6_SL_MASK                  (0x3U << PMU_GRF_GPIO0A_SL_GPIO0A6_SL_SHIFT)                 /* 0x00003000 */
-#define PMU_GRF_GPIO0A_SL_GPIO0A7_SL_SHIFT                 (14U)
-#define PMU_GRF_GPIO0A_SL_GPIO0A7_SL_MASK                  (0x3U << PMU_GRF_GPIO0A_SL_GPIO0A7_SL_SHIFT)                 /* 0x0000C000 */
+#define GRF_GPIO0A_SL_OFFSET                               (0x60U)
+#define GRF_GPIO0A_SL_GPIO0A0_SL_SHIFT                     (0U)
+#define GRF_GPIO0A_SL_GPIO0A0_SL_MASK                      (0x3U << GRF_GPIO0A_SL_GPIO0A0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO0A_SL_GPIO0A1_SL_SHIFT                     (2U)
+#define GRF_GPIO0A_SL_GPIO0A1_SL_MASK                      (0x3U << GRF_GPIO0A_SL_GPIO0A1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO0A_SL_GPIO0A2_SL_SHIFT                     (4U)
+#define GRF_GPIO0A_SL_GPIO0A2_SL_MASK                      (0x3U << GRF_GPIO0A_SL_GPIO0A2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO0A_SL_GPIO0A3_SL_SHIFT                     (6U)
+#define GRF_GPIO0A_SL_GPIO0A3_SL_MASK                      (0x3U << GRF_GPIO0A_SL_GPIO0A3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO0A_SL_GPIO0A4_SL_SHIFT                     (8U)
+#define GRF_GPIO0A_SL_GPIO0A4_SL_MASK                      (0x3U << GRF_GPIO0A_SL_GPIO0A4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO0A_SL_GPIO0A5_SL_SHIFT                     (10U)
+#define GRF_GPIO0A_SL_GPIO0A5_SL_MASK                      (0x3U << GRF_GPIO0A_SL_GPIO0A5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO0A_SL_GPIO0A6_SL_SHIFT                     (12U)
+#define GRF_GPIO0A_SL_GPIO0A6_SL_MASK                      (0x3U << GRF_GPIO0A_SL_GPIO0A6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO0A_SL_GPIO0A7_SL_SHIFT                     (14U)
+#define GRF_GPIO0A_SL_GPIO0A7_SL_MASK                      (0x3U << GRF_GPIO0A_SL_GPIO0A7_SL_SHIFT)                     /* 0x0000C000 */
 /* GPIO0B_SL */
-#define PMU_GRF_GPIO0B_SL_OFFSET                           (0x64U)
-#define PMU_GRF_GPIO0B_SL_GPIO0B0_SL_SHIFT                 (0U)
-#define PMU_GRF_GPIO0B_SL_GPIO0B0_SL_MASK                  (0x3U << PMU_GRF_GPIO0B_SL_GPIO0B0_SL_SHIFT)                 /* 0x00000003 */
-#define PMU_GRF_GPIO0B_SL_GPIO0B1_SL_SHIFT                 (2U)
-#define PMU_GRF_GPIO0B_SL_GPIO0B1_SL_MASK                  (0x3U << PMU_GRF_GPIO0B_SL_GPIO0B1_SL_SHIFT)                 /* 0x0000000C */
-#define PMU_GRF_GPIO0B_SL_GPIO0B2_SL_SHIFT                 (4U)
-#define PMU_GRF_GPIO0B_SL_GPIO0B2_SL_MASK                  (0x3U << PMU_GRF_GPIO0B_SL_GPIO0B2_SL_SHIFT)                 /* 0x00000030 */
-#define PMU_GRF_GPIO0B_SL_GPIO0B3_SL_SHIFT                 (6U)
-#define PMU_GRF_GPIO0B_SL_GPIO0B3_SL_MASK                  (0x3U << PMU_GRF_GPIO0B_SL_GPIO0B3_SL_SHIFT)                 /* 0x000000C0 */
-#define PMU_GRF_GPIO0B_SL_GPIO0B4_SL_SHIFT                 (8U)
-#define PMU_GRF_GPIO0B_SL_GPIO0B4_SL_MASK                  (0x3U << PMU_GRF_GPIO0B_SL_GPIO0B4_SL_SHIFT)                 /* 0x00000300 */
-#define PMU_GRF_GPIO0B_SL_GPIO0B5_SL_SHIFT                 (10U)
-#define PMU_GRF_GPIO0B_SL_GPIO0B5_SL_MASK                  (0x3U << PMU_GRF_GPIO0B_SL_GPIO0B5_SL_SHIFT)                 /* 0x00000C00 */
-#define PMU_GRF_GPIO0B_SL_GPIO0B6_SL_SHIFT                 (12U)
-#define PMU_GRF_GPIO0B_SL_GPIO0B6_SL_MASK                  (0x3U << PMU_GRF_GPIO0B_SL_GPIO0B6_SL_SHIFT)                 /* 0x00003000 */
-#define PMU_GRF_GPIO0B_SL_GPIO0B7_SL_SHIFT                 (14U)
-#define PMU_GRF_GPIO0B_SL_GPIO0B7_SL_MASK                  (0x3U << PMU_GRF_GPIO0B_SL_GPIO0B7_SL_SHIFT)                 /* 0x0000C000 */
+#define GRF_GPIO0B_SL_OFFSET                               (0x64U)
+#define GRF_GPIO0B_SL_GPIO0B0_SL_SHIFT                     (0U)
+#define GRF_GPIO0B_SL_GPIO0B0_SL_MASK                      (0x3U << GRF_GPIO0B_SL_GPIO0B0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO0B_SL_GPIO0B1_SL_SHIFT                     (2U)
+#define GRF_GPIO0B_SL_GPIO0B1_SL_MASK                      (0x3U << GRF_GPIO0B_SL_GPIO0B1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO0B_SL_GPIO0B2_SL_SHIFT                     (4U)
+#define GRF_GPIO0B_SL_GPIO0B2_SL_MASK                      (0x3U << GRF_GPIO0B_SL_GPIO0B2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO0B_SL_GPIO0B3_SL_SHIFT                     (6U)
+#define GRF_GPIO0B_SL_GPIO0B3_SL_MASK                      (0x3U << GRF_GPIO0B_SL_GPIO0B3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO0B_SL_GPIO0B4_SL_SHIFT                     (8U)
+#define GRF_GPIO0B_SL_GPIO0B4_SL_MASK                      (0x3U << GRF_GPIO0B_SL_GPIO0B4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO0B_SL_GPIO0B5_SL_SHIFT                     (10U)
+#define GRF_GPIO0B_SL_GPIO0B5_SL_MASK                      (0x3U << GRF_GPIO0B_SL_GPIO0B5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO0B_SL_GPIO0B6_SL_SHIFT                     (12U)
+#define GRF_GPIO0B_SL_GPIO0B6_SL_MASK                      (0x3U << GRF_GPIO0B_SL_GPIO0B6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO0B_SL_GPIO0B7_SL_SHIFT                     (14U)
+#define GRF_GPIO0B_SL_GPIO0B7_SL_MASK                      (0x3U << GRF_GPIO0B_SL_GPIO0B7_SL_SHIFT)                     /* 0x0000C000 */
 /* GPIO0C_SL */
-#define PMU_GRF_GPIO0C_SL_OFFSET                           (0x68U)
-#define PMU_GRF_GPIO0C_SL_GPIO0C0_SL_SHIFT                 (0U)
-#define PMU_GRF_GPIO0C_SL_GPIO0C0_SL_MASK                  (0x3U << PMU_GRF_GPIO0C_SL_GPIO0C0_SL_SHIFT)                 /* 0x00000003 */
-#define PMU_GRF_GPIO0C_SL_GPIO0C1_SL_SHIFT                 (2U)
-#define PMU_GRF_GPIO0C_SL_GPIO0C1_SL_MASK                  (0x3U << PMU_GRF_GPIO0C_SL_GPIO0C1_SL_SHIFT)                 /* 0x0000000C */
-#define PMU_GRF_GPIO0C_SL_GPIO0C2_SL_SHIFT                 (4U)
-#define PMU_GRF_GPIO0C_SL_GPIO0C2_SL_MASK                  (0x3U << PMU_GRF_GPIO0C_SL_GPIO0C2_SL_SHIFT)                 /* 0x00000030 */
-#define PMU_GRF_GPIO0C_SL_GPIO0C3_SL_SHIFT                 (6U)
-#define PMU_GRF_GPIO0C_SL_GPIO0C3_SL_MASK                  (0x3U << PMU_GRF_GPIO0C_SL_GPIO0C3_SL_SHIFT)                 /* 0x000000C0 */
-#define PMU_GRF_GPIO0C_SL_GPIO0C4_SL_SHIFT                 (8U)
-#define PMU_GRF_GPIO0C_SL_GPIO0C4_SL_MASK                  (0x3U << PMU_GRF_GPIO0C_SL_GPIO0C4_SL_SHIFT)                 /* 0x00000300 */
-#define PMU_GRF_GPIO0C_SL_GPIO0C5_SL_SHIFT                 (10U)
-#define PMU_GRF_GPIO0C_SL_GPIO0C5_SL_MASK                  (0x3U << PMU_GRF_GPIO0C_SL_GPIO0C5_SL_SHIFT)                 /* 0x00000C00 */
-#define PMU_GRF_GPIO0C_SL_GPIO0C6_SL_SHIFT                 (12U)
-#define PMU_GRF_GPIO0C_SL_GPIO0C6_SL_MASK                  (0x3U << PMU_GRF_GPIO0C_SL_GPIO0C6_SL_SHIFT)                 /* 0x00003000 */
-#define PMU_GRF_GPIO0C_SL_GPIO0C7_SL_SHIFT                 (14U)
-#define PMU_GRF_GPIO0C_SL_GPIO0C7_SL_MASK                  (0x3U << PMU_GRF_GPIO0C_SL_GPIO0C7_SL_SHIFT)                 /* 0x0000C000 */
+#define GRF_GPIO0C_SL_OFFSET                               (0x68U)
+#define GRF_GPIO0C_SL_GPIO0C0_SL_SHIFT                     (0U)
+#define GRF_GPIO0C_SL_GPIO0C0_SL_MASK                      (0x3U << GRF_GPIO0C_SL_GPIO0C0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO0C_SL_GPIO0C1_SL_SHIFT                     (2U)
+#define GRF_GPIO0C_SL_GPIO0C1_SL_MASK                      (0x3U << GRF_GPIO0C_SL_GPIO0C1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO0C_SL_GPIO0C2_SL_SHIFT                     (4U)
+#define GRF_GPIO0C_SL_GPIO0C2_SL_MASK                      (0x3U << GRF_GPIO0C_SL_GPIO0C2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO0C_SL_GPIO0C3_SL_SHIFT                     (6U)
+#define GRF_GPIO0C_SL_GPIO0C3_SL_MASK                      (0x3U << GRF_GPIO0C_SL_GPIO0C3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO0C_SL_GPIO0C4_SL_SHIFT                     (8U)
+#define GRF_GPIO0C_SL_GPIO0C4_SL_MASK                      (0x3U << GRF_GPIO0C_SL_GPIO0C4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO0C_SL_GPIO0C5_SL_SHIFT                     (10U)
+#define GRF_GPIO0C_SL_GPIO0C5_SL_MASK                      (0x3U << GRF_GPIO0C_SL_GPIO0C5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO0C_SL_GPIO0C6_SL_SHIFT                     (12U)
+#define GRF_GPIO0C_SL_GPIO0C6_SL_MASK                      (0x3U << GRF_GPIO0C_SL_GPIO0C6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO0C_SL_GPIO0C7_SL_SHIFT                     (14U)
+#define GRF_GPIO0C_SL_GPIO0C7_SL_MASK                      (0x3U << GRF_GPIO0C_SL_GPIO0C7_SL_SHIFT)                     /* 0x0000C000 */
 /* GPIO0D_SL */
-#define PMU_GRF_GPIO0D_SL_OFFSET                           (0x6CU)
-#define PMU_GRF_GPIO0D_SL_GPIO0D0_SL_SHIFT                 (0U)
-#define PMU_GRF_GPIO0D_SL_GPIO0D0_SL_MASK                  (0x3U << PMU_GRF_GPIO0D_SL_GPIO0D0_SL_SHIFT)                 /* 0x00000003 */
-#define PMU_GRF_GPIO0D_SL_GPIO0D1_SL_SHIFT                 (2U)
-#define PMU_GRF_GPIO0D_SL_GPIO0D1_SL_MASK                  (0x3U << PMU_GRF_GPIO0D_SL_GPIO0D1_SL_SHIFT)                 /* 0x0000000C */
-#define PMU_GRF_GPIO0D_SL_GPIO0D2_SL_SHIFT                 (4U)
-#define PMU_GRF_GPIO0D_SL_GPIO0D2_SL_MASK                  (0x3U << PMU_GRF_GPIO0D_SL_GPIO0D2_SL_SHIFT)                 /* 0x00000030 */
-#define PMU_GRF_GPIO0D_SL_GPIO0D3_SL_SHIFT                 (6U)
-#define PMU_GRF_GPIO0D_SL_GPIO0D3_SL_MASK                  (0x3U << PMU_GRF_GPIO0D_SL_GPIO0D3_SL_SHIFT)                 /* 0x000000C0 */
-#define PMU_GRF_GPIO0D_SL_GPIO0D4_SL_SHIFT                 (8U)
-#define PMU_GRF_GPIO0D_SL_GPIO0D4_SL_MASK                  (0x3U << PMU_GRF_GPIO0D_SL_GPIO0D4_SL_SHIFT)                 /* 0x00000300 */
-#define PMU_GRF_GPIO0D_SL_GPIO0D5_SL_SHIFT                 (10U)
-#define PMU_GRF_GPIO0D_SL_GPIO0D5_SL_MASK                  (0x3U << PMU_GRF_GPIO0D_SL_GPIO0D5_SL_SHIFT)                 /* 0x00000C00 */
-#define PMU_GRF_GPIO0D_SL_GPIO0D6_SL_SHIFT                 (12U)
-#define PMU_GRF_GPIO0D_SL_GPIO0D6_SL_MASK                  (0x3U << PMU_GRF_GPIO0D_SL_GPIO0D6_SL_SHIFT)                 /* 0x00003000 */
-#define PMU_GRF_GPIO0D_SL_GPIO0D7_SL_SHIFT                 (14U)
-#define PMU_GRF_GPIO0D_SL_GPIO0D7_SL_MASK                  (0x3U << PMU_GRF_GPIO0D_SL_GPIO0D7_SL_SHIFT)                 /* 0x0000C000 */
+#define GRF_GPIO0D_SL_OFFSET                               (0x6CU)
+#define GRF_GPIO0D_SL_GPIO0D0_SL_SHIFT                     (0U)
+#define GRF_GPIO0D_SL_GPIO0D0_SL_MASK                      (0x3U << GRF_GPIO0D_SL_GPIO0D0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO0D_SL_GPIO0D1_SL_SHIFT                     (2U)
+#define GRF_GPIO0D_SL_GPIO0D1_SL_MASK                      (0x3U << GRF_GPIO0D_SL_GPIO0D1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO0D_SL_GPIO0D2_SL_SHIFT                     (4U)
+#define GRF_GPIO0D_SL_GPIO0D2_SL_MASK                      (0x3U << GRF_GPIO0D_SL_GPIO0D2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO0D_SL_GPIO0D3_SL_SHIFT                     (6U)
+#define GRF_GPIO0D_SL_GPIO0D3_SL_MASK                      (0x3U << GRF_GPIO0D_SL_GPIO0D3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO0D_SL_GPIO0D4_SL_SHIFT                     (8U)
+#define GRF_GPIO0D_SL_GPIO0D4_SL_MASK                      (0x3U << GRF_GPIO0D_SL_GPIO0D4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO0D_SL_GPIO0D5_SL_SHIFT                     (10U)
+#define GRF_GPIO0D_SL_GPIO0D5_SL_MASK                      (0x3U << GRF_GPIO0D_SL_GPIO0D5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO0D_SL_GPIO0D6_SL_SHIFT                     (12U)
+#define GRF_GPIO0D_SL_GPIO0D6_SL_MASK                      (0x3U << GRF_GPIO0D_SL_GPIO0D6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO0D_SL_GPIO0D7_SL_SHIFT                     (14U)
+#define GRF_GPIO0D_SL_GPIO0D7_SL_MASK                      (0x3U << GRF_GPIO0D_SL_GPIO0D7_SL_SHIFT)                     /* 0x0000C000 */
 /* GPIO0A_DS_0 */
-#define PMU_GRF_GPIO0A_DS_0_OFFSET                         (0x70U)
-#define PMU_GRF_GPIO0A_DS_0_GPIO0A0_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0A_DS_0_GPIO0A0_DS_MASK                (0x3FU << PMU_GRF_GPIO0A_DS_0_GPIO0A0_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0A_DS_0_GPIO0A1_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0A_DS_0_GPIO0A1_DS_MASK                (0x3FU << PMU_GRF_GPIO0A_DS_0_GPIO0A1_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0A_DS_0_OFFSET                             (0x70U)
+#define GRF_GPIO0A_DS_0_GPIO0A0_DS_SHIFT                   (0U)
+#define GRF_GPIO0A_DS_0_GPIO0A0_DS_MASK                    (0x3FU << GRF_GPIO0A_DS_0_GPIO0A0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0A_DS_0_GPIO0A1_DS_SHIFT                   (8U)
+#define GRF_GPIO0A_DS_0_GPIO0A1_DS_MASK                    (0x3FU << GRF_GPIO0A_DS_0_GPIO0A1_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0A_DS_1 */
-#define PMU_GRF_GPIO0A_DS_1_OFFSET                         (0x74U)
-#define PMU_GRF_GPIO0A_DS_1_GPIO0A2_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0A_DS_1_GPIO0A2_DS_MASK                (0x3FU << PMU_GRF_GPIO0A_DS_1_GPIO0A2_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0A_DS_1_GPIO0A3_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0A_DS_1_GPIO0A3_DS_MASK                (0x3FU << PMU_GRF_GPIO0A_DS_1_GPIO0A3_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0A_DS_1_OFFSET                             (0x74U)
+#define GRF_GPIO0A_DS_1_GPIO0A2_DS_SHIFT                   (0U)
+#define GRF_GPIO0A_DS_1_GPIO0A2_DS_MASK                    (0x3FU << GRF_GPIO0A_DS_1_GPIO0A2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0A_DS_1_GPIO0A3_DS_SHIFT                   (8U)
+#define GRF_GPIO0A_DS_1_GPIO0A3_DS_MASK                    (0x3FU << GRF_GPIO0A_DS_1_GPIO0A3_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0A_DS_2 */
-#define PMU_GRF_GPIO0A_DS_2_OFFSET                         (0x78U)
-#define PMU_GRF_GPIO0A_DS_2_GPIO0A4_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0A_DS_2_GPIO0A4_DS_MASK                (0x3FU << PMU_GRF_GPIO0A_DS_2_GPIO0A4_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0A_DS_2_GPIO0A5_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0A_DS_2_GPIO0A5_DS_MASK                (0x3FU << PMU_GRF_GPIO0A_DS_2_GPIO0A5_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0A_DS_2_OFFSET                             (0x78U)
+#define GRF_GPIO0A_DS_2_GPIO0A4_DS_SHIFT                   (0U)
+#define GRF_GPIO0A_DS_2_GPIO0A4_DS_MASK                    (0x3FU << GRF_GPIO0A_DS_2_GPIO0A4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0A_DS_2_GPIO0A5_DS_SHIFT                   (8U)
+#define GRF_GPIO0A_DS_2_GPIO0A5_DS_MASK                    (0x3FU << GRF_GPIO0A_DS_2_GPIO0A5_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0A_DS_3 */
-#define PMU_GRF_GPIO0A_DS_3_OFFSET                         (0x7CU)
-#define PMU_GRF_GPIO0A_DS_3_GPIO0A6_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0A_DS_3_GPIO0A6_DS_MASK                (0x3FU << PMU_GRF_GPIO0A_DS_3_GPIO0A6_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0A_DS_3_GPIO0A7_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0A_DS_3_GPIO0A7_DS_MASK                (0x3FU << PMU_GRF_GPIO0A_DS_3_GPIO0A7_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0A_DS_3_OFFSET                             (0x7CU)
+#define GRF_GPIO0A_DS_3_GPIO0A6_DS_SHIFT                   (0U)
+#define GRF_GPIO0A_DS_3_GPIO0A6_DS_MASK                    (0x3FU << GRF_GPIO0A_DS_3_GPIO0A6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0A_DS_3_GPIO0A7_DS_SHIFT                   (8U)
+#define GRF_GPIO0A_DS_3_GPIO0A7_DS_MASK                    (0x3FU << GRF_GPIO0A_DS_3_GPIO0A7_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0B_DS_0 */
-#define PMU_GRF_GPIO0B_DS_0_OFFSET                         (0x80U)
-#define PMU_GRF_GPIO0B_DS_0_GPIO0B0_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0B_DS_0_GPIO0B0_DS_MASK                (0x3FU << PMU_GRF_GPIO0B_DS_0_GPIO0B0_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0B_DS_0_GPIO0B1_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0B_DS_0_GPIO0B1_DS_MASK                (0x3FU << PMU_GRF_GPIO0B_DS_0_GPIO0B1_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0B_DS_0_OFFSET                             (0x80U)
+#define GRF_GPIO0B_DS_0_GPIO0B0_DS_SHIFT                   (0U)
+#define GRF_GPIO0B_DS_0_GPIO0B0_DS_MASK                    (0x3FU << GRF_GPIO0B_DS_0_GPIO0B0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0B_DS_0_GPIO0B1_DS_SHIFT                   (8U)
+#define GRF_GPIO0B_DS_0_GPIO0B1_DS_MASK                    (0x3FU << GRF_GPIO0B_DS_0_GPIO0B1_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0B_DS_1 */
-#define PMU_GRF_GPIO0B_DS_1_OFFSET                         (0x84U)
-#define PMU_GRF_GPIO0B_DS_1_GPIO0B2_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0B_DS_1_GPIO0B2_DS_MASK                (0x3FU << PMU_GRF_GPIO0B_DS_1_GPIO0B2_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0B_DS_1_GPIO0B3_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0B_DS_1_GPIO0B3_DS_MASK                (0x3FU << PMU_GRF_GPIO0B_DS_1_GPIO0B3_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0B_DS_1_OFFSET                             (0x84U)
+#define GRF_GPIO0B_DS_1_GPIO0B2_DS_SHIFT                   (0U)
+#define GRF_GPIO0B_DS_1_GPIO0B2_DS_MASK                    (0x3FU << GRF_GPIO0B_DS_1_GPIO0B2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0B_DS_1_GPIO0B3_DS_SHIFT                   (8U)
+#define GRF_GPIO0B_DS_1_GPIO0B3_DS_MASK                    (0x3FU << GRF_GPIO0B_DS_1_GPIO0B3_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0B_DS_2 */
-#define PMU_GRF_GPIO0B_DS_2_OFFSET                         (0x88U)
-#define PMU_GRF_GPIO0B_DS_2_GPIO0B4_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0B_DS_2_GPIO0B4_DS_MASK                (0x3FU << PMU_GRF_GPIO0B_DS_2_GPIO0B4_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0B_DS_2_GPIO0B5_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0B_DS_2_GPIO0B5_DS_MASK                (0x3FU << PMU_GRF_GPIO0B_DS_2_GPIO0B5_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0B_DS_2_OFFSET                             (0x88U)
+#define GRF_GPIO0B_DS_2_GPIO0B4_DS_SHIFT                   (0U)
+#define GRF_GPIO0B_DS_2_GPIO0B4_DS_MASK                    (0x3FU << GRF_GPIO0B_DS_2_GPIO0B4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0B_DS_2_GPIO0B5_DS_SHIFT                   (8U)
+#define GRF_GPIO0B_DS_2_GPIO0B5_DS_MASK                    (0x3FU << GRF_GPIO0B_DS_2_GPIO0B5_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0B_DS_3 */
-#define PMU_GRF_GPIO0B_DS_3_OFFSET                         (0x8CU)
-#define PMU_GRF_GPIO0B_DS_3_GPIO0B6_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0B_DS_3_GPIO0B6_DS_MASK                (0x3FU << PMU_GRF_GPIO0B_DS_3_GPIO0B6_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0B_DS_3_GPIO0B7_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0B_DS_3_GPIO0B7_DS_MASK                (0x3FU << PMU_GRF_GPIO0B_DS_3_GPIO0B7_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0B_DS_3_OFFSET                             (0x8CU)
+#define GRF_GPIO0B_DS_3_GPIO0B6_DS_SHIFT                   (0U)
+#define GRF_GPIO0B_DS_3_GPIO0B6_DS_MASK                    (0x3FU << GRF_GPIO0B_DS_3_GPIO0B6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0B_DS_3_GPIO0B7_DS_SHIFT                   (8U)
+#define GRF_GPIO0B_DS_3_GPIO0B7_DS_MASK                    (0x3FU << GRF_GPIO0B_DS_3_GPIO0B7_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0C_DS_0 */
-#define PMU_GRF_GPIO0C_DS_0_OFFSET                         (0x90U)
-#define PMU_GRF_GPIO0C_DS_0_GPIO0C0_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0C_DS_0_GPIO0C0_DS_MASK                (0x3FU << PMU_GRF_GPIO0C_DS_0_GPIO0C0_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0C_DS_0_GPIO0C1_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0C_DS_0_GPIO0C1_DS_MASK                (0x3FU << PMU_GRF_GPIO0C_DS_0_GPIO0C1_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0C_DS_0_OFFSET                             (0x90U)
+#define GRF_GPIO0C_DS_0_GPIO0C0_DS_SHIFT                   (0U)
+#define GRF_GPIO0C_DS_0_GPIO0C0_DS_MASK                    (0x3FU << GRF_GPIO0C_DS_0_GPIO0C0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0C_DS_0_GPIO0C1_DS_SHIFT                   (8U)
+#define GRF_GPIO0C_DS_0_GPIO0C1_DS_MASK                    (0x3FU << GRF_GPIO0C_DS_0_GPIO0C1_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0C_DS_1 */
-#define PMU_GRF_GPIO0C_DS_1_OFFSET                         (0x94U)
-#define PMU_GRF_GPIO0C_DS_1_GPIO0C2_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0C_DS_1_GPIO0C2_DS_MASK                (0x3FU << PMU_GRF_GPIO0C_DS_1_GPIO0C2_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0C_DS_1_GPIO0C3_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0C_DS_1_GPIO0C3_DS_MASK                (0x3FU << PMU_GRF_GPIO0C_DS_1_GPIO0C3_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0C_DS_1_OFFSET                             (0x94U)
+#define GRF_GPIO0C_DS_1_GPIO0C2_DS_SHIFT                   (0U)
+#define GRF_GPIO0C_DS_1_GPIO0C2_DS_MASK                    (0x3FU << GRF_GPIO0C_DS_1_GPIO0C2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0C_DS_1_GPIO0C3_DS_SHIFT                   (8U)
+#define GRF_GPIO0C_DS_1_GPIO0C3_DS_MASK                    (0x3FU << GRF_GPIO0C_DS_1_GPIO0C3_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0C_DS_2 */
-#define PMU_GRF_GPIO0C_DS_2_OFFSET                         (0x98U)
-#define PMU_GRF_GPIO0C_DS_2_GPIO0C4_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0C_DS_2_GPIO0C4_DS_MASK                (0x3FU << PMU_GRF_GPIO0C_DS_2_GPIO0C4_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0C_DS_2_GPIO0C5_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0C_DS_2_GPIO0C5_DS_MASK                (0x3FU << PMU_GRF_GPIO0C_DS_2_GPIO0C5_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0C_DS_2_OFFSET                             (0x98U)
+#define GRF_GPIO0C_DS_2_GPIO0C4_DS_SHIFT                   (0U)
+#define GRF_GPIO0C_DS_2_GPIO0C4_DS_MASK                    (0x3FU << GRF_GPIO0C_DS_2_GPIO0C4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0C_DS_2_GPIO0C5_DS_SHIFT                   (8U)
+#define GRF_GPIO0C_DS_2_GPIO0C5_DS_MASK                    (0x3FU << GRF_GPIO0C_DS_2_GPIO0C5_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0C_DS_3 */
-#define PMU_GRF_GPIO0C_DS_3_OFFSET                         (0x9CU)
-#define PMU_GRF_GPIO0C_DS_3_GPIO0C6_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0C_DS_3_GPIO0C6_DS_MASK                (0x3FU << PMU_GRF_GPIO0C_DS_3_GPIO0C6_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0C_DS_3_GPIO0C7_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0C_DS_3_GPIO0C7_DS_MASK                (0x3FU << PMU_GRF_GPIO0C_DS_3_GPIO0C7_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0C_DS_3_OFFSET                             (0x9CU)
+#define GRF_GPIO0C_DS_3_GPIO0C6_DS_SHIFT                   (0U)
+#define GRF_GPIO0C_DS_3_GPIO0C6_DS_MASK                    (0x3FU << GRF_GPIO0C_DS_3_GPIO0C6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0C_DS_3_GPIO0C7_DS_SHIFT                   (8U)
+#define GRF_GPIO0C_DS_3_GPIO0C7_DS_MASK                    (0x3FU << GRF_GPIO0C_DS_3_GPIO0C7_DS_SHIFT)                  /* 0x00003F00 */
 /* GPIO0D_DS_0 */
-#define PMU_GRF_GPIO0D_DS_0_OFFSET                         (0xA0U)
-#define PMU_GRF_GPIO0D_DS_0_GPIO0D0_DS_SHIFT               (0U)
-#define PMU_GRF_GPIO0D_DS_0_GPIO0D0_DS_MASK                (0x3FU << PMU_GRF_GPIO0D_DS_0_GPIO0D0_DS_SHIFT)              /* 0x0000003F */
-#define PMU_GRF_GPIO0D_DS_0_GPIO0D1_DS_SHIFT               (8U)
-#define PMU_GRF_GPIO0D_DS_0_GPIO0D1_DS_MASK                (0x3FU << PMU_GRF_GPIO0D_DS_0_GPIO0D1_DS_SHIFT)              /* 0x00003F00 */
+#define GRF_GPIO0D_DS_0_OFFSET                             (0xA0U)
+#define GRF_GPIO0D_DS_0_GPIO0D0_DS_SHIFT                   (0U)
+#define GRF_GPIO0D_DS_0_GPIO0D0_DS_MASK                    (0x3FU << GRF_GPIO0D_DS_0_GPIO0D0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO0D_DS_0_GPIO0D1_DS_SHIFT                   (8U)
+#define GRF_GPIO0D_DS_0_GPIO0D1_DS_MASK                    (0x3FU << GRF_GPIO0D_DS_0_GPIO0D1_DS_SHIFT)                  /* 0x00003F00 */
 /* SOC_CON0 */
-#define PMU_GRF_SOC_CON0_OFFSET                            (0x100U)
-#define PMU_GRF_SOC_CON0_CON_32K_IOE_SHIFT                 (0U)
-#define PMU_GRF_SOC_CON0_CON_32K_IOE_MASK                  (0x1U << PMU_GRF_SOC_CON0_CON_32K_IOE_SHIFT)                 /* 0x00000001 */
-#define PMU_GRF_SOC_CON0_I2C0_IOMUX_SEL_SHIFT              (1U)
-#define PMU_GRF_SOC_CON0_I2C0_IOMUX_SEL_MASK               (0x1U << PMU_GRF_SOC_CON0_I2C0_IOMUX_SEL_SHIFT)              /* 0x00000002 */
-#define PMU_GRF_SOC_CON0_APLL_OSC_SOURCE_SEL_SHIFT         (2U)
-#define PMU_GRF_SOC_CON0_APLL_OSC_SOURCE_SEL_MASK          (0x1U << PMU_GRF_SOC_CON0_APLL_OSC_SOURCE_SEL_SHIFT)         /* 0x00000004 */
-#define PMU_GRF_SOC_CON0_DPLL_OSC_SOURCE_SEL_SHIFT         (3U)
-#define PMU_GRF_SOC_CON0_DPLL_OSC_SOURCE_SEL_MASK          (0x1U << PMU_GRF_SOC_CON0_DPLL_OSC_SOURCE_SEL_SHIFT)         /* 0x00000008 */
-#define PMU_GRF_SOC_CON0_UART0_RTS_SEL_SHIFT               (5U)
-#define PMU_GRF_SOC_CON0_UART0_RTS_SEL_MASK                (0x1U << PMU_GRF_SOC_CON0_UART0_RTS_SEL_SHIFT)               /* 0x00000020 */
-#define PMU_GRF_SOC_CON0_UART0_CTS_SEL_SHIFT               (6U)
-#define PMU_GRF_SOC_CON0_UART0_CTS_SEL_MASK                (0x1U << PMU_GRF_SOC_CON0_UART0_CTS_SEL_SHIFT)               /* 0x00000040 */
-#define PMU_GRF_SOC_CON0_GRF_CON_PMIC_SLEEP_SEL_SHIFT      (7U)
-#define PMU_GRF_SOC_CON0_GRF_CON_PMIC_SLEEP_SEL_MASK       (0x1U << PMU_GRF_SOC_CON0_GRF_CON_PMIC_SLEEP_SEL_SHIFT)      /* 0x00000080 */
-#define PMU_GRF_SOC_CON0_DDRPHY_BUFFEREN_SEL_SHIFT         (12U)
-#define PMU_GRF_SOC_CON0_DDRPHY_BUFFEREN_SEL_MASK          (0x1U << PMU_GRF_SOC_CON0_DDRPHY_BUFFEREN_SEL_SHIFT)         /* 0x00001000 */
-#define PMU_GRF_SOC_CON0_DDRPHY_BUFFEREN_CORE_SHIFT        (13U)
-#define PMU_GRF_SOC_CON0_DDRPHY_BUFFEREN_CORE_MASK         (0x1U << PMU_GRF_SOC_CON0_DDRPHY_BUFFEREN_CORE_SHIFT)        /* 0x00002000 */
-#define PMU_GRF_SOC_CON0_PVTM_FRQ_DONE_SHIFT               (14U)
-#define PMU_GRF_SOC_CON0_PVTM_FRQ_DONE_MASK                (0x1U << PMU_GRF_SOC_CON0_PVTM_FRQ_DONE_SHIFT)               /* 0x00004000 */
+#define GRF_SOC_CON0_OFFSET                                (0xA4U)
+#define GRF_SOC_CON0_CON_32K_IOE_SHIFT                     (0U)
+#define GRF_SOC_CON0_CON_32K_IOE_MASK                      (0x1U << GRF_SOC_CON0_CON_32K_IOE_SHIFT)                     /* 0x00000001 */
+#define GRF_SOC_CON0_I2C0_IOMUX_SEL_SHIFT                  (1U)
+#define GRF_SOC_CON0_I2C0_IOMUX_SEL_MASK                   (0x1U << GRF_SOC_CON0_I2C0_IOMUX_SEL_SHIFT)                  /* 0x00000002 */
+#define GRF_SOC_CON0_APLL_OSC_SOURCE_SEL_SHIFT             (2U)
+#define GRF_SOC_CON0_APLL_OSC_SOURCE_SEL_MASK              (0x1U << GRF_SOC_CON0_APLL_OSC_SOURCE_SEL_SHIFT)             /* 0x00000004 */
+#define GRF_SOC_CON0_DPLL_OSC_SOURCE_SEL_SHIFT             (3U)
+#define GRF_SOC_CON0_DPLL_OSC_SOURCE_SEL_MASK              (0x1U << GRF_SOC_CON0_DPLL_OSC_SOURCE_SEL_SHIFT)             /* 0x00000008 */
+#define GRF_SOC_CON0_UART0_RTS_SEL_SHIFT                   (5U)
+#define GRF_SOC_CON0_UART0_RTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART0_RTS_SEL_SHIFT)                   /* 0x00000020 */
+#define GRF_SOC_CON0_UART0_CTS_SEL_SHIFT                   (6U)
+#define GRF_SOC_CON0_UART0_CTS_SEL_MASK                    (0x1U << GRF_SOC_CON0_UART0_CTS_SEL_SHIFT)                   /* 0x00000040 */
+#define GRF_SOC_CON0_GRF_CON_PMIC_SLEEP_SEL_SHIFT          (7U)
+#define GRF_SOC_CON0_GRF_CON_PMIC_SLEEP_SEL_MASK           (0x1U << GRF_SOC_CON0_GRF_CON_PMIC_SLEEP_SEL_SHIFT)          /* 0x00000080 */
+#define GRF_SOC_CON0_DDRPHY_BUFFEREN_SEL_SHIFT             (12U)
+#define GRF_SOC_CON0_DDRPHY_BUFFEREN_SEL_MASK              (0x1U << GRF_SOC_CON0_DDRPHY_BUFFEREN_SEL_SHIFT)             /* 0x00001000 */
+#define GRF_SOC_CON0_DDRPHY_BUFFEREN_CORE_SHIFT            (13U)
+#define GRF_SOC_CON0_DDRPHY_BUFFEREN_CORE_MASK             (0x1U << GRF_SOC_CON0_DDRPHY_BUFFEREN_CORE_SHIFT)            /* 0x00002000 */
+#define GRF_SOC_CON0_PVTM_FRQ_DONE_SHIFT                   (14U)
+#define GRF_SOC_CON0_PVTM_FRQ_DONE_MASK                    (0x1U << GRF_SOC_CON0_PVTM_FRQ_DONE_SHIFT)                   /* 0x00004000 */
 /* SOC_CON1 */
-#define PMU_GRF_SOC_CON1_OFFSET                            (0x104U)
-#define PMU_GRF_SOC_CON1_RESETN_HOLD_SHIFT                 (0U)
-#define PMU_GRF_SOC_CON1_RESETN_HOLD_MASK                  (0xFFFFU << PMU_GRF_SOC_CON1_RESETN_HOLD_SHIFT)              /* 0x0000FFFF */
+#define GRF_SOC_CON1_OFFSET                                (0xA8U)
+#define GRF_SOC_CON1_RESETN_HOLD_SHIFT                     (0U)
+#define GRF_SOC_CON1_RESETN_HOLD_MASK                      (0xFFFFU << GRF_SOC_CON1_RESETN_HOLD_SHIFT)                  /* 0x0000FFFF */
 /* SOC_CON2 */
-#define PMU_GRF_SOC_CON2_OFFSET                            (0x108U)
-#define PMU_GRF_SOC_CON2_RESETN_HOLD_SHIFT                 (0U)
-#define PMU_GRF_SOC_CON2_RESETN_HOLD_MASK                  (0xFFU << PMU_GRF_SOC_CON2_RESETN_HOLD_SHIFT)                /* 0x000000FF */
+#define GRF_SOC_CON2_OFFSET                                (0xACU)
+#define GRF_SOC_CON2_RESETN_HOLD_SHIFT                     (0U)
+#define GRF_SOC_CON2_RESETN_HOLD_MASK                      (0xFFU << GRF_SOC_CON2_RESETN_HOLD_SHIFT)                    /* 0x000000FF */
 /* SOC_CON3 */
-#define PMU_GRF_SOC_CON3_OFFSET                            (0x10CU)
-#define PMU_GRF_SOC_CON3_TSADC_SHUT_RESET_TRIGGER_EN_SHIFT (0U)
-#define PMU_GRF_SOC_CON3_TSADC_SHUT_RESET_TRIGGER_EN_MASK  (0x1U << PMU_GRF_SOC_CON3_TSADC_SHUT_RESET_TRIGGER_EN_SHIFT) /* 0x00000001 */
-#define PMU_GRF_SOC_CON3_WDT_SHUT_RESET_TRIGGER_EN_SHIFT   (1U)
-#define PMU_GRF_SOC_CON3_WDT_SHUT_RESET_TRIGGER_EN_MASK    (0x1U << PMU_GRF_SOC_CON3_WDT_SHUT_RESET_TRIGGER_EN_SHIFT)   /* 0x00000002 */
-#define PMU_GRF_SOC_CON3_DDRIO_RET_EN_SHIFT                (2U)
-#define PMU_GRF_SOC_CON3_DDRIO_RET_EN_MASK                 (0x1U << PMU_GRF_SOC_CON3_DDRIO_RET_EN_SHIFT)                /* 0x00000004 */
-#define PMU_GRF_SOC_CON3_SREF_ENTER_EN_SHIFT               (3U)
-#define PMU_GRF_SOC_CON3_SREF_ENTER_EN_MASK                (0x1U << PMU_GRF_SOC_CON3_SREF_ENTER_EN_SHIFT)               /* 0x00000008 */
-#define PMU_GRF_SOC_CON3_DDRC_GATING_EN_SHIFT              (4U)
-#define PMU_GRF_SOC_CON3_DDRC_GATING_EN_MASK               (0x1U << PMU_GRF_SOC_CON3_DDRC_GATING_EN_SHIFT)              /* 0x00000010 */
-#define PMU_GRF_SOC_CON3_DDR_IO_RET_DE_REQ_SHIFT           (5U)
-#define PMU_GRF_SOC_CON3_DDR_IO_RET_DE_REQ_MASK            (0x1U << PMU_GRF_SOC_CON3_DDR_IO_RET_DE_REQ_SHIFT)           /* 0x00000020 */
-#define PMU_GRF_SOC_CON3_DDR_IO_RET_CFG_SHIFT              (6U)
-#define PMU_GRF_SOC_CON3_DDR_IO_RET_CFG_MASK               (0x1U << PMU_GRF_SOC_CON3_DDR_IO_RET_CFG_SHIFT)              /* 0x00000040 */
-#define PMU_GRF_SOC_CON3_DDR_IO_RET_OEN_CFG_SHIFT          (7U)
-#define PMU_GRF_SOC_CON3_DDR_IO_RET_OEN_CFG_MASK           (0x1U << PMU_GRF_SOC_CON3_DDR_IO_RET_OEN_CFG_SHIFT)          /* 0x00000080 */
-#define PMU_GRF_SOC_CON3_UPCTL_C_SYSREQ_CFG_SHIFT          (8U)
-#define PMU_GRF_SOC_CON3_UPCTL_C_SYSREQ_CFG_MASK           (0x1U << PMU_GRF_SOC_CON3_UPCTL_C_SYSREQ_CFG_SHIFT)          /* 0x00000100 */
-#define PMU_GRF_SOC_CON3_CORE_WFI_EN_SHIFT                 (9U)
-#define PMU_GRF_SOC_CON3_CORE_WFI_EN_MASK                  (0x1U << PMU_GRF_SOC_CON3_CORE_WFI_EN_SHIFT)                 /* 0x00000200 */
-#define PMU_GRF_SOC_CON3_CORE_OFF_EN_SHIFT                 (10U)
-#define PMU_GRF_SOC_CON3_CORE_OFF_EN_MASK                  (0x1U << PMU_GRF_SOC_CON3_CORE_OFF_EN_SHIFT)                 /* 0x00000400 */
-#define PMU_GRF_SOC_CON3_CORE_RET_EN_SHIFT                 (11U)
-#define PMU_GRF_SOC_CON3_CORE_RET_EN_MASK                  (0x1U << PMU_GRF_SOC_CON3_CORE_RET_EN_SHIFT)                 /* 0x00000800 */
-#define PMU_GRF_SOC_CON3_CORE_PACTIVE_EN_SHIFT             (12U)
-#define PMU_GRF_SOC_CON3_CORE_PACTIVE_EN_MASK              (0x1U << PMU_GRF_SOC_CON3_CORE_PACTIVE_EN_SHIFT)             /* 0x00001000 */
-#define PMU_GRF_SOC_CON3_DSU_OFF_EN_SHIFT                  (13U)
-#define PMU_GRF_SOC_CON3_DSU_OFF_EN_MASK                   (0x1U << PMU_GRF_SOC_CON3_DSU_OFF_EN_SHIFT)                  /* 0x00002000 */
-#define PMU_GRF_SOC_CON3_DSU_RET_EN_SHIFT                  (14U)
-#define PMU_GRF_SOC_CON3_DSU_RET_EN_MASK                   (0x1U << PMU_GRF_SOC_CON3_DSU_RET_EN_SHIFT)                  /* 0x00004000 */
-#define PMU_GRF_SOC_CON3_DSU_PACTIVE_EN_SHIFT              (15U)
-#define PMU_GRF_SOC_CON3_DSU_PACTIVE_EN_MASK               (0x1U << PMU_GRF_SOC_CON3_DSU_PACTIVE_EN_SHIFT)              /* 0x00008000 */
+#define GRF_SOC_CON3_OFFSET                                (0xB0U)
+#define GRF_SOC_CON3_TSADC_SHUT_RESET_TRIGGER_EN_SHIFT     (0U)
+#define GRF_SOC_CON3_TSADC_SHUT_RESET_TRIGGER_EN_MASK      (0x1U << GRF_SOC_CON3_TSADC_SHUT_RESET_TRIGGER_EN_SHIFT)     /* 0x00000001 */
+#define GRF_SOC_CON3_WDT_SHUT_RESET_TRIGGER_EN_SHIFT       (1U)
+#define GRF_SOC_CON3_WDT_SHUT_RESET_TRIGGER_EN_MASK        (0x1U << GRF_SOC_CON3_WDT_SHUT_RESET_TRIGGER_EN_SHIFT)       /* 0x00000002 */
+#define GRF_SOC_CON3_DDRIO_RET_EN_SHIFT                    (2U)
+#define GRF_SOC_CON3_DDRIO_RET_EN_MASK                     (0x1U << GRF_SOC_CON3_DDRIO_RET_EN_SHIFT)                    /* 0x00000004 */
+#define GRF_SOC_CON3_SREF_ENTER_EN_SHIFT                   (3U)
+#define GRF_SOC_CON3_SREF_ENTER_EN_MASK                    (0x1U << GRF_SOC_CON3_SREF_ENTER_EN_SHIFT)                   /* 0x00000008 */
+#define GRF_SOC_CON3_DDRC_GATING_EN_SHIFT                  (4U)
+#define GRF_SOC_CON3_DDRC_GATING_EN_MASK                   (0x1U << GRF_SOC_CON3_DDRC_GATING_EN_SHIFT)                  /* 0x00000010 */
+#define GRF_SOC_CON3_DDR_IO_RET_DE_REQ_SHIFT               (5U)
+#define GRF_SOC_CON3_DDR_IO_RET_DE_REQ_MASK                (0x1U << GRF_SOC_CON3_DDR_IO_RET_DE_REQ_SHIFT)               /* 0x00000020 */
+#define GRF_SOC_CON3_DDR_IO_RET_CFG_SHIFT                  (6U)
+#define GRF_SOC_CON3_DDR_IO_RET_CFG_MASK                   (0x1U << GRF_SOC_CON3_DDR_IO_RET_CFG_SHIFT)                  /* 0x00000040 */
+#define GRF_SOC_CON3_DDR_IO_RET_OEN_CFG_SHIFT              (7U)
+#define GRF_SOC_CON3_DDR_IO_RET_OEN_CFG_MASK               (0x1U << GRF_SOC_CON3_DDR_IO_RET_OEN_CFG_SHIFT)              /* 0x00000080 */
+#define GRF_SOC_CON3_UPCTL_C_SYSREQ_CFG_SHIFT              (8U)
+#define GRF_SOC_CON3_UPCTL_C_SYSREQ_CFG_MASK               (0x1U << GRF_SOC_CON3_UPCTL_C_SYSREQ_CFG_SHIFT)              /* 0x00000100 */
+#define GRF_SOC_CON3_CORE_WFI_EN_SHIFT                     (9U)
+#define GRF_SOC_CON3_CORE_WFI_EN_MASK                      (0x1U << GRF_SOC_CON3_CORE_WFI_EN_SHIFT)                     /* 0x00000200 */
+#define GRF_SOC_CON3_CORE_OFF_EN_SHIFT                     (10U)
+#define GRF_SOC_CON3_CORE_OFF_EN_MASK                      (0x1U << GRF_SOC_CON3_CORE_OFF_EN_SHIFT)                     /* 0x00000400 */
+#define GRF_SOC_CON3_CORE_RET_EN_SHIFT                     (11U)
+#define GRF_SOC_CON3_CORE_RET_EN_MASK                      (0x1U << GRF_SOC_CON3_CORE_RET_EN_SHIFT)                     /* 0x00000800 */
+#define GRF_SOC_CON3_CORE_PACTIVE_EN_SHIFT                 (12U)
+#define GRF_SOC_CON3_CORE_PACTIVE_EN_MASK                  (0x1U << GRF_SOC_CON3_CORE_PACTIVE_EN_SHIFT)                 /* 0x00001000 */
+#define GRF_SOC_CON3_DSU_OFF_EN_SHIFT                      (13U)
+#define GRF_SOC_CON3_DSU_OFF_EN_MASK                       (0x1U << GRF_SOC_CON3_DSU_OFF_EN_SHIFT)                      /* 0x00002000 */
+#define GRF_SOC_CON3_DSU_RET_EN_SHIFT                      (14U)
+#define GRF_SOC_CON3_DSU_RET_EN_MASK                       (0x1U << GRF_SOC_CON3_DSU_RET_EN_SHIFT)                      /* 0x00004000 */
+#define GRF_SOC_CON3_DSU_PACTIVE_EN_SHIFT                  (15U)
+#define GRF_SOC_CON3_DSU_PACTIVE_EN_MASK                   (0x1U << GRF_SOC_CON3_DSU_PACTIVE_EN_SHIFT)                  /* 0x00008000 */
 /* SOC_CON4 */
-#define PMU_GRF_SOC_CON4_OFFSET                            (0x110U)
-#define PMU_GRF_SOC_CON4_PWM0_IOMUX_SEL_SHIFT              (0U)
-#define PMU_GRF_SOC_CON4_PWM0_IOMUX_SEL_MASK               (0x3U << PMU_GRF_SOC_CON4_PWM0_IOMUX_SEL_SHIFT)              /* 0x00000003 */
-#define PMU_GRF_SOC_CON4_PWM1_IOMUX_SEL_SHIFT              (2U)
-#define PMU_GRF_SOC_CON4_PWM1_IOMUX_SEL_MASK               (0x3U << PMU_GRF_SOC_CON4_PWM1_IOMUX_SEL_SHIFT)              /* 0x0000000C */
-#define PMU_GRF_SOC_CON4_PWM2_IOMUX_SEL_SHIFT              (4U)
-#define PMU_GRF_SOC_CON4_PWM2_IOMUX_SEL_MASK               (0x3U << PMU_GRF_SOC_CON4_PWM2_IOMUX_SEL_SHIFT)              /* 0x00000030 */
-#define PMU_GRF_SOC_CON4_GPU_PWREN_POL_SHIFT               (10U)
-#define PMU_GRF_SOC_CON4_GPU_PWREN_POL_MASK                (0x3U << PMU_GRF_SOC_CON4_GPU_PWREN_POL_SHIFT)               /* 0x00000C00 */
-#define PMU_GRF_SOC_CON4_SPRA_HD_WTSEL_SHIFT               (12U)
-#define PMU_GRF_SOC_CON4_SPRA_HD_WTSEL_MASK                (0x3U << PMU_GRF_SOC_CON4_SPRA_HD_WTSEL_SHIFT)               /* 0x00003000 */
-#define PMU_GRF_SOC_CON4_SPRA_HD_RTSEL_SHIFT               (14U)
-#define PMU_GRF_SOC_CON4_SPRA_HD_RTSEL_MASK                (0x3U << PMU_GRF_SOC_CON4_SPRA_HD_RTSEL_SHIFT)               /* 0x0000C000 */
+#define GRF_SOC_CON4_OFFSET                                (0xB4U)
+#define GRF_SOC_CON4_PWM0_IOMUX_SEL_SHIFT                  (0U)
+#define GRF_SOC_CON4_PWM0_IOMUX_SEL_MASK                   (0x3U << GRF_SOC_CON4_PWM0_IOMUX_SEL_SHIFT)                  /* 0x00000003 */
+#define GRF_SOC_CON4_PWM1_IOMUX_SEL_SHIFT                  (2U)
+#define GRF_SOC_CON4_PWM1_IOMUX_SEL_MASK                   (0x3U << GRF_SOC_CON4_PWM1_IOMUX_SEL_SHIFT)                  /* 0x0000000C */
+#define GRF_SOC_CON4_PWM2_IOMUX_SEL_SHIFT                  (4U)
+#define GRF_SOC_CON4_PWM2_IOMUX_SEL_MASK                   (0x3U << GRF_SOC_CON4_PWM2_IOMUX_SEL_SHIFT)                  /* 0x00000030 */
+#define GRF_SOC_CON4_GPU_PWREN_POL_SHIFT                   (10U)
+#define GRF_SOC_CON4_GPU_PWREN_POL_MASK                    (0x3U << GRF_SOC_CON4_GPU_PWREN_POL_SHIFT)                   /* 0x00000C00 */
+#define GRF_SOC_CON4_SPRA_HD_WTSEL_SHIFT                   (12U)
+#define GRF_SOC_CON4_SPRA_HD_WTSEL_MASK                    (0x3U << GRF_SOC_CON4_SPRA_HD_WTSEL_SHIFT)                   /* 0x00003000 */
+#define GRF_SOC_CON4_SPRA_HD_RTSEL_SHIFT                   (14U)
+#define GRF_SOC_CON4_SPRA_HD_RTSEL_MASK                    (0x3U << GRF_SOC_CON4_SPRA_HD_RTSEL_SHIFT)                   /* 0x0000C000 */
 /* SOC_CON5 */
-#define PMU_GRF_SOC_CON5_OFFSET                            (0x114U)
-#define PMU_GRF_SOC_CON5_OUT2CHIP_RST_INIT_SHIFT           (0U)
-#define PMU_GRF_SOC_CON5_OUT2CHIP_RST_INIT_MASK            (0x1FFFU << PMU_GRF_SOC_CON5_OUT2CHIP_RST_INIT_SHIFT)        /* 0x00001FFF */
+#define GRF_SOC_CON5_OFFSET                                (0xB8U)
+#define GRF_SOC_CON5_OUT2CHIP_RST_INIT_SHIFT               (0U)
+#define GRF_SOC_CON5_OUT2CHIP_RST_INIT_MASK                (0x1FFFU << GRF_SOC_CON5_OUT2CHIP_RST_INIT_SHIFT)            /* 0x00001FFF */
 /* SOC_STATUS */
-#define PMU_GRF_SOC_STATUS_OFFSET                          (0x120U)
-#define PMU_GRF_SOC_STATUS                                 (0x0U)
-#define PMU_GRF_SOC_STATUS_WFI_STATUS_SHIFT                (0U)
-#define PMU_GRF_SOC_STATUS_WFI_STATUS_MASK                 (0xFU << PMU_GRF_SOC_STATUS_WFI_STATUS_SHIFT)                /* 0x0000000F */
+#define GRF_SOC_STATUS_OFFSET                              (0xBCU)
+#define GRF_SOC_STATUS                                     (0x0U)
+#define GRF_SOC_STATUS_WFI_STATUS_SHIFT                    (0U)
+#define GRF_SOC_STATUS_WFI_STATUS_MASK                     (0xFU << GRF_SOC_STATUS_WFI_STATUS_SHIFT)                    /* 0x0000000F */
 /* IO_VSEL0 */
-#define PMU_GRF_IO_VSEL0_OFFSET                            (0x140U)
-#define PMU_GRF_IO_VSEL0_VCCIO2_VOLTAGE_CONTROL_SELECT_SHIFT (0U)
-#define PMU_GRF_IO_VSEL0_VCCIO2_VOLTAGE_CONTROL_SELECT_MASK (0x1U << PMU_GRF_IO_VSEL0_VCCIO2_VOLTAGE_CONTROL_SELECT_SHIFT) /* 0x00000001 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO1_SEL18_SHIFT            (1U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO1_SEL18_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO1_SEL18_SHIFT)            /* 0x00000002 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO2_SEL18_SHIFT            (2U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO2_SEL18_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO2_SEL18_SHIFT)            /* 0x00000004 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO3_SEL18_SHIFT            (3U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO3_SEL18_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO3_SEL18_SHIFT)            /* 0x00000008 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO4_SEL18_SHIFT            (4U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO4_SEL18_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO4_SEL18_SHIFT)            /* 0x00000010 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO5_SEL18_SHIFT            (5U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO5_SEL18_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO5_SEL18_SHIFT)            /* 0x00000020 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO6_SEL18_SHIFT            (6U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO6_SEL18_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO6_SEL18_SHIFT)            /* 0x00000040 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO7_SEL18_SHIFT            (7U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO7_SEL18_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO7_SEL18_SHIFT)            /* 0x00000080 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO1_SEL25_SHIFT            (8U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO1_SEL25_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO1_SEL25_SHIFT)            /* 0x00000100 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO2_SEL25_SHIFT            (9U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO2_SEL25_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO2_SEL25_SHIFT)            /* 0x00000200 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO3_SEL25_SHIFT            (10U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO3_SEL25_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO3_SEL25_SHIFT)            /* 0x00000400 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO4_SEL25_SHIFT            (11U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO4_SEL25_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO4_SEL25_SHIFT)            /* 0x00000800 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO5_SEL25_SHIFT            (12U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO5_SEL25_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO5_SEL25_SHIFT)            /* 0x00001000 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO6_SEL25_SHIFT            (13U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO6_SEL25_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO6_SEL25_SHIFT)            /* 0x00002000 */
-#define PMU_GRF_IO_VSEL0_POC_VCCIO7_SEL25_SHIFT            (14U)
-#define PMU_GRF_IO_VSEL0_POC_VCCIO7_SEL25_MASK             (0x1U << PMU_GRF_IO_VSEL0_POC_VCCIO7_SEL25_SHIFT)            /* 0x00004000 */
+#define GRF_IO_VSEL0_OFFSET                                (0xC0U)
+#define GRF_IO_VSEL0_VCCIO2_VOLTAGE_CONTROL_SELECT_SHIFT   (0U)
+#define GRF_IO_VSEL0_VCCIO2_VOLTAGE_CONTROL_SELECT_MASK    (0x1U << GRF_IO_VSEL0_VCCIO2_VOLTAGE_CONTROL_SELECT_SHIFT)   /* 0x00000001 */
+#define GRF_IO_VSEL0_POC_VCCIO1_SEL18_SHIFT                (1U)
+#define GRF_IO_VSEL0_POC_VCCIO1_SEL18_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO1_SEL18_SHIFT)                /* 0x00000002 */
+#define GRF_IO_VSEL0_POC_VCCIO2_SEL18_SHIFT                (2U)
+#define GRF_IO_VSEL0_POC_VCCIO2_SEL18_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO2_SEL18_SHIFT)                /* 0x00000004 */
+#define GRF_IO_VSEL0_POC_VCCIO3_SEL18_SHIFT                (3U)
+#define GRF_IO_VSEL0_POC_VCCIO3_SEL18_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO3_SEL18_SHIFT)                /* 0x00000008 */
+#define GRF_IO_VSEL0_POC_VCCIO4_SEL18_SHIFT                (4U)
+#define GRF_IO_VSEL0_POC_VCCIO4_SEL18_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO4_SEL18_SHIFT)                /* 0x00000010 */
+#define GRF_IO_VSEL0_POC_VCCIO5_SEL18_SHIFT                (5U)
+#define GRF_IO_VSEL0_POC_VCCIO5_SEL18_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO5_SEL18_SHIFT)                /* 0x00000020 */
+#define GRF_IO_VSEL0_POC_VCCIO6_SEL18_SHIFT                (6U)
+#define GRF_IO_VSEL0_POC_VCCIO6_SEL18_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO6_SEL18_SHIFT)                /* 0x00000040 */
+#define GRF_IO_VSEL0_POC_VCCIO7_SEL18_SHIFT                (7U)
+#define GRF_IO_VSEL0_POC_VCCIO7_SEL18_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO7_SEL18_SHIFT)                /* 0x00000080 */
+#define GRF_IO_VSEL0_POC_VCCIO1_SEL25_SHIFT                (8U)
+#define GRF_IO_VSEL0_POC_VCCIO1_SEL25_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO1_SEL25_SHIFT)                /* 0x00000100 */
+#define GRF_IO_VSEL0_POC_VCCIO2_SEL25_SHIFT                (9U)
+#define GRF_IO_VSEL0_POC_VCCIO2_SEL25_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO2_SEL25_SHIFT)                /* 0x00000200 */
+#define GRF_IO_VSEL0_POC_VCCIO3_SEL25_SHIFT                (10U)
+#define GRF_IO_VSEL0_POC_VCCIO3_SEL25_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO3_SEL25_SHIFT)                /* 0x00000400 */
+#define GRF_IO_VSEL0_POC_VCCIO4_SEL25_SHIFT                (11U)
+#define GRF_IO_VSEL0_POC_VCCIO4_SEL25_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO4_SEL25_SHIFT)                /* 0x00000800 */
+#define GRF_IO_VSEL0_POC_VCCIO5_SEL25_SHIFT                (12U)
+#define GRF_IO_VSEL0_POC_VCCIO5_SEL25_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO5_SEL25_SHIFT)                /* 0x00001000 */
+#define GRF_IO_VSEL0_POC_VCCIO6_SEL25_SHIFT                (13U)
+#define GRF_IO_VSEL0_POC_VCCIO6_SEL25_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO6_SEL25_SHIFT)                /* 0x00002000 */
+#define GRF_IO_VSEL0_POC_VCCIO7_SEL25_SHIFT                (14U)
+#define GRF_IO_VSEL0_POC_VCCIO7_SEL25_MASK                 (0x1U << GRF_IO_VSEL0_POC_VCCIO7_SEL25_SHIFT)                /* 0x00004000 */
 /* IO_VSEL1 */
-#define PMU_GRF_IO_VSEL1_OFFSET                            (0x144U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO1_SEL33_SHIFT            (1U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO1_SEL33_MASK             (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO1_SEL33_SHIFT)            /* 0x00000002 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO2_SEL33_SHIFT            (2U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO2_SEL33_MASK             (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO2_SEL33_SHIFT)            /* 0x00000004 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO3_SEL33_SHIFT            (3U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO3_SEL33_MASK             (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO3_SEL33_SHIFT)            /* 0x00000008 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO4_SEL33_SHIFT            (4U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO4_SEL33_MASK             (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO4_SEL33_SHIFT)            /* 0x00000010 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO5_SEL33_SHIFT            (5U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO5_SEL33_MASK             (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO5_SEL33_SHIFT)            /* 0x00000020 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO6_SEL33_SHIFT            (6U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO6_SEL33_MASK             (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO6_SEL33_SHIFT)            /* 0x00000040 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO7_SEL33_SHIFT            (7U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO7_SEL33_MASK             (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO7_SEL33_SHIFT)            /* 0x00000080 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO1_IDDQ_SHIFT             (8U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO1_IDDQ_MASK              (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO1_IDDQ_SHIFT)             /* 0x00000100 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO2_IDDQ_SHIFT             (9U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO2_IDDQ_MASK              (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO2_IDDQ_SHIFT)             /* 0x00000200 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO3_IDDQ_SHIFT             (10U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO3_IDDQ_MASK              (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO3_IDDQ_SHIFT)             /* 0x00000400 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO4_IDDQ_SHIFT             (11U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO4_IDDQ_MASK              (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO4_IDDQ_SHIFT)             /* 0x00000800 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO5_IDDQ_SHIFT             (12U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO5_IDDQ_MASK              (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO5_IDDQ_SHIFT)             /* 0x00001000 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO6_IDDQ_SHIFT             (13U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO6_IDDQ_MASK              (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO6_IDDQ_SHIFT)             /* 0x00002000 */
-#define PMU_GRF_IO_VSEL1_POC_VCCIO7_IDDQ_SHIFT             (14U)
-#define PMU_GRF_IO_VSEL1_POC_VCCIO7_IDDQ_MASK              (0x1U << PMU_GRF_IO_VSEL1_POC_VCCIO7_IDDQ_SHIFT)             /* 0x00004000 */
+#define GRF_IO_VSEL1_OFFSET                                (0xC4U)
+#define GRF_IO_VSEL1_POC_VCCIO1_SEL33_SHIFT                (1U)
+#define GRF_IO_VSEL1_POC_VCCIO1_SEL33_MASK                 (0x1U << GRF_IO_VSEL1_POC_VCCIO1_SEL33_SHIFT)                /* 0x00000002 */
+#define GRF_IO_VSEL1_POC_VCCIO2_SEL33_SHIFT                (2U)
+#define GRF_IO_VSEL1_POC_VCCIO2_SEL33_MASK                 (0x1U << GRF_IO_VSEL1_POC_VCCIO2_SEL33_SHIFT)                /* 0x00000004 */
+#define GRF_IO_VSEL1_POC_VCCIO3_SEL33_SHIFT                (3U)
+#define GRF_IO_VSEL1_POC_VCCIO3_SEL33_MASK                 (0x1U << GRF_IO_VSEL1_POC_VCCIO3_SEL33_SHIFT)                /* 0x00000008 */
+#define GRF_IO_VSEL1_POC_VCCIO4_SEL33_SHIFT                (4U)
+#define GRF_IO_VSEL1_POC_VCCIO4_SEL33_MASK                 (0x1U << GRF_IO_VSEL1_POC_VCCIO4_SEL33_SHIFT)                /* 0x00000010 */
+#define GRF_IO_VSEL1_POC_VCCIO5_SEL33_SHIFT                (5U)
+#define GRF_IO_VSEL1_POC_VCCIO5_SEL33_MASK                 (0x1U << GRF_IO_VSEL1_POC_VCCIO5_SEL33_SHIFT)                /* 0x00000020 */
+#define GRF_IO_VSEL1_POC_VCCIO6_SEL33_SHIFT                (6U)
+#define GRF_IO_VSEL1_POC_VCCIO6_SEL33_MASK                 (0x1U << GRF_IO_VSEL1_POC_VCCIO6_SEL33_SHIFT)                /* 0x00000040 */
+#define GRF_IO_VSEL1_POC_VCCIO7_SEL33_SHIFT                (7U)
+#define GRF_IO_VSEL1_POC_VCCIO7_SEL33_MASK                 (0x1U << GRF_IO_VSEL1_POC_VCCIO7_SEL33_SHIFT)                /* 0x00000080 */
+#define GRF_IO_VSEL1_POC_VCCIO1_IDDQ_SHIFT                 (8U)
+#define GRF_IO_VSEL1_POC_VCCIO1_IDDQ_MASK                  (0x1U << GRF_IO_VSEL1_POC_VCCIO1_IDDQ_SHIFT)                 /* 0x00000100 */
+#define GRF_IO_VSEL1_POC_VCCIO2_IDDQ_SHIFT                 (9U)
+#define GRF_IO_VSEL1_POC_VCCIO2_IDDQ_MASK                  (0x1U << GRF_IO_VSEL1_POC_VCCIO2_IDDQ_SHIFT)                 /* 0x00000200 */
+#define GRF_IO_VSEL1_POC_VCCIO3_IDDQ_SHIFT                 (10U)
+#define GRF_IO_VSEL1_POC_VCCIO3_IDDQ_MASK                  (0x1U << GRF_IO_VSEL1_POC_VCCIO3_IDDQ_SHIFT)                 /* 0x00000400 */
+#define GRF_IO_VSEL1_POC_VCCIO4_IDDQ_SHIFT                 (11U)
+#define GRF_IO_VSEL1_POC_VCCIO4_IDDQ_MASK                  (0x1U << GRF_IO_VSEL1_POC_VCCIO4_IDDQ_SHIFT)                 /* 0x00000800 */
+#define GRF_IO_VSEL1_POC_VCCIO5_IDDQ_SHIFT                 (12U)
+#define GRF_IO_VSEL1_POC_VCCIO5_IDDQ_MASK                  (0x1U << GRF_IO_VSEL1_POC_VCCIO5_IDDQ_SHIFT)                 /* 0x00001000 */
+#define GRF_IO_VSEL1_POC_VCCIO6_IDDQ_SHIFT                 (13U)
+#define GRF_IO_VSEL1_POC_VCCIO6_IDDQ_MASK                  (0x1U << GRF_IO_VSEL1_POC_VCCIO6_IDDQ_SHIFT)                 /* 0x00002000 */
+#define GRF_IO_VSEL1_POC_VCCIO7_IDDQ_SHIFT                 (14U)
+#define GRF_IO_VSEL1_POC_VCCIO7_IDDQ_MASK                  (0x1U << GRF_IO_VSEL1_POC_VCCIO7_IDDQ_SHIFT)                 /* 0x00004000 */
 /* IO_VSEL2 */
-#define PMU_GRF_IO_VSEL2_OFFSET                            (0x148U)
-#define PMU_GRF_IO_VSEL2_POC_PMUIO2_SEL18_SHIFT            (1U)
-#define PMU_GRF_IO_VSEL2_POC_PMUIO2_SEL18_MASK             (0x1U << PMU_GRF_IO_VSEL2_POC_PMUIO2_SEL18_SHIFT)            /* 0x00000002 */
-#define PMU_GRF_IO_VSEL2_POC_PMUIO2_SEL25_SHIFT            (3U)
-#define PMU_GRF_IO_VSEL2_POC_PMUIO2_SEL25_MASK             (0x1U << PMU_GRF_IO_VSEL2_POC_PMUIO2_SEL25_SHIFT)            /* 0x00000008 */
-#define PMU_GRF_IO_VSEL2_POC_PMUIO2_SEL33_SHIFT            (5U)
-#define PMU_GRF_IO_VSEL2_POC_PMUIO2_SEL33_MASK             (0x1U << PMU_GRF_IO_VSEL2_POC_PMUIO2_SEL33_SHIFT)            /* 0x00000020 */
-#define PMU_GRF_IO_VSEL2_POC_PMUIO1_IDDQ_SHIFT             (6U)
-#define PMU_GRF_IO_VSEL2_POC_PMUIO1_IDDQ_MASK              (0x1U << PMU_GRF_IO_VSEL2_POC_PMUIO1_IDDQ_SHIFT)             /* 0x00000040 */
-#define PMU_GRF_IO_VSEL2_POC_PMUIO2_IDDQ_SHIFT             (7U)
-#define PMU_GRF_IO_VSEL2_POC_PMUIO2_IDDQ_MASK              (0x1U << PMU_GRF_IO_VSEL2_POC_PMUIO2_IDDQ_SHIFT)             /* 0x00000080 */
+#define GRF_IO_VSEL2_OFFSET                                (0xC8U)
+#define GRF_IO_VSEL2_POC_PMUIO2_SEL18_SHIFT                (1U)
+#define GRF_IO_VSEL2_POC_PMUIO2_SEL18_MASK                 (0x1U << GRF_IO_VSEL2_POC_PMUIO2_SEL18_SHIFT)                /* 0x00000002 */
+#define GRF_IO_VSEL2_POC_PMUIO2_SEL25_SHIFT                (3U)
+#define GRF_IO_VSEL2_POC_PMUIO2_SEL25_MASK                 (0x1U << GRF_IO_VSEL2_POC_PMUIO2_SEL25_SHIFT)                /* 0x00000008 */
+#define GRF_IO_VSEL2_POC_PMUIO2_SEL33_SHIFT                (5U)
+#define GRF_IO_VSEL2_POC_PMUIO2_SEL33_MASK                 (0x1U << GRF_IO_VSEL2_POC_PMUIO2_SEL33_SHIFT)                /* 0x00000020 */
+#define GRF_IO_VSEL2_POC_PMUIO1_IDDQ_SHIFT                 (6U)
+#define GRF_IO_VSEL2_POC_PMUIO1_IDDQ_MASK                  (0x1U << GRF_IO_VSEL2_POC_PMUIO1_IDDQ_SHIFT)                 /* 0x00000040 */
+#define GRF_IO_VSEL2_POC_PMUIO2_IDDQ_SHIFT                 (7U)
+#define GRF_IO_VSEL2_POC_PMUIO2_IDDQ_MASK                  (0x1U << GRF_IO_VSEL2_POC_PMUIO2_IDDQ_SHIFT)                 /* 0x00000080 */
 /* DLL_CON0 */
-#define PMU_GRF_DLL_CON0_OFFSET                            (0x180U)
-#define PMU_GRF_DLL_CON0_PVTM_CLKOUT_DIV_SHIFT             (0U)
-#define PMU_GRF_DLL_CON0_PVTM_CLKOUT_DIV_MASK              (0xFFFU << PMU_GRF_DLL_CON0_PVTM_CLKOUT_DIV_SHIFT)           /* 0x00000FFF */
+#define GRF_DLL_CON0_OFFSET                                (0xCCU)
+#define GRF_DLL_CON0_PVTM_CLKOUT_DIV_SHIFT                 (0U)
+#define GRF_DLL_CON0_PVTM_CLKOUT_DIV_MASK                  (0xFFFU << GRF_DLL_CON0_PVTM_CLKOUT_DIV_SHIFT)               /* 0x00000FFF */
 /* OS_REG0 */
-#define PMU_GRF_OS_REG0_OFFSET                             (0x200U)
-#define PMU_GRF_OS_REG0_PMU_OS_REG0_SHIFT                  (0U)
-#define PMU_GRF_OS_REG0_PMU_OS_REG0_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG0_PMU_OS_REG0_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG0_OFFSET                                 (0xD0U)
+#define GRF_OS_REG0_PMU_OS_REG0_SHIFT                      (0U)
+#define GRF_OS_REG0_PMU_OS_REG0_MASK                       (0xFFFFFFFFU << GRF_OS_REG0_PMU_OS_REG0_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG1 */
-#define PMU_GRF_OS_REG1_OFFSET                             (0x204U)
-#define PMU_GRF_OS_REG1_PMU_OS_REG1_SHIFT                  (0U)
-#define PMU_GRF_OS_REG1_PMU_OS_REG1_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG1_PMU_OS_REG1_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG1_OFFSET                                 (0xD4U)
+#define GRF_OS_REG1_PMU_OS_REG1_SHIFT                      (0U)
+#define GRF_OS_REG1_PMU_OS_REG1_MASK                       (0xFFFFFFFFU << GRF_OS_REG1_PMU_OS_REG1_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG2 */
-#define PMU_GRF_OS_REG2_OFFSET                             (0x208U)
-#define PMU_GRF_OS_REG2_PMU_OS_REG2_SHIFT                  (0U)
-#define PMU_GRF_OS_REG2_PMU_OS_REG2_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG2_PMU_OS_REG2_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG2_OFFSET                                 (0xD8U)
+#define GRF_OS_REG2_PMU_OS_REG2_SHIFT                      (0U)
+#define GRF_OS_REG2_PMU_OS_REG2_MASK                       (0xFFFFFFFFU << GRF_OS_REG2_PMU_OS_REG2_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG3 */
-#define PMU_GRF_OS_REG3_OFFSET                             (0x20CU)
-#define PMU_GRF_OS_REG3_PMU_OS_REG3_SHIFT                  (0U)
-#define PMU_GRF_OS_REG3_PMU_OS_REG3_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG3_PMU_OS_REG3_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG3_OFFSET                                 (0xDCU)
+#define GRF_OS_REG3_PMU_OS_REG3_SHIFT                      (0U)
+#define GRF_OS_REG3_PMU_OS_REG3_MASK                       (0xFFFFFFFFU << GRF_OS_REG3_PMU_OS_REG3_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG4 */
-#define PMU_GRF_OS_REG4_OFFSET                             (0x210U)
-#define PMU_GRF_OS_REG4_PMU_OS_REG4_SHIFT                  (0U)
-#define PMU_GRF_OS_REG4_PMU_OS_REG4_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG4_PMU_OS_REG4_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG4_OFFSET                                 (0xE0U)
+#define GRF_OS_REG4_PMU_OS_REG4_SHIFT                      (0U)
+#define GRF_OS_REG4_PMU_OS_REG4_MASK                       (0xFFFFFFFFU << GRF_OS_REG4_PMU_OS_REG4_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG5 */
-#define PMU_GRF_OS_REG5_OFFSET                             (0x214U)
-#define PMU_GRF_OS_REG5_PMU_OS_REG5_SHIFT                  (0U)
-#define PMU_GRF_OS_REG5_PMU_OS_REG5_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG5_PMU_OS_REG5_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG5_OFFSET                                 (0xE4U)
+#define GRF_OS_REG5_PMU_OS_REG5_SHIFT                      (0U)
+#define GRF_OS_REG5_PMU_OS_REG5_MASK                       (0xFFFFFFFFU << GRF_OS_REG5_PMU_OS_REG5_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG6 */
-#define PMU_GRF_OS_REG6_OFFSET                             (0x218U)
-#define PMU_GRF_OS_REG6_PMU_OS_REG6_SHIFT                  (0U)
-#define PMU_GRF_OS_REG6_PMU_OS_REG6_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG6_PMU_OS_REG6_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG6_OFFSET                                 (0xE8U)
+#define GRF_OS_REG6_PMU_OS_REG6_SHIFT                      (0U)
+#define GRF_OS_REG6_PMU_OS_REG6_MASK                       (0xFFFFFFFFU << GRF_OS_REG6_PMU_OS_REG6_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG7 */
-#define PMU_GRF_OS_REG7_OFFSET                             (0x21CU)
-#define PMU_GRF_OS_REG7_PMU_OS_REG7_SHIFT                  (0U)
-#define PMU_GRF_OS_REG7_PMU_OS_REG7_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG7_PMU_OS_REG7_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG7_OFFSET                                 (0xECU)
+#define GRF_OS_REG7_PMU_OS_REG7_SHIFT                      (0U)
+#define GRF_OS_REG7_PMU_OS_REG7_MASK                       (0xFFFFFFFFU << GRF_OS_REG7_PMU_OS_REG7_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG8 */
-#define PMU_GRF_OS_REG8_OFFSET                             (0x220U)
-#define PMU_GRF_OS_REG8_PMU_OS_REG8_SHIFT                  (0U)
-#define PMU_GRF_OS_REG8_PMU_OS_REG8_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG8_PMU_OS_REG8_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG8_OFFSET                                 (0xF0U)
+#define GRF_OS_REG8_PMU_OS_REG8_SHIFT                      (0U)
+#define GRF_OS_REG8_PMU_OS_REG8_MASK                       (0xFFFFFFFFU << GRF_OS_REG8_PMU_OS_REG8_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG9 */
-#define PMU_GRF_OS_REG9_OFFSET                             (0x224U)
-#define PMU_GRF_OS_REG9_PMU_OS_REG9_SHIFT                  (0U)
-#define PMU_GRF_OS_REG9_PMU_OS_REG9_MASK                   (0xFFFFFFFFU << PMU_GRF_OS_REG9_PMU_OS_REG9_SHIFT)           /* 0xFFFFFFFF */
+#define GRF_OS_REG9_OFFSET                                 (0xF4U)
+#define GRF_OS_REG9_PMU_OS_REG9_SHIFT                      (0U)
+#define GRF_OS_REG9_PMU_OS_REG9_MASK                       (0xFFFFFFFFU << GRF_OS_REG9_PMU_OS_REG9_SHIFT)               /* 0xFFFFFFFF */
 /* OS_REG10 */
-#define PMU_GRF_OS_REG10_OFFSET                            (0x228U)
-#define PMU_GRF_OS_REG10_PMU_OS_REG10_SHIFT                (0U)
-#define PMU_GRF_OS_REG10_PMU_OS_REG10_MASK                 (0xFFFFFFFFU << PMU_GRF_OS_REG10_PMU_OS_REG10_SHIFT)         /* 0xFFFFFFFF */
+#define GRF_OS_REG10_OFFSET                                (0xF8U)
+#define GRF_OS_REG10_PMU_OS_REG10_SHIFT                    (0U)
+#define GRF_OS_REG10_PMU_OS_REG10_MASK                     (0xFFFFFFFFU << GRF_OS_REG10_PMU_OS_REG10_SHIFT)             /* 0xFFFFFFFF */
 /* OS_REG11 */
-#define PMU_GRF_OS_REG11_OFFSET                            (0x22CU)
-#define PMU_GRF_OS_REG11_PMU_OS_REG11_SHIFT                (0U)
-#define PMU_GRF_OS_REG11_PMU_OS_REG11_MASK                 (0xFFFFFFFFU << PMU_GRF_OS_REG11_PMU_OS_REG11_SHIFT)         /* 0xFFFFFFFF */
+#define GRF_OS_REG11_OFFSET                                (0xFCU)
+#define GRF_OS_REG11_PMU_OS_REG11_SHIFT                    (0U)
+#define GRF_OS_REG11_PMU_OS_REG11_MASK                     (0xFFFFFFFFU << GRF_OS_REG11_PMU_OS_REG11_SHIFT)             /* 0xFFFFFFFF */
 /* RESET_FUNCTION_STATUS */
-#define PMU_GRF_RESET_FUNCTION_STATUS_OFFSET               (0x230U)
-#define PMU_GRF_RESET_FUNCTION_STATUS_FIRST_RESET_SRC_SHIFT (0U)
-#define PMU_GRF_RESET_FUNCTION_STATUS_FIRST_RESET_SRC_MASK (0x1U << PMU_GRF_RESET_FUNCTION_STATUS_FIRST_RESET_SRC_SHIFT) /* 0x00000001 */
-#define PMU_GRF_RESET_FUNCTION_STATUS_WDT_RESET_SRC_SHIFT  (1U)
-#define PMU_GRF_RESET_FUNCTION_STATUS_WDT_RESET_SRC_MASK   (0x1U << PMU_GRF_RESET_FUNCTION_STATUS_WDT_RESET_SRC_SHIFT)  /* 0x00000002 */
-#define PMU_GRF_RESET_FUNCTION_STATUS_TSADC_SHUT_RESET_SRC_SHIFT (2U)
-#define PMU_GRF_RESET_FUNCTION_STATUS_TSADC_SHUT_RESET_SRC_MASK (0x1U << PMU_GRF_RESET_FUNCTION_STATUS_TSADC_SHUT_RESET_SRC_SHIFT) /* 0x00000004 */
-#define PMU_GRF_RESET_FUNCTION_STATUS_DDR_FAIL_SAFE_SRC_SHIFT (3U)
-#define PMU_GRF_RESET_FUNCTION_STATUS_DDR_FAIL_SAFE_SRC_MASK (0x1U << PMU_GRF_RESET_FUNCTION_STATUS_DDR_FAIL_SAFE_SRC_SHIFT) /* 0x00000008 */
+#define GRF_RESET_FUNCTION_STATUS_OFFSET                   (0x100U)
+#define GRF_RESET_FUNCTION_STATUS_FIRST_RESET_SRC_SHIFT    (0U)
+#define GRF_RESET_FUNCTION_STATUS_FIRST_RESET_SRC_MASK     (0x1U << GRF_RESET_FUNCTION_STATUS_FIRST_RESET_SRC_SHIFT)    /* 0x00000001 */
+#define GRF_RESET_FUNCTION_STATUS_WDT_RESET_SRC_SHIFT      (1U)
+#define GRF_RESET_FUNCTION_STATUS_WDT_RESET_SRC_MASK       (0x1U << GRF_RESET_FUNCTION_STATUS_WDT_RESET_SRC_SHIFT)      /* 0x00000002 */
+#define GRF_RESET_FUNCTION_STATUS_TSADC_SHUT_RESET_SRC_SHIFT (2U)
+#define GRF_RESET_FUNCTION_STATUS_TSADC_SHUT_RESET_SRC_MASK (0x1U << GRF_RESET_FUNCTION_STATUS_TSADC_SHUT_RESET_SRC_SHIFT) /* 0x00000004 */
+#define GRF_RESET_FUNCTION_STATUS_DDR_FAIL_SAFE_SRC_SHIFT  (3U)
+#define GRF_RESET_FUNCTION_STATUS_DDR_FAIL_SAFE_SRC_MASK   (0x1U << GRF_RESET_FUNCTION_STATUS_DDR_FAIL_SAFE_SRC_SHIFT)  /* 0x00000008 */
 /* RESET_FUNCTION_CLR */
-#define PMU_GRF_RESET_FUNCTION_CLR_OFFSET                  (0x234U)
-#define PMU_GRF_RESET_FUNCTION_CLR_FIRST_RESET_SRC_CLR_SHIFT (0U)
-#define PMU_GRF_RESET_FUNCTION_CLR_FIRST_RESET_SRC_CLR_MASK (0x1U << PMU_GRF_RESET_FUNCTION_CLR_FIRST_RESET_SRC_CLR_SHIFT) /* 0x00000001 */
-#define PMU_GRF_RESET_FUNCTION_CLR_WDT_RESET_SRC_CLR_SHIFT (1U)
-#define PMU_GRF_RESET_FUNCTION_CLR_WDT_RESET_SRC_CLR_MASK  (0x1U << PMU_GRF_RESET_FUNCTION_CLR_WDT_RESET_SRC_CLR_SHIFT) /* 0x00000002 */
-#define PMU_GRF_RESET_FUNCTION_CLR_TSADC_SHUT_RESET_SRC_CLR_SHIFT (2U)
-#define PMU_GRF_RESET_FUNCTION_CLR_TSADC_SHUT_RESET_SRC_CLR_MASK (0x1U << PMU_GRF_RESET_FUNCTION_CLR_TSADC_SHUT_RESET_SRC_CLR_SHIFT) /* 0x00000004 */
-#define PMU_GRF_RESET_FUNCTION_CLR_DDR_FAIL_SAFE_SRC_CLR_SHIFT (3U)
-#define PMU_GRF_RESET_FUNCTION_CLR_DDR_FAIL_SAFE_SRC_CLR_MASK (0x1U << PMU_GRF_RESET_FUNCTION_CLR_DDR_FAIL_SAFE_SRC_CLR_SHIFT) /* 0x00000008 */
+#define GRF_RESET_FUNCTION_CLR_OFFSET                      (0x104U)
+#define GRF_RESET_FUNCTION_CLR_FIRST_RESET_SRC_CLR_SHIFT   (0U)
+#define GRF_RESET_FUNCTION_CLR_FIRST_RESET_SRC_CLR_MASK    (0x1U << GRF_RESET_FUNCTION_CLR_FIRST_RESET_SRC_CLR_SHIFT)   /* 0x00000001 */
+#define GRF_RESET_FUNCTION_CLR_WDT_RESET_SRC_CLR_SHIFT     (1U)
+#define GRF_RESET_FUNCTION_CLR_WDT_RESET_SRC_CLR_MASK      (0x1U << GRF_RESET_FUNCTION_CLR_WDT_RESET_SRC_CLR_SHIFT)     /* 0x00000002 */
+#define GRF_RESET_FUNCTION_CLR_TSADC_SHUT_RESET_SRC_CLR_SHIFT (2U)
+#define GRF_RESET_FUNCTION_CLR_TSADC_SHUT_RESET_SRC_CLR_MASK (0x1U << GRF_RESET_FUNCTION_CLR_TSADC_SHUT_RESET_SRC_CLR_SHIFT) /* 0x00000004 */
+#define GRF_RESET_FUNCTION_CLR_DDR_FAIL_SAFE_SRC_CLR_SHIFT (3U)
+#define GRF_RESET_FUNCTION_CLR_DDR_FAIL_SAFE_SRC_CLR_MASK  (0x1U << GRF_RESET_FUNCTION_CLR_DDR_FAIL_SAFE_SRC_CLR_SHIFT) /* 0x00000008 */
 /* SIG_DETECT_CON */
-#define PMU_GRF_SIG_DETECT_CON_OFFSET                      (0x380U)
-#define PMU_GRF_SIG_DETECT_CON_SDMMC0_DETECTN_POS_IRQ_MSK_SHIFT (0U)
-#define PMU_GRF_SIG_DETECT_CON_SDMMC0_DETECTN_POS_IRQ_MSK_MASK (0x1U << PMU_GRF_SIG_DETECT_CON_SDMMC0_DETECTN_POS_IRQ_MSK_SHIFT) /* 0x00000001 */
-#define PMU_GRF_SIG_DETECT_CON_SDMMC0_DETECTN_NEG_IRQ_MSK_SHIFT (1U)
-#define PMU_GRF_SIG_DETECT_CON_SDMMC0_DETECTN_NEG_IRQ_MSK_MASK (0x1U << PMU_GRF_SIG_DETECT_CON_SDMMC0_DETECTN_NEG_IRQ_MSK_SHIFT) /* 0x00000002 */
-#define PMU_GRF_SIG_DETECT_CON_SDMMC1_DETECTN_POS_IRQ_MSK_SHIFT (2U)
-#define PMU_GRF_SIG_DETECT_CON_SDMMC1_DETECTN_POS_IRQ_MSK_MASK (0x1U << PMU_GRF_SIG_DETECT_CON_SDMMC1_DETECTN_POS_IRQ_MSK_SHIFT) /* 0x00000004 */
-#define PMU_GRF_SIG_DETECT_CON_SDMMC1_DETECTN_NEG_IRQ_MSK_SHIFT (3U)
-#define PMU_GRF_SIG_DETECT_CON_SDMMC1_DETECTN_NEG_IRQ_MSK_MASK (0x1U << PMU_GRF_SIG_DETECT_CON_SDMMC1_DETECTN_NEG_IRQ_MSK_SHIFT) /* 0x00000008 */
-#define PMU_GRF_SIG_DETECT_CON_SDMMC2_DETECTN_POS_IRQ_MSK_SHIFT (4U)
-#define PMU_GRF_SIG_DETECT_CON_SDMMC2_DETECTN_POS_IRQ_MSK_MASK (0x1U << PMU_GRF_SIG_DETECT_CON_SDMMC2_DETECTN_POS_IRQ_MSK_SHIFT) /* 0x00000010 */
-#define PMU_GRF_SIG_DETECT_CON_SDMMC2_DETECTN_NEG_IRQ_MSK_SHIFT (5U)
-#define PMU_GRF_SIG_DETECT_CON_SDMMC2_DETECTN_NEG_IRQ_MSK_MASK (0x1U << PMU_GRF_SIG_DETECT_CON_SDMMC2_DETECTN_NEG_IRQ_MSK_SHIFT) /* 0x00000020 */
+#define GRF_SIG_DETECT_CON_OFFSET                          (0x108U)
+#define GRF_SIG_DETECT_CON_SDMMC0_DETECTN_POS_IRQ_MSK_SHIFT (0U)
+#define GRF_SIG_DETECT_CON_SDMMC0_DETECTN_POS_IRQ_MSK_MASK (0x1U << GRF_SIG_DETECT_CON_SDMMC0_DETECTN_POS_IRQ_MSK_SHIFT) /* 0x00000001 */
+#define GRF_SIG_DETECT_CON_SDMMC0_DETECTN_NEG_IRQ_MSK_SHIFT (1U)
+#define GRF_SIG_DETECT_CON_SDMMC0_DETECTN_NEG_IRQ_MSK_MASK (0x1U << GRF_SIG_DETECT_CON_SDMMC0_DETECTN_NEG_IRQ_MSK_SHIFT) /* 0x00000002 */
+#define GRF_SIG_DETECT_CON_SDMMC1_DETECTN_POS_IRQ_MSK_SHIFT (2U)
+#define GRF_SIG_DETECT_CON_SDMMC1_DETECTN_POS_IRQ_MSK_MASK (0x1U << GRF_SIG_DETECT_CON_SDMMC1_DETECTN_POS_IRQ_MSK_SHIFT) /* 0x00000004 */
+#define GRF_SIG_DETECT_CON_SDMMC1_DETECTN_NEG_IRQ_MSK_SHIFT (3U)
+#define GRF_SIG_DETECT_CON_SDMMC1_DETECTN_NEG_IRQ_MSK_MASK (0x1U << GRF_SIG_DETECT_CON_SDMMC1_DETECTN_NEG_IRQ_MSK_SHIFT) /* 0x00000008 */
+#define GRF_SIG_DETECT_CON_SDMMC2_DETECTN_POS_IRQ_MSK_SHIFT (4U)
+#define GRF_SIG_DETECT_CON_SDMMC2_DETECTN_POS_IRQ_MSK_MASK (0x1U << GRF_SIG_DETECT_CON_SDMMC2_DETECTN_POS_IRQ_MSK_SHIFT) /* 0x00000010 */
+#define GRF_SIG_DETECT_CON_SDMMC2_DETECTN_NEG_IRQ_MSK_SHIFT (5U)
+#define GRF_SIG_DETECT_CON_SDMMC2_DETECTN_NEG_IRQ_MSK_MASK (0x1U << GRF_SIG_DETECT_CON_SDMMC2_DETECTN_NEG_IRQ_MSK_SHIFT) /* 0x00000020 */
 /* SIG_DETECT_STATUS */
-#define PMU_GRF_SIG_DETECT_STATUS_OFFSET                   (0x390U)
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_POS_IRQ_SHIFT (0U)
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_POS_IRQ_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_POS_IRQ_SHIFT) /* 0x00000001 */
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_NEG_IRQ_SHIFT (1U)
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_NEG_IRQ_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_NEG_IRQ_SHIFT) /* 0x00000002 */
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_POS_IRQ_SHIFT (2U)
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_POS_IRQ_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_POS_IRQ_SHIFT) /* 0x00000004 */
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_NEG_IRQ_SHIFT (3U)
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_NEG_IRQ_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_NEG_IRQ_SHIFT) /* 0x00000008 */
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_POS_IRQ_SHIFT (4U)
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_POS_IRQ_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_POS_IRQ_SHIFT) /* 0x00000010 */
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_NEG_IRQ_SHIFT (5U)
-#define PMU_GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_NEG_IRQ_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_NEG_IRQ_SHIFT) /* 0x00000020 */
+#define GRF_SIG_DETECT_STATUS_OFFSET                       (0x10CU)
+#define GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_POS_IRQ_SHIFT (0U)
+#define GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_POS_IRQ_MASK  (0x1U << GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_POS_IRQ_SHIFT) /* 0x00000001 */
+#define GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_NEG_IRQ_SHIFT (1U)
+#define GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_NEG_IRQ_MASK  (0x1U << GRF_SIG_DETECT_STATUS_SDMMC0_DETECTN_NEG_IRQ_SHIFT) /* 0x00000002 */
+#define GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_POS_IRQ_SHIFT (2U)
+#define GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_POS_IRQ_MASK  (0x1U << GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_POS_IRQ_SHIFT) /* 0x00000004 */
+#define GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_NEG_IRQ_SHIFT (3U)
+#define GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_NEG_IRQ_MASK  (0x1U << GRF_SIG_DETECT_STATUS_SDMMC1_DETECTN_NEG_IRQ_SHIFT) /* 0x00000008 */
+#define GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_POS_IRQ_SHIFT (4U)
+#define GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_POS_IRQ_MASK  (0x1U << GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_POS_IRQ_SHIFT) /* 0x00000010 */
+#define GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_NEG_IRQ_SHIFT (5U)
+#define GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_NEG_IRQ_MASK  (0x1U << GRF_SIG_DETECT_STATUS_SDMMC2_DETECTN_NEG_IRQ_SHIFT) /* 0x00000020 */
 /* SIG_DETECT_STATUS_CLEAR */
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_OFFSET             (0x3A0U)
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_POS_IRQ_CLR_SHIFT (0U)
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_POS_IRQ_CLR_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_POS_IRQ_CLR_SHIFT) /* 0x00000001 */
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_NEG_IRQ_CLR_SHIFT (1U)
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_NEG_IRQ_CLR_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_NEG_IRQ_CLR_SHIFT) /* 0x00000002 */
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_POS_IRQ_CLR_SHIFT (2U)
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_POS_IRQ_CLR_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_POS_IRQ_CLR_SHIFT) /* 0x00000004 */
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_NEG_IRQ_CLR_SHIFT (3U)
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_NEG_IRQ_CLR_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_NEG_IRQ_CLR_SHIFT) /* 0x00000008 */
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_POS_IRQ_CLR_SHIFT (4U)
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_POS_IRQ_CLR_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_POS_IRQ_CLR_SHIFT) /* 0x00000010 */
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_NEG_IRQ_CLR_SHIFT (5U)
-#define PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_NEG_IRQ_CLR_MASK (0x1U << PMU_GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_NEG_IRQ_CLR_SHIFT) /* 0x00000020 */
+#define GRF_SIG_DETECT_STATUS_CLEAR_OFFSET                 (0x110U)
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_POS_IRQ_CLR_SHIFT (0U)
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_POS_IRQ_CLR_MASK (0x1U << GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_POS_IRQ_CLR_SHIFT) /* 0x00000001 */
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_NEG_IRQ_CLR_SHIFT (1U)
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_NEG_IRQ_CLR_MASK (0x1U << GRF_SIG_DETECT_STATUS_CLEAR_SDMMC0_DETECTN_NEG_IRQ_CLR_SHIFT) /* 0x00000002 */
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_POS_IRQ_CLR_SHIFT (2U)
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_POS_IRQ_CLR_MASK (0x1U << GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_POS_IRQ_CLR_SHIFT) /* 0x00000004 */
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_NEG_IRQ_CLR_SHIFT (3U)
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_NEG_IRQ_CLR_MASK (0x1U << GRF_SIG_DETECT_STATUS_CLEAR_SDMMC1_DETECTN_NEG_IRQ_CLR_SHIFT) /* 0x00000008 */
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_POS_IRQ_CLR_SHIFT (4U)
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_POS_IRQ_CLR_MASK (0x1U << GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_POS_IRQ_CLR_SHIFT) /* 0x00000010 */
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_NEG_IRQ_CLR_SHIFT (5U)
+#define GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_NEG_IRQ_CLR_MASK (0x1U << GRF_SIG_DETECT_STATUS_CLEAR_SDMMC2_DETECTN_NEG_IRQ_CLR_SHIFT) /* 0x00000020 */
 /* SDMMC_DET_COUNTER */
-#define PMU_GRF_SDMMC_DET_COUNTER_OFFSET                   (0x3B0U)
-#define PMU_GRF_SDMMC_DET_COUNTER_SDMMC_DETECTN_COUNT_SHIFT (0U)
-#define PMU_GRF_SDMMC_DET_COUNTER_SDMMC_DETECTN_COUNT_MASK (0xFFFFFU << PMU_GRF_SDMMC_DET_COUNTER_SDMMC_DETECTN_COUNT_SHIFT) /* 0x000FFFFF */
+#define GRF_SDMMC_DET_COUNTER_OFFSET                       (0x114U)
+#define GRF_SDMMC_DET_COUNTER_SDMMC_DETECTN_COUNT_SHIFT    (0U)
+#define GRF_SDMMC_DET_COUNTER_SDMMC_DETECTN_COUNT_MASK     (0xFFFFFU << GRF_SDMMC_DET_COUNTER_SDMMC_DETECTN_COUNT_SHIFT) /* 0x000FFFFF */
+/* GPIO1A_IOMUX_L */
+#define GRF_GPIO1A_IOMUX_L_OFFSET                          (0x40000U)
+#define GRF_GPIO1A_IOMUX_L_GPIO1A0_SEL_SHIFT               (0U)
+#define GRF_GPIO1A_IOMUX_L_GPIO1A0_SEL_MASK                (0x7U << GRF_GPIO1A_IOMUX_L_GPIO1A0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO1A_IOMUX_L_GPIO1A1_SEL_SHIFT               (4U)
+#define GRF_GPIO1A_IOMUX_L_GPIO1A1_SEL_MASK                (0x7U << GRF_GPIO1A_IOMUX_L_GPIO1A1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO1A_IOMUX_L_GPIO1A2_SEL_SHIFT               (8U)
+#define GRF_GPIO1A_IOMUX_L_GPIO1A2_SEL_MASK                (0x7U << GRF_GPIO1A_IOMUX_L_GPIO1A2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO1A_IOMUX_L_GPIO1A3_SEL_SHIFT               (12U)
+#define GRF_GPIO1A_IOMUX_L_GPIO1A3_SEL_MASK                (0x7U << GRF_GPIO1A_IOMUX_L_GPIO1A3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO1A_IOMUX_H */
+#define GRF_GPIO1A_IOMUX_H_OFFSET                          (0x40004U)
+#define GRF_GPIO1A_IOMUX_H_GPIO1A4_SEL_SHIFT               (0U)
+#define GRF_GPIO1A_IOMUX_H_GPIO1A4_SEL_MASK                (0x7U << GRF_GPIO1A_IOMUX_H_GPIO1A4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO1A_IOMUX_H_GPIO1A5_SEL_SHIFT               (4U)
+#define GRF_GPIO1A_IOMUX_H_GPIO1A5_SEL_MASK                (0x7U << GRF_GPIO1A_IOMUX_H_GPIO1A5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO1A_IOMUX_H_GPIO1A6_SEL_SHIFT               (8U)
+#define GRF_GPIO1A_IOMUX_H_GPIO1A6_SEL_MASK                (0x7U << GRF_GPIO1A_IOMUX_H_GPIO1A6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO1A_IOMUX_H_GPIO1A7_SEL_SHIFT               (12U)
+#define GRF_GPIO1A_IOMUX_H_GPIO1A7_SEL_MASK                (0x7U << GRF_GPIO1A_IOMUX_H_GPIO1A7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO1B_IOMUX_L */
+#define GRF_GPIO1B_IOMUX_L_OFFSET                          (0x40008U)
+#define GRF_GPIO1B_IOMUX_L_GPIO1B0_SEL_SHIFT               (0U)
+#define GRF_GPIO1B_IOMUX_L_GPIO1B0_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_L_GPIO1B0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO1B_IOMUX_L_GPIO1B1_SEL_SHIFT               (4U)
+#define GRF_GPIO1B_IOMUX_L_GPIO1B1_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_L_GPIO1B1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO1B_IOMUX_L_GPIO1B2_SEL_SHIFT               (8U)
+#define GRF_GPIO1B_IOMUX_L_GPIO1B2_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_L_GPIO1B2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO1B_IOMUX_L_GPIO1B3_SEL_SHIFT               (12U)
+#define GRF_GPIO1B_IOMUX_L_GPIO1B3_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_L_GPIO1B3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO1B_IOMUX_H */
+#define GRF_GPIO1B_IOMUX_H_OFFSET                          (0x4000CU)
+#define GRF_GPIO1B_IOMUX_H_GPIO1B4_SEL_SHIFT               (0U)
+#define GRF_GPIO1B_IOMUX_H_GPIO1B4_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_H_GPIO1B4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO1B_IOMUX_H_GPIO1B5_SEL_SHIFT               (4U)
+#define GRF_GPIO1B_IOMUX_H_GPIO1B5_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_H_GPIO1B5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO1B_IOMUX_H_GPIO1B6_SEL_SHIFT               (8U)
+#define GRF_GPIO1B_IOMUX_H_GPIO1B6_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_H_GPIO1B6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO1B_IOMUX_H_GPIO1B7_SEL_SHIFT               (12U)
+#define GRF_GPIO1B_IOMUX_H_GPIO1B7_SEL_MASK                (0x7U << GRF_GPIO1B_IOMUX_H_GPIO1B7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO1C_IOMUX_L */
+#define GRF_GPIO1C_IOMUX_L_OFFSET                          (0x40010U)
+#define GRF_GPIO1C_IOMUX_L_GPIO1C0_SEL_SHIFT               (0U)
+#define GRF_GPIO1C_IOMUX_L_GPIO1C0_SEL_MASK                (0x7U << GRF_GPIO1C_IOMUX_L_GPIO1C0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO1C_IOMUX_L_GPIO1C1_SEL_SHIFT               (4U)
+#define GRF_GPIO1C_IOMUX_L_GPIO1C1_SEL_MASK                (0x7U << GRF_GPIO1C_IOMUX_L_GPIO1C1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO1C_IOMUX_L_GPIO1C2_SEL_SHIFT               (8U)
+#define GRF_GPIO1C_IOMUX_L_GPIO1C2_SEL_MASK                (0x7U << GRF_GPIO1C_IOMUX_L_GPIO1C2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO1C_IOMUX_L_GPIO1C3_SEL_SHIFT               (12U)
+#define GRF_GPIO1C_IOMUX_L_GPIO1C3_SEL_MASK                (0x7U << GRF_GPIO1C_IOMUX_L_GPIO1C3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO1C_IOMUX_H */
+#define GRF_GPIO1C_IOMUX_H_OFFSET                          (0x40014U)
+#define GRF_GPIO1C_IOMUX_H_GPIO1C4_SEL_SHIFT               (0U)
+#define GRF_GPIO1C_IOMUX_H_GPIO1C4_SEL_MASK                (0x7U << GRF_GPIO1C_IOMUX_H_GPIO1C4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO1C_IOMUX_H_GPIO1C5_SEL_SHIFT               (4U)
+#define GRF_GPIO1C_IOMUX_H_GPIO1C5_SEL_MASK                (0x7U << GRF_GPIO1C_IOMUX_H_GPIO1C5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO1C_IOMUX_H_GPIO1C6_SEL_SHIFT               (8U)
+#define GRF_GPIO1C_IOMUX_H_GPIO1C6_SEL_MASK                (0x7U << GRF_GPIO1C_IOMUX_H_GPIO1C6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO1C_IOMUX_H_GPIO1C7_SEL_SHIFT               (12U)
+#define GRF_GPIO1C_IOMUX_H_GPIO1C7_SEL_MASK                (0x7U << GRF_GPIO1C_IOMUX_H_GPIO1C7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO1D_IOMUX_L */
+#define GRF_GPIO1D_IOMUX_L_OFFSET                          (0x40018U)
+#define GRF_GPIO1D_IOMUX_L_GPIO1D0_SEL_SHIFT               (0U)
+#define GRF_GPIO1D_IOMUX_L_GPIO1D0_SEL_MASK                (0x7U << GRF_GPIO1D_IOMUX_L_GPIO1D0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO1D_IOMUX_L_GPIO1D1_SEL_SHIFT               (4U)
+#define GRF_GPIO1D_IOMUX_L_GPIO1D1_SEL_MASK                (0x7U << GRF_GPIO1D_IOMUX_L_GPIO1D1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO1D_IOMUX_L_GPIO1D2_SEL_SHIFT               (8U)
+#define GRF_GPIO1D_IOMUX_L_GPIO1D2_SEL_MASK                (0x7U << GRF_GPIO1D_IOMUX_L_GPIO1D2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO1D_IOMUX_L_GPIO1D3_SEL_SHIFT               (12U)
+#define GRF_GPIO1D_IOMUX_L_GPIO1D3_SEL_MASK                (0x7U << GRF_GPIO1D_IOMUX_L_GPIO1D3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO1D_IOMUX_H */
+#define GRF_GPIO1D_IOMUX_H_OFFSET                          (0x4001CU)
+#define GRF_GPIO1D_IOMUX_H_GPIO1D4_SEL_SHIFT               (0U)
+#define GRF_GPIO1D_IOMUX_H_GPIO1D4_SEL_MASK                (0x7U << GRF_GPIO1D_IOMUX_H_GPIO1D4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO1D_IOMUX_H_GPIO1D5_SEL_SHIFT               (4U)
+#define GRF_GPIO1D_IOMUX_H_GPIO1D5_SEL_MASK                (0x7U << GRF_GPIO1D_IOMUX_H_GPIO1D5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO1D_IOMUX_H_GPIO1D6_SEL_SHIFT               (8U)
+#define GRF_GPIO1D_IOMUX_H_GPIO1D6_SEL_MASK                (0x7U << GRF_GPIO1D_IOMUX_H_GPIO1D6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO1D_IOMUX_H_GPIO1D7_SEL_SHIFT               (12U)
+#define GRF_GPIO1D_IOMUX_H_GPIO1D7_SEL_MASK                (0x7U << GRF_GPIO1D_IOMUX_H_GPIO1D7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO2A_IOMUX_L */
+#define GRF_GPIO2A_IOMUX_L_OFFSET                          (0x40020U)
+#define GRF_GPIO2A_IOMUX_L_GPIO2A0_SEL_SHIFT               (0U)
+#define GRF_GPIO2A_IOMUX_L_GPIO2A0_SEL_MASK                (0x7U << GRF_GPIO2A_IOMUX_L_GPIO2A0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO2A_IOMUX_L_GPIO2A1_SEL_SHIFT               (4U)
+#define GRF_GPIO2A_IOMUX_L_GPIO2A1_SEL_MASK                (0x7U << GRF_GPIO2A_IOMUX_L_GPIO2A1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO2A_IOMUX_L_GPIO2A2_SEL_SHIFT               (8U)
+#define GRF_GPIO2A_IOMUX_L_GPIO2A2_SEL_MASK                (0x7U << GRF_GPIO2A_IOMUX_L_GPIO2A2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO2A_IOMUX_L_GPIO2A3_SEL_SHIFT               (12U)
+#define GRF_GPIO2A_IOMUX_L_GPIO2A3_SEL_MASK                (0x7U << GRF_GPIO2A_IOMUX_L_GPIO2A3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO2A_IOMUX_H */
+#define GRF_GPIO2A_IOMUX_H_OFFSET                          (0x40024U)
+#define GRF_GPIO2A_IOMUX_H_GPIO2A4_SEL_SHIFT               (0U)
+#define GRF_GPIO2A_IOMUX_H_GPIO2A4_SEL_MASK                (0x7U << GRF_GPIO2A_IOMUX_H_GPIO2A4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO2A_IOMUX_H_GPIO2A5_SEL_SHIFT               (4U)
+#define GRF_GPIO2A_IOMUX_H_GPIO2A5_SEL_MASK                (0x7U << GRF_GPIO2A_IOMUX_H_GPIO2A5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO2A_IOMUX_H_GPIO2A6_SEL_SHIFT               (8U)
+#define GRF_GPIO2A_IOMUX_H_GPIO2A6_SEL_MASK                (0x7U << GRF_GPIO2A_IOMUX_H_GPIO2A6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO2A_IOMUX_H_GPIO2A7_SEL_SHIFT               (12U)
+#define GRF_GPIO2A_IOMUX_H_GPIO2A7_SEL_MASK                (0x7U << GRF_GPIO2A_IOMUX_H_GPIO2A7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO2B_IOMUX_L */
+#define GRF_GPIO2B_IOMUX_L_OFFSET                          (0x40028U)
+#define GRF_GPIO2B_IOMUX_L_GPIO2B0_SEL_SHIFT               (0U)
+#define GRF_GPIO2B_IOMUX_L_GPIO2B0_SEL_MASK                (0x7U << GRF_GPIO2B_IOMUX_L_GPIO2B0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO2B_IOMUX_L_GPIO2B1_SEL_SHIFT               (4U)
+#define GRF_GPIO2B_IOMUX_L_GPIO2B1_SEL_MASK                (0x7U << GRF_GPIO2B_IOMUX_L_GPIO2B1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO2B_IOMUX_L_GPIO2B2_SEL_SHIFT               (8U)
+#define GRF_GPIO2B_IOMUX_L_GPIO2B2_SEL_MASK                (0x7U << GRF_GPIO2B_IOMUX_L_GPIO2B2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO2B_IOMUX_L_GPIO2B3_SEL_SHIFT               (12U)
+#define GRF_GPIO2B_IOMUX_L_GPIO2B3_SEL_MASK                (0x7U << GRF_GPIO2B_IOMUX_L_GPIO2B3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO2B_IOMUX_H */
+#define GRF_GPIO2B_IOMUX_H_OFFSET                          (0x4002CU)
+#define GRF_GPIO2B_IOMUX_H_GPIO2B4_SEL_SHIFT               (0U)
+#define GRF_GPIO2B_IOMUX_H_GPIO2B4_SEL_MASK                (0x7U << GRF_GPIO2B_IOMUX_H_GPIO2B4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO2B_IOMUX_H_GPIO2B5_SEL_SHIFT               (4U)
+#define GRF_GPIO2B_IOMUX_H_GPIO2B5_SEL_MASK                (0x7U << GRF_GPIO2B_IOMUX_H_GPIO2B5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO2B_IOMUX_H_GPIO2B6_SEL_SHIFT               (8U)
+#define GRF_GPIO2B_IOMUX_H_GPIO2B6_SEL_MASK                (0x7U << GRF_GPIO2B_IOMUX_H_GPIO2B6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO2B_IOMUX_H_GPIO2B7_SEL_SHIFT               (12U)
+#define GRF_GPIO2B_IOMUX_H_GPIO2B7_SEL_MASK                (0x7U << GRF_GPIO2B_IOMUX_H_GPIO2B7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO2C_IOMUX_L */
+#define GRF_GPIO2C_IOMUX_L_OFFSET                          (0x40030U)
+#define GRF_GPIO2C_IOMUX_L_GPIO2C0_SEL_SHIFT               (0U)
+#define GRF_GPIO2C_IOMUX_L_GPIO2C0_SEL_MASK                (0x7U << GRF_GPIO2C_IOMUX_L_GPIO2C0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO2C_IOMUX_L_GPIO2C1_SEL_SHIFT               (4U)
+#define GRF_GPIO2C_IOMUX_L_GPIO2C1_SEL_MASK                (0x7U << GRF_GPIO2C_IOMUX_L_GPIO2C1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO2C_IOMUX_L_GPIO2C2_SEL_SHIFT               (8U)
+#define GRF_GPIO2C_IOMUX_L_GPIO2C2_SEL_MASK                (0x7U << GRF_GPIO2C_IOMUX_L_GPIO2C2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO2C_IOMUX_L_GPIO2C3_SEL_SHIFT               (12U)
+#define GRF_GPIO2C_IOMUX_L_GPIO2C3_SEL_MASK                (0x7U << GRF_GPIO2C_IOMUX_L_GPIO2C3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO2C_IOMUX_H */
+#define GRF_GPIO2C_IOMUX_H_OFFSET                          (0x40034U)
+#define GRF_GPIO2C_IOMUX_H_GPIO2C4_SEL_SHIFT               (0U)
+#define GRF_GPIO2C_IOMUX_H_GPIO2C4_SEL_MASK                (0x7U << GRF_GPIO2C_IOMUX_H_GPIO2C4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO2C_IOMUX_H_GPIO2C5_SEL_SHIFT               (4U)
+#define GRF_GPIO2C_IOMUX_H_GPIO2C5_SEL_MASK                (0x7U << GRF_GPIO2C_IOMUX_H_GPIO2C5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO2C_IOMUX_H_GPIO2C6_SEL_SHIFT               (8U)
+#define GRF_GPIO2C_IOMUX_H_GPIO2C6_SEL_MASK                (0x7U << GRF_GPIO2C_IOMUX_H_GPIO2C6_SEL_SHIFT)               /* 0x00000700 */
+/* GPIO2D_IOMUX_L */
+#define GRF_GPIO2D_IOMUX_L_OFFSET                          (0x40038U)
+#define GRF_GPIO2D_IOMUX_L_GPIO2D0_SEL_SHIFT               (0U)
+#define GRF_GPIO2D_IOMUX_L_GPIO2D0_SEL_MASK                (0x7U << GRF_GPIO2D_IOMUX_L_GPIO2D0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO2D_IOMUX_L_GPIO2D1_SEL_SHIFT               (4U)
+#define GRF_GPIO2D_IOMUX_L_GPIO2D1_SEL_MASK                (0x7U << GRF_GPIO2D_IOMUX_L_GPIO2D1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO2D_IOMUX_L_GPIO2D2_SEL_SHIFT               (8U)
+#define GRF_GPIO2D_IOMUX_L_GPIO2D2_SEL_MASK                (0x7U << GRF_GPIO2D_IOMUX_L_GPIO2D2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO2D_IOMUX_L_GPIO2D3_SEL_SHIFT               (12U)
+#define GRF_GPIO2D_IOMUX_L_GPIO2D3_SEL_MASK                (0x7U << GRF_GPIO2D_IOMUX_L_GPIO2D3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO2D_IOMUX_H */
+#define GRF_GPIO2D_IOMUX_H_OFFSET                          (0x4003CU)
+#define GRF_GPIO2D_IOMUX_H_GPIO2D4_SEL_SHIFT               (0U)
+#define GRF_GPIO2D_IOMUX_H_GPIO2D4_SEL_MASK                (0x7U << GRF_GPIO2D_IOMUX_H_GPIO2D4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO2D_IOMUX_H_GPIO2D5_SEL_SHIFT               (4U)
+#define GRF_GPIO2D_IOMUX_H_GPIO2D5_SEL_MASK                (0x7U << GRF_GPIO2D_IOMUX_H_GPIO2D5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO2D_IOMUX_H_GPIO2D6_SEL_SHIFT               (8U)
+#define GRF_GPIO2D_IOMUX_H_GPIO2D6_SEL_MASK                (0x7U << GRF_GPIO2D_IOMUX_H_GPIO2D6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO2D_IOMUX_H_GPIO2D7_SEL_SHIFT               (12U)
+#define GRF_GPIO2D_IOMUX_H_GPIO2D7_SEL_MASK                (0x7U << GRF_GPIO2D_IOMUX_H_GPIO2D7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO3A_IOMUX_L */
+#define GRF_GPIO3A_IOMUX_L_OFFSET                          (0x40040U)
+#define GRF_GPIO3A_IOMUX_L_GPIO3A0_SEL_SHIFT               (0U)
+#define GRF_GPIO3A_IOMUX_L_GPIO3A0_SEL_MASK                (0x7U << GRF_GPIO3A_IOMUX_L_GPIO3A0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO3A_IOMUX_L_GPIO3A1_SEL_SHIFT               (4U)
+#define GRF_GPIO3A_IOMUX_L_GPIO3A1_SEL_MASK                (0x7U << GRF_GPIO3A_IOMUX_L_GPIO3A1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO3A_IOMUX_L_GPIO3A2_SEL_SHIFT               (8U)
+#define GRF_GPIO3A_IOMUX_L_GPIO3A2_SEL_MASK                (0x7U << GRF_GPIO3A_IOMUX_L_GPIO3A2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO3A_IOMUX_L_GPIO3A3_SEL_SHIFT               (12U)
+#define GRF_GPIO3A_IOMUX_L_GPIO3A3_SEL_MASK                (0x7U << GRF_GPIO3A_IOMUX_L_GPIO3A3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO3A_IOMUX_H */
+#define GRF_GPIO3A_IOMUX_H_OFFSET                          (0x40044U)
+#define GRF_GPIO3A_IOMUX_H_GPIO3A4_SEL_SHIFT               (0U)
+#define GRF_GPIO3A_IOMUX_H_GPIO3A4_SEL_MASK                (0x7U << GRF_GPIO3A_IOMUX_H_GPIO3A4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO3A_IOMUX_H_GPIO3A5_SEL_SHIFT               (4U)
+#define GRF_GPIO3A_IOMUX_H_GPIO3A5_SEL_MASK                (0x7U << GRF_GPIO3A_IOMUX_H_GPIO3A5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO3A_IOMUX_H_GPIO3A6_SEL_SHIFT               (8U)
+#define GRF_GPIO3A_IOMUX_H_GPIO3A6_SEL_MASK                (0x7U << GRF_GPIO3A_IOMUX_H_GPIO3A6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO3A_IOMUX_H_GPIO3A7_SEL_SHIFT               (12U)
+#define GRF_GPIO3A_IOMUX_H_GPIO3A7_SEL_MASK                (0x7U << GRF_GPIO3A_IOMUX_H_GPIO3A7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO3B_IOMUX_L */
+#define GRF_GPIO3B_IOMUX_L_OFFSET                          (0x40048U)
+#define GRF_GPIO3B_IOMUX_L_GPIO3B0_SEL_SHIFT               (0U)
+#define GRF_GPIO3B_IOMUX_L_GPIO3B0_SEL_MASK                (0x7U << GRF_GPIO3B_IOMUX_L_GPIO3B0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO3B_IOMUX_L_GPIO3B1_SEL_SHIFT               (4U)
+#define GRF_GPIO3B_IOMUX_L_GPIO3B1_SEL_MASK                (0x7U << GRF_GPIO3B_IOMUX_L_GPIO3B1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO3B_IOMUX_L_GPIO3B2_SEL_SHIFT               (8U)
+#define GRF_GPIO3B_IOMUX_L_GPIO3B2_SEL_MASK                (0x7U << GRF_GPIO3B_IOMUX_L_GPIO3B2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO3B_IOMUX_L_GPIO3B3_SEL_SHIFT               (12U)
+#define GRF_GPIO3B_IOMUX_L_GPIO3B3_SEL_MASK                (0x7U << GRF_GPIO3B_IOMUX_L_GPIO3B3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO3B_IOMUX_H */
+#define GRF_GPIO3B_IOMUX_H_OFFSET                          (0x4004CU)
+#define GRF_GPIO3B_IOMUX_H_GPIO3B4_SEL_SHIFT               (0U)
+#define GRF_GPIO3B_IOMUX_H_GPIO3B4_SEL_MASK                (0x7U << GRF_GPIO3B_IOMUX_H_GPIO3B4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO3B_IOMUX_H_GPIO3B5_SEL_SHIFT               (4U)
+#define GRF_GPIO3B_IOMUX_H_GPIO3B5_SEL_MASK                (0x7U << GRF_GPIO3B_IOMUX_H_GPIO3B5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO3B_IOMUX_H_GPIO3B6_SEL_SHIFT               (8U)
+#define GRF_GPIO3B_IOMUX_H_GPIO3B6_SEL_MASK                (0x7U << GRF_GPIO3B_IOMUX_H_GPIO3B6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO3B_IOMUX_H_GPIO3B7_SEL_SHIFT               (12U)
+#define GRF_GPIO3B_IOMUX_H_GPIO3B7_SEL_MASK                (0x7U << GRF_GPIO3B_IOMUX_H_GPIO3B7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO3C_IOMUX_L */
+#define GRF_GPIO3C_IOMUX_L_OFFSET                          (0x40050U)
+#define GRF_GPIO3C_IOMUX_L_GPIO3C0_SEL_SHIFT               (0U)
+#define GRF_GPIO3C_IOMUX_L_GPIO3C0_SEL_MASK                (0x7U << GRF_GPIO3C_IOMUX_L_GPIO3C0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO3C_IOMUX_L_GPIO3C1_SEL_SHIFT               (4U)
+#define GRF_GPIO3C_IOMUX_L_GPIO3C1_SEL_MASK                (0x7U << GRF_GPIO3C_IOMUX_L_GPIO3C1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO3C_IOMUX_L_GPIO3C2_SEL_SHIFT               (8U)
+#define GRF_GPIO3C_IOMUX_L_GPIO3C2_SEL_MASK                (0x7U << GRF_GPIO3C_IOMUX_L_GPIO3C2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO3C_IOMUX_L_GPIO3C3_SEL_SHIFT               (12U)
+#define GRF_GPIO3C_IOMUX_L_GPIO3C3_SEL_MASK                (0x7U << GRF_GPIO3C_IOMUX_L_GPIO3C3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO3C_IOMUX_H */
+#define GRF_GPIO3C_IOMUX_H_OFFSET                          (0x40054U)
+#define GRF_GPIO3C_IOMUX_H_GPIO3C4_SEL_SHIFT               (0U)
+#define GRF_GPIO3C_IOMUX_H_GPIO3C4_SEL_MASK                (0x7U << GRF_GPIO3C_IOMUX_H_GPIO3C4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO3C_IOMUX_H_GPIO3C5_SEL_SHIFT               (4U)
+#define GRF_GPIO3C_IOMUX_H_GPIO3C5_SEL_MASK                (0x7U << GRF_GPIO3C_IOMUX_H_GPIO3C5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO3C_IOMUX_H_GPIO3C6_SEL_SHIFT               (8U)
+#define GRF_GPIO3C_IOMUX_H_GPIO3C6_SEL_MASK                (0x7U << GRF_GPIO3C_IOMUX_H_GPIO3C6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO3C_IOMUX_H_GPIO3C7_SEL_SHIFT               (12U)
+#define GRF_GPIO3C_IOMUX_H_GPIO3C7_SEL_MASK                (0x7U << GRF_GPIO3C_IOMUX_H_GPIO3C7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO3D_IOMUX_L */
+#define GRF_GPIO3D_IOMUX_L_OFFSET                          (0x40058U)
+#define GRF_GPIO3D_IOMUX_L_GPIO3D0_SEL_SHIFT               (0U)
+#define GRF_GPIO3D_IOMUX_L_GPIO3D0_SEL_MASK                (0x7U << GRF_GPIO3D_IOMUX_L_GPIO3D0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO3D_IOMUX_L_GPIO3D1_SEL_SHIFT               (4U)
+#define GRF_GPIO3D_IOMUX_L_GPIO3D1_SEL_MASK                (0x7U << GRF_GPIO3D_IOMUX_L_GPIO3D1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO3D_IOMUX_L_GPIO3D2_SEL_SHIFT               (8U)
+#define GRF_GPIO3D_IOMUX_L_GPIO3D2_SEL_MASK                (0x7U << GRF_GPIO3D_IOMUX_L_GPIO3D2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO3D_IOMUX_L_GPIO3D3_SEL_SHIFT               (12U)
+#define GRF_GPIO3D_IOMUX_L_GPIO3D3_SEL_MASK                (0x7U << GRF_GPIO3D_IOMUX_L_GPIO3D3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO3D_IOMUX_H */
+#define GRF_GPIO3D_IOMUX_H_OFFSET                          (0x4005CU)
+#define GRF_GPIO3D_IOMUX_H_GPIO3D4_SEL_SHIFT               (0U)
+#define GRF_GPIO3D_IOMUX_H_GPIO3D4_SEL_MASK                (0x7U << GRF_GPIO3D_IOMUX_H_GPIO3D4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO3D_IOMUX_H_GPIO3D5_SEL_SHIFT               (4U)
+#define GRF_GPIO3D_IOMUX_H_GPIO3D5_SEL_MASK                (0x7U << GRF_GPIO3D_IOMUX_H_GPIO3D5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO3D_IOMUX_H_GPIO3D6_SEL_SHIFT               (8U)
+#define GRF_GPIO3D_IOMUX_H_GPIO3D6_SEL_MASK                (0x7U << GRF_GPIO3D_IOMUX_H_GPIO3D6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO3D_IOMUX_H_GPIO3D7_SEL_SHIFT               (12U)
+#define GRF_GPIO3D_IOMUX_H_GPIO3D7_SEL_MASK                (0x7U << GRF_GPIO3D_IOMUX_H_GPIO3D7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO4A_IOMUX_L */
+#define GRF_GPIO4A_IOMUX_L_OFFSET                          (0x40060U)
+#define GRF_GPIO4A_IOMUX_L_GPIO4A0_SEL_SHIFT               (0U)
+#define GRF_GPIO4A_IOMUX_L_GPIO4A0_SEL_MASK                (0x7U << GRF_GPIO4A_IOMUX_L_GPIO4A0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO4A_IOMUX_L_GPIO4A1_SEL_SHIFT               (4U)
+#define GRF_GPIO4A_IOMUX_L_GPIO4A1_SEL_MASK                (0x7U << GRF_GPIO4A_IOMUX_L_GPIO4A1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO4A_IOMUX_L_GPIO4A2_SEL_SHIFT               (8U)
+#define GRF_GPIO4A_IOMUX_L_GPIO4A2_SEL_MASK                (0x7U << GRF_GPIO4A_IOMUX_L_GPIO4A2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO4A_IOMUX_L_GPIO4A3_SEL_SHIFT               (12U)
+#define GRF_GPIO4A_IOMUX_L_GPIO4A3_SEL_MASK                (0x7U << GRF_GPIO4A_IOMUX_L_GPIO4A3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO4A_IOMUX_H */
+#define GRF_GPIO4A_IOMUX_H_OFFSET                          (0x40064U)
+#define GRF_GPIO4A_IOMUX_H_GPIO4A4_SEL_SHIFT               (0U)
+#define GRF_GPIO4A_IOMUX_H_GPIO4A4_SEL_MASK                (0x7U << GRF_GPIO4A_IOMUX_H_GPIO4A4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO4A_IOMUX_H_GPIO4A5_SEL_SHIFT               (4U)
+#define GRF_GPIO4A_IOMUX_H_GPIO4A5_SEL_MASK                (0x7U << GRF_GPIO4A_IOMUX_H_GPIO4A5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO4A_IOMUX_H_GPIO4A6_SEL_SHIFT               (8U)
+#define GRF_GPIO4A_IOMUX_H_GPIO4A6_SEL_MASK                (0x7U << GRF_GPIO4A_IOMUX_H_GPIO4A6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO4A_IOMUX_H_GPIO4A7_SEL_SHIFT               (12U)
+#define GRF_GPIO4A_IOMUX_H_GPIO4A7_SEL_MASK                (0x7U << GRF_GPIO4A_IOMUX_H_GPIO4A7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO4B_IOMUX_L */
+#define GRF_GPIO4B_IOMUX_L_OFFSET                          (0x40068U)
+#define GRF_GPIO4B_IOMUX_L_GPIO4B0_SEL_SHIFT               (0U)
+#define GRF_GPIO4B_IOMUX_L_GPIO4B0_SEL_MASK                (0x7U << GRF_GPIO4B_IOMUX_L_GPIO4B0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO4B_IOMUX_L_GPIO4B1_SEL_SHIFT               (4U)
+#define GRF_GPIO4B_IOMUX_L_GPIO4B1_SEL_MASK                (0x7U << GRF_GPIO4B_IOMUX_L_GPIO4B1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO4B_IOMUX_L_GPIO4B2_SEL_SHIFT               (8U)
+#define GRF_GPIO4B_IOMUX_L_GPIO4B2_SEL_MASK                (0x7U << GRF_GPIO4B_IOMUX_L_GPIO4B2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO4B_IOMUX_L_GPIO4B3_SEL_SHIFT               (12U)
+#define GRF_GPIO4B_IOMUX_L_GPIO4B3_SEL_MASK                (0x7U << GRF_GPIO4B_IOMUX_L_GPIO4B3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO4B_IOMUX_H */
+#define GRF_GPIO4B_IOMUX_H_OFFSET                          (0x4006CU)
+#define GRF_GPIO4B_IOMUX_H_GPIO4B4_SEL_SHIFT               (0U)
+#define GRF_GPIO4B_IOMUX_H_GPIO4B4_SEL_MASK                (0x7U << GRF_GPIO4B_IOMUX_H_GPIO4B4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO4B_IOMUX_H_GPIO4B5_SEL_SHIFT               (4U)
+#define GRF_GPIO4B_IOMUX_H_GPIO4B5_SEL_MASK                (0x7U << GRF_GPIO4B_IOMUX_H_GPIO4B5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO4B_IOMUX_H_GPIO4B6_SEL_SHIFT               (8U)
+#define GRF_GPIO4B_IOMUX_H_GPIO4B6_SEL_MASK                (0x7U << GRF_GPIO4B_IOMUX_H_GPIO4B6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO4B_IOMUX_H_GPIO4B7_SEL_SHIFT               (12U)
+#define GRF_GPIO4B_IOMUX_H_GPIO4B7_SEL_MASK                (0x7U << GRF_GPIO4B_IOMUX_H_GPIO4B7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO4C_IOMUX_L */
+#define GRF_GPIO4C_IOMUX_L_OFFSET                          (0x40070U)
+#define GRF_GPIO4C_IOMUX_L_GPIO4C0_SEL_SHIFT               (0U)
+#define GRF_GPIO4C_IOMUX_L_GPIO4C0_SEL_MASK                (0x7U << GRF_GPIO4C_IOMUX_L_GPIO4C0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO4C_IOMUX_L_GPIO4C1_SEL_SHIFT               (4U)
+#define GRF_GPIO4C_IOMUX_L_GPIO4C1_SEL_MASK                (0x7U << GRF_GPIO4C_IOMUX_L_GPIO4C1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO4C_IOMUX_L_GPIO4C2_SEL_SHIFT               (8U)
+#define GRF_GPIO4C_IOMUX_L_GPIO4C2_SEL_MASK                (0x7U << GRF_GPIO4C_IOMUX_L_GPIO4C2_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO4C_IOMUX_L_GPIO4C3_SEL_SHIFT               (12U)
+#define GRF_GPIO4C_IOMUX_L_GPIO4C3_SEL_MASK                (0x7U << GRF_GPIO4C_IOMUX_L_GPIO4C3_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO4C_IOMUX_H */
+#define GRF_GPIO4C_IOMUX_H_OFFSET                          (0x40074U)
+#define GRF_GPIO4C_IOMUX_H_GPIO4C4_SEL_SHIFT               (0U)
+#define GRF_GPIO4C_IOMUX_H_GPIO4C4_SEL_MASK                (0x7U << GRF_GPIO4C_IOMUX_H_GPIO4C4_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO4C_IOMUX_H_GPIO4C5_SEL_SHIFT               (4U)
+#define GRF_GPIO4C_IOMUX_H_GPIO4C5_SEL_MASK                (0x7U << GRF_GPIO4C_IOMUX_H_GPIO4C5_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO4C_IOMUX_H_GPIO4C6_SEL_SHIFT               (8U)
+#define GRF_GPIO4C_IOMUX_H_GPIO4C6_SEL_MASK                (0x7U << GRF_GPIO4C_IOMUX_H_GPIO4C6_SEL_SHIFT)               /* 0x00000700 */
+#define GRF_GPIO4C_IOMUX_H_GPIO4C7_SEL_SHIFT               (12U)
+#define GRF_GPIO4C_IOMUX_H_GPIO4C7_SEL_MASK                (0x7U << GRF_GPIO4C_IOMUX_H_GPIO4C7_SEL_SHIFT)               /* 0x00007000 */
+/* GPIO4D_IOMUX_L */
+#define GRF_GPIO4D_IOMUX_L_OFFSET                          (0x40078U)
+#define GRF_GPIO4D_IOMUX_L_GPIO4D0_SEL_SHIFT               (0U)
+#define GRF_GPIO4D_IOMUX_L_GPIO4D0_SEL_MASK                (0x7U << GRF_GPIO4D_IOMUX_L_GPIO4D0_SEL_SHIFT)               /* 0x00000007 */
+#define GRF_GPIO4D_IOMUX_L_GPIO4D1_SEL_SHIFT               (4U)
+#define GRF_GPIO4D_IOMUX_L_GPIO4D1_SEL_MASK                (0x7U << GRF_GPIO4D_IOMUX_L_GPIO4D1_SEL_SHIFT)               /* 0x00000070 */
+#define GRF_GPIO4D_IOMUX_L_GPIO4D2_SEL_SHIFT               (8U)
+#define GRF_GPIO4D_IOMUX_L_GPIO4D2_SEL_MASK                (0x7U << GRF_GPIO4D_IOMUX_L_GPIO4D2_SEL_SHIFT)               /* 0x00000700 */
+/* GPIO1A_P */
+#define GRF_GPIO1A_P_OFFSET                                (0x4007CU)
+#define GRF_GPIO1A_P_GPIO1A0_P_SHIFT                       (0U)
+#define GRF_GPIO1A_P_GPIO1A0_P_MASK                        (0x3U << GRF_GPIO1A_P_GPIO1A0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO1A_P_GPIO1A1_P_SHIFT                       (2U)
+#define GRF_GPIO1A_P_GPIO1A1_P_MASK                        (0x3U << GRF_GPIO1A_P_GPIO1A1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO1A_P_GPIO1A2_P_SHIFT                       (4U)
+#define GRF_GPIO1A_P_GPIO1A2_P_MASK                        (0x3U << GRF_GPIO1A_P_GPIO1A2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO1A_P_GPIO1A3_P_SHIFT                       (6U)
+#define GRF_GPIO1A_P_GPIO1A3_P_MASK                        (0x3U << GRF_GPIO1A_P_GPIO1A3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO1A_P_GPIO1A4_P_SHIFT                       (8U)
+#define GRF_GPIO1A_P_GPIO1A4_P_MASK                        (0x3U << GRF_GPIO1A_P_GPIO1A4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO1A_P_GPIO1A5_P_SHIFT                       (10U)
+#define GRF_GPIO1A_P_GPIO1A5_P_MASK                        (0x3U << GRF_GPIO1A_P_GPIO1A5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO1A_P_GPIO1A6_P_SHIFT                       (12U)
+#define GRF_GPIO1A_P_GPIO1A6_P_MASK                        (0x3U << GRF_GPIO1A_P_GPIO1A6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO1A_P_GPIO1A7_P_SHIFT                       (14U)
+#define GRF_GPIO1A_P_GPIO1A7_P_MASK                        (0x3U << GRF_GPIO1A_P_GPIO1A7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO1B_P */
+#define GRF_GPIO1B_P_OFFSET                                (0x40080U)
+#define GRF_GPIO1B_P_GPIO1B0_P_SHIFT                       (0U)
+#define GRF_GPIO1B_P_GPIO1B0_P_MASK                        (0x3U << GRF_GPIO1B_P_GPIO1B0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO1B_P_GPIO1B1_P_SHIFT                       (2U)
+#define GRF_GPIO1B_P_GPIO1B1_P_MASK                        (0x3U << GRF_GPIO1B_P_GPIO1B1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO1B_P_GPIO1B2_P_SHIFT                       (4U)
+#define GRF_GPIO1B_P_GPIO1B2_P_MASK                        (0x3U << GRF_GPIO1B_P_GPIO1B2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO1B_P_GPIO1B3_P_SHIFT                       (6U)
+#define GRF_GPIO1B_P_GPIO1B3_P_MASK                        (0x3U << GRF_GPIO1B_P_GPIO1B3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO1B_P_GPIO1B4_P_SHIFT                       (8U)
+#define GRF_GPIO1B_P_GPIO1B4_P_MASK                        (0x3U << GRF_GPIO1B_P_GPIO1B4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO1B_P_GPIO1B5_P_SHIFT                       (10U)
+#define GRF_GPIO1B_P_GPIO1B5_P_MASK                        (0x3U << GRF_GPIO1B_P_GPIO1B5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO1B_P_GPIO1B6_P_SHIFT                       (12U)
+#define GRF_GPIO1B_P_GPIO1B6_P_MASK                        (0x3U << GRF_GPIO1B_P_GPIO1B6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO1B_P_GPIO1B7_P_SHIFT                       (14U)
+#define GRF_GPIO1B_P_GPIO1B7_P_MASK                        (0x3U << GRF_GPIO1B_P_GPIO1B7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO1C_P */
+#define GRF_GPIO1C_P_OFFSET                                (0x40084U)
+#define GRF_GPIO1C_P_GPIO1C0_P_SHIFT                       (0U)
+#define GRF_GPIO1C_P_GPIO1C0_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO1C_P_GPIO1C1_P_SHIFT                       (2U)
+#define GRF_GPIO1C_P_GPIO1C1_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO1C_P_GPIO1C2_P_SHIFT                       (4U)
+#define GRF_GPIO1C_P_GPIO1C2_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO1C_P_GPIO1C3_P_SHIFT                       (6U)
+#define GRF_GPIO1C_P_GPIO1C3_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO1C_P_GPIO1C4_P_SHIFT                       (8U)
+#define GRF_GPIO1C_P_GPIO1C4_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO1C_P_GPIO1C5_P_SHIFT                       (10U)
+#define GRF_GPIO1C_P_GPIO1C5_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO1C_P_GPIO1C6_P_SHIFT                       (12U)
+#define GRF_GPIO1C_P_GPIO1C6_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO1C_P_GPIO1C7_P_SHIFT                       (14U)
+#define GRF_GPIO1C_P_GPIO1C7_P_MASK                        (0x3U << GRF_GPIO1C_P_GPIO1C7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO1D_P */
+#define GRF_GPIO1D_P_OFFSET                                (0x40088U)
+#define GRF_GPIO1D_P_GPIO1D0_P_SHIFT                       (0U)
+#define GRF_GPIO1D_P_GPIO1D0_P_MASK                        (0x3U << GRF_GPIO1D_P_GPIO1D0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO1D_P_GPIO1D1_P_SHIFT                       (2U)
+#define GRF_GPIO1D_P_GPIO1D1_P_MASK                        (0x3U << GRF_GPIO1D_P_GPIO1D1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO1D_P_GPIO1D2_P_SHIFT                       (4U)
+#define GRF_GPIO1D_P_GPIO1D2_P_MASK                        (0x3U << GRF_GPIO1D_P_GPIO1D2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO1D_P_GPIO1D3_P_SHIFT                       (6U)
+#define GRF_GPIO1D_P_GPIO1D3_P_MASK                        (0x3U << GRF_GPIO1D_P_GPIO1D3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO1D_P_GPIO1D4_P_SHIFT                       (8U)
+#define GRF_GPIO1D_P_GPIO1D4_P_MASK                        (0x3U << GRF_GPIO1D_P_GPIO1D4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO1D_P_GPIO1D5_P_SHIFT                       (10U)
+#define GRF_GPIO1D_P_GPIO1D5_P_MASK                        (0x3U << GRF_GPIO1D_P_GPIO1D5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO1D_P_GPIO1D6_P_SHIFT                       (12U)
+#define GRF_GPIO1D_P_GPIO1D6_P_MASK                        (0x3U << GRF_GPIO1D_P_GPIO1D6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO1D_P_GPIO1D7_P_SHIFT                       (14U)
+#define GRF_GPIO1D_P_GPIO1D7_P_MASK                        (0x3U << GRF_GPIO1D_P_GPIO1D7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO2A_P */
+#define GRF_GPIO2A_P_OFFSET                                (0x4008CU)
+#define GRF_GPIO2A_P_GPIO2A0_P_SHIFT                       (0U)
+#define GRF_GPIO2A_P_GPIO2A0_P_MASK                        (0x3U << GRF_GPIO2A_P_GPIO2A0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO2A_P_GPIO2A1_P_SHIFT                       (2U)
+#define GRF_GPIO2A_P_GPIO2A1_P_MASK                        (0x3U << GRF_GPIO2A_P_GPIO2A1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO2A_P_GPIO2A2_P_SHIFT                       (4U)
+#define GRF_GPIO2A_P_GPIO2A2_P_MASK                        (0x3U << GRF_GPIO2A_P_GPIO2A2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO2A_P_GPIO2A3_P_SHIFT                       (6U)
+#define GRF_GPIO2A_P_GPIO2A3_P_MASK                        (0x3U << GRF_GPIO2A_P_GPIO2A3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO2A_P_GPIO2A4_P_SHIFT                       (8U)
+#define GRF_GPIO2A_P_GPIO2A4_P_MASK                        (0x3U << GRF_GPIO2A_P_GPIO2A4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO2A_P_GPIO2A5_P_SHIFT                       (10U)
+#define GRF_GPIO2A_P_GPIO2A5_P_MASK                        (0x3U << GRF_GPIO2A_P_GPIO2A5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO2A_P_GPIO2A6_P_SHIFT                       (12U)
+#define GRF_GPIO2A_P_GPIO2A6_P_MASK                        (0x3U << GRF_GPIO2A_P_GPIO2A6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO2A_P_GPIO2A7_P_SHIFT                       (14U)
+#define GRF_GPIO2A_P_GPIO2A7_P_MASK                        (0x3U << GRF_GPIO2A_P_GPIO2A7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO2B_P */
+#define GRF_GPIO2B_P_OFFSET                                (0x40090U)
+#define GRF_GPIO2B_P_GPIO2B0_P_SHIFT                       (0U)
+#define GRF_GPIO2B_P_GPIO2B0_P_MASK                        (0x3U << GRF_GPIO2B_P_GPIO2B0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO2B_P_GPIO2B1_P_SHIFT                       (2U)
+#define GRF_GPIO2B_P_GPIO2B1_P_MASK                        (0x3U << GRF_GPIO2B_P_GPIO2B1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO2B_P_GPIO2B2_P_SHIFT                       (4U)
+#define GRF_GPIO2B_P_GPIO2B2_P_MASK                        (0x3U << GRF_GPIO2B_P_GPIO2B2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO2B_P_GPIO2B3_P_SHIFT                       (6U)
+#define GRF_GPIO2B_P_GPIO2B3_P_MASK                        (0x3U << GRF_GPIO2B_P_GPIO2B3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO2B_P_GPIO2B4_P_SHIFT                       (8U)
+#define GRF_GPIO2B_P_GPIO2B4_P_MASK                        (0x3U << GRF_GPIO2B_P_GPIO2B4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO2B_P_GPIO2B5_P_SHIFT                       (10U)
+#define GRF_GPIO2B_P_GPIO2B5_P_MASK                        (0x3U << GRF_GPIO2B_P_GPIO2B5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO2B_P_GPIO2B6_P_SHIFT                       (12U)
+#define GRF_GPIO2B_P_GPIO2B6_P_MASK                        (0x3U << GRF_GPIO2B_P_GPIO2B6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO2B_P_GPIO2B7_P_SHIFT                       (14U)
+#define GRF_GPIO2B_P_GPIO2B7_P_MASK                        (0x3U << GRF_GPIO2B_P_GPIO2B7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO2C_P */
+#define GRF_GPIO2C_P_OFFSET                                (0x40094U)
+#define GRF_GPIO2C_P_GPIO2C0_P_SHIFT                       (0U)
+#define GRF_GPIO2C_P_GPIO2C0_P_MASK                        (0x3U << GRF_GPIO2C_P_GPIO2C0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO2C_P_GPIO2C1_P_SHIFT                       (2U)
+#define GRF_GPIO2C_P_GPIO2C1_P_MASK                        (0x3U << GRF_GPIO2C_P_GPIO2C1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO2C_P_GPIO2C2_P_SHIFT                       (4U)
+#define GRF_GPIO2C_P_GPIO2C2_P_MASK                        (0x3U << GRF_GPIO2C_P_GPIO2C2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO2C_P_GPIO2C3_P_SHIFT                       (6U)
+#define GRF_GPIO2C_P_GPIO2C3_P_MASK                        (0x3U << GRF_GPIO2C_P_GPIO2C3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO2C_P_GPIO2C4_P_SHIFT                       (8U)
+#define GRF_GPIO2C_P_GPIO2C4_P_MASK                        (0x3U << GRF_GPIO2C_P_GPIO2C4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO2C_P_GPIO2C5_P_SHIFT                       (10U)
+#define GRF_GPIO2C_P_GPIO2C5_P_MASK                        (0x3U << GRF_GPIO2C_P_GPIO2C5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO2C_P_GPIO2C6_P_SHIFT                       (12U)
+#define GRF_GPIO2C_P_GPIO2C6_P_MASK                        (0x3U << GRF_GPIO2C_P_GPIO2C6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO2C_P_GPIO2C7_P_SHIFT                       (14U)
+#define GRF_GPIO2C_P_GPIO2C7_P_MASK                        (0x3U << GRF_GPIO2C_P_GPIO2C7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO2D_P */
+#define GRF_GPIO2D_P_OFFSET                                (0x40098U)
+#define GRF_GPIO2D_P_GPIO2D0_P_SHIFT                       (0U)
+#define GRF_GPIO2D_P_GPIO2D0_P_MASK                        (0x3U << GRF_GPIO2D_P_GPIO2D0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO2D_P_GPIO2D1_P_SHIFT                       (2U)
+#define GRF_GPIO2D_P_GPIO2D1_P_MASK                        (0x3U << GRF_GPIO2D_P_GPIO2D1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO2D_P_GPIO2D2_P_SHIFT                       (4U)
+#define GRF_GPIO2D_P_GPIO2D2_P_MASK                        (0x3U << GRF_GPIO2D_P_GPIO2D2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO2D_P_GPIO2D3_P_SHIFT                       (6U)
+#define GRF_GPIO2D_P_GPIO2D3_P_MASK                        (0x3U << GRF_GPIO2D_P_GPIO2D3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO2D_P_GPIO2D4_P_SHIFT                       (8U)
+#define GRF_GPIO2D_P_GPIO2D4_P_MASK                        (0x3U << GRF_GPIO2D_P_GPIO2D4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO2D_P_GPIO2D5_P_SHIFT                       (10U)
+#define GRF_GPIO2D_P_GPIO2D5_P_MASK                        (0x3U << GRF_GPIO2D_P_GPIO2D5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO2D_P_GPIO2D6_P_SHIFT                       (12U)
+#define GRF_GPIO2D_P_GPIO2D6_P_MASK                        (0x3U << GRF_GPIO2D_P_GPIO2D6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO2D_P_GPIO2D7_P_SHIFT                       (14U)
+#define GRF_GPIO2D_P_GPIO2D7_P_MASK                        (0x3U << GRF_GPIO2D_P_GPIO2D7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO3A_P */
+#define GRF_GPIO3A_P_OFFSET                                (0x4009CU)
+#define GRF_GPIO3A_P_GPIO3A0_P_SHIFT                       (0U)
+#define GRF_GPIO3A_P_GPIO3A0_P_MASK                        (0x3U << GRF_GPIO3A_P_GPIO3A0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO3A_P_GPIO3A1_P_SHIFT                       (2U)
+#define GRF_GPIO3A_P_GPIO3A1_P_MASK                        (0x3U << GRF_GPIO3A_P_GPIO3A1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO3A_P_GPIO3A2_P_SHIFT                       (4U)
+#define GRF_GPIO3A_P_GPIO3A2_P_MASK                        (0x3U << GRF_GPIO3A_P_GPIO3A2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO3A_P_GPIO3A3_P_SHIFT                       (6U)
+#define GRF_GPIO3A_P_GPIO3A3_P_MASK                        (0x3U << GRF_GPIO3A_P_GPIO3A3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO3A_P_GPIO3A4_P_SHIFT                       (8U)
+#define GRF_GPIO3A_P_GPIO3A4_P_MASK                        (0x3U << GRF_GPIO3A_P_GPIO3A4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO3A_P_GPIO3A5_P_SHIFT                       (10U)
+#define GRF_GPIO3A_P_GPIO3A5_P_MASK                        (0x3U << GRF_GPIO3A_P_GPIO3A5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO3A_P_GPIO3A6_P_SHIFT                       (12U)
+#define GRF_GPIO3A_P_GPIO3A6_P_MASK                        (0x3U << GRF_GPIO3A_P_GPIO3A6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO3A_P_GPIO3A7_P_SHIFT                       (14U)
+#define GRF_GPIO3A_P_GPIO3A7_P_MASK                        (0x3U << GRF_GPIO3A_P_GPIO3A7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO3B_P */
+#define GRF_GPIO3B_P_OFFSET                                (0x400A0U)
+#define GRF_GPIO3B_P_GPIO3B0_P_SHIFT                       (0U)
+#define GRF_GPIO3B_P_GPIO3B0_P_MASK                        (0x3U << GRF_GPIO3B_P_GPIO3B0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO3B_P_GPIO3B1_P_SHIFT                       (2U)
+#define GRF_GPIO3B_P_GPIO3B1_P_MASK                        (0x3U << GRF_GPIO3B_P_GPIO3B1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO3B_P_GPIO3B2_P_SHIFT                       (4U)
+#define GRF_GPIO3B_P_GPIO3B2_P_MASK                        (0x3U << GRF_GPIO3B_P_GPIO3B2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO3B_P_GPIO3B3_P_SHIFT                       (6U)
+#define GRF_GPIO3B_P_GPIO3B3_P_MASK                        (0x3U << GRF_GPIO3B_P_GPIO3B3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO3B_P_GPIO3B4_P_SHIFT                       (8U)
+#define GRF_GPIO3B_P_GPIO3B4_P_MASK                        (0x3U << GRF_GPIO3B_P_GPIO3B4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO3B_P_GPIO3B5_P_SHIFT                       (10U)
+#define GRF_GPIO3B_P_GPIO3B5_P_MASK                        (0x3U << GRF_GPIO3B_P_GPIO3B5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO3B_P_GPIO3B6_P_SHIFT                       (12U)
+#define GRF_GPIO3B_P_GPIO3B6_P_MASK                        (0x3U << GRF_GPIO3B_P_GPIO3B6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO3B_P_GPIO3B7_P_SHIFT                       (14U)
+#define GRF_GPIO3B_P_GPIO3B7_P_MASK                        (0x3U << GRF_GPIO3B_P_GPIO3B7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO3C_P */
+#define GRF_GPIO3C_P_OFFSET                                (0x400A4U)
+#define GRF_GPIO3C_P_GPIO3C0_P_SHIFT                       (0U)
+#define GRF_GPIO3C_P_GPIO3C0_P_MASK                        (0x3U << GRF_GPIO3C_P_GPIO3C0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO3C_P_GPIO3C1_P_SHIFT                       (2U)
+#define GRF_GPIO3C_P_GPIO3C1_P_MASK                        (0x3U << GRF_GPIO3C_P_GPIO3C1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO3C_P_GPIO3C2_P_SHIFT                       (4U)
+#define GRF_GPIO3C_P_GPIO3C2_P_MASK                        (0x3U << GRF_GPIO3C_P_GPIO3C2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO3C_P_GPIO3C3_P_SHIFT                       (6U)
+#define GRF_GPIO3C_P_GPIO3C3_P_MASK                        (0x3U << GRF_GPIO3C_P_GPIO3C3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO3C_P_GPIO3C4_P_SHIFT                       (8U)
+#define GRF_GPIO3C_P_GPIO3C4_P_MASK                        (0x3U << GRF_GPIO3C_P_GPIO3C4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO3C_P_GPIO3C5_P_SHIFT                       (10U)
+#define GRF_GPIO3C_P_GPIO3C5_P_MASK                        (0x3U << GRF_GPIO3C_P_GPIO3C5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO3C_P_GPIO3C6_P_SHIFT                       (12U)
+#define GRF_GPIO3C_P_GPIO3C6_P_MASK                        (0x3U << GRF_GPIO3C_P_GPIO3C6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO3C_P_GPIO3C7_P_SHIFT                       (14U)
+#define GRF_GPIO3C_P_GPIO3C7_P_MASK                        (0x3U << GRF_GPIO3C_P_GPIO3C7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO3D_P */
+#define GRF_GPIO3D_P_OFFSET                                (0x400A8U)
+#define GRF_GPIO3D_P_GPIO3D0_P_SHIFT                       (0U)
+#define GRF_GPIO3D_P_GPIO3D0_P_MASK                        (0x3U << GRF_GPIO3D_P_GPIO3D0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO3D_P_GPIO3D1_P_SHIFT                       (2U)
+#define GRF_GPIO3D_P_GPIO3D1_P_MASK                        (0x3U << GRF_GPIO3D_P_GPIO3D1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO3D_P_GPIO3D2_P_SHIFT                       (4U)
+#define GRF_GPIO3D_P_GPIO3D2_P_MASK                        (0x3U << GRF_GPIO3D_P_GPIO3D2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO3D_P_GPIO3D3_P_SHIFT                       (6U)
+#define GRF_GPIO3D_P_GPIO3D3_P_MASK                        (0x3U << GRF_GPIO3D_P_GPIO3D3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO3D_P_GPIO3D4_P_SHIFT                       (8U)
+#define GRF_GPIO3D_P_GPIO3D4_P_MASK                        (0x3U << GRF_GPIO3D_P_GPIO3D4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO3D_P_GPIO3D5_P_SHIFT                       (10U)
+#define GRF_GPIO3D_P_GPIO3D5_P_MASK                        (0x3U << GRF_GPIO3D_P_GPIO3D5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO3D_P_GPIO3D6_P_SHIFT                       (12U)
+#define GRF_GPIO3D_P_GPIO3D6_P_MASK                        (0x3U << GRF_GPIO3D_P_GPIO3D6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO3D_P_GPIO3D7_P_SHIFT                       (14U)
+#define GRF_GPIO3D_P_GPIO3D7_P_MASK                        (0x3U << GRF_GPIO3D_P_GPIO3D7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO4A_P */
+#define GRF_GPIO4A_P_OFFSET                                (0x400ACU)
+#define GRF_GPIO4A_P_GPIO4A0_P_SHIFT                       (0U)
+#define GRF_GPIO4A_P_GPIO4A0_P_MASK                        (0x3U << GRF_GPIO4A_P_GPIO4A0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO4A_P_GPIO4A1_P_SHIFT                       (2U)
+#define GRF_GPIO4A_P_GPIO4A1_P_MASK                        (0x3U << GRF_GPIO4A_P_GPIO4A1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO4A_P_GPIO4A2_P_SHIFT                       (4U)
+#define GRF_GPIO4A_P_GPIO4A2_P_MASK                        (0x3U << GRF_GPIO4A_P_GPIO4A2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO4A_P_GPIO4A3_P_SHIFT                       (6U)
+#define GRF_GPIO4A_P_GPIO4A3_P_MASK                        (0x3U << GRF_GPIO4A_P_GPIO4A3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO4A_P_GPIO4A4_P_SHIFT                       (8U)
+#define GRF_GPIO4A_P_GPIO4A4_P_MASK                        (0x3U << GRF_GPIO4A_P_GPIO4A4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO4A_P_GPIO4A5_P_SHIFT                       (10U)
+#define GRF_GPIO4A_P_GPIO4A5_P_MASK                        (0x3U << GRF_GPIO4A_P_GPIO4A5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO4A_P_GPIO4A6_P_SHIFT                       (12U)
+#define GRF_GPIO4A_P_GPIO4A6_P_MASK                        (0x3U << GRF_GPIO4A_P_GPIO4A6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO4A_P_GPIO4A7_P_SHIFT                       (14U)
+#define GRF_GPIO4A_P_GPIO4A7_P_MASK                        (0x3U << GRF_GPIO4A_P_GPIO4A7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO4B_P */
+#define GRF_GPIO4B_P_OFFSET                                (0x400B0U)
+#define GRF_GPIO4B_P_GPIO4B0_P_SHIFT                       (0U)
+#define GRF_GPIO4B_P_GPIO4B0_P_MASK                        (0x3U << GRF_GPIO4B_P_GPIO4B0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO4B_P_GPIO4B1_P_SHIFT                       (2U)
+#define GRF_GPIO4B_P_GPIO4B1_P_MASK                        (0x3U << GRF_GPIO4B_P_GPIO4B1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO4B_P_GPIO4B2_P_SHIFT                       (4U)
+#define GRF_GPIO4B_P_GPIO4B2_P_MASK                        (0x3U << GRF_GPIO4B_P_GPIO4B2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO4B_P_GPIO4B3_P_SHIFT                       (6U)
+#define GRF_GPIO4B_P_GPIO4B3_P_MASK                        (0x3U << GRF_GPIO4B_P_GPIO4B3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO4B_P_GPIO4B4_P_SHIFT                       (8U)
+#define GRF_GPIO4B_P_GPIO4B4_P_MASK                        (0x3U << GRF_GPIO4B_P_GPIO4B4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO4B_P_GPIO4B5_P_SHIFT                       (10U)
+#define GRF_GPIO4B_P_GPIO4B5_P_MASK                        (0x3U << GRF_GPIO4B_P_GPIO4B5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO4B_P_GPIO4B6_P_SHIFT                       (12U)
+#define GRF_GPIO4B_P_GPIO4B6_P_MASK                        (0x3U << GRF_GPIO4B_P_GPIO4B6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO4B_P_GPIO4B7_P_SHIFT                       (14U)
+#define GRF_GPIO4B_P_GPIO4B7_P_MASK                        (0x3U << GRF_GPIO4B_P_GPIO4B7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO4C_P */
+#define GRF_GPIO4C_P_OFFSET                                (0x400B4U)
+#define GRF_GPIO4C_P_GPIO4C0_P_SHIFT                       (0U)
+#define GRF_GPIO4C_P_GPIO4C0_P_MASK                        (0x3U << GRF_GPIO4C_P_GPIO4C0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO4C_P_GPIO4C1_P_SHIFT                       (2U)
+#define GRF_GPIO4C_P_GPIO4C1_P_MASK                        (0x3U << GRF_GPIO4C_P_GPIO4C1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO4C_P_GPIO4C2_P_SHIFT                       (4U)
+#define GRF_GPIO4C_P_GPIO4C2_P_MASK                        (0x3U << GRF_GPIO4C_P_GPIO4C2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO4C_P_GPIO4C3_P_SHIFT                       (6U)
+#define GRF_GPIO4C_P_GPIO4C3_P_MASK                        (0x3U << GRF_GPIO4C_P_GPIO4C3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO4C_P_GPIO4C4_P_SHIFT                       (8U)
+#define GRF_GPIO4C_P_GPIO4C4_P_MASK                        (0x3U << GRF_GPIO4C_P_GPIO4C4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO4C_P_GPIO4C5_P_SHIFT                       (10U)
+#define GRF_GPIO4C_P_GPIO4C5_P_MASK                        (0x3U << GRF_GPIO4C_P_GPIO4C5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO4C_P_GPIO4C6_P_SHIFT                       (12U)
+#define GRF_GPIO4C_P_GPIO4C6_P_MASK                        (0x3U << GRF_GPIO4C_P_GPIO4C6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO4C_P_GPIO4C7_P_SHIFT                       (14U)
+#define GRF_GPIO4C_P_GPIO4C7_P_MASK                        (0x3U << GRF_GPIO4C_P_GPIO4C7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO4D_P */
+#define GRF_GPIO4D_P_OFFSET                                (0x400B8U)
+#define GRF_GPIO4D_P_GPIO4C0_P_SHIFT                       (0U)
+#define GRF_GPIO4D_P_GPIO4C0_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO4D_P_GPIO4C1_P_SHIFT                       (2U)
+#define GRF_GPIO4D_P_GPIO4C1_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO4D_P_GPIO4C2_P_SHIFT                       (4U)
+#define GRF_GPIO4D_P_GPIO4C2_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO4D_P_GPIO4C3_P_SHIFT                       (6U)
+#define GRF_GPIO4D_P_GPIO4C3_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO4D_P_GPIO4C4_P_SHIFT                       (8U)
+#define GRF_GPIO4D_P_GPIO4C4_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO4D_P_GPIO4C5_P_SHIFT                       (10U)
+#define GRF_GPIO4D_P_GPIO4C5_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO4D_P_GPIO4C6_P_SHIFT                       (12U)
+#define GRF_GPIO4D_P_GPIO4C6_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO4D_P_GPIO4C7_P_SHIFT                       (14U)
+#define GRF_GPIO4D_P_GPIO4C7_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C7_P_SHIFT)                       /* 0x0000C000 */
+/* GPIO1A_IE */
+#define GRF_GPIO1A_IE_OFFSET                               (0x400BCU)
+#define GRF_GPIO1A_IE_GPIO1A0_IE_SHIFT                     (0U)
+#define GRF_GPIO1A_IE_GPIO1A0_IE_MASK                      (0x3U << GRF_GPIO1A_IE_GPIO1A0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO1A_IE_GPIO1A1_IE_SHIFT                     (2U)
+#define GRF_GPIO1A_IE_GPIO1A1_IE_MASK                      (0x3U << GRF_GPIO1A_IE_GPIO1A1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO1A_IE_GPIO1A2_IE_SHIFT                     (4U)
+#define GRF_GPIO1A_IE_GPIO1A2_IE_MASK                      (0x3U << GRF_GPIO1A_IE_GPIO1A2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO1A_IE_GPIO1A3_IE_SHIFT                     (6U)
+#define GRF_GPIO1A_IE_GPIO1A3_IE_MASK                      (0x3U << GRF_GPIO1A_IE_GPIO1A3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO1A_IE_GPIO1A4_IE_SHIFT                     (8U)
+#define GRF_GPIO1A_IE_GPIO1A4_IE_MASK                      (0x3U << GRF_GPIO1A_IE_GPIO1A4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO1A_IE_GPIO1A5_IE_SHIFT                     (10U)
+#define GRF_GPIO1A_IE_GPIO1A5_IE_MASK                      (0x3U << GRF_GPIO1A_IE_GPIO1A5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO1A_IE_GPIO1A6_IE_SHIFT                     (12U)
+#define GRF_GPIO1A_IE_GPIO1A6_IE_MASK                      (0x3U << GRF_GPIO1A_IE_GPIO1A6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO1A_IE_GPIO1A7_IE_SHIFT                     (14U)
+#define GRF_GPIO1A_IE_GPIO1A7_IE_MASK                      (0x3U << GRF_GPIO1A_IE_GPIO1A7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO1B_IE */
+#define GRF_GPIO1B_IE_OFFSET                               (0x400C0U)
+#define GRF_GPIO1B_IE_GPIO1B0_IE_SHIFT                     (0U)
+#define GRF_GPIO1B_IE_GPIO1B0_IE_MASK                      (0x3U << GRF_GPIO1B_IE_GPIO1B0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO1B_IE_GPIO1B1_IE_SHIFT                     (2U)
+#define GRF_GPIO1B_IE_GPIO1B1_IE_MASK                      (0x3U << GRF_GPIO1B_IE_GPIO1B1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO1B_IE_GPIO1B2_IE_SHIFT                     (4U)
+#define GRF_GPIO1B_IE_GPIO1B2_IE_MASK                      (0x3U << GRF_GPIO1B_IE_GPIO1B2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO1B_IE_GPIO1B3_IE_SHIFT                     (6U)
+#define GRF_GPIO1B_IE_GPIO1B3_IE_MASK                      (0x3U << GRF_GPIO1B_IE_GPIO1B3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO1B_IE_GPIO1B4_IE_SHIFT                     (8U)
+#define GRF_GPIO1B_IE_GPIO1B4_IE_MASK                      (0x3U << GRF_GPIO1B_IE_GPIO1B4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO1B_IE_GPIO1B5_IE_SHIFT                     (10U)
+#define GRF_GPIO1B_IE_GPIO1B5_IE_MASK                      (0x3U << GRF_GPIO1B_IE_GPIO1B5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO1B_IE_GPIO1B6_IE_SHIFT                     (12U)
+#define GRF_GPIO1B_IE_GPIO1B6_IE_MASK                      (0x3U << GRF_GPIO1B_IE_GPIO1B6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO1B_IE_GPIO1B7_IE_SHIFT                     (14U)
+#define GRF_GPIO1B_IE_GPIO1B7_IE_MASK                      (0x3U << GRF_GPIO1B_IE_GPIO1B7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO1C_IE */
+#define GRF_GPIO1C_IE_OFFSET                               (0x400C4U)
+#define GRF_GPIO1C_IE_GPIO1C0_IE_SHIFT                     (0U)
+#define GRF_GPIO1C_IE_GPIO1C0_IE_MASK                      (0x3U << GRF_GPIO1C_IE_GPIO1C0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO1C_IE_GPIO1C1_IE_SHIFT                     (2U)
+#define GRF_GPIO1C_IE_GPIO1C1_IE_MASK                      (0x3U << GRF_GPIO1C_IE_GPIO1C1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO1C_IE_GPIO1C2_IE_SHIFT                     (4U)
+#define GRF_GPIO1C_IE_GPIO1C2_IE_MASK                      (0x3U << GRF_GPIO1C_IE_GPIO1C2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO1C_IE_GPIO1C3_IE_SHIFT                     (6U)
+#define GRF_GPIO1C_IE_GPIO1C3_IE_MASK                      (0x3U << GRF_GPIO1C_IE_GPIO1C3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO1C_IE_GPIO1C4_IE_SHIFT                     (8U)
+#define GRF_GPIO1C_IE_GPIO1C4_IE_MASK                      (0x3U << GRF_GPIO1C_IE_GPIO1C4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO1C_IE_GPIO1C5_IE_SHIFT                     (10U)
+#define GRF_GPIO1C_IE_GPIO1C5_IE_MASK                      (0x3U << GRF_GPIO1C_IE_GPIO1C5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO1C_IE_GPIO1C6_IE_SHIFT                     (12U)
+#define GRF_GPIO1C_IE_GPIO1C6_IE_MASK                      (0x3U << GRF_GPIO1C_IE_GPIO1C6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO1C_IE_GPIO1C7_IE_SHIFT                     (14U)
+#define GRF_GPIO1C_IE_GPIO1C7_IE_MASK                      (0x3U << GRF_GPIO1C_IE_GPIO1C7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO1D_IE */
+#define GRF_GPIO1D_IE_OFFSET                               (0x400C8U)
+#define GRF_GPIO1D_IE_GPIO1D0_IE_SHIFT                     (0U)
+#define GRF_GPIO1D_IE_GPIO1D0_IE_MASK                      (0x3U << GRF_GPIO1D_IE_GPIO1D0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO1D_IE_GPIO1D1_IE_SHIFT                     (2U)
+#define GRF_GPIO1D_IE_GPIO1D1_IE_MASK                      (0x3U << GRF_GPIO1D_IE_GPIO1D1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO1D_IE_GPIO1D2_IE_SHIFT                     (4U)
+#define GRF_GPIO1D_IE_GPIO1D2_IE_MASK                      (0x3U << GRF_GPIO1D_IE_GPIO1D2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO1D_IE_GPIO1D3_IE_SHIFT                     (6U)
+#define GRF_GPIO1D_IE_GPIO1D3_IE_MASK                      (0x3U << GRF_GPIO1D_IE_GPIO1D3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO1D_IE_GPIO1D4_IE_SHIFT                     (8U)
+#define GRF_GPIO1D_IE_GPIO1D4_IE_MASK                      (0x3U << GRF_GPIO1D_IE_GPIO1D4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO1D_IE_GPIO1D5_IE_SHIFT                     (10U)
+#define GRF_GPIO1D_IE_GPIO1D5_IE_MASK                      (0x3U << GRF_GPIO1D_IE_GPIO1D5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO1D_IE_GPIO1D6_IE_SHIFT                     (12U)
+#define GRF_GPIO1D_IE_GPIO1D6_IE_MASK                      (0x3U << GRF_GPIO1D_IE_GPIO1D6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO1D_IE_GPIO1D7_IE_SHIFT                     (14U)
+#define GRF_GPIO1D_IE_GPIO1D7_IE_MASK                      (0x3U << GRF_GPIO1D_IE_GPIO1D7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO2A_IE */
+#define GRF_GPIO2A_IE_OFFSET                               (0x400CCU)
+#define GRF_GPIO2A_IE_GPIO2A0_IE_SHIFT                     (0U)
+#define GRF_GPIO2A_IE_GPIO2A0_IE_MASK                      (0x3U << GRF_GPIO2A_IE_GPIO2A0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO2A_IE_GPIO2A1_IE_SHIFT                     (2U)
+#define GRF_GPIO2A_IE_GPIO2A1_IE_MASK                      (0x3U << GRF_GPIO2A_IE_GPIO2A1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO2A_IE_GPIO2A2_IE_SHIFT                     (4U)
+#define GRF_GPIO2A_IE_GPIO2A2_IE_MASK                      (0x3U << GRF_GPIO2A_IE_GPIO2A2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO2A_IE_GPIO2A3_IE_SHIFT                     (6U)
+#define GRF_GPIO2A_IE_GPIO2A3_IE_MASK                      (0x3U << GRF_GPIO2A_IE_GPIO2A3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO2A_IE_GPIO2A4_IE_SHIFT                     (8U)
+#define GRF_GPIO2A_IE_GPIO2A4_IE_MASK                      (0x3U << GRF_GPIO2A_IE_GPIO2A4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO2A_IE_GPIO2A5_IE_SHIFT                     (10U)
+#define GRF_GPIO2A_IE_GPIO2A5_IE_MASK                      (0x3U << GRF_GPIO2A_IE_GPIO2A5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO2A_IE_GPIO2A6_IE_SHIFT                     (12U)
+#define GRF_GPIO2A_IE_GPIO2A6_IE_MASK                      (0x3U << GRF_GPIO2A_IE_GPIO2A6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO2A_IE_GPIO2A7_IE_SHIFT                     (14U)
+#define GRF_GPIO2A_IE_GPIO2A7_IE_MASK                      (0x3U << GRF_GPIO2A_IE_GPIO2A7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO2B_IE */
+#define GRF_GPIO2B_IE_OFFSET                               (0x400D0U)
+#define GRF_GPIO2B_IE_GPIO2B0_IE_SHIFT                     (0U)
+#define GRF_GPIO2B_IE_GPIO2B0_IE_MASK                      (0x3U << GRF_GPIO2B_IE_GPIO2B0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO2B_IE_GPIO2B1_IE_SHIFT                     (2U)
+#define GRF_GPIO2B_IE_GPIO2B1_IE_MASK                      (0x3U << GRF_GPIO2B_IE_GPIO2B1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO2B_IE_GPIO2B2_IE_SHIFT                     (4U)
+#define GRF_GPIO2B_IE_GPIO2B2_IE_MASK                      (0x3U << GRF_GPIO2B_IE_GPIO2B2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO2B_IE_GPIO2B3_IE_SHIFT                     (6U)
+#define GRF_GPIO2B_IE_GPIO2B3_IE_MASK                      (0x3U << GRF_GPIO2B_IE_GPIO2B3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO2B_IE_GPIO2B4_IE_SHIFT                     (8U)
+#define GRF_GPIO2B_IE_GPIO2B4_IE_MASK                      (0x3U << GRF_GPIO2B_IE_GPIO2B4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO2B_IE_GPIO2B5_IE_SHIFT                     (10U)
+#define GRF_GPIO2B_IE_GPIO2B5_IE_MASK                      (0x3U << GRF_GPIO2B_IE_GPIO2B5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO2B_IE_GPIO2B6_IE_SHIFT                     (12U)
+#define GRF_GPIO2B_IE_GPIO2B6_IE_MASK                      (0x3U << GRF_GPIO2B_IE_GPIO2B6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO2B_IE_GPIO2B7_IE_SHIFT                     (14U)
+#define GRF_GPIO2B_IE_GPIO2B7_IE_MASK                      (0x3U << GRF_GPIO2B_IE_GPIO2B7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO2C_IE */
+#define GRF_GPIO2C_IE_OFFSET                               (0x400D4U)
+#define GRF_GPIO2C_IE_GPIO2C0_IE_SHIFT                     (0U)
+#define GRF_GPIO2C_IE_GPIO2C0_IE_MASK                      (0x3U << GRF_GPIO2C_IE_GPIO2C0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO2C_IE_GPIO2C1_IE_SHIFT                     (2U)
+#define GRF_GPIO2C_IE_GPIO2C1_IE_MASK                      (0x3U << GRF_GPIO2C_IE_GPIO2C1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO2C_IE_GPIO2C2_IE_SHIFT                     (4U)
+#define GRF_GPIO2C_IE_GPIO2C2_IE_MASK                      (0x3U << GRF_GPIO2C_IE_GPIO2C2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO2C_IE_GPIO2C3_IE_SHIFT                     (6U)
+#define GRF_GPIO2C_IE_GPIO2C3_IE_MASK                      (0x3U << GRF_GPIO2C_IE_GPIO2C3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO2C_IE_GPIO2C4_IE_SHIFT                     (8U)
+#define GRF_GPIO2C_IE_GPIO2C4_IE_MASK                      (0x3U << GRF_GPIO2C_IE_GPIO2C4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO2C_IE_GPIO2C5_IE_SHIFT                     (10U)
+#define GRF_GPIO2C_IE_GPIO2C5_IE_MASK                      (0x3U << GRF_GPIO2C_IE_GPIO2C5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO2C_IE_GPIO2C6_IE_SHIFT                     (12U)
+#define GRF_GPIO2C_IE_GPIO2C6_IE_MASK                      (0x3U << GRF_GPIO2C_IE_GPIO2C6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO2C_IE_GPIO2C7_IE_SHIFT                     (14U)
+#define GRF_GPIO2C_IE_GPIO2C7_IE_MASK                      (0x3U << GRF_GPIO2C_IE_GPIO2C7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO2D_IE */
+#define GRF_GPIO2D_IE_OFFSET                               (0x400D8U)
+#define GRF_GPIO2D_IE_GPIO2D0_IE_SHIFT                     (0U)
+#define GRF_GPIO2D_IE_GPIO2D0_IE_MASK                      (0x3U << GRF_GPIO2D_IE_GPIO2D0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO2D_IE_GPIO2D1_IE_SHIFT                     (2U)
+#define GRF_GPIO2D_IE_GPIO2D1_IE_MASK                      (0x3U << GRF_GPIO2D_IE_GPIO2D1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO2D_IE_GPIO2D2_IE_SHIFT                     (4U)
+#define GRF_GPIO2D_IE_GPIO2D2_IE_MASK                      (0x3U << GRF_GPIO2D_IE_GPIO2D2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO2D_IE_GPIO2D3_IE_SHIFT                     (6U)
+#define GRF_GPIO2D_IE_GPIO2D3_IE_MASK                      (0x3U << GRF_GPIO2D_IE_GPIO2D3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO2D_IE_GPIO2D4_IE_SHIFT                     (8U)
+#define GRF_GPIO2D_IE_GPIO2D4_IE_MASK                      (0x3U << GRF_GPIO2D_IE_GPIO2D4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO2D_IE_GPIO2A5_IE_SHIFT                     (10U)
+#define GRF_GPIO2D_IE_GPIO2A5_IE_MASK                      (0x3U << GRF_GPIO2D_IE_GPIO2A5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO2D_IE_GPIO2A6_IE_SHIFT                     (12U)
+#define GRF_GPIO2D_IE_GPIO2A6_IE_MASK                      (0x3U << GRF_GPIO2D_IE_GPIO2A6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO2D_IE_GPIO2D7_IE_SHIFT                     (14U)
+#define GRF_GPIO2D_IE_GPIO2D7_IE_MASK                      (0x3U << GRF_GPIO2D_IE_GPIO2D7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO3A_IE */
+#define GRF_GPIO3A_IE_OFFSET                               (0x400DCU)
+#define GRF_GPIO3A_IE_GPIO3A0_IE_SHIFT                     (0U)
+#define GRF_GPIO3A_IE_GPIO3A0_IE_MASK                      (0x3U << GRF_GPIO3A_IE_GPIO3A0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO3A_IE_GPIO3A1_IE_SHIFT                     (2U)
+#define GRF_GPIO3A_IE_GPIO3A1_IE_MASK                      (0x3U << GRF_GPIO3A_IE_GPIO3A1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO3A_IE_GPIO3A2_IE_SHIFT                     (4U)
+#define GRF_GPIO3A_IE_GPIO3A2_IE_MASK                      (0x3U << GRF_GPIO3A_IE_GPIO3A2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO3A_IE_GPIO3A3_IE_SHIFT                     (6U)
+#define GRF_GPIO3A_IE_GPIO3A3_IE_MASK                      (0x3U << GRF_GPIO3A_IE_GPIO3A3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO3A_IE_GPIO3A4_IE_SHIFT                     (8U)
+#define GRF_GPIO3A_IE_GPIO3A4_IE_MASK                      (0x3U << GRF_GPIO3A_IE_GPIO3A4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO3A_IE_GPIO3A5_IE_SHIFT                     (10U)
+#define GRF_GPIO3A_IE_GPIO3A5_IE_MASK                      (0x3U << GRF_GPIO3A_IE_GPIO3A5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO3A_IE_GPIO3A6_IE_SHIFT                     (12U)
+#define GRF_GPIO3A_IE_GPIO3A6_IE_MASK                      (0x3U << GRF_GPIO3A_IE_GPIO3A6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO3A_IE_GPIO3A7_IE_SHIFT                     (14U)
+#define GRF_GPIO3A_IE_GPIO3A7_IE_MASK                      (0x3U << GRF_GPIO3A_IE_GPIO3A7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO3B_IE */
+#define GRF_GPIO3B_IE_OFFSET                               (0x400E0U)
+#define GRF_GPIO3B_IE_GPIO3B0_IE_SHIFT                     (0U)
+#define GRF_GPIO3B_IE_GPIO3B0_IE_MASK                      (0x3U << GRF_GPIO3B_IE_GPIO3B0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO3B_IE_GPIO3B1_IE_SHIFT                     (2U)
+#define GRF_GPIO3B_IE_GPIO3B1_IE_MASK                      (0x3U << GRF_GPIO3B_IE_GPIO3B1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO3B_IE_GPIO3B2_IE_SHIFT                     (4U)
+#define GRF_GPIO3B_IE_GPIO3B2_IE_MASK                      (0x3U << GRF_GPIO3B_IE_GPIO3B2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO3B_IE_GPIO3B3_IE_SHIFT                     (6U)
+#define GRF_GPIO3B_IE_GPIO3B3_IE_MASK                      (0x3U << GRF_GPIO3B_IE_GPIO3B3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO3B_IE_GPIO3B4_IE_SHIFT                     (8U)
+#define GRF_GPIO3B_IE_GPIO3B4_IE_MASK                      (0x3U << GRF_GPIO3B_IE_GPIO3B4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO3B_IE_GPIO3B5_IE_SHIFT                     (10U)
+#define GRF_GPIO3B_IE_GPIO3B5_IE_MASK                      (0x3U << GRF_GPIO3B_IE_GPIO3B5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO3B_IE_GPIO3B6_IE_SHIFT                     (12U)
+#define GRF_GPIO3B_IE_GPIO3B6_IE_MASK                      (0x3U << GRF_GPIO3B_IE_GPIO3B6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO3B_IE_GPIO3B7_IE_SHIFT                     (14U)
+#define GRF_GPIO3B_IE_GPIO3B7_IE_MASK                      (0x3U << GRF_GPIO3B_IE_GPIO3B7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO3C_IE */
+#define GRF_GPIO3C_IE_OFFSET                               (0x400E4U)
+#define GRF_GPIO3C_IE_GPIO3C0_IE_SHIFT                     (0U)
+#define GRF_GPIO3C_IE_GPIO3C0_IE_MASK                      (0x3U << GRF_GPIO3C_IE_GPIO3C0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO3C_IE_GPIO3C1_IE_SHIFT                     (2U)
+#define GRF_GPIO3C_IE_GPIO3C1_IE_MASK                      (0x3U << GRF_GPIO3C_IE_GPIO3C1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO3C_IE_GPIO3C2_IE_SHIFT                     (4U)
+#define GRF_GPIO3C_IE_GPIO3C2_IE_MASK                      (0x3U << GRF_GPIO3C_IE_GPIO3C2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO3C_IE_GPIO3C3_IE_SHIFT                     (6U)
+#define GRF_GPIO3C_IE_GPIO3C3_IE_MASK                      (0x3U << GRF_GPIO3C_IE_GPIO3C3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO3C_IE_GPIO3C4_IE_SHIFT                     (8U)
+#define GRF_GPIO3C_IE_GPIO3C4_IE_MASK                      (0x3U << GRF_GPIO3C_IE_GPIO3C4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO3C_IE_GPIO3C5_IE_SHIFT                     (10U)
+#define GRF_GPIO3C_IE_GPIO3C5_IE_MASK                      (0x3U << GRF_GPIO3C_IE_GPIO3C5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO3C_IE_GPIO3C6_IE_SHIFT                     (12U)
+#define GRF_GPIO3C_IE_GPIO3C6_IE_MASK                      (0x3U << GRF_GPIO3C_IE_GPIO3C6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO3C_IE_GPIO3C7_IE_SHIFT                     (14U)
+#define GRF_GPIO3C_IE_GPIO3C7_IE_MASK                      (0x3U << GRF_GPIO3C_IE_GPIO3C7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO3D_IE */
+#define GRF_GPIO3D_IE_OFFSET                               (0x400E8U)
+#define GRF_GPIO3D_IE_GPIO3D0_IE_SHIFT                     (0U)
+#define GRF_GPIO3D_IE_GPIO3D0_IE_MASK                      (0x3U << GRF_GPIO3D_IE_GPIO3D0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO3D_IE_GPIO3D1_IE_SHIFT                     (2U)
+#define GRF_GPIO3D_IE_GPIO3D1_IE_MASK                      (0x3U << GRF_GPIO3D_IE_GPIO3D1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO3D_IE_GPIO3D2_IE_SHIFT                     (4U)
+#define GRF_GPIO3D_IE_GPIO3D2_IE_MASK                      (0x3U << GRF_GPIO3D_IE_GPIO3D2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO3D_IE_GPIO3D3_IE_SHIFT                     (6U)
+#define GRF_GPIO3D_IE_GPIO3D3_IE_MASK                      (0x3U << GRF_GPIO3D_IE_GPIO3D3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO3D_IE_GPIO3D4_IE_SHIFT                     (8U)
+#define GRF_GPIO3D_IE_GPIO3D4_IE_MASK                      (0x3U << GRF_GPIO3D_IE_GPIO3D4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO3D_IE_GPIO3D5_IE_SHIFT                     (10U)
+#define GRF_GPIO3D_IE_GPIO3D5_IE_MASK                      (0x3U << GRF_GPIO3D_IE_GPIO3D5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO3D_IE_GPIO3D6_IE_SHIFT                     (12U)
+#define GRF_GPIO3D_IE_GPIO3D6_IE_MASK                      (0x3U << GRF_GPIO3D_IE_GPIO3D6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO3D_IE_GPIO3D7_IE_SHIFT                     (14U)
+#define GRF_GPIO3D_IE_GPIO3D7_IE_MASK                      (0x3U << GRF_GPIO3D_IE_GPIO3D7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO4A_IE */
+#define GRF_GPIO4A_IE_OFFSET                               (0x400ECU)
+#define GRF_GPIO4A_IE_GPIO4A0_IE_SHIFT                     (0U)
+#define GRF_GPIO4A_IE_GPIO4A0_IE_MASK                      (0x3U << GRF_GPIO4A_IE_GPIO4A0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO4A_IE_GPIO4A1_IE_SHIFT                     (2U)
+#define GRF_GPIO4A_IE_GPIO4A1_IE_MASK                      (0x3U << GRF_GPIO4A_IE_GPIO4A1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO4A_IE_GPIO4A2_IE_SHIFT                     (4U)
+#define GRF_GPIO4A_IE_GPIO4A2_IE_MASK                      (0x3U << GRF_GPIO4A_IE_GPIO4A2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO4A_IE_GPIO4A3_IE_SHIFT                     (6U)
+#define GRF_GPIO4A_IE_GPIO4A3_IE_MASK                      (0x3U << GRF_GPIO4A_IE_GPIO4A3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO4A_IE_GPIO4A4_IE_SHIFT                     (8U)
+#define GRF_GPIO4A_IE_GPIO4A4_IE_MASK                      (0x3U << GRF_GPIO4A_IE_GPIO4A4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO4A_IE_GPIO4A5_IE_SHIFT                     (10U)
+#define GRF_GPIO4A_IE_GPIO4A5_IE_MASK                      (0x3U << GRF_GPIO4A_IE_GPIO4A5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO4A_IE_GPIO4A6_IE_SHIFT                     (12U)
+#define GRF_GPIO4A_IE_GPIO4A6_IE_MASK                      (0x3U << GRF_GPIO4A_IE_GPIO4A6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO4A_IE_GPIO4A7_IE_SHIFT                     (14U)
+#define GRF_GPIO4A_IE_GPIO4A7_IE_MASK                      (0x3U << GRF_GPIO4A_IE_GPIO4A7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO4B_IE */
+#define GRF_GPIO4B_IE_OFFSET                               (0x400F0U)
+#define GRF_GPIO4B_IE_GPIO4B0_IE_SHIFT                     (0U)
+#define GRF_GPIO4B_IE_GPIO4B0_IE_MASK                      (0x3U << GRF_GPIO4B_IE_GPIO4B0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO4B_IE_GPIO4B1_IE_SHIFT                     (2U)
+#define GRF_GPIO4B_IE_GPIO4B1_IE_MASK                      (0x3U << GRF_GPIO4B_IE_GPIO4B1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO4B_IE_GPIO4B2_IE_SHIFT                     (4U)
+#define GRF_GPIO4B_IE_GPIO4B2_IE_MASK                      (0x3U << GRF_GPIO4B_IE_GPIO4B2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO4B_IE_GPIO4B3_IE_SHIFT                     (6U)
+#define GRF_GPIO4B_IE_GPIO4B3_IE_MASK                      (0x3U << GRF_GPIO4B_IE_GPIO4B3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO4B_IE_GPIO4B4_IE_SHIFT                     (8U)
+#define GRF_GPIO4B_IE_GPIO4B4_IE_MASK                      (0x3U << GRF_GPIO4B_IE_GPIO4B4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO4B_IE_GPIO4B5_IE_SHIFT                     (10U)
+#define GRF_GPIO4B_IE_GPIO4B5_IE_MASK                      (0x3U << GRF_GPIO4B_IE_GPIO4B5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO4B_IE_GPIO4B6_IE_SHIFT                     (12U)
+#define GRF_GPIO4B_IE_GPIO4B6_IE_MASK                      (0x3U << GRF_GPIO4B_IE_GPIO4B6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO4B_IE_GPIO4B7_IE_SHIFT                     (14U)
+#define GRF_GPIO4B_IE_GPIO4B7_IE_MASK                      (0x3U << GRF_GPIO4B_IE_GPIO4B7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO4C_IE */
+#define GRF_GPIO4C_IE_OFFSET                               (0x400F4U)
+#define GRF_GPIO4C_IE_GPIO4C0_IE_SHIFT                     (0U)
+#define GRF_GPIO4C_IE_GPIO4C0_IE_MASK                      (0x3U << GRF_GPIO4C_IE_GPIO4C0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO4C_IE_GPIO4C1_IE_SHIFT                     (2U)
+#define GRF_GPIO4C_IE_GPIO4C1_IE_MASK                      (0x3U << GRF_GPIO4C_IE_GPIO4C1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO4C_IE_GPIO4C2_IE_SHIFT                     (4U)
+#define GRF_GPIO4C_IE_GPIO4C2_IE_MASK                      (0x3U << GRF_GPIO4C_IE_GPIO4C2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO4C_IE_GPIO4C3_IE_SHIFT                     (6U)
+#define GRF_GPIO4C_IE_GPIO4C3_IE_MASK                      (0x3U << GRF_GPIO4C_IE_GPIO4C3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO4C_IE_GPIO4C4_IE_SHIFT                     (8U)
+#define GRF_GPIO4C_IE_GPIO4C4_IE_MASK                      (0x3U << GRF_GPIO4C_IE_GPIO4C4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO4C_IE_GPIO4C5_IE_SHIFT                     (10U)
+#define GRF_GPIO4C_IE_GPIO4C5_IE_MASK                      (0x3U << GRF_GPIO4C_IE_GPIO4C5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO4C_IE_GPIO4C6_IE_SHIFT                     (12U)
+#define GRF_GPIO4C_IE_GPIO4C6_IE_MASK                      (0x3U << GRF_GPIO4C_IE_GPIO4C6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO4C_IE_GPIO4C7_IE_SHIFT                     (14U)
+#define GRF_GPIO4C_IE_GPIO4C7_IE_MASK                      (0x3U << GRF_GPIO4C_IE_GPIO4C7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO4D_IE */
+#define GRF_GPIO4D_IE_OFFSET                               (0x400F8U)
+#define GRF_GPIO4D_IE_GPIO3A0_IE_SHIFT                     (0U)
+#define GRF_GPIO4D_IE_GPIO3A0_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO4D_IE_GPIO3A1_IE_SHIFT                     (2U)
+#define GRF_GPIO4D_IE_GPIO3A1_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO4D_IE_GPIO3A2_IE_SHIFT                     (4U)
+#define GRF_GPIO4D_IE_GPIO3A2_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO4D_IE_GPIO3A3_IE_SHIFT                     (6U)
+#define GRF_GPIO4D_IE_GPIO3A3_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO4D_IE_GPIO3A4_IE_SHIFT                     (8U)
+#define GRF_GPIO4D_IE_GPIO3A4_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO4D_IE_GPIO3A5_IE_SHIFT                     (10U)
+#define GRF_GPIO4D_IE_GPIO3A5_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO4D_IE_GPIO3A6_IE_SHIFT                     (12U)
+#define GRF_GPIO4D_IE_GPIO3A6_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO4D_IE_GPIO3A7_IE_SHIFT                     (14U)
+#define GRF_GPIO4D_IE_GPIO3A7_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A7_IE_SHIFT)                     /* 0x0000C000 */
+/* GPIO1A_OPD */
+#define GRF_GPIO1A_OPD_OFFSET                              (0x400FCU)
+#define GRF_GPIO1A_OPD_GPIO1A0_OPD_SHIFT                   (0U)
+#define GRF_GPIO1A_OPD_GPIO1A0_OPD_MASK                    (0x1U << GRF_GPIO1A_OPD_GPIO1A0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO1A_OPD_GPIO1A1_OPD_SHIFT                   (1U)
+#define GRF_GPIO1A_OPD_GPIO1A1_OPD_MASK                    (0x1U << GRF_GPIO1A_OPD_GPIO1A1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO1A_OPD_GPIO1A2_OPD_SHIFT                   (2U)
+#define GRF_GPIO1A_OPD_GPIO1A2_OPD_MASK                    (0x1U << GRF_GPIO1A_OPD_GPIO1A2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO1A_OPD_GPIO1A3_OPD_SHIFT                   (3U)
+#define GRF_GPIO1A_OPD_GPIO1A3_OPD_MASK                    (0x1U << GRF_GPIO1A_OPD_GPIO1A3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO1A_OPD_GPIO1A4_OPD_SHIFT                   (4U)
+#define GRF_GPIO1A_OPD_GPIO1A4_OPD_MASK                    (0x1U << GRF_GPIO1A_OPD_GPIO1A4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO1A_OPD_GPIO1A5_OPD_SHIFT                   (5U)
+#define GRF_GPIO1A_OPD_GPIO1A5_OPD_MASK                    (0x1U << GRF_GPIO1A_OPD_GPIO1A5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO1A_OPD_GPIO1A6_OPD_SHIFT                   (6U)
+#define GRF_GPIO1A_OPD_GPIO1A6_OPD_MASK                    (0x1U << GRF_GPIO1A_OPD_GPIO1A6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO1A_OPD_GPIO1A7_OPD_SHIFT                   (7U)
+#define GRF_GPIO1A_OPD_GPIO1A7_OPD_MASK                    (0x1U << GRF_GPIO1A_OPD_GPIO1A7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO1B_OPD */
+#define GRF_GPIO1B_OPD_OFFSET                              (0x40100U)
+#define GRF_GPIO1B_OPD_GPIO1B0_OPD_SHIFT                   (0U)
+#define GRF_GPIO1B_OPD_GPIO1B0_OPD_MASK                    (0x1U << GRF_GPIO1B_OPD_GPIO1B0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO1B_OPD_GPIO1B1_OPD_SHIFT                   (1U)
+#define GRF_GPIO1B_OPD_GPIO1B1_OPD_MASK                    (0x1U << GRF_GPIO1B_OPD_GPIO1B1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO1B_OPD_GPIO1B2_OPD_SHIFT                   (2U)
+#define GRF_GPIO1B_OPD_GPIO1B2_OPD_MASK                    (0x1U << GRF_GPIO1B_OPD_GPIO1B2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO1B_OPD_GPIO1B3_OPD_SHIFT                   (3U)
+#define GRF_GPIO1B_OPD_GPIO1B3_OPD_MASK                    (0x1U << GRF_GPIO1B_OPD_GPIO1B3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO1B_OPD_GPIO1B4_OPD_SHIFT                   (4U)
+#define GRF_GPIO1B_OPD_GPIO1B4_OPD_MASK                    (0x1U << GRF_GPIO1B_OPD_GPIO1B4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO1B_OPD_GPIO1B5_OPD_SHIFT                   (5U)
+#define GRF_GPIO1B_OPD_GPIO1B5_OPD_MASK                    (0x1U << GRF_GPIO1B_OPD_GPIO1B5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO1B_OPD_GPIO1B6_OPD_SHIFT                   (6U)
+#define GRF_GPIO1B_OPD_GPIO1B6_OPD_MASK                    (0x1U << GRF_GPIO1B_OPD_GPIO1B6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO1B_OPD_GPIO1B7_OPD_SHIFT                   (7U)
+#define GRF_GPIO1B_OPD_GPIO1B7_OPD_MASK                    (0x1U << GRF_GPIO1B_OPD_GPIO1B7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO1C_OPD */
+#define GRF_GPIO1C_OPD_OFFSET                              (0x40104U)
+#define GRF_GPIO1C_OPD_GPIO1C0_OPD_SHIFT                   (0U)
+#define GRF_GPIO1C_OPD_GPIO1C0_OPD_MASK                    (0x1U << GRF_GPIO1C_OPD_GPIO1C0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO1C_OPD_GPIO1C1_OPD_SHIFT                   (1U)
+#define GRF_GPIO1C_OPD_GPIO1C1_OPD_MASK                    (0x1U << GRF_GPIO1C_OPD_GPIO1C1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO1C_OPD_GPIO1C2_OPD_SHIFT                   (2U)
+#define GRF_GPIO1C_OPD_GPIO1C2_OPD_MASK                    (0x1U << GRF_GPIO1C_OPD_GPIO1C2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO1C_OPD_GPIO1C3_OPD_SHIFT                   (3U)
+#define GRF_GPIO1C_OPD_GPIO1C3_OPD_MASK                    (0x1U << GRF_GPIO1C_OPD_GPIO1C3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO1C_OPD_GPIO1C4_OPD_SHIFT                   (4U)
+#define GRF_GPIO1C_OPD_GPIO1C4_OPD_MASK                    (0x1U << GRF_GPIO1C_OPD_GPIO1C4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO1C_OPD_GPIO1C5_OPD_SHIFT                   (5U)
+#define GRF_GPIO1C_OPD_GPIO1C5_OPD_MASK                    (0x1U << GRF_GPIO1C_OPD_GPIO1C5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO1C_OPD_GPIO1C6_OPD_SHIFT                   (6U)
+#define GRF_GPIO1C_OPD_GPIO1C6_OPD_MASK                    (0x1U << GRF_GPIO1C_OPD_GPIO1C6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO1C_OPD_GPIO1C7_OPD_SHIFT                   (7U)
+#define GRF_GPIO1C_OPD_GPIO1C7_OPD_MASK                    (0x1U << GRF_GPIO1C_OPD_GPIO1C7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO1D_OPD */
+#define GRF_GPIO1D_OPD_OFFSET                              (0x40108U)
+#define GRF_GPIO1D_OPD_GPIO1A0_OPD_SHIFT                   (0U)
+#define GRF_GPIO1D_OPD_GPIO1A0_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO1D_OPD_GPIO1A1_OPD_SHIFT                   (1U)
+#define GRF_GPIO1D_OPD_GPIO1A1_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO1D_OPD_GPIO1A2_OPD_SHIFT                   (2U)
+#define GRF_GPIO1D_OPD_GPIO1A2_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO1D_OPD_GPIO1A3_OPD_SHIFT                   (3U)
+#define GRF_GPIO1D_OPD_GPIO1A3_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO1D_OPD_GPIO1A4_OPD_SHIFT                   (4U)
+#define GRF_GPIO1D_OPD_GPIO1A4_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO1D_OPD_GPIO1A5_OPD_SHIFT                   (5U)
+#define GRF_GPIO1D_OPD_GPIO1A5_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO1D_OPD_GPIO1A6_OPD_SHIFT                   (6U)
+#define GRF_GPIO1D_OPD_GPIO1A6_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO1D_OPD_GPIO1A7_OPD_SHIFT                   (7U)
+#define GRF_GPIO1D_OPD_GPIO1A7_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO2A_OPD */
+#define GRF_GPIO2A_OPD_OFFSET                              (0x4010CU)
+#define GRF_GPIO2A_OPD_GPIO2A0_OPD_SHIFT                   (0U)
+#define GRF_GPIO2A_OPD_GPIO2A0_OPD_MASK                    (0x1U << GRF_GPIO2A_OPD_GPIO2A0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO2A_OPD_GPIO2A1_OPD_SHIFT                   (1U)
+#define GRF_GPIO2A_OPD_GPIO2A1_OPD_MASK                    (0x1U << GRF_GPIO2A_OPD_GPIO2A1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO2A_OPD_GPIO2A2_OPD_SHIFT                   (2U)
+#define GRF_GPIO2A_OPD_GPIO2A2_OPD_MASK                    (0x1U << GRF_GPIO2A_OPD_GPIO2A2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO2A_OPD_GPIO2A3_OPD_SHIFT                   (3U)
+#define GRF_GPIO2A_OPD_GPIO2A3_OPD_MASK                    (0x1U << GRF_GPIO2A_OPD_GPIO2A3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO2A_OPD_GPIO2A4_OPD_SHIFT                   (4U)
+#define GRF_GPIO2A_OPD_GPIO2A4_OPD_MASK                    (0x1U << GRF_GPIO2A_OPD_GPIO2A4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO2A_OPD_GPIO2A5_OPD_SHIFT                   (5U)
+#define GRF_GPIO2A_OPD_GPIO2A5_OPD_MASK                    (0x1U << GRF_GPIO2A_OPD_GPIO2A5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO2A_OPD_GPIO2A6_OPD_SHIFT                   (6U)
+#define GRF_GPIO2A_OPD_GPIO2A6_OPD_MASK                    (0x1U << GRF_GPIO2A_OPD_GPIO2A6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO2A_OPD_GPIO2A7_OPD_SHIFT                   (7U)
+#define GRF_GPIO2A_OPD_GPIO2A7_OPD_MASK                    (0x1U << GRF_GPIO2A_OPD_GPIO2A7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO2B_OPD */
+#define GRF_GPIO2B_OPD_OFFSET                              (0x40110U)
+#define GRF_GPIO2B_OPD_GPIO2B0_OPD_SHIFT                   (0U)
+#define GRF_GPIO2B_OPD_GPIO2B0_OPD_MASK                    (0x1U << GRF_GPIO2B_OPD_GPIO2B0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO2B_OPD_GPIO2B1_OPD_SHIFT                   (1U)
+#define GRF_GPIO2B_OPD_GPIO2B1_OPD_MASK                    (0x1U << GRF_GPIO2B_OPD_GPIO2B1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO2B_OPD_GPIO2B2_OPD_SHIFT                   (2U)
+#define GRF_GPIO2B_OPD_GPIO2B2_OPD_MASK                    (0x1U << GRF_GPIO2B_OPD_GPIO2B2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO2B_OPD_GPIO2B3_OPD_SHIFT                   (3U)
+#define GRF_GPIO2B_OPD_GPIO2B3_OPD_MASK                    (0x1U << GRF_GPIO2B_OPD_GPIO2B3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO2B_OPD_GPIO2B4_OPD_SHIFT                   (4U)
+#define GRF_GPIO2B_OPD_GPIO2B4_OPD_MASK                    (0x1U << GRF_GPIO2B_OPD_GPIO2B4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO2B_OPD_GPIO2B5_OPD_SHIFT                   (5U)
+#define GRF_GPIO2B_OPD_GPIO2B5_OPD_MASK                    (0x1U << GRF_GPIO2B_OPD_GPIO2B5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO2B_OPD_GPIO2B6_OPD_SHIFT                   (6U)
+#define GRF_GPIO2B_OPD_GPIO2B6_OPD_MASK                    (0x1U << GRF_GPIO2B_OPD_GPIO2B6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO2B_OPD_GPIO2B7_OPD_SHIFT                   (7U)
+#define GRF_GPIO2B_OPD_GPIO2B7_OPD_MASK                    (0x1U << GRF_GPIO2B_OPD_GPIO2B7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO2C_OPD */
+#define GRF_GPIO2C_OPD_OFFSET                              (0x40114U)
+#define GRF_GPIO2C_OPD_GPIO2C0_OPD_SHIFT                   (0U)
+#define GRF_GPIO2C_OPD_GPIO2C0_OPD_MASK                    (0x1U << GRF_GPIO2C_OPD_GPIO2C0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO2C_OPD_GPIO2C1_OPD_SHIFT                   (1U)
+#define GRF_GPIO2C_OPD_GPIO2C1_OPD_MASK                    (0x1U << GRF_GPIO2C_OPD_GPIO2C1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO2C_OPD_GPIO2C2_OPD_SHIFT                   (2U)
+#define GRF_GPIO2C_OPD_GPIO2C2_OPD_MASK                    (0x1U << GRF_GPIO2C_OPD_GPIO2C2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO2C_OPD_GPIO2C3_OPD_SHIFT                   (3U)
+#define GRF_GPIO2C_OPD_GPIO2C3_OPD_MASK                    (0x1U << GRF_GPIO2C_OPD_GPIO2C3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO2C_OPD_GPIO2C4_OPD_SHIFT                   (4U)
+#define GRF_GPIO2C_OPD_GPIO2C4_OPD_MASK                    (0x1U << GRF_GPIO2C_OPD_GPIO2C4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO2C_OPD_GPIO2C5_OPD_SHIFT                   (5U)
+#define GRF_GPIO2C_OPD_GPIO2C5_OPD_MASK                    (0x1U << GRF_GPIO2C_OPD_GPIO2C5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO2C_OPD_GPIO2C6_OPD_SHIFT                   (6U)
+#define GRF_GPIO2C_OPD_GPIO2C6_OPD_MASK                    (0x1U << GRF_GPIO2C_OPD_GPIO2C6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO2C_OPD_GPIO2C7_OPD_SHIFT                   (7U)
+#define GRF_GPIO2C_OPD_GPIO2C7_OPD_MASK                    (0x1U << GRF_GPIO2C_OPD_GPIO2C7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO2D_OPD */
+#define GRF_GPIO2D_OPD_OFFSET                              (0x40118U)
+#define GRF_GPIO2D_OPD_GPIO2D0_OPD_SHIFT                   (0U)
+#define GRF_GPIO2D_OPD_GPIO2D0_OPD_MASK                    (0x1U << GRF_GPIO2D_OPD_GPIO2D0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO2D_OPD_GPIO2D1_OPD_SHIFT                   (1U)
+#define GRF_GPIO2D_OPD_GPIO2D1_OPD_MASK                    (0x1U << GRF_GPIO2D_OPD_GPIO2D1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO2D_OPD_GPIO2D2_OPD_SHIFT                   (2U)
+#define GRF_GPIO2D_OPD_GPIO2D2_OPD_MASK                    (0x1U << GRF_GPIO2D_OPD_GPIO2D2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO2D_OPD_GPIO2D3_OPD_SHIFT                   (3U)
+#define GRF_GPIO2D_OPD_GPIO2D3_OPD_MASK                    (0x1U << GRF_GPIO2D_OPD_GPIO2D3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO2D_OPD_GPIO2D4_OPD_SHIFT                   (4U)
+#define GRF_GPIO2D_OPD_GPIO2D4_OPD_MASK                    (0x1U << GRF_GPIO2D_OPD_GPIO2D4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO2D_OPD_GPIO2D5_OPD_SHIFT                   (5U)
+#define GRF_GPIO2D_OPD_GPIO2D5_OPD_MASK                    (0x1U << GRF_GPIO2D_OPD_GPIO2D5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO2D_OPD_GPIO2D6_OPD_SHIFT                   (6U)
+#define GRF_GPIO2D_OPD_GPIO2D6_OPD_MASK                    (0x1U << GRF_GPIO2D_OPD_GPIO2D6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO2D_OPD_GPIO2D7_OPD_SHIFT                   (7U)
+#define GRF_GPIO2D_OPD_GPIO2D7_OPD_MASK                    (0x1U << GRF_GPIO2D_OPD_GPIO2D7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO3A_OPD */
+#define GRF_GPIO3A_OPD_OFFSET                              (0x4011CU)
+#define GRF_GPIO3A_OPD_GPIO3A0_OPD_SHIFT                   (0U)
+#define GRF_GPIO3A_OPD_GPIO3A0_OPD_MASK                    (0x1U << GRF_GPIO3A_OPD_GPIO3A0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO3A_OPD_GPIO3A1_OPD_SHIFT                   (1U)
+#define GRF_GPIO3A_OPD_GPIO3A1_OPD_MASK                    (0x1U << GRF_GPIO3A_OPD_GPIO3A1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO3A_OPD_GPIO3A2_OPD_SHIFT                   (2U)
+#define GRF_GPIO3A_OPD_GPIO3A2_OPD_MASK                    (0x1U << GRF_GPIO3A_OPD_GPIO3A2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO3A_OPD_GPIO3A3_OPD_SHIFT                   (3U)
+#define GRF_GPIO3A_OPD_GPIO3A3_OPD_MASK                    (0x1U << GRF_GPIO3A_OPD_GPIO3A3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO3A_OPD_GPIO3A4_OPD_SHIFT                   (4U)
+#define GRF_GPIO3A_OPD_GPIO3A4_OPD_MASK                    (0x1U << GRF_GPIO3A_OPD_GPIO3A4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO3A_OPD_GPIO3A5_OPD_SHIFT                   (5U)
+#define GRF_GPIO3A_OPD_GPIO3A5_OPD_MASK                    (0x1U << GRF_GPIO3A_OPD_GPIO3A5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO3A_OPD_GPIO3A6_OPD_SHIFT                   (6U)
+#define GRF_GPIO3A_OPD_GPIO3A6_OPD_MASK                    (0x1U << GRF_GPIO3A_OPD_GPIO3A6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO3A_OPD_GPIO3A7_OPD_SHIFT                   (7U)
+#define GRF_GPIO3A_OPD_GPIO3A7_OPD_MASK                    (0x1U << GRF_GPIO3A_OPD_GPIO3A7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO3B_OPD */
+#define GRF_GPIO3B_OPD_OFFSET                              (0x40120U)
+#define GRF_GPIO3B_OPD_GPIO3B0_OPD_SHIFT                   (0U)
+#define GRF_GPIO3B_OPD_GPIO3B0_OPD_MASK                    (0x1U << GRF_GPIO3B_OPD_GPIO3B0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO3B_OPD_GPIO3B1_OPD_SHIFT                   (1U)
+#define GRF_GPIO3B_OPD_GPIO3B1_OPD_MASK                    (0x1U << GRF_GPIO3B_OPD_GPIO3B1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO3B_OPD_GPIO3B2_OPD_SHIFT                   (2U)
+#define GRF_GPIO3B_OPD_GPIO3B2_OPD_MASK                    (0x1U << GRF_GPIO3B_OPD_GPIO3B2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO3B_OPD_GPIO3B3_OPD_SHIFT                   (3U)
+#define GRF_GPIO3B_OPD_GPIO3B3_OPD_MASK                    (0x1U << GRF_GPIO3B_OPD_GPIO3B3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO3B_OPD_GPIO3B4_OPD_SHIFT                   (4U)
+#define GRF_GPIO3B_OPD_GPIO3B4_OPD_MASK                    (0x1U << GRF_GPIO3B_OPD_GPIO3B4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO3B_OPD_GPIO3B5_OPD_SHIFT                   (5U)
+#define GRF_GPIO3B_OPD_GPIO3B5_OPD_MASK                    (0x1U << GRF_GPIO3B_OPD_GPIO3B5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO3B_OPD_GPIO3B6_OPD_SHIFT                   (6U)
+#define GRF_GPIO3B_OPD_GPIO3B6_OPD_MASK                    (0x1U << GRF_GPIO3B_OPD_GPIO3B6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO3B_OPD_GPIO3B7_OPD_SHIFT                   (7U)
+#define GRF_GPIO3B_OPD_GPIO3B7_OPD_MASK                    (0x1U << GRF_GPIO3B_OPD_GPIO3B7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO3C_OPD */
+#define GRF_GPIO3C_OPD_OFFSET                              (0x40124U)
+#define GRF_GPIO3C_OPD_GPIO3C0_OPD_SHIFT                   (0U)
+#define GRF_GPIO3C_OPD_GPIO3C0_OPD_MASK                    (0x1U << GRF_GPIO3C_OPD_GPIO3C0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO3C_OPD_GPIO3C1_OPD_SHIFT                   (1U)
+#define GRF_GPIO3C_OPD_GPIO3C1_OPD_MASK                    (0x1U << GRF_GPIO3C_OPD_GPIO3C1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO3C_OPD_GPIO3C2_OPD_SHIFT                   (2U)
+#define GRF_GPIO3C_OPD_GPIO3C2_OPD_MASK                    (0x1U << GRF_GPIO3C_OPD_GPIO3C2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO3C_OPD_GPIO3C3_OPD_SHIFT                   (3U)
+#define GRF_GPIO3C_OPD_GPIO3C3_OPD_MASK                    (0x1U << GRF_GPIO3C_OPD_GPIO3C3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO3C_OPD_GPIO3C4_OPD_SHIFT                   (4U)
+#define GRF_GPIO3C_OPD_GPIO3C4_OPD_MASK                    (0x1U << GRF_GPIO3C_OPD_GPIO3C4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO3C_OPD_GPIO3C5_OPD_SHIFT                   (5U)
+#define GRF_GPIO3C_OPD_GPIO3C5_OPD_MASK                    (0x1U << GRF_GPIO3C_OPD_GPIO3C5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO3C_OPD_GPIO3C6_OPD_SHIFT                   (6U)
+#define GRF_GPIO3C_OPD_GPIO3C6_OPD_MASK                    (0x1U << GRF_GPIO3C_OPD_GPIO3C6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO3C_OPD_GPIO3C7_OPD_SHIFT                   (7U)
+#define GRF_GPIO3C_OPD_GPIO3C7_OPD_MASK                    (0x1U << GRF_GPIO3C_OPD_GPIO3C7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO3D_OPD */
+#define GRF_GPIO3D_OPD_OFFSET                              (0x40128U)
+#define GRF_GPIO3D_OPD_GPIO3D0_OPD_SHIFT                   (0U)
+#define GRF_GPIO3D_OPD_GPIO3D0_OPD_MASK                    (0x1U << GRF_GPIO3D_OPD_GPIO3D0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO3D_OPD_GPIO3D1_OPD_SHIFT                   (1U)
+#define GRF_GPIO3D_OPD_GPIO3D1_OPD_MASK                    (0x1U << GRF_GPIO3D_OPD_GPIO3D1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO3D_OPD_GPIO3D2_OPD_SHIFT                   (2U)
+#define GRF_GPIO3D_OPD_GPIO3D2_OPD_MASK                    (0x1U << GRF_GPIO3D_OPD_GPIO3D2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO3D_OPD_GPIO3D3_OPD_SHIFT                   (3U)
+#define GRF_GPIO3D_OPD_GPIO3D3_OPD_MASK                    (0x1U << GRF_GPIO3D_OPD_GPIO3D3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO3D_OPD_GPIO3D4_OPD_SHIFT                   (4U)
+#define GRF_GPIO3D_OPD_GPIO3D4_OPD_MASK                    (0x1U << GRF_GPIO3D_OPD_GPIO3D4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO3D_OPD_GPIO3D5_OPD_SHIFT                   (5U)
+#define GRF_GPIO3D_OPD_GPIO3D5_OPD_MASK                    (0x1U << GRF_GPIO3D_OPD_GPIO3D5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO3D_OPD_GPIO3D6_OPD_SHIFT                   (6U)
+#define GRF_GPIO3D_OPD_GPIO3D6_OPD_MASK                    (0x1U << GRF_GPIO3D_OPD_GPIO3D6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO3D_OPD_GPIO3D7_OPD_SHIFT                   (7U)
+#define GRF_GPIO3D_OPD_GPIO3D7_OPD_MASK                    (0x1U << GRF_GPIO3D_OPD_GPIO3D7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO4A_OPD */
+#define GRF_GPIO4A_OPD_OFFSET                              (0x4012CU)
+#define GRF_GPIO4A_OPD_GPIO4A0_OPD_SHIFT                   (0U)
+#define GRF_GPIO4A_OPD_GPIO4A0_OPD_MASK                    (0x1U << GRF_GPIO4A_OPD_GPIO4A0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO4A_OPD_GPIO4A1_OPD_SHIFT                   (1U)
+#define GRF_GPIO4A_OPD_GPIO4A1_OPD_MASK                    (0x1U << GRF_GPIO4A_OPD_GPIO4A1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO4A_OPD_GPIO4A2_OPD_SHIFT                   (2U)
+#define GRF_GPIO4A_OPD_GPIO4A2_OPD_MASK                    (0x1U << GRF_GPIO4A_OPD_GPIO4A2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO4A_OPD_GPIO4A3_OPD_SHIFT                   (3U)
+#define GRF_GPIO4A_OPD_GPIO4A3_OPD_MASK                    (0x1U << GRF_GPIO4A_OPD_GPIO4A3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO4A_OPD_GPIO4A4_OPD_SHIFT                   (4U)
+#define GRF_GPIO4A_OPD_GPIO4A4_OPD_MASK                    (0x1U << GRF_GPIO4A_OPD_GPIO4A4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO4A_OPD_GPIO4A5_OPD_SHIFT                   (5U)
+#define GRF_GPIO4A_OPD_GPIO4A5_OPD_MASK                    (0x1U << GRF_GPIO4A_OPD_GPIO4A5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO4A_OPD_GPIO4A6_OPD_SHIFT                   (6U)
+#define GRF_GPIO4A_OPD_GPIO4A6_OPD_MASK                    (0x1U << GRF_GPIO4A_OPD_GPIO4A6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO4A_OPD_GPIO4A7_OPD_SHIFT                   (7U)
+#define GRF_GPIO4A_OPD_GPIO4A7_OPD_MASK                    (0x1U << GRF_GPIO4A_OPD_GPIO4A7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO4B_OPD */
+#define GRF_GPIO4B_OPD_OFFSET                              (0x40130U)
+#define GRF_GPIO4B_OPD_GPIO4B0_OPD_SHIFT                   (0U)
+#define GRF_GPIO4B_OPD_GPIO4B0_OPD_MASK                    (0x1U << GRF_GPIO4B_OPD_GPIO4B0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO4B_OPD_GPIO4B1_OPD_SHIFT                   (1U)
+#define GRF_GPIO4B_OPD_GPIO4B1_OPD_MASK                    (0x1U << GRF_GPIO4B_OPD_GPIO4B1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO4B_OPD_GPIO4B2_OPD_SHIFT                   (2U)
+#define GRF_GPIO4B_OPD_GPIO4B2_OPD_MASK                    (0x1U << GRF_GPIO4B_OPD_GPIO4B2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO4B_OPD_GPIO4B3_OPD_SHIFT                   (3U)
+#define GRF_GPIO4B_OPD_GPIO4B3_OPD_MASK                    (0x1U << GRF_GPIO4B_OPD_GPIO4B3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO4B_OPD_GPIO4B4_OPD_SHIFT                   (4U)
+#define GRF_GPIO4B_OPD_GPIO4B4_OPD_MASK                    (0x1U << GRF_GPIO4B_OPD_GPIO4B4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO4B_OPD_GPIO4B5_OPD_SHIFT                   (5U)
+#define GRF_GPIO4B_OPD_GPIO4B5_OPD_MASK                    (0x1U << GRF_GPIO4B_OPD_GPIO4B5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO4B_OPD_GPIO4B6_OPD_SHIFT                   (6U)
+#define GRF_GPIO4B_OPD_GPIO4B6_OPD_MASK                    (0x1U << GRF_GPIO4B_OPD_GPIO4B6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO4B_OPD_GPIO4B7_OPD_SHIFT                   (7U)
+#define GRF_GPIO4B_OPD_GPIO4B7_OPD_MASK                    (0x1U << GRF_GPIO4B_OPD_GPIO4B7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO4C_OPD */
+#define GRF_GPIO4C_OPD_OFFSET                              (0x40134U)
+#define GRF_GPIO4C_OPD_GPIO4C0_OPD_SHIFT                   (0U)
+#define GRF_GPIO4C_OPD_GPIO4C0_OPD_MASK                    (0x1U << GRF_GPIO4C_OPD_GPIO4C0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO4C_OPD_GPIO4C1_OPD_SHIFT                   (1U)
+#define GRF_GPIO4C_OPD_GPIO4C1_OPD_MASK                    (0x1U << GRF_GPIO4C_OPD_GPIO4C1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO4C_OPD_GPIO4C2_OPD_SHIFT                   (2U)
+#define GRF_GPIO4C_OPD_GPIO4C2_OPD_MASK                    (0x1U << GRF_GPIO4C_OPD_GPIO4C2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO4C_OPD_GPIO4C3_OPD_SHIFT                   (3U)
+#define GRF_GPIO4C_OPD_GPIO4C3_OPD_MASK                    (0x1U << GRF_GPIO4C_OPD_GPIO4C3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO4C_OPD_GPIO4C4_OPD_SHIFT                   (4U)
+#define GRF_GPIO4C_OPD_GPIO4C4_OPD_MASK                    (0x1U << GRF_GPIO4C_OPD_GPIO4C4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO4C_OPD_GPIO4C5_OPD_SHIFT                   (5U)
+#define GRF_GPIO4C_OPD_GPIO4C5_OPD_MASK                    (0x1U << GRF_GPIO4C_OPD_GPIO4C5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO4C_OPD_GPIO4C6_OPD_SHIFT                   (6U)
+#define GRF_GPIO4C_OPD_GPIO4C6_OPD_MASK                    (0x1U << GRF_GPIO4C_OPD_GPIO4C6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO4C_OPD_GPIO4C7_OPD_SHIFT                   (7U)
+#define GRF_GPIO4C_OPD_GPIO4C7_OPD_MASK                    (0x1U << GRF_GPIO4C_OPD_GPIO4C7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO4D_OPD */
+#define GRF_GPIO4D_OPD_OFFSET                              (0x40138U)
+#define GRF_GPIO4D_OPD_GPIO4D0_OPD_SHIFT                   (0U)
+#define GRF_GPIO4D_OPD_GPIO4D0_OPD_MASK                    (0x1U << GRF_GPIO4D_OPD_GPIO4D0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO4D_OPD_GPIO4D1_OPD_SHIFT                   (1U)
+#define GRF_GPIO4D_OPD_GPIO4D1_OPD_MASK                    (0x1U << GRF_GPIO4D_OPD_GPIO4D1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO4D_OPD_GPIO4D2_OPD_SHIFT                   (2U)
+#define GRF_GPIO4D_OPD_GPIO4D2_OPD_MASK                    (0x1U << GRF_GPIO4D_OPD_GPIO4D2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO4D_OPD_GPIO4D3_OPD_SHIFT                   (3U)
+#define GRF_GPIO4D_OPD_GPIO4D3_OPD_MASK                    (0x1U << GRF_GPIO4D_OPD_GPIO4D3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO4D_OPD_GPIO4D4_OPD_SHIFT                   (4U)
+#define GRF_GPIO4D_OPD_GPIO4D4_OPD_MASK                    (0x1U << GRF_GPIO4D_OPD_GPIO4D4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO4D_OPD_GPIO4D5_OPD_SHIFT                   (5U)
+#define GRF_GPIO4D_OPD_GPIO4D5_OPD_MASK                    (0x1U << GRF_GPIO4D_OPD_GPIO4D5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO4D_OPD_GPIO4D6_OPD_SHIFT                   (6U)
+#define GRF_GPIO4D_OPD_GPIO4D6_OPD_MASK                    (0x1U << GRF_GPIO4D_OPD_GPIO4D6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO4D_OPD_GPIO4D7_OPD_SHIFT                   (7U)
+#define GRF_GPIO4D_OPD_GPIO4D7_OPD_MASK                    (0x1U << GRF_GPIO4D_OPD_GPIO4D7_OPD_SHIFT)                   /* 0x00000080 */
+/* GPIO1A_SUS */
+#define GRF_GPIO1A_SUS_OFFSET                              (0x4013CU)
+#define GRF_GPIO1A_SUS_GPIO1A0_SUS_SHIFT                   (0U)
+#define GRF_GPIO1A_SUS_GPIO1A0_SUS_MASK                    (0x1U << GRF_GPIO1A_SUS_GPIO1A0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO1A_SUS_GPIO1A1_SUS_SHIFT                   (1U)
+#define GRF_GPIO1A_SUS_GPIO1A1_SUS_MASK                    (0x1U << GRF_GPIO1A_SUS_GPIO1A1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO1A_SUS_GPIO1A2_SUS_SHIFT                   (2U)
+#define GRF_GPIO1A_SUS_GPIO1A2_SUS_MASK                    (0x1U << GRF_GPIO1A_SUS_GPIO1A2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO1A_SUS_GPIO1A3_SUS_SHIFT                   (3U)
+#define GRF_GPIO1A_SUS_GPIO1A3_SUS_MASK                    (0x1U << GRF_GPIO1A_SUS_GPIO1A3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO1A_SUS_GPIO1A4_SUS_SHIFT                   (4U)
+#define GRF_GPIO1A_SUS_GPIO1A4_SUS_MASK                    (0x1U << GRF_GPIO1A_SUS_GPIO1A4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO1A_SUS_GPIO1A5_SUS_SHIFT                   (5U)
+#define GRF_GPIO1A_SUS_GPIO1A5_SUS_MASK                    (0x1U << GRF_GPIO1A_SUS_GPIO1A5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO1A_SUS_GPIO1A6_SUS_SHIFT                   (6U)
+#define GRF_GPIO1A_SUS_GPIO1A6_SUS_MASK                    (0x1U << GRF_GPIO1A_SUS_GPIO1A6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO1A_SUS_GPIO1A7_SUS_SHIFT                   (7U)
+#define GRF_GPIO1A_SUS_GPIO1A7_SUS_MASK                    (0x1U << GRF_GPIO1A_SUS_GPIO1A7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO1B_SUS */
+#define GRF_GPIO1B_SUS_OFFSET                              (0x40140U)
+#define GRF_GPIO1B_SUS_GPIO1B0_SUS_SHIFT                   (0U)
+#define GRF_GPIO1B_SUS_GPIO1B0_SUS_MASK                    (0x1U << GRF_GPIO1B_SUS_GPIO1B0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO1B_SUS_GPIO1B1_SUS_SHIFT                   (1U)
+#define GRF_GPIO1B_SUS_GPIO1B1_SUS_MASK                    (0x1U << GRF_GPIO1B_SUS_GPIO1B1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO1B_SUS_GPIO1B2_SUS_SHIFT                   (2U)
+#define GRF_GPIO1B_SUS_GPIO1B2_SUS_MASK                    (0x1U << GRF_GPIO1B_SUS_GPIO1B2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO1B_SUS_GPIO1B3_SUS_SHIFT                   (3U)
+#define GRF_GPIO1B_SUS_GPIO1B3_SUS_MASK                    (0x1U << GRF_GPIO1B_SUS_GPIO1B3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO1B_SUS_GPIO1B4_SUS_SHIFT                   (4U)
+#define GRF_GPIO1B_SUS_GPIO1B4_SUS_MASK                    (0x1U << GRF_GPIO1B_SUS_GPIO1B4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO1B_SUS_GPIO1B5_SUS_SHIFT                   (5U)
+#define GRF_GPIO1B_SUS_GPIO1B5_SUS_MASK                    (0x1U << GRF_GPIO1B_SUS_GPIO1B5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO1B_SUS_GPIO1B6_SUS_SHIFT                   (6U)
+#define GRF_GPIO1B_SUS_GPIO1B6_SUS_MASK                    (0x1U << GRF_GPIO1B_SUS_GPIO1B6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO1B_SUS_GPIO1B7_SUS_SHIFT                   (7U)
+#define GRF_GPIO1B_SUS_GPIO1B7_SUS_MASK                    (0x1U << GRF_GPIO1B_SUS_GPIO1B7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO1C_SUS */
+#define GRF_GPIO1C_SUS_OFFSET                              (0x40144U)
+#define GRF_GPIO1C_SUS_GPIO1C0_SUS_SHIFT                   (0U)
+#define GRF_GPIO1C_SUS_GPIO1C0_SUS_MASK                    (0x1U << GRF_GPIO1C_SUS_GPIO1C0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO1C_SUS_GPIO1C1_SUS_SHIFT                   (1U)
+#define GRF_GPIO1C_SUS_GPIO1C1_SUS_MASK                    (0x1U << GRF_GPIO1C_SUS_GPIO1C1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO1C_SUS_GPIO1C2_SUS_SHIFT                   (2U)
+#define GRF_GPIO1C_SUS_GPIO1C2_SUS_MASK                    (0x1U << GRF_GPIO1C_SUS_GPIO1C2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO1C_SUS_GPIO1C3_SUS_SHIFT                   (3U)
+#define GRF_GPIO1C_SUS_GPIO1C3_SUS_MASK                    (0x1U << GRF_GPIO1C_SUS_GPIO1C3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO1C_SUS_GPIO1C4_SUS_SHIFT                   (4U)
+#define GRF_GPIO1C_SUS_GPIO1C4_SUS_MASK                    (0x1U << GRF_GPIO1C_SUS_GPIO1C4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO1C_SUS_GPIO1C5_SUS_SHIFT                   (5U)
+#define GRF_GPIO1C_SUS_GPIO1C5_SUS_MASK                    (0x1U << GRF_GPIO1C_SUS_GPIO1C5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO1C_SUS_GPIO1C6_SUS_SHIFT                   (6U)
+#define GRF_GPIO1C_SUS_GPIO1C6_SUS_MASK                    (0x1U << GRF_GPIO1C_SUS_GPIO1C6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO1C_SUS_GPIO1C7_SUS_SHIFT                   (7U)
+#define GRF_GPIO1C_SUS_GPIO1C7_SUS_MASK                    (0x1U << GRF_GPIO1C_SUS_GPIO1C7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO1D_SUS */
+#define GRF_GPIO1D_SUS_OFFSET                              (0x40148U)
+#define GRF_GPIO1D_SUS_GPIO1D0_SUS_SHIFT                   (0U)
+#define GRF_GPIO1D_SUS_GPIO1D0_SUS_MASK                    (0x1U << GRF_GPIO1D_SUS_GPIO1D0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO1D_SUS_GPIO1D1_SUS_SHIFT                   (1U)
+#define GRF_GPIO1D_SUS_GPIO1D1_SUS_MASK                    (0x1U << GRF_GPIO1D_SUS_GPIO1D1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO1D_SUS_GPIO1D2_SUS_SHIFT                   (2U)
+#define GRF_GPIO1D_SUS_GPIO1D2_SUS_MASK                    (0x1U << GRF_GPIO1D_SUS_GPIO1D2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO1D_SUS_GPIO1D3_SUS_SHIFT                   (3U)
+#define GRF_GPIO1D_SUS_GPIO1D3_SUS_MASK                    (0x1U << GRF_GPIO1D_SUS_GPIO1D3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO1D_SUS_GPIO1D4_SUS_SHIFT                   (4U)
+#define GRF_GPIO1D_SUS_GPIO1D4_SUS_MASK                    (0x1U << GRF_GPIO1D_SUS_GPIO1D4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO1D_SUS_GPIO1D5_SUS_SHIFT                   (5U)
+#define GRF_GPIO1D_SUS_GPIO1D5_SUS_MASK                    (0x1U << GRF_GPIO1D_SUS_GPIO1D5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO1D_SUS_GPIO1D6_SUS_SHIFT                   (6U)
+#define GRF_GPIO1D_SUS_GPIO1D6_SUS_MASK                    (0x1U << GRF_GPIO1D_SUS_GPIO1D6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO1D_SUS_GPIO1D7_SUS_SHIFT                   (7U)
+#define GRF_GPIO1D_SUS_GPIO1D7_SUS_MASK                    (0x1U << GRF_GPIO1D_SUS_GPIO1D7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO2A_SUS */
+#define GRF_GPIO2A_SUS_OFFSET                              (0x4014CU)
+#define GRF_GPIO2A_SUS_GPIO2A0_SUS_SHIFT                   (0U)
+#define GRF_GPIO2A_SUS_GPIO2A0_SUS_MASK                    (0x1U << GRF_GPIO2A_SUS_GPIO2A0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO2A_SUS_GPIO2A1_SUS_SHIFT                   (1U)
+#define GRF_GPIO2A_SUS_GPIO2A1_SUS_MASK                    (0x1U << GRF_GPIO2A_SUS_GPIO2A1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO2A_SUS_GPIO2A2_SUS_SHIFT                   (2U)
+#define GRF_GPIO2A_SUS_GPIO2A2_SUS_MASK                    (0x1U << GRF_GPIO2A_SUS_GPIO2A2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO2A_SUS_GPIO2A3_SUS_SHIFT                   (3U)
+#define GRF_GPIO2A_SUS_GPIO2A3_SUS_MASK                    (0x1U << GRF_GPIO2A_SUS_GPIO2A3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO2A_SUS_GPIO2A4_SUS_SHIFT                   (4U)
+#define GRF_GPIO2A_SUS_GPIO2A4_SUS_MASK                    (0x1U << GRF_GPIO2A_SUS_GPIO2A4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO2A_SUS_GPIO2A5_SUS_SHIFT                   (5U)
+#define GRF_GPIO2A_SUS_GPIO2A5_SUS_MASK                    (0x1U << GRF_GPIO2A_SUS_GPIO2A5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO2A_SUS_GPIO2A6_SUS_SHIFT                   (6U)
+#define GRF_GPIO2A_SUS_GPIO2A6_SUS_MASK                    (0x1U << GRF_GPIO2A_SUS_GPIO2A6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO2A_SUS_GPIO2A7_SUS_SHIFT                   (7U)
+#define GRF_GPIO2A_SUS_GPIO2A7_SUS_MASK                    (0x1U << GRF_GPIO2A_SUS_GPIO2A7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO2B_SUS */
+#define GRF_GPIO2B_SUS_OFFSET                              (0x40150U)
+#define GRF_GPIO2B_SUS_GPIO2B0_SUS_SHIFT                   (0U)
+#define GRF_GPIO2B_SUS_GPIO2B0_SUS_MASK                    (0x1U << GRF_GPIO2B_SUS_GPIO2B0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO2B_SUS_GPIO2B1_SUS_SHIFT                   (1U)
+#define GRF_GPIO2B_SUS_GPIO2B1_SUS_MASK                    (0x1U << GRF_GPIO2B_SUS_GPIO2B1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO2B_SUS_GPIO2B2_SUS_SHIFT                   (2U)
+#define GRF_GPIO2B_SUS_GPIO2B2_SUS_MASK                    (0x1U << GRF_GPIO2B_SUS_GPIO2B2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO2B_SUS_GPIO2B3_SUS_SHIFT                   (3U)
+#define GRF_GPIO2B_SUS_GPIO2B3_SUS_MASK                    (0x1U << GRF_GPIO2B_SUS_GPIO2B3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO2B_SUS_GPIO2B4_SUS_SHIFT                   (4U)
+#define GRF_GPIO2B_SUS_GPIO2B4_SUS_MASK                    (0x1U << GRF_GPIO2B_SUS_GPIO2B4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO2B_SUS_GPIO2B5_SUS_SHIFT                   (5U)
+#define GRF_GPIO2B_SUS_GPIO2B5_SUS_MASK                    (0x1U << GRF_GPIO2B_SUS_GPIO2B5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO2B_SUS_GPIO2B6_SUS_SHIFT                   (6U)
+#define GRF_GPIO2B_SUS_GPIO2B6_SUS_MASK                    (0x1U << GRF_GPIO2B_SUS_GPIO2B6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO2B_SUS_GPIO2B7_SUS_SHIFT                   (7U)
+#define GRF_GPIO2B_SUS_GPIO2B7_SUS_MASK                    (0x1U << GRF_GPIO2B_SUS_GPIO2B7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO2C_SUS */
+#define GRF_GPIO2C_SUS_OFFSET                              (0x40154U)
+#define GRF_GPIO2C_SUS_GPIO2C0_SUS_SHIFT                   (0U)
+#define GRF_GPIO2C_SUS_GPIO2C0_SUS_MASK                    (0x1U << GRF_GPIO2C_SUS_GPIO2C0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO2C_SUS_GPIO2C1_SUS_SHIFT                   (1U)
+#define GRF_GPIO2C_SUS_GPIO2C1_SUS_MASK                    (0x1U << GRF_GPIO2C_SUS_GPIO2C1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO2C_SUS_GPIO2C2_SUS_SHIFT                   (2U)
+#define GRF_GPIO2C_SUS_GPIO2C2_SUS_MASK                    (0x1U << GRF_GPIO2C_SUS_GPIO2C2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO2C_SUS_GPIO2C3_SUS_SHIFT                   (3U)
+#define GRF_GPIO2C_SUS_GPIO2C3_SUS_MASK                    (0x1U << GRF_GPIO2C_SUS_GPIO2C3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO2C_SUS_GPIO2C4_SUS_SHIFT                   (4U)
+#define GRF_GPIO2C_SUS_GPIO2C4_SUS_MASK                    (0x1U << GRF_GPIO2C_SUS_GPIO2C4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO2C_SUS_GPIO2C5_SUS_SHIFT                   (5U)
+#define GRF_GPIO2C_SUS_GPIO2C5_SUS_MASK                    (0x1U << GRF_GPIO2C_SUS_GPIO2C5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO2C_SUS_GPIO2C6_SUS_SHIFT                   (6U)
+#define GRF_GPIO2C_SUS_GPIO2C6_SUS_MASK                    (0x1U << GRF_GPIO2C_SUS_GPIO2C6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO2C_SUS_GPIO2C7_SUS_SHIFT                   (7U)
+#define GRF_GPIO2C_SUS_GPIO2C7_SUS_MASK                    (0x1U << GRF_GPIO2C_SUS_GPIO2C7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO2D_SUS */
+#define GRF_GPIO2D_SUS_OFFSET                              (0x40158U)
+#define GRF_GPIO2D_SUS_GPIO2D0_SUS_SHIFT                   (0U)
+#define GRF_GPIO2D_SUS_GPIO2D0_SUS_MASK                    (0x1U << GRF_GPIO2D_SUS_GPIO2D0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO2D_SUS_GPIO2D1_SUS_SHIFT                   (1U)
+#define GRF_GPIO2D_SUS_GPIO2D1_SUS_MASK                    (0x1U << GRF_GPIO2D_SUS_GPIO2D1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO2D_SUS_GPIO2D2_SUS_SHIFT                   (2U)
+#define GRF_GPIO2D_SUS_GPIO2D2_SUS_MASK                    (0x1U << GRF_GPIO2D_SUS_GPIO2D2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO2D_SUS_GPIO2D3_SUS_SHIFT                   (3U)
+#define GRF_GPIO2D_SUS_GPIO2D3_SUS_MASK                    (0x1U << GRF_GPIO2D_SUS_GPIO2D3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO2D_SUS_GPIO2D4_SUS_SHIFT                   (4U)
+#define GRF_GPIO2D_SUS_GPIO2D4_SUS_MASK                    (0x1U << GRF_GPIO2D_SUS_GPIO2D4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO2D_SUS_GPIO2D5_SUS_SHIFT                   (5U)
+#define GRF_GPIO2D_SUS_GPIO2D5_SUS_MASK                    (0x1U << GRF_GPIO2D_SUS_GPIO2D5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO2D_SUS_GPIO2D6_SUS_SHIFT                   (6U)
+#define GRF_GPIO2D_SUS_GPIO2D6_SUS_MASK                    (0x1U << GRF_GPIO2D_SUS_GPIO2D6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO2D_SUS_GPIO2D7_SUS_SHIFT                   (7U)
+#define GRF_GPIO2D_SUS_GPIO2D7_SUS_MASK                    (0x1U << GRF_GPIO2D_SUS_GPIO2D7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO3A_SUS */
+#define GRF_GPIO3A_SUS_OFFSET                              (0x4015CU)
+#define GRF_GPIO3A_SUS_GPIO3A0_SUS_SHIFT                   (0U)
+#define GRF_GPIO3A_SUS_GPIO3A0_SUS_MASK                    (0x1U << GRF_GPIO3A_SUS_GPIO3A0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO3A_SUS_GPIO3A1_SUS_SHIFT                   (1U)
+#define GRF_GPIO3A_SUS_GPIO3A1_SUS_MASK                    (0x1U << GRF_GPIO3A_SUS_GPIO3A1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO3A_SUS_GPIO3A2_SUS_SHIFT                   (2U)
+#define GRF_GPIO3A_SUS_GPIO3A2_SUS_MASK                    (0x1U << GRF_GPIO3A_SUS_GPIO3A2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO3A_SUS_GPIO3A3_SUS_SHIFT                   (3U)
+#define GRF_GPIO3A_SUS_GPIO3A3_SUS_MASK                    (0x1U << GRF_GPIO3A_SUS_GPIO3A3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO3A_SUS_GPIO3A4_SUS_SHIFT                   (4U)
+#define GRF_GPIO3A_SUS_GPIO3A4_SUS_MASK                    (0x1U << GRF_GPIO3A_SUS_GPIO3A4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO3A_SUS_GPIO3A5_SUS_SHIFT                   (5U)
+#define GRF_GPIO3A_SUS_GPIO3A5_SUS_MASK                    (0x1U << GRF_GPIO3A_SUS_GPIO3A5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO3A_SUS_GPIO3A6_SUS_SHIFT                   (6U)
+#define GRF_GPIO3A_SUS_GPIO3A6_SUS_MASK                    (0x1U << GRF_GPIO3A_SUS_GPIO3A6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO3A_SUS_GPIO3A7_SUS_SHIFT                   (7U)
+#define GRF_GPIO3A_SUS_GPIO3A7_SUS_MASK                    (0x1U << GRF_GPIO3A_SUS_GPIO3A7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO3B_SUS */
+#define GRF_GPIO3B_SUS_OFFSET                              (0x40160U)
+#define GRF_GPIO3B_SUS_GPIO3B0_SUS_SHIFT                   (0U)
+#define GRF_GPIO3B_SUS_GPIO3B0_SUS_MASK                    (0x1U << GRF_GPIO3B_SUS_GPIO3B0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO3B_SUS_GPIO3B1_SUS_SHIFT                   (1U)
+#define GRF_GPIO3B_SUS_GPIO3B1_SUS_MASK                    (0x1U << GRF_GPIO3B_SUS_GPIO3B1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO3B_SUS_GPIO3B2_SUS_SHIFT                   (2U)
+#define GRF_GPIO3B_SUS_GPIO3B2_SUS_MASK                    (0x1U << GRF_GPIO3B_SUS_GPIO3B2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO3B_SUS_GPIO3B3_SUS_SHIFT                   (3U)
+#define GRF_GPIO3B_SUS_GPIO3B3_SUS_MASK                    (0x1U << GRF_GPIO3B_SUS_GPIO3B3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO3B_SUS_GPIO3B4_SUS_SHIFT                   (4U)
+#define GRF_GPIO3B_SUS_GPIO3B4_SUS_MASK                    (0x1U << GRF_GPIO3B_SUS_GPIO3B4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO3B_SUS_GPIO3B5_SUS_SHIFT                   (5U)
+#define GRF_GPIO3B_SUS_GPIO3B5_SUS_MASK                    (0x1U << GRF_GPIO3B_SUS_GPIO3B5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO3B_SUS_GPIO3B6_SUS_SHIFT                   (6U)
+#define GRF_GPIO3B_SUS_GPIO3B6_SUS_MASK                    (0x1U << GRF_GPIO3B_SUS_GPIO3B6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO3B_SUS_GPIO3B7_SUS_SHIFT                   (7U)
+#define GRF_GPIO3B_SUS_GPIO3B7_SUS_MASK                    (0x1U << GRF_GPIO3B_SUS_GPIO3B7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO3C_SUS */
+#define GRF_GPIO3C_SUS_OFFSET                              (0x40164U)
+#define GRF_GPIO3C_SUS_GPIO3C0_SUS_SHIFT                   (0U)
+#define GRF_GPIO3C_SUS_GPIO3C0_SUS_MASK                    (0x1U << GRF_GPIO3C_SUS_GPIO3C0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO3C_SUS_GPIO3C1_SUS_SHIFT                   (1U)
+#define GRF_GPIO3C_SUS_GPIO3C1_SUS_MASK                    (0x1U << GRF_GPIO3C_SUS_GPIO3C1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO3C_SUS_GPIO3C2_SUS_SHIFT                   (2U)
+#define GRF_GPIO3C_SUS_GPIO3C2_SUS_MASK                    (0x1U << GRF_GPIO3C_SUS_GPIO3C2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO3C_SUS_GPIO3C3_SUS_SHIFT                   (3U)
+#define GRF_GPIO3C_SUS_GPIO3C3_SUS_MASK                    (0x1U << GRF_GPIO3C_SUS_GPIO3C3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO3C_SUS_GPIO3C4_SUS_SHIFT                   (4U)
+#define GRF_GPIO3C_SUS_GPIO3C4_SUS_MASK                    (0x1U << GRF_GPIO3C_SUS_GPIO3C4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO3C_SUS_GPIO3C5_SUS_SHIFT                   (5U)
+#define GRF_GPIO3C_SUS_GPIO3C5_SUS_MASK                    (0x1U << GRF_GPIO3C_SUS_GPIO3C5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO3C_SUS_GPIO3C6_SUS_SHIFT                   (6U)
+#define GRF_GPIO3C_SUS_GPIO3C6_SUS_MASK                    (0x1U << GRF_GPIO3C_SUS_GPIO3C6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO3C_SUS_GPIO3C7_SUS_SHIFT                   (7U)
+#define GRF_GPIO3C_SUS_GPIO3C7_SUS_MASK                    (0x1U << GRF_GPIO3C_SUS_GPIO3C7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO3D_SUS */
+#define GRF_GPIO3D_SUS_OFFSET                              (0x40168U)
+#define GRF_GPIO3D_SUS_GPIO3D0_SUS_SHIFT                   (0U)
+#define GRF_GPIO3D_SUS_GPIO3D0_SUS_MASK                    (0x1U << GRF_GPIO3D_SUS_GPIO3D0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO3D_SUS_GPIO3D1_SUS_SHIFT                   (1U)
+#define GRF_GPIO3D_SUS_GPIO3D1_SUS_MASK                    (0x1U << GRF_GPIO3D_SUS_GPIO3D1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO3D_SUS_GPIO3D2_SUS_SHIFT                   (2U)
+#define GRF_GPIO3D_SUS_GPIO3D2_SUS_MASK                    (0x1U << GRF_GPIO3D_SUS_GPIO3D2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO3D_SUS_GPIO3D3_SUS_SHIFT                   (3U)
+#define GRF_GPIO3D_SUS_GPIO3D3_SUS_MASK                    (0x1U << GRF_GPIO3D_SUS_GPIO3D3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO3D_SUS_GPIO3D4_SUS_SHIFT                   (4U)
+#define GRF_GPIO3D_SUS_GPIO3D4_SUS_MASK                    (0x1U << GRF_GPIO3D_SUS_GPIO3D4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO3D_SUS_GPIO3D5_SUS_SHIFT                   (5U)
+#define GRF_GPIO3D_SUS_GPIO3D5_SUS_MASK                    (0x1U << GRF_GPIO3D_SUS_GPIO3D5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO3D_SUS_GPIO3D6_SUS_SHIFT                   (6U)
+#define GRF_GPIO3D_SUS_GPIO3D6_SUS_MASK                    (0x1U << GRF_GPIO3D_SUS_GPIO3D6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO3D_SUS_GPIO3D7_SUS_SHIFT                   (7U)
+#define GRF_GPIO3D_SUS_GPIO3D7_SUS_MASK                    (0x1U << GRF_GPIO3D_SUS_GPIO3D7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO4A_SUS */
+#define GRF_GPIO4A_SUS_OFFSET                              (0x4016CU)
+#define GRF_GPIO4A_SUS_GPIO4A0_SUS_SHIFT                   (0U)
+#define GRF_GPIO4A_SUS_GPIO4A0_SUS_MASK                    (0x1U << GRF_GPIO4A_SUS_GPIO4A0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO4A_SUS_GPIO4A1_SUS_SHIFT                   (1U)
+#define GRF_GPIO4A_SUS_GPIO4A1_SUS_MASK                    (0x1U << GRF_GPIO4A_SUS_GPIO4A1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO4A_SUS_GPIO4A2_SUS_SHIFT                   (2U)
+#define GRF_GPIO4A_SUS_GPIO4A2_SUS_MASK                    (0x1U << GRF_GPIO4A_SUS_GPIO4A2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO4A_SUS_GPIO4A3_SUS_SHIFT                   (3U)
+#define GRF_GPIO4A_SUS_GPIO4A3_SUS_MASK                    (0x1U << GRF_GPIO4A_SUS_GPIO4A3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO4A_SUS_GPIO4A4_SUS_SHIFT                   (4U)
+#define GRF_GPIO4A_SUS_GPIO4A4_SUS_MASK                    (0x1U << GRF_GPIO4A_SUS_GPIO4A4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO4A_SUS_GPIO4A5_SUS_SHIFT                   (5U)
+#define GRF_GPIO4A_SUS_GPIO4A5_SUS_MASK                    (0x1U << GRF_GPIO4A_SUS_GPIO4A5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO4A_SUS_GPIO4A6_SUS_SHIFT                   (6U)
+#define GRF_GPIO4A_SUS_GPIO4A6_SUS_MASK                    (0x1U << GRF_GPIO4A_SUS_GPIO4A6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO4A_SUS_GPIO4A7_SUS_SHIFT                   (7U)
+#define GRF_GPIO4A_SUS_GPIO4A7_SUS_MASK                    (0x1U << GRF_GPIO4A_SUS_GPIO4A7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO4B_SUS */
+#define GRF_GPIO4B_SUS_OFFSET                              (0x40170U)
+#define GRF_GPIO4B_SUS_GPIO4B0_SUS_SHIFT                   (0U)
+#define GRF_GPIO4B_SUS_GPIO4B0_SUS_MASK                    (0x1U << GRF_GPIO4B_SUS_GPIO4B0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO4B_SUS_GPIO4B1_SUS_SHIFT                   (1U)
+#define GRF_GPIO4B_SUS_GPIO4B1_SUS_MASK                    (0x1U << GRF_GPIO4B_SUS_GPIO4B1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO4B_SUS_GPIO4B2_SUS_SHIFT                   (2U)
+#define GRF_GPIO4B_SUS_GPIO4B2_SUS_MASK                    (0x1U << GRF_GPIO4B_SUS_GPIO4B2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO4B_SUS_GPIO4B3_SUS_SHIFT                   (3U)
+#define GRF_GPIO4B_SUS_GPIO4B3_SUS_MASK                    (0x1U << GRF_GPIO4B_SUS_GPIO4B3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO4B_SUS_GPIO4B4_SUS_SHIFT                   (4U)
+#define GRF_GPIO4B_SUS_GPIO4B4_SUS_MASK                    (0x1U << GRF_GPIO4B_SUS_GPIO4B4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO4B_SUS_GPIO4B5_SUS_SHIFT                   (5U)
+#define GRF_GPIO4B_SUS_GPIO4B5_SUS_MASK                    (0x1U << GRF_GPIO4B_SUS_GPIO4B5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO4B_SUS_GPIO4B6_SUS_SHIFT                   (6U)
+#define GRF_GPIO4B_SUS_GPIO4B6_SUS_MASK                    (0x1U << GRF_GPIO4B_SUS_GPIO4B6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO4B_SUS_GPIO4B7_SUS_SHIFT                   (7U)
+#define GRF_GPIO4B_SUS_GPIO4B7_SUS_MASK                    (0x1U << GRF_GPIO4B_SUS_GPIO4B7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO4C_SUS */
+#define GRF_GPIO4C_SUS_OFFSET                              (0x40174U)
+#define GRF_GPIO4C_SUS_GPIO4C0_SUS_SHIFT                   (0U)
+#define GRF_GPIO4C_SUS_GPIO4C0_SUS_MASK                    (0x1U << GRF_GPIO4C_SUS_GPIO4C0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO4C_SUS_GPIO4C1_SUS_SHIFT                   (1U)
+#define GRF_GPIO4C_SUS_GPIO4C1_SUS_MASK                    (0x1U << GRF_GPIO4C_SUS_GPIO4C1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO4C_SUS_GPIO4C2_SUS_SHIFT                   (2U)
+#define GRF_GPIO4C_SUS_GPIO4C2_SUS_MASK                    (0x1U << GRF_GPIO4C_SUS_GPIO4C2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO4C_SUS_GPIO4C3_SUS_SHIFT                   (3U)
+#define GRF_GPIO4C_SUS_GPIO4C3_SUS_MASK                    (0x1U << GRF_GPIO4C_SUS_GPIO4C3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO4C_SUS_GPIO4C4_SUS_SHIFT                   (4U)
+#define GRF_GPIO4C_SUS_GPIO4C4_SUS_MASK                    (0x1U << GRF_GPIO4C_SUS_GPIO4C4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO4C_SUS_GPIO4C5_SUS_SHIFT                   (5U)
+#define GRF_GPIO4C_SUS_GPIO4C5_SUS_MASK                    (0x1U << GRF_GPIO4C_SUS_GPIO4C5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO4C_SUS_GPIO4C6_SUS_SHIFT                   (6U)
+#define GRF_GPIO4C_SUS_GPIO4C6_SUS_MASK                    (0x1U << GRF_GPIO4C_SUS_GPIO4C6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO4C_SUS_GPIO4C7_SUS_SHIFT                   (7U)
+#define GRF_GPIO4C_SUS_GPIO4C7_SUS_MASK                    (0x1U << GRF_GPIO4C_SUS_GPIO4C7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO4D_SUS */
+#define GRF_GPIO4D_SUS_OFFSET                              (0x40178U)
+#define GRF_GPIO4D_SUS_GPIO4D0_SUS_SHIFT                   (0U)
+#define GRF_GPIO4D_SUS_GPIO4D0_SUS_MASK                    (0x1U << GRF_GPIO4D_SUS_GPIO4D0_SUS_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO4D_SUS_GPIO4D1_SUS_SHIFT                   (1U)
+#define GRF_GPIO4D_SUS_GPIO4D1_SUS_MASK                    (0x1U << GRF_GPIO4D_SUS_GPIO4D1_SUS_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO4D_SUS_GPIO4D2_SUS_SHIFT                   (2U)
+#define GRF_GPIO4D_SUS_GPIO4D2_SUS_MASK                    (0x1U << GRF_GPIO4D_SUS_GPIO4D2_SUS_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO4D_SUS_GPIO4D3_SUS_SHIFT                   (3U)
+#define GRF_GPIO4D_SUS_GPIO4D3_SUS_MASK                    (0x1U << GRF_GPIO4D_SUS_GPIO4D3_SUS_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO4D_SUS_GPIO4D4_SUS_SHIFT                   (4U)
+#define GRF_GPIO4D_SUS_GPIO4D4_SUS_MASK                    (0x1U << GRF_GPIO4D_SUS_GPIO4D4_SUS_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO4D_SUS_GPIO4D5_SUS_SHIFT                   (5U)
+#define GRF_GPIO4D_SUS_GPIO4D5_SUS_MASK                    (0x1U << GRF_GPIO4D_SUS_GPIO4D5_SUS_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO4D_SUS_GPIO4D6_SUS_SHIFT                   (6U)
+#define GRF_GPIO4D_SUS_GPIO4D6_SUS_MASK                    (0x1U << GRF_GPIO4D_SUS_GPIO4D6_SUS_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO4D_SUS_GPIO4D7_SUS_SHIFT                   (7U)
+#define GRF_GPIO4D_SUS_GPIO4D7_SUS_MASK                    (0x1U << GRF_GPIO4D_SUS_GPIO4D7_SUS_SHIFT)                   /* 0x00000080 */
+/* GPIO1A_SL */
+#define GRF_GPIO1A_SL_OFFSET                               (0x4017CU)
+#define GRF_GPIO1A_SL_GPIO1A0_SL_SHIFT                     (0U)
+#define GRF_GPIO1A_SL_GPIO1A0_SL_MASK                      (0x3U << GRF_GPIO1A_SL_GPIO1A0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO1A_SL_GPIO1A1_SL_SHIFT                     (2U)
+#define GRF_GPIO1A_SL_GPIO1A1_SL_MASK                      (0x3U << GRF_GPIO1A_SL_GPIO1A1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO1A_SL_GPIO1A2_SL_SHIFT                     (4U)
+#define GRF_GPIO1A_SL_GPIO1A2_SL_MASK                      (0x3U << GRF_GPIO1A_SL_GPIO1A2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO1A_SL_GPIO1A3_SL_SHIFT                     (6U)
+#define GRF_GPIO1A_SL_GPIO1A3_SL_MASK                      (0x3U << GRF_GPIO1A_SL_GPIO1A3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO1A_SL_GPIO1A4_SL_SHIFT                     (8U)
+#define GRF_GPIO1A_SL_GPIO1A4_SL_MASK                      (0x3U << GRF_GPIO1A_SL_GPIO1A4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO1A_SL_GPIO1A5_SL_SHIFT                     (10U)
+#define GRF_GPIO1A_SL_GPIO1A5_SL_MASK                      (0x3U << GRF_GPIO1A_SL_GPIO1A5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO1A_SL_GPIO1A6_SL_SHIFT                     (12U)
+#define GRF_GPIO1A_SL_GPIO1A6_SL_MASK                      (0x3U << GRF_GPIO1A_SL_GPIO1A6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO1A_SL_GPIO1A7_SL_SHIFT                     (14U)
+#define GRF_GPIO1A_SL_GPIO1A7_SL_MASK                      (0x3U << GRF_GPIO1A_SL_GPIO1A7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO1B_SL */
+#define GRF_GPIO1B_SL_OFFSET                               (0x40180U)
+#define GRF_GPIO1B_SL_GPIO1B0_SL_SHIFT                     (0U)
+#define GRF_GPIO1B_SL_GPIO1B0_SL_MASK                      (0x3U << GRF_GPIO1B_SL_GPIO1B0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO1B_SL_GPIO1B1_SL_SHIFT                     (2U)
+#define GRF_GPIO1B_SL_GPIO1B1_SL_MASK                      (0x3U << GRF_GPIO1B_SL_GPIO1B1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO1B_SL_GPIO1B2_SL_SHIFT                     (4U)
+#define GRF_GPIO1B_SL_GPIO1B2_SL_MASK                      (0x3U << GRF_GPIO1B_SL_GPIO1B2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO1B_SL_GPIO1B3_SL_SHIFT                     (6U)
+#define GRF_GPIO1B_SL_GPIO1B3_SL_MASK                      (0x3U << GRF_GPIO1B_SL_GPIO1B3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO1B_SL_GPIO1B4_SL_SHIFT                     (8U)
+#define GRF_GPIO1B_SL_GPIO1B4_SL_MASK                      (0x3U << GRF_GPIO1B_SL_GPIO1B4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO1B_SL_GPIO1B5_SL_SHIFT                     (10U)
+#define GRF_GPIO1B_SL_GPIO1B5_SL_MASK                      (0x3U << GRF_GPIO1B_SL_GPIO1B5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO1B_SL_GPIO1B6_SL_SHIFT                     (12U)
+#define GRF_GPIO1B_SL_GPIO1B6_SL_MASK                      (0x3U << GRF_GPIO1B_SL_GPIO1B6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO1B_SL_GPIO1B7_SL_SHIFT                     (14U)
+#define GRF_GPIO1B_SL_GPIO1B7_SL_MASK                      (0x3U << GRF_GPIO1B_SL_GPIO1B7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO1C_SL */
+#define GRF_GPIO1C_SL_OFFSET                               (0x40184U)
+#define GRF_GPIO1C_SL_GPIO1C0_SL_SHIFT                     (0U)
+#define GRF_GPIO1C_SL_GPIO1C0_SL_MASK                      (0x3U << GRF_GPIO1C_SL_GPIO1C0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO1C_SL_GPIO1C1_SL_SHIFT                     (2U)
+#define GRF_GPIO1C_SL_GPIO1C1_SL_MASK                      (0x3U << GRF_GPIO1C_SL_GPIO1C1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO1C_SL_GPIO1C2_SL_SHIFT                     (4U)
+#define GRF_GPIO1C_SL_GPIO1C2_SL_MASK                      (0x3U << GRF_GPIO1C_SL_GPIO1C2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO1C_SL_GPIO1C3_SL_SHIFT                     (6U)
+#define GRF_GPIO1C_SL_GPIO1C3_SL_MASK                      (0x3U << GRF_GPIO1C_SL_GPIO1C3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO1C_SL_GPIO1C4_SL_SHIFT                     (8U)
+#define GRF_GPIO1C_SL_GPIO1C4_SL_MASK                      (0x3U << GRF_GPIO1C_SL_GPIO1C4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO1C_SL_GPIO1C5_SL_SHIFT                     (10U)
+#define GRF_GPIO1C_SL_GPIO1C5_SL_MASK                      (0x3U << GRF_GPIO1C_SL_GPIO1C5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO1C_SL_GPIO1C6_SL_SHIFT                     (12U)
+#define GRF_GPIO1C_SL_GPIO1C6_SL_MASK                      (0x3U << GRF_GPIO1C_SL_GPIO1C6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO1C_SL_GPIO1C7_SL_SHIFT                     (14U)
+#define GRF_GPIO1C_SL_GPIO1C7_SL_MASK                      (0x3U << GRF_GPIO1C_SL_GPIO1C7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO1D_SL */
+#define GRF_GPIO1D_SL_OFFSET                               (0x40188U)
+#define GRF_GPIO1D_SL_GPIO1D0_SL_SHIFT                     (0U)
+#define GRF_GPIO1D_SL_GPIO1D0_SL_MASK                      (0x3U << GRF_GPIO1D_SL_GPIO1D0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO1D_SL_GPIO1D1_SL_SHIFT                     (2U)
+#define GRF_GPIO1D_SL_GPIO1D1_SL_MASK                      (0x3U << GRF_GPIO1D_SL_GPIO1D1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO1D_SL_GPIO1D2_SL_SHIFT                     (4U)
+#define GRF_GPIO1D_SL_GPIO1D2_SL_MASK                      (0x3U << GRF_GPIO1D_SL_GPIO1D2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO1D_SL_GPIO1D3_SL_SHIFT                     (6U)
+#define GRF_GPIO1D_SL_GPIO1D3_SL_MASK                      (0x3U << GRF_GPIO1D_SL_GPIO1D3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO1D_SL_GPIO1D4_SL_SHIFT                     (8U)
+#define GRF_GPIO1D_SL_GPIO1D4_SL_MASK                      (0x3U << GRF_GPIO1D_SL_GPIO1D4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO1D_SL_GPIO1D5_SL_SHIFT                     (10U)
+#define GRF_GPIO1D_SL_GPIO1D5_SL_MASK                      (0x3U << GRF_GPIO1D_SL_GPIO1D5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO1D_SL_GPIO1D6_SL_SHIFT                     (12U)
+#define GRF_GPIO1D_SL_GPIO1D6_SL_MASK                      (0x3U << GRF_GPIO1D_SL_GPIO1D6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO1D_SL_GPIO1D7_SL_SHIFT                     (14U)
+#define GRF_GPIO1D_SL_GPIO1D7_SL_MASK                      (0x3U << GRF_GPIO1D_SL_GPIO1D7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO2A_SL */
+#define GRF_GPIO2A_SL_OFFSET                               (0x4018CU)
+#define GRF_GPIO2A_SL_GPIO2A0_SL_SHIFT                     (0U)
+#define GRF_GPIO2A_SL_GPIO2A0_SL_MASK                      (0x3U << GRF_GPIO2A_SL_GPIO2A0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO2A_SL_GPIO2A1_SL_SHIFT                     (2U)
+#define GRF_GPIO2A_SL_GPIO2A1_SL_MASK                      (0x3U << GRF_GPIO2A_SL_GPIO2A1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO2A_SL_GPIO2A2_SL_SHIFT                     (4U)
+#define GRF_GPIO2A_SL_GPIO2A2_SL_MASK                      (0x3U << GRF_GPIO2A_SL_GPIO2A2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO2A_SL_GPIO2A3_SL_SHIFT                     (6U)
+#define GRF_GPIO2A_SL_GPIO2A3_SL_MASK                      (0x3U << GRF_GPIO2A_SL_GPIO2A3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO2A_SL_GPIO2A4_SL_SHIFT                     (8U)
+#define GRF_GPIO2A_SL_GPIO2A4_SL_MASK                      (0x3U << GRF_GPIO2A_SL_GPIO2A4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO2A_SL_GPIO2A5_SL_SHIFT                     (10U)
+#define GRF_GPIO2A_SL_GPIO2A5_SL_MASK                      (0x3U << GRF_GPIO2A_SL_GPIO2A5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO2A_SL_GPIO2A6_SL_SHIFT                     (12U)
+#define GRF_GPIO2A_SL_GPIO2A6_SL_MASK                      (0x3U << GRF_GPIO2A_SL_GPIO2A6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO2A_SL_GPIO2A7_SL_SHIFT                     (14U)
+#define GRF_GPIO2A_SL_GPIO2A7_SL_MASK                      (0x3U << GRF_GPIO2A_SL_GPIO2A7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO2B_SL */
+#define GRF_GPIO2B_SL_OFFSET                               (0x40190U)
+#define GRF_GPIO2B_SL_GPIO2B0_SL_SHIFT                     (0U)
+#define GRF_GPIO2B_SL_GPIO2B0_SL_MASK                      (0x3U << GRF_GPIO2B_SL_GPIO2B0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO2B_SL_GPIO2B1_SL_SHIFT                     (2U)
+#define GRF_GPIO2B_SL_GPIO2B1_SL_MASK                      (0x3U << GRF_GPIO2B_SL_GPIO2B1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO2B_SL_GPIO2B2_SL_SHIFT                     (4U)
+#define GRF_GPIO2B_SL_GPIO2B2_SL_MASK                      (0x3U << GRF_GPIO2B_SL_GPIO2B2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO2B_SL_GPIO2B3_SL_SHIFT                     (6U)
+#define GRF_GPIO2B_SL_GPIO2B3_SL_MASK                      (0x3U << GRF_GPIO2B_SL_GPIO2B3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO2B_SL_GPIO2B4_SL_SHIFT                     (8U)
+#define GRF_GPIO2B_SL_GPIO2B4_SL_MASK                      (0x3U << GRF_GPIO2B_SL_GPIO2B4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO2B_SL_GPIO2B5_SL_SHIFT                     (10U)
+#define GRF_GPIO2B_SL_GPIO2B5_SL_MASK                      (0x3U << GRF_GPIO2B_SL_GPIO2B5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO2B_SL_GPIO2B6_SL_SHIFT                     (12U)
+#define GRF_GPIO2B_SL_GPIO2B6_SL_MASK                      (0x3U << GRF_GPIO2B_SL_GPIO2B6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO2B_SL_GPIO2B7_SL_SHIFT                     (14U)
+#define GRF_GPIO2B_SL_GPIO2B7_SL_MASK                      (0x3U << GRF_GPIO2B_SL_GPIO2B7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO2C_SL */
+#define GRF_GPIO2C_SL_OFFSET                               (0x40194U)
+#define GRF_GPIO2C_SL_GPIO2C0_SL_SHIFT                     (0U)
+#define GRF_GPIO2C_SL_GPIO2C0_SL_MASK                      (0x3U << GRF_GPIO2C_SL_GPIO2C0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO2C_SL_GPIO2C1_SL_SHIFT                     (2U)
+#define GRF_GPIO2C_SL_GPIO2C1_SL_MASK                      (0x3U << GRF_GPIO2C_SL_GPIO2C1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO2C_SL_GPIO2C2_SL_SHIFT                     (4U)
+#define GRF_GPIO2C_SL_GPIO2C2_SL_MASK                      (0x3U << GRF_GPIO2C_SL_GPIO2C2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO2C_SL_GPIO2C3_SL_SHIFT                     (6U)
+#define GRF_GPIO2C_SL_GPIO2C3_SL_MASK                      (0x3U << GRF_GPIO2C_SL_GPIO2C3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO2C_SL_GPIO2C4_SL_SHIFT                     (8U)
+#define GRF_GPIO2C_SL_GPIO2C4_SL_MASK                      (0x3U << GRF_GPIO2C_SL_GPIO2C4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO2C_SL_GPIO2C5_SL_SHIFT                     (10U)
+#define GRF_GPIO2C_SL_GPIO2C5_SL_MASK                      (0x3U << GRF_GPIO2C_SL_GPIO2C5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO2C_SL_GPIO2C6_SL_SHIFT                     (12U)
+#define GRF_GPIO2C_SL_GPIO2C6_SL_MASK                      (0x3U << GRF_GPIO2C_SL_GPIO2C6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO2C_SL_GPIO2C7_SL_SHIFT                     (14U)
+#define GRF_GPIO2C_SL_GPIO2C7_SL_MASK                      (0x3U << GRF_GPIO2C_SL_GPIO2C7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO2D_SL */
+#define GRF_GPIO2D_SL_OFFSET                               (0x40198U)
+#define GRF_GPIO2D_SL_GPIO2D0_SL_SHIFT                     (0U)
+#define GRF_GPIO2D_SL_GPIO2D0_SL_MASK                      (0x3U << GRF_GPIO2D_SL_GPIO2D0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO2D_SL_GPIO2D1_SL_SHIFT                     (2U)
+#define GRF_GPIO2D_SL_GPIO2D1_SL_MASK                      (0x3U << GRF_GPIO2D_SL_GPIO2D1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO2D_SL_GPIO2D2_SL_SHIFT                     (4U)
+#define GRF_GPIO2D_SL_GPIO2D2_SL_MASK                      (0x3U << GRF_GPIO2D_SL_GPIO2D2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO2D_SL_GPIO2D3_SL_SHIFT                     (6U)
+#define GRF_GPIO2D_SL_GPIO2D3_SL_MASK                      (0x3U << GRF_GPIO2D_SL_GPIO2D3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO2D_SL_GPIO2D4_SL_SHIFT                     (8U)
+#define GRF_GPIO2D_SL_GPIO2D4_SL_MASK                      (0x3U << GRF_GPIO2D_SL_GPIO2D4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO2D_SL_GPIO2D5_SL_SHIFT                     (10U)
+#define GRF_GPIO2D_SL_GPIO2D5_SL_MASK                      (0x3U << GRF_GPIO2D_SL_GPIO2D5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO2D_SL_GPIO2D6_SL_SHIFT                     (12U)
+#define GRF_GPIO2D_SL_GPIO2D6_SL_MASK                      (0x3U << GRF_GPIO2D_SL_GPIO2D6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO2D_SL_GPIO2D7_SL_SHIFT                     (14U)
+#define GRF_GPIO2D_SL_GPIO2D7_SL_MASK                      (0x3U << GRF_GPIO2D_SL_GPIO2D7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO3A_SL */
+#define GRF_GPIO3A_SL_OFFSET                               (0x4019CU)
+#define GRF_GPIO3A_SL_GPIO3A0_SL_SHIFT                     (0U)
+#define GRF_GPIO3A_SL_GPIO3A0_SL_MASK                      (0x3U << GRF_GPIO3A_SL_GPIO3A0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO3A_SL_GPIO3A1_SL_SHIFT                     (2U)
+#define GRF_GPIO3A_SL_GPIO3A1_SL_MASK                      (0x3U << GRF_GPIO3A_SL_GPIO3A1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO3A_SL_GPIO3A2_SL_SHIFT                     (4U)
+#define GRF_GPIO3A_SL_GPIO3A2_SL_MASK                      (0x3U << GRF_GPIO3A_SL_GPIO3A2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO3A_SL_GPIO3A3_SL_SHIFT                     (6U)
+#define GRF_GPIO3A_SL_GPIO3A3_SL_MASK                      (0x3U << GRF_GPIO3A_SL_GPIO3A3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO3A_SL_GPIO3A4_SL_SHIFT                     (8U)
+#define GRF_GPIO3A_SL_GPIO3A4_SL_MASK                      (0x3U << GRF_GPIO3A_SL_GPIO3A4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO3A_SL_GPIO3A5_SL_SHIFT                     (10U)
+#define GRF_GPIO3A_SL_GPIO3A5_SL_MASK                      (0x3U << GRF_GPIO3A_SL_GPIO3A5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO3A_SL_GPIO3A6_SL_SHIFT                     (12U)
+#define GRF_GPIO3A_SL_GPIO3A6_SL_MASK                      (0x3U << GRF_GPIO3A_SL_GPIO3A6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO3A_SL_GPIO3A7_SL_SHIFT                     (14U)
+#define GRF_GPIO3A_SL_GPIO3A7_SL_MASK                      (0x3U << GRF_GPIO3A_SL_GPIO3A7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO3B_SL */
+#define GRF_GPIO3B_SL_OFFSET                               (0x401A0U)
+#define GRF_GPIO3B_SL_GPIO3B0_SL_SHIFT                     (0U)
+#define GRF_GPIO3B_SL_GPIO3B0_SL_MASK                      (0x3U << GRF_GPIO3B_SL_GPIO3B0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO3B_SL_GPIO3B1_SL_SHIFT                     (2U)
+#define GRF_GPIO3B_SL_GPIO3B1_SL_MASK                      (0x3U << GRF_GPIO3B_SL_GPIO3B1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO3B_SL_GPIO3B2_SL_SHIFT                     (4U)
+#define GRF_GPIO3B_SL_GPIO3B2_SL_MASK                      (0x3U << GRF_GPIO3B_SL_GPIO3B2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO3B_SL_GPIO3B3_SL_SHIFT                     (6U)
+#define GRF_GPIO3B_SL_GPIO3B3_SL_MASK                      (0x3U << GRF_GPIO3B_SL_GPIO3B3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO3B_SL_GPIO3B4_SL_SHIFT                     (8U)
+#define GRF_GPIO3B_SL_GPIO3B4_SL_MASK                      (0x3U << GRF_GPIO3B_SL_GPIO3B4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO3B_SL_GPIO3B5_SL_SHIFT                     (10U)
+#define GRF_GPIO3B_SL_GPIO3B5_SL_MASK                      (0x3U << GRF_GPIO3B_SL_GPIO3B5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO3B_SL_GPIO3B6_SL_SHIFT                     (12U)
+#define GRF_GPIO3B_SL_GPIO3B6_SL_MASK                      (0x3U << GRF_GPIO3B_SL_GPIO3B6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO3B_SL_GPIO3B7_SL_SHIFT                     (14U)
+#define GRF_GPIO3B_SL_GPIO3B7_SL_MASK                      (0x3U << GRF_GPIO3B_SL_GPIO3B7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO3C_SL */
+#define GRF_GPIO3C_SL_OFFSET                               (0x401A4U)
+#define GRF_GPIO3C_SL_GPIO3C0_SL_SHIFT                     (0U)
+#define GRF_GPIO3C_SL_GPIO3C0_SL_MASK                      (0x3U << GRF_GPIO3C_SL_GPIO3C0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO3C_SL_GPIO3C1_SL_SHIFT                     (2U)
+#define GRF_GPIO3C_SL_GPIO3C1_SL_MASK                      (0x3U << GRF_GPIO3C_SL_GPIO3C1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO3C_SL_GPIO3C2_SL_SHIFT                     (4U)
+#define GRF_GPIO3C_SL_GPIO3C2_SL_MASK                      (0x3U << GRF_GPIO3C_SL_GPIO3C2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO3C_SL_GPIO3C3_SL_SHIFT                     (6U)
+#define GRF_GPIO3C_SL_GPIO3C3_SL_MASK                      (0x3U << GRF_GPIO3C_SL_GPIO3C3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO3C_SL_GPIO3C4_SL_SHIFT                     (8U)
+#define GRF_GPIO3C_SL_GPIO3C4_SL_MASK                      (0x3U << GRF_GPIO3C_SL_GPIO3C4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO3C_SL_GPIO3C5_SL_SHIFT                     (10U)
+#define GRF_GPIO3C_SL_GPIO3C5_SL_MASK                      (0x3U << GRF_GPIO3C_SL_GPIO3C5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO3C_SL_GPIO3C6_SL_SHIFT                     (12U)
+#define GRF_GPIO3C_SL_GPIO3C6_SL_MASK                      (0x3U << GRF_GPIO3C_SL_GPIO3C6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO3C_SL_GPIO3C7_SL_SHIFT                     (14U)
+#define GRF_GPIO3C_SL_GPIO3C7_SL_MASK                      (0x3U << GRF_GPIO3C_SL_GPIO3C7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO3D_SL */
+#define GRF_GPIO3D_SL_OFFSET                               (0x401A8U)
+#define GRF_GPIO3D_SL_GPIO3D0_SL_SHIFT                     (0U)
+#define GRF_GPIO3D_SL_GPIO3D0_SL_MASK                      (0x3U << GRF_GPIO3D_SL_GPIO3D0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO3D_SL_GPIO3D1_SL_SHIFT                     (2U)
+#define GRF_GPIO3D_SL_GPIO3D1_SL_MASK                      (0x3U << GRF_GPIO3D_SL_GPIO3D1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO3D_SL_GPIO3D2_SL_SHIFT                     (4U)
+#define GRF_GPIO3D_SL_GPIO3D2_SL_MASK                      (0x3U << GRF_GPIO3D_SL_GPIO3D2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO3D_SL_GPIO3D3_SL_SHIFT                     (6U)
+#define GRF_GPIO3D_SL_GPIO3D3_SL_MASK                      (0x3U << GRF_GPIO3D_SL_GPIO3D3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO3D_SL_GPIO3D4_SL_SHIFT                     (8U)
+#define GRF_GPIO3D_SL_GPIO3D4_SL_MASK                      (0x3U << GRF_GPIO3D_SL_GPIO3D4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO3D_SL_GPIO3D5_SL_SHIFT                     (10U)
+#define GRF_GPIO3D_SL_GPIO3D5_SL_MASK                      (0x3U << GRF_GPIO3D_SL_GPIO3D5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO3D_SL_GPIO3D6_SL_SHIFT                     (12U)
+#define GRF_GPIO3D_SL_GPIO3D6_SL_MASK                      (0x3U << GRF_GPIO3D_SL_GPIO3D6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO3D_SL_GPIO3D7_SL_SHIFT                     (14U)
+#define GRF_GPIO3D_SL_GPIO3D7_SL_MASK                      (0x3U << GRF_GPIO3D_SL_GPIO3D7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO4A_SL */
+#define GRF_GPIO4A_SL_OFFSET                               (0x401ACU)
+#define GRF_GPIO4A_SL_GPIO4A0_SL_SHIFT                     (0U)
+#define GRF_GPIO4A_SL_GPIO4A0_SL_MASK                      (0x3U << GRF_GPIO4A_SL_GPIO4A0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO4A_SL_GPIO4A1_SL_SHIFT                     (2U)
+#define GRF_GPIO4A_SL_GPIO4A1_SL_MASK                      (0x3U << GRF_GPIO4A_SL_GPIO4A1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO4A_SL_GPIO4A2_SL_SHIFT                     (4U)
+#define GRF_GPIO4A_SL_GPIO4A2_SL_MASK                      (0x3U << GRF_GPIO4A_SL_GPIO4A2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO4A_SL_GPIO4A3_SL_SHIFT                     (6U)
+#define GRF_GPIO4A_SL_GPIO4A3_SL_MASK                      (0x3U << GRF_GPIO4A_SL_GPIO4A3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO4A_SL_GPIO4A4_SL_SHIFT                     (8U)
+#define GRF_GPIO4A_SL_GPIO4A4_SL_MASK                      (0x3U << GRF_GPIO4A_SL_GPIO4A4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO4A_SL_GPIO4A5_SL_SHIFT                     (10U)
+#define GRF_GPIO4A_SL_GPIO4A5_SL_MASK                      (0x3U << GRF_GPIO4A_SL_GPIO4A5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO4A_SL_GPIO4A6_SL_SHIFT                     (12U)
+#define GRF_GPIO4A_SL_GPIO4A6_SL_MASK                      (0x3U << GRF_GPIO4A_SL_GPIO4A6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO4A_SL_GPIO4A7_SL_SHIFT                     (14U)
+#define GRF_GPIO4A_SL_GPIO4A7_SL_MASK                      (0x3U << GRF_GPIO4A_SL_GPIO4A7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO4B_SL */
+#define GRF_GPIO4B_SL_OFFSET                               (0x401B0U)
+#define GRF_GPIO4B_SL_GPIO4B0_SL_SHIFT                     (0U)
+#define GRF_GPIO4B_SL_GPIO4B0_SL_MASK                      (0x3U << GRF_GPIO4B_SL_GPIO4B0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO4B_SL_GPIO4B1_SL_SHIFT                     (2U)
+#define GRF_GPIO4B_SL_GPIO4B1_SL_MASK                      (0x3U << GRF_GPIO4B_SL_GPIO4B1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO4B_SL_GPIO4B2_SL_SHIFT                     (4U)
+#define GRF_GPIO4B_SL_GPIO4B2_SL_MASK                      (0x3U << GRF_GPIO4B_SL_GPIO4B2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO4B_SL_GPIO4B3_SL_SHIFT                     (6U)
+#define GRF_GPIO4B_SL_GPIO4B3_SL_MASK                      (0x3U << GRF_GPIO4B_SL_GPIO4B3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO4B_SL_GPIO4B4_SL_SHIFT                     (8U)
+#define GRF_GPIO4B_SL_GPIO4B4_SL_MASK                      (0x3U << GRF_GPIO4B_SL_GPIO4B4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO4B_SL_GPIO4B5_SL_SHIFT                     (10U)
+#define GRF_GPIO4B_SL_GPIO4B5_SL_MASK                      (0x3U << GRF_GPIO4B_SL_GPIO4B5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO4B_SL_GPIO4B6_SL_SHIFT                     (12U)
+#define GRF_GPIO4B_SL_GPIO4B6_SL_MASK                      (0x3U << GRF_GPIO4B_SL_GPIO4B6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO4B_SL_GPIO4B7_SL_SHIFT                     (14U)
+#define GRF_GPIO4B_SL_GPIO4B7_SL_MASK                      (0x3U << GRF_GPIO4B_SL_GPIO4B7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO4C_SL */
+#define GRF_GPIO4C_SL_OFFSET                               (0x401B4U)
+#define GRF_GPIO4C_SL_GPIO4C0_SL_SHIFT                     (0U)
+#define GRF_GPIO4C_SL_GPIO4C0_SL_MASK                      (0x3U << GRF_GPIO4C_SL_GPIO4C0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO4C_SL_GPIO4C1_SL_SHIFT                     (2U)
+#define GRF_GPIO4C_SL_GPIO4C1_SL_MASK                      (0x3U << GRF_GPIO4C_SL_GPIO4C1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO4C_SL_GPIO4C2_SL_SHIFT                     (4U)
+#define GRF_GPIO4C_SL_GPIO4C2_SL_MASK                      (0x3U << GRF_GPIO4C_SL_GPIO4C2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO4C_SL_GPIO4C3_SL_SHIFT                     (6U)
+#define GRF_GPIO4C_SL_GPIO4C3_SL_MASK                      (0x3U << GRF_GPIO4C_SL_GPIO4C3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO4C_SL_GPIO4C4_SL_SHIFT                     (8U)
+#define GRF_GPIO4C_SL_GPIO4C4_SL_MASK                      (0x3U << GRF_GPIO4C_SL_GPIO4C4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO4C_SL_GPIO4C5_SL_SHIFT                     (10U)
+#define GRF_GPIO4C_SL_GPIO4C5_SL_MASK                      (0x3U << GRF_GPIO4C_SL_GPIO4C5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO4C_SL_GPIO4C6_SL_SHIFT                     (12U)
+#define GRF_GPIO4C_SL_GPIO4C6_SL_MASK                      (0x3U << GRF_GPIO4C_SL_GPIO4C6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO4C_SL_GPIO4C7_SL_SHIFT                     (14U)
+#define GRF_GPIO4C_SL_GPIO4C7_SL_MASK                      (0x3U << GRF_GPIO4C_SL_GPIO4C7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO4D_SL */
+#define GRF_GPIO4D_SL_OFFSET                               (0x401B8U)
+#define GRF_GPIO4D_SL_GPIO4D0_SL_SHIFT                     (0U)
+#define GRF_GPIO4D_SL_GPIO4D0_SL_MASK                      (0x3U << GRF_GPIO4D_SL_GPIO4D0_SL_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO4D_SL_GPIO4D1_SL_SHIFT                     (2U)
+#define GRF_GPIO4D_SL_GPIO4D1_SL_MASK                      (0x3U << GRF_GPIO4D_SL_GPIO4D1_SL_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO4D_SL_GPIO4D2_SL_SHIFT                     (4U)
+#define GRF_GPIO4D_SL_GPIO4D2_SL_MASK                      (0x3U << GRF_GPIO4D_SL_GPIO4D2_SL_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO4D_SL_GPIO4D3_SL_SHIFT                     (6U)
+#define GRF_GPIO4D_SL_GPIO4D3_SL_MASK                      (0x3U << GRF_GPIO4D_SL_GPIO4D3_SL_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO4D_SL_GPIO4D4_SL_SHIFT                     (8U)
+#define GRF_GPIO4D_SL_GPIO4D4_SL_MASK                      (0x3U << GRF_GPIO4D_SL_GPIO4D4_SL_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO4D_SL_GPIO4D5_SL_SHIFT                     (10U)
+#define GRF_GPIO4D_SL_GPIO4D5_SL_MASK                      (0x3U << GRF_GPIO4D_SL_GPIO4D5_SL_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO4D_SL_GPIO4D6_SL_SHIFT                     (12U)
+#define GRF_GPIO4D_SL_GPIO4D6_SL_MASK                      (0x3U << GRF_GPIO4D_SL_GPIO4D6_SL_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO4D_SL_GPIO4D7_SL_SHIFT                     (14U)
+#define GRF_GPIO4D_SL_GPIO4D7_SL_MASK                      (0x3U << GRF_GPIO4D_SL_GPIO4D7_SL_SHIFT)                     /* 0x0000C000 */
+/* GPIO1A_DS_0 */
+#define GRF_GPIO1A_DS_0_OFFSET                             (0x401BCU)
+#define GRF_GPIO1A_DS_0_GPIO1A0_DS_SHIFT                   (0U)
+#define GRF_GPIO1A_DS_0_GPIO1A0_DS_MASK                    (0x3FU << GRF_GPIO1A_DS_0_GPIO1A0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1A_DS_0_GPIO1A1_DS_SHIFT                   (8U)
+#define GRF_GPIO1A_DS_0_GPIO1A1_DS_MASK                    (0x3FU << GRF_GPIO1A_DS_0_GPIO1A1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1A_DS_1 */
+#define GRF_GPIO1A_DS_1_OFFSET                             (0x401C0U)
+#define GRF_GPIO1A_DS_1_GPIO1A2_DS_SHIFT                   (0U)
+#define GRF_GPIO1A_DS_1_GPIO1A2_DS_MASK                    (0x3FU << GRF_GPIO1A_DS_1_GPIO1A2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1A_DS_1_GPIO1A3_DS_SHIFT                   (8U)
+#define GRF_GPIO1A_DS_1_GPIO1A3_DS_MASK                    (0x3FU << GRF_GPIO1A_DS_1_GPIO1A3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1A_DS_2 */
+#define GRF_GPIO1A_DS_2_OFFSET                             (0x401C4U)
+#define GRF_GPIO1A_DS_2_GPIO1A4_DS_SHIFT                   (0U)
+#define GRF_GPIO1A_DS_2_GPIO1A4_DS_MASK                    (0x3FU << GRF_GPIO1A_DS_2_GPIO1A4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1A_DS_2_GPIO1A5_DS_SHIFT                   (8U)
+#define GRF_GPIO1A_DS_2_GPIO1A5_DS_MASK                    (0x3FU << GRF_GPIO1A_DS_2_GPIO1A5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1A_DS_3 */
+#define GRF_GPIO1A_DS_3_OFFSET                             (0x401C8U)
+#define GRF_GPIO1A_DS_3_GPIO1A6_DS_SHIFT                   (0U)
+#define GRF_GPIO1A_DS_3_GPIO1A6_DS_MASK                    (0x3FU << GRF_GPIO1A_DS_3_GPIO1A6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1A_DS_3_GPIO1A7_DS_SHIFT                   (8U)
+#define GRF_GPIO1A_DS_3_GPIO1A7_DS_MASK                    (0x3FU << GRF_GPIO1A_DS_3_GPIO1A7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1B_DS_0 */
+#define GRF_GPIO1B_DS_0_OFFSET                             (0x401CCU)
+#define GRF_GPIO1B_DS_0_GPIO1B0_DS_SHIFT                   (0U)
+#define GRF_GPIO1B_DS_0_GPIO1B0_DS_MASK                    (0x3FU << GRF_GPIO1B_DS_0_GPIO1B0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1B_DS_0_GPIO1B1_DS_SHIFT                   (8U)
+#define GRF_GPIO1B_DS_0_GPIO1B1_DS_MASK                    (0x3FU << GRF_GPIO1B_DS_0_GPIO1B1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1B_DS_1 */
+#define GRF_GPIO1B_DS_1_OFFSET                             (0x401D0U)
+#define GRF_GPIO1B_DS_1_GPIO1B2_DS_SHIFT                   (0U)
+#define GRF_GPIO1B_DS_1_GPIO1B2_DS_MASK                    (0x3FU << GRF_GPIO1B_DS_1_GPIO1B2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1B_DS_1_GPIO1B3_DS_SHIFT                   (8U)
+#define GRF_GPIO1B_DS_1_GPIO1B3_DS_MASK                    (0x3FU << GRF_GPIO1B_DS_1_GPIO1B3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1B_DS_2 */
+#define GRF_GPIO1B_DS_2_OFFSET                             (0x401D4U)
+#define GRF_GPIO1B_DS_2_GPIO1B4_DS_SHIFT                   (0U)
+#define GRF_GPIO1B_DS_2_GPIO1B4_DS_MASK                    (0x3FU << GRF_GPIO1B_DS_2_GPIO1B4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1B_DS_2_GPIO1B5_DS_SHIFT                   (8U)
+#define GRF_GPIO1B_DS_2_GPIO1B5_DS_MASK                    (0x3FU << GRF_GPIO1B_DS_2_GPIO1B5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1B_DS_3 */
+#define GRF_GPIO1B_DS_3_OFFSET                             (0x401D8U)
+#define GRF_GPIO1B_DS_3_GPIO1B6_DS_SHIFT                   (0U)
+#define GRF_GPIO1B_DS_3_GPIO1B6_DS_MASK                    (0x3FU << GRF_GPIO1B_DS_3_GPIO1B6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1B_DS_3_GPIO1B7_DS_SHIFT                   (8U)
+#define GRF_GPIO1B_DS_3_GPIO1B7_DS_MASK                    (0x3FU << GRF_GPIO1B_DS_3_GPIO1B7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1C_DS_0 */
+#define GRF_GPIO1C_DS_0_OFFSET                             (0x401DCU)
+#define GRF_GPIO1C_DS_0_GPIO1C0_DS_SHIFT                   (0U)
+#define GRF_GPIO1C_DS_0_GPIO1C0_DS_MASK                    (0x3FU << GRF_GPIO1C_DS_0_GPIO1C0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1C_DS_0_GPIO1C1_DS_SHIFT                   (8U)
+#define GRF_GPIO1C_DS_0_GPIO1C1_DS_MASK                    (0x3FU << GRF_GPIO1C_DS_0_GPIO1C1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1C_DS_1 */
+#define GRF_GPIO1C_DS_1_OFFSET                             (0x401E0U)
+#define GRF_GPIO1C_DS_1_GPIO1C2_DS_SHIFT                   (0U)
+#define GRF_GPIO1C_DS_1_GPIO1C2_DS_MASK                    (0x3FU << GRF_GPIO1C_DS_1_GPIO1C2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1C_DS_1_GPIO1C3_DS_SHIFT                   (8U)
+#define GRF_GPIO1C_DS_1_GPIO1C3_DS_MASK                    (0x3FU << GRF_GPIO1C_DS_1_GPIO1C3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1C_DS_2 */
+#define GRF_GPIO1C_DS_2_OFFSET                             (0x401E4U)
+#define GRF_GPIO1C_DS_2_GPIO1C4_DS_SHIFT                   (0U)
+#define GRF_GPIO1C_DS_2_GPIO1C4_DS_MASK                    (0x3FU << GRF_GPIO1C_DS_2_GPIO1C4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1C_DS_2_GPIO1C5_DS_SHIFT                   (8U)
+#define GRF_GPIO1C_DS_2_GPIO1C5_DS_MASK                    (0x3FU << GRF_GPIO1C_DS_2_GPIO1C5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1C_DS_3 */
+#define GRF_GPIO1C_DS_3_OFFSET                             (0x401E8U)
+#define GRF_GPIO1C_DS_3_GPIO1C6_DS_SHIFT                   (0U)
+#define GRF_GPIO1C_DS_3_GPIO1C6_DS_MASK                    (0x3FU << GRF_GPIO1C_DS_3_GPIO1C6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1C_DS_3_GPIO1C7_DS_SHIFT                   (8U)
+#define GRF_GPIO1C_DS_3_GPIO1C7_DS_MASK                    (0x3FU << GRF_GPIO1C_DS_3_GPIO1C7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1D_DS_0 */
+#define GRF_GPIO1D_DS_0_OFFSET                             (0x401ECU)
+#define GRF_GPIO1D_DS_0_GPIO1D0_DS_SHIFT                   (0U)
+#define GRF_GPIO1D_DS_0_GPIO1D0_DS_MASK                    (0x3FU << GRF_GPIO1D_DS_0_GPIO1D0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1D_DS_0_GPIO1D1_DS_SHIFT                   (8U)
+#define GRF_GPIO1D_DS_0_GPIO1D1_DS_MASK                    (0x3FU << GRF_GPIO1D_DS_0_GPIO1D1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1D_DS_1 */
+#define GRF_GPIO1D_DS_1_OFFSET                             (0x401F0U)
+#define GRF_GPIO1D_DS_1_GPIO1D2_DS_SHIFT                   (0U)
+#define GRF_GPIO1D_DS_1_GPIO1D2_DS_MASK                    (0x3FU << GRF_GPIO1D_DS_1_GPIO1D2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1D_DS_1_GPIO1D3_DS_SHIFT                   (8U)
+#define GRF_GPIO1D_DS_1_GPIO1D3_DS_MASK                    (0x3FU << GRF_GPIO1D_DS_1_GPIO1D3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1D_DS_2 */
+#define GRF_GPIO1D_DS_2_OFFSET                             (0x401F4U)
+#define GRF_GPIO1D_DS_2_GPIO1D4_DS_SHIFT                   (0U)
+#define GRF_GPIO1D_DS_2_GPIO1D4_DS_MASK                    (0x3FU << GRF_GPIO1D_DS_2_GPIO1D4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1D_DS_2_GPIO1D5_DS_SHIFT                   (8U)
+#define GRF_GPIO1D_DS_2_GPIO1D5_DS_MASK                    (0x3FU << GRF_GPIO1D_DS_2_GPIO1D5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO1D_DS_3 */
+#define GRF_GPIO1D_DS_3_OFFSET                             (0x401F8U)
+#define GRF_GPIO1D_DS_3_GPIO1D6_DS_SHIFT                   (0U)
+#define GRF_GPIO1D_DS_3_GPIO1D6_DS_MASK                    (0x3FU << GRF_GPIO1D_DS_3_GPIO1D6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO1D_DS_3_GPIO1D7_DS_SHIFT                   (8U)
+#define GRF_GPIO1D_DS_3_GPIO1D7_DS_MASK                    (0x3FU << GRF_GPIO1D_DS_3_GPIO1D7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2A_DS_0 */
+#define GRF_GPIO2A_DS_0_OFFSET                             (0x401FCU)
+#define GRF_GPIO2A_DS_0_GPIO2A0_DS_SHIFT                   (0U)
+#define GRF_GPIO2A_DS_0_GPIO2A0_DS_MASK                    (0x3FU << GRF_GPIO2A_DS_0_GPIO2A0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2A_DS_0_GPIO2A1_DS_SHIFT                   (8U)
+#define GRF_GPIO2A_DS_0_GPIO2A1_DS_MASK                    (0x3FU << GRF_GPIO2A_DS_0_GPIO2A1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2A_DS_1 */
+#define GRF_GPIO2A_DS_1_OFFSET                             (0x40200U)
+#define GRF_GPIO2A_DS_1_GPIO2A2_DS_SHIFT                   (0U)
+#define GRF_GPIO2A_DS_1_GPIO2A2_DS_MASK                    (0x3FU << GRF_GPIO2A_DS_1_GPIO2A2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2A_DS_1_GPIO2A3_DS_SHIFT                   (8U)
+#define GRF_GPIO2A_DS_1_GPIO2A3_DS_MASK                    (0x3FU << GRF_GPIO2A_DS_1_GPIO2A3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2A_DS_2 */
+#define GRF_GPIO2A_DS_2_OFFSET                             (0x40204U)
+#define GRF_GPIO2A_DS_2_GPIO2A4_DS_SHIFT                   (0U)
+#define GRF_GPIO2A_DS_2_GPIO2A4_DS_MASK                    (0x3FU << GRF_GPIO2A_DS_2_GPIO2A4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2A_DS_2_GPIO2A5_DS_SHIFT                   (8U)
+#define GRF_GPIO2A_DS_2_GPIO2A5_DS_MASK                    (0x3FU << GRF_GPIO2A_DS_2_GPIO2A5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2A_DS_3 */
+#define GRF_GPIO2A_DS_3_OFFSET                             (0x40208U)
+#define GRF_GPIO2A_DS_3_GPIO2A6_DS_SHIFT                   (0U)
+#define GRF_GPIO2A_DS_3_GPIO2A6_DS_MASK                    (0x3FU << GRF_GPIO2A_DS_3_GPIO2A6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2A_DS_3_GPIO2A7_DS_SHIFT                   (8U)
+#define GRF_GPIO2A_DS_3_GPIO2A7_DS_MASK                    (0x3FU << GRF_GPIO2A_DS_3_GPIO2A7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2B_DS_0 */
+#define GRF_GPIO2B_DS_0_OFFSET                             (0x4020CU)
+#define GRF_GPIO2B_DS_0_GPIO2B0_DS_SHIFT                   (0U)
+#define GRF_GPIO2B_DS_0_GPIO2B0_DS_MASK                    (0x3FU << GRF_GPIO2B_DS_0_GPIO2B0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2B_DS_0_GPIO2B1_DS_SHIFT                   (8U)
+#define GRF_GPIO2B_DS_0_GPIO2B1_DS_MASK                    (0x3FU << GRF_GPIO2B_DS_0_GPIO2B1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2B_DS_1 */
+#define GRF_GPIO2B_DS_1_OFFSET                             (0x40210U)
+#define GRF_GPIO2B_DS_1_GPIO2B2_DS_SHIFT                   (0U)
+#define GRF_GPIO2B_DS_1_GPIO2B2_DS_MASK                    (0x3FU << GRF_GPIO2B_DS_1_GPIO2B2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2B_DS_1_GPIO2B3_DS_SHIFT                   (8U)
+#define GRF_GPIO2B_DS_1_GPIO2B3_DS_MASK                    (0x3FU << GRF_GPIO2B_DS_1_GPIO2B3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2B_DS_2 */
+#define GRF_GPIO2B_DS_2_OFFSET                             (0x40214U)
+#define GRF_GPIO2B_DS_2_GPIO2B4_DS_SHIFT                   (0U)
+#define GRF_GPIO2B_DS_2_GPIO2B4_DS_MASK                    (0x3FU << GRF_GPIO2B_DS_2_GPIO2B4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2B_DS_2_GPIO2B5_DS_SHIFT                   (8U)
+#define GRF_GPIO2B_DS_2_GPIO2B5_DS_MASK                    (0x3FU << GRF_GPIO2B_DS_2_GPIO2B5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2B_DS_3 */
+#define GRF_GPIO2B_DS_3_OFFSET                             (0x40218U)
+#define GRF_GPIO2B_DS_3_GPIO2B6_DS_SHIFT                   (0U)
+#define GRF_GPIO2B_DS_3_GPIO2B6_DS_MASK                    (0x3FU << GRF_GPIO2B_DS_3_GPIO2B6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2B_DS_3_GPIO2B7_DS_SHIFT                   (8U)
+#define GRF_GPIO2B_DS_3_GPIO2B7_DS_MASK                    (0x3FU << GRF_GPIO2B_DS_3_GPIO2B7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2C_DS_0 */
+#define GRF_GPIO2C_DS_0_OFFSET                             (0x4021CU)
+#define GRF_GPIO2C_DS_0_GPIO2C0_DS_SHIFT                   (0U)
+#define GRF_GPIO2C_DS_0_GPIO2C0_DS_MASK                    (0x3FU << GRF_GPIO2C_DS_0_GPIO2C0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2C_DS_0_GPIO2C1_DS_SHIFT                   (8U)
+#define GRF_GPIO2C_DS_0_GPIO2C1_DS_MASK                    (0x3FU << GRF_GPIO2C_DS_0_GPIO2C1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2C_DS_1 */
+#define GRF_GPIO2C_DS_1_OFFSET                             (0x40220U)
+#define GRF_GPIO2C_DS_1_GPIO2C2_DS_SHIFT                   (0U)
+#define GRF_GPIO2C_DS_1_GPIO2C2_DS_MASK                    (0x3FU << GRF_GPIO2C_DS_1_GPIO2C2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2C_DS_1_GPIO2C3_DS_SHIFT                   (8U)
+#define GRF_GPIO2C_DS_1_GPIO2C3_DS_MASK                    (0x3FU << GRF_GPIO2C_DS_1_GPIO2C3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2C_DS_2 */
+#define GRF_GPIO2C_DS_2_OFFSET                             (0x40224U)
+#define GRF_GPIO2C_DS_2_GPIO2C4_DS_SHIFT                   (0U)
+#define GRF_GPIO2C_DS_2_GPIO2C4_DS_MASK                    (0x3FU << GRF_GPIO2C_DS_2_GPIO2C4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2C_DS_2_GPIO2C5_DS_SHIFT                   (8U)
+#define GRF_GPIO2C_DS_2_GPIO2C5_DS_MASK                    (0x3FU << GRF_GPIO2C_DS_2_GPIO2C5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2C_DS_3 */
+#define GRF_GPIO2C_DS_3_OFFSET                             (0x40228U)
+#define GRF_GPIO2C_DS_3_GPIO2C6_DS_SHIFT                   (0U)
+#define GRF_GPIO2C_DS_3_GPIO2C6_DS_MASK                    (0x3FU << GRF_GPIO2C_DS_3_GPIO2C6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2C_DS_3_GPIO2C7_DS_SHIFT                   (8U)
+#define GRF_GPIO2C_DS_3_GPIO2C7_DS_MASK                    (0x3FU << GRF_GPIO2C_DS_3_GPIO2C7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2D_DS_0 */
+#define GRF_GPIO2D_DS_0_OFFSET                             (0x4022CU)
+#define GRF_GPIO2D_DS_0_GPIO2D0_DS_SHIFT                   (0U)
+#define GRF_GPIO2D_DS_0_GPIO2D0_DS_MASK                    (0x3FU << GRF_GPIO2D_DS_0_GPIO2D0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2D_DS_0_GPIO2D1_DS_SHIFT                   (8U)
+#define GRF_GPIO2D_DS_0_GPIO2D1_DS_MASK                    (0x3FU << GRF_GPIO2D_DS_0_GPIO2D1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2D_DS_1 */
+#define GRF_GPIO2D_DS_1_OFFSET                             (0x40230U)
+#define GRF_GPIO2D_DS_1_GPIO2D2_DS_SHIFT                   (0U)
+#define GRF_GPIO2D_DS_1_GPIO2D2_DS_MASK                    (0x3FU << GRF_GPIO2D_DS_1_GPIO2D2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2D_DS_1_GPIO2D3_DS_SHIFT                   (8U)
+#define GRF_GPIO2D_DS_1_GPIO2D3_DS_MASK                    (0x3FU << GRF_GPIO2D_DS_1_GPIO2D3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2D_DS_2 */
+#define GRF_GPIO2D_DS_2_OFFSET                             (0x40234U)
+#define GRF_GPIO2D_DS_2_GPIO2D4_DS_SHIFT                   (0U)
+#define GRF_GPIO2D_DS_2_GPIO2D4_DS_MASK                    (0x3FU << GRF_GPIO2D_DS_2_GPIO2D4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2D_DS_2_GPIO2D5_DS_SHIFT                   (8U)
+#define GRF_GPIO2D_DS_2_GPIO2D5_DS_MASK                    (0x3FU << GRF_GPIO2D_DS_2_GPIO2D5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO2D_DS_3 */
+#define GRF_GPIO2D_DS_3_OFFSET                             (0x40238U)
+#define GRF_GPIO2D_DS_3_GPIO2D6_DS_SHIFT                   (0U)
+#define GRF_GPIO2D_DS_3_GPIO2D6_DS_MASK                    (0x3FU << GRF_GPIO2D_DS_3_GPIO2D6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO2D_DS_3_GPIO2D7_DS_SHIFT                   (8U)
+#define GRF_GPIO2D_DS_3_GPIO2D7_DS_MASK                    (0x3FU << GRF_GPIO2D_DS_3_GPIO2D7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3A_DS_0 */
+#define GRF_GPIO3A_DS_0_OFFSET                             (0x4023CU)
+#define GRF_GPIO3A_DS_0_GPIO3A0_DS_SHIFT                   (0U)
+#define GRF_GPIO3A_DS_0_GPIO3A0_DS_MASK                    (0x3FU << GRF_GPIO3A_DS_0_GPIO3A0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3A_DS_0_GPIO3A1_DS_SHIFT                   (8U)
+#define GRF_GPIO3A_DS_0_GPIO3A1_DS_MASK                    (0x3FU << GRF_GPIO3A_DS_0_GPIO3A1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3A_DS_1 */
+#define GRF_GPIO3A_DS_1_OFFSET                             (0x40240U)
+#define GRF_GPIO3A_DS_1_GPIO3A2_DS_SHIFT                   (0U)
+#define GRF_GPIO3A_DS_1_GPIO3A2_DS_MASK                    (0x3FU << GRF_GPIO3A_DS_1_GPIO3A2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3A_DS_1_GPIO3A3_DS_SHIFT                   (8U)
+#define GRF_GPIO3A_DS_1_GPIO3A3_DS_MASK                    (0x3FU << GRF_GPIO3A_DS_1_GPIO3A3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3A_DS_2 */
+#define GRF_GPIO3A_DS_2_OFFSET                             (0x40244U)
+#define GRF_GPIO3A_DS_2_GPIO3A4_DS_SHIFT                   (0U)
+#define GRF_GPIO3A_DS_2_GPIO3A4_DS_MASK                    (0x3FU << GRF_GPIO3A_DS_2_GPIO3A4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3A_DS_2_GPIO3A5_DS_SHIFT                   (8U)
+#define GRF_GPIO3A_DS_2_GPIO3A5_DS_MASK                    (0x3FU << GRF_GPIO3A_DS_2_GPIO3A5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3A_DS_3 */
+#define GRF_GPIO3A_DS_3_OFFSET                             (0x40248U)
+#define GRF_GPIO3A_DS_3_GPIO3A6_DS_SHIFT                   (0U)
+#define GRF_GPIO3A_DS_3_GPIO3A6_DS_MASK                    (0x3FU << GRF_GPIO3A_DS_3_GPIO3A6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3A_DS_3_GPIO3A7_DS_SHIFT                   (8U)
+#define GRF_GPIO3A_DS_3_GPIO3A7_DS_MASK                    (0x3FU << GRF_GPIO3A_DS_3_GPIO3A7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3B_DS_0 */
+#define GRF_GPIO3B_DS_0_OFFSET                             (0x4024CU)
+#define GRF_GPIO3B_DS_0_GPIO3B0_DS_SHIFT                   (0U)
+#define GRF_GPIO3B_DS_0_GPIO3B0_DS_MASK                    (0x3FU << GRF_GPIO3B_DS_0_GPIO3B0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3B_DS_0_GPIO3B1_DS_SHIFT                   (8U)
+#define GRF_GPIO3B_DS_0_GPIO3B1_DS_MASK                    (0x3FU << GRF_GPIO3B_DS_0_GPIO3B1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3B_DS_1 */
+#define GRF_GPIO3B_DS_1_OFFSET                             (0x40250U)
+#define GRF_GPIO3B_DS_1_GPIO3B2_DS_SHIFT                   (0U)
+#define GRF_GPIO3B_DS_1_GPIO3B2_DS_MASK                    (0x3FU << GRF_GPIO3B_DS_1_GPIO3B2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3B_DS_1_GPIO3B3_DS_SHIFT                   (8U)
+#define GRF_GPIO3B_DS_1_GPIO3B3_DS_MASK                    (0x3FU << GRF_GPIO3B_DS_1_GPIO3B3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3B_DS_2 */
+#define GRF_GPIO3B_DS_2_OFFSET                             (0x40254U)
+#define GRF_GPIO3B_DS_2_GPIO3B4_DS_SHIFT                   (0U)
+#define GRF_GPIO3B_DS_2_GPIO3B4_DS_MASK                    (0x3FU << GRF_GPIO3B_DS_2_GPIO3B4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3B_DS_2_GPIO3B5_DS_SHIFT                   (8U)
+#define GRF_GPIO3B_DS_2_GPIO3B5_DS_MASK                    (0x3FU << GRF_GPIO3B_DS_2_GPIO3B5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3B_DS_3 */
+#define GRF_GPIO3B_DS_3_OFFSET                             (0x40258U)
+#define GRF_GPIO3B_DS_3_GPIO3B6_DS_SHIFT                   (0U)
+#define GRF_GPIO3B_DS_3_GPIO3B6_DS_MASK                    (0x3FU << GRF_GPIO3B_DS_3_GPIO3B6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3B_DS_3_GPIO3B7_DS_SHIFT                   (8U)
+#define GRF_GPIO3B_DS_3_GPIO3B7_DS_MASK                    (0x3FU << GRF_GPIO3B_DS_3_GPIO3B7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3C_DS_0 */
+#define GRF_GPIO3C_DS_0_OFFSET                             (0x4025CU)
+#define GRF_GPIO3C_DS_0_GPIO3C0_DS_SHIFT                   (0U)
+#define GRF_GPIO3C_DS_0_GPIO3C0_DS_MASK                    (0x3FU << GRF_GPIO3C_DS_0_GPIO3C0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3C_DS_0_GPIO3C1_DS_SHIFT                   (8U)
+#define GRF_GPIO3C_DS_0_GPIO3C1_DS_MASK                    (0x3FU << GRF_GPIO3C_DS_0_GPIO3C1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3C_DS_1 */
+#define GRF_GPIO3C_DS_1_OFFSET                             (0x40260U)
+#define GRF_GPIO3C_DS_1_GPIO3C2_DS_SHIFT                   (0U)
+#define GRF_GPIO3C_DS_1_GPIO3C2_DS_MASK                    (0x3FU << GRF_GPIO3C_DS_1_GPIO3C2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3C_DS_1_GPIO3C3_DS_SHIFT                   (8U)
+#define GRF_GPIO3C_DS_1_GPIO3C3_DS_MASK                    (0x3FU << GRF_GPIO3C_DS_1_GPIO3C3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3C_DS_2 */
+#define GRF_GPIO3C_DS_2_OFFSET                             (0x40264U)
+#define GRF_GPIO3C_DS_2_GPIO3C4_DS_SHIFT                   (0U)
+#define GRF_GPIO3C_DS_2_GPIO3C4_DS_MASK                    (0x3FU << GRF_GPIO3C_DS_2_GPIO3C4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3C_DS_2_GPIO3C5_DS_SHIFT                   (8U)
+#define GRF_GPIO3C_DS_2_GPIO3C5_DS_MASK                    (0x3FU << GRF_GPIO3C_DS_2_GPIO3C5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3C_DS_3 */
+#define GRF_GPIO3C_DS_3_OFFSET                             (0x40268U)
+#define GRF_GPIO3C_DS_3_GPIO3C6_DS_SHIFT                   (0U)
+#define GRF_GPIO3C_DS_3_GPIO3C6_DS_MASK                    (0x3FU << GRF_GPIO3C_DS_3_GPIO3C6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3C_DS_3_GPIO3C7_DS_SHIFT                   (8U)
+#define GRF_GPIO3C_DS_3_GPIO3C7_DS_MASK                    (0x3FU << GRF_GPIO3C_DS_3_GPIO3C7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3D_DS_0 */
+#define GRF_GPIO3D_DS_0_OFFSET                             (0x4026CU)
+#define GRF_GPIO3D_DS_0_GPIO3D0_DS_SHIFT                   (0U)
+#define GRF_GPIO3D_DS_0_GPIO3D0_DS_MASK                    (0x3FU << GRF_GPIO3D_DS_0_GPIO3D0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3D_DS_0_GPIO3D1_DS_SHIFT                   (8U)
+#define GRF_GPIO3D_DS_0_GPIO3D1_DS_MASK                    (0x3FU << GRF_GPIO3D_DS_0_GPIO3D1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3D_DS_1 */
+#define GRF_GPIO3D_DS_1_OFFSET                             (0x40270U)
+#define GRF_GPIO3D_DS_1_GPIO3D2_DS_SHIFT                   (0U)
+#define GRF_GPIO3D_DS_1_GPIO3D2_DS_MASK                    (0x3FU << GRF_GPIO3D_DS_1_GPIO3D2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3D_DS_1_GPIO3D3_DS_SHIFT                   (8U)
+#define GRF_GPIO3D_DS_1_GPIO3D3_DS_MASK                    (0x3FU << GRF_GPIO3D_DS_1_GPIO3D3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3D_DS_2 */
+#define GRF_GPIO3D_DS_2_OFFSET                             (0x40274U)
+#define GRF_GPIO3D_DS_2_GPIO3D4_DS_SHIFT                   (0U)
+#define GRF_GPIO3D_DS_2_GPIO3D4_DS_MASK                    (0x3FU << GRF_GPIO3D_DS_2_GPIO3D4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3D_DS_2_GPIO3D5_DS_SHIFT                   (8U)
+#define GRF_GPIO3D_DS_2_GPIO3D5_DS_MASK                    (0x3FU << GRF_GPIO3D_DS_2_GPIO3D5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO3D_DS_3 */
+#define GRF_GPIO3D_DS_3_OFFSET                             (0x40278U)
+#define GRF_GPIO3D_DS_3_GPIO3D6_DS_SHIFT                   (0U)
+#define GRF_GPIO3D_DS_3_GPIO3D6_DS_MASK                    (0x3FU << GRF_GPIO3D_DS_3_GPIO3D6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO3D_DS_3_GPIO3D7_DS_SHIFT                   (8U)
+#define GRF_GPIO3D_DS_3_GPIO3D7_DS_MASK                    (0x3FU << GRF_GPIO3D_DS_3_GPIO3D7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4A_DS_0 */
+#define GRF_GPIO4A_DS_0_OFFSET                             (0x4027CU)
+#define GRF_GPIO4A_DS_0_GPIO4A0_DS_SHIFT                   (0U)
+#define GRF_GPIO4A_DS_0_GPIO4A0_DS_MASK                    (0x3FU << GRF_GPIO4A_DS_0_GPIO4A0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4A_DS_0_GPIO4A1_DS_SHIFT                   (8U)
+#define GRF_GPIO4A_DS_0_GPIO4A1_DS_MASK                    (0x3FU << GRF_GPIO4A_DS_0_GPIO4A1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4A_DS_1 */
+#define GRF_GPIO4A_DS_1_OFFSET                             (0x40280U)
+#define GRF_GPIO4A_DS_1_GPIO4A2_DS_SHIFT                   (0U)
+#define GRF_GPIO4A_DS_1_GPIO4A2_DS_MASK                    (0x3FU << GRF_GPIO4A_DS_1_GPIO4A2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4A_DS_1_GPIO4A3_DS_SHIFT                   (8U)
+#define GRF_GPIO4A_DS_1_GPIO4A3_DS_MASK                    (0x3FU << GRF_GPIO4A_DS_1_GPIO4A3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4A_DS_2 */
+#define GRF_GPIO4A_DS_2_OFFSET                             (0x40284U)
+#define GRF_GPIO4A_DS_2_GPIO4A4_DS_SHIFT                   (0U)
+#define GRF_GPIO4A_DS_2_GPIO4A4_DS_MASK                    (0x3FU << GRF_GPIO4A_DS_2_GPIO4A4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4A_DS_2_GPIO4A5_DS_SHIFT                   (8U)
+#define GRF_GPIO4A_DS_2_GPIO4A5_DS_MASK                    (0x3FU << GRF_GPIO4A_DS_2_GPIO4A5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4A_DS_3 */
+#define GRF_GPIO4A_DS_3_OFFSET                             (0x40288U)
+#define GRF_GPIO4A_DS_3_GPIO4A6_DS_SHIFT                   (0U)
+#define GRF_GPIO4A_DS_3_GPIO4A6_DS_MASK                    (0x3FU << GRF_GPIO4A_DS_3_GPIO4A6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4A_DS_3_GPIO4A7_DS_SHIFT                   (8U)
+#define GRF_GPIO4A_DS_3_GPIO4A7_DS_MASK                    (0x3FU << GRF_GPIO4A_DS_3_GPIO4A7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4B_DS_0 */
+#define GRF_GPIO4B_DS_0_OFFSET                             (0x4028CU)
+#define GRF_GPIO4B_DS_0_GPIO4B0_DS_SHIFT                   (0U)
+#define GRF_GPIO4B_DS_0_GPIO4B0_DS_MASK                    (0x3FU << GRF_GPIO4B_DS_0_GPIO4B0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4B_DS_0_GPIO4B1_DS_SHIFT                   (8U)
+#define GRF_GPIO4B_DS_0_GPIO4B1_DS_MASK                    (0x3FU << GRF_GPIO4B_DS_0_GPIO4B1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4B_DS_1 */
+#define GRF_GPIO4B_DS_1_OFFSET                             (0x40290U)
+#define GRF_GPIO4B_DS_1_GPIO4B2_DS_SHIFT                   (0U)
+#define GRF_GPIO4B_DS_1_GPIO4B2_DS_MASK                    (0x3FU << GRF_GPIO4B_DS_1_GPIO4B2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4B_DS_1_GPIO4B3_DS_SHIFT                   (8U)
+#define GRF_GPIO4B_DS_1_GPIO4B3_DS_MASK                    (0x3FU << GRF_GPIO4B_DS_1_GPIO4B3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4B_DS_2 */
+#define GRF_GPIO4B_DS_2_OFFSET                             (0x40294U)
+#define GRF_GPIO4B_DS_2_GPIO4B4_DS_SHIFT                   (0U)
+#define GRF_GPIO4B_DS_2_GPIO4B4_DS_MASK                    (0x3FU << GRF_GPIO4B_DS_2_GPIO4B4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4B_DS_2_GPIO4B5_DS_SHIFT                   (8U)
+#define GRF_GPIO4B_DS_2_GPIO4B5_DS_MASK                    (0x3FU << GRF_GPIO4B_DS_2_GPIO4B5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4B_DS_3 */
+#define GRF_GPIO4B_DS_3_OFFSET                             (0x40298U)
+#define GRF_GPIO4B_DS_3_GPIO4B6_DS_SHIFT                   (0U)
+#define GRF_GPIO4B_DS_3_GPIO4B6_DS_MASK                    (0x3FU << GRF_GPIO4B_DS_3_GPIO4B6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4B_DS_3_GPIO4B7_DS_SHIFT                   (8U)
+#define GRF_GPIO4B_DS_3_GPIO4B7_DS_MASK                    (0x3FU << GRF_GPIO4B_DS_3_GPIO4B7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4C_DS_0 */
+#define GRF_GPIO4C_DS_0_OFFSET                             (0x4029CU)
+#define GRF_GPIO4C_DS_0_GPIO4C0_DS_SHIFT                   (0U)
+#define GRF_GPIO4C_DS_0_GPIO4C0_DS_MASK                    (0x3FU << GRF_GPIO4C_DS_0_GPIO4C0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4C_DS_0_GPIO4C1_DS_SHIFT                   (8U)
+#define GRF_GPIO4C_DS_0_GPIO4C1_DS_MASK                    (0x3FU << GRF_GPIO4C_DS_0_GPIO4C1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4C_DS_1 */
+#define GRF_GPIO4C_DS_1_OFFSET                             (0x402A0U)
+#define GRF_GPIO4C_DS_1_GPIO4C2_DS_SHIFT                   (0U)
+#define GRF_GPIO4C_DS_1_GPIO4C2_DS_MASK                    (0x3FU << GRF_GPIO4C_DS_1_GPIO4C2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4C_DS_1_GPIO4C3_DS_SHIFT                   (8U)
+#define GRF_GPIO4C_DS_1_GPIO4C3_DS_MASK                    (0x3FU << GRF_GPIO4C_DS_1_GPIO4C3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4C_DS_2 */
+#define GRF_GPIO4C_DS_2_OFFSET                             (0x402A4U)
+#define GRF_GPIO4C_DS_2_GPIO4C4_DS_SHIFT                   (0U)
+#define GRF_GPIO4C_DS_2_GPIO4C4_DS_MASK                    (0x3FU << GRF_GPIO4C_DS_2_GPIO4C4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4C_DS_2_GPIO4C5_DS_SHIFT                   (8U)
+#define GRF_GPIO4C_DS_2_GPIO4C5_DS_MASK                    (0x3FU << GRF_GPIO4C_DS_2_GPIO4C5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4C_DS_3 */
+#define GRF_GPIO4C_DS_3_OFFSET                             (0x402A8U)
+#define GRF_GPIO4C_DS_3_GPIO4C6_DS_SHIFT                   (0U)
+#define GRF_GPIO4C_DS_3_GPIO4C6_DS_MASK                    (0x3FU << GRF_GPIO4C_DS_3_GPIO4C6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4C_DS_3_GPIO4C7_DS_SHIFT                   (8U)
+#define GRF_GPIO4C_DS_3_GPIO4C7_DS_MASK                    (0x3FU << GRF_GPIO4C_DS_3_GPIO4C7_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4D_DS_0 */
+#define GRF_GPIO4D_DS_0_OFFSET                             (0x402ACU)
+#define GRF_GPIO4D_DS_0_GPIO4D0_DS_SHIFT                   (0U)
+#define GRF_GPIO4D_DS_0_GPIO4D0_DS_MASK                    (0x3FU << GRF_GPIO4D_DS_0_GPIO4D0_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4D_DS_0_GPIO4D1_DS_SHIFT                   (8U)
+#define GRF_GPIO4D_DS_0_GPIO4D1_DS_MASK                    (0x3FU << GRF_GPIO4D_DS_0_GPIO4D1_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4D_DS_1 */
+#define GRF_GPIO4D_DS_1_OFFSET                             (0x402B0U)
+#define GRF_GPIO4D_DS_1_GPIO4D2_DS_SHIFT                   (0U)
+#define GRF_GPIO4D_DS_1_GPIO4D2_DS_MASK                    (0x3FU << GRF_GPIO4D_DS_1_GPIO4D2_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4D_DS_1_GPIO4D3_DS_SHIFT                   (8U)
+#define GRF_GPIO4D_DS_1_GPIO4D3_DS_MASK                    (0x3FU << GRF_GPIO4D_DS_1_GPIO4D3_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4D_DS_2 */
+#define GRF_GPIO4D_DS_2_OFFSET                             (0x402B4U)
+#define GRF_GPIO4D_DS_2_GPIO4D4_DS_SHIFT                   (0U)
+#define GRF_GPIO4D_DS_2_GPIO4D4_DS_MASK                    (0x3FU << GRF_GPIO4D_DS_2_GPIO4D4_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4D_DS_2_GPIO4D5_DS_SHIFT                   (8U)
+#define GRF_GPIO4D_DS_2_GPIO4D5_DS_MASK                    (0x3FU << GRF_GPIO4D_DS_2_GPIO4D5_DS_SHIFT)                  /* 0x00003F00 */
+/* GPIO4D_DS_3 */
+#define GRF_GPIO4D_DS_3_OFFSET                             (0x402B8U)
+#define GRF_GPIO4D_DS_3_GPIO4D6_DS_SHIFT                   (0U)
+#define GRF_GPIO4D_DS_3_GPIO4D6_DS_MASK                    (0x3FU << GRF_GPIO4D_DS_3_GPIO4D6_DS_SHIFT)                  /* 0x0000003F */
+#define GRF_GPIO4D_DS_3_GPIO4D7_DS_SHIFT                   (8U)
+#define GRF_GPIO4D_DS_3_GPIO4D7_DS_MASK                    (0x3FU << GRF_GPIO4D_DS_3_GPIO4D7_DS_SHIFT)                  /* 0x00003F00 */
+/* IOFUNC_SEL0 */
+#define GRF_IOFUNC_SEL0_OFFSET                             (0x402BCU)
+#define GRF_IOFUNC_SEL0_CAN0_IOMUX_SEL_SHIFT               (0U)
+#define GRF_IOFUNC_SEL0_CAN0_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL0_CAN0_IOMUX_SEL_SHIFT)               /* 0x00000001 */
+#define GRF_IOFUNC_SEL0_CAN1_IOMUX_SEL_SHIFT               (2U)
+#define GRF_IOFUNC_SEL0_CAN1_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL0_CAN1_IOMUX_SEL_SHIFT)               /* 0x00000004 */
+#define GRF_IOFUNC_SEL0_CAN2_IOMUX_SEL_SHIFT               (4U)
+#define GRF_IOFUNC_SEL0_CAN2_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL0_CAN2_IOMUX_SEL_SHIFT)               /* 0x00000010 */
+#define GRF_IOFUNC_SEL0_EDP_HPD_IOMUX_SEL_SHIFT            (6U)
+#define GRF_IOFUNC_SEL0_EDP_HPD_IOMUX_SEL_MASK             (0x1U << GRF_IOFUNC_SEL0_EDP_HPD_IOMUX_SEL_SHIFT)            /* 0x00000040 */
+#define GRF_IOFUNC_SEL0_GMAC1_IOMUX_SEL_SHIFT              (8U)
+#define GRF_IOFUNC_SEL0_GMAC1_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL0_GMAC1_IOMUX_SEL_SHIFT)              /* 0x00000100 */
+#define GRF_IOFUNC_SEL0_HDMITX_IOMUX_SEL_SHIFT             (10U)
+#define GRF_IOFUNC_SEL0_HDMITX_IOMUX_SEL_MASK              (0x1U << GRF_IOFUNC_SEL0_HDMITX_IOMUX_SEL_SHIFT)             /* 0x00000400 */
+#define GRF_IOFUNC_SEL0_I2C2_IOMUX_SEL_SHIFT               (14U)
+#define GRF_IOFUNC_SEL0_I2C2_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL0_I2C2_IOMUX_SEL_SHIFT)               /* 0x00004000 */
+/* IOFUNC_SEL1 */
+#define GRF_IOFUNC_SEL1_OFFSET                             (0x402C0U)
+#define GRF_IOFUNC_SEL1_I2C3_IOMUX_SEL_SHIFT               (0U)
+#define GRF_IOFUNC_SEL1_I2C3_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL1_I2C3_IOMUX_SEL_SHIFT)               /* 0x00000001 */
+#define GRF_IOFUNC_SEL1_I2C4_IOMUX_SEL_SHIFT               (2U)
+#define GRF_IOFUNC_SEL1_I2C4_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL1_I2C4_IOMUX_SEL_SHIFT)               /* 0x00000004 */
+#define GRF_IOFUNC_SEL1_I2C5_IOMUX_SEL_SHIFT               (4U)
+#define GRF_IOFUNC_SEL1_I2C5_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL1_I2C5_IOMUX_SEL_SHIFT)               /* 0x00000010 */
+#define GRF_IOFUNC_SEL1_PWM8_IOMUX_SEL_SHIFT               (14U)
+#define GRF_IOFUNC_SEL1_PWM8_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL1_PWM8_IOMUX_SEL_SHIFT)               /* 0x00004000 */
+/* IOFUNC_SEL2 */
+#define GRF_IOFUNC_SEL2_OFFSET                             (0x402C4U)
+#define GRF_IOFUNC_SEL2_PWM9_IOMUX_SEL_SHIFT               (0U)
+#define GRF_IOFUNC_SEL2_PWM9_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL2_PWM9_IOMUX_SEL_SHIFT)               /* 0x00000001 */
+#define GRF_IOFUNC_SEL2_PWM10_IOMUX_SEL_SHIFT              (2U)
+#define GRF_IOFUNC_SEL2_PWM10_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL2_PWM10_IOMUX_SEL_SHIFT)              /* 0x00000004 */
+#define GRF_IOFUNC_SEL2_PWM11_IOMUX_SEL_SHIFT              (4U)
+#define GRF_IOFUNC_SEL2_PWM11_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL2_PWM11_IOMUX_SEL_SHIFT)              /* 0x00000010 */
+#define GRF_IOFUNC_SEL2_PWM12_IOMUX_SEL_SHIFT              (6U)
+#define GRF_IOFUNC_SEL2_PWM12_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL2_PWM12_IOMUX_SEL_SHIFT)              /* 0x00000040 */
+#define GRF_IOFUNC_SEL2_PWM13_IOMUX_SEL_SHIFT              (8U)
+#define GRF_IOFUNC_SEL2_PWM13_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL2_PWM13_IOMUX_SEL_SHIFT)              /* 0x00000100 */
+#define GRF_IOFUNC_SEL2_PWM14_IOMUX_SEL_SHIFT              (10U)
+#define GRF_IOFUNC_SEL2_PWM14_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL2_PWM14_IOMUX_SEL_SHIFT)              /* 0x00000400 */
+#define GRF_IOFUNC_SEL2_PWM15_IOMUX_SEL_SHIFT              (12U)
+#define GRF_IOFUNC_SEL2_PWM15_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL2_PWM15_IOMUX_SEL_SHIFT)              /* 0x00001000 */
+#define GRF_IOFUNC_SEL2_SDMMC2_IOMUX_SEL_SHIFT             (14U)
+#define GRF_IOFUNC_SEL2_SDMMC2_IOMUX_SEL_MASK              (0x1U << GRF_IOFUNC_SEL2_SDMMC2_IOMUX_SEL_SHIFT)             /* 0x00004000 */
+/* IOFUNC_SEL3 */
+#define GRF_IOFUNC_SEL3_OFFSET                             (0x402C8U)
+#define GRF_IOFUNC_SEL3_SPI0_IOMUX_SEL_SHIFT               (0U)
+#define GRF_IOFUNC_SEL3_SPI0_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL3_SPI0_IOMUX_SEL_SHIFT)               /* 0x00000001 */
+#define GRF_IOFUNC_SEL3_SPI1_IOMUX_SEL_SHIFT               (2U)
+#define GRF_IOFUNC_SEL3_SPI1_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL3_SPI1_IOMUX_SEL_SHIFT)               /* 0x00000004 */
+#define GRF_IOFUNC_SEL3_SPI2_IOMUX_SEL_SHIFT               (4U)
+#define GRF_IOFUNC_SEL3_SPI2_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL3_SPI2_IOMUX_SEL_SHIFT)               /* 0x00000010 */
+#define GRF_IOFUNC_SEL3_SPI3_IOMUX_SEL_SHIFT               (6U)
+#define GRF_IOFUNC_SEL3_SPI3_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL3_SPI3_IOMUX_SEL_SHIFT)               /* 0x00000040 */
+#define GRF_IOFUNC_SEL3_UART1_IOMUX_SEL_SHIFT              (8U)
+#define GRF_IOFUNC_SEL3_UART1_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL3_UART1_IOMUX_SEL_SHIFT)              /* 0x00000100 */
+#define GRF_IOFUNC_SEL3_UART2_IOMUX_SEL_SHIFT              (10U)
+#define GRF_IOFUNC_SEL3_UART2_IOMUX_SEL_MASK               (0x3U << GRF_IOFUNC_SEL3_UART2_IOMUX_SEL_SHIFT)              /* 0x00000C00 */
+#define GRF_IOFUNC_SEL3_UART3_IOMUX_SEL_SHIFT              (12U)
+#define GRF_IOFUNC_SEL3_UART3_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL3_UART3_IOMUX_SEL_SHIFT)              /* 0x00001000 */
+#define GRF_IOFUNC_SEL3_UART4_IOMUX_SEL_SHIFT              (14U)
+#define GRF_IOFUNC_SEL3_UART4_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL3_UART4_IOMUX_SEL_SHIFT)              /* 0x00004000 */
+/* IOFUNC_SEL4 */
+#define GRF_IOFUNC_SEL4_OFFSET                             (0x402CCU)
+#define GRF_IOFUNC_SEL4_UART5_IOMUX_SEL_SHIFT              (0U)
+#define GRF_IOFUNC_SEL4_UART5_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL4_UART5_IOMUX_SEL_SHIFT)              /* 0x00000001 */
+#define GRF_IOFUNC_SEL4_UART6_IOMUX_SEL_SHIFT              (2U)
+#define GRF_IOFUNC_SEL4_UART6_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL4_UART6_IOMUX_SEL_SHIFT)              /* 0x00000004 */
+#define GRF_IOFUNC_SEL4_UART7_IOMUX_SEL_SHIFT              (4U)
+#define GRF_IOFUNC_SEL4_UART7_IOMUX_SEL_MASK               (0x3U << GRF_IOFUNC_SEL4_UART7_IOMUX_SEL_SHIFT)              /* 0x00000030 */
+#define GRF_IOFUNC_SEL4_UART8_IOMUX_SEL_SHIFT              (6U)
+#define GRF_IOFUNC_SEL4_UART8_IOMUX_SEL_MASK               (0x1U << GRF_IOFUNC_SEL4_UART8_IOMUX_SEL_SHIFT)              /* 0x00000040 */
+#define GRF_IOFUNC_SEL4_UART9_IOMUX_SEL_SHIFT              (8U)
+#define GRF_IOFUNC_SEL4_UART9_IOMUX_SEL_MASK               (0x3U << GRF_IOFUNC_SEL4_UART9_IOMUX_SEL_SHIFT)              /* 0x00000300 */
+#define GRF_IOFUNC_SEL4_I2S1_IOMUX_SEL_SHIFT               (10U)
+#define GRF_IOFUNC_SEL4_I2S1_IOMUX_SEL_MASK                (0x3U << GRF_IOFUNC_SEL4_I2S1_IOMUX_SEL_SHIFT)               /* 0x00000C00 */
+#define GRF_IOFUNC_SEL4_I2S2_IOMUX_SEL_SHIFT               (12U)
+#define GRF_IOFUNC_SEL4_I2S2_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL4_I2S2_IOMUX_SEL_SHIFT)               /* 0x00001000 */
+#define GRF_IOFUNC_SEL4_I2S3_IOMUX_SEL_SHIFT               (14U)
+#define GRF_IOFUNC_SEL4_I2S3_IOMUX_SEL_MASK                (0x1U << GRF_IOFUNC_SEL4_I2S3_IOMUX_SEL_SHIFT)               /* 0x00004000 */
+/* IOFUNC_SEL5 */
+#define GRF_IOFUNC_SEL5_OFFSET                             (0x402D0U)
+#define GRF_IOFUNC_SEL5_PDM_IOMUX_SEL_SHIFT                (0U)
+#define GRF_IOFUNC_SEL5_PDM_IOMUX_SEL_MASK                 (0x3U << GRF_IOFUNC_SEL5_PDM_IOMUX_SEL_SHIFT)                /* 0x00000003 */
+#define GRF_IOFUNC_SEL5_PCIE20_IOMUX_SEL_SHIFT             (2U)
+#define GRF_IOFUNC_SEL5_PCIE20_IOMUX_SEL_MASK              (0x3U << GRF_IOFUNC_SEL5_PCIE20_IOMUX_SEL_SHIFT)             /* 0x0000000C */
+#define GRF_IOFUNC_SEL5_PCIE30X1_IOMUX_SEL_SHIFT           (4U)
+#define GRF_IOFUNC_SEL5_PCIE30X1_IOMUX_SEL_MASK            (0x3U << GRF_IOFUNC_SEL5_PCIE30X1_IOMUX_SEL_SHIFT)           /* 0x00000030 */
+#define GRF_IOFUNC_SEL5_PCIE30X2_IOMUX_SEL_SHIFT           (6U)
+#define GRF_IOFUNC_SEL5_PCIE30X2_IOMUX_SEL_MASK            (0x3U << GRF_IOFUNC_SEL5_PCIE30X2_IOMUX_SEL_SHIFT)           /* 0x000000C0 */
+#define GRF_IOFUNC_SEL5_SATA_CP_POD_SEL_SHIFT              (8U)
+#define GRF_IOFUNC_SEL5_SATA_CP_POD_SEL_MASK               (0x3U << GRF_IOFUNC_SEL5_SATA_CP_POD_SEL_SHIFT)              /* 0x00000300 */
+#define GRF_IOFUNC_SEL5_SATA0_MP_SWITCH_SEL_SHIFT          (10U)
+#define GRF_IOFUNC_SEL5_SATA0_MP_SWITCH_SEL_MASK           (0x1U << GRF_IOFUNC_SEL5_SATA0_MP_SWITCH_SEL_SHIFT)          /* 0x00000400 */
+#define GRF_IOFUNC_SEL5_SATA1_MP_SWITCH_SEL_SHIFT          (11U)
+#define GRF_IOFUNC_SEL5_SATA1_MP_SWITCH_SEL_MASK           (0x1U << GRF_IOFUNC_SEL5_SATA1_MP_SWITCH_SEL_SHIFT)          /* 0x00000800 */
+#define GRF_IOFUNC_SEL5_SATA2_MP_SWITCH_SEL_SHIFT          (12U)
+#define GRF_IOFUNC_SEL5_SATA2_MP_SWITCH_SEL_MASK           (0x1U << GRF_IOFUNC_SEL5_SATA2_MP_SWITCH_SEL_SHIFT)          /* 0x00001000 */
+#define GRF_IOFUNC_SEL5_SATA0_CP_DEL_SEL_SHIFT             (13U)
+#define GRF_IOFUNC_SEL5_SATA0_CP_DEL_SEL_MASK              (0x1U << GRF_IOFUNC_SEL5_SATA0_CP_DEL_SEL_SHIFT)             /* 0x00002000 */
+#define GRF_IOFUNC_SEL5_SATA1_CP_DEL_SEL_SHIFT             (14U)
+#define GRF_IOFUNC_SEL5_SATA1_CP_DEL_SEL_MASK              (0x1U << GRF_IOFUNC_SEL5_SATA1_CP_DEL_SEL_SHIFT)             /* 0x00004000 */
+#define GRF_IOFUNC_SEL5_SATA2_CP_DEL_SEL_SHIFT             (15U)
+#define GRF_IOFUNC_SEL5_SATA2_CP_DEL_SEL_MASK              (0x1U << GRF_IOFUNC_SEL5_SATA2_CP_DEL_SEL_SHIFT)             /* 0x00008000 */
+/* VI_CON0 */
+#define GRF_VI_CON0_OFFSET                                 (0x402D4U)
+#define GRF_VI_CON0_CSIPHY_FORCERXMODE_0_SHIFT             (0U)
+#define GRF_VI_CON0_CSIPHY_FORCERXMODE_0_MASK              (0x1U << GRF_VI_CON0_CSIPHY_FORCERXMODE_0_SHIFT)             /* 0x00000001 */
+#define GRF_VI_CON0_CSIPHY_FORCERXMODE_1_SHIFT             (1U)
+#define GRF_VI_CON0_CSIPHY_FORCERXMODE_1_MASK              (0x1U << GRF_VI_CON0_CSIPHY_FORCERXMODE_1_SHIFT)             /* 0x00000002 */
+#define GRF_VI_CON0_CSIPHY_FORCERXMODE_2_SHIFT             (2U)
+#define GRF_VI_CON0_CSIPHY_FORCERXMODE_2_MASK              (0x1U << GRF_VI_CON0_CSIPHY_FORCERXMODE_2_SHIFT)             /* 0x00000004 */
+#define GRF_VI_CON0_CSIPHY_FORCERXMODE_3_SHIFT             (3U)
+#define GRF_VI_CON0_CSIPHY_FORCERXMODE_3_MASK              (0x1U << GRF_VI_CON0_CSIPHY_FORCERXMODE_3_SHIFT)             /* 0x00000008 */
+#define GRF_VI_CON0_CSIPHY_DATALANE_EN_0_SHIFT             (4U)
+#define GRF_VI_CON0_CSIPHY_DATALANE_EN_0_MASK              (0x1U << GRF_VI_CON0_CSIPHY_DATALANE_EN_0_SHIFT)             /* 0x00000010 */
+#define GRF_VI_CON0_CSIPHY_DATALANE_EN_1_SHIFT             (5U)
+#define GRF_VI_CON0_CSIPHY_DATALANE_EN_1_MASK              (0x1U << GRF_VI_CON0_CSIPHY_DATALANE_EN_1_SHIFT)             /* 0x00000020 */
+#define GRF_VI_CON0_CSIPHY_DATALANE_EN_2_SHIFT             (6U)
+#define GRF_VI_CON0_CSIPHY_DATALANE_EN_2_MASK              (0x1U << GRF_VI_CON0_CSIPHY_DATALANE_EN_2_SHIFT)             /* 0x00000040 */
+#define GRF_VI_CON0_CSIPHY_DATALANE_EN_3_SHIFT             (7U)
+#define GRF_VI_CON0_CSIPHY_DATALANE_EN_3_MASK              (0x1U << GRF_VI_CON0_CSIPHY_DATALANE_EN_3_SHIFT)             /* 0x00000080 */
+#define GRF_VI_CON0_CSIPHY_CLKLANE0_EN_SHIFT               (8U)
+#define GRF_VI_CON0_CSIPHY_CLKLANE0_EN_MASK                (0x1U << GRF_VI_CON0_CSIPHY_CLKLANE0_EN_SHIFT)               /* 0x00000100 */
+#define GRF_VI_CON0_CSIPHY_CLK0_INV_SELECTION_SHIFT        (9U)
+#define GRF_VI_CON0_CSIPHY_CLK0_INV_SELECTION_MASK         (0x1U << GRF_VI_CON0_CSIPHY_CLK0_INV_SELECTION_SHIFT)        /* 0x00000200 */
+#define GRF_VI_CON0_CSIPHY_CLKLANE1_EN_SHIFT               (10U)
+#define GRF_VI_CON0_CSIPHY_CLKLANE1_EN_MASK                (0x1U << GRF_VI_CON0_CSIPHY_CLKLANE1_EN_SHIFT)               /* 0x00000400 */
+#define GRF_VI_CON0_CSIPHY_CLK1_INV_SELECTION_SHIFT        (11U)
+#define GRF_VI_CON0_CSIPHY_CLK1_INV_SELECTION_MASK         (0x1U << GRF_VI_CON0_CSIPHY_CLK1_INV_SELECTION_SHIFT)        /* 0x00000800 */
+#define GRF_VI_CON0_DVP_CLK_INV_SEL_SHIFT                  (12U)
+#define GRF_VI_CON0_DVP_CLK_INV_SEL_MASK                   (0x1U << GRF_VI_CON0_DVP_CLK_INV_SEL_SHIFT)                  /* 0x00001000 */
+/* VI_CON1 */
+#define GRF_VI_CON1_OFFSET                                 (0x402D8U)
+#define GRF_VI_CON1_CIF_CLK_DELAYNUM_SHIFT                 (0U)
+#define GRF_VI_CON1_CIF_CLK_DELAYNUM_MASK                  (0x7FU << GRF_VI_CON1_CIF_CLK_DELAYNUM_SHIFT)                /* 0x0000007F */
+#define GRF_VI_CON1_CSIPHY_MODE_SEL_SHIFT                  (7U)
+#define GRF_VI_CON1_CSIPHY_MODE_SEL_MASK                   (0x1U << GRF_VI_CON1_CSIPHY_MODE_SEL_SHIFT)                  /* 0x00000080 */
+#define GRF_VI_CON1_CIF_DATAPATH_SHIFT                     (9U)
+#define GRF_VI_CON1_CIF_DATAPATH_MASK                      (0x1U << GRF_VI_CON1_CIF_DATAPATH_SHIFT)                     /* 0x00000200 */
+#define GRF_VI_CON1_VICAP_CSIPHY_SEL_SHIFT                 (11U)
+#define GRF_VI_CON1_VICAP_CSIPHY_SEL_MASK                  (0x1U << GRF_VI_CON1_VICAP_CSIPHY_SEL_SHIFT)                 /* 0x00000800 */
+#define GRF_VI_CON1_ISP_CSIPHY_SEL_SHIFT                   (12U)
+#define GRF_VI_CON1_ISP_CSIPHY_SEL_MASK                    (0x1U << GRF_VI_CON1_ISP_CSIPHY_SEL_SHIFT)                   /* 0x00001000 */
+#define GRF_VI_CON1_ISP_SHUTTER_TRIG_SHIFT                 (13U)
+#define GRF_VI_CON1_ISP_SHUTTER_TRIG_MASK                  (0x1U << GRF_VI_CON1_ISP_SHUTTER_TRIG_SHIFT)                 /* 0x00002000 */
+#define GRF_VI_CON1_ISP_WIDTH_SHIFT                        (14U)
+#define GRF_VI_CON1_ISP_WIDTH_MASK                         (0x3U << GRF_VI_CON1_ISP_WIDTH_SHIFT)                        /* 0x0000C000 */
+/* VI_STATUS0 */
+#define GRF_VI_STATUS0_OFFSET                              (0x402DCU)
+#define GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_0_SHIFT        (0U)
+#define GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_0_MASK         (0x1U << GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_0_SHIFT)        /* 0x00000001 */
+#define GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_1_SHIFT        (1U)
+#define GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_1_MASK         (0x1U << GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_1_SHIFT)        /* 0x00000002 */
+#define GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_2_SHIFT        (2U)
+#define GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_2_MASK         (0x1U << GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_2_SHIFT)        /* 0x00000004 */
+#define GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_3_SHIFT        (3U)
+#define GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_3_MASK         (0x1U << GRF_VI_STATUS0_CSIPHY_ULPSACTIVENOT_3_SHIFT)        /* 0x00000008 */
+#define GRF_VI_STATUS0_CSIPHY_DIRECTION_SHIFT              (4U)
+#define GRF_VI_STATUS0_CSIPHY_DIRECTION_MASK               (0x1U << GRF_VI_STATUS0_CSIPHY_DIRECTION_SHIFT)              /* 0x00000010 */
+#define GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_0_SHIFT          (5U)
+#define GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_0_MASK           (0x1U << GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_0_SHIFT)          /* 0x00000020 */
+#define GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_1_SHIFT          (6U)
+#define GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_1_MASK           (0x1U << GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_1_SHIFT)          /* 0x00000040 */
+#define GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_2_SHIFT          (7U)
+#define GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_2_MASK           (0x1U << GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_2_SHIFT)          /* 0x00000080 */
+#define GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_3_SHIFT          (8U)
+#define GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_3_MASK           (0x1U << GRF_VI_STATUS0_CSIPHY_RXSKEWCALHS_3_SHIFT)          /* 0x00000100 */
+#define GRF_VI_STATUS0_CSIPHY_ERRCONTENTIONLP0_0_SHIFT     (9U)
+#define GRF_VI_STATUS0_CSIPHY_ERRCONTENTIONLP0_0_MASK      (0x1U << GRF_VI_STATUS0_CSIPHY_ERRCONTENTIONLP0_0_SHIFT)     /* 0x00000200 */
+#define GRF_VI_STATUS0_CSIPHY_ERRCONTENTIONLP1_0_SHIFT     (10U)
+#define GRF_VI_STATUS0_CSIPHY_ERRCONTENTIONLP1_0_MASK      (0x1U << GRF_VI_STATUS0_CSIPHY_ERRCONTENTIONLP1_0_SHIFT)     /* 0x00000400 */
+/* VO_CON0 */
+#define GRF_VO_CON0_OFFSET                                 (0x402E0U)
+#define GRF_VO_CON0_DSI0_DPISHUTDN_SHIFT                   (0U)
+#define GRF_VO_CON0_DSI0_DPISHUTDN_MASK                    (0x1U << GRF_VO_CON0_DSI0_DPISHUTDN_SHIFT)                   /* 0x00000001 */
+#define GRF_VO_CON0_DSI0_DPICOLORM_SHIFT                   (1U)
+#define GRF_VO_CON0_DSI0_DPICOLORM_MASK                    (0x1U << GRF_VO_CON0_DSI0_DPICOLORM_SHIFT)                   /* 0x00000002 */
+#define GRF_VO_CON0_DSI0_DPIUPDATECFG_SHIFT                (2U)
+#define GRF_VO_CON0_DSI0_DPIUPDATECFG_MASK                 (0x1U << GRF_VO_CON0_DSI0_DPIUPDATECFG_SHIFT)                /* 0x00000004 */
+#define GRF_VO_CON0_LVDSFORMAT_LVDS0_MSBSEL_SHIFT          (3U)
+#define GRF_VO_CON0_LVDSFORMAT_LVDS0_MSBSEL_MASK           (0x1U << GRF_VO_CON0_LVDSFORMAT_LVDS0_MSBSEL_SHIFT)          /* 0x00000008 */
+#define GRF_VO_CON0_LVDSFORMAT_LVDS0_SELECT_SHIFT          (4U)
+#define GRF_VO_CON0_LVDSFORMAT_LVDS0_SELECT_MASK           (0x3U << GRF_VO_CON0_LVDSFORMAT_LVDS0_SELECT_SHIFT)          /* 0x00000030 */
+#define GRF_VO_CON0_DSI1_DPISHUTDN_SHIFT                   (8U)
+#define GRF_VO_CON0_DSI1_DPISHUTDN_MASK                    (0x1U << GRF_VO_CON0_DSI1_DPISHUTDN_SHIFT)                   /* 0x00000100 */
+#define GRF_VO_CON0_DSI1_DPICOLORM_SHIFT                   (9U)
+#define GRF_VO_CON0_DSI1_DPICOLORM_MASK                    (0x1U << GRF_VO_CON0_DSI1_DPICOLORM_SHIFT)                   /* 0x00000200 */
+#define GRF_VO_CON0_DSI1_DPIUPDATECFG_SHIFT                (10U)
+#define GRF_VO_CON0_DSI1_DPIUPDATECFG_MASK                 (0x1U << GRF_VO_CON0_DSI1_DPIUPDATECFG_SHIFT)                /* 0x00000400 */
+#define GRF_VO_CON0_HDMIPHY_I2C_JTAGZ_SHIFT                (15U)
+#define GRF_VO_CON0_HDMIPHY_I2C_JTAGZ_MASK                 (0x1U << GRF_VO_CON0_HDMIPHY_I2C_JTAGZ_SHIFT)                /* 0x00008000 */
+/* VO_CON1 */
+#define GRF_VO_CON1_OFFSET                                 (0x402E4U)
+#define GRF_VO_CON1_EBC_CLK_INV_SEL_SHIFT                  (0U)
+#define GRF_VO_CON1_EBC_CLK_INV_SEL_MASK                   (0x1U << GRF_VO_CON1_EBC_CLK_INV_SEL_SHIFT)                  /* 0x00000001 */
+#define GRF_VO_CON1_BT656_CLK_INV_SEL_SHIFT                (1U)
+#define GRF_VO_CON1_BT656_CLK_INV_SEL_MASK                 (0x1U << GRF_VO_CON1_BT656_CLK_INV_SEL_SHIFT)                /* 0x00000002 */
+#define GRF_VO_CON1_BT1120_CLK_INV_SEL_SHIFT               (2U)
+#define GRF_VO_CON1_BT1120_CLK_INV_SEL_MASK                (0x1U << GRF_VO_CON1_BT1120_CLK_INV_SEL_SHIFT)               /* 0x00000004 */
+#define GRF_VO_CON1_RGB_DCLK_INV_SEL_SHIFT                 (3U)
+#define GRF_VO_CON1_RGB_DCLK_INV_SEL_MASK                  (0x1U << GRF_VO_CON1_RGB_DCLK_INV_SEL_SHIFT)                 /* 0x00000008 */
+#define GRF_VO_CON1_BT656_BYPASS_SHIFT                     (4U)
+#define GRF_VO_CON1_BT656_BYPASS_MASK                      (0x1U << GRF_VO_CON1_BT656_BYPASS_SHIFT)                     /* 0x00000010 */
+#define GRF_VO_CON1_BT1120_BYPASS_SHIFT                    (5U)
+#define GRF_VO_CON1_BT1120_BYPASS_MASK                     (0x1U << GRF_VO_CON1_BT1120_BYPASS_SHIFT)                    /* 0x00000020 */
+#define GRF_VO_CON1_RGB_BYPASS_SHIFT                       (6U)
+#define GRF_VO_CON1_RGB_BYPASS_MASK                        (0x1U << GRF_VO_CON1_RGB_BYPASS_SHIFT)                       /* 0x00000040 */
+#define GRF_VO_CON1_HDMI_CECIN_MSK_SHIFT                   (13U)
+#define GRF_VO_CON1_HDMI_CECIN_MSK_MASK                    (0x1U << GRF_VO_CON1_HDMI_CECIN_MSK_SHIFT)                   /* 0x00002000 */
+#define GRF_VO_CON1_HDMI_SCLIN_MSK_SHIFT                   (14U)
+#define GRF_VO_CON1_HDMI_SCLIN_MSK_MASK                    (0x1U << GRF_VO_CON1_HDMI_SCLIN_MSK_SHIFT)                   /* 0x00004000 */
+#define GRF_VO_CON1_HDMI_SDAIN_MSK_SHIFT                   (15U)
+#define GRF_VO_CON1_HDMI_SDAIN_MSK_MASK                    (0x1U << GRF_VO_CON1_HDMI_SDAIN_MSK_SHIFT)                   /* 0x00008000 */
+/* VO_CON2 */
+#define GRF_VO_CON2_OFFSET                                 (0x402E8U)
+#define GRF_VO_CON2_DSIPHY0_FORCERXMODE_SHIFT              (0U)
+#define GRF_VO_CON2_DSIPHY0_FORCERXMODE_MASK               (0x1U << GRF_VO_CON2_DSIPHY0_FORCERXMODE_SHIFT)              /* 0x00000001 */
+#define GRF_VO_CON2_DSIPHY0_LVDS_MODE_SHIFT                (1U)
+#define GRF_VO_CON2_DSIPHY0_LVDS_MODE_MASK                 (0x1U << GRF_VO_CON2_DSIPHY0_LVDS_MODE_SHIFT)                /* 0x00000002 */
+#define GRF_VO_CON2_DSIPHY0_LANE0_TURNDISABLE_SHIFT        (2U)
+#define GRF_VO_CON2_DSIPHY0_LANE0_TURNDISABLE_MASK         (0x1U << GRF_VO_CON2_DSIPHY0_LANE0_TURNDISABLE_SHIFT)        /* 0x00000004 */
+#define GRF_VO_CON2_DSIPHY0_LANE0_FRCTXSTPM_SHIFT          (4U)
+#define GRF_VO_CON2_DSIPHY0_LANE0_FRCTXSTPM_MASK           (0x1U << GRF_VO_CON2_DSIPHY0_LANE0_FRCTXSTPM_SHIFT)          /* 0x00000010 */
+#define GRF_VO_CON2_DSIPHY0_LANE1_FRCTXSTPM_SHIFT          (5U)
+#define GRF_VO_CON2_DSIPHY0_LANE1_FRCTXSTPM_MASK           (0x1U << GRF_VO_CON2_DSIPHY0_LANE1_FRCTXSTPM_SHIFT)          /* 0x00000020 */
+#define GRF_VO_CON2_DSIPHY0_LANE2_FRCTXSTPM_SHIFT          (6U)
+#define GRF_VO_CON2_DSIPHY0_LANE2_FRCTXSTPM_MASK           (0x1U << GRF_VO_CON2_DSIPHY0_LANE2_FRCTXSTPM_SHIFT)          /* 0x00000040 */
+#define GRF_VO_CON2_DSIPHY0_LANE3_FRCTXSTPM_SHIFT          (7U)
+#define GRF_VO_CON2_DSIPHY0_LANE3_FRCTXSTPM_MASK           (0x1U << GRF_VO_CON2_DSIPHY0_LANE3_FRCTXSTPM_SHIFT)          /* 0x00000080 */
+#define GRF_VO_CON2_LVDS0_DCLK_DIV2_SEL_SHIFT              (8U)
+#define GRF_VO_CON2_LVDS0_DCLK_DIV2_SEL_MASK               (0x1U << GRF_VO_CON2_LVDS0_DCLK_DIV2_SEL_SHIFT)              /* 0x00000100 */
+#define GRF_VO_CON2_LVDS0_DCLK_INV_SEL_SHIFT               (9U)
+#define GRF_VO_CON2_LVDS0_DCLK_INV_SEL_MASK                (0x1U << GRF_VO_CON2_LVDS0_DCLK_INV_SEL_SHIFT)               /* 0x00000200 */
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_CK_SHIFT           (11U)
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_CK_MASK            (0x1U << GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_CK_SHIFT)           /* 0x00000800 */
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_0_SHIFT            (12U)
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_0_MASK             (0x1U << GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_0_SHIFT)            /* 0x00001000 */
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_1_SHIFT            (13U)
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_1_MASK             (0x1U << GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_1_SHIFT)            /* 0x00002000 */
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_2_SHIFT            (14U)
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_2_MASK             (0x1U << GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_2_SHIFT)            /* 0x00004000 */
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_3_SHIFT            (15U)
+#define GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_3_MASK             (0x1U << GRF_VO_CON2_DSIPHY0_TXSKEWCALHS_3_SHIFT)            /* 0x00008000 */
+/* MAC0_CON0 */
+#define GRF_MAC0_CON0_OFFSET                               (0x402ECU)
+#define GRF_MAC0_CON0_GMAC0_CLK_TX_DL_CFG_SHIFT            (0U)
+#define GRF_MAC0_CON0_GMAC0_CLK_TX_DL_CFG_MASK             (0xFFU << GRF_MAC0_CON0_GMAC0_CLK_TX_DL_CFG_SHIFT)           /* 0x000000FF */
+#define GRF_MAC0_CON0_GMAC0_CLK_RX_DL_CFG_SHIFT            (8U)
+#define GRF_MAC0_CON0_GMAC0_CLK_RX_DL_CFG_MASK             (0xFFU << GRF_MAC0_CON0_GMAC0_CLK_RX_DL_CFG_SHIFT)           /* 0x0000FF00 */
+/* MAC0_CON1 */
+#define GRF_MAC0_CON1_OFFSET                               (0x402F0U)
+#define GRF_MAC0_CON1_GMAC0_TXCLK_DLY_ENA_SHIFT            (0U)
+#define GRF_MAC0_CON1_GMAC0_TXCLK_DLY_ENA_MASK             (0x1U << GRF_MAC0_CON1_GMAC0_TXCLK_DLY_ENA_SHIFT)            /* 0x00000001 */
+#define GRF_MAC0_CON1_GMAC0_RXCLK_DLY_ENA_SHIFT            (1U)
+#define GRF_MAC0_CON1_GMAC0_RXCLK_DLY_ENA_MASK             (0x1U << GRF_MAC0_CON1_GMAC0_RXCLK_DLY_ENA_SHIFT)            /* 0x00000002 */
+#define GRF_MAC0_CON1_GMAC0_MAC_SPEED_SHIFT                (2U)
+#define GRF_MAC0_CON1_GMAC0_MAC_SPEED_MASK                 (0x1U << GRF_MAC0_CON1_GMAC0_MAC_SPEED_SHIFT)                /* 0x00000004 */
+#define GRF_MAC0_CON1_GMAC0_FLOWCTRL_SHIFT                 (3U)
+#define GRF_MAC0_CON1_GMAC0_FLOWCTRL_MASK                  (0x1U << GRF_MAC0_CON1_GMAC0_FLOWCTRL_SHIFT)                 /* 0x00000008 */
+#define GRF_MAC0_CON1_GMAC0_PHY_INTF_SEL_SHIFT             (4U)
+#define GRF_MAC0_CON1_GMAC0_PHY_INTF_SEL_MASK              (0x7U << GRF_MAC0_CON1_GMAC0_PHY_INTF_SEL_SHIFT)             /* 0x00000070 */
+#define GRF_MAC0_CON1_GMAC0_QSGMII_MODE_SHIFT              (7U)
+#define GRF_MAC0_CON1_GMAC0_QSGMII_MODE_MASK               (0x1U << GRF_MAC0_CON1_GMAC0_QSGMII_MODE_SHIFT)              /* 0x00000080 */
+/* MAC1_CON0 */
+#define GRF_MAC1_CON0_OFFSET                               (0x402F4U)
+#define GRF_MAC1_CON0_GMAC1_CLK_TX_DL_CFG_SHIFT            (0U)
+#define GRF_MAC1_CON0_GMAC1_CLK_TX_DL_CFG_MASK             (0xFFU << GRF_MAC1_CON0_GMAC1_CLK_TX_DL_CFG_SHIFT)           /* 0x000000FF */
+#define GRF_MAC1_CON0_GMAC1_CLK_RX_DL_CFG_SHIFT            (8U)
+#define GRF_MAC1_CON0_GMAC1_CLK_RX_DL_CFG_MASK             (0xFFU << GRF_MAC1_CON0_GMAC1_CLK_RX_DL_CFG_SHIFT)           /* 0x0000FF00 */
+/* MAC1_CON1 */
+#define GRF_MAC1_CON1_OFFSET                               (0x402F8U)
+#define GRF_MAC1_CON1_GMAC1_TXCLK_DLY_ENA_SHIFT            (0U)
+#define GRF_MAC1_CON1_GMAC1_TXCLK_DLY_ENA_MASK             (0x1U << GRF_MAC1_CON1_GMAC1_TXCLK_DLY_ENA_SHIFT)            /* 0x00000001 */
+#define GRF_MAC1_CON1_GMAC1_RXCLK_DLY_ENA_SHIFT            (1U)
+#define GRF_MAC1_CON1_GMAC1_RXCLK_DLY_ENA_MASK             (0x1U << GRF_MAC1_CON1_GMAC1_RXCLK_DLY_ENA_SHIFT)            /* 0x00000002 */
+#define GRF_MAC1_CON1_GMAC1_MAC_SPEED_SHIFT                (2U)
+#define GRF_MAC1_CON1_GMAC1_MAC_SPEED_MASK                 (0x1U << GRF_MAC1_CON1_GMAC1_MAC_SPEED_SHIFT)                /* 0x00000004 */
+#define GRF_MAC1_CON1_GMAC1_FLOWCTRL_SHIFT                 (3U)
+#define GRF_MAC1_CON1_GMAC1_FLOWCTRL_MASK                  (0x1U << GRF_MAC1_CON1_GMAC1_FLOWCTRL_SHIFT)                 /* 0x00000008 */
+#define GRF_MAC1_CON1_GMAC1_PHY_INTF_SEL_SHIFT             (4U)
+#define GRF_MAC1_CON1_GMAC1_PHY_INTF_SEL_MASK              (0x7U << GRF_MAC1_CON1_GMAC1_PHY_INTF_SEL_SHIFT)             /* 0x00000070 */
+#define GRF_MAC1_CON1_GMAC1_QSGMII_MODE_SHIFT              (7U)
+#define GRF_MAC1_CON1_GMAC1_QSGMII_MODE_MASK               (0x1U << GRF_MAC1_CON1_GMAC1_QSGMII_MODE_SHIFT)              /* 0x00000080 */
+/* BIU_CON0 */
+#define GRF_BIU_CON0_OFFSET                                (0x402FCU)
+#define GRF_BIU_CON0_BUS_FWD_TOP_STALL_SHIFT               (0U)
+#define GRF_BIU_CON0_BUS_FWD_TOP_STALL_MASK                (0x1U << GRF_BIU_CON0_BUS_FWD_TOP_STALL_SHIFT)               /* 0x00000001 */
+#define GRF_BIU_CON0_CPU_FWD_MSCH_STALL_SHIFT              (1U)
+#define GRF_BIU_CON0_CPU_FWD_MSCH_STALL_MASK               (0x1U << GRF_BIU_CON0_CPU_FWD_MSCH_STALL_SHIFT)              /* 0x00000002 */
+#define GRF_BIU_CON0_CPU_FWD_TOP_STALL_SHIFT               (2U)
+#define GRF_BIU_CON0_CPU_FWD_TOP_STALL_MASK                (0x1U << GRF_BIU_CON0_CPU_FWD_TOP_STALL_SHIFT)               /* 0x00000004 */
+#define GRF_BIU_CON0_GIC_FWD_PERI_STALL_SHIFT              (3U)
+#define GRF_BIU_CON0_GIC_FWD_PERI_STALL_MASK               (0x1U << GRF_BIU_CON0_GIC_FWD_PERI_STALL_SHIFT)              /* 0x00000008 */
+#define GRF_BIU_CON0_GPU_FWD_MSCH_STALL_SHIFT              (4U)
+#define GRF_BIU_CON0_GPU_FWD_MSCH_STALL_MASK               (0x1U << GRF_BIU_CON0_GPU_FWD_MSCH_STALL_SHIFT)              /* 0x00000010 */
+#define GRF_BIU_CON0_NPU_FWD_TOP_STALL_SHIFT               (5U)
+#define GRF_BIU_CON0_NPU_FWD_TOP_STALL_MASK                (0x1U << GRF_BIU_CON0_NPU_FWD_TOP_STALL_SHIFT)               /* 0x00000020 */
+#define GRF_BIU_CON0_PERI_FWD_TOP_STALL_SHIFT              (6U)
+#define GRF_BIU_CON0_PERI_FWD_TOP_STALL_MASK               (0x1U << GRF_BIU_CON0_PERI_FWD_TOP_STALL_SHIFT)              /* 0x00000040 */
+#define GRF_BIU_CON0_PERI_REQ_GA_STALL_SHIFT               (7U)
+#define GRF_BIU_CON0_PERI_REQ_GA_STALL_MASK                (0x1U << GRF_BIU_CON0_PERI_REQ_GA_STALL_SHIFT)               /* 0x00000080 */
+#define GRF_BIU_CON0_PERI_FWD_PHP_STALL_SHIFT              (8U)
+#define GRF_BIU_CON0_PERI_FWD_PHP_STALL_MASK               (0x1U << GRF_BIU_CON0_PERI_FWD_PHP_STALL_SHIFT)              /* 0x00000100 */
+#define GRF_BIU_CON0_PERI_FWD_SF_STALL_SHIFT               (9U)
+#define GRF_BIU_CON0_PERI_FWD_SF_STALL_MASK                (0x1U << GRF_BIU_CON0_PERI_FWD_SF_STALL_SHIFT)               /* 0x00000200 */
+#define GRF_BIU_CON0_PHP_REQ_PERI_STALL_SHIFT              (10U)
+#define GRF_BIU_CON0_PHP_REQ_PERI_STALL_MASK               (0x1U << GRF_BIU_CON0_PHP_REQ_PERI_STALL_SHIFT)              /* 0x00000400 */
+#define GRF_BIU_CON0_PIPE_FWD_TOP_STALL_SHIFT              (11U)
+#define GRF_BIU_CON0_PIPE_FWD_TOP_STALL_MASK               (0x1U << GRF_BIU_CON0_PIPE_FWD_TOP_STALL_SHIFT)              /* 0x00000800 */
+#define GRF_BIU_CON0_RGA_FWD_MSCH_STALL_SHIFT              (12U)
+#define GRF_BIU_CON0_RGA_FWD_MSCH_STALL_MASK               (0x1U << GRF_BIU_CON0_RGA_FWD_MSCH_STALL_SHIFT)              /* 0x00001000 */
+#define GRF_BIU_CON0_SF_REQ_PERI_STALL_SHIFT               (13U)
+#define GRF_BIU_CON0_SF_REQ_PERI_STALL_MASK                (0x1U << GRF_BIU_CON0_SF_REQ_PERI_STALL_SHIFT)               /* 0x00002000 */
+#define GRF_BIU_CON0_TOP_FWD_DDRC_STALL_SHIFT              (14U)
+#define GRF_BIU_CON0_TOP_FWD_DDRC_STALL_MASK               (0x1U << GRF_BIU_CON0_TOP_FWD_DDRC_STALL_SHIFT)              /* 0x00004000 */
+#define GRF_BIU_CON0_TOP_FWD_MSCH_STALL_SHIFT              (15U)
+#define GRF_BIU_CON0_TOP_FWD_MSCH_STALL_MASK               (0x1U << GRF_BIU_CON0_TOP_FWD_MSCH_STALL_SHIFT)              /* 0x00008000 */
+/* BIU_CON1 */
+#define GRF_BIU_CON1_OFFSET                                (0x40300U)
+#define GRF_BIU_CON1_TOP_FWD_PMU_STALL_SHIFT               (0U)
+#define GRF_BIU_CON1_TOP_FWD_PMU_STALL_MASK                (0x1U << GRF_BIU_CON1_TOP_FWD_PMU_STALL_SHIFT)               /* 0x00000001 */
+#define GRF_BIU_CON1_TOP_FWD_RGA_STALL_SHIFT               (1U)
+#define GRF_BIU_CON1_TOP_FWD_RGA_STALL_MASK                (0x1U << GRF_BIU_CON1_TOP_FWD_RGA_STALL_SHIFT)               /* 0x00000002 */
+#define GRF_BIU_CON1_TOP_FWD_VPU_STALL_SHIFT               (2U)
+#define GRF_BIU_CON1_TOP_FWD_VPU_STALL_MASK                (0x1U << GRF_BIU_CON1_TOP_FWD_VPU_STALL_SHIFT)               /* 0x00000004 */
+#define GRF_BIU_CON1_TOPAHPU_FWD_MSCH_STALL_SHIFT          (3U)
+#define GRF_BIU_CON1_TOPAHPU_FWD_MSCH_STALL_MASK           (0x1U << GRF_BIU_CON1_TOPAHPU_FWD_MSCH_STALL_SHIFT)          /* 0x00000008 */
+#define GRF_BIU_CON1_TOPAHVO_FWD_MSCH_STALL_SHIFT          (4U)
+#define GRF_BIU_CON1_TOPAHVO_FWD_MSCH_STALL_MASK           (0x1U << GRF_BIU_CON1_TOPAHVO_FWD_MSCH_STALL_SHIFT)          /* 0x00000010 */
+#define GRF_BIU_CON1_TOPAL_FWD_MSCH_STALL_SHIFT            (5U)
+#define GRF_BIU_CON1_TOPAL_FWD_MSCH_STALL_MASK             (0x1U << GRF_BIU_CON1_TOPAL_FWD_MSCH_STALL_SHIFT)            /* 0x00000020 */
+#define GRF_BIU_CON1_TOP_FWD_USB_STALL_SHIFT               (6U)
+#define GRF_BIU_CON1_TOP_FWD_USB_STALL_MASK                (0x1U << GRF_BIU_CON1_TOP_FWD_USB_STALL_SHIFT)               /* 0x00000040 */
+#define GRF_BIU_CON1_TOP_FWD_VI_STALL_SHIFT                (7U)
+#define GRF_BIU_CON1_TOP_FWD_VI_STALL_MASK                 (0x1U << GRF_BIU_CON1_TOP_FWD_VI_STALL_SHIFT)                /* 0x00000080 */
+#define GRF_BIU_CON1_TOP_FWD_VO_STALL_SHIFT                (8U)
+#define GRF_BIU_CON1_TOP_FWD_VO_STALL_MASK                 (0x1U << GRF_BIU_CON1_TOP_FWD_VO_STALL_SHIFT)                /* 0x00000100 */
+#define GRF_BIU_CON1_TOP_FWD_GPU_STALL_SHIFT               (9U)
+#define GRF_BIU_CON1_TOP_FWD_GPU_STALL_MASK                (0x1U << GRF_BIU_CON1_TOP_FWD_GPU_STALL_SHIFT)               /* 0x00000200 */
+#define GRF_BIU_CON1_TOP_FWD_VDEC_STALL_SHIFT              (10U)
+#define GRF_BIU_CON1_TOP_FWD_VDEC_STALL_MASK               (0x1U << GRF_BIU_CON1_TOP_FWD_VDEC_STALL_SHIFT)              /* 0x00000400 */
+#define GRF_BIU_CON1_TOP_FWD_VENC_STALL_SHIFT              (11U)
+#define GRF_BIU_CON1_TOP_FWD_VENC_STALL_MASK               (0x1U << GRF_BIU_CON1_TOP_FWD_VENC_STALL_SHIFT)              /* 0x00000800 */
+#define GRF_BIU_CON1_TOP_FWD_BUS_STALL_SHIFT               (12U)
+#define GRF_BIU_CON1_TOP_FWD_BUS_STALL_MASK                (0x1U << GRF_BIU_CON1_TOP_FWD_BUS_STALL_SHIFT)               /* 0x00001000 */
+#define GRF_BIU_CON1_TOP_FWD_NPU_STALL_SHIFT               (13U)
+#define GRF_BIU_CON1_TOP_FWD_NPU_STALL_MASK                (0x1U << GRF_BIU_CON1_TOP_FWD_NPU_STALL_SHIFT)               /* 0x00002000 */
+#define GRF_BIU_CON1_TOP_FWD_PERI_STALL_SHIFT              (14U)
+#define GRF_BIU_CON1_TOP_FWD_PERI_STALL_MASK               (0x1U << GRF_BIU_CON1_TOP_FWD_PERI_STALL_SHIFT)              /* 0x00004000 */
+#define GRF_BIU_CON1_TOP_FWD_PIPE_STALL_SHIFT              (15U)
+#define GRF_BIU_CON1_TOP_FWD_PIPE_STALL_MASK               (0x1U << GRF_BIU_CON1_TOP_FWD_PIPE_STALL_SHIFT)              /* 0x00008000 */
+/* BIU_CON2 */
+#define GRF_BIU_CON2_OFFSET                                (0x40304U)
+#define GRF_BIU_CON2_USB_FWD_MSCH_STALL_SHIFT              (0U)
+#define GRF_BIU_CON2_USB_FWD_MSCH_STALL_MASK               (0x1U << GRF_BIU_CON2_USB_FWD_MSCH_STALL_SHIFT)              /* 0x00000001 */
+#define GRF_BIU_CON2_VDEC_FWD_MSCH_STALL_SHIFT             (1U)
+#define GRF_BIU_CON2_VDEC_FWD_MSCH_STALL_MASK              (0x1U << GRF_BIU_CON2_VDEC_FWD_MSCH_STALL_SHIFT)             /* 0x00000002 */
+#define GRF_BIU_CON2_VDEC_FWD_TOP_STALL_SHIFT              (2U)
+#define GRF_BIU_CON2_VDEC_FWD_TOP_STALL_MASK               (0x1U << GRF_BIU_CON2_VDEC_FWD_TOP_STALL_SHIFT)              /* 0x00000004 */
+#define GRF_BIU_CON2_VENC_FWD_MSCH_STALL_SHIFT             (3U)
+#define GRF_BIU_CON2_VENC_FWD_MSCH_STALL_MASK              (0x1U << GRF_BIU_CON2_VENC_FWD_MSCH_STALL_SHIFT)             /* 0x00000008 */
+#define GRF_BIU_CON2_VI_FWD_TOP_STALL_SHIFT                (4U)
+#define GRF_BIU_CON2_VI_FWD_TOP_STALL_MASK                 (0x1U << GRF_BIU_CON2_VI_FWD_TOP_STALL_SHIFT)                /* 0x00000010 */
+#define GRF_BIU_CON2_VO_FWD_TOP_STALL_SHIFT                (5U)
+#define GRF_BIU_CON2_VO_FWD_TOP_STALL_MASK                 (0x1U << GRF_BIU_CON2_VO_FWD_TOP_STALL_SHIFT)                /* 0x00000020 */
+#define GRF_BIU_CON2_VPU_FWD_MSCH_STALL_SHIFT              (6U)
+#define GRF_BIU_CON2_VPU_FWD_MSCH_STALL_MASK               (0x1U << GRF_BIU_CON2_VPU_FWD_MSCH_STALL_SHIFT)              /* 0x00000040 */
+/* GIC_CON0 */
+#define GRF_GIC_CON0_OFFSET                                (0x40308U)
+#define GRF_GIC_CON0_GICD_PAGE_OFFSET_SHIFT                (0U)
+#define GRF_GIC_CON0_GICD_PAGE_OFFSET_MASK                 (0xFFFFU << GRF_GIC_CON0_GICD_PAGE_OFFSET_SHIFT)             /* 0x0000FFFF */
+/* GIC_CON1 */
+#define GRF_GIC_CON1_OFFSET                                (0x4030CU)
+#define GRF_GIC_CON1_ITS_TRANSR_PAGE_OFFSET_SHIFT          (0U)
+#define GRF_GIC_CON1_ITS_TRANSR_PAGE_OFFSET_MASK           (0xFFFFU << GRF_GIC_CON1_ITS_TRANSR_PAGE_OFFSET_SHIFT)       /* 0x0000FFFF */
+/* GIC_CON2 */
+#define GRF_GIC_CON2_OFFSET                                (0x40310U)
+#define GRF_GIC_CON2_CPU_ACTIVE_SHIFT                      (0U)
+#define GRF_GIC_CON2_CPU_ACTIVE_MASK                       (0xFU << GRF_GIC_CON2_CPU_ACTIVE_SHIFT)                      /* 0x0000000F */
+#define GRF_GIC_CON2_SAMPLE_REQ_SHIFT                      (4U)
+#define GRF_GIC_CON2_SAMPLE_REQ_MASK                       (0x1U << GRF_GIC_CON2_SAMPLE_REQ_SHIFT)                      /* 0x00000010 */
+#define GRF_GIC_CON2_GIC2CORE_PWRQ_PERMIT_DENY_SAR_SHIFT   (5U)
+#define GRF_GIC_CON2_GIC2CORE_PWRQ_PERMIT_DENY_SAR_MASK    (0x1U << GRF_GIC_CON2_GIC2CORE_PWRQ_PERMIT_DENY_SAR_SHIFT)   /* 0x00000020 */
+/* GPU_CON0 */
+#define GRF_GPU_CON0_OFFSET                                (0x40314U)
+#define GRF_GPU_CON0_DBGEN_SHIFT                           (0U)
+#define GRF_GPU_CON0_DBGEN_MASK                            (0x1U << GRF_GPU_CON0_DBGEN_SHIFT)                           /* 0x00000001 */
+#define GRF_GPU_CON0_NIDEN_SHIFT                           (1U)
+#define GRF_GPU_CON0_NIDEN_MASK                            (0x1U << GRF_GPU_CON0_NIDEN_SHIFT)                           /* 0x00000002 */
+#define GRF_GPU_CON0_STRIPPING_GRANULE_SHIFT               (2U)
+#define GRF_GPU_CON0_STRIPPING_GRANULE_MASK                (0x7U << GRF_GPU_CON0_STRIPPING_GRANULE_SHIFT)               /* 0x0000001C */
+/* GPU_CON1 */
+#define GRF_GPU_CON1_OFFSET                                (0x40318U)
+#define GRF_GPU_CON1_GPU_TEXFMTENABLE_SHIFT                (0U)
+#define GRF_GPU_CON1_GPU_TEXFMTENABLE_MASK                 (0xFFFFFFFFU << GRF_GPU_CON1_GPU_TEXFMTENABLE_SHIFT)         /* 0xFFFFFFFF */
+/* CPU_CON0 */
+#define GRF_CPU_CON0_OFFSET                                (0x4031CU)
+#define GRF_CPU_CON0_CFGEND_SHIFT                          (0U)
+#define GRF_CPU_CON0_CFGEND_MASK                           (0xFU << GRF_CPU_CON0_CFGEND_SHIFT)                          /* 0x0000000F */
+#define GRF_CPU_CON0_CFGTE_SHIFT                           (4U)
+#define GRF_CPU_CON0_CFGTE_MASK                            (0xFU << GRF_CPU_CON0_CFGTE_SHIFT)                           /* 0x000000F0 */
+#define GRF_CPU_CON0_PMUSNAPSHOTREQ_SHIFT                  (8U)
+#define GRF_CPU_CON0_PMUSNAPSHOTREQ_MASK                   (0x1U << GRF_CPU_CON0_PMUSNAPSHOTREQ_SHIFT)                  /* 0x00000100 */
+#define GRF_CPU_CON0_DBGCONNECTED_SHIFT                    (9U)
+#define GRF_CPU_CON0_DBGCONNECTED_MASK                     (0x1U << GRF_CPU_CON0_DBGCONNECTED_SHIFT)                    /* 0x00000200 */
+#define GRF_CPU_CON0_EVENTOACK_SHIFT                       (10U)
+#define GRF_CPU_CON0_EVENTOACK_MASK                        (0x1U << GRF_CPU_CON0_EVENTOACK_SHIFT)                       /* 0x00000400 */
+#define GRF_CPU_CON0_EVENCTIREQ_SHIFT                      (11U)
+#define GRF_CPU_CON0_EVENCTIREQ_MASK                       (0x1U << GRF_CPU_CON0_EVENCTIREQ_SHIFT)                      /* 0x00000800 */
+#define GRF_CPU_CON0_ADB400_PWRQ_PERMIT_DENY_SHIFT         (13U)
+#define GRF_CPU_CON0_ADB400_PWRQ_PERMIT_DENY_MASK          (0x1U << GRF_CPU_CON0_ADB400_PWRQ_PERMIT_DENY_SHIFT)         /* 0x00002000 */
+/* CPU_STATUS0 */
+#define GRF_CPU_STATUS0_OFFSET                             (0x40320U)
+#define GRF_CPU_STATUS0_COREINSTRUN_SHIFT                  (0U)
+#define GRF_CPU_STATUS0_COREINSTRUN_MASK                   (0xFU << GRF_CPU_STATUS0_COREINSTRUN_SHIFT)                  /* 0x0000000F */
+#define GRF_CPU_STATUS0_COREINSTRRET_SHIFT                 (4U)
+#define GRF_CPU_STATUS0_COREINSTRRET_MASK                  (0xFU << GRF_CPU_STATUS0_COREINSTRRET_SHIFT)                 /* 0x000000F0 */
+#define GRF_CPU_STATUS0_PMUSNAPSHOTACK_SHIFT               (8U)
+#define GRF_CPU_STATUS0_PMUSNAPSHOTACK_MASK                (0x1U << GRF_CPU_STATUS0_PMUSNAPSHOTACK_SHIFT)               /* 0x00000100 */
+#define GRF_CPU_STATUS0_EVENTIACK_SHIFT                    (10U)
+#define GRF_CPU_STATUS0_EVENTIACK_MASK                     (0x1U << GRF_CPU_STATUS0_EVENTIACK_SHIFT)                    /* 0x00000400 */
+#define GRF_CPU_STATUS0_EVENTOREQ_SHIFT                    (11U)
+#define GRF_CPU_STATUS0_EVENTOREQ_MASK                     (0x1U << GRF_CPU_STATUS0_EVENTOREQ_SHIFT)                    /* 0x00000800 */
+#define GRF_CPU_STATUS0_SWACTIVE_SHIFT                     (12U)
+#define GRF_CPU_STATUS0_SWACTIVE_MASK                      (0x1U << GRF_CPU_STATUS0_SWACTIVE_SHIFT)                     /* 0x00001000 */
+#define GRF_CPU_STATUS0_JTAGACTIVE_SHIFT                   (13U)
+#define GRF_CPU_STATUS0_JTAGACTIVE_MASK                    (0x1U << GRF_CPU_STATUS0_JTAGACTIVE_SHIFT)                   /* 0x00002000 */
+#define GRF_CPU_STATUS0_JTAGIR_SHIFT                       (14U)
+#define GRF_CPU_STATUS0_JTAGIR_MASK                        (0xFU << GRF_CPU_STATUS0_JTAGIR_SHIFT)                       /* 0x0003C000 */
+#define GRF_CPU_STATUS0_JTAGSTATE_SHIFT                    (18U)
+#define GRF_CPU_STATUS0_JTAGSTATE_MASK                     (0xFU << GRF_CPU_STATUS0_JTAGSTATE_SHIFT)                    /* 0x003C0000 */
+#define GRF_CPU_STATUS0_DORMANTSTATE_SHIFT                 (22U)
+#define GRF_CPU_STATUS0_DORMANTSTATE_MASK                  (0x1U << GRF_CPU_STATUS0_DORMANTSTATE_SHIFT)                 /* 0x00400000 */
+/* SOC_CON10 */
+#define GRF_SOC_CON10_OFFSET                               (0x40324U)
+#define GRF_SOC_CON10_UART1_CTS_INV_SHIFT                  (0U)
+#define GRF_SOC_CON10_UART1_CTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART1_CTS_INV_SHIFT)                  /* 0x00000001 */
+#define GRF_SOC_CON10_UART1_RTS_INV_SHIFT                  (1U)
+#define GRF_SOC_CON10_UART1_RTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART1_RTS_INV_SHIFT)                  /* 0x00000002 */
+#define GRF_SOC_CON10_UART2_CTS_INV_SHIFT                  (2U)
+#define GRF_SOC_CON10_UART2_CTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART2_CTS_INV_SHIFT)                  /* 0x00000004 */
+#define GRF_SOC_CON10_UART2_RTS_INV_SHIFT                  (3U)
+#define GRF_SOC_CON10_UART2_RTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART2_RTS_INV_SHIFT)                  /* 0x00000008 */
+#define GRF_SOC_CON10_UART3_CTS_INV_SHIFT                  (4U)
+#define GRF_SOC_CON10_UART3_CTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART3_CTS_INV_SHIFT)                  /* 0x00000010 */
+#define GRF_SOC_CON10_UART3_RTS_INV_SHIFT                  (5U)
+#define GRF_SOC_CON10_UART3_RTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART3_RTS_INV_SHIFT)                  /* 0x00000020 */
+#define GRF_SOC_CON10_UART4_CTS_INV_SHIFT                  (6U)
+#define GRF_SOC_CON10_UART4_CTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART4_CTS_INV_SHIFT)                  /* 0x00000040 */
+#define GRF_SOC_CON10_UART4_RTS_INV_SHIFT                  (7U)
+#define GRF_SOC_CON10_UART4_RTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART4_RTS_INV_SHIFT)                  /* 0x00000080 */
+#define GRF_SOC_CON10_UART5_CTS_INV_SHIFT                  (8U)
+#define GRF_SOC_CON10_UART5_CTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART5_CTS_INV_SHIFT)                  /* 0x00000100 */
+#define GRF_SOC_CON10_UART5_RTS_INV_SHIFT                  (9U)
+#define GRF_SOC_CON10_UART5_RTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART5_RTS_INV_SHIFT)                  /* 0x00000200 */
+#define GRF_SOC_CON10_UART6_CTS_INV_SHIFT                  (10U)
+#define GRF_SOC_CON10_UART6_CTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART6_CTS_INV_SHIFT)                  /* 0x00000400 */
+#define GRF_SOC_CON10_UART6_RTS_INV_SHIFT                  (11U)
+#define GRF_SOC_CON10_UART6_RTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART6_RTS_INV_SHIFT)                  /* 0x00000800 */
+#define GRF_SOC_CON10_UART7_CTS_INV_SHIFT                  (12U)
+#define GRF_SOC_CON10_UART7_CTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART7_CTS_INV_SHIFT)                  /* 0x00001000 */
+#define GRF_SOC_CON10_UART7_RTS_INV_SHIFT                  (13U)
+#define GRF_SOC_CON10_UART7_RTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART7_RTS_INV_SHIFT)                  /* 0x00002000 */
+#define GRF_SOC_CON10_UART8_CTS_INV_SHIFT                  (14U)
+#define GRF_SOC_CON10_UART8_CTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART8_CTS_INV_SHIFT)                  /* 0x00004000 */
+#define GRF_SOC_CON10_UART8_RTS_INV_SHIFT                  (15U)
+#define GRF_SOC_CON10_UART8_RTS_INV_MASK                   (0x1U << GRF_SOC_CON10_UART8_RTS_INV_SHIFT)                  /* 0x00008000 */
+/* SOC_CON11 */
+#define GRF_SOC_CON11_OFFSET                               (0x40328U)
+#define GRF_SOC_CON11_UART9_CTS_INV_SHIFT                  (0U)
+#define GRF_SOC_CON11_UART9_CTS_INV_MASK                   (0x1U << GRF_SOC_CON11_UART9_CTS_INV_SHIFT)                  /* 0x00000001 */
+#define GRF_SOC_CON11_UART9_RTS_INV_SHIFT                  (1U)
+#define GRF_SOC_CON11_UART9_RTS_INV_MASK                   (0x1U << GRF_SOC_CON11_UART9_RTS_INV_SHIFT)                  /* 0x00000002 */
+#define GRF_SOC_CON11_EMMC_CLKBYPASS_SHIFT                 (2U)
+#define GRF_SOC_CON11_EMMC_CLKBYPASS_MASK                  (0x1U << GRF_SOC_CON11_EMMC_CLKBYPASS_SHIFT)                 /* 0x00000004 */
+#define GRF_SOC_CON11_EMMC_CLKSTABLE_SHIFT                 (3U)
+#define GRF_SOC_CON11_EMMC_CLKSTABLE_MASK                  (0x1U << GRF_SOC_CON11_EMMC_CLKSTABLE_SHIFT)                 /* 0x00000008 */
+#define GRF_SOC_CON11_WDT_NS_PAUSE_EN_SHIFT                (4U)
+#define GRF_SOC_CON11_WDT_NS_PAUSE_EN_MASK                 (0x1U << GRF_SOC_CON11_WDT_NS_PAUSE_EN_SHIFT)                /* 0x00000010 */
+#define GRF_SOC_CON11_I2S1_MCLK_SEL_SHIFT                  (5U)
+#define GRF_SOC_CON11_I2S1_MCLK_SEL_MASK                   (0x1U << GRF_SOC_CON11_I2S1_MCLK_SEL_SHIFT)                  /* 0x00000020 */
+#define GRF_SOC_CON11_I2S3_LRCK_SEL_SHIFT                  (6U)
+#define GRF_SOC_CON11_I2S3_LRCK_SEL_MASK                   (0x1U << GRF_SOC_CON11_I2S3_LRCK_SEL_SHIFT)                  /* 0x00000040 */
+#define GRF_SOC_CON11_I2S3_SCLK_SEL_SHIFT                  (7U)
+#define GRF_SOC_CON11_I2S3_SCLK_SEL_MASK                   (0x1U << GRF_SOC_CON11_I2S3_SCLK_SEL_SHIFT)                  /* 0x00000080 */
+#define GRF_SOC_CON11_PCIE_ADDR_EXTEND_SHIFT               (8U)
+#define GRF_SOC_CON11_PCIE_ADDR_EXTEND_MASK                (0x1U << GRF_SOC_CON11_PCIE_ADDR_EXTEND_SHIFT)               /* 0x00000100 */
+#define GRF_SOC_CON11_SDMMC0_BUFFER_EN_SHIFT               (9U)
+#define GRF_SOC_CON11_SDMMC0_BUFFER_EN_MASK                (0x1U << GRF_SOC_CON11_SDMMC0_BUFFER_EN_SHIFT)               /* 0x00000200 */
+#define GRF_SOC_CON11_SDMMC1_BUFFER_EN_SHIFT               (10U)
+#define GRF_SOC_CON11_SDMMC1_BUFFER_EN_MASK                (0x1U << GRF_SOC_CON11_SDMMC1_BUFFER_EN_SHIFT)               /* 0x00000400 */
+#define GRF_SOC_CON11_SDMMC2_BUFFER_EN_SHIFT               (11U)
+#define GRF_SOC_CON11_SDMMC2_BUFFER_EN_MASK                (0x1U << GRF_SOC_CON11_SDMMC2_BUFFER_EN_SHIFT)               /* 0x00000800 */
+#define GRF_SOC_CON11_OTPCS_LOCK_SHIFT                     (12U)
+#define GRF_SOC_CON11_OTPCS_LOCK_MASK                      (0x1U << GRF_SOC_CON11_OTPCS_LOCK_SHIFT)                     /* 0x00001000 */
+#define GRF_SOC_CON11_OPTCNS_LOCK_SHIFT                    (13U)
+#define GRF_SOC_CON11_OPTCNS_LOCK_MASK                     (0x1U << GRF_SOC_CON11_OPTCNS_LOCK_SHIFT)                    /* 0x00002000 */
+/* SOC_CON12 */
+#define GRF_SOC_CON12_OFFSET                               (0x4032CU)
+#define GRF_SOC_CON12_I2S1_MCLK_RX_OE_SHIFT                (0U)
+#define GRF_SOC_CON12_I2S1_MCLK_RX_OE_MASK                 (0x1U << GRF_SOC_CON12_I2S1_MCLK_RX_OE_SHIFT)                /* 0x00000001 */
+#define GRF_SOC_CON12_I2S1_MCLK_TX_OE_SHIFT                (1U)
+#define GRF_SOC_CON12_I2S1_MCLK_TX_OE_MASK                 (0x1U << GRF_SOC_CON12_I2S1_MCLK_TX_OE_SHIFT)                /* 0x00000002 */
+#define GRF_SOC_CON12_I2S2_MCLK_OE_SHIFT                   (2U)
+#define GRF_SOC_CON12_I2S2_MCLK_OE_MASK                    (0x1U << GRF_SOC_CON12_I2S2_MCLK_OE_SHIFT)                   /* 0x00000004 */
+#define GRF_SOC_CON12_I2S3_MCLK_OE_SHIFT                   (3U)
+#define GRF_SOC_CON12_I2S3_MCLK_OE_MASK                    (0x1U << GRF_SOC_CON12_I2S3_MCLK_OE_SHIFT)                   /* 0x00000008 */
+#define GRF_SOC_CON12_WDTNS_GLB_RESET_EN_SHIFT             (4U)
+#define GRF_SOC_CON12_WDTNS_GLB_RESET_EN_MASK              (0x1U << GRF_SOC_CON12_WDTNS_GLB_RESET_EN_SHIFT)             /* 0x00000010 */
+#define GRF_SOC_CON12_SCR_DET_INV_SEL_SHIFT                (5U)
+#define GRF_SOC_CON12_SCR_DET_INV_SEL_MASK                 (0x1U << GRF_SOC_CON12_SCR_DET_INV_SEL_SHIFT)                /* 0x00000020 */
+#define GRF_SOC_CON12_PMU_PWR_IDLE_REQ_SHIFT               (10U)
+#define GRF_SOC_CON12_PMU_PWR_IDLE_REQ_MASK                (0x1U << GRF_SOC_CON12_PMU_PWR_IDLE_REQ_SHIFT)               /* 0x00000400 */
+#define GRF_SOC_CON12_BUS_PWR_IDLE_REQ_SHIFT               (11U)
+#define GRF_SOC_CON12_BUS_PWR_IDLE_REQ_MASK                (0x1U << GRF_SOC_CON12_BUS_PWR_IDLE_REQ_SHIFT)               /* 0x00000800 */
+#define GRF_SOC_CON12_ACDCDIG_I2S_ACTIVE_SHIFT             (13U)
+#define GRF_SOC_CON12_ACDCDIG_I2S_ACTIVE_MASK              (0x1U << GRF_SOC_CON12_ACDCDIG_I2S_ACTIVE_SHIFT)             /* 0x00002000 */
+#define GRF_SOC_CON12_ACDCDIG_I2C_TRAN_REQ_SHIFT           (14U)
+#define GRF_SOC_CON12_ACDCDIG_I2C_TRAN_REQ_MASK            (0x1U << GRF_SOC_CON12_ACDCDIG_I2C_TRAN_REQ_SHIFT)           /* 0x00004000 */
+#define GRF_SOC_CON12_I2S3_MCLK_SEL_SHIFT                  (15U)
+#define GRF_SOC_CON12_I2S3_MCLK_SEL_MASK                   (0x1U << GRF_SOC_CON12_I2S3_MCLK_SEL_SHIFT)                  /* 0x00008000 */
+/* SOC_CON13 */
+#define GRF_SOC_CON13_OFFSET                               (0x40330U)
+#define GRF_SOC_CON13_SDMMC_BUFFER_WR_THRESH_SHIFT         (0U)
+#define GRF_SOC_CON13_SDMMC_BUFFER_WR_THRESH_MASK          (0x1FU << GRF_SOC_CON13_SDMMC_BUFFER_WR_THRESH_SHIFT)        /* 0x0000001F */
+#define GRF_SOC_CON13_SDMMC_BUFFER_EN_SHIFT                (6U)
+#define GRF_SOC_CON13_SDMMC_BUFFER_EN_MASK                 (0x1U << GRF_SOC_CON13_SDMMC_BUFFER_EN_SHIFT)                /* 0x00000040 */
+#define GRF_SOC_CON13_SDMMC_BUF_CLK_INV_SEL_SHIFT          (7U)
+#define GRF_SOC_CON13_SDMMC_BUF_CLK_INV_SEL_MASK           (0x1U << GRF_SOC_CON13_SDMMC_BUF_CLK_INV_SEL_SHIFT)          /* 0x00000080 */
+#define GRF_SOC_CON13_HDCP_UART_EN_SHIFT                   (8U)
+#define GRF_SOC_CON13_HDCP_UART_EN_MASK                    (0x1U << GRF_SOC_CON13_HDCP_UART_EN_SHIFT)                   /* 0x00000100 */
+#define GRF_SOC_CON13_MCU_SOFT_IRQ_SHIFT                   (12U)
+#define GRF_SOC_CON13_MCU_SOFT_IRQ_MASK                    (0x1U << GRF_SOC_CON13_MCU_SOFT_IRQ_SHIFT)                   /* 0x00001000 */
+#define GRF_SOC_CON13_MCU_SEL_AXI_SHIFT                    (13U)
+#define GRF_SOC_CON13_MCU_SEL_AXI_MASK                     (0x1U << GRF_SOC_CON13_MCU_SEL_AXI_SHIFT)                    /* 0x00002000 */
+#define GRF_SOC_CON13_MCU_AHB2AXI_I_BUF_FLUSH_SHIFT        (14U)
+#define GRF_SOC_CON13_MCU_AHB2AXI_I_BUF_FLUSH_MASK         (0x1U << GRF_SOC_CON13_MCU_AHB2AXI_I_BUF_FLUSH_SHIFT)        /* 0x00004000 */
+#define GRF_SOC_CON13_MCU_AHB2AXI_D_BUF_FLUSH_SHIFT        (15U)
+#define GRF_SOC_CON13_MCU_AHB2AXI_D_BUF_FLUSH_MASK         (0x1U << GRF_SOC_CON13_MCU_AHB2AXI_D_BUF_FLUSH_SHIFT)        /* 0x00008000 */
+/* SOC_CON14 */
+#define GRF_SOC_CON14_OFFSET                               (0x40334U)
+#define GRF_SOC_CON14_MCU_BOOT_ADDR_SHIFT                  (0U)
+#define GRF_SOC_CON14_MCU_BOOT_ADDR_MASK                   (0xFFFFU << GRF_SOC_CON14_MCU_BOOT_ADDR_SHIFT)               /* 0x0000FFFF */
+/* SOC_CON15 */
+#define GRF_SOC_CON15_OFFSET                               (0x40338U)
+#define GRF_SOC_CON15_SDCARD_DECTN_DLY_SHIFT               (0U)
+#define GRF_SOC_CON15_SDCARD_DECTN_DLY_MASK                (0xFFFFFFFFU << GRF_SOC_CON15_SDCARD_DECTN_DLY_SHIFT)        /* 0xFFFFFFFF */
+/* SOC_CON16 */
+#define GRF_SOC_CON16_OFFSET                               (0x4033CU)
+#define GRF_SOC_CON16_AHB2AXI_D_TIMEOUT_SHIFT              (0U)
+#define GRF_SOC_CON16_AHB2AXI_D_TIMEOUT_MASK               (0xFFU << GRF_SOC_CON16_AHB2AXI_D_TIMEOUT_SHIFT)             /* 0x000000FF */
+#define GRF_SOC_CON16_AHB2AXI_I_RD_CLEAN_SHIFT             (8U)
+#define GRF_SOC_CON16_AHB2AXI_I_RD_CLEAN_MASK              (0x1U << GRF_SOC_CON16_AHB2AXI_I_RD_CLEAN_SHIFT)             /* 0x00000100 */
+#define GRF_SOC_CON16_AHB2AXI_D_RD_CLEAN_SHIFT             (9U)
+#define GRF_SOC_CON16_AHB2AXI_D_RD_CLEAN_MASK              (0x1U << GRF_SOC_CON16_AHB2AXI_D_RD_CLEAN_SHIFT)             /* 0x00000200 */
+#define GRF_SOC_CON16_PCIE30PHY_PRB_IO_EN_SHIFT            (10U)
+#define GRF_SOC_CON16_PCIE30PHY_PRB_IO_EN_MASK             (0x1U << GRF_SOC_CON16_PCIE30PHY_PRB_IO_EN_SHIFT)            /* 0x00000400 */
+#define GRF_SOC_CON16_HPLL_CLK_SEL_SHIFT                   (11U)
+#define GRF_SOC_CON16_HPLL_CLK_SEL_MASK                    (0x1U << GRF_SOC_CON16_HPLL_CLK_SEL_SHIFT)                   /* 0x00000800 */
+#define GRF_SOC_CON16_PPLL_CLK_SEL_SHIFT                   (12U)
+#define GRF_SOC_CON16_PPLL_CLK_SEL_MASK                    (0x1U << GRF_SOC_CON16_PPLL_CLK_SEL_SHIFT)                   /* 0x00001000 */
+#define GRF_SOC_CON16_GMAC0_TXCLK_INV_EN_SHIFT             (13U)
+#define GRF_SOC_CON16_GMAC0_TXCLK_INV_EN_MASK              (0x1U << GRF_SOC_CON16_GMAC0_TXCLK_INV_EN_SHIFT)             /* 0x00002000 */
+#define GRF_SOC_CON16_GMAC1_TXCLKM0_INV_EN_SHIFT           (14U)
+#define GRF_SOC_CON16_GMAC1_TXCLKM0_INV_EN_MASK            (0x1U << GRF_SOC_CON16_GMAC1_TXCLKM0_INV_EN_SHIFT)           /* 0x00004000 */
+#define GRF_SOC_CON16_GMAC1_TXCLKM1_INV_EN_SHIFT           (15U)
+#define GRF_SOC_CON16_GMAC1_TXCLKM1_INV_EN_MASK            (0x1U << GRF_SOC_CON16_GMAC1_TXCLKM1_INV_EN_SHIFT)           /* 0x00008000 */
+/* SOC_STATUS0 */
+#define GRF_SOC_STATUS0_OFFSET                             (0x40340U)
+#define GRF_SOC_STATUS0_APLL_LOCK_SHIFT                    (0U)
+#define GRF_SOC_STATUS0_APLL_LOCK_MASK                     (0x1U << GRF_SOC_STATUS0_APLL_LOCK_SHIFT)                    /* 0x00000001 */
+#define GRF_SOC_STATUS0_DPLL_LOCK_SHIFT                    (1U)
+#define GRF_SOC_STATUS0_DPLL_LOCK_MASK                     (0x1U << GRF_SOC_STATUS0_DPLL_LOCK_SHIFT)                    /* 0x00000002 */
+#define GRF_SOC_STATUS0_CPLL_LOCK_SHIFT                    (2U)
+#define GRF_SOC_STATUS0_CPLL_LOCK_MASK                     (0x1U << GRF_SOC_STATUS0_CPLL_LOCK_SHIFT)                    /* 0x00000004 */
+#define GRF_SOC_STATUS0_GPLL_LOCK_SHIFT                    (3U)
+#define GRF_SOC_STATUS0_GPLL_LOCK_MASK                     (0x1U << GRF_SOC_STATUS0_GPLL_LOCK_SHIFT)                    /* 0x00000008 */
+#define GRF_SOC_STATUS0_PPLL_LOCK_SHIFT                    (4U)
+#define GRF_SOC_STATUS0_PPLL_LOCK_MASK                     (0x1U << GRF_SOC_STATUS0_PPLL_LOCK_SHIFT)                    /* 0x00000010 */
+#define GRF_SOC_STATUS0_NPLL_LOCK_SHIFT                    (5U)
+#define GRF_SOC_STATUS0_NPLL_LOCK_MASK                     (0x1U << GRF_SOC_STATUS0_NPLL_LOCK_SHIFT)                    /* 0x00000020 */
+#define GRF_SOC_STATUS0_VPLL_LOCK_SHIFT                    (6U)
+#define GRF_SOC_STATUS0_VPLL_LOCK_MASK                     (0x1U << GRF_SOC_STATUS0_VPLL_LOCK_SHIFT)                    /* 0x00000040 */
+#define GRF_SOC_STATUS0_HPLL_LOCK_SHIFT                    (7U)
+#define GRF_SOC_STATUS0_HPLL_LOCK_MASK                     (0x1U << GRF_SOC_STATUS0_HPLL_LOCK_SHIFT)                    /* 0x00000080 */
+#define GRF_SOC_STATUS0_MPLL_LOCK_SHIFT                    (8U)
+#define GRF_SOC_STATUS0_MPLL_LOCK_MASK                     (0x1U << GRF_SOC_STATUS0_MPLL_LOCK_SHIFT)                    /* 0x00000100 */
+#define GRF_SOC_STATUS0_ACDCDIG_I2C_TRAN_ACK_SHIFT         (9U)
+#define GRF_SOC_STATUS0_ACDCDIG_I2C_TRAN_ACK_MASK          (0x1U << GRF_SOC_STATUS0_ACDCDIG_I2C_TRAN_ACK_SHIFT)         /* 0x00000200 */
+#define GRF_SOC_STATUS0_DDR_CMD_PLL_LOCK_SHIFT             (10U)
+#define GRF_SOC_STATUS0_DDR_CMD_PLL_LOCK_MASK              (0x1U << GRF_SOC_STATUS0_DDR_CMD_PLL_LOCK_SHIFT)             /* 0x00000400 */
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS0_SHIFT             (11U)
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS0_MASK              (0x1U << GRF_SOC_STATUS0_TIMER_EN_STATUS0_SHIFT)             /* 0x00000800 */
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS1_SHIFT             (12U)
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS1_MASK              (0x1U << GRF_SOC_STATUS0_TIMER_EN_STATUS1_SHIFT)             /* 0x00001000 */
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS2_SHIFT             (13U)
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS2_MASK              (0x1U << GRF_SOC_STATUS0_TIMER_EN_STATUS2_SHIFT)             /* 0x00002000 */
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS3_SHIFT             (14U)
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS3_MASK              (0x1U << GRF_SOC_STATUS0_TIMER_EN_STATUS3_SHIFT)             /* 0x00004000 */
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS4_SHIFT             (15U)
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS4_MASK              (0x1U << GRF_SOC_STATUS0_TIMER_EN_STATUS4_SHIFT)             /* 0x00008000 */
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS5_SHIFT             (16U)
+#define GRF_SOC_STATUS0_TIMER_EN_STATUS5_MASK              (0x1U << GRF_SOC_STATUS0_TIMER_EN_STATUS5_SHIFT)             /* 0x00010000 */
+#define GRF_SOC_STATUS0_VOP_DMA_FINISH_SHIFT               (17U)
+#define GRF_SOC_STATUS0_VOP_DMA_FINISH_MASK                (0x1U << GRF_SOC_STATUS0_VOP_DMA_FINISH_SHIFT)               /* 0x00020000 */
+#define GRF_SOC_STATUS0_SCRAMBLE_SHIFT_READY_SHIFT         (18U)
+#define GRF_SOC_STATUS0_SCRAMBLE_SHIFT_READY_MASK          (0x1U << GRF_SOC_STATUS0_SCRAMBLE_SHIFT_READY_SHIFT)         /* 0x00040000 */
+#define GRF_SOC_STATUS0_BUF_FLUSH_ACK_I_SHIFT              (19U)
+#define GRF_SOC_STATUS0_BUF_FLUSH_ACK_I_MASK               (0x1U << GRF_SOC_STATUS0_BUF_FLUSH_ACK_I_SHIFT)              /* 0x00080000 */
+#define GRF_SOC_STATUS0_BUF_FLUSH_ACK_D_SHIFT              (20U)
+#define GRF_SOC_STATUS0_BUF_FLUSH_ACK_D_MASK               (0x1U << GRF_SOC_STATUS0_BUF_FLUSH_ACK_D_SHIFT)              /* 0x00100000 */
+#define GRF_SOC_STATUS0_PMU_PWR_IDLE_SHIFT                 (21U)
+#define GRF_SOC_STATUS0_PMU_PWR_IDLE_MASK                  (0x1U << GRF_SOC_STATUS0_PMU_PWR_IDLE_SHIFT)                 /* 0x00200000 */
+#define GRF_SOC_STATUS0_PMU_PWR_IDLE_ACK_SHIFT             (22U)
+#define GRF_SOC_STATUS0_PMU_PWR_IDLE_ACK_MASK              (0x1U << GRF_SOC_STATUS0_PMU_PWR_IDLE_ACK_SHIFT)             /* 0x00400000 */
+#define GRF_SOC_STATUS0_OTPCNS_SBPI_BUSY_SHIFT             (23U)
+#define GRF_SOC_STATUS0_OTPCNS_SBPI_BUSY_MASK              (0x1U << GRF_SOC_STATUS0_OTPCNS_SBPI_BUSY_SHIFT)             /* 0x00800000 */
+#define GRF_SOC_STATUS0_OTPCNS_USER_BUSY_SHIFT             (24U)
+#define GRF_SOC_STATUS0_OTPCNS_USER_BUSY_MASK              (0x1U << GRF_SOC_STATUS0_OTPCNS_USER_BUSY_SHIFT)             /* 0x01000000 */
+#define GRF_SOC_STATUS0_OTP_S_SBPI_BUSY_SHIFT              (25U)
+#define GRF_SOC_STATUS0_OTP_S_SBPI_BUSY_MASK               (0x1U << GRF_SOC_STATUS0_OTP_S_SBPI_BUSY_SHIFT)              /* 0x02000000 */
+#define GRF_SOC_STATUS0_OTP_S_USER_BUSY_SHIFT              (26U)
+#define GRF_SOC_STATUS0_OTP_S_USER_BUSY_MASK               (0x1U << GRF_SOC_STATUS0_OTP_S_USER_BUSY_SHIFT)              /* 0x04000000 */
+#define GRF_SOC_STATUS0_WFI_HALTED_SHIFT                   (27U)
+#define GRF_SOC_STATUS0_WFI_HALTED_MASK                    (0x1U << GRF_SOC_STATUS0_WFI_HALTED_SHIFT)                   /* 0x08000000 */
+/* RAM_CON */
+#define GRF_RAM_CON_OFFSET                                 (0x40344U)
+#define GRF_RAM_CON_SPRA_RTSEL_SHIFT                       (0U)
+#define GRF_RAM_CON_SPRA_RTSEL_MASK                        (0x3U << GRF_RAM_CON_SPRA_RTSEL_SHIFT)                       /* 0x00000003 */
+#define GRF_RAM_CON_SPRA_WTSEL_SHIFT                       (2U)
+#define GRF_RAM_CON_SPRA_WTSEL_MASK                        (0x3U << GRF_RAM_CON_SPRA_WTSEL_SHIFT)                       /* 0x0000000C */
+#define GRF_RAM_CON_DPRA_PTSEL_SHIFT                       (4U)
+#define GRF_RAM_CON_DPRA_PTSEL_MASK                        (0x3U << GRF_RAM_CON_DPRA_PTSEL_SHIFT)                       /* 0x00000030 */
+#define GRF_RAM_CON_DPRA_RTSEL_SHIFT                       (6U)
+#define GRF_RAM_CON_DPRA_RTSEL_MASK                        (0x3U << GRF_RAM_CON_DPRA_RTSEL_SHIFT)                       /* 0x000000C0 */
+#define GRF_RAM_CON_DPRA_WTSEL_SHIFT                       (8U)
+#define GRF_RAM_CON_DPRA_WTSEL_MASK                        (0x3U << GRF_RAM_CON_DPRA_WTSEL_SHIFT)                       /* 0x00000300 */
+#define GRF_RAM_CON_ROM_PTSEL_SHIFT                        (10U)
+#define GRF_RAM_CON_ROM_PTSEL_MASK                         (0x3U << GRF_RAM_CON_ROM_PTSEL_SHIFT)                        /* 0x00000C00 */
+#define GRF_RAM_CON_ROM_RTSEL_SHIFT                        (12U)
+#define GRF_RAM_CON_ROM_RTSEL_MASK                         (0x3U << GRF_RAM_CON_ROM_RTSEL_SHIFT)                        /* 0x00003000 */
+#define GRF_RAM_CON_ROM_TRB_SHIFT                          (14U)
+#define GRF_RAM_CON_ROM_TRB_MASK                           (0x3U << GRF_RAM_CON_ROM_TRB_SHIFT)                          /* 0x0000C000 */
+/* CORE_RAM_CON */
+#define GRF_CORE_RAM_CON_OFFSET                            (0x40348U)
+#define GRF_CORE_RAM_CON_WTSEL_CPU_SHIFT                   (0U)
+#define GRF_CORE_RAM_CON_WTSEL_CPU_MASK                    (0x3U << GRF_CORE_RAM_CON_WTSEL_CPU_SHIFT)                   /* 0x00000003 */
+#define GRF_CORE_RAM_CON_RTSEL_CPU_SHIFT                   (2U)
+#define GRF_CORE_RAM_CON_RTSEL_CPU_MASK                    (0x3U << GRF_CORE_RAM_CON_RTSEL_CPU_SHIFT)                   /* 0x0000000C */
+#define GRF_CORE_RAM_CON_WTSEL_CPU_DSU_SHIFT               (4U)
+#define GRF_CORE_RAM_CON_WTSEL_CPU_DSU_MASK                (0x3U << GRF_CORE_RAM_CON_WTSEL_CPU_DSU_SHIFT)               /* 0x00000030 */
+#define GRF_CORE_RAM_CON_RTSEL_CPU_DSU_SHIFT               (6U)
+#define GRF_CORE_RAM_CON_RTSEL_CPU_DSU_MASK                (0x3U << GRF_CORE_RAM_CON_RTSEL_CPU_DSU_SHIFT)               /* 0x000000C0 */
+#define GRF_CORE_RAM_CON_SPRA_SLP_SHIFT                    (15U)
+#define GRF_CORE_RAM_CON_SPRA_SLP_MASK                     (0x1U << GRF_CORE_RAM_CON_SPRA_SLP_SHIFT)                    /* 0x00008000 */
+/* TSADC_CON */
+#define GRF_TSADC_CON_OFFSET                               (0x4034CU)
+#define GRF_TSADC_CON_TSADC_ANA_REG0_SHIFT                 (0U)
+#define GRF_TSADC_CON_TSADC_ANA_REG0_MASK                  (0x1U << GRF_TSADC_CON_TSADC_ANA_REG0_SHIFT)                 /* 0x00000001 */
+#define GRF_TSADC_CON_TSADC_ANA_REG1_SHIFT                 (1U)
+#define GRF_TSADC_CON_TSADC_ANA_REG1_MASK                  (0x1U << GRF_TSADC_CON_TSADC_ANA_REG1_SHIFT)                 /* 0x00000002 */
+#define GRF_TSADC_CON_TSADC_ANA_REG2_SHIFT                 (2U)
+#define GRF_TSADC_CON_TSADC_ANA_REG2_MASK                  (0x1U << GRF_TSADC_CON_TSADC_ANA_REG2_SHIFT)                 /* 0x00000004 */
+#define GRF_TSADC_CON_TSADC_ANA_REG3_SHIFT                 (3U)
+#define GRF_TSADC_CON_TSADC_ANA_REG3_MASK                  (0x1U << GRF_TSADC_CON_TSADC_ANA_REG3_SHIFT)                 /* 0x00000008 */
+#define GRF_TSADC_CON_TSADC_ANA_REG4_SHIFT                 (4U)
+#define GRF_TSADC_CON_TSADC_ANA_REG4_MASK                  (0x1U << GRF_TSADC_CON_TSADC_ANA_REG4_SHIFT)                 /* 0x00000010 */
+#define GRF_TSADC_CON_TSADC_ANA_REG5_SHIFT                 (5U)
+#define GRF_TSADC_CON_TSADC_ANA_REG5_MASK                  (0x1U << GRF_TSADC_CON_TSADC_ANA_REG5_SHIFT)                 /* 0x00000020 */
+#define GRF_TSADC_CON_TSADC_ANA_REG6_SHIFT                 (6U)
+#define GRF_TSADC_CON_TSADC_ANA_REG6_MASK                  (0x1U << GRF_TSADC_CON_TSADC_ANA_REG6_SHIFT)                 /* 0x00000040 */
+#define GRF_TSADC_CON_TSADC_TSEN_SHIFT                     (8U)
+#define GRF_TSADC_CON_TSADC_TSEN_MASK                      (0x1U << GRF_TSADC_CON_TSADC_TSEN_SHIFT)                     /* 0x00000100 */
+/* SARADC_CON */
+#define GRF_SARADC_CON_OFFSET                              (0x40350U)
+#define GRF_SARADC_CON_SARADC_ANA_REG_SHIFT                (0U)
+#define GRF_SARADC_CON_SARADC_ANA_REG_MASK                 (0xFFFFU << GRF_SARADC_CON_SARADC_ANA_REG_SHIFT)             /* 0x0000FFFF */
+/* GPUPVTPLL_CON0 */
+#define GRF_GPUPVTPLL_CON0_OFFSET                          (0x40354U)
+#define GRF_GPUPVTPLL_CON0_GPUPVTPLL_START_SHIFT           (0U)
+#define GRF_GPUPVTPLL_CON0_GPUPVTPLL_START_MASK            (0x1U << GRF_GPUPVTPLL_CON0_GPUPVTPLL_START_SHIFT)           /* 0x00000001 */
+#define GRF_GPUPVTPLL_CON0_GPUPVTPLL_OSC_EN_SHIFT          (1U)
+#define GRF_GPUPVTPLL_CON0_GPUPVTPLL_OSC_EN_MASK           (0x1U << GRF_GPUPVTPLL_CON0_GPUPVTPLL_OSC_EN_SHIFT)          /* 0x00000002 */
+#define GRF_GPUPVTPLL_CON0_GPUPVTPLL_OUT_POLAR_SHIFT       (2U)
+#define GRF_GPUPVTPLL_CON0_GPUPVTPLL_OUT_POLAR_MASK        (0x1U << GRF_GPUPVTPLL_CON0_GPUPVTPLL_OUT_POLAR_SHIFT)       /* 0x00000004 */
+#define GRF_GPUPVTPLL_CON0_GPU_PVTPLL_RING_LENGTH_SEL_SHIFT (3U)
+#define GRF_GPUPVTPLL_CON0_GPU_PVTPLL_RING_LENGTH_SEL_MASK (0x1FU << GRF_GPUPVTPLL_CON0_GPU_PVTPLL_RING_LENGTH_SEL_SHIFT) /* 0x000000F8 */
+#define GRF_GPUPVTPLL_CON0_GPU_PVTPLL_OSC_SEL_SHIFT        (8U)
+#define GRF_GPUPVTPLL_CON0_GPU_PVTPLL_OSC_SEL_MASK         (0x7U << GRF_GPUPVTPLL_CON0_GPU_PVTPLL_OSC_SEL_SHIFT)        /* 0x00000700 */
+#define GRF_GPUPVTPLL_CON0_GPU_PVTPLL_CLK_DIV_CNT_SHIFT    (11U)
+#define GRF_GPUPVTPLL_CON0_GPU_PVTPLL_CLK_DIV_CNT_MASK     (0xFU << GRF_GPUPVTPLL_CON0_GPU_PVTPLL_CLK_DIV_CNT_SHIFT)    /* 0x00007800 */
+/* GPUPVTPLL_CON1 */
+#define GRF_GPUPVTPLL_CON1_OFFSET                          (0x40358U)
+#define GRF_GPUPVTPLL_CON1_PVTPLL_CAL_CNT_SHIFT            (0U)
+#define GRF_GPUPVTPLL_CON1_PVTPLL_CAL_CNT_MASK             (0xFFFFFFFFU << GRF_GPUPVTPLL_CON1_PVTPLL_CAL_CNT_SHIFT)     /* 0xFFFFFFFF */
+/* GPUPVTPLL_CON2 */
+#define GRF_GPUPVTPLL_CON2_OFFSET                          (0x4035CU)
+#define GRF_GPUPVTPLL_CON2_GPU_PVTPLL_THRESHOLD_SHIFT      (0U)
+#define GRF_GPUPVTPLL_CON2_GPU_PVTPLL_THRESHOLD_MASK       (0xFFFFFFFFU << GRF_GPUPVTPLL_CON2_GPU_PVTPLL_THRESHOLD_SHIFT) /* 0xFFFFFFFF */
+/* GPUPVTPLL_CON3 */
+#define GRF_GPUPVTPLL_CON3_OFFSET                          (0x40360U)
+#define GRF_GPUPVTPLL_CON3_GPU_PVTPLL_REF_CNT_SHIFT        (0U)
+#define GRF_GPUPVTPLL_CON3_GPU_PVTPLL_REF_CNT_MASK         (0xFFFFFFFFU << GRF_GPUPVTPLL_CON3_GPU_PVTPLL_REF_CNT_SHIFT) /* 0xFFFFFFFF */
+/* NPUPVTPLL_CON0 */
+#define GRF_NPUPVTPLL_CON0_OFFSET                          (0x40364U)
+#define GRF_NPUPVTPLL_CON0_GPUPVTPLL_START_SHIFT           (0U)
+#define GRF_NPUPVTPLL_CON0_GPUPVTPLL_START_MASK            (0x1U << GRF_NPUPVTPLL_CON0_GPUPVTPLL_START_SHIFT)           /* 0x00000001 */
+#define GRF_NPUPVTPLL_CON0_GPUPVTPLL_OSC_EN_SHIFT          (1U)
+#define GRF_NPUPVTPLL_CON0_GPUPVTPLL_OSC_EN_MASK           (0x1U << GRF_NPUPVTPLL_CON0_GPUPVTPLL_OSC_EN_SHIFT)          /* 0x00000002 */
+#define GRF_NPUPVTPLL_CON0_GPUPVTPLL_OUT_POLAR_SHIFT       (2U)
+#define GRF_NPUPVTPLL_CON0_GPUPVTPLL_OUT_POLAR_MASK        (0x1U << GRF_NPUPVTPLL_CON0_GPUPVTPLL_OUT_POLAR_SHIFT)       /* 0x00000004 */
+#define GRF_NPUPVTPLL_CON0_GPU_PVTPLL_RING_LENGTH_SEL_SHIFT (3U)
+#define GRF_NPUPVTPLL_CON0_GPU_PVTPLL_RING_LENGTH_SEL_MASK (0x1FU << GRF_NPUPVTPLL_CON0_GPU_PVTPLL_RING_LENGTH_SEL_SHIFT) /* 0x000000F8 */
+#define GRF_NPUPVTPLL_CON0_GPU_PVTPLL_OSC_SEL_SHIFT        (8U)
+#define GRF_NPUPVTPLL_CON0_GPU_PVTPLL_OSC_SEL_MASK         (0x7U << GRF_NPUPVTPLL_CON0_GPU_PVTPLL_OSC_SEL_SHIFT)        /* 0x00000700 */
+#define GRF_NPUPVTPLL_CON0_GPU_PVTPLL_CLK_DIV_CNT_SHIFT    (11U)
+#define GRF_NPUPVTPLL_CON0_GPU_PVTPLL_CLK_DIV_CNT_MASK     (0xFU << GRF_NPUPVTPLL_CON0_GPU_PVTPLL_CLK_DIV_CNT_SHIFT)    /* 0x00007800 */
+/* NPUPVTPLL_CON1 */
+#define GRF_NPUPVTPLL_CON1_OFFSET                          (0x40368U)
+#define GRF_NPUPVTPLL_CON1_PVTPLL_CAL_CNT_SHIFT            (0U)
+#define GRF_NPUPVTPLL_CON1_PVTPLL_CAL_CNT_MASK             (0xFFFFFFFFU << GRF_NPUPVTPLL_CON1_PVTPLL_CAL_CNT_SHIFT)     /* 0xFFFFFFFF */
+/* NPUPVTPLL_CON2 */
+#define GRF_NPUPVTPLL_CON2_OFFSET                          (0x4036CU)
+#define GRF_NPUPVTPLL_CON2_GPU_PVTPLL_THRESHOLD_SHIFT      (0U)
+#define GRF_NPUPVTPLL_CON2_GPU_PVTPLL_THRESHOLD_MASK       (0xFFFFFFFFU << GRF_NPUPVTPLL_CON2_GPU_PVTPLL_THRESHOLD_SHIFT) /* 0xFFFFFFFF */
+/* NPUPVTPLL_CON3 */
+#define GRF_NPUPVTPLL_CON3_OFFSET                          (0x40370U)
+#define GRF_NPUPVTPLL_CON3_GPU_PVTPLL_REF_CNT_SHIFT        (0U)
+#define GRF_NPUPVTPLL_CON3_GPU_PVTPLL_REF_CNT_MASK         (0xFFFFFFFFU << GRF_NPUPVTPLL_CON3_GPU_PVTPLL_REF_CNT_SHIFT) /* 0xFFFFFFFF */
+/* CHIP_ID */
+#define GRF_CHIP_ID_OFFSET                                 (0x40374U)
+#define GRF_CHIP_ID_CHIP_ID_SHIFT                          (0U)
+#define GRF_CHIP_ID_CHIP_ID_MASK                           (0xFFFFFFFFU << GRF_CHIP_ID_CHIP_ID_SHIFT)                   /* 0xFFFFFFFF */
+/* GPIO1C5_DS */
+#define GRF_GPIO1C5_DS_OFFSET                              (0x40378U)
+#define GRF_GPIO1C5_DS_GPIO1C5_DS_SHIFT                    (0U)
+#define GRF_GPIO1C5_DS_GPIO1C5_DS_MASK                     (0x3FU << GRF_GPIO1C5_DS_GPIO1C5_DS_SHIFT)                   /* 0x0000003F */
+/* GPIO2A2_DS */
+#define GRF_GPIO2A2_DS_OFFSET                              (0x4037CU)
+#define GRF_GPIO2A2_DS_GPIO2A2_DS_SHIFT                    (0U)
+#define GRF_GPIO2A2_DS_GPIO2A2_DS_MASK                     (0x3FU << GRF_GPIO2A2_DS_GPIO2A2_DS_SHIFT)                   /* 0x0000003F */
+/* GPIO2B0_DS */
+#define GRF_GPIO2B0_DS_OFFSET                              (0x40380U)
+#define GRF_GPIO2B0_DS_GPIO2B0_DS_SHIFT                    (0U)
+#define GRF_GPIO2B0_DS_GPIO2B0_DS_MASK                     (0x3FU << GRF_GPIO2B0_DS_GPIO2B0_DS_SHIFT)                   /* 0x0000003F */
+/* GPIO3A0_DS */
+#define GRF_GPIO3A0_DS_OFFSET                              (0x40384U)
+#define GRF_GPIO3A0_DS_GPIO3A0_DS_SHIFT                    (0U)
+#define GRF_GPIO3A0_DS_GPIO3A0_DS_MASK                     (0x3FU << GRF_GPIO3A0_DS_GPIO3A0_DS_SHIFT)                   /* 0x0000003F */
+/* GPIO3A6_DS */
+#define GRF_GPIO3A6_DS_OFFSET                              (0x40388U)
+#define GRF_GPIO3A6_DS_GPIO3A6_DS_SHIFT                    (0U)
+#define GRF_GPIO3A6_DS_GPIO3A6_DS_MASK                     (0x3FU << GRF_GPIO3A6_DS_GPIO3A6_DS_SHIFT)                   /* 0x0000003F */
+/* GPIO4A0_DS */
+#define GRF_GPIO4A0_DS_OFFSET                              (0x4038CU)
+#define GRF_GPIO4A0_DS_GPIO4A0_DS_SHIFT                    (0U)
+#define GRF_GPIO4A0_DS_GPIO4A0_DS_MASK                     (0x3FU << GRF_GPIO4A0_DS_GPIO4A0_DS_SHIFT)                   /* 0x0000003F */
+/* DMAC0_CON0 */
+#define GRF_DMAC0_CON0_OFFSET                              (0x40390U)
+#define GRF_DMAC0_CON0_DMA0_IRQ_BOOT_NONSEC_SHIFT          (0U)
+#define GRF_DMAC0_CON0_DMA0_IRQ_BOOT_NONSEC_MASK           (0xFFFFU << GRF_DMAC0_CON0_DMA0_IRQ_BOOT_NONSEC_SHIFT)       /* 0x0000FFFF */
+/* DMAC0_CON1 */
+#define GRF_DMAC0_CON1_OFFSET                              (0x40394U)
+#define GRF_DMAC0_CON1_DMA0_PERI_CH_NONSEC_15_0_SHIFT      (0U)
+#define GRF_DMAC0_CON1_DMA0_PERI_CH_NONSEC_15_0_MASK       (0xFFFFU << GRF_DMAC0_CON1_DMA0_PERI_CH_NONSEC_15_0_SHIFT)   /* 0x0000FFFF */
+/* DMAC0_CON2 */
+#define GRF_DMAC0_CON2_OFFSET                              (0x40398U)
+#define GRF_DMAC0_CON2_DMA0_PERI_CH_NONSEC_31_16_SHIFT     (0U)
+#define GRF_DMAC0_CON2_DMA0_PERI_CH_NONSEC_31_16_MASK      (0xFFFFU << GRF_DMAC0_CON2_DMA0_PERI_CH_NONSEC_31_16_SHIFT)  /* 0x0000FFFF */
+/* DMAC0_CON3 */
+#define GRF_DMAC0_CON3_OFFSET                              (0x4039CU)
+#define GRF_DMAC0_CON3_DMA0_MANAGER_BOOT_NONSEC_SHIFT      (0U)
+#define GRF_DMAC0_CON3_DMA0_MANAGER_BOOT_NONSEC_MASK       (0x1U << GRF_DMAC0_CON3_DMA0_MANAGER_BOOT_NONSEC_SHIFT)      /* 0x00000001 */
+/* DMAC0_CON4 */
+#define GRF_DMAC0_CON4_OFFSET                              (0x403A0U)
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_0_TX_SHIFT            (0U)
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_0_TX_MASK             (0x3U << GRF_DMAC0_CON4_GRF_TYPE_UART_0_TX_SHIFT)            /* 0x00000003 */
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_0_RX_SHIFT            (2U)
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_0_RX_MASK             (0x3U << GRF_DMAC0_CON4_GRF_TYPE_UART_0_RX_SHIFT)            /* 0x0000000C */
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_1_TX_SHIFT            (4U)
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_1_TX_MASK             (0x3U << GRF_DMAC0_CON4_GRF_TYPE_UART_1_TX_SHIFT)            /* 0x00000030 */
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_1_RX_SHIFT            (6U)
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_1_RX_MASK             (0x3U << GRF_DMAC0_CON4_GRF_TYPE_UART_1_RX_SHIFT)            /* 0x000000C0 */
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_2_TX_SHIFT            (8U)
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_2_TX_MASK             (0x3U << GRF_DMAC0_CON4_GRF_TYPE_UART_2_TX_SHIFT)            /* 0x00000300 */
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_2_RX_SHIFT            (10U)
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_2_RX_MASK             (0x3U << GRF_DMAC0_CON4_GRF_TYPE_UART_2_RX_SHIFT)            /* 0x00000C00 */
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_3_TX_SHIFT            (12U)
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_3_TX_MASK             (0x3U << GRF_DMAC0_CON4_GRF_TYPE_UART_3_TX_SHIFT)            /* 0x00003000 */
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_3_RX_SHIFT            (14U)
+#define GRF_DMAC0_CON4_GRF_TYPE_UART_3_RX_MASK             (0x3U << GRF_DMAC0_CON4_GRF_TYPE_UART_3_RX_SHIFT)            /* 0x0000C000 */
+/* DMAC0_CON5 */
+#define GRF_DMAC0_CON5_OFFSET                              (0x403A4U)
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_4_TX_SHIFT            (0U)
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_4_TX_MASK             (0x3U << GRF_DMAC0_CON5_GRF_TYPE_UART_4_TX_SHIFT)            /* 0x00000003 */
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_4_RX_SHIFT            (2U)
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_4_RX_MASK             (0x3U << GRF_DMAC0_CON5_GRF_TYPE_UART_4_RX_SHIFT)            /* 0x0000000C */
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_5_TX_SHIFT            (4U)
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_5_TX_MASK             (0x3U << GRF_DMAC0_CON5_GRF_TYPE_UART_5_TX_SHIFT)            /* 0x00000030 */
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_5_RX_SHIFT            (6U)
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_5_RX_MASK             (0x3U << GRF_DMAC0_CON5_GRF_TYPE_UART_5_RX_SHIFT)            /* 0x000000C0 */
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_6_TX_SHIFT            (8U)
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_6_TX_MASK             (0x3U << GRF_DMAC0_CON5_GRF_TYPE_UART_6_TX_SHIFT)            /* 0x00000300 */
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_6_RX_SHIFT            (10U)
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_6_RX_MASK             (0x3U << GRF_DMAC0_CON5_GRF_TYPE_UART_6_RX_SHIFT)            /* 0x00000C00 */
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_7_TX_SHIFT            (12U)
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_7_TX_MASK             (0x3U << GRF_DMAC0_CON5_GRF_TYPE_UART_7_TX_SHIFT)            /* 0x00003000 */
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_7_RX_SHIFT            (14U)
+#define GRF_DMAC0_CON5_GRF_TYPE_UART_7_RX_MASK             (0x3U << GRF_DMAC0_CON5_GRF_TYPE_UART_7_RX_SHIFT)            /* 0x0000C000 */
+/* DMAC0_CON6 */
+#define GRF_DMAC0_CON6_OFFSET                              (0x403A8U)
+#define GRF_DMAC0_CON6_GRF_TYPE_UART_8_TX_SHIFT            (0U)
+#define GRF_DMAC0_CON6_GRF_TYPE_UART_8_TX_MASK             (0x3U << GRF_DMAC0_CON6_GRF_TYPE_UART_8_TX_SHIFT)            /* 0x00000003 */
+#define GRF_DMAC0_CON6_GRF_TYPE_UART_8_RX_SHIFT            (2U)
+#define GRF_DMAC0_CON6_GRF_TYPE_UART_8_RX_MASK             (0x3U << GRF_DMAC0_CON6_GRF_TYPE_UART_8_RX_SHIFT)            /* 0x0000000C */
+#define GRF_DMAC0_CON6_GRF_TYPE_UART_9_TX_SHIFT            (4U)
+#define GRF_DMAC0_CON6_GRF_TYPE_UART_9_TX_MASK             (0x3U << GRF_DMAC0_CON6_GRF_TYPE_UART_9_TX_SHIFT)            /* 0x00000030 */
+#define GRF_DMAC0_CON6_GRF_TYPE_UART_9_RX_SHIFT            (6U)
+#define GRF_DMAC0_CON6_GRF_TYPE_UART_9_RX_MASK             (0x3U << GRF_DMAC0_CON6_GRF_TYPE_UART_9_RX_SHIFT)            /* 0x000000C0 */
+#define GRF_DMAC0_CON6_GRF_TYPE_SPI0_TX_SHIFT              (8U)
+#define GRF_DMAC0_CON6_GRF_TYPE_SPI0_TX_MASK               (0x3U << GRF_DMAC0_CON6_GRF_TYPE_SPI0_TX_SHIFT)              /* 0x00000300 */
+#define GRF_DMAC0_CON6_GRF_TYPE_SPI0_RX_SHIFT              (10U)
+#define GRF_DMAC0_CON6_GRF_TYPE_SPI0_RX_MASK               (0x3U << GRF_DMAC0_CON6_GRF_TYPE_SPI0_RX_SHIFT)              /* 0x00000C00 */
+#define GRF_DMAC0_CON6_GRF_TYPE_SPI1_TX_SHIFT              (12U)
+#define GRF_DMAC0_CON6_GRF_TYPE_SPI1_TX_MASK               (0x3U << GRF_DMAC0_CON6_GRF_TYPE_SPI1_TX_SHIFT)              /* 0x00003000 */
+#define GRF_DMAC0_CON6_GRF_TYPE_SPI1_RX_SHIFT              (14U)
+#define GRF_DMAC0_CON6_GRF_TYPE_SPI1_RX_MASK               (0x3U << GRF_DMAC0_CON6_GRF_TYPE_SPI1_RX_SHIFT)              /* 0x0000C000 */
+/* DMAC0_CON7 */
+#define GRF_DMAC0_CON7_OFFSET                              (0x403ACU)
+#define GRF_DMAC0_CON7_GRF_TYPE_SPI2_TX_SHIFT              (0U)
+#define GRF_DMAC0_CON7_GRF_TYPE_SPI2_TX_MASK               (0x3U << GRF_DMAC0_CON7_GRF_TYPE_SPI2_TX_SHIFT)              /* 0x00000003 */
+#define GRF_DMAC0_CON7_GRF_TYPE_SPI2_RX_SHIFT              (2U)
+#define GRF_DMAC0_CON7_GRF_TYPE_SPI2_RX_MASK               (0x3U << GRF_DMAC0_CON7_GRF_TYPE_SPI2_RX_SHIFT)              /* 0x0000000C */
+#define GRF_DMAC0_CON7_GRF_TYPE_SPI3_TX_SHIFT              (4U)
+#define GRF_DMAC0_CON7_GRF_TYPE_SPI3_TX_MASK               (0x3U << GRF_DMAC0_CON7_GRF_TYPE_SPI3_TX_SHIFT)              /* 0x00000030 */
+#define GRF_DMAC0_CON7_GRF_TYPE_SPI3_RX_SHIFT              (6U)
+#define GRF_DMAC0_CON7_GRF_TYPE_SPI3_RX_MASK               (0x3U << GRF_DMAC0_CON7_GRF_TYPE_SPI3_RX_SHIFT)              /* 0x000000C0 */
+#define GRF_DMAC0_CON7_GRF_TYPE_PWM0_TX_SHIFT              (8U)
+#define GRF_DMAC0_CON7_GRF_TYPE_PWM0_TX_MASK               (0x3U << GRF_DMAC0_CON7_GRF_TYPE_PWM0_TX_SHIFT)              /* 0x00000300 */
+#define GRF_DMAC0_CON7_GRF_TYPE_PWM1_TX_SHIFT              (10U)
+#define GRF_DMAC0_CON7_GRF_TYPE_PWM1_TX_MASK               (0x3U << GRF_DMAC0_CON7_GRF_TYPE_PWM1_TX_SHIFT)              /* 0x00000C00 */
+#define GRF_DMAC0_CON7_GRF_TYPE_PWM2_TX_SHIFT              (12U)
+#define GRF_DMAC0_CON7_GRF_TYPE_PWM2_TX_MASK               (0x3U << GRF_DMAC0_CON7_GRF_TYPE_PWM2_TX_SHIFT)              /* 0x00003000 */
+#define GRF_DMAC0_CON7_GRF_TYPE_PWM3_TX_SHIFT              (14U)
+#define GRF_DMAC0_CON7_GRF_TYPE_PWM3_TX_MASK               (0x3U << GRF_DMAC0_CON7_GRF_TYPE_PWM3_TX_SHIFT)              /* 0x0000C000 */
+/* DMAC0_CON8 */
+#define GRF_DMAC0_CON8_OFFSET                              (0x403B0U)
+#define GRF_DMAC0_CON8_GRF_DMA0_REQ_MODIFY_DIS_SHIFT       (0U)
+#define GRF_DMAC0_CON8_GRF_DMA0_REQ_MODIFY_DIS_MASK        (0xFFFFU << GRF_DMAC0_CON8_GRF_DMA0_REQ_MODIFY_DIS_SHIFT)    /* 0x0000FFFF */
+/* DMAC0_CON9 */
+#define GRF_DMAC0_CON9_OFFSET                              (0x403B4U)
+#define GRF_DMAC0_CON9_GRF_DMA0_REQ_MODIFY_DIS_SHIFT       (0U)
+#define GRF_DMAC0_CON9_GRF_DMA0_REQ_MODIFY_DIS_MASK        (0xFFFFU << GRF_DMAC0_CON9_GRF_DMA0_REQ_MODIFY_DIS_SHIFT)    /* 0x0000FFFF */
+/* DMAC1_CON0 */
+#define GRF_DMAC1_CON0_OFFSET                              (0x403B8U)
+#define GRF_DMAC1_CON0_DMA1_IRQ_BOOT_NONSEC_SHIFT          (0U)
+#define GRF_DMAC1_CON0_DMA1_IRQ_BOOT_NONSEC_MASK           (0xFFFFU << GRF_DMAC1_CON0_DMA1_IRQ_BOOT_NONSEC_SHIFT)       /* 0x0000FFFF */
+/* DMAC1_CON1 */
+#define GRF_DMAC1_CON1_OFFSET                              (0x403BCU)
+#define GRF_DMAC1_CON1_DMA1_PERI_CH_NONSEC_15_0_SHIFT      (0U)
+#define GRF_DMAC1_CON1_DMA1_PERI_CH_NONSEC_15_0_MASK       (0xFFFFU << GRF_DMAC1_CON1_DMA1_PERI_CH_NONSEC_15_0_SHIFT)   /* 0x0000FFFF */
+/* DMAC1_CON2 */
+#define GRF_DMAC1_CON2_OFFSET                              (0x403C0U)
+#define GRF_DMAC1_CON2_DMA1_PERI_CH_NONSEC_31_16_SHIFT     (0U)
+#define GRF_DMAC1_CON2_DMA1_PERI_CH_NONSEC_31_16_MASK      (0xFFFFU << GRF_DMAC1_CON2_DMA1_PERI_CH_NONSEC_31_16_SHIFT)  /* 0x0000FFFF */
+/* DMAC1_CON3 */
+#define GRF_DMAC1_CON3_OFFSET                              (0x403C4U)
+#define GRF_DMAC1_CON3_DMA1_MANAGER_BOOT_NONSEC_SHIFT      (0U)
+#define GRF_DMAC1_CON3_DMA1_MANAGER_BOOT_NONSEC_MASK       (0x1U << GRF_DMAC1_CON3_DMA1_MANAGER_BOOT_NONSEC_SHIFT)      /* 0x00000001 */
+/* DMAC1_CON4 */
+#define GRF_DMAC1_CON4_OFFSET                              (0x403C8U)
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S0_RX_SHIFT              (0U)
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S0_RX_MASK               (0x3U << GRF_DMAC1_CON4_GRF_TYPE_I2S0_RX_SHIFT)              /* 0x00000003 */
+#define GRF_DMAC1_CON4_GRF_TYPE_SPDIF_SHIFT                (2U)
+#define GRF_DMAC1_CON4_GRF_TYPE_SPDIF_MASK                 (0x3U << GRF_DMAC1_CON4_GRF_TYPE_SPDIF_SHIFT)                /* 0x0000000C */
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S1_TX_SHIFT              (4U)
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S1_TX_MASK               (0x3U << GRF_DMAC1_CON4_GRF_TYPE_I2S1_TX_SHIFT)              /* 0x00000030 */
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S1_RX_SHIFT              (6U)
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S1_RX_MASK               (0x3U << GRF_DMAC1_CON4_GRF_TYPE_I2S1_RX_SHIFT)              /* 0x000000C0 */
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S2_TX_SHIFT              (8U)
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S2_TX_MASK               (0x3U << GRF_DMAC1_CON4_GRF_TYPE_I2S2_TX_SHIFT)              /* 0x00000300 */
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S2_RX_SHIFT              (10U)
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S2_RX_MASK               (0x3U << GRF_DMAC1_CON4_GRF_TYPE_I2S2_RX_SHIFT)              /* 0x00000C00 */
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S3_TX_SHIFT              (12U)
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S3_TX_MASK               (0x3U << GRF_DMAC1_CON4_GRF_TYPE_I2S3_TX_SHIFT)              /* 0x00003000 */
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S3_RX_SHIFT              (14U)
+#define GRF_DMAC1_CON4_GRF_TYPE_I2S3_RX_MASK               (0x3U << GRF_DMAC1_CON4_GRF_TYPE_I2S3_RX_SHIFT)              /* 0x0000C000 */
+/* DMAC1_CON5 */
+#define GRF_DMAC1_CON5_OFFSET                              (0x403CCU)
+#define GRF_DMAC1_CON5_GRF_TYPE_CAN1_RX_SHIFT              (0U)
+#define GRF_DMAC1_CON5_GRF_TYPE_CAN1_RX_MASK               (0x3U << GRF_DMAC1_CON5_GRF_TYPE_CAN1_RX_SHIFT)              /* 0x00000003 */
+/* DMAC1_CON6 */
+#define GRF_DMAC1_CON6_OFFSET                              (0x403D0U)
+#define GRF_DMAC1_CON6_GRF_TYPE_AUDPWM_SHIFT               (0U)
+#define GRF_DMAC1_CON6_GRF_TYPE_AUDPWM_MASK                (0x3U << GRF_DMAC1_CON6_GRF_TYPE_AUDPWM_SHIFT)               /* 0x00000003 */
+#define GRF_DMAC1_CON6_GRF_TYPE_PDM_SHIFT                  (2U)
+#define GRF_DMAC1_CON6_GRF_TYPE_PDM_MASK                   (0x3U << GRF_DMAC1_CON6_GRF_TYPE_PDM_SHIFT)                  /* 0x0000000C */
+#define GRF_DMAC1_CON6_GRF_TYPE_SDMMC_BUFFER_SHIFT         (4U)
+#define GRF_DMAC1_CON6_GRF_TYPE_SDMMC_BUFFER_MASK          (0x3U << GRF_DMAC1_CON6_GRF_TYPE_SDMMC_BUFFER_SHIFT)         /* 0x00000030 */
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN0_TX_SHIFT              (6U)
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN0_TX_MASK               (0x3U << GRF_DMAC1_CON6_GRF_TYPE_CAN0_TX_SHIFT)              /* 0x000000C0 */
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN0_RX_SHIFT              (8U)
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN0_RX_MASK               (0x3U << GRF_DMAC1_CON6_GRF_TYPE_CAN0_RX_SHIFT)              /* 0x00000300 */
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN1_TX_SHIFT              (10U)
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN1_TX_MASK               (0x3U << GRF_DMAC1_CON6_GRF_TYPE_CAN1_TX_SHIFT)              /* 0x00000C00 */
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN1_RX_SHIFT              (12U)
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN1_RX_MASK               (0x3U << GRF_DMAC1_CON6_GRF_TYPE_CAN1_RX_SHIFT)              /* 0x00003000 */
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN2_TX_SHIFT              (14U)
+#define GRF_DMAC1_CON6_GRF_TYPE_CAN2_TX_MASK               (0x3U << GRF_DMAC1_CON6_GRF_TYPE_CAN2_TX_SHIFT)              /* 0x0000C000 */
+/* DMAC1_CON7 */
+#define GRF_DMAC1_CON7_OFFSET                              (0x403D4U)
+#define GRF_DMAC1_CON7_GRF_TYPE_CAN2_RX_SHIFT              (0U)
+#define GRF_DMAC1_CON7_GRF_TYPE_CAN2_RX_MASK               (0x3U << GRF_DMAC1_CON7_GRF_TYPE_CAN2_RX_SHIFT)              /* 0x00000003 */
+/* DMAC1_CON8 */
+#define GRF_DMAC1_CON8_OFFSET                              (0x403D8U)
+#define GRF_DMAC1_CON8_GRF_DMA1_REQ_MODIFY_DIS_SHIFT       (0U)
+#define GRF_DMAC1_CON8_GRF_DMA1_REQ_MODIFY_DIS_MASK        (0xFFFFU << GRF_DMAC1_CON8_GRF_DMA1_REQ_MODIFY_DIS_SHIFT)    /* 0x0000FFFF */
+/* DMAC1_CON9 */
+#define GRF_DMAC1_CON9_OFFSET                              (0x403DCU)
+#define GRF_DMAC1_CON9_GRF_DMA1_REQ_MODIFY_DIS_SHIFT       (0U)
+#define GRF_DMAC1_CON9_GRF_DMA1_REQ_MODIFY_DIS_MASK        (0xFFFFU << GRF_DMAC1_CON9_GRF_DMA1_REQ_MODIFY_DIS_SHIFT)    /* 0x0000FFFF */
 /*****************************************PMUCRU*****************************************/
 /* PPLL_CON0 */
 #define PMUCRU_PPLL_CON0_OFFSET                            (0x0U)
