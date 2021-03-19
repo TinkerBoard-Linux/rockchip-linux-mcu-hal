@@ -90,6 +90,19 @@ typedef enum
 /*                               Register Bitmap Section                                */
 /*                                                                                      */
 /****************************************************************************************/
+/********************************** CPU Topology ****************************************/
+#define MPIDR_MT_MASK       ((1U) << 24)
+#define MPIDR_AFFLVL_MASK   (0xFFU)
+#define MPIDR_AFF0_SHIFT    (0U)
+#define MPIDR_AFF1_SHIFT    (8U)
+#define MPIDR_AFF2_SHIFT    (16U)
+#define MPIDR_AFF3_SHIFT    (32U)
+#define MPIDR_AFFINITY_MASK (0xFFFFFFU)
+#define PLATFORM_CLUSTER0_CORE_COUNT (4)
+#define PLATFORM_CLUSTER1_CORE_COUNT (0)
+#define PLATFORM_CORE_COUNT PLATFORM_CLUSTER0_CORE_COUNT
+#define CPU_GET_AFFINITY(cpuId, clusterId) ((cpuId) << MPIDR_AFF1_SHIFT)
+
 /******************************************CRU*******************************************/
 #define PLL_INPUT_OSC_RATE (24 * 1000 * 1000)
 
