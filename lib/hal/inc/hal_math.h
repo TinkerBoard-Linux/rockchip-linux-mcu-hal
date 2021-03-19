@@ -3,6 +3,10 @@
  * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
+#include "hal_conf.h"
+
+#ifdef HAL_VOP_MODULE_ENABLED
+
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -77,3 +81,5 @@ static inline int HAL_Sin(int angles)
 /** @} */
 
 /** @} */
+
+#endif
