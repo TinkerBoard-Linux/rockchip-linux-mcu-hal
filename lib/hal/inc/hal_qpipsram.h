@@ -50,8 +50,8 @@ struct QPIPSRAM_HOST {
     uint32_t mode;
     uint8_t flags;
     uint8_t cs;
-    uint32_t xipMem; /** XIP data mapped memory */
-    uint32_t xipMemCode; /** XIP code mapped memory */
+    uint32_t xipMem; /**< XIP data mapped memory */
+    uint32_t xipMemCode; /**< XIP code mapped memory */
     HAL_Status (*xfer)(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op);
     HAL_Status (*xipConfig)(struct QPIPSRAM_HOST *spi, struct HAL_SPI_MEM_OP *op, uint32_t on);
     void (*cs_gpio_take)(void);

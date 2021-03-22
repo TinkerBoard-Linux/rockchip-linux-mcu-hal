@@ -28,12 +28,10 @@
 /***************************** Structure Definition **************************/
 
 enum WDT_RESP_MODE {
-    /** Immediately reset system if WDT timeout */
-    DIRECT_SYSTEM_RESET,
-    /** First generate an interrupt and if the interrupt is not cleard by the time,
-      * a second timeout occur then generate a system reset
-      */
-    INDIRECT_SYSTEM_RESET,
+    DIRECT_SYSTEM_RESET,   /**< Immediately reset system if WDT timeout */
+    INDIRECT_SYSTEM_RESET, /**< First generate an interrupt and if the interrupt is not cleard by the time,
+                            *   a second timeout occur then generate a system reset
+                            */
 };
 
 /** @} */

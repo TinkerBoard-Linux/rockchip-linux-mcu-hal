@@ -96,13 +96,13 @@ struct HAL_FSPI_HOST {
     uint32_t xipClkGate;
     eCLOCK_Name sclkID;
     IRQn_Type irqNum;
-    uint32_t xipMemCode; /** Better under icache */
-    uint32_t xipMemData; /** Better under dcache */
-    uint8_t cs; /** Should be defined by user in each operation */
-    uint8_t mode; /** Should be defined by user, referring to hal_spi_mem.h */
-    uint8_t cell; /** Record DLL cell for PM resume, Set depend on corresponding device */
-    uint32_t xmmcCtrl; /** Set depend on corresponding device */
-    struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT]; /** Set depend on corresponding device */
+    uint32_t xipMemCode; /**< Better under icache */
+    uint32_t xipMemData; /**< Better under dcache */
+    uint8_t cs; /**< Should be defined by user in each operation */
+    uint8_t mode; /**< Should be defined by user, referring to hal_spi_mem.h */
+    uint8_t cell; /**< Record DLL cell for PM resume, Set depend on corresponding device */
+    uint32_t xmmcCtrl; /**< Set depend on corresponding device */
+    struct HAL_FSPI_XMMC_DEV xmmcDev[FSPI_CHIP_CNT]; /**< Set depend on corresponding device */
 };
 
 #define HAL_FSPI_MAX_DELAY_LINE_CELLS (0xFFU)
