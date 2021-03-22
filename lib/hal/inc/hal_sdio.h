@@ -142,14 +142,10 @@ typedef union {
 
 /* Data map for DMA descriptor chain */
 typedef struct {
-    /* control and status information of descriptor */
-    MMC_DMA_DESCRIPTOR0 desc0;
-    /* buffer sizes */
-    MMC_DMA_DESCRIPTOR1 desc1;
-    /* physical address of the buffer 1 */
-    MMC_DMA_DESCRIPTOR2 desc2;
-    /* physical address of the buffer 2 */
-    MMC_DMA_DESCRIPTOR3 desc3;
+    MMC_DMA_DESCRIPTOR0 desc0; /**< control and status information of descriptor */
+    MMC_DMA_DESCRIPTOR1 desc1; /**< buffer sizes */
+    MMC_DMA_DESCRIPTOR2 desc2; /**< physical address of the buffer 1 */
+    MMC_DMA_DESCRIPTOR3 desc3; /**< physical address of the buffer 2 */
 } MMC_DMA_DESCRIPTORS;
 
 /* Private mmc host data for HAL */

@@ -39,35 +39,35 @@
  */
 #if (defined(RKMCU_RK2108) || defined(RKMCU_PISCES))
 typedef enum {
-    DSP_DTCM0 = DSP_TCM_SEL(0),    /* 0x30200000 ~ 0x30210000 */
-    DSP_DTCM1 = DSP_TCM_SEL(1),    /* 0x30210000 ~ 0x30220000 */
-    DSP_DTCM2 = DSP_TCM_SEL(2),    /* 0x30220000 ~ 0x30230000 */
-    DSP_DTCM3 = DSP_TCM_SEL(3),    /* 0x30230000 ~ 0x30240000 */
-    DSP_DTCM4 = DSP_TCM_SEL(4),    /* 0x30240000 ~ 0x30250000 */
-    DSP_DTCM5 = DSP_TCM_SEL(5),    /* 0x30250000 ~ 0x30260000 */
-    DSP_DTCM6 = DSP_TCM_SEL(6),    /* 0x30260000 ~ 0x30270000 */
-    DSP_DTCM7 = DSP_TCM_SEL(7),    /* 0x30270000 ~ 0x30280000 */
-    DSP_ITCM  = DSP_TCM_SEL(8),    /* 0x30000000 ~ 0x30010000 */
+    DSP_DTCM0 = DSP_TCM_SEL(0),    /**< 0x30200000 ~ 0x30210000 */
+    DSP_DTCM1 = DSP_TCM_SEL(1),    /**< 0x30210000 ~ 0x30220000 */
+    DSP_DTCM2 = DSP_TCM_SEL(2),    /**< 0x30220000 ~ 0x30230000 */
+    DSP_DTCM3 = DSP_TCM_SEL(3),    /**< 0x30230000 ~ 0x30240000 */
+    DSP_DTCM4 = DSP_TCM_SEL(4),    /**< 0x30240000 ~ 0x30250000 */
+    DSP_DTCM5 = DSP_TCM_SEL(5),    /**< 0x30250000 ~ 0x30260000 */
+    DSP_DTCM6 = DSP_TCM_SEL(6),    /**< 0x30260000 ~ 0x30270000 */
+    DSP_DTCM7 = DSP_TCM_SEL(7),    /**< 0x30270000 ~ 0x30280000 */
+    DSP_ITCM  = DSP_TCM_SEL(8),    /**< 0x30000000 ~ 0x30010000 */
 } eDSP_tcmSel;
 
 #define DSP_DTCM (DSP_DTCM0 | DSP_DTCM1 | DSP_DTCM2 | DSP_DTCM3 | \
                   DSP_DTCM4 | DSP_DTCM5 | DSP_DTCM6 | DSP_DTCM7)
 #else
 typedef enum {
-    DSP_ITCM0  = DSP_TCM_SEL(0),    /* 0x20400000 ~ 0x20404000 */
-    DSP_ITCM1  = DSP_TCM_SEL(1),    /* 0x20404000 ~ 0x20408000 */
-    DSP_DTCM0  = DSP_TCM_SEL(4),    /* 0x20600000 ~ 0x20604000 */
-    DSP_DTCM1  = DSP_TCM_SEL(5),    /* 0x20604000 ~ 0x20608000 */
-    DSP_DTCM2  = DSP_TCM_SEL(6),    /* 0x20608000 ~ 0x2060c000 */
-    DSP_DTCM3  = DSP_TCM_SEL(7),    /* 0x2060c000 ~ 0x20610000 */
-    DSP_DTCM4  = DSP_TCM_SEL(8),    /* 0x20610000 ~ 0x20614000 */
-    DSP_DTCM5  = DSP_TCM_SEL(9),    /* 0x20614000 ~ 0x20618000 */
-    DSP_DTCM6  = DSP_TCM_SEL(10),   /* 0x20618000 ~ 0x2061c000 */
-    DSP_DTCM7  = DSP_TCM_SEL(11),   /* 0x2061c000 ~ 0x20620000 */
-    DSP_DTCM8  = DSP_TCM_SEL(12),   /* 0x20620000 ~ 0x20624000 */
-    DSP_DTCM9  = DSP_TCM_SEL(13),   /* 0x20624000 ~ 0x20628000 */
-    DSP_DTCM10 = DSP_TCM_SEL(14),   /* 0x20628000 ~ 0x2062c000 */
-    DSP_DTCM11 = DSP_TCM_SEL(15),   /* 0x2062c000 ~ 0x20630000 */
+    DSP_ITCM0  = DSP_TCM_SEL(0),    /**< 0x20400000 ~ 0x20404000 */
+    DSP_ITCM1  = DSP_TCM_SEL(1),    /**< 0x20404000 ~ 0x20408000 */
+    DSP_DTCM0  = DSP_TCM_SEL(4),    /**< 0x20600000 ~ 0x20604000 */
+    DSP_DTCM1  = DSP_TCM_SEL(5),    /**< 0x20604000 ~ 0x20608000 */
+    DSP_DTCM2  = DSP_TCM_SEL(6),    /**< 0x20608000 ~ 0x2060c000 */
+    DSP_DTCM3  = DSP_TCM_SEL(7),    /**< 0x2060c000 ~ 0x20610000 */
+    DSP_DTCM4  = DSP_TCM_SEL(8),    /**< 0x20610000 ~ 0x20614000 */
+    DSP_DTCM5  = DSP_TCM_SEL(9),    /**< 0x20614000 ~ 0x20618000 */
+    DSP_DTCM6  = DSP_TCM_SEL(10),   /**< 0x20618000 ~ 0x2061c000 */
+    DSP_DTCM7  = DSP_TCM_SEL(11),   /**< 0x2061c000 ~ 0x20620000 */
+    DSP_DTCM8  = DSP_TCM_SEL(12),   /**< 0x20620000 ~ 0x20624000 */
+    DSP_DTCM9  = DSP_TCM_SEL(13),   /**< 0x20624000 ~ 0x20628000 */
+    DSP_DTCM10 = DSP_TCM_SEL(14),   /**< 0x20628000 ~ 0x2062c000 */
+    DSP_DTCM11 = DSP_TCM_SEL(15),   /**< 0x2062c000 ~ 0x20630000 */
 } eDSP_tcmSel;
 
 #define DSP_DTCM (DSP_DTCM0 | DSP_DTCM1 | DSP_DTCM2 | DSP_DTCM3 |  \
@@ -104,12 +104,9 @@ typedef enum {
 } eDSP_powerSt;
 
 typedef enum    {
-    /* reset all clk of dsp */
-    DSP_RESET_MODE_RESET_ALL_CLK = 0,
-    /* reset parts of clk of dsp */
-    DSP_RESET_MODE_RESET_PART_CLK = 1,
-    /* do not reset any clk of dsp, dtcm is used by m3*/
-    DSP_RESET_MODE_NOT_RESET = 2,
+    DSP_RESET_MODE_RESET_ALL_CLK  = 0, /**< reset all clk of dsp */
+    DSP_RESET_MODE_RESET_PART_CLK = 1, /**< reset parts of clk of dsp */
+    DSP_RESET_MODE_NOT_RESET      = 2, /**< do not reset any clk of dsp, dtcm is used by m3 */
 } eDSP_resetMode;
 
 struct DSP_OPS {

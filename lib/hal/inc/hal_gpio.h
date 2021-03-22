@@ -29,9 +29,9 @@
 
 #define PIN_NUMBER_PER_BANK (32)
 
-#define GPIO_PIN_SHIFT  (0) /* Bits 0-4: GPIO Pin number: 0 - 31 */
+#define GPIO_PIN_SHIFT  (0) /**< Bits 0-4: GPIO Pin number: 0 - 31 */
 #define GPIO_PIN_MASK   (0x1f << GPIO_PIN_SHIFT)
-#define GPIO_BANK_SHIFT (5) /* Bits 5-7: GPIO Port number: 0 - 7 */
+#define GPIO_BANK_SHIFT (5) /**< Bits 5-7: GPIO Port number: 0 - 7 */
 #define GPIO_BANK_MASK  (0x7 << GPIO_BANK_SHIFT)
 
 #define BANK_PIN(BANK, PIN) ((((BANK) << GPIO_BANK_SHIFT) & GPIO_BANK_MASK) + (((PIN) << GPIO_PIN_SHIFT) & GPIO_PIN_MASK))

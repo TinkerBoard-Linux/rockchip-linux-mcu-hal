@@ -70,7 +70,7 @@ struct HAL_VAD_DEV {
     uint32_t audioDetChnl; /**< Indicates which channel data used for vad detection */
     uint32_t channels; /**< The total audio channels */
     uint32_t sampleBytes; /**< Bytes per sample */
-    uint32_t bufferTime; /* Buffer time in msec */
+    uint32_t bufferTime; /**< Buffer time in msec */
     uint32_t hclk;
     ePD_Id pd;
     uint8_t irq;  /**< irq number */

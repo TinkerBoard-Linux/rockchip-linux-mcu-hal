@@ -38,13 +38,13 @@
 typedef union {
     uint32_t d32;
     struct {
-        unsigned mode : 1; /* spi mode select */
-        unsigned sps : 1; /* shift in phase at: posedge 1: negedge */
+        unsigned mode : 1; /**< spi mode select */
+        unsigned sps : 1; /**< shift in phase at: posedge 1: negedge */
         unsigned reserved3_2 : 2;
-        unsigned scic : 4; /* sclk_idle_level_cycles */
-        unsigned cmdlines : 2; /* cmd bits number */
-        unsigned addrlines : 2; /* address bits number */
-        unsigned datalines : 2; /* data bits number */
+        unsigned scic : 4; /**< sclk_idle_level_cycles */
+        unsigned cmdlines : 2; /**< cmd bits number */
+        unsigned addrlines : 2; /**< address bits number */
+        unsigned datalines : 2; /**< data bits number */
         unsigned reserved14_15 : 2;
         unsigned addrbits : 5;
         unsigned reserved31_21 : 11;
@@ -65,13 +65,13 @@ typedef union {
 typedef union {
     uint32_t d32;
     struct {
-        unsigned cmd : 8; /* command that will send to Serial Flash */
-        unsigned dummybits : 4; /* dummy bits number */
-        unsigned rw : 1; /* 0:read, 1: write */
-        unsigned readmode : 1; /* continuous read mode */
-        unsigned addrbits : 2; /* address bits number */
-        unsigned datasize : 14; /* transferred bytes number */
-        unsigned cs : 2; /* chip select */
+        unsigned cmd : 8; /**< command that will send to Serial Flash */
+        unsigned dummybits : 4; /**< dummy bits number */
+        unsigned rw : 1; /**< 0:read, 1: write */
+        unsigned readmode : 1; /**< continuous read mode */
+        unsigned addrbits : 2; /**< address bits number */
+        unsigned datasize : 14; /**< transferred bytes number */
+        unsigned cs : 2; /**< chip select */
     } b;
 } FSPICMD_DATA;
 

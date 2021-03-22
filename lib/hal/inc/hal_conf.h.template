@@ -83,7 +83,7 @@
 
 /************************ HAL Driver Sub Config *******************************/
 
-#define HAL_SYSLOG printf /* Redirect HAL print function */
+#define HAL_SYSLOG printf /**< Redirect HAL print function */
 #define HAL_DBG_ON
 #define HAL_DBG_INFO_ON
 #define HAL_DBG_WRN_ON
@@ -91,7 +91,7 @@
 #define HAL_ASSERT_ON
 
 #ifdef HAL_FSPI_MODULE_ENABLED
-#define HAL_FSPI_XIP_ENABLE /* FSPI supports XIP by default */
+#define HAL_FSPI_XIP_ENABLE /**< FSPI supports XIP by default */
 #endif
 
 #ifdef HAL_GIC_MODULE_ENABLED
@@ -104,17 +104,17 @@
 #endif
 
 #ifdef HAL_QPIPSRAM_MODULE_ENABLED
-#define HAL_QPIPSRAM_HALF_SLEEP_ENABLED /* If support half sleep, configure it */
+#define HAL_QPIPSRAM_HALF_SLEEP_ENABLED /**< If support half sleep, configure it */
 #endif
 
 #ifdef HAL_SNOR_MODULE_ENABLED
-#define HAL_SNOR_FSPI_HOST /* Choose SNOR Host: FSPI */
-//#define HAL_SNOR_SPI_HOST /* Choose SNOR Host: SPI */
+#define HAL_SNOR_FSPI_HOST /**< Choose SNOR Host: FSPI */
+//#define HAL_SNOR_SPI_HOST /**< Choose SNOR Host: SPI */
 #endif
 
 #ifdef HAL_TIMER_MODULE_ENABLED
-#define HAL_SYS_TIMER  TIMER10 /* System timer designation (RK TIMER) */
-#define HAL_TICK_TIMER TIMER9 /* Tick timer designation (RK TIMER) */
+#define HAL_SYS_TIMER  TIMER10 /**< System timer designation (RK TIMER) */
+#define HAL_TICK_TIMER TIMER9 /**< Tick timer designation (RK TIMER) */
 #define HAL_TICK_IRQn  TIMER9_IRQn
 endif
 

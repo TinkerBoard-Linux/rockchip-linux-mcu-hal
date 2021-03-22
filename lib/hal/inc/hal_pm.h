@@ -39,10 +39,10 @@
 #define PM_SLEEP_WAKEUP_SOURCE 0x02
 
 enum {
-    PM_RUNTIME_TYPE_INTF = 0, /* normal interface */
+    PM_RUNTIME_TYPE_INTF = 0, /**< normal interface */
     PM_RUNTIME_TYPE_DISPLAY,
     PM_RUNTIME_TYPE_AUDIO,
-    PM_RUNTIME_TYPE_HS_INTF, /* high speed interface */
+    PM_RUNTIME_TYPE_HS_INTF, /**< high speed interface */
     PM_RUNTIME_TYPE_STORAGE,
     PM_RUNTIME_TYPE_UART,
     PM_RUNTIME_TYPE_I2C,
@@ -60,8 +60,7 @@ typedef enum {
 } ePM_RUNTIME_idleMode;
 
 typedef enum {
-    /* the id = 0, is means invalid in */
-    PM_RUNTIME_ID_INTF_INVLD = PM_RUNTIME_TYPE_TO_FIRST_ID(PM_RUNTIME_TYPE_INTF),
+    PM_RUNTIME_ID_INTF_INVLD = PM_RUNTIME_TYPE_TO_FIRST_ID(PM_RUNTIME_TYPE_INTF), /**< the id = 0, is means invalid */
     PM_RUNTIME_ID_SPI_APB,
     PM_RUNTIME_ID_VOP = PM_RUNTIME_TYPE_TO_FIRST_ID(PM_RUNTIME_TYPE_DISPLAY),
     PM_RUNTIME_ID_MIPI,

@@ -27,8 +27,8 @@
 
 /** PCD LPM State Structure definition */
 typedef enum {
-    PCD_LPM_L0_ACTIVE = 0x00U, /* on */
-    PCD_LPM_L1_ACTIVE = 0x01U, /* LPM L1 sleep */
+    PCD_LPM_L0_ACTIVE = 0x00U, /**< on */
+    PCD_LPM_L1_ACTIVE = 0x01U, /**< LPM L1 sleep */
 } ePCD_lpmMsg;
 
 /** @} */

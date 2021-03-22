@@ -50,10 +50,10 @@ typedef enum {
 
 /** LPM suspend state Structure definition */
 typedef enum {
-    LPM_L0 = 0x00U, /* on */
-    LPM_L1 = 0x01U, /* LPM L1 sleep */
-    LPM_L2 = 0x02U, /* suspend */
-    LPM_L3 = 0x03U, /* off */
+    LPM_L0 = 0x00U, /**< on */
+    LPM_L1 = 0x01U, /**< LPM L1 sleep */
+    LPM_L2 = 0x02U, /**< suspend */
+    LPM_L3 = 0x03U, /**< off */
 } ePCD_lpmState;
 
 /** PCD BCD State Structure definition */

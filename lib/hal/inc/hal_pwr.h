@@ -32,9 +32,9 @@ typedef enum {
     PWR_ID_VCC_MIPI,
     PWR_ID_VCC_AUDIO,
     PWR_ID_DSP_VCC_MIPI,
-    PWR_ID_MEMORY, /* for share memory and sram */
+    PWR_ID_MEMORY, /**< for share memory and sram */
     PWR_ID_TOP,
-    PWR_ID_BUCK_1V8, /* Usually as a transition between high and low voltage */
+    PWR_ID_BUCK_1V8, /**< Usually as a transition between high and low voltage */
     PWR_ID_VCCIO_3V3,
     PWR_ID_VDD_1V1,
     PWR_ID_VCCIO_1V8,
@@ -51,11 +51,11 @@ typedef enum {
 } ePWR_ID;
 
 typedef enum {
-    PWR_CTRL_VOLT_RUN = 0, /* run mode voltage */
-    PWR_CTRL_VOLT_SSPD, /* suspend mode voltage */
-    PWR_CTRL_PWR_EN, /* enable a regulator */
-    PWR_CTRL_PWR_SSPD, /* suspend mode enable a regulator */
-    PWR_CTRL_VOLT_ST, /* get a regulator state */
+    PWR_CTRL_VOLT_RUN = 0, /**< run mode voltage */
+    PWR_CTRL_VOLT_SSPD, /**< suspend mode voltage */
+    PWR_CTRL_PWR_EN, /**< enable a regulator */
+    PWR_CTRL_PWR_SSPD, /**< suspend mode enable a regulator */
+    PWR_CTRL_VOLT_ST, /**< get a regulator state */
     PWR_CTRL_MAX
 } ePWR_CtrlType;
 

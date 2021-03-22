@@ -25,8 +25,8 @@
  *  @{
  */
 
-#define HAL_SPI_MASTER_MAX_SCLK_OUT 50000000 /* Max io clock in master mode */
-#define HAL_SPI_SLAVE_MAX_SCLK_OUT  20000000 /* Max io in clock in slave mode */
+#define HAL_SPI_MASTER_MAX_SCLK_OUT 50000000 /**< Max io clock in master mode */
+#define HAL_SPI_SLAVE_MAX_SCLK_OUT  20000000 /**< Max io in clock in slave mode */
 
 #define CR0_DATA_FRAME_SIZE_4BIT  (0x00 << SPI_CTRLR0_DFS_SHIFT)
 #define CR0_DATA_FRAME_SIZE_8BIT  (0x01 << SPI_CTRLR0_DFS_SHIFT)
@@ -91,19 +91,19 @@ typedef enum {
 
 /** @brief  SPI Configuration Structure definition */
 struct SPI_CONFIG {
-    uint32_t opMode;           /* Specifies the SPI operating mode, master or slave. */
-    uint32_t xfmMode;          /* Specifies the SPI bidirectional mode state, tx only, rx only or trx mode. */
-    uint32_t nBytes;           /* Specifies the SPI data size. */
-    uint32_t clkPolarity;      /* Specifies the serial clock steady state. */
-    uint32_t clkPhase;         /* Specifies the clock active edge for the bit capture. */
-    uint32_t firstBit;         /* Specifies whether data transfers start from MSB or LSB bit. */
-    uint32_t endianMode;       /* Specifies whether data transfers start from little or big endian. */
-    uint32_t apbTransform;     /* Specifies apb transform type. */
-    uint32_t ssd;              /* Specifies period between ss_n active and sclk_out. */
-    uint32_t speed;            /* Specifies the Baud Rate prescaler value which will be
+    uint32_t opMode;           /**< Specifies the SPI operating mode, master or slave. */
+    uint32_t xfmMode;          /**< Specifies the SPI bidirectional mode state, tx only, rx only or trx mode. */
+    uint32_t nBytes;           /**< Specifies the SPI data size. */
+    uint32_t clkPolarity;      /**< Specifies the serial clock steady state. */
+    uint32_t clkPhase;         /**< Specifies the clock active edge for the bit capture. */
+    uint32_t firstBit;         /**< Specifies whether data transfers start from MSB or LSB bit. */
+    uint32_t endianMode;       /**< Specifies whether data transfers start from little or big endian. */
+    uint32_t apbTransform;     /**< Specifies apb transform type. */
+    uint32_t ssd;              /**< Specifies period between ss_n active and sclk_out. */
+    uint32_t speed;            /**< Specifies the Baud Rate prescaler value which will be
                                   used to configure the transmit and receive SCK clock. */
-    uint32_t ssiType;          /* Specifies if the TI mode is enabled or not.*/
-    uint32_t csm;              /* Specifies Motorola SPI Master SS_N high cycles for each frame data is transfer. */
+    uint32_t ssiType;          /**< Specifies if the TI mode is enabled or not.*/
+    uint32_t csm;              /**< Specifies Motorola SPI Master SS_N high cycles for each frame data is transfer. */
 };
 
 /* We have 2 DMA channels per SPI, one for RX and one for TX */
@@ -126,16 +126,16 @@ struct HAL_SPI_DEV {
 
 /** @brief  SPI handle Structure definition */
 struct SPI_HANDLE {
-    struct SPI_REG *pReg;          /* Specifies SPI registers base address. */
-    uint32_t maxFreq;              /* Specifies SPI clock frequency. */
-    struct SPI_CONFIG config;      /* Specifies SPI communication parameters. */
-    const uint8_t *pTxBuffer;      /* Specifies pointer to SPI Tx transfer Buffer. */
-    const uint8_t *pTxBufferEnd;   /* Specifies pointer to SPI Tx End transfer Buffer. */
-    uint8_t *pRxBuffer;            /* Specifies pointer to SPI Rx transfer Buffer. */
-    uint8_t *pRxBufferEnd;         /* Specifies pointer to SPI Rx End transfer Buffer. */
-    uint32_t len;                  /* Specifies the transfer length . */
-    eSPI_TransferType type;        /* Specifies the transfer type: POLL/IT/DMA. */
-    uint32_t dmaBurstSize;         /* Specifies Dma Burst size */
+    struct SPI_REG *pReg;          /**< Specifies SPI registers base address. */
+    uint32_t maxFreq;              /**< Specifies SPI clock frequency. */
+    struct SPI_CONFIG config;      /**< Specifies SPI communication parameters. */
+    const uint8_t *pTxBuffer;      /**< Specifies pointer to SPI Tx transfer Buffer. */
+    const uint8_t *pTxBufferEnd;   /**< Specifies pointer to SPI Tx End transfer Buffer. */
+    uint8_t *pRxBuffer;            /**< Specifies pointer to SPI Rx transfer Buffer. */
+    uint8_t *pRxBufferEnd;         /**< Specifies pointer to SPI Rx End transfer Buffer. */
+    uint32_t len;                  /**< Specifies the transfer length . */
+    eSPI_TransferType type;        /**< Specifies the transfer type: POLL/IT/DMA. */
+    uint32_t dmaBurstSize;         /**< Specifies Dma Burst size */
 };
 
 /** @} */

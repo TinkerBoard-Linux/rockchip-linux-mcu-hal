@@ -66,14 +66,14 @@
 
 /** enum PL330_CACHECTRL - pl330 cache control */
 typedef enum {
-    CCTRL0, /* Noncacheable and nonbufferable */
-    CCTRL1, /* Bufferable only */
-    CCTRL2, /* Cacheable, but do not allocate */
-    CCTRL3, /* Cacheable and bufferable, but do not allocate */
-    INVALID1, /* AWCACHE = 0x1000 */
+    CCTRL0, /**< Noncacheable and nonbufferable */
+    CCTRL1, /**< Bufferable only */
+    CCTRL2, /**< Cacheable, but do not allocate */
+    CCTRL3, /**< Cacheable and bufferable, but do not allocate */
+    INVALID1, /**< AWCACHE = 0x1000 */
     INVALID2,
-    CCTRL6, /* Cacheable write-through, allocate on writes only */
-    CCTRL7, /* Cacheable write-back, allocate on writes only */
+    CCTRL6, /**< Cacheable write-through, allocate on writes only */
+    CCTRL7, /**< Cacheable write-back, allocate on writes only */
 } ePL330_CACHECTRL;
 
 /** enum PL330_BYTESWAP - pl330 byte swap control */
@@ -98,7 +98,7 @@ typedef enum {
 struct PL330_CONFIG {
     uint32_t periphId;
     uint32_t mode;
-    uint32_t dataBusWidth; /* In number of bits */
+    uint32_t dataBusWidth; /**< In number of bits */
     uint32_t dataBufDep;
     uint32_t numChan;
     uint32_t numPeri;
@@ -121,7 +121,7 @@ struct PL330_REQCFG {
     bool privileged;
     bool insnaccess;
     uint32_t brstLen;
-    uint32_t brstSize; /* bytes */
+    uint32_t brstSize; /**< bytes */
 
     ePL330_CACHECTRL dcctl;
     ePL330_CACHECTRL scctl;

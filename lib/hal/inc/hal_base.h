@@ -31,9 +31,9 @@
 
 /***************************** Structure Definition **************************/
 typedef enum {
-    HAL_TICK_FREQ_10HZ    = 100U,    /* 10 ticks per second, so it's 100ms/tick */
-    HAL_TICK_FREQ_100HZ   = 10U,     /* 100 ticks per second, so it's 10ms/tick */
-    HAL_TICK_FREQ_1KHZ    = 1U,      /* 1000 ticks per second, so it's 1ms/tick */
+    HAL_TICK_FREQ_10HZ    = 100U,    /**< 10 ticks per second, so it's 100ms/tick */
+    HAL_TICK_FREQ_100HZ   = 10U,     /**< 100 ticks per second, so it's 10ms/tick */
+    HAL_TICK_FREQ_1KHZ    = 1U,      /**< 1000 ticks per second, so it's 1ms/tick */
     HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ
 } eHAL_tickFreq;
 

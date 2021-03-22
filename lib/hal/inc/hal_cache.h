@@ -29,17 +29,17 @@
  *
  */
 struct CACHE_PMU_CNT {
-    uint32_t rdNum; /* PMU read number counter */
-    uint32_t wrNum; /* PMU write number counter */
-    uint32_t sramRdHit; /* PMU SRAM hit counter */
-    uint32_t hbRdHit; /* PMU hot buffer hit */
-    uint32_t stbRdHit; /* PMU store buffer hit */
-    uint32_t rdHit; /* PMU read hit counter */
-    uint32_t wrHit; /* PMU write hit counter */
-    uint32_t rdMissPenalty; /* PMU read miss penalty counter */
-    uint32_t wrMissPenalty; /* PMU write miss penalty counter */
-    uint32_t rdLat; /* PMU read latency */
-    uint32_t wrLat; /* PMU write latency */
+    uint32_t rdNum; /**< PMU read number counter */
+    uint32_t wrNum; /**< PMU write number counter */
+    uint32_t sramRdHit; /**< PMU SRAM hit counter */
+    uint32_t hbRdHit; /**< PMU hot buffer hit */
+    uint32_t stbRdHit; /**< PMU store buffer hit */
+    uint32_t rdHit; /**< PMU read hit counter */
+    uint32_t wrHit; /**< PMU write hit counter */
+    uint32_t rdMissPenalty; /**< PMU read miss penalty counter */
+    uint32_t wrMissPenalty; /**< PMU write miss penalty counter */
+    uint32_t rdLat; /**< PMU read latency */
+    uint32_t wrLat; /**< PMU write latency */
 };
 
 /** @} */

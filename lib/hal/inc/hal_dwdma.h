@@ -29,51 +29,51 @@
 #define NR_DESCS_PER_CHANNEL 8
 
 /* Bitfields in CTL_LO */
-#define DWC_CTLL_INT_EN       (1 << 0)    /* irqs enabled? */
-#define DWC_CTLL_DST_WIDTH(n) ((n)<<1)    /* bytes per element */
+#define DWC_CTLL_INT_EN       (1 << 0)    /**< irqs enabled? */
+#define DWC_CTLL_DST_WIDTH(n) ((n)<<1)    /**< bytes per element */
 #define DWC_CTLL_SRC_WIDTH(n) ((n)<<4)
-#define DWC_CTLL_DST_INC      (0<<7)        /* DAR update/not */
+#define DWC_CTLL_DST_INC      (0<<7)        /**< DAR update/not */
 #define DWC_CTLL_DST_DEC      (1<<7)
 #define DWC_CTLL_DST_FIX      (2<<7)
-#define DWC_CTLL_SRC_INC      (0<<7)        /* SAR update/not */
+#define DWC_CTLL_SRC_INC      (0<<7)        /**< SAR update/not */
 #define DWC_CTLL_SRC_DEC      (1<<9)
 #define DWC_CTLL_SRC_FIX      (2<<9)
-#define DWC_CTLL_DST_MSIZE(n) ((n)<<11)    /* burst, #elements */
+#define DWC_CTLL_DST_MSIZE(n) ((n)<<11)    /**< burst, \#elements */
 #define DWC_CTLL_SRC_MSIZE(n) ((n)<<14)
-#define DWC_CTLL_S_GATH_EN    (1 << 17)    /* src gather, !FIX */
-#define DWC_CTLL_D_SCAT_EN    (1 << 18)    /* dst scatter, !FIX */
+#define DWC_CTLL_S_GATH_EN    (1 << 17)    /**< src gather, !FIX */
+#define DWC_CTLL_D_SCAT_EN    (1 << 18)    /**< dst scatter, !FIX */
 #define DWC_CTLL_FC(n)        ((n) << 20)
-#define DWC_CTLL_FC_M2M       (0 << 20)    /* mem-to-mem */
-#define DWC_CTLL_FC_M2P       (1 << 20)    /* mem-to-periph */
-#define DWC_CTLL_FC_P2M       (2 << 20)    /* periph-to-mem */
-#define DWC_CTLL_FC_P2P       (3 << 20)    /* periph-to-periph */
+#define DWC_CTLL_FC_M2M       (0 << 20)    /**< mem-to-mem */
+#define DWC_CTLL_FC_M2P       (1 << 20)    /**< mem-to-periph */
+#define DWC_CTLL_FC_P2M       (2 << 20)    /**< periph-to-mem */
+#define DWC_CTLL_FC_P2P       (3 << 20)    /**< periph-to-periph */
 /* plus 4 transfer types for peripheral-as-flow-controller */
-#define DWC_CTLL_DMS(n)   ((n)<<23)    /* dst master select */
-#define DWC_CTLL_SMS(n)   ((n)<<25)    /* src master select */
-#define DWC_CTLL_LLP_D_EN (1 << 27)    /* dest block chain */
-#define DWC_CTLL_LLP_S_EN (1 << 28)    /* src block chain */
+#define DWC_CTLL_DMS(n)   ((n)<<23)    /**< dst master select */
+#define DWC_CTLL_SMS(n)   ((n)<<25)    /**< src master select */
+#define DWC_CTLL_LLP_D_EN (1 << 27)    /**< dest block chain */
+#define DWC_CTLL_LLP_S_EN (1 << 28)    /**< src block chain */
 
 /* Bitfields in CTL_HI */
 #define DWC_CTLH_DONE          0x00001000
 #define DWC_CTLH_BLOCK_TS_MASK 0x00000fff
 
 /* Bitfields in CFG_LO */
-#define DWC_CFGL_CH_PRIOR_MASK  (0x7 << 5)    /* priority mask */
-#define DWC_CFGL_CH_PRIOR(x)    ((x) << 5)    /* priority */
-#define DWC_CFGL_CH_SUSP        (1 << 8)    /* pause xfer */
-#define DWC_CFGL_FIFO_EMPTY     (1 << 9)    /* pause xfer */
-#define DWC_CFGL_HS_DST         (1 << 10)    /* handshake w/dst */
-#define DWC_CFGL_HS_SRC         (1 << 11)    /* handshake w/src */
-#define DWC_CFGL_LOCK_CH_XFER   (0 << 12)    /* scope of LOCK_CH */
+#define DWC_CFGL_CH_PRIOR_MASK  (0x7 << 5)    /**< priority mask */
+#define DWC_CFGL_CH_PRIOR(x)    ((x) << 5)    /**< priority */
+#define DWC_CFGL_CH_SUSP        (1 << 8)    /**< pause xfer */
+#define DWC_CFGL_FIFO_EMPTY     (1 << 9)    /**< pause xfer */
+#define DWC_CFGL_HS_DST         (1 << 10)    /**< handshake w/dst */
+#define DWC_CFGL_HS_SRC         (1 << 11)    /**< handshake w/src */
+#define DWC_CFGL_LOCK_CH_XFER   (0 << 12)    /**< scope of LOCK_CH */
 #define DWC_CFGL_LOCK_CH_BLOCK  (1 << 12)
 #define DWC_CFGL_LOCK_CH_XACT   (2 << 12)
-#define DWC_CFGL_LOCK_BUS_XFER  (0 << 14)    /* scope of LOCK_BUS */
+#define DWC_CFGL_LOCK_BUS_XFER  (0 << 14)    /**< scope of LOCK_BUS */
 #define DWC_CFGL_LOCK_BUS_BLOCK (1 << 14)
 #define DWC_CFGL_LOCK_BUS_XACT  (2 << 14)
-#define DWC_CFGL_LOCK_CH        (1 << 15)    /* channel lockout */
-#define DWC_CFGL_LOCK_BUS       (1 << 16)    /* busmaster lockout */
-#define DWC_CFGL_HS_DST_POL     (1 << 18)    /* dst handshake active low */
-#define DWC_CFGL_HS_SRC_POL     (1 << 19)    /* src handshake active low */
+#define DWC_CFGL_LOCK_CH        (1 << 15)    /**< channel lockout */
+#define DWC_CFGL_LOCK_BUS       (1 << 16)    /**< busmaster lockout */
+#define DWC_CFGL_HS_DST_POL     (1 << 18)    /**< dst handshake active low */
+#define DWC_CFGL_HS_SRC_POL     (1 << 19)    /**< src handshake active low */
 #define DWC_CFGL_MAX_BURST(x)   ((x) << 20)
 #define DWC_CFGL_RELOAD_SAR     (1 << 30)
 #define DWC_CFGL_RELOAD_DAR     (1 << 31)
@@ -130,8 +130,7 @@ struct DW_LLI {
  * struct DW_DESC - dma transfer desc
  */
 struct DW_DESC {
-    /* FIRST values the hardware uses, must be in the first place. */
-    struct DW_LLI lli;
+    struct DW_LLI lli; /**< FIRST values the hardware uses, must be in the first place. */
 
     uint32_t len;
 };

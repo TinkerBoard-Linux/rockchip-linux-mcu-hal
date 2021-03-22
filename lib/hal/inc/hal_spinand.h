@@ -61,9 +61,9 @@ struct META_AREA {
 /* SPI_NAND dev handler */
 struct SPI_NAND {
     struct SPI_NAND_HOST *spi;
-    uint32_t *pageBuf; /* Dma buffer */
+    uint32_t *pageBuf; /**< Dma buffer */
 
-    uint32_t size; /* size in Byte */
+    uint32_t size; /**< size in Byte */
     uint16_t secPerPage;
     uint16_t pagePerBlk;
     uint16_t blkPerPlane;

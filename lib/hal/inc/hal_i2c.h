@@ -29,15 +29,15 @@
 /**
   * @brief  Hal I2C message flags
   */
-#define HAL_I2C_M_WR         (0x0000) /* write data, from master to slave */
-#define HAL_I2C_M_RD         (0x1 << 0) /* read data, from slave to master */
-#define HAL_I2C_M_TEN        (0x1 << 1) /* this is a ten bit chip address */
-#define HAL_I2C_M_IGNORE_NAK (0x1 << 2) /* if I2C_FUNC_PROTOCOL_MANGLING */
+#define HAL_I2C_M_WR         (0x0000) /**< write data, from master to slave */
+#define HAL_I2C_M_RD         (0x1 << 0) /**< read data, from slave to master */
+#define HAL_I2C_M_TEN        (0x1 << 1) /**< this is a ten bit chip address */
+#define HAL_I2C_M_IGNORE_NAK (0x1 << 2) /**< if I2C_FUNC_PROTOCOL_MANGLING */
 
 /**
   * @brief I2C MRXADDR valid bits
   */
-#define HAL_I2C_REG_MRXADDR_VALID(x) (0x1 << (24 + (x))) /* [x*8+7:x*8] of MRX[R]ADDR valid */
+#define HAL_I2C_REG_MRXADDR_VALID(x) (0x1 << (24 + (x))) /**< [x*8+7:x*8] of MRX[R]ADDR valid */
 
 /***************************** Structure Definition **************************/
 
@@ -45,10 +45,10 @@
   * @brief  I2C mode definition
   */
 typedef enum {
-    REG_CON_MOD_TX = 0,      /* transmit data */
-    REG_CON_MOD_REGISTER_TX, /* select register and restart */
-    REG_CON_MOD_RX,          /* receive data */
-    REG_CON_MOD_REGISTER_RX /* broken: transmits read addr AND writes*/
+    REG_CON_MOD_TX = 0,      /**< transmit data */
+    REG_CON_MOD_REGISTER_TX, /**< select register and restart */
+    REG_CON_MOD_RX,          /**< receive data */
+    REG_CON_MOD_REGISTER_RX /**< broken: transmits read addr AND writes*/
 } eI2C_Mode;
 
 /**
@@ -95,10 +95,10 @@ struct HAL_I2C_DEV {
   * @brief  I2C message definition
   */
 struct I2C_MSG {
-    uint16_t addr; /* slave address */
-    uint16_t flags; /* flags */
-    uint16_t len; /* msg length */
-    uint8_t *buf; /* pointer to msg data */
+    uint16_t addr; /**< slave address */
+    uint16_t flags; /**< flags */
+    uint16_t len; /**< msg length */
+    uint8_t *buf; /**< pointer to msg data */
 };
 
 /**
