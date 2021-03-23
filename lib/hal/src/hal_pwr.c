@@ -303,6 +303,10 @@ HAL_Check HAL_PWR_CheckDescByPwrId(struct PWR_INTREG_DESC *desc,
 
 #endif
 
+/** @defgroup PWR_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
 /**
  * @brief  use linear ranges to convert seletor to voltage.
  * @param  linearTables: the power linear range table pointer.
@@ -375,6 +379,8 @@ int HAL_PWR_LinearRangeVoltToSel(const struct PWR_LINEAR_RANGE_TABLE *linearTabl
 
     return ret;
 }
+
+/** @} */
 
 /** @} */
 

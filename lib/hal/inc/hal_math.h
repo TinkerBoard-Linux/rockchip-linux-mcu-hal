@@ -17,6 +17,10 @@
 #ifndef _HAL_MATH_H_
 #define _HAL_MATH_H_
 
+/** @defgroup VOP_Private_Definition Private Definition
+ *  @{
+ */
+
 static const int SinTable[] =
 {
     0x00000000, 0x023be165, 0x04779632, 0x06b2f1d2, 0x08edc7b6, 0x0b27eb5c,
@@ -75,6 +79,8 @@ static inline int HAL_Sin(int angles)
 
 /* HAL_Cos(x) = HAL_Sin(x + 90 angles) */
 #define HAL_Cos(v) HAL_Sin((v) + 90)
+
+/** @} */
 
 #endif
 

@@ -26,6 +26,10 @@
 
 #if defined(HAL_PM_SLEEP_MODULE_ENABLED)
 
+/** @defgroup PM_Private_Definition Private Definition
+ *  @{
+ */
+
 /********************* Private MACRO Definition ******************************/
 /* sleep mode define */
 #define SLP_PMU_HW_ARM_PD    HAL_BIT(0)
@@ -840,6 +844,7 @@ static int SOC_SuspendEnter(uint32_t flag)
 }
 #endif
 
+/** @} */
 /********************* Public Function Definition ****************************/
 
 int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)

@@ -94,9 +94,13 @@ const struct PM_RUNTIME_INFO *HAL_PM_RuntimeGetData(void)
 
 #ifdef HAL_PM_SLEEP_MODULE_ENABLED
 
+/** @defgroup PM_Private_Definition Private Definition
+ *  @{
+ */
 /********************* Private Variable Definition ***************************/
 static struct SLEEP_CONFIG_DATA sleepConfigData;
 
+/** @} */
 /********************* Public Function Definition ***************************/
 /** @defgroup PM_CPU_SLEEP_Exported_Functions_Group5 Other Functions
  *  @{

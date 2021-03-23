@@ -13,14 +13,15 @@
 #include "hal_cache.h"
 #include "hal_base.h"
 
-/***************************** MACRO Definition ******************************/
 /** @defgroup CACHE_Exported_Definition_Group1 Basic Definition
  *  @{
  */
 
+/***************************** MACRO Definition ******************************/
+
 /***************************** Structure Definition **************************/
 
-/** @} */
+/********************* Private Function Definition ***************************/
 
 #if defined(__CORTEX_M)
 __STATIC_INLINE unsigned long HAL_SYS_EnterCriticalSection(void)
@@ -48,6 +49,7 @@ __STATIC_INLINE void HAL_SYS_ExitCriticalSection(unsigned long flags)
 }
 #endif
 
+/** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup CACHE_Exported_Functions_Group5 Other Functions
  *  @attention these APIs allow direct use in the HAL layer

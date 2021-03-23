@@ -25,6 +25,10 @@
 
  @} */
 
+/** @defgroup PM_Private_Definition Private Definition
+ *  @{
+ */
+
 /********************* Private MACRO Definition ******************************/
 
 /* for pm_runtime */
@@ -629,6 +633,12 @@ static int SOC_SuspendEnter(uint32_t flag)
 }
 #endif
 
+/** @} */
+/********************* Public Function Definition ****************************/
+/** @defgroup PM_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
 HAL_Status HAL_PM_TimerStart(uint64_t timeoutCount, bool needTimeout)
 {
     pmTimerLastCount = HAL_GetSysTimerCount();
@@ -719,6 +729,8 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 
     return HAL_OK;
 }
+
+/** @} */
 #endif
 
 /** @} */

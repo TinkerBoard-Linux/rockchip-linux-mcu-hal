@@ -19,6 +19,10 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
+/** @defgroup DEMO_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
+
 #define PM_RUNTIME_TYPE_MUTI_SFT (3)
 #define PM_RUNTIME_PER_TYPE_NUM  (8)
 
@@ -111,6 +115,8 @@ struct SLEEP_CONFIG_DATA {
     uint32_t suspendWkupSrc;
 };
 #endif
+
+/** @} */
 /***************************** Function Declare ******************************/
 /** @defgroup PM_Public_Function_Declare Public Function Declare
  *  @{

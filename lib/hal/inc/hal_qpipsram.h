@@ -21,6 +21,9 @@
 #include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
+/** @defgroup QPIPSRAM_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
 
 #define QPIPSRAM_PROTO_STR(a, b, c)            (((a) << 8) | ((b) << 4) | (c))
 #define QPIPSRAM_GET_PROTOCOL_CMD_BITS(proto)  (((proto) >> 8) & 0xf)
@@ -83,6 +86,7 @@ struct QPI_PSRAM {
     uint32_t size;
     uint32_t pageSize;
 };
+/** @} */
 
 /***************************** Function Declare ******************************/
 /** @defgroup QPIPSRAM_Public_Function_Declare Public Function Declare

@@ -24,6 +24,10 @@
 
  @} */
 
+/** @defgroup PM_Private_Definition Private Definition
+ *  @{
+ */
+
 /********************* Private MACRO Definition ******************************/
 
 /* for pm_runtime */
@@ -504,6 +508,12 @@ _ret_err:
     return UINT32_MAX;
 }
 
+/** @} */
+/********************* Public Function Definition ****************************/
+/** @defgroup PM_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
 uint32_t HAL_PM_RuntimeEnter(ePM_RUNTIME_idleMode idleMode)
 {
     uint32_t ret;
@@ -596,6 +606,8 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
 
     return HAL_OK;
 }
+
+/** @} */
 #endif
 
 /** @} */
