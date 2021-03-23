@@ -2,9 +2,9 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V2.5.0
+发布版本：V2.6.0
 
-日期：2021-03-22
+日期：2021-03-23
 
 文件密级：□绝密   □秘密   □内部资料   ■公开
 
@@ -81,6 +81,7 @@ Rockchip Electronics Co., Ltd.
 | V2.3.1     | 2020.07  | Tao Huang    | 调整格式                               |
 | V2.4.0     | 2020.07  | Tao Huang    | 强调排版风格遵守 MISRA-C               |
 | V2.5.0     | 2021.03  | Jon Lin      | 增加 SOC 支持、修改 Doxygen 规范       |
+| V2.6.0     | 2021.03  | Jon Lin      | 增加 middleware 目录       |
 
 ---
 
@@ -166,13 +167,14 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 │           ├── hal_nvic.c
 │           ├── hal_uart.c
 │           ...
-└── project
-    └── rk2106
-        ├── GCC
-        └── src
-            ├── hal_conf.h
-            ├── main.c
-            └── main.h
+├── project
+│   └── rk2106
+│       ├── GCC
+│       └── src
+│           ├── hal_conf.h
+│           ├── main.c
+│           └── main.h
+└── middleware
 
 ```
 
@@ -184,6 +186,7 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 | lib/hal   | MCU 的 HAL 驱动库代码                            |
 | lib/bsp   | MCU 的芯片公共 BSP 配置的代码                    |
 | test      | HAL 驱动的驱动测试代码                           |
+| middleware | 扩展开发包                             |
 
 ### 库组成预览
 
@@ -242,6 +245,10 @@ project 目录基于板子或者项目建立工程，包含可运行的用户代
 | hal_conf.h | HAL 模块宏开关配置的头文件，通过重定义该文件可以裁剪 HAL 库。 |
 | rkxx_bsp.c | 包含 BSP 初始化。                                            |
 | main.c/.h  | 系统初始化：包括 HAL_Init()，系统时钟初始化，外设初始化，用户应用。 |
+
+### middleware 目录文件
+
+middleware 目录用于存放扩展开发包，例如：可用于存放 FatFs 实现代码 middleware/FatFs。
 
 ## 如何使用固件库
 
