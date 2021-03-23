@@ -81,7 +81,7 @@
 #define HAL_VOP_MODULE_ENABLED
 #define HAL_WDT_MODULE_ENABLED
 
-/********************* HAL Driver Subtitude Config ****************************/
+/************************ HAL Driver Sub Config *******************************/
 
 #define HAL_SYSLOG printf /* Redirect HAL print function */
 #define HAL_DBG_ON
