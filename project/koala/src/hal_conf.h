@@ -31,7 +31,7 @@
 #define HAL_UART_MODULE_ENABLED
 #define HAL_WDT_MODULE_ENABLED
 
-/* HAL_DEG SUB CONFIG */
+/* HAL_DBG SUB CONFIG */
 #define HAL_SYSLOG printf
 #define HAL_DBG_ON
 #define HAL_DBG_INFO_ON
