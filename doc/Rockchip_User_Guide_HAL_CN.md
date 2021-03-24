@@ -2,9 +2,9 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V2.6.0
+发布版本：V2.7.0
 
-日期：2021-03-23
+日期：2021-03-24
 
 文件密级：□绝密   □秘密   □内部资料   ■公开
 
@@ -82,6 +82,7 @@ Rockchip Electronics Co., Ltd.
 | V2.4.0     | 2020.07  | Tao Huang    | 强调排版风格遵守 MISRA-C               |
 | V2.5.0     | 2021.03  | Jon Lin      | 增加 SOC 支持、修改 Doxygen 规范       |
 | V2.6.0     | 2021.03  | Jon Lin      | 增加 middleware 目录       |
+| V2.7.0     | 2021.03  | Jon Lin      | demo 示例由 RK2106 更改为 RK2108，优化文件布局章节 |
 
 ---
 
@@ -137,22 +138,24 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 ├── lib
 │   ├── CMSIS
 │   │   ├── Device
-│   │   │   └── RK2106
+│   │   │   └── RK2108
 │   │   │       ├── Include
 │   │   │       │   ├── soc.h
-│   │   │       │   └── system_rk2106.h
+│   │   │       │   ├── rk2108.h
+│   │   │       │   ├── rk2108_usb.h
+│   │   │       │   └── system_rk2108.h
 │   │   │       └── Source
 │   │   │           ├── GCC
 │   │   │           │   ├── gcc_arm.ld
-│   │   │           │   └── startup_rk2106.S
-│   │   │           └── system_rk2106.c
+│   │   │           │   └── startup_rk2108.S
+│   │   │           └── system_rk2108.c
 │   │   └── Include
 │   │       ├── cmsis_compiler.h
 │   │       ├── cmsis_gcc.h
 │   │       ├── core_cm4.h
 │   │        ...
 │   ├── bsp
-│   │   └── RK2106
+│   │   └── RK2108
 │   │       ├── hal_bsp.c
 │   │       └── hal_bsp.h
 │   └── hal
@@ -168,7 +171,7 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 │           ├── hal_uart.c
 │           ...
 ├── project
-│   └── rk2106
+│   └── rk2108
 │       ├── GCC
 │       └── src
 │           ├── hal_conf.h
@@ -190,35 +193,37 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 
 ### 库组成预览
 
-以 RK2106 为例：
+以 RK2108 为例：
 
-![5](Rockchip_User_Guide_HAL_CN/file_structure.jpg)
+![5](./Rockchip_User_Guide_HAL_CN/file_structure.jpg)
 
 ### SOC 目录文件
 
 lib/CMSIS/Device 目录存放 SoC 相关的硬件信息,寄存器定义文件以及芯片启动相关代码.
 
-| 文件                 | 描述                                                         |
-| -------------------- | ------------------------------------------------------------ |
-| *startup_rk2106.S*   | 包含重置处理程序和异常向量的工具链特定文件,根据需求调整堆栈大小。 |
-| *system_rk2106.c/.h* | 包含：系统 start up 汇编文件中在跳转 main 前调用的 SystemInit()。 |
-| *gcc_arm.ld*         | 链接脚本                                                     |
-| *soc.h*              | 存放中断号、模块基地址、寄存器结构体、位宏信息的头文件，HAL 库统一引用 |
+| 文件               | 描述                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| startup_rk2108.S   | 包含重置处理程序和异常向量的工具链特定文件,根据需求调整堆栈大小。 |
+| system_rk2108.c/.h | 包含：系统 start up 汇编文件中在跳转 main 前调用的 SystemInit()。 |
+| gcc_arm.ld         | 链接脚本                                                     |
+| soc.h              | 存放中断号、模块基地址、寄存器结构体、位宏信息的头文件，HAL 库统一引用 |
+| rk2108.h           | 存放由 rxbb 工具生成的模块基地址、寄存器结构体、位宏信息的头文件 |
+| rk2108_usb.h       | usb 模块寄存器结构体、位宏信息的头文件                       |
 
 ### HAL 目录文件
 
-lib/hal 目录包含 HAL 库的代码主体, 其中 src 目录直接包含所有模块的 C 代码, inc 目录包含对外 API 函数声明, 由于模块寄存器结构体和 BIT 定义都已包含在 SOC 头文件中, 各模块不再使用私有头文件, 如需要定义私有的宏或结构体, 可在 C 文件中直接定义。
+lib/hal 目录包含 HAL 库的代码主体，其中 src 目录直接包含所有模块的 C 代码, inc 目录包含对外 API 函数声明, 由于模块寄存器结构体和 BIT 定义都已包含在 SOC 头文件中, 各模块不再使用私有头文件, 如需要定义私有的宏或结构体, 可在 C 文件中直接定义。
 
-| 文件                  | 描述                                                         |
-| --------------------- | ------------------------------------------------------------ |
-| *hal_ppp.c*           | 主要外设/模块驱动文件,包括所有的 RK 设备通用的 API，例如：hal_adc.c, hal_spi.c。 |
-| *hal_ppp.h*           | 主要驱动器 C 文件的头文件，它包括公共数据、句柄和枚举结构、定义语句和宏，以及导出的通用接口。例如：hal_adc.h, hal_spi.h。 |
-| *hal_ppp_ex.c*        | 外围设备或模块驱动程序的扩展文件。这组文件中包含特定型号或者系列的芯片的特殊 API。以及如果该特定的芯片内部有不同的实现方式，则该文件中的特殊 API 将覆盖_ppp 中的通用 API。例如：hal_adc_ex.c, hal_spi_ex.c。 |
-| *hal_ppp_ex.h*        | 外围设备或模块驱动程序的扩展文件头文件，它包括特定的数据和枚举结构，定义语句和宏，以及导出的设备部分，例如: hal_adc_ex.ah, hal_spi_ex.h。 |
-| *hal_base.c*          | HAL 库初始化，包含 DEBUG 接口、基于 SysTick 接口的 Time Delay      |
-| *hal_base.h*          | hal_base.c 头文件                                             |
-| *hal_conf.h.template* | HAL 库所有模块全功能的宏开关配置文件，需根据具体的芯片和设备来裁剪相应配置以输出目标设备的 hal_conf.h。<br />该文件有以下规范：<br />1.文件由 芯片配置、模块配置、模块次级配置组成<br />2.对于可选的配置需添加明确的注释说明 |
-| *hal_def.h*           | 常见的 HAL 资源，如通用定义语句、枚举、结构体和宏定义。        |
+| 文件                | 描述                                                         |
+| ------------------- | ------------------------------------------------------------ |
+| hal_ppp.c           | 主要外设/模块驱动文件,包括所有的 RK 设备通用的 API，例如：hal_adc.c, hal_spi.c。 |
+| hal_ppp.h           | 主要驱动器 C 文件的头文件，它包括公共数据、句柄和枚举结构、定义语句和宏，以及导出的通用接口。例如：hal_adc.h, hal_spi.h。 |
+| hal_ppp_ex.c        | 外围设备或模块驱动程序的扩展文件。这组文件中包含特定型号或者系列的芯片的特殊 API。以及如果该特定的芯片内部有不同的实现方式，则该文件中的特殊 API 将覆盖_ppp 中的通用 API。例如：hal_adc_ex.c, hal_spi_ex.c。 |
+| hal_ppp_ex.h        | 外围设备或模块驱动程序的扩展文件头文件，它包括特定的数据和枚举结构，定义语句和宏，以及导出的设备部分，例如: hal_adc_ex.ah, hal_spi_ex.h。 |
+| hal_base.c          | HAL 库初始化，包含 DEBUG 接口、基于 SysTick 接口的 Time Delay |
+| hal_base.h          | hal_base.c 头文件                                            |
+| hal_conf.h.template | HAL 库所有模块全功能的宏开关配置文件，需根据具体的芯片和设备来裁剪相应配置以输出目标设备的 hal_conf.h。<br />该文件有以下规范：<br />1.文件由 芯片配置、模块配置、模块次级配置组成<br />2.对于可选的配置需添加明确的注释说明 |
+| hal_def.h           | 常见的 HAL 资源，如通用定义语句、枚举、结构体和宏定义。      |
 
 ### BSP 目录文件
 
@@ -238,7 +243,7 @@ test_runner.c: 测试骨架程序，用于用户主程序调用
 
 ### project 目录文件
 
-project 目录基于板子或者项目建立工程，包含可运行的用户代码, 主要用于提供 main 函数调用各模块接口. 如 rk2106-evb 是针对该板子的工程，里面需要实现所有板子特有的软硬件初始化和模块定义。
+project 目录基于板子或者项目建立工程，包含可运行的用户代码, 主要用于提供 main 函数调用各模块接口. 如 project/rk2108 是针对该板子的工程，里面需要实现所有板子特有的软硬件初始化和模块定义。
 
 | 文件       | 描述                                                         |
 | ---------- | ------------------------------------------------------------ |
@@ -406,7 +411,7 @@ arm-none-eabi-objcopy -O binary TestDemo.elf TestDemo.bin
 
 ### 命名规则
 
-芯片相关的以芯片型号为关键字标识,如 start up 汇编“*startup_rk2106.S*”，驱动相关的硬件抽象层文件以模块简写开头，如“*hal_uart.c*”.
+芯片相关的以芯片型号为关键字标识,如 start up 汇编“*startup_rk2108.S*”，驱动相关的硬件抽象层文件以模块简写开头，如“*hal_uart.c*”.
 
 #### 函数命名
 
@@ -955,16 +960,38 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 
 #### C 代码源文件
 
-驱动代码要求私有宏, 结构体, 变量等定义放 C 代码开头部分, 然后是私有函数, 然后是公共的 API 函数.
+驱动代码要求私有宏, 结构体, 变量等定义放 C 代码开头部分, 然后是私有函数, 然后是公共的 API 函数。
+
+参考文件 hal_demo.c：
 
 ```c
-/* SPDX-License-Identifier: BSD-3-Clause */
+/* SPDX-License-Identifier: BSD-3-Clause */                                                     // License 及 copyright
 /*
- * Copyright (c) 2020 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
-#include "hal_base.h"
+#include "hal_base.h"                                                                          // HAL 库引用
 
+#ifdef HAL_DEMO_MODULE_ENABLED                                                                 // 模块宏保护
+
+/** @addtogroup RK_HAL_Driver                                                                  // Doxygen 所属库声明
+ *  @{
+ */
+
+/** @addtogroup DEMO                                                                           // Doxygen 所属模块声明
+ *  @{
+ */
+
+/** @defgroup DEMO_How_To_Use How To Use                                                       // Doxygen 模块应用说明
+ *  @{
+
+ The DEMO driver can be used as follows:
+
+ @} */
+
+/** @defgroup DEMO_Private_Definition Private Definition                                       // Doxygen 模块内所属分组声明
+ *  @{
+ */
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/
@@ -973,36 +1000,216 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 
 /********************* Private Function Definition ***************************/
 
+/** @} */
 /********************* Public Function Definition ****************************/
+/** @defgroup DEMO_Exported_Functions_Group1 Suspend and Resume Functions                     // Doxygen 模块内所属分组声明
+
+ This section provides functions allowing to suspend and resume the module:
+
+ ...to do or delete this row
+
+ *  @{
+ */
+
+/**
+ * @brief  It is for test.
+ * @param  inputTest: for test.
+ * @return HAL_Status
+ * ...to do or delete this row
+ */
+HAL_Status HAL_DEMO_Supsend(uint32_t inputTest)
+{
+    /* ...to do */
+}
+
+/**
+ * @brief  It is for test.
+ * @param  inputTest: for test.
+ * @return HAL_Status
+ * ...to do or delete this row
+ */
+HAL_Status HAL_DEMO_Resume(uint32_t inputTest)
+{
+    /* ...to do */
+}
+
+/** @} */
+
+/** @defgroup DEMO_Exported_Functions_Group2 State and Errors Functions                       // Doxygen 模块内所属分组声明
+
+ This section provides functions allowing to get the status of the module:
+
+ *  @{
+ */
+
+/**
+ * @brief  It is for test.
+ * @param  inputTest: for test.
+ * @return HAL_Status
+ * ...to do or delete this row
+ */
+HAL_Status HAL_DEMO_GetXXXState(uint32_t inputTest)
+{
+    /* ...to do */
+}
+
+/** @} */
+
+/** @defgroup DEMO_Exported_Functions_Group3 IO Functions                                     // Doxygen 模块内所属分组声明
+
+ This section provides functions allowing to IO controlling:
+
+ *  @{
+ */
+
+/**
+ * @brief  It is for test.
+ * @param  inputTest: for test.
+ * @return HAL_Status
+ * ...to do or delete this row
+ */
+HAL_Status HAL_DEMO_WriteByte_DMA(uint32_t inputTest)
+{
+    /* ...to do */
+}
+
+/** @} */
+
+/** @defgroup DEMO_Exported_Functions_Group4 Init and DeInit Functions                       // Doxygen 模块内所属分组声明
+
+ This section provides functions allowing to init and deinit the module:
+
+ ...to do or delete this row
+
+ *  @{
+ */
+
+/**
+ * @brief  It is for test.
+ * @param  inputTest: for test.
+ * @return HAL_Status
+ * ...to do or delete this row
+ */
+HAL_Status HAL_DEMO_Init(uint32_t inputTest)
+{
+    /* ...to do */
+}
+
+/**
+ * @brief  It is for test.
+ * @param  inputTest: for test.
+ * @return HAL_Status
+ * ...to do or delete this row
+ */
+HAL_Status HAL_DEMO_DeInit(uint32_t inputTest)
+{
+    /* ...to do */
+}
+
+/** @} */
+
+/** @defgroup DEMO_Exported_Functions_Group5 Other Functions                                // Doxygen 模块内所属分组声明
+ *  @{
+ */
+
+/**
+ * @brief  It is for test.
+ * @param  inputTest: for test.
+ * @return HAL_Status
+ * ...to do or delete this row
+ */
+HAL_Status HAL_DEMO_CommonFunction(uint32_t inputTest)
+{
+    /* ...to do */
+}
+
+/** @} */
+
+/** @} */
+
+/** @} */
+
+#endif /* HAL_DEMO_MODULE_ENABLED */
+
 ```
 
 #### 头文件
 
-模块头文件 lib/hal/inc/hal_ppp.h 作为对外 API 头文件声明, 应包含对外 API 函数声明, 及其需要使用的结构提和枚举类型，不可包含私有变量，宏或结构体.
+模块头文件 lib/hal/inc/hal_ppp.h 作为对外 API 头文件声明, 应包含对外 API 函数声明, 及其需要使用的结构提和枚举类型，不可包含私有变量，宏或结构体。
+
+参考文件 hal_demo.h：
 
 ```c
-/* SPDX-License-Identifier: BSD-3-Clause */
+/* SPDX-License-Identifier: BSD-3-Clause */                                        // License 及 copyright
 /*
- * Copyright (c) 2020 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
  */
 
-#ifndef _HAL_UART_H_
-#define _HAL_UART_H_
+#include "hal_conf.h"                                                              // HAL 芯片及模块宏开关
 
-#include "hal_base.h"
+#ifdef HAL_DEMO_MODULE_ENABLED                                                     // 模块宏保护
+
+/** @addtogroup RK_HAL_Driver                                                      // Doxygen 所属库声明
+ *  @{
+ */
+
+/** @addtogroup DEMO                                                               // Doxygen 所属模块声明
+ *  @{
+ */
+
+#ifndef _HAL_DEMO_H_
+#define _HAL_DEMO_H_
+
+#include "hal_def.h"
 
 /***************************** MACRO Definition ******************************/
+/** @defgroup DEMO_Exported_Definition_Group1 Basic Definition                     // Doxygen 模块内所属分组声明
+ *  @{
+ */
+
+/** Add brief to here */
+#define DEMO_TEST_DEFINE 0
 
 /***************************** Structure Definition **************************/
 
+/**
+ *  Add multi line brief to here
+ *  ...
+ */
+typedef enum {
+    TEST_ENUM_ONE,
+    TEST_ENUM_TWO,
+    TEST_ENUM_THREE
+} eDEMO_Test;
+
+/** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup DEMO_Public_Function_Declare Public Function Declare                 // Doxygen 模块内所属分组声明
+ *  @{
+ */
+
+HAL_Status HAL_DEMO_Supsend(uint32_t inputTest);
+HAL_Status HAL_DEMO_Resume(uint32_t inputTest);
+HAL_Status HAL_DEMO_GetXXXState(uint32_t inputTest);
+HAL_Status HAL_DEMO_WriteByte_DMA(uint32_t inputTest);
+HAL_Status HAL_DEMO_Init(uint32_t inputTest);
+HAL_Status HAL_DEMO_DeInit(uint32_t inputTest);
+HAL_Status HAL_DEMO_CommonFunction(uint32_t inputTest);
+
+/** @} */
 
 #endif
+
+/** @} */
+
+/** @} */
+
+#endif /* HAL_DEMO_MODULE_ENABLED */
 ```
 
 头文件包含关系示例如下：
 
-![header](Rockchip_User_Guide_HAL_CN/header_call.jpg)
+![header](./Rockchip_User_Guide_HAL_CN/header_call.jpg)
 
 其中芯片的选择和模块选择统一位于 hal_conf.h。
 
@@ -1136,7 +1343,7 @@ while (PD_ReadAck(pd) != idle) {
 
 驱动需要提交的测试代码位于 test/hal/目录，'test_'作为前缀对应驱动测试代码，
 
-每个驱动只要提供对应的一个 c 文件并把自己的 group 添加到 test_main.c，里面的测试 case 会被 test_main 自动包含和调用，test_main()一般由板级流程(如 rk2106-evb)调用；
+每个驱动只要提供对应的一个 c 文件并把自己的 group 添加到 test_main.c，里面的测试 case 会被 test_main 自动包含和调用，test_main()一般由板级流程(如 rk2108-evb)调用；
 
 ### 实现
 
@@ -1155,13 +1362,13 @@ while (PD_ReadAck(pd) != idle) {
 该部分代码移植 cmsis 标准库启动代码。
 
 ```c
-startup_<device>.c		//：如startup_rk2106.c
+startup_<device>.c		//：如startup_rk2108.c
 ```
 
 ## 外设寄存器
 
 ```c
-<device>.h		//如：rk2106.h, HAL库由hal_bash.h索引。
+<device>.h		//如：rk2108.h, HAL库由hal_bash.h索引。
 ```
 
 - 外设寄存器基地址
@@ -1169,13 +1376,27 @@ startup_<device>.c		//：如startup_rk2106.c
 - 外设寄存器结构体
 
 - 位宏
+- CPAL库索引，按照CMSIS规范，关于芯片特性的定义和CPAL库接口索引统一在这个文件里：
 
-- CPAL 库索引，按照 CMSIS 规范，所有 CPAL 库接口索引统一在这个文件里：
+```c
+/* ================================================================================ */
+/* ================      Processor and Core Peripheral Section     ================ */
+/* ================================================================================ */
 
-  ```c
-  #include "core_cm3.h"                       /* Processor and core peripherals */
-  #include "system_rk2106.h"                  /* System Header */
-  ```
+#define __CM4_REV                 0x0001U  /* Core revision r0p1                    */
+#define __MPU_PRESENT             1U       /* RK2108 provides an MPU                */
+#define __VTOR_PRESENT            1U       /* VTOR present */
+#define __NVIC_PRIO_BITS          3U       /* RK2108 uses 3 Bits for the Priority Levels   */
+#define __Vendor_SysTickConfig    0U       /* Set to 1 if different SysTick Config is used */
+#define __FPU_PRESENT             1U       /* FPU present                                  */
+
+#ifndef __ASSEMBLY__
+#include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
+#include "system_rk2108.h"
+#endif /* __ASSEMBLY__ */
+#include "rk2108.h"
+#include "rk2108_usb.h"
+```
 
 ### 系统初始化
 
@@ -1188,7 +1409,7 @@ system_<device>.c/.h
 例如：
 
 ```c
-system_rk2106.c/.h
+system_rk2108.c/.h
 ```
 
 主要包括以下部分：
