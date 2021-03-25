@@ -18,16 +18,6 @@
 
 static struct UART_REG *pUart = UART2;
 
-static void UART2_IOMUX_Init(void)
-{
-    /* UART2 M0 RX-0D0 TX-0D1 */
-    WRITE_REG_MASK_WE(PMU_GRF->GPIO0D_IOMUX_L,
-                      PMU_GRF_GPIO0D_IOMUX_L_GPIO0D0_SEL_MASK |
-                      PMU_GRF_GPIO0D_IOMUX_L_GPIO0D1_SEL_MASK,
-                      1 << PMU_GRF_GPIO0D_IOMUX_L_GPIO0D0_SEL_SHIFT |
-                      1 << PMU_GRF_GPIO0D_IOMUX_L_GPIO0D1_SEL_SHIFT);
-}
-
 #ifdef __GNUC__
 int _write(int fd, char *ptr, int len)
 {
@@ -95,7 +85,6 @@ void main(void)
     BSP_Init();
 
     /* UART Init */
-    UART2_IOMUX_Init();
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
     HAL_GIC_Init(HAL_CPU_TOPOLOGY_getCurrentCpuId(), &irqConfig);
     printf("Hello RK3568 Bare-metal using RK_HAL!\n");
