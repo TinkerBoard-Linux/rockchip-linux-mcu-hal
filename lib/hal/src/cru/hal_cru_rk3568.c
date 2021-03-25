@@ -445,6 +445,19 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 
         break;
 
+    case CLK_TSADC_TSEN:
+        if (HAL_CRU_ClkGetMux(clkMux)) {
+            pRate = s_gpllFreq / 12;
+        } else {
+            pRate = PLL_INPUT_OSC_RATE;
+        }
+
+        break;
+    case CLK_TSADC:
+        pRate = HAL_CRU_ClkGetFreq(CLK_TSADC_TSEN);
+
+        break;
+
     default:
         break;
     }
@@ -519,6 +532,21 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
             pRate = s_gpllFreq;
             mux = 0;
         }
+
+        break;
+
+    case CLK_TSADC_TSEN:
+        if (PLL_INPUT_OSC_RATE % rate == 0) {
+            pRate = PLL_INPUT_OSC_RATE;
+            mux = 0;
+        } else {
+            pRate = s_gpllFreq / 12;
+            mux = 1;
+        }
+
+        break;
+    case CLK_TSADC:
+        pRate = HAL_CRU_ClkGetFreq(CLK_TSADC_TSEN);
 
         break;
 

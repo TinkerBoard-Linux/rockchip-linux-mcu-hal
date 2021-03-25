@@ -173,6 +173,8 @@ typedef enum CLOCK_Name {
     CLK_CAN0       = CLK(CLK_CAN0_SEL, CLK_CAN0_DIV),
     CLK_CAN1       = CLK(CLK_CAN1_SEL, CLK_CAN1_DIV),
     CLK_CAN2       = CLK(CLK_CAN2_SEL, CLK_CAN2_DIV),
+    CLK_TSADC_TSEN = CLK(CLK_TSADC_TSEN_SEL, CLK_TSADC_TSEN_DIV),
+    CLK_TSADC      = CLK(0, CLK_TSADC_DIV),
 } eCLOCK_Name;
 #endif
 /****************************************MBOX********************************************/
