@@ -44,6 +44,10 @@
 #define TSADC_AUTO_PERIOD_HT_TIME        50
 #define TSADC_TSHUT_TEMP                 (120000)
 
+#define TSADCV2_USER_INTER_PD_SOC   0x8fc0 /* 97us, at least 90us */
+#define TSADCV2_AUTO_PERIOD_TIME    1622 /* 2.5ms */
+#define TSADCV2_AUTO_PERIOD_HT_TIME 1622 /* 2.5ms */
+
 /********************* Private Structure Definition **************************/
 
 struct TSADC_TABLE {
@@ -59,11 +63,19 @@ struct TSADC_CONFIG {
 
 /********************* Private Variable Definition ***************************/
 
+#if defined(RKMCU_RK2206)
 static const struct TSADC_TABLE s_tsadcTable[] =
 {
     { 3461, -40000 },
     { 3751, 125000 },
 };
+#elif defined(SOC_RK3568)
+static const struct TSADC_TABLE s_tsadcTable[] =
+{
+    { 1584, -40000 },
+    { 2704, 125000 },
+};
+#endif
 
 static const struct TSADC_CONFIG s_tsadcConfig =
 {
@@ -253,7 +265,8 @@ static int TSADC_GetTemp(const struct TSADC_CONFIG *config, int chn)
  * @brief tsadc config.
  * @param tshut_polarity: tsadc tshut pin polarity
  */
-static void HAL_TSADC_Config(eTSADC_tshutPolarity polarity)
+#if defined(RKMCU_RK2206)
+static void TSADC_Config(eTSADC_tshutPolarity polarity)
 {
     /* set tshut_prolarity 0: Low active , 1: High active */
 #ifdef TSADC_AUTO_CON_TSHUT_PROLARITY_MASK
@@ -266,6 +279,28 @@ static void HAL_TSADC_Config(eTSADC_tshutPolarity polarity)
     TSADC->AUTO_PERIOD_HT = TSADC_AUTO_PERIOD_HT_TIME;
     TSADC->HIGHT_TSHUT_DEBOUNCE = TSADC_HIGHT_TSHUT_DEBOUNCE_COUNT;
 }
+#elif defined(SOC_RK3568)
+static void TSADC_Config(eTSADC_tshutPolarity polarity)
+{
+#ifdef TSADC_AUTO_CON_TSHUT_PROLARITY_MASK
+    CLEAR_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_TSHUT_PROLARITY_MASK);
+    SET_BIT(TSADC->AUTO_CON, (polarity << TSADC_AUTO_CON_TSHUT_PROLARITY_SHIFT));
+#endif
+
+    TSADC->USER_CON = TSADCV2_USER_INTER_PD_SOC;
+    TSADC->AUTO_PERIOD = TSADCV2_AUTO_PERIOD_TIME;
+    TSADC->HIGHT_INT_DEBOUNCE = TSADC_HIGHT_INT_DEBOUNCE_COUNT;
+    TSADC->AUTO_PERIOD_HT = TSADCV2_AUTO_PERIOD_HT_TIME;
+    TSADC->HIGHT_TSHUT_DEBOUNCE = TSADC_HIGHT_TSHUT_DEBOUNCE_COUNT;
+
+    GRF->TSADC_CON = GRF->TSADC_CON | (0x10001 << 8);
+    HAL_DelayUs(15);
+    GRF->TSADC_CON = GRF->TSADC_CON | (0x10001 << 0);
+    GRF->TSADC_CON = GRF->TSADC_CON | (0x10001 << 1);
+    GRF->TSADC_CON = GRF->TSADC_CON | (0x10001 << 2);
+    HAL_DelayUs(200);
+}
+#endif
 
 /**
  * @brief tsadc enable auto mode.
@@ -379,7 +414,7 @@ HAL_Status HAL_TSADC_Enable_AUTO(int chn, eTSADC_tshutPolarity polarity, eTSADC_
     HAL_ASSERT(polarity <= TSHUT_HIGH_ACTIVE);
     HAL_ASSERT(mode <= TSHUT_MODE_GPIO);
 
-    HAL_TSADC_Config(polarity);
+    TSADC_Config(polarity);
     TSADC_IrqAck();
     TSADC_TshutTemp(&s_tsadcConfig, chn, TSADC_TSHUT_TEMP);
     TSADC_TshutMode(chn, mode);
