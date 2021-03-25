@@ -11,6 +11,10 @@
 
 static void RunAllTests(void)
 {
+#if defined(HAL_DEMO_MODULE_ENABLED) && defined(UNITY_HAL_DEMO)
+    RUN_TEST_GROUP(HAL_DEMO);
+#endif
+
 #ifdef UNITY_HAL_LEAGACY
     RUN_TEST_GROUP(HAL_LEAGACY);
 #endif

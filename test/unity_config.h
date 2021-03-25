@@ -18,6 +18,7 @@
 #define UNITY_HAL_PSRAM
 #define UNITY_HAL_SPIFLASH
 #define UNITY_HAL_HYPERPSRAM
+#define UNITY_HAL_DEMO
 /************** HAL Macro Define *****************/
 
 #endif
