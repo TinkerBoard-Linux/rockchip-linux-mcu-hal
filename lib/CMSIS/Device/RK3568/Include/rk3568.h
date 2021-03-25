@@ -392,6 +392,26 @@ struct UART_REG {
     __I  uint32_t UCV;                                /* Address Offset: 0x00F8 */
     __I  uint32_t CTR;                                /* Address Offset: 0x00FC */
 };
+/* TSADC Register Structure Define */
+struct TSADC_REG {
+    __IO uint32_t USER_CON;                           /* Address Offset: 0x0000 */
+    __IO uint32_t AUTO_CON;                           /* Address Offset: 0x0004 */
+    __IO uint32_t INT_EN;                             /* Address Offset: 0x0008 */
+    __IO uint32_t INT_PD;                             /* Address Offset: 0x000C */
+         uint32_t RESERVED0010[4];                    /* Address Offset: 0x0010 */
+    __I  uint32_t DATA[2];                            /* Address Offset: 0x0020 */
+         uint32_t RESERVED0028[2];                    /* Address Offset: 0x0028 */
+    __IO uint32_t COMP_INT[2];                        /* Address Offset: 0x0030 */
+         uint32_t RESERVED0038[2];                    /* Address Offset: 0x0038 */
+    __IO uint32_t COMP_SHUT[2];                       /* Address Offset: 0x0040 */
+         uint32_t RESERVED0048[6];                    /* Address Offset: 0x0048 */
+    __IO uint32_t HIGHT_INT_DEBOUNCE;                 /* Address Offset: 0x0060 */
+    __IO uint32_t HIGHT_TSHUT_DEBOUNCE;               /* Address Offset: 0x0064 */
+    __IO uint32_t AUTO_PERIOD;                        /* Address Offset: 0x0068 */
+    __IO uint32_t AUTO_PERIOD_HT;                     /* Address Offset: 0x006C */
+         uint32_t RESERVED0070[4];                    /* Address Offset: 0x0070 */
+    __IO uint32_t COMP_LOW_INT[2];                    /* Address Offset: 0x0080 */
+};
 /* MBOX Register Structure Define */
 struct MBOX_CMD_DAT {
     __IO uint32_t CMD;
@@ -431,6 +451,7 @@ struct MBOX_REG {
 #define TIMER4_BASE         0xFE5F0080U /* TIMER4 base address */
 #define TIMER5_BASE         0xFE5F00A0U /* TIMER5 base address */
 #define UART2_BASE          0xFE660000U /* UART2 base address */
+#define TSADC_BASE          0xFE710000U /* TSADC base address */
 #define MBOX0_BASE          0xFE780000U /* MBOX0 base address */
 /****************************************************************************************/
 /*                                                                                      */
@@ -454,6 +475,7 @@ struct MBOX_REG {
 #define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
+#define TSADC               ((struct TSADC_REG *) TSADC_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
 
 #define IS_PMU_GRF_INSTANCE(instance) ((instance) == PMU_GRF)
@@ -464,6 +486,7 @@ struct MBOX_REG {
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7))
 #define IS_CAN_INSTANCE(instance) (((instance) == CAN0) || ((instance) == CAN1) || ((instance) == CAN2))
 #define IS_UART_INSTANCE(instance) ((instance) == UART2)
+#define IS_TSADC_INSTANCE(instance) ((instance) == TSADC)
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
 /****************************************************************************************/
 /*                                                                                      */
@@ -6533,6 +6556,131 @@ struct MBOX_REG {
 #define UART_CTR                                           (0x44570110U)
 #define UART_CTR_PERIPHERAL_ID_SHIFT                       (0U)
 #define UART_CTR_PERIPHERAL_ID_MASK                        (0xFFFFFFFFU << UART_CTR_PERIPHERAL_ID_SHIFT)                /* 0xFFFFFFFF */
+/*****************************************TSADC******************************************/
+/* USER_CON */
+#define TSADC_USER_CON_OFFSET                              (0x0U)
+#define TSADC_USER_CON_ADC_INPUT_SRC_SEL_SHIFT             (0U)
+#define TSADC_USER_CON_ADC_INPUT_SRC_SEL_MASK              (0x7U << TSADC_USER_CON_ADC_INPUT_SRC_SEL_SHIFT)             /* 0x00000007 */
+#define TSADC_USER_CON_ADC_POWER_CTRL_SHIFT                (3U)
+#define TSADC_USER_CON_ADC_POWER_CTRL_MASK                 (0x1U << TSADC_USER_CON_ADC_POWER_CTRL_SHIFT)                /* 0x00000008 */
+#define TSADC_USER_CON_START_MODE_SHIFT                    (4U)
+#define TSADC_USER_CON_START_MODE_MASK                     (0x1U << TSADC_USER_CON_START_MODE_SHIFT)                    /* 0x00000010 */
+#define TSADC_USER_CON_START_SHIFT                         (5U)
+#define TSADC_USER_CON_START_MASK                          (0x1U << TSADC_USER_CON_START_SHIFT)                         /* 0x00000020 */
+#define TSADC_USER_CON_INTER_PD_SOC_SHIFT                  (6U)
+#define TSADC_USER_CON_INTER_PD_SOC_MASK                   (0x1FFU << TSADC_USER_CON_INTER_PD_SOC_SHIFT)                /* 0x00007FC0 */
+#define TSADC_USER_CON_ADC_STATUS_SHIFT                    (15U)
+#define TSADC_USER_CON_ADC_STATUS_MASK                     (0x1U << TSADC_USER_CON_ADC_STATUS_SHIFT)                    /* 0x00008000 */
+/* AUTO_CON */
+#define TSADC_AUTO_CON_OFFSET                              (0x4U)
+#define TSADC_AUTO_CON_AUTO_EN_SHIFT                       (0U)
+#define TSADC_AUTO_CON_AUTO_EN_MASK                        (0x1U << TSADC_AUTO_CON_AUTO_EN_SHIFT)                       /* 0x00000001 */
+#define TSADC_AUTO_CON_TSADC_Q_SEL_SHIFT                   (1U)
+#define TSADC_AUTO_CON_TSADC_Q_SEL_MASK                    (0x1U << TSADC_AUTO_CON_TSADC_Q_SEL_SHIFT)                   /* 0x00000002 */
+#define TSADC_AUTO_CON_SRC0_EN_SHIFT                       (4U)
+#define TSADC_AUTO_CON_SRC0_EN_MASK                        (0x1U << TSADC_AUTO_CON_SRC0_EN_SHIFT)                       /* 0x00000010 */
+#define TSADC_AUTO_CON_SRC1_EN_SHIFT                       (5U)
+#define TSADC_AUTO_CON_SRC1_EN_MASK                        (0x1U << TSADC_AUTO_CON_SRC1_EN_SHIFT)                       /* 0x00000020 */
+#define TSADC_AUTO_CON_TSHUT_PROLARITY_SHIFT               (8U)
+#define TSADC_AUTO_CON_TSHUT_PROLARITY_MASK                (0x1U << TSADC_AUTO_CON_TSHUT_PROLARITY_SHIFT)               /* 0x00000100 */
+#define TSADC_AUTO_CON_SRC0_LT_EN_SHIFT                    (12U)
+#define TSADC_AUTO_CON_SRC0_LT_EN_MASK                     (0x1U << TSADC_AUTO_CON_SRC0_LT_EN_SHIFT)                    /* 0x00001000 */
+#define TSADC_AUTO_CON_SRC1_LT_EN_SHIFT                    (13U)
+#define TSADC_AUTO_CON_SRC1_LT_EN_MASK                     (0x1U << TSADC_AUTO_CON_SRC1_LT_EN_SHIFT)                    /* 0x00002000 */
+#define TSADC_AUTO_CON_AUTO_STATUS_SHIFT                   (16U)
+#define TSADC_AUTO_CON_AUTO_STATUS_MASK                    (0x1U << TSADC_AUTO_CON_AUTO_STATUS_SHIFT)                   /* 0x00010000 */
+#define TSADC_AUTO_CON_SAMPLE_DLY_SEL_SHIFT                (17U)
+#define TSADC_AUTO_CON_SAMPLE_DLY_SEL_MASK                 (0x1U << TSADC_AUTO_CON_SAMPLE_DLY_SEL_SHIFT)                /* 0x00020000 */
+#define TSADC_AUTO_CON_LAST_TSHUT_2GPIO_SHIFT              (24U)
+#define TSADC_AUTO_CON_LAST_TSHUT_2GPIO_MASK               (0x1U << TSADC_AUTO_CON_LAST_TSHUT_2GPIO_SHIFT)              /* 0x01000000 */
+#define TSADC_AUTO_CON_LAST_TSHUT_2CRU_SHIFT               (25U)
+#define TSADC_AUTO_CON_LAST_TSHUT_2CRU_MASK                (0x1U << TSADC_AUTO_CON_LAST_TSHUT_2CRU_SHIFT)               /* 0x02000000 */
+/* INT_EN */
+#define TSADC_INT_EN_OFFSET                                (0x8U)
+#define TSADC_INT_EN_HT_INTEN_SRC0_SHIFT                   (0U)
+#define TSADC_INT_EN_HT_INTEN_SRC0_MASK                    (0x1U << TSADC_INT_EN_HT_INTEN_SRC0_SHIFT)                   /* 0x00000001 */
+#define TSADC_INT_EN_HT_INTEN_SRC1_SHIFT                   (1U)
+#define TSADC_INT_EN_HT_INTEN_SRC1_MASK                    (0x1U << TSADC_INT_EN_HT_INTEN_SRC1_SHIFT)                   /* 0x00000002 */
+#define TSADC_INT_EN_TSHUT_2GPIO_EN_SRC0_SHIFT             (4U)
+#define TSADC_INT_EN_TSHUT_2GPIO_EN_SRC0_MASK              (0x1U << TSADC_INT_EN_TSHUT_2GPIO_EN_SRC0_SHIFT)             /* 0x00000010 */
+#define TSADC_INT_EN_TSHUT_2GPIO_EN_SRC1_SHIFT             (5U)
+#define TSADC_INT_EN_TSHUT_2GPIO_EN_SRC1_MASK              (0x1U << TSADC_INT_EN_TSHUT_2GPIO_EN_SRC1_SHIFT)             /* 0x00000020 */
+#define TSADC_INT_EN_TSHUT_2CRU_EN_SRC0_SHIFT              (8U)
+#define TSADC_INT_EN_TSHUT_2CRU_EN_SRC0_MASK               (0x1U << TSADC_INT_EN_TSHUT_2CRU_EN_SRC0_SHIFT)              /* 0x00000100 */
+#define TSADC_INT_EN_TSHUT_2CRU_EN_SRC1_SHIFT              (9U)
+#define TSADC_INT_EN_TSHUT_2CRU_EN_SRC1_MASK               (0x1U << TSADC_INT_EN_TSHUT_2CRU_EN_SRC1_SHIFT)              /* 0x00000200 */
+#define TSADC_INT_EN_LT_INTEN_SRC0_SHIFT                   (12U)
+#define TSADC_INT_EN_LT_INTEN_SRC0_MASK                    (0x1U << TSADC_INT_EN_LT_INTEN_SRC0_SHIFT)                   /* 0x00001000 */
+#define TSADC_INT_EN_LT_INTEN_SRC1_SHIFT                   (13U)
+#define TSADC_INT_EN_LT_INTEN_SRC1_MASK                    (0x1U << TSADC_INT_EN_LT_INTEN_SRC1_SHIFT)                   /* 0x00002000 */
+#define TSADC_INT_EN_EOC_INT_EN_SHIFT                      (16U)
+#define TSADC_INT_EN_EOC_INT_EN_MASK                       (0x1U << TSADC_INT_EN_EOC_INT_EN_SHIFT)                      /* 0x00010000 */
+/* INT_PD */
+#define TSADC_INT_PD_OFFSET                                (0xCU)
+#define TSADC_INT_PD_HT_IRQ_SRC0_SHIFT                     (0U)
+#define TSADC_INT_PD_HT_IRQ_SRC0_MASK                      (0x1U << TSADC_INT_PD_HT_IRQ_SRC0_SHIFT)                     /* 0x00000001 */
+#define TSADC_INT_PD_HT_IRQ_SRC1_SHIFT                     (1U)
+#define TSADC_INT_PD_HT_IRQ_SRC1_MASK                      (0x1U << TSADC_INT_PD_HT_IRQ_SRC1_SHIFT)                     /* 0x00000002 */
+#define TSADC_INT_PD_TSHUT_O_SRC0_SHIFT                    (4U)
+#define TSADC_INT_PD_TSHUT_O_SRC0_MASK                     (0x1U << TSADC_INT_PD_TSHUT_O_SRC0_SHIFT)                    /* 0x00000010 */
+#define TSADC_INT_PD_TSHUT_O_SRC1_SHIFT                    (5U)
+#define TSADC_INT_PD_TSHUT_O_SRC1_MASK                     (0x1U << TSADC_INT_PD_TSHUT_O_SRC1_SHIFT)                    /* 0x00000020 */
+#define TSADC_INT_PD_LT_IRQ_SRC0_SHIFT                     (12U)
+#define TSADC_INT_PD_LT_IRQ_SRC0_MASK                      (0x1U << TSADC_INT_PD_LT_IRQ_SRC0_SHIFT)                     /* 0x00001000 */
+#define TSADC_INT_PD_LT_IRQ_SRC1_SHIFT                     (13U)
+#define TSADC_INT_PD_LT_IRQ_SRC1_MASK                      (0x1U << TSADC_INT_PD_LT_IRQ_SRC1_SHIFT)                     /* 0x00002000 */
+#define TSADC_INT_PD_EOC_INT_PD_SHIFT                      (16U)
+#define TSADC_INT_PD_EOC_INT_PD_MASK                       (0x1U << TSADC_INT_PD_EOC_INT_PD_SHIFT)                      /* 0x00010000 */
+/* DATA0 */
+#define TSADC_DATA0_OFFSET                                 (0x20U)
+#define TSADC_DATA0                                        (0x0U)
+#define TSADC_DATA0_ADC_DATA_SHIFT                         (0U)
+#define TSADC_DATA0_ADC_DATA_MASK                          (0xFFFU << TSADC_DATA0_ADC_DATA_SHIFT)                       /* 0x00000FFF */
+/* DATA1 */
+#define TSADC_DATA1_OFFSET                                 (0x24U)
+#define TSADC_DATA1                                        (0x0U)
+#define TSADC_DATA1_ADC_DATA_SHIFT                         (0U)
+#define TSADC_DATA1_ADC_DATA_MASK                          (0xFFFU << TSADC_DATA1_ADC_DATA_SHIFT)                       /* 0x00000FFF */
+/* COMP0_INT */
+#define TSADC_COMP0_INT_OFFSET                             (0x30U)
+#define TSADC_COMP0_INT_TSADC_COMP_SRC0_SHIFT              (0U)
+#define TSADC_COMP0_INT_TSADC_COMP_SRC0_MASK               (0xFFFU << TSADC_COMP0_INT_TSADC_COMP_SRC0_SHIFT)            /* 0x00000FFF */
+/* COMP1_INT */
+#define TSADC_COMP1_INT_OFFSET                             (0x34U)
+#define TSADC_COMP1_INT_TSADC_COMP_SRC1_SHIFT              (0U)
+#define TSADC_COMP1_INT_TSADC_COMP_SRC1_MASK               (0xFFFU << TSADC_COMP1_INT_TSADC_COMP_SRC1_SHIFT)            /* 0x00000FFF */
+/* COMP0_SHUT */
+#define TSADC_COMP0_SHUT_OFFSET                            (0x40U)
+#define TSADC_COMP0_SHUT_TSADC_COMP_SRC0_SHIFT             (0U)
+#define TSADC_COMP0_SHUT_TSADC_COMP_SRC0_MASK              (0xFFFU << TSADC_COMP0_SHUT_TSADC_COMP_SRC0_SHIFT)           /* 0x00000FFF */
+/* COMP1_SHUT */
+#define TSADC_COMP1_SHUT_OFFSET                            (0x44U)
+#define TSADC_COMP1_SHUT_TSADC_COMP_SRC1_SHIFT             (0U)
+#define TSADC_COMP1_SHUT_TSADC_COMP_SRC1_MASK              (0xFFFU << TSADC_COMP1_SHUT_TSADC_COMP_SRC1_SHIFT)           /* 0x00000FFF */
+/* HIGHT_INT_DEBOUNCE */
+#define TSADC_HIGHT_INT_DEBOUNCE_OFFSET                    (0x60U)
+#define TSADC_HIGHT_INT_DEBOUNCE_DEBOUNCE_SHIFT            (0U)
+#define TSADC_HIGHT_INT_DEBOUNCE_DEBOUNCE_MASK             (0xFFU << TSADC_HIGHT_INT_DEBOUNCE_DEBOUNCE_SHIFT)           /* 0x000000FF */
+/* HIGHT_TSHUT_DEBOUNCE */
+#define TSADC_HIGHT_TSHUT_DEBOUNCE_OFFSET                  (0x64U)
+#define TSADC_HIGHT_TSHUT_DEBOUNCE_DEBOUNCE_SHIFT          (0U)
+#define TSADC_HIGHT_TSHUT_DEBOUNCE_DEBOUNCE_MASK           (0xFFU << TSADC_HIGHT_TSHUT_DEBOUNCE_DEBOUNCE_SHIFT)         /* 0x000000FF */
+/* AUTO_PERIOD */
+#define TSADC_AUTO_PERIOD_OFFSET                           (0x68U)
+#define TSADC_AUTO_PERIOD_AUTO_PERIOD_SHIFT                (0U)
+#define TSADC_AUTO_PERIOD_AUTO_PERIOD_MASK                 (0xFFFFFFFFU << TSADC_AUTO_PERIOD_AUTO_PERIOD_SHIFT)         /* 0xFFFFFFFF */
+/* AUTO_PERIOD_HT */
+#define TSADC_AUTO_PERIOD_HT_OFFSET                        (0x6CU)
+#define TSADC_AUTO_PERIOD_HT_AUTO_PERIOD_SHIFT             (0U)
+#define TSADC_AUTO_PERIOD_HT_AUTO_PERIOD_MASK              (0xFFFFFFFFU << TSADC_AUTO_PERIOD_HT_AUTO_PERIOD_SHIFT)      /* 0xFFFFFFFF */
+/* COMP0_LOW_INT */
+#define TSADC_COMP0_LOW_INT_OFFSET                         (0x80U)
+#define TSADC_COMP0_LOW_INT_TSADC_COMP_SRC0_SHIFT          (0U)
+#define TSADC_COMP0_LOW_INT_TSADC_COMP_SRC0_MASK           (0xFFFU << TSADC_COMP0_LOW_INT_TSADC_COMP_SRC0_SHIFT)        /* 0x00000FFF */
+/* COMP1_LOW_INT */
+#define TSADC_COMP1_LOW_INT_OFFSET                         (0x84U)
+#define TSADC_COMP1_LOW_INT_TSADC_COMP_SRC1_SHIFT          (0U)
+#define TSADC_COMP1_LOW_INT_TSADC_COMP_SRC1_MASK           (0xFFFU << TSADC_COMP1_LOW_INT_TSADC_COMP_SRC1_SHIFT)        /* 0x00000FFF */
 /******************************************MBOX******************************************/
 /* A2B_INTEN */
 #define MBOX_A2B_INTEN_OFFSET                              (0x0U)
