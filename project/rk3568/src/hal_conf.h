@@ -36,4 +36,7 @@
 #define HAL_GIC_PREEMPT_FEATURE_ENABLED
 #endif
 
+/* UNITY CONFIG */
+#define UNITY_INCLUDE_CONFIG_H
+
 #endif

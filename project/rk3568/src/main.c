@@ -5,6 +5,7 @@
 
 #include "hal_bsp.h"
 #include "hal_base.h"
+#include "unity_runner.h"
 
 /********************* Private MACRO Definition ******************************/
 
@@ -88,6 +89,9 @@ void main(void)
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
     HAL_GIC_Init(HAL_CPU_TOPOLOGY_getCurrentCpuId(), &irqConfig);
     printf("Hello RK3568 Bare-metal using RK_HAL!\n");
+
+    /* Unity Test */
+    /* test_main(); */
 
     while (1) {
         ;
