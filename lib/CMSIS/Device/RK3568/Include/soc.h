@@ -180,7 +180,15 @@ typedef enum CLOCK_Name {
 /****************************************MBOX********************************************/
 #define MBOX_CNT             2
 #define MBOX_CHAN_CNT        4
-
+/****************************************GRF*********************************************/
+#define GRF_IOMUX_BIT_PER_PIN	(4)
+#define GRF_DS_BIT_PER_PIN	(8)
+#define GRF_PULL_BIT_PER_PIN	(2)
+/****************************************GPIO********************************************/
+#ifdef GPIO_VER_ID
+#undef GPIO_VER_ID
+#define GPIO_VER_ID             (0x01000C2BU)
+#endif
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

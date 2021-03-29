@@ -57,36 +57,45 @@ struct GRF_REG {
     __IO uint32_t GPIO0C_DS_2;                        /* Address Offset: 0x0098 */
     __IO uint32_t GPIO0C_DS_3;                        /* Address Offset: 0x009C */
     __IO uint32_t GPIO0D_DS_0;                        /* Address Offset: 0x00A0 */
-    __IO uint32_t SOC_CON0;                           /* Address Offset: 0x00A4 */
-    __IO uint32_t SOC_CON1;                           /* Address Offset: 0x00A8 */
-    __IO uint32_t SOC_CON2;                           /* Address Offset: 0x00AC */
-    __IO uint32_t SOC_CON3;                           /* Address Offset: 0x00B0 */
-    __IO uint32_t SOC_CON4;                           /* Address Offset: 0x00B4 */
-    __IO uint32_t SOC_CON5;                           /* Address Offset: 0x00B8 */
-    __I  uint32_t SOC_STATUS;                         /* Address Offset: 0x00BC */
-    __IO uint32_t IO_VSEL0;                           /* Address Offset: 0x00C0 */
-    __IO uint32_t IO_VSEL1;                           /* Address Offset: 0x00C4 */
-    __IO uint32_t IO_VSEL2;                           /* Address Offset: 0x00C8 */
-    __IO uint32_t DLL_CON0;                           /* Address Offset: 0x00CC */
-    __IO uint32_t OS_REG0;                            /* Address Offset: 0x00D0 */
-    __IO uint32_t OS_REG1;                            /* Address Offset: 0x00D4 */
-    __IO uint32_t OS_REG2;                            /* Address Offset: 0x00D8 */
-    __IO uint32_t OS_REG3;                            /* Address Offset: 0x00DC */
-    __IO uint32_t OS_REG4;                            /* Address Offset: 0x00E0 */
-    __IO uint32_t OS_REG5;                            /* Address Offset: 0x00E4 */
-    __IO uint32_t OS_REG6;                            /* Address Offset: 0x00E8 */
-    __IO uint32_t OS_REG7;                            /* Address Offset: 0x00EC */
-    __IO uint32_t OS_REG8;                            /* Address Offset: 0x00F0 */
-    __IO uint32_t OS_REG9;                            /* Address Offset: 0x00F4 */
-    __IO uint32_t OS_REG10;                           /* Address Offset: 0x00F8 */
-    __IO uint32_t OS_REG11;                           /* Address Offset: 0x00FC */
-    __IO uint32_t RESET_FUNCTION_STATUS;              /* Address Offset: 0x0100 */
-    __IO uint32_t RESET_FUNCTION_CLR;                 /* Address Offset: 0x0104 */
-    __IO uint32_t SIG_DETECT_CON;                     /* Address Offset: 0x0108 */
-    __IO uint32_t SIG_DETECT_STATUS;                  /* Address Offset: 0x010C */
-    __IO uint32_t SIG_DETECT_STATUS_CLEAR;            /* Address Offset: 0x0110 */
-    __IO uint32_t SDMMC_DET_COUNTER;                  /* Address Offset: 0x0114 */
-         uint32_t RESERVED0118[65466];                /* Address Offset: 0x0118 */
+    __IO uint32_t GPIO0D_DS_1;                        /* Address Offset: 0x00A4 */
+    __IO uint32_t GPIO0D_DS_2;                        /* Address Offset: 0x00A8 */
+    __IO uint32_t GPIO0D_DS_3;                        /* Address Offset: 0x00AC */
+         uint32_t RESERVED00B0[21];                   /* Address Offset: 0x00B0 */
+    __IO uint32_t SOC_CON0;                           /* Address Offset: 0x0100 */
+    __IO uint32_t SOC_CON1;                           /* Address Offset: 0x0104 */
+    __IO uint32_t SOC_CON2;                           /* Address Offset: 0x0108 */
+    __IO uint32_t SOC_CON3;                           /* Address Offset: 0x010C */
+    __IO uint32_t SOC_CON4;                           /* Address Offset: 0x0110 */
+    __IO uint32_t SOC_CON5;                           /* Address Offset: 0x0114 */
+         uint32_t RESERVED0118[2];                    /* Address Offset: 0x0118 */
+    __I  uint32_t SOC_STATUS;                         /* Address Offset: 0x0120 */
+         uint32_t RESERVED0124[7];                    /* Address Offset: 0x0124 */
+    __IO uint32_t IO_VSEL0;                           /* Address Offset: 0x0140 */
+    __IO uint32_t IO_VSEL1;                           /* Address Offset: 0x0144 */
+    __IO uint32_t IO_VSEL2;                           /* Address Offset: 0x0148 */
+         uint32_t RESERVED014C[13];                   /* Address Offset: 0x014C */
+    __IO uint32_t DLL_CON0;                           /* Address Offset: 0x0180 */
+         uint32_t RESERVED0184[31];                   /* Address Offset: 0x0184 */
+    __IO uint32_t OS_REG0;                            /* Address Offset: 0x0200 */
+    __IO uint32_t OS_REG1;                            /* Address Offset: 0x0204 */
+    __IO uint32_t OS_REG2;                            /* Address Offset: 0x0208 */
+    __IO uint32_t OS_REG3;                            /* Address Offset: 0x020C */
+    __IO uint32_t OS_REG4;                            /* Address Offset: 0x0210 */
+    __IO uint32_t OS_REG5;                            /* Address Offset: 0x0214 */
+    __IO uint32_t OS_REG6;                            /* Address Offset: 0x0218 */
+    __IO uint32_t OS_REG7;                            /* Address Offset: 0x021C */
+    __IO uint32_t OS_REG8;                            /* Address Offset: 0x0220 */
+    __IO uint32_t OS_REG9;                            /* Address Offset: 0x0224 */
+    __IO uint32_t OS_REG10;                           /* Address Offset: 0x0228 */
+    __IO uint32_t OS_REG11;                           /* Address Offset: 0x022C */
+    __IO uint32_t RESET_FUNCTION_STATUS;              /* Address Offset: 0x0230 */
+    __IO uint32_t RESET_FUNCTION_CLR;                 /* Address Offset: 0x0234 */
+         uint32_t RESERVED0238[82];                   /* Address Offset: 0x0238 */
+    __IO uint32_t SIG_DETECT_CON;                     /* Address Offset: 0x0380 */
+    __IO uint32_t SIG_DETECT_STATUS;                  /* Address Offset: 0x0390 */
+    __IO uint32_t SIG_DETECT_STATUS_CLEAR;            /* Address Offset: 0x03A0 */
+    __IO uint32_t SDMMC_DET_COUNTER;                  /* Address Offset: 0x03B0 */
+         uint32_t RESERVED03B4[65299];                /* Address Offset: 0x03B4 */
     __IO uint32_t GPIO1A_IOMUX_L;                     /* Address Offset: 0x40000 */
     __IO uint32_t GPIO1A_IOMUX_H;                     /* Address Offset: 0x40004 */
     __IO uint32_t GPIO1B_IOMUX_L;                     /* Address Offset: 0x40008 */
@@ -118,7 +127,8 @@ struct GRF_REG {
     __IO uint32_t GPIO4C_IOMUX_L;                     /* Address Offset: 0x40070 */
     __IO uint32_t GPIO4C_IOMUX_H;                     /* Address Offset: 0x40074 */
     __IO uint32_t GPIO4D_IOMUX_L;                     /* Address Offset: 0x40078 */
-    __IO uint32_t GPIO1A_P;                           /* Address Offset: 0x4007C */
+    __IO uint32_t GPIO4D_IOMUX_H;                     /* Address Offset: 0x4007C */
+    __IO uint32_t GPIO1A_P;                           /* Address Offset: 0x40080 */
     __IO uint32_t GPIO1B_P;                           /* Address Offset: 0x40080 */
     __IO uint32_t GPIO1C_P;                           /* Address Offset: 0x40084 */
     __IO uint32_t GPIO1D_P;                           /* Address Offset: 0x40088 */
