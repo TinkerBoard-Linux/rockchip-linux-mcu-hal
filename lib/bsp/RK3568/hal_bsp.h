@@ -11,6 +11,13 @@
 /***************************** MACRO Definition ******************************/
 
 /***************************** Structure Definition **************************/
+#ifdef HAL_SPI_MODULE_ENABLED
+extern const struct HAL_SPI_DEV g_spiDev0;
+extern const struct HAL_SPI_DEV g_spiDev1;
+extern const struct HAL_SPI_DEV g_spiDev2;
+extern const struct HAL_SPI_DEV g_spiDev3;
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 extern const struct HAL_UART_DEV g_uart2Dev;
 #endif
