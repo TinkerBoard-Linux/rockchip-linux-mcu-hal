@@ -39,6 +39,9 @@ static void RunAllTests(void)
 #if defined(HAL_CRU_MODULE_ENABLED) && (defined(RKMCU_PISCES) || defined(RKMCU_RK2108))
     RUN_TEST_GROUP(HAL_CRU);
 #endif
+#if defined(HAL_SPI_MODULE_ENABLED) && defined(UNITY_HAL_SPI)
+    RUN_TEST_GROUP(HAL_SPI);
+#endif
 }
 
 int test_main(void)
