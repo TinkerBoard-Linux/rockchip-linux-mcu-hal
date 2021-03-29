@@ -6,8 +6,9 @@
 #ifndef _HAL_CONF_H_
 #define _HAL_CONF_H_
 
-/* CPU config */
+/* HAL CPU config */
 #define SOC_RK3568
+#define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
 #define HAL_CPU_TOPOLOGY_MODULE_ENABLED
@@ -18,6 +19,7 @@
 #define HAL_PINCTRL_MODULE_ENABLED
 #define HAL_PL330_MODULE_ENABLED
 #define HAL_SMCCC_MODULE_ENABLED
+#define HAL_SPI_MODULE_ENABLED
 #define HAL_TIMER_MODULE_ENABLED
 #define HAL_TSADC_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
