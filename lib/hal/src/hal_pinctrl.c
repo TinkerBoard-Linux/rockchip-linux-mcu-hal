@@ -5,7 +5,7 @@
 
 #include "hal_base.h"
 
-#if defined(HAL_PINCTRL_MODULE_ENABLED) && !defined(SOC_RV1126) && !defined(SOC_SWALLOW)
+#if defined(HAL_PINCTRL_MODULE_ENABLED) && !defined(SOC_RV1126) && !defined(SOC_SWALLOW) && !defined(SOC_RK3568)
 
 /** @addtogroup RK_HAL_Driver
  *  @{
