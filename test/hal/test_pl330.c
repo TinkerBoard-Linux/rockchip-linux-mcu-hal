@@ -64,8 +64,12 @@ TEST(HAL_PL330, MemcpyTest){
 
 TEST_GROUP_RUNNER(HAL_PL330){
     uint32_t ret;
-    struct HAL_PL330_DEV *pl330 = &g_pl330Dev;
 
+#ifdef DMA0_BASE
+    struct HAL_PL330_DEV *pl330 = &g_pl330Dev0;
+#else
+    struct HAL_PL330_DEV *pl330 = &g_pl330Dev;
+#endif
     ret = HAL_PL330_Init(pl330);
     TEST_ASSERT(ret == HAL_OK);
 
@@ -77,8 +81,10 @@ TEST_GROUP_RUNNER(HAL_PL330){
     dst = (uint8_t *)malloc(TSIZE);
     TEST_ASSERT_NOT_NULL(dst);
 
+#ifdef HAL_NVIC_MODULE_ENABLED
     HAL_NVIC_SetIRQHandler(pl330->irq[0], (NVIC_IRQHandler) & HAL_PL330_Handler);
     HAL_NVIC_SetIRQHandler(pl330->irq[1], (NVIC_IRQHandler) & HAL_PL330_Handler);
+#endif
 
     RUN_TEST_CASE(HAL_PL330, MemcpyTest);
 
