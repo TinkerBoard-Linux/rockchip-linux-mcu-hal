@@ -187,6 +187,10 @@
 #include "hal_saradc.h"
 #endif
 
+#ifdef HAL_SMCCC_MODULE_ENABLED
+#include "hal_smccc.h"
+#endif
+
 #ifdef HAL_KEYCTRL_MODULE_ENABLED
 #include "hal_keyctrl.h"
 #endif
