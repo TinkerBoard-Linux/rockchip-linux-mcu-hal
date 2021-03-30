@@ -5,6 +5,26 @@
 
 #include "hal_bsp.h"
 
+#ifdef HAL_PL330_MODULE_ENABLED
+struct HAL_PL330_DEV g_pl330Dev0 =
+{
+    .pReg = DMA0,
+    .peripReqType = BURST,
+    .irq[0] = DMAC0_IRQn,
+    .irq[1] = DMAC0_ABORT_IRQn,
+    .pd = 0,
+};
+
+struct HAL_PL330_DEV g_pl330Dev1 =
+{
+    .pReg = DMA1,
+    .peripReqType = BURST,
+    .irq[0] = DMAC1_IRQn,
+    .irq[1] = DMAC1_ABORT_IRQn,
+    .pd = 0,
+};
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 const struct HAL_SPI_DEV g_spiDev0 = {
     .base = SPI0_BASE,
