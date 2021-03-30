@@ -8,11 +8,10 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-#if defined(HAL_SPI_MODULE_ENABLED) && defined(UNITY_HAL_SPI)
+#if defined(HAL_SPI_MODULE_ENABLED) && defined(HAL_PL330_MODULE_ENABLED) && defined(UNITY_HAL_SPI)
 /*************************** SPI DRIVER ****************************/
 
 /***************************** MACRO Definition ******************************/
-
 #define ROCKCHIP_SPI_SPEED_DEFAULT 10000000
 
 #define SPI_DEVICE_MAX 4
@@ -25,6 +24,12 @@ struct SPI_DEVICE_CLASS {
     /* Hal */
     struct SPI_HANDLE instance;
     const struct HAL_SPI_DEV *halDev;
+    uint32_t state;
+
+    /* dma */
+    uint32_t dmaBurstSize;
+    struct PL330_CHAN *dmaRxChan;
+    struct PL330_CHAN *dmaTxChan;
 };
 
 /* RK_SPI_CONFIG mode */
@@ -108,6 +113,9 @@ struct SPI_DEVICE_CLASS gSpiDev##ID = \
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
+static struct HAL_PL330_DEV *s_pl330;
+static uint8_t mcrTxBuf[PL330_CHAN_BUF_LEN];
+static uint8_t mcrRxBuf[PL330_CHAN_BUF_LEN];
 
 /* Define SPI resource */
 #ifdef SPI0
@@ -228,12 +236,106 @@ HAL_Status SPI_Configure(uint8_t id, struct RK_SPI_CONFIG *configuration)
     return HAL_OK;
 }
 
+static uint32_t SPI_CalcBurstSize(uint32_t data_len)
+{
+    uint32_t i;
+
+    /* burst size: 1, 2, 4, 8 */
+    for (i = 1; i < 8; i <<= 1) {
+        if (data_len & i) {
+            break;
+        }
+    }
+
+    /* DW_DMA is not support burst 2 */
+    if (i == 2) {
+        i = 1;
+    }
+
+    return i;
+}
+
+static void SPI_DmaRxCb(void *data)
+{
+    struct SPI_DEVICE_CLASS *spi = data;
+
+    spi->state &= ~RXBUSY;
+}
+
+static void SPI_DmaTxCb(void *data)
+{
+    struct SPI_DEVICE_CLASS *spi = data;
+
+    spi->state &= ~TXBUSY;
+}
+
+static int SPI_DmaPrepare(struct SPI_DEVICE_CLASS *spi, struct RK_SPI_MESSAGE *message)
+{
+    struct SPI_HANDLE *pSPI = &spi->instance;
+    int ret;
+    struct DMA_SLAVE_CONFIG sConfig;
+
+    spi->state &= ~RXBUSY;
+    spi->state &= ~TXBUSY;
+
+    /* Configure rx firstly. */
+    if (message->recvBuf) {
+        spi->dmaRxChan = HAL_PL330_RequestChannel(s_pl330, spi->halDev->rxDma.channel);
+
+        sConfig.direction = spi->halDev->rxDma.direction;
+        sConfig.srcAddr = spi->halDev->rxDma.addr;
+        sConfig.dstAddr = (uint32_t)message->recvBuf;
+        sConfig.srcAddrWidth = pSPI->config.nBytes;
+        sConfig.dstAddrWidth = pSPI->config.nBytes;
+        sConfig.srcMaxBurst = spi->dmaBurstSize;
+        sConfig.dstMaxBurst = spi->dmaBurstSize;
+        HAL_PL330_Config(spi->dmaRxChan, &sConfig);
+        HAL_PL330_PrepDmaSingle(spi->dmaRxChan, (uint32_t)message->recvBuf, message->length, spi->halDev->rxDma.direction,
+                                SPI_DmaRxCb, spi);
+        HAL_PL330_SetMcBuf(spi->dmaRxChan, &mcrRxBuf);
+    }
+
+    if (message->sendBuf) {
+        spi->dmaTxChan = HAL_PL330_RequestChannel(s_pl330, spi->halDev->txDma.channel);
+
+        sConfig.direction = spi->halDev->txDma.direction;
+        sConfig.srcAddr = (uint32_t)message->sendBuf;
+        sConfig.dstAddr = spi->halDev->txDma.addr;
+        sConfig.srcAddrWidth = pSPI->config.nBytes;
+        sConfig.dstAddrWidth = pSPI->config.nBytes;
+        sConfig.srcMaxBurst = 8;
+        sConfig.dstMaxBurst = 8;
+        HAL_PL330_Config(spi->dmaTxChan, &sConfig);
+        HAL_PL330_PrepDmaSingle(spi->dmaTxChan, (uint32_t)message->sendBuf, message->length, spi->halDev->txDma.direction,
+                                SPI_DmaTxCb, spi);
+        HAL_PL330_SetMcBuf(spi->dmaTxChan, &mcrTxBuf);
+#ifdef HAL_DCACHE_MODULE_ENABLED
+        HAL_DCACHE_CleanByRange((uint32_t)message->send_buf, message->length);
+#endif
+    }
+
+    if (message->recvBuf) {
+        spi->state |= RXBUSY;
+
+        ret = HAL_PL330_Start(spi->dmaRxChan);
+    }
+
+    if (message->sendBuf) {
+        spi->state |= TXBUSY;
+
+        ret = HAL_PL330_Start(spi->dmaTxChan);
+    }
+
+    return 0;
+}
+
 uint32_t SPI_ReadAndWrite(uint8_t id, struct RK_SPI_MESSAGE *message)
 {
     struct SPI_DEVICE_CLASS *spi = (struct SPI_DEVICE_CLASS *)gSpiDev[id];
     struct SPI_HANDLE *pSPI = &spi->instance;
     uint64_t timeout;
     HAL_Status ret = HAL_OK;
+    uint32_t start, timeoutMs;
 
     HAL_ASSERT((message->sendBuf != NULL) || (message->recvBuf != NULL));
 
@@ -245,17 +347,72 @@ uint32_t SPI_ReadAndWrite(uint8_t id, struct RK_SPI_MESSAGE *message)
         HAL_SPI_SetCS(pSPI, message->ch, true);
     }
 
-    HAL_SPI_PioTransfer(pSPI);
-    /* If tx, wait until the FIFO data completely. */
-    if (message->sendBuf) {
-        timeout = HAL_GetTick() + ROCKCHIP_SPI_TX_IDLE_TIMEOUT; /* some tolerance */
-        do {
-            ret = HAL_SPI_QueryBusState(pSPI);
-            if (ret == HAL_OK) {
-                break;
-            }
-            HAL_DBG("%s %d\n", __func__, __LINE__);
-        } while (timeout > HAL_GetTick());
+    /* Use poll mode for master while less fifo length. */
+    if (HAL_SPI_CanDma(pSPI)) {
+        spi->dmaBurstSize = 1;
+        pSPI->dmaBurstSize = spi->dmaBurstSize;
+        HAL_SPI_DmaTransfer(pSPI);
+        SPI_DmaPrepare(spi, message);
+        timeoutMs = HAL_SPI_CalculateTimeout(&spi->instance);
+        if (message->sendBuf) {
+            start = HAL_GetTick();
+            do {
+                if ((HAL_GetTick() - start) > timeoutMs) {
+                    HAL_DBG_ERR("%s dma tx timeout\n", __func__);
+
+                    ret = HAL_TIMEOUT;
+                    break;
+                }
+
+                /* If Interrupt is disabled, poll dma status */
+                if (HAL_PL330_GetPosition(spi->dmaTxChan) == message->length) {
+                    spi->state &= ~TXBUSY;
+                }
+            } while (spi->state &= TXBUSY);
+        }
+
+        if (message->recvBuf) {
+            start = HAL_GetTick();
+            do {
+                if ((HAL_GetTick() - start) > timeoutMs) {
+                    HAL_DBG_ERR("%s dma rx timeout\n", __func__);
+
+                    ret = HAL_TIMEOUT;
+                    break;
+                }
+
+                /* If Interrupt is disabled, poll dma status */
+                if (HAL_PL330_GetPosition(spi->dmaRxChan) == message->length) {
+                    spi->state &= ~RXBUSY;
+                }
+            } while (spi->state &= RXBUSY);
+        }
+
+        if (message->sendBuf) {
+            HAL_PL330_Stop(spi->dmaTxChan);
+            HAL_PL330_ReleaseChannel(spi->dmaTxChan);
+        }
+
+        if (message->recvBuf) {
+#ifdef HAL_DCACHE_MODULE_ENABLED
+            HAL_DCACHE_CleanByRange((uint32_t)message->send_buf, message->length);
+#endif
+            HAL_PL330_Stop(spi->dmaRxChan);
+            HAL_PL330_ReleaseChannel(spi->dmaRxChan);
+        }
+    } else {
+        HAL_SPI_PioTransfer(pSPI);
+        /* If tx, wait until the FIFO data completely. */
+        if (message->sendBuf) {
+            timeout = HAL_GetTick() + ROCKCHIP_SPI_TX_IDLE_TIMEOUT; /* some tolerance */
+            do {
+                ret = HAL_SPI_QueryBusState(pSPI);
+                if (ret == HAL_OK) {
+                    break;
+                }
+                HAL_DBG("%s %d\n", __func__, __LINE__);
+            } while (timeout > HAL_GetTick());
+        }
     }
 
     if (HAL_OK != ret) {
@@ -411,8 +568,8 @@ HAL_Status SPI_Init(uint8_t id)
 /*************************** SPI TEST ****************************/
 #define SPI_TEST_SIZE 4096
 #define SPI_TEST_ID   0
-static uint8_t tx_buf[SPI_TEST_SIZE];
-static uint8_t rx_buf[SPI_TEST_SIZE];
+static uint8_t tx_buf[2 * SPI_TEST_SIZE];
+static uint8_t rx_buf[2 * SPI_TEST_SIZE];
 static uint8_t *tx;
 static uint8_t *rx;
 
@@ -425,36 +582,83 @@ TEST_TEAR_DOWN(HAL_SPI){
 }
 
 /* SPI test case 0 */
-void SPI_LoopTest(void)
+void SPI_LoopTest(uint16_t size)
 {
-    uint32_t i;
+    uint32_t i, ret;
 
-    HAL_DBG("It's a SPI cpu loop test");
+    HAL_DBG("SPI%d cpu loop test, size=%d\n", SPI_TEST_ID, size);
 
     for (i = 0; i < SPI_TEST_SIZE / 4; i++) {
-        ((uint32_t *)tx)[i] = i;
+        ((uint32_t *)tx)[i] = (size << 16) | i;
     }
+    tx[0] = 0xa5;
     memset(rx, 0, SPI_TEST_SIZE);
-    SPI_Transfer(SPI_TEST_ID, 0, (const void *)tx, (void *)rx, SPI_TEST_SIZE);
+    ret = SPI_Transfer(SPI_TEST_ID, 0, (const void *)tx, (void *)rx, size);
+    TEST_ASSERT(ret == size);
 
-    for (i = 0; i < SPI_TEST_SIZE; i++) {
+    for (i = 0; i < size; i++) {
         if (tx[i] != rx[i]) {
-            HAL_DBG_HEX("w:", tx, 4, SPI_TEST_SIZE / 4);
-            HAL_DBG_HEX("r:", rx, 4, SPI_TEST_SIZE / 4);
+            HAL_DBG_HEX("w:", tx, 4, size / 4);
+            HAL_DBG_HEX("r:", rx, 4, size / 4);
             TEST_ASSERT(0);
             break;
         }
     }
 }
 
+/* SPI test case 1 */
+void SPI_WriteTest(uint16_t size)
+{
+    uint32_t i, ret;
+
+    HAL_DBG("SPI%d cpu write test, size=%d\n", SPI_TEST_ID, size);
+
+    for (i = 0; i < SPI_TEST_SIZE / 4; i++) {
+        ((uint32_t *)tx)[i] = (size << 16) | i;
+    }
+    ret = SPI_Write(SPI_TEST_ID, 0, (const void *)tx, size);
+    TEST_ASSERT(ret == size);
+}
+
+/* SPI test case 2 */
+void SPI_ReadTest(uint16_t size)
+{
+    uint32_t i, ret;
+
+    HAL_DBG("SPI%d cpu read test, size=%d\n", SPI_TEST_ID, size);
+
+    memset(rx, 0, SPI_TEST_SIZE);
+    ret = SPI_Read(SPI_TEST_ID, 0, (void *)rx, size);
+
+    HAL_DBG_HEX("r:", rx, 4, 4);
+    TEST_ASSERT(ret == size);
+}
+
 TEST_GROUP_RUNNER(HAL_SPI){
+    struct HAL_PL330_DEV *pl330 = &g_pl330Dev0;
+
     HAL_DBG("%s\n", __func__);
 
-    tx = (uint8_t *)&tx_buf;
-    rx = (uint8_t *)&rx_buf;
+    tx = (uint8_t *)(((uint32_t)&tx_buf + 0x3f) & (~0x3f));
+    rx = (uint8_t *)(((uint32_t)&rx_buf + 0x3f) & (~0x3f));
+
+    HAL_PL330_Init(pl330);
+    s_pl330 = pl330;
 
     SPI_Init(SPI_TEST_ID);
-    SPI_LoopTest();
+
+    SPI_LoopTest(1);
+    SPI_LoopTest(31);
+    SPI_LoopTest(32);
+    SPI_LoopTest(128);
+    SPI_LoopTest(4095);
+    SPI_LoopTest(4096);
+    SPI_WriteTest(32);
+    SPI_WriteTest(128);
+    SPI_ReadTest(32);
+    SPI_ReadTest(128);
+
+    HAL_PL330_DeInit(pl330);
 }
 
 #endif
