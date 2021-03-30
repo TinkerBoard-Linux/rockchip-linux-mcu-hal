@@ -61,6 +61,10 @@ typedef enum
   CAN0_IRQn              = 33,       /*!< CAN0 Interrupt              */
   CAN1_IRQn              = 34,       /*!< CAN1 Interrupt              */
   CAN2_IRQn              = 35,       /*!< CAN2 Interrupt              */
+  DMAC0_ABORT_IRQn       = 45,       /*!< DMAC0 Abort Interrupt       */
+  DMAC0_IRQn             = 46,       /*!< DMAC0 Interrupt             */
+  DMAC1_ABORT_IRQn       = 47,       /*!< DMAC1 Abort Interrupt       */
+  DMAC1_IRQn             = 48,       /*!< DMAC1 Interrupt             */
   SPI0_IRQn              = 135,      /*!< SPI0 Interrupt              */
   SPI1_IRQn              = 136,      /*!< SPI1 Interrupt              */
   SPI2_IRQn              = 137,      /*!< SPI2 Interrupt              */
@@ -204,7 +208,7 @@ typedef enum CLOCK_Name {
 /****************************************PMU*********************************************/
 #ifndef __ASSEMBLY__
 typedef enum PD_Id {
-    PD_DSP              = 0x80000000U,
+    PD_UNKOWN,
 } ePD_Id;
 #endif
 

@@ -596,10 +596,10 @@ struct DMA_REG {
          uint32_t RESERVED003C;                       /* Address Offset: 0x003C */
     __I  uint32_t FTR[6];                             /* Address Offset: 0x0040 */
          uint32_t RESERVED0058[42];                   /* Address Offset: 0x0058 */
-    struct DMA_CHANNEL_STATUS CHAN_STS[6];            /* Address Offset: 0x0100 */
-         uint32_t RESERVED0130[180];                  /* Address Offset: 0x0130 */
-    struct DMA_CHANNEL_CONFIG CHAN_CFG[6];            /* Address Offset: 0x0400 */
-         uint32_t RESERVED04C0[528];                  /* Address Offset: 0x04C0 */
+    struct DMA_CHANNEL_STATUS CHAN_STS[8];            /* Address Offset: 0x0100 */
+         uint32_t RESERVED0140[176];                  /* Address Offset: 0x0140 */
+    struct DMA_CHANNEL_CONFIG CHAN_CFG[8];            /* Address Offset: 0x0400 */
+         uint32_t RESERVED0500[512];                  /* Address Offset: 0x0500 */
     __I  uint32_t DBGSTATUS;                          /* Address Offset: 0x0D00 */
     __O  uint32_t DBGCMD;                             /* Address Offset: 0x0D04 */
     __O  uint32_t DBGINST[2];                         /* Address Offset: 0x0D08 */
@@ -791,6 +791,8 @@ struct MBOX_REG {
 #define CRU_BASE            0xFDD20000U /* CRU base address */
 #define GPIO0_BASE          0xFDD60000U /* GPIO0 base address */
 #define PMU_NS_BASE         0xFDD90000U /* PMU_NS base address */
+#define DMA0_BASE           0xFE530000U /* DMA0 base address */
+#define DMA1_BASE           0xFE550000U /* DMA1 base address */
 #define CAN0_BASE           0xFE570000U /* CAN0 base address */
 #define CAN1_BASE           0xFE580000U /* CAN1 base address */
 #define CAN2_BASE           0xFE590000U /* CAN2 base address */
@@ -852,7 +854,7 @@ struct MBOX_REG {
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
 #define IS_PMU_NS_INSTANCE(instance) ((instance) == PMU_NS)
 #define IS_TSADC_INSTANCE(instance) ((instance) == TSADC)
-#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7))
+#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3))
 #define IS_DMA_INSTANCE(instance) (((instance) == DMA0) || ((instance) == DMA1))
 #define IS_CAN_INSTANCE(instance) (((instance) == CAN0) || ((instance) == CAN1) || ((instance) == CAN2))
@@ -9638,6 +9640,42 @@ struct MBOX_REG {
 #define DMA_CPC5                                           (0x0U)
 #define DMA_CPC5_FIELD0000_SHIFT                           (0U)
 #define DMA_CPC5_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_CPC5_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
+/* CSR6 */
+#define DMA_CSR6_OFFSET                                    (0x130U)
+#define DMA_CSR6                                           (0x0U)
+#define DMA_CSR6_FIELD0000_SHIFT                           (0U)
+#define DMA_CSR6_FIELD0000_MASK                            (0xFU << DMA_CSR6_FIELD0000_SHIFT)                           /* 0x0000000F */
+#define DMA_CSR6_FIELD0004_SHIFT                           (4U)
+#define DMA_CSR6_FIELD0004_MASK                            (0x1FU << DMA_CSR6_FIELD0004_SHIFT)                          /* 0x000001F0 */
+#define DMA_CSR6_FIELD0003_SHIFT                           (14U)
+#define DMA_CSR6_FIELD0003_MASK                            (0x1U << DMA_CSR6_FIELD0003_SHIFT)                           /* 0x00004000 */
+#define DMA_CSR6_FIELD0002_SHIFT                           (15U)
+#define DMA_CSR6_FIELD0002_MASK                            (0x1U << DMA_CSR6_FIELD0002_SHIFT)                           /* 0x00008000 */
+#define DMA_CSR6_FIELD0001_SHIFT                           (21U)
+#define DMA_CSR6_FIELD0001_MASK                            (0x1U << DMA_CSR6_FIELD0001_SHIFT)                           /* 0x00200000 */
+/* CPC6 */
+#define DMA_CPC6_OFFSET                                    (0x134U)
+#define DMA_CPC6                                           (0x0U)
+#define DMA_CPC6_FIELD0000_SHIFT                           (0U)
+#define DMA_CPC6_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_CPC6_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
+/* CSR7 */
+#define DMA_CSR7_OFFSET                                    (0x138U)
+#define DMA_CSR7                                           (0x0U)
+#define DMA_CSR7_FIELD0000_SHIFT                           (0U)
+#define DMA_CSR7_FIELD0000_MASK                            (0xFU << DMA_CSR7_FIELD0000_SHIFT)                           /* 0x0000000F */
+#define DMA_CSR7_FIELD0004_SHIFT                           (4U)
+#define DMA_CSR7_FIELD0004_MASK                            (0x1FU << DMA_CSR7_FIELD0004_SHIFT)                          /* 0x000001F0 */
+#define DMA_CSR7_FIELD0003_SHIFT                           (14U)
+#define DMA_CSR7_FIELD0003_MASK                            (0x1U << DMA_CSR7_FIELD0003_SHIFT)                           /* 0x00004000 */
+#define DMA_CSR7_FIELD0002_SHIFT                           (15U)
+#define DMA_CSR7_FIELD0002_MASK                            (0x1U << DMA_CSR7_FIELD0002_SHIFT)                           /* 0x00008000 */
+#define DMA_CSR7_FIELD0001_SHIFT                           (21U)
+#define DMA_CSR7_FIELD0001_MASK                            (0x1U << DMA_CSR7_FIELD0001_SHIFT)                           /* 0x00200000 */
+/* CPC7 */
+#define DMA_CPC7_OFFSET                                    (0x13CU)
+#define DMA_CPC7                                           (0x0U)
+#define DMA_CPC7_FIELD0000_SHIFT                           (0U)
+#define DMA_CPC7_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_CPC7_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* SAR0 */
 #define DMA_SAR0_OFFSET                                    (0x400U)
 #define DMA_SAR0                                           (0x0U)
@@ -9932,6 +9970,104 @@ struct MBOX_REG {
 #define DMA_PADDING1_OFFSET                                (0x0U)
 /* PADDING2 */
 #define DMA_PADDING2_OFFSET                                (0x0U)
+/* SAR6 */
+#define DMA_SAR6_OFFSET                                    (0x4C0U)
+#define DMA_SAR6                                           (0x0U)
+#define DMA_SAR6_FIELD0000_SHIFT                           (0U)
+#define DMA_SAR6_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_SAR6_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
+/* DAR6 */
+#define DMA_DAR6_OFFSET                                    (0x4C4U)
+#define DMA_DAR6                                           (0x0U)
+#define DMA_DAR6_FIELD0000_SHIFT                           (0U)
+#define DMA_DAR6_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_DAR6_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
+/* CCR6 */
+#define DMA_CCR6_OFFSET                                    (0x4C8U)
+#define DMA_CCR6                                           (0x0U)
+#define DMA_CCR6_FIELD0000_SHIFT                           (0U)
+#define DMA_CCR6_FIELD0000_MASK                            (0x1U << DMA_CCR6_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_CCR6_FIELD0009_SHIFT                           (1U)
+#define DMA_CCR6_FIELD0009_MASK                            (0x7U << DMA_CCR6_FIELD0009_SHIFT)                           /* 0x0000000E */
+#define DMA_CCR6_FIELD0008_SHIFT                           (4U)
+#define DMA_CCR6_FIELD0008_MASK                            (0xFU << DMA_CCR6_FIELD0008_SHIFT)                           /* 0x000000F0 */
+#define DMA_CCR6_FIELD0007_SHIFT                           (8U)
+#define DMA_CCR6_FIELD0007_MASK                            (0x7U << DMA_CCR6_FIELD0007_SHIFT)                           /* 0x00000700 */
+#define DMA_CCR6_FIELD0006_SHIFT                           (11U)
+#define DMA_CCR6_FIELD0006_MASK                            (0x7U << DMA_CCR6_FIELD0006_SHIFT)                           /* 0x00003800 */
+#define DMA_CCR6_FIELD0005_SHIFT                           (14U)
+#define DMA_CCR6_FIELD0005_MASK                            (0x1U << DMA_CCR6_FIELD0005_SHIFT)                           /* 0x00004000 */
+#define DMA_CCR6_FIELD0004_SHIFT                           (15U)
+#define DMA_CCR6_FIELD0004_MASK                            (0x7U << DMA_CCR6_FIELD0004_SHIFT)                           /* 0x00038000 */
+#define DMA_CCR6_FIELD0003_SHIFT                           (18U)
+#define DMA_CCR6_FIELD0003_MASK                            (0xFU << DMA_CCR6_FIELD0003_SHIFT)                           /* 0x003C0000 */
+#define DMA_CCR6_FIELD0002_SHIFT                           (22U)
+#define DMA_CCR6_FIELD0002_MASK                            (0x7U << DMA_CCR6_FIELD0002_SHIFT)                           /* 0x01C00000 */
+#define DMA_CCR6_FIELD0001_SHIFT                           (25U)
+#define DMA_CCR6_FIELD0001_MASK                            (0x7U << DMA_CCR6_FIELD0001_SHIFT)                           /* 0x0E000000 */
+/* LC0_6 */
+#define DMA_LC0_6_OFFSET                                   (0x4CCU)
+#define DMA_LC0_6                                          (0x0U)
+#define DMA_LC0_6_FIELD0000_SHIFT                          (0U)
+#define DMA_LC0_6_FIELD0000_MASK                           (0xFFU << DMA_LC0_6_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* LC1_6 */
+#define DMA_LC1_6_OFFSET                                   (0x4D0U)
+#define DMA_LC1_6                                          (0x0U)
+#define DMA_LC1_6_FIELD0000_SHIFT                          (0U)
+#define DMA_LC1_6_FIELD0000_MASK                           (0xFFU << DMA_LC1_6_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING0 */
+#define DMA_PADDING0_OFFSET                                (0x0U)
+/* PADDING1 */
+#define DMA_PADDING1_OFFSET                                (0x0U)
+/* PADDING2 */
+#define DMA_PADDING2_OFFSET                                (0x0U)
+/* SAR7 */
+#define DMA_SAR7_OFFSET                                    (0x4E0U)
+#define DMA_SAR7                                           (0x0U)
+#define DMA_SAR7_FIELD0000_SHIFT                           (0U)
+#define DMA_SAR7_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_SAR7_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
+/* DAR7 */
+#define DMA_DAR7_OFFSET                                    (0x4E4U)
+#define DMA_DAR7                                           (0x0U)
+#define DMA_DAR7_FIELD0000_SHIFT                           (0U)
+#define DMA_DAR7_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_DAR7_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
+/* CCR7 */
+#define DMA_CCR7_OFFSET                                    (0x4E8U)
+#define DMA_CCR7                                           (0x0U)
+#define DMA_CCR7_FIELD0000_SHIFT                           (0U)
+#define DMA_CCR7_FIELD0000_MASK                            (0x1U << DMA_CCR7_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_CCR7_FIELD0009_SHIFT                           (1U)
+#define DMA_CCR7_FIELD0009_MASK                            (0x7U << DMA_CCR7_FIELD0009_SHIFT)                           /* 0x0000000E */
+#define DMA_CCR7_FIELD0008_SHIFT                           (4U)
+#define DMA_CCR7_FIELD0008_MASK                            (0xFU << DMA_CCR7_FIELD0008_SHIFT)                           /* 0x000000F0 */
+#define DMA_CCR7_FIELD0007_SHIFT                           (8U)
+#define DMA_CCR7_FIELD0007_MASK                            (0x7U << DMA_CCR7_FIELD0007_SHIFT)                           /* 0x00000700 */
+#define DMA_CCR7_FIELD0006_SHIFT                           (11U)
+#define DMA_CCR7_FIELD0006_MASK                            (0x7U << DMA_CCR7_FIELD0006_SHIFT)                           /* 0x00003800 */
+#define DMA_CCR7_FIELD0005_SHIFT                           (14U)
+#define DMA_CCR7_FIELD0005_MASK                            (0x1U << DMA_CCR7_FIELD0005_SHIFT)                           /* 0x00004000 */
+#define DMA_CCR7_FIELD0004_SHIFT                           (15U)
+#define DMA_CCR7_FIELD0004_MASK                            (0x7U << DMA_CCR7_FIELD0004_SHIFT)                           /* 0x00038000 */
+#define DMA_CCR7_FIELD0003_SHIFT                           (18U)
+#define DMA_CCR7_FIELD0003_MASK                            (0xFU << DMA_CCR7_FIELD0003_SHIFT)                           /* 0x003C0000 */
+#define DMA_CCR7_FIELD0002_SHIFT                           (22U)
+#define DMA_CCR7_FIELD0002_MASK                            (0x7U << DMA_CCR7_FIELD0002_SHIFT)                           /* 0x01C00000 */
+#define DMA_CCR7_FIELD0001_SHIFT                           (25U)
+#define DMA_CCR7_FIELD0001_MASK                            (0x7U << DMA_CCR7_FIELD0001_SHIFT)                           /* 0x0E000000 */
+/* LC0_7 */
+#define DMA_LC0_7_OFFSET                                   (0x4ECU)
+#define DMA_LC0_7                                          (0x0U)
+#define DMA_LC0_7_FIELD0000_SHIFT                          (0U)
+#define DMA_LC0_7_FIELD0000_MASK                           (0xFFU << DMA_LC0_7_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* LC1_7 */
+#define DMA_LC1_7_OFFSET                                   (0x4F0U)
+#define DMA_LC1_7                                          (0x0U)
+#define DMA_LC1_7_FIELD0000_SHIFT                          (0U)
+#define DMA_LC1_7_FIELD0000_MASK                           (0xFFU << DMA_LC1_7_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING0 */
+#define DMA_PADDING0_OFFSET                                (0x0U)
+/* PADDING1 */
+#define DMA_PADDING1_OFFSET                                (0x0U)
+/* PADDING2 */
+#define DMA_PADDING2_OFFSET                                (0x0U)
 /* DBGSTATUS */
 #define DMA_DBGSTATUS_OFFSET                               (0xD00U)
 #define DMA_DBGSTATUS                                      (0x0U)
@@ -10016,7 +10152,7 @@ struct MBOX_REG {
 /* WD */
 #define DMA_WD_OFFSET                                      (0xE80U)
 #define DMA_WD_FIELD0000_SHIFT                             (0U)
-#define DMA_WD_FIELD0000_MASK                              (0x1U << DMA_WD_FIELD0000_SHIFT)                             /* 0x00000001 */                            /* 0x00000001 */
+#define DMA_WD_FIELD0000_MASK                              (0x1U << DMA_WD_FIELD0000_SHIFT)                             /* 0x00000001 */
 /******************************************CAN*******************************************/
 /* MODE */
 #define CAN_MODE_OFFSET                                    (0x0U)
