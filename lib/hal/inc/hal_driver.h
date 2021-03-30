@@ -47,6 +47,10 @@
 #include "hal_demo.h"
 #endif
 
+#ifdef HAL_DDR_ECC_MODULE_ENABLED
+#include "hal_ddr_ecc.h"
+#endif
+
 #ifdef HAL_DSP_MODULE_ENABLED
 #include "hal_dsp.h"
 #endif
