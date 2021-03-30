@@ -201,6 +201,13 @@ typedef enum CLOCK_Name {
 #undef GPIO_VER_ID
 #define GPIO_VER_ID             (0x01000C2BU)
 #endif
+/****************************************PMU*********************************************/
+#ifndef __ASSEMBLY__
+typedef enum PD_Id {
+    PD_DSP              = 0x80000000U,
+} ePD_Id;
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
