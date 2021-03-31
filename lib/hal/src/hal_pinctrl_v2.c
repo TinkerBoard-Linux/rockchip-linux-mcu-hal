@@ -538,4 +538,4 @@ HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
 
 /** @} */
 
-#endif /* HAL_PINCTRL_V2_MODULE_ENABLED */
+#endif /* HAL_PINCTRL_MODULE_ENABLED */
