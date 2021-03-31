@@ -586,7 +586,7 @@ void SPI_LoopTest(uint16_t size)
 {
     uint32_t i, ret;
 
-    HAL_DBG("SPI%d cpu loop test, size=%d\n", SPI_TEST_ID, size);
+    HAL_DBG("SPI%d loop test, size=%d\n", SPI_TEST_ID, size);
 
     for (i = 0; i < SPI_TEST_SIZE / 4; i++) {
         ((uint32_t *)tx)[i] = (size << 16) | i;
@@ -611,7 +611,7 @@ void SPI_WriteTest(uint16_t size)
 {
     uint32_t i, ret;
 
-    HAL_DBG("SPI%d cpu write test, size=%d\n", SPI_TEST_ID, size);
+    HAL_DBG("SPI%d write test, size=%d\n", SPI_TEST_ID, size);
 
     for (i = 0; i < SPI_TEST_SIZE / 4; i++) {
         ((uint32_t *)tx)[i] = (size << 16) | i;
@@ -625,7 +625,7 @@ void SPI_ReadTest(uint16_t size)
 {
     uint32_t i, ret;
 
-    HAL_DBG("SPI%d cpu read test, size=%d\n", SPI_TEST_ID, size);
+    HAL_DBG("SPI%d read test, size=%d\n", SPI_TEST_ID, size);
 
     memset(rx, 0, SPI_TEST_SIZE);
     ret = SPI_Read(SPI_TEST_ID, 0, (void *)rx, size);
@@ -637,7 +637,12 @@ void SPI_ReadTest(uint16_t size)
 TEST_GROUP_RUNNER(HAL_SPI){
     struct HAL_PL330_DEV *pl330 = &g_pl330Dev0;
 
+    HAL_DBG("\n");
     HAL_DBG("%s\n", __func__);
+    HAL_DBG("Note:\n");
+    HAL_DBG("    dma transfer        : size > HAL_SPI_DMA_SIZE_MIN\n");
+    HAL_DBG("    cpu polling transfer: size <= HAL_SPI_DMA_SIZE_MIN\n");
+    HAL_DBG("    HAL_SPI_DMA_SIZE_MIN currently equals 512B\n");
 
     tx = (uint8_t *)(((uint32_t)&tx_buf + 0x3f) & (~0x3f));
     rx = (uint8_t *)(((uint32_t)&rx_buf + 0x3f) & (~0x3f));
@@ -654,9 +659,9 @@ TEST_GROUP_RUNNER(HAL_SPI){
     SPI_LoopTest(4095);
     SPI_LoopTest(4096);
     SPI_WriteTest(32);
-    SPI_WriteTest(128);
+    SPI_WriteTest(1024);
     SPI_ReadTest(32);
-    SPI_ReadTest(128);
+    SPI_ReadTest(1024);
 
     HAL_PL330_DeInit(pl330);
 }
