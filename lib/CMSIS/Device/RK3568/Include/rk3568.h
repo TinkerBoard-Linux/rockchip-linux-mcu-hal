@@ -2223,22 +2223,22 @@ struct MBOX_REG {
 #define GRF_GPIO4C_P_GPIO4C7_P_MASK                        (0x3U << GRF_GPIO4C_P_GPIO4C7_P_SHIFT)                       /* 0x0000C000 */
 /* GPIO4D_P */
 #define GRF_GPIO4D_P_OFFSET                                (0x400BCU)
-#define GRF_GPIO4D_P_GPIO4C0_P_SHIFT                       (0U)
-#define GRF_GPIO4D_P_GPIO4C0_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C0_P_SHIFT)                       /* 0x00000003 */
-#define GRF_GPIO4D_P_GPIO4C1_P_SHIFT                       (2U)
-#define GRF_GPIO4D_P_GPIO4C1_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C1_P_SHIFT)                       /* 0x0000000C */
-#define GRF_GPIO4D_P_GPIO4C2_P_SHIFT                       (4U)
-#define GRF_GPIO4D_P_GPIO4C2_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C2_P_SHIFT)                       /* 0x00000030 */
-#define GRF_GPIO4D_P_GPIO4C3_P_SHIFT                       (6U)
-#define GRF_GPIO4D_P_GPIO4C3_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C3_P_SHIFT)                       /* 0x000000C0 */
-#define GRF_GPIO4D_P_GPIO4C4_P_SHIFT                       (8U)
-#define GRF_GPIO4D_P_GPIO4C4_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C4_P_SHIFT)                       /* 0x00000300 */
-#define GRF_GPIO4D_P_GPIO4C5_P_SHIFT                       (10U)
-#define GRF_GPIO4D_P_GPIO4C5_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C5_P_SHIFT)                       /* 0x00000C00 */
-#define GRF_GPIO4D_P_GPIO4C6_P_SHIFT                       (12U)
-#define GRF_GPIO4D_P_GPIO4C6_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C6_P_SHIFT)                       /* 0x00003000 */
-#define GRF_GPIO4D_P_GPIO4C7_P_SHIFT                       (14U)
-#define GRF_GPIO4D_P_GPIO4C7_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4C7_P_SHIFT)                       /* 0x0000C000 */
+#define GRF_GPIO4D_P_GPIO4D0_P_SHIFT                       (0U)
+#define GRF_GPIO4D_P_GPIO4D0_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4D0_P_SHIFT)                       /* 0x00000003 */
+#define GRF_GPIO4D_P_GPIO4D1_P_SHIFT                       (2U)
+#define GRF_GPIO4D_P_GPIO4D1_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4D1_P_SHIFT)                       /* 0x0000000C */
+#define GRF_GPIO4D_P_GPIO4D2_P_SHIFT                       (4U)
+#define GRF_GPIO4D_P_GPIO4D2_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4D2_P_SHIFT)                       /* 0x00000030 */
+#define GRF_GPIO4D_P_GPIO4D3_P_SHIFT                       (6U)
+#define GRF_GPIO4D_P_GPIO4D3_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4D3_P_SHIFT)                       /* 0x000000C0 */
+#define GRF_GPIO4D_P_GPIO4D4_P_SHIFT                       (8U)
+#define GRF_GPIO4D_P_GPIO4D4_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4D4_P_SHIFT)                       /* 0x00000300 */
+#define GRF_GPIO4D_P_GPIO4D5_P_SHIFT                       (10U)
+#define GRF_GPIO4D_P_GPIO4D5_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4D5_P_SHIFT)                       /* 0x00000C00 */
+#define GRF_GPIO4D_P_GPIO4D6_P_SHIFT                       (12U)
+#define GRF_GPIO4D_P_GPIO4D6_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4D6_P_SHIFT)                       /* 0x00003000 */
+#define GRF_GPIO4D_P_GPIO4D7_P_SHIFT                       (14U)
+#define GRF_GPIO4D_P_GPIO4D7_P_MASK                        (0x3U << GRF_GPIO4D_P_GPIO4D7_P_SHIFT)                       /* 0x0000C000 */
 /* GPIO1A_IE */
 #define GRF_GPIO1A_IE_OFFSET                               (0x400C0U)
 #define GRF_GPIO1A_IE_GPIO1A0_IE_SHIFT                     (0U)
@@ -2511,22 +2511,22 @@ struct MBOX_REG {
 #define GRF_GPIO4C_IE_GPIO4C7_IE_MASK                      (0x3U << GRF_GPIO4C_IE_GPIO4C7_IE_SHIFT)                     /* 0x0000C000 */
 /* GPIO4D_IE */
 #define GRF_GPIO4D_IE_OFFSET                               (0x400FCU)
-#define GRF_GPIO4D_IE_GPIO3A0_IE_SHIFT                     (0U)
-#define GRF_GPIO4D_IE_GPIO3A0_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A0_IE_SHIFT)                     /* 0x00000003 */
-#define GRF_GPIO4D_IE_GPIO3A1_IE_SHIFT                     (2U)
-#define GRF_GPIO4D_IE_GPIO3A1_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A1_IE_SHIFT)                     /* 0x0000000C */
-#define GRF_GPIO4D_IE_GPIO3A2_IE_SHIFT                     (4U)
-#define GRF_GPIO4D_IE_GPIO3A2_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A2_IE_SHIFT)                     /* 0x00000030 */
-#define GRF_GPIO4D_IE_GPIO3A3_IE_SHIFT                     (6U)
-#define GRF_GPIO4D_IE_GPIO3A3_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A3_IE_SHIFT)                     /* 0x000000C0 */
-#define GRF_GPIO4D_IE_GPIO3A4_IE_SHIFT                     (8U)
-#define GRF_GPIO4D_IE_GPIO3A4_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A4_IE_SHIFT)                     /* 0x00000300 */
-#define GRF_GPIO4D_IE_GPIO3A5_IE_SHIFT                     (10U)
-#define GRF_GPIO4D_IE_GPIO3A5_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A5_IE_SHIFT)                     /* 0x00000C00 */
-#define GRF_GPIO4D_IE_GPIO3A6_IE_SHIFT                     (12U)
-#define GRF_GPIO4D_IE_GPIO3A6_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A6_IE_SHIFT)                     /* 0x00003000 */
-#define GRF_GPIO4D_IE_GPIO3A7_IE_SHIFT                     (14U)
-#define GRF_GPIO4D_IE_GPIO3A7_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO3A7_IE_SHIFT)                     /* 0x0000C000 */
+#define GRF_GPIO4D_IE_GPIO4D0_IE_SHIFT                     (0U)
+#define GRF_GPIO4D_IE_GPIO4D0_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO4D0_IE_SHIFT)                     /* 0x00000003 */
+#define GRF_GPIO4D_IE_GPIO4D1_IE_SHIFT                     (2U)
+#define GRF_GPIO4D_IE_GPIO4D1_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO4D1_IE_SHIFT)                     /* 0x0000000C */
+#define GRF_GPIO4D_IE_GPIO4D2_IE_SHIFT                     (4U)
+#define GRF_GPIO4D_IE_GPIO4D2_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO4D2_IE_SHIFT)                     /* 0x00000030 */
+#define GRF_GPIO4D_IE_GPIO4D3_IE_SHIFT                     (6U)
+#define GRF_GPIO4D_IE_GPIO4D3_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO4D3_IE_SHIFT)                     /* 0x000000C0 */
+#define GRF_GPIO4D_IE_GPIO4D4_IE_SHIFT                     (8U)
+#define GRF_GPIO4D_IE_GPIO4D4_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO4D4_IE_SHIFT)                     /* 0x00000300 */
+#define GRF_GPIO4D_IE_GPIO4D5_IE_SHIFT                     (10U)
+#define GRF_GPIO4D_IE_GPIO4D5_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO4D5_IE_SHIFT)                     /* 0x00000C00 */
+#define GRF_GPIO4D_IE_GPIO4D6_IE_SHIFT                     (12U)
+#define GRF_GPIO4D_IE_GPIO4D6_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO4D6_IE_SHIFT)                     /* 0x00003000 */
+#define GRF_GPIO4D_IE_GPIO4D7_IE_SHIFT                     (14U)
+#define GRF_GPIO4D_IE_GPIO4D7_IE_MASK                      (0x3U << GRF_GPIO4D_IE_GPIO4D7_IE_SHIFT)                     /* 0x0000C000 */
 /* GPIO1A_OPD */
 #define GRF_GPIO1A_OPD_OFFSET                              (0x40100U)
 #define GRF_GPIO1A_OPD_GPIO1A0_OPD_SHIFT                   (0U)
@@ -2583,22 +2583,22 @@ struct MBOX_REG {
 #define GRF_GPIO1C_OPD_GPIO1C7_OPD_MASK                    (0x1U << GRF_GPIO1C_OPD_GPIO1C7_OPD_SHIFT)                   /* 0x00000080 */
 /* GPIO1D_OPD */
 #define GRF_GPIO1D_OPD_OFFSET                              (0x4010CU)
-#define GRF_GPIO1D_OPD_GPIO1A0_OPD_SHIFT                   (0U)
-#define GRF_GPIO1D_OPD_GPIO1A0_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A0_OPD_SHIFT)                   /* 0x00000001 */
-#define GRF_GPIO1D_OPD_GPIO1A1_OPD_SHIFT                   (1U)
-#define GRF_GPIO1D_OPD_GPIO1A1_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A1_OPD_SHIFT)                   /* 0x00000002 */
-#define GRF_GPIO1D_OPD_GPIO1A2_OPD_SHIFT                   (2U)
-#define GRF_GPIO1D_OPD_GPIO1A2_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A2_OPD_SHIFT)                   /* 0x00000004 */
-#define GRF_GPIO1D_OPD_GPIO1A3_OPD_SHIFT                   (3U)
-#define GRF_GPIO1D_OPD_GPIO1A3_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A3_OPD_SHIFT)                   /* 0x00000008 */
-#define GRF_GPIO1D_OPD_GPIO1A4_OPD_SHIFT                   (4U)
-#define GRF_GPIO1D_OPD_GPIO1A4_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A4_OPD_SHIFT)                   /* 0x00000010 */
-#define GRF_GPIO1D_OPD_GPIO1A5_OPD_SHIFT                   (5U)
-#define GRF_GPIO1D_OPD_GPIO1A5_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A5_OPD_SHIFT)                   /* 0x00000020 */
-#define GRF_GPIO1D_OPD_GPIO1A6_OPD_SHIFT                   (6U)
-#define GRF_GPIO1D_OPD_GPIO1A6_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A6_OPD_SHIFT)                   /* 0x00000040 */
-#define GRF_GPIO1D_OPD_GPIO1A7_OPD_SHIFT                   (7U)
-#define GRF_GPIO1D_OPD_GPIO1A7_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1A7_OPD_SHIFT)                   /* 0x00000080 */
+#define GRF_GPIO1D_OPD_GPIO1D0_OPD_SHIFT                   (0U)
+#define GRF_GPIO1D_OPD_GPIO1D0_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1D0_OPD_SHIFT)                   /* 0x00000001 */
+#define GRF_GPIO1D_OPD_GPIO1D1_OPD_SHIFT                   (1U)
+#define GRF_GPIO1D_OPD_GPIO1D1_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1D1_OPD_SHIFT)                   /* 0x00000002 */
+#define GRF_GPIO1D_OPD_GPIO1D2_OPD_SHIFT                   (2U)
+#define GRF_GPIO1D_OPD_GPIO1D2_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1D2_OPD_SHIFT)                   /* 0x00000004 */
+#define GRF_GPIO1D_OPD_GPIO1D3_OPD_SHIFT                   (3U)
+#define GRF_GPIO1D_OPD_GPIO1D3_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1D3_OPD_SHIFT)                   /* 0x00000008 */
+#define GRF_GPIO1D_OPD_GPIO1D4_OPD_SHIFT                   (4U)
+#define GRF_GPIO1D_OPD_GPIO1D4_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1D4_OPD_SHIFT)                   /* 0x00000010 */
+#define GRF_GPIO1D_OPD_GPIO1D5_OPD_SHIFT                   (5U)
+#define GRF_GPIO1D_OPD_GPIO1D5_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1D5_OPD_SHIFT)                   /* 0x00000020 */
+#define GRF_GPIO1D_OPD_GPIO1D6_OPD_SHIFT                   (6U)
+#define GRF_GPIO1D_OPD_GPIO1D6_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1D6_OPD_SHIFT)                   /* 0x00000040 */
+#define GRF_GPIO1D_OPD_GPIO1D7_OPD_SHIFT                   (7U)
+#define GRF_GPIO1D_OPD_GPIO1D7_OPD_MASK                    (0x1U << GRF_GPIO1D_OPD_GPIO1D7_OPD_SHIFT)                   /* 0x00000080 */
 /* GPIO2A_OPD */
 #define GRF_GPIO2A_OPD_OFFSET                              (0x40110U)
 #define GRF_GPIO2A_OPD_GPIO2A0_OPD_SHIFT                   (0U)
