@@ -26,7 +26,7 @@ HAL_SMCCC_Call:
     ldp x2, x3, [x28, #SMCCC_PARAM_X2_OFFS]
     ldp x4, x5, [x28, #SMCCC_PARAM_X4_OFFS]
     ldp x6, x7, [x28, #SMCCC_PARAM_X6_OFFS]
-    smccc #0
+    smc #0
     stp x0, x1, [x28, #SMCCC_PARAM_X0_OFFS]
     stp x2, x3, [x28, #SMCCC_PARAM_X2_OFFS]
     ldp x28, x30, [sp], #16
@@ -41,7 +41,7 @@ HAL_SMCCC_Call:
     mov r8, r0
     ldm r8, { r0 - r7 }
 .arch_extension sec
-    smccc #0
+    smc #0
     stm r8, { r0 - r7 }
     pop { r4 - r8, pc }
 .size HAL_SMCCC_Call, .- HAL_SMCCC_Call
