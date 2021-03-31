@@ -17,17 +17,23 @@
 
 /************************ HAL SOC Config **************************************/
 
+//#define RKMCU_KOALA
 //#define RKMCU_PISCES
 //#define RKMCU_RK2108
-//#define RKMCU_KOALA
 //#define RKMCU_RK2206
+//#define SOC_RK1808
+//#define SOC_RK3568
+//#define SOC_RV1108
 //#define SOC_RV1126
 //#define SOC_SWALLOW
+#define SYS_TIMER TIMER10 /**< System timer designation (RK TIMER) */
 
 /************************ HAL Driver Config ***********************************/
 
 #define HAL_ACDCDIG_MODULE_ENABLED
 #define HAL_AUDIOPWM_MODULE_ENABLED
+#define HAL_BUFMGR_MODULE_ENABLED
+#define HAL_CKCAL_MODULE_ENABLED
 #define HAL_CPU_TOPOLOGY_MODULE_ENABLED
 #define HAL_CRU_MODULE_ENABLED
 #define HAL_CRYPTO_MODULE_ENABLED
@@ -67,6 +73,7 @@
 #define HAL_SARADC_MODULE_ENABLED
 #define HAL_SDIO_MODULE_ENABLED
 #define HAL_SFC_MODULE_ENABLED
+#define HAL_SMCCC_MODULE_ENABLED
 #define HAL_SNOR_MODULE_ENABLED
 #define HAL_SPI2APB_MODULE_ENABLED
 #define HAL_SPI_MODULE_ENABLED
@@ -90,6 +97,10 @@
 #define HAL_DBG_ERR_ON
 #define HAL_ASSERT_ON
 
+#ifdef HAL_CRU_MODULE_ENABLED
+#define HAL_CRU_AS_FEATURE_ENABLED
+#endif
+
 #ifdef HAL_FSPI_MODULE_ENABLED
 #define HAL_FSPI_XIP_ENABLE /**< FSPI supports XIP by default */
 #endif
@@ -111,12 +122,6 @@
 #define HAL_SNOR_FSPI_HOST /**< Choose SNOR Host: FSPI */
 //#define HAL_SNOR_SPI_HOST /**< Choose SNOR Host: SPI */
 #endif
-
-#ifdef HAL_TIMER_MODULE_ENABLED
-#define HAL_SYS_TIMER  TIMER10 /**< System timer designation (RK TIMER) */
-#define HAL_TICK_TIMER TIMER9 /**< Tick timer designation (RK TIMER) */
-#define HAL_TICK_IRQn  TIMER9_IRQn
-endif
 
 #ifdef HAL_WDT_MODULE_ENABLED
 #define HAL_WDT_DYNFREQ_FEATURE_ENABLED
