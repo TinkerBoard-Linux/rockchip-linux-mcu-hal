@@ -87,7 +87,7 @@ void main(void)
 
     /* UART Init */
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
-    HAL_GIC_Init(HAL_CPU_TOPOLOGY_getCurrentCpuId(), &irqConfig);
+    HAL_GIC_Init(HAL_CPU_TOPOLOGY_GetCurrentCpuId(), &irqConfig);
     printf("Hello RK3568 Bare-metal using RK_HAL!\n");
 
     /* Unity Test */

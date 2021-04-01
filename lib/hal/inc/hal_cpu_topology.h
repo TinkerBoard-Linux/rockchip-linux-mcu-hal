@@ -28,20 +28,20 @@
  * @param  mpidr: cpu mpidr value.
  * @return cpu id.
  */
-uint32_t HAL_CPU_TOPOLOGY_getCpuIdByMpidr(int32_t mpidr);
+uint32_t HAL_CPU_TOPOLOGY_GetCpuIdByMpidr(int32_t mpidr);
 
 /**
  * @brief  Get cpu id of the current cpu.
  * @return cpu id of the current cpu.
  */
-uint32_t HAL_CPU_TOPOLOGY_getCurrentCpuId(void);
+uint32_t HAL_CPU_TOPOLOGY_GetCurrentCpuId(void);
 
 /**
  * @brief  Get cpu affinity valule by cpu id.
  * @param  cpuId: cpu id.
  * @return cpu affinity valule.
  */
-uint32_t HAL_CPU_TOPOLOGY_getCpuAffByCpuId(uint32_t cpuId);
+uint32_t HAL_CPU_TOPOLOGY_GetCpuAffByCpuId(uint32_t cpuId);
 
 /** @} */
 

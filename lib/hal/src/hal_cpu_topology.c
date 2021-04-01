@@ -19,9 +19,9 @@
  *  @{
 
  The CPU_TOPOLOGY driver can be used as follows:
- - Invoke HAL_CPU_TOPOLOGY_getCpuIdByMpidr() to get cpu id by mpidr.
- - Invoke HAL_CPU_TOPOLOGY_getCurrentCpuId() to get cpu id of the current cpu.
- - Invoke HAL_CPU_TOPOLOGY_getCpuAffByCpuId() to get cpu affinity valule by cpu id.
+ - Invoke HAL_CPU_TOPOLOGY_GetCpuIdByMpidr() to get cpu id by mpidr.
+ - Invoke HAL_CPU_TOPOLOGY_GetCurrentCpuId() to get cpu id of the current cpu.
+ - Invoke HAL_CPU_TOPOLOGY_GetCpuAffByCpuId() to get cpu affinity valule by cpu id.
 
  @} */
 
@@ -72,17 +72,17 @@ static uint32_t CPU_getCpuIdByMpidr(int32_t mpidr)
 /** @defgroup CPU_TOPOLOGY_Exported_Functions_Group5 Other Functions
  *  @{
  */
-uint32_t HAL_CPU_TOPOLOGY_getCpuIdByMpidr(int32_t mpidr)
+uint32_t HAL_CPU_TOPOLOGY_GetCpuIdByMpidr(int32_t mpidr)
 {
     return CPU_getCpuIdByMpidr(mpidr);
 }
 
-uint32_t HAL_CPU_TOPOLOGY_getCurrentCpuId(void)
+uint32_t HAL_CPU_TOPOLOGY_GetCurrentCpuId(void)
 {
     return CPU_getCpuIdByMpidr(__get_MPIDR());
 }
 
-uint32_t HAL_CPU_TOPOLOGY_getCpuAffByCpuId(uint32_t cpuId)
+uint32_t HAL_CPU_TOPOLOGY_GetCpuAffByCpuId(uint32_t cpuId)
 {
     return CPU_GET_AFFINITY(cpuId, 0);
 }
