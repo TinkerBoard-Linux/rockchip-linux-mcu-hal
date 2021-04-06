@@ -7,8 +7,8 @@ ROOT_PATH	:= ../../..
 #############################################################################
 # Cross compiler
 #############################################################################
-ifneq ($(wildcard ${ROOT_PATH}/../prebuilts/gcc-arm-none-eabi-7-2018-q2-update/bin),)
-CROSS_COMPILE	?= ${ROOT_PATH}/../prebuilts/gcc-arm-none-eabi-7-2018-q2-update/bin/arm-none-eabi-
+ifneq ($(wildcard ${ROOT_PATH}/../prebuilts/gcc-arm-none-eabi-10-2020-q4-major),)
+CROSS_COMPILE	?= ${ROOT_PATH}/../prebuilts/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-
 else
 CROSS_COMPILE	?= arm-none-eabi-
 endif
