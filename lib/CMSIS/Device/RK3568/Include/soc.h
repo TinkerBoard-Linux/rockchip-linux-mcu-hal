@@ -99,6 +99,14 @@ typedef enum
   WDT0_IRQn              = 181,      /*!< WDT0  Interrupt             */
   DDR_ECC_CE_IRQn        = 205,      /*!< DDR ECC correctable fault Interrupt */
   DDR_ECC_UE_IRQn        = 207,      /*!< DDR ECC uncorrectable fault Interrupt */
+  MBOX0_CH0_A2B_IRQn     = 215,      /*!< MBOX0 CH0 A2B Interrupt     */
+  MBOX0_CH1_A2B_IRQn     = 216,      /*!< MBOX0 CH1 A2B Interrupt     */
+  MBOX0_CH2_A2B_IRQn     = 217,      /*!< MBOX0 CH2 A2B Interrupt     */
+  MBOX0_CH3_A2B_IRQn     = 218,      /*!< MBOX0 CH3 A2B Interrupt     */
+  MBOX0_CH0_B2A_IRQn     = 219,      /*!< MBOX0 CH0 B2A Interrupt     */
+  MBOX0_CH1_B2A_IRQn     = 220,      /*!< MBOX0 CH1 B2A Interrupt     */
+  MBOX0_CH2_B2A_IRQn     = 221,      /*!< MBOX0 CH2 B2A Interrupt     */
+  MBOX0_CH3_B2A_IRQn     = 222,      /*!< MBOX0 CH3 B2A Interrupt     */
   RSVD0_IRQn             = 283,      /*!< RSVD0  Interrupt            */
   NUM_INTERRUPTS         = 352,
 } IRQn_Type;
