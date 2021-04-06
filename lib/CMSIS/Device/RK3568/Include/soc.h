@@ -85,6 +85,7 @@ typedef enum
   UART7_IRQn             = 155,      /*!< UART7  Interrupt            */
   UART8_IRQn             = 156,      /*!< UART8  Interrupt            */
   UART9_IRQn             = 157,      /*!< UART9  Interrupt            */
+  WDT0_IRQn              = 181,      /*!< WDT0  Interrupt             */
   DDR_ECC_CE_IRQn        = 205,      /*!< DDR ECC correctable fault Interrupt */
   DDR_ECC_UE_IRQn        = 207,      /*!< DDR ECC uncorrectable fault Interrupt */
   RSVD0_IRQn             = 283,      /*!< RSVD0  Interrupt            */

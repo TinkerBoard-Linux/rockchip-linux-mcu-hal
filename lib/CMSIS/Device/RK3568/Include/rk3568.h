@@ -692,6 +692,15 @@ struct CAN_REG {
          uint32_t RESERVED0404[63];                   /* Address Offset: 0x0404 */
     __I  uint32_t TXE_FIFO_RDATA;                     /* Address Offset: 0x0500 */
 };
+/* WDT Register Structure Define */
+struct WDT_REG {
+    __IO uint32_t CR;                                 /* Address Offset: 0x0000 */
+    __IO uint32_t TORR;                               /* Address Offset: 0x0004 */
+    __I  uint32_t CCVR;                               /* Address Offset: 0x0008 */
+    __O  uint32_t CRR;                                /* Address Offset: 0x000C */
+    __I  uint32_t STAT;                               /* Address Offset: 0x0010 */
+    __I  uint32_t EOI;                                /* Address Offset: 0x0014 */
+};
 /* SPI Register Structure Define */
 struct SPI_REG {
     __IO uint32_t CTRLR[2];                           /* Address Offset: 0x0000 */
@@ -825,6 +834,7 @@ struct MBOX_REG {
 #define TIMER3_BASE         0xFE5F0060U /* TIMER3 base address */
 #define TIMER4_BASE         0xFE5F0080U /* TIMER4 base address */
 #define TIMER5_BASE         0xFE5F00A0U /* TIMER5 base address */
+#define WDT_BASE            0xFE600000U /* WDT base address */
 #define SPI0_BASE           0xFE610000U /* SPI0 base address */
 #define SPI1_BASE           0xFE620000U /* SPI1 base address */
 #define SPI2_BASE           0xFE630000U /* SPI2 base address */
@@ -860,6 +870,7 @@ struct MBOX_REG {
 #define TIMER3              ((struct TIMER_REG *) TIMER3_BASE)
 #define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
+#define WDT                 ((struct WDT_REG *) WDT_BASE)
 #define SPI0                ((struct SPI_REG *) SPI0_BASE)
 #define SPI1                ((struct SPI_REG *) SPI1_BASE)
 #define SPI2                ((struct SPI_REG *) SPI2_BASE)
@@ -876,6 +887,7 @@ struct MBOX_REG {
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
 #define IS_PMU_NS_INSTANCE(instance) ((instance) == PMU_NS)
+#define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_TSADC_INSTANCE(instance) ((instance) == TSADC)
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3))
@@ -10700,6 +10712,38 @@ struct MBOX_REG {
 #define CAN_TXE_FIFO_RDATA                                 (0x0U)
 #define CAN_TXE_FIFO_RDATA_TXE_FIFO_RDATA_SHIFT            (0U)
 #define CAN_TXE_FIFO_RDATA_TXE_FIFO_RDATA_MASK             (0xFFFFFFFFU << CAN_TXE_FIFO_RDATA_TXE_FIFO_RDATA_SHIFT)     /* 0xFFFFFFFF */
+/******************************************WDT*******************************************/
+/* CR */
+#define WDT_CR_OFFSET                                      (0x0U)
+#define WDT_CR_WDT_EN_SHIFT                                (0U)
+#define WDT_CR_WDT_EN_MASK                                 (0x1U << WDT_CR_WDT_EN_SHIFT)                                /* 0x00000001 */
+#define WDT_CR_RESP_MODE_SHIFT                             (1U)
+#define WDT_CR_RESP_MODE_MASK                              (0x1U << WDT_CR_RESP_MODE_SHIFT)                             /* 0x00000002 */
+#define WDT_CR_RST_PLUSE_LENGTH_SHIFT                      (2U)
+#define WDT_CR_RST_PLUSE_LENGTH_MASK                       (0x7U << WDT_CR_RST_PLUSE_LENGTH_SHIFT)                      /* 0x0000001C */
+/* TORR */
+#define WDT_TORR_OFFSET                                    (0x4U)
+#define WDT_TORR_TIMEOUT_PERIOD_SHIFT                      (0U)
+#define WDT_TORR_TIMEOUT_PERIOD_MASK                       (0xFU << WDT_TORR_TIMEOUT_PERIOD_SHIFT)                      /* 0x0000000F */
+/* CCVR */
+#define WDT_CCVR_OFFSET                                    (0x8U)
+#define WDT_CCVR                                           (0xFFFFU)
+#define WDT_CCVR_CUR_CNT_SHIFT                             (0U)
+#define WDT_CCVR_CUR_CNT_MASK                              (0xFFFFFFFFU << WDT_CCVR_CUR_CNT_SHIFT)                      /* 0xFFFFFFFF */
+/* CRR */
+#define WDT_CRR_OFFSET                                     (0xCU)
+#define WDT_CRR_CNT_RESTART_SHIFT                          (0U)
+#define WDT_CRR_CNT_RESTART_MASK                           (0xFFU << WDT_CRR_CNT_RESTART_SHIFT)                         /* 0x000000FF */
+/* STAT */
+#define WDT_STAT_OFFSET                                    (0x10U)
+#define WDT_STAT                                           (0x0U)
+#define WDT_STAT_WDT_STATUS_SHIFT                          (0U)
+#define WDT_STAT_WDT_STATUS_MASK                           (0x1U << WDT_STAT_WDT_STATUS_SHIFT)                          /* 0x00000001 */
+/* EOI */
+#define WDT_EOI_OFFSET                                     (0x14U)
+#define WDT_EOI                                            (0x0U)
+#define WDT_EOI_WDT_INT_CLR_SHIFT                          (0U)
+#define WDT_EOI_WDT_INT_CLR_MASK                           (0x1U << WDT_EOI_WDT_INT_CLR_SHIFT)                          /* 0x00000001 */
 /******************************************SPI*******************************************/
 /* CTRLR0 */
 #define SPI_CTRLR0_OFFSET                                  (0x0U)
