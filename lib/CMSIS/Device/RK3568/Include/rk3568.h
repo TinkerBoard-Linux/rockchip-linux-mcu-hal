@@ -844,6 +844,7 @@ struct MBOX_REG {
 #define GPIO1_BASE          0xFE740000U /* GPIO1 base address */
 #define GPIO2_BASE          0xFE750000U /* GPIO2 base address */
 #define GPIO3_BASE          0xFE760000U /* GPIO3 base address */
+#define GPIO4_BASE          0xFE770000U /* GPIO4 base address */
 #define MBOX0_BASE          0xFE780000U /* MBOX0 base address */
 /****************************************************************************************/
 /*                                                                                      */
@@ -880,6 +881,7 @@ struct MBOX_REG {
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
+#define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
 
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
@@ -890,7 +892,7 @@ struct MBOX_REG {
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_TSADC_INSTANCE(instance) ((instance) == TSADC)
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
-#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3))
+#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
 #define IS_DMA_INSTANCE(instance) (((instance) == DMA0) || ((instance) == DMA1))
 #define IS_CAN_INSTANCE(instance) (((instance) == CAN0) || ((instance) == CAN1) || ((instance) == CAN2))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1) || ((instance) == SPI2) || ((instance) == SPI3))
