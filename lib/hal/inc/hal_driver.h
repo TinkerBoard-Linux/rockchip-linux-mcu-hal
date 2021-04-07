@@ -69,6 +69,10 @@
 #include "hal_gpio.h"
 #endif
 
+#ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
+#include "hal_gpio_irq_group.h"
+#endif
+
 #ifdef HAL_PINCTRL_MODULE_ENABLED
 #include "hal_pinctrl.h"
 #endif
