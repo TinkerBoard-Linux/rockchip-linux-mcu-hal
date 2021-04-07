@@ -27,6 +27,7 @@
  - Invoke HAL_GIC_EndOfInterrupt() to end the active IRQ.
  - Invoke HAL_GIC_SetPending() to make a IRQ PENDING.
  - Invoke HAL_GIC_GetPending() to get the Pending state of a IRQ.
+ - Invoke HAL_GIC_GetIRQStatus() to get the Pending and active status of a IRQ.
  - Invoke HAL_GIC_ClearPending() to clear the Pending state of a IRQ.
  - Invoke HAL_GIC_SetPriority() to set priority for a IRQ.
  - Invoke HAL_GIC_SetPriorityMask() to set the priority mask.
@@ -298,6 +299,25 @@ static inline void GIC_ClearPending(uint32_t irq)
     }
 }
 
+static inline uint32_t GIC_GetIRQStatus(uint32_t irq)
+{
+    uint32_t pending, active;
+
+    if (irq >= NUM_INTERRUPTS) {
+        return HAL_INVAL;
+    }
+
+    if (irq > 31U) {
+        pending = (pGICD->ISPENDR[irq / 32U] >> (irq % 32U)) & 1UL;
+        active = (pGICD->ISACTIVER[irq / 32U] >> (irq % 32U)) & 1UL;
+    } else {
+        pending = (pGICRSGI->ISPENDR0 >> (irq % 32U)) & 1UL;
+        active = (pGICRSGI->ISACTIVER0 >> (irq % 32U)) & 1UL;
+    }
+
+    return ((active << 1U) | pending);
+}
+
 static inline void GIC_SetPriority(uint32_t irq, uint32_t priority)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
@@ -476,8 +496,8 @@ static void GIC_CPUInterfaceInit(uint32_t amp, uint32_t priority)
     ctlr |= 0x2;
 #else
     ctlr &= ~0x2;
-    GIC_SetIccCtlr(ctlr);
 #endif
+    GIC_SetIccCtlr(ctlr);
 
     GIC_EnableInterface();
     GIC_SetBinaryPoint(0);
@@ -641,6 +661,16 @@ HAL_Status HAL_GIC_ClearPending(uint32_t irq)
 }
 
 /**
+ * @brief  Get the status for a given interrupt.
+ * @param  irq: The interrupt to get status for.
+ * @return 0 - not pending/active, 1 - pending, 2 - active, 3 - pending and active
+ */
+uint32_t HAL_GIC_GetIRQStatus(uint32_t irq)
+{
+    return GIC_GetIRQStatus(irq);
+}
+
+/**
  * @brief  Set priority for a IRQ.
  * @param  irq: irq id.
  * @param  priority: priority value.
@@ -756,6 +786,7 @@ GIC_IRQHandler HAL_GIC_GetHandler(uint32_t irq)
  * @brief Initialize GIC base address and config GIC.
  * @param cpuID: cpu id.
  * @param ampCtrl: amp system config information.
+ * @return HAL_Status.
  */
 HAL_Status HAL_GIC_Init(uint32_t cpuID, struct GIC_IRQ_AMP_CTRL *ampCtrl)
 {

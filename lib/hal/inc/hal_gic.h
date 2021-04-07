@@ -65,6 +65,7 @@ HAL_Status HAL_GIC_EndOfInterrupt(uint32_t irq);
 HAL_Status HAL_GIC_SetPending(uint32_t irq);
 int32_t HAL_GIC_GetPending(uint32_t irq);
 HAL_Status HAL_GIC_ClearPending(uint32_t irq);
+uint32_t HAL_GIC_GetIRQStatus(uint32_t irq);
 HAL_Status HAL_GIC_SetPriority(uint32_t irq, uint32_t priority);
 HAL_Status HAL_GIC_SetPriorityMask(uint32_t priority);
 uint32_t HAL_GIC_GetPriorityMask(void);
