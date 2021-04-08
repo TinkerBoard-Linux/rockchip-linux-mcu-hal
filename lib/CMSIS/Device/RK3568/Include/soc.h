@@ -65,6 +65,11 @@ typedef enum
   DMAC0_IRQn             = 46,       /*!< DMAC0 Interrupt             */
   DMAC1_ABORT_IRQn       = 47,       /*!< DMAC1 Abort Interrupt       */
   DMAC1_IRQn             = 48,       /*!< DMAC1 Interrupt             */
+  GPIO0_IRQn             = 65,       /*!< GPIO0 Interrupt             */
+  GPIO1_IRQn             = 66,       /*!< GPIO1 Interrupt             */
+  GPIO2_IRQn             = 67,       /*!< GPIO2 Interrupt             */
+  GPIO3_IRQn             = 68,       /*!< GPIO3 Interrupt             */
+  GPIO4_IRQn             = 69,       /*!< GPIO4 Interrupt             */
   I2C0_IRQn              = 78,       /*!< I2C0 Interrupt              */
   I2C1_IRQn              = 79,       /*!< I2C1 Interrupt              */
   I2C2_IRQn              = 80,       /*!< I2C2 Interrupt              */
@@ -97,6 +102,13 @@ typedef enum
   RSVD0_IRQn             = 283,      /*!< RSVD0  Interrupt            */
   NUM_INTERRUPTS         = 352,
 } IRQn_Type;
+
+#define RSVD_IRQn(_N)               (RSVD0_IRQn + (_N))
+#define GPIO_IRQ_GROUP_DIRQ_BASE    RSVD_IRQn(37) /* gic irq: 320 */
+#define GPIO_IRQ_GROUP_DIRQ_NUM     (NUM_INTERRUPTS - GPIO_IRQ_GROUP_DIRQ_BASE)
+
+#define GPIO_IRQ_GROUP_GPIO0_HWIRQ  GPIO0_IRQn
+#define GPIO_IRQ_GROUP_GPION_HWIRQ  GPIO4_IRQn
 
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
