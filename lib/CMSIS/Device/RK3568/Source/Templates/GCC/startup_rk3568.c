@@ -26,15 +26,13 @@ void IRQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
 #ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
 void IRQ_HardIrqPreemptHandler(uint32_t irqn)
 {
-  GIC_IRQHandler handler;
+#ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
+  HAL_GPIO_IRQ_GROUP_DispatchGIRQs(irqn);
+#endif
 
-  __ASM volatile (
-  "cpsie  i                                       \n"
-  );
-  handler = HAL_GIC_GetHandler(irqn);
-  if (handler) {
-    handler(irqn);
-  }
+  __enable_irq();
+
+  HAL_IRQ_HANDLER_IRQHandler(irqn);
 }
 #else
 void IRQ_HardIrqHandler(void){
