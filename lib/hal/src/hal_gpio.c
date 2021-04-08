@@ -390,15 +390,36 @@ uint32_t HAL_GPIO_GetBankLevel(struct GPIO_REG *pGPIO)
 void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin)
 {
 #if (GPIO_VER_ID == 0x01000C2BU)
+#ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
+    uint32_t irqStatus;
+    int ret;
+
+    /*
+     * For a group type of gpio irq,
+     * need to check current cpu is the rounting cpu of this pin.
+     */
+    ret = HAL_GPIO_IRQ_GROUP_GpioCtrlEnter(pGPIO, pin, &irqStatus);
+    if (ret < 0) {
+        return;
+    }
+#endif
+
     if (IS_GPIO_HIGH_PIN(pin)) {
         pin &= 0xFFFF0000;
-        pGPIO->INT_EN_H = pin | (pin >> 16);
         pGPIO->INT_MASK_H = pin;
+        pGPIO->INT_EN_H = pin | (pin >> 16);
     } else {
         pin &= 0x0000FFFF;
-        pGPIO->INT_EN_L = pin | (pin << 16);
         pGPIO->INT_MASK_L = pin << 16;
+        pGPIO->INT_EN_L = pin | (pin << 16);
     }
+
+#ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
+    if (ret > 0) {
+        HAL_GPIO_IRQ_GROUP_GpioCtrlExit(pGPIO, pin, irqStatus);
+    }
+#endif
+
 #else
     {
         pGPIO->INTEN |= pin;
@@ -415,6 +436,20 @@ void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin)
 void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin)
 {
 #if (GPIO_VER_ID == 0x01000C2BU)
+#ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
+    uint32_t irqStatus;
+    int ret;
+
+    /*
+     * For a group type of gpio irq,
+     * need to check current cpu is the rounting cpu of this pin.
+     */
+    ret = HAL_GPIO_IRQ_GROUP_GpioCtrlEnter(pGPIO, pin, &irqStatus);
+    if (ret < 0) {
+        return;
+    }
+#endif
+
     if (IS_GPIO_HIGH_PIN(pin)) {
         pin &= 0xFFFF0000;
         pGPIO->INT_EN_H = pin;
@@ -424,6 +459,13 @@ void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin)
         pGPIO->INT_EN_L = pin << 16;
         pGPIO->INT_MASK_L = pin | (pin << 16);
     }
+
+#ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
+    if (ret > 0) {
+        HAL_GPIO_IRQ_GROUP_GpioCtrlExit(pGPIO, pin, irqStatus);
+    }
+#endif
+
 #else
     {
         pGPIO->INTEN &= ~pin;
