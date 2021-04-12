@@ -65,6 +65,12 @@ typedef enum
   DMAC0_IRQn             = 46,       /*!< DMAC0 Interrupt             */
   DMAC1_ABORT_IRQn       = 47,       /*!< DMAC1 Abort Interrupt       */
   DMAC1_IRQn             = 48,       /*!< DMAC1 Interrupt             */
+  I2C0_IRQn              = 78,       /*!< I2C0 Interrupt              */
+  I2C1_IRQn              = 79,       /*!< I2C1 Interrupt              */
+  I2C2_IRQn              = 80,       /*!< I2C2 Interrupt              */
+  I2C3_IRQn              = 81,       /*!< I2C3 Interrupt              */
+  I2C4_IRQn              = 82,       /*!< I2C4 Interrupt              */
+  I2C5_IRQn              = 83,       /*!< I2C5 Interrupt              */
   SPI0_IRQn              = 135,      /*!< SPI0 Interrupt              */
   SPI1_IRQn              = 136,      /*!< SPI1 Interrupt              */
   SPI2_IRQn              = 137,      /*!< SPI2 Interrupt              */
