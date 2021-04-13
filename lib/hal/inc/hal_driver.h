@@ -109,6 +109,10 @@
 #include "hal_intc.h"
 #endif
 
+#ifdef HAL_IRQ_HANDLER_MODULE_ENABLED
+#include "hal_irq_handler.h"
+#endif
+
 #ifdef HAL_GIC_MODULE_ENABLED
 #include "hal_gic.h"
 #endif
