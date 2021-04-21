@@ -37,8 +37,9 @@ typedef void (*GIC_IRQHandler) (uint32_t irq);
 /***************************** Structure Definition **************************/
 /** config information for a irq */
 struct GIC_AMP_IRQ_INIT_CFG {
-    uint32_t irq; /**< irq id */
-    uint32_t prio; /**< irq priority */
+    IRQn_Type irq; /**< irq id */
+    uint32_t prio; /**< irq priority, as fallows:
+                     * 0x80, 0x90, 0xa0, 0xb0, 0xc0, 0xd0, 0xe0 */
 };
 
 /** For the AMP system, need to specify a cpu to initialize
@@ -73,7 +74,7 @@ uint32_t HAL_GIC_GetPriority(uint32_t irq);
 HAL_Status HAL_GIC_SetIRouter(uint32_t irq, uint32_t aff);
 HAL_Status HAL_GIC_SetHandler(uint32_t irq, GIC_IRQHandler handler);
 GIC_IRQHandler HAL_GIC_GetHandler(uint32_t irq);
-HAL_Status HAL_GIC_Init(uint32_t cpuID, struct GIC_IRQ_AMP_CTRL *ampCtrl);
+HAL_Status HAL_GIC_Init(struct GIC_IRQ_AMP_CTRL *ampCtrl);
 
 /** @} */
 

@@ -154,7 +154,7 @@ static inline uint32_t GIC_GetIccIGrpen1_EL1(void)
     return val;
 }
 
-static uint32_t GIC_SetIccIGrpen1_EL1(uint32_t val)
+static void GIC_SetIccIGrpen1_EL1(uint32_t val)
 {
     __set_CP(15, 0, val, 12, 12, 7);
 }
@@ -168,7 +168,7 @@ static uint32_t GIC_GetIccIar1_EL1(void)
     return val;
 }
 
-static uint32_t GIC_SetIccEoir1_EL1(uint32_t val)
+static void GIC_SetIccEoir1_EL1(uint32_t val)
 {
     __set_CP(15, 0, val, 12, 12, 1);
 }
@@ -182,7 +182,7 @@ static inline uint32_t GIC_GetIccPmr_EL1(void)
     return val;
 }
 
-static inline uint32_t GIC_SetIccPmr_EL1(uint32_t val)
+static inline void GIC_SetIccPmr_EL1(uint32_t val)
 {
     __set_CP(15, 0, val, 4, 6, 0);
 }
@@ -195,7 +195,7 @@ static inline uint32_t GIC_GetIccbpr1(void)
 
     return val;
 }
-static inline uint32_t GIC_SetIccbpr1(uint32_t val)
+static inline void GIC_SetIccbpr1(uint32_t val)
 {
     __set_CP(15, 0, val, 12, 12, 3);
 }
@@ -288,8 +288,6 @@ static inline uint32_t GIC_GetPending(uint32_t irq)
 
 static inline void GIC_ClearPending(uint32_t irq)
 {
-    int32_t status;
-
     HAL_ASSERT(irq < NUM_INTERRUPTS);
 
     if (irq > 31U) {
@@ -333,8 +331,6 @@ static inline void GIC_SetPriority(uint32_t irq, uint32_t priority)
 
 static inline uint32_t GIC_GetPriority(uint32_t irq)
 {
-    uint32_t priority;
-
     HAL_ASSERT(irq < NUM_INTERRUPTS);
 
     if (irq > 31) {
@@ -355,7 +351,7 @@ static inline uint32_t GIC_GetPriorityMask(void)
     return GIC_GetIccPmr_EL1();
 }
 
-static inline int32_t GIC_SetIRouter(uint32_t irq, uint32_t aff)
+static inline void GIC_SetIRouter(uint32_t irq, uint32_t aff)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
 
@@ -610,8 +606,6 @@ uint32_t HAL_GIC_GetEnableState(uint32_t irq)
 uint32_t HAL_GIC_GetActiveIRQ(void)
 {
     return GIC_GetActiveIRQ();
-
-    return HAL_OK;
 }
 
 /**
@@ -784,13 +778,14 @@ GIC_IRQHandler HAL_GIC_GetHandler(uint32_t irq)
 
 /**
  * @brief Initialize GIC base address and config GIC.
- * @param cpuID: cpu id.
  * @param ampCtrl: amp system config information.
  * @return HAL_Status.
  */
-HAL_Status HAL_GIC_Init(uint32_t cpuID, struct GIC_IRQ_AMP_CTRL *ampCtrl)
+HAL_Status HAL_GIC_Init(struct GIC_IRQ_AMP_CTRL *ampCtrl)
 {
-    uint32_t i, cpu, aff, cpuId, prio;
+    uint32_t i, aff, cpuID, prio;
+
+    cpuID = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
 
     p_ampCtrl = ampCtrl;
     GIC_RedistInitBase(cpuID);
