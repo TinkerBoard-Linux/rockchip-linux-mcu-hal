@@ -493,8 +493,8 @@ HAL_Status HAL_PINCTRL_DeInit(void)
 /**
  * @brief  Public function to configure for multi pins.
  * @param  bank: pin bank channel defined in eGPIO_bankId.
- * @param  mPins: multi pins defined in PINCTRL_GPIO_PINS.
- * @param  param: multi params defined in ePINCTRL_configParam,
+ * @param  mPins: multi pins defined in @ref ePINCTRL_GPIO_PINS.
+ * @param  param: multi params defined in @ref ePINCTRL_configParam.
  * @return HAL_Status.
  */
 HAL_Status HAL_PINCTRL_SetParam(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_configParam param)
@@ -523,8 +523,8 @@ HAL_Status HAL_PINCTRL_SetParam(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
 /**
  * @brief  Public function to set iomux for multi pins.
  * @param  bank: pin bank channel defined in eGPIO_bankId.
- * @param  mPins: multi pins defined in PINCTRL_GPIO_PINS.
- * @param  param: multi params defined in ePINCTRL_configParam,
+ * @param  mPins: multi pins defined in @ref ePINCTRL_GPIO_PINS.
+ * @param  param: multi params defined in @ref ePINCTRL_configParam.
  * @return HAL_Status.
  */
 HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_configParam param)

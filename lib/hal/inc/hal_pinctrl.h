@@ -346,42 +346,43 @@ typedef enum {
         .GRFInfo[GRF_SMT_INFO] = { .offset = offset4, .bitsPerPin = bpp4, .pinsPerReg = ppr4 }, \
     }
 
-/** @defgroup PINCTRL_GPIO_PINS Pins Definition
+/** @defgroup ePINCTRL_GPIO_PINS Pins Definition
  *  @{
  */
-
-#define GPIO_PIN_A0 (0x00000001U)  /*!< Pin 0 selected    */
-#define GPIO_PIN_A1 (0x00000002U)  /*!< Pin 1 selected    */
-#define GPIO_PIN_A2 (0x00000004U)  /*!< Pin 2 selected    */
-#define GPIO_PIN_A3 (0x00000008U)  /*!< Pin 3 selected    */
-#define GPIO_PIN_A4 (0x00000010U)  /*!< Pin 4 selected    */
-#define GPIO_PIN_A5 (0x00000020U)  /*!< Pin 5 selected    */
-#define GPIO_PIN_A6 (0x00000040U)  /*!< Pin 6 selected    */
-#define GPIO_PIN_A7 (0x00000080U)  /*!< Pin 7 selected    */
-#define GPIO_PIN_B0 (0x00000100U)  /*!< Pin 8 selected    */
-#define GPIO_PIN_B1 (0x00000200U)  /*!< Pin 9 selected    */
-#define GPIO_PIN_B2 (0x00000400U)  /*!< Pin 10 selected   */
-#define GPIO_PIN_B3 (0x00000800U)  /*!< Pin 11 selected   */
-#define GPIO_PIN_B4 (0x00001000U)  /*!< Pin 12 selected   */
-#define GPIO_PIN_B5 (0x00002000U)  /*!< Pin 13 selected   */
-#define GPIO_PIN_B6 (0x00004000U)  /*!< Pin 14 selected   */
-#define GPIO_PIN_B7 (0x00008000U)  /*!< Pin 15 selected   */
-#define GPIO_PIN_C0 (0x00010000U)  /*!< Pin 16 selected   */
-#define GPIO_PIN_C1 (0x00020000U)  /*!< Pin 17 selected   */
-#define GPIO_PIN_C2 (0x00040000U)  /*!< Pin 18 selected   */
-#define GPIO_PIN_C3 (0x00080000U)  /*!< Pin 19 selected   */
-#define GPIO_PIN_C4 (0x00100000U)  /*!< Pin 20 selected   */
-#define GPIO_PIN_C5 (0x00200000U)  /*!< Pin 21 selected   */
-#define GPIO_PIN_C6 (0x00400000U)  /*!< Pin 22 selected   */
-#define GPIO_PIN_C7 (0x00800000U)  /*!< Pin 23 selected   */
-#define GPIO_PIN_D0 (0x01000000U)  /*!< Pin 24 selected   */
-#define GPIO_PIN_D1 (0x02000000U)  /*!< Pin 25 selected   */
-#define GPIO_PIN_D2 (0x04000000U)  /*!< Pin 26 selected   */
-#define GPIO_PIN_D3 (0x08000000U)  /*!< Pin 27 selected   */
-#define GPIO_PIN_D4 (0x10000000U)  /*!< Pin 28 selected   */
-#define GPIO_PIN_D5 (0x20000000U)  /*!< Pin 29 selected   */
-#define GPIO_PIN_D6 (0x40000000U)  /*!< Pin 30 selected   */
-#define GPIO_PIN_D7 (0x80000000U)  /*!< Pin 31 selected   */
+typedef enum {
+    GPIO_PIN_A0 = 0x00000001U,  /*!< Pin 0 selected    */
+    GPIO_PIN_A1 = 0x00000002U,  /*!< Pin 1 selected    */
+    GPIO_PIN_A2 = 0x00000004U,  /*!< Pin 2 selected    */
+    GPIO_PIN_A3 = 0x00000008U,  /*!< Pin 3 selected    */
+    GPIO_PIN_A4 = 0x00000010U,  /*!< Pin 4 selected    */
+    GPIO_PIN_A5 = 0x00000020U,  /*!< Pin 5 selected    */
+    GPIO_PIN_A6 = 0x00000040U,  /*!< Pin 6 selected    */
+    GPIO_PIN_A7 = 0x00000080U,  /*!< Pin 7 selected    */
+    GPIO_PIN_B0 = 0x00000100U,  /*!< Pin 8 selected    */
+    GPIO_PIN_B1 = 0x00000200U,  /*!< Pin 9 selected    */
+    GPIO_PIN_B2 = 0x00000400U,  /*!< Pin 10 selected   */
+    GPIO_PIN_B3 = 0x00000800U,  /*!< Pin 11 selected   */
+    GPIO_PIN_B4 = 0x00001000U,  /*!< Pin 12 selected   */
+    GPIO_PIN_B5 = 0x00002000U,  /*!< Pin 13 selected   */
+    GPIO_PIN_B6 = 0x00004000U,  /*!< Pin 14 selected   */
+    GPIO_PIN_B7 = 0x00008000U,  /*!< Pin 15 selected   */
+    GPIO_PIN_C0 = 0x00010000U,  /*!< Pin 16 selected   */
+    GPIO_PIN_C1 = 0x00020000U,  /*!< Pin 17 selected   */
+    GPIO_PIN_C2 = 0x00040000U,  /*!< Pin 18 selected   */
+    GPIO_PIN_C3 = 0x00080000U,  /*!< Pin 19 selected   */
+    GPIO_PIN_C4 = 0x00100000U,  /*!< Pin 20 selected   */
+    GPIO_PIN_C5 = 0x00200000U,  /*!< Pin 21 selected   */
+    GPIO_PIN_C6 = 0x00400000U,  /*!< Pin 22 selected   */
+    GPIO_PIN_C7 = 0x00800000U,  /*!< Pin 23 selected   */
+    GPIO_PIN_D0 = 0x01000000U,  /*!< Pin 24 selected   */
+    GPIO_PIN_D1 = 0x02000000U,  /*!< Pin 25 selected   */
+    GPIO_PIN_D2 = 0x04000000U,  /*!< Pin 26 selected   */
+    GPIO_PIN_D3 = 0x08000000U,  /*!< Pin 27 selected   */
+    GPIO_PIN_D4 = 0x10000000U,  /*!< Pin 28 selected   */
+    GPIO_PIN_D5 = 0x20000000U,  /*!< Pin 29 selected   */
+    GPIO_PIN_D6 = 0x40000000U,  /*!< Pin 30 selected   */
+    GPIO_PIN_D7 = 0x80000000U,  /*!< Pin 31 selected   */
+} ePINCTRL_GPIO_PINS;
 
 #define GPIO_PIN_ALL (0xFFFFFFFFU)  /*!< All pins selected */
 
