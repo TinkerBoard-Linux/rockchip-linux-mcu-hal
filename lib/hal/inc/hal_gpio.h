@@ -37,27 +37,31 @@
 #define BANK_PIN(BANK, PIN) ((((BANK) << GPIO_BANK_SHIFT) & GPIO_BANK_MASK) + (((PIN) << GPIO_PIN_SHIFT) & GPIO_PIN_MASK))
 
 /***************************** Structure Definition **************************/
-/** GPIO pin levle */
+/** GPIO pin level definition */
 typedef enum {
     GPIO_LOW,
     GPIO_HIGH
 } eGPIO_pinLevel;
 
+/** GPIO pin direction definition */
 typedef enum {
     GPIO_IN,
     GPIO_OUT
 } eGPIO_pinDirection;
 
+/** GPIO pin debounce definition */
 typedef enum {
     GPIO_DEBOUNCE_DIS,
     GPIO_DEBOUNCE_EN
 } eGPIO_pinDebounce;
 
+/** GPIO pin interrupt enable definition */
 typedef enum {
     GPIO_INT_ENABLE,
     GPIO_INT_DISABLE
 } eGPIO_intEnable;
 
+/** GPIO pin interrupt type definition */
 typedef enum {
     GPIO_INT_TYPE_NONE         = 0x00000000,
     GPIO_INT_TYPE_EDGE_RISING  = 0x00000001,
@@ -70,6 +74,7 @@ typedef enum {
     GPIO_INT_TYPE_DEFAULT      = GPIO_INT_TYPE_SENSE_MASK,
 } eGPIO_intType;
 
+/** GPIO pin interrupt mode definition */
 typedef enum {
     GPIO_INT_MODE_EDGE_RISING,
     GPIO_INT_MODE_EDGE_FALLING,
