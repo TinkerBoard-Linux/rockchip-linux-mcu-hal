@@ -17,6 +17,7 @@
 #define __HAL_GPIO_H
 
 #include "hal_def.h"
+#include "hal_pinctrl.h"
 
 /***************************** MACRO Definition ******************************/
 /** @defgroup GPIO_Exported_Definition_Group1 Basic Definition
@@ -128,20 +129,21 @@ typedef enum {
 /** @defgroup GPIO_Exported_Definition_Group2 Public Functions Declare.
  *  @{
  */
-eGPIO_pinDirection HAL_GPIO_GetPinDirection(struct GPIO_REG *pGPIO, uint32_t pin);
-eGPIO_pinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin);
-HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_pinLevel pinLevel);
-HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_pinDirection pinDir);
-HAL_Status HAL_GPIO_SetPinsLevel(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_pinLevel pinLevel);
-HAL_Status HAL_GPIO_SetPinsDirection(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_pinDirection pinDir);
-eGPIO_pinLevel HAL_GPIO_GetPinData(struct GPIO_REG *pGPIO, uint32_t pin);
+eGPIO_pinDirection HAL_GPIO_GetPinDirection(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin);
+eGPIO_pinLevel HAL_GPIO_GetPinLevel(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin);
+eGPIO_pinLevel HAL_GPIO_GetPinData(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin);
 uint32_t HAL_GPIO_GetBankLevel(struct GPIO_REG *pGPIO);
 
-void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, uint32_t pin);
-void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, uint32_t pin);
-void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank);
+HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, eGPIO_pinLevel level);
+HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, eGPIO_pinDirection direction);
+HAL_Status HAL_GPIO_SetIntType(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, eGPIO_intType mode);
 
-HAL_Status HAL_GPIO_SetIntType(struct GPIO_REG *pGPIO, uint32_t pin, eGPIO_intType mode);
+HAL_Status HAL_GPIO_SetPinsLevel(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_pinLevel level);
+HAL_Status HAL_GPIO_SetPinsDirection(struct GPIO_REG *pGPIO, uint32_t mPins, eGPIO_pinDirection direction);
+
+void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin);
+void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin);
+void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank);
 
 /* The parameter pin for this function is special, it's 0~31. */
 void HAL_GPIO_IRQDispatch(eGPIO_bankId bank, uint32_t pin);
