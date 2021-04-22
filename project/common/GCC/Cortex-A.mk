@@ -54,11 +54,11 @@ endif
 #############################################################################
 # Source code and include
 #############################################################################
-INCLUDES := \
+INCLUDES += \
 -I"../src" \
 -I"$(ROOT_PATH)/lib/CMSIS/Core_A/Include" \
 
-SRC_DIRS := \
+SRC_DIRS += \
     ../src \
 
 export HAL_PATH := $(ROOT_PATH)
