@@ -197,6 +197,7 @@ typedef enum {
     GPIO_NUM_MAX
 } ePINCTRL_PIN;
 
+/** PINCTRL IOMUX definition */
 typedef enum {
     PINCTRL_IOMUX_FUNC0,
     PINCTRL_IOMUX_FUNC1,
@@ -208,6 +209,7 @@ typedef enum {
     PINCTRL_IOMUX_FUNC7
 } ePINCTRL_iomuxFunc;
 
+/** PINCTRL PULL definition */
 typedef enum {
     PINCTRL_PULL_OD,
     PINCTRL_PULL_UP,
@@ -215,6 +217,7 @@ typedef enum {
     PINCTRL_PULL_KEEP
 } ePINCTRL_pullMode;
 
+/** PINCTRL Drive Strength definition */
 typedef enum {
     PINCTRL_DRIVE_LEVEL0,
     PINCTRL_DRIVE_LEVEL1,
@@ -226,11 +229,13 @@ typedef enum {
     PINCTRL_DRIVE_LEVEL7
 } ePINCTRL_driveLevel;
 
+/** PINCTRL Slew Rate definition */
 typedef enum {
     PINCTRL_SLEWRATE_SLOW,
     PINCTRL_SLEWRATE_FAST
 } ePINCTRL_slewRate;
 
+/** PINCTRL Schmitt enable definition */
 typedef enum {
     PINCTRL_SCHMITT_DIS,
     PINCTRL_SCHMITT_EN
