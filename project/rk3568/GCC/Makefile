@@ -6,5 +6,8 @@ PROJECT := RK3568
 SOC := RK3568
 CPU = -march=armv8-a -mtune=cortex-a55
 
+include ../../../middleware/OpenAMP/openamp.mk
+CFLAGS += -DMETAL_INTERNAL -DMETAL_MAX_DEVICE_REGIONS=2
+
 include ../../../middleware/sdhci/sdhci.mk
 include ../../common/GCC/Cortex-A.mk
