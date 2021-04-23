@@ -63,11 +63,9 @@ SRC_DIRS += \
 
 export HAL_PATH := $(ROOT_PATH)
 include $(HAL_PATH)/tools/build_lib.mk
-include $(HAL_PATH)/test/build_test.mk
 SRC_DIRS += $(HAL_LIB_SRC)
-SRC_DIRS += $(HAL_TEST_SRC)
 INCLUDES += $(HAL_LIB_INC)
-INCLUDES += $(HAL_TEST_INC)
+-include $(HAL_PATH)/test/build_test.mk
 
 SRCS += $(basename $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.[cS])))
 SRCS += $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/startup_$(shell echo $(SOC) | tr '[:upper:]' '[:lower:]').c
