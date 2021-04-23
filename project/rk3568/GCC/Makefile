@@ -10,4 +10,5 @@ include ../../../middleware/OpenAMP/openamp.mk
 CFLAGS += -DMETAL_INTERNAL -DMETAL_MAX_DEVICE_REGIONS=2
 
 include ../../../middleware/sdhci/sdhci.mk
+include ../../../middleware/coremark/coremark.mk
 include ../../common/GCC/Cortex-A.mk
