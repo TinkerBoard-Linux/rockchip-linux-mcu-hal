@@ -43,7 +43,4 @@
 /* UNITY CONFIG */
 #define UNITY_INCLUDE_CONFIG_H
 
-/* MIDDLEWARE CONFIG*/
-#define DRIVERS_SDHCI
-
 #endif
