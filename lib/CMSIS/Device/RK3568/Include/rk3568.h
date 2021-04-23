@@ -575,6 +575,35 @@ struct GPIO_REG {
          uint32_t RESERVED0074;                       /* Address Offset: 0x0074 */
     __I  uint32_t VER_ID;                             /* Address Offset: 0x0078 */
 };
+/* PWM Register Structure Define */
+struct PWM_CHANNEL {
+    __I  uint32_t CNT;
+    __IO uint32_t PERIOD_HPR;
+    __IO uint32_t DUTY_LPR;
+    __IO uint32_t CTRL;
+};
+struct PWM_REG {
+    struct PWM_CHANNEL CHANNELS[4];                   /* Address Offset: 0x0000 */
+    __IO uint32_t INTSTS;                             /* Address Offset: 0x0040 */
+    __IO uint32_t INT_EN;                             /* Address Offset: 0x0044 */
+         uint32_t RESERVED0048[2];                    /* Address Offset: 0x0048 */
+    __IO uint32_t FIFO_CTRL;                          /* Address Offset: 0x0050 */
+    __IO uint32_t FIFO_INTSTS;                        /* Address Offset: 0x0054 */
+    __IO uint32_t FIFO_TOUTTHR;                       /* Address Offset: 0x0058 */
+    __IO uint32_t VERSION_ID;                         /* Address Offset: 0x005C */
+    __I  uint32_t FIFO;                               /* Address Offset: 0x0060 */
+         uint32_t RESERVED0064[7];                    /* Address Offset: 0x0064 */
+    __IO uint32_t PWRMATCH_CTRL;                      /* Address Offset: 0x0080 */
+    __IO uint32_t PWRMATCH_LPRE;                      /* Address Offset: 0x0084 */
+    __IO uint32_t PWRMATCH_HPRE;                      /* Address Offset: 0x0088 */
+    __IO uint32_t PWRMATCH_LD;                        /* Address Offset: 0x008C */
+    __IO uint32_t PWRMATCH_HD_ZERO;                   /* Address Offset: 0x0090 */
+    __IO uint32_t PWRMATCH_HD_ONE;                    /* Address Offset: 0x0094 */
+    __IO uint32_t PWRMATCH_VALUE[10];                 /* Address Offset: 0x0098 */
+         uint32_t RESERVED00C0[3];                    /* Address Offset: 0x00C0 */
+    __I  uint32_t PWM3_PWRCAPTURE_VALUE;              /* Address Offset: 0x00CC */
+    __IO uint32_t FILTER_CTRL;                        /* Address Offset: 0x00D0 */
+};
 /* PMU Register Structure Define */
 struct PMU_REG {
     __I  uint32_t VERSION;                            /* Address Offset: 0x0000 */
@@ -843,6 +872,7 @@ struct MBOX_REG {
 #define I2C0_BASE           0xFDD40000U /* I2C0 base address */
 #define UART0_BASE          0xFDD50000U /* UART0 base address */
 #define GPIO0_BASE          0xFDD60000U /* GPIO0 base address */
+#define PWM0_BASE           0xFDD70000U /* PWM0 base address */
 #define PMU_NS_BASE         0xFDD90000U /* PMU_NS base address */
 #define DMA0_BASE           0xFE530000U /* DMA0 base address */
 #define DMA1_BASE           0xFE550000U /* DMA1 base address */
@@ -874,6 +904,9 @@ struct MBOX_REG {
 #define UART7_BASE          0xFE6B0000U /* UART7 base address */
 #define UART8_BASE          0xFE6C0000U /* UART8 base address */
 #define UART9_BASE          0xFE6D0000U /* UART9 base address */
+#define PWM1_BASE           0xFE6E0000U /* PWM1 base address */
+#define PWM2_BASE           0xFE6F0000U /* PWM2 base address */
+#define PWM3_BASE           0xFE700000U /* PWM3 base address */
 #define TSADC_BASE          0xFE710000U /* TSADC base address */
 #define GPIO1_BASE          0xFE740000U /* GPIO1 base address */
 #define GPIO2_BASE          0xFE750000U /* GPIO2 base address */
@@ -895,6 +928,7 @@ struct MBOX_REG {
 #define I2C0                ((struct I2C_REG *) I2C0_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define PWM0                ((struct PWM_REG *) PWM0_BASE)
 #define PMU_NS              ((struct PMU_NS_REG *) PMU_NS_BASE)
 #define DMA0                ((struct DMA_REG *) DMA0_BASE)
 #define DMA1                ((struct DMA_REG *) DMA1_BASE)
@@ -926,6 +960,9 @@ struct MBOX_REG {
 #define UART7               ((struct UART_REG *) UART7_BASE)
 #define UART8               ((struct UART_REG *) UART8_BASE)
 #define UART9               ((struct UART_REG *) UART9_BASE)
+#define PWM1                ((struct PWM_REG *) PWM1_BASE)
+#define PWM2                ((struct PWM_REG *) PWM2_BASE)
+#define PWM3                ((struct PWM_REG *) PWM3_BASE)
 #define TSADC               ((struct TSADC_REG *) TSADC_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
@@ -944,6 +981,7 @@ struct MBOX_REG {
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2) || ((instance) == I2C3) || ((instance) == I2C4) || ((instance) == I2C5))
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
+#define IS_PWM_INSTANCE(instance) (((instance) == PWM0) || ((instance) == PWM1) || ((instance) == PWM2) || ((instance) == PWM3))
 #define IS_DMA_INSTANCE(instance) (((instance) == DMA0) || ((instance) == DMA1))
 #define IS_CAN_INSTANCE(instance) (((instance) == CAN0) || ((instance) == CAN1) || ((instance) == CAN2))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1) || ((instance) == SPI2) || ((instance) == SPI3))
@@ -8975,6 +9013,369 @@ struct MBOX_REG {
 #define GPIO_VER_ID                                        (0x101157CU)
 #define GPIO_VER_ID_VER_ID_SHIFT                           (0U)
 #define GPIO_VER_ID_VER_ID_MASK                            (0xFFFFFFFFU << GPIO_VER_ID_VER_ID_SHIFT)                    /* 0xFFFFFFFF */
+/******************************************PWM*******************************************/
+/* PWM0_CNT */
+#define PWM_PWM0_CNT_OFFSET                                (0x0U)
+#define PWM_PWM0_CNT                                       (0x0U)
+#define PWM_PWM0_CNT_CNT_SHIFT                             (0U)
+#define PWM_PWM0_CNT_CNT_MASK                              (0xFFFFFFFFU << PWM_PWM0_CNT_CNT_SHIFT)                      /* 0xFFFFFFFF */
+/* PWM0_PERIOD_HPR */
+#define PWM_PWM0_PERIOD_HPR_OFFSET                         (0x4U)
+#define PWM_PWM0_PERIOD_HPR_PERIOD_HPR_SHIFT               (0U)
+#define PWM_PWM0_PERIOD_HPR_PERIOD_HPR_MASK                (0xFFFFFFFFU << PWM_PWM0_PERIOD_HPR_PERIOD_HPR_SHIFT)        /* 0xFFFFFFFF */
+/* PWM0_DUTY_LPR */
+#define PWM_PWM0_DUTY_LPR_OFFSET                           (0x8U)
+#define PWM_PWM0_DUTY_LPR_DUTY_LPR_SHIFT                   (0U)
+#define PWM_PWM0_DUTY_LPR_DUTY_LPR_MASK                    (0xFFFFFFFFU << PWM_PWM0_DUTY_LPR_DUTY_LPR_SHIFT)            /* 0xFFFFFFFF */
+/* PWM0_CTRL */
+#define PWM_PWM0_CTRL_OFFSET                               (0xCU)
+#define PWM_PWM0_CTRL_PWM_EN_SHIFT                         (0U)
+#define PWM_PWM0_CTRL_PWM_EN_MASK                          (0x1U << PWM_PWM0_CTRL_PWM_EN_SHIFT)                         /* 0x00000001 */
+#define PWM_PWM0_CTRL_PWM_MODE_SHIFT                       (1U)
+#define PWM_PWM0_CTRL_PWM_MODE_MASK                        (0x3U << PWM_PWM0_CTRL_PWM_MODE_SHIFT)                       /* 0x00000006 */
+#define PWM_PWM0_CTRL_DUTY_POL_SHIFT                       (3U)
+#define PWM_PWM0_CTRL_DUTY_POL_MASK                        (0x1U << PWM_PWM0_CTRL_DUTY_POL_SHIFT)                       /* 0x00000008 */
+#define PWM_PWM0_CTRL_INACTIVE_POL_SHIFT                   (4U)
+#define PWM_PWM0_CTRL_INACTIVE_POL_MASK                    (0x1U << PWM_PWM0_CTRL_INACTIVE_POL_SHIFT)                   /* 0x00000010 */
+#define PWM_PWM0_CTRL_OUTPUT_MODE_SHIFT                    (5U)
+#define PWM_PWM0_CTRL_OUTPUT_MODE_MASK                     (0x1U << PWM_PWM0_CTRL_OUTPUT_MODE_SHIFT)                    /* 0x00000020 */
+#define PWM_PWM0_CTRL_CONLOCK_SHIFT                        (6U)
+#define PWM_PWM0_CTRL_CONLOCK_MASK                         (0x1U << PWM_PWM0_CTRL_CONLOCK_SHIFT)                        /* 0x00000040 */
+#define PWM_PWM0_CTRL_CH_CNT_EN_SHIFT                      (7U)
+#define PWM_PWM0_CTRL_CH_CNT_EN_MASK                       (0x1U << PWM_PWM0_CTRL_CH_CNT_EN_SHIFT)                      /* 0x00000080 */
+#define PWM_PWM0_CTRL_FORCE_CLK_EN_SHIFT                   (8U)
+#define PWM_PWM0_CTRL_FORCE_CLK_EN_MASK                    (0x1U << PWM_PWM0_CTRL_FORCE_CLK_EN_SHIFT)                   /* 0x00000100 */
+#define PWM_PWM0_CTRL_CLK_SEL_SHIFT                        (9U)
+#define PWM_PWM0_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM0_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
+#define PWM_PWM0_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
+#define PWM_PWM0_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM0_CTRL_CLK_SRC_SEL_SHIFT)                    /* 0x00000400 */
+#define PWM_PWM0_CTRL_PRESCALE_SHIFT                       (12U)
+#define PWM_PWM0_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM0_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
+#define PWM_PWM0_CTRL_SCALE_SHIFT                          (16U)
+#define PWM_PWM0_CTRL_SCALE_MASK                           (0xFFU << PWM_PWM0_CTRL_SCALE_SHIFT)                         /* 0x00FF0000 */
+#define PWM_PWM0_CTRL_RPT_SHIFT                            (24U)
+#define PWM_PWM0_CTRL_RPT_MASK                             (0xFFU << PWM_PWM0_CTRL_RPT_SHIFT)                           /* 0xFF000000 */
+/* PWM1_CNT */
+#define PWM_PWM1_CNT_OFFSET                                (0x10U)
+#define PWM_PWM1_CNT                                       (0x0U)
+#define PWM_PWM1_CNT_CNT_SHIFT                             (0U)
+#define PWM_PWM1_CNT_CNT_MASK                              (0xFFFFFFFFU << PWM_PWM1_CNT_CNT_SHIFT)                      /* 0xFFFFFFFF */
+/* PWM1_PERIOD_HPR */
+#define PWM_PWM1_PERIOD_HPR_OFFSET                         (0x14U)
+#define PWM_PWM1_PERIOD_HPR_PERIOD_HPR_SHIFT               (0U)
+#define PWM_PWM1_PERIOD_HPR_PERIOD_HPR_MASK                (0xFFFFFFFFU << PWM_PWM1_PERIOD_HPR_PERIOD_HPR_SHIFT)        /* 0xFFFFFFFF */
+/* PWM1_DUTY_LPR */
+#define PWM_PWM1_DUTY_LPR_OFFSET                           (0x18U)
+#define PWM_PWM1_DUTY_LPR_DUTY_LPR_SHIFT                   (0U)
+#define PWM_PWM1_DUTY_LPR_DUTY_LPR_MASK                    (0xFFFFFFFFU << PWM_PWM1_DUTY_LPR_DUTY_LPR_SHIFT)            /* 0xFFFFFFFF */
+/* PWM1_CTRL */
+#define PWM_PWM1_CTRL_OFFSET                               (0x1CU)
+#define PWM_PWM1_CTRL_PWM_EN_SHIFT                         (0U)
+#define PWM_PWM1_CTRL_PWM_EN_MASK                          (0x1U << PWM_PWM1_CTRL_PWM_EN_SHIFT)                         /* 0x00000001 */
+#define PWM_PWM1_CTRL_PWM_MODE_SHIFT                       (1U)
+#define PWM_PWM1_CTRL_PWM_MODE_MASK                        (0x3U << PWM_PWM1_CTRL_PWM_MODE_SHIFT)                       /* 0x00000006 */
+#define PWM_PWM1_CTRL_DUTY_POL_SHIFT                       (3U)
+#define PWM_PWM1_CTRL_DUTY_POL_MASK                        (0x1U << PWM_PWM1_CTRL_DUTY_POL_SHIFT)                       /* 0x00000008 */
+#define PWM_PWM1_CTRL_INACTIVE_POL_SHIFT                   (4U)
+#define PWM_PWM1_CTRL_INACTIVE_POL_MASK                    (0x1U << PWM_PWM1_CTRL_INACTIVE_POL_SHIFT)                   /* 0x00000010 */
+#define PWM_PWM1_CTRL_OUTPUT_MODE_SHIFT                    (5U)
+#define PWM_PWM1_CTRL_OUTPUT_MODE_MASK                     (0x1U << PWM_PWM1_CTRL_OUTPUT_MODE_SHIFT)                    /* 0x00000020 */
+#define PWM_PWM1_CTRL_CONLOCK_SHIFT                        (6U)
+#define PWM_PWM1_CTRL_CONLOCK_MASK                         (0x1U << PWM_PWM1_CTRL_CONLOCK_SHIFT)                        /* 0x00000040 */
+#define PWM_PWM1_CTRL_CH_CNT_EN_SHIFT                      (7U)
+#define PWM_PWM1_CTRL_CH_CNT_EN_MASK                       (0x1U << PWM_PWM1_CTRL_CH_CNT_EN_SHIFT)                      /* 0x00000080 */
+#define PWM_PWM1_CTRL_FORCE_CLK_EN_SHIFT                   (8U)
+#define PWM_PWM1_CTRL_FORCE_CLK_EN_MASK                    (0x1U << PWM_PWM1_CTRL_FORCE_CLK_EN_SHIFT)                   /* 0x00000100 */
+#define PWM_PWM1_CTRL_CLK_SEL_SHIFT                        (9U)
+#define PWM_PWM1_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM1_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
+#define PWM_PWM1_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
+#define PWM_PWM1_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM1_CTRL_CLK_SRC_SEL_SHIFT)                    /* 0x00000400 */
+#define PWM_PWM1_CTRL_PRESCALE_SHIFT                       (12U)
+#define PWM_PWM1_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM1_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
+#define PWM_PWM1_CTRL_SCALE_SHIFT                          (16U)
+#define PWM_PWM1_CTRL_SCALE_MASK                           (0xFFU << PWM_PWM1_CTRL_SCALE_SHIFT)                         /* 0x00FF0000 */
+#define PWM_PWM1_CTRL_RPT_SHIFT                            (24U)
+#define PWM_PWM1_CTRL_RPT_MASK                             (0xFFU << PWM_PWM1_CTRL_RPT_SHIFT)                           /* 0xFF000000 */
+/* PWM2_CNT */
+#define PWM_PWM2_CNT_OFFSET                                (0x20U)
+#define PWM_PWM2_CNT                                       (0x0U)
+#define PWM_PWM2_CNT_CNT_SHIFT                             (0U)
+#define PWM_PWM2_CNT_CNT_MASK                              (0xFFFFFFFFU << PWM_PWM2_CNT_CNT_SHIFT)                      /* 0xFFFFFFFF */
+/* PWM2_PERIOD_HPR */
+#define PWM_PWM2_PERIOD_HPR_OFFSET                         (0x24U)
+#define PWM_PWM2_PERIOD_HPR_PERIOD_HPR_SHIFT               (0U)
+#define PWM_PWM2_PERIOD_HPR_PERIOD_HPR_MASK                (0xFFFFFFFFU << PWM_PWM2_PERIOD_HPR_PERIOD_HPR_SHIFT)        /* 0xFFFFFFFF */
+/* PWM2_DUTY_LPR */
+#define PWM_PWM2_DUTY_LPR_OFFSET                           (0x28U)
+#define PWM_PWM2_DUTY_LPR_DUTY_LPR_SHIFT                   (0U)
+#define PWM_PWM2_DUTY_LPR_DUTY_LPR_MASK                    (0xFFFFFFFFU << PWM_PWM2_DUTY_LPR_DUTY_LPR_SHIFT)            /* 0xFFFFFFFF */
+/* PWM2_CTRL */
+#define PWM_PWM2_CTRL_OFFSET                               (0x2CU)
+#define PWM_PWM2_CTRL_PWM_EN_SHIFT                         (0U)
+#define PWM_PWM2_CTRL_PWM_EN_MASK                          (0x1U << PWM_PWM2_CTRL_PWM_EN_SHIFT)                         /* 0x00000001 */
+#define PWM_PWM2_CTRL_PWM_MODE_SHIFT                       (1U)
+#define PWM_PWM2_CTRL_PWM_MODE_MASK                        (0x3U << PWM_PWM2_CTRL_PWM_MODE_SHIFT)                       /* 0x00000006 */
+#define PWM_PWM2_CTRL_DUTY_POL_SHIFT                       (3U)
+#define PWM_PWM2_CTRL_DUTY_POL_MASK                        (0x1U << PWM_PWM2_CTRL_DUTY_POL_SHIFT)                       /* 0x00000008 */
+#define PWM_PWM2_CTRL_INACTIVE_POL_SHIFT                   (4U)
+#define PWM_PWM2_CTRL_INACTIVE_POL_MASK                    (0x1U << PWM_PWM2_CTRL_INACTIVE_POL_SHIFT)                   /* 0x00000010 */
+#define PWM_PWM2_CTRL_OUTPUT_MODE_SHIFT                    (5U)
+#define PWM_PWM2_CTRL_OUTPUT_MODE_MASK                     (0x1U << PWM_PWM2_CTRL_OUTPUT_MODE_SHIFT)                    /* 0x00000020 */
+#define PWM_PWM2_CTRL_CONLOCK_SHIFT                        (6U)
+#define PWM_PWM2_CTRL_CONLOCK_MASK                         (0x1U << PWM_PWM2_CTRL_CONLOCK_SHIFT)                        /* 0x00000040 */
+#define PWM_PWM2_CTRL_CH_CNT_EN_SHIFT                      (7U)
+#define PWM_PWM2_CTRL_CH_CNT_EN_MASK                       (0x1U << PWM_PWM2_CTRL_CH_CNT_EN_SHIFT)                      /* 0x00000080 */
+#define PWM_PWM2_CTRL_FORCE_CLK_EN_SHIFT                   (8U)
+#define PWM_PWM2_CTRL_FORCE_CLK_EN_MASK                    (0x1U << PWM_PWM2_CTRL_FORCE_CLK_EN_SHIFT)                   /* 0x00000100 */
+#define PWM_PWM2_CTRL_CLK_SEL_SHIFT                        (9U)
+#define PWM_PWM2_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM2_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
+#define PWM_PWM2_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
+#define PWM_PWM2_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM2_CTRL_CLK_SRC_SEL_SHIFT)                    /* 0x00000400 */
+#define PWM_PWM2_CTRL_PRESCALE_SHIFT                       (12U)
+#define PWM_PWM2_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM2_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
+#define PWM_PWM2_CTRL_SCALE_SHIFT                          (16U)
+#define PWM_PWM2_CTRL_SCALE_MASK                           (0xFFU << PWM_PWM2_CTRL_SCALE_SHIFT)                         /* 0x00FF0000 */
+#define PWM_PWM2_CTRL_RPT_SHIFT                            (24U)
+#define PWM_PWM2_CTRL_RPT_MASK                             (0xFFU << PWM_PWM2_CTRL_RPT_SHIFT)                           /* 0xFF000000 */
+/* PWM3_CNT */
+#define PWM_PWM3_CNT_OFFSET                                (0x30U)
+#define PWM_PWM3_CNT                                       (0x0U)
+#define PWM_PWM3_CNT_CNT_SHIFT                             (0U)
+#define PWM_PWM3_CNT_CNT_MASK                              (0xFFFFFFFFU << PWM_PWM3_CNT_CNT_SHIFT)                      /* 0xFFFFFFFF */
+/* PWM3_PERIOD_HPR */
+#define PWM_PWM3_PERIOD_HPR_OFFSET                         (0x34U)
+#define PWM_PWM3_PERIOD_HPR_PERIOD_HPR_SHIFT               (0U)
+#define PWM_PWM3_PERIOD_HPR_PERIOD_HPR_MASK                (0xFFFFFFFFU << PWM_PWM3_PERIOD_HPR_PERIOD_HPR_SHIFT)        /* 0xFFFFFFFF */
+/* PWM3_DUTY_LPR */
+#define PWM_PWM3_DUTY_LPR_OFFSET                           (0x38U)
+#define PWM_PWM3_DUTY_LPR_DUTY_LPR_SHIFT                   (0U)
+#define PWM_PWM3_DUTY_LPR_DUTY_LPR_MASK                    (0xFFFFFFFFU << PWM_PWM3_DUTY_LPR_DUTY_LPR_SHIFT)            /* 0xFFFFFFFF */
+/* PWM3_CTRL */
+#define PWM_PWM3_CTRL_OFFSET                               (0x3CU)
+#define PWM_PWM3_CTRL_PWM_EN_SHIFT                         (0U)
+#define PWM_PWM3_CTRL_PWM_EN_MASK                          (0x1U << PWM_PWM3_CTRL_PWM_EN_SHIFT)                         /* 0x00000001 */
+#define PWM_PWM3_CTRL_PWM_MODE_SHIFT                       (1U)
+#define PWM_PWM3_CTRL_PWM_MODE_MASK                        (0x3U << PWM_PWM3_CTRL_PWM_MODE_SHIFT)                       /* 0x00000006 */
+#define PWM_PWM3_CTRL_DUTY_POL_SHIFT                       (3U)
+#define PWM_PWM3_CTRL_DUTY_POL_MASK                        (0x1U << PWM_PWM3_CTRL_DUTY_POL_SHIFT)                       /* 0x00000008 */
+#define PWM_PWM3_CTRL_INACTIVE_POL_SHIFT                   (4U)
+#define PWM_PWM3_CTRL_INACTIVE_POL_MASK                    (0x1U << PWM_PWM3_CTRL_INACTIVE_POL_SHIFT)                   /* 0x00000010 */
+#define PWM_PWM3_CTRL_OUTPUT_MODE_SHIFT                    (5U)
+#define PWM_PWM3_CTRL_OUTPUT_MODE_MASK                     (0x1U << PWM_PWM3_CTRL_OUTPUT_MODE_SHIFT)                    /* 0x00000020 */
+#define PWM_PWM3_CTRL_CONLOCK_SHIFT                        (6U)
+#define PWM_PWM3_CTRL_CONLOCK_MASK                         (0x1U << PWM_PWM3_CTRL_CONLOCK_SHIFT)                        /* 0x00000040 */
+#define PWM_PWM3_CTRL_CH_CNT_EN_SHIFT                      (7U)
+#define PWM_PWM3_CTRL_CH_CNT_EN_MASK                       (0x1U << PWM_PWM3_CTRL_CH_CNT_EN_SHIFT)                      /* 0x00000080 */
+#define PWM_PWM3_CTRL_FORCE_CLK_EN_SHIFT                   (8U)
+#define PWM_PWM3_CTRL_FORCE_CLK_EN_MASK                    (0x1U << PWM_PWM3_CTRL_FORCE_CLK_EN_SHIFT)                   /* 0x00000100 */
+#define PWM_PWM3_CTRL_CLK_SEL_SHIFT                        (9U)
+#define PWM_PWM3_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM3_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
+#define PWM_PWM3_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
+#define PWM_PWM3_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM3_CTRL_CLK_SRC_SEL_SHIFT)                    /* 0x00000400 */
+#define PWM_PWM3_CTRL_PRESCALE_SHIFT                       (12U)
+#define PWM_PWM3_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM3_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
+#define PWM_PWM3_CTRL_SCALE_SHIFT                          (16U)
+#define PWM_PWM3_CTRL_SCALE_MASK                           (0xFFU << PWM_PWM3_CTRL_SCALE_SHIFT)                         /* 0x00FF0000 */
+#define PWM_PWM3_CTRL_RPT_SHIFT                            (24U)
+#define PWM_PWM3_CTRL_RPT_MASK                             (0xFFU << PWM_PWM3_CTRL_RPT_SHIFT)                           /* 0xFF000000 */
+/* INTSTS */
+#define PWM_INTSTS_OFFSET                                  (0x40U)
+#define PWM_INTSTS_CH0_INTSTS_SHIFT                        (0U)
+#define PWM_INTSTS_CH0_INTSTS_MASK                         (0x1U << PWM_INTSTS_CH0_INTSTS_SHIFT)                        /* 0x00000001 */
+#define PWM_INTSTS_CH1_INTSTS_SHIFT                        (1U)
+#define PWM_INTSTS_CH1_INTSTS_MASK                         (0x1U << PWM_INTSTS_CH1_INTSTS_SHIFT)                        /* 0x00000002 */
+#define PWM_INTSTS_CH2_INTSTS_SHIFT                        (2U)
+#define PWM_INTSTS_CH2_INTSTS_MASK                         (0x1U << PWM_INTSTS_CH2_INTSTS_SHIFT)                        /* 0x00000004 */
+#define PWM_INTSTS_CH3_INTSTS_SHIFT                        (3U)
+#define PWM_INTSTS_CH3_INTSTS_MASK                         (0x1U << PWM_INTSTS_CH3_INTSTS_SHIFT)                        /* 0x00000008 */
+#define PWM_INTSTS_CH0_PWR_INTSTS_SHIFT                    (4U)
+#define PWM_INTSTS_CH0_PWR_INTSTS_MASK                     (0x1U << PWM_INTSTS_CH0_PWR_INTSTS_SHIFT)                    /* 0x00000010 */
+#define PWM_INTSTS_CH1_PWR_INTSTS_SHIFT                    (5U)
+#define PWM_INTSTS_CH1_PWR_INTSTS_MASK                     (0x1U << PWM_INTSTS_CH1_PWR_INTSTS_SHIFT)                    /* 0x00000020 */
+#define PWM_INTSTS_CH2_PWR_INTSTS_SHIFT                    (6U)
+#define PWM_INTSTS_CH2_PWR_INTSTS_MASK                     (0x1U << PWM_INTSTS_CH2_PWR_INTSTS_SHIFT)                    /* 0x00000040 */
+#define PWM_INTSTS_CH3_PWR_INTSTS_SHIFT                    (7U)
+#define PWM_INTSTS_CH3_PWR_INTSTS_MASK                     (0x1U << PWM_INTSTS_CH3_PWR_INTSTS_SHIFT)                    /* 0x00000080 */
+#define PWM_INTSTS_CH0_POL_SHIFT                           (8U)
+#define PWM_INTSTS_CH0_POL_MASK                            (0x1U << PWM_INTSTS_CH0_POL_SHIFT)                           /* 0x00000100 */
+#define PWM_INTSTS_CH1_POL_SHIFT                           (9U)
+#define PWM_INTSTS_CH1_POL_MASK                            (0x1U << PWM_INTSTS_CH1_POL_SHIFT)                           /* 0x00000200 */
+#define PWM_INTSTS_CH2_POL_SHIFT                           (10U)
+#define PWM_INTSTS_CH2_POL_MASK                            (0x1U << PWM_INTSTS_CH2_POL_SHIFT)                           /* 0x00000400 */
+#define PWM_INTSTS_CH3_POL_SHIFT                           (11U)
+#define PWM_INTSTS_CH3_POL_MASK                            (0x1U << PWM_INTSTS_CH3_POL_SHIFT)                           /* 0x00000800 */
+/* INT_EN */
+#define PWM_INT_EN_OFFSET                                  (0x44U)
+#define PWM_INT_EN_CH0_INT_EN_SHIFT                        (0U)
+#define PWM_INT_EN_CH0_INT_EN_MASK                         (0x1U << PWM_INT_EN_CH0_INT_EN_SHIFT)                        /* 0x00000001 */
+#define PWM_INT_EN_CH1_INT_EN_SHIFT                        (1U)
+#define PWM_INT_EN_CH1_INT_EN_MASK                         (0x1U << PWM_INT_EN_CH1_INT_EN_SHIFT)                        /* 0x00000002 */
+#define PWM_INT_EN_CH2_INT_EN_SHIFT                        (2U)
+#define PWM_INT_EN_CH2_INT_EN_MASK                         (0x1U << PWM_INT_EN_CH2_INT_EN_SHIFT)                        /* 0x00000004 */
+#define PWM_INT_EN_CH3_INT_EN_SHIFT                        (3U)
+#define PWM_INT_EN_CH3_INT_EN_MASK                         (0x1U << PWM_INT_EN_CH3_INT_EN_SHIFT)                        /* 0x00000008 */
+#define PWM_INT_EN_CH0_PWR_INT_EN_SHIFT                    (4U)
+#define PWM_INT_EN_CH0_PWR_INT_EN_MASK                     (0x1U << PWM_INT_EN_CH0_PWR_INT_EN_SHIFT)                    /* 0x00000010 */
+#define PWM_INT_EN_CH1_PWR_INT_EN_SHIFT                    (5U)
+#define PWM_INT_EN_CH1_PWR_INT_EN_MASK                     (0x1U << PWM_INT_EN_CH1_PWR_INT_EN_SHIFT)                    /* 0x00000020 */
+#define PWM_INT_EN_CH2_PWR_INT_EN_SHIFT                    (6U)
+#define PWM_INT_EN_CH2_PWR_INT_EN_MASK                     (0x1U << PWM_INT_EN_CH2_PWR_INT_EN_SHIFT)                    /* 0x00000040 */
+#define PWM_INT_EN_CH3_PWR_INT_EN_SHIFT                    (7U)
+#define PWM_INT_EN_CH3_PWR_INT_EN_MASK                     (0x1U << PWM_INT_EN_CH3_PWR_INT_EN_SHIFT)                    /* 0x00000080 */
+/* FIFO_CTRL */
+#define PWM_FIFO_CTRL_OFFSET                               (0x50U)
+#define PWM_FIFO_CTRL_FIFO_MODE_SEL_SHIFT                  (0U)
+#define PWM_FIFO_CTRL_FIFO_MODE_SEL_MASK                   (0x1U << PWM_FIFO_CTRL_FIFO_MODE_SEL_SHIFT)                  /* 0x00000001 */
+#define PWM_FIFO_CTRL_FULL_INT_EN_SHIFT                    (1U)
+#define PWM_FIFO_CTRL_FULL_INT_EN_MASK                     (0x1U << PWM_FIFO_CTRL_FULL_INT_EN_SHIFT)                    /* 0x00000002 */
+#define PWM_FIFO_CTRL_OVERFLOW_INT_EN_SHIFT                (2U)
+#define PWM_FIFO_CTRL_OVERFLOW_INT_EN_MASK                 (0x1U << PWM_FIFO_CTRL_OVERFLOW_INT_EN_SHIFT)                /* 0x00000004 */
+#define PWM_FIFO_CTRL_WATERMARK_INT_EN_SHIFT               (3U)
+#define PWM_FIFO_CTRL_WATERMARK_INT_EN_MASK                (0x1U << PWM_FIFO_CTRL_WATERMARK_INT_EN_SHIFT)               /* 0x00000008 */
+#define PWM_FIFO_CTRL_ALMOST_FULL_WATERMARK_SHIFT          (4U)
+#define PWM_FIFO_CTRL_ALMOST_FULL_WATERMARK_MASK           (0x7U << PWM_FIFO_CTRL_ALMOST_FULL_WATERMARK_SHIFT)          /* 0x00000070 */
+#define PWM_FIFO_CTRL_DMA_MODE_EN_SHIFT                    (8U)
+#define PWM_FIFO_CTRL_DMA_MODE_EN_MASK                     (0x1U << PWM_FIFO_CTRL_DMA_MODE_EN_SHIFT)                    /* 0x00000100 */
+#define PWM_FIFO_CTRL_TIMEOUT_EN_SHIFT                     (9U)
+#define PWM_FIFO_CTRL_TIMEOUT_EN_MASK                      (0x1U << PWM_FIFO_CTRL_TIMEOUT_EN_SHIFT)                     /* 0x00000200 */
+#define PWM_FIFO_CTRL_DMA_CH_SEL_EN_SHIFT                  (10U)
+#define PWM_FIFO_CTRL_DMA_CH_SEL_EN_MASK                   (0x1U << PWM_FIFO_CTRL_DMA_CH_SEL_EN_SHIFT)                  /* 0x00000400 */
+#define PWM_FIFO_CTRL_DMA_CH_SEL_SHIFT                     (12U)
+#define PWM_FIFO_CTRL_DMA_CH_SEL_MASK                      (0x3U << PWM_FIFO_CTRL_DMA_CH_SEL_SHIFT)                     /* 0x00003000 */
+/* FIFO_INTSTS */
+#define PWM_FIFO_INTSTS_OFFSET                             (0x54U)
+#define PWM_FIFO_INTSTS_FIFO_FULL_INTSTS_SHIFT             (0U)
+#define PWM_FIFO_INTSTS_FIFO_FULL_INTSTS_MASK              (0x1U << PWM_FIFO_INTSTS_FIFO_FULL_INTSTS_SHIFT)             /* 0x00000001 */
+#define PWM_FIFO_INTSTS_FIFO_OVERFLOW_INTSTS_SHIFT         (1U)
+#define PWM_FIFO_INTSTS_FIFO_OVERFLOW_INTSTS_MASK          (0x1U << PWM_FIFO_INTSTS_FIFO_OVERFLOW_INTSTS_SHIFT)         /* 0x00000002 */
+#define PWM_FIFO_INTSTS_FIFO_WATERMARK_FULL_INTSTS_SHIFT   (2U)
+#define PWM_FIFO_INTSTS_FIFO_WATERMARK_FULL_INTSTS_MASK    (0x1U << PWM_FIFO_INTSTS_FIFO_WATERMARK_FULL_INTSTS_SHIFT)   /* 0x00000004 */
+#define PWM_FIFO_INTSTS_TIMIEOUT_INTSTS_SHIFT              (3U)
+#define PWM_FIFO_INTSTS_TIMIEOUT_INTSTS_MASK               (0x1U << PWM_FIFO_INTSTS_TIMIEOUT_INTSTS_SHIFT)              /* 0x00000008 */
+#define PWM_FIFO_INTSTS_FIFO_EMPTY_STATUS_SHIFT            (4U)
+#define PWM_FIFO_INTSTS_FIFO_EMPTY_STATUS_MASK             (0x1U << PWM_FIFO_INTSTS_FIFO_EMPTY_STATUS_SHIFT)            /* 0x00000010 */
+/* FIFO_TOUTTHR */
+#define PWM_FIFO_TOUTTHR_OFFSET                            (0x58U)
+#define PWM_FIFO_TOUTTHR_TIMEOUT_THRESHOLD_SHIFT           (0U)
+#define PWM_FIFO_TOUTTHR_TIMEOUT_THRESHOLD_MASK            (0xFFFFFU << PWM_FIFO_TOUTTHR_TIMEOUT_THRESHOLD_SHIFT)       /* 0x000FFFFF */
+/* VERSION_ID */
+#define PWM_VERSION_ID_OFFSET                              (0x5CU)
+#define PWM_VERSION_ID_SVN_VERSION_SHIFT                   (0U)
+#define PWM_VERSION_ID_SVN_VERSION_MASK                    (0xFFFFU << PWM_VERSION_ID_SVN_VERSION_SHIFT)                /* 0x0000FFFF */
+#define PWM_VERSION_ID_MINOR_VERSION_SHIFT                 (16U)
+#define PWM_VERSION_ID_MINOR_VERSION_MASK                  (0xFFU << PWM_VERSION_ID_MINOR_VERSION_SHIFT)                /* 0x00FF0000 */
+#define PWM_VERSION_ID_MAIN_VERSION_SHIFT                  (24U)
+#define PWM_VERSION_ID_MAIN_VERSION_MASK                   (0xFFU << PWM_VERSION_ID_MAIN_VERSION_SHIFT)                 /* 0xFF000000 */
+/* FIFO */
+#define PWM_FIFO_OFFSET                                    (0x60U)
+#define PWM_FIFO                                           (0x0U)
+#define PWM_FIFO_CYCLE_CNT_SHIFT                           (0U)
+#define PWM_FIFO_CYCLE_CNT_MASK                            (0x7FFFFFFFU << PWM_FIFO_CYCLE_CNT_SHIFT)                    /* 0x7FFFFFFF */
+#define PWM_FIFO_POL_SHIFT                                 (31U)
+#define PWM_FIFO_POL_MASK                                  (0x1U << PWM_FIFO_POL_SHIFT)                                 /* 0x80000000 */
+/* PWRMATCH_CTRL */
+#define PWM_PWRMATCH_CTRL_OFFSET                           (0x80U)
+#define PWM_PWRMATCH_CTRL_CH3_PWRKEY_ENABLE_SHIFT          (3U)
+#define PWM_PWRMATCH_CTRL_CH3_PWRKEY_ENABLE_MASK           (0x1U << PWM_PWRMATCH_CTRL_CH3_PWRKEY_ENABLE_SHIFT)          /* 0x00000008 */
+#define PWM_PWRMATCH_CTRL_CH3_PWRKEY_POLARITY_SHIFT        (7U)
+#define PWM_PWRMATCH_CTRL_CH3_PWRKEY_POLARITY_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH3_PWRKEY_POLARITY_SHIFT)        /* 0x00000080 */
+#define PWM_PWRMATCH_CTRL_CH3_PWRKEY_CAPTURE_CTRL_SHIFT    (11U)
+#define PWM_PWRMATCH_CTRL_CH3_PWRKEY_CAPTURE_CTRL_MASK     (0x1U << PWM_PWRMATCH_CTRL_CH3_PWRKEY_CAPTURE_CTRL_SHIFT)    /* 0x00000800 */
+#define PWM_PWRMATCH_CTRL_CH3_PWRKEY_INT_CTRL_SHIFT        (15U)
+#define PWM_PWRMATCH_CTRL_CH3_PWRKEY_INT_CTRL_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH3_PWRKEY_INT_CTRL_SHIFT)        /* 0x00008000 */
+/* PWRMATCH_LPRE */
+#define PWM_PWRMATCH_LPRE_OFFSET                           (0x84U)
+#define PWM_PWRMATCH_LPRE_CNT_MIN_SHIFT                    (0U)
+#define PWM_PWRMATCH_LPRE_CNT_MIN_MASK                     (0xFFFFU << PWM_PWRMATCH_LPRE_CNT_MIN_SHIFT)                 /* 0x0000FFFF */
+#define PWM_PWRMATCH_LPRE_CNT_MAX_SHIFT                    (16U)
+#define PWM_PWRMATCH_LPRE_CNT_MAX_MASK                     (0xFFFFU << PWM_PWRMATCH_LPRE_CNT_MAX_SHIFT)                 /* 0xFFFF0000 */
+/* PWRMATCH_HPRE */
+#define PWM_PWRMATCH_HPRE_OFFSET                           (0x88U)
+#define PWM_PWRMATCH_HPRE_CNT_MIN_SHIFT                    (0U)
+#define PWM_PWRMATCH_HPRE_CNT_MIN_MASK                     (0xFFFFU << PWM_PWRMATCH_HPRE_CNT_MIN_SHIFT)                 /* 0x0000FFFF */
+#define PWM_PWRMATCH_HPRE_CNT_MAX_SHIFT                    (16U)
+#define PWM_PWRMATCH_HPRE_CNT_MAX_MASK                     (0xFFFFU << PWM_PWRMATCH_HPRE_CNT_MAX_SHIFT)                 /* 0xFFFF0000 */
+/* PWRMATCH_LD */
+#define PWM_PWRMATCH_LD_OFFSET                             (0x8CU)
+#define PWM_PWRMATCH_LD_CNT_MIN_SHIFT                      (0U)
+#define PWM_PWRMATCH_LD_CNT_MIN_MASK                       (0xFFFFU << PWM_PWRMATCH_LD_CNT_MIN_SHIFT)                   /* 0x0000FFFF */
+#define PWM_PWRMATCH_LD_CNT_MAX_SHIFT                      (16U)
+#define PWM_PWRMATCH_LD_CNT_MAX_MASK                       (0xFFFFU << PWM_PWRMATCH_LD_CNT_MAX_SHIFT)                   /* 0xFFFF0000 */
+/* PWRMATCH_HD_ZERO */
+#define PWM_PWRMATCH_HD_ZERO_OFFSET                        (0x90U)
+#define PWM_PWRMATCH_HD_ZERO_CNT_MIN_SHIFT                 (0U)
+#define PWM_PWRMATCH_HD_ZERO_CNT_MIN_MASK                  (0xFFFFU << PWM_PWRMATCH_HD_ZERO_CNT_MIN_SHIFT)              /* 0x0000FFFF */
+#define PWM_PWRMATCH_HD_ZERO_CNT_MAX_SHIFT                 (16U)
+#define PWM_PWRMATCH_HD_ZERO_CNT_MAX_MASK                  (0xFFFFU << PWM_PWRMATCH_HD_ZERO_CNT_MAX_SHIFT)              /* 0xFFFF0000 */
+/* PWRMATCH_HD_ONE */
+#define PWM_PWRMATCH_HD_ONE_OFFSET                         (0x94U)
+#define PWM_PWRMATCH_HD_ONE_CNT_MIN_SHIFT                  (0U)
+#define PWM_PWRMATCH_HD_ONE_CNT_MIN_MASK                   (0xFFFFU << PWM_PWRMATCH_HD_ONE_CNT_MIN_SHIFT)               /* 0x0000FFFF */
+#define PWM_PWRMATCH_HD_ONE_CNT_MAX_SHIFT                  (16U)
+#define PWM_PWRMATCH_HD_ONE_CNT_MAX_MASK                   (0xFFFFU << PWM_PWRMATCH_HD_ONE_CNT_MAX_SHIFT)               /* 0xFFFF0000 */
+/* PWRMATCH_VALUE0 */
+#define PWM_PWRMATCH_VALUE0_OFFSET                         (0x98U)
+#define PWM_PWRMATCH_VALUE0_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE0_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE0_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWRMATCH_VALUE1 */
+#define PWM_PWRMATCH_VALUE1_OFFSET                         (0x9CU)
+#define PWM_PWRMATCH_VALUE1_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE1_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE1_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWRMATCH_VALUE2 */
+#define PWM_PWRMATCH_VALUE2_OFFSET                         (0xA0U)
+#define PWM_PWRMATCH_VALUE2_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE2_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE2_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWRMATCH_VALUE3 */
+#define PWM_PWRMATCH_VALUE3_OFFSET                         (0xA4U)
+#define PWM_PWRMATCH_VALUE3_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE3_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE3_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWRMATCH_VALUE4 */
+#define PWM_PWRMATCH_VALUE4_OFFSET                         (0xA8U)
+#define PWM_PWRMATCH_VALUE4_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE4_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE4_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWRMATCH_VALUE5 */
+#define PWM_PWRMATCH_VALUE5_OFFSET                         (0xACU)
+#define PWM_PWRMATCH_VALUE5_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE5_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE5_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWRMATCH_VALUE6 */
+#define PWM_PWRMATCH_VALUE6_OFFSET                         (0xB0U)
+#define PWM_PWRMATCH_VALUE6_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE6_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE6_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWRMATCH_VALUE7 */
+#define PWM_PWRMATCH_VALUE7_OFFSET                         (0xB4U)
+#define PWM_PWRMATCH_VALUE7_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE7_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE7_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWRMATCH_VALUE8 */
+#define PWM_PWRMATCH_VALUE8_OFFSET                         (0xB8U)
+#define PWM_PWRMATCH_VALUE8_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE8_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE8_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWRMATCH_VALUE9 */
+#define PWM_PWRMATCH_VALUE9_OFFSET                         (0xBCU)
+#define PWM_PWRMATCH_VALUE9_PWRKEY_MATCH_VALUE_SHIFT       (0U)
+#define PWM_PWRMATCH_VALUE9_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE9_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* PWM3_PWRCAPTURE_VALUE */
+#define PWM_PWM3_PWRCAPTURE_VALUE_OFFSET                   (0xCCU)
+#define PWM_PWM3_PWRCAPTURE_VALUE                          (0x0U)
+#define PWM_PWM3_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_SHIFT (0U)
+#define PWM_PWM3_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_MASK (0xFFFFFFFFU << PWM_PWM3_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_SHIFT) /* 0xFFFFFFFF */
+/* FILTER_CTRL */
+#define PWM_FILTER_CTRL_OFFSET                             (0xD0U)
+#define PWM_FILTER_CTRL_CH0_INPUT_FILTER_ENABLE_SHIFT      (0U)
+#define PWM_FILTER_CTRL_CH0_INPUT_FILTER_ENABLE_MASK       (0x1U << PWM_FILTER_CTRL_CH0_INPUT_FILTER_ENABLE_SHIFT)      /* 0x00000001 */
+#define PWM_FILTER_CTRL_CH1_INPUT_FILTER_ENABLE_SHIFT      (1U)
+#define PWM_FILTER_CTRL_CH1_INPUT_FILTER_ENABLE_MASK       (0x1U << PWM_FILTER_CTRL_CH1_INPUT_FILTER_ENABLE_SHIFT)      /* 0x00000002 */
+#define PWM_FILTER_CTRL_CH2_INPUT_FILTER_ENABLE_SHIFT      (2U)
+#define PWM_FILTER_CTRL_CH2_INPUT_FILTER_ENABLE_MASK       (0x1U << PWM_FILTER_CTRL_CH2_INPUT_FILTER_ENABLE_SHIFT)      /* 0x00000004 */
+#define PWM_FILTER_CTRL_CH3_INPUT_FILTER_ENABLE_SHIFT      (3U)
+#define PWM_FILTER_CTRL_CH3_INPUT_FILTER_ENABLE_MASK       (0x1U << PWM_FILTER_CTRL_CH3_INPUT_FILTER_ENABLE_SHIFT)      /* 0x00000008 */
+#define PWM_FILTER_CTRL_FILTER_NUMBER_SHIFT                (4U)
+#define PWM_FILTER_CTRL_FILTER_NUMBER_MASK                 (0x1FFU << PWM_FILTER_CTRL_FILTER_NUMBER_SHIFT)              /* 0x00001FF0 */
+#define PWM_FILTER_CTRL_CH0_AND_CH3_SWITCH_EN_SHIFT        (16U)
+#define PWM_FILTER_CTRL_CH0_AND_CH3_SWITCH_EN_MASK         (0x1U << PWM_FILTER_CTRL_CH0_AND_CH3_SWITCH_EN_SHIFT)        /* 0x00010000 */
+#define PWM_FILTER_CTRL_CH1_AND_CH3_SWITCH_EN_SHIFT        (17U)
+#define PWM_FILTER_CTRL_CH1_AND_CH3_SWITCH_EN_MASK         (0x1U << PWM_FILTER_CTRL_CH1_AND_CH3_SWITCH_EN_SHIFT)        /* 0x00020000 */
+#define PWM_FILTER_CTRL_CH2_AND_CH3_SWITCH_EN_SHIFT        (18U)
+#define PWM_FILTER_CTRL_CH2_AND_CH3_SWITCH_EN_MASK         (0x1U << PWM_FILTER_CTRL_CH2_AND_CH3_SWITCH_EN_SHIFT)        /* 0x00040000 */
 /******************************************PMU*******************************************/
 /* VERSION */
 #define PMU_VERSION_OFFSET                                 (0x0U)
