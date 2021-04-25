@@ -143,7 +143,12 @@ typedef enum
 /*                               Module Structure Section                               */
 /*                                                                                      */
 /****************************************************************************************/
-
+#ifndef __ASSEMBLY__
+/* SPINLOCK Register Structure Define */
+struct SPINLOCK_REG {
+    __IO uint32_t STATUS[64];                         /* Address Offset: 0x0000 */
+};
+#endif
 /****************************************************************************************/
 /*                                                                                      */
 /*                                Module Address Section                                */
@@ -169,9 +174,11 @@ typedef enum
 /****************************************************************************************/
 /* Module Variable Define */
 #define USB                 ((struct USB_GLOBAL_REG *) USB_BASE)
+#define SPINLOCK            ((struct SPINLOCK_REG *) GRF->HW_SPINLOCK)
 
 #define IS_PCD_INSTANCE(instance) ((instance) == USB)
 #define IS_HCD_INSTANCE(instance) ((instance) == USB)
+#define IS_SPINLOCK_INSTANCE(instance) ((instance) == SPINLOCK)
 
 /****************************************************************************************/
 /*                                                                                      */
