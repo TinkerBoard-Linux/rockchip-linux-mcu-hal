@@ -25,9 +25,10 @@
  *  @{
  */
 
-HAL_Check HAL_HWSpinlock_TryLock(uint32_t LockID);
-void HAL_HWSpinlock_Unlock(uint32_t LockID);
-uint32_t HAL_HWSpinlock_GetOwner(uint32_t LockID);
+HAL_Check HAL_HWSpinlock_TryLock(uint32_t lockID);
+void HAL_HWSpinlock_Unlock(uint32_t lockID);
+uint32_t HAL_HWSpinlock_GetOwner(uint32_t lockID);
+HAL_Check HAL_HWSpinlock_Init(uint32_t ownerID);
 
 /** @} */
 

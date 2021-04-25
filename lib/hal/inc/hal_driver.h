@@ -88,9 +88,6 @@
 
 #ifdef HAL_HWSPINLOCK_MODULE_ENABLED
 #include "hal_hwspinlock.h"
-#if !defined(HAL_HWSPINLOCK_OWNER_ID) || (HAL_HWSPINLOCK_OWNER_ID <= 0)
-#error "HAL_HWSPINLOCK_OWNER_ID must be defined in hal_conf.h file"
-#endif
 #endif
 
 #ifdef HAL_HYPERPSRAM_MODULE_ENABLED
