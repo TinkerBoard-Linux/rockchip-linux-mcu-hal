@@ -544,8 +544,8 @@ reinit:
         }
     }
 
-    HAL_QPIPSRAM_DBG("QPIPsram size= 0x%x Bytes\n", psram->size);
-    HAL_QPIPSRAM_DBG("QPIPsram page size= 0x%x Bytes\n", psram->pageSize);
+    HAL_QPIPSRAM_DBG("QPIPsram size= 0x%lx Bytes\n", psram->size);
+    HAL_QPIPSRAM_DBG("QPIPsram page size= 0x%lx Bytes\n", psram->pageSize);
 
     QPIPSRAM_XmmcInit(psram);
     if (psram->spi->mode & HAL_SPI_XIP) {
