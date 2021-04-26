@@ -58,7 +58,7 @@ static struct PLL_SETUP CPLL = {
     .rateTable = PLL_TABLE,
 };
 
-static struct PLL_SETUP GPLL = {
+HAL_UNUSED static struct PLL_SETUP GPLL = {
     .conOffset0 = &(CRU->GPLL_CON[0]),
     .conOffset1 = &(CRU->GPLL_CON[1]),
     .conOffset2 = &(CRU->GPLL_CON[2]),
@@ -232,7 +232,7 @@ static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
  */
 static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
-    uint32_t muxSrc, mux = CLK_GET_MUX(clockName), muxOut = 0;
+    uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
     uint32_t divSrc, divFrac;
     uint32_t n = 0, m = 0;
     uint32_t gateId, fracGateId;
@@ -342,7 +342,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 {
     uint32_t clkMux = CLK_GET_MUX(clockName);
     uint32_t clkDiv = CLK_GET_DIV(clockName);
-    uint32_t pRate = 0, sel, freq;
+    uint32_t pRate = 0, freq;
 
     if (!s_cpllFreq) {
         s_cpllFreq = HAL_CRU_GetPllFreq(&CPLL);
