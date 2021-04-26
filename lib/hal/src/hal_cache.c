@@ -10,8 +10,8 @@
 /** @addtogroup CACHE
  *  @{
  */
-#include "hal_cache.h"
 #include "hal_base.h"
+#include "hal_cache.h"
 
 /** @defgroup CACHE_Exported_Definition_Group1 Basic Definition
  *  @{
