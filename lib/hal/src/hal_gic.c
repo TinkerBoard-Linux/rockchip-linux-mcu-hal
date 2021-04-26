@@ -530,7 +530,7 @@ static void GIC_AMPConfigIRQs(struct GIC_AMP_IRQ_INIT_CFG *irqsCfg)
     }
 
     while (config->prio) {
-        if ((config->irq >= 0) && (config->irq < NUM_INTERRUPTS)) {
+        if ((uint32_t)config->irq < NUM_INTERRUPTS) {
             GIC_SetPriority(config->irq, config->prio);
         }
         config++;
@@ -666,7 +666,7 @@ uint32_t HAL_GIC_GetIRQStatus(uint32_t irq)
  */
 HAL_Status HAL_GIC_SetPriority(uint32_t irq, uint32_t priority)
 {
-    int32_t aff;
+    uint32_t aff;
 
     aff = __get_MPIDR() & MPIDR_AFFINITY_MASK;
     if (p_ampCtrl->cpuAff != aff) {
