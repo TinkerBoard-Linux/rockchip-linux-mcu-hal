@@ -26,6 +26,7 @@ extern void SystemInit (void);
  */
 extern void SystemCoreClockUpdate (void);
 
+extern void DataInit (void);
 #ifdef __cplusplus
 }
 #endif

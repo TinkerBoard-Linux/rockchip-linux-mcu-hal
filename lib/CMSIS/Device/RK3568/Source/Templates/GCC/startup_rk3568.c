@@ -10,6 +10,10 @@
  *----------------------------------------------------------------------------*/
 void Vectors       (void) __attribute__ ((section("RESET")));
 void Reset_Handler (void);
+void Default_Handler(void);
+void IRQ_Handler(void);
+void IRQ_HardIrqHandler(void);
+void IRQ_HardIrqPreemptHandler(uint32_t irqn);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
@@ -96,9 +100,9 @@ void IRQ_Handler(void)
   "ldmfd  sp!, {r0-r12,lr}                          \n" // restore the CPU context
   "subs   pc,  lr, #4                               \n"
   );
-#endif
+#endif /* HAL_GIC_PREEMPT_FEATURE_ENABLED */
 }
-#endif
+#endif /* HAL_GIC_MODULE_ENABLED */
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector Table
