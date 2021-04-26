@@ -35,18 +35,17 @@ void IRQ_HardIrqPreemptHandler(uint32_t irqn)
   HAL_IRQ_HANDLER_IRQHandler(irqn);
 }
 #else
-void IRQ_HardIrqHandler(void){
+void IRQ_HardIrqHandler(void)
+{
   uint32_t irqn;
   GIC_IRQHandler handler;
 
   irqn = HAL_GIC_GetActiveIRQ();
 
-  if (irqn >= IRQ_GIC_LINE_COUNT)
+  if (irqn >= HAL_GIC_IRQ_LINE_COUNT)
     return;
 
-  handler = HAL_GIC_GetHandler(irqn);
-  if (handler)
-    handler(irqn);
+  HAL_IRQ_HANDLER_IRQHandler(irqn);
 
   HAL_GIC_EndOfInterrupt(irqn);
 }
