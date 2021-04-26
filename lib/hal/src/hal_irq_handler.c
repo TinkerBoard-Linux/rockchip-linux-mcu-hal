@@ -66,9 +66,10 @@ static struct GPIO_IRQ_GROUP_OPS defualtGicOps = {
 static HAL_Status GPIO_IRQ_GROUP_HWIRQDispatchBankIrqs(uint32_t irq, void *args)
 {
     struct GPIO_IRQ_GROUP_CFG const *gpioIrqCfg = args;
-    uint32_t gpioBank;
 
     HAL_GPIO_IRQHandler(gpioIrqCfg->gpioReg, gpioIrqCfg->bank);
+
+    return HAL_OK;
 }
 
 static HAL_Status GPIO_IRQ_GROUP_SetGIRQHandler(uint32_t irq,
