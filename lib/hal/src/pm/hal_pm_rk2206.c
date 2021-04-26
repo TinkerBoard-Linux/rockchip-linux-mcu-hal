@@ -159,13 +159,9 @@ static uint32_t clkUngtMsk[CRU_CLKGATES_CON_CNT] = {
 };
 
 static struct PMU_REG *pPmu = PMU;
-static struct TIMER_REG *pTimer = TIMER0;
-static struct GPIO_REG *pGpio0 = GPIO0;
-static struct GPIO_REG *pGpio1 = GPIO1;
 static struct UART_REG *pUart = UART0;
 static struct CRU_REG *pCru = CRU;
 static struct GRF_REG *pGrf = GRF;
-static struct PVTM_REG *pPvtm = PVTM;
 static struct TIMER_REG *ptimer6 = TIMER6;
 
 /********************* Private Function Definition ***************************/
@@ -180,14 +176,6 @@ static void PM_PutChar(char c)
         while (!(pUart->USR & UART_USR_TX_FIFO_EMPTY)) {
             ;
         }
-    }
-}
-
-static void PM_PutStr(char *str)
-{
-    while (*str) {
-        PM_PutChar(*str);
-        str++;
     }
 }
 
@@ -223,27 +211,6 @@ static void PM_PrintDec(int dec)
         PM_PutChar('0' + (char)(dec / i));
         dec %= i;
     }
-}
-
-static void PM_RegsdDump(uint32_t base,
-                         uint32_t startOffset,
-                         uint32_t endOffset)
-{
-    uint32_t i;
-
-    for (i = startOffset; i <= endOffset; i += 4) {
-        if ((i - startOffset) % 32 == 0) {
-            PM_PutChar('\n');
-        }
-        PM_PrintHex(base + i);
-        PM_PutChar(' ');
-        PM_PrintHex(*(uint32_t *)(base + i));
-        PM_PutChar(' ');
-        PM_PutChar(' ');
-        PM_PutChar(' ');
-        PM_PutChar(' ');
-    }
-    PM_PutChar('\n');
 }
 
 static void PM_UartInit(void)
@@ -377,7 +344,7 @@ static void PMU_SleepFinishInfo(void)
     pPmu->INT_ST = 0x1eff;
 }
 
-void SOC_ClkGateSuspend(void)
+static void SOC_ClkGateSuspend(void)
 {
     int i;
 
@@ -393,7 +360,7 @@ void SOC_ClkGateSuspend(void)
     }
 }
 
-void SOC_ClkGateResume(void)
+static void SOC_ClkGateResume(void)
 {
     int i;
 
@@ -462,7 +429,7 @@ static void PMU_BusIdleReq(ePMU_BusId bus, ePMU_BusState state)
     }
 
     if (PMU_BusIdleSt(bus) != state) {
-        HAL_DBG_WRN("%s:idle_st=0x%x, idle_st1=0x%x, bus_id=%d\n",
+        HAL_DBG_WRN("%s:idle_st=0x%lx, bus_id=%d\n",
                     __func__,
                     pPmu->BUS_IDLE_ST,
                     bus);
@@ -710,7 +677,7 @@ static inline void SOC_PllWaitLock(uint32_t pllId)
     }
 
     if (delay == 0) {
-        HAL_DBG_ERR("Can't wait pll:%d lock\n", pllId);
+        HAL_DBG_ERR("Can't wait pll:%lu lock\n", pllId);
     }
 }
 
@@ -805,7 +772,7 @@ static void SOC_ScbResume(void)
         SCB->SHP[i] = scbData.shp[i];
     }
 
-    SCB->AIRCR = scbData.aircr & 0x700 | 0x05fa0000;
+    SCB->AIRCR = (scbData.aircr & 0x700) | 0x05fa0000;
     SCB->CCR = scbData.ccr;
     SCB->CPACR = scbData.cpacr;
     SCB->SHCSR = scbData.shcsr & 0x70000;
