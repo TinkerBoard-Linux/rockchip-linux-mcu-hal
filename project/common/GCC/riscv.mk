@@ -26,11 +26,12 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 CPU		+= -DUSE_PLIC -DUSE_M_TIME -DNO_INIT -mcmodel=medany -msmall-data-limit=8 -L.  -nostartfiles  -lc
 ASFLAGS         += $(CPU) -c -x assembler-with-cpp
 CFLAGS		+= $(CPU) -O2 -g
+CFLAGS		+= -Wformat=2 -Wall -Wextra -Wno-unused-parameter
+CFLAGS		+= -Wstrict-prototypes -Wmissing-prototypes
 LDFLAGS		+= $(CPU) -Wl,--gc-sections -Wl,--wrap=memset -Wl,--wrap=puts
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
-HAL_CFLAGS	:= -Wformat=2 -Wall -Wextra -Wno-unused-parameter -Werror
-HAL_CFLAGS	+= -Wstrict-prototypes -Wmissing-prototypes
+HAL_CFLAGS	+= -Werror
 
 LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_riscv.ld
 
@@ -73,6 +74,10 @@ SRCS += $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/start_riscv.S
 OBJS += $(addsuffix .o,$(basename $(SRCS)))
 CFLAGS += $(INCLUDES)
 ASFLAGS += $(INCLUDES)
+
+HAL_SRCS += $(basename $(foreach dir,$(HAL_LIB_SRC) $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC,$(wildcard $(dir)/*.[cS])))
+HAL_OBJS += $(addsuffix .o,$(basename $(HAL_SRCS)))
+$(HAL_OBJS): CFLAGS += $(HAL_CFLAGS)
 
 all: $(BIN)
 

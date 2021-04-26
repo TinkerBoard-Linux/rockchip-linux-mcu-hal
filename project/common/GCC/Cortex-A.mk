@@ -26,11 +26,12 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 CPU		+= -ftree-vectorize -ffast-math -marm
 ASFLAGS		+= $(CPU) -c -x assembler-with-cpp -D__ASSEMBLY__
 CFLAGS		+= $(CPU) -std=gnu99 -O2 -g
+CFLAGS		+= -Wformat=2 -Wall -Wextra -Wno-unused-parameter
+CFLAGS		+= -Wstrict-prototypes -Wmissing-prototypes
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
-HAL_CFLAGS	:= -Wformat=2 -Wall -Wextra -Wno-unused-parameter -Werror
-HAL_CFLAGS	+= -Wstrict-prototypes -Wmissing-prototypes
+HAL_CFLAGS	+= -Werror
 
 LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_arm.ld
 
@@ -72,6 +73,10 @@ SRCS += $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/startup_$(shel
 OBJS += $(addsuffix .o,$(basename $(SRCS)))
 CFLAGS += $(INCLUDES)
 ASFLAGS += $(INCLUDES)
+
+HAL_SRCS += $(basename $(foreach dir,$(HAL_LIB_SRC) $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC,$(wildcard $(dir)/*.[cS])))
+HAL_OBJS += $(addsuffix .o,$(basename $(HAL_SRCS)))
+$(HAL_OBJS): CFLAGS += $(HAL_CFLAGS)
 
 all: $(BIN)
 
