@@ -62,9 +62,9 @@ static void DDR_ECC_GetCEInfo(struct DDR_ECC_SHARE_MEM *p,
     if (!p->ceInfo.errCnt) {
         return;
     }
-    HAL_DBG_WRN("DDR ECC error: %s, %d errors, the last is in DDR cs %d, "
-                "Row 0x%x, ChipID 0x%x, BankGroup 0x%x, Bank 0x%x, "
-                "Col 0x%x, Bit position 0x%x\n",
+    HAL_DBG_WRN("DDR ECC error: %s, %lu errors, the last is in DDR cs %lu, "
+                "Row 0x%lx, ChipID 0x%lx, BankGroup 0x%lx, Bank 0x%lx, "
+                "Col 0x%lx, Bit position 0x%lx\n",
                 "CE", p->ceInfo.errCnt, p->ceInfo.rank, p->ceInfo.row,
                 p->ceInfo.chipID, p->ceInfo.bankGroup, p->ceInfo.bank,
                 p->ceInfo.col, p->ceInfo.bitPos);
@@ -77,9 +77,9 @@ static void DDR_ECC_GetUEInfo(struct DDR_ECC_SHARE_MEM *p,
     if (!p->ueInfo.errCnt) {
         return;
     }
-    HAL_DBG_ERR("DDR ECC error: %s, %d errors, the last is in DDR cs %d, "
-                "Row 0x%x, ChipID 0x%x, bankGroup 0x%x, Bank 0x%x, "
-                "Col 0x%x\n",
+    HAL_DBG_ERR("DDR ECC error: %s, %lu errors, the last is in DDR cs %lu, "
+                "Row 0x%lx, ChipID 0x%lx, bankGroup 0x%lx, Bank 0x%lx, "
+                "Col 0x%lx\n",
                 "UE", p->ueInfo.errCnt, p->ueInfo.rank, p->ueInfo.row,
                 p->ueInfo.chipID, p->ueInfo.bankGroup, p->ueInfo.bank,
                 p->ueInfo.col);
