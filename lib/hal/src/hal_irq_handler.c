@@ -176,10 +176,10 @@ HAL_Status HAL_IRQ_HANDLER_SetGpioIRQHandler(eGPIO_bankId bank,
     uint32_t pinId;
 
     HAL_ASSERT(bank < GPIO_BANK_NUM);
-    HAL_ASSERT(pin < PIN_NUMBER_PER_BANK);
     HAL_ASSERT(handler);
 
-    pinId = 31 - __CLZ(pin);
+    pinId = 31U - __CLZ(pin);
+    HAL_ASSERT(pinId < PIN_NUMBER_PER_BANK);
 
     s_gpioHandler[bank][pinId].handler = handler;
     s_gpioHandler[bank][pinId].args = args;
