@@ -34,8 +34,6 @@
  - Invoke HAL_GIC_GetPriorityMask() to get the priority mask.
  - Invoke HAL_GIC_GetPriority() to get the priority value of a IRQ.
  - Invoke HAL_GIC_SetIRouter() to set the routting affinity value of a IRQ.
- - Invoke HAL_GIC_SetHandler() to set the irq handler callback for a IRQ.
- - Invoke HAL_GIC_GetHandler() to get the irq handler callback for a IRQ.
 
  @} */
 
@@ -121,11 +119,7 @@ struct GIC_REDISTRIBUTOR_SGI_REG {
 };
 
 /********************* Private Variable Definition ***************************/
-
 static struct GIC_IRQ_AMP_CTRL *p_ampCtrl;
-
-static GIC_IRQHandler g_IRQTable[NUM_INTERRUPTS] = { 0 };
-
 static struct GIC_DISTRIBUTOR_REG *pGICD = (struct GIC_DISTRIBUTOR_REG *)GIC_DISTRIBUTOR_BASE;
 static struct GIC_REDISTRIBUTOR_REG *pGICR;
 static struct GIC_REDISTRIBUTOR_SGI_REG *pGICRSGI;
@@ -727,46 +721,6 @@ HAL_Status HAL_GIC_SetIRouter(uint32_t irq, uint32_t aff)
     return HAL_OK;
 }
 
-/**
- * @brief  Set the irq handler callback for a IRQ.
- * @param  irq: irq id.
- * @param  handler: irq handler callback.
- * @return HAL_Status.
- */
-HAL_Status HAL_GIC_SetHandler(uint32_t irq, GIC_IRQHandler handler)
-{
-    int32_t status;
-
-    if ((irq >= 0) && (irq < NUM_INTERRUPTS)) {
-        g_IRQTable[irq] = handler;
-        status = HAL_OK;
-    } else {
-        status = HAL_INVAL;
-    }
-
-    return status;
-}
-
-/**
- * @brief  Get the irq handler callback for a IRQ.
- * @param  irq: irq id.
- * @return irq handler callback.
- */
-GIC_IRQHandler HAL_GIC_GetHandler(uint32_t irq)
-{
-    GIC_IRQHandler h;
-
-    irq &= 0x3FFU;
-
-    if ((irq >= 0) && (irq < NUM_INTERRUPTS)) {
-        h = g_IRQTable[irq];
-    } else {
-        h = (GIC_IRQHandler)0;
-    }
-
-    return h;
-}
-
 /** @} */
 
 /** @defgroup GIC_Exported_Functions_Group4 Init and DeInit Functions
@@ -783,16 +737,12 @@ GIC_IRQHandler HAL_GIC_GetHandler(uint32_t irq)
  */
 HAL_Status HAL_GIC_Init(struct GIC_IRQ_AMP_CTRL *ampCtrl)
 {
-    uint32_t i, aff, cpuID, prio;
+    uint32_t aff, cpuID, prio;
 
     cpuID = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
 
     p_ampCtrl = ampCtrl;
     GIC_RedistInitBase(cpuID);
-
-    for (i = 0U; i < NUM_INTERRUPTS; i++) {
-        g_IRQTable[i] = (GIC_IRQHandler)NULL;
-    }
 
     if (!p_ampCtrl) {
         GIC_Enable(1, 0, 0, 0);

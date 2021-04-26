@@ -22,7 +22,7 @@
 /** @defgroup GIC_Exported_Definition_Group1 Basic Definition
  *  @{
  */
-
+#define HAL_GIC_IRQ_LINE_COUNT     (1020U)
 #define GICR_WAKER_PROCESSOR_SLEEP (1U << 1)
 #define GICR_WAKER_CHILDREN_ASLEEP (1U << 2)
 
@@ -72,8 +72,6 @@ HAL_Status HAL_GIC_SetPriorityMask(uint32_t priority);
 uint32_t HAL_GIC_GetPriorityMask(void);
 uint32_t HAL_GIC_GetPriority(uint32_t irq);
 HAL_Status HAL_GIC_SetIRouter(uint32_t irq, uint32_t aff);
-HAL_Status HAL_GIC_SetHandler(uint32_t irq, GIC_IRQHandler handler);
-GIC_IRQHandler HAL_GIC_GetHandler(uint32_t irq);
 HAL_Status HAL_GIC_Init(struct GIC_IRQ_AMP_CTRL *ampCtrl);
 
 /** @} */
