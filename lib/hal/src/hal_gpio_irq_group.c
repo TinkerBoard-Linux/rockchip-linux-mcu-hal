@@ -172,8 +172,6 @@ static void GPIO_IRQ_GROUP_EndGroupIrqs(uint32_t group, uint32_t irqActBits,
     if (groupBitsL) {
         irqBitsHalf = irqActBits & GPIO_IRQ_GPIOAB_GROUP;
         gpioReg->PORT_EOI_L = VAL_MASK_WE(irqBitsHalf, irqBitsHalf);
-        unmaskBitsL = ~(gpioReg->INT_EN_L);
-        unmaskBitsL &= 0xffffU;
         gpioReg->DBCLK_DIV_EN_L = MASK_TO_WE(groupBitsL);
     }
 
@@ -182,12 +180,15 @@ static void GPIO_IRQ_GROUP_EndGroupIrqs(uint32_t group, uint32_t irqActBits,
         groupBitsH >>= 16;
         irqBitsHalf = irqActBits >> 16;
         gpioReg->PORT_EOI_H = VAL_MASK_WE(irqBitsHalf, irqBitsHalf);
-        unmaskBitsH = ~(gpioReg->INT_EN_H);
-        unmaskBitsH &= 0xffffU;
         gpioReg->DBCLK_DIV_EN_H = MASK_TO_WE(groupBitsH);
     }
 
     __disable_irq();
+    unmaskBitsL = ~(gpioReg->INT_EN_L);
+    unmaskBitsL &= 0xffffU;
+    unmaskBitsH = ~(gpioReg->INT_EN_H);
+    unmaskBitsH &= 0xffffU;
+
     gpioReg->INT_MASK_L = VAL_MASK_WE(groupBitsL, unmaskBitsL);
     gpioReg->INT_MASK_H = VAL_MASK_WE(groupBitsH, unmaskBitsH);
     __enable_irq();
@@ -273,7 +274,7 @@ static int GPIO_IRQ_GROUP_GirqCfgCheck(uint32_t bank)
                 }
             }
 
-            s_groupCtrl.unuseGroup != prioGroup->cpuGroup[cpu];
+            s_groupCtrl.unuseGroup |= prioGroup->cpuGroup[cpu];
 
             if (highprioLevel > prioLevel) {
                 highprioLevel = prioLevel;
@@ -403,7 +404,7 @@ static int GPIO_IRQ_Group_init(uint32_t irqCfg)
     for (bank = 0; bank < GPIO_BANK_NUM; bank++) {
         gpioIrqCfg = &p_gpioIrqCfg[bank];
 
-        HAL_DBG("***irq group int loop %d=%ld: ampen-%d %d\n", gpioIrqCfg->bank,
+        HAL_DBG("***irq group int loop %d=%ld: %d en-%d\n", gpioIrqCfg->bank,
                 bank, gpioIrqCfg->hwIrq, gpioIrqCfg->groupIrqEn);
 
         if (!gpioIrqCfg->gpioReg) {
