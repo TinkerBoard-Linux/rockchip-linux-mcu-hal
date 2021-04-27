@@ -646,7 +646,7 @@ int HAL_GPIO_IRQ_GROUP_GpioCtrlEnter(struct GPIO_REG *pGPIO,
     cpu = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
     getPin = 0;
 
-    for (prioLevel = 0; prioLevel <= GROUP_PRIO_LEVEL_MAX; prioLevel++) {
+    for (prioLevel = 0; prioLevel < GROUP_PRIO_LEVEL_MAX; prioLevel++) {
         getPin = gpioIrqCfg->prioGroup[prioLevel].cpuGroup[cpu] & pin;
         if (getPin) {
             break;
