@@ -58,11 +58,6 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
-void UART_IRQHandler(void)
-{
-    HAL_UART_HandleIrq(pUart);
-}
-
 int entry(void)
 {
     return 0;

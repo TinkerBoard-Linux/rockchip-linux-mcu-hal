@@ -59,7 +59,7 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
-void UART_IRQHandler(void)
+static void UART_IRQHandler(void)
 {
     HAL_UART_HandleIrq(pUart);
 }
@@ -102,7 +102,7 @@ static const struct CLK_INIT s_clkInits[] =
     INIT_CLK("CLK_SPI2", CLK_SPI2, 50 * MHZ),
 };
 
-void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
+static void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
 {
     int i;
 
@@ -116,11 +116,13 @@ void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
     }
 }
 
-void HAL_TICK_IRQHandler(void)
+#ifndef HAL_SYSTICK_MODULE_ENABLED
+static void HAL_TICK_IRQHandler(void)
 {
     HAL_IncTick();
     HAL_TIMER_ClrInt(TIMER4);
 }
+#endif
 
 void main(void)
 {

@@ -57,7 +57,7 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
-void UART_IRQHandler(void)
+static void UART_IRQHandler(void)
 {
     HAL_UART_HandleIrq(pUart);
 }
@@ -84,7 +84,7 @@ static const struct CLK_INIT s_clkInits[] =
     INIT_CLK("CLK_DSP", CLK_DSP, 120000000),
 };
 
-void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
+static void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
 {
     int i;
 

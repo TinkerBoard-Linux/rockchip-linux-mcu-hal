@@ -91,12 +91,12 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
-void UART_IRQHandler(void)
+static void UART_IRQHandler(void)
 {
     HAL_UART_HandleIrq(pUart);
 }
 
-void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
+static void ClkInit(const struct CLK_INIT *clkInits, int clkInitNum, bool clkDump)
 {
     int32_t i;
 
