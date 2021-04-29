@@ -67,6 +67,7 @@ include $(HAL_PATH)/tools/build_lib.mk
 SRC_DIRS += $(HAL_LIB_SRC)
 INCLUDES += $(HAL_LIB_INC)
 -include $(HAL_PATH)/test/build_test.mk
+CFLAGS += -DUNITY_INCLUDE_CONFIG_H
 
 SRCS += $(basename $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.[cS])))
 SRCS += $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/startup_$(shell echo $(SOC) | tr '[:upper:]' '[:lower:]').c
