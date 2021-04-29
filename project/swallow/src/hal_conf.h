@@ -33,6 +33,4 @@
 #define HAL_FSPI_XIP_ENABLE
 #endif
 
-#define UNITY_HAL_SPIFLASH
-
 #endif
