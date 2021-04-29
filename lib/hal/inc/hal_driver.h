@@ -22,6 +22,10 @@
 #include "hal_bufmgr.h"
 #endif
 
+#ifdef HAL_CANFD_MODULE_ENABLED
+#include "hal_canfd.h"
+#endif
+
 #ifdef HAL_CKCAL_MODULE_ENABLED
 #include "hal_ckcal.h"
 #endif
