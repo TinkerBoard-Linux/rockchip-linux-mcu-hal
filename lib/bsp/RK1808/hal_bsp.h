@@ -56,6 +56,10 @@ extern const struct HAL_UART_DEV g_uart6Dev;
 extern const struct HAL_UART_DEV g_uart7Dev;
 #endif
 
+#if defined(HAL_EHCI_MODULE_ENABLED) || defined(HAL_OHCI_MODULE_ENABLED)
+extern const struct HAL_USBH_DEV g_usbhDev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_Init(void);

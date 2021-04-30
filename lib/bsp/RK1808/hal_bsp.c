@@ -288,6 +288,18 @@ const struct HAL_UART_DEV g_uart7Dev =
 };
 #endif
 
+#if defined(HAL_EHCI_MODULE_ENABLED) || defined(HAL_OHCI_MODULE_ENABLED)
+const struct HAL_USBH_DEV g_usbhDev =
+{
+    .ehciReg = EHCI,
+    .ohciReg = OHCI,
+    .ehciIrqNum = EHCI_IRQn,
+    .ohciIrqNum = OHCI_IRQn,
+    .usbhGateID = HCLK_USB2HOST_GATE,
+    .usbhArbGateID = HCLK_USB2HOST_ARB_GATE,
+};
+#endif
+
 void BSP_DeInit(void)
 {
 }
