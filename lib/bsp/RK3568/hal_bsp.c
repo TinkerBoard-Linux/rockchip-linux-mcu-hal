@@ -195,6 +195,35 @@ struct HAL_FSPI_HOST g_fspi0Dev =
 };
 #endif
 
+#ifdef HAL_CANFD_MODULE_ENABLED
+const struct HAL_CANFD_DEV g_can0Dev =
+{
+    .pReg = CAN0,
+    .sclkID = CLK_CAN0,
+    .sclkGateID = CLK_CAN0_GATE,
+    .pclkGateID = PCLK_CAN0_GATE,
+    .irqNum = CAN0_IRQn,
+};
+
+const struct HAL_CANFD_DEV g_can1Dev =
+{
+    .pReg = CAN1,
+    .sclkID = CLK_CAN1,
+    .sclkGateID = CLK_CAN1_GATE,
+    .pclkGateID = PCLK_CAN1_GATE,
+    .irqNum = CAN1_IRQn,
+};
+
+const struct HAL_CANFD_DEV g_can2Dev =
+{
+    .pReg = CAN2,
+    .sclkID = CLK_CAN2,
+    .sclkGateID = CLK_CAN2_GATE,
+    .pclkGateID = PCLK_CAN2_GATE,
+    .irqNum = CAN2_IRQn,
+};
+#endif
+
 void BSP_Init(void)
 {
 }
