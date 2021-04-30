@@ -86,6 +86,10 @@
 #include "hal_usb_phy.h"
 #endif
 
+#if defined(HAL_EHCI_MODULE_ENABLED) || defined(HAL_OHCI_MODULE_ENABLED)
+#include "hal_usbh.h"
+#endif
+
 #ifdef HAL_HCD_MODULE_ENABLED
 #include "hal_hcd.h"
 #endif
