@@ -3,6 +3,14 @@
  * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
+/** @addtogroup RK_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup HAL_DEF
+ *  @{
+ */
+
 #ifndef _HAL_DEF_H_
 #define _HAL_DEF_H_
 
@@ -17,15 +25,19 @@
 #include "soc.h"
 #include "hal_list.h"
 
-/* SOC OPS Marco */
-#define SET_BIT(REG, BIT)    ((*(volatile uint32_t *)&(REG)) |= (BIT))
-#define CLEAR_BIT(REG, MASK) ((*(volatile uint32_t *)&(REG)) &= ~(MASK))
-#define READ_BIT(REG, MASK)  ((*(volatile const uint32_t *)&(REG)) & (MASK))
-#define CLEAR_REG(REG)       ((*(volatile uint32_t *)&(REG)) = (0x0))
-#define WRITE_REG(REG, VAL)  ((*(volatile uint32_t *)&(REG)) = (VAL))
-#define READ_REG(REG)        ((*(volatile const uint32_t *)&(REG)))
+/***************************** MACRO Definition ******************************/
+/** @defgroup HAL_DEF_Exported_Definition_Group1 Basic Definition
+ *  @{
+ */
+
+#define SET_BIT(REG, BIT)    ((*(volatile uint32_t *)&(REG)) |= (BIT))        /**< Set 1 to the register specific bit field */
+#define CLEAR_BIT(REG, MASK) ((*(volatile uint32_t *)&(REG)) &= ~(MASK))      /**< Clear the specific bits filed from the register */
+#define READ_BIT(REG, MASK)  ((*(volatile const uint32_t *)&(REG)) & (MASK))  /**< Read the value of a specific bits field from the register */
+#define CLEAR_REG(REG)       ((*(volatile uint32_t *)&(REG)) = (0x0))         /**< Write 0 to the register */
+#define WRITE_REG(REG, VAL)  ((*(volatile uint32_t *)&(REG)) = (VAL))         /**< Write the register */
+#define READ_REG(REG)        ((*(volatile const uint32_t *)&(REG)))           /**< Read the register */
 #define MODIFY_REG(REG, CLEARMASK, SETMASK) \
-        WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
+        WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))    /**< Clear and set the value of a specific bits field from the register */
 #define POSITION_VAL(VAL) (__CLZ(__RBIT(VAL)))
 
 #if defined(__GNUC__) || defined(__CC_ARM)
@@ -40,8 +52,8 @@
 #define HAL_MAX_DELAY 0xFFFFFFFFU
 
 #define RESET                     0
-#define HAL_IS_BIT_SET(REG, MASK) (((*(volatile uint32_t *)&(REG)) & (MASK)) != RESET)
-#define HAL_IS_BIT_CLR(REG, MASK) (((*(volatile uint32_t *)&(REG)) & (MASK)) == RESET)
+#define HAL_IS_BIT_SET(REG, MASK) (((*(volatile uint32_t *)&(REG)) & (MASK)) != RESET)  /**< Check if the the specific bits filed from the register is valid */
+#define HAL_IS_BIT_CLR(REG, MASK) (((*(volatile uint32_t *)&(REG)) & (MASK)) == RESET)  /**< Check if the the specific bits filed from the register is isvalid */
 
 #define HAL_BIT(nr)       (1UL << (nr))
 #define HAL_ARRAY_SIZE(a) (sizeof((a)) / sizeof((a)[0]))
@@ -102,19 +114,23 @@
 #define HAL_SECTION_XIP_RODATA
 #endif
 
+/** MCU systick clock source */
 typedef enum {
     HAL_SYSTICK_CLKSRC_CORE,
     HAL_SYSTICK_CLKSRC_EXT
 } eHAL_systickClkSource;
 
+/** Check if is MCU systick clock source */
 #define IS_SYSTICK_SOURCE(s) (((s) == HAL_SYSTICK_CLKSRC_CORE) || ((s) == HAL_SYSTICK_CLKSRC_EXT))
 
 /***************************** Structure Definition **************************/
+/** HAL boolean type definition */
 typedef enum {
     HAL_FALSE = 0x00U,
     HAL_TRUE  = 0x01U
 } HAL_Check;
 
+/** HAL error code definition */
 typedef enum {
     HAL_OK      = 0x00U,
     HAL_ERROR   = (-1),
@@ -125,16 +141,19 @@ typedef enum {
     HAL_TIMEOUT = (-110)
 } HAL_Status;
 
+/** HAL functional status definition */
 typedef enum {
     HAL_DISABLE = 0x00U,
     HAL_ENABLE  = 0x01U
 } HAL_FuncStatus;
 
+/** HAL lock structures definition */
 typedef enum {
     HAL_UNLOCKED = 0x00U,
     HAL_LOCKED   = 0x01U
 } HAL_LockStatus;
 
+/** RK GPIO bank definition */
 typedef enum {
 #ifdef GPIO0
     GPIO_BANK0 = 0,
@@ -154,8 +173,14 @@ typedef enum {
     GPIO_BANK_NUM
 } eGPIO_bankId;
 
+/** HAL function type definition */
 typedef void (*pFunc)(void);
 
+/** @} */
 /***************************** Function Declare ******************************/
 
 #endif
+
+/** @} */
+
+/** @} */
