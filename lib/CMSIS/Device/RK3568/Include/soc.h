@@ -108,6 +108,16 @@ typedef enum
   MBOX0_CH1_B2A_IRQn     = 220,      /*!< MBOX0 CH1 B2A Interrupt     */
   MBOX0_CH2_B2A_IRQn     = 221,      /*!< MBOX0 CH2 B2A Interrupt     */
   MBOX0_CH3_B2A_IRQn     = 222,      /*!< MBOX0 CH3 B2A Interrupt     */
+  NFAULT0_IRQn           = 272,      /*!< DSU L3 CACHE ECC FAULT Interrupt */
+  NFAULT1_IRQn           = 273,      /*!< CPU0 L1-L2 CACHE ECC FAULT Interrupt */
+  NFAULT2_IRQn           = 274,      /*!< CPU1 L1-L2 CACHE ECC FAULT Interrupt */
+  NFAULT3_IRQn           = 275,      /*!< CPU2 L1-L2 CACHE ECC FAULT Interrupt */
+  NFAULT4_IRQn           = 276,      /*!< CPU3 L1-L2 CACHE ECC FAULT Interrupt */
+  NERR0_IRQn             = 277,      /*!< DSU L3 CACHE ECC ERROR Interrupt */
+  NERR1_IRQn             = 278,      /*!< CPU0 L1-L2 CACHE ECC ERROR Interrupt */
+  NERR2_IRQn             = 279,      /*!< CPU1 L1-L2 CACHE ECC ERROR Interrupt */
+  NERR3_IRQn             = 280,      /*!< CPU2 L1-L2 CACHE ECC ERROR Interrupt */
+  NERR4_IRQn             = 281,      /*!< CPU3 L1-L2 CACHE ECC ERROR Interrupt */
   RSVD0_IRQn             = 283,      /*!< RSVD0  Interrupt            */
   NUM_INTERRUPTS         = 352,
 } IRQn_Type;
@@ -160,6 +170,18 @@ typedef enum
 #define PLATFORM_CORE_COUNT PLATFORM_CLUSTER0_CORE_COUNT
 #define CPU_GET_AFFINITY(cpuId, clusterId) ((cpuId) << MPIDR_AFF1_SHIFT)
 
+/********************************** CACHE ECC ****************************************/
+#ifndef __ASSEMBLY__
+/** @addtogroup CACHE_ECC_Exported_Definition_Group1
+ *  @{
+ */
+/** the fault value will be injected */
+typedef enum {
+    CACHE_ECC_INJECT_UC     = 0x80000002, /**< Uncontainable Error generation */
+    CACHE_ECC_INJECT_DE_UER = 0x8000000a, /**< for l1~l2, generate a exception */
+} eCACHE_ECC_InjectFault;
+/** @} */
+#endif
 /******************************************CRU*******************************************/
 #define PLL_INPUT_OSC_RATE (24 * 1000 * 1000)
 
