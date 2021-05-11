@@ -6,4 +6,5 @@
 /*!
 \~chinese \mainpage 指南
 \~english \mainpage Guides
+\~ - \subpage Rockchip_User_Guide_HAL_SPI_MEM
 */

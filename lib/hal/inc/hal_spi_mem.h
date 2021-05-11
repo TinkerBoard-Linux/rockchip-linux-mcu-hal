@@ -15,6 +15,15 @@
  *  @{
  */
 
+/** @defgroup SPI_MEM_How_To_Use How To Use
+ *  @{
+
+\~chinese 有关详细信息，请参阅 @ref Rockchip_User_Guide_HAL_SPI_MEM 。
+\~english See @ref Rockchip_User_Guide_HAL_SPI_MEM for more info.
+\~
+
+ @} */
+
 #ifndef _HAL_SPI_MEM_H_
 #define _HAL_SPI_MEM_H_
 
