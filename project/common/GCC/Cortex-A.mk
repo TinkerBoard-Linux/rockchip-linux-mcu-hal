@@ -58,9 +58,11 @@ endif
 INCLUDES += \
 -I"../src" \
 -I"$(ROOT_PATH)/lib/CMSIS/Core_A/Include" \
+-I"$(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC" \
 
 SRC_DIRS += \
     ../src \
+    $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC \
 
 export HAL_PATH := $(ROOT_PATH)
 include $(HAL_PATH)/tools/build_lib.mk
@@ -70,7 +72,6 @@ INCLUDES += $(HAL_LIB_INC)
 CFLAGS += -DUNITY_INCLUDE_CONFIG_H
 
 SRCS += $(basename $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.[cS])))
-SRCS += $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/startup_$(shell echo $(SOC) | tr '[:upper:]' '[:lower:]').c
 OBJS += $(addsuffix .o,$(basename $(SRCS)))
 CFLAGS += $(INCLUDES)
 ASFLAGS += $(INCLUDES)
