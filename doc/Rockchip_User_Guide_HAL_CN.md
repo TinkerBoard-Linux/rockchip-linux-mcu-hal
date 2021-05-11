@@ -2,9 +2,9 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V2.7.0
+发布版本：V2.8.0
 
-日期：2021-03-24
+日期：2021-05-11
 
 文件密级：□绝密   □秘密   □内部资料   ■公开
 
@@ -83,6 +83,7 @@ Rockchip Electronics Co., Ltd.
 | V2.5.0     | 2021.03  | Jon Lin      | 增加 SOC 支持、修改 Doxygen 规范       |
 | V2.6.0     | 2021.03  | Jon Lin      | 增加 middleware 目录       |
 | V2.7.0     | 2021.03  | Jon Lin      | demo 示例由 RK2106 更改为 RK2108，优化文件布局章节 |
+| V2.8.0     | 2021.05  | Jon Lin      | 增加 test_conf.h 说明、增加和修正模块缩写 |
 
 ---
 
@@ -110,12 +111,13 @@ Rockchip Electronics Co., Ltd.
 | PWM     | Pulse Width Modulation                      |
 | RTC     | Real-time clock                             |
 | SFC     | Serial Flash Controller                     |
+| SMCCC   | ARM SMC Calling Convention                  |
 | SPI     | Serial Peripheral interface                 |
 | SysTick | System tick timer                           |
 | UART    | Universal asynchronous receiver/transmitter |
 | USB     | Universal Serial Bus                        |
 | VOP     | Video Output Processor                      |
-| WDG     | watchdog                                    |
+| WDT     | watchdog                                    |
 
 ---
 
@@ -237,7 +239,7 @@ bsp 库用来存放某个芯片公共的板级配置和 dev 资源，代码路�
 ### test 目录文件
 
 test 目录用于存放 HAL 的 unit test 相关实现，其中：
-test/unity:　测试框架 Unity 的代码实现，来源于 https://github.com/ThrowTheSwitch/Unity.git
+test/unity:　测试框架 Unity 的代码实现，来源于 <https://github.com/ThrowTheSwitch/Unity.git>.
 test/hal: HAL 驱动的测试代码
 test_runner.c: 测试骨架程序，用于用户主程序调用
 
@@ -423,7 +425,7 @@ int PRE_MODULE_FuncFeature_SUB(void)
 
 - 前缀：'PRE_', 全大写
 - HAL 库对外提供的函数接口，应以"*HAL_*"开头，例如：*HAL_UART_ReadByte()*；
-  - HAL 库对外提供的宏定义函数接口，应以"\_\__HAL\__"开头，例如："*\_\_HAL_UART_SetIntEnabled*"；
+    - HAL 库对外提供的宏定义函数接口，应以"\_\__HAL\__"开头，例如："*\_\_HAL_UART_SetIntEnabled*"；
 - 模块名缩写：'MODULE_'；
 - 功能组合缩写：FuncFeature：按首字母大写区分单词的**驼峰式**组合；
 - 后缀：'_SUB()'：如果接口定义相近，但需要区分方式，可以添加后缀，例如，“_IT”中断模式。
@@ -1229,8 +1231,8 @@ OS 支持(如 RT-Thread)部分，利用控制器状态防重入，原子操作�
 
 - 模块初始化／反初始化
 - IO 访问函数
-  - 阻塞
-  - 非阻塞
+    - 阻塞
+    - 非阻塞
 - Suspend/Resume
 - 状态查询
 
@@ -1339,6 +1341,29 @@ while (PD_ReadAck(pd) != idle) {
 
 使用 Unity 框架，具体代码可以看 test/hal/test_timer.c，可用接口请查看 test/unity/extras/fixture/src/unity_fixture.h 和 test/unity/src/unity.h
 
+### 代码集成
+
+Unity 框架下的 test 测试程序以 test 开发包的形式管理，可以集成到 HAL 裸系统或其他 HAL 相关工程开发，其中以 HAL 裸系统 project 的 Unity 开发为例：
+
+- 获取 test 开发包并置于 HAL 开发包根目录
+
+- 参考或直接使用 Makefile 文件 build_test.mk 来引用 test 库
+
+- 定义 UNITY_INCLUDE_CONFIG_H 全局宏来开启 Unity configuration 的支持
+
+- 添加宏开关 test_conf.h 文件，相应的宏开关在 unity_runner.c 中选择，默认 SDK 提供所有可用开关
+
+- 引用 test_main，例如：
+
+  ```c
+  #include "unity_runner.h"
+  void main(void)
+  {
+      /* Unity Test */
+      test_main();
+  }
+  ```
+
 ### 提交
 
 驱动需要提交的测试代码位于 test/hal/目录，'test_'作为前缀对应驱动测试代码，
@@ -1347,11 +1372,17 @@ while (PD_ReadAck(pd) != idle) {
 
 ### 实现
 
-测试代码文件就只需要包含"hal_base.h"和"unity_fixture.h"，测试目标是 HAL driver 的所有 API.
+测试代码文件就只需要包含"hal_base.h"和"unity_fixture.h"，测试目标主要包括：
 
-可参考 test/hal 目录下已有实现。
+- HAL driver 的所有 API
+- 部分驱动可作为 driver 参考代码
 
-测试代码同时作为驱动参考代码使用，后续是否作为对外的参考代码再讨论
+test_conf.h 文件为 Unity configuration 的扩展，并在 unity_config.h 中引用，用来做以下测试开关的扩展：
+
+- 部分性能测试，没有模块宏可用作开关，可新增宏来限定
+- 新平台测试完，没有递归回旧平台测试，可新增宏来限定
+- 部分模块存在同一主控的不同应用，且相互逻辑冲突，可 hal_conf.h 为全功能开关（检验编译），新增宏来限定，例如：
+    - 主控 FSPI 支持 spiflash 和 qpipsram 两种器件，两者测试代码逻辑冲突
 
 ## CPAL 库
 
