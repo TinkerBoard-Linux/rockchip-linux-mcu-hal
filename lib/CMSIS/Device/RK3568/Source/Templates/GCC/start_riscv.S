@@ -3,6 +3,8 @@
  * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
+#ifdef ARCH_RISCV
+
 #include "riscv_csr_encoding.h"
 
 # define LREG     lw
@@ -92,3 +94,5 @@ ret
 
 sc_exit:
 j sc_exit
+
+#endif /* ARCH_RISCV */
