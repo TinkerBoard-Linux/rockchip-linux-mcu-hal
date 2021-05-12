@@ -4,6 +4,6 @@
 
 PROJECT		:= RV1126
 SOC		:= RV1126
-CPU		:= -march=rv32imac -mabi=ilp32 -DARCH_RISCV
+CPU		:= -march=rv32imac -mabi=ilp32
 
 include ../../common/GCC/riscv.mk

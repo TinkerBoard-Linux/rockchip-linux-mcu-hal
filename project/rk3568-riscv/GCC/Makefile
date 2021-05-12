@@ -4,6 +4,6 @@
 
 PROJECT		:= RK3568
 SOC		:= RK3568
-CPU		:= -march=rv32imac -mabi=ilp32 -DARCH_RISCV
+CPU		:= -march=rv32imac -mabi=ilp32
 
 include ../../common/GCC/riscv.mk
