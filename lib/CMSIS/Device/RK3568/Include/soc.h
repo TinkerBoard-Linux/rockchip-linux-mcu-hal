@@ -76,6 +76,7 @@ typedef enum
   I2C3_IRQn              = 81,       /*!< I2C3 Interrupt              */
   I2C4_IRQn              = 82,       /*!< I2C4 Interrupt              */
   I2C5_IRQn              = 83,       /*!< I2C5 Interrupt              */
+  FSPI0_IRQn             = 133,      /*!< FSPI Interrupt              */
   SPI0_IRQn              = 135,      /*!< SPI0 Interrupt              */
   SPI1_IRQn              = 136,      /*!< SPI1 Interrupt              */
   SPI2_IRQn              = 137,      /*!< SPI2 Interrupt              */
@@ -240,6 +241,8 @@ typedef enum PD_Id {
     PD_UNKOWN,
 } ePD_Id;
 #endif
+/****************************************FSPI********************************************/
+#define FSPI_CHIP_CNT                            (2)
 
 #ifdef __cplusplus
 }
