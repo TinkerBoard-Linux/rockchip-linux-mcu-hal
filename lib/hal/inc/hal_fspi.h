@@ -126,6 +126,7 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on);
 HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint8_t cells);
 HAL_Status HAL_FSPI_DLLDisable(struct HAL_FSPI_HOST *host);
 uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host);
+uint32_t HAL_FSPI_GetMaxIoSize(struct HAL_FSPI_HOST *host);
 
 /** @} */
 

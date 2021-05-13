@@ -89,8 +89,12 @@
 /* FSPI attributes */
 #define FSPI_VER_VER_1 1
 #define FSPI_VER_VER_3 3
+#define FSPI_VER_VER_5 5
 
 #define FSPI_NOR_FLASH_PAGE_SIZE 0x100
+
+#define FSPI_MAX_IOSIZE_VER3 (1024U * 8)
+#define FSPI_MAX_IOSIZE_VER4 (0xFFFFFFFFU)
 
 /********************* Private Structure Definition **************************/
 
@@ -271,8 +275,12 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
     }
 
     /* set DATA */
+#if (FSPI_VER > FSPI_VER_VER_3)
+    WRITE_REG(pReg->LEN_EXT, op->data.nbytes);
+#else
+    FSPICmd.b.datasize = op->data.nbytes;
+#endif
     if (op->data.nbytes) {
-        FSPICmd.b.datasize = op->data.nbytes;
         if (op->data.dir == HAL_SPI_MEM_DATA_OUT) {
             FSPICmd.b.rw = FSPI_WRITE;
         }
@@ -556,6 +564,10 @@ HAL_Status HAL_FSPI_Init(struct HAL_FSPI_HOST *host)
     pReg->CTRL0 = 0;
     FSPI_XmmcDevRegionInit(host);
 
+#if (FSPI_VER > FSPI_VER_VER_3)
+    WRITE_REG(pReg->LEN_CTRL, FSPI_LEN_CTRL_TRB_SEL_MASK);
+#endif
+
     return ret;
 }
 
@@ -801,6 +813,19 @@ uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host)
     HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
 
     return (uint32_t)host->instance->XMMCSR;
+}
+
+uint32_t HAL_FSPI_GetMaxIoSize(struct HAL_FSPI_HOST *host)
+{
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+
+#if (FSPI_VER > FSPI_VER_VER_3)
+
+    return FSPI_MAX_IOSIZE_VER4;
+#else
+
+    return FSPI_MAX_IOSIZE_VER3;
+#endif
 }
 
 /** @} */
