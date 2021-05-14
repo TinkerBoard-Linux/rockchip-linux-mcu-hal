@@ -575,7 +575,7 @@ static HAL_Status SNOR_Enter4byte(struct SPI_NOR *nor)
     return nor->writeReg(nor, SPINOR_OP_EN4B, NULL, 0);
 }
 
-HAL_UNUSED __STATIC_INLINE HAL_Status SNOR_ReadSFDP(struct SPI_NOR *nor, uint32_t addr, uint8_t *data)
+__STATIC_INLINE HAL_Status SNOR_ReadSFDP(struct SPI_NOR *nor, uint32_t addr, uint8_t *data)
 {
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(SPINOR_OP_READ_SFDP, 1),
                                                      HAL_SPI_MEM_OP_ADDR(3, addr, 1),
@@ -583,6 +583,23 @@ HAL_UNUSED __STATIC_INLINE HAL_Status SNOR_ReadSFDP(struct SPI_NOR *nor, uint32_
                                                      HAL_SPI_MEM_OP_DATA_IN(1, data, 1));
 
     return SNOR_SPIMemExecOp(nor->spi, &op);
+}
+
+static void *SNOR_InfoAdjust(struct SPI_NOR *nor, struct FLASH_INFO *info)
+{
+    uint32_t addr;
+    uint8_t para;
+
+    if (info->id == 0xc84019) {
+        addr = 0x09;
+        SNOR_ReadSFDP(nor, addr, &para);
+        if (para == 0x06) {
+            info->QEBits = 9;
+            info->progCmd_4 = 0x34;
+        }
+    }
+
+    return 0;
 }
 
 /** @} */
@@ -822,6 +839,8 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         s_commonSpiFlash.id = (idByte[0] << 16) | (idByte[1] << 8) | idByte[2];
         s_commonSpiFlash.density = idByte[2] - 9;
         info = &s_commonSpiFlash;
+    } else {
+        SNOR_InfoAdjust(nor, (struct FLASH_INFO *)info);
     }
 
     nor->info = info;
