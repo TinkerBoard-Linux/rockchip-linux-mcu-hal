@@ -9,7 +9,6 @@
 /* Unity HAL Test Config */
 #define UNITY_HAL_SPI
 #define UNITY_MID_SDHCI
-
+#define UNITY_HAL_I2C
 /* Unity HAL Test Sub Config */
-
 #endif
