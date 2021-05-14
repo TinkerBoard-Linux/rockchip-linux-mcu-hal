@@ -450,13 +450,17 @@ HAL_Status HAL_FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, void 
     int32_t timeout = 0;
     struct FSPI_REG *pReg = host->instance;
 
-    HAL_FSPI_UnmaskDMAInterrupt(host);
+    HAL_ASSERT(data && len);
+
     pReg->ICLR = 0xFFFFFFFF;
     pReg->DMAADDR = (uint32_t)data;
     pReg->DMATR = FSPI_DMATR_DMATR_START;
 
     timeout = len * 10;
-    while ((!(pReg->RISR & FSPI_ISR_TRANSS_MASK)) && (timeout-- > 0)) {
+    while (timeout--) {
+        if (READ_BIT(pReg->RISR, FSPI_ISR_DMAS_MASK)) {
+            break;
+        }
         HAL_DelayUs(1);
     }
 
