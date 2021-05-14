@@ -342,6 +342,26 @@ HAL_Status HAL_FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *dat
     uint32_t i, words;
     uint32_t *pData = (uint32_t *)data;
     struct FSPI_REG *pReg = host->instance;
+    uint32_t temp = 0;
+
+    HAL_ASSERT(data && len);
+
+    if (len && len < 4 && dir == FSPI_WRITE) {
+        if (len == 1) {
+            temp = *((uint8_t *)data);
+        } else if (len == 2) {
+            temp = *((uint16_t *)data);
+        } else {
+            temp = ((uint8_t *)data)[0] | ((uint8_t *)data)[1] << 8 | ((uint8_t *)data)[2] << 16;
+        }
+        pData = &temp;
+    } else if (len > 4 && !HAL_IS_ALIGNED((uint32_t)data, 4)) {
+        FSPI_DBG("%s data unaligned access\n", __func__);
+#ifndef __CORTEX_M
+
+        return HAL_INVAL;
+#endif
+    }
 
     /* FSPI_DBG("%s %p len %lx word0 %lx dir %lx\n", __func__, pData, len, pData[0], dir); */
     if (dir == FSPI_WRITE) {
