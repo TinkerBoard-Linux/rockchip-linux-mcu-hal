@@ -177,6 +177,24 @@ const struct HAL_I2C_DEV g_i2c5Dev =
 };
 #endif
 
+#ifdef HAL_FSPI_MODULE_ENABLED
+struct HAL_FSPI_HOST g_fspi0Dev =
+{
+    .instance = FSPI,
+    .sclkGate = SCLK_SFC_GATE,
+    .hclkGate = HCLK_SFC_GATE,
+    .xipClkGate = 0,
+    .sclkID = 0,
+    .irqNum = FSPI0_IRQn,
+    .xipMemCode = 0,
+    .xipMemData = 0,
+    .xmmcDev[0] =
+    {
+        .type = 0,
+    },
+};
+#endif
+
 void BSP_Init(void)
 {
 }
