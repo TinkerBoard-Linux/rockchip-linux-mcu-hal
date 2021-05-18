@@ -108,7 +108,7 @@ static void SFC_Reset(struct SFC_REG *pReg)
  * @param  host: SFC host.
  * @return HAL_Status.
  */
-HAL_Status SFC_ClearIsr(struct HAL_SFC_HOST *host)
+static HAL_Status SFC_ClearIsr(struct HAL_SFC_HOST *host)
 {
     host->instance->ICLR = 0xFFFFFFFF;
 
@@ -120,7 +120,7 @@ HAL_Status SFC_ClearIsr(struct HAL_SFC_HOST *host)
  * @param  host: SFC host.
  * @return HAL_Check.
  */
-HAL_Check SFC_IsDMAInterrupt(struct HAL_SFC_HOST *host)
+HAL_UNUSED static HAL_Check SFC_IsDMAInterrupt(struct HAL_SFC_HOST *host)
 {
     return (HAL_Check)HAL_IS_BIT_SET(host->instance->ISR, SFC_ISR_DMAS_ACTIVE);
 }
