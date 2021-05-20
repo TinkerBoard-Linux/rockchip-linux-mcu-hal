@@ -126,6 +126,7 @@ typedef enum
 #include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
 #ifndef ARCH_RISCV
 #define __CORTEX_A           55U          /* Cortex-A55 Core                          */
+#define __FPU_PRESENT         1U          /* FPU present                              */
 #include "core_ca.h"
 #endif /* ARCH_RISCV */
 #include "system_rk3568.h"

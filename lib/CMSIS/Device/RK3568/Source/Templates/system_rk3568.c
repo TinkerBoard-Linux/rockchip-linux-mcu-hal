@@ -28,7 +28,10 @@ void SystemInit (void)
 /* do not use global variables because this function is called before
    reaching pre-main. RW section may be overwritten afterwards.          */
 
-    /* to do */
+#if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
+    // Enable FPU
+    __FPU_Enable();
+#endif
 }
 
 void DataInit (void)
