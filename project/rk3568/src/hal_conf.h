@@ -11,6 +11,7 @@
 #define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
+#define HAL_CACHE_ECC_MODULE_ENABLED
 #define HAL_CPU_TOPOLOGY_MODULE_ENABLED
 #define HAL_CRU_MODULE_ENABLED
 #define HAL_DDR_ECC_MODULE_ENABLED
