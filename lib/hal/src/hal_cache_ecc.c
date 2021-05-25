@@ -20,7 +20,7 @@
 
  The CACHE_ECC driver can be used as follows:
 
- - Invoke HAL_CACHE_ECC_Init() to enable cache ecc.
+ - Invoke HAL_CACHE_ECC_SetErxctlr() to set the ERXCTLR_EL1 register for enabling ecc features.
  - Invoke HAL_CACHE_ECC_Inject() to Inject cache faults or errors for testing cache ecc.
  - Invoke HAL_CACHE_ECC_GetErxmisc3() to get the value of the register ERXMISC3.
  - Invoke HAL_CACHE_ECC_GetErxmisc2() to get the value of the register ERXMISC2.
@@ -157,30 +157,21 @@ HAL_Status HAL_CACHE_ECC_Inject(eCACHE_ECC_RecodeID errSel,
     return HAL_OK;
 }
 
-/** @} */
-
-/** @defgroup CACHE_ECC_Exported_Functions_Group4 Init and DeInit Functions
-
- This section provides functions allowing to init and deinit the module:
-
- *  @{
- */
-
 /**
- * @brief  CACHE_ECC enable.
- * @param  err0EnBits:  configure the register ERR0CTLR to enable l1~l2 ecc.
- * @param  err1EnBits:  configure the register ERR1CTLR to enable DSU L3 ecc.
+ * @brief  set the ERXCTLR_EL1 register for enabling ecc features.
+ * @param  err0ctlr:  set the register ERR0CTLR to enable l1~l2 ecc features.
+ * @param  err1ctlr:  set the register ERR1CTLR to enable DSU L3 ecc features.
  *                      make sure that ATF have allowed the register ERR0CTLR
  *                      and ERR1CTLR to be configured in EL1 or SVC.
  * @return HAL_Status.
  */
-HAL_Status HAL_CACHE_ECC_Init(uint32_t err0EnBits, uint32_t err1EnBits)
+HAL_Status HAL_CACHE_ECC_SetErxctlr(uint32_t err0ctlr, uint32_t err1ctlr)
 {
     __set_CP(15, 0, 0, 5, 3, 1);
-    __set_CP(15, 0, err0EnBits, 5, 4, 1);
+    __set_CP(15, 0, err0ctlr, 5, 4, 1);
 
     __set_CP(15, 0, 1, 5, 3, 1);
-    __set_CP(15, 0, err1EnBits, 5, 4, 1);
+    __set_CP(15, 0, err1ctlr, 5, 4, 1);
 
     return HAL_OK;
 }

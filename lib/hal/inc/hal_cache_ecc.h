@@ -45,7 +45,7 @@ uint32_t HAL_CACHE_ECC_GetErxmisc2(eCACHE_ECC_RecodeID sel);
 uint32_t HAL_CACHE_ECC_GetErxmisc3(eCACHE_ECC_RecodeID sel);
 HAL_Status HAL_CACHE_ECC_Inject(eCACHE_ECC_RecodeID errSel,
                                 eCACHE_ECC_InjectFault injectFault);
-HAL_Status HAL_CACHE_ECC_Init(uint32_t err0EnBits, uint32_t err1EnBits);
+HAL_Status HAL_CACHE_ECC_SetErxctlr(uint32_t err0ctlr, uint32_t err1ctlr);
 
 /** @} */
 
