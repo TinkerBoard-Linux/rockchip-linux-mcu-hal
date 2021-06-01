@@ -100,3 +100,10 @@ int Main(void)
 
     return 0;
 }
+
+int entry(void)
+{
+    main();
+
+    return 0;
+}

@@ -8,9 +8,7 @@
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            (24000000UL)     /* Oscillator frequency */
-
-#define  SYSTEM_CLOCK    (XTAL * 4U)
+#define  SYSTEM_CLOCK    (PLL_INPUT_OSC_RATE * 4U)
 
 
 /*----------------------------------------------------------------------------
@@ -43,38 +41,5 @@ void SystemInit (void)
   SCB->VTOR = (uint32_t) &__Vectors;
 #endif
   SystemCoreClock = SYSTEM_CLOCK;
-}
-
-/*----------------------------------------------------------------------------
-  System reset function
- *----------------------------------------------------------------------------*/
-void SystemReset(eRESET_MODE mode)
-{
-  /* mask cpu interrupt */
-  __disable_fault_irq();
-  __disable_irq();
-
-  if (REST_MASKROM == mode)
-  {
-      /* maskrom */
-      PMU->SYS_REG[3] = VAL_MASK_WE(0xFFFF, 0x18BF);
-  }
-  else if (REST_LOADER == mode)
-  {
-      /* loader */
-      PMU->SYS_REG[3] = VAL_MASK_WE(0xFFFF, 0x18AF);
-  }
-  else
-  {
-      /* reset */
-  }
-
-  /* Vectortable --> maskrom address 0x0000 */
-  SCB->VTOR = 0x00000000;
-
-  /* Remap, address 0x0 --> maskrom */
-  GRF->GRF_INTER_CON0 = VAL_MASK_WE(0x01 << 8, 0x00 << 8);
-
-  /* Software reset */
-  NVIC_SystemReset();
+  GRF->INTER_CON0 = GRF_INTER_CON0_NOC_REMAP_MASK | (GRF_INTER_CON0_NOC_REMAP_MASK << 16);
 }
