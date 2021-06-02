@@ -68,10 +68,6 @@
 /* SFC_RISR */
 #define SFC_RISR_TRANSS_ACTIVE (1 << SFC_RISR_TRANSS_SHIFT)
 
-/* SFC attributes */
-#define SFC_VER_VER_1 1
-#define SFC_VER_VER_3 3
-
 /********************* Private Structure Definition **************************/
 
 typedef union {
@@ -95,8 +91,8 @@ static void SFC_Reset(struct SFC_REG *pReg)
 {
     int32_t timeout = 10000;
 
-    pReg->RCVR = SFC_RCVR_RCVR_RESET;
-    while ((pReg->RCVR == SFC_RCVR_RCVR_RESET) && (timeout > 0)) {
+    pReg->RCVR = SFC_RCVR_RCVR_MASK;
+    while ((pReg->RCVR == SFC_RCVR_RCVR_MASK) && (timeout > 0)) {
         HAL_DelayUs(1);
         timeout--;
     }
@@ -364,7 +360,6 @@ HAL_Status HAL_SFC_Init(struct HAL_SFC_HOST *host)
     SFC_Reset(host->instance);
     host->status = HAL_UNLOCKED;
     host->instance->CTRL = 0;
-    host->version = host->instance->VER & SFC_VER_VER_MASK;
 
     return HAL_OK;
 }
