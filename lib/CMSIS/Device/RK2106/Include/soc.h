@@ -133,6 +133,43 @@ typedef enum
 /****************************************************************************************/
 /******************************************CRU*******************************************/
 #define PLL_INPUT_OSC_RATE (24 * 1000 * 1000)
+
+#define CLK(mux, div) \
+    (((mux) & 0x0F0F00FFU) | (((div) & 0xFFU) << 8) | (((div) & 0x0F0F0000U) << 4))
+
+#ifndef __ASSEMBLY__
+typedef enum CLOCK_Name {
+    CLK_INVALID = 0U,
+    PLL_APLL,
+    CAL_CORE       = CLK(CAL_CORE_SRC_SEL, CAL_CORE_DIV),
+    CAL_STCLK_CORE = CLK(0U, CAL_STCLK_DIV),
+    SYS_CORE       = CLK(SYS_CORE_SRC_SEL, SYS_CORE_DIV),
+    SYS_STCLK_CORE = CLK(0U, SYS_STCLK_DIV),
+    PCLK_LOGIC     = CLK(0U, PCLK_LOGIC_DIV),
+    CLK_I2S0_SRC   = CLK(I2S0_PLL_SEL, I2S0_DIV),
+    CLK_I2S0_FRAC  = CLK(0U, CLK_I2S0_FRAC_DIV),
+    CLK_I2S0       = CLK(I2S0_CLK_SEL, 0U),
+    CLK_I2S1_SRC   = CLK(I2S1_PLL_SEL, I2S1_DIV),
+    CLK_I2S1_FRAC  = CLK(0U, CLK_I2S1_FRAC_DIV),
+    CLK_I2S1       = CLK(I2S1_CLK_SEL, 0U),
+    CLK_I2S1_OUT   = CLK(I2S1_OUT_SEL, 0U),
+    DCLK_EBC       = CLK(EBC_DCLK_PLL_SEL, EBC_DCLK_DIV),
+    CLK_SDMMC      = CLK(SDMMC_CLK_PLL_SEL, SDMMC_DIV),
+    CLK_EMMC       = CLK(EMMC_PLL_SEL, EMMC_DIV),
+    CLK_SPI0       = CLK(SPI0_CLK_PLL_SEL, SPI0_DIV),
+    CLK_SPI1       = CLK(SPI1_CLK_PLL_SEL, SPI1_DIV),
+    CLK_SFC        = CLK(SFC_PLL_SEL, SFC_DIV),
+    CLK_UART0      = CLK(UART0_PLL_SEL, UART0_DIV),
+    CLK_UART1      = CLK(UART1_PLL_SEL, UART1_DIV),
+    CLK_UART2      = CLK(UART2_PLL_SEL, UART2_DIV),
+    CLK_UART3      = CLK(UART3_PLL_SEL, UART3_DIV),
+    CLK_UART4      = CLK(UART4_PLL_SEL, UART4_DIV),
+    CLK_UART5      = CLK(UART5_PLL_SEL, UART5_DIV),
+    CLK_SARADC     = CLK(0U, SARADC_DIV),
+    CLK_TIMER0     = CLK(TIMER0_PLL_SEL, TIMER0_DIV),
+    CLK_TIMER1     = CLK(TIMER1_PLL_SEL, TIMER1_DIV),
+} eCLOCK_Name;
+#endif
 /******************************************SFC*******************************************/
 #define SFC_CHIP_CNT                                       (1U)
 #ifdef __cplusplus
