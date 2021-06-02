@@ -18,40 +18,47 @@
 /** @defgroup SNOR_How_To_Use How To Use
  *  @{
 
- HAL_SNOR is the SPI Nor protocol layer.
+## Introduction
 
- **HAL_SNOR controller host supported feature**
+HAL_SNOR is the SPI Nor protocol layer
 
- - X1, X2, X4 transfer
- - choose SPI mode
- - XIP function
+### Feature
 
- **The SNOR driver can be used as follows**
+- X1, X2, X4 lines
+- choose SPI mode
+- XIP function
 
- Register Host:
+### How To Use
 
- - Init a SPI Nor abstract:
-   - Malloc struct SPI_NOR nor by user;
-   - Designated host to HAL_SNOR,  define a suitable spi->mode;
-   - Init SPI Nor abstract by calling HAL_SNOR_Init();
+#### Register Host
 
- SPI Nor operations for user:
+- Init a SPI Nor abstract
+    - Malloc the device structure @ref SPI_NOR "nor"
+    - Malloc the host structure @ref SNOR_HOST "nor->spi" and configure it
+        - Designated the real host to the abstract one's private data "nor->spi->userdata"
+        - Configure SPI_MODE nor->spi->mode
+        - Register nor->spi->xfer
+        - If the host support XIP, register nor->spi->xip
+- Init SPI Nor abstract by calling HAL_SNOR_Init()
 
- - Read, write and erase function groups  like HAL_SNOR_Read();
- - XIP enable/disable function;
+#### Main Function
 
- **Add New SPI Nor flash**
+- Read, write and erase function groups like HAL_SNOR_Read();
 
-  Figure out following points for adding a new SPI Nor flash to flash info table:
+- XIP enable/disable function
 
- - standard SPI (DI / DO), Quad SPI (D0 / D1/ D2 /D3) command
- - feature
-   - [1, 0] r/w status mode;
-   - [3, 2] quad r/w;
-   - [4] 4 bytes address;
-   - [5] should enter 4 bytes address mode;
- - density
- - QE bit
+### Add New SPI Nor flash
+
+ Figure out following points for adding a new SPI Nor flash to flash info table "s_spiFlashbl":
+
+- standard SPI (DI / DO), Quad SPI (D0 / D1/ D2 /D3) command
+    - feature
+    - [1, 0] r/w status mode
+    - [3, 2] quad r/w
+    - [4] 4 bytes address
+    - [5] should enter 4 bytes address mode
+    - density
+    - QE bit
 
  @} */
 
