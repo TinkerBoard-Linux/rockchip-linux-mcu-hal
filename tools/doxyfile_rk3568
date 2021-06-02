@@ -7,3 +7,6 @@ INCLUDE_PATH           +=\
 ./project/rk3568/src \
 ./lib/CMSIS/Device/RK3568/Include \
 ./lib/hal/inc
+
+INPUT                  +=\
+./lib/CMSIS/Device/RK3568/Include
