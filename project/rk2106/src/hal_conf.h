@@ -11,6 +11,7 @@
 #define SYS_TIMER TIMER1 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
+#define HAL_CRU_MODULE_ENABLED
 #define HAL_NVIC_MODULE_ENABLED
 #define HAL_SYSTICK_MODULE_ENABLED
 #define HAL_TIMER_MODULE_ENABLED
