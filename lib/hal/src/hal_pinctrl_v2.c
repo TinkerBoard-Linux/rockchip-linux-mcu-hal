@@ -5,7 +5,7 @@
 
 #include "hal_base.h"
 
-#if defined(HAL_PINCTRL_MODULE_ENABLED) && (defined(SOC_RV1126) || defined(SOC_SWALLOW) || defined(SOC_RK3568))
+#if defined(HAL_PINCTRL_MODULE_ENABLED) && (defined(SOC_RV1126) || defined(SOC_SWALLOW) || defined(SOC_RK3568) || defined(RKMCU_RK2106))
 
 /** @addtogroup RK_HAL_Driver
  *  @{
@@ -50,86 +50,101 @@ Example:
  */
 /********************* Private MACRO Definition ******************************/
 
-#ifdef GRF_IOMUX_BIT_PER_PIN
-#define IOMUX_BIT_PER_PIN GRF_IOMUX_BIT_PER_PIN
-#else
-#define IOMUX_BIT_PER_PIN (4)
-#endif
-
-#ifdef GRF_DS_BIT_PER_PIN
-#define DS_BIT_PER_PIN GRF_DS_BIT_PER_PIN
-#else
-#define DS_BIT_PER_PIN (4)
-#endif
-
-#ifdef GRF_PULL_BIT_PER_PIN
-#define PULL_BIT_PER_PIN GRF_PULL_BIT_PER_PIN
-#else
-#define PULL_BIT_PER_PIN (2)
-#endif
-
-#ifdef GRF_IOMUX_PIN_PER_REG
-#define IOMUX_PIN_PER_REG GRF_IOMUX_PIN_PER_REG
-#else
-#define IOMUX_PIN_PER_REG (16 / IOMUX_BIT_PER_PIN)
-#endif
-
-#ifdef GRF_DS_PIN_PER_REG
-#define DS_PIN_PER_REG GRF_DS_PIN_PER_REG
-#else
-#define DS_PIN_PER_REG (16 / DS_BIT_PER_PIN)
-#endif
-
-#ifdef GRF_PULL_PIN_PER_REG
-#define PULL_PIN_PER_REG GRF_PULL_PIN_PER_REG
-#else
-#define PULL_PIN_PER_REG (16 / PULL_BIT_PER_PIN)
-#endif
-
 #define _TO_MASK(w)         ((1U << (w)) - 1U)
 #define _TO_OFFSET(p, w)    ((p) * (w))
 #define RK_GEN_VAL(p, v, w) ((_TO_MASK(w) << (_TO_OFFSET(p, w) + 16)) | (((v) & _TO_MASK(w)) << _TO_OFFSET(p, w)))
 
-#define IOMUX_H(__B, __P) (GRF->GPIO##__B##__P##_IOMUX_H)
-#define IOMUX_L(__B, __P) (GRF->GPIO##__B##__P##_IOMUX_L)
-#define P_H(__B, __P)     (GRF->GPIO##__B##__P##_P_H)
-#define P_L(__B, __P)     (GRF->GPIO##__B##__P##_P_L)
-#define P(__B, __P)       (GRF->GPIO##__B##__P##_P)
-
-#define _PINCTRL_WRITE(REG, DATA) \
-{                                 \
-    HAL_DBG("0x%lx\n", REG);      \
-    REG = DATA;                   \
-    HAL_DBG("0x%lx\n", REG);      \
+#define _PINCTRL_WRITE(REG, DATA)                            \
+{                                                            \
+    HAL_DBG("Write Data: 0x%lx to Reg: 0x%lx\n", REG, DATA); \
+    REG = DATA;                                              \
+    HAL_DBG("Readback  : 0x%lx\n", REG);                     \
 }
 
-#define SET_IOMUX_H(_B, _P, p, v, w) _PINCTRL_WRITE(IOMUX_H(_B, _P), RK_GEN_VAL(p, v, w))
-#define SET_IOMUX_L(_B, _P, p, v, w) _PINCTRL_WRITE(IOMUX_L(_B, _P), RK_GEN_VAL(p, v, w))
-#define SET_P_H(_B, _P, p, v, w)     _PINCTRL_WRITE(P_H(_B, _P), RK_GEN_VAL(p, v, w))
-#define SET_P_L(_B, _P, p, v, w)     _PINCTRL_WRITE(P_L(_B, _P), RK_GEN_VAL(p, v, w))
-#define SET_P_(_B, _P, p, v, w)      _PINCTRL_WRITE(P(_B, _P), RK_GEN_VAL(p, v, w))
+#if defined(GRF_GPIO0A_IOMUX_OFFSET)
+#define IOMUX_BIT_PER_PIN                 (2)
+#define IOMUX_PIN_PER_REG                 (16 / IOMUX_BIT_PER_PIN)
+#define IOMUX_0(__B, __P)                 (GRF->GPIO##__B##__P##_IOMUX)
+#define SET_IOMUX_0(_B, _P, p, v, w)      _PINCTRL_WRITE(IOMUX_0(_B, _P), RK_GEN_VAL(p, v, w))
+#define RK_SET_IOMUX_0(B, P, p, v)        SET_IOMUX_0(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#define SET_IOMUX(_GPIO, _PORT, pin, val) RK_SET_IOMUX_0(_GPIO, _PORT, pin, val)
 
-#define RK_SET_IOMUX_H(B, P, p, v) SET_IOMUX_H(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
-#define RK_SET_IOMUX_L(B, P, p, v) SET_IOMUX_L(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#elif defined(GRF_GPIO0A_IOMUX_H_OFFSET)
+#define IOMUX_BIT_PER_PIN            (4)
+#define IOMUX_PIN_PER_REG            (16 / IOMUX_BIT_PER_PIN)
+#define IOMUX_0(__B, __P)            (GRF->GPIO##__B##__P##_IOMUX_L)
+#define IOMUX_1(__B, __P)            (GRF->GPIO##__B##__P##_IOMUX_H)
+#define SET_IOMUX_0(_B, _P, p, v, w) _PINCTRL_WRITE(IOMUX_0(_B, _P), RK_GEN_VAL(p, v, w))
+#define SET_IOMUX_1(_B, _P, p, v, w) _PINCTRL_WRITE(IOMUX_1(_B, _P), RK_GEN_VAL(p, v, w))
+#define RK_SET_IOMUX_0(B, P, p, v)   SET_IOMUX_0(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#define RK_SET_IOMUX_1(B, P, p, v)   SET_IOMUX_1(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#define SET_IOMUX(_GPIO, _PORT, pin, val)       \
+{                                               \
+    if ((pin % 8) < 4) {                        \
+        RK_SET_IOMUX_0(_GPIO, _PORT, pin, val); \
+    } else {                                    \
+        RK_SET_IOMUX_1(_GPIO, _PORT, pin, val); \
+    }                                           \
+}
 
-#if (DS_PIN_PER_REG >= 4)
-#define DS_H(__B, __P)            (GRF->GPIO##__B##__P##_DS_H)
-#define DS_L(__B, __P)            (GRF->GPIO##__B##__P##_DS_L)
-#define SET_DS_H(_B, _P, p, v, w) _PINCTRL_WRITE(DS_H(_B, _P), RK_GEN_VAL(p, v, w))
-#define SET_DS_L(_B, _P, p, v, w) _PINCTRL_WRITE(DS_L(_B, _P), RK_GEN_VAL(p, v, w))
-#define RK_SET_DS_H(B, P, p, v)   SET_DS_H(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
-#define RK_SET_DS_L(B, P, p, v)   SET_DS_L(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
+#elif defined(GRF_GPIO0A_IOMUX_0_OFFSET)
+#define IOMUX_BIT_PER_PIN            (8)
+#define IOMUX_PIN_PER_REG            (16 / IOMUX_BIT_PER_PIN)
+#define IOMUX_0(__B, __P)            (GRF->GPIO##__B##__P##_IOMUX_0)
+#define IOMUX_1(__B, __P)            (GRF->GPIO##__B##__P##_IOMUX_1)
+#define IOMUX_2(__B, __P)            (GRF->GPIO##__B##__P##_IOMUX_2)
+#define IOMUX_3(__B, __P)            (GRF->GPIO##__B##__P##_IOMUX_3)
+#define SET_IOMUX_0(_B, _P, p, v, w) _PINCTRL_WRITE(IOMUX_0(_B, _P), RK_GEN_VAL(p, v, w))
+#define SET_IOMUX_1(_B, _P, p, v, w) _PINCTRL_WRITE(IOMUX_1(_B, _P), RK_GEN_VAL(p, v, w))
+#define SET_IOMUX_2(_B, _P, p, v, w) _PINCTRL_WRITE(IOMUX_2(_B, _P), RK_GEN_VAL(p, v, w))
+#define SET_IOMUX_3(_B, _P, p, v, w) _PINCTRL_WRITE(IOMUX_3(_B, _P), RK_GEN_VAL(p, v, w))
+#define RK_SET_IOMUX_0(B, P, p, v)   SET_IOMUX_0(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#define RK_SET_IOMUX_1(B, P, p, v)   SET_IOMUX_1(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#define RK_SET_IOMUX_2(B, P, p, v)   SET_IOMUX_2(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#define RK_SET_IOMUX_3(B, P, p, v)   SET_IOMUX_3(B, P, p % IOMUX_PIN_PER_REG, v, IOMUX_BIT_PER_PIN)
+#define SET_IOMUX(_GPIO, _PORT, pin, val)       \
+{                                               \
+    if ((pin % 8) < 2) {                        \
+        RK_SET_IOMUX_0(_GPIO, _PORT, pin, val); \
+    } else if ((pin % 8) < 4) {                 \
+        RK_SET_IOMUX_1(_GPIO, _PORT, pin, val); \
+    } else if ((pin % 8) < 6) {                 \
+        RK_SET_IOMUX_2(_GPIO, _PORT, pin, val); \
+    } else {                                    \
+        RK_SET_IOMUX_3(_GPIO, _PORT, pin, val); \
+    }                                           \
+}
+#endif
 
+#if defined(GRF_GPIO0A_DS_OFFSET)
+#define DS_BIT_PER_PIN                 (2)
+#define DS_PIN_PER_REG                 (16 / DS_BIT_PER_PIN)
+#define DS_0(__B, __P)                 (GRF->GPIO##__B##__P##_DS)
+#define SET_DS_0(_B, _P, p, v, w)      _PINCTRL_WRITE(DS_0(_B, _P), RK_GEN_VAL(p, v, w))
+#define RK_SET_DS_0(B, P, p, v)        SET_DS_0(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
+#define SET_DS(_GPIO, _PORT, pin, val) RK_SET_DS_0(_GPIO, _PORT, pin, val)
+
+#elif defined(GRF_GPIO0A_DS_H_OFFSET)
+#define DS_BIT_PER_PIN            (4)
+#define DS_PIN_PER_REG            (16 / DS_BIT_PER_PIN)
+#define DS_0(__B, __P)            (GRF->GPIO##__B##__P##_DS_L)
+#define DS_1(__B, __P)            (GRF->GPIO##__B##__P##_DS_L)
+#define SET_DS_0(_B, _P, p, v, w) _PINCTRL_WRITE(DS_0(_B, _P), RK_GEN_VAL(p, v, w))
+#define SET_DS_1(_B, _P, p, v, w) _PINCTRL_WRITE(DS_1(_B, _P), RK_GEN_VAL(p, v, w))
+#define RK_SET_DS_0(B, P, p, v)   SET_DS_0(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
+#define RK_SET_DS_1(B, P, p, v)   SET_DS_1(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
 #define SET_DS(_GPIO, _PORT, pin, val)       \
 {                                            \
-    if ((pin % 8) > 3) {                     \
-        RK_SET_DS_H(_GPIO, _PORT, pin, val); \
+    if ((pin % 8) < 4) {                     \
+        RK_SET_DS_0(_GPIO, _PORT, pin, val); \
     } else {                                 \
-        RK_SET_DS_L(_GPIO, _PORT, pin, val); \
+        RK_SET_DS_1(_GPIO, _PORT, pin, val); \
     }                                        \
 }
-#elif (DS_PIN_PER_REG == 2)
 
+#elif defined(GRF_GPIO0A_DS_0_OFFSET)
+#define DS_BIT_PER_PIN            (8)
+#define DS_PIN_PER_REG            (16 / DS_BIT_PER_PIN)
 #define DS_0(__B, __P)            (GRF->GPIO##__B##__P##_DS_0)
 #define DS_1(__B, __P)            (GRF->GPIO##__B##__P##_DS_1)
 #define DS_2(__B, __P)            (GRF->GPIO##__B##__P##_DS_2)
@@ -142,7 +157,6 @@ Example:
 #define RK_SET_DS_1(B, P, p, v)   SET_DS_1(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
 #define RK_SET_DS_2(B, P, p, v)   SET_DS_2(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
 #define RK_SET_DS_3(B, P, p, v)   SET_DS_3(B, P, p % DS_PIN_PER_REG, v, DS_BIT_PER_PIN)
-
 #define SET_DS(_GPIO, _PORT, pin, val)       \
 {                                            \
     if ((pin % 8) < 2) {                     \
@@ -151,30 +165,68 @@ Example:
         RK_SET_DS_1(_GPIO, _PORT, pin, val); \
     } else if ((pin % 8) < 6) {              \
         RK_SET_DS_2(_GPIO, _PORT, pin, val); \
-    } else if ((pin % 8) < 8) {              \
+    } else {                                 \
         RK_SET_DS_3(_GPIO, _PORT, pin, val); \
     }                                        \
 }
 #endif
 
-#define RK_SET_P_H(B, P, p, v) SET_P_H(B, P, p % PULL_PIN_PER_REG, v, PULL_BIT_PER_PIN)
-#define RK_SET_P_L(B, P, p, v) SET_P_L(B, P, p % PULL_PIN_PER_REG, v, PULL_BIT_PER_PIN)
-#define RK_SET_P(B, P, p, v)   SET_P_(B, P, p % PULL_PIN_PER_REG, v, PULL_BIT_PER_PIN)
+#if defined(GRF_GPIO0A_P_OFFSET)
+#define P_BIT_PER_PIN                 (2)
+#define P_PIN_PER_REG                 (16 / P_BIT_PER_PIN)
+#define P_0(__B, __P)                 (GRF->GPIO##__B##__P##_P)
+#define SET_P_0(_B, _P, p, v, w)      _PINCTRL_WRITE(P_0(_B, _P), RK_GEN_VAL(p, v, w))
+#define RK_SET_P_0(B, P, p, v)        SET_P_0(B, P, p % P_PIN_PER_REG, v, P_BIT_PER_PIN)
+#define SET_P(_GPIO, _PORT, pin, val) RK_SET_P_0(_GPIO, _PORT, pin, val)
 
-#define SET_IOMUX(_GPIO, _PORT, pin, val)       \
-{                                               \
-    if ((pin % 8) > 3) {                        \
-        RK_SET_IOMUX_H(_GPIO, _PORT, pin, val); \
-    }else{                                      \
-        RK_SET_IOMUX_L(_GPIO, _PORT, pin, val); \
-    }                                           \
+#elif defined(GRF_GPIO0A_P_H_OFFSET)
+#define P_BIT_PER_PIN            (4)
+#define P_PIN_PER_REG            (16 / P_BIT_PER_PIN)
+#define P_0(__B, __P)            (GRF->GPIO##__B##__P##_P_L)
+#define P_1(__B, __P)            (GRF->GPIO##__B##__P##_P_L)
+#define SET_P_0(_B, _P, p, v, w) _PINCTRL_WRITE(P_0(_B, _P), RK_GEN_VAL(p, v, w))
+#define SET_P_1(_B, _P, p, v, w) _PINCTRL_WRITE(P_1(_B, _P), RK_GEN_VAL(p, v, w))
+#define RK_SET_P_0(B, P, p, v)   SET_P_0(B, P, p % P_PIN_PER_REG, v, P_BIT_PER_PIN)
+#define RK_SET_P_1(B, P, p, v)   SET_P_1(B, P, p % P_PIN_PER_REG, v, P_BIT_PER_PIN)
+#define SET_P(_GPIO, _PORT, pin, val)       \
+{                                           \
+    if ((pin % 8) < 4) {                    \
+        RK_SET_P_0(_GPIO, _PORT, pin, val); \
+    } else {                                \
+        RK_SET_P_3(_GPIO, _PORT, pin, val); \
+    }                                       \
 }
 
-#define SET_P(_GPIO, _PORT, pin, val)     \
-{                                         \
-        RK_SET_P(_GPIO, _PORT, pin, val); \
+#elif defined(GRF_GPIO0A_P_0_OFFSET)
+#define P_BIT_PER_PIN            (8)
+#define P_PIN_PER_REG            (16 / P_BIT_PER_PIN)
+#define P_0(__B, __P)            (GRF->GPIO##__B##__P##_P_0)
+#define P_1(__B, __P)            (GRF->GPIO##__B##__P##_P_1)
+#define P_2(__B, __P)            (GRF->GPIO##__B##__P##_P_2)
+#define P_3(__B, __P)            (GRF->GPIO##__B##__P##_P_3)
+#define SET_P_0(_B, _P, p, v, w) _PINCTRL_WRITE(P_0(_B, _P), RK_GEN_VAL(p, v, w))
+#define SET_P_1(_B, _P, p, v, w) _PINCTRL_WRITE(P_1(_B, _P), RK_GEN_VAL(p, v, w))
+#define SET_P_2(_B, _P, p, v, w) _PINCTRL_WRITE(P_2(_B, _P), RK_GEN_VAL(p, v, w))
+#define SET_P_3(_B, _P, p, v, w) _PINCTRL_WRITE(P_3(_B, _P), RK_GEN_VAL(p, v, w))
+#define RK_SET_P_0(B, P, p, v)   SET_P_0(B, P, p % P_PIN_PER_REG, v, P_BIT_PER_PIN)
+#define RK_SET_P_1(B, P, p, v)   SET_P_1(B, P, p % P_PIN_PER_REG, v, P_BIT_PER_PIN)
+#define RK_SET_P_2(B, P, p, v)   SET_P_2(B, P, p % P_PIN_PER_REG, v, P_BIT_PER_PIN)
+#define RK_SET_P_3(B, P, p, v)   SET_P_3(B, P, p % P_PIN_PER_REG, v, P_BIT_PER_PIN)
+#define SET_P(_GPIO, _PORT, pin, val)       \
+{                                           \
+    if ((pin % 8) < 2) {                    \
+        RK_SET_P_0(_GPIO, _PORT, pin, val); \
+    } else if ((pin % 8) < 4) {             \
+        RK_SET_P_1(_GPIO, _PORT, pin, val); \
+    } else if ((pin % 8) < 6) {             \
+        RK_SET_P_2(_GPIO, _PORT, pin, val); \
+    } else {                                \
+        RK_SET_P_3(_GPIO, _PORT, pin, val); \
+    }                                       \
 }
+#endif
 
+#ifdef SET_IOMUX
 #define PINCTRL_SET_IOMUX(bank, pin, val) \
 {                                         \
     if (pin < 8) {                        \
@@ -183,11 +235,13 @@ Example:
         SET_IOMUX(bank, B, pin, val);     \
     } else if (pin < 24) {                \
         SET_IOMUX(bank, C, pin, val);     \
-    } else if (pin < 32) {                \
+    } else {                              \
         SET_IOMUX(bank, D, pin, val);     \
     }                                     \
 }
+#endif
 
+#ifdef SET_DS
 #define PINCTRL_SET_DS(bank, pin, val) \
 {                                      \
     if (pin < 8) {                     \
@@ -196,11 +250,13 @@ Example:
         SET_DS(bank, B, pin, val);     \
     } else if (pin < 24) {             \
         SET_DS(bank, C, pin, val);     \
-    } else if (pin < 32) {             \
+    } else {                           \
         SET_DS(bank, D, pin, val);     \
     }                                  \
 }
+#endif
 
+#ifdef SET_P
 #define PINCTRL_SET_P(bank, pin, val) \
 {                                     \
     if (pin < 8) {                    \
@@ -209,10 +265,11 @@ Example:
         SET_P(bank, B, pin, val);     \
     } else if (pin < 24) {            \
         SET_P(bank, C, pin, val);     \
-    } else if (pin < 32) {            \
+    } else {                          \
         SET_P(bank, D, pin, val);     \
     }                                 \
 }
+#endif
 
 /********************* Private Variable Definition ***************************/
 
@@ -227,8 +284,7 @@ Example:
  */
 static HAL_Status PINCTRL_SetIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t data)
 {
-    HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / IOMUX_BIT_PER_PIN), data, IOMUX_BIT_PER_PIN));
-
+#ifdef PINCTRL_SET_IOMUX
     switch (bank) {
 #ifdef GPIO0
     case 0:
@@ -237,19 +293,7 @@ static HAL_Status PINCTRL_SetIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t data
 #endif
 #ifdef GPIO1
     case 1:
-    #ifdef RKMCU_RK2108
-        if (pin < 8) {
-            SET_IOMUX(1, A, pin, data);
-        } else if (pin < 16) {
-            SET_IOMUX(1, B, pin, data);
-        } else if (pin < 24) {
-            SET_IOMUX(1, C, pin, data);
-        } else {
-            RK_SET_IOMUX_L(1, D, pin, data);
-        }
-    #else
         PINCTRL_SET_IOMUX(1, pin, data);
-    #endif
         break;
 #endif
 #ifdef GPIO2
@@ -265,7 +309,9 @@ static HAL_Status PINCTRL_SetIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t data
 #ifdef GPIO4
     case 4:
     #ifdef SOC_RV1126
-        RK_SET_IOMUX_L(4, A, pin, data);
+        if (pin < 2) {
+            GRF->GPIO4A_IOMUX_L = RK_GEN_VAL(pin % IOMUX_PIN_PER_REG, data, IOMUX_BIT_PER_PIN);
+        }
     #else
         PINCTRL_SET_IOMUX(4, pin, data);
     #endif
@@ -277,6 +323,10 @@ static HAL_Status PINCTRL_SetIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t data
     }
 
     return HAL_OK;
+#else
+
+    return HAL_ERROR;
+#endif
 }
 
 /**
@@ -288,9 +338,7 @@ static HAL_Status PINCTRL_SetIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t data
  */
 static HAL_Status PINCTRL_SetDS(eGPIO_bankId bank, uint8_t pin, uint32_t data)
 {
-#if !defined(RKMCU_RK2108) && !defined(SOC_SWALLOW)
-    HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / DS_BIT_PER_PIN), data, DS_BIT_PER_PIN));
-
+#ifdef PINCTRL_SET_DS
     switch (bank) {
 #ifdef GPIO0
     case 0:
@@ -315,7 +363,9 @@ static HAL_Status PINCTRL_SetDS(eGPIO_bankId bank, uint8_t pin, uint32_t data)
 #ifdef GPIO4
     case 4:
     #ifdef SOC_RV1126
-        RK_SET_DS_L(4, A, pin, data);
+        if (pin < 2) {
+            GRF->GPIO4A_DS_L = RK_GEN_VAL(pin % DS_PIN_PER_REG, data, DS_BIT_PER_PIN);
+        }
     #else
         PINCTRL_SET_DS(4, pin, data);
     #endif
@@ -325,27 +375,13 @@ static HAL_Status PINCTRL_SetDS(eGPIO_bankId bank, uint8_t pin, uint32_t data)
         HAL_DBG("unknown gpio%d\n", bank);
         break;
     }
-#endif
 
     return HAL_OK;
-}
+#else
 
-#ifdef SOC_RV1126
-static void PINCTRL_SetP_RV1126(uint8_t pin, uint32_t data)
-{
-    if (pin < 8) {
-        RK_SET_P(0, A, pin, data);
-    } else if (pin < 16) {
-        RK_SET_P(0, B, pin, data);
-    } else if (pin < 19) {
-        RK_SET_P_L(0, C, pin, data);
-    } else if (pin < 24) {
-        RK_SET_P_H(0, C, pin, data);
-    } else {
-        RK_SET_P(0, D, pin, data);
-    }
-}
+    return HAL_ERROR;
 #endif
+}
 
 /**
  * @brief  Private function to set pupd for one pin.
@@ -356,13 +392,22 @@ static void PINCTRL_SetP_RV1126(uint8_t pin, uint32_t data)
  */
 static HAL_Status PINCTRL_SetPUPD(eGPIO_bankId bank, uint8_t pin, uint32_t data)
 {
-    HAL_DBG("func: %-20s: GPIO%d-%d set %lx (%08lx)\n", __func__, bank, pin, data, RK_GEN_VAL(pin % (16 / PULL_BIT_PER_PIN), data, PULL_BIT_PER_PIN));
-
+#ifdef PINCTRL_SET_P
     switch (bank) {
 #ifdef GPIO0
     case 0:
     #ifdef SOC_RV1126
-        PINCTRL_SetP_RV1126(pin, data);
+        if (pin < 8) {
+            SET_P(0, A, pin, data);
+        } else if (pin < 16) {
+            SET_P(0, B, pin, data);
+        } else if (pin < 20) {
+            GRF->GPIO0C_P_L = RK_GEN_VAL(pin % P_PIN_PER_REG, data, P_BIT_PER_PIN);
+        } else if (pin < 24) {
+            GRF->GPIO0C_P_H = RK_GEN_VAL(pin % P_PIN_PER_REG, data, P_BIT_PER_PIN);
+        } else {
+            SET_P(0, D, pin, data);
+        }
     #else
         PINCTRL_SET_P(0, pin, data);
     #endif
@@ -385,11 +430,13 @@ static HAL_Status PINCTRL_SetPUPD(eGPIO_bankId bank, uint8_t pin, uint32_t data)
 #endif
 #ifdef GPIO4
     case 4:
-    #ifdef SOC_RV1126
-        RK_SET_P(4, A, pin, data);
-    #else
+        #ifdef SOC_RV1126
+        if (pin < 2) {
+            GRF->GPIO4A_P = RK_GEN_VAL(pin % P_PIN_PER_REG, data, P_BIT_PER_PIN);
+        }
+        #else
         PINCTRL_SET_P(4, pin, data);
-    #endif
+        #endif
         break;
 #endif
     default:
@@ -398,6 +445,10 @@ static HAL_Status PINCTRL_SetPUPD(eGPIO_bankId bank, uint8_t pin, uint32_t data)
     }
 
     return HAL_OK;
+#else
+
+    return HAL_ERROR;
+#endif
 }
 
 /**
