@@ -170,6 +170,9 @@ typedef enum CLOCK_Name {
     CLK_TIMER1     = CLK(TIMER1_PLL_SEL, TIMER1_DIV),
 } eCLOCK_Name;
 #endif
+/****************************************GRF*********************************************/
+#define GRF_IOMUX_BIT_PER_PIN (2)
+#define GRF_PULL_BIT_PER_PIN  (2)
 /******************************************SFC*******************************************/
 #define SFC_CHIP_CNT                                       (1U)
 #ifdef __cplusplus
