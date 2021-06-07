@@ -33,7 +33,7 @@ OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
 HAL_CFLAGS	+= -Werror
 
-LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_arm.ld
+LINKER_SCRIPT	?= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_arm.ld
 
 #############################################################################
 # Output files
@@ -82,15 +82,19 @@ $(HAL_OBJS): CFLAGS += $(HAL_CFLAGS)
 
 all: $(BIN)
 
+%.ld: %.ld.S
+	$(Q) $(CPP) -P $(CFLAGS) -o $@ $<
+
 $(ELF): $(OBJS) $(LINKER_SCRIPT)
 	$(Q) $(CC) $(OBJS) $(LDFLAGS) $(CFLAGS) -T$(LINKER_SCRIPT) -Wl,-Map=$(MAP),-cref -o $@
 
 $(BIN): $(ELF)
 	$(Q) $(OBJCOPY) $(OCFLAGS) -O binary $< $@
 
+CLEAN_FILES += $(OBJS) TestDemo*
+
 clean:
-	rm -f $(OBJS)
-	rm -f TestDemo*
+	rm -f $(CLEAN_FILES)
 
 .PHONY: all clean
 
