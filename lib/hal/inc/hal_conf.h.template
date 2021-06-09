@@ -19,6 +19,7 @@
 
 //#define RKMCU_KOALA
 //#define RKMCU_PISCES
+//#define RKMCU_RK2106
 //#define RKMCU_RK2108
 //#define RKMCU_RK2206
 //#define SOC_RK1808
