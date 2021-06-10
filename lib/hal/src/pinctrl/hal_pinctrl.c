@@ -25,7 +25,8 @@
    - HAL_PINCTRL_SetPinIOMUX to set pin iomux
    - HAL_PINCTRL_SetPinParam to set pin drive/pull/slewrate/schmitt
 
-Example:
+ Example:
+
      HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
                           GPIO_PIN_A0 | // I2S_IN_SCLK
                           GPIO_PIN_A1 | // I2S_IN_LRCK
