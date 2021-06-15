@@ -1282,23 +1282,14 @@ struct UART_REG {
     __IO uint32_t CTR;                                /* Address Offset: 0x00FC */
 };
 /* PWM Register Structure Define */
+struct PWM_CHANNEL {
+    __I  uint32_t CNT;
+    __IO uint32_t PERIOD_HPR;
+    __IO uint32_t DUTY_LPR;
+    __IO uint32_t CTRL;
+};
 struct PWM_REG {
-    __I  uint32_t PWM0_CNT;                           /* Address Offset: 0x0000 */
-    __IO uint32_t PWM0_PERIOD_HPR;                    /* Address Offset: 0x0004 */
-    __IO uint32_t PWM0_DUTY_LPR;                      /* Address Offset: 0x0008 */
-    __IO uint32_t PWM0_CTRL;                          /* Address Offset: 0x000C */
-    __I  uint32_t PWM1_CNT;                           /* Address Offset: 0x0010 */
-    __IO uint32_t PWM1_PERIOD_HPR;                    /* Address Offset: 0x0014 */
-    __IO uint32_t PWM1_DUTY_LPR;                      /* Address Offset: 0x0018 */
-    __IO uint32_t PWM1_CTRL;                          /* Address Offset: 0x001C */
-    __I  uint32_t PWM2_CNT;                           /* Address Offset: 0x0020 */
-    __IO uint32_t PWM2_PERIOD_HPR;                    /* Address Offset: 0x0024 */
-    __IO uint32_t PWM2_DUTY_LPR;                      /* Address Offset: 0x0028 */
-    __IO uint32_t PWM2_CTRL;                          /* Address Offset: 0x002C */
-    __I  uint32_t PWM3_CNT;                           /* Address Offset: 0x0030 */
-    __IO uint32_t PWM3_PERIOD_HPR;                    /* Address Offset: 0x0034 */
-    __IO uint32_t PWM3_DUTY_LPR;                      /* Address Offset: 0x0038 */
-    __IO uint32_t PWM3_CTRL;                          /* Address Offset: 0x003C */
+    struct PWM_CHANNEL CHANNELS[4];                   /* Address Offset: 0x0000 */
     __IO uint32_t INTSTS;                             /* Address Offset: 0x0040 */
     __IO uint32_t INT_EN;                             /* Address Offset: 0x0044 */
          uint32_t RESERVED0048[2];                    /* Address Offset: 0x0048 */
@@ -1314,16 +1305,7 @@ struct PWM_REG {
     __IO uint32_t PWRMATCH_LD;                        /* Address Offset: 0x008C */
     __IO uint32_t PWRMATCH_HD_ZERO;                   /* Address Offset: 0x0090 */
     __IO uint32_t PWRMATCH_HD_ONE;                    /* Address Offset: 0x0094 */
-    __IO uint32_t PWRMATCH_VALUE0;                    /* Address Offset: 0x0098 */
-    __IO uint32_t PWRMATCH_VALUE1;                    /* Address Offset: 0x009C */
-    __IO uint32_t PWRMATCH_VALUE2;                    /* Address Offset: 0x00A0 */
-    __IO uint32_t PWRMATCH_VALUE3;                    /* Address Offset: 0x00A4 */
-    __IO uint32_t PWRMATCH_VALUE4;                    /* Address Offset: 0x00A8 */
-    __IO uint32_t PWRMATCH_VALUE5;                    /* Address Offset: 0x00AC */
-    __IO uint32_t PWRMATCH_VALUE6;                    /* Address Offset: 0x00B0 */
-    __IO uint32_t PWRMATCH_VALUE7;                    /* Address Offset: 0x00B4 */
-    __IO uint32_t PWRMATCH_VALUE8;                    /* Address Offset: 0x00B8 */
-    __IO uint32_t PWRMATCH_VALUE9;                    /* Address Offset: 0x00BC */
+    __IO uint32_t PWRMATCH_VALUE[10];                 /* Address Offset: 0x0098 */
          uint32_t RESERVED00C0[3];                    /* Address Offset: 0x00C0 */
     __I  uint32_t PWM3_PWRCAPTURE_VALUE;              /* Address Offset: 0x00CC */
     __IO uint32_t FILTER_CTRL;                        /* Address Offset: 0x00D0 */
