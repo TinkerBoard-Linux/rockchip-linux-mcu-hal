@@ -34,6 +34,10 @@ extern const struct HAL_SPI_DEV g_spiDev1;
 extern const struct HAL_USB_DEV g_usbdDev;
 #endif
 
+#ifdef HAL_PWM_MODULE_ENABLED
+extern const struct HAL_PWM_DEV g_pwm0Dev;
+#endif
+
 #ifdef HAL_FSPI_MODULE_ENABLED
 extern struct HAL_FSPI_HOST g_fspi0Dev;
 #endif

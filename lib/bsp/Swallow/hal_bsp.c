@@ -154,6 +154,17 @@ static void BSP_U2PHY_Init(void)
 }
 #endif
 
+#ifdef HAL_PWM_MODULE_ENABLED
+const struct HAL_PWM_DEV g_pwm0Dev =
+{
+    .pReg = PWM0,
+    .clkID = CLK_PWM,
+    .clkGateID = CLK_PWM_PLL_GATE,
+    .pclkGateID = PCLK_PWM_GATE,
+    .irqNum = PWM_IRQn,
+};
+#endif
+
 void BSP_Init(void)
 {
 #ifdef HAL_PCD_MODULE_ENABLED
