@@ -152,7 +152,8 @@ struct TIMER_REG {
     __IO uint32_t LOAD_COUNT[2];                      /* Address Offset: 0x0000 */
     __I  uint32_t CURRENT_VALUE[2];                   /* Address Offset: 0x0008 */
     __IO uint32_t CONTROLREG;                         /* Address Offset: 0x0010 */
-    __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0014 */
+         uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
+    __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
 };
 /* PWM Register Structure Define */
 struct PWM_REG {
@@ -1579,7 +1580,7 @@ struct SFC_REG {
 #define TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT              (2U)
 #define TIMER_CONTROLREG_TIMER_INT_MASK_MASK               (0x1U << TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT)              /* 0x00000004 */
 /* INTSTATUS */
-#define TIMER_INTSTATUS_OFFSET                             (0x14U)
+#define TIMER_INTSTATUS_OFFSET                             (0x18U)
 #define TIMER_INTSTATUS_INT_PD_SHIFT                       (0U)
 #define TIMER_INTSTATUS_INT_PD_MASK                        (0x1U << TIMER_INTSTATUS_INT_PD_SHIFT)                       /* 0x00000001 */
 /******************************************PWM*******************************************/
