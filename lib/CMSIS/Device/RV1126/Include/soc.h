@@ -70,6 +70,7 @@ typedef enum
   I2C5_IRQn              = 9,      /*!< I2C5 Interrupt              */
   SPI0_IRQn              = 10,      /*!< SPI0 Interrupt              */
   SPI1_IRQn              = 11,      /*!< SPI1 Interrupt              */
+  UART2_IRQn             = 14,      /*!< UART2 Interrupt             */
   TIMER0_IRQn            = 24,      /*!< TIMER0 Interrupt            */
   TIMER1_IRQn            = 25,      /*!< TIMER1 Interrupt            */
   TIMER2_IRQn            = 26,      /*!< TIMER2 Interrupt            */
@@ -124,6 +125,7 @@ typedef enum
   I2C5_IRQn              = 41,      /*!< I2C5 Interrupt              */
   SPI0_IRQn              = 42,      /*!< SPI0 Interrupt              */
   SPI1_IRQn              = 43,      /*!< SPI1 Interrupt              */
+  UART2_IRQn             = 46,      /*!< UART2 Interrupt             */
   TIMER0_IRQn            = 56,      /*!< TIMER0 Interrupt            */
   TIMER1_IRQn            = 57,      /*!< TIMER1 Interrupt            */
   TIMER2_IRQn            = 58,      /*!< TIMER2 Interrupt            */
