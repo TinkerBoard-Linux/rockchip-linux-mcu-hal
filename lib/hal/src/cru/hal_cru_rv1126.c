@@ -112,9 +112,15 @@ static struct PLL_SETUP GPLL = {
  */
 static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
 {
-    uint32_t pRate, divFrac, index, n, m, freq;
+    uint32_t freq = 0;
+    uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
+    uint32_t divSrc, divFrac;
+    uint32_t n, m, pRate;
+    uint32_t index;
 
-    if (clockName == CLK_OSC0_DIV32K || clockName == CLK_RTC32K) {
+    switch (clockName) {
+    case CLK_OSC0_DIV32K:
+    case CLK_RTC32K:
         pRate = PLL_INPUT_OSC_RATE;
         divFrac = CLK_GET_DIV(CLK_OSC0_DIV32K);
         index = CLK_DIV_GET_REG_OFFSET(divFrac) - CRU_CLK_DIV_CON_CNT;
@@ -123,9 +129,34 @@ static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         freq = (pRate / m) * n;
 
         return freq;
+    case CLK_UART2:
+        muxSrc = CLK_GET_MUX(CLK_UART2_SRC);
+        divSrc = CLK_GET_DIV(CLK_UART2_SRC);
+        divFrac = CLK_GET_DIV(CLK_UART2_FRAC);
+        break;
+    default:
+
+        return HAL_INVAL;
     }
 
-    return HAL_INVAL;
+    n = (CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0xffff0000) >> 16;
+    m = CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0x0000ffff;
+
+    if (HAL_CRU_ClkGetMux(muxSrc)) {
+        pRate = s_cpllFreq / HAL_CRU_ClkGetDiv(divSrc);
+    } else {
+        pRate = s_gpllFreq / HAL_CRU_ClkGetDiv(divSrc);
+    }
+
+    if (HAL_CRU_ClkGetMux(mux) == SCLK_UART2_SEL_SCLK_UART2_DIV) {
+        freq = pRate;
+    } else if (HAL_CRU_ClkGetMux(mux) == SCLK_UART2_SEL_SCLK_UART2_FRAC) {
+        freq = (pRate / m) * n;
+    } else if (HAL_CRU_ClkGetMux(mux) == SCLK_UART2_SEL_XIN_OSC0_FUNC) {
+        freq = PLL_INPUT_OSC_RATE;
+    }
+
+    return freq;
 }
 
 /**
@@ -139,10 +170,15 @@ static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
  */
 static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
-    uint32_t divFrac;
-    uint32_t index, n = 0, m = 0;
+    uint32_t muxSrc, mux = CLK_GET_MUX(clockName);
+    uint32_t divSrc, divFrac;
+    uint32_t n = 0, m = 0;
+    uint32_t gateId, fracGateId;
+    uint32_t index;
 
-    if (clockName == CLK_OSC0_DIV32K || clockName == CLK_RTC32K) {
+    switch (clockName) {
+    case CLK_OSC0_DIV32K:
+    case CLK_RTC32K:
         HAL_CRU_ClkSetMux(CLK_GET_MUX(CLK_RTC32K),
                           CLK_DEEPSLOW_SEL_CLK_OSC0_DIV32K);
 
@@ -150,6 +186,40 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         index = CLK_DIV_GET_REG_OFFSET(divFrac) - CRU_CLK_DIV_CON_CNT;
         HAL_CRU_FracdivGetConfig(rate, PLL_INPUT_OSC_RATE, &n, &m);
         PMUCRU->CRU_CLKSEL_CON[index] = (n << 16) | m;
+
+        return HAL_OK;
+    case CLK_UART2:
+        if (rate == PLL_INPUT_OSC_RATE) {
+            HAL_CRU_ClkSetMux(mux, SCLK_UART2_SEL_XIN_OSC0_FUNC);
+            HAL_CRU_ClkDisable(SCLK_UART2_DIV_GATE);
+
+            return HAL_OK;
+        }
+        muxSrc = CLK_GET_MUX(CLK_UART2_SRC);
+        divSrc = CLK_GET_DIV(CLK_UART2_SRC);
+        divFrac = CLK_GET_DIV(CLK_UART2_FRAC);
+        gateId = SCLK_UART2_DIV_GATE;
+        fracGateId = SCLK_UART2_FRAC_GATE;
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    HAL_CRU_ClkEnable(gateId);
+    HAL_CRU_ClkEnable(fracGateId);
+
+    if ((!(s_cpllFreq % rate)) && ((s_cpllFreq / rate) < 16)) {
+        HAL_CRU_ClkSetDiv(divSrc, s_cpllFreq / rate);
+        HAL_CRU_ClkSetMux(muxSrc, SCLK_UART2_DIV_SEL_CLK_GPLL_MUX);
+        HAL_CRU_ClkSetMux(mux, SCLK_UART2_SEL_SCLK_UART2_DIV);
+        HAL_CRU_ClkDisable(fracGateId);
+    } else {
+        HAL_CRU_FracdivGetConfig(rate, s_cpllFreq, &n, &m);
+        HAL_CRU_ClkSetDiv(divSrc, 1);
+        HAL_CRU_ClkSetMux(muxSrc, SCLK_UART2_DIV_SEL_CLK_GPLL_MUX);
+        HAL_CRU_ClkSetMux(mux, SCLK_UART2_SEL_SCLK_UART2_FRAC);
+        CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
     }
 
     return HAL_OK;
@@ -243,6 +313,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         break;
     case CLK_OSC0_DIV32K:
     case CLK_RTC32K:
+    case CLK_UART2:
         freq = HAL_CRU_ClkFracGetFreq(clockName);
 
         return freq;
