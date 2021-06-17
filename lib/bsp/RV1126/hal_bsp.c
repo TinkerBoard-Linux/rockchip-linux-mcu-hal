@@ -65,6 +65,7 @@ const struct HAL_I2C_DEV g_i2c5Dev =
     .irqNum = I2C5_IRQn,
     .runtimeID = PM_RUNTIME_ID_I2C5,
 };
+#endif
 
 #ifdef HAL_SPI_MODULE_ENABLED
 const struct HAL_SPI_DEV g_spiDev0 = {
@@ -104,7 +105,16 @@ const struct HAL_SPI_DEV g_spiDev1 = {
         .addr = SPI1_BASE + 0x800,
     },
 };
-
 #endif
 
+#ifdef HAL_UART_MODULE_ENABLED
+const struct HAL_UART_DEV g_uart2Dev =
+{
+    .pReg = UART2,
+    .sclkID = CLK_UART2,
+    .sclkGateID = SCLK_UART2_GATE,
+    .pclkGateID = PCLK_UART2_GATE,
+    .irqNum = UART2_IRQn,
+    .isAutoFlow = false,
+};
 #endif

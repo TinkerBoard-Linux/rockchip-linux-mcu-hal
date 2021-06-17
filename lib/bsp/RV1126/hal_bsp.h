@@ -26,6 +26,10 @@ extern const struct HAL_SPI_DEV g_spiDev0;
 extern const struct HAL_SPI_DEV g_spiDev1;
 #endif
 
+#ifdef HAL_UART_MODULE_ENABLED
+extern const struct HAL_UART_DEV g_uart2Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 #endif
