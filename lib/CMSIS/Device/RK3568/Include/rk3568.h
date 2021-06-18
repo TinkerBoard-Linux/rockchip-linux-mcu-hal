@@ -14139,6 +14139,7 @@ struct MBOX_REG {
 #define CLK_SDMMC1_SEL                   0x030C001EU
 #define CLK_SDMMC1_SEL_CLK_OSC0_DIV_750K 0U
 /********Name=CLKSEL_CON31,Offset=0x17C********/
+#define CLK_GMAC0_RX_TX_SEL                     0x0200001FU
 #define RMII0_EXTCLK_SEL                        0x0102001FU
 #define RMII0_EXTCLK_SEL_IO                     0U
 #define RMII0_CLK_SEL                           0x0103001FU
@@ -14159,6 +14160,7 @@ struct MBOX_REG {
 #define CLK_SDMMC2_SEL                   0x03080020U
 #define CLK_SDMMC2_SEL_CLK_OSC0_DIV_750K 0U
 /********Name=CLKSEL_CON33,Offset=0x184********/
+#define CLK_GMAC1_RX_TX_SEL                     0x02000021U
 #define RMII1_EXTCLK_SEL                        0x01020021U
 #define RMII1_EXTCLK_SEL_IO                     0U
 #define RMII1_CLK_SEL                           0x01030021U

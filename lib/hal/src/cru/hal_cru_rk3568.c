@@ -123,6 +123,8 @@ static uint32_t s_npllFreq;
 static uint32_t s_vpllFreq;
 static uint32_t s_ppllFreq;
 static uint32_t s_hpllFreq;
+static uint32_t s_clk_gmac_xpcs_mii;
+static uint32_t s_clk_gmac_in;
 
 /********************* Private Function Definition ***************************/
 
@@ -333,6 +335,341 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 }
 
 /**
+ * @brief Get gmac clk freq.
+ * @param  clockName: CLOCK_Name id
+ * @return clk rate.
+ */
+static uint32_t HAL_CRU_ClkGmacGetFreq(eCLOCK_Name clockName)
+{
+    uint32_t clkMux = CLK_GET_MUX(clockName);
+    uint32_t clkDiv = CLK_GET_DIV(clockName);
+    uint32_t freq;
+
+    switch (clockName) {
+    case ACLK_PHP:
+    case ACLK_USB:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = 297000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = 198000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 2) {
+            freq = 99000000;
+        } else {
+            freq = PLL_INPUT_OSC_RATE;
+        }
+
+        return freq;
+    case HCLK_PHP:
+    case HCLK_USB:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = 148500000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = 99000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 2) {
+            freq = 74250000;
+        } else {
+            freq = PLL_INPUT_OSC_RATE;
+        }
+
+        return freq;
+    case PCLK_PHP:
+        freq = HAL_CRU_ClkGmacGetFreq(ACLK_PHP) / (HAL_CRU_ClkGetDiv(clkDiv));
+
+        return freq;
+    case PCLK_USB:
+        freq = HAL_CRU_ClkGmacGetFreq(ACLK_USB) / (HAL_CRU_ClkGetDiv(clkDiv));
+
+        return freq;
+    case CLK_MAC0_2TOP:
+    case CLK_MAC1_2TOP:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = 125000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = 50000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 2) {
+            freq = 25000000;
+        } else {
+            freq = HAL_CRU_ClkGetFreq(PLL_PPLL);
+        }
+
+        return freq;
+
+    case CLK_MAC0_OUT:
+    case CLK_MAC1_OUT:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = 125000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = 50000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 2) {
+            freq = 25000000;
+        } else {
+            freq = PLL_INPUT_OSC_RATE;
+        }
+
+        return freq;
+
+    case CLK_GMAC0_PTP_REF:
+    case CLK_GMAC1_PTP_REF:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = 62500;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = 100000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 2) {
+            freq = 50000000;
+        } else {
+            freq = PLL_INPUT_OSC_RATE;
+        }
+
+        return freq;
+
+    case SCLK_GMAC0_RGMII_SPEED:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP);
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP);
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 2) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP) / 50;
+        } else {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP) / 5;
+        }
+
+        return freq;
+
+    case SCLK_GMAC1_RGMII_SPEED:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP);
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP);
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 2) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP) / 50;
+        } else {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP) / 5;
+        }
+
+        return freq;
+
+    case SCLK_GMAC0_RMII_SPEED:
+        if (HAL_CRU_ClkGetMux(clkMux)) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP) / 2;
+        } else {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP) / 20;
+        }
+
+        return freq;
+
+    case SCLK_GMAC1_RMII_SPEED:
+        if (HAL_CRU_ClkGetMux(clkMux)) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP) / 2;
+        } else {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP) / 20;
+        }
+
+        return freq;
+    case SCLK_GMAC0:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP);
+        } else {
+            freq = s_clk_gmac_in;
+        }
+
+        return freq;
+
+    case SCLK_GMAC1:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP);
+        } else {
+            freq = s_clk_gmac_in;
+        }
+
+        return freq;
+
+    case SCLK_GMAC0_RX_TX:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = HAL_CRU_ClkGetFreq(SCLK_GMAC0_RGMII_SPEED);
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = HAL_CRU_ClkGetFreq(SCLK_GMAC0_RMII_SPEED);
+        } else {
+            freq = s_clk_gmac_xpcs_mii;
+        }
+
+        return freq;
+    case SCLK_GMAC1_RX_TX:
+        if (HAL_CRU_ClkGetMux(clkMux) == 0) {
+            freq = HAL_CRU_ClkGetFreq(SCLK_GMAC1_RGMII_SPEED);
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = HAL_CRU_ClkGetFreq(SCLK_GMAC1_RMII_SPEED);
+        } else {
+            freq = s_clk_gmac_xpcs_mii;
+        }
+
+        return freq;
+    default:
+
+        return 0;
+    }
+}
+
+/**
+ * @brief Set gmac clk freq.
+ * @param  clockName: CLOCK_Name id.
+ * @param  rate: clk set rate
+ * @return HAL_Status.
+ */
+static HAL_Status HAL_CRU_ClkGmacSetFreq(eCLOCK_Name clockName, uint32_t rate)
+{
+    uint32_t clkMux = CLK_GET_MUX(clockName);
+    uint32_t clkDiv = CLK_GET_DIV(clockName);
+    uint32_t mux = 0, div = 0;
+
+    switch (clockName) {
+    case ACLK_PHP:
+    case ACLK_USB:
+        if (rate >= 297000000) {
+            mux = 0;
+        } else if (rate >= 198000000) {
+            mux = 1;
+        } else if (rate >= 99000000) {
+            mux = 2;
+        } else {
+            mux = 3;
+        }
+        break;
+    case HCLK_PHP:
+    case HCLK_USB:
+        if (rate >= 148500000) {
+            mux = 0;
+        } else if (rate >= 99000000) {
+            mux = 1;
+        } else if (rate >= 74250000) {
+            mux = 2;
+        } else {
+            mux = 3;
+        }
+        break;
+    case PCLK_PHP:
+        div = HAL_DIV_ROUND_UP(HAL_CRU_ClkGmacGetFreq(ACLK_PHP), rate);
+
+        break;
+    case PCLK_USB:
+        div = HAL_DIV_ROUND_UP(HAL_CRU_ClkGmacGetFreq(ACLK_USB), rate);
+
+        break;
+
+    case CLK_MAC0_2TOP:
+    case CLK_MAC1_2TOP:
+    case CLK_MAC0_OUT:
+    case CLK_MAC1_OUT:
+        if (rate == 125000000) {
+            mux = 0;
+        } else if (rate == 50000000) {
+            mux = 1;
+        } else if (rate == 25000000) {
+            mux = 2;
+        } else {
+            mux = 3;
+        }
+
+        break;
+
+    case CLK_GMAC0_PTP_REF:
+    case CLK_GMAC1_PTP_REF:
+        if (rate == 62500) {
+            mux = 0;
+        } else if (rate == 100000000) {
+            mux = 1;
+        } else if (rate == 50000000) {
+            mux = 2;
+        } else {
+            mux = 3;
+        }
+
+        break;
+
+    case SCLK_GMAC0_RGMII_SPEED:
+        if (rate == HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP) / 50) {
+            mux = 2;
+        } else if (rate == HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP) / 5) {
+            mux = 3;
+        } else {
+            mux = 0;
+        }
+        break;
+
+    case SCLK_GMAC1_RGMII_SPEED:
+        if (rate == HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP) / 50) {
+            mux = 2;
+        } else if (rate == HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP) / 5) {
+            mux = 3;
+        } else {
+            mux = 0;
+        }
+        break;
+
+    case SCLK_GMAC0_RMII_SPEED:
+        if (rate == HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP) / 2) {
+            mux = 1;
+        } else {
+            mux = 0;
+        }
+        break;
+
+    case SCLK_GMAC1_RMII_SPEED:
+        if (rate == HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP) / 2) {
+            mux = 1;
+        } else {
+            mux = 0;
+        }
+        break;
+    case SCLK_GMAC0:
+        if (rate == HAL_CRU_ClkGetFreq(CLK_MAC0_2TOP)) {
+            mux = 0;
+        } else {
+            mux = 1;
+        }
+        break;
+
+    case SCLK_GMAC1:
+        if (rate == HAL_CRU_ClkGetFreq(CLK_MAC1_2TOP)) {
+            mux = 0;
+        } else {
+            mux = 1;
+        }
+        break;
+
+    case SCLK_GMAC0_RX_TX:
+        if (rate == HAL_CRU_ClkGetFreq(SCLK_GMAC0_RGMII_SPEED)) {
+            mux = 0;
+        } else if (rate == HAL_CRU_ClkGetFreq(SCLK_GMAC0_RMII_SPEED)) {
+            mux = 1;
+        } else {
+            mux = 2;
+        }
+        break;
+    case SCLK_GMAC1_RX_TX:
+        if (rate == HAL_CRU_ClkGetFreq(SCLK_GMAC1_RGMII_SPEED)) {
+            mux = 0;
+        } else if (rate == HAL_CRU_ClkGetFreq(SCLK_GMAC1_RMII_SPEED)) {
+            mux = 1;
+        } else {
+            mux = 2;
+        }
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    if (clkMux) {
+        HAL_CRU_ClkSetMux(clkMux, mux);
+    }
+    if (clkDiv) {
+        HAL_CRU_ClkSetDiv(clkDiv, div);
+    }
+
+    return HAL_OK;
+}
+
+/**
  * @brief Get clk freq.
  * @param  clockName: CLOCK_Name id.
  * @return rate.
@@ -474,7 +811,27 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         }
 
         return freq;
+    case ACLK_USB:
+    case HCLK_USB:
+    case PCLK_USB:
+    case ACLK_PHP:
+    case HCLK_PHP:
+    case PCLK_PHP:
+    case CLK_MAC0_2TOP:
+    case CLK_MAC1_2TOP:
+    case CLK_MAC0_OUT:
+    case CLK_MAC1_OUT:
+    case CLK_GMAC0_PTP_REF:
+    case CLK_GMAC1_PTP_REF:
+    case SCLK_GMAC0_RGMII_SPEED:
+    case SCLK_GMAC1_RGMII_SPEED:
+    case SCLK_GMAC0_RMII_SPEED:
+    case SCLK_GMAC1_RMII_SPEED:
+    case SCLK_GMAC0_RX_TX:
+    case SCLK_GMAC1_RX_TX:
+        freq = HAL_CRU_ClkGmacGetFreq(clockName);
 
+        return freq;
     default:
         break;
     }
@@ -582,6 +939,27 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         }
 
         break;
+    case ACLK_USB:
+    case HCLK_USB:
+    case PCLK_USB:
+    case ACLK_PHP:
+    case HCLK_PHP:
+    case PCLK_PHP:
+    case CLK_MAC0_2TOP:
+    case CLK_MAC1_2TOP:
+    case CLK_MAC0_OUT:
+    case CLK_MAC1_OUT:
+    case CLK_GMAC0_PTP_REF:
+    case CLK_GMAC1_PTP_REF:
+    case SCLK_GMAC0_RGMII_SPEED:
+    case SCLK_GMAC1_RGMII_SPEED:
+    case SCLK_GMAC0_RMII_SPEED:
+    case SCLK_GMAC1_RMII_SPEED:
+    case SCLK_GMAC0_RX_TX:
+    case SCLK_GMAC1_RX_TX:
+        error = HAL_CRU_ClkGmacSetFreq(clockName, rate);
+
+        return error;
 
     default:
         break;
