@@ -2,9 +2,9 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V2.8.0
+发布版本：V2.9.0
 
-日期：2021-05-11
+日期：2021-06-18
 
 文件密级：□绝密   □秘密   □内部资料   ■公开
 
@@ -84,6 +84,7 @@ Rockchip Electronics Co., Ltd.
 | V2.6.0     | 2021.03  | Jon Lin      | 增加 middleware 目录       |
 | V2.7.0     | 2021.03  | Jon Lin      | demo 示例由 RK2106 更改为 RK2108，优化文件布局章节 |
 | V2.8.0     | 2021.05  | Jon Lin      | 增加 test_conf.h 说明、增加和修正模块缩写 |
+| V2.9.0     | 2021.06  | Jon Lin      | 增加 Doxygen 中文注释规范，增加用户指南扩展，调整裸系统 Main 函数格式，优化单元测试章节说明，添加扩展开发包说明 |
 
 ---
 
@@ -286,7 +287,7 @@ HAL 裸系统开发较为简单，以下将以 RK2206 串口小程序作为例�
 #include "hal_base.h"
 #include "hal_bsp.h"
 
-void Main(void);
+int Main(void);
 
 static void BSP_UART_Init(void)
 {
@@ -302,7 +303,7 @@ static void BSP_UART_Init(void)
                       2 << GRF_GPIO0B_IOMUX_H_GPIO0B7_SEL_SHIFT);   // UART0_TX_M0
 }
 
-void Main(void)
+int Main(void)
 {
     struct UART_REG *s_pUart;
     const struct HAL_UART_DEV *s_uartDev;
@@ -541,19 +542,20 @@ Jenkins 也会使用以上命令进行校验，原则上需要通过校验才合
 
 ##### Doxygen 关键字
 
-| 关键字        | 简介                                                         |
-| ------------- | ------------------------------------------------------------ |
-| @defgroup     | 指示注释块包含一组类、文件或命名空间的文档。可用于对类、文件或命名空间进行分类，并记录这些类别。还可以将组用作其他组的成员，从而构建组的层次结构。与@}成组使用。 |
-| @addtogroup   | 定义组与@defgroup 相同，但不同的是，使用相同名字的命令，多次将不会导致警告，而是一组文档合并。与@}成组使用。 |
-| @verbatim     | 块注释且 doxygen 关键字无效，与@endverbatim 配合使用。       |
-| @endverbatim  | 与@verbatim 配合使用。                                       |
-| @brief        | 简要描述                                                     |
-| @parm         | 函数参数定义                                                 |
-| @return       | 函数返回值定义                                               |
-| @attention    | 需要注意的信息                                               |
-| /** to-do */  | 代码块前的注释                                               |
-| /**< to-do */ | 置于代码右侧的注释，包括成员变量注释，例如：结构体内成员的注释（优先使用） |
-| /*!< to-do */ | 置于代码右侧的注释，包括成员变量注释，例如：结构体内成员的注释 |
+| 关键字                           | 简介                                                         |
+| -------------------------------- | ------------------------------------------------------------ |
+| @defgroup                        | 指示注释块包含一组类、文件或命名空间的文档。可用于对类、文件或命名空间进行分类，并记录这些类别。还可以将组用作其他组的成员，从而构建组的层次结构。与@}成组使用。 |
+| @addtogroup                      | 定义组与@defgroup 相同，但不同的是，使用相同名字的命令，多次将不会导致警告，而是一组文档合并。与@}成组使用。 |
+| @verbatim                        | 块注释且 doxygen 关键字无效，与@endverbatim 配合使用。       |
+| @endverbatim                     | 与@verbatim 配合使用。                                       |
+| @brief                           | 简要描述                                                     |
+| @parm                            | 函数参数定义                                                 |
+| @return                          | 函数返回值定义                                               |
+| @attention                       | 需要注意的信息                                               |
+| /** to-do */                     | 代码块前的注释                                               |
+| /**< to-do */                    | 置于代码右侧的注释，包括成员变量注释，例如：结构体内成员的注释（优先使用） |
+| /*!< to-do */                    | 置于代码右侧的注释，包括成员变量注释，例如：结构体内成员的注释 |
+| /~english<br />/~chinese<br />/~ | 通过 Doxygen 配置 OUTPUT_LANGUAGE= 来选中对应关键字后的注释内容 |
 
 ##### RK_HAL_Driver 库
 
@@ -569,7 +571,7 @@ Jenkins 也会使用以上命令进行校验，原则上需要通过校验才合
 /** @} */
 ```
 
-##### 定义外设模块
+###### 定义外设模块
 
 ```c
 /** @addtogroup DEMO
@@ -579,7 +581,7 @@ Jenkins 也会使用以上命令进行校验，原则上需要通过校验才合
 /** @} */
 ```
 
-##### HOW-TO-USE
+###### HOW-TO-USE
 
 每个模块都应有完整、简明的介绍，用以说明如何使用该模块。
 
@@ -596,7 +598,44 @@ Jenkins 也会使用以上命令进行校验，原则上需要通过校验才合
  */
 ```
 
-##### 外设驱动公共定义
+对于复杂模块需要详细说明的情况，可以考虑单独将 How_To_Use 说明写成用户指南文档并存放在 doc/guides 目录下。
+
+扩展 How_To_Use 规范如下：
+
+- doc/guides 添加说明文档，例如，doc/guides/Rockchip_User_Guide_HAL_SPI_MEM_CN.md，要求：
+
+    - 文档一级目录添加 lable，例如 lable Rockchip_User_Guide_HAL_SPI_MEM：
+
+```markdown
+# Rockchip HAL SPI_MEM 用户指南 {#Rockchip_User_Guide_HAL_SPI_MEM}
+```
+
+- doc/guides/Guides.h mainpage 添加 subpage 引用。如果仅提供中文或英文文档，则应在 subpage 前添加对应 \\~chinese 或 \\~english 关键字
+
+```c
+/*!
+\~chinese \mainpage 指南
+\~english \mainpage Guides
+\~ - \subpage Rockchip_User_Guide_HAL_SPI_MEM
+*/
+```
+
+- 模块代码内添加链接，原有 How_To_Use 处添加以下说明：
+
+```c
+/** @defgroup MODULE_How_To_Use How To Use
+ *  @{
+
+\~chinese 有关详细信息，请参阅 @ref Rockchip_User_Guide_HAL_SPI_MEM 。
+\~english See @ref Rockchip_User_Guide_HAL_SPI_MEM for more info.
+\~
+
+ @} */
+```
+
+详细可参考 SPI_MEM 模块扩展文档 doc/guides/Rockchip_User_Guide_HAL_SPI_MEM_CN.md
+
+###### 外设驱动公共定义
 
 所有公共的枚举、宏定义、宏定义函数、定义类型、结构体都添加到该组。
 
@@ -608,7 +647,7 @@ Jenkins 也会使用以上命令进行校验，原则上需要通过校验才合
 /** @} */
 ```
 
-##### 外设驱动函数子模块
+###### 外设驱动函数子模块
 
 驱动文件接口如果属于以下分组，需添加到相应的子模块：
 
@@ -738,6 +777,43 @@ Jenkins 也会使用以上命令进行校验，原则上需要通过校验才合
  */
 ```
 
+##### 中文注释
+
+**规范**
+
+- 如英文注释能符合用户理解，仅使用英文注释
+- 如英文注释对于中文用户来说有较大理解难度，适当改用或补充中文注释
+
+**用法**
+
+```c
+\~english English notes
+\~chinese 中文注释内容
+\~
+```
+
+**实例**
+
+```c
+struct GPIO_IRQ_GROUP_PRIO_GROUP {
+    uint32_t cpuGroup[PLATFORM_CORE_COUNT]; /**< mask bits for groups of PINs */
+    IRQn_Type GIRQId[PLATFORM_CORE_COUNT];  /**<
+                                             * \~english a GIRQ is a GPIO HWIRQ or DIR to dispatching
+                                             * IRQ for a group of PINs assigned in cpuGroup[]
+                                             *
+                                             * \~chinese 每个 cpuGroup[] 项指定的一组 PINs 对应的分发中
+                                             *（DIRQ）的中断 ID。如：prioGroup[0].cpuGroup[1] 的一组 PINs
+                                             * 对应的分发中断为 prioGroup[0].GIRQId[1]；对应的优先级为
+                                             * prioGroup[0].prio。由于 GPIO 的物理中断(HWIRQ)也需要负责一
+                                             * 组 PINs 的中断分发，并且对应的中断优先级最高；所以只能分配到
+                                             * prioGroup[0] 对应的 GIRQId[]
+                                             *
+                                             * \~
+                                             */
+    uint32_t prio;                          /**< irq priority of GIRQId[] of this struct  */
+};
+```
+
 ##### Doxygen 工具使用
 
 该库 HAL 驱动文件相应文档由 doxygen 工具生成，所以需要对文档注释检校是否符合 doxygen 文档规范。
@@ -746,15 +822,16 @@ linux
 
 - 安装 doxygen，参考链接 <http://www.doxygen.nl/download.html>，ubuntu 下可以直接使用命令：sudo apt-get install doxygen，如果出现‘sh: 1: dot: not found’，请安装 sudo apt-get install graphviz。
 
-- 当前最新版本 1.8.15
+- 当前最新版本 1.8.17
 
 - 执行命令
 
   ```shell
-  cat tools/Doxyfile tools/doxyfile_rk2108 | doxygen -
+  cat tools/Doxyfile tools/doxyfile_rk3568 | doxygen - # 生成中文文档（默认）
+  cat tools/Doxyfile tools/doxyfile_rk3568 | sed "s/Chinese/English/;s/_CN.md/_EN.md/" | doxygen - # 生成英文文档
   ```
 
-  其中 “doxyfile_rk2108” 应替换为对应芯片的配置文件。
+  其中 “doxyfile_rk3568” 应替换为对应芯片的配置文件。
 
 - 检查是否存在 warning 和 error 关键字。
 
@@ -1298,7 +1375,7 @@ HAL 设计以工程师自身对模块的理解为出发点，然而部分 IP 存
 
 模块在 IP 升级上，导致新增了部分功能，出现原有接口的新的组合方式，可以考虑新增 extend 接口，如 hal_pcd_ex.c。
 
-## Common 资源
+## HAL Common 资源
 
 ### DEBUG 相关
 
@@ -1335,55 +1412,6 @@ while (PD_ReadAck(pd) != idle) {
 }
 ```
 
-## 单元测试
-
-### 框架
-
-使用 Unity 框架，具体代码可以看 test/hal/test_timer.c，可用接口请查看 test/unity/extras/fixture/src/unity_fixture.h 和 test/unity/src/unity.h
-
-### 代码集成
-
-Unity 框架下的 test 测试程序以 test 开发包的形式管理，可以集成到 HAL 裸系统或其他 HAL 相关工程开发，其中以 HAL 裸系统 project 的 Unity 开发为例：
-
-- 获取 test 开发包并置于 HAL 开发包根目录
-
-- 参考或直接使用 Makefile 文件 build_test.mk 来引用 test 库
-
-- 定义 UNITY_INCLUDE_CONFIG_H 全局宏来开启 Unity configuration 的支持
-
-- 添加宏开关 test_conf.h 文件，相应的宏开关在 unity_runner.c 中选择，默认 SDK 提供所有可用开关
-
-- 引用 test_main，例如：
-
-  ```c
-  #include "unity_runner.h"
-  void main(void)
-  {
-      /* Unity Test */
-      test_main();
-  }
-  ```
-
-### 提交
-
-驱动需要提交的测试代码位于 test/hal/目录，'test_'作为前缀对应驱动测试代码，
-
-每个驱动只要提供对应的一个 c 文件并把自己的 group 添加到 test_main.c，里面的测试 case 会被 test_main 自动包含和调用，test_main()一般由板级流程(如 rk2108-evb)调用；
-
-### 实现
-
-测试代码文件就只需要包含"hal_base.h"和"unity_fixture.h"，测试目标主要包括：
-
-- HAL driver 的所有 API
-- 部分驱动可作为 driver 参考代码
-
-test_conf.h 文件为 Unity configuration 的扩展，并在 unity_config.h 中引用，用来做以下测试开关的扩展：
-
-- 部分性能测试，没有模块宏可用作开关，可新增宏来限定
-- 新平台测试完，没有递归回旧平台测试，可新增宏来限定
-- 部分模块存在同一主控的不同应用，且相互逻辑冲突，可 hal_conf.h 为全功能开关（检验编译），新增宏来限定，例如：
-    - 主控 FSPI 支持 spiflash 和 qpipsram 两种器件，两者测试代码逻辑冲突
-
 ## CPAL 库
 
 核内访问移植 CMSIS-CORE 库，按照 CMSIS 标准移植了启动代码和系统初始化代码，并将外设寄存器置于该级别，核外访问函数使用 CMSIS 标准库文件，CPAL 所有相关文件在 CMSIS/文件目录下，包括以下几个内容：
@@ -1396,7 +1424,7 @@ test_conf.h 文件为 Unity configuration 的扩展，并在 unity_config.h 中�
 startup_<device>.c		//：如startup_rk2108.c
 ```
 
-## 外设寄存器
+### 外设寄存器
 
 ```c
 <device>.h		//如：rk2108.h, HAL库由hal_bash.h索引。
@@ -1543,9 +1571,164 @@ extern const struct HAL_AUDIOPWM_DEV g_audioPwmDev;
 #endif
 ```
 
-## HAL 模块文档
+## 单元测试
 
-此处填充 Doxygen 自动生成各模块文档.
+### 框架
+
+RK HAL 单元测试方案使用 Unity 框架，具体实现可参考 test/hal/test_timer.c，Unity 框架可用接口请查看 test/unity/extras/fixture/src/unity_fixture.h 和 test/unity/src/unity.h
+
+### 代码集成
+
+Unity 框架下的 test 测试程序以 test 开发包的形式管理，可以集成到 HAL 裸系统或其他 HAL 相关工程开发，以下为相应步骤：
+
+- 获取 test 开发包并置于 HAL 开发包根目录
+
+- 参考或直接引用 Makefile 文件 build_test.mk 来引用 test 库
+
+- 定义 UNITY_INCLUDE_CONFIG_H 全局宏来开启 Unity configuration 的支持
+
+- 添加宏开关 test_conf.h 文件，相应的宏开关在 unity_runner.c 中选择，默认 SDK 提供所有可用开关
+
+- 引用 test_main，例如：
+
+```c
+#include "unity_runner.h"
+void main(void)
+{
+    /* Unity Test */
+    test_main();
+}
+```
+
+以 RK2108 为例：
+
+```diff
+diff --git a/project/common/GCC/Cortex-M.mk b/project/common/GCC/Cortex-M.mk
+index 594ee754..fc44a2bb 100644
+--- a/project/common/GCC/Cortex-M.mk
++++ b/project/common/GCC/Cortex-M.mk
+@@ -67,6 +67,8 @@ export HAL_PATH := $(ROOT_PATH)
+ include $(HAL_PATH)/tools/build_lib.mk
+ SRC_DIRS += $(HAL_LIB_SRC)
+ INCLUDES += $(HAL_LIB_INC)
++include $(HAL_PATH)/test/build_test.mk
++CFLAGS += -DUNITY_INCLUDE_CONFIG_H
+
+ SRCS += $(basename $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.[cS])))
+ OBJS += $(addsuffix .o,$(basename $(SRCS)))
+diff --git a/project/rk2108/src/main.c b/project/rk2108/src/main.c
+index 1ef4dfd4..62e4f127 100644
+--- a/project/rk2108/src/main.c
++++ b/project/rk2108/src/main.c
+@@ -5,6 +5,7 @@
+
+ #include "hal_bsp.h"
+ #include "hal_base.h"
++#include "unity_runner.h"
+
+ /********************* Private MACRO Definition ******************************/
+
+@@ -162,6 +163,9 @@ void main(void)
+
+     HAL_UART_Init(&g_uart0Dev, &hal_uart_config);
+
++    /* Unity Test  */
++    test_main();
++
+     while (1) {
+         ;
+     }
+diff --git a/project/rk2108/src/test_conf.h b/project/rk2108/src/test_conf.h
+new file mode 100644
+index 00000000..93791078
+--- /dev/null
++++ b/project/rk2108/src/test_conf.h
+@@ -0,0 +1,14 @@
++/* SPDX-License-Identifier: BSD-3-Clause */
++/*
++ * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
++ */
++
++#ifndef _TEST_CONF_H_
++#define _TEST_CONF_H_
++
++/* Unity HAL Test Config */
++#define UNITY_HAL_SPIFLASH
++
++/* Unity HAL Test Sub Config */
++
++#endif
+\ No newline at end of file
+(END)
+```
+
+说明：
+
+- HAL project/ 目录下的裸系统工程默认添加该单元测试，所以要去掉测试集成只需要将相应的代码去除即可
+
+### 测试代码编写规范
+
+**规范：**
+
+- 测试代码文件引用"hal_base.h"和"unity_fixture.h"，测试目标主要包括：
+    - HAL driver 的所有 API
+    - 部分驱动可作为 driver 参考代码
+- 测试代码存放在 test/hal/目录，'test_'作为前缀对应驱动测试代码
+- test_main.c 中引用每个模块的测试入口函数，test_main() 由板级流程调用，例如 ./project/rk2108/src/main.c
+
+- 标准宏开关 HAL_DEMO_MODULE_ENABLED，通过与 HAL 模块一致的宏开关来自动添加相应测试项
+- 扩展宏开关 UNITY_HAL_DEMO，开关在对应工程的 test_conf.h 文件中定义，由 unity_config.h 引用，通过扩展宏开关来达到以下目的：
+    - 部分性能测试，没有模块宏可用作开关，可新增宏来限定
+    - 新平台测试完，没有递归回旧平台测试，可新增宏来限定
+    - 部分模块存在同一主控的不同应用，且相互逻辑冲突，可 hal_conf.h 为全功能开关（检验编译），新增宏来限定，例如：
+        - 主控 FSPI 支持 spiflash 和 qpipsram 两种器件，两者测试代码逻辑冲突
+
+**示例：**
+
+详细可以参考 hal/test_demo.c 的编写。
+
+## 扩展开发包
+
+RK 提供基于 RK HAL 开发的扩展包，支持组件功能的进一步扩展，例如裸系统下支持 OpenAMP。
+
+### 代码集成
+
+middleware 开发包可以集成到 HAL 裸系统或其他 HAL 相关工程开发，步骤如下：
+
+- 获取 middleware 开发包并置于 HAL 开发包根目录
+- 定义工程路径 HAL_PATH 环境变量，例如：HAL 裸系统在 project/common/gcc 目录下的 Makefile 脚本中提供该环境变量
+- 参考或直接引用指定开发包路径下的 Makefile 文件，例如引用 OpenAMP/openamp.mk 来引用 OpenAMP 库
+- 根据第三插件库要求添加相应配置
+
+以 RK3568 添加 OpenAMP 支持 为例：
+
+```diff
+diff --git a/project/rk3568/GCC/Makefile b/project/rk3568/GCC/Makefile
+index 13702c6b..b828eec7 100644
+--- a/project/rk3568/GCC/Makefile
++++ b/project/rk3568/GCC/Makefile
+@@ -6,5 +6,8 @@ PROJECT := RK3568
+ SOC := RK3568
+ CPU = -march=armv8-a -mtune=cortex-a55
+
++include ../../../middleware/OpenAMP/openamp.mk
++CFLAGS += -DMETAL_INTERNAL -DMETAL_MAX_DEVICE_REGIONS=2
++
+ include ../../../middleware/sdhci/sdhci.mk
+ include ../../common/GCC/Cortex-A.mk
+(END)
+```
+
+### 添加第三方插件库规范
+
+- 路径下添加统一的 Makefile 编译脚本以方便用户集成，以 .mk 结尾：
+    - 添加所有需要编译的源文件所在路径到 SRC_DIRS 变量中
+    - 添加所有所需的头文件目录到 INCLUDES 变量中
+- 根据需求添加说明文档
+
+## HAL 模块详细文档
+
+HAL 库使用 Doxygen 生成的注释文档作为 HAL 模块文档，详细参考“Doxygen注释及其布局”章节。
 
 ## 附录
 
