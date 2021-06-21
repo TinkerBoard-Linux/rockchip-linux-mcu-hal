@@ -68,6 +68,27 @@ const struct HAL_UART_DEV g_uart5Dev =
 };
 #endif
 
+#ifdef HAL_PCD_MODULE_ENABLED
+const struct HAL_USB_DEV g_usbdDev =
+{
+    .pReg = USB,
+    .hclkGateID = HCLK_USBC_GATE,
+    .utmiclkGateID = CLK_USBPHY_GATE,
+    .irqNum = USBC_IRQn,
+    .cfg =
+    {
+        .epNum = 3,
+        .ep0Mps = USB_OTG_MAX_EP0_SIZE,
+        .phyif = USB_PHY_UTMI_WIDTH_16,
+        .speed = PCD_SPEED_HIGH,
+        .dmaEnable = false,
+        .sofEnable = false,
+        .lpmEnable = false,
+        .vbusSensingEnable = false,
+        .suspendEnable = false,
+    },
+};
+#endif
 /********************* Private MACRO Definition ******************************/
 
 /********************* Private Structure Definition **************************/
