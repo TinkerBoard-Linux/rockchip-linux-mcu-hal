@@ -26,14 +26,16 @@ struct USB_GLOBAL_REG {
          uint32_t RESERVED0[2];                       /* Address Offset: 0x0030 */
     __IO uint32_t GGPIO;                              /* Address Offset: 0x0038 */
     __IO uint32_t GUID;                               /* Address Offset: 0x003C */
-         uint32_t RESERVED1[3];                       /* Address Offset: 0x0040 */
+    __O  uint32_t GSNPSID;                            /* Address Offset: 0x0040 */
+    __O  uint32_t GHWCFG1;                            /* Address Offset: 0x0044 */
+    __O  uint32_t GHWCFG2;                            /* Address Offset: 0x0048 */
     __O  uint32_t GHWCFG3;                            /* Address Offset: 0x004C */
-         uint32_t RESERVED2;                          /* Address Offset: 0x0050 */
+    __O  uint32_t GHWCFG4;                            /* Address Offset: 0x0050 */
     __IO uint32_t GLPMCFG;                            /* Address Offset: 0x0054 */
     __IO uint32_t GPWRDN;                             /* Address Offset: 0x0058 */
     __IO uint32_t GDFIFOCFG;                          /* Address Offset: 0x005C */
     __IO uint32_t GADPCTL;                            /* Address Offset: 0x0060 */
-         uint32_t RESERVED3[39];                      /* Address Offset: 0x0064 */
+         uint32_t RESERVED1[39];                      /* Address Offset: 0x0064 */
     __IO uint32_t HPTXFSIZ;                           /* Address Offset: 0x0100 */
     __IO uint32_t DIEPTXF[0x0F];                      /* Address Offset: 0x0104 */
 };
@@ -541,6 +543,14 @@ struct USB_HOST_CH_REG {
 #define USB_OTG_GNPTXSTS_NPTXQTOP_4              (0x10U << USB_OTG_GNPTXSTS_NPTXQTOP_SHIFT) /* 0x10000000 */
 #define USB_OTG_GNPTXSTS_NPTXQTOP_5              (0x20U << USB_OTG_GNPTXSTS_NPTXQTOP_SHIFT) /* 0x20000000 */
 #define USB_OTG_GNPTXSTS_NPTXQTOP_6              (0x40U << USB_OTG_GNPTXSTS_NPTXQTOP_SHIFT) /* 0x40000000 */
+/********************  Bit definition for USB_OTG_GHWCFG2 register  ********************/
+#define USB_OTG_GHWCFG2_DYNFIFOSIZING_SHIFT      (19U)
+#define USB_OTG_GHWCFG2_DYNFIFOSIZING_MASK       (0x1U << USB_OTG_GHWCFG2_DYNFIFOSIZING_SHIFT) /* 0x00080000 */
+#define USB_OTG_GHWCFG2_DYNFIFOSIZING            USB_OTG_GHWCFG2_DYNFIFOSIZING_MASK     /* Dynamic FIFO Sizing enabled */
+/********************  Bit definition for USB_OTG_GHWCFG4 register  ********************/
+#define USB_OTG_GHWCFG4_DEDFIFOMODE_SHIFT        (25U)
+#define USB_OTG_GHWCFG4_DEDFIFOMODE_MASK         (0x1U << USB_OTG_GHWCFG4_DEDFIFOMODE_SHIFT)   /* 0x00080000 */
+#define USB_OTG_GHWCFG4_DEDFIFOMODE              USB_OTG_GHWCFG4_DEDFIFOMODE_MASK       /* Dedicated FIFO enabled */
 /********************  Bit definition for USB_OTG_GLPMCFG register  ********************/
 #define USB_OTG_GLPMCFG_LPMEN_SHIFT              (0U)
 #define USB_OTG_GLPMCFG_LPMEN_MASK               (0x1U << USB_OTG_GLPMCFG_LPMEN_SHIFT) /* 0x00000001 */
