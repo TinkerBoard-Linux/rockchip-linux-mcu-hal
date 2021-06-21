@@ -184,10 +184,9 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                     if ((epInt & USB_OTG_DOEPINT_STUP) == USB_OTG_DOEPINT_STUP) {
                         if (pPCD->cfg.dmaEnable == 1) {
                             HAL_DCACHE_InvalidateByRange((uint32_t)(pPCD->setupBuf), sizeof(pPCD->setupBuf));
+                            /* Inform the upper layer that a setup packet is available */
+                            HAL_PCD_SetupStageCallback(pPCD);
                         }
-
-                        /* Inform the upper layer that a setup packet is available */
-                        HAL_PCD_SetupStageCallback(pPCD);
                     }
                 }
                 epNum++;
@@ -215,8 +214,8 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                             pPCD->inEp[epNum].pxferBuff += pPCD->inEp[epNum].maxPacket;
                         }
 
-                        if ((pPCD->cfg.dmaEnable == 1) && (epNum == 0) &&
-                            (pPCD->inEp[epNum].xferLen == 0) &&
+                        /* For both DMA mode and Slave mode */
+                        if ((epNum == 0) && (pPCD->inEp[epNum].xferLen == 0) &&
                             ((pPCD->setupBuf[0] & 0x80) == 0)) {
                             /* this is ZLP, so prepare EP0 for next setup */
                             USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
@@ -328,11 +327,12 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
             __HAL_PCD_CLEAR_FLAG(pPCD, USB_OTG_GINTSTS_ENUMDNE);
         }
 
-        /* Handle RxQLevel Interrupt */
+        /* Handle RxQLevel Interrupt for slave mode */
         if (__HAL_PCD_GET_FLAG(pPCD, USB_OTG_GINTSTS_RXFLVL)) {
             USB_MASK_INTERRUPT(pPCD->pReg, USB_OTG_GINTSTS_RXFLVL);
             temp = pUSB->GRXSTSP;
             pEP = &pPCD->outEp[temp & USB_OTG_GRXSTSP_EPNUM];
+            epNum = temp & USB_OTG_GRXSTSP_EPNUM;
 
             if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_DATA_UPDT) {
                 if ((temp & USB_OTG_GRXSTSP_BCNT) != 0) {
@@ -341,9 +341,20 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                     pEP->pxferBuff += (temp & USB_OTG_GRXSTSP_BCNT) >> 4;
                     pEP->xferCount += (temp & USB_OTG_GRXSTSP_BCNT) >> 4;
                 }
+            } else if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_XFER_COMP) {
+                if (pEP->xferCount != 0) {
+                    HAL_PCD_DataOutStageCallback(pPCD, epNum);
+                } else if ((epNum == 0) && (pEP->xferCount == 0)) {
+                    USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
+                }
             } else if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_SETUP_UPDT) {
                 USB_ReadPacket(pUSB, pPCD->setupBuf, 8);
                 pEP->xferCount += (temp & USB_OTG_GRXSTSP_BCNT) >> 4;
+            } else if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_SETUP_COMP) {
+                /* Inform the upper layer that a setup packet is available */
+                HAL_PCD_SetupStageCallback(pPCD);
+            } else {
+                HAL_DBG_WRN("unknown status 0x%08lx\n", temp);
             }
             USB_UNMASK_INTERRUPT(pPCD->pReg, USB_OTG_GINTSTS_RXFLVL);
         }

@@ -90,6 +90,11 @@ HAL_Status HAL_PCDEx_SetTxFiFo(struct PCD_HANDLE *pPCD, uint8_t fifo, uint16_t s
     uint8_t i = 0;
     uint32_t txOffset = 0;
 
+    /* Set TxFIFO only if the Dynamic FIFO Sizing is enabled and dedicated FIFO mode */
+    if (((pPCD->pReg->GHWCFG2 & USB_OTG_GHWCFG2_DYNFIFOSIZING_MASK) != USB_OTG_GHWCFG2_DYNFIFOSIZING) ||
+        ((pPCD->pReg->GHWCFG4 & USB_OTG_GHWCFG4_DEDFIFOMODE_MASK) != USB_OTG_GHWCFG4_DEDFIFOMODE)) {
+        return HAL_OK;
+    }
     /*
      * TXn min size = 16 words. (n  : Transmit FIFO index)
      * When a TxFIFO is not used, the Configuration should be as follows:
@@ -126,7 +131,10 @@ HAL_Status HAL_PCDEx_SetTxFiFo(struct PCD_HANDLE *pPCD, uint8_t fifo, uint16_t s
  */
 HAL_Status HAL_PCDEx_SetRxFiFo(struct PCD_HANDLE *pPCD, uint16_t size)
 {
-    pPCD->pReg->GRXFSIZ = size;
+    /*  Set RxFIFO only if the dynamic FIFO Sizing is Enabled */
+    if (pPCD->pReg->GHWCFG2 & USB_OTG_GHWCFG2_DYNFIFOSIZING) {
+        pPCD->pReg->GRXFSIZ = size;
+    }
 
     return HAL_OK;
 }

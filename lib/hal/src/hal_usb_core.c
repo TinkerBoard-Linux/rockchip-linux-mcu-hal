@@ -618,6 +618,7 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
                                         USB_OTG_DIEPCTL_EPENA);
 
         if (pEP->type == EP_TYPE_ISOC) {
+            /* Write packet after EP is enabled for slave mode */
             USB_WritePacket(pUSB, pEP->pxferBuff, pEP->num, pEP->xferLen, dma);
         }
     } else {
@@ -705,14 +706,24 @@ HAL_Status USB_EP0StartXfer(struct USB_GLOBAL_REG *pUSB,
         if (dma == 1) {
             USB_INEP(pEP->num)->DIEPDMA = (uint32_t)(pEP->dmaAddr);
         } else {
-            /* Enable the Tx FIFO Empty Interrupt for this EP */
-            if (pEP->xferLen > 0U) {
+            /*
+             * Enable the Tx FIFO Empty Interrupt for this EP
+             * if the dedicated fifo mode is enabled.
+             */
+
+            if (((pUSB->GHWCFG4 & USB_OTG_GHWCFG4_DEDFIFOMODE_MASK) ==
+                 USB_OTG_GHWCFG4_DEDFIFOMODE) && (pEP->xferLen > 0U)) {
                 USB_DEVICE->DIEPEMPMSK |= 1U << (pEP->num);
             }
         }
 
         /* EP enable, IN data in FIFO */
         USB_INEP(pEP->num)->DIEPCTL |= (USB_OTG_DIEPCTL_CNAK | USB_OTG_DIEPCTL_EPENA);
+
+        /* Write packet after EP is enabled for slave mode */
+        if ((dma == 0) && (pEP->xferLen > 0)) {
+            USB_WritePacket(pUSB, pEP->pxferBuff, pEP->num, pEP->xferLen, dma);
+        }
     } else {
         /* OUT endpoint */
         /*
@@ -1051,6 +1062,9 @@ HAL_Status USB_EP0_OutStart(struct USB_GLOBAL_REG *pUSB,
     if (dma == 1) {
         USB_OUTEP(0)->DOEPDMA = (uint32_t)psetup;
         /* EP enable, for Setup request do not clear NAK */
+        USB_OUTEP(0)->DOEPCTL = USB_OTG_DOEPCTL_EPENA;
+    } else {
+        /* Slave mode */
         USB_OUTEP(0)->DOEPCTL = USB_OTG_DOEPCTL_EPENA;
     }
 
