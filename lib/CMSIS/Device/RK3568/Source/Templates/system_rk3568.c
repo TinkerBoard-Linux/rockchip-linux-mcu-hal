@@ -3,6 +3,8 @@
  * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
  */
 
+#include "hal_base.h"
+#include "hal_def.h"
 #include "soc.h"
 
 #define  SYSTEM_CLOCK  150000000U
