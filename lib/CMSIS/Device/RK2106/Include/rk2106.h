@@ -17,16 +17,16 @@
 /* CRU Register Structure Define */
 struct CRU_REG {
     __IO uint32_t APLL_CON[3];                        /* Address Offset: 0x0000 */
-    uint32_t RESERVED000C;                            /* Address Offset: 0x000C */
+         uint32_t RESERVED000C;                       /* Address Offset: 0x000C */
     __IO uint32_t MODE_CON00;                         /* Address Offset: 0x0010 */
     __IO uint32_t CRU_CLKSEL_CON[17];                 /* Address Offset: 0x0014 */
-    uint32_t RESERVED0058[10];                        /* Address Offset: 0x0058 */
+         uint32_t RESERVED0058[10];                   /* Address Offset: 0x0058 */
     __IO uint32_t CRU_CLKGATE_CON[10];                /* Address Offset: 0x0080 */
-    uint32_t RESERVED00A8[6];                         /* Address Offset: 0x00A8 */
+         uint32_t RESERVED00A8[6];                    /* Address Offset: 0x00A8 */
     __IO uint32_t CRU_SOFTRST_CON[5];                 /* Address Offset: 0x00C0 */
-    uint32_t RESERVED00D4[3];                         /* Address Offset: 0x00D4 */
+         uint32_t RESERVED00D4[3];                    /* Address Offset: 0x00D4 */
     __IO uint32_t STCLK_CON[2];                       /* Address Offset: 0x00E0 */
-    uint32_t RESERVED00E8[3];                         /* Address Offset: 0x00E8 */
+         uint32_t RESERVED00E8[3];                    /* Address Offset: 0x00E8 */
     __IO uint32_t GLB_SRST_FST_VALUE;                 /* Address Offset: 0x00F4 */
     __IO uint32_t GLB_CNT_TH;                         /* Address Offset: 0x00F8 */
 };
@@ -310,7 +310,7 @@ struct SFC_REG {
     __IO uint32_t IMR;                                /* Address Offset: 0x0004 */
     __IO uint32_t ICLR;                               /* Address Offset: 0x0008 */
     __IO uint32_t FTLR;                               /* Address Offset: 0x000C */
-    __IO uint32_t RCVR;                              /* Address Offset: 0x0010 */
+    __IO uint32_t RCVR;                               /* Address Offset: 0x0010 */
     __I  uint32_t AX;                                 /* Address Offset: 0x0014 */
     __IO uint32_t ABIT;                               /* Address Offset: 0x0018 */
     __IO uint32_t ISR;                                /* Address Offset: 0x001C */
@@ -331,32 +331,32 @@ struct SFC_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
-#define CRU_BASE                       0x40180000U /* CRU base address */
-#define I2S0_BASE                      0x40020000U /* I2S0 base address */
-#define I2S1_BASE                      0x40030000U /* I2S1 base address */
-#define I2C0_BASE                      0x40040000U /* I2C0 base address */
-#define I2C1_BASE                      0x40050000U /* I2C1 base address */
-#define I2C2_BASE                      0x40060000U /* I2C2 base address */
-#define SPI0_BASE                      0x40070000U /* SPI0 base address */
-#define SPI1_BASE                      0x40080000U /* SPI1 base address */
-#define UART0_BASE                     0x400A0000U /* UART0 base address */
-#define UART1_BASE                     0x400B0000U /* UART1 base address */
-#define UART2_BASE                     0x400C0000U /* UART2 base address */
-#define SARADC_BASE                    0x400D0000U /* SARADC base address */
-#define TIMER0_BASE                    0x400E0000U /* TIMER0 base address */
-#define TIMER1_BASE                    0x400E0020U /* TIMER1 base address */
-#define PWM0_BASE                      0x400F0000U /* PWM0 base address */
-#define PWM1_BASE                      0x40100000U /* PWM1 base address */
-#define WDT_BASE                       0x40120000U /* WDT base address */
-#define UART3_BASE                     0x40130000U /* UART3 base address */
-#define UART4_BASE                     0x40140000U /* UART4 base address */
-#define UART5_BASE                     0x40150000U /* UART5 base address */
-#define GPIO0_BASE                     0x40160000U /* GPIO0 base address */
-#define GPIO1_BASE                     0x40170000U /* GPIO1 base address */
-#define GRF_BASE                       0x50010000U /* GRF base address */
-#define GPIO2_BASE                     0x50030000U /* GPIO2 base address */
-#define DMA_BASE                       0x60000000U /* DMA base address */
-#define SFC_BASE                       0x60060000U /* SFC base address */
+#define CRU_BASE            0x40180000U /* CRU base address */
+#define I2S0_BASE           0x40020000U /* I2S0 base address */
+#define I2S1_BASE           0x40030000U /* I2S1 base address */
+#define I2C0_BASE           0x40040000U /* I2C0 base address */
+#define I2C1_BASE           0x40050000U /* I2C1 base address */
+#define I2C2_BASE           0x40060000U /* I2C2 base address */
+#define SPI0_BASE           0x40070000U /* SPI0 base address */
+#define SPI1_BASE           0x40080000U /* SPI1 base address */
+#define UART0_BASE          0x400A0000U /* UART0 base address */
+#define UART1_BASE          0x400B0000U /* UART1 base address */
+#define UART2_BASE          0x400C0000U /* UART2 base address */
+#define SARADC_BASE         0x400D0000U /* SARADC base address */
+#define TIMER0_BASE         0x400E0000U /* TIMER0 base address */
+#define TIMER1_BASE         0x400E0020U /* TIMER1 base address */
+#define PWM0_BASE           0x400F0000U /* PWM0 base address */
+#define PWM1_BASE           0x40100000U /* PWM1 base address */
+#define WDT_BASE            0x40120000U /* WDT base address */
+#define UART3_BASE          0x40130000U /* UART3 base address */
+#define UART4_BASE          0x40140000U /* UART4 base address */
+#define UART5_BASE          0x40150000U /* UART5 base address */
+#define GPIO0_BASE          0x40160000U /* GPIO0 base address */
+#define GPIO1_BASE          0x40170000U /* GPIO1 base address */
+#define GRF_BASE            0x50010000U /* GRF base address */
+#define GPIO2_BASE          0x50030000U /* GPIO2 base address */
+#define DMA_BASE            0x60000000U /* DMA base address */
+#define SFC_BASE            0x60060000U /* SFC base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -395,7 +395,6 @@ struct SFC_REG {
 #define IS_SARADC_INSTANCE(instance) ((instance) == SARADC)
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
-#define IS_DMA_INSTANCE(instance) ((instance) == DMA)
 #define IS_SFC_INSTANCE(instance) ((instance) == SFC)
 #define IS_I2S_INSTANCE(instance) (((instance) == I2S0) || ((instance) == I2S1))
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2))
@@ -404,6 +403,7 @@ struct SFC_REG {
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1))
 #define IS_PWM_INSTANCE(instance) (((instance) == PWM0) || ((instance) == PWM1))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2))
+#define IS_DMA_INSTANCE(instance) ((instance) == DMA)
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
@@ -446,14 +446,14 @@ struct SFC_REG {
 #define CRU_APLL_CON2_FOUTVCOPD_MASK                       (0x1U << CRU_APLL_CON2_FOUTVCOPD_SHIFT)                      /* 0x04000000 */
 #define CRU_APLL_CON2_FOUT4PHASEPD_SHIFT                   (27U)
 #define CRU_APLL_CON2_FOUT4PHASEPD_MASK                    (0x1U << CRU_APLL_CON2_FOUT4PHASEPD_SHIFT)                   /* 0x08000000 */
-/* MODE_CON */
-#define CRU_MODE_CON_OFFSET                                (0x10U)
-#define CRU_MODE_CON_APLL_WORK_MODE_SHIFT                  (0U)
-#define CRU_MODE_CON_APLL_WORK_MODE_MASK                   (0x1U << CRU_MODE_CON_APLL_WORK_MODE_SHIFT)                  /* 0x00000001 */
-#define CRU_MODE_CON_USB480M_SEL_SHIFT                     (4U)
-#define CRU_MODE_CON_USB480M_SEL_MASK                      (0x1U << CRU_MODE_CON_USB480M_SEL_SHIFT)                     /* 0x00000010 */
-#define CRU_MODE_CON_DIV_CON_24M_SHIFT                     (8U)
-#define CRU_MODE_CON_DIV_CON_24M_MASK                      (0x3FU << CRU_MODE_CON_DIV_CON_24M_SHIFT)                    /* 0x00003F00 */
+/* MODE_CON00 */
+#define CRU_MODE_CON00_OFFSET                              (0x10U)
+#define CRU_MODE_CON00_APLL_WORK_MODE_SHIFT                (0U)
+#define CRU_MODE_CON00_APLL_WORK_MODE_MASK                 (0x1U << CRU_MODE_CON00_APLL_WORK_MODE_SHIFT)                /* 0x00000001 */
+#define CRU_MODE_CON00_USB480M_SEL_SHIFT                   (4U)
+#define CRU_MODE_CON00_USB480M_SEL_MASK                    (0x1U << CRU_MODE_CON00_USB480M_SEL_SHIFT)                   /* 0x00000010 */
+#define CRU_MODE_CON00_DIV_CON_24M_SHIFT                   (8U)
+#define CRU_MODE_CON00_DIV_CON_24M_MASK                    (0x3FU << CRU_MODE_CON00_DIV_CON_24M_SHIFT)                  /* 0x00003F00 */
 /* CLKSEL0_CON */
 #define CRU_CLKSEL0_CON_OFFSET                             (0x14U)
 #define CRU_CLKSEL0_CON_SYS_CORE_DIV_CON_SHIFT             (0U)
@@ -568,14 +568,14 @@ struct SFC_REG {
 #define CRU_CLKSEL12_CON_UART5_DIV_CON_MASK                (0x3FU << CRU_CLKSEL12_CON_UART5_DIV_CON_SHIFT)              /* 0x00003F00 */
 #define CRU_CLKSEL12_CON_UART5_PLL_SEL_SHIFT               (15U)
 #define CRU_CLKSEL12_CON_UART5_PLL_SEL_MASK                (0x1U << CRU_CLKSEL12_CON_UART5_PLL_SEL_SHIFT)               /* 0x00008000 */
-/* CLK_FRACDIV_CON0 */
-#define CRU_CLK_FRACDIV_CON0_OFFSET                        (0x50U)
-#define CRU_CLK_FRACDIV_CON0_I2S0_FRAC_FACTOR_SHIFT        (0U)
-#define CRU_CLK_FRACDIV_CON0_I2S0_FRAC_FACTOR_MASK         (0xFFFFFFFFU << CRU_CLK_FRACDIV_CON0_I2S0_FRAC_FACTOR_SHIFT) /* 0xFFFFFFFF */
-/* CLK_FRACDIV_CON1 */
-#define CRU_CLK_FRACDIV_CON1_OFFSET                        (0x54U)
-#define CRU_CLK_FRACDIV_CON1_I2S1_FRAC_FACTOR_SHIFT        (0U)
-#define CRU_CLK_FRACDIV_CON1_I2S1_FRAC_FACTOR_MASK         (0xFFFFFFFFU << CRU_CLK_FRACDIV_CON1_I2S1_FRAC_FACTOR_SHIFT) /* 0xFFFFFFFF */
+/* CLKSEL15_CON */
+#define CRU_CLKSEL15_CON_OFFSET                            (0x50U)
+#define CRU_CLKSEL15_CON_I2S0_FRAC_FACTOR_SHIFT            (0U)
+#define CRU_CLKSEL15_CON_I2S0_FRAC_FACTOR_MASK             (0xFFFFFFFFU << CRU_CLKSEL15_CON_I2S0_FRAC_FACTOR_SHIFT)     /* 0xFFFFFFFF */
+/* CLKSEL16_CON */
+#define CRU_CLKSEL16_CON_OFFSET                            (0x54U)
+#define CRU_CLKSEL16_CON_I2S1_FRAC_FACTOR_SHIFT            (0U)
+#define CRU_CLKSEL16_CON_I2S1_FRAC_FACTOR_MASK             (0xFFFFFFFFU << CRU_CLKSEL16_CON_I2S1_FRAC_FACTOR_SHIFT)     /* 0xFFFFFFFF */
 /* CLKGATE0_CON */
 #define CRU_CLKGATE0_CON_OFFSET                            (0x80U)
 #define CRU_CLKGATE0_CON_CLK_SYS_CORE_GATE_EN_SHIFT        (0U)
@@ -851,11 +851,11 @@ struct SFC_REG {
 #define CRU_STCLK_CON1_STCLK_COUNTER_SHIFT                 (0U)
 #define CRU_STCLK_CON1_STCLK_COUNTER_MASK                  (0xFFFFFFU << CRU_STCLK_CON1_STCLK_COUNTER_SHIFT)            /* 0x00FFFFFF */
 /* GLB_SRST_FST_VALUE */
-#define CRU_GLB_SRST_FST_VALUE_OFFSET                      (0x100U)
+#define CRU_GLB_SRST_FST_VALUE_OFFSET                      (0xF4U)
 #define CRU_GLB_SRST_FST_VALUE_GLB_SRST_FST_VALUE_SHIFT    (0U)
 #define CRU_GLB_SRST_FST_VALUE_GLB_SRST_FST_VALUE_MASK     (0xFFFFU << CRU_GLB_SRST_FST_VALUE_GLB_SRST_FST_VALUE_SHIFT) /* 0x0000FFFF */
 /* GLB_CNT_TH */
-#define CRU_GLB_CNT_TH_OFFSET                              (0x140U)
+#define CRU_GLB_CNT_TH_OFFSET                              (0xF8U)
 #define CRU_GLB_CNT_TH_GLB_RST_CNT_TH_SHIFT                (0U)
 #define CRU_GLB_CNT_TH_GLB_RST_CNT_TH_MASK                 (0x3FFU << CRU_GLB_CNT_TH_GLB_RST_CNT_TH_SHIFT)              /* 0x000003FF */
 #define CRU_GLB_CNT_TH_PLL_LOCK_PERIOD_SHIFT               (16U)
@@ -2714,7 +2714,6 @@ struct SFC_REG {
 #define SFC_FTLR_RXFTLR_MASK                               (0xFFU << SFC_FTLR_RXFTLR_SHIFT)                             /* 0x0000FF00 */
 /* RCVR */
 #define SFC_RCVR_OFFSET                                    (0x10U)
-#define SFC_RCVR                                           (0x0U)
 #define SFC_RCVR_RCVR_SHIFT                                (0U)
 #define SFC_RCVR_RCVR_MASK                                 (0x1U << SFC_RCVR_RCVR_SHIFT)                                /* 0x00000001 */
 /* AX */
