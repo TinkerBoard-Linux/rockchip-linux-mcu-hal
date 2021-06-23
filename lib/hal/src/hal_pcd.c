@@ -169,15 +169,14 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                             }
 
                             pPCD->outEp[epNum].pxferBuff += pPCD->outEp[epNum].xferCount;
-                        }
 
-                        if ((pPCD->cfg.dmaEnable == 1) && (epNum == 0) &&
-                            (pPCD->outEp[epNum].xferLen == 0)) {
-                            /* this is ZLP, so prepare EP0 for next setup */
-                            USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
-                        } else {
-                            pPCD->outEp[epNum].xferLen = 0;
-                            HAL_PCD_DataOutStageCallback(pPCD, epNum);
+                            if ((epNum == 0) && (pPCD->outEp[epNum].xferLen == 0)) {
+                                /* this is ZLP, so prepare EP0 for next setup */
+                                USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
+                            } else {
+                                pPCD->outEp[epNum].xferLen = 0;
+                                HAL_PCD_DataOutStageCallback(pPCD, epNum);
+                            }
                         }
                     }
 
@@ -336,8 +335,9 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
 
             if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_DATA_UPDT) {
                 if ((temp & USB_OTG_GRXSTSP_BCNT) != 0) {
-                    USB_ReadPacket(pUSB, pEP->pxferBuff,
-                                   (temp & USB_OTG_GRXSTSP_BCNT) >> 4);
+                    USB_ReadPacket(pUSB, pEP->pxferBuff, epNum,
+                                   (temp & USB_OTG_GRXSTSP_BCNT) >> 4,
+                                   pPCD->cfg.dmaEnable);
                     pEP->pxferBuff += (temp & USB_OTG_GRXSTSP_BCNT) >> 4;
                     pEP->xferCount += (temp & USB_OTG_GRXSTSP_BCNT) >> 4;
                 }
@@ -348,7 +348,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                     USB_EP0_OutStart(pPCD->pReg, 1, pPCD->setupBuf);
                 }
             } else if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_SETUP_UPDT) {
-                USB_ReadPacket(pUSB, pPCD->setupBuf, 8);
+                USB_ReadPacket(pUSB, pPCD->setupBuf, epNum, 8, pPCD->cfg.dmaEnable);
                 pEP->xferCount += (temp & USB_OTG_GRXSTSP_BCNT) >> 4;
             } else if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_SETUP_COMP) {
                 /* Inform the upper layer that a setup packet is available */

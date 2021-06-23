@@ -862,7 +862,8 @@ static void HCD_RXQLVL_IRQHandler(struct HCD_HANDLE *pHCD)
     case GRXSTS_PKTSTS_IN:
         /* Read the data into the host buffer. */
         if ((pktCnt > 0) && (pHCD->hc[chNum].pxferBuff != (void *)0)) {
-            USB_ReadPacket(pHCD->pReg, pHCD->hc[chNum].pxferBuff, pktCnt);
+            USB_ReadPacket(pHCD->pReg, pHCD->hc[chNum].pxferBuff, chNum,
+                           pktCnt, pHCD->cfg.dmaEnable);
 
             /*manage multiple Xfer */
             pHCD->hc[chNum].pxferBuff += pktCnt;

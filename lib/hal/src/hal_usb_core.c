@@ -648,10 +648,14 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
         }
 
         if (pEP->type == EP_TYPE_ISOC) {
-            if ((USB_DEVICE->DSTS & (1 << 8)) == 0) {
-                USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SODDFRM;
-            } else {
+            if (USB_GetDevSpeed(pUSB) == USB_OTG_SPEED_HIGH) {
                 USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
+            } else {
+                if ((USB_DEVICE->DSTS & (1 << 8)) == 0) {
+                    USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SODDFRM;
+                } else {
+                    USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
+                }
             }
         }
         /* EP enable */
@@ -786,16 +790,24 @@ HAL_Status USB_WritePacket(struct USB_GLOBAL_REG *pUSB, uint8_t *psrc,
  *         with the EP/channel
  * @param  pUSB  Selected device
  * @param  pdest  destination buffer
+ * @param  chEpNum  endpoint or host channel number
  * @param  len  Number of bytes to read
+ * @param  dma USB dma enabled or disabled
+ *          This parameter can be one of these values:
+ *           0 : DMA feature not used
+ *           1 : DMA feature used
  * @return pointer to destination buffer
  */
-void *USB_ReadPacket(struct USB_GLOBAL_REG *pUSB, uint8_t *pdest, uint16_t len)
+void *USB_ReadPacket(struct USB_GLOBAL_REG *pUSB, uint8_t *pdest,
+                     uint8_t chEpNum, uint16_t len, uint8_t dma)
 {
     uint32_t i = 0;
-    uint32_t lenWords = (len + 3) / 4;
 
-    for (i = 0; i < lenWords; i++, pdest += 4) {
-        __UNALIGNED_UINT32_WRITE(pdest, USB_DFIFO(0));
+    if (dma == 0) {
+        uint32_t lenWords = (len + 3) / 4;
+        for (i = 0; i < lenWords; i++, pdest += 4) {
+            __UNALIGNED_UINT32_WRITE(pdest, USB_DFIFO(chEpNum));
+        }
     }
 
     return ((void *)pdest);

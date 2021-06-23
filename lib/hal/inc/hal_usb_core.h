@@ -266,7 +266,7 @@ HAL_Status USB_DeactivateDedicatedEndpoint(struct USB_GLOBAL_REG *pUSB, struct U
 HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP, uint8_t dma);
 HAL_Status USB_EP0StartXfer(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP, uint8_t dma);
 HAL_Status USB_WritePacket(struct USB_GLOBAL_REG *pUSB, uint8_t *psrc, uint8_t chEpNum, uint16_t len, uint8_t dma);
-void *USB_ReadPacket(struct USB_GLOBAL_REG *pUSB, uint8_t *pdest, uint16_t len);
+void *USB_ReadPacket(struct USB_GLOBAL_REG *pUSB, uint8_t *pdest, uint8_t chEpNum, uint16_t len, uint8_t dma);
 HAL_Status USB_EPSetStall(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP);
 HAL_Status USB_EPClearStall(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *pEP);
 HAL_Status USB_SetDevAddress(struct USB_GLOBAL_REG *pUSB, uint8_t address);
