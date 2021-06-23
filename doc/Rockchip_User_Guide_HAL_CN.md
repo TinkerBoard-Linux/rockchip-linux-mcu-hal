@@ -2,9 +2,9 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V2.9.0
+发布版本：V3.0.0
 
-日期：2021-06-18
+日期：2021-06-23
 
 文件密级：□绝密   □秘密   □内部资料   ■公开
 
@@ -85,6 +85,7 @@ Rockchip Electronics Co., Ltd.
 | V2.7.0     | 2021.03  | Jon Lin      | demo 示例由 RK2106 更改为 RK2108，优化文件布局章节 |
 | V2.8.0     | 2021.05  | Jon Lin      | 增加 test_conf.h 说明、增加和修正模块缩写 |
 | V2.9.0     | 2021.06  | Jon Lin      | 增加 Doxygen 中文注释规范，增加用户指南扩展，调整裸系统 Main 函数格式，优化单元测试章节说明，添加扩展开发包说明 |
+| V3.0.0 | 2021.06 | Jon Lin | 增加多核相关编程规范 |
 
 ---
 
@@ -1374,6 +1375,199 @@ HAL 设计以工程师自身对模块的理解为出发点，然而部分 IP 存
 > USB
 
 模块在 IP 升级上，导致新增了部分功能，出现原有接口的新的组合方式，可以考虑新增 extend 接口，如 hal_pcd_ex.c。
+
+### 核间差异的兼容性处理
+
+#### 核间差异依赖信息
+
+核间差异主要考虑以下几个层级：
+
+| 应用 | 指令集        | 处理器系列 | 处理器                                  | 芯片                                                         |
+| ---- | ------------- | ---------- | --------------------------------------- | ------------------------------------------------------------ |
+| AP   | ARM64         | Cortex-A   | e.g. Cortex-A55                         | e.g. RK3568 **Quad-core Cortex-A55** and RISC-V MCU          |
+| AP   | ARM(即 ARM32) | Cortex-A   | e.g. Cortex-A7、Cortex-A55（兼容ARM32） | e.g. RV1126 **Quad-core Cortex-A7** and RISC-V MCU、RK3568 **Quad-core Cortex-A55** and RISC-V MCU |
+| MCU  | \             | Cortex-M   | e.g. Cortex-M4                          | e.g. RK2108 Cortex-M4                                        |
+| MCU  | \             | RISC-V     | \                                       | e.g. RV1126 Quad-core Cortex-A7 and **RISC-V MCU**           |
+
+表格注释：
+
+- ”\“ 标记：代表暂时不考虑相关情形
+- e.g.  项为列举，非穷举
+- "应用"：异构核 SOC 方案基本为主芯片 AP + MCU 的应用组合方案，所以增加此信息以遍异构核的兼容性扩展
+
+#### 核间差异默认宏定义
+
+RK HAL 支持 CMSIS 标准的 CPAL 库，所以芯片级定义沿用或参考 CMSIS 标准。
+
+##### 处理器系列
+
+处理器系列宏定义，主要用以区分 ARM A core、ARM M core 与 RISC-V，应用于 CMSIS 标准库函数及HAL 层库函数编写。
+
+| 处理器系列 | 宏定义     | 定义处                                  | 规范来源          |
+| ---------- | ---------- | --------------------------------------- | ----------------- |
+| Cortex-A   | __CORTEX_A | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | CMSIS             |
+| Cortex-M   | __CORTEX_M | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | CMSIS             |
+| RISC-V     | __RISC_V   | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | HAL（参考 CMSIS） |
+
+##### 处理器
+
+处理器宏定义，主要用以区分同一处理器系列下的不同处理器型号，与"处理器系列"宏为同一处定义。
+
+| 处理器                 | 宏定义                                | 定义处                                  | 规范来源 |
+| ---------------------- | ------------------------------------- | --------------------------------------- | -------- |
+| Cortex-A55、 Cortex-A7 | \_\_CORTEX_A = 55U、\_\_CORTEX_A = 7U | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | CMSIS    |
+| Cortex-M4、Cortex-M3   | \_\_CORTEX_M = 4U、\_\_CORTEX_M = 3U  | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | CMSIS    |
+
+#### 核间差异兼容性处理默认规范
+
+##### 处理器系列差异
+
+**资源完全无法复用**
+
+新增对应"处理器系列"所需的文件，文件名定义参考以下表格：
+
+| 处理器系列 | 文件名命名      | 文件内添加宏限制  | 实例                     |
+| ---------- | --------------- | ----------------- | ------------------------ |
+| Cortex-A   | \               | #ifdef __CORTEX_A | e.g. hal_pm_rk3568.S     |
+| Cortex-M   | 添加"_mcu" 尾缀 | #ifdef __CORTEX_M | e.g. hal_pm_rkxxxx_mcu.S |
+| RISC-V     | 添加"_mcu" 尾缀 | #ifdef __RISC_V   | e.g. hal_pm_rk3568_mcu.S |
+
+注释：
+
+- Cortex-A 系列处理器在此类问题里为大核，使用默认命名
+
+**资源部分无法复用**
+
+通过对应"处理器系列"默认宏定义进行区分，例如：
+
+```c
+#if defined(__CORTEX_A) || defined(__CORTEX_M)
+static void CPUCycleLoop(uint32_t cycles)
+{
+	/* To-Do */
+}
+#elif defined(__RISC_V)
+static void CPUCycleLoop(uint32_t cycles)
+{
+	/* To-Do */
+}
+#endif
+```
+
+##### 处理器差异
+
+**资源完全无法复用**
+
+新增对应"处理器"所需的文件，文件名定义及宏限制参考以下表格：
+
+| 处理器系列 | 文件名命名             | 文件内添加宏限制               | 实例               |
+| ---------- | ---------------------- | ------------------------------ | ------------------ |
+| Cortex-A   | 仅作为大核、不添加尾缀 | e.g. #if (__CORTEX_A55 == 55U) | start_rk3568.c     |
+| Cortex-M   | 添加"_mcu" 尾缀        | e.g. #if (__CORTEX_M == 4U)    | start_rkxxxx_mcu.c |
+
+注释：
+
+- 异构核中主芯片不添加后缀
+- RISC-V 芯片方案目前暂不考虑使用准确的"处理器"信息，沿用"处理器系列"信息
+
+**资源部分无法复用**
+
+通过对应"处理器"默认宏定义进行区分，例如：
+
+```c
+#if defined(__CORTEX_A) || defined(__CORTEX_M)
+#if (__CORTEX_M == 0U)								// 此处为 ARM M0 处理器 HAL_BASE 资源部分无法复用的处理示例。
+static void CPUCycleLoop(uint32_t cycles)
+{
+    uint32_t count;
+
+    if (cycles < 100U) {
+        return;
+    }
+
+    count = cycles / 3;
+    while (count-- > 0) {
+        __asm volatile ("nop");
+    }
+}
+#else
+static void CPUCycleLoop(uint32_t cycles)
+{
+	/* To-Do */
+}
+#endif
+#elif defined(__RISC_V)
+static void CPUCycleLoop(uint32_t cycles)
+{
+	/* To-Do */
+}
+#endif
+```
+
+#### 异构核核间差异扩展宏定义
+
+强调，该规范仅在异构核方案中使用。
+
+由上可知，"核间差异的默认宏定义"参考 CMSIS 标准定义于 soc.h 文件中，无法传参，所以仅用默认规范的异构核工程存在以下问题：
+
+- 无法灵活选定"核间差异的默认宏定义"
+- CPAL 内的异构资源没有引用 soc.h，无法感知相关信息
+
+为了解决以上问题，通过 hal_conf.h 新增宏定义来描绘核间差异，通过引用 hal_conf.h 来获知相应信息。
+
+##### 应用
+
+| 应用 | 宏定义       | 定义处     | 规范来源 |
+| ---- | ------------ | ---------- | -------- |
+| AP   | HAL_AP_CORE  | hal_conf.h | HAL      |
+| MCU  | HAL_MCU_CORE | hal_conf.h | HAL      |
+
+#### 异构核核间差异兼容性处理补充规范
+
+强调，该规范仅在异构核方案中使用。
+
+不同规格的处理器组成的异构核 SOC 方案，主要为 AP 应用 + MCU 应用大小核，所以仅添加"应用"信息即可补充所需的核间差异。
+
+##### 应用差异
+
+**资源完全无法复用**
+
+仅通过新增对应"应用"所需的文件，文件名定义参考以下表格：
+
+| 应用 | 文件名命名             | 文件内添加宏限制    | 实例                    |
+| ---- | ---------------------- | ------------------- | ----------------------- |
+| AP   | 默认为大核，不添加尾缀 | #ifdef HAL_AP_CORE  | e.g. start_rk3568.c     |
+| MCU  | 添加"_mcu" 尾缀        | #ifdef HAL_MCU_CORE | e.g. start_rkxxxx_mcu.c |
+
+例如：
+
+```
+start_rk3568_mcu.S:
+#ifndef HAL_AP_CORE
+...
+#endif
+
+start_rk3568.S
+#ifdef HAL_AP_CORE
+...
+#endif
+```
+
+**资源可部分复用**
+
+仅通过新增对应"应用"扩展宏定义进行区分，例如：
+
+```c
+#ifdef HAL_AP_CORE
+#define __CORTEX_A
+...
+#elif defined(HAL_MCU_CORE)
+#define __RISC_V
+...
+#else
+#error "Please define HAL_AP_CORE or HAL_MCU_CORE on hal_conf.h"
+#endif
+```
 
 ## HAL Common 资源
 
