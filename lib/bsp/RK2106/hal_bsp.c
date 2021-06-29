@@ -6,6 +6,80 @@
 #include "hal_bsp.h"
 #include "hal_base.h"
 
+#ifdef HAL_ACODEC_MODULE_ENABLED
+struct HAL_ACODEC_DEV g_acodecDev =
+{
+    .pReg = ACODEC,
+    .hclk = PCLK_ACODEC_GATE,
+    .mclk = 24000000,
+    .micBias = ACODEC_MICBIAS_SEL2V0,
+    .micDifferential = true,
+};
+#endif
+
+#ifdef HAL_DWDMA_MODULE_ENABLED
+struct HAL_DWDMA_DEV g_dwDma1Dev =
+{
+    .pReg = DMA1,
+    .irq[0] = DMA1_IRQn,
+    .maxChans = DMA1_NUM_CHANNELS,
+    .dataWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+    .blockSize = 0xfff, /** ref to trm */
+};
+#endif
+
+#ifdef HAL_I2S_MODULE_ENABLED
+struct HAL_I2S_DEV g_i2s0Dev =
+{
+    .pReg = I2S0,
+    .mclk = CLK_I2S0,
+    .mclkGate = CLK_I2S0_GATE,
+    .hclk = PCLK_I2S0_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2S0->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_RX,
+        .dmac = DMA1,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2S0->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_TX,
+        .dmac = DMA1,
+    },
+};
+
+struct HAL_I2S_DEV g_i2s1Dev =
+{
+    .pReg = I2S1,
+    .mclk = CLK_I2S1,
+    .mclkGate = CLK_I2S1_GATE,
+    .hclk = PCLK_I2S1_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2S1->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S1_RX,
+        .dmac = DMA1,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2S1->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S1_TX,
+        .dmac = DMA1,
+    },
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
@@ -101,4 +175,8 @@ const struct HAL_USB_DEV g_usbdDev =
 
 void BSP_Init(void)
 {
+#ifdef HAL_ACODEC_MODULE_ENABLED
+    WRITE_REG_MASK_WE(GRF->IOFUNC_CON0, GRF_IOFUNC_CON0_I2S0_SEL_MASK,
+                      1 << GRF_IOFUNC_CON0_I2S0_SEL_SHIFT);
+#endif
 }

@@ -12,6 +12,19 @@
 
 /***************************** Structure Definition **************************/
 
+#ifdef HAL_ACODEC_MODULE_ENABLED
+extern struct HAL_ACODEC_DEV g_acodecDev;
+#endif
+
+#ifdef HAL_DWDMA_MODULE_ENABLED
+extern struct HAL_DWDMA_DEV g_dwDma1Dev;
+#endif
+
+#ifdef HAL_I2S_MODULE_ENABLED
+extern struct HAL_I2S_DEV g_i2s0Dev;
+extern struct HAL_I2S_DEV g_i2s1Dev;
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 extern const struct HAL_UART_DEV g_uart0Dev;
 extern const struct HAL_UART_DEV g_uart1Dev;
