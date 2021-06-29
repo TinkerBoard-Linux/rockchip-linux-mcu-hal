@@ -59,7 +59,7 @@ typedef enum
     EMMC_IRQn,
     SDMMC_IRQn,
     USBC_IRQn,
-    DMA_IRQn,
+    DMA1_IRQn,
     IMDCT_IRQn,
     WDT_IRQn,
     MAILBOX0_IRQn,
@@ -172,9 +172,12 @@ typedef enum CLOCK_Name {
     CLK_TIMER1     = CLK(TIMER1_PLL_SEL, TIMER1_DIV),
 } eCLOCK_Name;
 #endif
-/****************************************GRF*********************************************/
-#define GRF_IOMUX_BIT_PER_PIN (2)
-#define GRF_PULL_BIT_PER_PIN  (2)
+/******************************************DMA*******************************************/
+#define DMA1_NUM_CHANNELS                                  (6U)
+#define DMA2_NUM_CHANNELS                                  (2U)
+/******************************************GRF*******************************************/
+#define GRF_IOMUX_BIT_PER_PIN                              (2U)
+#define GRF_PULL_BIT_PER_PIN                               (2U)
 /******************************************SFC*******************************************/
 #define SFC_CHIP_CNT                                       (1U)
 #ifdef __cplusplus
