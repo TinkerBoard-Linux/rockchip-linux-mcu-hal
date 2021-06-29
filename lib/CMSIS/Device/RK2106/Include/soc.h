@@ -120,6 +120,7 @@ typedef enum
 #endif /* __ASSEMBLY__ */
 #include "rk2106.h"
 #include "rk2106_usb.h"
+#include "rk2106_acodec.h"
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -132,6 +133,8 @@ typedef enum
 /*                                Module Address Section                                */
 /*                                                                                      */
 /****************************************************************************************/
+/* Memory Base */
+#define ACODEC_BASE         0x40090000U /* ACODEC base address */
 #define USB_BASE            0x60080000U /* USB base address */
 /******************************************CRU*******************************************/
 #define PLL_INPUT_OSC_RATE (24 * 1000 * 1000)
