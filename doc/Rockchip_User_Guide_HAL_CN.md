@@ -1933,3 +1933,26 @@ HAL 库使用 Doxygen 生成的注释文档作为 HAL 模块文档，详细参�
 ### Unity
 
 <http://www.throwtheswitch.org/unityz>
+
+### 使用Windows环境编译
+
+以RK3568为例，从ARM官网（[点击进入](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads)）下载ARM交叉编译工具链安装程序（版本信息：gcc-arm-none-eabi-10-2020-q4-major-win32.exe）。安装流程如下：
+
+![GCC_1](./Rockchip_User_Guide_HAL_CN/GCC_1.png)
+
+![GCC_2](./Rockchip_User_Guide_HAL_CN/GCC_2.png)
+
+下载安装MinGW。如果已下载，可跳过此步骤。确保安装路径下有MinGW\bin\mingw32-make.exe编译程序。复制此程序重命名为make.exe。
+
+使用Windows命令行切换工作路径到hal\project\rk3568\GCC下。使用以下命令编译：
+
+```shell
+make -j8
+```
+
+新建Windows批处理文件clean.bat用于清除编译产物，内容如下：
+
+```shell
+del TestDemo*
+del ..\..\..\*.o /s
+```
