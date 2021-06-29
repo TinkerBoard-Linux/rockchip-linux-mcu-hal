@@ -178,6 +178,12 @@ typedef enum CLOCK_Name {
 /******************************************GRF*******************************************/
 #define GRF_IOMUX_BIT_PER_PIN                              (2U)
 #define GRF_PULL_BIT_PER_PIN                               (2U)
+/******************************************PMU*******************************************/
+#ifndef __ASSEMBLY__
+typedef enum PD_Id {
+    PD_INVALID = 0,
+} ePD_Id;
+#endif
 /******************************************SFC*******************************************/
 #define SFC_CHIP_CNT                                       (1U)
 #ifdef __cplusplus
