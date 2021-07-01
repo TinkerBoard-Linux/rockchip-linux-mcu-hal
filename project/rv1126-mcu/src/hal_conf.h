@@ -8,6 +8,7 @@
 
 /* CPU config */
 #define SOC_RV1126
+#define HAL_MCU_CORE
 
 /* HAL Driver Config */
 #define HAL_CRU_MODULE_ENABLED
