@@ -8,6 +8,7 @@
 
 /* CPU config */
 #define SOC_RK3568
+#define HAL_MCU_CORE
 
 /* HAL Driver Config */
 #define HAL_TIMER_MODULE_ENABLED
