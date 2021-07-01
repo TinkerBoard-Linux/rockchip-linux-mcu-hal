@@ -8,6 +8,7 @@
 
 /* HAL CPU config */
 #define SOC_RK3568
+#define HAL_AP_CORE
 #define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
