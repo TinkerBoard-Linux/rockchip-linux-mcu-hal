@@ -23,7 +23,6 @@ STRIP		= $(CROSS_COMPILE)strip
 OBJCOPY		= $(CROSS_COMPILE)objcopy
 OBJDUMP		= $(CROSS_COMPILE)objdump
 
-CPU		+= -DARCH_RISCV
 CPU		+= -DUSE_PLIC -DUSE_M_TIME -DNO_INIT -mcmodel=medany -msmall-data-limit=8 -L.  -nostartfiles  -lc
 ASFLAGS         += $(CPU) -c -x assembler-with-cpp
 CFLAGS		+= $(CPU) -O2 -g
