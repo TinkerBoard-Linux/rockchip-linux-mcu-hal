@@ -9,6 +9,8 @@
   extern "C" {
 #endif
 
+#include "hal_conf.h"
+
 /* IO definitions (access restrictions to peripheral registers) */
 #ifdef __cplusplus
   #define   __I     volatile             /*!< brief Defines 'read only' permissions */
@@ -132,13 +134,27 @@ typedef enum
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
 /* ================================================================================ */
-#ifndef __ASSEMBLY__
-#include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
-#ifndef ARCH_RISCV
+
+#if defined(HAL_AP_CORE) && defined(HAL_MCU_CORE)
+#error "HAL_AP_CORE and HAL_MCU_CORE only one of them can be enabled"
+#endif
+
+#if !defined(HAL_AP_CORE) && !defined(HAL_MCU_CORE)
+#error "Please define HAL_AP_CORE or HAL_MCU_CORE on hal_conf.h"
+#endif
+
+#ifdef HAL_AP_CORE
 #define __CORTEX_A           55U          /* Cortex-A55 Core                          */
 #define __FPU_PRESENT         1U          /* FPU present                              */
+#else
+#define __RISC_V
+#endif
+
+#ifndef __ASSEMBLY__
+#include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
+#ifdef __CORTEX_A
 #include "core_ca.h"
-#endif /* ARCH_RISCV */
+#endif
 #include "system_rk3568.h"
 #endif /* __ASSEMBLY__ */
 #include "rk3568.h"

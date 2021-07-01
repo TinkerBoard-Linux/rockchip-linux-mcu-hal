@@ -3,7 +3,9 @@
  * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
-#ifdef ARCH_RISCV
+#include "hal_conf.h"
+
+#ifdef HAL_MCU_CORE
 
 #include "riscv_csr_encoding.h"
 
@@ -95,4 +97,4 @@ ret
 sc_exit:
 j sc_exit
 
-#endif /* ARCH_RISCV */
+#endif /* HAL_MCU_CORE */

@@ -4,7 +4,6 @@
  */
 
 #include "hal_base.h"
-#include "hal_def.h"
 #include "soc.h"
 
 #define  SYSTEM_CLOCK  150000000U
@@ -38,7 +37,7 @@ void SystemInit (void)
 
 void DataInit (void)
 {
-#ifndef ARCH_RISCV
+#ifdef HAL_AP_CORE
 
     typedef struct {
         unsigned long* dest;
@@ -53,5 +52,5 @@ void DataInit (void)
             pTable->dest[i] = 0u;
         }
     }
-#endif /* ARCH_RISCV */
+#endif /* HAL_AP_CORE */
 }
