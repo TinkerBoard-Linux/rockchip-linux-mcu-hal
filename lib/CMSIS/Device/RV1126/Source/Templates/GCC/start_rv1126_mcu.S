@@ -3,6 +3,10 @@
  * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
+#include "hal_conf.h"
+
+#ifdef HAL_MCU_CORE
+
 #include "riscv_csr_encoding.h"
 
 # define LREG     lw
@@ -92,3 +96,4 @@ ret
 
 sc_exit:
 j sc_exit
+#endif /* HAL_MCU_CORE */

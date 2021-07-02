@@ -13,7 +13,7 @@ CL_SIZE = 32;
 SECTIONS {
     .text : {
         PROVIDE(__TEXT_START__ = .);
-        *start_riscv.o(.text .text.*)
+        *start_rv1126_mcu.o(.text .text.*)
         *(.text .text.*)
         *(sc_test_section)
 
