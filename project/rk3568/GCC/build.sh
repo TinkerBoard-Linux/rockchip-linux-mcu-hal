@@ -6,10 +6,10 @@ usage() {
     echo "usage: ./build.sh <cpu_id 0~3 or all>"
 }
 
-CPU0_BASE=0x00a00000
-CPU1_BASE=0x00b00000
-CPU2_BASE=0x00d00000
-CPU3_BASE=0x00e00000
+CPU0_BASE=0x12000000
+CPU1_BASE=0x01800000
+CPU2_BASE=0x03800000
+CPU3_BASE=0x05800000
 
 make_hal() {
     export FIRMWARE_CPU_BASE=$(eval echo \$CPU$1_BASE)

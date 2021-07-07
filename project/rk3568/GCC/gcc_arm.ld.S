@@ -8,7 +8,7 @@
 MEMORY
 {
     SRAM  (rxw) : ORIGIN = 0xfdcc0000, LENGTH = 64K      /* SYSTEM SRAM */
-    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = 512K  /* DRAM */
+    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = 30M   /* DRAM */
 }
 
 ENTRY(Reset_Handler)

@@ -12,7 +12,7 @@ CFLAGS += -DMETAL_INTERNAL -DMETAL_MAX_DEVICE_REGIONS=2
 include ../../../middleware/sdhci/sdhci.mk
 include ../../../middleware/coremark/coremark.mk
 
-FIRMWARE_CPU_BASE ?= 0x00a00000
+FIRMWARE_CPU_BASE ?= 0x12000000
 CFLAGS += -DFIRMWARE_BASE=$(FIRMWARE_CPU_BASE)
 LINKER_SCRIPT := gcc_arm.ld
 CLEAN_FILES += $(LINKER_SCRIPT)
