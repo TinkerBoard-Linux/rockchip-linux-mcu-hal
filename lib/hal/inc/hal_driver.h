@@ -77,6 +77,10 @@
 #include "hal_efuse.h"
 #endif
 
+#ifdef HAL_GMAC_MODULE_ENABLED
+#include "hal_gmac.h"
+#endif
+
 #ifdef HAL_GPIO_MODULE_ENABLED
 #include "hal_gpio.h"
 #endif
