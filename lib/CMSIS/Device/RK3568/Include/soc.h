@@ -67,6 +67,8 @@ typedef enum
   DMAC0_IRQn             = 46,       /*!< DMAC0 Interrupt             */
   DMAC1_ABORT_IRQn       = 47,       /*!< DMAC1 Abort Interrupt       */
   DMAC1_IRQn             = 48,       /*!< DMAC1 Interrupt             */
+  GMAC0_IRQn             = 59,       /*!< GMAC0 Interrupt             */
+  GMAC1_IRQn             = 64,       /*!< GMAC1 Interrupt             */
   GPIO0_IRQn             = 65,       /*!< GPIO0 Interrupt             */
   GPIO1_IRQn             = 66,       /*!< GPIO1 Interrupt             */
   GPIO2_IRQn             = 67,       /*!< GPIO2 Interrupt             */
