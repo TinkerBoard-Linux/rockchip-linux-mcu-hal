@@ -45,6 +45,10 @@ extern const struct HAL_CANFD_DEV g_can1Dev;
 extern const struct HAL_CANFD_DEV g_can2Dev;
 #endif
 
+#ifdef HAL_GMAC_MODULE_ENABLED
+extern const struct HAL_GMAC_DEV g_gmac0Dev;
+extern const struct HAL_GMAC_DEV g_gmac1Dev;
+#endif
 /***************************** Function Declare ******************************/
 void BSP_Init(void);
 
