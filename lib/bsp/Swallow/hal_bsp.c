@@ -12,6 +12,7 @@ struct HAL_DWDMA_DEV g_dwDmaDev =
     .irq[0] = DMAC0_IRQn,
     .irq[1] = DMAC1_IRQn,
     .irq[2] = DMAC2_IRQn,
+    .maxChans = DMA_NUM_CHANNELS,
     .dataWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
     .blockSize = 0xfff, /** ref to trm */
 };

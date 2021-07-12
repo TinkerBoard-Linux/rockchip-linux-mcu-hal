@@ -349,11 +349,11 @@ HAL_Status HAL_DWDMA_Init(struct HAL_DWDMA_DEV *dw)
     dw->blockSize &= ~(HAL_DWDMA_BLOCK_ALIGN_SZ - 1);
 #endif
     /* Calculate all channel mask before DMA setup */
-    dw->allChanMask = (1 << DMA_NUM_CHANNELS) - 1;
+    dw->allChanMask = (1 << dw->maxChans) - 1;
     /* Force dma off, just in case */
     DWDMA_off(dw);
 
-    for (i = 0; i < DMA_NUM_CHANNELS; i++) {
+    for (i = 0; i < dw->maxChans; i++) {
         dwc = &dw->chan[i];
 
         dwc->dw = dw;
@@ -607,7 +607,7 @@ struct DWDMA_CHAN *HAL_DWDMA_RequestChannel(struct HAL_DWDMA_DEV *dw, DMA_REQ_Ty
         DWDMA_on(dw);
     }
 
-    for (i = 0; i < DMA_NUM_CHANNELS; i++) {
+    for (i = 0; i < dw->maxChans; i++) {
         dwc = &dw->chan[i];
 
         if (dw->used & dwc->mask) {
@@ -620,7 +620,7 @@ struct DWDMA_CHAN *HAL_DWDMA_RequestChannel(struct HAL_DWDMA_DEV *dw, DMA_REQ_Ty
         break;
     }
 
-    if (i >= DMA_NUM_CHANNELS || !dwc) {
+    if (i >= dw->maxChans || !dwc) {
         return NULL;
     }
 

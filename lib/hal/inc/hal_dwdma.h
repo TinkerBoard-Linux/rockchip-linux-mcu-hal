@@ -27,6 +27,7 @@
 /***************************** MACRO Definition ******************************/
 
 #define NR_DESCS_PER_CHANNEL 8
+#define DMA_MAX_CHANNELS     8
 
 /* Bitfields in CTL_LO */
 #define DWC_CTLL_INT_EN       (1 << 0)    /**< irqs enabled? */
@@ -163,10 +164,11 @@ struct DWDMA_CHAN {
  */
 struct HAL_DWDMA_DEV {
     struct DMA_REG *pReg;
-    struct DWDMA_CHAN chan[DMA_NUM_CHANNELS];
-    uint8_t irq[DMA_NUM_CHANNELS];
+    struct DWDMA_CHAN chan[DMA_MAX_CHANNELS];
+    uint8_t irq[DMA_MAX_CHANNELS];
     uint8_t allChanMask;
     uint8_t used;
+    uint8_t maxChans;
     /* hardware configuration */
     uint8_t dataWidth;
     uint32_t blockSize;
