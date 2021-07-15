@@ -12,6 +12,10 @@
 #include "hal_acdcdig.h"
 #endif
 
+#ifdef HAL_ACODEC_MODULE_ENABLED
+#include "hal_acodec.h"
+#endif
+
 #ifdef HAL_AUDIOPWM_MODULE_ENABLED
 #include "hal_audiopwm.h"
 #endif

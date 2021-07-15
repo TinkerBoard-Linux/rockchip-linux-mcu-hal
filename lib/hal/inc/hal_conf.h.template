@@ -36,6 +36,7 @@
 /************************ HAL Driver Config ***********************************/
 
 #define HAL_ACDCDIG_MODULE_ENABLED
+#define HAL_ACODEC_MODULE_ENABLED
 #define HAL_AUDIOPWM_MODULE_ENABLED
 #define HAL_BUFMGR_MODULE_ENABLED
 #define HAL_CACHE_ECC_MODULE_ENABLED

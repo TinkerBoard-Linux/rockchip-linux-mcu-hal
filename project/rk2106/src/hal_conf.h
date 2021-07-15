@@ -11,6 +11,7 @@
 #define SYS_TIMER TIMER1 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
+#define HAL_ACODEC_MODULE_ENABLED
 #define HAL_CRU_MODULE_ENABLED
 #define HAL_DWDMA_MODULE_ENABLED
 #define HAL_I2S_MODULE_ENABLED
