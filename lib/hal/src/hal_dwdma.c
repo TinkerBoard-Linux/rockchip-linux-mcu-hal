@@ -578,6 +578,25 @@ uint32_t HAL_DWDMA_IrqHandler(struct HAL_DWDMA_DEV *dw, uint32_t chanId)
 }
 
 /**
+ * @brief Get the dma channel
+ *
+ * @param dw: the handle of dw dma.
+ * @param chanId: the chan id.
+ *
+ * @return the dma channel by chan id or NULL on error.
+ */
+struct DWDMA_CHAN *HAL_DWDMA_GetChannel(struct HAL_DWDMA_DEV *dw, uint32_t chanId)
+{
+    HAL_ASSERT(dw);
+
+    if (chanId > dw->maxChans) {
+        return NULL;
+    }
+
+    return &dw->chan[chanId];
+}
+
+/**
  * @brief Request a dma channel
  *
  * @param dw: the handle of dw dma.
