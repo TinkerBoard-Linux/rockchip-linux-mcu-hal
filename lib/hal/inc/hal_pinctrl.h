@@ -256,20 +256,20 @@ typedef enum {
 #define SHIFT_MUX (0)
 #define SHIFT_PUL (4)
 #define SHIFT_DRV (8)
-#define SHIFT_SRT (12)
-#define SHIFT_SMT (14)
+#define SHIFT_SRT (16)
+#define SHIFT_SMT (18)
 #define MASK_MUX  (0xFU << SHIFT_MUX)
 #define MASK_PUL  (0xFU << SHIFT_PUL)
-#define MASK_DRV  (0xFU << SHIFT_DRV)
+#define MASK_DRV  (0xFFU << SHIFT_DRV)
 #define MASK_SRT  (0x3U << SHIFT_SRT)
 #define MASK_SMT  (0x3U << SHIFT_SMT)
 
 /** @brief  PIN Configuration Mode
- *  Elements values convention: gggg g000 0000 0000 ttrr dddd pppp xxxx
+ *  Elements values convention: gggg g000 0000 ttrr dddd dddd pppp xxxx
  *      - ggggg  : Flag to set Mux/Pull/Drive/Slewrate/Schmitt
  *      - tt  : Schmitt value
  *      - rr  : Slewrate value
- *      - dddd  : Drive value
+ *      - dddddddd  : Drive value
  *      - pppp  : Pull value
  *      - xxxx  : Mux mode value
  */
@@ -306,6 +306,15 @@ typedef enum {
     PIN_CONFIG_PUL_DEFAULT = PIN_CONFIG_PUL_NORMAL,
 #endif
 
+#if defined(SOC_RK3568)
+    PIN_CONFIG_DRV_LEVEL0        = (0x1 << SHIFT_DRV | FLAG_DRV),
+    PIN_CONFIG_DRV_LEVEL1        = (0x3 << SHIFT_DRV | FLAG_DRV),
+    PIN_CONFIG_DRV_LEVEL2        = (0x7 << SHIFT_DRV | FLAG_DRV),
+    PIN_CONFIG_DRV_LEVEL3        = (0xf << SHIFT_DRV | FLAG_DRV),
+    PIN_CONFIG_DRV_LEVEL4        = (0x1f << SHIFT_DRV | FLAG_DRV),
+    PIN_CONFIG_DRV_LEVEL5        = (0x3f << SHIFT_DRV | FLAG_DRV),
+    PIN_CONFIG_DRV_LEVEL_DEFAULT = PIN_CONFIG_DRV_LEVEL2,
+#else
     PIN_CONFIG_DRV_LEVEL0        = (0x0 << SHIFT_DRV | FLAG_DRV),
     PIN_CONFIG_DRV_LEVEL1        = (0x1 << SHIFT_DRV | FLAG_DRV),
     PIN_CONFIG_DRV_LEVEL2        = (0x2 << SHIFT_DRV | FLAG_DRV),
@@ -315,6 +324,7 @@ typedef enum {
     PIN_CONFIG_DRV_LEVEL6        = (0x6 << SHIFT_DRV | FLAG_DRV),
     PIN_CONFIG_DRV_LEVEL7        = (0x7 << SHIFT_DRV | FLAG_DRV),
     PIN_CONFIG_DRV_LEVEL_DEFAULT = PIN_CONFIG_DRV_LEVEL2,
+#endif
 
     PIN_CONFIG_SRT_SLOW    = (0x0 << SHIFT_SRT | FLAG_SRT),
     PIN_CONFIG_SRT_FAST    = (0x1 << SHIFT_SRT | FLAG_SRT),
