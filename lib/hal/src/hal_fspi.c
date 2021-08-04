@@ -355,9 +355,9 @@ HAL_Status HAL_FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *dat
             temp = ((uint8_t *)data)[0] | ((uint8_t *)data)[1] << 8 | ((uint8_t *)data)[2] << 16;
         }
         pData = &temp;
-    } else if (len > 4 && !HAL_IS_ALIGNED((uint32_t)data, 4)) {
+    } else if (len >= 4 && !HAL_IS_ALIGNED((uint32_t)data, 4)) {
         FSPI_DBG("%s data unaligned access\n", __func__);
-#ifndef __CORTEX_M
+#if !defined(__CORTEX_M) && !defined(HAL_FSPI_ALIGNED_CHECK_BYPASS)
 
         return HAL_INVAL;
 #endif

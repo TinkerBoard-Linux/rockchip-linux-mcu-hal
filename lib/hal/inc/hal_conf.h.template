@@ -113,6 +113,7 @@
 
 #ifdef HAL_FSPI_MODULE_ENABLED
 #define HAL_FSPI_XIP_ENABLE /**< FSPI supports XIP by default */
+// #define HAL_FSPI_ALIGNED_CHECK_BYPASS /**< Disable memery unalighed check if these behavior is support */
 #endif
 
 #ifdef HAL_GIC_MODULE_ENABLED
