@@ -665,7 +665,7 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
 {
     int32_t ret;
     uint8_t *pBuf = (uint8_t *)buf;
-    uint32_t size, remain = len;
+    uint32_t size, remain = len, pageOffset;
 
     /* HAL_SNOR_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
     if (to >= nor->size || len > nor->size || (to + len) > nor->size) {
@@ -673,7 +673,8 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
     }
 
     while (remain) {
-        size = HAL_MIN(nor->pageSize, remain);
+        pageOffset = to & (nor->pageSize - 1);
+        size = HAL_MIN(nor->pageSize - pageOffset, remain);
         SNOR_WriteEnable(nor);
         ret = nor->write(nor, to, size, pBuf);
         if (ret != (int32_t)size) {
