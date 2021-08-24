@@ -663,7 +663,7 @@ int HAL_SYS_Suspend(struct PM_SUSPEND_INFO *suspendInfo)
     struct PMU_REG *pPmu = PMU;
     struct GRF_REG *pGrf = GRF;
     struct UART_REG *pUart = NULL;
-    struct UART_REG_SAVE pUartSave;
+    struct UART_REG_SAVE pUartSave = { 0 };
     uint64_t timerCount;
 
     HAL_ASSERT(suspendInfo != NULL);
