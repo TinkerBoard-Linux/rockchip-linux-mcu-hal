@@ -25,6 +25,7 @@ extern const struct HAL_SPI_DEV g_spiDev3;
 
 #ifdef HAL_UART_MODULE_ENABLED
 extern const struct HAL_UART_DEV g_uart2Dev;
+extern const struct HAL_UART_DEV g_uart4Dev;
 #endif
 
 #ifdef HAL_I2C_MODULE_ENABLED

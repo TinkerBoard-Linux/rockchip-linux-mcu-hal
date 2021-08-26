@@ -113,6 +113,16 @@ const struct HAL_UART_DEV g_uart2Dev =
     .irqNum = UART2_IRQn,
     .isAutoFlow = false,
 };
+
+const struct HAL_UART_DEV g_uart4Dev =
+{
+    .pReg = UART4,
+    .sclkID = CLK_UART4,
+    .sclkGateID = SCLK_UART4_GATE,
+    .pclkGateID = PCLK_UART4_GATE,
+    .irqNum = UART4_IRQn,
+    .isAutoFlow = false,
+};
 #endif
 
 #ifdef HAL_I2C_MODULE_ENABLED
