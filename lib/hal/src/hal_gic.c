@@ -430,14 +430,22 @@ static void GIC_DistInit(uint32_t initGicd, uint32_t amp, uint32_t priority, uin
     uint32_t numIrq = 0U;
     uint32_t priorityField;
 
+    numIrq = 32 * ((GIC_DistributorInfo() & 0x1F) + 1);
+
     if (!initGicd) {
-        GIC_EnableDistributor();
+        while (!(pGICD->CTLR & 0x3)) {
+            ;
+        }
+#ifdef HAL_GIC_WAIT_LINUX_INIT_ENABLED
+        while (pGICD->IPRIORITYR[(numIrq - 1) / 4] != 0xa0a0a0a0) {
+            ;
+        }
+#endif
 
         return;
     }
 
     GIC_DisableDistributor();
-    numIrq = 32 * ((GIC_DistributorInfo() & 0x1F) + 1);
 
     if (!amp) {
         HAL_GIC_SetPriority(0, 0xFF);
