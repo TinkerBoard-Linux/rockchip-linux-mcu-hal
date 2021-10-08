@@ -92,12 +92,12 @@ Reset_Handler   PROC
 		        LDR     R2, =0x00000000
 		        LDR     R1, =HANDLER_CONTROL
 		        STR     R2, [R1, #0x00]
-		        
+
 		        ;Systick Int Disable
 		        LDR     R2, =0x00000000
 		        LDR     R1, =SYSTICK_CONTROL
 		        STR     R2, [R1, #0x00]
-		        
+
 		        ;General Int Disable
 		        LDR     R2, =0xFFFFFFFF
 		        LDR     R1, =IRQ_DISABLE0
@@ -109,7 +109,7 @@ Reset_Handler   PROC
 		        STR     R2, [R1, #0x14]
 		        STR     R2, [R1, #0x18]
 		        STR     R2, [R1, #0x1c]
- 
+
                 LDR      R0, =SystemInit
                 BLX      R0
                 LDR      R0, =__main
