@@ -83,12 +83,30 @@ void IRQ_Handler(void)
   "mrc    p15, 0, r6, c12, c12, 0                   \n" // get the irq id
   "cmp    r6, #1020                                 \n"
   "bhs    IRQ_HandlerEnd                            \n"
+  "vmrs   r8, fpexc                                 \n"
+  "tst    r8, #(1<<30)                              \n"
+  "beq    1f                                        \n"
+  "vstmdb sp!, {d0-d15}                             \n" // save fpu context
+  "vstmdb sp!, {d16-d31}                            \n"
+  "vmrs   r9, fpscr                                 \n"
+  "stmfd  sp!, {r9}                                 \n"
+  "1:                                               \n"
+  "stmfd  sp!, {r8}                                 \n"
   "mrc    p15, 0, r2, c12, c11, 3                   \n" // get the running priority
   "mrc    p15, 0, r7, c4, c6, 0                     \n" // get the interrupt priority mask
   "mcr    p15, 0, r2, c4, c6, 0                     \n" // set the interrupt priority mask
   "mcr    p15, 0, r6, c12, c12, 1                   \n" // end of interrupt
   "mov    r0, r6                                    \n"
   "bl     IRQ_HardIrqPreemptHandler                 \n"
+  "ldmfd  sp!, {r8}                                 \n"
+  "vmsr   fpexc, r8                                 \n"
+  "tst    r8, #(1<<30)                              \n"
+  "beq    1f                                        \n"
+  "ldmfd  sp!, {r9}                                 \n"
+  "vmsr   fpscr, r9                                 \n"
+  "vldmia sp!, {d16-d31}                            \n"
+  "vldmia sp!, {d0-d15}                             \n"
+  "1:                                               \n"
   "mcr    p15, 0, r6, c12, c11, 1                   \n" // set the interrupt priority mask
   "mcr    p15, 0, r7, c4, c6, 0                     \n" // deactivate interrupt
   "IRQ_HandlerEnd:                                  \n"
