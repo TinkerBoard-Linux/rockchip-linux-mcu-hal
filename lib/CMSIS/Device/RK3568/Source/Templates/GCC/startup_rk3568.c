@@ -51,9 +51,13 @@ void IRQ_HardIrqHandler(void)
   if (irqn >= HAL_GIC_IRQ_LINE_COUNT)
     return;
 
+  if (irqn <= 15)
+    HAL_GIC_EndOfInterrupt(irqn);
+
   HAL_IRQ_HANDLER_IRQHandler(irqn);
 
-  HAL_GIC_EndOfInterrupt(irqn);
+  if (irqn > 15)
+    HAL_GIC_EndOfInterrupt(irqn);
 }
 #endif
 
@@ -96,6 +100,10 @@ void IRQ_Handler(void)
   "mrc    p15, 0, r7, c4, c6, 0                     \n" // get the interrupt priority mask
   "mcr    p15, 0, r2, c4, c6, 0                     \n" // set the interrupt priority mask
   "mcr    p15, 0, r6, c12, c12, 1                   \n" // end of interrupt
+  "cmp    r6, #16                                   \n"
+  "bhs    2f                                        \n"
+  "mcr    p15, 0, r6, c12, c11, 1                   \n" // deactivate sgi interrupt
+  "2:                                               \n"
   "mov    r0, r6                                    \n"
   "bl     IRQ_HardIrqPreemptHandler                 \n"
   "ldmfd  sp!, {r8}                                 \n"
@@ -108,8 +116,11 @@ void IRQ_Handler(void)
   "vldmia sp!, {d0-d15}                             \n"
   "1:                                               \n"
   "cpsid  i                                         \n"
-  "mcr    p15, 0, r6, c12, c11, 1                   \n" // set the interrupt priority mask
-  "mcr    p15, 0, r7, c4, c6, 0                     \n" // deactivate interrupt
+  "cmp    r6, #16                                   \n"
+  "blo    2f                                        \n" // for sgi bypass deactivate interrupt
+  "mcr    p15, 0, r6, c12, c11, 1                   \n" // deactivate interrupt
+  "2:                                               \n"
+  "mcr    p15, 0, r7, c4, c6, 0                     \n" // set the interrupt priority mask
   "IRQ_HandlerEnd:                                  \n"
   "msr    spsr_cxsf, r5                             \n" // restore the spsr
   "ldmia  sp, {r0 - pc}^                            \n" // restore the CPU context then exit irq handler
