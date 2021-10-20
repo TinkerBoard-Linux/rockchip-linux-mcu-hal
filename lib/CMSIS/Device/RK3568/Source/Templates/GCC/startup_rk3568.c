@@ -107,6 +107,7 @@ void IRQ_Handler(void)
   "vldmia sp!, {d16-d31}                            \n"
   "vldmia sp!, {d0-d15}                             \n"
   "1:                                               \n"
+  "cpsid  i                                         \n"
   "mcr    p15, 0, r6, c12, c11, 1                   \n" // set the interrupt priority mask
   "mcr    p15, 0, r7, c4, c6, 0                     \n" // deactivate interrupt
   "IRQ_HandlerEnd:                                  \n"
