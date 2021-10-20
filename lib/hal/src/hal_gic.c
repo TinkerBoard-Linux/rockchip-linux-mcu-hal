@@ -34,6 +34,7 @@
  - Invoke HAL_GIC_GetPriorityMask() to get the priority mask.
  - Invoke HAL_GIC_GetPriority() to get the priority value of a IRQ.
  - Invoke HAL_GIC_SetIRouter() to set the routting affinity value of a IRQ.
+ - Invoke HAL_GIC_SendSGI() to send a sgi.
 
  @} */
 
@@ -44,6 +45,34 @@
 #define RESERVED(N, T)         T RESERVED##N;
 #define GICR_CPU_BASE(cpu)     (GIC_REDISTRIBUTOR_BASE + (0x20000 * (cpu)))
 #define GICR_SGI_CPU_BASE(cpu) (GICR_CPU_BASE(cpu) + 0x10000)
+
+#define ICC_SGI1R_TARGET_LIST_SHIFT    0
+#define ICC_SGI1R_TARGET_LIST_MASK     (0xffff << ICC_SGI1R_TARGET_LIST_SHIFT)
+#define ICC_SGI1R_AFFINITY_1_SHIFT     16
+#define ICC_SGI1R_AFFINITY_1_MASK      (0xff << ICC_SGI1R_AFFINITY_1_SHIFT)
+#define ICC_SGI1R_SGI_ID_SHIFT         24
+#define ICC_SGI1R_SGI_ID_MASK          (0xfULL << ICC_SGI1R_SGI_ID_SHIFT)
+#define ICC_SGI1R_AFFINITY_2_SHIFT     32
+#define ICC_SGI1R_AFFINITY_2_MASK      (0xffULL << ICC_SGI1R_AFFINITY_2_SHIFT)
+#define ICC_SGI1R_IRQ_ROUTING_MODE_BIT 40
+#define ICC_SGI1R_RS_SHIFT             44
+#define ICC_SGI1R_RS_MASK              (0xfULL << ICC_SGI1R_RS_SHIFT)
+#define ICC_SGI1R_AFFINITY_3_SHIFT     48
+#define ICC_SGI1R_AFFINITY_3_MASK      (0xffULL << ICC_SGI1R_AFFINITY_3_SHIFT)
+
+#define MPIDR_LEVEL_BITS 8
+#define MPIDR_LEVEL_MASK ((1 << MPIDR_LEVEL_BITS) - 1)
+
+#define MPIDR_AFFINITY_LEVEL(mpidr, level) \
+    ((mpidr >> (MPIDR_LEVEL_BITS * level)) & MPIDR_LEVEL_MASK)
+
+#define MPIDR_TO_SGI_AFFINITY(cluster_id, level) \
+    (MPIDR_AFFINITY_LEVEL(cluster_id, level)     \
+        << ICC_SGI1R_AFFINITY_## level ##_SHIFT)
+
+#define MPIDR_RS(mpidr)                (((mpidr) & 0xF0UL) >> 4)
+#define MPIDR_TO_SGI_RS(mpidr)         (MPIDR_RS(mpidr) << ICC_SGI1R_RS_SHIFT)
+#define MPIDR_TO_SGI_CLUSTER_ID(mpidr) ((mpidr) & ~0xFUL)
 
 /********************* Private Structure Definition **************************/
 struct  GIC_DISTRIBUTOR_REG {
@@ -203,6 +232,11 @@ static inline uint32_t GIC_GetIccHppir1_EL1(void)
     return val;
 }
 
+static inline void GIC_SetIccSgi1r(uint64_t val)
+{
+    __set_CP64(15, 0, val, 12);
+}
+
 static inline void GIC_EnableIRQ(uint32_t irq)
 {
     if (irq > 31) {
@@ -291,6 +325,52 @@ static inline void GIC_ClearPending(uint32_t irq)
     }
 }
 
+static uint16_t GIC_GetTargetList(int *baseCpu, uint32_t mask, unsigned long clusterId)
+{
+    int nextCpu, cpu = *baseCpu;
+    unsigned long mpidr = HAL_CPU_TOPOLOGY_GetCpuAffByCpuId(cpu);
+    uint16_t tList = 0;
+
+    tList |= 1 << (mpidr & 0xf);
+
+    for (nextCpu = cpu + 1; nextCpu < PLATFORM_CORE_COUNT; nextCpu++) {
+        mpidr = HAL_CPU_TOPOLOGY_GetCpuAffByCpuId(nextCpu);
+
+        if (clusterId != MPIDR_TO_SGI_CLUSTER_ID(mpidr)) {
+            break;
+        }
+
+        if (!(mask & HAL_BIT(nextCpu))) {
+            continue;
+        }
+
+        tList |= 1 << (mpidr & 0xf);
+    }
+
+    *baseCpu = nextCpu;
+
+    return tList;
+}
+
+static void GIC_SendSgi(uint64_t clusterId, uint16_t tList, unsigned int irq, uint32_t routMode)
+{
+    uint64_t val;
+
+    if (routMode) {
+        val = (0x1ULL << ICC_SGI1R_IRQ_ROUTING_MODE_BIT |
+               irq << ICC_SGI1R_SGI_ID_SHIFT);
+    } else {
+        val = (MPIDR_TO_SGI_AFFINITY(clusterId, 3) |
+               MPIDR_TO_SGI_AFFINITY(clusterId, 2) |
+               irq << ICC_SGI1R_SGI_ID_SHIFT |
+               MPIDR_TO_SGI_AFFINITY(clusterId, 1) |
+               MPIDR_TO_SGI_RS(clusterId) |
+               tList << ICC_SGI1R_TARGET_LIST_SHIFT);
+    }
+
+    GIC_SetIccSgi1r(val);
+}
+
 static inline uint32_t GIC_GetIRQStatus(uint32_t irq)
 {
     uint32_t pending, active;
@@ -348,8 +428,9 @@ static inline uint32_t GIC_GetPriorityMask(void)
 static inline void GIC_SetIRouter(uint32_t irq, uint32_t aff)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
-
-    pGICD->IROUTER[irq - 32] = aff;
+    if (irq > 31) {
+        pGICD->IROUTER[irq - 32] = aff;
+    }
 }
 
 static inline void GIC_SetConfiguration(uint32_t irq, uint32_t int_config)
@@ -597,8 +678,6 @@ HAL_Status HAL_GIC_Disable(uint32_t irq)
 uint32_t HAL_GIC_GetEnableState(uint32_t irq)
 {
     return GIC_GetEnableState(irq);
-
-    return HAL_OK;
 }
 
 /**
@@ -646,12 +725,56 @@ int32_t HAL_GIC_GetPending(uint32_t irq)
 
 /**
  * @brief  Clear the Pending state of a IRQ.
- * @param  irq id.
+ * @param  irq: irq id.
  * @return HAL_Status.
  */
 HAL_Status HAL_GIC_ClearPending(uint32_t irq)
 {
     GIC_ClearPending(irq);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Send a sgi.
+ * @param  irq: irq id of a sgi.
+ * @param  targetList: The set of CPUs for which SGI interrupts
+                       will be generated. Each bit corresponds to a cpu.
+                       for example,0x6 corresponds to cpu 1 and cpu2.
+ * @param  routMode: 0 sgi routed to the Cpus specified by targetList.
+                     1 sgi routed to all CPUs in the system, excluding "self".
+ * @return HAL_Status.
+ */
+HAL_Status HAL_GIC_SendSGI(IRQn_Type irq,
+                           uint32_t targetList,
+                           uint32_t routMode)
+{
+    int i = 0;
+    uint16_t tList;
+    unsigned long mpidr;
+    uint64_t clusterId;
+
+    if (irq > 15) {
+        return HAL_INVAL;
+    }
+
+    if (routMode) {
+        GIC_SendSgi(0, 0, irq, routMode);
+
+        return HAL_OK;
+    }
+
+    while (i < PLATFORM_CORE_COUNT) {
+        if (targetList & HAL_BIT(i)) {
+            mpidr = HAL_CPU_TOPOLOGY_GetCpuAffByCpuId(i);
+            clusterId = MPIDR_TO_SGI_CLUSTER_ID(mpidr);
+            tList = GIC_GetTargetList(&i, targetList, clusterId);
+            GIC_SendSgi(clusterId, tList, irq, routMode);
+        } else {
+            i++;
+        }
+    }
+    __ISB();
 
     return HAL_OK;
 }
@@ -677,7 +800,7 @@ HAL_Status HAL_GIC_SetPriority(uint32_t irq, uint32_t priority)
     uint32_t aff;
 
     aff = __get_MPIDR() & MPIDR_AFFINITY_MASK;
-    if (p_ampCtrl->cpuAff != aff) {
+    if (p_ampCtrl && p_ampCtrl->cpuAff != aff && irq > 31) {
         return HAL_INVAL;
     }
     GIC_SetPriority(irq, priority);
