@@ -99,6 +99,25 @@ static const struct GPIO_IRQ_GROUP_CFG gpioIrqCfg[GPIO_BANK_NUM] = {
 
 static struct UART_REG *pUart = UART2;
 
+static void HAL_IOMUX_Uart2M0Config(void)
+{
+    /* UART2 M0 RX-0D0 TX-0D1 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_D0 |
+                         GPIO_PIN_D1,
+                         PIN_CONFIG_MUX_FUNC1);
+}
+
+static void HAL_IOMUX_Uart4M1Config(void)
+{
+    /* UART4 M1 RX-3B1 TX-3B2 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK3,
+                         GPIO_PIN_B1 |
+                         GPIO_PIN_B2,
+                         PIN_CONFIG_MUX_FUNC4);
+    HAL_PINCTRL_IOFuncSelForUART4(IOFUNC_SEL_M1);
+}
+
 #ifdef __GNUC__
 int _write(int fd, char *ptr, int len)
 {
@@ -155,6 +174,7 @@ void main(void)
     BSP_Init();
 
     /* UART Init */
+    HAL_IOMUX_Uart2M0Config();
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
     HAL_GIC_Init(&irqConfig);
     HAL_GPIO_IRQ_GROUP_Init(CPU_GET_AFFINITY(1, 0),
