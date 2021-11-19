@@ -187,20 +187,39 @@ typedef enum
 #define PLL_INPUT_OSC_RATE       (24 * 1000 * 1000)
 
 /* --------  Configuration of Core Peripherals  ----------------------------------- */
+#if defined(HAL_AP_CORE) && defined(HAL_MCU_CORE)
+#error "HAL_AP_CORE and HAL_MCU_CORE only one of them can be enabled"
+#endif
+
+#if !defined(HAL_AP_CORE) && !defined(HAL_MCU_CORE)
+#error "Please define HAL_AP_CORE or HAL_MCU_CORE on hal_conf.h"
+#endif
+
+#ifdef HAL_AP_CORE
+#define __CORTEX_A_BIG            76U       /* Cortex-A76 Core                          */
+#define __CORTEX_A_LIT            55U       /* Cortex-A55 Core                          */
+#define __FPU_PRESENT             1U        /* FPU present                              */
+#else
 #define __CM0_REV                 0x0000U   /* Core revision r0p0 */
 #define __MPU_PRESENT             0U        /* no MPU present */
 #define __VTOR_PRESENT            0U        /* no VTOR present */
 #define __NVIC_PRIO_BITS          2U        /* Number of Bits used for Priority Levels */
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
 
-#define NVIC_PERIPH_IRQ_OFFSET  16U
-#define MAX_INTERRUPT_VECTOR    64U
+#define NVIC_PERIPH_IRQ_OFFSET    16U
+#define MAX_INTERRUPT_VECTOR      64U
+
+#endif
 
 #ifndef __ASSEMBLY__
-#include "core_cm0.h"                       /* Processor and core peripherals */
-#include "system_rk3588_mcu.h"
+#ifdef HAL_AP_CORE
+#include "core_ca.h"
+#else
+#include "core_cm0.h"
+#endif
+#include "system_rk3588.h"
 #endif /* __ASSEMBLY__ */
-#include "rk3588_mcu.h"
+#include "rk3588.h"
 
 /****************************************************************************************/
 /*                                                                                      */

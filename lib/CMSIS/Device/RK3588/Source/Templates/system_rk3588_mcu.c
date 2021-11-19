@@ -5,6 +5,8 @@
 
 #include "hal_base.h"
 
+#ifdef HAL_MCU_CORE
+
 HAL_SECTION_SRAM_DATA uint32_t SystemCoreClock = 30000000;
 
 /*----------------------------------------------------------------------------
@@ -36,3 +38,4 @@ void SystemInit(void)
     DCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 #endif
 }
+#endif

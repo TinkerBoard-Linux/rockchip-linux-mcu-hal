@@ -3,8 +3,8 @@
  * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
  */
 
-#ifndef __SYSTEM_RK3588_MCU_H_
-#define __SYSTEM_RK3588_MCU_H_
+#ifndef __SYSTEM_RK3588_H_
+#define __SYSTEM_RK3588_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,4 +19,4 @@ extern void SystemInit(void);
 }
 #endif
 
-#endif /*__SYSTEM_RK3588_MCU_H_ */
+#endif /*__SYSTEM_RK3588_H_ */

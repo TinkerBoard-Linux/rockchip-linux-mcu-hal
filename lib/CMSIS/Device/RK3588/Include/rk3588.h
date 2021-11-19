@@ -1,5 +1,5 @@
-#ifndef __RK3588_MCU_H
-#define __RK3588_MCU_H
+#ifndef __RK3588_H
+#define __RK3588_H
 #ifdef __cplusplus
   extern "C" {
 #endif
