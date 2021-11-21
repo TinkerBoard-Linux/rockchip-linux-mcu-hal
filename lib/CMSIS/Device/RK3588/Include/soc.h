@@ -158,17 +158,17 @@ typedef enum
   INTMUX_OUT_START_IRQn     =  0,     /*!< INTMUX_OUT_START Interrupt    */
   INTMUX_OUT_END_IRQn       =  7,     /*!< INTMUX_OUT_END Interrupt      */
   NUM_INTERRUPTS            =  27,     /*!< Number of internal IRQ        */
-  MBOX0_CH0_AP_IRQn         =  93  + NUM_INTERRUPTS,     /*!< MAILBOX_CH0_AP Interrupt      */
-  MBOX0_CH1_AP_IRQn         =  94  + NUM_INTERRUPTS,     /*!< MAILBOX_CH1_AP Interrupt      */
-  MBOX0_CH2_AP_IRQn         =  95  + NUM_INTERRUPTS,     /*!< MAILBOX_CH2_AP Interrupt      */
-  MBOX0_CH3_AP_IRQn         =  96  + NUM_INTERRUPTS,     /*!< MAILBOX_CH3_AP Interrupt      */
-  MBOX0_CH0_BB_IRQn         =  97  + NUM_INTERRUPTS,     /*!< MAILBOX_CH0_BB Interrupt      */
-  MBOX0_CH1_BB_IRQn         =  98  + NUM_INTERRUPTS,     /*!< MAILBOX_CH1_BB Interrupt      */
-  MBOX0_CH2_BB_IRQn         =  99  + NUM_INTERRUPTS,     /*!< MAILBOX_CH2_BB Interrupt      */
-  MBOX0_CH3_BB_IRQn         =  100 + NUM_INTERRUPTS,     /*!< MAILBOX_CH3_BB Interrupt      */
-  WDT0_IRQn                 =  433 + NUM_INTERRUPTS,     /*!< WDT Interrupt         */
-  TIMER0_IRQn               =  434 + NUM_INTERRUPTS,     /*!< TIMER0 Interrupt      */
-  TIMER1_IRQn               =  435 + NUM_INTERRUPTS,     /*!< TIMER1 Interrupt      */
+  MBOX0_CH0_AP_IRQn         =  101  + NUM_INTERRUPTS,     /*!< MAILBOX_CH0_AP Interrupt      */
+  MBOX0_CH1_AP_IRQn         =  102  + NUM_INTERRUPTS,     /*!< MAILBOX_CH1_AP Interrupt      */
+  MBOX0_CH2_AP_IRQn         =  103  + NUM_INTERRUPTS,     /*!< MAILBOX_CH2_AP Interrupt      */
+  MBOX0_CH3_AP_IRQn         =  104  + NUM_INTERRUPTS,     /*!< MAILBOX_CH3_AP Interrupt      */
+  MBOX0_CH0_BB_IRQn         =  105  + NUM_INTERRUPTS,     /*!< MAILBOX_CH0_BB Interrupt      */
+  MBOX0_CH1_BB_IRQn         =  106  + NUM_INTERRUPTS,     /*!< MAILBOX_CH1_BB Interrupt      */
+  MBOX0_CH2_BB_IRQn         =  107  + NUM_INTERRUPTS,     /*!< MAILBOX_CH2_BB Interrupt      */
+  MBOX0_CH3_BB_IRQn         =  108  + NUM_INTERRUPTS,     /*!< MAILBOX_CH3_BB Interrupt      */
+  WDT0_IRQn                 =  433  + NUM_INTERRUPTS,     /*!< WDT Interrupt         */
+  TIMER0_IRQn               =  434  + NUM_INTERRUPTS,     /*!< TIMER0 Interrupt      */
+  TIMER1_IRQn               =  435  + NUM_INTERRUPTS,     /*!< TIMER1 Interrupt      */
   TOTAL_INTERRUPTS          =  (NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),   /*!< For external interrupt from intmux    */
 } IRQn_Type;
 
