@@ -127,6 +127,9 @@ typedef enum
 } IRQn_Type;
 
 #define RSVD_IRQn(_N)               (RSVD0_IRQn + (_N))
+
+#define AMP_CPUOFF_REQ_IRQ(cpu)     RSVD_IRQn(11 + (cpu)) /* gic irq: 294 */
+
 #define GPIO_IRQ_GROUP_DIRQ_BASE    RSVD_IRQn(37) /* gic irq: 320 */
 #define GPIO_IRQ_GROUP_DIRQ_NUM     (NUM_INTERRUPTS - GPIO_IRQ_GROUP_DIRQ_BASE)
 

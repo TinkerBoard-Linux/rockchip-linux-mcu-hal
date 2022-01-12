@@ -20,15 +20,6 @@
 
 #include "hal_def.h"
 
-/** @defgroup SMCCC_How_To_Use How To Use
- *  @{
-
- The ARM SMCCC(SMC Calling Convention) driver can be used as follows:
-
- - Trap into Secure Monitor mode which is at EL3 or Secure-PL1.
-
- @} */
-
 /***************************** MACRO Definition ******************************/
 /* SMC function IDs for SiP Service queries */
 #define SIP_ATF_VERSION               0x82000001
@@ -66,6 +57,7 @@
 #define SIP_SCMI_AGENT15              0x8200001f
 #define SIP_SDEI_FIQ_DBG_SWITCH_CPU   0x82000020
 #define SIP_SDEI_FIQ_DBG_GET_EVENT_ID 0x82000021
+#define SIP_AMP_CFG                   0x82000022
 
 #define ROCKCHIP_SIP_CONFIG_DRAM_ECC 0x0d
 
@@ -80,6 +72,20 @@ typedef enum {
     SIP_SHARE_PAGE_TYPE_DDRECC,
     SIP_SHARE_PAGE_TYPE_MAX,
 } eSIP_sharePageType;
+
+/**
+  * @brief SIP AMP sub-function definition
+  */
+typedef enum {
+    SIP_AMP_SUB_FUNC_CFG_MODE = 0,
+    SIP_AMP_SUB_FUNC_BOOT_ARG01,
+    SIP_AMP_SUB_FUNC_BOOT_ARG23,
+    SIP_AMP_SUB_FUNC_REQ_CPU_OFF,
+    SIP_AMP_SUB_FUNC_GET_CPU_STATUS,
+    SIP_AMP_SUB_FUNC_CPU_OFF,
+    SIP_AMP_SUB_FUNC_CPU_ON,
+    SIP_AMP_SUB_FUNC_END,
+} eSIP_AmpSubFuncType;
 
 /***************************** Structure Definition **************************/
 /** @defgroup SMCCC_Exported_Definition_Group1 Basic Definition
@@ -108,6 +114,8 @@ struct SMCCC_PARAM {
 * @attention this API allow direct use in the HAL layer.
 */
 void HAL_SMCCC_Call(struct SMCCC_PARAM *pParam);
+HAL_Status HAL_SMCCC_SIP_AmpCpuOffIrqHandler(uint32_t irq, void *args);
+HAL_Status HAL_SMCCC_SIP_AmpCpuOff(void);
 
 /** @} */
 
