@@ -874,7 +874,6 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     nor->size = 1 << (info->density + 9);
     nor->eraseSize = nor->sectorSize;
     if (nor->spi->mode & HAL_SPI_RX_QUAD) {
-        ret = HAL_OK;
         if (info->QEBits) {
             ret = SNOR_EnableQE(nor);
         }
@@ -896,14 +895,24 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         nor->readDummy = 8;
         nor->readProto = SNOR_PROTO_1_1_2;
     }
-    if (nor->spi->mode & HAL_SPI_TX_QUAD &&
-        info->QEBits) {
-        if (SNOR_EnableQE(nor) == HAL_OK) {
+    if (nor->spi->mode & HAL_SPI_TX_QUAD) {
+        if (info->QEBits) {
+            ret = SNOR_EnableQE(nor);
+        }
+        if (ret == HAL_OK) {
             nor->programOpcode = info->progCmd_4;
             switch (nor->programOpcode) {
             case SPINOR_OP_PP_1_4_4:
                 nor->writeProto = SNOR_PROTO_1_4_4;
                 break;
+            case SPINOR_OP_4PP_1_4_4:
+                if (idByte[0] == MID_MACRONIX) {
+                    nor->writeProto = SNOR_PROTO_1_4_4;
+                    break;
+                } else {
+                    nor->writeProto = SNOR_PROTO_1_1_4;
+                    break;
+                }
             default:
                 nor->writeProto = SNOR_PROTO_1_1_4;
                 break;

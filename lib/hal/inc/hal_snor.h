@@ -67,6 +67,7 @@ enum SPI_NOR_PROTOCOL {
 #define SPINOR_OP_PP         0x02 /**< Page program (up to 256 bytes) */
 #define SPINOR_OP_PP_1_1_4   0x32 /**< Quad page program */
 #define SPINOR_OP_PP_1_4_4   0x38 /**< Quad page program */
+#define SPINOR_OP_4PP_1_4_4  0x3e /**< Quad page program with 4B */
 #define SPINOR_OP_BE_4K      0x20 /**< Erase 4KiB block */
 #define SPINOR_OP_BE_4K_PMC  0xd7 /**< Erase 4KiB block on PMC chips */
 #define SPINOR_OP_BE_32K     0x52 /**< Erase 32KiB block */
