@@ -74,6 +74,7 @@ uint32_t HAL_GIC_GetPriority(uint32_t irq);
 HAL_Status HAL_GIC_SetIRouter(uint32_t irq, uint32_t aff);
 HAL_Status HAL_GIC_Init(struct GIC_IRQ_AMP_CTRL *ampCtrl);
 HAL_Status HAL_GIC_SendSGI(IRQn_Type irq, uint32_t targetList, uint32_t routMode);
+HAL_Status HAL_GIC_SetDir(uint32_t irq);
 
 /** @} */
 

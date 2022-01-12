@@ -35,6 +35,7 @@
  - Invoke HAL_GIC_GetPriority() to get the priority value of a IRQ.
  - Invoke HAL_GIC_SetIRouter() to set the routting affinity value of a IRQ.
  - Invoke HAL_GIC_SendSGI() to send a sgi.
+ - Invoke HAL_GIC_SetDir() to deactivate a IRQ.
 
  @} */
 
@@ -166,6 +167,11 @@ static inline uint32_t GIC_GetIccCtlr(void)
 static inline void GIC_SetIccCtlr(uint32_t val)
 {
     __set_CP(15, 0, val, 12, 12, 4);
+}
+
+static inline void GIC_SetIccDir_EL1(uint32_t val)
+{
+    __set_CP(15, 0, val, 12, 11, 1);
 }
 
 static inline uint32_t GIC_GetIccIGrpen1_EL1(void)
@@ -425,6 +431,11 @@ static inline uint32_t GIC_GetPriorityMask(void)
     return GIC_GetIccPmr_EL1();
 }
 
+static inline void GIC_SetDir(uint32_t irq)
+{
+    GIC_SetIccDir_EL1(irq);
+}
+
 static inline void GIC_SetIRouter(uint32_t irq, uint32_t aff)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
@@ -577,10 +588,9 @@ static void GIC_CPUInterfaceInit(uint32_t amp, uint32_t priority)
     ctlr &= ~0x2;
 #endif
     GIC_SetIccCtlr(ctlr);
-
-    GIC_EnableInterface();
     GIC_SetBinaryPoint(0);
     GIC_SetPriorityMask(0xFF);
+    GIC_EnableInterface();
 }
 
 static void GIC_EnableRedist(uint32_t enable)
@@ -848,6 +858,18 @@ uint32_t HAL_GIC_GetPriority(uint32_t irq)
 HAL_Status HAL_GIC_SetIRouter(uint32_t irq, uint32_t aff)
 {
     GIC_SetIRouter(irq, aff);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  deactivate a IRQ.
+ * @param  irq: irq id.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_GIC_SetDir(uint32_t irq)
+{
+    GIC_SetDir(irq);
 
     return HAL_OK;
 }
