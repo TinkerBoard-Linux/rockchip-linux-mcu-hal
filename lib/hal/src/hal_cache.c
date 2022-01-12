@@ -18,6 +18,11 @@
  */
 
 /***************************** MACRO Definition ******************************/
+#ifdef HAL_CACHE_DECODED_ADDR_BASE
+#define DECODED_ADDR(x) (x + HAL_CACHE_DECODED_ADDR_BASE)
+#else
+#define DECODED_ADDR(x) (x)
+#endif
 
 /***************************** Structure Definition **************************/
 
@@ -238,6 +243,7 @@ HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
     }
 
     address = HAL_CpuAddrToDmaAddr(address);
+    address = DECODED_ADDR(address);
 
     offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
@@ -582,6 +588,8 @@ HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
         return HAL_OK;
     }
 
+    address = DECODED_ADDR(address);
+
     offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_INVALID | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
@@ -626,6 +634,8 @@ HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
         return HAL_OK;
     }
 
+    address = DECODED_ADDR(address);
+
     offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |
             CACHE_M_CLEAN | DCACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK;
@@ -669,6 +679,8 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     if (sizeByte == 0) {
         return HAL_OK;
     }
+
+    address = DECODED_ADDR(address);
 
     offset = ((address & (CACHE_LINE_SIZE - 1)) + sizeByte - 1) >> CACHE_LINE_SHIFT;
     value = (address & DCACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK) |

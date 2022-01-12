@@ -226,6 +226,7 @@ typedef enum
 /*                               Register Bitmap Section                                */
 /*                                                                                      */
 /****************************************************************************************/
+#ifdef HAL_MCU_CORE
 /*****************************************CACHE*****************************************/
 /* CACHE LINE SIZE */
 #define CACHE_LINE_SHIFT                (5U)
@@ -236,6 +237,12 @@ typedef enum
 #define CACHE_M_CLEAN_INVALID           0x4U
 #define CACHE_M_INVALID_ALL             0x6U
 #define CACHE_REVISION                  (0x00000100U)
+
+#ifndef HAL_CACHE_DECODED_ADDR_BASE
+#error "Please define HAL_CACHE_DECODED_ADDR_BASE on hal_conf.h"
+#endif
+
+#endif
 
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
