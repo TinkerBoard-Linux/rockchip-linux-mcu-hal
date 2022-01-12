@@ -160,6 +160,8 @@ int fputc(int ch, FILE *f)
 
 void main(void)
 {
+    uint32_t cpu_id, irq;
+
     struct HAL_UART_CONFIG hal_uart_config = {
         .baudRate = UART_BR_1500000,
         .dataBit = UART_DATA_8B,
@@ -180,6 +182,12 @@ void main(void)
     HAL_GPIO_IRQ_GROUP_Init(CPU_GET_AFFINITY(1, 0),
                             gpioIrqCfg,
                             HAL_IRQ_HANDLER_GetGpioIrqGroupOps());
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    irq = AMP_CPUOFF_REQ_IRQ(cpu_id);
+    HAL_IRQ_HANDLER_SetIRQHandler(irq, HAL_SMCCC_SIP_AmpCpuOffIrqHandler, NULL);
+    HAL_GIC_Enable(irq);
+
     printf("Hello RK3568 Bare-metal using RK_HAL!\n");
 
     /* Unity Test */
