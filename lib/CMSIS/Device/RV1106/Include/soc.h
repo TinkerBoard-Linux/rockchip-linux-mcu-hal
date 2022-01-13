@@ -92,7 +92,7 @@ typedef enum
   TIMER3_IRQn            = 41,      /*!< TIMER3 Interrupt            */
   TIMER4_IRQn            = 42,      /*!< TIMER4 Interrupt            */
   TIMER5_IRQn            = 43,      /*!< TIMER5 Interrupt            */
-  SARADC_IRQn            = 62,      /*!< SARADC Interrupt	           */
+  SARADC_IRQn            = 62,      /*!< SARADC Interrupt            */
   VOP_IRQn               = 89,      /*!< VOP Interrupt               */
   MIPI_ISP_IRQn          = 103,     /*!< MIPI ISP Interrupt          */
   MI_ISP_IRQn            = 104,     /*!< MI ISP Interrupt            */
@@ -198,6 +198,17 @@ typedef enum
 #include "system_rv1106.h"
 #endif /* __ASSEMBLY__ */
 #include "rv1106.h"
+
+/*****************************************CACHE*****************************************/
+/* CACHE LINE SIZE */
+#define CACHE_LINE_SHIFT                (5U)
+#define CACHE_LINE_SIZE                 (0x1U << CACHE_LINE_SHIFT)
+#define CACHE_LINE_ADDR_MASK            (0xFFFFFFFFU << CACHE_LINE_SHIFT)
+#define CACHE_M_CLEAN                   0x0U
+#define CACHE_M_INVALID                 0x2U
+#define CACHE_M_CLEAN_INVALID           0x4U
+#define CACHE_M_INVALID_ALL             0x6U
+#define CACHE_REVISION                  (0x00000100U)
 
 /****************************************************************************************/
 /*                                                                                      */
