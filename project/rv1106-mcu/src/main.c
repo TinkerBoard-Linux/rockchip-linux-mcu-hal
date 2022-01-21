@@ -7,6 +7,7 @@
 #include "hal_base.h"
 
 /********************* Private MACRO Definition ******************************/
+//#define GPIO_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -15,6 +16,8 @@
 /********************* Private Function Definition ***************************/
 
 /********************* Public Function Definition ****************************/
+extern void scr1_trap_entry(void);
+
 static struct UART_REG *pUart = UART2;
 
 static void HAL_IOMUX_Uart0M1Config(void)
@@ -75,6 +78,50 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
+#ifdef GPIO_TEST
+static void gpio_isr(int vector, void *param)
+{
+    printf("Enter GPIO IRQHander!\n");
+    HAL_GPIO_IRQHandler(GPIO2, GPIO_BANK2);
+    printf("Leave GPIO IRQHandler!\n");
+}
+
+static HAL_Status b0_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_test(void)
+{
+    uint32_t level;
+
+    /* Test GPIO output */
+    HAL_GPIO_SetPinDirection(GPIO2, GPIO_PIN_B0, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO2, GPIO_PIN_B0);
+    printf("test_gpio level = %ld\n", level);
+    HAL_DelayMs(5000);
+    if (level == GPIO_HIGH) {
+        HAL_GPIO_SetPinLevel(GPIO2, GPIO_PIN_B0, GPIO_LOW);
+    } else {
+        HAL_GPIO_SetPinLevel(GPIO2, GPIO_PIN_B0, GPIO_HIGH);
+    }
+    level = HAL_GPIO_GetPinLevel(GPIO2, GPIO_PIN_B0);
+    printf("test_gpio level = %ld\n", level);
+    HAL_DelayMs(5000);
+
+    /* Test GPIO input */
+    printf("test_gpio interrupt\n");
+    HAL_GPIO_SetPinDirection(GPIO2, GPIO_PIN_B0, GPIO_IN);
+    HAL_IRQ_HANDLER_SetIRQHandler(GPIO2_IRQn, gpio_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK2, GPIO_PIN_B0, b0_call_back, NULL);
+    HAL_RISCVIC_EnableIRQ(GPIO2_IRQn);
+    HAL_GPIO_SetIntType(GPIO2, GPIO_PIN_B0, GPIO_INT_TYPE_EDGE_RISING);
+    HAL_GPIO_EnableIRQ(GPIO2, GPIO_PIN_B0);
+}
+#endif
+
 void main(void)
 {
     struct HAL_UART_CONFIG hal_uart_config = {
@@ -90,11 +137,18 @@ void main(void)
     /* BSP Init */
     BSP_Init();
 
+    /* Interrupt Init */
+    HAL_RISCVIC_Init((uint32_t)scr1_trap_entry);
+
     /* UART Init */
     HAL_IOMUX_Uart2M0Config();
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
 
     printf("Hello RV1106 RISC-V\n");
+
+#ifdef GPIO_TEST
+    gpio_test();
+#endif
 
     while (1) {
         ;

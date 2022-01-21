@@ -176,6 +176,10 @@
 
 #include "hal_pwr.h"
 
+#ifdef HAL_RISCVIC_MODULE_ENABLED
+#include "hal_riscvic.h"
+#endif
+
 #ifdef HAL_SDIO_MODULE_ENABLED
 #include "hal_sdio.h"
 #endif
