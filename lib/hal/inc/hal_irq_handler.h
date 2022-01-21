@@ -23,7 +23,9 @@
  *  @{
  */
 typedef HAL_Status (*HAL_IRQ_HANDLER)(uint32_t irq, void *args);
+#ifdef HAL_GPIO_MODULE_ENABLED
 typedef HAL_Status (*HAL_IRQ_GPIO_HANDLER)(eGPIO_bankId bank, uint32_t pin, void *args);
+#endif
 
 /** @} */
 /***************************** Function Declare ******************************/
@@ -34,10 +36,12 @@ struct GPIO_IRQ_GROUP_OPS *HAL_IRQ_HANDLER_GetGpioIrqGroupOps(void);
 HAL_Status HAL_IRQ_HANDLER_IRQHandler(uint32_t irq);
 HAL_Status HAL_IRQ_HANDLER_SetIRQHandler(uint32_t irq,
                                          HAL_IRQ_HANDLER handler, void *args);
+#ifdef HAL_GPIO_MODULE_ENABLED
 HAL_Status HAL_IRQ_HANDLER_SetGpioIRQHandler(eGPIO_bankId bank,
                                              ePINCTRL_GPIO_PINS pin,
                                              HAL_IRQ_GPIO_HANDLER handler,
                                              void *args);
+#endif
 /** @} */
 
 #endif

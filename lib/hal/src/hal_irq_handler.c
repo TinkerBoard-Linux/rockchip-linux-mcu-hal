@@ -37,15 +37,17 @@ struct HAL_IRQ_HANDLER_CTRL {
     void *args;
 };
 
+#ifdef HAL_GPIO_MODULE_ENABLED
 struct HAL_GPIO_IRQ_HANDLER_CTRL {
     HAL_IRQ_GPIO_HANDLER handler;
     void *args;
 };
-
+#endif
 /********************* Private Variable Definition ***************************/
 static struct HAL_IRQ_HANDLER_CTRL s_irqsHandler[NUM_INTERRUPTS];
-static struct HAL_GPIO_IRQ_HANDLER_CTRL
-    s_gpioHandler[GPIO_BANK_NUM][PIN_NUMBER_PER_BANK];
+#ifdef HAL_GPIO_MODULE_ENABLED
+static struct HAL_GPIO_IRQ_HANDLER_CTRL s_gpioHandler[GPIO_BANK_NUM][PIN_NUMBER_PER_BANK];
+#endif
 
 #ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
 static HAL_Status GPIO_IRQ_GROUP_SetGIRQHandler(uint32_t irq,
@@ -151,6 +153,7 @@ HAL_Status HAL_IRQ_HANDLER_SetIRQHandler(uint32_t irq, HAL_IRQ_HANDLER handler, 
     return HAL_OK;
 }
 
+#ifdef HAL_GPIO_MODULE_ENABLED
 void HAL_GPIO_IRQDispatch(eGPIO_bankId bank, uint32_t pin)
 {
     HAL_ASSERT(bank < GPIO_BANK_NUM);
@@ -187,6 +190,7 @@ HAL_Status HAL_IRQ_HANDLER_SetGpioIRQHandler(eGPIO_bankId bank,
 
     return HAL_OK;
 }
+#endif /* HAL_GPIO_MODULE_ENABLED */
 
 /** @} */
 
