@@ -848,7 +848,16 @@ HAL_Status HAL_PCD_EPSetStall(struct PCD_HANDLE *pPCD, uint8_t epAddr)
 
     pEP->isStall = 1;
     pEP->num = epAddr & 0x7F;
-    pEP->isIn = ((epAddr & 0x80) == 0x80);
+
+    if (pEP->num != 0) {
+        pEP->isIn = ((epAddr & 0x80) == 0x80);
+    } else if (pEP->num == 0) {
+        if (pPCD->setupBuf[0] & 0x80) {
+            pEP->isIn = 1;
+        } else {
+            pEP->isIn = 0;
+        }
+    }
 
     USB_EPSetStall(pPCD->pReg, pEP);
     if ((epAddr & 0x7F) == 0) {
