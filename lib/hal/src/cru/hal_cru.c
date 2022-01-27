@@ -97,12 +97,22 @@
 
 #define CRU_PLL_ROUND_UP_TO_KHZ(x) (HAL_DIV_ROUND_UP((x), KHZ) * KHZ)
 
+#define CRU_READ(r)           (*(volatile uint32_t *)(r))
+#define CRU_WRITE(r, b, w, v) (*(volatile uint32_t *)(r) = (((w) << (16) | (v)) << (b)))
+
 /********************* Private Structure Definition **************************/
 static struct PLL_CONFIG g_rockchipAutoTable;
+__WEAK const struct HAL_CRU_DEV g_cruDev;
 
 /********************* Private Variable Definition ***************************/
-
 /********************* Private Function Definition ***************************/
+
+#ifdef CRU_CLK_USE_CON_BANK
+static const struct HAL_CRU_DEV *CRU_GetInfo(void)
+{
+    return &g_cruDev;
+}
+#endif
 
 /** Calculate the greatest common divisor */
 static uint32_t CRU_Gcd(uint32_t m, uint32_t n)
@@ -634,6 +644,17 @@ HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk)
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
     HAL_Check ret;
 
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].gateOffset + index * 4;
+    ret = (HAL_Check)(!((CRU_READ(reg) & (1 << shift)) >> shift));
+
+    return ret;
+#endif
+
 #ifdef CRU_GATE_CON_CNT
     if (index < CRU_GATE_CON_CNT) {
         ret = (HAL_Check)(!((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift));
@@ -661,6 +682,17 @@ HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
 
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].gateOffset + index * 4;
+    CRU_WRITE(reg, shift, 1U << shift, 0U);
+
+    return HAL_OK;
+#endif
+
 #ifdef CRU_GATE_CON_CNT
     if (index < CRU_GATE_CON_CNT) {
         CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
@@ -687,6 +719,18 @@ HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
 {
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
+
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].gateOffset + index * 4;
+    CRU_WRITE(reg, shift, 1U << shift, 1U);
+
+    return HAL_OK;
+
+#endif
 
 #ifdef CRU_GATE_CON_CNT
     if (index < CRU_GATE_CON_CNT) {
@@ -716,6 +760,17 @@ HAL_Check HAL_CRU_ClkIsReset(uint32_t clk)
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
     HAL_Check ret;
 
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
+    ret = (HAL_Check)((CRU_READ(reg) & (1 << shift)) >> shift);
+
+    return ret;
+#endif
+
 #ifdef CRU_SRST_CON_CNT
     if (index < CRU_SRST_CON_CNT) {
         ret = (HAL_Check)((CRU->CRU_CLKGATE_CON[index] & (1 << shift)) >> shift);
@@ -738,6 +793,18 @@ HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk)
 {
     uint32_t index = CLK_RESET_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
+
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    HAL_ASSERT(shift < 16);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
+    CRU_WRITE(reg, shift, 1U << shift, 1U);
+
+    return HAL_OK;
+#endif
 
     HAL_ASSERT(shift < 16);
 #ifdef CRU_SRST_CON_CNT
@@ -763,6 +830,19 @@ HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
     uint32_t index = CLK_RESET_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
 
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    HAL_ASSERT(shift < 16);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
+    CRU_WRITE(reg, shift, 1U << shift, 0U);
+
+    return HAL_OK;
+
+#endif
+
     HAL_ASSERT(shift < 16);
 #ifdef CRU_SRST_CON_CNT
     if (index < CRU_SRST_CON_CNT) {
@@ -786,6 +866,26 @@ HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
 HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
 {
     uint32_t shift, mask, index;
+
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t reg, bank;
+
+    index = CLK_DIV_GET_REG_OFFSET(divName);
+    shift = CLK_DIV_GET_BITS_SHIFT(divName);
+    HAL_ASSERT(shift < 16);
+    mask = CLK_DIV_GET_MASK(divName);
+    if (divValue > mask) {
+        divValue = mask;
+    }
+
+    bank = CLK_BANK_DIV_GET_BANK(divName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    CRU_WRITE(reg, shift, mask, (divValue - 1U));
+
+    return HAL_OK;
+
+#endif
 
     index = CLK_DIV_GET_REG_OFFSET(divName);
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
@@ -821,6 +921,22 @@ uint32_t HAL_CRU_ClkGetDiv(uint32_t divName)
 {
     uint32_t shift, mask, index, divValue;
 
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t reg, bank;
+
+    index = CLK_DIV_GET_REG_OFFSET(divName);
+    shift = CLK_DIV_GET_BITS_SHIFT(divName);
+    HAL_ASSERT(shift < 16);
+    mask = CLK_DIV_GET_MASK(divName);
+
+    bank = CLK_BANK_DIV_GET_BANK(divName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    divValue = ((CRU_READ(reg) & mask) >> shift) + 1;
+
+    return divValue;
+#endif
+
     index = CLK_DIV_GET_REG_OFFSET(divName);
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
     HAL_ASSERT(shift < 16);
@@ -854,6 +970,22 @@ HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
 {
     uint32_t shift, mask, index;
 
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t reg, bank;
+
+    index = CLK_MUX_GET_REG_OFFSET(muxName);
+    shift = CLK_MUX_GET_BITS_SHIFT(muxName);
+    HAL_ASSERT(shift < 16);
+    mask = CLK_MUX_GET_MASK(muxName);
+
+    bank = CLK_BANK_MUX_GET_BANK(muxName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    CRU_WRITE(reg, shift, mask, muxValue);
+
+    return HAL_OK;
+#endif
+
     index = CLK_MUX_GET_REG_OFFSET(muxName);
     shift = CLK_MUX_GET_BITS_SHIFT(muxName);
     HAL_ASSERT(shift < 16);
@@ -885,6 +1017,22 @@ HAL_SECTION_SRAM_CODE
 uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
 {
     uint32_t shift, mask, index, muxValue;
+
+#ifdef CRU_CLK_USE_CON_BANK
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t reg, bank;
+
+    index = CLK_MUX_GET_REG_OFFSET(muxName);
+    shift = CLK_MUX_GET_BITS_SHIFT(muxName);
+    HAL_ASSERT(shift < 16);
+    mask = CLK_MUX_GET_MASK(muxName);
+
+    bank = CLK_BANK_MUX_GET_BANK(muxName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    muxValue = ((CRU_READ(reg) & mask) >> shift);
+
+    return muxValue;
+#endif
 
     index = CLK_MUX_GET_REG_OFFSET(muxName);
     shift = CLK_MUX_GET_BITS_SHIFT(muxName);

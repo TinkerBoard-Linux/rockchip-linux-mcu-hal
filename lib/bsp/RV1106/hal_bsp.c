@@ -5,6 +5,24 @@
 
 #include "hal_bsp.h"
 
+#if defined(HAL_CRU_MODULE_ENABLED)
+static struct CRU_BANK_INFO cruBanks[] = {
+    CRU_BANK_CFG_FLAGS(CRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(PMUCRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(PERICRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(VICRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(NPUCRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(CORECRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(VEPUCRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(VOCRU_BASE, 0x300, 0x800, 0xa00),
+};
+
+const struct HAL_CRU_DEV g_cruDev = {
+    .banks = cruBanks,
+    .banksNum = HAL_ARRAY_SIZE(cruBanks),
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart2Dev =
 {

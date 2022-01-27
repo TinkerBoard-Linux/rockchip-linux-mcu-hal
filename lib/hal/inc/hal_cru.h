@@ -32,11 +32,13 @@
 #define PLL_INPUT_OSC_RATE (24 * MHZ)
 #endif
 
-#define CLK_RESET_GET_REG_OFFSET(x) ((uint32_t)((x) / 16))
-#define CLK_RESET_GET_BITS_SHIFT(x) ((uint32_t)((x) % 16))
+#define CLK_RESET_GET_REG_OFFSET(x) ((uint32_t)((x & 0xffffff) / 16))
+#define CLK_RESET_GET_BITS_SHIFT(x) ((uint32_t)((x & 0xffffff) % 16))
+#define CLK_RESET_GET_REG_BANK(x)   ((uint32_t)((x & 0xff000000) >> 24))
 
-#define CLK_GATE_GET_REG_OFFSET(x) ((uint32_t)((x) / 16))
-#define CLK_GATE_GET_BITS_SHIFT(x) ((uint32_t)((x) % 16))
+#define CLK_GATE_GET_REG_OFFSET(x) ((uint32_t)((x & 0xffffff) / 16))
+#define CLK_GATE_GET_BITS_SHIFT(x) ((uint32_t)((x & 0xffffff) % 16))
+#define CLK_GATE_GET_REG_BANK(x)   ((uint32_t)((x & 0xff000000) >> 24))
 
 #define CLK_GET_MUX(x) ((x) & 0x0F0F00FFU)
 #define CLK_GET_DIV(x) ((((x) & 0xFF00U) >> 8) | (((x) & 0xF0F00000U) >> 4))
@@ -73,12 +75,58 @@
     WIDTH_TO_MASK((((uint32_t)(x) & CLK_DIV_WIDTH_MASK) >> CLK_DIV_WIDTH_SHIFT)) \
         << CLK_DIV_GET_BITS_SHIFT(x)
 
+#define CLK_BANK_MUX_REG_OFFSET_SHIFT 0U
+#define CLK_BANK_MUX_REG_OFFSET_MASK  0x0000001FU
+#define CLK_BANK_MUX_BANK_SHIFT       5U
+#define CLK_BANK_MUX_BANK_MASK        0x000000E0U
+#define CLK_BANK_MUX_SHIFT_SHIFT      16U
+#define CLK_BANK_MUX_SHIFT_MASK       0x00FF0000U
+#define CLK_BANK_MUX_WIDTH_SHIFT      24U
+#define CLK_BANK_MUX_WIDTH_MASK       0xFF000000U
+
+#define CLK_BANK_MUX_GET_REG_OFFSET(x) \
+    (((uint32_t)(x) & CLK_BANK_MUX_REG_OFFSET_MASK) >> CLK_BANK_MUX_REG_OFFSET_SHIFT)
+#define CLK_BANK_MUX_GET_BITS_SHIFT(x) \
+    (((uint32_t)(x) & CLK_BANK_MUX_SHIFT_MASK) >> CLK_BANK_MUX_SHIFT_SHIFT)
+#define CLK_BANK_MUX_GET_MASK(x)                                                           \
+    WIDTH_TO_MASK((((uint32_t)(x) & CLK_BANK_MUX_WIDTH_MASK) >> CLK_BANK_MUX_WIDTH_SHIFT)) \
+        << CLK_BANK_MUX_GET_BITS_SHIFT(x)
+#define CLK_BANK_MUX_GET_BANK(x) \
+    (((uint32_t)(x) & CLK_BANK_MUX_BANK_MASK) >> CLK_BANK_MUX_BANK_SHIFT)
+
+#define CLK_BANK_DIV_REG_OFFSET_SHIFT 0U
+#define CLK_BANK_DIV_REG_OFFSET_MASK  0x0000001FU
+#define CLK_BANK_DIV_BANK_SHIFT       5U
+#define CLK_BANK_DIV_BANK_MASK        0x000000E0U
+#define CLK_BANK_DIV_SHIFT_SHIFT      16U
+#define CLK_BANK_DIV_SHIFT_MASK       0x00FF0000U
+#define CLK_BANK_DIV_WIDTH_SHIFT      24U
+#define CLK_BANK_DIV_WIDTH_MASK       0xFF000000U
+
+#define CLK_BANK_DIV_GET_REG_OFFSET(x) \
+    (((uint32_t)(x) & CLK_BANK_DIV_REG_OFFSET_MASK) >> CLK_BANK_DIV_REG_OFFSET_SHIFT)
+#define CLK_BANK_DIV_GET_BITS_SHIFT(x) \
+    (((uint32_t)(x) & CLK_BANK_DIV_SHIFT_MASK) >> CLK_BANK_DIV_SHIFT_SHIFT)
+#define CLK_BANK_DIV_GET_MASK(x)                                                           \
+    WIDTH_TO_MASK((((uint32_t)(x) & CLK_BANK_DIV_WIDTH_MASK) >> CLK_BANK_DIV_WIDTH_SHIFT)) \
+        << CLK_BANK_DIV_GET_BITS_SHIFT(x)
+#define CLK_BANK_DIV_GET_BANK(x) \
+    (((uint32_t)(x) & CLK_BANK_DIV_BANK_MASK) >> CLK_BANK_DIV_BANK_SHIFT)
+
 #define RK_PLL_RATE(_rate, _refdiv, _fbdiv, _postdiv1, _postdiv2, _dsmpd, \
                     _frac)                                                \
     {                                                                     \
         .rate = _rate##U, .fbDiv = _fbdiv, .postDiv1 = _postdiv1,         \
         .refDiv = _refdiv, .postDiv2 = _postdiv2, .dsmpd = _dsmpd,        \
         .frac = _frac,                                                    \
+    }
+
+#define CRU_BANK_CFG_FLAGS(reg, sel, gate, soft) \
+    {                                            \
+        .cruBase = reg,                          \
+        .selOffset = sel,                        \
+        .gateOffset = gate,                      \
+        .softOffset = soft,                      \
     }
 
 struct PLL_CONFIG {
@@ -117,6 +165,20 @@ typedef enum {
     GLB_RST_FST_WDT2,
     GLB_RST_SND_WDT2,
 } eCRU_WdtRstType;
+
+struct CRU_BANK_INFO {
+    uint32_t cruBase;
+    uint32_t selOffset;
+    uint32_t gateOffset;
+    uint32_t softOffset;
+};
+
+struct HAL_CRU_DEV {
+    const struct CRU_BANK_INFO *banks;
+    uint8_t banksNum;
+};
+
+extern const struct HAL_CRU_DEV g_cruDev;
 
 /***************************** Structure Definition **************************/
 

@@ -12,6 +12,10 @@
 
 /***************************** Structure Definition **************************/
 
+#ifdef HAL_CRU_MODULE_ENABLED
+extern const struct HAL_CRU_DEV g_cruDev;
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 extern const struct HAL_UART_DEV g_uart2Dev;
 #endif
