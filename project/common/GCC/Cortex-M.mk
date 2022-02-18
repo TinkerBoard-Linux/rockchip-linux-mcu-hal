@@ -33,7 +33,7 @@ OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
 HAL_CFLAGS	+= -Werror
 
-LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_arm$(if $(findstring 1,$(XIP)),_xip).ld
+LINKER_SCRIPT	?= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_arm$(if $(findstring 1,$(XIP)),_xip).ld
 
 #############################################################################
 # Output files

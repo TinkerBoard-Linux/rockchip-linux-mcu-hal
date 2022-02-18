@@ -181,13 +181,13 @@ SECTIONS
     __end__ = .;
     PROVIDE(end = .);
     PROVIDE(__heap_start = .);
-    . = ORIGIN(SRAM1) + LENGTH(SRAM1) - __STACK_SIZE;
+    . = ORIGIN(DRAM) + LENGTH(DRAM) - __STACK_SIZE;
     PROVIDE(__heap_end = .);
     . = ALIGN(8);
     __HeapLimit = .;
   } > DRAM
 
-  .stack (ORIGIN(SRAM1) + LENGTH(SRAM1) - __STACK_SIZE) (COPY) :
+  .stack (ORIGIN(DRAM) + LENGTH(DRAM) - __STACK_SIZE) (COPY) :
   {
     . = ALIGN(8);
     __StackLimit = .;
