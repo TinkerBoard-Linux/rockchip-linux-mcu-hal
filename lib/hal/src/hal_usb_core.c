@@ -442,7 +442,7 @@ HAL_Status USB_ActivateEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *
 
         if (((USB_INEP(pEP->num)->DIEPCTL) & USB_OTG_DIEPCTL_USBAEP) == 0) {
             USB_INEP(pEP->num)->DIEPCTL |= ((pEP->maxPacket & USB_OTG_DIEPCTL_MPSIZ) |
-                                            (pEP->type << 18) | ((pEP->num) << 22) |
+                                            (pEP->type << 18) | ((pEP->txFIFONum) << 22) |
                                             (USB_OTG_DIEPCTL_SD0PID_SEVNFRM) |
                                             (USB_OTG_DIEPCTL_USBAEP));
         }

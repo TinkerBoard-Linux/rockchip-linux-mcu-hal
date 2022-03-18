@@ -590,19 +590,17 @@ HAL_Status HAL_PCD_Init(struct PCD_HANDLE *pPCD)
         pPCD->inEp[i].maxPacket = 0;
         pPCD->inEp[i].pxferBuff = 0;
         pPCD->inEp[i].xferLen = 0;
+        pPCD->pReg->DIEPTXF[i] = 0;
     }
 
     for (i = 0; i < 15; i++) {
         pPCD->outEp[i].isIn = 0;
         pPCD->outEp[i].num = i;
-        pPCD->inEp[i].txFIFONum = i;
         /* Control until ep is activated */
         pPCD->outEp[i].type = EP_TYPE_CTRL;
         pPCD->outEp[i].maxPacket = 0;
         pPCD->outEp[i].pxferBuff = 0;
         pPCD->outEp[i].xferLen = 0;
-
-        pPCD->pReg->DIEPTXF[i] = 0;
     }
 
     /* Init Device */
@@ -709,7 +707,7 @@ HAL_Status HAL_PCD_EPOpen(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint16_t ep_m
 
     if (pEP->isIn) {
         /* Assign a Tx FIFO */
-        pEP->txFIFONum = pEP->num;
+        pEP->txFIFONum = pEP->num >> 1;
     }
 
     /* Set initial data PID. */
