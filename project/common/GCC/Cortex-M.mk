@@ -27,7 +27,7 @@ CPU		+= -mthumb
 ASFLAGS         += $(CPU) -D__ASSEMBLY__
 CFLAGS		+= $(CPU) -std=c99 -O2 -g
 CFLAGS		+= -Wformat=2 -Wall -Wextra -Wno-unused-parameter
-CFLAGS		+= -Wstrict-prototypes -Wmissing-prototypes
+CFLAGS		+= -Wstrict-prototypes -Wmissing-prototypes -nostartfiles
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 

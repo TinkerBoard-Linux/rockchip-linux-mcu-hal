@@ -27,7 +27,7 @@ CPU		+= -DUSE_PLIC -DUSE_M_TIME -DNO_INIT -mcmodel=medany -msmall-data-limit=8 -
 ASFLAGS         += $(CPU) -c -x assembler-with-cpp
 CFLAGS		+= $(CPU) -O2 -g
 CFLAGS		+= -Wformat=2 -Wall -Wextra -Wno-unused-parameter
-CFLAGS		+= -Wstrict-prototypes -Wmissing-prototypes
+CFLAGS		+= -Wstrict-prototypes -Wmissing-prototypes -nostartfiles
 LDFLAGS		+= $(CPU) -Wl,--gc-sections -Wl,--wrap=memset -Wl,--wrap=puts
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
