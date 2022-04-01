@@ -190,6 +190,10 @@
 #include "hal_spinand.h"
 #endif
 
+#ifdef HAL_SPINLOCK_MODULE_ENABLED
+#include "hal_spinlock.h"
+#endif
+
 #ifdef HAL_SYSTICK_MODULE_ENABLED
 #include "hal_systick.h"
 #endif
