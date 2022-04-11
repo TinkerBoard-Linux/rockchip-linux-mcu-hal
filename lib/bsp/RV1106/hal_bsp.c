@@ -24,6 +24,16 @@ const struct HAL_CRU_DEV g_cruDev = {
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED
+const struct HAL_UART_DEV g_uart0Dev =
+{
+    .pReg = UART0,
+    .sclkID = CLK_UART0,
+    .sclkGateID = SCLK_UART0_GATE,
+    .pclkGateID = PCLK_UART0_GATE,
+    .irqNum = UART0_IRQn,
+    .isAutoFlow = false,
+};
+
 const struct HAL_UART_DEV g_uart2Dev =
 {
     .pReg = UART2,
