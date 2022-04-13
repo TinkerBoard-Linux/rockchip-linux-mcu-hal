@@ -102,7 +102,18 @@ static void spinlock_test(void)
     }
 }
 
-int main(void)
+static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
+    GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(0, 0)),
+};
+
+static struct GIC_IRQ_AMP_CTRL irqConfig = {
+    .cpuAff = CPU_GET_AFFINITY(1, 0),
+    .defPrio = 0xd0,
+    .defRouteAff = CPU_GET_AFFINITY(0, 0),
+    .irqsCfg = &irqsConfig[0],
+};
+
+void main(void)
 {
     uint32_t ownerID;
 
@@ -118,6 +129,8 @@ int main(void)
 
     /* BSP Init */
     BSP_Init();
+
+    HAL_GIC_Init(&irqConfig);
 
     /* UART Init */
     HAL_IOMUX_Uart4M0Config();

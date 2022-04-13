@@ -124,6 +124,7 @@ typedef enum
   CAN0_IRQn               = 91,       /*!< CPU1 L1-L2 CACHE ECC ERROR Interrupt */
   SFC_IRQn                = 114,
   RSVD0_IRQn              = 148,      /*!< RSVD0  Interrupt            */
+  NUM_INTERRUPTS          = 160
 } IRQn_Type;
 
 #define RSVD_IRQn(_N)               (RSVD0_IRQn + (_N))
@@ -142,6 +143,7 @@ typedef enum
 
 #define __CORTEX_A           35U          /* Cortex-A35 Core                          */
 #define __FPU_PRESENT         1U          /* FPU present                              */
+#define HAL_GIC_V2            1U          /* GIC version 2                            */
 
 #ifndef __ASSEMBLY__
 #include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
@@ -158,8 +160,8 @@ typedef enum
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
-#define GIC_DISTRIBUTOR_BASE    0xFF580000 /* GIC Dist base address */
-#define GIC_CPU_BASE            0xFF581000 /* GIC CPU interface base address */
+#define GIC_DISTRIBUTOR_BASE    (0xFF581000)
+#define GIC_CPU_INTERFACE_BASE  (0xFF582000)
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -176,7 +178,7 @@ typedef enum
 #define PLATFORM_CLUSTER0_CORE_COUNT (4)
 #define PLATFORM_CLUSTER1_CORE_COUNT (0)
 #define PLATFORM_CORE_COUNT PLATFORM_CLUSTER0_CORE_COUNT
-#define CPU_GET_AFFINITY(cpuId, clusterId) ((cpuId) << MPIDR_AFF1_SHIFT)
+#define CPU_GET_AFFINITY(cpuId, clusterId) ((cpuId) << MPIDR_AFF0_SHIFT)
 
 /******************************************CRU*******************************************/
 

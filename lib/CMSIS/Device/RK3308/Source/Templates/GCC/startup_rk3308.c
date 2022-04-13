@@ -42,7 +42,6 @@ void IRQ_HardIrqPreemptHandler(uint32_t irqn)
 void IRQ_HardIrqHandler(void)
 {
   uint32_t irqn;
-  GIC_IRQHandler handler;
 
   irqn = HAL_GIC_GetActiveIRQ();
 
@@ -62,6 +61,11 @@ void IRQ_HardIrqHandler(void)
 void IRQ_Handler(void)
 {
 #ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
+
+#if GIC_CPU_INTERFACE_BASE != 0xFF582000
+  "error: GIC_CPU_INTERFACE_BASE != 0xFF582000"
+#endif
+
   __ASM volatile (
   "sub    lr, lr, #4                                \n"
   "stm    sp, {r0, lr}                              \n" // save r0, lr, spsr
@@ -82,7 +86,8 @@ void IRQ_Handler(void)
   "str    r3, [sp, #-4]!                            \n"
   "mov    r3, lr                                    \n"
   "stmia  r7, {r2 - r5}                             \n"
-  "mrc    p15, 0, r6, c12, c12, 0                   \n" // get the irq id
+  "ldr    r10, =0xFF582000                          \n"
+  "ldr    r6, [r10, #0xc]                           \n" // get the irq id
   "cmp    r6, #1020                                 \n"
   "bhs    IRQ_HandlerEnd                            \n"
   "vmrs   r8, fpexc                                 \n"
@@ -94,13 +99,14 @@ void IRQ_Handler(void)
   "stmfd  sp!, {r9}                                 \n"
   "1:                                               \n"
   "stmfd  sp!, {r8}                                 \n"
-  "mrc    p15, 0, r2, c12, c11, 3                   \n" // get the running priority
-  "mrc    p15, 0, r7, c4, c6, 0                     \n" // get the interrupt priority mask
-  "mcr    p15, 0, r2, c4, c6, 0                     \n" // set the interrupt priority mask
-  "mcr    p15, 0, r6, c12, c12, 1                   \n" // end of interrupt
+  "ldr    r2, [r10, #0x14]                          \n" // get the running priority
+  "ldr    r7, [r10, #0x4]                           \n" // get the interrupt priority mask
+  "str    r2, [r10, #0x4]                           \n" // set the interrupt priority mask
+  "str    r6, [r10, #0x10]                          \n" // end of interrupt
   "cmp    r6, #16                                   \n"
   "bhs    2f                                        \n"
-  "mcr    p15, 0, r6, c12, c11, 1                   \n" // deactivate sgi interrupt
+  "add    r3, r10, #0x1000                          \n" // deactivate sgi interrupt
+  "str    r6, [r3]                                  \n" // deactivate sgi interrupt
   "2:                                               \n"
   "mov    r0, r6                                    \n"
   "bl     IRQ_HardIrqPreemptHandler                 \n"
@@ -116,9 +122,10 @@ void IRQ_Handler(void)
   "cpsid  i                                         \n"
   "cmp    r6, #16                                   \n"
   "blo    2f                                        \n" // for sgi bypass deactivate interrupt
-  "mcr    p15, 0, r6, c12, c11, 1                   \n" // deactivate interrupt
+  "add    r3, r10, #0x1000                          \n" // deactivate sgi interrupt
+  "str    r6, [r3]                                  \n" // deactivate sgi interrupt
   "2:                                               \n"
-  "mcr    p15, 0, r7, c4, c6, 0                     \n" // set the interrupt priority mask
+  "str    r7, [r10, #0x4]                           \n" // set the interrupt priority mask
   "IRQ_HandlerEnd:                                  \n"
   "msr    spsr_cxsf, r5                             \n" // restore the spsr
   "ldmia  sp, {r0 - pc}^                            \n" // restore the CPU context then exit irq handler
