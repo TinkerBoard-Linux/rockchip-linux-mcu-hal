@@ -34,12 +34,19 @@ typedef void (*GIC_IRQHandler) (uint32_t irq);
     .prio = (_prio),                 \
   }
 
+#define GIC_AMP_IRQ_CFG_ROUTE(_irq, _prio, aff) \
+  {                                             \
+    .irq = (_irq),                              \
+    .prio = (_prio),                            \
+    .routeAff = (aff),                          \
+  }
 /***************************** Structure Definition **************************/
 /** config information for a irq */
 struct GIC_AMP_IRQ_INIT_CFG {
     IRQn_Type irq; /**< irq id */
     uint32_t prio; /**< irq priority, as fallows:
                      * 0x80, 0x90, 0xa0, 0xb0, 0xc0, 0xd0, 0xe0 */
+    uint32_t routeAff; /**< routting affinity */
 };
 
 /** For the AMP system, need to specify a cpu to initialize

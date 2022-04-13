@@ -113,7 +113,29 @@ struct  GIC_DISTRIBUTOR_REG {
     RESERVED(10[5236], uint32_t)
     __IO uint64_t IROUTER[988];       /* brief  Offset: 0x6100(R/W) Interrupt Routing Registers */
 };
-
+#ifdef HAL_GIC_V2
+struct GIC_CPU_INTERFACE_REG {
+    __IO uint32_t CTLR;               /*!< \brief  Offset: 0x000 (R/W) CPU Interface Control Register */
+    __IO uint32_t PMR;                /*!< \brief  Offset: 0x004 (R/W) Interrupt Priority Mask Register */
+    __IO uint32_t BPR;                /*!< \brief  Offset: 0x008 (R/W) Binary Point Register */
+    __I uint32_t IAR;                 /*!< \brief  Offset: 0x00C (R/ ) Interrupt Acknowledge Register */
+    __O uint32_t EOIR;                /*!< \brief  Offset: 0x010 ( /W) End Of Interrupt Register */
+    __I uint32_t RPR;                 /*!< \brief  Offset: 0x014 (R/ ) Running Priority Register */
+    __I uint32_t HPPIR;               /*!< \brief  Offset: 0x018 (R/ ) Highest Priority Pending Interrupt Register */
+    __IO uint32_t ABPR;               /*!< \brief  Offset: 0x01C (R/W) Aliased Binary Point Register */
+    __I uint32_t AIAR;                /*!< \brief  Offset: 0x020 (R/ ) Aliased Interrupt Acknowledge Register */
+    __O uint32_t AEOIR;               /*!< \brief  Offset: 0x024 ( /W) Aliased End Of Interrupt Register */
+    __I uint32_t AHPPIR;              /*!< \brief  Offset: 0x028 (R/ ) Aliased Highest Priority Pending Interrupt Register */
+    __IO uint32_t STATUSR;            /*!< \brief  Offset: 0x02C (R/W) Error Reporting Status Register, optional */
+    RESERVED(1[40], uint32_t)
+    __IO uint32_t APR[4];             /*!< \brief  Offset: 0x0D0 (R/W) Active Priority Register */
+    __IO uint32_t NSAPR[4];           /*!< \brief  Offset: 0x0E0 (R/W) Non-secure Active Priority Register */
+    RESERVED(2[3], uint32_t)
+    __I uint32_t IIDR;                /*!< \brief  Offset: 0x0FC (R/ ) CPU Interface Identification Register */
+    RESERVED(3[960], uint32_t)
+    __O uint32_t DIR;                 /*!< \brief  Offset: 0x1000( /W) Deactivate Interrupt Register */
+};
+#else
 struct GIC_REDISTRIBUTOR_REG {
     __IO uint32_t CTLR;            /* brief  Offset: 0x0 (R/W) Redistributor Control Register */
     __IO uint32_t IIDR;            /* brief  Offset: 0x4 (RO) Implementer Identification Register */
@@ -147,14 +169,18 @@ struct GIC_REDISTRIBUTOR_SGI_REG {
     RESERVED(10[63], uint32_t)
     __IO uint32_t NSACR[64];       /* brief  Offset: 0xE00 (R/W) Non-secure Access Control Registers */
 };
-
+#endif
 /********************* Private Variable Definition ***************************/
 static struct GIC_IRQ_AMP_CTRL *p_ampCtrl;
 static struct GIC_DISTRIBUTOR_REG *pGICD = (struct GIC_DISTRIBUTOR_REG *)GIC_DISTRIBUTOR_BASE;
+#ifdef HAL_GIC_V2
+static struct GIC_CPU_INTERFACE_REG *pGICC = (struct GIC_CPU_INTERFACE_REG *)GIC_CPU_INTERFACE_BASE;
+#else
 static struct GIC_REDISTRIBUTOR_REG *pGICR;
 static struct GIC_REDISTRIBUTOR_SGI_REG *pGICRSGI;
-
+#endif
 /********************* Private Function Definition ***************************/
+#ifndef HAL_GIC_V2
 static inline uint32_t GIC_GetIccCtlr(void)
 {
     uint32_t val;
@@ -242,43 +268,80 @@ static inline void GIC_SetIccSgi1r(uint64_t val)
 {
     __set_CP64(15, 0, val, 12);
 }
+#endif
 
 static inline void GIC_EnableIRQ(uint32_t irq)
 {
+    HAL_ASSERT(irq < NUM_INTERRUPTS);
+#ifdef HAL_GIC_V2
+    pGICD->ISENABLER[irq / 32U] = 1U << (irq % 32U);
+#else
     if (irq > 31) {
         pGICD->ISENABLER[irq / 32U] = 1U << (irq % 32U);
     } else {
         pGICRSGI->ISENABLER0 = 1U << (irq % 32U);
     }
+#endif
 }
 
 static inline void GIC_DisableIRQ(uint32_t irq)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
-
+#ifdef HAL_GIC_V2
+    pGICD->ICENABLER[irq / 32U] = 1U << (irq % 32U);
+#else
     if (irq > 31) {
         pGICD->ICENABLER[irq / 32] = 1 << (irq % 32);
     } else {
         pGICRSGI->ICENABLER0 = 1 << (irq % 32);
     }
+#endif
 }
 
 static inline uint32_t GIC_GetEnableState(uint32_t irq)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
+#ifdef HAL_GIC_V2
 
+    return (pGICD->ISENABLER[irq / 32U] >> (irq % 32U)) & 1UL;
+#else
     if (irq > 31) {
         return (pGICD->ISENABLER[irq / 32] >> (irq % 32)) & 1;
     } else {
         return (pGICRSGI->ISENABLER0 >> (irq % 32)) & 1;
     }
+#endif
+}
+
+static inline uint32_t GIC_GetCtlr(void)
+{
+#ifdef HAL_GIC_V2
+
+    return pGICC->CTLR;
+#else
+
+    return GIC_GetIccCtlr();
+#endif
+}
+
+static inline void GIC_SetCtlr(uint32_t val)
+{
+#ifdef HAL_GIC_V2
+    pGICC->CTLR = val;
+#else
+    GIC_SetIccCtlr(val);
+#endif
 }
 
 static inline uint32_t GIC_GetActiveIRQ(void)
 {
     uint32_t irq;
 
+#ifdef HAL_GIC_V2
+    irq = pGICC->IAR;
+#else
     irq = GIC_GetIccIar1_EL1();
+#endif
     __DSB();
 
     return irq;
@@ -288,19 +351,29 @@ static inline void GIC_EndOfInterrupt(uint32_t irq)
 {
     irq &= 0x3FFU;
     HAL_ASSERT(irq < NUM_INTERRUPTS);
-
+#ifdef HAL_GIC_V2
+    pGICC->EOIR = irq;
+#else
     GIC_SetIccEoir1_EL1(irq);
+#endif
 }
 
 static inline void GIC_SetPending(uint32_t irq)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
-
-    if (irq > 31) {
-        pGICD->ISPENDR[irq / 32] = 1 << (irq % 32);
+#ifdef HAL_GIC_V2
+    if (irq >= 16U) {
+        pGICD->ISPENDR[irq / 32U] = 1U << (irq % 32U);
     } else {
-        pGICRSGI->ISPENDR0 = 1 << (irq % 32);
+        pGICD->SGIR = (irq | 0x02000000U);
     }
+#else
+    if (irq > 31U) {
+        pGICD->ISPENDR[irq / 32U] = 1u << (irq % 32U);
+    } else {
+        pGICRSGI->ISPENDR0 = 1U << (irq % 32U);
+    }
+#endif
 }
 
 static inline uint32_t GIC_GetPending(uint32_t irq)
@@ -310,12 +383,24 @@ static inline uint32_t GIC_GetPending(uint32_t irq)
     if (irq >= NUM_INTERRUPTS) {
         return HAL_INVAL;
     }
-
-    if (irq > 31) {
-        pending = (pGICD->ISPENDR[irq / 32] >> (irq % 32)) & 1;
+#ifdef HAL_GIC_V2
+    if (irq >= 16U) {
+        pending = (pGICD->ISPENDR[irq / 32U] >> (irq % 32U)) & 1UL;
     } else {
-        pending = (pGICRSGI->ISPENDR0 >> (irq % 32)) & 1;
+        pending = (pGICD->SPENDSGIR[irq / 4U] >> ((irq % 4U) * 8U)) & 0xFFUL;
+        if (pending != 0U) {
+            pending = 1U;
+        } else {
+            pending = 0U;
+        }
     }
+#else
+    if (irq > 31) {
+        pending = (pGICD->ISPENDR[irq / 32U] >> (irq % 32U)) & 1UL;
+    } else {
+        pending = (pGICRSGI->ISPENDR0 >> (irq % 32U)) & 1UL;
+    }
+#endif
 
     return pending;
 }
@@ -323,14 +408,29 @@ static inline uint32_t GIC_GetPending(uint32_t irq)
 static inline void GIC_ClearPending(uint32_t irq)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
-
-    if (irq > 31U) {
-        pGICD->ICPENDR[irq / 32] = 1 << (irq % 32);
+#ifdef HAL_GIC_V2
+    if (irq >= 16U) {
+        pGICD->ICPENDR[irq / 32U] = 1U << (irq % 32U);
     } else {
-        pGICRSGI->ICPENDR0 = 1 << (irq % 32);
+        pGICD->CPENDSGIR[irq / 4U] = 1U << ((irq % 4U) * 8U);
     }
+#else
+    if (irq > 31U) {
+        pGICD->ICPENDR[irq / 32U] = 1U << (irq % 32U);
+    } else {
+        pGICRSGI->ICPENDR0 = 1U << (irq % 32U);
+    }
+#endif
 }
 
+#ifdef HAL_GIC_V2
+static void GIC_SendSgi(IRQn_Type irq, uint32_t targetList, uint32_t routMode)
+{
+    HAL_ASSERT(irq < 16U);
+    pGICD->SGIR = ((routMode & 3U) << 24U) |
+                  ((targetList & 0xFFUL) << 16U) | (irq & 0x0FUL);
+}
+#else
 static uint16_t GIC_GetTargetList(int *baseCpu, uint32_t mask, unsigned long clusterId)
 {
     int nextCpu, cpu = *baseCpu;
@@ -358,7 +458,7 @@ static uint16_t GIC_GetTargetList(int *baseCpu, uint32_t mask, unsigned long clu
     return tList;
 }
 
-static void GIC_SendSgi(uint64_t clusterId, uint16_t tList, unsigned int irq, uint32_t routMode)
+static void GIC_SetSgi(uint64_t clusterId, uint16_t tList, unsigned int irq, uint32_t routMode)
 {
     uint64_t val;
 
@@ -377,6 +477,37 @@ static void GIC_SendSgi(uint64_t clusterId, uint16_t tList, unsigned int irq, ui
     GIC_SetIccSgi1r(val);
 }
 
+static void GIC_SendSgi(IRQn_Type irq, uint32_t targetList, uint32_t routMode)
+{
+    int i = 0;
+    uint16_t tList;
+    unsigned long mpidr;
+    uint64_t clusterId;
+
+    if (irq > 15U) {
+        return;
+    }
+
+    if (routMode) {
+        GIC_SetSgi(0, 0, irq, routMode);
+
+        return;
+    }
+
+    while (i < PLATFORM_CORE_COUNT) {
+        if (targetList & HAL_BIT(i)) {
+            mpidr = HAL_CPU_TOPOLOGY_GetCpuAffByCpuId(i);
+            clusterId = MPIDR_TO_SGI_CLUSTER_ID(mpidr);
+            tList = GIC_GetTargetList(&i, targetList, clusterId);
+            GIC_SetSgi(clusterId, tList, irq, routMode);
+        } else {
+            i++;
+        }
+    }
+    __ISB();
+}
+#endif
+
 static inline uint32_t GIC_GetIRQStatus(uint32_t irq)
 {
     uint32_t pending, active;
@@ -384,7 +515,10 @@ static inline uint32_t GIC_GetIRQStatus(uint32_t irq)
     if (irq >= NUM_INTERRUPTS) {
         return HAL_INVAL;
     }
-
+#ifdef HAL_GIC_V2
+    pending = (pGICD->ISPENDR[irq / 32U] >> (irq % 32U)) & 1UL;
+    active = (pGICD->ISACTIVER[irq / 32U] >> (irq % 32U)) & 1UL;
+#else
     if (irq > 31U) {
         pending = (pGICD->ISPENDR[irq / 32U] >> (irq % 32U)) & 1UL;
         active = (pGICD->ISACTIVER[irq / 32U] >> (irq % 32U)) & 1UL;
@@ -392,6 +526,7 @@ static inline uint32_t GIC_GetIRQStatus(uint32_t irq)
         pending = (pGICRSGI->ISPENDR0 >> (irq % 32U)) & 1UL;
         active = (pGICRSGI->ISACTIVER0 >> (irq % 32U)) & 1UL;
     }
+#endif
 
     return ((active << 1U) | pending);
 }
@@ -399,7 +534,10 @@ static inline uint32_t GIC_GetIRQStatus(uint32_t irq)
 static inline void GIC_SetPriority(uint32_t irq, uint32_t priority)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
-
+#ifdef HAL_GIC_V2
+    uint32_t mask = pGICD->IPRIORITYR[irq / 4U] & ~(0xFFUL << ((irq % 4U) * 8U));
+    pGICD->IPRIORITYR[irq / 4U] = mask | ((priority & 0xFFUL) << ((irq % 4U) * 8U));
+#else
     if (irq > 31) {
         uint32_t mask = pGICD->IPRIORITYR[irq / 4U] & ~(0xFFUL << ((irq % 4U) * 8U));
         pGICD->IPRIORITYR[irq / 4U] = mask | ((priority & 0xFFUL) << ((irq % 4U) * 8U));
@@ -407,51 +545,89 @@ static inline void GIC_SetPriority(uint32_t irq, uint32_t priority)
         uint32_t mask = pGICRSGI->IPRIORITYR[irq / 4U] & ~(0xFFUL << ((irq % 4U) * 8U));
         pGICRSGI->IPRIORITYR[irq / 4U] = mask | ((priority & 0xFFUL) << ((irq % 4U) * 8U));
     }
+#endif
 }
 
 static inline uint32_t GIC_GetPriority(uint32_t irq)
 {
     HAL_ASSERT(irq < NUM_INTERRUPTS);
 
+#ifdef HAL_GIC_V2
+
+    return (pGICD->IPRIORITYR[irq / 4U] >> ((irq % 4U) * 8U)) & 0xFFUL;
+#else
     if (irq > 31) {
-        return (pGICD->IPRIORITYR[irq / 4] >> ((irq % 4) * 8)) & 0xFF;
+        return (pGICD->IPRIORITYR[irq / 4U] >> ((irq % 4U) * 8U)) & 0xFFUL;
     } else {
-        return (pGICRSGI->IPRIORITYR[irq / 4] >> ((irq % 4) * 8)) & 0xFF;
+        return (pGICRSGI->IPRIORITYR[irq / 4U] >> ((irq % 4U) * 8U)) & 0xFFUL;
     }
+#endif
 }
 
 static inline void GIC_SetPriorityMask(uint32_t priority)
 {
     priority = priority & 0xFF;
+
+#ifdef HAL_GIC_V2
+    pGICC->PMR = priority;
+#else
     GIC_SetIccPmr_EL1(priority);
+#endif
 }
 
 static inline uint32_t GIC_GetPriorityMask(void)
 {
+#ifdef HAL_GIC_V2
+
+    return pGICC->PMR;
+#else
+
     return GIC_GetIccPmr_EL1();
+#endif
 }
 
 static inline void GIC_SetDir(uint32_t irq)
 {
+#ifdef HAL_GIC_V2
+    pGICC->DIR = irq;
+#else
     GIC_SetIccDir_EL1(irq);
+#endif
 }
 
 static inline void GIC_SetIRouter(uint32_t irq, uint32_t aff)
 {
+#ifdef HAL_GIC_V2
+    uint32_t cpu_target, mask;
+    uint32_t cpu = HAL_CPU_TOPOLOGY_GetCpuIdByMpidr(aff);
+
     HAL_ASSERT(irq < NUM_INTERRUPTS);
+    HAL_ASSERT(cpu < PLATFORM_CORE_COUNT);
+
     if (irq > 31) {
-        pGICD->IROUTER[irq - 32] = aff;
+        cpu_target = HAL_BIT(cpu);
+        mask = pGICD->ITARGETSR[irq / 4U] & ~(0xFFUL << ((irq % 4U) * 8U));
+        cpu_target = (cpu_target & 0xFFUL) << ((irq % 4U) * 8U);
+        pGICD->ITARGETSR[irq / 4U] = mask | cpu_target;
     }
+#else
+    if (irq > 31) {
+        pGICD->IROUTER[irq - 32U] = aff;
+    }
+#endif
 }
 
 static inline void GIC_SetConfiguration(uint32_t irq, uint32_t int_config)
 {
-    uint32_t icfgr = pGICD->ICFGR[irq / 16];
-    uint32_t shift = (irq % 16) << 1;
+    uint32_t icfgr = pGICD->ICFGR[irq / 16U];
+    uint32_t shift = (irq % 16U) << 1U;
 
-    icfgr &= (~(3 << shift));
+    icfgr &= (~(3U << shift));
     icfgr |= (int_config << shift);
 
+#ifdef HAL_GIC_V2
+    pGICD->ICFGR[irq / 16U] = icfgr;
+#else
     if (irq > 31) {
         pGICD->ICFGR[irq / 16] = icfgr;
     } else if (irq > 15) {
@@ -459,41 +635,64 @@ static inline void GIC_SetConfiguration(uint32_t irq, uint32_t int_config)
     } else {
         pGICRSGI->ICFGR0 = icfgr;
     }
+#endif
 }
 
 static inline uint32_t GIC_GetConfiguration(uint32_t irq)
 {
     uint32_t icfgr;
 
+#ifdef HAL_GIC_V2
+    icfgr = pGICD->ICFGR[irq / 16U];
+#else
     if (irq > 31) {
-        icfgr = pGICD->ICFGR[irq / 16];
+        icfgr = pGICD->ICFGR[irq / 16U];
     } else if (irq > 15) {
         icfgr = pGICRSGI->ICFGR1;
     } else {
         icfgr = pGICRSGI->ICFGR0;
     }
+#endif
 
-    return icfgr >> ((irq % 16) << 1);
+    return icfgr >> ((irq % 16U) << 1U);
 }
 
 static inline void GIC_SetBinaryPoint(uint32_t binary_point)
 {
+#ifdef HAL_GIC_V2
+    pGICC->ABPR = binary_point & 7U;
+#else
     GIC_SetIccbpr1(binary_point);
+#endif
 }
 
 static inline uint32_t GIC_GetBinaryPoint(void)
 {
+#ifdef HAL_GIC_V2
+
+    return pGICC->BPR;
+#else
+
     return GIC_GetIccbpr1();
+#endif
 }
 
 static inline void GIC_EnableInterface(void)
 {
+#ifdef HAL_GIC_V2
+    pGICC->CTLR |= 1U;
+#else
     GIC_SetIccIGrpen1_EL1(1);
+#endif
 }
 
 static inline void GIC_DisableInterface(void)
 {
+#ifdef HAL_GIC_V2
+    pGICC->CTLR &= ~1U;
+#else
     GIC_SetIccIGrpen1_EL1(0);
+#endif
 }
 
 static inline void GIC_EnableDistributor(void)
@@ -511,11 +710,6 @@ static inline uint32_t GIC_DistributorInfo(void)
     return pGICD->TYPER;
 }
 
-static inline void GIC_RedistInitBase(uint32_t cpu)
-{
-    pGICR = (struct GIC_REDISTRIBUTOR_REG *)GICR_CPU_BASE(cpu);
-    pGICRSGI = (struct GIC_REDISTRIBUTOR_SGI_REG *)GICR_SGI_CPU_BASE(cpu);
-}
 static void GIC_DistInit(uint32_t initGicd, uint32_t amp, uint32_t priority, uint32_t aff)
 {
     uint32_t i;
@@ -581,16 +775,23 @@ static void GIC_CPUInterfaceInit(uint32_t amp, uint32_t priority)
         GIC_SetPriority(i, priorityField);
     }
 
-    ctlr = GIC_GetIccCtlr();
+    ctlr = GIC_GetCtlr();
 #ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
     ctlr |= 0x2;
 #else
     ctlr &= ~0x2;
 #endif
-    GIC_SetIccCtlr(ctlr);
+    GIC_SetCtlr(ctlr);
     GIC_SetBinaryPoint(0);
     GIC_SetPriorityMask(0xFF);
     GIC_EnableInterface();
+}
+
+#ifndef HAL_GIC_V2
+static inline void GIC_RedistInitBase(uint32_t cpu)
+{
+    pGICR = (struct GIC_REDISTRIBUTOR_REG *)GICR_CPU_BASE(cpu);
+    pGICRSGI = (struct GIC_REDISTRIBUTOR_SGI_REG *)GICR_SGI_CPU_BASE(cpu);
 }
 
 static void GIC_EnableRedist(uint32_t enable)
@@ -607,11 +808,14 @@ static void GIC_EnableRedist(uint32_t enable)
         }
     }
 }
+#endif
 
 static void GIC_Enable(uint32_t initGicd, uint32_t amp, uint32_t priority, uint32_t aff)
 {
     GIC_DistInit(initGicd, amp, priority, aff);
+#ifndef HAL_GIC_V2
     GIC_EnableRedist(1);
+#endif
     GIC_CPUInterfaceInit(amp, priority);
 }
 
@@ -631,6 +835,9 @@ static void GIC_AMPConfigIRQs(struct GIC_AMP_IRQ_INIT_CFG *irqsCfg)
     while (config->prio) {
         if ((uint32_t)config->irq < NUM_INTERRUPTS) {
             GIC_SetPriority(config->irq, config->prio);
+#ifdef HAL_GIC_V2
+            GIC_SetIRouter(config->irq, config->routeAff);
+#endif
         }
         config++;
     }
@@ -652,14 +859,10 @@ static void GIC_AMPConfigIRQs(struct GIC_AMP_IRQ_INIT_CFG *irqsCfg)
  */
 HAL_Status HAL_GIC_Enable(uint32_t irq)
 {
-#ifdef HAL_GIC_AMP_FEATURE_ENABLED
-    uint32_t aff = __get_MPIDR() & MPIDR_AFFINITY_MASK;
-#endif
-
     HAL_ASSERT(irq < NUM_INTERRUPTS);
 
-#ifdef HAL_GIC_AMP_FEATURE_ENABLED
-    GIC_SetIRouter(irq, aff);
+#if defined(HAL_GIC_AMP_FEATURE_ENABLED) && !defined(HAL_GIC_V2)
+    GIC_SetIRouter(irq, __get_MPIDR() & MPIDR_AFFINITY_MASK);
 #endif
 
     GIC_EnableIRQ(irq);
@@ -759,32 +962,7 @@ HAL_Status HAL_GIC_SendSGI(IRQn_Type irq,
                            uint32_t targetList,
                            uint32_t routMode)
 {
-    int i = 0;
-    uint16_t tList;
-    unsigned long mpidr;
-    uint64_t clusterId;
-
-    if (irq > 15) {
-        return HAL_INVAL;
-    }
-
-    if (routMode) {
-        GIC_SendSgi(0, 0, irq, routMode);
-
-        return HAL_OK;
-    }
-
-    while (i < PLATFORM_CORE_COUNT) {
-        if (targetList & HAL_BIT(i)) {
-            mpidr = HAL_CPU_TOPOLOGY_GetCpuAffByCpuId(i);
-            clusterId = MPIDR_TO_SGI_CLUSTER_ID(mpidr);
-            tList = GIC_GetTargetList(&i, targetList, clusterId);
-            GIC_SendSgi(clusterId, tList, irq, routMode);
-        } else {
-            i++;
-        }
-    }
-    __ISB();
+    GIC_SendSgi(irq, targetList, routMode);
 
     return HAL_OK;
 }
@@ -890,12 +1068,13 @@ HAL_Status HAL_GIC_SetDir(uint32_t irq)
  */
 HAL_Status HAL_GIC_Init(struct GIC_IRQ_AMP_CTRL *ampCtrl)
 {
-    uint32_t aff, cpuID, prio;
+    uint32_t aff, prio;
 
-    cpuID = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+#ifndef HAL_GIC_V2
+    GIC_RedistInitBase(HAL_CPU_TOPOLOGY_GetCurrentCpuId());
+#endif
 
     p_ampCtrl = ampCtrl;
-    GIC_RedistInitBase(cpuID);
 
     if (!p_ampCtrl) {
         GIC_Enable(1, 0, 0, 0);
