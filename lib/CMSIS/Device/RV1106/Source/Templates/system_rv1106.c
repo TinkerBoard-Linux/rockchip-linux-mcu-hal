@@ -22,6 +22,9 @@ void SystemInit(void)
 #if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
     uint32_t status;
 
+    /* set the mcu uncache area, usually set the devices address */
+    COREGRF->CACHE_PERI_ADDR_START = 0xff000;
+    COREGRF->CACHE_PERI_ADDR_END = 0xffc00;
     /* stb enable, stb_entry=7, stb_timeout enable, write back */
     DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK |
                           (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
