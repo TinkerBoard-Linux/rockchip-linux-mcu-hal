@@ -14,6 +14,23 @@
 /*                                                                                      */
 /****************************************************************************************/
 #ifndef __ASSEMBLY__
+/* COREGRF Register Structure Define */
+struct COREGRF_REG {
+    __IO uint32_t PVTPLL_CON0_L;                      /* Address Offset: 0x0000 */
+    __IO uint32_t PVTPLL_CON0_H;                      /* Address Offset: 0x0004 */
+    __IO uint32_t PVTPLL_CON[3];                      /* Address Offset: 0x0008 */
+         uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
+    __IO uint32_t PVTPLL_OSC_CNT;                     /* Address Offset: 0x0018 */
+    __IO uint32_t PVTPLL_OSC_CNT_AVG;                 /* Address Offset: 0x001C */
+         uint32_t RESERVED0020;                       /* Address Offset: 0x0020 */
+    __IO uint32_t CACHE_PERI_ADDR_START;              /* Address Offset: 0x0024 */
+    __IO uint32_t CACHE_PERI_ADDR_END;                /* Address Offset: 0x0028 */
+    __IO uint32_t MCU_CACHE_MISC;                     /* Address Offset: 0x002C */
+    __IO uint32_t MCU_CACHE_STATUS;                   /* Address Offset: 0x0030 */
+    __IO uint32_t CPU_STATUS;                         /* Address Offset: 0x0034 */
+    __IO uint32_t CPU_CON0;                           /* Address Offset: 0x0038 */
+    __IO uint32_t CORE_MEMCFG_UHDSPRA;                /* Address Offset: 0x003C */
+};
 /* PMUCRU Register Structure Define */
 struct PMUCRU_REG {
          uint32_t RESERVED0000[192];                  /* Address Offset: 0x0000 */
@@ -264,6 +281,7 @@ struct DCACHE_REG {
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
+#define COREGRF_BASE                   0xFF040000U /* COREGRF base address */
 #define PMUCRU_BASE                    0xFF3A0000U /* PMUCRU base address */
 #define CRU_BASE                       0xFF3B0000U /* CRU base address */
 #define PERICRU_BASE                   0xFF3B2000U /* PERICRU base address */
@@ -289,6 +307,7 @@ struct DCACHE_REG {
 /****************************************************************************************/
 /* Module Variable Define */
 
+#define COREGRF             ((struct COREGRF_REG *) COREGRF_BASE)
 #define PMUCRU              ((struct PMUCRU_REG *) PMUCRU_BASE)
 #define CRU                 ((struct CRU_REG *) CRU_BASE)
 #define PERICRU             ((struct PERICRU_REG *) PERICRU_BASE)
@@ -308,6 +327,7 @@ struct DCACHE_REG {
 #define ICACHE              ((struct ICACHE_REG *) ICACHE_BASE)
 #define DCACHE              ((struct DCACHE_REG *) DCACHE_BASE)
 
+#define IS_COREGRF_INSTANCE(instance) ((instance) == COREGRF)
 #define IS_PMUCRU_INSTANCE(instance) ((instance) == PMUCRU)
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
 #define IS_PERICRU_INSTANCE(instance) ((instance) == PERICRU)
@@ -326,6 +346,123 @@ struct DCACHE_REG {
 /*                               Register Bitmap Section                                */
 /*                                                                                      */
 /****************************************************************************************/
+/****************************************COREGRF*****************************************/
+/* PVTPLL_CON0_L */
+#define COREGRF_PVTPLL_CON0_L_OFFSET                       (0x0U)
+#define COREGRF_PVTPLL_CON0_L_START_SHIFT                  (0U)
+#define COREGRF_PVTPLL_CON0_L_START_MASK                   (0x1U << COREGRF_PVTPLL_CON0_L_START_SHIFT)                  /* 0x00000001 */
+#define COREGRF_PVTPLL_CON0_L_OSC_EN_SHIFT                 (1U)
+#define COREGRF_PVTPLL_CON0_L_OSC_EN_MASK                  (0x1U << COREGRF_PVTPLL_CON0_L_OSC_EN_SHIFT)                 /* 0x00000002 */
+#define COREGRF_PVTPLL_CON0_L_OUT_POLAR_SHIFT              (2U)
+#define COREGRF_PVTPLL_CON0_L_OUT_POLAR_MASK               (0x1U << COREGRF_PVTPLL_CON0_L_OUT_POLAR_SHIFT)              /* 0x00000004 */
+#define COREGRF_PVTPLL_CON0_L_OSC_RING_SEL_SHIFT           (8U)
+#define COREGRF_PVTPLL_CON0_L_OSC_RING_SEL_MASK            (0x7U << COREGRF_PVTPLL_CON0_L_OSC_RING_SEL_SHIFT)           /* 0x00000700 */
+#define COREGRF_PVTPLL_CON0_L_CLK_DIV_REF_SHIFT            (11U)
+#define COREGRF_PVTPLL_CON0_L_CLK_DIV_REF_MASK             (0x3U << COREGRF_PVTPLL_CON0_L_CLK_DIV_REF_SHIFT)            /* 0x00001800 */
+#define COREGRF_PVTPLL_CON0_L_CLK_DIV_OSC_SHIFT            (13U)
+#define COREGRF_PVTPLL_CON0_L_CLK_DIV_OSC_MASK             (0x3U << COREGRF_PVTPLL_CON0_L_CLK_DIV_OSC_SHIFT)            /* 0x00006000 */
+#define COREGRF_PVTPLL_CON0_L_BYPASS_SHIFT                 (15U)
+#define COREGRF_PVTPLL_CON0_L_BYPASS_MASK                  (0x1U << COREGRF_PVTPLL_CON0_L_BYPASS_SHIFT)                 /* 0x00008000 */
+/* PVTPLL_CON0_H */
+#define COREGRF_PVTPLL_CON0_H_OFFSET                       (0x4U)
+#define COREGRF_PVTPLL_CON0_H_RING_LENGTH_SEL_SHIFT        (0U)
+#define COREGRF_PVTPLL_CON0_H_RING_LENGTH_SEL_MASK         (0x7FU << COREGRF_PVTPLL_CON0_H_RING_LENGTH_SEL_SHIFT)       /* 0x0000007F */
+/* PVTPLL_CON1 */
+#define COREGRF_PVTPLL_CON1_OFFSET                         (0x8U)
+#define COREGRF_PVTPLL_CON1_CAL_CNT_SHIFT                  (0U)
+#define COREGRF_PVTPLL_CON1_CAL_CNT_MASK                   (0xFFFFFFFFU << COREGRF_PVTPLL_CON1_CAL_CNT_SHIFT)           /* 0xFFFFFFFF */
+/* PVTPLL_CON2 */
+#define COREGRF_PVTPLL_CON2_OFFSET                         (0xCU)
+#define COREGRF_PVTPLL_CON2_THRESHOLD_SHIFT                (0U)
+#define COREGRF_PVTPLL_CON2_THRESHOLD_MASK                 (0xFFFFU << COREGRF_PVTPLL_CON2_THRESHOLD_SHIFT)             /* 0x0000FFFF */
+#define COREGRF_PVTPLL_CON2_CKG_VAL_SHIFT                  (16U)
+#define COREGRF_PVTPLL_CON2_CKG_VAL_MASK                   (0xFFFFU << COREGRF_PVTPLL_CON2_CKG_VAL_SHIFT)               /* 0xFFFF0000 */
+/* PVTPLL_CON3 */
+#define COREGRF_PVTPLL_CON3_OFFSET                         (0x10U)
+#define COREGRF_PVTPLL_CON3_REF_CNT_SHIFT                  (0U)
+#define COREGRF_PVTPLL_CON3_REF_CNT_MASK                   (0xFFFFFFFFU << COREGRF_PVTPLL_CON3_REF_CNT_SHIFT)           /* 0xFFFFFFFF */
+/* PVTPLL_OSC_CNT */
+#define COREGRF_PVTPLL_OSC_CNT_OFFSET                      (0x18U)
+#define COREGRF_PVTPLL_OSC_CNT_OSC_CLK_CNT_VAL_SHIFT       (0U)
+#define COREGRF_PVTPLL_OSC_CNT_OSC_CLK_CNT_VAL_MASK        (0xFFFFFFFFU << COREGRF_PVTPLL_OSC_CNT_OSC_CLK_CNT_VAL_SHIFT) /* 0xFFFFFFFF */
+/* PVTPLL_OSC_CNT_AVG */
+#define COREGRF_PVTPLL_OSC_CNT_AVG_OFFSET                  (0x1CU)
+#define COREGRF_PVTPLL_OSC_CNT_AVG_OSC_CLK_CNT_AVE_VALUE_SHIFT (0U)
+#define COREGRF_PVTPLL_OSC_CNT_AVG_OSC_CLK_CNT_AVE_VALUE_MASK (0x1U << COREGRF_PVTPLL_OSC_CNT_AVG_OSC_CLK_CNT_AVE_VALUE_SHIFT) /* 0x00000001 */
+/* CACHE_PERI_ADDR_START */
+#define COREGRF_CACHE_PERI_ADDR_START_OFFSET               (0x24U)
+#define COREGRF_CACHE_PERI_ADDR_START_PERI_ADDR_START_SHIFT (0U)
+#define COREGRF_CACHE_PERI_ADDR_START_PERI_ADDR_START_MASK (0xFFFFFU << COREGRF_CACHE_PERI_ADDR_START_PERI_ADDR_START_SHIFT) /* 0x000FFFFF */
+/* CACHE_PERI_ADDR_END */
+#define COREGRF_CACHE_PERI_ADDR_END_OFFSET                 (0x28U)
+#define COREGRF_CACHE_PERI_ADDR_END_PERIPHRAL_ADDR_END_SHIFT (0U)
+#define COREGRF_CACHE_PERI_ADDR_END_PERIPHRAL_ADDR_END_MASK (0xFFFFFU << COREGRF_CACHE_PERI_ADDR_END_PERIPHRAL_ADDR_END_SHIFT) /* 0x000FFFFF */
+/* MCU_CACHE_MISC */
+#define COREGRF_MCU_CACHE_MISC_OFFSET                      (0x2CU)
+#define COREGRF_MCU_CACHE_MISC_CACHE_FLUSH_REQ_SHIFT       (0U)
+#define COREGRF_MCU_CACHE_MISC_CACHE_FLUSH_REQ_MASK        (0x1U << COREGRF_MCU_CACHE_MISC_CACHE_FLUSH_REQ_SHIFT)       /* 0x00000001 */
+#define COREGRF_MCU_CACHE_MISC_CACHE_SLV_MEMATTR_SHIFT     (1U)
+#define COREGRF_MCU_CACHE_MISC_CACHE_SLV_MEMATTR_MASK      (0x3U << COREGRF_MCU_CACHE_MISC_CACHE_SLV_MEMATTR_SHIFT)     /* 0x00000006 */
+#define COREGRF_MCU_CACHE_MISC_SCR1_SOFT_IRQ_SHIFT         (3U)
+#define COREGRF_MCU_CACHE_MISC_SCR1_SOFT_IRQ_MASK          (0x1U << COREGRF_MCU_CACHE_MISC_SCR1_SOFT_IRQ_SHIFT)         /* 0x00000008 */
+/* MCU_CACHE_STATUS */
+#define COREGRF_MCU_CACHE_STATUS_OFFSET                    (0x30U)
+#define COREGRF_MCU_CACHE_STATUS_CACHE_IDLE_SHIFT          (0U)
+#define COREGRF_MCU_CACHE_STATUS_CACHE_IDLE_MASK           (0x1U << COREGRF_MCU_CACHE_STATUS_CACHE_IDLE_SHIFT)          /* 0x00000001 */
+#define COREGRF_MCU_CACHE_STATUS_CACHE_FLUSH_ACK_SHIFT     (1U)
+#define COREGRF_MCU_CACHE_STATUS_CACHE_FLUSH_ACK_MASK      (0x1U << COREGRF_MCU_CACHE_STATUS_CACHE_FLUSH_ACK_SHIFT)     /* 0x00000002 */
+#define COREGRF_MCU_CACHE_STATUS_WFI_HALTED_SHIFT          (2U)
+#define COREGRF_MCU_CACHE_STATUS_WFI_HALTED_MASK           (0x1U << COREGRF_MCU_CACHE_STATUS_WFI_HALTED_SHIFT)          /* 0x00000004 */
+#define COREGRF_MCU_CACHE_STATUS_NDM_RST_N_OUT_SHIFT       (3U)
+#define COREGRF_MCU_CACHE_STATUS_NDM_RST_N_OUT_MASK        (0x1U << COREGRF_MCU_CACHE_STATUS_NDM_RST_N_OUT_SHIFT)       /* 0x00000008 */
+/* CPU_STATUS */
+#define COREGRF_CPU_STATUS_OFFSET                          (0x34U)
+#define COREGRF_CPU_STATUS_STANDBYWFE_SHIFT                (0U)
+#define COREGRF_CPU_STATUS_STANDBYWFE_MASK                 (0x1U << COREGRF_CPU_STATUS_STANDBYWFE_SHIFT)                /* 0x00000001 */
+#define COREGRF_CPU_STATUS_STANDBYWFI_SHIFT                (1U)
+#define COREGRF_CPU_STATUS_STANDBYWFI_MASK                 (0x1U << COREGRF_CPU_STATUS_STANDBYWFI_SHIFT)                /* 0x00000002 */
+#define COREGRF_CPU_STATUS_SMPNAMP_SHIFT                   (2U)
+#define COREGRF_CPU_STATUS_SMPNAMP_MASK                    (0x1U << COREGRF_CPU_STATUS_SMPNAMP_SHIFT)                   /* 0x00000004 */
+#define COREGRF_CPU_STATUS_STANDBYWFIL2_SHIFT              (3U)
+#define COREGRF_CPU_STATUS_STANDBYWFIL2_MASK               (0x1U << COREGRF_CPU_STATUS_STANDBYWFIL2_SHIFT)              /* 0x00000008 */
+#define COREGRF_CPU_STATUS_EVENTO_RISING_EDGE_SHIFT        (4U)
+#define COREGRF_CPU_STATUS_EVENTO_RISING_EDGE_MASK         (0x1U << COREGRF_CPU_STATUS_EVENTO_RISING_EDGE_SHIFT)        /* 0x00000010 */
+#define COREGRF_CPU_STATUS_JTAGTOP_SHIFT                   (5U)
+#define COREGRF_CPU_STATUS_JTAGTOP_MASK                    (0x1U << COREGRF_CPU_STATUS_JTAGTOP_SHIFT)                   /* 0x00000020 */
+#define COREGRF_CPU_STATUS_JTAGNSW_SHIFT                   (6U)
+#define COREGRF_CPU_STATUS_JTAGNSW_MASK                    (0x1U << COREGRF_CPU_STATUS_JTAGNSW_SHIFT)                   /* 0x00000040 */
+/* CPU_CON0 */
+#define COREGRF_CPU_CON0_OFFSET                            (0x38U)
+#define COREGRF_CPU_CON0_VINITHI_SHIFT                     (0U)
+#define COREGRF_CPU_CON0_VINITHI_MASK                      (0x1U << COREGRF_CPU_CON0_VINITHI_SHIFT)                     /* 0x00000001 */
+#define COREGRF_CPU_CON0_CFGEND_SHIFT                      (1U)
+#define COREGRF_CPU_CON0_CFGEND_MASK                       (0x1U << COREGRF_CPU_CON0_CFGEND_SHIFT)                      /* 0x00000002 */
+#define COREGRF_CPU_CON0_CFGTE_SHIFT                       (2U)
+#define COREGRF_CPU_CON0_CFGTE_MASK                        (0x1U << COREGRF_CPU_CON0_CFGTE_SHIFT)                       /* 0x00000004 */
+#define COREGRF_CPU_CON0_L1RSTDISABLE_SHIFT                (7U)
+#define COREGRF_CPU_CON0_L1RSTDISABLE_MASK                 (0x1U << COREGRF_CPU_CON0_L1RSTDISABLE_SHIFT)                /* 0x00000080 */
+#define COREGRF_CPU_CON0_L2RSTDISABLE_SHIFT                (8U)
+#define COREGRF_CPU_CON0_L2RSTDISABLE_MASK                 (0x1U << COREGRF_CPU_CON0_L2RSTDISABLE_SHIFT)                /* 0x00000100 */
+#define COREGRF_CPU_CON0_EVENTI_SHIFT                      (9U)
+#define COREGRF_CPU_CON0_EVENTI_MASK                       (0x1U << COREGRF_CPU_CON0_EVENTI_SHIFT)                      /* 0x00000200 */
+#define COREGRF_CPU_CON0_DBGROMADDRV_SHIFT                 (10U)
+#define COREGRF_CPU_CON0_DBGROMADDRV_MASK                  (0x1U << COREGRF_CPU_CON0_DBGROMADDRV_SHIFT)                 /* 0x00000400 */
+#define COREGRF_CPU_CON0_DBGSELFADDRV_SHIFT                (11U)
+#define COREGRF_CPU_CON0_DBGSELFADDRV_MASK                 (0x1U << COREGRF_CPU_CON0_DBGSELFADDRV_SHIFT)                /* 0x00000800 */
+#define COREGRF_CPU_CON0_EVENTO_CLR_SHIFT                  (12U)
+#define COREGRF_CPU_CON0_EVENTO_CLR_MASK                   (0x1U << COREGRF_CPU_CON0_EVENTO_CLR_SHIFT)                  /* 0x00001000 */
+#define COREGRF_CPU_CON0_SRST_WFIEN_SHIFT                  (13U)
+#define COREGRF_CPU_CON0_SRST_WFIEN_MASK                   (0x1U << COREGRF_CPU_CON0_SRST_WFIEN_SHIFT)                  /* 0x00002000 */
+#define COREGRF_CPU_CON0_PO_SRST_WFIEN_SHIFT               (14U)
+#define COREGRF_CPU_CON0_PO_SRST_WFIEN_MASK                (0x1U << COREGRF_CPU_CON0_PO_SRST_WFIEN_SHIFT)               /* 0x00004000 */
+#define COREGRF_CPU_CON0_WAKEUP_INT_PMU_SEL_SHIFT          (15U)
+#define COREGRF_CPU_CON0_WAKEUP_INT_PMU_SEL_MASK           (0x1U << COREGRF_CPU_CON0_WAKEUP_INT_PMU_SEL_SHIFT)          /* 0x00008000 */
+/* CORE_MEMCFG_UHDSPRA */
+#define COREGRF_CORE_MEMCFG_UHDSPRA_OFFSET                 (0x3CU)
+#define COREGRF_CORE_MEMCFG_UHDSPRA_RTSEL_SHIFT            (0U)
+#define COREGRF_CORE_MEMCFG_UHDSPRA_RTSEL_MASK             (0x3U << COREGRF_CORE_MEMCFG_UHDSPRA_RTSEL_SHIFT)            /* 0x00000003 */
+#define COREGRF_CORE_MEMCFG_UHDSPRA_WTSEL_SHIFT            (2U)
+#define COREGRF_CORE_MEMCFG_UHDSPRA_WTSEL_MASK             (0x3U << COREGRF_CORE_MEMCFG_UHDSPRA_WTSEL_SHIFT)            /* 0x0000000C */
 /*****************************************PMUCRU*****************************************/
 /* PMUCLKSEL_CON00 */
 #define PMUCRU_PMUCLKSEL_CON00_OFFSET                      (0x300U)
