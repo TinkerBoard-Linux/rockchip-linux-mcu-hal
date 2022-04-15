@@ -1624,31 +1624,15 @@ struct GMAC_REG {
 };
 /* CRU Register Structure Define */
 struct CRU_REG {
-    __IO uint32_t APLL_CON0;                          /* Address Offset: 0x0000 */
-    __IO uint32_t APLL_CON1;                          /* Address Offset: 0x0004 */
-    __IO uint32_t APLL_CON2;                          /* Address Offset: 0x0008 */
-    __IO uint32_t APLL_CON3;                          /* Address Offset: 0x000C */
-    __IO uint32_t APLL_CON4;                          /* Address Offset: 0x0010 */
+    __IO uint32_t APLL_CON[5];                        /* Address Offset: 0x0000 */
          uint32_t RESERVED0014[3];                    /* Address Offset: 0x0014 */
-    __IO uint32_t DPLL_CON0;                          /* Address Offset: 0x0020 */
-    __IO uint32_t DPLL_CON1;                          /* Address Offset: 0x0024 */
-    __IO uint32_t DPLL_CON2;                          /* Address Offset: 0x0028 */
-    __IO uint32_t DPLL_CON3;                          /* Address Offset: 0x002C */
-    __IO uint32_t DPLL_CON4;                          /* Address Offset: 0x0030 */
+    __IO uint32_t DPLL_CON[5];                        /* Address Offset: 0x0020 */
          uint32_t RESERVED0034[3];                    /* Address Offset: 0x0034 */
-    __IO uint32_t VPLL0_CON0;                         /* Address Offset: 0x0040 */
-    __IO uint32_t VPLL0_CON1;                         /* Address Offset: 0x0044 */
-    __IO uint32_t VPLL0_CON2;                         /* Address Offset: 0x0048 */
-    __IO uint32_t VPLL0_CON3;                         /* Address Offset: 0x004C */
-    __IO uint32_t VPLL0_CON4;                         /* Address Offset: 0x0050 */
+    __IO uint32_t VPLL0_CON[5];                       /* Address Offset: 0x0040 */
          uint32_t RESERVED0054[3];                    /* Address Offset: 0x0054 */
-    __IO uint32_t VPLL1_CON0;                         /* Address Offset: 0x0060 */
-    __IO uint32_t VPLL1_CON1;                         /* Address Offset: 0x0064 */
-    __IO uint32_t VPLL1_CON2;                         /* Address Offset: 0x0068 */
-    __IO uint32_t VPLL1_CON3;                         /* Address Offset: 0x006C */
-    __IO uint32_t VPLL1_CON4;                         /* Address Offset: 0x0070 */
+    __IO uint32_t VPLL1_CON[5];                       /* Address Offset: 0x0060 */
          uint32_t RESERVED0074[11];                   /* Address Offset: 0x0074 */
-    __IO uint32_t MODE;                               /* Address Offset: 0x00A0 */
+    __IO uint32_t MODE_CON00;                               /* Address Offset: 0x00A0 */
     __IO uint32_t MISC;                               /* Address Offset: 0x00A4 */
          uint32_t RESERVED00A8[2];                    /* Address Offset: 0x00A8 */
     __IO uint32_t GLB_CNT_TH;                         /* Address Offset: 0x00B0 */
@@ -1666,99 +1650,9 @@ struct CRU_REG {
     __I  uint32_t APLL_CON1_S;                        /* Address Offset: 0x00F4 */
     __I  uint32_t CLKSEL_CON0_S;                      /* Address Offset: 0x00F8 */
          uint32_t RESERVED00FC;                       /* Address Offset: 0x00FC */
-    __IO uint32_t CLKSEL_CON0;                        /* Address Offset: 0x0100 */
-    __IO uint32_t CLKSEL_CON1;                        /* Address Offset: 0x0104 */
-    __IO uint32_t CLKSEL_CON2;                        /* Address Offset: 0x0108 */
-    __IO uint32_t CLKSEL_CON3;                        /* Address Offset: 0x010C */
-    __IO uint32_t CLKSEL_CON4;                        /* Address Offset: 0x0110 */
-    __IO uint32_t CLKSEL_CON5;                        /* Address Offset: 0x0114 */
-    __IO uint32_t CLKSEL_CON6;                        /* Address Offset: 0x0118 */
-    __IO uint32_t CLKSEL_CON7;                        /* Address Offset: 0x011C */
-    __IO uint32_t CLKSEL_CON8;                        /* Address Offset: 0x0120 */
-    __IO uint32_t CLKSEL_CON9;                        /* Address Offset: 0x0124 */
-    __IO uint32_t CLKSEL_CON10;                       /* Address Offset: 0x0128 */
-    __IO uint32_t CLKSEL_CON11;                       /* Address Offset: 0x012C */
-    __IO uint32_t CLKSEL_CON12;                       /* Address Offset: 0x0130 */
-    __IO uint32_t CLKSEL_CON13;                       /* Address Offset: 0x0134 */
-    __IO uint32_t CLKSEL_CON14;                       /* Address Offset: 0x0138 */
-    __IO uint32_t CLKSEL_CON15;                       /* Address Offset: 0x013C */
-    __IO uint32_t CLKSEL_CON16;                       /* Address Offset: 0x0140 */
-    __IO uint32_t CLKSEL_CON17;                       /* Address Offset: 0x0144 */
-    __IO uint32_t CLKSEL_CON18;                       /* Address Offset: 0x0148 */
-    __IO uint32_t CLKSEL_CON19;                       /* Address Offset: 0x014C */
-    __IO uint32_t CLKSEL_CON20;                       /* Address Offset: 0x0150 */
-    __IO uint32_t CLKSEL_CON21;                       /* Address Offset: 0x0154 */
-    __IO uint32_t CLKSEL_CON22;                       /* Address Offset: 0x0158 */
-    __IO uint32_t CLKSEL_CON23;                       /* Address Offset: 0x015C */
-    __IO uint32_t CLKSEL_CON24;                       /* Address Offset: 0x0160 */
-    __IO uint32_t CLKSEL_CON25;                       /* Address Offset: 0x0164 */
-    __IO uint32_t CLKSEL_CON26;                       /* Address Offset: 0x0168 */
-    __IO uint32_t CLKSEL_CON27;                       /* Address Offset: 0x016C */
-    __IO uint32_t CLKSEL_CON28;                       /* Address Offset: 0x0170 */
-    __IO uint32_t CLKSEL_CON29;                       /* Address Offset: 0x0174 */
-    __IO uint32_t CLKSEL_CON30;                       /* Address Offset: 0x0178 */
-    __IO uint32_t CLKSEL_CON31;                       /* Address Offset: 0x017C */
-    __IO uint32_t CLKSEL_CON32;                       /* Address Offset: 0x0180 */
-    __IO uint32_t CLKSEL_CON33;                       /* Address Offset: 0x0184 */
-    __IO uint32_t CLKSEL_CON34;                       /* Address Offset: 0x0188 */
-    __IO uint32_t CLKSEL_CON35;                       /* Address Offset: 0x018C */
-    __IO uint32_t CLKSEL_CON36;                       /* Address Offset: 0x0190 */
-    __IO uint32_t CLKSEL_CON37;                       /* Address Offset: 0x0194 */
-    __IO uint32_t CLKSEL_CON38;                       /* Address Offset: 0x0198 */
-    __IO uint32_t CLKSEL_CON39;                       /* Address Offset: 0x019C */
-    __IO uint32_t CLKSEL_CON40;                       /* Address Offset: 0x01A0 */
-    __IO uint32_t CLKSEL_CON41;                       /* Address Offset: 0x01A4 */
-    __IO uint32_t CLKSEL_CON42;                       /* Address Offset: 0x01A8 */
-    __IO uint32_t CLKSEL_CON43;                       /* Address Offset: 0x01AC */
-    __IO uint32_t CLKSEL_CON44;                       /* Address Offset: 0x01B0 */
-    __IO uint32_t CLKSEL_CON45;                       /* Address Offset: 0x01B4 */
-    __IO uint32_t CLKSEL_CON46;                       /* Address Offset: 0x01B8 */
-    __IO uint32_t CLKSEL_CON47;                       /* Address Offset: 0x01BC */
-    __IO uint32_t CLKSEL_CON48;                       /* Address Offset: 0x01C0 */
-    __IO uint32_t CLKSEL_CON49;                       /* Address Offset: 0x01C4 */
-    __IO uint32_t CLKSEL_CON50;                       /* Address Offset: 0x01C8 */
-    __IO uint32_t CLKSEL_CON51;                       /* Address Offset: 0x01CC */
-    __IO uint32_t CLKSEL_CON52;                       /* Address Offset: 0x01D0 */
-    __IO uint32_t CLKSEL_CON53;                       /* Address Offset: 0x01D4 */
-    __IO uint32_t CLKSEL_CON54;                       /* Address Offset: 0x01D8 */
-    __IO uint32_t CLKSEL_CON55;                       /* Address Offset: 0x01DC */
-    __IO uint32_t CLKSEL_CON56;                       /* Address Offset: 0x01E0 */
-    __IO uint32_t CLKSEL_CON57;                       /* Address Offset: 0x01E4 */
-    __IO uint32_t CLKSEL_CON58;                       /* Address Offset: 0x01E8 */
-    __IO uint32_t CLKSEL_CON59;                       /* Address Offset: 0x01EC */
-    __IO uint32_t CLKSEL_CON60;                       /* Address Offset: 0x01F0 */
-    __IO uint32_t CLKSEL_CON61;                       /* Address Offset: 0x01F4 */
-    __IO uint32_t CLKSEL_CON62;                       /* Address Offset: 0x01F8 */
-    __IO uint32_t CLKSEL_CON63;                       /* Address Offset: 0x01FC */
-    __IO uint32_t CLKSEL_CON64;                       /* Address Offset: 0x0200 */
-    __IO uint32_t CLKSEL_CON65;                       /* Address Offset: 0x0204 */
-    __IO uint32_t CLKSEL_CON66;                       /* Address Offset: 0x0208 */
-    __IO uint32_t CLKSEL_CON67;                       /* Address Offset: 0x020C */
-    __IO uint32_t CLKSEL_CON68;                       /* Address Offset: 0x0210 */
-    __IO uint32_t CLKSEL_CON69;                       /* Address Offset: 0x0214 */
-    __IO uint32_t CLKSEL_CON70;                       /* Address Offset: 0x0218 */
-    __IO uint32_t CLKSEL_CON71;                       /* Address Offset: 0x021C */
-    __IO uint32_t CLKSEL_CON72;                       /* Address Offset: 0x0220 */
-    __IO uint32_t CLKSEL_CON73;                       /* Address Offset: 0x0224 */
-    __IO uint32_t CLKSEL_CON74;                       /* Address Offset: 0x0228 */
-    __IO uint32_t CLKSEL_CON75;                       /* Address Offset: 0x022C */
+    __IO uint32_t CRU_CLKSEL_CON[76];                 /* Address Offset: 0x0100 */
          uint32_t RESERVED0230[52];                   /* Address Offset: 0x0230 */
-    __IO uint32_t CLKGATE_CON0;                       /* Address Offset: 0x0300 */
-    __IO uint32_t CLKGATE_CON1;                       /* Address Offset: 0x0304 */
-    __IO uint32_t CLKGATE_CON2;                       /* Address Offset: 0x0308 */
-    __IO uint32_t CLKGATE_CON3;                       /* Address Offset: 0x030C */
-    __IO uint32_t CLKGATE_CON4;                       /* Address Offset: 0x0310 */
-    __IO uint32_t CLKGATE_CON5;                       /* Address Offset: 0x0314 */
-    __IO uint32_t CLKGATE_CON6;                       /* Address Offset: 0x0318 */
-    __IO uint32_t CLKGATE_CON7;                       /* Address Offset: 0x031C */
-    __IO uint32_t CLKGATE_CON8;                       /* Address Offset: 0x0320 */
-    __IO uint32_t CLKGATE_CON9;                       /* Address Offset: 0x0324 */
-    __IO uint32_t CLKGATE_CON10;                      /* Address Offset: 0x0328 */
-    __IO uint32_t CLKGATE_CON11;                      /* Address Offset: 0x032C */
-    __IO uint32_t CLKGATE_CON12;                      /* Address Offset: 0x0330 */
-    __IO uint32_t CLKGATE_CON13;                      /* Address Offset: 0x0334 */
-    __IO uint32_t CLKGATE_CON14;                      /* Address Offset: 0x0338 */
-    __IO uint32_t CLKGATE_CON15;                      /* Address Offset: 0x033C */
+    __IO uint32_t CRU_CLKGATE_CON[16];                /* Address Offset: 0x0300 */
          uint32_t RESERVED0340[16];                   /* Address Offset: 0x0340 */
     __O  uint32_t SSCGTBL0_3;                         /* Address Offset: 0x0380 */
     __O  uint32_t SSCGTBL4_7;                         /* Address Offset: 0x0384 */
@@ -1792,25 +1686,12 @@ struct CRU_REG {
     __O  uint32_t SSCGTBL116_119;                     /* Address Offset: 0x03F4 */
     __O  uint32_t SSCGTBL120_123;                     /* Address Offset: 0x03F8 */
     __O  uint32_t SSCGTBL124_127;                     /* Address Offset: 0x03FC */
-    __IO uint32_t SOFTRST_CON0;                       /* Address Offset: 0x0400 */
-    __IO uint32_t SOFTRST_CON1;                       /* Address Offset: 0x0404 */
-    __IO uint32_t SOFTRST_CON2;                       /* Address Offset: 0x0408 */
-    __IO uint32_t SOFTRST_CON3;                       /* Address Offset: 0x040C */
-    __IO uint32_t SOFTRST_CON4;                       /* Address Offset: 0x0410 */
-    __IO uint32_t SOFTRST_CON5;                       /* Address Offset: 0x0414 */
-    __IO uint32_t SOFTRST_CON6;                       /* Address Offset: 0x0418 */
-    __IO uint32_t SOFTRST_CON7;                       /* Address Offset: 0x041C */
-    __IO uint32_t SOFTRST_CON8;                       /* Address Offset: 0x0420 */
-    __IO uint32_t SOFTRST_CON9;                       /* Address Offset: 0x0424 */
+    __IO uint32_t CRU_SOFTRST_CON[10];                /* Address Offset: 0x0400 */
          uint32_t RESERVED0428[22];                   /* Address Offset: 0x0428 */
-    __IO uint32_t SDMMC_CON0;                         /* Address Offset: 0x0480 */
-    __IO uint32_t SDMMC_CON1;                         /* Address Offset: 0x0484 */
-    __IO uint32_t SDIO_CON0;                          /* Address Offset: 0x0488 */
-    __IO uint32_t SDIO_CON1;                          /* Address Offset: 0x048C */
-    __IO uint32_t EMMC_CON0;                          /* Address Offset: 0x0490 */
-    __IO uint32_t EMMC_CON1;                          /* Address Offset: 0x0494 */
-};
-/* PMU Register Structure Define */
+    __IO uint32_t SDMMC_CON[2];                       /* Address Offset: 0x0480 */
+    __IO uint32_t SDIO_CON[2];                        /* Address Offset: 0x0488 */
+    __IO uint32_t EMMC_CON[2];                        /* Address Offset: 0x0490 */
+};/* PMU Register Structure Define */
 struct PMU_REG {
     __IO uint32_t WAKEUP_CFG0_LO;                     /* Address Offset: 0x0000 */
     __IO uint32_t WAKEUP_CFG0_HI;                     /* Address Offset: 0x0004 */
