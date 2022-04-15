@@ -674,14 +674,12 @@ struct TSADC_REG {
     __IO uint32_t INT_EN;                             /* Address Offset: 0x0008 */
     __IO uint32_t INT_PD;                             /* Address Offset: 0x000C */
          uint32_t RESERVED0010[4];                    /* Address Offset: 0x0010 */
-    __I  uint32_t DATA0;                              /* Address Offset: 0x0020 */
-    __I  uint32_t DATA1;                              /* Address Offset: 0x0024 */
+    __I  uint32_t DATA[2];                              /* Address Offset: 0x0020 */
          uint32_t RESERVED0028[2];                    /* Address Offset: 0x0028 */
     __IO uint32_t COMP0_INT;                          /* Address Offset: 0x0030 */
     __IO uint32_t COMP1_INT;                          /* Address Offset: 0x0034 */
          uint32_t RESERVED0038[2];                    /* Address Offset: 0x0038 */
-    __IO uint32_t COMP0_SHUT;                         /* Address Offset: 0x0040 */
-    __IO uint32_t COMP1_SHUT;                         /* Address Offset: 0x0044 */
+    __IO uint32_t COMP_SHUT[2];                         /* Address Offset: 0x0040 */
          uint32_t RESERVED0048[6];                    /* Address Offset: 0x0048 */
     __IO uint32_t HIGHT_INT_DEBOUNCE;                 /* Address Offset: 0x0060 */
     __IO uint32_t HIGHT_TSHUT_DEBOUNCE;               /* Address Offset: 0x0064 */

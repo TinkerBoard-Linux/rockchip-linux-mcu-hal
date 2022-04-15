@@ -75,6 +75,12 @@ static const struct TSADC_TABLE s_tsadcTable[] =
     { 1584, -40000 },
     { 2704, 125000 },
 };
+#elif defined(SOC_RK3308)
+static const struct TSADC_TABLE s_tsadcTable[] =
+{
+    { 296, -40000 },
+    { 675, 125000 },
+};
 #endif
 
 static const struct TSADC_CONFIG s_tsadcConfig =
@@ -265,7 +271,7 @@ static int TSADC_GetTemp(const struct TSADC_CONFIG *config, int chn)
  * @brief tsadc config.
  * @param tshut_polarity: tsadc tshut pin polarity
  */
-#if defined(RKMCU_RK2206)
+#if defined(RKMCU_RK2206) || defined(SOC_RK3308)
 static void TSADC_Config(eTSADC_tshutPolarity polarity)
 {
     /* set tshut_prolarity 0: Low active , 1: High active */
