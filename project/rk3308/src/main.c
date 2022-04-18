@@ -25,7 +25,11 @@ static void HAL_IOMUX_Uart2M0Config(void)
 
 static void HAL_IOMUX_Uart4M0Config(void)
 {
-    GRF->GPIO4B_IOMUX = 0x000f0005;
+    /* UART4 M0 RX-4B0 TX-4B1 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK4,
+                         GPIO_PIN_B0 |
+                         GPIO_PIN_B1,
+                         PIN_CONFIG_MUX_FUNC1);
 }
 
 #ifdef __GNUC__
@@ -86,7 +90,7 @@ void main(void)
     BSP_Init();
 
     /* UART Init */
-    //HAL_IOMUX_Uart4M0Config();
+    HAL_IOMUX_Uart4M0Config();
     //HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
 
     printf("Hello RK3308 Bare-metal using RK_HAL!\n");
