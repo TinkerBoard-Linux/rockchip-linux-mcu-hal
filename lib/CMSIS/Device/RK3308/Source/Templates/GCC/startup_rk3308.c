@@ -140,6 +140,7 @@ void IRQ_Handler(void)
 void Vectors(void)
 {
   __ASM volatile(
+  ".balign 0x20                                     \n"
   "LDR    PC, =Reset_Handler                        \n"
   "LDR    PC, =Undef_Handler                        \n"
   "LDR    PC, =SVC_Handler                          \n"

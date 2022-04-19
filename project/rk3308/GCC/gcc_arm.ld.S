@@ -105,8 +105,21 @@ SECTIONS
         PROVIDE(__bss_end__ = .);
     } > DRAM
     _end = .;
+    PROVIDE(end = .);
 
-    .stack :
+    /* The heap is between bss_end and stack_start */
+    . = ALIGN(16);
+    __ALL_STACK_SIZE = __STACK_SIZE + __FIQ_STACK_SIZE + __IRQ_STACK_SIZE + __SVC_STACK_SIZE + __ABT_STACK_SIZE + __UND_STACK_SIZE;
+    __STACK_START = ORIGIN(DRAM) + LENGTH(DRAM) - __ALL_STACK_SIZE;
+    __HEAP_SIZE = (__STACK_START - .);
+    .heap :
+    {
+        PROVIDE(__heap_start = .);
+        . += __HEAP_SIZE;
+        PROVIDE(__heap_end = .);
+    } > DRAM
+
+    .stack __STACK_START :
     {
         . = ALIGN(16);
 
@@ -136,14 +149,5 @@ SECTIONS
         . += __UND_STACK_SIZE;
         Image$$UND_STACK$$ZI$$Limit = .;
 
-    } > DRAM
-
-    .heap :
-    {
-        . = ALIGN(16);
-        PROVIDE(__heap_start = .);
-        . = ORIGIN(DRAM) + LENGTH(DRAM);
-        PROVIDE(__heap_end = .);
-        end = __heap_end;
     } > DRAM
 }
