@@ -27,6 +27,8 @@ extern void SystemInit (void);
 extern void SystemCoreClockUpdate (void);
 
 extern void DataInit (void);
+
+extern void MMU_CreateTranslationTable(void);
 #ifdef __cplusplus
 }
 #endif

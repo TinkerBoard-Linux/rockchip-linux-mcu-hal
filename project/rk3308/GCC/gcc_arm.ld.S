@@ -20,6 +20,8 @@ __SVC_STACK_SIZE = 0x1000;
 __ABT_STACK_SIZE = 0x400;
 __UND_STACK_SIZE = 0x400;
 
+__TTB_SIZE = 0x4000;
+
 SECTIONS
 {
     .text :
@@ -60,6 +62,8 @@ SECTIONS
         __zero_table_start__ = .;
         LONG (__bss_start__)
         LONG ((__bss_end__ - __bss_start__) / 4)
+        LONG (__TTB_start__)
+        LONG ((__TTB_end__ - __TTB_start__) / 4)
         __zero_table_end__ = .;
     } > DRAM
 
@@ -91,6 +95,16 @@ SECTIONS
         KEEP(*(SORT(.dtors.*)))
         KEEP(*(.dtors))
         PROVIDE(__dtors_end__ = .);
+    } > DRAM
+
+    .ttb :
+    {
+        . = ALIGN(16 * 1024);
+        PROVIDE(__TTB_start__ = .);
+        PROVIDE(MMUTable  = .);
+        . += __TTB_SIZE;
+        PROVIDE(__TTB_end__ = .);
+        . = ALIGN(16 * 1024);
     } > DRAM
 
     . = ALIGN(16);
