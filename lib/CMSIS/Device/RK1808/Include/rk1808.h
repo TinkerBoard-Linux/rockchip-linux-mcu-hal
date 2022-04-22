@@ -7165,6 +7165,62 @@ struct TIMER_REG {
 /* DLY_PU_SOC */
 #define SARADC_DLY_PU_SOC_DLY_PU_SOC_SHIFT                 (0U)
 #define SARADC_DLY_PU_SOC_DLY_PU_SOC_MASK                  (0x3FU << SARADC_DLY_PU_SOC_DLY_PU_SOC_SHIFT)                /* 0x0000003F */
+/******************************************GPIO******************************************/
+/* SWPORTA_DR */
+#define GPIO_SWPORTA_DR_OFFSET                             (0x0U)
+#define GPIO_SWPORTA_DR_GPIO_SWPORTA_DR_SHIFT              (0U)
+#define GPIO_SWPORTA_DR_GPIO_SWPORTA_DR_MASK               (0xFFFFFFFFU << GPIO_SWPORTA_DR_GPIO_SWPORTA_DR_SHIFT)       /* 0xFFFFFFFF */
+/* SWPORTA_DDR */
+#define GPIO_SWPORTA_DDR_OFFSET                            (0x4U)
+#define GPIO_SWPORTA_DDR_GPIO_SWPORTA_DDR_SHIFT            (0U)
+#define GPIO_SWPORTA_DDR_GPIO_SWPORTA_DDR_MASK             (0xFFFFFFFFU << GPIO_SWPORTA_DDR_GPIO_SWPORTA_DDR_SHIFT)     /* 0xFFFFFFFF */
+/* INTEN */
+#define GPIO_INTEN_OFFSET                                  (0x30U)
+#define GPIO_INTEN_GPIO_INT_EN_SHIFT                       (0U)
+#define GPIO_INTEN_GPIO_INT_EN_MASK                        (0xFFFFFFFFU << GPIO_INTEN_GPIO_INT_EN_SHIFT)                /* 0xFFFFFFFF */
+/* INTMASK */
+#define GPIO_INTMASK_OFFSET                                (0x34U)
+#define GPIO_INTMASK_GPIO_INT_MASK_SHIFT                   (0U)
+#define GPIO_INTMASK_GPIO_INT_MASK_MASK                    (0x1U << GPIO_INTMASK_GPIO_INT_MASK_SHIFT)                   /* 0x00000001 */
+/* INTTYPE_LEVEL */
+#define GPIO_INTTYPE_LEVEL_OFFSET                          (0x38U)
+#define GPIO_INTTYPE_LEVEL_GPIO_INTTYPE_LEVEL_SHIFT        (0U)
+#define GPIO_INTTYPE_LEVEL_GPIO_INTTYPE_LEVEL_MASK         (0x1U << GPIO_INTTYPE_LEVEL_GPIO_INTTYPE_LEVEL_SHIFT)        /* 0x00000001 */
+/* INT_POLARITY */
+#define GPIO_INT_POLARITY_OFFSET                           (0x3CU)
+#define GPIO_INT_POLARITY_GPIO_INT_POLARITY_SHIFT          (0U)
+#define GPIO_INT_POLARITY_GPIO_INT_POLARITY_MASK           (0xFFFFFFFFU << GPIO_INT_POLARITY_GPIO_INT_POLARITY_SHIFT)   /* 0xFFFFFFFF */
+/* INT_STATUS */
+#define GPIO_INT_STATUS_OFFSET                             (0x40U)
+#define GPIO_INT_STATUS                                    (0x0U)
+#define GPIO_INT_STATUS_GPIO_INT_STATUS_SHIFT              (0U)
+#define GPIO_INT_STATUS_GPIO_INT_STATUS_MASK               (0xFFFFFFFFU << GPIO_INT_STATUS_GPIO_INT_STATUS_SHIFT)       /* 0xFFFFFFFF */
+/* INT_RAWSTATUS */
+#define GPIO_INT_RAWSTATUS_OFFSET                          (0x44U)
+#define GPIO_INT_RAWSTATUS                                 (0x0U)
+#define GPIO_INT_RAWSTATUS_GPIO_INT_RAWSTATUS_SHIFT        (0U)
+#define GPIO_INT_RAWSTATUS_GPIO_INT_RAWSTATUS_MASK         (0xFFFFFFFFU << GPIO_INT_RAWSTATUS_GPIO_INT_RAWSTATUS_SHIFT) /* 0xFFFFFFFF */
+/* DEBOUNCE */
+#define GPIO_DEBOUNCE_OFFSET                               (0x48U)
+#define GPIO_DEBOUNCE_GPIO_DEBOUNCE_SHIFT                  (0U)
+#define GPIO_DEBOUNCE_GPIO_DEBOUNCE_MASK                   (0xFFFFFFFFU << GPIO_DEBOUNCE_GPIO_DEBOUNCE_SHIFT)           /* 0xFFFFFFFF */
+/* PORTA_EOI */
+#define GPIO_PORTA_EOI_OFFSET                              (0x4CU)
+#define GPIO_PORTA_EOI_GPIO_PORTA_EOI_SHIFT                (0U)
+#define GPIO_PORTA_EOI_GPIO_PORTA_EOI_MASK                 (0xFFFFFFFFU << GPIO_PORTA_EOI_GPIO_PORTA_EOI_SHIFT)         /* 0xFFFFFFFF */
+/* EXT_PORTA */
+#define GPIO_EXT_PORTA_OFFSET                              (0x50U)
+#define GPIO_EXT_PORTA                                     (0x0U)
+#define GPIO_EXT_PORTA_GPIO_EXT_PORTA_SHIFT                (0U)
+#define GPIO_EXT_PORTA_GPIO_EXT_PORTA_MASK                 (0xFFFFFFFFU << GPIO_EXT_PORTA_GPIO_EXT_PORTA_SHIFT)         /* 0xFFFFFFFF */
+/* LS_SYNC */
+#define GPIO_LS_SYNC_OFFSET                                (0x60U)
+#define GPIO_LS_SYNC_GPIO_LS_SYNC_SHIFT                    (0U)
+#define GPIO_LS_SYNC_GPIO_LS_SYNC_MASK                     (0xFFFFFFFFU << GPIO_LS_SYNC_GPIO_LS_SYNC_SHIFT)             /* 0xFFFFFFFF */
+/* INT_BOTHEDGE */
+#define GPIO_INT_BOTHEDGE_OFFSET                           (0x68U)
+#define GPIO_INT_BOTHEDGE_INTERRUPT_BOTH_EDGE_TYPE_SHIFT   (0U)
+#define GPIO_INT_BOTHEDGE_INTERRUPT_BOTH_EDGE_TYPE_MASK    (0xFFFFFFFFU << GPIO_INT_BOTHEDGE_INTERRUPT_BOTH_EDGE_TYPE_SHIFT) /* 0xFFFFFFFF */
 /******************************************DCF*******************************************/
 /* DCF_CTRL */
 #define DCF_DCF_CTRL_START_SHIFT                           (0U)

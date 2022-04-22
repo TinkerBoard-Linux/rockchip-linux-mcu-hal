@@ -78,7 +78,7 @@ static uint32_t GPIO_GetIntType(struct GPIO_REG *pGPIO)
     type |= ((pGPIO->INT_BOTHEDGE_H & 0xffff) << 16);
 #else
     type = pGPIO->INTTYPE_LEVEL;
-    #ifdef SOC_RK1808
+    #ifdef GPIO_INT_BOTHEDGE_OFFSET
     type |= pGPIO->INT_BOTHEDGE;
     #endif
 #endif
@@ -166,7 +166,7 @@ HAL_Status HAL_GPIO_SetIntType(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, e
     {
         pGPIO->INTTYPE_LEVEL = (type) ? (pin) : (pGPIO->INTTYPE_LEVEL & ~(pin));
         pGPIO->INT_POLARITY = (plar) ? (pin) : (pGPIO->INT_POLARITY & ~(pin));
-        #ifdef SOC_RK1808
+        #ifdef GPIO_INT_BOTHEDGE_OFFSET
         pGPIO->INT_BOTHEDGE = (both) ? (pin) : (pGPIO->INT_BOTHEDGE & ~(pin));
         #endif
     }

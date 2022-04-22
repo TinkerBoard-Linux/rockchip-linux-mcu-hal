@@ -58,8 +58,8 @@ typedef enum {
 
 /** GPIO pin interrupt enable definition */
 typedef enum {
-    GPIO_INT_ENABLE,
-    GPIO_INT_DISABLE
+    GPIO_INT_DISABLE,
+    GPIO_INT_ENABLE
 } eGPIO_intEnable;
 
 /** GPIO pin interrupt type definition */
