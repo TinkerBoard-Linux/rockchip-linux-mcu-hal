@@ -459,24 +459,11 @@ struct I2C_REG {
     __I  uint32_t FCNT;                               /* Address Offset: 0x0020 */
     __IO uint32_t SCL_OE_DB;                          /* Address Offset: 0x0024 */
          uint32_t RESERVED0028[54];                   /* Address Offset: 0x0028 */
-    __IO uint32_t TXDATA0;                            /* Address Offset: 0x0100 */
-    __IO uint32_t TXDATA1;                            /* Address Offset: 0x0104 */
-    __IO uint32_t TXDATA2;                            /* Address Offset: 0x0108 */
-    __IO uint32_t TXDATA3;                            /* Address Offset: 0x010C */
-    __IO uint32_t TXDATA4;                            /* Address Offset: 0x0110 */
-    __IO uint32_t TXDATA5;                            /* Address Offset: 0x0114 */
-    __IO uint32_t TXDATA6;                            /* Address Offset: 0x0118 */
-    __IO uint32_t TXDATA7;                            /* Address Offset: 0x011C */
+    __IO uint32_t TXDATA[8];                          /* Address Offset: 0x0100 */
          uint32_t RESERVED0120[56];                   /* Address Offset: 0x0120 */
-    __I  uint32_t RXDATA0;                            /* Address Offset: 0x0200 */
-    __I  uint32_t RXDATA1;                            /* Address Offset: 0x0204 */
-    __I  uint32_t RXDATA2;                            /* Address Offset: 0x0208 */
-    __I  uint32_t RXDATA3;                            /* Address Offset: 0x020C */
-    __I  uint32_t RXDATA4;                            /* Address Offset: 0x0210 */
-    __I  uint32_t RXDATA5;                            /* Address Offset: 0x0214 */
-    __I  uint32_t RXDATA6;                            /* Address Offset: 0x0218 */
-    __I  uint32_t RXDATA7;                            /* Address Offset: 0x021C */
+    __I  uint32_t RXDATA[8];                          /* Address Offset: 0x0200 */
     __I  uint32_t ST;                                 /* Address Offset: 0x0220 */
+    __IO uint32_t DBGCTRL;                            /* Address Offset: 0x0224 */
 };
 /* WDT Register Structure Define */
 struct WDT_REG {
@@ -674,20 +661,18 @@ struct TSADC_REG {
     __IO uint32_t INT_EN;                             /* Address Offset: 0x0008 */
     __IO uint32_t INT_PD;                             /* Address Offset: 0x000C */
          uint32_t RESERVED0010[4];                    /* Address Offset: 0x0010 */
-    __I  uint32_t DATA[2];                              /* Address Offset: 0x0020 */
+    __I  uint32_t DATA[2];                            /* Address Offset: 0x0020 */
          uint32_t RESERVED0028[2];                    /* Address Offset: 0x0028 */
-    __IO uint32_t COMP0_INT;                          /* Address Offset: 0x0030 */
-    __IO uint32_t COMP1_INT;                          /* Address Offset: 0x0034 */
+    __IO uint32_t COMP_INT[2];                        /* Address Offset: 0x0030 */
          uint32_t RESERVED0038[2];                    /* Address Offset: 0x0038 */
-    __IO uint32_t COMP_SHUT[2];                         /* Address Offset: 0x0040 */
+    __IO uint32_t COMP_SHUT[2];                       /* Address Offset: 0x0040 */
          uint32_t RESERVED0048[6];                    /* Address Offset: 0x0048 */
     __IO uint32_t HIGHT_INT_DEBOUNCE;                 /* Address Offset: 0x0060 */
     __IO uint32_t HIGHT_TSHUT_DEBOUNCE;               /* Address Offset: 0x0064 */
     __IO uint32_t AUTO_PERIOD;                        /* Address Offset: 0x0068 */
     __IO uint32_t AUTO_PERIOD_HT;                     /* Address Offset: 0x006C */
          uint32_t RESERVED0070[4];                    /* Address Offset: 0x0070 */
-    __IO uint32_t COMP0_LOW_INT;                      /* Address Offset: 0x0080 */
-    __IO uint32_t COMP1_LOW_INT;                      /* Address Offset: 0x0084 */
+    __IO uint32_t COMP_LOW_INT[2];                    /* Address Offset: 0x0080 */
 };
 /* OTPC Register Structure Define */
 struct OTPC_REG {
@@ -1630,7 +1615,7 @@ struct CRU_REG {
          uint32_t RESERVED0054[3];                    /* Address Offset: 0x0054 */
     __IO uint32_t VPLL1_CON[5];                       /* Address Offset: 0x0060 */
          uint32_t RESERVED0074[11];                   /* Address Offset: 0x0074 */
-    __IO uint32_t MODE_CON00;                               /* Address Offset: 0x00A0 */
+    __IO uint32_t MODE_CON00;                         /* Address Offset: 0x00A0 */
     __IO uint32_t MISC;                               /* Address Offset: 0x00A4 */
          uint32_t RESERVED00A8[2];                    /* Address Offset: 0x00A8 */
     __IO uint32_t GLB_CNT_TH;                         /* Address Offset: 0x00B0 */
@@ -1689,7 +1674,8 @@ struct CRU_REG {
     __IO uint32_t SDMMC_CON[2];                       /* Address Offset: 0x0480 */
     __IO uint32_t SDIO_CON[2];                        /* Address Offset: 0x0488 */
     __IO uint32_t EMMC_CON[2];                        /* Address Offset: 0x0490 */
-};/* PMU Register Structure Define */
+};
+/* PMU Register Structure Define */
 struct PMU_REG {
     __IO uint32_t WAKEUP_CFG0_LO;                     /* Address Offset: 0x0000 */
     __IO uint32_t WAKEUP_CFG0_HI;                     /* Address Offset: 0x0004 */
@@ -5606,11 +5592,25 @@ struct ACODEC_REG {
 #define I2C_RXDATA7_RXDATA7_MASK                           (0xFFFFFFFFU << I2C_RXDATA7_RXDATA7_SHIFT)                   /* 0xFFFFFFFF */
 /* ST */
 #define I2C_ST_OFFSET                                      (0x220U)
-#define I2C_ST                                             (0x3U)
+#define I2C_ST                                             (0x0U)
 #define I2C_ST_SDA_ST_SHIFT                                (0U)
 #define I2C_ST_SDA_ST_MASK                                 (0x1U << I2C_ST_SDA_ST_SHIFT)                                /* 0x00000001 */
 #define I2C_ST_SCL_ST_SHIFT                                (1U)
 #define I2C_ST_SCL_ST_MASK                                 (0x1U << I2C_ST_SCL_ST_SHIFT)                                /* 0x00000002 */
+/* DBGCTRL */
+#define I2C_DBGCTRL_OFFSET                                 (0x224U)
+#define I2C_DBGCTRL_FLT_F_SHIFT                            (0U)
+#define I2C_DBGCTRL_FLT_F_MASK                             (0xFU << I2C_DBGCTRL_FLT_F_SHIFT)                            /* 0x0000000F */
+#define I2C_DBGCTRL_FLT_R_SHIFT                            (4U)
+#define I2C_DBGCTRL_FLT_R_MASK                             (0xFU << I2C_DBGCTRL_FLT_R_SHIFT)                            /* 0x000000F0 */
+#define I2C_DBGCTRL_SLV_HOLD_SCL_TH_SHIFT                  (8U)
+#define I2C_DBGCTRL_SLV_HOLD_SCL_TH_MASK                   (0xFU << I2C_DBGCTRL_SLV_HOLD_SCL_TH_SHIFT)                  /* 0x00000F00 */
+#define I2C_DBGCTRL_FLT_EN_SHIFT                           (12U)
+#define I2C_DBGCTRL_FLT_EN_MASK                            (0x1U << I2C_DBGCTRL_FLT_EN_SHIFT)                           /* 0x00001000 */
+#define I2C_DBGCTRL_NAK_RELEASE_SCL_SHIFT                  (13U)
+#define I2C_DBGCTRL_NAK_RELEASE_SCL_MASK                   (0x1U << I2C_DBGCTRL_NAK_RELEASE_SCL_SHIFT)                  /* 0x00002000 */
+#define I2C_DBGCTRL_H0_CHECK_SCL_SHIFT                     (14U)
+#define I2C_DBGCTRL_H0_CHECK_SCL_MASK                      (0x1U << I2C_DBGCTRL_H0_CHECK_SCL_SHIFT)                     /* 0x00004000 */
 /******************************************WDT*******************************************/
 /* WDT_CR */
 #define WDT_WDT_CR_OFFSET                                  (0x0U)
@@ -13458,26 +13458,26 @@ struct ACODEC_REG {
 #define CRU_VPLL1_CON4_SSMOD_SEL_EXT_WAVE_MASK             (0x1U << CRU_VPLL1_CON4_SSMOD_SEL_EXT_WAVE_SHIFT)            /* 0x00000001 */
 #define CRU_VPLL1_CON4_SSMOD_EXT_MAXADDR_SHIFT             (8U)
 #define CRU_VPLL1_CON4_SSMOD_EXT_MAXADDR_MASK              (0xFFU << CRU_VPLL1_CON4_SSMOD_EXT_MAXADDR_SHIFT)            /* 0x0000FF00 */
-/* MODE */
-#define CRU_MODE_OFFSET                                    (0xA0U)
-#define CRU_MODE_APLL_WORK_MODE_SHIFT                      (0U)
-#define CRU_MODE_APLL_WORK_MODE_MASK                       (0x3U << CRU_MODE_APLL_WORK_MODE_SHIFT)                      /* 0x00000003 */
-#define CRU_MODE_DPLL_WORK_MODE_SHIFT                      (2U)
-#define CRU_MODE_DPLL_WORK_MODE_MASK                       (0x3U << CRU_MODE_DPLL_WORK_MODE_SHIFT)                      /* 0x0000000C */
-#define CRU_MODE_VPLL0_WORK_MODE_SHIFT                     (4U)
-#define CRU_MODE_VPLL0_WORK_MODE_MASK                      (0x3U << CRU_MODE_VPLL0_WORK_MODE_SHIFT)                     /* 0x00000030 */
-#define CRU_MODE_VPLL1_WORK_MODE_SHIFT                     (6U)
-#define CRU_MODE_VPLL1_WORK_MODE_MASK                      (0x3U << CRU_MODE_VPLL1_WORK_MODE_SHIFT)                     /* 0x000000C0 */
-#define CRU_MODE_USBPHY480M_WORK_MODE_SHIFT                (8U)
-#define CRU_MODE_USBPHY480M_WORK_MODE_MASK                 (0x3U << CRU_MODE_USBPHY480M_WORK_MODE_SHIFT)                /* 0x00000300 */
-#define CRU_MODE_APLL_CLK_SEL_SHIFT                        (10U)
-#define CRU_MODE_APLL_CLK_SEL_MASK                         (0x1U << CRU_MODE_APLL_CLK_SEL_SHIFT)                        /* 0x00000400 */
-#define CRU_MODE_DPLL_CLK_SEL_SHIFT                        (11U)
-#define CRU_MODE_DPLL_CLK_SEL_MASK                         (0x1U << CRU_MODE_DPLL_CLK_SEL_SHIFT)                        /* 0x00000800 */
-#define CRU_MODE_VPLL0_CLK_SEL_SHIFT                       (12U)
-#define CRU_MODE_VPLL0_CLK_SEL_MASK                        (0x1U << CRU_MODE_VPLL0_CLK_SEL_SHIFT)                       /* 0x00001000 */
-#define CRU_MODE_VPLL1_CLK_SEL_SHIFT                       (13U)
-#define CRU_MODE_VPLL1_CLK_SEL_MASK                        (0x1U << CRU_MODE_VPLL1_CLK_SEL_SHIFT)                       /* 0x00002000 */
+/* MODE_CON00 */
+#define CRU_MODE_CON00_OFFSET                              (0xA0U)
+#define CRU_MODE_CON00_APLL_WORK_MODE_SHIFT                (0U)
+#define CRU_MODE_CON00_APLL_WORK_MODE_MASK                 (0x3U << CRU_MODE_CON00_APLL_WORK_MODE_SHIFT)                /* 0x00000003 */
+#define CRU_MODE_CON00_DPLL_WORK_MODE_SHIFT                (2U)
+#define CRU_MODE_CON00_DPLL_WORK_MODE_MASK                 (0x3U << CRU_MODE_CON00_DPLL_WORK_MODE_SHIFT)                /* 0x0000000C */
+#define CRU_MODE_CON00_VPLL0_WORK_MODE_SHIFT               (4U)
+#define CRU_MODE_CON00_VPLL0_WORK_MODE_MASK                (0x3U << CRU_MODE_CON00_VPLL0_WORK_MODE_SHIFT)               /* 0x00000030 */
+#define CRU_MODE_CON00_VPLL1_WORK_MODE_SHIFT               (6U)
+#define CRU_MODE_CON00_VPLL1_WORK_MODE_MASK                (0x3U << CRU_MODE_CON00_VPLL1_WORK_MODE_SHIFT)               /* 0x000000C0 */
+#define CRU_MODE_CON00_USBPHY480M_WORK_MODE_SHIFT          (8U)
+#define CRU_MODE_CON00_USBPHY480M_WORK_MODE_MASK           (0x3U << CRU_MODE_CON00_USBPHY480M_WORK_MODE_SHIFT)          /* 0x00000300 */
+#define CRU_MODE_CON00_APLL_CLK_SEL_SHIFT                  (10U)
+#define CRU_MODE_CON00_APLL_CLK_SEL_MASK                   (0x1U << CRU_MODE_CON00_APLL_CLK_SEL_SHIFT)                  /* 0x00000400 */
+#define CRU_MODE_CON00_DPLL_CLK_SEL_SHIFT                  (11U)
+#define CRU_MODE_CON00_DPLL_CLK_SEL_MASK                   (0x1U << CRU_MODE_CON00_DPLL_CLK_SEL_SHIFT)                  /* 0x00000800 */
+#define CRU_MODE_CON00_VPLL0_CLK_SEL_SHIFT                 (12U)
+#define CRU_MODE_CON00_VPLL0_CLK_SEL_MASK                  (0x1U << CRU_MODE_CON00_VPLL0_CLK_SEL_SHIFT)                 /* 0x00001000 */
+#define CRU_MODE_CON00_VPLL1_CLK_SEL_SHIFT                 (13U)
+#define CRU_MODE_CON00_VPLL1_CLK_SEL_MASK                  (0x1U << CRU_MODE_CON00_VPLL1_CLK_SEL_SHIFT)                 /* 0x00002000 */
 /* MISC */
 #define CRU_MISC_OFFSET                                    (0xA4U)
 #define CRU_MISC_WARMRST_EN_SHIFT                          (0U)
