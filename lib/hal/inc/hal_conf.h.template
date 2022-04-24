@@ -137,6 +137,7 @@
 #ifdef HAL_SNOR_MODULE_ENABLED
 #define HAL_SNOR_FSPI_HOST /**< Choose SNOR Host: FSPI */
 //#define HAL_SNOR_SPI_HOST /**< Choose SNOR Host: SPI */
+//#define HAL_SNOR_SFC_HOST /**< Choose SNOR Host: SFC */
 #endif
 
 #ifdef HAL_WDT_MODULE_ENABLED
