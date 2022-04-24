@@ -88,6 +88,8 @@ struct HAL_SFC_XMMC_DEV {
 
 struct HAL_SFC_HOST {
     struct SFC_REG *instance;
+    eCLOCK_Name sclkID;
+    IRQn_Type irqNum;
     HAL_LockStatus status;
     uint32_t version;
     struct HAL_SFC_XMMC_DEV xmmcDev[SFC_CHIP_CNT];
