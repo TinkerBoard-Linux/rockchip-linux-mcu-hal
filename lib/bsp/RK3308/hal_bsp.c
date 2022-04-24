@@ -68,9 +68,8 @@ const struct HAL_SPI_DEV g_spiDev2 = {
 const struct HAL_UART_DEV g_uart0Dev =
 {
     .pReg = UART0,
-    .sclkID = 0,
-    .sclkGateID = 0,
-    .pclkGateID = 0,
+    .sclkID = CLK_UART0,
+    .pclkGateID = PCLK_UART0_GATE,
     .irqNum = UART0_IRQn,
     .isAutoFlow = false,
 };
@@ -78,9 +77,8 @@ const struct HAL_UART_DEV g_uart0Dev =
 const struct HAL_UART_DEV g_uart1Dev =
 {
     .pReg = UART1,
-    .sclkID = 0,
-    .sclkGateID = 0,
-    .pclkGateID = 0,
+    .sclkID = CLK_UART1,
+    .pclkGateID = PCLK_UART1_GATE,
     .irqNum = UART1_IRQn,
     .isAutoFlow = false,
 };
@@ -88,9 +86,8 @@ const struct HAL_UART_DEV g_uart1Dev =
 const struct HAL_UART_DEV g_uart2Dev =
 {
     .pReg = UART2,
-    .sclkID = 0,
-    .sclkGateID = 0,
-    .pclkGateID = 0,
+    .sclkID = CLK_UART2,
+    .pclkGateID = PCLK_UART2_GATE,
     .irqNum = UART2_IRQn,
     .isAutoFlow = false,
 };
@@ -98,9 +95,8 @@ const struct HAL_UART_DEV g_uart2Dev =
 const struct HAL_UART_DEV g_uart3Dev =
 {
     .pReg = UART3,
-    .sclkID = 0,
-    .sclkGateID = 0,
-    .pclkGateID = 0,
+    .sclkID = CLK_UART3,
+    .pclkGateID = PCLK_UART3_GATE,
     .irqNum = UART3_IRQn,
     .isAutoFlow = false,
 };
@@ -108,9 +104,8 @@ const struct HAL_UART_DEV g_uart3Dev =
 const struct HAL_UART_DEV g_uart4Dev =
 {
     .pReg = UART4,
-    .sclkID = 0,
-    .sclkGateID = 0,
-    .pclkGateID = 0,
+    .sclkID = CLK_UART4,
+    .pclkGateID = PCLK_UART4_GATE,
     .irqNum = UART4_IRQn,
     .isAutoFlow = false,
 };

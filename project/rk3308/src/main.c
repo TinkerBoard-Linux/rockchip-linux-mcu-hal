@@ -91,7 +91,7 @@ void main(void)
 
     /* UART Init */
     HAL_IOMUX_Uart4M0Config();
-    //HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
+    HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
 
     printf("Hello RK3308 Bare-metal using RK_HAL!\n");
 
