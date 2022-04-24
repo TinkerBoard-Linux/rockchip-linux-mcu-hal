@@ -1365,20 +1365,21 @@ struct SFC_REG {
     __IO uint32_t IMR;                                /* Address Offset: 0x0004 */
     __IO uint32_t ICLR;                               /* Address Offset: 0x0008 */
     __IO uint32_t FTLR;                               /* Address Offset: 0x000C */
-    __I  uint32_t RCVR;                               /* Address Offset: 0x0010 */
-    __I  uint32_t AX;                                 /* Address Offset: 0x0014 */
+    __IO uint32_t RCVR;                               /* Address Offset: 0x0010 */
+    __IO uint32_t AX;                                 /* Address Offset: 0x0014 */
     __IO uint32_t ABIT;                               /* Address Offset: 0x0018 */
     __IO uint32_t ISR;                                /* Address Offset: 0x001C */
     __IO uint32_t FSR;                                /* Address Offset: 0x0020 */
-    __O  uint32_t SR;                                 /* Address Offset: 0x0024 */
-    __IO uint32_t RISR;                               /* Address Offset: 0x0028 */
-    __I  uint32_t VER;                                /* Address Offset: 0x002C */
-         uint32_t RESERVED0030[20];                   /* Address Offset: 0x0030 */
+    __IO uint32_t SR;                                 /* Address Offset: 0x0024 */
+    __I  uint32_t RISR;                               /* Address Offset: 0x0028 */
+    __IO uint32_t VER;                                /* Address Offset: 0x002C */
+    __IO uint32_t QOP;                                /* Address Offset: 0x0030 */
+         uint32_t RESERVED0034[19];                   /* Address Offset: 0x0034 */
     __IO uint32_t DMATR;                              /* Address Offset: 0x0080 */
     __IO uint32_t DMAADDR;                            /* Address Offset: 0x0084 */
          uint32_t RESERVED0088[30];                   /* Address Offset: 0x0088 */
-    __IO uint32_t CMD;                                /* Address Offset: 0x0100 */
-    __IO uint32_t ADDR;                               /* Address Offset: 0x0104 */
+    __O  uint32_t CMD;                                /* Address Offset: 0x0100 */
+    __O  uint32_t ADDR;                               /* Address Offset: 0x0104 */
     __IO uint32_t DATA;                               /* Address Offset: 0x0108 */
 };
 /* GMAC Register Structure Define */
@@ -11660,18 +11661,16 @@ struct ACODEC_REG {
 #define SFC_FTLR_RXFTLR_MASK                               (0xFFU << SFC_FTLR_RXFTLR_SHIFT)                             /* 0x0000FF00 */
 /* RCVR */
 #define SFC_RCVR_OFFSET                                    (0x10U)
-#define SFC_RCVR                                           (0x0U)
 #define SFC_RCVR_RCVR_SHIFT                                (0U)
 #define SFC_RCVR_RCVR_MASK                                 (0x1U << SFC_RCVR_RCVR_SHIFT)                                /* 0x00000001 */
 /* AX */
 #define SFC_AX_OFFSET                                      (0x14U)
-#define SFC_AX                                             (0x0U)
 #define SFC_AX_AX_SHIFT                                    (0U)
 #define SFC_AX_AX_MASK                                     (0xFFU << SFC_AX_AX_SHIFT)                                   /* 0x000000FF */
 /* ABIT */
 #define SFC_ABIT_OFFSET                                    (0x18U)
 #define SFC_ABIT_ABIT_SHIFT                                (0U)
-#define SFC_ABIT_ABIT_MASK                                 (0x1U << SFC_ABIT_ABIT_SHIFT)                                /* 0x00000001 */
+#define SFC_ABIT_ABIT_MASK                                 (0x1FU << SFC_ABIT_ABIT_SHIFT)                               /* 0x0000001F */
 /* ISR */
 #define SFC_ISR_OFFSET                                     (0x1CU)
 #define SFC_ISR_RXFS_SHIFT                                 (0U)
@@ -11710,6 +11709,7 @@ struct ACODEC_REG {
 #define SFC_SR_SR_MASK                                     (0x1U << SFC_SR_SR_SHIFT)                                    /* 0x00000001 */
 /* RISR */
 #define SFC_RISR_OFFSET                                    (0x28U)
+#define SFC_RISR                                           (0x0U)
 #define SFC_RISR_RXFS_SHIFT                                (0U)
 #define SFC_RISR_RXFS_MASK                                 (0x1U << SFC_RISR_RXFS_SHIFT)                                /* 0x00000001 */
 #define SFC_RISR_RXUS_SHIFT                                (1U)
@@ -11728,9 +11728,12 @@ struct ACODEC_REG {
 #define SFC_RISR_DMAS_MASK                                 (0x1U << SFC_RISR_DMAS_SHIFT)                                /* 0x00000080 */
 /* VER */
 #define SFC_VER_OFFSET                                     (0x2CU)
-#define SFC_VER                                            (0x5EB0001U)
 #define SFC_VER_VER_SHIFT                                  (0U)
 #define SFC_VER_VER_MASK                                   (0xFFFFFFFFU << SFC_VER_VER_SHIFT)                           /* 0xFFFFFFFF */
+/* QOP */
+#define SFC_QOP_OFFSET                                     (0x30U)
+#define SFC_QOP_SO123_SHIFT                                (0U)
+#define SFC_QOP_SO123_MASK                                 (0x1U << SFC_QOP_SO123_SHIFT)                                /* 0x00000001 */
 /* DMATR */
 #define SFC_DMATR_OFFSET                                   (0x80U)
 #define SFC_DMATR_DMATR_SHIFT                              (0U)
@@ -11761,8 +11764,8 @@ struct ACODEC_REG {
 #define SFC_ADDR_ADDR_MASK                                 (0xFFFFFFFFU << SFC_ADDR_ADDR_SHIFT)                         /* 0xFFFFFFFF */
 /* DATA */
 #define SFC_DATA_OFFSET                                    (0x108U)
-#define SFC_DATA_ADDR_SHIFT                                (0U)
-#define SFC_DATA_ADDR_MASK                                 (0xFFFFFFFFU << SFC_DATA_ADDR_SHIFT)                         /* 0xFFFFFFFF */
+#define SFC_DATA_DATA_SHIFT                                (0U)
+#define SFC_DATA_DATA_MASK                                 (0xFFFFFFFFU << SFC_DATA_DATA_SHIFT)                         /* 0xFFFFFFFF */
 /******************************************GMAC******************************************/
 /* MAC_CONF */
 #define GMAC_MAC_CONF_OFFSET                               (0x0U)
