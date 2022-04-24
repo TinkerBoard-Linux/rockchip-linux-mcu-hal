@@ -567,8 +567,7 @@ struct CAN_REG {
 };
 /* SPI Register Structure Define */
 struct SPI_REG {
-    __IO uint32_t CTRLR0;                             /* Address Offset: 0x0000 */
-    __IO uint32_t CTRLR1;                             /* Address Offset: 0x0004 */
+    __IO uint32_t CTRLR[2];                           /* Address Offset: 0x0000 */
     __IO uint32_t ENR;                                /* Address Offset: 0x0008 */
     __IO uint32_t SER;                                /* Address Offset: 0x000C */
     __IO uint32_t BAUDR;                              /* Address Offset: 0x0010 */
