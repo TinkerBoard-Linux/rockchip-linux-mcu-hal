@@ -7,8 +7,9 @@
 
 MEMORY
 {
-    SRAM  (rxw) : ORIGIN = 0xfff80000, LENGTH = 256K      /* SYSTEM SRAM */
-    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = 10M    /* DRAM */
+    SRAM  (rxw) : ORIGIN = 0xfff80000, LENGTH = 256K            /* SYSTEM SRAM */
+    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = DRAM_SIZE    /* DRAM */
+    SHMEM (rxw) : ORIGIN = SHMEM_BASE, LENGTH = SHMEM_SIZE      /* shared memory for all cpu */
 }
 
 ENTRY(Reset_Handler)
@@ -21,6 +22,7 @@ __ABT_STACK_SIZE = 0x400;
 __UND_STACK_SIZE = 0x400;
 
 __TTB_SIZE = 0x4000;
+__SPINLOCK_MEM_SIZE = 0x100;
 
 SECTIONS
 {
@@ -64,6 +66,10 @@ SECTIONS
         LONG ((__bss_end__ - __bss_start__) / 4)
         LONG (__TTB_start__)
         LONG ((__TTB_end__ - __TTB_start__) / 4)
+#ifdef CPU1
+        LONG (__spinlock_mem_start__)
+        LONG ((__spinlock_mem_end__ - __spinlock_mem_start__) / 4)
+#endif
         __zero_table_end__ = .;
     } > DRAM
 
@@ -106,6 +112,15 @@ SECTIONS
         PROVIDE(__TTB_end__ = .);
         . = ALIGN(16 * 1024);
     } > DRAM
+
+    .share_mem (NOLOAD) :
+    {
+        . = ALIGN(64);
+        PROVIDE(__spinlock_mem_start__ = .);
+        . += __SPINLOCK_MEM_SIZE;
+        PROVIDE(__spinlock_mem_end__ = .);
+        . = ALIGN(64);
+    } > SHMEM
 
     . = ALIGN(16);
     .bss (NOLOAD) :
