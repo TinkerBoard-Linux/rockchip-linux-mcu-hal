@@ -7,6 +7,7 @@
 #define _TEST_CONF_H_
 
 /* Unity HAL Test Config */
+#define UNITY_HAL_SPIFLASH
 
 /* Unity HAL Test Sub Config */
 #endif
