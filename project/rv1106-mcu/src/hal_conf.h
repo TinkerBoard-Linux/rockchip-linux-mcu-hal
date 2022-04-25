@@ -9,9 +9,12 @@
 /* CPU config */
 #define SOC_RV1106
 #define HAL_MCU_CORE
+#define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
-#define HAL_UART_MODULE_ENABLED
 #define HAL_CRU_MODULE_ENABLED
+#define HAL_MBOX_MODULE_ENABLED
+#define HAL_TIMER_MODULE_ENABLED
+#define HAL_UART_MODULE_ENABLED
 
 #endif

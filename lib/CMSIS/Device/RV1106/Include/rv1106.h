@@ -222,6 +222,29 @@ struct UART_REG {
     __I  uint32_t UCV;                                /* Address Offset: 0x00F8 */
     __I  uint32_t CTR;                                /* Address Offset: 0x00FC */
 };
+/* TIMER Register Structure Define */
+struct TIMER_REG {
+    __IO uint32_t LOAD_COUNT[2];                      /* Address Offset: 0x0000 */
+    __I  uint32_t CURRENT_VALUE[2];                   /* Address Offset: 0x0008 */
+    __IO uint32_t CONTROLREG;                         /* Address Offset: 0x0010 */
+         uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
+    __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
+};
+/* MBOX Register Structure Define */
+struct MBOX_CMD_DAT {
+    __IO uint32_t CMD;
+    __IO uint32_t DATA;
+};
+struct MBOX_REG {
+    __IO uint32_t A2B_INTEN;                          /* Address Offset: 0x0000 */
+    __IO uint32_t A2B_STATUS;                         /* Address Offset: 0x0004 */
+    struct MBOX_CMD_DAT A2B[4];                       /* Address Offset: 0x0008 */
+    __IO uint32_t B2A_INTEN;                          /* Address Offset: 0x0028 */
+    __IO uint32_t B2A_STATUS;                         /* Address Offset: 0x002C */
+    struct MBOX_CMD_DAT B2A[4];                       /* Address Offset: 0x0030 */
+         uint32_t RESERVED0050[44];                   /* Address Offset: 0x0050 */
+    __IO uint32_t ATOMIC_LOCK[32];                    /* Address Offset: 0x0100 */
+};
 /* ICACHE Register Structure Define */
 struct ICACHE_REG {
     __IO uint32_t CACHE_CTRL;                         /* Address Offset: 0x0000 */
@@ -298,6 +321,13 @@ struct DCACHE_REG {
 #define UART3_BASE                     0xFF4D0000U /* UART3 base address */
 #define UART4_BASE                     0xFF4E0000U /* UART4 base address */
 #define UART5_BASE                     0xFF4F0000U /* UART5 base address */
+#define TIMER0_BASE                    0xFF580000U /* TIMER0 base address */
+#define TIMER1_BASE                    0xFF580020U /* TIMER1 base address */
+#define TIMER2_BASE                    0xFF580040U /* TIMER2 base address */
+#define TIMER3_BASE                    0xFF580060U /* TIMER3 base address */
+#define TIMER4_BASE                    0xFF580080U /* TIMER4 base address */
+#define TIMER5_BASE                    0xFF5800A0U /* TIMER5 base address */
+#define MBOX_BASE                      0xFF5C0000U /* MBOX base address */
 #define ICACHE_BASE                    0xFF640000U /* ICACHE base address */
 #define DCACHE_BASE                    0xFF640000U /* DCACHE base address */
 /****************************************************************************************/
@@ -324,6 +354,13 @@ struct DCACHE_REG {
 #define UART3               ((struct UART_REG *) UART3_BASE)
 #define UART4               ((struct UART_REG *) UART4_BASE)
 #define UART5               ((struct UART_REG *) UART5_BASE)
+#define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
+#define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
+#define TIMER2              ((struct TIMER_REG *) TIMER2_BASE)
+#define TIMER3              ((struct TIMER_REG *) TIMER3_BASE)
+#define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
+#define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
+#define MBOX                ((struct MBOX_REG *) MBOX_BASE)
 #define ICACHE              ((struct ICACHE_REG *) ICACHE_BASE)
 #define DCACHE              ((struct DCACHE_REG *) DCACHE_BASE)
 
@@ -338,9 +375,11 @@ struct DCACHE_REG {
 #define IS_VOCRU_INSTANCE(instance) ((instance) == VOCRU)
 #define IS_DDRCRU_INSTANCE(instance) ((instance) == DDRCRU)
 #define IS_SUBDDRCRU_INSTANCE(instance) ((instance) == SUBDDRCRU)
+#define IS_MBOX_INSTANCE(instance) ((instance) == MBOX)
 #define IS_ICACHE_INSTANCE(instance) ((instance) == ICACHE)
 #define IS_DCACHE_INSTANCE(instance) ((instance) == DCACHE)
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5))
+#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
@@ -3080,6 +3119,270 @@ struct DCACHE_REG {
 #define UART_CTR                                           (0x44570110U)
 #define UART_CTR_PERIPHERAL_ID_SHIFT                       (0U)
 #define UART_CTR_PERIPHERAL_ID_MASK                        (0xFFFFFFFFU << UART_CTR_PERIPHERAL_ID_SHIFT)                /* 0xFFFFFFFF */
+/*****************************************TIMER******************************************/
+/* LOAD_COUNT0 */
+#define TIMER_LOAD_COUNT0_OFFSET                           (0x0U)
+#define TIMER_LOAD_COUNT0_COUNT0_SHIFT                     (0U)
+#define TIMER_LOAD_COUNT0_COUNT0_MASK                      (0xFFFFFFFFU << TIMER_LOAD_COUNT0_COUNT0_SHIFT)              /* 0xFFFFFFFF */
+/* LOAD_COUNT1 */
+#define TIMER_LOAD_COUNT1_OFFSET                           (0x4U)
+#define TIMER_LOAD_COUNT1_COUNT1_SHIFT                     (0U)
+#define TIMER_LOAD_COUNT1_COUNT1_MASK                      (0xFFFFFFFFU << TIMER_LOAD_COUNT1_COUNT1_SHIFT)              /* 0xFFFFFFFF */
+/* CURRENT_VALUE0 */
+#define TIMER_CURRENT_VALUE0_OFFSET                        (0x8U)
+#define TIMER_CURRENT_VALUE0                               (0x0U)
+#define TIMER_CURRENT_VALUE0_CURRENT_VALUE0_SHIFT          (0U)
+#define TIMER_CURRENT_VALUE0_CURRENT_VALUE0_MASK           (0xFFFFFFFFU << TIMER_CURRENT_VALUE0_CURRENT_VALUE0_SHIFT)   /* 0xFFFFFFFF */
+/* CURRENT_VALUE1 */
+#define TIMER_CURRENT_VALUE1_OFFSET                        (0xCU)
+#define TIMER_CURRENT_VALUE1                               (0x0U)
+#define TIMER_CURRENT_VALUE1_CURRENT_VALUE1_SHIFT          (0U)
+#define TIMER_CURRENT_VALUE1_CURRENT_VALUE1_MASK           (0xFFFFFFFFU << TIMER_CURRENT_VALUE1_CURRENT_VALUE1_SHIFT)   /* 0xFFFFFFFF */
+/* CONTROLREG */
+#define TIMER_CONTROLREG_OFFSET                            (0x10U)
+#define TIMER_CONTROLREG_TIMER_ENABLE_SHIFT                (0U)
+#define TIMER_CONTROLREG_TIMER_ENABLE_MASK                 (0x1U << TIMER_CONTROLREG_TIMER_ENABLE_SHIFT)                /* 0x00000001 */
+#define TIMER_CONTROLREG_TIMER_MODE_SHIFT                  (1U)
+#define TIMER_CONTROLREG_TIMER_MODE_MASK                   (0x1U << TIMER_CONTROLREG_TIMER_MODE_SHIFT)                  /* 0x00000002 */
+#define TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT              (2U)
+#define TIMER_CONTROLREG_TIMER_INT_MASK_MASK               (0x1U << TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT)              /* 0x00000004 */
+/* INTSTATUS */
+#define TIMER_INTSTATUS_OFFSET                             (0x18U)
+#define TIMER_INTSTATUS_INT_PD_SHIFT                       (0U)
+#define TIMER_INTSTATUS_INT_PD_MASK                        (0x1U << TIMER_INTSTATUS_INT_PD_SHIFT)                       /* 0x00000001 */
+/******************************************MBOX******************************************/
+/* A2B_INTEN */
+#define MBOX_A2B_INTEN_OFFSET                              (0x0U)
+#define MBOX_A2B_INTEN_INT0_SHIFT                          (0U)
+#define MBOX_A2B_INTEN_INT0_MASK                           (0x1U << MBOX_A2B_INTEN_INT0_SHIFT)                          /* 0x00000001 */
+#define MBOX_A2B_INTEN_INT1_SHIFT                          (1U)
+#define MBOX_A2B_INTEN_INT1_MASK                           (0x1U << MBOX_A2B_INTEN_INT1_SHIFT)                          /* 0x00000002 */
+#define MBOX_A2B_INTEN_INT2_SHIFT                          (2U)
+#define MBOX_A2B_INTEN_INT2_MASK                           (0x1U << MBOX_A2B_INTEN_INT2_SHIFT)                          /* 0x00000004 */
+#define MBOX_A2B_INTEN_INT3_SHIFT                          (3U)
+#define MBOX_A2B_INTEN_INT3_MASK                           (0x1U << MBOX_A2B_INTEN_INT3_SHIFT)                          /* 0x00000008 */
+/* A2B_STATUS */
+#define MBOX_A2B_STATUS_OFFSET                             (0x4U)
+#define MBOX_A2B_STATUS_INT0_SHIFT                         (0U)
+#define MBOX_A2B_STATUS_INT0_MASK                          (0x1U << MBOX_A2B_STATUS_INT0_SHIFT)                         /* 0x00000001 */
+#define MBOX_A2B_STATUS_INT1_SHIFT                         (1U)
+#define MBOX_A2B_STATUS_INT1_MASK                          (0x1U << MBOX_A2B_STATUS_INT1_SHIFT)                         /* 0x00000002 */
+#define MBOX_A2B_STATUS_INT2_SHIFT                         (2U)
+#define MBOX_A2B_STATUS_INT2_MASK                          (0x1U << MBOX_A2B_STATUS_INT2_SHIFT)                         /* 0x00000004 */
+#define MBOX_A2B_STATUS_INT3_SHIFT                         (3U)
+#define MBOX_A2B_STATUS_INT3_MASK                          (0x1U << MBOX_A2B_STATUS_INT3_SHIFT)                         /* 0x00000008 */
+/* A2B_CMD_0 */
+#define MBOX_A2B_CMD_0_OFFSET                              (0x8U)
+#define MBOX_A2B_CMD_0_COMMAND_SHIFT                       (0U)
+#define MBOX_A2B_CMD_0_COMMAND_MASK                        (0xFFFFFFFFU << MBOX_A2B_CMD_0_COMMAND_SHIFT)                /* 0xFFFFFFFF */
+/* A2B_DAT_0 */
+#define MBOX_A2B_DAT_0_OFFSET                              (0xCU)
+#define MBOX_A2B_DAT_0_DATA_SHIFT                          (0U)
+#define MBOX_A2B_DAT_0_DATA_MASK                           (0xFFFFFFFFU << MBOX_A2B_DAT_0_DATA_SHIFT)                   /* 0xFFFFFFFF */
+/* A2B_CMD_1 */
+#define MBOX_A2B_CMD_1_OFFSET                              (0x10U)
+#define MBOX_A2B_CMD_1_COMMAND_SHIFT                       (0U)
+#define MBOX_A2B_CMD_1_COMMAND_MASK                        (0xFFFFFFFFU << MBOX_A2B_CMD_1_COMMAND_SHIFT)                /* 0xFFFFFFFF */
+/* A2B_DAT_1 */
+#define MBOX_A2B_DAT_1_OFFSET                              (0x14U)
+#define MBOX_A2B_DAT_1_DATA_SHIFT                          (0U)
+#define MBOX_A2B_DAT_1_DATA_MASK                           (0xFFFFFFFFU << MBOX_A2B_DAT_1_DATA_SHIFT)                   /* 0xFFFFFFFF */
+/* A2B_CMD_2 */
+#define MBOX_A2B_CMD_2_OFFSET                              (0x18U)
+#define MBOX_A2B_CMD_2_COMMAND_SHIFT                       (0U)
+#define MBOX_A2B_CMD_2_COMMAND_MASK                        (0xFFFFFFFFU << MBOX_A2B_CMD_2_COMMAND_SHIFT)                /* 0xFFFFFFFF */
+/* A2B_DAT_2 */
+#define MBOX_A2B_DAT_2_OFFSET                              (0x1CU)
+#define MBOX_A2B_DAT_2_DATA_SHIFT                          (0U)
+#define MBOX_A2B_DAT_2_DATA_MASK                           (0xFFFFFFFFU << MBOX_A2B_DAT_2_DATA_SHIFT)                   /* 0xFFFFFFFF */
+/* A2B_CMD_3 */
+#define MBOX_A2B_CMD_3_OFFSET                              (0x20U)
+#define MBOX_A2B_CMD_3_COMMAND_SHIFT                       (0U)
+#define MBOX_A2B_CMD_3_COMMAND_MASK                        (0xFFFFFFFFU << MBOX_A2B_CMD_3_COMMAND_SHIFT)                /* 0xFFFFFFFF */
+/* A2B_DAT_3 */
+#define MBOX_A2B_DAT_3_OFFSET                              (0x24U)
+#define MBOX_A2B_DAT_3_DATA_SHIFT                          (0U)
+#define MBOX_A2B_DAT_3_DATA_MASK                           (0xFFFFFFFFU << MBOX_A2B_DAT_3_DATA_SHIFT)                   /* 0xFFFFFFFF */
+/* B2A_INTEN */
+#define MBOX_B2A_INTEN_OFFSET                              (0x28U)
+#define MBOX_B2A_INTEN_INT0_SHIFT                          (0U)
+#define MBOX_B2A_INTEN_INT0_MASK                           (0x1U << MBOX_B2A_INTEN_INT0_SHIFT)                          /* 0x00000001 */
+#define MBOX_B2A_INTEN_INT1_SHIFT                          (1U)
+#define MBOX_B2A_INTEN_INT1_MASK                           (0x1U << MBOX_B2A_INTEN_INT1_SHIFT)                          /* 0x00000002 */
+#define MBOX_B2A_INTEN_INT2_SHIFT                          (2U)
+#define MBOX_B2A_INTEN_INT2_MASK                           (0x1U << MBOX_B2A_INTEN_INT2_SHIFT)                          /* 0x00000004 */
+#define MBOX_B2A_INTEN_INT3_SHIFT                          (3U)
+#define MBOX_B2A_INTEN_INT3_MASK                           (0x1U << MBOX_B2A_INTEN_INT3_SHIFT)                          /* 0x00000008 */
+/* B2A_STATUS */
+#define MBOX_B2A_STATUS_OFFSET                             (0x2CU)
+#define MBOX_B2A_STATUS_INT0_SHIFT                         (0U)
+#define MBOX_B2A_STATUS_INT0_MASK                          (0x1U << MBOX_B2A_STATUS_INT0_SHIFT)                         /* 0x00000001 */
+#define MBOX_B2A_STATUS_INT1_SHIFT                         (1U)
+#define MBOX_B2A_STATUS_INT1_MASK                          (0x1U << MBOX_B2A_STATUS_INT1_SHIFT)                         /* 0x00000002 */
+#define MBOX_B2A_STATUS_INT2_SHIFT                         (2U)
+#define MBOX_B2A_STATUS_INT2_MASK                          (0x1U << MBOX_B2A_STATUS_INT2_SHIFT)                         /* 0x00000004 */
+#define MBOX_B2A_STATUS_INT3_SHIFT                         (3U)
+#define MBOX_B2A_STATUS_INT3_MASK                          (0x1U << MBOX_B2A_STATUS_INT3_SHIFT)                         /* 0x00000008 */
+/* B2A_CMD_0 */
+#define MBOX_B2A_CMD_0_OFFSET                              (0x30U)
+#define MBOX_B2A_CMD_0_COMMAND_SHIFT                       (0U)
+#define MBOX_B2A_CMD_0_COMMAND_MASK                        (0xFFFFFFFFU << MBOX_B2A_CMD_0_COMMAND_SHIFT)                /* 0xFFFFFFFF */
+/* B2A_DAT_0 */
+#define MBOX_B2A_DAT_0_OFFSET                              (0x34U)
+#define MBOX_B2A_DAT_0_DATA_SHIFT                          (0U)
+#define MBOX_B2A_DAT_0_DATA_MASK                           (0xFFFFFFFFU << MBOX_B2A_DAT_0_DATA_SHIFT)                   /* 0xFFFFFFFF */
+/* B2A_CMD_1 */
+#define MBOX_B2A_CMD_1_OFFSET                              (0x38U)
+#define MBOX_B2A_CMD_1_COMMAND_SHIFT                       (0U)
+#define MBOX_B2A_CMD_1_COMMAND_MASK                        (0xFFFFFFFFU << MBOX_B2A_CMD_1_COMMAND_SHIFT)                /* 0xFFFFFFFF */
+/* B2A_DAT_1 */
+#define MBOX_B2A_DAT_1_OFFSET                              (0x3CU)
+#define MBOX_B2A_DAT_1_DATA_SHIFT                          (0U)
+#define MBOX_B2A_DAT_1_DATA_MASK                           (0xFFFFFFFFU << MBOX_B2A_DAT_1_DATA_SHIFT)                   /* 0xFFFFFFFF */
+/* B2A_CMD_2 */
+#define MBOX_B2A_CMD_2_OFFSET                              (0x40U)
+#define MBOX_B2A_CMD_2_COMMAND_SHIFT                       (0U)
+#define MBOX_B2A_CMD_2_COMMAND_MASK                        (0xFFFFFFFFU << MBOX_B2A_CMD_2_COMMAND_SHIFT)                /* 0xFFFFFFFF */
+/* B2A_DAT_2 */
+#define MBOX_B2A_DAT_2_OFFSET                              (0x44U)
+#define MBOX_B2A_DAT_2_DATA_SHIFT                          (0U)
+#define MBOX_B2A_DAT_2_DATA_MASK                           (0xFFFFFFFFU << MBOX_B2A_DAT_2_DATA_SHIFT)                   /* 0xFFFFFFFF */
+/* B2A_CMD_3 */
+#define MBOX_B2A_CMD_3_OFFSET                              (0x48U)
+#define MBOX_B2A_CMD_3_COMMAND_SHIFT                       (0U)
+#define MBOX_B2A_CMD_3_COMMAND_MASK                        (0xFFFFFFFFU << MBOX_B2A_CMD_3_COMMAND_SHIFT)                /* 0xFFFFFFFF */
+/* B2A_DAT_3 */
+#define MBOX_B2A_DAT_3_OFFSET                              (0x4CU)
+#define MBOX_B2A_DAT_3_DATA_SHIFT                          (0U)
+#define MBOX_B2A_DAT_3_DATA_MASK                           (0xFFFFFFFFU << MBOX_B2A_DAT_3_DATA_SHIFT)                   /* 0xFFFFFFFF */
+/* ATOMIC_LOCK_00 */
+#define MBOX_ATOMIC_LOCK_00_OFFSET                         (0x100U)
+#define MBOX_ATOMIC_LOCK_00_ATOMIC_LOCK_00_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_00_ATOMIC_LOCK_00_MASK            (0x1U << MBOX_ATOMIC_LOCK_00_ATOMIC_LOCK_00_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_01 */
+#define MBOX_ATOMIC_LOCK_01_OFFSET                         (0x104U)
+#define MBOX_ATOMIC_LOCK_01_ATOMIC_LOCK_01_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_01_ATOMIC_LOCK_01_MASK            (0x1U << MBOX_ATOMIC_LOCK_01_ATOMIC_LOCK_01_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_02 */
+#define MBOX_ATOMIC_LOCK_02_OFFSET                         (0x108U)
+#define MBOX_ATOMIC_LOCK_02_ATOMIC_LOCK_02_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_02_ATOMIC_LOCK_02_MASK            (0x1U << MBOX_ATOMIC_LOCK_02_ATOMIC_LOCK_02_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_03 */
+#define MBOX_ATOMIC_LOCK_03_OFFSET                         (0x10CU)
+#define MBOX_ATOMIC_LOCK_03_ATOMIC_LOCK_03_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_03_ATOMIC_LOCK_03_MASK            (0x1U << MBOX_ATOMIC_LOCK_03_ATOMIC_LOCK_03_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_04 */
+#define MBOX_ATOMIC_LOCK_04_OFFSET                         (0x110U)
+#define MBOX_ATOMIC_LOCK_04_ATOMIC_LOCK_04_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_04_ATOMIC_LOCK_04_MASK            (0x1U << MBOX_ATOMIC_LOCK_04_ATOMIC_LOCK_04_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_05 */
+#define MBOX_ATOMIC_LOCK_05_OFFSET                         (0x114U)
+#define MBOX_ATOMIC_LOCK_05_ATOMIC_LOCK_05_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_05_ATOMIC_LOCK_05_MASK            (0x1U << MBOX_ATOMIC_LOCK_05_ATOMIC_LOCK_05_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_06 */
+#define MBOX_ATOMIC_LOCK_06_OFFSET                         (0x118U)
+#define MBOX_ATOMIC_LOCK_06_ATOMIC_LOCK_06_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_06_ATOMIC_LOCK_06_MASK            (0x1U << MBOX_ATOMIC_LOCK_06_ATOMIC_LOCK_06_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_07 */
+#define MBOX_ATOMIC_LOCK_07_OFFSET                         (0x11CU)
+#define MBOX_ATOMIC_LOCK_07_ATOMIC_LOCK_07_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_07_ATOMIC_LOCK_07_MASK            (0x1U << MBOX_ATOMIC_LOCK_07_ATOMIC_LOCK_07_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_08 */
+#define MBOX_ATOMIC_LOCK_08_OFFSET                         (0x120U)
+#define MBOX_ATOMIC_LOCK_08_ATOMIC_LOCK_08_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_08_ATOMIC_LOCK_08_MASK            (0x1U << MBOX_ATOMIC_LOCK_08_ATOMIC_LOCK_08_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_09 */
+#define MBOX_ATOMIC_LOCK_09_OFFSET                         (0x124U)
+#define MBOX_ATOMIC_LOCK_09_ATOMIC_LOCK_09_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_09_ATOMIC_LOCK_09_MASK            (0x1U << MBOX_ATOMIC_LOCK_09_ATOMIC_LOCK_09_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_10 */
+#define MBOX_ATOMIC_LOCK_10_OFFSET                         (0x128U)
+#define MBOX_ATOMIC_LOCK_10_ATOMIC_LOCK_10_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_10_ATOMIC_LOCK_10_MASK            (0x1U << MBOX_ATOMIC_LOCK_10_ATOMIC_LOCK_10_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_11 */
+#define MBOX_ATOMIC_LOCK_11_OFFSET                         (0x12CU)
+#define MBOX_ATOMIC_LOCK_11_ATOMIC_LOCK_11_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_11_ATOMIC_LOCK_11_MASK            (0x1U << MBOX_ATOMIC_LOCK_11_ATOMIC_LOCK_11_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_12 */
+#define MBOX_ATOMIC_LOCK_12_OFFSET                         (0x130U)
+#define MBOX_ATOMIC_LOCK_12_ATOMIC_LOCK_12_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_12_ATOMIC_LOCK_12_MASK            (0x1U << MBOX_ATOMIC_LOCK_12_ATOMIC_LOCK_12_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_13 */
+#define MBOX_ATOMIC_LOCK_13_OFFSET                         (0x134U)
+#define MBOX_ATOMIC_LOCK_13_ATOMIC_LOCK_13_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_13_ATOMIC_LOCK_13_MASK            (0x1U << MBOX_ATOMIC_LOCK_13_ATOMIC_LOCK_13_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_14 */
+#define MBOX_ATOMIC_LOCK_14_OFFSET                         (0x138U)
+#define MBOX_ATOMIC_LOCK_14_ATOMIC_LOCK_14_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_14_ATOMIC_LOCK_14_MASK            (0x1U << MBOX_ATOMIC_LOCK_14_ATOMIC_LOCK_14_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_15 */
+#define MBOX_ATOMIC_LOCK_15_OFFSET                         (0x13CU)
+#define MBOX_ATOMIC_LOCK_15_ATOMIC_LOCK_15_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_15_ATOMIC_LOCK_15_MASK            (0x1U << MBOX_ATOMIC_LOCK_15_ATOMIC_LOCK_15_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_16 */
+#define MBOX_ATOMIC_LOCK_16_OFFSET                         (0x140U)
+#define MBOX_ATOMIC_LOCK_16_ATOMIC_LOCK_16_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_16_ATOMIC_LOCK_16_MASK            (0x1U << MBOX_ATOMIC_LOCK_16_ATOMIC_LOCK_16_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_17 */
+#define MBOX_ATOMIC_LOCK_17_OFFSET                         (0x144U)
+#define MBOX_ATOMIC_LOCK_17_ATOMIC_LOCK_17_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_17_ATOMIC_LOCK_17_MASK            (0x1U << MBOX_ATOMIC_LOCK_17_ATOMIC_LOCK_17_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_18 */
+#define MBOX_ATOMIC_LOCK_18_OFFSET                         (0x148U)
+#define MBOX_ATOMIC_LOCK_18_ATOMIC_LOCK_18_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_18_ATOMIC_LOCK_18_MASK            (0x1U << MBOX_ATOMIC_LOCK_18_ATOMIC_LOCK_18_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_19 */
+#define MBOX_ATOMIC_LOCK_19_OFFSET                         (0x14CU)
+#define MBOX_ATOMIC_LOCK_19_ATOMIC_LOCK_19_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_19_ATOMIC_LOCK_19_MASK            (0x1U << MBOX_ATOMIC_LOCK_19_ATOMIC_LOCK_19_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_20 */
+#define MBOX_ATOMIC_LOCK_20_OFFSET                         (0x150U)
+#define MBOX_ATOMIC_LOCK_20_ATOMIC_LOCK_20_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_20_ATOMIC_LOCK_20_MASK            (0x1U << MBOX_ATOMIC_LOCK_20_ATOMIC_LOCK_20_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_21 */
+#define MBOX_ATOMIC_LOCK_21_OFFSET                         (0x154U)
+#define MBOX_ATOMIC_LOCK_21_ATOMIC_LOCK_21_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_21_ATOMIC_LOCK_21_MASK            (0x1U << MBOX_ATOMIC_LOCK_21_ATOMIC_LOCK_21_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_22 */
+#define MBOX_ATOMIC_LOCK_22_OFFSET                         (0x158U)
+#define MBOX_ATOMIC_LOCK_22_ATOMIC_LOCK_22_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_22_ATOMIC_LOCK_22_MASK            (0x1U << MBOX_ATOMIC_LOCK_22_ATOMIC_LOCK_22_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_23 */
+#define MBOX_ATOMIC_LOCK_23_OFFSET                         (0x15CU)
+#define MBOX_ATOMIC_LOCK_23_ATOMIC_LOCK_23_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_23_ATOMIC_LOCK_23_MASK            (0x1U << MBOX_ATOMIC_LOCK_23_ATOMIC_LOCK_23_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_24 */
+#define MBOX_ATOMIC_LOCK_24_OFFSET                         (0x160U)
+#define MBOX_ATOMIC_LOCK_24_ATOMIC_LOCK_24_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_24_ATOMIC_LOCK_24_MASK            (0x1U << MBOX_ATOMIC_LOCK_24_ATOMIC_LOCK_24_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_25 */
+#define MBOX_ATOMIC_LOCK_25_OFFSET                         (0x164U)
+#define MBOX_ATOMIC_LOCK_25_ATOMIC_LOCK_25_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_25_ATOMIC_LOCK_25_MASK            (0x1U << MBOX_ATOMIC_LOCK_25_ATOMIC_LOCK_25_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_26 */
+#define MBOX_ATOMIC_LOCK_26_OFFSET                         (0x168U)
+#define MBOX_ATOMIC_LOCK_26_ATOMIC_LOCK_26_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_26_ATOMIC_LOCK_26_MASK            (0x1U << MBOX_ATOMIC_LOCK_26_ATOMIC_LOCK_26_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_27 */
+#define MBOX_ATOMIC_LOCK_27_OFFSET                         (0x16CU)
+#define MBOX_ATOMIC_LOCK_27_ATOMIC_LOCK_27_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_27_ATOMIC_LOCK_27_MASK            (0x1U << MBOX_ATOMIC_LOCK_27_ATOMIC_LOCK_27_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_28 */
+#define MBOX_ATOMIC_LOCK_28_OFFSET                         (0x170U)
+#define MBOX_ATOMIC_LOCK_28_ATOMIC_LOCK_28_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_28_ATOMIC_LOCK_28_MASK            (0x1U << MBOX_ATOMIC_LOCK_28_ATOMIC_LOCK_28_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_29 */
+#define MBOX_ATOMIC_LOCK_29_OFFSET                         (0x174U)
+#define MBOX_ATOMIC_LOCK_29_ATOMIC_LOCK_29_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_29_ATOMIC_LOCK_29_MASK            (0x1U << MBOX_ATOMIC_LOCK_29_ATOMIC_LOCK_29_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_30 */
+#define MBOX_ATOMIC_LOCK_30_OFFSET                         (0x178U)
+#define MBOX_ATOMIC_LOCK_30_ATOMIC_LOCK_30_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_30_ATOMIC_LOCK_30_MASK            (0x1U << MBOX_ATOMIC_LOCK_30_ATOMIC_LOCK_30_SHIFT)           /* 0x00000001 */
+/* ATOMIC_LOCK_31 */
+#define MBOX_ATOMIC_LOCK_31_OFFSET                         (0x17CU)
+#define MBOX_ATOMIC_LOCK_31_ATOMIC_LOCK_31_SHIFT           (0U)
+#define MBOX_ATOMIC_LOCK_31_ATOMIC_LOCK_31_MASK            (0x1U << MBOX_ATOMIC_LOCK_31_ATOMIC_LOCK_31_SHIFT)           /* 0x00000001 */
 /*****************************************ICACHE*****************************************/
 /* CACHE_CTRL */
 #define ICACHE_CACHE_CTRL_OFFSET                           (0x0U)

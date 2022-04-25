@@ -209,6 +209,9 @@ typedef enum
 #define CACHE_M_CLEAN_INVALID           0x4U
 #define CACHE_M_INVALID_ALL             0x6U
 #define CACHE_REVISION                  (0x00000100U)
+/****************************************MBOX********************************************/
+#define MBOX_CNT             1
+#define MBOX_CHAN_CNT        4
 
 /****************************************************************************************/
 /*                                                                                      */
