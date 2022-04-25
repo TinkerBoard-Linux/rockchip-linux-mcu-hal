@@ -195,6 +195,12 @@ static void timer_test(void)
     HAL_TIMER_Start_IT(timer);
 }
 
+void config_freq(void)
+{
+    HAL_CRU_ClkSetFreq(PLL_APLL, 1008000000);
+    HAL_SystemCoreClockUpdate(1008000000, HAL_SYSTICK_CLKSRC_EXT);
+}
+
 void main(void)
 {
     uint32_t ownerID;
