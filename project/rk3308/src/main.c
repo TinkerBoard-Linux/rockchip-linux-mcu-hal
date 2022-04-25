@@ -201,6 +201,13 @@ void config_freq(void)
     HAL_SystemCoreClockUpdate(1008000000, HAL_SYSTICK_CLKSRC_EXT);
 }
 
+static void tsadc_test(void)
+{
+    HAL_CRU_ClkSetFreq(CLK_TSADC, 50000);
+    HAL_TSADC_Enable_AUTO(0, 0, 0);
+    printf("GET TEMP %d!\n", HAL_TSADC_GetTemperature_AUTO(0));
+}
+
 void main(void)
 {
     uint32_t ownerID;
