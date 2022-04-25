@@ -44,3 +44,7 @@ const struct HAL_UART_DEV g_uart2Dev =
     .isAutoFlow = false,
 };
 #endif
+
+void BSP_Init(void)
+{
+}

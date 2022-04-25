@@ -22,5 +22,6 @@ extern const struct HAL_UART_DEV g_uart2Dev;
 #endif
 
 /***************************** Function Declare ******************************/
+void BSP_Init(void);
 
 #endif
