@@ -6,7 +6,7 @@
 #include "hal_base.h"
 #include "soc.h"
 
-#define  SYSTEM_CLOCK 1000000000U
+#define  SYSTEM_CLOCK 816000000U
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable
