@@ -15,6 +15,7 @@
 //#define GPIO_TEST
 //#define UART_TEST
 //#define I2STDM_TEST
+//#define PERF_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -311,6 +312,41 @@ void config_freq(void)
     HAL_SystemCoreClockUpdate(1008000000, HAL_SYSTICK_CLKSRC_EXT);
 }
 
+#ifdef PERF_TEST
+uint32_t g_sum = 0;
+static void perf_test(void)
+{
+    uint32_t cpu_id, loop = 1000, size = 4 * 1024 * 1024;
+    uint32_t *ptr;
+    uint64_t start, end;
+    double time_s;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    if (cpu_id == 0) {
+        coremark_main();
+        config_freq();
+        coremark_main();
+
+        ptr = (uint32_t *)malloc(size);
+        if (ptr) {
+            start = HAL_GetSysTimerCount();
+            for (int i = 0; i < loop; i++) {
+                memset(ptr, i, size);
+            }
+            end = HAL_GetSysTimerCount();
+            time_s = ((end - start) * 1.0) / PLL_INPUT_OSC_RATE;
+            printf("memset bw=%.2fMB/s, time_s=%.2f\n", (size * loop) / time_s / 1000000, time_s);
+
+            for (int i = 0; i < size / sizeof(uint32_t); i++) {
+                g_sum += ptr[i];
+            }
+            printf("sum=%d\n", g_sum);
+            free(ptr);
+        }
+    }
+}
+#endif
+
 #ifdef TSADC_TEST
 static void tsadc_test(void)
 {
@@ -498,6 +534,10 @@ void main(void)
     if (HAL_CPU_TOPOLOGY_GetCurrentCpuId() == 0) {
         i2stdm0_demo();
     }
+#endif
+
+#ifdef PERF_TEST
+    perf_test();
 #endif
 
 #ifdef UNITY_TEST
