@@ -298,7 +298,7 @@ HAL_Status HAL_SPINLOCK_Init(uint32_t ownerID)
 {
 #ifdef HAL_HWSPINLOCK_MODULE_ENABLED
 
-    return HAL_HWSpinlock_Init(ownerID) ? HAL_OK : HAL_ERROR;
+    return HAL_HWSPINLOCK_Init(ownerID) ? HAL_OK : HAL_ERROR;
 #else
 
     return HAL_SW_SPINLOCK_Init(ownerID);
@@ -316,7 +316,7 @@ HAL_Check HAL_SPINLOCK_TryLock(uint32_t lockID)
 {
 #ifdef HAL_HWSPINLOCK_MODULE_ENABLED
 
-    return HAL_HWSpinlock_TryLock(lockID);
+    return HAL_HWSPINLOCK_TryLock(lockID);
 #else
     SPINLOCK_t *lock = HAL_SW_SPINLOCK(lockID);
 
@@ -339,7 +339,7 @@ void HAL_SPINLOCK_Lock(uint32_t lockID)
     HAL_Check ret;
 
     do {
-        ret = HAL_HWSpinlock_TryLock(lockID);
+        ret = HAL_HWSPINLOCK_TryLock(lockID);
     } while (!ret);
 #else
     SPINLOCK_t *lock = HAL_SW_SPINLOCK(lockID);
@@ -358,7 +358,7 @@ void HAL_SPINLOCK_Lock(uint32_t lockID)
 void HAL_SPINLOCK_Unlock(uint32_t lockID)
 {
 #ifdef HAL_HWSPINLOCK_MODULE_ENABLED
-    HAL_HWSpinlock_Unlock(lockID);
+    HAL_HWSPINLOCK_Unlock(lockID);
 #else
     SPINLOCK_t *lock = HAL_SW_SPINLOCK(lockID);
 
@@ -379,7 +379,7 @@ uint32_t HAL_SPINLOCK_GetOwner(uint32_t lockID)
 {
 #ifdef HAL_HWSPINLOCK_MODULE_ENABLED
 
-    return HAL_HWSpinlock_GetOwner(lockID);
+    return HAL_HWSPINLOCK_GetOwner(lockID);
 #else
     SPINLOCK_t *lock = HAL_SW_SPINLOCK(lockID);
 

@@ -11,7 +11,7 @@
  *  @{
  */
 
-/** @addtogroup HWSpinlock
+/** @addtogroup HWSPINLOCK
  *  @{
  */
 
@@ -21,14 +21,14 @@
 #include "hal_def.h"
 
 /***************************** Function Declare ******************************/
-/** @defgroup HWSpinlock_Public_Function_Declare Public Function Declare
+/** @defgroup HWSPINLOCK_Public_Function_Declare Public Function Declare
  *  @{
  */
 
-HAL_Check HAL_HWSpinlock_TryLock(uint32_t lockID);
-void HAL_HWSpinlock_Unlock(uint32_t lockID);
-uint32_t HAL_HWSpinlock_GetOwner(uint32_t lockID);
-HAL_Check HAL_HWSpinlock_Init(uint32_t ownerID);
+HAL_Check HAL_HWSPINLOCK_TryLock(uint32_t lockID);
+void HAL_HWSPINLOCK_Unlock(uint32_t lockID);
+uint32_t HAL_HWSPINLOCK_GetOwner(uint32_t lockID);
+HAL_Check HAL_HWSPINLOCK_Init(uint32_t ownerID);
 
 /** @} */
 

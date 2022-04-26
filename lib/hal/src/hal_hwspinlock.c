@@ -11,11 +11,11 @@
  *  @{
  */
 
-/** @addtogroup HWSpinlock
+/** @addtogroup HWSPINLOCK
  *  @{
  */
 
-/** @defgroup HWSpinlock_Private_Definition Private Definition
+/** @defgroup HWSPINLOCK_Private_Definition Private Definition
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
@@ -27,27 +27,27 @@
 /********************* Private Variable Definition ***************************/
 
 /*
- * g_ownerID variable *MUST* be initialized by invoking HAL_HWSpinlock_Init()
- * before using HWSpinlock.
+ * g_ownerID variable *MUST* be initialized by invoking HAL_HWSPINLOCK_Init()
+ * before using HWSPINLOCK.
  */
 static uint32_t g_ownerID;
 
 /** @} */
 /********************* Public Function Definition ****************************/
 
-/** @defgroup HWSpinlock_Exported_Functions_Group1 TryLock and Unlock Functions
+/** @defgroup HWSPINLOCK_Exported_Functions_Group1 TryLock and Unlock Functions
 
-This section provides functions allowing to Trylock and Unlock HWSpinlock:
+This section provides functions allowing to Trylock and Unlock HWSPINLOCK:
 
 *  @{
 */
 
 /**
- * @brief  HWSpinlock Try to Lock API.
+ * @brief  HWSPINLOCK Try to Lock API.
  * @param  lockID: The Lock ID which try to lock.
  * @return The lock status, 1 means locked and 0 is not.
  */
-HAL_Check HAL_HWSpinlock_TryLock(uint32_t lockID)
+HAL_Check HAL_HWSPINLOCK_TryLock(uint32_t lockID)
 {
     HAL_ASSERT(IS_VALID_LOCKID(lockID));
 
@@ -68,10 +68,10 @@ HAL_Check HAL_HWSpinlock_TryLock(uint32_t lockID)
 }
 
 /**
- * @brief  HWSpinlock Unlock API
+ * @brief  HWSPINLOCK Unlock API
  * @param  lockID: The Lock ID which try to unlock.
  */
-void HAL_HWSpinlock_Unlock(uint32_t lockID)
+void HAL_HWSPINLOCK_Unlock(uint32_t lockID)
 {
     HAL_ASSERT(IS_VALID_LOCKID(lockID));
 
@@ -80,11 +80,11 @@ void HAL_HWSpinlock_Unlock(uint32_t lockID)
 }
 
 /**
- * @brief  HWSpinlock Get Owner API
+ * @brief  HWSPINLOCK Get Owner API
  * @param  lockID: The Lock ID which get owner.
  * @return The current owner of the lockID.
  */
-uint32_t HAL_HWSpinlock_GetOwner(uint32_t lockID)
+uint32_t HAL_HWSPINLOCK_GetOwner(uint32_t lockID)
 {
     HAL_ASSERT(IS_VALID_LOCKID(lockID));
 
@@ -93,11 +93,11 @@ uint32_t HAL_HWSpinlock_GetOwner(uint32_t lockID)
 }
 
 /**
- * @brief  HWSpinlock Init API
+ * @brief  HWSPINLOCK Init API
  * @param  ownerID: The Owner ID wanna set.
  * @return The init result, 1 means success and 0 is failed.
  */
-HAL_Check HAL_HWSpinlock_Init(uint32_t ownerID)
+HAL_Check HAL_HWSPINLOCK_Init(uint32_t ownerID)
 {
     if (!IS_VALID_OWNERID(ownerID)) {
         return HAL_FALSE;
