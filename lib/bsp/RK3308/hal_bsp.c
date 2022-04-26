@@ -209,6 +209,35 @@ const struct HAL_SPI_DEV g_spiDev2 = {
 };
 #endif
 
+#ifdef HAL_PWM_MODULE_ENABLED
+const struct HAL_PWM_DEV g_pwm0Dev =
+{
+    .pReg = PWM0,
+    .clkID = CLK_PWM,
+    .clkGateID = CLK_PWM_PLL_CLK_GATE,
+    .pclkGateID = PCLK_PWM_GATE,
+    .irqNum = PWM0_PWR_IRQn,
+};
+
+const struct HAL_PWM_DEV g_pwm1Dev =
+{
+    .pReg = PWM1,
+    .clkID = CLK_PWM1,
+    .clkGateID = CLK_PWM1_PLL_CLK_GATE,
+    .pclkGateID = PCLK_PWM1_GATE,
+    .irqNum = PWM1_PWR_IRQn,
+};
+
+const struct HAL_PWM_DEV g_pwm2Dev =
+{
+    .pReg = PWM2,
+    .clkID = CLK_PWM2,
+    .clkGateID = CLK_PWM2_PLL_CLK_GATE,
+    .pclkGateID = PCLK_PWM2_GATE,
+    .irqNum = PWM2_PWR_IRQn,
+};
+#endif
+
 void BSP_Init(void)
 {
 }

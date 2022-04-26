@@ -590,23 +590,14 @@ struct SPI_REG {
     __IO uint32_t RXDR;                               /* Address Offset: 0x0800 */
 };
 /* PWM Register Structure Define */
+struct PWM_CHANNEL {
+    __I  uint32_t CNT;
+    __IO uint32_t PERIOD_HPR;
+    __IO uint32_t DUTY_LPR;
+    __IO uint32_t CTRL;
+};
 struct PWM_REG {
-    __I  uint32_t PWM0_CNT;                           /* Address Offset: 0x0000 */
-    __IO uint32_t PWM0_PERIOD_HPR;                    /* Address Offset: 0x0004 */
-    __IO uint32_t PWM0_DUTY_LPR;                      /* Address Offset: 0x0008 */
-    __IO uint32_t PWM0_CTRL;                          /* Address Offset: 0x000C */
-    __I  uint32_t PWM1_CNT;                           /* Address Offset: 0x0010 */
-    __IO uint32_t PWM1_PERIOD_HPR;                    /* Address Offset: 0x0014 */
-    __IO uint32_t PWM1_DUTY_LPR;                      /* Address Offset: 0x0018 */
-    __IO uint32_t PWM1_CTRL;                          /* Address Offset: 0x001C */
-    __I  uint32_t PWM2_CNT;                           /* Address Offset: 0x0020 */
-    __IO uint32_t PWM2_PERIOD_HPR;                    /* Address Offset: 0x0024 */
-    __IO uint32_t PWM2_DUTY_LPR;                      /* Address Offset: 0x0028 */
-    __IO uint32_t PWM2_CTRL;                          /* Address Offset: 0x002C */
-    __I  uint32_t PWM3_CNT;                           /* Address Offset: 0x0030 */
-    __IO uint32_t PWM3_PERIOD_HPR;                    /* Address Offset: 0x0034 */
-    __IO uint32_t PWM3_DUTY_LPR;                      /* Address Offset: 0x0038 */
-    __IO uint32_t PWM3_CTRL;                          /* Address Offset: 0x003C */
+    struct PWM_CHANNEL CHANNELS[4];                   /* Address Offset: 0x0000 */
     __IO uint32_t INTSTS;                             /* Address Offset: 0x0040 */
     __IO uint32_t INT_EN;                             /* Address Offset: 0x0044 */
          uint32_t RESERVED0048[2];                    /* Address Offset: 0x0048 */
@@ -622,19 +613,8 @@ struct PWM_REG {
     __IO uint32_t PWRMATCH_LD;                        /* Address Offset: 0x008C */
     __IO uint32_t PWRMATCH_HD_ZERO;                   /* Address Offset: 0x0090 */
     __IO uint32_t PWRMATCH_HD_ONE;                    /* Address Offset: 0x0094 */
-    __IO uint32_t PWRMATCH_VALUE0;                    /* Address Offset: 0x0098 */
-    __IO uint32_t PWRMATCH_VALUE1;                    /* Address Offset: 0x009C */
-    __IO uint32_t PWRMATCH_VALUE2;                    /* Address Offset: 0x00A0 */
-    __IO uint32_t PWRMATCH_VALUE3;                    /* Address Offset: 0x00A4 */
-    __IO uint32_t PWRMATCH_VALUE4;                    /* Address Offset: 0x00A8 */
-    __IO uint32_t PWRMATCH_VALUE5;                    /* Address Offset: 0x00AC */
-    __IO uint32_t PWRMATCH_VALUE6;                    /* Address Offset: 0x00B0 */
-    __IO uint32_t PWRMATCH_VALUE7;                    /* Address Offset: 0x00B4 */
-    __IO uint32_t PWRMATCH_VALUE8;                    /* Address Offset: 0x00B8 */
-    __IO uint32_t PWRMATCH_VALUE9;                    /* Address Offset: 0x00BC */
-    __I  uint32_t PWM0_PWRCAPTURE_VALUE;              /* Address Offset: 0x00C0 */
-    __I  uint32_t PWM1_PWRCAPTURE_VALUE;              /* Address Offset: 0x00C4 */
-    __I  uint32_t PWM2_PWRCAPTURE_VALUE;              /* Address Offset: 0x00C8 */
+    __IO uint32_t PWRMATCH_VALUE[10];                 /* Address Offset: 0x0098 */
+         uint32_t RESERVED00C0[3];                    /* Address Offset: 0x00C0 */
     __I  uint32_t PWM3_PWRCAPTURE_VALUE;              /* Address Offset: 0x00CC */
     __IO uint32_t FILTER_CTRL;                        /* Address Offset: 0x00D0 */
 };
@@ -6194,6 +6174,8 @@ struct ACODEC_REG {
 #define PWM_PWM0_CTRL_FORCE_CLK_EN_MASK                    (0x1U << PWM_PWM0_CTRL_FORCE_CLK_EN_SHIFT)                   /* 0x00000100 */
 #define PWM_PWM0_CTRL_CLK_SEL_SHIFT                        (9U)
 #define PWM_PWM0_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM0_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
+#define PWM_PWM0_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
+#define PWM_PWM0_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM0_CTRL_CLK_SRC_SEL_SHIFT)
 #define PWM_PWM0_CTRL_PRESCALE_SHIFT                       (12U)
 #define PWM_PWM0_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM0_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
 #define PWM_PWM0_CTRL_SCALE_SHIFT                          (16U)
@@ -6233,6 +6215,8 @@ struct ACODEC_REG {
 #define PWM_PWM1_CTRL_FORCE_CLK_EN_MASK                    (0x1U << PWM_PWM1_CTRL_FORCE_CLK_EN_SHIFT)                   /* 0x00000100 */
 #define PWM_PWM1_CTRL_CLK_SEL_SHIFT                        (9U)
 #define PWM_PWM1_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM1_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
+#define PWM_PWM1_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
+#define PWM_PWM1_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM1_CTRL_CLK_SRC_SEL_SHIFT)
 #define PWM_PWM1_CTRL_PRESCALE_SHIFT                       (12U)
 #define PWM_PWM1_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM1_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
 #define PWM_PWM1_CTRL_SCALE_SHIFT                          (16U)
@@ -6272,6 +6256,8 @@ struct ACODEC_REG {
 #define PWM_PWM2_CTRL_FORCE_CLK_EN_MASK                    (0x1U << PWM_PWM2_CTRL_FORCE_CLK_EN_SHIFT)                   /* 0x00000100 */
 #define PWM_PWM2_CTRL_CLK_SEL_SHIFT                        (9U)
 #define PWM_PWM2_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM2_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
+#define PWM_PWM2_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
+#define PWM_PWM2_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM2_CTRL_CLK_SRC_SEL_SHIFT)
 #define PWM_PWM2_CTRL_PRESCALE_SHIFT                       (12U)
 #define PWM_PWM2_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM2_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
 #define PWM_PWM2_CTRL_SCALE_SHIFT                          (16U)
@@ -6311,6 +6297,8 @@ struct ACODEC_REG {
 #define PWM_PWM3_CTRL_FORCE_CLK_EN_MASK                    (0x1U << PWM_PWM3_CTRL_FORCE_CLK_EN_SHIFT)                   /* 0x00000100 */
 #define PWM_PWM3_CTRL_CLK_SEL_SHIFT                        (9U)
 #define PWM_PWM3_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM3_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
+#define PWM_PWM3_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
+#define PWM_PWM3_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM3_CTRL_CLK_SRC_SEL_SHIFT)
 #define PWM_PWM3_CTRL_PRESCALE_SHIFT                       (12U)
 #define PWM_PWM3_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM3_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
 #define PWM_PWM3_CTRL_SCALE_SHIFT                          (16U)
@@ -6414,36 +6402,12 @@ struct ACODEC_REG {
 #define PWM_FIFO_POL_MASK                                  (0x1U << PWM_FIFO_POL_SHIFT)                                 /* 0x80000000 */
 /* PWRMATCH_CTRL */
 #define PWM_PWRMATCH_CTRL_OFFSET                           (0x80U)
-#define PWM_PWRMATCH_CTRL_CH0_PWRKEY_ENABLE_SHIFT          (0U)
-#define PWM_PWRMATCH_CTRL_CH0_PWRKEY_ENABLE_MASK           (0x1U << PWM_PWRMATCH_CTRL_CH0_PWRKEY_ENABLE_SHIFT)          /* 0x00000001 */
-#define PWM_PWRMATCH_CTRL_CH1_PWRKEY_ENABLE_SHIFT          (1U)
-#define PWM_PWRMATCH_CTRL_CH1_PWRKEY_ENABLE_MASK           (0x1U << PWM_PWRMATCH_CTRL_CH1_PWRKEY_ENABLE_SHIFT)          /* 0x00000002 */
-#define PWM_PWRMATCH_CTRL_CH2_PWRKEY_ENABLE_SHIFT          (2U)
-#define PWM_PWRMATCH_CTRL_CH2_PWRKEY_ENABLE_MASK           (0x1U << PWM_PWRMATCH_CTRL_CH2_PWRKEY_ENABLE_SHIFT)          /* 0x00000004 */
 #define PWM_PWRMATCH_CTRL_CH3_PWRKEY_ENABLE_SHIFT          (3U)
 #define PWM_PWRMATCH_CTRL_CH3_PWRKEY_ENABLE_MASK           (0x1U << PWM_PWRMATCH_CTRL_CH3_PWRKEY_ENABLE_SHIFT)          /* 0x00000008 */
-#define PWM_PWRMATCH_CTRL_CH0_PWRKEY_POLARITY_SHIFT        (4U)
-#define PWM_PWRMATCH_CTRL_CH0_PWRKEY_POLARITY_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH0_PWRKEY_POLARITY_SHIFT)        /* 0x00000010 */
-#define PWM_PWRMATCH_CTRL_CH1_PWRKEY_POLARITY_SHIFT        (5U)
-#define PWM_PWRMATCH_CTRL_CH1_PWRKEY_POLARITY_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH1_PWRKEY_POLARITY_SHIFT)        /* 0x00000020 */
-#define PWM_PWRMATCH_CTRL_CH2_PWRKEY_POLARITY_SHIFT        (6U)
-#define PWM_PWRMATCH_CTRL_CH2_PWRKEY_POLARITY_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH2_PWRKEY_POLARITY_SHIFT)        /* 0x00000040 */
 #define PWM_PWRMATCH_CTRL_CH3_PWRKEY_POLARITY_SHIFT        (7U)
 #define PWM_PWRMATCH_CTRL_CH3_PWRKEY_POLARITY_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH3_PWRKEY_POLARITY_SHIFT)        /* 0x00000080 */
-#define PWM_PWRMATCH_CTRL_CH0_PWRKEY_CAPTURE_CTRL_SHIFT    (8U)
-#define PWM_PWRMATCH_CTRL_CH0_PWRKEY_CAPTURE_CTRL_MASK     (0x1U << PWM_PWRMATCH_CTRL_CH0_PWRKEY_CAPTURE_CTRL_SHIFT)    /* 0x00000100 */
-#define PWM_PWRMATCH_CTRL_CH1_PWRKEY_CAPTURE_CTRL_SHIFT    (9U)
-#define PWM_PWRMATCH_CTRL_CH1_PWRKEY_CAPTURE_CTRL_MASK     (0x1U << PWM_PWRMATCH_CTRL_CH1_PWRKEY_CAPTURE_CTRL_SHIFT)    /* 0x00000200 */
-#define PWM_PWRMATCH_CTRL_CH2_PWRKEY_CAPTURE_CTRL_SHIFT    (10U)
-#define PWM_PWRMATCH_CTRL_CH2_PWRKEY_CAPTURE_CTRL_MASK     (0x1U << PWM_PWRMATCH_CTRL_CH2_PWRKEY_CAPTURE_CTRL_SHIFT)    /* 0x00000400 */
 #define PWM_PWRMATCH_CTRL_CH3_PWRKEY_CAPTURE_CTRL_SHIFT    (11U)
 #define PWM_PWRMATCH_CTRL_CH3_PWRKEY_CAPTURE_CTRL_MASK     (0x1U << PWM_PWRMATCH_CTRL_CH3_PWRKEY_CAPTURE_CTRL_SHIFT)    /* 0x00000800 */
-#define PWM_PWRMATCH_CTRL_CH0_PWRKEY_INT_CTRL_SHIFT        (12U)
-#define PWM_PWRMATCH_CTRL_CH0_PWRKEY_INT_CTRL_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH0_PWRKEY_INT_CTRL_SHIFT)        /* 0x00001000 */
-#define PWM_PWRMATCH_CTRL_CH1_PWRKEY_INT_CTRL_SHIFT        (13U)
-#define PWM_PWRMATCH_CTRL_CH1_PWRKEY_INT_CTRL_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH1_PWRKEY_INT_CTRL_SHIFT)        /* 0x00002000 */
-#define PWM_PWRMATCH_CTRL_CH2_PWRKEY_INT_CTRL_SHIFT        (14U)
-#define PWM_PWRMATCH_CTRL_CH2_PWRKEY_INT_CTRL_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH2_PWRKEY_INT_CTRL_SHIFT)        /* 0x00004000 */
 #define PWM_PWRMATCH_CTRL_CH3_PWRKEY_INT_CTRL_SHIFT        (15U)
 #define PWM_PWRMATCH_CTRL_CH3_PWRKEY_INT_CTRL_MASK         (0x1U << PWM_PWRMATCH_CTRL_CH3_PWRKEY_INT_CTRL_SHIFT)        /* 0x00008000 */
 /* PWRMATCH_LPRE */
@@ -6516,21 +6480,6 @@ struct ACODEC_REG {
 #define PWM_PWRMATCH_VALUE9_OFFSET                         (0xBCU)
 #define PWM_PWRMATCH_VALUE9_PWRKEY_MATCH_VALUE_SHIFT       (0U)
 #define PWM_PWRMATCH_VALUE9_PWRKEY_MATCH_VALUE_MASK        (0xFFFFFFFFU << PWM_PWRMATCH_VALUE9_PWRKEY_MATCH_VALUE_SHIFT) /* 0xFFFFFFFF */
-/* PWM0_PWRCAPTURE_VALUE */
-#define PWM_PWM0_PWRCAPTURE_VALUE_OFFSET                   (0xC0U)
-#define PWM_PWM0_PWRCAPTURE_VALUE                          (0x0U)
-#define PWM_PWM0_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_SHIFT (0U)
-#define PWM_PWM0_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_MASK (0xFFFFFFFFU << PWM_PWM0_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_SHIFT) /* 0xFFFFFFFF */
-/* PWM1_PWRCAPTURE_VALUE */
-#define PWM_PWM1_PWRCAPTURE_VALUE_OFFSET                   (0xC4U)
-#define PWM_PWM1_PWRCAPTURE_VALUE                          (0x0U)
-#define PWM_PWM1_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_SHIFT (0U)
-#define PWM_PWM1_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_MASK (0xFFFFFFFFU << PWM_PWM1_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_SHIFT) /* 0xFFFFFFFF */
-/* PWM2_PWRCAPTURE_VALUE */
-#define PWM_PWM2_PWRCAPTURE_VALUE_OFFSET                   (0xC8U)
-#define PWM_PWM2_PWRCAPTURE_VALUE                          (0x0U)
-#define PWM_PWM2_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_SHIFT (0U)
-#define PWM_PWM2_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_MASK (0xFFFFFFFFU << PWM_PWM2_PWRCAPTURE_VALUE_PWRKEY_CAPTURE_VALUE_SHIFT) /* 0xFFFFFFFF */
 /* PWM3_PWRCAPTURE_VALUE */
 #define PWM_PWM3_PWRCAPTURE_VALUE_OFFSET                   (0xCCU)
 #define PWM_PWM3_PWRCAPTURE_VALUE                          (0x0U)
@@ -6548,6 +6497,12 @@ struct ACODEC_REG {
 #define PWM_FILTER_CTRL_CH3_INPUT_FILTER_ENABLE_MASK       (0x1U << PWM_FILTER_CTRL_CH3_INPUT_FILTER_ENABLE_SHIFT)      /* 0x00000008 */
 #define PWM_FILTER_CTRL_FILTER_NUMBER_SHIFT                (4U)
 #define PWM_FILTER_CTRL_FILTER_NUMBER_MASK                 (0x1FFU << PWM_FILTER_CTRL_FILTER_NUMBER_SHIFT)              /* 0x00001FF0 */
+#define PWM_FILTER_CTRL_CH0_AND_CH3_SWITCH_EN_SHIFT        (16U)
+#define PWM_FILTER_CTRL_CH0_AND_CH3_SWITCH_EN_MASK         (0x1U << PWM_FILTER_CTRL_CH0_AND_CH3_SWITCH_EN_SHIFT)        /* 0x00010000 */
+#define PWM_FILTER_CTRL_CH1_AND_CH3_SWITCH_EN_SHIFT        (17U)
+#define PWM_FILTER_CTRL_CH1_AND_CH3_SWITCH_EN_MASK         (0x1U << PWM_FILTER_CTRL_CH1_AND_CH3_SWITCH_EN_SHIFT)        /* 0x00020000 */
+#define PWM_FILTER_CTRL_CH2_AND_CH3_SWITCH_EN_SHIFT        (18U)
+#define PWM_FILTER_CTRL_CH2_AND_CH3_SWITCH_EN_MASK         (0x1U << PWM_FILTER_CTRL_CH2_AND_CH3_SWITCH_EN_SHIFT)        /* 0x00040000 */
 /*****************************************TIMER******************************************/
 /* LOAD_COUNT0 */
 #define TIMER_LOAD_COUNT0_OFFSET                           (0x0U)
