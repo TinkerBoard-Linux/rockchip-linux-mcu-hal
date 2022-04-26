@@ -33,6 +33,9 @@ extern const struct HAL_I2C_DEV g_i2c2Dev;
 extern const struct HAL_I2C_DEV g_i2c3Dev;
 #endif
 
+#ifdef HAL_I2STDM_MODULE_ENABLED
+extern struct HAL_I2STDM_DEV g_i2sTdm0Dev;
+#endif
 #ifdef HAL_SFC_MODULE_ENABLED
 extern struct HAL_SFC_HOST g_sfcDev;
 #endif

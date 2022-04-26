@@ -14,6 +14,7 @@
 //#define PWM_TEST
 //#define GPIO_TEST
 //#define UART_TEST
+//#define I2STDM_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -357,6 +358,52 @@ static void pwm_test(void)
 }
 #endif
 
+#ifdef I2STDM_TEST
+void i2stdm0_demo(void)
+{
+    struct AUDIO_PARAMS params;
+    struct AUDIO_INIT_CONFIG config;
+
+    printf("zzz---i2stdm0_demo\n");
+    params.channels = AUDIO_CHANNELS_2;
+    params.sampleBits = AUDIO_SAMPLEBITS_16;
+    params.sampleRate = AUDIO_SAMPLERATE_48000;
+    /* iomux init */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK2,
+                         GPIO_PIN_A7 |
+                         GPIO_PIN_A6 |
+                         GPIO_PIN_A5 |
+                         GPIO_PIN_A4 |
+                         GPIO_PIN_B0 |
+                         GPIO_PIN_B0 |
+                         GPIO_PIN_B1 |
+                         GPIO_PIN_B2 |
+                         GPIO_PIN_B3 |
+                         GPIO_PIN_B4 |
+                         GPIO_PIN_B5 |
+                         GPIO_PIN_B6 |
+                         GPIO_PIN_B7 |
+                         GPIO_PIN_C0,
+                         PIN_CONFIG_MUX_FUNC1);
+
+    config.master = HAL_TRUE;
+    config.clkInvert = HAL_FALSE;
+    config.format = AUDIO_FMT_I2S;
+    config.trcmMode = TRCM_NONE;
+    config.pdmMode = PDM_NORMAL_MODE;
+    config.txMap = 0;
+    config.rxMap = 0;
+    HAL_I2STDM_Init(&g_i2sTdm0Dev, &config);
+    /* clk init */
+    HAL_CRU_ClkEnable(g_i2sTdm0Dev.mclkTxGate);
+    HAL_CRU_ClkEnable(g_i2sTdm0Dev.mclkRxGate);
+    HAL_CRU_ClkEnable(g_i2sTdm0Dev.hclk);
+    HAL_CRU_ClkSetFreq(g_i2sTdm0Dev.mclkTx, AUDIO_SAMPLERATE_48000 * 256);
+    HAL_I2STDM_Config(&g_i2sTdm0Dev, AUDIO_STREAM_PLAYBACK, &params);
+    HAL_I2STDM_TxRxEnable(&g_i2sTdm0Dev, AUDIO_STREAM_PLAYBACK, 1);
+}
+#endif
+
 void main(void)
 {
     uint32_t ownerID;
@@ -420,6 +467,12 @@ void main(void)
 
 #ifdef UART_TEST
     uart_test();
+#endif
+
+#ifdef I2STDM_TEST
+    if (HAL_CPU_TOPOLOGY_GetCurrentCpuId() == 0) {
+        i2stdm0_demo();
+    }
 #endif
 
 #ifdef UNITY_TEST
