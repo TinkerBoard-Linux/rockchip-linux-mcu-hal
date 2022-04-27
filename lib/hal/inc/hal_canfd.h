@@ -130,4 +130,4 @@ uint32_t HAL_CANFD_GetErrInterruptMaskCombin(eCANFD_IntType type);
 
 /** @} */
 
-#endif /* HAL_CAN_MODULE_ENABLED */
+#endif /* HAL_CANFD_MODULE_ENABLED */
