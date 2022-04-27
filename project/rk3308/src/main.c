@@ -232,7 +232,7 @@ void main(void)
     HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
 
     /* SPINLOCK Init */
-#ifdef HAL_IPC_MODULE_ENABLED
+#ifdef HAL_SPINLOCK_MODULE_ENABLED
     ownerID = HAL_CPU_TOPOLOGY_GetCurrentCpuId() << 1 | 1;
     HAL_SPINLOCK_Init(ownerID);
 #endif
