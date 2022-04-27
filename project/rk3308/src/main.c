@@ -208,6 +208,58 @@ static void tsadc_test(void)
     printf("GET TEMP %d!\n", HAL_TSADC_GetTemperature_AUTO(0));
 }
 
+static uint32_t hal_pwm0_clk = 100000000;
+static struct HAL_PWM_CONFIG hal_channel0_handle, hal_channel1_handle;
+struct HAL_PWM_CONFIG hal_channel0_config = {
+    .channel = 0,
+    .periodNS = 100000,
+    .dutyNS = 40000,
+    .polarity = true,
+};
+
+struct HAL_PWM_CONFIG hal_channel1_config = {
+    .channel = 1,
+    .periodNS = 100000,
+    .dutyNS = 20000,
+    .polarity = false,
+};
+
+static void HAL_IOMUX_PWM0_Channel0Config(void)
+{
+    /* PWM0 chanel0-0B5 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_B5,
+                         PIN_CONFIG_MUX_FUNC1);
+}
+
+static void HAL_IOMUX_PWM0_Channel1Config(void)
+{
+    /* PWM0 chanel1-0B6 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_B6,
+                         PIN_CONFIG_MUX_FUNC1);
+}
+
+static void pwm_test(void)
+{
+    HAL_IOMUX_PWM0_Channel0Config();
+    HAL_IOMUX_PWM0_Channel1Config();
+
+    HAL_CRU_ClkSetFreq(g_pwm0Dev.clkID, hal_pwm0_clk);
+
+    HAL_PWM_Init(&hal_channel0_handle, g_pwm0Dev.pReg, hal_pwm0_clk);
+    HAL_PWM_Init(&hal_channel1_handle, g_pwm0Dev.pReg, hal_pwm0_clk);
+    HAL_PWM_SetConfig(&hal_channel0_handle,
+                      hal_channel0_config.channel,
+                      &hal_channel0_config);
+    HAL_PWM_SetConfig(&hal_channel1_handle,
+                      hal_channel1_config.channel,
+                      &hal_channel1_config);
+
+    HAL_PWM_Enable(&hal_channel0_handle, hal_channel0_config.channel, HAL_PWM_CONTINUOUS);
+    HAL_PWM_Enable(&hal_channel1_handle, hal_channel1_config.channel, HAL_PWM_CONTINUOUS);
+}
+
 void main(void)
 {
     uint32_t ownerID;
@@ -240,6 +292,7 @@ void main(void)
     printf("Hello RK3308 Bare-metal using RK_HAL!\n");
     /* spinlock_test(); */
     /* timer_test(); */
+    /* pwm_test(); */
 
     /* Unity Test */
     /* test_main(); */
