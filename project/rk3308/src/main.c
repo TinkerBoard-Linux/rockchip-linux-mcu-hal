@@ -7,6 +7,12 @@
 #include "hal_base.h"
 
 /********************* Private MACRO Definition ******************************/
+//#define UNITY_TEST
+//#define SPINLOCK_TEST
+//#define TIMER_TEST
+//#define TSADC_TEST
+//#define PWM_TEST
+//#define GPIO_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -73,6 +79,7 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
+#ifdef SPINLOCK_TEST
 static void spinlock_test(void)
 {
     uint32_t cpu_id, owner;
@@ -101,13 +108,65 @@ static void spinlock_test(void)
         HAL_CPUDelayUs(10);
     }
 }
+#endif
+
+#ifdef GPIO_TEST
+static void gpio_isr(int vector, void *param)
+{
+    printf("Enter GPIO IRQHander!\n");
+    HAL_GPIO_IRQHandler(GPIO0, GPIO_BANK0);
+    printf("Leave GPIO IRQHandler!\n");
+}
+
+static HAL_Status c4_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_test(void)
+{
+    uint32_t level;
+
+    /* Test GPIO output */
+    HAL_GPIO_SetPinDirection(GPIO0, GPIO_PIN_C4, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO0, GPIO_PIN_C4);
+    printf("test_gpio level = %ld\n", level);
+    HAL_DelayMs(5000);
+    if (level == GPIO_HIGH) {
+        HAL_GPIO_SetPinLevel(GPIO0, GPIO_PIN_C4, GPIO_LOW);
+    } else {
+        HAL_GPIO_SetPinLevel(GPIO0, GPIO_PIN_C4, GPIO_HIGH);
+    }
+    level = HAL_GPIO_GetPinLevel(GPIO0, GPIO_PIN_C4);
+    printf("test_gpio level = %ld\n", level);
+    HAL_DelayMs(5000);
+
+    /* Test GPIO input */
+    HAL_GPIO_SetPinDirection(GPIO0, GPIO_PIN_C4, GPIO_IN);
+    HAL_IRQ_HANDLER_SetIRQHandler(GPIO0_IRQn, gpio_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK0, GPIO_PIN_C4, c4_call_back, NULL);
+    HAL_GIC_Enable(GPIO0_IRQn);
+    HAL_GPIO_SetIntType(GPIO0, GPIO_PIN_C4, GPIO_INT_TYPE_EDGE_RISING);
+    HAL_GPIO_EnableIRQ(GPIO0, GPIO_PIN_C4);
+}
+#endif
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     /* The priority higher than 0x80 is non-secure interrupt. */
+
+#ifdef TIMER_TEST
     GIC_AMP_IRQ_CFG_ROUTE(TIMER0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(TIMER1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(TIMER2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(TIMER3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
+
+#ifdef GPIO_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(GPIO0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+#endif
+
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(0, 0)),   /* sentinel */
 };
 
@@ -118,6 +177,7 @@ static struct GIC_IRQ_AMP_CTRL irqConfig = {
     .irqsCfg = &irqsConfig[0],
 };
 
+#ifdef TIMER_TEST
 static int timer_int_count = 0;
 static uint32_t latency_sum = 0;
 struct TIMER_REG *timer = NULL;
@@ -127,7 +187,7 @@ static uint32_t latency_max = 0;
 static struct TIMER_REG *g_timer[4] = { TIMER0, TIMER1, TIMER2, TIMER3 };
 static uint32_t g_timer_irq[4] = { TIMER0_IRQn, TIMER1_IRQn, TIMER2_IRQn, TIMER3_IRQn };
 
-void timer_isr(int vector, void *param)
+static void timer_isr(int vector, void *param)
 {
     uint32_t count, cpu_id;
     uint32_t latency;
@@ -194,6 +254,7 @@ static void timer_test(void)
     HAL_TIMER_SetCount(timer, 24000000);
     HAL_TIMER_Start_IT(timer);
 }
+#endif
 
 void config_freq(void)
 {
@@ -201,13 +262,16 @@ void config_freq(void)
     HAL_SystemCoreClockUpdate(1008000000, HAL_SYSTICK_CLKSRC_EXT);
 }
 
+#ifdef TSADC_TEST
 static void tsadc_test(void)
 {
     HAL_CRU_ClkSetFreq(CLK_TSADC, 50000);
     HAL_TSADC_Enable_AUTO(0, 0, 0);
     printf("GET TEMP %d!\n", HAL_TSADC_GetTemperature_AUTO(0));
 }
+#endif
 
+#ifdef PWM_TEST
 static uint32_t hal_pwm0_clk = 100000000;
 static struct HAL_PWM_CONFIG hal_channel0_handle, hal_channel1_handle;
 struct HAL_PWM_CONFIG hal_channel0_config = {
@@ -259,6 +323,7 @@ static void pwm_test(void)
     HAL_PWM_Enable(&hal_channel0_handle, hal_channel0_config.channel, HAL_PWM_CONTINUOUS);
     HAL_PWM_Enable(&hal_channel1_handle, hal_channel1_config.channel, HAL_PWM_CONTINUOUS);
 }
+#endif
 
 void main(void)
 {
@@ -290,12 +355,30 @@ void main(void)
 #endif
 
     printf("Hello RK3308 Bare-metal using RK_HAL!\n");
-    /* spinlock_test(); */
-    /* timer_test(); */
-    /* pwm_test(); */
+#ifdef SPINLOCK_TEST
+    spinlock_test();
+#endif
 
+#ifdef TIMER_TEST
+    timer_test();
+#endif
+
+#ifdef TSADC_TEST
+    tsadc_test();
+#endif
+
+#ifdef PWM_TEST
+    pwm_test();
+#endif
+
+#ifdef GPIO_TEST
+    gpio_test();
+#endif
+
+#ifdef UNITY_TEST
     /* Unity Test */
-    /* test_main(); */
+    test_main();
+#endif
 
     while (1) {
         ;
