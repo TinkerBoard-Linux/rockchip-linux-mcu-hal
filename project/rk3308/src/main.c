@@ -377,7 +377,9 @@ void main(void)
 
 #ifdef UNITY_TEST
     /* Unity Test */
-    test_main();
+    if (HAL_CPU_TOPOLOGY_GetCurrentCpuId() == 0) {
+        test_main();
+    }
 #endif
 
     while (1) {
