@@ -39,6 +39,17 @@ static void HAL_IOMUX_Uart4M0Config(void)
                          PIN_CONFIG_MUX_FUNC1);
 }
 
+#ifdef HAL_I2C_MODULE_ENABLED
+static void HAL_IOMUX_I2C1M0Config(void)
+{
+    /* I2C1 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_B3 |
+                         GPIO_PIN_B4,
+                         PIN_CONFIG_MUX_FUNC1);
+}
+#endif
+
 #ifdef __GNUC__
 int _write(int fd, char *ptr, int len)
 {
@@ -347,6 +358,10 @@ void main(void)
     /* UART Init */
     HAL_IOMUX_Uart4M0Config();
     HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
+
+#ifdef HAL_I2C_MODULE_ENABLED
+    HAL_IOMUX_I2C1M0Config();
+#endif
 
     /* SPINLOCK Init */
 #ifdef HAL_SPINLOCK_MODULE_ENABLED

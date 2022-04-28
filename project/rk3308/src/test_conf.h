@@ -7,8 +7,10 @@
 #define _TEST_CONF_H_
 
 /* Unity HAL Test Config */
+#define UNITY_HAL_I2C
 #define UNITY_HAL_SPI
 #define UNITY_HAL_SPIFLASH
 
 /* Unity HAL Test Sub Config */
+#define HAL_I2C1
 #endif
