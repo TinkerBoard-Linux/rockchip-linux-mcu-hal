@@ -13,6 +13,7 @@
 //#define TSADC_TEST
 //#define PWM_TEST
 //#define GPIO_TEST
+//#define UART_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -87,6 +88,26 @@ int fputc(int ch, FILE *f)
     HAL_UART_SerialOutChar(pUart, (char)ch);
 
     return 0;
+}
+#endif
+
+#ifdef UART_TEST
+void uart_test(void)
+{
+    uint8_t buf[2];
+    uint8_t input, cnt = 0;
+
+    // must input 16 chars to exit the test
+    for (input = 0; input < 16; input++) {
+        while (1) {
+            cnt = HAL_UART_SerialIn(pUart, buf, 1);
+            if (cnt > 0) {
+                break;
+            }
+        }
+        buf[1] = 0;
+        HAL_UART_SerialOutChar(pUart, (char)buf[0]);
+    }
 }
 #endif
 
@@ -369,7 +390,14 @@ void main(void)
     HAL_SPINLOCK_Init(ownerID);
 #endif
 
-    printf("Hello RK3308 Bare-metal using RK_HAL!\n");
+    printf("\n");
+    printf("****************************************\n");
+    printf("  Hello RK3308 Bare-metal using RK_HAL! \n");
+    printf("   Fuzhou Rockchip Electronics Co.Ltd   \n");
+    printf("              CPI_ID(%d)                \n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
+    printf("****************************************\n");
+    printf("\n");
+
 #ifdef SPINLOCK_TEST
     spinlock_test();
 #endif
@@ -388,6 +416,10 @@ void main(void)
 
 #ifdef GPIO_TEST
     gpio_test();
+#endif
+
+#ifdef UART_TEST
+    uart_test();
 #endif
 
 #ifdef UNITY_TEST
