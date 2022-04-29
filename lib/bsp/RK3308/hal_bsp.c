@@ -95,7 +95,7 @@ const struct HAL_I2C_DEV g_i2c3Dev =
 #endif
 
 #ifdef HAL_SFC_MODULE_ENABLED
-struct HAL_SFC_HOST g_fspi0Dev =
+struct HAL_SFC_HOST g_sfcDev =
 {
     .instance = SFC,
     .sclkID = CLK_SFC,
