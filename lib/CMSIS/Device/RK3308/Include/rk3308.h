@@ -808,6 +808,7 @@ struct DMA_CHANNEL_CONFIG {
     __I  uint32_t CCR;
     __I  uint32_t LC0;
     __I  uint32_t LC1;
+         uint32_t PADDING[3];
 };
 struct DMA_REG {
     __I  uint32_t DSR;                                /* Address Offset: 0x0000 */
@@ -826,7 +827,7 @@ struct DMA_REG {
     struct DMA_CHANNEL_STATUS CHAN_STS[6];            /* Address Offset: 0x0100 */
          uint32_t RESERVED0130[180];                  /* Address Offset: 0x0130 */
     struct DMA_CHANNEL_CONFIG CHAN_CFG[6];            /* Address Offset: 0x0400 */
-         uint32_t RESERVED04B4[531];                  /* Address Offset: 0x04B4 */
+         uint32_t RESERVED04C0[528];                  /* Address Offset: 0x04C0 */
     __I  uint32_t DBGSTATUS;                          /* Address Offset: 0x0D00 */
     __O  uint32_t DBGCMD;                             /* Address Offset: 0x0D04 */
     __O  uint32_t DBGINST[2];                         /* Address Offset: 0x0D08 */
@@ -7909,6 +7910,12 @@ struct ACODEC_REG {
 #define DMA_LC1_0                                          (0x0U)
 #define DMA_LC1_0_FIELD0000_SHIFT                          (0U)
 #define DMA_LC1_0_FIELD0000_MASK                           (0xFFU << DMA_LC1_0_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING0_0 */
+#define DMA_PADDING0_0_OFFSET                              (0x414U)
+/* PADDING0_1 */
+#define DMA_PADDING0_1_OFFSET                              (0x418U)
+/* PADDING0_2 */
+#define DMA_PADDING0_2_OFFSET                              (0x41CU)
 /* SAR1 */
 #define DMA_SAR1_OFFSET                                    (0x420U)
 #define DMA_SAR1                                           (0x0U)
@@ -7952,12 +7959,12 @@ struct ACODEC_REG {
 #define DMA_LC1_1                                          (0x0U)
 #define DMA_LC1_1_FIELD0000_SHIFT                          (0U)
 #define DMA_LC1_1_FIELD0000_MASK                           (0xFFU << DMA_LC1_1_FIELD0000_SHIFT)                         /* 0x000000FF */
-/* PADDING0 */
-#define DMA_PADDING0_OFFSET                                (0x434U)
-/* PADDING1 */
-#define DMA_PADDING1_OFFSET                                (0x438U)
-/* PADDING2 */
-#define DMA_PADDING2_OFFSET                                (0x43CU)
+/* PADDING1_0 */
+#define DMA_PADDING1_0_OFFSET                              (0x434U)
+/* PADDING1_1 */
+#define DMA_PADDING1_1_OFFSET                              (0x438U)
+/* PADDING1_2 */
+#define DMA_PADDING1_2_OFFSET                              (0x43CU)
 /* SAR2 */
 #define DMA_SAR2_OFFSET                                    (0x440U)
 #define DMA_SAR2                                           (0x0U)
@@ -8001,6 +8008,12 @@ struct ACODEC_REG {
 #define DMA_LC1_2                                          (0x0U)
 #define DMA_LC1_2_FIELD0000_SHIFT                          (0U)
 #define DMA_LC1_2_FIELD0000_MASK                           (0xFFU << DMA_LC1_2_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING2_0 */
+#define DMA_PADDING2_0_OFFSET                              (0x454U)
+/* PADDING2_1 */
+#define DMA_PADDING2_1_OFFSET                              (0x458U)
+/* PADDING2_2 */
+#define DMA_PADDING2_2_OFFSET                              (0x45CU)
 /* SAR3 */
 #define DMA_SAR3_OFFSET                                    (0x460U)
 #define DMA_SAR3                                           (0x0U)
@@ -8044,6 +8057,12 @@ struct ACODEC_REG {
 #define DMA_LC1_3                                          (0x0U)
 #define DMA_LC1_3_FIELD0000_SHIFT                          (0U)
 #define DMA_LC1_3_FIELD0000_MASK                           (0xFFU << DMA_LC1_3_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING3_0 */
+#define DMA_PADDING3_0_OFFSET                              (0x474U)
+/* PADDING3_1 */
+#define DMA_PADDING3_1_OFFSET                              (0x478U)
+/* PADDING3_2 */
+#define DMA_PADDING3_2_OFFSET                              (0x47CU)
 /* SAR4 */
 #define DMA_SAR4_OFFSET                                    (0x480U)
 #define DMA_SAR4                                           (0x0U)
@@ -8087,6 +8106,12 @@ struct ACODEC_REG {
 #define DMA_LC1_4                                          (0x0U)
 #define DMA_LC1_4_FIELD0000_SHIFT                          (0U)
 #define DMA_LC1_4_FIELD0000_MASK                           (0xFFU << DMA_LC1_4_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING4_0 */
+#define DMA_PADDING4_0_OFFSET                              (0x494U)
+/* PADDING4_1 */
+#define DMA_PADDING4_1_OFFSET                              (0x498U)
+/* PADDING4_2 */
+#define DMA_PADDING4_2_OFFSET                              (0x49CU)
 /* SAR5 */
 #define DMA_SAR5_OFFSET                                    (0x4A0U)
 #define DMA_SAR5                                           (0x0U)
@@ -8130,6 +8155,12 @@ struct ACODEC_REG {
 #define DMA_LC1_5                                          (0x0U)
 #define DMA_LC1_5_FIELD0000_SHIFT                          (0U)
 #define DMA_LC1_5_FIELD0000_MASK                           (0xFFU << DMA_LC1_5_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING5_0 */
+#define DMA_PADDING5_0_OFFSET                              (0x4B4U)
+/* PADDING5_1 */
+#define DMA_PADDING5_1_OFFSET                              (0x4B8U)
+/* PADDING5_2 */
+#define DMA_PADDING5_2_OFFSET                              (0x4BCU)
 /* DBGSTATUS */
 #define DMA_DBGSTATUS_OFFSET                               (0xD00U)
 #define DMA_DBGSTATUS                                      (0x0U)
