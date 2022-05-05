@@ -6175,7 +6175,7 @@ struct ACODEC_REG {
 #define PWM_PWM0_CTRL_CLK_SEL_SHIFT                        (9U)
 #define PWM_PWM0_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM0_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
 #define PWM_PWM0_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
-#define PWM_PWM0_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM0_CTRL_CLK_SRC_SEL_SHIFT)
+#define PWM_PWM0_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM0_CTRL_CLK_SRC_SEL_SHIFT)                    /* 0x00000400 */
 #define PWM_PWM0_CTRL_PRESCALE_SHIFT                       (12U)
 #define PWM_PWM0_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM0_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
 #define PWM_PWM0_CTRL_SCALE_SHIFT                          (16U)
@@ -6216,7 +6216,7 @@ struct ACODEC_REG {
 #define PWM_PWM1_CTRL_CLK_SEL_SHIFT                        (9U)
 #define PWM_PWM1_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM1_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
 #define PWM_PWM1_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
-#define PWM_PWM1_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM1_CTRL_CLK_SRC_SEL_SHIFT)
+#define PWM_PWM1_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM1_CTRL_CLK_SRC_SEL_SHIFT)                    /* 0x00000400 */
 #define PWM_PWM1_CTRL_PRESCALE_SHIFT                       (12U)
 #define PWM_PWM1_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM1_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
 #define PWM_PWM1_CTRL_SCALE_SHIFT                          (16U)
@@ -6257,7 +6257,7 @@ struct ACODEC_REG {
 #define PWM_PWM2_CTRL_CLK_SEL_SHIFT                        (9U)
 #define PWM_PWM2_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM2_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
 #define PWM_PWM2_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
-#define PWM_PWM2_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM2_CTRL_CLK_SRC_SEL_SHIFT)
+#define PWM_PWM2_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM2_CTRL_CLK_SRC_SEL_SHIFT)                    /* 0x00000400 */
 #define PWM_PWM2_CTRL_PRESCALE_SHIFT                       (12U)
 #define PWM_PWM2_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM2_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
 #define PWM_PWM2_CTRL_SCALE_SHIFT                          (16U)
@@ -6298,7 +6298,7 @@ struct ACODEC_REG {
 #define PWM_PWM3_CTRL_CLK_SEL_SHIFT                        (9U)
 #define PWM_PWM3_CTRL_CLK_SEL_MASK                         (0x1U << PWM_PWM3_CTRL_CLK_SEL_SHIFT)                        /* 0x00000200 */
 #define PWM_PWM3_CTRL_CLK_SRC_SEL_SHIFT                    (10U)
-#define PWM_PWM3_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM3_CTRL_CLK_SRC_SEL_SHIFT)
+#define PWM_PWM3_CTRL_CLK_SRC_SEL_MASK                     (0x1U << PWM_PWM3_CTRL_CLK_SRC_SEL_SHIFT)                    /* 0x00000400 */
 #define PWM_PWM3_CTRL_PRESCALE_SHIFT                       (12U)
 #define PWM_PWM3_CTRL_PRESCALE_MASK                        (0x7U << PWM_PWM3_CTRL_PRESCALE_SHIFT)                       /* 0x00007000 */
 #define PWM_PWM3_CTRL_SCALE_SHIFT                          (16U)
