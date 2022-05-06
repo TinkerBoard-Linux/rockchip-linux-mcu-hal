@@ -309,6 +309,12 @@ typedef enum CLOCK_Name {
 
 #endif
 
+/****************************************GPIO********************************************/
+#ifdef GPIO_VER_ID
+#undef GPIO_VER_ID
+#define GPIO_VER_ID             (0x01000C2BU)
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
