@@ -30,7 +30,16 @@ int _write(int fd, char *ptr, int len);
 int fputc(int ch, FILE *f);
 #endif
 
-static struct UART_REG *pUart = UART4;
+static struct UART_REG *pUart = UART2;
+
+static void HAL_IOMUX_Uart2M1Config(void)
+{
+    /* UART2 M1 RX-4D2 TX-4D3 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK4,
+                         GPIO_PIN_D2 |
+                         GPIO_PIN_D3,
+                         PIN_CONFIG_MUX_FUNC2);
+}
 
 static void HAL_IOMUX_Uart4M0Config(void)
 {
@@ -424,8 +433,8 @@ void main(void)
     HAL_GIC_Init(&irqConfig);
 
     /* UART Init */
-    HAL_IOMUX_Uart4M0Config();
-    HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
+    HAL_IOMUX_Uart2M1Config();
+    HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
 
 #ifdef HAL_I2C_MODULE_ENABLED
     HAL_IOMUX_I2C1M0Config();
