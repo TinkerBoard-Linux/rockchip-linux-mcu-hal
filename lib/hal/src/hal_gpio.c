@@ -19,16 +19,19 @@
  *  @{
 
  The GPIO driver can be used as follows:
+
  APIs for GPIO io read write:
-   1) HAL_GPIO_GetPinLevel to get EXT port level.
-   2) HAL_GPIO_SetPinLevel to set io level.
-   3) HAL_GPIO_SetPinDirection to set io direction.
+
+   1. HAL_GPIO_GetPinLevel() to get EXT port level.
+   2. HAL_GPIO_SetPinLevel() to set io level.
+   3. HAL_GPIO_SetPinDirection() to set io direction.
 
  APIs for GPIO IRQ:
-   1) HAL_GPIO_EnableIRQ to enable a GPIO IRQ.
-   2) HAL_GPIO_DisableIRQ to disable a GPIO IRQ.
-   3) HAL_GPIO_IRQHandler to handle GPIO IRQ isr.
-   4) HAL_GPIO_IRQDispatch to dispatch GPIO IRQ, should be implemented by User.
+
+   1. HAL_GPIO_EnableIRQ() to enable a GPIO IRQ.
+   2. HAL_GPIO_DisableIRQ() to disable a GPIO IRQ.
+   3. HAL_GPIO_IRQHandler() to handle GPIO IRQ isr.
+   4. HAL_GPIO_IRQDispatch() to dispatch GPIO IRQ, should be implemented by User.
 
  @} */
 
