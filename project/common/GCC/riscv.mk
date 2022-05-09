@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-3-Clause */
 
-# Copyright (c) 2020 Rockchip Electronics Co., Ltd.
+# Copyright (c) 2022 Rockchip Electronics Co., Ltd.
 
 ROOT_PATH	:= ../../..
 
@@ -23,12 +23,13 @@ STRIP		= $(CROSS_COMPILE)strip
 OBJCOPY		= $(CROSS_COMPILE)objcopy
 OBJDUMP		= $(CROSS_COMPILE)objdump
 
-CPU		+= -DUSE_PLIC -DUSE_M_TIME -DNO_INIT -mcmodel=medany -msmall-data-limit=8 -L.  -nostartfiles  -lc
-ASFLAGS         += $(CPU) -c -x assembler-with-cpp
-CFLAGS		+= $(CPU) -O2 -g
+CPU		+= -DUSE_PLIC -DUSE_M_TIME -DNO_INIT -mcmodel=medany -msmall-data-limit=8 -L.
+ASFLAGS         += $(CPU) -c -x assembler-with-cpp  -D__ASSEMBLY__
+CFLAGS		+= $(CPU) -std=gnu99 -Os -g
+CFLAGS		+= -ffunction-sections -fdata-sections -flto
 CFLAGS		+= -Wformat=2 -Wall -Wextra -Wno-unused-parameter
 CFLAGS		+= -Wstrict-prototypes -Wmissing-prototypes -nostartfiles
-LDFLAGS		+= $(CPU) -Wl,--gc-sections -Wl,--wrap=memset -Wl,--wrap=puts
+LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lc -lm -lgcc
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
 HAL_CFLAGS	+= -Werror
