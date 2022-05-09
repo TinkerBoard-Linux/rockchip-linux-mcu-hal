@@ -22,8 +22,8 @@
  iomux, drive strength, pull mode, slew rate and schmitt trigger.
 
  The pinctrl driver provides APIs:
-   - HAL_PINCTRL_SetPinIOMUX to set pin iomux
-   - HAL_PINCTRL_SetPinParam to set pin iomux/drive/pull/slewrate/schmitt/ie
+   - HAL_PINCTRL_SetIOMUX() to set pin iomux
+   - HAL_PINCTRL_SetParam() to set pin iomux/drive/pull/slewrate/schmitt/ie
 
  Example:
 
