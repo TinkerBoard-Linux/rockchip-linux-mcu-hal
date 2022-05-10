@@ -43,6 +43,26 @@ __STATIC_INLINE void HAL_SYS_ExitCriticalSection(unsigned long flags)
 {
     __set_PRIMASK(flags);
 }
+#elif defined(__RISC_V)
+__STATIC_INLINE unsigned long HAL_SYS_EnterCriticalSection(void)
+{
+    unsigned long flags;
+
+    __asm volatile ("csrrci %0, mstatus, 8"
+                    : "=&r" (flags)
+                    :
+                    : "memory");
+
+    return flags;
+}
+
+__STATIC_INLINE void HAL_SYS_ExitCriticalSection(unsigned long flags)
+{
+    __asm volatile ("csrw mstatus, %0"
+                    :
+                    : "r" (flags)
+                    : "memory");
+}
 #else
 __STATIC_INLINE unsigned long HAL_SYS_EnterCriticalSection(void)
 {
