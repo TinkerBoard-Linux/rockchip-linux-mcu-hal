@@ -8,6 +8,7 @@
 
 /* CPU config */
 #define SOC_RV1106
+#define __RISC_V
 #define HAL_MCU_CORE
 #define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
