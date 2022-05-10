@@ -50,6 +50,13 @@ static void HAL_IOMUX_Uart4M0Config(void)
                          PIN_CONFIG_MUX_FUNC1);
 }
 
+static void HAL_IODOMAIN_Config(void)
+{
+    /* VCC IO 2 voltage select 1v8 */
+    GRF->SOC_CON0 = (1 << GRF_SOC_CON0_IO_VSEL2_SHIFT) |
+                    (GRF_SOC_CON0_IO_VSEL2_MASK << 16);
+}
+
 #ifdef HAL_I2C_MODULE_ENABLED
 static void HAL_IOMUX_I2C1M0Config(void)
 {
@@ -430,7 +437,11 @@ void main(void)
     /* BSP Init */
     BSP_Init();
 
+    /* Interrupt Init */
     HAL_GIC_Init(&irqConfig);
+
+    /* IO Domain Init */
+    HAL_IODOMAIN_Config();
 
     /* UART Init */
     HAL_IOMUX_Uart2M1Config();
