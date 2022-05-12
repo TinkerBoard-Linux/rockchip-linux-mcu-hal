@@ -30,7 +30,7 @@ int _write(int fd, char *ptr, int len);
 int fputc(int ch, FILE *f);
 #endif
 
-static struct UART_REG *pUart = UART2;
+static struct UART_REG *pUart = UART2;      // UART2 or UART4, selected depend on hardware board
 
 static void HAL_IOMUX_Uart2M1Config(void)
 {
@@ -444,8 +444,13 @@ void main(void)
     HAL_IODOMAIN_Config();
 
     /* UART Init */
-    HAL_IOMUX_Uart2M1Config();
-    HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
+    if (UART2 == pUart) {
+        HAL_IOMUX_Uart2M1Config();
+        HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
+    } else if (UART4 == pUart) {
+        HAL_IOMUX_Uart4M0Config();
+        HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
+    }
 
 #ifdef HAL_I2C_MODULE_ENABLED
     HAL_IOMUX_I2C1M0Config();
