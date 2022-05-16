@@ -17,6 +17,7 @@
 //#define UART_TEST
 //#define I2STDM_TEST
 //#define PERF_TEST
+//#define SOFTIRQ_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -246,6 +247,10 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     GIC_AMP_IRQ_CFG_ROUTE(GPIO0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
 #endif
 
+#ifdef SOFTIRQ_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+#endif
+
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(0, 0)),   /* sentinel */
 };
 
@@ -332,6 +337,22 @@ static void timer_test(void)
     HAL_TIMER_Init(timer, TIMER_FREE_RUNNING);
     HAL_TIMER_SetCount(timer, 24000000);
     HAL_TIMER_Start_IT(timer);
+}
+#endif
+
+#ifdef SOFTIRQ_TEST
+static void soft_isr(int vector, void *param)
+{
+    printf("soft_isr, vector = %d\n", vector);
+    HAL_GIC_EndOfInterrupt(vector);
+}
+
+static void softirq_test(void)
+{
+    HAL_IRQ_HANDLER_SetIRQHandler(RSVD0_IRQn, soft_isr, NULL);
+    HAL_GIC_Enable(RSVD0_IRQn);
+
+    HAL_GIC_SetPending(RSVD0_IRQn);
 }
 #endif
 
@@ -568,6 +589,10 @@ void main(void)
 
 #ifdef PERF_TEST
     perf_test();
+#endif
+
+#ifdef SOFTIRQ_TEST
+    softirq_test();
 #endif
 
 #ifdef UNITY_TEST
