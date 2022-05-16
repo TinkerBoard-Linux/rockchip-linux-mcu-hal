@@ -235,6 +235,33 @@ struct SUBDDRCRU_REG {
          uint32_t RESERVED0804[127];                  /* Address Offset: 0x0804 */
     __IO uint32_t SUBDDRSOFTRST_CON[1];               /* Address Offset: 0x0A00 */
 };
+/* SARADC Register Structure Define */
+struct SARADC_REG {
+    __IO uint32_t CONV_CON;                           /* Address Offset: 0x0000 */
+    __IO uint32_t T_PD_SOC;                           /* Address Offset: 0x0004 */
+    __IO uint32_t T_AS_SOC;                           /* Address Offset: 0x0008 */
+    __IO uint32_t T_DAS_SOC;                          /* Address Offset: 0x000C */
+    __IO uint32_t T_SEL_SOC;                          /* Address Offset: 0x0010 */
+    __IO uint32_t HIGH_COMP[2];                       /* Address Offset: 0x0014 */
+         uint32_t RESERVED001C[14];                   /* Address Offset: 0x001C */
+    __IO uint32_t LOW_COMP[2];                        /* Address Offset: 0x0054 */
+         uint32_t RESERVED005C[14];                   /* Address Offset: 0x005C */
+    __IO uint32_t DEBOUNCE;                           /* Address Offset: 0x0094 */
+    __IO uint32_t HT_INT_EN;                          /* Address Offset: 0x0098 */
+    __IO uint32_t LT_INT_EN;                          /* Address Offset: 0x009C */
+         uint32_t RESERVED00A0[24];                   /* Address Offset: 0x00A0 */
+    __IO uint32_t MT_INT_EN;                          /* Address Offset: 0x0100 */
+    __IO uint32_t END_INT_EN;                         /* Address Offset: 0x0104 */
+         uint32_t RESERVED0108;                       /* Address Offset: 0x0108 */
+    __I  uint32_t STATUS;                             /* Address Offset: 0x010C */
+    __IO uint32_t END_INT_ST;                         /* Address Offset: 0x0110 */
+    __IO uint32_t HT_INT_ST;                          /* Address Offset: 0x0114 */
+    __IO uint32_t LT_INT_ST;                          /* Address Offset: 0x0118 */
+    __IO uint32_t MT_INT_ST;                          /* Address Offset: 0x011C */
+    __I  uint32_t DATA[2];                            /* Address Offset: 0x0120 */
+         uint32_t RESERVED0128[14];                   /* Address Offset: 0x0128 */
+    __IO uint32_t AUTO_CH_EN;                         /* Address Offset: 0x0160 */
+};
 /* UART Register Structure Define */
 struct UART_REG {
     union {
@@ -552,6 +579,7 @@ struct DCACHE_REG {
 #define VOCRU_BASE                     0xFF3BC000U /* VOCRU base address */
 #define DDRCRU_BASE                    0xFF3BE000U /* DDRCRU base address */
 #define SUBDDRCRU_BASE                 0xFF3BF000U /* SUBDDRCRU base address */
+#define SARADC_BASE                    0xFF3C0000U /* SARADC base address */
 #define UART0_BASE                     0xFF4A0000U /* UART0 base address */
 #define UART1_BASE                     0xFF4B0000U /* UART1 base address */
 #define UART2_BASE                     0xFF4C0000U /* UART2 base address */
@@ -595,6 +623,7 @@ struct DCACHE_REG {
 #define VOCRU               ((struct VOCRU_REG *) VOCRU_BASE)
 #define DDRCRU              ((struct DDRCRU_REG *) DDRCRU_BASE)
 #define SUBDDRCRU           ((struct SUBDDRCRU_REG *) SUBDDRCRU_BASE)
+#define SARADC              ((struct SARADC_REG *) SARADC_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
@@ -631,6 +660,7 @@ struct DCACHE_REG {
 #define IS_VOCRU_INSTANCE(instance) ((instance) == VOCRU)
 #define IS_DDRCRU_INSTANCE(instance) ((instance) == DDRCRU)
 #define IS_SUBDDRCRU_INSTANCE(instance) ((instance) == SUBDDRCRU)
+#define IS_SARADC_INSTANCE(instance) ((instance) == SARADC)
 #define IS_GPIO1_IOC_INSTANCE(instance) ((instance) == GPIO1_IOC)
 #define IS_GPIO2_IOC_INSTANCE(instance) ((instance) == GPIO2_IOC)
 #define IS_GPIO3_IOC_INSTANCE(instance) ((instance) == GPIO3_IOC)
@@ -3399,6 +3429,128 @@ struct DCACHE_REG {
 #define SUBDDRCRU_SUBDDRSOFTRST_CON00_RESETN_DFICTRL_MASK  (0x1U << SUBDDRCRU_SUBDDRSOFTRST_CON00_RESETN_DFICTRL_SHIFT) /* 0x00000020 */
 #define SUBDDRCRU_SUBDDRSOFTRST_CON00_RESETN_DDR_PHY_SHIFT (6U)
 #define SUBDDRCRU_SUBDDRSOFTRST_CON00_RESETN_DDR_PHY_MASK  (0x1U << SUBDDRCRU_SUBDDRSOFTRST_CON00_RESETN_DDR_PHY_SHIFT) /* 0x00000040 */
+/*****************************************SARADC*****************************************/
+/* CONV_CON */
+#define SARADC_CONV_CON_OFFSET                             (0x0U)
+#define SARADC_CONV_CON_CHANNEL_SEL_SHIFT                  (0U)
+#define SARADC_CONV_CON_CHANNEL_SEL_MASK                   (0xFU << SARADC_CONV_CON_CHANNEL_SEL_SHIFT)                  /* 0x0000000F */
+#define SARADC_CONV_CON_START_ADC_SHIFT                    (4U)
+#define SARADC_CONV_CON_START_ADC_MASK                     (0x1U << SARADC_CONV_CON_START_ADC_SHIFT)                    /* 0x00000010 */
+#define SARADC_CONV_CON_SINGLE_PD_MODE_SHIFT               (5U)
+#define SARADC_CONV_CON_SINGLE_PD_MODE_MASK                (0x1U << SARADC_CONV_CON_SINGLE_PD_MODE_SHIFT)               /* 0x00000020 */
+#define SARADC_CONV_CON_AUTO_CHANNEL_MODE_SHIFT            (6U)
+#define SARADC_CONV_CON_AUTO_CHANNEL_MODE_MASK             (0x1U << SARADC_CONV_CON_AUTO_CHANNEL_MODE_SHIFT)            /* 0x00000040 */
+#define SARADC_CONV_CON_END_CONV_SHIFT                     (7U)
+#define SARADC_CONV_CON_END_CONV_MASK                      (0x1U << SARADC_CONV_CON_END_CONV_SHIFT)                     /* 0x00000080 */
+#define SARADC_CONV_CON_AS_PD_MODE_SHIFT                   (8U)
+#define SARADC_CONV_CON_AS_PD_MODE_MASK                    (0x1U << SARADC_CONV_CON_AS_PD_MODE_SHIFT)                   /* 0x00000100 */
+#define SARADC_CONV_CON_INT_LOCK_SHIFT                     (9U)
+#define SARADC_CONV_CON_INT_LOCK_MASK                      (0x1U << SARADC_CONV_CON_INT_LOCK_SHIFT)                     /* 0x00000200 */
+/* T_PD_SOC */
+#define SARADC_T_PD_SOC_OFFSET                             (0x4U)
+#define SARADC_T_PD_SOC_T_PD_SOC_SHIFT                     (13U)
+#define SARADC_T_PD_SOC_T_PD_SOC_MASK                      (0xFFU << SARADC_T_PD_SOC_T_PD_SOC_SHIFT)                    /* 0x001FE000 */
+/* T_AS_SOC */
+#define SARADC_T_AS_SOC_OFFSET                             (0x8U)
+#define SARADC_T_AS_SOC_T_AS_SOC_SHIFT                     (0U)
+#define SARADC_T_AS_SOC_T_AS_SOC_MASK                      (0xFFFFFFFFU << SARADC_T_AS_SOC_T_AS_SOC_SHIFT)              /* 0xFFFFFFFF */
+/* T_DAS_SOC */
+#define SARADC_T_DAS_SOC_OFFSET                            (0xCU)
+#define SARADC_T_DAS_SOC_T_DAS_SOC_SHIFT                   (0U)
+#define SARADC_T_DAS_SOC_T_DAS_SOC_MASK                    (0xFFFFFFFFU << SARADC_T_DAS_SOC_T_DAS_SOC_SHIFT)            /* 0xFFFFFFFF */
+/* T_SEL_SOC */
+#define SARADC_T_SEL_SOC_OFFSET                            (0x10U)
+#define SARADC_T_SEL_SOC_T_SEL_SOC_SHIFT                   (0U)
+#define SARADC_T_SEL_SOC_T_SEL_SOC_MASK                    (0xFFFFU << SARADC_T_SEL_SOC_T_SEL_SOC_SHIFT)                /* 0x0000FFFF */
+/* HIGH_COMP0 */
+#define SARADC_HIGH_COMP0_OFFSET                           (0x14U)
+#define SARADC_HIGH_COMP0_HIGH_COMP0_SHIFT                 (0U)
+#define SARADC_HIGH_COMP0_HIGH_COMP0_MASK                  (0xFFFU << SARADC_HIGH_COMP0_HIGH_COMP0_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP1 */
+#define SARADC_HIGH_COMP1_OFFSET                           (0x18U)
+#define SARADC_HIGH_COMP1_HIGH_COMP1_SHIFT                 (0U)
+#define SARADC_HIGH_COMP1_HIGH_COMP1_MASK                  (0xFFFU << SARADC_HIGH_COMP1_HIGH_COMP1_SHIFT)               /* 0x00000FFF */
+/* LOW_COMP0 */
+#define SARADC_LOW_COMP0_OFFSET                            (0x54U)
+#define SARADC_LOW_COMP0_LOW_COMP0_SHIFT                   (0U)
+#define SARADC_LOW_COMP0_LOW_COMP0_MASK                    (0xFFFU << SARADC_LOW_COMP0_LOW_COMP0_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP1 */
+#define SARADC_LOW_COMP1_OFFSET                            (0x58U)
+#define SARADC_LOW_COMP1_LOW_COMP1_SHIFT                   (0U)
+#define SARADC_LOW_COMP1_LOW_COMP1_MASK                    (0xFFFU << SARADC_LOW_COMP1_LOW_COMP1_SHIFT)                 /* 0x00000FFF */
+/* DEBOUNCE */
+#define SARADC_DEBOUNCE_OFFSET                             (0x94U)
+#define SARADC_DEBOUNCE_DEBOUNCE_SHIFT                     (0U)
+#define SARADC_DEBOUNCE_DEBOUNCE_MASK                      (0xFFU << SARADC_DEBOUNCE_DEBOUNCE_SHIFT)                    /* 0x000000FF */
+/* HT_INT_EN */
+#define SARADC_HT_INT_EN_OFFSET                            (0x98U)
+#define SARADC_HT_INT_EN_HT_INT_EN0_SHIFT                  (0U)
+#define SARADC_HT_INT_EN_HT_INT_EN0_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN0_SHIFT)                  /* 0x00000001 */
+#define SARADC_HT_INT_EN_HT_INT_EN1_SHIFT                  (1U)
+#define SARADC_HT_INT_EN_HT_INT_EN1_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN1_SHIFT)                  /* 0x00000002 */
+/* LT_INT_EN */
+#define SARADC_LT_INT_EN_OFFSET                            (0x9CU)
+#define SARADC_LT_INT_EN_LT_INT_EN0_SHIFT                  (0U)
+#define SARADC_LT_INT_EN_LT_INT_EN0_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN0_SHIFT)                  /* 0x00000001 */
+#define SARADC_LT_INT_EN_LT_INT_EN1_SHIFT                  (1U)
+#define SARADC_LT_INT_EN_LT_INT_EN1_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN1_SHIFT)                  /* 0x00000002 */
+/* MT_INT_EN */
+#define SARADC_MT_INT_EN_OFFSET                            (0x100U)
+#define SARADC_MT_INT_EN_MT_INT_EN0_SHIFT                  (0U)
+#define SARADC_MT_INT_EN_MT_INT_EN0_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN0_SHIFT)                  /* 0x00000001 */
+#define SARADC_MT_INT_EN_MT_INT_EN1_SHIFT                  (1U)
+#define SARADC_MT_INT_EN_MT_INT_EN1_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN1_SHIFT)                  /* 0x00000002 */
+/* END_INT_EN */
+#define SARADC_END_INT_EN_OFFSET                           (0x104U)
+#define SARADC_END_INT_EN_END_INT_EN_SHIFT                 (0U)
+#define SARADC_END_INT_EN_END_INT_EN_MASK                  (0x1U << SARADC_END_INT_EN_END_INT_EN_SHIFT)                 /* 0x00000001 */
+/* STATUS */
+#define SARADC_STATUS_OFFSET                               (0x10CU)
+#define SARADC_STATUS                                      (0x2U)
+#define SARADC_STATUS_CONV_ST_SHIFT                        (0U)
+#define SARADC_STATUS_CONV_ST_MASK                         (0x1U << SARADC_STATUS_CONV_ST_SHIFT)                        /* 0x00000001 */
+#define SARADC_STATUS_PD_SHIFT                             (1U)
+#define SARADC_STATUS_PD_MASK                              (0x1U << SARADC_STATUS_PD_SHIFT)                             /* 0x00000002 */
+#define SARADC_STATUS_SEL_SHIFT                            (2U)
+#define SARADC_STATUS_SEL_MASK                             (0xFU << SARADC_STATUS_SEL_SHIFT)                            /* 0x0000003C */
+/* END_INT_ST */
+#define SARADC_END_INT_ST_OFFSET                           (0x110U)
+#define SARADC_END_INT_ST_END_INT_ST_SHIFT                 (0U)
+#define SARADC_END_INT_ST_END_INT_ST_MASK                  (0x1U << SARADC_END_INT_ST_END_INT_ST_SHIFT)                 /* 0x00000001 */
+/* HT_INT_ST */
+#define SARADC_HT_INT_ST_OFFSET                            (0x114U)
+#define SARADC_HT_INT_ST_HT_INT_ST0_SHIFT                  (0U)
+#define SARADC_HT_INT_ST_HT_INT_ST0_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST0_SHIFT)                  /* 0x00000001 */
+#define SARADC_HT_INT_ST_HT_INT_ST1_SHIFT                  (1U)
+#define SARADC_HT_INT_ST_HT_INT_ST1_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST1_SHIFT)                  /* 0x00000002 */
+/* LT_INT_ST */
+#define SARADC_LT_INT_ST_OFFSET                            (0x118U)
+#define SARADC_LT_INT_ST_LT_INT_ST0_SHIFT                  (0U)
+#define SARADC_LT_INT_ST_LT_INT_ST0_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST0_SHIFT)                  /* 0x00000001 */
+#define SARADC_LT_INT_ST_LT_INT_ST1_SHIFT                  (1U)
+#define SARADC_LT_INT_ST_LT_INT_ST1_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST1_SHIFT)                  /* 0x00000002 */
+/* MT_INT_ST */
+#define SARADC_MT_INT_ST_OFFSET                            (0x11CU)
+#define SARADC_MT_INT_ST_MT_INT_ST0_SHIFT                  (0U)
+#define SARADC_MT_INT_ST_MT_INT_ST0_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST0_SHIFT)                  /* 0x00000001 */
+#define SARADC_MT_INT_ST_MT_INT_ST1_SHIFT                  (1U)
+#define SARADC_MT_INT_ST_MT_INT_ST1_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST1_SHIFT)                  /* 0x00000002 */
+/* DATA0 */
+#define SARADC_DATA0_OFFSET                                (0x120U)
+#define SARADC_DATA0                                       (0x0U)
+#define SARADC_DATA0_DATA0_SHIFT                           (0U)
+#define SARADC_DATA0_DATA0_MASK                            (0xFFFU << SARADC_DATA0_DATA0_SHIFT)                         /* 0x00000FFF */
+/* DATA1 */
+#define SARADC_DATA1_OFFSET                                (0x124U)
+#define SARADC_DATA1                                       (0x0U)
+#define SARADC_DATA1_DATA1_SHIFT                           (0U)
+#define SARADC_DATA1_DATA1_MASK                            (0xFFFU << SARADC_DATA1_DATA1_SHIFT)                         /* 0x00000FFF */
+/* AUTO_CH_EN */
+#define SARADC_AUTO_CH_EN_OFFSET                           (0x160U)
+#define SARADC_AUTO_CH_EN_AUTO_CH0_EN_SHIFT                (0U)
+#define SARADC_AUTO_CH_EN_AUTO_CH0_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH0_EN_SHIFT)                /* 0x00000001 */
+#define SARADC_AUTO_CH_EN_AUTO_CH1_EN_SHIFT                (1U)
+#define SARADC_AUTO_CH_EN_AUTO_CH1_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH1_EN_SHIFT)                /* 0x00000002 */
 /******************************************UART******************************************/
 /* RBR */
 #define UART_RBR_OFFSET                                    (0x0U)
