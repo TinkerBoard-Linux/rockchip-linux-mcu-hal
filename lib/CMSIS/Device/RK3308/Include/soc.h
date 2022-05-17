@@ -145,6 +145,9 @@ typedef enum
 #define __FPU_PRESENT         1U          /* FPU present                              */
 #define HAL_GIC_V2            1U          /* GIC version 2                            */
 
+#define CACHE_LINE_SHIFT    (6U)
+#define CACHE_LINE_SIZE     (0x1U << CACHE_LINE_SHIFT)
+
 #ifndef __ASSEMBLY__
 #include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
 #ifdef __CORTEX_A
