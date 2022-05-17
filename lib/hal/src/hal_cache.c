@@ -562,6 +562,9 @@ HAL_Status HAL_DCACHE_Invalidate(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
+#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+    L1C_InvalidateDCacheAll();
+
 #endif
 
     return HAL_OK;
@@ -607,6 +610,31 @@ HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
+#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+    uint32_t start, stop, addr;
+
+    if (sizeByte == 0) {
+        return HAL_OK;
+    }
+
+    start = address;
+    stop = start + sizeByte;
+
+    if (start & (CACHE_LINE_SIZE - 1)) {
+        addr = start & ~(CACHE_LINE_SIZE - 1);
+        L1C_CleanInvalidateDCacheMVA((void *)addr);
+        start = addr + CACHE_LINE_SIZE;
+    }
+
+    if (stop & (CACHE_LINE_SIZE - 1)) {
+        addr = stop & ~(CACHE_LINE_SIZE - 1);
+        L1C_CleanInvalidateDCacheMVA((void *)addr);
+        stop = addr;
+    }
+
+    for (addr = start; addr < stop; addr += CACHE_LINE_SIZE) {
+        L1C_InvalidateDCacheMVA((void *)addr);
+    }
 #endif
 
     return HAL_OK;
@@ -653,6 +681,19 @@ HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
+#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+    uint32_t start, stop, addr;
+
+    if (sizeByte == 0) {
+        return HAL_OK;
+    }
+
+    start = address & ~(CACHE_LINE_SIZE - 1);
+    stop = (address + sizeByte) & ~(CACHE_LINE_SIZE - 1);
+
+    for (addr = start; addr <= stop; addr += CACHE_LINE_SIZE) {
+        L1C_CleanDCacheMVA((void *)addr);
+    }
 #endif
 
     return HAL_OK;
@@ -699,6 +740,19 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
+#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+    uint32_t start, stop, addr;
+
+    if (sizeByte == 0) {
+        return HAL_OK;
+    }
+
+    start = address & ~(CACHE_LINE_SIZE - 1);
+    stop = (address + sizeByte) & ~(CACHE_LINE_SIZE - 1);
+
+    for (addr = start; addr <= stop; addr += CACHE_LINE_SIZE) {
+        L1C_CleanInvalidateDCacheMVA((void *)addr);
+    }
 #endif
 
     return HAL_OK;
@@ -730,6 +784,9 @@ HAL_Status HAL_DCACHE_CleanInvalidate(void)
 
     HAL_SYS_ExitCriticalSection(flags);
 #endif
+
+#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+    L1C_CleanInvalidateDCacheAll();
 
 #endif
 
