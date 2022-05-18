@@ -315,6 +315,8 @@ typedef enum CLOCK_Name {
 #define GPIO_VER_ID             (0x01000C2BU)
 #endif
 
+#define PCLK_SARADC_CONTROL_GATE PCLK_SARADC_GATE
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
