@@ -500,10 +500,10 @@ struct MBOX_CMD_DAT {
 struct MBOX_REG {
     __IO uint32_t A2B_INTEN;                          /* Address Offset: 0x0000 */
     __IO uint32_t A2B_STATUS;                         /* Address Offset: 0x0004 */
-    struct MBOX_CMD_DAT A2B[4];                       /* Address Offset: 0x0008 */
+         struct MBOX_CMD_DAT A2B[4];                  /* Address Offset: 0x0008 */
     __IO uint32_t B2A_INTEN;                          /* Address Offset: 0x0028 */
     __IO uint32_t B2A_STATUS;                         /* Address Offset: 0x002C */
-    struct MBOX_CMD_DAT B2A[4];                       /* Address Offset: 0x0030 */
+         struct MBOX_CMD_DAT B2A[4];                  /* Address Offset: 0x0030 */
          uint32_t RESERVED0050[44];                   /* Address Offset: 0x0050 */
     __IO uint32_t ATOMIC_LOCK[32];                    /* Address Offset: 0x0100 */
 };
