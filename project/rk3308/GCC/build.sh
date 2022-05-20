@@ -23,6 +23,7 @@ make_hal() {
     export CUR_CPU=$1
     make clean
     make -j8
+    cp $CUR_DIR/TestDemo.elf $CUR_DIR/hal$1.elf
     mv $CUR_DIR/TestDemo.bin $CUR_DIR/hal$1.bin
 }
 
