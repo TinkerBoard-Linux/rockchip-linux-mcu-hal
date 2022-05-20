@@ -597,7 +597,7 @@ struct PWM_CHANNEL {
     __IO uint32_t CTRL;
 };
 struct PWM_REG {
-    struct PWM_CHANNEL CHANNELS[4];                   /* Address Offset: 0x0000 */
+         struct PWM_CHANNEL CHANNELS[4];              /* Address Offset: 0x0000 */
     __IO uint32_t INTSTS;                             /* Address Offset: 0x0040 */
     __IO uint32_t INT_EN;                             /* Address Offset: 0x0044 */
          uint32_t RESERVED0048[2];                    /* Address Offset: 0x0048 */
@@ -808,7 +808,7 @@ struct DMA_CHANNEL_CONFIG {
     __I  uint32_t CCR;
     __I  uint32_t LC0;
     __I  uint32_t LC1;
-         uint32_t PADDING[3];
+    __I  uint32_t PADDING[3];
 };
 struct DMA_REG {
     __I  uint32_t DSR;                                /* Address Offset: 0x0000 */
@@ -824,9 +824,9 @@ struct DMA_REG {
          uint32_t RESERVED003C;                       /* Address Offset: 0x003C */
     __I  uint32_t FTR[6];                             /* Address Offset: 0x0040 */
          uint32_t RESERVED0058[42];                   /* Address Offset: 0x0058 */
-    struct DMA_CHANNEL_STATUS CHAN_STS[6];            /* Address Offset: 0x0100 */
+         struct DMA_CHANNEL_STATUS CHAN_STS[6];       /* Address Offset: 0x0100 */
          uint32_t RESERVED0130[180];                  /* Address Offset: 0x0130 */
-    struct DMA_CHANNEL_CONFIG CHAN_CFG[6];            /* Address Offset: 0x0400 */
+         struct DMA_CHANNEL_CONFIG CHAN_CFG[6];       /* Address Offset: 0x0400 */
          uint32_t RESERVED04C0[528];                  /* Address Offset: 0x04C0 */
     __I  uint32_t DBGSTATUS;                          /* Address Offset: 0x0D00 */
     __O  uint32_t DBGCMD;                             /* Address Offset: 0x0D04 */
