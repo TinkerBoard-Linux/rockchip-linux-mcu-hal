@@ -12,9 +12,10 @@ usage() {
 }
 
 CUR_DIR=$(pwd)
+HAL_DIR=$(pwd)/../..
 IMAGE=$(pwd)/Image
 
 cp -r $CUR_DIR/GCC/hal*.bin $IMAGE/
-mkimage -f $IMAGE/amp.its -E -p 0xe00 $IMAGE/amp.img
+$HAL_DIR/tools/mkimage -f $IMAGE/amp.its -E -p 0xe00 $IMAGE/amp.img
 
 echo 'Image: amp.img is ready.'
