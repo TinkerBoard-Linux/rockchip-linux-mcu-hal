@@ -98,7 +98,7 @@
 #define CRU_PLL_ROUND_UP_TO_KHZ(x) (HAL_DIV_ROUND_UP((x), KHZ) * KHZ)
 
 #define CRU_READ(r)           (*(volatile uint32_t *)(r))
-#define CRU_WRITE(r, b, w, v) (*(volatile uint32_t *)(r) = (((w) << (16) | (v)) << (b)))
+#define CRU_WRITE(r, b, w, v) (*(volatile uint32_t *)(r) = ((w) << (16) | (v) << (b)))
 
 /********************* Private Structure Definition **************************/
 static struct PLL_CONFIG g_rockchipAutoTable;
