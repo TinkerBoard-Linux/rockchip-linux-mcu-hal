@@ -222,7 +222,7 @@ typedef enum
 #define PLL_INPUT_OSC_RATE   (24 * 1000 * 1000)
 #define CRU_CLK_USE_CON_BANK 1
 #define CLK(mux, div) \
-    ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
+    (((mux) & 0x0F0F00FFU) | (((div) & 0xFFU) << 8) | (((div) & 0x0F0F0000U) << 4))
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
     CLK_INVALID = 0U,

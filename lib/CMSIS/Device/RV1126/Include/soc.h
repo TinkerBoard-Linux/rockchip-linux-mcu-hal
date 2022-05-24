@@ -185,7 +185,7 @@ typedef enum
 #define CRU_CLK_DIV_CON_CNT 78
 #define CRU_CLK_SEL_CON_CNT 78
 #define CLK(mux, div) \
-    ((mux & 0x0F0F00FFU) | ((div & 0xFFU) << 8) | ((div & 0xFFFF0000U) << 4))
+    (((mux) & 0x0F0F00FFU) | (((div) & 0xFFU) << 8) | (((div) & 0x0F0F0000U) << 4))
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
     CLK_INVALID = 0U,
