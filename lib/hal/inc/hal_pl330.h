@@ -145,6 +145,8 @@ typedef void (*PL330_Callback)(void *cparam);
  * a pointer pointing to generated DMA program, and execution result.
  */
 struct PL330_DESC {
+    /* support desc data list */
+    struct HAL_LIST_NODE node;
     struct PL330_REQCFG rqcfg;
     struct PL330_XFER px;
     uint8_t peri;
@@ -164,6 +166,12 @@ struct PL330_XFER_SPEC {
     struct PL330_DESC *desc;
 };
 
+struct PL330_XFER_SPEC_LIST {
+    uint32_t ccr;
+    struct PL330_XFER xfer;
+    struct HAL_LIST_NODE node;
+};
+
 struct HAL_PL330_DEV;
 /**
  * The PL330_CHAN Data is a struct to book keep individual channel of
@@ -177,7 +185,9 @@ struct PL330_CHAN {
     uint32_t brstLen;
     uint16_t srcInterlaceSize;
     uint16_t dstInterlaceSize;
+    struct HAL_LIST_NODE descLinkList;
     struct PL330_DESC desc;
+    struct PL330_DESC *pdesc;
     struct HAL_PL330_DEV *pl330;
     void *mcBuf;
     bool used;
@@ -236,6 +246,11 @@ HAL_Status HAL_PL330_ClearIrq(struct HAL_PL330_DEV *pl330, uint32_t irq);
 HAL_Status HAL_PL330_SetMcBuf(struct PL330_CHAN *pchan, void *buf);
 void *HAL_PL330_GetMcBuf(struct PL330_CHAN *pchan);
 const struct PL330_DESC *HAL_PL330_GetDesc(struct PL330_CHAN *pchan);
+HAL_Status HAL_PL330_PrepDmaLinkList(struct PL330_CHAN *pchan,
+                                     struct PL330_XFER_SPEC_LIST *pxferList,
+                                     struct PL330_DESC *pdesc,
+                                     eDMA_TRANSFER_DIRECTION direction,
+                                     PL330_Callback callback, void *cparam);
 
 /** @} */
 
