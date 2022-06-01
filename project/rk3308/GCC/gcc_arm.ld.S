@@ -29,7 +29,7 @@ SECTIONS
     .text :
     {
         KEEP(*(RESET))                  /* Startup code */
-
+        _stext = .;
         . = ALIGN(16);
         *(.text)                        /* remaining code */
         *(.text.*)                      /* remaining code */
