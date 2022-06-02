@@ -19,6 +19,7 @@
 //#define PERF_TEST
 //#define SOFTIRQ_TEST
 //#define SOFTRST_TEST
+//#define FAULTDBG_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -183,6 +184,38 @@ void softrst_test(st_RstType mode)
     CRU->GLB_SRST_FST = GLB_SRST_FST;
     while (1) {
         ;
+    }
+}
+#endif
+
+#ifdef FAULTDBG_TEST
+static void fault_dbg_test(void)
+{
+    // If system fault happend, use "addr2line" command to debug
+    // Such as follows cpu0 fault
+
+    // This is an example for accessing invalid address
+    // if fault happend, log output as followed:
+    /*
+        abort mode:
+        pc : 02607684  lr : 02607674 cpsr: 600e0013
+        sp : 02eff7e8  ip : 0260e5d0  fp : 00000000
+        r10: 00000560  r9 : 1f58cdf8  r8 : 1f5ce540
+        r7 : 00000004  r6 : 1ffefaf4  r5 : 1f5cd500  r4 : 02eff7e8
+        r3 : aaaaaaaa  r2 : 90000000  r1 : 0000000a  r0 : 00000000
+
+        stack:
+        0x02eff7e8: 0x0016e360  0x00020008  0x00000000  0x026001b0
+        0x02eff7f8: 0x00000000  0x02600318
+
+        Show more call stack info by run: addr2line -e hal0.elf -a -f 02607684 02607674 026001b0 02600318
+    */
+    // use command to find errors:
+    // cd hal/
+    // addr2line -e project/rk3308/GCC/hal0.elf -a -f 02607684 02607674 026001b0 02600318
+    if (HAL_CPU_TOPOLOGY_GetCurrentCpuId() == 0) {
+        volatile uint32_t *p_addr = (uint32_t *)0x90000000;
+        *p_addr = 0xaaaaaaaa;
     }
 }
 #endif
@@ -634,6 +667,10 @@ void main(void)
     if (HAL_CPU_TOPOLOGY_GetCurrentCpuId() == 0) {
         test_main();
     }
+#endif
+
+#ifdef FAULTDBG_TEST
+    fault_dbg_test();
 #endif
 
     while (1) {
