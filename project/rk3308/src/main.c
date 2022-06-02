@@ -18,6 +18,7 @@
 //#define I2STDM_TEST
 //#define PERF_TEST
 //#define SOFTIRQ_TEST
+//#define SOFTRST_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -155,6 +156,33 @@ void uart_test(void)
         }
         buf[1] = 0;
         HAL_UART_SerialOutChar(pUart, (char)buf[0]);
+    }
+}
+#endif
+
+#ifdef SOFTRST_TEST
+typedef enum {
+    SOFT_SRST_DIRECT = 0,
+    SOFT_SRST_MASKROM,
+    SOFT_SRST_LOADER,
+} st_RstType;
+
+/* system reset test*/
+void softrst_test(st_RstType mode)
+{
+    if (mode == SOFT_SRST_MASKROM) {
+        /* Reset to maskrom */
+        GRF->OS_REG0 = SYS_UPGRADE_FLAG;
+    } else if (mode == SOFT_SRST_LOADER) {
+        /* Reset to Loader */
+        GRF->OS_REG0 = LDR_UPGRADE_FLAG;
+    } else {
+        /* Direct reboot system */
+    }
+
+    CRU->GLB_SRST_FST = GLB_SRST_FST;
+    while (1) {
+        ;
     }
 }
 #endif
@@ -556,6 +584,12 @@ void main(void)
     printf("****************************************\n");
     rk_printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("\n");
+
+#ifdef SOFTRST_TEST
+    if (HAL_CPU_TOPOLOGY_GetCurrentCpuId() == 0) {
+        softrst_test(SOFT_SRST_DIRECT);
+    }
+#endif
 
 #ifdef SPINLOCK_TEST
     spinlock_test();
