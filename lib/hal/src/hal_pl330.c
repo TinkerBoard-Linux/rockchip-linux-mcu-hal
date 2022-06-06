@@ -38,20 +38,14 @@
 /********************* Private MACRO Definition ******************************/
 
 #ifdef PL330_DEBUG_MCGEN
-static uint32_t s_cmdLine;
-#define PL330_DBGCMD_DUMP(off, x...) \
-    do {                             \
-        HAL_DBG("%lx:", s_cmdLine);  \
-        HAL_DBG(x);                  \
-        s_cmdLine += off;            \
+#define PL330_DBGCMD_DUMP(addr, x...) \
+    do {                              \
+        HAL_DBG("%lx:", (long)addr);  \
+        HAL_DBG(x);                   \
     } while (0)
-#define PL330_DBGMC_START(addr) (s_cmdLine = addr)
 #else
-#define PL330_DBGCMD_DUMP(off, x...) \
-    do {                             \
-    } while (0)
-#define PL330_DBGMC_START(addr) \
-    do {                        \
+#define PL330_DBGCMD_DUMP(addr, x...) \
+    do {                              \
     } while (0)
 #endif
 
@@ -218,7 +212,7 @@ __STATIC_INLINE int PL330_Instr_DMAADDH(uint8_t dryRun, char *buf,
     *buf |= (da << 1);
     *((uint16_t *)(buf + 1)) = val;
 
-    PL330_DBGCMD_DUMP(SZ_DMAADDH, "\tDMAADDH %s %u\n",
+    PL330_DBGCMD_DUMP(buf, "\tDMAADDH %s %u\n",
                       da == DST ? "DA" : "SA", val);
 
     return SZ_DMAADDH;
@@ -236,7 +230,7 @@ __STATIC_INLINE int PL330_Instr_DMAEND(uint8_t dryRun, char *buf)
      */
     *buf = CMD_DMAEND;
 
-    PL330_DBGCMD_DUMP(SZ_DMAEND, "\tDMAEND\n");
+    PL330_DBGCMD_DUMP(buf, "\tDMAEND\n");
 
     return SZ_DMAEND;
 }
@@ -286,7 +280,7 @@ __STATIC_INLINE int PL330_Instr_DMALP(uint8_t dryRun, char *buf, uint8_t lc,
     *buf = (uint8_t)(CMD_DMALP | ((lc & 1) << 1));
     *(buf + 1) = (uint8_t)(loops - 1);
 
-    PL330_DBGCMD_DUMP(SZ_DMALP, "\tDMALP_%c %u\n", lc ? '1' : '0', loops - 1);
+    PL330_DBGCMD_DUMP(buf, "\tDMALP_%c %u\n", lc ? '1' : '0', loops - 1);
 
     return SZ_DMALP;
 }
@@ -311,7 +305,7 @@ __STATIC_INLINE int PL330_Instr_DMAMOV(uint8_t dryRun, char *buf, uint8_t rd,
     *(buf + 1) = rd & 0x7;
     PL330_Memcpy4(buf + 2, (char *)&imm);
 
-    PL330_DBGCMD_DUMP(SZ_DMAMOV, "\tDMAMOV %s 0x%lx\n",
+    PL330_DBGCMD_DUMP(buf, "\tDMAMOV %s 0x%lx\n",
                       rd == SAR ? "SAR" : (rd == DAR ? "DAR" : "CCR"), imm);
 
     return SZ_DMAMOV;
@@ -329,7 +323,7 @@ HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMANOP(uint8_t dryRun, char *buf)
      */
     *buf = CMD_DMANOP;
 
-    PL330_DBGCMD_DUMP(SZ_DMANOP, "\tDMANOP\n");
+    PL330_DBGCMD_DUMP(buf, "\tDMANOP\n");
 
     return SZ_DMANOP;
 }
@@ -346,7 +340,7 @@ HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMARMB(uint8_t dryRun, char *buf)
      */
     *buf = CMD_DMARMB;
 
-    PL330_DBGCMD_DUMP(SZ_DMARMB, "\tDMARMB\n");
+    PL330_DBGCMD_DUMP(buf, "\tDMARMB\n");
 
     return SZ_DMARMB;
 }
@@ -364,7 +358,7 @@ __STATIC_INLINE int PL330_Instr_DMASEV(uint8_t dryRun, char *buf, uint8_t event)
     *buf = CMD_DMASEV;
     *(buf + 1) = (uint8_t)(event << 3);
 
-    PL330_DBGCMD_DUMP(SZ_DMASEV, "\tDMASEV %u\n", event);
+    PL330_DBGCMD_DUMP(buf, "\tDMASEV %u\n", event);
 
     return SZ_DMASEV;
 }
@@ -381,7 +375,7 @@ HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMAWMB(uint8_t dryRun, char *buf)
      */
     *buf = CMD_DMAWMB;
 
-    PL330_DBGCMD_DUMP(SZ_DMAWMB, "\tDMAWMB\n");
+    PL330_DBGCMD_DUMP(buf, "\tDMAWMB\n");
 
     return SZ_DMAWMB;
 }
@@ -403,7 +397,7 @@ __STATIC_INLINE int PL330_Instr_DMAFLUSHP(uint8_t dryRun, char *buf,
     peri <<= 3;
     *(buf + 1) = peri;
 
-    PL330_DBGCMD_DUMP(SZ_DMAFLUSHP, "\tDMAFLUSHP %u\n", peri >> 3);
+    PL330_DBGCMD_DUMP(buf, "\tDMAFLUSHP %u\n", peri >> 3);
 
     return SZ_DMAFLUSHP;
 }
@@ -427,7 +421,7 @@ __STATIC_INLINE int PL330_Instr_DMALD(uint8_t dryRun, char *buf,
         *buf |= (1 << 1) | (1 << 0);
     }
 
-    PL330_DBGCMD_DUMP(SZ_DMALD, "\tDMALD%c\n",
+    PL330_DBGCMD_DUMP(buf, "\tDMALD%c\n",
                       cond == SINGLE ? 'S' : (cond == BURST ? 'B' : 'A'));
 
     return SZ_DMALD;
@@ -454,7 +448,7 @@ __STATIC_INLINE int PL330_Instr_DMALDP(uint8_t dryRun, char *buf,
     peri <<= 3;
     *(buf + 1) = peri;
 
-    PL330_DBGCMD_DUMP(SZ_DMALDP, "\tDMALDP%c %u\n", cond == SINGLE ? 'S' : 'B',
+    PL330_DBGCMD_DUMP(buf, "\tDMALDP%c %u\n", cond == SINGLE ? 'S' : 'B',
                       peri >> 3);
 
     return SZ_DMALDP;
@@ -490,7 +484,7 @@ __STATIC_INLINE int PL330_Instr_DMALPEND(uint8_t dryRun, char *buf,
 
     *(buf + 1) = bjump;
 
-    PL330_DBGCMD_DUMP(SZ_DMALPEND, "\tDMALP%s%c_%c bjmpto_%x\n",
+    PL330_DBGCMD_DUMP(buf, "\tDMALP%s%c_%c bjmpto_%x\n",
                       forever ? "FE" : "END",
                       cond == SINGLE ? 'S' : (cond == BURST ? 'B' : 'A'),
                       loop ? '1' : '0', bjump);
@@ -532,7 +526,7 @@ __STATIC_INLINE int PL330_Instr_DMAST(uint8_t dryRun, char *buf,
         *buf |= (1 << 1) | (1 << 0);
     }
 
-    PL330_DBGCMD_DUMP(SZ_DMAST, "\tDMAST%c\n",
+    PL330_DBGCMD_DUMP(buf, "\tDMAST%c\n",
                       cond == SINGLE ? 'S' : (cond == BURST ? 'B' : 'A'));
 
     return SZ_DMAST;
@@ -559,7 +553,7 @@ __STATIC_INLINE int PL330_Instr_DMASTP(uint8_t dryRun, char *buf,
     peri <<= 3;
     *(buf + 1) = peri;
 
-    PL330_DBGCMD_DUMP(SZ_DMASTP, "\tDMASTP%c %u\n", cond == SINGLE ? 'S' : 'B',
+    PL330_DBGCMD_DUMP(buf, "\tDMASTP%c %u\n", cond == SINGLE ? 'S' : 'B',
                       peri >> 3);
 
     return SZ_DMASTP;
@@ -577,7 +571,7 @@ HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMASTZ(uint8_t dryRun, char *buf)
      */
     *buf = CMD_DMASTZ;
 
-    PL330_DBGCMD_DUMP(SZ_DMASTZ, "\tDMASTZ\n");
+    PL330_DBGCMD_DUMP(buf, "\tDMASTZ\n");
 
     return SZ_DMASTZ;
 }
@@ -603,7 +597,7 @@ HAL_UNUSED __STATIC_INLINE int PL330_Instr_DMAWFE(uint8_t dryRun, char *buf, uin
         *(buf + 1) |= (1 << 1);
     }
 
-    PL330_DBGCMD_DUMP(SZ_DMAWFE, "\tDMAWFE %u%s\n", ev >> 3,
+    PL330_DBGCMD_DUMP(buf, "\tDMAWFE %u%s\n", ev >> 3,
                       invalidate ? ", I" : "");
 
     return SZ_DMAWFE;
@@ -634,7 +628,7 @@ __STATIC_INLINE int PL330_Instr_DMAWFP(uint8_t dryRun, char *buf,
     peri <<= 3;
     *(buf + 1) = peri;
 
-    PL330_DBGCMD_DUMP(SZ_DMAWFP, "\tDMAWFP%c %u\n",
+    PL330_DBGCMD_DUMP(buf, "\tDMAWFP%c %u\n",
                       cond == SINGLE ? 'S' : (cond == BURST ? 'B' : 'P'),
                       peri >> 3);
 
@@ -1213,8 +1207,6 @@ static int PL330_BuildDmaProg(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     char *buf = (char *)pxs->desc->mcBuf;
     struct PL330_XFER *x;
     int off = 0;
-
-    PL330_DBGMC_START((uint32_t)buf);
 
     /* DMAMOV CCR, ccr */
     off += PL330_Instr_DMAMOV(dryRun, &buf[off], CCR, pxs->ccr);
