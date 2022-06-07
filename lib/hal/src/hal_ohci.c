@@ -669,6 +669,7 @@ static HAL_Status OHCI_IntrXfer(struct UTR *utr)
     //HAL_DBG("Link INT ED 0x%x: 0x%x 0x%x 0x%x 0x%x\n", (int)ed, ed->info, ed->tailP, ed->headP, ed->nextED);
 
     pReg->CONTROL |= OHCI_CONTROL_PLE_MASK; /* periodic list enable */
+
     return HAL_OK;
 }
 
@@ -824,6 +825,7 @@ static HAL_Status OHCI_RhPortReset(void *pHCD, int port)
 Done:
     if ((pReg->RH_PORTSTATUS[port] & OHCI_RH_PORTSTATUS_CCS_MASK) == 0) { /* check again if device disconnected */
         pReg->RH_PORTSTATUS[port] = OHCI_RH_PORTSTATUS_CSC_MASK; /* clear CSC */
+
         return HAL_ERROR;
     }
 

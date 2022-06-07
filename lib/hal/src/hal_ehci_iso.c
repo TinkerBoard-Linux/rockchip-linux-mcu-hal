@@ -205,6 +205,7 @@ static void EHCI_RemoveIsoEpFromList(struct EHCI_HCD *ehci, struct ECHI_ISO_EP *
 
     if (ehci->isoEpList == isoEp) {
         ehci->isoEpList = isoEp->next; /* It's the first entry, remove it */
+
         return;
     }
 
@@ -402,6 +403,7 @@ static HAL_Status EHCI_IsoSplitXfer(struct UTR *utr, struct ECHI_ISO_EP *isoEp)
     }
 
     pReg->USBCMD |= EHCI_USBCMD_PSEN_MASK; /* periodic list enable */
+
     return HAL_OK;
 
 error:
@@ -562,6 +564,7 @@ HAL_Status HAL_EHCI_IsoXfer(struct UTR *utr)
     }
 
     pReg->USBCMD |= EHCI_USBCMD_PSEN_MASK; /* periodic list enable */
+
     return HAL_OK;
 
 error:

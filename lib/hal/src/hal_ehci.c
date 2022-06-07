@@ -747,6 +747,7 @@ static HAL_Status EHCI_IntrXfer(struct UTR *utr)
     // HAL_DBG("%s: qh 0x%lx, 0x%lx, 0x%lx\n", __func__, (uint32_t)qh, (uint32_t)qh->chrst, (uint32_t)qh->cap);
 
     pReg->USBCMD |= EHCI_USBCMD_PSEN_MASK; /* periodic list enable */
+
     return HAL_OK;
 }
 
@@ -1024,6 +1025,7 @@ done:
     /* Check again if device disconnected */
     if ((pReg->PORTSC[port] & EHCI_PORTSC_CCS_MASK) == 0) {
         pReg->PORTSC[port] |= EHCI_PORTSC_CSC_MASK; /* Clear CSC */
+
         return HAL_ERROR;
     }
     pReg->PORTSC[port] |= EHCI_PORTSC_PEC_MASK; /* Clear port enable change status  */
