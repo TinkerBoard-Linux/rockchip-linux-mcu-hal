@@ -110,7 +110,7 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
         .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
         .maxBurst = 8,
         .dmaReqCh = DMA_REQ_I2S_8CH_0_RX,
-        .dmac = DMA0,
+        .dmac = DMA1,
     },
     .txDmaData =
     {
@@ -118,7 +118,61 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
         .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
         .maxBurst = 8,
         .dmaReqCh = DMA_REQ_I2S_8CH_0_TX,
-        .dmac = DMA0,
+        .dmac = DMA1,
+    },
+};
+
+struct HAL_I2STDM_DEV g_i2sTdm1Dev =
+{
+    .pReg = I2STDM1,
+    .mclkTx = CLK_I2S1_8CH_TX,
+    .mclkTxGate = CLK_I2S1_8CH_TX_CLK_GATE,
+    .mclkRx = CLK_I2S1_8CH_RX,
+    .mclkRxGate = CLK_I2S1_8CH_RX_CLK_GATE,
+    .hclk = HCLK_I2S1_8CH_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM1->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S_8CH_1_RX,
+        .dmac = DMA1,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM1->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S_8CH_1_TX,
+        .dmac = DMA1,
+    },
+};
+
+struct HAL_I2STDM_DEV g_i2sTdm2Dev =
+{
+    .pReg = I2STDM2,
+    .mclkTx = CLK_I2S2_8CH_TX,
+    .mclkTxGate = CLK_I2S2_8CH_TX_CLK_GATE,
+    .mclkRx = CLK_I2S2_8CH_RX,
+    .mclkRxGate = CLK_I2S2_8CH_RX_CLK_GATE,
+    .hclk = HCLK_I2S2_8CH_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM2->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S_8CH_2_RX,
+        .dmac = DMA1,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM2->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S_8CH_2_TX,
+        .dmac = DMA1,
     },
 };
 #endif
