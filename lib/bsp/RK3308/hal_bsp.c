@@ -267,6 +267,11 @@ const struct HAL_PWM_DEV g_pwm2Dev =
 };
 #endif
 
+void BSP_SetLoaderFlag(void)
+{
+    GRF->OS_REG0 = SYS_UPGRADE_FLAG;
+}
+
 void BSP_Init(void)
 {
 }

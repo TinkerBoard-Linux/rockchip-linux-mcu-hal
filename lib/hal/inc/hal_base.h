@@ -26,6 +26,8 @@
 
 /** enter markrom usb upgrade */
 #define SYS_UPGRADE_FLAG (0xEF08A53C)
+/** enter loader usb upgrade */
+#define LDR_UPGRADE_FLAG (0x5242C301)
 
 #define IS_TICKFREQ(f) (((f) == HAL_TICK_FREQ_1KHZ)  || ((f) == HAL_TICK_FREQ_100HZ) || ((f) == HAL_TICK_FREQ_10HZ))
 
