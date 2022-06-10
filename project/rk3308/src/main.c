@@ -19,6 +19,7 @@
 //#define PERF_TEST
 //#define SOFTIRQ_TEST
 //#define SOFTRST_TEST
+//#define DMA_LINK_LIST_TEST
 //#define FAULTDBG_TEST
 
 /********************* Private Structure Definition **************************/
@@ -567,6 +568,145 @@ void i2stdm0_demo(void)
 }
 #endif
 
+#ifdef DMA_LINK_LIST_TEST
+#define DMA_SIZE         64
+#define DMA_TEST_CHANNEL 0
+#define XFER_LIST_SIZE   128
+__ALIGNED(64) uint8_t src[DMA_SIZE * 2] = { 0 };
+__ALIGNED(64) uint8_t dst[DMA_SIZE * 2] = { 0 };
+HAL_LIST_HEAD(pxfer_link_list);
+
+static void HAL_PL330_Handler(uint32_t irq, void *args)
+{
+    struct HAL_PL330_DEV *pl330 = (struct HAL_PL330_DEV *)args;
+    uint32_t irqStatus;
+
+    irqStatus = HAL_PL330_IrqHandler(pl330);
+    if (irqStatus & (1 << DMA_TEST_CHANNEL)) {
+        if (pl330->chans[DMA_TEST_CHANNEL].desc.callback) {
+            pl330->chans[DMA_TEST_CHANNEL].desc.callback(&pl330->chans[DMA_TEST_CHANNEL]);
+        }
+
+        if (pl330->chans[DMA_TEST_CHANNEL].pdesc->callback) {
+            pl330->chans[DMA_TEST_CHANNEL].pdesc->callback(&pl330->chans[DMA_TEST_CHANNEL]);
+        }
+    }
+}
+
+static void MEMCPY_Callback(void *cparam)
+{
+    struct PL330_CHAN *pchan = cparam;
+    uint32_t ret;
+    int i;
+
+    for (i = 0; i < DMA_SIZE * 2; i++) {
+        if (src[i] != dst[i]) {
+            printf("DMA transfor error, src[%d] is %x, dst[%d] is %x\n",
+                   i, src[i], i, dst[i]);
+            break;
+        }
+    }
+    ret = HAL_PL330_Stop(pchan);
+    if (ret) {
+        printf("Stop DMA fail\n");
+
+        return;
+    }
+
+    ret = HAL_PL330_ReleaseChannel(pchan);
+    if (ret) {
+        printf("Release DMA fail\n");
+
+        return;
+    }
+}
+
+static void xferdata_init(struct PL330_XFER_SPEC_LIST *xfer_list)
+{
+    struct PL330_XFER_SPEC_LIST *xfer_list_after = xfer_list;
+    struct PL330_XFER_SPEC_LIST *xfer_list_befor = xfer_list;
+
+    xfer_list_after->xfer.srcAddr = src;
+    xfer_list_after->xfer.dstAddr = dst;
+    xfer_list_after->xfer.length = DMA_SIZE;
+    HAL_LIST_InsertAfter(&pxfer_link_list, &xfer_list_after->node);
+    xfer_list_after += sizeof(struct PL330_XFER_SPEC_LIST);
+    xfer_list_after->xfer.srcAddr = src + DMA_SIZE;
+    xfer_list_after->xfer.dstAddr = dst + DMA_SIZE;
+    xfer_list_after->xfer.length = DMA_SIZE;
+    HAL_LIST_InsertAfter(&xfer_list_befor->node, &xfer_list_after->node);
+}
+
+void dmalinklist_test(void)
+{
+    __ALIGNED(64) uint8_t buf[PL330_CHAN_BUF_LEN] = { 0 };
+    __ALIGNED(64) static uint8_t pxferList[XFER_LIST_SIZE] = { 0 };
+    __ALIGNED(64) static uint8_t pdesc[XFER_LIST_SIZE * 2] = { 0 };
+    uint32_t timeout = 1000;
+    struct PL330_CHAN *pchan;
+    int ret, i;
+
+#ifdef DMA0_BASE
+    struct HAL_PL330_DEV *pl330 = &g_pl330Dev0;
+#else
+    struct HAL_PL330_DEV *pl330 = &g_pl330Dev;
+#endif
+
+    ret = HAL_PL330_Init(pl330);
+    if (ret) {
+        printf("HAL_PL330_Init fail!\n");
+
+        return;
+    }
+
+    for (i = 0; i < DMA_SIZE * 2; i++) {
+        src[i] = i;
+    }
+
+    HAL_IRQ_HANDLER_SetIRQHandler(pl330->irq[0], HAL_PL330_Handler, pl330);
+    HAL_IRQ_HANDLER_SetIRQHandler(pl330->irq[1], HAL_PL330_Handler, pl330);
+    HAL_GIC_Enable(pl330->irq[0]);
+    HAL_GIC_Enable(pl330->irq[1]);
+    pchan = HAL_PL330_RequestChannel(pl330, (DMA_REQ_Type)DMA_TEST_CHANNEL);
+    if (!pchan) {
+        printf("Can not find used channel!\n");
+
+        return;
+    }
+
+    HAL_PL330_SetMcBuf(pchan, buf);
+    xferdata_init(pxferList);
+    ret = HAL_PL330_PrepDmaLinkList(pchan, pxferList,
+                                    pdesc, DMA_MEM_TO_MEM,
+                                    MEMCPY_Callback, pchan);
+    ret = HAL_PL330_Start(pchan);
+    if (ret) {
+        printf("Start dma fail\n");
+    }
+
+    while (timeout--) {
+        if (pl330->pReg->INTEN & (1 << DMA_TEST_CHANNEL) == 0) {
+            break;
+        }
+
+        HAL_DelayUs(10);
+    }
+
+    if (!timeout) {
+        printf("Wait DMA finish timeout\n");
+
+        return;
+    }
+
+    ret = HAL_PL330_DeInit(pl330);
+    if (ret) {
+        printf("DeInit DMA fail\n");
+
+        return;
+    }
+}
+#endif
+
 void main(void)
 {
     uint32_t ownerID;
@@ -646,6 +786,12 @@ void main(void)
 
 #ifdef UART_TEST
     uart_test();
+#endif
+
+#ifdef DMA_LINK_LIST_TEST
+    if (HAL_CPU_TOPOLOGY_GetCurrentCpuId() == 0) {
+        dmalinklist_test();
+    }
 #endif
 
 #ifdef I2STDM_TEST
