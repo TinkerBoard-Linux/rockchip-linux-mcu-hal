@@ -84,7 +84,7 @@ typedef enum
   SPI2_IRQn               = 49,       /*!< SPI2 Interrupt              */
   UART0_IRQn              = 50,       /*!< UART0 Interrupt             */
   UART1_IRQn              = 51,       /*!< UART1 Interrupt             */
-  UART2_IRQn              = 53,       /*!< UART2 Interrupt             */
+  UART2_IRQn              = 52,       /*!< UART2 Interrupt             */
   UART3_IRQn              = 53,       /*!< UART3 Interrupt             */
   UART4_IRQn              = 54,       /*!< UART4 Interrupt             */
   PWM0_IRQn               = 55,       /*!< PWM0 Interrupt              */
