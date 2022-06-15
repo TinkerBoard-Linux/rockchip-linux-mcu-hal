@@ -16,6 +16,10 @@
 #include "hal_acodec.h"
 #endif
 
+#ifdef HAL_ARCHTIMER_MODULE_ENABLED
+#include "hal_archtimer.h"
+#endif
+
 #ifdef HAL_AUDIOPWM_MODULE_ENABLED
 #include "hal_audiopwm.h"
 #endif
