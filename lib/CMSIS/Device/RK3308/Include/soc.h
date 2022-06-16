@@ -1380,6 +1380,9 @@ typedef enum PD_Id {
 /****************************************SFC********************************************/
 #define SFC_CHIP_CNT                            (1)
 
+#define PCLK_SARADC_CONTROL_GATE PCLK_SARADC_GATE
+#define CLK_SARADC_GATE          CLK_SARADC_PLL_CLK_GATE
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
