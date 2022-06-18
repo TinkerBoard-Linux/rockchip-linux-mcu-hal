@@ -23,6 +23,11 @@ extern const struct HAL_I2C_DEV g_i2c2Dev;
 extern const struct HAL_I2C_DEV g_i2c3Dev;
 #endif
 
+#ifdef HAL_I2S_MODULE_ENABLED
+extern struct HAL_I2S_DEV g_i2s0Dev;
+extern struct HAL_I2S_DEV g_i2s1Dev;
+#endif
+
 #ifdef HAL_I2STDM_MODULE_ENABLED
 extern struct HAL_I2STDM_DEV g_i2sTdm0Dev;
 extern struct HAL_I2STDM_DEV g_i2sTdm1Dev;
