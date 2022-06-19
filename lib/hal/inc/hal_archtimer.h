@@ -76,7 +76,6 @@ __STATIC_FORCEINLINE void HAL_ARCHTIMER_SetCNTFRQ(uint32_t value)
 
 /**
  * @brief  Get CNTFRQ.
- * @param  value: Get CNTFRQ Register value.
  * @return
  *         The value of CNTFRQ
  */
@@ -102,7 +101,6 @@ __STATIC_FORCEINLINE void HAL_ARCHTIMER_SetCNTPTVAL(uint32_t value)
 
 /**
  * @brief  Get CNTP_TVAL.
- * @param  value: Get CNTP_TVAL Register value.
  * @return
  *         The value of CNTP_TVAL
  */
@@ -117,7 +115,6 @@ __STATIC_FORCEINLINE uint32_t HAL_ARCHTIMER_GetCNTPTVAL(void)
 
 /**
  * @brief  Get CNTPCT.
- * @param  value: Get CNTPCT Register value.
  * @return
  *         The value of CNTPCT
  */
@@ -143,7 +140,6 @@ __STATIC_FORCEINLINE void HAL_ARCHTIMER_SetCNTPCVAL(uint64_t value)
 
 /**
  * @brief  Get CNTP_CVAL.
- * @param  value: Get CNTP_CVAL Register value.
  * @return
  *         The value of CNTP_CVAL
  */
@@ -169,7 +165,6 @@ __STATIC_FORCEINLINE void HAL_ARCHTIMER_SetCNTPCTL(uint32_t value)
 
 /**
  * @brief  Get CNTP_CTL.
- * @param  value: Get CNTP_CTL Register value.
  * @return
  *         The value of CNTP_CTL
  */
