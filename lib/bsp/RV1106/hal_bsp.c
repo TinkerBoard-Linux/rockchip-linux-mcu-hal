@@ -23,6 +23,18 @@ const struct HAL_CRU_DEV g_cruDev = {
 };
 #endif
 
+#ifdef HAL_I2C_MODULE_ENABLED
+const struct HAL_I2C_DEV g_i2c4Dev =
+{
+    .pReg = I2C4,
+    .irqNum = I2C4_IRQn,
+    .clkID = CLK_I2C4,
+    .clkGateID = CLK_I2C4_GATE,
+    .pclkGateID = PCLK_I2C4_GATE,
+    .runtimeID = PM_RUNTIME_ID_I2C4,
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
