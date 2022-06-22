@@ -8,6 +8,7 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define GPIO_TEST
+//#define MBOX_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -122,6 +123,56 @@ static void gpio_test(void)
 }
 #endif
 
+#ifdef MBOX_TEST
+#define MBOX_B2A 0
+#define MBOX_A2B 1
+
+static struct MBOX_REG *pMBox = MBOX;
+
+static void mbox_isr(int vector, void *param)
+{
+    printf("Enter MBOX IRQHander!\n");
+    HAL_MBOX_IrqHandler(MAILBOX0_BB_IRQn, pMBox);
+    printf("Leave MBOX IRQHandler!\n");
+}
+
+static void mbox_rx_callback(struct MBOX_CMD_DAT *msg, void *args)
+{
+    struct MBOX_CMD_DAT rx_msg = *msg;
+
+    printf("MBOX callback!\n");
+    printf("test_mbox receive cmd=0x%lx data=0x%lx\n", rx_msg.CMD, rx_msg.DATA);
+}
+
+static void mbox_test(void)
+{
+    struct MBOX_CMD_DAT tx_msg;
+    uint32_t tx_chan = MBOX_CH_1;
+    uint32_t rx_chan = MBOX_CH_0;
+    struct MBOX_CLIENT mbox_cl = { "mbox-test", MAILBOX0_BB_IRQn, mbox_rx_callback, (void *)rx_chan };
+    int ret = 0;
+
+    tx_msg.CMD = 0x12345678;
+    tx_msg.DATA = 0x87654321;
+
+    HAL_MBOX_Init(pMBox, MBOX_B2A);
+    ret = HAL_MBOX_RegisterClient(pMBox, tx_chan, &mbox_cl);
+    if (ret) {
+        printf("mbox tx_chan register failed, ret=%d\n", ret);
+    }
+    ret = HAL_MBOX_RegisterClient(pMBox, rx_chan, &mbox_cl);
+    if (ret) {
+        printf("mbox rx_chan register failed, ret=%d\n", ret);
+    }
+    HAL_IRQ_HANDLER_SetIRQHandler(MAILBOX0_BB_IRQn, mbox_isr, NULL);
+    HAL_RISCVIC_EnableIRQ(MAILBOX0_BB_IRQn);
+
+    HAL_DelayMs(1000);
+    printf("test_mbox send cmd=0x%lx data=0x%lx\n", tx_msg.CMD, tx_msg.DATA);
+    HAL_MBOX_SendMsg2(pMBox, tx_chan, &tx_msg, MBOX_B2A);
+}
+#endif
+
 void main(void)
 {
     struct HAL_UART_CONFIG hal_uart_config = {
@@ -148,6 +199,10 @@ void main(void)
 
 #ifdef GPIO_TEST
     gpio_test();
+#endif
+
+#ifdef MBOX_TEST
+    mbox_test();
 #endif
 
     while (1) {
