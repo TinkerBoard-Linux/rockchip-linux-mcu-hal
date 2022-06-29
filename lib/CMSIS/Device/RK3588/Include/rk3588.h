@@ -3,23 +3,21 @@
 #ifdef __cplusplus
   extern "C" {
 #endif
-
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Structure Section                               */
 /*                                                                                      */
 /****************************************************************************************/
 #ifndef __ASSEMBLY__
-/* CACHE Register Structure Define */
-struct CACHE_REG {
+/* DCACHE Register Structure Define */
+struct DCACHE_REG {
     __IO uint32_t CACHE_CTRL;                         /* Address Offset: 0x0000 */
     __IO uint32_t CACHE_MAINTAIN[2];                  /* Address Offset: 0x0004 */
     __IO uint32_t STB_TIMEOUT_CTRL;                   /* Address Offset: 0x000C */
-    __IO uint32_t RAM_DEBUG;                          /* Address Offset: 0x0010 */
-         uint32_t RESERVED0014[3];                    /* Address Offset: 0x0014 */
+         uint32_t RESERVED0010[4];                    /* Address Offset: 0x0010 */
     __IO uint32_t CACHE_INT_EN;                       /* Address Offset: 0x0020 */
     __IO uint32_t CACHE_INT_ST;                       /* Address Offset: 0x0024 */
-    __I  uint32_t CACHE_ERR_HADDR;                    /* Address Offset: 0x0028 */
+    __IO uint32_t CACHE_ERR_HADDR;                    /* Address Offset: 0x0028 */
          uint32_t RESERVED002C;                       /* Address Offset: 0x002C */
     __I  uint32_t CACHE_STATUS;                       /* Address Offset: 0x0030 */
          uint32_t RESERVED0034[3];                    /* Address Offset: 0x0034 */
@@ -27,7 +25,7 @@ struct CACHE_REG {
     __I  uint32_t PMU_WR_NUM_CNT;                     /* Address Offset: 0x0044 */
     __I  uint32_t PMU_SRAM_RD_HIT_CNT;                /* Address Offset: 0x0048 */
     __I  uint32_t PMU_HB_RD_HIT_CNT;                  /* Address Offset: 0x004C */
-    __I  uint32_t PMU_STB_RD_HIT_CNT;                 /* Address Offset: 0x0050 */
+    __IO uint32_t PMU_STB_RD_HIT_CNT;                 /* Address Offset: 0x0050 */
     __I  uint32_t PMU_RD_HIT_CNT;                     /* Address Offset: 0x0054 */
     __I  uint32_t PMU_WR_HIT_CNT;                     /* Address Offset: 0x0058 */
     __I  uint32_t PMU_RD_MISS_PENALTY_CNT;            /* Address Offset: 0x005C */
@@ -35,12 +33,33 @@ struct CACHE_REG {
     __I  uint32_t PMU_RD_LAT_CNT;                     /* Address Offset: 0x0064 */
     __I  uint32_t PMU_WR_LAT_CNT;                     /* Address Offset: 0x0068 */
          uint32_t RESERVED006C[33];                   /* Address Offset: 0x006C */
-    __I  uint32_t REVISION;                           /* Address Offset: 0x00F0 */
+    __IO uint32_t REVISION;                           /* Address Offset: 0x00F0 */
 };
-/* INTMUX Register Structure Define */
-struct INTMUX_REG {
-    __IO uint32_t INT_ENABLE_GROUP[32];               /* Address Offset: 0x0000 */
-    __IO uint32_t INT_FLAG_GROUP[32];                 /* Address Offset: 0x0080 */
+/* ICACHE Register Structure Define */
+struct ICACHE_REG {
+    __IO uint32_t CACHE_CTRL;                         /* Address Offset: 0x0000 */
+    __IO uint32_t CACHE_MAINTAIN[2];                  /* Address Offset: 0x0004 */
+    __IO uint32_t STB_TIMEOUT_CTRL;                   /* Address Offset: 0x000C */
+         uint32_t RESERVED0010[4];                    /* Address Offset: 0x0010 */
+    __IO uint32_t CACHE_INT_EN;                       /* Address Offset: 0x0020 */
+    __IO uint32_t CACHE_INT_ST;                       /* Address Offset: 0x0024 */
+    __IO uint32_t CACHE_ERR_HADDR;                    /* Address Offset: 0x0028 */
+         uint32_t RESERVED002C;                       /* Address Offset: 0x002C */
+    __I  uint32_t CACHE_STATUS;                       /* Address Offset: 0x0030 */
+         uint32_t RESERVED0034[3];                    /* Address Offset: 0x0034 */
+    __I  uint32_t PMU_RD_NUM_CNT;                     /* Address Offset: 0x0040 */
+    __I  uint32_t PMU_WR_NUM_CNT;                     /* Address Offset: 0x0044 */
+    __I  uint32_t PMU_SRAM_RD_HIT_CNT;                /* Address Offset: 0x0048 */
+    __I  uint32_t PMU_HB_RD_HIT_CNT;                  /* Address Offset: 0x004C */
+    __IO uint32_t PMU_STB_RD_HIT_CNT;                 /* Address Offset: 0x0050 */
+    __I  uint32_t PMU_RD_HIT_CNT;                     /* Address Offset: 0x0054 */
+    __I  uint32_t PMU_WR_HIT_CNT;                     /* Address Offset: 0x0058 */
+    __I  uint32_t PMU_RD_MISS_PENALTY_CNT;            /* Address Offset: 0x005C */
+    __I  uint32_t PMU_WR_MISS_PENALTY_CNT;            /* Address Offset: 0x0060 */
+    __I  uint32_t PMU_RD_LAT_CNT;                     /* Address Offset: 0x0064 */
+    __I  uint32_t PMU_WR_LAT_CNT;                     /* Address Offset: 0x0068 */
+         uint32_t RESERVED006C[33];                   /* Address Offset: 0x006C */
+    __IO uint32_t REVISION;                           /* Address Offset: 0x00F0 */
 };
 /* UART Register Structure Define */
 struct UART_REG {
@@ -113,10 +132,10 @@ struct MBOX_CMD_DAT {
 struct MBOX_REG {
     __IO uint32_t A2B_INTEN;                          /* Address Offset: 0x0000 */
     __IO uint32_t A2B_STATUS;                         /* Address Offset: 0x0004 */
-    struct MBOX_CMD_DAT A2B[4];                       /* Address Offset: 0x0008 */
+         struct MBOX_CMD_DAT A2B[4];                  /* Address Offset: 0x0008 */
     __IO uint32_t B2A_INTEN;                          /* Address Offset: 0x0028 */
     __IO uint32_t B2A_STATUS;                         /* Address Offset: 0x002C */
-    struct MBOX_CMD_DAT B2A[4];                       /* Address Offset: 0x0030 */
+         struct MBOX_CMD_DAT B2A[4];                  /* Address Offset: 0x0030 */
          uint32_t RESERVED0050[44];                   /* Address Offset: 0x0050 */
     __IO uint32_t ATOMIC_LOCK[32];                    /* Address Offset: 0x0100 */
 };
@@ -129,11 +148,10 @@ struct MBOX_REG {
 /* Memory Base */
 #define DCACHE_BASE                    0xF6F10000U /* DCACHE base address */
 #define ICACHE_BASE                    0xF6F10000U /* ICACHE base address */
-#define INTMUX0_PMU_BASE               0xFECF0000U /* INTMUX0_PMU base address */
-#define INTMUX1_PMU_BASE               0xFECF4000U /* INTMUX1_PMU base address */
-#define INTMUX0_DDR_BASE               0xFECF8000U /* INTMUX0_DDR base address */
-#define INTMUX1_DDR_BASE               0xFECFC000U /* INTMUX1_DDR base address */
 #define UART0_BASE                     0xFD890000U /* UART0 base address */
+#define WDT_BASE                       0xFD8E0000U /* WDT base address */
+#define TIMER0_BASE                    0xFD8F0000U /* TIMER0 base address */
+#define TIMER1_BASE                    0xFD8F0020U /* TIMER1 base address */
 #define UART1_BASE                     0xFEB40000U /* UART1 base address */
 #define UART2_BASE                     0xFEB50000U /* UART2 base address */
 #define UART3_BASE                     0xFEB60000U /* UART3 base address */
@@ -143,48 +161,20 @@ struct MBOX_REG {
 #define UART7_BASE                     0xFEBA0000U /* UART7 base address */
 #define UART8_BASE                     0xFEBB0000U /* UART8 base address */
 #define UART9_BASE                     0xFEBC0000U /* UART9 base address */
-#if defined(RKMCU_RK3588_DDR)
-#define WDT_BASE                       0xFE110000U /* WDT base address*/
-#elif defined(RKMCU_RK3588_PMU)
-#define WDT_BASE                       0xFD8E0000U /* WDT base address*/
-#elif defined(RKMCU_RK3588_NPU)
-#define WDT_BASE                       0xFDAF8000U /* WDT base address*/
-#endif
-#if defined(RKMCU_RK3588_PMU)
-#define TIMER0_BASE                    0xFD8F0000U /* TIMER0_BASE*/
-#define TIMER1_BASE                    0xFD8F0020U /* TIMER1_BASE*/
-#elif defined(RKMCU_RK3588_NPU)
-#define TIMER0_BASE                    0xFDB00000U /* TIMER0_BASE*/
-#define TIMER1_BASE                    0xFDB00020U /* TIMER1_BASE*/
-#elif defined(RKMCU_RK3588_DDR)
-#define TIMER0_BASE                    0xFE118000U /* TIMER0_BASE*/
-#define TIMER1_BASE                    0xFE118020U /* TIMER1_BASE*/
-#endif
-#if defined(RKMCU_RK3588_PMU)
 #define MBOX0_BASE                     0xFEC60000U /* MBOX0 base address */
-#elif defined(RKMCU_RK3588_DDR)
-#define MBOX0_BASE                     0xFEC70000U /* MBOX0 base address */
-#elif defined(RKMCU_RK3588_NPU)
-#define MBOX0_BASE                     0xFECE0000U /* MBOX0 base address */
-#endif
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
 /*                                                                                      */
 /****************************************************************************************/
 /* Module Variable Define */
-#if !defined(RKMCU_RK3588_DDR)
-#define DCACHE              ((struct CACHE_REG *) DCACHE_BASE)
-#define ICACHE              ((struct CACHE_REG *) ICACHE_BASE)
-#endif
-#if defined(RKMCU_RK3588_PMU)
-#define INTMUX0             ((struct INTMUX_REG *) INTMUX0_PMU_BASE)
-#define INTMUX1             ((struct INTMUX_REG *) INTMUX1_PMU_BASE)
-#elif defined(RKMCU_RK3588_DDR)
-#define INTMUX0             ((struct INTMUX_REG *) INTMUX0_DDR_BASE)
-#define INTMUX1             ((struct INTMUX_REG *) INTMUX1_DDR_BASE)
-#endif
+
+#define DCACHE              ((struct DCACHE_REG *) DCACHE_BASE)
+#define ICACHE              ((struct ICACHE_REG *) ICACHE_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
+#define WDT                 ((struct WDT_REG *) WDT_BASE)
+#define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
+#define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
 #define UART3               ((struct UART_REG *) UART3_BASE)
@@ -194,143 +184,19 @@ struct MBOX_REG {
 #define UART7               ((struct UART_REG *) UART7_BASE)
 #define UART8               ((struct UART_REG *) UART8_BASE)
 #define UART9               ((struct UART_REG *) UART9_BASE)
-#define WDT                 ((struct WDT_REG *)  WDT_BASE)
-#define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
-#define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
 
 #define IS_DCACHE_INSTANCE(instance) ((instance) == DCACHE)
 #define IS_ICACHE_INSTANCE(instance) ((instance) == ICACHE)
-#define IS_INTMUX0_INSTANCE(instance) ((instance) == INTMUX0)
-#define IS_INTMUX1_INSTANCE(instance) ((instance) == INTMUX1)
-#define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
+#define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1))
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
-
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
 /*                                                                                      */
 /****************************************************************************************/
-/*****************************************CACHE******************************************/
-/* CACHE_CTRL */
-#define ICACHE_CACHE_CTRL_OFFSET                           (0x0U)
-#define ICACHE_CACHE_CTRL_CACHE_EN_SHIFT                   (0U)
-#define ICACHE_CACHE_CTRL_CACHE_EN_MASK                    (0x1U << ICACHE_CACHE_CTRL_CACHE_EN_SHIFT)                   /* 0x00000001 */
-#define ICACHE_CACHE_CTRL_CACHE_WT_EN_SHIFT                (1U)
-#define ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK                 (0x1U << ICACHE_CACHE_CTRL_CACHE_WT_EN_SHIFT)                /* 0x00000002 */
-#define ICACHE_CACHE_CTRL_CACHE_HB_EN_SHIFT                (2U)
-#define ICACHE_CACHE_CTRL_CACHE_HB_EN_MASK                 (0x1U << ICACHE_CACHE_CTRL_CACHE_HB_EN_SHIFT)                /* 0x00000004 */
-#define ICACHE_CACHE_CTRL_CACHE_STB_EN_SHIFT               (3U)
-#define ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK                (0x1U << ICACHE_CACHE_CTRL_CACHE_STB_EN_SHIFT)               /* 0x00000008 */
-#define ICACHE_CACHE_CTRL_CACHE_FLUSH_SHIFT                (4U)
-#define ICACHE_CACHE_CTRL_CACHE_FLUSH_MASK                 (0x1U << ICACHE_CACHE_CTRL_CACHE_FLUSH_SHIFT)                /* 0x00000010 */
-#define ICACHE_CACHE_CTRL_CACHE_PMU_EN_SHIFT               (5U)
-#define ICACHE_CACHE_CTRL_CACHE_PMU_EN_MASK                (0x1U << ICACHE_CACHE_CTRL_CACHE_PMU_EN_SHIFT)               /* 0x00000020 */
-#define ICACHE_CACHE_CTRL_CACHE_BYPASS_SHIFT               (6U)
-#define ICACHE_CACHE_CTRL_CACHE_BYPASS_MASK                (0x1U << ICACHE_CACHE_CTRL_CACHE_BYPASS_SHIFT)               /* 0x00000040 */
-#define ICACHE_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT             (7U)
-#define ICACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK              (0x1U << ICACHE_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT)             /* 0x00000080 */
-#define ICACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT         (8U)
-#define ICACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_MASK          (0x7U << ICACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT)         /* 0x00000700 */
-#define ICACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT                (13U)
-#define ICACHE_CACHE_CTRL_CACHE_PF_EN_MASK                 (0x1U << ICACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT)                /* 0x00002000 */
-/* CACHE_MAINTAIN0 */
-#define ICACHE_CACHE_MAINTAIN0_OFFSET                      (0x4U)
-#define ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT         (0U)
-#define ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK          (0x1U << ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT)         /* 0x00000001 */
-#define ICACHE_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT           (1U)
-#define ICACHE_CACHE_MAINTAIN0_CACHE_M_CMD_MASK            (0x3U << ICACHE_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT)           /* 0x00000006 */
-#define ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT          (5U)
-#define ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK           (0x7FFFFFFU << ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT)    /* 0xFFFFFFE0 */
-/* CACHE_MAINTAIN1 */
-#define ICACHE_CACHE_MAINTAIN1_OFFSET                      (0x8U)
-#define ICACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT        (0U)
-#define ICACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_MASK         (0xFFFFU << ICACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT)     /* 0x0000FFFF */
-/* STB_TIMEOUT_CTRL */
-#define ICACHE_STB_TIMEOUT_CTRL_OFFSET                     (0xCU)
-#define ICACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT    (0U)
-#define ICACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_MASK     (0x7FFFFU << ICACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT) /* 0x0007FFFF */
-/* CACHE_INT_EN */
-#define ICACHE_CACHE_INT_EN_OFFSET                         (0x20U)
-#define ICACHE_CACHE_INT_EN_ERR_RECORD_EN_SHIFT            (0U)
-#define ICACHE_CACHE_INT_EN_ERR_RECORD_EN_MASK             (0x1U << ICACHE_CACHE_INT_EN_ERR_RECORD_EN_SHIFT)            /* 0x00000001 */
-/* CACHE_INT_ST */
-#define ICACHE_CACHE_INT_ST_OFFSET                         (0x24U)
-#define ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT         (0U)
-#define ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK          (0x1U << ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT)         /* 0x00000001 */
-/* CACHE_ERR_HADDR */
-#define ICACHE_CACHE_ERR_HADDR_OFFSET                      (0x28U)
-#define ICACHE_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT          (0U)
-#define ICACHE_CACHE_ERR_HADDR_STATUS_HADDR_MASK           (0x1U << ICACHE_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT)          /* 0x00000001 */
-/* CACHE_STATUS */
-#define ICACHE_CACHE_STATUS_OFFSET                         (0x30U)
-#define ICACHE_CACHE_STATUS                                (0x0U)
-#define ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT        (0U)
-#define ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK         (0x1U << ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT)        /* 0x00000001 */
-#define ICACHE_CACHE_STATUS_CACHE_M_BUSY_SHIFT             (1U)
-#define ICACHE_CACHE_STATUS_CACHE_M_BUSY_MASK              (0x1U << ICACHE_CACHE_STATUS_CACHE_M_BUSY_SHIFT)             /* 0x00000002 */
-#define ICACHE_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT         (2U)
-#define ICACHE_CACHE_STATUS_CACHE_FLUSH_DONE_MASK          (0x1U << ICACHE_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT)         /* 0x00000004 */
-/* PMU_RD_NUM_CNT */
-#define ICACHE_PMU_RD_NUM_CNT_OFFSET                       (0x40U)
-#define ICACHE_PMU_RD_NUM_CNT                              (0x0U)
-#define ICACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT         (0U)
-#define ICACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT)  /* 0xFFFFFFFF */
-/* PMU_WR_NUM_CNT */
-#define ICACHE_PMU_WR_NUM_CNT_OFFSET                       (0x44U)
-#define ICACHE_PMU_WR_NUM_CNT                              (0x0U)
-#define ICACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT         (0U)
-#define ICACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT)  /* 0xFFFFFFFF */
-/* PMU_SRAM_RD_HIT_CNT */
-#define ICACHE_PMU_SRAM_RD_HIT_CNT_OFFSET                  (0x48U)
-#define ICACHE_PMU_SRAM_RD_HIT_CNT                         (0x0U)
-#define ICACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT (0U)
-#define ICACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
-/* PMU_HB_RD_HIT_CNT */
-#define ICACHE_PMU_HB_RD_HIT_CNT_OFFSET                    (0x4CU)
-#define ICACHE_PMU_HB_RD_HIT_CNT                           (0x0U)
-#define ICACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT   (0U)
-#define ICACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_MASK    (0xFFFFFFFFU << ICACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
-/* PMU_STB_RD_HIT_CNT */
-#define ICACHE_PMU_STB_RD_HIT_CNT_OFFSET                   (0x50U)
-#define ICACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT (0U)
-#define ICACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_MASK  (0xFFFFFFFFU << ICACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
-/* PMU_RD_HIT_CNT */
-#define ICACHE_PMU_RD_HIT_CNT_OFFSET                       (0x54U)
-#define ICACHE_PMU_RD_HIT_CNT                              (0x0U)
-#define ICACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT         (0U)
-#define ICACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT)  /* 0xFFFFFFFF */
-/* PMU_WR_HIT_CNT */
-#define ICACHE_PMU_WR_HIT_CNT_OFFSET                       (0x58U)
-#define ICACHE_PMU_WR_HIT_CNT                              (0x0U)
-#define ICACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT         (0U)
-#define ICACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT)  /* 0xFFFFFFFF */
-/* PMU_RD_MISS_PENALTY_CNT */
-#define ICACHE_PMU_RD_MISS_PENALTY_CNT_OFFSET              (0x5CU)
-#define ICACHE_PMU_RD_MISS_PENALTY_CNT                     (0x0U)
-#define ICACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT (0U)
-#define ICACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
-/* PMU_WR_MISS_PENALTY_CNT */
-#define ICACHE_PMU_WR_MISS_PENALTY_CNT_OFFSET              (0x60U)
-#define ICACHE_PMU_WR_MISS_PENALTY_CNT                     (0x0U)
-#define ICACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT (0U)
-#define ICACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
-/* PMU_RD_LAT_CNT */
-#define ICACHE_PMU_RD_LAT_CNT_OFFSET                       (0x64U)
-#define ICACHE_PMU_RD_LAT_CNT                              (0x0U)
-#define ICACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT         (0U)
-#define ICACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT)  /* 0xFFFFFFFF */
-/* PMU_WR_LAT_CNT */
-#define ICACHE_PMU_WR_LAT_CNT_OFFSET                       (0x68U)
-#define ICACHE_PMU_WR_LAT_CNT                              (0x0U)
-#define ICACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT         (0U)
-#define ICACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT)  /* 0xFFFFFFFF */
-/* REVISION */
-#define ICACHE_REVISION_OFFSET                             (0xF0U)
-#define ICACHE_REVISION_REVISION_SHIFT                     (0U)
-#define ICACHE_REVISION_REVISION_MASK                      (0xFFFFFFFFU << ICACHE_REVISION_REVISION_SHIFT)              /* 0xFFFFFFFF */
 /*****************************************DCACHE*****************************************/
 /* CACHE_CTRL */
 #define DCACHE_CACHE_CTRL_OFFSET                           (0x0U)
@@ -352,6 +218,8 @@ struct MBOX_REG {
 #define DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK              (0x1U << DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT)             /* 0x00000080 */
 #define DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT         (8U)
 #define DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_MASK          (0x7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT)         /* 0x00000700 */
+#define DCACHE_CACHE_CTRL_CACHE_MPU_MODE_SHIFT             (12U)
+#define DCACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK              (0x1U << DCACHE_CACHE_CTRL_CACHE_MPU_MODE_SHIFT)             /* 0x00001000 */
 #define DCACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT                (13U)
 #define DCACHE_CACHE_CTRL_CACHE_PF_EN_MASK                 (0x1U << DCACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT)                /* 0x00002000 */
 /* CACHE_MAINTAIN0 */
@@ -449,6 +317,126 @@ struct MBOX_REG {
 #define DCACHE_REVISION_OFFSET                             (0xF0U)
 #define DCACHE_REVISION_REVISION_SHIFT                     (0U)
 #define DCACHE_REVISION_REVISION_MASK                      (0xFFFFFFFFU << DCACHE_REVISION_REVISION_SHIFT)              /* 0xFFFFFFFF */
+/*****************************************ICACHE*****************************************/
+/* CACHE_CTRL */
+#define ICACHE_CACHE_CTRL_OFFSET                           (0x0U)
+#define ICACHE_CACHE_CTRL_CACHE_EN_SHIFT                   (0U)
+#define ICACHE_CACHE_CTRL_CACHE_EN_MASK                    (0x1U << ICACHE_CACHE_CTRL_CACHE_EN_SHIFT)                   /* 0x00000001 */
+#define ICACHE_CACHE_CTRL_CACHE_WT_EN_SHIFT                (1U)
+#define ICACHE_CACHE_CTRL_CACHE_WT_EN_MASK                 (0x1U << ICACHE_CACHE_CTRL_CACHE_WT_EN_SHIFT)                /* 0x00000002 */
+#define ICACHE_CACHE_CTRL_CACHE_HB_EN_SHIFT                (2U)
+#define ICACHE_CACHE_CTRL_CACHE_HB_EN_MASK                 (0x1U << ICACHE_CACHE_CTRL_CACHE_HB_EN_SHIFT)                /* 0x00000004 */
+#define ICACHE_CACHE_CTRL_CACHE_STB_EN_SHIFT               (3U)
+#define ICACHE_CACHE_CTRL_CACHE_STB_EN_MASK                (0x1U << ICACHE_CACHE_CTRL_CACHE_STB_EN_SHIFT)               /* 0x00000008 */
+#define ICACHE_CACHE_CTRL_CACHE_FLUSH_SHIFT                (4U)
+#define ICACHE_CACHE_CTRL_CACHE_FLUSH_MASK                 (0x1U << ICACHE_CACHE_CTRL_CACHE_FLUSH_SHIFT)                /* 0x00000010 */
+#define ICACHE_CACHE_CTRL_CACHE_PMU_EN_SHIFT               (5U)
+#define ICACHE_CACHE_CTRL_CACHE_PMU_EN_MASK                (0x1U << ICACHE_CACHE_CTRL_CACHE_PMU_EN_SHIFT)               /* 0x00000020 */
+#define ICACHE_CACHE_CTRL_CACHE_BYPASS_SHIFT               (6U)
+#define ICACHE_CACHE_CTRL_CACHE_BYPASS_MASK                (0x1U << ICACHE_CACHE_CTRL_CACHE_BYPASS_SHIFT)               /* 0x00000040 */
+#define ICACHE_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT             (7U)
+#define ICACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK              (0x1U << ICACHE_CACHE_CTRL_STB_TIMEOUT_EN_SHIFT)             /* 0x00000080 */
+#define ICACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT         (8U)
+#define ICACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_MASK          (0x7U << ICACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT)         /* 0x00000700 */
+#define ICACHE_CACHE_CTRL_CACHE_MPU_MODE_SHIFT             (12U)
+#define ICACHE_CACHE_CTRL_CACHE_MPU_MODE_MASK              (0x1U << ICACHE_CACHE_CTRL_CACHE_MPU_MODE_SHIFT)             /* 0x00001000 */
+#define ICACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT                (13U)
+#define ICACHE_CACHE_CTRL_CACHE_PF_EN_MASK                 (0x1U << ICACHE_CACHE_CTRL_CACHE_PF_EN_SHIFT)                /* 0x00002000 */
+/* CACHE_MAINTAIN0 */
+#define ICACHE_CACHE_MAINTAIN0_OFFSET                      (0x4U)
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT         (0U)
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_MASK          (0x1U << ICACHE_CACHE_MAINTAIN0_CACHE_M_VALID_SHIFT)         /* 0x00000001 */
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT           (1U)
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_CMD_MASK            (0x3U << ICACHE_CACHE_MAINTAIN0_CACHE_M_CMD_SHIFT)           /* 0x00000006 */
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT          (5U)
+#define ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_MASK           (0x7FFFFFFU << ICACHE_CACHE_MAINTAIN0_CACHE_M_ADDR_SHIFT)    /* 0xFFFFFFE0 */
+/* CACHE_MAINTAIN1 */
+#define ICACHE_CACHE_MAINTAIN1_OFFSET                      (0x8U)
+#define ICACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT        (0U)
+#define ICACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_MASK         (0xFFFFU << ICACHE_CACHE_MAINTAIN1_CACHE_M_OFFSET_SHIFT)     /* 0x0000FFFF */
+/* STB_TIMEOUT_CTRL */
+#define ICACHE_STB_TIMEOUT_CTRL_OFFSET                     (0xCU)
+#define ICACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT    (0U)
+#define ICACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_MASK     (0x7FFFFU << ICACHE_STB_TIMEOUT_CTRL_STB_TIMEOUT_VALUE_SHIFT) /* 0x0007FFFF */
+/* CACHE_INT_EN */
+#define ICACHE_CACHE_INT_EN_OFFSET                         (0x20U)
+#define ICACHE_CACHE_INT_EN_ERR_RECORD_EN_SHIFT            (0U)
+#define ICACHE_CACHE_INT_EN_ERR_RECORD_EN_MASK             (0x1U << ICACHE_CACHE_INT_EN_ERR_RECORD_EN_SHIFT)            /* 0x00000001 */
+/* CACHE_INT_ST */
+#define ICACHE_CACHE_INT_ST_OFFSET                         (0x24U)
+#define ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT         (0U)
+#define ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_MASK          (0x1U << ICACHE_CACHE_INT_ST_AHB_ERROR_STATUS_SHIFT)         /* 0x00000001 */
+/* CACHE_ERR_HADDR */
+#define ICACHE_CACHE_ERR_HADDR_OFFSET                      (0x28U)
+#define ICACHE_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT          (0U)
+#define ICACHE_CACHE_ERR_HADDR_STATUS_HADDR_MASK           (0x1U << ICACHE_CACHE_ERR_HADDR_STATUS_HADDR_SHIFT)          /* 0x00000001 */
+/* CACHE_STATUS */
+#define ICACHE_CACHE_STATUS_OFFSET                         (0x30U)
+#define ICACHE_CACHE_STATUS                                (0x0U)
+#define ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT        (0U)
+#define ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK         (0x1U << ICACHE_CACHE_STATUS_CACHE_INIT_FINISH_SHIFT)        /* 0x00000001 */
+#define ICACHE_CACHE_STATUS_CACHE_M_BUSY_SHIFT             (1U)
+#define ICACHE_CACHE_STATUS_CACHE_M_BUSY_MASK              (0x1U << ICACHE_CACHE_STATUS_CACHE_M_BUSY_SHIFT)             /* 0x00000002 */
+#define ICACHE_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT         (2U)
+#define ICACHE_CACHE_STATUS_CACHE_FLUSH_DONE_MASK          (0x1U << ICACHE_CACHE_STATUS_CACHE_FLUSH_DONE_SHIFT)         /* 0x00000004 */
+/* PMU_RD_NUM_CNT */
+#define ICACHE_PMU_RD_NUM_CNT_OFFSET                       (0x40U)
+#define ICACHE_PMU_RD_NUM_CNT                              (0x0U)
+#define ICACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT         (0U)
+#define ICACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_RD_NUM_CNT_PMU_RD_NUM_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_WR_NUM_CNT */
+#define ICACHE_PMU_WR_NUM_CNT_OFFSET                       (0x44U)
+#define ICACHE_PMU_WR_NUM_CNT                              (0x0U)
+#define ICACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT         (0U)
+#define ICACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_WR_NUM_CNT_PMU_WR_NUM_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_SRAM_RD_HIT_CNT */
+#define ICACHE_PMU_SRAM_RD_HIT_CNT_OFFSET                  (0x48U)
+#define ICACHE_PMU_SRAM_RD_HIT_CNT                         (0x0U)
+#define ICACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT (0U)
+#define ICACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_SRAM_RD_HIT_CNT_PMU_SRAM_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_HB_RD_HIT_CNT */
+#define ICACHE_PMU_HB_RD_HIT_CNT_OFFSET                    (0x4CU)
+#define ICACHE_PMU_HB_RD_HIT_CNT                           (0x0U)
+#define ICACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT   (0U)
+#define ICACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_MASK    (0xFFFFFFFFU << ICACHE_PMU_HB_RD_HIT_CNT_PMU_HB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_STB_RD_HIT_CNT */
+#define ICACHE_PMU_STB_RD_HIT_CNT_OFFSET                   (0x50U)
+#define ICACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT (0U)
+#define ICACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_MASK  (0xFFFFFFFFU << ICACHE_PMU_STB_RD_HIT_CNT_PMU_STB_RD_HIT_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_RD_HIT_CNT */
+#define ICACHE_PMU_RD_HIT_CNT_OFFSET                       (0x54U)
+#define ICACHE_PMU_RD_HIT_CNT                              (0x0U)
+#define ICACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT         (0U)
+#define ICACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_RD_HIT_CNT_PMU_RD_HIT_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_WR_HIT_CNT */
+#define ICACHE_PMU_WR_HIT_CNT_OFFSET                       (0x58U)
+#define ICACHE_PMU_WR_HIT_CNT                              (0x0U)
+#define ICACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT         (0U)
+#define ICACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_WR_HIT_CNT_PMU_WR_HIT_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_RD_MISS_PENALTY_CNT */
+#define ICACHE_PMU_RD_MISS_PENALTY_CNT_OFFSET              (0x5CU)
+#define ICACHE_PMU_RD_MISS_PENALTY_CNT                     (0x0U)
+#define ICACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT (0U)
+#define ICACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_RD_MISS_PENALTY_CNT_PMU_RD_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_WR_MISS_PENALTY_CNT */
+#define ICACHE_PMU_WR_MISS_PENALTY_CNT_OFFSET              (0x60U)
+#define ICACHE_PMU_WR_MISS_PENALTY_CNT                     (0x0U)
+#define ICACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT (0U)
+#define ICACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_MASK (0xFFFFFFFFU << ICACHE_PMU_WR_MISS_PENALTY_CNT_PMU_WR_MISS_PENALTY_CNT_SHIFT) /* 0xFFFFFFFF */
+/* PMU_RD_LAT_CNT */
+#define ICACHE_PMU_RD_LAT_CNT_OFFSET                       (0x64U)
+#define ICACHE_PMU_RD_LAT_CNT                              (0x0U)
+#define ICACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT         (0U)
+#define ICACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_RD_LAT_CNT_PMU_RD_LAT_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* PMU_WR_LAT_CNT */
+#define ICACHE_PMU_WR_LAT_CNT_OFFSET                       (0x68U)
+#define ICACHE_PMU_WR_LAT_CNT                              (0x0U)
+#define ICACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT         (0U)
+#define ICACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_MASK          (0xFFFFFFFFU << ICACHE_PMU_WR_LAT_CNT_PMU_RD_LAT_CNT_SHIFT)  /* 0xFFFFFFFF */
+/* REVISION */
+#define ICACHE_REVISION_OFFSET                             (0xF0U)
+#define ICACHE_REVISION_REVISION_SHIFT                     (0U)
+#define ICACHE_REVISION_REVISION_MASK                      (0xFFFFFFFFU << ICACHE_REVISION_REVISION_SHIFT)              /* 0xFFFFFFFF */
 /******************************************UART******************************************/
 /* RBR */
 #define UART_RBR_OFFSET                                    (0x0U)
@@ -701,8 +689,8 @@ struct MBOX_REG {
 /******************************************WDT*******************************************/
 /* CR */
 #define WDT_CR_OFFSET                                      (0x0U)
-#define WDT_CR_WDT_EN_SHIFT                                (0U)
-#define WDT_CR_WDT_EN_MASK                                 (0x1U << WDT_CR_WDT_EN_SHIFT)                                /* 0x00000001 */
+#define WDT_CR_EN_SHIFT                                    (0U)
+#define WDT_CR_EN_MASK                                     (0x1U << WDT_CR_EN_SHIFT)                                    /* 0x00000001 */
 #define WDT_CR_RESP_MODE_SHIFT                             (1U)
 #define WDT_CR_RESP_MODE_MASK                              (0x1U << WDT_CR_RESP_MODE_SHIFT)                             /* 0x00000002 */
 #define WDT_CR_RST_PLUSE_LENGTH_SHIFT                      (2U)
@@ -713,7 +701,7 @@ struct MBOX_REG {
 #define WDT_TORR_TIMEOUT_PERIOD_MASK                       (0xFU << WDT_TORR_TIMEOUT_PERIOD_SHIFT)                      /* 0x0000000F */
 /* CCVR */
 #define WDT_CCVR_OFFSET                                    (0x8U)
-#define WDT_CCVR                                           (0x0U)
+#define WDT_CCVR                                           (0xFFFFU)
 #define WDT_CCVR_CUR_CNT_SHIFT                             (0U)
 #define WDT_CCVR_CUR_CNT_MASK                              (0xFFFFFFFFU << WDT_CCVR_CUR_CNT_SHIFT)                      /* 0xFFFFFFFF */
 /* CRR */
@@ -723,13 +711,13 @@ struct MBOX_REG {
 /* STAT */
 #define WDT_STAT_OFFSET                                    (0x10U)
 #define WDT_STAT                                           (0x0U)
-#define WDT_STAT_WDT_STATUS_SHIFT                          (0U)
-#define WDT_STAT_WDT_STATUS_MASK                           (0x1U << WDT_STAT_WDT_STATUS_SHIFT)                          /* 0x00000001 */
+#define WDT_STAT_STATUS_SHIFT                              (0U)
+#define WDT_STAT_STATUS_MASK                               (0x1U << WDT_STAT_STATUS_SHIFT)                              /* 0x00000001 */
 /* EOI */
 #define WDT_EOI_OFFSET                                     (0x14U)
 #define WDT_EOI                                            (0x0U)
-#define WDT_EOI_WDT_INT_CLR_SHIFT                          (0U)
-#define WDT_EOI_WDT_INT_CLR_MASK                           (0x1U << WDT_EOI_WDT_INT_CLR_SHIFT)                          /* 0x00000001 */
+#define WDT_EOI_INT_CLR_SHIFT                              (0U)
+#define WDT_EOI_INT_CLR_MASK                               (0x1U << WDT_EOI_INT_CLR_SHIFT)                              /* 0x00000001 */
 /*****************************************TIMER******************************************/
 /* LOAD_COUNT0 */
 #define TIMER_LOAD_COUNT0_OFFSET                           (0x0U)
@@ -994,8 +982,7 @@ struct MBOX_REG {
 #define MBOX_ATOMIC_LOCK_31_OFFSET                         (0x17CU)
 #define MBOX_ATOMIC_LOCK_31_ATOMIC_LOCK_31_SHIFT           (0U)
 #define MBOX_ATOMIC_LOCK_31_ATOMIC_LOCK_31_MASK            (0x1U << MBOX_ATOMIC_LOCK_31_ATOMIC_LOCK_31_SHIFT)           /* 0x00000001 */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-#endif /* __INTMUX_H */
+#endif /* __RK3588_H */

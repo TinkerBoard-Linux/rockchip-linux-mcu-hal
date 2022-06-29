@@ -276,6 +276,56 @@ typedef enum CLOCK_Name {
 #define MBOX_CNT             2
 #define MBOX_CHAN_CNT        4
 
+/***************************************INTMUX*******************************************/
+#define INTMUX0_PMU_BASE               0xFECF0000U /* INTMUX0_PMU base address */
+#define INTMUX1_PMU_BASE               0xFECF4000U /* INTMUX1_PMU base address */
+#define INTMUX0_DDR_BASE               0xFECF8000U /* INTMUX0_DDR base address */
+#define INTMUX1_DDR_BASE               0xFECFC000U /* INTMUX1_DDR base address */
+
+/* INTMUX Register Structure Define */
+struct INTMUX_REG {
+    __IO uint32_t INT_ENABLE_GROUP[32];               /* Address Offset: 0x0000 */
+    __IO uint32_t INT_FLAG_GROUP[32];                 /* Address Offset: 0x0080 */
+};
+
+#if defined(RKMCU_RK3588_PMU)
+#define INTMUX0             ((struct INTMUX_REG *) INTMUX0_PMU_BASE)
+#define INTMUX1             ((struct INTMUX_REG *) INTMUX1_PMU_BASE)
+#elif defined(RKMCU_RK3588_DDR)
+#define INTMUX0             ((struct INTMUX_REG *) INTMUX0_DDR_BASE)
+#define INTMUX1             ((struct INTMUX_REG *) INTMUX1_DDR_BASE)
+#endif
+
+#define IS_INTMUX0_INSTANCE(instance) ((instance) == INTMUX0)
+#define IS_INTMUX1_INSTANCE(instance) ((instance) == INTMUX1)
+
+/****************************************************************************************/
+/*                                                                                      */
+/*                           Platform Differences Section                               */
+/*                                                                                      */
+/****************************************************************************************/
+#if defined(RKMCU_RK3588_DDR)
+#undef DCACHE
+#undef ICACHE
+#undef MBOX0_BASE
+#define MBOX0_BASE                     0xFEC70000U /* MBOX0 base address */
+#undef WDT_BASE
+#define WDT_BASE                       0xFE110000U /* WDT base address*/
+#undef TIMER0_BASE
+#undef TIMER1_BASE
+#define TIMER0_BASE                    0xFE118000U /* TIMER0_BASE*/
+#define TIMER1_BASE                    0xFE118020U /* TIMER1_BASE*/
+#elif defined(RKMCU_RK3588_NPU)
+#undef MBOX0_BASE
+#define MBOX0_BASE                     0xFECE0000U /* MBOX0 base address */
+#undef WDT_BASE
+#define WDT_BASE                       0xFDAF8000U /* WDT base address*/
+#undef TIMER0_BASE
+#undef TIMER1_BASE
+#define TIMER0_BASE                    0xFDB00000U /* TIMER0_BASE*/
+#define TIMER1_BASE                    0xFDB00020U /* TIMER1_BASE*/
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
