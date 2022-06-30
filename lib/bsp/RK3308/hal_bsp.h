@@ -12,6 +12,10 @@
 
 /***************************** Structure Definition **************************/
 
+#ifdef HAL_ACODEC_MODULE_ENABLED
+extern struct HAL_ACODEC_DEV g_acodecDev;
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 extern const struct HAL_SPI_DEV g_spiDev0;
 extern const struct HAL_SPI_DEV g_spiDev1;

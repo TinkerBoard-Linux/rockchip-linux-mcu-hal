@@ -5,6 +5,17 @@
 
 #include "hal_bsp.h"
 
+#ifdef HAL_ACODEC_MODULE_ENABLED
+struct HAL_ACODEC_DEV g_acodecDev =
+{
+    .pReg = ACODEC,
+    .hclk = PCLK_ACODEC_GATE,
+    .mclk = 12288000,
+    .micBias = RK3308_ADC_MICBIAS_VOLT_0_85,
+    .micDifferential = true,
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
