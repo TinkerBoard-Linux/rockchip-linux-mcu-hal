@@ -35,6 +35,7 @@ struct HAL_ACODEC_DEV {
     uint32_t mclk;
     uint32_t micBias;
     bool micDifferential;
+    void *privateData;
 };
 
 /** @} */
