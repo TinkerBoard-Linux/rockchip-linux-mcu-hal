@@ -6,153 +6,152 @@
 #ifndef __SOC_H
 #define __SOC_H
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 #include "hal_conf.h"
 
 /* IO definitions (access restrictions to peripheral registers) */
 #ifdef __cplusplus
-  #define   __I     volatile             /*!< brief Defines 'read only' permissions */
+  #define   __I volatile                 /*!< brief Defines 'read only' permissions */
 #else
-  #define   __I     volatile const       /*!< brief Defines 'read only' permissions */
+  #define   __I volatile const           /*!< brief Defines 'read only' permissions */
 #endif
-#define     __O     volatile             /*!< brief Defines 'write only' permissions */
-#define     __IO    volatile             /*!< brief Defines 'read / write' permissions */
+#define     __O  volatile                /*!< brief Defines 'write only' permissions */
+#define     __IO volatile                /*!< brief Defines 'read / write' permissions */
 
 /* ================================================================================ */
 /* ================                    DMA REQ                      =============== */
 /* ================================================================================ */
 typedef enum {
-    DMA_REQ_SPI0_TX  = 0,
-    DMA_REQ_SPI0_RX  = 1,
-    DMA_REQ_SPI1_TX  = 2,
-    DMA_REQ_SPI1_RX  = 3,
-    DMA_REQ_UART0_TX = 4,
-    DMA_REQ_UART0_RX = 5,
-    DMA_REQ_UART1_TX = 6,
-    DMA_REQ_UART1_RX = 7,
-    DMA_REQ_UART2_TX = 8,
-    DMA_REQ_UART2_RX = 9,
-    DMA_REQ_UART3_TX = 10,
-    DMA_REQ_UART3_RX = 11,
-    DMA_REQ_I2S_8CH_0_TX  = 0,
-    DMA_REQ_I2S_8CH_0_RX  = 1,
-    DMA_REQ_I2S_8CH_1_TX  = 2,
-    DMA_REQ_I2S_8CH_1_RX  = 3,
-    DMA_REQ_I2S_8CH_2_TX  = 4,
-    DMA_REQ_I2S_8CH_2_RX  = 5,
-    DMA_REQ_I2S_8CH_3_TX  = 6,
-    DMA_REQ_I2S_8CH_3_RX  = 7,
-    DMA_REQ_I2S_2CH_0_TX  = 8,
-    DMA_REQ_I2S_2CH_0_RX  = 9,
-    DMA_REQ_I2S_2CH_1_TX  = 10,
-    DMA_REQ_I2S_2CH_1_RX  = 11,
-    DMA_REQ_PDM0_RX  = 12,
-    DMA_REQ_SPIDF_TX = 13,
-    DMA_REQ_SPIDF_RX = 14,
-    DMA_REQ_PWM0_RX  = 15,
-    DMA_REQ_SPI2_TX  = 16,
-    DMA_REQ_SPI2_RX  = 17,
-    DMA_REQ_UART4_TX = 18,
-    DMA_REQ_UART4_RX = 19,
+    DMA_REQ_SPI0_TX      = 0,
+    DMA_REQ_SPI0_RX      = 1,
+    DMA_REQ_SPI1_TX      = 2,
+    DMA_REQ_SPI1_RX      = 3,
+    DMA_REQ_UART0_TX     = 4,
+    DMA_REQ_UART0_RX     = 5,
+    DMA_REQ_UART1_TX     = 6,
+    DMA_REQ_UART1_RX     = 7,
+    DMA_REQ_UART2_TX     = 8,
+    DMA_REQ_UART2_RX     = 9,
+    DMA_REQ_UART3_TX     = 10,
+    DMA_REQ_UART3_RX     = 11,
+    DMA_REQ_I2S_8CH_0_TX = 0,
+    DMA_REQ_I2S_8CH_0_RX = 1,
+    DMA_REQ_I2S_8CH_1_TX = 2,
+    DMA_REQ_I2S_8CH_1_RX = 3,
+    DMA_REQ_I2S_8CH_2_TX = 4,
+    DMA_REQ_I2S_8CH_2_RX = 5,
+    DMA_REQ_I2S_8CH_3_TX = 6,
+    DMA_REQ_I2S_8CH_3_RX = 7,
+    DMA_REQ_I2S_2CH_0_TX = 8,
+    DMA_REQ_I2S_2CH_0_RX = 9,
+    DMA_REQ_I2S_2CH_1_TX = 10,
+    DMA_REQ_I2S_2CH_1_RX = 11,
+    DMA_REQ_PDM0_RX      = 12,
+    DMA_REQ_SPIDF_TX     = 13,
+    DMA_REQ_SPIDF_RX     = 14,
+    DMA_REQ_PWM0_RX      = 15,
+    DMA_REQ_SPI2_TX      = 16,
+    DMA_REQ_SPI2_RX      = 17,
+    DMA_REQ_UART4_TX     = 18,
+    DMA_REQ_UART4_RX     = 19,
 } DMA_REQ_Type;
 
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
-typedef enum
-{
-  CNTHP_IRQn              = 26,
-  CNTV_IRQn               = 27,
-  CNTPS_IRQn              = 29,
-  CNTPNS_IRQn             = 30,
+typedef enum {
+    CNTHP_IRQn  = 26,
+    CNTV_IRQn   = 27,
+    CNTPS_IRQn  = 29,
+    CNTPNS_IRQn = 30,
 
 /******  Platform Exceptions Numbers ***************************************************/
-  DMAC0_IRQn              = 32,       /*!< DMAC0 Interrupt             */
-  DMAC0_ABORT_IRQn        = 33,       /*!< DMAC0 ABORT Interrupt       */
-  DMAC1_IRQn              = 34,       /*!< DMAC1 Interrupt             */
-  DMAC1_ABORT_IRQn        = 35,       /*!< DMAC1 ABORT Abort Interrupt */
-  PWM1_IRQn               = 36,       /*!< PWM1 Interrupt              */
-  PWM1_PWR_IRQn           = 37,       /*!< PWM1_PWR  Interrupt         */
-  PWM2_IRQn               = 38,       /*!< PWM2 Interrupt              */
-  PWM2_PWR_IRQn           = 39,       /*!< PWM2 PWR Interrupt          */
-  DDR_PCTL_IRQn           = 40,       /*!< DDR PCTL Interrupt          */
-  DDR_MON_IRQn            = 41,       /*!< DDR MON Interrupt           */
-  WDT0_IRQn               = 42,       /*!< WDT0 Interrupt              */
-  I2C0_IRQn               = 43,       /*!< I2C0 Interrupt              */
-  I2C1_IRQn               = 44,       /*!< I2C1 Interrupt              */
-  I2C2_IRQn               = 45,       /*!< I2C2 Interrupt              */
-  I2C3_IRQn               = 46,       /*!< I2C3 Interrupt              */
-  SPI0_IRQn               = 47,       /*!< SPI0 Interrupt              */
-  SPI1_IRQn               = 48,       /*!< SPI1 Interrupt              */
-  SPI2_IRQn               = 49,       /*!< SPI2 Interrupt              */
-  UART0_IRQn              = 50,       /*!< UART0 Interrupt             */
-  UART1_IRQn              = 51,       /*!< UART1 Interrupt             */
-  UART2_IRQn              = 52,       /*!< UART2 Interrupt             */
-  UART3_IRQn              = 53,       /*!< UART3 Interrupt             */
-  UART4_IRQn              = 54,       /*!< UART4 Interrupt             */
-  PWM0_IRQn               = 55,       /*!< PWM0 Interrupt              */
-  PWM0_PWR_IRQn           = 56,       /*!< PWM0 PWR Interrupt          */
-  TIMER0_IRQn             = 57,       /*!< TIMER0 Interrupt            */
-  TIMER1_IRQn             = 58,       /*!< TIMER1 Interrupt            */
-  TIMER2_IRQn             = 59,       /*!< TIMER2 Interrupt            */
-  TIMER3_IRQn             = 60,       /*!< TIMER3 Interrupt            */
-  TIMER4_IRQn             = 61,       /*!< TIMER4 Interrupt            */
-  TIMER5_IRQn             = 62,       /*!< TIMER5 Interrupt            */
-  TIMER6_IRQn             = 63,       /*!< TIMER6  Interrupt           */
-  TIMER7_IRQn             = 64,       /*!< TIMER7  Interrupt           */
-  TIMER8_IRQn             = 65,       /*!< TIMER8  Interrupt           */
-  TIMER9_IRQn             = 66,       /*!< TIMER9  Interrupt           */
-  TIMER10_IRQn            = 67,       /*!< TIMER10  Interrupt          */
-  TIMER11_IRQn            = 68,       /*!< TIMER11  Interrupt          */
-  SARADC_IRQn             = 69,       /*!< SARADC  Interrupt           */
-  TSADC_IRQn              = 70,       /*!< TSADC  Interrupt            */
-  GPIO0_IRQn              = 72,       /*!< GPIO0  Interrupt            */
-  GPIO1_IRQn              = 73,       /*!< GPIO1  Interrupt            */
-  GPIO2_IRQn              = 74,       /*!< GPIO2  Interrupt            */
-  GPIO3_IRQn              = 75,       /*!< GPIO3 Interrupt             */
-  GPIO4_IRQn              = 76,       /*!< GPIO4 Interrupt             */
-  CRYPTO_IRQn             = 77,       /*!< CRYPTO Interrupt            */
-  VOP_IRQn                = 78,       /*!< VOP Interrupt               */
-  I2S_8CH_0_IRQn          = 80,       /*!< I2S_8CH_0 Interrupt         */
-  I2S_8CH_1_IRQn          = 81,       /*!< I2S_8CH_1 Interrupt         */
-  I2S_8CH_2_IRQn          = 82,       /*!< I2S_8CH_2 Interrupt         */
-  I2S_8CH_3_IRQn          = 83,       /*!< I2S_8CH_3 Interrupt         */
-  I2S_2CH_0_IRQn          = 84,       /*!< I2S_2CH_0 Interrupt         */
-  I2S_2CH_1_IRQn          = 85,       /*!< I2S_2CH_1 Interrupt         */
-  PDM0_IRQn               = 86,       /*!< PDM0 Interrupt              */
-  SPDIF_TX_IRQn           = 87,       /*!< SPDIF TX Interrupt          */
-  SPDIF_RX_IRQn           = 88,       /*!< SPDIF RX Interrupt          */
-  VAD_IRQn                = 89,       /*!< VAD Interrupt               */
-  OWIRE_IRQn              = 90,       /*!< OWIRE Interrupt             */
-  CAN0_IRQn               = 91,       /*!< CAN0 Interrupt              */
-  SFC_IRQn                = 114,      /*!< SFC Interrupt               */
-  RSVD0_IRQn              = 148,      /*!< RSVD0  Interrupt            */
-  NUM_INTERRUPTS          = 160
+    DMAC0_IRQn       = 32,            /*!< DMAC0 Interrupt             */
+    DMAC0_ABORT_IRQn = 33,            /*!< DMAC0 ABORT Interrupt       */
+    DMAC1_IRQn       = 34,            /*!< DMAC1 Interrupt             */
+    DMAC1_ABORT_IRQn = 35,            /*!< DMAC1 ABORT Abort Interrupt */
+    PWM1_IRQn        = 36,            /*!< PWM1 Interrupt              */
+    PWM1_PWR_IRQn    = 37,            /*!< PWM1_PWR  Interrupt         */
+    PWM2_IRQn        = 38,            /*!< PWM2 Interrupt              */
+    PWM2_PWR_IRQn    = 39,            /*!< PWM2 PWR Interrupt          */
+    DDR_PCTL_IRQn    = 40,            /*!< DDR PCTL Interrupt          */
+    DDR_MON_IRQn     = 41,            /*!< DDR MON Interrupt           */
+    WDT0_IRQn        = 42,            /*!< WDT0 Interrupt              */
+    I2C0_IRQn        = 43,            /*!< I2C0 Interrupt              */
+    I2C1_IRQn        = 44,            /*!< I2C1 Interrupt              */
+    I2C2_IRQn        = 45,            /*!< I2C2 Interrupt              */
+    I2C3_IRQn        = 46,            /*!< I2C3 Interrupt              */
+    SPI0_IRQn        = 47,            /*!< SPI0 Interrupt              */
+    SPI1_IRQn        = 48,            /*!< SPI1 Interrupt              */
+    SPI2_IRQn        = 49,            /*!< SPI2 Interrupt              */
+    UART0_IRQn       = 50,            /*!< UART0 Interrupt             */
+    UART1_IRQn       = 51,            /*!< UART1 Interrupt             */
+    UART2_IRQn       = 52,            /*!< UART2 Interrupt             */
+    UART3_IRQn       = 53,            /*!< UART3 Interrupt             */
+    UART4_IRQn       = 54,            /*!< UART4 Interrupt             */
+    PWM0_IRQn        = 55,            /*!< PWM0 Interrupt              */
+    PWM0_PWR_IRQn    = 56,            /*!< PWM0 PWR Interrupt          */
+    TIMER0_IRQn      = 57,            /*!< TIMER0 Interrupt            */
+    TIMER1_IRQn      = 58,            /*!< TIMER1 Interrupt            */
+    TIMER2_IRQn      = 59,            /*!< TIMER2 Interrupt            */
+    TIMER3_IRQn      = 60,            /*!< TIMER3 Interrupt            */
+    TIMER4_IRQn      = 61,            /*!< TIMER4 Interrupt            */
+    TIMER5_IRQn      = 62,            /*!< TIMER5 Interrupt            */
+    TIMER6_IRQn      = 63,            /*!< TIMER6  Interrupt           */
+    TIMER7_IRQn      = 64,            /*!< TIMER7  Interrupt           */
+    TIMER8_IRQn      = 65,            /*!< TIMER8  Interrupt           */
+    TIMER9_IRQn      = 66,            /*!< TIMER9  Interrupt           */
+    TIMER10_IRQn     = 67,            /*!< TIMER10  Interrupt          */
+    TIMER11_IRQn     = 68,            /*!< TIMER11  Interrupt          */
+    SARADC_IRQn      = 69,            /*!< SARADC  Interrupt           */
+    TSADC_IRQn       = 70,            /*!< TSADC  Interrupt            */
+    GPIO0_IRQn       = 72,            /*!< GPIO0  Interrupt            */
+    GPIO1_IRQn       = 73,            /*!< GPIO1  Interrupt            */
+    GPIO2_IRQn       = 74,            /*!< GPIO2  Interrupt            */
+    GPIO3_IRQn       = 75,            /*!< GPIO3 Interrupt             */
+    GPIO4_IRQn       = 76,            /*!< GPIO4 Interrupt             */
+    CRYPTO_IRQn      = 77,            /*!< CRYPTO Interrupt            */
+    VOP_IRQn         = 78,            /*!< VOP Interrupt               */
+    I2S_8CH_0_IRQn   = 80,            /*!< I2S_8CH_0 Interrupt         */
+    I2S_8CH_1_IRQn   = 81,            /*!< I2S_8CH_1 Interrupt         */
+    I2S_8CH_2_IRQn   = 82,            /*!< I2S_8CH_2 Interrupt         */
+    I2S_8CH_3_IRQn   = 83,            /*!< I2S_8CH_3 Interrupt         */
+    I2S_2CH_0_IRQn   = 84,            /*!< I2S_2CH_0 Interrupt         */
+    I2S_2CH_1_IRQn   = 85,            /*!< I2S_2CH_1 Interrupt         */
+    PDM0_IRQn        = 86,            /*!< PDM0 Interrupt              */
+    SPDIF_TX_IRQn    = 87,            /*!< SPDIF TX Interrupt          */
+    SPDIF_RX_IRQn    = 88,            /*!< SPDIF RX Interrupt          */
+    VAD_IRQn         = 89,            /*!< VAD Interrupt               */
+    OWIRE_IRQn       = 90,            /*!< OWIRE Interrupt             */
+    CAN0_IRQn        = 91,            /*!< CAN0 Interrupt              */
+    SFC_IRQn         = 114,           /*!< SFC Interrupt               */
+    RSVD0_IRQn       = 148,           /*!< RSVD0  Interrupt            */
+    NUM_INTERRUPTS   = 160
 } IRQn_Type;
 
-#define RSVD_IRQn(_N)               (RSVD0_IRQn + (_N))
+#define RSVD_IRQn(_N) (RSVD0_IRQn + (_N))
 
-#define AMP_CPUOFF_REQ_IRQ(cpu)     RSVD_IRQn(12 + (cpu)) /* gic irq: 160 */
+#define AMP_CPUOFF_REQ_IRQ(cpu) RSVD_IRQn(12 + (cpu))     /* gic irq: 160 */
 
-#define GPIO_IRQ_GROUP_DIRQ_BASE    RSVD_IRQn(52) /* gic irq:  200 */
-#define GPIO_IRQ_GROUP_DIRQ_NUM     (NUM_INTERRUPTS - GPIO_IRQ_GROUP_DIRQ_BASE)
+#define GPIO_IRQ_GROUP_DIRQ_BASE RSVD_IRQn(52)    /* gic irq:  200 */
+#define GPIO_IRQ_GROUP_DIRQ_NUM  (NUM_INTERRUPTS - GPIO_IRQ_GROUP_DIRQ_BASE)
 
-#define GPIO_IRQ_GROUP_GPIO0_HWIRQ  GPIO0_IRQn
-#define GPIO_IRQ_GROUP_GPION_HWIRQ  GPIO4_IRQn
+#define GPIO_IRQ_GROUP_GPIO0_HWIRQ GPIO0_IRQn
+#define GPIO_IRQ_GROUP_GPION_HWIRQ GPIO4_IRQn
 
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
 /* ================================================================================ */
 
-#define __CORTEX_A           35U          /* Cortex-A35 Core                          */
-#define __FPU_PRESENT         1U          /* FPU present                              */
-#define HAL_GIC_V2            1U          /* GIC version 2                            */
-#define __TIM_PRESENT         1U          /* Generic Timer                            */
+#define __CORTEX_A    35U                 /* Cortex-A35 Core                          */
+#define __FPU_PRESENT 1U                  /* FPU present                              */
+#define HAL_GIC_V2    1U                  /* GIC version 2                            */
+#define __TIM_PRESENT 1U                  /* Generic Timer                            */
 
-#define CACHE_LINE_SHIFT    (6U)
-#define CACHE_LINE_SIZE     (0x1U << CACHE_LINE_SHIFT)
+#define CACHE_LINE_SHIFT (6U)
+#define CACHE_LINE_SIZE  (0x1U << CACHE_LINE_SHIFT)
 
 #ifndef __ASSEMBLY__
 #include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
@@ -162,6 +161,7 @@ typedef enum
 #include "system_rk3308.h"
 #endif /* __ASSEMBLY__ */
 #include "rk3308.h"
+#include "rk3308_acodec.h"
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -169,8 +169,8 @@ typedef enum
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
-#define GIC_DISTRIBUTOR_BASE    (0xFF581000)
-#define GIC_CPU_INTERFACE_BASE  (0xFF582000)
+#define GIC_DISTRIBUTOR_BASE   (0xFF581000)
+#define GIC_CPU_INTERFACE_BASE (0xFF582000)
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -178,15 +178,15 @@ typedef enum
 /*                                                                                      */
 /****************************************************************************************/
 /********************************** CPU Topology ****************************************/
-#define MPIDR_MT_MASK       ((1U) << 24)
-#define MPIDR_AFFLVL_MASK   (0xFFU)
-#define MPIDR_AFF0_SHIFT    (0U)
-#define MPIDR_AFF1_SHIFT    (8U)
-#define MPIDR_AFF2_SHIFT    (16U)
-#define MPIDR_AFFINITY_MASK (0xFFFFFFU)
-#define PLATFORM_CLUSTER0_CORE_COUNT (4)
-#define PLATFORM_CLUSTER1_CORE_COUNT (0)
-#define PLATFORM_CORE_COUNT PLATFORM_CLUSTER0_CORE_COUNT
+#define MPIDR_MT_MASK                      ((1U) << 24)
+#define MPIDR_AFFLVL_MASK                  (0xFFU)
+#define MPIDR_AFF0_SHIFT                   (0U)
+#define MPIDR_AFF1_SHIFT                   (8U)
+#define MPIDR_AFF2_SHIFT                   (16U)
+#define MPIDR_AFFINITY_MASK                (0xFFFFFFU)
+#define PLATFORM_CLUSTER0_CORE_COUNT       (4)
+#define PLATFORM_CLUSTER1_CORE_COUNT       (0)
+#define PLATFORM_CORE_COUNT                PLATFORM_CLUSTER0_CORE_COUNT
 #define CPU_GET_AFFINITY(cpuId, clusterId) ((cpuId) << MPIDR_AFF0_SHIFT)
 
 /******************************************CRU*******************************************/
@@ -1369,7 +1369,7 @@ typedef enum CLOCK_Name {
 /****************************************GPIO********************************************/
 #ifdef GPIO_VER_ID
 #undef GPIO_VER_ID
-#define GPIO_VER_ID             (0x3231322AU)
+#define GPIO_VER_ID (0x3231322AU)
 #endif
 /****************************************PMU*********************************************/
 #ifndef __ASSEMBLY__
@@ -1378,7 +1378,7 @@ typedef enum PD_Id {
 } ePD_Id;
 #endif
 /****************************************SFC********************************************/
-#define SFC_CHIP_CNT                            (1)
+#define SFC_CHIP_CNT (1)
 
 #define PCLK_SARADC_CONTROL_GATE PCLK_SARADC_GATE
 #define CLK_SARADC_GATE          CLK_SARADC_PLL_CLK_GATE
