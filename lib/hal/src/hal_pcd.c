@@ -187,6 +187,33 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                             HAL_PCD_SetupStageCallback(pPCD);
                         }
                     }
+
+                    /*
+                     * This is starting point for high speed ISOC-OUT transfer,
+                     * synchronization done with first out token received from
+                     * host while corresponding EP is disabled. Device does not
+                     * know initial frame in which out token will come. For this
+                     * HW generates OUTTKNEPDIS - out token is received while EP
+                     * is disabled. Upon getting this interrupt SW starts isoc
+                     * out transfer.
+                     */
+                    if (((epInt & USB_OTG_DOEPINT_OTEPDIS) == USB_OTG_DOEPINT_OTEPDIS) &&
+                        (pPCD->outEp[epNum].type == EP_TYPE_ISOC) &&
+                        (pPCD->outEp[epNum].isocStart == 0) &&
+                        (USB_GetDevSpeed(pUSB) == USB_OTG_SPEED_HIGH)) {
+                        if ((USB_DEVICE->DSTS & (1 << 8)) == 0) {
+                            USB_OUTEP(epNum)->DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
+                        } else {
+                            USB_OUTEP(epNum)->DOEPCTL |= USB_OTG_DOEPCTL_SODDFRM;
+                        }
+
+                        if (pPCD->outEp[epNum].isocPending == 1) {
+                            USB_OUTEP(epNum)->DOEPCTL |= (USB_OTG_DOEPCTL_CNAK | USB_OTG_DOEPCTL_EPENA);
+                            pPCD->outEp[epNum].isocPending = 0;
+                        }
+                        pPCD->outEp[epNum].isocStart = 1;
+                        USB_DEVICE->DOEPMSK &= ~(USB_OTG_DOEPMSK_OTEPDM);
+                    }
                 }
                 epNum++;
                 epIntr >>= 1;
@@ -226,6 +253,33 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
 
                     if ((epInt & USB_OTG_DIEPINT_TXFE) == USB_OTG_DIEPINT_TXFE) {
                         PCD_WriteEmptyTxFifo(pPCD, epNum);
+                    }
+
+                    /*
+                     * This is starting point for high speed ISOC-IN transfer,
+                     * synchronization done with first IN token received from
+                     * host while corresponding EP is disabled. Device does not
+                     * know when first one token will arrive from host. NAK
+                     * interrupt for ISOC-IN means that token has arrived and
+                     * ZLP was sent in response to that as there was no data in
+                     * FIFO. SW is basing on this interrupt to obtain frame in
+                     * which token has come and start isoc in transfer.
+                     */
+                    if (((epInt & USB_OTG_DIEPINT_NAK) == USB_OTG_DIEPINT_NAK) &&
+                        (pPCD->inEp[epNum].type == EP_TYPE_ISOC) &&
+                        (pPCD->inEp[epNum].isocStart == 0) &&
+                        (USB_GetDevSpeed(pUSB) == USB_OTG_SPEED_HIGH)) {
+                        if ((USB_DEVICE->DSTS & (1 << 8)) == 0) {
+                            USB_INEP(epNum)->DIEPCTL |= USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
+                        } else {
+                            USB_INEP(epNum)->DIEPCTL |= USB_OTG_DIEPCTL_SODDFRM;
+                        }
+
+                        if (pPCD->inEp[epNum].isocPending == 1) {
+                            USB_INEP(epNum)->DIEPCTL |= (USB_OTG_DIEPCTL_CNAK | USB_OTG_DIEPCTL_EPENA);
+                            pPCD->inEp[epNum].isocPending = 0;
+                        }
+                        pPCD->inEp[epNum].isocStart = 1;
                     }
                 }
                 epNum++;
@@ -711,7 +765,7 @@ HAL_Status HAL_PCD_EPOpen(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint16_t ep_m
     }
 
     /* Set initial data PID. */
-    if (epType == EP_TYPE_BULK) {
+    if (pEP->type == EP_TYPE_BULK) {
         pEP->dataPID = 0;
     }
 

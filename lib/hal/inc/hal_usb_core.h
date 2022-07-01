@@ -192,6 +192,8 @@ struct USB_OTG_EP {
                                  This parameter must be a number between Min_Data = 0 and Max_Data = 1    */
     uint8_t isStall;        /*!< Endpoint stall condition
                                  This parameter must be a number between Min_Data = 0 and Max_Data = 1    */
+    uint8_t isocStart;      /*!< Enable high speed isoc transfer                                          */
+    uint8_t isocPending;    /*!< Pending high speed isoc transfer                                         */
     uint8_t type;           /*!< Endpoint type                                                            */
     uint8_t dataPID;        /*!< Initial data PID
                                  This parameter must be a number between Min_Data = 0 and Max_Data = 1    */

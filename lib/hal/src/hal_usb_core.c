@@ -439,6 +439,9 @@ HAL_Status USB_ActivateEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *
 {
     if (pEP->isIn == 1) {
         USB_DEVICE->DAINTMSK |= USB_OTG_DAINTMSK_IEPM & ((1 << (pEP->num)));
+        if ((pEP->type == EP_TYPE_ISOC) && (USB_GetDevSpeed(pUSB) == USB_OTG_SPEED_HIGH)) {
+            USB_DEVICE->DIEPMSK |= USB_OTG_DIEPMSK_NAK;
+        }
 
         if (((USB_INEP(pEP->num)->DIEPCTL) & USB_OTG_DIEPCTL_USBAEP) == 0) {
             USB_INEP(pEP->num)->DIEPCTL |= ((pEP->maxPacket & USB_OTG_DIEPCTL_MPSIZ) |
@@ -448,6 +451,9 @@ HAL_Status USB_ActivateEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP *
         }
     } else {
         USB_DEVICE->DAINTMSK |= USB_OTG_DAINTMSK_OEPM & ((1 << (pEP->num)) << 16);
+        if ((pEP->type == EP_TYPE_ISOC) && (USB_GetDevSpeed(pUSB) == USB_OTG_SPEED_HIGH)) {
+            USB_DEVICE->DOEPMSK |= USB_OTG_DOEPMSK_OTEPDM;
+        }
 
         if (((USB_OUTEP(pEP->num)->DOEPCTL) & USB_OTG_DOEPCTL_USBAEP) == 0) {
             USB_OUTEP(pEP->num)->DOEPCTL |= ((pEP->maxPacket & USB_OTG_DOEPCTL_MPSIZ) |
@@ -518,6 +524,10 @@ HAL_Status USB_DeactivateEndpoint(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_EP
         USB_OUTEP(pEP->num)->DOEPCTL &= ~USB_OTG_DOEPCTL_EPENA;
         USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SNAK;
         USB_DEVICE->DAINTMSK &= ~(USB_OTG_DAINTMSK_OEPM & ((1 << (pEP->num)) << 16));
+    }
+
+    if ((pEP->type == EP_TYPE_ISOC) && (USB_GetDevSpeed(pUSB) == USB_OTG_SPEED_HIGH)) {
+        pEP->isocStart = 0;
     }
 
     return HAL_OK;
@@ -603,7 +613,11 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
 
         if (pEP->type == EP_TYPE_ISOC) {
             if (USB_GetDevSpeed(pUSB) == USB_OTG_SPEED_HIGH) {
-                USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
+                if (pEP->isocStart == 0) {
+                    pEP->isocPending = 1;
+
+                    return HAL_OK;
+                }
             } else {
                 if ((USB_DEVICE->DSTS & (1 << 8)) == 0) {
                     USB_INEP(pEP->num)->DIEPCTL |= USB_OTG_DIEPCTL_SODDFRM;
@@ -649,7 +663,11 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
 
         if (pEP->type == EP_TYPE_ISOC) {
             if (USB_GetDevSpeed(pUSB) == USB_OTG_SPEED_HIGH) {
-                USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
+                if (pEP->isocStart == 0) {
+                    pEP->isocPending = 1;
+
+                    return HAL_OK;
+                }
             } else {
                 if ((USB_DEVICE->DSTS & (1 << 8)) == 0) {
                     USB_OUTEP(pEP->num)->DOEPCTL |= USB_OTG_DOEPCTL_SODDFRM;
