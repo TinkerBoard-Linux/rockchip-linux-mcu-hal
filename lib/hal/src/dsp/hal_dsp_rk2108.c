@@ -5,7 +5,7 @@
 
 #include "hal_base.h"
 
-#if (defined(RKMCU_PISCES) ||  defined(RKMCU_RK2108)) && defined(HAL_DSP_MODULE_ENABLED)
+#if (defined(RKMCU_PISCES) || defined(RKMCU_RK2108)) && defined(HAL_DSP_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver
  *  @{
