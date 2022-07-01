@@ -986,6 +986,9 @@ struct USB_HOST_CH_REG {
 #define USB_OTG_DIEPMSK_BIM_SHIFT                (9U)
 #define USB_OTG_DIEPMSK_BIM_MASK                 (0x1U << USB_OTG_DIEPMSK_BIM_SHIFT) /* 0x00000200 */
 #define USB_OTG_DIEPMSK_BIM                      USB_OTG_DIEPMSK_BIM_MASK       /* BNA interrupt mask */
+#define USB_OTG_DIEPMSK_NAK_SHIFT                (13U)
+#define USB_OTG_DIEPMSK_NAK_MASK                 (0x1U << USB_OTG_DIEPMSK_NAK_SHIFT) /* 0x00002000 */
+#define USB_OTG_DIEPMSK_NAK                      USB_OTG_DIEPMSK_NAK_MASK       /* NAK interrupt mask */
 /********************  Bit definition for USB_OTG_DOEPMSK register  ********************/
 #define USB_OTG_DOEPMSK_XFRCM_SHIFT              (0U)
 #define USB_OTG_DOEPMSK_XFRCM_MASK               (0x1U << USB_OTG_DOEPMSK_XFRCM_SHIFT) /* 0x00000001 */
