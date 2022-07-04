@@ -1474,8 +1474,8 @@ struct CRU_REG {
          uint32_t RESERVED00A8[2];                    /* Address Offset: 0x00A8 */
     __IO uint32_t GLB_CNT_TH;                         /* Address Offset: 0x00B0 */
     __IO uint32_t GLB_RST_ST;                         /* Address Offset: 0x00B4 */
-    __IO uint32_t GLB_SRST_FST;                       /* Address Offset: 0x00B8 */
-    __IO uint32_t GLB_SRST_SND;                       /* Address Offset: 0x00BC */
+    __IO uint32_t GLB_SRST_FST_VALUE;                 /* Address Offset: 0x00B8 */
+    __IO uint32_t GLB_SRST_SND_VALUE;                 /* Address Offset: 0x00BC */
     __IO uint32_t GLB_RST_CON;                        /* Address Offset: 0x00C0 */
     __IO uint32_t GLB_PLL_LOCK;                       /* Address Offset: 0x00C4 */
          uint32_t RESERVED00C8[6];                    /* Address Offset: 0x00C8 */
@@ -12704,14 +12704,14 @@ struct ACODEC_REG {
 #define CRU_GLB_RST_ST_RESETN_CORE_SRC_ST_MASK             (0xFU << CRU_GLB_RST_ST_RESETN_CORE_SRC_ST_SHIFT)            /* 0x000F0000 */
 #define CRU_GLB_RST_ST_RESETN_COREPO_SRC_ST_SHIFT          (20U)
 #define CRU_GLB_RST_ST_RESETN_COREPO_SRC_ST_MASK           (0xFU << CRU_GLB_RST_ST_RESETN_COREPO_SRC_ST_SHIFT)          /* 0x00F00000 */
-/* GLB_SRST_FST */
-#define CRU_GLB_SRST_FST_OFFSET                            (0xB8U)
-#define CRU_GLB_SRST_FST_GLB_SRST_FST_SHIFT                (0U)
-#define CRU_GLB_SRST_FST_GLB_SRST_FST_MASK                 (0xFFFFU << CRU_GLB_SRST_FST_GLB_SRST_FST_SHIFT)             /* 0x0000FFFF */
-/* GLB_SRST_SND */
-#define CRU_GLB_SRST_SND_OFFSET                            (0xBCU)
-#define CRU_GLB_SRST_SND_GLB_SRST_SND_SHIFT                (0U)
-#define CRU_GLB_SRST_SND_GLB_SRST_SND_MASK                 (0xFFFFU << CRU_GLB_SRST_SND_GLB_SRST_SND_SHIFT)             /* 0x0000FFFF */
+/* GLB_SRST_FST_VALUE */
+#define CRU_GLB_SRST_FST_VALUE_OFFSET                      (0xB8U)
+#define CRU_GLB_SRST_FST_VALUE_GLB_SRST_FST_SHIFT          (0U)
+#define CRU_GLB_SRST_FST_VALUE_GLB_SRST_FST_MASK           (0xFFFFU << CRU_GLB_SRST_FST_VALUE_GLB_SRST_FST_SHIFT)       /* 0x0000FFFF */
+/* GLB_SRST_SND_VALUE */
+#define CRU_GLB_SRST_SND_VALUE_OFFSET                      (0xBCU)
+#define CRU_GLB_SRST_SND_VALUE_GLB_SRST_SND_SHIFT          (0U)
+#define CRU_GLB_SRST_SND_VALUE_GLB_SRST_SND_MASK           (0xFFFFU << CRU_GLB_SRST_SND_VALUE_GLB_SRST_SND_SHIFT)       /* 0x0000FFFF */
 /* GLB_RST_CON */
 #define CRU_GLB_RST_CON_OFFSET                             (0xC0U)
 #define CRU_GLB_RST_CON_TSADC_GLB_SRST_CTRL_SHIFT          (0U)
