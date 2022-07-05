@@ -66,6 +66,7 @@ extern struct HAL_PL330_DEV g_pl330Dev1;
 
 /***************************** Function Declare ******************************/
 void BSP_SetLoaderFlag(void);
+void BSP_SetMaskRomFlag(void);
 void BSP_Init(void);
 
 #endif

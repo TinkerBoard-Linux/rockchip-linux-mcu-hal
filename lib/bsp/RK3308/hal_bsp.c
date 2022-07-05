@@ -334,6 +334,11 @@ const struct HAL_PWM_DEV g_pwm2Dev =
 
 void BSP_SetLoaderFlag(void)
 {
+    GRF->OS_REG0 = LDR_UPGRADE_FLAG;
+}
+
+void BSP_SetMaskRomFlag(void)
+{
     GRF->OS_REG0 = SYS_UPGRADE_FLAG;
 }
 
