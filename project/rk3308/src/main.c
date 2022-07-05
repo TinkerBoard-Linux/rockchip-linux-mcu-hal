@@ -174,15 +174,15 @@ void softrst_test(st_RstType mode)
 {
     if (mode == SOFT_SRST_MASKROM) {
         /* Reset to maskrom */
-        GRF->OS_REG0 = SYS_UPGRADE_FLAG;
+        BSP_SetMaskRomFlag();
     } else if (mode == SOFT_SRST_LOADER) {
         /* Reset to Loader */
-        GRF->OS_REG0 = LDR_UPGRADE_FLAG;
+        BSP_SetLoaderFlag();
     } else {
         /* Direct reboot system */
     }
 
-    CRU->GLB_SRST_FST = GLB_SRST_FST;
+    HAL_CRU_SetGlbSrst(GLB_SRST_FST);
     while (1) {
         ;
     }
