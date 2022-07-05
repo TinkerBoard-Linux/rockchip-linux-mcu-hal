@@ -5,11 +5,34 @@
 
 #include "hal_bsp.h"
 
+#if defined(HAL_CRU_MODULE_ENABLED)
+static struct CRU_BANK_INFO cruBanks[] = {
+    CRU_BANK_CFG_FLAGS(CRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(PHPTOPCRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(SECURECRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(SBUSCRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(PMU1SCRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(PMU1CRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(DDR0CRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(DDR1CRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(DDR2CRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(DDR3CRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(BIGCORE0CRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(BIGCORE1CRU_BASE, 0x300, 0x800, 0xa00),
+    CRU_BANK_CFG_FLAGS(DSUCRU_BASE, 0x300, 0x800, 0xa00),
+};
+
+const struct HAL_CRU_DEV g_cruDev = {
+    .banks = cruBanks,
+    .banksNum = HAL_ARRAY_SIZE(cruBanks),
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
     .pReg = UART0,
-    .sclkID = 0,              // TODO: Need to update if you enable CRU
+    .sclkID = CLK_UART0,
     .irqNum = 390,            // 363 + 27(NUM_INTERRUPTS)
     .isAutoFlow = true,
     .runtimeID = PM_RUNTIME_ID_UART0,
@@ -17,7 +40,7 @@ const struct HAL_UART_DEV g_uart0Dev =
 const struct HAL_UART_DEV g_uart2Dev =
 {
     .pReg = UART2,
-    .sclkID = 0,             // TODO: Need to update if you enable CRU
+    .sclkID = CLK_UART2,
     .irqNum = 392,           // 365 + 27(NUM_INTERRUPTS)
     .isAutoFlow = true,
     .runtimeID = PM_RUNTIME_ID_UART2,

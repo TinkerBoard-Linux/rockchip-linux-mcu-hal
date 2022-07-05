@@ -92,6 +92,12 @@
         .frac = _frac,                                                    \
     }
 
+#define RK3588_PLL_RATE(_rate, _p, _m, _s, _k) \
+    {                                          \
+        .rate = _rate##U, .p = _p, .m = _m,    \
+        .s = _s, .k = _k,                      \
+    }
+
 #define CRU_BANK_CFG_FLAGS(reg, sel, gate, soft) \
     {                                            \
         .cruBase = reg,                          \
@@ -102,12 +108,23 @@
 
 struct PLL_CONFIG {
     uint32_t rate;
-    uint32_t fbDiv;
-    uint32_t postDiv1;
-    uint32_t refDiv;
-    uint32_t postDiv2;
-    uint32_t dsmpd;
-    uint32_t frac;
+
+    union {
+        struct {
+            uint32_t fbDiv;
+            uint32_t postDiv1;
+            uint32_t refDiv;
+            uint32_t postDiv2;
+            uint32_t dsmpd;
+            uint32_t frac;
+        };
+        struct {
+            uint32_t m;
+            uint32_t p;
+            uint32_t s;
+            uint32_t k;
+        };
+    };
 };
 
 struct PLL_SETUP {
@@ -115,6 +132,7 @@ struct PLL_SETUP {
     __IO uint32_t *conOffset1;
     __IO uint32_t *conOffset2;
     __IO uint32_t *conOffset3;
+    __IO uint32_t *conOffset6;
     __IO uint32_t *modeOffset;
     __I uint32_t *stat0;
     uint32_t modeShift;
@@ -231,6 +249,28 @@ HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk);
 HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk);
 
 /**
+ * @brief  Set frac div
+ * @param  fracDivName: frac div id(Contains div offset, shift, mask information)
+ * @param  numerator: the numerator to set.
+ * @param  denominator: the denominator to set.
+ * @return HAL_Status
+ */
+HAL_Status HAL_CRU_ClkSetFracDiv(uint32_t fracDivName,
+                                 uint32_t numerator,
+                                 uint32_t denominator);
+
+/**
+ * @brief  Get frac div
+ * @param  fracDivName: frac div id(Contains div offset, shift, mask information)
+ * @param  numerator: the returned numerator.
+ * @param  denominator: the returned denominator.
+ * @return HAL_Status
+ */
+HAL_Status HAL_CRU_ClkGetFracDiv(uint32_t fracDivName,
+                                 uint32_t *numerator,
+                                 uint32_t *denominator);
+
+/**
  * @brief  Set integer div
  * @param  divName: div id(Contains div offset, shift, mask information)
  * @param  divValue: div value
@@ -337,6 +377,20 @@ HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType);
  * @attention these APIs allow direct use in the HAL layer.
  */
 HAL_Status HAL_CRU_PllCompensation(eCLOCK_Name clockName, int ppm);
+
+/**
+ * @brief CRU suspend.
+ * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
+HAL_Status HAL_CRU_Suspend(void);
+
+/**
+ * @brief CRU resume.
+ * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
+HAL_Status HAL_CRU_Resume(void);
 
 #ifdef HAL_CRU_AS_FEATURE_ENABLED
 /**

@@ -23,6 +23,7 @@
 #define SYS_TIMER TIMER0 /* System timer designation (RK TIMER) */
 
 /* HAL Driver Config */
+#define HAL_CRU_MODULE_ENABLED
 #define HAL_DCACHE_MODULE_ENABLED
 #define HAL_ICACHE_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED

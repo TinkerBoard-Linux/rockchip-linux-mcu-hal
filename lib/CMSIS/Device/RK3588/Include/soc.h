@@ -244,32 +244,46 @@ typedef enum
 
 #endif
 
+/******************************************CRU*******************************************/
+#define CRU_CLK_USE_CON_BANK
+#define CLK64(mux, div)   ((((mux) & 0xffffffffULL) << 32) | ((div) & 0xffffffffULL))
+
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
     CLK_INVALID = 0U,
+    PLL_AUPLL,
+    PLL_B0PLL,
+    PLL_B1PLL,
+    PLL_CPLL,
     PLL_GPLL,
-    CLK_WDT,
-    PLL_GPLL_NP5,
-    PCLK_LOGIC_BUS,
-    CLK_SARADC,
-    ACLK_JPEG_BUS,
-    HCLK_MCU_BUS,
-    HCLK_LOGIC_BUS,
-    DCLK_VIPCAP,
-    CLK_ISP,
-    CLK_I2C0,
-    CLK_I2C1,
-    CLK_SPI0,
-    CLK_SPI1,
-    CLK_PWM,
-    CLK_TIMER,
-    CLK_XIP_SFC,
-    CLK_VIP_OUT,
-    OUTCLK_TEST,
-    CLK_UART0_SRC,
-    CLK_UART0_FRAC,
-    CLK_UART0,
-    CLK_32K,
+    PLL_LPLL,
+    PLL_NPLL,
+    PLL_PPLL,
+    PLL_V0PLL,
+
+    CCLK_EMMC            = CLK64(CCLK_EMMC_SEL, CCLK_EMMC_DIV),
+    SCLK_SFC             = CLK64(SCLK_SFC_SEL, SCLK_SFC_DIV),
+    CCLK_SRC_SDIO        = CLK64(CCLK_SRC_SDIO_SEL, CCLK_SRC_SDIO_DIV),
+    BCLK_EMMC            = CLK64(BCLK_EMMC_SEL, BCLK_EMMC_DIV),
+    CLK_REF_PIPE_PHY0    = CLK64(CLK_REF_PIPE_PHY0_SEL, CLK_REF_PIPE_PHY0_PLL_SRC_DIV),
+    CLK_REF_PIPE_PHY1    = CLK64(CLK_REF_PIPE_PHY1_SEL, CLK_REF_PIPE_PHY1_PLL_SRC_DIV),
+    CLK_REF_PIPE_PHY2    = CLK64(CLK_REF_PIPE_PHY2_SEL, CLK_REF_PIPE_PHY2_PLL_SRC_DIV),
+    CLK_HCLK_VAD         = CLK64(HCLK_PMU1_ROOT_I_SEL, 0U),
+    CLK_MCLK_PDM0        = CLK64(MCLK_PDM0_SEL, 0U),
+    CLK_I2S1_8CH_TX_SRC  = CLK64(0U, CLK_I2S1_8CH_TX_SRC_DIV),
+    CLK_I2S1_8CH_TX_FRAC = CLK64(0U, CLK_I2S1_8CH_TX_FRAC_DIV),
+    CLK_I2S1_8CH_TX      = CLK64(MCLK_I2S1_8CH_TX_SEL, 0U),
+    CLK_I2S1_8CH_RX_SRC  = CLK64(0U, CLK_I2S1_8CH_RX_SRC_DIV),
+    CLK_I2S1_8CH_RX_FRAC = CLK64(0U, CLK_I2S1_8CH_RX_FRAC_DIV),
+    CLK_I2S1_8CH_RX      = CLK64(MCLK_I2S1_8CH_RX_SEL, 0U),
+    CLK_UART0_SRC        = CLK64(SCLK_UART0_SEL, CLK_UART0_SRC_DIV),
+    CLK_UART0_FRAC       = CLK64(0U, CLK_UART0_FRAC_DIV),
+    CLK_UART0            = CLK64(SCLK_UART0_SEL , 0U),
+    CLK_UART2_SRC        = CLK64(CLK_UART2_SRC_SEL, CLK_UART2_SRC_DIV),
+    CLK_UART2_FRAC       = CLK64(0U, CLK_UART2_FRAC_DIV),
+    CLK_UART2            = CLK64(SCLK_UART2_SEL, 0U),
+    HCLK_PMU_CM0         = CLK64(HCLK_PMU_CM0_ROOT_I_SEL, 0U),
+
 } eCLOCK_Name;
 #endif /* __ASSEMBLY__ */
 /****************************************MBOX********************************************/

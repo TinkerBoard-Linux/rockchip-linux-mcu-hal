@@ -57,6 +57,21 @@
 #define PLL_DSMPD_MASK     1 << PLL_DSMPD_SHIFT
 #define PLL_FRAC_SHIFT     0
 #define PLL_FRAC_MASK      0xffffff << PLL_FRAC_SHIFT
+#elif defined(SOC_RK3588)
+#define PLLCON0_M_SHIFT     0
+#define PLLCON0_M_MASK      0x3ff << PLLCON0_M_SHIFT
+#define PLLCON1_P_SHIFT     0
+#define PLLCON1_P_MASK      0x3f << PLLCON1_P_SHIFT
+#define PLLCON1_S_SHIFT     6
+#define PLLCON1_S_MASK      0x7 << PLLCON1_S_SHIFT
+#define PLLCON2_K_SHIFT     0
+#define PLLCON2_K_MASK      0xffff << PLLCON2_K_SHIFT
+#define PLLCON1_PWRDOWN     BIT(13)
+#define PLLCON6_LOCK_STATUS BIT(15)
+
+#define PWRDOWN_SHIT 13
+#define PWRDOWN_MASK 1 << PWRDOWN_SHIT
+
 #else
 #define PWRDOWN_SHIT       13
 #define PWRDOWN_MASK       1 << PWRDOWN_SHIT
@@ -77,7 +92,7 @@
 #define MIN_FOUTVCO_FREQ (800 * MHZ)
 #define MAX_FOUTVCO_FREQ (2000 * MHZ)
 #define MIN_FOUT_FREQ    (24 * MHZ)
-#define MAX_FOUT_FREQ    (1400 * MHZ)
+#define MAX_FOUT_FREQ    (1600 * MHZ)
 
 #define EXPONENT_OF_FRAC_PLL              24
 #define RK_PLL_MODE_SLOW                  0
@@ -430,6 +445,157 @@ HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
 
     return HAL_OK;
 }
+
+#elif defined(SOC_RK3588)
+/*
+ * Formulas also embedded within the fractional PLL Verilog model:
+ * If K = 0 (DSM is disabled, "integer mode")
+ * FOUTVCO = FREF / P * M
+ * FOUT = FOUTVCO / 2^S
+ * If K > 0 (DSM is enabled, "fractional mode")
+ * FOUTVCO = (FREF / P) * (M + K / 65536)
+ * FOUT = FOUTVCO / 2^S
+ */
+uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
+{
+    uint32_t m, p, s, k;
+    uint64_t rate = PLL_INPUT_OSC_RATE;
+    uint32_t mode = 0;
+
+    if (pSetup->modeMask) {
+        mode = PLL_GET_PLLMODE(READ_REG(*(pSetup->modeOffset)), pSetup->modeShift,
+                               pSetup->modeMask);
+    } else {
+        mode = RK_PLL_MODE_NORMAL;
+    }
+
+    switch (mode) {
+    case RK_PLL_MODE_SLOW:
+        rate = PLL_INPUT_OSC_RATE;
+        break;
+
+    case RK_PLL_MODE_NORMAL:
+        m = (READ_REG(*(pSetup->conOffset0)) & PLLCON0_M_MASK) >> PLLCON0_M_SHIFT;
+        p = (READ_REG(*(pSetup->conOffset1)) & PLLCON1_P_MASK) >> PLLCON1_P_SHIFT;
+        s = (READ_REG(*(pSetup->conOffset1)) & PLLCON1_S_MASK) >> PLLCON1_S_SHIFT;
+        k = (READ_REG(*(pSetup->conOffset2)) & PLLCON2_K_MASK) >> PLLCON2_K_SHIFT;
+
+        rate *= m;
+        rate = rate / p;
+        if (k) {
+            /* fractional mode */
+            uint64_t frac = PLL_INPUT_OSC_RATE / p;
+
+            frac *= k;
+            frac = frac / 65536;
+            rate += frac;
+        }
+        rate = rate >> s;
+        break;
+
+    case RK_PLL_MODE_DEEP:
+    default:
+        rate = 32768;
+        break;
+    }
+
+    return rate;
+}
+
+/*
+ * Force PLL into slow mode
+ * Pll Power down
+ * Pll Config M, P, S, K
+ * Pll Power up
+ * Waiting for pll lock
+ * Force PLL into normal mode
+ */
+HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
+{
+    const struct PLL_CONFIG *pConfig;
+    int delay = 24000000;
+
+    if (rate == HAL_CRU_GetPllFreq(pSetup)) {
+        return HAL_OK;
+    } else if (rate < MIN_FOUT_FREQ) {
+        return HAL_INVAL;
+    } else if (rate > MAX_FOUT_FREQ) {
+        return HAL_INVAL;
+    }
+
+    pConfig = CRU_PllGetSettings(pSetup, rate);
+    if (!pConfig) {
+        return HAL_ERROR;
+    }
+
+    /* Force PLL into slow mode to ensure output stable clock */
+    if (pSetup->modeMask) {
+        WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift);
+    }
+
+    /* Pll Power down */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+
+    /* Pll Config */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset0), PLLCON0_M_MASK, pConfig->m << PLLCON0_M_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLLCON1_P_MASK, pConfig->p << PLLCON1_P_SHIFT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLLCON1_S_MASK, pConfig->s << PLLCON1_S_SHIFT);
+    if (pConfig->k) {
+        WRITE_REG_MASK_WE(*(pSetup->conOffset2), PLLCON2_K_MASK, pConfig->k << PLLCON2_K_SHIFT);
+    }
+
+    /* Pll Power up */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+
+    /* Waiting for pll lock */
+    while (delay > 0) {
+        if (READ_REG(*(pSetup->conOffset6)) & (1 << pSetup->lockShift)) {
+            break;
+        }
+        delay--;
+    }
+    if (delay == 0) {
+        return HAL_TIMEOUT;
+    }
+
+    /* Force PLL into normal mode */
+    if (pSetup->modeMask) {
+        WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift);
+    }
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
+{
+    int delay = 2400;
+
+    /* Pll Power up */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+
+    /* Waiting for pll lock */
+    while (delay > 0) {
+        if (READ_REG(*(pSetup->conOffset6)) & (1 << pSetup->lockShift)) {
+            break;
+        }
+        HAL_CPUDelayUs(1000);
+        delay--;
+    }
+    if (delay == 0) {
+        return HAL_TIMEOUT;
+    }
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
+{
+    /* Pll Power down */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+
+    return HAL_OK;
+}
+
 #else
 /*
  * Formulas also embedded within the fractional PLL Verilog model:
@@ -756,6 +922,41 @@ uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
     return muxValue;
 }
 
+HAL_Status HAL_CRU_ClkSetFracDiv(uint32_t fracDivName,
+                                 uint32_t numerator,
+                                 uint32_t denominator)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t reg, bank;
+    uint32_t index;
+
+    index = CLK_DIV_GET_REG_OFFSET(fracDivName);
+    bank = CLK_DIV_GET_BANK(fracDivName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    CRU_WRITE(reg, 0, 0, ((numerator << 16) | denominator));
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_ClkGetFracDiv(uint32_t fracDivName,
+                                 uint32_t *numerator,
+                                 uint32_t *denominator)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t reg, bank;
+    uint32_t index;
+    uint32_t val;
+
+    index = CLK_DIV_GET_REG_OFFSET(fracDivName);
+    bank = CLK_DIV_GET_BANK(fracDivName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    val = CRU_READ(reg);
+
+    *numerator = (val & 0xffff0000) >> 16;
+    *denominator = (val & 0x0000ffff);
+
+    return HAL_OK;
+}
 #else /* CRU_CLK_USE_CON_BANK */
 
 HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk)
@@ -989,6 +1190,58 @@ uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
 #endif
 
     return muxValue;
+}
+
+HAL_Status HAL_CRU_ClkSetFracDiv(uint32_t fracDivName,
+                                 uint32_t numerator,
+                                 uint32_t denominator)
+{
+    uint32_t index;
+
+    index = CLK_DIV_GET_REG_OFFSET(fracDivName);
+#ifdef CRU_CLK_DIV_CON_CNT
+    if (index < CRU_CLK_DIV_CON_CNT) {
+        CRU->CRU_CLKSEL_CON[index] = (numerator << 16) | denominator;
+    } else {
+#ifdef PMUCRU_BASE
+        PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT] = (numerator << 16) | denominator;
+#else
+        CRU->PMU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT] = (numerator << 16) | denominator;
+#endif
+    }
+#else
+    CRU->CRU_CLKSEL_CON[index] = (numerator << 16) | denominator;
+#endif
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_ClkGetFracDiv(uint32_t fracDivName,
+                                 uint32_t *numerator,
+                                 uint32_t *denominator)
+{
+    uint32_t index;
+    uint32_t val;
+
+    index = CLK_DIV_GET_REG_OFFSET(fracDivName);
+#ifdef CRU_CLK_DIV_CON_CNT
+    if (index < CRU_CLK_DIV_CON_CNT) {
+        val = CRU->CRU_CLKSEL_CON[index];
+    } else {
+#ifdef PMUCRU_BASE
+        val = PMUCRU->CRU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT];
+#else
+        val = CRU->CRU_CLKSEL_CON[index - CRU_CLK_DIV_CON_CNT];
+#endif
+    }
+#else
+    val = CRU->CRU_CLKSEL_CON[index];
+#endif
+
+    *numerator = (val & 0xffff0000) >> 16;
+    *denominator = (val & 0x0000ffff);
+
+    return HAL_OK;
 }
 #endif /* CRU_CLK_USE_CON_BANK */
 
