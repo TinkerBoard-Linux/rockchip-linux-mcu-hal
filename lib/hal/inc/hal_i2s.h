@@ -31,9 +31,9 @@
 /** i2s dev struct */
 struct HAL_I2S_DEV {
     struct I2S_REG *pReg;
-    uint32_t mclk;
+    eCLOCK_Name mclk;
     uint32_t mclkGate;
-    uint32_t hclk;
+    eCLOCK_Name hclk;
     ePD_Id pd;
     uint16_t bclkFs;
     struct AUDIO_DMA_DATA rxDmaData;

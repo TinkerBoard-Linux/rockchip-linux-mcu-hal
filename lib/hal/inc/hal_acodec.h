@@ -31,7 +31,7 @@
 /** acodec dev struct */
 struct HAL_ACODEC_DEV {
     struct ACODEC_REG *pReg;
-    uint32_t hclk;
+    eCLOCK_Name hclk;
     uint32_t mclk;
     uint32_t micBias;
     bool micDifferential;

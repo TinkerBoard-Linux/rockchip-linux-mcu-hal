@@ -269,9 +269,9 @@ struct GMAC_HANDLE {
   */
 struct HAL_GMAC_DEV {
     struct GMAC_REG *pReg;
-    uint32_t clkID;
+    eCLOCK_Name clkID;
     uint32_t clkGateID;
-    uint32_t pclkID;
+    eCLOCK_Name pclkID;
     uint32_t pclkGateID;
     IRQn_Type irqNum;
     ePM_RUNTIME_ID runtimeID;

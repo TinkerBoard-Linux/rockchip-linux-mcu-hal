@@ -124,7 +124,7 @@ struct DSP_DEV {
     struct MBOX_REG *mboxReg;
     uint8_t errorIrq;
     int mboxIrq[MBOX_CHAN_CNT];
-    uint32_t clkId;
+    eCLOCK_Name clkId;
     void *privData; /**< dsp dev privData */
 };
 

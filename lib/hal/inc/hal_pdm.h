@@ -37,7 +37,7 @@ struct HAL_PDM_DEV {
     eCLOCK_Name mclk;
     uint32_t mclkGate;
     uint32_t mclkRate;
-    uint32_t hclk;
+    eCLOCK_Name hclk;
     uint32_t reset;
     ePD_Id pd;
     ePDM_mode mode;

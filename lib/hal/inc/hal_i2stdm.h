@@ -31,12 +31,12 @@
 /** i2s-tdm dev struct */
 struct HAL_I2STDM_DEV {
     struct I2STDM_REG *pReg;
-    uint32_t mclkOut;
+    eCLOCK_Name mclkOut;
     eCLOCK_Name mclkTx;
     uint32_t mclkTxGate;
     eCLOCK_Name mclkRx;
     uint32_t mclkRxGate;
-    uint32_t hclk;
+    eCLOCK_Name hclk;
     ePD_Id pd;
     uint16_t bclkFs;
     eTRCM_modeType trcmMode;

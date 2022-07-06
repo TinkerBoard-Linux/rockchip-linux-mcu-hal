@@ -45,7 +45,7 @@ struct HAL_HYPERPSRAM_DEV {
     struct HYPERBUS_REG *pReg;
     struct HYPERPSRAM_CHIP_INFO psramChip;
     struct HYPERPSRAM_RESUME_REG hyperResumeReg;
-    uint32_t clkID; /**< The hyperbus clk id */
+    eCLOCK_Name clkID; /**< The hyperbus clk id */
     uint32_t aclkGateID; /**< The hyperbus aclk gate id */
     uint32_t sclkGateID; /**< The hyperbus sclk gate id */
     uint32_t hyperMem[2]; /**< The hyperbus psram base address

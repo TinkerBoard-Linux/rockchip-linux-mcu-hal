@@ -16,7 +16,7 @@
 
 struct CLK_INIT {
     const char *name;
-    uint32_t clkId;
+    eCLOCK_Name clkId;
     uint32_t initRate;
 };
 

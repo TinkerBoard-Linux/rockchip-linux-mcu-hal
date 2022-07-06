@@ -115,7 +115,7 @@ struct HAL_SPI_DMA_INFO {
 
 struct HAL_SPI_DEV {
     const uint32_t base;
-    const uint32_t clkId;
+    const eCLOCK_Name clkId;
     const uint32_t clkGateID;
     const uint32_t pclkGateID;
     const uint8_t irqNum;

@@ -41,7 +41,7 @@ typedef enum {
   */
 struct HAL_PWM_DEV {
     struct PWM_REG *pReg;
-    uint32_t clkID;
+    eCLOCK_Name clkID;
     uint32_t clkGateID;
     uint32_t pclkGateID;
     IRQn_Type irqNum;

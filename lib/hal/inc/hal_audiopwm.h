@@ -30,9 +30,9 @@
 /** audioPwm dev struct */
 struct HAL_AUDIOPWM_DEV {
     struct AUDIOPWM_REG *pReg;
-    uint32_t mclk;
+    eCLOCK_Name mclk;
     uint32_t mclkGate;
-    uint32_t hclk;
+    eCLOCK_Name hclk;
 
     struct AUDIO_DMA_DATA txDmaData;
 };

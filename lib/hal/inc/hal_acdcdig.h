@@ -38,8 +38,8 @@ typedef enum {
 /** acdcDig dev struct */
 struct HAL_ACDCDIG_DEV {
     struct ACDCDIG_REG *pReg;
-    uint32_t hclk;
-    uint32_t clkI2cCodec;
+    eCLOCK_Name hclk;
+    eCLOCK_Name clkI2cCodec;
     uint16_t bclkFs;
     uint16_t i2cFlags;
     uint16_t enabled;
