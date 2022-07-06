@@ -26,7 +26,7 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 CPU		+= -ftree-vectorize -ffast-math -marm
 ASFLAGS		+= $(CPU) -c -x assembler-with-cpp -D__ASSEMBLY__
 CFLAGS		+= $(CPU) -std=gnu99 -O2 -g
-CFLAGS		+= -Wformat=2 -Wall -Wextra -Wno-unused-parameter
+CFLAGS		+= -Wformat=2 -Wall -Wno-unused-parameter
 CFLAGS		+= -Wstrict-prototypes -Wmissing-prototypes -nostartfiles
 LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
