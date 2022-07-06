@@ -162,8 +162,7 @@ static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         return HAL_INVAL;
     }
 
-    n = (CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0xffff0000) >> 16;
-    m = CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] & 0x0000ffff;
+    HAL_CRU_ClkGetFracDiv(divFrac, &n, &m);
 
     if (HAL_CRU_ClkGetMux(muxSrc)) {
         pRate = s_cpllFreq / HAL_CRU_ClkGetDiv(divSrc);
@@ -294,7 +293,7 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         HAL_CRU_FracdivGetConfig(rate, s_gpllFreq, &n, &m);
         HAL_CRU_ClkSetDiv(divSrc, 1);
         HAL_CRU_ClkSetMux(muxSrc, 0);
-        CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
+        HAL_CRU_ClkSetFracDiv(divFrac, n, m);
         HAL_CRU_ClkSetMux(mux, 1);
     }
 
@@ -745,12 +744,12 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
  */
 HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType)
 {
-    uint32_t mask = CRU_GLB_RST_CON_CRU_WDT_EN_MASK | CRU_GLB_RST_CON_CRU_WDT_CON_MASK;
-    uint32_t val = 1 << CRU_GLB_RST_CON_CRU_WDT_EN_SHIFT;
+    uint32_t mask = CRU_GLB_RST_CON_CRU_WDT0_EN_MASK | CRU_GLB_RST_CON_CRU_WDT0_CON_MASK;
+    uint32_t val = 1 << CRU_GLB_RST_CON_CRU_WDT0_EN_SHIFT;
 
     switch (wdtType) {
     case GLB_RST_FST_WDT0:
-        val |= (1 << CRU_GLB_RST_CON_CRU_WDT_CON_SHIFT);
+        val |= (1 << CRU_GLB_RST_CON_CRU_WDT0_CON_SHIFT);
         break;
     case GLB_RST_SND_WDT0:
         break;
