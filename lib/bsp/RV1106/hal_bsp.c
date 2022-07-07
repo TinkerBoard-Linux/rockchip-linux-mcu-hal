@@ -35,6 +35,35 @@ const struct HAL_I2C_DEV g_i2c4Dev =
 };
 #endif
 
+#ifdef HAL_PWM_MODULE_ENABLED
+const struct HAL_PWM_DEV g_pwm0Dev =
+{
+    .pReg = PWM0,
+    .clkID = CLK_PWM0,
+    .clkGateID = CLK_PWM0_PERI_GATE,
+    .pclkGateID = PCLK_PWM0_PERI_GATE,
+    .irqNum = PWM0_PWR_IRQn,
+};
+
+const struct HAL_PWM_DEV g_pwm1Dev =
+{
+    .pReg = PWM1,
+    .clkID = CLK_PWM1,
+    .clkGateID = CLK_PWM1_PERI_GATE,
+    .pclkGateID = PCLK_PWM1_PERI_GATE,
+    .irqNum = PWM1_PWR_IRQn,
+};
+
+const struct HAL_PWM_DEV g_pwm2Dev =
+{
+    .pReg = PWM2,
+    .clkID = CLK_PWM2,
+    .clkGateID = CLK_PWM2_PERI_GATE,
+    .pclkGateID = PCLK_PWM2_PERI_GATE,
+    .irqNum = PWM2_PWR_IRQn,
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
