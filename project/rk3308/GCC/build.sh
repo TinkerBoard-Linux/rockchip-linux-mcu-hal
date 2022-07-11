@@ -22,6 +22,7 @@ make_hal() {
     export SHMEM_SIZE=0x00100000
     export CUR_CPU=$1
     make clean
+    rm $CUR_DIR/hal$1.elf $CUR_DIR/hal$1.bin
     make -j8
     cp $CUR_DIR/TestDemo.elf $CUR_DIR/hal$1.elf
     mv $CUR_DIR/TestDemo.bin $CUR_DIR/hal$1.bin
