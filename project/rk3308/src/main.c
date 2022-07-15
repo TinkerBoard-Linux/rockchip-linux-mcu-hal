@@ -113,16 +113,17 @@ int rk_printf(const char *fmt, ...)
 {
     va_list args;
     uint64_t cnt64;
-    uint32_t sec, ms, us;
+    uint32_t cpu_id, sec, ms, us;
 
     HAL_SPINLOCK_Lock(RK_PRINTF_SPINLOCK_ID);
 
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
     // SYS_TIMER is 24MHz
     cnt64 = HAL_GetSysTimerCount();
     us = (uint32_t)((cnt64 / (PLL_INPUT_OSC_RATE / 1000000)) % 1000);
     ms = (uint32_t)((cnt64 / (PLL_INPUT_OSC_RATE / 1000)) % 1000);
     sec = (uint32_t)(cnt64 / PLL_INPUT_OSC_RATE);
-    printf("[%d.%03d.%03d]", sec, ms, us);
+    printf("[(%d) %d.%03d.%03d]", cpu_id, sec, ms, us);
 
     va_start(args, fmt);
 

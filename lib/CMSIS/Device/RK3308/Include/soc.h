@@ -127,10 +127,22 @@ typedef enum {
     OWIRE_IRQn       = 90,            /*!< OWIRE Interrupt             */
     CAN0_IRQn        = 91,            /*!< CAN0 Interrupt              */
     SFC_IRQn         = 114,           /*!< SFC Interrupt               */
-    AMP0_IRQn        = 130,           /*!< AMP0   Interrupt            */
-    AMP1_IRQn        = 131,           /*!< AMP1   Interrupt            */
-    AMP2_IRQn        = 132,           /*!< AMP2   Interrupt            */
-    AMP3_IRQn        = 133,           /*!< AMP3   Interrupt            */
+    AMP0_IRQn        = 119,           /*!< AMP0   Interrupt            */
+    AMP1_IRQn        = 120,           /*!< AMP1   Interrupt            */
+    AMP2_IRQn        = 121,           /*!< AMP2   Interrupt            */
+    AMP3_IRQn        = 122,           /*!< AMP3   Interrupt            */
+    RPMSG_01_IRQn    = 130,           /*!< RPMSG 0->1 Interrupt        */
+    RPMSG_02_IRQn    = 131,           /*!< RPMSG 0->2 Interrupt        */
+    RPMSG_03_IRQn    = 132,           /*!< RPMSG 0->3 Interrupt        */
+    RPMSG_10_IRQn    = 133,           /*!< RPMSG 1->0 Interrupt        */
+    RPMSG_12_IRQn    = 134,           /*!< RPMSG 1->2 Interrupt        */
+    RPMSG_13_IRQn    = 135,           /*!< RPMSG 1->3 Interrupt        */
+    RPMSG_20_IRQn    = 136,           /*!< RPMSG 2->0 Interrupt        */
+    RPMSG_21_IRQn    = 137,           /*!< RPMSG 2->1 Interrupt        */
+    RPMSG_23_IRQn    = 138,           /*!< RPMSG 2->3 Interrupt        */
+    RPMSG_30_IRQn    = 139,           /*!< RPMSG 3->0 Interrupt        */
+    RPMSG_31_IRQn    = 140,           /*!< RPMSG 3->1 Interrupt        */
+    RPMSG_32_IRQn    = 141,           /*!< RPMSG 3->2 Interrupt        */
     RSVD0_IRQn       = 148,           /*!< RSVD0  Interrupt            */
     NUM_INTERRUPTS   = 160
 } IRQn_Type;

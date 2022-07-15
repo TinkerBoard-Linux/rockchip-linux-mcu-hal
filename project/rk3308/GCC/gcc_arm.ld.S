@@ -23,6 +23,7 @@ __UND_STACK_SIZE = 0x400;
 
 __TTB_SIZE = 0x4000;
 __SPINLOCK_MEM_SIZE = 0x100;
+__SHARE_RPMSG_SIZE = 0x80000;
 
 SECTIONS
 {
@@ -132,6 +133,15 @@ SECTIONS
         . += __SPINLOCK_MEM_SIZE;
         PROVIDE(__spinlock_mem_end__ = .);
         . = ALIGN(64);
+    } > SHMEM
+
+    .share_rpmsg (NOLOAD):
+    {
+        . = ALIGN(0x1000);
+        PROVIDE(__share_rpmsg_start__ = .);
+        . += __SHARE_RPMSG_SIZE;
+        PROVIDE(__share_rpmsg_end__ = .);
+        . = ALIGN(0x1000);
     } > SHMEM
 
     .share_data :
