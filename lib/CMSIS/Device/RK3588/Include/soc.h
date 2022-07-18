@@ -22,34 +22,73 @@
 /* ================                    DMA REQ                      =============== */
 /* ================================================================================ */
 typedef enum {
-    DMA_REQ_UART0_TX = 0,
-    DMA_REQ_UART0_RX = 1,
-    DMA_REQ_UART1_TX = 2,
-    DMA_REQ_UART1_RX = 3,
-    DMA_REQ_UART2_TX = 4,
-    DMA_REQ_UART2_RX = 5,
-    DMA_REQ_UART3_TX = 6,
-    DMA_REQ_UART3_RX = 7,
-    DMA_REQ_UART4_TX = 8,
-    DMA_REQ_UART4_RX = 9,
-    DMA_REQ_UART5_TX = 10,
-    DMA_REQ_UART5_RX = 11,
-    DMA_REQ_UART6_TX = 12,
-    DMA_REQ_UART6_RX = 13,
-    DMA_REQ_UART7_TX = 14,
-    DMA_REQ_UART7_RX = 15,
-    DMA_REQ_UART8_TX = 16,
-    DMA_REQ_UART8_RX = 17,
-    DMA_REQ_UART9_TX = 18,
-    DMA_REQ_UART9_RX = 19,
-    DMA_REQ_SPI0_TX = 20,
-    DMA_REQ_SPI0_RX = 21,
-    DMA_REQ_SPI1_TX = 22,
-    DMA_REQ_SPI1_RX = 23,
-    DMA_REQ_SPI2_TX = 24,
-    DMA_REQ_SPI2_RX = 25,
-    DMA_REQ_SPI3_TX = 26,
-    DMA_REQ_SPI3_RX = 27,
+    DMA_REQ_I2S0_8CH_TX = 0,
+    DMA_REQ_I2S2_2CH_TX = 0,
+    DMA_REQ_I2S4_8CH_TX = 0,
+    DMA_REQ_I2S0_8CH_RX = 1,
+    DMA_REQ_I2S2_2CH_RX = 1,
+    DMA_REQ_I2S1_8CH_TX = 2,
+    DMA_REQ_I2S3_2CH_TX = 2,
+    DMA_REQ_I2S5_8CH_TX = 2,
+    DMA_REQ_I2S1_8CH_RX = 3,
+    DMA_REQ_I2S3_2CH_RX = 3,
+    DMA_REQ_PDM0        = 4,
+    DMA_REQ_PDM1        = 4,
+    DMA_REQ_I2S6_8CH_TX = 4,
+    DMA_REQ_SPDIF0_TX   = 5,
+    DMA_REQ_SPDIF1_TX   = 5,
+    DMA_REQ_UART0_TX    = 6,
+    DMA_REQ_SPDIF2_TX   = 6,
+    DMA_REQ_UART0_RX    = 7,
+    DMA_REQ_SPDIF3_TX   = 7,
+    DMA_REQ_UART7_TX    = 7,
+    DMA_REQ_UART1_TX    = 8,
+    DMA_REQ_SPDIF4_TX   = 8,
+    DMA_REQ_UART7_RX    = 8,
+    DMA_REQ_UART1_RX    = 9,
+    DMA_REQ_UART4_TX    = 9,
+    DMA_REQ_UART8_TX    = 9,
+    DMA_REQ_UART2_TX    = 10,
+    DMA_REQ_UART4_RX    = 10,
+    DMA_REQ_UART8_RX    = 10,
+    DMA_REQ_UART2_RX    = 11,
+    DMA_REQ_UART5_TX    = 11,
+    DMA_REQ_UART9_TX    = 11,
+    DMA_REQ_UART3_TX    = 12,
+    DMA_REQ_UART5_RX    = 12,
+    DMA_REQ_UART9_RX    = 12,
+    DMA_REQ_UART3_RX    = 13,
+    DMA_REQ_UART6_TX    = 13,
+    DMA_REQ_SPI4_TX     = 13,
+    DMA_REQ_SPI0_TX     = 14,
+    DMA_REQ_UART6_RX    = 14,
+    DMA_REQ_SPI4_RX     = 14,
+    DMA_REQ_SPI0_RX     = 15,
+    DMA_REQ_SPI2_TX     = 15,
+    DMA_REQ_PWM2        = 15,
+    DMA_REQ_SPI1_TX     = 16,
+    DMA_REQ_SPI2_RX     = 16,
+    DMA_REQ_PWM3        = 16,
+    DMA_REQ_SPI1_RX     = 17,
+    DMA_REQ_SPI3_TX     = 17,
+    DMA_REQ_CAN2_TX     = 17,
+    DMA_REQ_PWM0        = 18,
+    DMA_REQ_SPI3_RX     = 18,
+    DMA_REQ_CAN2_RX     = 18,
+    DMA_REQ_CAN0_TX     = 19,
+    DMA_REQ_PWM1        = 19,
+    DMA_REQ_SDMMC       = 19,
+    DMA_REQ_CAN0_RX     = 20,
+    DMA_REQ_CAN1_TX     = 20,
+    DMA_REQ_SPDIF0_RX   = 21,
+    DMA_REQ_CAN1_RX     = 21,
+    DMA_REQ_I2S7_8CH_RX = 21,
+    DMA_REQ_SPDIF1_RX   = 22,
+    DMA_REQ_SPDIF5_TX   = 22,
+    DMA_REQ_I2S8_8CH_TX = 22,
+    DMA_REQ_SPDIF2_RX   = 23,
+    DMA_REQ_I29_8CH_RX  = 23,
+    DMA_REQ_I210_8CH_RX = 24,
 } DMA_REQ_Type;
 
 /* ================================================================================ */
@@ -60,8 +99,7 @@ typedef enum {
 #define NUM_EXT_INTERRUPTS        512
 
 #if defined(RKMCU_RK3588_PMU)
-typedef enum
-{
+typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
   NonMaskableInt_IRQn       = -14,     /*  2 Non Maskable Interrupt */
   HardFault_IRQn            = -13,     /*  3 HardFault Interrupt */
@@ -107,8 +145,7 @@ typedef enum
   TOTAL_INTERRUPTS          =  (NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),   /*!< For external interrupt from intmux    */
 } IRQn_Type;
 #elif defined(RKMCU_RK3588_NPU)
-typedef enum
-{
+typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
   NonMaskableInt_IRQn       = -14,     /*  2 Non Maskable Interrupt */
   HardFault_IRQn            = -13,     /*  3 HardFault Interrupt */
@@ -246,7 +283,7 @@ typedef enum
 
 /******************************************CRU*******************************************/
 #define CRU_CLK_USE_CON_BANK
-#define CLK64(mux, div)   ((((mux) & 0xffffffffULL) << 32) | ((div) & 0xffffffffULL))
+#define CLK64(mux, div) ((((mux) & 0xffffffffULL) << 32) | ((div) & 0xffffffffULL))
 
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
@@ -278,12 +315,11 @@ typedef enum CLOCK_Name {
     CLK_I2S1_8CH_RX      = CLK64(MCLK_I2S1_8CH_RX_SEL, 0U),
     CLK_UART0_SRC        = CLK64(SCLK_UART0_SEL, CLK_UART0_SRC_DIV),
     CLK_UART0_FRAC       = CLK64(0U, CLK_UART0_FRAC_DIV),
-    CLK_UART0            = CLK64(SCLK_UART0_SEL , 0U),
+    CLK_UART0            = CLK64(SCLK_UART0_SEL, 0U),
     CLK_UART2_SRC        = CLK64(CLK_UART2_SRC_SEL, CLK_UART2_SRC_DIV),
     CLK_UART2_FRAC       = CLK64(0U, CLK_UART2_FRAC_DIV),
     CLK_UART2            = CLK64(SCLK_UART2_SEL, 0U),
     HCLK_PMU_CM0         = CLK64(HCLK_PMU_CM0_ROOT_I_SEL, 0U),
-
 } eCLOCK_Name;
 #endif /* __ASSEMBLY__ */
 /****************************************MBOX********************************************/
@@ -338,6 +374,14 @@ struct INTMUX_REG {
 #undef TIMER1_BASE
 #define TIMER0_BASE                    0xFDB00000U /* TIMER0_BASE*/
 #define TIMER1_BASE                    0xFDB00020U /* TIMER1_BASE*/
+#endif
+
+/****************************************PMU*********************************************/
+#ifndef __ASSEMBLY__
+typedef enum PD_Id {
+    PD_UNKOWN,
+    PD_AUDIO,
+} ePD_Id;
 #endif
 
 #ifdef __cplusplus
