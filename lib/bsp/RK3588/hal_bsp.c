@@ -47,6 +47,43 @@ const struct HAL_UART_DEV g_uart2Dev =
 };
 #endif
 
+#ifdef HAL_PDM_MODULE_ENABLED
+struct HAL_PDM_DEV g_pdm0Dev =
+{
+    .pReg = PDM0,
+    .mclk = CLK_MCLK_PDM0,
+    .mclkGate = MCLK_PDM0_GATE,
+    .mclkRate = PDM_CLK_RATE,
+    .hclk = HCLK_PDM0_GATE,
+    .reset = SRST_RESETN_PDM0,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(PDM0->RXFIFO_DATA_REG),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_PDM0,
+        .dmac = DMA0,
+    },
+};
+#endif
+
+#ifdef HAL_VAD_MODULE_ENABLED
+/* VAD_CONTROL[3:1]: voice source mapping */
+const struct AUDIO_SRC_ADDR_MAP g_audioSrcAddrMaps[] =
+{
+    { 0, PDM0_BASE + 0x400 },
+    { /* sentinel */ }
+};
+
+struct HAL_VAD_DEV g_vadDev =
+{
+    .pReg = VAD,
+    .hclk = HCLK_VAD_GATE,
+    .pd = PD_AUDIO,
+    .irq = VAD_IRQn,
+};
+#endif
+
 void BSP_Init(void)
 {
 }
