@@ -66,11 +66,23 @@ SECTIONS
         LONG ((__bss_end__ - __bss_start__) / 4)
         LONG (__TTB_start__)
         LONG ((__TTB_end__ - __TTB_start__) / 4)
-#ifdef CPU1
-        LONG (__spinlock_mem_start__)
-        LONG ((__spinlock_mem_end__ - __spinlock_mem_start__) / 4)
+#ifdef PRIMARY_CPU
+        LONG (ADDR(.share_lock))
+        LONG (SIZEOF(.share_lock) / 4)
 #endif
         __zero_table_end__ = .;
+    } > DRAM
+
+    .copy.table :
+    {
+        . = ALIGN(4);
+        __copy_table_start__ = .;
+#ifdef PRIMARY_CPU
+        LONG (LOADADDR(.share_data))
+        LONG (ADDR(.share_data))
+        LONG (SIZEOF(.share_data) / 4)
+#endif
+        __copy_table_end__ = .;
     } > DRAM
 
     . = ALIGN(4);
@@ -113,7 +125,7 @@ SECTIONS
         . = ALIGN(16 * 1024);
     } > DRAM
 
-    .share_mem (NOLOAD) :
+    .share_lock (NOLOAD):
     {
         . = ALIGN(64);
         PROVIDE(__spinlock_mem_start__ = .);
@@ -121,6 +133,15 @@ SECTIONS
         PROVIDE(__spinlock_mem_end__ = .);
         . = ALIGN(64);
     } > SHMEM
+
+    .share_data :
+    {
+        . = ALIGN(64);
+        PROVIDE(__share_data_start__ = .);
+        KEEP(*(.share_data))
+        PROVIDE(__share_data_end__ = .);
+        . = ALIGN(64);
+    } > SHMEM AT > DRAM
 
     . = ALIGN(16);
     .bss (NOLOAD) :
