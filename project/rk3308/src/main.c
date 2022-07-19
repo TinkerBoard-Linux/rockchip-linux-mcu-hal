@@ -8,13 +8,18 @@
 #include "task_ipc.h"
 
 /********************* Private MACRO Definition ******************************/
-#define TEST_DEMO
+//#define TEST_DEMO
 
 /********************* Private Structure Definition **************************/
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     /* Config the irqs here. */
     // todo...
+
+    GIC_AMP_IRQ_CFG_ROUTE(AMP0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(AMP1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(AMP2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(AMP3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(1, 0)),   /* sentinel */
 };
@@ -184,6 +189,9 @@ void main(void)
     printf("****************************************\n");
     rk_printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("\n");
+
+    /* check all cpu is power on*/
+    amp_sync_poweron();
 
 #ifdef TEST_DEMO
     test_demo();
