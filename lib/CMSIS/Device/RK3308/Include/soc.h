@@ -127,6 +127,10 @@ typedef enum {
     OWIRE_IRQn       = 90,            /*!< OWIRE Interrupt             */
     CAN0_IRQn        = 91,            /*!< CAN0 Interrupt              */
     SFC_IRQn         = 114,           /*!< SFC Interrupt               */
+    AMP0_IRQn        = 130,           /*!< AMP0   Interrupt            */
+    AMP1_IRQn        = 131,           /*!< AMP1   Interrupt            */
+    AMP2_IRQn        = 132,           /*!< AMP2   Interrupt            */
+    AMP3_IRQn        = 133,           /*!< AMP3   Interrupt            */
     RSVD0_IRQn       = 148,           /*!< RSVD0  Interrupt            */
     NUM_INTERRUPTS   = 160
 } IRQn_Type;

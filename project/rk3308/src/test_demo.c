@@ -8,6 +8,7 @@
 #include "task_ipc.h"
 
 /********************* Private MACRO Definition ******************************/
+#define AMPMSG_TEST
 //#define SOFTRST_TEST
 //#define SOFTIRQ_TEST
 //#define FAULTDBG_TEST
@@ -27,6 +28,13 @@
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     /* The priority higher than 0x80 is non-secure interrupt. */
+
+#ifdef AMPMSG_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(AMP0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(AMP1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(AMP2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(AMP3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
 
 #ifdef TIMER_TEST
     GIC_AMP_IRQ_CFG_ROUTE(TIMER0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
@@ -71,6 +79,54 @@ static void HAL_IOMUX_I2C1M0Config(void)
                          GPIO_PIN_B3 |
                          GPIO_PIN_B4,
                          PIN_CONFIG_MUX_FUNC1);
+}
+#endif
+
+/************************************************/
+/*                                              */
+/*                AMPMSG_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef AMPMSG_TEST
+static uint32_t amp_irq[4] = { AMP0_IRQn, AMP1_IRQn, AMP2_IRQn, AMP3_IRQn };
+
+static void amp_master_isr(int vector, void *param)
+{
+    uint32_t cpu_id;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    rk_printf("cpu_id=%ld: master_isr, vector = %d\n", cpu_id, vector);
+    HAL_GIC_EndOfInterrupt(vector);
+}
+
+static void amp_remote_isr(int vector, void *param)
+{
+    uint32_t cpu_id;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    rk_printf("cpu_id=%ld: remote_isr, vector = %d\n", cpu_id, vector);
+    HAL_GIC_SetPending(amp_irq[1]);
+    HAL_GIC_EndOfInterrupt(vector);
+}
+
+static void ampmsg_test(void)
+{
+    uint32_t cpu_id;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    if (cpu_id == 1) {
+        HAL_IRQ_HANDLER_SetIRQHandler(amp_irq[cpu_id], amp_master_isr, NULL);
+    } else {
+        HAL_IRQ_HANDLER_SetIRQHandler(amp_irq[cpu_id], amp_remote_isr, NULL);
+    }
+    HAL_GIC_Enable(amp_irq[cpu_id]);
+
+    if (cpu_id == 1) {
+        HAL_DelayMs(100);
+        HAL_GIC_SetPending(amp_irq[0]);
+        HAL_GIC_SetPending(amp_irq[2]);
+        HAL_GIC_SetPending(amp_irq[3]);
+    }
 }
 #endif
 
@@ -716,6 +772,10 @@ void TEST_DEMO_GIC_Init(void)
 
 void test_demo(void)
 {
+#ifdef AMPMSG_TEST
+    ampmsg_test();
+#endif
+
 #ifdef SPINLOCK_TEST
     spinlock_test();
 #endif

@@ -8,7 +8,7 @@
 #include "task_ipc.h"
 
 /********************* Private MACRO Definition ******************************/
-//#define TEST_DEMO
+#define TEST_DEMO
 
 /********************* Private Structure Definition **************************/
 
