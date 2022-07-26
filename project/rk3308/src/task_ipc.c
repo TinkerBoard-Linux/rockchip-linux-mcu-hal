@@ -49,7 +49,7 @@ void amp_sync_poweron(void)
     } while ((cpu_sta & (0x000000f << CPU_POWER_UP_SHIFT)) != (0x000000f << CPU_POWER_UP_SHIFT));
 }
 
-static void amp_master_isr(int vector, void *param)
+static void amp_msg_isr(int vector, void *param)
 {
     uint32_t cpu_id;
     uint32_t retval;
@@ -58,63 +58,27 @@ static void amp_master_isr(int vector, void *param)
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
     //rk_printf("cpu_id=%ld: master_isr, vector = %d\n", cpu_id, vector);
 
-    if (ipc_dat->m_cb) {
-        retval = ipc_dat->m_cb();
+    if (ipc_dat->rx_cb[cpu_id]) {
+        retval = ipc_dat->rx_cb[cpu_id]();
         if (retval != HAL_OK) {
-            printf("amp_master_isr: callback error!\n");
+            printf("amp_msg_isr[%d]: callback error!\n", cpu_id);
         }
     }
 
     HAL_GIC_EndOfInterrupt(vector);
 }
 
-HAL_Status amp_master_init(IPC_DATA_T *ipc_dat, ipc_rx_cb_t callback)
+HAL_Status amp_msg_init(IPC_DATA_T *ipc_dat, ipc_rx_cb_t callback)
 {
     uint32_t cpu_id;
     HAL_Status ret = HAL_OK;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    HAL_IRQ_HANDLER_SetIRQHandler(amp_irq[cpu_id], amp_master_isr, ipc_dat);
+    HAL_IRQ_HANDLER_SetIRQHandler(amp_irq[cpu_id], amp_msg_isr, ipc_dat);
     HAL_GIC_Enable(amp_irq[cpu_id]);
 
     HAL_SPINLOCK_Lock(ipc_dat->spinlock_id);
-    ipc_dat->m_cb = callback;
-    ipc_dat->cpu_sta |= (0x00000001 << cpu_id) << CPU_INITIALED_SHIFT;
-    HAL_SPINLOCK_Unlock(ipc_dat->spinlock_id);
-
-    return ret;
-}
-
-static void amp_remote_isr(int vector, void *param)
-{
-    uint32_t cpu_id;
-    uint32_t retval;
-    IPC_DATA_T *ipc_dat = (IPC_DATA_T *)param;
-
-    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    //rk_printf("cpu_id=%ld: remote_isr, vector = %d\n", cpu_id, vector);
-
-    if (ipc_dat->r_cb) {
-        retval = ipc_dat->r_cb();
-        if (retval != HAL_OK) {
-            printf("amp_remote_isr: callback error!\n");
-        }
-    }
-
-    HAL_GIC_EndOfInterrupt(vector);
-}
-
-HAL_Status amp_remote_init(IPC_DATA_T *ipc_dat, ipc_rx_cb_t callback)
-{
-    uint32_t cpu_id;
-    HAL_Status ret = HAL_OK;
-
-    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    HAL_IRQ_HANDLER_SetIRQHandler(amp_irq[cpu_id], amp_remote_isr, ipc_dat);
-    HAL_GIC_Enable(amp_irq[cpu_id]);
-
-    HAL_SPINLOCK_Lock(ipc_dat->spinlock_id);
-    ipc_dat->r_cb = callback;
+    ipc_dat->rx_cb[cpu_id] = callback;
     ipc_dat->cpu_sta |= (0x00000001 << cpu_id) << CPU_INITIALED_SHIFT;
     HAL_SPINLOCK_Unlock(ipc_dat->spinlock_id);
 

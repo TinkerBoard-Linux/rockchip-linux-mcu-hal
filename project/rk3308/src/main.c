@@ -190,8 +190,10 @@ void main(void)
     rk_printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("\n");
 
+#ifdef IPC_ENABLE
     /* check all cpu is power on*/
     amp_sync_poweron();
+#endif
 
 #ifdef TEST_DEMO
     test_demo();

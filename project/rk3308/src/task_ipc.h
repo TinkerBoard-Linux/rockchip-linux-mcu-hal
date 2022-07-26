@@ -6,6 +6,8 @@
 #ifndef _TASK_IPC_H_
 #define _TASK_IPC_H_
 
+#define IPC_ENABLE
+
 /* spinlock ID define */
 #define RK_PRINTF_SPINLOCK_ID 0U
 #define RK_SHMEM_SPINLOCK_ID  1U
@@ -30,8 +32,7 @@ struct IPC_DATA {
     uint32_t spinlock_id;   // for spinlock ID
     uint32_t cpu_sta;       // cpu power up flag
     uint32_t src_cpu;       // source cpu which send msg
-    ipc_rx_cb_t m_cb;       // master isr callback
-    ipc_rx_cb_t r_cb;       // remote isr callback
+    ipc_rx_cb_t rx_cb[4];   // cpu 0~3 rx isr callback
     struct IPC_MSG msg;
 };
 typedef struct IPC_DATA IPC_DATA_T;
@@ -40,8 +41,7 @@ typedef struct IPC_DATA IPC_DATA_T;
 extern IPC_DATA_MEM IPC_DATA_T share_t;
 
 void amp_sync_poweron(void);
-HAL_Status amp_master_init(IPC_DATA_T *ipc_dat, ipc_rx_cb_t callback);
-HAL_Status amp_remote_init(IPC_DATA_T *ipc_dat, ipc_rx_cb_t callback);
+HAL_Status amp_msg_init(IPC_DATA_T *ipc_dat, ipc_rx_cb_t callback);
 HAL_Status amp_msg_send(IPC_DATA_T *ipc_dat, IPC_MSG_T *ipc_msg, uint32_t dst_cpu);
 
 #endif

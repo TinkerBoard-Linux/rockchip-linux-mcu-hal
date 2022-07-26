@@ -20,8 +20,10 @@
 //#define I2STDM_TEST
 //#define DMA_LINK_LIST_TEST
 //#define PERF_TEST
+#ifdef IPC_ENABLE
 //#define IPC_TEST
 //#define AMPMSG_TEST
+#endif
 //#define UNITY_TEST
 
 /********************* Private Structure Definition **************************/
@@ -742,7 +744,7 @@ static void ampmsg_master_test(void)
     IPC_MSG_T pmsg;
 
     master_isr_flag = 0;
-    amp_master_init(p_gshare, ampmsg_master_cb);
+    amp_msg_init(p_gshare, ampmsg_master_cb);
 
     // only example: init test data
     pmsg.cmd = AMPMSG_REQ;
@@ -796,7 +798,7 @@ static void ampmsg_remote_test(void)
     IPC_MSG_T pmsg;
 
     remote_isr_flag = 0;
-    amp_remote_init(p_gshare, ampmsg_remote_cb);
+    amp_msg_init(p_gshare, ampmsg_remote_cb);
 
     while (1) {
         if (remote_isr_flag) {
