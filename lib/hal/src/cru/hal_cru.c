@@ -696,7 +696,7 @@ HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
         divValue = mask;
     }
 
-    bank = CLK_BANK_DIV_GET_BANK(divName);
+    bank = CLK_DIV_GET_BANK(divName);
     reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
     CRU_WRITE(reg, shift, mask, (divValue - 1U));
 
@@ -713,7 +713,7 @@ uint32_t HAL_CRU_ClkGetDiv(uint32_t divName)
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
     HAL_ASSERT(shift < 16);
     mask = CLK_DIV_GET_MASK(divName);
-    bank = CLK_BANK_DIV_GET_BANK(divName);
+    bank = CLK_DIV_GET_BANK(divName);
     reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
     divValue = ((CRU_READ(reg) & mask) >> shift) + 1;
 
@@ -731,7 +731,7 @@ HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
     shift = CLK_MUX_GET_BITS_SHIFT(muxName);
     HAL_ASSERT(shift < 16);
     mask = CLK_MUX_GET_MASK(muxName);
-    bank = CLK_BANK_MUX_GET_BANK(muxName);
+    bank = CLK_MUX_GET_BANK(muxName);
     reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
     CRU_WRITE(reg, shift, mask, muxValue);
 
@@ -749,7 +749,7 @@ uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
     shift = CLK_MUX_GET_BITS_SHIFT(muxName);
     HAL_ASSERT(shift < 16);
     mask = CLK_MUX_GET_MASK(muxName);
-    bank = CLK_BANK_MUX_GET_BANK(muxName);
+    bank = CLK_MUX_GET_BANK(muxName);
     reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
     muxValue = ((CRU_READ(reg) & mask) >> shift);
 

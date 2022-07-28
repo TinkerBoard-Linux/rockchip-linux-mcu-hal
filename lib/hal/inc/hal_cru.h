@@ -32,86 +32,57 @@
 #define PLL_INPUT_OSC_RATE (24 * MHZ)
 #endif
 
-#define CLK_RESET_GET_REG_OFFSET(x) ((uint32_t)((x & 0xffffff) / 16))
-#define CLK_RESET_GET_BITS_SHIFT(x) ((uint32_t)((x & 0xffffff) % 16))
-#define CLK_RESET_GET_REG_BANK(x)   ((uint32_t)((x & 0xff000000) >> 24))
+#define GENMASK(h, l)           (((~0UL) << (l)) & (~0UL >> (32 - 1 - (h))))
+#define GENVAL(x, h, l)         ((uint32_t)(((x) & GENMASK(h, l)) >> (l)))
+#define GENVAL_D16(x, h, l)     ((uint32_t)(((x) & GENMASK(h, l)) / 16))
+#define GENVAL_D16_REM(x, h, l) ((uint32_t)(((x) & GENMASK(h, l)) % 16))
+#define WIDTH_TO_MASK(w)        ((1 << (w)) - 1)
 
-#define CLK_GATE_GET_REG_OFFSET(x) ((uint32_t)((x & 0xffffff) / 16))
-#define CLK_GATE_GET_BITS_SHIFT(x) ((uint32_t)((x & 0xffffff) % 16))
-#define CLK_GATE_GET_REG_BANK(x)   ((uint32_t)((x & 0xff000000) >> 24))
+/*
+ * RESET/GATE fields:
+ *   [31:16]: reserved
+ *   [15:12]: bank
+ *   [11:0]:  id
+ */
+#define CLK_RESET_GET_REG_OFFSET(x) GENVAL_D16(x, 11, 0)
+#define CLK_RESET_GET_BITS_SHIFT(x) GENVAL_D16_REM(x, 11, 0)
+#define CLK_RESET_GET_REG_BANK(x)   GENVAL(x, 15, 12)
 
-#define CLK_GET_MUX(x) ((x) & 0x0F0F00FFU)
-#define CLK_GET_DIV(x) ((((x) & 0xFF00U) >> 8) | (((x) & 0xF0F00000U) >> 4))
+#define CLK_GATE_GET_REG_OFFSET(x) CLK_RESET_GET_REG_OFFSET(x)
+#define CLK_GATE_GET_BITS_SHIFT(x) CLK_RESET_GET_BITS_SHIFT(x)
+#define CLK_GATE_GET_REG_BANK(x)   CLK_RESET_GET_REG_BANK(x)
 
-#define WIDTH_TO_MASK(width) ((1 << (width)) - 1)
+/*
+ * MUX/DIV fields:
+ *   [31:24]: width
+ *   [23:16]: shift
+ *   [15:12]: reserved
+ *   [11:8]:  bank
+ *   [7:0]:   reg
+ */
+#define CLK_MUX_GET_REG_OFFSET(x) GENVAL(x, 7,  0)
+#define CLK_MUX_GET_BANK(x)       GENVAL(x, 11, 8)
+#define CLK_MUX_GET_BITS_SHIFT(x) GENVAL(x, 23, 16)
+#define CLK_MUX_GET_WIDTH(x)      GENVAL(x, 31, 24)
+#define CLK_MUX_GET_MASK(x)       (WIDTH_TO_MASK(CLK_MUX_GET_WIDTH(x)) << CLK_MUX_GET_BITS_SHIFT(x))
 
-#define CLK_MUX_REG_OFFSET_SHIFT 0U
-#define CLK_MUX_REG_OFFSET_MASK  0x0000FFFFU
-#define CLK_MUX_SHIFT_SHIFT      16U
-#define CLK_MUX_SHIFT_MASK       0x00FF0000U
-#define CLK_MUX_WIDTH_SHIFT      24U
-#define CLK_MUX_WIDTH_MASK       0xFF000000U
+#define CLK_DIV_GET_REG_OFFSET(x) CLK_MUX_GET_REG_OFFSET(x)
+#define CLK_DIV_GET_BANK(x)       CLK_MUX_GET_BANK(x)
+#define CLK_DIV_GET_BITS_SHIFT(x) CLK_MUX_GET_BITS_SHIFT(x)
+#define CLK_DIV_GET_MASK(x)       CLK_MUX_GET_MASK(x)
 
-#define CLK_MUX_GET_REG_OFFSET(x) \
-    (((uint32_t)(x) & CLK_MUX_REG_OFFSET_MASK) >> CLK_MUX_REG_OFFSET_SHIFT)
-#define CLK_MUX_GET_BITS_SHIFT(x) \
-    (((uint32_t)(x) & CLK_MUX_SHIFT_MASK) >> CLK_MUX_SHIFT_SHIFT)
-#define CLK_MUX_GET_MASK(x)                                                      \
-    WIDTH_TO_MASK((((uint32_t)(x) & CLK_MUX_WIDTH_MASK) >> CLK_MUX_WIDTH_SHIFT)) \
-        << CLK_MUX_GET_BITS_SHIFT(x)
-
-#define CLK_DIV_REG_OFFSET_SHIFT 0U
-#define CLK_DIV_REG_OFFSET_MASK  0x0000FFFFU
-#define CLK_DIV_SHIFT_SHIFT      16U
-#define CLK_DIV_SHIFT_MASK       0x00FF0000U
-#define CLK_DIV_WIDTH_SHIFT      24U
-#define CLK_DIV_WIDTH_MASK       0xFF000000U
-
-#define CLK_DIV_GET_REG_OFFSET(x) \
-    (((uint32_t)(x) & CLK_DIV_REG_OFFSET_MASK) >> CLK_DIV_REG_OFFSET_SHIFT)
-#define CLK_DIV_GET_BITS_SHIFT(x) \
-    (((uint32_t)(x) & CLK_DIV_SHIFT_MASK) >> CLK_DIV_SHIFT_SHIFT)
-#define CLK_DIV_GET_MASK(x)                                                      \
-    WIDTH_TO_MASK((((uint32_t)(x) & CLK_DIV_WIDTH_MASK) >> CLK_DIV_WIDTH_SHIFT)) \
-        << CLK_DIV_GET_BITS_SHIFT(x)
-
-#define CLK_BANK_MUX_REG_OFFSET_SHIFT 0U
-#define CLK_BANK_MUX_REG_OFFSET_MASK  0x0000001FU
-#define CLK_BANK_MUX_BANK_SHIFT       5U
-#define CLK_BANK_MUX_BANK_MASK        0x000000E0U
-#define CLK_BANK_MUX_SHIFT_SHIFT      16U
-#define CLK_BANK_MUX_SHIFT_MASK       0x00FF0000U
-#define CLK_BANK_MUX_WIDTH_SHIFT      24U
-#define CLK_BANK_MUX_WIDTH_MASK       0xFF000000U
-
-#define CLK_BANK_MUX_GET_REG_OFFSET(x) \
-    (((uint32_t)(x) & CLK_BANK_MUX_REG_OFFSET_MASK) >> CLK_BANK_MUX_REG_OFFSET_SHIFT)
-#define CLK_BANK_MUX_GET_BITS_SHIFT(x) \
-    (((uint32_t)(x) & CLK_BANK_MUX_SHIFT_MASK) >> CLK_BANK_MUX_SHIFT_SHIFT)
-#define CLK_BANK_MUX_GET_MASK(x)                                                           \
-    WIDTH_TO_MASK((((uint32_t)(x) & CLK_BANK_MUX_WIDTH_MASK) >> CLK_BANK_MUX_WIDTH_SHIFT)) \
-        << CLK_BANK_MUX_GET_BITS_SHIFT(x)
-#define CLK_BANK_MUX_GET_BANK(x) \
-    (((uint32_t)(x) & CLK_BANK_MUX_BANK_MASK) >> CLK_BANK_MUX_BANK_SHIFT)
-
-#define CLK_BANK_DIV_REG_OFFSET_SHIFT 0U
-#define CLK_BANK_DIV_REG_OFFSET_MASK  0x0000001FU
-#define CLK_BANK_DIV_BANK_SHIFT       5U
-#define CLK_BANK_DIV_BANK_MASK        0x000000E0U
-#define CLK_BANK_DIV_SHIFT_SHIFT      16U
-#define CLK_BANK_DIV_SHIFT_MASK       0x00FF0000U
-#define CLK_BANK_DIV_WIDTH_SHIFT      24U
-#define CLK_BANK_DIV_WIDTH_MASK       0xFF000000U
-
-#define CLK_BANK_DIV_GET_REG_OFFSET(x) \
-    (((uint32_t)(x) & CLK_BANK_DIV_REG_OFFSET_MASK) >> CLK_BANK_DIV_REG_OFFSET_SHIFT)
-#define CLK_BANK_DIV_GET_BITS_SHIFT(x) \
-    (((uint32_t)(x) & CLK_BANK_DIV_SHIFT_MASK) >> CLK_BANK_DIV_SHIFT_SHIFT)
-#define CLK_BANK_DIV_GET_MASK(x)                                                           \
-    WIDTH_TO_MASK((((uint32_t)(x) & CLK_BANK_DIV_WIDTH_MASK) >> CLK_BANK_DIV_WIDTH_SHIFT)) \
-        << CLK_BANK_DIV_GET_BITS_SHIFT(x)
-#define CLK_BANK_DIV_GET_BANK(x) \
-    (((uint32_t)(x) & CLK_BANK_DIV_BANK_MASK) >> CLK_BANK_DIV_BANK_SHIFT)
+/*
+ * v64 mux = v32 | bank(in bit[35:32])
+ * v64 div = v32 | bank(in bit[39:36])
+ */
+#ifdef CRU_CLK_USE_CON_BANK
+#define CLK_GET_MUX(v64) ((uint32_t)(((v64) & 0xFFFFFFFF00000000) >> 32))
+#define CLK_GET_DIV(v64) ((uint32_t)((v64) & 0x00000000FFFFFFFF))
+#else
+#define CLK_GET_MUX(v32) ((uint32_t)((v32) & 0x0F0F00FFU))
+#define CLK_GET_DIV(v32) ((uint32_t)((((v32) & 0x0000FF00U) >> 8) | \
+                                     (((v32) & 0xF0F00000U) >> 4)))
+#endif
 
 #define RK_PLL_RATE(_rate, _refdiv, _fbdiv, _postdiv1, _postdiv2, _dsmpd, \
                     _frac)                                                \
