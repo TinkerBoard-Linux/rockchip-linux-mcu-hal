@@ -161,8 +161,6 @@ void HAL_CRU_AsInit(void)
 }
 #endif
 
-/**
- */
 HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
 {
     HAL_Status ret = HAL_OK;

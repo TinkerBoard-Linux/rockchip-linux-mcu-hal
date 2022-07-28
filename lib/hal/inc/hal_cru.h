@@ -187,41 +187,184 @@ extern const struct HAL_CRU_DEV g_cruDev;
 /** @defgroup CRU_Public_Function_Declare Public Function Declare
  *  @{
  */
+
+/**
+ * @brief Get pll freq.
+ * @param  pSetup: Contains PLL register parameters
+ * @return pll rate.
+ */
 uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup);
+
+/**
+ * @brief Set pll freq.
+ * @param  pSetup: Contains PLL register parameters
+ * @param  rate: pll set
+ * @return HAL_Status.
+ */
 HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate);
+
+/**
+ * @brief Set pll power up.
+ * @param  pSetup: Contains PLL register parameters
+ * @return HAL_Status.
+ */
 HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup);
+
+/**
+ * @brief Set pll power down.
+ * @param  pSetup: Contains PLL register parameters
+ * @return HAL_Status.
+ */
 HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup);
 
+/**
+ * @brief Check if clk is enabled
+ * @param  clk: clock to check
+ * @return HAL_Check.
+ */
 HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk);
+
+/**
+ * @brief Enable clk
+ * @param  clk: clock to set
+ * @return HAL_Status.
+ */
 HAL_Status HAL_CRU_ClkEnable(uint32_t clk);
+
+/**
+ * @brief Disable clk
+ * @param  clk: clock to set
+ * @return HAL_Status.
+ */
 HAL_Status HAL_CRU_ClkDisable(uint32_t clk);
 
+/**
+ * @brief Check if clk is reset
+ * @param  clk: clock to check
+ * @return HAL_Check.
+ */
 HAL_Check HAL_CRU_ClkIsReset(uint32_t clk);
+
+/**
+ * @brief Assert the reset to the clk
+ * @param  clk: clock to assert
+ * @return HAL_Status.
+ */
 HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk);
+
+/**
+ * @brief Deassert the reset to the clk
+ * @param  clk: clock to deassert
+ * @return HAL_Status.
+ */
 HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk);
 
+/**
+ * @brief  Set integer div
+ * @param  divName: div id(Contains div offset, shift, mask information)
+ * @param  divValue: div value
+ * @return NONE
+ */
 HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue);
+
+/**
+ * @brief  Get integer div
+ * @param  divName: div id (Contains div offset, shift, mask information)
+ * @return div value
+ */
 uint32_t HAL_CRU_ClkGetDiv(uint32_t divName);
 
+/**
+ * @brief  Set mux
+ * @param  muxName: mux id (Contains mux offset, shift, mask information)
+ * @param  muxValue: mux value
+ * @return NONE
+ */
 HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue);
+
+/**
+ * @brief  Get mux
+ * @param  muxName: mux id (Contains mux offset, shift, mask information)
+ * @return mux value
+ */
 uint32_t HAL_CRU_ClkGetMux(uint32_t muxName);
 
+/**
+ * @brief  Get frac div config.
+ * @param  rateOut: clk out rate.
+ * @param  rate: clk src rate.
+ * @param  numerator: the returned numerator.
+ * @param  denominator: the returned denominator.
+ * @return HAL_Status.
+ */
 HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
                                     uint32_t *numerator,
                                     uint32_t *denominator);
-
+/**
+ * @brief Get clk freq.
+ * @param  clockName: CLOCK_Name id.
+ * @return rate.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName);
+
+/**
+ * @brief Set clk freq.
+ * @param  clockName: CLOCK_Name id.
+ * @param  rate: clk rate.
+ * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate);
 
+/**
+ * @brief vop dclk enable.
+ * @param  gateId: gate id
+ * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
 HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId);
+
+/**
+ * @brief vop dclk disable.
+ * @param  gateId: gate id
+ * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
 HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId);
 
+/**
+ * @brief  Get Np5 best div.
+ * @param  clockName: clk id.
+ * @param  rate: clk rate.
+ * @param  pRate: clk parent rate
+ * @param  bestdiv: the returned bestdiv.
+ * @return HAL_Status.
+ */
 HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t pRate, uint32_t *bestdiv);
 
+/**
+ * @brief  assert CRU global software reset.
+ * @param  type: global software reset type.
+ * @return HAL_INVAL if the SoC does not support.
+ */
 HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type);
 
+/**
+ * @brief wdt glbrst enable.
+ * @param  wdtType: wdt reset type.
+ * @return HAL_OK.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
 HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType);
 
+/**
+ * @brief pll output freq Compensation.
+ * @param  clockName: CLOCK_Name id.
+ * @param  ppm: Efforts to compensate.
+ * @return HAL_OK.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
 HAL_Status HAL_CRU_PllCompensation(eCLOCK_Name clockName, int ppm);
 
 #ifdef HAL_CRU_AS_FEATURE_ENABLED

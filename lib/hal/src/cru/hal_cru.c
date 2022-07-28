@@ -107,13 +107,6 @@ __WEAK const struct HAL_CRU_DEV g_cruDev;
 /********************* Private Variable Definition ***************************/
 /********************* Private Function Definition ***************************/
 
-#ifdef CRU_CLK_USE_CON_BANK
-static const struct HAL_CRU_DEV *CRU_GetInfo(void)
-{
-    return &g_cruDev;
-}
-#endif
-
 /** Calculate the greatest common divisor */
 static uint32_t CRU_Gcd(uint32_t m, uint32_t n)
 {
@@ -295,19 +288,15 @@ static const struct PLL_CONFIG *CRU_PllGetSettings(struct PLL_SETUP *pSetup,
  */
 
 #if defined(SOC_RV1108)
-/**
- * @brief Get pll freq.
- * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
- * @return pll rate.
- * How to calculate the PLL:
- *     Formulas also embedded within the fractional PLL Verilog model:
- *     If DSMPD = 1 (DSM is disabled, "integer mode")
- *     FOUTVCO = FREF / REFDIV * FBDIV
- *     FOUT = FOUTVCO / POSTDIV1 / POSTDIV2
- *     If DSMPD = 0 (DSM is enabled, "fractional mode")
- *     FOUTVCO = (FREF / REFDIV) * (FBDIV + FRAC / (2^24))
- *     FOUTPOSTDIV = FOUTVCO / (POSTDIV1*POSTDIV2)
- *     FOUT = FOUTVCO / POSTDIV1 / POSTDIV2
+/*
+ * Formulas also embedded within the fractional PLL Verilog model:
+ * If DSMPD = 1 (DSM is disabled, "integer mode")
+ * FOUTVCO = FREF / REFDIV * FBDIV
+ * FOUT = FOUTVCO / POSTDIV1 / POSTDIV2
+ * If DSMPD = 0 (DSM is enabled, "fractional mode")
+ * FOUTVCO = (FREF / REFDIV) * (FBDIV + FRAC / (2^24))
+ * FOUTPOSTDIV = FOUTVCO / (POSTDIV1*POSTDIV2)
+ * FOUT = FOUTVCO / POSTDIV1 / POSTDIV2
  */
 uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
 {
@@ -349,18 +338,13 @@ uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
     return rate;
 }
 
-/**
- * @brief Set pll freq.
- * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
- * @param  rate: pll set rate
- * @return HAL_Status.
- * How to calculate the PLL:
- *     Force PLL into slow mode
- *     Pll Power down
- *     Pll Config fbDiv, refDiv, postdDv1, postDiv2, dsmpd, frac
- *     Pll Power up
- *     Waiting for pll lock
- *     Force PLL into normal mode
+/*
+ * Force PLL into slow mode
+ * Pll Power down
+ * Pll Config fbDiv, refDiv, postdDv1, postDiv2, dsmpd, frac
+ * Pll Power up
+ * Waiting for pll lock
+ * Force PLL into normal mode
  */
 HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
 {
@@ -417,11 +401,6 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     return HAL_OK;
 }
 
-/**
- * @brief Set pll power up.
- * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
- * @return HAL_Status.
- */
 HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
 {
     int delay = 2400;
@@ -444,11 +423,6 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
     return HAL_OK;
 }
 
-/**
- * @brief Set pll power down.
- * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
- * @return HAL_Status.
- */
 HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
 {
     /* Pll Power down */
@@ -457,19 +431,15 @@ HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
     return HAL_OK;
 }
 #else
-/**
- * @brief Get pll freq.
- * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
- * @return pll rate.
- * How to calculate the PLL:
- *     Formulas also embedded within the fractional PLL Verilog model:
- *     If DSMPD = 1 (DSM is disabled, "integer mode")
- *     FOUTVCO = FREF / REFDIV * FBDIV
- *     FOUT = FOUTVCO / POSTDIV1 / POSTDIV2
- *     If DSMPD = 0 (DSM is enabled, "fractional mode")
- *     FOUTVCO = (FREF / REFDIV) * (FBDIV + FRAC / (2^24))
- *     FOUTPOSTDIV = FOUTVCO / (POSTDIV1*POSTDIV2)
- *     FOUT = FOUTVCO / POSTDIV1 / POSTDIV2
+/*
+ * Formulas also embedded within the fractional PLL Verilog model:
+ * If DSMPD = 1 (DSM is disabled, "integer mode")
+ * FOUTVCO = FREF / REFDIV * FBDIV
+ * FOUT = FOUTVCO / POSTDIV1 / POSTDIV2
+ * If DSMPD = 0 (DSM is enabled, "fractional mode")
+ * FOUTVCO = (FREF / REFDIV) * (FBDIV + FRAC / (2^24))
+ * FOUTPOSTDIV = FOUTVCO / (POSTDIV1*POSTDIV2)
+ * FOUT = FOUTVCO / POSTDIV1 / POSTDIV2
  */
 uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
 {
@@ -511,18 +481,13 @@ uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
     return rate;
 }
 
-/**
- * @brief Set pll freq.
- * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
- * @param  rate: pll set rate
- * @return HAL_Status.
- * How to calculate the PLL:
- *     Force PLL into slow mode
- *     Pll Power down
- *     Pll Config fbDiv, refDiv, postdDv1, postDiv2, dsmpd, frac
- *     Pll Power up
- *     Waiting for pll lock
- *     Force PLL into normal mode
+/*
+ * Force PLL into slow mode
+ * Pll Power down
+ * Pll Config fbDiv, refDiv, postdDv1, postDiv2, dsmpd, frac
+ * Pll Power up
+ * Waiting for pll lock
+ * Force PLL into normal mode
  */
 HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
 {
@@ -586,11 +551,6 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     return HAL_OK;
 }
 
-/**
- * @brief Set pll power up.
- * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
- * @return HAL_Status.
- */
 HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
 {
     int delay = 2400;
@@ -619,11 +579,6 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
     return HAL_OK;
 }
 
-/**
- * @brief Set pll power down.
- * @param  *pSetup: struct PLL_SETUP struct,Contains PLL register parameters
- * @return HAL_Status.
- */
 HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
 {
     /* Pll Power down */
@@ -633,27 +588,181 @@ HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
 }
 #endif
 
-/**
- * @brief  IP Clock is Enabled API
- * @param  clk: clk gate id
- * @return HAL_Check
- */
+#ifdef CRU_CLK_USE_CON_BANK
+static const struct HAL_CRU_DEV *CRU_GetInfo(void)
+{
+    return &g_cruDev;
+}
+
 HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk)
 {
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
-    HAL_Check ret;
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
     uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
     uint32_t reg;
+    HAL_Check ret;
 
     reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].gateOffset + index * 4;
     ret = (HAL_Check)(!((CRU_READ(reg) & (1 << shift)) >> shift));
 
     return ret;
-#endif
+}
+
+HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
+    uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].gateOffset + index * 4;
+    CRU_WRITE(reg, shift, 1U << shift, 0U);
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
+    uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].gateOffset + index * 4;
+    CRU_WRITE(reg, shift, 1U << shift, 1U);
+
+    return HAL_OK;
+}
+
+HAL_Check HAL_CRU_ClkIsReset(uint32_t clk)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
+    uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+    HAL_Check ret;
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
+    ret = (HAL_Check)((CRU_READ(reg) & (1 << shift)) >> shift);
+
+    return ret;
+}
+
+HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t index = CLK_RESET_GET_REG_OFFSET(clk);
+    uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    HAL_ASSERT(shift < 16);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
+    CRU_WRITE(reg, shift, 1U << shift, 1U);
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t index = CLK_RESET_GET_REG_OFFSET(clk);
+    uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
+    uint32_t reg;
+
+    HAL_ASSERT(shift < 16);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
+    CRU_WRITE(reg, shift, 1U << shift, 0U);
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t shift, mask, index;
+    uint32_t reg, bank;
+
+    index = CLK_DIV_GET_REG_OFFSET(divName);
+    shift = CLK_DIV_GET_BITS_SHIFT(divName);
+    HAL_ASSERT(shift < 16);
+    mask = CLK_DIV_GET_MASK(divName);
+    if (divValue > mask) {
+        divValue = mask;
+    }
+
+    bank = CLK_BANK_DIV_GET_BANK(divName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    CRU_WRITE(reg, shift, mask, (divValue - 1U));
+
+    return HAL_OK;
+}
+
+uint32_t HAL_CRU_ClkGetDiv(uint32_t divName)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t shift, mask, index, divValue;
+    uint32_t reg, bank;
+
+    index = CLK_DIV_GET_REG_OFFSET(divName);
+    shift = CLK_DIV_GET_BITS_SHIFT(divName);
+    HAL_ASSERT(shift < 16);
+    mask = CLK_DIV_GET_MASK(divName);
+    bank = CLK_BANK_DIV_GET_BANK(divName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    divValue = ((CRU_READ(reg) & mask) >> shift) + 1;
+
+    return divValue;
+}
+
+HAL_SECTION_SRAM_CODE
+HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t shift, mask, index;
+    uint32_t reg, bank;
+
+    index = CLK_MUX_GET_REG_OFFSET(muxName);
+    shift = CLK_MUX_GET_BITS_SHIFT(muxName);
+    HAL_ASSERT(shift < 16);
+    mask = CLK_MUX_GET_MASK(muxName);
+    bank = CLK_BANK_MUX_GET_BANK(muxName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    CRU_WRITE(reg, shift, mask, muxValue);
+
+    return HAL_OK;
+}
+
+HAL_SECTION_SRAM_CODE
+uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t shift, mask, index, muxValue;
+    uint32_t reg, bank;
+
+    index = CLK_MUX_GET_REG_OFFSET(muxName);
+    shift = CLK_MUX_GET_BITS_SHIFT(muxName);
+    HAL_ASSERT(shift < 16);
+    mask = CLK_MUX_GET_MASK(muxName);
+    bank = CLK_BANK_MUX_GET_BANK(muxName);
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
+    muxValue = ((CRU_READ(reg) & mask) >> shift);
+
+    return muxValue;
+}
+
+#else /* CRU_CLK_USE_CON_BANK */
+
+HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk)
+{
+    uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
+    uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
+    HAL_Check ret;
 
 #ifdef CRU_GATE_CON_CNT
     if (index < CRU_GATE_CON_CNT) {
@@ -672,26 +781,10 @@ HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk)
     return ret;
 }
 
-/**
- * @brief  IP Clock Enable API
- * @param  clk: clk gate id
- * @return NONE
- */
 HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
 {
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
-    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
-    uint32_t reg;
-
-    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].gateOffset + index * 4;
-    CRU_WRITE(reg, shift, 1U << shift, 0U);
-
-    return HAL_OK;
-#endif
 
 #ifdef CRU_GATE_CON_CNT
     if (index < CRU_GATE_CON_CNT) {
@@ -710,27 +803,10 @@ HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
     return HAL_OK;
 }
 
-/**
- * @brief  IP Clock Disabled API
- * @param  clk: clk gate id
- * @return NONE
- */
 HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
 {
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
-    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
-    uint32_t reg;
-
-    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].gateOffset + index * 4;
-    CRU_WRITE(reg, shift, 1U << shift, 1U);
-
-    return HAL_OK;
-
-#endif
 
 #ifdef CRU_GATE_CON_CNT
     if (index < CRU_GATE_CON_CNT) {
@@ -749,27 +825,11 @@ HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
     return HAL_OK;
 }
 
-/**
- * @brief  IP Clock is reset API
- * @param  clk: clk reset id
- * @return HAL_Check
- */
 HAL_Check HAL_CRU_ClkIsReset(uint32_t clk)
 {
     uint32_t index = CLK_GATE_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_GATE_GET_BITS_SHIFT(clk);
     HAL_Check ret;
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
-    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
-    uint32_t reg;
-
-    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
-    ret = (HAL_Check)((CRU_READ(reg) & (1 << shift)) >> shift);
-
-    return ret;
-#endif
 
 #ifdef CRU_SRST_CON_CNT
     if (index < CRU_SRST_CON_CNT) {
@@ -784,27 +844,10 @@ HAL_Check HAL_CRU_ClkIsReset(uint32_t clk)
     return ret;
 }
 
-/**
- * @brief  IP Clock Reset Assert API
- * @param  clk: clk reset id
- * @return NONE
- */
 HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk)
 {
     uint32_t index = CLK_RESET_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
-    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
-    uint32_t reg;
-
-    HAL_ASSERT(shift < 16);
-    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
-    CRU_WRITE(reg, shift, 1U << shift, 1U);
-
-    return HAL_OK;
-#endif
 
     HAL_ASSERT(shift < 16);
 #ifdef CRU_SRST_CON_CNT
@@ -820,28 +863,10 @@ HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk)
     return HAL_OK;
 }
 
-/**
- * @brief  IP Clock Reset Deassert API
- * @param  clk: clk reset id
- * @return NONE
- */
 HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
 {
     uint32_t index = CLK_RESET_GET_REG_OFFSET(clk);
     uint32_t shift = CLK_RESET_GET_BITS_SHIFT(clk);
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
-    uint32_t bank = CLK_GATE_GET_REG_BANK(clk);
-    uint32_t reg;
-
-    HAL_ASSERT(shift < 16);
-    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
-    CRU_WRITE(reg, shift, 1U << shift, 0U);
-
-    return HAL_OK;
-
-#endif
 
     HAL_ASSERT(shift < 16);
 #ifdef CRU_SRST_CON_CNT
@@ -857,35 +882,9 @@ HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
     return HAL_OK;
 }
 
-/**
- * @brief  IP Clock set div API
- * @param  divName: div id(Contains div offset, shift, mask information)
- * @param  divValue: div value
- * @return NONE
- */
 HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
 {
     uint32_t shift, mask, index;
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
-    uint32_t reg, bank;
-
-    index = CLK_DIV_GET_REG_OFFSET(divName);
-    shift = CLK_DIV_GET_BITS_SHIFT(divName);
-    HAL_ASSERT(shift < 16);
-    mask = CLK_DIV_GET_MASK(divName);
-    if (divValue > mask) {
-        divValue = mask;
-    }
-
-    bank = CLK_BANK_DIV_GET_BANK(divName);
-    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
-    CRU_WRITE(reg, shift, mask, (divValue - 1U));
-
-    return HAL_OK;
-
-#endif
 
     index = CLK_DIV_GET_REG_OFFSET(divName);
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
@@ -912,30 +911,9 @@ HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
     return HAL_OK;
 }
 
-/**
- * @brief  IP Clock get div API
- * @param  divName: div id(Contains div offset, shift, mask information)
- * @return div value
- */
 uint32_t HAL_CRU_ClkGetDiv(uint32_t divName)
 {
     uint32_t shift, mask, index, divValue;
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
-    uint32_t reg, bank;
-
-    index = CLK_DIV_GET_REG_OFFSET(divName);
-    shift = CLK_DIV_GET_BITS_SHIFT(divName);
-    HAL_ASSERT(shift < 16);
-    mask = CLK_DIV_GET_MASK(divName);
-
-    bank = CLK_BANK_DIV_GET_BANK(divName);
-    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
-    divValue = ((CRU_READ(reg) & mask) >> shift) + 1;
-
-    return divValue;
-#endif
 
     index = CLK_DIV_GET_REG_OFFSET(divName);
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
@@ -959,32 +937,10 @@ uint32_t HAL_CRU_ClkGetDiv(uint32_t divName)
     return divValue;
 }
 
-/**
- * @brief  IP Clock set mux API
- * @param  muxName: mux id(Contains mux offset, shift, mask information)
- * @param  muxValue: mux value
- * @return NONE
- */
 HAL_SECTION_SRAM_CODE
 HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
 {
     uint32_t shift, mask, index;
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
-    uint32_t reg, bank;
-
-    index = CLK_MUX_GET_REG_OFFSET(muxName);
-    shift = CLK_MUX_GET_BITS_SHIFT(muxName);
-    HAL_ASSERT(shift < 16);
-    mask = CLK_MUX_GET_MASK(muxName);
-
-    bank = CLK_BANK_MUX_GET_BANK(muxName);
-    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
-    CRU_WRITE(reg, shift, mask, muxValue);
-
-    return HAL_OK;
-#endif
 
     index = CLK_MUX_GET_REG_OFFSET(muxName);
     shift = CLK_MUX_GET_BITS_SHIFT(muxName);
@@ -1008,31 +964,10 @@ HAL_Status HAL_CRU_ClkSetMux(uint32_t muxName, uint32_t muxValue)
     return HAL_OK;
 }
 
-/**
- * @brief  IP Clock get mux API
- * @param  muxName: mux id(Contains mux offset, shift, mask information)
- * @return mux value
- */
 HAL_SECTION_SRAM_CODE
 uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
 {
     uint32_t shift, mask, index, muxValue;
-
-#ifdef CRU_CLK_USE_CON_BANK
-    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
-    uint32_t reg, bank;
-
-    index = CLK_MUX_GET_REG_OFFSET(muxName);
-    shift = CLK_MUX_GET_BITS_SHIFT(muxName);
-    HAL_ASSERT(shift < 16);
-    mask = CLK_MUX_GET_MASK(muxName);
-
-    bank = CLK_BANK_MUX_GET_BANK(muxName);
-    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].selOffset + index * 4;
-    muxValue = ((CRU_READ(reg) & mask) >> shift);
-
-    return muxValue;
-#endif
 
     index = CLK_MUX_GET_REG_OFFSET(muxName);
     shift = CLK_MUX_GET_BITS_SHIFT(muxName);
@@ -1055,15 +990,8 @@ uint32_t HAL_CRU_ClkGetMux(uint32_t muxName)
 
     return muxValue;
 }
+#endif /* CRU_CLK_USE_CON_BANK */
 
-/**
- * @brief  Get frac div config.
- * @param  rateOut: clk out rate.
- * @param  rate: clk src rate.
- * @param  numerator: the returned numerator.
- * @param  denominator: the returned denominator.
- * @return HAL_Status.
- */
 HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
                                     uint32_t *numerator,
                                     uint32_t *denominator)
@@ -1089,14 +1017,6 @@ HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
     return HAL_OK;
 }
 
-/**
- * @brief  Get Np5 best div.
- * @param  clockName: clk id.
- * @param  rate: clk rate.
- * @param  pRate: clk parent rate
- * @param  bestdiv: the returned bestdiv.
- * @return HAL_Status.
- */
 HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t pRate, uint32_t *bestdiv)
 {
     uint32_t div = CLK_GET_DIV(clockName);
@@ -1114,12 +1034,6 @@ HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t 
     return HAL_ERROR;
 }
 
-/**
- * @brief vop dclk enable.
- * @param  gateId: gate id
- * @return HAL_Status.
- * @attention these APIs allow direct use in the HAL layer.
- */
 __WEAK HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
 {
     HAL_CRU_ClkEnable(gateId);
@@ -1127,12 +1041,6 @@ __WEAK HAL_Status HAL_CRU_VopDclkEnable(uint32_t gateId)
     return HAL_OK;
 }
 
-/**
- * @brief vop dclk disable.
- * @param  gateId: gate id
- * @return HAL_Status.
- * @attention these APIs allow direct use in the HAL layer.
- */
 __WEAK HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId)
 {
     HAL_CRU_ClkDisable(gateId);
@@ -1140,11 +1048,6 @@ __WEAK HAL_Status HAL_CRU_VopDclkDisable(uint32_t gateId)
     return HAL_OK;
 }
 
-/**
- * @brief  assert CRU global software reset.
- * @param  type: global software reset type.
- * @return HAL_INVAL if the SoC does not support.
- */
 HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type)
 {
 #ifdef CRU_GLB_SRST_FST_VALUE_OFFSET
