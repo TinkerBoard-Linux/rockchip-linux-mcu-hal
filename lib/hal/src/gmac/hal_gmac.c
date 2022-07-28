@@ -1776,24 +1776,20 @@ HAL_Status HAL_GMAC_Start(struct GMAC_HANDLE *pGMAC, uint8_t *addr)
     /* Mask interrupts by writing to CSR7 */
     WRITE_REG(pGMAC->pReg->DMA_CH0_INTERRUPT_ENABLE, DMA_CHAN_INTR_DEFAULT_MASK);
 
-    hwCap = READ_REG(pGMAC->pReg->MAC_HW_FEATURE0);
+    hwCap = READ_REG(pGMAC->pReg->MAC_HW_FEATURE1);
     /* Set the HW DMA mode and the COE */
-    rxFifosz = 128 << ((hwCap & GMAC_HW_TXFIFOSIZE) >> GMAC_HW_TXFIFOSIZE_SHIFT);
-    txFifosz = 128 << ((hwCap & GMAC_HW_RXFIFOSIZE) >> GMAC_HW_RXFIFOSIZE_SHIFT);
-
-    WRITE_REG(pGMAC->pReg->DMA_CH0_CONTROL, 0x00010000);
+    txFifosz = 128 << ((hwCap & GMAC_HW_TXFIFOSIZE) >> GMAC_HW_TXFIFOSIZE_SHIFT);
+    rxFifosz = 128 << ((hwCap & GMAC_HW_RXFIFOSIZE) >> GMAC_HW_RXFIFOSIZE_SHIFT);
 
     /* init rx chan */
     value = READ_REG(pGMAC->pReg->DMA_CH0_RX_CONTROL);
     value &= ~DMA_CH0_RX_CONTROL_RBSZ_MASK;
-    value |= (txFifosz << DMA_CH0_RX_CONTROL_RBSZ_SHIFT) & DMA_CH0_RX_CONTROL_RBSZ_MASK;
+    value |= (rxFifosz << DMA_CH0_RX_CONTROL_RBSZ_SHIFT) & DMA_CH0_RX_CONTROL_RBSZ_MASK;
     value = value | (8 << DMA_CH0_RX_CONTROL_RXPBL_SHIFT);
     WRITE_REG(pGMAC->pReg->DMA_CH0_RX_CONTROL, value);
     WRITE_REG(pGMAC->pReg->DMA_CH0_RXDESC_LIST_ADDRESS, (uint32_t)pGMAC->rxDescs);
     WRITE_REG(pGMAC->pReg->DMA_CH0_RXDESC_TAIL_POINTER,
               (uint32_t)(pGMAC->rxDescs + pGMAC->rxSize));
-
-    WRITE_REG(pGMAC->pReg->DMA_CH0_RX_CONTROL, 0x00080c00);
 
     /* init tx chan */
     value = READ_REG(pGMAC->pReg->DMA_CH0_TX_CONTROL);
