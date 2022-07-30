@@ -865,22 +865,25 @@ extern uint32_t __share_rpmsg_end__[];
 #define RPMSG_MEM_BASE ((uint32_t)&__share_rpmsg_start__)
 #define RPMSG_MEM_END  ((uint32_t)&__share_rpmsg_end__)
 
+#define EPT_M2R_ADDR(addr) (addr + VRING_SIZE)  // covert master endpoint number to remote endpoint number
+#define EPT_R2M_ADDR(addr) (addr - VRING_SIZE)  // covert remote endpoint number to master endpoint number
+
 struct rpmsg_block_t {
     uint32_t len;
     uint8_t buffer[32 - 4];
 };
 
 struct rpmsg_ept_map_t {
-    uint32_t base;        // share memory base addr
-    uint32_t size;        // share memory size
-    uint32_t m_ept_addr;
-    uint32_t r_ept_addr;
+    uint32_t base;          // share memory base addr
+    uint32_t size;          // share memory size
+    uint32_t m_ept_addr;    // master endpoint number
+    uint32_t r_ept_addr;    // remote endpoint number
 };
 
 struct rpmsg_info_t {
     struct rpmsg_lite_instance *instance;
     struct rpmsg_lite_endpoint *ept;
-    struct rpmsg_ept_map_t *eptmap;
+    struct rpmsg_ept_map_t *map;
     uint32_t cb_sta;    // callback status flags
     void * private;
 };
@@ -891,11 +894,17 @@ struct rpmsg_info_t {
 #define RPMSG_TEST2_BASE    (RPMSG_MEM_BASE + 2 * RPMSG_TEST_MEM_SIZE)
 #define RPMSG_TEST3_BASE    (RPMSG_MEM_BASE + 3 * RPMSG_TEST_MEM_SIZE)
 
+// define endpoint number for test
+#define RPMSG_TEST0_EPT 0x80000000UL
+#define RPMSG_TEST1_EPT 0x80000001UL
+#define RPMSG_TEST2_EPT 0x80000002UL
+#define RPMSG_TEST3_EPT 0x80000003UL
+
 static struct rpmsg_ept_map_t rpmsg_ept_map_table[4] = {
-    { RPMSG_TEST0_BASE, RPMSG_TEST_MEM_SIZE, RPMSG_TEST0_BASE, RPMSG_TEST0_BASE + VRING_SIZE },
-    { RPMSG_TEST1_BASE, RPMSG_TEST_MEM_SIZE, RPMSG_TEST1_BASE, RPMSG_TEST1_BASE + VRING_SIZE },
-    { RPMSG_TEST2_BASE, RPMSG_TEST_MEM_SIZE, RPMSG_TEST2_BASE, RPMSG_TEST2_BASE + VRING_SIZE },
-    { RPMSG_TEST3_BASE, RPMSG_TEST_MEM_SIZE, RPMSG_TEST3_BASE, RPMSG_TEST3_BASE + VRING_SIZE },
+    { RPMSG_TEST0_BASE, RPMSG_TEST_MEM_SIZE, RPMSG_TEST0_EPT, EPT_M2R_ADDR(RPMSG_TEST0_EPT) },
+    { RPMSG_TEST1_BASE, RPMSG_TEST_MEM_SIZE, RPMSG_TEST1_EPT, EPT_M2R_ADDR(RPMSG_TEST1_EPT) },
+    { RPMSG_TEST2_BASE, RPMSG_TEST_MEM_SIZE, RPMSG_TEST2_EPT, EPT_M2R_ADDR(RPMSG_TEST2_EPT) },
+    { RPMSG_TEST3_BASE, RPMSG_TEST_MEM_SIZE, RPMSG_TEST3_EPT, EPT_M2R_ADDR(RPMSG_TEST3_EPT) },
 };
 
 static void rpmsg_share_mem_check(void)
@@ -934,13 +943,12 @@ static int32_t master_ept_cb(void *payload, uint32_t payload_len, uint32_t src, 
 {
     uint32_t i, cpu_id;
     struct rpmsg_info_t *info = (struct rpmsg_info_t *)priv;
-    struct rpmsg_ept_map_t *eptmap = info->eptmap;
     struct rpmsg_block_t *block = (struct rpmsg_block_t *)info->private;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
     //rk_printf("master_ept_cb: master[%d]", cpu_id);
 
-    if (src == eptmap->r_ept_addr) {     // check source ept addr
+    if (src == info->map->r_ept_addr) {     // check source ept addr
         block->len = payload_len;
         memcpy(block->buffer, payload, payload_len);
         info->cb_sta = 1;
@@ -958,7 +966,6 @@ static void rpmsg_master_test(void)
     uint32_t master_id, remote_id;
     struct rpmsg_info_t *info;
     struct rpmsg_info_t *p_rpmsg_info[3];
-    struct rpmsg_ept_map_t *eptmap;
     struct rpmsg_block_t block, *rblock;
 
     rpmsg_share_mem_check();
@@ -984,12 +991,11 @@ static void rpmsg_master_test(void)
             }
         }
 
-        eptmap = &rpmsg_ept_map_table[remote_id];
-        info->eptmap = &rpmsg_ept_map_table[remote_id];
-        info->instance = rpmsg_lite_master_init((void *)eptmap->base, eptmap->size,
+        info->map = &rpmsg_ept_map_table[remote_id];
+        info->instance = rpmsg_lite_master_init((void *)info->map->base, info->map->size,
                                                 RL_PLATFORM_SET_LINK_ID(master_id, remote_id), RL_NO_FLAGS);
         rpmsg_lite_wait_for_link_up(info->instance);
-        info->ept = rpmsg_lite_create_ept(info->instance, eptmap->m_ept_addr, master_ept_cb, info);
+        info->ept = rpmsg_lite_create_ept(info->instance, info->map->m_ept_addr, master_ept_cb, info);
 
         p_rpmsg_info[i] = info;
     }
@@ -1003,11 +1009,10 @@ static void rpmsg_master_test(void)
         uint32_t timeout;
         info = p_rpmsg_info[i];
         remote_id = remote_id_table[i];
-        eptmap = &rpmsg_ept_map_table[remote_id];
         rblock = (struct rpmsg_block_t *)info->private;
 
         for (j = 0; j < 20; j++) {
-            rpmsg_lite_send(info->instance, info->ept, eptmap->r_ept_addr, block.buffer, block.len, RL_BLOCK);
+            rpmsg_lite_send(info->instance, info->ept, info->map->r_ept_addr, block.buffer, block.len, RL_BLOCK);
 
             // wait for remote response
             timeout = 10;
@@ -1044,9 +1049,8 @@ static void rpmsg_master_test(void)
         info = p_rpmsg_info[i];
         info->cb_sta = 0;
         remote_id = remote_id_table[i];
-        eptmap = &rpmsg_ept_map_table[remote_id];
-        rk_printf("rpmsg_master_send: master[%d]-->remote[%d], remote ept addr = 0x%08x\n", master_id, remote_id, eptmap->r_ept_addr);
-        rpmsg_lite_send(info->instance, info->ept, eptmap->r_ept_addr, block.buffer, block.len, RL_BLOCK);
+        rk_printf("rpmsg_master_send: master[%d]-->remote[%d], remote ept addr = 0x%08x\n", master_id, remote_id, info->map->r_ept_addr);
+        rpmsg_lite_send(info->instance, info->ept, info->map->r_ept_addr, block.buffer, block.len, RL_BLOCK);
     }
 
     while (1) {
@@ -1059,9 +1063,8 @@ static void rpmsg_master_test(void)
             if (rblock->buffer[0] == RPMSG_ACK_TEST) {
                 remote_id = rblock->buffer[1];
                 block.buffer[0 + 2] = rblock->buffer[0 + 2];
-                eptmap = &rpmsg_ept_map_table[remote_id];
                 //rk_printf("0: 0x%x\n", rblock->buffer[0 + 2]);
-                rk_printf("rpmsg_master_recv: master[%d]<--remote[%d], remote ept addr = 0x%08x\n", master_id, remote_id, eptmap->r_ept_addr);
+                rk_printf("rpmsg_master_recv: master[%d]<--remote[%d], remote ept addr = 0x%08x\n", master_id, remote_id, info->map->r_ept_addr);
             }
             // CMD(ACK): ......
             else {
@@ -1077,9 +1080,8 @@ static void rpmsg_master_test(void)
             if (rblock->buffer[0] == RPMSG_ACK_TEST) {
                 remote_id = rblock->buffer[1];
                 block.buffer[1 + 2] = rblock->buffer[1 + 2];
-                eptmap = &rpmsg_ept_map_table[remote_id];
                 //rk_printf("1: 0x%x\n", rblock->buffer[1 + 2]);
-                rk_printf("rpmsg_master_recv: master[%d]<--remote[%d], remote ept addr = 0x%08x\n", master_id, remote_id, eptmap->r_ept_addr);
+                rk_printf("rpmsg_master_recv: master[%d]<--remote[%d], remote ept addr = 0x%08x\n", master_id, remote_id, info->map->r_ept_addr);
             }
             // CMD(ACK): ......
             else {
@@ -1095,9 +1097,8 @@ static void rpmsg_master_test(void)
             if (rblock->buffer[0] == RPMSG_ACK_TEST) {
                 remote_id = rblock->buffer[1];
                 block.buffer[2 + 2] = rblock->buffer[2 + 2];
-                eptmap = &rpmsg_ept_map_table[remote_id];
                 //rk_printf("2: 0x%x\n", rblock->buffer[2 + 2]);
-                rk_printf("rpmsg_master_recv: master[%d]<--remote[%d], remote ept addr = 0x%08x\n", master_id, remote_id, eptmap->r_ept_addr);
+                rk_printf("rpmsg_master_recv: master[%d]<--remote[%d], remote ept addr = 0x%08x\n", master_id, remote_id, info->map->r_ept_addr);
             }
             // CMD(ACK): ......
             else {
@@ -1134,13 +1135,12 @@ static int32_t remote_ept_cb(void *payload, uint32_t payload_len, uint32_t src, 
 {
     uint32_t i, cpu_id;
     struct rpmsg_info_t *info = (struct rpmsg_info_t *)priv;
-    struct rpmsg_ept_map_t *eptmap = info->eptmap;
     struct rpmsg_block_t *block = (struct rpmsg_block_t *)info->private;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
     //rk_printf("remote_ept_cb: remote[%d]", cpu_id);
 
-    if (src == eptmap->m_ept_addr) {     // check source ept addr
+    if (src == info->map->m_ept_addr) {      // check source ept addr
         block->len = payload_len;
         memcpy(block->buffer, payload, payload_len);
         info->cb_sta = 1;
@@ -1156,7 +1156,6 @@ static void rpmsg_remote_test(void)
 {
     uint32_t i, master_id, remote_id;
     struct rpmsg_info_t *info;
-    struct rpmsg_ept_map_t *eptmap;
     struct rpmsg_block_t *block;
 
     rpmsg_share_mem_check();
@@ -1178,14 +1177,13 @@ static void rpmsg_remote_test(void)
             ;
         }
     }
-    eptmap = &rpmsg_ept_map_table[remote_id];
 
-    info->eptmap = eptmap;
+    info->map = &rpmsg_ept_map_table[remote_id];
     info->cb_sta = 0;
-    info->instance = rpmsg_lite_remote_init((void *)eptmap->base,
+    info->instance = rpmsg_lite_remote_init((void *)info->map->base,
                                             RL_PLATFORM_SET_LINK_ID(master_id, remote_id), RL_NO_FLAGS);
     rpmsg_lite_wait_for_link_up(info->instance);
-    info->ept = rpmsg_lite_create_ept(info->instance, eptmap->r_ept_addr, remote_ept_cb, info);
+    info->ept = rpmsg_lite_create_ept(info->instance, info->map->r_ept_addr, remote_ept_cb, info);
 
     while (1) {
         if (info->cb_sta == 1) {
@@ -1198,10 +1196,11 @@ static void rpmsg_remote_test(void)
                 block->buffer[0] = RPMSG_ACK_PROB;
                 block->buffer[1] = remote_id;
                 block->len = 2;
+                rpmsg_lite_send(info->instance, info->ept, info->map->m_ept_addr, block->buffer, block->len, RL_BLOCK);
             }
             // CMD(ACK): RPMSG_CMD_TEST
             else if (block->buffer[0] == RPMSG_CMD_TEST) {
-                rk_printf("rpmsg_remote_recv: remote[%d]<--master[%d], master ept addr = 0x%08x\n", remote_id, block->buffer[1], eptmap->m_ept_addr);
+                rk_printf("rpmsg_remote_recv: remote[%d]<--master[%d], master ept addr = 0x%08x\n", remote_id, block->buffer[1], info->map->m_ept_addr);
 
                 block->buffer[0] = RPMSG_ACK_TEST;
                 block->buffer[1] = remote_id;
@@ -1209,14 +1208,13 @@ static void rpmsg_remote_test(void)
                 i = rpmsg_get_remote_index(remote_id);
                 block->buffer[i + 2] |= 0xaa;
 
-                rk_printf("rpmsg_remote_send: remote[%d]-->master[%d], master ept addr = 0x%08x\n", remote_id, master_id, eptmap->m_ept_addr);
+                rk_printf("rpmsg_remote_send: remote[%d]-->master[%d], master ept addr = 0x%08x\n", remote_id, master_id, info->map->m_ept_addr);
+                rpmsg_lite_send(info->instance, info->ept, info->map->m_ept_addr, block->buffer, block->len, RL_BLOCK);
             }
             // CMD(ACK): ......
             else {
                 //......
             }
-
-            rpmsg_lite_send(info->instance, info->ept, eptmap->m_ept_addr, block->buffer, block->len, RL_BLOCK);
         }
         HAL_DelayMs(100);
     }
