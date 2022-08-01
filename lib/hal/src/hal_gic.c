@@ -776,11 +776,7 @@ static void GIC_CPUInterfaceInit(uint32_t amp, uint32_t priority)
     }
 
     ctlr = GIC_GetCtlr();
-#ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
-    ctlr |= 0x2;
-#else
     ctlr &= ~0x2;
-#endif
     GIC_SetCtlr(ctlr);
     GIC_SetBinaryPoint(0);
     GIC_SetPriorityMask(0xFF);
