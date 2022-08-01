@@ -31,7 +31,8 @@
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
-#define FILTER_GPIO_LEVEL_PULSE       0
+#define FILTER_GPIO_LEVEL_PULSE       1
+#define SAVE_GPIO_LEVEL_PULSE         1
 #define GPIO_IRQ_GROUP_CTRL_GPIO_MASK 1
 #define GPIO_IRQ_GPIOAB_GROUP         0xffffU
 #define GPIO_IRQ_GPIOCD_GROUP         0xffff0000U
@@ -132,9 +133,11 @@ static uint32_t GPIO_IRQ_GROUP_GetGroupActIrqs(uint32_t group,
                                                struct GPIO_REG *gpioReg)
 {
     uint32_t edgeActBits, irqActBits, intEnReg, grpEnBits;
+    uint32_t intTypeEdge, intTypeLevel, saveActBits;
+    uint32_t curLevelActBits;
 
-#if FILTER_GPIO_LEVEL_PULSE
-    uint32_t edgeActBitsL, edgeActBitsH;
+#if SAVE_GPIO_LEVEL_PULSE
+    uint32_t levelActBits;
 #endif
 
     intEnReg = gpioReg->INT_EN_H;
@@ -143,78 +146,76 @@ static uint32_t GPIO_IRQ_GROUP_GetGroupActIrqs(uint32_t group,
 
     grpEnBits = intEnReg & group;
 
-    if (!grpEnBits) {
-        return 0;
+    saveActBits = (gpioReg->DBCLK_DIV_EN_H << 16) | gpioReg->DBCLK_DIV_EN_L;
+
+    gpioReg->DBCLK_DIV_EN_L = MASK_TO_WE(group & GPIO_IRQ_GPIOAB_GROUP);
+    gpioReg->DBCLK_DIV_EN_H = MASK_TO_WE((group & GPIO_IRQ_GPIOCD_GROUP) >> 16);
+
+    __DSB();
+
+    /* may be level type */
+    if (!(saveActBits && group)) {
+        HAL_DBG_WRN("GetGroupActIrqs invalid grp=%lx %lx && %lx\n",
+                    group, saveActBits, group);
     }
 
-#if FILTER_GPIO_LEVEL_PULSE
-    edgeActBitsL = gpioReg->INT_TYPE_L & gpioReg->DBCLK_DIV_EN_L;
-    edgeActBitsH = gpioReg->INT_TYPE_H & gpioReg->DBCLK_DIV_EN_H;
-    edgeActBits = (edgeActBitsH << 16) | edgeActBitsL;
+    intTypeEdge = (gpioReg->INT_TYPE_H << 16) | gpioReg->INT_TYPE_L;
+    edgeActBits = saveActBits & intTypeEdge;
+
+    intTypeLevel = ~intTypeEdge;
+
+    curLevelActBits = (gpioReg->INT_RAWSTATUS & intTypeLevel);
+
+#if SAVE_GPIO_LEVEL_PULSE
+    levelActBits = saveActBits & intTypeLevel;
+    irqActBits = (levelActBits | curLevelActBits | edgeActBits) & grpEnBits;
+    IRQ_DBG(" GetGroupIrqs grp: %lx-%lx-%lx edge:%lx-%lx lvl:%lx-%lx-%lx\n",
+            group, irqActBits, saveActBits, edgeActBits, intTypeEdge,
+            levelActBits, curLevelActBits, intTypeLevel);
 #else
-    edgeActBits = (gpioReg->DBCLK_DIV_EN_H << 16) | gpioReg->DBCLK_DIV_EN_L;
+    irqActBits = (curLevelActBits | edgeActBits) & grpEnBits;
+    IRQ_DBG(" GetGroupIrqs grp: %lx-%lx-%lx edge:%lx-%lx lvl:%lx-%lx\n",
+            group, irqActBits, saveActBits, edgeActBits, intTypeEdge,
+            levelActBits, intTypeLevel);
 #endif
-
-    irqActBits = (gpioReg->INT_RAWSTATUS | edgeActBits) & grpEnBits;
-
-    IRQ_DBG(" GetGroupIrqs act %lx-%lx\n", irqActBits, edgeActBits);
 
     return irqActBits;
 }
 
-static void GPIO_IRQ_GROUP_EndGroupIrqs(uint32_t group,
-                                        uint32_t irqActBits,
-                                        struct GPIO_REG *gpioReg,
-                                        uint32_t irq)
+static HAL_Status GPIO_IRQ_GROUP_EndGroupIrqs(struct GPIO_IRQ_GROUP_CFG const *gpioIrqCfg, uint32_t group,
+                                              uint32_t irqActBits,
+                                              struct GPIO_REG *gpioReg,
+                                              uint32_t irq)
 {
-    uint32_t irqBitsHalf, groupBitsL, groupBitsH, unmaskBitsL, unmaskBitsH;
-    uint32_t groupRawIrq, intEnL, intEnH;
+    uint32_t groupBitsL, groupBitsH, groupRawIrq, intTypeEdge;
+    HAL_Status ret = HAL_OK;
 
-    IRQ_DBG(" EndGrpIrqs %lx-%lx m:%lx_%lx e:%lx_%lx s:%lx_%lx\n", group, irqActBits,
+    IRQ_DBG(" EndGrpIrqs %lx-%lx m:%lx_%lx e:%lx_%lx s:%lx_%lx\n",
+            group, irqActBits,
             gpioReg->INT_MASK_H, gpioReg->INT_MASK_L,
             gpioReg->INT_EN_H, gpioReg->INT_EN_L,
             gpioReg->DBCLK_DIV_EN_H, gpioReg->DBCLK_DIV_EN_L);
 
     groupBitsL = group & GPIO_IRQ_GPIOAB_GROUP;
+    groupBitsH = (group & GPIO_IRQ_GPIOCD_GROUP) >> 16;
 
-    if (groupBitsL) {
-        irqBitsHalf = irqActBits & GPIO_IRQ_GPIOAB_GROUP;
-        gpioReg->PORT_EOI_L = VAL_MASK_WE(irqBitsHalf, irqBitsHalf);
-        gpioReg->DBCLK_DIV_EN_L = MASK_TO_WE(groupBitsL);
-    }
-
-    groupBitsH = group & GPIO_IRQ_GPIOCD_GROUP;
-    if (groupBitsH) {
-        groupBitsH >>= 16;
-        irqBitsHalf = irqActBits >> 16;
-        gpioReg->PORT_EOI_H = VAL_MASK_WE(irqBitsHalf, irqBitsHalf);
-        gpioReg->DBCLK_DIV_EN_H = MASK_TO_WE(groupBitsH);
-    }
-
-    __disable_irq();
-    intEnL = gpioReg->INT_EN_L;
-    intEnH = gpioReg->INT_EN_H;
-
-    unmaskBitsL = (~intEnL) & 0xffffU;
-    unmaskBitsH = (~intEnH) & 0xffffU;
-
-    gpioReg->INT_MASK_L = VAL_MASK_WE(groupBitsL, unmaskBitsL);
-    gpioReg->INT_MASK_H = VAL_MASK_WE(groupBitsH, unmaskBitsH);
-
-    group &= (intEnL | (intEnH << 16));
-
-    groupRawIrq = gpioReg->INT_RAWSTATUS & group;
-    groupRawIrq &= (gpioReg->INT_TYPE_L | (gpioReg->INT_TYPE_H << 16));
+    gpioReg->INT_MASK_L = VAL_MASK_WE(groupBitsL, 0);
+    gpioReg->INT_MASK_H = VAL_MASK_WE(groupBitsH, 0);
+    __DSB();
+    intTypeEdge = (gpioReg->INT_TYPE_H << 16) | gpioReg->INT_TYPE_L;
+    groupRawIrq = (gpioReg->INT_RAWSTATUS & intTypeEdge) & group;
 
     if (groupRawIrq) {
-        g_irqOps->setIrqPending(irq);
+        g_irqOps->setIrqPending(gpioIrqCfg->hwIrq);
+        ret = HAL_BUSY;
     }
-    __enable_irq();
 
-    IRQ_DBG(" EndGrpIrqs %lx-%lx m:%lx_%lx e:%lx_%lx s:%lx_%lx %lx end\n",
-            group, irqActBits, gpioReg->INT_MASK_H, gpioReg->INT_MASK_L,
+    IRQ_DBG(" EndGrpIrqs %lx-%lx raw-%lx e:%lx_%lx s:%lx_%lx end\n",
+            group, irqActBits, groupRawIrq,
             gpioReg->INT_EN_H, gpioReg->INT_EN_L,
-            gpioReg->DBCLK_DIV_EN_H, gpioReg->DBCLK_DIV_EN_L, groupRawIrq);
+            gpioReg->DBCLK_DIV_EN_H, gpioReg->DBCLK_DIV_EN_L);
+
+    return ret;
 }
 
 #if !GPIO_IRQ_GROUP_CTRL_GPIO_MASK
@@ -394,6 +395,25 @@ static int GPIO_IRQ_GROUP_GIrqCfg(uint32_t bank)
     return HAL_OK;
 }
 
+static void GPIO_IRQ_GROUP_GpioInit(uint32_t bank)
+{
+    struct GPIO_IRQ_GROUP_CFG const *gpioIrqCfg;
+    struct GPIO_REG *gpioReg;
+
+    gpioIrqCfg = &p_gpioIrqCfg[bank];
+    gpioReg = gpioIrqCfg->gpioReg;
+
+    printf("GROUP_GpioInit bank:%ld :%lx,%lx, %lx\n",
+           bank, gpioReg->DBCLK_DIV_CON,
+           gpioReg->DBCLK_DIV_EN_L, gpioReg->DBCLK_DIV_EN_H);
+
+    gpioReg->DBCLK_DIV_CON = 0;
+    gpioReg->DBCLK_DIV_EN_L = VAL_MASK_WE(0xffff, 0);
+    gpioReg->DBCLK_DIV_EN_H = VAL_MASK_WE(0xffff, 0);
+
+    printf("GROUP_GpioInit end-%lx,%lx, %lx\n", gpioReg->DBCLK_DIV_CON,
+           gpioReg->DBCLK_DIV_EN_L, gpioReg->DBCLK_DIV_EN_H);
+}
 static int GPIO_IRQ_GROUP_GIrqCreate(uint32_t bank, uint32_t cpu,
                                      uint32_t prioLevel)
 {
@@ -466,6 +486,7 @@ static int GPIO_IRQ_GROUP_GIrqsInit(uint32_t bank, uint32_t irqCfg)
     }
 
     if (irqCfg) {
+        GPIO_IRQ_GROUP_GpioInit(bank);
         GPIO_IRQ_GROUP_GIrqCfg(bank);
     }
 
@@ -535,7 +556,7 @@ HAL_Status HAL_GPIO_IRQ_GROUP_DispatchGIRQs(uint32_t irq)
     struct GPIO_IRQ_GROUP_PRIO_GROUP const *prioGroup;
     struct GPIO_REG *gpioReg;
     uint32_t cpu, prioLevel, grp, gpioBank, irqActBits, rawStatus;
-    uint32_t unmskReg, mskReg, intEnReg, grpsState;
+    uint32_t unmskReg, mskReg, grpsState;
 
 #if GPIO_IRQ_GROUP_CTRL_GPIO_MASK
     uint32_t grpUnmskBits;
@@ -575,10 +596,6 @@ HAL_Status HAL_GPIO_IRQ_GROUP_DispatchGIRQs(uint32_t irq)
     mskReg |= gpioReg->INT_MASK_L;
     unmskReg = ~mskReg;
 
-    intEnReg = gpioReg->INT_EN_H;
-    intEnReg <<= 16;
-    intEnReg |= gpioReg->INT_EN_L;
-
     for (prioLevel = 0; prioLevel < GROUP_PRIO_LEVEL_MAX; prioLevel++) {
         grpsState = rawStatus & s_groupCtrl.prioGroupBits[prioLevel];
         if (!grpsState) {
@@ -602,18 +619,20 @@ HAL_Status HAL_GPIO_IRQ_GROUP_DispatchGIRQs(uint32_t irq)
                         prioLevel, cpu, g_irqOps->getIrqStatus(irq));
                 IRQ_DBG(" DispatchGIrqs busy reg:%lx %lx %lx\n",
                         grp, grpUnmskBits, grpMskBits);
-                HAL_ASSERT(grp == grpMskBits);
+
                 continue;
             }
 #else
             if (DispatchGIRQsBusy(prioGroup, gpioIrqCfg, prioLevel, cpu, irq, grp,
-                                  intEnReg, unmskReg, mskReg)) {
+                                  (gpioReg->INT_EN_H << 16) | gpioReg->INT_EN_L,
+                                  unmskReg, mskReg)) {
                 continue;
             }
 #endif
 
             IRQ_DBG(" DispatchGIrqs:%ld-%ld-%d-%lx-%lx:%lx\n", prioLevel, cpu,
-                    prioGroup->GIRQId[cpu], grp, intEnReg & grp, irqActBits);
+                    prioGroup->GIRQId[cpu], grp,
+                    ((gpioReg->INT_EN_H << 16) | gpioReg->INT_EN_L) & grp, irqActBits);
 
             GPIO_IRQ_GROUP_GIrqsDispatchCtrl(grp, irqActBits, gpioReg);
 
@@ -646,8 +665,8 @@ HAL_Status HAL_GPIO_IRQ_GROUP_DispatchGIRQs(uint32_t irq)
  */
 HAL_Status HAL_GPIO_IRQ_GROUP_HWIRQDispatchIrqs(uint32_t irq, void *args)
 {
+    uint32_t cpu, level, group, irqActBits, mskReg, grpMskBits;
     struct GPIO_REG *gpioReg;
-    uint32_t cpu, level, group, irqActBits;
     struct GPIO_IRQ_GROUP_CFG const *gpioIrqCfg = args;
 
     gpioReg = gpioIrqCfg->gpioReg;
@@ -656,16 +675,33 @@ HAL_Status HAL_GPIO_IRQ_GROUP_HWIRQDispatchIrqs(uint32_t irq, void *args)
 
     group = gpioIrqCfg->prioGroup[level].cpuGroup[cpu];
 
+    if (!group) {
+        return HAL_OK;
+    }
+
     IRQ_DBG("**HwIrqDispatchIrqs %ld-%ld-%ld-%lx\n", level, cpu, irq, group);
+
+    __disable_irq();
+
+    mskReg = gpioReg->INT_MASK_H;
+    mskReg <<= 16;
+    mskReg |= gpioReg->INT_MASK_L;
+
+    grpMskBits = mskReg & group;
+
+    if (grpMskBits != group) {
+        return HAL_OK;
+    }
 
     irqActBits = GPIO_IRQ_GROUP_GetGroupActIrqs(group, gpioReg);
 
     if (irqActBits) {
+        __enable_irq();
         GPIO_IRQ_GROUP_DispatchPinsIrq(irqActBits, gpioIrqCfg);
-        GPIO_IRQ_GROUP_EndGroupIrqs(group, irqActBits, gpioReg, irq);
-        IRQ_DBG("**HwIrqDispatchIrqs end:%ld-%ld-%ld-%lx %lx\n", level, cpu,
-                irq, group, irqActBits);
+        __disable_irq();
     }
+
+    GPIO_IRQ_GROUP_EndGroupIrqs(gpioIrqCfg, group, irqActBits, gpioReg, irq);
 
     return HAL_OK;
 }
@@ -678,7 +714,7 @@ HAL_Status HAL_GPIO_IRQ_GROUP_HWIRQDispatchIrqs(uint32_t irq, void *args)
  */
 HAL_Status HAL_GPIO_IRQ_GROUP_DIRQDispatchIrqs(uint32_t irq, void *args)
 {
-    uint32_t group, irqActBits;
+    uint32_t group, irqActBits, mskReg, grpMskBits;
     struct GPIO_IRQ_GROUP_DIRQ_CTRL *DIRQCtrl = args;
     struct GPIO_IRQ_GROUP_CFG const *gpioIrqCfg;
     struct GPIO_REG *gpioReg;
@@ -688,18 +724,34 @@ HAL_Status HAL_GPIO_IRQ_GROUP_DIRQDispatchIrqs(uint32_t irq, void *args)
 
     group = gpioIrqCfg->prioGroup[DIRQCtrl->prioLevel].cpuGroup[DIRQCtrl->cpu];
 
+    if (!group) {
+        return HAL_OK;
+    }
+
     IRQ_DBG("**DIRQDispatchIrqs %ld-%ld-%ld-%lx %lx\n", DIRQCtrl->prioLevel,
             DIRQCtrl->cpu, irq, group, g_irqOps->getIrqStatus(irq));
+
+    __disable_irq();
+
+    mskReg = gpioReg->INT_MASK_H;
+    mskReg <<= 16;
+    mskReg |= gpioReg->INT_MASK_L;
+
+    grpMskBits = mskReg & group;
+
+    if (grpMskBits != group) {
+        return HAL_OK;
+    }
 
     irqActBits = GPIO_IRQ_GROUP_GetGroupActIrqs(group, gpioReg);
 
     if (irqActBits) {
+        __enable_irq();
         GPIO_IRQ_GROUP_DispatchPinsIrq(irqActBits, gpioIrqCfg);
-        GPIO_IRQ_GROUP_EndGroupIrqs(group, irqActBits, gpioReg, irq);
-
-        IRQ_DBG("**DIRQDispatchIrqs end:%ld-%ld-%ld-%lx %lx\n",
-                DIRQCtrl->prioLevel, DIRQCtrl->cpu, irq, group, irqActBits);
+        __disable_irq();
     }
+
+    GPIO_IRQ_GROUP_EndGroupIrqs(gpioIrqCfg, group, irqActBits, gpioReg, irq);
 
     return HAL_OK;
 }
