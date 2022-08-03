@@ -51,7 +51,7 @@ const struct HAL_UART_DEV g_uart2Dev =
 struct HAL_PDM_DEV g_pdm0Dev =
 {
     .pReg = PDM0,
-    .mclk = CLK_MCLK_PDM0,
+    .mclk = MCLK_PDM0,
     .mclkGate = MCLK_PDM0_GATE,
     .mclkRate = PDM_CLK_RATE,
     .hclk = HCLK_PDM0_GATE,

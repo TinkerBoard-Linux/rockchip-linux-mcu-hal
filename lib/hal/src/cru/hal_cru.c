@@ -139,6 +139,121 @@ static uint32_t CRU_Gcd(uint32_t m, uint32_t n)
     return n;
 }
 
+static int isBetterFreq(uint32_t now, uint32_t new, uint32_t best)
+{
+    return (new <= now && new > best);
+}
+
+int HAL_CRU_FreqGetMux4(uint32_t freq, uint32_t freq0, uint32_t freq1,
+                        uint32_t freq2, uint32_t freq3)
+{
+    uint32_t best = 0;
+
+    if (isBetterFreq(freq, freq0, best)) {
+        best = freq0;
+    }
+
+    if (isBetterFreq(freq, freq1, best)) {
+        best = freq1;
+    }
+
+    if (isBetterFreq(freq, freq2, best)) {
+        best = freq2;
+    }
+
+    if (isBetterFreq(freq, freq3, best)) {
+        best = freq3;
+    }
+
+    if (best == freq0) {
+        return 0;
+    } else if (best == freq1) {
+        return 1;
+    } else if (best == freq2) {
+        return 2;
+    } else if (best == freq3) {
+        return 3;
+    }
+
+    return HAL_INVAL;
+}
+
+int HAL_CRU_FreqGetMux3(uint32_t freq, uint32_t freq0, uint32_t freq1, uint32_t freq2)
+{
+    return HAL_CRU_FreqGetMux4(freq, freq0, freq1, freq2, freq2);
+}
+
+int HAL_CRU_FreqGetMux2(uint32_t freq, uint32_t freq0, uint32_t freq1)
+{
+    return HAL_CRU_FreqGetMux4(freq, freq0, freq1, freq1, freq1);
+}
+
+uint32_t HAL_CRU_MuxGetFreq4(uint32_t muxName, uint32_t freq0, uint32_t freq1,
+                             uint32_t freq2, uint32_t freq3)
+{
+    switch (HAL_CRU_ClkGetMux(muxName)) {
+    case 0:
+
+        return freq0;
+    case 1:
+
+        return freq1;
+    case 2:
+
+        return freq2;
+    case 3:
+
+        return freq3;
+    }
+
+    return HAL_INVAL;
+}
+
+uint32_t HAL_CRU_MuxGetFreq3(uint32_t muxName, uint32_t freq0,
+                             uint32_t freq1, uint32_t freq2)
+{
+    return HAL_CRU_MuxGetFreq4(muxName, freq0, freq1, freq2, freq2);
+}
+
+uint32_t HAL_CRU_MuxGetFreq2(uint32_t muxName, uint32_t freq0, uint32_t freq1)
+{
+    return HAL_CRU_MuxGetFreq4(muxName, freq0, freq1, freq1, freq1);
+}
+
+int HAL_CRU_RoundFreqGetMux4(uint32_t freq, uint32_t pFreq0,
+                             uint32_t pFreq1, uint32_t pFreq2,
+                             uint32_t pFreq3, uint32_t *pFreqOut)
+{
+    uint32_t mux;
+
+    if (pFreq3 && (pFreq3 % freq == 0)) {
+        *pFreqOut = pFreq3;
+        mux = 3;
+    } else if (pFreq2 && (pFreq2 % freq == 0)) {
+        *pFreqOut = pFreq2;
+        mux = 2;
+    } else if (pFreq1 % freq == 0) {
+        *pFreqOut = pFreq1;
+        mux = 1;
+    } else {
+        *pFreqOut = pFreq0;
+        mux = 0;
+    }
+
+    return mux;
+}
+
+int HAL_CRU_RoundFreqGetMux3(uint32_t freq, uint32_t pFreq0,
+                             uint32_t pFreq1, uint32_t pFreq2, uint32_t *pFreqOut)
+{
+    return HAL_CRU_RoundFreqGetMux4(freq, pFreq0, pFreq1, pFreq2, 0, pFreqOut);
+}
+
+int HAL_CRU_RoundFreqGetMux2(uint32_t freq, uint32_t pFreq0, uint32_t pFreq1, uint32_t *pFreqOut)
+{
+    return HAL_CRU_RoundFreqGetMux4(freq, pFreq0, pFreq1, 0, 0, pFreqOut);
+}
+
 /**
  * @brief Rockchip pll clk set postdiv.
  * @param  foutHz: output freq

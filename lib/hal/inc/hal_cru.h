@@ -69,7 +69,9 @@
 #define CLK_DIV_GET_REG_OFFSET(x) CLK_MUX_GET_REG_OFFSET(x)
 #define CLK_DIV_GET_BANK(x)       CLK_MUX_GET_BANK(x)
 #define CLK_DIV_GET_BITS_SHIFT(x) CLK_MUX_GET_BITS_SHIFT(x)
+#define CLK_DIV_GET_WIDTH(x)      CLK_MUX_GET_WIDTH(x)
 #define CLK_DIV_GET_MASK(x)       CLK_MUX_GET_MASK(x)
+#define CLK_DIV_GET_MAXDIV(x)     ((1 << CLK_DIV_GET_WIDTH(x)) - 1)
 
 /*
  * v64 mux = v32 | bank(in bit[35:32])
@@ -173,6 +175,35 @@ extern const struct HAL_CRU_DEV g_cruDev;
 
 /** @} */
 /***************************** Function Declare ******************************/
+/** @defgroup CRU_Private_Function_Declare Private Function Declare
+ *  @{
+ */
+
+#define _MHZ(n) ((n) * 1000000)
+#define DIV_NO_REM(pFreq, freq, maxDiv) \
+    ((!((pFreq) % (freq))) && ((pFreq) / (freq) <= (maxDiv)))
+
+int HAL_CRU_FreqGetMux4(uint32_t freq, uint32_t freq0, uint32_t freq1,
+                        uint32_t freq2, uint32_t freq3);
+int HAL_CRU_FreqGetMux3(uint32_t freq, uint32_t freq0, uint32_t freq1,
+                        uint32_t freq2);
+int HAL_CRU_FreqGetMux2(uint32_t freq, uint32_t freq0, uint32_t freq1);
+
+uint32_t HAL_CRU_MuxGetFreq4(uint32_t muxName, uint32_t freq0, uint32_t freq1,
+                             uint32_t freq2, uint32_t freq3);
+uint32_t HAL_CRU_MuxGetFreq3(uint32_t muxName, uint32_t freq0, uint32_t freq1,
+                             uint32_t freq2);
+uint32_t HAL_CRU_MuxGetFreq2(uint32_t muxName, uint32_t freq0, uint32_t freq1);
+
+int HAL_CRU_RoundFreqGetMux4(uint32_t freq, uint32_t pFreq0, uint32_t pFreq1,
+                             uint32_t pFreq2, uint32_t pFreq3, uint32_t *pFreqOut);
+int HAL_CRU_RoundFreqGetMux3(uint32_t freq, uint32_t pFreq0, uint32_t pFreq1,
+                             uint32_t pFreq2, uint32_t *pFreqOut);
+int HAL_CRU_RoundFreqGetMux2(uint32_t freq, uint32_t pFreq0, uint32_t pFreq1,
+                             uint32_t *pFreqOut);
+
+/** @} */
+
 /** @defgroup CRU_Public_Function_Declare Public Function Declare
  *  @{
  */
