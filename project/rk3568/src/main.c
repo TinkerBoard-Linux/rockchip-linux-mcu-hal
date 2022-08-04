@@ -180,6 +180,11 @@ void main(void)
     HAL_IRQ_HANDLER_SetIRQHandler(irq, HAL_SMCCC_SIP_AmpCpuOffIrqHandler, NULL);
     HAL_GIC_Enable(irq);
 
+#ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
+    irq = GIC_TOUCH_REQ_IRQ(cpu_id);
+    HAL_GIC_Enable(irq);
+#endif
+
     printf("\n");
     printf("****************************************\n");
     printf("  Hello RK3568 Bare-metal using RK_HAL! \n");

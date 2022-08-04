@@ -30,6 +30,22 @@ void FIQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
 void IRQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
 #else
 #ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
+static void GIC_CPUInterTouch(void)
+{
+    uint32_t cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    uint32_t irq = GIC_TOUCH_REQ_IRQ(cpu_id);
+
+    if (HAL_GIC_GetPending(irq)) {
+        HAL_GIC_ClearPending(irq);
+        __DSB();
+    }
+
+    HAL_GIC_SetPending(irq);
+    __DSB();
+    HAL_GIC_ClearPending(irq);
+    __DSB();
+}
+
 void IRQ_HardIrqPreemptHandler(void)
 {
     uint32_t irqn;
@@ -38,6 +54,8 @@ void IRQ_HardIrqPreemptHandler(void)
 
     if ((irqn >= 1020 && irqn <= 1023))
         return;
+
+    GIC_CPUInterTouch();
 
 #ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
     HAL_GPIO_IRQ_GROUP_DispatchGIRQs(irqn);
