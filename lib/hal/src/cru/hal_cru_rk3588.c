@@ -714,6 +714,11 @@ static HAL_Status HAL_CRU_ClkSetAudioFreq(eCLOCK_Name clockName, uint32_t rate)
     if ((!(PLL_INPUT_OSC_RATE / 2 % rate))) {
         HAL_CRU_ClkSetMux(mux, 3);
         HAL_CRU_ClkDisable(fracGateId);
+        /*
+         * AUPLL is designed for audio, we will pre-calculate
+         * a common rate and set it for the most audio requirement.
+         * So AUPLL will not be changed like vop to change v0pll.
+         */
     } else if (DIV_NO_REM(s_aupllFreq, rate, maxDiv)) {
         HAL_CRU_ClkSetDiv(divSrc, s_aupllFreq / rate);
         HAL_CRU_ClkSetMux(muxSrc, 1);
@@ -783,9 +788,15 @@ static uint32_t HAL_CRU_ClkGetVopFreq(eCLOCK_Name clockName)
 
 static uint32_t HAL_CRU_ClkSetVopFreq(eCLOCK_Name clockName, uint32_t rate)
 {
+    /* vop2Pll[3] can be set as PLL_AUPLL, if the product doesn't use audio */
+    uint32_t vop2Pll[] = { 0, 0, PLL_V0PLL, 0, };
     uint32_t mux = CLK_GET_MUX(clockName);
     uint32_t muxSrc, divSrc;
-    uint32_t maxDiv;
+    uint32_t maxDiv, pllFreq;
+    uint32_t *pllTable = NULL;
+    uint32_t pllTableCnt = 0;
+    uint32_t curPll, i;
+    int best = -1;
 
     switch (clockName) {
     case DCLK_VOP0:
@@ -796,12 +807,13 @@ static uint32_t HAL_CRU_ClkSetVopFreq(eCLOCK_Name clockName, uint32_t rate)
     case DCLK_VOP1:
         muxSrc = CLK_GET_MUX(DCLK_VOP1_SRC);
         divSrc = CLK_GET_DIV(DCLK_VOP1_SRC);
-
         break;
 
     case DCLK_VOP2:
         muxSrc = CLK_GET_MUX(DCLK_VOP2_SRC);
         divSrc = CLK_GET_DIV(DCLK_VOP2_SRC);
+        pllTable = vop2Pll;
+        pllTableCnt = HAL_ARRAY_SIZE(vop2Pll);
         break;
 
     case DCLK_VOP3:
@@ -841,8 +853,27 @@ static uint32_t HAL_CRU_ClkSetVopFreq(eCLOCK_Name clockName, uint32_t rate)
             HAL_CRU_ClkSetMux(mux, 0);
         }
     } else {
-        HAL_CRU_ClkSetDiv(divSrc, HAL_DIV_ROUND_UP(s_gpllFreq, rate));
-        HAL_CRU_ClkSetMux(muxSrc, 0);
+        curPll = HAL_CRU_ClkGetMux(muxSrc);
+        for (i = 0; i < pllTableCnt; i++) {
+            if (pllTable[i]) {
+                best = i;
+                if (pllTable[i] == curPll) {
+                    break;
+                }
+            }
+        }
+
+        /* No PLL reserved for vop ? */
+        if (best < 0) {
+            best = 0;
+            pllFreq = s_gpllFreq;
+        } else {
+            HAL_CRU_ClkSetFreq(pllTable[best], rate);
+            pllFreq = HAL_CRU_ClkGetFreq(pllTable[best]);
+        }
+
+        HAL_CRU_ClkSetDiv(divSrc, HAL_DIV_ROUND_UP(pllFreq, rate));
+        HAL_CRU_ClkSetMux(muxSrc, best);
         if (muxSrc != mux) {
             HAL_CRU_ClkSetMux(mux, 0);
         }
