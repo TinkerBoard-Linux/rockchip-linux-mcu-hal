@@ -43,8 +43,8 @@
  */
 /********************* Private MACRO Definition ******************************/
 #if defined(SOC_RV1108)
-#define PWRDOWN_SHIT       0
-#define PWRDOWN_MASK       1 << PWRDOWN_SHIT
+#define PWRDOWN_SHIFT      0
+#define PWRDOWN_MASK       1 << PWRDOWN_SHIFT
 #define PLL_POSTDIV1_SHIFT 8
 #define PLL_POSTDIV1_MASK  0x7 << PLL_POSTDIV1_SHIFT
 #define PLL_FBDIV_SHIFT    0
@@ -69,12 +69,12 @@
 #define PLLCON1_PWRDOWN     BIT(13)
 #define PLLCON6_LOCK_STATUS BIT(15)
 
-#define PWRDOWN_SHIT 13
-#define PWRDOWN_MASK 1 << PWRDOWN_SHIT
+#define PWRDOWN_SHIFT 13
+#define PWRDOWN_MASK  (1 << PWRDOWN_SHIFT)
 
 #else
-#define PWRDOWN_SHIT       13
-#define PWRDOWN_MASK       1 << PWRDOWN_SHIT
+#define PWRDOWN_SHIFT      13
+#define PWRDOWN_MASK       1 << PWRDOWN_SHIFT
 #define PLL_POSTDIV1_SHIFT 12
 #define PLL_POSTDIV1_MASK  0x7 << PLL_POSTDIV1_SHIFT
 #define PLL_FBDIV_SHIFT    0
@@ -574,7 +574,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift);
 
     /* Pll Power down */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 1 << PWRDOWN_SHIFT);
 
     /* Pll Config */
     WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLL_POSTDIV2_MASK, pConfig->postDiv2 << PLL_POSTDIV2_SHIFT);
@@ -587,7 +587,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
         WRITE_REG(*(pSetup->conOffset2), (READ_REG(*(pSetup->conOffset2)) & 0xff000000) | pConfig->frac);
     }
 
-    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 0 << PWRDOWN_SHIFT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
@@ -612,7 +612,7 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
     int delay = 2400;
 
     /* Pll Power up */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 0 << PWRDOWN_SHIFT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
@@ -632,7 +632,7 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
 HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
 {
     /* Pll Power down */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset3), PWRDOWN_MASK, 1 << PWRDOWN_SHIFT);
 
     return HAL_OK;
 }
@@ -725,7 +725,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     }
 
     /* Pll Power down */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIFT);
 
     /* Pll Config */
     WRITE_REG_MASK_WE(*(pSetup->conOffset0), PLLCON0_M_MASK, pConfig->m << PLLCON0_M_SHIFT);
@@ -736,7 +736,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     }
 
     /* Pll Power up */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIFT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
@@ -762,7 +762,7 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
     int delay = 2400;
 
     /* Pll Power up */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIFT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
@@ -782,7 +782,7 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
 HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
 {
     /* Pll Power down */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIFT);
 
     return HAL_OK;
 }
@@ -868,7 +868,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_SLOW << pSetup->modeShift);
 
     /* Pll Power down */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIFT);
 
     /* Pll Config */
     WRITE_REG_MASK_WE(*(pSetup->conOffset1), PLL_POSTDIV2_MASK, pConfig->postDiv2 << PLL_POSTDIV2_SHIFT);
@@ -882,7 +882,7 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     }
 
     /* Pll Power up */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIFT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
@@ -913,7 +913,7 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
     int delay = 2400;
 
     /* Pll Power up */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 0 << PWRDOWN_SHIFT);
 
     /* Waiting for pll lock */
     while (delay > 0) {
@@ -939,7 +939,7 @@ HAL_Status HAL_CRU_SetPllPowerUp(struct PLL_SETUP *pSetup)
 HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
 {
     /* Pll Power down */
-    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIT);
+    WRITE_REG_MASK_WE(*(pSetup->conOffset1), PWRDOWN_MASK, 1 << PWRDOWN_SHIFT);
 
     return HAL_OK;
 }
