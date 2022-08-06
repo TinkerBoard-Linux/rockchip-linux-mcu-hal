@@ -69,6 +69,9 @@
 #define PLLCON1_PWRDOWN     BIT(13)
 #define PLLCON6_LOCK_STATUS BIT(15)
 
+#define BYPASS_SHIFT 15
+#define BYPASS_MASK  (1 << BYPASS_SHIFT)
+
 #define PWRDOWN_SHIFT 13
 #define PWRDOWN_MASK  (1 << PWRDOWN_SHIFT)
 
@@ -753,6 +756,14 @@ HAL_Status HAL_CRU_SetPllFreq(struct PLL_SETUP *pSetup, uint32_t rate)
     if (pSetup->modeMask) {
         WRITE_REG_MASK_WE(*(pSetup->modeOffset), pSetup->modeMask, RK_PLL_MODE_NORMAL << pSetup->modeShift);
     }
+
+    /*
+     * PLL operates normally.
+     *
+     * ATF system suspend requires memory repair operation which would
+     * bypass the pll, let's ensure it's on normal mode.
+     */
+    WRITE_REG_MASK_WE(*(pSetup->conOffset0), BYPASS_MASK, 0 << BYPASS_SHIFT);
 
     return HAL_OK;
 }
