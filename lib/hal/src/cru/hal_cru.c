@@ -254,6 +254,81 @@ int HAL_CRU_RoundFreqGetMux2(uint32_t freq, uint32_t pFreq0, uint32_t pFreq1, ui
     return HAL_CRU_RoundFreqGetMux4(freq, pFreq0, pFreq1, 0, 0, pFreqOut);
 }
 
+#if defined(SOC_RK3588)
+/**
+ * @brief Get pll parameter by auto.
+ * @param  finHz: pll intput freq
+ * @param  foutHz: pll output freq
+ * @return struct PLL_CONFIG.
+ * How to calculate the PLL:
+ *     FFVCO = ((m + k / 65536) * FFIN) / p
+ *     FFOUT = ((m + k / 65536) * FFIN) / (p * 2^s)
+ */
+static const struct PLL_CONFIG *CRU_PllSetByAuto(uint32_t finHz, uint32_t foutHz)
+{
+    struct PLL_CONFIG *rateTable = &g_rockchipAutoTable;
+    uint64_t fvcoMin = 2250ULL * MHZ, fvcoMax = 4500ULL * MHZ;
+    uint64_t foutMin = 37ULL * MHZ, foutMax = 4500ULL * MHZ;
+    uint64_t fvco, fref, fout, ffrac;
+    uint32_t p, m, s;
+
+    if (finHz == 0 || foutHz == 0 || foutHz == finHz) {
+        return NULL;
+    }
+
+    if (foutHz > foutMax || foutHz < foutMin) {
+        return NULL;
+    }
+
+    if (finHz / MHZ * MHZ == finHz && foutHz / MHZ * MHZ == foutHz) {
+        for (s = 0; s <= 6; s++) {
+            fvco = (uint64_t)foutHz << s;
+            if (fvco < fvcoMin || fvco > fvcoMax) {
+                continue;
+            }
+
+            for (p = 2; p <= 4; p++) {
+                for (m = 64; m <= 1023; m++) {
+                    if (fvco == m * finHz / p) {
+                        rateTable->p = p;
+                        rateTable->m = m;
+                        rateTable->s = s;
+                        rateTable->k = 0;
+
+                        return rateTable;
+                    }
+                }
+            }
+        }
+    } else {
+        for (s = 0; s <= 6; s++) {
+            fvco = (uint64_t)foutHz << s;
+            if (fvco < fvcoMin || fvco > fvcoMax) {
+                continue;
+            }
+
+            for (p = 1; p <= 4; p++) {
+                for (m = 64; m <= 1023; m++) {
+                    if ((fvco >= m * finHz / p) && (fvco < (m + 1) * finHz / p)) {
+                        rateTable->p = p;
+                        rateTable->m = m;
+                        rateTable->s = s;
+                        fref = finHz / p;
+                        ffrac = fvco - (m * fref);
+                        fout = ffrac * 65536;
+                        rateTable->k = fout / fref;
+
+                        return rateTable;
+                    }
+                }
+            }
+        }
+    }
+
+    return NULL;
+}
+
+#else
 /**
  * @brief Rockchip pll clk set postdiv.
  * @param  foutHz: output freq
@@ -379,6 +454,7 @@ static const struct PLL_CONFIG *CRU_PllSetByAuto(uint32_t finHz,
 
     return rateTable;
 }
+#endif
 
 /**
  * @brief Get pll parameter by rateTable.
