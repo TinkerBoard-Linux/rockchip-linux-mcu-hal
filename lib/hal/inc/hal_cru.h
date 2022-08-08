@@ -25,6 +25,12 @@
  *  @{
  */
 
+#ifdef HAL_CRU_DBG_ON
+#define HAL_CRU_DBG(fmt, arg...) HAL_SYSLOG("[HAL CRU] " fmt, ##arg)
+#else
+#define HAL_CRU_DBG(fmt, arg...) do { if (0) HAL_SYSLOG("[HAL CRU] " fmt, ##arg); } while (0)
+#endif
+
 #define MHZ 1000000
 #define KHZ 1000
 
