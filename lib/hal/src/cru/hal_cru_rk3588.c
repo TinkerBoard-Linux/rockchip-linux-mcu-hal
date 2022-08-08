@@ -364,8 +364,7 @@ static HAL_Status HAL_CRU_ClkSetUartFreq(eCLOCK_Name clockName, uint32_t rate)
     HAL_CRU_ClkEnable(gateId);
     HAL_CRU_ClkEnable(fracGateId);
 
-    if ((!(PLL_INPUT_OSC_RATE % rate))) {
-        HAL_CRU_ClkSetDiv(divSrc, PLL_INPUT_OSC_RATE);
+    if (PLL_INPUT_OSC_RATE == rate) {
         HAL_CRU_ClkSetMux(mux, 2);
         HAL_CRU_ClkDisable(fracGateId);
         /* attention: UART0 is fixed at CPLL, 'muxSrc' is set as 0 */
@@ -711,7 +710,7 @@ static HAL_Status HAL_CRU_ClkSetAudioFreq(eCLOCK_Name clockName, uint32_t rate)
     HAL_CRU_ClkEnable(gateId);
     HAL_CRU_ClkEnable(fracGateId);
 
-    if ((!(PLL_INPUT_OSC_RATE / 2 % rate))) {
+    if (PLL_INPUT_OSC_RATE / 2 == rate) {
         HAL_CRU_ClkSetMux(mux, 3);
         HAL_CRU_ClkDisable(fracGateId);
         /*
