@@ -26,7 +26,7 @@
  */
 
 #define HAL_FSPI_QUAD_ENABLE
-#define HAL_FSPI_SPEED_THRESHOLD 100000000
+#define HAL_FSPI_SPEED_THRESHOLD 50000000
 
 /***************************** Structure Definition **************************/
 /** FSPI_CTRL register datalines, addrlines and cmdlines value */
