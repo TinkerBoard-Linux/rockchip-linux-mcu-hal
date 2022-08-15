@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
  */
 
 /* Program Entry, set to mark it as "used" and avoid gc */
@@ -8,7 +8,8 @@
 MEMORY
 {
     SRAM  (rxw) : ORIGIN = 0xfdcc0000, LENGTH = 64K      /* SYSTEM SRAM */
-    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = 30M   /* DRAM */
+    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = DRAM_SIZE    /* DRAM */
+    SHMEM (rxw) : ORIGIN = SHMEM_BASE, LENGTH = SHMEM_SIZE      /* shared memory for all cpu */
 }
 
 ENTRY(Reset_Handler)
@@ -20,12 +21,16 @@ __SVC_STACK_SIZE = 0x1000;
 __ABT_STACK_SIZE = 0x400;
 __UND_STACK_SIZE = 0x400;
 
+__TTB_SIZE = 0x4000;
+__SPINLOCK_MEM_SIZE = 0x100;
+__SHARE_RPMSG_SIZE = 0x80000;
+
 SECTIONS
 {
     .text :
     {
         KEEP(*(RESET))                  /* Startup code */
-
+        _stext = .;
         . = ALIGN(16);
         *(.text)                        /* remaining code */
         *(.text.*)                      /* remaining code */
@@ -60,7 +65,25 @@ SECTIONS
         __zero_table_start__ = .;
         LONG (__bss_start__)
         LONG ((__bss_end__ - __bss_start__) / 4)
+        LONG (__TTB_start__)
+        LONG ((__TTB_end__ - __TTB_start__) / 4)
+#ifdef PRIMARY_CPU
+        LONG (ADDR(.share_lock))
+        LONG (SIZEOF(.share_lock) / 4)
+#endif
         __zero_table_end__ = .;
+    } > DRAM
+
+    .copy.table :
+    {
+        . = ALIGN(4);
+        __copy_table_start__ = .;
+#ifdef PRIMARY_CPU
+        LONG (LOADADDR(.share_data))
+        LONG (ADDR(.share_data))
+        LONG (SIZEOF(.share_data) / 4)
+#endif
+        __copy_table_end__ = .;
     } > DRAM
 
     . = ALIGN(4);
@@ -93,6 +116,44 @@ SECTIONS
         PROVIDE(__dtors_end__ = .);
     } > DRAM
 
+    .ttb :
+    {
+        . = ALIGN(16 * 1024);
+        PROVIDE(__TTB_start__ = .);
+        PROVIDE(MMUTable  = .);
+        . += __TTB_SIZE;
+        PROVIDE(__TTB_end__ = .);
+        . = ALIGN(16 * 1024);
+    } > DRAM
+
+    .share_lock (NOLOAD):
+    {
+        . = ALIGN(64);
+        PROVIDE(__spinlock_mem_start__ = .);
+        . += __SPINLOCK_MEM_SIZE;
+        PROVIDE(__spinlock_mem_end__ = .);
+        . = ALIGN(64);
+    } > SHMEM
+
+    .share_rpmsg (NOLOAD):
+    {
+        . = ALIGN(0x1000);
+        PROVIDE(__share_rpmsg_start__ = .);
+        . += __SHARE_RPMSG_SIZE;
+        PROVIDE(__share_rpmsg_end__ = .);
+        . = ALIGN(0x1000);
+    } > SHMEM
+
+    .share_data :
+    {
+        . = ALIGN(64);
+        PROVIDE(__share_data_start__ = .);
+        KEEP(*(.share_data))
+        PROVIDE(__share_data_end__ = .);
+        . = ALIGN(64);
+    } > SHMEM AT > DRAM
+
+
     . = ALIGN(16);
     .bss (NOLOAD) :
     {
@@ -105,8 +166,21 @@ SECTIONS
         PROVIDE(__bss_end__ = .);
     } > DRAM
     _end = .;
+   PROVIDE(end = .);
 
-    .stack :
+    /* The heap is between bss_end and stack_start */
+    . = ALIGN(16);
+    __ALL_STACK_SIZE = __STACK_SIZE + __FIQ_STACK_SIZE + __IRQ_STACK_SIZE + __SVC_STACK_SIZE + __ABT_STACK_SIZE + __UND_STACK_SIZE;
+    __STACK_START = ORIGIN(DRAM) + LENGTH(DRAM) - __ALL_STACK_SIZE;
+    __HEAP_SIZE = (__STACK_START - .);
+    .heap :
+    {
+        PROVIDE(__heap_start = .);
+        . += __HEAP_SIZE;
+        PROVIDE(__heap_end = .);
+    } > DRAM
+
+    .stack __STACK_START :
     {
         . = ALIGN(16);
 
@@ -136,14 +210,5 @@ SECTIONS
         . += __UND_STACK_SIZE;
         Image$$UND_STACK$$ZI$$Limit = .;
 
-    } > DRAM
-
-    .heap :
-    {
-        . = ALIGN(16);
-        PROVIDE(__heap_start = .);
-        . = ORIGIN(DRAM) + LENGTH(DRAM);
-        PROVIDE(__heap_end = .);
-        end = __heap_end;
     } > DRAM
 }
