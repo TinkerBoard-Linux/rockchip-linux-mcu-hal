@@ -99,6 +99,9 @@ int fputc(int ch, FILE *f)
 
 void main(void)
 {
+#ifdef HAL_SPINLOCK_MODULE_ENABLED
+    uint32_t ownerID;
+#endif
     uint32_t cpu_id, irq;
 
     struct HAL_UART_CONFIG hal_uart_config = {
@@ -131,6 +134,12 @@ void main(void)
             HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
         }
     }
+
+    /* SPINLOCK Init */
+#ifdef HAL_SPINLOCK_MODULE_ENABLED
+    ownerID = HAL_CPU_TOPOLOGY_GetCurrentCpuId() << 1 | 1;
+    HAL_SPINLOCK_Init(ownerID);
+#endif
 
     /* CPU Off Support */
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();

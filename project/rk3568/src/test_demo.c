@@ -10,6 +10,7 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define GPIO_IRQ_GROUP_TEST
+//#define SPINLOCK_TEST
 //#define UNITY_TEST
 
 #ifdef GPIO_IRQ_GROUP_TEST
@@ -129,6 +130,42 @@ static void gpio_irq_group_test(void)
 }
 #endif
 
+/************************************************/
+/*                                              */
+/*                SPINLOCK_TEST                 */
+/*                                              */
+/************************************************/
+#ifdef SPINLOCK_TEST
+static void spinlock_test(void)
+{
+    uint32_t cpu_id, owner;
+    HAL_Check ret;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    printf("begin spinlock test: cpu=%ld\n", cpu_id);
+
+    while (1) {
+        ret = HAL_SPINLOCK_TryLock(0);
+        if (ret) {
+            printf("try lock success: %ld\n", cpu_id);
+            HAL_SPINLOCK_Unlock(0);
+        } else {
+            printf("try lock failed: %ld\n", cpu_id);
+        }
+        HAL_SPINLOCK_Lock(0);
+        printf("enter cpu%ld\n", cpu_id);
+        HAL_CPUDelayUs(rand() % 2000000);
+        owner = HAL_SPINLOCK_GetOwner(0);
+        if ((owner >> 1) != cpu_id) {
+            printf("owner id is not matched(%ld, %ld)\n", cpu_id, owner);
+        }
+        printf("leave cpu%ld\n", cpu_id);
+        HAL_SPINLOCK_Unlock(0);
+        HAL_CPUDelayUs(10);
+    }
+}
+#endif
+
 /********************* Public Function Definition ****************************/
 
 void TEST_DEMO_GIC_Init(void)
@@ -140,6 +177,10 @@ void test_demo(void)
 {
 #ifdef GPIO_IRQ_GROUP_TEST && defined(PRIMARY_CPU)
     gpio_irq_group_test();
+#endif
+
+#ifdef SPINLOCK_TEST
+    spinlock_test();
 #endif
 
 #if defined(UNITY_TEST) && defined(PRIMARY_CPU)
