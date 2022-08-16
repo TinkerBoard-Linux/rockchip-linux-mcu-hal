@@ -221,13 +221,7 @@ typedef enum
 /******************************************CRU*******************************************/
 #define PLL_INPUT_OSC_RATE   (24 * 1000 * 1000)
 #define CRU_CLK_USE_CON_BANK
-
-#define CLK64(mux, div) \
-    ((((mux) & 0x0F0F00FFULL) << 0)  | \
-     (((mux) & 0x00000F00ULL) << 24) | \
-     (((div) & 0x000000FFULL) << 8)  | \
-     (((div) & 0x0F0F0000ULL) << 4)  | \
-     (((div) & 0x00000F00ULL) << 28))
+#define CLK64(mux, div) ((((mux) & 0xffffffffULL) << 32) | ((div) & 0xffffffffULL))
 
 #ifndef __ASSEMBLY__
 typedef enum CLOCK_Name {
