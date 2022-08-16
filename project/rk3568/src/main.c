@@ -5,6 +5,7 @@
 
 #include "hal_bsp.h"
 #include "hal_base.h"
+#include "task_ipc.h"
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
@@ -97,6 +98,35 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
+int rk_printf(const char *fmt, ...)
+{
+    va_list args;
+    uint64_t cnt64;
+    uint32_t cpu_id, sec, ms, us;
+
+    HAL_SPINLOCK_Lock(RK_PRINTF_SPINLOCK_ID);
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    // SYS_TIMER is 24MHz
+    cnt64 = HAL_GetSysTimerCount();
+    us = (uint32_t)((cnt64 / (PLL_INPUT_OSC_RATE / 1000000)) % 1000);
+    ms = (uint32_t)((cnt64 / (PLL_INPUT_OSC_RATE / 1000)) % 1000);
+    sec = (uint32_t)(cnt64 / PLL_INPUT_OSC_RATE);
+    printf("[(%d) %d.%03d.%03d]", cpu_id, sec, ms, us);
+
+    va_start(args, fmt);
+
+    vprintf(fmt, args);
+
+    va_end(args);
+
+    //printf("\n");
+
+    HAL_SPINLOCK_Unlock(RK_PRINTF_SPINLOCK_ID);
+
+    return 0;
+}
+
 void main(void)
 {
 #ifdef HAL_SPINLOCK_MODULE_ENABLED
@@ -153,7 +183,7 @@ void main(void)
     printf("       Rockchip Electronics Co.Ltd      \n");
     printf("              CPI_ID(%d)                \n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("****************************************\n");
-    printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
+    rk_printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("\n");
 
 #ifdef TEST_DEMO

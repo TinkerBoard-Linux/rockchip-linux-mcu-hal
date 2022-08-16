@@ -5,6 +5,7 @@
 
 #include "hal_bsp.h"
 #include "hal_base.h"
+#include "task_ipc.h"
 #include "unity_runner.h"
 #include <stdlib.h>
 
