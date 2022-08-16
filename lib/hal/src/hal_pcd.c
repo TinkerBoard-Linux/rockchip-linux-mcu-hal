@@ -760,8 +760,8 @@ HAL_Status HAL_PCD_EPOpen(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint16_t ep_m
     pEP->type = epType & EP_TYPE_MSK;
 
     if (pEP->isIn) {
-        /* Assign a Tx FIFO */
-        pEP->txFIFONum = pEP->num >> 1;
+        /* Assign TxFIFO Number for IN endpoints */
+        pEP->txFIFONum = pEP->num ? (pEP->num >> 1) + 1 : 0;
     }
 
     /* Set initial data PID. */
