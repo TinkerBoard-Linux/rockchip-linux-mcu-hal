@@ -11,6 +11,7 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define GPIO_IRQ_GROUP_TEST
+//#define SOFTIRQ_TEST
 //#define SPINLOCK_TEST
 //#define UNITY_TEST
 
@@ -36,6 +37,10 @@
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     /* The priority higher than 0x80 is non-secure interrupt. */
+
+#ifdef SOFTIRQ_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+#endif
 
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(1, 0)),   /* sentinel */
 };
@@ -133,6 +138,27 @@ static void gpio_irq_group_test(void)
 
 /************************************************/
 /*                                              */
+/*                SOFTIRQ_TEST                  */
+/*                                              */
+/************************************************/
+#ifdef SOFTIRQ_TEST
+static void soft_isr(int vector, void *param)
+{
+    printf("soft_isr, vector = %d\n", vector);
+    HAL_GIC_EndOfInterrupt(vector);
+}
+
+static void softirq_test(void)
+{
+    HAL_IRQ_HANDLER_SetIRQHandler(RSVD0_IRQn, soft_isr, NULL);
+    HAL_GIC_Enable(RSVD0_IRQn);
+
+    HAL_GIC_SetPending(RSVD0_IRQn);
+}
+#endif
+
+/************************************************/
+/*                                              */
 /*                SPINLOCK_TEST                 */
 /*                                              */
 /************************************************/
@@ -178,6 +204,10 @@ void test_demo(void)
 {
 #ifdef GPIO_IRQ_GROUP_TEST && defined(PRIMARY_CPU)
     gpio_irq_group_test();
+#endif
+
+#if defined(SOFTIRQ_TEST) && defined(PRIMARY_CPU)
+    softirq_test();
 #endif
 
 #ifdef SPINLOCK_TEST
