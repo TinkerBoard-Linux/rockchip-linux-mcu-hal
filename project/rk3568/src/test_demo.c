@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 /********************* Private MACRO Definition ******************************/
+//#define GPIO_TEST
 //#define GPIO_IRQ_GROUP_TEST
 //#define SOFTIRQ_TEST
 //#define SPINLOCK_TEST
@@ -37,6 +38,10 @@
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     /* The priority higher than 0x80 is non-secure interrupt. */
+
+#ifdef GPIO_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(GPIO3_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+#endif
 
 #ifdef SOFTIRQ_TEST
     GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
@@ -122,6 +127,56 @@ static const struct GPIO_IRQ_GROUP_CFG gpioIrqCfg[GPIO_BANK_NUM] = {
 /*                                              */
 /************************************************/
 
+/* TODO: Set Module IOMUX Function Here */
+
+/************************************************/
+/*                                              */
+/*                  GPIO_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef GPIO_TEST
+static void gpio_isr(int vector, void *param)
+{
+    printf("Enter GPIO IRQHander!\n");
+    HAL_GPIO_IRQHandler(GPIO3, GPIO_BANK3);
+    printf("Leave GPIO IRQHandler!\n");
+}
+
+static HAL_Status b2_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_test(void)
+{
+    uint32_t level;
+
+    /* Test GPIO output */
+    HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_B2, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_B2);
+    printf("test_gpio level = %ld\n", level);
+    HAL_DelayMs(5000);
+    if (level == GPIO_HIGH) {
+        HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_B2, GPIO_LOW);
+    } else {
+        HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_B2, GPIO_HIGH);
+    }
+    level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_B2);
+    printf("test_gpio level = %ld\n", level);
+    HAL_DelayMs(5000);
+
+    /* Test GPIO input */
+    HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_B2, GPIO_IN);
+    HAL_IRQ_HANDLER_SetIRQHandler(GPIO3_IRQn, gpio_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK3, GPIO_PIN_B2, b2_call_back, NULL);
+    HAL_GIC_Enable(GPIO3_IRQn);
+    HAL_GPIO_SetIntType(GPIO3, GPIO_PIN_B2, GPIO_INT_TYPE_EDGE_RISING);
+    HAL_GPIO_EnableIRQ(GPIO3, GPIO_PIN_B2);
+}
+#endif
+
 /************************************************/
 /*                                              */
 /*             GPIO_IRQ_GROUP_TEST              */
@@ -202,7 +257,11 @@ void TEST_DEMO_GIC_Init(void)
 
 void test_demo(void)
 {
-#ifdef GPIO_IRQ_GROUP_TEST && defined(PRIMARY_CPU)
+#if defined(GPIO_TEST) && defined(PRIMARY_CPU)
+    gpio_test();
+#endif
+
+#if defined(GPIO_IRQ_GROUP_TEST) && defined(PRIMARY_CPU)
     gpio_irq_group_test();
 #endif
 
