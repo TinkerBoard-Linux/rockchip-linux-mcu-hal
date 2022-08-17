@@ -14,6 +14,7 @@
 //#define GPIO_IRQ_GROUP_TEST
 //#define SOFTIRQ_TEST
 //#define SPINLOCK_TEST
+//#define TIMER_TEST
 //#define UNITY_TEST
 
 #ifdef GPIO_IRQ_GROUP_TEST
@@ -45,6 +46,13 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
 
 #ifdef SOFTIRQ_TEST
     GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+#endif
+
+#ifdef TIMER_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 #endif
 
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(1, 0)),   /* sentinel */
@@ -248,6 +256,92 @@ static void spinlock_test(void)
 }
 #endif
 
+/************************************************/
+/*                                              */
+/*                  TIMER_TEST                  */
+/*                                              */
+/************************************************/
+#ifdef TIMER_TEST
+static int timer_int_count = 0;
+static uint32_t latency_sum = 0;
+struct TIMER_REG *timer = NULL;
+static bool desc_timer = true;
+static int fixed_spend = 0;
+static uint32_t latency_max = 0;
+static struct TIMER_REG *g_timer[4] = { TIMER0, TIMER1, TIMER2, TIMER3 };
+static uint32_t g_timer_irq[4] = { TIMER0_IRQn, TIMER1_IRQn, TIMER2_IRQn, TIMER3_IRQn };
+
+static void timer_isr(int vector, void *param)
+{
+    uint32_t count, cpu_id;
+    uint32_t latency;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    count = (uint32_t)HAL_TIMER_GetCount(timer);
+    if (desc_timer) {
+        count = 24000000 - count;
+    }
+    if (count > fixed_spend) {
+        count -= fixed_spend;
+    }
+    /* 24M timer: 41.67ns per count */
+    latency = count * 41;
+    printf("count=%d\n", count);
+    printf("cpu_id=%d: latency=%dns(count=%d)\n", cpu_id, latency, count);
+    timer_int_count++;
+    latency_sum += latency;
+    latency_max = latency_max > latency ? latency_max : latency;
+    if (timer_int_count == 100) {
+        printf("cpu_id=%d: latency avg=%d,max=%d\n", cpu_id, latency_sum / timer_int_count, latency_max);
+        timer_int_count = 0;
+        latency_sum = 0;
+        latency_max = 0;
+        HAL_TIMER_ClrInt(timer);
+        HAL_GIC_EndOfInterrupt(g_timer_irq[cpu_id]);
+        HAL_TIMER_Stop_IT(timer);
+    }
+
+    HAL_TIMER_ClrInt(timer);
+    HAL_GIC_EndOfInterrupt(g_timer_irq[cpu_id]);
+}
+
+static void timer_test(void)
+{
+    uint64_t start, end;
+    uint32_t count, cpu_id;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+
+    start = HAL_GetSysTimerCount();
+    HAL_CPUDelayUs(1000000);
+    end = HAL_GetSysTimerCount();
+    count = (uint32_t)(end - start);
+    printf("systimer 1s count: %ld(%lld, %lld)\n", count, start, end);
+
+    printf("\n\ncpu_id=%ld: test internal irq\n", cpu_id);
+    timer = g_timer[cpu_id];
+    /* Pay attention to the timer type */
+    desc_timer = true;
+    HAL_TIMER_Init(timer, TIMER_FREE_RUNNING);
+    HAL_TIMER_SetCount(timer, 2000000000);
+    HAL_TIMER_Start(timer);
+    start = HAL_TIMER_GetCount(timer);
+    HAL_CPUDelayUs(1000000);
+    end = HAL_TIMER_GetCount(timer);
+    count = (uint32_t)(end - start);
+    fixed_spend = start;
+    printf("cpu_id=%ld: internal timer 1s count: %ld(%lld, %lld), fixed_spend=%d\n",
+           cpu_id, count, start, end, fixed_spend);
+    HAL_TIMER_Stop(timer);
+
+    HAL_IRQ_HANDLER_SetIRQHandler(g_timer_irq[cpu_id], timer_isr, NULL);
+    HAL_GIC_Enable(g_timer_irq[cpu_id]);
+    HAL_TIMER_Init(timer, TIMER_FREE_RUNNING);
+    HAL_TIMER_SetCount(timer, 24000000);
+    HAL_TIMER_Start_IT(timer);
+}
+#endif
+
 /********************* Public Function Definition ****************************/
 
 void TEST_DEMO_GIC_Init(void)
@@ -271,6 +365,10 @@ void test_demo(void)
 
 #ifdef SPINLOCK_TEST
     spinlock_test();
+#endif
+
+#ifdef TIMER_TEST
+    timer_test();
 #endif
 
 #if defined(UNITY_TEST) && defined(PRIMARY_CPU)
