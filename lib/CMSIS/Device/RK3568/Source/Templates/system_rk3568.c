@@ -6,7 +6,8 @@
 #include "hal_base.h"
 #include "soc.h"
 
-#define  SYSTEM_CLOCK  150000000U
+/* The frequency of SYSTEM_CLOCK is determined by the previous firmware. */
+#define  SYSTEM_CLOCK  816000000U
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable

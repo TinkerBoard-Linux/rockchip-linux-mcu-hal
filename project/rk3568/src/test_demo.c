@@ -12,6 +12,7 @@
 /********************* Private MACRO Definition ******************************/
 //#define GPIO_TEST
 //#define GPIO_IRQ_GROUP_TEST
+//#define PERF_TEST
 //#define SOFTIRQ_TEST
 //#define SPINLOCK_TEST
 //#define TIMER_TEST
@@ -201,6 +202,44 @@ static void gpio_irq_group_test(void)
 
 /************************************************/
 /*                                              */
+/*                  PERF_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef PERF_TEST
+uint32_t g_sum = 0;
+static void perf_test(void)
+{
+    uint32_t cpu_id, loop = 1000, size = 4 * 1024 * 1024;
+    uint32_t *ptr;
+    uint64_t start, end;
+    double time_s;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    printf("perftest: cpu-%ld\n", cpu_id);
+    coremark_main();
+
+    ptr = (uint32_t *)malloc(size);
+    if (ptr) {
+        start = HAL_GetSysTimerCount();
+        for (int i = 0; i < loop; i++) {
+            memset(ptr, i, size);
+        }
+        end = HAL_GetSysTimerCount();
+        time_s = ((end - start) * 1.0) / PLL_INPUT_OSC_RATE;
+        printf("\nmemset bw=%.2fMB/s, time_s=%.2f\n", (size * loop) / time_s / 1000000, time_s);
+
+        /* prevent optimization */
+        for (int i = 0; i < size / sizeof(uint32_t); i++) {
+            g_sum += ptr[i];
+        }
+        printf("sum=%d\n", g_sum);
+        free(ptr);
+    }
+}
+#endif
+
+/************************************************/
+/*                                              */
 /*                SOFTIRQ_TEST                  */
 /*                                              */
 /************************************************/
@@ -357,6 +396,10 @@ void test_demo(void)
 
 #if defined(GPIO_IRQ_GROUP_TEST) && defined(PRIMARY_CPU)
     gpio_irq_group_test();
+#endif
+
+#if defined(PERF_TEST) && defined(PRIMARY_CPU)
+    perf_test();
 #endif
 
 #if defined(SOFTIRQ_TEST) && defined(PRIMARY_CPU)
