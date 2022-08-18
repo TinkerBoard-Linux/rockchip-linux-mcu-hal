@@ -151,6 +151,10 @@ typedef enum
 #ifdef HAL_AP_CORE
 #define __CORTEX_A           55U          /* Cortex-A55 Core                          */
 #define __FPU_PRESENT         1U          /* FPU present                              */
+
+#define CACHE_LINE_SHIFT    (6U)
+#define CACHE_LINE_SIZE     (0x1U << CACHE_LINE_SHIFT)
+
 #else
 #define __RISC_V
 #endif

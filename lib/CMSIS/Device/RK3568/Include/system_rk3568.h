@@ -27,6 +27,11 @@ extern void SystemInit (void);
 extern void SystemCoreClockUpdate (void);
 
 extern void DataInit (void);
+
+#if defined(HAL_AP_CORE)
+extern void MMU_CreateTranslationTable(void);
+#endif
+
 #ifdef __cplusplus
 }
 #endif
