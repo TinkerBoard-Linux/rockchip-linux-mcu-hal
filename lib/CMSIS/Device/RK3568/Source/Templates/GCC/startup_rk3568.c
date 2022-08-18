@@ -61,6 +61,14 @@ void IRQ_HardIrqHandler(void)
 }
 #endif
 
+#if defined(__GNUC__) && ! defined(__ARMCC_VERSION)
+#pragma GCC push_options
+#pragma GCC optimize ("-fomit-frame-pointer")
+#elif defined(__ARMCC_VERSION)
+#pragma push
+#pragma -fomit-frame-pointer
+#endif
+
 void IRQ_Handler(void)
 {
 #ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
@@ -218,5 +226,11 @@ void Default_Handler(void)
 {
     while(1);
 }
+
+#if defined(__GNUC__) && ! defined(__ARMCC_VERSION)
+#pragma GCC pop_options
+#elif defined(__ARMCC_VERSION)
+#pragma pop
+#endif
 
 #endif /* HAL_AP_CORE */
