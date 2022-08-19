@@ -12,6 +12,7 @@
 /********************* Private MACRO Definition ******************************/
 //#define GPIO_TEST
 //#define GPIO_IRQ_GROUP_TEST
+//#define IPI_SGI_TEST
 //#define MBOX_TEST
 //#define PERF_TEST
 //#define RPMSG_TEST
@@ -204,6 +205,56 @@ static void gpio_irq_group_test(void)
     HAL_GPIO_IRQ_GROUP_Init(CPU_GET_AFFINITY(1, 0),
                             gpioIrqCfg,
                             HAL_IRQ_HANDLER_GetGpioIrqGroupOps());
+}
+#endif
+
+/************************************************/
+/*                                              */
+/*                IPI_SGI_TEST                  */
+/*                                              */
+/************************************************/
+#ifdef IPI_SGI_TEST
+
+#define IPI_CPU0               0x01
+#define IPI_CPU1               0x02
+#define IPI_CPU2               0x04
+#define IPI_CPU3               0x08
+#define IPI_TO_TARGETLIST      0
+#define IPI_TO_ALL_EXCEPT_SELF 1
+
+static void ipi_sgi_isr(int vector, void *param)
+{
+    uint32_t cpu_id;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    if (cpu_id == 2) {
+        HAL_DelayMs(1000);
+    } else if (cpu_id == 3) {
+        HAL_DelayMs(2000);
+    }
+    printf("ipi sgi: cpu_id=%ld vector = %d\n", cpu_id, vector);
+    HAL_GIC_EndOfInterrupt(vector);
+}
+
+static void ipi_sgi_test(void)
+{
+    uint32_t cpu_id;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    HAL_IRQ_HANDLER_SetIRQHandler(IPI_SGI7, ipi_sgi_isr, NULL);
+    HAL_GIC_Enable(IPI_SGI7);
+
+    if (cpu_id == 1) {
+        printf("ipi sgi: cpu_id=%ld test start\n", cpu_id);
+        HAL_DelayMs(2000);
+        HAL_GIC_SendSGI(IPI_SGI7, 0, IPI_TO_ALL_EXCEPT_SELF);
+        HAL_DelayMs(4000);
+        HAL_GIC_SendSGI(IPI_SGI7, IPI_CPU3, IPI_TO_TARGETLIST);
+        HAL_DelayMs(4000);
+        HAL_GIC_SendSGI(IPI_SGI7, IPI_CPU3 | IPI_CPU2, IPI_TO_TARGETLIST);
+        HAL_DelayMs(4000);
+        HAL_GIC_SendSGI(IPI_SGI7, IPI_CPU3 | IPI_CPU2 | IPI_CPU0, IPI_TO_TARGETLIST);
+    }
 }
 #endif
 
@@ -887,6 +938,10 @@ void test_demo(void)
 
 #if defined(GPIO_IRQ_GROUP_TEST) && defined(PRIMARY_CPU)
     gpio_irq_group_test();
+#endif
+
+#ifdef IPI_SGI_TEST
+    ipi_sgi_test();
 #endif
 
 #ifdef MBOX_TEST

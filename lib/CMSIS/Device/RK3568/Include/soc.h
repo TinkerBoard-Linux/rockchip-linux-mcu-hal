@@ -59,6 +59,27 @@ typedef enum {
 /* ================================================================================ */
 typedef enum
 {
+/* When IPI_SGIs are used in AMP mode, you need to pay attention to whether it conflicts
+ * with SMP mode. Especially in the case of Linux OS as The Master Core.
+ * IPI_SGI 0~7 for non-secure and IPI_SGI 8~15 for secure.
+ */
+    IPI_SGI0               = 0,
+    IPI_SGI1               = 1,
+    IPI_SGI2               = 2,
+    IPI_SGI3               = 3,
+    IPI_SGI4               = 4,
+    IPI_SGI5               = 5,
+    IPI_SGI6               = 6,
+    IPI_SGI7               = 7,
+    IPI_SGI8               = 8,
+    IPI_SGI9               = 9,
+    IPI_SGI10              = 10,
+    IPI_SGI11              = 11,
+    IPI_SGI12              = 12,
+    IPI_SGI13              = 13,
+    IPI_SGI14              = 14,
+    IPI_SGI15              = 15,
+
     CNTHP_IRQn             = 26,
     CNTV_IRQn              = 27,
     CNTPS_IRQn             = 29,
