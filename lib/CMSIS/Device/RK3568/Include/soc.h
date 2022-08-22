@@ -123,6 +123,18 @@ typedef enum
   NERR3_IRQn             = 280,      /*!< CPU2 L1-L2 CACHE ECC ERROR Interrupt */
   NERR4_IRQn             = 281,      /*!< CPU3 L1-L2 CACHE ECC ERROR Interrupt */
   RSVD0_IRQn             = 283,      /*!< RSVD0  Interrupt            */
+  RPMSG_01_IRQn          = 285,      /*!< RPMSG 0->1 Interrupt        */
+  RPMSG_02_IRQn          = 286,      /*!< RPMSG 0->2 Interrupt        */
+  RPMSG_03_IRQn          = 287,      /*!< RPMSG 0->3 Interrupt        */
+  RPMSG_10_IRQn          = 288,      /*!< RPMSG 1->0 Interrupt        */
+  RPMSG_12_IRQn          = 289,      /*!< RPMSG 1->2 Interrupt        */
+  RPMSG_13_IRQn          = 290,      /*!< RPMSG 1->3 Interrupt        */
+  RPMSG_20_IRQn          = 291,      /*!< RPMSG 2->0 Interrupt        */
+  RPMSG_21_IRQn          = 292,      /*!< RPMSG 2->1 Interrupt        */
+  RPMSG_23_IRQn          = 293,      /*!< RPMSG 2->3 Interrupt        */
+  RPMSG_30_IRQn          = 294,      /*!< RPMSG 3->0 Interrupt        */
+  RPMSG_31_IRQn          = 295,      /*!< RPMSG 3->1 Interrupt        */
+  RPMSG_32_IRQn          = 296,      /*!< RPMSG 3->2 Interrupt        */
   NUM_INTERRUPTS         = 352,
 } IRQn_Type;
 
