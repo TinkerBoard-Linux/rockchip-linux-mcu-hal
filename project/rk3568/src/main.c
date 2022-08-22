@@ -27,7 +27,12 @@ static struct GIC_IRQ_AMP_CTRL irqConfig = {
 
 /********************* Private Variable Definition ***************************/
 
-static struct UART_REG *pUart = UART2;    // UART2 or UART4, selected depend on hardware board
+/* TODO: By default, UART2 is used for master core, and UART4 is used for remote core */
+#ifdef PRIMARY_CPU /*CPU1*/
+static struct UART_REG *pUart = UART2;
+#else
+static struct UART_REG *pUart = UART4;
+#endif
 
 /********************* Private Function Definition ***************************/
 
@@ -154,16 +159,13 @@ void main(void)
     HAL_GIC_Init(&irqConfig);
 #endif
 
-    /* CPU1(main core) init UART*/
-    if (HAL_CPU_TOPOLOGY_GetCurrentCpuId() == 1) {
-        if (UART2 == pUart) {
-            HAL_IOMUX_Uart2M0Config();
-            HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
-        } else if (UART4 == pUart) {
-            HAL_IOMUX_Uart4M1Config();
-            HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
-        }
-    }
+#ifdef PRIMARY_CPU /*CPU1*/
+    HAL_IOMUX_Uart2M0Config();
+    HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
+#else
+    HAL_IOMUX_Uart4M1Config();
+    HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
+#endif
 
     /* SPINLOCK Init */
 #ifdef HAL_SPINLOCK_MODULE_ENABLED
