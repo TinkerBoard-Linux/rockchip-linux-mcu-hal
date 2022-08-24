@@ -59,6 +59,11 @@ typedef enum {
 /* ================================================================================ */
 typedef enum
 {
+  CNTHP_IRQn  = 26,
+  CNTV_IRQn   = 27,
+  CNTPS_IRQn  = 29,
+  CNTPNS_IRQn = 30,
+
 /******  Platform Exceptions Numbers ***************************************************/
   CAN0_IRQn              = 33,       /*!< CAN0 Interrupt              */
   CAN1_IRQn              = 34,       /*!< CAN1 Interrupt              */
@@ -163,6 +168,7 @@ typedef enum
 #ifdef HAL_AP_CORE
 #define __CORTEX_A           55U          /* Cortex-A55 Core                          */
 #define __FPU_PRESENT         1U          /* FPU present                              */
+#define __TIM_PRESENT         1U          /* Generic Timer                            */
 
 #define CACHE_LINE_SHIFT    (6U)
 #define CACHE_LINE_SIZE     (0x1U << CACHE_LINE_SHIFT)
