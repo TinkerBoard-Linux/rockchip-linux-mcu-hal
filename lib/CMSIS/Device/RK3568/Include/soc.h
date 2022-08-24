@@ -6,16 +6,16 @@
 #ifndef __SOC_H
 #define __SOC_H
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 #include "hal_conf.h"
 
 /* IO definitions (access restrictions to peripheral registers) */
 #ifdef __cplusplus
-  #define   __I     volatile             /*!< brief Defines 'read only' permissions */
+#define     __I     volatile             /*!< brief Defines 'read only' permissions */
 #else
-  #define   __I     volatile const       /*!< brief Defines 'read only' permissions */
+#define     __I     volatile const       /*!< brief Defines 'read only' permissions */
 #endif
 #define     __O     volatile             /*!< brief Defines 'write only' permissions */
 #define     __IO    volatile             /*!< brief Defines 'read / write' permissions */
@@ -59,88 +59,88 @@ typedef enum {
 /* ================================================================================ */
 typedef enum
 {
-  CNTHP_IRQn  = 26,
-  CNTV_IRQn   = 27,
-  CNTPS_IRQn  = 29,
-  CNTPNS_IRQn = 30,
+    CNTHP_IRQn             = 26,
+    CNTV_IRQn              = 27,
+    CNTPS_IRQn             = 29,
+    CNTPNS_IRQn            = 30,
 
 /******  Platform Exceptions Numbers ***************************************************/
-  CAN0_IRQn              = 33,       /*!< CAN0 Interrupt              */
-  CAN1_IRQn              = 34,       /*!< CAN1 Interrupt              */
-  CAN2_IRQn              = 35,       /*!< CAN2 Interrupt              */
-  DMAC0_ABORT_IRQn       = 45,       /*!< DMAC0 Abort Interrupt       */
-  DMAC0_IRQn             = 46,       /*!< DMAC0 Interrupt             */
-  DMAC1_ABORT_IRQn       = 47,       /*!< DMAC1 Abort Interrupt       */
-  DMAC1_IRQn             = 48,       /*!< DMAC1 Interrupt             */
-  GMAC0_IRQn             = 59,       /*!< GMAC0 Interrupt             */
-  GMAC1_IRQn             = 64,       /*!< GMAC1 Interrupt             */
-  GPIO0_IRQn             = 65,       /*!< GPIO0 Interrupt             */
-  GPIO1_IRQn             = 66,       /*!< GPIO1 Interrupt             */
-  GPIO2_IRQn             = 67,       /*!< GPIO2 Interrupt             */
-  GPIO3_IRQn             = 68,       /*!< GPIO3 Interrupt             */
-  GPIO4_IRQn             = 69,       /*!< GPIO4 Interrupt             */
-  I2C0_IRQn              = 78,       /*!< I2C0 Interrupt              */
-  I2C1_IRQn              = 79,       /*!< I2C1 Interrupt              */
-  I2C2_IRQn              = 80,       /*!< I2C2 Interrupt              */
-  I2C3_IRQn              = 81,       /*!< I2C3 Interrupt              */
-  I2C4_IRQn              = 82,       /*!< I2C4 Interrupt              */
-  I2C5_IRQn              = 83,       /*!< I2C5 Interrupt              */
-  FSPI0_IRQn             = 133,      /*!< FSPI Interrupt              */
-  SPI0_IRQn              = 135,      /*!< SPI0 Interrupt              */
-  SPI1_IRQn              = 136,      /*!< SPI1 Interrupt              */
-  SPI2_IRQn              = 137,      /*!< SPI2 Interrupt              */
-  SPI3_IRQn              = 138,      /*!< SPI3 Interrupt              */
-  TIMER0_IRQn            = 141,      /*!< TIMER0 Interrupt            */
-  TIMER1_IRQn            = 142,      /*!< TIMER1 Interrupt            */
-  TIMER2_IRQn            = 143,      /*!< TIMER2 Interrupt            */
-  TIMER3_IRQn            = 144,      /*!< TIMER3 Interrupt            */
-  TIMER4_IRQn            = 145,      /*!< TIMER4 Interrupt            */
-  TIMER5_IRQn            = 146,      /*!< TIMER5 Interrupt            */
-  UART0_IRQn             = 148,      /*!< UART0  Interrupt            */
-  UART1_IRQn             = 149,      /*!< UART1  Interrupt            */
-  UART2_IRQn             = 150,      /*!< UART2  Interrupt            */
-  UART3_IRQn             = 151,      /*!< UART3  Interrupt            */
-  UART4_IRQn             = 152,      /*!< UART4  Interrupt            */
-  UART5_IRQn             = 153,      /*!< UART5  Interrupt            */
-  UART6_IRQn             = 154,      /*!< UART6  Interrupt            */
-  UART7_IRQn             = 155,      /*!< UART7  Interrupt            */
-  UART8_IRQn             = 156,      /*!< UART8  Interrupt            */
-  UART9_IRQn             = 157,      /*!< UART9  Interrupt            */
-  WDT0_IRQn              = 181,      /*!< WDT0  Interrupt             */
-  DDR_ECC_CE_IRQn        = 205,      /*!< DDR ECC correctable fault Interrupt */
-  DDR_ECC_UE_IRQn        = 207,      /*!< DDR ECC uncorrectable fault Interrupt */
-  MBOX0_CH0_A2B_IRQn     = 215,      /*!< MBOX0 CH0 A2B Interrupt     */
-  MBOX0_CH1_A2B_IRQn     = 216,      /*!< MBOX0 CH1 A2B Interrupt     */
-  MBOX0_CH2_A2B_IRQn     = 217,      /*!< MBOX0 CH2 A2B Interrupt     */
-  MBOX0_CH3_A2B_IRQn     = 218,      /*!< MBOX0 CH3 A2B Interrupt     */
-  MBOX0_CH0_B2A_IRQn     = 219,      /*!< MBOX0 CH0 B2A Interrupt     */
-  MBOX0_CH1_B2A_IRQn     = 220,      /*!< MBOX0 CH1 B2A Interrupt     */
-  MBOX0_CH2_B2A_IRQn     = 221,      /*!< MBOX0 CH2 B2A Interrupt     */
-  MBOX0_CH3_B2A_IRQn     = 222,      /*!< MBOX0 CH3 B2A Interrupt     */
-  NFAULT0_IRQn           = 272,      /*!< DSU L3 CACHE ECC FAULT Interrupt */
-  NFAULT1_IRQn           = 273,      /*!< CPU0 L1-L2 CACHE ECC FAULT Interrupt */
-  NFAULT2_IRQn           = 274,      /*!< CPU1 L1-L2 CACHE ECC FAULT Interrupt */
-  NFAULT3_IRQn           = 275,      /*!< CPU2 L1-L2 CACHE ECC FAULT Interrupt */
-  NFAULT4_IRQn           = 276,      /*!< CPU3 L1-L2 CACHE ECC FAULT Interrupt */
-  NERR0_IRQn             = 277,      /*!< DSU L3 CACHE ECC ERROR Interrupt */
-  NERR1_IRQn             = 278,      /*!< CPU0 L1-L2 CACHE ECC ERROR Interrupt */
-  NERR2_IRQn             = 279,      /*!< CPU1 L1-L2 CACHE ECC ERROR Interrupt */
-  NERR3_IRQn             = 280,      /*!< CPU2 L1-L2 CACHE ECC ERROR Interrupt */
-  NERR4_IRQn             = 281,      /*!< CPU3 L1-L2 CACHE ECC ERROR Interrupt */
-  RSVD0_IRQn             = 283,      /*!< RSVD0  Interrupt            */
-  RPMSG_01_IRQn          = 285,      /*!< RPMSG 0->1 Interrupt        */
-  RPMSG_02_IRQn          = 286,      /*!< RPMSG 0->2 Interrupt        */
-  RPMSG_03_IRQn          = 287,      /*!< RPMSG 0->3 Interrupt        */
-  RPMSG_10_IRQn          = 288,      /*!< RPMSG 1->0 Interrupt        */
-  RPMSG_12_IRQn          = 289,      /*!< RPMSG 1->2 Interrupt        */
-  RPMSG_13_IRQn          = 290,      /*!< RPMSG 1->3 Interrupt        */
-  RPMSG_20_IRQn          = 291,      /*!< RPMSG 2->0 Interrupt        */
-  RPMSG_21_IRQn          = 292,      /*!< RPMSG 2->1 Interrupt        */
-  RPMSG_23_IRQn          = 293,      /*!< RPMSG 2->3 Interrupt        */
-  RPMSG_30_IRQn          = 294,      /*!< RPMSG 3->0 Interrupt        */
-  RPMSG_31_IRQn          = 295,      /*!< RPMSG 3->1 Interrupt        */
-  RPMSG_32_IRQn          = 296,      /*!< RPMSG 3->2 Interrupt        */
-  NUM_INTERRUPTS         = 352,
+    CAN0_IRQn              = 33,       /*!< CAN0 Interrupt              */
+    CAN1_IRQn              = 34,       /*!< CAN1 Interrupt              */
+    CAN2_IRQn              = 35,       /*!< CAN2 Interrupt              */
+    DMAC0_ABORT_IRQn       = 45,       /*!< DMAC0 Abort Interrupt       */
+    DMAC0_IRQn             = 46,       /*!< DMAC0 Interrupt             */
+    DMAC1_ABORT_IRQn       = 47,       /*!< DMAC1 Abort Interrupt       */
+    DMAC1_IRQn             = 48,       /*!< DMAC1 Interrupt             */
+    GMAC0_IRQn             = 59,       /*!< GMAC0 Interrupt             */
+    GMAC1_IRQn             = 64,       /*!< GMAC1 Interrupt             */
+    GPIO0_IRQn             = 65,       /*!< GPIO0 Interrupt             */
+    GPIO1_IRQn             = 66,       /*!< GPIO1 Interrupt             */
+    GPIO2_IRQn             = 67,       /*!< GPIO2 Interrupt             */
+    GPIO3_IRQn             = 68,       /*!< GPIO3 Interrupt             */
+    GPIO4_IRQn             = 69,       /*!< GPIO4 Interrupt             */
+    I2C0_IRQn              = 78,       /*!< I2C0 Interrupt              */
+    I2C1_IRQn              = 79,       /*!< I2C1 Interrupt              */
+    I2C2_IRQn              = 80,       /*!< I2C2 Interrupt              */
+    I2C3_IRQn              = 81,       /*!< I2C3 Interrupt              */
+    I2C4_IRQn              = 82,       /*!< I2C4 Interrupt              */
+    I2C5_IRQn              = 83,       /*!< I2C5 Interrupt              */
+    FSPI0_IRQn             = 133,      /*!< FSPI Interrupt              */
+    SPI0_IRQn              = 135,      /*!< SPI0 Interrupt              */
+    SPI1_IRQn              = 136,      /*!< SPI1 Interrupt              */
+    SPI2_IRQn              = 137,      /*!< SPI2 Interrupt              */
+    SPI3_IRQn              = 138,      /*!< SPI3 Interrupt              */
+    TIMER0_IRQn            = 141,      /*!< TIMER0 Interrupt            */
+    TIMER1_IRQn            = 142,      /*!< TIMER1 Interrupt            */
+    TIMER2_IRQn            = 143,      /*!< TIMER2 Interrupt            */
+    TIMER3_IRQn            = 144,      /*!< TIMER3 Interrupt            */
+    TIMER4_IRQn            = 145,      /*!< TIMER4 Interrupt            */
+    TIMER5_IRQn            = 146,      /*!< TIMER5 Interrupt            */
+    UART0_IRQn             = 148,      /*!< UART0  Interrupt            */
+    UART1_IRQn             = 149,      /*!< UART1  Interrupt            */
+    UART2_IRQn             = 150,      /*!< UART2  Interrupt            */
+    UART3_IRQn             = 151,      /*!< UART3  Interrupt            */
+    UART4_IRQn             = 152,      /*!< UART4  Interrupt            */
+    UART5_IRQn             = 153,      /*!< UART5  Interrupt            */
+    UART6_IRQn             = 154,      /*!< UART6  Interrupt            */
+    UART7_IRQn             = 155,      /*!< UART7  Interrupt            */
+    UART8_IRQn             = 156,      /*!< UART8  Interrupt            */
+    UART9_IRQn             = 157,      /*!< UART9  Interrupt            */
+    WDT0_IRQn              = 181,      /*!< WDT0  Interrupt             */
+    DDR_ECC_CE_IRQn        = 205,      /*!< DDR ECC correctable fault Interrupt */
+    DDR_ECC_UE_IRQn        = 207,      /*!< DDR ECC uncorrectable fault Interrupt */
+    MBOX0_CH0_A2B_IRQn     = 215,      /*!< MBOX0 CH0 A2B Interrupt     */
+    MBOX0_CH1_A2B_IRQn     = 216,      /*!< MBOX0 CH1 A2B Interrupt     */
+    MBOX0_CH2_A2B_IRQn     = 217,      /*!< MBOX0 CH2 A2B Interrupt     */
+    MBOX0_CH3_A2B_IRQn     = 218,      /*!< MBOX0 CH3 A2B Interrupt     */
+    MBOX0_CH0_B2A_IRQn     = 219,      /*!< MBOX0 CH0 B2A Interrupt     */
+    MBOX0_CH1_B2A_IRQn     = 220,      /*!< MBOX0 CH1 B2A Interrupt     */
+    MBOX0_CH2_B2A_IRQn     = 221,      /*!< MBOX0 CH2 B2A Interrupt     */
+    MBOX0_CH3_B2A_IRQn     = 222,      /*!< MBOX0 CH3 B2A Interrupt     */
+    NFAULT0_IRQn           = 272,      /*!< DSU L3 CACHE ECC FAULT Interrupt */
+    NFAULT1_IRQn           = 273,      /*!< CPU0 L1-L2 CACHE ECC FAULT Interrupt */
+    NFAULT2_IRQn           = 274,      /*!< CPU1 L1-L2 CACHE ECC FAULT Interrupt */
+    NFAULT3_IRQn           = 275,      /*!< CPU2 L1-L2 CACHE ECC FAULT Interrupt */
+    NFAULT4_IRQn           = 276,      /*!< CPU3 L1-L2 CACHE ECC FAULT Interrupt */
+    NERR0_IRQn             = 277,      /*!< DSU L3 CACHE ECC ERROR Interrupt */
+    NERR1_IRQn             = 278,      /*!< CPU0 L1-L2 CACHE ECC ERROR Interrupt */
+    NERR2_IRQn             = 279,      /*!< CPU1 L1-L2 CACHE ECC ERROR Interrupt */
+    NERR3_IRQn             = 280,      /*!< CPU2 L1-L2 CACHE ECC ERROR Interrupt */
+    NERR4_IRQn             = 281,      /*!< CPU3 L1-L2 CACHE ECC ERROR Interrupt */
+    RSVD0_IRQn             = 283,      /*!< RSVD0  Interrupt            */
+    RPMSG_01_IRQn          = 285,      /*!< RPMSG 0->1 Interrupt        */
+    RPMSG_02_IRQn          = 286,      /*!< RPMSG 0->2 Interrupt        */
+    RPMSG_03_IRQn          = 287,      /*!< RPMSG 0->3 Interrupt        */
+    RPMSG_10_IRQn          = 288,      /*!< RPMSG 1->0 Interrupt        */
+    RPMSG_12_IRQn          = 289,      /*!< RPMSG 1->2 Interrupt        */
+    RPMSG_13_IRQn          = 290,      /*!< RPMSG 1->3 Interrupt        */
+    RPMSG_20_IRQn          = 291,      /*!< RPMSG 2->0 Interrupt        */
+    RPMSG_21_IRQn          = 292,      /*!< RPMSG 2->1 Interrupt        */
+    RPMSG_23_IRQn          = 293,      /*!< RPMSG 2->3 Interrupt        */
+    RPMSG_30_IRQn          = 294,      /*!< RPMSG 3->0 Interrupt        */
+    RPMSG_31_IRQn          = 295,      /*!< RPMSG 3->1 Interrupt        */
+    RPMSG_32_IRQn          = 296,      /*!< RPMSG 3->2 Interrupt        */
+    NUM_INTERRUPTS         = 352,
 } IRQn_Type;
 
 #define RSVD_IRQn(_N)               (RSVD0_IRQn + (_N))
