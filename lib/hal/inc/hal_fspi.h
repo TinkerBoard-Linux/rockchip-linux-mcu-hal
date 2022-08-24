@@ -106,6 +106,12 @@ struct HAL_FSPI_HOST {
 };
 
 #define HAL_FSPI_MAX_DELAY_LINE_CELLS (0xFFU)
+
+/** Training step */
+#define HAL_FSPI_DLL_TRANING_STEP 5
+/** Valid DLL winbow */
+#define HAL_FSPI_DLL_TRANING_VALID_WINDOW 40
+
 /** @} */
 /***************************** Function Declare ******************************/
 /** @defgroup FSPI_Public_Function_Declare Public Function Declare
@@ -127,6 +133,7 @@ HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint8_t cells);
 HAL_Status HAL_FSPI_DLLDisable(struct HAL_FSPI_HOST *host);
 uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host);
 uint32_t HAL_FSPI_GetMaxIoSize(struct HAL_FSPI_HOST *host);
+uint32_t HAL_FSPI_GetMaxDllCells(struct HAL_FSPI_HOST *host);
 
 /** @} */
 

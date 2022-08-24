@@ -89,12 +89,17 @@
 /* FSPI attributes */
 #define FSPI_VER_VER_1 1
 #define FSPI_VER_VER_3 3
+#define FSPI_VER_VER_4 4
 #define FSPI_VER_VER_5 5
+#define FSPI_VER_VER_6 6
 
 #define FSPI_NOR_FLASH_PAGE_SIZE 0x100
 
 #define FSPI_MAX_IOSIZE_VER3 (1024U * 8)
 #define FSPI_MAX_IOSIZE_VER4 (0xFFFFFFFFU)
+
+#define FSPI_DLL_CTRL0_DLL_MAX_VER3 0xFFU
+#define FSPI_DLL_CTRL0_DLL_MAX_VER5 0x1FFU
 
 /********************* Private Structure Definition **************************/
 
@@ -849,6 +854,22 @@ uint32_t HAL_FSPI_GetMaxIoSize(struct HAL_FSPI_HOST *host)
 #else
 
     return FSPI_MAX_IOSIZE_VER3;
+#endif
+}
+
+uint32_t HAL_FSPI_GetMaxDllCells(struct HAL_FSPI_HOST *host)
+{
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+
+#if (FSPI_VER >= FSPI_VER_VER_5)
+
+    return FSPI_DLL_CTRL0_DLL_MAX_VER5;
+#elif (FSPI_VER >= FSPI_VER_VER_3)
+
+    return FSPI_DLL_CTRL0_DLL_MAX_VER3;
+#else
+
+    return 0;
 #endif
 }
 
