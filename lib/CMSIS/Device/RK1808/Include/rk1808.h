@@ -9946,10 +9946,11 @@ struct TIMER_REG {
 
 #ifndef __ASSEMBLY__
 typedef enum PD_Id {
-    VD_NPU  = 0x800222FFU,
-    PD_PCIE = 0x80044499U,
-    PD_VPU  = 0x800777DDU,
-    PD_VIO  = 0x800888EEU,
+    PD_INVALID = 0U,
+    VD_NPU     = 0x800222FFU,
+    PD_PCIE    = 0x80044499U,
+    PD_VPU     = 0x800777DDU,
+    PD_VIO     = 0x800888EEU,
 } ePD_Id;
 #endif
 

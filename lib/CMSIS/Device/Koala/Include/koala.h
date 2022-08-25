@@ -5258,6 +5258,7 @@ struct CRU_REG {
 
 #ifndef __ASSEMBLY__
 typedef enum PD_Id {
+    PD_INVALID          = 0U,
     PD_DSP              = 0x80000000U,
     PD_MCU              = 0x80011111U,
     PD_BT_AUDIO         = 0x80022222U,

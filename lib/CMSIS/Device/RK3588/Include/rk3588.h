@@ -645,6 +645,195 @@ struct GPIO_REG {
     __IO uint32_t GPIO_REG_GROUP_H;                   /* Address Offset: 0x0104 */
     __IO uint32_t GPIO_VIRTUAL_EN;                    /* Address Offset: 0x0108 */
 };
+/* PMU Register Structure Define */
+struct PMU_REG {
+    __IO uint32_t PWR_CON0;                           /* Address Offset: 0x0000 */
+         uint32_t RESERVED0004;                       /* Address Offset: 0x0004 */
+    __IO uint32_t WAKEUP_INT_CON_P0;                  /* Address Offset: 0x0008 */
+    __I  uint32_t WAKEUP_INT_STS_P0;                  /* Address Offset: 0x000C */
+    __IO uint32_t PMIC_STABLE_CNT_P0;                 /* Address Offset: 0x0010 */
+    __IO uint32_t WAKEUP_RST_CLR_CNT_P0;              /* Address Offset: 0x0014 */
+    __IO uint32_t OSC_STABLE_CNT_P0;                  /* Address Offset: 0x0018 */
+    __IO uint32_t PMU1_PWR_CHAIN_STABLE_CON;          /* Address Offset: 0x001C */
+    __IO uint32_t DDR_RET_CON0_P0;                    /* Address Offset: 0x0020 */
+    __IO uint32_t DDR_RET_CON1_P0;                    /* Address Offset: 0x0024 */
+         uint32_t RESERVED0028[2];                    /* Address Offset: 0x0028 */
+    __IO uint32_t INFO_TX_CON;                        /* Address Offset: 0x0030 */
+         uint32_t RESERVED0034[4083];                 /* Address Offset: 0x0034 */
+    __I  uint32_t VERSION;                            /* Address Offset: 0x4000 */
+    __IO uint32_t PWR_CON1;                           /* Address Offset: 0x4004 */
+    __I  uint32_t GLB_POWER_STS;                      /* Address Offset: 0x4008 */
+    __IO uint32_t INT_MASK_CON;                       /* Address Offset: 0x400C */
+    __IO uint32_t WAKEUP_INT_CON;                     /* Address Offset: 0x4010 */
+    __I  uint32_t WAKEUP_INT_STS;                     /* Address Offset: 0x4014 */
+         uint32_t RESERVED4018[2];                    /* Address Offset: 0x4018 */
+    __IO uint32_t DDR_CH0_PWR_CON;                    /* Address Offset: 0x4020 */
+    __IO uint32_t DDR_CH1_PWR_CON;                    /* Address Offset: 0x4024 */
+    __IO uint32_t DDR_CH2_PWR_CON;                    /* Address Offset: 0x4028 */
+    __IO uint32_t DDR_CH3_PWR_CON;                    /* Address Offset: 0x402C */
+    __IO uint32_t DDR_CH0_PWR_SFTCON;                 /* Address Offset: 0x4030 */
+    __IO uint32_t DDR_CH1_PWR_SFTCON;                 /* Address Offset: 0x4034 */
+    __IO uint32_t DDR_CH2_PWR_SFTCON;                 /* Address Offset: 0x4038 */
+    __IO uint32_t DDR_CH3_PWR_SFTCON;                 /* Address Offset: 0x403C */
+    __I  uint32_t DDR_POWER_STS;                      /* Address Offset: 0x4040 */
+    __I  uint32_t DDR_STS;                            /* Address Offset: 0x4044 */
+         uint32_t RESERVED4048[2];                    /* Address Offset: 0x4048 */
+    __IO uint32_t CRU_PWR_CON;                        /* Address Offset: 0x4050 */
+    __IO uint32_t CRU_PWR_SFTCON;                     /* Address Offset: 0x4054 */
+    __I  uint32_t CRU_POWER_STS;                      /* Address Offset: 0x4058 */
+         uint32_t RESERVED405C;                       /* Address Offset: 0x405C */
+    __IO uint32_t PLLPD_CON0;                         /* Address Offset: 0x4060 */
+    __IO uint32_t PLLPD_CON1;                         /* Address Offset: 0x4064 */
+    __IO uint32_t PLLPD_SFTCON0;                      /* Address Offset: 0x4068 */
+    __IO uint32_t PLLPD_SFTCON1;                      /* Address Offset: 0x406C */
+         uint32_t RESERVED4070[4];                    /* Address Offset: 0x4070 */
+    __IO uint32_t PMIC_STABLE_CNT;                    /* Address Offset: 0x4080 */
+    __IO uint32_t OSC_STABLE_CNT;                     /* Address Offset: 0x4084 */
+    __IO uint32_t WAKEUP_RST_CLR_CNT;                 /* Address Offset: 0x4088 */
+    __IO uint32_t PLL_LOCK_CNT;                       /* Address Offset: 0x408C */
+         uint32_t RESERVED4090;                       /* Address Offset: 0x4090 */
+    __IO uint32_t WAKEUP_TIMEOUT_CNT;                 /* Address Offset: 0x4094 */
+    __IO uint32_t PWM_SWITCH_CNT;                     /* Address Offset: 0x4098 */
+         uint32_t RESERVED409C[25];                   /* Address Offset: 0x409C */
+    __IO uint32_t SYS_REG0;                           /* Address Offset: 0x4100 */
+    __IO uint32_t SYS_REG1;                           /* Address Offset: 0x4104 */
+    __IO uint32_t SYS_REG2;                           /* Address Offset: 0x4108 */
+    __IO uint32_t SYS_REG3;                           /* Address Offset: 0x410C */
+    __IO uint32_t SYS_REG4;                           /* Address Offset: 0x4110 */
+    __IO uint32_t SYS_REG5;                           /* Address Offset: 0x4114 */
+    __IO uint32_t SYS_REG6;                           /* Address Offset: 0x4118 */
+    __IO uint32_t SYS_REG7;                           /* Address Offset: 0x411C */
+         uint32_t RESERVED4120[4024];                 /* Address Offset: 0x4120 */
+    __IO uint32_t PWR_CON2;                           /* Address Offset: 0x8000 */
+    __IO uint32_t DSU_PWR_CON;                        /* Address Offset: 0x8004 */
+    __IO uint32_t DSU_PWR_SFTCON;                     /* Address Offset: 0x8008 */
+    __IO uint32_t DSU_AUTO_PWR_CON;                   /* Address Offset: 0x800C */
+    __IO uint32_t CPU0_AUTO_PWR_CON;                  /* Address Offset: 0x8010 */
+    __IO uint32_t CPU1_AUTO_PWR_CON;                  /* Address Offset: 0x8014 */
+    __IO uint32_t CPU2_AUTO_PWR_CON;                  /* Address Offset: 0x8018 */
+    __IO uint32_t CPU3_AUTO_PWR_CON;                  /* Address Offset: 0x801C */
+    __IO uint32_t CPU4_AUTO_PWR_CON;                  /* Address Offset: 0x8020 */
+    __IO uint32_t CPU5_AUTO_PWR_CON;                  /* Address Offset: 0x8024 */
+    __IO uint32_t CPU6_AUTO_PWR_CON;                  /* Address Offset: 0x8028 */
+    __IO uint32_t CPU7_AUTO_PWR_CON;                  /* Address Offset: 0x802C */
+    __IO uint32_t CPU0_PWR_SFTCON;                    /* Address Offset: 0x8030 */
+    __IO uint32_t CPU1_PWR_SFTCON;                    /* Address Offset: 0x8034 */
+    __IO uint32_t CPU2_PWR_SFTCON;                    /* Address Offset: 0x8038 */
+    __IO uint32_t CPU3_PWR_SFTCON;                    /* Address Offset: 0x803C */
+    __IO uint32_t CPU4_PWR_SFTCON;                    /* Address Offset: 0x8040 */
+    __IO uint32_t CPU5_PWR_SFTCON;                    /* Address Offset: 0x8044 */
+    __IO uint32_t CPU6_PWR_SFTCON;                    /* Address Offset: 0x8048 */
+    __IO uint32_t CPU7_PWR_SFTCON;                    /* Address Offset: 0x804C */
+    __IO uint32_t CORE0_PWR_CON;                      /* Address Offset: 0x8050 */
+    __IO uint32_t CORE1_PWR_CON;                      /* Address Offset: 0x8054 */
+    __IO uint32_t CORE0_PWR_SFTCON;                   /* Address Offset: 0x8058 */
+    __IO uint32_t CORE1_PWR_SFTCON;                   /* Address Offset: 0x805C */
+    __IO uint32_t CORE0_AUTO_PWR_CON;                 /* Address Offset: 0x8060 */
+    __IO uint32_t CORE1_AUTO_PWR_CON;                 /* Address Offset: 0x8064 */
+    __IO uint32_t CLUSTER_BIU_AUTO_CON;               /* Address Offset: 0x8068 */
+         uint32_t RESERVED806C;                       /* Address Offset: 0x806C */
+    __IO uint32_t CLUSTER_BIU_IDLE_CON;               /* Address Offset: 0x8070 */
+    __IO uint32_t CLUSTER_BIU_IDLE_SFTCON;            /* Address Offset: 0x8074 */
+    __I  uint32_t CLUSTER_BIU_IDLE_ACK_STS;           /* Address Offset: 0x8078 */
+    __I  uint32_t CLUSTER_BIU_IDLE_STS;               /* Address Offset: 0x807C */
+    __I  uint32_t CLUSTER_STS;                        /* Address Offset: 0x8080 */
+    __I  uint32_t CLUSTER_POWER_STS0;                 /* Address Offset: 0x8084 */
+    __I  uint32_t CLUSTER_POWER_STS1;                 /* Address Offset: 0x8088 */
+    __I  uint32_t CLUSTER_PCHANNEL_STS0;              /* Address Offset: 0x808C */
+    __I  uint32_t CLUSTER_PCHANNEL_STS1;              /* Address Offset: 0x8090 */
+    __I  uint32_t CLUSTER_PCHANNEL_STS2;              /* Address Offset: 0x8094 */
+    __IO uint32_t CPU_PWR_CHAIN_STABLE_CON;           /* Address Offset: 0x8098 */
+    __IO uint32_t DSU_MEM_PWR_CON;                    /* Address Offset: 0x809C */
+         uint32_t RESERVED80A0[4];                    /* Address Offset: 0x80A0 */
+    __IO uint32_t DSU_STABLE_CNT;                     /* Address Offset: 0x80B0 */
+    __IO uint32_t DSU_PWRUP_CNT;                      /* Address Offset: 0x80B4 */
+    __IO uint32_t DSU_PWRDN_CNT;                      /* Address Offset: 0x80B8 */
+    __IO uint32_t CORE0_STABLE_CNT;                   /* Address Offset: 0x80BC */
+    __IO uint32_t CORE0_PWRUP_CNT;                    /* Address Offset: 0x80C0 */
+    __IO uint32_t CORE0_PWRDN_CNT;                    /* Address Offset: 0x80C4 */
+    __IO uint32_t CORE1_STABLE_CNT;                   /* Address Offset: 0x80C8 */
+    __IO uint32_t CORE1_PWRUP_CNT;                    /* Address Offset: 0x80CC */
+    __IO uint32_t CORE1_PWRDN_CNT;                    /* Address Offset: 0x80D0 */
+    __IO uint32_t CPU0_DBG_RST_CNT;                   /* Address Offset: 0x80D4 */
+    __IO uint32_t CPU1_DBG_RST_CNT;                   /* Address Offset: 0x80D8 */
+    __IO uint32_t CPU2_DBG_RST_CNT;                   /* Address Offset: 0x80DC */
+    __IO uint32_t CPU3_DBG_RST_CNT;                   /* Address Offset: 0x80E0 */
+    __IO uint32_t CPU4_DBG_RST_CNT;                   /* Address Offset: 0x80E4 */
+    __IO uint32_t CPU5_DBG_RST_CNT;                   /* Address Offset: 0x80E8 */
+    __IO uint32_t CPU6_DBG_RST_CNT;                   /* Address Offset: 0x80EC */
+    __IO uint32_t CPU7_DBG_RST_CNT;                   /* Address Offset: 0x80F0 */
+         uint32_t RESERVED80F4[3];                    /* Address Offset: 0x80F4 */
+    __IO uint32_t BIU_IDLE_CON0;                      /* Address Offset: 0x8100 */
+    __IO uint32_t BIU_IDLE_CON1;                      /* Address Offset: 0x8104 */
+    __IO uint32_t BIU_IDLE_CON2;                      /* Address Offset: 0x8108 */
+    __IO uint32_t BUS_IDLE_REQ[3];                    /* Address Offset: 0x810C */
+    __I  uint32_t BUS_IDLE_ACK[2];                    /* Address Offset: 0x8118 */
+    __I  uint32_t BUS_IDLE_ST[2];                     /* Address Offset: 0x8120 */
+    __IO uint32_t BIU_AUTO_CON0;                      /* Address Offset: 0x8128 */
+    __IO uint32_t BIU_AUTO_CON1;                      /* Address Offset: 0x812C */
+    __IO uint32_t BIU_AUTO_CON2;                      /* Address Offset: 0x8130 */
+         uint32_t RESERVED8134[3];                    /* Address Offset: 0x8134 */
+    __IO uint32_t PWR_GATE_CON0;                      /* Address Offset: 0x8140 */
+    __IO uint32_t PWR_GATE_CON1;                      /* Address Offset: 0x8144 */
+    __IO uint32_t PWR_GATE_CON2;                      /* Address Offset: 0x8148 */
+    __IO uint32_t PWRDN_CON[3];                       /* Address Offset: 0x814C */
+    __IO uint32_t VOL_GATE_CON0;                      /* Address Offset: 0x8158 */
+         uint32_t RESERVED815C;                       /* Address Offset: 0x815C */
+    __IO uint32_t VOL_GATE_CON1;                      /* Address Offset: 0x8160 */
+    __IO uint32_t PWR_CHAIN_PWRUP_CON0;               /* Address Offset: 0x8164 */
+    __IO uint32_t PWR_CHAIN_PWRUP_CON1;               /* Address Offset: 0x8168 */
+         uint32_t RESERVED816C;                       /* Address Offset: 0x816C */
+    __IO uint32_t PWR_CHAIN_PWRDN_CON0;               /* Address Offset: 0x8170 */
+    __IO uint32_t PWR_CHAIN_PWRDN_CON1;               /* Address Offset: 0x8174 */
+         uint32_t RESERVED8178;                       /* Address Offset: 0x8178 */
+    __IO uint32_t PWR_STABLE_CNT;                     /* Address Offset: 0x817C */
+    __I  uint32_t PWRDN_ST[2];                        /* Address Offset: 0x8180 */
+    __I  uint32_t PWR_GATE_POWER_STS;                 /* Address Offset: 0x8188 */
+    __IO uint32_t VOL_GATE_FAST_CON;                  /* Address Offset: 0x818C */
+    __IO uint32_t GPU_PWRUP_CNT;                      /* Address Offset: 0x8190 */
+    __IO uint32_t GPU_PWRDN_CNT;                      /* Address Offset: 0x8194 */
+    __IO uint32_t NPU_PWRUP_CNT;                      /* Address Offset: 0x8198 */
+    __IO uint32_t NPU_PWRDN_CNT;                      /* Address Offset: 0x819C */
+    __IO uint32_t PWR_MEM_CON[3];                     /* Address Offset: 0x81A0 */
+         uint32_t RESERVED81AC;                       /* Address Offset: 0x81AC */
+    __IO uint32_t SUBMEM_PWR_GATE_SFTCON0;            /* Address Offset: 0x81B0 */
+    __IO uint32_t SUBMEM_PWR_GATE_SFTCON1;            /* Address Offset: 0x81B4 */
+    __IO uint32_t SUBMEM_PWR_GATE_SFTCON2;            /* Address Offset: 0x81B8 */
+    __I  uint32_t SUBMEM_PWR_GATE_STS;                /* Address Offset: 0x81BC */
+    __IO uint32_t SUBMEM_PWR_ACK_BYPASS_CON0;         /* Address Offset: 0x81C0 */
+    __IO uint32_t SUBMEM_PWR_ACK_BYPASS_CON1;         /* Address Offset: 0x81C4 */
+         uint32_t RESERVED81C8[2];                    /* Address Offset: 0x81C8 */
+    __IO uint32_t QCHANNEL_PWR_CON;                   /* Address Offset: 0x81D0 */
+    __IO uint32_t QCHANNEL_PWR_SFTCON;                /* Address Offset: 0x81D4 */
+    __I  uint32_t QCHANNEL_PWR_STS;                   /* Address Offset: 0x81D8 */
+         uint32_t RESERVED81DC;                       /* Address Offset: 0x81DC */
+    __IO uint32_t DEBUG_INFO_CON;                     /* Address Offset: 0x81E0 */
+    __I  uint32_t VOP_SUBPD_PWR_CHAIN_STS;            /* Address Offset: 0x81E4 */
+    __I  uint32_t PWR_CHAIN0_ST[2];                   /* Address Offset: 0x81E8 */
+    __I  uint32_t PWR_CHAIN1_ST[2];                   /* Address Offset: 0x81F0 */
+    __I  uint32_t PWR_MEM_ST[2];                      /* Address Offset: 0x81F8 */
+    __IO uint32_t BISR_CON0;                          /* Address Offset: 0x8200 */
+    __IO uint32_t BISR_CON1;                          /* Address Offset: 0x8204 */
+    __IO uint32_t BISR_CON2;                          /* Address Offset: 0x8208 */
+    __IO uint32_t BISR_CON3;                          /* Address Offset: 0x820C */
+    __IO uint32_t BISR_CON4;                          /* Address Offset: 0x8210 */
+    __IO uint32_t BISR_CON5;                          /* Address Offset: 0x8214 */
+    __IO uint32_t BISR_CON6;                          /* Address Offset: 0x8218 */
+    __IO uint32_t BISR_CON7;                          /* Address Offset: 0x821C */
+    __IO uint32_t BISR_CON8;                          /* Address Offset: 0x8220 */
+    __IO uint32_t BISR_CON9;                          /* Address Offset: 0x8224 */
+    __IO uint32_t BISR_CON10;                         /* Address Offset: 0x8228 */
+    __IO uint32_t BISR_CON11;                         /* Address Offset: 0x822C */
+    __IO uint32_t BISR_CON12;                         /* Address Offset: 0x8230 */
+    __IO uint32_t BISR_CON13;                         /* Address Offset: 0x8234 */
+    __IO uint32_t BISR_CON14;                         /* Address Offset: 0x8238 */
+         uint32_t RESERVED823C[17];                   /* Address Offset: 0x823C */
+    __I  uint32_t BISR_STS0;                          /* Address Offset: 0x8280 */
+    __I  uint32_t BISR_STS1;                          /* Address Offset: 0x8284 */
+    __I  uint32_t BISR_STS2;                          /* Address Offset: 0x8288 */
+    __I  uint32_t BISR_STS3;                          /* Address Offset: 0x828C */
+    __I  uint32_t PWR_REPAIR_ST[2];                   /* Address Offset: 0x8290 */
+};
 /* WDT Register Structure Define */
 struct WDT_REG {
     __IO uint32_t CR;                                 /* Address Offset: 0x0000 */
@@ -797,6 +986,7 @@ struct MBOX_REG {
 #define DSUCRU_BASE                    0xFD818000U /* DSUCRU base address */
 #define UART0_BASE                     0xFD890000U /* UART0 base address */
 #define GPIO0_BASE                     0xFD8A0000U /* GPIO0 base address */
+#define PMU_BASE                       0xFD8D0000U /* PMU base address */
 #define WDT_BASE                       0xFD8E0000U /* WDT base address */
 #define TIMER0_BASE                    0xFD8F0000U /* TIMER0 base address */
 #define TIMER1_BASE                    0xFD8F0020U /* TIMER1 base address */
@@ -851,6 +1041,7 @@ struct MBOX_REG {
 #define DSUCRU              ((struct DSUCRU_REG *) DSUCRU_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define WDT                 ((struct WDT_REG *) WDT_BASE)
 #define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
 #define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
@@ -897,6 +1088,7 @@ struct MBOX_REG {
 #define IS_BIGCORE0CRU_INSTANCE(instance) ((instance) == BIGCORE0CRU)
 #define IS_BIGCORE1CRU_INSTANCE(instance) ((instance) == BIGCORE1CRU)
 #define IS_DSUCRU_INSTANCE(instance) ((instance) == DSUCRU)
+#define IS_PMU_INSTANCE(instance) ((instance) == PMU)
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_VAD_INSTANCE(instance) ((instance) == VAD)
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
@@ -11743,6 +11935,3586 @@ struct MBOX_REG {
 #define GPIO_GPIO_VIRTUAL_EN_OFFSET                        (0x108U)
 #define GPIO_GPIO_VIRTUAL_EN_GPIO_VIRTUAL_EN_SHIFT         (0U)
 #define GPIO_GPIO_VIRTUAL_EN_GPIO_VIRTUAL_EN_MASK          (0x1U << GPIO_GPIO_VIRTUAL_EN_GPIO_VIRTUAL_EN_SHIFT)         /* 0x00000001 */
+/******************************************PMU*******************************************/
+/* PWR_CON0 */
+#define PMU_PWR_CON0_OFFSET                                (0x0U)
+#define PMU_PWR_CON0_POWERMODE0_EN_SHIFT                   (0U)
+#define PMU_PWR_CON0_POWERMODE0_EN_MASK                    (0x1U << PMU_PWR_CON0_POWERMODE0_EN_SHIFT)                   /* 0x00000001 */
+#define PMU_PWR_CON0_PMU1_PWR_BYPASS_SHIFT                 (1U)
+#define PMU_PWR_CON0_PMU1_PWR_BYPASS_MASK                  (0x1U << PMU_PWR_CON0_PMU1_PWR_BYPASS_SHIFT)                 /* 0x00000002 */
+#define PMU_PWR_CON0_PMU1_BUS_BYPASS_SHIFT                 (2U)
+#define PMU_PWR_CON0_PMU1_BUS_BYPASS_MASK                  (0x1U << PMU_PWR_CON0_PMU1_BUS_BYPASS_SHIFT)                 /* 0x00000004 */
+#define PMU_PWR_CON0_WAKEUP_BYPASS_SHIFT                   (3U)
+#define PMU_PWR_CON0_WAKEUP_BYPASS_MASK                    (0x1U << PMU_PWR_CON0_WAKEUP_BYPASS_SHIFT)                   /* 0x00000008 */
+#define PMU_PWR_CON0_PMIC_BYPASS_SHIFT                     (4U)
+#define PMU_PWR_CON0_PMIC_BYPASS_MASK                      (0x1U << PMU_PWR_CON0_PMIC_BYPASS_SHIFT)                     /* 0x00000010 */
+#define PMU_PWR_CON0_RESET_BYPASS_SHIFT                    (5U)
+#define PMU_PWR_CON0_RESET_BYPASS_MASK                     (0x1U << PMU_PWR_CON0_RESET_BYPASS_SHIFT)                    /* 0x00000020 */
+#define PMU_PWR_CON0_FREQ_SWITCH_BYPASS_SHIFT              (6U)
+#define PMU_PWR_CON0_FREQ_SWITCH_BYPASS_MASK               (0x1U << PMU_PWR_CON0_FREQ_SWITCH_BYPASS_SHIFT)              /* 0x00000040 */
+#define PMU_PWR_CON0_OSC_DIS_BYPASS_SHIFT                  (7U)
+#define PMU_PWR_CON0_OSC_DIS_BYPASS_MASK                   (0x1U << PMU_PWR_CON0_OSC_DIS_BYPASS_SHIFT)                  /* 0x00000080 */
+#define PMU_PWR_CON0_PMU1_PWR_GATE_ENA_SHIFT               (8U)
+#define PMU_PWR_CON0_PMU1_PWR_GATE_ENA_MASK                (0x1U << PMU_PWR_CON0_PMU1_PWR_GATE_ENA_SHIFT)               /* 0x00000100 */
+#define PMU_PWR_CON0_PMU1_PWR_GATE_SFTENA_SHIFT            (9U)
+#define PMU_PWR_CON0_PMU1_PWR_GATE_SFTENA_MASK             (0x1U << PMU_PWR_CON0_PMU1_PWR_GATE_SFTENA_SHIFT)            /* 0x00000200 */
+#define PMU_PWR_CON0_PMU1_MEMPWR_GATE_SFTENA_SHIFT         (10U)
+#define PMU_PWR_CON0_PMU1_MEMPWR_GATE_SFTENA_MASK          (0x1U << PMU_PWR_CON0_PMU1_MEMPWR_GATE_SFTENA_SHIFT)         /* 0x00000400 */
+#define PMU_PWR_CON0_PMU1_BUS_IDLE_ENA_SHIFT               (11U)
+#define PMU_PWR_CON0_PMU1_BUS_IDLE_ENA_MASK                (0x1U << PMU_PWR_CON0_PMU1_BUS_IDLE_ENA_SHIFT)               /* 0x00000800 */
+#define PMU_PWR_CON0_PMU1_BUS_IDLE_SFTENA_SHIFT            (12U)
+#define PMU_PWR_CON0_PMU1_BUS_IDLE_SFTENA_MASK             (0x1U << PMU_PWR_CON0_PMU1_BUS_IDLE_SFTENA_SHIFT)            /* 0x00001000 */
+#define PMU_PWR_CON0_BIU_AUTO_PMU1_SHIFT                   (13U)
+#define PMU_PWR_CON0_BIU_AUTO_PMU1_MASK                    (0x1U << PMU_PWR_CON0_BIU_AUTO_PMU1_SHIFT)                   /* 0x00002000 */
+#define PMU_PWR_CON0_POWER_OFF_IO_ENA_SHIFT                (14U)
+#define PMU_PWR_CON0_POWER_OFF_IO_ENA_MASK                 (0x1U << PMU_PWR_CON0_POWER_OFF_IO_ENA_SHIFT)                /* 0x00004000 */
+/* WAKEUP_INT_CON_P0 */
+#define PMU_WAKEUP_INT_CON_P0_OFFSET                       (0x8U)
+#define PMU_WAKEUP_INT_CON_P0_WAKEUP_INT_EN_SHIFT          (0U)
+#define PMU_WAKEUP_INT_CON_P0_WAKEUP_INT_EN_MASK           (0x1U << PMU_WAKEUP_INT_CON_P0_WAKEUP_INT_EN_SHIFT)          /* 0x00000001 */
+/* WAKEUP_INT_STS_P0 */
+#define PMU_WAKEUP_INT_STS_P0_OFFSET                       (0xCU)
+#define PMU_WAKEUP_INT_STS_P0                              (0x0U)
+#define PMU_WAKEUP_INT_STS_P0_WAKEUP_INT_ST_SHIFT          (0U)
+#define PMU_WAKEUP_INT_STS_P0_WAKEUP_INT_ST_MASK           (0x1U << PMU_WAKEUP_INT_STS_P0_WAKEUP_INT_ST_SHIFT)          /* 0x00000001 */
+/* PMIC_STABLE_CNT_P0 */
+#define PMU_PMIC_STABLE_CNT_P0_OFFSET                      (0x10U)
+#define PMU_PMIC_STABLE_CNT_P0_PMIC_STABLE_CNT_SHIFT       (0U)
+#define PMU_PMIC_STABLE_CNT_P0_PMIC_STABLE_CNT_MASK        (0xFFFFFU << PMU_PMIC_STABLE_CNT_P0_PMIC_STABLE_CNT_SHIFT)   /* 0x000FFFFF */
+/* WAKEUP_RST_CLR_CNT_P0 */
+#define PMU_WAKEUP_RST_CLR_CNT_P0_OFFSET                   (0x14U)
+#define PMU_WAKEUP_RST_CLR_CNT_P0_WAKEUP_RST_CLR_CNT_SHIFT (0U)
+#define PMU_WAKEUP_RST_CLR_CNT_P0_WAKEUP_RST_CLR_CNT_MASK  (0xFFFFFU << PMU_WAKEUP_RST_CLR_CNT_P0_WAKEUP_RST_CLR_CNT_SHIFT) /* 0x000FFFFF */
+/* OSC_STABLE_CNT_P0 */
+#define PMU_OSC_STABLE_CNT_P0_OFFSET                       (0x18U)
+#define PMU_OSC_STABLE_CNT_P0_OSC_STABLE_CNT_SHIFT         (0U)
+#define PMU_OSC_STABLE_CNT_P0_OSC_STABLE_CNT_MASK          (0xFFFFFU << PMU_OSC_STABLE_CNT_P0_OSC_STABLE_CNT_SHIFT)     /* 0x000FFFFF */
+/* PMU1_PWR_CHAIN_STABLE_CON */
+#define PMU_PMU1_PWR_CHAIN_STABLE_CON_OFFSET               (0x1CU)
+#define PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_UP_STABLE_EN_SHIFT (0U)
+#define PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_UP_STABLE_EN_MASK (0x1U << PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_UP_STABLE_EN_SHIFT) /* 0x00000001 */
+#define PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_UP_STABLE_CNT_SHIFT (1U)
+#define PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_UP_STABLE_CNT_MASK (0x1FU << PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_UP_STABLE_CNT_SHIFT) /* 0x0000003E */
+#define PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_DWN_STABLE_EN_SHIFT (8U)
+#define PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_DWN_STABLE_EN_MASK (0x1U << PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_DWN_STABLE_EN_SHIFT) /* 0x00000100 */
+#define PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_DWN_STABLE_CNT_SHIFT (9U)
+#define PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_DWN_STABLE_CNT_MASK (0x1FU << PMU_PMU1_PWR_CHAIN_STABLE_CON_PMU1_PWR_DWN_STABLE_CNT_SHIFT) /* 0x00003E00 */
+/* DDR_RET_CON0_P0 */
+#define PMU_DDR_RET_CON0_P0_OFFSET                         (0x20U)
+#define PMU_DDR_RET_CON0_P0_DDRIO_RETON_ENTER_ENA_SHIFT    (0U)
+#define PMU_DDR_RET_CON0_P0_DDRIO_RETON_ENTER_ENA_MASK     (0xFU << PMU_DDR_RET_CON0_P0_DDRIO_RETON_ENTER_ENA_SHIFT)    /* 0x0000000F */
+#define PMU_DDR_RET_CON0_P0_DDRIO_RSTIOV_ENTER_ENA_SHIFT   (4U)
+#define PMU_DDR_RET_CON0_P0_DDRIO_RSTIOV_ENTER_ENA_MASK    (0xFU << PMU_DDR_RET_CON0_P0_DDRIO_RSTIOV_ENTER_ENA_SHIFT)   /* 0x000000F0 */
+#define PMU_DDR_RET_CON0_P0_DDRIO_RETON_EXIT_ENA_SHIFT     (8U)
+#define PMU_DDR_RET_CON0_P0_DDRIO_RETON_EXIT_ENA_MASK      (0xFU << PMU_DDR_RET_CON0_P0_DDRIO_RETON_EXIT_ENA_SHIFT)     /* 0x00000F00 */
+#define PMU_DDR_RET_CON0_P0_DDRIO_RSTIOV_EXIT_ENA_SHIFT    (12U)
+#define PMU_DDR_RET_CON0_P0_DDRIO_RSTIOV_EXIT_ENA_MASK     (0xFU << PMU_DDR_RET_CON0_P0_DDRIO_RSTIOV_EXIT_ENA_SHIFT)    /* 0x0000F000 */
+/* DDR_RET_CON1_P0 */
+#define PMU_DDR_RET_CON1_P0_OFFSET                         (0x24U)
+#define PMU_DDR_RET_CON1_P0_DDRIO_RETON_ENTER_SFTENA_SHIFT (0U)
+#define PMU_DDR_RET_CON1_P0_DDRIO_RETON_ENTER_SFTENA_MASK  (0xFU << PMU_DDR_RET_CON1_P0_DDRIO_RETON_ENTER_SFTENA_SHIFT) /* 0x0000000F */
+#define PMU_DDR_RET_CON1_P0_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT (4U)
+#define PMU_DDR_RET_CON1_P0_DDRIO_RSTIOV_ENTER_SFTENA_MASK (0xFU << PMU_DDR_RET_CON1_P0_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT) /* 0x000000F0 */
+#define PMU_DDR_RET_CON1_P0_DDRIO_RETON_EXIT_SFTENA_SHIFT  (8U)
+#define PMU_DDR_RET_CON1_P0_DDRIO_RETON_EXIT_SFTENA_MASK   (0xFU << PMU_DDR_RET_CON1_P0_DDRIO_RETON_EXIT_SFTENA_SHIFT)  /* 0x00000F00 */
+#define PMU_DDR_RET_CON1_P0_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT (12U)
+#define PMU_DDR_RET_CON1_P0_DDRIO_RSTIOV_EXIT_SFTENA_MASK  (0xFU << PMU_DDR_RET_CON1_P0_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT) /* 0x0000F000 */
+/* INFO_TX_CON */
+#define PMU_INFO_TX_CON_OFFSET                             (0x30U)
+#define PMU_INFO_TX_CON_INFO_TX_INTV_TIME_SHIFT            (0U)
+#define PMU_INFO_TX_CON_INFO_TX_INTV_TIME_MASK             (0xFFU << PMU_INFO_TX_CON_INFO_TX_INTV_TIME_SHIFT)           /* 0x000000FF */
+#define PMU_INFO_TX_CON_INFO_TX_EN_SHIFT                   (8U)
+#define PMU_INFO_TX_CON_INFO_TX_EN_MASK                    (0x1U << PMU_INFO_TX_CON_INFO_TX_EN_SHIFT)                   /* 0x00000100 */
+/* VERSION */
+#define PMU_VERSION_OFFSET                                 (0x4000U)
+#define PMU_VERSION                                        (0x3588U)
+#define PMU_VERSION_VERSION_SHIFT                          (0U)
+#define PMU_VERSION_VERSION_MASK                           (0xFFFFFFFFU << PMU_VERSION_VERSION_SHIFT)                   /* 0xFFFFFFFF */
+/* PWR_CON1 */
+#define PMU_PWR_CON1_OFFSET                                (0x4004U)
+#define PMU_PWR_CON1_POWERMODE1_EN_SHIFT                   (0U)
+#define PMU_PWR_CON1_POWERMODE1_EN_MASK                    (0x1U << PMU_PWR_CON1_POWERMODE1_EN_SHIFT)                   /* 0x00000001 */
+#define PMU_PWR_CON1_DSU_BYPASS_SHIFT                      (1U)
+#define PMU_PWR_CON1_DSU_BYPASS_MASK                       (0x1U << PMU_PWR_CON1_DSU_BYPASS_SHIFT)                      /* 0x00000002 */
+#define PMU_PWR_CON1_BUS_BYPASS_SHIFT                      (4U)
+#define PMU_PWR_CON1_BUS_BYPASS_MASK                       (0x1U << PMU_PWR_CON1_BUS_BYPASS_SHIFT)                      /* 0x00000010 */
+#define PMU_PWR_CON1_DDR_BYPASS_SHIFT                      (5U)
+#define PMU_PWR_CON1_DDR_BYPASS_MASK                       (0x1U << PMU_PWR_CON1_DDR_BYPASS_SHIFT)                      /* 0x00000020 */
+#define PMU_PWR_CON1_PWRGATE_BYPASS_SHIFT                  (6U)
+#define PMU_PWR_CON1_PWRGATE_BYPASS_MASK                   (0x1U << PMU_PWR_CON1_PWRGATE_BYPASS_SHIFT)                  /* 0x00000040 */
+#define PMU_PWR_CON1_CRU_BYPASS_SHIFT                      (7U)
+#define PMU_PWR_CON1_CRU_BYPASS_MASK                       (0x1U << PMU_PWR_CON1_CRU_BYPASS_SHIFT)                      /* 0x00000080 */
+#define PMU_PWR_CON1_QCH_BYPASS_SHIFT                      (8U)
+#define PMU_PWR_CON1_QCH_BYPASS_MASK                       (0x1U << PMU_PWR_CON1_QCH_BYPASS_SHIFT)                      /* 0x00000100 */
+#define PMU_PWR_CON1_CORE_BYPASS_SHIFT                     (9U)
+#define PMU_PWR_CON1_CORE_BYPASS_MASK                      (0x7U << PMU_PWR_CON1_CORE_BYPASS_SHIFT)                     /* 0x00000E00 */
+#define PMU_PWR_CON1_WFI_BYPASS_SHIFT                      (12U)
+#define PMU_PWR_CON1_WFI_BYPASS_MASK                       (0x1U << PMU_PWR_CON1_WFI_BYPASS_SHIFT)                      /* 0x00001000 */
+/* GLB_POWER_STS */
+#define PMU_GLB_POWER_STS_OFFSET                           (0x4008U)
+#define PMU_GLB_POWER_STS                                  (0x0U)
+#define PMU_GLB_POWER_STS_POWER_STATE_SHIFT                (0U)
+#define PMU_GLB_POWER_STS_POWER_STATE_MASK                 (0xFU << PMU_GLB_POWER_STS_POWER_STATE_SHIFT)                /* 0x0000000F */
+/* INT_MASK_CON */
+#define PMU_INT_MASK_CON_OFFSET                            (0x400CU)
+#define PMU_INT_MASK_CON_GLB_INT_MASK_SHIFT                (0U)
+#define PMU_INT_MASK_CON_GLB_INT_MASK_MASK                 (0x1U << PMU_INT_MASK_CON_GLB_INT_MASK_SHIFT)                /* 0x00000001 */
+/* WAKEUP_INT_CON */
+#define PMU_WAKEUP_INT_CON_OFFSET                          (0x4010U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU0_INT_EN_SHIFT        (0U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU0_INT_EN_MASK         (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_CPU0_INT_EN_SHIFT)        /* 0x00000001 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU1_INT_EN_SHIFT        (1U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU1_INT_EN_MASK         (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_CPU1_INT_EN_SHIFT)        /* 0x00000002 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU2_INT_EN_SHIFT        (2U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU2_INT_EN_MASK         (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_CPU2_INT_EN_SHIFT)        /* 0x00000004 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU3_INT_EN_SHIFT        (3U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU3_INT_EN_MASK         (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_CPU3_INT_EN_SHIFT)        /* 0x00000008 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU4_INT_EN_SHIFT        (4U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU4_INT_EN_MASK         (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_CPU4_INT_EN_SHIFT)        /* 0x00000010 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU5_INT_EN_SHIFT        (5U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU5_INT_EN_MASK         (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_CPU5_INT_EN_SHIFT)        /* 0x00000020 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU6_INT_EN_SHIFT        (6U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU6_INT_EN_MASK         (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_CPU6_INT_EN_SHIFT)        /* 0x00000040 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU7_INT_EN_SHIFT        (7U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_CPU7_INT_EN_MASK         (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_CPU7_INT_EN_SHIFT)        /* 0x00000080 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_GPIO0_INT_EN_SHIFT       (8U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_GPIO0_INT_EN_MASK        (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_GPIO0_INT_EN_SHIFT)       /* 0x00000100 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_SDMMC_INT_EN_SHIFT       (9U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_SDMMC_INT_EN_MASK        (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_SDMMC_INT_EN_SHIFT)       /* 0x00000200 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_SDIO_INT_EN_SHIFT        (10U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_SDIO_INT_EN_MASK         (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_SDIO_INT_EN_SHIFT)        /* 0x00000400 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_USB_INT_EN_SHIFT         (11U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_USB_INT_EN_MASK          (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_USB_INT_EN_SHIFT)         /* 0x00000800 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_UART0_INT_EN_SHIFT       (12U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_UART0_INT_EN_MASK        (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_UART0_INT_EN_SHIFT)       /* 0x00001000 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_VAD_INT_EN_SHIFT         (13U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_VAD_INT_EN_MASK          (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_VAD_INT_EN_SHIFT)         /* 0x00002000 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_TIMER_INT_EN_SHIFT       (14U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_TIMER_INT_EN_MASK        (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_TIMER_INT_EN_SHIFT)       /* 0x00004000 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_SYS_INT_EN_SHIFT         (15U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_SYS_INT_EN_MASK          (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_SYS_INT_EN_SHIFT)         /* 0x00008000 */
+#define PMU_WAKEUP_INT_CON_WAKEUP_TIMEOUT_EN_SHIFT         (16U)
+#define PMU_WAKEUP_INT_CON_WAKEUP_TIMEOUT_EN_MASK          (0x1U << PMU_WAKEUP_INT_CON_WAKEUP_TIMEOUT_EN_SHIFT)         /* 0x00010000 */
+/* WAKEUP_INT_STS */
+#define PMU_WAKEUP_INT_STS_OFFSET                          (0x4014U)
+#define PMU_WAKEUP_INT_STS                                 (0x0U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU0_INT_ST_SHIFT        (0U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU0_INT_ST_MASK         (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_CPU0_INT_ST_SHIFT)        /* 0x00000001 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU1_INT_ST_SHIFT        (1U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU1_INT_ST_MASK         (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_CPU1_INT_ST_SHIFT)        /* 0x00000002 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU2_INT_ST_SHIFT        (2U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU2_INT_ST_MASK         (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_CPU2_INT_ST_SHIFT)        /* 0x00000004 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU3_INT_ST_SHIFT        (3U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU3_INT_ST_MASK         (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_CPU3_INT_ST_SHIFT)        /* 0x00000008 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU4_INT_ST_SHIFT        (4U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU4_INT_ST_MASK         (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_CPU4_INT_ST_SHIFT)        /* 0x00000010 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU5_INT_ST_SHIFT        (5U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU5_INT_ST_MASK         (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_CPU5_INT_ST_SHIFT)        /* 0x00000020 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU6_INT_ST_SHIFT        (6U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU6_INT_ST_MASK         (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_CPU6_INT_ST_SHIFT)        /* 0x00000040 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU7_INT_ST_SHIFT        (7U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_CPU7_INT_ST_MASK         (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_CPU7_INT_ST_SHIFT)        /* 0x00000080 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_GPIO0_INT_ST_SHIFT       (8U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_GPIO0_INT_ST_MASK        (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_GPIO0_INT_ST_SHIFT)       /* 0x00000100 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_SDMMC_INT_ST_SHIFT       (9U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_SDMMC_INT_ST_MASK        (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_SDMMC_INT_ST_SHIFT)       /* 0x00000200 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_SDIO_INT_ST_SHIFT        (10U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_SDIO_INT_ST_MASK         (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_SDIO_INT_ST_SHIFT)        /* 0x00000400 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_USB_INT_ST_SHIFT         (11U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_USB_INT_ST_MASK          (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_USB_INT_ST_SHIFT)         /* 0x00000800 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_UART0_INT_ST_SHIFT       (12U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_UART0_INT_ST_MASK        (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_UART0_INT_ST_SHIFT)       /* 0x00001000 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_VAD_INT_ST_SHIFT         (13U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_VAD_INT_ST_MASK          (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_VAD_INT_ST_SHIFT)         /* 0x00002000 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_TIMER_INT_ST_SHIFT       (14U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_TIMER_INT_ST_MASK        (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_TIMER_INT_ST_SHIFT)       /* 0x00004000 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_SYS_INT_ST_SHIFT         (15U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_SYS_INT_ST_MASK          (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_SYS_INT_ST_SHIFT)         /* 0x00008000 */
+#define PMU_WAKEUP_INT_STS_WAKEUP_TIMEOUT_ST_SHIFT         (16U)
+#define PMU_WAKEUP_INT_STS_WAKEUP_TIMEOUT_ST_MASK          (0x1U << PMU_WAKEUP_INT_STS_WAKEUP_TIMEOUT_ST_SHIFT)         /* 0x00010000 */
+/* DDR_CH0_PWR_CON */
+#define PMU_DDR_CH0_PWR_CON_OFFSET                         (0x4020U)
+#define PMU_DDR_CH0_PWR_CON_DDR_SREF_C_ENA_SHIFT           (0U)
+#define PMU_DDR_CH0_PWR_CON_DDR_SREF_C_ENA_MASK            (0x1U << PMU_DDR_CH0_PWR_CON_DDR_SREF_C_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_DDR_CH0_PWR_CON_DDR_SREF_A_ENA_SHIFT           (1U)
+#define PMU_DDR_CH0_PWR_CON_DDR_SREF_A_ENA_MASK            (0x1U << PMU_DDR_CH0_PWR_CON_DDR_SREF_A_ENA_SHIFT)           /* 0x00000002 */
+#define PMU_DDR_CH0_PWR_CON_DDRIO_RETON_ENTER_ENA_SHIFT    (2U)
+#define PMU_DDR_CH0_PWR_CON_DDRIO_RETON_ENTER_ENA_MASK     (0x1U << PMU_DDR_CH0_PWR_CON_DDRIO_RETON_ENTER_ENA_SHIFT)    /* 0x00000004 */
+#define PMU_DDR_CH0_PWR_CON_DDRIO_RETON_EXIT_ENA_SHIFT     (5U)
+#define PMU_DDR_CH0_PWR_CON_DDRIO_RETON_EXIT_ENA_MASK      (0x1U << PMU_DDR_CH0_PWR_CON_DDRIO_RETON_EXIT_ENA_SHIFT)     /* 0x00000020 */
+#define PMU_DDR_CH0_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_SHIFT   (6U)
+#define PMU_DDR_CH0_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_MASK    (0x1U << PMU_DDR_CH0_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_SHIFT)   /* 0x00000040 */
+#define PMU_DDR_CH0_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_SHIFT    (7U)
+#define PMU_DDR_CH0_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_MASK     (0x1U << PMU_DDR_CH0_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_SHIFT)    /* 0x00000080 */
+#define PMU_DDR_CH0_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_SHIFT (8U)
+#define PMU_DDR_CH0_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_MASK  (0x1U << PMU_DDR_CH0_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_SHIFT) /* 0x00000100 */
+#define PMU_DDR_CH0_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_SHIFT (9U)
+#define PMU_DDR_CH0_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_MASK  (0x1U << PMU_DDR_CH0_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_SHIFT) /* 0x00000200 */
+#define PMU_DDR_CH0_PWR_CON_DDRPHY_AUTO_GATING_ENA_SHIFT   (10U)
+#define PMU_DDR_CH0_PWR_CON_DDRPHY_AUTO_GATING_ENA_MASK    (0x1U << PMU_DDR_CH0_PWR_CON_DDRPHY_AUTO_GATING_ENA_SHIFT)   /* 0x00000400 */
+/* DDR_CH1_PWR_CON */
+#define PMU_DDR_CH1_PWR_CON_OFFSET                         (0x4024U)
+#define PMU_DDR_CH1_PWR_CON_DDR_SREF_C_ENA_SHIFT           (0U)
+#define PMU_DDR_CH1_PWR_CON_DDR_SREF_C_ENA_MASK            (0x1U << PMU_DDR_CH1_PWR_CON_DDR_SREF_C_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_DDR_CH1_PWR_CON_DDR_SREF_A_ENA_SHIFT           (1U)
+#define PMU_DDR_CH1_PWR_CON_DDR_SREF_A_ENA_MASK            (0x1U << PMU_DDR_CH1_PWR_CON_DDR_SREF_A_ENA_SHIFT)           /* 0x00000002 */
+#define PMU_DDR_CH1_PWR_CON_DDRIO_RETON_ENTER_ENA_SHIFT    (2U)
+#define PMU_DDR_CH1_PWR_CON_DDRIO_RETON_ENTER_ENA_MASK     (0x1U << PMU_DDR_CH1_PWR_CON_DDRIO_RETON_ENTER_ENA_SHIFT)    /* 0x00000004 */
+#define PMU_DDR_CH1_PWR_CON_DDRIO_RETON_EXIT_ENA_SHIFT     (5U)
+#define PMU_DDR_CH1_PWR_CON_DDRIO_RETON_EXIT_ENA_MASK      (0x1U << PMU_DDR_CH1_PWR_CON_DDRIO_RETON_EXIT_ENA_SHIFT)     /* 0x00000020 */
+#define PMU_DDR_CH1_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_SHIFT   (6U)
+#define PMU_DDR_CH1_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_MASK    (0x1U << PMU_DDR_CH1_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_SHIFT)   /* 0x00000040 */
+#define PMU_DDR_CH1_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_SHIFT    (7U)
+#define PMU_DDR_CH1_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_MASK     (0x1U << PMU_DDR_CH1_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_SHIFT)    /* 0x00000080 */
+#define PMU_DDR_CH1_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_SHIFT (8U)
+#define PMU_DDR_CH1_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_MASK  (0x1U << PMU_DDR_CH1_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_SHIFT) /* 0x00000100 */
+#define PMU_DDR_CH1_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_SHIFT (9U)
+#define PMU_DDR_CH1_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_MASK  (0x1U << PMU_DDR_CH1_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_SHIFT) /* 0x00000200 */
+#define PMU_DDR_CH1_PWR_CON_DDRPHY_AUTO_GATING_ENA_SHIFT   (10U)
+#define PMU_DDR_CH1_PWR_CON_DDRPHY_AUTO_GATING_ENA_MASK    (0x1U << PMU_DDR_CH1_PWR_CON_DDRPHY_AUTO_GATING_ENA_SHIFT)   /* 0x00000400 */
+/* DDR_CH2_PWR_CON */
+#define PMU_DDR_CH2_PWR_CON_OFFSET                         (0x4028U)
+#define PMU_DDR_CH2_PWR_CON_DDR_SREF_C_ENA_SHIFT           (0U)
+#define PMU_DDR_CH2_PWR_CON_DDR_SREF_C_ENA_MASK            (0x1U << PMU_DDR_CH2_PWR_CON_DDR_SREF_C_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_DDR_CH2_PWR_CON_DDR_SREF_A_ENA_SHIFT           (1U)
+#define PMU_DDR_CH2_PWR_CON_DDR_SREF_A_ENA_MASK            (0x1U << PMU_DDR_CH2_PWR_CON_DDR_SREF_A_ENA_SHIFT)           /* 0x00000002 */
+#define PMU_DDR_CH2_PWR_CON_DDRIO_RETON_ENTER_ENA_SHIFT    (2U)
+#define PMU_DDR_CH2_PWR_CON_DDRIO_RETON_ENTER_ENA_MASK     (0x1U << PMU_DDR_CH2_PWR_CON_DDRIO_RETON_ENTER_ENA_SHIFT)    /* 0x00000004 */
+#define PMU_DDR_CH2_PWR_CON_DDRIO_RETON_EXIT_ENA_SHIFT     (5U)
+#define PMU_DDR_CH2_PWR_CON_DDRIO_RETON_EXIT_ENA_MASK      (0x1U << PMU_DDR_CH2_PWR_CON_DDRIO_RETON_EXIT_ENA_SHIFT)     /* 0x00000020 */
+#define PMU_DDR_CH2_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_SHIFT   (6U)
+#define PMU_DDR_CH2_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_MASK    (0x1U << PMU_DDR_CH2_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_SHIFT)   /* 0x00000040 */
+#define PMU_DDR_CH2_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_SHIFT    (7U)
+#define PMU_DDR_CH2_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_MASK     (0x1U << PMU_DDR_CH2_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_SHIFT)    /* 0x00000080 */
+#define PMU_DDR_CH2_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_SHIFT (8U)
+#define PMU_DDR_CH2_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_MASK  (0x1U << PMU_DDR_CH2_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_SHIFT) /* 0x00000100 */
+#define PMU_DDR_CH2_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_SHIFT (9U)
+#define PMU_DDR_CH2_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_MASK  (0x1U << PMU_DDR_CH2_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_SHIFT) /* 0x00000200 */
+#define PMU_DDR_CH2_PWR_CON_DDRPHY_AUTO_GATING_ENA_SHIFT   (10U)
+#define PMU_DDR_CH2_PWR_CON_DDRPHY_AUTO_GATING_ENA_MASK    (0x1U << PMU_DDR_CH2_PWR_CON_DDRPHY_AUTO_GATING_ENA_SHIFT)   /* 0x00000400 */
+/* DDR_CH3_PWR_CON */
+#define PMU_DDR_CH3_PWR_CON_OFFSET                         (0x402CU)
+#define PMU_DDR_CH3_PWR_CON_DDR_SREF_C_ENA_SHIFT           (0U)
+#define PMU_DDR_CH3_PWR_CON_DDR_SREF_C_ENA_MASK            (0x1U << PMU_DDR_CH3_PWR_CON_DDR_SREF_C_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_DDR_CH3_PWR_CON_DDR_SREF_A_ENA_SHIFT           (1U)
+#define PMU_DDR_CH3_PWR_CON_DDR_SREF_A_ENA_MASK            (0x1U << PMU_DDR_CH3_PWR_CON_DDR_SREF_A_ENA_SHIFT)           /* 0x00000002 */
+#define PMU_DDR_CH3_PWR_CON_DDRIO_RETON_ENTER_ENA_SHIFT    (2U)
+#define PMU_DDR_CH3_PWR_CON_DDRIO_RETON_ENTER_ENA_MASK     (0x1U << PMU_DDR_CH3_PWR_CON_DDRIO_RETON_ENTER_ENA_SHIFT)    /* 0x00000004 */
+#define PMU_DDR_CH3_PWR_CON_DDRIO_RETON_EXIT_ENA_SHIFT     (5U)
+#define PMU_DDR_CH3_PWR_CON_DDRIO_RETON_EXIT_ENA_MASK      (0x1U << PMU_DDR_CH3_PWR_CON_DDRIO_RETON_EXIT_ENA_SHIFT)     /* 0x00000020 */
+#define PMU_DDR_CH3_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_SHIFT   (6U)
+#define PMU_DDR_CH3_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_MASK    (0x1U << PMU_DDR_CH3_PWR_CON_DDRIO_RSTIOV_ENTER_ENA_SHIFT)   /* 0x00000040 */
+#define PMU_DDR_CH3_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_SHIFT    (7U)
+#define PMU_DDR_CH3_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_MASK     (0x1U << PMU_DDR_CH3_PWR_CON_DDRIO_RSTIOV_EXIT_ENA_SHIFT)    /* 0x00000080 */
+#define PMU_DDR_CH3_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_SHIFT (8U)
+#define PMU_DDR_CH3_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_MASK  (0x1U << PMU_DDR_CH3_PWR_CON_DDRCTL_A_AUTO_GATING_ENA_SHIFT) /* 0x00000100 */
+#define PMU_DDR_CH3_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_SHIFT (9U)
+#define PMU_DDR_CH3_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_MASK  (0x1U << PMU_DDR_CH3_PWR_CON_DDRCTL_C_AUTO_GATING_ENA_SHIFT) /* 0x00000200 */
+#define PMU_DDR_CH3_PWR_CON_DDRPHY_AUTO_GATING_ENA_SHIFT   (10U)
+#define PMU_DDR_CH3_PWR_CON_DDRPHY_AUTO_GATING_ENA_MASK    (0x1U << PMU_DDR_CH3_PWR_CON_DDRPHY_AUTO_GATING_ENA_SHIFT)   /* 0x00000400 */
+/* DDR_CH0_PWR_SFTCON */
+#define PMU_DDR_CH0_PWR_SFTCON_OFFSET                      (0x4030U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDR_SREF_C_SFTENA_SHIFT     (0U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDR_SREF_C_SFTENA_MASK      (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDR_SREF_C_SFTENA_SHIFT)     /* 0x00000001 */
+#define PMU_DDR_CH0_PWR_SFTCON_DDR_SREF_A_SFTENA_SHIFT     (1U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDR_SREF_A_SFTENA_MASK      (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDR_SREF_A_SFTENA_SHIFT)     /* 0x00000002 */
+#define PMU_DDR_CH0_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_SHIFT (2U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_MASK (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_SHIFT) /* 0x00000004 */
+#define PMU_DDR_CH0_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_SHIFT (5U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_MASK (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_DDR_CH0_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT (6U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_MASK (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_DDR_CH0_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT (7U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_MASK (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_DDR_CH0_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_SHIFT (8U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_MASK (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_SHIFT) /* 0x00000100 */
+#define PMU_DDR_CH0_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_SHIFT (9U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_MASK (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_SHIFT) /* 0x00000200 */
+#define PMU_DDR_CH0_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_SHIFT (10U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_MASK (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_SHIFT) /* 0x00000400 */
+#define PMU_DDR_CH0_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_SHIFT (11U)
+#define PMU_DDR_CH0_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_MASK (0x1U << PMU_DDR_CH0_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_SHIFT) /* 0x00000800 */
+/* DDR_CH1_PWR_SFTCON */
+#define PMU_DDR_CH1_PWR_SFTCON_OFFSET                      (0x4034U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDR_SREF_C_SFTENA_SHIFT     (0U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDR_SREF_C_SFTENA_MASK      (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDR_SREF_C_SFTENA_SHIFT)     /* 0x00000001 */
+#define PMU_DDR_CH1_PWR_SFTCON_DDR_SREF_A_SFTENA_SHIFT     (1U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDR_SREF_A_SFTENA_MASK      (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDR_SREF_A_SFTENA_SHIFT)     /* 0x00000002 */
+#define PMU_DDR_CH1_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_SHIFT (2U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_MASK (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_SHIFT) /* 0x00000004 */
+#define PMU_DDR_CH1_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_SHIFT (5U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_MASK (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_DDR_CH1_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT (6U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_MASK (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_DDR_CH1_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT (7U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_MASK (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_DDR_CH1_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_SHIFT (8U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_MASK (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_SHIFT) /* 0x00000100 */
+#define PMU_DDR_CH1_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_SHIFT (9U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_MASK (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_SHIFT) /* 0x00000200 */
+#define PMU_DDR_CH1_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_SHIFT (10U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_MASK (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_SHIFT) /* 0x00000400 */
+#define PMU_DDR_CH1_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_SHIFT (11U)
+#define PMU_DDR_CH1_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_MASK (0x1U << PMU_DDR_CH1_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_SHIFT) /* 0x00000800 */
+/* DDR_CH2_PWR_SFTCON */
+#define PMU_DDR_CH2_PWR_SFTCON_OFFSET                      (0x4038U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDR_SREF_C_SFTENA_SHIFT     (0U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDR_SREF_C_SFTENA_MASK      (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDR_SREF_C_SFTENA_SHIFT)     /* 0x00000001 */
+#define PMU_DDR_CH2_PWR_SFTCON_DDR_SREF_A_SFTENA_SHIFT     (1U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDR_SREF_A_SFTENA_MASK      (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDR_SREF_A_SFTENA_SHIFT)     /* 0x00000002 */
+#define PMU_DDR_CH2_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_SHIFT (2U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_MASK (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_SHIFT) /* 0x00000004 */
+#define PMU_DDR_CH2_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_SHIFT (5U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_MASK (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_DDR_CH2_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT (6U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_MASK (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_DDR_CH2_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT (7U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_MASK (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_DDR_CH2_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_SHIFT (8U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_MASK (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_SHIFT) /* 0x00000100 */
+#define PMU_DDR_CH2_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_SHIFT (9U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_MASK (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_SHIFT) /* 0x00000200 */
+#define PMU_DDR_CH2_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_SHIFT (10U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_MASK (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_SHIFT) /* 0x00000400 */
+#define PMU_DDR_CH2_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_SHIFT (11U)
+#define PMU_DDR_CH2_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_MASK (0x1U << PMU_DDR_CH2_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_SHIFT) /* 0x00000800 */
+/* DDR_CH3_PWR_SFTCON */
+#define PMU_DDR_CH3_PWR_SFTCON_OFFSET                      (0x403CU)
+#define PMU_DDR_CH3_PWR_SFTCON_DDR_SREF_C_SFTENA_SHIFT     (0U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDR_SREF_C_SFTENA_MASK      (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDR_SREF_C_SFTENA_SHIFT)     /* 0x00000001 */
+#define PMU_DDR_CH3_PWR_SFTCON_DDR_SREF_A_SFTENA_SHIFT     (1U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDR_SREF_A_SFTENA_MASK      (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDR_SREF_A_SFTENA_SHIFT)     /* 0x00000002 */
+#define PMU_DDR_CH3_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_SHIFT (2U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_MASK (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDRIO_RETON_ENTER_SFTENA_SHIFT) /* 0x00000004 */
+#define PMU_DDR_CH3_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_SHIFT (5U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_MASK (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDRIO_RETON_EXIT_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_DDR_CH3_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT (6U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_MASK (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDRIO_RSTIOV_ENTER_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_DDR_CH3_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT (7U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_MASK (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDRIO_RSTIOV_EXIT_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_DDR_CH3_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_SHIFT (8U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_MASK (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_ENTER_SHIFT) /* 0x00000100 */
+#define PMU_DDR_CH3_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_SHIFT (9U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_MASK (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_EXIT_SHIFT) /* 0x00000200 */
+#define PMU_DDR_CH3_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_SHIFT (10U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_MASK (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDRCTL_A_ACTIVE_WAIT_EXIT_SHIFT) /* 0x00000400 */
+#define PMU_DDR_CH3_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_SHIFT (11U)
+#define PMU_DDR_CH3_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_MASK (0x1U << PMU_DDR_CH3_PWR_SFTCON_DDRCTL_C_ACTIVE_WAIT_ENTER_SHIFT) /* 0x00000800 */
+/* DDR_POWER_STS */
+#define PMU_DDR_POWER_STS_OFFSET                           (0x4040U)
+#define PMU_DDR_POWER_STS                                  (0x0U)
+#define PMU_DDR_POWER_STS_DDR_POWER_STATE_SHIFT            (0U)
+#define PMU_DDR_POWER_STS_DDR_POWER_STATE_MASK             (0xFU << PMU_DDR_POWER_STS_DDR_POWER_STATE_SHIFT)            /* 0x0000000F */
+/* DDR_STS */
+#define PMU_DDR_STS_OFFSET                                 (0x4044U)
+#define PMU_DDR_STS                                        (0x0U)
+#define PMU_DDR_STS_DDRCTRL_CH0_C_SYSACK_SHIFT             (0U)
+#define PMU_DDR_STS_DDRCTRL_CH0_C_SYSACK_MASK              (0x1U << PMU_DDR_STS_DDRCTRL_CH0_C_SYSACK_SHIFT)             /* 0x00000001 */
+#define PMU_DDR_STS_DDRCTRL_CH0_C_SYSACTIVE_SHIFT          (1U)
+#define PMU_DDR_STS_DDRCTRL_CH0_C_SYSACTIVE_MASK           (0x1U << PMU_DDR_STS_DDRCTRL_CH0_C_SYSACTIVE_SHIFT)          /* 0x00000002 */
+#define PMU_DDR_STS_DDR_CH0_IO_RETON_SHIFT                 (2U)
+#define PMU_DDR_STS_DDR_CH0_IO_RETON_MASK                  (0x1U << PMU_DDR_STS_DDR_CH0_IO_RETON_SHIFT)                 /* 0x00000004 */
+#define PMU_DDR_STS_DDRCTRL_CH0_A_SYSACK_SHIFT             (3U)
+#define PMU_DDR_STS_DDRCTRL_CH0_A_SYSACK_MASK              (0x1U << PMU_DDR_STS_DDRCTRL_CH0_A_SYSACK_SHIFT)             /* 0x00000008 */
+#define PMU_DDR_STS_DDRCTRL_CH0_A_SYSACTIVE_SHIFT          (4U)
+#define PMU_DDR_STS_DDRCTRL_CH0_A_SYSACTIVE_MASK           (0x1U << PMU_DDR_STS_DDRCTRL_CH0_A_SYSACTIVE_SHIFT)          /* 0x00000010 */
+#define PMU_DDR_STS_DDR_CH0_IO_RSTIOV_SHIFT                (5U)
+#define PMU_DDR_STS_DDR_CH0_IO_RSTIOV_MASK                 (0x1U << PMU_DDR_STS_DDR_CH0_IO_RSTIOV_SHIFT)                /* 0x00000020 */
+#define PMU_DDR_STS_DDRCTRL_CH1_C_SYSACK_SHIFT             (8U)
+#define PMU_DDR_STS_DDRCTRL_CH1_C_SYSACK_MASK              (0x1U << PMU_DDR_STS_DDRCTRL_CH1_C_SYSACK_SHIFT)             /* 0x00000100 */
+#define PMU_DDR_STS_DDRCTRL_CH1_C_SYSACTIVE_SHIFT          (9U)
+#define PMU_DDR_STS_DDRCTRL_CH1_C_SYSACTIVE_MASK           (0x1U << PMU_DDR_STS_DDRCTRL_CH1_C_SYSACTIVE_SHIFT)          /* 0x00000200 */
+#define PMU_DDR_STS_DDR_CH1_IO_RETON_SHIFT                 (10U)
+#define PMU_DDR_STS_DDR_CH1_IO_RETON_MASK                  (0x1U << PMU_DDR_STS_DDR_CH1_IO_RETON_SHIFT)                 /* 0x00000400 */
+#define PMU_DDR_STS_DDRCTRL_CH1_A_SYSACK_SHIFT             (11U)
+#define PMU_DDR_STS_DDRCTRL_CH1_A_SYSACK_MASK              (0x1U << PMU_DDR_STS_DDRCTRL_CH1_A_SYSACK_SHIFT)             /* 0x00000800 */
+#define PMU_DDR_STS_DDRCTRL_CH1_A_SYSACTIVE_SHIFT          (12U)
+#define PMU_DDR_STS_DDRCTRL_CH1_A_SYSACTIVE_MASK           (0x1U << PMU_DDR_STS_DDRCTRL_CH1_A_SYSACTIVE_SHIFT)          /* 0x00001000 */
+#define PMU_DDR_STS_DDR_CH1_IO_RSTIOV_SHIFT                (13U)
+#define PMU_DDR_STS_DDR_CH1_IO_RSTIOV_MASK                 (0x1U << PMU_DDR_STS_DDR_CH1_IO_RSTIOV_SHIFT)                /* 0x00002000 */
+#define PMU_DDR_STS_DDRCTRL_CH2_C_SYSACK_SHIFT             (16U)
+#define PMU_DDR_STS_DDRCTRL_CH2_C_SYSACK_MASK              (0x1U << PMU_DDR_STS_DDRCTRL_CH2_C_SYSACK_SHIFT)             /* 0x00010000 */
+#define PMU_DDR_STS_DDRCTRL_CH2_C_SYSACTIVE_SHIFT          (17U)
+#define PMU_DDR_STS_DDRCTRL_CH2_C_SYSACTIVE_MASK           (0x1U << PMU_DDR_STS_DDRCTRL_CH2_C_SYSACTIVE_SHIFT)          /* 0x00020000 */
+#define PMU_DDR_STS_DDR_CH2_IO_RETON_SHIFT                 (18U)
+#define PMU_DDR_STS_DDR_CH2_IO_RETON_MASK                  (0x1U << PMU_DDR_STS_DDR_CH2_IO_RETON_SHIFT)                 /* 0x00040000 */
+#define PMU_DDR_STS_DDRCTRL_CH2_A_SYSACK_SHIFT             (19U)
+#define PMU_DDR_STS_DDRCTRL_CH2_A_SYSACK_MASK              (0x1U << PMU_DDR_STS_DDRCTRL_CH2_A_SYSACK_SHIFT)             /* 0x00080000 */
+#define PMU_DDR_STS_DDRCTRL_CH2_A_SYSACTIVE_SHIFT          (20U)
+#define PMU_DDR_STS_DDRCTRL_CH2_A_SYSACTIVE_MASK           (0x1U << PMU_DDR_STS_DDRCTRL_CH2_A_SYSACTIVE_SHIFT)          /* 0x00100000 */
+#define PMU_DDR_STS_DDR_CH2_IO_RSTIOV_SHIFT                (21U)
+#define PMU_DDR_STS_DDR_CH2_IO_RSTIOV_MASK                 (0x1U << PMU_DDR_STS_DDR_CH2_IO_RSTIOV_SHIFT)                /* 0x00200000 */
+#define PMU_DDR_STS_DDRCTRL_CH3_C_SYSACK_SHIFT             (24U)
+#define PMU_DDR_STS_DDRCTRL_CH3_C_SYSACK_MASK              (0x1U << PMU_DDR_STS_DDRCTRL_CH3_C_SYSACK_SHIFT)             /* 0x01000000 */
+#define PMU_DDR_STS_DDRCTRL_CH3_C_SYSACTIVE_SHIFT          (25U)
+#define PMU_DDR_STS_DDRCTRL_CH3_C_SYSACTIVE_MASK           (0x1U << PMU_DDR_STS_DDRCTRL_CH3_C_SYSACTIVE_SHIFT)          /* 0x02000000 */
+#define PMU_DDR_STS_DDR_CH3_IO_RETON_SHIFT                 (26U)
+#define PMU_DDR_STS_DDR_CH3_IO_RETON_MASK                  (0x1U << PMU_DDR_STS_DDR_CH3_IO_RETON_SHIFT)                 /* 0x04000000 */
+#define PMU_DDR_STS_DDRCTRL_CH3_A_SYSACK_SHIFT             (27U)
+#define PMU_DDR_STS_DDRCTRL_CH3_A_SYSACK_MASK              (0x1U << PMU_DDR_STS_DDRCTRL_CH3_A_SYSACK_SHIFT)             /* 0x08000000 */
+#define PMU_DDR_STS_DDRCTRL_CH3_A_SYSACTIVE_SHIFT          (28U)
+#define PMU_DDR_STS_DDRCTRL_CH3_A_SYSACTIVE_MASK           (0x1U << PMU_DDR_STS_DDRCTRL_CH3_A_SYSACTIVE_SHIFT)          /* 0x10000000 */
+#define PMU_DDR_STS_DDR_CH3_IO_RSTIOV_SHIFT                (29U)
+#define PMU_DDR_STS_DDR_CH3_IO_RSTIOV_MASK                 (0x1U << PMU_DDR_STS_DDR_CH3_IO_RSTIOV_SHIFT)                /* 0x20000000 */
+/* CRU_PWR_CON */
+#define PMU_CRU_PWR_CON_OFFSET                             (0x4050U)
+#define PMU_CRU_PWR_CON_ALIVE_32K_ENA_SHIFT                (0U)
+#define PMU_CRU_PWR_CON_ALIVE_32K_ENA_MASK                 (0x1U << PMU_CRU_PWR_CON_ALIVE_32K_ENA_SHIFT)                /* 0x00000001 */
+#define PMU_CRU_PWR_CON_OSC_DIS_ENA_SHIFT                  (1U)
+#define PMU_CRU_PWR_CON_OSC_DIS_ENA_MASK                   (0x1U << PMU_CRU_PWR_CON_OSC_DIS_ENA_SHIFT)                  /* 0x00000002 */
+#define PMU_CRU_PWR_CON_WAKEUP_RST_ENA_SHIFT               (2U)
+#define PMU_CRU_PWR_CON_WAKEUP_RST_ENA_MASK                (0x1U << PMU_CRU_PWR_CON_WAKEUP_RST_ENA_SHIFT)               /* 0x00000004 */
+#define PMU_CRU_PWR_CON_INPUT_CLAMP_ENA_SHIFT              (3U)
+#define PMU_CRU_PWR_CON_INPUT_CLAMP_ENA_MASK               (0x1U << PMU_CRU_PWR_CON_INPUT_CLAMP_ENA_SHIFT)              /* 0x00000008 */
+#define PMU_CRU_PWR_CON_ALIVE_OSC_ENA_SHIFT                (4U)
+#define PMU_CRU_PWR_CON_ALIVE_OSC_ENA_MASK                 (0x1U << PMU_CRU_PWR_CON_ALIVE_OSC_ENA_SHIFT)                /* 0x00000010 */
+#define PMU_CRU_PWR_CON_POWER_OFF_ENA_SHIFT                (5U)
+#define PMU_CRU_PWR_CON_POWER_OFF_ENA_MASK                 (0x1U << PMU_CRU_PWR_CON_POWER_OFF_ENA_SHIFT)                /* 0x00000020 */
+#define PMU_CRU_PWR_CON_PWM_SWITCH_ENA_SHIFT               (6U)
+#define PMU_CRU_PWR_CON_PWM_SWITCH_ENA_MASK                (0x1U << PMU_CRU_PWR_CON_PWM_SWITCH_ENA_SHIFT)               /* 0x00000040 */
+#define PMU_CRU_PWR_CON_PWM_GPIO_IOE_ENA_SHIFT             (7U)
+#define PMU_CRU_PWR_CON_PWM_GPIO_IOE_ENA_MASK              (0x1U << PMU_CRU_PWR_CON_PWM_GPIO_IOE_ENA_SHIFT)             /* 0x00000080 */
+#define PMU_CRU_PWR_CON_PWM_SWITCH_IOUT_SHIFT              (8U)
+#define PMU_CRU_PWR_CON_PWM_SWITCH_IOUT_MASK               (0x1U << PMU_CRU_PWR_CON_PWM_SWITCH_IOUT_SHIFT)              /* 0x00000100 */
+#define PMU_CRU_PWR_CON_PD_BUS_CLK_SRC_GATE_ENA_SHIFT      (9U)
+#define PMU_CRU_PWR_CON_PD_BUS_CLK_SRC_GATE_ENA_MASK       (0x1U << PMU_CRU_PWR_CON_PD_BUS_CLK_SRC_GATE_ENA_SHIFT)      /* 0x00000200 */
+#define PMU_CRU_PWR_CON_POWER_OFF_IO_ENA_SHIFT             (10U)
+#define PMU_CRU_PWR_CON_POWER_OFF_IO_ENA_MASK              (0x1U << PMU_CRU_PWR_CON_POWER_OFF_IO_ENA_SHIFT)             /* 0x00000400 */
+/* CRU_PWR_SFTCON */
+#define PMU_CRU_PWR_SFTCON_OFFSET                          (0x4054U)
+#define PMU_CRU_PWR_SFTCON_ALIVE_32K_SFTENA_SHIFT          (0U)
+#define PMU_CRU_PWR_SFTCON_ALIVE_32K_SFTENA_MASK           (0x1U << PMU_CRU_PWR_SFTCON_ALIVE_32K_SFTENA_SHIFT)          /* 0x00000001 */
+#define PMU_CRU_PWR_SFTCON_OSC_DIS_SFTENA_SHIFT            (1U)
+#define PMU_CRU_PWR_SFTCON_OSC_DIS_SFTENA_MASK             (0x1U << PMU_CRU_PWR_SFTCON_OSC_DIS_SFTENA_SHIFT)            /* 0x00000002 */
+#define PMU_CRU_PWR_SFTCON_WAKEUP_RST_SFTENA_SHIFT         (2U)
+#define PMU_CRU_PWR_SFTCON_WAKEUP_RST_SFTENA_MASK          (0x1U << PMU_CRU_PWR_SFTCON_WAKEUP_RST_SFTENA_SHIFT)         /* 0x00000004 */
+#define PMU_CRU_PWR_SFTCON_INPUT_CLAMP_SFTENA_SHIFT        (3U)
+#define PMU_CRU_PWR_SFTCON_INPUT_CLAMP_SFTENA_MASK         (0x1U << PMU_CRU_PWR_SFTCON_INPUT_CLAMP_SFTENA_SHIFT)        /* 0x00000008 */
+#define PMU_CRU_PWR_SFTCON_ALIVE_OSC_SFTENA_SHIFT          (4U)
+#define PMU_CRU_PWR_SFTCON_ALIVE_OSC_SFTENA_MASK           (0x1U << PMU_CRU_PWR_SFTCON_ALIVE_OSC_SFTENA_SHIFT)          /* 0x00000010 */
+#define PMU_CRU_PWR_SFTCON_POWER_OFF_SFTENA_SHIFT          (5U)
+#define PMU_CRU_PWR_SFTCON_POWER_OFF_SFTENA_MASK           (0x1U << PMU_CRU_PWR_SFTCON_POWER_OFF_SFTENA_SHIFT)          /* 0x00000020 */
+#define PMU_CRU_PWR_SFTCON_POWER_OFF_IO_SFTENA_SHIFT       (6U)
+#define PMU_CRU_PWR_SFTCON_POWER_OFF_IO_SFTENA_MASK        (0x1U << PMU_CRU_PWR_SFTCON_POWER_OFF_IO_SFTENA_SHIFT)       /* 0x00000040 */
+/* CRU_POWER_STS */
+#define PMU_CRU_POWER_STS_OFFSET                           (0x4058U)
+#define PMU_CRU_POWER_STS                                  (0x0U)
+#define PMU_CRU_POWER_STS_CRU_POWER_STATE_SHIFT            (0U)
+#define PMU_CRU_POWER_STS_CRU_POWER_STATE_MASK             (0xFU << PMU_CRU_POWER_STS_CRU_POWER_STATE_SHIFT)            /* 0x0000000F */
+/* PLLPD_CON0 */
+#define PMU_PLLPD_CON0_OFFSET                              (0x4060U)
+#define PMU_PLLPD_CON0_B0PLL_PD_ENA_SHIFT                  (0U)
+#define PMU_PLLPD_CON0_B0PLL_PD_ENA_MASK                   (0x1U << PMU_PLLPD_CON0_B0PLL_PD_ENA_SHIFT)                  /* 0x00000001 */
+#define PMU_PLLPD_CON0_B1PLL_PD_ENA_SHIFT                  (1U)
+#define PMU_PLLPD_CON0_B1PLL_PD_ENA_MASK                   (0x1U << PMU_PLLPD_CON0_B1PLL_PD_ENA_SHIFT)                  /* 0x00000002 */
+#define PMU_PLLPD_CON0_LPLL_PD_ENA_SHIFT                   (2U)
+#define PMU_PLLPD_CON0_LPLL_PD_ENA_MASK                    (0x1U << PMU_PLLPD_CON0_LPLL_PD_ENA_SHIFT)                   /* 0x00000004 */
+#define PMU_PLLPD_CON0_D0APLL_PD_ENA_SHIFT                 (3U)
+#define PMU_PLLPD_CON0_D0APLL_PD_ENA_MASK                  (0x1U << PMU_PLLPD_CON0_D0APLL_PD_ENA_SHIFT)                 /* 0x00000008 */
+#define PMU_PLLPD_CON0_D0BPLL_PD_ENA_SHIFT                 (4U)
+#define PMU_PLLPD_CON0_D0BPLL_PD_ENA_MASK                  (0x1U << PMU_PLLPD_CON0_D0BPLL_PD_ENA_SHIFT)                 /* 0x00000010 */
+#define PMU_PLLPD_CON0_D1APLL_PD_ENA_SHIFT                 (5U)
+#define PMU_PLLPD_CON0_D1APLL_PD_ENA_MASK                  (0x1U << PMU_PLLPD_CON0_D1APLL_PD_ENA_SHIFT)                 /* 0x00000020 */
+#define PMU_PLLPD_CON0_D1BPLL_PD_ENA_SHIFT                 (6U)
+#define PMU_PLLPD_CON0_D1BPLL_PD_ENA_MASK                  (0x1U << PMU_PLLPD_CON0_D1BPLL_PD_ENA_SHIFT)                 /* 0x00000040 */
+#define PMU_PLLPD_CON0_D2APLL_PD_ENA_SHIFT                 (7U)
+#define PMU_PLLPD_CON0_D2APLL_PD_ENA_MASK                  (0x1U << PMU_PLLPD_CON0_D2APLL_PD_ENA_SHIFT)                 /* 0x00000080 */
+#define PMU_PLLPD_CON0_D2BPLL_PD_ENA_SHIFT                 (8U)
+#define PMU_PLLPD_CON0_D2BPLL_PD_ENA_MASK                  (0x1U << PMU_PLLPD_CON0_D2BPLL_PD_ENA_SHIFT)                 /* 0x00000100 */
+#define PMU_PLLPD_CON0_D3APLL_PD_ENA_SHIFT                 (9U)
+#define PMU_PLLPD_CON0_D3APLL_PD_ENA_MASK                  (0x1U << PMU_PLLPD_CON0_D3APLL_PD_ENA_SHIFT)                 /* 0x00000200 */
+#define PMU_PLLPD_CON0_D3BPLL_PD_ENA_SHIFT                 (10U)
+#define PMU_PLLPD_CON0_D3BPLL_PD_ENA_MASK                  (0x1U << PMU_PLLPD_CON0_D3BPLL_PD_ENA_SHIFT)                 /* 0x00000400 */
+#define PMU_PLLPD_CON0_V0PLL_PD_ENA_SHIFT                  (11U)
+#define PMU_PLLPD_CON0_V0PLL_PD_ENA_MASK                   (0x1U << PMU_PLLPD_CON0_V0PLL_PD_ENA_SHIFT)                  /* 0x00000800 */
+#define PMU_PLLPD_CON0_AUPLL_PD_ENA_SHIFT                  (12U)
+#define PMU_PLLPD_CON0_AUPLL_PD_ENA_MASK                   (0x1U << PMU_PLLPD_CON0_AUPLL_PD_ENA_SHIFT)                  /* 0x00001000 */
+#define PMU_PLLPD_CON0_GPLL_PD_ENA_SHIFT                   (13U)
+#define PMU_PLLPD_CON0_GPLL_PD_ENA_MASK                    (0x1U << PMU_PLLPD_CON0_GPLL_PD_ENA_SHIFT)                   /* 0x00002000 */
+#define PMU_PLLPD_CON0_CPLL_PD_ENA_SHIFT                   (14U)
+#define PMU_PLLPD_CON0_CPLL_PD_ENA_MASK                    (0x1U << PMU_PLLPD_CON0_CPLL_PD_ENA_SHIFT)                   /* 0x00004000 */
+#define PMU_PLLPD_CON0_NPLL_PD_ENA_SHIFT                   (15U)
+#define PMU_PLLPD_CON0_NPLL_PD_ENA_MASK                    (0x1U << PMU_PLLPD_CON0_NPLL_PD_ENA_SHIFT)                   /* 0x00008000 */
+/* PLLPD_CON1 */
+#define PMU_PLLPD_CON1_OFFSET                              (0x4064U)
+#define PMU_PLLPD_CON1_PPLL_PD_ENA_SHIFT                   (0U)
+#define PMU_PLLPD_CON1_PPLL_PD_ENA_MASK                    (0x1U << PMU_PLLPD_CON1_PPLL_PD_ENA_SHIFT)                   /* 0x00000001 */
+#define PMU_PLLPD_CON1_SPLL_PD_ENA_SHIFT                   (1U)
+#define PMU_PLLPD_CON1_SPLL_PD_ENA_MASK                    (0x1U << PMU_PLLPD_CON1_SPLL_PD_ENA_SHIFT)                   /* 0x00000002 */
+/* PLLPD_SFTCON0 */
+#define PMU_PLLPD_SFTCON0_OFFSET                           (0x4068U)
+#define PMU_PLLPD_SFTCON0_B0PLL_PD_SFTENA_SHIFT            (0U)
+#define PMU_PLLPD_SFTCON0_B0PLL_PD_SFTENA_MASK             (0x1U << PMU_PLLPD_SFTCON0_B0PLL_PD_SFTENA_SHIFT)            /* 0x00000001 */
+#define PMU_PLLPD_SFTCON0_B1PLL_PD_SFTENA_SHIFT            (1U)
+#define PMU_PLLPD_SFTCON0_B1PLL_PD_SFTENA_MASK             (0x1U << PMU_PLLPD_SFTCON0_B1PLL_PD_SFTENA_SHIFT)            /* 0x00000002 */
+#define PMU_PLLPD_SFTCON0_LPLL_PD_SFTENA_SHIFT             (2U)
+#define PMU_PLLPD_SFTCON0_LPLL_PD_SFTENA_MASK              (0x1U << PMU_PLLPD_SFTCON0_LPLL_PD_SFTENA_SHIFT)             /* 0x00000004 */
+#define PMU_PLLPD_SFTCON0_D0APLL_PD_SFTENA_SHIFT           (3U)
+#define PMU_PLLPD_SFTCON0_D0APLL_PD_SFTENA_MASK            (0x1U << PMU_PLLPD_SFTCON0_D0APLL_PD_SFTENA_SHIFT)           /* 0x00000008 */
+#define PMU_PLLPD_SFTCON0_D0BPLL_PD_SFTENA_SHIFT           (4U)
+#define PMU_PLLPD_SFTCON0_D0BPLL_PD_SFTENA_MASK            (0x1U << PMU_PLLPD_SFTCON0_D0BPLL_PD_SFTENA_SHIFT)           /* 0x00000010 */
+#define PMU_PLLPD_SFTCON0_D1APLL_PD_SFTENA_SHIFT           (5U)
+#define PMU_PLLPD_SFTCON0_D1APLL_PD_SFTENA_MASK            (0x1U << PMU_PLLPD_SFTCON0_D1APLL_PD_SFTENA_SHIFT)           /* 0x00000020 */
+#define PMU_PLLPD_SFTCON0_D1BPLL_PD_SFTENA_SHIFT           (6U)
+#define PMU_PLLPD_SFTCON0_D1BPLL_PD_SFTENA_MASK            (0x1U << PMU_PLLPD_SFTCON0_D1BPLL_PD_SFTENA_SHIFT)           /* 0x00000040 */
+#define PMU_PLLPD_SFTCON0_D2APLL_PD_SFTENA_SHIFT           (7U)
+#define PMU_PLLPD_SFTCON0_D2APLL_PD_SFTENA_MASK            (0x1U << PMU_PLLPD_SFTCON0_D2APLL_PD_SFTENA_SHIFT)           /* 0x00000080 */
+#define PMU_PLLPD_SFTCON0_D2BPLL_PD_SFTENA_SHIFT           (8U)
+#define PMU_PLLPD_SFTCON0_D2BPLL_PD_SFTENA_MASK            (0x1U << PMU_PLLPD_SFTCON0_D2BPLL_PD_SFTENA_SHIFT)           /* 0x00000100 */
+#define PMU_PLLPD_SFTCON0_D3APLL_PD_SFTENA_SHIFT           (9U)
+#define PMU_PLLPD_SFTCON0_D3APLL_PD_SFTENA_MASK            (0x1U << PMU_PLLPD_SFTCON0_D3APLL_PD_SFTENA_SHIFT)           /* 0x00000200 */
+#define PMU_PLLPD_SFTCON0_D3BPLL_PD_SFTENA_SHIFT           (10U)
+#define PMU_PLLPD_SFTCON0_D3BPLL_PD_SFTENA_MASK            (0x1U << PMU_PLLPD_SFTCON0_D3BPLL_PD_SFTENA_SHIFT)           /* 0x00000400 */
+#define PMU_PLLPD_SFTCON0_V0PLL_PD_SFTENA_SHIFT            (11U)
+#define PMU_PLLPD_SFTCON0_V0PLL_PD_SFTENA_MASK             (0x1U << PMU_PLLPD_SFTCON0_V0PLL_PD_SFTENA_SHIFT)            /* 0x00000800 */
+#define PMU_PLLPD_SFTCON0_AUPLL_PD_SFTENA_SHIFT            (12U)
+#define PMU_PLLPD_SFTCON0_AUPLL_PD_SFTENA_MASK             (0x1U << PMU_PLLPD_SFTCON0_AUPLL_PD_SFTENA_SHIFT)            /* 0x00001000 */
+#define PMU_PLLPD_SFTCON0_GPLL_PD_SFTENA_SHIFT             (13U)
+#define PMU_PLLPD_SFTCON0_GPLL_PD_SFTENA_MASK              (0x1U << PMU_PLLPD_SFTCON0_GPLL_PD_SFTENA_SHIFT)             /* 0x00002000 */
+#define PMU_PLLPD_SFTCON0_CPLL_PD_SFTENA_SHIFT             (14U)
+#define PMU_PLLPD_SFTCON0_CPLL_PD_SFTENA_MASK              (0x1U << PMU_PLLPD_SFTCON0_CPLL_PD_SFTENA_SHIFT)             /* 0x00004000 */
+#define PMU_PLLPD_SFTCON0_NPLL_PD_SFTENA_SHIFT             (15U)
+#define PMU_PLLPD_SFTCON0_NPLL_PD_SFTENA_MASK              (0x1U << PMU_PLLPD_SFTCON0_NPLL_PD_SFTENA_SHIFT)             /* 0x00008000 */
+/* PLLPD_SFTCON1 */
+#define PMU_PLLPD_SFTCON1_OFFSET                           (0x406CU)
+#define PMU_PLLPD_SFTCON1_PPLL_PD_SFTENA_SHIFT             (0U)
+#define PMU_PLLPD_SFTCON1_PPLL_PD_SFTENA_MASK              (0x1U << PMU_PLLPD_SFTCON1_PPLL_PD_SFTENA_SHIFT)             /* 0x00000001 */
+#define PMU_PLLPD_SFTCON1_SPLL_PD_SFTENA_SHIFT             (1U)
+#define PMU_PLLPD_SFTCON1_SPLL_PD_SFTENA_MASK              (0x1U << PMU_PLLPD_SFTCON1_SPLL_PD_SFTENA_SHIFT)             /* 0x00000002 */
+/* PMIC_STABLE_CNT */
+#define PMU_PMIC_STABLE_CNT_OFFSET                         (0x4080U)
+#define PMU_PMIC_STABLE_CNT_PMIC_STABLE_CNT_SHIFT          (0U)
+#define PMU_PMIC_STABLE_CNT_PMIC_STABLE_CNT_MASK           (0xFFFFFU << PMU_PMIC_STABLE_CNT_PMIC_STABLE_CNT_SHIFT)      /* 0x000FFFFF */
+/* OSC_STABLE_CNT */
+#define PMU_OSC_STABLE_CNT_OFFSET                          (0x4084U)
+#define PMU_OSC_STABLE_CNT_OSC_STABLE_CNT_SHIFT            (0U)
+#define PMU_OSC_STABLE_CNT_OSC_STABLE_CNT_MASK             (0xFFFFFU << PMU_OSC_STABLE_CNT_OSC_STABLE_CNT_SHIFT)        /* 0x000FFFFF */
+/* WAKEUP_RST_CLR_CNT */
+#define PMU_WAKEUP_RST_CLR_CNT_OFFSET                      (0x4088U)
+#define PMU_WAKEUP_RST_CLR_CNT_WAKEUP_RST_CLR_CNT_SHIFT    (0U)
+#define PMU_WAKEUP_RST_CLR_CNT_WAKEUP_RST_CLR_CNT_MASK     (0xFFFFFU << PMU_WAKEUP_RST_CLR_CNT_WAKEUP_RST_CLR_CNT_SHIFT) /* 0x000FFFFF */
+/* PLL_LOCK_CNT */
+#define PMU_PLL_LOCK_CNT_OFFSET                            (0x408CU)
+#define PMU_PLL_LOCK_CNT_PLL_LOCK_CNT_SHIFT                (0U)
+#define PMU_PLL_LOCK_CNT_PLL_LOCK_CNT_MASK                 (0xFFFFFU << PMU_PLL_LOCK_CNT_PLL_LOCK_CNT_SHIFT)            /* 0x000FFFFF */
+/* WAKEUP_TIMEOUT_CNT */
+#define PMU_WAKEUP_TIMEOUT_CNT_OFFSET                      (0x4094U)
+#define PMU_WAKEUP_TIMEOUT_CNT_WAKEUP_TIMEOUT_CNT_SHIFT    (0U)
+#define PMU_WAKEUP_TIMEOUT_CNT_WAKEUP_TIMEOUT_CNT_MASK     (0xFFFFFU << PMU_WAKEUP_TIMEOUT_CNT_WAKEUP_TIMEOUT_CNT_SHIFT) /* 0x000FFFFF */
+/* PWM_SWITCH_CNT */
+#define PMU_PWM_SWITCH_CNT_OFFSET                          (0x4098U)
+#define PMU_PWM_SWITCH_CNT_PWM_SWITCH_CNT_SHIFT            (0U)
+#define PMU_PWM_SWITCH_CNT_PWM_SWITCH_CNT_MASK             (0xFFFFFU << PMU_PWM_SWITCH_CNT_PWM_SWITCH_CNT_SHIFT)        /* 0x000FFFFF */
+/* SYS_REG0 */
+#define PMU_SYS_REG0_OFFSET                                (0x4100U)
+#define PMU_SYS_REG0_SYS_REG_SHIFT                         (0U)
+#define PMU_SYS_REG0_SYS_REG_MASK                          (0xFFFFFFFFU << PMU_SYS_REG0_SYS_REG_SHIFT)                  /* 0xFFFFFFFF */
+/* SYS_REG1 */
+#define PMU_SYS_REG1_OFFSET                                (0x4104U)
+#define PMU_SYS_REG1_SYS_REG_SHIFT                         (0U)
+#define PMU_SYS_REG1_SYS_REG_MASK                          (0xFFFFFFFFU << PMU_SYS_REG1_SYS_REG_SHIFT)                  /* 0xFFFFFFFF */
+/* SYS_REG2 */
+#define PMU_SYS_REG2_OFFSET                                (0x4108U)
+#define PMU_SYS_REG2_SYS_REG_SHIFT                         (0U)
+#define PMU_SYS_REG2_SYS_REG_MASK                          (0xFFFFFFFFU << PMU_SYS_REG2_SYS_REG_SHIFT)                  /* 0xFFFFFFFF */
+/* SYS_REG3 */
+#define PMU_SYS_REG3_OFFSET                                (0x410CU)
+#define PMU_SYS_REG3_SYS_REG_SHIFT                         (0U)
+#define PMU_SYS_REG3_SYS_REG_MASK                          (0xFFFFFFFFU << PMU_SYS_REG3_SYS_REG_SHIFT)                  /* 0xFFFFFFFF */
+/* SYS_REG4 */
+#define PMU_SYS_REG4_OFFSET                                (0x4110U)
+#define PMU_SYS_REG4_SYS_REG_SHIFT                         (0U)
+#define PMU_SYS_REG4_SYS_REG_MASK                          (0xFFFFFFFFU << PMU_SYS_REG4_SYS_REG_SHIFT)                  /* 0xFFFFFFFF */
+/* SYS_REG5 */
+#define PMU_SYS_REG5_OFFSET                                (0x4114U)
+#define PMU_SYS_REG5_SYS_REG_SHIFT                         (0U)
+#define PMU_SYS_REG5_SYS_REG_MASK                          (0xFFFFFFFFU << PMU_SYS_REG5_SYS_REG_SHIFT)                  /* 0xFFFFFFFF */
+/* SYS_REG6 */
+#define PMU_SYS_REG6_OFFSET                                (0x4118U)
+#define PMU_SYS_REG6_SYS_REG_SHIFT                         (0U)
+#define PMU_SYS_REG6_SYS_REG_MASK                          (0xFFFFFFFFU << PMU_SYS_REG6_SYS_REG_SHIFT)                  /* 0xFFFFFFFF */
+/* SYS_REG7 */
+#define PMU_SYS_REG7_OFFSET                                (0x411CU)
+#define PMU_SYS_REG7_SYS_REG_SHIFT                         (0U)
+#define PMU_SYS_REG7_SYS_REG_MASK                          (0xFFFFFFFFU << PMU_SYS_REG7_SYS_REG_SHIFT)                  /* 0xFFFFFFFF */
+/* PWR_CON2 */
+#define PMU_PWR_CON2_OFFSET                                (0x8000U)
+#define PMU_PWR_CON2_CPU0_LP_BYPASS_SHIFT                  (0U)
+#define PMU_PWR_CON2_CPU0_LP_BYPASS_MASK                   (0x1U << PMU_PWR_CON2_CPU0_LP_BYPASS_SHIFT)                  /* 0x00000001 */
+#define PMU_PWR_CON2_CPU1_LP_BYPASS_SHIFT                  (1U)
+#define PMU_PWR_CON2_CPU1_LP_BYPASS_MASK                   (0x1U << PMU_PWR_CON2_CPU1_LP_BYPASS_SHIFT)                  /* 0x00000002 */
+#define PMU_PWR_CON2_CPU2_LP_BYPASS_SHIFT                  (2U)
+#define PMU_PWR_CON2_CPU2_LP_BYPASS_MASK                   (0x1U << PMU_PWR_CON2_CPU2_LP_BYPASS_SHIFT)                  /* 0x00000004 */
+#define PMU_PWR_CON2_CPU3_LP_BYPASS_SHIFT                  (3U)
+#define PMU_PWR_CON2_CPU3_LP_BYPASS_MASK                   (0x1U << PMU_PWR_CON2_CPU3_LP_BYPASS_SHIFT)                  /* 0x00000008 */
+#define PMU_PWR_CON2_CPU4_LP_BYPASS_SHIFT                  (4U)
+#define PMU_PWR_CON2_CPU4_LP_BYPASS_MASK                   (0x1U << PMU_PWR_CON2_CPU4_LP_BYPASS_SHIFT)                  /* 0x00000010 */
+#define PMU_PWR_CON2_CPU5_LP_BYPASS_SHIFT                  (5U)
+#define PMU_PWR_CON2_CPU5_LP_BYPASS_MASK                   (0x1U << PMU_PWR_CON2_CPU5_LP_BYPASS_SHIFT)                  /* 0x00000020 */
+#define PMU_PWR_CON2_CPU6_LP_BYPASS_SHIFT                  (6U)
+#define PMU_PWR_CON2_CPU6_LP_BYPASS_MASK                   (0x1U << PMU_PWR_CON2_CPU6_LP_BYPASS_SHIFT)                  /* 0x00000040 */
+#define PMU_PWR_CON2_CPU7_LP_BYPASS_SHIFT                  (7U)
+#define PMU_PWR_CON2_CPU7_LP_BYPASS_MASK                   (0x1U << PMU_PWR_CON2_CPU7_LP_BYPASS_SHIFT)                  /* 0x00000080 */
+/* DSU_PWR_CON */
+#define PMU_DSU_PWR_CON_OFFSET                             (0x8004U)
+#define PMU_DSU_PWR_CON_DSU_PWRDN_ENA_SHIFT                (0U)
+#define PMU_DSU_PWR_CON_DSU_PWRDN_ENA_MASK                 (0x1U << PMU_DSU_PWR_CON_DSU_PWRDN_ENA_SHIFT)                /* 0x00000001 */
+#define PMU_DSU_PWR_CON_DSU_PWROFF_ENA_SHIFT               (1U)
+#define PMU_DSU_PWR_CON_DSU_PWROFF_ENA_MASK                (0x1U << PMU_DSU_PWR_CON_DSU_PWROFF_ENA_SHIFT)               /* 0x00000002 */
+#define PMU_DSU_PWR_CON_DSU_CLUSTERPACTIVE_BIT_FULL_FLAG_SHIFT (2U)
+#define PMU_DSU_PWR_CON_DSU_CLUSTERPACTIVE_BIT_FULL_FLAG_MASK (0x1U << PMU_DSU_PWR_CON_DSU_CLUSTERPACTIVE_BIT_FULL_FLAG_SHIFT) /* 0x00000004 */
+#define PMU_DSU_PWR_CON_DSU_FUNCRET_ENA_SHIFT              (3U)
+#define PMU_DSU_PWR_CON_DSU_FUNCRET_ENA_MASK               (0x1U << PMU_DSU_PWR_CON_DSU_FUNCRET_ENA_SHIFT)              /* 0x00000008 */
+#define PMU_DSU_PWR_CON_DSU_MEM_DWN_ACK_BYPASS_SHIFT       (5U)
+#define PMU_DSU_PWR_CON_DSU_MEM_DWN_ACK_BYPASS_MASK        (0x1FU << PMU_DSU_PWR_CON_DSU_MEM_DWN_ACK_BYPASS_SHIFT)      /* 0x000003E0 */
+#define PMU_DSU_PWR_CON_DSU_MEM_DWN_ACK_CLAMP_ENA_SHIFT    (10U)
+#define PMU_DSU_PWR_CON_DSU_MEM_DWN_ACK_CLAMP_ENA_MASK     (0x1U << PMU_DSU_PWR_CON_DSU_MEM_DWN_ACK_CLAMP_ENA_SHIFT)    /* 0x00000400 */
+/* DSU_PWR_SFTCON */
+#define PMU_DSU_PWR_SFTCON_OFFSET                          (0x8008U)
+#define PMU_DSU_PWR_SFTCON_DSU_PWRDN_SFTENA_SHIFT          (0U)
+#define PMU_DSU_PWR_SFTCON_DSU_PWRDN_SFTENA_MASK           (0x1U << PMU_DSU_PWR_SFTCON_DSU_PWRDN_SFTENA_SHIFT)          /* 0x00000001 */
+#define PMU_DSU_PWR_SFTCON_DSU_PWROFF_SFTENA_SHIFT         (1U)
+#define PMU_DSU_PWR_SFTCON_DSU_PWROFF_SFTENA_MASK          (0x1U << PMU_DSU_PWR_SFTCON_DSU_PWROFF_SFTENA_SHIFT)         /* 0x00000002 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_OFF_SHIFT (2U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_OFF_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_OFF_SHIFT) /* 0x00000004 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_FULLON_SHIFT (3U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_FULLON_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_FULLON_SHIFT) /* 0x00000008 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_FUNCRET_SHIFT (4U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_FUNCRET_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_FUNCRET_SHIFT) /* 0x00000010 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ON3P4_SHIFT (5U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ON3P4_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ON3P4_SHIFT) /* 0x00000020 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ON1P2_SHIFT (6U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ON1P2_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ON1P2_SHIFT) /* 0x00000040 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ON1P4_SHIFT (7U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ON1P4_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ON1P4_SHIFT) /* 0x00000080 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ONSF_SHIFT (8U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ONSF_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_ONSF_SHIFT) /* 0x00000100 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RET3P4_SHIFT (9U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RET3P4_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RET3P4_SHIFT) /* 0x00000200 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RET1P2_SHIFT (10U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RET1P2_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RET1P2_SHIFT) /* 0x00000400 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RET1P4_SHIFT (11U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RET1P4_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RET1P4_SHIFT) /* 0x00000800 */
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RETSF_SHIFT (12U)
+#define PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RETSF_MASK (0x1U << PMU_DSU_PWR_SFTCON_DSU_SFT_CLUSTERPACTIVE_RETSF_SHIFT) /* 0x00001000 */
+/* DSU_AUTO_PWR_CON */
+#define PMU_DSU_AUTO_PWR_CON_OFFSET                        (0x800CU)
+#define PMU_DSU_AUTO_PWR_CON_DSU_LP_EN_SHIFT               (0U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_LP_EN_MASK                (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_LP_EN_SHIFT)               /* 0x00000001 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_INT_WAKEUP_ENA_SHIFT      (1U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_INT_WAKEUP_ENA_MASK       (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_INT_WAKEUP_ENA_SHIFT)      /* 0x00000002 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_SFT_WAKEUP_ENA_SHIFT      (3U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_SFT_WAKEUP_ENA_MASK       (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_SFT_WAKEUP_ENA_SHIFT)      /* 0x00000008 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_FUNCRET_ENA_SHIFT    (4U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_FUNCRET_ENA_MASK     (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_FUNCRET_ENA_SHIFT)    /* 0x00000010 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_FULLON_ENA_SHIFT     (5U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_FULLON_ENA_MASK      (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_FULLON_ENA_SHIFT)     /* 0x00000020 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ON3P4_ENA_SHIFT      (6U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ON3P4_ENA_MASK       (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ON3P4_ENA_SHIFT)      /* 0x00000040 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ON1P2_ENA_SHIFT      (7U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ON1P2_ENA_MASK       (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ON1P2_ENA_SHIFT)      /* 0x00000080 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ON1P4_ENA_SHIFT      (8U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ON1P4_ENA_MASK       (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ON1P4_ENA_SHIFT)      /* 0x00000100 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ONSF_ENA_SHIFT       (9U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ONSF_ENA_MASK        (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_ONSF_ENA_SHIFT)       /* 0x00000200 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RET3P4_ENA_SHIFT     (10U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RET3P4_ENA_MASK      (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RET3P4_ENA_SHIFT)     /* 0x00000400 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RET1P2_ENA_SHIFT     (11U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RET1P2_ENA_MASK      (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RET1P2_ENA_SHIFT)     /* 0x00000800 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RET1P4_ENA_SHIFT     (12U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RET1P4_ENA_MASK      (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RET1P4_ENA_SHIFT)     /* 0x00001000 */
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RETSF_ENA_SHIFT      (13U)
+#define PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RETSF_ENA_MASK       (0x1U << PMU_DSU_AUTO_PWR_CON_DSU_AUTO_RETSF_ENA_SHIFT)      /* 0x00002000 */
+/* CPU0_AUTO_PWR_CON */
+#define PMU_CPU0_AUTO_PWR_CON_OFFSET                       (0x8010U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT     (0U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_MASK      (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT)     /* 0x00000001 */
+#define PMU_CPU0_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT     (1U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT)     /* 0x00000002 */
+#define PMU_CPU0_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT     (3U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT)     /* 0x00000008 */
+#define PMU_CPU0_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT       (4U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_AUTO_RET_ENA_MASK        (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT)       /* 0x00000010 */
+#define PMU_CPU0_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT         (6U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_DBGRCV_ENA_MASK          (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT)         /* 0x00000040 */
+#define PMU_CPU0_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT         (7U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_MEM_LS_ENA_MASK          (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT)         /* 0x00000080 */
+#define PMU_CPU0_AUTO_PWR_CON_CPU_AUTO_EMUOFF_ENA_SHIFT    (8U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_AUTO_EMUOFF_ENA_MASK     (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_AUTO_EMUOFF_ENA_SHIFT)    /* 0x00000100 */
+#define PMU_CPU0_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT    (9U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_MASK     (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT)    /* 0x00000200 */
+#define PMU_CPU0_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT (10U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_MASK (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT) /* 0x00000400 */
+#define PMU_CPU0_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT (11U)
+#define PMU_CPU0_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_MASK (0x1U << PMU_CPU0_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT) /* 0x00000800 */
+/* CPU1_AUTO_PWR_CON */
+#define PMU_CPU1_AUTO_PWR_CON_OFFSET                       (0x8014U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT     (0U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_MASK      (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT)     /* 0x00000001 */
+#define PMU_CPU1_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT     (1U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT)     /* 0x00000002 */
+#define PMU_CPU1_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT     (3U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT)     /* 0x00000008 */
+#define PMU_CPU1_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT       (4U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_AUTO_RET_ENA_MASK        (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT)       /* 0x00000010 */
+#define PMU_CPU1_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT         (6U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_DBGRCV_ENA_MASK          (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT)         /* 0x00000040 */
+#define PMU_CPU1_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT         (7U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_MEM_LS_ENA_MASK          (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT)         /* 0x00000080 */
+#define PMU_CPU1_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT       (8U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_MASK        (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT)       /* 0x00000100 */
+#define PMU_CPU1_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT    (9U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_MASK     (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT)    /* 0x00000200 */
+#define PMU_CPU1_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT (10U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_MASK (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT) /* 0x00000400 */
+#define PMU_CPU1_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT (11U)
+#define PMU_CPU1_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_MASK (0x1U << PMU_CPU1_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT) /* 0x00000800 */
+/* CPU2_AUTO_PWR_CON */
+#define PMU_CPU2_AUTO_PWR_CON_OFFSET                       (0x8018U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT     (0U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_MASK      (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT)     /* 0x00000001 */
+#define PMU_CPU2_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT     (1U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT)     /* 0x00000002 */
+#define PMU_CPU2_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT     (3U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT)     /* 0x00000008 */
+#define PMU_CPU2_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT       (4U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_AUTO_RET_ENA_MASK        (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT)       /* 0x00000010 */
+#define PMU_CPU2_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT         (6U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_DBGRCV_ENA_MASK          (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT)         /* 0x00000040 */
+#define PMU_CPU2_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT         (7U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_MEM_LS_ENA_MASK          (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT)         /* 0x00000080 */
+#define PMU_CPU2_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT       (8U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_MASK        (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT)       /* 0x00000100 */
+#define PMU_CPU2_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT    (9U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_MASK     (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT)    /* 0x00000200 */
+#define PMU_CPU2_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT (10U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_MASK (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT) /* 0x00000400 */
+#define PMU_CPU2_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT (11U)
+#define PMU_CPU2_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_MASK (0x1U << PMU_CPU2_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT) /* 0x00000800 */
+/* CPU3_AUTO_PWR_CON */
+#define PMU_CPU3_AUTO_PWR_CON_OFFSET                       (0x801CU)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT     (0U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_MASK      (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT)     /* 0x00000001 */
+#define PMU_CPU3_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT     (1U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT)     /* 0x00000002 */
+#define PMU_CPU3_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT     (3U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT)     /* 0x00000008 */
+#define PMU_CPU3_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT       (4U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_AUTO_RET_ENA_MASK        (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT)       /* 0x00000010 */
+#define PMU_CPU3_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT         (6U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_DBGRCV_ENA_MASK          (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT)         /* 0x00000040 */
+#define PMU_CPU3_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT         (7U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_MEM_LS_ENA_MASK          (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT)         /* 0x00000080 */
+#define PMU_CPU3_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT       (8U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_MASK        (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT)       /* 0x00000100 */
+#define PMU_CPU3_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT    (9U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_MASK     (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT)    /* 0x00000200 */
+#define PMU_CPU3_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT (10U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_MASK (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT) /* 0x00000400 */
+#define PMU_CPU3_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT (11U)
+#define PMU_CPU3_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_MASK (0x1U << PMU_CPU3_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT) /* 0x00000800 */
+/* CPU4_AUTO_PWR_CON */
+#define PMU_CPU4_AUTO_PWR_CON_OFFSET                       (0x8020U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT     (0U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_MASK      (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT)     /* 0x00000001 */
+#define PMU_CPU4_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT     (1U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT)     /* 0x00000002 */
+#define PMU_CPU4_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT     (3U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT)     /* 0x00000008 */
+#define PMU_CPU4_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT       (4U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_AUTO_RET_ENA_MASK        (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT)       /* 0x00000010 */
+#define PMU_CPU4_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT         (6U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_DBGRCV_ENA_MASK          (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT)         /* 0x00000040 */
+#define PMU_CPU4_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT         (7U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_MEM_LS_ENA_MASK          (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT)         /* 0x00000080 */
+#define PMU_CPU4_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT       (8U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_MASK        (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT)       /* 0x00000100 */
+#define PMU_CPU4_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT    (9U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_MASK     (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT)    /* 0x00000200 */
+#define PMU_CPU4_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT (10U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_MASK (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT) /* 0x00000400 */
+#define PMU_CPU4_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT (11U)
+#define PMU_CPU4_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_MASK (0x1U << PMU_CPU4_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT) /* 0x00000800 */
+/* CPU5_AUTO_PWR_CON */
+#define PMU_CPU5_AUTO_PWR_CON_OFFSET                       (0x8024U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT     (0U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_MASK      (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT)     /* 0x00000001 */
+#define PMU_CPU5_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT     (1U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT)     /* 0x00000002 */
+#define PMU_CPU5_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT     (3U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT)     /* 0x00000008 */
+#define PMU_CPU5_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT       (4U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_AUTO_RET_ENA_MASK        (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT)       /* 0x00000010 */
+#define PMU_CPU5_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT         (6U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_DBGRCV_ENA_MASK          (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT)         /* 0x00000040 */
+#define PMU_CPU5_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT         (7U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_MEM_LS_ENA_MASK          (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT)         /* 0x00000080 */
+#define PMU_CPU5_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT       (8U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_MASK        (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT)       /* 0x00000100 */
+#define PMU_CPU5_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT    (9U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_MASK     (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT)    /* 0x00000200 */
+#define PMU_CPU5_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT (10U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_MASK (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT) /* 0x00000400 */
+#define PMU_CPU5_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT (11U)
+#define PMU_CPU5_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_MASK (0x1U << PMU_CPU5_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT) /* 0x00000800 */
+/* CPU6_AUTO_PWR_CON */
+#define PMU_CPU6_AUTO_PWR_CON_OFFSET                       (0x8028U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT     (0U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_MASK      (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT)     /* 0x00000001 */
+#define PMU_CPU6_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT     (1U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT)     /* 0x00000002 */
+#define PMU_CPU6_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT     (3U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT)     /* 0x00000008 */
+#define PMU_CPU6_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT       (4U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_AUTO_RET_ENA_MASK        (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT)       /* 0x00000010 */
+#define PMU_CPU6_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT         (6U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_DBGRCV_ENA_MASK          (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT)         /* 0x00000040 */
+#define PMU_CPU6_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT         (7U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_MEM_LS_ENA_MASK          (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT)         /* 0x00000080 */
+#define PMU_CPU6_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT       (8U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_MASK        (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT)       /* 0x00000100 */
+#define PMU_CPU6_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT    (9U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_MASK     (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT)    /* 0x00000200 */
+#define PMU_CPU6_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT (10U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_MASK (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT) /* 0x00000400 */
+#define PMU_CPU6_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT (11U)
+#define PMU_CPU6_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_MASK (0x1U << PMU_CPU6_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT) /* 0x00000800 */
+/* CPU7_AUTO_PWR_CON */
+#define PMU_CPU7_AUTO_PWR_CON_OFFSET                       (0x802CU)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT     (0U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_MASK      (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_AUTO_PWRDN_ENA_SHIFT)     /* 0x00000001 */
+#define PMU_CPU7_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT     (1U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_INT_WAKEUP_ENA_SHIFT)     /* 0x00000002 */
+#define PMU_CPU7_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT     (3U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_MASK      (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_SFT_WAKEUP_ENA_SHIFT)     /* 0x00000008 */
+#define PMU_CPU7_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT       (4U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_AUTO_RET_ENA_MASK        (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_AUTO_RET_ENA_SHIFT)       /* 0x00000010 */
+#define PMU_CPU7_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT         (6U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_DBGRCV_ENA_MASK          (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_DBGRCV_ENA_SHIFT)         /* 0x00000040 */
+#define PMU_CPU7_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT         (7U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_MEM_LS_ENA_MASK          (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_MEM_LS_ENA_SHIFT)         /* 0x00000080 */
+#define PMU_CPU7_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT       (8U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_MASK        (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_AUTO_EMU_ENA_SHIFT)       /* 0x00000100 */
+#define PMU_CPU7_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT    (9U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_MASK     (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_ONLY_MEMOFF_ENA_SHIFT)    /* 0x00000200 */
+#define PMU_CPU7_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT (10U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_MASK (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_DBGRCV_NCORERESET_ENA_SHIFT) /* 0x00000400 */
+#define PMU_CPU7_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT (11U)
+#define PMU_CPU7_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_MASK (0x1U << PMU_CPU7_AUTO_PWR_CON_CPU_DBGRCV_NCPUPORESET_ENA_SHIFT) /* 0x00000800 */
+/* CPU0_PWR_SFTCON */
+#define PMU_CPU0_PWR_SFTCON_OFFSET                         (0x8030U)
+#define PMU_CPU0_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT         (0U)
+#define PMU_CPU0_PWR_SFTCON_CPU_PWRDN_SFTENA_MASK          (0x1U << PMU_CPU0_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT)         /* 0x00000001 */
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT      (1U)
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_MASK       (0x1U << PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT)      /* 0x00000002 */
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT       (2U)
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_ON_MASK        (0x1U << PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT)       /* 0x00000004 */
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT      (3U)
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_RET_MASK       (0x1U << PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT)      /* 0x00000008 */
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT   (4U)
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_MASK    (0x1U << PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT)   /* 0x00000010 */
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT   (5U)
+#define PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_MASK    (0x1U << PMU_CPU0_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT)   /* 0x00000020 */
+#define PMU_CPU0_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT (6U)
+#define PMU_CPU0_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_MASK (0x1U << PMU_CPU0_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_CPU0_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT (7U)
+#define PMU_CPU0_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_MASK (0x1U << PMU_CPU0_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_CPU0_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT        (8U)
+#define PMU_CPU0_PWR_SFTCON_CPU_MEM_LS_SFTENA_MASK         (0x1U << PMU_CPU0_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT)        /* 0x00000100 */
+/* CPU1_PWR_SFTCON */
+#define PMU_CPU1_PWR_SFTCON_OFFSET                         (0x8034U)
+#define PMU_CPU1_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT         (0U)
+#define PMU_CPU1_PWR_SFTCON_CPU_PWRDN_SFTENA_MASK          (0x1U << PMU_CPU1_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT)         /* 0x00000001 */
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT      (1U)
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_MASK       (0x1U << PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT)      /* 0x00000002 */
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT       (2U)
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_ON_MASK        (0x1U << PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT)       /* 0x00000004 */
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT      (3U)
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_RET_MASK       (0x1U << PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT)      /* 0x00000008 */
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT   (4U)
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_MASK    (0x1U << PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT)   /* 0x00000010 */
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT   (5U)
+#define PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_MASK    (0x1U << PMU_CPU1_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT)   /* 0x00000020 */
+#define PMU_CPU1_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT (6U)
+#define PMU_CPU1_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_MASK (0x1U << PMU_CPU1_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_CPU1_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT (7U)
+#define PMU_CPU1_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_MASK (0x1U << PMU_CPU1_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_CPU1_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT        (8U)
+#define PMU_CPU1_PWR_SFTCON_CPU_MEM_LS_SFTENA_MASK         (0x1U << PMU_CPU1_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT)        /* 0x00000100 */
+/* CPU2_PWR_SFTCON */
+#define PMU_CPU2_PWR_SFTCON_OFFSET                         (0x8038U)
+#define PMU_CPU2_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT         (0U)
+#define PMU_CPU2_PWR_SFTCON_CPU_PWRDN_SFTENA_MASK          (0x1U << PMU_CPU2_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT)         /* 0x00000001 */
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT      (1U)
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_MASK       (0x1U << PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT)      /* 0x00000002 */
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT       (2U)
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_ON_MASK        (0x1U << PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT)       /* 0x00000004 */
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT      (3U)
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_RET_MASK       (0x1U << PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT)      /* 0x00000008 */
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT   (4U)
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_MASK    (0x1U << PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT)   /* 0x00000010 */
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT   (5U)
+#define PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_MASK    (0x1U << PMU_CPU2_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT)   /* 0x00000020 */
+#define PMU_CPU2_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT (6U)
+#define PMU_CPU2_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_MASK (0x1U << PMU_CPU2_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_CPU2_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT (7U)
+#define PMU_CPU2_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_MASK (0x1U << PMU_CPU2_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_CPU2_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT        (8U)
+#define PMU_CPU2_PWR_SFTCON_CPU_MEM_LS_SFTENA_MASK         (0x1U << PMU_CPU2_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT)        /* 0x00000100 */
+/* CPU3_PWR_SFTCON */
+#define PMU_CPU3_PWR_SFTCON_OFFSET                         (0x803CU)
+#define PMU_CPU3_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT         (0U)
+#define PMU_CPU3_PWR_SFTCON_CPU_PWRDN_SFTENA_MASK          (0x1U << PMU_CPU3_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT)         /* 0x00000001 */
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT      (1U)
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_MASK       (0x1U << PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT)      /* 0x00000002 */
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT       (2U)
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_ON_MASK        (0x1U << PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT)       /* 0x00000004 */
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT      (3U)
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_RET_MASK       (0x1U << PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT)      /* 0x00000008 */
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT   (4U)
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_MASK    (0x1U << PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT)   /* 0x00000010 */
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT   (5U)
+#define PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_MASK    (0x1U << PMU_CPU3_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT)   /* 0x00000020 */
+#define PMU_CPU3_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT (6U)
+#define PMU_CPU3_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_MASK (0x1U << PMU_CPU3_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_CPU3_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT (7U)
+#define PMU_CPU3_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_MASK (0x1U << PMU_CPU3_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_CPU3_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT        (8U)
+#define PMU_CPU3_PWR_SFTCON_CPU_MEM_LS_SFTENA_MASK         (0x1U << PMU_CPU3_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT)        /* 0x00000100 */
+/* CPU4_PWR_SFTCON */
+#define PMU_CPU4_PWR_SFTCON_OFFSET                         (0x8040U)
+#define PMU_CPU4_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT         (0U)
+#define PMU_CPU4_PWR_SFTCON_CPU_PWRDN_SFTENA_MASK          (0x1U << PMU_CPU4_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT)         /* 0x00000001 */
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT      (1U)
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_MASK       (0x1U << PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT)      /* 0x00000002 */
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT       (2U)
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_ON_MASK        (0x1U << PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT)       /* 0x00000004 */
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT      (3U)
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_RET_MASK       (0x1U << PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT)      /* 0x00000008 */
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT   (4U)
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_MASK    (0x1U << PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT)   /* 0x00000010 */
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT   (5U)
+#define PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_MASK    (0x1U << PMU_CPU4_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT)   /* 0x00000020 */
+#define PMU_CPU4_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT (6U)
+#define PMU_CPU4_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_MASK (0x1U << PMU_CPU4_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_CPU4_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT (7U)
+#define PMU_CPU4_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_MASK (0x1U << PMU_CPU4_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_CPU4_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT        (8U)
+#define PMU_CPU4_PWR_SFTCON_CPU_MEM_LS_SFTENA_MASK         (0x1U << PMU_CPU4_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT)        /* 0x00000100 */
+/* CPU5_PWR_SFTCON */
+#define PMU_CPU5_PWR_SFTCON_OFFSET                         (0x8044U)
+#define PMU_CPU5_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT         (0U)
+#define PMU_CPU5_PWR_SFTCON_CPU_PWRDN_SFTENA_MASK          (0x1U << PMU_CPU5_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT)         /* 0x00000001 */
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT      (1U)
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_MASK       (0x1U << PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT)      /* 0x00000002 */
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT       (2U)
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_ON_MASK        (0x1U << PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT)       /* 0x00000004 */
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT      (3U)
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_RET_MASK       (0x1U << PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT)      /* 0x00000008 */
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT   (4U)
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_MASK    (0x1U << PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT)   /* 0x00000010 */
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT   (5U)
+#define PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_MASK    (0x1U << PMU_CPU5_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT)   /* 0x00000020 */
+#define PMU_CPU5_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT (6U)
+#define PMU_CPU5_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_MASK (0x1U << PMU_CPU5_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_CPU5_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT (7U)
+#define PMU_CPU5_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_MASK (0x1U << PMU_CPU5_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_CPU5_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT        (8U)
+#define PMU_CPU5_PWR_SFTCON_CPU_MEM_LS_SFTENA_MASK         (0x1U << PMU_CPU5_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT)        /* 0x00000100 */
+/* CPU6_PWR_SFTCON */
+#define PMU_CPU6_PWR_SFTCON_OFFSET                         (0x8048U)
+#define PMU_CPU6_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT         (0U)
+#define PMU_CPU6_PWR_SFTCON_CPU_PWRDN_SFTENA_MASK          (0x1U << PMU_CPU6_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT)         /* 0x00000001 */
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT      (1U)
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_MASK       (0x1U << PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT)      /* 0x00000002 */
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT       (2U)
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_ON_MASK        (0x1U << PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT)       /* 0x00000004 */
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT      (3U)
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_RET_MASK       (0x1U << PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT)      /* 0x00000008 */
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT   (4U)
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_MASK    (0x1U << PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT)   /* 0x00000010 */
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT   (5U)
+#define PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_MASK    (0x1U << PMU_CPU6_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT)   /* 0x00000020 */
+#define PMU_CPU6_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT (6U)
+#define PMU_CPU6_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_MASK (0x1U << PMU_CPU6_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_CPU6_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT (7U)
+#define PMU_CPU6_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_MASK (0x1U << PMU_CPU6_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_CPU6_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT        (8U)
+#define PMU_CPU6_PWR_SFTCON_CPU_MEM_LS_SFTENA_MASK         (0x1U << PMU_CPU6_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT)        /* 0x00000100 */
+/* CPU7_PWR_SFTCON */
+#define PMU_CPU7_PWR_SFTCON_OFFSET                         (0x804CU)
+#define PMU_CPU7_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT         (0U)
+#define PMU_CPU7_PWR_SFTCON_CPU_PWRDN_SFTENA_MASK          (0x1U << PMU_CPU7_PWR_SFTCON_CPU_PWRDN_SFTENA_SHIFT)         /* 0x00000001 */
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT      (1U)
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_MASK       (0x1U << PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_OFF_SHIFT)      /* 0x00000002 */
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT       (2U)
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_ON_MASK        (0x1U << PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_ON_SHIFT)       /* 0x00000004 */
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT      (3U)
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_RET_MASK       (0x1U << PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_RET_SHIFT)      /* 0x00000008 */
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT   (4U)
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_MASK    (0x1U << PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_EMUOFF_SHIFT)   /* 0x00000010 */
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT   (5U)
+#define PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_MASK    (0x1U << PMU_CPU7_PWR_SFTCON_CPU_SFT_PACTIVE_DBGRCV_SHIFT)   /* 0x00000020 */
+#define PMU_CPU7_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT (6U)
+#define PMU_CPU7_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_MASK (0x1U << PMU_CPU7_PWR_SFTCON_CPU_DBGRCV_NCORERESET_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_CPU7_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT (7U)
+#define PMU_CPU7_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_MASK (0x1U << PMU_CPU7_PWR_SFTCON_CPU_DBGRCV_NCPUPORESET_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_CPU7_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT        (8U)
+#define PMU_CPU7_PWR_SFTCON_CPU_MEM_LS_SFTENA_MASK         (0x1U << PMU_CPU7_PWR_SFTCON_CPU_MEM_LS_SFTENA_SHIFT)        /* 0x00000100 */
+/* CORE0_PWR_CON */
+#define PMU_CORE0_PWR_CON_OFFSET                           (0x8050U)
+#define PMU_CORE0_PWR_CON_CORE_PWRDN_ENA_SHIFT             (0U)
+#define PMU_CORE0_PWR_CON_CORE_PWRDN_ENA_MASK              (0x1U << PMU_CORE0_PWR_CON_CORE_PWRDN_ENA_SHIFT)             /* 0x00000001 */
+#define PMU_CORE0_PWR_CON_CORE_PWROFF_ENA_SHIFT            (1U)
+#define PMU_CORE0_PWR_CON_CORE_PWROFF_ENA_MASK             (0x1U << PMU_CORE0_PWR_CON_CORE_PWROFF_ENA_SHIFT)            /* 0x00000002 */
+#define PMU_CORE0_PWR_CON_CORE_CPU_PWRDN_ENA_SHIFT         (2U)
+#define PMU_CORE0_PWR_CON_CORE_CPU_PWRDN_ENA_MASK          (0x1U << PMU_CORE0_PWR_CON_CORE_CPU_PWRDN_ENA_SHIFT)         /* 0x00000004 */
+#define PMU_CORE0_PWR_CON_CORE_PWR_CNT_ENA_SHIFT           (3U)
+#define PMU_CORE0_PWR_CON_CORE_PWR_CNT_ENA_MASK            (0x1U << PMU_CORE0_PWR_CON_CORE_PWR_CNT_ENA_SHIFT)           /* 0x00000008 */
+/* CORE1_PWR_CON */
+#define PMU_CORE1_PWR_CON_OFFSET                           (0x8054U)
+#define PMU_CORE1_PWR_CON_CORE_PWRDN_ENA_SHIFT             (0U)
+#define PMU_CORE1_PWR_CON_CORE_PWRDN_ENA_MASK              (0x1U << PMU_CORE1_PWR_CON_CORE_PWRDN_ENA_SHIFT)             /* 0x00000001 */
+#define PMU_CORE1_PWR_CON_CORE_PWROFF_ENA_SHIFT            (1U)
+#define PMU_CORE1_PWR_CON_CORE_PWROFF_ENA_MASK             (0x1U << PMU_CORE1_PWR_CON_CORE_PWROFF_ENA_SHIFT)            /* 0x00000002 */
+#define PMU_CORE1_PWR_CON_CORE_CPU_PWRDN_ENA_SHIFT         (2U)
+#define PMU_CORE1_PWR_CON_CORE_CPU_PWRDN_ENA_MASK          (0x1U << PMU_CORE1_PWR_CON_CORE_CPU_PWRDN_ENA_SHIFT)         /* 0x00000004 */
+#define PMU_CORE1_PWR_CON_CORE_PWR_CNT_ENA_SHIFT           (3U)
+#define PMU_CORE1_PWR_CON_CORE_PWR_CNT_ENA_MASK            (0x1U << PMU_CORE1_PWR_CON_CORE_PWR_CNT_ENA_SHIFT)           /* 0x00000008 */
+/* CORE0_PWR_SFTCON */
+#define PMU_CORE0_PWR_SFTCON_OFFSET                        (0x8058U)
+#define PMU_CORE0_PWR_SFTCON_CORE_PWRDN_SFTENA_SHIFT       (0U)
+#define PMU_CORE0_PWR_SFTCON_CORE_PWRDN_SFTENA_MASK        (0x1U << PMU_CORE0_PWR_SFTCON_CORE_PWRDN_SFTENA_SHIFT)       /* 0x00000001 */
+#define PMU_CORE0_PWR_SFTCON_CORE_PWROFF_SFTENA_SHIFT      (1U)
+#define PMU_CORE0_PWR_SFTCON_CORE_PWROFF_SFTENA_MASK       (0x1U << PMU_CORE0_PWR_SFTCON_CORE_PWROFF_SFTENA_SHIFT)      /* 0x00000002 */
+#define PMU_CORE0_PWR_SFTCON_CORE_CPU_PWRDN_SFTENA_SHIFT   (2U)
+#define PMU_CORE0_PWR_SFTCON_CORE_CPU_PWRDN_SFTENA_MASK    (0x1U << PMU_CORE0_PWR_SFTCON_CORE_CPU_PWRDN_SFTENA_SHIFT)   /* 0x00000004 */
+#define PMU_CORE0_PWR_SFTCON_CORE_DWN_ACK_CLAMP_ENA_SHIFT  (3U)
+#define PMU_CORE0_PWR_SFTCON_CORE_DWN_ACK_CLAMP_ENA_MASK   (0x1U << PMU_CORE0_PWR_SFTCON_CORE_DWN_ACK_CLAMP_ENA_SHIFT)  /* 0x00000008 */
+/* CORE1_PWR_SFTCON */
+#define PMU_CORE1_PWR_SFTCON_OFFSET                        (0x805CU)
+#define PMU_CORE1_PWR_SFTCON_CORE_PWRDN_SFTENA_SHIFT       (0U)
+#define PMU_CORE1_PWR_SFTCON_CORE_PWRDN_SFTENA_MASK        (0x1U << PMU_CORE1_PWR_SFTCON_CORE_PWRDN_SFTENA_SHIFT)       /* 0x00000001 */
+#define PMU_CORE1_PWR_SFTCON_CORE_PWROFF_SFTENA_SHIFT      (1U)
+#define PMU_CORE1_PWR_SFTCON_CORE_PWROFF_SFTENA_MASK       (0x1U << PMU_CORE1_PWR_SFTCON_CORE_PWROFF_SFTENA_SHIFT)      /* 0x00000002 */
+#define PMU_CORE1_PWR_SFTCON_CORE_CPU_PWRDN_SFTENA_SHIFT   (2U)
+#define PMU_CORE1_PWR_SFTCON_CORE_CPU_PWRDN_SFTENA_MASK    (0x1U << PMU_CORE1_PWR_SFTCON_CORE_CPU_PWRDN_SFTENA_SHIFT)   /* 0x00000004 */
+#define PMU_CORE1_PWR_SFTCON_CORE_DWN_ACK_CLAMP_ENA_SHIFT  (3U)
+#define PMU_CORE1_PWR_SFTCON_CORE_DWN_ACK_CLAMP_ENA_MASK   (0x1U << PMU_CORE1_PWR_SFTCON_CORE_DWN_ACK_CLAMP_ENA_SHIFT)  /* 0x00000008 */
+/* CORE0_AUTO_PWR_CON */
+#define PMU_CORE0_AUTO_PWR_CON_OFFSET                      (0x8060U)
+#define PMU_CORE0_AUTO_PWR_CON_CORE_LP_EN_SHIFT            (0U)
+#define PMU_CORE0_AUTO_PWR_CON_CORE_LP_EN_MASK             (0x1U << PMU_CORE0_AUTO_PWR_CON_CORE_LP_EN_SHIFT)            /* 0x00000001 */
+#define PMU_CORE0_AUTO_PWR_CON_CORE_INT_WAKEUP_ENA_SHIFT   (1U)
+#define PMU_CORE0_AUTO_PWR_CON_CORE_INT_WAKEUP_ENA_MASK    (0x1U << PMU_CORE0_AUTO_PWR_CON_CORE_INT_WAKEUP_ENA_SHIFT)   /* 0x00000002 */
+#define PMU_CORE0_AUTO_PWR_CON_CORE_INT_WAKEUP_SFTENA_SHIFT (3U)
+#define PMU_CORE0_AUTO_PWR_CON_CORE_INT_WAKEUP_SFTENA_MASK (0x1U << PMU_CORE0_AUTO_PWR_CON_CORE_INT_WAKEUP_SFTENA_SHIFT) /* 0x00000008 */
+/* CORE1_AUTO_PWR_CON */
+#define PMU_CORE1_AUTO_PWR_CON_OFFSET                      (0x8064U)
+#define PMU_CORE1_AUTO_PWR_CON_CORE_LP_EN_SHIFT            (0U)
+#define PMU_CORE1_AUTO_PWR_CON_CORE_LP_EN_MASK             (0x1U << PMU_CORE1_AUTO_PWR_CON_CORE_LP_EN_SHIFT)            /* 0x00000001 */
+#define PMU_CORE1_AUTO_PWR_CON_CORE_INT_WAKEUP_ENA_SHIFT   (1U)
+#define PMU_CORE1_AUTO_PWR_CON_CORE_INT_WAKEUP_ENA_MASK    (0x1U << PMU_CORE1_AUTO_PWR_CON_CORE_INT_WAKEUP_ENA_SHIFT)   /* 0x00000002 */
+#define PMU_CORE1_AUTO_PWR_CON_CORE_INT_WAKEUP_SFTENA_SHIFT (3U)
+#define PMU_CORE1_AUTO_PWR_CON_CORE_INT_WAKEUP_SFTENA_MASK (0x1U << PMU_CORE1_AUTO_PWR_CON_CORE_INT_WAKEUP_SFTENA_SHIFT) /* 0x00000008 */
+/* CLUSTER_BIU_AUTO_CON */
+#define PMU_CLUSTER_BIU_AUTO_CON_OFFSET                    (0x8068U)
+#define PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_BIGCORE0_ENA_SHIFT (0U)
+#define PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_BIGCORE0_ENA_MASK (0x1U << PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_BIGCORE0_ENA_SHIFT) /* 0x00000001 */
+#define PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_BIGCORE1_ENA_SHIFT (1U)
+#define PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_BIGCORE1_ENA_MASK (0x1U << PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_BIGCORE1_ENA_SHIFT) /* 0x00000002 */
+#define PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_DSU_ENA_SHIFT    (2U)
+#define PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_DSU_ENA_MASK     (0x1U << PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_DSU_ENA_SHIFT)    /* 0x00000004 */
+#define PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_LITDSU_ENA_SHIFT (3U)
+#define PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_LITDSU_ENA_MASK  (0x1U << PMU_CLUSTER_BIU_AUTO_CON_BIU_AUTO_LITDSU_ENA_SHIFT) /* 0x00000008 */
+/* CLUSTER_BIU_IDLE_CON */
+#define PMU_CLUSTER_BIU_IDLE_CON_OFFSET                    (0x8070U)
+#define PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_BIGCORE0_ENA_SHIFT (0U)
+#define PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_BIGCORE0_ENA_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_BIGCORE0_ENA_SHIFT) /* 0x00000001 */
+#define PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_BIGCORE1_ENA_SHIFT (2U)
+#define PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_BIGCORE1_ENA_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_BIGCORE1_ENA_SHIFT) /* 0x00000004 */
+#define PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_DSU_ENA_SHIFT    (4U)
+#define PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_DSU_ENA_MASK     (0x1U << PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_DSU_ENA_SHIFT)    /* 0x00000010 */
+#define PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_LITDSU_ENA_SHIFT (5U)
+#define PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_LITDSU_ENA_MASK  (0x1U << PMU_CLUSTER_BIU_IDLE_CON_IDLE_REQ_LITDSU_ENA_SHIFT) /* 0x00000020 */
+#define PMU_CLUSTER_BIU_IDLE_CON_ADB400_CORE_QCH_ENA_SHIFT (6U)
+#define PMU_CLUSTER_BIU_IDLE_CON_ADB400_CORE_QCH_ENA_MASK  (0x1U << PMU_CLUSTER_BIU_IDLE_CON_ADB400_CORE_QCH_ENA_SHIFT) /* 0x00000040 */
+/* CLUSTER_BIU_IDLE_SFTCON */
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_OFFSET                 (0x8074U)
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_BIGCORE0_SFTENA_SHIFT (0U)
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_BIGCORE0_SFTENA_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_BIGCORE0_SFTENA_SHIFT) /* 0x00000001 */
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_BIGCORE1_SFTENA_SHIFT (2U)
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_BIGCORE1_SFTENA_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_BIGCORE1_SFTENA_SHIFT) /* 0x00000004 */
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_DSU_SFTENA_SHIFT (4U)
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_DSU_SFTENA_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_DSU_SFTENA_SHIFT) /* 0x00000010 */
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_LITDSU_SFTENA_SHIFT (5U)
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_LITDSU_SFTENA_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_SFTCON_IDLE_REQ_LITDSU_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_ADB400_CORE_QCH_SFTENA_SHIFT (6U)
+#define PMU_CLUSTER_BIU_IDLE_SFTCON_ADB400_CORE_QCH_SFTENA_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_SFTCON_ADB400_CORE_QCH_SFTENA_SHIFT) /* 0x00000040 */
+/* CLUSTER_BIU_IDLE_ACK_STS */
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_OFFSET                (0x8078U)
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS                       (0x0U)
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_BIGCORE0_SHIFT (0U)
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_BIGCORE0_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_BIGCORE0_SHIFT) /* 0x00000001 */
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_BIGCORE1_SHIFT (1U)
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_BIGCORE1_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_BIGCORE1_SHIFT) /* 0x00000002 */
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_DSU_SHIFT    (2U)
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_DSU_MASK     (0x1U << PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_DSU_SHIFT)    /* 0x00000004 */
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_LITDSU_SHIFT (3U)
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_LITDSU_MASK  (0x1U << PMU_CLUSTER_BIU_IDLE_ACK_STS_IDLE_ACK_LITDSU_SHIFT) /* 0x00000008 */
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_ADB400_CORE_PACCEPT_SHIFT (4U)
+#define PMU_CLUSTER_BIU_IDLE_ACK_STS_ADB400_CORE_PACCEPT_MASK (0x1U << PMU_CLUSTER_BIU_IDLE_ACK_STS_ADB400_CORE_PACCEPT_SHIFT) /* 0x00000010 */
+/* CLUSTER_BIU_IDLE_STS */
+#define PMU_CLUSTER_BIU_IDLE_STS_OFFSET                    (0x807CU)
+#define PMU_CLUSTER_BIU_IDLE_STS                           (0x0U)
+#define PMU_CLUSTER_BIU_IDLE_STS_IDLE_BIGCORE0_SHIFT       (0U)
+#define PMU_CLUSTER_BIU_IDLE_STS_IDLE_BIGCORE0_MASK        (0x1U << PMU_CLUSTER_BIU_IDLE_STS_IDLE_BIGCORE0_SHIFT)       /* 0x00000001 */
+#define PMU_CLUSTER_BIU_IDLE_STS_IDLE_BIGCORE1_SHIFT       (1U)
+#define PMU_CLUSTER_BIU_IDLE_STS_IDLE_BIGCORE1_MASK        (0x1U << PMU_CLUSTER_BIU_IDLE_STS_IDLE_BIGCORE1_SHIFT)       /* 0x00000002 */
+#define PMU_CLUSTER_BIU_IDLE_STS_IDLE_DSU_SHIFT            (2U)
+#define PMU_CLUSTER_BIU_IDLE_STS_IDLE_DSU_MASK             (0x1U << PMU_CLUSTER_BIU_IDLE_STS_IDLE_DSU_SHIFT)            /* 0x00000004 */
+#define PMU_CLUSTER_BIU_IDLE_STS_IDLE_LITDSU_SHIFT         (3U)
+#define PMU_CLUSTER_BIU_IDLE_STS_IDLE_LITDSU_MASK          (0x1U << PMU_CLUSTER_BIU_IDLE_STS_IDLE_LITDSU_SHIFT)         /* 0x00000008 */
+#define PMU_CLUSTER_BIU_IDLE_STS_ADB400_CORE_PACTIVE_SHIFT (4U)
+#define PMU_CLUSTER_BIU_IDLE_STS_ADB400_CORE_PACTIVE_MASK  (0x1U << PMU_CLUSTER_BIU_IDLE_STS_ADB400_CORE_PACTIVE_SHIFT) /* 0x00000010 */
+/* CLUSTER_STS */
+#define PMU_CLUSTER_STS_OFFSET                             (0x8080U)
+#define PMU_CLUSTER_STS                                    (0x0U)
+#define PMU_CLUSTER_STS_PD_CPU0_DWN_STAT_SHIFT             (0U)
+#define PMU_CLUSTER_STS_PD_CPU0_DWN_STAT_MASK              (0x1U << PMU_CLUSTER_STS_PD_CPU0_DWN_STAT_SHIFT)             /* 0x00000001 */
+#define PMU_CLUSTER_STS_PD_CPU1_DWN_STAT_SHIFT             (1U)
+#define PMU_CLUSTER_STS_PD_CPU1_DWN_STAT_MASK              (0x1U << PMU_CLUSTER_STS_PD_CPU1_DWN_STAT_SHIFT)             /* 0x00000002 */
+#define PMU_CLUSTER_STS_PD_CPU2_DWN_STAT_SHIFT             (2U)
+#define PMU_CLUSTER_STS_PD_CPU2_DWN_STAT_MASK              (0x1U << PMU_CLUSTER_STS_PD_CPU2_DWN_STAT_SHIFT)             /* 0x00000004 */
+#define PMU_CLUSTER_STS_PD_CPU3_DWN_STAT_SHIFT             (3U)
+#define PMU_CLUSTER_STS_PD_CPU3_DWN_STAT_MASK              (0x1U << PMU_CLUSTER_STS_PD_CPU3_DWN_STAT_SHIFT)             /* 0x00000008 */
+#define PMU_CLUSTER_STS_PD_CPU4_DWN_STAT_SHIFT             (4U)
+#define PMU_CLUSTER_STS_PD_CPU4_DWN_STAT_MASK              (0x1U << PMU_CLUSTER_STS_PD_CPU4_DWN_STAT_SHIFT)             /* 0x00000010 */
+#define PMU_CLUSTER_STS_PD_CPU5_DWN_STAT_SHIFT             (5U)
+#define PMU_CLUSTER_STS_PD_CPU5_DWN_STAT_MASK              (0x1U << PMU_CLUSTER_STS_PD_CPU5_DWN_STAT_SHIFT)             /* 0x00000020 */
+#define PMU_CLUSTER_STS_PD_CPU6_DWN_STAT_SHIFT             (6U)
+#define PMU_CLUSTER_STS_PD_CPU6_DWN_STAT_MASK              (0x1U << PMU_CLUSTER_STS_PD_CPU6_DWN_STAT_SHIFT)             /* 0x00000040 */
+#define PMU_CLUSTER_STS_PD_CPU7_DWN_STAT_SHIFT             (7U)
+#define PMU_CLUSTER_STS_PD_CPU7_DWN_STAT_MASK              (0x1U << PMU_CLUSTER_STS_PD_CPU7_DWN_STAT_SHIFT)             /* 0x00000080 */
+#define PMU_CLUSTER_STS_PD_CORE0_DWN_STAT_SHIFT            (8U)
+#define PMU_CLUSTER_STS_PD_CORE0_DWN_STAT_MASK             (0x1U << PMU_CLUSTER_STS_PD_CORE0_DWN_STAT_SHIFT)            /* 0x00000100 */
+#define PMU_CLUSTER_STS_PD_CORE1_DWN_STAT_SHIFT            (9U)
+#define PMU_CLUSTER_STS_PD_CORE1_DWN_STAT_MASK             (0x1U << PMU_CLUSTER_STS_PD_CORE1_DWN_STAT_SHIFT)            /* 0x00000200 */
+#define PMU_CLUSTER_STS_PD_DSU_DWN_STAT_SHIFT              (10U)
+#define PMU_CLUSTER_STS_PD_DSU_DWN_STAT_MASK               (0x1U << PMU_CLUSTER_STS_PD_DSU_DWN_STAT_SHIFT)              /* 0x00000400 */
+#define PMU_CLUSTER_STS_CPU0_HANDSHAKE_SHIFT               (11U)
+#define PMU_CLUSTER_STS_CPU0_HANDSHAKE_MASK                (0x1U << PMU_CLUSTER_STS_CPU0_HANDSHAKE_SHIFT)               /* 0x00000800 */
+#define PMU_CLUSTER_STS_CPU1_HANDSHAKE_SHIFT               (12U)
+#define PMU_CLUSTER_STS_CPU1_HANDSHAKE_MASK                (0x1U << PMU_CLUSTER_STS_CPU1_HANDSHAKE_SHIFT)               /* 0x00001000 */
+#define PMU_CLUSTER_STS_CPU2_HANDSHAKE_SHIFT               (13U)
+#define PMU_CLUSTER_STS_CPU2_HANDSHAKE_MASK                (0x1U << PMU_CLUSTER_STS_CPU2_HANDSHAKE_SHIFT)               /* 0x00002000 */
+#define PMU_CLUSTER_STS_CPU3_HANDSHAKE_SHIFT               (14U)
+#define PMU_CLUSTER_STS_CPU3_HANDSHAKE_MASK                (0x1U << PMU_CLUSTER_STS_CPU3_HANDSHAKE_SHIFT)               /* 0x00004000 */
+#define PMU_CLUSTER_STS_CPU4_HANDSHAKE_SHIFT               (15U)
+#define PMU_CLUSTER_STS_CPU4_HANDSHAKE_MASK                (0x1U << PMU_CLUSTER_STS_CPU4_HANDSHAKE_SHIFT)               /* 0x00008000 */
+#define PMU_CLUSTER_STS_CPU5_HANDSHAKE_SHIFT               (16U)
+#define PMU_CLUSTER_STS_CPU5_HANDSHAKE_MASK                (0x1U << PMU_CLUSTER_STS_CPU5_HANDSHAKE_SHIFT)               /* 0x00010000 */
+#define PMU_CLUSTER_STS_CPU6_HANDSHAKE_SHIFT               (17U)
+#define PMU_CLUSTER_STS_CPU6_HANDSHAKE_MASK                (0x1U << PMU_CLUSTER_STS_CPU6_HANDSHAKE_SHIFT)               /* 0x00020000 */
+#define PMU_CLUSTER_STS_CPU7_HANDSHAKE_SHIFT               (18U)
+#define PMU_CLUSTER_STS_CPU7_HANDSHAKE_MASK                (0x1U << PMU_CLUSTER_STS_CPU7_HANDSHAKE_SHIFT)               /* 0x00040000 */
+#define PMU_CLUSTER_STS_DSU_HANDSHAKE_SHIFT                (19U)
+#define PMU_CLUSTER_STS_DSU_HANDSHAKE_MASK                 (0x1U << PMU_CLUSTER_STS_DSU_HANDSHAKE_SHIFT)                /* 0x00080000 */
+#define PMU_CLUSTER_STS_CPU0_STANDBYWFI_SHIFT              (20U)
+#define PMU_CLUSTER_STS_CPU0_STANDBYWFI_MASK               (0x1U << PMU_CLUSTER_STS_CPU0_STANDBYWFI_SHIFT)              /* 0x00100000 */
+#define PMU_CLUSTER_STS_CPU1_STANDBYWFI_SHIFT              (21U)
+#define PMU_CLUSTER_STS_CPU1_STANDBYWFI_MASK               (0x1U << PMU_CLUSTER_STS_CPU1_STANDBYWFI_SHIFT)              /* 0x00200000 */
+#define PMU_CLUSTER_STS_CPU2_STANDBYWFI_SHIFT              (22U)
+#define PMU_CLUSTER_STS_CPU2_STANDBYWFI_MASK               (0x1U << PMU_CLUSTER_STS_CPU2_STANDBYWFI_SHIFT)              /* 0x00400000 */
+#define PMU_CLUSTER_STS_CPU3_STANDBYWFI_SHIFT              (23U)
+#define PMU_CLUSTER_STS_CPU3_STANDBYWFI_MASK               (0x1U << PMU_CLUSTER_STS_CPU3_STANDBYWFI_SHIFT)              /* 0x00800000 */
+#define PMU_CLUSTER_STS_CPU4_STANDBYWFI_SHIFT              (24U)
+#define PMU_CLUSTER_STS_CPU4_STANDBYWFI_MASK               (0x1U << PMU_CLUSTER_STS_CPU4_STANDBYWFI_SHIFT)              /* 0x01000000 */
+#define PMU_CLUSTER_STS_CPU5_STANDBYWFI_SHIFT              (25U)
+#define PMU_CLUSTER_STS_CPU5_STANDBYWFI_MASK               (0x1U << PMU_CLUSTER_STS_CPU5_STANDBYWFI_SHIFT)              /* 0x02000000 */
+#define PMU_CLUSTER_STS_CPU6_STANDBYWFI_SHIFT              (26U)
+#define PMU_CLUSTER_STS_CPU6_STANDBYWFI_MASK               (0x1U << PMU_CLUSTER_STS_CPU6_STANDBYWFI_SHIFT)              /* 0x04000000 */
+#define PMU_CLUSTER_STS_CPU7_STANDBYWFI_SHIFT              (27U)
+#define PMU_CLUSTER_STS_CPU7_STANDBYWFI_MASK               (0x1U << PMU_CLUSTER_STS_CPU7_STANDBYWFI_SHIFT)              /* 0x08000000 */
+/* CLUSTER_POWER_STS0 */
+#define PMU_CLUSTER_POWER_STS0_OFFSET                      (0x8084U)
+#define PMU_CLUSTER_POWER_STS0                             (0x0U)
+#define PMU_CLUSTER_POWER_STS0_CPU0_POWER_STATE_SHIFT      (0U)
+#define PMU_CLUSTER_POWER_STS0_CPU0_POWER_STATE_MASK       (0x7U << PMU_CLUSTER_POWER_STS0_CPU0_POWER_STATE_SHIFT)      /* 0x00000007 */
+#define PMU_CLUSTER_POWER_STS0_CPU1_POWER_STATE_SHIFT      (4U)
+#define PMU_CLUSTER_POWER_STS0_CPU1_POWER_STATE_MASK       (0x7U << PMU_CLUSTER_POWER_STS0_CPU1_POWER_STATE_SHIFT)      /* 0x00000070 */
+#define PMU_CLUSTER_POWER_STS0_CPU2_POWER_STATE_SHIFT      (8U)
+#define PMU_CLUSTER_POWER_STS0_CPU2_POWER_STATE_MASK       (0x7U << PMU_CLUSTER_POWER_STS0_CPU2_POWER_STATE_SHIFT)      /* 0x00000700 */
+#define PMU_CLUSTER_POWER_STS0_CPU3_POWER_STATE_SHIFT      (12U)
+#define PMU_CLUSTER_POWER_STS0_CPU3_POWER_STATE_MASK       (0x7U << PMU_CLUSTER_POWER_STS0_CPU3_POWER_STATE_SHIFT)      /* 0x00007000 */
+#define PMU_CLUSTER_POWER_STS0_CPU4_POWER_STATE_SHIFT      (16U)
+#define PMU_CLUSTER_POWER_STS0_CPU4_POWER_STATE_MASK       (0x7U << PMU_CLUSTER_POWER_STS0_CPU4_POWER_STATE_SHIFT)      /* 0x00070000 */
+#define PMU_CLUSTER_POWER_STS0_CPU5_POWER_STATE_SHIFT      (20U)
+#define PMU_CLUSTER_POWER_STS0_CPU5_POWER_STATE_MASK       (0x7U << PMU_CLUSTER_POWER_STS0_CPU5_POWER_STATE_SHIFT)      /* 0x00700000 */
+#define PMU_CLUSTER_POWER_STS0_CPU6_POWER_STATE_SHIFT      (24U)
+#define PMU_CLUSTER_POWER_STS0_CPU6_POWER_STATE_MASK       (0x7U << PMU_CLUSTER_POWER_STS0_CPU6_POWER_STATE_SHIFT)      /* 0x07000000 */
+#define PMU_CLUSTER_POWER_STS0_CPU7_POWER_STATE_SHIFT      (28U)
+#define PMU_CLUSTER_POWER_STS0_CPU7_POWER_STATE_MASK       (0x7U << PMU_CLUSTER_POWER_STS0_CPU7_POWER_STATE_SHIFT)      /* 0x70000000 */
+/* CLUSTER_POWER_STS1 */
+#define PMU_CLUSTER_POWER_STS1_OFFSET                      (0x8088U)
+#define PMU_CLUSTER_POWER_STS1                             (0x0U)
+#define PMU_CLUSTER_POWER_STS1_CORE0_POWER_STATE_SHIFT     (0U)
+#define PMU_CLUSTER_POWER_STS1_CORE0_POWER_STATE_MASK      (0xFU << PMU_CLUSTER_POWER_STS1_CORE0_POWER_STATE_SHIFT)     /* 0x0000000F */
+#define PMU_CLUSTER_POWER_STS1_CORE1_POWER_STATE_SHIFT     (4U)
+#define PMU_CLUSTER_POWER_STS1_CORE1_POWER_STATE_MASK      (0xFU << PMU_CLUSTER_POWER_STS1_CORE1_POWER_STATE_SHIFT)     /* 0x000000F0 */
+#define PMU_CLUSTER_POWER_STS1_DSU_POWER_STATE_SHIFT       (8U)
+#define PMU_CLUSTER_POWER_STS1_DSU_POWER_STATE_MASK        (0xFU << PMU_CLUSTER_POWER_STS1_DSU_POWER_STATE_SHIFT)       /* 0x00000F00 */
+/* CLUSTER_PCHANNEL_STS0 */
+#define PMU_CLUSTER_PCHANNEL_STS0_OFFSET                   (0x808CU)
+#define PMU_CLUSTER_PCHANNEL_STS0                          (0x0U)
+#define PMU_CLUSTER_PCHANNEL_STS0_CPU0_PCHANNEL_STATUS_SHIFT (0U)
+#define PMU_CLUSTER_PCHANNEL_STS0_CPU0_PCHANNEL_STATUS_MASK (0x3FU << PMU_CLUSTER_PCHANNEL_STS0_CPU0_PCHANNEL_STATUS_SHIFT) /* 0x0000003F */
+#define PMU_CLUSTER_PCHANNEL_STS0_CPU1_PCHANNEL_STATUS_SHIFT (8U)
+#define PMU_CLUSTER_PCHANNEL_STS0_CPU1_PCHANNEL_STATUS_MASK (0x3FU << PMU_CLUSTER_PCHANNEL_STS0_CPU1_PCHANNEL_STATUS_SHIFT) /* 0x00003F00 */
+#define PMU_CLUSTER_PCHANNEL_STS0_CPU2_PCHANNEL_STATUS_SHIFT (16U)
+#define PMU_CLUSTER_PCHANNEL_STS0_CPU2_PCHANNEL_STATUS_MASK (0x3FU << PMU_CLUSTER_PCHANNEL_STS0_CPU2_PCHANNEL_STATUS_SHIFT) /* 0x003F0000 */
+#define PMU_CLUSTER_PCHANNEL_STS0_CPU3_PCHANNEL_STATUS_SHIFT (24U)
+#define PMU_CLUSTER_PCHANNEL_STS0_CPU3_PCHANNEL_STATUS_MASK (0x3FU << PMU_CLUSTER_PCHANNEL_STS0_CPU3_PCHANNEL_STATUS_SHIFT) /* 0x3F000000 */
+/* CLUSTER_PCHANNEL_STS1 */
+#define PMU_CLUSTER_PCHANNEL_STS1_OFFSET                   (0x8090U)
+#define PMU_CLUSTER_PCHANNEL_STS1                          (0x0U)
+#define PMU_CLUSTER_PCHANNEL_STS1_CPU4_PCHANNEL_STATUS_SHIFT (0U)
+#define PMU_CLUSTER_PCHANNEL_STS1_CPU4_PCHANNEL_STATUS_MASK (0x3FU << PMU_CLUSTER_PCHANNEL_STS1_CPU4_PCHANNEL_STATUS_SHIFT) /* 0x0000003F */
+#define PMU_CLUSTER_PCHANNEL_STS1_CPU5_PCHANNEL_STATUS_SHIFT (8U)
+#define PMU_CLUSTER_PCHANNEL_STS1_CPU5_PCHANNEL_STATUS_MASK (0x3FU << PMU_CLUSTER_PCHANNEL_STS1_CPU5_PCHANNEL_STATUS_SHIFT) /* 0x00003F00 */
+#define PMU_CLUSTER_PCHANNEL_STS1_CPU6_PCHANNEL_STATUS_SHIFT (16U)
+#define PMU_CLUSTER_PCHANNEL_STS1_CPU6_PCHANNEL_STATUS_MASK (0x3FU << PMU_CLUSTER_PCHANNEL_STS1_CPU6_PCHANNEL_STATUS_SHIFT) /* 0x003F0000 */
+#define PMU_CLUSTER_PCHANNEL_STS1_CPU7_PCHANNEL_STATUS_SHIFT (24U)
+#define PMU_CLUSTER_PCHANNEL_STS1_CPU7_PCHANNEL_STATUS_MASK (0x3FU << PMU_CLUSTER_PCHANNEL_STS1_CPU7_PCHANNEL_STATUS_SHIFT) /* 0x3F000000 */
+/* CLUSTER_PCHANNEL_STS2 */
+#define PMU_CLUSTER_PCHANNEL_STS2_OFFSET                   (0x8094U)
+#define PMU_CLUSTER_PCHANNEL_STS2                          (0x0U)
+#define PMU_CLUSTER_PCHANNEL_STS2_DSU_PCHANNEL_STATUS_SHIFT (0U)
+#define PMU_CLUSTER_PCHANNEL_STS2_DSU_PCHANNEL_STATUS_MASK (0x1FFU << PMU_CLUSTER_PCHANNEL_STS2_DSU_PCHANNEL_STATUS_SHIFT) /* 0x000001FF */
+/* CPU_PWR_CHAIN_STABLE_CON */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_OFFSET                (0x8098U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU0_PWRUP_STABLE_ENA_SHIFT (0U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU0_PWRUP_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU0_PWRUP_STABLE_ENA_SHIFT) /* 0x00000001 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU1_PWRUP_STABLE_ENA_SHIFT (1U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU1_PWRUP_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU1_PWRUP_STABLE_ENA_SHIFT) /* 0x00000002 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU2_PWRUP_STABLE_ENA_SHIFT (2U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU2_PWRUP_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU2_PWRUP_STABLE_ENA_SHIFT) /* 0x00000004 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU3_PWRUP_STABLE_ENA_SHIFT (3U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU3_PWRUP_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU3_PWRUP_STABLE_ENA_SHIFT) /* 0x00000008 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU4_PWRUP_STABLE_ENA_SHIFT (4U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU4_PWRUP_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU4_PWRUP_STABLE_ENA_SHIFT) /* 0x00000010 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU5_PWRUP_STABLE_ENA_SHIFT (5U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU5_PWRUP_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU5_PWRUP_STABLE_ENA_SHIFT) /* 0x00000020 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU6_PWRUP_STABLE_ENA_SHIFT (6U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU6_PWRUP_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU6_PWRUP_STABLE_ENA_SHIFT) /* 0x00000040 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU7_PWRUP_STABLE_ENA_SHIFT (7U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU7_PWRUP_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU7_PWRUP_STABLE_ENA_SHIFT) /* 0x00000080 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU0_PWRDN_STABLE_ENA_SHIFT (8U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU0_PWRDN_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU0_PWRDN_STABLE_ENA_SHIFT) /* 0x00000100 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU1_PWRDN_STABLE_ENA_SHIFT (9U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU1_PWRDN_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU1_PWRDN_STABLE_ENA_SHIFT) /* 0x00000200 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU2_PWRDN_STABLE_ENA_SHIFT (10U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU2_PWRDN_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU2_PWRDN_STABLE_ENA_SHIFT) /* 0x00000400 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU3_PWRDN_STABLE_ENA_SHIFT (11U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU3_PWRDN_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU3_PWRDN_STABLE_ENA_SHIFT) /* 0x00000800 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU4_PWRDN_STABLE_ENA_SHIFT (12U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU4_PWRDN_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU4_PWRDN_STABLE_ENA_SHIFT) /* 0x00001000 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU5_PWRDN_STABLE_ENA_SHIFT (13U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU5_PWRDN_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU5_PWRDN_STABLE_ENA_SHIFT) /* 0x00002000 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU6_PWRDN_STABLE_ENA_SHIFT (14U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU6_PWRDN_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU6_PWRDN_STABLE_ENA_SHIFT) /* 0x00004000 */
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU7_PWRDN_STABLE_ENA_SHIFT (15U)
+#define PMU_CPU_PWR_CHAIN_STABLE_CON_CPU7_PWRDN_STABLE_ENA_MASK (0x1U << PMU_CPU_PWR_CHAIN_STABLE_CON_CPU7_PWRDN_STABLE_ENA_SHIFT) /* 0x00008000 */
+/* DSU_MEM_PWR_CON */
+#define PMU_DSU_MEM_PWR_CON_OFFSET                         (0x809CU)
+#define PMU_DSU_MEM_PWR_CON_DSU_MEM_SD_ENA_SHIFT           (0U)
+#define PMU_DSU_MEM_PWR_CON_DSU_MEM_SD_ENA_MASK            (0xFU << PMU_DSU_MEM_PWR_CON_DSU_MEM_SD_ENA_SHIFT)           /* 0x0000000F */
+#define PMU_DSU_MEM_PWR_CON_DSU_MEM_LS_ENA_SHIFT           (4U)
+#define PMU_DSU_MEM_PWR_CON_DSU_MEM_LS_ENA_MASK            (0xFU << PMU_DSU_MEM_PWR_CON_DSU_MEM_LS_ENA_SHIFT)           /* 0x000000F0 */
+#define PMU_DSU_MEM_PWR_CON_DSU_MEM_SD_SFTENA_SHIFT        (8U)
+#define PMU_DSU_MEM_PWR_CON_DSU_MEM_SD_SFTENA_MASK         (0xFU << PMU_DSU_MEM_PWR_CON_DSU_MEM_SD_SFTENA_SHIFT)        /* 0x00000F00 */
+#define PMU_DSU_MEM_PWR_CON_DSU_MEM_LS_SFTENA_SHIFT        (12U)
+#define PMU_DSU_MEM_PWR_CON_DSU_MEM_LS_SFTENA_MASK         (0xFU << PMU_DSU_MEM_PWR_CON_DSU_MEM_LS_SFTENA_SHIFT)        /* 0x0000F000 */
+/* DSU_STABLE_CNT */
+#define PMU_DSU_STABLE_CNT_OFFSET                          (0x80B0U)
+#define PMU_DSU_STABLE_CNT_DSU_STABLE_CNT_SHIFT            (0U)
+#define PMU_DSU_STABLE_CNT_DSU_STABLE_CNT_MASK             (0xFFFFFU << PMU_DSU_STABLE_CNT_DSU_STABLE_CNT_SHIFT)        /* 0x000FFFFF */
+/* DSU_PWRUP_CNT */
+#define PMU_DSU_PWRUP_CNT_OFFSET                           (0x80B4U)
+#define PMU_DSU_PWRUP_CNT_DSU_PWRUP_CNT_SHIFT              (0U)
+#define PMU_DSU_PWRUP_CNT_DSU_PWRUP_CNT_MASK               (0xFFFFFU << PMU_DSU_PWRUP_CNT_DSU_PWRUP_CNT_SHIFT)          /* 0x000FFFFF */
+/* DSU_PWRDN_CNT */
+#define PMU_DSU_PWRDN_CNT_OFFSET                           (0x80B8U)
+#define PMU_DSU_PWRDN_CNT_DSU_PWRDN_CNT_SHIFT              (0U)
+#define PMU_DSU_PWRDN_CNT_DSU_PWRDN_CNT_MASK               (0xFFFFFU << PMU_DSU_PWRDN_CNT_DSU_PWRDN_CNT_SHIFT)          /* 0x000FFFFF */
+/* CORE0_STABLE_CNT */
+#define PMU_CORE0_STABLE_CNT_OFFSET                        (0x80BCU)
+#define PMU_CORE0_STABLE_CNT_CORE0_STABLE_CNT_SHIFT        (0U)
+#define PMU_CORE0_STABLE_CNT_CORE0_STABLE_CNT_MASK         (0xFFFFFU << PMU_CORE0_STABLE_CNT_CORE0_STABLE_CNT_SHIFT)    /* 0x000FFFFF */
+/* CORE0_PWRUP_CNT */
+#define PMU_CORE0_PWRUP_CNT_OFFSET                         (0x80C0U)
+#define PMU_CORE0_PWRUP_CNT_CORE0_PWRUP_CNT_SHIFT          (0U)
+#define PMU_CORE0_PWRUP_CNT_CORE0_PWRUP_CNT_MASK           (0xFFFFFU << PMU_CORE0_PWRUP_CNT_CORE0_PWRUP_CNT_SHIFT)      /* 0x000FFFFF */
+/* CORE0_PWRDN_CNT */
+#define PMU_CORE0_PWRDN_CNT_OFFSET                         (0x80C4U)
+#define PMU_CORE0_PWRDN_CNT_CORE0_PWRDN_CNT_SHIFT          (0U)
+#define PMU_CORE0_PWRDN_CNT_CORE0_PWRDN_CNT_MASK           (0xFFFFFU << PMU_CORE0_PWRDN_CNT_CORE0_PWRDN_CNT_SHIFT)      /* 0x000FFFFF */
+/* CORE1_STABLE_CNT */
+#define PMU_CORE1_STABLE_CNT_OFFSET                        (0x80C8U)
+#define PMU_CORE1_STABLE_CNT_CORE1_STABLE_CNT_SHIFT        (0U)
+#define PMU_CORE1_STABLE_CNT_CORE1_STABLE_CNT_MASK         (0xFFFFFU << PMU_CORE1_STABLE_CNT_CORE1_STABLE_CNT_SHIFT)    /* 0x000FFFFF */
+/* CORE1_PWRUP_CNT */
+#define PMU_CORE1_PWRUP_CNT_OFFSET                         (0x80CCU)
+#define PMU_CORE1_PWRUP_CNT_CORE1_PWRUP_CNT_SHIFT          (0U)
+#define PMU_CORE1_PWRUP_CNT_CORE1_PWRUP_CNT_MASK           (0xFFFFFU << PMU_CORE1_PWRUP_CNT_CORE1_PWRUP_CNT_SHIFT)      /* 0x000FFFFF */
+/* CORE1_PWRDN_CNT */
+#define PMU_CORE1_PWRDN_CNT_OFFSET                         (0x80D0U)
+#define PMU_CORE1_PWRDN_CNT_CORE1_PWRDN_CNT_SHIFT          (0U)
+#define PMU_CORE1_PWRDN_CNT_CORE1_PWRDN_CNT_MASK           (0xFFFFFU << PMU_CORE1_PWRDN_CNT_CORE1_PWRDN_CNT_SHIFT)      /* 0x000FFFFF */
+/* CPU0_DBG_RST_CNT */
+#define PMU_CPU0_DBG_RST_CNT_OFFSET                        (0x80D4U)
+#define PMU_CPU0_DBG_RST_CNT_CPU0_DBG_RST_CNT_SHIFT        (0U)
+#define PMU_CPU0_DBG_RST_CNT_CPU0_DBG_RST_CNT_MASK         (0xFFFFFU << PMU_CPU0_DBG_RST_CNT_CPU0_DBG_RST_CNT_SHIFT)    /* 0x000FFFFF */
+/* CPU1_DBG_RST_CNT */
+#define PMU_CPU1_DBG_RST_CNT_OFFSET                        (0x80D8U)
+#define PMU_CPU1_DBG_RST_CNT_CPU1_DBG_RST_CNT_SHIFT        (0U)
+#define PMU_CPU1_DBG_RST_CNT_CPU1_DBG_RST_CNT_MASK         (0xFFFFFU << PMU_CPU1_DBG_RST_CNT_CPU1_DBG_RST_CNT_SHIFT)    /* 0x000FFFFF */
+/* CPU2_DBG_RST_CNT */
+#define PMU_CPU2_DBG_RST_CNT_OFFSET                        (0x80DCU)
+#define PMU_CPU2_DBG_RST_CNT_CPU2_DBG_RST_CNT_SHIFT        (0U)
+#define PMU_CPU2_DBG_RST_CNT_CPU2_DBG_RST_CNT_MASK         (0xFFFFFU << PMU_CPU2_DBG_RST_CNT_CPU2_DBG_RST_CNT_SHIFT)    /* 0x000FFFFF */
+/* CPU3_DBG_RST_CNT */
+#define PMU_CPU3_DBG_RST_CNT_OFFSET                        (0x80E0U)
+#define PMU_CPU3_DBG_RST_CNT_CPU3_DBG_RST_CNT_SHIFT        (0U)
+#define PMU_CPU3_DBG_RST_CNT_CPU3_DBG_RST_CNT_MASK         (0xFFFFFU << PMU_CPU3_DBG_RST_CNT_CPU3_DBG_RST_CNT_SHIFT)    /* 0x000FFFFF */
+/* CPU4_DBG_RST_CNT */
+#define PMU_CPU4_DBG_RST_CNT_OFFSET                        (0x80E4U)
+#define PMU_CPU4_DBG_RST_CNT_CPU4_DBG_RST_CNT_SHIFT        (0U)
+#define PMU_CPU4_DBG_RST_CNT_CPU4_DBG_RST_CNT_MASK         (0xFFFFFU << PMU_CPU4_DBG_RST_CNT_CPU4_DBG_RST_CNT_SHIFT)    /* 0x000FFFFF */
+/* CPU5_DBG_RST_CNT */
+#define PMU_CPU5_DBG_RST_CNT_OFFSET                        (0x80E8U)
+#define PMU_CPU5_DBG_RST_CNT_CPU5_DBG_RST_CNT_SHIFT        (0U)
+#define PMU_CPU5_DBG_RST_CNT_CPU5_DBG_RST_CNT_MASK         (0xFFFFFU << PMU_CPU5_DBG_RST_CNT_CPU5_DBG_RST_CNT_SHIFT)    /* 0x000FFFFF */
+/* CPU6_DBG_RST_CNT */
+#define PMU_CPU6_DBG_RST_CNT_OFFSET                        (0x80ECU)
+#define PMU_CPU6_DBG_RST_CNT_CPU6_DBG_RST_CNT_SHIFT        (0U)
+#define PMU_CPU6_DBG_RST_CNT_CPU6_DBG_RST_CNT_MASK         (0xFFFFFU << PMU_CPU6_DBG_RST_CNT_CPU6_DBG_RST_CNT_SHIFT)    /* 0x000FFFFF */
+/* CPU7_DBG_RST_CNT */
+#define PMU_CPU7_DBG_RST_CNT_OFFSET                        (0x80F0U)
+#define PMU_CPU7_DBG_RST_CNT_CPU7_DBG_RST_CNT_SHIFT        (0U)
+#define PMU_CPU7_DBG_RST_CNT_CPU7_DBG_RST_CNT_MASK         (0xFFFFFU << PMU_CPU7_DBG_RST_CNT_CPU7_DBG_RST_CNT_SHIFT)    /* 0x000FFFFF */
+/* BIU_IDLE_CON0 */
+#define PMU_BIU_IDLE_CON0_OFFSET                           (0x8100U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_GPU_ENA_SHIFT           (0U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_GPU_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_GPU_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_NPUTOP_ENA_SHIFT        (1U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_NPUTOP_ENA_MASK         (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_NPUTOP_ENA_SHIFT)        /* 0x00000002 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_NPU1_ENA_SHIFT          (2U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_NPU1_ENA_MASK           (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_NPU1_ENA_SHIFT)          /* 0x00000004 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_NPU2_ENA_SHIFT          (3U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_NPU2_ENA_MASK           (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_NPU2_ENA_SHIFT)          /* 0x00000008 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VENC0_ENA_SHIFT         (4U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VENC0_ENA_MASK          (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_VENC0_ENA_SHIFT)         /* 0x00000010 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VENC1_ENA_SHIFT         (5U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VENC1_ENA_MASK          (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_VENC1_ENA_SHIFT)         /* 0x00000020 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_RKVDEC0_ENA_SHIFT       (6U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_RKVDEC0_ENA_MASK        (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_RKVDEC0_ENA_SHIFT)       /* 0x00000040 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_RKVDEC1_ENA_SHIFT       (7U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_RKVDEC1_ENA_MASK        (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_RKVDEC1_ENA_SHIFT)       /* 0x00000080 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VDPU_ENA_SHIFT          (8U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VDPU_ENA_MASK           (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_VDPU_ENA_SHIFT)          /* 0x00000100 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_AV1_ENA_SHIFT           (9U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_AV1_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_AV1_ENA_SHIFT)           /* 0x00000200 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VI_ENA_SHIFT            (10U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VI_ENA_MASK             (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_VI_ENA_SHIFT)            /* 0x00000400 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_ISP1_ENA_SHIFT          (11U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_ISP1_ENA_MASK           (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_ISP1_ENA_SHIFT)          /* 0x00000800 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_RGA31_ENA_SHIFT         (12U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_RGA31_ENA_MASK          (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_RGA31_ENA_SHIFT)         /* 0x00001000 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VOP_ENA_SHIFT           (13U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VOP_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_VOP_ENA_SHIFT)           /* 0x00002000 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VOP_CHANNEL_ENA_SHIFT   (14U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VOP_CHANNEL_ENA_MASK    (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_VOP_CHANNEL_ENA_SHIFT)   /* 0x00004000 */
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VO0_ENA_SHIFT           (15U)
+#define PMU_BIU_IDLE_CON0_IDLE_REQ_VO0_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON0_IDLE_REQ_VO0_ENA_SHIFT)           /* 0x00008000 */
+/* BIU_IDLE_CON1 */
+#define PMU_BIU_IDLE_CON1_OFFSET                           (0x8104U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_VO1_ENA_SHIFT           (0U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_VO1_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_VO1_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_AUDIO_ENA_SHIFT         (1U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_AUDIO_ENA_MASK          (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_AUDIO_ENA_SHIFT)         /* 0x00000002 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_NVM_ENA_SHIFT           (2U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_NVM_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_NVM_ENA_SHIFT)           /* 0x00000004 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_SDIO_ENA_SHIFT          (3U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_SDIO_ENA_MASK           (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_SDIO_ENA_SHIFT)          /* 0x00000008 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_USB_ENA_SHIFT           (4U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_USB_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_USB_ENA_SHIFT)           /* 0x00000010 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_PHP_ENA_SHIFT           (5U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_PHP_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_PHP_ENA_SHIFT)           /* 0x00000020 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_VO1USBTOP_ENA_SHIFT     (6U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_VO1USBTOP_ENA_MASK      (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_VO1USBTOP_ENA_SHIFT)     /* 0x00000040 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_SECURE_ENA_SHIFT        (7U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_SECURE_ENA_MASK         (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_SECURE_ENA_SHIFT)        /* 0x00000080 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_SECURE_CENTER_CHANNEL_ENA_SHIFT (8U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_SECURE_CENTER_CHANNEL_ENA_MASK (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_SECURE_CENTER_CHANNEL_ENA_SHIFT) /* 0x00000100 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_SECURE_VO1USB_CHANNEL_ENA_SHIFT (9U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_SECURE_VO1USB_CHANNEL_ENA_MASK (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_SECURE_VO1USB_CHANNEL_ENA_SHIFT) /* 0x00000200 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_CENTER_ENA_SHIFT        (10U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_CENTER_ENA_MASK         (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_CENTER_ENA_SHIFT)        /* 0x00000400 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_CENTER_CHANNEL_ENA_SHIFT (11U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_CENTER_CHANNEL_ENA_MASK (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_CENTER_CHANNEL_ENA_SHIFT) /* 0x00000800 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH0_ENA_SHIFT       (12U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH0_ENA_MASK        (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH0_ENA_SHIFT)       /* 0x00001000 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH1_ENA_SHIFT       (13U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH1_ENA_MASK        (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH1_ENA_SHIFT)       /* 0x00002000 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH2_ENA_SHIFT       (14U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH2_ENA_MASK        (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH2_ENA_SHIFT)       /* 0x00004000 */
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH3_ENA_SHIFT       (15U)
+#define PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH3_ENA_MASK        (0x1U << PMU_BIU_IDLE_CON1_IDLE_REQ_DDRSCH3_ENA_SHIFT)       /* 0x00008000 */
+/* BIU_IDLE_CON2 */
+#define PMU_BIU_IDLE_CON2_OFFSET                           (0x8108U)
+#define PMU_BIU_IDLE_CON2_IDLE_REQ_CENTER_DDRSCH_ENA_SHIFT (0U)
+#define PMU_BIU_IDLE_CON2_IDLE_REQ_CENTER_DDRSCH_ENA_MASK  (0x1U << PMU_BIU_IDLE_CON2_IDLE_REQ_CENTER_DDRSCH_ENA_SHIFT) /* 0x00000001 */
+#define PMU_BIU_IDLE_CON2_IDLE_REQ_BUS_ENA_SHIFT           (1U)
+#define PMU_BIU_IDLE_CON2_IDLE_REQ_BUS_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON2_IDLE_REQ_BUS_ENA_SHIFT)           /* 0x00000002 */
+#define PMU_BIU_IDLE_CON2_IDLE_REQ_TOP_ENA_SHIFT           (2U)
+#define PMU_BIU_IDLE_CON2_IDLE_REQ_TOP_ENA_MASK            (0x1U << PMU_BIU_IDLE_CON2_IDLE_REQ_TOP_ENA_SHIFT)           /* 0x00000004 */
+/* BIU_IDLE_SFTCON0 */
+#define PMU_BIU_IDLE_SFTCON0_OFFSET                        (0x810CU)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_GPU_SFTENA_SHIFT     (0U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_GPU_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_GPU_SFTENA_SHIFT)     /* 0x00000001 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_NPUTOP_SFTENA_SHIFT  (1U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_NPUTOP_SFTENA_MASK   (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_NPUTOP_SFTENA_SHIFT)  /* 0x00000002 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_NPU1_SFTENA_SHIFT    (2U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_NPU1_SFTENA_MASK     (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_NPU1_SFTENA_SHIFT)    /* 0x00000004 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_NPU2_SFTENA_SHIFT    (3U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_NPU2_SFTENA_MASK     (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_NPU2_SFTENA_SHIFT)    /* 0x00000008 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VENC0_SFTENA_SHIFT   (4U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VENC0_SFTENA_MASK    (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VENC0_SFTENA_SHIFT)   /* 0x00000010 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VENC1_SFTENA_SHIFT   (5U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VENC1_SFTENA_MASK    (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VENC1_SFTENA_SHIFT)   /* 0x00000020 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_RKVDEC0_SFTENA_SHIFT (6U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_RKVDEC0_SFTENA_MASK  (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_RKVDEC0_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_RKVDEC1_SFTENA_SHIFT (7U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_RKVDEC1_SFTENA_MASK  (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_RKVDEC1_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VDPU_SFTENA_SHIFT    (8U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VDPU_SFTENA_MASK     (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VDPU_SFTENA_SHIFT)    /* 0x00000100 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_AV1_SFTENA_SHIFT     (9U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_AV1_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_AV1_SFTENA_SHIFT)     /* 0x00000200 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VI_SFTENA_SHIFT      (10U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VI_SFTENA_MASK       (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VI_SFTENA_SHIFT)      /* 0x00000400 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_ISP1_SFTENA_SHIFT    (11U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_ISP1_SFTENA_MASK     (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_ISP1_SFTENA_SHIFT)    /* 0x00000800 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_RGA31_SFTENA_SHIFT   (12U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_RGA31_SFTENA_MASK    (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_RGA31_SFTENA_SHIFT)   /* 0x00001000 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VOP_SFTENA_SHIFT     (13U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VOP_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VOP_SFTENA_SHIFT)     /* 0x00002000 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VOP_CHANNEL_SFTENA_SHIFT (14U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VOP_CHANNEL_SFTENA_MASK (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VOP_CHANNEL_SFTENA_SHIFT) /* 0x00004000 */
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VO0_SFTENA_SHIFT     (15U)
+#define PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VO0_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON0_IDLE_REQ_VO0_SFTENA_SHIFT)     /* 0x00008000 */
+/* BIU_IDLE_SFTCON1 */
+#define PMU_BIU_IDLE_SFTCON1_OFFSET                        (0x8110U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_VO1_SFTENA_SHIFT     (0U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_VO1_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_VO1_SFTENA_SHIFT)     /* 0x00000001 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_AUDIO_SFTENA_SHIFT   (1U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_AUDIO_SFTENA_MASK    (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_AUDIO_SFTENA_SHIFT)   /* 0x00000002 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_NVM_SFTENA_SHIFT     (2U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_NVM_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_NVM_SFTENA_SHIFT)     /* 0x00000004 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SDIO_SFTENA_SHIFT    (3U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SDIO_SFTENA_MASK     (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SDIO_SFTENA_SHIFT)    /* 0x00000008 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_USB_SFTENA_SHIFT     (4U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_USB_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_USB_SFTENA_SHIFT)     /* 0x00000010 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_PHP_SFTENA_SHIFT     (5U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_PHP_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_PHP_SFTENA_SHIFT)     /* 0x00000020 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_VO1USBTOP_SFTENA_SHIFT (6U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_VO1USBTOP_SFTENA_MASK (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_VO1USBTOP_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SECURE_SFTENA_SHIFT  (7U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SECURE_SFTENA_MASK   (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SECURE_SFTENA_SHIFT)  /* 0x00000080 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SECURE_CENTER_CHANNEL_SFTENA_SHIFT (8U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SECURE_CENTER_CHANNEL_SFTENA_MASK (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SECURE_CENTER_CHANNEL_SFTENA_SHIFT) /* 0x00000100 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SECURE_VO1USB_CHANNEL_SFTENA_SHIFT (9U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SECURE_VO1USB_CHANNEL_SFTENA_MASK (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_SECURE_VO1USB_CHANNEL_SFTENA_SHIFT) /* 0x00000200 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_CENTER_SFTENA_SHIFT  (10U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_CENTER_SFTENA_MASK   (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_CENTER_SFTENA_SHIFT)  /* 0x00000400 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_CENTER_CHANNEL_SFTENA_SHIFT (11U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_CENTER_CHANNEL_SFTENA_MASK (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_CENTER_CHANNEL_SFTENA_SHIFT) /* 0x00000800 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH0_SFTENA_SHIFT (12U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH0_SFTENA_MASK  (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH0_SFTENA_SHIFT) /* 0x00001000 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH1_SFTENA_SHIFT (13U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH1_SFTENA_MASK  (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH1_SFTENA_SHIFT) /* 0x00002000 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH2_SFTENA_SHIFT (14U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH2_SFTENA_MASK  (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH2_SFTENA_SHIFT) /* 0x00004000 */
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH3_SFTENA_SHIFT (15U)
+#define PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH3_SFTENA_MASK  (0x1U << PMU_BIU_IDLE_SFTCON1_IDLE_REQ_DDRSCH3_SFTENA_SHIFT) /* 0x00008000 */
+/* BIU_IDLE_SFTCON2 */
+#define PMU_BIU_IDLE_SFTCON2_OFFSET                        (0x8114U)
+#define PMU_BIU_IDLE_SFTCON2_IDLE_REQ_CENTER_DDRSCH_SFTENA_SHIFT (0U)
+#define PMU_BIU_IDLE_SFTCON2_IDLE_REQ_CENTER_DDRSCH_SFTENA_MASK (0x1U << PMU_BIU_IDLE_SFTCON2_IDLE_REQ_CENTER_DDRSCH_SFTENA_SHIFT) /* 0x00000001 */
+#define PMU_BIU_IDLE_SFTCON2_IDLE_REQ_BUS_SFTENA_SHIFT     (1U)
+#define PMU_BIU_IDLE_SFTCON2_IDLE_REQ_BUS_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON2_IDLE_REQ_BUS_SFTENA_SHIFT)     /* 0x00000002 */
+#define PMU_BIU_IDLE_SFTCON2_IDLE_REQ_TOP_SFTENA_SHIFT     (2U)
+#define PMU_BIU_IDLE_SFTCON2_IDLE_REQ_TOP_SFTENA_MASK      (0x1U << PMU_BIU_IDLE_SFTCON2_IDLE_REQ_TOP_SFTENA_SHIFT)     /* 0x00000004 */
+/* BIU_IDLE_ACK_STS0 */
+#define PMU_BIU_IDLE_ACK_STS0_OFFSET                       (0x8118U)
+#define PMU_BIU_IDLE_ACK_STS0                              (0x0U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_GPU_SHIFT           (0U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_GPU_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_GPU_SHIFT)           /* 0x00000001 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NPUTOP_SHIFT        (1U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NPUTOP_MASK         (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NPUTOP_SHIFT)        /* 0x00000002 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NPU1_SHIFT          (2U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NPU1_MASK           (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NPU1_SHIFT)          /* 0x00000004 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NPU2_SHIFT          (3U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NPU2_MASK           (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NPU2_SHIFT)          /* 0x00000008 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VENC0_SHIFT         (4U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VENC0_MASK          (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VENC0_SHIFT)         /* 0x00000010 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VENC1_SHIFT         (5U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VENC1_MASK          (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VENC1_SHIFT)         /* 0x00000020 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_RKVDEC0_SHIFT       (6U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_RKVDEC0_MASK        (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_RKVDEC0_SHIFT)       /* 0x00000040 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_RKVDEC1_SHIFT       (7U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_RKVDEC1_MASK        (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_RKVDEC1_SHIFT)       /* 0x00000080 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VDPU_SHIFT          (8U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VDPU_MASK           (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VDPU_SHIFT)          /* 0x00000100 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_AV1_SHIFT           (9U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_AV1_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_AV1_SHIFT)           /* 0x00000200 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VI_SHIFT            (10U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VI_MASK             (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VI_SHIFT)            /* 0x00000400 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_ISP1_SHIFT          (11U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_ISP1_MASK           (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_ISP1_SHIFT)          /* 0x00000800 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_RGA31_SHIFT         (12U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_RGA31_MASK          (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_RGA31_SHIFT)         /* 0x00001000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VOP_SHIFT           (13U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VOP_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VOP_SHIFT)           /* 0x00002000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VOP_CHANNEL_SHIFT   (14U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VOP_CHANNEL_MASK    (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VOP_CHANNEL_SHIFT)   /* 0x00004000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VO0_SHIFT           (15U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VO0_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VO0_SHIFT)           /* 0x00008000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VO1_SHIFT           (16U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VO1_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VO1_SHIFT)           /* 0x00010000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_AUDIO_SHIFT         (17U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_AUDIO_MASK          (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_AUDIO_SHIFT)         /* 0x00020000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NVM_SHIFT           (18U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NVM_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_NVM_SHIFT)           /* 0x00040000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SDIO_SHIFT          (19U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SDIO_MASK           (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SDIO_SHIFT)          /* 0x00080000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_USB_SHIFT           (20U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_USB_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_USB_SHIFT)           /* 0x00100000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_PHP_SHIFT           (21U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_PHP_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_PHP_SHIFT)           /* 0x00200000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VO1USBTOP_SHIFT     (22U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VO1USBTOP_MASK      (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_VO1USBTOP_SHIFT)     /* 0x00400000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SECURE_SHIFT        (23U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SECURE_MASK         (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SECURE_SHIFT)        /* 0x00800000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SECURE_CENTER_CHANNEL_SHIFT (24U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SECURE_CENTER_CHANNEL_MASK (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SECURE_CENTER_CHANNEL_SHIFT) /* 0x01000000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SECURE_VO1USB_CHANNEL_SHIFT (25U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SECURE_VO1USB_CHANNEL_MASK (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_SECURE_VO1USB_CHANNEL_SHIFT) /* 0x02000000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_CENTER_SHIFT        (26U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_CENTER_MASK         (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_CENTER_SHIFT)        /* 0x04000000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_CENTER_CHANNEL_SHIFT (27U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_CENTER_CHANNEL_MASK (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_CENTER_CHANNEL_SHIFT) /* 0x08000000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH0_SHIFT       (28U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH0_MASK        (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH0_SHIFT)       /* 0x10000000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH1_SHIFT       (29U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH1_MASK        (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH1_SHIFT)       /* 0x20000000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH2_SHIFT       (30U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH2_MASK        (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH2_SHIFT)       /* 0x40000000 */
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH3_SHIFT       (31U)
+#define PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH3_MASK        (0x1U << PMU_BIU_IDLE_ACK_STS0_IDLE_ACK_DDRSCH3_SHIFT)       /* 0x80000000 */
+/* BIU_IDLE_ACK_STS1 */
+#define PMU_BIU_IDLE_ACK_STS1_OFFSET                       (0x811CU)
+#define PMU_BIU_IDLE_ACK_STS1                              (0x0U)
+#define PMU_BIU_IDLE_ACK_STS1_IDLE_ACK_CENTER_DDRSCH_SHIFT (0U)
+#define PMU_BIU_IDLE_ACK_STS1_IDLE_ACK_CENTER_DDRSCH_MASK  (0x1U << PMU_BIU_IDLE_ACK_STS1_IDLE_ACK_CENTER_DDRSCH_SHIFT) /* 0x00000001 */
+#define PMU_BIU_IDLE_ACK_STS1_IDLE_ACK_BUS_SHIFT           (1U)
+#define PMU_BIU_IDLE_ACK_STS1_IDLE_ACK_BUS_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS1_IDLE_ACK_BUS_SHIFT)           /* 0x00000002 */
+#define PMU_BIU_IDLE_ACK_STS1_IDLE_ACK_TOP_SHIFT           (2U)
+#define PMU_BIU_IDLE_ACK_STS1_IDLE_ACK_TOP_MASK            (0x1U << PMU_BIU_IDLE_ACK_STS1_IDLE_ACK_TOP_SHIFT)           /* 0x00000004 */
+/* BIU_IDLE_STS0 */
+#define PMU_BIU_IDLE_STS0_OFFSET                           (0x8120U)
+#define PMU_BIU_IDLE_STS0                                  (0x0U)
+#define PMU_BIU_IDLE_STS0_IDLE_GPU_SHIFT                   (0U)
+#define PMU_BIU_IDLE_STS0_IDLE_GPU_MASK                    (0x1U << PMU_BIU_IDLE_STS0_IDLE_GPU_SHIFT)                   /* 0x00000001 */
+#define PMU_BIU_IDLE_STS0_IDLE_NPUTOP_SHIFT                (1U)
+#define PMU_BIU_IDLE_STS0_IDLE_NPUTOP_MASK                 (0x1U << PMU_BIU_IDLE_STS0_IDLE_NPUTOP_SHIFT)                /* 0x00000002 */
+#define PMU_BIU_IDLE_STS0_IDLE_NPU1_SHIFT                  (2U)
+#define PMU_BIU_IDLE_STS0_IDLE_NPU1_MASK                   (0x1U << PMU_BIU_IDLE_STS0_IDLE_NPU1_SHIFT)                  /* 0x00000004 */
+#define PMU_BIU_IDLE_STS0_IDLE_NPU2_SHIFT                  (3U)
+#define PMU_BIU_IDLE_STS0_IDLE_NPU2_MASK                   (0x1U << PMU_BIU_IDLE_STS0_IDLE_NPU2_SHIFT)                  /* 0x00000008 */
+#define PMU_BIU_IDLE_STS0_IDLE_VENC0_SHIFT                 (4U)
+#define PMU_BIU_IDLE_STS0_IDLE_VENC0_MASK                  (0x1U << PMU_BIU_IDLE_STS0_IDLE_VENC0_SHIFT)                 /* 0x00000010 */
+#define PMU_BIU_IDLE_STS0_IDLE_VENC1_SHIFT                 (5U)
+#define PMU_BIU_IDLE_STS0_IDLE_VENC1_MASK                  (0x1U << PMU_BIU_IDLE_STS0_IDLE_VENC1_SHIFT)                 /* 0x00000020 */
+#define PMU_BIU_IDLE_STS0_IDLE_RKVDEC0_SHIFT               (6U)
+#define PMU_BIU_IDLE_STS0_IDLE_RKVDEC0_MASK                (0x1U << PMU_BIU_IDLE_STS0_IDLE_RKVDEC0_SHIFT)               /* 0x00000040 */
+#define PMU_BIU_IDLE_STS0_IDLE_RKVDEC1_SHIFT               (7U)
+#define PMU_BIU_IDLE_STS0_IDLE_RKVDEC1_MASK                (0x1U << PMU_BIU_IDLE_STS0_IDLE_RKVDEC1_SHIFT)               /* 0x00000080 */
+#define PMU_BIU_IDLE_STS0_IDLE_VDPU_SHIFT                  (8U)
+#define PMU_BIU_IDLE_STS0_IDLE_VDPU_MASK                   (0x1U << PMU_BIU_IDLE_STS0_IDLE_VDPU_SHIFT)                  /* 0x00000100 */
+#define PMU_BIU_IDLE_STS0_IDLE_AV1_SHIFT                   (9U)
+#define PMU_BIU_IDLE_STS0_IDLE_AV1_MASK                    (0x1U << PMU_BIU_IDLE_STS0_IDLE_AV1_SHIFT)                   /* 0x00000200 */
+#define PMU_BIU_IDLE_STS0_IDLE_VI_SHIFT                    (10U)
+#define PMU_BIU_IDLE_STS0_IDLE_VI_MASK                     (0x1U << PMU_BIU_IDLE_STS0_IDLE_VI_SHIFT)                    /* 0x00000400 */
+#define PMU_BIU_IDLE_STS0_IDLE_ISP1_SHIFT                  (11U)
+#define PMU_BIU_IDLE_STS0_IDLE_ISP1_MASK                   (0x1U << PMU_BIU_IDLE_STS0_IDLE_ISP1_SHIFT)                  /* 0x00000800 */
+#define PMU_BIU_IDLE_STS0_IDLE_RGA31_SHIFT                 (12U)
+#define PMU_BIU_IDLE_STS0_IDLE_RGA31_MASK                  (0x1U << PMU_BIU_IDLE_STS0_IDLE_RGA31_SHIFT)                 /* 0x00001000 */
+#define PMU_BIU_IDLE_STS0_IDLE_VOP_SHIFT                   (13U)
+#define PMU_BIU_IDLE_STS0_IDLE_VOP_MASK                    (0x1U << PMU_BIU_IDLE_STS0_IDLE_VOP_SHIFT)                   /* 0x00002000 */
+#define PMU_BIU_IDLE_STS0_IDLE_VOP_CHANNEL_SHIFT           (14U)
+#define PMU_BIU_IDLE_STS0_IDLE_VOP_CHANNEL_MASK            (0x1U << PMU_BIU_IDLE_STS0_IDLE_VOP_CHANNEL_SHIFT)           /* 0x00004000 */
+#define PMU_BIU_IDLE_STS0_IDLE_VO0_SHIFT                   (15U)
+#define PMU_BIU_IDLE_STS0_IDLE_VO0_MASK                    (0x1U << PMU_BIU_IDLE_STS0_IDLE_VO0_SHIFT)                   /* 0x00008000 */
+#define PMU_BIU_IDLE_STS0_IDLE_VO1_SHIFT                   (16U)
+#define PMU_BIU_IDLE_STS0_IDLE_VO1_MASK                    (0x1U << PMU_BIU_IDLE_STS0_IDLE_VO1_SHIFT)                   /* 0x00010000 */
+#define PMU_BIU_IDLE_STS0_IDLE_AUDIO_SHIFT                 (17U)
+#define PMU_BIU_IDLE_STS0_IDLE_AUDIO_MASK                  (0x1U << PMU_BIU_IDLE_STS0_IDLE_AUDIO_SHIFT)                 /* 0x00020000 */
+#define PMU_BIU_IDLE_STS0_IDLE_NVM_SHIFT                   (18U)
+#define PMU_BIU_IDLE_STS0_IDLE_NVM_MASK                    (0x1U << PMU_BIU_IDLE_STS0_IDLE_NVM_SHIFT)                   /* 0x00040000 */
+#define PMU_BIU_IDLE_STS0_IDLE_SDIO_SHIFT                  (19U)
+#define PMU_BIU_IDLE_STS0_IDLE_SDIO_MASK                   (0x1U << PMU_BIU_IDLE_STS0_IDLE_SDIO_SHIFT)                  /* 0x00080000 */
+#define PMU_BIU_IDLE_STS0_IDLE_USB_SHIFT                   (20U)
+#define PMU_BIU_IDLE_STS0_IDLE_USB_MASK                    (0x1U << PMU_BIU_IDLE_STS0_IDLE_USB_SHIFT)                   /* 0x00100000 */
+#define PMU_BIU_IDLE_STS0_IDLE_PHP_SHIFT                   (21U)
+#define PMU_BIU_IDLE_STS0_IDLE_PHP_MASK                    (0x1U << PMU_BIU_IDLE_STS0_IDLE_PHP_SHIFT)                   /* 0x00200000 */
+#define PMU_BIU_IDLE_STS0_IDLE_VO1USBTOP_SHIFT             (22U)
+#define PMU_BIU_IDLE_STS0_IDLE_VO1USBTOP_MASK              (0x1U << PMU_BIU_IDLE_STS0_IDLE_VO1USBTOP_SHIFT)             /* 0x00400000 */
+#define PMU_BIU_IDLE_STS0_IDLE_SECURE_SHIFT                (23U)
+#define PMU_BIU_IDLE_STS0_IDLE_SECURE_MASK                 (0x1U << PMU_BIU_IDLE_STS0_IDLE_SECURE_SHIFT)                /* 0x00800000 */
+#define PMU_BIU_IDLE_STS0_IDLE_SECURE_CENTER_CHANNEL_SHIFT (24U)
+#define PMU_BIU_IDLE_STS0_IDLE_SECURE_CENTER_CHANNEL_MASK  (0x1U << PMU_BIU_IDLE_STS0_IDLE_SECURE_CENTER_CHANNEL_SHIFT) /* 0x01000000 */
+#define PMU_BIU_IDLE_STS0_IDLE_SECURE_VO1USB_CHANNEL_SHIFT (25U)
+#define PMU_BIU_IDLE_STS0_IDLE_SECURE_VO1USB_CHANNEL_MASK  (0x1U << PMU_BIU_IDLE_STS0_IDLE_SECURE_VO1USB_CHANNEL_SHIFT) /* 0x02000000 */
+#define PMU_BIU_IDLE_STS0_IDLE_CENTER_SHIFT                (26U)
+#define PMU_BIU_IDLE_STS0_IDLE_CENTER_MASK                 (0x1U << PMU_BIU_IDLE_STS0_IDLE_CENTER_SHIFT)                /* 0x04000000 */
+#define PMU_BIU_IDLE_STS0_IDLE_CENTER_CHANNEL_SHIFT        (27U)
+#define PMU_BIU_IDLE_STS0_IDLE_CENTER_CHANNEL_MASK         (0x1U << PMU_BIU_IDLE_STS0_IDLE_CENTER_CHANNEL_SHIFT)        /* 0x08000000 */
+#define PMU_BIU_IDLE_STS0_IDLE_DDRSCH0_SHIFT               (28U)
+#define PMU_BIU_IDLE_STS0_IDLE_DDRSCH0_MASK                (0x1U << PMU_BIU_IDLE_STS0_IDLE_DDRSCH0_SHIFT)               /* 0x10000000 */
+#define PMU_BIU_IDLE_STS0_IDLE_DDRSCH1_SHIFT               (29U)
+#define PMU_BIU_IDLE_STS0_IDLE_DDRSCH1_MASK                (0x1U << PMU_BIU_IDLE_STS0_IDLE_DDRSCH1_SHIFT)               /* 0x20000000 */
+#define PMU_BIU_IDLE_STS0_IDLE_DDRSCH2_SHIFT               (30U)
+#define PMU_BIU_IDLE_STS0_IDLE_DDRSCH2_MASK                (0x1U << PMU_BIU_IDLE_STS0_IDLE_DDRSCH2_SHIFT)               /* 0x40000000 */
+#define PMU_BIU_IDLE_STS0_IDLE_DDRSCH3_SHIFT               (31U)
+#define PMU_BIU_IDLE_STS0_IDLE_DDRSCH3_MASK                (0x1U << PMU_BIU_IDLE_STS0_IDLE_DDRSCH3_SHIFT)               /* 0x80000000 */
+/* BIU_IDLE_STS1 */
+#define PMU_BIU_IDLE_STS1_OFFSET                           (0x8124U)
+#define PMU_BIU_IDLE_STS1                                  (0x0U)
+#define PMU_BIU_IDLE_STS1_IDLE_CENTER_DDRSCH_SHIFT         (0U)
+#define PMU_BIU_IDLE_STS1_IDLE_CENTER_DDRSCH_MASK          (0x1U << PMU_BIU_IDLE_STS1_IDLE_CENTER_DDRSCH_SHIFT)         /* 0x00000001 */
+#define PMU_BIU_IDLE_STS1_IDLE_BUS_SHIFT                   (1U)
+#define PMU_BIU_IDLE_STS1_IDLE_BUS_MASK                    (0x1U << PMU_BIU_IDLE_STS1_IDLE_BUS_SHIFT)                   /* 0x00000002 */
+#define PMU_BIU_IDLE_STS1_IDLE_TOP_SHIFT                   (2U)
+#define PMU_BIU_IDLE_STS1_IDLE_TOP_MASK                    (0x1U << PMU_BIU_IDLE_STS1_IDLE_TOP_SHIFT)                   /* 0x00000004 */
+/* BIU_AUTO_CON0 */
+#define PMU_BIU_AUTO_CON0_OFFSET                           (0x8128U)
+#define PMU_BIU_AUTO_CON0_BIU_AUTO_GPU_ENA_SHIFT           (0U)
+#define PMU_BIU_AUTO_CON0_BIU_AUTO_GPU_ENA_MASK            (0x1U << PMU_BIU_AUTO_CON0_BIU_AUTO_GPU_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_NPUTOP_ENA_SHIFT       (1U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_NPUTOP_ENA_MASK        (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_NPUTOP_ENA_SHIFT)       /* 0x00000002 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_NPU1_ENA_SHIFT         (2U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_NPU1_ENA_MASK          (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_NPU1_ENA_SHIFT)         /* 0x00000004 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_NPU2_ENA_SHIFT         (3U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_NPU2_ENA_MASK          (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_NPU2_ENA_SHIFT)         /* 0x00000008 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VENC0_ENA_SHIFT        (4U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VENC0_ENA_MASK         (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_VENC0_ENA_SHIFT)        /* 0x00000010 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VENC1_ENA_SHIFT        (5U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VENC1_ENA_MASK         (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_VENC1_ENA_SHIFT)        /* 0x00000020 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_RKVDEC0_ENA_SHIFT      (6U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_RKVDEC0_ENA_MASK       (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_RKVDEC0_ENA_SHIFT)      /* 0x00000040 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_RKVDEC1_ENA_SHIFT      (7U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_RKVDEC1_ENA_MASK       (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_RKVDEC1_ENA_SHIFT)      /* 0x00000080 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VDPU_ENA_SHIFT         (8U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VDPU_ENA_MASK          (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_VDPU_ENA_SHIFT)         /* 0x00000100 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_AV1_ENA_SHIFT          (9U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_AV1_ENA_MASK           (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_AV1_ENA_SHIFT)          /* 0x00000200 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VI_ENA_SHIFT           (10U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VI_ENA_MASK            (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_VI_ENA_SHIFT)           /* 0x00000400 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_ISP1_ENA_SHIFT         (11U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_ISP1_ENA_MASK          (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_ISP1_ENA_SHIFT)         /* 0x00000800 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_RGA31_ENA_SHIFT        (12U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_RGA31_ENA_MASK         (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_RGA31_ENA_SHIFT)        /* 0x00001000 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VOP_ENA_SHIFT          (13U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VOP_ENA_MASK           (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_VOP_ENA_SHIFT)          /* 0x00002000 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VOP_CHANNEL_ENA_SHIFT  (14U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VOP_CHANNEL_ENA_MASK   (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_VOP_CHANNEL_ENA_SHIFT)  /* 0x00004000 */
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VO0_ENA_SHIFT          (15U)
+#define PMU_BIU_AUTO_CON0_IDLE_AUTO_VO0_ENA_MASK           (0x1U << PMU_BIU_AUTO_CON0_IDLE_AUTO_VO0_ENA_SHIFT)          /* 0x00008000 */
+/* BIU_AUTO_CON1 */
+#define PMU_BIU_AUTO_CON1_OFFSET                           (0x812CU)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_VO1_ENA_SHIFT          (0U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_VO1_ENA_MASK           (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_VO1_ENA_SHIFT)          /* 0x00000001 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_AUDIO_ENA_SHIFT        (1U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_AUDIO_ENA_MASK         (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_AUDIO_ENA_SHIFT)        /* 0x00000002 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_NVM_ENA_SHIFT          (2U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_NVM_ENA_MASK           (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_NVM_ENA_SHIFT)          /* 0x00000004 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_SDIO_ENA_SHIFT         (3U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_SDIO_ENA_MASK          (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_SDIO_ENA_SHIFT)         /* 0x00000008 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_USB_ENA_SHIFT          (4U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_USB_ENA_MASK           (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_USB_ENA_SHIFT)          /* 0x00000010 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_PHP_ENA_SHIFT          (5U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_PHP_ENA_MASK           (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_PHP_ENA_SHIFT)          /* 0x00000020 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_VO1USBTOP_ENA_SHIFT    (6U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_VO1USBTOP_ENA_MASK     (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_VO1USBTOP_ENA_SHIFT)    /* 0x00000040 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_SECURE_ENA_SHIFT       (7U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_SECURE_ENA_MASK        (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_SECURE_ENA_SHIFT)       /* 0x00000080 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_SECURE_CENTER_CHANNEL_ENA_SHIFT (8U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_SECURE_CENTER_CHANNEL_ENA_MASK (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_SECURE_CENTER_CHANNEL_ENA_SHIFT) /* 0x00000100 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_SECURE_VO1USB_CHANNEL_ENA_SHIFT (9U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_SECURE_VO1USB_CHANNEL_ENA_MASK (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_SECURE_VO1USB_CHANNEL_ENA_SHIFT) /* 0x00000200 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_CENTER_ENA_SHIFT       (10U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_CENTER_ENA_MASK        (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_CENTER_ENA_SHIFT)       /* 0x00000400 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_CENTER_CHANNEL_ENA_SHIFT (11U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_CENTER_CHANNEL_ENA_MASK (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_CENTER_CHANNEL_ENA_SHIFT) /* 0x00000800 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH0_ENA_SHIFT      (12U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH0_ENA_MASK       (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH0_ENA_SHIFT)      /* 0x00001000 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH1_ENA_SHIFT      (13U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH1_ENA_MASK       (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH1_ENA_SHIFT)      /* 0x00002000 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH2_ENA_SHIFT      (14U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH2_ENA_MASK       (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH2_ENA_SHIFT)      /* 0x00004000 */
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH3_ENA_SHIFT      (15U)
+#define PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH3_ENA_MASK       (0x1U << PMU_BIU_AUTO_CON1_IDLE_AUTO_DDRSCH3_ENA_SHIFT)      /* 0x00008000 */
+/* BIU_AUTO_CON2 */
+#define PMU_BIU_AUTO_CON2_OFFSET                           (0x8130U)
+#define PMU_BIU_AUTO_CON2_IDLE_AUTO_CENTER_DDRSCH_ENA_SHIFT (0U)
+#define PMU_BIU_AUTO_CON2_IDLE_AUTO_CENTER_DDRSCH_ENA_MASK (0x1U << PMU_BIU_AUTO_CON2_IDLE_AUTO_CENTER_DDRSCH_ENA_SHIFT) /* 0x00000001 */
+#define PMU_BIU_AUTO_CON2_IDLE_AUTO_BUS_ENA_SHIFT          (1U)
+#define PMU_BIU_AUTO_CON2_IDLE_AUTO_BUS_ENA_MASK           (0x1U << PMU_BIU_AUTO_CON2_IDLE_AUTO_BUS_ENA_SHIFT)          /* 0x00000002 */
+#define PMU_BIU_AUTO_CON2_IDLE_AUTO_TOP_ENA_SHIFT          (2U)
+#define PMU_BIU_AUTO_CON2_IDLE_AUTO_TOP_ENA_MASK           (0x1U << PMU_BIU_AUTO_CON2_IDLE_AUTO_TOP_ENA_SHIFT)          /* 0x00000004 */
+/* PWR_GATE_CON0 */
+#define PMU_PWR_GATE_CON0_OFFSET                           (0x8140U)
+#define PMU_PWR_GATE_CON0_PD_GPU_DWN_ENA_SHIFT             (0U)
+#define PMU_PWR_GATE_CON0_PD_GPU_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON0_PD_GPU_DWN_ENA_SHIFT)             /* 0x00000001 */
+#define PMU_PWR_GATE_CON0_PD_NPU_DWN_ENA_SHIFT             (1U)
+#define PMU_PWR_GATE_CON0_PD_NPU_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON0_PD_NPU_DWN_ENA_SHIFT)             /* 0x00000002 */
+#define PMU_PWR_GATE_CON0_PD_VCODEC_DWN_ENA_SHIFT          (2U)
+#define PMU_PWR_GATE_CON0_PD_VCODEC_DWN_ENA_MASK           (0x1U << PMU_PWR_GATE_CON0_PD_VCODEC_DWN_ENA_SHIFT)          /* 0x00000004 */
+#define PMU_PWR_GATE_CON0_PD_NPUTOP_DWN_ENA_SHIFT          (3U)
+#define PMU_PWR_GATE_CON0_PD_NPUTOP_DWN_ENA_MASK           (0x1U << PMU_PWR_GATE_CON0_PD_NPUTOP_DWN_ENA_SHIFT)          /* 0x00000008 */
+#define PMU_PWR_GATE_CON0_PD_NPU1_DWN_ENA_SHIFT            (4U)
+#define PMU_PWR_GATE_CON0_PD_NPU1_DWN_ENA_MASK             (0x1U << PMU_PWR_GATE_CON0_PD_NPU1_DWN_ENA_SHIFT)            /* 0x00000010 */
+#define PMU_PWR_GATE_CON0_PD_NPU2_DWN_ENA_SHIFT            (5U)
+#define PMU_PWR_GATE_CON0_PD_NPU2_DWN_ENA_MASK             (0x1U << PMU_PWR_GATE_CON0_PD_NPU2_DWN_ENA_SHIFT)            /* 0x00000020 */
+#define PMU_PWR_GATE_CON0_PD_VENC0_DWN_ENA_SHIFT           (6U)
+#define PMU_PWR_GATE_CON0_PD_VENC0_DWN_ENA_MASK            (0x1U << PMU_PWR_GATE_CON0_PD_VENC0_DWN_ENA_SHIFT)           /* 0x00000040 */
+#define PMU_PWR_GATE_CON0_PD_VENC1_DWN_ENA_SHIFT           (7U)
+#define PMU_PWR_GATE_CON0_PD_VENC1_DWN_ENA_MASK            (0x1U << PMU_PWR_GATE_CON0_PD_VENC1_DWN_ENA_SHIFT)           /* 0x00000080 */
+#define PMU_PWR_GATE_CON0_PD_RKVDEC0_DWN_ENA_SHIFT         (8U)
+#define PMU_PWR_GATE_CON0_PD_RKVDEC0_DWN_ENA_MASK          (0x1U << PMU_PWR_GATE_CON0_PD_RKVDEC0_DWN_ENA_SHIFT)         /* 0x00000100 */
+#define PMU_PWR_GATE_CON0_PD_RKVDEC1_DWN_ENA_SHIFT         (9U)
+#define PMU_PWR_GATE_CON0_PD_RKVDEC1_DWN_ENA_MASK          (0x1U << PMU_PWR_GATE_CON0_PD_RKVDEC1_DWN_ENA_SHIFT)         /* 0x00000200 */
+#define PMU_PWR_GATE_CON0_PD_VDPU_DWN_ENA_SHIFT            (10U)
+#define PMU_PWR_GATE_CON0_PD_VDPU_DWN_ENA_MASK             (0x1U << PMU_PWR_GATE_CON0_PD_VDPU_DWN_ENA_SHIFT)            /* 0x00000400 */
+#define PMU_PWR_GATE_CON0_PD_RGA30_DWN_ENA_SHIFT           (11U)
+#define PMU_PWR_GATE_CON0_PD_RGA30_DWN_ENA_MASK            (0x1U << PMU_PWR_GATE_CON0_PD_RGA30_DWN_ENA_SHIFT)           /* 0x00000800 */
+#define PMU_PWR_GATE_CON0_PD_AV1_DWN_ENA_SHIFT             (12U)
+#define PMU_PWR_GATE_CON0_PD_AV1_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON0_PD_AV1_DWN_ENA_SHIFT)             /* 0x00001000 */
+#define PMU_PWR_GATE_CON0_PD_VI_DWN_ENA_SHIFT              (13U)
+#define PMU_PWR_GATE_CON0_PD_VI_DWN_ENA_MASK               (0x1U << PMU_PWR_GATE_CON0_PD_VI_DWN_ENA_SHIFT)              /* 0x00002000 */
+#define PMU_PWR_GATE_CON0_PD_FEC_DWN_ENA_SHIFT             (14U)
+#define PMU_PWR_GATE_CON0_PD_FEC_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON0_PD_FEC_DWN_ENA_SHIFT)             /* 0x00004000 */
+#define PMU_PWR_GATE_CON0_PD_ISP1_DWN_ENA_SHIFT            (15U)
+#define PMU_PWR_GATE_CON0_PD_ISP1_DWN_ENA_MASK             (0x1U << PMU_PWR_GATE_CON0_PD_ISP1_DWN_ENA_SHIFT)            /* 0x00008000 */
+/* PWR_GATE_CON1 */
+#define PMU_PWR_GATE_CON1_OFFSET                           (0x8144U)
+#define PMU_PWR_GATE_CON1_PD_RGA31_DWN_ENA_SHIFT           (0U)
+#define PMU_PWR_GATE_CON1_PD_RGA31_DWN_ENA_MASK            (0x1U << PMU_PWR_GATE_CON1_PD_RGA31_DWN_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_PWR_GATE_CON1_PD_VOP_DWN_ENA_SHIFT             (1U)
+#define PMU_PWR_GATE_CON1_PD_VOP_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON1_PD_VOP_DWN_ENA_SHIFT)             /* 0x00000002 */
+#define PMU_PWR_GATE_CON1_PD_VO0_DWN_ENA_SHIFT             (2U)
+#define PMU_PWR_GATE_CON1_PD_VO0_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON1_PD_VO0_DWN_ENA_SHIFT)             /* 0x00000004 */
+#define PMU_PWR_GATE_CON1_PD_VO1_DWN_ENA_SHIFT             (3U)
+#define PMU_PWR_GATE_CON1_PD_VO1_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON1_PD_VO1_DWN_ENA_SHIFT)             /* 0x00000008 */
+#define PMU_PWR_GATE_CON1_PD_AUDIO_DWN_ENA_SHIFT           (4U)
+#define PMU_PWR_GATE_CON1_PD_AUDIO_DWN_ENA_MASK            (0x1U << PMU_PWR_GATE_CON1_PD_AUDIO_DWN_ENA_SHIFT)           /* 0x00000010 */
+#define PMU_PWR_GATE_CON1_PD_PHP_DWN_ENA_SHIFT             (5U)
+#define PMU_PWR_GATE_CON1_PD_PHP_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON1_PD_PHP_DWN_ENA_SHIFT)             /* 0x00000020 */
+#define PMU_PWR_GATE_CON1_PD_GMAC_DWN_ENA_SHIFT            (6U)
+#define PMU_PWR_GATE_CON1_PD_GMAC_DWN_ENA_MASK             (0x1U << PMU_PWR_GATE_CON1_PD_GMAC_DWN_ENA_SHIFT)            /* 0x00000040 */
+#define PMU_PWR_GATE_CON1_PD_PCIE_DWN_ENA_SHIFT            (7U)
+#define PMU_PWR_GATE_CON1_PD_PCIE_DWN_ENA_MASK             (0x1U << PMU_PWR_GATE_CON1_PD_PCIE_DWN_ENA_SHIFT)            /* 0x00000080 */
+#define PMU_PWR_GATE_CON1_PD_NVM_DWN_ENA_SHIFT             (8U)
+#define PMU_PWR_GATE_CON1_PD_NVM_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON1_PD_NVM_DWN_ENA_SHIFT)             /* 0x00000100 */
+#define PMU_PWR_GATE_CON1_PD_NVM0_DWN_ENA_SHIFT            (9U)
+#define PMU_PWR_GATE_CON1_PD_NVM0_DWN_ENA_MASK             (0x1U << PMU_PWR_GATE_CON1_PD_NVM0_DWN_ENA_SHIFT)            /* 0x00000200 */
+#define PMU_PWR_GATE_CON1_PD_SDIO_DWN_ENA_SHIFT            (10U)
+#define PMU_PWR_GATE_CON1_PD_SDIO_DWN_ENA_MASK             (0x1U << PMU_PWR_GATE_CON1_PD_SDIO_DWN_ENA_SHIFT)            /* 0x00000400 */
+#define PMU_PWR_GATE_CON1_PD_USB_DWN_ENA_SHIFT             (11U)
+#define PMU_PWR_GATE_CON1_PD_USB_DWN_ENA_MASK              (0x1U << PMU_PWR_GATE_CON1_PD_USB_DWN_ENA_SHIFT)             /* 0x00000800 */
+#define PMU_PWR_GATE_CON1_PD_SECURE_DWN_ENA_SHIFT          (12U)
+#define PMU_PWR_GATE_CON1_PD_SECURE_DWN_ENA_MASK           (0x1U << PMU_PWR_GATE_CON1_PD_SECURE_DWN_ENA_SHIFT)          /* 0x00001000 */
+#define PMU_PWR_GATE_CON1_PD_SDMMC_DWN_ENA_SHIFT           (13U)
+#define PMU_PWR_GATE_CON1_PD_SDMMC_DWN_ENA_MASK            (0x1U << PMU_PWR_GATE_CON1_PD_SDMMC_DWN_ENA_SHIFT)           /* 0x00002000 */
+#define PMU_PWR_GATE_CON1_PD_CRYPTO_DWN_ENA_SHIFT          (14U)
+#define PMU_PWR_GATE_CON1_PD_CRYPTO_DWN_ENA_MASK           (0x1U << PMU_PWR_GATE_CON1_PD_CRYPTO_DWN_ENA_SHIFT)          /* 0x00004000 */
+#define PMU_PWR_GATE_CON1_PD_CENTER_DWN_ENA_SHIFT          (15U)
+#define PMU_PWR_GATE_CON1_PD_CENTER_DWN_ENA_MASK           (0x1U << PMU_PWR_GATE_CON1_PD_CENTER_DWN_ENA_SHIFT)          /* 0x00008000 */
+/* PWR_GATE_CON2 */
+#define PMU_PWR_GATE_CON2_OFFSET                           (0x8148U)
+#define PMU_PWR_GATE_CON2_PD_DDR01_DWN_ENA_SHIFT           (0U)
+#define PMU_PWR_GATE_CON2_PD_DDR01_DWN_ENA_MASK            (0x1U << PMU_PWR_GATE_CON2_PD_DDR01_DWN_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_PWR_GATE_CON2_PD_DDR23_DWN_ENA_SHIFT           (1U)
+#define PMU_PWR_GATE_CON2_PD_DDR23_DWN_ENA_MASK            (0x1U << PMU_PWR_GATE_CON2_PD_DDR23_DWN_ENA_SHIFT)           /* 0x00000002 */
+/* PWR_GATE_SFTCON0 */
+#define PMU_PWR_GATE_SFTCON0_OFFSET                        (0x814CU)
+#define PMU_PWR_GATE_SFTCON0_PD_GPU_DWN_SFTENA_SHIFT       (0U)
+#define PMU_PWR_GATE_SFTCON0_PD_GPU_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON0_PD_GPU_DWN_SFTENA_SHIFT)       /* 0x00000001 */
+#define PMU_PWR_GATE_SFTCON0_PD_NPU_DWN_SFTENA_SHIFT       (1U)
+#define PMU_PWR_GATE_SFTCON0_PD_NPU_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON0_PD_NPU_DWN_SFTENA_SHIFT)       /* 0x00000002 */
+#define PMU_PWR_GATE_SFTCON0_PD_VCODEC_DWN_SFTENA_SHIFT    (2U)
+#define PMU_PWR_GATE_SFTCON0_PD_VCODEC_DWN_SFTENA_MASK     (0x1U << PMU_PWR_GATE_SFTCON0_PD_VCODEC_DWN_SFTENA_SHIFT)    /* 0x00000004 */
+#define PMU_PWR_GATE_SFTCON0_PD_NPUTOP_DWN_SFTENA_SHIFT    (3U)
+#define PMU_PWR_GATE_SFTCON0_PD_NPUTOP_DWN_SFTENA_MASK     (0x1U << PMU_PWR_GATE_SFTCON0_PD_NPUTOP_DWN_SFTENA_SHIFT)    /* 0x00000008 */
+#define PMU_PWR_GATE_SFTCON0_PD_NPU1_DWN_SFTENA_SHIFT      (4U)
+#define PMU_PWR_GATE_SFTCON0_PD_NPU1_DWN_SFTENA_MASK       (0x1U << PMU_PWR_GATE_SFTCON0_PD_NPU1_DWN_SFTENA_SHIFT)      /* 0x00000010 */
+#define PMU_PWR_GATE_SFTCON0_PD_NPU2_DWN_SFTENA_SHIFT      (5U)
+#define PMU_PWR_GATE_SFTCON0_PD_NPU2_DWN_SFTENA_MASK       (0x1U << PMU_PWR_GATE_SFTCON0_PD_NPU2_DWN_SFTENA_SHIFT)      /* 0x00000020 */
+#define PMU_PWR_GATE_SFTCON0_PD_VENC0_DWN_SFTENA_SHIFT     (6U)
+#define PMU_PWR_GATE_SFTCON0_PD_VENC0_DWN_SFTENA_MASK      (0x1U << PMU_PWR_GATE_SFTCON0_PD_VENC0_DWN_SFTENA_SHIFT)     /* 0x00000040 */
+#define PMU_PWR_GATE_SFTCON0_PD_VENC1_DWN_SFTENA_SHIFT     (7U)
+#define PMU_PWR_GATE_SFTCON0_PD_VENC1_DWN_SFTENA_MASK      (0x1U << PMU_PWR_GATE_SFTCON0_PD_VENC1_DWN_SFTENA_SHIFT)     /* 0x00000080 */
+#define PMU_PWR_GATE_SFTCON0_PD_RKVDEC0_DWN_SFTENA_SHIFT   (8U)
+#define PMU_PWR_GATE_SFTCON0_PD_RKVDEC0_DWN_SFTENA_MASK    (0x1U << PMU_PWR_GATE_SFTCON0_PD_RKVDEC0_DWN_SFTENA_SHIFT)   /* 0x00000100 */
+#define PMU_PWR_GATE_SFTCON0_PD_RKVDEC1_DWN_SFTENA_SHIFT   (9U)
+#define PMU_PWR_GATE_SFTCON0_PD_RKVDEC1_DWN_SFTENA_MASK    (0x1U << PMU_PWR_GATE_SFTCON0_PD_RKVDEC1_DWN_SFTENA_SHIFT)   /* 0x00000200 */
+#define PMU_PWR_GATE_SFTCON0_PD_VDPU_DWN_SFTENA_SHIFT      (10U)
+#define PMU_PWR_GATE_SFTCON0_PD_VDPU_DWN_SFTENA_MASK       (0x1U << PMU_PWR_GATE_SFTCON0_PD_VDPU_DWN_SFTENA_SHIFT)      /* 0x00000400 */
+#define PMU_PWR_GATE_SFTCON0_PD_RGA30_DWN_SFTENA_SHIFT     (11U)
+#define PMU_PWR_GATE_SFTCON0_PD_RGA30_DWN_SFTENA_MASK      (0x1U << PMU_PWR_GATE_SFTCON0_PD_RGA30_DWN_SFTENA_SHIFT)     /* 0x00000800 */
+#define PMU_PWR_GATE_SFTCON0_PD_AV1_DWN_SFTENA_SHIFT       (12U)
+#define PMU_PWR_GATE_SFTCON0_PD_AV1_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON0_PD_AV1_DWN_SFTENA_SHIFT)       /* 0x00001000 */
+#define PMU_PWR_GATE_SFTCON0_PD_VI_DWN_SFTENA_SHIFT        (13U)
+#define PMU_PWR_GATE_SFTCON0_PD_VI_DWN_SFTENA_MASK         (0x1U << PMU_PWR_GATE_SFTCON0_PD_VI_DWN_SFTENA_SHIFT)        /* 0x00002000 */
+#define PMU_PWR_GATE_SFTCON0_PD_FEC_DWN_SFTENA_SHIFT       (14U)
+#define PMU_PWR_GATE_SFTCON0_PD_FEC_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON0_PD_FEC_DWN_SFTENA_SHIFT)       /* 0x00004000 */
+#define PMU_PWR_GATE_SFTCON0_PD_ISP1_DWN_SFTENA_SHIFT      (15U)
+#define PMU_PWR_GATE_SFTCON0_PD_ISP1_DWN_SFTENA_MASK       (0x1U << PMU_PWR_GATE_SFTCON0_PD_ISP1_DWN_SFTENA_SHIFT)      /* 0x00008000 */
+/* PWR_GATE_SFTCON1 */
+#define PMU_PWR_GATE_SFTCON1_OFFSET                        (0x8150U)
+#define PMU_PWR_GATE_SFTCON1_PD_RGA31_DWN_SFTENA_SHIFT     (0U)
+#define PMU_PWR_GATE_SFTCON1_PD_RGA31_DWN_SFTENA_MASK      (0x1U << PMU_PWR_GATE_SFTCON1_PD_RGA31_DWN_SFTENA_SHIFT)     /* 0x00000001 */
+#define PMU_PWR_GATE_SFTCON1_PD_VOP_DWN_SFTENA_SHIFT       (1U)
+#define PMU_PWR_GATE_SFTCON1_PD_VOP_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON1_PD_VOP_DWN_SFTENA_SHIFT)       /* 0x00000002 */
+#define PMU_PWR_GATE_SFTCON1_PD_VO0_DWN_SFTENA_SHIFT       (2U)
+#define PMU_PWR_GATE_SFTCON1_PD_VO0_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON1_PD_VO0_DWN_SFTENA_SHIFT)       /* 0x00000004 */
+#define PMU_PWR_GATE_SFTCON1_PD_VO1_DWN_SFTENA_SHIFT       (3U)
+#define PMU_PWR_GATE_SFTCON1_PD_VO1_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON1_PD_VO1_DWN_SFTENA_SHIFT)       /* 0x00000008 */
+#define PMU_PWR_GATE_SFTCON1_PD_AUDIO_DWN_SFTENA_SHIFT     (4U)
+#define PMU_PWR_GATE_SFTCON1_PD_AUDIO_DWN_SFTENA_MASK      (0x1U << PMU_PWR_GATE_SFTCON1_PD_AUDIO_DWN_SFTENA_SHIFT)     /* 0x00000010 */
+#define PMU_PWR_GATE_SFTCON1_PD_PHP_DWN_SFTENA_SHIFT       (5U)
+#define PMU_PWR_GATE_SFTCON1_PD_PHP_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON1_PD_PHP_DWN_SFTENA_SHIFT)       /* 0x00000020 */
+#define PMU_PWR_GATE_SFTCON1_PD_GMAC_DWN_SFTENA_SHIFT      (6U)
+#define PMU_PWR_GATE_SFTCON1_PD_GMAC_DWN_SFTENA_MASK       (0x1U << PMU_PWR_GATE_SFTCON1_PD_GMAC_DWN_SFTENA_SHIFT)      /* 0x00000040 */
+#define PMU_PWR_GATE_SFTCON1_PD_PCIE_DWN_SFTENA_SHIFT      (7U)
+#define PMU_PWR_GATE_SFTCON1_PD_PCIE_DWN_SFTENA_MASK       (0x1U << PMU_PWR_GATE_SFTCON1_PD_PCIE_DWN_SFTENA_SHIFT)      /* 0x00000080 */
+#define PMU_PWR_GATE_SFTCON1_PD_NVM_DWN_SFTENA_SHIFT       (8U)
+#define PMU_PWR_GATE_SFTCON1_PD_NVM_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON1_PD_NVM_DWN_SFTENA_SHIFT)       /* 0x00000100 */
+#define PMU_PWR_GATE_SFTCON1_PD_NVM0_DWN_SFTENA_SHIFT      (9U)
+#define PMU_PWR_GATE_SFTCON1_PD_NVM0_DWN_SFTENA_MASK       (0x1U << PMU_PWR_GATE_SFTCON1_PD_NVM0_DWN_SFTENA_SHIFT)      /* 0x00000200 */
+#define PMU_PWR_GATE_SFTCON1_PD_SDIO_DWN_SFTENA_SHIFT      (10U)
+#define PMU_PWR_GATE_SFTCON1_PD_SDIO_DWN_SFTENA_MASK       (0x1U << PMU_PWR_GATE_SFTCON1_PD_SDIO_DWN_SFTENA_SHIFT)      /* 0x00000400 */
+#define PMU_PWR_GATE_SFTCON1_PD_USB_DWN_SFTENA_SHIFT       (11U)
+#define PMU_PWR_GATE_SFTCON1_PD_USB_DWN_SFTENA_MASK        (0x1U << PMU_PWR_GATE_SFTCON1_PD_USB_DWN_SFTENA_SHIFT)       /* 0x00000800 */
+#define PMU_PWR_GATE_SFTCON1_PD_SECURE_DWN_SFTENA_SHIFT    (12U)
+#define PMU_PWR_GATE_SFTCON1_PD_SECURE_DWN_SFTENA_MASK     (0x1U << PMU_PWR_GATE_SFTCON1_PD_SECURE_DWN_SFTENA_SHIFT)    /* 0x00001000 */
+#define PMU_PWR_GATE_SFTCON1_PD_SDMMC_DWN_SFTENA_SHIFT     (13U)
+#define PMU_PWR_GATE_SFTCON1_PD_SDMMC_DWN_SFTENA_MASK      (0x1U << PMU_PWR_GATE_SFTCON1_PD_SDMMC_DWN_SFTENA_SHIFT)     /* 0x00002000 */
+#define PMU_PWR_GATE_SFTCON1_PD_CRYPTO_DWN_SFTENA_SHIFT    (14U)
+#define PMU_PWR_GATE_SFTCON1_PD_CRYPTO_DWN_SFTENA_MASK     (0x1U << PMU_PWR_GATE_SFTCON1_PD_CRYPTO_DWN_SFTENA_SHIFT)    /* 0x00004000 */
+#define PMU_PWR_GATE_SFTCON1_PD_CENTER_DWN_SFTENA_SHIFT    (15U)
+#define PMU_PWR_GATE_SFTCON1_PD_CENTER_DWN_SFTENA_MASK     (0x1U << PMU_PWR_GATE_SFTCON1_PD_CENTER_DWN_SFTENA_SHIFT)    /* 0x00008000 */
+/* PWR_GATE_SFTCON2 */
+#define PMU_PWR_GATE_SFTCON2_OFFSET                        (0x8154U)
+#define PMU_PWR_GATE_SFTCON2_PD_DDR01_DWN_SFTENA_SHIFT     (0U)
+#define PMU_PWR_GATE_SFTCON2_PD_DDR01_DWN_SFTENA_MASK      (0x1U << PMU_PWR_GATE_SFTCON2_PD_DDR01_DWN_SFTENA_SHIFT)     /* 0x00000001 */
+#define PMU_PWR_GATE_SFTCON2_PD_DDR23_DWN_SFTENA_SHIFT     (1U)
+#define PMU_PWR_GATE_SFTCON2_PD_DDR23_DWN_SFTENA_MASK      (0x1U << PMU_PWR_GATE_SFTCON2_PD_DDR23_DWN_SFTENA_SHIFT)     /* 0x00000002 */
+/* VOL_GATE_CON0 */
+#define PMU_VOL_GATE_CON0_OFFSET                           (0x8158U)
+#define PMU_VOL_GATE_CON0_VD_GPU_OFF_ENA_SHIFT             (0U)
+#define PMU_VOL_GATE_CON0_VD_GPU_OFF_ENA_MASK              (0x1U << PMU_VOL_GATE_CON0_VD_GPU_OFF_ENA_SHIFT)             /* 0x00000001 */
+#define PMU_VOL_GATE_CON0_VD_NPU_OFF_ENA_SHIFT             (1U)
+#define PMU_VOL_GATE_CON0_VD_NPU_OFF_ENA_MASK              (0x1U << PMU_VOL_GATE_CON0_VD_NPU_OFF_ENA_SHIFT)             /* 0x00000002 */
+#define PMU_VOL_GATE_CON0_VD_VCODEC_OFF_ENA_SHIFT          (2U)
+#define PMU_VOL_GATE_CON0_VD_VCODEC_OFF_ENA_MASK           (0x1U << PMU_VOL_GATE_CON0_VD_VCODEC_OFF_ENA_SHIFT)          /* 0x00000004 */
+/* VOL_GATE_CON1 */
+#define PMU_VOL_GATE_CON1_OFFSET                           (0x8160U)
+#define PMU_VOL_GATE_CON1_VD_DDR01_OFF_ENA_SHIFT           (0U)
+#define PMU_VOL_GATE_CON1_VD_DDR01_OFF_ENA_MASK            (0x1U << PMU_VOL_GATE_CON1_VD_DDR01_OFF_ENA_SHIFT)           /* 0x00000001 */
+#define PMU_VOL_GATE_CON1_VD_DDR23_OFF_ENA_SHIFT           (1U)
+#define PMU_VOL_GATE_CON1_VD_DDR23_OFF_ENA_MASK            (0x1U << PMU_VOL_GATE_CON1_VD_DDR23_OFF_ENA_SHIFT)           /* 0x00000002 */
+/* PWR_CHAIN_PWRUP_CON0 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_OFFSET                    (0x8164U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_NPUTOP_PWRUP_STABLE_ENA_SHIFT (3U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_NPUTOP_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_NPUTOP_PWRUP_STABLE_ENA_SHIFT) /* 0x00000008 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_NPU1_PWRUP_STABLE_ENA_SHIFT (4U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_NPU1_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_NPU1_PWRUP_STABLE_ENA_SHIFT) /* 0x00000010 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_NPU2_PWRUP_STABLE_ENA_SHIFT (5U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_NPU2_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_NPU2_PWRUP_STABLE_ENA_SHIFT) /* 0x00000020 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_VENC0_PWRUP_STABLE_ENA_SHIFT (6U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_VENC0_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_VENC0_PWRUP_STABLE_ENA_SHIFT) /* 0x00000040 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_VENC1_PWRUP_STABLE_ENA_SHIFT (7U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_VENC1_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_VENC1_PWRUP_STABLE_ENA_SHIFT) /* 0x00000080 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_RKVDEC0_PWRUP_STABLE_ENA_SHIFT (8U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_RKVDEC0_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_RKVDEC0_PWRUP_STABLE_ENA_SHIFT) /* 0x00000100 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_RKVDEC1_PWRUP_STABLE_ENA_SHIFT (9U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_RKVDEC1_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_RKVDEC1_PWRUP_STABLE_ENA_SHIFT) /* 0x00000200 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_VDPU_PWRUP_STABLE_ENA_SHIFT (10U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_VDPU_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_VDPU_PWRUP_STABLE_ENA_SHIFT) /* 0x00000400 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_RGA30_PWRUP_STABLE_ENA_SHIFT (11U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_RGA30_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_RGA30_PWRUP_STABLE_ENA_SHIFT) /* 0x00000800 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_AV1_PWRUP_STABLE_ENA_SHIFT (12U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_AV1_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_AV1_PWRUP_STABLE_ENA_SHIFT) /* 0x00001000 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_VI_PWRUP_STABLE_ENA_SHIFT (13U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_VI_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_VI_PWRUP_STABLE_ENA_SHIFT) /* 0x00002000 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_FEC_PWRUP_STABLE_ENA_SHIFT (14U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_FEC_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_FEC_PWRUP_STABLE_ENA_SHIFT) /* 0x00004000 */
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_ISP1_PWRUP_STABLE_ENA_SHIFT (15U)
+#define PMU_PWR_CHAIN_PWRUP_CON0_PD_ISP1_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON0_PD_ISP1_PWRUP_STABLE_ENA_SHIFT) /* 0x00008000 */
+/* PWR_CHAIN_PWRUP_CON1 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_OFFSET                    (0x8168U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_RGA31_PWRUP_STABLE_ENA_SHIFT (0U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_RGA31_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_RGA31_PWRUP_STABLE_ENA_SHIFT) /* 0x00000001 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_VOP_PWRUP_STABLE_ENA_SHIFT (1U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_VOP_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_VOP_PWRUP_STABLE_ENA_SHIFT) /* 0x00000002 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_VO0_PWRUP_STABLE_ENA_SHIFT (2U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_VO0_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_VO0_PWRUP_STABLE_ENA_SHIFT) /* 0x00000004 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_VO1_PWRUP_STABLE_ENA_SHIFT (3U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_VO1_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_VO1_PWRUP_STABLE_ENA_SHIFT) /* 0x00000008 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_AUDIO_PWRUP_STABLE_ENA_SHIFT (4U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_AUDIO_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_AUDIO_PWRUP_STABLE_ENA_SHIFT) /* 0x00000010 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_PHP_PWRUP_STABLE_ENA_SHIFT (5U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_PHP_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_PHP_PWRUP_STABLE_ENA_SHIFT) /* 0x00000020 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_GMAC_PWRUP_STABLE_ENA_SHIFT (6U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_GMAC_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_GMAC_PWRUP_STABLE_ENA_SHIFT) /* 0x00000040 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_PCIE_PWRUP_STABLE_ENA_SHIFT (7U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_PCIE_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_PCIE_PWRUP_STABLE_ENA_SHIFT) /* 0x00000080 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_NVM_PWRUP_STABLE_ENA_SHIFT (8U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_NVM_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_NVM_PWRUP_STABLE_ENA_SHIFT) /* 0x00000100 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_NVM0_PWRUP_STABLE_ENA_SHIFT (9U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_NVM0_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_NVM0_PWRUP_STABLE_ENA_SHIFT) /* 0x00000200 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_SDIO_PWRUP_STABLE_ENA_SHIFT (10U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_SDIO_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_SDIO_PWRUP_STABLE_ENA_SHIFT) /* 0x00000400 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_USB_PWRUP_STABLE_ENA_SHIFT (11U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_USB_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_USB_PWRUP_STABLE_ENA_SHIFT) /* 0x00000800 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_SECURE_PWRUP_STABLE_ENA_SHIFT (12U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_SECURE_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_SECURE_PWRUP_STABLE_ENA_SHIFT) /* 0x00001000 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_SDMMC_PWRUP_STABLE_ENA_SHIFT (13U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_SDMMC_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_SDMMC_PWRUP_STABLE_ENA_SHIFT) /* 0x00002000 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_CRYPTO_PWRUP_STABLE_ENA_SHIFT (14U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_CRYPTO_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_CRYPTO_PWRUP_STABLE_ENA_SHIFT) /* 0x00004000 */
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_CENTER_PWRUP_STABLE_ENA_SHIFT (15U)
+#define PMU_PWR_CHAIN_PWRUP_CON1_PD_CENTER_PWRUP_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRUP_CON1_PD_CENTER_PWRUP_STABLE_ENA_SHIFT) /* 0x00008000 */
+/* PWR_CHAIN_PWRDN_CON0 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_OFFSET                    (0x8170U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_NPUTOP_PWRDN_STABLE_ENA_SHIFT (3U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_NPUTOP_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_NPUTOP_PWRDN_STABLE_ENA_SHIFT) /* 0x00000008 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_NPU1_PWRDN_STABLE_ENA_SHIFT (4U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_NPU1_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_NPU1_PWRDN_STABLE_ENA_SHIFT) /* 0x00000010 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_NPU2_PWRDN_STABLE_ENA_SHIFT (5U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_NPU2_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_NPU2_PWRDN_STABLE_ENA_SHIFT) /* 0x00000020 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_VENC0_PWRDN_STABLE_ENA_SHIFT (6U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_VENC0_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_VENC0_PWRDN_STABLE_ENA_SHIFT) /* 0x00000040 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_VENC1_PWRDN_STABLE_ENA_SHIFT (7U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_VENC1_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_VENC1_PWRDN_STABLE_ENA_SHIFT) /* 0x00000080 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_RKVDEC0_PWRDN_STABLE_ENA_SHIFT (8U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_RKVDEC0_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_RKVDEC0_PWRDN_STABLE_ENA_SHIFT) /* 0x00000100 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_RKVDEC1_PWRDN_STABLE_ENA_SHIFT (9U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_RKVDEC1_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_RKVDEC1_PWRDN_STABLE_ENA_SHIFT) /* 0x00000200 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_VDPU_PWRDN_STABLE_ENA_SHIFT (10U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_VDPU_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_VDPU_PWRDN_STABLE_ENA_SHIFT) /* 0x00000400 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_RGA30_PWRDN_STABLE_ENA_SHIFT (11U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_RGA30_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_RGA30_PWRDN_STABLE_ENA_SHIFT) /* 0x00000800 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_AV1_PWRDN_STABLE_ENA_SHIFT (12U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_AV1_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_AV1_PWRDN_STABLE_ENA_SHIFT) /* 0x00001000 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_VI_PWRDN_STABLE_ENA_SHIFT (13U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_VI_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_VI_PWRDN_STABLE_ENA_SHIFT) /* 0x00002000 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_FEC_PWRDN_STABLE_ENA_SHIFT (14U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_FEC_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_FEC_PWRDN_STABLE_ENA_SHIFT) /* 0x00004000 */
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_ISP1_PWRDN_STABLE_ENA_SHIFT (15U)
+#define PMU_PWR_CHAIN_PWRDN_CON0_PD_ISP1_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON0_PD_ISP1_PWRDN_STABLE_ENA_SHIFT) /* 0x00008000 */
+/* PWR_CHAIN_PWRDN_CON1 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_OFFSET                    (0x8174U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_RGA31_PWRDN_STABLE_ENA_SHIFT (0U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_RGA31_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_RGA31_PWRDN_STABLE_ENA_SHIFT) /* 0x00000001 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_VOP_PWRDN_STABLE_ENA_SHIFT (1U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_VOP_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_VOP_PWRDN_STABLE_ENA_SHIFT) /* 0x00000002 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_VO0_PWRDN_STABLE_ENA_SHIFT (2U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_VO0_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_VO0_PWRDN_STABLE_ENA_SHIFT) /* 0x00000004 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_VO1_PWRDN_STABLE_ENA_SHIFT (3U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_VO1_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_VO1_PWRDN_STABLE_ENA_SHIFT) /* 0x00000008 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_AUDIO_PWRDN_STABLE_ENA_SHIFT (4U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_AUDIO_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_AUDIO_PWRDN_STABLE_ENA_SHIFT) /* 0x00000010 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_PHP_PWRDN_STABLE_ENA_SHIFT (5U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_PHP_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_PHP_PWRDN_STABLE_ENA_SHIFT) /* 0x00000020 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_GMAC_PWRDN_STABLE_ENA_SHIFT (6U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_GMAC_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_GMAC_PWRDN_STABLE_ENA_SHIFT) /* 0x00000040 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_PCIE_PWRDN_STABLE_ENA_SHIFT (7U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_PCIE_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_PCIE_PWRDN_STABLE_ENA_SHIFT) /* 0x00000080 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_NVM_PWRDN_STABLE_ENA_SHIFT (8U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_NVM_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_NVM_PWRDN_STABLE_ENA_SHIFT) /* 0x00000100 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_NVM0_PWRDN_STABLE_ENA_SHIFT (9U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_NVM0_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_NVM0_PWRDN_STABLE_ENA_SHIFT) /* 0x00000200 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_SDIO_PWRDN_STABLE_ENA_SHIFT (10U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_SDIO_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_SDIO_PWRDN_STABLE_ENA_SHIFT) /* 0x00000400 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_USB_PWRDN_STABLE_ENA_SHIFT (11U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_USB_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_USB_PWRDN_STABLE_ENA_SHIFT) /* 0x00000800 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_SECURE_PWRDN_STABLE_ENA_SHIFT (12U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_SECURE_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_SECURE_PWRDN_STABLE_ENA_SHIFT) /* 0x00001000 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_SDMMC_PWRDN_STABLE_ENA_SHIFT (13U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_SDMMC_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_SDMMC_PWRDN_STABLE_ENA_SHIFT) /* 0x00002000 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_CRYPTO_PWRDN_STABLE_ENA_SHIFT (14U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_CRYPTO_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_CRYPTO_PWRDN_STABLE_ENA_SHIFT) /* 0x00004000 */
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_CENTER_PWRDN_STABLE_ENA_SHIFT (15U)
+#define PMU_PWR_CHAIN_PWRDN_CON1_PD_CENTER_PWRDN_STABLE_ENA_MASK (0x1U << PMU_PWR_CHAIN_PWRDN_CON1_PD_CENTER_PWRDN_STABLE_ENA_SHIFT) /* 0x00008000 */
+/* PWR_STABLE_CNT */
+#define PMU_PWR_STABLE_CNT_OFFSET                          (0x817CU)
+#define PMU_PWR_STABLE_CNT_PWRUP_STABLE_CNT_SHIFT          (0U)
+#define PMU_PWR_STABLE_CNT_PWRUP_STABLE_CNT_MASK           (0x1FU << PMU_PWR_STABLE_CNT_PWRUP_STABLE_CNT_SHIFT)         /* 0x0000001F */
+#define PMU_PWR_STABLE_CNT_PWRDN_STABLE_CNT_SHIFT          (16U)
+#define PMU_PWR_STABLE_CNT_PWRDN_STABLE_CNT_MASK           (0x1FU << PMU_PWR_STABLE_CNT_PWRDN_STABLE_CNT_SHIFT)         /* 0x001F0000 */
+/* PWR_GATE_STS0 */
+#define PMU_PWR_GATE_STS0_OFFSET                           (0x8180U)
+#define PMU_PWR_GATE_STS0                                  (0xFFFFFFU)
+#define PMU_PWR_GATE_STS0_PD_GPU_DWN_STAT_SHIFT            (0U)
+#define PMU_PWR_GATE_STS0_PD_GPU_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_GPU_DWN_STAT_SHIFT)            /* 0x00000001 */
+#define PMU_PWR_GATE_STS0_PD_NPU_DWN_STAT_SHIFT            (1U)
+#define PMU_PWR_GATE_STS0_PD_NPU_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_NPU_DWN_STAT_SHIFT)            /* 0x00000002 */
+#define PMU_PWR_GATE_STS0_PD_VCODEC_DWN_STAT_SHIFT         (2U)
+#define PMU_PWR_GATE_STS0_PD_VCODEC_DWN_STAT_MASK          (0x1U << PMU_PWR_GATE_STS0_PD_VCODEC_DWN_STAT_SHIFT)         /* 0x00000004 */
+#define PMU_PWR_GATE_STS0_PD_NPUTOP_DWN_STAT_SHIFT         (3U)
+#define PMU_PWR_GATE_STS0_PD_NPUTOP_DWN_STAT_MASK          (0x1U << PMU_PWR_GATE_STS0_PD_NPUTOP_DWN_STAT_SHIFT)         /* 0x00000008 */
+#define PMU_PWR_GATE_STS0_PD_NPU1_DWN_STAT_SHIFT           (4U)
+#define PMU_PWR_GATE_STS0_PD_NPU1_DWN_STAT_MASK            (0x1U << PMU_PWR_GATE_STS0_PD_NPU1_DWN_STAT_SHIFT)           /* 0x00000010 */
+#define PMU_PWR_GATE_STS0_PD_NPU2_DWN_STAT_SHIFT           (5U)
+#define PMU_PWR_GATE_STS0_PD_NPU2_DWN_STAT_MASK            (0x1U << PMU_PWR_GATE_STS0_PD_NPU2_DWN_STAT_SHIFT)           /* 0x00000020 */
+#define PMU_PWR_GATE_STS0_PD_VENC0_DWN_STAT_SHIFT          (6U)
+#define PMU_PWR_GATE_STS0_PD_VENC0_DWN_STAT_MASK           (0x1U << PMU_PWR_GATE_STS0_PD_VENC0_DWN_STAT_SHIFT)          /* 0x00000040 */
+#define PMU_PWR_GATE_STS0_PD_VENC1_DWN_STAT_SHIFT          (7U)
+#define PMU_PWR_GATE_STS0_PD_VENC1_DWN_STAT_MASK           (0x1U << PMU_PWR_GATE_STS0_PD_VENC1_DWN_STAT_SHIFT)          /* 0x00000080 */
+#define PMU_PWR_GATE_STS0_PD_RKVDEC0_DWN_STAT_SHIFT        (8U)
+#define PMU_PWR_GATE_STS0_PD_RKVDEC0_DWN_STAT_MASK         (0x1U << PMU_PWR_GATE_STS0_PD_RKVDEC0_DWN_STAT_SHIFT)        /* 0x00000100 */
+#define PMU_PWR_GATE_STS0_PD_RKVDEC1_DWN_STAT_SHIFT        (9U)
+#define PMU_PWR_GATE_STS0_PD_RKVDEC1_DWN_STAT_MASK         (0x1U << PMU_PWR_GATE_STS0_PD_RKVDEC1_DWN_STAT_SHIFT)        /* 0x00000200 */
+#define PMU_PWR_GATE_STS0_PD_VDPU_DWN_STAT_SHIFT           (10U)
+#define PMU_PWR_GATE_STS0_PD_VDPU_DWN_STAT_MASK            (0x1U << PMU_PWR_GATE_STS0_PD_VDPU_DWN_STAT_SHIFT)           /* 0x00000400 */
+#define PMU_PWR_GATE_STS0_PD_RGA30_DWN_STAT_SHIFT          (11U)
+#define PMU_PWR_GATE_STS0_PD_RGA30_DWN_STAT_MASK           (0x1U << PMU_PWR_GATE_STS0_PD_RGA30_DWN_STAT_SHIFT)          /* 0x00000800 */
+#define PMU_PWR_GATE_STS0_PD_AV1_DWN_STAT_SHIFT            (12U)
+#define PMU_PWR_GATE_STS0_PD_AV1_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_AV1_DWN_STAT_SHIFT)            /* 0x00001000 */
+#define PMU_PWR_GATE_STS0_PD_VI_DWN_STAT_SHIFT             (13U)
+#define PMU_PWR_GATE_STS0_PD_VI_DWN_STAT_MASK              (0x1U << PMU_PWR_GATE_STS0_PD_VI_DWN_STAT_SHIFT)             /* 0x00002000 */
+#define PMU_PWR_GATE_STS0_PD_FEC_DWN_STAT_SHIFT            (14U)
+#define PMU_PWR_GATE_STS0_PD_FEC_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_FEC_DWN_STAT_SHIFT)            /* 0x00004000 */
+#define PMU_PWR_GATE_STS0_PD_ISP1_DWN_STAT_SHIFT           (15U)
+#define PMU_PWR_GATE_STS0_PD_ISP1_DWN_STAT_MASK            (0x1U << PMU_PWR_GATE_STS0_PD_ISP1_DWN_STAT_SHIFT)           /* 0x00008000 */
+#define PMU_PWR_GATE_STS0_PD_RGA31_DWN_STAT_SHIFT          (16U)
+#define PMU_PWR_GATE_STS0_PD_RGA31_DWN_STAT_MASK           (0x1U << PMU_PWR_GATE_STS0_PD_RGA31_DWN_STAT_SHIFT)          /* 0x00010000 */
+#define PMU_PWR_GATE_STS0_PD_VOP_DWN_STAT_SHIFT            (17U)
+#define PMU_PWR_GATE_STS0_PD_VOP_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_VOP_DWN_STAT_SHIFT)            /* 0x00020000 */
+#define PMU_PWR_GATE_STS0_PD_VO0_DWN_STAT_SHIFT            (18U)
+#define PMU_PWR_GATE_STS0_PD_VO0_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_VO0_DWN_STAT_SHIFT)            /* 0x00040000 */
+#define PMU_PWR_GATE_STS0_PD_VO1_DWN_STAT_SHIFT            (19U)
+#define PMU_PWR_GATE_STS0_PD_VO1_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_VO1_DWN_STAT_SHIFT)            /* 0x00080000 */
+#define PMU_PWR_GATE_STS0_PD_AUDIO_DWN_STAT_SHIFT          (20U)
+#define PMU_PWR_GATE_STS0_PD_AUDIO_DWN_STAT_MASK           (0x1U << PMU_PWR_GATE_STS0_PD_AUDIO_DWN_STAT_SHIFT)          /* 0x00100000 */
+#define PMU_PWR_GATE_STS0_PD_PHP_DWN_STAT_SHIFT            (21U)
+#define PMU_PWR_GATE_STS0_PD_PHP_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_PHP_DWN_STAT_SHIFT)            /* 0x00200000 */
+#define PMU_PWR_GATE_STS0_PD_GMAC_DWN_STAT_SHIFT           (22U)
+#define PMU_PWR_GATE_STS0_PD_GMAC_DWN_STAT_MASK            (0x1U << PMU_PWR_GATE_STS0_PD_GMAC_DWN_STAT_SHIFT)           /* 0x00400000 */
+#define PMU_PWR_GATE_STS0_PD_PCIE_DWN_STAT_SHIFT           (23U)
+#define PMU_PWR_GATE_STS0_PD_PCIE_DWN_STAT_MASK            (0x1U << PMU_PWR_GATE_STS0_PD_PCIE_DWN_STAT_SHIFT)           /* 0x00800000 */
+#define PMU_PWR_GATE_STS0_PD_NVM_DWN_STAT_SHIFT            (24U)
+#define PMU_PWR_GATE_STS0_PD_NVM_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_NVM_DWN_STAT_SHIFT)            /* 0x01000000 */
+#define PMU_PWR_GATE_STS0_PD_NVM0_DWN_STAT_SHIFT           (25U)
+#define PMU_PWR_GATE_STS0_PD_NVM0_DWN_STAT_MASK            (0x1U << PMU_PWR_GATE_STS0_PD_NVM0_DWN_STAT_SHIFT)           /* 0x02000000 */
+#define PMU_PWR_GATE_STS0_PD_SDIO_DWN_STAT_SHIFT           (26U)
+#define PMU_PWR_GATE_STS0_PD_SDIO_DWN_STAT_MASK            (0x1U << PMU_PWR_GATE_STS0_PD_SDIO_DWN_STAT_SHIFT)           /* 0x04000000 */
+#define PMU_PWR_GATE_STS0_PD_USB_DWN_STAT_SHIFT            (27U)
+#define PMU_PWR_GATE_STS0_PD_USB_DWN_STAT_MASK             (0x1U << PMU_PWR_GATE_STS0_PD_USB_DWN_STAT_SHIFT)            /* 0x08000000 */
+#define PMU_PWR_GATE_STS0_PD_SECURE_DWN_STAT_SHIFT         (28U)
+#define PMU_PWR_GATE_STS0_PD_SECURE_DWN_STAT_MASK          (0x1U << PMU_PWR_GATE_STS0_PD_SECURE_DWN_STAT_SHIFT)         /* 0x10000000 */
+#define PMU_PWR_GATE_STS0_PD_SDMMC_DWN_STAT_SHIFT          (29U)
+#define PMU_PWR_GATE_STS0_PD_SDMMC_DWN_STAT_MASK           (0x1U << PMU_PWR_GATE_STS0_PD_SDMMC_DWN_STAT_SHIFT)          /* 0x20000000 */
+#define PMU_PWR_GATE_STS0_PD_CRYPTO_DWN_STAT_SHIFT         (30U)
+#define PMU_PWR_GATE_STS0_PD_CRYPTO_DWN_STAT_MASK          (0x1U << PMU_PWR_GATE_STS0_PD_CRYPTO_DWN_STAT_SHIFT)         /* 0x40000000 */
+#define PMU_PWR_GATE_STS0_PD_CENTER_DWN_STAT_SHIFT         (31U)
+#define PMU_PWR_GATE_STS0_PD_CENTER_DWN_STAT_MASK          (0x1U << PMU_PWR_GATE_STS0_PD_CENTER_DWN_STAT_SHIFT)         /* 0x80000000 */
+/* PWR_GATE_STS1 */
+#define PMU_PWR_GATE_STS1_OFFSET                           (0x8184U)
+#define PMU_PWR_GATE_STS1                                  (0x0U)
+#define PMU_PWR_GATE_STS1_PD_DDR01_DWN_STAT_SHIFT          (0U)
+#define PMU_PWR_GATE_STS1_PD_DDR01_DWN_STAT_MASK           (0x1U << PMU_PWR_GATE_STS1_PD_DDR01_DWN_STAT_SHIFT)          /* 0x00000001 */
+#define PMU_PWR_GATE_STS1_PD_DDR23_DWN_STAT_SHIFT          (1U)
+#define PMU_PWR_GATE_STS1_PD_DDR23_DWN_STAT_MASK           (0x1U << PMU_PWR_GATE_STS1_PD_DDR23_DWN_STAT_SHIFT)          /* 0x00000002 */
+/* PWR_GATE_POWER_STS */
+#define PMU_PWR_GATE_POWER_STS_OFFSET                      (0x8188U)
+#define PMU_PWR_GATE_POWER_STS                             (0x0U)
+#define PMU_PWR_GATE_POWER_STS_POWER_GATE_STATE_SHIFT      (0U)
+#define PMU_PWR_GATE_POWER_STS_POWER_GATE_STATE_MASK       (0x7U << PMU_PWR_GATE_POWER_STS_POWER_GATE_STATE_SHIFT)      /* 0x00000007 */
+/* VOL_GATE_FAST_CON */
+#define PMU_VOL_GATE_FAST_CON_OFFSET                       (0x818CU)
+#define PMU_VOL_GATE_FAST_CON_VD_GPU_FAST_ENA_SHIFT        (0U)
+#define PMU_VOL_GATE_FAST_CON_VD_GPU_FAST_ENA_MASK         (0x1U << PMU_VOL_GATE_FAST_CON_VD_GPU_FAST_ENA_SHIFT)        /* 0x00000001 */
+#define PMU_VOL_GATE_FAST_CON_VD_NPU_FAST_ENA_SHIFT        (1U)
+#define PMU_VOL_GATE_FAST_CON_VD_NPU_FAST_ENA_MASK         (0x1U << PMU_VOL_GATE_FAST_CON_VD_NPU_FAST_ENA_SHIFT)        /* 0x00000002 */
+/* GPU_PWRUP_CNT */
+#define PMU_GPU_PWRUP_CNT_OFFSET                           (0x8190U)
+#define PMU_GPU_PWRUP_CNT_GPU_PWRUP_CNT_SHIFT              (0U)
+#define PMU_GPU_PWRUP_CNT_GPU_PWRUP_CNT_MASK               (0xFFFFFU << PMU_GPU_PWRUP_CNT_GPU_PWRUP_CNT_SHIFT)          /* 0x000FFFFF */
+/* GPU_PWRDN_CNT */
+#define PMU_GPU_PWRDN_CNT_OFFSET                           (0x8194U)
+#define PMU_GPU_PWRDN_CNT_GPU_PWRDN_CNT_SHIFT              (0U)
+#define PMU_GPU_PWRDN_CNT_GPU_PWRDN_CNT_MASK               (0xFFFFFU << PMU_GPU_PWRDN_CNT_GPU_PWRDN_CNT_SHIFT)          /* 0x000FFFFF */
+/* NPU_PWRUP_CNT */
+#define PMU_NPU_PWRUP_CNT_OFFSET                           (0x8198U)
+#define PMU_NPU_PWRUP_CNT_NPU_PWRUP_CNT_SHIFT              (0U)
+#define PMU_NPU_PWRUP_CNT_NPU_PWRUP_CNT_MASK               (0xFFFFFU << PMU_NPU_PWRUP_CNT_NPU_PWRUP_CNT_SHIFT)          /* 0x000FFFFF */
+/* NPU_PWRDN_CNT */
+#define PMU_NPU_PWRDN_CNT_OFFSET                           (0x819CU)
+#define PMU_NPU_PWRDN_CNT_NPU_PWRDN_CNT_SHIFT              (0U)
+#define PMU_NPU_PWRDN_CNT_NPU_PWRDN_CNT_MASK               (0xFFFFFU << PMU_NPU_PWRDN_CNT_NPU_PWRDN_CNT_SHIFT)          /* 0x000FFFFF */
+/* MEM_PWR_GATE_SFTCON0 */
+#define PMU_MEM_PWR_GATE_SFTCON0_OFFSET                    (0x81A0U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_NPUTOP_MEM_DWN_SFTENA_SHIFT (3U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_NPUTOP_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_NPUTOP_MEM_DWN_SFTENA_SHIFT) /* 0x00000008 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_NPU1_MEM_DWN_SFTENA_SHIFT (4U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_NPU1_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_NPU1_MEM_DWN_SFTENA_SHIFT) /* 0x00000010 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_NPU2_MEM_DWN_SFTENA_SHIFT (5U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_NPU2_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_NPU2_MEM_DWN_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_VENC0_MEM_DWN_SFTENA_SHIFT (6U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_VENC0_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_VENC0_MEM_DWN_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_VENC1_MEM_DWN_SFTENA_SHIFT (7U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_VENC1_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_VENC1_MEM_DWN_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_RKVDEC0_MEM_DWN_SFTENA_SHIFT (8U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_RKVDEC0_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_RKVDEC0_MEM_DWN_SFTENA_SHIFT) /* 0x00000100 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_RKVDEC1_MEM_DWN_SFTENA_SHIFT (9U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_RKVDEC1_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_RKVDEC1_MEM_DWN_SFTENA_SHIFT) /* 0x00000200 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_RGA30_MEM_DWN_SFTENA_SHIFT (11U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_RGA30_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_RGA30_MEM_DWN_SFTENA_SHIFT) /* 0x00000800 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_AV1_MEM_DWN_SFTENA_SHIFT (12U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_AV1_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_AV1_MEM_DWN_SFTENA_SHIFT) /* 0x00001000 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_VI_MEM_DWN_SFTENA_SHIFT (13U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_VI_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_VI_MEM_DWN_SFTENA_SHIFT) /* 0x00002000 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_FEC_MEM_DWN_SFTENA_SHIFT (14U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_FEC_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_FEC_MEM_DWN_SFTENA_SHIFT) /* 0x00004000 */
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_ISP1_MEM_DWN_SFTENA_SHIFT (15U)
+#define PMU_MEM_PWR_GATE_SFTCON0_PD_ISP1_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON0_PD_ISP1_MEM_DWN_SFTENA_SHIFT) /* 0x00008000 */
+/* MEM_PWR_GATE_SFTCON1 */
+#define PMU_MEM_PWR_GATE_SFTCON1_OFFSET                    (0x81A4U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_RGA31_MEM_DWN_SFTENA_SHIFT (0U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_RGA31_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_RGA31_MEM_DWN_SFTENA_SHIFT) /* 0x00000001 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_VOP_MEM_DWN_SFTENA_SHIFT (1U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_VOP_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_VOP_MEM_DWN_SFTENA_SHIFT) /* 0x00000002 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_VO0_MEM_DWN_SFTENA_SHIFT (2U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_VO0_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_VO0_MEM_DWN_SFTENA_SHIFT) /* 0x00000004 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_VO1_MEM_DWN_SFTENA_SHIFT (3U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_VO1_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_VO1_MEM_DWN_SFTENA_SHIFT) /* 0x00000008 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_AUDIO_MEM_DWN_SFTENA_SHIFT (4U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_AUDIO_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_AUDIO_MEM_DWN_SFTENA_SHIFT) /* 0x00000010 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_PHP_MEM_DWN_SFTENA_SHIFT (5U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_PHP_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_PHP_MEM_DWN_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_GMAC_MEM_DWN_SFTENA_SHIFT (6U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_GMAC_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_GMAC_MEM_DWN_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_PCIE_MEM_DWN_SFTENA_SHIFT (7U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_PCIE_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_PCIE_MEM_DWN_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_NVM0_MEM_DWN_SFTENA_SHIFT (9U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_NVM0_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_NVM0_MEM_DWN_SFTENA_SHIFT) /* 0x00000200 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_SDIO_MEM_DWN_SFTENA_SHIFT (10U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_SDIO_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_SDIO_MEM_DWN_SFTENA_SHIFT) /* 0x00000400 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_USB_MEM_DWN_SFTENA_SHIFT (11U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_USB_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_USB_MEM_DWN_SFTENA_SHIFT) /* 0x00000800 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_SDMMC_MEM_DWN_SFTENA_SHIFT (13U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_SDMMC_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_SDMMC_MEM_DWN_SFTENA_SHIFT) /* 0x00002000 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_CRYPTO_MEM_DWN_SFTENA_SHIFT (14U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_CRYPTO_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_CRYPTO_MEM_DWN_SFTENA_SHIFT) /* 0x00004000 */
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_CENTER_MEM_DWN_SFTENA_SHIFT (15U)
+#define PMU_MEM_PWR_GATE_SFTCON1_PD_CENTER_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON1_PD_CENTER_MEM_DWN_SFTENA_SHIFT) /* 0x00008000 */
+/* MEM_PWR_GATE_SFTCON2 */
+#define PMU_MEM_PWR_GATE_SFTCON2_OFFSET                    (0x81A8U)
+#define PMU_MEM_PWR_GATE_SFTCON2_PD_DDR01_MEM_DWN_SFTENA_SHIFT (0U)
+#define PMU_MEM_PWR_GATE_SFTCON2_PD_DDR01_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON2_PD_DDR01_MEM_DWN_SFTENA_SHIFT) /* 0x00000001 */
+#define PMU_MEM_PWR_GATE_SFTCON2_PD_DDR23_MEM_DWN_SFTENA_SHIFT (1U)
+#define PMU_MEM_PWR_GATE_SFTCON2_PD_DDR23_MEM_DWN_SFTENA_MASK (0x1U << PMU_MEM_PWR_GATE_SFTCON2_PD_DDR23_MEM_DWN_SFTENA_SHIFT) /* 0x00000002 */
+/* SUBMEM_PWR_GATE_SFTCON0 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_OFFSET                 (0x81B0U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_SD_ENA_SHIFT (0U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_SD_ENA_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_SD_ENA_SHIFT) /* 0x00000001 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_SD_ENA_SHIFT (1U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_SD_ENA_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_SD_ENA_SHIFT) /* 0x00000002 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_SD_ENA_SHIFT (2U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_SD_ENA_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_SD_ENA_SHIFT) /* 0x00000004 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_SD_ENA_SHIFT (3U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_SD_ENA_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_SD_ENA_SHIFT) /* 0x00000008 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_DS_ENA_SHIFT (4U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_DS_ENA_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_DS_ENA_SHIFT) /* 0x00000010 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_DS_ENA_SHIFT (5U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_DS_ENA_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_DS_ENA_SHIFT) /* 0x00000020 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_DS_ENA_SHIFT (6U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_DS_ENA_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_DS_ENA_SHIFT) /* 0x00000040 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_DS_ENA_SHIFT (7U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_DS_ENA_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_DS_ENA_SHIFT) /* 0x00000080 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_SD_CTRL_SHIFT (8U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_SD_CTRL_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_SD_CTRL_SHIFT) /* 0x00000100 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_SD_CTRL_SHIFT (9U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_SD_CTRL_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_SD_CTRL_SHIFT) /* 0x00000200 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_SD_CTRL_SHIFT (10U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_SD_CTRL_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_SD_CTRL_SHIFT) /* 0x00000400 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_SD_CTRL_SHIFT (11U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_SD_CTRL_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_SD_CTRL_SHIFT) /* 0x00000800 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_DS_CTRL_SHIFT (12U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_DS_CTRL_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK0_DS_CTRL_SHIFT) /* 0x00001000 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_DS_CTRL_SHIFT (13U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_DS_CTRL_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK1_DS_CTRL_SHIFT) /* 0x00002000 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_DS_CTRL_SHIFT (14U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_DS_CTRL_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK2_DS_CTRL_SHIFT) /* 0x00004000 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_DS_CTRL_SHIFT (15U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_DS_CTRL_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON0_SHRM_BLK3_DS_CTRL_SHIFT) /* 0x00008000 */
+/* SUBMEM_PWR_GATE_SFTCON1 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_OFFSET                 (0x81B4U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PCIE1L0_MEM_DWN_SFTENA_SHIFT (0U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PCIE1L0_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_PCIE1L0_MEM_DWN_SFTENA_SHIFT) /* 0x00000001 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PCIE1L1_MEM_DWN_SFTENA_SHIFT (1U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PCIE1L1_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_PCIE1L1_MEM_DWN_SFTENA_SHIFT) /* 0x00000002 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PCIE1L2_MEM_DWN_SFTENA_SHIFT (2U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PCIE1L2_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_PCIE1L2_MEM_DWN_SFTENA_SHIFT) /* 0x00000004 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PCIEMMU_MEM_DWN_SFTENA_SHIFT (3U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PCIEMMU_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_PCIEMMU_MEM_DWN_SFTENA_SHIFT) /* 0x00000008 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PHPMMU_MEM_DWN_SFTENA_SHIFT (4U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_PHPMMU_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_PHPMMU_MEM_DWN_SFTENA_SHIFT) /* 0x00000010 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_SATA_MEM_DWN_SFTENA_SHIFT (5U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_SATA_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_SATA_MEM_DWN_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_USB3_MEM_DWN_SFTENA_SHIFT (6U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_USB3_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_USB3_MEM_DWN_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_VDPU_MEM_DWN_SFTENA_SHIFT (7U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_VDPU_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_VDPU_MEM_DWN_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_RGA2_MEM_DWN_SFTENA_SHIFT (8U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_RGA2_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_RGA2_MEM_DWN_SFTENA_SHIFT) /* 0x00000100 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_IEP_MEM_DWN_SFTENA_SHIFT (9U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_IEP_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_IEP_MEM_DWN_SFTENA_SHIFT) /* 0x00000200 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGDEC_MEM_DWN_SFTENA_SHIFT (10U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGDEC_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGDEC_MEM_DWN_SFTENA_SHIFT) /* 0x00000400 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC0_MEM_DWN_SFTENA_SHIFT (11U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC0_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC0_MEM_DWN_SFTENA_SHIFT) /* 0x00000800 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC1_MEM_DWN_SFTENA_SHIFT (12U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC1_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC1_MEM_DWN_SFTENA_SHIFT) /* 0x00001000 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC2_MEM_DWN_SFTENA_SHIFT (13U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC2_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC2_MEM_DWN_SFTENA_SHIFT) /* 0x00002000 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC3_MEM_DWN_SFTENA_SHIFT (14U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC3_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_JPEGENC3_MEM_DWN_SFTENA_SHIFT) /* 0x00004000 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_VOPPOST0_MEM_DWN_SFTENA_SHIFT (15U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON1_VOPPOST0_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON1_VOPPOST0_MEM_DWN_SFTENA_SHIFT) /* 0x00008000 */
+/* SUBMEM_PWR_GATE_SFTCON2 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_OFFSET                 (0x81B8U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPPOST1_MEM_DWN_SFTENA_SHIFT (0U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPPOST1_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON2_VOPPOST1_MEM_DWN_SFTENA_SHIFT) /* 0x00000001 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPPOST2_MEM_DWN_SFTENA_SHIFT (1U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPPOST2_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON2_VOPPOST2_MEM_DWN_SFTENA_SHIFT) /* 0x00000002 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPPOST3_MEM_DWN_SFTENA_SHIFT (2U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPPOST3_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON2_VOPPOST3_MEM_DWN_SFTENA_SHIFT) /* 0x00000004 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPDOLBY1_MEM_DWN_SFTENA_SHIFT (3U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPDOLBY1_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON2_VOPDOLBY1_MEM_DWN_SFTENA_SHIFT) /* 0x00000008 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPDOLBY2_MEM_DWN_SFTENA_SHIFT (4U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPDOLBY2_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON2_VOPDOLBY2_MEM_DWN_SFTENA_SHIFT) /* 0x00000010 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPDOLBY3_MEM_DWN_SFTENA_SHIFT (5U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPDOLBY3_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON2_VOPDOLBY3_MEM_DWN_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPWB_MEM_DWN_SFTENA_SHIFT (6U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_VOPWB_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON2_VOPWB_MEM_DWN_SFTENA_SHIFT) /* 0x00000040 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_DSIHOST0_MEM_DWN_SFTENA_SHIFT (7U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_DSIHOST0_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON2_DSIHOST0_MEM_DWN_SFTENA_SHIFT) /* 0x00000080 */
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_DSIHOST1_MEM_DWN_SFTENA_SHIFT (8U)
+#define PMU_SUBMEM_PWR_GATE_SFTCON2_DSIHOST1_MEM_DWN_SFTENA_MASK (0x1U << PMU_SUBMEM_PWR_GATE_SFTCON2_DSIHOST1_MEM_DWN_SFTENA_SHIFT) /* 0x00000100 */
+/* SUBMEM_PWR_GATE_STS */
+#define PMU_SUBMEM_PWR_GATE_STS_OFFSET                     (0x81BCU)
+#define PMU_SUBMEM_PWR_GATE_STS                            (0x0U)
+#define PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK0_PWR_STAT_SHIFT   (0U)
+#define PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK0_PWR_STAT_MASK    (0x1U << PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK0_PWR_STAT_SHIFT)   /* 0x00000001 */
+#define PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK1_PWR_STAT_SHIFT   (1U)
+#define PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK1_PWR_STAT_MASK    (0x1U << PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK1_PWR_STAT_SHIFT)   /* 0x00000002 */
+#define PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK2_PWR_STAT_SHIFT   (2U)
+#define PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK2_PWR_STAT_MASK    (0x1U << PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK2_PWR_STAT_SHIFT)   /* 0x00000004 */
+#define PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK3_PWR_STAT_SHIFT   (3U)
+#define PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK3_PWR_STAT_MASK    (0x1U << PMU_SUBMEM_PWR_GATE_STS_SHRM_BLK3_PWR_STAT_SHIFT)   /* 0x00000008 */
+#define PMU_SUBMEM_PWR_GATE_STS_PCIE1L0_MEM_PWR_STAT_SHIFT (4U)
+#define PMU_SUBMEM_PWR_GATE_STS_PCIE1L0_MEM_PWR_STAT_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_STS_PCIE1L0_MEM_PWR_STAT_SHIFT) /* 0x00000010 */
+#define PMU_SUBMEM_PWR_GATE_STS_PCIE1L1_MEM_DWN_STAT_SHIFT (5U)
+#define PMU_SUBMEM_PWR_GATE_STS_PCIE1L1_MEM_DWN_STAT_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_STS_PCIE1L1_MEM_DWN_STAT_SHIFT) /* 0x00000020 */
+#define PMU_SUBMEM_PWR_GATE_STS_PCIE1L2_MEM_DWN_STAT_SHIFT (6U)
+#define PMU_SUBMEM_PWR_GATE_STS_PCIE1L2_MEM_DWN_STAT_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_STS_PCIE1L2_MEM_DWN_STAT_SHIFT) /* 0x00000040 */
+#define PMU_SUBMEM_PWR_GATE_STS_PCIEMMU_MEM_DWN_STAT_SHIFT (7U)
+#define PMU_SUBMEM_PWR_GATE_STS_PCIEMMU_MEM_DWN_STAT_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_STS_PCIEMMU_MEM_DWN_STAT_SHIFT) /* 0x00000080 */
+#define PMU_SUBMEM_PWR_GATE_STS_PHPMMU_MEM_DWN_STAT_SHIFT  (8U)
+#define PMU_SUBMEM_PWR_GATE_STS_PHPMMU_MEM_DWN_STAT_MASK   (0x1U << PMU_SUBMEM_PWR_GATE_STS_PHPMMU_MEM_DWN_STAT_SHIFT)  /* 0x00000100 */
+#define PMU_SUBMEM_PWR_GATE_STS_SATA_MEM_DWN_STAT_SHIFT    (9U)
+#define PMU_SUBMEM_PWR_GATE_STS_SATA_MEM_DWN_STAT_MASK     (0x1U << PMU_SUBMEM_PWR_GATE_STS_SATA_MEM_DWN_STAT_SHIFT)    /* 0x00000200 */
+#define PMU_SUBMEM_PWR_GATE_STS_USB3_MEM_DWN_STAT_SHIFT    (10U)
+#define PMU_SUBMEM_PWR_GATE_STS_USB3_MEM_DWN_STAT_MASK     (0x1U << PMU_SUBMEM_PWR_GATE_STS_USB3_MEM_DWN_STAT_SHIFT)    /* 0x00000400 */
+#define PMU_SUBMEM_PWR_GATE_STS_VDPU_MEM_DWN_STAT_SHIFT    (11U)
+#define PMU_SUBMEM_PWR_GATE_STS_VDPU_MEM_DWN_STAT_MASK     (0x1U << PMU_SUBMEM_PWR_GATE_STS_VDPU_MEM_DWN_STAT_SHIFT)    /* 0x00000800 */
+#define PMU_SUBMEM_PWR_GATE_STS_RGA2_MEM_DWN_STAT_SHIFT    (12U)
+#define PMU_SUBMEM_PWR_GATE_STS_RGA2_MEM_DWN_STAT_MASK     (0x1U << PMU_SUBMEM_PWR_GATE_STS_RGA2_MEM_DWN_STAT_SHIFT)    /* 0x00001000 */
+#define PMU_SUBMEM_PWR_GATE_STS_IEP_MEM_DWN_STAT_SHIFT     (13U)
+#define PMU_SUBMEM_PWR_GATE_STS_IEP_MEM_DWN_STAT_MASK      (0x1U << PMU_SUBMEM_PWR_GATE_STS_IEP_MEM_DWN_STAT_SHIFT)     /* 0x00002000 */
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGDEC_MEM_DWN_STAT_SHIFT (14U)
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGDEC_MEM_DWN_STAT_MASK  (0x1U << PMU_SUBMEM_PWR_GATE_STS_JPEGDEC_MEM_DWN_STAT_SHIFT) /* 0x00004000 */
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGENC0_MEM_DWN_STAT_SHIFT (15U)
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGENC0_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_JPEGENC0_MEM_DWN_STAT_SHIFT) /* 0x00008000 */
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGENC1_MEM_DWN_STAT_SHIFT (16U)
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGENC1_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_JPEGENC1_MEM_DWN_STAT_SHIFT) /* 0x00010000 */
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGENC2_MEM_DWN_STAT_SHIFT (17U)
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGENC2_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_JPEGENC2_MEM_DWN_STAT_SHIFT) /* 0x00020000 */
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGENC3_MEM_DWN_STAT_SHIFT (18U)
+#define PMU_SUBMEM_PWR_GATE_STS_JPEGENC3_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_JPEGENC3_MEM_DWN_STAT_SHIFT) /* 0x00040000 */
+#define PMU_SUBMEM_PWR_GATE_STS_VOPPOST0_MEM_DWN_STAT_SHIFT (19U)
+#define PMU_SUBMEM_PWR_GATE_STS_VOPPOST0_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_VOPPOST0_MEM_DWN_STAT_SHIFT) /* 0x00080000 */
+#define PMU_SUBMEM_PWR_GATE_STS_VOPPOST1_MEM_DWN_STAT_SHIFT (20U)
+#define PMU_SUBMEM_PWR_GATE_STS_VOPPOST1_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_VOPPOST1_MEM_DWN_STAT_SHIFT) /* 0x00100000 */
+#define PMU_SUBMEM_PWR_GATE_STS_VOPPOST2_MEM_DWN_STAT_SHIFT (21U)
+#define PMU_SUBMEM_PWR_GATE_STS_VOPPOST2_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_VOPPOST2_MEM_DWN_STAT_SHIFT) /* 0x00200000 */
+#define PMU_SUBMEM_PWR_GATE_STS_VOPPOST3_MEM_DWN_STAT_SHIFT (22U)
+#define PMU_SUBMEM_PWR_GATE_STS_VOPPOST3_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_VOPPOST3_MEM_DWN_STAT_SHIFT) /* 0x00400000 */
+#define PMU_SUBMEM_PWR_GATE_STS_VOPDOLBY1_MEM_DWN_STAT_SHIFT (23U)
+#define PMU_SUBMEM_PWR_GATE_STS_VOPDOLBY1_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_VOPDOLBY1_MEM_DWN_STAT_SHIFT) /* 0x00800000 */
+#define PMU_SUBMEM_PWR_GATE_STS_VOPDOLBY2_MEM_DWN_STAT_SHIFT (24U)
+#define PMU_SUBMEM_PWR_GATE_STS_VOPDOLBY2_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_VOPDOLBY2_MEM_DWN_STAT_SHIFT) /* 0x01000000 */
+#define PMU_SUBMEM_PWR_GATE_STS_VOPDOLBY3_MEM_DWN_STAT_SHIFT (25U)
+#define PMU_SUBMEM_PWR_GATE_STS_VOPDOLBY3_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_VOPDOLBY3_MEM_DWN_STAT_SHIFT) /* 0x02000000 */
+#define PMU_SUBMEM_PWR_GATE_STS_VOPWB_MEM_DWN_STAT_SHIFT   (26U)
+#define PMU_SUBMEM_PWR_GATE_STS_VOPWB_MEM_DWN_STAT_MASK    (0x1U << PMU_SUBMEM_PWR_GATE_STS_VOPWB_MEM_DWN_STAT_SHIFT)   /* 0x04000000 */
+#define PMU_SUBMEM_PWR_GATE_STS_DSIHOST0_MEM_DWN_STAT_SHIFT (27U)
+#define PMU_SUBMEM_PWR_GATE_STS_DSIHOST0_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_DSIHOST0_MEM_DWN_STAT_SHIFT) /* 0x08000000 */
+#define PMU_SUBMEM_PWR_GATE_STS_DSIHOST1_MEM_DWN_STAT_SHIFT (28U)
+#define PMU_SUBMEM_PWR_GATE_STS_DSIHOST1_MEM_DWN_STAT_MASK (0x1U << PMU_SUBMEM_PWR_GATE_STS_DSIHOST1_MEM_DWN_STAT_SHIFT) /* 0x10000000 */
+/* SUBMEM_PWR_ACK_BYPASS_CON0 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_OFFSET              (0x81C0U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIE1L0_MEM_PWR_ACK_BYPASS_ENA_SHIFT (0U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIE1L0_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIE1L0_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000001 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIE1L1_MEM_PWR_ACK_BYPASS_ENA_SHIFT (1U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIE1L1_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIE1L1_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000002 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIE1L2_MEM_PWR_ACK_BYPASS_ENA_SHIFT (2U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIE1L2_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIE1L2_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000004 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIEMMU_MEM_PWR_ACK_BYPASS_ENA_SHIFT (3U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIEMMU_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PCIEMMU_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000008 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PHPMMU_MEM_PWR_ACK_BYPASS_ENA_SHIFT (4U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PHPMMU_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_PHPMMU_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000010 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_SATA_MEM_PWR_ACK_BYPASS_ENA_SHIFT (5U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_SATA_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_SATA_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000020 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_USB3_MEM_PWR_ACK_BYPASS_ENA_SHIFT (6U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_USB3_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_USB3_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000040 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_VDPU_MEM_PWR_ACK_BYPASS_ENA_SHIFT (7U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_VDPU_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_VDPU_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000080 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_RGA2_MEM_PWR_ACK_BYPASS_ENA_SHIFT (8U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_RGA2_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_RGA2_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000100 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_IEP_MEM_PWR_ACK_BYPASS_ENA_SHIFT (9U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_IEP_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_IEP_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000200 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGDEC_MEM_PWR_ACK_BYPASS_ENA_SHIFT (10U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGDEC_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGDEC_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000400 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC0_MEM_PWR_ACK_BYPASS_ENA_SHIFT (11U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC0_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC0_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000800 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC1_MEM_PWR_ACK_BYPASS_ENA_SHIFT (12U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC1_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC1_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00001000 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC2_MEM_PWR_ACK_BYPASS_ENA_SHIFT (13U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC2_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC2_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00002000 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC3_MEM_PWR_ACK_BYPASS_ENA_SHIFT (14U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC3_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_JPEGENC3_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00004000 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_VOPPOST0_MEM_PWR_ACK_BYPASS_ENA_SHIFT (15U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON0_VOPPOST0_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON0_VOPPOST0_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00008000 */
+/* SUBMEM_PWR_ACK_BYPASS_CON1 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_OFFSET              (0x81C4U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPPOST1_DWN_ACK_BYPASS_ENA_SHIFT (0U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPPOST1_DWN_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPPOST1_DWN_ACK_BYPASS_ENA_SHIFT) /* 0x00000001 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPPOST2_MEM_PWR_ACK_BYPASS_ENA_SHIFT (1U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPPOST2_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPPOST2_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000002 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPPOST3_MEM_PWR_ACK_BYPASS_ENA_SHIFT (2U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPPOST3_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPPOST3_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000004 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPDOLBY1_MEM_PWR_ACK_BYPASS_ENA_SHIFT (3U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPDOLBY1_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPDOLBY1_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000008 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPDOLBY2_MEM_PWR_ACK_BYPASS_ENA_SHIFT (4U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPDOLBY2_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPDOLBY2_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000010 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPDOLBY3_MEM_PWR_ACK_BYPASS_ENA_SHIFT (5U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPDOLBY3_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPDOLBY3_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000020 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPWB_MEM_PWR_ACK_BYPASS_ENA_SHIFT (6U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPWB_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_VOPWB_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000040 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_DSIHOST0_MEM_PWR_ACK_BYPASS_ENA_SHIFT (7U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_DSIHOST0_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_DSIHOST0_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000080 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_DSIHOST1_MEM_PWR_ACK_BYPASS_ENA_SHIFT (8U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_DSIHOST1_MEM_PWR_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_DSIHOST1_MEM_PWR_ACK_BYPASS_ENA_SHIFT) /* 0x00000100 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK0_DWN_ACK_BYPASS_ENA_SHIFT (9U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK0_DWN_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK0_DWN_ACK_BYPASS_ENA_SHIFT) /* 0x00000200 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK1_DWN_ACK_BYPASS_ENA_SHIFT (10U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK1_DWN_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK1_DWN_ACK_BYPASS_ENA_SHIFT) /* 0x00000400 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK2_DWN_ACK_BYPASS_ENA_SHIFT (11U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK2_DWN_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK2_DWN_ACK_BYPASS_ENA_SHIFT) /* 0x00000800 */
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK3_DWN_ACK_BYPASS_ENA_SHIFT (12U)
+#define PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK3_DWN_ACK_BYPASS_ENA_MASK (0x1U << PMU_SUBMEM_PWR_ACK_BYPASS_CON1_SHRM_BLK3_DWN_ACK_BYPASS_ENA_SHIFT) /* 0x00001000 */
+/* QCHANNEL_PWR_CON */
+#define PMU_QCHANNEL_PWR_CON_OFFSET                        (0x81D0U)
+#define PMU_QCHANNEL_PWR_CON_PHPMMU_TBU_QCH_ENA_SHIFT      (0U)
+#define PMU_QCHANNEL_PWR_CON_PHPMMU_TBU_QCH_ENA_MASK       (0x1U << PMU_QCHANNEL_PWR_CON_PHPMMU_TBU_QCH_ENA_SHIFT)      /* 0x00000001 */
+#define PMU_QCHANNEL_PWR_CON_PHPMMU_TCU_QCH_ENA_SHIFT      (1U)
+#define PMU_QCHANNEL_PWR_CON_PHPMMU_TCU_QCH_ENA_MASK       (0x1U << PMU_QCHANNEL_PWR_CON_PHPMMU_TCU_QCH_ENA_SHIFT)      /* 0x00000002 */
+#define PMU_QCHANNEL_PWR_CON_PCIEMMU_TBU_QCH_ENA_SHIFT     (2U)
+#define PMU_QCHANNEL_PWR_CON_PCIEMMU_TBU_QCH_ENA_MASK      (0x1U << PMU_QCHANNEL_PWR_CON_PCIEMMU_TBU_QCH_ENA_SHIFT)     /* 0x00000004 */
+#define PMU_QCHANNEL_PWR_CON_PCIEMMU_TCU_QCH_ENA_SHIFT     (3U)
+#define PMU_QCHANNEL_PWR_CON_PCIEMMU_TCU_QCH_ENA_MASK      (0x1U << PMU_QCHANNEL_PWR_CON_PCIEMMU_TCU_QCH_ENA_SHIFT)     /* 0x00000008 */
+#define PMU_QCHANNEL_PWR_CON_PHPGIC_ITS_QCH_ENA_SHIFT      (4U)
+#define PMU_QCHANNEL_PWR_CON_PHPGIC_ITS_QCH_ENA_MASK       (0x1U << PMU_QCHANNEL_PWR_CON_PHPGIC_ITS_QCH_ENA_SHIFT)      /* 0x00000010 */
+#define PMU_QCHANNEL_PWR_CON_BUSGIC_ITS0_QCH_ENA_SHIFT     (5U)
+#define PMU_QCHANNEL_PWR_CON_BUSGIC_ITS0_QCH_ENA_MASK      (0x1U << PMU_QCHANNEL_PWR_CON_BUSGIC_ITS0_QCH_ENA_SHIFT)     /* 0x00000020 */
+#define PMU_QCHANNEL_PWR_CON_BUSGIC_ITS1_QCH_ENA_SHIFT     (6U)
+#define PMU_QCHANNEL_PWR_CON_BUSGIC_ITS1_QCH_ENA_MASK      (0x1U << PMU_QCHANNEL_PWR_CON_BUSGIC_ITS1_QCH_ENA_SHIFT)     /* 0x00000040 */
+/* QCHANNEL_PWR_SFTCON */
+#define PMU_QCHANNEL_PWR_SFTCON_OFFSET                     (0x81D4U)
+#define PMU_QCHANNEL_PWR_SFTCON_PHPMMU_TBU_QCH_SFTENA_SHIFT (0U)
+#define PMU_QCHANNEL_PWR_SFTCON_PHPMMU_TBU_QCH_SFTENA_MASK (0x1U << PMU_QCHANNEL_PWR_SFTCON_PHPMMU_TBU_QCH_SFTENA_SHIFT) /* 0x00000001 */
+#define PMU_QCHANNEL_PWR_SFTCON_PHPMMU_TCU_QCH_SFTENA_SHIFT (1U)
+#define PMU_QCHANNEL_PWR_SFTCON_PHPMMU_TCU_QCH_SFTENA_MASK (0x1U << PMU_QCHANNEL_PWR_SFTCON_PHPMMU_TCU_QCH_SFTENA_SHIFT) /* 0x00000002 */
+#define PMU_QCHANNEL_PWR_SFTCON_PCIEMMU_TBU_QCH_SFTENA_SHIFT (2U)
+#define PMU_QCHANNEL_PWR_SFTCON_PCIEMMU_TBU_QCH_SFTENA_MASK (0x1U << PMU_QCHANNEL_PWR_SFTCON_PCIEMMU_TBU_QCH_SFTENA_SHIFT) /* 0x00000004 */
+#define PMU_QCHANNEL_PWR_SFTCON_PCIEMMU_TCU_QCH_SFTENA_SHIFT (3U)
+#define PMU_QCHANNEL_PWR_SFTCON_PCIEMMU_TCU_QCH_SFTENA_MASK (0x1U << PMU_QCHANNEL_PWR_SFTCON_PCIEMMU_TCU_QCH_SFTENA_SHIFT) /* 0x00000008 */
+#define PMU_QCHANNEL_PWR_SFTCON_PHPGIC_ITS_QCH_SFTENA_SHIFT (4U)
+#define PMU_QCHANNEL_PWR_SFTCON_PHPGIC_ITS_QCH_SFTENA_MASK (0x1U << PMU_QCHANNEL_PWR_SFTCON_PHPGIC_ITS_QCH_SFTENA_SHIFT) /* 0x00000010 */
+#define PMU_QCHANNEL_PWR_SFTCON_BUSGIC_ITS0_QCH_SFTENA_SHIFT (5U)
+#define PMU_QCHANNEL_PWR_SFTCON_BUSGIC_ITS0_QCH_SFTENA_MASK (0x1U << PMU_QCHANNEL_PWR_SFTCON_BUSGIC_ITS0_QCH_SFTENA_SHIFT) /* 0x00000020 */
+#define PMU_QCHANNEL_PWR_SFTCON_BUSGIC_ITS1_QCH_SFTENA_SHIFT (6U)
+#define PMU_QCHANNEL_PWR_SFTCON_BUSGIC_ITS1_QCH_SFTENA_MASK (0x1U << PMU_QCHANNEL_PWR_SFTCON_BUSGIC_ITS1_QCH_SFTENA_SHIFT) /* 0x00000040 */
+/* QCHANNEL_PWR_STS */
+#define PMU_QCHANNEL_PWR_STS_OFFSET                        (0x81D8U)
+#define PMU_QCHANNEL_PWR_STS                               (0x0U)
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_ACCEPT_SHIFT   (0U)
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_ACCEPT_MASK    (0x1U << PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_ACCEPT_SHIFT)   /* 0x00000001 */
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_ACCEPT_SHIFT   (1U)
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_ACCEPT_MASK    (0x1U << PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_ACCEPT_SHIFT)   /* 0x00000002 */
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_ACCEPT_SHIFT  (2U)
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_ACCEPT_MASK   (0x1U << PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_ACCEPT_SHIFT)  /* 0x00000004 */
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_ACCEPT_SHIFT  (3U)
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_ACCEPT_MASK   (0x1U << PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_ACCEPT_SHIFT)  /* 0x00000008 */
+#define PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_ACCEPT_SHIFT   (4U)
+#define PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_ACCEPT_MASK    (0x1U << PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_ACCEPT_SHIFT)   /* 0x00000010 */
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_ACCEPT_SHIFT  (5U)
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_ACCEPT_MASK   (0x1U << PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_ACCEPT_SHIFT)  /* 0x00000020 */
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_ACCEPT_SHIFT  (6U)
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_ACCEPT_MASK   (0x1U << PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_ACCEPT_SHIFT)  /* 0x00000040 */
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_DENY_SHIFT     (7U)
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_DENY_MASK      (0x1U << PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_DENY_SHIFT)     /* 0x00000080 */
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_DENY_SHIFT     (8U)
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_DENY_MASK      (0x1U << PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_DENY_SHIFT)     /* 0x00000100 */
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_DENY_SHIFT    (9U)
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_DENY_MASK     (0x1U << PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_DENY_SHIFT)    /* 0x00000200 */
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_DENY_SHIFT    (10U)
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_DENY_MASK     (0x1U << PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_DENY_SHIFT)    /* 0x00000400 */
+#define PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_DENY_SHIFT     (11U)
+#define PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_DENY_MASK      (0x1U << PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_DENY_SHIFT)     /* 0x00000800 */
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_DENY_SHIFT    (12U)
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_DENY_MASK     (0x1U << PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_DENY_SHIFT)    /* 0x00001000 */
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_DENY_SHIFT    (13U)
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_DENY_MASK     (0x1U << PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_DENY_SHIFT)    /* 0x00002000 */
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_ACTIVE_SHIFT   (14U)
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_ACTIVE_MASK    (0x1U << PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_ACTIVE_SHIFT)   /* 0x00004000 */
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_ACTIVE_SHIFT   (15U)
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_ACTIVE_MASK    (0x1U << PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_ACTIVE_SHIFT)   /* 0x00008000 */
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_ACTIVE_SHIFT  (16U)
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_ACTIVE_MASK   (0x1U << PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_ACTIVE_SHIFT)  /* 0x00010000 */
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_ACTIVE_SHIFT  (17U)
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_ACTIVE_MASK   (0x1U << PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_ACTIVE_SHIFT)  /* 0x00020000 */
+#define PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_ACTIVE_SHIFT   (18U)
+#define PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_ACTIVE_MASK    (0x1U << PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_ACTIVE_SHIFT)   /* 0x00040000 */
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_ACTIVE_SHIFT  (19U)
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_ACTIVE_MASK   (0x1U << PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_ACTIVE_SHIFT)  /* 0x00080000 */
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_ACTIVE_SHIFT  (20U)
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_ACTIVE_MASK   (0x1U << PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_ACTIVE_SHIFT)  /* 0x00100000 */
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_REQ_SHIFT      (21U)
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_REQ_MASK       (0x1U << PMU_QCHANNEL_PWR_STS_PHPMMU_TBU_QCH_REQ_SHIFT)      /* 0x00200000 */
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_REQ_SHIFT      (22U)
+#define PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_REQ_MASK       (0x1U << PMU_QCHANNEL_PWR_STS_PHPMMU_TCU_QCH_REQ_SHIFT)      /* 0x00400000 */
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_REQ_SHIFT     (23U)
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_REQ_MASK      (0x1U << PMU_QCHANNEL_PWR_STS_PCIEMMU_TBU_QCH_REQ_SHIFT)     /* 0x00800000 */
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_REQ_SHIFT     (24U)
+#define PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_REQ_MASK      (0x1U << PMU_QCHANNEL_PWR_STS_PCIEMMU_TCU_QCH_REQ_SHIFT)     /* 0x01000000 */
+#define PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_REQ_SHIFT      (25U)
+#define PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_REQ_MASK       (0x1U << PMU_QCHANNEL_PWR_STS_PHPGIC_ITS_QCH_REQ_SHIFT)      /* 0x02000000 */
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_REQ_SHIFT     (26U)
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_REQ_MASK      (0x1U << PMU_QCHANNEL_PWR_STS_BUSGIC_ITS0_QCH_REQ_SHIFT)     /* 0x04000000 */
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_REQ_SHIFT     (27U)
+#define PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_REQ_MASK      (0x1U << PMU_QCHANNEL_PWR_STS_BUSGIC_ITS1_QCH_REQ_SHIFT)     /* 0x08000000 */
+/* DEBUG_INFO_CON */
+#define PMU_DEBUG_INFO_CON_OFFSET                          (0x81E0U)
+#define PMU_DEBUG_INFO_CON_CPU0_POWER_STATE_SEL_SHIFT      (0U)
+#define PMU_DEBUG_INFO_CON_CPU0_POWER_STATE_SEL_MASK       (0x1U << PMU_DEBUG_INFO_CON_CPU0_POWER_STATE_SEL_SHIFT)      /* 0x00000001 */
+#define PMU_DEBUG_INFO_CON_CPU1_POWER_STATE_SEL_SHIFT      (1U)
+#define PMU_DEBUG_INFO_CON_CPU1_POWER_STATE_SEL_MASK       (0x1U << PMU_DEBUG_INFO_CON_CPU1_POWER_STATE_SEL_SHIFT)      /* 0x00000002 */
+#define PMU_DEBUG_INFO_CON_CPU2_POWER_STATE_SEL_SHIFT      (2U)
+#define PMU_DEBUG_INFO_CON_CPU2_POWER_STATE_SEL_MASK       (0x1U << PMU_DEBUG_INFO_CON_CPU2_POWER_STATE_SEL_SHIFT)      /* 0x00000004 */
+#define PMU_DEBUG_INFO_CON_CPU3_POWER_STATE_SEL_SHIFT      (3U)
+#define PMU_DEBUG_INFO_CON_CPU3_POWER_STATE_SEL_MASK       (0x1U << PMU_DEBUG_INFO_CON_CPU3_POWER_STATE_SEL_SHIFT)      /* 0x00000008 */
+#define PMU_DEBUG_INFO_CON_CPU4_POWER_STATE_SEL_SHIFT      (4U)
+#define PMU_DEBUG_INFO_CON_CPU4_POWER_STATE_SEL_MASK       (0x1U << PMU_DEBUG_INFO_CON_CPU4_POWER_STATE_SEL_SHIFT)      /* 0x00000010 */
+#define PMU_DEBUG_INFO_CON_CPU5_POWER_STATE_SEL_SHIFT      (5U)
+#define PMU_DEBUG_INFO_CON_CPU5_POWER_STATE_SEL_MASK       (0x1U << PMU_DEBUG_INFO_CON_CPU5_POWER_STATE_SEL_SHIFT)      /* 0x00000020 */
+#define PMU_DEBUG_INFO_CON_CPU6_POWER_STATE_SEL_SHIFT      (6U)
+#define PMU_DEBUG_INFO_CON_CPU6_POWER_STATE_SEL_MASK       (0x1U << PMU_DEBUG_INFO_CON_CPU6_POWER_STATE_SEL_SHIFT)      /* 0x00000040 */
+#define PMU_DEBUG_INFO_CON_CPU7_POWER_STATE_SEL_SHIFT      (7U)
+#define PMU_DEBUG_INFO_CON_CPU7_POWER_STATE_SEL_MASK       (0x1U << PMU_DEBUG_INFO_CON_CPU7_POWER_STATE_SEL_SHIFT)      /* 0x00000080 */
+#define PMU_DEBUG_INFO_CON_CORE0_POWER_STATE_SEL_SHIFT     (8U)
+#define PMU_DEBUG_INFO_CON_CORE0_POWER_STATE_SEL_MASK      (0x1U << PMU_DEBUG_INFO_CON_CORE0_POWER_STATE_SEL_SHIFT)     /* 0x00000100 */
+#define PMU_DEBUG_INFO_CON_CORE1_POWER_STATE_SEL_SHIFT     (9U)
+#define PMU_DEBUG_INFO_CON_CORE1_POWER_STATE_SEL_MASK      (0x1U << PMU_DEBUG_INFO_CON_CORE1_POWER_STATE_SEL_SHIFT)     /* 0x00000200 */
+#define PMU_DEBUG_INFO_CON_CPU_POWER_STATE_SEL_SHIFT       (10U)
+#define PMU_DEBUG_INFO_CON_CPU_POWER_STATE_SEL_MASK        (0x1U << PMU_DEBUG_INFO_CON_CPU_POWER_STATE_SEL_SHIFT)       /* 0x00000400 */
+/* VOP_SUBPD_PWR_CHAIN_STS */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_OFFSET                 (0x81E4U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS                        (0x49249U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER0_MEM_PWR_STAT_SHIFT (0U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER0_MEM_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER0_MEM_PWR_STAT_SHIFT) /* 0x00000001 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER0_C1_PWR_STAT_SHIFT (1U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER0_C1_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER0_C1_PWR_STAT_SHIFT) /* 0x00000002 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER0_C0_PWR_STAT_SHIFT (2U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER0_C0_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER0_C0_PWR_STAT_SHIFT) /* 0x00000004 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER1_MEM_PWR_STAT_SHIFT (3U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER1_MEM_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER1_MEM_PWR_STAT_SHIFT) /* 0x00000008 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER1_C1_PWR_STAT_SHIFT (4U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER1_C1_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER1_C1_PWR_STAT_SHIFT) /* 0x00000010 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER1_C0_PWR_STAT_SHIFT (5U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER1_C0_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER1_C0_PWR_STAT_SHIFT) /* 0x00000020 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER2_MEM_PWR_STAT_SHIFT (6U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER2_MEM_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER2_MEM_PWR_STAT_SHIFT) /* 0x00000040 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER2_C1_PWR_STAT_SHIFT (7U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER2_C1_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER2_C1_PWR_STAT_SHIFT) /* 0x00000080 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER2_C0_PWR_STAT_SHIFT (8U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER2_C0_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER2_C0_PWR_STAT_SHIFT) /* 0x00000100 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER3_MEM_PWR_STAT_SHIFT (9U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER3_MEM_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER3_MEM_PWR_STAT_SHIFT) /* 0x00000200 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER3_C1_PWR_STAT_SHIFT (10U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER3_C1_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER3_C1_PWR_STAT_SHIFT) /* 0x00000400 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER3_C0_PWR_STAT_SHIFT (11U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER3_C0_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_CLUSTER3_C0_PWR_STAT_SHIFT) /* 0x00000800 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_ESMART_MEM_PWR_STAT_SHIFT (12U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_ESMART_MEM_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_ESMART_MEM_PWR_STAT_SHIFT) /* 0x00001000 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_ESMART_C1_PWR_STAT_SHIFT (13U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_ESMART_C1_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_ESMART_C1_PWR_STAT_SHIFT) /* 0x00002000 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_ESMART_C0_PWR_STAT_SHIFT (14U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_ESMART_C0_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_ESMART_C0_PWR_STAT_SHIFT) /* 0x00004000 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC4K_MEM_PWR_STAT_SHIFT (15U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC4K_MEM_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC4K_MEM_PWR_STAT_SHIFT) /* 0x00008000 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC4K_C1_PWR_STAT_SHIFT (16U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC4K_C1_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC4K_C1_PWR_STAT_SHIFT) /* 0x00010000 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC4K_C0_PWR_STAT_SHIFT (17U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC4K_C0_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC4K_C0_PWR_STAT_SHIFT) /* 0x00020000 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC8K_MEM_PWR_STAT_SHIFT (18U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC8K_MEM_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC8K_MEM_PWR_STAT_SHIFT) /* 0x00040000 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC8K_C1_PWR_STAT_SHIFT (19U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC8K_C1_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC8K_C1_PWR_STAT_SHIFT) /* 0x00080000 */
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC8K_C0_PWR_STAT_SHIFT (20U)
+#define PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC8K_C0_PWR_STAT_MASK (0x1U << PMU_VOP_SUBPD_PWR_CHAIN_STS_VOP_DSC8K_C0_PWR_STAT_SHIFT) /* 0x00100000 */
+/* PWR_CHAIN0_STS0 */
+#define PMU_PWR_CHAIN0_STS0_OFFSET                         (0x81E8U)
+#define PMU_PWR_CHAIN0_STS0                                (0xFFU)
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_0_C0_PWR_STAT_SHIFT     (0U)
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_0_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_CPU_0_C0_PWR_STAT_SHIFT)     /* 0x00000001 */
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_1_C0_PWR_STAT_SHIFT     (1U)
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_1_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_CPU_1_C0_PWR_STAT_SHIFT)     /* 0x00000002 */
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_2_C0_PWR_STAT_SHIFT     (2U)
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_2_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_CPU_2_C0_PWR_STAT_SHIFT)     /* 0x00000004 */
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_3_C0_PWR_STAT_SHIFT     (3U)
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_3_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_CPU_3_C0_PWR_STAT_SHIFT)     /* 0x00000008 */
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_4_C0_PWR_STAT_SHIFT     (4U)
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_4_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_CPU_4_C0_PWR_STAT_SHIFT)     /* 0x00000010 */
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_5_C0_PWR_STAT_SHIFT     (5U)
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_5_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_CPU_5_C0_PWR_STAT_SHIFT)     /* 0x00000020 */
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_6_C0_PWR_STAT_SHIFT     (6U)
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_6_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_CPU_6_C0_PWR_STAT_SHIFT)     /* 0x00000040 */
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_7_C0_PWR_STAT_SHIFT     (7U)
+#define PMU_PWR_CHAIN0_STS0_PD_CPU_7_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_CPU_7_C0_PWR_STAT_SHIFT)     /* 0x00000080 */
+#define PMU_PWR_CHAIN0_STS0_PD_NPUTOP_C0_PWR_STAT_SHIFT    (11U)
+#define PMU_PWR_CHAIN0_STS0_PD_NPUTOP_C0_PWR_STAT_MASK     (0x1U << PMU_PWR_CHAIN0_STS0_PD_NPUTOP_C0_PWR_STAT_SHIFT)    /* 0x00000800 */
+#define PMU_PWR_CHAIN0_STS0_PD_NPU1_C0_PWR_STAT_SHIFT      (12U)
+#define PMU_PWR_CHAIN0_STS0_PD_NPU1_C0_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN0_STS0_PD_NPU1_C0_PWR_STAT_SHIFT)      /* 0x00001000 */
+#define PMU_PWR_CHAIN0_STS0_PD_NPU2_C0_PWR_STAT_SHIFT      (13U)
+#define PMU_PWR_CHAIN0_STS0_PD_NPU2_C0_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN0_STS0_PD_NPU2_C0_PWR_STAT_SHIFT)      /* 0x00002000 */
+#define PMU_PWR_CHAIN0_STS0_PD_VENC0_C0_PWR_STAT_SHIFT     (14U)
+#define PMU_PWR_CHAIN0_STS0_PD_VENC0_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_VENC0_C0_PWR_STAT_SHIFT)     /* 0x00004000 */
+#define PMU_PWR_CHAIN0_STS0_PD_VENC1_C0_PWR_STAT_SHIFT     (15U)
+#define PMU_PWR_CHAIN0_STS0_PD_VENC1_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_VENC1_C0_PWR_STAT_SHIFT)     /* 0x00008000 */
+#define PMU_PWR_CHAIN0_STS0_PD_RKVDEC0_C0_PWR_STAT_SHIFT   (16U)
+#define PMU_PWR_CHAIN0_STS0_PD_RKVDEC0_C0_PWR_STAT_MASK    (0x1U << PMU_PWR_CHAIN0_STS0_PD_RKVDEC0_C0_PWR_STAT_SHIFT)   /* 0x00010000 */
+#define PMU_PWR_CHAIN0_STS0_PD_RKVDEC1_C0_PWR_STAT_SHIFT   (17U)
+#define PMU_PWR_CHAIN0_STS0_PD_RKVDEC1_C0_PWR_STAT_MASK    (0x1U << PMU_PWR_CHAIN0_STS0_PD_RKVDEC1_C0_PWR_STAT_SHIFT)   /* 0x00020000 */
+#define PMU_PWR_CHAIN0_STS0_PD_VDPU_C0_PWR_STAT_SHIFT      (18U)
+#define PMU_PWR_CHAIN0_STS0_PD_VDPU_C0_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN0_STS0_PD_VDPU_C0_PWR_STAT_SHIFT)      /* 0x00040000 */
+#define PMU_PWR_CHAIN0_STS0_PD_RGA30_C0_PWR_STAT_SHIFT     (19U)
+#define PMU_PWR_CHAIN0_STS0_PD_RGA30_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_RGA30_C0_PWR_STAT_SHIFT)     /* 0x00080000 */
+#define PMU_PWR_CHAIN0_STS0_PD_AV1_C0_PWR_STAT_SHIFT       (20U)
+#define PMU_PWR_CHAIN0_STS0_PD_AV1_C0_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN0_STS0_PD_AV1_C0_PWR_STAT_SHIFT)       /* 0x00100000 */
+#define PMU_PWR_CHAIN0_STS0_PD_VI_C0_PWR_STAT_SHIFT        (21U)
+#define PMU_PWR_CHAIN0_STS0_PD_VI_C0_PWR_STAT_MASK         (0x1U << PMU_PWR_CHAIN0_STS0_PD_VI_C0_PWR_STAT_SHIFT)        /* 0x00200000 */
+#define PMU_PWR_CHAIN0_STS0_PD_FEC_C0_PWR_STAT_SHIFT       (22U)
+#define PMU_PWR_CHAIN0_STS0_PD_FEC_C0_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN0_STS0_PD_FEC_C0_PWR_STAT_SHIFT)       /* 0x00400000 */
+#define PMU_PWR_CHAIN0_STS0_PD_ISP1_C0_PWR_STAT_SHIFT      (23U)
+#define PMU_PWR_CHAIN0_STS0_PD_ISP1_C0_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN0_STS0_PD_ISP1_C0_PWR_STAT_SHIFT)      /* 0x00800000 */
+#define PMU_PWR_CHAIN0_STS0_PD_RGA31_C0_PWR_STAT_SHIFT     (24U)
+#define PMU_PWR_CHAIN0_STS0_PD_RGA31_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_RGA31_C0_PWR_STAT_SHIFT)     /* 0x01000000 */
+#define PMU_PWR_CHAIN0_STS0_PD_VOP_C0_PWR_STAT_SHIFT       (25U)
+#define PMU_PWR_CHAIN0_STS0_PD_VOP_C0_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN0_STS0_PD_VOP_C0_PWR_STAT_SHIFT)       /* 0x02000000 */
+#define PMU_PWR_CHAIN0_STS0_PD_VO0_C0_PWR_STAT_SHIFT       (26U)
+#define PMU_PWR_CHAIN0_STS0_PD_VO0_C0_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN0_STS0_PD_VO0_C0_PWR_STAT_SHIFT)       /* 0x04000000 */
+#define PMU_PWR_CHAIN0_STS0_PD_VO1_C0_PWR_STAT_SHIFT       (27U)
+#define PMU_PWR_CHAIN0_STS0_PD_VO1_C0_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN0_STS0_PD_VO1_C0_PWR_STAT_SHIFT)       /* 0x08000000 */
+#define PMU_PWR_CHAIN0_STS0_PD_AUDIO_C0_PWR_STAT_SHIFT     (28U)
+#define PMU_PWR_CHAIN0_STS0_PD_AUDIO_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS0_PD_AUDIO_C0_PWR_STAT_SHIFT)     /* 0x10000000 */
+#define PMU_PWR_CHAIN0_STS0_PD_PHP_C0_PWR_STAT_SHIFT       (29U)
+#define PMU_PWR_CHAIN0_STS0_PD_PHP_C0_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN0_STS0_PD_PHP_C0_PWR_STAT_SHIFT)       /* 0x20000000 */
+#define PMU_PWR_CHAIN0_STS0_PD_GMAC_C0_PWR_STAT_SHIFT      (30U)
+#define PMU_PWR_CHAIN0_STS0_PD_GMAC_C0_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN0_STS0_PD_GMAC_C0_PWR_STAT_SHIFT)      /* 0x40000000 */
+#define PMU_PWR_CHAIN0_STS0_PD_PCIE_C0_PWR_STAT_SHIFT      (31U)
+#define PMU_PWR_CHAIN0_STS0_PD_PCIE_C0_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN0_STS0_PD_PCIE_C0_PWR_STAT_SHIFT)      /* 0x80000000 */
+/* PWR_CHAIN0_STS1 */
+#define PMU_PWR_CHAIN0_STS1_OFFSET                         (0x81ECU)
+#define PMU_PWR_CHAIN0_STS1                                (0xFFU)
+#define PMU_PWR_CHAIN0_STS1_PD_NVM_C0_PWR_STAT_SHIFT       (0U)
+#define PMU_PWR_CHAIN0_STS1_PD_NVM_C0_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN0_STS1_PD_NVM_C0_PWR_STAT_SHIFT)       /* 0x00000001 */
+#define PMU_PWR_CHAIN0_STS1_PD_NVM0_C0_PWR_STAT_SHIFT      (1U)
+#define PMU_PWR_CHAIN0_STS1_PD_NVM0_C0_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN0_STS1_PD_NVM0_C0_PWR_STAT_SHIFT)      /* 0x00000002 */
+#define PMU_PWR_CHAIN0_STS1_PD_SDIO_C0_PWR_STAT_SHIFT      (2U)
+#define PMU_PWR_CHAIN0_STS1_PD_SDIO_C0_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN0_STS1_PD_SDIO_C0_PWR_STAT_SHIFT)      /* 0x00000004 */
+#define PMU_PWR_CHAIN0_STS1_PD_USB_C0_PWR_STAT_SHIFT       (3U)
+#define PMU_PWR_CHAIN0_STS1_PD_USB_C0_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN0_STS1_PD_USB_C0_PWR_STAT_SHIFT)       /* 0x00000008 */
+#define PMU_PWR_CHAIN0_STS1_PD_SECURE_C0_PWR_STAT_SHIFT    (4U)
+#define PMU_PWR_CHAIN0_STS1_PD_SECURE_C0_PWR_STAT_MASK     (0x1U << PMU_PWR_CHAIN0_STS1_PD_SECURE_C0_PWR_STAT_SHIFT)    /* 0x00000010 */
+#define PMU_PWR_CHAIN0_STS1_PD_SDMMC_C0_PWR_STAT_SHIFT     (5U)
+#define PMU_PWR_CHAIN0_STS1_PD_SDMMC_C0_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN0_STS1_PD_SDMMC_C0_PWR_STAT_SHIFT)     /* 0x00000020 */
+#define PMU_PWR_CHAIN0_STS1_PD_CRYPTO_C0_PWR_STAT_SHIFT    (6U)
+#define PMU_PWR_CHAIN0_STS1_PD_CRYPTO_C0_PWR_STAT_MASK     (0x1U << PMU_PWR_CHAIN0_STS1_PD_CRYPTO_C0_PWR_STAT_SHIFT)    /* 0x00000040 */
+#define PMU_PWR_CHAIN0_STS1_PD_CENTER_C0_PWR_STAT_SHIFT    (7U)
+#define PMU_PWR_CHAIN0_STS1_PD_CENTER_C0_PWR_STAT_MASK     (0x1U << PMU_PWR_CHAIN0_STS1_PD_CENTER_C0_PWR_STAT_SHIFT)    /* 0x00000080 */
+/* PWR_CHAIN1_STS0 */
+#define PMU_PWR_CHAIN1_STS0_OFFSET                         (0x81F0U)
+#define PMU_PWR_CHAIN1_STS0                                (0xFFU)
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_0_C1_PWR_STAT_SHIFT     (0U)
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_0_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_CPU_0_C1_PWR_STAT_SHIFT)     /* 0x00000001 */
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_1_C1_PWR_STAT_SHIFT     (1U)
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_1_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_CPU_1_C1_PWR_STAT_SHIFT)     /* 0x00000002 */
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_2_C1_PWR_STAT_SHIFT     (2U)
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_2_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_CPU_2_C1_PWR_STAT_SHIFT)     /* 0x00000004 */
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_3_C1_PWR_STAT_SHIFT     (3U)
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_3_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_CPU_3_C1_PWR_STAT_SHIFT)     /* 0x00000008 */
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_4_C1_PWR_STAT_SHIFT     (4U)
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_4_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_CPU_4_C1_PWR_STAT_SHIFT)     /* 0x00000010 */
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_5_C1_PWR_STAT_SHIFT     (5U)
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_5_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_CPU_5_C1_PWR_STAT_SHIFT)     /* 0x00000020 */
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_6_C1_PWR_STAT_SHIFT     (6U)
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_6_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_CPU_6_C1_PWR_STAT_SHIFT)     /* 0x00000040 */
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_7_C1_PWR_STAT_SHIFT     (7U)
+#define PMU_PWR_CHAIN1_STS0_PD_CPU_7_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_CPU_7_C1_PWR_STAT_SHIFT)     /* 0x00000080 */
+#define PMU_PWR_CHAIN1_STS0_PD_NPUTOP_C1_PWR_STAT_SHIFT    (11U)
+#define PMU_PWR_CHAIN1_STS0_PD_NPUTOP_C1_PWR_STAT_MASK     (0x1U << PMU_PWR_CHAIN1_STS0_PD_NPUTOP_C1_PWR_STAT_SHIFT)    /* 0x00000800 */
+#define PMU_PWR_CHAIN1_STS0_PD_NPU1_C1_PWR_STAT_SHIFT      (12U)
+#define PMU_PWR_CHAIN1_STS0_PD_NPU1_C1_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN1_STS0_PD_NPU1_C1_PWR_STAT_SHIFT)      /* 0x00001000 */
+#define PMU_PWR_CHAIN1_STS0_PD_NPU2_C1_PWR_STAT_SHIFT      (13U)
+#define PMU_PWR_CHAIN1_STS0_PD_NPU2_C1_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN1_STS0_PD_NPU2_C1_PWR_STAT_SHIFT)      /* 0x00002000 */
+#define PMU_PWR_CHAIN1_STS0_PD_VENC0_C1_PWR_STAT_SHIFT     (14U)
+#define PMU_PWR_CHAIN1_STS0_PD_VENC0_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_VENC0_C1_PWR_STAT_SHIFT)     /* 0x00004000 */
+#define PMU_PWR_CHAIN1_STS0_PD_VENC1_C1_PWR_STAT_SHIFT     (15U)
+#define PMU_PWR_CHAIN1_STS0_PD_VENC1_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_VENC1_C1_PWR_STAT_SHIFT)     /* 0x00008000 */
+#define PMU_PWR_CHAIN1_STS0_PD_RKVDEC0_C1_PWR_STAT_SHIFT   (16U)
+#define PMU_PWR_CHAIN1_STS0_PD_RKVDEC0_C1_PWR_STAT_MASK    (0x1U << PMU_PWR_CHAIN1_STS0_PD_RKVDEC0_C1_PWR_STAT_SHIFT)   /* 0x00010000 */
+#define PMU_PWR_CHAIN1_STS0_PD_RKVDEC1_C1_PWR_STAT_SHIFT   (17U)
+#define PMU_PWR_CHAIN1_STS0_PD_RKVDEC1_C1_PWR_STAT_MASK    (0x1U << PMU_PWR_CHAIN1_STS0_PD_RKVDEC1_C1_PWR_STAT_SHIFT)   /* 0x00020000 */
+#define PMU_PWR_CHAIN1_STS0_PD_VDPU_C1_PWR_STAT_SHIFT      (18U)
+#define PMU_PWR_CHAIN1_STS0_PD_VDPU_C1_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN1_STS0_PD_VDPU_C1_PWR_STAT_SHIFT)      /* 0x00040000 */
+#define PMU_PWR_CHAIN1_STS0_PD_RGA30_C1_PWR_STAT_SHIFT     (19U)
+#define PMU_PWR_CHAIN1_STS0_PD_RGA30_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_RGA30_C1_PWR_STAT_SHIFT)     /* 0x00080000 */
+#define PMU_PWR_CHAIN1_STS0_PD_AV1_C1_PWR_STAT_SHIFT       (20U)
+#define PMU_PWR_CHAIN1_STS0_PD_AV1_C1_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN1_STS0_PD_AV1_C1_PWR_STAT_SHIFT)       /* 0x00100000 */
+#define PMU_PWR_CHAIN1_STS0_PD_VI_C1_PWR_STAT_SHIFT        (21U)
+#define PMU_PWR_CHAIN1_STS0_PD_VI_C1_PWR_STAT_MASK         (0x1U << PMU_PWR_CHAIN1_STS0_PD_VI_C1_PWR_STAT_SHIFT)        /* 0x00200000 */
+#define PMU_PWR_CHAIN1_STS0_PD_FEC_C1_PWR_STAT_SHIFT       (22U)
+#define PMU_PWR_CHAIN1_STS0_PD_FEC_C1_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN1_STS0_PD_FEC_C1_PWR_STAT_SHIFT)       /* 0x00400000 */
+#define PMU_PWR_CHAIN1_STS0_PD_ISP1_C1_PWR_STAT_SHIFT      (23U)
+#define PMU_PWR_CHAIN1_STS0_PD_ISP1_C1_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN1_STS0_PD_ISP1_C1_PWR_STAT_SHIFT)      /* 0x00800000 */
+#define PMU_PWR_CHAIN1_STS0_PD_RGA31_C1_PWR_STAT_SHIFT     (24U)
+#define PMU_PWR_CHAIN1_STS0_PD_RGA31_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_RGA31_C1_PWR_STAT_SHIFT)     /* 0x01000000 */
+#define PMU_PWR_CHAIN1_STS0_PD_VOP_C1_PWR_STAT_SHIFT       (25U)
+#define PMU_PWR_CHAIN1_STS0_PD_VOP_C1_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN1_STS0_PD_VOP_C1_PWR_STAT_SHIFT)       /* 0x02000000 */
+#define PMU_PWR_CHAIN1_STS0_PD_VO0_C1_PWR_STAT_SHIFT       (26U)
+#define PMU_PWR_CHAIN1_STS0_PD_VO0_C1_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN1_STS0_PD_VO0_C1_PWR_STAT_SHIFT)       /* 0x04000000 */
+#define PMU_PWR_CHAIN1_STS0_PD_VO1_C1_PWR_STAT_SHIFT       (27U)
+#define PMU_PWR_CHAIN1_STS0_PD_VO1_C1_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN1_STS0_PD_VO1_C1_PWR_STAT_SHIFT)       /* 0x08000000 */
+#define PMU_PWR_CHAIN1_STS0_PD_AUDIO_C1_PWR_STAT_SHIFT     (28U)
+#define PMU_PWR_CHAIN1_STS0_PD_AUDIO_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS0_PD_AUDIO_C1_PWR_STAT_SHIFT)     /* 0x10000000 */
+#define PMU_PWR_CHAIN1_STS0_PD_PHP_C1_PWR_STAT_SHIFT       (29U)
+#define PMU_PWR_CHAIN1_STS0_PD_PHP_C1_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN1_STS0_PD_PHP_C1_PWR_STAT_SHIFT)       /* 0x20000000 */
+#define PMU_PWR_CHAIN1_STS0_PD_GMAC_C1_PWR_STAT_SHIFT      (30U)
+#define PMU_PWR_CHAIN1_STS0_PD_GMAC_C1_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN1_STS0_PD_GMAC_C1_PWR_STAT_SHIFT)      /* 0x40000000 */
+#define PMU_PWR_CHAIN1_STS0_PD_PCIE_C1_PWR_STAT_SHIFT      (31U)
+#define PMU_PWR_CHAIN1_STS0_PD_PCIE_C1_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN1_STS0_PD_PCIE_C1_PWR_STAT_SHIFT)      /* 0x80000000 */
+/* PWR_CHAIN1_STS1 */
+#define PMU_PWR_CHAIN1_STS1_OFFSET                         (0x81F4U)
+#define PMU_PWR_CHAIN1_STS1                                (0xFFU)
+#define PMU_PWR_CHAIN1_STS1_PD_NVM_C1_PWR_STAT_SHIFT       (0U)
+#define PMU_PWR_CHAIN1_STS1_PD_NVM_C1_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN1_STS1_PD_NVM_C1_PWR_STAT_SHIFT)       /* 0x00000001 */
+#define PMU_PWR_CHAIN1_STS1_PD_NVM0_C1_PWR_STAT_SHIFT      (1U)
+#define PMU_PWR_CHAIN1_STS1_PD_NVM0_C1_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN1_STS1_PD_NVM0_C1_PWR_STAT_SHIFT)      /* 0x00000002 */
+#define PMU_PWR_CHAIN1_STS1_PD_SDIO_C1_PWR_STAT_SHIFT      (2U)
+#define PMU_PWR_CHAIN1_STS1_PD_SDIO_C1_PWR_STAT_MASK       (0x1U << PMU_PWR_CHAIN1_STS1_PD_SDIO_C1_PWR_STAT_SHIFT)      /* 0x00000004 */
+#define PMU_PWR_CHAIN1_STS1_PD_USB_C1_PWR_STAT_SHIFT       (3U)
+#define PMU_PWR_CHAIN1_STS1_PD_USB_C1_PWR_STAT_MASK        (0x1U << PMU_PWR_CHAIN1_STS1_PD_USB_C1_PWR_STAT_SHIFT)       /* 0x00000008 */
+#define PMU_PWR_CHAIN1_STS1_PD_SECURE_C1_PWR_STAT_SHIFT    (4U)
+#define PMU_PWR_CHAIN1_STS1_PD_SECURE_C1_PWR_STAT_MASK     (0x1U << PMU_PWR_CHAIN1_STS1_PD_SECURE_C1_PWR_STAT_SHIFT)    /* 0x00000010 */
+#define PMU_PWR_CHAIN1_STS1_PD_SDMMC_C1_PWR_STAT_SHIFT     (5U)
+#define PMU_PWR_CHAIN1_STS1_PD_SDMMC_C1_PWR_STAT_MASK      (0x1U << PMU_PWR_CHAIN1_STS1_PD_SDMMC_C1_PWR_STAT_SHIFT)     /* 0x00000020 */
+#define PMU_PWR_CHAIN1_STS1_PD_CRYPTO_C1_PWR_STAT_SHIFT    (6U)
+#define PMU_PWR_CHAIN1_STS1_PD_CRYPTO_C1_PWR_STAT_MASK     (0x1U << PMU_PWR_CHAIN1_STS1_PD_CRYPTO_C1_PWR_STAT_SHIFT)    /* 0x00000040 */
+#define PMU_PWR_CHAIN1_STS1_PD_CENTER_C1_PWR_STAT_SHIFT    (7U)
+#define PMU_PWR_CHAIN1_STS1_PD_CENTER_C1_PWR_STAT_MASK     (0x1U << PMU_PWR_CHAIN1_STS1_PD_CENTER_C1_PWR_STAT_SHIFT)    /* 0x00000080 */
+/* PWR_MEM_STS0 */
+#define PMU_PWR_MEM_STS0_OFFSET                            (0x81F8U)
+#define PMU_PWR_MEM_STS0                                   (0xFFFBF800U)
+#define PMU_PWR_MEM_STS0_PD_CPU_0_MEM_PWR_STAT_SHIFT       (0U)
+#define PMU_PWR_MEM_STS0_PD_CPU_0_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_CPU_0_MEM_PWR_STAT_SHIFT)       /* 0x00000001 */
+#define PMU_PWR_MEM_STS0_PD_CPU_1_MEM_PWR_STAT_SHIFT       (1U)
+#define PMU_PWR_MEM_STS0_PD_CPU_1_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_CPU_1_MEM_PWR_STAT_SHIFT)       /* 0x00000002 */
+#define PMU_PWR_MEM_STS0_PD_CPU_2_MEM_PWR_STAT_SHIFT       (2U)
+#define PMU_PWR_MEM_STS0_PD_CPU_2_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_CPU_2_MEM_PWR_STAT_SHIFT)       /* 0x00000004 */
+#define PMU_PWR_MEM_STS0_PD_CPU_3_MEM_PWR_STAT_SHIFT       (3U)
+#define PMU_PWR_MEM_STS0_PD_CPU_3_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_CPU_3_MEM_PWR_STAT_SHIFT)       /* 0x00000008 */
+#define PMU_PWR_MEM_STS0_PD_CPU_4_MEM_PWR_STAT_SHIFT       (4U)
+#define PMU_PWR_MEM_STS0_PD_CPU_4_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_CPU_4_MEM_PWR_STAT_SHIFT)       /* 0x00000010 */
+#define PMU_PWR_MEM_STS0_PD_CPU_5_MEM_PWR_STAT_SHIFT       (5U)
+#define PMU_PWR_MEM_STS0_PD_CPU_5_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_CPU_5_MEM_PWR_STAT_SHIFT)       /* 0x00000020 */
+#define PMU_PWR_MEM_STS0_PD_CPU_6_MEM_PWR_STAT_SHIFT       (6U)
+#define PMU_PWR_MEM_STS0_PD_CPU_6_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_CPU_6_MEM_PWR_STAT_SHIFT)       /* 0x00000040 */
+#define PMU_PWR_MEM_STS0_PD_CPU_7_MEM_PWR_STAT_SHIFT       (7U)
+#define PMU_PWR_MEM_STS0_PD_CPU_7_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_CPU_7_MEM_PWR_STAT_SHIFT)       /* 0x00000080 */
+#define PMU_PWR_MEM_STS0_PD_NPUTOP_MEM_PWR_STAT_SHIFT      (11U)
+#define PMU_PWR_MEM_STS0_PD_NPUTOP_MEM_PWR_STAT_MASK       (0x1U << PMU_PWR_MEM_STS0_PD_NPUTOP_MEM_PWR_STAT_SHIFT)      /* 0x00000800 */
+#define PMU_PWR_MEM_STS0_PD_NPU1_MEM_PWR_STAT_SHIFT        (12U)
+#define PMU_PWR_MEM_STS0_PD_NPU1_MEM_PWR_STAT_MASK         (0x1U << PMU_PWR_MEM_STS0_PD_NPU1_MEM_PWR_STAT_SHIFT)        /* 0x00001000 */
+#define PMU_PWR_MEM_STS0_PD_NPU2_MEM_PWR_STAT_SHIFT        (13U)
+#define PMU_PWR_MEM_STS0_PD_NPU2_MEM_PWR_STAT_MASK         (0x1U << PMU_PWR_MEM_STS0_PD_NPU2_MEM_PWR_STAT_SHIFT)        /* 0x00002000 */
+#define PMU_PWR_MEM_STS0_PD_VENC0_MEM_PWR_STAT_SHIFT       (14U)
+#define PMU_PWR_MEM_STS0_PD_VENC0_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_VENC0_MEM_PWR_STAT_SHIFT)       /* 0x00004000 */
+#define PMU_PWR_MEM_STS0_PD_VENC1_MEM_PWR_STAT_SHIFT       (15U)
+#define PMU_PWR_MEM_STS0_PD_VENC1_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_VENC1_MEM_PWR_STAT_SHIFT)       /* 0x00008000 */
+#define PMU_PWR_MEM_STS0_PD_RKVDEC0_MEM_PWR_STAT_SHIFT     (16U)
+#define PMU_PWR_MEM_STS0_PD_RKVDEC0_MEM_PWR_STAT_MASK      (0x1U << PMU_PWR_MEM_STS0_PD_RKVDEC0_MEM_PWR_STAT_SHIFT)     /* 0x00010000 */
+#define PMU_PWR_MEM_STS0_PD_RKVDEC1_MEM_PWR_STAT_SHIFT     (17U)
+#define PMU_PWR_MEM_STS0_PD_RKVDEC1_MEM_PWR_STAT_MASK      (0x1U << PMU_PWR_MEM_STS0_PD_RKVDEC1_MEM_PWR_STAT_SHIFT)     /* 0x00020000 */
+#define PMU_PWR_MEM_STS0_PD_RGA30_MEM_PWR_STAT_SHIFT       (19U)
+#define PMU_PWR_MEM_STS0_PD_RGA30_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_RGA30_MEM_PWR_STAT_SHIFT)       /* 0x00080000 */
+#define PMU_PWR_MEM_STS0_PD_AV1_MEM_PWR_STAT_SHIFT         (20U)
+#define PMU_PWR_MEM_STS0_PD_AV1_MEM_PWR_STAT_MASK          (0x1U << PMU_PWR_MEM_STS0_PD_AV1_MEM_PWR_STAT_SHIFT)         /* 0x00100000 */
+#define PMU_PWR_MEM_STS0_PD_VI_MEM_PWR_STAT_SHIFT          (21U)
+#define PMU_PWR_MEM_STS0_PD_VI_MEM_PWR_STAT_MASK           (0x1U << PMU_PWR_MEM_STS0_PD_VI_MEM_PWR_STAT_SHIFT)          /* 0x00200000 */
+#define PMU_PWR_MEM_STS0_PD_FEC_MEM_PWR_STAT_SHIFT         (22U)
+#define PMU_PWR_MEM_STS0_PD_FEC_MEM_PWR_STAT_MASK          (0x1U << PMU_PWR_MEM_STS0_PD_FEC_MEM_PWR_STAT_SHIFT)         /* 0x00400000 */
+#define PMU_PWR_MEM_STS0_PD_ISP1_MEM_PWR_STAT_SHIFT        (23U)
+#define PMU_PWR_MEM_STS0_PD_ISP1_MEM_PWR_STAT_MASK         (0x1U << PMU_PWR_MEM_STS0_PD_ISP1_MEM_PWR_STAT_SHIFT)        /* 0x00800000 */
+#define PMU_PWR_MEM_STS0_PD_RGA31_MEM_PWR_STAT_SHIFT       (24U)
+#define PMU_PWR_MEM_STS0_PD_RGA31_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_RGA31_MEM_PWR_STAT_SHIFT)       /* 0x01000000 */
+#define PMU_PWR_MEM_STS0_PD_VOP_MEM_PWR_STAT_SHIFT         (25U)
+#define PMU_PWR_MEM_STS0_PD_VOP_MEM_PWR_STAT_MASK          (0x1U << PMU_PWR_MEM_STS0_PD_VOP_MEM_PWR_STAT_SHIFT)         /* 0x02000000 */
+#define PMU_PWR_MEM_STS0_PD_VO0_MEM_PWR_STAT_SHIFT         (26U)
+#define PMU_PWR_MEM_STS0_PD_VO0_MEM_PWR_STAT_MASK          (0x1U << PMU_PWR_MEM_STS0_PD_VO0_MEM_PWR_STAT_SHIFT)         /* 0x04000000 */
+#define PMU_PWR_MEM_STS0_PD_VO1_MEM_PWR_STAT_SHIFT         (27U)
+#define PMU_PWR_MEM_STS0_PD_VO1_MEM_PWR_STAT_MASK          (0x1U << PMU_PWR_MEM_STS0_PD_VO1_MEM_PWR_STAT_SHIFT)         /* 0x08000000 */
+#define PMU_PWR_MEM_STS0_PD_AUDIO_MEM_PWR_STAT_SHIFT       (28U)
+#define PMU_PWR_MEM_STS0_PD_AUDIO_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS0_PD_AUDIO_MEM_PWR_STAT_SHIFT)       /* 0x10000000 */
+#define PMU_PWR_MEM_STS0_PD_PHP_MEM_PWR_STAT_SHIFT         (29U)
+#define PMU_PWR_MEM_STS0_PD_PHP_MEM_PWR_STAT_MASK          (0x1U << PMU_PWR_MEM_STS0_PD_PHP_MEM_PWR_STAT_SHIFT)         /* 0x20000000 */
+#define PMU_PWR_MEM_STS0_PD_GMAC_MEM_PWR_STAT_SHIFT        (30U)
+#define PMU_PWR_MEM_STS0_PD_GMAC_MEM_PWR_STAT_MASK         (0x1U << PMU_PWR_MEM_STS0_PD_GMAC_MEM_PWR_STAT_SHIFT)        /* 0x40000000 */
+#define PMU_PWR_MEM_STS0_PD_PCIE_MEM_PWR_STAT_SHIFT        (31U)
+#define PMU_PWR_MEM_STS0_PD_PCIE_MEM_PWR_STAT_MASK         (0x1U << PMU_PWR_MEM_STS0_PD_PCIE_MEM_PWR_STAT_SHIFT)        /* 0x80000000 */
+/* PWR_MEM_STS1 */
+#define PMU_PWR_MEM_STS1_OFFSET                            (0x81FCU)
+#define PMU_PWR_MEM_STS1                                   (0x0U)
+#define PMU_PWR_MEM_STS1_PD_NVM0_MEM_PWR_STAT_SHIFT        (1U)
+#define PMU_PWR_MEM_STS1_PD_NVM0_MEM_PWR_STAT_MASK         (0x1U << PMU_PWR_MEM_STS1_PD_NVM0_MEM_PWR_STAT_SHIFT)        /* 0x00000002 */
+#define PMU_PWR_MEM_STS1_PD_SDIO_MEM_PWR_STAT_SHIFT        (2U)
+#define PMU_PWR_MEM_STS1_PD_SDIO_MEM_PWR_STAT_MASK         (0x1U << PMU_PWR_MEM_STS1_PD_SDIO_MEM_PWR_STAT_SHIFT)        /* 0x00000004 */
+#define PMU_PWR_MEM_STS1_PD_USB_MEM_PWR_STAT_SHIFT         (3U)
+#define PMU_PWR_MEM_STS1_PD_USB_MEM_PWR_STAT_MASK          (0x1U << PMU_PWR_MEM_STS1_PD_USB_MEM_PWR_STAT_SHIFT)         /* 0x00000008 */
+#define PMU_PWR_MEM_STS1_PD_SDMMC_MEM_PWR_STAT_SHIFT       (5U)
+#define PMU_PWR_MEM_STS1_PD_SDMMC_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS1_PD_SDMMC_MEM_PWR_STAT_SHIFT)       /* 0x00000020 */
+#define PMU_PWR_MEM_STS1_PD_CRYPTO_MEM_PWR_STAT_SHIFT      (6U)
+#define PMU_PWR_MEM_STS1_PD_CRYPTO_MEM_PWR_STAT_MASK       (0x1U << PMU_PWR_MEM_STS1_PD_CRYPTO_MEM_PWR_STAT_SHIFT)      /* 0x00000040 */
+#define PMU_PWR_MEM_STS1_PD_CENTER_MEM_PWR_STAT_SHIFT      (7U)
+#define PMU_PWR_MEM_STS1_PD_CENTER_MEM_PWR_STAT_MASK       (0x1U << PMU_PWR_MEM_STS1_PD_CENTER_MEM_PWR_STAT_SHIFT)      /* 0x00000080 */
+#define PMU_PWR_MEM_STS1_PD_DDR01_MEM_PWR_STAT_SHIFT       (8U)
+#define PMU_PWR_MEM_STS1_PD_DDR01_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS1_PD_DDR01_MEM_PWR_STAT_SHIFT)       /* 0x00000100 */
+#define PMU_PWR_MEM_STS1_PD_DDR23_MEM_PWR_STAT_SHIFT       (9U)
+#define PMU_PWR_MEM_STS1_PD_DDR23_MEM_PWR_STAT_MASK        (0x1U << PMU_PWR_MEM_STS1_PD_DDR23_MEM_PWR_STAT_SHIFT)       /* 0x00000200 */
+#define PMU_PWR_MEM_STS1_PD_DSU_MEM_PWR_STAT_SHIFT         (10U)
+#define PMU_PWR_MEM_STS1_PD_DSU_MEM_PWR_STAT_MASK          (0x1FU << PMU_PWR_MEM_STS1_PD_DSU_MEM_PWR_STAT_SHIFT)        /* 0x00007C00 */
+/* BISR_CON0 */
+#define PMU_BISR_CON0_OFFSET                               (0x8200U)
+#define PMU_BISR_CON0_BISR_INIT_SHIFT                      (0U)
+#define PMU_BISR_CON0_BISR_INIT_MASK                       (0x1U << PMU_BISR_CON0_BISR_INIT_SHIFT)                      /* 0x00000001 */
+#define PMU_BISR_CON0_BISR_PDGDONE_SEL_SHIFT               (1U)
+#define PMU_BISR_CON0_BISR_PDGDONE_SEL_MASK                (0xFU << PMU_BISR_CON0_BISR_PDGDONE_SEL_SHIFT)               /* 0x0000001E */
+#define PMU_BISR_CON0_BISR_CLKGATE_ENA_SHIFT               (5U)
+#define PMU_BISR_CON0_BISR_CLKGATE_ENA_MASK                (0x1U << PMU_BISR_CON0_BISR_CLKGATE_ENA_SHIFT)               /* 0x00000020 */
+#define PMU_BISR_CON0_BISR_CLKGATE_SFTENA_SHIFT            (6U)
+#define PMU_BISR_CON0_BISR_CLKGATE_SFTENA_MASK             (0x1U << PMU_BISR_CON0_BISR_CLKGATE_SFTENA_SHIFT)            /* 0x00000040 */
+#define PMU_BISR_CON0_BISR_TIMEOUT_ENA_SHIFT               (7U)
+#define PMU_BISR_CON0_BISR_TIMEOUT_ENA_MASK                (0x1U << PMU_BISR_CON0_BISR_TIMEOUT_ENA_SHIFT)               /* 0x00000080 */
+#define PMU_BISR_CON0_BISR_REPAIR_MODE_SHIFT               (8U)
+#define PMU_BISR_CON0_BISR_REPAIR_MODE_MASK                (0x1U << PMU_BISR_CON0_BISR_REPAIR_MODE_SHIFT)               /* 0x00000100 */
+#define PMU_BISR_CON0_BISR_RESETN_SFT_SHIFT                (9U)
+#define PMU_BISR_CON0_BISR_RESETN_SFT_MASK                 (0x1U << PMU_BISR_CON0_BISR_RESETN_SFT_SHIFT)                /* 0x00000200 */
+#define PMU_BISR_CON0_BISR_SFT_ENA_SHIFT                   (10U)
+#define PMU_BISR_CON0_BISR_SFT_ENA_MASK                    (0x1U << PMU_BISR_CON0_BISR_SFT_ENA_SHIFT)                   /* 0x00000400 */
+#define PMU_BISR_CON0_BISR_INITRSTN_DIS_SHIFT              (11U)
+#define PMU_BISR_CON0_BISR_INITRSTN_DIS_MASK               (0x1U << PMU_BISR_CON0_BISR_INITRSTN_DIS_SHIFT)              /* 0x00000800 */
+/* BISR_CON1 */
+#define PMU_BISR_CON1_OFFSET                               (0x8204U)
+#define PMU_BISR_CON1_PD_GPU_BISR_ENA_SHIFT                (1U)
+#define PMU_BISR_CON1_PD_GPU_BISR_ENA_MASK                 (0x1U << PMU_BISR_CON1_PD_GPU_BISR_ENA_SHIFT)                /* 0x00000002 */
+#define PMU_BISR_CON1_PD_NPUTOP_REPAIR_ENA_SHIFT           (2U)
+#define PMU_BISR_CON1_PD_NPUTOP_REPAIR_ENA_MASK            (0x1U << PMU_BISR_CON1_PD_NPUTOP_REPAIR_ENA_SHIFT)           /* 0x00000004 */
+#define PMU_BISR_CON1_PD_NPU1_REPAIR_ENA_SHIFT             (3U)
+#define PMU_BISR_CON1_PD_NPU1_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON1_PD_NPU1_REPAIR_ENA_SHIFT)             /* 0x00000008 */
+#define PMU_BISR_CON1_PD_NPU2_REPAIR_ENA_SHIFT             (4U)
+#define PMU_BISR_CON1_PD_NPU2_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON1_PD_NPU2_REPAIR_ENA_SHIFT)             /* 0x00000010 */
+#define PMU_BISR_CON1_PD_VENC0_REPAIR_ENA_SHIFT            (5U)
+#define PMU_BISR_CON1_PD_VENC0_REPAIR_ENA_MASK             (0x1U << PMU_BISR_CON1_PD_VENC0_REPAIR_ENA_SHIFT)            /* 0x00000020 */
+#define PMU_BISR_CON1_PD_VENC1_REPAIR_ENA_SHIFT            (6U)
+#define PMU_BISR_CON1_PD_VENC1_REPAIR_ENA_MASK             (0x1U << PMU_BISR_CON1_PD_VENC1_REPAIR_ENA_SHIFT)            /* 0x00000040 */
+#define PMU_BISR_CON1_PD_RKVDEC0_REPAIR_ENA_SHIFT          (7U)
+#define PMU_BISR_CON1_PD_RKVDEC0_REPAIR_ENA_MASK           (0x1U << PMU_BISR_CON1_PD_RKVDEC0_REPAIR_ENA_SHIFT)          /* 0x00000080 */
+#define PMU_BISR_CON1_PD_RKVDEC1_REPAIR_ENA_SHIFT          (8U)
+#define PMU_BISR_CON1_PD_RKVDEC1_REPAIR_ENA_MASK           (0x1U << PMU_BISR_CON1_PD_RKVDEC1_REPAIR_ENA_SHIFT)          /* 0x00000100 */
+#define PMU_BISR_CON1_PD_VDPU_REPAIR_ENA_SHIFT             (9U)
+#define PMU_BISR_CON1_PD_VDPU_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON1_PD_VDPU_REPAIR_ENA_SHIFT)             /* 0x00000200 */
+#define PMU_BISR_CON1_PD_RGA30_REPAIR_ENA_SHIFT            (10U)
+#define PMU_BISR_CON1_PD_RGA30_REPAIR_ENA_MASK             (0x1U << PMU_BISR_CON1_PD_RGA30_REPAIR_ENA_SHIFT)            /* 0x00000400 */
+#define PMU_BISR_CON1_PD_AV1_REPAIR_ENA_SHIFT              (11U)
+#define PMU_BISR_CON1_PD_AV1_REPAIR_ENA_MASK               (0x1U << PMU_BISR_CON1_PD_AV1_REPAIR_ENA_SHIFT)              /* 0x00000800 */
+#define PMU_BISR_CON1_PD_VI_REPAIR_ENA_SHIFT               (12U)
+#define PMU_BISR_CON1_PD_VI_REPAIR_ENA_MASK                (0x1U << PMU_BISR_CON1_PD_VI_REPAIR_ENA_SHIFT)               /* 0x00001000 */
+#define PMU_BISR_CON1_PD_FEC_REPAIR_ENA_SHIFT              (13U)
+#define PMU_BISR_CON1_PD_FEC_REPAIR_ENA_MASK               (0x1U << PMU_BISR_CON1_PD_FEC_REPAIR_ENA_SHIFT)              /* 0x00002000 */
+#define PMU_BISR_CON1_PD_ISP1_REPAIR_ENA_SHIFT             (14U)
+#define PMU_BISR_CON1_PD_ISP1_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON1_PD_ISP1_REPAIR_ENA_SHIFT)             /* 0x00004000 */
+#define PMU_BISR_CON1_PD_RGA31_REPAIR_ENA_SHIFT            (15U)
+#define PMU_BISR_CON1_PD_RGA31_REPAIR_ENA_MASK             (0x1U << PMU_BISR_CON1_PD_RGA31_REPAIR_ENA_SHIFT)            /* 0x00008000 */
+/* BISR_CON2 */
+#define PMU_BISR_CON2_OFFSET                               (0x8208U)
+#define PMU_BISR_CON2_PD_VOP_REPAIR_ENA_SHIFT              (0U)
+#define PMU_BISR_CON2_PD_VOP_REPAIR_ENA_MASK               (0x1U << PMU_BISR_CON2_PD_VOP_REPAIR_ENA_SHIFT)              /* 0x00000001 */
+#define PMU_BISR_CON2_PD_VO0_REPAIR_ENA_SHIFT              (1U)
+#define PMU_BISR_CON2_PD_VO0_REPAIR_ENA_MASK               (0x1U << PMU_BISR_CON2_PD_VO0_REPAIR_ENA_SHIFT)              /* 0x00000002 */
+#define PMU_BISR_CON2_PD_VO1_REPAIR_ENA_SHIFT              (2U)
+#define PMU_BISR_CON2_PD_VO1_REPAIR_ENA_MASK               (0x1U << PMU_BISR_CON2_PD_VO1_REPAIR_ENA_SHIFT)              /* 0x00000004 */
+#define PMU_BISR_CON2_PD_AUDIO_REPAIR_ENA_SHIFT            (3U)
+#define PMU_BISR_CON2_PD_AUDIO_REPAIR_ENA_MASK             (0x1U << PMU_BISR_CON2_PD_AUDIO_REPAIR_ENA_SHIFT)            /* 0x00000008 */
+#define PMU_BISR_CON2_PD_PHP_REPAIR_ENA_SHIFT              (4U)
+#define PMU_BISR_CON2_PD_PHP_REPAIR_ENA_MASK               (0x1U << PMU_BISR_CON2_PD_PHP_REPAIR_ENA_SHIFT)              /* 0x00000010 */
+#define PMU_BISR_CON2_PD_GMAC_REPAIR_ENA_SHIFT             (5U)
+#define PMU_BISR_CON2_PD_GMAC_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON2_PD_GMAC_REPAIR_ENA_SHIFT)             /* 0x00000020 */
+#define PMU_BISR_CON2_PD_PCIE_REPAIR_ENA_SHIFT             (6U)
+#define PMU_BISR_CON2_PD_PCIE_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON2_PD_PCIE_REPAIR_ENA_SHIFT)             /* 0x00000040 */
+#define PMU_BISR_CON2_PD_NVM0_REPAIR_ENA_SHIFT             (7U)
+#define PMU_BISR_CON2_PD_NVM0_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON2_PD_NVM0_REPAIR_ENA_SHIFT)             /* 0x00000080 */
+#define PMU_BISR_CON2_PD_SDIO_REPAIR_ENA_SHIFT             (8U)
+#define PMU_BISR_CON2_PD_SDIO_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON2_PD_SDIO_REPAIR_ENA_SHIFT)             /* 0x00000100 */
+#define PMU_BISR_CON2_PD_USB_REPAIR_ENA_SHIFT              (9U)
+#define PMU_BISR_CON2_PD_USB_REPAIR_ENA_MASK               (0x1U << PMU_BISR_CON2_PD_USB_REPAIR_ENA_SHIFT)              /* 0x00000200 */
+#define PMU_BISR_CON2_PD_SDMMC_REPAIR_ENA_SHIFT            (10U)
+#define PMU_BISR_CON2_PD_SDMMC_REPAIR_ENA_MASK             (0x1U << PMU_BISR_CON2_PD_SDMMC_REPAIR_ENA_SHIFT)            /* 0x00000400 */
+#define PMU_BISR_CON2_PD_CRYPTO_REPAIR_ENA_SHIFT           (11U)
+#define PMU_BISR_CON2_PD_CRYPTO_REPAIR_ENA_MASK            (0x1U << PMU_BISR_CON2_PD_CRYPTO_REPAIR_ENA_SHIFT)           /* 0x00000800 */
+#define PMU_BISR_CON2_PD_CENTER_REPAIR_ENA_SHIFT           (12U)
+#define PMU_BISR_CON2_PD_CENTER_REPAIR_ENA_MASK            (0x1U << PMU_BISR_CON2_PD_CENTER_REPAIR_ENA_SHIFT)           /* 0x00001000 */
+#define PMU_BISR_CON2_PD_DDR01_REPAIR_ENA_SHIFT            (13U)
+#define PMU_BISR_CON2_PD_DDR01_REPAIR_ENA_MASK             (0x1U << PMU_BISR_CON2_PD_DDR01_REPAIR_ENA_SHIFT)            /* 0x00002000 */
+#define PMU_BISR_CON2_PD_DDR23_REPAIR_ENA_SHIFT            (14U)
+#define PMU_BISR_CON2_PD_DDR23_REPAIR_ENA_MASK             (0x1U << PMU_BISR_CON2_PD_DDR23_REPAIR_ENA_SHIFT)            /* 0x00004000 */
+#define PMU_BISR_CON2_PD_BUS_REPAIR_ENA_SHIFT              (15U)
+#define PMU_BISR_CON2_PD_BUS_REPAIR_ENA_MASK               (0x1U << PMU_BISR_CON2_PD_BUS_REPAIR_ENA_SHIFT)              /* 0x00008000 */
+/* BISR_CON3 */
+#define PMU_BISR_CON3_OFFSET                               (0x820CU)
+#define PMU_BISR_CON3_PD_DSU_REPAIR_ENA_SHIFT              (0U)
+#define PMU_BISR_CON3_PD_DSU_REPAIR_ENA_MASK               (0x1U << PMU_BISR_CON3_PD_DSU_REPAIR_ENA_SHIFT)              /* 0x00000001 */
+#define PMU_BISR_CON3_PD_CPU7_REPAIR_ENA_SHIFT             (1U)
+#define PMU_BISR_CON3_PD_CPU7_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON3_PD_CPU7_REPAIR_ENA_SHIFT)             /* 0x00000002 */
+#define PMU_BISR_CON3_PD_CPU6_REPAIR_ENA_SHIFT             (2U)
+#define PMU_BISR_CON3_PD_CPU6_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON3_PD_CPU6_REPAIR_ENA_SHIFT)             /* 0x00000004 */
+#define PMU_BISR_CON3_PD_CPU5_REPAIR_ENA_SHIFT             (3U)
+#define PMU_BISR_CON3_PD_CPU5_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON3_PD_CPU5_REPAIR_ENA_SHIFT)             /* 0x00000008 */
+#define PMU_BISR_CON3_PD_CPU4_REPAIR_ENA_SHIFT             (4U)
+#define PMU_BISR_CON3_PD_CPU4_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON3_PD_CPU4_REPAIR_ENA_SHIFT)             /* 0x00000010 */
+#define PMU_BISR_CON3_PD_CPU3_REPAIR_ENA_SHIFT             (5U)
+#define PMU_BISR_CON3_PD_CPU3_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON3_PD_CPU3_REPAIR_ENA_SHIFT)             /* 0x00000020 */
+#define PMU_BISR_CON3_PD_CPU2_REPAIR_ENA_SHIFT             (6U)
+#define PMU_BISR_CON3_PD_CPU2_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON3_PD_CPU2_REPAIR_ENA_SHIFT)             /* 0x00000040 */
+#define PMU_BISR_CON3_PD_CPU1_REPAIR_ENA_SHIFT             (7U)
+#define PMU_BISR_CON3_PD_CPU1_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON3_PD_CPU1_REPAIR_ENA_SHIFT)             /* 0x00000080 */
+#define PMU_BISR_CON3_PD_CPU0_REPAIR_ENA_SHIFT             (8U)
+#define PMU_BISR_CON3_PD_CPU0_REPAIR_ENA_MASK              (0x1U << PMU_BISR_CON3_PD_CPU0_REPAIR_ENA_SHIFT)             /* 0x00000100 */
+#define PMU_BISR_CON3_PD_VOPCLUSTER0_REPAIR_ENA_SHIFT      (9U)
+#define PMU_BISR_CON3_PD_VOPCLUSTER0_REPAIR_ENA_MASK       (0x1U << PMU_BISR_CON3_PD_VOPCLUSTER0_REPAIR_ENA_SHIFT)      /* 0x00000200 */
+#define PMU_BISR_CON3_PD_VOPCLUSTER1_REPAIR_ENA_SHIFT      (10U)
+#define PMU_BISR_CON3_PD_VOPCLUSTER1_REPAIR_ENA_MASK       (0x1U << PMU_BISR_CON3_PD_VOPCLUSTER1_REPAIR_ENA_SHIFT)      /* 0x00000400 */
+#define PMU_BISR_CON3_PD_VOPCLUSTER2_REPAIR_ENA_SHIFT      (11U)
+#define PMU_BISR_CON3_PD_VOPCLUSTER2_REPAIR_ENA_MASK       (0x1U << PMU_BISR_CON3_PD_VOPCLUSTER2_REPAIR_ENA_SHIFT)      /* 0x00000800 */
+#define PMU_BISR_CON3_PD_VOPCLUSTER3_REPAIR_ENA_SHIFT      (12U)
+#define PMU_BISR_CON3_PD_VOPCLUSTER3_REPAIR_ENA_MASK       (0x1U << PMU_BISR_CON3_PD_VOPCLUSTER3_REPAIR_ENA_SHIFT)      /* 0x00001000 */
+#define PMU_BISR_CON3_PD_VOPDSC8K_REPAIR_ENA_SHIFT         (13U)
+#define PMU_BISR_CON3_PD_VOPDSC8K_REPAIR_ENA_MASK          (0x1U << PMU_BISR_CON3_PD_VOPDSC8K_REPAIR_ENA_SHIFT)         /* 0x00002000 */
+#define PMU_BISR_CON3_PD_VOPDSC4K_REPAIR_ENA_SHIFT         (14U)
+#define PMU_BISR_CON3_PD_VOPDSC4K_REPAIR_ENA_MASK          (0x1U << PMU_BISR_CON3_PD_VOPDSC4K_REPAIR_ENA_SHIFT)         /* 0x00004000 */
+#define PMU_BISR_CON3_PD_VOPESMART_REPAIR_ENA_SHIFT        (15U)
+#define PMU_BISR_CON3_PD_VOPESMART_REPAIR_ENA_MASK         (0x1U << PMU_BISR_CON3_PD_VOPESMART_REPAIR_ENA_SHIFT)        /* 0x00008000 */
+/* BISR_CON4 */
+#define PMU_BISR_CON4_OFFSET                               (0x8210U)
+#define PMU_BISR_CON4_PD_PMU1_REPAIR_SFTENA_SHIFT          (0U)
+#define PMU_BISR_CON4_PD_PMU1_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON4_PD_PMU1_REPAIR_SFTENA_SHIFT)          /* 0x00000001 */
+#define PMU_BISR_CON4_PD_GPU_BISR_SFTENA_SHIFT             (1U)
+#define PMU_BISR_CON4_PD_GPU_BISR_SFTENA_MASK              (0x1U << PMU_BISR_CON4_PD_GPU_BISR_SFTENA_SHIFT)             /* 0x00000002 */
+#define PMU_BISR_CON4_PD_NPUTOP_REPAIR_SFTENA_SHIFT        (2U)
+#define PMU_BISR_CON4_PD_NPUTOP_REPAIR_SFTENA_MASK         (0x1U << PMU_BISR_CON4_PD_NPUTOP_REPAIR_SFTENA_SHIFT)        /* 0x00000004 */
+#define PMU_BISR_CON4_PD_NPU1_REPAIR_SFTENA_SHIFT          (3U)
+#define PMU_BISR_CON4_PD_NPU1_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON4_PD_NPU1_REPAIR_SFTENA_SHIFT)          /* 0x00000008 */
+#define PMU_BISR_CON4_PD_NPU2_REPAIR_SFTENA_SHIFT          (4U)
+#define PMU_BISR_CON4_PD_NPU2_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON4_PD_NPU2_REPAIR_SFTENA_SHIFT)          /* 0x00000010 */
+#define PMU_BISR_CON4_PD_VENC0_REPAIR_SFTENA_SHIFT         (5U)
+#define PMU_BISR_CON4_PD_VENC0_REPAIR_SFTENA_MASK          (0x1U << PMU_BISR_CON4_PD_VENC0_REPAIR_SFTENA_SHIFT)         /* 0x00000020 */
+#define PMU_BISR_CON4_PD_VENC1_REPAIR_SFTENA_SHIFT         (6U)
+#define PMU_BISR_CON4_PD_VENC1_REPAIR_SFTENA_MASK          (0x1U << PMU_BISR_CON4_PD_VENC1_REPAIR_SFTENA_SHIFT)         /* 0x00000040 */
+#define PMU_BISR_CON4_PD_RKVDEC0_REPAIR_SFTENA_SHIFT       (7U)
+#define PMU_BISR_CON4_PD_RKVDEC0_REPAIR_SFTENA_MASK        (0x1U << PMU_BISR_CON4_PD_RKVDEC0_REPAIR_SFTENA_SHIFT)       /* 0x00000080 */
+#define PMU_BISR_CON4_PD_RKVDEC1_REPAIR_SFTENA_SHIFT       (8U)
+#define PMU_BISR_CON4_PD_RKVDEC1_REPAIR_SFTENA_MASK        (0x1U << PMU_BISR_CON4_PD_RKVDEC1_REPAIR_SFTENA_SHIFT)       /* 0x00000100 */
+#define PMU_BISR_CON4_PD_VDPU_REPAIR_SFTENA_SHIFT          (9U)
+#define PMU_BISR_CON4_PD_VDPU_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON4_PD_VDPU_REPAIR_SFTENA_SHIFT)          /* 0x00000200 */
+#define PMU_BISR_CON4_PD_RGA30_REPAIR_SFTENA_SHIFT         (10U)
+#define PMU_BISR_CON4_PD_RGA30_REPAIR_SFTENA_MASK          (0x1U << PMU_BISR_CON4_PD_RGA30_REPAIR_SFTENA_SHIFT)         /* 0x00000400 */
+#define PMU_BISR_CON4_PD_AV1_REPAIR_SFTENA_SHIFT           (11U)
+#define PMU_BISR_CON4_PD_AV1_REPAIR_SFTENA_MASK            (0x1U << PMU_BISR_CON4_PD_AV1_REPAIR_SFTENA_SHIFT)           /* 0x00000800 */
+#define PMU_BISR_CON4_PD_VI_REPAIR_SFTENA_SHIFT            (12U)
+#define PMU_BISR_CON4_PD_VI_REPAIR_SFTENA_MASK             (0x1U << PMU_BISR_CON4_PD_VI_REPAIR_SFTENA_SHIFT)            /* 0x00001000 */
+#define PMU_BISR_CON4_PD_FEC_REPAIR_SFTENA_SHIFT           (13U)
+#define PMU_BISR_CON4_PD_FEC_REPAIR_SFTENA_MASK            (0x1U << PMU_BISR_CON4_PD_FEC_REPAIR_SFTENA_SHIFT)           /* 0x00002000 */
+#define PMU_BISR_CON4_PD_ISP1_REPAIR_SFTENA_SHIFT          (14U)
+#define PMU_BISR_CON4_PD_ISP1_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON4_PD_ISP1_REPAIR_SFTENA_SHIFT)          /* 0x00004000 */
+#define PMU_BISR_CON4_PD_RGA31_REPAIR_SFTENA_SHIFT         (15U)
+#define PMU_BISR_CON4_PD_RGA31_REPAIR_SFTENA_MASK          (0x1U << PMU_BISR_CON4_PD_RGA31_REPAIR_SFTENA_SHIFT)         /* 0x00008000 */
+/* BISR_CON5 */
+#define PMU_BISR_CON5_OFFSET                               (0x8214U)
+#define PMU_BISR_CON5_PD_VOP_REPAIR_SFTENA_SHIFT           (0U)
+#define PMU_BISR_CON5_PD_VOP_REPAIR_SFTENA_MASK            (0x1U << PMU_BISR_CON5_PD_VOP_REPAIR_SFTENA_SHIFT)           /* 0x00000001 */
+#define PMU_BISR_CON5_PD_VO0_REPAIR_SFTENA_SHIFT           (1U)
+#define PMU_BISR_CON5_PD_VO0_REPAIR_SFTENA_MASK            (0x1U << PMU_BISR_CON5_PD_VO0_REPAIR_SFTENA_SHIFT)           /* 0x00000002 */
+#define PMU_BISR_CON5_PD_VO1_REPAIR_SFTENA_SHIFT           (2U)
+#define PMU_BISR_CON5_PD_VO1_REPAIR_SFTENA_MASK            (0x1U << PMU_BISR_CON5_PD_VO1_REPAIR_SFTENA_SHIFT)           /* 0x00000004 */
+#define PMU_BISR_CON5_PD_AUDIO_REPAIR_SFTENA_SHIFT         (3U)
+#define PMU_BISR_CON5_PD_AUDIO_REPAIR_SFTENA_MASK          (0x1U << PMU_BISR_CON5_PD_AUDIO_REPAIR_SFTENA_SHIFT)         /* 0x00000008 */
+#define PMU_BISR_CON5_PD_PHP_REPAIR_SFTENA_SHIFT           (4U)
+#define PMU_BISR_CON5_PD_PHP_REPAIR_SFTENA_MASK            (0x1U << PMU_BISR_CON5_PD_PHP_REPAIR_SFTENA_SHIFT)           /* 0x00000010 */
+#define PMU_BISR_CON5_PD_GMAC_REPAIR_SFTENA_SHIFT          (5U)
+#define PMU_BISR_CON5_PD_GMAC_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON5_PD_GMAC_REPAIR_SFTENA_SHIFT)          /* 0x00000020 */
+#define PMU_BISR_CON5_PD_PCIE_REPAIR_SFTENA_SHIFT          (6U)
+#define PMU_BISR_CON5_PD_PCIE_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON5_PD_PCIE_REPAIR_SFTENA_SHIFT)          /* 0x00000040 */
+#define PMU_BISR_CON5_PD_NVM0_REPAIR_SFTENA_SHIFT          (7U)
+#define PMU_BISR_CON5_PD_NVM0_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON5_PD_NVM0_REPAIR_SFTENA_SHIFT)          /* 0x00000080 */
+#define PMU_BISR_CON5_PD_SDIO_REPAIR_SFTENA_SHIFT          (8U)
+#define PMU_BISR_CON5_PD_SDIO_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON5_PD_SDIO_REPAIR_SFTENA_SHIFT)          /* 0x00000100 */
+#define PMU_BISR_CON5_PD_USB_REPAIR_SFTENA_SHIFT           (9U)
+#define PMU_BISR_CON5_PD_USB_REPAIR_SFTENA_MASK            (0x1U << PMU_BISR_CON5_PD_USB_REPAIR_SFTENA_SHIFT)           /* 0x00000200 */
+#define PMU_BISR_CON5_PD_SDMMC_REPAIR_SFTENA_SHIFT         (10U)
+#define PMU_BISR_CON5_PD_SDMMC_REPAIR_SFTENA_MASK          (0x1U << PMU_BISR_CON5_PD_SDMMC_REPAIR_SFTENA_SHIFT)         /* 0x00000400 */
+#define PMU_BISR_CON5_PD_CRYPTO_REPAIR_SFTENA_SHIFT        (11U)
+#define PMU_BISR_CON5_PD_CRYPTO_REPAIR_SFTENA_MASK         (0x1U << PMU_BISR_CON5_PD_CRYPTO_REPAIR_SFTENA_SHIFT)        /* 0x00000800 */
+#define PMU_BISR_CON5_PD_CENTER_REPAIR_SFTENA_SHIFT        (12U)
+#define PMU_BISR_CON5_PD_CENTER_REPAIR_SFTENA_MASK         (0x1U << PMU_BISR_CON5_PD_CENTER_REPAIR_SFTENA_SHIFT)        /* 0x00001000 */
+#define PMU_BISR_CON5_PD_DDR01_REPAIR_SFTENA_SHIFT         (13U)
+#define PMU_BISR_CON5_PD_DDR01_REPAIR_SFTENA_MASK          (0x1U << PMU_BISR_CON5_PD_DDR01_REPAIR_SFTENA_SHIFT)         /* 0x00002000 */
+#define PMU_BISR_CON5_PD_DDR23_REPAIR_SFTENA_SHIFT         (14U)
+#define PMU_BISR_CON5_PD_DDR23_REPAIR_SFTENA_MASK          (0x1U << PMU_BISR_CON5_PD_DDR23_REPAIR_SFTENA_SHIFT)         /* 0x00004000 */
+#define PMU_BISR_CON5_PD_BUS_REPAIR_SFTENA_SHIFT           (15U)
+#define PMU_BISR_CON5_PD_BUS_REPAIR_SFTENA_MASK            (0x1U << PMU_BISR_CON5_PD_BUS_REPAIR_SFTENA_SHIFT)           /* 0x00008000 */
+/* BISR_CON6 */
+#define PMU_BISR_CON6_OFFSET                               (0x8218U)
+#define PMU_BISR_CON6_PD_DSU_REPAIR_SFTENA_SHIFT           (0U)
+#define PMU_BISR_CON6_PD_DSU_REPAIR_SFTENA_MASK            (0x1U << PMU_BISR_CON6_PD_DSU_REPAIR_SFTENA_SHIFT)           /* 0x00000001 */
+#define PMU_BISR_CON6_PD_CPU7_REPAIR_SFTENA_SHIFT          (1U)
+#define PMU_BISR_CON6_PD_CPU7_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON6_PD_CPU7_REPAIR_SFTENA_SHIFT)          /* 0x00000002 */
+#define PMU_BISR_CON6_PD_CPU6_REPAIR_SFTENA_SHIFT          (2U)
+#define PMU_BISR_CON6_PD_CPU6_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON6_PD_CPU6_REPAIR_SFTENA_SHIFT)          /* 0x00000004 */
+#define PMU_BISR_CON6_PD_CPU5_REPAIR_SFTENA_SHIFT          (3U)
+#define PMU_BISR_CON6_PD_CPU5_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON6_PD_CPU5_REPAIR_SFTENA_SHIFT)          /* 0x00000008 */
+#define PMU_BISR_CON6_PD_CPU4_REPAIR_SFTENA_SHIFT          (4U)
+#define PMU_BISR_CON6_PD_CPU4_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON6_PD_CPU4_REPAIR_SFTENA_SHIFT)          /* 0x00000010 */
+#define PMU_BISR_CON6_PD_CPU3_REPAIR_SFTENA_SHIFT          (5U)
+#define PMU_BISR_CON6_PD_CPU3_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON6_PD_CPU3_REPAIR_SFTENA_SHIFT)          /* 0x00000020 */
+#define PMU_BISR_CON6_PD_CPU2_REPAIR_SFTENA_SHIFT          (6U)
+#define PMU_BISR_CON6_PD_CPU2_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON6_PD_CPU2_REPAIR_SFTENA_SHIFT)          /* 0x00000040 */
+#define PMU_BISR_CON6_PD_CPU1_REPAIR_SFTENA_SHIFT          (7U)
+#define PMU_BISR_CON6_PD_CPU1_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON6_PD_CPU1_REPAIR_SFTENA_SHIFT)          /* 0x00000080 */
+#define PMU_BISR_CON6_PD_CPU0_REPAIR_SFTENA_SHIFT          (8U)
+#define PMU_BISR_CON6_PD_CPU0_REPAIR_SFTENA_MASK           (0x1U << PMU_BISR_CON6_PD_CPU0_REPAIR_SFTENA_SHIFT)          /* 0x00000100 */
+#define PMU_BISR_CON6_PD_VOPCLUSTER0_REPAIR_SFTENA_SHIFT   (9U)
+#define PMU_BISR_CON6_PD_VOPCLUSTER0_REPAIR_SFTENA_MASK    (0x1U << PMU_BISR_CON6_PD_VOPCLUSTER0_REPAIR_SFTENA_SHIFT)   /* 0x00000200 */
+#define PMU_BISR_CON6_PD_VOPCLUSTER1_REPAIR_SFTENA_SHIFT   (10U)
+#define PMU_BISR_CON6_PD_VOPCLUSTER1_REPAIR_SFTENA_MASK    (0x1U << PMU_BISR_CON6_PD_VOPCLUSTER1_REPAIR_SFTENA_SHIFT)   /* 0x00000400 */
+#define PMU_BISR_CON6_PD_VOPCLUSTER2_REPAIR_SFTENA_SHIFT   (11U)
+#define PMU_BISR_CON6_PD_VOPCLUSTER2_REPAIR_SFTENA_MASK    (0x1U << PMU_BISR_CON6_PD_VOPCLUSTER2_REPAIR_SFTENA_SHIFT)   /* 0x00000800 */
+#define PMU_BISR_CON6_PD_VOPCLUSTER3_REPAIR_SFTENA_SHIFT   (12U)
+#define PMU_BISR_CON6_PD_VOPCLUSTER3_REPAIR_SFTENA_MASK    (0x1U << PMU_BISR_CON6_PD_VOPCLUSTER3_REPAIR_SFTENA_SHIFT)   /* 0x00001000 */
+#define PMU_BISR_CON6_PD_VOPDSC8K_REPAIR_SFTENA_SHIFT      (13U)
+#define PMU_BISR_CON6_PD_VOPDSC8K_REPAIR_SFTENA_MASK       (0x1U << PMU_BISR_CON6_PD_VOPDSC8K_REPAIR_SFTENA_SHIFT)      /* 0x00002000 */
+#define PMU_BISR_CON6_PD_VOPDSC4K_REPAIR_SFTENA_SHIFT      (14U)
+#define PMU_BISR_CON6_PD_VOPDSC4K_REPAIR_SFTENA_MASK       (0x1U << PMU_BISR_CON6_PD_VOPDSC4K_REPAIR_SFTENA_SHIFT)      /* 0x00004000 */
+#define PMU_BISR_CON6_PD_VOPESMART_REPAIR_SFTENA_SHIFT     (15U)
+#define PMU_BISR_CON6_PD_VOPESMART_REPAIR_SFTENA_MASK      (0x1U << PMU_BISR_CON6_PD_VOPESMART_REPAIR_SFTENA_SHIFT)     /* 0x00008000 */
+/* BISR_CON7 */
+#define PMU_BISR_CON7_OFFSET                               (0x821CU)
+#define PMU_BISR_CON7_PD_PMU1_PDGDONE_SFTENA_SHIFT         (0U)
+#define PMU_BISR_CON7_PD_PMU1_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON7_PD_PMU1_PDGDONE_SFTENA_SHIFT)         /* 0x00000001 */
+#define PMU_BISR_CON7_PD_GPU_PDGDONE_SFTENA_SHIFT          (1U)
+#define PMU_BISR_CON7_PD_GPU_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON7_PD_GPU_PDGDONE_SFTENA_SHIFT)          /* 0x00000002 */
+#define PMU_BISR_CON7_PD_NPUTOP_PDGDONE_SFTENA_SHIFT       (2U)
+#define PMU_BISR_CON7_PD_NPUTOP_PDGDONE_SFTENA_MASK        (0x1U << PMU_BISR_CON7_PD_NPUTOP_PDGDONE_SFTENA_SHIFT)       /* 0x00000004 */
+#define PMU_BISR_CON7_PD_NPU1_PDGDONE_SFTENA_SHIFT         (3U)
+#define PMU_BISR_CON7_PD_NPU1_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON7_PD_NPU1_PDGDONE_SFTENA_SHIFT)         /* 0x00000008 */
+#define PMU_BISR_CON7_PD_NPU2_PDGDONE_SFTENA_SHIFT         (4U)
+#define PMU_BISR_CON7_PD_NPU2_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON7_PD_NPU2_PDGDONE_SFTENA_SHIFT)         /* 0x00000010 */
+#define PMU_BISR_CON7_PD_VENC0_PDGDONE_SFTENA_SHIFT        (5U)
+#define PMU_BISR_CON7_PD_VENC0_PDGDONE_SFTENA_MASK         (0x1U << PMU_BISR_CON7_PD_VENC0_PDGDONE_SFTENA_SHIFT)        /* 0x00000020 */
+#define PMU_BISR_CON7_PD_VENC1_PDGDONE_SFTENA_SHIFT        (6U)
+#define PMU_BISR_CON7_PD_VENC1_PDGDONE_SFTENA_MASK         (0x1U << PMU_BISR_CON7_PD_VENC1_PDGDONE_SFTENA_SHIFT)        /* 0x00000040 */
+#define PMU_BISR_CON7_PD_RKVDEC0_PDGDONE_SFTENA_SHIFT      (7U)
+#define PMU_BISR_CON7_PD_RKVDEC0_PDGDONE_SFTENA_MASK       (0x1U << PMU_BISR_CON7_PD_RKVDEC0_PDGDONE_SFTENA_SHIFT)      /* 0x00000080 */
+#define PMU_BISR_CON7_PD_RKVDEC1_PDGDONE_SFTENA_SHIFT      (8U)
+#define PMU_BISR_CON7_PD_RKVDEC1_PDGDONE_SFTENA_MASK       (0x1U << PMU_BISR_CON7_PD_RKVDEC1_PDGDONE_SFTENA_SHIFT)      /* 0x00000100 */
+#define PMU_BISR_CON7_PD_VDPU_PDGDONE_SFTENA_SHIFT         (9U)
+#define PMU_BISR_CON7_PD_VDPU_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON7_PD_VDPU_PDGDONE_SFTENA_SHIFT)         /* 0x00000200 */
+#define PMU_BISR_CON7_PD_RGA30_PDGDONE_SFTENA_SHIFT        (10U)
+#define PMU_BISR_CON7_PD_RGA30_PDGDONE_SFTENA_MASK         (0x1U << PMU_BISR_CON7_PD_RGA30_PDGDONE_SFTENA_SHIFT)        /* 0x00000400 */
+#define PMU_BISR_CON7_PD_AV1_PDGDONE_SFTENA_SHIFT          (11U)
+#define PMU_BISR_CON7_PD_AV1_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON7_PD_AV1_PDGDONE_SFTENA_SHIFT)          /* 0x00000800 */
+#define PMU_BISR_CON7_PD_VI_PDGDONE_SFTENA_SHIFT           (12U)
+#define PMU_BISR_CON7_PD_VI_PDGDONE_SFTENA_MASK            (0x1U << PMU_BISR_CON7_PD_VI_PDGDONE_SFTENA_SHIFT)           /* 0x00001000 */
+#define PMU_BISR_CON7_PD_FEC_PDGDONE_SFTENA_SHIFT          (13U)
+#define PMU_BISR_CON7_PD_FEC_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON7_PD_FEC_PDGDONE_SFTENA_SHIFT)          /* 0x00002000 */
+#define PMU_BISR_CON7_PD_ISP1_PDGDONE_SFTENA_SHIFT         (14U)
+#define PMU_BISR_CON7_PD_ISP1_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON7_PD_ISP1_PDGDONE_SFTENA_SHIFT)         /* 0x00004000 */
+#define PMU_BISR_CON7_PD_RGA31_PDGDONE_SFTENA_SHIFT        (15U)
+#define PMU_BISR_CON7_PD_RGA31_PDGDONE_SFTENA_MASK         (0x1U << PMU_BISR_CON7_PD_RGA31_PDGDONE_SFTENA_SHIFT)        /* 0x00008000 */
+/* BISR_CON8 */
+#define PMU_BISR_CON8_OFFSET                               (0x8220U)
+#define PMU_BISR_CON8_PD_VOP_PDGDONE_SFTENA_SHIFT          (0U)
+#define PMU_BISR_CON8_PD_VOP_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON8_PD_VOP_PDGDONE_SFTENA_SHIFT)          /* 0x00000001 */
+#define PMU_BISR_CON8_PD_VO0_PDGDONE_SFTENA_SHIFT          (1U)
+#define PMU_BISR_CON8_PD_VO0_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON8_PD_VO0_PDGDONE_SFTENA_SHIFT)          /* 0x00000002 */
+#define PMU_BISR_CON8_PD_VO1_PDGDONE_SFTENA_SHIFT          (2U)
+#define PMU_BISR_CON8_PD_VO1_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON8_PD_VO1_PDGDONE_SFTENA_SHIFT)          /* 0x00000004 */
+#define PMU_BISR_CON8_PD_AUDIO_PDGDONE_SFTENA_SHIFT        (3U)
+#define PMU_BISR_CON8_PD_AUDIO_PDGDONE_SFTENA_MASK         (0x1U << PMU_BISR_CON8_PD_AUDIO_PDGDONE_SFTENA_SHIFT)        /* 0x00000008 */
+#define PMU_BISR_CON8_PD_PHP_PDGDONE_SFTENA_SHIFT          (4U)
+#define PMU_BISR_CON8_PD_PHP_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON8_PD_PHP_PDGDONE_SFTENA_SHIFT)          /* 0x00000010 */
+#define PMU_BISR_CON8_PD_GMAC_PDGDONE_SFTENA_SHIFT         (5U)
+#define PMU_BISR_CON8_PD_GMAC_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON8_PD_GMAC_PDGDONE_SFTENA_SHIFT)         /* 0x00000020 */
+#define PMU_BISR_CON8_PD_PCIE_PDGDONE_SFTENA_SHIFT         (6U)
+#define PMU_BISR_CON8_PD_PCIE_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON8_PD_PCIE_PDGDONE_SFTENA_SHIFT)         /* 0x00000040 */
+#define PMU_BISR_CON8_PD_NVM0_PDGDONE_SFTENA_SHIFT         (7U)
+#define PMU_BISR_CON8_PD_NVM0_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON8_PD_NVM0_PDGDONE_SFTENA_SHIFT)         /* 0x00000080 */
+#define PMU_BISR_CON8_PD_SDIO_PDGDONE_SFTENA_SHIFT         (8U)
+#define PMU_BISR_CON8_PD_SDIO_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON8_PD_SDIO_PDGDONE_SFTENA_SHIFT)         /* 0x00000100 */
+#define PMU_BISR_CON8_PD_USB_PDGDONE_SFTENA_SHIFT          (9U)
+#define PMU_BISR_CON8_PD_USB_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON8_PD_USB_PDGDONE_SFTENA_SHIFT)          /* 0x00000200 */
+#define PMU_BISR_CON8_PD_SDMMC_PDGDONE_SFTENA_SHIFT        (10U)
+#define PMU_BISR_CON8_PD_SDMMC_PDGDONE_SFTENA_MASK         (0x1U << PMU_BISR_CON8_PD_SDMMC_PDGDONE_SFTENA_SHIFT)        /* 0x00000400 */
+#define PMU_BISR_CON8_PD_CRYPTO_PDGDONE_SFTENA_SHIFT       (11U)
+#define PMU_BISR_CON8_PD_CRYPTO_PDGDONE_SFTENA_MASK        (0x1U << PMU_BISR_CON8_PD_CRYPTO_PDGDONE_SFTENA_SHIFT)       /* 0x00000800 */
+#define PMU_BISR_CON8_PD_CENTER_PDGDONE_SFTENA_SHIFT       (12U)
+#define PMU_BISR_CON8_PD_CENTER_PDGDONE_SFTENA_MASK        (0x1U << PMU_BISR_CON8_PD_CENTER_PDGDONE_SFTENA_SHIFT)       /* 0x00001000 */
+#define PMU_BISR_CON8_PD_DDR01_PDGDONE_SFTENA_SHIFT        (13U)
+#define PMU_BISR_CON8_PD_DDR01_PDGDONE_SFTENA_MASK         (0x1U << PMU_BISR_CON8_PD_DDR01_PDGDONE_SFTENA_SHIFT)        /* 0x00002000 */
+#define PMU_BISR_CON8_PD_DDR23_PDGDONE_SFTENA_SHIFT        (14U)
+#define PMU_BISR_CON8_PD_DDR23_PDGDONE_SFTENA_MASK         (0x1U << PMU_BISR_CON8_PD_DDR23_PDGDONE_SFTENA_SHIFT)        /* 0x00004000 */
+#define PMU_BISR_CON8_PD_BUS_PDGDONE_SFTENA_SHIFT          (15U)
+#define PMU_BISR_CON8_PD_BUS_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON8_PD_BUS_PDGDONE_SFTENA_SHIFT)          /* 0x00008000 */
+/* BISR_CON9 */
+#define PMU_BISR_CON9_OFFSET                               (0x8224U)
+#define PMU_BISR_CON9_PD_DSU_PDGDONE_SFTENA_SHIFT          (0U)
+#define PMU_BISR_CON9_PD_DSU_PDGDONE_SFTENA_MASK           (0x1U << PMU_BISR_CON9_PD_DSU_PDGDONE_SFTENA_SHIFT)          /* 0x00000001 */
+#define PMU_BISR_CON9_PD_CPU7_PDGDONE_SFTENA_SHIFT         (1U)
+#define PMU_BISR_CON9_PD_CPU7_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON9_PD_CPU7_PDGDONE_SFTENA_SHIFT)         /* 0x00000002 */
+#define PMU_BISR_CON9_PD_CPU6_PDGDONE_SFTENA_SHIFT         (2U)
+#define PMU_BISR_CON9_PD_CPU6_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON9_PD_CPU6_PDGDONE_SFTENA_SHIFT)         /* 0x00000004 */
+#define PMU_BISR_CON9_PD_CPU5_PDGDONE_SFTENA_SHIFT         (3U)
+#define PMU_BISR_CON9_PD_CPU5_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON9_PD_CPU5_PDGDONE_SFTENA_SHIFT)         /* 0x00000008 */
+#define PMU_BISR_CON9_PD_CPU4_PDGDONE_SFTENA_SHIFT         (4U)
+#define PMU_BISR_CON9_PD_CPU4_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON9_PD_CPU4_PDGDONE_SFTENA_SHIFT)         /* 0x00000010 */
+#define PMU_BISR_CON9_PD_CPU3_PDGDONE_SFTENA_SHIFT         (5U)
+#define PMU_BISR_CON9_PD_CPU3_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON9_PD_CPU3_PDGDONE_SFTENA_SHIFT)         /* 0x00000020 */
+#define PMU_BISR_CON9_PD_CPU2_PDGDONE_SFTENA_SHIFT         (6U)
+#define PMU_BISR_CON9_PD_CPU2_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON9_PD_CPU2_PDGDONE_SFTENA_SHIFT)         /* 0x00000040 */
+#define PMU_BISR_CON9_PD_CPU1_PDGDONE_SFTENA_SHIFT         (7U)
+#define PMU_BISR_CON9_PD_CPU1_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON9_PD_CPU1_PDGDONE_SFTENA_SHIFT)         /* 0x00000080 */
+#define PMU_BISR_CON9_PD_CPU0_PDGDONE_SFTENA_SHIFT         (8U)
+#define PMU_BISR_CON9_PD_CPU0_PDGDONE_SFTENA_MASK          (0x1U << PMU_BISR_CON9_PD_CPU0_PDGDONE_SFTENA_SHIFT)         /* 0x00000100 */
+#define PMU_BISR_CON9_PD_VOPCLUSTER0_PDGDONE_SFTENA_SHIFT  (9U)
+#define PMU_BISR_CON9_PD_VOPCLUSTER0_PDGDONE_SFTENA_MASK   (0x1U << PMU_BISR_CON9_PD_VOPCLUSTER0_PDGDONE_SFTENA_SHIFT)  /* 0x00000200 */
+#define PMU_BISR_CON9_PD_VOPCLUSTER1_PDGDONE_SFTENA_SHIFT  (10U)
+#define PMU_BISR_CON9_PD_VOPCLUSTER1_PDGDONE_SFTENA_MASK   (0x1U << PMU_BISR_CON9_PD_VOPCLUSTER1_PDGDONE_SFTENA_SHIFT)  /* 0x00000400 */
+#define PMU_BISR_CON9_PD_VOPCLUSTER2_PDGDONE_SFTENA_SHIFT  (11U)
+#define PMU_BISR_CON9_PD_VOPCLUSTER2_PDGDONE_SFTENA_MASK   (0x1U << PMU_BISR_CON9_PD_VOPCLUSTER2_PDGDONE_SFTENA_SHIFT)  /* 0x00000800 */
+#define PMU_BISR_CON9_PD_VOPCLUSTER3_PDGDONE_SFTENA_SHIFT  (12U)
+#define PMU_BISR_CON9_PD_VOPCLUSTER3_PDGDONE_SFTENA_MASK   (0x1U << PMU_BISR_CON9_PD_VOPCLUSTER3_PDGDONE_SFTENA_SHIFT)  /* 0x00001000 */
+#define PMU_BISR_CON9_PD_VOPDSC8K_PDGDONE_SFTENA_SHIFT     (13U)
+#define PMU_BISR_CON9_PD_VOPDSC8K_PDGDONE_SFTENA_MASK      (0x1U << PMU_BISR_CON9_PD_VOPDSC8K_PDGDONE_SFTENA_SHIFT)     /* 0x00002000 */
+#define PMU_BISR_CON9_PD_VOPDSC4K_PDGDONE_SFTENA_SHIFT     (14U)
+#define PMU_BISR_CON9_PD_VOPDSC4K_PDGDONE_SFTENA_MASK      (0x1U << PMU_BISR_CON9_PD_VOPDSC4K_PDGDONE_SFTENA_SHIFT)     /* 0x00004000 */
+#define PMU_BISR_CON9_PD_VOPESMART_PDGDONE_SFTENA_SHIFT    (15U)
+#define PMU_BISR_CON9_PD_VOPESMART_PDGDONE_SFTENA_MASK     (0x1U << PMU_BISR_CON9_PD_VOPESMART_PDGDONE_SFTENA_SHIFT)    /* 0x00008000 */
+/* BISR_CON10 */
+#define PMU_BISR_CON10_OFFSET                              (0x8228U)
+#define PMU_BISR_CON10_PD_PMU1_INITRSTN_SFTENA_SHIFT       (0U)
+#define PMU_BISR_CON10_PD_PMU1_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON10_PD_PMU1_INITRSTN_SFTENA_SHIFT)       /* 0x00000001 */
+#define PMU_BISR_CON10_PD_GPU_INITRSTN_SFTENA_SHIFT        (1U)
+#define PMU_BISR_CON10_PD_GPU_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON10_PD_GPU_INITRSTN_SFTENA_SHIFT)        /* 0x00000002 */
+#define PMU_BISR_CON10_PD_NPUTOP_INITRSTN_SFTENA_SHIFT     (2U)
+#define PMU_BISR_CON10_PD_NPUTOP_INITRSTN_SFTENA_MASK      (0x1U << PMU_BISR_CON10_PD_NPUTOP_INITRSTN_SFTENA_SHIFT)     /* 0x00000004 */
+#define PMU_BISR_CON10_PD_NPU1_INITRSTN_SFTENA_SHIFT       (3U)
+#define PMU_BISR_CON10_PD_NPU1_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON10_PD_NPU1_INITRSTN_SFTENA_SHIFT)       /* 0x00000008 */
+#define PMU_BISR_CON10_PD_NPU2_INITRSTN_SFTENA_SHIFT       (4U)
+#define PMU_BISR_CON10_PD_NPU2_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON10_PD_NPU2_INITRSTN_SFTENA_SHIFT)       /* 0x00000010 */
+#define PMU_BISR_CON10_PD_VENC0_INITRSTN_SFTENA_SHIFT      (5U)
+#define PMU_BISR_CON10_PD_VENC0_INITRSTN_SFTENA_MASK       (0x1U << PMU_BISR_CON10_PD_VENC0_INITRSTN_SFTENA_SHIFT)      /* 0x00000020 */
+#define PMU_BISR_CON10_PD_VENC1_INITRSTN_SFTENA_SHIFT      (6U)
+#define PMU_BISR_CON10_PD_VENC1_INITRSTN_SFTENA_MASK       (0x1U << PMU_BISR_CON10_PD_VENC1_INITRSTN_SFTENA_SHIFT)      /* 0x00000040 */
+#define PMU_BISR_CON10_PD_RKVDEC0_INITRSTN_SFTENA_SHIFT    (7U)
+#define PMU_BISR_CON10_PD_RKVDEC0_INITRSTN_SFTENA_MASK     (0x1U << PMU_BISR_CON10_PD_RKVDEC0_INITRSTN_SFTENA_SHIFT)    /* 0x00000080 */
+#define PMU_BISR_CON10_PD_RKVDEC1_INITRSTN_SFTENA_SHIFT    (8U)
+#define PMU_BISR_CON10_PD_RKVDEC1_INITRSTN_SFTENA_MASK     (0x1U << PMU_BISR_CON10_PD_RKVDEC1_INITRSTN_SFTENA_SHIFT)    /* 0x00000100 */
+#define PMU_BISR_CON10_PD_VDPU_INITRSTN_SFTENA_SHIFT       (9U)
+#define PMU_BISR_CON10_PD_VDPU_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON10_PD_VDPU_INITRSTN_SFTENA_SHIFT)       /* 0x00000200 */
+#define PMU_BISR_CON10_PD_RGA30_INITRSTN_SFTENA_SHIFT      (10U)
+#define PMU_BISR_CON10_PD_RGA30_INITRSTN_SFTENA_MASK       (0x1U << PMU_BISR_CON10_PD_RGA30_INITRSTN_SFTENA_SHIFT)      /* 0x00000400 */
+#define PMU_BISR_CON10_PD_AV1_INITRSTN_SFTENA_SHIFT        (11U)
+#define PMU_BISR_CON10_PD_AV1_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON10_PD_AV1_INITRSTN_SFTENA_SHIFT)        /* 0x00000800 */
+#define PMU_BISR_CON10_PD_VI_INITRSTN_SFTENA_SHIFT         (12U)
+#define PMU_BISR_CON10_PD_VI_INITRSTN_SFTENA_MASK          (0x1U << PMU_BISR_CON10_PD_VI_INITRSTN_SFTENA_SHIFT)         /* 0x00001000 */
+#define PMU_BISR_CON10_PD_FEC_INITRSTN_SFTENA_SHIFT        (13U)
+#define PMU_BISR_CON10_PD_FEC_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON10_PD_FEC_INITRSTN_SFTENA_SHIFT)        /* 0x00002000 */
+#define PMU_BISR_CON10_PD_ISP1_INITRSTN_SFTENA_SHIFT       (14U)
+#define PMU_BISR_CON10_PD_ISP1_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON10_PD_ISP1_INITRSTN_SFTENA_SHIFT)       /* 0x00004000 */
+#define PMU_BISR_CON10_PD_RGA31_INITRSTN_SFTENA_SHIFT      (15U)
+#define PMU_BISR_CON10_PD_RGA31_INITRSTN_SFTENA_MASK       (0x1U << PMU_BISR_CON10_PD_RGA31_INITRSTN_SFTENA_SHIFT)      /* 0x00008000 */
+/* BISR_CON11 */
+#define PMU_BISR_CON11_OFFSET                              (0x822CU)
+#define PMU_BISR_CON11_PD_VOP_INITRSTN_SFTENA_SHIFT        (0U)
+#define PMU_BISR_CON11_PD_VOP_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON11_PD_VOP_INITRSTN_SFTENA_SHIFT)        /* 0x00000001 */
+#define PMU_BISR_CON11_PD_VO0_INITRSTN_SFTENA_SHIFT        (1U)
+#define PMU_BISR_CON11_PD_VO0_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON11_PD_VO0_INITRSTN_SFTENA_SHIFT)        /* 0x00000002 */
+#define PMU_BISR_CON11_PD_VO1_INITRSTN_SFTENA_SHIFT        (2U)
+#define PMU_BISR_CON11_PD_VO1_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON11_PD_VO1_INITRSTN_SFTENA_SHIFT)        /* 0x00000004 */
+#define PMU_BISR_CON11_PD_AUDIO_INITRSTN_SFTENA_SHIFT      (3U)
+#define PMU_BISR_CON11_PD_AUDIO_INITRSTN_SFTENA_MASK       (0x1U << PMU_BISR_CON11_PD_AUDIO_INITRSTN_SFTENA_SHIFT)      /* 0x00000008 */
+#define PMU_BISR_CON11_PD_PHP_INITRSTN_SFTENA_SHIFT        (4U)
+#define PMU_BISR_CON11_PD_PHP_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON11_PD_PHP_INITRSTN_SFTENA_SHIFT)        /* 0x00000010 */
+#define PMU_BISR_CON11_PD_GMAC_INITRSTN_SFTENA_SHIFT       (5U)
+#define PMU_BISR_CON11_PD_GMAC_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON11_PD_GMAC_INITRSTN_SFTENA_SHIFT)       /* 0x00000020 */
+#define PMU_BISR_CON11_PD_PCIE_INITRSTN_SFTENA_SHIFT       (6U)
+#define PMU_BISR_CON11_PD_PCIE_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON11_PD_PCIE_INITRSTN_SFTENA_SHIFT)       /* 0x00000040 */
+#define PMU_BISR_CON11_PD_NVM0_INITRSTN_SFTENA_SHIFT       (7U)
+#define PMU_BISR_CON11_PD_NVM0_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON11_PD_NVM0_INITRSTN_SFTENA_SHIFT)       /* 0x00000080 */
+#define PMU_BISR_CON11_PD_SDIO_INITRSTN_SFTENA_SHIFT       (8U)
+#define PMU_BISR_CON11_PD_SDIO_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON11_PD_SDIO_INITRSTN_SFTENA_SHIFT)       /* 0x00000100 */
+#define PMU_BISR_CON11_PD_USB_INITRSTN_SFTENA_SHIFT        (9U)
+#define PMU_BISR_CON11_PD_USB_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON11_PD_USB_INITRSTN_SFTENA_SHIFT)        /* 0x00000200 */
+#define PMU_BISR_CON11_PD_SDMMC_INITRSTN_SFTENA_SHIFT      (10U)
+#define PMU_BISR_CON11_PD_SDMMC_INITRSTN_SFTENA_MASK       (0x1U << PMU_BISR_CON11_PD_SDMMC_INITRSTN_SFTENA_SHIFT)      /* 0x00000400 */
+#define PMU_BISR_CON11_PD_CRYPTO_INITRSTN_SFTENA_SHIFT     (11U)
+#define PMU_BISR_CON11_PD_CRYPTO_INITRSTN_SFTENA_MASK      (0x1U << PMU_BISR_CON11_PD_CRYPTO_INITRSTN_SFTENA_SHIFT)     /* 0x00000800 */
+#define PMU_BISR_CON11_PD_CENTER_INITRSTN_SFTENA_SHIFT     (12U)
+#define PMU_BISR_CON11_PD_CENTER_INITRSTN_SFTENA_MASK      (0x1U << PMU_BISR_CON11_PD_CENTER_INITRSTN_SFTENA_SHIFT)     /* 0x00001000 */
+#define PMU_BISR_CON11_PD_DDR01_INITRSTN_SFTENA_SHIFT      (13U)
+#define PMU_BISR_CON11_PD_DDR01_INITRSTN_SFTENA_MASK       (0x1U << PMU_BISR_CON11_PD_DDR01_INITRSTN_SFTENA_SHIFT)      /* 0x00002000 */
+#define PMU_BISR_CON11_PD_DDR23_INITRSTN_SFTENA_SHIFT      (14U)
+#define PMU_BISR_CON11_PD_DDR23_INITRSTN_SFTENA_MASK       (0x1U << PMU_BISR_CON11_PD_DDR23_INITRSTN_SFTENA_SHIFT)      /* 0x00004000 */
+#define PMU_BISR_CON11_PD_BUS_INITRSTN_SFTENA_SHIFT        (15U)
+#define PMU_BISR_CON11_PD_BUS_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON11_PD_BUS_INITRSTN_SFTENA_SHIFT)        /* 0x00008000 */
+/* BISR_CON12 */
+#define PMU_BISR_CON12_OFFSET                              (0x8230U)
+#define PMU_BISR_CON12_PD_DSU_INITRSTN_SFTENA_SHIFT        (0U)
+#define PMU_BISR_CON12_PD_DSU_INITRSTN_SFTENA_MASK         (0x1U << PMU_BISR_CON12_PD_DSU_INITRSTN_SFTENA_SHIFT)        /* 0x00000001 */
+#define PMU_BISR_CON12_PD_CPU7_INITRSTN_SFTENA_SHIFT       (1U)
+#define PMU_BISR_CON12_PD_CPU7_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON12_PD_CPU7_INITRSTN_SFTENA_SHIFT)       /* 0x00000002 */
+#define PMU_BISR_CON12_PD_CPU6_INITRSTN_SFTENA_SHIFT       (2U)
+#define PMU_BISR_CON12_PD_CPU6_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON12_PD_CPU6_INITRSTN_SFTENA_SHIFT)       /* 0x00000004 */
+#define PMU_BISR_CON12_PD_CPU5_INITRSTN_SFTENA_SHIFT       (3U)
+#define PMU_BISR_CON12_PD_CPU5_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON12_PD_CPU5_INITRSTN_SFTENA_SHIFT)       /* 0x00000008 */
+#define PMU_BISR_CON12_PD_CPU4_INITRSTN_SFTENA_SHIFT       (4U)
+#define PMU_BISR_CON12_PD_CPU4_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON12_PD_CPU4_INITRSTN_SFTENA_SHIFT)       /* 0x00000010 */
+#define PMU_BISR_CON12_PD_CPU3_INITRSTN_SFTENA_SHIFT       (5U)
+#define PMU_BISR_CON12_PD_CPU3_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON12_PD_CPU3_INITRSTN_SFTENA_SHIFT)       /* 0x00000020 */
+#define PMU_BISR_CON12_PD_CPU2_INITRSTN_SFTENA_SHIFT       (6U)
+#define PMU_BISR_CON12_PD_CPU2_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON12_PD_CPU2_INITRSTN_SFTENA_SHIFT)       /* 0x00000040 */
+#define PMU_BISR_CON12_PD_CPU1_INITRSTN_SFTENA_SHIFT       (7U)
+#define PMU_BISR_CON12_PD_CPU1_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON12_PD_CPU1_INITRSTN_SFTENA_SHIFT)       /* 0x00000080 */
+#define PMU_BISR_CON12_PD_CPU0_INITRSTN_SFTENA_SHIFT       (8U)
+#define PMU_BISR_CON12_PD_CPU0_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON12_PD_CPU0_INITRSTN_SFTENA_SHIFT)       /* 0x00000100 */
+#define PMU_BISR_CON12_PD_VOPCLUSTER0_INITRSTN_SFTENA_SHIFT (9U)
+#define PMU_BISR_CON12_PD_VOPCLUSTER0_INITRSTN_SFTENA_MASK (0x1U << PMU_BISR_CON12_PD_VOPCLUSTER0_INITRSTN_SFTENA_SHIFT) /* 0x00000200 */
+#define PMU_BISR_CON12_PD_VOPCLUSTER1_INITRSTN_SFTENA_SHIFT (10U)
+#define PMU_BISR_CON12_PD_VOPCLUSTER1_INITRSTN_SFTENA_MASK (0x1U << PMU_BISR_CON12_PD_VOPCLUSTER1_INITRSTN_SFTENA_SHIFT) /* 0x00000400 */
+#define PMU_BISR_CON12_PD_VOPCLUSTER2_INITRSTN_SFTENA_SHIFT (11U)
+#define PMU_BISR_CON12_PD_VOPCLUSTER2_INITRSTN_SFTENA_MASK (0x1U << PMU_BISR_CON12_PD_VOPCLUSTER2_INITRSTN_SFTENA_SHIFT) /* 0x00000800 */
+#define PMU_BISR_CON12_PD_VOPCLUSTER3_INITRSTN_SFTENA_SHIFT (12U)
+#define PMU_BISR_CON12_PD_VOPCLUSTER3_INITRSTN_SFTENA_MASK (0x1U << PMU_BISR_CON12_PD_VOPCLUSTER3_INITRSTN_SFTENA_SHIFT) /* 0x00001000 */
+#define PMU_BISR_CON12_PD_VOPDSC8K_INITRSTN_SFTENA_SHIFT   (13U)
+#define PMU_BISR_CON12_PD_VOPDSC8K_INITRSTN_SFTENA_MASK    (0x1U << PMU_BISR_CON12_PD_VOPDSC8K_INITRSTN_SFTENA_SHIFT)   /* 0x00002000 */
+#define PMU_BISR_CON12_PD_VOPDSC4K_INITRSTN_SFTENA_SHIFT   (14U)
+#define PMU_BISR_CON12_PD_VOPDSC4K_INITRSTN_SFTENA_MASK    (0x1U << PMU_BISR_CON12_PD_VOPDSC4K_INITRSTN_SFTENA_SHIFT)   /* 0x00004000 */
+#define PMU_BISR_CON12_PD_VOPESMART_INITRSTN_SFTENA_SHIFT  (15U)
+#define PMU_BISR_CON12_PD_VOPESMART_INITRSTN_SFTENA_MASK   (0x1U << PMU_BISR_CON12_PD_VOPESMART_INITRSTN_SFTENA_SHIFT)  /* 0x00008000 */
+/* BISR_CON13 */
+#define PMU_BISR_CON13_OFFSET                              (0x8234U)
+#define PMU_BISR_CON13_HDMIRXPHY_REPAIR_ENA_SHIFT          (0U)
+#define PMU_BISR_CON13_HDMIRXPHY_REPAIR_ENA_MASK           (0x1U << PMU_BISR_CON13_HDMIRXPHY_REPAIR_ENA_SHIFT)          /* 0x00000001 */
+#define PMU_BISR_CON13_PCIEPHY_REPAIR_ENA_SHIFT            (1U)
+#define PMU_BISR_CON13_PCIEPHY_REPAIR_ENA_MASK             (0x1U << PMU_BISR_CON13_PCIEPHY_REPAIR_ENA_SHIFT)            /* 0x00000002 */
+#define PMU_BISR_CON13_HDMIRXPHY_REPAIR_SFTENA_SHIFT       (4U)
+#define PMU_BISR_CON13_HDMIRXPHY_REPAIR_SFTENA_MASK        (0x1U << PMU_BISR_CON13_HDMIRXPHY_REPAIR_SFTENA_SHIFT)       /* 0x00000010 */
+#define PMU_BISR_CON13_PCIEPHY_REPAIR_SFTENA_SHIFT         (5U)
+#define PMU_BISR_CON13_PCIEPHY_REPAIR_SFTENA_MASK          (0x1U << PMU_BISR_CON13_PCIEPHY_REPAIR_SFTENA_SHIFT)         /* 0x00000020 */
+#define PMU_BISR_CON13_HDMIRXPHY_PDGDONE_SFTENA_SHIFT      (8U)
+#define PMU_BISR_CON13_HDMIRXPHY_PDGDONE_SFTENA_MASK       (0x1U << PMU_BISR_CON13_HDMIRXPHY_PDGDONE_SFTENA_SHIFT)      /* 0x00000100 */
+#define PMU_BISR_CON13_PCIEPHY_PDGDONE_SFTENA_SHIFT        (9U)
+#define PMU_BISR_CON13_PCIEPHY_PDGDONE_SFTENA_MASK         (0x1U << PMU_BISR_CON13_PCIEPHY_PDGDONE_SFTENA_SHIFT)        /* 0x00000200 */
+#define PMU_BISR_CON13_HDMIRXPHY_INITRSTN_SFTENA_SHIFT     (12U)
+#define PMU_BISR_CON13_HDMIRXPHY_INITRSTN_SFTENA_MASK      (0x1U << PMU_BISR_CON13_HDMIRXPHY_INITRSTN_SFTENA_SHIFT)     /* 0x00001000 */
+#define PMU_BISR_CON13_PCIEPHY_INITRSTN_SFTENA_SHIFT       (13U)
+#define PMU_BISR_CON13_PCIEPHY_INITRSTN_SFTENA_MASK        (0x1U << PMU_BISR_CON13_PCIEPHY_INITRSTN_SFTENA_SHIFT)       /* 0x00002000 */
+/* BISR_CON14 */
+#define PMU_BISR_CON14_OFFSET                              (0x8238U)
+#define PMU_BISR_CON14_BISR_TIMEOUT_CNT_SHIFT              (0U)
+#define PMU_BISR_CON14_BISR_TIMEOUT_CNT_MASK               (0xFFFFFFFFU << PMU_BISR_CON14_BISR_TIMEOUT_CNT_SHIFT)       /* 0xFFFFFFFF */
+/* BISR_STS0 */
+#define PMU_BISR_STS0_OFFSET                               (0x8280U)
+#define PMU_BISR_STS0                                      (0x0U)
+#define PMU_BISR_STS0_PD_PMU1_REPAIR_PDGDONE_SHIFT         (0U)
+#define PMU_BISR_STS0_PD_PMU1_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS0_PD_PMU1_REPAIR_PDGDONE_SHIFT)         /* 0x00000001 */
+#define PMU_BISR_STS0_PD_GPU_BISR_PDGDONE_SHIFT            (1U)
+#define PMU_BISR_STS0_PD_GPU_BISR_PDGDONE_MASK             (0x1U << PMU_BISR_STS0_PD_GPU_BISR_PDGDONE_SHIFT)            /* 0x00000002 */
+#define PMU_BISR_STS0_PD_NPUTOP_DWN_PDGDONE_SHIFT          (2U)
+#define PMU_BISR_STS0_PD_NPUTOP_DWN_PDGDONE_MASK           (0x1U << PMU_BISR_STS0_PD_NPUTOP_DWN_PDGDONE_SHIFT)          /* 0x00000004 */
+#define PMU_BISR_STS0_PD_NPU1_DWN_PDGDONE_SHIFT            (3U)
+#define PMU_BISR_STS0_PD_NPU1_DWN_PDGDONE_MASK             (0x1U << PMU_BISR_STS0_PD_NPU1_DWN_PDGDONE_SHIFT)            /* 0x00000008 */
+#define PMU_BISR_STS0_PD_NPU2_DWN_PDGDONE_SHIFT            (4U)
+#define PMU_BISR_STS0_PD_NPU2_DWN_PDGDONE_MASK             (0x1U << PMU_BISR_STS0_PD_NPU2_DWN_PDGDONE_SHIFT)            /* 0x00000010 */
+#define PMU_BISR_STS0_PD_VENC0_DWN_PDGDONE_SHIFT           (5U)
+#define PMU_BISR_STS0_PD_VENC0_DWN_PDGDONE_MASK            (0x1U << PMU_BISR_STS0_PD_VENC0_DWN_PDGDONE_SHIFT)           /* 0x00000020 */
+#define PMU_BISR_STS0_PD_VENC1_DWN_PDGDONE_SHIFT           (6U)
+#define PMU_BISR_STS0_PD_VENC1_DWN_PDGDONE_MASK            (0x1U << PMU_BISR_STS0_PD_VENC1_DWN_PDGDONE_SHIFT)           /* 0x00000040 */
+#define PMU_BISR_STS0_PD_RKVDEC0_DWN_PDGDONE_SHIFT         (7U)
+#define PMU_BISR_STS0_PD_RKVDEC0_DWN_PDGDONE_MASK          (0x1U << PMU_BISR_STS0_PD_RKVDEC0_DWN_PDGDONE_SHIFT)         /* 0x00000080 */
+#define PMU_BISR_STS0_PD_RKVDEC1_DWN_PDGDONE_SHIFT         (8U)
+#define PMU_BISR_STS0_PD_RKVDEC1_DWN_PDGDONE_MASK          (0x1U << PMU_BISR_STS0_PD_RKVDEC1_DWN_PDGDONE_SHIFT)         /* 0x00000100 */
+#define PMU_BISR_STS0_PD_VDPU_DWN_PDGDONE_SHIFT            (9U)
+#define PMU_BISR_STS0_PD_VDPU_DWN_PDGDONE_MASK             (0x1U << PMU_BISR_STS0_PD_VDPU_DWN_PDGDONE_SHIFT)            /* 0x00000200 */
+#define PMU_BISR_STS0_PD_RGA30_DWN_PDGDONE_SHIFT           (10U)
+#define PMU_BISR_STS0_PD_RGA30_DWN_PDGDONE_MASK            (0x1U << PMU_BISR_STS0_PD_RGA30_DWN_PDGDONE_SHIFT)           /* 0x00000400 */
+#define PMU_BISR_STS0_PD_AV1_DWN_PDGDONE_SHIFT             (11U)
+#define PMU_BISR_STS0_PD_AV1_DWN_PDGDONE_MASK              (0x1U << PMU_BISR_STS0_PD_AV1_DWN_PDGDONE_SHIFT)             /* 0x00000800 */
+#define PMU_BISR_STS0_PD_VI_DWN_PDGDONE_SHIFT              (12U)
+#define PMU_BISR_STS0_PD_VI_DWN_PDGDONE_MASK               (0x1U << PMU_BISR_STS0_PD_VI_DWN_PDGDONE_SHIFT)              /* 0x00001000 */
+#define PMU_BISR_STS0_PD_FEC_DWN_PDGDONE_SHIFT             (13U)
+#define PMU_BISR_STS0_PD_FEC_DWN_PDGDONE_MASK              (0x1U << PMU_BISR_STS0_PD_FEC_DWN_PDGDONE_SHIFT)             /* 0x00002000 */
+#define PMU_BISR_STS0_PD_ISP1_DWN_PDGDONE_SHIFT            (14U)
+#define PMU_BISR_STS0_PD_ISP1_DWN_PDGDONE_MASK             (0x1U << PMU_BISR_STS0_PD_ISP1_DWN_PDGDONE_SHIFT)            /* 0x00004000 */
+#define PMU_BISR_STS0_PD_RGA31_DWN_PDGDONE_SHIFT           (15U)
+#define PMU_BISR_STS0_PD_RGA31_DWN_PDGDONE_MASK            (0x1U << PMU_BISR_STS0_PD_RGA31_DWN_PDGDONE_SHIFT)           /* 0x00008000 */
+#define PMU_BISR_STS0_PD_VOP_DWN_PDGDONE_SHIFT             (16U)
+#define PMU_BISR_STS0_PD_VOP_DWN_PDGDONE_MASK              (0x1U << PMU_BISR_STS0_PD_VOP_DWN_PDGDONE_SHIFT)             /* 0x00010000 */
+#define PMU_BISR_STS0_PD_VO0_DWN_PDGDONE_SHIFT             (17U)
+#define PMU_BISR_STS0_PD_VO0_DWN_PDGDONE_MASK              (0x1U << PMU_BISR_STS0_PD_VO0_DWN_PDGDONE_SHIFT)             /* 0x00020000 */
+#define PMU_BISR_STS0_PD_VO1_DWN_PDGDONE_SHIFT             (18U)
+#define PMU_BISR_STS0_PD_VO1_DWN_PDGDONE_MASK              (0x1U << PMU_BISR_STS0_PD_VO1_DWN_PDGDONE_SHIFT)             /* 0x00040000 */
+#define PMU_BISR_STS0_PD_AUDIO_DWN_PDGDONE_SHIFT           (19U)
+#define PMU_BISR_STS0_PD_AUDIO_DWN_PDGDONE_MASK            (0x1U << PMU_BISR_STS0_PD_AUDIO_DWN_PDGDONE_SHIFT)           /* 0x00080000 */
+#define PMU_BISR_STS0_PD_PHP_DWN_PDGDONE_SHIFT             (20U)
+#define PMU_BISR_STS0_PD_PHP_DWN_PDGDONE_MASK              (0x1U << PMU_BISR_STS0_PD_PHP_DWN_PDGDONE_SHIFT)             /* 0x00100000 */
+#define PMU_BISR_STS0_PD_GMAC_DWN_PDGDONE_SHIFT            (21U)
+#define PMU_BISR_STS0_PD_GMAC_DWN_PDGDONE_MASK             (0x1U << PMU_BISR_STS0_PD_GMAC_DWN_PDGDONE_SHIFT)            /* 0x00200000 */
+#define PMU_BISR_STS0_PD_PCIE_DWN_PDGDONE_SHIFT            (22U)
+#define PMU_BISR_STS0_PD_PCIE_DWN_PDGDONE_MASK             (0x1U << PMU_BISR_STS0_PD_PCIE_DWN_PDGDONE_SHIFT)            /* 0x00400000 */
+#define PMU_BISR_STS0_PD_NVM0_DWN_PDGDONE_SHIFT            (23U)
+#define PMU_BISR_STS0_PD_NVM0_DWN_PDGDONE_MASK             (0x1U << PMU_BISR_STS0_PD_NVM0_DWN_PDGDONE_SHIFT)            /* 0x00800000 */
+#define PMU_BISR_STS0_PD_SDIO_DWN_PDGDONE_SHIFT            (24U)
+#define PMU_BISR_STS0_PD_SDIO_DWN_PDGDONE_MASK             (0x1U << PMU_BISR_STS0_PD_SDIO_DWN_PDGDONE_SHIFT)            /* 0x01000000 */
+#define PMU_BISR_STS0_PD_USB_DWN_PDGDONE_SHIFT             (25U)
+#define PMU_BISR_STS0_PD_USB_DWN_PDGDONE_MASK              (0x1U << PMU_BISR_STS0_PD_USB_DWN_PDGDONE_SHIFT)             /* 0x02000000 */
+#define PMU_BISR_STS0_PD_SDMMC_DWN_PDGDONE_SHIFT           (26U)
+#define PMU_BISR_STS0_PD_SDMMC_DWN_PDGDONE_MASK            (0x1U << PMU_BISR_STS0_PD_SDMMC_DWN_PDGDONE_SHIFT)           /* 0x04000000 */
+#define PMU_BISR_STS0_PD_CRYPTO_DWN_PDGDONE_SHIFT          (27U)
+#define PMU_BISR_STS0_PD_CRYPTO_DWN_PDGDONE_MASK           (0x1U << PMU_BISR_STS0_PD_CRYPTO_DWN_PDGDONE_SHIFT)          /* 0x08000000 */
+#define PMU_BISR_STS0_PD_CENTER_DWN_PDGDONE_SHIFT          (28U)
+#define PMU_BISR_STS0_PD_CENTER_DWN_PDGDONE_MASK           (0x1U << PMU_BISR_STS0_PD_CENTER_DWN_PDGDONE_SHIFT)          /* 0x10000000 */
+#define PMU_BISR_STS0_PD_DDR01_DWN_PDGDONE_SHIFT           (29U)
+#define PMU_BISR_STS0_PD_DDR01_DWN_PDGDONE_MASK            (0x1U << PMU_BISR_STS0_PD_DDR01_DWN_PDGDONE_SHIFT)           /* 0x20000000 */
+#define PMU_BISR_STS0_PD_DDR23_DWN_PDGDONE_SHIFT           (30U)
+#define PMU_BISR_STS0_PD_DDR23_DWN_PDGDONE_MASK            (0x1U << PMU_BISR_STS0_PD_DDR23_DWN_PDGDONE_SHIFT)           /* 0x40000000 */
+#define PMU_BISR_STS0_PD_BUS_DWN_PDGDONE_SHIFT             (31U)
+#define PMU_BISR_STS0_PD_BUS_DWN_PDGDONE_MASK              (0x1U << PMU_BISR_STS0_PD_BUS_DWN_PDGDONE_SHIFT)             /* 0x80000000 */
+/* BISR_STS1 */
+#define PMU_BISR_STS1_OFFSET                               (0x8284U)
+#define PMU_BISR_STS1                                      (0x0U)
+#define PMU_BISR_STS1_PD_DSU_REPAIR_PDGDONE_SHIFT          (0U)
+#define PMU_BISR_STS1_PD_DSU_REPAIR_PDGDONE_MASK           (0x1U << PMU_BISR_STS1_PD_DSU_REPAIR_PDGDONE_SHIFT)          /* 0x00000001 */
+#define PMU_BISR_STS1_PD_CPU7_REPAIR_PDGDONE_SHIFT         (1U)
+#define PMU_BISR_STS1_PD_CPU7_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS1_PD_CPU7_REPAIR_PDGDONE_SHIFT)         /* 0x00000002 */
+#define PMU_BISR_STS1_PD_CPU6_REPAIR_PDGDONE_SHIFT         (2U)
+#define PMU_BISR_STS1_PD_CPU6_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS1_PD_CPU6_REPAIR_PDGDONE_SHIFT)         /* 0x00000004 */
+#define PMU_BISR_STS1_PD_CPU5_REPAIR_PDGDONE_SHIFT         (3U)
+#define PMU_BISR_STS1_PD_CPU5_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS1_PD_CPU5_REPAIR_PDGDONE_SHIFT)         /* 0x00000008 */
+#define PMU_BISR_STS1_PD_CPU4_REPAIR_PDGDONE_SHIFT         (4U)
+#define PMU_BISR_STS1_PD_CPU4_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS1_PD_CPU4_REPAIR_PDGDONE_SHIFT)         /* 0x00000010 */
+#define PMU_BISR_STS1_PD_CPU3_REPAIR_PDGDONE_SHIFT         (5U)
+#define PMU_BISR_STS1_PD_CPU3_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS1_PD_CPU3_REPAIR_PDGDONE_SHIFT)         /* 0x00000020 */
+#define PMU_BISR_STS1_PD_CPU2_REPAIR_PDGDONE_SHIFT         (6U)
+#define PMU_BISR_STS1_PD_CPU2_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS1_PD_CPU2_REPAIR_PDGDONE_SHIFT)         /* 0x00000040 */
+#define PMU_BISR_STS1_PD_CPU1_REPAIR_PDGDONE_SHIFT         (7U)
+#define PMU_BISR_STS1_PD_CPU1_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS1_PD_CPU1_REPAIR_PDGDONE_SHIFT)         /* 0x00000080 */
+#define PMU_BISR_STS1_PD_CPU0_REPAIR_PDGDONE_SHIFT         (8U)
+#define PMU_BISR_STS1_PD_CPU0_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS1_PD_CPU0_REPAIR_PDGDONE_SHIFT)         /* 0x00000100 */
+#define PMU_BISR_STS1_PD_VOPCLUSTER0_REPAIR_PDGDONE_SHIFT  (9U)
+#define PMU_BISR_STS1_PD_VOPCLUSTER0_REPAIR_PDGDONE_MASK   (0x1U << PMU_BISR_STS1_PD_VOPCLUSTER0_REPAIR_PDGDONE_SHIFT)  /* 0x00000200 */
+#define PMU_BISR_STS1_PD_VOPCLUSTER1_REPAIR_PDGDONE_SHIFT  (10U)
+#define PMU_BISR_STS1_PD_VOPCLUSTER1_REPAIR_PDGDONE_MASK   (0x1U << PMU_BISR_STS1_PD_VOPCLUSTER1_REPAIR_PDGDONE_SHIFT)  /* 0x00000400 */
+#define PMU_BISR_STS1_PD_VOPCLUSTER2_REPAIR_PDGDONE_SHIFT  (11U)
+#define PMU_BISR_STS1_PD_VOPCLUSTER2_REPAIR_PDGDONE_MASK   (0x1U << PMU_BISR_STS1_PD_VOPCLUSTER2_REPAIR_PDGDONE_SHIFT)  /* 0x00000800 */
+#define PMU_BISR_STS1_PD_VOPCLUSTER3_REPAIR_PDGDONE_SHIFT  (12U)
+#define PMU_BISR_STS1_PD_VOPCLUSTER3_REPAIR_PDGDONE_MASK   (0x1U << PMU_BISR_STS1_PD_VOPCLUSTER3_REPAIR_PDGDONE_SHIFT)  /* 0x00001000 */
+#define PMU_BISR_STS1_PD_VOPDSC8K_REPAIR_PDGDONE_SHIFT     (13U)
+#define PMU_BISR_STS1_PD_VOPDSC8K_REPAIR_PDGDONE_MASK      (0x1U << PMU_BISR_STS1_PD_VOPDSC8K_REPAIR_PDGDONE_SHIFT)     /* 0x00002000 */
+#define PMU_BISR_STS1_PD_VOPDSC4K_REPAIR_PDGDONE_SHIFT     (14U)
+#define PMU_BISR_STS1_PD_VOPDSC4K_REPAIR_PDGDONE_MASK      (0x1U << PMU_BISR_STS1_PD_VOPDSC4K_REPAIR_PDGDONE_SHIFT)     /* 0x00004000 */
+#define PMU_BISR_STS1_PD_VOPESMART_REPAIR_PDGDONE_SHIFT    (15U)
+#define PMU_BISR_STS1_PD_VOPESMART_REPAIR_PDGDONE_MASK     (0x1U << PMU_BISR_STS1_PD_VOPESMART_REPAIR_PDGDONE_SHIFT)    /* 0x00008000 */
+#define PMU_BISR_STS1_HDMIRXPHY_REPAIR_PDGDONE_SHIFT       (16U)
+#define PMU_BISR_STS1_HDMIRXPHY_REPAIR_PDGDONE_MASK        (0x1U << PMU_BISR_STS1_HDMIRXPHY_REPAIR_PDGDONE_SHIFT)       /* 0x00010000 */
+#define PMU_BISR_STS1_PCIEPHY_REPAIR_PDGDONE_SHIFT         (17U)
+#define PMU_BISR_STS1_PCIEPHY_REPAIR_PDGDONE_MASK          (0x1U << PMU_BISR_STS1_PCIEPHY_REPAIR_PDGDONE_SHIFT)         /* 0x00020000 */
+/* BISR_STS2 */
+#define PMU_BISR_STS2_OFFSET                               (0x8288U)
+#define PMU_BISR_STS2                                      (0x0U)
+#define PMU_BISR_STS2_PD_PMU1_REPAIR_CEDIS_SHIFT           (0U)
+#define PMU_BISR_STS2_PD_PMU1_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS2_PD_PMU1_REPAIR_CEDIS_SHIFT)           /* 0x00000001 */
+#define PMU_BISR_STS2_PD_GPU_BISR_CEDIS_SHIFT              (1U)
+#define PMU_BISR_STS2_PD_GPU_BISR_CEDIS_MASK               (0x1U << PMU_BISR_STS2_PD_GPU_BISR_CEDIS_SHIFT)              /* 0x00000002 */
+#define PMU_BISR_STS2_PD_NPUTOP_REPAIR_CEDIS_SHIFT         (2U)
+#define PMU_BISR_STS2_PD_NPUTOP_REPAIR_CEDIS_MASK          (0x1U << PMU_BISR_STS2_PD_NPUTOP_REPAIR_CEDIS_SHIFT)         /* 0x00000004 */
+#define PMU_BISR_STS2_PD_NPU1_REPAIR_CEDIS_SHIFT           (3U)
+#define PMU_BISR_STS2_PD_NPU1_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS2_PD_NPU1_REPAIR_CEDIS_SHIFT)           /* 0x00000008 */
+#define PMU_BISR_STS2_PD_NPU2_REPAIR_CEDIS_SHIFT           (4U)
+#define PMU_BISR_STS2_PD_NPU2_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS2_PD_NPU2_REPAIR_CEDIS_SHIFT)           /* 0x00000010 */
+#define PMU_BISR_STS2_PD_VENC0_REPAIR_CEDIS_SHIFT          (5U)
+#define PMU_BISR_STS2_PD_VENC0_REPAIR_CEDIS_MASK           (0x1U << PMU_BISR_STS2_PD_VENC0_REPAIR_CEDIS_SHIFT)          /* 0x00000020 */
+#define PMU_BISR_STS2_PD_VENC1_REPAIR_CEDIS_SHIFT          (6U)
+#define PMU_BISR_STS2_PD_VENC1_REPAIR_CEDIS_MASK           (0x1U << PMU_BISR_STS2_PD_VENC1_REPAIR_CEDIS_SHIFT)          /* 0x00000040 */
+#define PMU_BISR_STS2_PD_RKVDEC0_REPAIR_CEDIS_SHIFT        (7U)
+#define PMU_BISR_STS2_PD_RKVDEC0_REPAIR_CEDIS_MASK         (0x1U << PMU_BISR_STS2_PD_RKVDEC0_REPAIR_CEDIS_SHIFT)        /* 0x00000080 */
+#define PMU_BISR_STS2_PD_RKVDEC1_REPAIR_CEDIS_SHIFT        (8U)
+#define PMU_BISR_STS2_PD_RKVDEC1_REPAIR_CEDIS_MASK         (0x1U << PMU_BISR_STS2_PD_RKVDEC1_REPAIR_CEDIS_SHIFT)        /* 0x00000100 */
+#define PMU_BISR_STS2_PD_VDPU_REPAIR_CEDIS_SHIFT           (9U)
+#define PMU_BISR_STS2_PD_VDPU_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS2_PD_VDPU_REPAIR_CEDIS_SHIFT)           /* 0x00000200 */
+#define PMU_BISR_STS2_PD_RGA30_REPAIR_CEDIS_SHIFT          (10U)
+#define PMU_BISR_STS2_PD_RGA30_REPAIR_CEDIS_MASK           (0x1U << PMU_BISR_STS2_PD_RGA30_REPAIR_CEDIS_SHIFT)          /* 0x00000400 */
+#define PMU_BISR_STS2_PD_AV1_REPAIR_CEDIS_SHIFT            (11U)
+#define PMU_BISR_STS2_PD_AV1_REPAIR_CEDIS_MASK             (0x1U << PMU_BISR_STS2_PD_AV1_REPAIR_CEDIS_SHIFT)            /* 0x00000800 */
+#define PMU_BISR_STS2_PD_VI_REPAIR_CEDIS_SHIFT             (12U)
+#define PMU_BISR_STS2_PD_VI_REPAIR_CEDIS_MASK              (0x1U << PMU_BISR_STS2_PD_VI_REPAIR_CEDIS_SHIFT)             /* 0x00001000 */
+#define PMU_BISR_STS2_PD_FEC_REPAIR_CEDIS_SHIFT            (13U)
+#define PMU_BISR_STS2_PD_FEC_REPAIR_CEDIS_MASK             (0x1U << PMU_BISR_STS2_PD_FEC_REPAIR_CEDIS_SHIFT)            /* 0x00002000 */
+#define PMU_BISR_STS2_PD_ISP1_REPAIR_CEDIS_SHIFT           (14U)
+#define PMU_BISR_STS2_PD_ISP1_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS2_PD_ISP1_REPAIR_CEDIS_SHIFT)           /* 0x00004000 */
+#define PMU_BISR_STS2_PD_RGA31_REPAIR_CEDIS_SHIFT          (15U)
+#define PMU_BISR_STS2_PD_RGA31_REPAIR_CEDIS_MASK           (0x1U << PMU_BISR_STS2_PD_RGA31_REPAIR_CEDIS_SHIFT)          /* 0x00008000 */
+#define PMU_BISR_STS2_PD_VOP_REPAIR_CEDIS_SHIFT            (16U)
+#define PMU_BISR_STS2_PD_VOP_REPAIR_CEDIS_MASK             (0x1U << PMU_BISR_STS2_PD_VOP_REPAIR_CEDIS_SHIFT)            /* 0x00010000 */
+#define PMU_BISR_STS2_PD_VO0_REPAIR_CEDIS_SHIFT            (17U)
+#define PMU_BISR_STS2_PD_VO0_REPAIR_CEDIS_MASK             (0x1U << PMU_BISR_STS2_PD_VO0_REPAIR_CEDIS_SHIFT)            /* 0x00020000 */
+#define PMU_BISR_STS2_PD_VO1_REPAIR_CEDIS_SHIFT            (18U)
+#define PMU_BISR_STS2_PD_VO1_REPAIR_CEDIS_MASK             (0x1U << PMU_BISR_STS2_PD_VO1_REPAIR_CEDIS_SHIFT)            /* 0x00040000 */
+#define PMU_BISR_STS2_PD_AUDIO_REPAIR_CEDIS_SHIFT          (19U)
+#define PMU_BISR_STS2_PD_AUDIO_REPAIR_CEDIS_MASK           (0x1U << PMU_BISR_STS2_PD_AUDIO_REPAIR_CEDIS_SHIFT)          /* 0x00080000 */
+#define PMU_BISR_STS2_PD_PHP_REPAIR_CEDIS_SHIFT            (20U)
+#define PMU_BISR_STS2_PD_PHP_REPAIR_CEDIS_MASK             (0x1U << PMU_BISR_STS2_PD_PHP_REPAIR_CEDIS_SHIFT)            /* 0x00100000 */
+#define PMU_BISR_STS2_PD_GMAC_REPAIR_CEDIS_SHIFT           (21U)
+#define PMU_BISR_STS2_PD_GMAC_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS2_PD_GMAC_REPAIR_CEDIS_SHIFT)           /* 0x00200000 */
+#define PMU_BISR_STS2_PD_PCIE_REPAIR_CEDIS_SHIFT           (22U)
+#define PMU_BISR_STS2_PD_PCIE_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS2_PD_PCIE_REPAIR_CEDIS_SHIFT)           /* 0x00400000 */
+#define PMU_BISR_STS2_PD_NVM0_REPAIR_CEDIS_SHIFT           (23U)
+#define PMU_BISR_STS2_PD_NVM0_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS2_PD_NVM0_REPAIR_CEDIS_SHIFT)           /* 0x00800000 */
+#define PMU_BISR_STS2_PD_SDIO_REPAIR_CEDIS_SHIFT           (24U)
+#define PMU_BISR_STS2_PD_SDIO_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS2_PD_SDIO_REPAIR_CEDIS_SHIFT)           /* 0x01000000 */
+#define PMU_BISR_STS2_PD_USB_REPAIR_CEDIS_SHIFT            (25U)
+#define PMU_BISR_STS2_PD_USB_REPAIR_CEDIS_MASK             (0x1U << PMU_BISR_STS2_PD_USB_REPAIR_CEDIS_SHIFT)            /* 0x02000000 */
+#define PMU_BISR_STS2_PD_SDMMC_REPAIR_CEDIS_SHIFT          (26U)
+#define PMU_BISR_STS2_PD_SDMMC_REPAIR_CEDIS_MASK           (0x1U << PMU_BISR_STS2_PD_SDMMC_REPAIR_CEDIS_SHIFT)          /* 0x04000000 */
+#define PMU_BISR_STS2_PD_CRYPTO_REPAIR_CEDIS_SHIFT         (27U)
+#define PMU_BISR_STS2_PD_CRYPTO_REPAIR_CEDIS_MASK          (0x1U << PMU_BISR_STS2_PD_CRYPTO_REPAIR_CEDIS_SHIFT)         /* 0x08000000 */
+#define PMU_BISR_STS2_PD_CENTER_REPAIR_CEDIS_SHIFT         (28U)
+#define PMU_BISR_STS2_PD_CENTER_REPAIR_CEDIS_MASK          (0x1U << PMU_BISR_STS2_PD_CENTER_REPAIR_CEDIS_SHIFT)         /* 0x10000000 */
+#define PMU_BISR_STS2_PD_DDR01_REPAIR_CEDIS_SHIFT          (29U)
+#define PMU_BISR_STS2_PD_DDR01_REPAIR_CEDIS_MASK           (0x1U << PMU_BISR_STS2_PD_DDR01_REPAIR_CEDIS_SHIFT)          /* 0x20000000 */
+#define PMU_BISR_STS2_PD_DDR23_REPAIR_CEDIS_SHIFT          (30U)
+#define PMU_BISR_STS2_PD_DDR23_REPAIR_CEDIS_MASK           (0x1U << PMU_BISR_STS2_PD_DDR23_REPAIR_CEDIS_SHIFT)          /* 0x40000000 */
+#define PMU_BISR_STS2_PD_BUS_REPAIR_CEDIS_SHIFT            (31U)
+#define PMU_BISR_STS2_PD_BUS_REPAIR_CEDIS_MASK             (0x1U << PMU_BISR_STS2_PD_BUS_REPAIR_CEDIS_SHIFT)            /* 0x80000000 */
+/* BISR_STS3 */
+#define PMU_BISR_STS3_OFFSET                               (0x828CU)
+#define PMU_BISR_STS3                                      (0x0U)
+#define PMU_BISR_STS3_PD_DSU_REPAIR_CEDIS_SHIFT            (0U)
+#define PMU_BISR_STS3_PD_DSU_REPAIR_CEDIS_MASK             (0x1U << PMU_BISR_STS3_PD_DSU_REPAIR_CEDIS_SHIFT)            /* 0x00000001 */
+#define PMU_BISR_STS3_PD_CPU7_REPAIR_CEDIS_SHIFT           (1U)
+#define PMU_BISR_STS3_PD_CPU7_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS3_PD_CPU7_REPAIR_CEDIS_SHIFT)           /* 0x00000002 */
+#define PMU_BISR_STS3_PD_CPU6_REPAIR_CEDIS_SHIFT           (2U)
+#define PMU_BISR_STS3_PD_CPU6_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS3_PD_CPU6_REPAIR_CEDIS_SHIFT)           /* 0x00000004 */
+#define PMU_BISR_STS3_PD_CPU5_REPAIR_CEDIS_SHIFT           (3U)
+#define PMU_BISR_STS3_PD_CPU5_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS3_PD_CPU5_REPAIR_CEDIS_SHIFT)           /* 0x00000008 */
+#define PMU_BISR_STS3_PD_CPU4_REPAIR_CEDIS_SHIFT           (4U)
+#define PMU_BISR_STS3_PD_CPU4_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS3_PD_CPU4_REPAIR_CEDIS_SHIFT)           /* 0x00000010 */
+#define PMU_BISR_STS3_PD_CPU3_REPAIR_CEDIS_SHIFT           (5U)
+#define PMU_BISR_STS3_PD_CPU3_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS3_PD_CPU3_REPAIR_CEDIS_SHIFT)           /* 0x00000020 */
+#define PMU_BISR_STS3_PD_CPU2_REPAIR_CEDIS_SHIFT           (6U)
+#define PMU_BISR_STS3_PD_CPU2_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS3_PD_CPU2_REPAIR_CEDIS_SHIFT)           /* 0x00000040 */
+#define PMU_BISR_STS3_PD_CPU1_REPAIR_CEDIS_SHIFT           (7U)
+#define PMU_BISR_STS3_PD_CPU1_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS3_PD_CPU1_REPAIR_CEDIS_SHIFT)           /* 0x00000080 */
+#define PMU_BISR_STS3_PD_CPU0_REPAIR_CEDIS_SHIFT           (8U)
+#define PMU_BISR_STS3_PD_CPU0_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS3_PD_CPU0_REPAIR_CEDIS_SHIFT)           /* 0x00000100 */
+#define PMU_BISR_STS3_PD_VOPCLUSTER0_REPAIR_CEDIS_SHIFT    (9U)
+#define PMU_BISR_STS3_PD_VOPCLUSTER0_REPAIR_CEDIS_MASK     (0x1U << PMU_BISR_STS3_PD_VOPCLUSTER0_REPAIR_CEDIS_SHIFT)    /* 0x00000200 */
+#define PMU_BISR_STS3_PD_VOPCLUSTER1_REPAIR_CEDIS_SHIFT    (10U)
+#define PMU_BISR_STS3_PD_VOPCLUSTER1_REPAIR_CEDIS_MASK     (0x1U << PMU_BISR_STS3_PD_VOPCLUSTER1_REPAIR_CEDIS_SHIFT)    /* 0x00000400 */
+#define PMU_BISR_STS3_PD_VOPCLUSTER2_REPAIR_CEDIS_SHIFT    (11U)
+#define PMU_BISR_STS3_PD_VOPCLUSTER2_REPAIR_CEDIS_MASK     (0x1U << PMU_BISR_STS3_PD_VOPCLUSTER2_REPAIR_CEDIS_SHIFT)    /* 0x00000800 */
+#define PMU_BISR_STS3_PD_VOPCLUSTER3_REPAIR_CEDIS_SHIFT    (12U)
+#define PMU_BISR_STS3_PD_VOPCLUSTER3_REPAIR_CEDIS_MASK     (0x1U << PMU_BISR_STS3_PD_VOPCLUSTER3_REPAIR_CEDIS_SHIFT)    /* 0x00001000 */
+#define PMU_BISR_STS3_PD_VOPDSC8K_REPAIR_CEDIS_SHIFT       (13U)
+#define PMU_BISR_STS3_PD_VOPDSC8K_REPAIR_CEDIS_MASK        (0x1U << PMU_BISR_STS3_PD_VOPDSC8K_REPAIR_CEDIS_SHIFT)       /* 0x00002000 */
+#define PMU_BISR_STS3_PD_VOPDSC4K_REPAIR_CEDIS_SHIFT       (14U)
+#define PMU_BISR_STS3_PD_VOPDSC4K_REPAIR_CEDIS_MASK        (0x1U << PMU_BISR_STS3_PD_VOPDSC4K_REPAIR_CEDIS_SHIFT)       /* 0x00004000 */
+#define PMU_BISR_STS3_PD_VOPESMART_REPAIR_CEDIS_SHIFT      (15U)
+#define PMU_BISR_STS3_PD_VOPESMART_REPAIR_CEDIS_MASK       (0x1U << PMU_BISR_STS3_PD_VOPESMART_REPAIR_CEDIS_SHIFT)      /* 0x00008000 */
+#define PMU_BISR_STS3_HDMIRXPHY_REPAIR_CEDIS_SHIFT         (16U)
+#define PMU_BISR_STS3_HDMIRXPHY_REPAIR_CEDIS_MASK          (0x1U << PMU_BISR_STS3_HDMIRXPHY_REPAIR_CEDIS_SHIFT)         /* 0x00010000 */
+#define PMU_BISR_STS3_PCIEPHY_REPAIR_CEDIS_SHIFT           (17U)
+#define PMU_BISR_STS3_PCIEPHY_REPAIR_CEDIS_MASK            (0x1U << PMU_BISR_STS3_PCIEPHY_REPAIR_CEDIS_SHIFT)           /* 0x00020000 */
+/* BISR_STS4 */
+#define PMU_BISR_STS4_OFFSET                               (0x8290U)
+#define PMU_BISR_STS4                                      (0x0U)
+#define PMU_BISR_STS4_PD_PMU1_PWR_REPAIR_STAT_SHIFT        (0U)
+#define PMU_BISR_STS4_PD_PMU1_PWR_REPAIR_STAT_MASK         (0x1U << PMU_BISR_STS4_PD_PMU1_PWR_REPAIR_STAT_SHIFT)        /* 0x00000001 */
+#define PMU_BISR_STS4_PD_GPU_BISR_PWR_REPAIR_STAT_SHIFT    (1U)
+#define PMU_BISR_STS4_PD_GPU_BISR_PWR_REPAIR_STAT_MASK     (0x1U << PMU_BISR_STS4_PD_GPU_BISR_PWR_REPAIR_STAT_SHIFT)    /* 0x00000002 */
+#define PMU_BISR_STS4_PD_NPUTOP_DWN_PWR_REPAIR_STAT_SHIFT  (2U)
+#define PMU_BISR_STS4_PD_NPUTOP_DWN_PWR_REPAIR_STAT_MASK   (0x1U << PMU_BISR_STS4_PD_NPUTOP_DWN_PWR_REPAIR_STAT_SHIFT)  /* 0x00000004 */
+#define PMU_BISR_STS4_PD_NPU1_DWN_PWR_REPAIR_STAT_SHIFT    (3U)
+#define PMU_BISR_STS4_PD_NPU1_DWN_PWR_REPAIR_STAT_MASK     (0x1U << PMU_BISR_STS4_PD_NPU1_DWN_PWR_REPAIR_STAT_SHIFT)    /* 0x00000008 */
+#define PMU_BISR_STS4_PD_NPU2_DWN_PWR_REPAIR_STAT_SHIFT    (4U)
+#define PMU_BISR_STS4_PD_NPU2_DWN_PWR_REPAIR_STAT_MASK     (0x1U << PMU_BISR_STS4_PD_NPU2_DWN_PWR_REPAIR_STAT_SHIFT)    /* 0x00000010 */
+#define PMU_BISR_STS4_PD_VENC0_DWN_PWR_REPAIR_STAT_SHIFT   (5U)
+#define PMU_BISR_STS4_PD_VENC0_DWN_PWR_REPAIR_STAT_MASK    (0x1U << PMU_BISR_STS4_PD_VENC0_DWN_PWR_REPAIR_STAT_SHIFT)   /* 0x00000020 */
+#define PMU_BISR_STS4_PD_VENC1_DWN_PWR_REPAIR_STAT_SHIFT   (6U)
+#define PMU_BISR_STS4_PD_VENC1_DWN_PWR_REPAIR_STAT_MASK    (0x1U << PMU_BISR_STS4_PD_VENC1_DWN_PWR_REPAIR_STAT_SHIFT)   /* 0x00000040 */
+#define PMU_BISR_STS4_PD_RKVDEC0_DWN_PWR_REPAIR_STAT_SHIFT (7U)
+#define PMU_BISR_STS4_PD_RKVDEC0_DWN_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS4_PD_RKVDEC0_DWN_PWR_REPAIR_STAT_SHIFT) /* 0x00000080 */
+#define PMU_BISR_STS4_PD_RKVDEC1_DWN_PWR_REPAIR_STAT_SHIFT (8U)
+#define PMU_BISR_STS4_PD_RKVDEC1_DWN_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS4_PD_RKVDEC1_DWN_PWR_REPAIR_STAT_SHIFT) /* 0x00000100 */
+#define PMU_BISR_STS4_PD_VDPU_DWN_PWR_REPAIR_STAT_SHIFT    (9U)
+#define PMU_BISR_STS4_PD_VDPU_DWN_PWR_REPAIR_STAT_MASK     (0x1U << PMU_BISR_STS4_PD_VDPU_DWN_PWR_REPAIR_STAT_SHIFT)    /* 0x00000200 */
+#define PMU_BISR_STS4_PD_RGA30_DWN_PWR_REPAIR_STAT_SHIFT   (10U)
+#define PMU_BISR_STS4_PD_RGA30_DWN_PWR_REPAIR_STAT_MASK    (0x1U << PMU_BISR_STS4_PD_RGA30_DWN_PWR_REPAIR_STAT_SHIFT)   /* 0x00000400 */
+#define PMU_BISR_STS4_PD_AV1_DWN_PWR_REPAIR_STAT_SHIFT     (11U)
+#define PMU_BISR_STS4_PD_AV1_DWN_PWR_REPAIR_STAT_MASK      (0x1U << PMU_BISR_STS4_PD_AV1_DWN_PWR_REPAIR_STAT_SHIFT)     /* 0x00000800 */
+#define PMU_BISR_STS4_PD_VI_DWN_PWR_REPAIR_STAT_SHIFT      (12U)
+#define PMU_BISR_STS4_PD_VI_DWN_PWR_REPAIR_STAT_MASK       (0x1U << PMU_BISR_STS4_PD_VI_DWN_PWR_REPAIR_STAT_SHIFT)      /* 0x00001000 */
+#define PMU_BISR_STS4_PD_FEC_DWN_PWR_REPAIR_STAT_SHIFT     (13U)
+#define PMU_BISR_STS4_PD_FEC_DWN_PWR_REPAIR_STAT_MASK      (0x1U << PMU_BISR_STS4_PD_FEC_DWN_PWR_REPAIR_STAT_SHIFT)     /* 0x00002000 */
+#define PMU_BISR_STS4_PD_ISP1_DWN_PWR_REPAIR_STAT_SHIFT    (14U)
+#define PMU_BISR_STS4_PD_ISP1_DWN_PWR_REPAIR_STAT_MASK     (0x1U << PMU_BISR_STS4_PD_ISP1_DWN_PWR_REPAIR_STAT_SHIFT)    /* 0x00004000 */
+#define PMU_BISR_STS4_PD_RGA31_DWN_PWR_REPAIR_STAT_SHIFT   (15U)
+#define PMU_BISR_STS4_PD_RGA31_DWN_PWR_REPAIR_STAT_MASK    (0x1U << PMU_BISR_STS4_PD_RGA31_DWN_PWR_REPAIR_STAT_SHIFT)   /* 0x00008000 */
+#define PMU_BISR_STS4_PD_VOP_DWN_PWR_REPAIR_STAT_SHIFT     (16U)
+#define PMU_BISR_STS4_PD_VOP_DWN_PWR_REPAIR_STAT_MASK      (0x1U << PMU_BISR_STS4_PD_VOP_DWN_PWR_REPAIR_STAT_SHIFT)     /* 0x00010000 */
+#define PMU_BISR_STS4_PD_VO0_DWN_PWR_REPAIR_STAT_SHIFT     (17U)
+#define PMU_BISR_STS4_PD_VO0_DWN_PWR_REPAIR_STAT_MASK      (0x1U << PMU_BISR_STS4_PD_VO0_DWN_PWR_REPAIR_STAT_SHIFT)     /* 0x00020000 */
+#define PMU_BISR_STS4_PD_VO1_DWN_PWR_REPAIR_STAT_SHIFT     (18U)
+#define PMU_BISR_STS4_PD_VO1_DWN_PWR_REPAIR_STAT_MASK      (0x1U << PMU_BISR_STS4_PD_VO1_DWN_PWR_REPAIR_STAT_SHIFT)     /* 0x00040000 */
+#define PMU_BISR_STS4_PD_AUDIO_DWN_PWR_REPAIR_STAT_SHIFT   (19U)
+#define PMU_BISR_STS4_PD_AUDIO_DWN_PWR_REPAIR_STAT_MASK    (0x1U << PMU_BISR_STS4_PD_AUDIO_DWN_PWR_REPAIR_STAT_SHIFT)   /* 0x00080000 */
+#define PMU_BISR_STS4_PD_PHP_DWN_PWR_REPAIR_STAT_SHIFT     (20U)
+#define PMU_BISR_STS4_PD_PHP_DWN_PWR_REPAIR_STAT_MASK      (0x1U << PMU_BISR_STS4_PD_PHP_DWN_PWR_REPAIR_STAT_SHIFT)     /* 0x00100000 */
+#define PMU_BISR_STS4_PD_GMAC_DWN_PWR_REPAIR_STAT_SHIFT    (21U)
+#define PMU_BISR_STS4_PD_GMAC_DWN_PWR_REPAIR_STAT_MASK     (0x1U << PMU_BISR_STS4_PD_GMAC_DWN_PWR_REPAIR_STAT_SHIFT)    /* 0x00200000 */
+#define PMU_BISR_STS4_PD_PCIE_DWN_PWR_REPAIR_STAT_SHIFT    (22U)
+#define PMU_BISR_STS4_PD_PCIE_DWN_PWR_REPAIR_STAT_MASK     (0x1U << PMU_BISR_STS4_PD_PCIE_DWN_PWR_REPAIR_STAT_SHIFT)    /* 0x00400000 */
+#define PMU_BISR_STS4_PD_NVM0_DWN_PWR_REPAIR_STAT_SHIFT    (23U)
+#define PMU_BISR_STS4_PD_NVM0_DWN_PWR_REPAIR_STAT_MASK     (0x1U << PMU_BISR_STS4_PD_NVM0_DWN_PWR_REPAIR_STAT_SHIFT)    /* 0x00800000 */
+#define PMU_BISR_STS4_PD_SDIO_DWN_PWR_REPAIR_STAT_SHIFT    (24U)
+#define PMU_BISR_STS4_PD_SDIO_DWN_PWR_REPAIR_STAT_MASK     (0x1U << PMU_BISR_STS4_PD_SDIO_DWN_PWR_REPAIR_STAT_SHIFT)    /* 0x01000000 */
+#define PMU_BISR_STS4_PD_USB_DWN_PWR_REPAIR_STAT_SHIFT     (25U)
+#define PMU_BISR_STS4_PD_USB_DWN_PWR_REPAIR_STAT_MASK      (0x1U << PMU_BISR_STS4_PD_USB_DWN_PWR_REPAIR_STAT_SHIFT)     /* 0x02000000 */
+#define PMU_BISR_STS4_PD_SDMMC_DWN_PWR_REPAIR_STAT_SHIFT   (26U)
+#define PMU_BISR_STS4_PD_SDMMC_DWN_PWR_REPAIR_STAT_MASK    (0x1U << PMU_BISR_STS4_PD_SDMMC_DWN_PWR_REPAIR_STAT_SHIFT)   /* 0x04000000 */
+#define PMU_BISR_STS4_PD_CRYPTO_DWN_PWR_REPAIR_STAT_SHIFT  (27U)
+#define PMU_BISR_STS4_PD_CRYPTO_DWN_PWR_REPAIR_STAT_MASK   (0x1U << PMU_BISR_STS4_PD_CRYPTO_DWN_PWR_REPAIR_STAT_SHIFT)  /* 0x08000000 */
+#define PMU_BISR_STS4_PD_CENTER_DWN_PWR_REPAIR_STAT_SHIFT  (28U)
+#define PMU_BISR_STS4_PD_CENTER_DWN_PWR_REPAIR_STAT_MASK   (0x1U << PMU_BISR_STS4_PD_CENTER_DWN_PWR_REPAIR_STAT_SHIFT)  /* 0x10000000 */
+#define PMU_BISR_STS4_PD_DDR01_DWN_PWR_REPAIR_STAT_SHIFT   (29U)
+#define PMU_BISR_STS4_PD_DDR01_DWN_PWR_REPAIR_STAT_MASK    (0x1U << PMU_BISR_STS4_PD_DDR01_DWN_PWR_REPAIR_STAT_SHIFT)   /* 0x20000000 */
+#define PMU_BISR_STS4_PD_DDR23_DWN_PWR_REPAIR_STAT_SHIFT   (30U)
+#define PMU_BISR_STS4_PD_DDR23_DWN_PWR_REPAIR_STAT_MASK    (0x1U << PMU_BISR_STS4_PD_DDR23_DWN_PWR_REPAIR_STAT_SHIFT)   /* 0x40000000 */
+#define PMU_BISR_STS4_PD_BUS_DWN_PWR_REPAIR_STAT_SHIFT     (31U)
+#define PMU_BISR_STS4_PD_BUS_DWN_PWR_REPAIR_STAT_MASK      (0x1U << PMU_BISR_STS4_PD_BUS_DWN_PWR_REPAIR_STAT_SHIFT)     /* 0x80000000 */
+/* BISR_STS5 */
+#define PMU_BISR_STS5_OFFSET                               (0x8294U)
+#define PMU_BISR_STS5                                      (0x0U)
+#define PMU_BISR_STS5_PD_DSU_REPAIR_PWR_REPAIR_STAT_SHIFT  (0U)
+#define PMU_BISR_STS5_PD_DSU_REPAIR_PWR_REPAIR_STAT_MASK   (0x1U << PMU_BISR_STS5_PD_DSU_REPAIR_PWR_REPAIR_STAT_SHIFT)  /* 0x00000001 */
+#define PMU_BISR_STS5_PD_CPU7_REPAIR_PWR_REPAIR_STAT_SHIFT (1U)
+#define PMU_BISR_STS5_PD_CPU7_REPAIR_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS5_PD_CPU7_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000002 */
+#define PMU_BISR_STS5_PD_CPU6_REPAIR_PWR_REPAIR_STAT_SHIFT (2U)
+#define PMU_BISR_STS5_PD_CPU6_REPAIR_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS5_PD_CPU6_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000004 */
+#define PMU_BISR_STS5_PD_CPU5_REPAIR_PWR_REPAIR_STAT_SHIFT (3U)
+#define PMU_BISR_STS5_PD_CPU5_REPAIR_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS5_PD_CPU5_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000008 */
+#define PMU_BISR_STS5_PD_CPU4_REPAIR_PWR_REPAIR_STAT_SHIFT (4U)
+#define PMU_BISR_STS5_PD_CPU4_REPAIR_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS5_PD_CPU4_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000010 */
+#define PMU_BISR_STS5_PD_CPU3_REPAIR_PWR_REPAIR_STAT_SHIFT (5U)
+#define PMU_BISR_STS5_PD_CPU3_REPAIR_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS5_PD_CPU3_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000020 */
+#define PMU_BISR_STS5_PD_CPU2_REPAIR_PWR_REPAIR_STAT_SHIFT (6U)
+#define PMU_BISR_STS5_PD_CPU2_REPAIR_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS5_PD_CPU2_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000040 */
+#define PMU_BISR_STS5_PD_CPU1_REPAIR_PWR_REPAIR_STAT_SHIFT (7U)
+#define PMU_BISR_STS5_PD_CPU1_REPAIR_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS5_PD_CPU1_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000080 */
+#define PMU_BISR_STS5_PD_CPU0_REPAIR_PWR_REPAIR_STAT_SHIFT (8U)
+#define PMU_BISR_STS5_PD_CPU0_REPAIR_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS5_PD_CPU0_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000100 */
+#define PMU_BISR_STS5_PD_VOPCLUSTER0_REPAIR_PWR_REPAIR_STAT_SHIFT (9U)
+#define PMU_BISR_STS5_PD_VOPCLUSTER0_REPAIR_PWR_REPAIR_STAT_MASK (0x1U << PMU_BISR_STS5_PD_VOPCLUSTER0_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000200 */
+#define PMU_BISR_STS5_PD_VOPCLUSTER1_REPAIR_PWR_REPAIR_STAT_SHIFT (10U)
+#define PMU_BISR_STS5_PD_VOPCLUSTER1_REPAIR_PWR_REPAIR_STAT_MASK (0x1U << PMU_BISR_STS5_PD_VOPCLUSTER1_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000400 */
+#define PMU_BISR_STS5_PD_VOPCLUSTER2_REPAIR_PWR_REPAIR_STAT_SHIFT (11U)
+#define PMU_BISR_STS5_PD_VOPCLUSTER2_REPAIR_PWR_REPAIR_STAT_MASK (0x1U << PMU_BISR_STS5_PD_VOPCLUSTER2_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00000800 */
+#define PMU_BISR_STS5_PD_VOPCLUSTER3_REPAIR_PWR_REPAIR_STAT_SHIFT (12U)
+#define PMU_BISR_STS5_PD_VOPCLUSTER3_REPAIR_PWR_REPAIR_STAT_MASK (0x1U << PMU_BISR_STS5_PD_VOPCLUSTER3_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00001000 */
+#define PMU_BISR_STS5_PD_VOPDSC8K_REPAIR_PWR_REPAIR_STAT_SHIFT (13U)
+#define PMU_BISR_STS5_PD_VOPDSC8K_REPAIR_PWR_REPAIR_STAT_MASK (0x1U << PMU_BISR_STS5_PD_VOPDSC8K_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00002000 */
+#define PMU_BISR_STS5_PD_VOPDSC4K_REPAIR_PWR_REPAIR_STAT_SHIFT (14U)
+#define PMU_BISR_STS5_PD_VOPDSC4K_REPAIR_PWR_REPAIR_STAT_MASK (0x1U << PMU_BISR_STS5_PD_VOPDSC4K_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00004000 */
+#define PMU_BISR_STS5_PD_VOPESMART_REPAIR_PWR_REPAIR_STAT_SHIFT (15U)
+#define PMU_BISR_STS5_PD_VOPESMART_REPAIR_PWR_REPAIR_STAT_MASK (0x1U << PMU_BISR_STS5_PD_VOPESMART_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00008000 */
+#define PMU_BISR_STS5_HDMIRXPHY_REPAIR_PWR_REPAIR_STAT_SHIFT (16U)
+#define PMU_BISR_STS5_HDMIRXPHY_REPAIR_PWR_REPAIR_STAT_MASK (0x1U << PMU_BISR_STS5_HDMIRXPHY_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00010000 */
+#define PMU_BISR_STS5_PCIEPHY_REPAIR_PWR_REPAIR_STAT_SHIFT (17U)
+#define PMU_BISR_STS5_PCIEPHY_REPAIR_PWR_REPAIR_STAT_MASK  (0x1U << PMU_BISR_STS5_PCIEPHY_REPAIR_PWR_REPAIR_STAT_SHIFT) /* 0x00020000 */
 /******************************************WDT*******************************************/
 /* CR */
 #define WDT_CR_OFFSET                                      (0x0U)

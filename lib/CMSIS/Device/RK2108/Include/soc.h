@@ -190,6 +190,7 @@ typedef enum
 /*****************************************PMU*****************************************/
 #ifndef __ASSEMBLY__
 typedef enum PD_Id {
+    PD_INVALID          = 0U,
     PD_DSP              = 0x80000000U,
     PD_LOGIC            = 0x80011111U,
     PD_SHRM             = 0x80022222U,
