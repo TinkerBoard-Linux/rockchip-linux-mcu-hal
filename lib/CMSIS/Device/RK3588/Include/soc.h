@@ -142,6 +142,10 @@ typedef enum {
   MBOX0_CH1_BB_IRQn         =  98  + NUM_INTERRUPTS,     /*!< MAILBOX_CH1_BB Interrupt      */
   MBOX0_CH2_BB_IRQn         =  99  + NUM_INTERRUPTS,     /*!< MAILBOX_CH2_BB Interrupt      */
   MBOX0_CH3_BB_IRQn         =  100 + NUM_INTERRUPTS,     /*!< MAILBOX_CH3_BB Interrupt      */
+  GPIO1_IRQn                =  310 + NUM_INTERRUPTS,     /*!< GPIO1 Interrupt               */
+  GPIO2_IRQn                =  311 + NUM_INTERRUPTS,     /*!< GPIO2 Interrupt               */
+  GPIO3_IRQn                =  312 + NUM_INTERRUPTS,     /*!< GPIO3 Interrupt               */
+  GPIO4_IRQn                =  313 + NUM_INTERRUPTS,     /*!< GPIO4 Interrupt               */
   TOTAL_INTERRUPTS          =  (NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),   /*!< For external interrupt from intmux    */
 } IRQn_Type;
 #elif defined(RKMCU_RK3588_NPU)

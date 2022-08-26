@@ -5,6 +5,7 @@
 
 #include "hal_bsp.h"
 #include "hal_base.h"
+#include "hdmi_cec.h"
 
 /********************* Private MACRO Definition ******************************/
 
@@ -80,6 +81,11 @@ int main(void)
     /* UART Init */
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
     printf("Hello RK3588 mcu\n");
+
+    /* HDMI CEC Init */
+#ifdef HDMI_CEC_WKUP
+    HAL_CEC_Init();
+#endif
 
     /* Unity Test  */
 
