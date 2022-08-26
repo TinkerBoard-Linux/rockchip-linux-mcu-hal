@@ -12,6 +12,7 @@
 /********************* Private MACRO Definition ******************************/
 //#define GPIO_TEST
 //#define GPIO_IRQ_GROUP_TEST
+//#define MBOX_TEST
 //#define PERF_TEST
 //#define RPMSG_TEST
 //#define SOFTIRQ_TEST
@@ -44,6 +45,11 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
 
 #ifdef GPIO_TEST
     GIC_AMP_IRQ_CFG_ROUTE(GPIO3_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+#endif
+
+#ifdef MBOX_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(MBOX0_CH2_B2A_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(MBOX0_CH2_A2B_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
 #endif
 
 #ifdef SOFTIRQ_TEST
@@ -199,6 +205,110 @@ static void gpio_irq_group_test(void)
                             gpioIrqCfg,
                             HAL_IRQ_HANDLER_GetGpioIrqGroupOps());
 }
+#endif
+
+/************************************************/
+/*                                              */
+/*                  MBOX_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef MBOX_TEST
+
+/* master core uses MBOX_A2B and remote core uses MBOX_B2A */
+#define MBOX_B2A 0
+#define MBOX_A2B 1
+
+static struct MBOX_REG *pMBox = MBOX0;
+
+#ifdef PRIMARY_CPU
+static void mbox_master_isr(int vector, void *param)
+{
+    HAL_MBOX_IrqHandler(vector, pMBox);
+    HAL_GIC_EndOfInterrupt(vector);
+}
+
+static void mbox_master_cb(struct MBOX_CMD_DAT *msg, void *args)
+{
+    uint32_t cpu_id;
+    struct MBOX_CMD_DAT rx_msg = *msg;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    printf("mbox master: recieve cpu-%ld cmd=0x%lx data=0x%lx\n", cpu_id, rx_msg.CMD, rx_msg.DATA);
+}
+#else
+static void mbox_remote_isr(int vector, void *param)
+{
+    HAL_MBOX_IrqHandler(vector, pMBox);
+    HAL_GIC_EndOfInterrupt(vector);
+}
+
+static void mbox_remote_cb(struct MBOX_CMD_DAT *msg, void *args)
+{
+    uint32_t cpu_id;
+    struct MBOX_CMD_DAT rx_msg = *msg;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    printf("mbox remote: recieve cpu-%ld cmd=0x%lx data=0x%lx\n", cpu_id, rx_msg.CMD, rx_msg.DATA);
+}
+#endif
+
+/* Use CPU1 as Master Core and CPU2 as Remote Core*/
+#ifdef PRIMARY_CPU
+static struct MBOX_CLIENT mbox_client2_m = { "mbox-cl2m", MBOX0_CH2_B2A_IRQn, mbox_master_cb, (void *)MBOX_CH_2 };
+
+static void mbox_master_test(void)
+{
+    struct MBOX_CLIENT *mbox_cl2m;
+    struct MBOX_CMD_DAT tx_msg;
+    uint32_t cpu_id;
+    int ret = 0;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    mbox_cl2m = &mbox_client2_m;
+    tx_msg.CMD = cpu_id & 0xFU;
+    tx_msg.DATA = 0x12345678;
+
+    HAL_MBOX_Init(pMBox, MBOX_A2B);
+    ret = HAL_MBOX_RegisterClient(pMBox, MBOX_CH_2, mbox_cl2m);
+    if (ret) {
+        printf("mbox_cl2m register failed, ret=%d\n", ret);
+    }
+    HAL_IRQ_HANDLER_SetIRQHandler(MBOX0_CH2_B2A_IRQn, mbox_master_isr, NULL);
+    HAL_GIC_Enable(MBOX0_CH2_B2A_IRQn);
+    HAL_DelayMs(4000);
+    printf("mbox master: send cmd=0x%lx data=0x%lx\n", tx_msg.CMD, tx_msg.DATA);
+    HAL_MBOX_SendMsg(pMBox, MBOX_CH_2, &tx_msg);
+}
+#endif
+
+#ifdef CPU2
+static struct MBOX_CLIENT mbox_client2_r = { "mbox-cl2r", MBOX0_CH2_A2B_IRQn, mbox_remote_cb, (void *)MBOX_CH_2 };
+
+static void mbox_remote_test(void)
+{
+    struct MBOX_CLIENT *mbox_cl2r;
+    struct MBOX_CMD_DAT tx_msg;
+    uint32_t cpu_id;
+    int ret = 0;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    mbox_cl2r = &mbox_client2_r;
+    tx_msg.CMD = cpu_id & 0xFU;
+    tx_msg.DATA = 0x98765432;
+
+    HAL_MBOX_Init(pMBox, MBOX_B2A);
+    ret = HAL_MBOX_RegisterClient(pMBox, MBOX_CH_2, mbox_cl2r);
+    if (ret) {
+        printf("mbox_cl2r register failed, ret=%d\n", ret);
+    }
+    HAL_IRQ_HANDLER_SetIRQHandler(MBOX0_CH2_A2B_IRQn, mbox_remote_isr, NULL);
+    HAL_GIC_Enable(MBOX0_CH2_A2B_IRQn);
+    HAL_DelayMs(2000);
+    printf("mbox remote: send cmd=0x%lx data=0x%lx\n", tx_msg.CMD, tx_msg.DATA);
+    HAL_MBOX_SendMsg(pMBox, MBOX_CH_2, &tx_msg);
+}
+#endif
+
 #endif
 
 /************************************************/
@@ -777,6 +887,15 @@ void test_demo(void)
 
 #if defined(GPIO_IRQ_GROUP_TEST) && defined(PRIMARY_CPU)
     gpio_irq_group_test();
+#endif
+
+#ifdef MBOX_TEST
+#ifdef PRIMARY_CPU /*CPU1*/
+    mbox_master_test();
+#endif
+#ifdef CPU2
+    mbox_remote_test();
+#endif
 #endif
 
 #if defined(PERF_TEST) && defined(PRIMARY_CPU)
