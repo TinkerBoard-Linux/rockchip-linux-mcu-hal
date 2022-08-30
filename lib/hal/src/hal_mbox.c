@@ -22,7 +22,8 @@
 
  - Invoke HAL_MBOX_Init() in driver wrapper file to initialize mailbox.
  - Invoke HAL_MBOX_RegisterClient() in protocol layer to register mailbox
-     client (user).
+     client (user). The consumer should ensure client memory must not be
+     released until HAL_MBOX_UnregisterClient() API is invoked.
  - Protocol layer call HAL_MBOX_SendMsg() to send mailbox message and receive
      message via interrupt handler.
  - Using destroy related function to finish resource release work.
@@ -315,11 +316,11 @@ HAL_Status HAL_MBOX_IrqHandler(int irq, struct MBOX_REG *pReg)
     }
 
     for (chan = 0; chan < MBOX_CHAN_CNT; chan++) {
-        if (irq != pMBox->chans[chan].client->irq) {
+        if (!MBOX_ChanIntStGet(pReg, (eMBOX_CH)chan, pMBox->A2B)) {
             continue;
         }
 
-        if (!MBOX_ChanIntStGet(pReg, (eMBOX_CH)chan, pMBox->A2B)) {
+        if (irq != pMBox->chans[chan].client->irq) {
             continue;
         }
 
@@ -416,7 +417,8 @@ HAL_Status HAL_MBOX_DeInit(struct MBOX_REG *pReg)
  * @brief  Register mailbox client to specified mailbox and channel
  * @param  pReg: mailbox base addr
  * @param  chan: chan id
- * @param  cl: mailbox client wanna register
+ * @param  cl: mailbox client wanna register, its memory must not be released
+               until HAL_MBOX_UnregisterClient() API is invoked.
  * @return HAL_Status
  */
 HAL_Status HAL_MBOX_RegisterClient(struct MBOX_REG *pReg, eMBOX_CH chan,
