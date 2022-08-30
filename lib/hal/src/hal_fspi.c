@@ -803,9 +803,14 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
  * @param  cells: delay line cells.
  * @return HAL_Status.
  */
-HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint8_t cells)
+HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint16_t cells)
 {
     HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+
+    if (cells > HAL_FSPI_GetMaxDllCells(host)) {
+        return HAL_INVAL;
+    }
+
     if (host->cs == 0) {
         WRITE_REG(host->instance->DLL_CTRL0, 1 << FSPI_DLL_CTRL0_SCLK_SMP_SEL_SHIFT | cells);
     } else {
