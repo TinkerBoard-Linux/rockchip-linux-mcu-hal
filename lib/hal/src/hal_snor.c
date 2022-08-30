@@ -678,6 +678,10 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
     uint8_t *pBuf = (uint8_t *)buf;
     uint32_t size, remain = len, pageOffset;
 
+    if (!buf) {
+        return HAL_INVAL;
+    }
+
     /* HAL_SNOR_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
     if (to >= nor->size || len > nor->size || (to + len) > nor->size) {
         return HAL_INVAL;
@@ -746,6 +750,10 @@ int32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pD
 {
     int32_t ret = HAL_OK;
 
+    if (!pData) {
+        return HAL_INVAL;
+    }
+
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     ret = HAL_SNOR_ReadData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
     if (ret != (int32_t)(nSec * nor->sectorSize)) {
@@ -766,6 +774,10 @@ int32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pD
 int32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pData)
 {
     int32_t ret = HAL_OK;
+
+    if (!pData) {
+        return HAL_INVAL;
+    }
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
@@ -789,6 +801,10 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
     int32_t ret = HAL_OK;
     uint8_t *pBuf = (uint8_t *)pData;
     uint32_t remaining = nSec;
+
+    if (!pData) {
+        return HAL_INVAL;
+    }
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
     while (remaining) {
@@ -982,11 +998,14 @@ HAL_Status HAL_SNOR_DeInit(struct SPI_NOR *nor)
 HAL_Status HAL_SNOR_ReadID(struct SPI_NOR *nor, uint8_t *data)
 {
     int32_t ret;
-    uint8_t *id = data;
 
-    ret = nor->readReg(nor, SPINOR_OP_RDID, id, 3);
+    if (!data) {
+        return HAL_INVAL;
+    }
+
+    ret = nor->readReg(nor, SPINOR_OP_RDID, data, 3);
     if (ret) {
-        HAL_SNOR_DBG("error reading JEDEC ID%x %x %x\n", id[0], id[1], id[2]);
+        HAL_SNOR_DBG("error reading JEDEC ID%x %x %x\n", data[0], data[1], data[2]);
 
         return HAL_ERROR;
     }
@@ -1032,7 +1051,13 @@ HAL_Status HAL_SNOR_XIPDisable(struct SPI_NOR *nor)
 HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId)
 {
     uint32_t i;
-    uint32_t id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
+    uint32_t id;
+
+    if (!flashId) {
+        return HAL_FALSE;
+    }
+
+    id = (flashId[0] << 16) | (flashId[1] << 8) | (flashId[2] << 0);
 
     for (i = 0; i < HAL_ARRAY_SIZE(s_spiFlashbl); i++) {
         if (s_spiFlashbl[i].id == id) {
