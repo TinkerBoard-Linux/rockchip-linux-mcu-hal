@@ -22,7 +22,7 @@ make_hal() {
     export FIRMWARE_CPU_BASE=$(eval echo \$CPU$1_MEM_BASE)
     export DRAM_SIZE=$(eval echo \$CPU$1_MEM_SIZE)
     export SHMEM_BASE=0x07800000
-    export SHMEM_SIZE=0x02000000
+    export SHMEM_SIZE=0x00800000
     export CUR_CPU=$1
     make clean
     rm $CUR_DIR/hal$1.elf $CUR_DIR/hal$1.bin
