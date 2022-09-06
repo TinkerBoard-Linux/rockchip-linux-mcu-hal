@@ -1093,8 +1093,7 @@ struct I2S_REG {
 /* PDM Register Structure Define */
 struct PDM_REG {
     __IO uint32_t SYSCONFIG;                          /* Address Offset: 0x0000 */
-    __IO uint32_t CTRL0;                              /* Address Offset: 0x0004 */
-    __IO uint32_t CTRL1;                              /* Address Offset: 0x0008 */
+    __IO uint32_t CTRL[2];                            /* Address Offset: 0x0004 */
     __IO uint32_t CLK_CTRL;                           /* Address Offset: 0x000C */
     __IO uint32_t HPF_CTRL;                           /* Address Offset: 0x0010 */
     __IO uint32_t FIFO_CTRL;                          /* Address Offset: 0x0014 */

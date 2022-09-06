@@ -141,6 +141,26 @@ struct HAL_I2STDM_DEV g_i2sTdm2Dev =
 };
 #endif
 
+#ifdef HAL_PDM_MODULE_ENABLED
+struct HAL_PDM_DEV g_pdm0Dev =
+{
+    .pReg = PDM0,
+    .mclk = CLK_PDM,
+    .mclkRate = PDM_CLK_RATE,
+    .mclkGate = CLK_PDM_CLK_GATE,
+    .hclk = HCLK_PDM_GATE,
+    .reset = SRST_M_PDM,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(PDM0->RXFIFO_DATA_REG),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_PDM0_RX,
+        .dmac = DMA1,
+    },
+};
+#endif
+
 #ifdef HAL_PL330_MODULE_ENABLED
 struct HAL_PL330_DEV g_pl330Dev0 =
 {
