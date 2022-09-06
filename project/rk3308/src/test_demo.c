@@ -19,6 +19,7 @@
 //#define PWM_TEST
 //#define UART_TEST
 //#define I2STDM_TEST
+//#define PDM_TEST
 //#define DMA_LINK_LIST_TEST
 //#define PERF_TEST
 #ifdef IPC_ENABLE
@@ -490,6 +491,50 @@ void i2stdm0_demo(void)
     HAL_CRU_ClkSetFreq(g_i2sTdm0Dev.mclkTx, AUDIO_SAMPLERATE_48000 * 256);
     HAL_I2STDM_Config(&g_i2sTdm0Dev, AUDIO_STREAM_PLAYBACK, &params);
     HAL_I2STDM_TxRxEnable(&g_i2sTdm0Dev, AUDIO_STREAM_PLAYBACK, 1);
+}
+#endif
+
+/************************************************/
+/*                                              */
+/*                PDM_TEST                      */
+/*                                              */
+/************************************************/
+#ifdef PDM_TEST
+void pdm_test(void)
+{
+    struct AUDIO_PARAMS pdmParams;
+    struct AUDIO_INIT_CONFIG pdmConfig;
+
+    GRF->SOC_CON12 = 0x00040004;
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_B1,
+                         PIN_CONFIG_MUX_FUNC1);
+
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK2,
+                         GPIO_PIN_A6 |
+                         GPIO_PIN_B5 |
+                         GPIO_PIN_B6,
+                         PIN_CONFIG_MUX_FUNC2);
+
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK2,
+                         GPIO_PIN_A4,
+                         PIN_CONFIG_MUX_FUNC3);
+
+    pdmParams.channels = 2;
+    pdmParams.sampleBits = 16;
+    pdmParams.sampleRate = 16000;
+    HAL_PDM_Config(&g_pdm0Dev, &pdmParams);
+
+    pdmConfig.master = HAL_TRUE;
+    pdmConfig.clkInvert = HAL_FALSE;
+    pdmConfig.format = AUDIO_FMT_PDM;
+    pdmConfig.trcmMode = TRCM_NONE;
+    pdmConfig.pdmMode = PDM_NORMAL_MODE;
+    pdmConfig.txMap = 0;
+    pdmConfig.rxMap = 0;
+    HAL_PDM_Init(&g_pdm0Dev, &pdmConfig);
+
+    HAL_PDM_Enable(&g_pdm0Dev);
 }
 #endif
 
@@ -1280,6 +1325,10 @@ void test_demo(void)
 
 #if defined(I2STDM_TEST) && defined(PRIMARY_CPU)
     i2stdm0_demo();
+#endif
+
+#if defined(PDM_TEST) && defined(PRIMARY_CPU)
+    pdm_test();
 #endif
 
 #if defined(DMA_LINK_LIST_TEST) && defined(PRIMARY_CPU)
