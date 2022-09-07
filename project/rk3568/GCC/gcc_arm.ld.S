@@ -10,6 +10,7 @@ MEMORY
     SRAM  (rxw) : ORIGIN = 0xfdcc0000, LENGTH = 64K      /* SYSTEM SRAM */
     DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = DRAM_SIZE    /* DRAM */
     SHMEM (rxw) : ORIGIN = SHMEM_BASE, LENGTH = SHMEM_SIZE      /* shared memory for all cpu */
+    LINUX_RPMSG (rxw) : ORIGIN = LINUX_RPMSG_BASE, LENGTH = LINUX_RPMSG_SIZE /* shared memory for linux rpmsg */
 }
 
 ENTRY(Reset_Handler)
@@ -153,6 +154,12 @@ SECTIONS
         . = ALIGN(64);
     } > SHMEM AT > DRAM
 
+    .linux_share_rpmsg (NOLOAD):
+    {
+        PROVIDE(__linux_share_rpmsg_start__ = .);
+        . += LINUX_RPMSG_SIZE;
+        PROVIDE(__linux_share_rpmsg_end__ = .);
+    } > LINUX_RPMSG
 
     . = ALIGN(16);
     .bss (NOLOAD) :

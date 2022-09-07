@@ -39,6 +39,9 @@ void MMU_CreateTranslationTable(void)
     MMU_TTSection(MMUTable, FIRMWARE_BASE, DRAM_SIZE >> 20, Sect_Normal);
     MMU_TTSection(MMUTable, SHMEM_BASE, SHMEM_SIZE >> 20, Sect_Normal_SH);
 //    MMU_TTSection(MMUTable, SHMEM_BASE, SHMEM_SIZE >> 20, Sect_SO);
+#ifdef LINUX_RPMSG_BASE
+    MMU_TTSection(MMUTable, LINUX_RPMSG_BASE, LINUX_RPMSG_SIZE >> 20, Sect_SO);
+#endif
 
     //--------------------- PERIPHERALS -------------------
     MMU_TTSection(MMUTable, 0xF0000000, 233U, Sect_Device_RW);
