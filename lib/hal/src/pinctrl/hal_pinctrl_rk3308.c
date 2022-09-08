@@ -38,6 +38,18 @@
                           PIN_CONFIG_MUX_FUNC1 |
                           PIN_CONFIG_PUL_UP |
                           PIN_CONFIG_DRV_LEVEL2);
+
+ TODO:If you configure the iomux of the following modules, you need to configure
+ the group select register additionally:
+ pdm: m0/m1/m2
+ i2s1: m0/m1
+ uart2: m0/m1  uart3: m0/m1
+ mac: m0/m1
+ can: m0/m1/m2
+ owire: m0/m1/m2
+ spi1: m0/m1
+ i2c3: sel-m0/m1  sel-plus-m0/m1/m2
+
  @} */
 
 /** @defgroup PINCTRL_Private_Definition Private Definition
