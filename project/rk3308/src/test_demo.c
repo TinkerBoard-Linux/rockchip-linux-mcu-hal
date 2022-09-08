@@ -506,6 +506,7 @@ void pdm_test(void)
     struct AUDIO_INIT_CONFIG pdmConfig;
 
     GRF->SOC_CON12 = 0x00040004;
+    GRF->SOC_CON2 = 0x30002000;
     HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
                          GPIO_PIN_B1,
                          PIN_CONFIG_MUX_FUNC1);
