@@ -114,6 +114,11 @@
 #define HAL_SECTION_XIP_RODATA
 #endif
 
+#define HAL_GENMASK(h, l)       (((~0U) << (l)) & (~0U >> (32 - 1 - (h))))
+#define HAL_GENVAL(x, h, l)     ((uint32_t)(((x) & HAL_GENMASK(h, l)) >> (l)))
+#define HAL_GENMASK_ULL(h, l)   (((~0ULL) << (l)) & (~0ULL >> (64 - 1 - (h))))
+#define HAL_GENVAL_ULL(x, h, l) ((uint64_t)(((x) & HAL_GENMASK_ULL(h, l)) >> (l)))
+
 /** MCU systick clock source */
 typedef enum {
     HAL_SYSTICK_CLKSRC_CORE,

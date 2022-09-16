@@ -38,10 +38,8 @@
 #define PLL_INPUT_OSC_RATE (24 * MHZ)
 #endif
 
-#define GENMASK(h, l)           (((~0UL) << (l)) & (~0UL >> (32 - 1 - (h))))
-#define GENVAL(x, h, l)         ((uint32_t)(((x) & GENMASK(h, l)) >> (l)))
-#define GENVAL_D16(x, h, l)     ((uint32_t)(((x) & GENMASK(h, l)) / 16))
-#define GENVAL_D16_REM(x, h, l) ((uint32_t)(((x) & GENMASK(h, l)) % 16))
+#define GENVAL_D16(x, h, l)     ((uint32_t)(((x) & HAL_GENMASK(h, l)) / 16))
+#define GENVAL_D16_REM(x, h, l) ((uint32_t)(((x) & HAL_GENMASK(h, l)) % 16))
 #define WIDTH_TO_MASK(w)        ((1 << (w)) - 1)
 
 /*
@@ -52,7 +50,7 @@
  */
 #define CLK_RESET_GET_REG_OFFSET(x) GENVAL_D16(x, 11, 0)
 #define CLK_RESET_GET_BITS_SHIFT(x) GENVAL_D16_REM(x, 11, 0)
-#define CLK_RESET_GET_REG_BANK(x)   GENVAL(x, 15, 12)
+#define CLK_RESET_GET_REG_BANK(x)   HAL_GENVAL(x, 15, 12)
 
 #define CLK_GATE_GET_REG_OFFSET(x) CLK_RESET_GET_REG_OFFSET(x)
 #define CLK_GATE_GET_BITS_SHIFT(x) CLK_RESET_GET_BITS_SHIFT(x)
@@ -66,10 +64,10 @@
  *   [11:8]:  bank
  *   [7:0]:   reg
  */
-#define CLK_MUX_GET_REG_OFFSET(x) GENVAL(x, 7,  0)
-#define CLK_MUX_GET_BANK(x)       GENVAL(x, 11, 8)
-#define CLK_MUX_GET_BITS_SHIFT(x) GENVAL(x, 23, 16)
-#define CLK_MUX_GET_WIDTH(x)      GENVAL(x, 31, 24)
+#define CLK_MUX_GET_REG_OFFSET(x) HAL_GENVAL(x, 7,  0)
+#define CLK_MUX_GET_BANK(x)       HAL_GENVAL(x, 11, 8)
+#define CLK_MUX_GET_BITS_SHIFT(x) HAL_GENVAL(x, 23, 16)
+#define CLK_MUX_GET_WIDTH(x)      HAL_GENVAL(x, 31, 24)
 #define CLK_MUX_GET_MASK(x)       (WIDTH_TO_MASK(CLK_MUX_GET_WIDTH(x)) << CLK_MUX_GET_BITS_SHIFT(x))
 
 #define CLK_DIV_GET_REG_OFFSET(x) CLK_MUX_GET_REG_OFFSET(x)

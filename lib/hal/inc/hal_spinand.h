@@ -35,7 +35,7 @@
 #define SPINAND_BUSY        HAL_BIT(0)
 #define SPINAND_ERASE_FAIL  HAL_BIT(2)
 #define SPINAND_PROG_FAIL   HAL_BIT(3)
-#define SPINAND_ECC_MASK    GENMASK(5, 4)
+#define SPINAND_ECC_MASK    HAL_GENMASK(5, 4)
 #define SPINAND_ECC_OK      (0 << 4)
 #define SPINAND_ECC_REFRESH (1 << 4)
 #define SPINAND_ECC_ERROR   (2 << 4)
