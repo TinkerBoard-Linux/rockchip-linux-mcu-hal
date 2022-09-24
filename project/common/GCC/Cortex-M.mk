@@ -25,10 +25,12 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 
 CPU		+= -mthumb
 ASFLAGS         += $(CPU) -D__ASSEMBLY__
-CFLAGS		+= $(CPU) -std=c99 -O2 -g
+CFLAGS		?= -O2
+CFLAGS		+= $(CPU) -std=c99 -g
 CFLAGS		+= -Wformat=2 -Wall -Wno-unused-parameter
 CFLAGS		+= -Wstrict-prototypes -Wmissing-prototypes -nostartfiles
-LDFLAGS		+= $(CPU) -Wl,--gc-sections --specs=nosys.specs -lm -lgcc
+LDFLAGS		?= --specs=nosys.specs
+LDFLAGS		+= $(CPU) -Wl,--gc-sections -lc -lm -lgcc
 OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
 HAL_CFLAGS	+= -Werror
@@ -81,14 +83,18 @@ $(HAL_OBJS): CFLAGS += $(HAL_CFLAGS)
 
 all: $(BIN)
 
+%.ld: %.ld.S
+	$(Q) $(CPP) -P $(CFLAGS) -o $@ $<
+
 $(ELF): $(OBJS) $(LINKER_SCRIPT)
 	$(Q) $(CC) $(OBJS) $(LDFLAGS) $(CFLAGS) -T$(LINKER_SCRIPT) -Wl,-Map=$(MAP),-cref -o $@
 
 $(BIN): $(ELF)
 	$(Q) $(OBJCOPY) $(OCFLAGS) -O binary $< $@
 
+CLEAN_FILES += $(OBJS) TestDemo*
+
 clean:
-	rm -f $(OBJS)
-	rm -f TestDemo*
+	rm -f $(CLEAN_FILES)
 
 .PHONY: all clean
