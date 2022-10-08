@@ -691,6 +691,8 @@ static void dmalinklist_test(void)
 /*                                              */
 /************************************************/
 #ifdef PERF_TEST
+#include "benchmark.h"
+
 void config_freq(void)
 {
     HAL_CRU_ClkSetFreq(PLL_APLL, 1008000000);
@@ -707,9 +709,9 @@ static void perf_test(void)
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
     if (cpu_id == 0) {
-        coremark_main();
+        benchmark_main();
         config_freq();
-        coremark_main();
+        benchmark_main();
 
         ptr = (uint32_t *)malloc(size);
         if (ptr) {

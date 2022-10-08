@@ -368,6 +368,8 @@ static void mbox_remote_test(void)
 /*                                              */
 /************************************************/
 #ifdef PERF_TEST
+#include "benchmark.h"
+
 uint32_t g_sum = 0;
 static void perf_test(void)
 {
@@ -378,8 +380,10 @@ static void perf_test(void)
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
     printf("perftest: cpu-%ld\n", cpu_id);
-    coremark_main();
 
+    benchmark_main();
+
+    printf("test memset start!\n");
     ptr = (uint32_t *)malloc(size);
     if (ptr) {
         start = HAL_GetSysTimerCount();
@@ -397,6 +401,7 @@ static void perf_test(void)
         printf("sum=%d\n", g_sum);
         free(ptr);
     }
+    printf("test memset end!\n");
 }
 #endif
 
