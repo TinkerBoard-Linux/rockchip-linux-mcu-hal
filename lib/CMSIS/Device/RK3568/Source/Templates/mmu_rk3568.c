@@ -8,6 +8,7 @@
 static uint32_t Sect_Normal;        // outer & inner wb/wa, non-shareable, executable, rw, domain 0
 static uint32_t Sect_Normal_SH;     // as Sect_Normal, but shareable
 static uint32_t Sect_Device_RW;     // as Sect_Device_RO, but writeable
+static uint32_t Sect_SO;            // Strongly-ordered (therefore shareable), not executable, rw, domain 0, base addr 0
 
 extern uint32_t MMUTable[];
 void MMU_CreateTranslationTable(void)
@@ -27,6 +28,8 @@ void MMU_CreateTranslationTable(void)
     MMU_GetSectionDescriptor(&Sect_Normal_SH, region);
     // Create descriptors for peripherals
     section_device_rw(Sect_Device_RW, region);
+    // Create descriptors for Uncache Memory
+    section_device_rw(Sect_SO, region);
 
     /*
      *  Define MMU flat-map regions and attributes
@@ -35,6 +38,7 @@ void MMU_CreateTranslationTable(void)
     // Define dram address space
     MMU_TTSection(MMUTable, FIRMWARE_BASE, DRAM_SIZE >> 20, Sect_Normal);
     MMU_TTSection(MMUTable, SHMEM_BASE, SHMEM_SIZE >> 20, Sect_Normal_SH);
+//    MMU_TTSection(MMUTable, SHMEM_BASE, SHMEM_SIZE >> 20, Sect_SO);
 
     //--------------------- PERIPHERALS -------------------
     MMU_TTSection(MMUTable, 0xF0000000, 233U, Sect_Device_RW);
