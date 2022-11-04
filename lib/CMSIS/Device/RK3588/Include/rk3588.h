@@ -986,6 +986,7 @@ struct MBOX_REG {
 #define DSUCRU_BASE                    0xFD818000U /* DSUCRU base address */
 #define UART0_BASE                     0xFD890000U /* UART0 base address */
 #define GPIO0_BASE                     0xFD8A0000U /* GPIO0 base address */
+#define GPIO0_EXP_BASE                 0xFD8A1000U /* GPIO0_EXP OSB base address */
 #define PMU_BASE                       0xFD8D0000U /* PMU base address */
 #define WDT_BASE                       0xFD8E0000U /* WDT base address */
 #define PDM0_BASE                      0xFE4B0000U /* PDM0 base address */
@@ -1015,9 +1016,13 @@ struct MBOX_REG {
 #define UART8_BASE                     0xFEBB0000U /* UART8 base address */
 #define UART9_BASE                     0xFEBC0000U /* UART9 base address */
 #define GPIO1_BASE                     0xFEC20000U /* GPIO1 base address */
+#define GPIO1_EXP_BASE                 0xFEC21000U /* GPIO1_EXP OSB base address */
 #define GPIO2_BASE                     0xFEC30000U /* GPIO2 base address */
+#define GPIO2_EXP_BASE                 0xFEC31000U /* GPIO2_EXP OSB base address */
 #define GPIO3_BASE                     0xFEC40000U /* GPIO3 base address */
+#define GPIO3_EXP_BASE                 0xFEC41000U /* GPIO3_EXP OSB base address */
 #define GPIO4_BASE                     0xFEC50000U /* GPIO4 base address */
+#define GPIO4_EXP_BASE                 0xFEC51000U /* GPIO4_EXP OSB base address */
 #define MBOX0_BASE                     0xFEC60000U /* MBOX0 base address */
 /****************************************************************************************/
 /*                                                                                      */
@@ -1051,6 +1056,7 @@ struct MBOX_REG {
 #define DSUCRU              ((struct DSUCRU_REG *) DSUCRU_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define GPIO0_EXP           ((struct GPIO_REG *) GPIO0_EXP_BASE)
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define WDT                 ((struct WDT_REG *) WDT_BASE)
 #define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
@@ -1080,9 +1086,13 @@ struct MBOX_REG {
 #define UART8               ((struct UART_REG *) UART8_BASE)
 #define UART9               ((struct UART_REG *) UART9_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
+#define GPIO1_EXP           ((struct GPIO_REG *) GPIO1_EXP_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
+#define GPIO2_EXP           ((struct GPIO_REG *) GPIO2_EXP_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
+#define GPIO3_EXP           ((struct GPIO_REG *) GPIO3_EXP_BASE)
 #define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
+#define GPIO4_EXP           ((struct GPIO_REG *) GPIO4_EXP_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
 
 #define IS_DCACHE_INSTANCE(instance) ((instance) == DCACHE)
@@ -1112,7 +1122,7 @@ struct MBOX_REG {
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_VAD_INSTANCE(instance) ((instance) == VAD)
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
-#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
+#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4) || ((instance) == GPIO0_EXP) || ((instance) == GPIO1_EXP) || ((instance) == GPIO2_EXP) || ((instance) == GPIO3_EXP) || ((instance) == GPIO4_EXP))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER8) || ((instance) == TIMER9) || ((instance) == TIMER10) || ((instance) == TIMER11))
 #define IS_PDM_INSTANCE(instance) (((instance) == PDM0) || ((instance) == PDM1))
 #define IS_DMA_INSTANCE(instance) (((instance) == DMA0) || ((instance) == DMA1))
