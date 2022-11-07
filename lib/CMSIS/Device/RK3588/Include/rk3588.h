@@ -988,13 +988,23 @@ struct MBOX_REG {
 #define GPIO0_BASE                     0xFD8A0000U /* GPIO0 base address */
 #define PMU_BASE                       0xFD8D0000U /* PMU base address */
 #define WDT_BASE                       0xFD8E0000U /* WDT base address */
-#define TIMER0_BASE                    0xFD8F0000U /* TIMER0 base address */
-#define TIMER1_BASE                    0xFD8F0020U /* TIMER1 base address */
 #define PDM0_BASE                      0xFE4B0000U /* PDM0 base address */
 #define PDM1_BASE                      0xFE4C0000U /* PDM1 base address */
 #define VAD_BASE                       0xFE4D0000U /* VAD base address */
 #define DMA0_BASE                      0xFEA10000U /* DMA0 base address */
 #define DMA1_BASE                      0xFEA30000U /* DMA1 base address */
+#define TIMER0_BASE                    0xFEAE0000U /* TIMER0_BASE*/
+#define TIMER1_BASE                    0xFEAE0020U /* TIMER1_BASE*/
+#define TIMER2_BASE                    0xFEAE0040U /* TIMER2_BASE*/
+#define TIMER3_BASE                    0xFEAE0060U /* TIMER3_BASE*/
+#define TIMER4_BASE                    0xFEAE0080U /* TIMER4_BASE*/
+#define TIMER5_BASE                    0xFEAE00a0U /* TIMER5_BASE*/
+#define TIMER6_BASE                    0xFEAE8000U /* TIMER6_BASE*/
+#define TIMER7_BASE                    0xFEAE8020U /* TIMER7_BASE*/
+#define TIMER8_BASE                    0xFEAE8040U /* TIMER8_BASE*/
+#define TIMER9_BASE                    0xFEAE8060U /* TIMER9_BASE*/
+#define TIMER10_BASE                   0xFEAE8080U /* TIMER10_BASE*/
+#define TIMER11_BASE                   0xFEAE80a0U /* TIMER11_BASE*/
 #define UART1_BASE                     0xFEB40000U /* UART1 base address */
 #define UART2_BASE                     0xFEB50000U /* UART2 base address */
 #define UART3_BASE                     0xFEB60000U /* UART3 base address */
@@ -1045,6 +1055,16 @@ struct MBOX_REG {
 #define WDT                 ((struct WDT_REG *) WDT_BASE)
 #define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
 #define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
+#define TIMER2              ((struct TIMER_REG *) TIMER2_BASE)
+#define TIMER3              ((struct TIMER_REG *) TIMER3_BASE)
+#define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
+#define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
+#define TIMER6              ((struct TIMER_REG *) TIMER6_BASE)
+#define TIMER7              ((struct TIMER_REG *) TIMER7_BASE)
+#define TIMER8              ((struct TIMER_REG *) TIMER8_BASE)
+#define TIMER9              ((struct TIMER_REG *) TIMER9_BASE)
+#define TIMER10             ((struct TIMER_REG *) TIMER10_BASE)
+#define TIMER11             ((struct TIMER_REG *) TIMER11_BASE)
 #define PDM0                ((struct PDM_REG *) PDM0_BASE)
 #define PDM1                ((struct PDM_REG *) PDM1_BASE)
 #define VAD                 ((struct VAD_REG *) VAD_BASE)
@@ -1093,7 +1113,7 @@ struct MBOX_REG {
 #define IS_VAD_INSTANCE(instance) ((instance) == VAD)
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
-#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1))
+#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER8) || ((instance) == TIMER9) || ((instance) == TIMER10) || ((instance) == TIMER11))
 #define IS_PDM_INSTANCE(instance) (((instance) == PDM0) || ((instance) == PDM1))
 #define IS_DMA_INSTANCE(instance) (((instance) == DMA0) || ((instance) == DMA1))
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)

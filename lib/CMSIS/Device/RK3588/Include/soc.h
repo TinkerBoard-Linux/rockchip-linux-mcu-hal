@@ -9,6 +9,8 @@
   extern "C" {
 #endif
 
+#include "hal_conf.h"
+
 /* IO definitions (access restrictions to peripheral registers) */
 #ifdef __cplusplus
   #define   __I     volatile             /*!< brief Defines 'read only' permissions    */
@@ -98,6 +100,7 @@ typedef enum {
 #define NUM_INT_PER_GROUP         64
 #define NUM_EXT_INTERRUPTS        512
 
+#if defined(HAL_MCU_CORE)
 #if defined(RKMCU_RK3588_PMU)
 typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
@@ -212,7 +215,6 @@ typedef enum
   TIMER1_IRQn               =  435  + NUM_INTERRUPTS,     /*!< TIMER1 Interrupt      */
   TOTAL_INTERRUPTS          =  (NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),   /*!< For external interrupt from intmux    */
 } IRQn_Type;
-
 #else
 #error missing IRQn_Type define for interrupt
 #endif
@@ -220,6 +222,109 @@ typedef enum
 #if defined(RKMCU_RK3588_PMU) || defined(RKMCU_RK3588_DDR)
 #define HAS_CUSTOME_INTC
 #endif
+#endif /* HAL_MCU_CORE */
+
+#if defined(HAL_AP_CORE)
+typedef enum
+{
+/* When IPI_SGIs are used in AMP mode, you need to pay attention to whether it conflicts
+ * with SMP mode. Especially in the case of Linux OS as The Master Core.
+ * IPI_SGI 0~7 for non-secure and IPI_SGI 8~15 for secure.
+ */
+    IPI_SGI0               = 0,
+    IPI_SGI1               = 1,
+    IPI_SGI2               = 2,
+    IPI_SGI3               = 3,
+    IPI_SGI4               = 4,
+    IPI_SGI5               = 5,
+    IPI_SGI6               = 6,
+    IPI_SGI7               = 7,
+    IPI_SGI8               = 8,
+    IPI_SGI9               = 9,
+    IPI_SGI10              = 10,
+    IPI_SGI11              = 11,
+    IPI_SGI12              = 12,
+    IPI_SGI13              = 13,
+    IPI_SGI14              = 14,
+    IPI_SGI15              = 15,
+
+    CNTHP_IRQn             = 26,
+    CNTV_IRQn              = 27,
+    CNTPS_IRQn             = 29,
+    CNTPNS_IRQn            = 30,
+
+/******  Platform Exceptions Numbers ***************************************************/
+    MBOX0_CH0_B2A_IRQn     = 93,       /*!< MBOX0 CH0 B2A Interrupt     */
+    MBOX0_CH1_B2A_IRQn     = 94,       /*!< MBOX0 CH1 B2A Interrupt     */
+    MBOX0_CH2_B2A_IRQn     = 95,       /*!< MBOX0 CH2 B2A Interrupt     */
+    MBOX0_CH3_B2A_IRQn     = 96,       /*!< MBOX0 CH3 B2A Interrupt     */
+    MBOX0_CH0_A2B_IRQn     = 97,       /*!< MBOX0 CH0 A2B Interrupt     */
+    MBOX0_CH1_A2B_IRQn     = 98,       /*!< MBOX0 CH1 A2B Interrupt     */
+    MBOX0_CH2_A2B_IRQn     = 99,       /*!< MBOX0 CH2 A2B Interrupt     */
+    MBOX0_CH3_A2B_IRQn     = 100,      /*!< MBOX0 CH3 A2B Interrupt     */
+    MBOX1_CH0_B2A_IRQn     = 101,      /*!< MBOX1 CH0 B2A Interrupt     */
+    MBOX1_CH1_B2A_IRQn     = 102,      /*!< MBOX1 CH1 B2A Interrupt     */
+    MBOX1_CH2_B2A_IRQn     = 103,      /*!< MBOX1 CH2 B2A Interrupt     */
+    MBOX1_CH3_B2A_IRQn     = 104,      /*!< MBOX1 CH3 B2A Interrupt     */
+    MBOX1_CH0_A2B_IRQn     = 105,      /*!< MBOX1 CH0 A2B Interrupt     */
+    MBOX1_CH1_A2B_IRQn     = 106,      /*!< MBOX1 CH1 A2B Interrupt     */
+    MBOX1_CH2_A2B_IRQn     = 107,      /*!< MBOX1 CH2 A2B Interrupt     */
+    MBOX1_CH3_A2B_IRQn     = 108,      /*!< MBOX1 CH3 A2B Interrupt     */
+    MBOX2_CH0_B2A_IRQn     = 109,      /*!< MBOX2 CH0 B2A Interrupt     */
+    MBOX2_CH1_B2A_IRQn     = 110,      /*!< MBOX2 CH1 B2A Interrupt     */
+    MBOX2_CH2_B2A_IRQn     = 111,      /*!< MBOX2 CH2 B2A Interrupt     */
+    MBOX2_CH3_B2A_IRQn     = 112,      /*!< MBOX2 CH3 B2A Interrupt     */
+    MBOX2_CH0_A2B_IRQn     = 113,      /*!< MBOX2 CH0 A2B Interrupt     */
+    MBOX2_CH1_A2B_IRQn     = 114,      /*!< MBOX2 CH1 A2B Interrupt     */
+    MBOX2_CH2_A2B_IRQn     = 115,      /*!< MBOX2 CH2 A2B Interrupt     */
+    MBOX2_CH3_A2B_IRQn     = 116,      /*!< MBOX2 CH3 A2B Interrupt     */
+    GPIO0_IRQn             = 309,      /*!< GPIO0 Interrupt             */
+    GPIO1_IRQn             = 310,      /*!< GPIO1 Interrupt             */
+    GPIO2_IRQn             = 311,      /*!< GPIO2 Interrupt             */
+    GPIO3_IRQn             = 312,      /*!< GPIO3 Interrupt             */
+    GPIO4_IRQn             = 313,      /*!< GPIO4 Interrupt             */
+    GPIO0_EXP_IRQn         = 314,      /*!< GPIO0 EXP Interrupt         */
+    GPIO1_EXP_IRQn         = 315,      /*!< GPIO1 EXP Interrupt         */
+    GPIO2_EXP_IRQn         = 316,      /*!< GPIO2 EXP Interrupt         */
+    GPIO3_EXP_IRQn         = 317,      /*!< GPIO3 EXP Interrupt         */
+    GPIO4_EXP_IRQn         = 318,      /*!< GPIO4 EXP Interrupt         */
+    TIMER0_IRQn            = 321,      /*!< TIMER0 Interrupt            */
+    TIMER1_IRQn            = 322,      /*!< TIMER1 Interrupt            */
+    TIMER2_IRQn            = 323,      /*!< TIMER2 Interrupt            */
+    TIMER3_IRQn            = 324,      /*!< TIMER3 Interrupt            */
+    TIMER4_IRQn            = 325,      /*!< TIMER4 Interrupt            */
+    TIMER5_IRQn            = 326,      /*!< TIMER5 Interrupt            */
+    TIMER6_IRQn            = 327,      /*!< TIMER6 Interrupt            */
+    TIMER7_IRQn            = 328,      /*!< TIMER7 Interrupt            */
+    TIMER8_IRQn            = 329,      /*!< TIMER8 Interrupt            */
+    TIMER9_IRQn            = 330,      /*!< TIMER9 Interrupt            */
+    TIMER10_IRQn           = 331,      /*!< TIMER10 Interrupt           */
+    TIMER11_IRQn           = 332,      /*!< TIMER11 Interrupt           */
+    UART0_IRQn             = 363,      /*!< UART0  Interrupt            */
+    UART1_IRQn             = 364,      /*!< UART1  Interrupt            */
+    UART2_IRQn             = 365,      /*!< UART2  Interrupt            */
+    UART3_IRQn             = 366,      /*!< UART3  Interrupt            */
+    UART4_IRQn             = 367,      /*!< UART4  Interrupt            */
+    UART5_IRQn             = 368,      /*!< UART5  Interrupt            */
+    UART6_IRQn             = 369,      /*!< UART6  Interrupt            */
+    UART7_IRQn             = 370,      /*!< UART7  Interrupt            */
+    UART8_IRQn             = 371,      /*!< UART8  Interrupt            */
+    UART9_IRQn             = 372,      /*!< UART9  Interrupt            */
+    RSVD0_IRQn             = 454,      /*!< RSVD0  Interrupt            */
+    NUM_INTERRUPTS         = 512,
+} IRQn_Type;
+
+#define RSVD_IRQn(_N)               (RSVD0_IRQn + (_N))
+
+#define AMP_CPUOFF_REQ_IRQ(cpu)     RSVD_IRQn(15 + (cpu)) /* gic irq: 469 */
+
+#define GPIO_IRQ_GROUP_DIRQ_BASE    480
+#define GPIO_IRQ_GROUP_DIRQ_NUM     32
+
+#define GPIO_IRQ_GROUP_GPIO0_HWIRQ  GPIO0_IRQn
+#define GPIO_IRQ_GROUP_GPION_HWIRQ  GPIO4_IRQn
+
+#endif /* HAL_AP_CORE */
 
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
@@ -237,9 +342,15 @@ typedef enum
 #endif
 
 #ifdef HAL_AP_CORE
-#define __CORTEX_A_BIG            76U       /* Cortex-A76 Core                          */
-#define __CORTEX_A_LIT            55U       /* Cortex-A55 Core                          */
-#define __FPU_PRESENT             1U        /* FPU present                              */
+#define __CORTEX_A            55U
+#define __CORTEX_A_BIG        76U       /* Cortex-A76 Core                          */
+#define __CORTEX_A_LIT        55U       /* Cortex-A55 Core                          */
+#define __FPU_PRESENT         1U        /* FPU present                              */
+#define __TIM_PRESENT         1U        /* Generic Timer                            */
+
+#define CACHE_LINE_SHIFT    (6U)
+#define CACHE_LINE_SIZE     (0x1U << CACHE_LINE_SHIFT)
+
 #else
 #define __CM0_REV                 0x0000U   /* Core revision r0p0 */
 #define __MPU_PRESENT             0U        /* no MPU present */
@@ -253,7 +364,8 @@ typedef enum
 #endif
 
 #ifndef __ASSEMBLY__
-#ifdef HAL_AP_CORE
+#include "cmsis_compiler.h"
+#ifdef __CORTEX_A
 #include "core_ca.h"
 #else
 #include "core_cm0.h"
@@ -264,11 +376,35 @@ typedef enum
 
 /****************************************************************************************/
 /*                                                                                      */
+/*                                Module Address Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/* Memory Base */
+#define GIC_DISTRIBUTOR_BASE    0xFE600000 /* GICD base address */
+#define GIC_REDISTRIBUTOR_BASE  0xFE660000 /* GICR base address */
+
+/****************************************************************************************/
+/*                                                                                      */
 /*                               Register Bitmap Section                                */
 /*                                                                                      */
 /****************************************************************************************/
-#ifdef HAL_MCU_CORE
-/*****************************************CACHE*****************************************/
+#if defined(HAL_AP_CORE)
+/********************************** CPU Topology ****************************************/
+#define MPIDR_MT_MASK       ((1U) << 24)
+#define MPIDR_AFFLVL_MASK   (0xFFU)
+#define MPIDR_AFF0_SHIFT    (0U)
+#define MPIDR_AFF1_SHIFT    (8U)
+#define MPIDR_AFF2_SHIFT    (16U)
+#define MPIDR_AFF3_SHIFT    (32U)
+#define MPIDR_AFFINITY_MASK (0xFFFFFFU)
+#define PLATFORM_CLUSTER0_CORE_COUNT (8)
+#define PLATFORM_CORE_COUNT (8)
+#define CPU_GET_AFFINITY(cpuId, clusterId) ((cpuId) << MPIDR_AFF1_SHIFT)
+
+#endif /* HAL_AP_CORE */
+
+#if defined(HAL_MCU_CORE)
+/**************************************** CACHE ****************************************/
 /* CACHE LINE SIZE */
 #define CACHE_LINE_SHIFT                (5U)
 #define CACHE_LINE_SIZE                 (0x1U << CACHE_LINE_SHIFT)
@@ -283,7 +419,7 @@ typedef enum
 #error "Please define HAL_CACHE_DECODED_ADDR_BASE on hal_conf.h"
 #endif
 
-#endif
+#endif /* HAL_MCU_CORE */
 
 /******************************************CRU*******************************************/
 #define CRU_CLK_USE_CON_BANK
@@ -478,7 +614,21 @@ struct INTMUX_REG {
 /*                           Platform Differences Section                               */
 /*                                                                                      */
 /****************************************************************************************/
-#if defined(RKMCU_RK3588_DDR)
+#if defined(HAL_AP_CORE)
+
+#undef DCACHE
+#undef ICACHE
+
+#endif
+
+#if defined(HAL_MCU_CORE)
+
+#if defined(RKMCU_RK3588_PMU)
+#undef TIMER0_BASE
+#undef TIMER1_BASE
+#define TIMER0_BASE                    0xFD8F0000U /* TIMER0 base address */
+#define TIMER1_BASE                    0xFD8F0020U /* TIMER1 base address */
+#elif defined(RKMCU_RK3588_DDR)
 #undef DCACHE
 #undef ICACHE
 #undef MBOX0_BASE
@@ -498,6 +648,8 @@ struct INTMUX_REG {
 #undef TIMER1_BASE
 #define TIMER0_BASE                    0xFDB00000U /* TIMER0_BASE*/
 #define TIMER1_BASE                    0xFDB00020U /* TIMER1_BASE*/
+#endif
+
 #endif
 
 /****************************************GPIO********************************************/
