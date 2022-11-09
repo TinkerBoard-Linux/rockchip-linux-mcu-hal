@@ -158,7 +158,6 @@ HAL_Status HAL_UART_Resume(struct UART_REG *pReg, struct UART_SAVE_CONFIG *pUart
 {
     HAL_ASSERT(IS_UART_INSTANCE(pReg));
     if (pUartSave && pReg) {
-        pReg->SRR = UART_SRR_XFR | UART_SRR_RFR | UART_SRR_UR;
         pReg->MCR = UART_MCR_LOOP;
         pReg->LCR = UART_LCR_DLAB;
         pReg->DLL = pUartSave->DLL;
