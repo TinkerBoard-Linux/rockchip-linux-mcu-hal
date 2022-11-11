@@ -46,7 +46,7 @@ static uint32_t CPU_getCpuIdByMpidr(int32_t mpidr)
     if (!clusterId) {
         return cpuId;
     } else {
-        return (PLATFORM_CLUSTER0_CORE_COUNT + cpuId)
+        return (PLATFORM_CLUSTER0_CORE_COUNT + cpuId);
     };
 }
 
