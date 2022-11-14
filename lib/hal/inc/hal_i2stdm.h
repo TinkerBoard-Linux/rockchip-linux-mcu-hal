@@ -46,6 +46,13 @@ struct HAL_I2STDM_DEV {
     bool isTdm;
     struct AUDIO_DMA_DATA rxDmaData;
     struct AUDIO_DMA_DATA txDmaData;
+#ifdef HAL_I2STDM_TDM_MULTI_LANES
+    struct GPIO_REG *gpioI2sLrck;
+    struct GPIO_REG *gpioTdmFsync;
+    ePINCTRL_GPIO_PINS pinI2sLrck;
+    ePINCTRL_GPIO_PINS pinTdmFsync;
+    bool isTdmMultiLanes;
+#endif
 };
 
 /** @} */

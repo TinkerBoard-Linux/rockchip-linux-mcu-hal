@@ -156,6 +156,40 @@
 #define I2STDM_CLKDIV_TX_MDIV(x) ((x - 1) << I2STDM_CLKDIV_TX_MDIV_SHIFT)
 #define I2STDM_CLKDIV_RX_MDIV(x) ((x - 1) << I2STDM_CLKDIV_RX_MDIV_SHIFT)
 
+#ifdef HAL_I2STDM_TDM_MULTI_LANES
+/*
+ * Example: RK3308
+ *
+ * Use I2S0_2CH as Clk-Gen to serve TDM_MULTI_LANES
+ *
+ * I2S0_2CH ----> BCLK,I2S_LRCK --------> I2S_8CH_0/1_RX/TX (Slave TRCM-NONE)
+ *     |
+ *     |--------> BCLK,TDM_SYNC --------> TDM Device  (Slave)
+ *
+ * Note:
+ *
+ * I2S0_2CH_MCLK: BCLK
+ * I2S0_2CH_SCLK: I2S_LRCK (GPIO4_B5)
+ * I2S0_2CH_LRCK: TDM_SYNC (GPIO4_B6)
+ *
+ * --- a/lib/bsp/RK3308/hal_bsp.c
+ * +++ b/lib/bsp/RK3308/hal_bsp.c
+ * @@ -171,6 +171,13 @@ struct HAL_I2STDM_DEV g_i2sTdm1Dev =
+ *          .dmaReqCh = DMA_REQ_I2S_8CH_1_TX,
+ *          .dmac = DMA1,
+ *      },
+ * +#ifdef HAL_I2STDM_TDM_MULTI_LANES
+ * +    .gpioI2sLrck = GPIO4;
+ * +    .gpioTdmFsync = GPIO4;
+ * +    .pinI2sLrck = GPIO_PIN_B5;
+ * +    .pinTdmFsync = GPIO_PIN_B6;
+ * +    .isTdmMultiLanes = true;
+ * +#endif
+ */
+
+#define REF_TIMEOUT_COUNT 1000
+#endif
+
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
@@ -441,6 +475,115 @@ HAL_Status HAL_I2STDM_DeInit(struct HAL_I2STDM_DEV *i2sTdm)
  *  @{
  */
 
+#ifdef HAL_I2STDM_TDM_MULTI_LANES
+#define NSAMPLES 4
+HAL_UNUSED static void HAL_I2STDM_GpioClkMeas(struct GPIO_REG *pGPIO,
+                                              ePINCTRL_GPIO_PINS pin)
+{
+    int h[NSAMPLES], l[NSAMPLES], i;
+
+    for (i = 0; i < NSAMPLES; i++) {
+        h[i] = 0; l[i] = 0;
+        while (HAL_GPIO_GetPinLevel(pGPIO, pin)) {
+            h[i]++;
+        }
+        while (!HAL_GPIO_GetPinLevel(pGPIO, pin)) {
+            l[i]++;
+        }
+    }
+
+    for (i = 0; i < NSAMPLES; i++) {
+        HAL_DBG_ERR("H[%d]: %2d, L[%d]: %2d\n", i, h[i], i, l[i]);
+    }
+}
+
+static void HAL_I2STDM_UntilGpioClkSync(struct HAL_I2STDM_DEV *i2sTdm,
+                                        eAUDIO_streamType stream,
+                                        int *high, int *low, int *high2, int *low2)
+{
+    int h = 0, l = 0, h2 = 0, l2 = 0, dc_h = 0, dc_l = 0;
+
+    //HAL_I2STDM_GpioClkMeas(i2sTdm->gpioTdmFsync, i2sTdm->pinTdmFsync);
+    //HAL_I2STDM_GpioClkMeas(i2sTdm->gpioI2sLrck, i2sTdm->pinI2sLrck);
+
+    /*
+     * debounce: at least one cycle found, otherwise, the clk ref maybe
+     * not on the fly.
+     */
+    /* check HIGH-Level */
+    while (HAL_GPIO_GetPinLevel(i2sTdm->gpioTdmFsync, i2sTdm->pinTdmFsync)) {
+        dc_h++;
+        if (dc_h >= REF_TIMEOUT_COUNT) {
+            HAL_DBG("Failed to find HIGH-Level\n");
+
+            return;
+        }
+    }
+    /* check LOW-Level */
+    while (!HAL_GPIO_GetPinLevel(i2sTdm->gpioTdmFsync, i2sTdm->pinTdmFsync)) {
+        dc_l++;
+        if (dc_l >= REF_TIMEOUT_COUNT) {
+            HAL_DBG("Failed to find LOW-Level\n");
+
+            return;
+        }
+    }
+
+    while (HAL_GPIO_GetPinLevel(i2sTdm->gpioTdmFsync, i2sTdm->pinTdmFsync)) {
+        h++;
+    }
+
+    while (!HAL_GPIO_GetPinLevel(i2sTdm->gpioTdmFsync, i2sTdm->pinTdmFsync)) {
+        l++;
+    }
+
+    while (!HAL_GPIO_GetPinLevel(i2sTdm->gpioI2sLrck, i2sTdm->pinI2sLrck)) {
+        l2++;
+    }
+
+    if (stream == AUDIO_STREAM_CAPTURE) {
+        while (HAL_GPIO_GetPinLevel(i2sTdm->gpioI2sLrck, i2sTdm->pinI2sLrck)) {
+            h2++;
+        }
+    }
+
+    *high = h;
+    *high2 = h2;
+    *low = l;
+    *low2 = l2;
+}
+
+/**
+ * @brief  Enable i2sTdm multi lanes.
+ * @param  i2sTdm: the handle of i2sTdm.
+ * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @return HAL_Status
+ * @note   Must be invoked with irq disabled for atomic ops.
+ */
+static HAL_Status HAL_I2STDM_MultiLanesEnable(struct HAL_I2STDM_DEV *i2sTdm,
+                                              eAUDIO_streamType stream)
+{
+    struct I2STDM_REG *reg = i2sTdm->pReg;
+    int h = 0, l = 0, h2 = 0, l2 = 0;
+
+    if (stream == AUDIO_STREAM_PLAYBACK) {
+        MODIFY_REG(reg->DMACR, I2STDM_DMACR_TDE_MASK, I2STDM_DMACR_TDE_ENABLE);
+        HAL_DelayUs(1);
+        HAL_I2STDM_UntilGpioClkSync(i2sTdm, stream, &h, &l, &h2, &l2);
+        MODIFY_REG(reg->XFER, I2STDM_XFER_TXS_MASK, I2STDM_XFER_TXS_START);
+    } else {
+        MODIFY_REG(reg->DMACR, I2STDM_DMACR_RDE_MASK, I2STDM_DMACR_RDE_ENABLE);
+        HAL_I2STDM_UntilGpioClkSync(i2sTdm, stream, &h, &l, &h2, &l2);
+        MODIFY_REG(reg->XFER, I2STDM_XFER_RXS_MASK, I2STDM_XFER_RXS_START);
+    }
+
+    HAL_DBG("STREAM[%d]: HIGH: %d, LOW: %d, HIGH2: %d, LOW2: %d\n",
+            stream, h, l, h2, l2);
+
+    return HAL_OK;
+}
+#endif
+
 /**
  * @brief  Enable i2sTdm controller.
  * @param  i2sTdm: the handle of i2sTdm.
@@ -450,6 +593,12 @@ HAL_Status HAL_I2STDM_DeInit(struct HAL_I2STDM_DEV *i2sTdm)
 HAL_Status HAL_I2STDM_Enable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType stream)
 {
     struct I2STDM_REG *reg = i2sTdm->pReg;
+
+#ifdef HAL_I2STDM_TDM_MULTI_LANES
+    if (i2sTdm->isTdmMultiLanes) {
+        return HAL_I2STDM_MultiLanesEnable(i2sTdm, stream);
+    }
+#endif
 
     if (stream == AUDIO_STREAM_PLAYBACK) {
         MODIFY_REG(reg->DMACR, I2STDM_DMACR_TDE_MASK, I2STDM_DMACR_TDE_ENABLE);
