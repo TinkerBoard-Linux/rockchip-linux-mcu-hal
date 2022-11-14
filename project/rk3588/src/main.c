@@ -7,6 +7,7 @@
 #include "hal_base.h"
 
 /********************* Private MACRO Definition ******************************/
+//#define TEST_DEMO
 
 /********************* Private Structure Definition **************************/
 
@@ -94,8 +95,12 @@ void main(void)
     /* BSP Init */
     BSP_Init();
 
+#ifdef TEST_DEMO
+    TEST_DEMO_GIC_Init();
+#else
     /* Interrupt Init */
     HAL_GIC_Init(&irqConfig);
+#endif
 
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
 
@@ -109,6 +114,10 @@ void main(void)
     printf("****************************************\n");
     printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("\n");
+
+#ifdef TEST_DEMO
+    test_demo();
+#endif
 
     while (1) {
         ;
