@@ -33,6 +33,14 @@
    3. HAL_GPIO_IRQHandler() to handle GPIO IRQ isr.
    4. HAL_GPIO_IRQDispatch() to dispatch GPIO IRQ, should be implemented by User.
 
+ Please open the macro definition HAL_GPIO_VIRTUAL_MODEL_FEATURE_ENABLED to support
+
+ APIs for GPIO virtual model:
+
+   1. HAL_GPIO_EnableVirtualModel() to enable a GPIO virtual model.
+   2. HAL_GPIO_DisableVirtualModel() to disable a GPIO virtual model.
+   3. HAL_GPIO_SetVirtualModel() to configure GPIO pins virtual model.
+
  @} */
 
 /** @defgroup GPIO_Private_Definition Private Definition
@@ -489,6 +497,73 @@ void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank)
         }
     }
 }
+
+#ifdef HAL_GPIO_VIRTUAL_MODEL_FEATURE_ENABLED
+
+/**
+ * @brief  GPIO virtual model enable.
+ * @param  pGPIO: The pointer of GPIO struct.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_GPIO_EnableVirtualModel(struct GPIO_REG *pGPIO)
+{
+#if (GPIO_VER_ID == 0x01000C2BU)
+    pGPIO->GPIO_VIRTUAL_EN = 0x10001;
+
+    return HAL_OK;
+#endif
+
+    return HAL_ERROR;
+}
+
+/**
+ * @brief  GPIO virtual model disable.
+ * @param  pGPIO: The pointer of GPIO struct.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_GPIO_DisableVirtualModel(struct GPIO_REG *pGPIO)
+{
+#if (GPIO_VER_ID == 0x01000C2BU)
+    pGPIO->GPIO_VIRTUAL_EN = 0x10000;
+
+    return HAL_OK;
+#endif
+
+    return HAL_ERROR;
+}
+
+/**
+ * @brief  GPIO Configure pins for virtual model.
+ * @param  pGPIO: The pointer of GPIO struct.
+ * @param  pins: The pin bit defined in @ref ePINCTRL_GPIO_PINS.
+ * @param  vmode: The value defined in @ref eGPIO_VirtualModel.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_GPIO_SetVirtualModel(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, eGPIO_VirtualModel vmodel)
+{
+#if (GPIO_VER_ID == 0x01000C2BU)
+    uint32_t low_pins, high_pins;
+
+    low_pins = pin & 0x0000ffff;
+    high_pins = (pin & 0xffff0000) >> 16;
+
+    /* Support OS_A and OS_B */
+    if (vmodel == GPIO_VIRTUAL_MODEL_OS_B) {
+        pGPIO->GPIO_REG_GROUP_L = low_pins << 16;
+        pGPIO->GPIO_REG_GROUP_H = high_pins << 16;
+    } else {
+        pGPIO->GPIO_REG_GROUP_L = low_pins | (low_pins << 16);
+        pGPIO->GPIO_REG_GROUP_H = high_pins | (high_pins << 16);
+    }
+
+    return HAL_OK;
+#endif
+
+    return HAL_ERROR;
+}
+
+#endif /* HAL_GPIO_VIRTUAL_MODEL_FEATURE_ENABLED */
+
 /** @} */
 
 /** @} */

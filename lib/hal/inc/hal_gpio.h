@@ -85,6 +85,14 @@ typedef enum {
     GPIO_INT_MODE_INVALID
 } eGPIO_intMode;
 
+/** GPIO pin virtual model definition */
+typedef enum {
+    GPIO_VIRTUAL_MODEL_OS_A,
+    GPIO_VIRTUAL_MODEL_OS_B,
+    GPIO_VIRTUAL_MODEL_OS_C,
+    GPIO_VIRTUAL_MODEL_OS_D,
+} eGPIO_VirtualModel;
+
 #define IS_GPIO_PIN_DIR(ACTION)   (((ACTION) == GPIO_IN) || ((ACTION) == GPIO_OUT))
 #define IS_GPIO_PIN_LEVEL(ACTION) (((ACTION) == GPIO_LOW) || ((ACTION) == GPIO_HIGH))
 
@@ -144,6 +152,12 @@ HAL_Status HAL_GPIO_SetPinsDirection(struct GPIO_REG *pGPIO, uint32_t mPins, eGP
 void HAL_GPIO_EnableIRQ(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin);
 void HAL_GPIO_DisableIRQ(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin);
 void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank);
+
+#ifdef HAL_GPIO_VIRTUAL_MODEL_FEATURE_ENABLED
+HAL_Status HAL_GPIO_EnableVirtualModel(struct GPIO_REG *pGPIO);
+HAL_Status HAL_GPIO_DisableVirtualModel(struct GPIO_REG *pGPIO);
+HAL_Status HAL_GPIO_SetVirtualModel(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, eGPIO_VirtualModel vmodel);
+#endif
 
 /* The parameter pin for this function is special, it's 0~31. */
 void HAL_GPIO_IRQDispatch(eGPIO_bankId bank, uint32_t pin);
