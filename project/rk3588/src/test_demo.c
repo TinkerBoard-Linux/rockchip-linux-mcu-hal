@@ -10,6 +10,7 @@
 /********************* Private MACRO Definition ******************************/
 //#define SOFTIRQ_TEST
 //#define GPIO_TEST
+//#define GPIO_VIRTUAL_MODEL_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -18,6 +19,10 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
 
 #ifdef GPIO_TEST
     GIC_AMP_IRQ_CFG_ROUTE(GPIO3_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+#endif
+
+#ifdef GPIO_VIRTUAL_MODEL_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(GPIO3_EXP_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
 #endif
 
 #ifdef SOFTIRQ_TEST
@@ -140,6 +145,87 @@ static void gpio_test(void)
 
 /************************************************/
 /*                                              */
+/*          GPIO_VIRTUAL_MODEL_TEST             */
+/*                                              */
+/************************************************/
+#ifdef GPIO_VIRTUAL_MODEL_TEST
+static void gpio3_isr(int vector, void *param)
+{
+    HAL_GPIO_IRQHandler(GPIO3, GPIO_BANK3);
+}
+
+static void gpio3_exp_isr(int vector, void *param)
+{
+    HAL_GPIO_IRQHandler(GPIO3_EXP, GPIO_BANK3_EXP);
+}
+
+static HAL_Status b2_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIOB2 OS_A callback!\n");
+
+    return HAL_OK;
+}
+
+static HAL_Status b2_exp_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIOB2 OS_B callback!\n");
+
+    return HAL_OK;
+}
+
+static HAL_Status c0_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIOC0 OS_A callback!\n");
+
+    return HAL_OK;
+}
+
+static HAL_Status c0_exp_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIOC0 OS_B callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_virtual_model_test(void)
+{
+    HAL_PINCTRL_SetParam(GPIO_BANK3,
+                         GPIO_PIN_B2 |
+                         GPIO_PIN_C0,
+                         PIN_CONFIG_MUX_FUNC0 |
+                         PIN_CONFIG_PUL_UP);
+    HAL_GPIO_EnableVirtualModel(GPIO3);
+    HAL_GPIO_SetVirtualModel(GPIO3,
+                             GPIO_PIN_A0 | GPIO_PIN_A1 | GPIO_PIN_A2 | GPIO_PIN_A3 |
+                             GPIO_PIN_A4 | GPIO_PIN_A5 | GPIO_PIN_A6 | GPIO_PIN_A7 |
+                             GPIO_PIN_B0 | GPIO_PIN_B1 | GPIO_PIN_B2 | GPIO_PIN_B3 |
+                             GPIO_PIN_B4 | GPIO_PIN_B5 | GPIO_PIN_B6 | GPIO_PIN_B7,
+                             GPIO_VIRTUAL_MODEL_OS_A);
+    HAL_GPIO_SetVirtualModel(GPIO3,
+                             GPIO_PIN_C0 | GPIO_PIN_C1 | GPIO_PIN_C2 | GPIO_PIN_C3 |
+                             GPIO_PIN_C4 | GPIO_PIN_C5 | GPIO_PIN_C6 | GPIO_PIN_C7 |
+                             GPIO_PIN_D0 | GPIO_PIN_D1 | GPIO_PIN_D2 | GPIO_PIN_D3 |
+                             GPIO_PIN_D4 | GPIO_PIN_D5 | GPIO_PIN_D6 | GPIO_PIN_D7,
+                             GPIO_VIRTUAL_MODEL_OS_B);
+    HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_B2, GPIO_IN);
+    HAL_GPIO_SetPinDirection(GPIO3_EXP, GPIO_PIN_C0, GPIO_IN);
+    HAL_IRQ_HANDLER_SetIRQHandler(GPIO3_IRQn, gpio3_isr, NULL);
+    HAL_IRQ_HANDLER_SetIRQHandler(GPIO3_EXP_IRQn, gpio3_exp_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK3, GPIO_PIN_B2, b2_call_back, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK3_EXP, GPIO_PIN_C0, c0_exp_call_back, NULL);
+    HAL_GIC_Enable(GPIO3_IRQn);
+    HAL_GIC_Enable(GPIO3_EXP_IRQn);
+    HAL_GPIO_SetIntType(GPIO3, GPIO_PIN_B2, GPIO_INT_TYPE_EDGE_FALLING);
+    HAL_GPIO_SetIntType(GPIO3_EXP, GPIO_PIN_C0, GPIO_INT_TYPE_EDGE_FALLING);
+    HAL_GPIO_EnableIRQ(GPIO3, GPIO_PIN_B2);
+    HAL_GPIO_EnableIRQ(GPIO3_EXP, GPIO_PIN_C0);
+    printf("test_gpio virtual mode interrupt ready\n");
+}
+
+#endif
+
+/************************************************/
+/*                                              */
 /*                SOFTIRQ_TEST                  */
 /*                                              */
 /************************************************/
@@ -173,6 +259,10 @@ void test_demo(void)
 {
 #if defined(GPIO_TEST) && defined(CPU0)
     gpio_test();
+#endif
+
+#if defined(GPIO_VIRTUAL_MODEL_TEST) && defined(CPU0)
+    gpio_virtual_model_test();
 #endif
 
 #if defined(SOFTIRQ_TEST) && defined(CPU0)
