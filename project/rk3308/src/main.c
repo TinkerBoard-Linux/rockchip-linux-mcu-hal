@@ -5,7 +5,12 @@
 
 #include "hal_bsp.h"
 #include "hal_base.h"
+#include "test_conf.h"
 #include "task_ipc.h"
+
+#if defined(SRAM_USAGE) && defined(PRIMARY_CPU)
+extern void sram_usage(void);
+#endif
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
@@ -198,6 +203,11 @@ void main(void)
 
 #ifdef TEST_DEMO
     test_demo();
+#endif
+
+#if defined(SRAM_USAGE) && defined(PRIMARY_CPU)
+    printf("func: sram_usage addr = 0x%08x\n", (void *)(sram_usage));
+    sram_usage();
 #endif
 
     while (1) {

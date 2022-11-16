@@ -7,7 +7,7 @@
 
 MEMORY
 {
-    SRAM  (rxw) : ORIGIN = 0xfff80000, LENGTH = 256K            /* SYSTEM SRAM */
+    SRAM  (rxw) : ORIGIN = SRAM_BASE, LENGTH = SRAM_SIZE            /* SYSTEM SRAM */
     DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = DRAM_SIZE    /* DRAM */
     SHMEM (rxw) : ORIGIN = SHMEM_BASE, LENGTH = SHMEM_SIZE      /* shared memory for all cpu */
 }
@@ -27,9 +27,49 @@ __SHARE_RPMSG_SIZE = 0x80000;
 
 SECTIONS
 {
-    .text :
+    .vector :
     {
         KEEP(*(RESET))                  /* Startup code */
+    } > DRAM
+
+    .sram.text :
+    {
+        . = ALIGN(16);
+        _s_sram_text = .;
+
+        KEEP(*(.sram.text))
+        *sram_example.o(.text .text.* .rodata .rodata*) /* example */
+
+        . = ALIGN(16);
+        _e_sram_text = .;
+    } > SRAM AT > DRAM
+
+    .sram.data :
+    {
+        . = ALIGN(16);
+        _s_sram_data = .;
+
+        KEEP(*(.sram.data))
+        *sram_example.o(.data .data.*)  /* example */
+
+        . = ALIGN(16);
+        _e_sram_data = .;
+    } > SRAM AT > DRAM
+
+    .sram.bss (NOLOAD) :
+    {
+        . = ALIGN(16);
+        _s_sram_bss = .;
+
+        KEEP(*(.sram.bss))
+        *sram_example.o(.bss .bss.*)    /* example */
+
+        . = ALIGN(16);
+        _e_sram_bss = .;
+    } > SRAM AT > DRAM
+
+    .text :
+    {
         _stext = .;
         . = ALIGN(16);
         *(.text)                        /* remaining code */
@@ -63,10 +103,15 @@ SECTIONS
     {
         . = ALIGN(4);
         __zero_table_start__ = .;
+
         LONG (__bss_start__)
         LONG ((__bss_end__ - __bss_start__) / 4)
         LONG (__TTB_start__)
         LONG ((__TTB_end__ - __TTB_start__) / 4)
+
+        LONG (ADDR(.sram.bss))
+        LONG (SIZEOF(.sram.bss) / 4)
+
 #ifdef PRIMARY_CPU
         LONG (ADDR(.share_lock))
         LONG (SIZEOF(.share_lock) / 4)
@@ -78,6 +123,14 @@ SECTIONS
     {
         . = ALIGN(4);
         __copy_table_start__ = .;
+
+        LONG (LOADADDR(.sram.text))
+        LONG (ADDR(.sram.text))
+        LONG (SIZEOF(.sram.text) / 4)
+        LONG (LOADADDR(.sram.data))
+        LONG (ADDR(.sram.data))
+        LONG (SIZEOF(.sram.data) / 4)
+
 #ifdef PRIMARY_CPU
         LONG (LOADADDR(.share_data))
         LONG (ADDR(.share_data))
