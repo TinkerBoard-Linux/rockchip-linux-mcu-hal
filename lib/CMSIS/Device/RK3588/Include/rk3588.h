@@ -843,14 +843,6 @@ struct WDT_REG {
     __I  uint32_t STAT;                               /* Address Offset: 0x0010 */
     __I  uint32_t EOI;                                /* Address Offset: 0x0014 */
 };
-/* TIMER Register Structure Define */
-struct TIMER_REG {
-    __IO uint32_t LOAD_COUNT[2];                      /* Address Offset: 0x0000 */
-    __I  uint32_t CURRENT_VALUE[2];                   /* Address Offset: 0x0008 */
-    __IO uint32_t CONTROLREG;                         /* Address Offset: 0x0010 */
-         uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
-    __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
-};
 /* PDM Register Structure Define */
 struct PDM_REG {
     __IO uint32_t SYSCONFIG;                          /* Address Offset: 0x0000 */
@@ -939,6 +931,14 @@ struct DMA_REG {
          uint32_t RESERVED0E18[26];                   /* Address Offset: 0x0E18 */
     __IO uint32_t WD;                                 /* Address Offset: 0x0E80 */
 };
+/* TIMER Register Structure Define */
+struct TIMER_REG {
+    __IO uint32_t LOAD_COUNT[2];                      /* Address Offset: 0x0000 */
+    __I  uint32_t CURRENT_VALUE[2];                   /* Address Offset: 0x0008 */
+    __IO uint32_t CONTROLREG;                         /* Address Offset: 0x0010 */
+         uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
+    __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
+};
 /* MBOX Register Structure Define */
 struct MBOX_CMD_DAT {
     __IO uint32_t CMD;
@@ -994,18 +994,18 @@ struct MBOX_REG {
 #define VAD_BASE                       0xFE4D0000U /* VAD base address */
 #define DMA0_BASE                      0xFEA10000U /* DMA0 base address */
 #define DMA1_BASE                      0xFEA30000U /* DMA1 base address */
-#define TIMER0_BASE                    0xFEAE0000U /* TIMER0_BASE*/
-#define TIMER1_BASE                    0xFEAE0020U /* TIMER1_BASE*/
-#define TIMER2_BASE                    0xFEAE0040U /* TIMER2_BASE*/
-#define TIMER3_BASE                    0xFEAE0060U /* TIMER3_BASE*/
-#define TIMER4_BASE                    0xFEAE0080U /* TIMER4_BASE*/
-#define TIMER5_BASE                    0xFEAE00a0U /* TIMER5_BASE*/
-#define TIMER6_BASE                    0xFEAE8000U /* TIMER6_BASE*/
-#define TIMER7_BASE                    0xFEAE8020U /* TIMER7_BASE*/
-#define TIMER8_BASE                    0xFEAE8040U /* TIMER8_BASE*/
-#define TIMER9_BASE                    0xFEAE8060U /* TIMER9_BASE*/
-#define TIMER10_BASE                   0xFEAE8080U /* TIMER10_BASE*/
-#define TIMER11_BASE                   0xFEAE80a0U /* TIMER11_BASE*/
+#define TIMER0_BASE                    0xFEAE0000U /* TIMER0 base address */
+#define TIMER1_BASE                    0xFEAE0020U /* TIMER1 base address */
+#define TIMER2_BASE                    0xFEAE0040U /* TIMER2 base address */
+#define TIMER3_BASE                    0xFEAE0060U /* TIMER3 base address */
+#define TIMER4_BASE                    0xFEAE0080U /* TIMER4 base address */
+#define TIMER5_BASE                    0xFEAE00A0U /* TIMER5 base address */
+#define TIMER6_BASE                    0xFEAE8000U /* TIMER6 base address */
+#define TIMER7_BASE                    0xFEAE8020U /* TIMER7 base address */
+#define TIMER8_BASE                    0xFEAE8040U /* TIMER8 base address */
+#define TIMER9_BASE                    0xFEAE8060U /* TIMER9 base address */
+#define TIMER10_BASE                   0xFEAE8080U /* TIMER10 base address */
+#define TIMER11_BASE                   0xFEAE80A0U /* TIMER11 base address */
 #define UART1_BASE                     0xFEB40000U /* UART1 base address */
 #define UART2_BASE                     0xFEB50000U /* UART2 base address */
 #define UART3_BASE                     0xFEB60000U /* UART3 base address */
@@ -1059,6 +1059,11 @@ struct MBOX_REG {
 #define GPIO0_EXP           ((struct GPIO_REG *) GPIO0_EXP_BASE)
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define WDT                 ((struct WDT_REG *) WDT_BASE)
+#define PDM0                ((struct PDM_REG *) PDM0_BASE)
+#define PDM1                ((struct PDM_REG *) PDM1_BASE)
+#define VAD                 ((struct VAD_REG *) VAD_BASE)
+#define DMA0                ((struct DMA_REG *) DMA0_BASE)
+#define DMA1                ((struct DMA_REG *) DMA1_BASE)
 #define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
 #define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
 #define TIMER2              ((struct TIMER_REG *) TIMER2_BASE)
@@ -1071,11 +1076,6 @@ struct MBOX_REG {
 #define TIMER9              ((struct TIMER_REG *) TIMER9_BASE)
 #define TIMER10             ((struct TIMER_REG *) TIMER10_BASE)
 #define TIMER11             ((struct TIMER_REG *) TIMER11_BASE)
-#define PDM0                ((struct PDM_REG *) PDM0_BASE)
-#define PDM1                ((struct PDM_REG *) PDM1_BASE)
-#define VAD                 ((struct VAD_REG *) VAD_BASE)
-#define DMA0                ((struct DMA_REG *) DMA0_BASE)
-#define DMA1                ((struct DMA_REG *) DMA1_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
 #define UART3               ((struct UART_REG *) UART3_BASE)
@@ -1123,9 +1123,9 @@ struct MBOX_REG {
 #define IS_VAD_INSTANCE(instance) ((instance) == VAD)
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4) || ((instance) == GPIO0_EXP) || ((instance) == GPIO1_EXP) || ((instance) == GPIO2_EXP) || ((instance) == GPIO3_EXP) || ((instance) == GPIO4_EXP))
-#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER8) || ((instance) == TIMER9) || ((instance) == TIMER10) || ((instance) == TIMER11))
 #define IS_PDM_INSTANCE(instance) (((instance) == PDM0) || ((instance) == PDM1))
 #define IS_DMA_INSTANCE(instance) (((instance) == DMA0) || ((instance) == DMA1))
+#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER8) || ((instance) == TIMER9) || ((instance) == TIMER10) || ((instance) == TIMER11))
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
 /****************************************************************************************/
 /*                                                                                      */
@@ -15577,37 +15577,6 @@ struct MBOX_REG {
 #define WDT_EOI                                            (0x0U)
 #define WDT_EOI_INT_CLR_SHIFT                              (0U)
 #define WDT_EOI_INT_CLR_MASK                               (0x1U << WDT_EOI_INT_CLR_SHIFT)                              /* 0x00000001 */
-/*****************************************TIMER******************************************/
-/* LOAD_COUNT0 */
-#define TIMER_LOAD_COUNT0_OFFSET                           (0x0U)
-#define TIMER_LOAD_COUNT0_COUNT0_SHIFT                     (0U)
-#define TIMER_LOAD_COUNT0_COUNT0_MASK                      (0xFFFFFFFFU << TIMER_LOAD_COUNT0_COUNT0_SHIFT)              /* 0xFFFFFFFF */
-/* LOAD_COUNT1 */
-#define TIMER_LOAD_COUNT1_OFFSET                           (0x4U)
-#define TIMER_LOAD_COUNT1_COUNT1_SHIFT                     (0U)
-#define TIMER_LOAD_COUNT1_COUNT1_MASK                      (0xFFFFFFFFU << TIMER_LOAD_COUNT1_COUNT1_SHIFT)              /* 0xFFFFFFFF */
-/* CURRENT_VALUE0 */
-#define TIMER_CURRENT_VALUE0_OFFSET                        (0x8U)
-#define TIMER_CURRENT_VALUE0                               (0x0U)
-#define TIMER_CURRENT_VALUE0_CURRENT_VALUE0_SHIFT          (0U)
-#define TIMER_CURRENT_VALUE0_CURRENT_VALUE0_MASK           (0xFFFFFFFFU << TIMER_CURRENT_VALUE0_CURRENT_VALUE0_SHIFT)   /* 0xFFFFFFFF */
-/* CURRENT_VALUE1 */
-#define TIMER_CURRENT_VALUE1_OFFSET                        (0xCU)
-#define TIMER_CURRENT_VALUE1                               (0x0U)
-#define TIMER_CURRENT_VALUE1_CURRENT_VALUE1_SHIFT          (0U)
-#define TIMER_CURRENT_VALUE1_CURRENT_VALUE1_MASK           (0xFFFFFFFFU << TIMER_CURRENT_VALUE1_CURRENT_VALUE1_SHIFT)   /* 0xFFFFFFFF */
-/* CONTROLREG */
-#define TIMER_CONTROLREG_OFFSET                            (0x10U)
-#define TIMER_CONTROLREG_TIMER_ENABLE_SHIFT                (0U)
-#define TIMER_CONTROLREG_TIMER_ENABLE_MASK                 (0x1U << TIMER_CONTROLREG_TIMER_ENABLE_SHIFT)                /* 0x00000001 */
-#define TIMER_CONTROLREG_TIMER_MODE_SHIFT                  (1U)
-#define TIMER_CONTROLREG_TIMER_MODE_MASK                   (0x1U << TIMER_CONTROLREG_TIMER_MODE_SHIFT)                  /* 0x00000002 */
-#define TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT              (2U)
-#define TIMER_CONTROLREG_TIMER_INT_MASK_MASK               (0x1U << TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT)              /* 0x00000004 */
-/* INTSTATUS */
-#define TIMER_INTSTATUS_OFFSET                             (0x18U)
-#define TIMER_INTSTATUS_INT_PD_SHIFT                       (0U)
-#define TIMER_INTSTATUS_INT_PD_MASK                        (0x1U << TIMER_INTSTATUS_INT_PD_SHIFT)                       /* 0x00000001 */
 /******************************************PDM*******************************************/
 /* SYSCONFIG */
 #define PDM_SYSCONFIG_OFFSET                               (0x0U)
@@ -16652,6 +16621,37 @@ struct MBOX_REG {
 #define DMA_WD_OFFSET                                      (0xE80U)
 #define DMA_WD_FIELD0000_SHIFT                             (0U)
 #define DMA_WD_FIELD0000_MASK                              (0x1U << DMA_WD_FIELD0000_SHIFT)                             /* 0x00000001 */
+/*****************************************TIMER******************************************/
+/* LOAD_COUNT0 */
+#define TIMER_LOAD_COUNT0_OFFSET                           (0x0U)
+#define TIMER_LOAD_COUNT0_COUNT0_SHIFT                     (0U)
+#define TIMER_LOAD_COUNT0_COUNT0_MASK                      (0xFFFFFFFFU << TIMER_LOAD_COUNT0_COUNT0_SHIFT)              /* 0xFFFFFFFF */
+/* LOAD_COUNT1 */
+#define TIMER_LOAD_COUNT1_OFFSET                           (0x4U)
+#define TIMER_LOAD_COUNT1_COUNT1_SHIFT                     (0U)
+#define TIMER_LOAD_COUNT1_COUNT1_MASK                      (0xFFFFFFFFU << TIMER_LOAD_COUNT1_COUNT1_SHIFT)              /* 0xFFFFFFFF */
+/* CURRENT_VALUE0 */
+#define TIMER_CURRENT_VALUE0_OFFSET                        (0x8U)
+#define TIMER_CURRENT_VALUE0                               (0x0U)
+#define TIMER_CURRENT_VALUE0_CURRENT_VALUE0_SHIFT          (0U)
+#define TIMER_CURRENT_VALUE0_CURRENT_VALUE0_MASK           (0xFFFFFFFFU << TIMER_CURRENT_VALUE0_CURRENT_VALUE0_SHIFT)   /* 0xFFFFFFFF */
+/* CURRENT_VALUE1 */
+#define TIMER_CURRENT_VALUE1_OFFSET                        (0xCU)
+#define TIMER_CURRENT_VALUE1                               (0x0U)
+#define TIMER_CURRENT_VALUE1_CURRENT_VALUE1_SHIFT          (0U)
+#define TIMER_CURRENT_VALUE1_CURRENT_VALUE1_MASK           (0xFFFFFFFFU << TIMER_CURRENT_VALUE1_CURRENT_VALUE1_SHIFT)   /* 0xFFFFFFFF */
+/* CONTROLREG */
+#define TIMER_CONTROLREG_OFFSET                            (0x10U)
+#define TIMER_CONTROLREG_TIMER_ENABLE_SHIFT                (0U)
+#define TIMER_CONTROLREG_TIMER_ENABLE_MASK                 (0x1U << TIMER_CONTROLREG_TIMER_ENABLE_SHIFT)                /* 0x00000001 */
+#define TIMER_CONTROLREG_TIMER_MODE_SHIFT                  (1U)
+#define TIMER_CONTROLREG_TIMER_MODE_MASK                   (0x1U << TIMER_CONTROLREG_TIMER_MODE_SHIFT)                  /* 0x00000002 */
+#define TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT              (2U)
+#define TIMER_CONTROLREG_TIMER_INT_MASK_MASK               (0x1U << TIMER_CONTROLREG_TIMER_INT_MASK_SHIFT)              /* 0x00000004 */
+/* INTSTATUS */
+#define TIMER_INTSTATUS_OFFSET                             (0x18U)
+#define TIMER_INTSTATUS_INT_PD_SHIFT                       (0U)
+#define TIMER_INTSTATUS_INT_PD_MASK                        (0x1U << TIMER_INTSTATUS_INT_PD_SHIFT)                       /* 0x00000001 */
 /******************************************MBOX******************************************/
 /* A2B_INTEN */
 #define MBOX_A2B_INTEN_OFFSET                              (0x0U)
