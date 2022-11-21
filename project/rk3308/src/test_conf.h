@@ -7,7 +7,7 @@
 #define _TEST_CONF_H_
 
 /* SRAM Usage Test Config */
-#define SRAM_USAGE
+//#define SRAM_USAGE
 
 /* Unity HAL Test Config */
 #define UNITY_HAL_I2C
