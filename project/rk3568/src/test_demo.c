@@ -25,19 +25,21 @@
 
 #ifdef GPIO_IRQ_GROUP_TEST
 
-#define LEVEL0_CPU0_GPIO_BITS (0) /* GPIO_PIN_A0 | GPIO_PIN_A1 */
+/* TODO: Modify GPIO group and priority here */
+#define LEVEL0_CPU0_GPIO_BITS (0)
 #define LEVEL0_CPU1_GPIO_BITS (0)
 #define LEVEL0_CPU2_GPIO_BITS (0)
-#define LEVEL0_CPU3_GPIO_BITS (0)
+#define LEVEL0_CPU3_GPIO_BITS (GPIO_PIN_C4 | GPIO_PIN_C5)
 
 #define LEVEL1_CPU0_GPIO_BITS (0)
 #define LEVEL1_CPU1_GPIO_BITS (0)
 #define LEVEL1_CPU2_GPIO_BITS (0)
-#define LEVEL1_CPU3_GPIO_BITS (0)
+#define LEVEL1_CPU3_GPIO_BITS (GPIO_PIN_C6 | GPIO_PIN_C7)
 
 #define LEVEL2_CPU0_GPIO_BITS (0)
 #define LEVEL2_CPU1_GPIO_BITS (0)
 #define LEVEL2_CPU2_GPIO_BITS (0)
+#define LEVEL2_CPU3_GPIO_BITS (0)
 
 #endif
 
@@ -84,7 +86,7 @@ static const struct GPIO_IRQ_GROUP_CFG gpioIrqCfg[GPIO_BANK_NUM] = {
         GPIO_IRQ_GROUP_GPIO_CFG(GPIO_BANK0, GPIO0_IRQn, GPIO0),
         .groupIrqEn = GPIO_IRQ_GROUP_EN_BANK_TYPE,
         .bankTypeCfg = {
-            .hwIrqCpuAff = CPU_GET_AFFINITY(1, 0),
+            .hwIrqCpuAff = CPU_GET_AFFINITY(3, 0),
             .prio = 0xd0,
         },
     },
@@ -92,7 +94,7 @@ static const struct GPIO_IRQ_GROUP_CFG gpioIrqCfg[GPIO_BANK_NUM] = {
         GPIO_IRQ_GROUP_GPIO_CFG(GPIO_BANK1, GPIO1_IRQn, GPIO1),
         .groupIrqEn = GPIO_IRQ_GROUP_EN_BANK_TYPE,
         .bankTypeCfg = {
-            .hwIrqCpuAff = CPU_GET_AFFINITY(1, 0),
+            .hwIrqCpuAff = CPU_GET_AFFINITY(3, 0),
             .prio = 0xd0,
         },
     },
@@ -100,17 +102,28 @@ static const struct GPIO_IRQ_GROUP_CFG gpioIrqCfg[GPIO_BANK_NUM] = {
         GPIO_IRQ_GROUP_GPIO_CFG(GPIO_BANK2, GPIO2_IRQn, GPIO2),
         .groupIrqEn = GPIO_IRQ_GROUP_EN_BANK_TYPE,
         .bankTypeCfg = {
-            .hwIrqCpuAff = CPU_GET_AFFINITY(1, 0),
+            .hwIrqCpuAff = CPU_GET_AFFINITY(3, 0),
             .prio = 0xd0,
         },
+    },
+    [GPIO_BANK3] = {
+        GPIO_IRQ_GROUP_GPIO_CFG(GPIO_BANK3, GPIO3_IRQn, GPIO3),
+        .groupIrqEn = GPIO_IRQ_GROUP_EN_BANK_TYPE,
+        .bankTypeCfg = {
+            .hwIrqCpuAff = CPU_GET_AFFINITY(3, 0),
+            .prio = 0xd0,
+        },
+    },
+    [GPIO_BANK4] = {
+        GPIO_IRQ_GROUP_GPIO_CFG(GPIO_BANK4, GPIO4_IRQn, GPIO4),
+        .groupIrqEn = GPIO_IRQ_GROUP_EN_GROUP_TYPE,
         .prioGroup[0] = {
             .cpuGroup = { LEVEL0_CPU0_GPIO_BITS, LEVEL0_CPU1_GPIO_BITS,
                           LEVEL0_CPU2_GPIO_BITS, LEVEL0_CPU3_GPIO_BITS },
-            .GIRQId = { RSVD_IRQn(39), GPIO2_IRQn,
-                        RSVD_IRQn(40), RSVD_IRQn(41) },
+            .GIRQId = { RSVD_IRQn(39), RSVD_IRQn(40),
+                        RSVD_IRQn(41), GPIO4_IRQn },
             .prio = 0x80,
         },
-
         .prioGroup[1] = {
             .cpuGroup = { LEVEL1_CPU0_GPIO_BITS, LEVEL1_CPU1_GPIO_BITS,
                           LEVEL1_CPU2_GPIO_BITS, LEVEL1_CPU3_GPIO_BITS },
@@ -118,21 +131,12 @@ static const struct GPIO_IRQ_GROUP_CFG gpioIrqCfg[GPIO_BANK_NUM] = {
                         RSVD_IRQn(44), RSVD_IRQn(45) },
             .prio = 0x90,
         },
-
         .prioGroup[2] = {
             .cpuGroup = { LEVEL2_CPU0_GPIO_BITS, LEVEL2_CPU1_GPIO_BITS,
-                          LEVEL2_CPU2_GPIO_BITS, 0 },
+                          LEVEL2_CPU2_GPIO_BITS, LEVEL2_CPU3_GPIO_BITS },
             .GIRQId = { RSVD_IRQn(46), RSVD_IRQn(47),
                         RSVD_IRQn(48), RSVD_IRQn(49) },
             .prio = 0xa0,
-        },
-    },
-    [GPIO_BANK3] = {
-        GPIO_IRQ_GROUP_GPIO_CFG(GPIO_BANK3, GPIO3_IRQn, GPIO3),
-        .groupIrqEn = GPIO_IRQ_GROUP_EN_BANK_TYPE,
-        .bankTypeCfg = {
-            .hwIrqCpuAff = CPU_GET_AFFINITY(1, 0),
-            .prio = 0xd0,
         },
     },
 };
@@ -204,11 +208,41 @@ static void gpio_test(void)
 /*                                              */
 /************************************************/
 #ifdef GPIO_IRQ_GROUP_TEST
+static HAL_Status c5_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    uint32_t priority;
+
+    priority = HAL_GIC_GetPriority(GPIO4_IRQn);
+    printf("GPIO4C5 high priority 0x%lx.\n", priority);
+
+    return HAL_OK;
+}
+
+static HAL_Status c6_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    uint32_t priority;
+
+    priority = HAL_GIC_GetPriority(RSVD_IRQn(45));
+    printf("GPIO4C6 low priority 0x%lx.\n", priority);
+    printf("GPIO4C6 low priority callback enter! delay 8s\n");
+    HAL_DelayMs(8000);
+    printf("GPIO4C6 low priority callback exit!\n");
+
+    return HAL_OK;
+}
+
 static void gpio_irq_group_test(void)
 {
-    HAL_GPIO_IRQ_GROUP_Init(CPU_GET_AFFINITY(1, 0),
-                            gpioIrqCfg,
-                            HAL_IRQ_HANDLER_GetGpioIrqGroupOps());
+    printf("GPIO irq group test start!\n");
+    HAL_GPIO_SetPinDirection(GPIO4, GPIO_PIN_C5, GPIO_IN);
+    HAL_GPIO_SetPinDirection(GPIO4, GPIO_PIN_C6, GPIO_IN);
+    HAL_GPIO_SetIntType(GPIO4, GPIO_PIN_C5, GPIO_INT_TYPE_EDGE_RISING);
+    HAL_GPIO_SetIntType(GPIO4, GPIO_PIN_C6, GPIO_INT_TYPE_EDGE_RISING);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK4, GPIO_PIN_C5, c5_call_back, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK4, GPIO_PIN_C6, c6_call_back, NULL);
+    HAL_GPIO_EnableIRQ(GPIO4, GPIO_PIN_C5);
+    HAL_GPIO_EnableIRQ(GPIO4, GPIO_PIN_C6);
+    printf("GPIO irq group test ready!\n");
 }
 #endif
 
@@ -1147,8 +1181,15 @@ void test_demo(void)
     gpio_test();
 #endif
 
-#if defined(GPIO_IRQ_GROUP_TEST) && defined(PRIMARY_CPU)
+#ifdef GPIO_IRQ_GROUP_TEST
+/* Each core needs to initialize the GPIO IRQ Group */
+    HAL_GPIO_IRQ_GROUP_Init(CPU_GET_AFFINITY(1, 0),
+                            gpioIrqCfg,
+                            HAL_IRQ_HANDLER_GetGpioIrqGroupOps());
+#ifdef CPU3
+    HAL_DelayMs(4000);
     gpio_irq_group_test();
+#endif
 #endif
 
 #ifdef IPI_SGI_TEST
