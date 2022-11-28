@@ -204,8 +204,10 @@ HAL_Status HAL_GPIO_SetPinDirection(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS p
         pGPIO->SWPORT_DDR_L = (direction == GPIO_OUT) ? (pin | (pin << 16)) : (pin << 16);
     }
 #else
-    {
-        pGPIO->SWPORTA_DDR = (direction == GPIO_OUT) ? (pin) : (pGPIO->SWPORTA_DDR & ~(pin));
+    if (direction == GPIO_OUT) {
+        pGPIO->SWPORTA_DDR |= pin;
+    } else {
+        pGPIO->SWPORTA_DDR &= ~pin;
     }
 #endif
 
@@ -282,8 +284,10 @@ HAL_Status HAL_GPIO_SetPinLevel(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, 
         pGPIO->SWPORT_DR_L = (level == GPIO_HIGH) ? (pin | (pin << 16)) : (pin << 16);
     }
 #else
-    {
-        pGPIO->SWPORTA_DR = (level == GPIO_HIGH) ? (pin) : (pGPIO->SWPORTA_DR & ~(pin));
+    if (level == GPIO_HIGH) {
+        pGPIO->SWPORTA_DR |= pin;
+    } else {
+        pGPIO->SWPORTA_DR &= ~pin;
     }
 #endif
 
