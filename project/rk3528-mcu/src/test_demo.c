@@ -10,6 +10,7 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define PERF_TEST
+//#define SOFTIRQ_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -39,9 +40,35 @@ static void perf_test(void)
 }
 #endif
 
+/************************************************/
+/*                                              */
+/*                SOFTIRQ_TEST                  */
+/*                                              */
+/************************************************/
+#ifdef SOFTIRQ_TEST
+static void soft_isr(void)
+{
+    printf("softirq_test: enter isr\n");
+}
+
+static void softirq_test(void)
+{
+    printf("softirq_test start\n");
+    HAL_NVIC_SetIRQHandler(RSVD0_MCU_IRQn, soft_isr);
+    HAL_NVIC_EnableIRQ(RSVD0_MCU_IRQn);
+
+    HAL_DelayMs(4000);
+    HAL_NVIC_SetPendingIRQ(RSVD0_MCU_IRQn);
+}
+#endif
+
 void test_demo(void)
 {
 #ifdef PERF_TEST
     perf_test();
+#endif
+
+#ifdef SOFTIRQ_TEST
+    softirq_test();
 #endif
 }

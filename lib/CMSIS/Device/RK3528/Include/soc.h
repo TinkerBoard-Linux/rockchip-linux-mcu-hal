@@ -92,6 +92,7 @@ typedef enum {
   INTMUX_OUT1_IRQn          =  12,     /*!< INTMUX OUT1 Interrupt         */
   INTMUX_OUT2_IRQn          =  13,     /*!< INTMUX OUT2 Interrupt         */
   INTMUX_OUT3_IRQn          =  14,     /*!< INTMUX OUT3 Interrupt         */
+  RSVD0_MCU_IRQn            =  15,     /*!< RSVD0 MCU Interrupt         */
   NUM_INTERRUPTS            =  32,     /*!< Number of internal IRQ        */
   TIMER0_IRQn               =  63  + NUM_INTERRUPTS,                    /*!< TIMER0 Interrupt              */
   TIMER1_IRQn               =  64  + NUM_INTERRUPTS,                    /*!< TIMER1 Interrupt              */
@@ -109,6 +110,8 @@ typedef enum {
   UART7_IRQn                =  79  + NUM_INTERRUPTS,                    /*!< UART7 Interrupt               */
   TOTAL_INTERRUPTS          =  (NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),   /*!< For external interrupt from intmux    */
 } IRQn_Type;
+
+#define RSVD_MCU_IRQn(_N)               (RSVD0_MCU_IRQn + (_N))
 
 #define HAS_CUSTOME_INTC
 
