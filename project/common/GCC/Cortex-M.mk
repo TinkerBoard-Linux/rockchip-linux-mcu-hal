@@ -1,16 +1,16 @@
 # SPDX-License-Identifier: BSD-3-Clause */
 
-# Copyright (c) 2020 Rockchip Electronics Co., Ltd.
+# Copyright (c) 2022 Rockchip Electronics Co., Ltd.
 
 ROOT_PATH	:= ../../..
 
 #############################################################################
 # Cross compiler
 #############################################################################
-ifneq ($(wildcard ${ROOT_PATH}/../prebuilts/gcc-arm-none-eabi-10-2020-q4-major),)
-CROSS_COMPILE	= ${ROOT_PATH}/../prebuilts/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-
+ifneq ($(wildcard ${ROOT_PATH}/../prebuilts/gcc/linux-x86/arm/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux),)
+CROSS_COMPILE	?= ${ROOT_PATH}/../prebuilts/gcc/linux-x86/arm/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux/bin/arm-none-eabi-
 else
-CROSS_COMPILE	= arm-none-eabi-
+CROSS_COMPILE	?= arm-none-eabi-
 endif
 
 AS		= $(CROSS_COMPILE)as
@@ -57,11 +57,11 @@ endif
 #############################################################################
 # Source code and include
 #############################################################################
-INCLUDES := \
+INCLUDES += \
 -I"../src" \
 -I"$(ROOT_PATH)/lib/CMSIS/Core/Include" \
 
-SRC_DIRS := \
+SRC_DIRS += \
     ../src \
     $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC \
 
