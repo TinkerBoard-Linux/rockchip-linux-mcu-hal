@@ -37,6 +37,9 @@ struct HAL_I2STDM_DEV {
     eCLOCK_Name mclkRx;
     uint32_t mclkRxGate;
     eCLOCK_Name hclk;
+    uint32_t muxTxSel;
+    uint32_t muxRxSel;
+    uint32_t rsts[2];
     ePD_Id pd;
     uint16_t bclkFs;
     eTRCM_modeType trcmMode;

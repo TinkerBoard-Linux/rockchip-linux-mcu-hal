@@ -172,8 +172,14 @@ static HAL_Status I2STDM_SetSampleRate(struct HAL_I2STDM_DEV *i2sTdm,
 
     if (i2sTdm->trcmMode) {
         if (i2sTdm->trcmMode == TRCM_TXONLY) {
+            if (i2sTdm->muxRxSel) {
+                HAL_CRU_ClkSetMux(i2sTdm->muxRxSel, 1);
+            }
             mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkTx);
         } else {
+            if (i2sTdm->muxTxSel) {
+                HAL_CRU_ClkSetMux(i2sTdm->muxTxSel, 1);
+            }
             mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkRx);
         }
 
@@ -500,8 +506,11 @@ HAL_Status HAL_I2STDM_TxRxEnable(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamTyp
     }
 
     if (doXfer) {
+        HAL_CRU_ClkResetSyncAssert(2, i2sTdm->rsts);
+        HAL_DelayUs(10);
         MODIFY_REG(reg->XFER, I2STDM_XFER_TXS_MASK | I2STDM_XFER_RXS_MASK,
                    I2STDM_XFER_TXS_START | I2STDM_XFER_RXS_START);
+        HAL_CRU_ClkResetSyncDeassert(2, i2sTdm->rsts);
     }
 
     return HAL_OK;
