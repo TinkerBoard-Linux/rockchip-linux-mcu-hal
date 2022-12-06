@@ -284,6 +284,22 @@ HAL_Status HAL_CRU_ClkResetAssert(uint32_t clk);
 HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk);
 
 /**
+ * @brief Sync Assert the resets to the clk
+ * @param  numClks: num clocks to assert
+ * @param  clks: clocks to assert
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_ClkResetSyncAssert(int numClks, uint32_t *clks);
+
+/**
+ * @brief Sync Deassert the resets to the clk
+ * @param  numClks: num clocks to assert
+ * @param  clks: clocks to deassert
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_ClkResetSyncDeassert(int numClks, uint32_t *clks);
+
+/**
  * @brief  Set frac div
  * @param  fracDivName: frac div id(Contains div offset, shift, mask information)
  * @param  numerator: the numerator to set.

@@ -1050,6 +1050,52 @@ HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
     return HAL_OK;
 }
 
+HAL_Status HAL_CRU_ClkResetSyncAssert(int numClks, uint32_t *clks)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t index = CLK_RESET_GET_REG_OFFSET(clks[0]);
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clks[0]);
+    uint32_t val = 0;
+    uint32_t reg;
+    int i;
+
+    for (i = 0; i < numClks; i++) {
+        val |= HAL_BIT(CLK_RESET_GET_BITS_SHIFT(clks[i]));
+        if (index != CLK_RESET_GET_REG_OFFSET(clks[i])) {
+            return HAL_ERROR;
+        }
+    }
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
+    CRU_WRITE(reg, 0, val, val);
+    HAL_DBG("%s: index: 0x%lx, val: 0x%lx\n", __func__, index, val);
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_ClkResetSyncDeassert(int numClks, uint32_t *clks)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t index = CLK_RESET_GET_REG_OFFSET(clks[0]);
+    uint32_t bank = CLK_GATE_GET_REG_BANK(clks[0]);
+    uint32_t val = 0;
+    uint32_t reg;
+    int i;
+
+    for (i = 0; i < numClks; i++) {
+        val |= HAL_BIT(CLK_RESET_GET_BITS_SHIFT(clks[i]));
+        if (index != CLK_RESET_GET_REG_OFFSET(clks[i])) {
+            return HAL_ERROR;
+        }
+    }
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
+    CRU_WRITE(reg, 0, val, 0);
+    HAL_DBG("%s: index: 0x%lx, val: 0x%lx\n", __func__, index, val);
+
+    return HAL_OK;
+}
+
 HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
 {
     const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
@@ -1281,6 +1327,60 @@ HAL_Status HAL_CRU_ClkResetDeassert(uint32_t clk)
 #else
     CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(1U << shift, 0U << shift);
 #endif
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_ClkResetSyncAssert(int numClks, uint32_t *clks)
+{
+    uint32_t index = CLK_RESET_GET_REG_OFFSET(clks[0]);
+    uint32_t val = 0;
+    int i;
+
+    for (i = 0; i < numClks; i++) {
+        val |= HAL_BIT(CLK_RESET_GET_BITS_SHIFT(clks[i]));
+        if (index != CLK_RESET_GET_REG_OFFSET(clks[i])) {
+            return HAL_ERROR;
+        }
+    }
+
+#ifdef CRU_SRST_CON_CNT
+    if (index < CRU_SRST_CON_CNT) {
+        CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(val, val);
+    } else {
+        PMUCRU->CRU_SOFTRST_CON[index - CRU_SRST_CON_CNT] = VAL_MASK_WE(val, val);
+    }
+#else
+    CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(val, val);
+#endif
+    HAL_DBG("%s: index: 0x%lx, val: 0x%lx\n", __func__, index, val);
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_ClkResetSyncDeassert(int numClks, uint32_t *clks)
+{
+    uint32_t index = CLK_RESET_GET_REG_OFFSET(clks[0]);
+    uint32_t val = 0;
+    int i;
+
+    for (i = 0; i < numClks; i++) {
+        val |= HAL_BIT(CLK_RESET_GET_BITS_SHIFT(clks[i]));
+        if (index != CLK_RESET_GET_REG_OFFSET(clks[i])) {
+            return HAL_ERROR;
+        }
+    }
+
+#ifdef CRU_SRST_CON_CNT
+    if (index < CRU_SRST_CON_CNT) {
+        CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(val, 0);
+    } else {
+        PMUCRU->CRU_SOFTRST_CON[index - CRU_SRST_CON_CNT] = VAL_MASK_WE(val, 0);
+    }
+#else
+    CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(val, 0);
+#endif
+    HAL_DBG("%s: index: 0x%lx, val: 0x%lx\n", __func__, index, val);
 
     return HAL_OK;
 }
