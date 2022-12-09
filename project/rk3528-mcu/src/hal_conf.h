@@ -11,7 +11,7 @@
 #define HAL_MCU_CORE
 
 /* System timer designation (RK TIMER) */
-#define SYS_TIMER TIMER0
+#define SYS_TIMER TIMER5
 
 #define HAL_DBG_ON
 
