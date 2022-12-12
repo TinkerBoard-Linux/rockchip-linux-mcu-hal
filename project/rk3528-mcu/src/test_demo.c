@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 /********************* Private MACRO Definition ******************************/
+//#define IRQ_LATENCY_TEST
 //#define PERF_TEST
 //#define SOFTIRQ_TEST
 
@@ -25,6 +26,61 @@
 /************************************************/
 
 /* TODO: Set Module IOMUX Function Here */
+
+/************************************************/
+/*                                              */
+/*             IRQ_LATENCY_TEST                 */
+/*                                              */
+/************************************************/
+#ifdef IRQ_LATENCY_TEST
+#define IRQ_LATENCY_TEST_NUM   10
+#define IRQ_LATENCY_TEST_LOOP  10000
+#define IRQ_LATENCY_TEST_DELAY 500
+
+static uint64_t time_start, time_end;
+static double time_one, time_sum, time_max, time_min;
+
+static void irq_rsvd_isr(void)
+{
+    time_end = HAL_GetSysTimerCount();
+    time_one = ((time_end - time_start) * 1000000.0) / PLL_INPUT_OSC_RATE;
+    time_sum += time_one;
+    if (time_one > time_max) {
+        time_max = time_one;
+    }
+    if (time_one < time_min) {
+        time_min = time_one;
+    }
+//    printf("irq_rsvd: latency = %.2f\n", time_one);
+}
+
+static void irq_latency_test(void)
+{
+    int i, j;
+
+    printf("irq_latency_test start:\n");
+
+    printf("irq_rsvd:\n");
+    HAL_NVIC_SetIRQHandler(RSVD0_MCU_IRQn, irq_rsvd_isr);
+    HAL_NVIC_EnableIRQ(RSVD0_MCU_IRQn);
+    HAL_DelayMs(2000);
+
+    for (i = 0; i < IRQ_LATENCY_TEST_NUM; i++) {
+        time_sum = 0;
+        time_max = 0;
+        time_min = 1000;
+        for (j = 0; j < IRQ_LATENCY_TEST_LOOP; j++) {
+            time_start = HAL_GetSysTimerCount();
+            HAL_NVIC_SetPendingIRQ(RSVD0_MCU_IRQn);
+            HAL_DelayUs(IRQ_LATENCY_TEST_DELAY);
+        }
+        printf("irq_rsvd latency: avg = %.2f, max = %.2f, min = %.2f\n",
+               time_sum / IRQ_LATENCY_TEST_LOOP, time_max, time_min);
+    }
+
+    printf("irq_latency_test end.\n");
+}
+#endif
 
 /************************************************/
 /*                                              */
@@ -94,6 +150,10 @@ static void softirq_test(void)
 
 void test_demo(void)
 {
+#ifdef IRQ_LATENCY_TEST
+    irq_latency_test();
+#endif
+
 #ifdef PERF_TEST
     perf_test();
 #endif
