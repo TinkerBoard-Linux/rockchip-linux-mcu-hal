@@ -59,11 +59,12 @@ typedef enum {
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
-#define NUM_INT_PER_CON           256
-#define NUM_INT_PER_MUX           64
-#define NUM_MUX_PER_CON           4
-#define NUM_INT_PER_GROUP         8
-#define NUM_GROUP_PER_CON         32
+#define INTMUX_NUM_INT_PER_CON    256
+#define INTMUX_NUM_OUT_PER_CON    4
+#define INTMUX_NUM_INT_PER_OUT    64
+#define INTMUX_NUM_GROUP_PER_CON  8
+#define INTMUX_NUM_INT_PER_GROUP  32
+
 #define NUM_EXT_INTERRUPTS        256
 
 typedef enum {
