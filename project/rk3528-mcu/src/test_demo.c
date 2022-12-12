@@ -32,10 +32,40 @@
 /*                                              */
 /************************************************/
 #ifdef PERF_TEST
+#include "benchmark.h"
+
+uint32_t g_sum = 0;
+
 static void perf_test(void)
 {
+    uint32_t loop = 1000, size = 64 * 1024;
+    uint32_t *ptr;
+    uint32_t time_start, time_end, time_ms;
+
     printf("Perftest Start:\n");
     benchmark_main();
+
+    printf("memset test start:\n");
+    ptr = (uint32_t *)malloc(size);
+    if (ptr) {
+        time_start = HAL_GetTick();
+        for (int i = 0; i < loop; i++) {
+            memset(ptr, i, size);
+        }
+        time_end = HAL_GetTick();
+        time_ms = time_end - time_start;
+        printf("memset bw=%ldKB/s, time_ms=%d\n",
+               1000 * (size * loop / 1024) / time_ms, time_ms);
+
+        /* prevent optimization */
+        for (int i = 0; i < size / sizeof(uint32_t); i++) {
+            g_sum += ptr[i];
+        }
+        printf("sum=%d\n", g_sum);
+        free(ptr);
+    }
+    printf("memset test end\n");
+
     printf("Perftest End:\n");
 }
 #endif
