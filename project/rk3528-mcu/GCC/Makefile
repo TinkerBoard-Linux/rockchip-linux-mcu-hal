@@ -4,7 +4,7 @@
 
 PROJECT		:= RK3528
 SOC		:= RK3528
-CPU		:= -mcpu=cortex-m0 -mthumb
+CPU		:= -mcpu=cortex-m0
 
 CFLAGS := -O2
 LDFLAGS := --specs=nosys.specs
