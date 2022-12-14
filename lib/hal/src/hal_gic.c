@@ -697,12 +697,12 @@ static inline void GIC_DisableInterface(void)
 
 static inline void GIC_EnableDistributor(void)
 {
-    pGICD->CTLR |= 1;
+    pGICD->CTLR |= 3;
 }
 
 static inline void GIC_DisableDistributor(void)
 {
-    pGICD->CTLR &= ~1;
+    pGICD->CTLR &= ~3;
 }
 
 static inline uint32_t GIC_DistributorInfo(void)
