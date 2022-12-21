@@ -228,6 +228,15 @@ struct GPIO2_IOC_REG {
          uint32_t RESERVED0724[67];                   /* Address Offset: 0x0724 */
     __IO uint32_t VCCIO2_POC;                         /* Address Offset: 0x0830 */
 };
+/* WDT Register Structure Define */
+struct WDT_REG {
+    __IO uint32_t CR;                                 /* Address Offset: 0x0000 */
+    __IO uint32_t TORR;                               /* Address Offset: 0x0004 */
+    __I  uint32_t CCVR;                               /* Address Offset: 0x0008 */
+    __O  uint32_t CRR;                                /* Address Offset: 0x000C */
+    __I  uint32_t STAT;                               /* Address Offset: 0x0010 */
+    __I  uint32_t EOI;                                /* Address Offset: 0x0014 */
+};
 /* UART Register Structure Define */
 struct UART_REG {
     union {
@@ -300,6 +309,7 @@ struct TIMER_REG {
 #define GPIO1_IOC_BASE                 0xFF560000U /* GPIO1_IOC base address */
 #define GPIO3_IOC_BASE                 0xFF560000U /* GPIO3_IOC base address */
 #define GPIO2_IOC_BASE                 0xFF570000U /* GPIO2_IOC base address */
+#define WDT_BASE                       0xFF5E0000U /* WDT base address */
 #define UART0_BASE                     0xFF9F0000U /* UART0 base address */
 #define UART1_BASE                     0xFF9F8000U /* UART1 base address */
 #define UART2_BASE                     0xFFA00000U /* UART2 base address */
@@ -327,6 +337,7 @@ struct TIMER_REG {
 #define GPIO1_IOC           ((struct GPIO1_IOC_REG *) GPIO1_IOC_BASE)
 #define GPIO3_IOC           ((struct GPIO3_IOC_REG *) GPIO3_IOC_BASE)
 #define GPIO2_IOC           ((struct GPIO2_IOC_REG *) GPIO2_IOC_BASE)
+#define WDT                 ((struct WDT_REG *) WDT_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
@@ -348,6 +359,7 @@ struct TIMER_REG {
 #define IS_GPIO1_IOC_INSTANCE(instance) ((instance) == GPIO1_IOC)
 #define IS_GPIO3_IOC_INSTANCE(instance) ((instance) == GPIO3_IOC)
 #define IS_GPIO2_IOC_INSTANCE(instance) ((instance) == GPIO2_IOC)
+#define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_INTMUX_INSTANCE(instance) ((instance) == INTMUX)
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
@@ -2155,6 +2167,38 @@ struct TIMER_REG {
 #define GPIO2_IOC_VCCIO2_POC_FORCE_JTAG_MASK               (0x1U << GPIO2_IOC_VCCIO2_POC_FORCE_JTAG_SHIFT)              /* 0x00000020 */
 #define GPIO2_IOC_VCCIO2_POC_VCCIO2_VD_SHIFT               (8U)
 #define GPIO2_IOC_VCCIO2_POC_VCCIO2_VD_MASK                (0x1U << GPIO2_IOC_VCCIO2_POC_VCCIO2_VD_SHIFT)               /* 0x00000100 */
+/******************************************WDT*******************************************/
+/* CR */
+#define WDT_CR_OFFSET                                      (0x0U)
+#define WDT_CR_WDT_EN_SHIFT                                (0U)
+#define WDT_CR_WDT_EN_MASK                                 (0x1U << WDT_CR_WDT_EN_SHIFT)                                /* 0x00000001 */
+#define WDT_CR_RESP_MODE_SHIFT                             (1U)
+#define WDT_CR_RESP_MODE_MASK                              (0x1U << WDT_CR_RESP_MODE_SHIFT)                             /* 0x00000002 */
+#define WDT_CR_RST_PLUSE_LENGTH_SHIFT                      (2U)
+#define WDT_CR_RST_PLUSE_LENGTH_MASK                       (0x7U << WDT_CR_RST_PLUSE_LENGTH_SHIFT)                      /* 0x0000001C */
+/* TORR */
+#define WDT_TORR_OFFSET                                    (0x4U)
+#define WDT_TORR_TIMEOUT_PERIOD_SHIFT                      (0U)
+#define WDT_TORR_TIMEOUT_PERIOD_MASK                       (0xFU << WDT_TORR_TIMEOUT_PERIOD_SHIFT)                      /* 0x0000000F */
+/* CCVR */
+#define WDT_CCVR_OFFSET                                    (0x8U)
+#define WDT_CCVR                                           (0xFFFFU)
+#define WDT_CCVR_CUR_CNT_SHIFT                             (0U)
+#define WDT_CCVR_CUR_CNT_MASK                              (0xFFFFFFFFU << WDT_CCVR_CUR_CNT_SHIFT)                      /* 0xFFFFFFFF */
+/* CRR */
+#define WDT_CRR_OFFSET                                     (0xCU)
+#define WDT_CRR_CNT_RESTART_SHIFT                          (0U)
+#define WDT_CRR_CNT_RESTART_MASK                           (0xFFU << WDT_CRR_CNT_RESTART_SHIFT)                         /* 0x000000FF */
+/* STAT */
+#define WDT_STAT_OFFSET                                    (0x10U)
+#define WDT_STAT                                           (0x0U)
+#define WDT_STAT_STATUS_SHIFT                              (0U)
+#define WDT_STAT_STATUS_MASK                               (0x1U << WDT_STAT_STATUS_SHIFT)                              /* 0x00000001 */
+/* EOI */
+#define WDT_EOI_OFFSET                                     (0x14U)
+#define WDT_EOI                                            (0x0U)
+#define WDT_EOI_INT_CLR_SHIFT                              (0U)
+#define WDT_EOI_INT_CLR_MASK                               (0x1U << WDT_EOI_INT_CLR_SHIFT)                              /* 0x00000001 */
 /******************************************UART******************************************/
 /* RBR */
 #define UART_RBR_OFFSET                                    (0x0U)
