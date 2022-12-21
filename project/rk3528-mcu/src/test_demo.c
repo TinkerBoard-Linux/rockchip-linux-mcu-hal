@@ -12,6 +12,7 @@
 //#define IRQ_LATENCY_TEST
 //#define PERF_TEST
 //#define SOFTIRQ_TEST
+//#define WDT_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -148,6 +149,57 @@ static void softirq_test(void)
 }
 #endif
 
+/************************************************/
+/*                                              */
+/*                  WDT_TEST                    */
+/*                                              */
+/************************************************/
+#ifdef WDT_TEST
+
+#define WDT_TEST_FREQ        PLL_INPUT_OSC_RATE
+#define WDT_TEST_CLEAR_COUNT 3
+
+static struct WDT_REG *pWdt = WDT;
+
+static int wdt_int_count = 0;
+
+static void wdt_isr(void)
+{
+    if (wdt_int_count < WDT_TEST_CLEAR_COUNT) {
+        printf("wdt_test: isr eoi\n");
+        HAL_WDT_ClearInterrupt();
+    }
+    wdt_int_count++;
+}
+
+static void wdt_test(void)
+{
+    int wdt_timeout = 4;
+    uint32_t wdt_left_start, wdt_left_end;
+
+    /* wdt globle reset */
+    /* *(uint32_t*)0xff370004 = 0x10001000; */
+    /* wdt mcu reset and counter reset */
+    *(uint32_t *)0xff370004 = 0x20002000;
+    pWdt->CRR = 0x76;
+
+    printf("wdt_test start:\n");
+    HAL_NVIC_SetIRQHandler(PMUWDT_IRQn, wdt_isr);
+    HAL_NVIC_EnableIRQ(PMUWDT_IRQn);
+
+    HAL_WDT_Init(WDT_TEST_FREQ, pWdt);
+    HAL_WDT_SetTimeout(wdt_timeout);
+    printf("wdt_test: timeout set-%ds, get-%ds, TORR-0x%lx\n",
+           wdt_timeout, HAL_WDT_GetTimeout(), pWdt->TORR);
+    HAL_WDT_Start(INDIRECT_SYSTEM_RESET);
+    wdt_left_start = HAL_WDT_GetTimeLeft();
+    HAL_DelayMs(1000);
+    wdt_left_end = HAL_WDT_GetTimeLeft();
+    printf("wdt_test: 1s(delay) = %ldus(wdt)\n",
+           (wdt_left_start - wdt_left_end) / (WDT_TEST_FREQ / 1000000));
+}
+#endif
+
 void test_demo(void)
 {
 #ifdef IRQ_LATENCY_TEST
@@ -160,5 +212,9 @@ void test_demo(void)
 
 #ifdef SOFTIRQ_TEST
     softirq_test();
+#endif
+
+#ifdef WDT_TEST
+    wdt_test();
 #endif
 }
