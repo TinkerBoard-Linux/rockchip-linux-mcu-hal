@@ -50,6 +50,10 @@ extern const struct HAL_CANFD_DEV g_can2Dev;
 extern const struct HAL_GMAC_DEV g_gmac0Dev;
 extern const struct HAL_GMAC_DEV g_gmac1Dev;
 #endif
+
+#ifdef HAL_PCIE_MODULE_ENABLED
+extern struct HAL_PCIE_HANDLE g_pcieDev;
+#endif
 /***************************** Function Declare ******************************/
 void BSP_Init(void);
 

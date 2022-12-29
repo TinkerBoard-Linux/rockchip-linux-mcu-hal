@@ -214,8 +214,10 @@ typedef enum
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
+#define PCIE3X2_DBI_BASE        0xF6000000 /* PCIe dbi base address */
 #define GIC_DISTRIBUTOR_BASE    0xFD400000 /* GICD base address */
 #define GIC_REDISTRIBUTOR_BASE  0xFD460000 /* GICR base address */
+#define PCIE3X2_APB_BASE        0xFE280000 /* PCIe apb base address */
 
 /****************************************************************************************/
 /*                                                                                      */
