@@ -12,6 +12,7 @@
 //#define IRQ_LATENCY_TEST
 //#define PERF_TEST
 //#define SOFTIRQ_TEST
+//#define TIMER_TEST
 
 /********************* Private Structure Definition **************************/
 
@@ -148,6 +149,86 @@ static void softirq_test(void)
 }
 #endif
 
+/************************************************/
+/*                                              */
+/*                  TIMER_TEST                  */
+/*                                              */
+/************************************************/
+#ifdef TIMER_TEST
+static int timer_int_count = 0;
+static uint32_t latency_sum = 0;
+static uint32_t latency_max = 0;
+struct TIMER_REG *test_timer = TIMER4;
+static bool desc_timer = true;
+static uint32_t fixed_spend = 0;
+
+static void timer_isr(uint32_t irq, void *args)
+{
+    uint32_t count;
+    uint32_t latency;
+
+    count = (uint32_t)HAL_TIMER_GetCount(test_timer);
+    if (desc_timer) {
+        count = 24000000 - count;
+    }
+    if (count > fixed_spend) {
+        count -= fixed_spend;
+    }
+    /* 24M timer: 41.67ns per count */
+    latency = count * 41;
+    printf("timer_test: latency=%ldns(count=%ld)\n", latency, count);
+    timer_int_count++;
+    latency_sum += latency;
+    latency_max = latency_max > latency ? latency_max : latency;
+    if (timer_int_count == 100) {
+        printf("timer_test: latency avg=%dns,max=%dns\n", latency_sum / timer_int_count, latency_max);
+        timer_int_count = 0;
+        latency_sum = 0;
+        latency_max = 0;
+        HAL_TIMER_ClrInt(test_timer);
+        HAL_TIMER_Stop_IT(test_timer);
+    }
+
+    HAL_TIMER_ClrInt(test_timer);
+}
+
+static void timer_test(void)
+{
+    uint64_t start, end;
+    uint32_t count;
+
+    printf("timer_test start\n");
+    start = HAL_GetSysTimerCount();
+    HAL_DelayUs(1000000);
+    end = HAL_GetSysTimerCount();
+    /* sys_timer: TIMER5 is a increment count TIMER */
+    count = (uint32_t)(end - start);
+    printf("sys_timer 1s count: %ld(%lld, %lld)\n", count, start, end);
+
+    HAL_TIMER_Init(test_timer, TIMER_FREE_RUNNING);
+    HAL_TIMER_SetCount(test_timer, 2000000000);
+    HAL_TIMER_Start(test_timer);
+    start = HAL_TIMER_GetCount(test_timer);
+    HAL_DelayUs(1000000);
+    end = HAL_TIMER_GetCount(test_timer);
+    /* Pay attention to the timer type */
+    /* test_timer: TIMER4 is a decrement count TIMER */
+    desc_timer = true;
+    count = (uint32_t)(start - end);
+    fixed_spend = start;
+    printf("test_timer 1s count: %ld(%lld, %lld), fixed_spend=%ld\n",
+           count, start, end, fixed_spend);
+    HAL_TIMER_Stop(test_timer);
+
+    HAL_INTMUX_SetIRQHandler(TIMER4_IRQn, timer_isr, NULL);
+    HAL_INTMUX_EnableIRQ(TIMER4_IRQn);
+    printf("timer_test: 1s interrupt start\n");
+    HAL_TIMER_Init(test_timer, TIMER_FREE_RUNNING);
+    HAL_TIMER_SetCount(test_timer, 24000000);
+    HAL_TIMER_Start_IT(test_timer);
+}
+#endif
+
 void test_demo(void)
 {
 #ifdef IRQ_LATENCY_TEST
@@ -160,5 +241,9 @@ void test_demo(void)
 
 #ifdef SOFTIRQ_TEST
     softirq_test();
+#endif
+
+#ifdef TIMER_TEST
+    timer_test();
 #endif
 }
