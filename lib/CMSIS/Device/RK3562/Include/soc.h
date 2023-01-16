@@ -74,8 +74,12 @@ typedef enum {
 #define INTMUX_NUM_INT_PER_CON    256
 #define INTMUX_NUM_OUT_PER_CON    4
 #define INTMUX_NUM_INT_PER_OUT    64
-#define INTMUX_NUM_GROUP_PER_CON  8
-#define INTMUX_NUM_INT_PER_GROUP  32
+#define INTMUX_NUM_GROUP_PER_OUT  8
+#define INTMUX_NUM_GROUP_PER_CON  32
+#define INTMUX_NUM_INT_PER_GROUP  8
+/* INTMUX IRQ start from GIC SPI(Shared Peripheral Interrupt) */
+#define INTMUX_IRQ_START_NUM      32
+#define INTMUX_OUT_IRQ_START_NUM  0
 
 #define NUM_EXT_INTERRUPTS        256
 
@@ -98,17 +102,22 @@ typedef enum {
   TIMER0_IRQn               =  5,      /*!< TIMER0 Interrupt              */
   RSVD0_MCU_IRQn            =  6,      /*!< RSVD0 MCU Interrupt           */
   NUM_INTERRUPTS            =  8,      /*!< Number of internal IRQ        */
-  UART0_IRQn                =  62  + NUM_INTERRUPTS,                    /*!< UART0 Interrupt               */
-  UART1_IRQn                =  63  + NUM_INTERRUPTS,                    /*!< UART1 Interrupt               */
-  UART2_IRQn                =  64  + NUM_INTERRUPTS,                    /*!< UART2 Interrupt               */
-  UART3_IRQn                =  65  + NUM_INTERRUPTS,                    /*!< UART3 Interrupt               */
-  UART4_IRQn                =  66  + NUM_INTERRUPTS,                    /*!< UART4 Interrupt               */
-  UART5_IRQn                =  67  + NUM_INTERRUPTS,                    /*!< UART5 Interrupt               */
-  UART6_IRQn                =  68  + NUM_INTERRUPTS,                    /*!< UART6 Interrupt               */
-  UART7_IRQn                =  69  + NUM_INTERRUPTS,                    /*!< UART7 Interrupt               */
-  UART8_IRQn                =  70  + NUM_INTERRUPTS,                    /*!< UART8 Interrupt               */
-  UART9_IRQn                =  71  + NUM_INTERRUPTS,                    /*!< UART9 Interrupt               */
-  TOTAL_INTERRUPTS          =  (NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),   /*!< For external interrupt from intmux    */
+  UART0_IRQn                =  62 + NUM_INTERRUPTS,     /*!< UART0 Interrupt               */
+  UART1_IRQn                =  63 + NUM_INTERRUPTS,     /*!< UART1 Interrupt               */
+  UART2_IRQn                =  64 + NUM_INTERRUPTS,     /*!< UART2 Interrupt               */
+  UART3_IRQn                =  65 + NUM_INTERRUPTS,     /*!< UART3 Interrupt               */
+  UART4_IRQn                =  66 + NUM_INTERRUPTS,     /*!< UART4 Interrupt               */
+  UART5_IRQn                =  67 + NUM_INTERRUPTS,     /*!< UART5 Interrupt               */
+  UART6_IRQn                =  68 + NUM_INTERRUPTS,     /*!< UART6 Interrupt               */
+  UART7_IRQn                =  69 + NUM_INTERRUPTS,     /*!< UART7 Interrupt               */
+  UART8_IRQn                =  70 + NUM_INTERRUPTS,     /*!< UART8 Interrupt               */
+  UART9_IRQn                =  71 + NUM_INTERRUPTS,     /*!< UART9 Interrupt               */
+  TIMER1_IRQn               =  78 + NUM_INTERRUPTS,     /*!< TIMER1 Interrupt               */
+  TIMER2_IRQn               =  79 + NUM_INTERRUPTS,     /*!< TIMER2 Interrupt               */
+  TIMER3_IRQn               =  80 + NUM_INTERRUPTS,     /*!< TIMER3 Interrupt               */
+  TIMER4_IRQn               =  81 + NUM_INTERRUPTS,     /*!< TIMER4 Interrupt               */
+  TIMER5_IRQn               =  81 + NUM_INTERRUPTS,     /*!< TIMER5 Interrupt               */
+  TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 
 #elif defined(RKMCU_RK3562_PMU)
