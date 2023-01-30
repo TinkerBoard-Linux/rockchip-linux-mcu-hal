@@ -283,6 +283,43 @@ struct UART_REG {
     __I  uint32_t UCV;                                /* Address Offset: 0x00F8 */
     __I  uint32_t CTR;                                /* Address Offset: 0x00FC */
 };
+/* GPIO Register Structure Define */
+struct GPIO_REG {
+    __IO uint32_t SWPORT_DR_L;                        /* Address Offset: 0x0000 */
+    __IO uint32_t SWPORT_DR_H;                        /* Address Offset: 0x0004 */
+    __IO uint32_t SWPORT_DDR_L;                       /* Address Offset: 0x0008 */
+    __IO uint32_t SWPORT_DDR_H;                       /* Address Offset: 0x000C */
+    __IO uint32_t INT_EN_L;                           /* Address Offset: 0x0010 */
+    __IO uint32_t INT_EN_H;                           /* Address Offset: 0x0014 */
+    __IO uint32_t INT_MASK_L;                         /* Address Offset: 0x0018 */
+    __IO uint32_t INT_MASK_H;                         /* Address Offset: 0x001C */
+    __IO uint32_t INT_TYPE_L;                         /* Address Offset: 0x0020 */
+    __IO uint32_t INT_TYPE_H;                         /* Address Offset: 0x0024 */
+    __IO uint32_t INT_POLARITY_L;                     /* Address Offset: 0x0028 */
+    __IO uint32_t INT_POLARITY_H;                     /* Address Offset: 0x002C */
+    __IO uint32_t INT_BOTHEDGE_L;                     /* Address Offset: 0x0030 */
+    __IO uint32_t INT_BOTHEDGE_H;                     /* Address Offset: 0x0034 */
+    __IO uint32_t DEBOUNCE_L;                         /* Address Offset: 0x0038 */
+    __IO uint32_t DEBOUNCE_H;                         /* Address Offset: 0x003C */
+    __IO uint32_t DBCLK_DIV_EN_L;                     /* Address Offset: 0x0040 */
+    __IO uint32_t DBCLK_DIV_EN_H;                     /* Address Offset: 0x0044 */
+    __IO uint32_t DBCLK_DIV_CON;                      /* Address Offset: 0x0048 */
+         uint32_t RESERVED004C;                       /* Address Offset: 0x004C */
+    __I  uint32_t INT_STATUS;                         /* Address Offset: 0x0050 */
+         uint32_t RESERVED0054;                       /* Address Offset: 0x0054 */
+    __I  uint32_t INT_RAWSTATUS;                      /* Address Offset: 0x0058 */
+         uint32_t RESERVED005C;                       /* Address Offset: 0x005C */
+    __IO uint32_t PORT_EOI_L;                         /* Address Offset: 0x0060 */
+    __IO uint32_t PORT_EOI_H;                         /* Address Offset: 0x0064 */
+         uint32_t RESERVED0068[2];                    /* Address Offset: 0x0068 */
+    __I  uint32_t EXT_PORT;                           /* Address Offset: 0x0070 */
+         uint32_t RESERVED0074;                       /* Address Offset: 0x0074 */
+    __I  uint32_t VER_ID;                             /* Address Offset: 0x0078 */
+         uint32_t RESERVED007C[33];                   /* Address Offset: 0x007C */
+    __IO uint32_t GPIO_REG_GROUP_L;                   /* Address Offset: 0x0100 */
+    __IO uint32_t GPIO_REG_GROUP_H;                   /* Address Offset: 0x0104 */
+    __IO uint32_t GPIO_VIRTUAL_EN;                    /* Address Offset: 0x0108 */
+};
 /* DCACHE Register Structure Define */
 struct DCACHE_REG {
     __IO uint32_t CACHE_CTRL;                         /* Address Offset: 0x0000 */
@@ -363,6 +400,9 @@ struct INTMUX_REG {
 #define GPIO4_IOC_BASE                 0xFF070000U /* GPIO4_IOC base address */
 #define GPIO0_IOC_BASE                 0xFF080000U /* GPIO0_IOC base address */
 #define UART0_BASE                     0xFF210000U /* UART0 base address */
+#define GPIO0_BASE                     0xFF260000U /* GPIO0 base address */
+#define GPIO1_BASE                     0xFF620000U /* GPIO1 base address */
+#define GPIO2_BASE                     0xFF630000U /* GPIO2 base address */
 #define UART1_BASE                     0xFF670000U /* UART1 base address */
 #define UART2_BASE                     0xFF680000U /* UART2 base address */
 #define UART3_BASE                     0xFF690000U /* UART3 base address */
@@ -380,6 +420,8 @@ struct INTMUX_REG {
 #define TIMER3_BASE                    0xFFA50060U /* TIMER3 base address */
 #define TIMER4_BASE                    0xFFA50080U /* TIMER4 base address */
 #define TIMER5_BASE                    0xFFA500A0U /* TIMER5 base address */
+#define GPIO3_BASE                     0xFFAC0000U /* GPIO3 base address */
+#define GPIO4_BASE                     0xFFAD0000U /* GPIO4 base address */
 #define INTMUX_BASE                    0xFFAF0000U /* INTMUX base address */
 /****************************************************************************************/
 /*                                                                                      */
@@ -394,6 +436,9 @@ struct INTMUX_REG {
 #define GPIO4_IOC           ((struct GPIO4_IOC_REG *) GPIO4_IOC_BASE)
 #define GPIO0_IOC           ((struct GPIO0_IOC_REG *) GPIO0_IOC_BASE)
 #define UART0               ((struct UART_REG *) UART0_BASE)
+#define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
+#define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define UART2               ((struct UART_REG *) UART2_BASE)
 #define UART3               ((struct UART_REG *) UART3_BASE)
@@ -411,6 +456,8 @@ struct INTMUX_REG {
 #define TIMER3              ((struct TIMER_REG *) TIMER3_BASE)
 #define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
+#define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
+#define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
 #define INTMUX              ((struct INTMUX_REG *) INTMUX_BASE)
 
 #define IS_GPIO1_IOC_INSTANCE(instance) ((instance) == GPIO1_IOC)
@@ -422,6 +469,7 @@ struct INTMUX_REG {
 #define IS_ICACHE_INSTANCE(instance) ((instance) == ICACHE)
 #define IS_INTMUX_INSTANCE(instance) ((instance) == INTMUX)
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
+#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 /****************************************************************************************/
 /*                                                                                      */
@@ -2642,6 +2690,123 @@ struct INTMUX_REG {
 #define UART_CTR                                           (0x44570110U)
 #define UART_CTR_PERIPHERAL_ID_SHIFT                       (0U)
 #define UART_CTR_PERIPHERAL_ID_MASK                        (0xFFFFFFFFU << UART_CTR_PERIPHERAL_ID_SHIFT)                /* 0xFFFFFFFF */
+/******************************************GPIO******************************************/
+/* SWPORT_DR_L */
+#define GPIO_SWPORT_DR_L_OFFSET                            (0x0U)
+#define GPIO_SWPORT_DR_L_SWPORT_DR_LOW_SHIFT               (0U)
+#define GPIO_SWPORT_DR_L_SWPORT_DR_LOW_MASK                (0xFFFFU << GPIO_SWPORT_DR_L_SWPORT_DR_LOW_SHIFT)            /* 0x0000FFFF */
+/* SWPORT_DR_H */
+#define GPIO_SWPORT_DR_H_OFFSET                            (0x4U)
+#define GPIO_SWPORT_DR_H_SWPORT_DR_HIGH_SHIFT              (0U)
+#define GPIO_SWPORT_DR_H_SWPORT_DR_HIGH_MASK               (0xFFFFU << GPIO_SWPORT_DR_H_SWPORT_DR_HIGH_SHIFT)           /* 0x0000FFFF */
+/* SWPORT_DDR_L */
+#define GPIO_SWPORT_DDR_L_OFFSET                           (0x8U)
+#define GPIO_SWPORT_DDR_L_SWPORT_DDR_LOW_SHIFT             (0U)
+#define GPIO_SWPORT_DDR_L_SWPORT_DDR_LOW_MASK              (0xFFFFU << GPIO_SWPORT_DDR_L_SWPORT_DDR_LOW_SHIFT)          /* 0x0000FFFF */
+/* SWPORT_DDR_H */
+#define GPIO_SWPORT_DDR_H_OFFSET                           (0xCU)
+#define GPIO_SWPORT_DDR_H_SWPORT_DDR_HIGH_SHIFT            (0U)
+#define GPIO_SWPORT_DDR_H_SWPORT_DDR_HIGH_MASK             (0xFFFFU << GPIO_SWPORT_DDR_H_SWPORT_DDR_HIGH_SHIFT)         /* 0x0000FFFF */
+/* INT_EN_L */
+#define GPIO_INT_EN_L_OFFSET                               (0x10U)
+#define GPIO_INT_EN_L_INT_EN_LOW_SHIFT                     (0U)
+#define GPIO_INT_EN_L_INT_EN_LOW_MASK                      (0xFFFFU << GPIO_INT_EN_L_INT_EN_LOW_SHIFT)                  /* 0x0000FFFF */
+/* INT_EN_H */
+#define GPIO_INT_EN_H_OFFSET                               (0x14U)
+#define GPIO_INT_EN_H_INT_EN_HIGH_SHIFT                    (0U)
+#define GPIO_INT_EN_H_INT_EN_HIGH_MASK                     (0xFFFFU << GPIO_INT_EN_H_INT_EN_HIGH_SHIFT)                 /* 0x0000FFFF */
+/* INT_MASK_L */
+#define GPIO_INT_MASK_L_OFFSET                             (0x18U)
+#define GPIO_INT_MASK_L_INT_MASK_LOW_SHIFT                 (0U)
+#define GPIO_INT_MASK_L_INT_MASK_LOW_MASK                  (0xFFFFU << GPIO_INT_MASK_L_INT_MASK_LOW_SHIFT)              /* 0x0000FFFF */
+/* INT_MASK_H */
+#define GPIO_INT_MASK_H_OFFSET                             (0x1CU)
+#define GPIO_INT_MASK_H_INT_MASK_HIGH_SHIFT                (0U)
+#define GPIO_INT_MASK_H_INT_MASK_HIGH_MASK                 (0xFFFFU << GPIO_INT_MASK_H_INT_MASK_HIGH_SHIFT)             /* 0x0000FFFF */
+/* INT_TYPE_L */
+#define GPIO_INT_TYPE_L_OFFSET                             (0x20U)
+#define GPIO_INT_TYPE_L_INT_TYPE_LOW_SHIFT                 (0U)
+#define GPIO_INT_TYPE_L_INT_TYPE_LOW_MASK                  (0xFFFFU << GPIO_INT_TYPE_L_INT_TYPE_LOW_SHIFT)              /* 0x0000FFFF */
+/* INT_TYPE_H */
+#define GPIO_INT_TYPE_H_OFFSET                             (0x24U)
+#define GPIO_INT_TYPE_H_INT_TYPE_HIGH_SHIFT                (0U)
+#define GPIO_INT_TYPE_H_INT_TYPE_HIGH_MASK                 (0xFFFFU << GPIO_INT_TYPE_H_INT_TYPE_HIGH_SHIFT)             /* 0x0000FFFF */
+/* INT_POLARITY_L */
+#define GPIO_INT_POLARITY_L_OFFSET                         (0x28U)
+#define GPIO_INT_POLARITY_L_INT_POLARITY_LOW_SHIFT         (0U)
+#define GPIO_INT_POLARITY_L_INT_POLARITY_LOW_MASK          (0xFFFFU << GPIO_INT_POLARITY_L_INT_POLARITY_LOW_SHIFT)      /* 0x0000FFFF */
+/* INT_POLARITY_H */
+#define GPIO_INT_POLARITY_H_OFFSET                         (0x2CU)
+#define GPIO_INT_POLARITY_H_INT_POLARITY_HIGH_SHIFT        (0U)
+#define GPIO_INT_POLARITY_H_INT_POLARITY_HIGH_MASK         (0xFFFFU << GPIO_INT_POLARITY_H_INT_POLARITY_HIGH_SHIFT)     /* 0x0000FFFF */
+/* INT_BOTHEDGE_L */
+#define GPIO_INT_BOTHEDGE_L_OFFSET                         (0x30U)
+#define GPIO_INT_BOTHEDGE_L_INT_BOTHEDGE_LOW_SHIFT         (0U)
+#define GPIO_INT_BOTHEDGE_L_INT_BOTHEDGE_LOW_MASK          (0xFFFFU << GPIO_INT_BOTHEDGE_L_INT_BOTHEDGE_LOW_SHIFT)      /* 0x0000FFFF */
+/* INT_BOTHEDGE_H */
+#define GPIO_INT_BOTHEDGE_H_OFFSET                         (0x34U)
+#define GPIO_INT_BOTHEDGE_H_INT_BOTHEDGE_HIGH_SHIFT        (0U)
+#define GPIO_INT_BOTHEDGE_H_INT_BOTHEDGE_HIGH_MASK         (0xFFFFU << GPIO_INT_BOTHEDGE_H_INT_BOTHEDGE_HIGH_SHIFT)     /* 0x0000FFFF */
+/* DEBOUNCE_L */
+#define GPIO_DEBOUNCE_L_OFFSET                             (0x38U)
+#define GPIO_DEBOUNCE_L_DEBOUNCE_LOW_SHIFT                 (0U)
+#define GPIO_DEBOUNCE_L_DEBOUNCE_LOW_MASK                  (0xFFFFU << GPIO_DEBOUNCE_L_DEBOUNCE_LOW_SHIFT)              /* 0x0000FFFF */
+/* DEBOUNCE_H */
+#define GPIO_DEBOUNCE_H_OFFSET                             (0x3CU)
+#define GPIO_DEBOUNCE_H_DEBOUNCE_HIGH_SHIFT                (0U)
+#define GPIO_DEBOUNCE_H_DEBOUNCE_HIGH_MASK                 (0xFFFFU << GPIO_DEBOUNCE_H_DEBOUNCE_HIGH_SHIFT)             /* 0x0000FFFF */
+/* DBCLK_DIV_EN_L */
+#define GPIO_DBCLK_DIV_EN_L_OFFSET                         (0x40U)
+#define GPIO_DBCLK_DIV_EN_L_DBCLK_DIV_EN_LOW_SHIFT         (0U)
+#define GPIO_DBCLK_DIV_EN_L_DBCLK_DIV_EN_LOW_MASK          (0xFFFFU << GPIO_DBCLK_DIV_EN_L_DBCLK_DIV_EN_LOW_SHIFT)      /* 0x0000FFFF */
+/* DBCLK_DIV_EN_H */
+#define GPIO_DBCLK_DIV_EN_H_OFFSET                         (0x44U)
+#define GPIO_DBCLK_DIV_EN_H_DBCLK_DIV_EN_HIGH_SHIFT        (0U)
+#define GPIO_DBCLK_DIV_EN_H_DBCLK_DIV_EN_HIGH_MASK         (0xFFFFU << GPIO_DBCLK_DIV_EN_H_DBCLK_DIV_EN_HIGH_SHIFT)     /* 0x0000FFFF */
+/* DBCLK_DIV_CON */
+#define GPIO_DBCLK_DIV_CON_OFFSET                          (0x48U)
+#define GPIO_DBCLK_DIV_CON_DBCLK_DIV_CON_SHIFT             (0U)
+#define GPIO_DBCLK_DIV_CON_DBCLK_DIV_CON_MASK              (0xFFFFFFU << GPIO_DBCLK_DIV_CON_DBCLK_DIV_CON_SHIFT)        /* 0x00FFFFFF */
+/* INT_STATUS */
+#define GPIO_INT_STATUS_OFFSET                             (0x50U)
+#define GPIO_INT_STATUS                                    (0x0U)
+#define GPIO_INT_STATUS_INT_STATUS_SHIFT                   (0U)
+#define GPIO_INT_STATUS_INT_STATUS_MASK                    (0xFFFFFFFFU << GPIO_INT_STATUS_INT_STATUS_SHIFT)            /* 0xFFFFFFFF */
+/* INT_RAWSTATUS */
+#define GPIO_INT_RAWSTATUS_OFFSET                          (0x58U)
+#define GPIO_INT_RAWSTATUS                                 (0x0U)
+#define GPIO_INT_RAWSTATUS_INT_RAWSTATUS_SHIFT             (0U)
+#define GPIO_INT_RAWSTATUS_INT_RAWSTATUS_MASK              (0xFFFFFFFFU << GPIO_INT_RAWSTATUS_INT_RAWSTATUS_SHIFT)      /* 0xFFFFFFFF */
+/* PORT_EOI_L */
+#define GPIO_PORT_EOI_L_OFFSET                             (0x60U)
+#define GPIO_PORT_EOI_L_PORT_EOI_LOW_SHIFT                 (0U)
+#define GPIO_PORT_EOI_L_PORT_EOI_LOW_MASK                  (0xFFFFU << GPIO_PORT_EOI_L_PORT_EOI_LOW_SHIFT)              /* 0x0000FFFF */
+/* PORT_EOI_H */
+#define GPIO_PORT_EOI_H_OFFSET                             (0x64U)
+#define GPIO_PORT_EOI_H_PORT_EOI_HIGH_SHIFT                (0U)
+#define GPIO_PORT_EOI_H_PORT_EOI_HIGH_MASK                 (0xFFFFU << GPIO_PORT_EOI_H_PORT_EOI_HIGH_SHIFT)             /* 0x0000FFFF */
+/* EXT_PORT */
+#define GPIO_EXT_PORT_OFFSET                               (0x70U)
+#define GPIO_EXT_PORT                                      (0x0U)
+#define GPIO_EXT_PORT_EXT_PORT_SHIFT                       (0U)
+#define GPIO_EXT_PORT_EXT_PORT_MASK                        (0xFFFFFFFFU << GPIO_EXT_PORT_EXT_PORT_SHIFT)                /* 0xFFFFFFFF */
+/* VER_ID */
+#define GPIO_VER_ID_OFFSET                                 (0x78U)
+#define GPIO_VER_ID                                        (0x101157CU)
+#define GPIO_VER_ID_VER_ID_SHIFT                           (0U)
+#define GPIO_VER_ID_VER_ID_MASK                            (0xFFFFFFFFU << GPIO_VER_ID_VER_ID_SHIFT)                    /* 0xFFFFFFFF */
+/* GPIO_REG_GROUP_L */
+#define GPIO_GPIO_REG_GROUP_L_OFFSET                       (0x100U)
+#define GPIO_GPIO_REG_GROUP_L_GPIO_REG_GROUP_LOW_SHIFT     (0U)
+#define GPIO_GPIO_REG_GROUP_L_GPIO_REG_GROUP_LOW_MASK      (0xFFFFU << GPIO_GPIO_REG_GROUP_L_GPIO_REG_GROUP_LOW_SHIFT)  /* 0x0000FFFF */
+/* GPIO_REG_GROUP_H */
+#define GPIO_GPIO_REG_GROUP_H_OFFSET                       (0x104U)
+#define GPIO_GPIO_REG_GROUP_H_GPIO_REG_GROUP_HIGH_SHIFT    (0U)
+#define GPIO_GPIO_REG_GROUP_H_GPIO_REG_GROUP_HIGH_MASK     (0xFFFFU << GPIO_GPIO_REG_GROUP_H_GPIO_REG_GROUP_HIGH_SHIFT) /* 0x0000FFFF */
+/* GPIO_VIRTUAL_EN */
+#define GPIO_GPIO_VIRTUAL_EN_OFFSET                        (0x108U)
+#define GPIO_GPIO_VIRTUAL_EN_GPIO_VIRTUAL_EN_SHIFT         (0U)
+#define GPIO_GPIO_VIRTUAL_EN_GPIO_VIRTUAL_EN_MASK          (0x1U << GPIO_GPIO_VIRTUAL_EN_GPIO_VIRTUAL_EN_SHIFT)         /* 0x00000001 */
 /*****************************************DCACHE*****************************************/
 /* CACHE_CTRL */
 #define DCACHE_CACHE_CTRL_OFFSET                           (0x0U)
