@@ -79,6 +79,10 @@ typedef enum {
 #define INTMUX_NUM_INT_PER_GROUP  8
 /* INTMUX IRQ start from GIC SPI(Shared Peripheral Interrupt) */
 #define INTMUX_IRQ_START_NUM      32
+#define INTMUX_IRQ_OUT0
+#define INTMUX_IRQ_OUT1
+#define INTMUX_IRQ_OUT2
+#define INTMUX_IRQ_OUT3
 #define INTMUX_OUT_IRQ_START_NUM  0
 
 #define NUM_EXT_INTERRUPTS        256

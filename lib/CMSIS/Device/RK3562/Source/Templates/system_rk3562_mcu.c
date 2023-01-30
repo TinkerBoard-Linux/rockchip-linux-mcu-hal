@@ -34,5 +34,7 @@ void SystemInit(void)
 
     DCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 #endif
+
+    HAL_INTMUX_Init();
 }
 #endif
