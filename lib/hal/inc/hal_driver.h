@@ -134,6 +134,10 @@
 #include "hal_intc.h"
 #endif
 
+#ifdef HAL_INTMUX_MODULE_ENABLED
+#include "hal_intmux.h"
+#endif
+
 #ifdef HAL_IRQ_HANDLER_MODULE_ENABLED
 #include "hal_irq_handler.h"
 #endif
