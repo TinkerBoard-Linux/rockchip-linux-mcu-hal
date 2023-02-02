@@ -6,6 +6,7 @@
 MEMORY
 {
     RAM(rxw) : ORIGIN = 0x00000000, LENGTH = 0x100000
+    LINUX_RPMSG (rxw) : ORIGIN = 0xa0000000, LENGTH = 0x00500000
 }
 
 ENTRY(Reset_Handler)
@@ -115,6 +116,13 @@ SECTIONS
         KEEP(*(.dtors))
         PROVIDE(__dtors_end__ = .);
     } > RAM
+
+    .linux_share_rpmsg (NOLOAD):
+    {
+        PROVIDE(__linux_share_rpmsg_start__ = .);
+        . += LENGTH(LINUX_RPMSG);
+        PROVIDE(__linux_share_rpmsg_end__ = .);
+    } > LINUX_RPMSG
 
     . = ALIGN(16);
 

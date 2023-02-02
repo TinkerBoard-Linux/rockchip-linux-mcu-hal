@@ -234,6 +234,10 @@ typedef enum CLOCK_Name {
 } eCLOCK_Name;
 #endif /* __ASSEMBLY__ */
 
+/****************************************MBOX********************************************/
+#define MBOX_CNT             2
+#define MBOX_CHAN_CNT        4
+
 /****************************************GPIO********************************************/
 #ifdef GPIO_VER_ID
 #undef GPIO_VER_ID
