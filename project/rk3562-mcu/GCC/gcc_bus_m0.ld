@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
 MEMORY
@@ -8,169 +8,146 @@ MEMORY
     RAM(rxw) : ORIGIN = 0x00000000, LENGTH = 0x100000
 }
 
-__STACK_SIZE = 0x400;
-
-/* Linker script to place sections and symbol values. Should be used together
- * with other linker script that defines memory regions FLASH and RAM.
- * It references following symbols, which must be defined in code:
- *   Reset_Handler : Entry of reset handler
- *
- * It defines following symbols, which code can use without definition:
- *   __exidx_start
- *   __exidx_end
- *   __copy_table_start__
- *   __copy_table_end__
- *   __zero_table_start__
- *   __zero_table_end__
- *   __etext
- *   __data_start__
- *   __preinit_array_start
- *   __preinit_array_end
- *   __init_array_start
- *   __init_array_end
- *   __fini_array_start
- *   __fini_array_end
- *   __data_end__
- *   __bss_start__
- *   __bss_end__
- *   __end__
- *   end
- *   __HeapLimit
- *   __StackLimit
- *   __StackTop
- *   __stack
- */
 ENTRY(Reset_Handler)
+
+__STACK_SIZE = 0x1000;
 
 SECTIONS
 {
-  .text :
-  {
-    KEEP(*(.vectors))
-    *(.text*)
+    .text :
+    {
+        KEEP(*(.vectors))
+        _stext = .;
+        . = ALIGN(16);
+        KEEP(*(.init))
+        KEEP(*(.fini))
+        *(.text)                        /* remaining code */
+        *(.text.*)                      /* remaining code */
+        *(.rodata)                      /* read-only data (constants) */
+        *(.rodata*)
+        *(.glue_7)
+        *(.glue_7t)
+        *(.gnu.linkonce.t*)
 
-    KEEP(*(.init))
-    KEEP(*(.fini))
+        . = ALIGN(16);
+        _etext = .;
+    } > RAM
 
-    /* .ctors */
-    PROVIDE(__ctors_start__ = .);
-    *crtbegin.o(.ctors)
-    *crtbegin?.o(.ctors)
-    *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
-    *(SORT(.ctors.*))
-    *(.ctors)
+    .ARM.extab :
+    {
+        *(.ARM.extab* .gnu.linkonce.armextab.*)
+    } > RAM
 
-    /* .dtors */
-    *crtbegin.o(.dtors)
-    *crtbegin?.o(.dtors)
-    *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
-    *(SORT(.dtors.*))
-    *(.dtors)
+    __exidx_start = .;
+    .ARM.exidx :
+    {
+        *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+    } > RAM
+    __exidx_end = .;
 
-    *(.rodata*)
+    .zero.table :
+    {
+        . = ALIGN(4);
+        __zero_table_start__ = .;
+        LONG (__bss_start__)
+        LONG (__bss_end__ - __bss_start__ / 4)
+        __zero_table_end__ = .;
+    } > RAM
 
-    KEEP(*(.eh_frame*))
-  } > RAM
+    .copy.table :
+    {
+        . = ALIGN(4);
+        __copy_table_start__ = .;
+        __copy_table_end__ = .;
+    } > RAM
 
-  .ARM.extab :
-  {
-    *(.ARM.extab* .gnu.linkonce.armextab.*)
-  } > RAM
+    . = ALIGN (4);
 
-  __exidx_start = .;
-  .ARM.exidx :
-  {
-    *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-  } > RAM
-  __exidx_end = .;
+    .data :
+    {
+        PROVIDE(__data_start__ = .);
+        *(vtable)
+        *(.data)
+        *(.data.*)
 
-  .copy.table :
-  {
-    . = ALIGN(4);
-    __copy_table_start__ = .;
-    __copy_table_end__ = .;
-  } > RAM
+        . = ALIGN(4);
+        /* preinit data */
+        PROVIDE_HIDDEN (__preinit_array_start = .);
+        KEEP(*(.preinit_array))
+        PROVIDE_HIDDEN (__preinit_array_end = .);
 
-  .zero.table :
-  {
-    . = ALIGN(4);
-    __zero_table_start__ = .;
-    LONG (__bss_start__)
-    LONG (__bss_end__ - __bss_start__)
-    __zero_table_end__ = .;
-  } > RAM
+        . = ALIGN(4);
+        /* init data */
+        PROVIDE_HIDDEN (__init_array_start = .);
+        KEEP(*(SORT(.init_array.*)))
+        KEEP(*(.init_array))
+        PROVIDE_HIDDEN (__init_array_end = .);
 
-  /**
-   * Location counter can end up 2byte aligned with narrow Thumb code but
-   * __etext is assumed by startup code to be the LMA of a section in RAM
-   * which must be 4byte aligned
-   */
-  __etext = ALIGN (4);
+        . = ALIGN(4);
+        /* finit data */
+        PROVIDE_HIDDEN (__fini_array_start = .);
+        KEEP(*(SORT(.fini_array.*)))
+        KEEP(*(.fini_array))
+        PROVIDE_HIDDEN (__fini_array_end = .);
 
-  .data :
-  {
-    __data_start__ = .;
-    *(vtable)
-    *(.data)
-    *(.data.*)
+        KEEP(*(.jcr*))
 
-    . = ALIGN(4);
-    /* preinit data */
-    PROVIDE_HIDDEN (__preinit_array_start = .);
-    KEEP(*(.preinit_array))
-    PROVIDE_HIDDEN (__preinit_array_end = .);
+        . = ALIGN(16);
+        *(.sdata)
+        *(.sdata.*)
+        PROVIDE(__data_end__ = .);
+    } > RAM
 
-    . = ALIGN(4);
-    /* init data */
-    PROVIDE_HIDDEN (__init_array_start = .);
-    KEEP(*(SORT(.init_array.*)))
-    KEEP(*(.init_array))
-    PROVIDE_HIDDEN (__init_array_end = .);
+    . = ALIGN(16);
 
-    . = ALIGN(4);
-    /* finit data */
-    PROVIDE_HIDDEN (__fini_array_start = .);
-    KEEP(*(SORT(.fini_array.*)))
-    KEEP(*(.fini_array))
-    PROVIDE_HIDDEN (__fini_array_end = .);
+    .ctors :
+    {
+        PROVIDE(__ctors_start__ = .);
+        KEEP(*(SORT(.ctors.*)))
+        KEEP(*(.ctors))
+        PROVIDE(__ctors_end__ = .);
+    } > RAM
 
-    KEEP(*(.jcr*))
-    . = ALIGN(4);
-    /* All data end */
-    __data_end__ = .;
+    .dtors :
+    {
+        PROVIDE(__dtors_start__ = .);
+        KEEP(*(SORT(.dtors.*)))
+        KEEP(*(.dtors))
+        PROVIDE(__dtors_end__ = .);
+    } > RAM
 
-  } > RAM
+    . = ALIGN(16);
 
-  .bss :
-  {
-    . = ALIGN(4);
-    __bss_start__ = .;
-    *(.bss)
-    *(.bss.*)
-    *(COMMON)
-    . = ALIGN(4);
-    __bss_end__ = .;
-  } > RAM
+    .bss :
+    {
+        PROVIDE(__bss_start__ = .);
+        *(.bss)
+        *(.bss.*)
+        *(.dynbss)
+        *(COMMON)
+        . = ALIGN(16);
+        PROVIDE(__bss_end__ = .);
+    } > RAM
+    _end = .;
+   PROVIDE(end = .);
 
-  .heap (NOLOAD) :
-  {
-    . = ALIGN(8);
-    __end__ = .;
-    PROVIDE(end = .);
-    PROVIDE(__heap_start = .);
-    . = ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE;
-    PROVIDE(__heap_end = .);
-    . = ALIGN(8);
-    __HeapLimit = .;
-  } > RAM
+    . = ALIGN(16);
+    __STACK_START = ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE;
+    __HEAP_SIZE = (__STACK_START - .);
 
-  .stack :
-  {
-    . = ALIGN(8);
-    __StackLimit = .;
-    . = . + __STACK_SIZE;
-    . = ALIGN(8);
-    __StackTop = .;
-  } > RAM
-  PROVIDE(__stack = __StackTop);
+    .heap :
+    {
+        PROVIDE(__heap_start = .);
+        . += __HEAP_SIZE;
+        PROVIDE(__heap_end = .);
+        __HeapLimit = .;
+    } > RAM
+
+    .stack __STACK_START :
+    {
+        __StackLimit = .;
+        PROVIDE(__StackTop = .);
+        . += __STACK_SIZE;
+        __stack = .;
+    } > RAM
 }
