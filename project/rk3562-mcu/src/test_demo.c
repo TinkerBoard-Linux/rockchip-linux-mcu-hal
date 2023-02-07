@@ -160,7 +160,6 @@ static uint32_t latency_sum = 0;
 static uint32_t latency_max = 0;
 struct TIMER_REG *test_timer = TIMER4;
 static bool desc_timer = true;
-static uint32_t fixed_spend = 0;
 
 static void timer_isr(uint32_t irq, void *args)
 {
@@ -170,9 +169,6 @@ static void timer_isr(uint32_t irq, void *args)
     count = (uint32_t)HAL_TIMER_GetCount(test_timer);
     if (desc_timer) {
         count = 24000000 - count;
-    }
-    if (count > fixed_spend) {
-        count -= fixed_spend;
     }
     /* 24M timer: 41.67ns per count */
     latency = count * 41;
@@ -215,9 +211,7 @@ static void timer_test(void)
     /* test_timer: TIMER4 is a decrement count TIMER */
     desc_timer = true;
     count = (uint32_t)(start - end);
-    fixed_spend = start;
-    printf("test_timer 1s count: %ld(%lld, %lld), fixed_spend=%ld\n",
-           count, start, end, fixed_spend);
+    printf("test_timer 1s count: %ld(%lld, %lld)\n", count, start, end);
     HAL_TIMER_Stop(test_timer);
 
     HAL_INTMUX_SetIRQHandler(TIMER4_IRQn, timer_isr, NULL);
