@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
 #include "hal_base.h"
@@ -80,6 +80,45 @@ static const struct TSADC_TABLE s_tsadcTable[] =
 {
     { 296, -40000 },
     { 675, 125000 },
+};
+#elif defined(SOC_RK3358)
+static const struct TSADC_TABLE s_tsadcTable[] =
+{
+    { 0, -40000 },
+    { 296, -40000 },
+    { 304, -35000 },
+    { 313, -30000 },
+    { 331, -20000 },
+    { 340, -15000 },
+    { 349, -10000 },
+    { 359, -5000 },
+    { 368, 0 },
+    { 378, 5000 },
+    { 388, 10000 },
+    { 398, 15000 },
+    { 408, 20000 },
+    { 418, 25000 },
+    { 429, 30000 },
+    { 440, 35000 },
+    { 451, 40000 },
+    { 462, 45000 },
+    { 473, 50000 },
+    { 485, 55000 },
+    { 496, 60000 },
+    { 508, 65000 },
+    { 521, 70000 },
+    { 533, 75000 },
+    { 546, 80000 },
+    { 559, 85000 },
+    { 572, 90000 },
+    { 586, 95000 },
+    { 600, 100000 },
+    { 614, 105000 },
+    { 629, 110000 },
+    { 644, 115000 },
+    { 659, 120000 },
+    { 675, 125000 },
+    { 0xfff, 125000 },
 };
 #endif
 
@@ -305,6 +344,23 @@ static void TSADC_Config(eTSADC_tshutPolarity polarity)
     GRF->TSADC_CON = GRF->TSADC_CON | (0x10001 << 1);
     GRF->TSADC_CON = GRF->TSADC_CON | (0x10001 << 2);
     HAL_DelayUs(200);
+}
+#elif defined(SOC_RK3358)
+static void TSADC_Config(eTSADC_tshutPolarity polarity)
+{
+    /* set tshut_prolarity 0: Low active , 1: High active */
+#ifdef TSADC_AUTO_CON_TSHUT_PROLARITY_MASK
+    CLEAR_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_TSHUT_PROLARITY_MASK);
+    SET_BIT(TSADC->AUTO_CON, (polarity << TSADC_AUTO_CON_TSHUT_PROLARITY_SHIFT));
+#endif
+
+    TSADC->AUTO_PERIOD = TSADC_AUTO_PERIOD_TIME;
+    TSADC->HIGHT_INT_DEBOUNCE = TSADC_HIGHT_INT_DEBOUNCE_COUNT;
+    TSADC->AUTO_PERIOD_HT = TSADC_AUTO_PERIOD_HT_TIME;
+    TSADC->HIGHT_TSHUT_DEBOUNCE = TSADC_HIGHT_TSHUT_DEBOUNCE_COUNT;
+
+    GRF->SOC_CON[2] = 0x10001 << 1;
+    HAL_DelayUs(15);
 }
 #endif
 
