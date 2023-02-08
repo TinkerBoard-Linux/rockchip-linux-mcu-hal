@@ -336,6 +336,18 @@ struct TIMER_REG {
     __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
 };
 /* DMA Register Structure Define */
+struct DMA_CHANNEL_STATUS {
+    __I  uint32_t CSR;
+    __I  uint32_t CPC;
+};
+struct DMA_CHANNEL_CONFIG {
+    __I  uint32_t SAR;
+    __I  uint32_t DAR;
+    __I  uint32_t CCR;
+    __I  uint32_t LC0;
+    __I  uint32_t LC1;
+    __I  uint32_t PADDING[3];
+};
 struct DMA_REG {
     __I  uint32_t DSR;                                /* Address Offset: 0x0000 */
     __I  uint32_t DPC;                                /* Address Offset: 0x0004 */
@@ -348,79 +360,18 @@ struct DMA_REG {
     __I  uint32_t FSRC;                               /* Address Offset: 0x0034 */
     __IO uint32_t FTRD;                               /* Address Offset: 0x0038 */
          uint32_t RESERVED003C;                       /* Address Offset: 0x003C */
-    __I  uint32_t FTR[8];                             /* Address Offset: 0x0040 */
-         uint32_t RESERVED0060[40];                   /* Address Offset: 0x0060 */
-    __I  uint32_t CSR0;                               /* Address Offset: 0x0100 */
-    __I  uint32_t CPC0;                               /* Address Offset: 0x0104 */
-    __I  uint32_t CSR1;                               /* Address Offset: 0x0108 */
-    __I  uint32_t CPC1;                               /* Address Offset: 0x010C */
-    __I  uint32_t CSR2;                               /* Address Offset: 0x0110 */
-    __I  uint32_t CPC2;                               /* Address Offset: 0x0114 */
-    __I  uint32_t CSR3;                               /* Address Offset: 0x0118 */
-    __I  uint32_t CPC3;                               /* Address Offset: 0x011C */
-    __I  uint32_t CSR4;                               /* Address Offset: 0x0120 */
-    __I  uint32_t CPC4;                               /* Address Offset: 0x0124 */
-    __I  uint32_t CSR5;                               /* Address Offset: 0x0128 */
-    __I  uint32_t CPC5;                               /* Address Offset: 0x012C */
-    __I  uint32_t CSR6;                               /* Address Offset: 0x0130 */
-    __I  uint32_t CPC6;                               /* Address Offset: 0x0134 */
-    __I  uint32_t CSR[1];                             /* Address Offset: 0x0138 */
-    __I  uint32_t CPC[1];                             /* Address Offset: 0x013C */
-         uint32_t RESERVED0140[176];                  /* Address Offset: 0x0140 */
-    __I  uint32_t SAR0;                               /* Address Offset: 0x0400 */
-    __I  uint32_t DAR0;                               /* Address Offset: 0x0404 */
-    __I  uint32_t CCR0;                               /* Address Offset: 0x0408 */
-    __I  uint32_t LC0_0;                              /* Address Offset: 0x040C */
-    __I  uint32_t LC1_0;                              /* Address Offset: 0x0410 */
-         uint32_t RESERVED0414[3];                    /* Address Offset: 0x0414 */
-    __I  uint32_t SAR1;                               /* Address Offset: 0x0420 */
-    __I  uint32_t DAR1;                               /* Address Offset: 0x0424 */
-    __I  uint32_t CCR1;                               /* Address Offset: 0x0428 */
-    __I  uint32_t LC0_1;                              /* Address Offset: 0x042C */
-    __I  uint32_t LC1_1;                              /* Address Offset: 0x0430 */
-         uint32_t RESERVED0434[3];                    /* Address Offset: 0x0434 */
-    __I  uint32_t SAR2;                               /* Address Offset: 0x0440 */
-    __I  uint32_t DAR2;                               /* Address Offset: 0x0444 */
-    __I  uint32_t CCR2;                               /* Address Offset: 0x0448 */
-    __I  uint32_t LC0_2;                              /* Address Offset: 0x044C */
-    __I  uint32_t LC1_2;                              /* Address Offset: 0x0450 */
-         uint32_t RESERVED0454[3];                    /* Address Offset: 0x0454 */
-    __I  uint32_t SAR3;                               /* Address Offset: 0x0460 */
-    __I  uint32_t DAR3;                               /* Address Offset: 0x0464 */
-    __I  uint32_t CCR3;                               /* Address Offset: 0x0468 */
-    __I  uint32_t LC0_3;                              /* Address Offset: 0x046C */
-    __I  uint32_t LC1_3;                              /* Address Offset: 0x0470 */
-         uint32_t RESERVED0474[3];                    /* Address Offset: 0x0474 */
-    __I  uint32_t SAR4;                               /* Address Offset: 0x0480 */
-    __I  uint32_t DAR4;                               /* Address Offset: 0x0484 */
-    __I  uint32_t CCR4;                               /* Address Offset: 0x0488 */
-    __I  uint32_t LC0_4;                              /* Address Offset: 0x048C */
-    __I  uint32_t LC1_4;                              /* Address Offset: 0x0490 */
-         uint32_t RESERVED0494[3];                    /* Address Offset: 0x0494 */
-    __I  uint32_t SAR5;                               /* Address Offset: 0x04A0 */
-    __I  uint32_t DAR5;                               /* Address Offset: 0x04A4 */
-    __I  uint32_t CCR5;                               /* Address Offset: 0x04A8 */
-    __I  uint32_t LC0_5;                              /* Address Offset: 0x04AC */
-    __I  uint32_t LC1_5;                              /* Address Offset: 0x04B0 */
-         uint32_t RESERVED04B4[3];                    /* Address Offset: 0x04B4 */
-    __I  uint32_t SAR6;                               /* Address Offset: 0x04C0 */
-    __I  uint32_t DAR6;                               /* Address Offset: 0x04C4 */
-    __I  uint32_t CCR6;                               /* Address Offset: 0x04C8 */
-    __I  uint32_t LC0_6;                              /* Address Offset: 0x04CC */
-    __I  uint32_t LC1_6;                              /* Address Offset: 0x04D0 */
-         uint32_t RESERVED04D4[3];                    /* Address Offset: 0x04D4 */
-    __I  uint32_t SAR[1];                             /* Address Offset: 0x04E0 */
-    __I  uint32_t DAR[1];                             /* Address Offset: 0x04E4 */
-    __I  uint32_t CCR[1];                             /* Address Offset: 0x04E8 */
-    __I  uint32_t LC0[1];                             /* Address Offset: 0x04EC */
-    __I  uint32_t LC1[1];                             /* Address Offset: 0x04F0 */
-         uint32_t RESERVED04F4[515];                  /* Address Offset: 0x04F4 */
+    __I  uint32_t FTR[6];                             /* Address Offset: 0x0040 */
+         uint32_t RESERVED0058[42];                   /* Address Offset: 0x0058 */
+         struct DMA_CHANNEL_STATUS CHAN_STS[6];       /* Address Offset: 0x0100 */
+         uint32_t RESERVED0130[180];                  /* Address Offset: 0x0130 */
+         struct DMA_CHANNEL_CONFIG CHAN_CFG[6];       /* Address Offset: 0x0400 */
+         uint32_t RESERVED04C0[528];                  /* Address Offset: 0x04C0 */
     __I  uint32_t DBGSTATUS;                          /* Address Offset: 0x0D00 */
     __O  uint32_t DBGCMD;                             /* Address Offset: 0x0D04 */
     __O  uint32_t DBGINST[2];                         /* Address Offset: 0x0D08 */
          uint32_t RESERVED0D10[60];                   /* Address Offset: 0x0D10 */
     __I  uint32_t CR[5];                              /* Address Offset: 0x0E00 */
-    __I  uint32_t CRDn;                               /* Address Offset: 0x0E14 */
+    __I  uint32_t CRDN;                               /* Address Offset: 0x0E14 */
          uint32_t RESERVED0E18[26];                   /* Address Offset: 0x0E18 */
     __IO uint32_t WD;                                 /* Address Offset: 0x0E80 */
 };
@@ -722,7 +673,7 @@ struct MMC_REG {
 #define TIMER3_BASE                    0xFF210060U /* TIMER3 base address */
 #define TIMER4_BASE                    0xFF210080U /* TIMER4 base address */
 #define TIMER5_BASE                    0xFF2100A0U /* TIMER5 base address */
-#define DMA_BASE                       0xFF240000U /* DMA base address */
+#define DMA0_BASE                      0xFF240000U /* DMA0 base address */
 #define GPIO1_BASE                     0xFF250000U /* GPIO1 base address */
 #define GPIO2_BASE                     0xFF260000U /* GPIO2 base address */
 #define GPIO3_BASE                     0xFF270000U /* GPIO3 base address */
@@ -762,7 +713,7 @@ struct MMC_REG {
 #define TIMER3              ((struct TIMER_REG *) TIMER3_BASE)
 #define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
-#define DMA                 ((struct DMA_REG *) DMA_BASE)
+#define DMA0                ((struct DMA_REG *) DMA0_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
@@ -777,7 +728,6 @@ struct MMC_REG {
 #define IS_PMU_GRF_INSTANCE(instance) ((instance) == PMU_GRF)
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_CORE_GRF_INSTANCE(instance) ((instance) == CORE_GRF)
-#define IS_DMA_INSTANCE(instance) ((instance) == DMA)
 #define IS_TSADC_INSTANCE(instance) ((instance) == TSADC)
 #define IS_SARADC_INSTANCE(instance) ((instance) == SARADC)
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
@@ -789,6 +739,7 @@ struct MMC_REG {
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2) || ((instance) == I2C3))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
+#define IS_DMA_INSTANCE(instance) ((instance) == DMA0)
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
@@ -3975,849 +3926,709 @@ struct MMC_REG {
 /******************************************DMA*******************************************/
 /* DSR */
 #define DMA_DSR_OFFSET                                     (0x0U)
-#define DMA_DSR                                            (0x200U)
-#define DMA_DSR_DMA_STATUS_SHIFT                           (0U)
-#define DMA_DSR_DMA_STATUS_MASK                            (0xFU << DMA_DSR_DMA_STATUS_SHIFT)                           /* 0x0000000F */
-#define DMA_DSR_WAKEUP_EVENT_SHIFT                         (4U)
-#define DMA_DSR_WAKEUP_EVENT_MASK                          (0x1FU << DMA_DSR_WAKEUP_EVENT_SHIFT)                        /* 0x000001F0 */
-#define DMA_DSR_DNS_SHIFT                                  (9U)
-#define DMA_DSR_DNS_MASK                                   (0x1U << DMA_DSR_DNS_SHIFT)                                  /* 0x00000200 */
+#define DMA_DSR                                            (0x0U)
+#define DMA_DSR_FIELD0000_SHIFT                            (0U)
+#define DMA_DSR_FIELD0000_MASK                             (0xFU << DMA_DSR_FIELD0000_SHIFT)                            /* 0x0000000F */
+#define DMA_DSR_FIELD0002_SHIFT                            (4U)
+#define DMA_DSR_FIELD0002_MASK                             (0x1FU << DMA_DSR_FIELD0002_SHIFT)                           /* 0x000001F0 */
+#define DMA_DSR_FIELD0001_SHIFT                            (9U)
+#define DMA_DSR_FIELD0001_MASK                             (0x1U << DMA_DSR_FIELD0001_SHIFT)                            /* 0x00000200 */
 /* DPC */
 #define DMA_DPC_OFFSET                                     (0x4U)
 #define DMA_DPC                                            (0x0U)
-#define DMA_DPC_PC_MGR_SHIFT                               (0U)
-#define DMA_DPC_PC_MGR_MASK                                (0xFFFFFFFFU << DMA_DPC_PC_MGR_SHIFT)                        /* 0xFFFFFFFF */
+#define DMA_DPC_FIELD0000_SHIFT                            (0U)
+#define DMA_DPC_FIELD0000_MASK                             (0xFFFFFFFFU << DMA_DPC_FIELD0000_SHIFT)                     /* 0xFFFFFFFF */
 /* INTEN */
 #define DMA_INTEN_OFFSET                                   (0x20U)
-#define DMA_INTEN_EVENT_IRQ_SELECT_SHIFT                   (0U)
-#define DMA_INTEN_EVENT_IRQ_SELECT_MASK                    (0xFFFFFFFFU << DMA_INTEN_EVENT_IRQ_SELECT_SHIFT)            /* 0xFFFFFFFF */
+#define DMA_INTEN_FIELD0000_SHIFT                          (0U)
+#define DMA_INTEN_FIELD0000_MASK                           (0xFFFFFFFFU << DMA_INTEN_FIELD0000_SHIFT)                   /* 0xFFFFFFFF */
 /* EVENT_RIS */
 #define DMA_EVENT_RIS_OFFSET                               (0x24U)
 #define DMA_EVENT_RIS                                      (0x0U)
-#define DMA_EVENT_RIS_DMASEV_ACTIVE_SHIFT                  (0U)
-#define DMA_EVENT_RIS_DMASEV_ACTIVE_MASK                   (0xFFFFFFFFU << DMA_EVENT_RIS_DMASEV_ACTIVE_SHIFT)           /* 0xFFFFFFFF */
+#define DMA_EVENT_RIS_FIELD0000_SHIFT                      (0U)
+#define DMA_EVENT_RIS_FIELD0000_MASK                       (0xFFFFFFFFU << DMA_EVENT_RIS_FIELD0000_SHIFT)               /* 0xFFFFFFFF */
 /* INTMIS */
 #define DMA_INTMIS_OFFSET                                  (0x28U)
 #define DMA_INTMIS                                         (0x0U)
-#define DMA_INTMIS_IRQ_STATUS_SHIFT                        (0U)
-#define DMA_INTMIS_IRQ_STATUS_MASK                         (0xFFFFFFFFU << DMA_INTMIS_IRQ_STATUS_SHIFT)                 /* 0xFFFFFFFF */
+#define DMA_INTMIS_FIELD0000_SHIFT                         (0U)
+#define DMA_INTMIS_FIELD0000_MASK                          (0xFFFFFFFFU << DMA_INTMIS_FIELD0000_SHIFT)                  /* 0xFFFFFFFF */
 /* INTCLR */
 #define DMA_INTCLR_OFFSET                                  (0x2CU)
-#define DMA_INTCLR_IRQ_CLR_SHIFT                           (0U)
-#define DMA_INTCLR_IRQ_CLR_MASK                            (0xFFFFFFFFU << DMA_INTCLR_IRQ_CLR_SHIFT)                    /* 0xFFFFFFFF */
+#define DMA_INTCLR_FIELD0000_SHIFT                         (0U)
+#define DMA_INTCLR_FIELD0000_MASK                          (0xFFFFFFFFU << DMA_INTCLR_FIELD0000_SHIFT)                  /* 0xFFFFFFFF */
 /* FSRD */
 #define DMA_FSRD_OFFSET                                    (0x30U)
 #define DMA_FSRD                                           (0x0U)
-#define DMA_FSRD_FS_MGR_SHIFT                              (0U)
-#define DMA_FSRD_FS_MGR_MASK                               (0x1U << DMA_FSRD_FS_MGR_SHIFT)                              /* 0x00000001 */
+#define DMA_FSRD_FIELD0000_SHIFT                           (0U)
+#define DMA_FSRD_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_FSRD_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* FSRC */
 #define DMA_FSRC_OFFSET                                    (0x34U)
 #define DMA_FSRC                                           (0x0U)
-#define DMA_FSRC_FAULT_STATUS_SHIFT                        (0U)
-#define DMA_FSRC_FAULT_STATUS_MASK                         (0xFFU << DMA_FSRC_FAULT_STATUS_SHIFT)                       /* 0x000000FF */
+#define DMA_FSRC_FIELD0000_SHIFT                           (0U)
+#define DMA_FSRC_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_FSRC_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* FTRD */
 #define DMA_FTRD_OFFSET                                    (0x38U)
-#define DMA_FTRD_UNDEF_INSTR_SHIFT                         (0U)
-#define DMA_FTRD_UNDEF_INSTR_MASK                          (0x1U << DMA_FTRD_UNDEF_INSTR_SHIFT)                         /* 0x00000001 */
-#define DMA_FTRD_OPERAND_INVALID_SHIFT                     (1U)
-#define DMA_FTRD_OPERAND_INVALID_MASK                      (0x1U << DMA_FTRD_OPERAND_INVALID_SHIFT)                     /* 0x00000002 */
-#define DMA_FTRD_DMAGO_ERR_SHIFT                           (4U)
-#define DMA_FTRD_DMAGO_ERR_MASK                            (0x1U << DMA_FTRD_DMAGO_ERR_SHIFT)                           /* 0x00000010 */
-#define DMA_FTRD_MGR_EVNT_ERR_SHIFT                        (5U)
-#define DMA_FTRD_MGR_EVNT_ERR_MASK                         (0x1U << DMA_FTRD_MGR_EVNT_ERR_SHIFT)                        /* 0x00000020 */
-#define DMA_FTRD_INSTR_FETCH_ERR_SHIFT                     (16U)
-#define DMA_FTRD_INSTR_FETCH_ERR_MASK                      (0x1U << DMA_FTRD_INSTR_FETCH_ERR_SHIFT)                     /* 0x00010000 */
-#define DMA_FTRD_DBG_INSTR_SHIFT                           (30U)
-#define DMA_FTRD_DBG_INSTR_MASK                            (0x1U << DMA_FTRD_DBG_INSTR_SHIFT)                           /* 0x40000000 */
+#define DMA_FTRD_FIELD0000_SHIFT                           (0U)
+#define DMA_FTRD_FIELD0000_MASK                            (0x1U << DMA_FTRD_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_FTRD_FIELD0005_SHIFT                           (1U)
+#define DMA_FTRD_FIELD0005_MASK                            (0x1U << DMA_FTRD_FIELD0005_SHIFT)                           /* 0x00000002 */
+#define DMA_FTRD_FIELD0004_SHIFT                           (4U)
+#define DMA_FTRD_FIELD0004_MASK                            (0x1U << DMA_FTRD_FIELD0004_SHIFT)                           /* 0x00000010 */
+#define DMA_FTRD_FIELD0003_SHIFT                           (5U)
+#define DMA_FTRD_FIELD0003_MASK                            (0x1U << DMA_FTRD_FIELD0003_SHIFT)                           /* 0x00000020 */
+#define DMA_FTRD_FIELD0002_SHIFT                           (16U)
+#define DMA_FTRD_FIELD0002_MASK                            (0x1U << DMA_FTRD_FIELD0002_SHIFT)                           /* 0x00010000 */
+#define DMA_FTRD_FIELD0001_SHIFT                           (30U)
+#define DMA_FTRD_FIELD0001_MASK                            (0x1U << DMA_FTRD_FIELD0001_SHIFT)                           /* 0x40000000 */
 /* FTR0 */
 #define DMA_FTR0_OFFSET                                    (0x40U)
 #define DMA_FTR0                                           (0x0U)
-#define DMA_FTR0_UNDEF_INSTR_SHIFT                         (0U)
-#define DMA_FTR0_UNDEF_INSTR_MASK                          (0x1U << DMA_FTR0_UNDEF_INSTR_SHIFT)                         /* 0x00000001 */
-#define DMA_FTR0_OPERAND_INVALID_SHIFT                     (1U)
-#define DMA_FTR0_OPERAND_INVALID_MASK                      (0x1U << DMA_FTR0_OPERAND_INVALID_SHIFT)                     /* 0x00000002 */
-#define DMA_FTR0_CH_EVENT_ERR_SHIFT                        (5U)
-#define DMA_FTR0_CH_EVENT_ERR_MASK                         (0x1U << DMA_FTR0_CH_EVENT_ERR_SHIFT)                        /* 0x00000020 */
-#define DMA_FTR0_CH_PERIPH_ERR_SHIFT                       (6U)
-#define DMA_FTR0_CH_PERIPH_ERR_MASK                        (0x1U << DMA_FTR0_CH_PERIPH_ERR_SHIFT)                       /* 0x00000040 */
-#define DMA_FTR0_CH_RDWR_ERR_SHIFT                         (7U)
-#define DMA_FTR0_CH_RDWR_ERR_MASK                          (0x1U << DMA_FTR0_CH_RDWR_ERR_SHIFT)                         /* 0x00000080 */
-#define DMA_FTR0_MFIFO_ERR_SHIFT                           (12U)
-#define DMA_FTR0_MFIFO_ERR_MASK                            (0x1U << DMA_FTR0_MFIFO_ERR_SHIFT)                           /* 0x00001000 */
-#define DMA_FTR0_ST_DATA_UNAVAILABLE_SHIFT                 (13U)
-#define DMA_FTR0_ST_DATA_UNAVAILABLE_MASK                  (0x1U << DMA_FTR0_ST_DATA_UNAVAILABLE_SHIFT)                 /* 0x00002000 */
-#define DMA_FTR0_INSTR_FETCH_ERR_SHIFT                     (16U)
-#define DMA_FTR0_INSTR_FETCH_ERR_MASK                      (0x1U << DMA_FTR0_INSTR_FETCH_ERR_SHIFT)                     /* 0x00010000 */
-#define DMA_FTR0_DATA_WRITE_ERR_SHIFT                      (17U)
-#define DMA_FTR0_DATA_WRITE_ERR_MASK                       (0x1U << DMA_FTR0_DATA_WRITE_ERR_SHIFT)                      /* 0x00020000 */
-#define DMA_FTR0_DATA_READ_ERR_SHIFT                       (18U)
-#define DMA_FTR0_DATA_READ_ERR_MASK                        (0x1U << DMA_FTR0_DATA_READ_ERR_SHIFT)                       /* 0x00040000 */
-#define DMA_FTR0_DBG_INSTR_SHIFT                           (30U)
-#define DMA_FTR0_DBG_INSTR_MASK                            (0x1U << DMA_FTR0_DBG_INSTR_SHIFT)                           /* 0x40000000 */
-#define DMA_FTR0_LOCKUP_ERR_SHIFT                          (31U)
-#define DMA_FTR0_LOCKUP_ERR_MASK                           (0x1U << DMA_FTR0_LOCKUP_ERR_SHIFT)                          /* 0x80000000 */
+#define DMA_FTR0_FIELD0000_SHIFT                           (0U)
+#define DMA_FTR0_FIELD0000_MASK                            (0x1U << DMA_FTR0_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_FTR0_FIELD0011_SHIFT                           (1U)
+#define DMA_FTR0_FIELD0011_MASK                            (0x1U << DMA_FTR0_FIELD0011_SHIFT)                           /* 0x00000002 */
+#define DMA_FTR0_FIELD0010_SHIFT                           (5U)
+#define DMA_FTR0_FIELD0010_MASK                            (0x1U << DMA_FTR0_FIELD0010_SHIFT)                           /* 0x00000020 */
+#define DMA_FTR0_FIELD0009_SHIFT                           (6U)
+#define DMA_FTR0_FIELD0009_MASK                            (0x1U << DMA_FTR0_FIELD0009_SHIFT)                           /* 0x00000040 */
+#define DMA_FTR0_FIELD0008_SHIFT                           (7U)
+#define DMA_FTR0_FIELD0008_MASK                            (0x1U << DMA_FTR0_FIELD0008_SHIFT)                           /* 0x00000080 */
+#define DMA_FTR0_FIELD0007_SHIFT                           (12U)
+#define DMA_FTR0_FIELD0007_MASK                            (0x1U << DMA_FTR0_FIELD0007_SHIFT)                           /* 0x00001000 */
+#define DMA_FTR0_FIELD0006_SHIFT                           (13U)
+#define DMA_FTR0_FIELD0006_MASK                            (0x1U << DMA_FTR0_FIELD0006_SHIFT)                           /* 0x00002000 */
+#define DMA_FTR0_FIELD0005_SHIFT                           (16U)
+#define DMA_FTR0_FIELD0005_MASK                            (0x1U << DMA_FTR0_FIELD0005_SHIFT)                           /* 0x00010000 */
+#define DMA_FTR0_FIELD0004_SHIFT                           (17U)
+#define DMA_FTR0_FIELD0004_MASK                            (0x1U << DMA_FTR0_FIELD0004_SHIFT)                           /* 0x00020000 */
+#define DMA_FTR0_FIELD0003_SHIFT                           (18U)
+#define DMA_FTR0_FIELD0003_MASK                            (0x1U << DMA_FTR0_FIELD0003_SHIFT)                           /* 0x00040000 */
+#define DMA_FTR0_FIELD0002_SHIFT                           (30U)
+#define DMA_FTR0_FIELD0002_MASK                            (0x1U << DMA_FTR0_FIELD0002_SHIFT)                           /* 0x40000000 */
+#define DMA_FTR0_FIELD0001_SHIFT                           (31U)
+#define DMA_FTR0_FIELD0001_MASK                            (0x1U << DMA_FTR0_FIELD0001_SHIFT)                           /* 0x80000000 */
 /* FTR1 */
 #define DMA_FTR1_OFFSET                                    (0x44U)
 #define DMA_FTR1                                           (0x0U)
-#define DMA_FTR1_UNDEF_INSTR_SHIFT                         (0U)
-#define DMA_FTR1_UNDEF_INSTR_MASK                          (0x1U << DMA_FTR1_UNDEF_INSTR_SHIFT)                         /* 0x00000001 */
-#define DMA_FTR1_OPERAND_INVALID_SHIFT                     (1U)
-#define DMA_FTR1_OPERAND_INVALID_MASK                      (0x1U << DMA_FTR1_OPERAND_INVALID_SHIFT)                     /* 0x00000002 */
-#define DMA_FTR1_CH_EVENT_ERR_SHIFT                        (5U)
-#define DMA_FTR1_CH_EVENT_ERR_MASK                         (0x1U << DMA_FTR1_CH_EVENT_ERR_SHIFT)                        /* 0x00000020 */
-#define DMA_FTR1_CH_PERIPH_ERR_SHIFT                       (6U)
-#define DMA_FTR1_CH_PERIPH_ERR_MASK                        (0x1U << DMA_FTR1_CH_PERIPH_ERR_SHIFT)                       /* 0x00000040 */
-#define DMA_FTR1_CH_RDWR_ERR_SHIFT                         (7U)
-#define DMA_FTR1_CH_RDWR_ERR_MASK                          (0x1U << DMA_FTR1_CH_RDWR_ERR_SHIFT)                         /* 0x00000080 */
-#define DMA_FTR1_MFIFO_ERR_SHIFT                           (12U)
-#define DMA_FTR1_MFIFO_ERR_MASK                            (0x1U << DMA_FTR1_MFIFO_ERR_SHIFT)                           /* 0x00001000 */
-#define DMA_FTR1_ST_DATA_UNAVAILABLE_SHIFT                 (13U)
-#define DMA_FTR1_ST_DATA_UNAVAILABLE_MASK                  (0x1U << DMA_FTR1_ST_DATA_UNAVAILABLE_SHIFT)                 /* 0x00002000 */
-#define DMA_FTR1_INSTR_FETCH_ERR_SHIFT                     (16U)
-#define DMA_FTR1_INSTR_FETCH_ERR_MASK                      (0x1U << DMA_FTR1_INSTR_FETCH_ERR_SHIFT)                     /* 0x00010000 */
-#define DMA_FTR1_DATA_WRITE_ERR_SHIFT                      (17U)
-#define DMA_FTR1_DATA_WRITE_ERR_MASK                       (0x1U << DMA_FTR1_DATA_WRITE_ERR_SHIFT)                      /* 0x00020000 */
-#define DMA_FTR1_DATA_READ_ERR_SHIFT                       (18U)
-#define DMA_FTR1_DATA_READ_ERR_MASK                        (0x1U << DMA_FTR1_DATA_READ_ERR_SHIFT)                       /* 0x00040000 */
-#define DMA_FTR1_DBG_INSTR_SHIFT                           (30U)
-#define DMA_FTR1_DBG_INSTR_MASK                            (0x1U << DMA_FTR1_DBG_INSTR_SHIFT)                           /* 0x40000000 */
-#define DMA_FTR1_LOCKUP_ERR_SHIFT                          (31U)
-#define DMA_FTR1_LOCKUP_ERR_MASK                           (0x1U << DMA_FTR1_LOCKUP_ERR_SHIFT)                          /* 0x80000000 */
+#define DMA_FTR1_FIELD0000_SHIFT                           (0U)
+#define DMA_FTR1_FIELD0000_MASK                            (0x1U << DMA_FTR1_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_FTR1_FIELD0011_SHIFT                           (1U)
+#define DMA_FTR1_FIELD0011_MASK                            (0x1U << DMA_FTR1_FIELD0011_SHIFT)                           /* 0x00000002 */
+#define DMA_FTR1_FIELD0010_SHIFT                           (5U)
+#define DMA_FTR1_FIELD0010_MASK                            (0x1U << DMA_FTR1_FIELD0010_SHIFT)                           /* 0x00000020 */
+#define DMA_FTR1_FIELD0009_SHIFT                           (6U)
+#define DMA_FTR1_FIELD0009_MASK                            (0x1U << DMA_FTR1_FIELD0009_SHIFT)                           /* 0x00000040 */
+#define DMA_FTR1_FIELD0008_SHIFT                           (7U)
+#define DMA_FTR1_FIELD0008_MASK                            (0x1U << DMA_FTR1_FIELD0008_SHIFT)                           /* 0x00000080 */
+#define DMA_FTR1_FIELD0007_SHIFT                           (12U)
+#define DMA_FTR1_FIELD0007_MASK                            (0x1U << DMA_FTR1_FIELD0007_SHIFT)                           /* 0x00001000 */
+#define DMA_FTR1_FIELD0006_SHIFT                           (13U)
+#define DMA_FTR1_FIELD0006_MASK                            (0x1U << DMA_FTR1_FIELD0006_SHIFT)                           /* 0x00002000 */
+#define DMA_FTR1_FIELD0005_SHIFT                           (16U)
+#define DMA_FTR1_FIELD0005_MASK                            (0x1U << DMA_FTR1_FIELD0005_SHIFT)                           /* 0x00010000 */
+#define DMA_FTR1_FIELD0004_SHIFT                           (17U)
+#define DMA_FTR1_FIELD0004_MASK                            (0x1U << DMA_FTR1_FIELD0004_SHIFT)                           /* 0x00020000 */
+#define DMA_FTR1_FIELD0003_SHIFT                           (18U)
+#define DMA_FTR1_FIELD0003_MASK                            (0x1U << DMA_FTR1_FIELD0003_SHIFT)                           /* 0x00040000 */
+#define DMA_FTR1_FIELD0002_SHIFT                           (30U)
+#define DMA_FTR1_FIELD0002_MASK                            (0x1U << DMA_FTR1_FIELD0002_SHIFT)                           /* 0x40000000 */
+#define DMA_FTR1_FIELD0001_SHIFT                           (31U)
+#define DMA_FTR1_FIELD0001_MASK                            (0x1U << DMA_FTR1_FIELD0001_SHIFT)                           /* 0x80000000 */
 /* FTR2 */
 #define DMA_FTR2_OFFSET                                    (0x48U)
 #define DMA_FTR2                                           (0x0U)
-#define DMA_FTR2_UNDEF_INSTR_SHIFT                         (0U)
-#define DMA_FTR2_UNDEF_INSTR_MASK                          (0x1U << DMA_FTR2_UNDEF_INSTR_SHIFT)                         /* 0x00000001 */
-#define DMA_FTR2_OPERAND_INVALID_SHIFT                     (1U)
-#define DMA_FTR2_OPERAND_INVALID_MASK                      (0x1U << DMA_FTR2_OPERAND_INVALID_SHIFT)                     /* 0x00000002 */
-#define DMA_FTR2_CH_EVENT_ERR_SHIFT                        (5U)
-#define DMA_FTR2_CH_EVENT_ERR_MASK                         (0x1U << DMA_FTR2_CH_EVENT_ERR_SHIFT)                        /* 0x00000020 */
-#define DMA_FTR2_CH_PERIPH_ERR_SHIFT                       (6U)
-#define DMA_FTR2_CH_PERIPH_ERR_MASK                        (0x1U << DMA_FTR2_CH_PERIPH_ERR_SHIFT)                       /* 0x00000040 */
-#define DMA_FTR2_CH_RDWR_ERR_SHIFT                         (7U)
-#define DMA_FTR2_CH_RDWR_ERR_MASK                          (0x1U << DMA_FTR2_CH_RDWR_ERR_SHIFT)                         /* 0x00000080 */
-#define DMA_FTR2_MFIFO_ERR_SHIFT                           (12U)
-#define DMA_FTR2_MFIFO_ERR_MASK                            (0x1U << DMA_FTR2_MFIFO_ERR_SHIFT)                           /* 0x00001000 */
-#define DMA_FTR2_ST_DATA_UNAVAILABLE_SHIFT                 (13U)
-#define DMA_FTR2_ST_DATA_UNAVAILABLE_MASK                  (0x1U << DMA_FTR2_ST_DATA_UNAVAILABLE_SHIFT)                 /* 0x00002000 */
-#define DMA_FTR2_INSTR_FETCH_ERR_SHIFT                     (16U)
-#define DMA_FTR2_INSTR_FETCH_ERR_MASK                      (0x1U << DMA_FTR2_INSTR_FETCH_ERR_SHIFT)                     /* 0x00010000 */
-#define DMA_FTR2_DATA_WRITE_ERR_SHIFT                      (17U)
-#define DMA_FTR2_DATA_WRITE_ERR_MASK                       (0x1U << DMA_FTR2_DATA_WRITE_ERR_SHIFT)                      /* 0x00020000 */
-#define DMA_FTR2_DATA_READ_ERR_SHIFT                       (18U)
-#define DMA_FTR2_DATA_READ_ERR_MASK                        (0x1U << DMA_FTR2_DATA_READ_ERR_SHIFT)                       /* 0x00040000 */
-#define DMA_FTR2_DBG_INSTR_SHIFT                           (30U)
-#define DMA_FTR2_DBG_INSTR_MASK                            (0x1U << DMA_FTR2_DBG_INSTR_SHIFT)                           /* 0x40000000 */
-#define DMA_FTR2_LOCKUP_ERR_SHIFT                          (31U)
-#define DMA_FTR2_LOCKUP_ERR_MASK                           (0x1U << DMA_FTR2_LOCKUP_ERR_SHIFT)                          /* 0x80000000 */
+#define DMA_FTR2_FIELD0000_SHIFT                           (0U)
+#define DMA_FTR2_FIELD0000_MASK                            (0x1U << DMA_FTR2_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_FTR2_FIELD0011_SHIFT                           (1U)
+#define DMA_FTR2_FIELD0011_MASK                            (0x1U << DMA_FTR2_FIELD0011_SHIFT)                           /* 0x00000002 */
+#define DMA_FTR2_FIELD0010_SHIFT                           (5U)
+#define DMA_FTR2_FIELD0010_MASK                            (0x1U << DMA_FTR2_FIELD0010_SHIFT)                           /* 0x00000020 */
+#define DMA_FTR2_FIELD0009_SHIFT                           (6U)
+#define DMA_FTR2_FIELD0009_MASK                            (0x1U << DMA_FTR2_FIELD0009_SHIFT)                           /* 0x00000040 */
+#define DMA_FTR2_FIELD0008_SHIFT                           (7U)
+#define DMA_FTR2_FIELD0008_MASK                            (0x1U << DMA_FTR2_FIELD0008_SHIFT)                           /* 0x00000080 */
+#define DMA_FTR2_FIELD0007_SHIFT                           (12U)
+#define DMA_FTR2_FIELD0007_MASK                            (0x1U << DMA_FTR2_FIELD0007_SHIFT)                           /* 0x00001000 */
+#define DMA_FTR2_FIELD0006_SHIFT                           (13U)
+#define DMA_FTR2_FIELD0006_MASK                            (0x1U << DMA_FTR2_FIELD0006_SHIFT)                           /* 0x00002000 */
+#define DMA_FTR2_FIELD0005_SHIFT                           (16U)
+#define DMA_FTR2_FIELD0005_MASK                            (0x1U << DMA_FTR2_FIELD0005_SHIFT)                           /* 0x00010000 */
+#define DMA_FTR2_FIELD0004_SHIFT                           (17U)
+#define DMA_FTR2_FIELD0004_MASK                            (0x1U << DMA_FTR2_FIELD0004_SHIFT)                           /* 0x00020000 */
+#define DMA_FTR2_FIELD0003_SHIFT                           (18U)
+#define DMA_FTR2_FIELD0003_MASK                            (0x1U << DMA_FTR2_FIELD0003_SHIFT)                           /* 0x00040000 */
+#define DMA_FTR2_FIELD0002_SHIFT                           (30U)
+#define DMA_FTR2_FIELD0002_MASK                            (0x1U << DMA_FTR2_FIELD0002_SHIFT)                           /* 0x40000000 */
+#define DMA_FTR2_FIELD0001_SHIFT                           (31U)
+#define DMA_FTR2_FIELD0001_MASK                            (0x1U << DMA_FTR2_FIELD0001_SHIFT)                           /* 0x80000000 */
 /* FTR3 */
 #define DMA_FTR3_OFFSET                                    (0x4CU)
 #define DMA_FTR3                                           (0x0U)
-#define DMA_FTR3_UNDEF_INSTR_SHIFT                         (0U)
-#define DMA_FTR3_UNDEF_INSTR_MASK                          (0x1U << DMA_FTR3_UNDEF_INSTR_SHIFT)                         /* 0x00000001 */
-#define DMA_FTR3_OPERAND_INVALID_SHIFT                     (1U)
-#define DMA_FTR3_OPERAND_INVALID_MASK                      (0x1U << DMA_FTR3_OPERAND_INVALID_SHIFT)                     /* 0x00000002 */
-#define DMA_FTR3_CH_EVENT_ERR_SHIFT                        (5U)
-#define DMA_FTR3_CH_EVENT_ERR_MASK                         (0x1U << DMA_FTR3_CH_EVENT_ERR_SHIFT)                        /* 0x00000020 */
-#define DMA_FTR3_CH_PERIPH_ERR_SHIFT                       (6U)
-#define DMA_FTR3_CH_PERIPH_ERR_MASK                        (0x1U << DMA_FTR3_CH_PERIPH_ERR_SHIFT)                       /* 0x00000040 */
-#define DMA_FTR3_CH_RDWR_ERR_SHIFT                         (7U)
-#define DMA_FTR3_CH_RDWR_ERR_MASK                          (0x1U << DMA_FTR3_CH_RDWR_ERR_SHIFT)                         /* 0x00000080 */
-#define DMA_FTR3_MFIFO_ERR_SHIFT                           (12U)
-#define DMA_FTR3_MFIFO_ERR_MASK                            (0x1U << DMA_FTR3_MFIFO_ERR_SHIFT)                           /* 0x00001000 */
-#define DMA_FTR3_ST_DATA_UNAVAILABLE_SHIFT                 (13U)
-#define DMA_FTR3_ST_DATA_UNAVAILABLE_MASK                  (0x1U << DMA_FTR3_ST_DATA_UNAVAILABLE_SHIFT)                 /* 0x00002000 */
-#define DMA_FTR3_INSTR_FETCH_ERR_SHIFT                     (16U)
-#define DMA_FTR3_INSTR_FETCH_ERR_MASK                      (0x1U << DMA_FTR3_INSTR_FETCH_ERR_SHIFT)                     /* 0x00010000 */
-#define DMA_FTR3_DATA_WRITE_ERR_SHIFT                      (17U)
-#define DMA_FTR3_DATA_WRITE_ERR_MASK                       (0x1U << DMA_FTR3_DATA_WRITE_ERR_SHIFT)                      /* 0x00020000 */
-#define DMA_FTR3_DATA_READ_ERR_SHIFT                       (18U)
-#define DMA_FTR3_DATA_READ_ERR_MASK                        (0x1U << DMA_FTR3_DATA_READ_ERR_SHIFT)                       /* 0x00040000 */
-#define DMA_FTR3_DBG_INSTR_SHIFT                           (30U)
-#define DMA_FTR3_DBG_INSTR_MASK                            (0x1U << DMA_FTR3_DBG_INSTR_SHIFT)                           /* 0x40000000 */
-#define DMA_FTR3_LOCKUP_ERR_SHIFT                          (31U)
-#define DMA_FTR3_LOCKUP_ERR_MASK                           (0x1U << DMA_FTR3_LOCKUP_ERR_SHIFT)                          /* 0x80000000 */
+#define DMA_FTR3_FIELD0000_SHIFT                           (0U)
+#define DMA_FTR3_FIELD0000_MASK                            (0x1U << DMA_FTR3_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_FTR3_FIELD0011_SHIFT                           (1U)
+#define DMA_FTR3_FIELD0011_MASK                            (0x1U << DMA_FTR3_FIELD0011_SHIFT)                           /* 0x00000002 */
+#define DMA_FTR3_FIELD0010_SHIFT                           (5U)
+#define DMA_FTR3_FIELD0010_MASK                            (0x1U << DMA_FTR3_FIELD0010_SHIFT)                           /* 0x00000020 */
+#define DMA_FTR3_FIELD0009_SHIFT                           (6U)
+#define DMA_FTR3_FIELD0009_MASK                            (0x1U << DMA_FTR3_FIELD0009_SHIFT)                           /* 0x00000040 */
+#define DMA_FTR3_FIELD0008_SHIFT                           (7U)
+#define DMA_FTR3_FIELD0008_MASK                            (0x1U << DMA_FTR3_FIELD0008_SHIFT)                           /* 0x00000080 */
+#define DMA_FTR3_FIELD0007_SHIFT                           (12U)
+#define DMA_FTR3_FIELD0007_MASK                            (0x1U << DMA_FTR3_FIELD0007_SHIFT)                           /* 0x00001000 */
+#define DMA_FTR3_FIELD0006_SHIFT                           (13U)
+#define DMA_FTR3_FIELD0006_MASK                            (0x1U << DMA_FTR3_FIELD0006_SHIFT)                           /* 0x00002000 */
+#define DMA_FTR3_FIELD0005_SHIFT                           (16U)
+#define DMA_FTR3_FIELD0005_MASK                            (0x1U << DMA_FTR3_FIELD0005_SHIFT)                           /* 0x00010000 */
+#define DMA_FTR3_FIELD0004_SHIFT                           (17U)
+#define DMA_FTR3_FIELD0004_MASK                            (0x1U << DMA_FTR3_FIELD0004_SHIFT)                           /* 0x00020000 */
+#define DMA_FTR3_FIELD0003_SHIFT                           (18U)
+#define DMA_FTR3_FIELD0003_MASK                            (0x1U << DMA_FTR3_FIELD0003_SHIFT)                           /* 0x00040000 */
+#define DMA_FTR3_FIELD0002_SHIFT                           (30U)
+#define DMA_FTR3_FIELD0002_MASK                            (0x1U << DMA_FTR3_FIELD0002_SHIFT)                           /* 0x40000000 */
+#define DMA_FTR3_FIELD0001_SHIFT                           (31U)
+#define DMA_FTR3_FIELD0001_MASK                            (0x1U << DMA_FTR3_FIELD0001_SHIFT)                           /* 0x80000000 */
 /* FTR4 */
 #define DMA_FTR4_OFFSET                                    (0x50U)
 #define DMA_FTR4                                           (0x0U)
-#define DMA_FTR4_UNDEF_INSTR_SHIFT                         (0U)
-#define DMA_FTR4_UNDEF_INSTR_MASK                          (0x1U << DMA_FTR4_UNDEF_INSTR_SHIFT)                         /* 0x00000001 */
-#define DMA_FTR4_OPERAND_INVALID_SHIFT                     (1U)
-#define DMA_FTR4_OPERAND_INVALID_MASK                      (0x1U << DMA_FTR4_OPERAND_INVALID_SHIFT)                     /* 0x00000002 */
-#define DMA_FTR4_CH_EVENT_ERR_SHIFT                        (5U)
-#define DMA_FTR4_CH_EVENT_ERR_MASK                         (0x1U << DMA_FTR4_CH_EVENT_ERR_SHIFT)                        /* 0x00000020 */
-#define DMA_FTR4_CH_PERIPH_ERR_SHIFT                       (6U)
-#define DMA_FTR4_CH_PERIPH_ERR_MASK                        (0x1U << DMA_FTR4_CH_PERIPH_ERR_SHIFT)                       /* 0x00000040 */
-#define DMA_FTR4_CH_RDWR_ERR_SHIFT                         (7U)
-#define DMA_FTR4_CH_RDWR_ERR_MASK                          (0x1U << DMA_FTR4_CH_RDWR_ERR_SHIFT)                         /* 0x00000080 */
-#define DMA_FTR4_MFIFO_ERR_SHIFT                           (12U)
-#define DMA_FTR4_MFIFO_ERR_MASK                            (0x1U << DMA_FTR4_MFIFO_ERR_SHIFT)                           /* 0x00001000 */
-#define DMA_FTR4_ST_DATA_UNAVAILABLE_SHIFT                 (13U)
-#define DMA_FTR4_ST_DATA_UNAVAILABLE_MASK                  (0x1U << DMA_FTR4_ST_DATA_UNAVAILABLE_SHIFT)                 /* 0x00002000 */
-#define DMA_FTR4_INSTR_FETCH_ERR_SHIFT                     (16U)
-#define DMA_FTR4_INSTR_FETCH_ERR_MASK                      (0x1U << DMA_FTR4_INSTR_FETCH_ERR_SHIFT)                     /* 0x00010000 */
-#define DMA_FTR4_DATA_WRITE_ERR_SHIFT                      (17U)
-#define DMA_FTR4_DATA_WRITE_ERR_MASK                       (0x1U << DMA_FTR4_DATA_WRITE_ERR_SHIFT)                      /* 0x00020000 */
-#define DMA_FTR4_DATA_READ_ERR_SHIFT                       (18U)
-#define DMA_FTR4_DATA_READ_ERR_MASK                        (0x1U << DMA_FTR4_DATA_READ_ERR_SHIFT)                       /* 0x00040000 */
-#define DMA_FTR4_DBG_INSTR_SHIFT                           (30U)
-#define DMA_FTR4_DBG_INSTR_MASK                            (0x1U << DMA_FTR4_DBG_INSTR_SHIFT)                           /* 0x40000000 */
-#define DMA_FTR4_LOCKUP_ERR_SHIFT                          (31U)
-#define DMA_FTR4_LOCKUP_ERR_MASK                           (0x1U << DMA_FTR4_LOCKUP_ERR_SHIFT)                          /* 0x80000000 */
+#define DMA_FTR4_FIELD0000_SHIFT                           (0U)
+#define DMA_FTR4_FIELD0000_MASK                            (0x1U << DMA_FTR4_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_FTR4_FIELD0011_SHIFT                           (1U)
+#define DMA_FTR4_FIELD0011_MASK                            (0x1U << DMA_FTR4_FIELD0011_SHIFT)                           /* 0x00000002 */
+#define DMA_FTR4_FIELD0010_SHIFT                           (5U)
+#define DMA_FTR4_FIELD0010_MASK                            (0x1U << DMA_FTR4_FIELD0010_SHIFT)                           /* 0x00000020 */
+#define DMA_FTR4_FIELD0009_SHIFT                           (6U)
+#define DMA_FTR4_FIELD0009_MASK                            (0x1U << DMA_FTR4_FIELD0009_SHIFT)                           /* 0x00000040 */
+#define DMA_FTR4_FIELD0008_SHIFT                           (7U)
+#define DMA_FTR4_FIELD0008_MASK                            (0x1U << DMA_FTR4_FIELD0008_SHIFT)                           /* 0x00000080 */
+#define DMA_FTR4_FIELD0007_SHIFT                           (12U)
+#define DMA_FTR4_FIELD0007_MASK                            (0x1U << DMA_FTR4_FIELD0007_SHIFT)                           /* 0x00001000 */
+#define DMA_FTR4_FIELD0006_SHIFT                           (13U)
+#define DMA_FTR4_FIELD0006_MASK                            (0x1U << DMA_FTR4_FIELD0006_SHIFT)                           /* 0x00002000 */
+#define DMA_FTR4_FIELD0005_SHIFT                           (16U)
+#define DMA_FTR4_FIELD0005_MASK                            (0x1U << DMA_FTR4_FIELD0005_SHIFT)                           /* 0x00010000 */
+#define DMA_FTR4_FIELD0004_SHIFT                           (17U)
+#define DMA_FTR4_FIELD0004_MASK                            (0x1U << DMA_FTR4_FIELD0004_SHIFT)                           /* 0x00020000 */
+#define DMA_FTR4_FIELD0003_SHIFT                           (18U)
+#define DMA_FTR4_FIELD0003_MASK                            (0x1U << DMA_FTR4_FIELD0003_SHIFT)                           /* 0x00040000 */
+#define DMA_FTR4_FIELD0002_SHIFT                           (30U)
+#define DMA_FTR4_FIELD0002_MASK                            (0x1U << DMA_FTR4_FIELD0002_SHIFT)                           /* 0x40000000 */
+#define DMA_FTR4_FIELD0001_SHIFT                           (31U)
+#define DMA_FTR4_FIELD0001_MASK                            (0x1U << DMA_FTR4_FIELD0001_SHIFT)                           /* 0x80000000 */
 /* FTR5 */
 #define DMA_FTR5_OFFSET                                    (0x54U)
 #define DMA_FTR5                                           (0x0U)
-#define DMA_FTR5_UNDEF_INSTR_SHIFT                         (0U)
-#define DMA_FTR5_UNDEF_INSTR_MASK                          (0x1U << DMA_FTR5_UNDEF_INSTR_SHIFT)                         /* 0x00000001 */
-#define DMA_FTR5_OPERAND_INVALID_SHIFT                     (1U)
-#define DMA_FTR5_OPERAND_INVALID_MASK                      (0x1U << DMA_FTR5_OPERAND_INVALID_SHIFT)                     /* 0x00000002 */
-#define DMA_FTR5_CH_EVENT_ERR_SHIFT                        (5U)
-#define DMA_FTR5_CH_EVENT_ERR_MASK                         (0x1U << DMA_FTR5_CH_EVENT_ERR_SHIFT)                        /* 0x00000020 */
-#define DMA_FTR5_CH_PERIPH_ERR_SHIFT                       (6U)
-#define DMA_FTR5_CH_PERIPH_ERR_MASK                        (0x1U << DMA_FTR5_CH_PERIPH_ERR_SHIFT)                       /* 0x00000040 */
-#define DMA_FTR5_CH_RDWR_ERR_SHIFT                         (7U)
-#define DMA_FTR5_CH_RDWR_ERR_MASK                          (0x1U << DMA_FTR5_CH_RDWR_ERR_SHIFT)                         /* 0x00000080 */
-#define DMA_FTR5_MFIFO_ERR_SHIFT                           (12U)
-#define DMA_FTR5_MFIFO_ERR_MASK                            (0x1U << DMA_FTR5_MFIFO_ERR_SHIFT)                           /* 0x00001000 */
-#define DMA_FTR5_ST_DATA_UNAVAILABLE_SHIFT                 (13U)
-#define DMA_FTR5_ST_DATA_UNAVAILABLE_MASK                  (0x1U << DMA_FTR5_ST_DATA_UNAVAILABLE_SHIFT)                 /* 0x00002000 */
-#define DMA_FTR5_INSTR_FETCH_ERR_SHIFT                     (16U)
-#define DMA_FTR5_INSTR_FETCH_ERR_MASK                      (0x1U << DMA_FTR5_INSTR_FETCH_ERR_SHIFT)                     /* 0x00010000 */
-#define DMA_FTR5_DATA_WRITE_ERR_SHIFT                      (17U)
-#define DMA_FTR5_DATA_WRITE_ERR_MASK                       (0x1U << DMA_FTR5_DATA_WRITE_ERR_SHIFT)                      /* 0x00020000 */
-#define DMA_FTR5_DATA_READ_ERR_SHIFT                       (18U)
-#define DMA_FTR5_DATA_READ_ERR_MASK                        (0x1U << DMA_FTR5_DATA_READ_ERR_SHIFT)                       /* 0x00040000 */
-#define DMA_FTR5_DBG_INSTR_SHIFT                           (30U)
-#define DMA_FTR5_DBG_INSTR_MASK                            (0x1U << DMA_FTR5_DBG_INSTR_SHIFT)                           /* 0x40000000 */
-#define DMA_FTR5_LOCKUP_ERR_SHIFT                          (31U)
-#define DMA_FTR5_LOCKUP_ERR_MASK                           (0x1U << DMA_FTR5_LOCKUP_ERR_SHIFT)                          /* 0x80000000 */
-/* FTR6 */
-#define DMA_FTR6_OFFSET                                    (0x58U)
-#define DMA_FTR6                                           (0x0U)
-#define DMA_FTR6_UNDEF_INSTR_SHIFT                         (0U)
-#define DMA_FTR6_UNDEF_INSTR_MASK                          (0x1U << DMA_FTR6_UNDEF_INSTR_SHIFT)                         /* 0x00000001 */
-#define DMA_FTR6_OPERAND_INVALID_SHIFT                     (1U)
-#define DMA_FTR6_OPERAND_INVALID_MASK                      (0x1U << DMA_FTR6_OPERAND_INVALID_SHIFT)                     /* 0x00000002 */
-#define DMA_FTR6_CH_EVENT_ERR_SHIFT                        (5U)
-#define DMA_FTR6_CH_EVENT_ERR_MASK                         (0x1U << DMA_FTR6_CH_EVENT_ERR_SHIFT)                        /* 0x00000020 */
-#define DMA_FTR6_CH_PERIPH_ERR_SHIFT                       (6U)
-#define DMA_FTR6_CH_PERIPH_ERR_MASK                        (0x1U << DMA_FTR6_CH_PERIPH_ERR_SHIFT)                       /* 0x00000040 */
-#define DMA_FTR6_CH_RDWR_ERR_SHIFT                         (7U)
-#define DMA_FTR6_CH_RDWR_ERR_MASK                          (0x1U << DMA_FTR6_CH_RDWR_ERR_SHIFT)                         /* 0x00000080 */
-#define DMA_FTR6_MFIFO_ERR_SHIFT                           (12U)
-#define DMA_FTR6_MFIFO_ERR_MASK                            (0x1U << DMA_FTR6_MFIFO_ERR_SHIFT)                           /* 0x00001000 */
-#define DMA_FTR6_ST_DATA_UNAVAILABLE_SHIFT                 (13U)
-#define DMA_FTR6_ST_DATA_UNAVAILABLE_MASK                  (0x1U << DMA_FTR6_ST_DATA_UNAVAILABLE_SHIFT)                 /* 0x00002000 */
-#define DMA_FTR6_INSTR_FETCH_ERR_SHIFT                     (16U)
-#define DMA_FTR6_INSTR_FETCH_ERR_MASK                      (0x1U << DMA_FTR6_INSTR_FETCH_ERR_SHIFT)                     /* 0x00010000 */
-#define DMA_FTR6_DATA_WRITE_ERR_SHIFT                      (17U)
-#define DMA_FTR6_DATA_WRITE_ERR_MASK                       (0x1U << DMA_FTR6_DATA_WRITE_ERR_SHIFT)                      /* 0x00020000 */
-#define DMA_FTR6_DATA_READ_ERR_SHIFT                       (18U)
-#define DMA_FTR6_DATA_READ_ERR_MASK                        (0x1U << DMA_FTR6_DATA_READ_ERR_SHIFT)                       /* 0x00040000 */
-#define DMA_FTR6_DBG_INSTR_SHIFT                           (30U)
-#define DMA_FTR6_DBG_INSTR_MASK                            (0x1U << DMA_FTR6_DBG_INSTR_SHIFT)                           /* 0x40000000 */
-#define DMA_FTR6_LOCKUP_ERR_SHIFT                          (31U)
-#define DMA_FTR6_LOCKUP_ERR_MASK                           (0x1U << DMA_FTR6_LOCKUP_ERR_SHIFT)                          /* 0x80000000 */
-/* FTR7 */
-#define DMA_FTR7_OFFSET                                    (0x5CU)
-#define DMA_FTR7                                           (0x0U)
-#define DMA_FTR7_UNDEF_INSTR_SHIFT                         (0U)
-#define DMA_FTR7_UNDEF_INSTR_MASK                          (0x1U << DMA_FTR7_UNDEF_INSTR_SHIFT)                         /* 0x00000001 */
-#define DMA_FTR7_OPERAND_INVALID_SHIFT                     (1U)
-#define DMA_FTR7_OPERAND_INVALID_MASK                      (0x1U << DMA_FTR7_OPERAND_INVALID_SHIFT)                     /* 0x00000002 */
-#define DMA_FTR7_CH_EVENT_ERR_SHIFT                        (5U)
-#define DMA_FTR7_CH_EVENT_ERR_MASK                         (0x1U << DMA_FTR7_CH_EVENT_ERR_SHIFT)                        /* 0x00000020 */
-#define DMA_FTR7_CH_PERIPH_ERR_SHIFT                       (6U)
-#define DMA_FTR7_CH_PERIPH_ERR_MASK                        (0x1U << DMA_FTR7_CH_PERIPH_ERR_SHIFT)                       /* 0x00000040 */
-#define DMA_FTR7_CH_RDWR_ERR_SHIFT                         (7U)
-#define DMA_FTR7_CH_RDWR_ERR_MASK                          (0x1U << DMA_FTR7_CH_RDWR_ERR_SHIFT)                         /* 0x00000080 */
-#define DMA_FTR7_MFIFO_ERR_SHIFT                           (12U)
-#define DMA_FTR7_MFIFO_ERR_MASK                            (0x1U << DMA_FTR7_MFIFO_ERR_SHIFT)                           /* 0x00001000 */
-#define DMA_FTR7_ST_DATA_UNAVAILABLE_SHIFT                 (13U)
-#define DMA_FTR7_ST_DATA_UNAVAILABLE_MASK                  (0x1U << DMA_FTR7_ST_DATA_UNAVAILABLE_SHIFT)                 /* 0x00002000 */
-#define DMA_FTR7_INSTR_FETCH_ERR_SHIFT                     (16U)
-#define DMA_FTR7_INSTR_FETCH_ERR_MASK                      (0x1U << DMA_FTR7_INSTR_FETCH_ERR_SHIFT)                     /* 0x00010000 */
-#define DMA_FTR7_DATA_WRITE_ERR_SHIFT                      (17U)
-#define DMA_FTR7_DATA_WRITE_ERR_MASK                       (0x1U << DMA_FTR7_DATA_WRITE_ERR_SHIFT)                      /* 0x00020000 */
-#define DMA_FTR7_DATA_READ_ERR_SHIFT                       (18U)
-#define DMA_FTR7_DATA_READ_ERR_MASK                        (0x1U << DMA_FTR7_DATA_READ_ERR_SHIFT)                       /* 0x00040000 */
-#define DMA_FTR7_DBG_INSTR_SHIFT                           (30U)
-#define DMA_FTR7_DBG_INSTR_MASK                            (0x1U << DMA_FTR7_DBG_INSTR_SHIFT)                           /* 0x40000000 */
-#define DMA_FTR7_LOCKUP_ERR_SHIFT                          (31U)
-#define DMA_FTR7_LOCKUP_ERR_MASK                           (0x1U << DMA_FTR7_LOCKUP_ERR_SHIFT)                          /* 0x80000000 */
+#define DMA_FTR5_FIELD0000_SHIFT                           (0U)
+#define DMA_FTR5_FIELD0000_MASK                            (0x1U << DMA_FTR5_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_FTR5_FIELD0011_SHIFT                           (1U)
+#define DMA_FTR5_FIELD0011_MASK                            (0x1U << DMA_FTR5_FIELD0011_SHIFT)                           /* 0x00000002 */
+#define DMA_FTR5_FIELD0010_SHIFT                           (5U)
+#define DMA_FTR5_FIELD0010_MASK                            (0x1U << DMA_FTR5_FIELD0010_SHIFT)                           /* 0x00000020 */
+#define DMA_FTR5_FIELD0009_SHIFT                           (6U)
+#define DMA_FTR5_FIELD0009_MASK                            (0x1U << DMA_FTR5_FIELD0009_SHIFT)                           /* 0x00000040 */
+#define DMA_FTR5_FIELD0008_SHIFT                           (7U)
+#define DMA_FTR5_FIELD0008_MASK                            (0x1U << DMA_FTR5_FIELD0008_SHIFT)                           /* 0x00000080 */
+#define DMA_FTR5_FIELD0007_SHIFT                           (12U)
+#define DMA_FTR5_FIELD0007_MASK                            (0x1U << DMA_FTR5_FIELD0007_SHIFT)                           /* 0x00001000 */
+#define DMA_FTR5_FIELD0006_SHIFT                           (13U)
+#define DMA_FTR5_FIELD0006_MASK                            (0x1U << DMA_FTR5_FIELD0006_SHIFT)                           /* 0x00002000 */
+#define DMA_FTR5_FIELD0005_SHIFT                           (16U)
+#define DMA_FTR5_FIELD0005_MASK                            (0x1U << DMA_FTR5_FIELD0005_SHIFT)                           /* 0x00010000 */
+#define DMA_FTR5_FIELD0004_SHIFT                           (17U)
+#define DMA_FTR5_FIELD0004_MASK                            (0x1U << DMA_FTR5_FIELD0004_SHIFT)                           /* 0x00020000 */
+#define DMA_FTR5_FIELD0003_SHIFT                           (18U)
+#define DMA_FTR5_FIELD0003_MASK                            (0x1U << DMA_FTR5_FIELD0003_SHIFT)                           /* 0x00040000 */
+#define DMA_FTR5_FIELD0002_SHIFT                           (30U)
+#define DMA_FTR5_FIELD0002_MASK                            (0x1U << DMA_FTR5_FIELD0002_SHIFT)                           /* 0x40000000 */
+#define DMA_FTR5_FIELD0001_SHIFT                           (31U)
+#define DMA_FTR5_FIELD0001_MASK                            (0x1U << DMA_FTR5_FIELD0001_SHIFT)                           /* 0x80000000 */
 /* CSR0 */
 #define DMA_CSR0_OFFSET                                    (0x100U)
 #define DMA_CSR0                                           (0x0U)
-#define DMA_CSR0_CHANNEL_STATUS_SHIFT                      (0U)
-#define DMA_CSR0_CHANNEL_STATUS_MASK                       (0xFU << DMA_CSR0_CHANNEL_STATUS_SHIFT)                      /* 0x0000000F */
-#define DMA_CSR0_WAKEUP_NUMBER_SHIFT                       (4U)
-#define DMA_CSR0_WAKEUP_NUMBER_MASK                        (0x1FU << DMA_CSR0_WAKEUP_NUMBER_SHIFT)                      /* 0x000001F0 */
-#define DMA_CSR0_DMAWFP_B_NS_SHIFT                         (14U)
-#define DMA_CSR0_DMAWFP_B_NS_MASK                          (0x1U << DMA_CSR0_DMAWFP_B_NS_SHIFT)                         /* 0x00004000 */
-#define DMA_CSR0_DMAWFP_PERIPH_SHIFT                       (15U)
-#define DMA_CSR0_DMAWFP_PERIPH_MASK                        (0x1U << DMA_CSR0_DMAWFP_PERIPH_SHIFT)                       /* 0x00008000 */
-#define DMA_CSR0_CNS_SHIFT                                 (21U)
-#define DMA_CSR0_CNS_MASK                                  (0x1U << DMA_CSR0_CNS_SHIFT)                                 /* 0x00200000 */
+#define DMA_CSR0_FIELD0000_SHIFT                           (0U)
+#define DMA_CSR0_FIELD0000_MASK                            (0xFU << DMA_CSR0_FIELD0000_SHIFT)                           /* 0x0000000F */
+#define DMA_CSR0_FIELD0004_SHIFT                           (4U)
+#define DMA_CSR0_FIELD0004_MASK                            (0x1FU << DMA_CSR0_FIELD0004_SHIFT)                          /* 0x000001F0 */
+#define DMA_CSR0_FIELD0003_SHIFT                           (14U)
+#define DMA_CSR0_FIELD0003_MASK                            (0x1U << DMA_CSR0_FIELD0003_SHIFT)                           /* 0x00004000 */
+#define DMA_CSR0_FIELD0002_SHIFT                           (15U)
+#define DMA_CSR0_FIELD0002_MASK                            (0x1U << DMA_CSR0_FIELD0002_SHIFT)                           /* 0x00008000 */
+#define DMA_CSR0_FIELD0001_SHIFT                           (21U)
+#define DMA_CSR0_FIELD0001_MASK                            (0x1U << DMA_CSR0_FIELD0001_SHIFT)                           /* 0x00200000 */
 /* CPC0 */
 #define DMA_CPC0_OFFSET                                    (0x104U)
 #define DMA_CPC0                                           (0x0U)
-#define DMA_CPC0_PC_CHNL_SHIFT                             (0U)
-#define DMA_CPC0_PC_CHNL_MASK                              (0xFFFFFFFFU << DMA_CPC0_PC_CHNL_SHIFT)                      /* 0xFFFFFFFF */
+#define DMA_CPC0_FIELD0000_SHIFT                           (0U)
+#define DMA_CPC0_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_CPC0_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CSR1 */
 #define DMA_CSR1_OFFSET                                    (0x108U)
 #define DMA_CSR1                                           (0x0U)
-#define DMA_CSR1_CHANNEL_STATUS_SHIFT                      (0U)
-#define DMA_CSR1_CHANNEL_STATUS_MASK                       (0xFU << DMA_CSR1_CHANNEL_STATUS_SHIFT)                      /* 0x0000000F */
-#define DMA_CSR1_WAKEUP_NUMBER_SHIFT                       (4U)
-#define DMA_CSR1_WAKEUP_NUMBER_MASK                        (0x1FU << DMA_CSR1_WAKEUP_NUMBER_SHIFT)                      /* 0x000001F0 */
-#define DMA_CSR1_DMAWFP_B_NS_SHIFT                         (14U)
-#define DMA_CSR1_DMAWFP_B_NS_MASK                          (0x1U << DMA_CSR1_DMAWFP_B_NS_SHIFT)                         /* 0x00004000 */
-#define DMA_CSR1_DMAWFP_PERIPH_SHIFT                       (15U)
-#define DMA_CSR1_DMAWFP_PERIPH_MASK                        (0x1U << DMA_CSR1_DMAWFP_PERIPH_SHIFT)                       /* 0x00008000 */
-#define DMA_CSR1_CNS_SHIFT                                 (21U)
-#define DMA_CSR1_CNS_MASK                                  (0x1U << DMA_CSR1_CNS_SHIFT)                                 /* 0x00200000 */
+#define DMA_CSR1_FIELD0000_SHIFT                           (0U)
+#define DMA_CSR1_FIELD0000_MASK                            (0xFU << DMA_CSR1_FIELD0000_SHIFT)                           /* 0x0000000F */
+#define DMA_CSR1_FIELD0004_SHIFT                           (4U)
+#define DMA_CSR1_FIELD0004_MASK                            (0x1FU << DMA_CSR1_FIELD0004_SHIFT)                          /* 0x000001F0 */
+#define DMA_CSR1_FIELD0003_SHIFT                           (14U)
+#define DMA_CSR1_FIELD0003_MASK                            (0x1U << DMA_CSR1_FIELD0003_SHIFT)                           /* 0x00004000 */
+#define DMA_CSR1_FIELD0002_SHIFT                           (15U)
+#define DMA_CSR1_FIELD0002_MASK                            (0x1U << DMA_CSR1_FIELD0002_SHIFT)                           /* 0x00008000 */
+#define DMA_CSR1_FIELD0001_SHIFT                           (21U)
+#define DMA_CSR1_FIELD0001_MASK                            (0x1U << DMA_CSR1_FIELD0001_SHIFT)                           /* 0x00200000 */
 /* CPC1 */
 #define DMA_CPC1_OFFSET                                    (0x10CU)
 #define DMA_CPC1                                           (0x0U)
-#define DMA_CPC1_PC_CHNL_SHIFT                             (0U)
-#define DMA_CPC1_PC_CHNL_MASK                              (0xFFFFFFFFU << DMA_CPC1_PC_CHNL_SHIFT)                      /* 0xFFFFFFFF */
+#define DMA_CPC1_FIELD0000_SHIFT                           (0U)
+#define DMA_CPC1_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_CPC1_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CSR2 */
 #define DMA_CSR2_OFFSET                                    (0x110U)
 #define DMA_CSR2                                           (0x0U)
-#define DMA_CSR2_CHANNEL_STATUS_SHIFT                      (0U)
-#define DMA_CSR2_CHANNEL_STATUS_MASK                       (0xFU << DMA_CSR2_CHANNEL_STATUS_SHIFT)                      /* 0x0000000F */
-#define DMA_CSR2_WAKEUP_NUMBER_SHIFT                       (4U)
-#define DMA_CSR2_WAKEUP_NUMBER_MASK                        (0x1FU << DMA_CSR2_WAKEUP_NUMBER_SHIFT)                      /* 0x000001F0 */
-#define DMA_CSR2_DMAWFP_B_NS_SHIFT                         (14U)
-#define DMA_CSR2_DMAWFP_B_NS_MASK                          (0x1U << DMA_CSR2_DMAWFP_B_NS_SHIFT)                         /* 0x00004000 */
-#define DMA_CSR2_DMAWFP_PERIPH_SHIFT                       (15U)
-#define DMA_CSR2_DMAWFP_PERIPH_MASK                        (0x1U << DMA_CSR2_DMAWFP_PERIPH_SHIFT)                       /* 0x00008000 */
-#define DMA_CSR2_CNS_SHIFT                                 (21U)
-#define DMA_CSR2_CNS_MASK                                  (0x1U << DMA_CSR2_CNS_SHIFT)                                 /* 0x00200000 */
+#define DMA_CSR2_FIELD0000_SHIFT                           (0U)
+#define DMA_CSR2_FIELD0000_MASK                            (0xFU << DMA_CSR2_FIELD0000_SHIFT)                           /* 0x0000000F */
+#define DMA_CSR2_FIELD0004_SHIFT                           (4U)
+#define DMA_CSR2_FIELD0004_MASK                            (0x1FU << DMA_CSR2_FIELD0004_SHIFT)                          /* 0x000001F0 */
+#define DMA_CSR2_FIELD0003_SHIFT                           (14U)
+#define DMA_CSR2_FIELD0003_MASK                            (0x1U << DMA_CSR2_FIELD0003_SHIFT)                           /* 0x00004000 */
+#define DMA_CSR2_FIELD0002_SHIFT                           (15U)
+#define DMA_CSR2_FIELD0002_MASK                            (0x1U << DMA_CSR2_FIELD0002_SHIFT)                           /* 0x00008000 */
+#define DMA_CSR2_FIELD0001_SHIFT                           (21U)
+#define DMA_CSR2_FIELD0001_MASK                            (0x1U << DMA_CSR2_FIELD0001_SHIFT)                           /* 0x00200000 */
 /* CPC2 */
 #define DMA_CPC2_OFFSET                                    (0x114U)
 #define DMA_CPC2                                           (0x0U)
-#define DMA_CPC2_PC_CHNL_SHIFT                             (0U)
-#define DMA_CPC2_PC_CHNL_MASK                              (0xFFFFFFFFU << DMA_CPC2_PC_CHNL_SHIFT)                      /* 0xFFFFFFFF */
+#define DMA_CPC2_FIELD0000_SHIFT                           (0U)
+#define DMA_CPC2_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_CPC2_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CSR3 */
 #define DMA_CSR3_OFFSET                                    (0x118U)
 #define DMA_CSR3                                           (0x0U)
-#define DMA_CSR3_CHANNEL_STATUS_SHIFT                      (0U)
-#define DMA_CSR3_CHANNEL_STATUS_MASK                       (0xFU << DMA_CSR3_CHANNEL_STATUS_SHIFT)                      /* 0x0000000F */
-#define DMA_CSR3_WAKEUP_NUMBER_SHIFT                       (4U)
-#define DMA_CSR3_WAKEUP_NUMBER_MASK                        (0x1FU << DMA_CSR3_WAKEUP_NUMBER_SHIFT)                      /* 0x000001F0 */
-#define DMA_CSR3_DMAWFP_B_NS_SHIFT                         (14U)
-#define DMA_CSR3_DMAWFP_B_NS_MASK                          (0x1U << DMA_CSR3_DMAWFP_B_NS_SHIFT)                         /* 0x00004000 */
-#define DMA_CSR3_DMAWFP_PERIPH_SHIFT                       (15U)
-#define DMA_CSR3_DMAWFP_PERIPH_MASK                        (0x1U << DMA_CSR3_DMAWFP_PERIPH_SHIFT)                       /* 0x00008000 */
-#define DMA_CSR3_CNS_SHIFT                                 (21U)
-#define DMA_CSR3_CNS_MASK                                  (0x1U << DMA_CSR3_CNS_SHIFT)                                 /* 0x00200000 */
+#define DMA_CSR3_FIELD0000_SHIFT                           (0U)
+#define DMA_CSR3_FIELD0000_MASK                            (0xFU << DMA_CSR3_FIELD0000_SHIFT)                           /* 0x0000000F */
+#define DMA_CSR3_FIELD0004_SHIFT                           (4U)
+#define DMA_CSR3_FIELD0004_MASK                            (0x1FU << DMA_CSR3_FIELD0004_SHIFT)                          /* 0x000001F0 */
+#define DMA_CSR3_FIELD0003_SHIFT                           (14U)
+#define DMA_CSR3_FIELD0003_MASK                            (0x1U << DMA_CSR3_FIELD0003_SHIFT)                           /* 0x00004000 */
+#define DMA_CSR3_FIELD0002_SHIFT                           (15U)
+#define DMA_CSR3_FIELD0002_MASK                            (0x1U << DMA_CSR3_FIELD0002_SHIFT)                           /* 0x00008000 */
+#define DMA_CSR3_FIELD0001_SHIFT                           (21U)
+#define DMA_CSR3_FIELD0001_MASK                            (0x1U << DMA_CSR3_FIELD0001_SHIFT)                           /* 0x00200000 */
 /* CPC3 */
 #define DMA_CPC3_OFFSET                                    (0x11CU)
 #define DMA_CPC3                                           (0x0U)
-#define DMA_CPC3_PC_CHNL_SHIFT                             (0U)
-#define DMA_CPC3_PC_CHNL_MASK                              (0xFFFFFFFFU << DMA_CPC3_PC_CHNL_SHIFT)                      /* 0xFFFFFFFF */
+#define DMA_CPC3_FIELD0000_SHIFT                           (0U)
+#define DMA_CPC3_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_CPC3_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CSR4 */
 #define DMA_CSR4_OFFSET                                    (0x120U)
 #define DMA_CSR4                                           (0x0U)
-#define DMA_CSR4_CHANNEL_STATUS_SHIFT                      (0U)
-#define DMA_CSR4_CHANNEL_STATUS_MASK                       (0xFU << DMA_CSR4_CHANNEL_STATUS_SHIFT)                      /* 0x0000000F */
-#define DMA_CSR4_WAKEUP_NUMBER_SHIFT                       (4U)
-#define DMA_CSR4_WAKEUP_NUMBER_MASK                        (0x1FU << DMA_CSR4_WAKEUP_NUMBER_SHIFT)                      /* 0x000001F0 */
-#define DMA_CSR4_DMAWFP_B_NS_SHIFT                         (14U)
-#define DMA_CSR4_DMAWFP_B_NS_MASK                          (0x1U << DMA_CSR4_DMAWFP_B_NS_SHIFT)                         /* 0x00004000 */
-#define DMA_CSR4_DMAWFP_PERIPH_SHIFT                       (15U)
-#define DMA_CSR4_DMAWFP_PERIPH_MASK                        (0x1U << DMA_CSR4_DMAWFP_PERIPH_SHIFT)                       /* 0x00008000 */
-#define DMA_CSR4_CNS_SHIFT                                 (21U)
-#define DMA_CSR4_CNS_MASK                                  (0x1U << DMA_CSR4_CNS_SHIFT)                                 /* 0x00200000 */
+#define DMA_CSR4_FIELD0000_SHIFT                           (0U)
+#define DMA_CSR4_FIELD0000_MASK                            (0xFU << DMA_CSR4_FIELD0000_SHIFT)                           /* 0x0000000F */
+#define DMA_CSR4_FIELD0004_SHIFT                           (4U)
+#define DMA_CSR4_FIELD0004_MASK                            (0x1FU << DMA_CSR4_FIELD0004_SHIFT)                          /* 0x000001F0 */
+#define DMA_CSR4_FIELD0003_SHIFT                           (14U)
+#define DMA_CSR4_FIELD0003_MASK                            (0x1U << DMA_CSR4_FIELD0003_SHIFT)                           /* 0x00004000 */
+#define DMA_CSR4_FIELD0002_SHIFT                           (15U)
+#define DMA_CSR4_FIELD0002_MASK                            (0x1U << DMA_CSR4_FIELD0002_SHIFT)                           /* 0x00008000 */
+#define DMA_CSR4_FIELD0001_SHIFT                           (21U)
+#define DMA_CSR4_FIELD0001_MASK                            (0x1U << DMA_CSR4_FIELD0001_SHIFT)                           /* 0x00200000 */
 /* CPC4 */
 #define DMA_CPC4_OFFSET                                    (0x124U)
 #define DMA_CPC4                                           (0x0U)
-#define DMA_CPC4_PC_CHNL_SHIFT                             (0U)
-#define DMA_CPC4_PC_CHNL_MASK                              (0xFFFFFFFFU << DMA_CPC4_PC_CHNL_SHIFT)                      /* 0xFFFFFFFF */
+#define DMA_CPC4_FIELD0000_SHIFT                           (0U)
+#define DMA_CPC4_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_CPC4_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CSR5 */
 #define DMA_CSR5_OFFSET                                    (0x128U)
 #define DMA_CSR5                                           (0x0U)
-#define DMA_CSR5_CHANNEL_STATUS_SHIFT                      (0U)
-#define DMA_CSR5_CHANNEL_STATUS_MASK                       (0xFU << DMA_CSR5_CHANNEL_STATUS_SHIFT)                      /* 0x0000000F */
-#define DMA_CSR5_WAKEUP_NUMBER_SHIFT                       (4U)
-#define DMA_CSR5_WAKEUP_NUMBER_MASK                        (0x1FU << DMA_CSR5_WAKEUP_NUMBER_SHIFT)                      /* 0x000001F0 */
-#define DMA_CSR5_DMAWFP_B_NS_SHIFT                         (14U)
-#define DMA_CSR5_DMAWFP_B_NS_MASK                          (0x1U << DMA_CSR5_DMAWFP_B_NS_SHIFT)                         /* 0x00004000 */
-#define DMA_CSR5_DMAWFP_PERIPH_SHIFT                       (15U)
-#define DMA_CSR5_DMAWFP_PERIPH_MASK                        (0x1U << DMA_CSR5_DMAWFP_PERIPH_SHIFT)                       /* 0x00008000 */
-#define DMA_CSR5_CNS_SHIFT                                 (21U)
-#define DMA_CSR5_CNS_MASK                                  (0x1U << DMA_CSR5_CNS_SHIFT)                                 /* 0x00200000 */
+#define DMA_CSR5_FIELD0000_SHIFT                           (0U)
+#define DMA_CSR5_FIELD0000_MASK                            (0xFU << DMA_CSR5_FIELD0000_SHIFT)                           /* 0x0000000F */
+#define DMA_CSR5_FIELD0004_SHIFT                           (4U)
+#define DMA_CSR5_FIELD0004_MASK                            (0x1FU << DMA_CSR5_FIELD0004_SHIFT)                          /* 0x000001F0 */
+#define DMA_CSR5_FIELD0003_SHIFT                           (14U)
+#define DMA_CSR5_FIELD0003_MASK                            (0x1U << DMA_CSR5_FIELD0003_SHIFT)                           /* 0x00004000 */
+#define DMA_CSR5_FIELD0002_SHIFT                           (15U)
+#define DMA_CSR5_FIELD0002_MASK                            (0x1U << DMA_CSR5_FIELD0002_SHIFT)                           /* 0x00008000 */
+#define DMA_CSR5_FIELD0001_SHIFT                           (21U)
+#define DMA_CSR5_FIELD0001_MASK                            (0x1U << DMA_CSR5_FIELD0001_SHIFT)                           /* 0x00200000 */
 /* CPC5 */
 #define DMA_CPC5_OFFSET                                    (0x12CU)
 #define DMA_CPC5                                           (0x0U)
-#define DMA_CPC5_PC_CHNL_SHIFT                             (0U)
-#define DMA_CPC5_PC_CHNL_MASK                              (0xFFFFFFFFU << DMA_CPC5_PC_CHNL_SHIFT)                      /* 0xFFFFFFFF */
-/* CSR6 */
-#define DMA_CSR6_OFFSET                                    (0x130U)
-#define DMA_CSR6                                           (0x0U)
-#define DMA_CSR6_CHANNEL_STATUS_SHIFT                      (0U)
-#define DMA_CSR6_CHANNEL_STATUS_MASK                       (0xFU << DMA_CSR6_CHANNEL_STATUS_SHIFT)                      /* 0x0000000F */
-#define DMA_CSR6_WAKEUP_NUMBER_SHIFT                       (4U)
-#define DMA_CSR6_WAKEUP_NUMBER_MASK                        (0x1FU << DMA_CSR6_WAKEUP_NUMBER_SHIFT)                      /* 0x000001F0 */
-#define DMA_CSR6_DMAWFP_B_NS_SHIFT                         (14U)
-#define DMA_CSR6_DMAWFP_B_NS_MASK                          (0x1U << DMA_CSR6_DMAWFP_B_NS_SHIFT)                         /* 0x00004000 */
-#define DMA_CSR6_DMAWFP_PERIPH_SHIFT                       (15U)
-#define DMA_CSR6_DMAWFP_PERIPH_MASK                        (0x1U << DMA_CSR6_DMAWFP_PERIPH_SHIFT)                       /* 0x00008000 */
-#define DMA_CSR6_CNS_SHIFT                                 (21U)
-#define DMA_CSR6_CNS_MASK                                  (0x1U << DMA_CSR6_CNS_SHIFT)                                 /* 0x00200000 */
-/* CPC6 */
-#define DMA_CPC6_OFFSET                                    (0x134U)
-#define DMA_CPC6                                           (0x0U)
-#define DMA_CPC6_PC_CHNL_SHIFT                             (0U)
-#define DMA_CPC6_PC_CHNL_MASK                              (0xFFFFFFFFU << DMA_CPC6_PC_CHNL_SHIFT)                      /* 0xFFFFFFFF */
-/* CSR7 */
-#define DMA_CSR7_OFFSET                                    (0x138U)
-#define DMA_CSR7                                           (0x0U)
-#define DMA_CSR7_CHANNEL_STATUS_SHIFT                      (0U)
-#define DMA_CSR7_CHANNEL_STATUS_MASK                       (0xFU << DMA_CSR7_CHANNEL_STATUS_SHIFT)                      /* 0x0000000F */
-#define DMA_CSR7_WAKEUP_NUMBER_SHIFT                       (4U)
-#define DMA_CSR7_WAKEUP_NUMBER_MASK                        (0x1FU << DMA_CSR7_WAKEUP_NUMBER_SHIFT)                      /* 0x000001F0 */
-#define DMA_CSR7_DMAWFP_B_NS_SHIFT                         (14U)
-#define DMA_CSR7_DMAWFP_B_NS_MASK                          (0x1U << DMA_CSR7_DMAWFP_B_NS_SHIFT)                         /* 0x00004000 */
-#define DMA_CSR7_DMAWFP_PERIPH_SHIFT                       (15U)
-#define DMA_CSR7_DMAWFP_PERIPH_MASK                        (0x1U << DMA_CSR7_DMAWFP_PERIPH_SHIFT)                       /* 0x00008000 */
-#define DMA_CSR7_CNS_SHIFT                                 (21U)
-#define DMA_CSR7_CNS_MASK                                  (0x1U << DMA_CSR7_CNS_SHIFT)                                 /* 0x00200000 */
-/* CPC7 */
-#define DMA_CPC7_OFFSET                                    (0x13CU)
-#define DMA_CPC7                                           (0x0U)
-#define DMA_CPC7_PC_CHNL_SHIFT                             (0U)
-#define DMA_CPC7_PC_CHNL_MASK                              (0xFFFFFFFFU << DMA_CPC7_PC_CHNL_SHIFT)                      /* 0xFFFFFFFF */
+#define DMA_CPC5_FIELD0000_SHIFT                           (0U)
+#define DMA_CPC5_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_CPC5_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* SAR0 */
 #define DMA_SAR0_OFFSET                                    (0x400U)
 #define DMA_SAR0                                           (0x0U)
-#define DMA_SAR0_SRC_ADDR_SHIFT                            (0U)
-#define DMA_SAR0_SRC_ADDR_MASK                             (0xFFFFFFFFU << DMA_SAR0_SRC_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_SAR0_FIELD0000_SHIFT                           (0U)
+#define DMA_SAR0_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_SAR0_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* DAR0 */
 #define DMA_DAR0_OFFSET                                    (0x404U)
 #define DMA_DAR0                                           (0x0U)
-#define DMA_DAR0_DST_ADDR_SHIFT                            (0U)
-#define DMA_DAR0_DST_ADDR_MASK                             (0xFFFFFFFFU << DMA_DAR0_DST_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_DAR0_FIELD0000_SHIFT                           (0U)
+#define DMA_DAR0_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_DAR0_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CCR0 */
 #define DMA_CCR0_OFFSET                                    (0x408U)
 #define DMA_CCR0                                           (0x0U)
-#define DMA_CCR0_SRC_INC_SHIFT                             (0U)
-#define DMA_CCR0_SRC_INC_MASK                              (0x1U << DMA_CCR0_SRC_INC_SHIFT)                             /* 0x00000001 */
-#define DMA_CCR0_SRC_BURST_SIZE_SHIFT                      (1U)
-#define DMA_CCR0_SRC_BURST_SIZE_MASK                       (0x7U << DMA_CCR0_SRC_BURST_SIZE_SHIFT)                      /* 0x0000000E */
-#define DMA_CCR0_SRC_BURST_LEN_SHIFT                       (4U)
-#define DMA_CCR0_SRC_BURST_LEN_MASK                        (0xFU << DMA_CCR0_SRC_BURST_LEN_SHIFT)                       /* 0x000000F0 */
-#define DMA_CCR0_SRC_PROT_CTRL_SHIFT                       (8U)
-#define DMA_CCR0_SRC_PROT_CTRL_MASK                        (0x7U << DMA_CCR0_SRC_PROT_CTRL_SHIFT)                       /* 0x00000700 */
-#define DMA_CCR0_SRC_CACHE_CTRL_SHIFT                      (11U)
-#define DMA_CCR0_SRC_CACHE_CTRL_MASK                       (0x7U << DMA_CCR0_SRC_CACHE_CTRL_SHIFT)                      /* 0x00003800 */
-#define DMA_CCR0_DST_INC_SHIFT                             (14U)
-#define DMA_CCR0_DST_INC_MASK                              (0x1U << DMA_CCR0_DST_INC_SHIFT)                             /* 0x00004000 */
-#define DMA_CCR0_DST_BURST_SIZE_SHIFT                      (15U)
-#define DMA_CCR0_DST_BURST_SIZE_MASK                       (0x7U << DMA_CCR0_DST_BURST_SIZE_SHIFT)                      /* 0x00038000 */
-#define DMA_CCR0_DST_BURST_LEN_SHIFT                       (18U)
-#define DMA_CCR0_DST_BURST_LEN_MASK                        (0xFU << DMA_CCR0_DST_BURST_LEN_SHIFT)                       /* 0x003C0000 */
-#define DMA_CCR0_DST_PROT_CTRL_SHIFT                       (22U)
-#define DMA_CCR0_DST_PROT_CTRL_MASK                        (0x7U << DMA_CCR0_DST_PROT_CTRL_SHIFT)                       /* 0x01C00000 */
-#define DMA_CCR0_DST_CACHE_CTRL_SHIFT                      (25U)
-#define DMA_CCR0_DST_CACHE_CTRL_MASK                       (0x7U << DMA_CCR0_DST_CACHE_CTRL_SHIFT)                      /* 0x0E000000 */
+#define DMA_CCR0_FIELD0000_SHIFT                           (0U)
+#define DMA_CCR0_FIELD0000_MASK                            (0x1U << DMA_CCR0_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_CCR0_FIELD0009_SHIFT                           (1U)
+#define DMA_CCR0_FIELD0009_MASK                            (0x7U << DMA_CCR0_FIELD0009_SHIFT)                           /* 0x0000000E */
+#define DMA_CCR0_FIELD0008_SHIFT                           (4U)
+#define DMA_CCR0_FIELD0008_MASK                            (0xFU << DMA_CCR0_FIELD0008_SHIFT)                           /* 0x000000F0 */
+#define DMA_CCR0_FIELD0007_SHIFT                           (8U)
+#define DMA_CCR0_FIELD0007_MASK                            (0x7U << DMA_CCR0_FIELD0007_SHIFT)                           /* 0x00000700 */
+#define DMA_CCR0_FIELD0006_SHIFT                           (11U)
+#define DMA_CCR0_FIELD0006_MASK                            (0x7U << DMA_CCR0_FIELD0006_SHIFT)                           /* 0x00003800 */
+#define DMA_CCR0_FIELD0005_SHIFT                           (14U)
+#define DMA_CCR0_FIELD0005_MASK                            (0x1U << DMA_CCR0_FIELD0005_SHIFT)                           /* 0x00004000 */
+#define DMA_CCR0_FIELD0004_SHIFT                           (15U)
+#define DMA_CCR0_FIELD0004_MASK                            (0x7U << DMA_CCR0_FIELD0004_SHIFT)                           /* 0x00038000 */
+#define DMA_CCR0_FIELD0003_SHIFT                           (18U)
+#define DMA_CCR0_FIELD0003_MASK                            (0xFU << DMA_CCR0_FIELD0003_SHIFT)                           /* 0x003C0000 */
+#define DMA_CCR0_FIELD0002_SHIFT                           (22U)
+#define DMA_CCR0_FIELD0002_MASK                            (0x7U << DMA_CCR0_FIELD0002_SHIFT)                           /* 0x01C00000 */
+#define DMA_CCR0_FIELD0001_SHIFT                           (25U)
+#define DMA_CCR0_FIELD0001_MASK                            (0x7U << DMA_CCR0_FIELD0001_SHIFT)                           /* 0x0E000000 */
 /* LC0_0 */
 #define DMA_LC0_0_OFFSET                                   (0x40CU)
 #define DMA_LC0_0                                          (0x0U)
-#define DMA_LC0_0_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC0_0_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC0_0_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC0_0_FIELD0000_SHIFT                          (0U)
+#define DMA_LC0_0_FIELD0000_MASK                           (0xFFU << DMA_LC0_0_FIELD0000_SHIFT)                         /* 0x000000FF */
 /* LC1_0 */
 #define DMA_LC1_0_OFFSET                                   (0x410U)
 #define DMA_LC1_0                                          (0x0U)
-#define DMA_LC1_0_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC1_0_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC1_0_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC1_0_FIELD0000_SHIFT                          (0U)
+#define DMA_LC1_0_FIELD0000_MASK                           (0xFFU << DMA_LC1_0_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING0_0 */
+#define DMA_PADDING0_0_OFFSET                              (0x414U)
+/* PADDING0_1 */
+#define DMA_PADDING0_1_OFFSET                              (0x418U)
+/* PADDING0_2 */
+#define DMA_PADDING0_2_OFFSET                              (0x41CU)
 /* SAR1 */
 #define DMA_SAR1_OFFSET                                    (0x420U)
 #define DMA_SAR1                                           (0x0U)
-#define DMA_SAR1_SRC_ADDR_SHIFT                            (0U)
-#define DMA_SAR1_SRC_ADDR_MASK                             (0xFFFFFFFFU << DMA_SAR1_SRC_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_SAR1_FIELD0000_SHIFT                           (0U)
+#define DMA_SAR1_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_SAR1_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* DAR1 */
 #define DMA_DAR1_OFFSET                                    (0x424U)
 #define DMA_DAR1                                           (0x0U)
-#define DMA_DAR1_DST_ADDR_SHIFT                            (0U)
-#define DMA_DAR1_DST_ADDR_MASK                             (0xFFFFFFFFU << DMA_DAR1_DST_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_DAR1_FIELD0000_SHIFT                           (0U)
+#define DMA_DAR1_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_DAR1_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CCR1 */
 #define DMA_CCR1_OFFSET                                    (0x428U)
 #define DMA_CCR1                                           (0x0U)
-#define DMA_CCR1_SRC_INC_SHIFT                             (0U)
-#define DMA_CCR1_SRC_INC_MASK                              (0x1U << DMA_CCR1_SRC_INC_SHIFT)                             /* 0x00000001 */
-#define DMA_CCR1_SRC_BURST_SIZE_SHIFT                      (1U)
-#define DMA_CCR1_SRC_BURST_SIZE_MASK                       (0x7U << DMA_CCR1_SRC_BURST_SIZE_SHIFT)                      /* 0x0000000E */
-#define DMA_CCR1_SRC_BURST_LEN_SHIFT                       (4U)
-#define DMA_CCR1_SRC_BURST_LEN_MASK                        (0xFU << DMA_CCR1_SRC_BURST_LEN_SHIFT)                       /* 0x000000F0 */
-#define DMA_CCR1_SRC_PROT_CTRL_SHIFT                       (8U)
-#define DMA_CCR1_SRC_PROT_CTRL_MASK                        (0x7U << DMA_CCR1_SRC_PROT_CTRL_SHIFT)                       /* 0x00000700 */
-#define DMA_CCR1_SRC_CACHE_CTRL_SHIFT                      (11U)
-#define DMA_CCR1_SRC_CACHE_CTRL_MASK                       (0x7U << DMA_CCR1_SRC_CACHE_CTRL_SHIFT)                      /* 0x00003800 */
-#define DMA_CCR1_DST_INC_SHIFT                             (14U)
-#define DMA_CCR1_DST_INC_MASK                              (0x1U << DMA_CCR1_DST_INC_SHIFT)                             /* 0x00004000 */
-#define DMA_CCR1_DST_BURST_SIZE_SHIFT                      (15U)
-#define DMA_CCR1_DST_BURST_SIZE_MASK                       (0x7U << DMA_CCR1_DST_BURST_SIZE_SHIFT)                      /* 0x00038000 */
-#define DMA_CCR1_DST_BURST_LEN_SHIFT                       (18U)
-#define DMA_CCR1_DST_BURST_LEN_MASK                        (0xFU << DMA_CCR1_DST_BURST_LEN_SHIFT)                       /* 0x003C0000 */
-#define DMA_CCR1_DST_PROT_CTRL_SHIFT                       (22U)
-#define DMA_CCR1_DST_PROT_CTRL_MASK                        (0x7U << DMA_CCR1_DST_PROT_CTRL_SHIFT)                       /* 0x01C00000 */
-#define DMA_CCR1_DST_CACHE_CTRL_SHIFT                      (25U)
-#define DMA_CCR1_DST_CACHE_CTRL_MASK                       (0x7U << DMA_CCR1_DST_CACHE_CTRL_SHIFT)                      /* 0x0E000000 */
+#define DMA_CCR1_FIELD0000_SHIFT                           (0U)
+#define DMA_CCR1_FIELD0000_MASK                            (0x1U << DMA_CCR1_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_CCR1_FIELD0009_SHIFT                           (1U)
+#define DMA_CCR1_FIELD0009_MASK                            (0x7U << DMA_CCR1_FIELD0009_SHIFT)                           /* 0x0000000E */
+#define DMA_CCR1_FIELD0008_SHIFT                           (4U)
+#define DMA_CCR1_FIELD0008_MASK                            (0xFU << DMA_CCR1_FIELD0008_SHIFT)                           /* 0x000000F0 */
+#define DMA_CCR1_FIELD0007_SHIFT                           (8U)
+#define DMA_CCR1_FIELD0007_MASK                            (0x7U << DMA_CCR1_FIELD0007_SHIFT)                           /* 0x00000700 */
+#define DMA_CCR1_FIELD0006_SHIFT                           (11U)
+#define DMA_CCR1_FIELD0006_MASK                            (0x7U << DMA_CCR1_FIELD0006_SHIFT)                           /* 0x00003800 */
+#define DMA_CCR1_FIELD0005_SHIFT                           (14U)
+#define DMA_CCR1_FIELD0005_MASK                            (0x1U << DMA_CCR1_FIELD0005_SHIFT)                           /* 0x00004000 */
+#define DMA_CCR1_FIELD0004_SHIFT                           (15U)
+#define DMA_CCR1_FIELD0004_MASK                            (0x7U << DMA_CCR1_FIELD0004_SHIFT)                           /* 0x00038000 */
+#define DMA_CCR1_FIELD0003_SHIFT                           (18U)
+#define DMA_CCR1_FIELD0003_MASK                            (0xFU << DMA_CCR1_FIELD0003_SHIFT)                           /* 0x003C0000 */
+#define DMA_CCR1_FIELD0002_SHIFT                           (22U)
+#define DMA_CCR1_FIELD0002_MASK                            (0x7U << DMA_CCR1_FIELD0002_SHIFT)                           /* 0x01C00000 */
+#define DMA_CCR1_FIELD0001_SHIFT                           (25U)
+#define DMA_CCR1_FIELD0001_MASK                            (0x7U << DMA_CCR1_FIELD0001_SHIFT)                           /* 0x0E000000 */
 /* LC0_1 */
 #define DMA_LC0_1_OFFSET                                   (0x42CU)
 #define DMA_LC0_1                                          (0x0U)
-#define DMA_LC0_1_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC0_1_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC0_1_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC0_1_FIELD0000_SHIFT                          (0U)
+#define DMA_LC0_1_FIELD0000_MASK                           (0xFFU << DMA_LC0_1_FIELD0000_SHIFT)                         /* 0x000000FF */
 /* LC1_1 */
 #define DMA_LC1_1_OFFSET                                   (0x430U)
 #define DMA_LC1_1                                          (0x0U)
-#define DMA_LC1_1_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC1_1_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC1_1_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC1_1_FIELD0000_SHIFT                          (0U)
+#define DMA_LC1_1_FIELD0000_MASK                           (0xFFU << DMA_LC1_1_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING1_0 */
+#define DMA_PADDING1_0_OFFSET                              (0x434U)
+/* PADDING1_1 */
+#define DMA_PADDING1_1_OFFSET                              (0x438U)
+/* PADDING1_2 */
+#define DMA_PADDING1_2_OFFSET                              (0x43CU)
 /* SAR2 */
 #define DMA_SAR2_OFFSET                                    (0x440U)
 #define DMA_SAR2                                           (0x0U)
-#define DMA_SAR2_SRC_ADDR_SHIFT                            (0U)
-#define DMA_SAR2_SRC_ADDR_MASK                             (0xFFFFFFFFU << DMA_SAR2_SRC_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_SAR2_FIELD0000_SHIFT                           (0U)
+#define DMA_SAR2_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_SAR2_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* DAR2 */
 #define DMA_DAR2_OFFSET                                    (0x444U)
 #define DMA_DAR2                                           (0x0U)
-#define DMA_DAR2_DST_ADDR_SHIFT                            (0U)
-#define DMA_DAR2_DST_ADDR_MASK                             (0xFFFFFFFFU << DMA_DAR2_DST_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_DAR2_FIELD0000_SHIFT                           (0U)
+#define DMA_DAR2_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_DAR2_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CCR2 */
 #define DMA_CCR2_OFFSET                                    (0x448U)
 #define DMA_CCR2                                           (0x0U)
-#define DMA_CCR2_SRC_INC_SHIFT                             (0U)
-#define DMA_CCR2_SRC_INC_MASK                              (0x1U << DMA_CCR2_SRC_INC_SHIFT)                             /* 0x00000001 */
-#define DMA_CCR2_SRC_BURST_SIZE_SHIFT                      (1U)
-#define DMA_CCR2_SRC_BURST_SIZE_MASK                       (0x7U << DMA_CCR2_SRC_BURST_SIZE_SHIFT)                      /* 0x0000000E */
-#define DMA_CCR2_SRC_BURST_LEN_SHIFT                       (4U)
-#define DMA_CCR2_SRC_BURST_LEN_MASK                        (0xFU << DMA_CCR2_SRC_BURST_LEN_SHIFT)                       /* 0x000000F0 */
-#define DMA_CCR2_SRC_PROT_CTRL_SHIFT                       (8U)
-#define DMA_CCR2_SRC_PROT_CTRL_MASK                        (0x7U << DMA_CCR2_SRC_PROT_CTRL_SHIFT)                       /* 0x00000700 */
-#define DMA_CCR2_SRC_CACHE_CTRL_SHIFT                      (11U)
-#define DMA_CCR2_SRC_CACHE_CTRL_MASK                       (0x7U << DMA_CCR2_SRC_CACHE_CTRL_SHIFT)                      /* 0x00003800 */
-#define DMA_CCR2_DST_INC_SHIFT                             (14U)
-#define DMA_CCR2_DST_INC_MASK                              (0x1U << DMA_CCR2_DST_INC_SHIFT)                             /* 0x00004000 */
-#define DMA_CCR2_DST_BURST_SIZE_SHIFT                      (15U)
-#define DMA_CCR2_DST_BURST_SIZE_MASK                       (0x7U << DMA_CCR2_DST_BURST_SIZE_SHIFT)                      /* 0x00038000 */
-#define DMA_CCR2_DST_BURST_LEN_SHIFT                       (18U)
-#define DMA_CCR2_DST_BURST_LEN_MASK                        (0xFU << DMA_CCR2_DST_BURST_LEN_SHIFT)                       /* 0x003C0000 */
-#define DMA_CCR2_DST_PROT_CTRL_SHIFT                       (22U)
-#define DMA_CCR2_DST_PROT_CTRL_MASK                        (0x7U << DMA_CCR2_DST_PROT_CTRL_SHIFT)                       /* 0x01C00000 */
-#define DMA_CCR2_DST_CACHE_CTRL_SHIFT                      (25U)
-#define DMA_CCR2_DST_CACHE_CTRL_MASK                       (0x7U << DMA_CCR2_DST_CACHE_CTRL_SHIFT)                      /* 0x0E000000 */
+#define DMA_CCR2_FIELD0000_SHIFT                           (0U)
+#define DMA_CCR2_FIELD0000_MASK                            (0x1U << DMA_CCR2_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_CCR2_FIELD0009_SHIFT                           (1U)
+#define DMA_CCR2_FIELD0009_MASK                            (0x7U << DMA_CCR2_FIELD0009_SHIFT)                           /* 0x0000000E */
+#define DMA_CCR2_FIELD0008_SHIFT                           (4U)
+#define DMA_CCR2_FIELD0008_MASK                            (0xFU << DMA_CCR2_FIELD0008_SHIFT)                           /* 0x000000F0 */
+#define DMA_CCR2_FIELD0007_SHIFT                           (8U)
+#define DMA_CCR2_FIELD0007_MASK                            (0x7U << DMA_CCR2_FIELD0007_SHIFT)                           /* 0x00000700 */
+#define DMA_CCR2_FIELD0006_SHIFT                           (11U)
+#define DMA_CCR2_FIELD0006_MASK                            (0x7U << DMA_CCR2_FIELD0006_SHIFT)                           /* 0x00003800 */
+#define DMA_CCR2_FIELD0005_SHIFT                           (14U)
+#define DMA_CCR2_FIELD0005_MASK                            (0x1U << DMA_CCR2_FIELD0005_SHIFT)                           /* 0x00004000 */
+#define DMA_CCR2_FIELD0004_SHIFT                           (15U)
+#define DMA_CCR2_FIELD0004_MASK                            (0x7U << DMA_CCR2_FIELD0004_SHIFT)                           /* 0x00038000 */
+#define DMA_CCR2_FIELD0003_SHIFT                           (18U)
+#define DMA_CCR2_FIELD0003_MASK                            (0xFU << DMA_CCR2_FIELD0003_SHIFT)                           /* 0x003C0000 */
+#define DMA_CCR2_FIELD0002_SHIFT                           (22U)
+#define DMA_CCR2_FIELD0002_MASK                            (0x7U << DMA_CCR2_FIELD0002_SHIFT)                           /* 0x01C00000 */
+#define DMA_CCR2_FIELD0001_SHIFT                           (25U)
+#define DMA_CCR2_FIELD0001_MASK                            (0x7U << DMA_CCR2_FIELD0001_SHIFT)                           /* 0x0E000000 */
 /* LC0_2 */
 #define DMA_LC0_2_OFFSET                                   (0x44CU)
 #define DMA_LC0_2                                          (0x0U)
-#define DMA_LC0_2_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC0_2_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC0_2_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC0_2_FIELD0000_SHIFT                          (0U)
+#define DMA_LC0_2_FIELD0000_MASK                           (0xFFU << DMA_LC0_2_FIELD0000_SHIFT)                         /* 0x000000FF */
 /* LC1_2 */
 #define DMA_LC1_2_OFFSET                                   (0x450U)
 #define DMA_LC1_2                                          (0x0U)
-#define DMA_LC1_2_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC1_2_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC1_2_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC1_2_FIELD0000_SHIFT                          (0U)
+#define DMA_LC1_2_FIELD0000_MASK                           (0xFFU << DMA_LC1_2_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING2_0 */
+#define DMA_PADDING2_0_OFFSET                              (0x454U)
+/* PADDING2_1 */
+#define DMA_PADDING2_1_OFFSET                              (0x458U)
+/* PADDING2_2 */
+#define DMA_PADDING2_2_OFFSET                              (0x45CU)
 /* SAR3 */
 #define DMA_SAR3_OFFSET                                    (0x460U)
 #define DMA_SAR3                                           (0x0U)
-#define DMA_SAR3_SRC_ADDR_SHIFT                            (0U)
-#define DMA_SAR3_SRC_ADDR_MASK                             (0xFFFFFFFFU << DMA_SAR3_SRC_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_SAR3_FIELD0000_SHIFT                           (0U)
+#define DMA_SAR3_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_SAR3_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* DAR3 */
 #define DMA_DAR3_OFFSET                                    (0x464U)
 #define DMA_DAR3                                           (0x0U)
-#define DMA_DAR3_DST_ADDR_SHIFT                            (0U)
-#define DMA_DAR3_DST_ADDR_MASK                             (0xFFFFFFFFU << DMA_DAR3_DST_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_DAR3_FIELD0000_SHIFT                           (0U)
+#define DMA_DAR3_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_DAR3_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CCR3 */
 #define DMA_CCR3_OFFSET                                    (0x468U)
 #define DMA_CCR3                                           (0x0U)
-#define DMA_CCR3_SRC_INC_SHIFT                             (0U)
-#define DMA_CCR3_SRC_INC_MASK                              (0x1U << DMA_CCR3_SRC_INC_SHIFT)                             /* 0x00000001 */
-#define DMA_CCR3_SRC_BURST_SIZE_SHIFT                      (1U)
-#define DMA_CCR3_SRC_BURST_SIZE_MASK                       (0x7U << DMA_CCR3_SRC_BURST_SIZE_SHIFT)                      /* 0x0000000E */
-#define DMA_CCR3_SRC_BURST_LEN_SHIFT                       (4U)
-#define DMA_CCR3_SRC_BURST_LEN_MASK                        (0xFU << DMA_CCR3_SRC_BURST_LEN_SHIFT)                       /* 0x000000F0 */
-#define DMA_CCR3_SRC_PROT_CTRL_SHIFT                       (8U)
-#define DMA_CCR3_SRC_PROT_CTRL_MASK                        (0x7U << DMA_CCR3_SRC_PROT_CTRL_SHIFT)                       /* 0x00000700 */
-#define DMA_CCR3_SRC_CACHE_CTRL_SHIFT                      (11U)
-#define DMA_CCR3_SRC_CACHE_CTRL_MASK                       (0x7U << DMA_CCR3_SRC_CACHE_CTRL_SHIFT)                      /* 0x00003800 */
-#define DMA_CCR3_DST_INC_SHIFT                             (14U)
-#define DMA_CCR3_DST_INC_MASK                              (0x1U << DMA_CCR3_DST_INC_SHIFT)                             /* 0x00004000 */
-#define DMA_CCR3_DST_BURST_SIZE_SHIFT                      (15U)
-#define DMA_CCR3_DST_BURST_SIZE_MASK                       (0x7U << DMA_CCR3_DST_BURST_SIZE_SHIFT)                      /* 0x00038000 */
-#define DMA_CCR3_DST_BURST_LEN_SHIFT                       (18U)
-#define DMA_CCR3_DST_BURST_LEN_MASK                        (0xFU << DMA_CCR3_DST_BURST_LEN_SHIFT)                       /* 0x003C0000 */
-#define DMA_CCR3_DST_PROT_CTRL_SHIFT                       (22U)
-#define DMA_CCR3_DST_PROT_CTRL_MASK                        (0x7U << DMA_CCR3_DST_PROT_CTRL_SHIFT)                       /* 0x01C00000 */
-#define DMA_CCR3_DST_CACHE_CTRL_SHIFT                      (25U)
-#define DMA_CCR3_DST_CACHE_CTRL_MASK                       (0x7U << DMA_CCR3_DST_CACHE_CTRL_SHIFT)                      /* 0x0E000000 */
+#define DMA_CCR3_FIELD0000_SHIFT                           (0U)
+#define DMA_CCR3_FIELD0000_MASK                            (0x1U << DMA_CCR3_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_CCR3_FIELD0009_SHIFT                           (1U)
+#define DMA_CCR3_FIELD0009_MASK                            (0x7U << DMA_CCR3_FIELD0009_SHIFT)                           /* 0x0000000E */
+#define DMA_CCR3_FIELD0008_SHIFT                           (4U)
+#define DMA_CCR3_FIELD0008_MASK                            (0xFU << DMA_CCR3_FIELD0008_SHIFT)                           /* 0x000000F0 */
+#define DMA_CCR3_FIELD0007_SHIFT                           (8U)
+#define DMA_CCR3_FIELD0007_MASK                            (0x7U << DMA_CCR3_FIELD0007_SHIFT)                           /* 0x00000700 */
+#define DMA_CCR3_FIELD0006_SHIFT                           (11U)
+#define DMA_CCR3_FIELD0006_MASK                            (0x7U << DMA_CCR3_FIELD0006_SHIFT)                           /* 0x00003800 */
+#define DMA_CCR3_FIELD0005_SHIFT                           (14U)
+#define DMA_CCR3_FIELD0005_MASK                            (0x1U << DMA_CCR3_FIELD0005_SHIFT)                           /* 0x00004000 */
+#define DMA_CCR3_FIELD0004_SHIFT                           (15U)
+#define DMA_CCR3_FIELD0004_MASK                            (0x7U << DMA_CCR3_FIELD0004_SHIFT)                           /* 0x00038000 */
+#define DMA_CCR3_FIELD0003_SHIFT                           (18U)
+#define DMA_CCR3_FIELD0003_MASK                            (0xFU << DMA_CCR3_FIELD0003_SHIFT)                           /* 0x003C0000 */
+#define DMA_CCR3_FIELD0002_SHIFT                           (22U)
+#define DMA_CCR3_FIELD0002_MASK                            (0x7U << DMA_CCR3_FIELD0002_SHIFT)                           /* 0x01C00000 */
+#define DMA_CCR3_FIELD0001_SHIFT                           (25U)
+#define DMA_CCR3_FIELD0001_MASK                            (0x7U << DMA_CCR3_FIELD0001_SHIFT)                           /* 0x0E000000 */
 /* LC0_3 */
 #define DMA_LC0_3_OFFSET                                   (0x46CU)
 #define DMA_LC0_3                                          (0x0U)
-#define DMA_LC0_3_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC0_3_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC0_3_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC0_3_FIELD0000_SHIFT                          (0U)
+#define DMA_LC0_3_FIELD0000_MASK                           (0xFFU << DMA_LC0_3_FIELD0000_SHIFT)                         /* 0x000000FF */
 /* LC1_3 */
 #define DMA_LC1_3_OFFSET                                   (0x470U)
 #define DMA_LC1_3                                          (0x0U)
-#define DMA_LC1_3_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC1_3_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC1_3_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC1_3_FIELD0000_SHIFT                          (0U)
+#define DMA_LC1_3_FIELD0000_MASK                           (0xFFU << DMA_LC1_3_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING3_0 */
+#define DMA_PADDING3_0_OFFSET                              (0x474U)
+/* PADDING3_1 */
+#define DMA_PADDING3_1_OFFSET                              (0x478U)
+/* PADDING3_2 */
+#define DMA_PADDING3_2_OFFSET                              (0x47CU)
 /* SAR4 */
 #define DMA_SAR4_OFFSET                                    (0x480U)
 #define DMA_SAR4                                           (0x0U)
-#define DMA_SAR4_SRC_ADDR_SHIFT                            (0U)
-#define DMA_SAR4_SRC_ADDR_MASK                             (0xFFFFFFFFU << DMA_SAR4_SRC_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_SAR4_FIELD0000_SHIFT                           (0U)
+#define DMA_SAR4_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_SAR4_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* DAR4 */
 #define DMA_DAR4_OFFSET                                    (0x484U)
 #define DMA_DAR4                                           (0x0U)
-#define DMA_DAR4_DST_ADDR_SHIFT                            (0U)
-#define DMA_DAR4_DST_ADDR_MASK                             (0xFFFFFFFFU << DMA_DAR4_DST_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_DAR4_FIELD0000_SHIFT                           (0U)
+#define DMA_DAR4_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_DAR4_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CCR4 */
 #define DMA_CCR4_OFFSET                                    (0x488U)
 #define DMA_CCR4                                           (0x0U)
-#define DMA_CCR4_SRC_INC_SHIFT                             (0U)
-#define DMA_CCR4_SRC_INC_MASK                              (0x1U << DMA_CCR4_SRC_INC_SHIFT)                             /* 0x00000001 */
-#define DMA_CCR4_SRC_BURST_SIZE_SHIFT                      (1U)
-#define DMA_CCR4_SRC_BURST_SIZE_MASK                       (0x7U << DMA_CCR4_SRC_BURST_SIZE_SHIFT)                      /* 0x0000000E */
-#define DMA_CCR4_SRC_BURST_LEN_SHIFT                       (4U)
-#define DMA_CCR4_SRC_BURST_LEN_MASK                        (0xFU << DMA_CCR4_SRC_BURST_LEN_SHIFT)                       /* 0x000000F0 */
-#define DMA_CCR4_SRC_PROT_CTRL_SHIFT                       (8U)
-#define DMA_CCR4_SRC_PROT_CTRL_MASK                        (0x7U << DMA_CCR4_SRC_PROT_CTRL_SHIFT)                       /* 0x00000700 */
-#define DMA_CCR4_SRC_CACHE_CTRL_SHIFT                      (11U)
-#define DMA_CCR4_SRC_CACHE_CTRL_MASK                       (0x7U << DMA_CCR4_SRC_CACHE_CTRL_SHIFT)                      /* 0x00003800 */
-#define DMA_CCR4_DST_INC_SHIFT                             (14U)
-#define DMA_CCR4_DST_INC_MASK                              (0x1U << DMA_CCR4_DST_INC_SHIFT)                             /* 0x00004000 */
-#define DMA_CCR4_DST_BURST_SIZE_SHIFT                      (15U)
-#define DMA_CCR4_DST_BURST_SIZE_MASK                       (0x7U << DMA_CCR4_DST_BURST_SIZE_SHIFT)                      /* 0x00038000 */
-#define DMA_CCR4_DST_BURST_LEN_SHIFT                       (18U)
-#define DMA_CCR4_DST_BURST_LEN_MASK                        (0xFU << DMA_CCR4_DST_BURST_LEN_SHIFT)                       /* 0x003C0000 */
-#define DMA_CCR4_DST_PROT_CTRL_SHIFT                       (22U)
-#define DMA_CCR4_DST_PROT_CTRL_MASK                        (0x7U << DMA_CCR4_DST_PROT_CTRL_SHIFT)                       /* 0x01C00000 */
-#define DMA_CCR4_DST_CACHE_CTRL_SHIFT                      (25U)
-#define DMA_CCR4_DST_CACHE_CTRL_MASK                       (0x7U << DMA_CCR4_DST_CACHE_CTRL_SHIFT)                      /* 0x0E000000 */
+#define DMA_CCR4_FIELD0000_SHIFT                           (0U)
+#define DMA_CCR4_FIELD0000_MASK                            (0x1U << DMA_CCR4_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_CCR4_FIELD0009_SHIFT                           (1U)
+#define DMA_CCR4_FIELD0009_MASK                            (0x7U << DMA_CCR4_FIELD0009_SHIFT)                           /* 0x0000000E */
+#define DMA_CCR4_FIELD0008_SHIFT                           (4U)
+#define DMA_CCR4_FIELD0008_MASK                            (0xFU << DMA_CCR4_FIELD0008_SHIFT)                           /* 0x000000F0 */
+#define DMA_CCR4_FIELD0007_SHIFT                           (8U)
+#define DMA_CCR4_FIELD0007_MASK                            (0x7U << DMA_CCR4_FIELD0007_SHIFT)                           /* 0x00000700 */
+#define DMA_CCR4_FIELD0006_SHIFT                           (11U)
+#define DMA_CCR4_FIELD0006_MASK                            (0x7U << DMA_CCR4_FIELD0006_SHIFT)                           /* 0x00003800 */
+#define DMA_CCR4_FIELD0005_SHIFT                           (14U)
+#define DMA_CCR4_FIELD0005_MASK                            (0x1U << DMA_CCR4_FIELD0005_SHIFT)                           /* 0x00004000 */
+#define DMA_CCR4_FIELD0004_SHIFT                           (15U)
+#define DMA_CCR4_FIELD0004_MASK                            (0x7U << DMA_CCR4_FIELD0004_SHIFT)                           /* 0x00038000 */
+#define DMA_CCR4_FIELD0003_SHIFT                           (18U)
+#define DMA_CCR4_FIELD0003_MASK                            (0xFU << DMA_CCR4_FIELD0003_SHIFT)                           /* 0x003C0000 */
+#define DMA_CCR4_FIELD0002_SHIFT                           (22U)
+#define DMA_CCR4_FIELD0002_MASK                            (0x7U << DMA_CCR4_FIELD0002_SHIFT)                           /* 0x01C00000 */
+#define DMA_CCR4_FIELD0001_SHIFT                           (25U)
+#define DMA_CCR4_FIELD0001_MASK                            (0x7U << DMA_CCR4_FIELD0001_SHIFT)                           /* 0x0E000000 */
 /* LC0_4 */
 #define DMA_LC0_4_OFFSET                                   (0x48CU)
 #define DMA_LC0_4                                          (0x0U)
-#define DMA_LC0_4_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC0_4_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC0_4_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC0_4_FIELD0000_SHIFT                          (0U)
+#define DMA_LC0_4_FIELD0000_MASK                           (0xFFU << DMA_LC0_4_FIELD0000_SHIFT)                         /* 0x000000FF */
 /* LC1_4 */
 #define DMA_LC1_4_OFFSET                                   (0x490U)
 #define DMA_LC1_4                                          (0x0U)
-#define DMA_LC1_4_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC1_4_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC1_4_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC1_4_FIELD0000_SHIFT                          (0U)
+#define DMA_LC1_4_FIELD0000_MASK                           (0xFFU << DMA_LC1_4_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING4_0 */
+#define DMA_PADDING4_0_OFFSET                              (0x494U)
+/* PADDING4_1 */
+#define DMA_PADDING4_1_OFFSET                              (0x498U)
+/* PADDING4_2 */
+#define DMA_PADDING4_2_OFFSET                              (0x49CU)
 /* SAR5 */
 #define DMA_SAR5_OFFSET                                    (0x4A0U)
 #define DMA_SAR5                                           (0x0U)
-#define DMA_SAR5_SRC_ADDR_SHIFT                            (0U)
-#define DMA_SAR5_SRC_ADDR_MASK                             (0xFFFFFFFFU << DMA_SAR5_SRC_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_SAR5_FIELD0000_SHIFT                           (0U)
+#define DMA_SAR5_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_SAR5_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* DAR5 */
 #define DMA_DAR5_OFFSET                                    (0x4A4U)
 #define DMA_DAR5                                           (0x0U)
-#define DMA_DAR5_DST_ADDR_SHIFT                            (0U)
-#define DMA_DAR5_DST_ADDR_MASK                             (0xFFFFFFFFU << DMA_DAR5_DST_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_DAR5_FIELD0000_SHIFT                           (0U)
+#define DMA_DAR5_FIELD0000_MASK                            (0xFFFFFFFFU << DMA_DAR5_FIELD0000_SHIFT)                    /* 0xFFFFFFFF */
 /* CCR5 */
 #define DMA_CCR5_OFFSET                                    (0x4A8U)
 #define DMA_CCR5                                           (0x0U)
-#define DMA_CCR5_SRC_INC_SHIFT                             (0U)
-#define DMA_CCR5_SRC_INC_MASK                              (0x1U << DMA_CCR5_SRC_INC_SHIFT)                             /* 0x00000001 */
-#define DMA_CCR5_SRC_BURST_SIZE_SHIFT                      (1U)
-#define DMA_CCR5_SRC_BURST_SIZE_MASK                       (0x7U << DMA_CCR5_SRC_BURST_SIZE_SHIFT)                      /* 0x0000000E */
-#define DMA_CCR5_SRC_BURST_LEN_SHIFT                       (4U)
-#define DMA_CCR5_SRC_BURST_LEN_MASK                        (0xFU << DMA_CCR5_SRC_BURST_LEN_SHIFT)                       /* 0x000000F0 */
-#define DMA_CCR5_SRC_PROT_CTRL_SHIFT                       (8U)
-#define DMA_CCR5_SRC_PROT_CTRL_MASK                        (0x7U << DMA_CCR5_SRC_PROT_CTRL_SHIFT)                       /* 0x00000700 */
-#define DMA_CCR5_SRC_CACHE_CTRL_SHIFT                      (11U)
-#define DMA_CCR5_SRC_CACHE_CTRL_MASK                       (0x7U << DMA_CCR5_SRC_CACHE_CTRL_SHIFT)                      /* 0x00003800 */
-#define DMA_CCR5_DST_INC_SHIFT                             (14U)
-#define DMA_CCR5_DST_INC_MASK                              (0x1U << DMA_CCR5_DST_INC_SHIFT)                             /* 0x00004000 */
-#define DMA_CCR5_DST_BURST_SIZE_SHIFT                      (15U)
-#define DMA_CCR5_DST_BURST_SIZE_MASK                       (0x7U << DMA_CCR5_DST_BURST_SIZE_SHIFT)                      /* 0x00038000 */
-#define DMA_CCR5_DST_BURST_LEN_SHIFT                       (18U)
-#define DMA_CCR5_DST_BURST_LEN_MASK                        (0xFU << DMA_CCR5_DST_BURST_LEN_SHIFT)                       /* 0x003C0000 */
-#define DMA_CCR5_DST_PROT_CTRL_SHIFT                       (22U)
-#define DMA_CCR5_DST_PROT_CTRL_MASK                        (0x7U << DMA_CCR5_DST_PROT_CTRL_SHIFT)                       /* 0x01C00000 */
-#define DMA_CCR5_DST_CACHE_CTRL_SHIFT                      (25U)
-#define DMA_CCR5_DST_CACHE_CTRL_MASK                       (0x7U << DMA_CCR5_DST_CACHE_CTRL_SHIFT)                      /* 0x0E000000 */
+#define DMA_CCR5_FIELD0000_SHIFT                           (0U)
+#define DMA_CCR5_FIELD0000_MASK                            (0x1U << DMA_CCR5_FIELD0000_SHIFT)                           /* 0x00000001 */
+#define DMA_CCR5_FIELD0009_SHIFT                           (1U)
+#define DMA_CCR5_FIELD0009_MASK                            (0x7U << DMA_CCR5_FIELD0009_SHIFT)                           /* 0x0000000E */
+#define DMA_CCR5_FIELD0008_SHIFT                           (4U)
+#define DMA_CCR5_FIELD0008_MASK                            (0xFU << DMA_CCR5_FIELD0008_SHIFT)                           /* 0x000000F0 */
+#define DMA_CCR5_FIELD0007_SHIFT                           (8U)
+#define DMA_CCR5_FIELD0007_MASK                            (0x7U << DMA_CCR5_FIELD0007_SHIFT)                           /* 0x00000700 */
+#define DMA_CCR5_FIELD0006_SHIFT                           (11U)
+#define DMA_CCR5_FIELD0006_MASK                            (0x7U << DMA_CCR5_FIELD0006_SHIFT)                           /* 0x00003800 */
+#define DMA_CCR5_FIELD0005_SHIFT                           (14U)
+#define DMA_CCR5_FIELD0005_MASK                            (0x1U << DMA_CCR5_FIELD0005_SHIFT)                           /* 0x00004000 */
+#define DMA_CCR5_FIELD0004_SHIFT                           (15U)
+#define DMA_CCR5_FIELD0004_MASK                            (0x7U << DMA_CCR5_FIELD0004_SHIFT)                           /* 0x00038000 */
+#define DMA_CCR5_FIELD0003_SHIFT                           (18U)
+#define DMA_CCR5_FIELD0003_MASK                            (0xFU << DMA_CCR5_FIELD0003_SHIFT)                           /* 0x003C0000 */
+#define DMA_CCR5_FIELD0002_SHIFT                           (22U)
+#define DMA_CCR5_FIELD0002_MASK                            (0x7U << DMA_CCR5_FIELD0002_SHIFT)                           /* 0x01C00000 */
+#define DMA_CCR5_FIELD0001_SHIFT                           (25U)
+#define DMA_CCR5_FIELD0001_MASK                            (0x7U << DMA_CCR5_FIELD0001_SHIFT)                           /* 0x0E000000 */
 /* LC0_5 */
 #define DMA_LC0_5_OFFSET                                   (0x4ACU)
 #define DMA_LC0_5                                          (0x0U)
-#define DMA_LC0_5_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC0_5_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC0_5_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC0_5_FIELD0000_SHIFT                          (0U)
+#define DMA_LC0_5_FIELD0000_MASK                           (0xFFU << DMA_LC0_5_FIELD0000_SHIFT)                         /* 0x000000FF */
 /* LC1_5 */
 #define DMA_LC1_5_OFFSET                                   (0x4B0U)
 #define DMA_LC1_5                                          (0x0U)
-#define DMA_LC1_5_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC1_5_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC1_5_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
-/* SAR6 */
-#define DMA_SAR6_OFFSET                                    (0x4C0U)
-#define DMA_SAR6                                           (0x0U)
-#define DMA_SAR6_SRC_ADDR_SHIFT                            (0U)
-#define DMA_SAR6_SRC_ADDR_MASK                             (0xFFFFFFFFU << DMA_SAR6_SRC_ADDR_SHIFT)                     /* 0xFFFFFFFF */
-/* DAR6 */
-#define DMA_DAR6_OFFSET                                    (0x4C4U)
-#define DMA_DAR6                                           (0x0U)
-#define DMA_DAR6_DST_ADDR_SHIFT                            (0U)
-#define DMA_DAR6_DST_ADDR_MASK                             (0xFFFFFFFFU << DMA_DAR6_DST_ADDR_SHIFT)                     /* 0xFFFFFFFF */
-/* CCR6 */
-#define DMA_CCR6_OFFSET                                    (0x4C8U)
-#define DMA_CCR6                                           (0x0U)
-#define DMA_CCR6_SRC_INC_SHIFT                             (0U)
-#define DMA_CCR6_SRC_INC_MASK                              (0x1U << DMA_CCR6_SRC_INC_SHIFT)                             /* 0x00000001 */
-#define DMA_CCR6_SRC_BURST_SIZE_SHIFT                      (1U)
-#define DMA_CCR6_SRC_BURST_SIZE_MASK                       (0x7U << DMA_CCR6_SRC_BURST_SIZE_SHIFT)                      /* 0x0000000E */
-#define DMA_CCR6_SRC_BURST_LEN_SHIFT                       (4U)
-#define DMA_CCR6_SRC_BURST_LEN_MASK                        (0xFU << DMA_CCR6_SRC_BURST_LEN_SHIFT)                       /* 0x000000F0 */
-#define DMA_CCR6_SRC_PROT_CTRL_SHIFT                       (8U)
-#define DMA_CCR6_SRC_PROT_CTRL_MASK                        (0x7U << DMA_CCR6_SRC_PROT_CTRL_SHIFT)                       /* 0x00000700 */
-#define DMA_CCR6_SRC_CACHE_CTRL_SHIFT                      (11U)
-#define DMA_CCR6_SRC_CACHE_CTRL_MASK                       (0x7U << DMA_CCR6_SRC_CACHE_CTRL_SHIFT)                      /* 0x00003800 */
-#define DMA_CCR6_DST_INC_SHIFT                             (14U)
-#define DMA_CCR6_DST_INC_MASK                              (0x1U << DMA_CCR6_DST_INC_SHIFT)                             /* 0x00004000 */
-#define DMA_CCR6_DST_BURST_SIZE_SHIFT                      (15U)
-#define DMA_CCR6_DST_BURST_SIZE_MASK                       (0x7U << DMA_CCR6_DST_BURST_SIZE_SHIFT)                      /* 0x00038000 */
-#define DMA_CCR6_DST_BURST_LEN_SHIFT                       (18U)
-#define DMA_CCR6_DST_BURST_LEN_MASK                        (0xFU << DMA_CCR6_DST_BURST_LEN_SHIFT)                       /* 0x003C0000 */
-#define DMA_CCR6_DST_PROT_CTRL_SHIFT                       (22U)
-#define DMA_CCR6_DST_PROT_CTRL_MASK                        (0x7U << DMA_CCR6_DST_PROT_CTRL_SHIFT)                       /* 0x01C00000 */
-#define DMA_CCR6_DST_CACHE_CTRL_SHIFT                      (25U)
-#define DMA_CCR6_DST_CACHE_CTRL_MASK                       (0x7U << DMA_CCR6_DST_CACHE_CTRL_SHIFT)                      /* 0x0E000000 */
-/* LC0_6 */
-#define DMA_LC0_6_OFFSET                                   (0x4CCU)
-#define DMA_LC0_6                                          (0x0U)
-#define DMA_LC0_6_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC0_6_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC0_6_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
-/* LC1_6 */
-#define DMA_LC1_6_OFFSET                                   (0x4D0U)
-#define DMA_LC1_6                                          (0x0U)
-#define DMA_LC1_6_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC1_6_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC1_6_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
-/* SAR7 */
-#define DMA_SAR7_OFFSET                                    (0x4E0U)
-#define DMA_SAR7                                           (0x0U)
-#define DMA_SAR7_SRC_ADDR_SHIFT                            (0U)
-#define DMA_SAR7_SRC_ADDR_MASK                             (0xFFFFFFFFU << DMA_SAR7_SRC_ADDR_SHIFT)                     /* 0xFFFFFFFF */
-/* DAR7 */
-#define DMA_DAR7_OFFSET                                    (0x4E4U)
-#define DMA_DAR7                                           (0x0U)
-#define DMA_DAR7_DST_ADDR_SHIFT                            (0U)
-#define DMA_DAR7_DST_ADDR_MASK                             (0xFFFFFFFFU << DMA_DAR7_DST_ADDR_SHIFT)                     /* 0xFFFFFFFF */
-/* CCR7 */
-#define DMA_CCR7_OFFSET                                    (0x4E8U)
-#define DMA_CCR7                                           (0x0U)
-#define DMA_CCR7_SRC_INC_SHIFT                             (0U)
-#define DMA_CCR7_SRC_INC_MASK                              (0x1U << DMA_CCR7_SRC_INC_SHIFT)                             /* 0x00000001 */
-#define DMA_CCR7_SRC_BURST_SIZE_SHIFT                      (1U)
-#define DMA_CCR7_SRC_BURST_SIZE_MASK                       (0x7U << DMA_CCR7_SRC_BURST_SIZE_SHIFT)                      /* 0x0000000E */
-#define DMA_CCR7_SRC_BURST_LEN_SHIFT                       (4U)
-#define DMA_CCR7_SRC_BURST_LEN_MASK                        (0xFU << DMA_CCR7_SRC_BURST_LEN_SHIFT)                       /* 0x000000F0 */
-#define DMA_CCR7_SRC_PROT_CTRL_SHIFT                       (8U)
-#define DMA_CCR7_SRC_PROT_CTRL_MASK                        (0x7U << DMA_CCR7_SRC_PROT_CTRL_SHIFT)                       /* 0x00000700 */
-#define DMA_CCR7_SRC_CACHE_CTRL_SHIFT                      (11U)
-#define DMA_CCR7_SRC_CACHE_CTRL_MASK                       (0x7U << DMA_CCR7_SRC_CACHE_CTRL_SHIFT)                      /* 0x00003800 */
-#define DMA_CCR7_DST_INC_SHIFT                             (14U)
-#define DMA_CCR7_DST_INC_MASK                              (0x1U << DMA_CCR7_DST_INC_SHIFT)                             /* 0x00004000 */
-#define DMA_CCR7_DST_BURST_SIZE_SHIFT                      (15U)
-#define DMA_CCR7_DST_BURST_SIZE_MASK                       (0x7U << DMA_CCR7_DST_BURST_SIZE_SHIFT)                      /* 0x00038000 */
-#define DMA_CCR7_DST_BURST_LEN_SHIFT                       (18U)
-#define DMA_CCR7_DST_BURST_LEN_MASK                        (0xFU << DMA_CCR7_DST_BURST_LEN_SHIFT)                       /* 0x003C0000 */
-#define DMA_CCR7_DST_PROT_CTRL_SHIFT                       (22U)
-#define DMA_CCR7_DST_PROT_CTRL_MASK                        (0x7U << DMA_CCR7_DST_PROT_CTRL_SHIFT)                       /* 0x01C00000 */
-#define DMA_CCR7_DST_CACHE_CTRL_SHIFT                      (25U)
-#define DMA_CCR7_DST_CACHE_CTRL_MASK                       (0x7U << DMA_CCR7_DST_CACHE_CTRL_SHIFT)                      /* 0x0E000000 */
-/* LC0_7 */
-#define DMA_LC0_7_OFFSET                                   (0x4ECU)
-#define DMA_LC0_7                                          (0x0U)
-#define DMA_LC0_7_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC0_7_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC0_7_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
-/* LC1_7 */
-#define DMA_LC1_7_OFFSET                                   (0x4F0U)
-#define DMA_LC1_7                                          (0x0U)
-#define DMA_LC1_7_LOOP_COUNTER_ITERATIONS_SHIFT            (0U)
-#define DMA_LC1_7_LOOP_COUNTER_ITERATIONS_MASK             (0xFFU << DMA_LC1_7_LOOP_COUNTER_ITERATIONS_SHIFT)           /* 0x000000FF */
+#define DMA_LC1_5_FIELD0000_SHIFT                          (0U)
+#define DMA_LC1_5_FIELD0000_MASK                           (0xFFU << DMA_LC1_5_FIELD0000_SHIFT)                         /* 0x000000FF */
+/* PADDING5_0 */
+#define DMA_PADDING5_0_OFFSET                              (0x4B4U)
+/* PADDING5_1 */
+#define DMA_PADDING5_1_OFFSET                              (0x4B8U)
+/* PADDING5_2 */
+#define DMA_PADDING5_2_OFFSET                              (0x4BCU)
 /* DBGSTATUS */
 #define DMA_DBGSTATUS_OFFSET                               (0xD00U)
 #define DMA_DBGSTATUS                                      (0x0U)
-#define DMA_DBGSTATUS_DBGSTATUS_SHIFT                      (0U)
-#define DMA_DBGSTATUS_DBGSTATUS_MASK                       (0x1U << DMA_DBGSTATUS_DBGSTATUS_SHIFT)                      /* 0x00000001 */
+#define DMA_DBGSTATUS_FIELD0000_SHIFT                      (0U)
+#define DMA_DBGSTATUS_FIELD0000_MASK                       (0x3U << DMA_DBGSTATUS_FIELD0000_SHIFT)                      /* 0x00000003 */
 /* DBGCMD */
 #define DMA_DBGCMD_OFFSET                                  (0xD04U)
-#define DMA_DBGCMD_DBGCMD_SHIFT                            (0U)
-#define DMA_DBGCMD_DBGCMD_MASK                             (0x3U << DMA_DBGCMD_DBGCMD_SHIFT)                            /* 0x00000003 */
+#define DMA_DBGCMD_FIELD0000_SHIFT                         (0U)
+#define DMA_DBGCMD_FIELD0000_MASK                          (0x3U << DMA_DBGCMD_FIELD0000_SHIFT)                         /* 0x00000003 */
 /* DBGINST0 */
 #define DMA_DBGINST0_OFFSET                                (0xD08U)
-#define DMA_DBGINST0_DEBUG_THREAD_SHIFT                    (0U)
-#define DMA_DBGINST0_DEBUG_THREAD_MASK                     (0x1U << DMA_DBGINST0_DEBUG_THREAD_SHIFT)                    /* 0x00000001 */
-#define DMA_DBGINST0_CHANNEL_NUMBER_SHIFT                  (8U)
-#define DMA_DBGINST0_CHANNEL_NUMBER_MASK                   (0x7U << DMA_DBGINST0_CHANNEL_NUMBER_SHIFT)                  /* 0x00000700 */
-#define DMA_DBGINST0_INSTRUCTION_BYTE0_SHIFT               (16U)
-#define DMA_DBGINST0_INSTRUCTION_BYTE0_MASK                (0xFFU << DMA_DBGINST0_INSTRUCTION_BYTE0_SHIFT)              /* 0x00FF0000 */
-#define DMA_DBGINST0_INSTRUCTION_BYTE1_SHIFT               (24U)
-#define DMA_DBGINST0_INSTRUCTION_BYTE1_MASK                (0xFFU << DMA_DBGINST0_INSTRUCTION_BYTE1_SHIFT)              /* 0xFF000000 */
+#define DMA_DBGINST0_FIELD0000_SHIFT                       (0U)
+#define DMA_DBGINST0_FIELD0000_MASK                        (0x1U << DMA_DBGINST0_FIELD0000_SHIFT)                       /* 0x00000001 */
+#define DMA_DBGINST0_FIELD0003_SHIFT                       (8U)
+#define DMA_DBGINST0_FIELD0003_MASK                        (0x7U << DMA_DBGINST0_FIELD0003_SHIFT)                       /* 0x00000700 */
+#define DMA_DBGINST0_FIELD0002_SHIFT                       (16U)
+#define DMA_DBGINST0_FIELD0002_MASK                        (0xFFU << DMA_DBGINST0_FIELD0002_SHIFT)                      /* 0x00FF0000 */
+#define DMA_DBGINST0_FIELD0001_SHIFT                       (24U)
+#define DMA_DBGINST0_FIELD0001_MASK                        (0xFFU << DMA_DBGINST0_FIELD0001_SHIFT)                      /* 0xFF000000 */
 /* DBGINST1 */
 #define DMA_DBGINST1_OFFSET                                (0xD0CU)
-#define DMA_DBGINST1_INSTRUCTION_BYTE2_SHIFT               (0U)
-#define DMA_DBGINST1_INSTRUCTION_BYTE2_MASK                (0xFFU << DMA_DBGINST1_INSTRUCTION_BYTE2_SHIFT)              /* 0x000000FF */
-#define DMA_DBGINST1_INSTRUCTION_BYTE3_SHIFT               (8U)
-#define DMA_DBGINST1_INSTRUCTION_BYTE3_MASK                (0xFFU << DMA_DBGINST1_INSTRUCTION_BYTE3_SHIFT)              /* 0x0000FF00 */
-#define DMA_DBGINST1_INSTRUCTION_BYTE4_SHIFT               (16U)
-#define DMA_DBGINST1_INSTRUCTION_BYTE4_MASK                (0xFFU << DMA_DBGINST1_INSTRUCTION_BYTE4_SHIFT)              /* 0x00FF0000 */
-#define DMA_DBGINST1_INSTRUCTION_BYTE5_SHIFT               (24U)
-#define DMA_DBGINST1_INSTRUCTION_BYTE5_MASK                (0xFFU << DMA_DBGINST1_INSTRUCTION_BYTE5_SHIFT)              /* 0xFF000000 */
+#define DMA_DBGINST1_FIELD0000_SHIFT                       (0U)
+#define DMA_DBGINST1_FIELD0000_MASK                        (0xFFU << DMA_DBGINST1_FIELD0000_SHIFT)                      /* 0x000000FF */
+#define DMA_DBGINST1_FIELD0003_SHIFT                       (8U)
+#define DMA_DBGINST1_FIELD0003_MASK                        (0xFFU << DMA_DBGINST1_FIELD0003_SHIFT)                      /* 0x0000FF00 */
+#define DMA_DBGINST1_FIELD0002_SHIFT                       (16U)
+#define DMA_DBGINST1_FIELD0002_MASK                        (0xFFU << DMA_DBGINST1_FIELD0002_SHIFT)                      /* 0x00FF0000 */
+#define DMA_DBGINST1_FIELD0001_SHIFT                       (24U)
+#define DMA_DBGINST1_FIELD0001_MASK                        (0xFFU << DMA_DBGINST1_FIELD0001_SHIFT)                      /* 0xFF000000 */
 /* CR0 */
 #define DMA_CR0_OFFSET                                     (0xE00U)
-#define DMA_CR0                                            (0x1FF075U)
-#define DMA_CR0_PERIPH_REQ_SHIFT                           (0U)
-#define DMA_CR0_PERIPH_REQ_MASK                            (0x1U << DMA_CR0_PERIPH_REQ_SHIFT)                           /* 0x00000001 */
-#define DMA_CR0_BOOT_EN_SHIFT                              (1U)
-#define DMA_CR0_BOOT_EN_MASK                               (0x1U << DMA_CR0_BOOT_EN_SHIFT)                              /* 0x00000002 */
-#define DMA_CR0_MGR_NS_AT_RST_SHIFT                        (2U)
-#define DMA_CR0_MGR_NS_AT_RST_MASK                         (0x1U << DMA_CR0_MGR_NS_AT_RST_SHIFT)                        /* 0x00000004 */
-#define DMA_CR0_NUM_CHNLS_SHIFT                            (4U)
-#define DMA_CR0_NUM_CHNLS_MASK                             (0x7U << DMA_CR0_NUM_CHNLS_SHIFT)                            /* 0x00000070 */
-#define DMA_CR0_NUM_PERIPH_REQ_SHIFT                       (12U)
-#define DMA_CR0_NUM_PERIPH_REQ_MASK                        (0x1FU << DMA_CR0_NUM_PERIPH_REQ_SHIFT)                      /* 0x0001F000 */
-#define DMA_CR0_NUM_EVENTS_SHIFT                           (17U)
-#define DMA_CR0_NUM_EVENTS_MASK                            (0x1FU << DMA_CR0_NUM_EVENTS_SHIFT)                          /* 0x003E0000 */
+#define DMA_CR0                                            (0x47051U)
+#define DMA_CR0_FIELD0000_SHIFT                            (0U)
+#define DMA_CR0_FIELD0000_MASK                             (0x1U << DMA_CR0_FIELD0000_SHIFT)                            /* 0x00000001 */
+#define DMA_CR0_FIELD0005_SHIFT                            (1U)
+#define DMA_CR0_FIELD0005_MASK                             (0x1U << DMA_CR0_FIELD0005_SHIFT)                            /* 0x00000002 */
+#define DMA_CR0_FIELD0004_SHIFT                            (2U)
+#define DMA_CR0_FIELD0004_MASK                             (0x1U << DMA_CR0_FIELD0004_SHIFT)                            /* 0x00000004 */
+#define DMA_CR0_FIELD0003_SHIFT                            (4U)
+#define DMA_CR0_FIELD0003_MASK                             (0x7U << DMA_CR0_FIELD0003_SHIFT)                            /* 0x00000070 */
+#define DMA_CR0_FIELD0002_SHIFT                            (12U)
+#define DMA_CR0_FIELD0002_MASK                             (0x1FU << DMA_CR0_FIELD0002_SHIFT)                           /* 0x0001F000 */
+#define DMA_CR0_FIELD0001_SHIFT                            (17U)
+#define DMA_CR0_FIELD0001_MASK                             (0x1FU << DMA_CR0_FIELD0001_SHIFT)                           /* 0x003E0000 */
 /* CR1 */
 #define DMA_CR1_OFFSET                                     (0xE04U)
-#define DMA_CR1                                            (0xB5U)
-#define DMA_CR1_I_CACHE_LEN_SHIFT                          (0U)
-#define DMA_CR1_I_CACHE_LEN_MASK                           (0x7U << DMA_CR1_I_CACHE_LEN_SHIFT)                          /* 0x00000007 */
-#define DMA_CR1_NUM_I_CACHE_LINES_SHIFT                    (4U)
-#define DMA_CR1_NUM_I_CACHE_LINES_MASK                     (0xFU << DMA_CR1_NUM_I_CACHE_LINES_SHIFT)                    /* 0x000000F0 */
+#define DMA_CR1                                            (0x57U)
+#define DMA_CR1_FIELD0000_SHIFT                            (0U)
+#define DMA_CR1_FIELD0000_MASK                             (0x7U << DMA_CR1_FIELD0000_SHIFT)                            /* 0x00000007 */
+#define DMA_CR1_FIELD0001_SHIFT                            (4U)
+#define DMA_CR1_FIELD0001_MASK                             (0xFU << DMA_CR1_FIELD0001_SHIFT)                            /* 0x000000F0 */
 /* CR2 */
 #define DMA_CR2_OFFSET                                     (0xE08U)
 #define DMA_CR2                                            (0x0U)
-#define DMA_CR2_BOOT_ADDR_SHIFT                            (0U)
-#define DMA_CR2_BOOT_ADDR_MASK                             (0xFFFFFFFFU << DMA_CR2_BOOT_ADDR_SHIFT)                     /* 0xFFFFFFFF */
+#define DMA_CR2_FIELD0000_SHIFT                            (0U)
+#define DMA_CR2_FIELD0000_MASK                             (0xFFFFFFFFU << DMA_CR2_FIELD0000_SHIFT)                     /* 0xFFFFFFFF */
 /* CR3 */
 #define DMA_CR3_OFFSET                                     (0xE0CU)
-#define DMA_CR3                                            (0xFFFFU)
-#define DMA_CR3_INS_SHIFT                                  (0U)
-#define DMA_CR3_INS_MASK                                   (0xFFFFFFFFU << DMA_CR3_INS_SHIFT)                           /* 0xFFFFFFFF */
+#define DMA_CR3                                            (0x0U)
+#define DMA_CR3_FIELD0000_SHIFT                            (0U)
+#define DMA_CR3_FIELD0000_MASK                             (0xFFFFFFFFU << DMA_CR3_FIELD0000_SHIFT)                     /* 0xFFFFFFFF */
 /* CR4 */
 #define DMA_CR4_OFFSET                                     (0xE10U)
-#define DMA_CR4                                            (0xFFFFFFFFU)
-#define DMA_CR4_PNS_SHIFT                                  (0U)
-#define DMA_CR4_PNS_MASK                                   (0xFFFFFFFFU << DMA_CR4_PNS_SHIFT)                           /* 0xFFFFFFFF */
+#define DMA_CR4                                            (0x6U)
+#define DMA_CR4_FIELD0000_SHIFT                            (0U)
+#define DMA_CR4_FIELD0000_MASK                             (0xFFFFFFFFU << DMA_CR4_FIELD0000_SHIFT)                     /* 0xFFFFFFFF */
 /* CRDN */
 #define DMA_CRDN_OFFSET                                    (0xE14U)
-#define DMA_CRDN                                           (0x7FF7F73U)
-#define DMA_CRDN_DATA_WIDTH_SHIFT                          (0U)
-#define DMA_CRDN_DATA_WIDTH_MASK                           (0x7U << DMA_CRDN_DATA_WIDTH_SHIFT)                          /* 0x00000007 */
-#define DMA_CRDN_WR_CAP_SHIFT                              (4U)
-#define DMA_CRDN_WR_CAP_MASK                               (0x7U << DMA_CRDN_WR_CAP_SHIFT)                              /* 0x00000070 */
-#define DMA_CRDN_WR_Q_DEP_SHIFT                            (8U)
-#define DMA_CRDN_WR_Q_DEP_MASK                             (0xFU << DMA_CRDN_WR_Q_DEP_SHIFT)                            /* 0x00000F00 */
-#define DMA_CRDN_RD_CAP_SHIFT                              (12U)
-#define DMA_CRDN_RD_CAP_MASK                               (0x7U << DMA_CRDN_RD_CAP_SHIFT)                              /* 0x00007000 */
-#define DMA_CRDN_RD_Q_DEP_SHIFT                            (16U)
-#define DMA_CRDN_RD_Q_DEP_MASK                             (0xFU << DMA_CRDN_RD_Q_DEP_SHIFT)                            /* 0x000F0000 */
-#define DMA_CRDN_DATA_BUFFER_DEP_SHIFT                     (20U)
-#define DMA_CRDN_DATA_BUFFER_DEP_MASK                      (0x3FFU << DMA_CRDN_DATA_BUFFER_DEP_SHIFT)                   /* 0x3FF00000 */
+#define DMA_CRDN                                           (0x2094733U)
+#define DMA_CRDN_FIELD0000_SHIFT                           (0U)
+#define DMA_CRDN_FIELD0000_MASK                            (0x7U << DMA_CRDN_FIELD0000_SHIFT)                           /* 0x00000007 */
+#define DMA_CRDN_FIELD0005_SHIFT                           (4U)
+#define DMA_CRDN_FIELD0005_MASK                            (0x7U << DMA_CRDN_FIELD0005_SHIFT)                           /* 0x00000070 */
+#define DMA_CRDN_FIELD0004_SHIFT                           (8U)
+#define DMA_CRDN_FIELD0004_MASK                            (0xFU << DMA_CRDN_FIELD0004_SHIFT)                           /* 0x00000F00 */
+#define DMA_CRDN_FIELD0003_SHIFT                           (12U)
+#define DMA_CRDN_FIELD0003_MASK                            (0x7U << DMA_CRDN_FIELD0003_SHIFT)                           /* 0x00007000 */
+#define DMA_CRDN_FIELD0002_SHIFT                           (16U)
+#define DMA_CRDN_FIELD0002_MASK                            (0xFU << DMA_CRDN_FIELD0002_SHIFT)                           /* 0x000F0000 */
+#define DMA_CRDN_FIELD0001_SHIFT                           (20U)
+#define DMA_CRDN_FIELD0001_MASK                            (0x3FFU << DMA_CRDN_FIELD0001_SHIFT)                         /* 0x3FF00000 */
 /* WD */
 #define DMA_WD_OFFSET                                      (0xE80U)
-#define DMA_WD_WD_IRQ_ONLY_SHIFT                           (0U)
-#define DMA_WD_WD_IRQ_ONLY_MASK                            (0x1U << DMA_WD_WD_IRQ_ONLY_SHIFT)                           /* 0x00000001 */
+#define DMA_WD_FIELD0000_SHIFT                             (0U)
+#define DMA_WD_FIELD0000_MASK                              (0x1U << DMA_WD_FIELD0000_SHIFT)                             /* 0x00000001 */
 /*****************************************TSADC******************************************/
 /* USER_CON */
 #define TSADC_USER_CON_OFFSET                              (0x0U)
