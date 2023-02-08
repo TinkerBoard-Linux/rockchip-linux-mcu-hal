@@ -106,6 +106,16 @@ typedef enum {
   TIMER0_IRQn               =  5,      /*!< TIMER0 Interrupt              */
   RSVD0_MCU_IRQn            =  6,      /*!< RSVD0 MCU Interrupt           */
   NUM_INTERRUPTS            =  8,      /*!< Number of internal IRQ        */
+  GPIO0_IRQn                =  32 + NUM_INTERRUPTS,     /*!< GPIO0 Interrupt               */
+  GPIO0_EXP_IRQn            =  33 + NUM_INTERRUPTS,     /*!< GPIO0 EXP Interrupt           */
+  GPIO1_IRQn                =  34 + NUM_INTERRUPTS,     /*!< GPIO1 Interrupt               */
+  GPIO1_EXP_IRQn            =  35 + NUM_INTERRUPTS,     /*!< GPIO1 EXP Interrupt           */
+  GPIO2_IRQn                =  36 + NUM_INTERRUPTS,     /*!< GPIO2 Interrupt               */
+  GPIO2_EXP_IRQn            =  37 + NUM_INTERRUPTS,     /*!< GPIO2 EXP Interrupt           */
+  GPIO3_IRQn                =  38 + NUM_INTERRUPTS,     /*!< GPIO3 Interrupt               */
+  GPIO3_EXP_IRQn            =  39 + NUM_INTERRUPTS,     /*!< GPIO3 EXP Interrupt           */
+  GPIO4_IRQn                =  40 + NUM_INTERRUPTS,     /*!< GPIO4 Interrupt               */
+  GPIO4_EXP_IRQn            =  41 + NUM_INTERRUPTS,     /*!< GPIO4 EXP Interrupt           */
   UART0_IRQn                =  62 + NUM_INTERRUPTS,     /*!< UART0 Interrupt               */
   UART1_IRQn                =  63 + NUM_INTERRUPTS,     /*!< UART1 Interrupt               */
   UART2_IRQn                =  64 + NUM_INTERRUPTS,     /*!< UART2 Interrupt               */
