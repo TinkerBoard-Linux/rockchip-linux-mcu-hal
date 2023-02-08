@@ -9,6 +9,7 @@
 #include "task_ipc.h"
 
 /********************* Private MACRO Definition ******************************/
+#define TEST_DEMO
 
 /********************* Private Structure Definition **************************/
 
@@ -150,6 +151,10 @@ void main(void)
     printf("****************************************\n");
     rk_printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("\n");
+
+#ifdef TEST_DEMO
+    test_demo();
+#endif
 
     while (1) {
         ;
