@@ -106,7 +106,7 @@ void IRQ_Handler(void)
         "str    r3, [sp, #-4]!                            \n"
         "mov    r3, lr                                    \n"
         "stmia  r7, {r2 - r5}                             \n"
-        "ldr    r10, =0xFF582000                          \n"
+        "ldr    r10, =0xFF132000                          \n"
         "ldr    r6, [r10, #0xc]                           \n" // get the irq id
         "cmp    r6, #1020                                 \n"
         "bhs    IRQ_HandlerEnd                            \n"

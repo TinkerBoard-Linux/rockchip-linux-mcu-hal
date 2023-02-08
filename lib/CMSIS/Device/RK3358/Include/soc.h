@@ -181,8 +181,14 @@ typedef enum PD_Id {
 
 /******************************************CRU*******************************************/
 
+#define PCLK_I2C0_GATE           PCLK_I2C0_CLK_GATE
+#define PCLK_I2C1_GATE           PCLK_I2C1_CLK_GATE
+#define PCLK_I2C2_GATE           PCLK_I2C2_CLK_GATE
+#define PCLK_I2C3_GATE           PCLK_I2C3_CLK_GATE
 #define PCLK_SARADC_CONTROL_GATE PCLK_SARADC_GATE
 #define CLK_SARADC_GATE          CLK_SARADC_PLL_CLK_GATE
+#define PCLK_SPI0_GATE           PCLK_SPI0_CLK_GATE
+#define PCLK_SPI1_GATE           PCLK_SPI1_CLK_GATE
 #define PCLK_UART0_GATE          PCLK_PMU_UART0_CLK_GATE
 #define PCLK_UART1_GATE          PCLK_UART1_CLK_GATE
 #define PCLK_UART2_GATE          PCLK_UART2_CLK_GATE
