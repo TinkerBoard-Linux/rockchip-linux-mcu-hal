@@ -682,7 +682,7 @@ struct MMC_REG {
 #define CRU_BASE                       0xFF2B0000U /* CRU base address */
 #define USBPHY_GRF_BASE                0xFF2C0000U /* USBPHY_GRF base address */
 #define GMAC_BASE                      0xFF360000U /* GMAC base address */
-#define MMC_BASE                       0xFF370000U /* MMC base address */
+#define MMC_BASE                       0xFF390000U /* MMC base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -5004,32 +5004,32 @@ struct MMC_REG {
 #define CRU_NPLL_CON4_SSMOD_SEL_EXT_WAVE_MASK              (0x1U << CRU_NPLL_CON4_SSMOD_SEL_EXT_WAVE_SHIFT)             /* 0x00000001 */
 #define CRU_NPLL_CON4_SSMOD_EXT_MAXADDR_SHIFT              (8U)
 #define CRU_NPLL_CON4_SSMOD_EXT_MAXADDR_MASK               (0xFFU << CRU_NPLL_CON4_SSMOD_EXT_MAXADDR_SHIFT)             /* 0x0000FF00 */
-/* MODE */
-#define CRU_MODE_OFFSET                                    (0xA0U)
-#define CRU_MODE_APLL_WORK_MODE_SHIFT                      (0U)
-#define CRU_MODE_APLL_WORK_MODE_MASK                       (0x3U << CRU_MODE_APLL_WORK_MODE_SHIFT)                      /* 0x00000003 */
-#define CRU_MODE_CPLL_WORK_MODE_SHIFT                      (2U)
-#define CRU_MODE_CPLL_WORK_MODE_MASK                       (0x3U << CRU_MODE_CPLL_WORK_MODE_SHIFT)                      /* 0x0000000C */
-#define CRU_MODE_DPLL_WORK_MODE_SHIFT                      (4U)
-#define CRU_MODE_DPLL_WORK_MODE_MASK                       (0x3U << CRU_MODE_DPLL_WORK_MODE_SHIFT)                      /* 0x00000030 */
-#define CRU_MODE_NPLL_WORK_MODE_SHIFT                      (6U)
-#define CRU_MODE_NPLL_WORK_MODE_MASK                       (0x3U << CRU_MODE_NPLL_WORK_MODE_SHIFT)                      /* 0x000000C0 */
-#define CRU_MODE_USBPHY480M_WORK_MODE_SHIFT                (8U)
-#define CRU_MODE_USBPHY480M_WORK_MODE_MASK                 (0x3U << CRU_MODE_USBPHY480M_WORK_MODE_SHIFT)                /* 0x00000300 */
-/* MISC */
-#define CRU_MISC_OFFSET                                    (0xA4U)
-#define CRU_MISC_WARMRST_EN_SHIFT                          (0U)
-#define CRU_MISC_WARMRST_EN_MASK                           (0x1U << CRU_MISC_WARMRST_EN_SHIFT)                          /* 0x00000001 */
-#define CRU_MISC_CORE_SRST_WFIEN_SHIFT                     (1U)
-#define CRU_MISC_CORE_SRST_WFIEN_MASK                      (0x1U << CRU_MISC_CORE_SRST_WFIEN_SHIFT)                     /* 0x00000002 */
-#define CRU_MISC_CORE_WRST_WFIEN_SHIFT                     (2U)
-#define CRU_MISC_CORE_WRST_WFIEN_MASK                      (0x1U << CRU_MISC_CORE_WRST_WFIEN_SHIFT)                     /* 0x00000004 */
-#define CRU_MISC_COREPO_SRST_WFIEN_SHIFT                   (3U)
-#define CRU_MISC_COREPO_SRST_WFIEN_MASK                    (0x1U << CRU_MISC_COREPO_SRST_WFIEN_SHIFT)                   /* 0x00000008 */
-#define CRU_MISC_COREPO_WRST_WFIEN_SHIFT                   (4U)
-#define CRU_MISC_COREPO_WRST_WFIEN_MASK                    (0x1U << CRU_MISC_COREPO_WRST_WFIEN_SHIFT)                   /* 0x00000010 */
-#define CRU_MISC_CORE_HIGH_FREQ_RST_EN_SHIFT               (12U)
-#define CRU_MISC_CORE_HIGH_FREQ_RST_EN_MASK                (0xFU << CRU_MISC_CORE_HIGH_FREQ_RST_EN_SHIFT)               /* 0x0000F000 */
+/* MODE_CON00 */
+#define CRU_MODE_CON00_OFFSET                              (0xA0U)
+#define CRU_MODE_CON00_APLL_WORK_MODE_SHIFT                (0U)
+#define CRU_MODE_CON00_APLL_WORK_MODE_MASK                 (0x3U << CRU_MODE_CON00_APLL_WORK_MODE_SHIFT)                /* 0x00000003 */
+#define CRU_MODE_CON00_CPLL_WORK_MODE_SHIFT                (2U)
+#define CRU_MODE_CON00_CPLL_WORK_MODE_MASK                 (0x3U << CRU_MODE_CON00_CPLL_WORK_MODE_SHIFT)                /* 0x0000000C */
+#define CRU_MODE_CON00_DPLL_WORK_MODE_SHIFT                (4U)
+#define CRU_MODE_CON00_DPLL_WORK_MODE_MASK                 (0x3U << CRU_MODE_CON00_DPLL_WORK_MODE_SHIFT)                /* 0x00000030 */
+#define CRU_MODE_CON00_NPLL_WORK_MODE_SHIFT                (6U)
+#define CRU_MODE_CON00_NPLL_WORK_MODE_MASK                 (0x3U << CRU_MODE_CON00_NPLL_WORK_MODE_SHIFT)                /* 0x000000C0 */
+#define CRU_MODE_CON00_USBPHY480M_WORK_MODE_SHIFT          (8U)
+#define CRU_MODE_CON00_USBPHY480M_WORK_MODE_MASK           (0x3U << CRU_MODE_CON00_USBPHY480M_WORK_MODE_SHIFT)          /* 0x00000300 */
+/* MISC_CON */
+#define CRU_MISC_CON_OFFSET                                (0xA4U)
+#define CRU_MISC_CON_WARMRST_EN_SHIFT                      (0U)
+#define CRU_MISC_CON_WARMRST_EN_MASK                       (0x1U << CRU_MISC_CON_WARMRST_EN_SHIFT)                      /* 0x00000001 */
+#define CRU_MISC_CON_CORE_SRST_WFIEN_SHIFT                 (1U)
+#define CRU_MISC_CON_CORE_SRST_WFIEN_MASK                  (0x1U << CRU_MISC_CON_CORE_SRST_WFIEN_SHIFT)                 /* 0x00000002 */
+#define CRU_MISC_CON_CORE_WRST_WFIEN_SHIFT                 (2U)
+#define CRU_MISC_CON_CORE_WRST_WFIEN_MASK                  (0x1U << CRU_MISC_CON_CORE_WRST_WFIEN_SHIFT)                 /* 0x00000004 */
+#define CRU_MISC_CON_COREPO_SRST_WFIEN_SHIFT               (3U)
+#define CRU_MISC_CON_COREPO_SRST_WFIEN_MASK                (0x1U << CRU_MISC_CON_COREPO_SRST_WFIEN_SHIFT)               /* 0x00000008 */
+#define CRU_MISC_CON_COREPO_WRST_WFIEN_SHIFT               (4U)
+#define CRU_MISC_CON_COREPO_WRST_WFIEN_MASK                (0x1U << CRU_MISC_CON_COREPO_WRST_WFIEN_SHIFT)               /* 0x00000010 */
+#define CRU_MISC_CON_CORE_HIGH_FREQ_RST_EN_SHIFT           (12U)
+#define CRU_MISC_CON_CORE_HIGH_FREQ_RST_EN_MASK            (0xFU << CRU_MISC_CON_CORE_HIGH_FREQ_RST_EN_SHIFT)           /* 0x0000F000 */
 /* GLB_CNT_TH */
 #define CRU_GLB_CNT_TH_OFFSET                              (0xB0U)
 #define CRU_GLB_CNT_TH_GLOBAL_RESET_COUNTER_THRESHOLD_SHIFT (0U)
@@ -6763,10 +6763,10 @@ struct MMC_REG {
 #define CRU_GPLL_CON4_SSMOD_SEL_EXT_WAVE_MASK              (0x1U << CRU_GPLL_CON4_SSMOD_SEL_EXT_WAVE_SHIFT)             /* 0x00000001 */
 #define CRU_GPLL_CON4_SSMOD_EXT_MAXADDR_SHIFT              (8U)
 #define CRU_GPLL_CON4_SSMOD_EXT_MAXADDR_MASK               (0xFFU << CRU_GPLL_CON4_SSMOD_EXT_MAXADDR_SHIFT)             /* 0x0000FF00 */
-/* PMU_MODE */
-#define CRU_PMU_MODE_OFFSET                                (0xC020U)
-#define CRU_PMU_MODE_GPLL_WORK_MODE_SHIFT                  (0U)
-#define CRU_PMU_MODE_GPLL_WORK_MODE_MASK                   (0x3U << CRU_PMU_MODE_GPLL_WORK_MODE_SHIFT)                  /* 0x00000003 */
+/* PMU_MODE_CON00 */
+#define CRU_PMU_MODE_CON00_OFFSET                          (0xC020U)
+#define CRU_PMU_MODE_CON00_GPLL_WORK_MODE_SHIFT            (0U)
+#define CRU_PMU_MODE_CON00_GPLL_WORK_MODE_MASK             (0x3U << CRU_PMU_MODE_CON00_GPLL_WORK_MODE_SHIFT)            /* 0x00000003 */
 /* PMU_CLKSEL_CON0 */
 #define CRU_PMU_CLKSEL_CON0_OFFSET                         (0xC040U)
 #define CRU_PMU_CLKSEL_CON0_PCLK_PDPMU_DIV_CON_SHIFT       (0U)
