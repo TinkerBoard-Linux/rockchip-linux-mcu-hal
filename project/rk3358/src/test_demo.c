@@ -14,25 +14,15 @@
 //#define FAULTDBG_TEST
 //#define TIMER_TEST
 //#define SPINLOCK_TEST
-#define TSADC_TEST
+//#define TSADC_TEST
 //#define GPIO_TEST
-//#define PWM_TEST
 //#define UART_TEST
-//#define I2STDM_TEST
-//#define PDM_TEST
 //#define DMA_LINK_LIST_TEST
 //#define PERF_TEST
-#ifdef IPC_ENABLE
-//#define IPC_TEST
-//#define AMPMSG_TEST
-#endif
 //#define RPMSG_TEST
-#define UNITY_TEST
+//#define UNITY_TEST
 
 /********************* Private Structure Definition **************************/
-#ifdef IPC_TEST
-static IPC_DATA_T *p_gshare = &share_t;
-#endif
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     /* The priority higher than 0x80 is non-secure interrupt. */
@@ -50,13 +40,6 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
 
 #ifdef SOFTIRQ_TEST
     GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
-#endif
-
-#ifdef AMPMSG_TEST
-    GIC_AMP_IRQ_CFG_ROUTE(AMP0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
-    GIC_AMP_IRQ_CFG_ROUTE(AMP1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
-    GIC_AMP_IRQ_CFG_ROUTE(AMP2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
-    GIC_AMP_IRQ_CFG_ROUTE(AMP3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 #endif
 
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(1, 0)),   /* sentinel */
@@ -131,6 +114,7 @@ void softrst_test(st_RstType mode)
     }
 
     HAL_CRU_SetGlbSrst(GLB_SRST_FST);
+    printf("softrst test fail\n");
     while (1) {
         ;
     }
@@ -378,161 +362,6 @@ static void gpio_test(void)
 
 /************************************************/
 /*                                              */
-/*                  PWM_TEST                    */
-/*                                              */
-/************************************************/
-#ifdef PWM_TEST
-static uint32_t hal_pwm0_clk = 100000000;
-static struct HAL_PWM_CONFIG hal_channel0_handle, hal_channel1_handle;
-struct HAL_PWM_CONFIG hal_channel0_config = {
-    .channel = 0,
-    .periodNS = 100000,
-    .dutyNS = 40000,
-    .polarity = true,
-};
-
-struct HAL_PWM_CONFIG hal_channel1_config = {
-    .channel = 1,
-    .periodNS = 100000,
-    .dutyNS = 20000,
-    .polarity = false,
-};
-
-static void HAL_IOMUX_PWM0_Channel0Config(void)
-{
-    /* PWM0 chanel0-0B5 */
-    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
-                         GPIO_PIN_B5,
-                         PIN_CONFIG_MUX_FUNC1);
-}
-
-static void HAL_IOMUX_PWM0_Channel1Config(void)
-{
-    /* PWM0 chanel1-0B6 */
-    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
-                         GPIO_PIN_B6,
-                         PIN_CONFIG_MUX_FUNC1);
-}
-
-static void pwm_test(void)
-{
-    HAL_IOMUX_PWM0_Channel0Config();
-    HAL_IOMUX_PWM0_Channel1Config();
-
-    HAL_CRU_ClkSetFreq(g_pwm0Dev.clkID, hal_pwm0_clk);
-
-    HAL_PWM_Init(&hal_channel0_handle, g_pwm0Dev.pReg, hal_pwm0_clk);
-    HAL_PWM_Init(&hal_channel1_handle, g_pwm0Dev.pReg, hal_pwm0_clk);
-    HAL_PWM_SetConfig(&hal_channel0_handle,
-                      hal_channel0_config.channel,
-                      &hal_channel0_config);
-    HAL_PWM_SetConfig(&hal_channel1_handle,
-                      hal_channel1_config.channel,
-                      &hal_channel1_config);
-
-    HAL_PWM_Enable(&hal_channel0_handle, hal_channel0_config.channel, HAL_PWM_CONTINUOUS);
-    HAL_PWM_Enable(&hal_channel1_handle, hal_channel1_config.channel, HAL_PWM_CONTINUOUS);
-}
-#endif
-
-/************************************************/
-/*                                              */
-/*                I2STDM_TEST                   */
-/*                                              */
-/************************************************/
-#ifdef I2STDM_TEST
-void i2stdm0_demo(void)
-{
-    struct AUDIO_PARAMS params;
-    struct AUDIO_INIT_CONFIG config;
-
-    printf("zzz---i2stdm0_demo\n");
-    params.channels = AUDIO_CHANNELS_2;
-    params.sampleBits = AUDIO_SAMPLEBITS_16;
-    params.sampleRate = AUDIO_SAMPLERATE_48000;
-    /* iomux init */
-    HAL_PINCTRL_SetIOMUX(GPIO_BANK2,
-                         GPIO_PIN_A7 |
-                         GPIO_PIN_A6 |
-                         GPIO_PIN_A5 |
-                         GPIO_PIN_A4 |
-                         GPIO_PIN_B0 |
-                         GPIO_PIN_B0 |
-                         GPIO_PIN_B1 |
-                         GPIO_PIN_B2 |
-                         GPIO_PIN_B3 |
-                         GPIO_PIN_B4 |
-                         GPIO_PIN_B5 |
-                         GPIO_PIN_B6 |
-                         GPIO_PIN_B7 |
-                         GPIO_PIN_C0,
-                         PIN_CONFIG_MUX_FUNC1);
-
-    config.master = HAL_TRUE;
-    config.clkInvert = HAL_FALSE;
-    config.format = AUDIO_FMT_I2S;
-    config.trcmMode = TRCM_NONE;
-    config.pdmMode = PDM_NORMAL_MODE;
-    config.txMap = 0;
-    config.rxMap = 0;
-    HAL_I2STDM_Init(&g_i2sTdm0Dev, &config);
-    /* clk init */
-    HAL_CRU_ClkEnable(g_i2sTdm0Dev.mclkTxGate);
-    HAL_CRU_ClkEnable(g_i2sTdm0Dev.mclkRxGate);
-    HAL_CRU_ClkEnable(g_i2sTdm0Dev.hclk);
-    HAL_CRU_ClkSetFreq(g_i2sTdm0Dev.mclkTx, AUDIO_SAMPLERATE_48000 * 256);
-    HAL_I2STDM_Config(&g_i2sTdm0Dev, AUDIO_STREAM_PLAYBACK, &params);
-    HAL_I2STDM_TxRxEnable(&g_i2sTdm0Dev, AUDIO_STREAM_PLAYBACK, 1);
-}
-#endif
-
-/************************************************/
-/*                                              */
-/*                PDM_TEST                      */
-/*                                              */
-/************************************************/
-#ifdef PDM_TEST
-void pdm_test(void)
-{
-    struct AUDIO_PARAMS pdmParams;
-    struct AUDIO_INIT_CONFIG pdmConfig;
-
-    GRF->SOC_CON12 = 0x00040004;
-    GRF->SOC_CON2 = 0x30002000;
-    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
-                         GPIO_PIN_B1,
-                         PIN_CONFIG_MUX_FUNC1);
-
-    HAL_PINCTRL_SetIOMUX(GPIO_BANK2,
-                         GPIO_PIN_A6 |
-                         GPIO_PIN_B5 |
-                         GPIO_PIN_B6,
-                         PIN_CONFIG_MUX_FUNC2);
-
-    HAL_PINCTRL_SetIOMUX(GPIO_BANK2,
-                         GPIO_PIN_A4,
-                         PIN_CONFIG_MUX_FUNC3);
-
-    pdmParams.channels = 2;
-    pdmParams.sampleBits = 16;
-    pdmParams.sampleRate = 16000;
-    HAL_PDM_Config(&g_pdm0Dev, &pdmParams);
-
-    pdmConfig.master = HAL_TRUE;
-    pdmConfig.clkInvert = HAL_FALSE;
-    pdmConfig.format = AUDIO_FMT_PDM;
-    pdmConfig.trcmMode = TRCM_NONE;
-    pdmConfig.pdmMode = PDM_NORMAL_MODE;
-    pdmConfig.txMap = 0;
-    pdmConfig.rxMap = 0;
-    HAL_PDM_Init(&g_pdm0Dev, &pdmConfig);
-
-    HAL_PDM_Enable(&g_pdm0Dev);
-}
-#endif
-
-/************************************************/
-/*                                              */
 /*            DMA_LINK_LIST_TEST                */
 /*                                              */
 /************************************************/
@@ -723,162 +552,6 @@ static void perf_test(void)
         }
     }
 }
-#endif
-
-/************************************************/
-/*                                              */
-/*                  IPC_TEST                    */
-/*                                              */
-/************************************************/
-#ifdef IPC_TEST
-
-void multi_cpu_cowork_test(void)
-{
-    uint32_t curr_cpu_id;
-
-    while (1) {
-        HAL_SPINLOCK_Lock(p_gshare->spinlock_id);        // Use spinlock to protect share mem
-
-        curr_cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-
-        // an example for access share memory
-        p_gshare->msg.cmd = curr_cpu_id;     // current cpu id as a flag for example
-        p_gshare->msg.data[0]++;              // muti-cpu can access data buffer
-
-        printf("CPU(%d) lockID = %d, flag = %d, data = %d\n", curr_cpu_id, p_gshare->spinlock_id, p_gshare->msg.cmd, p_gshare->msg.data[0]);
-
-        if (curr_cpu_id == 0) {
-            printf("\n");
-        }
-
-        HAL_SPINLOCK_Unlock(p_gshare->spinlock_id);      // Use spinlock to protect share mem
-        HAL_DelayMs(500);
-    }
-}
-
-#endif
-
-/************************************************/
-/*                                              */
-/*                AMPMSG_TEST                   */
-/*                                              */
-/************************************************/
-#ifdef AMPMSG_TEST
-
-#define AMPMSG_REQ   ((uint32_t)0x55)
-#define AMPMSG_ACK   ((uint32_t)0xaa)
-#define AMPMSG_DONE  ((uint32_t)0x5a)
-#define AMPMSG_ERROR ((uint32_t)-1)
-
-static uint32_t master_isr_flag = 0;
-static uint32_t remote_isr_flag = 0;
-
-static HAL_Status ampmsg_master_cb(void)
-{
-    master_isr_flag = 1;
-
-    return HAL_OK;
-}
-
-static void ampmsg_master_test(void)
-{
-    uint32_t src_cpu, dst_cpu = 0;
-    IPC_MSG_T pmsg;
-
-    master_isr_flag = 0;
-    amp_msg_init(p_gshare, ampmsg_master_cb);
-
-    // only example: init test data
-    pmsg.cmd = AMPMSG_REQ;
-    pmsg.data[0] = 0x00000055;
-    rk_printf("master: send req and data 0x%08x to remote!\n", pmsg.data[0]);
-    amp_msg_send(p_gshare, &pmsg, dst_cpu);
-
-    while (1) {
-        if (master_isr_flag) {
-            master_isr_flag = 0;
-
-            HAL_SPINLOCK_Lock(p_gshare->spinlock_id);
-            src_cpu = p_gshare->src_cpu;
-            memcpy(&pmsg, &p_gshare->msg, sizeof(IPC_MSG_T));
-            HAL_SPINLOCK_Unlock(p_gshare->spinlock_id);
-
-            if (src_cpu == 0) {
-                // only example to process data
-                if (pmsg.cmd == AMPMSG_ACK) {
-                    if (pmsg.data[0] == 0x0000AA55) {
-                        rk_printf("master: recv ack and data 0x%08x from remote!\n", pmsg.data[0]);
-                        pmsg.cmd = AMPMSG_DONE;
-                    } else {
-                        rk_printf("master: recv error from remote!\n");
-                        pmsg.cmd = AMPMSG_ERROR;
-                    }
-                    amp_msg_send(p_gshare, &pmsg, src_cpu);
-                }
-            } else if (src_cpu == 1) {
-            } else if (src_cpu == 2) {
-            } else { /*if (src_cpu == 3)*/
-            }
-        }
-
-        ;
-        asm volatile ("wfi");
-        ;
-    }
-}
-
-static HAL_Status ampmsg_remote_cb(void)
-{
-    remote_isr_flag = 1;
-
-    return HAL_OK;
-}
-
-static void ampmsg_remote_test(void)
-{
-    uint32_t src_cpu;
-    IPC_MSG_T pmsg;
-
-    remote_isr_flag = 0;
-    amp_msg_init(p_gshare, ampmsg_remote_cb);
-
-    while (1) {
-        if (remote_isr_flag) {
-            remote_isr_flag = 0;
-
-            HAL_SPINLOCK_Lock(p_gshare->spinlock_id);
-            src_cpu = p_gshare->src_cpu;
-            memcpy(&pmsg, &p_gshare->msg, sizeof(IPC_MSG_T));
-            HAL_SPINLOCK_Unlock(p_gshare->spinlock_id);
-
-            if (src_cpu == 1) {
-                if (pmsg.cmd == AMPMSG_REQ) {
-                    // only example to process data
-                    rk_printf("remote: recv req and data 0x%08x from master!\n", pmsg.data[0]);
-
-                    pmsg.cmd = AMPMSG_ACK;
-                    pmsg.data[0] |= 0x0000AA00;
-                    rk_printf("remote: send ack and data 0x%08x to master!\n", pmsg.data[0]);
-                    amp_msg_send(p_gshare, &pmsg, src_cpu);
-                } else if (pmsg.cmd == AMPMSG_DONE) {
-                    rk_printf("AMPMsg test OK!\n");
-                } else if (pmsg.cmd == AMPMSG_ERROR) {
-                    rk_printf("AMPMsg test Failed!\n");
-                } else {
-                    rk_printf("pmsg.cmd error: 0x%8x\n", pmsg.cmd);
-                }
-            } else if (src_cpu == 2) {
-            } else if (src_cpu == 3) {
-            } else { /*if (src_cpu == 0)*/
-            }
-        }
-
-        ;
-        asm volatile ("wfi");
-        ;
-    }
-}
-
 #endif
 
 /************************************************/
@@ -1263,6 +936,45 @@ static void rpmsg_remote_test(void)
 
 #endif
 
+#ifdef HAL_I2C_MODULE_ENABLED
+static void HAL_IOMUX_I2C0M0Config(void)
+{
+    /* I2C0 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_B0 |        // i2c0_scl
+                         GPIO_PIN_B1,         // i2c0_sda
+                         PIN_CONFIG_MUX_FUNC1);
+}
+#endif
+
+#ifdef HAL_SDIO_MODULE_ENABLED
+static void HAL_IOMUX_MMCM0Config(void)
+{
+    /* MMC */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK1,
+                         GPIO_PIN_A0 |        // EMMC_D0
+                         GPIO_PIN_A1 | // EMMC_D1
+                         GPIO_PIN_A2 | // EMMC_D2
+                         GPIO_PIN_A3 | // EMMC_D3
+                         GPIO_PIN_A4 | // EMMC_D4
+                         GPIO_PIN_A5 | // EMMC_D5
+                         GPIO_PIN_A6 | // EMMC_D6
+                         GPIO_PIN_A7 | // EMMC_D7
+                         GPIO_PIN_B1 | // EMMC_CLKOUT
+                         GPIO_PIN_B2 | // EMMC_CMD
+                         GPIO_PIN_B3, // EMMC_RSTN
+                         PIN_CONFIG_MUX_FUNC2);
+}
+#endif
+
+#if defined(UNITY_TEST) && defined(PRIMARY_CPU)
+static void unity_test_iomux_config(void)
+{
+    HAL_IOMUX_I2C0M0Config();
+    HAL_IOMUX_MMCM0Config();
+}
+#endif
+
 /********************* Public Function Definition ****************************/
 
 void TEST_DEMO_GIC_Init(void)
@@ -1273,11 +985,9 @@ void TEST_DEMO_GIC_Init(void)
 void test_demo(void)
 {
 #ifdef RPMSG_TEST
-#ifdef PRIMARY_CPU /*CPU1*/
+#ifdef PRIMARY_CPU
     rpmsg_master_test();
-//#endif
 #else
-//#ifdef CPU0
     rpmsg_remote_test();
 #endif
 #endif
@@ -1294,10 +1004,6 @@ void test_demo(void)
     fault_dbg_test();
 #endif
 
-#if defined(SOFTRST_TEST) && defined(PRIMARY_CPU)
-    softrst_test(SOFT_SRST_DIRECT);
-#endif
-
 #ifdef TIMER_TEST
     timer_test();
 #endif
@@ -1310,44 +1016,26 @@ void test_demo(void)
     gpio_test();
 #endif
 
-#if defined(PWM_TEST) && defined(PRIMARY_CPU)
-    pwm_test();
-#endif
-
 #if defined(UART_TEST) && defined(PRIMARY_CPU)
     uart_test();
-#endif
-
-#if defined(I2STDM_TEST) && defined(PRIMARY_CPU)
-    i2stdm0_demo();
-#endif
-
-#if defined(PDM_TEST) && defined(PRIMARY_CPU)
-    pdm_test();
 #endif
 
 #if defined(DMA_LINK_LIST_TEST) && defined(PRIMARY_CPU)
     dmalinklist_test();
 #endif
 
-#ifdef PERF_TEST
+#ifdef PERF_TEST && defined(PRIMARY_CPU)
     perf_test();
-#endif
-
-#ifdef IPC_TEST
-    multi_cpu_cowork_test();
-#endif
-
-#ifdef AMPMSG_TEST
-#if defined(PRIMARY_CPU)
-    ampmsg_master_test();
-#elif defined(CPU0)
-    ampmsg_remote_test();
-#endif
 #endif
 
 #if defined(UNITY_TEST) && defined(PRIMARY_CPU)
     /* Unity Test */
+    unity_test_iomux_config();
     test_main();
+#endif
+
+#if defined(SOFTRST_TEST) && defined(PRIMARY_CPU)
+    HAL_DelayMs(10);
+    softrst_test(SOFT_SRST_DIRECT);
 #endif
 }

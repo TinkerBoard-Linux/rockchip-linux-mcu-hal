@@ -128,7 +128,11 @@ void main(void)
     BSP_Init();
 
     /* Interrupt Init */
+#ifdef TEST_DEMO
+    TEST_DEMO_GIC_Init();
+#else
     HAL_GIC_Init(&irqConfig);
+#endif
 
     /* IO Domain Init */
 
@@ -150,7 +154,7 @@ void main(void)
     printf("              CPI_ID(%d)                \n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("****************************************\n");
     rk_printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
-    printf("\n");
+    printf("time: %f\n", (HAL_GetSysTimerCount() * 1.0) / PLL_INPUT_OSC_RATE);
 
 #ifdef TEST_DEMO
     test_demo();

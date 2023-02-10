@@ -6,8 +6,6 @@
 #ifndef _TASK_IPC_H_
 #define _TASK_IPC_H_
 
-//#define IPC_ENABLE
-
 /* spinlock ID define */
 #define RK_PRINTF_SPINLOCK_ID 0U
 
