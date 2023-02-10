@@ -114,30 +114,28 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
+static char printf_buf[512];
 int rk_printf(const char *fmt, ...)
 {
     va_list args;
     uint64_t cnt64;
-    uint32_t cpu_id, sec, ms, us;
-
-    HAL_SPINLOCK_Lock(RK_PRINTF_SPINLOCK_ID);
+    uint32_t cpu_id, n, sec, ms, us;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+
     // SYS_TIMER is 24MHz
     cnt64 = HAL_GetSysTimerCount();
     us = (uint32_t)((cnt64 / (PLL_INPUT_OSC_RATE / 1000000)) % 1000);
     ms = (uint32_t)((cnt64 / (PLL_INPUT_OSC_RATE / 1000)) % 1000);
     sec = (uint32_t)(cnt64 / PLL_INPUT_OSC_RATE);
-    printf("[(%d) %d.%03d.%03d]", cpu_id, sec, ms, us);
+    n = snprintf(printf_buf, 512, "[(%d)%d.%d.%d]", cpu_id, sec, ms, us);
 
     va_start(args, fmt);
-
-    vprintf(fmt, args);
-
+    vsnprintf(printf_buf + n, 512 - n, fmt, args);
     va_end(args);
 
-    //printf("\n");
-
+    HAL_SPINLOCK_Lock(RK_PRINTF_SPINLOCK_ID);
+    printf("%s", printf_buf);
     HAL_SPINLOCK_Unlock(RK_PRINTF_SPINLOCK_ID);
 
     return 0;
