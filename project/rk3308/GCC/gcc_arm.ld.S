@@ -20,10 +20,9 @@ __IRQ_STACK_SIZE = 0x400;
 __SVC_STACK_SIZE = 0x1000;
 __ABT_STACK_SIZE = 0x400;
 __UND_STACK_SIZE = 0x400;
-
 __TTB_SIZE = 0x4000;
+
 __SPINLOCK_MEM_SIZE = 0x100;
-__SHARE_RPMSG_SIZE = 0x80000;
 
 SECTIONS
 {
@@ -179,7 +178,7 @@ SECTIONS
         . = ALIGN(16 * 1024);
     } > DRAM
 
-    .share_lock (NOLOAD):
+    .share_lock (NOLOAD) :
     {
         . = ALIGN(64);
         PROVIDE(__spinlock_mem_start__ = .);
@@ -192,9 +191,42 @@ SECTIONS
     {
         . = ALIGN(0x1000);
         PROVIDE(__share_rpmsg_start__ = .);
-        . += __SHARE_RPMSG_SIZE;
+        . += SHRPMSG_SIZE;
         PROVIDE(__share_rpmsg_end__ = .);
         . = ALIGN(0x1000);
+    } > SHMEM
+
+    .share_ramfs (NOLOAD):
+    {
+        . = ALIGN(0x1000);
+        PROVIDE(__share_ramfs_start__ = .);
+        . += SHRAMFS_SIZE;
+        PROVIDE(__share_ramfs_end__ = .);
+        . = ALIGN(0x1000);
+    } > SHMEM
+
+    .share_log (NOLOAD):
+    {
+        . = ALIGN(64);
+        PROVIDE(__share_log0_start__ = .);
+        . += SHLOG0_SIZE;
+        PROVIDE(__share_log0_end__ = .);
+
+        . = ALIGN(64);
+        PROVIDE(__share_log1_start__ = .);
+        . += SHLOG1_SIZE;
+        PROVIDE(__share_log1_end__ = .);
+
+        . = ALIGN(64);
+        PROVIDE(__share_log2_start__ = .);
+        . += SHLOG2_SIZE;
+        PROVIDE(__share_log2_end__ = .);
+
+        . = ALIGN(64);
+        PROVIDE(__share_log3_start__ = .);
+        . += SHLOG3_SIZE;
+        PROVIDE(__share_log4_end__ = .);
+        . = ALIGN(64);
     } > SHMEM
 
     .share_data :
@@ -205,6 +237,14 @@ SECTIONS
         PROVIDE(__share_data_end__ = .);
         . = ALIGN(64);
     } > SHMEM AT > DRAM
+
+    .share_heap (NOLOAD):
+    {
+        . = ALIGN(16);
+        PROVIDE(__share_heap_begin = .);
+        . = ORIGIN(SHMEM) + LENGTH(SHMEM);
+        PROVIDE(__share_heap_end = .);
+    } > SHMEM
 
     . = ALIGN(16);
     .bss (NOLOAD) :
