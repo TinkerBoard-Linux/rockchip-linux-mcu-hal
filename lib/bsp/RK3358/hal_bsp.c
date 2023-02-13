@@ -178,6 +178,41 @@ const struct HAL_UART_DEV g_uart4Dev =
 };
 #endif
 
+#if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
+const struct HAL_USB_DEV g_usbdDev =
+{
+    .pReg = OTG,
+    .hclkGateID = HCLK_USB2OTG_CLK_GATE,
+    .utmiclkGateID = USBPHY_REF_CLK_GATE,
+    .irqNum = OTG_IRQn,
+    .cfg =
+    {
+        .epNum = 10,
+        .ep0Mps = USB_OTG_MAX_EP0_SIZE,
+        .phyif = USB_PHY_UTMI_WIDTH_16,
+        .speed = USB_OTG_SPEED_HIGH,
+        .hcNum = 8,
+        .dmaEnable = true,
+        .sofEnable = false,
+        .lpmEnable = false,
+        .vbusSensingEnable = false,
+        .suspendEnable = false,
+    },
+};
+#endif
+
+#if defined(HAL_EHCI_MODULE_ENABLED) || defined(HAL_OHCI_MODULE_ENABLED)
+const struct HAL_USBH_DEV g_usbhDev =
+{
+    .ehciReg = EHCI,
+    .ohciReg = OHCI,
+    .ehciIrqNum = EHCI_IRQn,
+    .ohciIrqNum = OHCI_IRQn,
+    .usbhGateID = HCLK_USB2HOST_CLK_GATE,
+    .usbhArbGateID = HCLK_USB2HOST_ARB_CLK_GATE,
+};
+#endif
+
 void BSP_SetLoaderFlag(void)
 {
     PMU_GRF->OS_REG[0] = LDR_UPGRADE_FLAG;

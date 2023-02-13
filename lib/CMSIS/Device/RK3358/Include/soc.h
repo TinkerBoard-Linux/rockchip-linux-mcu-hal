@@ -102,6 +102,9 @@ typedef enum {
     SFC_IRQn         = 88,            /*!< SFC Interrupt               */
     NANDC_IRQn       = 89,            /*!< NANDC Interrupt             */
     PMU_IRQn         = 90,            /*!< PMU Interrupt               */
+    EHCI_IRQn        = 92,            /*!< EHCI Interrupt              */
+    OHCI_IRQn        = 93,            /*!< OHCI Interrupt              */
+    OTG_IRQn         = 94,            /*!< OTG Interrupt          */
     PWM0_PWR_IRQn    = 121,           /*!< PWM0 PWR Interrupt          */
     PWM1_PWR_IRQn    = 122,           /*!< PWM1 PWR Interrupt          */
                                       /*!< IRQn: 136-139 for cpu off in Trust */
@@ -142,6 +145,7 @@ typedef enum {
 #include "system_rk3358.h"
 #endif /* __ASSEMBLY__ */
 #include "rk3358.h"
+#include "rk3358_usb.h"
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -152,6 +156,9 @@ typedef enum {
 #define GIC_DISTRIBUTOR_BASE   (0xFF131000)
 #define GIC_CPU_INTERFACE_BASE (0xFF132000)
 
+#define OTG_BASE               (0xFF300000U) /* DWC2 base address */
+#define EHCI_BASE              (0xFF340000U) /* EHCI base address */
+#define OHCI_BASE              (0xFF350000U) /* OHCI base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
