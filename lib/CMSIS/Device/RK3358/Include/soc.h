@@ -104,19 +104,23 @@ typedef enum {
     PMU_IRQn         = 90,            /*!< PMU Interrupt               */
     PWM0_PWR_IRQn    = 121,           /*!< PWM0 PWR Interrupt          */
     PWM1_PWR_IRQn    = 122,           /*!< PWM1 PWR Interrupt          */
-    RSVD0_IRQn       = 188,           /*!< RSVD0  Interrupt            */
-    NUM_INTERRUPTS   = 200
+                                      /*!< IRQn: 136-139 for cpu off in Trust */
+    RPMSG_01_IRQn    = 140,           /*!< RPMSG 0->1 Interrupt        */
+    RPMSG_02_IRQn    = 141,           /*!< RPMSG 0->2 Interrupt        */
+    RPMSG_03_IRQn    = 142,           /*!< RPMSG 0->3 Interrupt        */
+    RPMSG_10_IRQn    = 143,           /*!< RPMSG 1->0 Interrupt        */
+    RPMSG_12_IRQn    = 144,           /*!< RPMSG 1->2 Interrupt        */
+    RPMSG_13_IRQn    = 145,           /*!< RPMSG 1->3 Interrupt        */
+    RPMSG_20_IRQn    = 146,           /*!< RPMSG 2->0 Interrupt        */
+    RPMSG_21_IRQn    = 147,           /*!< RPMSG 2->1 Interrupt        */
+    RPMSG_23_IRQn    = 148,           /*!< RPMSG 2->3 Interrupt        */
+    RPMSG_30_IRQn    = 149,           /*!< RPMSG 3->0 Interrupt        */
+    RPMSG_31_IRQn    = 150,           /*!< RPMSG 3->1 Interrupt        */
+    RSVD0_IRQn       = 151,           /*!< RSVD0  Interrupt            */
+    NUM_INTERRUPTS   = 160
 } IRQn_Type;
 
-#define RSVD_IRQn(_N) (RSVD0_IRQn + (_N))
-
-#define AMP_CPUOFF_REQ_IRQ(cpu)  RSVD_IRQn(12 + (cpu))    /* gic irq: 200 */
-
-#define GPIO_IRQ_GROUP_DIRQ_BASE RSVD_IRQn(52)            /* gic irq:  240 */
-#define GPIO_IRQ_GROUP_DIRQ_NUM  (NUM_INTERRUPTS - GPIO_IRQ_GROUP_DIRQ_BASE)
-
-#define GPIO_IRQ_GROUP_GPIO0_HWIRQ GPIO0_IRQn
-#define GPIO_IRQ_GROUP_GPION_HWIRQ GPIO3_IRQn
+#define AMP_CPUOFF_REQ_IRQ(cpu)  (cpu + 136)           /* gic irq: 136-139 */
 
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
