@@ -62,6 +62,11 @@ HAL_Status HAL_SystemCoreClockUpdate(uint32_t hz, eHAL_systickClkSource clkSourc
 uint64_t HAL_DivU64Rem(uint64_t numerator, uint32_t denominator, uint32_t *pRemainder);
 uint64_t HAL_GetSysTimerCount(void);
 
+void HAL_CPU_EnterIdle(void);
+#if defined(HAL_CPU_USAGE_ENABLED)
+uint32_t HAL_GetCPUUsage(void);
+#endif
+
 /** @} */
 
 /********************* Public Function Definition ***************************/

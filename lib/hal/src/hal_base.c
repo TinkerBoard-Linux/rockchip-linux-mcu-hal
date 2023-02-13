@@ -35,10 +35,11 @@
 
  APIs:
 
- - Get system time by calling HAL_GetTick();
+ - Get system time by calling HAL_GetTick().
  - Delay for a certain length of time, HAL_DelayMs(), HAL_DelayUs(), and HAL_CPUDelayUs().
  - Blocking for a certain period of time to continuously query HW status, use HAL_GetTick()
  to do timeout, this will be more accurate.
+ - Get current cpu usage by calling HAL_GetCPUUsage().
 
  @} */
 
@@ -346,6 +347,60 @@ HAL_Status HAL_CPUDelayUs(uint32_t us)
     CPUCycleLoop(cycles);
 
     return HAL_OK;
+}
+
+#if defined(HAL_CPU_USAGE_ENABLED)
+static uint64_t g_last_enter_idle_time = 0;               /* Last time current CPU entered the idle state. */
+static uint64_t g_total_idle_time = 0;                    /* Total time for current CPU to enter idle state. */
+static uint64_t g_last_elapsed_time = 0;                  /* Last elapsed time for current CPU. */
+
+/**
+ * @brief  Get current CPU usage.
+ * @return 0-100
+ * @attention The cpu usage function depends on HAL_CPUEnterIdle function.
+ */
+uint32_t HAL_GetCPUUsage(void)
+{
+    uint64_t elapsed_time, active_time, current_time;
+    uint32_t usage;
+
+    current_time = HAL_GetSysTimerCount();
+    elapsed_time = current_time - g_last_elapsed_time;
+
+    /* Prevent the risk of dividing by 0 caused by repeated calls for a short time. */
+    if (!elapsed_time) {
+        return 0;
+    }
+
+    HAL_ASSERT(elapsed_time > g_total_idle_time);
+    active_time = elapsed_time - g_total_idle_time;
+    usage = (active_time * 100) / elapsed_time;
+    g_total_idle_time = 0;
+    g_last_elapsed_time = current_time;
+
+    return usage;
+}
+#endif
+
+/**
+ * @brief  CPU enter idle.
+ */
+void HAL_CPU_EnterIdle(void)
+{
+#if defined(HAL_CPU_USAGE_ENABLED)
+    uint64_t idle_time;
+
+    __disable_irq();
+    g_last_enter_idle_time = HAL_GetSysTimerCount();
+#endif
+
+    __asm volatile ("wfi");
+
+#if defined(HAL_CPU_USAGE_ENABLED)
+    idle_time = HAL_GetSysTimerCount() - g_last_enter_idle_time;
+    g_total_idle_time += idle_time;
+    __enable_irq();
+#endif
 }
 
 /** @} */
