@@ -161,9 +161,10 @@ void main(void)
 #endif
 
     while (1) {
-        ;
-        asm volatile ("wfi");
-        ;
+        /* TODO: Message loop */
+
+        /* Enter cpu idle when no message */
+        HAL_CPU_EnterIdle();
     }
 }
 

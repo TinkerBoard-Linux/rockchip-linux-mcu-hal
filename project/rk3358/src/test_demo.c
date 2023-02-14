@@ -21,13 +21,14 @@
 //#define PERF_TEST
 //#define RPMSG_TEST
 //#define UNITY_TEST
+#define CPU_USAGE_TEST
 
 /********************* Private Structure Definition **************************/
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     /* The priority higher than 0x80 is non-secure interrupt. */
 
-#ifdef TIMER_TEST
+#if defined(TIMER_TEST) || defined(CPU_USAGE_TEST)
     GIC_AMP_IRQ_CFG_ROUTE(TIMER0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(TIMER1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(TIMER2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
@@ -936,6 +937,49 @@ static void rpmsg_remote_test(void)
 
 #endif
 
+#ifdef CPU_USAGE_TEST
+struct timer_info {
+    struct TIMER_REG *timer;
+    uint32_t irq;
+};
+
+struct timer_info g_timer_info[4] = {
+    { TIMER0, TIMER0_IRQn },
+    { TIMER1, TIMER1_IRQn },
+    { TIMER2, TIMER2_IRQn },
+    { TIMER3, TIMER3_IRQn },
+};
+static void usage_isr(int vector, void *param)
+{
+    struct timer_info *info = (struct timer_info *)param;
+    uint32_t cpu_id;
+    uint64_t t1, t2;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    t1 = HAL_GetSysTimerCount();
+    HAL_CPUDelayUs((cpu_id + 1) * 100000);
+    t2 = HAL_GetSysTimerCount();
+    rk_printf("cpu:%ld, irq: %d, HAL_GetCPUUsage: %ld, t=%lld\n", cpu_id, vector, HAL_GetCPUUsage(), t2 - t1);
+
+    HAL_TIMER_ClrInt(info->timer);
+    HAL_GIC_EndOfInterrupt(info->irq);
+}
+
+static void usage_test(void)
+{
+    uint32_t cpu_id;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+
+    printf("cpu: %ld, usage_test\n", cpu_id);
+    HAL_IRQ_HANDLER_SetIRQHandler(g_timer_info[cpu_id].irq, usage_isr, &g_timer_info[cpu_id]);
+    HAL_GIC_Enable(g_timer_info[cpu_id].irq);
+    HAL_TIMER_Init(g_timer_info[cpu_id].timer, TIMER_FREE_RUNNING);
+    HAL_TIMER_SetCount(g_timer_info[cpu_id].timer, PLL_INPUT_OSC_RATE);
+    HAL_TIMER_Start_IT(g_timer_info[cpu_id].timer);
+}
+#endif  /* CPU_USAGE_TEST */
+
 #ifdef HAL_I2C_MODULE_ENABLED
 static void HAL_IOMUX_I2C0M0Config(void)
 {
@@ -1032,6 +1076,10 @@ void test_demo(void)
     /* Unity Test */
     unity_test_iomux_config();
     test_main();
+#endif
+
+#if defined(CPU_USAGE_TEST)
+    usage_test();
 #endif
 
 #if defined(SOFTRST_TEST) && defined(PRIMARY_CPU)
