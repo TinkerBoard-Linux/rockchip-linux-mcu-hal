@@ -5,12 +5,7 @@
 
 #include "hal_bsp.h"
 #include "hal_base.h"
-#include "test_conf.h"
 #include "task_ipc.h"
-
-#if defined(SRAM_USAGE) && defined(PRIMARY_CPU)
-extern void sram_usage(void);
-#endif
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
@@ -194,24 +189,15 @@ void main(void)
     rk_printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("\n");
 
-#ifdef IPC_ENABLE
-    /* check all cpu is power on*/
-    amp_sync_poweron();
-#endif
-
 #ifdef TEST_DEMO
     test_demo();
 #endif
 
-#if defined(SRAM_USAGE) && defined(PRIMARY_CPU)
-    printf("func: sram_usage addr = 0x%08x\n", (void *)(sram_usage));
-    sram_usage();
-#endif
-
     while (1) {
-        ;
-        asm volatile ("wfi");
-        ;
+        /* TODO: Message loop */
+
+        /* Enter cpu idle when no message */
+        HAL_CPU_EnterIdle();
     }
 }
 
