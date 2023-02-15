@@ -61,7 +61,13 @@
  */
 /********************* Private MACRO Definition ******************************/
 
+#define SPI_VER1_TYPE1 0x0B050001
+
+#if (SPI_VERSION == SPI_VER1_TYPE1)
+#define HAL_SPI_FIFO_LENGTH 32
+#else
 #define HAL_SPI_FIFO_LENGTH 64
+#endif
 /* Bit fields in SR */
 #define HAL_SPI_SR_BUSY (0x1 << SPI_SR_BSF_SHIFT)
 #ifdef SPI_SR_STB_SHIFT
