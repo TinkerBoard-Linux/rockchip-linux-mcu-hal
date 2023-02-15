@@ -1393,8 +1393,10 @@ typedef enum PD_Id {
     PD_INVALID = 0U,
 } ePD_Id;
 #endif
-/****************************************SFC********************************************/
+/****************************************SFC*********************************************/
 #define SFC_CHIP_CNT (1)
+/****************************************SPI*********************************************/
+#define SPI_VERSION    0x0B050001
 
 #define PCLK_SARADC_CONTROL_GATE PCLK_SARADC_GATE
 #define CLK_SARADC_GATE          CLK_SARADC_PLL_CLK_GATE
