@@ -73,9 +73,9 @@ static SPINLOCK_t *HAL_SW_SPINLOCK(uint32_t index)
 }
 
 static void HAL_SW_SPINLOCK_Lock(SPINLOCK_t *lock)
+{
 #if defined(__ARM_ARCH_8A__)           /* for armv8a */
 #if defined(__AARCH64__)               /* for armv8a 64bit*/
-{
     int tmp;
 
     asm volatile (
@@ -91,9 +91,7 @@ static void HAL_SW_SPINLOCK_Lock(SPINLOCK_t *lock)
         : "r" (lock), "r" (g_ownerID)
         : "cc"
         );
-}
 #else                                  /* for armv8a 32bit */
-{
     int tmp;
 
     asm volatile (
@@ -109,10 +107,8 @@ static void HAL_SW_SPINLOCK_Lock(SPINLOCK_t *lock)
         : "r" (lock), "r" (g_ownerID)
         : "cc"
         );
-}
 #endif
 #elif defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7A__)   /* for armv7m & armv7a */
-{
     int tmp;
 
     asm volatile (
@@ -128,9 +124,7 @@ static void HAL_SW_SPINLOCK_Lock(SPINLOCK_t *lock)
         : "r" (lock), "r" (g_ownerID)
         : "cc"
         );
-}
 #elif defined(__ARM_ARCH_8M__)        /* for armv8m */
-{
     int tmp;
 
     asm volatile (
@@ -146,13 +140,13 @@ static void HAL_SW_SPINLOCK_Lock(SPINLOCK_t *lock)
         : "r" (lock), "r" (g_ownerID)
         : "cc"
         );
-}
 #endif
+}
 
 static HAL_Check HAL_SW_SPINLOCK_TryLock(SPINLOCK_t *lock)
+{
 #if defined(__ARM_ARCH_8A__)           /* for armv8a */
 #if defined(__AARCH64__)               /* for armv8a 64bit*/
-{
     int tmp;
 
     asm volatile (
@@ -169,9 +163,7 @@ static HAL_Check HAL_SW_SPINLOCK_TryLock(SPINLOCK_t *lock)
         );
 
     return tmp ? HAL_FALSE : HAL_TRUE;
-}
 #else                                  /* for armv8a 32bit */
-{
     int tmp;
 
     asm volatile (
@@ -189,10 +181,8 @@ static HAL_Check HAL_SW_SPINLOCK_TryLock(SPINLOCK_t *lock)
         );
 
     return tmp ? HAL_FALSE : HAL_TRUE;
-}
 #endif
 #elif defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7A__)   /* for armv7m & armv7a */
-{
     int tmp;
 
     asm volatile (
@@ -210,9 +200,7 @@ static HAL_Check HAL_SW_SPINLOCK_TryLock(SPINLOCK_t *lock)
         );
 
     return tmp ? HAL_FALSE : HAL_TRUE;
-}
 #elif defined(__ARM_ARCH_8M__)        /* for armv8m */
-{
     int tmp;
 
     asm volatile (
@@ -230,32 +218,28 @@ static HAL_Check HAL_SW_SPINLOCK_TryLock(SPINLOCK_t *lock)
         );
 
     return tmp ? HAL_FALSE : HAL_TRUE;
-}
 #endif
+}
 
 static void HAL_SW_SPINLOCK_Unlock(SPINLOCK_t *lock)
+{
 #if defined(__ARM_ARCH_8A__)           /* for armv8a */
 #if defined(__AARCH64__)               /* for armv8a 64bit*/
-{
     asm (
         "STLR WZR, [%0]"
         :
         : "r" (lock)
         : "cc"
         );
-}
 #else                                  /* for armv8a 32bit */
-{
     asm (
         "STL %1, [%0]\n"
         :
         : "r" (lock), "r" (0)
         : "cc"
         );
-}
 #endif
 #elif defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7A__)   /* for armv7m & armv7a */
-{
     asm (
         "STR %1, [%0]\n"
         "DSB\n"
@@ -264,17 +248,15 @@ static void HAL_SW_SPINLOCK_Unlock(SPINLOCK_t *lock)
         : "r" (lock), "r" (0)
         : "cc"
         );
-}
 #elif defined(__ARM_ARCH_8M__)        /* for armv8m */
-{
     asm (
         "STL %1, [%0]\n"
         :
         : "r" (lock), "r" (0)
         : "cc"
         );
-}
 #endif
+}
 
 static uint32_t HAL_SW_SPINLOCK_GetOwner(SPINLOCK_t *lock)
 {
