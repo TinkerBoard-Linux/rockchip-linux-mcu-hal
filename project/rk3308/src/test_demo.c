@@ -612,7 +612,7 @@ static void xferdata_init(struct PL330_XFER_SPEC_LIST *xfer_list)
     xfer_list_after->xfer.dstAddr = dst;
     xfer_list_after->xfer.length = DMA_SIZE;
     HAL_LIST_InsertAfter(&pxfer_link_list, &xfer_list_after->node);
-    xfer_list_after += sizeof(struct PL330_XFER_SPEC_LIST);
+    xfer_list_after++;
     xfer_list_after->xfer.srcAddr = src + DMA_SIZE;
     xfer_list_after->xfer.dstAddr = dst + DMA_SIZE;
     xfer_list_after->xfer.length = DMA_SIZE;
