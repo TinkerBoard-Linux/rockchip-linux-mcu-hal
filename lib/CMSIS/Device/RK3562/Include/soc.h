@@ -134,11 +134,13 @@ typedef enum {
   UART7_IRQn                =  69 + NUM_INTERRUPTS,     /*!< UART7 Interrupt               */
   UART8_IRQn                =  70 + NUM_INTERRUPTS,     /*!< UART8 Interrupt               */
   UART9_IRQn                =  71 + NUM_INTERRUPTS,     /*!< UART9 Interrupt               */
+  SARADC0_IRQn              =  72 + NUM_INTERRUPTS,     /*!< SARADC0 Interrupt             */
   TIMER1_IRQn               =  78 + NUM_INTERRUPTS,     /*!< TIMER1 Interrupt               */
   TIMER2_IRQn               =  79 + NUM_INTERRUPTS,     /*!< TIMER2 Interrupt               */
   TIMER3_IRQn               =  80 + NUM_INTERRUPTS,     /*!< TIMER3 Interrupt               */
   TIMER4_IRQn               =  81 + NUM_INTERRUPTS,     /*!< TIMER4 Interrupt               */
   TIMER5_IRQn               =  81 + NUM_INTERRUPTS,     /*!< TIMER5 Interrupt               */
+  SARADC1_IRQn              =  156 + NUM_INTERRUPTS,    /*!< SARADC1 Interrupt              */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 
