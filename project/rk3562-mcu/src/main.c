@@ -8,18 +8,18 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
-//#define TEST_USE_UART5M0
+//#define TEST_USE_UART7M1
 
 /********************* Private Structure Definition **************************/
 
-#ifdef TEST_USE_UART5M0
-static void HAL_IOMUX_Uart5m0Config(void)
+#ifdef TEST_USE_UART7M1
+static void HAL_IOMUX_Uart7m1Config(void)
 {
     HAL_PINCTRL_SetIOMUX(GPIO_BANK1,
-                         GPIO_PIN_B7,
+                         GPIO_PIN_B3,
                          PIN_CONFIG_MUX_FUNC3);
     HAL_PINCTRL_SetIOMUX(GPIO_BANK1,
-                         GPIO_PIN_C0,
+                         GPIO_PIN_B4,
                          PIN_CONFIG_MUX_FUNC3);
 }
 #endif
@@ -29,8 +29,8 @@ static void HAL_IOMUX_Uart5m0Config(void)
 /********************* Private Function Definition ***************************/
 
 /********************* Public Function Definition ****************************/
-#ifdef TEST_USE_UART5M0
-static struct UART_REG *pUart = UART5;
+#ifdef TEST_USE_UART7M1
+static struct UART_REG *pUart = UART7;
 #else
 static struct UART_REG *pUart = UART0;
 #endif
@@ -139,9 +139,9 @@ int main(void)
     BSP_Init();
 
     /* UART Init */
-#ifdef TEST_USE_UART5M0
-    HAL_IOMUX_Uart5m0Config();
-    HAL_UART_Init(&g_uart5Dev, &hal_uart_config);
+#ifdef TEST_USE_UART7M1
+    HAL_IOMUX_Uart7m1Config();
+    HAL_UART_Init(&g_uart7Dev, &hal_uart_config);
 #else
     HAL_UART_Init(&g_uart0Dev, &hal_uart_config);
 #endif
