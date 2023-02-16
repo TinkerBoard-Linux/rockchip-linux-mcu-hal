@@ -12,6 +12,14 @@
 
 /***************************** Structure Definition **************************/
 
+#ifdef HAL_SPI_MODULE_ENABLED
+extern const struct HAL_SPI_DEV g_spiDev0;
+#ifdef RKMCU_RK3562_BUS
+extern const struct HAL_SPI_DEV g_spiDev1;
+extern const struct HAL_SPI_DEV g_spiDev2;
+#endif
+#endif
+
 #ifdef RKMCU_RK3562_BUS
 
 #ifdef HAL_UART_MODULE_ENABLED

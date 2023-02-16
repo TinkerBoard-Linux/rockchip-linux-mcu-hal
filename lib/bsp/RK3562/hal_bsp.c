@@ -5,6 +5,67 @@
 
 #include "hal_bsp.h"
 
+#ifdef HAL_SPI_MODULE_ENABLED
+const struct HAL_SPI_DEV g_spiDev0 = {
+    .base = SPI0_BASE,
+    .clkId = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+    .irqNum = SPI0_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI0_RX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI0_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI0_TX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI0_BASE + 0x800,
+    },
+};
+
+#ifdef RKMCU_RK3562_BUS
+const struct HAL_SPI_DEV g_spiDev1 = {
+    .base = SPI1_BASE,
+    .clkId = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+    .irqNum = SPI1_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI1_RX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI1_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI1_TX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI1_BASE + 0x800,
+    },
+};
+
+const struct HAL_SPI_DEV g_spiDev2 = {
+    .base = SPI2_BASE,
+    .clkId = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+    .irqNum = SPI2_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI2_RX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI2_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI2_TX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI2_BASE + 0x800,
+    },
+};
+#endif /* RKMCU_RK3562_BUS */
+#endif /* HAL_SPI_MODULE_ENABLED */
+
 #ifdef RKMCU_RK3562_BUS
 
 #ifdef HAL_UART_MODULE_ENABLED

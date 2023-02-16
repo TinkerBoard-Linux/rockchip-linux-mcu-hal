@@ -140,6 +140,9 @@ typedef enum {
   TIMER3_IRQn               =  80 + NUM_INTERRUPTS,     /*!< TIMER3 Interrupt               */
   TIMER4_IRQn               =  81 + NUM_INTERRUPTS,     /*!< TIMER4 Interrupt               */
   TIMER5_IRQn               =  81 + NUM_INTERRUPTS,     /*!< TIMER5 Interrupt               */
+  SPI0_IRQn                 =  84 + NUM_INTERRUPTS,     /*!< SPI0 Interrupt                 */
+  SPI1_IRQn                 =  85 + NUM_INTERRUPTS,     /*!< SPI1 Interrupt                 */
+  SPI2_IRQn                 =  86 + NUM_INTERRUPTS,     /*!< SPI2 Interrupt                 */
   SARADC1_IRQn              =  156 + NUM_INTERRUPTS,    /*!< SARADC1 Interrupt              */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
