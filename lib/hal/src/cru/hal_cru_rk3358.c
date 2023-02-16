@@ -272,6 +272,8 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
     uint32_t gateId, fracGateId;
 
     switch (clockName) {
+    case CLK_UART0:
+        break;
     case CLK_UART1:
         muxSrc = CLK_GET_MUX(CLK_UART1_SRC);
         divSrc = CLK_GET_DIV(CLK_UART1_SRC);
@@ -328,14 +330,35 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         gateId = CLK_I2S2_PLL_CLK_GATE;
         fracGateId = CLK_I2S2_FRAC_SRC_CLK_GATE;
         break;
-    case CLK_UART0:
-        break;
     default:
 
         return HAL_INVAL;
     }
 
     switch (clockName) {
+    case CLK_UART0:
+        if (PLL_INPUT_OSC_RATE == rate) {
+            CRU->PMU_CLKSEL_CON[3] = 0xffff0000 | (1 << 14);
+            CRU->PMU_CLKSEL_CON[4] = 0xffff0000;
+        } else if ((!(s_npllFreq % rate)) && ((s_npllFreq / rate) < 128)) {
+            divSrc = s_npllFreq / rate;
+            CRU->PMU_CLKSEL_CON[3] = 0xffff0000 | (3 << 14) | (divSrc - 1);
+            CRU->PMU_CLKSEL_CON[4] = 0xffff0000;
+        } else if ((!(usb480m % rate)) && ((usb480m / rate) < 128)) {
+            divSrc = usb480m / rate;
+            CRU->PMU_CLKSEL_CON[3] = 0xffff0000 | (2 << 14) | (divSrc - 1);
+            CRU->PMU_CLKSEL_CON[4] = 0xffff0000;
+        } else if ((!(s_gpllFreq % rate)) && ((s_gpllFreq / rate) < 128)) {
+            divSrc = s_gpllFreq / rate;
+            CRU->PMU_CLKSEL_CON[3] = 0xffff0000 | (0 << 14) | (divSrc - 1);
+            CRU->PMU_CLKSEL_CON[4] = 0xffff0000;
+        } else {
+            HAL_CRU_FracdivGetConfig(rate, s_gpllFreq / 2, &n, &m);
+            CRU->PMU_CLKSEL_CON[3] = 0xffff0001;
+            CRU->PMU_CLKSEL_CON[5] = (n << 16) | m;
+            CRU->PMU_CLKSEL_CON[4] = 0xffff0000 | (2 << 14);
+        }
+        break;
     case CLK_UART1:
     case CLK_UART2:
     case CLK_UART3:
@@ -369,39 +392,7 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
             CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
             HAL_CRU_ClkSetMux(mux, 2);
         }
-
-        return HAL_OK;
-    default:
-
         break;
-    }
-
-    if (clockName == CLK_UART0) {
-        if (PLL_INPUT_OSC_RATE == rate) {
-            CRU->PMU_CLKSEL_CON[3] = 0xffff0000 | (1 << 14);
-            CRU->PMU_CLKSEL_CON[4] = 0xffff0000;
-        } else if ((!(s_npllFreq % rate)) && ((s_npllFreq / rate) < 128)) {
-            divSrc = s_npllFreq / rate;
-            CRU->PMU_CLKSEL_CON[3] = 0xffff0000 | (3 << 14) | (divSrc - 1);
-            CRU->PMU_CLKSEL_CON[4] = 0xffff0000;
-        } else if ((!(usb480m % rate)) && ((usb480m / rate) < 128)) {
-            divSrc = usb480m / rate;
-            CRU->PMU_CLKSEL_CON[3] = 0xffff0000 | (2 << 14) | (divSrc - 1);
-            CRU->PMU_CLKSEL_CON[4] = 0xffff0000;
-        } else if ((!(s_gpllFreq % rate)) && ((s_gpllFreq / rate) < 128)) {
-            divSrc = s_gpllFreq / rate;
-            CRU->PMU_CLKSEL_CON[3] = 0xffff0000 | (0 << 14) | (divSrc - 1);
-            CRU->PMU_CLKSEL_CON[4] = 0xffff0000;
-        } else {
-            HAL_CRU_FracdivGetConfig(rate, s_gpllFreq / 2, &n, &m);
-            CRU->PMU_CLKSEL_CON[3] = 0xffff0001;
-            CRU->PMU_CLKSEL_CON[5] = (n << 16) | m;
-            CRU->PMU_CLKSEL_CON[4] = 0xffff0000 | (2 << 14);
-        }
-
-        return HAL_OK;
-    }
-    switch (clockName) {
     case CLK_I2S0_TX:
     case CLK_I2S1:
     case CLK_I2S2:
@@ -432,10 +423,8 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
             CRU->CRU_CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
             HAL_CRU_ClkSetMux(mux, 1);
         }
-
-        return HAL_OK;
+        break;
     default:
-
         break;
     }
 
