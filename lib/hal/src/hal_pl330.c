@@ -1264,7 +1264,7 @@ static HAL_Status PL330_GenDmaProg(struct HAL_PL330_DEV *pl330, struct PL330_XFE
 
     HAL_LIST_FOR_EACH_ENTRY(desc, &pl330->chans[channel].descLinkList, node) {
         len += PL330_BuildDmaProg(0, pl330, pxs, channel, &off);
-        pxs->desc += sizeof(struct PL330_DESC);
+        pxs->desc++;
         if (len < 0 || len > PL330_CHAN_BUF_LEN) {
             HAL_DBG_ERR("xfer size is too large, try to increase mc size\n");
 
@@ -2053,7 +2053,7 @@ HAL_Status HAL_PL330_PrepDmaLinkList(struct PL330_CHAN *pchan,
         HAL_LIST_InsertAfter(pdescNode, &pdescList->node);
         pdescNode = &pdescList->node;
         PL330_CleanInvalidateDataBuf(pdescList);
-        pdescList += sizeof(struct PL330_DESC);
+        pdescList++;
     }
 
     return HAL_OK;
