@@ -366,6 +366,30 @@ struct GPIO_REG {
     __IO uint32_t GPIO_REG_GROUP_H;                   /* Address Offset: 0x0104 */
     __IO uint32_t GPIO_VIRTUAL_EN;                    /* Address Offset: 0x0108 */
 };
+/* SARADC Register Structure Define */
+struct SARADC_REG {
+    __IO uint32_t CONV_CON;                           /* Address Offset: 0x0000 */
+    __IO uint32_t T_PD_SOC;                           /* Address Offset: 0x0004 */
+    __IO uint32_t T_AS_SOC;                           /* Address Offset: 0x0008 */
+    __IO uint32_t T_DAS_SOC;                          /* Address Offset: 0x000C */
+    __IO uint32_t T_SEL_SOC;                          /* Address Offset: 0x0010 */
+    __IO uint32_t HIGH_COMP[16];                      /* Address Offset: 0x0014 */
+    __IO uint32_t LOW_COMP[16];                       /* Address Offset: 0x0054 */
+    __IO uint32_t DEBOUNCE;                           /* Address Offset: 0x0094 */
+    __IO uint32_t HT_INT_EN;                          /* Address Offset: 0x0098 */
+    __IO uint32_t LT_INT_EN;                          /* Address Offset: 0x009C */
+         uint32_t RESERVED00A0[24];                   /* Address Offset: 0x00A0 */
+    __IO uint32_t MT_INT_EN;                          /* Address Offset: 0x0100 */
+    __IO uint32_t END_INT_EN;                         /* Address Offset: 0x0104 */
+    __IO uint32_t ST_CON;                             /* Address Offset: 0x0108 */
+    __I  uint32_t STATUS;                             /* Address Offset: 0x010C */
+    __IO uint32_t END_INT_ST;                         /* Address Offset: 0x0110 */
+    __IO uint32_t HT_INT_ST;                          /* Address Offset: 0x0114 */
+    __IO uint32_t LT_INT_ST;                          /* Address Offset: 0x0118 */
+    __IO uint32_t MT_INT_ST;                          /* Address Offset: 0x011C */
+    __I  uint32_t DATA[16];                           /* Address Offset: 0x0120 */
+    __IO uint32_t AUTO_CH_EN;                         /* Address Offset: 0x0160 */
+};
 /* DCACHE Register Structure Define */
 struct DCACHE_REG {
     __IO uint32_t CACHE_CTRL;                         /* Address Offset: 0x0000 */
@@ -475,6 +499,7 @@ struct INTMUX_REG {
 #define PWM1_BASE                      0xFF700000U /* PWM1 base address */
 #define PWM2_BASE                      0xFF710000U /* PWM2 base address */
 #define PWM3_BASE                      0xFF720000U /* PWM3 base address */
+#define SARADC0_BASE                   0xFF730000U /* SARADC0 base address */
 #define DCACHE_BASE                    0xFF9F0000U /* DCACHE base address */
 #define ICACHE_BASE                    0xFF9F0000U /* ICACHE base address */
 #define TIMER0_BASE                    0xFFA50000U /* TIMER0 base address */
@@ -483,6 +508,7 @@ struct INTMUX_REG {
 #define TIMER3_BASE                    0xFFA50060U /* TIMER3 base address */
 #define TIMER4_BASE                    0xFFA50080U /* TIMER4 base address */
 #define TIMER5_BASE                    0xFFA500A0U /* TIMER5 base address */
+#define SARADC1_BASE                   0xFFAA0000U /* SARADC1 base address */
 #define GPIO3_BASE                     0xFFAC0000U /* GPIO3 base address */
 #define GPIO4_BASE                     0xFFAD0000U /* GPIO4 base address */
 #define MBOX0_BASE                     0xFFAE0000U /* MBOX0 base address */
@@ -516,6 +542,7 @@ struct INTMUX_REG {
 #define PWM1                ((struct PWM_REG *) PWM1_BASE)
 #define PWM2                ((struct PWM_REG *) PWM2_BASE)
 #define PWM3                ((struct PWM_REG *) PWM3_BASE)
+#define SARADC0             ((struct SARADC_REG *) SARADC0_BASE)
 #define DCACHE              ((struct DCACHE_REG *) DCACHE_BASE)
 #define ICACHE              ((struct ICACHE_REG *) ICACHE_BASE)
 #define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
@@ -524,6 +551,7 @@ struct INTMUX_REG {
 #define TIMER3              ((struct TIMER_REG *) TIMER3_BASE)
 #define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
+#define SARADC1             ((struct SARADC_REG *) SARADC1_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
 #define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
@@ -540,6 +568,7 @@ struct INTMUX_REG {
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
 #define IS_PWM_INSTANCE(instance) (((instance) == PWM0) || ((instance) == PWM1) || ((instance) == PWM2) || ((instance) == PWM3))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
+#define IS_SARADC_INSTANCE(instance) (((instance) == SARADC0) || ((instance) == SARADC1))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
 /****************************************************************************************/
@@ -3370,6 +3399,512 @@ struct INTMUX_REG {
 #define GPIO_GPIO_VIRTUAL_EN_OFFSET                        (0x108U)
 #define GPIO_GPIO_VIRTUAL_EN_GPIO_VIRTUAL_EN_SHIFT         (0U)
 #define GPIO_GPIO_VIRTUAL_EN_GPIO_VIRTUAL_EN_MASK          (0x1U << GPIO_GPIO_VIRTUAL_EN_GPIO_VIRTUAL_EN_SHIFT)         /* 0x00000001 */
+/*****************************************SARADC*****************************************/
+/* CONV_CON */
+#define SARADC_CONV_CON_OFFSET                             (0x0U)
+#define SARADC_CONV_CON_CHANNEL_SEL_SHIFT                  (0U)
+#define SARADC_CONV_CON_CHANNEL_SEL_MASK                   (0xFU << SARADC_CONV_CON_CHANNEL_SEL_SHIFT)                  /* 0x0000000F */
+#define SARADC_CONV_CON_START_ADC_SHIFT                    (4U)
+#define SARADC_CONV_CON_START_ADC_MASK                     (0x1U << SARADC_CONV_CON_START_ADC_SHIFT)                    /* 0x00000010 */
+#define SARADC_CONV_CON_SINGLE_PD_MODE_SHIFT               (5U)
+#define SARADC_CONV_CON_SINGLE_PD_MODE_MASK                (0x1U << SARADC_CONV_CON_SINGLE_PD_MODE_SHIFT)               /* 0x00000020 */
+#define SARADC_CONV_CON_AUTO_CHANNEL_MODE_SHIFT            (6U)
+#define SARADC_CONV_CON_AUTO_CHANNEL_MODE_MASK             (0x1U << SARADC_CONV_CON_AUTO_CHANNEL_MODE_SHIFT)            /* 0x00000040 */
+#define SARADC_CONV_CON_END_CONV_SHIFT                     (7U)
+#define SARADC_CONV_CON_END_CONV_MASK                      (0x1U << SARADC_CONV_CON_END_CONV_SHIFT)                     /* 0x00000080 */
+#define SARADC_CONV_CON_AS_PD_MODE_SHIFT                   (8U)
+#define SARADC_CONV_CON_AS_PD_MODE_MASK                    (0x1U << SARADC_CONV_CON_AS_PD_MODE_SHIFT)                   /* 0x00000100 */
+#define SARADC_CONV_CON_INT_LOCK_SHIFT                     (9U)
+#define SARADC_CONV_CON_INT_LOCK_MASK                      (0x1U << SARADC_CONV_CON_INT_LOCK_SHIFT)                     /* 0x00000200 */
+/* T_PD_SOC */
+#define SARADC_T_PD_SOC_OFFSET                             (0x4U)
+#define SARADC_T_PD_SOC_T_PD_SOC_SHIFT                     (13U)
+#define SARADC_T_PD_SOC_T_PD_SOC_MASK                      (0xFFU << SARADC_T_PD_SOC_T_PD_SOC_SHIFT)                    /* 0x001FE000 */
+/* T_AS_SOC */
+#define SARADC_T_AS_SOC_OFFSET                             (0x8U)
+#define SARADC_T_AS_SOC_T_AS_SOC_SHIFT                     (0U)
+#define SARADC_T_AS_SOC_T_AS_SOC_MASK                      (0xFFFFFFFFU << SARADC_T_AS_SOC_T_AS_SOC_SHIFT)              /* 0xFFFFFFFF */
+/* T_DAS_SOC */
+#define SARADC_T_DAS_SOC_OFFSET                            (0xCU)
+#define SARADC_T_DAS_SOC_T_DAS_SOC_SHIFT                   (0U)
+#define SARADC_T_DAS_SOC_T_DAS_SOC_MASK                    (0xFFFFFFFFU << SARADC_T_DAS_SOC_T_DAS_SOC_SHIFT)            /* 0xFFFFFFFF */
+/* T_SEL_SOC */
+#define SARADC_T_SEL_SOC_OFFSET                            (0x10U)
+#define SARADC_T_SEL_SOC_T_SEL_SOC_SHIFT                   (0U)
+#define SARADC_T_SEL_SOC_T_SEL_SOC_MASK                    (0xFFFFU << SARADC_T_SEL_SOC_T_SEL_SOC_SHIFT)                /* 0x0000FFFF */
+/* HIGH_COMP0 */
+#define SARADC_HIGH_COMP0_OFFSET                           (0x14U)
+#define SARADC_HIGH_COMP0_HIGH_COMP0_SHIFT                 (0U)
+#define SARADC_HIGH_COMP0_HIGH_COMP0_MASK                  (0xFFFU << SARADC_HIGH_COMP0_HIGH_COMP0_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP1 */
+#define SARADC_HIGH_COMP1_OFFSET                           (0x18U)
+#define SARADC_HIGH_COMP1_HIGH_COMP1_SHIFT                 (0U)
+#define SARADC_HIGH_COMP1_HIGH_COMP1_MASK                  (0xFFFU << SARADC_HIGH_COMP1_HIGH_COMP1_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP2 */
+#define SARADC_HIGH_COMP2_OFFSET                           (0x1CU)
+#define SARADC_HIGH_COMP2_HIGH_COMP2_SHIFT                 (0U)
+#define SARADC_HIGH_COMP2_HIGH_COMP2_MASK                  (0xFFFU << SARADC_HIGH_COMP2_HIGH_COMP2_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP3 */
+#define SARADC_HIGH_COMP3_OFFSET                           (0x20U)
+#define SARADC_HIGH_COMP3_HIGH_COMP3_SHIFT                 (0U)
+#define SARADC_HIGH_COMP3_HIGH_COMP3_MASK                  (0xFFFU << SARADC_HIGH_COMP3_HIGH_COMP3_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP4 */
+#define SARADC_HIGH_COMP4_OFFSET                           (0x24U)
+#define SARADC_HIGH_COMP4_HIGH_COMP4_SHIFT                 (0U)
+#define SARADC_HIGH_COMP4_HIGH_COMP4_MASK                  (0xFFFU << SARADC_HIGH_COMP4_HIGH_COMP4_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP5 */
+#define SARADC_HIGH_COMP5_OFFSET                           (0x28U)
+#define SARADC_HIGH_COMP5_HIGH_COMP5_SHIFT                 (0U)
+#define SARADC_HIGH_COMP5_HIGH_COMP5_MASK                  (0xFFFU << SARADC_HIGH_COMP5_HIGH_COMP5_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP6 */
+#define SARADC_HIGH_COMP6_OFFSET                           (0x2CU)
+#define SARADC_HIGH_COMP6_HIGH_COMP6_SHIFT                 (0U)
+#define SARADC_HIGH_COMP6_HIGH_COMP6_MASK                  (0xFFFU << SARADC_HIGH_COMP6_HIGH_COMP6_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP7 */
+#define SARADC_HIGH_COMP7_OFFSET                           (0x30U)
+#define SARADC_HIGH_COMP7_HIGH_COMP7_SHIFT                 (0U)
+#define SARADC_HIGH_COMP7_HIGH_COMP7_MASK                  (0xFFFU << SARADC_HIGH_COMP7_HIGH_COMP7_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP8 */
+#define SARADC_HIGH_COMP8_OFFSET                           (0x34U)
+#define SARADC_HIGH_COMP8_HIGH_COMP8_SHIFT                 (0U)
+#define SARADC_HIGH_COMP8_HIGH_COMP8_MASK                  (0xFFFU << SARADC_HIGH_COMP8_HIGH_COMP8_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP9 */
+#define SARADC_HIGH_COMP9_OFFSET                           (0x38U)
+#define SARADC_HIGH_COMP9_HIGH_COMP9_SHIFT                 (0U)
+#define SARADC_HIGH_COMP9_HIGH_COMP9_MASK                  (0xFFFU << SARADC_HIGH_COMP9_HIGH_COMP9_SHIFT)               /* 0x00000FFF */
+/* HIGH_COMP10 */
+#define SARADC_HIGH_COMP10_OFFSET                          (0x3CU)
+#define SARADC_HIGH_COMP10_HIGH_COMP10_SHIFT               (0U)
+#define SARADC_HIGH_COMP10_HIGH_COMP10_MASK                (0xFFFU << SARADC_HIGH_COMP10_HIGH_COMP10_SHIFT)             /* 0x00000FFF */
+/* HIGH_COMP11 */
+#define SARADC_HIGH_COMP11_OFFSET                          (0x40U)
+#define SARADC_HIGH_COMP11_HIGH_COMP11_SHIFT               (0U)
+#define SARADC_HIGH_COMP11_HIGH_COMP11_MASK                (0xFFFU << SARADC_HIGH_COMP11_HIGH_COMP11_SHIFT)             /* 0x00000FFF */
+/* HIGH_COMP12 */
+#define SARADC_HIGH_COMP12_OFFSET                          (0x44U)
+#define SARADC_HIGH_COMP12_HIGH_COMP12_SHIFT               (0U)
+#define SARADC_HIGH_COMP12_HIGH_COMP12_MASK                (0xFFFU << SARADC_HIGH_COMP12_HIGH_COMP12_SHIFT)             /* 0x00000FFF */
+/* HIGH_COMP13 */
+#define SARADC_HIGH_COMP13_OFFSET                          (0x48U)
+#define SARADC_HIGH_COMP13_HIGH_COMP13_SHIFT               (0U)
+#define SARADC_HIGH_COMP13_HIGH_COMP13_MASK                (0xFFFU << SARADC_HIGH_COMP13_HIGH_COMP13_SHIFT)             /* 0x00000FFF */
+/* HIGH_COMP14 */
+#define SARADC_HIGH_COMP14_OFFSET                          (0x4CU)
+#define SARADC_HIGH_COMP14_HIGH_COMP14_SHIFT               (0U)
+#define SARADC_HIGH_COMP14_HIGH_COMP14_MASK                (0xFFFU << SARADC_HIGH_COMP14_HIGH_COMP14_SHIFT)             /* 0x00000FFF */
+/* HIGH_COMP15 */
+#define SARADC_HIGH_COMP15_OFFSET                          (0x50U)
+#define SARADC_HIGH_COMP15_HIGH_COMP15_SHIFT               (0U)
+#define SARADC_HIGH_COMP15_HIGH_COMP15_MASK                (0xFFFU << SARADC_HIGH_COMP15_HIGH_COMP15_SHIFT)             /* 0x00000FFF */
+/* LOW_COMP0 */
+#define SARADC_LOW_COMP0_OFFSET                            (0x54U)
+#define SARADC_LOW_COMP0_LOW_COMP0_SHIFT                   (0U)
+#define SARADC_LOW_COMP0_LOW_COMP0_MASK                    (0xFFFU << SARADC_LOW_COMP0_LOW_COMP0_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP1 */
+#define SARADC_LOW_COMP1_OFFSET                            (0x58U)
+#define SARADC_LOW_COMP1_LOW_COMP1_SHIFT                   (0U)
+#define SARADC_LOW_COMP1_LOW_COMP1_MASK                    (0xFFFU << SARADC_LOW_COMP1_LOW_COMP1_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP2 */
+#define SARADC_LOW_COMP2_OFFSET                            (0x5CU)
+#define SARADC_LOW_COMP2_LOW_COMP2_SHIFT                   (0U)
+#define SARADC_LOW_COMP2_LOW_COMP2_MASK                    (0xFFFU << SARADC_LOW_COMP2_LOW_COMP2_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP3 */
+#define SARADC_LOW_COMP3_OFFSET                            (0x60U)
+#define SARADC_LOW_COMP3_LOW_COMP3_SHIFT                   (0U)
+#define SARADC_LOW_COMP3_LOW_COMP3_MASK                    (0xFFFU << SARADC_LOW_COMP3_LOW_COMP3_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP4 */
+#define SARADC_LOW_COMP4_OFFSET                            (0x64U)
+#define SARADC_LOW_COMP4_LOW_COMP4_SHIFT                   (0U)
+#define SARADC_LOW_COMP4_LOW_COMP4_MASK                    (0xFFFU << SARADC_LOW_COMP4_LOW_COMP4_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP5 */
+#define SARADC_LOW_COMP5_OFFSET                            (0x68U)
+#define SARADC_LOW_COMP5_LOW_COMP5_SHIFT                   (0U)
+#define SARADC_LOW_COMP5_LOW_COMP5_MASK                    (0xFFFU << SARADC_LOW_COMP5_LOW_COMP5_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP6 */
+#define SARADC_LOW_COMP6_OFFSET                            (0x6CU)
+#define SARADC_LOW_COMP6_LOW_COMP6_SHIFT                   (0U)
+#define SARADC_LOW_COMP6_LOW_COMP6_MASK                    (0xFFFU << SARADC_LOW_COMP6_LOW_COMP6_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP7 */
+#define SARADC_LOW_COMP7_OFFSET                            (0x70U)
+#define SARADC_LOW_COMP7_LOW_COMP7_SHIFT                   (0U)
+#define SARADC_LOW_COMP7_LOW_COMP7_MASK                    (0xFFFU << SARADC_LOW_COMP7_LOW_COMP7_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP8 */
+#define SARADC_LOW_COMP8_OFFSET                            (0x74U)
+#define SARADC_LOW_COMP8_LOW_COMP8_SHIFT                   (0U)
+#define SARADC_LOW_COMP8_LOW_COMP8_MASK                    (0xFFFU << SARADC_LOW_COMP8_LOW_COMP8_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP9 */
+#define SARADC_LOW_COMP9_OFFSET                            (0x78U)
+#define SARADC_LOW_COMP9_LOW_COMP9_SHIFT                   (0U)
+#define SARADC_LOW_COMP9_LOW_COMP9_MASK                    (0xFFFU << SARADC_LOW_COMP9_LOW_COMP9_SHIFT)                 /* 0x00000FFF */
+/* LOW_COMP10 */
+#define SARADC_LOW_COMP10_OFFSET                           (0x7CU)
+#define SARADC_LOW_COMP10_LOW_COMP10_SHIFT                 (0U)
+#define SARADC_LOW_COMP10_LOW_COMP10_MASK                  (0x1U << SARADC_LOW_COMP10_LOW_COMP10_SHIFT)                 /* 0x00000001 */
+/* LOW_COMP11 */
+#define SARADC_LOW_COMP11_OFFSET                           (0x80U)
+#define SARADC_LOW_COMP11_LOW_COMP11_SHIFT                 (0U)
+#define SARADC_LOW_COMP11_LOW_COMP11_MASK                  (0xFFFU << SARADC_LOW_COMP11_LOW_COMP11_SHIFT)               /* 0x00000FFF */
+/* LOW_COMP12 */
+#define SARADC_LOW_COMP12_OFFSET                           (0x84U)
+#define SARADC_LOW_COMP12_LOW_COMP12_SHIFT                 (0U)
+#define SARADC_LOW_COMP12_LOW_COMP12_MASK                  (0xFFFU << SARADC_LOW_COMP12_LOW_COMP12_SHIFT)               /* 0x00000FFF */
+/* LOW_COMP13 */
+#define SARADC_LOW_COMP13_OFFSET                           (0x88U)
+#define SARADC_LOW_COMP13_LOW_COMP13_SHIFT                 (0U)
+#define SARADC_LOW_COMP13_LOW_COMP13_MASK                  (0x1U << SARADC_LOW_COMP13_LOW_COMP13_SHIFT)                 /* 0x00000001 */
+/* LOW_COMP14 */
+#define SARADC_LOW_COMP14_OFFSET                           (0x8CU)
+#define SARADC_LOW_COMP14_LOW_COMP14_SHIFT                 (0U)
+#define SARADC_LOW_COMP14_LOW_COMP14_MASK                  (0xFFFU << SARADC_LOW_COMP14_LOW_COMP14_SHIFT)               /* 0x00000FFF */
+/* LOW_COMP15 */
+#define SARADC_LOW_COMP15_OFFSET                           (0x90U)
+#define SARADC_LOW_COMP15_LOW_COMP15_SHIFT                 (0U)
+#define SARADC_LOW_COMP15_LOW_COMP15_MASK                  (0xFFFU << SARADC_LOW_COMP15_LOW_COMP15_SHIFT)               /* 0x00000FFF */
+/* DEBOUNCE */
+#define SARADC_DEBOUNCE_OFFSET                             (0x94U)
+#define SARADC_DEBOUNCE_DEBOUNCE_SHIFT                     (0U)
+#define SARADC_DEBOUNCE_DEBOUNCE_MASK                      (0xFFU << SARADC_DEBOUNCE_DEBOUNCE_SHIFT)                    /* 0x000000FF */
+/* HT_INT_EN */
+#define SARADC_HT_INT_EN_OFFSET                            (0x98U)
+#define SARADC_HT_INT_EN_HT_INT_EN0_SHIFT                  (0U)
+#define SARADC_HT_INT_EN_HT_INT_EN0_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN0_SHIFT)                  /* 0x00000001 */
+#define SARADC_HT_INT_EN_HT_INT_EN1_SHIFT                  (1U)
+#define SARADC_HT_INT_EN_HT_INT_EN1_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN1_SHIFT)                  /* 0x00000002 */
+#define SARADC_HT_INT_EN_HT_INT_EN2_SHIFT                  (2U)
+#define SARADC_HT_INT_EN_HT_INT_EN2_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN2_SHIFT)                  /* 0x00000004 */
+#define SARADC_HT_INT_EN_HT_INT_EN3_SHIFT                  (3U)
+#define SARADC_HT_INT_EN_HT_INT_EN3_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN3_SHIFT)                  /* 0x00000008 */
+#define SARADC_HT_INT_EN_HT_INT_EN4_SHIFT                  (4U)
+#define SARADC_HT_INT_EN_HT_INT_EN4_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN4_SHIFT)                  /* 0x00000010 */
+#define SARADC_HT_INT_EN_HT_INT_EN5_SHIFT                  (5U)
+#define SARADC_HT_INT_EN_HT_INT_EN5_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN5_SHIFT)                  /* 0x00000020 */
+#define SARADC_HT_INT_EN_HT_INT_EN6_SHIFT                  (6U)
+#define SARADC_HT_INT_EN_HT_INT_EN6_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN6_SHIFT)                  /* 0x00000040 */
+#define SARADC_HT_INT_EN_HT_INT_EN7_SHIFT                  (7U)
+#define SARADC_HT_INT_EN_HT_INT_EN7_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN7_SHIFT)                  /* 0x00000080 */
+#define SARADC_HT_INT_EN_HT_INT_EN8_SHIFT                  (8U)
+#define SARADC_HT_INT_EN_HT_INT_EN8_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN8_SHIFT)                  /* 0x00000100 */
+#define SARADC_HT_INT_EN_HT_INT_EN9_SHIFT                  (9U)
+#define SARADC_HT_INT_EN_HT_INT_EN9_MASK                   (0x1U << SARADC_HT_INT_EN_HT_INT_EN9_SHIFT)                  /* 0x00000200 */
+#define SARADC_HT_INT_EN_HT_INT_EN10_SHIFT                 (10U)
+#define SARADC_HT_INT_EN_HT_INT_EN10_MASK                  (0x1U << SARADC_HT_INT_EN_HT_INT_EN10_SHIFT)                 /* 0x00000400 */
+#define SARADC_HT_INT_EN_HT_INT_EN11_SHIFT                 (11U)
+#define SARADC_HT_INT_EN_HT_INT_EN11_MASK                  (0x1U << SARADC_HT_INT_EN_HT_INT_EN11_SHIFT)                 /* 0x00000800 */
+#define SARADC_HT_INT_EN_HT_INT_EN12_SHIFT                 (12U)
+#define SARADC_HT_INT_EN_HT_INT_EN12_MASK                  (0x1U << SARADC_HT_INT_EN_HT_INT_EN12_SHIFT)                 /* 0x00001000 */
+#define SARADC_HT_INT_EN_HT_INT_EN13_SHIFT                 (13U)
+#define SARADC_HT_INT_EN_HT_INT_EN13_MASK                  (0x1U << SARADC_HT_INT_EN_HT_INT_EN13_SHIFT)                 /* 0x00002000 */
+#define SARADC_HT_INT_EN_HT_INT_EN14_SHIFT                 (14U)
+#define SARADC_HT_INT_EN_HT_INT_EN14_MASK                  (0x1U << SARADC_HT_INT_EN_HT_INT_EN14_SHIFT)                 /* 0x00004000 */
+#define SARADC_HT_INT_EN_HT_INT_EN15_SHIFT                 (15U)
+#define SARADC_HT_INT_EN_HT_INT_EN15_MASK                  (0x1U << SARADC_HT_INT_EN_HT_INT_EN15_SHIFT)                 /* 0x00008000 */
+/* LT_INT_EN */
+#define SARADC_LT_INT_EN_OFFSET                            (0x9CU)
+#define SARADC_LT_INT_EN_LT_INT_EN0_SHIFT                  (0U)
+#define SARADC_LT_INT_EN_LT_INT_EN0_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN0_SHIFT)                  /* 0x00000001 */
+#define SARADC_LT_INT_EN_LT_INT_EN1_SHIFT                  (1U)
+#define SARADC_LT_INT_EN_LT_INT_EN1_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN1_SHIFT)                  /* 0x00000002 */
+#define SARADC_LT_INT_EN_LT_INT_EN2_SHIFT                  (2U)
+#define SARADC_LT_INT_EN_LT_INT_EN2_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN2_SHIFT)                  /* 0x00000004 */
+#define SARADC_LT_INT_EN_LT_INT_EN3_SHIFT                  (3U)
+#define SARADC_LT_INT_EN_LT_INT_EN3_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN3_SHIFT)                  /* 0x00000008 */
+#define SARADC_LT_INT_EN_LT_INT_EN4_SHIFT                  (4U)
+#define SARADC_LT_INT_EN_LT_INT_EN4_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN4_SHIFT)                  /* 0x00000010 */
+#define SARADC_LT_INT_EN_LT_INT_EN5_SHIFT                  (5U)
+#define SARADC_LT_INT_EN_LT_INT_EN5_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN5_SHIFT)                  /* 0x00000020 */
+#define SARADC_LT_INT_EN_LT_INT_EN6_SHIFT                  (6U)
+#define SARADC_LT_INT_EN_LT_INT_EN6_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN6_SHIFT)                  /* 0x00000040 */
+#define SARADC_LT_INT_EN_LT_INT_EN7_SHIFT                  (7U)
+#define SARADC_LT_INT_EN_LT_INT_EN7_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN7_SHIFT)                  /* 0x00000080 */
+#define SARADC_LT_INT_EN_LT_INT_EN8_SHIFT                  (8U)
+#define SARADC_LT_INT_EN_LT_INT_EN8_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN8_SHIFT)                  /* 0x00000100 */
+#define SARADC_LT_INT_EN_LT_INT_EN9_SHIFT                  (9U)
+#define SARADC_LT_INT_EN_LT_INT_EN9_MASK                   (0x1U << SARADC_LT_INT_EN_LT_INT_EN9_SHIFT)                  /* 0x00000200 */
+#define SARADC_LT_INT_EN_LT_INT_EN10_SHIFT                 (10U)
+#define SARADC_LT_INT_EN_LT_INT_EN10_MASK                  (0x1U << SARADC_LT_INT_EN_LT_INT_EN10_SHIFT)                 /* 0x00000400 */
+#define SARADC_LT_INT_EN_LT_INT_EN11_SHIFT                 (11U)
+#define SARADC_LT_INT_EN_LT_INT_EN11_MASK                  (0x1U << SARADC_LT_INT_EN_LT_INT_EN11_SHIFT)                 /* 0x00000800 */
+#define SARADC_LT_INT_EN_LT_INT_EN12_SHIFT                 (12U)
+#define SARADC_LT_INT_EN_LT_INT_EN12_MASK                  (0x1U << SARADC_LT_INT_EN_LT_INT_EN12_SHIFT)                 /* 0x00001000 */
+#define SARADC_LT_INT_EN_LT_INT_EN13_SHIFT                 (13U)
+#define SARADC_LT_INT_EN_LT_INT_EN13_MASK                  (0x1U << SARADC_LT_INT_EN_LT_INT_EN13_SHIFT)                 /* 0x00002000 */
+#define SARADC_LT_INT_EN_LT_INT_EN14_SHIFT                 (14U)
+#define SARADC_LT_INT_EN_LT_INT_EN14_MASK                  (0x1U << SARADC_LT_INT_EN_LT_INT_EN14_SHIFT)                 /* 0x00004000 */
+#define SARADC_LT_INT_EN_LT_INT_EN15_SHIFT                 (15U)
+#define SARADC_LT_INT_EN_LT_INT_EN15_MASK                  (0x1U << SARADC_LT_INT_EN_LT_INT_EN15_SHIFT)                 /* 0x00008000 */
+/* MT_INT_EN */
+#define SARADC_MT_INT_EN_OFFSET                            (0x100U)
+#define SARADC_MT_INT_EN_MT_INT_EN0_SHIFT                  (0U)
+#define SARADC_MT_INT_EN_MT_INT_EN0_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN0_SHIFT)                  /* 0x00000001 */
+#define SARADC_MT_INT_EN_MT_INT_EN1_SHIFT                  (1U)
+#define SARADC_MT_INT_EN_MT_INT_EN1_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN1_SHIFT)                  /* 0x00000002 */
+#define SARADC_MT_INT_EN_MT_INT_EN2_SHIFT                  (2U)
+#define SARADC_MT_INT_EN_MT_INT_EN2_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN2_SHIFT)                  /* 0x00000004 */
+#define SARADC_MT_INT_EN_MT_INT_EN3_SHIFT                  (3U)
+#define SARADC_MT_INT_EN_MT_INT_EN3_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN3_SHIFT)                  /* 0x00000008 */
+#define SARADC_MT_INT_EN_MT_INT_EN4_SHIFT                  (4U)
+#define SARADC_MT_INT_EN_MT_INT_EN4_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN4_SHIFT)                  /* 0x00000010 */
+#define SARADC_MT_INT_EN_MT_INT_EN5_SHIFT                  (5U)
+#define SARADC_MT_INT_EN_MT_INT_EN5_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN5_SHIFT)                  /* 0x00000020 */
+#define SARADC_MT_INT_EN_MT_INT_EN6_SHIFT                  (6U)
+#define SARADC_MT_INT_EN_MT_INT_EN6_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN6_SHIFT)                  /* 0x00000040 */
+#define SARADC_MT_INT_EN_MT_INT_EN7_SHIFT                  (7U)
+#define SARADC_MT_INT_EN_MT_INT_EN7_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN7_SHIFT)                  /* 0x00000080 */
+#define SARADC_MT_INT_EN_MT_INT_EN8_SHIFT                  (8U)
+#define SARADC_MT_INT_EN_MT_INT_EN8_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN8_SHIFT)                  /* 0x00000100 */
+#define SARADC_MT_INT_EN_MT_INT_EN9_SHIFT                  (9U)
+#define SARADC_MT_INT_EN_MT_INT_EN9_MASK                   (0x1U << SARADC_MT_INT_EN_MT_INT_EN9_SHIFT)                  /* 0x00000200 */
+#define SARADC_MT_INT_EN_MT_INT_EN10_SHIFT                 (10U)
+#define SARADC_MT_INT_EN_MT_INT_EN10_MASK                  (0x1U << SARADC_MT_INT_EN_MT_INT_EN10_SHIFT)                 /* 0x00000400 */
+#define SARADC_MT_INT_EN_MT_INT_EN11_SHIFT                 (11U)
+#define SARADC_MT_INT_EN_MT_INT_EN11_MASK                  (0x1U << SARADC_MT_INT_EN_MT_INT_EN11_SHIFT)                 /* 0x00000800 */
+#define SARADC_MT_INT_EN_MT_INT_EN12_SHIFT                 (12U)
+#define SARADC_MT_INT_EN_MT_INT_EN12_MASK                  (0x1U << SARADC_MT_INT_EN_MT_INT_EN12_SHIFT)                 /* 0x00001000 */
+#define SARADC_MT_INT_EN_MT_INT_EN13_SHIFT                 (13U)
+#define SARADC_MT_INT_EN_MT_INT_EN13_MASK                  (0x1U << SARADC_MT_INT_EN_MT_INT_EN13_SHIFT)                 /* 0x00002000 */
+#define SARADC_MT_INT_EN_MT_INT_EN14_SHIFT                 (14U)
+#define SARADC_MT_INT_EN_MT_INT_EN14_MASK                  (0x1U << SARADC_MT_INT_EN_MT_INT_EN14_SHIFT)                 /* 0x00004000 */
+#define SARADC_MT_INT_EN_MT_INT_EN15_SHIFT                 (15U)
+#define SARADC_MT_INT_EN_MT_INT_EN15_MASK                  (0x1U << SARADC_MT_INT_EN_MT_INT_EN15_SHIFT)                 /* 0x00008000 */
+/* END_INT_EN */
+#define SARADC_END_INT_EN_OFFSET                           (0x104U)
+#define SARADC_END_INT_EN_END_INT_EN_SHIFT                 (0U)
+#define SARADC_END_INT_EN_END_INT_EN_MASK                  (0x1U << SARADC_END_INT_EN_END_INT_EN_SHIFT)                 /* 0x00000001 */
+/* ST_CON */
+#define SARADC_ST_CON_OFFSET                               (0x108U)
+#define SARADC_ST_CON_CCTRL_SHIFT                          (0U)
+#define SARADC_ST_CON_CCTRL_MASK                           (0x7U << SARADC_ST_CON_CCTRL_SHIFT)                          /* 0x00000007 */
+#define SARADC_ST_CON_ICTRL_SHIFT                          (3U)
+#define SARADC_ST_CON_ICTRL_MASK                           (0x7U << SARADC_ST_CON_ICTRL_SHIFT)                          /* 0x00000038 */
+/* STATUS */
+#define SARADC_STATUS_OFFSET                               (0x10CU)
+#define SARADC_STATUS                                      (0x2U)
+#define SARADC_STATUS_CONV_ST_SHIFT                        (0U)
+#define SARADC_STATUS_CONV_ST_MASK                         (0x1U << SARADC_STATUS_CONV_ST_SHIFT)                        /* 0x00000001 */
+#define SARADC_STATUS_PD_SHIFT                             (1U)
+#define SARADC_STATUS_PD_MASK                              (0x1U << SARADC_STATUS_PD_SHIFT)                             /* 0x00000002 */
+#define SARADC_STATUS_SEL_SHIFT                            (2U)
+#define SARADC_STATUS_SEL_MASK                             (0xFU << SARADC_STATUS_SEL_SHIFT)                            /* 0x0000003C */
+/* END_INT_ST */
+#define SARADC_END_INT_ST_OFFSET                           (0x110U)
+#define SARADC_END_INT_ST_END_INT_ST_SHIFT                 (0U)
+#define SARADC_END_INT_ST_END_INT_ST_MASK                  (0x1U << SARADC_END_INT_ST_END_INT_ST_SHIFT)                 /* 0x00000001 */
+/* HT_INT_ST */
+#define SARADC_HT_INT_ST_OFFSET                            (0x114U)
+#define SARADC_HT_INT_ST_HT_INT_ST0_SHIFT                  (0U)
+#define SARADC_HT_INT_ST_HT_INT_ST0_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST0_SHIFT)                  /* 0x00000001 */
+#define SARADC_HT_INT_ST_HT_INT_ST1_SHIFT                  (1U)
+#define SARADC_HT_INT_ST_HT_INT_ST1_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST1_SHIFT)                  /* 0x00000002 */
+#define SARADC_HT_INT_ST_HT_INT_ST2_SHIFT                  (2U)
+#define SARADC_HT_INT_ST_HT_INT_ST2_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST2_SHIFT)                  /* 0x00000004 */
+#define SARADC_HT_INT_ST_HT_INT_ST3_SHIFT                  (3U)
+#define SARADC_HT_INT_ST_HT_INT_ST3_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST3_SHIFT)                  /* 0x00000008 */
+#define SARADC_HT_INT_ST_HT_INT_ST4_SHIFT                  (4U)
+#define SARADC_HT_INT_ST_HT_INT_ST4_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST4_SHIFT)                  /* 0x00000010 */
+#define SARADC_HT_INT_ST_HT_INT_ST5_SHIFT                  (5U)
+#define SARADC_HT_INT_ST_HT_INT_ST5_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST5_SHIFT)                  /* 0x00000020 */
+#define SARADC_HT_INT_ST_HT_INT_ST6_SHIFT                  (6U)
+#define SARADC_HT_INT_ST_HT_INT_ST6_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST6_SHIFT)                  /* 0x00000040 */
+#define SARADC_HT_INT_ST_HT_INT_ST7_SHIFT                  (7U)
+#define SARADC_HT_INT_ST_HT_INT_ST7_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST7_SHIFT)                  /* 0x00000080 */
+#define SARADC_HT_INT_ST_HT_INT_ST8_SHIFT                  (8U)
+#define SARADC_HT_INT_ST_HT_INT_ST8_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST8_SHIFT)                  /* 0x00000100 */
+#define SARADC_HT_INT_ST_HT_INT_ST9_SHIFT                  (9U)
+#define SARADC_HT_INT_ST_HT_INT_ST9_MASK                   (0x1U << SARADC_HT_INT_ST_HT_INT_ST9_SHIFT)                  /* 0x00000200 */
+#define SARADC_HT_INT_ST_HT_INT_ST10_SHIFT                 (10U)
+#define SARADC_HT_INT_ST_HT_INT_ST10_MASK                  (0x1U << SARADC_HT_INT_ST_HT_INT_ST10_SHIFT)                 /* 0x00000400 */
+#define SARADC_HT_INT_ST_HT_INT_ST11_SHIFT                 (11U)
+#define SARADC_HT_INT_ST_HT_INT_ST11_MASK                  (0x1U << SARADC_HT_INT_ST_HT_INT_ST11_SHIFT)                 /* 0x00000800 */
+#define SARADC_HT_INT_ST_HT_INT_ST12_SHIFT                 (12U)
+#define SARADC_HT_INT_ST_HT_INT_ST12_MASK                  (0x1U << SARADC_HT_INT_ST_HT_INT_ST12_SHIFT)                 /* 0x00001000 */
+#define SARADC_HT_INT_ST_HT_INT_ST13_SHIFT                 (13U)
+#define SARADC_HT_INT_ST_HT_INT_ST13_MASK                  (0x1U << SARADC_HT_INT_ST_HT_INT_ST13_SHIFT)                 /* 0x00002000 */
+#define SARADC_HT_INT_ST_HT_INT_ST14_SHIFT                 (14U)
+#define SARADC_HT_INT_ST_HT_INT_ST14_MASK                  (0x1U << SARADC_HT_INT_ST_HT_INT_ST14_SHIFT)                 /* 0x00004000 */
+#define SARADC_HT_INT_ST_HT_INT_ST15_SHIFT                 (15U)
+#define SARADC_HT_INT_ST_HT_INT_ST15_MASK                  (0x1U << SARADC_HT_INT_ST_HT_INT_ST15_SHIFT)                 /* 0x00008000 */
+/* LT_INT_ST */
+#define SARADC_LT_INT_ST_OFFSET                            (0x118U)
+#define SARADC_LT_INT_ST_LT_INT_ST0_SHIFT                  (0U)
+#define SARADC_LT_INT_ST_LT_INT_ST0_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST0_SHIFT)                  /* 0x00000001 */
+#define SARADC_LT_INT_ST_LT_INT_ST1_SHIFT                  (1U)
+#define SARADC_LT_INT_ST_LT_INT_ST1_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST1_SHIFT)                  /* 0x00000002 */
+#define SARADC_LT_INT_ST_LT_INT_ST2_SHIFT                  (2U)
+#define SARADC_LT_INT_ST_LT_INT_ST2_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST2_SHIFT)                  /* 0x00000004 */
+#define SARADC_LT_INT_ST_LT_INT_ST3_SHIFT                  (3U)
+#define SARADC_LT_INT_ST_LT_INT_ST3_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST3_SHIFT)                  /* 0x00000008 */
+#define SARADC_LT_INT_ST_LT_INT_ST4_SHIFT                  (4U)
+#define SARADC_LT_INT_ST_LT_INT_ST4_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST4_SHIFT)                  /* 0x00000010 */
+#define SARADC_LT_INT_ST_LT_INT_ST5_SHIFT                  (5U)
+#define SARADC_LT_INT_ST_LT_INT_ST5_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST5_SHIFT)                  /* 0x00000020 */
+#define SARADC_LT_INT_ST_LT_INT_ST6_SHIFT                  (6U)
+#define SARADC_LT_INT_ST_LT_INT_ST6_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST6_SHIFT)                  /* 0x00000040 */
+#define SARADC_LT_INT_ST_LT_INT_ST7_SHIFT                  (7U)
+#define SARADC_LT_INT_ST_LT_INT_ST7_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST7_SHIFT)                  /* 0x00000080 */
+#define SARADC_LT_INT_ST_LT_INT_ST8_SHIFT                  (8U)
+#define SARADC_LT_INT_ST_LT_INT_ST8_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST8_SHIFT)                  /* 0x00000100 */
+#define SARADC_LT_INT_ST_LT_INT_ST9_SHIFT                  (9U)
+#define SARADC_LT_INT_ST_LT_INT_ST9_MASK                   (0x1U << SARADC_LT_INT_ST_LT_INT_ST9_SHIFT)                  /* 0x00000200 */
+#define SARADC_LT_INT_ST_LT_INT_ST10_SHIFT                 (10U)
+#define SARADC_LT_INT_ST_LT_INT_ST10_MASK                  (0x1U << SARADC_LT_INT_ST_LT_INT_ST10_SHIFT)                 /* 0x00000400 */
+#define SARADC_LT_INT_ST_LT_INT_ST11_SHIFT                 (11U)
+#define SARADC_LT_INT_ST_LT_INT_ST11_MASK                  (0x1U << SARADC_LT_INT_ST_LT_INT_ST11_SHIFT)                 /* 0x00000800 */
+#define SARADC_LT_INT_ST_LT_INT_ST12_SHIFT                 (12U)
+#define SARADC_LT_INT_ST_LT_INT_ST12_MASK                  (0x1U << SARADC_LT_INT_ST_LT_INT_ST12_SHIFT)                 /* 0x00001000 */
+#define SARADC_LT_INT_ST_LT_INT_ST13_SHIFT                 (13U)
+#define SARADC_LT_INT_ST_LT_INT_ST13_MASK                  (0x1U << SARADC_LT_INT_ST_LT_INT_ST13_SHIFT)                 /* 0x00002000 */
+#define SARADC_LT_INT_ST_LT_INT_ST14_SHIFT                 (14U)
+#define SARADC_LT_INT_ST_LT_INT_ST14_MASK                  (0x1U << SARADC_LT_INT_ST_LT_INT_ST14_SHIFT)                 /* 0x00004000 */
+#define SARADC_LT_INT_ST_LT_INT_ST15_SHIFT                 (15U)
+#define SARADC_LT_INT_ST_LT_INT_ST15_MASK                  (0x1U << SARADC_LT_INT_ST_LT_INT_ST15_SHIFT)                 /* 0x00008000 */
+/* MT_INT_ST */
+#define SARADC_MT_INT_ST_OFFSET                            (0x11CU)
+#define SARADC_MT_INT_ST_MT_INT_ST0_SHIFT                  (0U)
+#define SARADC_MT_INT_ST_MT_INT_ST0_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST0_SHIFT)                  /* 0x00000001 */
+#define SARADC_MT_INT_ST_MT_INT_ST1_SHIFT                  (1U)
+#define SARADC_MT_INT_ST_MT_INT_ST1_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST1_SHIFT)                  /* 0x00000002 */
+#define SARADC_MT_INT_ST_MT_INT_ST2_SHIFT                  (2U)
+#define SARADC_MT_INT_ST_MT_INT_ST2_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST2_SHIFT)                  /* 0x00000004 */
+#define SARADC_MT_INT_ST_MT_INT_ST3_SHIFT                  (3U)
+#define SARADC_MT_INT_ST_MT_INT_ST3_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST3_SHIFT)                  /* 0x00000008 */
+#define SARADC_MT_INT_ST_MT_INT_ST4_SHIFT                  (4U)
+#define SARADC_MT_INT_ST_MT_INT_ST4_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST4_SHIFT)                  /* 0x00000010 */
+#define SARADC_MT_INT_ST_MT_INT_ST5_SHIFT                  (5U)
+#define SARADC_MT_INT_ST_MT_INT_ST5_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST5_SHIFT)                  /* 0x00000020 */
+#define SARADC_MT_INT_ST_MT_INT_ST6_SHIFT                  (6U)
+#define SARADC_MT_INT_ST_MT_INT_ST6_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST6_SHIFT)                  /* 0x00000040 */
+#define SARADC_MT_INT_ST_MT_INT_ST7_SHIFT                  (7U)
+#define SARADC_MT_INT_ST_MT_INT_ST7_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST7_SHIFT)                  /* 0x00000080 */
+#define SARADC_MT_INT_ST_MT_INT_ST8_SHIFT                  (8U)
+#define SARADC_MT_INT_ST_MT_INT_ST8_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST8_SHIFT)                  /* 0x00000100 */
+#define SARADC_MT_INT_ST_MT_INT_ST9_SHIFT                  (9U)
+#define SARADC_MT_INT_ST_MT_INT_ST9_MASK                   (0x1U << SARADC_MT_INT_ST_MT_INT_ST9_SHIFT)                  /* 0x00000200 */
+#define SARADC_MT_INT_ST_MT_INT_ST10_SHIFT                 (10U)
+#define SARADC_MT_INT_ST_MT_INT_ST10_MASK                  (0x1U << SARADC_MT_INT_ST_MT_INT_ST10_SHIFT)                 /* 0x00000400 */
+#define SARADC_MT_INT_ST_MT_INT_ST11_SHIFT                 (11U)
+#define SARADC_MT_INT_ST_MT_INT_ST11_MASK                  (0x1U << SARADC_MT_INT_ST_MT_INT_ST11_SHIFT)                 /* 0x00000800 */
+#define SARADC_MT_INT_ST_MT_INT_ST12_SHIFT                 (12U)
+#define SARADC_MT_INT_ST_MT_INT_ST12_MASK                  (0x1U << SARADC_MT_INT_ST_MT_INT_ST12_SHIFT)                 /* 0x00001000 */
+#define SARADC_MT_INT_ST_MT_INT_ST13_SHIFT                 (13U)
+#define SARADC_MT_INT_ST_MT_INT_ST13_MASK                  (0x1U << SARADC_MT_INT_ST_MT_INT_ST13_SHIFT)                 /* 0x00002000 */
+#define SARADC_MT_INT_ST_MT_INT_ST14_SHIFT                 (14U)
+#define SARADC_MT_INT_ST_MT_INT_ST14_MASK                  (0x1U << SARADC_MT_INT_ST_MT_INT_ST14_SHIFT)                 /* 0x00004000 */
+#define SARADC_MT_INT_ST_MT_INT_ST15_SHIFT                 (15U)
+#define SARADC_MT_INT_ST_MT_INT_ST15_MASK                  (0x1U << SARADC_MT_INT_ST_MT_INT_ST15_SHIFT)                 /* 0x00008000 */
+/* DATA0 */
+#define SARADC_DATA0_OFFSET                                (0x120U)
+#define SARADC_DATA0                                       (0x0U)
+#define SARADC_DATA0_DATA0_SHIFT                           (0U)
+#define SARADC_DATA0_DATA0_MASK                            (0xFFFU << SARADC_DATA0_DATA0_SHIFT)                         /* 0x00000FFF */
+/* DATA1 */
+#define SARADC_DATA1_OFFSET                                (0x124U)
+#define SARADC_DATA1                                       (0x0U)
+#define SARADC_DATA1_DATA1_SHIFT                           (0U)
+#define SARADC_DATA1_DATA1_MASK                            (0xFFFU << SARADC_DATA1_DATA1_SHIFT)                         /* 0x00000FFF */
+/* DATA2 */
+#define SARADC_DATA2_OFFSET                                (0x128U)
+#define SARADC_DATA2                                       (0x0U)
+#define SARADC_DATA2_DATA2_SHIFT                           (0U)
+#define SARADC_DATA2_DATA2_MASK                            (0xFFFU << SARADC_DATA2_DATA2_SHIFT)                         /* 0x00000FFF */
+/* DATA3 */
+#define SARADC_DATA3_OFFSET                                (0x12CU)
+#define SARADC_DATA3                                       (0x0U)
+#define SARADC_DATA3_DATA3_SHIFT                           (0U)
+#define SARADC_DATA3_DATA3_MASK                            (0xFFFU << SARADC_DATA3_DATA3_SHIFT)                         /* 0x00000FFF */
+/* DATA4 */
+#define SARADC_DATA4_OFFSET                                (0x130U)
+#define SARADC_DATA4                                       (0x0U)
+#define SARADC_DATA4_DATA4_SHIFT                           (0U)
+#define SARADC_DATA4_DATA4_MASK                            (0xFFFU << SARADC_DATA4_DATA4_SHIFT)                         /* 0x00000FFF */
+/* DATA5 */
+#define SARADC_DATA5_OFFSET                                (0x134U)
+#define SARADC_DATA5                                       (0x0U)
+#define SARADC_DATA5_DATA5_SHIFT                           (0U)
+#define SARADC_DATA5_DATA5_MASK                            (0xFFFU << SARADC_DATA5_DATA5_SHIFT)                         /* 0x00000FFF */
+/* DATA6 */
+#define SARADC_DATA6_OFFSET                                (0x138U)
+#define SARADC_DATA6                                       (0x0U)
+#define SARADC_DATA6_DATA6_SHIFT                           (0U)
+#define SARADC_DATA6_DATA6_MASK                            (0xFFFU << SARADC_DATA6_DATA6_SHIFT)                         /* 0x00000FFF */
+/* DATA7 */
+#define SARADC_DATA7_OFFSET                                (0x13CU)
+#define SARADC_DATA7                                       (0x0U)
+#define SARADC_DATA7_DATA7_SHIFT                           (0U)
+#define SARADC_DATA7_DATA7_MASK                            (0xFFFU << SARADC_DATA7_DATA7_SHIFT)                         /* 0x00000FFF */
+/* DATA8 */
+#define SARADC_DATA8_OFFSET                                (0x140U)
+#define SARADC_DATA8                                       (0x0U)
+#define SARADC_DATA8_DATA8_SHIFT                           (0U)
+#define SARADC_DATA8_DATA8_MASK                            (0xFFFU << SARADC_DATA8_DATA8_SHIFT)                         /* 0x00000FFF */
+/* DATA9 */
+#define SARADC_DATA9_OFFSET                                (0x144U)
+#define SARADC_DATA9                                       (0x0U)
+#define SARADC_DATA9_DATA9_SHIFT                           (0U)
+#define SARADC_DATA9_DATA9_MASK                            (0xFFFU << SARADC_DATA9_DATA9_SHIFT)                         /* 0x00000FFF */
+/* DATA10 */
+#define SARADC_DATA10_OFFSET                               (0x148U)
+#define SARADC_DATA10                                      (0x0U)
+#define SARADC_DATA10_DATA10_SHIFT                         (0U)
+#define SARADC_DATA10_DATA10_MASK                          (0xFFFU << SARADC_DATA10_DATA10_SHIFT)                       /* 0x00000FFF */
+/* DATA11 */
+#define SARADC_DATA11_OFFSET                               (0x14CU)
+#define SARADC_DATA11                                      (0x0U)
+#define SARADC_DATA11_DATA11_SHIFT                         (0U)
+#define SARADC_DATA11_DATA11_MASK                          (0xFFFU << SARADC_DATA11_DATA11_SHIFT)                       /* 0x00000FFF */
+/* DATA12 */
+#define SARADC_DATA12_OFFSET                               (0x150U)
+#define SARADC_DATA12                                      (0x0U)
+#define SARADC_DATA12_DATA12_SHIFT                         (0U)
+#define SARADC_DATA12_DATA12_MASK                          (0xFFFU << SARADC_DATA12_DATA12_SHIFT)                       /* 0x00000FFF */
+/* DATA13 */
+#define SARADC_DATA13_OFFSET                               (0x154U)
+#define SARADC_DATA13                                      (0x0U)
+#define SARADC_DATA13_DATA13_SHIFT                         (0U)
+#define SARADC_DATA13_DATA13_MASK                          (0xFFFU << SARADC_DATA13_DATA13_SHIFT)                       /* 0x00000FFF */
+/* DATA14 */
+#define SARADC_DATA14_OFFSET                               (0x158U)
+#define SARADC_DATA14                                      (0x0U)
+#define SARADC_DATA14_DATA14_SHIFT                         (0U)
+#define SARADC_DATA14_DATA14_MASK                          (0xFFFU << SARADC_DATA14_DATA14_SHIFT)                       /* 0x00000FFF */
+/* DATA15 */
+#define SARADC_DATA15_OFFSET                               (0x15CU)
+#define SARADC_DATA15                                      (0x0U)
+#define SARADC_DATA15_DATA15_SHIFT                         (0U)
+#define SARADC_DATA15_DATA15_MASK                          (0xFFFU << SARADC_DATA15_DATA15_SHIFT)                       /* 0x00000FFF */
+/* AUTO_CH_EN */
+#define SARADC_AUTO_CH_EN_OFFSET                           (0x160U)
+#define SARADC_AUTO_CH_EN_AUTO_CH0_EN_SHIFT                (0U)
+#define SARADC_AUTO_CH_EN_AUTO_CH0_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH0_EN_SHIFT)                /* 0x00000001 */
+#define SARADC_AUTO_CH_EN_AUTO_CH1_EN_SHIFT                (1U)
+#define SARADC_AUTO_CH_EN_AUTO_CH1_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH1_EN_SHIFT)                /* 0x00000002 */
+#define SARADC_AUTO_CH_EN_AUTO_CH2_EN_SHIFT                (2U)
+#define SARADC_AUTO_CH_EN_AUTO_CH2_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH2_EN_SHIFT)                /* 0x00000004 */
+#define SARADC_AUTO_CH_EN_AUTO_CH3_EN_SHIFT                (3U)
+#define SARADC_AUTO_CH_EN_AUTO_CH3_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH3_EN_SHIFT)                /* 0x00000008 */
+#define SARADC_AUTO_CH_EN_AUTO_CH4_EN_SHIFT                (4U)
+#define SARADC_AUTO_CH_EN_AUTO_CH4_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH4_EN_SHIFT)                /* 0x00000010 */
+#define SARADC_AUTO_CH_EN_AUTO_CH5_EN_SHIFT                (5U)
+#define SARADC_AUTO_CH_EN_AUTO_CH5_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH5_EN_SHIFT)                /* 0x00000020 */
+#define SARADC_AUTO_CH_EN_AUTO_CH6_EN_SHIFT                (6U)
+#define SARADC_AUTO_CH_EN_AUTO_CH6_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH6_EN_SHIFT)                /* 0x00000040 */
+#define SARADC_AUTO_CH_EN_AUTO_CH7_EN_SHIFT                (7U)
+#define SARADC_AUTO_CH_EN_AUTO_CH7_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH7_EN_SHIFT)                /* 0x00000080 */
+#define SARADC_AUTO_CH_EN_AUTO_CH8_EN_SHIFT                (8U)
+#define SARADC_AUTO_CH_EN_AUTO_CH8_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH8_EN_SHIFT)                /* 0x00000100 */
+#define SARADC_AUTO_CH_EN_AUTO_CH9_EN_SHIFT                (9U)
+#define SARADC_AUTO_CH_EN_AUTO_CH9_EN_MASK                 (0x1U << SARADC_AUTO_CH_EN_AUTO_CH9_EN_SHIFT)                /* 0x00000200 */
+#define SARADC_AUTO_CH_EN_AUTO_CH10_EN_SHIFT               (10U)
+#define SARADC_AUTO_CH_EN_AUTO_CH10_EN_MASK                (0x1U << SARADC_AUTO_CH_EN_AUTO_CH10_EN_SHIFT)               /* 0x00000400 */
+#define SARADC_AUTO_CH_EN_AUTO_CH11_EN_SHIFT               (11U)
+#define SARADC_AUTO_CH_EN_AUTO_CH11_EN_MASK                (0x1U << SARADC_AUTO_CH_EN_AUTO_CH11_EN_SHIFT)               /* 0x00000800 */
+#define SARADC_AUTO_CH_EN_AUTO_CH12_EN_SHIFT               (12U)
+#define SARADC_AUTO_CH_EN_AUTO_CH12_EN_MASK                (0x1U << SARADC_AUTO_CH_EN_AUTO_CH12_EN_SHIFT)               /* 0x00001000 */
+#define SARADC_AUTO_CH_EN_AUTO_CH13_EN_SHIFT               (13U)
+#define SARADC_AUTO_CH_EN_AUTO_CH13_EN_MASK                (0x1U << SARADC_AUTO_CH_EN_AUTO_CH13_EN_SHIFT)               /* 0x00002000 */
+#define SARADC_AUTO_CH_EN_AUTO_CH14_EN_SHIFT               (14U)
+#define SARADC_AUTO_CH_EN_AUTO_CH14_EN_MASK                (0x1U << SARADC_AUTO_CH_EN_AUTO_CH14_EN_SHIFT)               /* 0x00004000 */
+#define SARADC_AUTO_CH_EN_AUTO_CH15_EN_SHIFT               (15U)
+#define SARADC_AUTO_CH_EN_AUTO_CH15_EN_MASK                (0x1U << SARADC_AUTO_CH_EN_AUTO_CH15_EN_SHIFT)               /* 0x00008000 */
 /*****************************************DCACHE*****************************************/
 /* CACHE_CTRL */
 #define DCACHE_CACHE_CTRL_OFFSET                           (0x0U)
