@@ -174,6 +174,7 @@ static uint32_t s_npllFreq;
 static uint32_t s_v0pllFreq;
 static uint32_t s_ppllFreq;
 static uint32_t s_aupllFreq;
+static uint32_t s_spllFreq = 702 * 1000 * 1000;
 
 static uint32_t cru_suspend;
 
@@ -1175,7 +1176,20 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case CLK_GMAC_50M:
     case REFCLKO25M_ETH0_OUT:
     case REFCLKO25M_ETH1_OUT:
+    case DCLK_VICAP:
         freq = HAL_CRU_MuxGetFreq2(clkMux, s_gpllFreq, s_cpllFreq);
+        break;
+
+    case CLK_MIPI_CAMOUT0:
+    case CLK_MIPI_CAMOUT1:
+    case CLK_MIPI_CAMOUT2:
+    case CLK_MIPI_CAMOUT3:
+    case CLK_MIPI_CAMOUT4:
+        freq = HAL_CRU_MuxGetFreq4(clkMux, PLL_INPUT_OSC_RATE, s_spllFreq, s_gpllFreq, s_cpllFreq);
+        break;
+
+    case CLK_CIFOUT:
+        freq = HAL_CRU_MuxGetFreq4(clkMux, s_gpllFreq, s_cpllFreq, PLL_INPUT_OSC_RATE, s_spllFreq);
         break;
 
     default:
@@ -1333,9 +1347,21 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_GMAC_50M:
     case REFCLKO25M_ETH0_OUT:
     case REFCLKO25M_ETH1_OUT:
+    case DCLK_VICAP:
         mux = HAL_CRU_RoundFreqGetMux2(rate, s_gpllFreq, s_cpllFreq, &pRate);
         break;
 
+    case CLK_MIPI_CAMOUT0:
+    case CLK_MIPI_CAMOUT1:
+    case CLK_MIPI_CAMOUT2:
+    case CLK_MIPI_CAMOUT3:
+    case CLK_MIPI_CAMOUT4:
+        mux = HAL_CRU_RoundFreqGetMux4(rate, PLL_INPUT_OSC_RATE, s_spllFreq, s_gpllFreq, s_cpllFreq, &pRate);
+        break;
+
+    case CLK_CIFOUT:
+        mux = HAL_CRU_RoundFreqGetMux4(rate, s_gpllFreq, s_cpllFreq, PLL_INPUT_OSC_RATE, s_spllFreq, &pRate);
+        break;
     default:
 
         return HAL_CRU_ClkSetOtherFreq(clockName, rate);
