@@ -27,8 +27,8 @@
 
 /** HCD Speed */
 #define HCD_SPEED_HIGH 0U
+#define HCD_SPEED_FULL 1U
 #define HCD_SPEED_LOW  2U
-#define HCD_SPEED_FULL 3U
 
 /** HCD Interrupts Handle */
 #define __HAL_HCD_ENABLE(__HANDLE__)  USB_EnableGlobalInt((__HANDLE__)->pReg)

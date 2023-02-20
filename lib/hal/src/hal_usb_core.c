@@ -1116,11 +1116,12 @@ HAL_Status USB_HostInit(struct USB_GLOBAL_REG *pUSB, struct USB_OTG_CFG cfg)
     /* Restart the Phy Clock */
     USB_PCGCCTL = 0;
 
-    /* Force Device Enumeration to FS/LS mode only */
-    if (cfg.speed == USB_OTG_SPEED_FULL) {
-        USB_HOST->HCFG |= USB_OTG_HCFG_FSLSS;
-    } else { /* Set default Max speed support */
+    if (cfg.speed == USB_OTG_SPEED_HIGH) {
+        /* Set default Max speed support */
         USB_HOST->HCFG &= ~(USB_OTG_HCFG_FSLSS);
+    } else {
+        /* Force Device Enumeration to FS/LS mode only */
+        USB_HOST->HCFG |= USB_OTG_HCFG_FSLSS;
     }
 
     /* Make sure the FIFOs are flushed. */

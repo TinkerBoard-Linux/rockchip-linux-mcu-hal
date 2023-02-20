@@ -28,7 +28,8 @@
 /** PCD Speed */
 #define PCD_SPEED_HIGH         0U
 #define PCD_SPEED_HIGH_IN_FULL 1U
-#define PCD_SPEED_FULL         2U
+#define PCD_SPEED_LOW          2U
+#define PCD_SPEED_FULL         3U
 
 /** PCD Interrupts Handle */
 #define __HAL_PCD_ENABLE(__HANDLE__)  USB_EnableGlobalInt((__HANDLE__)->pReg)
@@ -79,6 +80,7 @@ struct PCD_HANDLE {
 #else
     uint8_t setupBuf[32];               /*!< Setup packet buffer     */
 #endif
+    uint8_t enumSpeed;                  /*!< Enumerated Speed        */
     void *pData;                        /*!< Pointer to upper stack Handler */
     ePCD_state pcdState;                /*!< PCD communication state */
     ePCD_lpmState lpmState;             /*!< LPM State               */

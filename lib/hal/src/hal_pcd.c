@@ -366,13 +366,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
         if (__HAL_PCD_GET_FLAG(pPCD, USB_OTG_GINTSTS_ENUMDNE)) {
             USB_ActivateSetup(pPCD->pReg);
 
-            if (USB_GetDevSpeed(pPCD->pReg) == USB_OTG_SPEED_HIGH) {
-                pPCD->cfg.speed = USB_OTG_SPEED_HIGH;
-                pPCD->cfg.ep0Mps = USB_OTG_MAX_EP0_SIZE;
-            } else {
-                pPCD->cfg.speed = USB_OTG_SPEED_FULL;
-                pPCD->cfg.ep0Mps = USB_OTG_MAX_EP0_SIZE;
-            }
+            pPCD->enumSpeed = USB_GetDevSpeed(pPCD->pReg);
 
             /* setup EP0 to receive SETUP packets */
             USB_EP0_OutStart(pPCD->pReg, pPCD->cfg.dmaEnable, pPCD->setupBuf);
