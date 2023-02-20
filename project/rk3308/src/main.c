@@ -180,6 +180,9 @@ void main(void)
     HAL_SPINLOCK_Init(ownerID);
 #endif
 
+    /* RPMsg Init */
+    rpmsg_init();
+
     printf("\n");
     printf("****************************************\n");
     printf("  Hello RK3308 Bare-metal using RK_HAL! \n");

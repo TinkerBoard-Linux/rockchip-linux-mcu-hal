@@ -1046,9 +1046,7 @@ static void rpmsg_master_test(void)
         }
 
         info->map = &rpmsg_ept_map_table[remote_id];
-        info->instance = rpmsg_lite_master_init((void *)info->map->base, info->map->size,
-                                                RL_PLATFORM_SET_LINK_ID(master_id, remote_id), RL_NO_FLAGS);
-        rpmsg_lite_wait_for_link_up(info->instance);
+        info->instance = rpmsg_master_get_instance(master_id, remote_id);
         info->ept = rpmsg_lite_create_ept(info->instance, info->map->m_ept_addr, master_ept_cb, info);
 
         p_rpmsg_info[i] = info;
@@ -1234,9 +1232,7 @@ static void rpmsg_remote_test(void)
 
     info->map = &rpmsg_ept_map_table[remote_id];
     info->cb_sta = 0;
-    info->instance = rpmsg_lite_remote_init((void *)info->map->base,
-                                            RL_PLATFORM_SET_LINK_ID(master_id, remote_id), RL_NO_FLAGS);
-    rpmsg_lite_wait_for_link_up(info->instance);
+    info->instance = rpmsg_remote_get_instance(master_id, remote_id);
     info->ept = rpmsg_lite_create_ept(info->instance, info->map->r_ept_addr, remote_ept_cb, info);
 
     while (1) {

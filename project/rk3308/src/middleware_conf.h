@@ -21,11 +21,11 @@
 /* RPMSG master(cpu1) to remote(cpu0) endpoint index define */
 #define EPT_M1R0_INIT 0UL
 
+/* RPMSG API Functions */
+void rpmsg_init(void);
 #ifdef PRIMARY_CPU
-void rpmsg_master_init(void);
 struct rpmsg_lite_instance *rpmsg_master_get_instance(uint32_t master_id, uint32_t remote_id);
 #else
-void rpmsg_remote_init(void);
 struct rpmsg_lite_instance *rpmsg_remote_get_instance(uint32_t master_id, uint32_t remote_id);
 #endif
 
