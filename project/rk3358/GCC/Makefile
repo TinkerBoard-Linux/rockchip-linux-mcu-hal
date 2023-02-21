@@ -15,7 +15,7 @@ CFLAGS += -DFIRMWARE_BASE=$(FIRMWARE_CPU_BASE) -DDRAM_SIZE=$(DRAM_SIZE) -DSHMEM_
 
 # The shared memory is initialized by cpu1.
 ifeq ($(CUR_CPU), 1)
-        CFLAGS += -DPRIMARY_CPU
+        CFLAGS += -DPRIMARY_CPU -DNC_MEM_BASE=$(NC_MEM_BASE) -DNC_MEM_SIZE=$(NC_MEM_SIZE)
 endif
 ifeq ($(CUR_CPU), 0)
         CFLAGS += -DCPU0

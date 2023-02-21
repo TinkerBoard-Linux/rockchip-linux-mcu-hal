@@ -20,6 +20,8 @@ make_hal() {
     export DRAM_SIZE=$(eval echo \$CPU$1_MEM_SIZE)
     export SHMEM_BASE=0x02f00000
     export SHMEM_SIZE=0x00100000
+    export NC_MEM_BASE=0x03000000
+    export NC_MEM_SIZE=0x00100000
     export CUR_CPU=$1
     make clean
     rm $CUR_DIR/hal$1.elf $CUR_DIR/hal$1.bin
