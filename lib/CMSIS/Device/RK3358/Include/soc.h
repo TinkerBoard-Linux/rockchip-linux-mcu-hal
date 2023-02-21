@@ -270,6 +270,7 @@ typedef enum CLOCK_Name {
     ACLK_BUS         = CLK(ACLK_HCLK_PCLK_BUS_PLL_SEL, ACLK_BUS_DIV),
     HCLK_BUS         = CLK(ACLK_HCLK_PCLK_BUS_PLL_SEL, HCLK_BUS_DIV),
     PCLK_BUS         = CLK(0U, PCLK_BUS_DIV),
+    PCLK_GMAC        = CLK(0U, PCLK_GMAC_DIV),
 } eCLOCK_Name;
 #endif
 

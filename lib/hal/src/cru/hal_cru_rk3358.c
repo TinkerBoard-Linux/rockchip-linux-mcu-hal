@@ -592,6 +592,10 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         }
 
         return freq;
+    case PCLK_GMAC:
+        pRate = HAL_CRU_ClkGetFreq(ACLK_PERI);
+        break;
+
     default:
         break;
     }
@@ -776,6 +780,9 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         } else {
             mux = 0;
         }
+        break;
+    case PCLK_GMAC:
+        pRate = HAL_CRU_ClkGetFreq(ACLK_PERI);
         break;
 
     default:
