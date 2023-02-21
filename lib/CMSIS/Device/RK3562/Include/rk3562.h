@@ -801,8 +801,11 @@ struct INTMUX_REG {
 #define SPI0_BASE                      0xFF220000U /* SPI0 base address */
 #define PWM0_BASE                      0xFF230000U /* PWM0 base address */
 #define GPIO0_BASE                     0xFF260000U /* GPIO0 base address */
+#define GPIO0_EXP_BASE                 0xFF261000U /* GPIO0 EXP base address */
 #define GPIO1_BASE                     0xFF620000U /* GPIO1 base address */
+#define GPIO1_EXP_BASE                 0xFF621000U /* GPIO1 EXP base address */
 #define GPIO2_BASE                     0xFF630000U /* GPIO2 base address */
+#define GPIO2_EXP_BASE                 0xFF631000U /* GPIO2 EXP base address */
 #define SPI1_BASE                      0xFF640000U /* SPI1 base address */
 #define SPI2_BASE                      0xFF650000U /* SPI2 base address */
 #define UART1_BASE                     0xFF670000U /* UART1 base address */
@@ -835,7 +838,9 @@ struct INTMUX_REG {
 #define WDT_BASE                       0xFFA60000U /* WDT base address */
 #define SARADC1_BASE                   0xFFAA0000U /* SARADC1 base address */
 #define GPIO3_BASE                     0xFFAC0000U /* GPIO3 base address */
+#define GPIO3_EXP_BASE                 0xFFAC1000U /* GPIO3 EXP base address */
 #define GPIO4_BASE                     0xFFAD0000U /* GPIO4 base address */
+#define GPIO4_EXP_BASE                 0xFFAD1000U /* GPIO4 EXP base address */
 #define MBOX0_BASE                     0xFFAE0000U /* MBOX0 base address */
 #define INTMUX_BASE                    0xFFAF0000U /* INTMUX base address */
 /****************************************************************************************/
@@ -861,8 +866,11 @@ struct INTMUX_REG {
 #define SPI0                ((struct SPI_REG *) SPI0_BASE)
 #define PWM0                ((struct PWM_REG *) PWM0_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define GPIO0_EXP           ((struct GPIO_REG *) GPIO0_EXP_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
+#define GPIO1_EXP           ((struct GPIO_REG *) GPIO1_EXP_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
+#define GPIO2_EXP           ((struct GPIO_REG *) GPIO2_EXP_BASE)
 #define SPI1                ((struct SPI_REG *) SPI1_BASE)
 #define SPI2                ((struct SPI_REG *) SPI2_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
@@ -895,7 +903,9 @@ struct INTMUX_REG {
 #define WDT                 ((struct WDT_REG *) WDT_BASE)
 #define SARADC1             ((struct SARADC_REG *) SARADC1_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
+#define GPIO3_EXP           ((struct GPIO_REG *) GPIO3_EXP_BASE)
 #define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
+#define GPIO4_EXP           ((struct GPIO_REG *) GPIO4_EXP_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
 #define INTMUX              ((struct INTMUX_REG *) INTMUX_BASE)
 
@@ -919,7 +929,7 @@ struct INTMUX_REG {
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1) || ((instance) == SPI2))
 #define IS_PWM_INSTANCE(instance) (((instance) == PWM0) || ((instance) == PWM1) || ((instance) == PWM2) || ((instance) == PWM3))
-#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
+#define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4) || ((instance) == GPIO0_EXP) || ((instance) == GPIO1_EXP) || ((instance) == GPIO2_EXP) || ((instance) == GPIO3_EXP) || ((instance) == GPIO4_EXP))
 #define IS_SARADC_INSTANCE(instance) (((instance) == SARADC0) || ((instance) == SARADC1))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
