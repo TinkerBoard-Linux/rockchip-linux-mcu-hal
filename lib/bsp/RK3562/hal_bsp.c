@@ -155,6 +155,44 @@ const struct HAL_UART_DEV g_uart0Dev =
 
 #endif /* RKMCU_RK3562_PMU */
 
+#ifdef HAL_PWM_MODULE_ENABLED
+const struct HAL_PWM_DEV g_pwm0Dev =
+{
+    .pReg = PWM0,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+    .irqNum = PWM0_IRQn,
+};
+
+const struct HAL_PWM_DEV g_pwm1Dev =
+{
+    .pReg = PWM1,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+    .irqNum = PWM1_IRQn,
+};
+
+const struct HAL_PWM_DEV g_pwm2Dev =
+{
+    .pReg = PWM2,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+    .irqNum = PWM2_IRQn,
+};
+
+const struct HAL_PWM_DEV g_pwm3Dev =
+{
+    .pReg = PWM3,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+    .irqNum = PWM3_IRQn,
+};
+#endif
+
 void BSP_Init(void)
 {
 }

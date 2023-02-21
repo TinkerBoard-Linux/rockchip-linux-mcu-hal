@@ -45,6 +45,13 @@ extern const struct HAL_UART_DEV g_uart0Dev;
 
 #endif /* RKMCU_RK3562_PMU */
 
+#ifdef HAL_PWM_MODULE_ENABLED
+extern const struct HAL_PWM_DEV g_pwm0Dev;
+extern const struct HAL_PWM_DEV g_pwm1Dev;
+extern const struct HAL_PWM_DEV g_pwm2Dev;
+extern const struct HAL_PWM_DEV g_pwm3Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 void BSP_Init(void);
 void BSP_SetLoaderFlag(void);
