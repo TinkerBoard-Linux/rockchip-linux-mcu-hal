@@ -181,10 +181,7 @@ struct PWM_REG {
     __I  uint32_t PWM3_PWRCAPTURE_VALUE;              /* Address Offset: 0x00CC */
     __IO uint32_t FILTER_CTRL;                        /* Address Offset: 0x00D0 */
          uint32_t RESERVED00D4[3];                    /* Address Offset: 0x00D4 */
-    __IO uint32_t PWM0_OFFSET;                        /* Address Offset: 0x00E0 */
-    __IO uint32_t PWM1_OFFSET;                        /* Address Offset: 0x00E4 */
-    __IO uint32_t PWM2_OFFSET;                        /* Address Offset: 0x00E8 */
-    __IO uint32_t PWM3_OFFSET;                        /* Address Offset: 0x00EC */
+    __IO uint32_t OFFSET[4];                          /* Address Offset: 0x00E0 */
          uint32_t RESERVED00F0[4];                    /* Address Offset: 0x00F0 */
     __IO uint32_t IR_TRANS_CTRL;                      /* Address Offset: 0x0100 */
     __IO uint32_t IR_TRANS_PRE;                       /* Address Offset: 0x0104 */
