@@ -28,10 +28,17 @@
      - Base register address;
      - Input clock frequency.
 
+ - (optionally)Invoke HAL_PWM_GlobalLock() API to make configuration of channels unchangeable:
+     - Use HAL_PWM_GlobalLock() to lock specified channels;
+
  - Invoke HAL_PWM_SetConfig() API and HAL_PWM_SetEnable() to start/stop:
      - Use HAL_PWM_SetConfig() to configurate the request mode;
+     - (optionally)Use HAL_PWM_SetOutputOffset() to configurate the output offset;
      - Use HAL_PWM_Enable() to start PWM;
      - Use HAL_PWM_Disable() to stop PWM.
+
+ - (optionally)Invoke HAL_PWM_GlobalUnlock() API to make sure channels update configuration simultaneously:
+     - Use HAL_PWM_GlobalUnlock() to unlock specified channels;
 
  - Invoke HAL_PWM_DeInit() if necessary.
 
@@ -80,6 +87,14 @@
 #define PWM_CTRL_SCALE_MASK  (PWM_PWM0_CTRL_SCALE_MASK)
 
 #define PWM_PWRMATCH_MAX_SHIFT (PWM_PWRMATCH_LPRE_CNT_MIN_SHIFT)
+
+#ifdef PWM_FILTER_CTRL_PWM0_GLOBAL_LOCK_SHIFT
+#define PWM_GLOBAL_LOCK_SHIFT (PWM_FILTER_CTRL_PWM0_GLOBAL_LOCK_SHIFT)
+#define PWM_GLOBAL_LOCK_MASK  (PWM_FILTER_CTRL_PWM0_GLOBAL_LOCK_MASK || \
+                               PWM_FILTER_CTRL_PWM1_GLOBAL_LOCK_MASK || \
+                               PWM_FILTER_CTRL_PWM2_GLOBAL_LOCK_MASK || \
+                               PWM_FILTER_CTRL_PWM3_GLOBAL_LOCK_MASK)
+#endif
 
 /********************* Private Structure Definition **************************/
 
@@ -263,6 +278,88 @@ HAL_Status HAL_PWM_SetMatch(struct PWM_HANDLE *pPWM, uint8_t channel, const stru
 
     return HAL_OK;
 }
+
+#ifdef PWM_PWM0_OFFSET_OFFSET
+/**
+ * @brief  Configurate PWM channel output offset.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channel(0~3).
+ * @param  offsetNS: PWM channel output offset configuration.
+ * @retval HAL status
+ */
+HAL_Status HAL_PWM_SetOutputOffset(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t offsetNS)
+{
+    uint32_t period, duty;
+    uint32_t offset, offsetMax;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+
+    period = READ_REG(PWM_PERIOD_REG(pPWM, channel));
+    duty = READ_REG(PWM_DUTY_REG(pPWM, channel));
+
+    offset = HAL_DivU64((uint64_t)pPWM->freq * offsetNS, 1000000000);
+    offsetMax = period - duty;
+    if (offset < 0 || offset > offsetMax) {
+        return HAL_INVAL;
+    }
+
+    HAL_DBG("channel=%d, offsetNS=%ld\n", channel, offsetNS);
+
+    WRITE_REG(pPWM->pReg->OFFSET[channel], offset);
+
+    return HAL_OK;
+}
+#endif
+
+#ifdef PWM_FILTER_CTRL_PWM0_GLOBAL_LOCK_SHIFT
+/**
+ * @brief  Enable PWM global lock.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channelMask: PWM channel mask, such as 0x5 indicates
+ *                      channel0 and channel2.
+ * @retval HAL status
+ */
+HAL_Status HAL_PWM_GlobalLock(struct PWM_HANDLE *pPWM, uint8_t channelMask)
+{
+    uint32_t filter_ctrl;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channelMask <= (PWM_GLOBAL_LOCK_MASK >> PWM_GLOBAL_LOCK_SHIFT));
+    HAL_DBG("channelMask=0x%04x, global lock\n", channelMask);
+
+    filter_ctrl = READ_REG(pPWM->pReg->FILTER_CTRL);
+    filter_ctrl |= (channelMask << PWM_GLOBAL_LOCK_SHIFT) & PWM_GLOBAL_LOCK_MASK;
+    WRITE_REG(pPWM->pReg->FILTER_CTRL, filter_ctrl);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable PWM global lock.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channelMask: PWM channel mask, such as 0x5 indicates
+ *                      channel0 and channel2.
+ * @retval HAL status
+ */
+HAL_Status HAL_PWM_GlobalUnlock(struct PWM_HANDLE *pPWM, uint8_t channelMask)
+{
+    uint32_t filter_ctrl;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channelMask <= (PWM_GLOBAL_LOCK_MASK >> PWM_GLOBAL_LOCK_SHIFT));
+    HAL_DBG("channelMask=0x%04x, global unlock\n", channelMask);
+
+    filter_ctrl = READ_REG(pPWM->pReg->FILTER_CTRL);
+    filter_ctrl &= ~(channelMask << PWM_GLOBAL_LOCK_SHIFT) & PWM_GLOBAL_LOCK_MASK;
+    WRITE_REG(pPWM->pReg->FILTER_CTRL, filter_ctrl);
+
+    return HAL_OK;
+}
+#endif
 
 /**
  * @brief  Get PWM mode.
