@@ -202,6 +202,7 @@ typedef enum PD_Id {
 
 #define PLL_INPUT_OSC_RATE (24 * 1000 * 1000)
 
+#define CRU_GATE_CON_CNT    18
 #define CRU_CLK_DIV_CON_CNT 60
 #define CRU_CLK_SEL_CON_CNT 60
 

@@ -8634,28 +8634,28 @@ struct MMC_REG {
 #define GPU_PVTPLL_REF_CLK_GATE      283U
 #define CPU_PVTPLL_REF_CLK_GATE      284U
 /********Name=PMU_CLKGATE_CON0,Offset=0xC080********/
-#define PCLK_PDPMU_PLL_CLK_GATE        0U
-#define PCLK_PMU_NIU_CLK_GATE          1U
-#define PCLK_PMU_SGRF_CLK_GATE         2U
-#define PCLK_PMU_GRF_CLK_GATE          3U
-#define PCLK_PMU_PMU_CLK_GATE          4U
-#define PCLK_PMU_MEM_CLK_GATE          5U
-#define PCLK_PMU_GPIO0_CLK_GATE        6U
-#define PCLK_PMU_UART0_CLK_GATE        7U
-#define PCLK_PMU_CRU_CLK_GATE          8U
-#define XIN_OSC0_FUNC_DIV_SRC_CLK_GATE 12U
-#define CLK_DIV32P768KHZ_SRC_CLK_GATE  13U
-#define CLK_WIFI_PLL_CLK_GATE          14U
-#define CLK_WIFI_CLK_GATE              15U
+#define PCLK_PDPMU_PLL_CLK_GATE        288U
+#define PCLK_PMU_NIU_CLK_GATE          289U
+#define PCLK_PMU_SGRF_CLK_GATE         290U
+#define PCLK_PMU_GRF_CLK_GATE          291U
+#define PCLK_PMU_PMU_CLK_GATE          292U
+#define PCLK_PMU_MEM_CLK_GATE          293U
+#define PCLK_PMU_GPIO0_CLK_GATE        294U
+#define PCLK_PMU_UART0_CLK_GATE        295U
+#define PCLK_PMU_CRU_CLK_GATE          296U
+#define XIN_OSC0_FUNC_DIV_SRC_CLK_GATE 300U
+#define CLK_DIV32P768KHZ_SRC_CLK_GATE  301U
+#define CLK_WIFI_PLL_CLK_GATE          302U
+#define CLK_WIFI_CLK_GATE              303U
 /********Name=PMU_CLKGATE_CON1,Offset=0xC084********/
-#define CLK_UART0_PMU_PLL_CLK_GATE    16U
-#define CLK_UART0_PMU_DIVNP5_CLK_GATE 17U
-#define CLK_UART0_PMU_FRAC_CLK_GATE   18U
-#define CLK_UART0_PMU_CLK_GATE        19U
-#define CLK_PVTM_PMU_CLK_GATE         20U
-#define CLK_REF24M_PLL_CLK_GATE       24U
-#define USBPHY_REF_CLK_GATE           25U
-#define MIPIDSIPHY_REF_CCLK_GATE      26U
+#define CLK_UART0_PMU_PLL_CLK_GATE    304U
+#define CLK_UART0_PMU_DIVNP5_CLK_GATE 305U
+#define CLK_UART0_PMU_FRAC_CLK_GATE   306U
+#define CLK_UART0_PMU_CLK_GATE        307U
+#define CLK_PVTM_PMU_CLK_GATE         308U
+#define CLK_REF24M_PLL_CLK_GATE       312U
+#define USBPHY_REF_CLK_GATE           313U
+#define MIPIDSIPHY_REF_CCLK_GATE      314U
 
 /********Name=CLKSEL_CON0,Offset=0x100********/
 #define CLK_CORE_DIV  0x04000000U
