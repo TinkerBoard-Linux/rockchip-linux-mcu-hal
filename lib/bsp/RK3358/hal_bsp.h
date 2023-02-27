@@ -54,6 +54,10 @@ extern const struct HAL_USB_DEV g_usbdDev;
 extern const struct HAL_USBH_DEV g_usbhDev;
 #endif
 
+#ifdef HAL_GMAC1000_MODULE_ENABLED
+extern const struct HAL_GMAC_DEV g_gmacDev;
+#endif
+
 /***************************** Function Declare ******************************/
 void BSP_SetLoaderFlag(void);
 void BSP_SetMaskRomFlag(void);

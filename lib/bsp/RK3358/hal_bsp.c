@@ -213,6 +213,18 @@ const struct HAL_USBH_DEV g_usbhDev =
 };
 #endif
 
+#ifdef HAL_GMAC1000_MODULE_ENABLED
+const struct HAL_GMAC_DEV g_gmacDev =
+{
+    .pReg = GMAC,
+    .clkID = CLK_GMAC,
+    .clkGateID = ACLK_PDGMAC_CLK_GATE,
+    .pclkID = PCLK_GMAC,
+    .pclkGateID = PCLK_GMAC_CLK_GATE,
+    .irqNum = GMAC0_IRQn,
+};
+#endif
+
 void BSP_SetLoaderFlag(void)
 {
     PMU_GRF->OS_REG[0] = LDR_UPGRADE_FLAG;

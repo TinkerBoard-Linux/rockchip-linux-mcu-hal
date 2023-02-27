@@ -5,7 +5,7 @@
 
 #include "hal_conf.h"
 
-#ifdef HAL_GMAC_MODULE_ENABLED
+#if (defined(HAL_GMAC_MODULE_ENABLED) || defined(HAL_GMAC1000_MODULE_ENABLED))
 
 /** @addtogroup RK_HAL_Driver
   * @{
@@ -241,11 +241,25 @@ struct GMAC_DMAStats {
 };
 
 /**
+  * @brief  GMAC device information Structure Definition
+  */
+struct GMAC_DEVICE_INFO {
+    uint32_t miiAddrShift;
+    uint32_t miiAddrMask;
+    uint32_t miiRegShift;
+    uint32_t miiRegMask;
+    uint32_t clkCsrShift;
+    uint32_t clkCsrMask;
+};
+
+/**
   * @brief  GMAC Handle Structure Definition
   */
 struct GMAC_HANDLE {
     struct GMAC_REG *pReg;                /**< Register base address */
     uint32_t clkCSR;                      /**< clock csr value, div for MDC clock */
+
+    struct GMAC_DEVICE_INFO mac;          /**< MAC information */
 
     struct GMAC_PHY_OPS phyOps;           /**< phy ops callback function */
     struct GMAC_PHY_Config phyConfig;     /**< phy config provied by user */

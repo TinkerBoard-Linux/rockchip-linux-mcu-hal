@@ -81,7 +81,7 @@
 #include "hal_efuse.h"
 #endif
 
-#ifdef HAL_GMAC_MODULE_ENABLED
+#if defined(HAL_GMAC_MODULE_ENABLED) || defined(HAL_GMAC1000_MODULE_ENABLED)
 #include "hal_gmac.h"
 #endif
 
