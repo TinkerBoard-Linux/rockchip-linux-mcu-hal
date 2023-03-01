@@ -11,6 +11,10 @@
 #define REMOTE_ID_3 ((uint32_t)3)
 #define REMOTE_ID_0 ((uint32_t)0)
 
+/* RPMSG endpoint addr covert */
+#define EPT_M2R_ADDR(addr) (addr + VRING_SIZE)   // master to remote covert
+#define EPT_R2M_ADDR(addr) (addr - VRING_SIZE)   // remote to master covert
+
 /* RPMSG ID Define */
 /* RPMSG master(cpu1) to remote(cpu2) endpoint index define */
 #define EPT_M1R2_INIT 0UL
