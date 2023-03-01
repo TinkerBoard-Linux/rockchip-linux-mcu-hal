@@ -48,6 +48,10 @@
 #define TSADCV2_AUTO_PERIOD_TIME    1622 /* 2.5ms */
 #define TSADCV2_AUTO_PERIOD_HT_TIME 1622 /* 2.5ms */
 
+/* -40 to 125 is reliable, outside the range existed unreliability */
+#define MIN_TEMP (-60000)
+#define MAX_TEMP (180000)
+
 /********************* Private Structure Definition **************************/
 
 struct TSADC_TABLE {
@@ -66,25 +70,24 @@ struct TSADC_CONFIG {
 #if defined(RKMCU_RK2206)
 static const struct TSADC_TABLE s_tsadcTable[] =
 {
+    { 3426, MIN_TEMP },
     { 3461, -40000 },
     { 3751, 125000 },
+    { 3848, MAX_TEMP },
 };
 #elif defined(SOC_RK3568)
 static const struct TSADC_TABLE s_tsadcTable[] =
 {
+    { 1448, MIN_TEMP },
     { 1584, -40000 },
     { 2704, 125000 },
+    { 3076, MAX_TEMP },
 };
-#elif defined(SOC_RK3308)
+#elif defined(SOC_RK3308) || defined(SOC_RK3358)
 static const struct TSADC_TABLE s_tsadcTable[] =
 {
-    { 296, -40000 },
-    { 675, 125000 },
-};
-#elif defined(SOC_RK3358)
-static const struct TSADC_TABLE s_tsadcTable[] =
-{
-    { 0, -40000 },
+    { 0, MIN_TEMP },
+    { 261, MIN_TEMP },
     { 296, -40000 },
     { 304, -35000 },
     { 313, -30000 },
@@ -118,7 +121,10 @@ static const struct TSADC_TABLE s_tsadcTable[] =
     { 644, 115000 },
     { 659, 120000 },
     { 675, 125000 },
-    { 0xfff, 125000 },
+    { 745, 145000 },
+    { 825, 165000 },
+    { 900, MAX_TEMP },
+    { 0xfff, MAX_TEMP },
 };
 #endif
 
