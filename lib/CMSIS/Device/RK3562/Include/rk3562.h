@@ -318,7 +318,6 @@ struct PWM_CHANNEL {
     __IO uint32_t CTRL;
 };
 struct PWM_CAPTURE_CNT {
-    __IO uint32_t CAPTURE_CNT_EN;
     __IO uint32_t POS_CNT;
     __IO uint32_t NEG_CNT;
 };
@@ -354,7 +353,8 @@ struct PWM_REG {
     __IO uint32_t IR_TRANS_BURST_FRAME;               /* Address Offset: 0x0114 */
     __IO uint32_t IR_TRANS_DATA_VALUE;                /* Address Offset: 0x0118 */
          uint32_t RESERVED011C;                       /* Address Offset: 0x011C */
-         struct PWM_CAPTURE_CNT CAPTURE_CNT[4];       /* Address Offset: 0x0120 */
+    __IO uint32_t CAPTURE_CNT_EN[4];                  /* Address Offset: 0x0120 */
+         struct PWM_CAPTURE_CNT CAPTURE_CNT[4];       /* Address Offset: 0x0130 */
 };
 /* GPIO Register Structure Define */
 struct GPIO_REG {
