@@ -324,15 +324,15 @@ HAL_Status HAL_PWM_SetOutputOffset(struct PWM_HANDLE *pPWM, uint8_t channel, uin
  */
 HAL_Status HAL_PWM_GlobalLock(struct PWM_HANDLE *pPWM, uint8_t channelMask)
 {
-    uint32_t filter_ctrl;
+    uint32_t filterCtrl;
 
     HAL_ASSERT(pPWM != NULL);
     HAL_ASSERT(channelMask <= (PWM_GLOBAL_LOCK_MASK >> PWM_GLOBAL_LOCK_SHIFT));
     HAL_DBG("channelMask=0x%04x, global lock\n", channelMask);
 
-    filter_ctrl = READ_REG(pPWM->pReg->FILTER_CTRL);
-    filter_ctrl |= (channelMask << PWM_GLOBAL_LOCK_SHIFT) & PWM_GLOBAL_LOCK_MASK;
-    WRITE_REG(pPWM->pReg->FILTER_CTRL, filter_ctrl);
+    filterCtrl = READ_REG(pPWM->pReg->FILTER_CTRL);
+    filterCtrl |= (channelMask << PWM_GLOBAL_LOCK_SHIFT) & PWM_GLOBAL_LOCK_MASK;
+    WRITE_REG(pPWM->pReg->FILTER_CTRL, filterCtrl);
 
     return HAL_OK;
 }
@@ -347,15 +347,15 @@ HAL_Status HAL_PWM_GlobalLock(struct PWM_HANDLE *pPWM, uint8_t channelMask)
  */
 HAL_Status HAL_PWM_GlobalUnlock(struct PWM_HANDLE *pPWM, uint8_t channelMask)
 {
-    uint32_t filter_ctrl;
+    uint32_t filterCtrl;
 
     HAL_ASSERT(pPWM != NULL);
     HAL_ASSERT(channelMask <= (PWM_GLOBAL_LOCK_MASK >> PWM_GLOBAL_LOCK_SHIFT));
     HAL_DBG("channelMask=0x%04x, global unlock\n", channelMask);
 
-    filter_ctrl = READ_REG(pPWM->pReg->FILTER_CTRL);
-    filter_ctrl &= ~(channelMask << PWM_GLOBAL_LOCK_SHIFT) & PWM_GLOBAL_LOCK_MASK;
-    WRITE_REG(pPWM->pReg->FILTER_CTRL, filter_ctrl);
+    filterCtrl = READ_REG(pPWM->pReg->FILTER_CTRL);
+    filterCtrl &= ~((channelMask << PWM_GLOBAL_LOCK_SHIFT) & PWM_GLOBAL_LOCK_MASK);
+    WRITE_REG(pPWM->pReg->FILTER_CTRL, filterCtrl);
 
     return HAL_OK;
 }
