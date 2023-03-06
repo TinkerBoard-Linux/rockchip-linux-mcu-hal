@@ -23,10 +23,19 @@
 static struct PLL_CONFIG PLL_TABLE[] =
 {
     /* _mhz, _p, _m, _s, _k */
-    RK3588_PLL_RATE(1680000000, 2, 280, 1, 0),
+    RK3588_PLL_RATE(2400000000, 2, 200, 0, 0),
+    RK3588_PLL_RATE(2304000000, 2, 192, 0, 0),
+    RK3588_PLL_RATE(2208000000, 2, 368, 1, 0),
+    RK3588_PLL_RATE(2112000000, 2, 352, 1, 0),
+    RK3588_PLL_RATE(2016000000, 2, 336, 1, 0),
+    RK3588_PLL_RATE(1920000000, 2, 320, 1, 0),
+    RK3588_PLL_RATE(1800000000, 2, 300, 1, 0),
+    RK3588_PLL_RATE(1704000000, 2, 284, 1, 0),
+    RK3588_PLL_RATE(1608000000, 2, 268, 1, 0),
     RK3588_PLL_RATE(1512000000, 2, 252, 1, 0),
     RK3588_PLL_RATE(1500000000, 2, 250, 1, 0),
     RK3588_PLL_RATE(1416000000, 2, 236, 1, 0),
+    RK3588_PLL_RATE(1200000000, 2, 200, 1, 0),
     RK3588_PLL_RATE(1188000000, 2, 198, 1, 0),
     RK3588_PLL_RATE(1008000000, 2, 336, 2, 0),
     RK3588_PLL_RATE(1000000000, 3, 500, 2, 0),
@@ -38,6 +47,7 @@ static struct PLL_CONFIG PLL_TABLE[] =
     RK3588_PLL_RATE(786000000, 1, 131, 2, 0),
     RK3588_PLL_RATE(785560000, 3, 392, 2, 51117),
     RK3588_PLL_RATE(722534400, 8, 963, 2, 24850),
+    RK3588_PLL_RATE(408000000, 2, 272, 3, 0),
     RK3588_PLL_RATE(100000000, 3, 400, 5, 0),
     { /* sentinel */ },
 };
@@ -1063,17 +1073,20 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 
     switch (clockName) {
     case PLL_LPLL:
+    case ARMCLK_L:
         freq = HAL_CRU_GetPllFreq(&LPLL);
         s_lpllFreq = freq;
 
         return freq;
 
     case PLL_B0PLL:
+    case ARMCLK_B01:
         freq = HAL_CRU_GetPllFreq(&B0PLL);
 
         return freq;
 
     case PLL_B1PLL:
+    case ARMCLK_B23:
         freq = HAL_CRU_GetPllFreq(&B1PLL);
 
         return freq;
@@ -1280,6 +1293,48 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case PLL_V0PLL:
         error = HAL_CRU_SetPllFreq(&V0PLL, rate);
         s_v0pllFreq = HAL_CRU_GetPllFreq(&V0PLL);
+
+        return error;
+
+    case ARMCLK_L:
+        HAL_CRU_ClkSetMux(CLK_CORE_L_SLOW_SRC_SEL, CLK_CORE_L_SLOW_SRC_SEL_XIN_OSC0_FUNC);
+        HAL_CRU_ClkSetMux(CLK_CORE_L_SRC_SEL, CLK_CORE_L_SRC_SEL_CLK_CORE_L_GPLL_SRC);
+        HAL_CRU_ClkSetMux(SCLK_DSU_DF_SRC_SEL, SCLK_DSU_DF_SRC_SEL_CLK_GPLL_MUX);
+        error = HAL_CRU_SetPllFreq(&LPLL, rate);
+        s_lpllFreq = HAL_CRU_GetPllFreq(&LPLL);
+        HAL_CRU_ClkSetMux(SCLK_DSU_DF_SRC_SEL, SCLK_DSU_DF_SRC_SEL_CLK_LPLL_MUX);
+        HAL_CRU_ClkSetMux(CLK_CORE_L0_SEL, CLK_CORE_L0_SEL_CLK_CORE_L0_CLEAN);
+        HAL_CRU_ClkSetMux(CLK_CORE_L1_SEL, CLK_CORE_L1_SEL_CLK_CORE_L1_CLEAN);
+        HAL_CRU_ClkSetMux(CLK_CORE_L_SRC_SEL, CLK_CORE_L_SRC_SEL_CLK_LPLL);
+
+        return error;
+
+    case ARMCLK_B01:
+        HAL_CRU_ClkSetMux(CLK_CORE_B01_SLOW_SRC_SEL, CLK_CORE_B01_SLOW_SRC_SEL_XIN_OSC0_FUNC);
+        HAL_CRU_ClkSetMux(CLK_CORE_B01_SRC_SEL, CLK_CORE_B01_SRC_SEL_CLK_CORE_B01_GPLL_SRC);
+        error = HAL_CRU_SetPllFreq(&B0PLL, rate);
+        HAL_CRU_ClkSetMux(CLK_CORE_B0_SEL, CLK_CORE_B0_SEL_CLK_CORE_B0_CLEAN);
+        HAL_CRU_ClkSetMux(CLK_CORE_B1_SEL, CLK_CORE_B1_SEL_CLK_CORE_B1_CLEAN);
+        HAL_CRU_ClkSetMux(CLK_CORE_B01_SRC_SEL, CLK_CORE_B01_SRC_SEL_CLK_B0PLL);
+
+        return error;
+
+    case ARMCLK_B23:
+        HAL_CRU_ClkSetMux(CLK_CORE_B23_SLOW_SRC_SEL, CLK_CORE_B23_SLOW_SRC_SEL_XIN_OSC0_FUNC);
+        HAL_CRU_ClkSetMux(CLK_CORE_B23_SRC_SEL, CLK_CORE_B23_SRC_SEL_CLK_CORE_B23_GPLL_SRC);
+        error = HAL_CRU_SetPllFreq(&B1PLL, rate);
+        HAL_CRU_ClkSetMux(CLK_CORE_B2_SEL, CLK_CORE_B2_SEL_CLK_CORE_B2_CLEAN);
+        HAL_CRU_ClkSetMux(CLK_CORE_B3_SEL, CLK_CORE_B3_SEL_CLK_CORE_B3_CLEAN);
+        HAL_CRU_ClkSetMux(CLK_CORE_B23_SRC_SEL, CLK_CORE_B23_SRC_SEL_CLK_B1PLL);
+
+        return error;
+
+    case SCLK_DSU:
+        HAL_CRU_ClkSetMux(SCLK_DSU_DF_SRC_SEL, SCLK_DSU_DF_SRC_SEL_CLK_GPLL_MUX);
+        error = HAL_CRU_SetPllFreq(&LPLL, rate);
+        s_lpllFreq = HAL_CRU_GetPllFreq(&LPLL);
+        HAL_CRU_ClkSetMux(SCLK_DSU_DF_SRC_SEL, SCLK_DSU_DF_SRC_SEL_CLK_LPLL_MUX);
+        HAL_CRU_ClkSetMux(SCLK_DSU_SRC_T_SEL, SCLK_DSU_SRC_T_SEL_SCLK_DSU_SRC);
 
         return error;
 

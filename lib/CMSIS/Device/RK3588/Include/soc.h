@@ -437,6 +437,11 @@ typedef enum CLOCK_Name {
     PLL_NPLL,
     PLL_PPLL,
     PLL_V0PLL,
+    ARMCLK_L,
+    ARMCLK_B01,
+    ARMCLK_B23,
+
+    SCLK_DSU = CLK64(SCLK_DSU_SRC_T_SEL, 0U),
 
     /* storage */
     BCLK_EMMC            = CLK64(BCLK_EMMC_SEL, BCLK_EMMC_DIV),
