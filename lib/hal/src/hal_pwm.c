@@ -20,16 +20,16 @@
 
  The PWM HAL driver can be used as follows:
 
- - Declare a PWM_Handle handle structure, for example:
+ - Declare a PWM_HANDLE handle structure, for example:
    ```
-   PWM_Handle instance;
+   struct PWM_HANDLE instance;
    ```
  - Invoke HAL_PWM_Init() API to initialize base address and clock frequency:
      - Base register address;
      - Input clock frequency.
 
  - (optionally)Invoke HAL_PWM_GlobalLock() API to make configuration of channels unchangeable:
-     - Use HAL_PWM_GlobalLock() to lock specified channels;
+     - Use HAL_PWM_GlobalLock() to lock specified channels.
 
  - Invoke HAL_PWM_SetConfig() API and HAL_PWM_SetEnable() to start/stop:
      - Use HAL_PWM_SetConfig() to configurate the request mode;
@@ -38,7 +38,13 @@
      - Use HAL_PWM_Disable() to stop PWM.
 
  - (optionally)Invoke HAL_PWM_GlobalUnlock() API to make sure channels update configuration simultaneously:
-     - Use HAL_PWM_GlobalUnlock() to unlock specified channels;
+     - Use HAL_PWM_GlobalUnlock() to unlock specified channels.
+
+ - (optionally)Invoke HAL_PWM_EnableCaptureCnt() API to enable postive/negtive capture counter:
+     - Use HAL_PWM_GetPosCaptureCnt() to read the number of rising edges in capture mode;
+     - Use HAL_PWM_GetNegCaptureCnt() to read the number of falling edges in capture mode.
+
+ - (optionally)Invoke HAL_PWM_DisableCaptureCnt() API to disable postive/negtive capture counter.
 
  - Invoke HAL_PWM_DeInit() if necessary.
 
@@ -94,6 +100,12 @@
                                PWM_FILTER_CTRL_PWM1_GLOBAL_LOCK_MASK | \
                                PWM_FILTER_CTRL_PWM2_GLOBAL_LOCK_MASK | \
                                PWM_FILTER_CTRL_PWM3_GLOBAL_LOCK_MASK)
+#endif
+
+#ifdef PWM_PWM0_CAPTURE_CNT_EN_OFFSET
+#define PWM_CAPTURE_EN_SHIFT (PWM_PWM0_CAPTURE_CNT_EN_POS_CAPTURE_EN_SHIFT)
+#define PWM_CAPTURE_EN_MASK  (PWM_PWM0_CAPTURE_CNT_EN_POS_CAPTURE_EN_MASK | \
+                              PWM_PWM0_CAPTURE_CNT_EN_NEG_CAPTURE_EN_MASK)
 #endif
 
 /********************* Private Structure Definition **************************/
@@ -358,6 +370,88 @@ HAL_Status HAL_PWM_GlobalUnlock(struct PWM_HANDLE *pPWM, uint8_t channelMask)
     WRITE_REG(pPWM->pReg->FILTER_CTRL, filterCtrl);
 
     return HAL_OK;
+}
+#endif
+
+#ifdef PWM_PWM0_CAPTURE_CNT_EN_OFFSET
+/**
+ * @brief  Enable PWM capture counter.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channel(0~3).
+ * @param  mode: PWM capture counter mode(postive/negtive).
+ * @retval HAL status
+ */
+HAL_Status HAL_PWM_EnableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
+                                    ePWM_captureCntMode mode)
+{
+    uint32_t modeCtrl = 0;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+    HAL_ASSERT(mode >= HAL_PWM_POS_CAPTURE && mode <= HAL_PWM_POS_NEG_CAPTURE);
+    HAL_DBG("channel=%d, capture counter mode=%d enable\n", channel, mode);
+
+    modeCtrl = READ_REG(pPWM->pReg->CAPTURE_CNT_EN[channel]);
+    modeCtrl |= (mode << PWM_CAPTURE_EN_SHIFT) & PWM_CAPTURE_EN_MASK;
+    WRITE_REG(pPWM->pReg->CAPTURE_CNT_EN[channel], modeCtrl);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable PWM capture counter.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channel(0~3).
+ * @param  mode: PWM capture counter mode(postive/negtive).
+ * @retval HAL status
+ */
+HAL_Status HAL_PWM_DisableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
+                                     ePWM_captureCntMode mode)
+{
+    uint32_t modeCtrl;
+
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+    HAL_ASSERT(mode >= HAL_PWM_POS_CAPTURE && mode <= HAL_PWM_POS_NEG_CAPTURE);
+    HAL_DBG("channel=%d, capture counter mode=%d disable\n", channel, mode);
+
+    modeCtrl = READ_REG(pPWM->pReg->CAPTURE_CNT_EN[channel]);
+    modeCtrl &= ~((mode << PWM_CAPTURE_EN_SHIFT) & PWM_CAPTURE_EN_MASK);
+    WRITE_REG(pPWM->pReg->CAPTURE_CNT_EN[channel], modeCtrl);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get PWM postive capture counter result.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channel(0~3).
+ * @retval counter value.
+ */
+uint32_t HAL_PWM_GetPosCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel)
+{
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+
+    return READ_REG(pPWM->pReg->CAPTURE_POS_CNT[channel]);
+}
+
+/**
+ * @brief  Get PWM negtive capture counter result.
+ * @param  pPWM: pointer to a PWM_HANDLE structure that contains
+ *               the information for PWM module.
+ * @param  channel: PWM channel(0~3).
+ * @retval counter value.
+ */
+uint32_t HAL_PWM_GetNegCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel)
+{
+    HAL_ASSERT(pPWM != NULL);
+    HAL_ASSERT(channel < HAL_PWM_NUM_CHANNELS);
+
+    return READ_REG(pPWM->pReg->CAPTURE_NEG_CNT[channel]);
 }
 #endif
 

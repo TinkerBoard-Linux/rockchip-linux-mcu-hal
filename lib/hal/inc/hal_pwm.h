@@ -30,11 +30,23 @@
 
 /***************************** Structure Definition **************************/
 
+/**
+  * @brief  PWM operation mode definition
+  */
 typedef enum {
-    HAL_PWM_ONE_SHOT = 0,
-    HAL_PWM_CONTINUOUS,
-    HAL_PWM_CAPTURE,
+    HAL_PWM_ONE_SHOT = 0, /**< one-shot mode generates configured periods */
+    HAL_PWM_CONTINUOUS,   /**< continuous mode generates periods in series */
+    HAL_PWM_CAPTURE,      /**< capture mode supports to measure input waveform */
 } ePWM_Mode;
+
+/**
+  * @brief  PWM capture counter mode definition
+  */
+typedef enum {
+    HAL_PWM_POS_CAPTURE = 1, /**< count the number of rising edges */
+    HAL_PWM_NEG_CAPTURE,     /**< count the number of falling edges */
+    HAL_PWM_POS_NEG_CAPTURE, /**< count the number of both rising and falling edges */
+} ePWM_captureCntMode;
 
 /**
   * @brief  PWM HW information definition
@@ -116,6 +128,14 @@ HAL_Status HAL_PWM_SetOutputOffset(struct PWM_HANDLE *pPWM, uint8_t channel, uin
 #ifdef PWM_FILTER_CTRL_PWM0_GLOBAL_LOCK_SHIFT
 HAL_Status HAL_PWM_GlobalLock(struct PWM_HANDLE *pPWM, uint8_t channelMask);
 HAL_Status HAL_PWM_GlobalUnlock(struct PWM_HANDLE *pPWM, uint8_t channelMask);
+#endif
+#ifdef PWM_PWM0_CAPTURE_CNT_EN_OFFSET
+HAL_Status HAL_PWM_EnableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
+                                    ePWM_captureCntMode mode);
+HAL_Status HAL_PWM_DisableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
+                                     ePWM_captureCntMode mode);
+uint32_t HAL_PWM_GetPosCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel);
+uint32_t HAL_PWM_GetNegCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel);
 #endif
 ePWM_Mode HAL_PWM_GetMode(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, ePWM_Mode mode);
