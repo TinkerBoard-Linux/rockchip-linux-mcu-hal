@@ -164,7 +164,7 @@ HAL_Status HAL_UART_Resume(struct UART_REG *pReg, struct UART_SAVE_CONFIG *pUart
         pReg->DLH = pUartSave->DLH;
         pReg->LCR = pUartSave->LCR;
         pReg->IER = pUartSave->IER;
-        pReg->FCR = UART_FCR_ENABLE_FIFO;
+        pReg->FCR = UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_10 | UART_FCR_T_TRIG_10;
         pReg->MCR = pUartSave->MCR;
         pReg->SRT = pUartSave->SRT;
         pReg->STET = pUartSave->STET;
