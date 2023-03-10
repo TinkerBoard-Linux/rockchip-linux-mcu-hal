@@ -7,6 +7,7 @@
 #include "hal_base.h"
 #include "unity_runner.h"
 #include <stdlib.h>
+#include "simple_console.h"
 
 /********************* Private MACRO Definition ******************************/
 //#define GPIO_TEST
@@ -16,6 +17,20 @@
 //#define RPMSG_LINUX_TEST
 //#define SOFTIRQ_TEST
 //#define TIMER_TEST
+
+//#define HAS_CONSOLE
+
+#ifdef HAS_CONSOLE
+#define CONSOLE_BUF_MAX  100
+#define CONSOLE_LINE_MAX 10
+
+static void command_testall_process(uint8_t *in, int len);
+struct console_command command_testall = {
+    .name = "testall",
+    .help = "Run all auto test demos",
+    .process = command_testall_process,
+};
+#endif
 
 /********************* Private Structure Definition **************************/
 
@@ -495,7 +510,11 @@ static void timer_test(void)
 }
 #endif
 
+#ifndef HAS_CONSOLE
 void test_demo(void)
+#else
+static void command_testall_process(uint8_t *in, int len)
+#endif
 {
 #ifdef GPIO_TEST
     gpio_test();
@@ -525,3 +544,26 @@ void test_demo(void)
     timer_test();
 #endif
 }
+
+#ifdef HAS_CONSOLE
+void test_demo(void)
+{
+    int i;
+    uint8_t *lines[CONSOLE_LINE_MAX];
+
+    for (i = 0; i < CONSOLE_LINE_MAX; i++) {
+        lines[i] = malloc(CONSOLE_BUF_MAX);
+        memset(lines[i], 0, CONSOLE_BUF_MAX);
+    }
+
+    console_init(&g_uart7Dev, lines, CONSOLE_BUF_MAX, CONSOLE_LINE_MAX);
+    console_add_command(&command_testall);
+
+    HAL_INTMUX_SetIRQHandler(g_uart7Dev.irqNum, console_uart_isr, NULL);
+    HAL_INTMUX_EnableIRQ(g_uart7Dev.irqNum);
+    HAL_UART_EnableIrq(g_uart7Dev.pReg, 1);
+    console_run(true);
+
+    command_testall_process(NULL, 0);
+}
+#endif

@@ -18,4 +18,5 @@ LINKER_SCRIPT := gcc_bus_m0.ld
 
 -include ../../../middleware/benchmark/benchmark.mk
 -include ../../../middleware/rpmsg-lite/rpmsg-lite.mk
+-include ../../../middleware/simple_console/simple_console.mk
 include ../../common/GCC/Cortex-M.mk
