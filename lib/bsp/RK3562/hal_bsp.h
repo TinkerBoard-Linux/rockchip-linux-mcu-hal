@@ -34,6 +34,9 @@ extern const struct HAL_UART_DEV g_uart7Dev;
 extern const struct HAL_UART_DEV g_uart8Dev;
 extern const struct HAL_UART_DEV g_uart9Dev;
 #endif
+#ifdef HAL_FSPI_MODULE_ENABLED
+extern struct HAL_FSPI_HOST g_fspi0Dev;
+#endif
 
 #endif /* RKMCU_RK3562_BUS */
 

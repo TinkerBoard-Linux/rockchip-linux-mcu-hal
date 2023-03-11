@@ -68,6 +68,24 @@ const struct HAL_SPI_DEV g_spiDev2 = {
 
 #ifdef RKMCU_RK3562_BUS
 
+#ifdef HAL_FSPI_MODULE_ENABLED
+struct HAL_FSPI_HOST g_fspi0Dev =
+{
+    .instance = FSPI,
+    .sclkGate = 0,
+    .hclkGate = 0,
+    .xipClkGate = 0,
+    .sclkID = 0,
+    .irqNum = FSPI0_IRQn,
+    .xipMemCode = 0,
+    .xipMemData = 0,
+    .xmmcDev[0] =
+    {
+        .type = 0,
+    },
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
