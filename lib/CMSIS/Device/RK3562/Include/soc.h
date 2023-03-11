@@ -144,6 +144,7 @@ typedef enum {
   SPI1_IRQn                 =  85 + NUM_INTERRUPTS,     /*!< SPI1 Interrupt                 */
   SPI2_IRQn                 =  86 + NUM_INTERRUPTS,     /*!< SPI2 Interrupt                 */
   SARADC1_IRQn              =  156 + NUM_INTERRUPTS,    /*!< SARADC1 Interrupt              */
+  FSPI0_IRQn                =  160 + NUM_INTERRUPTS,    /*!< FSPI0 Interrupt                */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 
@@ -266,6 +267,8 @@ typedef enum CLOCK_Name {
 #undef GPIO_VER_ID
 #define GPIO_VER_ID             (0x01000C2BU)
 #endif
+/****************************************FSPI********************************************/
+#define FSPI_CHIP_CNT                            (2)
 
 #ifdef __cplusplus
 }
