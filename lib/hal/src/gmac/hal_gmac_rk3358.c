@@ -53,6 +53,8 @@
  * @brief  Set RGMII Mode.
  * @param  pGMAC: pointer to a GMAC_HANDLE structure that contains
  *                the information for GMAC module.
+ * @param  txDelay: RGMII tx delayline
+ * @param  rxDelay: RGMII rx delayline
  */
 void HAL_GMAC_SetToRGMII(struct GMAC_HANDLE *pGMAC,
                          int32_t txDelay, int32_t rxDelay)
