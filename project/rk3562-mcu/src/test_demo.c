@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "simple_console.h"
 #include "command_gpio.h"
+#include "command_wdt.h"
 
 /********************* Private MACRO Definition ******************************/
 //#define GPIO_TEST
@@ -560,6 +561,7 @@ void test_demo(void)
     console_init(&g_uart7Dev, lines, CONSOLE_BUF_MAX, CONSOLE_LINE_MAX);
     console_add_command(&command_testall);
     console_add_command(&command_gpio);
+    console_add_command(&command_wdt);
 
     HAL_INTMUX_SetIRQHandler(g_uart7Dev.irqNum, console_uart_isr, NULL);
     HAL_INTMUX_EnableIRQ(g_uart7Dev.irqNum);
