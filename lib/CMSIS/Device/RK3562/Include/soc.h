@@ -116,6 +116,12 @@ typedef enum {
   GPIO3_EXP_IRQn            =  39 + NUM_INTERRUPTS,     /*!< GPIO3 EXP Interrupt           */
   GPIO4_IRQn                =  40 + NUM_INTERRUPTS,     /*!< GPIO4 Interrupt               */
   GPIO4_EXP_IRQn            =  41 + NUM_INTERRUPTS,     /*!< GPIO4 EXP Interrupt           */
+  I2C0_IRQn                 =  44 + NUM_INTERRUPTS,     /*!< I2C0 Interrupt                */
+  I2C1_IRQn                 =  45 + NUM_INTERRUPTS,     /*!< I2C1 Interrupt                */
+  I2C2_IRQn                 =  46 + NUM_INTERRUPTS,     /*!< I2C2 Interrupt                */
+  I2C3_IRQn                 =  47 + NUM_INTERRUPTS,     /*!< I2C3 Interrupt                */
+  I2C4_IRQn                 =  48 + NUM_INTERRUPTS,     /*!< I2C4 Interrupt                */
+  I2C5_IRQn                 =  49 + NUM_INTERRUPTS,     /*!< I2C5 Interrupt                */
   PWM0_IRQn                 =  52 + NUM_INTERRUPTS,     /*!< PWM0 Interrupt                */
   PWM0_PWR_IRQn             =  53 + NUM_INTERRUPTS,     /*!< PWM0 PWR Interrupt            */
   PWM1_IRQn                 =  54 + NUM_INTERRUPTS,     /*!< PWM1 Interrupt                */

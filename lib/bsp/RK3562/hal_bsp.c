@@ -5,6 +5,64 @@
 
 #include "hal_bsp.h"
 
+#ifdef HAL_I2C_MODULE_ENABLED
+const struct HAL_I2C_DEV g_i2c0Dev =
+{
+    .pReg = I2C0,
+    .irqNum = I2C0_IRQn,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+};
+
+#ifdef RKMCU_RK3562_BUS
+const struct HAL_I2C_DEV g_i2c1Dev =
+{
+    .pReg = I2C1,
+    .irqNum = I2C1_IRQn,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+};
+
+const struct HAL_I2C_DEV g_i2c2Dev =
+{
+    .pReg = I2C2,
+    .irqNum = I2C2_IRQn,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+};
+
+const struct HAL_I2C_DEV g_i2c3Dev =
+{
+    .pReg = I2C3,
+    .irqNum = I2C3_IRQn,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+};
+
+const struct HAL_I2C_DEV g_i2c4Dev =
+{
+    .pReg = I2C4,
+    .irqNum = I2C4_IRQn,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+};
+
+const struct HAL_I2C_DEV g_i2c5Dev =
+{
+    .pReg = I2C5,
+    .irqNum = I2C5_IRQn,
+    .clkID = 0,
+    .clkGateID = 0,
+    .pclkGateID = 0,
+};
+#endif /* RKMCU_RK3562_BUS */
+#endif /* HAL_I2C_MODULE_ENABLED */
+
 #ifdef HAL_SPI_MODULE_ENABLED
 const struct HAL_SPI_DEV g_spiDev0 = {
     .base = SPI0_BASE,
