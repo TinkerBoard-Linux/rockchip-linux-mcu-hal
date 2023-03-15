@@ -26,7 +26,7 @@ struct HAL_PL330_DEV g_pl330Dev1 =
 #endif
 
 #ifdef HAL_SPI_MODULE_ENABLED
-const struct HAL_SPI_DEV g_spiDev0 = {
+const struct HAL_SPI_DEV g_spi0Dev = {
     .base = SPI0_BASE,
     .clkId = CLK_SPI0,
     .clkGateID = CLK_SPI0_GATE,
@@ -45,7 +45,7 @@ const struct HAL_SPI_DEV g_spiDev0 = {
     },
 };
 
-const struct HAL_SPI_DEV g_spiDev1 = {
+const struct HAL_SPI_DEV g_spi1Dev = {
     .base = SPI1_BASE,
     .clkId = CLK_SPI1,
     .clkGateID = CLK_SPI1_GATE,
@@ -64,7 +64,7 @@ const struct HAL_SPI_DEV g_spiDev1 = {
     },
 };
 
-const struct HAL_SPI_DEV g_spiDev2 = {
+const struct HAL_SPI_DEV g_spi2Dev = {
     .base = SPI2_BASE,
     .clkId = CLK_SPI2,
     .clkGateID = CLK_SPI2_GATE,
@@ -83,7 +83,7 @@ const struct HAL_SPI_DEV g_spiDev2 = {
     },
 };
 
-const struct HAL_SPI_DEV g_spiDev3 = {
+const struct HAL_SPI_DEV g_spi3Dev = {
     .base = SPI3_BASE,
     .clkId = CLK_SPI3,
     .clkGateID = CLK_SPI3_GATE,

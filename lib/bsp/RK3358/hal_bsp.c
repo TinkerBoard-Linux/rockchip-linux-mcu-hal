@@ -92,7 +92,7 @@ struct HAL_SFC_HOST g_sfcDev =
 #endif
 
 #ifdef HAL_SPI_MODULE_ENABLED
-const struct HAL_SPI_DEV g_spiDev0 = {
+const struct HAL_SPI_DEV g_spi0Dev = {
     .base = SPI0_BASE,
     .clkId = CLK_SPI0,
     .clkGateID = CLK_SPI0_PLL_CLK_GATE,
@@ -111,7 +111,7 @@ const struct HAL_SPI_DEV g_spiDev0 = {
     },
 };
 
-const struct HAL_SPI_DEV g_spiDev1 = {
+const struct HAL_SPI_DEV g_spi1Dev = {
     .base = SPI1_BASE,
     .clkId = CLK_SPI1,
     .clkGateID = CLK_SPI1_PLL_CLK_GATE,

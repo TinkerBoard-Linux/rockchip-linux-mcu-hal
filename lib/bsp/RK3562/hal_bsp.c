@@ -64,7 +64,7 @@ const struct HAL_I2C_DEV g_i2c5Dev =
 #endif /* HAL_I2C_MODULE_ENABLED */
 
 #ifdef HAL_SPI_MODULE_ENABLED
-const struct HAL_SPI_DEV g_spiDev0 = {
+const struct HAL_SPI_DEV g_spi0Dev = {
     .base = SPI0_BASE,
     .clkId = 0,
     .clkGateID = 0,
@@ -84,7 +84,7 @@ const struct HAL_SPI_DEV g_spiDev0 = {
 };
 
 #ifdef RKMCU_RK3562_BUS
-const struct HAL_SPI_DEV g_spiDev1 = {
+const struct HAL_SPI_DEV g_spi1Dev = {
     .base = SPI1_BASE,
     .clkId = 0,
     .clkGateID = 0,
@@ -103,7 +103,7 @@ const struct HAL_SPI_DEV g_spiDev1 = {
     },
 };
 
-const struct HAL_SPI_DEV g_spiDev2 = {
+const struct HAL_SPI_DEV g_spi2Dev = {
     .base = SPI2_BASE,
     .clkId = 0,
     .clkGateID = 0,

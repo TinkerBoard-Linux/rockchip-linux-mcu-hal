@@ -505,7 +505,7 @@ static HAL_Status BSP_FSPI_DeInit(void)
 #endif
 
 #ifdef HAL_SPI_MODULE_ENABLED
-const struct HAL_SPI_DEV g_spiDev1 = {
+const struct HAL_SPI_DEV g_spi1Dev = {
     .base = SPI1_BASE,
     .clkId = CLK_SPI1,
     .clkGateID = CLK_SPI1_GATE,
@@ -524,7 +524,7 @@ const struct HAL_SPI_DEV g_spiDev1 = {
     },
 };
 
-const struct HAL_SPI_DEV g_spiDev2 = {
+const struct HAL_SPI_DEV g_spi2Dev = {
     .base = SPI2_BASE,
     .clkId = CLK_SPI2,
     .clkGateID = CLK_SPI2_GATE,

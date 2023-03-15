@@ -51,7 +51,7 @@ extern const struct HAL_PVTM_DEV g_pvtmDev;
 #endif
 
 #ifdef HAL_SPI_MODULE_ENABLED
-extern const struct HAL_SPI_DEV g_spiDev1;
+extern const struct HAL_SPI_DEV g_spi1Dev;
 #endif
 /***************************** Function Declare ******************************/
 

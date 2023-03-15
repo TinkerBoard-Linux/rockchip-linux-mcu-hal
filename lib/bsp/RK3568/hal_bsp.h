@@ -17,10 +17,10 @@ extern struct HAL_PL330_DEV g_pl330Dev1;
 #endif
 
 #ifdef HAL_SPI_MODULE_ENABLED
-extern const struct HAL_SPI_DEV g_spiDev0;
-extern const struct HAL_SPI_DEV g_spiDev1;
-extern const struct HAL_SPI_DEV g_spiDev2;
-extern const struct HAL_SPI_DEV g_spiDev3;
+extern const struct HAL_SPI_DEV g_spi0Dev;
+extern const struct HAL_SPI_DEV g_spi1Dev;
+extern const struct HAL_SPI_DEV g_spi2Dev;
+extern const struct HAL_SPI_DEV g_spi3Dev;
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED

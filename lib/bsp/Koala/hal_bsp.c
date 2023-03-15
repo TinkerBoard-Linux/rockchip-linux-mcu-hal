@@ -204,7 +204,7 @@ const struct HAL_PVTM_DEV g_pvtmDev =
 #endif
 
 #ifdef HAL_SPI_MODULE_ENABLED
-const struct HAL_SPI_DEV g_spiDev1 = {
+const struct HAL_SPI_DEV g_spi1Dev = {
     .base = SPI1_BASE,
     .clkId = CLK_SPI1,
     .clkGateID = CLK_SPI1_GATE,
