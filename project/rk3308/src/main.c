@@ -9,6 +9,7 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
+//#define TEST_USE_RPMSG_INIT
 
 /********************* Private Structure Definition **************************/
 
@@ -181,7 +182,9 @@ void main(void)
 #endif
 
     /* RPMsg Init */
+#ifdef TEST_USE_RPMSG_INIT
     rpmsg_init();
+#endif
 
     printf("\n");
     printf("****************************************\n");
