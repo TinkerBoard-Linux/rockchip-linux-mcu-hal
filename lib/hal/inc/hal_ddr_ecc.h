@@ -24,6 +24,12 @@
 /** @defgroup DDR_ECC_Exported_Definition_Group1 Basic Definition
  *  @{
  */
+#define DDR_ECC_CE_DATA_POISON (1)
+#define DDR_ECC_UE_DATA_POISON (0)
+
+#define DDR_ECC_POISON_EN  (1)
+#define DDR_ECC_POISON_DIS (0)
+
 /***************************** Structure Definition **************************/
 /**
  * @brief  DDR_ECC private instance data
@@ -31,6 +37,7 @@
 struct DDR_ECC_CNT {
     uint32_t ceCnt; /**< Statistical Correctable Error count */
     uint32_t ueCnt; /**< Statistical Uncorrectable Error count */
+    uint64_t eccPoisonAddr; /**< ECC Data Poisoning Address */
 };
 
 /** @} */
@@ -40,6 +47,8 @@ struct DDR_ECC_CNT {
  */
 HAL_Status HAL_DDR_ECC_GetInfo(struct DDR_ECC_CNT *p);
 HAL_Status HAL_DDR_ECC_Init(struct DDR_ECC_CNT *p);
+HAL_Status HAL_DDR_ECC_PoisonEnable(struct DDR_ECC_CNT *p);
+HAL_Status HAL_DDR_ECC_PoisonDisable(struct DDR_ECC_CNT *p);
 /** @} */
 
 #endif

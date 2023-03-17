@@ -60,6 +60,7 @@
 #define SIP_AMP_CFG                   0x82000022
 
 #define ROCKCHIP_SIP_CONFIG_DRAM_ECC 0x0d
+#define CONFIG_DRAM_ECC_POISON       0x11
 
 /**
   * @brief  SIP share mem page types definition
