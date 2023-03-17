@@ -195,6 +195,7 @@ typedef enum {
 /* ================      Processor and Core Peripheral Section     ================ */
 /* ================================================================================ */
 
+#define PLL_INPUT_32K_RATE       (32 * 1000)
 #define PLL_INPUT_OSC_RATE       (24 * 1000 * 1000)
 
 /* --------  Configuration of Core Peripherals  ----------------------------------- */
@@ -262,6 +263,58 @@ typedef enum {
 typedef enum CLOCK_Name {
     /* TODO */
     CLK_INVALID = 0U,
+    PLL_APLL,
+    PLL_GPLL,
+    PLL_VPLL,
+    PLL_HPLL,
+    PLL_CPLL,
+    PLL_DPLL,
+
+    HCLK_BUS             = CLK64(HCLK_BUS_SEL, HCLK_BUS_DIV),
+
+    CLK_PMU0_I2C0        = CLK64(CLK_PMU0_I2C0_SEL, CLK_PMU0_I2C0_DIV),
+    CLK_I2C              = CLK64(CLK_I2C_SEL, 0U),
+
+    CLK_PMU1_SPI0        = CLK64(CLK_PMU1_SPI0_SEL, CLK_PMU1_SPI0_DIV),
+    CLK_SPI1             = CLK64(CLK_SPI1_SEL, 0U),
+    CLK_SPI2             = CLK64(CLK_SPI2_SEL, 0U),
+    SCLK_SFC             = CLK64(SCLK_SFC_SEL, SCLK_SFC_DIV),
+
+    CLK_PMU1_UART0_SRC   = CLK64(0U, CLK_PMU1_UART0_SRC_DIV),
+    CLK_PMU1_UART0_FRAC  = CLK64(0U, CLK_PMU1_UART0_FRAC_DIV),
+    CLK_PMU1_UART0       = CLK64(SCLK_PMU1_UART0_SEL, 0U),
+    CLK_UART1_SRC        = CLK64(CLK_UART1_SRC_SEL, CLK_UART1_SRC_DIV),
+    CLK_UART1_FRAC       = CLK64(0U, CLK_UART1_FRAC_DIV),
+    CLK_UART1            = CLK64(SCLK_UART1_SEL, 0U),
+    CLK_UART2_SRC        = CLK64(CLK_UART2_SRC_SEL, CLK_UART2_SRC_DIV),
+    CLK_UART2_FRAC       = CLK64(0U, CLK_UART2_FRAC_DIV),
+    CLK_UART2            = CLK64(SCLK_UART2_SEL, 0U),
+    CLK_UART3_SRC        = CLK64(CLK_UART3_SRC_SEL, CLK_UART3_SRC_DIV),
+    CLK_UART3_FRAC       = CLK64(0U, CLK_UART3_FRAC_DIV),
+    CLK_UART3            = CLK64(SCLK_UART3_SEL, 0U),
+    CLK_UART4_SRC        = CLK64(CLK_UART4_SRC_SEL, CLK_UART4_SRC_DIV),
+    CLK_UART4_FRAC       = CLK64(0U, CLK_UART4_FRAC_DIV),
+    CLK_UART4            = CLK64(SCLK_UART4_SEL, 0U),
+    CLK_UART5_SRC        = CLK64(CLK_UART5_SRC_SEL, CLK_UART5_SRC_DIV),
+    CLK_UART5_FRAC       = CLK64(0U, CLK_UART5_FRAC_DIV),
+    CLK_UART5            = CLK64(SCLK_UART5_SEL, 0U),
+    CLK_UART6_SRC        = CLK64(CLK_UART6_SRC_SEL, CLK_UART6_SRC_DIV),
+    CLK_UART6_FRAC       = CLK64(0U, CLK_UART6_FRAC_DIV),
+    CLK_UART6            = CLK64(SCLK_UART6_SEL, 0U),
+    CLK_UART7_SRC        = CLK64(CLK_UART7_SRC_SEL, CLK_UART7_SRC_DIV),
+    CLK_UART7_FRAC       = CLK64(0U, CLK_UART7_FRAC_DIV),
+    CLK_UART7            = CLK64(SCLK_UART7_SEL, 0U),
+    CLK_UART8_SRC        = CLK64(CLK_UART8_SRC_SEL, CLK_UART8_SRC_DIV),
+    CLK_UART8_FRAC       = CLK64(0U, CLK_UART8_FRAC_DIV),
+    CLK_UART8            = CLK64(SCLK_UART8_SEL, 0U),
+    CLK_UART9_SRC        = CLK64(CLK_UART9_SRC_SEL, CLK_UART9_SRC_DIV),
+    CLK_UART9_FRAC       = CLK64(0U, CLK_UART9_FRAC_DIV),
+    CLK_UART9            = CLK64(SCLK_UART9_SEL, 0U),
+
+    CLK_PMU1_PWM0        = CLK64(CLK_PMU1_PWM0_SEL, CLK_PMU1_PWM0_DIV),
+    CLK_PWM1_PERI        = CLK64(CLK_PWM1_PERI_SEL, 0U),
+    CLK_PWM2_PERI        = CLK64(CLK_PWM2_PERI_SEL, 0U),
+    CLK_PWM3_PERI        = CLK64(CLK_PWM3_PERI_SEL, 0U),
 } eCLOCK_Name;
 #endif /* __ASSEMBLY__ */
 
