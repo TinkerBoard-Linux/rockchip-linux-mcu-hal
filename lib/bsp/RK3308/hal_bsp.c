@@ -118,7 +118,11 @@ struct HAL_I2STDM_DEV g_i2sTdm0Dev =
     .mclkTxGate = CLK_I2S0_8CH_TX_CLK_GATE,
     .mclkRx = CLK_I2S0_8CH_RX,
     .mclkRxGate = CLK_I2S0_8CH_RX_CLK_GATE,
+    .muxTxSel = CLK_I2S0_8CH_TX_RX_CLK_SEL,
+    .muxRxSel = CLK_I2S0_8CH_RX_TX_CLK_SEL,
     .hclk = HCLK_I2S0_8CH_GATE,
+    .rsts[0] = SRST_M_I2S0_8CH_TX,
+    .rsts[1] = SRST_M_I2S0_8CH_RX,
     .bclkFs = 64,
     .rxDmaData =
     {
@@ -145,7 +149,11 @@ struct HAL_I2STDM_DEV g_i2sTdm1Dev =
     .mclkTxGate = CLK_I2S1_8CH_TX_CLK_GATE,
     .mclkRx = CLK_I2S1_8CH_RX,
     .mclkRxGate = CLK_I2S1_8CH_RX_CLK_GATE,
+    .muxTxSel = CLK_I2S1_8CH_TX_RX_CLK_SEL,
+    .muxRxSel = CLK_I2S1_8CH_RX_TX_CLK_SEL,
     .hclk = HCLK_I2S1_8CH_GATE,
+    .rsts[0] = SRST_M_I2S1_8CH_TX,
+    .rsts[1] = SRST_M_I2S1_8CH_RX,
     .bclkFs = 64,
     .rxDmaData =
     {
@@ -172,7 +180,11 @@ struct HAL_I2STDM_DEV g_i2sTdm2Dev =
     .mclkTxGate = CLK_I2S2_8CH_TX_CLK_GATE,
     .mclkRx = CLK_I2S2_8CH_RX,
     .mclkRxGate = CLK_I2S2_8CH_RX_CLK_GATE,
+    .muxTxSel = CLK_I2S2_8CH_TX_RX_CLK_SEL,
+    .muxRxSel = CLK_I2S2_8CH_RX_TX_CLK_SEL,
     .hclk = HCLK_I2S2_8CH_GATE,
+    .rsts[0] = SRST_M_I2S2_8CH_TX,
+    .rsts[1] = SRST_M_I2S2_8CH_RX,
     .bclkFs = 64,
     .rxDmaData =
     {
