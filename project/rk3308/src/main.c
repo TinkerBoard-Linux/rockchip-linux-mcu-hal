@@ -10,6 +10,7 @@
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
 //#define TEST_USE_RPMSG_INIT
+//#define TEST_USE_UART1M0
 
 /********************* Private Structure Definition **************************/
 
@@ -34,9 +35,24 @@ static struct GIC_IRQ_AMP_CTRL irqConfig = {
 
 /********************* Private Variable Definition ***************************/
 
+#if defined(TEST_USE_UART1M0) && defined(PRIMARY_CPU)
+static struct UART_REG *pUart = UART1;
+#else
 static struct UART_REG *pUart = UART4;      // UART2 or UART4, selected depend on hardware board
+#endif
 
 /********************* Private Function Definition ***************************/
+
+#if defined(TEST_USE_UART1M0) && defined(PRIMARY_CPU)
+static void HAL_IOMUX_Uart1M0Config(void)
+{
+    /* UART1 M0 RX-1D0 TX-1D1 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK1,
+                         GPIO_PIN_D0 |
+                         GPIO_PIN_D1,
+                         PIN_CONFIG_MUX_FUNC1);
+}
+#else
 static void HAL_IOMUX_Uart2M1Config(void)
 {
     /* UART2 M1 RX-4D2 TX-4D3 */
@@ -54,6 +70,7 @@ static void HAL_IOMUX_Uart4M0Config(void)
                          GPIO_PIN_B1,
                          PIN_CONFIG_MUX_FUNC1);
 }
+#endif
 
 static void HAL_IODOMAIN_Config(void)
 {
@@ -164,6 +181,10 @@ void main(void)
     /* IO Domain Init */
     HAL_IODOMAIN_Config();
 
+#if defined(TEST_USE_UART1M0) && defined(PRIMARY_CPU)
+    HAL_IOMUX_Uart1M0Config();
+    HAL_UART_Init(&g_uart1Dev, &hal_uart_config);
+#else
     /* CPU1(main core) init UART*/
     if (HAL_CPU_TOPOLOGY_GetCurrentCpuId() == 1) {
         if (UART2 == pUart) {
@@ -174,6 +195,7 @@ void main(void)
             HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
         }
     }
+#endif
 
     /* SPINLOCK Init */
 #ifdef HAL_SPINLOCK_MODULE_ENABLED
