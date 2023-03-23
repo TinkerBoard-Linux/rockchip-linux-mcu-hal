@@ -419,7 +419,9 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         HAL_CRU_ClkEnable(fracGateId);
 
         if ((!(PLL_INPUT_OSC_RATE % rate))) {
-            HAL_CRU_ClkSetMux(mux, 4);
+            HAL_CRU_ClkSetDiv(divSrc, 1);
+            HAL_CRU_ClkSetMux(muxSrc, 4);
+            HAL_CRU_ClkSetMux(mux, 0);
             HAL_CRU_ClkDisable(fracGateId);
         } else if ((!(s_dpllFreq % rate)) && ((s_dpllFreq / rate) < 31)) {
             HAL_CRU_ClkSetDiv(divSrc, s_dpllFreq / rate);
