@@ -111,6 +111,7 @@ struct HAL_SPI_DMA_INFO {
     uint8_t channel;
     uint8_t direction;
     uint32_t addr;
+    struct DMA_REG *dmac; /**< dmac reg base ptr */
 };
 
 struct HAL_SPI_DEV {
