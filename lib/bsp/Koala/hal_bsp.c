@@ -215,11 +215,13 @@ const struct HAL_SPI_DEV g_spi1Dev = {
         .channel = DMA_REQ_SPI1_TX,
         .direction = DMA_MEM_TO_DEV,
         .addr = SPI1_BASE + 0x400,
+        .dmac = DMA,
     },
     .rxDma = {
         .channel = DMA_REQ_SPI1_RX,
         .direction = DMA_DEV_TO_MEM,
         .addr = SPI1_BASE + 0x800,
+        .dmac = DMA,
     },
 };
 #endif
