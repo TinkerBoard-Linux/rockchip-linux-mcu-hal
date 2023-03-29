@@ -59,48 +59,34 @@ static void gpio_test(void)
 {
     uint32_t level1, level2;
 
+    HAL_PINCTRL_SetParam(GPIO_BANK1,
+                         GPIO_PIN_C0,
+                         PIN_CONFIG_MUX_FUNC0);
     /* Test GPIO pull */
     printf("test_gpio pull UP\n");
     HAL_PINCTRL_SetParam(GPIO_BANK1,
-                         GPIO_PIN_B3,
-                         PIN_CONFIG_MUX_FUNC0 |
-                         PIN_CONFIG_PUL_UP);
-    HAL_PINCTRL_SetParam(GPIO_BANK1,
-                         GPIO_PIN_B4,
-                         PIN_CONFIG_MUX_FUNC0 |
+                         GPIO_PIN_C0,
                          PIN_CONFIG_PUL_UP);
     HAL_DelayMs(3000);
     printf("test_gpio pull DOWN\n");
     HAL_PINCTRL_SetParam(GPIO_BANK1,
-                         GPIO_PIN_B3,
-                         PIN_CONFIG_PUL_DOWN);
-    HAL_PINCTRL_SetParam(GPIO_BANK1,
-                         GPIO_PIN_B4,
+                         GPIO_PIN_C0,
                          PIN_CONFIG_PUL_DOWN);
     HAL_DelayMs(3000);
 
     /* Test GPIO output */
     printf("test_gpio output\n");
-    HAL_GPIO_SetPinDirection(GPIO1, GPIO_PIN_B3, GPIO_OUT);
-    HAL_GPIO_SetPinDirection(GPIO1, GPIO_PIN_B4, GPIO_OUT);
-    level1 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B3);
-    level2 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B4);
-    printf("test_gpio 1b3 level = %ld\n", level1);
-    printf("test_gpio 1b4 level = %ld\n", level2);
+    HAL_GPIO_SetPinDirection(GPIO1, GPIO_PIN_C0, GPIO_OUT);
+    level2 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_C0);
+    printf("test_gpio 1c0 level = %ld\n", level2);
     HAL_DelayMs(3000);
-    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_B3, GPIO_HIGH);
-    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_B4, GPIO_HIGH);
-    level1 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B3);
-    level2 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B4);
-    printf("test_gpio 1b3 output high level = %ld\n", level1);
-    printf("test_gpio 1b4 output high level = %ld\n", level2);
+    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_C0, GPIO_HIGH);
+    level2 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_C0);
+    printf("test_gpio 1c0 output high level = %ld\n", level2);
     HAL_DelayMs(3000);
-    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_B3, GPIO_LOW);
-    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_B4, GPIO_LOW);
-    level1 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B3);
-    level2 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B4);
-    printf("test_gpio 1b3 output low level = %ld\n", level1);
-    printf("test_gpio 1b4 output low level = %ld\n", level2);
+    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_C0, GPIO_LOW);
+    level2 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_C0);
+    printf("test_gpio 1c0 output low level = %ld\n", level2);
 }
 #endif
 
