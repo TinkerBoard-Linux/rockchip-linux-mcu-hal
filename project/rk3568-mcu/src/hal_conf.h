@@ -14,4 +14,10 @@
 #define HAL_TIMER_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 
+#define HAL_DBG_USING_LIBC_PRINTF
+#define HAL_DBG_INFO_ON
+#define HAL_DBG_WRN_ON
+#define HAL_DBG_ERR_ON
+#define HAL_ASSERT_ON
+
 #endif

@@ -18,19 +18,45 @@
 /********************* Public Function Definition ****************************/
 static struct UART_REG *pUart = UART2;
 
-int __wrap_puts(const char *s)
+#ifdef __GNUC__
+__USED int _write(int fd, char *ptr, int len)
 {
-    while (*s != '\0') {
-        if (*s == '\n') {
+    int i = 0;
+
+    /*
+     * write "len" of char from "ptr" to file id "fd"
+     * Return number of char written.
+     *
+    * Only work for STDOUT, STDIN, and STDERR
+     */
+    if (fd > 2) {
+        return -1;
+    }
+
+    while (*ptr && (i < len)) {
+        if (*ptr == '\n') {
             HAL_UART_SerialOutChar(pUart, '\r');
         }
+        HAL_UART_SerialOutChar(pUart, *ptr);
 
-        HAL_UART_SerialOutChar(pUart, *s);
-        ++s;
+        i++;
+        ptr++;
     }
+
+    return i;
+}
+#else
+int fputc(int ch, FILE *f)
+{
+    if (ch == '\n') {
+        HAL_UART_SerialOutChar(pUart, '\r');
+    }
+
+    HAL_UART_SerialOutChar(pUart, (char)ch);
 
     return 0;
 }
+#endif
 
 int main(void)
 {
