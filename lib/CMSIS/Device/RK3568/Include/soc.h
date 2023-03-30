@@ -57,6 +57,60 @@ typedef enum {
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
+#ifdef HAL_MCU_CORE
+typedef enum
+{
+/******  Platform Exceptions Numbers ***************************************************/
+    DMAC0_ABORT_IRQn       = 13,       /*!< DMAC0 Abort Interrupt       */
+    DMAC0_IRQn             = 14,       /*!< DMAC0 Interrupt             */
+    DMAC1_ABORT_IRQn       = 15,       /*!< DMAC1 Abort Interrupt       */
+    DMAC1_IRQn             = 16,       /*!< DMAC1 Interrupt             */
+    GMAC0_IRQn             = 27,       /*!< GMAC0 Interrupt             */
+    GMAC1_IRQn             = 32,       /*!< GMAC1 Interrupt             */
+    GPIO0_IRQn             = 33,       /*!< GPIO0 Interrupt             */
+    GPIO1_IRQn             = 34,       /*!< GPIO1 Interrupt             */
+    GPIO2_IRQn             = 35,       /*!< GPIO2 Interrupt             */
+    GPIO3_IRQn             = 36,       /*!< GPIO3 Interrupt             */
+    GPIO4_IRQn             = 37,       /*!< GPIO4 Interrupt             */
+    I2C0_IRQn              = 46,       /*!< I2C0 Interrupt              */
+    I2C1_IRQn              = 47,       /*!< I2C1 Interrupt              */
+    I2C2_IRQn              = 48,       /*!< I2C2 Interrupt              */
+    I2C3_IRQn              = 49,       /*!< I2C3 Interrupt              */
+    I2C4_IRQn              = 50,       /*!< I2C4 Interrupt              */
+    I2C5_IRQn              = 51,       /*!< I2C5 Interrupt              */
+    FSPI0_IRQn             = 101,      /*!< FSPI Interrupt              */
+    SPI0_IRQn              = 103,      /*!< SPI0 Interrupt              */
+    SPI1_IRQn              = 104,      /*!< SPI1 Interrupt              */
+    SPI2_IRQn              = 105,      /*!< SPI2 Interrupt              */
+    SPI3_IRQn              = 106,      /*!< SPI3 Interrupt              */
+    TIMER0_IRQn            = 109,      /*!< TIMER0 Interrupt            */
+    TIMER1_IRQn            = 110,      /*!< TIMER1 Interrupt            */
+    TIMER2_IRQn            = 111,      /*!< TIMER2 Interrupt            */
+    TIMER3_IRQn            = 112,      /*!< TIMER3 Interrupt            */
+    TIMER4_IRQn            = 113,      /*!< TIMER4 Interrupt            */
+    TIMER5_IRQn            = 114,      /*!< TIMER5 Interrupt            */
+    UART0_IRQn             = 116,      /*!< UART0  Interrupt            */
+    UART1_IRQn             = 117,      /*!< UART1  Interrupt            */
+    UART2_IRQn             = 118,      /*!< UART2  Interrupt            */
+    UART3_IRQn             = 119,      /*!< UART3  Interrupt            */
+    UART4_IRQn             = 120,      /*!< UART4  Interrupt            */
+    UART5_IRQn             = 121,      /*!< UART5  Interrupt            */
+    UART6_IRQn             = 122,      /*!< UART6  Interrupt            */
+    UART7_IRQn             = 123,      /*!< UART7  Interrupt            */
+    UART8_IRQn             = 124,      /*!< UART8  Interrupt            */
+    UART9_IRQn             = 125,      /*!< UART9  Interrupt            */
+    WDT0_IRQn              = 149,      /*!< WDT0  Interrupt             */
+    MBOX0_CH0_B2A_IRQn     = 183,      /*!< MBOX0 CH0 B2A Interrupt     */
+    MBOX0_CH1_B2A_IRQn     = 184,      /*!< MBOX0 CH1 B2A Interrupt     */
+    MBOX0_CH2_B2A_IRQn     = 185,      /*!< MBOX0 CH2 B2A Interrupt     */
+    MBOX0_CH3_B2A_IRQn     = 186,      /*!< MBOX0 CH3 B2A Interrupt     */
+    MBOX0_CH0_A2B_IRQn     = 187,      /*!< MBOX0 CH0 A2B Interrupt     */
+    MBOX0_CH1_A2B_IRQn     = 188,      /*!< MBOX0 CH1 A2B Interrupt     */
+    MBOX0_CH2_A2B_IRQn     = 189,      /*!< MBOX0 CH2 A2B Interrupt     */
+    MBOX0_CH3_A2B_IRQn     = 190,      /*!< MBOX0 CH3 A2B Interrupt     */
+    NUM_INTERRUPTS         = 255,
+} IRQn_Type;
+#else
 typedef enum
 {
 /* When IPI_SGIs are used in AMP mode, you need to pay attention to whether it conflicts
@@ -163,6 +217,7 @@ typedef enum
     RPMSG_32_IRQn          = 296,      /*!< RPMSG 3->2 Interrupt        */
     NUM_INTERRUPTS         = 352,
 } IRQn_Type;
+#endif
 
 #define RSVD_IRQn(_N)               (RSVD0_IRQn + (_N))
 
