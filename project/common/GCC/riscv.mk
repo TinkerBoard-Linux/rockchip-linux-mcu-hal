@@ -56,12 +56,12 @@ endif
 #############################################################################
 # Source code and include
 #############################################################################
-INCLUDES := \
+INCLUDES += \
 -I"../src" \
 -I"$(ROOT_PATH)/lib/CMSIS/RISCV/Include" \
 
 
-SRC_DIRS := \
+SRC_DIRS += \
     ../src \
     $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC \
 
