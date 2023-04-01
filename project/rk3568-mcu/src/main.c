@@ -8,6 +8,7 @@
 #include "unity_runner.h"
 
 /********************* Private MACRO Definition ******************************/
+//#define TEST_DEMO
 
 /********************* Private Structure Definition **************************/
 
@@ -58,12 +59,23 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
+extern void scr1_trap_entry(void);
+
 int main(void)
 {
-    /* Uart is initialized by pre-loader,
-     * use it to print debug info directly.
-     */
+    /* HAL BASE Init */
+    HAL_Init();
+
+    /* BSP Init */
+    BSP_Init();
+
+    /* Interrupt Init */
+    HAL_RISCVIC_Init((uint32_t)scr1_trap_entry);
+
     printf("Hello RISC-V\n");
+#ifdef TEST_DEMO
+    test_demo();
+#endif
 
     return 0;
 }

@@ -10,7 +10,12 @@
 #define SOC_RK3568
 #define HAL_MCU_CORE
 
+/* System timer designation (RK TIMER) */
+#define SYS_TIMER TIMER5
+
 /* HAL Driver Config */
+#define HAL_IRQ_HANDLER_MODULE_ENABLED
+#define HAL_RISCVIC_MODULE_ENABLED
 #define HAL_TIMER_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 
@@ -19,5 +24,7 @@
 #define HAL_DBG_WRN_ON
 #define HAL_DBG_ERR_ON
 #define HAL_ASSERT_ON
+
+#define HAL_RISCVIC_INTERRUPT_SEPERATE 8
 
 #endif

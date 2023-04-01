@@ -6,4 +6,5 @@ PROJECT		:= RK3568
 SOC		:= RK3568
 CPU		:= -march=rv32imac -mabi=ilp32
 
+-include ../../../middleware/benchmark/benchmark.mk
 include ../../common/GCC/riscv.mk
