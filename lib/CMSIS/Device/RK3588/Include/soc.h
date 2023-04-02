@@ -674,6 +674,13 @@ struct INTMUX_REG {
 #undef GPIO_VER_ID
 #define GPIO_VER_ID             (0x01000C2BU)
 #endif
+/****************************************PCIE********************************************/
+#define PCIE3_4L_S_BASE                0xF0000000U /* PCIE 32btis mmio base address */
+#define PCIE3_4L_DBI_BASE              0xF5000000U /* PCIE dbi base address */
+#define PCIE3PHY_GRF_BASE              0xFD5B8000U /* S-PHY_GRF base address */
+#define PCIE3_4L_APB_BASE              0xFE150000U /* PCIE apb base address */
+#define PCIE3_PHY_BASE                 0xFEE80000U /* S-PHY base address */
+#define PCIE3_4L_S_64_BASE             0x900000000U /* PCIE 64btis mmio base address */
 
 /****************************************PMU*********************************************/
 #define RK3588_PD_GPU     0
