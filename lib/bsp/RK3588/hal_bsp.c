@@ -47,6 +47,24 @@ const struct HAL_UART_DEV g_uart2Dev =
 };
 #endif
 
+#ifdef HAL_PCIE_MODULE_ENABLED
+const struct HAL_PHY_SNPS_PCIE3_DEV g_phy_pcie3Dev =
+{
+    .phyMode = PHY_MODE_PCIE_AGGREGATION,
+};
+
+struct HAL_PCIE_DEV g_pcieDev =
+{
+    .apbBase = PCIE3_4L_APB_BASE,
+    .dbiBase = PCIE3_4L_DBI_BASE,
+    .cfgBase = 0xF0000000,
+    .lanes = 4,
+    .gen = 3,
+    .firstBusNo = 0,
+    .phy = (void *)&g_phy_pcie3Dev,
+};
+#endif
+
 #ifdef HAL_PDM_MODULE_ENABLED
 struct HAL_PDM_DEV g_pdm0Dev =
 {
