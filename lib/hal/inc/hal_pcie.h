@@ -27,10 +27,32 @@
 
 /***************************** Structure Definition **************************/
 
+#define PHY_MODE_PCIE_AGGREGATION 4       /**< PCIE3x4 */
+#define PHY_MODE_PCIE_NANBNB      0       /**< P1:PCIE3x2  +  P0:PCIE3x2 */
+#define PHY_MODE_PCIE_NANBBI      1       /**< P1:PCIE3x2  +  P0:PCIE3x1*2 */
+#define PHY_MODE_PCIE_NABINB      2       /**< P1:PCIE3x1*2 + P0:PCIE3x2 */
+#define PHY_MODE_PCIE_NABIBI      3       /**< P1:PCIE3x1*2 + P0:PCIE3x1*2 */
+
+#define PCIE_ATU_REGION_INDEX1 (0x1 << 0)
+#define PCIE_ATU_REGION_INDEX0 (0x0 << 0)
+#define PCIE_ATU_TYPE_MEM      (0x0 << 0)
+#define PCIE_ATU_TYPE_IO       (0x2 << 0)
+#define PCIE_ATU_TYPE_CFG0     (0x4 << 0)
+#define PCIE_ATU_TYPE_CFG1     (0x5 << 0)
+
+struct HAL_PHY_SNPS_PCIE3_DEV {
+    uint32_t phyMode;
+};
+
 /** PCIe handler */
 struct HAL_PCIE_DEV {
     uint32_t apbBase;
     uint32_t dbiBase;
+    uint32_t cfgBase;
+    uint8_t lanes;
+    uint8_t gen;
+    uint8_t firstBusNo;
+    void *phy;
 };
 
 struct HAL_PCIE_HANDLE {
@@ -49,6 +71,9 @@ HAL_Check HAL_PCIE_LinkUp(struct HAL_PCIE_HANDLE *pcie);
 uint32_t HAL_PCIE_GetLTSSM(struct HAL_PCIE_HANDLE *pcie);
 HAL_Status HAL_PCIE_Init(struct HAL_PCIE_HANDLE *pcie, struct HAL_PCIE_DEV *dev);
 HAL_Status HAL_PCIE_DeInit(struct HAL_PCIE_HANDLE *pcie);
+HAL_Status HAL_PCIE_InboundConfig(struct HAL_PCIE_HANDLE *pcie, int32_t index, int32_t bar, uint64_t cpuAddr);
+HAL_Status HAL_PCIE_OutboundConfig(struct HAL_PCIE_HANDLE *pcie, int32_t index, int type, uint64_t cpuAddr, uint64_t busAddr, uint32_t size);
+int32_t HAL_PCIE_OutboundConfigCFG0(struct HAL_PCIE_HANDLE *pcie, HAL_PCI_DevT bdf, uint32_t size);
 
 /** @} */
 
