@@ -326,6 +326,7 @@ typedef enum CLOCK_Name {
     PLL_PPLL,
     PLL_HPLL,
     CLK_WDT,
+    CLK_UART0,
     CLK_I2C        = CLK(CLK_I2C_SEL, 0U),
     CLK_PWM1       = CLK(CLK_PWM1_SEL, 0U),
     CLK_PWM2       = CLK(CLK_PWM2_SEL, 0U),

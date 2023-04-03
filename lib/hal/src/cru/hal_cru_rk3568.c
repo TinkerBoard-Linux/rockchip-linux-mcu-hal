@@ -152,6 +152,48 @@ static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
     uint32_t divSrc = 0, divFrac = 0;
     uint32_t n, m, pRate;
 
+    if (clockName == CLK_UART0) {
+        n = (PMUCRU->CRU_CLKSEL_CON[5] & 0xffff0000) >> 16;
+        m = PMUCRU->CRU_CLKSEL_CON[5] & 0x0000ffff;
+        muxSrc = (PMUCRU->CRU_CLKSEL_CON[4] & 0x0300) >> 8;
+        divSrc = PMUCRU->CRU_CLKSEL_CON[4] & 0x003f;
+
+        switch (muxSrc) {
+        case 0:
+            pRate = s_ppllFreq / (divSrc + 1);
+            break;
+        case 1:
+            pRate = 480000000 / (divSrc + 1);
+            break;
+        case 2:
+            pRate = s_cpllFreq / (divSrc + 1);
+            break;
+        case 3:
+            pRate = s_gpllFreq / (divSrc + 1);
+            break;
+        default:
+
+            return 0;
+        }
+        muxSrc = (PMUCRU->CRU_CLKSEL_CON[4] & 0x0c00) >> 10;
+        switch (muxSrc) {
+        case 0:
+            freq = pRate;
+            break;
+        case 1:
+            freq = (pRate / m) * n;
+            break;
+        case 2:
+            freq = PLL_INPUT_OSC_RATE;
+            break;
+        default:
+
+            return 0;
+        }
+
+        return freq;
+    }
+
     switch (clockName) {
     case CLK_UART1:
         muxSrc = CLK_GET_MUX(CLK_UART1_SRC);
@@ -238,6 +280,26 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
     uint32_t divSrc, divFrac;
     uint32_t n = 0, m = 0;
     uint32_t gateId, fracGateId;
+
+    if (clockName == CLK_UART0) {
+        if (PLL_INPUT_OSC_RATE == rate) {
+            PMUCRU->CRU_CLKSEL_CON[4] = 0x0cff0800;
+        } else if ((!(s_gpllFreq % rate)) && ((s_gpllFreq / rate) < 31)) {
+            divSrc = (s_gpllFreq / rate) - 1;
+            PMUCRU->CRU_CLKSEL_CON[4] = 0x003f0000 | divSrc;
+            PMUCRU->CRU_CLKSEL_CON[4] = 0x0f000300;
+        } else if ((!(s_cpllFreq % rate)) && ((s_cpllFreq / rate) < 31)) {
+            divSrc = (s_cpllFreq / rate) - 1;
+            PMUCRU->CRU_CLKSEL_CON[4] = 0x003f0000 | divSrc;
+            PMUCRU->CRU_CLKSEL_CON[4] = 0x0f000200;
+        } else {
+            HAL_CRU_FracdivGetConfig(rate, s_gpllFreq, &n, &m);
+            PMUCRU->CRU_CLKSEL_CON[5] = (n << 16) | m;
+            PMUCRU->CRU_CLKSEL_CON[4] = 0x0fff0700;
+        }
+
+        return HAL_OK;
+    }
 
     switch (clockName) {
     case CLK_UART1:
@@ -759,6 +821,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         }
 
         return freq;
+    case CLK_UART0:
     case CLK_UART1:
     case CLK_UART2:
     case CLK_UART3:
@@ -883,6 +946,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return error;
 
+    case CLK_UART0:
     case CLK_UART1:
     case CLK_UART2:
     case CLK_UART3:
