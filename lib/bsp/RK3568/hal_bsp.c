@@ -273,6 +273,7 @@ struct HAL_PCIE_DEV g_pcieDev =
     .lanes = 2,
     .gen = 3,
     .firstBusNo = 0x20,
+    .legacyIrqNum = PCIE30x2_LEGACY_IRQn,
 };
 #endif
 

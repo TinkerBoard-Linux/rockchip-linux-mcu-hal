@@ -182,6 +182,7 @@ typedef enum
     UART8_IRQn             = 156,      /*!< UART8  Interrupt            */
     UART9_IRQn             = 157,      /*!< UART9  Interrupt            */
     WDT0_IRQn              = 181,      /*!< WDT0  Interrupt             */
+    PCIE30x2_LEGACY_IRQn   = 194,      /*!< PCIe3x2_legacy Interrupt    */
     DDR_ECC_CE_IRQn        = 205,      /*!< DDR ECC correctable fault Interrupt */
     DDR_ECC_UE_IRQn        = 207,      /*!< DDR ECC uncorrectable fault Interrupt */
     MBOX0_CH0_B2A_IRQn     = 215,      /*!< MBOX0 CH0 B2A Interrupt     */
