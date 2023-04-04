@@ -61,6 +61,7 @@ struct HAL_PCIE_DEV g_pcieDev =
     .lanes = 4,
     .gen = 3,
     .firstBusNo = 0,
+    .legacyIrqNum = PCIE30x4_LEGACY_IRQn,
     .phy = (void *)&g_phy_pcie3Dev,
 };
 #endif

@@ -278,6 +278,7 @@ typedef enum
     MBOX2_CH1_A2B_IRQn     = 114,      /*!< MBOX2 CH1 A2B Interrupt     */
     MBOX2_CH2_A2B_IRQn     = 115,      /*!< MBOX2 CH2 A2B Interrupt     */
     MBOX2_CH3_A2B_IRQn     = 116,      /*!< MBOX2 CH3 A2B Interrupt     */
+    PCIE30x4_LEGACY_IRQn   = 292,      /*!< PCIe3x4_legacy Interrupt    */
     GPIO0_IRQn             = 309,      /*!< GPIO0 Interrupt             */
     GPIO1_IRQn             = 310,      /*!< GPIO1 Interrupt             */
     GPIO2_IRQn             = 311,      /*!< GPIO2 Interrupt             */
