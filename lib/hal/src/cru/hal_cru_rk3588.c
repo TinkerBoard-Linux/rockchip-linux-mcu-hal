@@ -1204,6 +1204,10 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case CLK_CIFOUT:
         freq = HAL_CRU_MuxGetFreq4(clkMux, s_gpllFreq, s_cpllFreq, PLL_INPUT_OSC_RATE, s_spllFreq);
         break;
+    case CLK_AUX16M_0:
+    case CLK_AUX16M_1:
+        freq = s_gpllFreq;
+        break;
 
     default:
 
@@ -1416,6 +1420,11 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
     case CLK_CIFOUT:
         mux = HAL_CRU_RoundFreqGetMux4(rate, s_gpllFreq, s_cpllFreq, PLL_INPUT_OSC_RATE, s_spllFreq, &pRate);
+        break;
+
+    case CLK_AUX16M_0:
+    case CLK_AUX16M_1:
+        pRate = s_gpllFreq;
         break;
     default:
 

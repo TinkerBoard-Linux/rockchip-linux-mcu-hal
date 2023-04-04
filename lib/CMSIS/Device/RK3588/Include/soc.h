@@ -593,6 +593,9 @@ typedef enum CLOCK_Name {
     CLK_SPI3             = CLK64(CLK_SPI3_SEL, 0U),
     CLK_SPI4             = CLK64(CLK_SPI4_SEL, 0U),
 
+    CLK_AUX16M_0         = CLK64(0U, CLK_AUX16MHZ_0_DIV),
+    CLK_AUX16M_1         = CLK64(0U, CLK_AUX16MHZ_1_DIV),
+
     HCLK_PMU_CM0         = CLK64(HCLK_PMU_CM0_ROOT_I_SEL, 0U),
 } eCLOCK_Name;
 #endif /* __ASSEMBLY__ */
