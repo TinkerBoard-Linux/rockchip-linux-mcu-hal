@@ -269,6 +269,10 @@ struct HAL_PCIE_DEV g_pcieDev =
 {
     .apbBase = PCIE3X2_APB_BASE,
     .dbiBase = PCIE3X2_DBI_BASE,
+    .cfgBase = 0xF0000000,
+    .lanes = 2,
+    .gen = 3,
+    .firstBusNo = 0x20,
 };
 #endif
 
