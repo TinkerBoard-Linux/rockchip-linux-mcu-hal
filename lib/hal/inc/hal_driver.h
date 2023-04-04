@@ -159,6 +159,7 @@
 #endif
 
 #ifdef HAL_PCIE_MODULE_ENABLED
+#include "hal_pci_core.h"
 #include "hal_pcie_dma.h"
 #include "hal_pcie.h"
 #endif
