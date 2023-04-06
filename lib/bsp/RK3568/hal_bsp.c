@@ -265,7 +265,7 @@ const struct HAL_GMAC_DEV g_gmac1Dev =
 #endif
 
 #ifdef HAL_PCIE_MODULE_ENABLED
-struct HAL_PCIE_HANDLE g_pcieDev =
+struct HAL_PCIE_DEV g_pcieDev =
 {
     .apbBase = PCIE3X2_APB_BASE,
     .dbiBase = PCIE3X2_DBI_BASE,

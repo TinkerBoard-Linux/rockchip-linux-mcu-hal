@@ -52,7 +52,7 @@ extern const struct HAL_GMAC_DEV g_gmac1Dev;
 #endif
 
 #ifdef HAL_PCIE_MODULE_ENABLED
-extern struct HAL_PCIE_HANDLE g_pcieDev;
+extern struct HAL_PCIE_DEV g_pcieDev;
 #endif
 /***************************** Function Declare ******************************/
 void BSP_Init(void);

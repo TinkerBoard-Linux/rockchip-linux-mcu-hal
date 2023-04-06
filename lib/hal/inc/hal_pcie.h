@@ -28,11 +28,14 @@
 /***************************** Structure Definition **************************/
 
 /** PCIe handler */
-struct HAL_PCIE_HANDLE {
+struct HAL_PCIE_DEV {
     uint32_t apbBase;
     uint32_t dbiBase;
 };
 
+struct HAL_PCIE_HANDLE {
+    struct HAL_PCIE_DEV *dev;
+};
 /** @} */
 /***************************** Function Declare ******************************/
 /** @defgroup PCIE_Public_Function_Declare Public Function Declare
@@ -44,7 +47,7 @@ HAL_Status HAL_PCIE_ConfigDma(struct HAL_PCIE_HANDLE *pcie, struct DMA_TABLE *ta
 HAL_Status HAL_PCIE_StartDma(struct HAL_PCIE_HANDLE *pcie, struct DMA_TABLE *table);
 HAL_Check HAL_PCIE_LinkUp(struct HAL_PCIE_HANDLE *pcie);
 uint32_t HAL_PCIE_GetLTSSM(struct HAL_PCIE_HANDLE *pcie);
-HAL_Status HAL_PCIE_Init(struct HAL_PCIE_HANDLE *pcie);
+HAL_Status HAL_PCIE_Init(struct HAL_PCIE_HANDLE *pcie, struct HAL_PCIE_DEV *dev);
 HAL_Status HAL_PCIE_DeInit(struct HAL_PCIE_HANDLE *pcie);
 
 /** @} */

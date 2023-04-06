@@ -91,22 +91,22 @@ static inline uint32_t readl(uint32_t address)
 
 static inline void HAL_PCIE_DbiWritel(struct HAL_PCIE_HANDLE *pcie, uint32_t reg, uint32_t val)
 {
-    writel(pcie->dbiBase + reg, val);
+    writel(pcie->dev->dbiBase + reg, val);
 }
 
 static inline uint32_t HAL_PCIE_DbiReadl(struct HAL_PCIE_HANDLE *pcie, uint32_t reg)
 {
-    return readl(pcie->dbiBase + reg);
+    return readl(pcie->dev->dbiBase + reg);
 }
 
 static inline void HAL_PCIE_ApbWritel(struct HAL_PCIE_HANDLE *pcie, uint32_t reg, uint32_t val)
 {
-    writel(pcie->apbBase + reg, val);
+    writel(pcie->dev->apbBase + reg, val);
 }
 
 static inline uint32_t HAL_PCIE_ApbReadl(struct HAL_PCIE_HANDLE *pcie, uint32_t reg)
 {
-    return readl(pcie->apbBase + reg);
+    return readl(pcie->dev->apbBase + reg);
 }
 
 static void HAL_PCIE_StartDmaWrite(struct HAL_PCIE_HANDLE *pcie, struct DMA_TABLE *cur, int ctrOffset)
@@ -285,10 +285,13 @@ uint32_t HAL_PCIE_GetLTSSM(struct HAL_PCIE_HANDLE *pcie)
 /**
  * @brief  Initialial PCIe host.
  * @param  pcie: PCIe host.
+ * @param  dev: PCIe device.
  * @return HAL_Status
  */
-HAL_Status HAL_PCIE_Init(struct HAL_PCIE_HANDLE *pcie)
+HAL_Status HAL_PCIE_Init(struct HAL_PCIE_HANDLE *pcie, struct HAL_PCIE_DEV *dev)
 {
+    pcie->dev = dev;
+
     return HAL_OK;
 }
 
