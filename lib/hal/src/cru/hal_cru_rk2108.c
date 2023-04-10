@@ -659,6 +659,9 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return error;
     case ACLK_DSP:
+        pRate = s_gpllFreq;
+        mux = 0;
+        break;
     case HCLK_AUDIO:
     case MCLK_PDM0:
         error = HAL_CRU_ClkFracSetFreq(clockName, rate);
