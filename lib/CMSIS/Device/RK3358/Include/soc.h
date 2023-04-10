@@ -281,6 +281,8 @@ typedef enum CLOCK_Name {
     PCLK_GMAC        = CLK(0U, PCLK_GMAC_DIV),
 } eCLOCK_Name;
 #endif
+/****************************************SPI*********************************************/
+#define SPI_VERSION    0x0B050001
 
 #ifdef __cplusplus
 }
