@@ -37,6 +37,16 @@ const struct HAL_UART_DEV g_uart0Dev =
     .isAutoFlow = true,
     .runtimeID = PM_RUNTIME_ID_UART0,
 };
+
+const struct HAL_UART_DEV g_uart1Dev =
+{
+    .pReg = UART1,
+    .sclkID = CLK_UART1,
+    .irqNum = 391,            // 364 + 27(NUM_INTERRUPTS)
+    .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART1,
+};
+
 const struct HAL_UART_DEV g_uart2Dev =
 {
     .pReg = UART2,
@@ -44,6 +54,69 @@ const struct HAL_UART_DEV g_uart2Dev =
     .irqNum = 392,           // 365 + 27(NUM_INTERRUPTS)
     .isAutoFlow = true,
     .runtimeID = PM_RUNTIME_ID_UART2,
+};
+
+const struct HAL_UART_DEV g_uart3Dev =
+{
+    .pReg = UART3,
+    .sclkID = CLK_UART3,
+    .irqNum = 393,           // 366 + 27(NUM_INTERRUPTS)
+    .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART3,
+};
+
+const struct HAL_UART_DEV g_uart4Dev =
+{
+    .pReg = UART4,
+    .sclkID = CLK_UART4,
+    .irqNum = 394,           // 367 + 27(NUM_INTERRUPTS)
+    .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART4,
+};
+
+const struct HAL_UART_DEV g_uart5Dev =
+{
+    .pReg = UART5,
+    .sclkID = CLK_UART5,
+    .irqNum = 395,           // 368 + 27(NUM_INTERRUPTS)
+    .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART5,
+};
+
+const struct HAL_UART_DEV g_uart6Dev =
+{
+    .pReg = UART6,
+    .sclkID = CLK_UART6,
+    .irqNum = 396,           // 369 + 27(NUM_INTERRUPTS)
+    .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART6,
+};
+
+const struct HAL_UART_DEV g_uart7Dev =
+{
+    .pReg = UART7,
+    .sclkID = CLK_UART7,
+    .irqNum = 397,           // 370 + 27(NUM_INTERRUPTS)
+    .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART7,
+};
+
+const struct HAL_UART_DEV g_uart8Dev =
+{
+    .pReg = UART8,
+    .sclkID = CLK_UART8,
+    .irqNum = 398,           // 371 + 27(NUM_INTERRUPTS)
+    .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART8,
+};
+
+const struct HAL_UART_DEV g_uart9Dev =
+{
+    .pReg = UART9,
+    .sclkID = CLK_UART9,
+    .irqNum = 399,           // 372 + 27(NUM_INTERRUPTS)
+    .isAutoFlow = true,
+    .runtimeID = PM_RUNTIME_ID_UART9,
 };
 #endif
 
