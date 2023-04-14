@@ -15,8 +15,11 @@
 
 #if defined(RKMCU_RK3562_BUS)
 
-/* Cache maintain need the decoded addr, it must be matched with pre-loader */
-#define HAL_CACHE_DECODED_ADDR_BASE 0x100000
+/* TODO: Cache maintain need the decoded addr,
+ * it must be matched with pre-loader!
+ * default: 0x08200000
+ */
+#define HAL_CACHE_DECODED_ADDR_BASE 0x08200000
 /* System timer designation (RK TIMER) */
 #define SYS_TIMER TIMER5
 
