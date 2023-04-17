@@ -28,6 +28,7 @@
 //#define AMPMSG_TEST
 #endif
 //#define RPMSG_TEST
+//#define RPMSG_PERF_TEST
 //#define UNITY_TEST
 //#define CPU_USAGE_TEST
 #ifdef SRAM_USAGE
@@ -1275,6 +1276,59 @@ static void rpmsg_remote_test(void)
 
 /************************************************/
 /*                                              */
+/*               RPMSG_PERF_TEST                */
+/*                                              */
+/************************************************/
+#ifdef RPMSG_PERF_TEST
+#include "rpmsg_lite.h"
+#include "rpmsg_ns.h"
+#include "rpmsg_perf.h"
+
+/* TODO: Configure RPMSG PERF TEST share memory base */
+extern uint32_t __share_rpmsg_start__[];
+extern uint32_t __share_rpmsg_end__[];
+
+#define RPMSG_MEM_BASE ((uint32_t)&__share_rpmsg_start__)
+#define RPMSG_MEM_END  ((uint32_t)&__share_rpmsg_end__)
+
+//#define RPMSG_PERF_MEM_BASE 0x7a00000
+//#define RPMSG_PERF_MEM_SIZE 0x20000
+
+#define RPMSG_PERF_MEM_BASE ((uint32_t)&__share_rpmsg_start__)
+#define RPMSG_PERF_MEM_END  ((uint32_t)&__share_rpmsg_end__)
+#define RPMSG_PERF_MEM_SIZE (uint32_t)((uint32_t)RPMSG_PERF_MEM_END - (uint32_t)RPMSG_PERF_MEM_BASE)
+
+static void rpmsg_perf_master_test(void)
+{
+    uint32_t cpu_id;
+    struct rpmsg_lite_instance *master_rpmsg;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    rk_printf("rpmsg master: master core cpu_id-%ld\n", cpu_id);
+    master_rpmsg = rpmsg_lite_master_init((void *)RPMSG_PERF_MEM_BASE, RPMSG_PERF_MEM_SIZE,
+                                          RL_PLATFORM_SET_LINK_ID(0, 3), RL_NO_FLAGS);
+
+    HAL_DelayMs(200);   //wait for remote initialed to start test
+    rpmsg_perf_master_main(master_rpmsg);
+}
+
+static void rpmsg_perf_remote_test(void)
+{
+    uint32_t cpu_id;
+    struct rpmsg_lite_instance *remote_rpmsg;
+
+    cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
+    rk_printf("rpmsg remote: remote core cpu_id-%ld\n", cpu_id);
+    remote_rpmsg = rpmsg_lite_remote_init((void *)RPMSG_PERF_MEM_BASE,
+                                          RL_PLATFORM_SET_LINK_ID(0, 3), RL_NO_FLAGS);
+    rpmsg_lite_wait_for_link_up(remote_rpmsg);
+    rk_printf("rpmsg remote: link up! link_id-0x%lx\n", remote_rpmsg->link_id);
+    rpmsg_perf_remote_main(remote_rpmsg);
+}
+#endif
+
+/************************************************/
+/*                                              */
 /*                 CPU_USAGE_TEST               */
 /*                                              */
 /************************************************/
@@ -1342,6 +1396,14 @@ void test_demo(void)
 #else
 //#ifdef CPU0
     rpmsg_remote_test();
+#endif
+#endif
+
+#ifdef RPMSG_PERF_TEST
+#ifdef CPU0
+    rpmsg_perf_master_test();
+#elif CPU3
+    rpmsg_perf_remote_test();
 #endif
 #endif
 
