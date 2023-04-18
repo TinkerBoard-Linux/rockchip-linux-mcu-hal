@@ -96,12 +96,28 @@ typedef enum {
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
-#define NUM_INT_PER_CON           256
-#define NUM_INT_PER_GROUP         64
-#define NUM_EXT_INTERRUPTS        512
-
 #if defined(HAL_MCU_CORE)
 #if defined(RKMCU_RK3588_PMU)
+#define INTMUX_NUM_INT_PER_CON    256
+#define INTMUX_NUM_OUT_PER_CON    4
+#define INTMUX_NUM_INT_PER_OUT    64
+#define INTMUX_NUM_GROUP_PER_OUT  8
+#define INTMUX_NUM_GROUP_PER_CON  32
+#define INTMUX_NUM_INT_PER_GROUP  8
+/* INTMUX IRQ start from GIC SPI(Shared Peripheral Interrupt) */
+#define INTMUX_IRQ_START_NUM      0
+#define INTMUX_IRQ_OUT0
+#define INTMUX_IRQ_OUT1
+#define INTMUX_IRQ_OUT2
+#define INTMUX_IRQ_OUT3
+#define INTMUX_IRQ_OUT4
+#define INTMUX_IRQ_OUT5
+#define INTMUX_IRQ_OUT6
+#define INTMUX_IRQ_OUT7
+#define INTMUX_OUT_IRQ_START_NUM  16
+
+#define NUM_EXT_INTERRUPTS        512
+
 typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
   NonMaskableInt_IRQn       = -14,     /*  2 Non Maskable Interrupt */
@@ -127,20 +143,23 @@ typedef enum {
   PVTM_IRQn                 =  9,      /*!< PVTM Interrupt                */
   PWM0_PWR_IRQn             =  10,     /*!< PWM0 PWR Interrupt            */
   PWM0_IRQn                 =  11,     /*!< PWM0 Interrupt                */
-  WDT0_IRQn                 =  12,     /*!< WDT Interrupt                 */
-  TIMER0_IRQn               =  14,     /*!< TIMER0 Interrupt              */
-  TIMER1_IRQn               =  13,     /*!< TIMER1 Interrupt              */
+  WDT_PMU_IRQn              =  12,     /*!< WDT PMU Interrupt             */
+  TIMER1_PMU_IRQn           =  13,     /*!< TIMER1 PMU Interrupt          */
+  TIMER0_PMU_IRQn           =  14,     /*!< TIMER0 PMU Interrupt          */
   CRC_CHK_RST_IRQn          =  15,     /*!< CRC_CHK_RST Interrupt         */
-  INTMUX_OUT_START_IRQn     =  16,     /*!< INTMUX_OUT_START Interrupt    */
-  INTMUX_OUT_END_IRQn       =  23,     /*!< INTMUX_OUT_END Interrupt      */
+  INTMUX_OUT0_IRQn          =  16,     /*!< INTMUX OUT0 Interrupt         */
+  INTMUX_OUT1_IRQn          =  17,     /*!< INTMUX OUT1 Interrupt         */
+  INTMUX_OUT2_IRQn          =  18,     /*!< INTMUX OUT2 Interrupt         */
+  INTMUX_OUT3_IRQn          =  19,     /*!< INTMUX OUT3 Interrupt         */
+  INTMUX_OUT4_IRQn          =  20,     /*!< INTMUX OUT4 Interrupt         */
+  INTMUX_OUT5_IRQn          =  21,     /*!< INTMUX OUT5 Interrupt         */
+  INTMUX_OUT6_IRQn          =  22,     /*!< INTMUX OUT6 Interrupt         */
+  INTMUX_OUT7_IRQn          =  23,     /*!< INTMUX OUT7 Interrupt         */
   HPTIMER_PMU0_IRQn         =  24,     /*!< HPTIMER_PMU0 Interrupt        */
   OSC_CHK_RST_IRQn          =  25,     /*!< OSC_CHK_RST Interrupt         */
   CACHE_IRQn                =  26,     /*!< CACHE Interrupt               */
-  NUM_INTERRUPTS            =  27,     /*!< Number of internal IRQ        */
-  MBOX0_CH0_AP_IRQn         =  93  + NUM_INTERRUPTS,     /*!< MAILBOX_CH0_AP Interrupt      */
-  MBOX0_CH1_AP_IRQn         =  94  + NUM_INTERRUPTS,     /*!< MAILBOX_CH1_AP Interrupt      */
-  MBOX0_CH2_AP_IRQn         =  95  + NUM_INTERRUPTS,     /*!< MAILBOX_CH2_AP Interrupt      */
-  MBOX0_CH3_AP_IRQn         =  96  + NUM_INTERRUPTS,     /*!< MAILBOX_CH3_AP Interrupt      */
+  RSVD0_MCU_IRQn            =  27,     /*!< RSVD0 MCU Interrupt           */
+  NUM_INTERRUPTS            =  32,     /*!< Number of internal IRQ        */
   MBOX0_CH0_BB_IRQn         =  97  + NUM_INTERRUPTS,     /*!< MAILBOX_CH0_BB Interrupt      */
   MBOX0_CH1_BB_IRQn         =  98  + NUM_INTERRUPTS,     /*!< MAILBOX_CH1_BB Interrupt      */
   MBOX0_CH2_BB_IRQn         =  99  + NUM_INTERRUPTS,     /*!< MAILBOX_CH2_BB Interrupt      */
@@ -149,7 +168,32 @@ typedef enum {
   GPIO2_IRQn                =  311 + NUM_INTERRUPTS,     /*!< GPIO2 Interrupt               */
   GPIO3_IRQn                =  312 + NUM_INTERRUPTS,     /*!< GPIO3 Interrupt               */
   GPIO4_IRQn                =  313 + NUM_INTERRUPTS,     /*!< GPIO4 Interrupt               */
-  TOTAL_INTERRUPTS          =  (NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),   /*!< For external interrupt from intmux    */
+  GPIO1_EXP_IRQn            =  315 + NUM_INTERRUPTS,     /*!< GPIO1 EXP Interrupt           */
+  GPIO2_EXP_IRQn            =  316 + NUM_INTERRUPTS,     /*!< GPIO2 EXP Interrupt           */
+  GPIO3_EXP_IRQn            =  317 + NUM_INTERRUPTS,     /*!< GPIO3 EXP Interrupt           */
+  GPIO4_EXP_IRQn            =  318 + NUM_INTERRUPTS,     /*!< GPIO4 EXP Interrupt           */
+  TIMER0_IRQn               =  321 + NUM_INTERRUPTS,     /*!< TIMER0 Interrupt              */
+  TIMER1_IRQn               =  322 + NUM_INTERRUPTS,     /*!< TIMER1 Interrupt              */
+  TIMER2_IRQn               =  323 + NUM_INTERRUPTS,     /*!< TIMER2 Interrupt              */
+  TIMER3_IRQn               =  324 + NUM_INTERRUPTS,     /*!< TIMER3 Interrupt              */
+  TIMER4_IRQn               =  325 + NUM_INTERRUPTS,     /*!< TIMER4 Interrupt              */
+  TIMER5_IRQn               =  326 + NUM_INTERRUPTS,     /*!< TIMER5 Interrupt              */
+  TIMER6_IRQn               =  327 + NUM_INTERRUPTS,     /*!< TIMER6 Interrupt              */
+  TIMER7_IRQn               =  328 + NUM_INTERRUPTS,     /*!< TIMER7 Interrupt              */
+  TIMER8_IRQn               =  329 + NUM_INTERRUPTS,     /*!< TIMER8 Interrupt              */
+  TIMER9_IRQn               =  330 + NUM_INTERRUPTS,     /*!< TIMER9 Interrupt              */
+  TIMER10_IRQn              =  331 + NUM_INTERRUPTS,     /*!< TIMER10 Interrupt             */
+  TIMER11_IRQn              =  332 + NUM_INTERRUPTS,     /*!< TIMER11 Interrupt             */
+  UART1_IRQn                =  364 + NUM_INTERRUPTS,     /*!< UART1 Interrupt               */
+  UART2_IRQn                =  365 + NUM_INTERRUPTS,     /*!< UART2 Interrupt               */
+  UART3_IRQn                =  366 + NUM_INTERRUPTS,     /*!< UART3 Interrupt               */
+  UART4_IRQn                =  367 + NUM_INTERRUPTS,     /*!< UART4 Interrupt               */
+  UART5_IRQn                =  368 + NUM_INTERRUPTS,     /*!< UART5 Interrupt               */
+  UART6_IRQn                =  369 + NUM_INTERRUPTS,     /*!< UART6 Interrupt               */
+  UART7_IRQn                =  370 + NUM_INTERRUPTS,     /*!< UART7 Interrupt               */
+  UART8_IRQn                =  371 + NUM_INTERRUPTS,     /*!< UART8 Interrupt               */
+  UART9_IRQn                =  372 + NUM_INTERRUPTS,     /*!< UART9 Interrupt               */
+  TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 #elif defined(RKMCU_RK3588_NPU)
 typedef enum {
