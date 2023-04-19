@@ -70,7 +70,15 @@ HAL_Status HAL_INTMUX_EnableIRQ(uint32_t irq)
     HAL_ASSERT(irq < TOTAL_INTERRUPTS);
     irqGroup = _TO_INTMUX_GROUP(irq);
     irqBit = _TO_INTMUX_BIT(irq);
+#ifdef INTMUX0
+    if (_TO_INTMUX_NUM(irq) < INTMUX_NUM_INT_PER_CON) {
+        INTMUX0->INT_ENABLE_GROUP[irqGroup] |= 0x1U << irqBit;
+    } else {
+        INTMUX1->INT_ENABLE_GROUP[irqGroup - INTMUX_NUM_GROUP_PER_CON] |= 0x1U << irqBit;
+    }
+#else
     INTMUX->INT_ENABLE_GROUP[irqGroup] |= 0x1U << irqBit;
+#endif
 
     return HAL_OK;
 }
@@ -87,7 +95,15 @@ HAL_Status HAL_INTMUX_DisableIRQ(uint32_t irq)
     HAL_ASSERT(irq < TOTAL_INTERRUPTS);
     irqGroup = _TO_INTMUX_GROUP(irq);
     irqBit = _TO_INTMUX_BIT(irq);
+#ifdef INTMUX0
+    if (_TO_INTMUX_NUM(irq) < INTMUX_NUM_INT_PER_CON) {
+        INTMUX0->INT_ENABLE_GROUP[irqGroup] &= ~(0x1U << irqBit);
+    } else {
+        INTMUX1->INT_ENABLE_GROUP[irqGroup - INTMUX_NUM_GROUP_PER_CON] &= ~(0x1U << irqBit);
+    }
+#else
     INTMUX->INT_ENABLE_GROUP[irqGroup] &= ~(0x1U << irqBit);
+#endif
 
     return HAL_OK;
 }
@@ -104,6 +120,25 @@ static void INTMUX_Dispatch(uint32_t irqOut)
         if (_TO_INTMUX_OUT(g_intmuxFastIrqTable[i]) == irqOut) {
             fastGroup = _TO_INTMUX_GROUP(g_intmuxFastIrqTable[i]);
             fastBit = _TO_INTMUX_BIT(g_intmuxFastIrqTable[i]);
+#ifdef INTMUX0
+            if (fastGroup < INTMUX_NUM_GROUP_PER_CON) {
+                if (INTMUX0->INT_FLAG_GROUP[fastGroup] & HAL_BIT(fastBit)) {
+                    irqn = fastGroup * INTMUX_NUM_INT_PER_GROUP + fastBit;
+                    if (s_intmuxHandler[irqn].handler) {
+                        s_intmuxHandler[irqn].handler(irqn, s_intmuxHandler[irqn].args);
+                    }
+                    fastHit = true;
+                }
+            } else {
+                if (INTMUX1->INT_FLAG_GROUP[fastGroup - INTMUX_NUM_GROUP_PER_CON] & HAL_BIT(fastBit)) {
+                    irqn = fastGroup * INTMUX_NUM_INT_PER_GROUP + fastBit;
+                    if (s_intmuxHandler[irqn].handler) {
+                        s_intmuxHandler[irqn].handler(irqn, s_intmuxHandler[irqn].args);
+                    }
+                    fastHit = true;
+                }
+            }
+#else
             if (INTMUX->INT_FLAG_GROUP[fastGroup] & HAL_BIT(fastBit)) {
                 irqn = fastGroup * INTMUX_NUM_INT_PER_GROUP + fastBit;
                 if (s_intmuxHandler[irqn].handler) {
@@ -111,12 +146,21 @@ static void INTMUX_Dispatch(uint32_t irqOut)
                 }
                 fastHit = true;
             }
+#endif
         }
     }
 
     if (fastHit == false) {
         for (i = irqOut * INTMUX_NUM_GROUP_PER_OUT; i < (irqOut + 1) * INTMUX_NUM_GROUP_PER_OUT; i++) {
+#ifdef INTMUX0
+            if (irqOut < INTMUX_NUM_OUT_PER_CON) {
+                groupFlag = INTMUX0->INT_FLAG_GROUP[i];
+            } else {
+                groupFlag = INTMUX1->INT_FLAG_GROUP[i - INTMUX_NUM_GROUP_PER_CON];
+            }
+#else
             groupFlag = INTMUX->INT_FLAG_GROUP[i];
+#endif
             if (groupFlag) {
                 for (j = 0; j < INTMUX_NUM_INT_PER_GROUP; j++) {
                     if (groupFlag & HAL_BIT(j)) {
@@ -139,7 +183,15 @@ static void INTMUX_Dispatch(uint32_t irqOut)
     int i, j;
 
     for (i = irqOut * INTMUX_NUM_GROUP_PER_OUT; i < (irqOut + 1) * INTMUX_NUM_GROUP_PER_OUT; i++) {
+#ifdef INTMUX0
+        if (irqOut < INTMUX_NUM_OUT_PER_CON) {
+            groupFlag = INTMUX0->INT_FLAG_GROUP[i];
+        } else {
+            groupFlag = INTMUX1->INT_FLAG_GROUP[i - INTMUX_NUM_GROUP_PER_CON];
+        }
+#else
         groupFlag = INTMUX->INT_FLAG_GROUP[i];
+#endif
         if (groupFlag) {
             for (j = 0; j < INTMUX_NUM_INT_PER_GROUP; j++) {
                 if (groupFlag & HAL_BIT(j)) {
@@ -176,6 +228,30 @@ static void HAL_INTMUX_OUT2_Handler(void)
 static void HAL_INTMUX_OUT3_Handler(void)
 {
     INTMUX_Dispatch(3);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT4
+static void HAL_INTMUX_OUT4_Handler(void)
+{
+    INTMUX_Dispatch(4);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT5
+static void HAL_INTMUX_OUT5_Handler(void)
+{
+    INTMUX_Dispatch(5);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT6
+static void HAL_INTMUX_OUT6_Handler(void)
+{
+    INTMUX_Dispatch(6);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT7
+static void HAL_INTMUX_OUT7_Handler(void)
+{
+    INTMUX_Dispatch(7);
 }
 #endif
 
@@ -222,6 +298,22 @@ HAL_Status HAL_INTMUX_Init(void)
 #ifdef INTMUX_IRQ_OUT3
     HAL_NVIC_SetIRQHandler(INTMUX_OUT3_IRQn, HAL_INTMUX_OUT3_Handler);
     HAL_NVIC_EnableIRQ(INTMUX_OUT3_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT4
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT4_IRQn, HAL_INTMUX_OUT4_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT4_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT5
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT5_IRQn, HAL_INTMUX_OUT5_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT5_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT6
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT6_IRQn, HAL_INTMUX_OUT6_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT6_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT7
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT7_IRQn, HAL_INTMUX_OUT7_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT7_IRQn);
 #endif
 #endif
 
