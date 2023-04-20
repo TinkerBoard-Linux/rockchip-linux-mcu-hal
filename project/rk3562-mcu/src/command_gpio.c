@@ -11,6 +11,7 @@
 
 #define FLAG_GPIO_DIR BIT(31)
 #define FLAG_GPIO_OUT BIT(30)
+#define FLAG_GPIO_GET BIT(29)
 
 #define SHIFT_GPIO_DIR 0
 #define SHIFT_GPIO_OUT 1
@@ -32,7 +33,6 @@ struct command_gpio_info {
     ePINCTRL_configParam param;
 
     struct GPIO_REG *reg;
-    bool getvar;
 
     uint32_t gpio_flag;
 };
@@ -258,7 +258,6 @@ static int command_gpio_parse(uint8_t *input, int len,
     uint8_t *next;
 
     command->param = 0;
-    command->getvar = false;
 
     next = input;
 
@@ -275,7 +274,7 @@ static int command_gpio_parse(uint8_t *input, int len,
     }
 
     if (STR_IS_TARGET(input, "getvar")) {
-        command->getvar = true;
+        command->gpio_flag |= FLAG_GPIO_GET;
 
         return 0;
     } else {
@@ -290,6 +289,12 @@ static void command_gpio_grf_control(struct command_gpio_info *command)
 
 static void command_gpio_control(struct command_gpio_info *command)
 {
+    if (command->gpio_flag & FLAG_GPIO_GET) {
+        printf("Pin is %s\n",
+               HAL_GPIO_GetPinLevel(command->reg, command->pin) ?
+               "High" : "Low");
+    }
+
     if (command->gpio_flag & FLAG_GPIO_DIR) {
         HAL_GPIO_SetPinDirection(command->reg, command->pin,
                                  (command->gpio_flag & BIT(SHIFT_GPIO_DIR)) ?
@@ -313,7 +318,9 @@ static void command_gpio_process(uint8_t *in, int len)
         return;
     }
 
-    command_gpio_grf_control(&command);
+    if (!(command.gpio_flag & FLAG_GPIO_GET)) {
+        command_gpio_grf_control(&command);
+    }
     command_gpio_control(&command);
 }
 
