@@ -55,6 +55,9 @@ static void command_gpio_help(void)
     printf("        -out <out>          Out: work with -dir 1, init gpio out status\n");
     /* printf("        -raw <raw>          Advance function: Set RAW paramter for pinctrl\n"); */
     printf("    <getvar>                Get pin level\n");
+    printf("Example:\n");
+    printf("    gpio 0_c3 set -dir 1 -out 1     # Set gpio0_c3 output high level\n");
+    printf("    gpio 0_c3 getvar                # Get gpio0_c3 input level\n");
 }
 
 static int command_gpio_get_parameter(uint8_t * *start, uint8_t *input,
@@ -145,6 +148,10 @@ static int command_gpio_param_parse(uint8_t *input, int len,
 
     while (len) {
         if (command_gpio_get_parameter(&input, next, &next, &len)) {
+            if (len) {
+                break; /* Space at tail */
+            }
+
             return -1;
         }
 
@@ -277,9 +284,11 @@ static int command_gpio_parse(uint8_t *input, int len,
         command->gpio_flag |= FLAG_GPIO_GET;
 
         return 0;
-    } else {
+    } else if (STR_IS_TARGET(input, "set")) {
         return command_gpio_param_parse(next, len, command);
     }
+
+    return -1;
 }
 
 static void command_gpio_grf_control(struct command_gpio_info *command)
