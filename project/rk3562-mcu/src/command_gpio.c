@@ -12,12 +12,24 @@
 #define FLAG_GPIO_DIR BIT(31)
 #define FLAG_GPIO_OUT BIT(30)
 #define FLAG_GPIO_GET BIT(29)
+#define FLAG_GPIO_IRQ BIT(28)
 
 #define SHIFT_GPIO_DIR 0
 #define SHIFT_GPIO_OUT 1
 
 #define STR_IS_TARGET(str, target) \
         (!strncmp((char *)(str), target, strlen(target)))
+
+#define FOREACH_INTTYPE(S)        \
+    S(GPIO_INT_TYPE_NONE)         \
+    S(GPIO_INT_TYPE_EDGE_RISING)  \
+    S(GPIO_INT_TYPE_EDGE_FALLING) \
+    S(GPIO_INT_TYPE_EDGE_BOTH)    \
+    S(GPIO_INT_TYPE_LEVEL_HIGH)   \
+    S(GPIO_INT_TYPE_LEVEL_LOW)
+
+#define GS(S)    #S,
+#define TYPE_CNT (sizeof(inttype) / sizeof(inttype[0]))
 
 enum gpio_configs {
     GPIO_CONFIG_DIR_IN  = (0 << SHIFT_GPIO_DIR | FLAG_GPIO_DIR),
@@ -31,14 +43,20 @@ struct command_gpio_info {
     eGPIO_bankId bank;
     ePINCTRL_GPIO_PINS pin;
     ePINCTRL_configParam param;
+    eGPIO_intType type;
 
     struct GPIO_REG *reg;
 
     uint32_t gpio_flag;
 };
 
+static const char *inttype[] = { FOREACH_INTTYPE(GS) };
+static eGPIO_bankId g_bank[] = { GPIO_BANK0, GPIO_BANK1, GPIO_BANK2, GPIO_BANK3, GPIO_BANK4 };
+
 static void command_gpio_help(void)
 {
+    int i;
+
     printf("GPIO utility\n");
     printf("\ngpio <pin> <set <option...> | getvar>\n");
     printf("Options: \n");
@@ -53,6 +71,10 @@ static void command_gpio_help(void)
     printf("        -srt <srt>          Slew rate: can be 0-3, 0 is lowest SRT\n");
     printf("        -smt <smt>          SMT: <smt> can be 0 for disable, 1 for enable\n");
     printf("        -out <out>          Out: work with -dir 1, init gpio out status\n");
+    printf("        -irq <type>         IRQ: set IRQ, work with -dir 0, type can be: \n");
+    for (i = 0; i < TYPE_CNT; i++) {
+        printf("                                %d %s\n", i, inttype[i]);
+    }
     /* printf("        -raw <raw>          Advance function: Set RAW paramter for pinctrl\n"); */
     printf("    <getvar>                Get pin level\n");
     printf("Example:\n");
@@ -246,6 +268,20 @@ raw_next:
             command->param = strtoul((char *)input, NULL, 0);
 
             return 0;
+        } else if (STR_IS_TARGET(input, "-irq")) {
+            len = command_gpio_param_value(next, len, &next, &val);
+            if (len < 0) {
+                return -1;
+            }
+
+            if (val >= TYPE_CNT || val < 0) {
+                printf("Bad OUT param\n");
+
+                return -1;
+            }
+
+            command->gpio_flag |= FLAG_GPIO_IRQ;
+            command->type = val;
         } else {
             return -1;
         }
@@ -296,6 +332,22 @@ static void command_gpio_grf_control(struct command_gpio_info *command)
     HAL_PINCTRL_SetParam(command->bank, command->pin, command->param);
 }
 
+static HAL_Status gpio_isr(uint32_t irq, void *args)
+{
+    eGPIO_bankId bank = *(eGPIO_bankId *)args;
+
+    HAL_GPIO_IRQHandler(gpio_get_reg(bank), bank);
+
+    return HAL_OK;
+}
+
+static HAL_Status gpio_pin_handle(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("IRQ For GPIO%1d PIN %08lx\n", bank, pin);
+
+    return HAL_OK;
+}
+
 static void command_gpio_control(struct command_gpio_info *command)
 {
     if (command->gpio_flag & FLAG_GPIO_GET) {
@@ -314,6 +366,16 @@ static void command_gpio_control(struct command_gpio_info *command)
         HAL_GPIO_SetPinLevel(command->reg, command->pin,
                              (command->gpio_flag & BIT(SHIFT_GPIO_OUT)) ?
                              GPIO_HIGH : GPIO_LOW);
+    }
+
+    if (command->gpio_flag & FLAG_GPIO_IRQ) {
+        HAL_INTMUX_SetIRQHandler(GPIO0_IRQn + (command->bank * 2),
+                                 gpio_isr, &g_bank[command->bank]);
+        HAL_IRQ_HANDLER_SetGpioIRQHandler(command->bank, command->pin, gpio_pin_handle, NULL);
+        HAL_INTMUX_EnableIRQ(GPIO0_IRQn + (command->bank * 2));
+        HAL_GPIO_SetIntType(command->reg, command->pin, command->type);
+
+        HAL_GPIO_EnableIRQ(command->reg, command->pin);
     }
 }
 
