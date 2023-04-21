@@ -658,6 +658,7 @@ HAL_Status USB_EPStartXfer(struct USB_GLOBAL_REG *pUSB,
         }
 
         if (dma == 1) {
+            HAL_DCACHE_CleanByRange((uint32_t)pEP->dmaAddr, pEP->xferLen);
             USB_OUTEP(pEP->num)->DOEPDMA = (uint32_t)pEP->dmaAddr;
         }
 
