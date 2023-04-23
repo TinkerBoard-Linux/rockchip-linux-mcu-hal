@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 /********************* Private MACRO Definition ******************************/
+//#define GPIO_TEST
 //#define IRQ_LATENCY_TEST
 //#define PERF_TEST
 //#define SOFTIRQ_TEST
@@ -27,6 +28,71 @@
 /************************************************/
 
 /* TODO: Set Module IOMUX Function Here */
+
+/************************************************/
+/*                                              */
+/*                  GPIO_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef GPIO_TEST
+static void gpio3_isr(uint32_t irq, void *args)
+{
+    HAL_GPIO_IRQHandler(GPIO3, GPIO_BANK3);
+}
+
+static HAL_Status c0_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO3C0 callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_test(void)
+{
+    uint32_t level;
+
+    /* set pinctrl function */
+    HAL_PINCTRL_SetParam(GPIO_BANK3,
+                         GPIO_PIN_C0,
+                         PIN_CONFIG_MUX_FUNC0);
+    /* Test pinctrl pull */
+    printf("test_gpio pull UP\n");
+    HAL_PINCTRL_SetParam(GPIO_BANK3,
+                         GPIO_PIN_C0,
+                         PIN_CONFIG_PUL_UP);
+    printf("GPIO3C_P: %p = 0x%lx\n", &VCCIO3_5_IOC->GPIO3C_P, VCCIO3_5_IOC->GPIO3C_P);
+    HAL_DelayMs(3000);
+    printf("test_gpio pull DOWN\n");
+    HAL_PINCTRL_SetParam(GPIO_BANK3,
+                         GPIO_PIN_C0,
+                         PIN_CONFIG_PUL_DOWN);
+    HAL_DelayMs(3000);
+    printf("GPIO3C_P: %p = 0x%lx\n", &VCCIO3_5_IOC->GPIO3C_P, VCCIO3_5_IOC->GPIO3C_P);
+
+    /* Test GPIO output */
+    HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_C0, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
+    printf("test_gpio 3c0 level = %ld\n", level);
+    HAL_DelayMs(3000);
+    HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_C0, GPIO_HIGH);
+    level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
+    printf("test_gpio 3c0 output high level = %ld\n", level);
+    HAL_DelayMs(3000);
+    HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_C0, GPIO_LOW);
+    level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
+    printf("test_gpio 3c0 output low level = %ld\n", level);
+    HAL_DelayMs(3000);
+
+    /* Test GPIO interrupt */
+    HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_C0, GPIO_IN);
+    HAL_INTMUX_SetIRQHandler(GPIO3_IRQn, gpio3_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK3, GPIO_PIN_C0, c0_call_back, NULL);
+    HAL_INTMUX_EnableIRQ(GPIO3_IRQn);
+    HAL_GPIO_SetIntType(GPIO3, GPIO_PIN_C0, GPIO_INT_TYPE_EDGE_BOTH);
+    HAL_GPIO_EnableIRQ(GPIO3, GPIO_PIN_C0);
+    printf("test_gpio interrupt ready\n");
+}
+#endif
 
 /************************************************/
 /*                                              */
@@ -225,6 +291,10 @@ static void timer_test(void)
 
 void test_demo(void)
 {
+#ifdef GPIO_TEST
+    gpio_test();
+#endif
+
 #ifdef IRQ_LATENCY_TEST
     irq_latency_test();
 #endif
