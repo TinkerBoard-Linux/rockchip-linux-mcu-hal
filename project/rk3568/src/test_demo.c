@@ -160,16 +160,14 @@ static const struct GPIO_IRQ_GROUP_CFG gpioIrqCfg[GPIO_BANK_NUM] = {
 /*                                              */
 /************************************************/
 #ifdef GPIO_TEST
-static void gpio_isr(int vector, void *param)
+static void gpio3_isr(int vector, void *param)
 {
-    printf("Enter GPIO IRQHander!\n");
     HAL_GPIO_IRQHandler(GPIO3, GPIO_BANK3);
-    printf("Leave GPIO IRQHandler!\n");
 }
 
-static HAL_Status b2_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+static HAL_Status c0_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
 {
-    printf("GPIO callback!\n");
+    printf("GPIO3C0 callback!\n");
 
     return HAL_OK;
 }
@@ -178,27 +176,32 @@ static void gpio_test(void)
 {
     uint32_t level;
 
+    /* set pinctrl function */
+    HAL_PINCTRL_SetParam(GPIO_BANK3,
+                         GPIO_PIN_C0,
+                         PIN_CONFIG_MUX_FUNC0);
     /* Test GPIO output */
-    HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_B2, GPIO_OUT);
-    level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_B2);
-    printf("test_gpio level = %ld\n", level);
-    HAL_DelayMs(5000);
+    HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_C0, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
+    printf("test_gpio 3c0 level = %ld\n", level);
+    HAL_DelayMs(3000);
     if (level == GPIO_HIGH) {
-        HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_B2, GPIO_LOW);
+        HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_C0, GPIO_LOW);
     } else {
-        HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_B2, GPIO_HIGH);
+        HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_C0, GPIO_HIGH);
     }
-    level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_B2);
-    printf("test_gpio level = %ld\n", level);
-    HAL_DelayMs(5000);
+    level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
+    printf("test_gpio 3c0 level = %ld\n", level);
+    HAL_DelayMs(3000);
 
     /* Test GPIO input */
-    HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_B2, GPIO_IN);
-    HAL_IRQ_HANDLER_SetIRQHandler(GPIO3_IRQn, gpio_isr, NULL);
-    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK3, GPIO_PIN_B2, b2_call_back, NULL);
+    HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_C0, GPIO_IN);
+    HAL_IRQ_HANDLER_SetIRQHandler(GPIO3_IRQn, gpio3_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK3, GPIO_PIN_C0, c0_call_back, NULL);
     HAL_GIC_Enable(GPIO3_IRQn);
-    HAL_GPIO_SetIntType(GPIO3, GPIO_PIN_B2, GPIO_INT_TYPE_EDGE_RISING);
-    HAL_GPIO_EnableIRQ(GPIO3, GPIO_PIN_B2);
+    HAL_GPIO_SetIntType(GPIO3, GPIO_PIN_C0, GPIO_INT_TYPE_EDGE_BOTH);
+    HAL_GPIO_EnableIRQ(GPIO3, GPIO_PIN_C0);
+    printf("test_gpio interrupt ready\n");
 }
 #endif
 
