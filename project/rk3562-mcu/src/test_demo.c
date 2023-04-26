@@ -55,38 +55,62 @@ struct console_command command_testall = {
 /*                                              */
 /************************************************/
 #ifdef GPIO_TEST
+static void gpio1_isr(uint32_t irq, void *args)
+{
+    HAL_GPIO_IRQHandler(GPIO1, GPIO_BANK1);
+}
+
+static HAL_Status b7_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO1B7 callback!\n");
+
+    return HAL_OK;
+}
+
 static void gpio_test(void)
 {
-    uint32_t level1, level2;
+    uint32_t level;
 
+    /* set pinctrl function */
     HAL_PINCTRL_SetParam(GPIO_BANK1,
-                         GPIO_PIN_C0,
+                         GPIO_PIN_B7,
                          PIN_CONFIG_MUX_FUNC0);
-    /* Test GPIO pull */
+    /* Test pinctrl pull */
     printf("test_gpio pull UP\n");
     HAL_PINCTRL_SetParam(GPIO_BANK1,
-                         GPIO_PIN_C0,
+                         GPIO_PIN_B7,
                          PIN_CONFIG_PUL_UP);
+    printf("GPIO1B_P: %p = 0x%lx\n", &GPIO1_IOC->GPIO1B_P, GPIO1_IOC->GPIO1B_P);
     HAL_DelayMs(3000);
     printf("test_gpio pull DOWN\n");
     HAL_PINCTRL_SetParam(GPIO_BANK1,
-                         GPIO_PIN_C0,
+                         GPIO_PIN_B7,
                          PIN_CONFIG_PUL_DOWN);
     HAL_DelayMs(3000);
+    printf("GPIO1B_P: %p = 0x%lx\n", &GPIO1_IOC->GPIO1B_P, GPIO1_IOC->GPIO1B_P);
 
     /* Test GPIO output */
-    printf("test_gpio output\n");
-    HAL_GPIO_SetPinDirection(GPIO1, GPIO_PIN_C0, GPIO_OUT);
-    level2 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_C0);
-    printf("test_gpio 1c0 level = %ld\n", level2);
+    HAL_GPIO_SetPinDirection(GPIO1, GPIO_PIN_B7, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B7);
+    printf("test_gpio 1b7 level = %ld\n", level);
     HAL_DelayMs(3000);
-    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_C0, GPIO_HIGH);
-    level2 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_C0);
-    printf("test_gpio 1c0 output high level = %ld\n", level2);
+    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_B7, GPIO_HIGH);
+    level = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B7);
+    printf("test_gpio 1b7 output high level = %ld\n", level);
     HAL_DelayMs(3000);
-    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_C0, GPIO_LOW);
-    level2 = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_C0);
-    printf("test_gpio 1c0 output low level = %ld\n", level2);
+    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_B7, GPIO_LOW);
+    level = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B7);
+    printf("test_gpio 1b7 output low level = %ld\n", level);
+    HAL_DelayMs(3000);
+
+    /* Test GPIO interrupt */
+    HAL_GPIO_SetPinDirection(GPIO1, GPIO_PIN_B7, GPIO_IN);
+    HAL_INTMUX_SetIRQHandler(GPIO1_IRQn, gpio1_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK1, GPIO_PIN_B7, b7_call_back, NULL);
+    HAL_INTMUX_EnableIRQ(GPIO1_IRQn);
+    HAL_GPIO_SetIntType(GPIO1, GPIO_PIN_B7, GPIO_INT_TYPE_EDGE_BOTH);
+    HAL_GPIO_EnableIRQ(GPIO1, GPIO_PIN_B7);
+    printf("test_gpio interrupt ready\n");
 }
 #endif
 
