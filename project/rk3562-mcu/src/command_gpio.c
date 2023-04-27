@@ -51,7 +51,7 @@ struct command_gpio_info {
 };
 
 static const char *inttype[] = { FOREACH_INTTYPE(GS) };
-static eGPIO_bankId g_bank[] = { GPIO_BANK0, GPIO_BANK1, GPIO_BANK2, GPIO_BANK3, GPIO_BANK4 };
+static eGPIO_bankId g_bank[] = { GPIO_BANK0_EXP, GPIO_BANK1_EXP, GPIO_BANK2_EXP, GPIO_BANK3_EXP, GPIO_BANK4_EXP };
 
 static void command_gpio_help(void)
 {
@@ -97,15 +97,15 @@ static struct GPIO_REG *gpio_get_reg(int bank)
 {
     switch (bank) {
     case 0:
-        return GPIO0;
+        return GPIO0_EXP;
     case 1:
-        return GPIO1;
+        return GPIO1_EXP;
     case 2:
-        return GPIO2;
+        return GPIO2_EXP;
     case 3:
-        return GPIO3;
+        return GPIO3_EXP;
     case 4:
-        return GPIO4;
+        return GPIO4_EXP;
     default:
         return NULL;
     }
@@ -124,6 +124,7 @@ static int command_gpio_get_pin(uint8_t *input,
     if (command->bank > 4 || command->bank < 0) {
         return -1;
     }
+
     group = input[2] >= 'a' ? input[2] - 'a' : input[2] - 'A';
     if (group > 4 || group < 0) {
         return -1;
@@ -327,23 +328,39 @@ static int command_gpio_parse(uint8_t *input, int len,
     return -1;
 }
 
-static void command_gpio_grf_control(struct command_gpio_info *command)
+static void command_gpio_init_virtual_model(struct GPIO_REG *pGPIO,
+                                            ePINCTRL_GPIO_PINS pin)
 {
-    HAL_PINCTRL_SetParam(command->bank, command->pin, command->param);
+    if (!(pGPIO->GPIO_VIRTUAL_EN & 0x00000001)) {
+        HAL_GPIO_EnableVirtualModel(pGPIO);
+        HAL_GPIO_SetVirtualModel(pGPIO, 0xffffffff, GPIO_VIRTUAL_MODEL_OS_A);
+    }
+
+    HAL_GPIO_SetVirtualModel(pGPIO, pin, GPIO_VIRTUAL_MODEL_OS_B);
+}
+
+static void command_gpio_pin_control(struct command_gpio_info *command)
+{
+    HAL_PINCTRL_SetParam(command->bank, command->pin,
+                         command->param);
+
+    command_gpio_init_virtual_model(
+        (void *)(gpio_get_reg(command->bank)) - 0x1000,
+        command->pin);
 }
 
 static HAL_Status gpio_isr(uint32_t irq, void *args)
 {
     eGPIO_bankId bank = *(eGPIO_bankId *)args;
 
-    HAL_GPIO_IRQHandler(gpio_get_reg(bank), bank);
+    HAL_GPIO_IRQHandler(gpio_get_reg(bank - GPIO_BANK0_EXP), bank);
 
     return HAL_OK;
 }
 
 static HAL_Status gpio_pin_handle(eGPIO_bankId bank, uint32_t pin, void *args)
 {
-    printf("IRQ For GPIO%1d PIN %08lx\n", bank, pin);
+    printf("IRQ For GPIO%1d PIN %2ld\n", bank - GPIO_BANK0_EXP, pin);
 
     return HAL_OK;
 }
@@ -369,10 +386,11 @@ static void command_gpio_control(struct command_gpio_info *command)
     }
 
     if (command->gpio_flag & FLAG_GPIO_IRQ) {
-        HAL_INTMUX_SetIRQHandler(GPIO0_IRQn + (command->bank * 2),
+        HAL_INTMUX_SetIRQHandler(GPIO0_EXP_IRQn + (command->bank * 2),
                                  gpio_isr, &g_bank[command->bank]);
-        HAL_IRQ_HANDLER_SetGpioIRQHandler(command->bank, command->pin, gpio_pin_handle, NULL);
-        HAL_INTMUX_EnableIRQ(GPIO0_IRQn + (command->bank * 2));
+        HAL_IRQ_HANDLER_SetGpioIRQHandler(g_bank[command->bank], command->pin,
+                                          gpio_pin_handle, NULL);
+        HAL_INTMUX_EnableIRQ(GPIO0_EXP_IRQn + (command->bank * 2));
         HAL_GPIO_SetIntType(command->reg, command->pin, command->type);
 
         HAL_GPIO_EnableIRQ(command->reg, command->pin);
@@ -390,7 +408,7 @@ static void command_gpio_process(uint8_t *in, int len)
     }
 
     if (!(command.gpio_flag & FLAG_GPIO_GET)) {
-        command_gpio_grf_control(&command);
+        command_gpio_pin_control(&command);
     }
     command_gpio_control(&command);
 }
