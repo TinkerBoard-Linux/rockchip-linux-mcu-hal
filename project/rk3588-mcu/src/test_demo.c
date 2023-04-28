@@ -10,6 +10,7 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define GPIO_TEST
+//#define GPIO_DIRECT_TEST
 //#define GPIO_VIRTUAL_MODEL_TEST
 //#define IRQ_LATENCY_TEST
 //#define PERF_TEST
@@ -91,6 +92,42 @@ static void gpio_test(void)
     HAL_INTMUX_EnableIRQ(GPIO3_IRQn);
     HAL_GPIO_SetIntType(GPIO3, GPIO_PIN_C0, GPIO_INT_TYPE_EDGE_BOTH);
     HAL_GPIO_EnableIRQ(GPIO3, GPIO_PIN_C0);
+    printf("test_gpio interrupt ready\n");
+}
+#endif
+
+/************************************************/
+/*                                              */
+/*              GPIO_DIRECT_TEST                */
+/*                                              */
+/************************************************/
+#ifdef GPIO_DIRECT_TEST
+static void gpio0_isr(uint32_t irq, void *args)
+{
+    HAL_GPIO_IRQHandler(GPIO0, GPIO_BANK0);
+}
+
+static HAL_Status a7_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO0A7 callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_direct_test(void)
+{
+    /* set pinctrl function */
+    HAL_PINCTRL_SetParam(GPIO_BANK0,
+                         GPIO_PIN_A7,
+                         PIN_CONFIG_MUX_FUNC0);
+
+    /* Test GPIO interrupt */
+    HAL_GPIO_SetPinDirection(GPIO0, GPIO_PIN_A7, GPIO_IN);
+    HAL_NVIC_SetIRQHandler(GPIO0_IRQn, gpio0_isr);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK0, GPIO_PIN_A7, a7_call_back, NULL);
+    HAL_NVIC_EnableIRQ(GPIO0_IRQn);
+    HAL_GPIO_SetIntType(GPIO0, GPIO_PIN_A7, GPIO_INT_TYPE_EDGE_BOTH);
+    HAL_GPIO_EnableIRQ(GPIO0, GPIO_PIN_A7);
     printf("test_gpio interrupt ready\n");
 }
 #endif
@@ -362,6 +399,10 @@ void test_demo(void)
 {
 #ifdef GPIO_TEST
     gpio_test();
+#endif
+
+#ifdef GPIO_DIRECT_TEST
+    gpio_direct_test();
 #endif
 
 #ifdef GPIO_VIRTUAL_MODEL_TEST
