@@ -15,6 +15,7 @@
 //#define IPI_SGI_TEST
 //#define MBOX_TEST
 //#define PERF_TEST
+//#define PWM_TEST
 //#define RPMSG_TEST
 //#define RPMSG_LINUX_TEST
 //#define RPMSG_PERF_TEST
@@ -443,6 +444,55 @@ static void perf_test(void)
         free(ptr);
     }
     printf("test memset end!\n");
+}
+#endif
+
+/************************************************/
+/*                                              */
+/*                  PWM_TEST                    */
+/*                                              */
+/************************************************/
+#ifdef PWM_TEST
+static uint32_t hal_pwm1_clk = 100000000;
+static struct PWM_HANDLE hal_pwm1_handle;
+struct HAL_PWM_CONFIG hal_channel0_config = {
+    .channel = 0,
+    .periodNS = 100000,
+    .dutyNS = 40000,
+    .polarity = true,
+};
+
+struct HAL_PWM_CONFIG hal_channel1_config = {
+    .channel = 1,
+    .periodNS = 100000,
+    .dutyNS = 20000,
+    .polarity = false,
+};
+
+static void HAL_IOMUX_PWM1_Config(void)
+{
+    /* PWM1 chanel0-0C3 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0, GPIO_PIN_C3, PIN_CONFIG_MUX_FUNC1);
+
+    /* PWM1 chanel1-0C4 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0, GPIO_PIN_C4, PIN_CONFIG_MUX_FUNC1);
+}
+
+static void pwm_test(void)
+{
+    printf("pwm_test: test start:\n");
+
+    HAL_PWM_Init(&hal_pwm1_handle, g_pwm1Dev.pReg, hal_pwm1_clk);
+
+    HAL_IOMUX_PWM1_Config();
+
+    HAL_CRU_ClkSetFreq(g_pwm1Dev.clkID, hal_pwm1_clk);
+
+    HAL_PWM_SetConfig(&hal_pwm1_handle, hal_channel0_config.channel, &hal_channel0_config);
+    HAL_PWM_SetConfig(&hal_pwm1_handle, hal_channel1_config.channel, &hal_channel1_config);
+
+    HAL_PWM_Enable(&hal_pwm1_handle, hal_channel0_config.channel, HAL_PWM_CONTINUOUS);
+    HAL_PWM_Enable(&hal_pwm1_handle, hal_channel1_config.channel, HAL_PWM_CONTINUOUS);
 }
 #endif
 
@@ -1210,6 +1260,10 @@ void test_demo(void)
 
 #if defined(PERF_TEST) && defined(PRIMARY_CPU)
     perf_test();
+#endif
+
+#if defined(PWM_TEST) && defined(PRIMARY_CPU)
+    pwm_test();
 #endif
 
 #ifdef RPMSG_TEST
