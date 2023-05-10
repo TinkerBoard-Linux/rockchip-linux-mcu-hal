@@ -398,7 +398,7 @@ static void gpio_test(void)
 /************************************************/
 #ifdef PWM_TEST
 static uint32_t hal_pwm0_clk = 100000000;
-static struct HAL_PWM_CONFIG hal_channel0_handle, hal_channel1_handle;
+static struct PWM_HANDLE hal_pwm0_handle;
 struct HAL_PWM_CONFIG hal_channel0_config = {
     .channel = 0,
     .periodNS = 100000,
@@ -413,40 +413,30 @@ struct HAL_PWM_CONFIG hal_channel1_config = {
     .polarity = false,
 };
 
-static void HAL_IOMUX_PWM0_Channel0Config(void)
+static void HAL_IOMUX_PWM0_Config(void)
 {
     /* PWM0 chanel0-0B5 */
-    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
-                         GPIO_PIN_B5,
-                         PIN_CONFIG_MUX_FUNC1);
-}
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0, GPIO_PIN_B5, PIN_CONFIG_MUX_FUNC1);
 
-static void HAL_IOMUX_PWM0_Channel1Config(void)
-{
     /* PWM0 chanel1-0B6 */
-    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
-                         GPIO_PIN_B6,
-                         PIN_CONFIG_MUX_FUNC1);
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0, GPIO_PIN_B6, PIN_CONFIG_MUX_FUNC1);
 }
 
 static void pwm_test(void)
 {
-    HAL_IOMUX_PWM0_Channel0Config();
-    HAL_IOMUX_PWM0_Channel1Config();
+    printf("pwm_test: test start:\n");
+
+    HAL_PWM_Init(&hal_pwm0_handle, g_pwm0Dev.pReg, hal_pwm0_clk);
+
+    HAL_IOMUX_PWM0_Config();
 
     HAL_CRU_ClkSetFreq(g_pwm0Dev.clkID, hal_pwm0_clk);
 
-    HAL_PWM_Init(&hal_channel0_handle, g_pwm0Dev.pReg, hal_pwm0_clk);
-    HAL_PWM_Init(&hal_channel1_handle, g_pwm0Dev.pReg, hal_pwm0_clk);
-    HAL_PWM_SetConfig(&hal_channel0_handle,
-                      hal_channel0_config.channel,
-                      &hal_channel0_config);
-    HAL_PWM_SetConfig(&hal_channel1_handle,
-                      hal_channel1_config.channel,
-                      &hal_channel1_config);
+    HAL_PWM_SetConfig(&hal_pwm0_handle, hal_channel0_config.channel, &hal_channel0_config);
+    HAL_PWM_SetConfig(&hal_pwm0_handle, hal_channel1_config.channel, &hal_channel1_config);
 
-    HAL_PWM_Enable(&hal_channel0_handle, hal_channel0_config.channel, HAL_PWM_CONTINUOUS);
-    HAL_PWM_Enable(&hal_channel1_handle, hal_channel1_config.channel, HAL_PWM_CONTINUOUS);
+    HAL_PWM_Enable(&hal_pwm0_handle, hal_channel0_config.channel, HAL_PWM_CONTINUOUS);
+    HAL_PWM_Enable(&hal_pwm0_handle, hal_channel1_config.channel, HAL_PWM_CONTINUOUS);
 }
 #endif
 
