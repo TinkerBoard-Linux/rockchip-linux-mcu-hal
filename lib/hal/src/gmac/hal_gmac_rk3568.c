@@ -99,12 +99,24 @@ void HAL_GMAC_SetToRGMII(struct GMAC_HANDLE *pGMAC,
  */
 void HAL_GMAC_SetToRMII(struct GMAC_HANDLE *pGMAC)
 {
-    uint32_t *con1;
+    uint32_t *con1, *cruCon, val;
 
     con1 = (uint32_t *)((pGMAC->pReg == GMAC1) ? &(GRF->MAC1_CON1) :
                                                  &(GRF->MAC0_CON1));
 
     WRITE_REG(*con1, RK3568_GMAC_PHY_INTF_SEL_RMII);
+
+    cruCon = (uint32_t *)((pGMAC->pReg == GMAC1) ? &(CRU->CRU_CLKSEL_CON[33]) :
+                                                   &(CRU->CRU_CLKSEL_CON[31]));
+    /* RMII mode */
+    val = HIWORD_UPDATE(0x1, 0x3, 0);
+    /* clock from io if it was */
+    /* val |= HIWORD_UPDATE(0x1, 0x1, 2);  */
+    /* ref clock sel 50M */
+    val |= HIWORD_UPDATE(0x1, 0x3, 8);
+    /* clock speed 25M */
+    val |= HIWORD_UPDATE(0x1, 0x1, 3);
+    WRITE_REG(*cruCon, val);
 }
 
 /**
