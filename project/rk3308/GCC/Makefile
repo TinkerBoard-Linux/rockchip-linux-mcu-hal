@@ -33,6 +33,9 @@ endif
 ifeq ($(CUR_CPU), 0)
         CFLAGS += -DCPU0
 endif
+# ifeq ($(CUR_CPU), 1)
+#         CFLAGS += -DCPU1
+# endif
 ifeq ($(CUR_CPU), 2)
         CFLAGS += -DCPU2
 endif
