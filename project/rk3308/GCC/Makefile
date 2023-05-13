@@ -26,22 +26,39 @@ CFLAGS += -DSRAM_BASE=$(SRAM_BASE) -DSRAM_SIZE=$(SRAM_SIZE)
 CFLAGS += -DSHRPMSG_SIZE=$(SHRPMSG_SIZE) -DSHRAMFS_SIZE=$(SHRAMFS_SIZE)
 CFLAGS += -DSHLOG0_SIZE=$(SHLOG0_SIZE) -DSHLOG1_SIZE=$(SHLOG1_SIZE) -DSHLOG2_SIZE=$(SHLOG2_SIZE) -DSHLOG3_SIZE=$(SHLOG3_SIZE)
 
+# Define default IRQ route CPU
+ifeq ("$(origin AMP_KERNEL_ENABLE)", "undefined")
+CFLAGS += -DDEFAULT_IRQ_CPU=1
+else
+CFLAGS += -DDEFAULT_IRQ_CPU=0
+CFLAGS += -DAMP_LINUX_ENABLE
+endif
+
+# Define the primary CPU
+ifeq ("$(origin AMP_PRIMARY_CORE)", "undefined")
+AMP_PRIMARY_CPU ?=1
+else
+AMP_PRIMARY_CPU ?=$(AMP_PRIMARY_CORE)
+endif
+
 # The shared memory is initialized by cpu1.
-ifeq ($(CUR_CPU), 1)
+
+ifeq ($(CUR_CPU), $(AMP_PRIMARY_CPU))
         CFLAGS += -DPRIMARY_CPU
 endif
 ifeq ($(CUR_CPU), 0)
         CFLAGS += -DCPU0
 endif
-# ifeq ($(CUR_CPU), 1)
-#         CFLAGS += -DCPU1
-# endif
+ifeq ($(CUR_CPU), 1)
+        CFLAGS += -DCPU1
+endif
 ifeq ($(CUR_CPU), 2)
         CFLAGS += -DCPU2
 endif
 ifeq ($(CUR_CPU), 3)
         CFLAGS += -DCPU3
 endif
+
 LINKER_SCRIPT := gcc_arm.ld
 CLEAN_FILES += $(LINKER_SCRIPT)
 

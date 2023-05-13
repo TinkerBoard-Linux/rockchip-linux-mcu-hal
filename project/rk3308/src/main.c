@@ -23,13 +23,13 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     GIC_AMP_IRQ_CFG_ROUTE(AMP2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(AMP3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 
-    GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(1, 0)),   /* sentinel */
+    GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(DEFAULT_IRQ_CPU, 0)),   /* sentinel */
 };
 
 static struct GIC_IRQ_AMP_CTRL irqConfig = {
-    .cpuAff = CPU_GET_AFFINITY(1, 0),
+    .cpuAff = CPU_GET_AFFINITY(DEFAULT_IRQ_CPU, 0),
     .defPrio = 0xd0,
-    .defRouteAff = CPU_GET_AFFINITY(1, 0),
+    .defRouteAff = CPU_GET_AFFINITY(DEFAULT_IRQ_CPU, 0),
     .irqsCfg = &irqsConfig[0],
 };
 
