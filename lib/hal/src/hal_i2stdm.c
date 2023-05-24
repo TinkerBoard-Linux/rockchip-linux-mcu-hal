@@ -426,9 +426,10 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
     MODIFY_REG(reg->CKR, mask, val);
 
     HAL_ASSERT(config->trcmMode <= TRCM_RXONLY);
-    i2sTdm->trcmMode = config->trcmMode;
     MODIFY_REG(reg->CKR, I2STDM_CKR_LRCK_COMMON_MASK,
-               i2sTdm->trcmMode << I2STDM_CKR_LRCK_COMMON_SHIFT);
+               config->trcmMode << I2STDM_CKR_LRCK_COMMON_SHIFT);
+
+    i2sTdm->trcmMode = isMaster ? config->trcmMode : TRCM_NONE;
 
     /* channel re-mapping */
     if (txMap) {
