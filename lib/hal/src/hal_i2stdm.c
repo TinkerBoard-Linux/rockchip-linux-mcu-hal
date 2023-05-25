@@ -206,14 +206,8 @@ static HAL_Status I2STDM_SetSampleRate(struct HAL_I2STDM_DEV *i2sTdm,
 
     if (i2sTdm->trcmMode) {
         if (i2sTdm->trcmMode == TRCM_TXONLY) {
-            if (i2sTdm->muxRxSel) {
-                HAL_CRU_ClkSetMux(i2sTdm->muxRxSel, 1);
-            }
             mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkTx);
         } else {
-            if (i2sTdm->muxTxSel) {
-                HAL_CRU_ClkSetMux(i2sTdm->muxTxSel, 1);
-            }
             mclkRate = HAL_CRU_ClkGetFreq(i2sTdm->mclkRx);
         }
 
@@ -435,6 +429,15 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
     MODIFY_REG(reg->CKR, I2STDM_CKR_LRCK_COMMON_MASK,
                config->trcmMode << I2STDM_CKR_LRCK_COMMON_SHIFT);
 
+    if (config->trcmMode == TRCM_TXONLY) {
+        if (i2sTdm->muxTxSel) {
+            HAL_CRU_ClkSetMux(i2sTdm->muxTxSel, 1);
+        }
+    } else if (config->trcmMode == TRCM_RXONLY) {
+        if (i2sTdm->muxRxSel) {
+            HAL_CRU_ClkSetMux(i2sTdm->muxRxSel, 1);
+        }
+    }
     i2sTdm->trcmMode = isMaster ? config->trcmMode : TRCM_NONE;
 
     /* channel re-mapping */
