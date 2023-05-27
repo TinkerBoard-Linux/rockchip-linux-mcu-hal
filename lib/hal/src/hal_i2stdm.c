@@ -330,6 +330,7 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
     uint32_t mask = 0, val = 0, tdmVal = 0;
     bool isMaster = config->master;
     bool clkInvert = config->clkInvert;
+    bool frmInvert = config->frameInvert;
     uint16_t rxMap = config->rxMap;
     uint16_t txMap = config->txMap;
     struct I2STDM_REG *reg = i2sTdm->pReg;
@@ -423,6 +424,11 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
 
     mask = I2STDM_CKR_CKP_MASK;
     val = clkInvert ? I2STDM_CKR_CKP_POS : I2STDM_CKR_CKP_NEG;
+    MODIFY_REG(reg->CKR, mask, val);
+
+    mask = I2STDM_CKR_RLP_MASK | I2STDM_CKR_TLP_MASK;
+    val = frmInvert ? I2STDM_CKR_RLP_OPPSITE | I2STDM_CKR_TLP_OPPSITE :
+                      I2STDM_CKR_RLP_NORMAL | I2STDM_CKR_TLP_NORMAL;
     MODIFY_REG(reg->CKR, mask, val);
 
     HAL_ASSERT(config->trcmMode <= TRCM_RXONLY);
