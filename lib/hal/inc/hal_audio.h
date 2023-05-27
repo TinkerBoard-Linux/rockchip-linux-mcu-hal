@@ -123,6 +123,7 @@ typedef enum {
 struct AUDIO_INIT_CONFIG {
     uint32_t master : 1;
     uint32_t clkInvert : 1;
+    uint32_t frameInvert : 1;
     eAUDIO_fmtType format;
     eTRCM_modeType trcmMode;
     ePDM_mode pdmMode;
