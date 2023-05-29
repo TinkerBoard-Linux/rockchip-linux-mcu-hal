@@ -720,10 +720,10 @@ HAL_Status HAL_I2STDM_Config(struct HAL_I2STDM_DEV *i2sTdm, eAUDIO_streamType st
     bool isMaster;
 
     if (i2sTdm->isTdm) {
-        i2sTdm->bclkFs = params->channels * params->sampleBits;
-        mask = TDM_SLOT_BIT_WIDTH_MSK | TDM_FRAME_WIDTH_MSK;
-        val = TDM_SLOT_BIT_WIDTH(params->sampleBits) |
-              TDM_FRAME_WIDTH(i2sTdm->bclkFs);
+        val = READ_BIT(reg->TDM_TXCTRL, TDM_SLOT_BIT_WIDTH_MSK) >> TDM_SLOT_BIT_WIDTH_SHIFT;
+        i2sTdm->bclkFs = params->channels * (val + 1);
+        mask = TDM_FRAME_WIDTH_MSK;
+        val = TDM_FRAME_WIDTH(i2sTdm->bclkFs);
         MODIFY_REG(reg->TDM_TXCTRL, mask, val);
         MODIFY_REG(reg->TDM_RXCTRL, mask, val);
     }
