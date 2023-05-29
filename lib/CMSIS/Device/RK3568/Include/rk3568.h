@@ -1138,6 +1138,13 @@ struct TSADC_REG {
          uint32_t RESERVED0070[4];                    /* Address Offset: 0x0070 */
     __IO uint32_t COMP_LOW_INT[2];                    /* Address Offset: 0x0080 */
 };
+/* SARADC Register Structure Define */
+struct SARADC_REG {
+    __I  uint32_t DATA;                               /* Address Offset: 0x0000 */
+    __I  uint32_t STAS;                               /* Address Offset: 0x0004 */
+    __IO uint32_t CTRL;                               /* Address Offset: 0x0008 */
+    __IO uint32_t DLY_PU_SOC;                         /* Address Offset: 0x000C */
+};
 /* MBOX Register Structure Define */
 struct MBOX_CMD_DAT {
     __IO uint32_t CMD;
@@ -1209,6 +1216,7 @@ struct MBOX_REG {
 #define PWM2_BASE                      0xFE6F0000U /* PWM2 base address */
 #define PWM3_BASE                      0xFE700000U /* PWM3 base address */
 #define TSADC_BASE                     0xFE710000U /* TSADC base address */
+#define SARADC_BASE                    0xFE720000U /* SARADC base address */
 #define GPIO1_BASE                     0xFE740000U /* GPIO1 base address */
 #define GPIO2_BASE                     0xFE750000U /* GPIO2 base address */
 #define GPIO3_BASE                     0xFE760000U /* GPIO3 base address */
@@ -1270,6 +1278,7 @@ struct MBOX_REG {
 #define PWM2                ((struct PWM_REG *) PWM2_BASE)
 #define PWM3                ((struct PWM_REG *) PWM3_BASE)
 #define TSADC               ((struct TSADC_REG *) TSADC_BASE)
+#define SARADC              ((struct SARADC_REG *) SARADC_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
@@ -1285,6 +1294,7 @@ struct MBOX_REG {
 #define IS_FSPI_INSTANCE(instance) ((instance) == FSPI)
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_TSADC_INSTANCE(instance) ((instance) == TSADC)
+#define IS_SARADC_INSTANCE(instance) ((instance) == SARADC)
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2) || ((instance) == I2C3) || ((instance) == I2C4) || ((instance) == I2C5))
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
@@ -14432,6 +14442,31 @@ struct MBOX_REG {
 #define TSADC_COMP1_LOW_INT_OFFSET                         (0x84U)
 #define TSADC_COMP1_LOW_INT_TSADC_COMP_SRC1_SHIFT          (0U)
 #define TSADC_COMP1_LOW_INT_TSADC_COMP_SRC1_MASK           (0xFFFU << TSADC_COMP1_LOW_INT_TSADC_COMP_SRC1_SHIFT)        /* 0x00000FFF */
+/*****************************************SARADC*****************************************/
+/* DATA */
+#define SARADC_DATA_OFFSET                                 (0x0U)
+#define SARADC_DATA                                        (0x0U)
+#define SARADC_DATA_ADC_DATA_SHIFT                         (0U)
+#define SARADC_DATA_ADC_DATA_MASK                          (0x3FFU << SARADC_DATA_ADC_DATA_SHIFT)                       /* 0x000003FF */
+/* STAS */
+#define SARADC_STAS_OFFSET                                 (0x4U)
+#define SARADC_STAS                                        (0x0U)
+#define SARADC_STAS_ADC_STATUS_SHIFT                       (0U)
+#define SARADC_STAS_ADC_STATUS_MASK                        (0x1U << SARADC_STAS_ADC_STATUS_SHIFT)                       /* 0x00000001 */
+/* CTRL */
+#define SARADC_CTRL_OFFSET                                 (0x8U)
+#define SARADC_CTRL_ADC_INPUT_SRC_SEL_SHIFT                (0U)
+#define SARADC_CTRL_ADC_INPUT_SRC_SEL_MASK                 (0x7U << SARADC_CTRL_ADC_INPUT_SRC_SEL_SHIFT)                /* 0x00000007 */
+#define SARADC_CTRL_ADC_POWER_CTRL_SHIFT                   (3U)
+#define SARADC_CTRL_ADC_POWER_CTRL_MASK                    (0x1U << SARADC_CTRL_ADC_POWER_CTRL_SHIFT)                   /* 0x00000008 */
+#define SARADC_CTRL_INT_EN_SHIFT                           (5U)
+#define SARADC_CTRL_INT_EN_MASK                            (0x1U << SARADC_CTRL_INT_EN_SHIFT)                           /* 0x00000020 */
+#define SARADC_CTRL_INT_STATUS_SHIFT                       (6U)
+#define SARADC_CTRL_INT_STATUS_MASK                        (0x1U << SARADC_CTRL_INT_STATUS_SHIFT)                       /* 0x00000040 */
+/* DLY_PU_SOC */
+#define SARADC_DLY_PU_SOC_OFFSET                           (0xCU)
+#define SARADC_DLY_PU_SOC_DLY_PU_SOC_SHIFT                 (0U)
+#define SARADC_DLY_PU_SOC_DLY_PU_SOC_MASK                  (0x3FU << SARADC_DLY_PU_SOC_DLY_PU_SOC_SHIFT)                /* 0x0000003F */
 /******************************************MBOX******************************************/
 /* A2B_INTEN */
 #define MBOX_A2B_INTEN_OFFSET                              (0x0U)
