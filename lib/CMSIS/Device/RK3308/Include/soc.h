@@ -126,6 +126,9 @@ typedef enum {
     VAD_IRQn         = 89,            /*!< VAD Interrupt               */
     OWIRE_IRQn       = 90,            /*!< OWIRE Interrupt             */
     CAN0_IRQn        = 91,            /*!< CAN0 Interrupt              */
+    SDMMC_IRQn       = 108,           /*!< SDMMC Interrupt             */
+    EMMC_IRQn        = 109,           /*!< EMMC Interrupt              */
+    SDIO_IRQn        = 110,           /*!< SDIO Interrupt              */
     SFC_IRQn         = 114,           /*!< SFC Interrupt               */
     AMP0_IRQn        = 119,           /*!< AMP0   Interrupt            */
     AMP1_IRQn        = 120,           /*!< AMP1   Interrupt            */
@@ -504,7 +507,7 @@ typedef enum {
 #define CLK_SDMMC_PLL_CLK_GATE  134U
 #define CLK_SDMMC_CLK_GATE      135U
 #define CLK_SDIO_PLL_CLK_GATE   136U
-#define CLK_SDIO_CLK_GATE       137U
+#define CLK_SDIO_GATE           137U
 #define CLK_EMMC_PLL_CLK_GATE   138U
 #define CLK_EMMC_CLK_GATE       139U
 #define CLK_SFC_PLL_CLK_GATE    140U

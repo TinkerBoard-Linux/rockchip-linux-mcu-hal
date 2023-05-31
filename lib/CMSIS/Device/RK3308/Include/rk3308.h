@@ -1205,10 +1205,7 @@ struct SDIO_REG {
     __IO uint32_t INTMASK;                            /* Address Offset: 0x0024 */
     __IO uint32_t CMDARG;                             /* Address Offset: 0x0028 */
     __IO uint32_t CMD;                                /* Address Offset: 0x002C */
-    __I  uint32_t RESP0;                              /* Address Offset: 0x0030 */
-    __I  uint32_t RESP1;                              /* Address Offset: 0x0034 */
-    __I  uint32_t RESP2;                              /* Address Offset: 0x0038 */
-    __I  uint32_t RESP3;                              /* Address Offset: 0x003C */
+    __I  uint32_t RESP[4];                            /* Address Offset: 0x0030 */
     __IO uint32_t MINTSTS;                            /* Address Offset: 0x0040 */
     __IO uint32_t RINTSTS;                            /* Address Offset: 0x0044 */
     __I  uint32_t STATUS;                             /* Address Offset: 0x0048 */
@@ -1242,7 +1239,7 @@ struct SDIO_REG {
     __IO uint32_t FIFO_BASE;                          /* Address Offset: 0x0200 */
 };
 /* EMMC Register Structure Define */
-struct EMMC_REG {
+struct MMC_REG {
     __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
     __IO uint32_t PWREN;                              /* Address Offset: 0x0004 */
     __IO uint32_t CLKDIV;                             /* Address Offset: 0x0008 */
@@ -1255,10 +1252,7 @@ struct EMMC_REG {
     __IO uint32_t INTMASK;                            /* Address Offset: 0x0024 */
     __IO uint32_t CMDARG;                             /* Address Offset: 0x0028 */
     __IO uint32_t CMD;                                /* Address Offset: 0x002C */
-    __I  uint32_t RESP0;                              /* Address Offset: 0x0030 */
-    __I  uint32_t RESP1;                              /* Address Offset: 0x0034 */
-    __I  uint32_t RESP2;                              /* Address Offset: 0x0038 */
-    __I  uint32_t RESP3;                              /* Address Offset: 0x003C */
+    __I  uint32_t RESP[4];                            /* Address Offset: 0x0030 */
     __IO uint32_t MINTSTS;                            /* Address Offset: 0x0040 */
     __IO uint32_t RINTSTS;                            /* Address Offset: 0x0044 */
     __I  uint32_t STATUS;                             /* Address Offset: 0x0048 */
@@ -10888,355 +10882,355 @@ struct ACODEC_REG {
 #define SDIO_FIFO_BASE_FIFO_BASE_ADDR_MASK                 (0xFFFFFFFFU << SDIO_FIFO_BASE_FIFO_BASE_ADDR_SHIFT)         /* 0xFFFFFFFF */
 /******************************************EMMC******************************************/
 /* CTRL */
-#define EMMC_CTRL_OFFSET                                   (0x0U)
-#define EMMC_CTRL_CONTROLLER_RESET_SHIFT                   (0U)
-#define EMMC_CTRL_CONTROLLER_RESET_MASK                    (0x1U << EMMC_CTRL_CONTROLLER_RESET_SHIFT)                   /* 0x00000001 */
-#define EMMC_CTRL_FIFO_RESET_SHIFT                         (1U)
-#define EMMC_CTRL_FIFO_RESET_MASK                          (0x1U << EMMC_CTRL_FIFO_RESET_SHIFT)                         /* 0x00000002 */
-#define EMMC_CTRL_DMA_RESET_SHIFT                          (2U)
-#define EMMC_CTRL_DMA_RESET_MASK                           (0x1U << EMMC_CTRL_DMA_RESET_SHIFT)                          /* 0x00000004 */
-#define EMMC_CTRL_INT_ENABLE_SHIFT                         (4U)
-#define EMMC_CTRL_INT_ENABLE_MASK                          (0x1U << EMMC_CTRL_INT_ENABLE_SHIFT)                         /* 0x00000010 */
-#define EMMC_CTRL_DMA_ENABLE_SHIFT                         (5U)
-#define EMMC_CTRL_DMA_ENABLE_MASK                          (0x1U << EMMC_CTRL_DMA_ENABLE_SHIFT)                         /* 0x00000020 */
-#define EMMC_CTRL_READ_WAIT_SHIFT                          (6U)
-#define EMMC_CTRL_READ_WAIT_MASK                           (0x1U << EMMC_CTRL_READ_WAIT_SHIFT)                          /* 0x00000040 */
-#define EMMC_CTRL_SEND_IRQ_RESPONSE_SHIFT                  (7U)
-#define EMMC_CTRL_SEND_IRQ_RESPONSE_MASK                   (0x1U << EMMC_CTRL_SEND_IRQ_RESPONSE_SHIFT)                  /* 0x00000080 */
-#define EMMC_CTRL_ABORT_READ_DATA_SHIFT                    (8U)
-#define EMMC_CTRL_ABORT_READ_DATA_MASK                     (0x1U << EMMC_CTRL_ABORT_READ_DATA_SHIFT)                    /* 0x00000100 */
-#define EMMC_CTRL_SEND_CCSD_SHIFT                          (9U)
-#define EMMC_CTRL_SEND_CCSD_MASK                           (0x1U << EMMC_CTRL_SEND_CCSD_SHIFT)                          /* 0x00000200 */
-#define EMMC_CTRL_SEND_AUTO_STOP_CCSD_SHIFT                (10U)
-#define EMMC_CTRL_SEND_AUTO_STOP_CCSD_MASK                 (0x1U << EMMC_CTRL_SEND_AUTO_STOP_CCSD_SHIFT)                /* 0x00000400 */
-#define EMMC_CTRL_CEATA_DEVICE_INTERRUPT_STATUS_SHIFT      (11U)
-#define EMMC_CTRL_CEATA_DEVICE_INTERRUPT_STATUS_MASK       (0x1U << EMMC_CTRL_CEATA_DEVICE_INTERRUPT_STATUS_SHIFT)      /* 0x00000800 */
-#define EMMC_CTRL_CARD_VOLTAGE_A_SHIFT                     (16U)
-#define EMMC_CTRL_CARD_VOLTAGE_A_MASK                      (0xFU << EMMC_CTRL_CARD_VOLTAGE_A_SHIFT)                     /* 0x000F0000 */
-#define EMMC_CTRL_CARD_VOLTAGE_B_SHIFT                     (20U)
-#define EMMC_CTRL_CARD_VOLTAGE_B_MASK                      (0xFU << EMMC_CTRL_CARD_VOLTAGE_B_SHIFT)                     /* 0x00F00000 */
-#define EMMC_CTRL_ENABLE_OD_PULLUP_SHIFT                   (24U)
-#define EMMC_CTRL_ENABLE_OD_PULLUP_MASK                    (0x1U << EMMC_CTRL_ENABLE_OD_PULLUP_SHIFT)                   /* 0x01000000 */
-#define EMMC_CTRL_USE_INTERNAL_DMAC_SHIFT                  (25U)
-#define EMMC_CTRL_USE_INTERNAL_DMAC_MASK                   (0x1U << EMMC_CTRL_USE_INTERNAL_DMAC_SHIFT)                  /* 0x02000000 */
+#define MMC_CTRL_OFFSET                                   (0x0U)
+#define MMC_CTRL_CONTROLLER_RESET_SHIFT                   (0U)
+#define MMC_CTRL_CONTROLLER_RESET_MASK                    (0x1U << MMC_CTRL_CONTROLLER_RESET_SHIFT)                   /* 0x00000001 */
+#define MMC_CTRL_FIFO_RESET_SHIFT                         (1U)
+#define MMC_CTRL_FIFO_RESET_MASK                          (0x1U << MMC_CTRL_FIFO_RESET_SHIFT)                         /* 0x00000002 */
+#define MMC_CTRL_DMA_RESET_SHIFT                          (2U)
+#define MMC_CTRL_DMA_RESET_MASK                           (0x1U << MMC_CTRL_DMA_RESET_SHIFT)                          /* 0x00000004 */
+#define MMC_CTRL_INT_ENABLE_SHIFT                         (4U)
+#define MMC_CTRL_INT_ENABLE_MASK                          (0x1U << MMC_CTRL_INT_ENABLE_SHIFT)                         /* 0x00000010 */
+#define MMC_CTRL_DMA_ENABLE_SHIFT                         (5U)
+#define MMC_CTRL_DMA_ENABLE_MASK                          (0x1U << MMC_CTRL_DMA_ENABLE_SHIFT)                         /* 0x00000020 */
+#define MMC_CTRL_READ_WAIT_SHIFT                          (6U)
+#define MMC_CTRL_READ_WAIT_MASK                           (0x1U << MMC_CTRL_READ_WAIT_SHIFT)                          /* 0x00000040 */
+#define MMC_CTRL_SEND_IRQ_RESPONSE_SHIFT                  (7U)
+#define MMC_CTRL_SEND_IRQ_RESPONSE_MASK                   (0x1U << MMC_CTRL_SEND_IRQ_RESPONSE_SHIFT)                  /* 0x00000080 */
+#define MMC_CTRL_ABORT_READ_DATA_SHIFT                    (8U)
+#define MMC_CTRL_ABORT_READ_DATA_MASK                     (0x1U << MMC_CTRL_ABORT_READ_DATA_SHIFT)                    /* 0x00000100 */
+#define MMC_CTRL_SEND_CCSD_SHIFT                          (9U)
+#define MMC_CTRL_SEND_CCSD_MASK                           (0x1U << MMC_CTRL_SEND_CCSD_SHIFT)                          /* 0x00000200 */
+#define MMC_CTRL_SEND_AUTO_STOP_CCSD_SHIFT                (10U)
+#define MMC_CTRL_SEND_AUTO_STOP_CCSD_MASK                 (0x1U << MMC_CTRL_SEND_AUTO_STOP_CCSD_SHIFT)                /* 0x00000400 */
+#define MMC_CTRL_CEATA_DEVICE_INTERRUPT_STATUS_SHIFT      (11U)
+#define MMC_CTRL_CEATA_DEVICE_INTERRUPT_STATUS_MASK       (0x1U << MMC_CTRL_CEATA_DEVICE_INTERRUPT_STATUS_SHIFT)      /* 0x00000800 */
+#define MMC_CTRL_CARD_VOLTAGE_A_SHIFT                     (16U)
+#define MMC_CTRL_CARD_VOLTAGE_A_MASK                      (0xFU << MMC_CTRL_CARD_VOLTAGE_A_SHIFT)                     /* 0x000F0000 */
+#define MMC_CTRL_CARD_VOLTAGE_B_SHIFT                     (20U)
+#define MMC_CTRL_CARD_VOLTAGE_B_MASK                      (0xFU << MMC_CTRL_CARD_VOLTAGE_B_SHIFT)                     /* 0x00F00000 */
+#define MMC_CTRL_ENABLE_OD_PULLUP_SHIFT                   (24U)
+#define MMC_CTRL_ENABLE_OD_PULLUP_MASK                    (0x1U << MMC_CTRL_ENABLE_OD_PULLUP_SHIFT)                   /* 0x01000000 */
+#define MMC_CTRL_USE_INTERNAL_DMAC_SHIFT                  (25U)
+#define MMC_CTRL_USE_INTERNAL_DMAC_MASK                   (0x1U << MMC_CTRL_USE_INTERNAL_DMAC_SHIFT)                  /* 0x02000000 */
 /* PWREN */
-#define EMMC_PWREN_OFFSET                                  (0x4U)
-#define EMMC_PWREN_POWER_ENABLE_SHIFT                      (0U)
-#define EMMC_PWREN_POWER_ENABLE_MASK                       (0x1U << EMMC_PWREN_POWER_ENABLE_SHIFT)                      /* 0x00000001 */
+#define MMC_PWREN_OFFSET                                  (0x4U)
+#define MMC_PWREN_POWER_ENABLE_SHIFT                      (0U)
+#define MMC_PWREN_POWER_ENABLE_MASK                       (0x1U << MMC_PWREN_POWER_ENABLE_SHIFT)                      /* 0x00000001 */
 /* CLKDIV */
-#define EMMC_CLKDIV_OFFSET                                 (0x8U)
-#define EMMC_CLKDIV_CLK_DIVIDER0_SHIFT                     (0U)
-#define EMMC_CLKDIV_CLK_DIVIDER0_MASK                      (0xFFU << EMMC_CLKDIV_CLK_DIVIDER0_SHIFT)                    /* 0x000000FF */
-#define EMMC_CLKDIV_CLK_DIVIDER1_SHIFT                     (8U)
-#define EMMC_CLKDIV_CLK_DIVIDER1_MASK                      (0xFFU << EMMC_CLKDIV_CLK_DIVIDER1_SHIFT)                    /* 0x0000FF00 */
-#define EMMC_CLKDIV_CLK_DIVIDER2_SHIFT                     (16U)
-#define EMMC_CLKDIV_CLK_DIVIDER2_MASK                      (0xFFU << EMMC_CLKDIV_CLK_DIVIDER2_SHIFT)                    /* 0x00FF0000 */
-#define EMMC_CLKDIV_CLK_DIVIDER3_SHIFT                     (24U)
-#define EMMC_CLKDIV_CLK_DIVIDER3_MASK                      (0xFFU << EMMC_CLKDIV_CLK_DIVIDER3_SHIFT)                    /* 0xFF000000 */
+#define MMC_CLKDIV_OFFSET                                 (0x8U)
+#define MMC_CLKDIV_CLK_DIVIDER0_SHIFT                     (0U)
+#define MMC_CLKDIV_CLK_DIVIDER0_MASK                      (0xFFU << MMC_CLKDIV_CLK_DIVIDER0_SHIFT)                    /* 0x000000FF */
+#define MMC_CLKDIV_CLK_DIVIDER1_SHIFT                     (8U)
+#define MMC_CLKDIV_CLK_DIVIDER1_MASK                      (0xFFU << MMC_CLKDIV_CLK_DIVIDER1_SHIFT)                    /* 0x0000FF00 */
+#define MMC_CLKDIV_CLK_DIVIDER2_SHIFT                     (16U)
+#define MMC_CLKDIV_CLK_DIVIDER2_MASK                      (0xFFU << MMC_CLKDIV_CLK_DIVIDER2_SHIFT)                    /* 0x00FF0000 */
+#define MMC_CLKDIV_CLK_DIVIDER3_SHIFT                     (24U)
+#define MMC_CLKDIV_CLK_DIVIDER3_MASK                      (0xFFU << MMC_CLKDIV_CLK_DIVIDER3_SHIFT)                    /* 0xFF000000 */
 /* CLKSRC */
-#define EMMC_CLKSRC_OFFSET                                 (0xCU)
-#define EMMC_CLKSRC_CLK_SOURCE_SHIFT                       (0U)
-#define EMMC_CLKSRC_CLK_SOURCE_MASK                        (0x3U << EMMC_CLKSRC_CLK_SOURCE_SHIFT)                       /* 0x00000003 */
+#define MMC_CLKSRC_OFFSET                                 (0xCU)
+#define MMC_CLKSRC_CLK_SOURCE_SHIFT                       (0U)
+#define MMC_CLKSRC_CLK_SOURCE_MASK                        (0x3U << MMC_CLKSRC_CLK_SOURCE_SHIFT)                       /* 0x00000003 */
 /* CLKENA */
-#define EMMC_CLKENA_OFFSET                                 (0x10U)
-#define EMMC_CLKENA_CCLK_ENABLE_SHIFT                      (0U)
-#define EMMC_CLKENA_CCLK_ENABLE_MASK                       (0x1U << EMMC_CLKENA_CCLK_ENABLE_SHIFT)                      /* 0x00000001 */
-#define EMMC_CLKENA_CCLK_LOW_POWER_SHIFT                   (16U)
-#define EMMC_CLKENA_CCLK_LOW_POWER_MASK                    (0x1U << EMMC_CLKENA_CCLK_LOW_POWER_SHIFT)                   /* 0x00010000 */
+#define MMC_CLKENA_OFFSET                                 (0x10U)
+#define MMC_CLKENA_CCLK_ENABLE_SHIFT                      (0U)
+#define MMC_CLKENA_CCLK_ENABLE_MASK                       (0x1U << MMC_CLKENA_CCLK_ENABLE_SHIFT)                      /* 0x00000001 */
+#define MMC_CLKENA_CCLK_LOW_POWER_SHIFT                   (16U)
+#define MMC_CLKENA_CCLK_LOW_POWER_MASK                    (0x1U << MMC_CLKENA_CCLK_LOW_POWER_SHIFT)                   /* 0x00010000 */
 /* TMOUT */
-#define EMMC_TMOUT_OFFSET                                  (0x14U)
-#define EMMC_TMOUT_RESPONSE_TIMEOUT_SHIFT                  (0U)
-#define EMMC_TMOUT_RESPONSE_TIMEOUT_MASK                   (0xFFU << EMMC_TMOUT_RESPONSE_TIMEOUT_SHIFT)                 /* 0x000000FF */
-#define EMMC_TMOUT_DATA_TIMEOUT_SHIFT                      (8U)
-#define EMMC_TMOUT_DATA_TIMEOUT_MASK                       (0xFFFFFFU << EMMC_TMOUT_DATA_TIMEOUT_SHIFT)                 /* 0xFFFFFF00 */
+#define MMC_TMOUT_OFFSET                                  (0x14U)
+#define MMC_TMOUT_RESPONSE_TIMEOUT_SHIFT                  (0U)
+#define MMC_TMOUT_RESPONSE_TIMEOUT_MASK                   (0xFFU << MMC_TMOUT_RESPONSE_TIMEOUT_SHIFT)                 /* 0x000000FF */
+#define MMC_TMOUT_DATA_TIMEOUT_SHIFT                      (8U)
+#define MMC_TMOUT_DATA_TIMEOUT_MASK                       (0xFFFFFFU << MMC_TMOUT_DATA_TIMEOUT_SHIFT)                 /* 0xFFFFFF00 */
 /* CTYPE */
-#define EMMC_CTYPE_OFFSET                                  (0x18U)
-#define EMMC_CTYPE_CARD_WIDTH_SHIFT                        (0U)
-#define EMMC_CTYPE_CARD_WIDTH_MASK                         (0x1U << EMMC_CTYPE_CARD_WIDTH_SHIFT)                        /* 0x00000001 */
-#define EMMC_CTYPE_CARD_WIDTH_8_SHIFT                      (16U)
-#define EMMC_CTYPE_CARD_WIDTH_8_MASK                       (0x1U << EMMC_CTYPE_CARD_WIDTH_8_SHIFT)                      /* 0x00010000 */
+#define MMC_CTYPE_OFFSET                                  (0x18U)
+#define MMC_CTYPE_CARD_WIDTH_SHIFT                        (0U)
+#define MMC_CTYPE_CARD_WIDTH_MASK                         (0x1U << MMC_CTYPE_CARD_WIDTH_SHIFT)                        /* 0x00000001 */
+#define MMC_CTYPE_CARD_WIDTH_8_SHIFT                      (16U)
+#define MMC_CTYPE_CARD_WIDTH_8_MASK                       (0x1U << MMC_CTYPE_CARD_WIDTH_8_SHIFT)                      /* 0x00010000 */
 /* BLKSIZ */
-#define EMMC_BLKSIZ_OFFSET                                 (0x1CU)
-#define EMMC_BLKSIZ_BLOCK_SIZE_SHIFT                       (0U)
-#define EMMC_BLKSIZ_BLOCK_SIZE_MASK                        (0xFFFFU << EMMC_BLKSIZ_BLOCK_SIZE_SHIFT)                    /* 0x0000FFFF */
+#define MMC_BLKSIZ_OFFSET                                 (0x1CU)
+#define MMC_BLKSIZ_BLOCK_SIZE_SHIFT                       (0U)
+#define MMC_BLKSIZ_BLOCK_SIZE_MASK                        (0xFFFFU << MMC_BLKSIZ_BLOCK_SIZE_SHIFT)                    /* 0x0000FFFF */
 /* BYTCNT */
-#define EMMC_BYTCNT_OFFSET                                 (0x20U)
-#define EMMC_BYTCNT_BYTE_COUNT_SHIFT                       (0U)
-#define EMMC_BYTCNT_BYTE_COUNT_MASK                        (0xFFFFFFFFU << EMMC_BYTCNT_BYTE_COUNT_SHIFT)                /* 0xFFFFFFFF */
+#define MMC_BYTCNT_OFFSET                                 (0x20U)
+#define MMC_BYTCNT_BYTE_COUNT_SHIFT                       (0U)
+#define MMC_BYTCNT_BYTE_COUNT_MASK                        (0xFFFFFFFFU << MMC_BYTCNT_BYTE_COUNT_SHIFT)                /* 0xFFFFFFFF */
 /* INTMASK */
-#define EMMC_INTMASK_OFFSET                                (0x24U)
-#define EMMC_INTMASK_INT_MASK_SHIFT                        (0U)
-#define EMMC_INTMASK_INT_MASK_MASK                         (0xFFFFU << EMMC_INTMASK_INT_MASK_SHIFT)                     /* 0x0000FFFF */
-#define EMMC_INTMASK_DATA_NOBUSY_INT_MASK_SHIFT            (16U)
-#define EMMC_INTMASK_DATA_NOBUSY_INT_MASK_MASK             (0x1U << EMMC_INTMASK_DATA_NOBUSY_INT_MASK_SHIFT)            /* 0x00010000 */
-#define EMMC_INTMASK_SDIO_INT_MASK_SHIFT                   (24U)
-#define EMMC_INTMASK_SDIO_INT_MASK_MASK                    (0x1U << EMMC_INTMASK_SDIO_INT_MASK_SHIFT)                   /* 0x01000000 */
+#define MMC_INTMASK_OFFSET                                (0x24U)
+#define MMC_INTMASK_INT_MASK_SHIFT                        (0U)
+#define MMC_INTMASK_INT_MASK_MASK                         (0xFFFFU << MMC_INTMASK_INT_MASK_SHIFT)                     /* 0x0000FFFF */
+#define MMC_INTMASK_DATA_NOBUSY_INT_MASK_SHIFT            (16U)
+#define MMC_INTMASK_DATA_NOBUSY_INT_MASK_MASK             (0x1U << MMC_INTMASK_DATA_NOBUSY_INT_MASK_SHIFT)            /* 0x00010000 */
+#define MMC_INTMASK_SDIO_INT_MASK_SHIFT                   (24U)
+#define MMC_INTMASK_SDIO_INT_MASK_MASK                    (0x1U << MMC_INTMASK_SDIO_INT_MASK_SHIFT)                   /* 0x01000000 */
 /* CMDARG */
-#define EMMC_CMDARG_OFFSET                                 (0x28U)
-#define EMMC_CMDARG_CMD_ARG_SHIFT                          (0U)
-#define EMMC_CMDARG_CMD_ARG_MASK                           (0xFFFFFFFFU << EMMC_CMDARG_CMD_ARG_SHIFT)                   /* 0xFFFFFFFF */
+#define MMC_CMDARG_OFFSET                                 (0x28U)
+#define MMC_CMDARG_CMD_ARG_SHIFT                          (0U)
+#define MMC_CMDARG_CMD_ARG_MASK                           (0xFFFFFFFFU << MMC_CMDARG_CMD_ARG_SHIFT)                   /* 0xFFFFFFFF */
 /* CMD */
-#define EMMC_CMD_OFFSET                                    (0x2CU)
-#define EMMC_CMD_CMD_INDEX_SHIFT                           (0U)
-#define EMMC_CMD_CMD_INDEX_MASK                            (0x3FU << EMMC_CMD_CMD_INDEX_SHIFT)                          /* 0x0000003F */
-#define EMMC_CMD_RESPONSE_EXPECT_SHIFT                     (6U)
-#define EMMC_CMD_RESPONSE_EXPECT_MASK                      (0x1U << EMMC_CMD_RESPONSE_EXPECT_SHIFT)                     /* 0x00000040 */
-#define EMMC_CMD_RESPONSE_LENGTH_SHIFT                     (7U)
-#define EMMC_CMD_RESPONSE_LENGTH_MASK                      (0x1U << EMMC_CMD_RESPONSE_LENGTH_SHIFT)                     /* 0x00000080 */
-#define EMMC_CMD_CHECK_RESPONSE_CRC_SHIFT                  (8U)
-#define EMMC_CMD_CHECK_RESPONSE_CRC_MASK                   (0x1U << EMMC_CMD_CHECK_RESPONSE_CRC_SHIFT)                  /* 0x00000100 */
-#define EMMC_CMD_DATA_EXPECTED_SHIFT                       (9U)
-#define EMMC_CMD_DATA_EXPECTED_MASK                        (0x1U << EMMC_CMD_DATA_EXPECTED_SHIFT)                       /* 0x00000200 */
-#define EMMC_CMD_WR_SHIFT                                  (10U)
-#define EMMC_CMD_WR_MASK                                   (0x1U << EMMC_CMD_WR_SHIFT)                                  /* 0x00000400 */
-#define EMMC_CMD_TRANSFER_MODE_SHIFT                       (11U)
-#define EMMC_CMD_TRANSFER_MODE_MASK                        (0x1U << EMMC_CMD_TRANSFER_MODE_SHIFT)                       /* 0x00000800 */
-#define EMMC_CMD_SEND_AUTO_STOP_SHIFT                      (12U)
-#define EMMC_CMD_SEND_AUTO_STOP_MASK                       (0x1U << EMMC_CMD_SEND_AUTO_STOP_SHIFT)                      /* 0x00001000 */
-#define EMMC_CMD_WAIT_PRVDATA_COMPLETE_SHIFT               (13U)
-#define EMMC_CMD_WAIT_PRVDATA_COMPLETE_MASK                (0x1U << EMMC_CMD_WAIT_PRVDATA_COMPLETE_SHIFT)               /* 0x00002000 */
-#define EMMC_CMD_STOP_ABORT_CMD_SHIFT                      (14U)
-#define EMMC_CMD_STOP_ABORT_CMD_MASK                       (0x1U << EMMC_CMD_STOP_ABORT_CMD_SHIFT)                      /* 0x00004000 */
-#define EMMC_CMD_SEND_INITIALIZATION_SHIFT                 (15U)
-#define EMMC_CMD_SEND_INITIALIZATION_MASK                  (0x1U << EMMC_CMD_SEND_INITIALIZATION_SHIFT)                 /* 0x00008000 */
-#define EMMC_CMD_CARD_NUMBER_SHIFT                         (16U)
-#define EMMC_CMD_CARD_NUMBER_MASK                          (0x1FU << EMMC_CMD_CARD_NUMBER_SHIFT)                        /* 0x001F0000 */
-#define EMMC_CMD_UPDATE_CLOCK_REGISTERS_ONLY_SHIFT         (21U)
-#define EMMC_CMD_UPDATE_CLOCK_REGISTERS_ONLY_MASK          (0x1U << EMMC_CMD_UPDATE_CLOCK_REGISTERS_ONLY_SHIFT)         /* 0x00200000 */
-#define EMMC_CMD_READ_CEATA_DEVICE_SHIFT                   (22U)
-#define EMMC_CMD_READ_CEATA_DEVICE_MASK                    (0x1U << EMMC_CMD_READ_CEATA_DEVICE_SHIFT)                   /* 0x00400000 */
-#define EMMC_CMD_CCS_EXPECTED_SHIFT                        (23U)
-#define EMMC_CMD_CCS_EXPECTED_MASK                         (0x1U << EMMC_CMD_CCS_EXPECTED_SHIFT)                        /* 0x00800000 */
-#define EMMC_CMD_ENABLE_BOOT_SHIFT                         (24U)
-#define EMMC_CMD_ENABLE_BOOT_MASK                          (0x1U << EMMC_CMD_ENABLE_BOOT_SHIFT)                         /* 0x01000000 */
-#define EMMC_CMD_EXPECT_BOOT_ACK_SHIFT                     (25U)
-#define EMMC_CMD_EXPECT_BOOT_ACK_MASK                      (0x1U << EMMC_CMD_EXPECT_BOOT_ACK_SHIFT)                     /* 0x02000000 */
-#define EMMC_CMD_DISABLE_BOOT_SHIFT                        (26U)
-#define EMMC_CMD_DISABLE_BOOT_MASK                         (0x1U << EMMC_CMD_DISABLE_BOOT_SHIFT)                        /* 0x04000000 */
-#define EMMC_CMD_BOOT_MODE_SHIFT                           (27U)
-#define EMMC_CMD_BOOT_MODE_MASK                            (0x1U << EMMC_CMD_BOOT_MODE_SHIFT)                           /* 0x08000000 */
-#define EMMC_CMD_VOLT_SWITCH_SHIFT                         (28U)
-#define EMMC_CMD_VOLT_SWITCH_MASK                          (0x1U << EMMC_CMD_VOLT_SWITCH_SHIFT)                         /* 0x10000000 */
-#define EMMC_CMD_USE_HOLD_REG_SHIFT                        (29U)
-#define EMMC_CMD_USE_HOLD_REG_MASK                         (0x1U << EMMC_CMD_USE_HOLD_REG_SHIFT)                        /* 0x20000000 */
-#define EMMC_CMD_START_CMD_SHIFT                           (31U)
-#define EMMC_CMD_START_CMD_MASK                            (0x1U << EMMC_CMD_START_CMD_SHIFT)                           /* 0x80000000 */
+#define MMC_CMD_OFFSET                                    (0x2CU)
+#define MMC_CMD_CMD_INDEX_SHIFT                           (0U)
+#define MMC_CMD_CMD_INDEX_MASK                            (0x3FU << MMC_CMD_CMD_INDEX_SHIFT)                          /* 0x0000003F */
+#define MMC_CMD_RESPONSE_EXPECT_SHIFT                     (6U)
+#define MMC_CMD_RESPONSE_EXPECT_MASK                      (0x1U << MMC_CMD_RESPONSE_EXPECT_SHIFT)                     /* 0x00000040 */
+#define MMC_CMD_RESPONSE_LENGTH_SHIFT                     (7U)
+#define MMC_CMD_RESPONSE_LENGTH_MASK                      (0x1U << MMC_CMD_RESPONSE_LENGTH_SHIFT)                     /* 0x00000080 */
+#define MMC_CMD_CHECK_RESPONSE_CRC_SHIFT                  (8U)
+#define MMC_CMD_CHECK_RESPONSE_CRC_MASK                   (0x1U << MMC_CMD_CHECK_RESPONSE_CRC_SHIFT)                  /* 0x00000100 */
+#define MMC_CMD_DATA_EXPECTED_SHIFT                       (9U)
+#define MMC_CMD_DATA_EXPECTED_MASK                        (0x1U << MMC_CMD_DATA_EXPECTED_SHIFT)                       /* 0x00000200 */
+#define MMC_CMD_WR_SHIFT                                  (10U)
+#define MMC_CMD_WR_MASK                                   (0x1U << MMC_CMD_WR_SHIFT)                                  /* 0x00000400 */
+#define MMC_CMD_TRANSFER_MODE_SHIFT                       (11U)
+#define MMC_CMD_TRANSFER_MODE_MASK                        (0x1U << MMC_CMD_TRANSFER_MODE_SHIFT)                       /* 0x00000800 */
+#define MMC_CMD_SEND_AUTO_STOP_SHIFT                      (12U)
+#define MMC_CMD_SEND_AUTO_STOP_MASK                       (0x1U << MMC_CMD_SEND_AUTO_STOP_SHIFT)                      /* 0x00001000 */
+#define MMC_CMD_WAIT_PRVDATA_COMPLETE_SHIFT               (13U)
+#define MMC_CMD_WAIT_PRVDATA_COMPLETE_MASK                (0x1U << MMC_CMD_WAIT_PRVDATA_COMPLETE_SHIFT)               /* 0x00002000 */
+#define MMC_CMD_STOP_ABORT_CMD_SHIFT                      (14U)
+#define MMC_CMD_STOP_ABORT_CMD_MASK                       (0x1U << MMC_CMD_STOP_ABORT_CMD_SHIFT)                      /* 0x00004000 */
+#define MMC_CMD_SEND_INITIALIZATION_SHIFT                 (15U)
+#define MMC_CMD_SEND_INITIALIZATION_MASK                  (0x1U << MMC_CMD_SEND_INITIALIZATION_SHIFT)                 /* 0x00008000 */
+#define MMC_CMD_CARD_NUMBER_SHIFT                         (16U)
+#define MMC_CMD_CARD_NUMBER_MASK                          (0x1FU << MMC_CMD_CARD_NUMBER_SHIFT)                        /* 0x001F0000 */
+#define MMC_CMD_UPDATE_CLOCK_REGISTERS_ONLY_SHIFT         (21U)
+#define MMC_CMD_UPDATE_CLOCK_REGISTERS_ONLY_MASK          (0x1U << MMC_CMD_UPDATE_CLOCK_REGISTERS_ONLY_SHIFT)         /* 0x00200000 */
+#define MMC_CMD_READ_CEATA_DEVICE_SHIFT                   (22U)
+#define MMC_CMD_READ_CEATA_DEVICE_MASK                    (0x1U << MMC_CMD_READ_CEATA_DEVICE_SHIFT)                   /* 0x00400000 */
+#define MMC_CMD_CCS_EXPECTED_SHIFT                        (23U)
+#define MMC_CMD_CCS_EXPECTED_MASK                         (0x1U << MMC_CMD_CCS_EXPECTED_SHIFT)                        /* 0x00800000 */
+#define MMC_CMD_ENABLE_BOOT_SHIFT                         (24U)
+#define MMC_CMD_ENABLE_BOOT_MASK                          (0x1U << MMC_CMD_ENABLE_BOOT_SHIFT)                         /* 0x01000000 */
+#define MMC_CMD_EXPECT_BOOT_ACK_SHIFT                     (25U)
+#define MMC_CMD_EXPECT_BOOT_ACK_MASK                      (0x1U << MMC_CMD_EXPECT_BOOT_ACK_SHIFT)                     /* 0x02000000 */
+#define MMC_CMD_DISABLE_BOOT_SHIFT                        (26U)
+#define MMC_CMD_DISABLE_BOOT_MASK                         (0x1U << MMC_CMD_DISABLE_BOOT_SHIFT)                        /* 0x04000000 */
+#define MMC_CMD_BOOT_MODE_SHIFT                           (27U)
+#define MMC_CMD_BOOT_MODE_MASK                            (0x1U << MMC_CMD_BOOT_MODE_SHIFT)                           /* 0x08000000 */
+#define MMC_CMD_VOLT_SWITCH_SHIFT                         (28U)
+#define MMC_CMD_VOLT_SWITCH_MASK                          (0x1U << MMC_CMD_VOLT_SWITCH_SHIFT)                         /* 0x10000000 */
+#define MMC_CMD_USE_HOLD_REG_SHIFT                        (29U)
+#define MMC_CMD_USE_HOLD_REG_MASK                         (0x1U << MMC_CMD_USE_HOLD_REG_SHIFT)                        /* 0x20000000 */
+#define MMC_CMD_START_CMD_SHIFT                           (31U)
+#define MMC_CMD_START_CMD_MASK                            (0x1U << MMC_CMD_START_CMD_SHIFT)                           /* 0x80000000 */
 /* RESP0 */
-#define EMMC_RESP0_OFFSET                                  (0x30U)
-#define EMMC_RESP0                                         (0x0U)
-#define EMMC_RESP0_RESPONSE0_SHIFT                         (0U)
-#define EMMC_RESP0_RESPONSE0_MASK                          (0xFFFFFFFFU << EMMC_RESP0_RESPONSE0_SHIFT)                  /* 0xFFFFFFFF */
+#define MMC_RESP0_OFFSET                                  (0x30U)
+#define MMC_RESP0                                         (0x0U)
+#define MMC_RESP0_RESPONSE0_SHIFT                         (0U)
+#define MMC_RESP0_RESPONSE0_MASK                          (0xFFFFFFFFU << MMC_RESP0_RESPONSE0_SHIFT)                  /* 0xFFFFFFFF */
 /* RESP1 */
-#define EMMC_RESP1_OFFSET                                  (0x34U)
-#define EMMC_RESP1                                         (0x0U)
-#define EMMC_RESP1_RESPONSE_SHIFT                          (0U)
-#define EMMC_RESP1_RESPONSE_MASK                           (0xFFFFFFFFU << EMMC_RESP1_RESPONSE_SHIFT)                   /* 0xFFFFFFFF */
+#define MMC_RESP1_OFFSET                                  (0x34U)
+#define MMC_RESP1                                         (0x0U)
+#define MMC_RESP1_RESPONSE_SHIFT                          (0U)
+#define MMC_RESP1_RESPONSE_MASK                           (0xFFFFFFFFU << MMC_RESP1_RESPONSE_SHIFT)                   /* 0xFFFFFFFF */
 /* RESP2 */
-#define EMMC_RESP2_OFFSET                                  (0x38U)
-#define EMMC_RESP2                                         (0x0U)
-#define EMMC_RESP2_RESPONSE2_SHIFT                         (0U)
-#define EMMC_RESP2_RESPONSE2_MASK                          (0xFFFFFFFFU << EMMC_RESP2_RESPONSE2_SHIFT)                  /* 0xFFFFFFFF */
+#define MMC_RESP2_OFFSET                                  (0x38U)
+#define MMC_RESP2                                         (0x0U)
+#define MMC_RESP2_RESPONSE2_SHIFT                         (0U)
+#define MMC_RESP2_RESPONSE2_MASK                          (0xFFFFFFFFU << MMC_RESP2_RESPONSE2_SHIFT)                  /* 0xFFFFFFFF */
 /* RESP3 */
-#define EMMC_RESP3_OFFSET                                  (0x3CU)
-#define EMMC_RESP3                                         (0x0U)
-#define EMMC_RESP3_RESPONSE3_SHIFT                         (0U)
-#define EMMC_RESP3_RESPONSE3_MASK                          (0xFFFFFFFFU << EMMC_RESP3_RESPONSE3_SHIFT)                  /* 0xFFFFFFFF */
+#define MMC_RESP3_OFFSET                                  (0x3CU)
+#define MMC_RESP3                                         (0x0U)
+#define MMC_RESP3_RESPONSE3_SHIFT                         (0U)
+#define MMC_RESP3_RESPONSE3_MASK                          (0xFFFFFFFFU << MMC_RESP3_RESPONSE3_SHIFT)                  /* 0xFFFFFFFF */
 /* MINTSTS */
-#define EMMC_MINTSTS_OFFSET                                (0x40U)
-#define EMMC_MINTSTS_INT_STATUS_SHIFT                      (0U)
-#define EMMC_MINTSTS_INT_STATUS_MASK                       (0xFFFFU << EMMC_MINTSTS_INT_STATUS_SHIFT)                   /* 0x0000FFFF */
-#define EMMC_MINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT          (16U)
-#define EMMC_MINTSTS_DATA_NOBUSY_INT_STATUS_MASK           (0x1U << EMMC_MINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT)          /* 0x00010000 */
-#define EMMC_MINTSTS_SDIO_INTERRUPT_SHIFT                  (24U)
-#define EMMC_MINTSTS_SDIO_INTERRUPT_MASK                   (0x1U << EMMC_MINTSTS_SDIO_INTERRUPT_SHIFT)                  /* 0x01000000 */
+#define MMC_MINTSTS_OFFSET                                (0x40U)
+#define MMC_MINTSTS_INT_STATUS_SHIFT                      (0U)
+#define MMC_MINTSTS_INT_STATUS_MASK                       (0xFFFFU << MMC_MINTSTS_INT_STATUS_SHIFT)                   /* 0x0000FFFF */
+#define MMC_MINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT          (16U)
+#define MMC_MINTSTS_DATA_NOBUSY_INT_STATUS_MASK           (0x1U << MMC_MINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT)          /* 0x00010000 */
+#define MMC_MINTSTS_SDIO_INTERRUPT_SHIFT                  (24U)
+#define MMC_MINTSTS_SDIO_INTERRUPT_MASK                   (0x1U << MMC_MINTSTS_SDIO_INTERRUPT_SHIFT)                  /* 0x01000000 */
 /* RINTSTS */
-#define EMMC_RINTSTS_OFFSET                                (0x44U)
-#define EMMC_RINTSTS_INT_STATUS_SHIFT                      (0U)
-#define EMMC_RINTSTS_INT_STATUS_MASK                       (0xFFFFU << EMMC_RINTSTS_INT_STATUS_SHIFT)                   /* 0x0000FFFF */
-#define EMMC_RINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT          (16U)
-#define EMMC_RINTSTS_DATA_NOBUSY_INT_STATUS_MASK           (0x1U << EMMC_RINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT)          /* 0x00010000 */
-#define EMMC_RINTSTS_SDIO_INTERRUPT_SHIFT                  (24U)
-#define EMMC_RINTSTS_SDIO_INTERRUPT_MASK                   (0x1U << EMMC_RINTSTS_SDIO_INTERRUPT_SHIFT)                  /* 0x01000000 */
+#define MMC_RINTSTS_OFFSET                                (0x44U)
+#define MMC_RINTSTS_INT_STATUS_SHIFT                      (0U)
+#define MMC_RINTSTS_INT_STATUS_MASK                       (0xFFFFU << MMC_RINTSTS_INT_STATUS_SHIFT)                   /* 0x0000FFFF */
+#define MMC_RINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT          (16U)
+#define MMC_RINTSTS_DATA_NOBUSY_INT_STATUS_MASK           (0x1U << MMC_RINTSTS_DATA_NOBUSY_INT_STATUS_SHIFT)          /* 0x00010000 */
+#define MMC_RINTSTS_SDIO_INTERRUPT_SHIFT                  (24U)
+#define MMC_RINTSTS_SDIO_INTERRUPT_MASK                   (0x1U << MMC_RINTSTS_SDIO_INTERRUPT_SHIFT)                  /* 0x01000000 */
 /* STATUS */
-#define EMMC_STATUS_OFFSET                                 (0x48U)
-#define EMMC_STATUS                                        (0x406U)
-#define EMMC_STATUS_FIFO_RX_WATERMARK_SHIFT                (0U)
-#define EMMC_STATUS_FIFO_RX_WATERMARK_MASK                 (0x1U << EMMC_STATUS_FIFO_RX_WATERMARK_SHIFT)                /* 0x00000001 */
-#define EMMC_STATUS_FIFO_TX_WATERMARK_SHIFT                (1U)
-#define EMMC_STATUS_FIFO_TX_WATERMARK_MASK                 (0x1U << EMMC_STATUS_FIFO_TX_WATERMARK_SHIFT)                /* 0x00000002 */
-#define EMMC_STATUS_FIFO_EMPTY_SHIFT                       (2U)
-#define EMMC_STATUS_FIFO_EMPTY_MASK                        (0x1U << EMMC_STATUS_FIFO_EMPTY_SHIFT)                       /* 0x00000004 */
-#define EMMC_STATUS_FIFO_FULL_SHIFT                        (3U)
-#define EMMC_STATUS_FIFO_FULL_MASK                         (0x1U << EMMC_STATUS_FIFO_FULL_SHIFT)                        /* 0x00000008 */
-#define EMMC_STATUS_COMMAND_FSM_STATES_SHIFT               (4U)
-#define EMMC_STATUS_COMMAND_FSM_STATES_MASK                (0xFU << EMMC_STATUS_COMMAND_FSM_STATES_SHIFT)               /* 0x000000F0 */
-#define EMMC_STATUS_DATA_3_STATUS_SHIFT                    (8U)
-#define EMMC_STATUS_DATA_3_STATUS_MASK                     (0x1U << EMMC_STATUS_DATA_3_STATUS_SHIFT)                    /* 0x00000100 */
-#define EMMC_STATUS_DATA_BUSY_SHIFT                        (9U)
-#define EMMC_STATUS_DATA_BUSY_MASK                         (0x1U << EMMC_STATUS_DATA_BUSY_SHIFT)                        /* 0x00000200 */
-#define EMMC_STATUS_DATA_STATE_MC_BUSY_SHIFT               (10U)
-#define EMMC_STATUS_DATA_STATE_MC_BUSY_MASK                (0x1U << EMMC_STATUS_DATA_STATE_MC_BUSY_SHIFT)               /* 0x00000400 */
-#define EMMC_STATUS_RESPONSE_INDEX_SHIFT                   (11U)
-#define EMMC_STATUS_RESPONSE_INDEX_MASK                    (0x3FU << EMMC_STATUS_RESPONSE_INDEX_SHIFT)                  /* 0x0001F800 */
-#define EMMC_STATUS_FIFO_COUNT_SHIFT                       (17U)
-#define EMMC_STATUS_FIFO_COUNT_MASK                        (0x1FFFU << EMMC_STATUS_FIFO_COUNT_SHIFT)                    /* 0x3FFE0000 */
-#define EMMC_STATUS_DMA_ACK_SHIFT                          (30U)
-#define EMMC_STATUS_DMA_ACK_MASK                           (0x1U << EMMC_STATUS_DMA_ACK_SHIFT)                          /* 0x40000000 */
-#define EMMC_STATUS_DMA_REQ_SHIFT                          (31U)
-#define EMMC_STATUS_DMA_REQ_MASK                           (0x1U << EMMC_STATUS_DMA_REQ_SHIFT)                          /* 0x80000000 */
+#define MMC_STATUS_OFFSET                                 (0x48U)
+#define MMC_STATUS                                        (0x406U)
+#define MMC_STATUS_FIFO_RX_WATERMARK_SHIFT                (0U)
+#define MMC_STATUS_FIFO_RX_WATERMARK_MASK                 (0x1U << MMC_STATUS_FIFO_RX_WATERMARK_SHIFT)                /* 0x00000001 */
+#define MMC_STATUS_FIFO_TX_WATERMARK_SHIFT                (1U)
+#define MMC_STATUS_FIFO_TX_WATERMARK_MASK                 (0x1U << MMC_STATUS_FIFO_TX_WATERMARK_SHIFT)                /* 0x00000002 */
+#define MMC_STATUS_FIFO_EMPTY_SHIFT                       (2U)
+#define MMC_STATUS_FIFO_EMPTY_MASK                        (0x1U << MMC_STATUS_FIFO_EMPTY_SHIFT)                       /* 0x00000004 */
+#define MMC_STATUS_FIFO_FULL_SHIFT                        (3U)
+#define MMC_STATUS_FIFO_FULL_MASK                         (0x1U << MMC_STATUS_FIFO_FULL_SHIFT)                        /* 0x00000008 */
+#define MMC_STATUS_COMMAND_FSM_STATES_SHIFT               (4U)
+#define MMC_STATUS_COMMAND_FSM_STATES_MASK                (0xFU << MMC_STATUS_COMMAND_FSM_STATES_SHIFT)               /* 0x000000F0 */
+#define MMC_STATUS_DATA_3_STATUS_SHIFT                    (8U)
+#define MMC_STATUS_DATA_3_STATUS_MASK                     (0x1U << MMC_STATUS_DATA_3_STATUS_SHIFT)                    /* 0x00000100 */
+#define MMC_STATUS_DATA_BUSY_SHIFT                        (9U)
+#define MMC_STATUS_DATA_BUSY_MASK                         (0x1U << MMC_STATUS_DATA_BUSY_SHIFT)                        /* 0x00000200 */
+#define MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT               (10U)
+#define MMC_STATUS_DATA_STATE_MC_BUSY_MASK                (0x1U << MMC_STATUS_DATA_STATE_MC_BUSY_SHIFT)               /* 0x00000400 */
+#define MMC_STATUS_RESPONSE_INDEX_SHIFT                   (11U)
+#define MMC_STATUS_RESPONSE_INDEX_MASK                    (0x3FU << MMC_STATUS_RESPONSE_INDEX_SHIFT)                  /* 0x0001F800 */
+#define MMC_STATUS_FIFO_COUNT_SHIFT                       (17U)
+#define MMC_STATUS_FIFO_COUNT_MASK                        (0x1FFFU << MMC_STATUS_FIFO_COUNT_SHIFT)                    /* 0x3FFE0000 */
+#define MMC_STATUS_DMA_ACK_SHIFT                          (30U)
+#define MMC_STATUS_DMA_ACK_MASK                           (0x1U << MMC_STATUS_DMA_ACK_SHIFT)                          /* 0x40000000 */
+#define MMC_STATUS_DMA_REQ_SHIFT                          (31U)
+#define MMC_STATUS_DMA_REQ_MASK                           (0x1U << MMC_STATUS_DMA_REQ_SHIFT)                          /* 0x80000000 */
 /* FIFOTH */
-#define EMMC_FIFOTH_OFFSET                                 (0x4CU)
-#define EMMC_FIFOTH_TX_WMARK_SHIFT                         (0U)
-#define EMMC_FIFOTH_TX_WMARK_MASK                          (0xFFFU << EMMC_FIFOTH_TX_WMARK_SHIFT)                       /* 0x00000FFF */
-#define EMMC_FIFOTH_RX_WMARK_SHIFT                         (16U)
-#define EMMC_FIFOTH_RX_WMARK_MASK                          (0xFFFU << EMMC_FIFOTH_RX_WMARK_SHIFT)                       /* 0x0FFF0000 */
-#define EMMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT     (28U)
-#define EMMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_MASK      (0x7U << EMMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT)     /* 0x70000000 */
+#define MMC_FIFOTH_OFFSET                                 (0x4CU)
+#define MMC_FIFOTH_TX_WMARK_SHIFT                         (0U)
+#define MMC_FIFOTH_TX_WMARK_MASK                          (0xFFFU << MMC_FIFOTH_TX_WMARK_SHIFT)                       /* 0x00000FFF */
+#define MMC_FIFOTH_RX_WMARK_SHIFT                         (16U)
+#define MMC_FIFOTH_RX_WMARK_MASK                          (0xFFFU << MMC_FIFOTH_RX_WMARK_SHIFT)                       /* 0x0FFF0000 */
+#define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT     (28U)
+#define MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_MASK      (0x7U << MMC_FIFOTH_DMA_MUTIPLE_TRANSACTION_SIZE_SHIFT)     /* 0x70000000 */
 /* CDETECT */
-#define EMMC_CDETECT_OFFSET                                (0x50U)
-#define EMMC_CDETECT                                       (0x0U)
-#define EMMC_CDETECT_CARD_DETECT_N_SHIFT                   (0U)
-#define EMMC_CDETECT_CARD_DETECT_N_MASK                    (0x1U << EMMC_CDETECT_CARD_DETECT_N_SHIFT)                   /* 0x00000001 */
+#define MMC_CDETECT_OFFSET                                (0x50U)
+#define MMC_CDETECT                                       (0x0U)
+#define MMC_CDETECT_CARD_DETECT_N_SHIFT                   (0U)
+#define MMC_CDETECT_CARD_DETECT_N_MASK                    (0x1U << MMC_CDETECT_CARD_DETECT_N_SHIFT)                   /* 0x00000001 */
 /* WRTPRT */
-#define EMMC_WRTPRT_OFFSET                                 (0x54U)
-#define EMMC_WRTPRT_WRITE_PROTECT_SHIFT                    (0U)
-#define EMMC_WRTPRT_WRITE_PROTECT_MASK                     (0x1U << EMMC_WRTPRT_WRITE_PROTECT_SHIFT)                    /* 0x00000001 */
+#define MMC_WRTPRT_OFFSET                                 (0x54U)
+#define MMC_WRTPRT_WRITE_PROTECT_SHIFT                    (0U)
+#define MMC_WRTPRT_WRITE_PROTECT_MASK                     (0x1U << MMC_WRTPRT_WRITE_PROTECT_SHIFT)                    /* 0x00000001 */
 /* TCBCNT */
-#define EMMC_TCBCNT_OFFSET                                 (0x5CU)
-#define EMMC_TCBCNT                                        (0x0U)
-#define EMMC_TCBCNT_TRANS_CARD_BYTE_COUNT_SHIFT            (0U)
-#define EMMC_TCBCNT_TRANS_CARD_BYTE_COUNT_MASK             (0xFFFFFFFFU << EMMC_TCBCNT_TRANS_CARD_BYTE_COUNT_SHIFT)     /* 0xFFFFFFFF */
+#define MMC_TCBCNT_OFFSET                                 (0x5CU)
+#define MMC_TCBCNT                                        (0x0U)
+#define MMC_TCBCNT_TRANS_CARD_BYTE_COUNT_SHIFT            (0U)
+#define MMC_TCBCNT_TRANS_CARD_BYTE_COUNT_MASK             (0xFFFFFFFFU << MMC_TCBCNT_TRANS_CARD_BYTE_COUNT_SHIFT)     /* 0xFFFFFFFF */
 /* TBBCNT */
-#define EMMC_TBBCNT_OFFSET                                 (0x60U)
-#define EMMC_TBBCNT                                        (0x0U)
-#define EMMC_TBBCNT_TRANS_FIFO_BYTE_COUNT_SHIFT            (0U)
-#define EMMC_TBBCNT_TRANS_FIFO_BYTE_COUNT_MASK             (0xFFFFFFFFU << EMMC_TBBCNT_TRANS_FIFO_BYTE_COUNT_SHIFT)     /* 0xFFFFFFFF */
+#define MMC_TBBCNT_OFFSET                                 (0x60U)
+#define MMC_TBBCNT                                        (0x0U)
+#define MMC_TBBCNT_TRANS_FIFO_BYTE_COUNT_SHIFT            (0U)
+#define MMC_TBBCNT_TRANS_FIFO_BYTE_COUNT_MASK             (0xFFFFFFFFU << MMC_TBBCNT_TRANS_FIFO_BYTE_COUNT_SHIFT)     /* 0xFFFFFFFF */
 /* DEBNCE */
-#define EMMC_DEBNCE_OFFSET                                 (0x64U)
-#define EMMC_DEBNCE_DEBOUNCE_COUNT_SHIFT                   (0U)
-#define EMMC_DEBNCE_DEBOUNCE_COUNT_MASK                    (0xFFFFFFU << EMMC_DEBNCE_DEBOUNCE_COUNT_SHIFT)              /* 0x00FFFFFF */
+#define MMC_DEBNCE_OFFSET                                 (0x64U)
+#define MMC_DEBNCE_DEBOUNCE_COUNT_SHIFT                   (0U)
+#define MMC_DEBNCE_DEBOUNCE_COUNT_MASK                    (0xFFFFFFU << MMC_DEBNCE_DEBOUNCE_COUNT_SHIFT)              /* 0x00FFFFFF */
 /* USRID */
-#define EMMC_USRID_OFFSET                                  (0x68U)
-#define EMMC_USRID_USRID_SHIFT                             (0U)
-#define EMMC_USRID_USRID_MASK                              (0xFFFFFFFFU << EMMC_USRID_USRID_SHIFT)                      /* 0xFFFFFFFF */
+#define MMC_USRID_OFFSET                                  (0x68U)
+#define MMC_USRID_USRID_SHIFT                             (0U)
+#define MMC_USRID_USRID_MASK                              (0xFFFFFFFFU << MMC_USRID_USRID_SHIFT)                      /* 0xFFFFFFFF */
 /* VERID */
-#define EMMC_VERID_OFFSET                                  (0x6CU)
-#define EMMC_VERID                                         (0x5342270AU)
-#define EMMC_VERID_VERID_SHIFT                             (0U)
-#define EMMC_VERID_VERID_MASK                              (0xFFFFFFFFU << EMMC_VERID_VERID_SHIFT)                      /* 0xFFFFFFFF */
+#define MMC_VERID_OFFSET                                  (0x6CU)
+#define MMC_VERID                                         (0x5342270AU)
+#define MMC_VERID_VERID_SHIFT                             (0U)
+#define MMC_VERID_VERID_MASK                              (0xFFFFFFFFU << MMC_VERID_VERID_SHIFT)                      /* 0xFFFFFFFF */
 /* HCON */
-#define EMMC_HCON_OFFSET                                   (0x70U)
-#define EMMC_HCON                                          (0x0U)
-#define EMMC_HCON_HCON_SHIFT                               (0U)
-#define EMMC_HCON_HCON_MASK                                (0xFFFFFFFFU << EMMC_HCON_HCON_SHIFT)                        /* 0xFFFFFFFF */
+#define MMC_HCON_OFFSET                                   (0x70U)
+#define MMC_HCON                                          (0x0U)
+#define MMC_HCON_HCON_SHIFT                               (0U)
+#define MMC_HCON_HCON_MASK                                (0xFFFFFFFFU << MMC_HCON_HCON_SHIFT)                        /* 0xFFFFFFFF */
 /* UHS_REG */
-#define EMMC_UHS_REG_OFFSET                                (0x74U)
-#define EMMC_UHS_REG_VOLT_REG_SHIFT                        (0U)
-#define EMMC_UHS_REG_VOLT_REG_MASK                         (0x1U << EMMC_UHS_REG_VOLT_REG_SHIFT)                        /* 0x00000001 */
-#define EMMC_UHS_REG_DDR_REG_SHIFT                         (16U)
-#define EMMC_UHS_REG_DDR_REG_MASK                          (0x1U << EMMC_UHS_REG_DDR_REG_SHIFT)                         /* 0x00010000 */
+#define MMC_UHS_REG_OFFSET                                (0x74U)
+#define MMC_UHS_REG_VOLT_REG_SHIFT                        (0U)
+#define MMC_UHS_REG_VOLT_REG_MASK                         (0x1U << MMC_UHS_REG_VOLT_REG_SHIFT)                        /* 0x00000001 */
+#define MMC_UHS_REG_DDR_REG_SHIFT                         (16U)
+#define MMC_UHS_REG_DDR_REG_MASK                          (0x1U << MMC_UHS_REG_DDR_REG_SHIFT)                         /* 0x00010000 */
 /* RST_N */
-#define EMMC_RST_N_OFFSET                                  (0x78U)
-#define EMMC_RST_N_CARD_RESET_SHIFT                        (0U)
-#define EMMC_RST_N_CARD_RESET_MASK                         (0x1U << EMMC_RST_N_CARD_RESET_SHIFT)                        /* 0x00000001 */
+#define MMC_RST_N_OFFSET                                  (0x78U)
+#define MMC_RST_N_CARD_RESET_SHIFT                        (0U)
+#define MMC_RST_N_CARD_RESET_MASK                         (0x1U << MMC_RST_N_CARD_RESET_SHIFT)                        /* 0x00000001 */
 /* BMOD */
-#define EMMC_BMOD_OFFSET                                   (0x80U)
-#define EMMC_BMOD_SWR_SHIFT                                (0U)
-#define EMMC_BMOD_SWR_MASK                                 (0x1U << EMMC_BMOD_SWR_SHIFT)                                /* 0x00000001 */
-#define EMMC_BMOD_FB_SHIFT                                 (1U)
-#define EMMC_BMOD_FB_MASK                                  (0x1U << EMMC_BMOD_FB_SHIFT)                                 /* 0x00000002 */
-#define EMMC_BMOD_DSL_SHIFT                                (2U)
-#define EMMC_BMOD_DSL_MASK                                 (0x1FU << EMMC_BMOD_DSL_SHIFT)                               /* 0x0000007C */
-#define EMMC_BMOD_DE_SHIFT                                 (7U)
-#define EMMC_BMOD_DE_MASK                                  (0x1U << EMMC_BMOD_DE_SHIFT)                                 /* 0x00000080 */
-#define EMMC_BMOD_PBL_SHIFT                                (8U)
-#define EMMC_BMOD_PBL_MASK                                 (0x7U << EMMC_BMOD_PBL_SHIFT)                                /* 0x00000700 */
+#define MMC_BMOD_OFFSET                                   (0x80U)
+#define MMC_BMOD_SWR_SHIFT                                (0U)
+#define MMC_BMOD_SWR_MASK                                 (0x1U << MMC_BMOD_SWR_SHIFT)                                /* 0x00000001 */
+#define MMC_BMOD_FB_SHIFT                                 (1U)
+#define MMC_BMOD_FB_MASK                                  (0x1U << MMC_BMOD_FB_SHIFT)                                 /* 0x00000002 */
+#define MMC_BMOD_DSL_SHIFT                                (2U)
+#define MMC_BMOD_DSL_MASK                                 (0x1FU << MMC_BMOD_DSL_SHIFT)                               /* 0x0000007C */
+#define MMC_BMOD_DE_SHIFT                                 (7U)
+#define MMC_BMOD_DE_MASK                                  (0x1U << MMC_BMOD_DE_SHIFT)                                 /* 0x00000080 */
+#define MMC_BMOD_PBL_SHIFT                                (8U)
+#define MMC_BMOD_PBL_MASK                                 (0x7U << MMC_BMOD_PBL_SHIFT)                                /* 0x00000700 */
 /* PLDMND */
-#define EMMC_PLDMND_OFFSET                                 (0x84U)
-#define EMMC_PLDMND_PD_SHIFT                               (0U)
-#define EMMC_PLDMND_PD_MASK                                (0xFFFFFFFFU << EMMC_PLDMND_PD_SHIFT)                        /* 0xFFFFFFFF */
+#define MMC_PLDMND_OFFSET                                 (0x84U)
+#define MMC_PLDMND_PD_SHIFT                               (0U)
+#define MMC_PLDMND_PD_MASK                                (0xFFFFFFFFU << MMC_PLDMND_PD_SHIFT)                        /* 0xFFFFFFFF */
 /* DBADDR */
-#define EMMC_DBADDR_OFFSET                                 (0x88U)
-#define EMMC_DBADDR_SDL_SHIFT                              (0U)
-#define EMMC_DBADDR_SDL_MASK                               (0xFFFFFFFFU << EMMC_DBADDR_SDL_SHIFT)                       /* 0xFFFFFFFF */
+#define MMC_DBADDR_OFFSET                                 (0x88U)
+#define MMC_DBADDR_SDL_SHIFT                              (0U)
+#define MMC_DBADDR_SDL_MASK                               (0xFFFFFFFFU << MMC_DBADDR_SDL_SHIFT)                       /* 0xFFFFFFFF */
 /* IDSTS */
-#define EMMC_IDSTS_OFFSET                                  (0x8CU)
-#define EMMC_IDSTS_TI_SHIFT                                (0U)
-#define EMMC_IDSTS_TI_MASK                                 (0x1U << EMMC_IDSTS_TI_SHIFT)                                /* 0x00000001 */
-#define EMMC_IDSTS_RI_SHIFT                                (1U)
-#define EMMC_IDSTS_RI_MASK                                 (0x1U << EMMC_IDSTS_RI_SHIFT)                                /* 0x00000002 */
-#define EMMC_IDSTS_FBE_SHIFT                               (2U)
-#define EMMC_IDSTS_FBE_MASK                                (0x1U << EMMC_IDSTS_FBE_SHIFT)                               /* 0x00000004 */
-#define EMMC_IDSTS_DU_SHIFT                                (4U)
-#define EMMC_IDSTS_DU_MASK                                 (0x1U << EMMC_IDSTS_DU_SHIFT)                                /* 0x00000010 */
-#define EMMC_IDSTS_CES_SHIFT                               (5U)
-#define EMMC_IDSTS_CES_MASK                                (0x1U << EMMC_IDSTS_CES_SHIFT)                               /* 0x00000020 */
-#define EMMC_IDSTS_NIS_SHIFT                               (8U)
-#define EMMC_IDSTS_NIS_MASK                                (0x1U << EMMC_IDSTS_NIS_SHIFT)                               /* 0x00000100 */
-#define EMMC_IDSTS_AIS_SHIFT                               (9U)
-#define EMMC_IDSTS_AIS_MASK                                (0x1U << EMMC_IDSTS_AIS_SHIFT)                               /* 0x00000200 */
-#define EMMC_IDSTS_EB_SHIFT                                (10U)
-#define EMMC_IDSTS_EB_MASK                                 (0x7U << EMMC_IDSTS_EB_SHIFT)                                /* 0x00001C00 */
-#define EMMC_IDSTS_FSM_SHIFT                               (13U)
-#define EMMC_IDSTS_FSM_MASK                                (0xFU << EMMC_IDSTS_FSM_SHIFT)                               /* 0x0001E000 */
+#define MMC_IDSTS_OFFSET                                  (0x8CU)
+#define MMC_IDSTS_TI_SHIFT                                (0U)
+#define MMC_IDSTS_TI_MASK                                 (0x1U << MMC_IDSTS_TI_SHIFT)                                /* 0x00000001 */
+#define MMC_IDSTS_RI_SHIFT                                (1U)
+#define MMC_IDSTS_RI_MASK                                 (0x1U << MMC_IDSTS_RI_SHIFT)                                /* 0x00000002 */
+#define MMC_IDSTS_FBE_SHIFT                               (2U)
+#define MMC_IDSTS_FBE_MASK                                (0x1U << MMC_IDSTS_FBE_SHIFT)                               /* 0x00000004 */
+#define MMC_IDSTS_DU_SHIFT                                (4U)
+#define MMC_IDSTS_DU_MASK                                 (0x1U << MMC_IDSTS_DU_SHIFT)                                /* 0x00000010 */
+#define MMC_IDSTS_CES_SHIFT                               (5U)
+#define MMC_IDSTS_CES_MASK                                (0x1U << MMC_IDSTS_CES_SHIFT)                               /* 0x00000020 */
+#define MMC_IDSTS_NIS_SHIFT                               (8U)
+#define MMC_IDSTS_NIS_MASK                                (0x1U << MMC_IDSTS_NIS_SHIFT)                               /* 0x00000100 */
+#define MMC_IDSTS_AIS_SHIFT                               (9U)
+#define MMC_IDSTS_AIS_MASK                                (0x1U << MMC_IDSTS_AIS_SHIFT)                               /* 0x00000200 */
+#define MMC_IDSTS_EB_SHIFT                                (10U)
+#define MMC_IDSTS_EB_MASK                                 (0x7U << MMC_IDSTS_EB_SHIFT)                                /* 0x00001C00 */
+#define MMC_IDSTS_FSM_SHIFT                               (13U)
+#define MMC_IDSTS_FSM_MASK                                (0xFU << MMC_IDSTS_FSM_SHIFT)                               /* 0x0001E000 */
 /* IDINTEN */
-#define EMMC_IDINTEN_OFFSET                                (0x90U)
-#define EMMC_IDINTEN_TI_SHIFT                              (0U)
-#define EMMC_IDINTEN_TI_MASK                               (0x1U << EMMC_IDINTEN_TI_SHIFT)                              /* 0x00000001 */
-#define EMMC_IDINTEN_RI_SHIFT                              (1U)
-#define EMMC_IDINTEN_RI_MASK                               (0x1U << EMMC_IDINTEN_RI_SHIFT)                              /* 0x00000002 */
-#define EMMC_IDINTEN_FBE_SHIFT                             (2U)
-#define EMMC_IDINTEN_FBE_MASK                              (0x1U << EMMC_IDINTEN_FBE_SHIFT)                             /* 0x00000004 */
-#define EMMC_IDINTEN_DU_SHIFT                              (4U)
-#define EMMC_IDINTEN_DU_MASK                               (0x1U << EMMC_IDINTEN_DU_SHIFT)                              /* 0x00000010 */
-#define EMMC_IDINTEN_CES_SHIFT                             (5U)
-#define EMMC_IDINTEN_CES_MASK                              (0x1U << EMMC_IDINTEN_CES_SHIFT)                             /* 0x00000020 */
-#define EMMC_IDINTEN_NI_SHIFT                              (8U)
-#define EMMC_IDINTEN_NI_MASK                               (0x1U << EMMC_IDINTEN_NI_SHIFT)                              /* 0x00000100 */
-#define EMMC_IDINTEN_AI_SHIFT                              (9U)
-#define EMMC_IDINTEN_AI_MASK                               (0x1U << EMMC_IDINTEN_AI_SHIFT)                              /* 0x00000200 */
+#define MMC_IDINTEN_OFFSET                                (0x90U)
+#define MMC_IDINTEN_TI_SHIFT                              (0U)
+#define MMC_IDINTEN_TI_MASK                               (0x1U << MMC_IDINTEN_TI_SHIFT)                              /* 0x00000001 */
+#define MMC_IDINTEN_RI_SHIFT                              (1U)
+#define MMC_IDINTEN_RI_MASK                               (0x1U << MMC_IDINTEN_RI_SHIFT)                              /* 0x00000002 */
+#define MMC_IDINTEN_FBE_SHIFT                             (2U)
+#define MMC_IDINTEN_FBE_MASK                              (0x1U << MMC_IDINTEN_FBE_SHIFT)                             /* 0x00000004 */
+#define MMC_IDINTEN_DU_SHIFT                              (4U)
+#define MMC_IDINTEN_DU_MASK                               (0x1U << MMC_IDINTEN_DU_SHIFT)                              /* 0x00000010 */
+#define MMC_IDINTEN_CES_SHIFT                             (5U)
+#define MMC_IDINTEN_CES_MASK                              (0x1U << MMC_IDINTEN_CES_SHIFT)                             /* 0x00000020 */
+#define MMC_IDINTEN_NI_SHIFT                              (8U)
+#define MMC_IDINTEN_NI_MASK                               (0x1U << MMC_IDINTEN_NI_SHIFT)                              /* 0x00000100 */
+#define MMC_IDINTEN_AI_SHIFT                              (9U)
+#define MMC_IDINTEN_AI_MASK                               (0x1U << MMC_IDINTEN_AI_SHIFT)                              /* 0x00000200 */
 /* DSCADDR */
-#define EMMC_DSCADDR_OFFSET                                (0x94U)
-#define EMMC_DSCADDR_HDA_SHIFT                             (0U)
-#define EMMC_DSCADDR_HDA_MASK                              (0xFFFFFFFFU << EMMC_DSCADDR_HDA_SHIFT)                      /* 0xFFFFFFFF */
+#define MMC_DSCADDR_OFFSET                                (0x94U)
+#define MMC_DSCADDR_HDA_SHIFT                             (0U)
+#define MMC_DSCADDR_HDA_MASK                              (0xFFFFFFFFU << MMC_DSCADDR_HDA_SHIFT)                      /* 0xFFFFFFFF */
 /* BUFADDR */
-#define EMMC_BUFADDR_OFFSET                                (0x98U)
-#define EMMC_BUFADDR_HBA_SHIFT                             (0U)
-#define EMMC_BUFADDR_HBA_MASK                              (0xFFFFFFFFU << EMMC_BUFADDR_HBA_SHIFT)                      /* 0xFFFFFFFF */
+#define MMC_BUFADDR_OFFSET                                (0x98U)
+#define MMC_BUFADDR_HBA_SHIFT                             (0U)
+#define MMC_BUFADDR_HBA_MASK                              (0xFFFFFFFFU << MMC_BUFADDR_HBA_SHIFT)                      /* 0xFFFFFFFF */
 /* CARDTHRCTL */
-#define EMMC_CARDTHRCTL_OFFSET                             (0x100U)
-#define EMMC_CARDTHRCTL_CARDRDTHREN_SHIFT                  (0U)
-#define EMMC_CARDTHRCTL_CARDRDTHREN_MASK                   (0x1U << EMMC_CARDTHRCTL_CARDRDTHREN_SHIFT)                  /* 0x00000001 */
-#define EMMC_CARDTHRCTL_BSYCLRINTEN_SHIFT                  (1U)
-#define EMMC_CARDTHRCTL_BSYCLRINTEN_MASK                   (0x1U << EMMC_CARDTHRCTL_BSYCLRINTEN_SHIFT)                  /* 0x00000002 */
-#define EMMC_CARDTHRCTL_CARDRDTHRESHOLD_SHIFT              (16U)
-#define EMMC_CARDTHRCTL_CARDRDTHRESHOLD_MASK               (0xFFFU << EMMC_CARDTHRCTL_CARDRDTHRESHOLD_SHIFT)            /* 0x0FFF0000 */
+#define MMC_CARDTHRCTL_OFFSET                             (0x100U)
+#define MMC_CARDTHRCTL_CARDRDTHREN_SHIFT                  (0U)
+#define MMC_CARDTHRCTL_CARDRDTHREN_MASK                   (0x1U << MMC_CARDTHRCTL_CARDRDTHREN_SHIFT)                  /* 0x00000001 */
+#define MMC_CARDTHRCTL_BSYCLRINTEN_SHIFT                  (1U)
+#define MMC_CARDTHRCTL_BSYCLRINTEN_MASK                   (0x1U << MMC_CARDTHRCTL_BSYCLRINTEN_SHIFT)                  /* 0x00000002 */
+#define MMC_CARDTHRCTL_CARDRDTHRESHOLD_SHIFT              (16U)
+#define MMC_CARDTHRCTL_CARDRDTHRESHOLD_MASK               (0xFFFU << MMC_CARDTHRCTL_CARDRDTHRESHOLD_SHIFT)            /* 0x0FFF0000 */
 /* BACK_END_POWER */
-#define EMMC_BACK_END_POWER_OFFSET                         (0x104U)
-#define EMMC_BACK_END_POWER_BACK_END_POWER_SHIFT           (0U)
-#define EMMC_BACK_END_POWER_BACK_END_POWER_MASK            (0x1U << EMMC_BACK_END_POWER_BACK_END_POWER_SHIFT)           /* 0x00000001 */
+#define MMC_BACK_END_POWER_OFFSET                         (0x104U)
+#define MMC_BACK_END_POWER_BACK_END_POWER_SHIFT           (0U)
+#define MMC_BACK_END_POWER_BACK_END_POWER_MASK            (0x1U << MMC_BACK_END_POWER_BACK_END_POWER_SHIFT)           /* 0x00000001 */
 /* UHS_REG_EXT */
-#define EMMC_UHS_REG_EXT_OFFSET                            (0x108U)
-#define EMMC_UHS_REG_EXT_MMC_VOLT_REG_SHIFT                (0U)
-#define EMMC_UHS_REG_EXT_MMC_VOLT_REG_MASK                 (0xFFFFU << EMMC_UHS_REG_EXT_MMC_VOLT_REG_SHIFT)             /* 0x0000FFFF */
-#define EMMC_UHS_REG_EXT_CLK_SMPL_PHASE_CTRL_SHIFT         (16U)
-#define EMMC_UHS_REG_EXT_CLK_SMPL_PHASE_CTRL_MASK          (0x7FU << EMMC_UHS_REG_EXT_CLK_SMPL_PHASE_CTRL_SHIFT)        /* 0x007F0000 */
-#define EMMC_UHS_REG_EXT_CLK_DRV_PHASE_CTRL_SHIFT          (23U)
-#define EMMC_UHS_REG_EXT_CLK_DRV_PHASE_CTRL_MASK           (0x7FU << EMMC_UHS_REG_EXT_CLK_DRV_PHASE_CTRL_SHIFT)         /* 0x3F800000 */
-#define EMMC_UHS_REG_EXT_EXT_CLK_MUX_CTRL_SHIFT            (30U)
-#define EMMC_UHS_REG_EXT_EXT_CLK_MUX_CTRL_MASK             (0x3U << EMMC_UHS_REG_EXT_EXT_CLK_MUX_CTRL_SHIFT)            /* 0xC0000000 */
-/* EMMC_DDR_REG */
-#define EMMC_EMMC_DDR_REG_OFFSET                           (0x10CU)
-#define EMMC_EMMC_DDR_REG_HALF_START_BIT_SHIFT             (0U)
-#define EMMC_EMMC_DDR_REG_HALF_START_BIT_MASK              (0x1U << EMMC_EMMC_DDR_REG_HALF_START_BIT_SHIFT)             /* 0x00000001 */
+#define MMC_UHS_REG_EXT_OFFSET                            (0x108U)
+#define MMC_UHS_REG_EXT_MMC_VOLT_REG_SHIFT                (0U)
+#define MMC_UHS_REG_EXT_MMC_VOLT_REG_MASK                 (0xFFFFU << MMC_UHS_REG_EXT_MMC_VOLT_REG_SHIFT)             /* 0x0000FFFF */
+#define MMC_UHS_REG_EXT_CLK_SMPL_PHASE_CTRL_SHIFT         (16U)
+#define MMC_UHS_REG_EXT_CLK_SMPL_PHASE_CTRL_MASK          (0x7FU << MMC_UHS_REG_EXT_CLK_SMPL_PHASE_CTRL_SHIFT)        /* 0x007F0000 */
+#define MMC_UHS_REG_EXT_CLK_DRV_PHASE_CTRL_SHIFT          (23U)
+#define MMC_UHS_REG_EXT_CLK_DRV_PHASE_CTRL_MASK           (0x7FU << MMC_UHS_REG_EXT_CLK_DRV_PHASE_CTRL_SHIFT)         /* 0x3F800000 */
+#define MMC_UHS_REG_EXT_EXT_CLK_MUX_CTRL_SHIFT            (30U)
+#define MMC_UHS_REG_EXT_EXT_CLK_MUX_CTRL_MASK             (0x3U << MMC_UHS_REG_EXT_EXT_CLK_MUX_CTRL_SHIFT)            /* 0xC0000000 */
+/* MMC_DDR_REG */
+#define MMC_EMMC_DDR_REG_OFFSET                           (0x10CU)
+#define MMC_EMMC_DDR_REG_HALF_START_BIT_SHIFT             (0U)
+#define MMC_EMMC_DDR_REG_HALF_START_BIT_MASK              (0x1U << MMC_EMMC_DDR_REG_HALF_START_BIT_SHIFT)             /* 0x00000001 */
 /* ENABLE_SHIFT */
-#define EMMC_ENABLE_SHIFT_OFFSET                           (0x110U)
-#define EMMC_ENABLE_SHIFT_ENABLE_SHIFT_SHIFT               (0U)
-#define EMMC_ENABLE_SHIFT_ENABLE_SHIFT_MASK                (0x1U << EMMC_ENABLE_SHIFT_ENABLE_SHIFT_SHIFT)               /* 0x00000001 */
+#define MMC_ENABLE_SHIFT_OFFSET                           (0x110U)
+#define MMC_ENABLE_SHIFT_ENABLE_SHIFT_SHIFT               (0U)
+#define MMC_ENABLE_SHIFT_ENABLE_SHIFT_MASK                (0x1U << MMC_ENABLE_SHIFT_ENABLE_SHIFT_SHIFT)               /* 0x00000001 */
 /* FIFO_BASE */
-#define EMMC_FIFO_BASE_OFFSET                              (0x200U)
-#define EMMC_FIFO_BASE_FIFO_BASE_ADDR_SHIFT                (0U)
-#define EMMC_FIFO_BASE_FIFO_BASE_ADDR_MASK                 (0xFFFFFFFFU << EMMC_FIFO_BASE_FIFO_BASE_ADDR_SHIFT)         /* 0xFFFFFFFF */
+#define MMC_FIFO_BASE_OFFSET                              (0x200U)
+#define MMC_FIFO_BASE_FIFO_BASE_ADDR_SHIFT                (0U)
+#define MMC_FIFO_BASE_FIFO_BASE_ADDR_MASK                 (0xFFFFFFFFU << MMC_FIFO_BASE_FIFO_BASE_ADDR_SHIFT)         /* 0xFFFFFFFF */
 /*****************************************NANDC******************************************/
 /* FMCTL */
 #define NANDC_FMCTL_OFFSET                                 (0x0U)
