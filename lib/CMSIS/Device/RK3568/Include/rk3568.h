@@ -1160,6 +1160,11 @@ struct MBOX_REG {
          uint32_t RESERVED0050[44];                   /* Address Offset: 0x0050 */
     __IO uint32_t ATOMIC_LOCK[32];                    /* Address Offset: 0x0100 */
 };
+/* INTMUX Register Structure Define */
+struct INTMUX_REG {
+    __IO uint32_t INT_ENABLE_GROUP[32];               /* Address Offset: 0x0000 */
+    __I  uint32_t INT_FLAG_GROUP[32];                 /* Address Offset: 0x0080 */
+};
 #endif /*  __ASSEMBLY__  */
 /****************************************************************************************/
 /*                                                                                      */
@@ -1222,6 +1227,7 @@ struct MBOX_REG {
 #define GPIO3_BASE                     0xFE760000U /* GPIO3 base address */
 #define GPIO4_BASE                     0xFE770000U /* GPIO4 base address */
 #define MBOX0_BASE                     0xFE780000U /* MBOX0 base address */
+#define INTMUX_BASE                    0xFE790000U /* INTMUX base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -1284,6 +1290,7 @@ struct MBOX_REG {
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
 #define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
+#define INTMUX              ((struct INTMUX_REG *) INTMUX_BASE)
 
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_PMUCRU_INSTANCE(instance) ((instance) == PMUCRU)
@@ -1295,6 +1302,7 @@ struct MBOX_REG {
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
 #define IS_TSADC_INSTANCE(instance) ((instance) == TSADC)
 #define IS_SARADC_INSTANCE(instance) ((instance) == SARADC)
+#define IS_INTMUX_INSTANCE(instance) ((instance) == INTMUX)
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_I2C_INSTANCE(instance) (((instance) == I2C0) || ((instance) == I2C1) || ((instance) == I2C2) || ((instance) == I2C3) || ((instance) == I2C4) || ((instance) == I2C5))
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9))
@@ -14700,6 +14708,295 @@ struct MBOX_REG {
 #define MBOX_ATOMIC_LOCK_31_OFFSET                         (0x17CU)
 #define MBOX_ATOMIC_LOCK_31_ATOMIC_LOCK_31_SHIFT           (0U)
 #define MBOX_ATOMIC_LOCK_31_ATOMIC_LOCK_31_MASK            (0x1U << MBOX_ATOMIC_LOCK_31_ATOMIC_LOCK_31_SHIFT)           /* 0x00000001 */
+/*****************************************INTMUX*****************************************/
+/* INT_ENABLE_GROUP0 */
+#define INTMUX_INT_ENABLE_GROUP0_OFFSET                    (0x0U)
+#define INTMUX_INT_ENABLE_GROUP0_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP0_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP0_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP1 */
+#define INTMUX_INT_ENABLE_GROUP1_OFFSET                    (0x4U)
+#define INTMUX_INT_ENABLE_GROUP1_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP1_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP1_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP2 */
+#define INTMUX_INT_ENABLE_GROUP2_OFFSET                    (0x8U)
+#define INTMUX_INT_ENABLE_GROUP2_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP2_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP2_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP3 */
+#define INTMUX_INT_ENABLE_GROUP3_OFFSET                    (0xCU)
+#define INTMUX_INT_ENABLE_GROUP3_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP3_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP3_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP4 */
+#define INTMUX_INT_ENABLE_GROUP4_OFFSET                    (0x10U)
+#define INTMUX_INT_ENABLE_GROUP4_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP4_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP4_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP5 */
+#define INTMUX_INT_ENABLE_GROUP5_OFFSET                    (0x14U)
+#define INTMUX_INT_ENABLE_GROUP5_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP5_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP5_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP6 */
+#define INTMUX_INT_ENABLE_GROUP6_OFFSET                    (0x18U)
+#define INTMUX_INT_ENABLE_GROUP6_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP6_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP6_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP7 */
+#define INTMUX_INT_ENABLE_GROUP7_OFFSET                    (0x1CU)
+#define INTMUX_INT_ENABLE_GROUP7_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP7_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP7_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP8 */
+#define INTMUX_INT_ENABLE_GROUP8_OFFSET                    (0x20U)
+#define INTMUX_INT_ENABLE_GROUP8_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP8_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP8_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP9 */
+#define INTMUX_INT_ENABLE_GROUP9_OFFSET                    (0x24U)
+#define INTMUX_INT_ENABLE_GROUP9_ENABLE_SHIFT              (0U)
+#define INTMUX_INT_ENABLE_GROUP9_ENABLE_MASK               (0xFFU << INTMUX_INT_ENABLE_GROUP9_ENABLE_SHIFT)             /* 0x000000FF */
+/* INT_ENABLE_GROUP10 */
+#define INTMUX_INT_ENABLE_GROUP10_OFFSET                   (0x28U)
+#define INTMUX_INT_ENABLE_GROUP10_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP10_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP10_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP11 */
+#define INTMUX_INT_ENABLE_GROUP11_OFFSET                   (0x2CU)
+#define INTMUX_INT_ENABLE_GROUP11_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP11_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP11_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP12 */
+#define INTMUX_INT_ENABLE_GROUP12_OFFSET                   (0x30U)
+#define INTMUX_INT_ENABLE_GROUP12_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP12_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP12_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP13 */
+#define INTMUX_INT_ENABLE_GROUP13_OFFSET                   (0x34U)
+#define INTMUX_INT_ENABLE_GROUP13_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP13_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP13_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP14 */
+#define INTMUX_INT_ENABLE_GROUP14_OFFSET                   (0x38U)
+#define INTMUX_INT_ENABLE_GROUP14_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP14_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP14_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP15 */
+#define INTMUX_INT_ENABLE_GROUP15_OFFSET                   (0x3CU)
+#define INTMUX_INT_ENABLE_GROUP15_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP15_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP15_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP16 */
+#define INTMUX_INT_ENABLE_GROUP16_OFFSET                   (0x40U)
+#define INTMUX_INT_ENABLE_GROUP16_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP16_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP16_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP17 */
+#define INTMUX_INT_ENABLE_GROUP17_OFFSET                   (0x44U)
+#define INTMUX_INT_ENABLE_GROUP17_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP17_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP17_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP18 */
+#define INTMUX_INT_ENABLE_GROUP18_OFFSET                   (0x48U)
+#define INTMUX_INT_ENABLE_GROUP18_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP18_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP18_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP19 */
+#define INTMUX_INT_ENABLE_GROUP19_OFFSET                   (0x4CU)
+#define INTMUX_INT_ENABLE_GROUP19_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP19_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP19_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP20 */
+#define INTMUX_INT_ENABLE_GROUP20_OFFSET                   (0x50U)
+#define INTMUX_INT_ENABLE_GROUP20_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP20_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP20_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP21 */
+#define INTMUX_INT_ENABLE_GROUP21_OFFSET                   (0x54U)
+#define INTMUX_INT_ENABLE_GROUP21_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP21_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP21_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP22 */
+#define INTMUX_INT_ENABLE_GROUP22_OFFSET                   (0x58U)
+#define INTMUX_INT_ENABLE_GROUP22_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP22_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP22_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP23 */
+#define INTMUX_INT_ENABLE_GROUP23_OFFSET                   (0x5CU)
+#define INTMUX_INT_ENABLE_GROUP23_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP23_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP23_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP24 */
+#define INTMUX_INT_ENABLE_GROUP24_OFFSET                   (0x60U)
+#define INTMUX_INT_ENABLE_GROUP24_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP24_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP24_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP25 */
+#define INTMUX_INT_ENABLE_GROUP25_OFFSET                   (0x64U)
+#define INTMUX_INT_ENABLE_GROUP25_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP25_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP25_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP26 */
+#define INTMUX_INT_ENABLE_GROUP26_OFFSET                   (0x68U)
+#define INTMUX_INT_ENABLE_GROUP26_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP26_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP26_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP27 */
+#define INTMUX_INT_ENABLE_GROUP27_OFFSET                   (0x6CU)
+#define INTMUX_INT_ENABLE_GROUP27_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP27_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP27_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP28 */
+#define INTMUX_INT_ENABLE_GROUP28_OFFSET                   (0x70U)
+#define INTMUX_INT_ENABLE_GROUP28_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP28_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP28_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP29 */
+#define INTMUX_INT_ENABLE_GROUP29_OFFSET                   (0x74U)
+#define INTMUX_INT_ENABLE_GROUP29_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP29_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP29_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP30 */
+#define INTMUX_INT_ENABLE_GROUP30_OFFSET                   (0x78U)
+#define INTMUX_INT_ENABLE_GROUP30_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP30_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP30_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_ENABLE_GROUP31 */
+#define INTMUX_INT_ENABLE_GROUP31_OFFSET                   (0x7CU)
+#define INTMUX_INT_ENABLE_GROUP31_ENABLE_SHIFT             (0U)
+#define INTMUX_INT_ENABLE_GROUP31_ENABLE_MASK              (0xFFU << INTMUX_INT_ENABLE_GROUP31_ENABLE_SHIFT)            /* 0x000000FF */
+/* INT_FLAG_GROUP0 */
+#define INTMUX_INT_FLAG_GROUP0_OFFSET                      (0x80U)
+#define INTMUX_INT_FLAG_GROUP0                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP0_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP0_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP0_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP1 */
+#define INTMUX_INT_FLAG_GROUP1_OFFSET                      (0x84U)
+#define INTMUX_INT_FLAG_GROUP1                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP1_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP1_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP1_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP2 */
+#define INTMUX_INT_FLAG_GROUP2_OFFSET                      (0x88U)
+#define INTMUX_INT_FLAG_GROUP2                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP2_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP2_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP2_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP3 */
+#define INTMUX_INT_FLAG_GROUP3_OFFSET                      (0x8CU)
+#define INTMUX_INT_FLAG_GROUP3                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP3_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP3_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP3_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP4 */
+#define INTMUX_INT_FLAG_GROUP4_OFFSET                      (0x90U)
+#define INTMUX_INT_FLAG_GROUP4                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP4_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP4_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP4_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP5 */
+#define INTMUX_INT_FLAG_GROUP5_OFFSET                      (0x94U)
+#define INTMUX_INT_FLAG_GROUP5                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP5_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP5_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP5_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP6 */
+#define INTMUX_INT_FLAG_GROUP6_OFFSET                      (0x98U)
+#define INTMUX_INT_FLAG_GROUP6                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP6_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP6_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP6_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP7 */
+#define INTMUX_INT_FLAG_GROUP7_OFFSET                      (0x9CU)
+#define INTMUX_INT_FLAG_GROUP7                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP7_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP7_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP7_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP8 */
+#define INTMUX_INT_FLAG_GROUP8_OFFSET                      (0xA0U)
+#define INTMUX_INT_FLAG_GROUP8                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP8_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP8_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP8_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP9 */
+#define INTMUX_INT_FLAG_GROUP9_OFFSET                      (0xA4U)
+#define INTMUX_INT_FLAG_GROUP9                             (0x0U)
+#define INTMUX_INT_FLAG_GROUP9_FLAG_SHIFT                  (0U)
+#define INTMUX_INT_FLAG_GROUP9_FLAG_MASK                   (0xFFU << INTMUX_INT_FLAG_GROUP9_FLAG_SHIFT)                 /* 0x000000FF */
+/* INT_FLAG_GROUP10 */
+#define INTMUX_INT_FLAG_GROUP10_OFFSET                     (0xA8U)
+#define INTMUX_INT_FLAG_GROUP10                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP10_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP10_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP10_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP11 */
+#define INTMUX_INT_FLAG_GROUP11_OFFSET                     (0xACU)
+#define INTMUX_INT_FLAG_GROUP11                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP11_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP11_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP11_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP12 */
+#define INTMUX_INT_FLAG_GROUP12_OFFSET                     (0xB0U)
+#define INTMUX_INT_FLAG_GROUP12                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP12_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP12_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP12_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP13 */
+#define INTMUX_INT_FLAG_GROUP13_OFFSET                     (0xB4U)
+#define INTMUX_INT_FLAG_GROUP13                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP13_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP13_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP13_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP14 */
+#define INTMUX_INT_FLAG_GROUP14_OFFSET                     (0xB8U)
+#define INTMUX_INT_FLAG_GROUP14                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP14_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP14_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP14_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP15 */
+#define INTMUX_INT_FLAG_GROUP15_OFFSET                     (0xBCU)
+#define INTMUX_INT_FLAG_GROUP15                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP15_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP15_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP15_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP16 */
+#define INTMUX_INT_FLAG_GROUP16_OFFSET                     (0xC0U)
+#define INTMUX_INT_FLAG_GROUP16                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP16_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP16_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP16_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP17 */
+#define INTMUX_INT_FLAG_GROUP17_OFFSET                     (0xC4U)
+#define INTMUX_INT_FLAG_GROUP17                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP17_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP17_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP17_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP18 */
+#define INTMUX_INT_FLAG_GROUP18_OFFSET                     (0xC8U)
+#define INTMUX_INT_FLAG_GROUP18                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP18_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP18_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP18_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP19 */
+#define INTMUX_INT_FLAG_GROUP19_OFFSET                     (0xCCU)
+#define INTMUX_INT_FLAG_GROUP19                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP19_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP19_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP19_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP20 */
+#define INTMUX_INT_FLAG_GROUP20_OFFSET                     (0xD0U)
+#define INTMUX_INT_FLAG_GROUP20                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP20_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP20_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP20_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP21 */
+#define INTMUX_INT_FLAG_GROUP21_OFFSET                     (0xD4U)
+#define INTMUX_INT_FLAG_GROUP21                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP21_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP21_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP21_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP22 */
+#define INTMUX_INT_FLAG_GROUP22_OFFSET                     (0xD8U)
+#define INTMUX_INT_FLAG_GROUP22                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP22_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP22_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP22_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP23 */
+#define INTMUX_INT_FLAG_GROUP23_OFFSET                     (0xDCU)
+#define INTMUX_INT_FLAG_GROUP23                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP23_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP23_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP23_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP24 */
+#define INTMUX_INT_FLAG_GROUP24_OFFSET                     (0xE0U)
+#define INTMUX_INT_FLAG_GROUP24                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP24_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP24_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP24_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP25 */
+#define INTMUX_INT_FLAG_GROUP25_OFFSET                     (0xE4U)
+#define INTMUX_INT_FLAG_GROUP25                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP25_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP25_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP25_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP26 */
+#define INTMUX_INT_FLAG_GROUP26_OFFSET                     (0xE8U)
+#define INTMUX_INT_FLAG_GROUP26                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP26_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP26_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP26_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP27 */
+#define INTMUX_INT_FLAG_GROUP27_OFFSET                     (0xECU)
+#define INTMUX_INT_FLAG_GROUP27                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP27_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP27_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP27_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP28 */
+#define INTMUX_INT_FLAG_GROUP28_OFFSET                     (0xF0U)
+#define INTMUX_INT_FLAG_GROUP28                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP28_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP28_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP28_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP29 */
+#define INTMUX_INT_FLAG_GROUP29_OFFSET                     (0xF4U)
+#define INTMUX_INT_FLAG_GROUP29                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP29_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP29_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP29_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP30 */
+#define INTMUX_INT_FLAG_GROUP30_OFFSET                     (0xF8U)
+#define INTMUX_INT_FLAG_GROUP30                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP30_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP30_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP30_FLAG_SHIFT)                /* 0x000000FF */
+/* INT_FLAG_GROUP31 */
+#define INTMUX_INT_FLAG_GROUP31_OFFSET                     (0xFCU)
+#define INTMUX_INT_FLAG_GROUP31                            (0x0U)
+#define INTMUX_INT_FLAG_GROUP31_FLAG_SHIFT                 (0U)
+#define INTMUX_INT_FLAG_GROUP31_FLAG_MASK                  (0xFFU << INTMUX_INT_FLAG_GROUP31_FLAG_SHIFT)                /* 0x000000FF */
 
 /********Name=SOFTRST_CON00,Offset=0x400********/
 #define SRST_NCORERESET0  0U
