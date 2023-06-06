@@ -9,15 +9,29 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
-
+//#define TEST_USE_UART4M1
 /********************* Private Structure Definition **************************/
+#ifdef TEST_USE_UART4M1
+static void HAL_IOMUX_Uart4M1Config(void)
+{
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK3,
+                         GPIO_PIN_B1 |
+                         GPIO_PIN_B2,
+                         PIN_CONFIG_MUX_FUNC4);
+    HAL_PINCTRL_IOFuncSelForUART4(IOFUNC_SEL_M1);
+}
+#endif
 
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
 
 /********************* Public Function Definition ****************************/
+#ifdef TEST_USE_UART4M1
+static struct UART_REG *pUart = UART4;
+#else
 static struct UART_REG *pUart = UART2;
+#endif
 
 #ifdef __GNUC__
 __USED int _write(int fd, char *ptr, int len)
@@ -63,11 +77,26 @@ extern void scr1_trap_entry(void);
 
 int main(void)
 {
+    struct HAL_UART_CONFIG hal_uart_config = {
+        .baudRate = UART_BR_1500000,
+        .dataBit = UART_DATA_8B,
+        .stopBit = UART_ONE_STOPBIT,
+        .parity = UART_PARITY_DISABLE,
+    };
+
     /* HAL BASE Init */
     HAL_Init();
 
     /* BSP Init */
     BSP_Init();
+
+    /* UART Init */
+#ifdef TEST_USE_UART4M1
+    HAL_IOMUX_Uart4M1Config();
+    HAL_UART_Init(&g_uart4Dev, &hal_uart_config);
+#else
+    HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
+#endif
 
     /* Interrupt Init */
     HAL_RISCVIC_Init((uint32_t)scr1_trap_entry);
