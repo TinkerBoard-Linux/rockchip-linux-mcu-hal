@@ -2,11 +2,11 @@ OUTPUT_ARCH( "riscv" )
 ENTRY(_start)
 
 MEMORY {
-    RAM (rwx) : ORIGIN = 0x110000, LENGTH = 0xf0000
+    RAM (rwx) : ORIGIN = 0x8200000, LENGTH = 0x100000
 }
 
-STACK_SIZE = (1024 * 2);
-HEAP_SIZE = (1024 * 256);
+STACK_SIZE = (1024 * 1);
+HEAP_SIZE = (1024 * 32);
 
 CL_SIZE = 32;
 
