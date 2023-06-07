@@ -84,10 +84,8 @@
 #define SPI_INT_RXFI (1 << SPI_IMR_RFFIM_SHIFT)
 #define SPI_INT_TOI  (1 << SPI_IMR_TOIM_SHIFT)
 #define SPI_INT_SSPI (1 << SPI_IMR_SSPIM_SHIFT)
-#ifdef SPI_IMR_TXFIM_SHIFT
+#if (SPI_VERSION != SPI_VER1_TYPE1)
 #define SPI_INT_TXFIM (1 << SPI_IMR_TXFIM_SHIFT)
-#else
-#define SPI_INT_TXFIM (1 << SPI_IMR_RFFIM_SHIFT)
 #endif
 
 /* Bit fields in ICR */
@@ -323,9 +321,23 @@ HAL_Status HAL_SPI_QueryBusState(struct SPI_HANDLE *pSPI)
     HAL_ASSERT(pSPI != NULL);
 
     if (pSPI->config.opMode == CR0_OPM_SLAVE) {
+#if (SPI_VERSION == SPI_VER1_TYPE1)
+        if (READ_REG(pSPI->pReg->SR) & SPI_SR_TFE_MASK) {
+            uint32_t div, speed, us;
+
+            div = HAL_DIV_ROUND_UP(pSPI->maxFreq, pSPI->config.speed);
+            div = (div + 1) & 0xfffe;
+            speed = pSPI->maxFreq / div;
+            us = 8 * 1000000 / speed + 1;
+            HAL_DelayUs(us);
+
+            return HAL_OK;
+        }
+#else
         if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_STB_BUSY)) {
             return HAL_OK;
         }
+#endif
     } else {
         if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_BUSY)) {
             return HAL_OK;
@@ -375,6 +387,107 @@ static HAL_Status HAL_SPI_PioWrite(struct SPI_HANDLE *pSPI)
 
     return HAL_OK;
 }
+
+#if (SPI_VERSION == SPI_VER1_TYPE1)
+/**
+  * @brief  Read an amount of data(byte) in blocking mode.
+  * @param  pSPI: pointer to a SPI_Handle structure that contains
+  *               the configuration information for SPI module.
+  * @return HAL status
+  */
+static HAL_Status HAL_SPI_PioReadByte(struct SPI_HANDLE *pSPI)
+{
+    uint32_t rxRoom = READ_REG(pSPI->pReg->RXFLR);
+    uint32_t rxLen = pSPI->pRxBufferEnd - pSPI->pRxBuffer;
+    uint32_t ftl, rxLeft;
+
+    rxLeft = rxLen > rxRoom ? rxLen - rxRoom : 0;
+    /*
+     * the low version hardware doesn't allow us to change fifo
+     * threshold level while spi is enabled, so instead make sure to
+     * leave enough words in the rx fifo to get the last interrupt
+     * exactly when all words have been received
+     */
+    if (rxLeft) {
+        ftl = READ_REG(pSPI->pReg->RXFTLR) + 1;
+
+        if (rxLeft < ftl) {
+            rxLeft = ftl;
+            rxRoom = rxLen - rxLeft;
+        }
+    }
+
+    while (rxRoom > 7) {
+        *(pSPI->pRxBuffer + 0) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 1) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 2) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 3) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 4) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 5) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 6) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        *(pSPI->pRxBuffer + 7) = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        pSPI->pRxBuffer += 8;
+        rxRoom -= 8;
+    }
+
+    while (rxRoom--) {
+        *pSPI->pRxBuffer = (uint8_t)READ_REG(pSPI->pReg->RXDR);
+        pSPI->pRxBuffer++;
+    }
+
+    return HAL_OK;
+}
+
+/**
+  * @brief  Read an amount of data(short) in blocking mode.
+  * @param  pSPI: pointer to a SPI_Handle structure that contains
+  *               the configuration information for SPI module.
+  * @return HAL status
+  */
+static HAL_Status HAL_SPI_PioReadShort(struct SPI_HANDLE *pSPI)
+{
+    uint32_t rxRoom = READ_REG(pSPI->pReg->RXFLR);
+    uint32_t rxLen = (pSPI->pRxBufferEnd - pSPI->pRxBuffer) >> 1;
+    uint32_t ftl, rxLeft;
+
+    rxLeft = rxLen > rxRoom ? rxLen - rxRoom : 0;
+    /*
+     * the low version hardware doesn't allow us to change fifo
+     * threshold level while spi is enabled, so instead make sure to
+     * leave enough words in the rx fifo to get the last interrupt
+     * exactly when all words have been received
+     */
+    if (rxLeft) {
+        ftl = READ_REG(pSPI->pReg->RXFTLR) + 1;
+
+        if (rxLeft < ftl) {
+            rxLeft = ftl;
+            rxRoom = rxLen - rxLeft;
+        }
+    }
+
+    while (rxRoom > 7) {
+        *((uint16_t *)pSPI->pRxBuffer + 0) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 1) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 2) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 3) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 4) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 5) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 6) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        *((uint16_t *)pSPI->pRxBuffer + 7) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        pSPI->pRxBuffer += 16;
+        rxRoom -= 8;
+    }
+
+    while (rxRoom--) {
+        *((uint16_t *)pSPI->pRxBuffer) = (uint16_t)READ_REG(pSPI->pReg->RXDR);
+        pSPI->pRxBuffer += 2;
+    }
+
+    return HAL_OK;
+}
+
+#else
 
 /**
   * @brief  Read an amount of data(byte) in blocking mode.
@@ -441,6 +554,7 @@ static HAL_Status HAL_SPI_PioReadShort(struct SPI_HANDLE *pSPI)
 
     return HAL_OK;
 }
+#endif
 
 /**
   * @brief  Transmit an amount of data in blocking mode.
@@ -571,11 +685,26 @@ HAL_Status HAL_SPI_IrqHandler(struct SPI_HANDLE *pSPI)
         HAL_SPI_UnmaskIntr(pSPI, SPI_INT_TXEI);
     }
 
+#if (SPI_VERSION == SPI_VER1_TYPE1)
+    if ((irqStatus & SPI_INT_TXEI) && pSPI->pTxBuffer && pSPI->pTxBufferEnd == pSPI->pTxBuffer) {
+        uint32_t div, speed, us;
+
+        div = HAL_DIV_ROUND_UP(pSPI->maxFreq, pSPI->config.speed);
+        div = (div + 1) & 0xfffe;
+        speed = pSPI->maxFreq / div;
+        us = 8 * 1000000 / speed + 1;
+        HAL_DelayUs(us);
+
+        result = HAL_OK;
+        goto out;
+    }
+#else
     if ((irqStatus & SPI_INT_TXFIM) && (pSPI->pTxBufferEnd == pSPI->pTxBuffer)) {
         WRITE_REG(pSPI->pReg->ICR, SPI_CLEAR_INT_TXFI);
         result = HAL_OK;
         goto out;
     }
+#endif
 
     return HAL_BUSY;
 
@@ -605,8 +734,8 @@ HAL_Status HAL_SPI_ItTransfer(struct SPI_HANDLE *pSPI)
         rxLevel = HAL_SPI_FIFO_LENGTH / 2;
         rxLevel = (tempLevel > rxLevel) ? rxLevel : tempLevel;
 
-        if (rxLevel != READ_REG(pSPI->pReg->RXFTLR)) {
-            WRITE_REG(pSPI->pReg->RXFTLR, rxLevel);
+        if (rxLevel && rxLevel != READ_REG(pSPI->pReg->RXFTLR)) {
+            WRITE_REG(pSPI->pReg->RXFTLR, rxLevel - 1);
         }
 
         HAL_SPI_EnableChip(pSPI, 1);
@@ -627,7 +756,10 @@ HAL_Status HAL_SPI_ItTransfer(struct SPI_HANDLE *pSPI)
 
         HAL_SPI_EnableChip(pSPI, 1);
         HAL_SPI_PioWrite(pSPI);
-        newMask = SPI_INT_TXEI | SPI_INT_TXFIM | SPI_INT_TXOI;
+        newMask = SPI_INT_TXEI | SPI_INT_TXOI;
+#if (SPI_VERSION != SPI_VER1_TYPE1)
+        newMask |= SPI_INT_TXFIM;
+#endif
     }
 
     WRITE_REG(pSPI->pReg->IMR, newMask);
