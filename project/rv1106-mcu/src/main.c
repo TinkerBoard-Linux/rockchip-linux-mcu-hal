@@ -17,8 +17,6 @@
 /********************* Private Function Definition ***************************/
 
 /********************* Public Function Definition ****************************/
-extern void scr1_trap_entry(void);
-
 static struct UART_REG *pUart = UART2;
 
 static void HAL_IOMUX_Uart0M1Config(void)
@@ -187,9 +185,6 @@ void main(void)
 
     /* BSP Init */
     BSP_Init();
-
-    /* Interrupt Init */
-    HAL_RISCVIC_Init((uint32_t)scr1_trap_entry);
 
     /* UART Init */
     HAL_IOMUX_Uart2M0Config();

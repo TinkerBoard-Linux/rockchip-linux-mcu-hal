@@ -73,8 +73,6 @@ int fputc(int ch, FILE *f)
 }
 #endif
 
-extern void scr1_trap_entry(void);
-
 int main(void)
 {
     struct HAL_UART_CONFIG hal_uart_config = {
@@ -97,9 +95,6 @@ int main(void)
 #else
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
 #endif
-
-    /* Interrupt Init */
-    HAL_RISCVIC_Init((uint32_t)scr1_trap_entry);
 
     printf("Hello RISC-V\n");
 #ifdef TEST_DEMO
