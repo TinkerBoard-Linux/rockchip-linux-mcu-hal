@@ -7,7 +7,7 @@ ROOT_PATH	:= ../../..
 #############################################################################
 # Cross compiler
 #############################################################################
-ifneq ($(wildcard ${ROOT_PATH}/../prebuilts/gcc/linux-x86/riscv64/xpack-riscv-none-embed-gcc-10.2.0-1.2/bin),)
+ifneq ($(wildcard ${ROOT_PATH}/../prebuilts/gcc/linux-x86/riscv64/xpack-riscv-none-embed-gcc-10.2.0-1.2-linux-x64/bin),)
 CROSS_COMPILE	?= ${ROOT_PATH}/../prebuilts/gcc/linux-x86/riscv64/xpack-riscv-none-embed-gcc-10.2.0-1.2-linux-x64/bin/riscv-none-embed-
 else
 CROSS_COMPILE	?= riscv-none-embed-
