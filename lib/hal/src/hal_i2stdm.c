@@ -336,6 +336,16 @@ HAL_Status HAL_I2STDM_Init(struct HAL_I2STDM_DEV *i2sTdm, struct AUDIO_INIT_CONF
         val = I2STDM_TXCR_TFS_I2S;
         break;
 
+    case AUDIO_FMT_LEFT_J:
+        val = I2STDM_TXCR_TFS_I2S | I2STDM_TXCR_IBM_LSJM;
+        mask |= I2STDM_TXCR_IBM_MASK;
+        break;
+
+    case AUDIO_FMT_RIGHT_J:
+        val = I2STDM_TXCR_TFS_I2S | I2STDM_TXCR_IBM_RSJM;
+        mask |= I2STDM_TXCR_IBM_MASK;
+        break;
+
     case AUDIO_FMT_PCM:
     /* fallthrough */
     case AUDIO_FMT_PCM_DELAY1:
