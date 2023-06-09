@@ -23,6 +23,7 @@
  - Invoke HAL_INTMUX_DisableIRQ() to disable irq.
  - Invoke HAL_INTMUX_SetIRQHandler() to set handler for intmux irq.
  - Invoke HAL_INTMUX_Init() to init intmux.
+ - Invoke HAL_INTMUX_DirectDispatch() to direct dispatch irq.
 
  Use HAL_INTMUX_CUSTOM_DISTRIBUTION_FEATURE_ENABLED to add custom interrupt
  distribution policy. Please define variable g_intmuxFastIrqTable.
@@ -256,6 +257,16 @@ static void HAL_INTMUX_OUT7_Handler(void)
 #endif
 
 /**
+ * @brief  Intmux direct dispatch
+ * @param  irq: irq id
+ * @return NONE
+ */
+void HAL_INTMUX_DirectDispatch(uint32_t irq)
+{
+    INTMUX_Dispatch(irq);
+}
+
+/**
  * @brief  Set handler for intmux irq
  * @param  irq: irq id.
  * @param  handler: handler callback
@@ -315,6 +326,9 @@ HAL_Status HAL_INTMUX_Init(void)
     HAL_NVIC_SetIRQHandler(INTMUX_OUT7_IRQn, HAL_INTMUX_OUT7_Handler);
     HAL_NVIC_EnableIRQ(INTMUX_OUT7_IRQn);
 #endif
+#endif
+#ifdef HAL_RISCVIC_MODULE_ENABLED
+    HAL_RISCVIC_Init();
 #endif
 
     return HAL_OK;

@@ -36,6 +36,7 @@ HAL_Status HAL_INTMUX_EnableIRQ(uint32_t irq);
 HAL_Status HAL_INTMUX_DisableIRQ(uint32_t irq);
 HAL_Status HAL_INTMUX_SetIRQHandler(uint32_t irq, HAL_INTMUX_HANDLER handler, void *args);
 HAL_Status HAL_INTMUX_Init(void);
+void HAL_INTMUX_DirectDispatch(uint32_t irq);
 
 /** @} */
 
