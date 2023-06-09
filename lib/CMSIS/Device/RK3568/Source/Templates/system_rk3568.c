@@ -64,6 +64,10 @@ void SystemInit (void)
     L1C_EnableCaches();
     L1C_EnableBTAC();
 #endif
+
+#if defined(HAL_MCU_CORE) && defined(HAL_INTMUX_MODULE_ENABLED)
+    HAL_INTMUX_Init();
+#endif
 }
 
 void DataInit (void)
