@@ -157,6 +157,15 @@ static unsigned int HAL_RISCVIC_ReadCSR(unsigned int addr)
     return res;
 }
 
+/**
+ * @brief  Get Active Interrupt number.
+ * @return interrupt number.
+ */
+static uint32_t HAL_RISCVIC_GetActiveIRQ(void)
+{
+    return HAL_RISCVIC_ReadCSR(IPIC_CISV);
+}
+
 static void HAL_RISCVIC_ExtIRQInit(void)
 {
     set_csr(mie, MIP_MEIP);
@@ -164,16 +173,15 @@ static void HAL_RISCVIC_ExtIRQInit(void)
 
 static void HAL_RISCVIC_ExtIRQHandle(void)
 {
-    uint32_t irq;
-
     /* Any value can be written in IPIC_SOI to start process */
     HAL_RISCVIC_WriteCSR(IPIC_SOI, 0x0);
-    irq = HAL_RISCVIC_GetActiveIRQ();
-    HAL_RISCVIC_DisableIRQ(irq);
-    HAL_IRQ_HANDLER_IRQHandler(irq);
+#ifdef HAL_INTMUX_MODULE_ENABLED
+    HAL_INTMUX_DirectDispatch(HAL_RISCVIC_GetActiveIRQ());
+#else
+    printf("Irq is %ld, please open HAL_INTMUX_MODULE_ENABLED!\n", HAL_RISCVIC_GetActiveIRQ());
+#endif
     /* Any value can be written in IPIC_EOI to end process */
     HAL_RISCVIC_WriteCSR(IPIC_EOI, 0x0);
-    HAL_RISCVIC_EnableIRQ(irq);
 }
 
 static int Print_Stack_Frame(unsigned int sp)
@@ -227,63 +235,27 @@ static int Print_Stack_Frame(unsigned int sp)
  *  @{
  */
 
-/**
- * @brief Set Active Interrupt.
- * @param IRQn: interrupt number.
- */
-__WEAK void HAL_RISCVIC_SetActiveIRQ(IRQn_Type IRQn)
-{
-}
-
-/**
- * @brief  Get Active Interrupt number.
- * @return interrupt number.
- */
-__WEAK uint32_t HAL_RISCVIC_GetActiveIRQ(void)
-{
-    return HAL_RISCVIC_ReadCSR(IPIC_CISV);
-}
+extern void scr1_trap_entry(void);
 
 /**
  * @brief  Init RISCVIC Interrupt Controller.
  * @return HAL_OK.
  */
-HAL_Status HAL_RISCVIC_Init(RISCVIC_Entry trapEntry)
+HAL_Status HAL_RISCVIC_Init(void)
 {
+    int i;
+
     write_csr(mstatus, 0x00001888);
     /* Set the vector table */
-    write_csr(mtvec, trapEntry);
+    write_csr(mtvec, scr1_trap_entry);
 
+    for (i = 0; i < 8; i++) {
+        HAL_RISCVIC_WriteCSR(IPIC_IDX, i);
+        /* enable, level trigger */
+        HAL_RISCVIC_WriteCSR(IPIC_ICSR, IPIC_ICSR_IE);
+    }
     /* Enable the external interrupt */
     HAL_RISCVIC_ExtIRQInit();
-
-    return HAL_OK;
-}
-
-/**
- * @brief  RISCVIC Interrupt Controller Disable IRQ.
- * @param  IRQn: interrupt number.
- * @return HAL_OK.
- */
-HAL_Status HAL_RISCVIC_DisableIRQ(IRQn_Type IRQn)
-{
-    HAL_RISCVIC_WriteCSR(IPIC_IDX, IRQn / HAL_RISCVIC_INTERRUPT_SEPERATE);
-    HAL_RISCVIC_WriteCSR(IPIC_ICSR, 0);
-
-    return HAL_OK;
-}
-
-/**
- * @brief  RISCVIC Interrupt Controller Enable IRQ.
- * @param  IRQn: interrupt number.
- * @return HAL_OK.
- */
-HAL_Status HAL_RISCVIC_EnableIRQ(IRQn_Type IRQn)
-{
-    HAL_RISCVIC_SetActiveIRQ(IRQn);
-    HAL_RISCVIC_WriteCSR(IPIC_IDX, IRQn / HAL_RISCVIC_INTERRUPT_SEPERATE);
-    /* enable, level trigger */
-    HAL_RISCVIC_WriteCSR(IPIC_ICSR, IPIC_ICSR_IE);
 
     return HAL_OK;
 }

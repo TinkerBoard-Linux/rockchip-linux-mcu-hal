@@ -35,11 +35,7 @@ typedef void (*RISCVIC_Entry)(void);
 /** @defgroup RISCVIC_Public_Function_Declare Public Function Declare
  *  @{
  */
-void HAL_RISCVIC_SetActiveIRQ(IRQn_Type IRQn);
-uint32_t HAL_RISCVIC_GetActiveIRQ(void);
-HAL_Status HAL_RISCVIC_Init(RISCVIC_Entry trapEntry);
-HAL_Status HAL_RISCVIC_DisableIRQ(IRQn_Type IRQn);
-HAL_Status HAL_RISCVIC_EnableIRQ(IRQn_Type IRQn);
+HAL_Status HAL_RISCVIC_Init(void);
 HAL_Status HAL_RISCVIC_IRQHandler(unsigned int iMcause, unsigned int iMepc, unsigned int iSp);
 
 /** @} */
