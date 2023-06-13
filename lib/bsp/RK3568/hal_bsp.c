@@ -112,6 +112,24 @@ const struct HAL_SPI_DEV g_spi3Dev = {
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED
+const struct HAL_UART_DEV g_uart0Dev =
+{
+    .pReg = UART0,
+    .sclkID = CLK_UART0,
+    .irqNum = UART0_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart1Dev =
+{
+    .pReg = UART1,
+    .sclkID = CLK_UART1,
+    .sclkGateID = SCLK_UART1_GATE,
+    .pclkGateID = PCLK_UART1_GATE,
+    .irqNum = UART1_IRQn,
+    .isAutoFlow = false,
+};
+
 const struct HAL_UART_DEV g_uart2Dev =
 {
     .pReg = UART2,
@@ -122,6 +140,16 @@ const struct HAL_UART_DEV g_uart2Dev =
     .isAutoFlow = false,
 };
 
+const struct HAL_UART_DEV g_uart3Dev =
+{
+    .pReg = UART3,
+    .sclkID = CLK_UART3,
+    .sclkGateID = SCLK_UART3_GATE,
+    .pclkGateID = PCLK_UART3_GATE,
+    .irqNum = UART3_IRQn,
+    .isAutoFlow = false,
+};
+
 const struct HAL_UART_DEV g_uart4Dev =
 {
     .pReg = UART4,
@@ -129,6 +157,56 @@ const struct HAL_UART_DEV g_uart4Dev =
     .sclkGateID = SCLK_UART4_GATE,
     .pclkGateID = PCLK_UART4_GATE,
     .irqNum = UART4_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart5Dev =
+{
+    .pReg = UART5,
+    .sclkID = CLK_UART5,
+    .sclkGateID = SCLK_UART5_GATE,
+    .pclkGateID = PCLK_UART5_GATE,
+    .irqNum = UART5_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart6Dev =
+{
+    .pReg = UART6,
+    .sclkID = CLK_UART6,
+    .sclkGateID = SCLK_UART6_GATE,
+    .pclkGateID = PCLK_UART6_GATE,
+    .irqNum = UART6_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart7Dev =
+{
+    .pReg = UART7,
+    .sclkID = CLK_UART7,
+    .sclkGateID = SCLK_UART7_GATE,
+    .pclkGateID = PCLK_UART7_GATE,
+    .irqNum = UART7_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart8Dev =
+{
+    .pReg = UART8,
+    .sclkID = CLK_UART8,
+    .sclkGateID = SCLK_UART8_GATE,
+    .pclkGateID = PCLK_UART8_GATE,
+    .irqNum = UART8_IRQn,
+    .isAutoFlow = false,
+};
+
+const struct HAL_UART_DEV g_uart9Dev =
+{
+    .pReg = UART9,
+    .sclkID = CLK_UART9,
+    .sclkGateID = SCLK_UART9_GATE,
+    .pclkGateID = PCLK_UART9_GATE,
+    .irqNum = UART9_IRQn,
     .isAutoFlow = false,
 };
 #endif
