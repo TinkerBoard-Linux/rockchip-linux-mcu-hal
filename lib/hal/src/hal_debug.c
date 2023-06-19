@@ -117,6 +117,98 @@ HAL_Status HAL_DBG_HEX(char *s, void *buf, uint32_t width, uint32_t len)
     return HAL_OK;
 }
 
+#ifdef HAL_DBG_USING_HAL_PRINTF
+static void reverse(char *start, char *end)
+{
+    while (start < end) {
+        char temp = *start;
+        *start = *end;
+        *end = temp;
+        start++;
+        end--;
+    }
+}
+
+#ifdef __GNUC__
+extern int _write(int fd, char *ptr, int len);
+#endif
+
+/**
+ * @brief  format and print data
+ * @param  format: format printf param. only support: \%d, \%s, \%ld, \%lld
+ * @return int32_t.
+ */
+__WEAK int32_t HAL_DBG_Printf(const char *format, ...)
+{
+    static char g_printf_buf[HAL_PRINTF_BUF_SIZE];
+    char *str = g_printf_buf;
+    int32_t len = 0;
+    va_list args;
+
+    va_start(args, format);
+
+    while (*format != '\0') {
+        if (*format == '%') {
+            format++;
+            if (*format == 'd') {
+                int i = va_arg(args, int);
+                char *start = str;
+                do {
+                    *str++ = '0' + (i % 10);
+                    i /= 10;
+                } while (i > 0);
+                reverse(start, str - 1);
+            } else if (*format == 's') {
+                char *s = va_arg(args, char *);
+                while (*s) {
+                    *str++ = *s++;
+                }
+            } else if (*format == 'l') {
+                format++;
+                if (*format == 'd') {
+                    long i = va_arg(args, long);
+                    char *start = str;
+                    do {
+                        *str++ = '0' + (i % 10);
+                        i /= 10;
+                    } while (i > 0);
+                    reverse(start, str - 1);
+                } else if (*format == 'l') {
+                    format++;
+                    if (*format == 'd') {
+                        long long int i = va_arg(args, long long int);
+                        char *start = str;
+                        do {
+                            *str++ = '0' + (i % 10);
+                            i /= 10;
+                        } while (i > 0);
+                        reverse(start, str - 1);
+                    }
+                }
+            }
+        } else {
+            *str++ = *format;
+        }
+        format++;
+    }
+
+    *str = '\0';
+
+    va_end(args);
+    len = str - g_printf_buf;
+
+#ifdef __GNUC__
+
+    return _write(2, g_printf_buf, len);
+#else
+    for (int i = 0; i < len; i++) {
+        fputc(g_printf_buf[i], stdout);
+    }
+
+    return len;
+#endif
+}
+#else
 /**
  * @brief  format and print data
  * @param  format: format printf param.
@@ -126,6 +218,7 @@ __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
 {
     return 0;
 }
+#endif /* HAL_DBG_USING_HAL_PRINTF */
 
 /** @} */
 

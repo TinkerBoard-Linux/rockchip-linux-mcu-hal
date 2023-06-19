@@ -86,6 +86,7 @@ Rockchip Electronics Co., Ltd.
 | V2.8.0     | 2021.05  | Jon Lin      | 增加 test_conf.h 说明、增加和修正模块缩写 |
 | V2.9.0     | 2021.06  | Jon Lin      | 增加 Doxygen 中文注释规范，增加用户指南扩展，调整裸系统 Main 函数格式，优化单元测试章节说明，添加扩展开发包说明 |
 | V3.0.0 | 2021.06 | Jon Lin | 增加多核相关编程规范 |
+| V3.0.1 | 2023.06 | Cliff | 修改打印调试配置说明 |
 
 ---
 
@@ -1575,12 +1576,39 @@ start_rk3568.S
 
 代码实现参考 lib/hal/inc/hal_debug.h。
 
-#### 打印等级
+#### 打印调试
+
+##### 打印开关
+
+打印开关通过`HAL_DBG_ON`这个宏定义来实现，我们需要把它放到`hal_conf.h`头文件里。
+
+##### 打印模式
+
+我们需要通过钩子函数来把HAL的打印转发到串口上，目前有三种模式选择：
+
+- HAL_DBG_USING_RTT_SERIAL：转发到RT-Thread的`rt_kprintf`函数。
+- HAL_DBG_USING_LIBC_PRINTF：转发到C库的`printf`函数，因为它依赖于`malloc`函数，所以务必确保堆初始化好以后，才能调用打印函数，否则会出现崩溃卡死。
+- HAL_DBG_USING_HAL_PRINTF：转发到HAL内部的精简打印函数`HAL_DBG_Printf`，code size控制在1KB以内，所以只支持`%s`、`%d`、`%ld`和`%lld`这些最常见的格式。可以通过`HAL_PRINTF_BUF_SIZE`来控制最大单次打印的字符串长度，默认是128字节，需要调整的话可以在`hal_conf.h`里定义这个宏。
+
+##### 打印等级
 
 系统提供下面几个级别的宏，用于日常 debug 使用，在产品阶段可关闭，不占用空间：
 HAL_DBG(), 对应普通 info 级别；
 HAL_DBG_WRN()
 HAL_DBG_ERR()
+
+##### 配置例子
+
+```c
+#define HAL_DBG_ON                    /* 打开打印总开关 */
+#ifdef HAL_DBG_ON
+#define HAL_DBG_USING_HAL_PRINTF      /* 配置打印模式：转发到HAL内部的精简打印函数 */
+#define HAL_PRINTF_BUF_SIZE  128      /* 配置打印buffer大小，在HAL_DBG_USING_RTT_SERIAL和HAL_DBG_USING_LIBC_PRINTF模式下不起作用 */
+#define HAL_DBG_INFO_ON               /* 打印等级配置：启用HAL_DBG_INFO */
+#define HAL_DBG_WRN_ON                /* 打印等级配置：启用HAL_DBG_WRN */
+#define HAL_DBG_ERR_ON                /* 打印等级配置：启用HAL_DBG_ERR */
+#endif
+```
 
 ### ASSERT()
 

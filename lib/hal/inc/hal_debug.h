@@ -19,6 +19,7 @@
 /* Run only for debugging, please refer to how-to-use for the definition of the specification. */
 //#define HAL_DBG_USING_RTT_SERIAL
 //#define HAL_DBG_USING_LIBC_PRINTF
+//#define HAL_DBG_USING_HAL_PRINTF
 #ifdef HAL_DBG_USING_RTT_SERIAL
 #include <rthw.h>
 #include <rtthread.h>
@@ -26,6 +27,11 @@
 #define HAL_SYSLOG rt_kprintf
 #elif defined(HAL_DBG_USING_LIBC_PRINTF)
 #define HAL_SYSLOG printf
+#elif defined(HAL_DBG_USING_HAL_PRINTF)
+#define HAL_SYSLOG HAL_DBG_Printf
+#ifndef HAL_PRINTF_BUF_SIZE
+#define HAL_PRINTF_BUF_SIZE 128
+#endif
 #endif
 
 /** @defgroup DEBUG_Exported_Definition_Group1 Basic Definition

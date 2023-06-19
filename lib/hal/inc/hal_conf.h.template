@@ -114,8 +114,9 @@
 
 /************************ HAL Driver Sub Config *******************************/
 
-//#define HAL_DBG_USING_RTT_SERIAL
-//#define HAL_DBG_USING_LIBC_PRINTF
+//#define HAL_DBG_USING_RTT_SERIAL              /**< Using rt_kprintf in RT-Thread for HAL debug printf */
+//#define HAL_DBG_USING_LIBC_PRINTF             /**< Using printf in LIBC for HAL debug printf */
+//#define HAL_DBG_USING_HAL_PRINTF              /**< Using HAL_DBG_Printf in HAL for HAL debug printf */
 #define HAL_DBG_ON
 #define HAL_DBG_INFO_ON
 #define HAL_DBG_WRN_ON
