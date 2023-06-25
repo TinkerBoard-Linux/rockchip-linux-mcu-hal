@@ -58,58 +58,65 @@ typedef enum {
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
 #ifdef HAL_MCU_CORE
+#define INTMUX_IRQ_START_NUM      32
+#define INTMUX_OUT_IRQ_START_NUM  0
+#define INTMUX_NUM_INT_PER_OUT    64
+#define INTMUX_NUM_GROUP_PER_CON  8
+#define INTMUX_NUM_GROUP_PER_OUT  8
+#define INTMUX_NUM_INT_PER_GROUP  8
+#define NUM_EXT_INTERRUPTS        320
+
 typedef enum
 {
 /******  Platform Exceptions Numbers ***************************************************/
-    DMAC0_ABORT_IRQn       = 13,       /*!< DMAC0 Abort Interrupt       */
-    DMAC0_IRQn             = 14,       /*!< DMAC0 Interrupt             */
-    DMAC1_ABORT_IRQn       = 15,       /*!< DMAC1 Abort Interrupt       */
-    DMAC1_IRQn             = 16,       /*!< DMAC1 Interrupt             */
-    GMAC0_IRQn             = 27,       /*!< GMAC0 Interrupt             */
-    GMAC1_IRQn             = 32,       /*!< GMAC1 Interrupt             */
-    GPIO0_IRQn             = 33,       /*!< GPIO0 Interrupt             */
-    GPIO1_IRQn             = 34,       /*!< GPIO1 Interrupt             */
-    GPIO2_IRQn             = 35,       /*!< GPIO2 Interrupt             */
-    GPIO3_IRQn             = 36,       /*!< GPIO3 Interrupt             */
-    GPIO4_IRQn             = 37,       /*!< GPIO4 Interrupt             */
-    I2C0_IRQn              = 46,       /*!< I2C0 Interrupt              */
-    I2C1_IRQn              = 47,       /*!< I2C1 Interrupt              */
-    I2C2_IRQn              = 48,       /*!< I2C2 Interrupt              */
-    I2C3_IRQn              = 49,       /*!< I2C3 Interrupt              */
-    I2C4_IRQn              = 50,       /*!< I2C4 Interrupt              */
-    I2C5_IRQn              = 51,       /*!< I2C5 Interrupt              */
-    SARADC_IRQn            = 93,       /*!< SARADC Interrupt            */
-    FSPI0_IRQn             = 101,      /*!< FSPI Interrupt              */
-    SPI0_IRQn              = 103,      /*!< SPI0 Interrupt              */
-    SPI1_IRQn              = 104,      /*!< SPI1 Interrupt              */
-    SPI2_IRQn              = 105,      /*!< SPI2 Interrupt              */
-    SPI3_IRQn              = 106,      /*!< SPI3 Interrupt              */
-    TIMER0_IRQn            = 109,      /*!< TIMER0 Interrupt            */
-    TIMER1_IRQn            = 110,      /*!< TIMER1 Interrupt            */
-    TIMER2_IRQn            = 111,      /*!< TIMER2 Interrupt            */
-    TIMER3_IRQn            = 112,      /*!< TIMER3 Interrupt            */
-    TIMER4_IRQn            = 113,      /*!< TIMER4 Interrupt            */
-    TIMER5_IRQn            = 114,      /*!< TIMER5 Interrupt            */
-    UART0_IRQn             = 116,      /*!< UART0  Interrupt            */
-    UART1_IRQn             = 117,      /*!< UART1  Interrupt            */
-    UART2_IRQn             = 118,      /*!< UART2  Interrupt            */
-    UART3_IRQn             = 119,      /*!< UART3  Interrupt            */
-    UART4_IRQn             = 120,      /*!< UART4  Interrupt            */
-    UART5_IRQn             = 121,      /*!< UART5  Interrupt            */
-    UART6_IRQn             = 122,      /*!< UART6  Interrupt            */
-    UART7_IRQn             = 123,      /*!< UART7  Interrupt            */
-    UART8_IRQn             = 124,      /*!< UART8  Interrupt            */
-    UART9_IRQn             = 125,      /*!< UART9  Interrupt            */
-    WDT0_IRQn              = 149,      /*!< WDT0  Interrupt             */
-    MBOX0_CH0_B2A_IRQn     = 183,      /*!< MBOX0 CH0 B2A Interrupt     */
-    MBOX0_CH1_B2A_IRQn     = 184,      /*!< MBOX0 CH1 B2A Interrupt     */
-    MBOX0_CH2_B2A_IRQn     = 185,      /*!< MBOX0 CH2 B2A Interrupt     */
-    MBOX0_CH3_B2A_IRQn     = 186,      /*!< MBOX0 CH3 B2A Interrupt     */
-    MBOX0_CH0_A2B_IRQn     = 187,      /*!< MBOX0 CH0 A2B Interrupt     */
-    MBOX0_CH1_A2B_IRQn     = 188,      /*!< MBOX0 CH1 A2B Interrupt     */
-    MBOX0_CH2_A2B_IRQn     = 189,      /*!< MBOX0 CH2 A2B Interrupt     */
-    MBOX0_CH3_A2B_IRQn     = 190,      /*!< MBOX0 CH3 A2B Interrupt     */
-    NUM_INTERRUPTS         = 255,
+    NUM_INTERRUPTS         = 0,
+    DMAC0_ABORT_IRQn       = 45,       /*!< DMAC0 Abort Interrupt       */
+    DMAC0_IRQn             = 46,       /*!< DMAC0 Interrupt             */
+    DMAC1_ABORT_IRQn       = 47,       /*!< DMAC1 Abort Interrupt       */
+    DMAC1_IRQn             = 48,       /*!< DMAC1 Interrupt             */
+    GPIO0_IRQn             = 65,       /*!< GPIO0 Interrupt             */
+    GPIO1_IRQn             = 66,       /*!< GPIO1 Interrupt             */
+    GPIO2_IRQn             = 67,       /*!< GPIO2 Interrupt             */
+    GPIO3_IRQn             = 68,       /*!< GPIO3 Interrupt             */
+    GPIO4_IRQn             = 69,       /*!< GPIO4 Interrupt             */
+    I2C0_IRQn              = 78,       /*!< I2C0 Interrupt              */
+    I2C1_IRQn              = 79,       /*!< I2C1 Interrupt              */
+    I2C2_IRQn              = 80,       /*!< I2C2 Interrupt              */
+    I2C3_IRQn              = 81,       /*!< I2C3 Interrupt              */
+    I2C4_IRQn              = 82,       /*!< I2C4 Interrupt              */
+    I2C5_IRQn              = 83,       /*!< I2C5 Interrupt              */
+    SARADC_IRQn            = 125,       /*!< SARADC Interrupt            */
+    FSPI0_IRQn             = 133,      /*!< FSPI Interrupt              */
+    SPI0_IRQn              = 135,      /*!< SPI0 Interrupt              */
+    SPI1_IRQn              = 136,      /*!< SPI1 Interrupt              */
+    SPI2_IRQn              = 137,      /*!< SPI2 Interrupt              */
+    SPI3_IRQn              = 138,      /*!< SPI3 Interrupt              */
+    TIMER0_IRQn            = 141,      /*!< TIMER0 Interrupt            */
+    TIMER1_IRQn            = 142,      /*!< TIMER1 Interrupt            */
+    TIMER2_IRQn            = 143,      /*!< TIMER2 Interrupt            */
+    TIMER3_IRQn            = 144,      /*!< TIMER3 Interrupt            */
+    TIMER4_IRQn            = 145,      /*!< TIMER4 Interrupt            */
+    TIMER5_IRQn            = 146,      /*!< TIMER5 Interrupt            */
+    UART0_IRQn             = 148,      /*!< UART0  Interrupt            */
+    UART1_IRQn             = 149,      /*!< UART1  Interrupt            */
+    UART2_IRQn             = 150,      /*!< UART2  Interrupt            */
+    UART3_IRQn             = 151,      /*!< UART3  Interrupt            */
+    UART4_IRQn             = 152,      /*!< UART4  Interrupt            */
+    UART5_IRQn             = 153,      /*!< UART5  Interrupt            */
+    UART6_IRQn             = 154,      /*!< UART6  Interrupt            */
+    UART7_IRQn             = 155,      /*!< UART7  Interrupt            */
+    UART8_IRQn             = 156,      /*!< UART8  Interrupt            */
+    UART9_IRQn             = 157,      /*!< UART9  Interrupt            */
+    WDT0_IRQn              = 181,      /*!< WDT0  Interrupt             */
+    MBOX0_CH0_B2A_IRQn     = 215,      /*!< MBOX0 CH0 B2A Interrupt     */
+    MBOX0_CH1_B2A_IRQn     = 216,      /*!< MBOX0 CH1 B2A Interrupt     */
+    MBOX0_CH2_B2A_IRQn     = 217,      /*!< MBOX0 CH2 B2A Interrupt     */
+    MBOX0_CH3_B2A_IRQn     = 218,      /*!< MBOX0 CH3 B2A Interrupt     */
+    MBOX0_CH0_A2B_IRQn     = 219,      /*!< MBOX0 CH0 A2B Interrupt     */
+    MBOX0_CH1_A2B_IRQn     = 220,      /*!< MBOX0 CH1 A2B Interrupt     */
+    MBOX0_CH2_A2B_IRQn     = 221,      /*!< MBOX0 CH2 A2B Interrupt     */
+    MBOX0_CH3_A2B_IRQn     = 222,      /*!< MBOX0 CH3 A2B Interrupt     */
+    TOTAL_INTERRUPTS       = (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 #else
 typedef enum
