@@ -313,7 +313,7 @@ int HAL_CEC_Init(void)
 #ifdef CEC_M0
     ret = READ_REG(hdmi0_cec_m0->GPIO4C_IOMUX_SEL_L);
     ret = ret >> 4;
-    if (ret & 0xf == 0x5) {
+    if ((ret & 0xf) == 0x5) {
         printf("GPIO CEC: cec iomux\n");
         cec_flag = 1;
     } else {
@@ -325,7 +325,7 @@ int HAL_CEC_Init(void)
 #else
     ret = READ_REG(hdmi0_cec_m1->GPIO0D_IOMUX_SEL_L);
     ret = ret >> 4;
-    if (ret & 0xf == 0x8) {
+    if ((ret & 0xf) == 0x8) {
         printf("GPIO CEC: cec iomux\n");
         cec_flag = 1;
     } else {
