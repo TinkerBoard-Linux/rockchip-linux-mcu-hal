@@ -77,8 +77,9 @@
 #define PWM_INACTIVE_NEGATIVE (0 << PWM_PWM0_CTRL_INACTIVE_POL_SHIFT)
 #define PWM_INACTIVE_MASK     (1 << 4)
 
-#define PWM_OUTPUT_LEFT   (0 << PWM_PWM0_CTRL_OUTPUT_MODE_SHIFT)
-#define PWM_OUTPUT_CENTER (1 << PWM_PWM0_CTRL_OUTPUT_MODE_SHIFT)
+#define PWM_OUTPUT_LEFT       (0 << PWM_PWM0_CTRL_OUTPUT_MODE_SHIFT)
+#define PWM_OUTPUT_CENTER     (1 << PWM_PWM0_CTRL_OUTPUT_MODE_SHIFT)
+#define PWM_ALIGNED_MODE_MASK (1 << PWM_PWM0_CTRL_OUTPUT_MODE_SHIFT)
 
 #define PWM_UNLOCK (0 << PWM_PWM0_CTRL_CONLOCK_SHIFT)
 #define PWM_LOCK   (1 << PWM_PWM0_CTRL_CONLOCK_SHIFT)
@@ -88,6 +89,12 @@
 
 #define PWM_SEL_SRC_CLK   (0 << PWM_PWM0_CTRL_CLK_SEL_SHIFT)
 #define PWM_SEL_SCALE_CLK (1 << PWM_PWM0_CTRL_CLK_SEL_SHIFT)
+
+#ifdef PWM_PWM0_CTRL_ALIGNED_VLD_N_SHIFT
+#define PWM_ALIGNED_VALID      (0 << PWM_PWM0_CTRL_ALIGNED_VLD_N_SHIFT)
+#define PWM_ALIGNED_INVALID    (1 << PWM_PWM0_CTRL_ALIGNED_VLD_N_SHIFT)
+#define PWM_ALIGNED_VALID_MASK (1 << PWM_PWM0_CTRL_ALIGNED_VLD_N_SHIFT)
+#endif
 
 #define PWM_CTRL_SCALE_SHIFT (PWM_PWM0_CTRL_SCALE_SHIFT)
 #define PWM_CTRL_SCALE_MASK  (PWM_PWM0_CTRL_SCALE_MASK)
@@ -192,6 +199,34 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
     } else {
         ctrl |= PWM_DUTY_POSTIVE | PWM_INACTIVE_NEGATIVE;
     }
+
+    ctrl &= ~(PWM_ALIGNED_MODE_MASK);
+    switch (config->alignedMode) {
+    case HAL_PWM_LEFT_ALIGNED:
+        ctrl |= PWM_OUTPUT_LEFT;
+        break;
+    case HAL_PWM_CENTER_ALIGNED:
+        ctrl |= PWM_OUTPUT_CENTER;
+        break;
+    case HAL_PWM_UNALIGNED:
+    default:
+        break;
+    }
+
+#ifdef PWM_PWM0_CTRL_ALIGNED_VLD_N_SHIFT
+    ctrl &= ~(PWM_ALIGNED_VALID_MASK);
+    switch (config->alignedMode) {
+    case HAL_PWM_LEFT_ALIGNED:
+    case HAL_PWM_CENTER_ALIGNED:
+        ctrl |= PWM_ALIGNED_VALID;
+        break;
+    case HAL_PWM_UNALIGNED:
+        ctrl |= PWM_ALIGNED_INVALID;
+        break;
+    default:
+        break;
+    }
+#endif
 
     ctrl &= ~PWM_LOCK;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);

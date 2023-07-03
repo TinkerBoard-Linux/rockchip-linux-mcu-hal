@@ -49,6 +49,15 @@ typedef enum {
 } ePWM_captureCntMode;
 
 /**
+  * @brief  PWM aligned mode definition
+  */
+typedef enum {
+    HAL_PWM_LEFT_ALIGNED = 1, /**< set waveform to left-aligned mode */
+    HAL_PWM_CENTER_ALIGNED,   /**< set waveform to center-aligned mode */
+    HAL_PWM_UNALIGNED,        /**< set waveform to unaligned mode */
+} ePWM_alignedMode;
+
+/**
   * @brief  PWM HW information definition
   */
 struct HAL_PWM_DEV {
@@ -67,6 +76,7 @@ struct HAL_PWM_CONFIG {
     uint32_t periodNS;
     uint32_t dutyNS;
     bool polarity;
+    ePWM_alignedMode alignedMode;
 };
 
 /**
