@@ -85,6 +85,14 @@ typedef enum
     I2C3_IRQn              = 81,       /*!< I2C3 Interrupt              */
     I2C4_IRQn              = 82,       /*!< I2C4 Interrupt              */
     I2C5_IRQn              = 83,       /*!< I2C5 Interrupt              */
+    PWM_PMU_IRQn           = 114,      /*!< PWM_PMU Interrupt           */
+    PWM1_IRQn              = 115,      /*!< PWM1 Interrupt              */
+    PWM2_IRQn              = 116,      /*!< PWM2 Interrupt              */
+    PWM3_IRQn              = 117,      /*!< PWM3 Interrupt              */
+    PWM_PMU_PWR_IRQn       = 118,      /*!< PWM_PMU PWR Interrupt       */
+    PWM1_PWR_IRQn          = 119,      /*!< PWM1 PWR Interrupt          */
+    PWM2_PWR_IRQn          = 120,      /*!< PWM2 PWR Interrupt          */
+    PWM3_PWR_IRQn          = 121,      /*!< PWM3 PWR Interrupt          */
     SARADC_IRQn            = 125,       /*!< SARADC Interrupt            */
     FSPI0_IRQn             = 133,      /*!< FSPI Interrupt              */
     SPI0_IRQn              = 135,      /*!< SPI0 Interrupt              */
