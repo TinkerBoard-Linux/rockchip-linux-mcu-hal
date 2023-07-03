@@ -295,6 +295,7 @@ struct HAL_PWM_CONFIG hal_channel0_config = {
     .periodNS = 100000,
     .dutyNS = 40000,
     .polarity = true,
+    .alignedMode = HAL_PWM_UNALIGNED,
 };
 
 struct HAL_PWM_CONFIG hal_channel1_config = {
@@ -302,6 +303,15 @@ struct HAL_PWM_CONFIG hal_channel1_config = {
     .periodNS = 100000,
     .dutyNS = 20000,
     .polarity = false,
+    .alignedMode = HAL_PWM_LEFT_ALIGNED,
+};
+
+struct HAL_PWM_CONFIG hal_channel2_config = {
+    .channel = 2,
+    .periodNS = 100000,
+    .dutyNS = 20000,
+    .polarity = false,
+    .alignedMode = HAL_PWM_UNALIGNED,
 };
 
 struct HAL_PWM_CONFIG hal_channel3_config = {
@@ -309,6 +319,7 @@ struct HAL_PWM_CONFIG hal_channel3_config = {
     .periodNS = 100000,
     .dutyNS = 50000,
     .polarity = false,
+    .alignedMode = HAL_PWM_LEFT_ALIGNED,
 };
 
 static void HAL_IOMUX_PWM0_Config(void)
@@ -318,6 +329,9 @@ static void HAL_IOMUX_PWM0_Config(void)
 
     /* PWM1 chanel1-0C2 */
     HAL_PINCTRL_SetIOMUX(GPIO_BANK0, GPIO_PIN_C2, PIN_CONFIG_MUX_FUNC2);
+
+    /* PWM1 chanel2-0C1 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0, GPIO_PIN_C1, PIN_CONFIG_MUX_FUNC2);
 
     /* PWM1 chanel3-0C0 */
     HAL_PINCTRL_SetIOMUX(GPIO_BANK0, GPIO_PIN_C0, PIN_CONFIG_MUX_FUNC2);
@@ -353,19 +367,23 @@ static void pwm_test(void)
 
     channel_mask = HAL_BIT(hal_channel0_config.channel) |
                    HAL_BIT(hal_channel1_config.channel) |
+                   HAL_BIT(hal_channel2_config.channel) |
                    HAL_BIT(hal_channel3_config.channel);
     HAL_PWM_GlobalLock(&hal_pwm1_handle, channel_mask);
 
     HAL_PWM_SetConfig(&hal_pwm1_handle, hal_channel0_config.channel, &hal_channel0_config);
     HAL_PWM_SetConfig(&hal_pwm1_handle, hal_channel1_config.channel, &hal_channel1_config);
+    HAL_PWM_SetConfig(&hal_pwm1_handle, hal_channel2_config.channel, &hal_channel2_config);
     HAL_PWM_SetConfig(&hal_pwm1_handle, hal_channel3_config.channel, &hal_channel3_config);
 
     HAL_PWM_SetOutputOffset(&hal_pwm1_handle, hal_channel0_config.channel, 20000);
     HAL_PWM_SetOutputOffset(&hal_pwm1_handle, hal_channel1_config.channel, 30000);
+    HAL_PWM_SetOutputOffset(&hal_pwm1_handle, hal_channel2_config.channel, 0);
     HAL_PWM_SetOutputOffset(&hal_pwm1_handle, hal_channel3_config.channel, 40000);
 
     HAL_PWM_Enable(&hal_pwm1_handle, hal_channel0_config.channel, HAL_PWM_CONTINUOUS);
     HAL_PWM_Enable(&hal_pwm1_handle, hal_channel1_config.channel, HAL_PWM_CAPTURE);
+    HAL_PWM_Enable(&hal_pwm1_handle, hal_channel2_config.channel, HAL_PWM_CONTINUOUS);
     HAL_PWM_Enable(&hal_pwm1_handle, hal_channel3_config.channel, HAL_PWM_CAPTURE);
 
     HAL_PWM_GlobalUnlock(&hal_pwm1_handle, channel_mask);
