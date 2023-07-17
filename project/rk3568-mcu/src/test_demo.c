@@ -11,6 +11,7 @@
 /********************* Private MACRO Definition ******************************/
 // #define PERF_TEST
 // #define DEVICE_TEST
+// #define GPIO_TEST
 // #define TIMER_TEST
 // #define PWM_TEST
 
@@ -77,6 +78,58 @@ void device_test(void)
     }
 
     printf("device test ok.\n");
+}
+#endif
+
+/************************************************/
+/*                                              */
+/*                  GPIO_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef GPIO_TEST
+static void gpio4_isr(uint32_t irq, void *args)
+{
+    HAL_GPIO_IRQHandler(GPIO4, GPIO_BANK4);
+}
+
+static HAL_Status c5_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO4C5 callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_test(void)
+{
+    uint32_t level;
+
+    /* set pinctrl function */
+    HAL_PINCTRL_SetParam(GPIO_BANK4,
+                         GPIO_PIN_C5,
+                         PIN_CONFIG_MUX_FUNC0);
+
+    /* Test GPIO output */
+    HAL_GPIO_SetPinDirection(GPIO4, GPIO_PIN_C5, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO4, GPIO_PIN_C5);
+    printf("test_gpio 4c5 level = %ld\n", level);
+    HAL_DelayMs(5000);
+    if (level == GPIO_HIGH) {
+        HAL_GPIO_SetPinLevel(GPIO4, GPIO_PIN_C5, GPIO_LOW);
+    } else {
+        HAL_GPIO_SetPinLevel(GPIO4, GPIO_PIN_C5, GPIO_HIGH);
+    }
+    level = HAL_GPIO_GetPinLevel(GPIO4, GPIO_PIN_C5);
+    printf("test_gpio 4c5 level = %ld\n", level);
+    HAL_DelayMs(5000);
+
+    /* Test GPIO interrupt */
+    HAL_GPIO_SetPinDirection(GPIO4, GPIO_PIN_C5, GPIO_IN);
+    HAL_INTMUX_SetIRQHandler(GPIO4_IRQn, gpio4_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK4, GPIO_PIN_C5, c5_call_back, NULL);
+    HAL_INTMUX_EnableIRQ(GPIO4_IRQn);
+    HAL_GPIO_SetIntType(GPIO4, GPIO_PIN_C5, GPIO_INT_TYPE_EDGE_RISING);
+    HAL_GPIO_EnableIRQ(GPIO4, GPIO_PIN_C5);
+    printf("test_gpio interrupt ready\n");
 }
 #endif
 
@@ -285,6 +338,10 @@ void test_demo(void)
 {
 #ifdef DEVICE_TEST
     device_test();
+#endif
+
+#ifdef GPIO_TEST
+    gpio_test();
 #endif
 
 #ifdef PERF_TEST
