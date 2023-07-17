@@ -1285,6 +1285,7 @@ typedef enum {
 #define CLK_PWM2_PLL_SEL_XIN_OSC0 2U
 #define CLK_PWM2_PLL_SEL_RESERVED 3U
 
+#define FAKE_CLOCK_GATE	          14U
 #define PLL_INPUT_OSC_RATE (24 * 1000 * 1000)
 
 #define CLK(mux, div) \
@@ -1405,7 +1406,7 @@ typedef enum PD_Id {
 #define CLK_SARADC_GATE          CLK_SARADC_PLL_CLK_GATE
 
 #define PCLK_WDT		 PCLK_BUS
-#define PCLK_WDT0_GATE		 FAKE_CLOCK
+#define PCLK_WDT0_GATE		 FAKE_CLOCK_GATE
 
 #ifdef __cplusplus
 }
