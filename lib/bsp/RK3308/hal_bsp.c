@@ -399,6 +399,18 @@ const struct HAL_UART_DEV g_uart4Dev =
 };
 #endif
 
+#ifdef HAL_GMAC1000_MODULE_ENABLED
+const struct HAL_GMAC_DEV g_gmac0Dev =
+{
+    .pReg = GMAC0,
+    .clkID = CLK_MAC,
+    .clkGateID = CLK_MAC_TXRX_GATE,
+    .pclkID = PCLK_PERI,
+    .pclkGateID = PCLK_MAC_GATE,
+    .irqNum = MAC_IRQn,
+};
+#endif
+
 void BSP_SetLoaderFlag(void)
 {
     GRF->OS_REG0 = LDR_UPGRADE_FLAG;
