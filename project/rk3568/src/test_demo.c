@@ -1277,7 +1277,7 @@ void test_demo(void)
 #endif
 #endif
 
-#if defined(RPMSG_LINUX_TEST) && defined(PRIMARY_CPU)
+#if defined(RPMSG_LINUX_TEST) && defined(CPU3)
     rpmsg_linux_test();
 #endif
 
