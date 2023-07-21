@@ -130,6 +130,8 @@ struct FLASH_INFO {
 
 /********************* Private Variable Definition ***************************/
 HAL_SECTION_SRAM_CODE static const struct FLASH_INFO s_spiFlashbl[] = {
+    /* GD25LQ16E */
+    { 0xc86015, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 12, 9, 0 },
     /* GD25Q32B */
     { 0xc84016, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 13, 9, 0 },
     /* GD25Q64B */
