@@ -860,10 +860,10 @@ static void GIC_AMPGetValidConfig(struct GIC_IRQ_AMP_CTRL *ampCtrl,
 
 #ifndef HAL_GIC_WAIT_LINUX_INIT_ENABLED
     for (i = 32; i < NUM_INTERRUPTS; i++) {
-        if (!valid->checkConfig[config->irq].flag) {
-            valid->checkConfig[config->irq].prio = ampCtrl->defPrio;
-            valid->checkConfig[config->irq].aff = ampCtrl->defRouteAff;
-            valid->checkConfig[config->irq].flag = 1;
+        if (!valid->checkConfig[i].flag) {
+            valid->checkConfig[i].prio = ampCtrl->defPrio;
+            valid->checkConfig[i].aff = ampCtrl->defRouteAff;
+            valid->checkConfig[i].flag = 1;
         }
     }
 #endif
@@ -994,6 +994,11 @@ static void GIC_AMPConfigIRQs(struct GIC_AMP_IRQ_INIT_CFG *irqsCfg)
         if (ampValid.checkConfig[i].flag) {
             GIC_SetPriority(i, ampValid.checkConfig[i].prio);
             GIC_SetIRouter(i, ampValid.checkConfig[i].aff);
+            GIC_DBG("GIC_AMPConfigIRQs-%d: prio:%lx-%lx, aff:%lx-%d\n", i,
+                    ampValid.checkConfig[i].prio, GIC_GetPriority(i),
+                    ampValid.checkConfig[i].aff,
+                    GIC_AMPCheckIRoute(i, ampValid.checkConfig[i].aff) ? 1 : 0
+                    );
         }
     }
 }
