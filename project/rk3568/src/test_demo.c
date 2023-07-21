@@ -646,9 +646,7 @@ static void rpmsg_master_test(void)
         }
 
         info->map = &rpmsg_ept_map_table[remote_id];
-        info->instance = rpmsg_lite_master_init((void *)info->map->base, info->map->size,
-                                                RL_PLATFORM_SET_LINK_ID(master_id, remote_id), RL_NO_FLAGS);
-        rpmsg_lite_wait_for_link_up(info->instance);
+        info->instance = rpmsg_master_get_instance(master_id, remote_id);
         info->ept = rpmsg_lite_create_ept(info->instance, info->map->m_ept_id, master_ept_cb, info);
 
         p_rpmsg_info[i] = info;
@@ -833,9 +831,7 @@ static void rpmsg_remote_test(void)
 
     info->map = &rpmsg_ept_map_table[remote_id];
     info->cb_sta = 0;
-    info->instance = rpmsg_lite_remote_init((void *)info->map->base,
-                                            RL_PLATFORM_SET_LINK_ID(master_id, remote_id), RL_NO_FLAGS);
-    rpmsg_lite_wait_for_link_up(info->instance);
+    info->instance = rpmsg_remote_get_instance(master_id, remote_id);
     info->ept = rpmsg_lite_create_ept(info->instance, info->map->r_ept_id, remote_ept_cb, info);
 
     while (1) {
@@ -919,7 +915,7 @@ struct rpmsg_info_t {
 static void rpmsg_share_mem_check(void)
 {
     if ((RPMSG_LINUX_MEM_BASE + RPMSG_LINUX_MEM_SIZE) > RPMSG_LINUX_MEM_END) {
-        rk_printf("share memory size error!\n");
+        rk_printf("shared memory size error!\n");
         while (1) {
             ;
         }
@@ -1047,7 +1043,7 @@ static void rpmsg_linux_test(void)
 #include "rpmsg_ns.h"
 #include "rpmsg_perf.h"
 
-/* TODO: Configure RPMSG PERF TEST share memory base */
+/* TODO: Configure RPMSG PERF TEST shared memory base */
 #define RPMSG_PERF_MEM_BASE 0x7a00000
 #define RPMSG_PERF_MEM_SIZE 0x20000
 

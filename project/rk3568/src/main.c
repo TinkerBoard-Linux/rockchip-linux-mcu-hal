@@ -9,7 +9,7 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
-
+//#define TEST_USE_RPMSG
 /********************* Private Structure Definition **************************/
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
@@ -183,6 +183,11 @@ void main(void)
 #ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
     irq = GIC_TOUCH_REQ_IRQ(cpu_id);
     HAL_GIC_Enable(irq);
+#endif
+
+#ifdef TEST_USE_RPMSG
+    /* RPMsg Init */
+    rpmsg_init();
 #endif
 
     printf("\n");
