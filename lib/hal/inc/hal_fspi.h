@@ -86,6 +86,7 @@ struct HAL_FSPI_XMMC_DEV {
     uint32_t ctrl;
     uint32_t readCmd;
     uint32_t writeCmd;
+    uint8_t cell;
 };
 
 /** XIP may be not accessble, so place it in sram or psram */

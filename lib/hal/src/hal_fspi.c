@@ -201,7 +201,11 @@ static void FSPI_ContModeInit(struct HAL_FSPI_HOST *host)
         WRITE_REG(host->instance->AX0, 0 << FSPI_AX0_AX_SHIFT);
         break;
     case 1:
+#ifdef RKMCU_RK2108
+        WRITE_REG(host->instance->AX0, 0 << FSPI_AX0_AX_SHIFT);
+#else
         WRITE_REG(host->instance->AX1, 0 << FSPI_AX1_AX_SHIFT);
+#endif
         break;
     default:
         break;
@@ -300,7 +304,13 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
 
     /* spitial setting */
     FSPICtrl.b.sps = host->mode & HAL_SPI_CPHA;
+#ifdef RKMCU_RK2108
+    if (host->cs >= 1) {
+        FSPICmd.b.cs = 2;
+    }
+#else
     FSPICmd.b.cs = host->cs;
+#endif
     if (op->data.nbytes == 0 && op->addr.nbytes) {
         FSPICmd.b.rw = FSPI_WRITE;
     }
@@ -318,7 +328,11 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
         pReg->CTRL0 = FSPICtrl.d32;
         break;
     case 1:
+#ifdef RKMCU_RK2108
+        pReg->CTRL0 = FSPICtrl.d32;
+#else
         pReg->CTRL1 = FSPICtrl.d32;
+#endif
         break;
     default:
         break;
@@ -814,7 +828,11 @@ HAL_Status HAL_FSPI_SetDelayLines(struct HAL_FSPI_HOST *host, uint16_t cells)
     if (host->cs == 0) {
         WRITE_REG(host->instance->DLL_CTRL0, 1 << FSPI_DLL_CTRL0_SCLK_SMP_SEL_SHIFT | cells);
     } else {
+#ifdef RKMCU_RK2108
+        WRITE_REG(host->instance->DLL_CTRL0, 1 << FSPI_DLL_CTRL0_SCLK_SMP_SEL_SHIFT | cells);
+#else
         WRITE_REG(host->instance->DLL_CTRL1, 1 << FSPI_DLL_CTRL0_SCLK_SMP_SEL_SHIFT | cells);
+#endif
     }
 
     return HAL_OK;
@@ -831,7 +849,11 @@ HAL_Status HAL_FSPI_DLLDisable(struct HAL_FSPI_HOST *host)
     if (host->cs == 0) {
         CLEAR_REG(host->instance->DLL_CTRL0);
     } else {
+#ifdef RKMCU_RK2108
+        CLEAR_REG(host->instance->DLL_CTRL0);
+#else
         CLEAR_REG(host->instance->DLL_CTRL1);
+#endif
     }
 
     return HAL_OK;
