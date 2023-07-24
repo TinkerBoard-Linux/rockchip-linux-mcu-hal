@@ -31,6 +31,8 @@
 #define SPINAND_SECTOR_FULL_SIZE 528
 #define SPINAND_SECTOR_SIZE      512
 
+#define SPINAND_MAX_ID_LEN 4
+
 /* status register */
 #define SPINAND_BUSY        HAL_BIT(0)
 #define SPINAND_ERASE_FAIL  HAL_BIT(2)
@@ -90,6 +92,7 @@ HAL_Status HAL_SPINAND_ReadID(struct SPI_NAND *spinand, uint8_t *data);
 uint32_t HAL_SPINAND_GetCapacity(struct SPI_NAND *spinand);
 HAL_Check HAL_SPINAND_IsBad(struct SPI_NAND *spinand, uint32_t addr);
 HAL_Status HAL_SPINAND_MarkBad(struct SPI_NAND *spinand, uint32_t addr);
+HAL_Check HAL_SPINAND_IsFlashSupported(uint8_t *flashId);
 
 /** @} */
 

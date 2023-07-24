@@ -56,6 +56,7 @@
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
+// #define HAL_SPINAND_DEBUG
 #ifdef HAL_SPINAND_DEBUG
 #define HAL_SPINAND_DBG(...) HAL_DBG(__VA_ARGS__)
 #else
@@ -120,8 +121,6 @@
            HAL_SPI_MEM_OP_ADDR(3, addr, 1),     \
            HAL_SPI_MEM_OP_NO_DUMMY,             \
            HAL_SPI_MEM_OP_NO_DATA)
-
-#define SPINAND_MAX_ID_LEN 4
 
 /* SPINAND_INFO feature */
 #define SPINAND_FEA_4BIT_READ HAL_BIT(2)
@@ -238,6 +237,12 @@ static const struct SPINAND_INFO s_spiNandTable[] = {
     { 0xEFBA, 4, 0x40, 1, 1024, 0x4C, 18, 0x1, 0, { 0x04, 0x14, 0x24, 0xFF }, &SPINAND_GetEccStatus1 },
     /* DS35M2GA-1B */
     { 0xE522, 4, 0x40, 2, 1024, 0x0C, 19, 0x4, 1, { 0x04, 0x14, 0xFF, 0xFF }, &SPINAND_GetEccStatus1 },
+    /* MX35UF1GE4AD */
+    { 0xC296, 4, 0x40, 1, 1024, 0x0C, 18, 0x8, 1, { 0x04, 0x08, 0xFF, 0xFF }, &SPINAND_GetEccStatus0 },
+    /* GD5F1GQ5REYIG */
+    { 0xC841, 4, 0x40, 1, 1024, 0x4C, 18, 0x4, 1, { 0x04, 0x14, 0xFF, 0xFF }, &SPINAND_GetEccStatus2 },
+    /* GD5F1GM7RExxG */
+    { 0xC881, 4, 0x40, 1, 1024, 0x0C, 18, 0x8, 1, { 0x04, 0x14, 0xFF, 0xFF }, &SPINAND_GetEccStatus2 },
 };
 
 /********************* Private Function Definition ***************************/
@@ -357,10 +362,10 @@ static int32_t SPINAND_GetEccStatus2(struct SPI_NAND *spinand)
     int32_t ret;
     uint8_t ecc, status, status1;
 
-    if (SPINAND_ReadStatus(spinand, 0xC0, &status) == HAL_OK) {
+    if (SPINAND_ReadStatus(spinand, 0xC0, &status) != HAL_OK) {
         return SPINAND_ECC_ERROR;
     }
-    if (SPINAND_ReadStatus(spinand, 0xF0, &status1) == HAL_OK) {
+    if (SPINAND_ReadStatus(spinand, 0xF0, &status1) != HAL_OK) {
         return SPINAND_ECC_ERROR;
     }
 
@@ -374,8 +379,6 @@ static int32_t SPINAND_GetEccStatus2(struct SPI_NAND *spinand)
     } else {
         ret = SPINAND_ECC_ERROR;
     }
-
-    HAL_SPINAND_DBG("%s C0 %x, F0 %x\n", __func__, status, status1);
 
     return ret;
 }
@@ -396,10 +399,10 @@ static int32_t SPINAND_GetEccStatus3(struct SPI_NAND *spinand)
     int32_t ret;
     uint8_t ecc, status, status1;
 
-    if (SPINAND_ReadStatus(spinand, 0xC0, &status) == HAL_OK) {
+    if (SPINAND_ReadStatus(spinand, 0xC0, &status) != HAL_OK) {
         return SPINAND_ECC_ERROR;
     }
-    if (SPINAND_ReadStatus(spinand, 0xF0, &status1) == HAL_OK) {
+    if (SPINAND_ReadStatus(spinand, 0xF0, &status1) != HAL_OK) {
         return SPINAND_ECC_ERROR;
     }
 
@@ -902,6 +905,31 @@ HAL_Status HAL_SPINAND_ReadID(struct SPI_NAND *spinand, uint8_t *data)
 uint32_t HAL_SPINAND_GetCapacity(struct SPI_NAND *spinand)
 {
     return spinand->size;
+}
+
+/**
+ * @brief  Check if the flash support.
+ * @param  flashId: flash id.
+ * @return HAL_Check.
+ */
+HAL_Check HAL_SPINAND_IsFlashSupported(uint8_t *flashId)
+{
+    uint32_t i;
+    uint32_t id;
+
+    if (!flashId) {
+        return HAL_FALSE;
+    }
+
+    id = (flashId[0] << 8) | (flashId[1] << 0);
+
+    for (i = 0; i < HAL_ARRAY_SIZE(s_spiNandTable); i++) {
+        if (s_spiNandTable[i].id == id) {
+            return HAL_TRUE;
+        }
+    }
+
+    return HAL_FALSE;
 }
 
 /** @} */
