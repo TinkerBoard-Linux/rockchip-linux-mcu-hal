@@ -1383,6 +1383,7 @@ typedef enum CLOCK_Name {
     CLK_I2S1_2CH_SRC     = CLK(CLK_I2S1_2CH_PLL_SEL, CLK_I2S1_2CH_DIV),
     CLK_I2S1_2CH_FRAC    = CLK(0U, CLK_I2S1_2CH_FRAC_DIV),
     CLK_I2S1_2CH         = CLK(CLK_I2S1_2CH_SEL, 0U),
+    CLK_MAC              = CLK(CLK_MAC_PLL_SEL, CLK_MAC_DIV),
 } eCLOCK_Name;
 #endif
 
