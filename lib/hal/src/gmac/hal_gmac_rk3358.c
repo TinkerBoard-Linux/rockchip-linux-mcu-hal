@@ -69,7 +69,6 @@ void HAL_GMAC_SetToRGMII(struct GMAC_HANDLE *pGMAC,
 void HAL_GMAC_SetToRMII(struct GMAC_HANDLE *pGMAC)
 {
     WRITE_REG(GRF->MAC_CON[0], PX30_GMAC_PHY_INTF_SEL_RMII | PX30_GMAC_SPEED_100M);
-    //WRITE_REG(CRU->CRU_CLKSEL_CON[23], READ_REG(CRU->CRU_CLKSEL_CON[23]));
 }
 
 /**
@@ -80,6 +79,26 @@ void HAL_GMAC_SetToRMII(struct GMAC_HANDLE *pGMAC)
  */
 void HAL_GMAC_SetRGMIISpeed(struct GMAC_HANDLE *pGMAC, int32_t speed)
 {
+}
+
+/**
+ * @brief  Set external clock source select.
+ * @param  pGMAC: pointer to a GMAC_HANDLE structure that contains
+ *                the information for GMAC module.
+ * @param  extClk: 0: select clk_mac as the clock of mac
+ *                 1: select external phy clock as the clock of mac
+ */
+void HAL_GMAC_SetExtclkSrc(struct GMAC_HANDLE *pGMAC, bool extClk)
+{
+    uint32_t clksel = 0;
+
+    if (extClk) {
+        clksel = 1;
+    }
+
+    WRITE_REG_MASK_WE(CRU->CRU_CLKSEL_CON[23],
+                      CRU_CLKSEL_CON23_RMII_EXTCLKSRC_SEL_MASK,
+                      clksel << CRU_CLKSEL_CON23_RMII_EXTCLKSRC_SEL_SHIFT);
 }
 
 /**

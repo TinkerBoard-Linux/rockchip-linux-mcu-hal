@@ -298,7 +298,8 @@ struct HAL_GMAC_DEV {
  *  @{
  */
 HAL_Status HAL_GMAC_Init(struct GMAC_HANDLE *pGMAC, struct GMAC_REG *pReg,
-                         uint32_t freq, eGMAC_PHY_Interface interface);
+                         uint32_t freq, eGMAC_PHY_Interface interface,
+                         bool extClk);
 HAL_Status HAL_GMAC_DeInit(struct GMAC_HANDLE *pGMAC);
 HAL_Status HAL_GMAC_Start(struct GMAC_HANDLE *pGMAC, uint8_t *addr);
 HAL_Status HAL_GMAC_Stop(struct GMAC_HANDLE *pGMAC);
@@ -336,6 +337,7 @@ void HAL_GMAC_SetToRGMII(struct GMAC_HANDLE *pGMAC,
 void HAL_GMAC_SetToRMII(struct GMAC_HANDLE *pGMAC);
 void HAL_GMAC_SetRGMIISpeed(struct GMAC_HANDLE *pGMAC, int32_t speed);
 void HAL_GMAC_SetRMIISpeed(struct GMAC_HANDLE *pGMAC, int32_t speed);
+void HAL_GMAC_SetExtclkSrc(struct GMAC_HANDLE *pGMAC, bool extClk);
 
 /** @} */
 

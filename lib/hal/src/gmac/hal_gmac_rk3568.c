@@ -120,6 +120,29 @@ void HAL_GMAC_SetToRMII(struct GMAC_HANDLE *pGMAC)
 }
 
 /**
+ * @brief  Set external clock source select.
+ * @param  pGMAC: pointer to a GMAC_HANDLE structure that contains
+ *                the information for GMAC module.
+ * @param  extClk: 0: select clk_mac as the clock of mac
+ *                 1: select external phy clock as the clock of mac
+ */
+void HAL_GMAC_SetExtclkSrc(struct GMAC_HANDLE *pGMAC, bool extClk)
+{
+    uint32_t *cruCon, val;
+    uint32_t clksel = 0;
+
+    cruCon = (uint32_t *)((pGMAC->pReg == GMAC1) ? &(CRU->CRU_CLKSEL_CON[33]) :
+                                                   &(CRU->CRU_CLKSEL_CON[31]));
+
+    if (extClk) {
+        clksel = 1;
+    }
+
+    val = HIWORD_UPDATE(clksel, 0x1, 2);
+    WRITE_REG(*cruCon, val);
+}
+
+/**
  * @brief  Set RGMII speed.
  * @param  pGMAC: pointer to a GMAC_HANDLE structure that contains
  *                the information for GMAC module.

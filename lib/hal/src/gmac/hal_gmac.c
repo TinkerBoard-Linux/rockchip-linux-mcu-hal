@@ -2130,11 +2130,13 @@ void HAL_GMAC_WriteHWAddr(struct GMAC_HANDLE *pGMAC, uint8_t *enetAddr)
   * @param  pReg: base register for gmac controller.
   * @param  freq: pclk clock frequency rate.
   * @param  interface: RGMII or RMII.
+  * @param  extClk: working clock from cru(output) or phy(external input clk).
   *
   * @retval HAL status
   */
 HAL_Status HAL_GMAC_Init(struct GMAC_HANDLE *pGMAC, struct GMAC_REG *pReg,
-                         uint32_t freq, eGMAC_PHY_Interface interface)
+                         uint32_t freq, eGMAC_PHY_Interface interface,
+                         bool extClk)
 {
     /* Check the GMAC handle allocation */
     HAL_ASSERT(pGMAC != NULL);
@@ -2184,6 +2186,8 @@ HAL_Status HAL_GMAC_Init(struct GMAC_HANDLE *pGMAC, struct GMAC_REG *pReg,
     } else {
         HAL_GMAC_SetToRMII(pGMAC);
     }
+
+    HAL_GMAC_SetExtclkSrc(pGMAC, extClk);
 
     return HAL_OK;
 }
