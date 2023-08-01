@@ -35,8 +35,8 @@ enum HAL_PCIE_DMA_CHAN {
 
 /** PCIe DMA Direction */
 enum HAL_PCIE_DMA_DIR {
-    DMA_FROM_BUS,
-    DMA_TO_BUS,
+    DMA_FROM_BUS, /**< DMA from remote memory to local memory */
+    DMA_TO_BUS, /**< DMA from local memory to remote memory */
 };
 
 /**
@@ -159,17 +159,17 @@ union PCIE_DMA_INI_CLEAR {
  */
 struct DMA_TABLE {
     uint32_t *descs;
-    int chn;
-    uint32_t dir;
+    int chn; /**< DMA channel */
+    enum HAL_PCIE_DMA_DIR dir;
     uint32_t type;
     union PCIE_DMA_ENB enb;
     struct PCIE_DMA_CTX_REGS ctxReg;
     union PCIE_DMA_WEIGHT weilo;
     union PCIE_DMA_WEIGHT weihi;
     union PCIE_DMA_DB start;
-    uint32_t local;
-    uint32_t bus;
-    uint32_t bufSize;
+    uint32_t local; /**< DMA transfer local device's memory address */
+    uint32_t bus; /**< DMA transfer remote device's memory address */
+    uint32_t bufSize; /**< DMA transfer size */
 };
 
 /** @} */
