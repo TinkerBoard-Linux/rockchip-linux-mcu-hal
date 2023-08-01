@@ -167,8 +167,8 @@ struct DMA_TABLE {
     union PCIE_DMA_WEIGHT weilo;
     union PCIE_DMA_WEIGHT weihi;
     union PCIE_DMA_DB start;
-    uint32_t local; /**< DMA transfer local device's memory address */
-    uint32_t bus; /**< DMA transfer remote device's memory address */
+    uint64_t local; /**< DMA transfer local device's memory address */
+    uint64_t bus; /**< DMA transfer remote device's memory address */
     uint32_t bufSize; /**< DMA transfer size */
 };
 

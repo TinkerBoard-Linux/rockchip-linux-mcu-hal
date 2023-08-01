@@ -254,14 +254,14 @@ HAL_Status HAL_PCIE_ConfigDma(struct HAL_PCIE_HANDLE *pcie, struct DMA_TABLE *ta
     table->ctxReg.xfersize = table->bufSize;
     if (table->dir == DMA_FROM_BUS) {
         table->ctxReg.sarptrlo = (uint32_t)(table->bus & 0xffffffff);
-        table->ctxReg.sarptrhi = 0;
+        table->ctxReg.sarptrhi = (uint32_t)(table->bus >> 32);
         table->ctxReg.darptrlo = (uint32_t)(table->local & 0xffffffff);
-        table->ctxReg.darptrhi = 0;
+        table->ctxReg.darptrhi = (uint32_t)(table->local >> 32);
     } else if (table->dir == DMA_TO_BUS) {
         table->ctxReg.sarptrlo = (uint32_t)(table->local & 0xffffffff);
-        table->ctxReg.sarptrhi = 0;
+        table->ctxReg.sarptrhi = (uint32_t)(table->local >> 32);
         table->ctxReg.darptrlo = (uint32_t)(table->bus & 0xffffffff);
-        table->ctxReg.darptrhi = 0;
+        table->ctxReg.darptrhi = (uint32_t)(table->bus >> 32);
     }
     table->weilo.weight0 = 0x0;
     table->start.stop = 0x0;
