@@ -823,6 +823,10 @@ static void GIC_AmpCheckIrqInit(void)
 
 static bool GIC_AMPCheckPrio(uint32_t irq)
 {
+    if (irq < 32) {
+        return true;
+    }
+
     if (GIC_GetPriority(irq) == ampValid.checkConfig[irq].prio) {
         return true;
     } else {
