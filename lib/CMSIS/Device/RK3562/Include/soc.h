@@ -149,7 +149,7 @@ typedef enum {
   SPI0_IRQn                 =  84 + NUM_INTERRUPTS,     /*!< SPI0 Interrupt                 */
   SPI1_IRQn                 =  85 + NUM_INTERRUPTS,     /*!< SPI1 Interrupt                 */
   SPI2_IRQn                 =  86 + NUM_INTERRUPTS,     /*!< SPI2 Interrupt                 */
-  WDT_IRQn                  =  134 + NUM_INTERRUPTS,    /*!< WDT Interrupt                  */
+  WDT0_IRQn                 =  134 + NUM_INTERRUPTS,    /*!< WDT0 Interrupt                 */
   SARADC1_IRQn              =  156 + NUM_INTERRUPTS,    /*!< SARADC1 Interrupt              */
   FSPI0_IRQn                =  160 + NUM_INTERRUPTS,    /*!< FSPI0 Interrupt                */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),

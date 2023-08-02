@@ -96,9 +96,9 @@ static void command_wdt_process(uint8_t *in, int len)
            command.auto_mode ? "auto_mode" : "normal_mode",
            command.time_s, HAL_WDT_GetTimeout(), WDT->TORR);
     if (command.auto_mode) {
-        HAL_INTMUX_SetIRQHandler(WDT_IRQn, wdt_isr, NULL);
+        HAL_INTMUX_SetIRQHandler(WDT0_IRQn, wdt_isr, NULL);
         HAL_WDT_Start(INDIRECT_SYSTEM_RESET);
-        HAL_INTMUX_EnableIRQ(WDT_IRQn);
+        HAL_INTMUX_EnableIRQ(WDT0_IRQn);
     } else {
         HAL_WDT_Start(DIRECT_SYSTEM_RESET);
     }
