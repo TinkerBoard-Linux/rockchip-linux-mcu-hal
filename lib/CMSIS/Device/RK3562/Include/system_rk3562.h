@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
 #ifndef __SYSTEM_RK3562_H_
@@ -12,8 +12,25 @@ extern "C" {
 
 extern uint32_t SystemCoreClock; /*!< System Clock Frequency (Core Clock) */
 
-extern void SystemCoreClockUpdate(void);
+/**
+  \brief Setup the system.
+
+   Initialize the System and update the SystemCoreClock variable.
+ */
 extern void SystemInit(void);
+
+/**
+  \brief  Update SystemCoreClock variable.
+
+   Updates the SystemCoreClock with current core Clock retrieved from cpu registers.
+ */
+extern void SystemCoreClockUpdate(void);
+
+extern void DataInit(void);
+
+#if defined(HAL_AP_CORE)
+extern void MMU_CreateTranslationTable(void);
+#endif
 
 #ifdef __cplusplus
 }

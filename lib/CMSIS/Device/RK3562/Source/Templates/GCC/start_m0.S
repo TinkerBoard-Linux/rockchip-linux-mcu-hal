@@ -3,6 +3,10 @@
  * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
  */
 
+#include "hal_conf.h"
+
+#ifdef HAL_MCU_CORE
+
 /*
 ;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
 */
@@ -140,3 +144,5 @@ Default_Handler:
                 Set_Default_Handler  SysTick_Handler
 
                 .end
+
+#endif /* HAL_MCU_CORE */

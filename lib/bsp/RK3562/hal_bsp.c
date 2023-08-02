@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
 #include "hal_bsp.h"
@@ -31,7 +31,7 @@ const struct HAL_I2C_DEV g_i2c0Dev =
     .pclkGateID = CLK_PMU0_I2C0_GATE,
 };
 
-#ifdef RKMCU_RK3562_BUS
+#if defined(RKMCU_RK3562_BUS) || defined(HAL_AP_CORE)
 const struct HAL_I2C_DEV g_i2c1Dev =
 {
     .pReg = I2C1,
@@ -76,7 +76,7 @@ const struct HAL_I2C_DEV g_i2c5Dev =
     .clkGateID = CLK_I2C5_GATE,
     .pclkGateID = PCLK_I2C5_GATE,
 };
-#endif /* RKMCU_RK3562_BUS */
+#endif /* RKMCU_RK3562_BUS || HAL_AP_CORE */
 #endif /* HAL_I2C_MODULE_ENABLED */
 
 #ifdef HAL_SPI_MODULE_ENABLED
@@ -99,7 +99,7 @@ const struct HAL_SPI_DEV g_spi0Dev = {
     },
 };
 
-#ifdef RKMCU_RK3562_BUS
+#if defined(RKMCU_RK3562_BUS) || defined(HAL_AP_CORE)
 const struct HAL_SPI_DEV g_spi1Dev = {
     .base = SPI1_BASE,
     .clkId = CLK_SPI1,
@@ -137,10 +137,10 @@ const struct HAL_SPI_DEV g_spi2Dev = {
         .addr = SPI2_BASE + 0x800,
     },
 };
-#endif /* RKMCU_RK3562_BUS */
+#endif /* RKMCU_RK3562_BUS || HAL_AP_CORE */
 #endif /* HAL_SPI_MODULE_ENABLED */
 
-#ifdef RKMCU_RK3562_BUS
+#if defined(RKMCU_RK3562_BUS) || defined(HAL_AP_CORE)
 
 #ifdef HAL_FSPI_MODULE_ENABLED
 struct HAL_FSPI_HOST g_fspi0Dev =
@@ -262,7 +262,7 @@ const struct HAL_UART_DEV g_uart9Dev =
 };
 #endif
 
-#endif /* RKMCU_RK3562_BUS */
+#endif /* RKMCU_RK3562_BUS || HAL_AP_CORE */
 
 #ifdef RKMCU_RK3562_PMU
 
