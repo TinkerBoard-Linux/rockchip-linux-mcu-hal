@@ -67,12 +67,7 @@ HAL_Status HAL_SMCCC_SIP_AmpCpuOffIrqHandler(uint32_t irq, void *args)
     }
 
     HAL_GIC_Disable(irq);
-
-#ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
-    HAL_GIC_SetDir(irq);
-#else
     HAL_GIC_EndOfInterrupt(irq);
-#endif
     HAL_SMCCC_SIP_AmpCpuOff();
 
     return HAL_OK;
