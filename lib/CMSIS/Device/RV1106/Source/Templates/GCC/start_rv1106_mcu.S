@@ -14,7 +14,7 @@
 # define REGBYTES 4
 
 .globl _start
-.weak sc_exit, SystemInit, entry, main
+.weak sc_exit, SystemInit, entry, main, data_section_fixup
 .text
 /* skip supervisor & hypervisor & user vectors */
 j _start
@@ -74,6 +74,7 @@ la sp, __C_STACK_TOP__
 
 li a0, 0
 li a1, 0
+call data_section_fixup
 call SystemInit
 call entry
 call main
@@ -96,6 +97,9 @@ ret
 
 sc_exit:
 j sc_exit
+
+data_section_fixup:
+ret
 
 .section .text.entry
 .align 6
