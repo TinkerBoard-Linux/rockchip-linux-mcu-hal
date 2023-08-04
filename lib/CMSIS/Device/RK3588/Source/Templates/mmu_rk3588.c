@@ -37,7 +37,7 @@ void MMU_CreateTranslationTable(void)
     MMU_TTSection(MMUTable, SHMEM_BASE, SHMEM_SIZE >> 20, Sect_Normal_SH);
 
     //--------------------- PERIPHERALS -------------------
-    MMU_TTSection(MMUTable, 0xF0000000, 242U, Sect_Device_RW);
+    MMU_TTSection(MMUTable, 0xF0000000, 240U, Sect_Device_RW);
 
     /* Set location of level 1 page table
     ; 31:14 - Translation table base addr (31:14-TTBCR.N, TTBCR.N is 0 out of reset)
