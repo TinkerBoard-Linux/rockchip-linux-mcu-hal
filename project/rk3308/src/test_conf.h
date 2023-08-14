@@ -13,7 +13,9 @@
 #define UNITY_HAL_I2C
 #define UNITY_HAL_SPI
 #define UNITY_HAL_SPIFLASH
+#define UNITY_HAL_GMAC
 
 /* Unity HAL Test Sub Config */
 #define HAL_I2C1
+#define HAL_GMAC0
 #endif
