@@ -3,6 +3,7 @@
  * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
  */
 #include "soc.h"
+#include "hal_conf.h"
 
 static uint32_t Sect_Normal;        // outer & inner wb/wa, non-shareable, executable, rw, domain 0
 static uint32_t Sect_Normal_SH;     // as Sect_Normal_SH, but shareable
@@ -34,11 +35,13 @@ void MMU_CreateTranslationTable(void)
      *
      */
     // Define dram address space
-    MMU_TTSection(MMUTable, FIRMWARE_BASE, DRAM_SIZE >> 20, Sect_Normal);
-    MMU_TTSection(MMUTable, SHMEM_BASE, SHMEM_SIZE >> 20, Sect_Normal_SH);
 #if defined(NC_MEM_BASE) && defined(NC_MEM_SIZE)
+    MMU_TTSection(MMUTable, FIRMWARE_BASE, (DRAM_SIZE - NC_MEM_SIZE) >> 20, Sect_Normal);
     MMU_TTSection(MMUTable, NC_MEM_BASE, NC_MEM_SIZE >> 20, Sect_Normal_NC);
+#else
+    MMU_TTSection(MMUTable, FIRMWARE_BASE, DRAM_SIZE >> 20, Sect_Normal);
 #endif
+    MMU_TTSection(MMUTable, SHMEM_BASE, SHMEM_SIZE >> 20, Sect_Normal_SH);
 
     //--------------------- PERIPHERALS -------------------
     MMU_TTSection(MMUTable, 0xFF000000, 15U, Sect_Device_RW);
