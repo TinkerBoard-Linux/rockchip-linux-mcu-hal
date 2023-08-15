@@ -10,6 +10,11 @@
 #define SOC_RK3308
 #define SYS_TIMER TIMER5 /* System timer designation (RK TIMER) */
 
+#ifdef PRIMARY_CPU
+#define NC_MEM_SIZE 0x100000   /* Align 1MB */
+#define NC_MEM_BASE (FIRMWARE_BASE + DRAM_SIZE - NC_MEM_SIZE)
+#endif
+
 /* HAL Driver Config */
 #define HAL_ACODEC_MODULE_ENABLED
 #define HAL_ARCHTIMER_MODULE_ENABLED

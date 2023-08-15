@@ -5,10 +5,17 @@
 
 /* Program Entry, set to mark it as "used" and avoid gc */
 
+#include "hal_conf.h"
+
 MEMORY
 {
     SRAM  (rxw) : ORIGIN = SRAM_BASE, LENGTH = SRAM_SIZE            /* SYSTEM SRAM */
+#ifdef NC_MEM_SIZE
+    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = DRAM_SIZE - NC_MEM_SIZE   /* DRAM */
+    NCRAM (rxw) : ORIGIN = NC_MEM_BASE, LENGTH =  NC_MEM_SIZE   /* NCRAM */
+#else
     DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = DRAM_SIZE    /* DRAM */
+#endif
     SHMEM (rxw) : ORIGIN = SHMEM_BASE, LENGTH = SHMEM_SIZE      /* shared memory for all cpu */
 }
 
@@ -303,4 +310,13 @@ SECTIONS
         Image$$UND_STACK$$ZI$$Limit = .;
 
     } > DRAM
+
+#ifdef NC_MEM_SIZE
+    .ucheap (NOLOAD):
+    {
+        PROVIDE(__ucheap_start = .);
+        . += NC_MEM_SIZE;
+        PROVIDE(__ucheap_end = .);
+    } > NCRAM
+#endif
 }
