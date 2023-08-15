@@ -126,6 +126,8 @@ typedef enum {
     VAD_IRQn         = 89,            /*!< VAD Interrupt               */
     OWIRE_IRQn       = 90,            /*!< OWIRE Interrupt             */
     CAN0_IRQn        = 91,            /*!< CAN0 Interrupt              */
+    MAC_IRQn         = 96,            /*!< MAC Interrupt               */
+    MAC_PMT_IRQn     = 97,            /*!< MAC_PMT Interrupt           */
     SDMMC_IRQn       = 108,           /*!< SDMMC Interrupt             */
     EMMC_IRQn        = 109,           /*!< EMMC Interrupt              */
     SDIO_IRQn        = 110,           /*!< SDIO Interrupt              */
