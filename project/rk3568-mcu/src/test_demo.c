@@ -10,6 +10,7 @@
 
 /********************* Private MACRO Definition ******************************/
 // #define PERF_TEST
+// #define MBOX_TEST
 // #define DEVICE_TEST
 // #define GPIO_TEST
 // #define TIMER_TEST
@@ -334,6 +335,56 @@ static void timer_test(void)
 }
 #endif
 
+/************************************************/
+/*                                              */
+/*                  MBOX_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef MBOX_TEST
+
+#define _MBOX_TO_INTMUX_NUM(n) (n - INTMUX_IRQ_START_NUM - NUM_INTERRUPTS)
+/* master core uses MBOX_A2B and remote core uses MBOX_B2A */
+#define MBOX_B2A 0
+#define MBOX_A2B 1
+
+static struct MBOX_REG *pMBox = MBOX0;
+static uint32_t mbox_chan = MBOX_CH_3;
+static uint32_t cpu_id = 4;
+
+static void mbox_remote_isr(int vector, void *param)
+{
+    HAL_MBOX_IrqHandler(vector, pMBox);
+}
+
+static void mbox_remote_cb(struct MBOX_CMD_DAT *msg, void *args)
+{
+    struct MBOX_CMD_DAT tx_msg;
+
+    tx_msg.CMD = cpu_id & 0xFU;
+    tx_msg.DATA = 0x98765432;
+    printf("mbox receive: cmd=0x%lx data=0x%lx\n", msg->CMD, msg->DATA);
+    HAL_MBOX_SendMsg(pMBox, mbox_chan, &tx_msg);
+}
+
+static struct MBOX_CLIENT mbox_client3_r = { "mbox-cl3r", _MBOX_TO_INTMUX_NUM(MBOX0_CH3_A2B_IRQn), mbox_remote_cb, NULL };
+
+static void mbox_remote_test(void)
+{
+    struct MBOX_CLIENT *mbox_cl3r;
+    int ret = 0;
+
+    mbox_cl3r = &mbox_client3_r;
+
+    HAL_MBOX_Init(pMBox, MBOX_B2A);
+    ret = HAL_MBOX_RegisterClient(pMBox, mbox_chan, mbox_cl3r);
+    if (ret) {
+        printf("mbox_cl3r mbox_chan failed, ret=%d\n", ret);
+    }
+    HAL_INTMUX_SetIRQHandler(MBOX0_CH3_A2B_IRQn, mbox_remote_isr, NULL);
+    HAL_INTMUX_EnableIRQ(MBOX0_CH3_A2B_IRQn);
+}
+#endif
+
 void test_demo(void)
 {
 #ifdef DEVICE_TEST
@@ -354,5 +405,9 @@ void test_demo(void)
 
 #ifdef TIMER_TEST
     timer_test();
+#endif
+
+#ifdef MBOX_TEST
+    mbox_remote_test();
 #endif
 }
