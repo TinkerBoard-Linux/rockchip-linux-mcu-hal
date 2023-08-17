@@ -537,6 +537,33 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     return HAL_OK;
 }
 
+/**
+ * @brief wdt glbrst enable.
+ * @param  wdtType: wdt reset type.
+ * @return HAL_OK.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
+HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType)
+{
+    uint32_t mask = TOPCRU_GLB_RST_CON_WDT_RESET_EXT_EN_MASK | TOPCRU_GLB_RST_CON_WDT_GLB_SRST_CTRL_MASK;
+    uint32_t val = 1 << TOPCRU_GLB_RST_CON_WDT_RESET_EXT_EN_SHIFT;
+
+    switch (wdtType) {
+    case GLB_RST_FST_WDT0:
+        val |= (1 << TOPCRU_GLB_RST_CON_WDT_GLB_SRST_CTRL_SHIFT);
+        break;
+    case GLB_RST_SND_WDT0:
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    TOPCRU->GLB_RST_CON = VAL_MASK_WE(mask, val);
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /** @} */
