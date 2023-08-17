@@ -256,6 +256,10 @@ typedef enum {
 /****************************************************************************************/
 
 /******************************************CRU*******************************************/
+
+#define PCLK_WDT0_GATE           PCLK_WDTNS_GATE
+#define PCLK_WDT                 PCLK_BUS
+
 #define CRU_CLK_USE_CON_BANK
 #define CLK64(mux, div) ((((mux) & 0xffffffffULL) << 32) | ((div) & 0xffffffffULL))
 
@@ -271,6 +275,7 @@ typedef enum CLOCK_Name {
     PLL_DPLL,
 
     HCLK_BUS             = CLK64(HCLK_BUS_SEL, HCLK_BUS_DIV),
+    PCLK_BUS             = CLK64(PCLK_BUS_SEL, PCLK_BUS_DIV),
 
     CLK_PMU0_I2C0        = CLK64(CLK_PMU0_I2C0_SEL, CLK_PMU0_I2C0_DIV),
     CLK_I2C              = CLK64(CLK_I2C_SEL, 0U),

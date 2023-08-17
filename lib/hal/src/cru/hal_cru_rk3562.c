@@ -387,6 +387,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         return HAL_CRU_GetPllFreq(&DPLL);
 
     case HCLK_BUS:
+    case PCLK_BUS:
         freq = HAL_CRU_MuxGetFreq2(clkMux, s_gpllFreq, s_cpllFreq);
 
         break;
@@ -471,6 +472,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         return error;
 
     case HCLK_BUS:
+    case PCLK_BUS:
         pRate = s_gpllFreq;
         mux = HCLK_BUS_SEL_CLK_GPLL_MUX;
 
