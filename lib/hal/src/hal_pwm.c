@@ -254,6 +254,7 @@ HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t
     HAL_DBG("Oneshot count=%ld\n", count);
 
     ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
+    ctrl &= ~PWM_PWM0_CTRL_RPT_MASK;
     ctrl |= (count << PWM_PWM0_CTRL_RPT_SHIFT) & PWM_PWM0_CTRL_RPT_MASK;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
 
