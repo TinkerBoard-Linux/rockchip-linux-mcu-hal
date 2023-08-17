@@ -256,6 +256,15 @@ HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk);
 HAL_Status HAL_CRU_ClkEnable(uint32_t clk);
 
 /**
+ * @brief Disable unused clk
+ * @param  bank: cru bank id
+ * @param  index: gate con offset
+ * @param  val: gate value
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_ClkDisableUnused(uint32_t bank, uint32_t index, uint32_t val);
+
+/**
  * @brief Disable clk
  * @param  clk: clock to set
  * @return HAL_Status.

@@ -1005,6 +1005,17 @@ HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
     return HAL_OK;
 }
 
+HAL_Status HAL_CRU_ClkDisableUnused(uint32_t bank, uint32_t index, uint32_t val)
+{
+    const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
+    uint32_t reg;
+
+    reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].gateOffset + index * 4;
+    CRU_WRITE(reg, 0, 0, val);
+
+    return HAL_OK;
+}
+
 HAL_Check HAL_CRU_ClkIsReset(uint32_t clk)
 {
     const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
@@ -1269,6 +1280,25 @@ HAL_Status HAL_CRU_ClkDisable(uint32_t clk)
     }
 #else
     CRU->CRU_CLKGATE_CON[index] = VAL_MASK_WE(1U << shift, 1U << shift);
+#endif
+
+    return HAL_OK;
+}
+
+HAL_Status HAL_CRU_ClkDisableUnused(uint32_t bank, uint32_t index, uint32_t val)
+{
+#ifdef CRU_GATE_CON_CNT
+    if (index < CRU_GATE_CON_CNT) {
+        CRU->CRU_CLKGATE_CON[index] = val;
+    } else {
+#ifdef PMUCRU_BASE
+        PMUCRU->CRU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = val;
+#else
+        CRU->PMU_CLKGATE_CON[index - CRU_GATE_CON_CNT] = val;
+#endif
+    }
+#else
+    CRU->CRU_CLKGATE_CON[index] = val;
 #endif
 
     return HAL_OK;
