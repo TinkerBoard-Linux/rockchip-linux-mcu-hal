@@ -1131,12 +1131,6 @@ HAL_Status HAL_GIC_EndOfInterrupt(uint32_t irq)
  */
 HAL_Status HAL_GIC_SetPending(uint32_t irq)
 {
-    if (!GIC_AmpCheckIrqValid(irq)) {
-        GIC_DBG("HAL_GIC_SetPending: invalid prio-%ld\n", irq);
-
-        return HAL_INVAL;
-    }
-
     GIC_SetPending(irq);
 
     return HAL_OK;
@@ -1159,12 +1153,6 @@ int32_t HAL_GIC_GetPending(uint32_t irq)
  */
 HAL_Status HAL_GIC_ClearPending(uint32_t irq)
 {
-    if (!GIC_AmpCheckIrqValid(irq)) {
-        GIC_DBG("HAL_GIC_ClearPending: invalid prio-%ld\n", irq);
-
-        return HAL_INVAL;
-    }
-
     GIC_ClearPending(irq);
 
     return HAL_OK;
