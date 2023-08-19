@@ -694,7 +694,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     /* set CMD */
     FSPICmd.b.cmd = op->cmd.opcode;
     FSPICtrl.b.cmdlines = op->cmd.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
-    if (op->addr.buswidth == 4 && host->xmmcDev[host->cs].type == DEV_NOR) {
+    if (op->addr.buswidth == 4 && (host->xmmcDev[host->cs].type == DEV_NOR || host->xmmcDev[host->cs].type == DEV_SPINAND)) {
         FSPICmd.b.readmode = 1;
     }
 

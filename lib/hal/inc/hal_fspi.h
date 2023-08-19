@@ -79,6 +79,7 @@ typedef enum {
     DEV_UNKNON = 0,
     DEV_NOR,
     DEV_PSRAM,
+    DEV_SPINAND,
 } eFSPI_devType;
 
 struct HAL_FSPI_XMMC_DEV {
