@@ -84,7 +84,7 @@ static void irq_rsvd_isr(void)
     if (time_one < time_min) {
         time_min = time_one;
     }
-//    printf("irq_rsvd: latency = %.2f\n", time_one);
+//    printf("irq_rsvd: latency = %.2f us\n", time_one);
 }
 
 static void irq_latency_test(void)
@@ -107,7 +107,7 @@ static void irq_latency_test(void)
             HAL_GIC_SetPending(RSVD0_IRQn);
             HAL_DelayUs(IRQ_LATENCY_TEST_DELAY);
         }
-        printf("irq_rsvd latency: avg = %.2f, max = %.2f, min = %.2f\n",
+        printf("irq_rsvd latency: avg = %.2f us, max = %.2f us, min = %.2f us\n",
                time_sum / IRQ_LATENCY_TEST_LOOP, time_max, time_min);
     }
 
