@@ -13,7 +13,7 @@
 /********************* Private Structure Definition **************************/
 
 #ifdef TEST_USE_UART7M1
-static void HAL_IOMUX_Uart7m1Config(void)
+static void HAL_IOMUX_Uart7M1Config(void)
 {
     HAL_PINCTRL_SetIOMUX(GPIO_BANK1,
                          GPIO_PIN_B3,
@@ -140,7 +140,7 @@ int main(void)
 
     /* UART Init */
 #ifdef TEST_USE_UART7M1
-    HAL_IOMUX_Uart7m1Config();
+    HAL_IOMUX_Uart7M1Config();
     HAL_UART_Init(&g_uart7Dev, &hal_uart_config);
 #else
     HAL_UART_Init(&g_uart0Dev, &hal_uart_config);
