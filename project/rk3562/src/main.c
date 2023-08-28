@@ -9,6 +9,7 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
+//#define TEST_USE_JTAG
 
 #ifndef PRIMARY_CPU
 #define TEST_USE_UART7M1
@@ -25,6 +26,18 @@ static void HAL_IOMUX_Uart7m1Config(void)
     HAL_PINCTRL_SetIOMUX(GPIO_BANK1,
                          GPIO_PIN_B4,
                          PIN_CONFIG_MUX_FUNC3);
+}
+#endif
+
+#ifdef TEST_USE_JTAG
+static void HAL_IOMUX_JtagM1Config(void)
+{
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK1,
+                         GPIO_PIN_B5,
+                         PIN_CONFIG_MUX_FUNC2);
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK1,
+                         GPIO_PIN_B6,
+                         PIN_CONFIG_MUX_FUNC2);
 }
 #endif
 
@@ -149,6 +162,10 @@ void main(void)
 
     /* BSP Init */
     BSP_Init();
+
+#ifdef TEST_USE_JTAG
+    HAL_IOMUX_JtagM1Config();
+#endif
 
 #ifdef TEST_DEMO
     TEST_DEMO_GIC_Init();
