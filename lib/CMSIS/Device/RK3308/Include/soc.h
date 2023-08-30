@@ -1408,8 +1408,10 @@ typedef enum PD_Id {
 #define PCLK_SARADC_CONTROL_GATE PCLK_SARADC_GATE
 #define CLK_SARADC_GATE          CLK_SARADC_PLL_CLK_GATE
 
-#define PCLK_WDT		 PCLK_BUS
-#define PCLK_WDT0_GATE		 FAKE_CLOCK_GATE
+#define PCLK_WDT                 PCLK_BUS
+#define PCLK_WDT0_GATE           FAKE_CLOCK_GATE
+
+#define DCLK_VOP_GATE            DCLKVOP_CLK_GATE
 
 #ifdef __cplusplus
 }
