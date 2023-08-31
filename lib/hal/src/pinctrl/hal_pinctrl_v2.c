@@ -55,11 +55,14 @@
 #define _TO_OFFSET(p, w)    ((p) * (w))
 #define RK_GEN_VAL(p, v, w) ((_TO_MASK(w) << (_TO_OFFSET(p, w) + 16)) | (((v) & _TO_MASK(w)) << _TO_OFFSET(p, w)))
 
-#define _PINCTRL_WRITE(REG, DATA)                            \
-{                                                            \
-    HAL_DBG("Write Data: 0x%lx to Reg: 0x%lx\n", REG, DATA); \
-    REG = DATA;                                              \
-    HAL_DBG("Readback  : 0x%lx\n", REG);                     \
+/*
+ * Use HAL_DBG("pinctrl: write val = 0x%lx to register %p\n", VAL, &REG);
+ * and HAL_DBG("pinctrl: readback register %p = 0x%lx\n", &REG, REG);
+ * for debug
+ */
+#define _PINCTRL_WRITE(REG, DATA) \
+{                                 \
+    REG = DATA;                   \
 }
 
 #if defined(GRF_GPIO0A_IOMUX_OFFSET)
