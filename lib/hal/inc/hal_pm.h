@@ -37,6 +37,7 @@
 #define PM_INTF_REQUESTED(pdata)    ((pdata)->bits[PM_RUNTIME_TYPE_INTF])
 #define PM_HS_INTF_REQUESTED(pdata) ((pdata)->bits[PM_RUNTIME_TYPE_HS_INTF])
 #define PM_SPI_REQUESTED(pdata)     ((pdata)->bits[PM_RUNTIME_TYPE_SPI])
+#define PM_CIF_REQUESTED(pdata)     ((pdata)->bits[PM_RUNTIME_TYPE_CIF])
 
 /* suspend config id */
 #define PM_SLEEP_MODE_CONFIG   0x01
@@ -51,6 +52,7 @@ enum {
     PM_RUNTIME_TYPE_UART,
     PM_RUNTIME_TYPE_I2C,
     PM_RUNTIME_TYPE_SPI,
+    PM_RUNTIME_TYPE_CIF,
     PM_RUNTIME_TYPE_DEVICE,
     PM_RUNTIME_TYPE_END,
 };
@@ -97,6 +99,8 @@ typedef enum {
     PM_RUNTIME_ID_I2C5,
 
     PM_RUNTIME_ID_SPI = PM_RUNTIME_TYPE_TO_FIRST_ID(PM_RUNTIME_TYPE_SPI),
+    PM_RUNTIME_ID_CIF = PM_RUNTIME_TYPE_TO_FIRST_ID(PM_RUNTIME_TYPE_CIF),
+
     PM_RUNTIME_ID_END,
 } ePM_RUNTIME_ID;
 
