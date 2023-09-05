@@ -57,17 +57,6 @@ j sc_exit
 .align 6
 
 _start:
-# clear bss
-la a1, __BSS_START__
-la a2, __BSS_END__
-j       4f
-3 :
-sw zero, 0 (a1)
-add a1, a1, 4
-4 :
-bne a1, a2, 3b
-sw zero, 0 (a1)
-
 auipc gp, % hi(_gp)
 addi gp, gp, % lo(_gp)
 la sp, __C_STACK_TOP__

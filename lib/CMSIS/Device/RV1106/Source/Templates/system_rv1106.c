@@ -7,6 +7,20 @@
 
 uint32_t SystemCoreClock = 300000000;
 
+extern uint32_t __BSS_START__[];
+extern uint32_t __BSS_END__[];
+
+static void BssInit(void)
+{
+    uint32_t *p = __BSS_START__;
+    int size;
+
+    size = (__BSS_END__ - __BSS_START__ + 1) * 4;
+
+    memset(p, 0x0, size);
+    HAL_DCACHE_CleanByRange((uint32_t)p, size);
+}
+
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
@@ -38,4 +52,5 @@ void SystemInit(void)
 
     DCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
 #endif
+    BssInit();
 }
