@@ -28,6 +28,184 @@ const struct HAL_CRU_DEV g_cruDev = {
 };
 #endif
 
+#ifdef HAL_I2STDM_MODULE_ENABLED
+struct HAL_I2STDM_DEV g_i2sTdm0Dev =
+{
+    .pReg = I2STDM0,
+    .mclkTx = CLK_I2S0_8CH_TX,
+    .mclkTxGate = CLK_I2S0_8CH_TX_GATE,
+    .mclkRx = CLK_I2S0_8CH_RX,
+    .mclkRxGate = CLK_I2S0_8CH_RX_GATE,
+    .muxTxSel = MCLK_I2S0_8CH_TX_SEL,
+    .muxRxSel = MCLK_I2S0_8CH_RX_SEL,
+    .hclk = HCLK_I2S0_8CH_GATE,
+    .rsts[0] = SRST_MRESETN_I2S0_8CH_TX,
+    .rsts[1] = SRST_MRESETN_I2S0_8CH_RX,
+    .bclkFs = 64,
+    .pd = PD_AUDIO,
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM0->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_8CH_TX,
+        .dmac = DMA0,
+    },
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM0->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S0_8CH_RX,
+        .dmac = DMA0,
+    },
+};
+
+struct HAL_I2STDM_DEV g_i2sTdm1Dev =
+{
+    .pReg = I2STDM1,
+    .mclkTx = CLK_I2S1_8CH_TX,
+    .mclkTxGate = CLK_I2S1_8CH_TX_GATE,
+    .mclkRx = CLK_I2S1_8CH_RX,
+    .mclkRxGate = CLK_I2S1_8CH_RX_GATE,
+    .muxTxSel = MCLK_I2S1_8CH_TX_SEL,
+    .muxRxSel = MCLK_I2S1_8CH_RX_SEL,
+    .hclk = HCLK_I2S1_8CH_GATE,
+    .rsts[0] = SRST_MRESETN_I2S1_8CH_TX,
+    .rsts[1] = SRST_MRESETN_I2S1_8CH_RX,
+    .bclkFs = 64,
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM1->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S1_8CH_TX,
+        .dmac = DMA0,
+    },
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2STDM1->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S1_8CH_RX,
+        .dmac = DMA0,
+    },
+};
+#endif
+
+#ifdef HAL_I2S_MODULE_ENABLED
+struct HAL_I2S_DEV g_i2s2Dev =
+{
+    .pReg = I2S2,
+    .mclk = CLK_I2S2_2CH,
+    .mclkGate = CLK_I2S2_2CH_GATE,
+    .hclk = HCLK_I2S2_2CH_GATE,
+    .bclkFs = 64,
+    .pd = PD_AUDIO,
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2S2->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S2_2CH_TX,
+        .dmac = DMA1,
+    },
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2S2->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S2_2CH_RX,
+        .dmac = DMA1,
+    },
+};
+
+struct HAL_I2S_DEV g_i2s3Dev =
+{
+    .pReg = I2S3,
+    .mclk = CLK_I2S3_2CH,
+    .mclkGate = CLK_I2S3_2CH_GATE,
+    .hclk = HCLK_I2S3_2CH_GATE,
+    .bclkFs = 64,
+    .pd = PD_AUDIO,
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(I2S3->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S3_2CH_TX,
+        .dmac = DMA1,
+    },
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(I2S3->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_I2S3_2CH_RX,
+        .dmac = DMA1,
+    },
+};
+#endif
+
+#ifdef HAL_PCIE_MODULE_ENABLED
+const struct HAL_PHY_SNPS_PCIE3_DEV g_phy_pcie3Dev =
+{
+    .phyMode = PHY_MODE_PCIE_AGGREGATION,
+};
+
+struct HAL_PCIE_DEV g_pcieDev =
+{
+    .apbBase = PCIE3_4L_APB_BASE,
+    .dbiBase = PCIE3_4L_DBI_BASE,
+    .cfgBase = 0xF0000000,
+    .lanes = 4,
+    .gen = 3,
+    .firstBusNo = 0,
+    .legacyIrqNum = PCIE30x4_LEGACY_IRQn,
+    .phy = (void *)&g_phy_pcie3Dev,
+};
+#endif
+
+#ifdef HAL_PDM_MODULE_ENABLED
+struct HAL_PDM_DEV g_pdm0Dev =
+{
+    .pReg = PDM0,
+    .mclk = MCLK_PDM0,
+    .mclkGate = MCLK_PDM0_GATE,
+    .mclkRate = PDM_CLK_RATE,
+    .hclk = HCLK_PDM0_GATE,
+    .reset = SRST_RESETN_PDM0,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(PDM0->RXFIFO_DATA_REG),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_PDM0,
+        .dmac = DMA0,
+    },
+};
+#endif
+
+#ifdef HAL_PL330_MODULE_ENABLED
+struct HAL_PL330_DEV g_pl330Dev0 =
+{
+    .pReg = DMA0,
+    .peripReqType = BURST,
+    .irq[0] = DMAC0_IRQn,
+    .irq[1] = DMAC0_ABORT_IRQn,
+    .pd = 0,
+};
+
+struct HAL_PL330_DEV g_pl330Dev1 =
+{
+    .pReg = DMA1,
+    .peripReqType = BURST,
+    .irq[0] = DMAC1_IRQn,
+    .irq[1] = DMAC1_ABORT_IRQn,
+    .pd = 0,
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
@@ -117,45 +295,6 @@ const struct HAL_UART_DEV g_uart9Dev =
     .irqNum = UART9_IRQn,
     .isAutoFlow = true,
     .runtimeID = PM_RUNTIME_ID_UART9,
-};
-#endif
-
-#ifdef HAL_PCIE_MODULE_ENABLED
-const struct HAL_PHY_SNPS_PCIE3_DEV g_phy_pcie3Dev =
-{
-    .phyMode = PHY_MODE_PCIE_AGGREGATION,
-};
-
-struct HAL_PCIE_DEV g_pcieDev =
-{
-    .apbBase = PCIE3_4L_APB_BASE,
-    .dbiBase = PCIE3_4L_DBI_BASE,
-    .cfgBase = 0xF0000000,
-    .lanes = 4,
-    .gen = 3,
-    .firstBusNo = 0,
-    .legacyIrqNum = PCIE30x4_LEGACY_IRQn,
-    .phy = (void *)&g_phy_pcie3Dev,
-};
-#endif
-
-#ifdef HAL_PDM_MODULE_ENABLED
-struct HAL_PDM_DEV g_pdm0Dev =
-{
-    .pReg = PDM0,
-    .mclk = MCLK_PDM0,
-    .mclkGate = MCLK_PDM0_GATE,
-    .mclkRate = PDM_CLK_RATE,
-    .hclk = HCLK_PDM0_GATE,
-    .reset = SRST_RESETN_PDM0,
-    .rxDmaData =
-    {
-        .addr = (uint32_t)&(PDM0->RXFIFO_DATA_REG),
-        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-        .maxBurst = 8,
-        .dmaReqCh = DMA_REQ_PDM0,
-        .dmac = DMA0,
-    },
 };
 #endif
 

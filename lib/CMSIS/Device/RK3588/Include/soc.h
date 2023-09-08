@@ -322,6 +322,16 @@ typedef enum
     MBOX2_CH1_A2B_IRQn     = 114,      /*!< MBOX2 CH1 A2B Interrupt     */
     MBOX2_CH2_A2B_IRQn     = 115,      /*!< MBOX2 CH2 A2B Interrupt     */
     MBOX2_CH3_A2B_IRQn     = 116,      /*!< MBOX2 CH3 A2B Interrupt     */
+    DMAC0_IRQn             = 118,      /*!< DMAC0 Interrupt             */
+    DMAC0_ABORT_IRQn       = 119,      /*!< DMAC0 ABORT Interrupt       */
+    DMAC1_IRQn             = 120,      /*!< DMAC1 Interrupt             */
+    DMAC1_ABORT_IRQn       = 121,      /*!< DMAC1 ABORT Interrupt       */
+    DMAC2_IRQn             = 122,      /*!< DMAC2 Interrupt             */
+    DMAC2_ABORT_IRQn       = 123,      /*!< DMAC2 ABORT Interrupt       */
+    I2S0_8CH_IRQn          = 212,      /*!< I2S0_8CH Interrupt          */
+    I2S1_8CH_IRQn          = 213,      /*!< I2S1_8CH Interrupt          */
+    I2S2_2CH_IRQn          = 214,      /*!< I2S2_2CH Interrupt          */
+    I2S3_2CH_IRQn          = 215,      /*!< I2S3_2CH Interrupt          */
     PCIE30x4_LEGACY_IRQn   = 292,      /*!< PCIe3x4_legacy Interrupt    */
     GPIO0_IRQn             = 309,      /*!< GPIO0 Interrupt             */
     GPIO1_IRQn             = 310,      /*!< GPIO1 Interrupt             */
