@@ -927,7 +927,7 @@ struct DMA_REG {
     __O  uint32_t DBGINST[2];                         /* Address Offset: 0x0D08 */
          uint32_t RESERVED0D10[60];                   /* Address Offset: 0x0D10 */
     __I  uint32_t CR[5];                              /* Address Offset: 0x0E00 */
-    __I  uint32_t CRDn;                               /* Address Offset: 0x0E14 */
+    __I  uint32_t CRDN;                               /* Address Offset: 0x0E14 */
          uint32_t RESERVED0E18[26];                   /* Address Offset: 0x0E18 */
     __IO uint32_t WD;                                 /* Address Offset: 0x0E80 */
 };
