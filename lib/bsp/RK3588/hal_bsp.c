@@ -193,6 +193,7 @@ struct HAL_PL330_DEV g_pl330Dev0 =
     .peripReqType = BURST,
     .irq[0] = DMAC0_IRQn,
     .irq[1] = DMAC0_ABORT_IRQn,
+    .clkGate = ACLK_DMAC0_GATE,
     .pd = 0,
 };
 
@@ -202,6 +203,7 @@ struct HAL_PL330_DEV g_pl330Dev1 =
     .peripReqType = BURST,
     .irq[0] = DMAC1_IRQn,
     .irq[1] = DMAC1_ABORT_IRQn,
+    .clkGate = ACLK_DMAC1_GATE,
     .pd = 0,
 };
 #endif
