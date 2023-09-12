@@ -205,6 +205,7 @@ struct HAL_PL330_DEV {
     ePL330_COND peripReqType;
     IRQn_Type irq[PL330_NR_IRQS];
     ePD_Id pd;
+    uint32_t clkGate;
 
     void *priv;
 };
