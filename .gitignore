@@ -35,6 +35,8 @@
 /latex
 /middleware
 /test
+/board
+/applications
 
 # host programs on Cygwin
 *.exe
