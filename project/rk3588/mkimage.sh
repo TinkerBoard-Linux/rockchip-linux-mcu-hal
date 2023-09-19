@@ -1,6 +1,6 @@
 #!/bin/bash
 # SPDX-License-Identifier: BSD-3-Clause */
-# Copyright (c) 2022 Rockchip Electronics Co., Ltd.
+# Copyright (c) 2023 Rockchip Electronics Co., Ltd.
 
 set -e
 
@@ -16,6 +16,6 @@ HAL_DIR=$(pwd)/../..
 IMAGE=$(pwd)/Image
 
 cp -r $CUR_DIR/GCC/hal*.bin $IMAGE/
-$HAL_DIR/tools/mkimage -f $IMAGE/amp.its -E -p 0xe00 $IMAGE/amp.img
+$HAL_DIR/tools/mkimage -f $IMAGE/amp_linux.its -E -p 0xe00 $IMAGE/amp.img
 
 echo 'Image: amp.img is ready.'

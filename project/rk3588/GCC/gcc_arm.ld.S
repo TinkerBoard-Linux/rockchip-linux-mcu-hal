@@ -1,15 +1,23 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
 /* Program Entry, set to mark it as "used" and avoid gc */
 
+#include "hal_conf.h"
+
 MEMORY
 {
-    SRAM  (rxw) : ORIGIN = 0xff000000, LENGTH = 0x100000     /* SYSTEM SRAM */
-    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = DRAM_SIZE /* DRAM */
-    SHMEM (rxw) : ORIGIN = SHMEM_BASE, LENGTH = SHMEM_SIZE   /* shared memory for all cpu */
+    SRAM  (rxw) : ORIGIN = SRAM_BASE, LENGTH = SRAM_SIZE        /* SYSTEM SRAM */
+#ifdef NC_MEM_SIZE
+    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = DRAM_SIZE - NC_MEM_SIZE   /* DRAM */
+    NCRAM (rxw) : ORIGIN = NC_MEM_BASE, LENGTH =  NC_MEM_SIZE   /* NCRAM */
+#else
+    DRAM  (rxw) : ORIGIN = FIRMWARE_BASE, LENGTH = DRAM_SIZE    /* DRAM */
+#endif
+    SHMEM (rxw) : ORIGIN = SHMEM_BASE, LENGTH = SHMEM_SIZE      /* shared memory for all cpu */
+    LINUX_RPMSG (rxw) : ORIGIN = LINUX_RPMSG_BASE, LENGTH = LINUX_RPMSG_SIZE /* shared memory for linux rpmsg */
 }
 
 ENTRY(Reset_Handler)
@@ -153,6 +161,13 @@ SECTIONS
         . = ALIGN(64);
     } > SHMEM AT > DRAM
 
+    .linux_share_rpmsg (NOLOAD):
+    {
+        PROVIDE(__linux_share_rpmsg_start__ = .);
+        . += LINUX_RPMSG_SIZE;
+        PROVIDE(__linux_share_rpmsg_end__ = .);
+    } > LINUX_RPMSG
+
     . = ALIGN(16);
     .bss (NOLOAD) :
     {
@@ -210,4 +225,14 @@ SECTIONS
         Image$$UND_STACK$$ZI$$Limit = .;
 
     } > DRAM
+
+#ifdef NC_MEM_SIZE
+    .ucheap (NOLOAD):
+    {
+        PROVIDE(__ucheap_start = .);
+        . += NC_MEM_SIZE;
+        PROVIDE(__ucheap_end = .);
+    } > NCRAM
+#endif
 }
+

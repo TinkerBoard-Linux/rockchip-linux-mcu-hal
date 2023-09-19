@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
 #include "hal_bsp.h"
@@ -8,25 +8,43 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
+#define TEST_USE_UART5M0
 
 /********************* Private Structure Definition **************************/
+
+#ifdef TEST_USE_UART5M0
+static void HAL_IOMUX_Uart5M0Config(void)
+{
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK4,
+                         GPIO_PIN_D4,
+                         PIN_CONFIG_MUX_FUNC10);
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK4,
+                         GPIO_PIN_D5,
+                         PIN_CONFIG_MUX_FUNC10);
+}
+#endif
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     /* TODO: Config the irqs here. */
 
-    GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(1, 0)),   /* sentinel */
+    GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(0, 0)),   /* sentinel */
 };
 
 static struct GIC_IRQ_AMP_CTRL irqConfig = {
-    .cpuAff = CPU_GET_AFFINITY(1, 0),
+    .cpuAff = CPU_GET_AFFINITY(0, 0),
     .defPrio = 0xd0,
-    .defRouteAff = CPU_GET_AFFINITY(1, 0),
+    .defRouteAff = CPU_GET_AFFINITY(0, 0),
     .irqsCfg = &irqsConfig[0],
 };
 
 /********************* Private Variable Definition ***************************/
 
+/* TODO: By default, UART2 is used for master core, and UART5 is used for remote core */
+#ifdef TEST_USE_UART5M0
+static struct UART_REG *pUart = UART5;
+#else
 static struct UART_REG *pUart = UART2;
+#endif
 
 /********************* Private Function Definition ***************************/
 
@@ -102,7 +120,12 @@ void main(void)
     HAL_GIC_Init(&irqConfig);
 #endif
 
+#ifdef TEST_USE_UART5M0
+    HAL_IOMUX_Uart5M0Config();
+    HAL_UART_Init(&g_uart5Dev, &hal_uart_config);
+#else
     HAL_UART_Init(&g_uart2Dev, &hal_uart_config);
+#endif
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
 
@@ -120,9 +143,10 @@ void main(void)
 #endif
 
     while (1) {
-        ;
-        asm volatile ("wfi");
-        ;
+        /* TODO: Message loop */
+
+        /* Enter cpu idle when no message */
+        HAL_CPU_EnterIdle();
     }
 }
 
