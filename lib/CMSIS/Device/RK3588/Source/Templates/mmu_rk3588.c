@@ -8,6 +8,8 @@
 static uint32_t Sect_Normal;        // outer & inner wb/wa, non-shareable, executable, rw, domain 0
 static uint32_t Sect_Normal_SH;     // as Sect_Normal, but shareable
 static uint32_t Sect_Device_RW;     // as Sect_Device_RO, but writeable
+static uint32_t Sect_Normal_NC;     // Outer & inner non-cacheable, non-shareable, executable, rw, domain 0
+static uint32_t Sect_Normal_NC_SH;  // as Sect_Normal_NC, but shareable
 
 extern uint32_t MMUTable[];
 void MMU_CreateTranslationTable(void)
@@ -27,6 +29,10 @@ void MMU_CreateTranslationTable(void)
     MMU_GetSectionDescriptor(&Sect_Normal_SH, region);
     // Create descriptors for peripherals
     section_device_rw(Sect_Device_RW, region);
+    // Create descriptors for Uncache Memory
+    section_normal_nc(Sect_Normal_NC, region);
+    region.sh_t = SHARED;
+    MMU_GetSectionDescriptor(&Sect_Normal_NC_SH, region);
 
     /*
      *  Define MMU flat-map regions and attributes
@@ -35,6 +41,10 @@ void MMU_CreateTranslationTable(void)
     // Define dram address space
     MMU_TTSection(MMUTable, FIRMWARE_BASE, DRAM_SIZE >> 20, Sect_Normal);
     MMU_TTSection(MMUTable, SHMEM_BASE, SHMEM_SIZE >> 20, Sect_Normal_SH);
+//    MMU_TTSection(MMUTable, SHMEM_BASE, SHMEM_SIZE >> 20, Sect_Normal_NC_SH);
+#ifdef LINUX_RPMSG_BASE
+    MMU_TTSection(MMUTable, LINUX_RPMSG_BASE, LINUX_RPMSG_SIZE >> 20, Sect_Normal_NC_SH);
+#endif
 
     //--------------------- PERIPHERALS -------------------
     MMU_TTSection(MMUTable, 0xF0000000, 240U, Sect_Device_RW);
