@@ -5,21 +5,8 @@
 
 #include "hal_base.h"
 
-uint32_t SystemCoreClock = 300000000;
-
-extern uint32_t __BSS_START__[];
-extern uint32_t __BSS_END__[];
-
-static void BssInit(void)
-{
-    uint32_t *p = __BSS_START__;
-    int size;
-
-    size = (__BSS_END__ - __BSS_START__ + 1) * 4;
-
-    memset(p, 0x0, size);
-    HAL_DCACHE_CleanByRange((uint32_t)p, size);
-}
+#ifdef HAL_AP_CORE
+uint32_t SystemCoreClock = 816000000;
 
 /*----------------------------------------------------------------------------
   System Core Clock update function
@@ -28,29 +15,67 @@ void SystemCoreClockUpdate(void)
 {
 }
 
-/*----------------------------------------------------------------------------
-  System initialization function
- *----------------------------------------------------------------------------*/
 void SystemInit(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) || defined(HAL_DCACHE_MODULE_ENABLED)
-    uint32_t status;
+    /* do not use global variables because this function is called before
+     * reaching pre-main. RW section may be overwritten afterwards.
+     */
+    // Invalidate entire Unified TLB
+  __set_TLBIALL(0);
 
-    /* set the mcu uncache area, usually set the devices address */
-    COREGRF->CACHE_PERI_ADDR_START = 0xff000;
-    COREGRF->CACHE_PERI_ADDR_END = 0xffc00;
-    /* stb enable, stb_entry=7, stb_timeout enable, write back */
-    DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK |
-                          (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT) |
-                          DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK;
-    DCACHE->STB_TIMEOUT_CTRL = 1;
+  // Invalidate entire branch predictor array
+  __set_BPIALL(0);
+  __DSB();
+  __ISB();
 
-    do {
-        status =
-            DCACHE->CACHE_STATUS & DCACHE_CACHE_STATUS_CACHE_INIT_FINISH_MASK;
-    } while (status == 0);
+  //  Invalidate instruction cache and flush branch target cache
+  __set_ICIALLU(0);
+  __DSB();
+  __ISB();
 
-    DCACHE->CACHE_CTRL &= ~DCACHE_CACHE_CTRL_CACHE_BYPASS_MASK;
+  //  Invalidate data cache
+  L1C_InvalidateDCacheAll();
+
+#if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
+  // Enable FPU
+  __FPU_Enable();
 #endif
-    BssInit();
+
+  // Create Translation Table
+  MMU_CreateTranslationTable();
+
+  // Enable MMU
+  MMU_Enable();
+
+  // Enable Caches
+  L1C_EnableCaches();
+  L1C_EnableBTAC();
+
+#if (__L2C_PRESENT == 1) 
+  // Enable GIC
+  L2C_Enable();
+#endif
+
+  // IRQ Initialize
 }
+
+void DataInit(void)
+{
+    typedef struct {
+        uint32_t* dest;
+        uint32_t  wlen;
+    } __zero_table_t;
+
+    extern const __zero_table_t __zero_table_start__;
+    extern const __zero_table_t __zero_table_end__;
+
+    for (__zero_table_t const *pTable = &__zero_table_start__; pTable < &__zero_table_end__; ++pTable) {
+        for (unsigned long i = 0u; i < pTable->wlen; ++i) {
+            pTable->dest[i] = 0u;
+        }
+    }
+
+
+}
+
+#endif  /* End of HAL_AP_CORE */

@@ -120,6 +120,11 @@ typedef enum
   SGI14_IRQn             = 14,
   SGI15_IRQn             = 15,
 
+  CNTHP_IRQn             = 26,
+  CNTV_IRQn              = 27,
+  CNTPS_IRQn             = 29,
+  CNTPNS_IRQn            = 30,
+
 /******  Cortex-A7 Processor Exceptions Numbers ****************************************/
   SecurePhyTimer_IRQn    = 29,      /*!< Physical Timer Interrupt    */
   NoSecurePhyTimer_IRQn  = 30,    /*!< Physical Timer Interrupt    */
@@ -183,9 +188,16 @@ typedef enum
 #error "Please define HAL_AP_CORE or HAL_MCU_CORE on hal_conf.h"
 #endif
 
+/* GIC Base */
+#define GIC_DISTRIBUTOR_BASE       (0xFF1F1000)
+#define GIC_CPU_INTERFACE_BASE     (0xFF1F2000)
+
 #ifdef HAL_AP_CORE
-#define __CORTEX_A            7U          /* Cortex-A7 Core                  */
-#define __FPU_PRESENT         1U          /* FPU present                     */
+#define __CA_REV        0x0005U    /* Core revision r0p5                            */
+#define __CORTEX_A           7U    /* Cortex-A7 Core                                */
+#define __FPU_PRESENT        1U    /* FPU present                                   */
+#define __TIM_PRESENT        1U    /* TIM present                                   */
+#define __L2C_PRESENT        0U    /* L2C present                                   */
 #else
 #define __RISC_V
 #endif
@@ -200,6 +212,11 @@ typedef enum
 #include "rv1106.h"
 
 /*****************************************CACHE*****************************************/
+#ifdef HAL_AP_CORE
+/* CACHE LINE SIZE */
+#define CACHE_LINE_SHIFT (6U)
+#define CACHE_LINE_SIZE  (0x1U << CACHE_LINE_SHIFT)
+#else
 /* CACHE LINE SIZE */
 #define CACHE_LINE_SHIFT                (5U)
 #define CACHE_LINE_SIZE                 (0x1U << CACHE_LINE_SHIFT)
@@ -209,6 +226,7 @@ typedef enum
 #define CACHE_M_CLEAN_INVALID           0x4U
 #define CACHE_M_INVALID_ALL             0x6U
 #define CACHE_REVISION                  (0x00000100U)
+#endif
 /****************************************MBOX********************************************/
 #define MBOX_CNT             1
 #define MBOX_CHAN_CNT        4
