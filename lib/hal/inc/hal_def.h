@@ -21,7 +21,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "cmsis_compiler.h"
 #include "soc.h"
 #include "hal_list.h"
 
