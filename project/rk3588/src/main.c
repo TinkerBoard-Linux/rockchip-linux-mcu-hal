@@ -25,9 +25,11 @@ static void HAL_IOMUX_Uart5M0Config(void)
 #endif
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
-    /* TODO: Config the irqs here. */
-
-    GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(0, 0)),   /* sentinel */
+/* TODO: Config the irqs here.
+ * GIC version: GICv3
+ * Default: CPU0
+ */
+    GIC_AMP_IRQ_CFG(0, 0),   /* sentinel */
 };
 
 static struct GIC_IRQ_AMP_CTRL irqConfig = {
