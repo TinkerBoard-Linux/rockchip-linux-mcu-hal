@@ -1142,27 +1142,28 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
 /**
  * @brief  VOP MCU mode init.
  * @param  pReg: VOP reg base.
+ * @param  pMcuTiming: VOP mcu timing info.
  * @return HAL_Status.
  */
-HAL_Status HAL_VOP_McuModeInit(struct VOP_REG *pReg)
+HAL_Status HAL_VOP_McuModeInit(struct VOP_REG *pReg, struct VOP_MCU_TIMING *pMcuTiming)
 {
     VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_TYPE_SHIFT,
                   VOP_MCU_MCU_TYPE_MASK, 1);
 
     VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_PIX_TOTAL_SHIFT,
-                  VOP_MCU_MCU_PIX_TOTAL_MASK, MCU_TOTAL);
+                  VOP_MCU_MCU_PIX_TOTAL_MASK, pMcuTiming->mcuPixelTotal);
 
     VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CS_PST_SHIFT,
-                  VOP_MCU_MCU_CS_PST_MASK, MCU_CS_STR);
+                  VOP_MCU_MCU_CS_PST_MASK, pMcuTiming->mcuCsPst);
 
     VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CS_PEND_SHIFT,
-                  VOP_MCU_MCU_CS_PEND_MASK, MCU_CS_END);
+                  VOP_MCU_MCU_CS_PEND_MASK, pMcuTiming->mcuCsPend);
 
     VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RW_PST_SHIFT,
-                  VOP_MCU_MCU_RW_PST_MASK, MCU_WR_STR);
+                  VOP_MCU_MCU_RW_PST_MASK, pMcuTiming->mcuRwPst);
 
     VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_RW_PEND_SHIFT,
-                  VOP_MCU_MCU_RW_PEND_MASK, MCU_WR_END);
+                  VOP_MCU_MCU_RW_PEND_MASK, pMcuTiming->mcuRwPend);
 
     VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_CLK_SEL_SHIFT,
                   VOP_MCU_MCU_CLK_SEL_MASK, 0);

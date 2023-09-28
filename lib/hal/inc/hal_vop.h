@@ -177,6 +177,15 @@ struct VOP_POST_CLIP_INFO {
     uint8_t postYThres;
 };
 
+struct VOP_MCU_TIMING {
+    uint16_t mcuPixelTotal;
+    uint16_t mcuCsPst;
+    uint16_t mcuCsPend;
+    uint16_t mcuRwPst;
+    uint16_t mcuRwPend;
+    uint16_t mcuHoldMode;
+};
+
 /** @} */
 /***************************** Function Declare ******************************/
 /** @defgroup VOP_Public_Function_Declare Public Function Declare
@@ -223,7 +232,7 @@ HAL_Status HAL_VOP_ModeInit(struct VOP_REG *pReg,
                             struct VOP_POST_SCALE_INFO *pPostScaleInfo);
 HAL_Status HAL_VOP_DscInit(struct VOP_REG *pReg,
                            struct DISPLAY_MODE_INFO *pModeInfo);
-HAL_Status HAL_VOP_McuModeInit(struct VOP_REG *pReg);
+HAL_Status HAL_VOP_McuModeInit(struct VOP_REG *pReg, struct VOP_MCU_TIMING *pMcuTiming);
 HAL_Status HAL_VOP_MipiSwitch(struct VOP_REG *pReg, eVOP_MipiSwitchPath path);
 HAL_Status HAL_VOP_PostScaleInit(struct VOP_REG *pReg,
                                  struct DISPLAY_MODE_INFO *pModeInfo,
