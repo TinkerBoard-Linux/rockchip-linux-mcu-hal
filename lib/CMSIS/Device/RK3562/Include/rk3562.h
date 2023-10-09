@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
 #ifndef __RK3562_H
@@ -729,6 +729,10 @@ struct DMA_REG {
          uint32_t RESERVED0E18[26];                   /* Address Offset: 0x0E18 */
     __IO uint32_t WD;                                 /* Address Offset: 0x0E80 */
 };
+/* SPINLOCK Register Structure Define */
+struct SPINLOCK_REG {
+    __IO uint32_t STATUS[64];                         /* Address Offset: 0x0000 */
+};
 /* DCACHE Register Structure Define */
 struct DCACHE_REG {
     __IO uint32_t CACHE_CTRL;                         /* Address Offset: 0x0000 */
@@ -863,6 +867,7 @@ struct INTMUX_REG {
 #define SARADC0_BASE                   0xFF730000U /* SARADC0 base address */
 #define FSPI_BASE                      0xFF860000U /* FSPI base address */
 #define DMA_BASE                       0xFF990000U /* DMA base address */
+#define SPINLOCK_BASE                  0xFF9E0000U /* SPINLOCK base address */
 #define DCACHE_BASE                    0xFF9F0000U /* DCACHE base address */
 #define ICACHE_BASE                    0xFF9F0000U /* ICACHE base address */
 #define I2C1_BASE                      0xFFA00000U /* I2C1 base address */
@@ -929,6 +934,7 @@ struct INTMUX_REG {
 #define SARADC0             ((struct SARADC_REG *) SARADC0_BASE)
 #define FSPI                ((struct FSPI_REG *) FSPI_BASE)
 #define DMA                 ((struct DMA_REG *) DMA_BASE)
+#define SPINLOCK            ((struct SPINLOCK_REG *) SPINLOCK_BASE)
 #define DCACHE              ((struct DCACHE_REG *) DCACHE_BASE)
 #define ICACHE              ((struct ICACHE_REG *) ICACHE_BASE)
 #define I2C1                ((struct I2C_REG *) I2C1_BASE)
@@ -964,6 +970,7 @@ struct INTMUX_REG {
 #define IS_PERICRU_INSTANCE(instance) ((instance) == PERICRU)
 #define IS_FSPI_INSTANCE(instance) ((instance) == FSPI)
 #define IS_DMA_INSTANCE(instance) ((instance) == DMA)
+#define IS_SPINLOCK_INSTANCE(instance) ((instance) == SPINLOCK)
 #define IS_DCACHE_INSTANCE(instance) ((instance) == DCACHE)
 #define IS_ICACHE_INSTANCE(instance) ((instance) == ICACHE)
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
@@ -8882,6 +8889,263 @@ struct INTMUX_REG {
 #define DMA_WD_OFFSET                                      (0xE80U)
 #define DMA_WD_FIELD0000_SHIFT                             (0U)
 #define DMA_WD_FIELD0000_MASK                              (0x1U << DMA_WD_FIELD0000_SHIFT)                             /* 0x00000001 */
+/****************************************SPINLOCK****************************************/
+/* STATUS_0 */
+#define SPINLOCK_STATUS_0_OFFSET                           (0x0U)
+#define SPINLOCK_STATUS_0_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_0_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_0_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_1 */
+#define SPINLOCK_STATUS_1_OFFSET                           (0x4U)
+#define SPINLOCK_STATUS_1_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_1_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_1_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_2 */
+#define SPINLOCK_STATUS_2_OFFSET                           (0x8U)
+#define SPINLOCK_STATUS_2_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_2_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_2_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_3 */
+#define SPINLOCK_STATUS_3_OFFSET                           (0xCU)
+#define SPINLOCK_STATUS_3_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_3_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_3_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_4 */
+#define SPINLOCK_STATUS_4_OFFSET                           (0x10U)
+#define SPINLOCK_STATUS_4_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_4_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_4_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_5 */
+#define SPINLOCK_STATUS_5_OFFSET                           (0x14U)
+#define SPINLOCK_STATUS_5_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_5_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_5_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_6 */
+#define SPINLOCK_STATUS_6_OFFSET                           (0x18U)
+#define SPINLOCK_STATUS_6_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_6_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_6_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_7 */
+#define SPINLOCK_STATUS_7_OFFSET                           (0x1CU)
+#define SPINLOCK_STATUS_7_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_7_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_7_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_8 */
+#define SPINLOCK_STATUS_8_OFFSET                           (0x20U)
+#define SPINLOCK_STATUS_8_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_8_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_8_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_9 */
+#define SPINLOCK_STATUS_9_OFFSET                           (0x24U)
+#define SPINLOCK_STATUS_9_SPINLOCK_STATUS_SHIFT            (0U)
+#define SPINLOCK_STATUS_9_SPINLOCK_STATUS_MASK             (0xFU << SPINLOCK_STATUS_9_SPINLOCK_STATUS_SHIFT)            /* 0x0000000F */
+/* STATUS_10 */
+#define SPINLOCK_STATUS_10_OFFSET                          (0x28U)
+#define SPINLOCK_STATUS_10_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_10_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_10_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_11 */
+#define SPINLOCK_STATUS_11_OFFSET                          (0x2CU)
+#define SPINLOCK_STATUS_11_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_11_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_11_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_12 */
+#define SPINLOCK_STATUS_12_OFFSET                          (0x30U)
+#define SPINLOCK_STATUS_12_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_12_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_12_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_13 */
+#define SPINLOCK_STATUS_13_OFFSET                          (0x34U)
+#define SPINLOCK_STATUS_13_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_13_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_13_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_14 */
+#define SPINLOCK_STATUS_14_OFFSET                          (0x38U)
+#define SPINLOCK_STATUS_14_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_14_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_14_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_15 */
+#define SPINLOCK_STATUS_15_OFFSET                          (0x3CU)
+#define SPINLOCK_STATUS_15_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_15_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_15_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_16 */
+#define SPINLOCK_STATUS_16_OFFSET                          (0x40U)
+#define SPINLOCK_STATUS_16_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_16_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_16_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_17 */
+#define SPINLOCK_STATUS_17_OFFSET                          (0x44U)
+#define SPINLOCK_STATUS_17_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_17_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_17_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_18 */
+#define SPINLOCK_STATUS_18_OFFSET                          (0x48U)
+#define SPINLOCK_STATUS_18_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_18_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_18_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_19 */
+#define SPINLOCK_STATUS_19_OFFSET                          (0x4CU)
+#define SPINLOCK_STATUS_19_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_19_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_19_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_20 */
+#define SPINLOCK_STATUS_20_OFFSET                          (0x50U)
+#define SPINLOCK_STATUS_20_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_20_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_20_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_21 */
+#define SPINLOCK_STATUS_21_OFFSET                          (0x54U)
+#define SPINLOCK_STATUS_21_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_21_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_21_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_22 */
+#define SPINLOCK_STATUS_22_OFFSET                          (0x58U)
+#define SPINLOCK_STATUS_22_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_22_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_22_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_23 */
+#define SPINLOCK_STATUS_23_OFFSET                          (0x5CU)
+#define SPINLOCK_STATUS_23_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_23_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_23_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_24 */
+#define SPINLOCK_STATUS_24_OFFSET                          (0x60U)
+#define SPINLOCK_STATUS_24_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_24_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_24_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_25 */
+#define SPINLOCK_STATUS_25_OFFSET                          (0x64U)
+#define SPINLOCK_STATUS_25_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_25_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_25_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_26 */
+#define SPINLOCK_STATUS_26_OFFSET                          (0x68U)
+#define SPINLOCK_STATUS_26_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_26_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_26_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_27 */
+#define SPINLOCK_STATUS_27_OFFSET                          (0x6CU)
+#define SPINLOCK_STATUS_27_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_27_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_27_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_28 */
+#define SPINLOCK_STATUS_28_OFFSET                          (0x70U)
+#define SPINLOCK_STATUS_28_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_28_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_28_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_29 */
+#define SPINLOCK_STATUS_29_OFFSET                          (0x74U)
+#define SPINLOCK_STATUS_29_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_29_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_29_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_30 */
+#define SPINLOCK_STATUS_30_OFFSET                          (0x78U)
+#define SPINLOCK_STATUS_30_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_30_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_30_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_31 */
+#define SPINLOCK_STATUS_31_OFFSET                          (0x7CU)
+#define SPINLOCK_STATUS_31_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_31_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_31_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_32 */
+#define SPINLOCK_STATUS_32_OFFSET                          (0x80U)
+#define SPINLOCK_STATUS_32_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_32_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_32_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_33 */
+#define SPINLOCK_STATUS_33_OFFSET                          (0x84U)
+#define SPINLOCK_STATUS_33_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_33_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_33_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_34 */
+#define SPINLOCK_STATUS_34_OFFSET                          (0x88U)
+#define SPINLOCK_STATUS_34_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_34_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_34_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_35 */
+#define SPINLOCK_STATUS_35_OFFSET                          (0x8CU)
+#define SPINLOCK_STATUS_35_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_35_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_35_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_36 */
+#define SPINLOCK_STATUS_36_OFFSET                          (0x90U)
+#define SPINLOCK_STATUS_36_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_36_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_36_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_37 */
+#define SPINLOCK_STATUS_37_OFFSET                          (0x94U)
+#define SPINLOCK_STATUS_37_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_37_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_37_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_38 */
+#define SPINLOCK_STATUS_38_OFFSET                          (0x98U)
+#define SPINLOCK_STATUS_38_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_38_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_38_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_39 */
+#define SPINLOCK_STATUS_39_OFFSET                          (0x9CU)
+#define SPINLOCK_STATUS_39_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_39_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_39_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_40 */
+#define SPINLOCK_STATUS_40_OFFSET                          (0xA0U)
+#define SPINLOCK_STATUS_40_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_40_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_40_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_41 */
+#define SPINLOCK_STATUS_41_OFFSET                          (0xA4U)
+#define SPINLOCK_STATUS_41_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_41_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_41_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_42 */
+#define SPINLOCK_STATUS_42_OFFSET                          (0xA8U)
+#define SPINLOCK_STATUS_42_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_42_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_42_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_43 */
+#define SPINLOCK_STATUS_43_OFFSET                          (0xACU)
+#define SPINLOCK_STATUS_43_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_43_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_43_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_44 */
+#define SPINLOCK_STATUS_44_OFFSET                          (0xB0U)
+#define SPINLOCK_STATUS_44_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_44_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_44_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_45 */
+#define SPINLOCK_STATUS_45_OFFSET                          (0xB4U)
+#define SPINLOCK_STATUS_45_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_45_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_45_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_46 */
+#define SPINLOCK_STATUS_46_OFFSET                          (0xB8U)
+#define SPINLOCK_STATUS_46_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_46_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_46_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_47 */
+#define SPINLOCK_STATUS_47_OFFSET                          (0xBCU)
+#define SPINLOCK_STATUS_47_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_47_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_47_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_48 */
+#define SPINLOCK_STATUS_48_OFFSET                          (0xC0U)
+#define SPINLOCK_STATUS_48_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_48_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_48_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_49 */
+#define SPINLOCK_STATUS_49_OFFSET                          (0xC4U)
+#define SPINLOCK_STATUS_49_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_49_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_49_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_50 */
+#define SPINLOCK_STATUS_50_OFFSET                          (0xC8U)
+#define SPINLOCK_STATUS_50_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_50_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_50_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_51 */
+#define SPINLOCK_STATUS_51_OFFSET                          (0xCCU)
+#define SPINLOCK_STATUS_51_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_51_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_51_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_52 */
+#define SPINLOCK_STATUS_52_OFFSET                          (0xD0U)
+#define SPINLOCK_STATUS_52_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_52_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_52_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_53 */
+#define SPINLOCK_STATUS_53_OFFSET                          (0xD4U)
+#define SPINLOCK_STATUS_53_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_53_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_53_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_54 */
+#define SPINLOCK_STATUS_54_OFFSET                          (0xD8U)
+#define SPINLOCK_STATUS_54_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_54_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_54_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_55 */
+#define SPINLOCK_STATUS_55_OFFSET                          (0xDCU)
+#define SPINLOCK_STATUS_55_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_55_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_55_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_56 */
+#define SPINLOCK_STATUS_56_OFFSET                          (0xE0U)
+#define SPINLOCK_STATUS_56_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_56_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_56_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_57 */
+#define SPINLOCK_STATUS_57_OFFSET                          (0xE4U)
+#define SPINLOCK_STATUS_57_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_57_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_57_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_58 */
+#define SPINLOCK_STATUS_58_OFFSET                          (0xE8U)
+#define SPINLOCK_STATUS_58_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_58_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_58_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_59 */
+#define SPINLOCK_STATUS_59_OFFSET                          (0xECU)
+#define SPINLOCK_STATUS_59_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_59_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_59_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_60 */
+#define SPINLOCK_STATUS_60_OFFSET                          (0xF0U)
+#define SPINLOCK_STATUS_60_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_60_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_60_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_61 */
+#define SPINLOCK_STATUS_61_OFFSET                          (0xF4U)
+#define SPINLOCK_STATUS_61_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_61_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_61_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_62 */
+#define SPINLOCK_STATUS_62_OFFSET                          (0xF8U)
+#define SPINLOCK_STATUS_62_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_62_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_62_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
+/* STATUS_63 */
+#define SPINLOCK_STATUS_63_OFFSET                          (0xFCU)
+#define SPINLOCK_STATUS_63_SPINLOCK_STATUS_SHIFT           (0U)
+#define SPINLOCK_STATUS_63_SPINLOCK_STATUS_MASK            (0xFU << SPINLOCK_STATUS_63_SPINLOCK_STATUS_SHIFT)           /* 0x0000000F */
 /*****************************************DCACHE*****************************************/
 /* CACHE_CTRL */
 #define DCACHE_CACHE_CTRL_OFFSET                           (0x0U)
