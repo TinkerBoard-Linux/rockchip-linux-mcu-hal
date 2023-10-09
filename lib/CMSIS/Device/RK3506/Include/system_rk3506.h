@@ -12,8 +12,23 @@ extern "C" {
 
 extern uint32_t SystemCoreClock; /*!< System Clock Frequency (Core Clock) */
 
-extern void SystemCoreClockUpdate(void);
-extern void SystemInit(void);
+/**
+  \brief Setup the system.
+
+   Initialize the System and update the SystemCoreClock variable.
+ */
+extern void SystemInit (void);
+
+/**
+  \brief  Update SystemCoreClock variable.
+
+   Updates the SystemCoreClock with current core Clock retrieved from cpu registers.
+ */
+extern void SystemCoreClockUpdate (void);
+
+extern void DataInit (void);
+
+extern void MMU_CreateTranslationTable(void);
 
 #ifdef __cplusplus
 }

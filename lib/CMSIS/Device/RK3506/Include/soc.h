@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2022 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
 #ifndef __SOC_H
@@ -8,6 +8,8 @@
 #ifdef __cplusplus
   extern "C" {
 #endif
+
+#include "hal_conf.h"
 
 /* IO definitions (access restrictions to peripheral registers) */
 #ifdef __cplusplus
@@ -181,7 +183,149 @@ typedef enum {
 } IRQn_Type;
 
 #else
-#error missing IRQn_Type define for interrupt
+typedef enum
+{
+  CNTHP_IRQn                =  26,     /*!< CNTHP Interrupt               */
+  CNTV_IRQn                 =  27,
+  CNTPS_IRQn                =  29,
+  CNTPNS_IRQn               =  30,
+  
+  GPIO0_0_IRQn              =  32,
+  GPIO0_1_IRQn              =  33,
+  GPIO0_2_IRQn              =  34,
+  GPIO0_3_IRQn              =  35,
+  GPIO1_0_IRQn              =  36,
+  GPIO1_1_IRQn              =  37,
+  GPIO1_2_IRQn              =  38,
+  GPIO1_3_IRQn              =  39,
+  GPIO2_0_IRQn              =  40,
+  GPIO2_1_IRQn              =  41,
+  GPIO2_2_IRQn              =  42,
+  GPIO2_3_IRQn              =  43,
+  GPIO3_0_IRQn              =  44,
+  GPIO3_1_IRQn              =  45,
+  GPIO3_2_IRQn              =  46,
+  GPIO3_3_IRQn              =  47,
+  GPIO4_0_IRQn              =  48,
+  GPIO4_1_IRQn              =  49,
+  GPIO4_2_IRQn              =  50,
+  GPIO4_3_IRQn              =  51,
+  TOUCH_KEY_POS_IRQn        =  52,
+  TOUCH_KEY_NEG_IRQn        =  53,
+  PWM0_IRQn                 =  54,
+  PWM1_IRQn                 =  55,
+  PWM2_IRQn                 =  56,
+  PWM3_IRQn                 =  57,
+  PWM4_IRQn                 =  58,
+  PWM5_IRQn                 =  59,
+  PWM6_IRQn                 =  60,
+  PWM7_IRQn                 =  61,
+  PWM8_IRQn                 =  62,
+  PWM9_IRQn                 =  63,
+  PWM10_IRQn                =  64,
+  PWM11_IRQn                =  65,
+  UART0_IRQn                =  66,
+  UART1_IRQn                =  67,
+  UART2_IRQn                =  68,
+  UART3_IRQn                =  69,
+  UART4_IRQn                =  70,
+  UART5_IRQn                =  71,
+  I2C0_IRQn                 =  72,
+  I2C1_IRQn                 =  73,
+  I2C2_IRQn                 =  74,
+  SPI0_IRQn                 =  75,
+  SPI1_IRQn                 =  76,
+  CAN0_IRQn                 =  77,
+  CAN1_IRQn                 =  78,
+  SPDIF_TX_IRQn             =  79,
+  SPDIF_RX_IRQn             =  80,
+  PDM_IRQn                  =  81,
+  SAI0_IRQn                 =  82,
+  SAI1_IRQn                 =  83,
+  SAI2_IRQn                 =  84,
+  SAI3_IRQn                 =  85,
+  SAI4_IRQn                 =  86,
+  ASRC0_IRQn                =  87,
+  ASRC1_IRQn                =  88,
+  SARADC_IRQn               =  89,
+  TSADC_IRQn                =  90,
+  VOP_IRQn                  =  91,
+  MIPI_DSIHOST_IRQn         =  92,
+  RGA_IRQn                  =  93,
+  OTPC_NS_IRQn              =  94,
+  OTPC_S_IRQn               =  95,
+  KEY_READER_IRQn           =  96,
+  OTPC_MASK_IRQn            =  97,
+  MAC0_SBD_IRQn             =  98,
+  MAC0_SBD_TX_IRQn          =  99,
+  MAC0_SBD_RX_IRQn          =  100,
+  MAC0_PMT_IRQn             =  101,
+  MAC1_SBD_IRQn             =  102,
+  MAC1_SBD_TX_IRQn          =  103,
+  MAC1_SBD_RX_IRQn          =  104,
+  MAC1_PMT_IRQn             =  105,
+  OTG0_IRQn                 =  106,
+  OTG0_BVALID_IRQn          =  107,
+  OTG0_ID_IRQn              =  108,
+  OTG0_LINESTATE_IRQn       =  109,
+  OTG0_DISCONNECT_IRQn      =  110,
+  OTG1_IRQn                 =  111,
+  OTG1_BVALID_IRQn          =  112,
+  OTG1_ID_IRQn              =  113,
+  OTG1_LINESTATE_IRQn       =  114,
+  OTG1_DISCONNECT_IRQn      =  115,
+  SPI2APB_IRQn              =  116,
+  FSPI_IRQn                 =  117,
+  SDMMC_IRQn                =  118,
+  DDRC_AWPOISON0_IRQn       =  119,
+  DDRC_AWPOISON1_IRQn       =  120,
+  DDRC_ARPOISON0_IRQn       =  121,
+  DDRC_ARPOISON1_IRQn       =  122,
+  DDRC_DFI_ALERT_ERR_IRQn   =  123,
+  DDR_MONITOR_IRQn          =  124,
+  DDRPHY_IRQn               =  125,
+  TIMER0_IRQn               =  126,
+  TIMER1_IRQn               =  127,
+  TIMER2_IRQn               =  128,
+  TIMER3_IRQn               =  129,
+  TIMER4_IRQn               =  130,
+  TIMER5_IRQn               =  131,
+  TIMER6_IRQn               =  132,
+  TIMER7_IRQn               =  133,
+  TIMER8_IRQn               =  134,
+  TIMER9_IRQn               =  135,
+  TIMER10_IRQn              =  136,
+  TIMER11_IRQn              =  137,
+  HPTIMER_IRQn              =  138,
+  WDT0_IRQn                 =  139,
+  WDT1_IRQn                 =  140,
+  MAILBOX_BB_IRQn           =  141,
+  MAILBOX_AP_IRQn           =  142,
+  CRYPTO_IRQn               =  143,
+  CRYPTO_KLAD_IRQn          =  144,
+  CRYPTO_SC_IRQn            =  145,
+  NS_TRNG_IRQn              =  146,
+  S_TRNG_IRQn               =  147,
+  DMAC0_IRQn                =  148,
+  DMAC0_ABORT_IRQn          =  149,
+  DMAC1_IRQn                =  150,
+  DMAC1_ABORT_IRQn          =  151,
+  PERF_CORE_IRQn            =  152,
+  A7_PMUIRQ_0_IRQn          =  153,
+  A7_PMUIRQ_1_IRQn          =  154,
+  A7_PMUIRQ_2_IRQn          =  155,
+  A7_PMUIRQ_3_IRQn          =  156,
+  A7_AXIERRIRQ_IRQn         =  157,
+  DSMC_IRQn                 =  158,
+  FLEXBUS_IRQn              =  159,
+  PMU_IRQn                  =  160,
+  NPOR_POWERGOOD_IRQn       =  161,
+  GPIO1_SHADOW_0_IRQn       =  162,
+  GPIO1_SHADOW_1_IRQn       =  163,
+  GPIO1_SHADOW_2_IRQn       =  164,
+  GPIO1_SHADOW_3_IRQn       =  165,
+  NUM_INTERRUPTS            =  166,      /*!< Number of internal IRQ        */
+} IRQn_Type;
 #endif
 
 #if defined(RKMCU_RK3506_BUS)
@@ -207,7 +351,17 @@ typedef enum {
 #error "Please define HAL_AP_CORE or HAL_MCU_CORE on hal_conf.h"
 #endif
 
-#ifdef HAL_MCU_CORE
+/* GIC Base */
+#define GIC_DISTRIBUTOR_BASE       (0xFF581000)
+#define GIC_CPU_INTERFACE_BASE     (0xFF582000)
+
+#ifdef HAL_AP_CORE
+#define __CA_REV                  0x0005U    /* Core revision r0p5                            */
+#define __CORTEX_A                7U         /* Cortex-A7 Core                                */
+#define __FPU_PRESENT             1U         /* FPU present                                   */
+#define __TIM_PRESENT             1U         /* TIM present                                   */
+#define __L2C_PRESENT             0U         /* L2C present                                   */
+#else
 #define __CM0_REV                 0x0000U   /* Core revision r0p0 */
 #define __MPU_PRESENT             0U        /* no MPU present */
 #define __VTOR_PRESENT            0U        /* no VTOR present */
@@ -219,20 +373,22 @@ typedef enum {
 #endif
 
 #ifndef __ASSEMBLY__
-#ifdef HAL_MCU_CORE
+#include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
+#ifdef HAL_AP_CORE
+#include "core_ca.h"
+#else
 #include "core_cm0.h"
 #endif
 #include "system_rk3506.h"
 #endif /* __ASSEMBLY__ */
 #include "rk3506.h"
 
-/****************************************************************************************/
-/*                                                                                      */
-/*                               Register Bitmap Section                                */
-/*                                                                                      */
-/****************************************************************************************/
-#ifdef HAL_MCU_CORE
 /*****************************************CACHE*****************************************/
+#ifdef HAL_AP_CORE
+/* CACHE LINE SIZE */
+#define CACHE_LINE_SHIFT (6U)
+#define CACHE_LINE_SIZE  (0x1U << CACHE_LINE_SHIFT)
+#else
 /* CACHE LINE SIZE */
 #define CACHE_LINE_SHIFT                (5U)
 #define CACHE_LINE_SIZE                 (0x1U << CACHE_LINE_SHIFT)
@@ -263,58 +419,6 @@ typedef enum {
 typedef enum CLOCK_Name {
     /* TODO */
     CLK_INVALID = 0U,
-    PLL_APLL,
-    PLL_GPLL,
-    PLL_VPLL,
-    PLL_HPLL,
-    PLL_CPLL,
-    PLL_DPLL,
-
-    HCLK_BUS             = CLK64(HCLK_BUS_SEL, HCLK_BUS_DIV),
-
-    CLK_PMU0_I2C0        = CLK64(CLK_PMU0_I2C0_SEL, CLK_PMU0_I2C0_DIV),
-    CLK_I2C              = CLK64(CLK_I2C_SEL, 0U),
-
-    CLK_PMU1_SPI0        = CLK64(CLK_PMU1_SPI0_SEL, CLK_PMU1_SPI0_DIV),
-    CLK_SPI1             = CLK64(CLK_SPI1_SEL, 0U),
-    CLK_SPI2             = CLK64(CLK_SPI2_SEL, 0U),
-    SCLK_SFC             = CLK64(SCLK_SFC_SEL, SCLK_SFC_DIV),
-
-    CLK_PMU1_UART0_SRC   = CLK64(0U, CLK_PMU1_UART0_SRC_DIV),
-    CLK_PMU1_UART0_FRAC  = CLK64(0U, CLK_PMU1_UART0_FRAC_DIV),
-    CLK_PMU1_UART0       = CLK64(SCLK_PMU1_UART0_SEL, 0U),
-    CLK_UART1_SRC        = CLK64(CLK_UART1_SRC_SEL, CLK_UART1_SRC_DIV),
-    CLK_UART1_FRAC       = CLK64(0U, CLK_UART1_FRAC_DIV),
-    CLK_UART1            = CLK64(SCLK_UART1_SEL, 0U),
-    CLK_UART2_SRC        = CLK64(CLK_UART2_SRC_SEL, CLK_UART2_SRC_DIV),
-    CLK_UART2_FRAC       = CLK64(0U, CLK_UART2_FRAC_DIV),
-    CLK_UART2            = CLK64(SCLK_UART2_SEL, 0U),
-    CLK_UART3_SRC        = CLK64(CLK_UART3_SRC_SEL, CLK_UART3_SRC_DIV),
-    CLK_UART3_FRAC       = CLK64(0U, CLK_UART3_FRAC_DIV),
-    CLK_UART3            = CLK64(SCLK_UART3_SEL, 0U),
-    CLK_UART4_SRC        = CLK64(CLK_UART4_SRC_SEL, CLK_UART4_SRC_DIV),
-    CLK_UART4_FRAC       = CLK64(0U, CLK_UART4_FRAC_DIV),
-    CLK_UART4            = CLK64(SCLK_UART4_SEL, 0U),
-    CLK_UART5_SRC        = CLK64(CLK_UART5_SRC_SEL, CLK_UART5_SRC_DIV),
-    CLK_UART5_FRAC       = CLK64(0U, CLK_UART5_FRAC_DIV),
-    CLK_UART5            = CLK64(SCLK_UART5_SEL, 0U),
-    CLK_UART6_SRC        = CLK64(CLK_UART6_SRC_SEL, CLK_UART6_SRC_DIV),
-    CLK_UART6_FRAC       = CLK64(0U, CLK_UART6_FRAC_DIV),
-    CLK_UART6            = CLK64(SCLK_UART6_SEL, 0U),
-    CLK_UART7_SRC        = CLK64(CLK_UART7_SRC_SEL, CLK_UART7_SRC_DIV),
-    CLK_UART7_FRAC       = CLK64(0U, CLK_UART7_FRAC_DIV),
-    CLK_UART7            = CLK64(SCLK_UART7_SEL, 0U),
-    CLK_UART8_SRC        = CLK64(CLK_UART8_SRC_SEL, CLK_UART8_SRC_DIV),
-    CLK_UART8_FRAC       = CLK64(0U, CLK_UART8_FRAC_DIV),
-    CLK_UART8            = CLK64(SCLK_UART8_SEL, 0U),
-    CLK_UART9_SRC        = CLK64(CLK_UART9_SRC_SEL, CLK_UART9_SRC_DIV),
-    CLK_UART9_FRAC       = CLK64(0U, CLK_UART9_FRAC_DIV),
-    CLK_UART9            = CLK64(SCLK_UART9_SEL, 0U),
-
-    CLK_PMU1_PWM0        = CLK64(CLK_PMU1_PWM0_SEL, CLK_PMU1_PWM0_DIV),
-    CLK_PWM1_PERI        = CLK64(CLK_PWM1_PERI_SEL, 0U),
-    CLK_PWM2_PERI        = CLK64(CLK_PWM2_PERI_SEL, 0U),
-    CLK_PWM3_PERI        = CLK64(CLK_PWM3_PERI_SEL, 0U),
 } eCLOCK_Name;
 #endif /* __ASSEMBLY__ */
 
@@ -327,6 +431,12 @@ typedef enum CLOCK_Name {
 #undef GPIO_VER_ID
 #define GPIO_VER_ID             (0x01000C2BU)
 #endif
+#define GPIO0_IRQn              GPIO0_0_IRQn
+#define GPIO1_IRQn              GPIO1_0_IRQn
+#define GPIO2_IRQn              GPIO2_0_IRQn
+#define GPIO3_IRQn              GPIO3_0_IRQn
+#define GPIO4_IRQn              GPIO4_0_IRQn
+
 /****************************************FSPI********************************************/
 #define FSPI_CHIP_CNT                            (2)
 

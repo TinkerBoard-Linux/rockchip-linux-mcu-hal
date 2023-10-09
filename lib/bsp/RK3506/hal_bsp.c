@@ -19,7 +19,7 @@ const struct HAL_CRU_DEV g_cruDev = {
     .banks = cruBanks,
     .banksNum = HAL_ARRAY_SIZE(cruBanks),
 };
-#endif /* HAL_CRU_MODULE_ENABLED */
+#endif  /* End of HAL_CRU_MODULE_ENABLED */
 
 #ifdef HAL_I2C_MODULE_ENABLED
 const struct HAL_I2C_DEV g_i2c0Dev =
@@ -31,7 +31,6 @@ const struct HAL_I2C_DEV g_i2c0Dev =
     .pclkGateID = CLK_PMU0_I2C0_GATE,
 };
 
-#ifdef RKMCU_RK3506_BUS
 const struct HAL_I2C_DEV g_i2c1Dev =
 {
     .pReg = I2C1,
@@ -49,35 +48,7 @@ const struct HAL_I2C_DEV g_i2c2Dev =
     .clkGateID = CLK_I2C2_GATE,
     .pclkGateID = PCLK_I2C2_GATE,
 };
-
-const struct HAL_I2C_DEV g_i2c3Dev =
-{
-    .pReg = I2C3,
-    .irqNum = I2C3_IRQn,
-    .clkID = CLK_I2C,
-    .clkGateID = CLK_I2C3_GATE,
-    .pclkGateID = PCLK_I2C3_GATE,
-};
-
-const struct HAL_I2C_DEV g_i2c4Dev =
-{
-    .pReg = I2C4,
-    .irqNum = I2C4_IRQn,
-    .clkID = CLK_I2C,
-    .clkGateID = CLK_I2C4_GATE,
-    .pclkGateID = PCLK_I2C4_GATE,
-};
-
-const struct HAL_I2C_DEV g_i2c5Dev =
-{
-    .pReg = I2C5,
-    .irqNum = I2C5_IRQn,
-    .clkID = CLK_I2C,
-    .clkGateID = CLK_I2C5_GATE,
-    .pclkGateID = PCLK_I2C5_GATE,
-};
-#endif /* RKMCU_RK3506_BUS */
-#endif /* HAL_I2C_MODULE_ENABLED */
+#endif  /* End of HAL_I2C_MODULE_ENABLED */
 
 #ifdef HAL_SPI_MODULE_ENABLED
 const struct HAL_SPI_DEV g_spi0Dev = {
@@ -99,7 +70,6 @@ const struct HAL_SPI_DEV g_spi0Dev = {
     },
 };
 
-#ifdef RKMCU_RK3506_BUS
 const struct HAL_SPI_DEV g_spi1Dev = {
     .base = SPI1_BASE,
     .clkId = CLK_SPI1,
@@ -118,29 +88,7 @@ const struct HAL_SPI_DEV g_spi1Dev = {
         .addr = SPI1_BASE + 0x800,
     },
 };
-
-const struct HAL_SPI_DEV g_spi2Dev = {
-    .base = SPI2_BASE,
-    .clkId = CLK_SPI2,
-    .clkGateID = CLK_SPI2_GATE,
-    .pclkGateID = PCLK_SPI2_GATE,
-    .irqNum = SPI2_IRQn,
-    .isSlave = false,
-    .txDma = {
-        .channel = DMA_REQ_SPI2_RX,
-        .direction = DMA_MEM_TO_DEV,
-        .addr = SPI2_BASE + 0x400,
-    },
-    .rxDma = {
-        .channel = DMA_REQ_SPI2_TX,
-        .direction = DMA_DEV_TO_MEM,
-        .addr = SPI2_BASE + 0x800,
-    },
-};
-#endif /* RKMCU_RK3506_BUS */
-#endif /* HAL_SPI_MODULE_ENABLED */
-
-#ifdef RKMCU_RK3506_BUS
+#endif  /* End of HAL_SPI_MODULE_ENABLED */
 
 #ifdef HAL_FSPI_MODULE_ENABLED
 struct HAL_FSPI_HOST g_fspi0Dev =
@@ -158,15 +106,15 @@ struct HAL_FSPI_HOST g_fspi0Dev =
         .type = 0,
     },
 };
-#endif
+#endif  /* End of HAL_FSPI_MODULE_ENABLED */
 
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
     .pReg = UART0,
-    .sclkID = CLK_PMU1_UART0,
-    .sclkGateID = CLK_PMU1_UART0_GATE,
-    .pclkGateID = PCLK_PMU1_UART0_GATE,
+    .sclkID = 0,
+    .sclkGateID = 0,
+    .pclkGateID = 0,
     .irqNum = UART0_IRQn,
     .isAutoFlow = false,
 };
@@ -174,9 +122,9 @@ const struct HAL_UART_DEV g_uart0Dev =
 const struct HAL_UART_DEV g_uart1Dev =
 {
     .pReg = UART1,
-    .sclkID = CLK_UART1,
-    .sclkGateID = CLK_UART1_GATE,
-    .pclkGateID = PCLK_UART1_GATE,
+    .sclkID = 0,
+    .sclkGateID = 0,
+    .pclkGateID = 0,
     .irqNum = UART1_IRQn,
     .isAutoFlow = false,
 };
@@ -184,9 +132,9 @@ const struct HAL_UART_DEV g_uart1Dev =
 const struct HAL_UART_DEV g_uart2Dev =
 {
     .pReg = UART2,
-    .sclkID = CLK_UART2,
-    .sclkGateID = CLK_UART2_GATE,
-    .pclkGateID = PCLK_UART2_GATE,
+    .sclkID = 0,
+    .sclkGateID = 0,
+    .pclkGateID = 0,
     .irqNum = UART2_IRQn,
     .isAutoFlow = false,
 };
@@ -194,9 +142,9 @@ const struct HAL_UART_DEV g_uart2Dev =
 const struct HAL_UART_DEV g_uart3Dev =
 {
     .pReg = UART3,
-    .sclkID = CLK_UART3,
-    .sclkGateID = CLK_UART3_GATE,
-    .pclkGateID = PCLK_UART3_GATE,
+    .sclkID = 0,
+    .sclkGateID = 0,
+    .pclkGateID = 0,
     .irqNum = UART3_IRQn,
     .isAutoFlow = false,
 };
@@ -204,81 +152,13 @@ const struct HAL_UART_DEV g_uart3Dev =
 const struct HAL_UART_DEV g_uart4Dev =
 {
     .pReg = UART4,
-    .sclkID = CLK_UART4,
-    .sclkGateID = CLK_UART4_GATE,
-    .pclkGateID = PCLK_UART4_GATE,
+    .sclkID = 0,
+    .sclkGateID = 0,
+    .pclkGateID = 0,
     .irqNum = UART4_IRQn,
     .isAutoFlow = false,
 };
-
-const struct HAL_UART_DEV g_uart5Dev =
-{
-    .pReg = UART5,
-    .sclkID = CLK_UART5,
-    .sclkGateID = CLK_UART5_GATE,
-    .pclkGateID = PCLK_UART5_GATE,
-    .irqNum = UART5_IRQn,
-    .isAutoFlow = false,
-};
-
-const struct HAL_UART_DEV g_uart6Dev =
-{
-    .pReg = UART6,
-    .sclkID = CLK_UART6,
-    .sclkGateID = CLK_UART6_GATE,
-    .pclkGateID = PCLK_UART6_GATE,
-    .irqNum = UART6_IRQn,
-    .isAutoFlow = false,
-};
-
-const struct HAL_UART_DEV g_uart7Dev =
-{
-    .pReg = UART7,
-    .sclkID = CLK_UART7,
-    .sclkGateID = CLK_UART7_GATE,
-    .pclkGateID = PCLK_UART7_GATE,
-    .irqNum = UART7_IRQn,
-    .isAutoFlow = false,
-};
-
-const struct HAL_UART_DEV g_uart8Dev =
-{
-    .pReg = UART8,
-    .sclkID = CLK_UART8,
-    .sclkGateID = CLK_UART8_GATE,
-    .pclkGateID = PCLK_UART8_GATE,
-    .irqNum = UART8_IRQn,
-    .isAutoFlow = false,
-};
-
-const struct HAL_UART_DEV g_uart9Dev =
-{
-    .pReg = UART9,
-    .sclkID = CLK_UART9,
-    .sclkGateID = CLK_UART9_GATE,
-    .pclkGateID = PCLK_UART9_GATE,
-    .irqNum = UART9_IRQn,
-    .isAutoFlow = false,
-};
-#endif
-
-#endif /* RKMCU_RK3506_BUS */
-
-#ifdef RKMCU_RK3506_PMU
-
-#ifdef HAL_UART_MODULE_ENABLED
-const struct HAL_UART_DEV g_uart0Dev =
-{
-    .pReg = UART0,
-    .sclkID = CLK_PMU1_UART0,
-    .sclkGateID = CLK_PMU1_UART0_GATE,
-    .pclkGateID = PCLK_PMU1_UART0_GATE,
-    .irqNum = UART0_IRQn,
-    .isAutoFlow = false,
-};
-#endif
-
-#endif /* RKMCU_RK3506_PMU */
+#endif  /* End of HAL_UART_MODULE_ENABLED */
 
 #ifdef HAL_PWM_MODULE_ENABLED
 const struct HAL_PWM_DEV g_pwm0Dev =
@@ -316,7 +196,7 @@ const struct HAL_PWM_DEV g_pwm3Dev =
     .pclkGateID = PCLK_PWM3_PERI_GATE,
     .irqNum = PWM3_IRQn,
 };
-#endif
+#endif  /* End of HAL_PWM_MODULE_ENABLED */
 
 void BSP_Init(void)
 {
