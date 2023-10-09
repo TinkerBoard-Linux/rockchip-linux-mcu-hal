@@ -271,6 +271,8 @@ typedef enum {
   WDT_IRQn                  =  134,     /*!< WDT Interrupt                 */
   DMAC_ABORT_IRQn           =  142,     /*!< DMAC Abort Interrupt          */
   DMAC_IRQn                 =  143,     /*!< DMAC Interrupt                */
+  MBOX_AP_IRQn              =  146,     /*!< MBOX AP Interrupt             */
+  MBOX_BB_IRQn              =  147,     /*!< MBOX BB Interrupt             */
   SARADC1_IRQn              =  156,     /*!< SARADC1 Interrupt             */
   FSPI0_IRQn                =  160,     /*!< FSPI0 Interrupt               */
   RSVD0_IRQn                =  280,     /*!< RSVD0 Interrupt               */

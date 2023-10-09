@@ -27,6 +27,8 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
  * The priority higher than 0x80 is non-secure interrupt.
  */
     GIC_AMP_IRQ_CFG_ROUTE(UART0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(MBOX_AP_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(MBOX_BB_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 
 #ifdef IRQ_LATENCY_TEST
     GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),

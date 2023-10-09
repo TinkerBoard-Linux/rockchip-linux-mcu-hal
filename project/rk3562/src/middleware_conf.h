@@ -6,10 +6,10 @@
 #ifndef __MIDDLEWARE_CONF_H__
 #define __MIDDLEWARE_CONF_H__
 
-#define MASTER_ID   ((uint32_t)1)
+#define MASTER_ID   ((uint32_t)0)
+#define REMOTE_ID_1 ((uint32_t)1)
 #define REMOTE_ID_2 ((uint32_t)2)
 #define REMOTE_ID_3 ((uint32_t)3)
-#define REMOTE_ID_0 ((uint32_t)0)
 
 /* RPMSG endpoint addr covert */
 #define EPT_M2R_ADDR(addr) (addr + VRING_SIZE)   // master to remote covert
@@ -27,7 +27,7 @@
 
 /* RPMSG API Functions */
 void rpmsg_init(void);
-#ifdef PRIMARY_CPU
+#ifdef CPU0
 struct rpmsg_lite_instance *rpmsg_master_get_instance(uint32_t master_id, uint32_t remote_id);
 #else
 struct rpmsg_lite_instance *rpmsg_remote_get_instance(uint32_t master_id, uint32_t remote_id);

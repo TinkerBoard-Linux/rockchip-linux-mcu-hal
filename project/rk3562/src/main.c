@@ -11,6 +11,9 @@
 //#define TEST_DEMO
 //#define TEST_USE_JTAG
 
+/* TODO: Only used for RPMsg without linux master now */
+//#define TEST_USE_RPMSG
+
 #ifndef PRIMARY_CPU
 #define TEST_USE_UART7M1
 #endif
@@ -195,6 +198,13 @@ void main(void)
     printf("****************************************\n");
     rk_printf(" CPU(%d) Initial OK!\n", HAL_CPU_TOPOLOGY_GetCurrentCpuId());
     printf("\n");
+
+#ifdef TEST_USE_RPMSG
+#if defined(CPU0) || defined(CPU3)
+    /* RPMsg Init */
+    rpmsg_init();
+#endif
+#endif
 
 #ifdef TEST_DEMO
     test_demo();
