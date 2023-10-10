@@ -143,7 +143,8 @@
 #endif
 
 #ifdef HAL_GPIO_MODULE_ENABLED
-#define HAL_GPIO_VIRTUAL_MODEL_FEATURE_ENABLED
+#define HAL_GPIO_IRQ_DISPATCH_FEATURE_ENABLED /**< Support HAL's own GPIO IRQ dispatch */
+#define HAL_GPIO_VIRTUAL_MODEL_FEATURE_ENABLED /**< Support GPIO hardware grouping */
 #endif
 
 #ifdef HAL_HWSPINLOCK_MODULE_ENABLED
