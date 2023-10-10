@@ -12,6 +12,10 @@
 
 /***************************** Structure Definition **************************/
 
+#ifdef HAL_PL330_MODULE_ENABLED
+extern struct HAL_PL330_DEV g_pl330Dev;
+#endif
+
 #ifdef HAL_I2C_MODULE_ENABLED
 extern const struct HAL_I2C_DEV g_i2c0Dev;
 #if defined(RKMCU_RK3562_BUS) || defined(HAL_AP_CORE)

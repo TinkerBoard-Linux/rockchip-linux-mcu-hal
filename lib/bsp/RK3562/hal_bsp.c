@@ -5,6 +5,17 @@
 
 #include "hal_bsp.h"
 
+#ifdef HAL_PL330_MODULE_ENABLED
+struct HAL_PL330_DEV g_pl330Dev =
+{
+    .pReg = DMA,
+    .peripReqType = BURST,
+    .irq[0] = DMAC_IRQn,
+    .irq[1] = DMAC_ABORT_IRQn,
+    .pd = 0,
+};
+#endif /* HAL_PL330_MODULE_ENABLED */
+
 #ifdef HAL_CRU_MODULE_ENABLED
 static struct CRU_BANK_INFO cruBanks[] = {
     CRU_BANK_CFG_FLAGS(TOPCRU_BASE, 0x100, 0x300, 0x400),
