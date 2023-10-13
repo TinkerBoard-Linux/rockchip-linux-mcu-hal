@@ -8,7 +8,9 @@
 #include "task_ipc.h"
 
 /********************* Private MACRO Definition ******************************/
+#ifndef AMP_LINUX_ENABLE
 //#define TEST_DEMO
+#endif
 //#define TEST_USE_RPMSG_INIT
 //#define TEST_USE_UART1M0
 
@@ -18,6 +20,12 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     /* Config the irqs here. */
     // todo...
 
+#ifdef AMP_LINUX_ENABLE
+    GIC_AMP_IRQ_CFG_ROUTE(RPMSG_03_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#if defined(TEST_USE_UART1M0)
+    GIC_AMP_IRQ_CFG_ROUTE(UART1_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
+#else // #ifdef AMP_LINUX_ENABLE
     GIC_AMP_IRQ_CFG_ROUTE(AMP0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(AMP1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(AMP2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
@@ -38,6 +46,7 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     GIC_AMP_IRQ_CFG_ROUTE(RPMSG_30_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(RPMSG_31_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(RPMSG_32_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
+#endif
 
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(DEFAULT_IRQ_CPU, 0)),   /* sentinel */
 };
