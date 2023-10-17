@@ -5,6 +5,17 @@
 
 #include "hal_base.h"
 
+#define USR_MODE    0x00000010
+#define SVC_MODE    0x00000013
+#define FIQ_MODE    0x00000011
+#define IRQ_MODE    0x00000012
+#define MON_MODE    0x00000016
+#define ABT_MODE    0x00000017
+#define HYP_MODE    0x0000001a
+#define UND_MODE    0x0000001b
+#define SYSTEM_MODE 0x0000001f
+#define MODE_MASK   0x0000001f
+
 #ifdef HAL_AP_CORE
 
 /*----------------------------------------------------------------------------
@@ -16,6 +27,16 @@ void Default_Handler           (void);
 void IRQ_Handler               (void);
 void IRQ_HardIrqHandler        (void);
 void IRQ_HardIrqPreemptHandler (void);
+void DAbt_Handler(void);
+void Dump_Regs(uint32_t *regs, uint32_t mode);
+
+extern uint32_t Image$$SVC_STACK$$ZI$$Limit[];
+extern uint32_t _etext[];
+extern uint32_t _stext[];
+
+#define Image_SVC_STACK_ZI_Limit ((uint32_t)&Image$$SVC_STACK$$ZI$$Limit)
+#define ETEXT                    ((uint32_t)&_etext)
+#define STEXT                    ((uint32_t)&_stext)
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
@@ -232,12 +253,85 @@ void Reset_Handler(void)
     );
 }
 
+void Dump_Regs(uint32_t *regs, uint32_t mode)
+{
+    uint32_t *buf = (uint32_t *)regs[13], stack = 0, stack_limit = Image_SVC_STACK_ZI_Limit;
+    uint32_t n = 0, i = 0, j = 0;
+    uint32_t call_stack[16];
+
+    switch (mode) {
+    case ABT_MODE:
+        printf("abort mode:\n");
+        break;
+    case UND_MODE:
+        printf("undefined mode:\n");
+        break;
+    case FIQ_MODE:
+        printf("fiq mode:\n");
+        break;
+    default:
+        printf("unknow mode:%ld\n", mode);
+    }
+
+    printf("pc : %08lx  lr : %08lx cpsr: %08lx\n", regs[15], regs[14], regs[16]);
+    printf("sp : %08lx  ip : %08lx  fp : %08lx\n", regs[13], regs[12], regs[11]);
+    printf("r10: %08lx  r9 : %08lx  r8 : %08lx\n", regs[10], regs[9], regs[8]);
+    printf("r7 : %08lx  r6 : %08lx  r5 : %08lx  r4 : %08lx\n", regs[7], regs[6], regs[5], regs[4]);
+    printf("r3 : %08lx  r2 : %08lx  r1 : %08lx  r0 : %08lx\n", regs[3], regs[2], regs[1], regs[0]);
+
+    printf("\nstack: \n");
+
+    stack = regs[13];
+    n = (stack_limit - stack) / 4;
+    for (i = 0; i < n; i++) {
+        if (i && i % 4 == 0) {
+            printf("\n");
+        }
+        if (i % 4 == 0) {
+            printf("0x%08lx: ", stack + i * 4);
+        }
+
+        printf("0x%08lx  ", buf[i]);
+        if ((buf[i] >= STEXT && buf[i] < ETEXT) && j < 16) {
+            call_stack[j++] = buf[i];
+        }
+    }
+
+    printf("\n\n");
+    printf("Show more call stack info by run: addr2line -e hal0.elf -a -f %08lx %08lx ", regs[15], regs[14]);
+    for (i = 0; i < j; i++) {
+        printf("%08lx ", call_stack[i]);
+    }
+    printf("\n");
+}
+
 /*----------------------------------------------------------------------------
   Default Handler for Exceptions / Interrupts
  *----------------------------------------------------------------------------*/
 void Default_Handler(void)
 {
-    while(1);
+    __ASM volatile (
+        "sub    sp, #0x10                                  \n"
+        "stmfd  sp!, {r0-r12}                              \n" // save the CPU context r0-r12
+        "mov    r5, sp                                     \n"
+        "mrs    r0, CPSR                                   \n"
+        "mrs    r4, SPSR                                   \n"
+        "orr    r8, r4, #0x1c0                             \n"
+        "msr    CPSR_c, r8                                 \n" // switch to pre-exception mode
+        "mov    r1, sp                                     \n"
+        "mov    r2, lr                                     \n"
+        "msr    CPSR_c, r0                                 \n" // back to current mode
+        "mov    r3, lr                                     \n"
+        "sub    r3, #8                                     \n"
+        "add    sp, #0x44                                  \n"
+        "stmfd  sp!, {r1-r4}                               \n" //save cpsr pc lr sp
+        "mov    sp, r5                                     \n"
+        "mov    r0, r5                                     \n"
+        "mrs    r1, CPSR                                   \n"
+        "and    r1, r1, #0x1f                              \n"
+        "bl     Dump_Regs                                  \n"
+        "b      .                                          \n"
+        );
 }
 
 #if defined(__GNUC__) && ! defined(__ARMCC_VERSION)
