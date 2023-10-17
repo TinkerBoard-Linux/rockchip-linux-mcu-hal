@@ -8,9 +8,7 @@
 #include "task_ipc.h"
 
 /********************* Private MACRO Definition ******************************/
-#ifndef AMP_LINUX_ENABLE
 //#define TEST_DEMO
-#endif
 //#define TEST_USE_RPMSG_INIT
 //#define TEST_USE_UART1M0
 
