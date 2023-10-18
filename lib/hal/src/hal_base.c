@@ -58,7 +58,7 @@ static __IO uint32_t uwTick;
 static eHAL_tickFreq uwTickFreq = HAL_TICK_FREQ_DEFAULT;
 
 /********************* Private Function Definition ***************************/
-#if defined(__CORTEX_A) || defined(__CORTEX_M)
+#if defined(__CORTEX_A) || defined(__CORTEX_M) || defined(__STAR_MC)
 #if __CORTEX_M == 0U || !defined(__GNUC__)
 static void CPUCycleLoop(uint32_t cycles)
 {
