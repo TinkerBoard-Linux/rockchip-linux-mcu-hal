@@ -58,6 +58,8 @@ struct GIC_IRQ_AMP_CTRL {
     uint32_t defRouteAff; /**< the default routting affinity for all the irqs */
     struct GIC_AMP_IRQ_INIT_CFG *irqsCfg; /**< some irqs need to be initialized
                                             * with their config instead of default */
+    void *gpioGroupCfg; /**< gpio group irqs need to be initialized
+         * with their config */
 };
 
 /** @} */

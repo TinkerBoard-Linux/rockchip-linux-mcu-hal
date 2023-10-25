@@ -853,6 +853,95 @@ static bool GIC_AMPCheckValidPrio(uint32_t irq)
     }
 }
 
+#ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
+static int GIC_AMPGpioGroupGIrqCfg(struct GPIO_IRQ_GROUP_CFG const *gpioIrqCfg,
+                                   struct GIC_IRQ_AMP_VALID_CTRL *valid)
+{
+    uint32_t prioLevel, cpu, irq;
+    struct GPIO_IRQ_GROUP_PRIO_GROUP const *prioGroup;
+
+    for (prioLevel = 0; prioLevel < GROUP_PRIO_LEVEL_MAX;
+         prioLevel++) {
+        for (cpu = 0; cpu < PLATFORM_CORE_COUNT; cpu++) {
+            prioGroup = &gpioIrqCfg->prioGroup[prioLevel];
+            irq = prioGroup->GIRQId[cpu];
+
+            if (valid->checkConfig[irq].flag) {
+                GIC_WRN("GIC_AMPGpioGroupGIrqCfg irq-%ld has been set-(%lx %lx) irqCur-%ld\n",
+                        irq, valid->checkConfig[irq].aff,
+                        valid->checkConfig[irq].prio, valid->checkConfig[irq].irqCur);
+
+                return HAL_BUSY;
+            }
+
+            valid->checkConfig[irq].prio = prioGroup->prio;
+            valid->checkConfig[irq].aff =
+                HAL_CPU_TOPOLOGY_GetCpuAffByCpuId(cpu);
+            if (valid->checkConfig[irq].aff == valid->curAff) {
+                valid->checkConfig[irq].irqCur = 1;
+            }
+            valid->checkConfig[irq].flag = 1;
+
+            GIC_DBG(" GIC_AMPGpioGroupGIrqCfg: level(%ld %lx) cpu-%ld irq-%ld aff-%lx (%ld %d)\n",
+                    prioLevel, valid->checkConfig[irq].prio, cpu, irq, valid->checkConfig[irq].aff,
+                    valid->checkConfig[irq].irqCur, valid->checkConfig[irq].flag);
+        }
+    }
+
+    return HAL_OK;
+}
+
+static int GIC_AMPGpioGroupBankIrqCfg(struct GPIO_IRQ_GROUP_CFG const *gpioIrqCfg,
+                                      struct GIC_IRQ_AMP_VALID_CTRL *valid)
+{
+    uint32_t prio, aff, irq;
+
+    irq = gpioIrqCfg->hwIrq;
+
+    if (valid->checkConfig[irq].flag) {
+        GIC_WRN("GIC_AMPGpioGroupBankIrqCfg irq-%ld has been set-(%lx %lx) irqCur-%ld\n",
+                irq, valid->checkConfig[irq].aff, valid->checkConfig[irq].prio,
+                valid->checkConfig[irq].irqCur);
+
+        return HAL_BUSY;
+    }
+
+    aff = gpioIrqCfg->bankTypeCfg.hwIrqCpuAff;
+    prio = gpioIrqCfg->bankTypeCfg.prio;
+    valid->checkConfig[irq].prio = prio;
+    valid->checkConfig[irq].aff = aff;
+    if (valid->checkConfig[irq].aff == valid->curAff) {
+        valid->checkConfig[irq].irqCur = 1;
+    }
+    valid->checkConfig[irq].flag = 1;
+
+    GIC_DBG(" GIC_AMPGpioGroupBankIrqCfg: hwirq-%ld aff-%lx prio-%lx (%ld %d))\n",
+            irq, valid->checkConfig[irq].aff, valid->checkConfig[irq].prio,
+            valid->checkConfig[irq].irqCur, valid->checkConfig[irq].flag);
+
+    return HAL_OK;
+}
+
+static void GIC_AMPGetGroupGpioIrqInfo(struct GPIO_IRQ_GROUP_CFG const *gpioCfg, struct GIC_IRQ_AMP_VALID_CTRL *valid)
+{
+    uint32_t bank;
+    struct GPIO_IRQ_GROUP_CFG const *gpioIrqCfg;
+
+    if (!gpioCfg) {
+        return;
+    }
+
+    for (bank = 0; bank < GPIO_BANK_NUM; bank++) {
+        gpioIrqCfg = &gpioCfg[bank];
+        GIC_DBG("GIC_AMPGetGroupGpioIrqInfo: bank-%ld\n", bank);
+        if (gpioIrqCfg->groupIrqEn == GPIO_IRQ_GROUP_EN_GROUP_TYPE) {
+            GIC_AMPGpioGroupGIrqCfg(gpioIrqCfg, valid);
+        } else if (gpioIrqCfg->groupIrqEn == GPIO_IRQ_GROUP_EN_BANK_TYPE) {
+            GIC_AMPGpioGroupBankIrqCfg(gpioIrqCfg, valid);
+        }
+    }
+}
+#endif
 static void GIC_AMPGetValidConfig(struct GIC_IRQ_AMP_CTRL *ampCtrl,
                                   struct GIC_IRQ_AMP_VALID_CTRL *valid)
 {
@@ -887,6 +976,10 @@ static void GIC_AMPGetValidConfig(struct GIC_IRQ_AMP_CTRL *ampCtrl,
                 valid->checkConfig[config->irq].irqCur);
         config++;
     }
+
+#ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
+    GIC_AMPGetGroupGpioIrqInfo((struct GPIO_IRQ_GROUP_CFG *)ampCtrl->gpioGroupCfg, valid);
+#endif
 
 #ifndef HAL_GIC_WAIT_LINUX_INIT_ENABLED
     for (i = 32; i < NUM_INTERRUPTS; i++) {
