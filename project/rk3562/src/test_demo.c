@@ -20,6 +20,7 @@
 //#define TIMER_TEST
 //#define UART_TEST
 //#define PWM_TEST
+//#define GPIO_TEST
 //#define UNITY_TEST
 
 /********************* Private Structure Definition **************************/
@@ -52,6 +53,10 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
 
 #ifdef PWM_TEST
     GIC_AMP_IRQ_CFG_ROUTE(PWM1_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+#endif
+
+#ifdef GPIO_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(GPIO1_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
 #endif
 
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(1, 0)),   /* sentinel */
@@ -645,6 +650,71 @@ static void pwm_test(void)
 }
 #endif
 
+/************************************************/
+/*                                              */
+/*                  GPIO_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef GPIO_TEST
+static void gpio1_isr(uint32_t irq, void *args)
+{
+    HAL_GPIO_IRQHandler(GPIO1, GPIO_BANK1);
+}
+
+static HAL_Status b7_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO1B7 callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_test(void)
+{
+    uint32_t level;
+
+    /* set pinctrl function */
+    HAL_PINCTRL_SetParam(GPIO_BANK1,
+                         GPIO_PIN_B7,
+                         PIN_CONFIG_MUX_FUNC0);
+    /* Test pinctrl pull */
+    printf("test_gpio pull UP\n");
+    HAL_PINCTRL_SetParam(GPIO_BANK1,
+                         GPIO_PIN_B7,
+                         PIN_CONFIG_PUL_UP);
+    printf("GPIO1B_P: %p = 0x%lx\n", &GPIO1_IOC->GPIO1B_P, GPIO1_IOC->GPIO1B_P);
+    HAL_DelayMs(3000);
+    printf("test_gpio pull DOWN\n");
+    HAL_PINCTRL_SetParam(GPIO_BANK1,
+                         GPIO_PIN_B7,
+                         PIN_CONFIG_PUL_DOWN);
+    HAL_DelayMs(3000);
+    printf("GPIO1B_P: %p = 0x%lx\n", &GPIO1_IOC->GPIO1B_P, GPIO1_IOC->GPIO1B_P);
+
+    /* Test GPIO output */
+    HAL_GPIO_SetPinDirection(GPIO1, GPIO_PIN_B7, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B7);
+    printf("test_gpio 1b7 level = %ld\n", level);
+    HAL_DelayMs(3000);
+    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_B7, GPIO_HIGH);
+    level = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B7);
+    printf("test_gpio 1b7 output high level = %ld\n", level);
+    HAL_DelayMs(3000);
+    HAL_GPIO_SetPinLevel(GPIO1, GPIO_PIN_B7, GPIO_LOW);
+    level = HAL_GPIO_GetPinLevel(GPIO1, GPIO_PIN_B7);
+    printf("test_gpio 1b7 output low level = %ld\n", level);
+    HAL_DelayMs(3000);
+
+    /* Test GPIO interrupt */
+    HAL_GPIO_SetPinDirection(GPIO1, GPIO_PIN_B7, GPIO_IN);
+    HAL_IRQ_HANDLER_SetIRQHandler(GPIO1_IRQn, gpio1_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK1, GPIO_PIN_B7, b7_call_back, NULL);
+    HAL_GIC_Enable(GPIO1_IRQn);
+    HAL_GPIO_SetIntType(GPIO1, GPIO_PIN_B7, GPIO_INT_TYPE_EDGE_BOTH);
+    HAL_GPIO_EnableIRQ(GPIO1, GPIO_PIN_B7);
+    printf("test_gpio interrupt ready\n");
+}
+#endif
+
 /********************* Public Function Definition ****************************/
 
 void TEST_DEMO_GIC_Init(void)
@@ -692,6 +762,10 @@ void test_demo(void)
 
 #if defined(PWM_TEST) && defined(CPU0)
     pwm_test();
+#endif
+
+#if defined(GPIO_TEST) && defined(CPU0)
+    gpio_test();
 #endif
 
 #if defined(UNITY_TEST) && defined(CPU0)
