@@ -52,33 +52,46 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
  * The priority higher than 0x80 is non-secure interrupt.
  */
 #ifdef GPIO_TEST
-    GIC_AMP_IRQ_CFG(GPIO3_IRQn, 0xd0),
+    GIC_AMP_IRQ_CFG_ROUTE(GPIO3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 #endif
 
 #ifdef MBOX_TEST
-    GIC_AMP_IRQ_CFG(MBOX0_CH2_B2A_IRQn, 0xd0),
-    GIC_AMP_IRQ_CFG(MBOX0_CH2_A2B_IRQn, 0xd0),
+    GIC_AMP_IRQ_CFG_ROUTE(MBOX0_CH2_B2A_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(MBOX0_CH2_A2B_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
 #endif
 
 #ifdef SOFTIRQ_TEST
-    GIC_AMP_IRQ_CFG(RSVD0_IRQn, 0xd0),
+    GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 #endif
 
 #ifdef TIMER_TEST
-    GIC_AMP_IRQ_CFG(TIMER0_IRQn, 0xd0),
-    GIC_AMP_IRQ_CFG(TIMER1_IRQn, 0xd0),
-    GIC_AMP_IRQ_CFG(TIMER2_IRQn, 0xd0),
-    GIC_AMP_IRQ_CFG(TIMER3_IRQn, 0xd0),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 #endif
 
-    GIC_AMP_IRQ_CFG(0, 0),   /* sentinel */
-};
+#ifdef HAL_GIC_WAIT_LINUX_INIT_ENABLED
+    GIC_AMP_IRQ_CFG_ROUTE(AMP_CPUOFF_REQ_IRQ(3), 0xd0, CPU_GET_AFFINITY(3, 0)),
+#ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
+    GIC_AMP_IRQ_CFG_ROUTE(GIC_TOUCH_REQ_IRQ(3), 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
+#else
+    GIC_AMP_IRQ_CFG_ROUTE(AMP_CPUOFF_REQ_IRQ(0), 0xd0, CPU_GET_AFFINITY(0, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(AMP_CPUOFF_REQ_IRQ(1), 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(AMP_CPUOFF_REQ_IRQ(2), 0xd0, CPU_GET_AFFINITY(2, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(AMP_CPUOFF_REQ_IRQ(3), 0xd0, CPU_GET_AFFINITY(3, 0)),
 
-static struct GIC_IRQ_AMP_CTRL irqConfig = {
-    .cpuAff = CPU_GET_AFFINITY(1, 0),
-    .defPrio = 0xd0,
-    .defRouteAff = CPU_GET_AFFINITY(1, 0),
-    .irqsCfg = &irqsConfig[0],
+#ifdef HAL_GIC_PREEMPT_FEATURE_ENABLED
+    GIC_AMP_IRQ_CFG_ROUTE(GIC_TOUCH_REQ_IRQ(0), 0xd0, CPU_GET_AFFINITY(0, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(GIC_TOUCH_REQ_IRQ(1), 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(GIC_TOUCH_REQ_IRQ(2), 0xd0, CPU_GET_AFFINITY(2, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(GIC_TOUCH_REQ_IRQ(3), 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
+
+#endif
+
+    GIC_AMP_IRQ_CFG_ROUTE(0, 0, 0),   /* sentinel */
 };
 
 #ifdef GPIO_IRQ_GROUP_TEST
@@ -142,6 +155,16 @@ static const struct GPIO_IRQ_GROUP_CFG gpioIrqCfg[GPIO_BANK_NUM] = {
     },
 };
 #endif
+
+static struct GIC_IRQ_AMP_CTRL irqConfig = {
+    .cpuAff = CPU_GET_AFFINITY(1, 0),
+    .defPrio = 0xd0,
+    .defRouteAff = CPU_GET_AFFINITY(1, 0),
+    .irqsCfg = &irqsConfig[0],
+#ifdef GPIO_IRQ_GROUP_TEST
+    .gpioGroupCfg = gpioIrqCfg,
+#endif
+};
 
 /********************* Private Variable Definition ***************************/
 

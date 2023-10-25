@@ -29,7 +29,7 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
  * GIC version: GICv3
  * Default: CPU0
  */
-    GIC_AMP_IRQ_CFG(0, 0),   /* sentinel */
+    GIC_AMP_IRQ_CFG_ROUTE(0, 0, 0),   /* sentinel */
 };
 
 static struct GIC_IRQ_AMP_CTRL irqConfig = {

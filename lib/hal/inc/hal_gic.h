@@ -28,12 +28,6 @@
 
 typedef void (*GIC_IRQHandler) (uint32_t irq);
 
-#define GIC_AMP_IRQ_CFG(_irq, _prio) \
-  {                                  \
-    .irq = (_irq),                   \
-    .prio = (_prio),                 \
-  }
-
 #define GIC_AMP_IRQ_CFG_ROUTE(_irq, _prio, aff) \
   {                                             \
     .irq = (_irq),                              \

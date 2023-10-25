@@ -21,18 +21,18 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
  * The priority higher than 0x80 is non-secure interrupt.
  */
 #ifdef GPIO_TEST
-    GIC_AMP_IRQ_CFG(GPIO3_IRQn, 0xd0),
+    GIC_AMP_IRQ_CFG_ROUTE(GPIO3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 #endif
 
 #ifdef GPIO_VIRTUAL_MODEL_TEST
-    GIC_AMP_IRQ_CFG(GPIO3_EXP_IRQn, 0xd0),
+    GIC_AMP_IRQ_CFG_ROUTE(GPIO3_EXP_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 #endif
 
 #ifdef SOFTIRQ_TEST
-    GIC_AMP_IRQ_CFG(RSVD0_IRQn, 0xd0),
+    GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 #endif
 
-    GIC_AMP_IRQ_CFG(0, 0),   /* sentinel */
+    GIC_AMP_IRQ_CFG_ROUTE(0, 0, 0),   /* sentinel */
 };
 
 static struct GIC_IRQ_AMP_CTRL irqConfig = {
