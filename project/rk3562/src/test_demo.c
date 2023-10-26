@@ -21,6 +21,7 @@
 //#define UART_TEST
 //#define PWM_TEST
 //#define GPIO_TEST
+//#define WDT_TEST
 //#define UNITY_TEST
 
 /********************* Private Structure Definition **************************/
@@ -53,6 +54,10 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
 
 #ifdef PWM_TEST
     GIC_AMP_IRQ_CFG_ROUTE(PWM1_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+#endif
+
+#ifdef WDT_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(WDT_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
 #endif
 
 #ifdef GPIO_TEST
@@ -715,6 +720,51 @@ static void gpio_test(void)
 }
 #endif
 
+/************************************************/
+/*                                              */
+/*                  WDT_TEST                    */
+/*                                              */
+/************************************************/
+#ifdef WDT_TEST
+
+#define WDT_TEST_FREQ        PLL_INPUT_OSC_RATE
+#define WDT_TEST_CLEAR_COUNT 3
+
+static struct WDT_REG *pWdt = WDT;
+
+static int wdt_int_count = 0;
+
+static void wdt_isr(uint32_t irq, void *args)
+{
+    if (wdt_int_count < WDT_TEST_CLEAR_COUNT) {
+        printf("wdt_test: isr eoi\n");
+        HAL_WDT_ClearInterrupt();
+    }
+    wdt_int_count++;
+}
+
+static void wdt_test(void)
+{
+    int wdt_timeout = 4;
+    uint32_t wdt_left_start, wdt_left_end;
+
+    printf("wdt_test start:\n");
+    HAL_WDT_Init(WDT_TEST_FREQ, pWdt);
+    HAL_WDT_SetTimeout(wdt_timeout);
+    HAL_IRQ_HANDLER_SetIRQHandler(WDT_IRQn, wdt_isr, NULL);
+    HAL_GIC_Enable(WDT_IRQn);
+
+    printf("wdt_test: timeout set-%ds, get-%ds, TORR-0x%lx\n",
+           wdt_timeout, HAL_WDT_GetTimeout(), pWdt->TORR);
+    HAL_WDT_Start(INDIRECT_SYSTEM_RESET);
+    wdt_left_start = HAL_WDT_GetTimeLeft();
+    HAL_DelayMs(1000);
+    wdt_left_end = HAL_WDT_GetTimeLeft();
+    printf("wdt_test: 1s(delay) = %ldus(wdt)\n",
+           (wdt_left_start - wdt_left_end) / (WDT_TEST_FREQ / 1000000));
+}
+#endif
+
 /********************* Public Function Definition ****************************/
 
 void TEST_DEMO_GIC_Init(void)
@@ -766,6 +816,10 @@ void test_demo(void)
 
 #if defined(GPIO_TEST) && defined(CPU0)
     gpio_test();
+#endif
+
+#if defined(WDT_TEST) && defined(CPU0)
+    wdt_test();
 #endif
 
 #if defined(UNITY_TEST) && defined(CPU0)
