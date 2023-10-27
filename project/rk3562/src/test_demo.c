@@ -21,6 +21,7 @@
 //#define UART_TEST
 //#define PWM_TEST
 //#define GPIO_TEST
+//#define GPIO_VIRTUAL_MODEL_TEST
 //#define WDT_TEST
 //#define UNITY_TEST
 
@@ -62,6 +63,10 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
 
 #ifdef GPIO_TEST
     GIC_AMP_IRQ_CFG_ROUTE(GPIO1_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+#endif
+
+#ifdef GPIO_VIRTUAL_MODEL_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(GPIO1_EXP_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
 #endif
 
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(1, 0)),   /* sentinel */
@@ -722,6 +727,74 @@ static void gpio_test(void)
 
 /************************************************/
 /*                                              */
+/*          GPIO_VIRTUAL_MODEL_TEST             */
+/*                                              */
+/************************************************/
+#ifdef GPIO_VIRTUAL_MODEL_TEST
+static void gpio1_exp_isr(uint32_t irq, void *args)
+{
+    HAL_GPIO_IRQHandler(GPIO1_EXP, GPIO_BANK1_EXP);
+}
+
+static HAL_Status b7_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO1B7 exp callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_virtual_model_test(void)
+{
+    uint32_t level;
+
+    /* set pinctrl function */
+    HAL_PINCTRL_SetParam(GPIO_BANK1,
+                         GPIO_PIN_B7,
+                         PIN_CONFIG_MUX_FUNC0);
+
+    /* set pin group configuration */
+    HAL_GPIO_EnableVirtualModel(GPIO1);
+    HAL_GPIO_SetVirtualModel(GPIO1,
+                             GPIO_PIN_A0 | GPIO_PIN_A1 | GPIO_PIN_A2 | GPIO_PIN_A3 |
+                             GPIO_PIN_A4 | GPIO_PIN_A5 | GPIO_PIN_A6 | GPIO_PIN_A7 |
+                             GPIO_PIN_B0 | GPIO_PIN_B1 | GPIO_PIN_B2 | GPIO_PIN_B3 |
+                             GPIO_PIN_B4 | GPIO_PIN_B5 | GPIO_PIN_B6 |
+                             GPIO_PIN_C0 | GPIO_PIN_C1 | GPIO_PIN_C2 | GPIO_PIN_C3 |
+                             GPIO_PIN_C4 | GPIO_PIN_C5 | GPIO_PIN_C6 | GPIO_PIN_C7 |
+                             GPIO_PIN_D0 | GPIO_PIN_D1 | GPIO_PIN_D2 | GPIO_PIN_D3 |
+                             GPIO_PIN_D4 | GPIO_PIN_D5 | GPIO_PIN_D6 | GPIO_PIN_D7,
+                             GPIO_VIRTUAL_MODEL_OS_A);
+    HAL_GPIO_SetVirtualModel(GPIO1,
+                             GPIO_PIN_B7,
+                             GPIO_VIRTUAL_MODEL_OS_B);
+
+    /* Test GPIO output */
+    HAL_GPIO_SetPinDirection(GPIO1_EXP, GPIO_PIN_B7, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO1_EXP, GPIO_PIN_B7);
+    printf("test gpio 1b7 level = %ld\n", level);
+    HAL_DelayMs(3000);
+    HAL_GPIO_SetPinLevel(GPIO1_EXP, GPIO_PIN_B7, GPIO_HIGH);
+    level = HAL_GPIO_GetPinLevel(GPIO1_EXP, GPIO_PIN_B7);
+    printf("test_gpio 1b7 output high level = %ld\n", level);
+    HAL_DelayMs(3000);
+    HAL_GPIO_SetPinLevel(GPIO1_EXP, GPIO_PIN_B7, GPIO_LOW);
+    level = HAL_GPIO_GetPinLevel(GPIO1_EXP, GPIO_PIN_B7);
+    printf("test_gpio 1b7 output low level = %ld\n", level);
+    HAL_DelayMs(3000);
+
+    /* Test GPIO interrupt */
+    HAL_GPIO_SetPinDirection(GPIO1_EXP, GPIO_PIN_B7, GPIO_IN);
+    HAL_IRQ_HANDLER_SetIRQHandler(GPIO1_EXP_IRQn, gpio1_exp_isr, NULL);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK1_EXP, GPIO_PIN_B7, b7_call_back, NULL);
+    HAL_GIC_Enable(GPIO1_EXP_IRQn);
+    HAL_GPIO_SetIntType(GPIO1_EXP, GPIO_PIN_B7, GPIO_INT_TYPE_EDGE_BOTH);
+    HAL_GPIO_EnableIRQ(GPIO1_EXP, GPIO_PIN_B7);
+    printf("test gpio exp interrupt ready\n");
+}
+#endif
+
+/************************************************/
+/*                                              */
 /*                  WDT_TEST                    */
 /*                                              */
 /************************************************/
@@ -816,6 +889,10 @@ void test_demo(void)
 
 #if defined(GPIO_TEST) && defined(CPU0)
     gpio_test();
+#endif
+
+#if defined(GPIO_VIRTUAL_MODEL_TEST) && defined(CPU0)
+    gpio_virtual_model_test();
 #endif
 
 #if defined(WDT_TEST) && defined(CPU0)
