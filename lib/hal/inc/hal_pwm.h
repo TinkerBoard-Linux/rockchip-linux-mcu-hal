@@ -134,10 +134,24 @@ HAL_Status HAL_PWM_SetCapturedFreq(struct PWM_HANDLE *pPWM, uint8_t channel, uin
 HAL_Status HAL_PWM_SetMatch(struct PWM_HANDLE *pPWM, uint8_t channel, const struct PWM_MATCH *data);
 #ifdef PWM_PWM0_OFFSET_OFFSET
 HAL_Status HAL_PWM_SetOutputOffset(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t offsetNS);
+#else
+inline HAL_Status HAL_PWM_SetOutputOffset(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t offsetNS)
+{
+    return HAL_OK;
+}
 #endif
 #ifdef PWM_FILTER_CTRL_PWM0_GLOBAL_LOCK_SHIFT
 HAL_Status HAL_PWM_GlobalLock(struct PWM_HANDLE *pPWM, uint8_t channelMask);
 HAL_Status HAL_PWM_GlobalUnlock(struct PWM_HANDLE *pPWM, uint8_t channelMask);
+#else
+inline HAL_Status HAL_PWM_GlobalLock(struct PWM_HANDLE *pPWM, uint8_t channelMask)
+{
+    return HAL_OK;
+}
+inline HAL_Status HAL_PWM_GlobalUnlock(struct PWM_HANDLE *pPWM, uint8_t channelMask)
+{
+    return HAL_OK;
+}
 #endif
 #ifdef PWM_PWM0_CAPTURE_CNT_EN_OFFSET
 HAL_Status HAL_PWM_EnableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
@@ -146,6 +160,25 @@ HAL_Status HAL_PWM_DisableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
                                      ePWM_captureCntMode mode);
 uint32_t HAL_PWM_GetPosCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel);
 uint32_t HAL_PWM_GetNegCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel);
+#else
+inline HAL_Status HAL_PWM_EnableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
+                                           ePWM_captureCntMode mode)
+{
+    return HAL_OK;
+}
+inline HAL_Status HAL_PWM_DisableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
+                                            ePWM_captureCntMode mode)
+{
+    return HAL_OK;
+}
+inline uint32_t HAL_PWM_GetPosCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel)
+{
+    return 0;
+}
+inline uint32_t HAL_PWM_GetNegCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel)
+{
+    return 0;
+}
 #endif
 ePWM_Mode HAL_PWM_GetMode(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_Enable(struct PWM_HANDLE *pPWM, uint8_t channel, ePWM_Mode mode);
