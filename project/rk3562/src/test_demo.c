@@ -58,7 +58,7 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
 #endif
 
 #ifdef WDT_TEST
-    GIC_AMP_IRQ_CFG_ROUTE(WDT_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(WDT0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
 #endif
 
 #ifdef GPIO_TEST
@@ -824,8 +824,8 @@ static void wdt_test(void)
     printf("wdt_test start:\n");
     HAL_WDT_Init(WDT_TEST_FREQ, pWdt);
     HAL_WDT_SetTimeout(wdt_timeout);
-    HAL_IRQ_HANDLER_SetIRQHandler(WDT_IRQn, wdt_isr, NULL);
-    HAL_GIC_Enable(WDT_IRQn);
+    HAL_IRQ_HANDLER_SetIRQHandler(WDT0_IRQn, wdt_isr, NULL);
+    HAL_GIC_Enable(WDT0_IRQn);
 
     printf("wdt_test: timeout set-%ds, get-%ds, TORR-0x%lx\n",
            wdt_timeout, HAL_WDT_GetTimeout(), pWdt->TORR);

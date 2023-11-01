@@ -174,7 +174,7 @@ typedef enum {
   MBOX_BB_IRQn              =  0,      /*!< MAILBOX_BB Interrupt          */
   HPTIMER_IRQn              =  1,      /*!< HPTIMER Interrupt             */
   UART0_IRQn                =  2,      /*!< UART0 Interrupt               */
-  WDT_IRQn                  =  3,      /*!< WDT Interrupt                 */
+  WDT0_IRQn                 =  3,      /*!< WDT Interrupt                 */
   GPIO0_IRQn                =  4,      /*!< GPIO0 Interrupt               */
   SPI0_IRQn                 =  5,      /*!< SPI0 Interrupt                */
   PWM0_IRQn                 =  6,      /*!< PWM0 Interrupt                */
@@ -268,7 +268,7 @@ typedef enum {
   SPI0_IRQn                 =  84,      /*!< SPI0 Interrupt                */
   SPI1_IRQn                 =  85,      /*!< SPI1 Interrupt                */
   SPI2_IRQn                 =  86,      /*!< SPI2 Interrupt                */
-  WDT_IRQn                  =  134,     /*!< WDT Interrupt                 */
+  WDT0_IRQn                 =  134,     /*!< WDT Interrupt                 */
   DMAC_ABORT_IRQn           =  142,     /*!< DMAC Abort Interrupt          */
   DMAC_IRQn                 =  143,     /*!< DMAC Interrupt                */
   MBOX_AP_IRQn              =  146,     /*!< MBOX AP Interrupt             */
