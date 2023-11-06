@@ -28,8 +28,11 @@
 #define SPINAND_SPEED_MAX     133000000
 #define SPINAND_SPEED_DEFAULT 80000000
 
-#define SPINAND_SECTOR_FULL_SIZE 528
 #define SPINAND_SECTOR_SIZE      512
+#define SPINAND_SECTOR_OOB_SIZE  16
+#define SPINAND_SECTOR_FULL_SIZE (SPINAND_SECTOR_SIZE + SPINAND_SECTOR_OOB_SIZE)
+
+#define SPINAND_META_WORDS_MAX 4
 
 #define SPINAND_MAX_ID_LEN 4
 
@@ -93,6 +96,10 @@ uint32_t HAL_SPINAND_GetCapacity(struct SPI_NAND *spinand);
 HAL_Check HAL_SPINAND_IsBad(struct SPI_NAND *spinand, uint32_t addr);
 HAL_Status HAL_SPINAND_MarkBad(struct SPI_NAND *spinand, uint32_t addr);
 HAL_Check HAL_SPINAND_IsFlashSupported(uint8_t *flashId);
+int32_t HAL_SPINAND_ReadPage(struct SPI_NAND *spinand, uint32_t addr, void *pData, uint32_t *pSpare);
+HAL_Status HAL_SPINAND_ProgPage(struct SPI_NAND *spinand, uint32_t addr, const void *pData, const uint32_t *pSpare);
+int32_t HAL_SPINAND_ReadPageMeta(struct SPI_NAND *spinand, uint32_t addr, uint32_t *pSpare);
+int32_t HAL_SPINAND_ReadPageAnyWhere(struct SPI_NAND *spinand, uint32_t addr, void *pData, uint32_t offset, uint32_t length);
 
 /** @} */
 

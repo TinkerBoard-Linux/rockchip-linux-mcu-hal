@@ -658,7 +658,11 @@ int32_t HAL_SPINAND_ReadPageRaw(struct SPI_NAND *spinand, uint32_t addr, void *p
     int ret;
     uint32_t addrMix, size;
 
-    HAL_SPINAND_DBG("%s %x\n", __func__, addr);
+    HAL_SPINAND_DBG("%s 0x%x\n", __func__, addr);
+
+    if (!pData) {
+        return HAL_INVAL;
+    }
 
     ret = SPINAND_LoadPageOp(spinand, addr);
     if (ret) {
@@ -694,7 +698,11 @@ HAL_Status HAL_SPINAND_ProgPageRaw(struct SPI_NAND *spinand, uint32_t addr, cons
     int ret;
     uint32_t addrMix, size;
 
-    HAL_SPINAND_DBG("%s %x\n", __func__, addr);
+    HAL_SPINAND_DBG("%s 0x%x\n", __func__, addr);
+
+    if (!pData) {
+        return HAL_INVAL;
+    }
 
     ret = SPINAND_WriteEnableOp(spinand);
     if (ret) {
@@ -723,6 +731,160 @@ HAL_Status HAL_SPINAND_ProgPageRaw(struct SPI_NAND *spinand, uint32_t addr, cons
     }
 
     return ret;
+}
+
+/**
+ * @brief  SPI Nand page read.
+ * @param  spinand: SPI_NAND dev.
+ * @param  addr: page address.
+ * @param  pData: destination address.
+ * @param  pSpare: destination spare address.
+ * @return return value < 0: transfer error, return HAL_Status;
+ *   return value >= 0: transfer ok, return ecc status, check SPINAND_ECC_XXXX;
+ */
+int32_t HAL_SPINAND_ReadPage(struct SPI_NAND *spinand, uint32_t addr, void *pData, uint32_t *pSpare)
+{
+    int32_t ret;
+    uint32_t secs = spinand->secPerPage;
+    uint32_t dataSize = secs * SPINAND_SECTOR_SIZE;
+    struct META_AREA *meta = &spinand->meta;
+    uint32_t *buffer = spinand->pageBuf;
+
+    if (!pData || !pSpare) {
+        return HAL_INVAL;
+    }
+
+    ret = HAL_SPINAND_ReadPageRaw(spinand, addr, buffer, true);
+    memcpy(pData, buffer, dataSize);
+    pSpare[0] = buffer[(dataSize + meta->off0) / 4];
+    pSpare[1] = buffer[(dataSize + meta->off1) / 4];
+
+    if (secs == 8) {
+        pSpare[2] = buffer[(dataSize + meta->off2) / 4];
+        pSpare[3] = buffer[(dataSize + meta->off3) / 4];
+    }
+
+    return ret;
+}
+
+/**
+ * @brief  SPI Nand page program.
+ * @param  spinand: SPI_NAND dev.
+ * @param  addr: page address.
+ * @param  pData: source address.
+ * @param  pSpare: destination spare address.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SPINAND_ProgPage(struct SPI_NAND *spinand, uint32_t addr, const void *pData, const uint32_t *pSpare)
+{
+    int32_t ret;
+    uint32_t secs = spinand->secPerPage;
+    uint32_t dataSize = secs * SPINAND_SECTOR_SIZE;
+    struct META_AREA *meta = &spinand->meta;
+    uint32_t *buffer = spinand->pageBuf;
+
+    if (!pData || !pSpare) {
+        return HAL_INVAL;
+    }
+
+    memcpy(buffer, pData, dataSize);
+    memset(&buffer[dataSize / 4], 0xff, secs * 16);
+    buffer[(dataSize + meta->off0) / 4] = pSpare[0];
+    buffer[(dataSize + meta->off1) / 4] = pSpare[1];
+
+    if (secs == 8) {
+        buffer[(dataSize + meta->off2) / 4] = pSpare[2];
+        buffer[(dataSize + meta->off3) / 4] = pSpare[3];
+    }
+
+    ret = HAL_SPINAND_ProgPageRaw(spinand, addr, buffer, true);
+
+    return ret;
+}
+
+/**
+ * @brief  SPI Nand page read meta data only.
+ * @param  spinand: SPI_NAND dev.
+ * @param  addr: page address.
+ * @param  pSpare: destination spare address.
+ * @return return value < 0: transfer error, return HAL_Status;
+ *   return value >= 0: transfer ok, return ecc status, check SPINAND_ECC_XXXX;
+ */
+int32_t HAL_SPINAND_ReadPageMeta(struct SPI_NAND *spinand, uint32_t addr, uint32_t *pSpare)
+{
+    uint32_t secs = spinand->secPerPage;
+    uint32_t oobSize = secs * SPINAND_SECTOR_OOB_SIZE;
+    uint32_t *buffer = spinand->pageBuf;
+    struct META_AREA *meta = &spinand->meta;
+    uint8_t status;
+    uint32_t addrMix;
+
+    HAL_SPINAND_DBG("%s %x\n", __func__, addr);
+
+    if (!pSpare) {
+        return HAL_INVAL;
+    }
+
+    SPINAND_LoadPageOp(spinand, addr);
+
+    SPINAND_WaitBusy(spinand, &status, 1000 * 1000);
+
+    addrMix = spinand->secPerPage * SPINAND_SECTOR_SIZE;
+    addrMix |= spinand->planePerDie == 1 ? 0 : ((addr >> 6) & 0x1) << 12;
+    SPINAND_ReadFromCacheOp(spinand, addrMix, buffer, oobSize);
+
+    pSpare[0] = buffer[(meta->off0) / 4];
+    pSpare[1] = buffer[(meta->off1) / 4];
+
+    if (secs == 8) {
+        pSpare[2] = buffer[(meta->off2) / 4];
+        pSpare[3] = buffer[(meta->off3) / 4];
+    }
+
+    return spinand->eccStatus(spinand);
+}
+
+/**
+ * @brief  SPI Nand page read with bytes offset .
+ * @param  spinand: SPI_NAND dev.
+ * @param  addr: page address.
+ * @param  pData: destination address.
+ * @param  length: read bytes.
+ * @param  offset: bytes offset within one page.
+ * @return return value < 0: transfer error, return HAL_Status;
+ *   return value >= 0: transfer ok, return ecc status, check SPINAND_ECC_XXXX;
+ */
+int32_t HAL_SPINAND_ReadPageAnyWhere(struct SPI_NAND *spinand, uint32_t addr, void *pData, uint32_t offset, uint32_t length)
+{
+    uint8_t status;
+    int ret;
+    uint32_t addrMix, size;
+
+    HAL_SPINAND_DBG("%s 0x%x\n", __func__, addr);
+
+    if (!pData) {
+        return HAL_INVAL;
+    }
+
+    ret = SPINAND_LoadPageOp(spinand, addr);
+    if (ret) {
+        return ret;
+    }
+
+    ret = SPINAND_WaitBusy(spinand, &status, 1000 * 1000);
+    if (ret < 0) {
+        return ret;
+    }
+
+    addrMix = offset;
+    addrMix |= spinand->planePerDie == 1 ? 0 : ((addr >> 6) & 0x1) << 12;
+    size = length;
+    ret = SPINAND_ReadFromCacheOp(spinand, addrMix, pData, size);
+    if (ret) {
+        return ret;
+    }
+
+    return spinand->eccStatus(spinand);
 }
 
 /**
