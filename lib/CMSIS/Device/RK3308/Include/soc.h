@@ -68,88 +68,93 @@ typedef enum {
     CNTPNS_IRQn = 30,
 
 /******  Platform Exceptions Numbers ***************************************************/
-    DMAC0_IRQn       = 32,            /*!< DMAC0 Interrupt             */
-    DMAC0_ABORT_IRQn = 33,            /*!< DMAC0 ABORT Interrupt       */
-    DMAC1_IRQn       = 34,            /*!< DMAC1 Interrupt             */
-    DMAC1_ABORT_IRQn = 35,            /*!< DMAC1 ABORT Abort Interrupt */
-    PWM1_IRQn        = 36,            /*!< PWM1 Interrupt              */
-    PWM1_PWR_IRQn    = 37,            /*!< PWM1_PWR  Interrupt         */
-    PWM2_IRQn        = 38,            /*!< PWM2 Interrupt              */
-    PWM2_PWR_IRQn    = 39,            /*!< PWM2 PWR Interrupt          */
-    DDR_PCTL_IRQn    = 40,            /*!< DDR PCTL Interrupt          */
-    DDR_MON_IRQn     = 41,            /*!< DDR MON Interrupt           */
-    WDT0_IRQn        = 42,            /*!< WDT0 Interrupt              */
-    I2C0_IRQn        = 43,            /*!< I2C0 Interrupt              */
-    I2C1_IRQn        = 44,            /*!< I2C1 Interrupt              */
-    I2C2_IRQn        = 45,            /*!< I2C2 Interrupt              */
-    I2C3_IRQn        = 46,            /*!< I2C3 Interrupt              */
-    SPI0_IRQn        = 47,            /*!< SPI0 Interrupt              */
-    SPI1_IRQn        = 48,            /*!< SPI1 Interrupt              */
-    SPI2_IRQn        = 49,            /*!< SPI2 Interrupt              */
-    UART0_IRQn       = 50,            /*!< UART0 Interrupt             */
-    UART1_IRQn       = 51,            /*!< UART1 Interrupt             */
-    UART2_IRQn       = 52,            /*!< UART2 Interrupt             */
-    UART3_IRQn       = 53,            /*!< UART3 Interrupt             */
-    UART4_IRQn       = 54,            /*!< UART4 Interrupt             */
-    PWM0_IRQn        = 55,            /*!< PWM0 Interrupt              */
-    PWM0_PWR_IRQn    = 56,            /*!< PWM0 PWR Interrupt          */
-    TIMER0_IRQn      = 57,            /*!< TIMER0 Interrupt            */
-    TIMER1_IRQn      = 58,            /*!< TIMER1 Interrupt            */
-    TIMER2_IRQn      = 59,            /*!< TIMER2 Interrupt            */
-    TIMER3_IRQn      = 60,            /*!< TIMER3 Interrupt            */
-    TIMER4_IRQn      = 61,            /*!< TIMER4 Interrupt            */
-    TIMER5_IRQn      = 62,            /*!< TIMER5 Interrupt            */
-    TIMER6_IRQn      = 63,            /*!< TIMER6  Interrupt           */
-    TIMER7_IRQn      = 64,            /*!< TIMER7  Interrupt           */
-    TIMER8_IRQn      = 65,            /*!< TIMER8  Interrupt           */
-    TIMER9_IRQn      = 66,            /*!< TIMER9  Interrupt           */
-    TIMER10_IRQn     = 67,            /*!< TIMER10  Interrupt          */
-    TIMER11_IRQn     = 68,            /*!< TIMER11  Interrupt          */
-    SARADC_IRQn      = 69,            /*!< SARADC  Interrupt           */
-    TSADC_IRQn       = 70,            /*!< TSADC  Interrupt            */
-    GPIO0_IRQn       = 72,            /*!< GPIO0  Interrupt            */
-    GPIO1_IRQn       = 73,            /*!< GPIO1  Interrupt            */
-    GPIO2_IRQn       = 74,            /*!< GPIO2  Interrupt            */
-    GPIO3_IRQn       = 75,            /*!< GPIO3 Interrupt             */
-    GPIO4_IRQn       = 76,            /*!< GPIO4 Interrupt             */
-    CRYPTO_IRQn      = 77,            /*!< CRYPTO Interrupt            */
-    VOP_IRQn         = 78,            /*!< VOP Interrupt               */
-    I2S_8CH_0_IRQn   = 80,            /*!< I2S_8CH_0 Interrupt         */
-    I2S_8CH_1_IRQn   = 81,            /*!< I2S_8CH_1 Interrupt         */
-    I2S_8CH_2_IRQn   = 82,            /*!< I2S_8CH_2 Interrupt         */
-    I2S_8CH_3_IRQn   = 83,            /*!< I2S_8CH_3 Interrupt         */
-    I2S_2CH_0_IRQn   = 84,            /*!< I2S_2CH_0 Interrupt         */
-    I2S_2CH_1_IRQn   = 85,            /*!< I2S_2CH_1 Interrupt         */
-    PDM0_IRQn        = 86,            /*!< PDM0 Interrupt              */
-    SPDIF_TX_IRQn    = 87,            /*!< SPDIF TX Interrupt          */
-    SPDIF_RX_IRQn    = 88,            /*!< SPDIF RX Interrupt          */
-    VAD_IRQn         = 89,            /*!< VAD Interrupt               */
-    OWIRE_IRQn       = 90,            /*!< OWIRE Interrupt             */
-    CAN0_IRQn        = 91,            /*!< CAN0 Interrupt              */
-    MAC_IRQn         = 96,            /*!< MAC Interrupt               */
-    MAC_PMT_IRQn     = 97,            /*!< MAC_PMT Interrupt           */
-    SDMMC_IRQn       = 108,           /*!< SDMMC Interrupt             */
-    EMMC_IRQn        = 109,           /*!< EMMC Interrupt              */
-    SDIO_IRQn        = 110,           /*!< SDIO Interrupt              */
-    SFC_IRQn         = 114,           /*!< SFC Interrupt               */
-    AMP0_IRQn        = 119,           /*!< AMP0   Interrupt            */
-    AMP1_IRQn        = 120,           /*!< AMP1   Interrupt            */
-    AMP2_IRQn        = 121,           /*!< AMP2   Interrupt            */
-    AMP3_IRQn        = 122,           /*!< AMP3   Interrupt            */
-    RPMSG_01_IRQn    = 130,           /*!< RPMSG 0->1 Interrupt        */
-    RPMSG_02_IRQn    = 131,           /*!< RPMSG 0->2 Interrupt        */
-    RPMSG_03_IRQn    = 132,           /*!< RPMSG 0->3 Interrupt        */
-    RPMSG_10_IRQn    = 133,           /*!< RPMSG 1->0 Interrupt        */
-    RPMSG_12_IRQn    = 134,           /*!< RPMSG 1->2 Interrupt        */
-    RPMSG_13_IRQn    = 135,           /*!< RPMSG 1->3 Interrupt        */
-    RPMSG_20_IRQn    = 136,           /*!< RPMSG 2->0 Interrupt        */
-    RPMSG_21_IRQn    = 137,           /*!< RPMSG 2->1 Interrupt        */
-    RPMSG_23_IRQn    = 138,           /*!< RPMSG 2->3 Interrupt        */
-    RPMSG_30_IRQn    = 139,           /*!< RPMSG 3->0 Interrupt        */
-    RPMSG_31_IRQn    = 140,           /*!< RPMSG 3->1 Interrupt        */
-    RPMSG_32_IRQn    = 141,           /*!< RPMSG 3->2 Interrupt        */
-    RSVD0_IRQn       = 148,           /*!< RSVD0  Interrupt            */
-    NUM_INTERRUPTS   = 160
+    DMAC0_IRQn                  = 32,            /*!< DMAC0 Interrupt              */
+    DMAC0_ABORT_IRQn            = 33,            /*!< DMAC0 ABORT Interrupt        */
+    DMAC1_IRQn                  = 34,            /*!< DMAC1 Interrupt              */
+    DMAC1_ABORT_IRQn            = 35,            /*!< DMAC1 ABORT Abort Interrupt  */
+    PWM1_IRQn                   = 36,            /*!< PWM1 Interrupt               */
+    PWM1_PWR_IRQn               = 37,            /*!< PWM1_PWR  Interrupt          */
+    PWM2_IRQn                   = 38,            /*!< PWM2 Interrupt               */
+    PWM2_PWR_IRQn               = 39,            /*!< PWM2 PWR Interrupt           */
+    DDR_PCTL_IRQn               = 40,            /*!< DDR PCTL Interrupt           */
+    DDR_MON_IRQn                = 41,            /*!< DDR MON Interrupt            */
+    WDT0_IRQn                   = 42,            /*!< WDT0 Interrupt               */
+    I2C0_IRQn                   = 43,            /*!< I2C0 Interrupt               */
+    I2C1_IRQn                   = 44,            /*!< I2C1 Interrupt               */
+    I2C2_IRQn                   = 45,            /*!< I2C2 Interrupt               */
+    I2C3_IRQn                   = 46,            /*!< I2C3 Interrupt               */
+    SPI0_IRQn                   = 47,            /*!< SPI0 Interrupt               */
+    SPI1_IRQn                   = 48,            /*!< SPI1 Interrupt               */
+    SPI2_IRQn                   = 49,            /*!< SPI2 Interrupt               */
+    UART0_IRQn                  = 50,            /*!< UART0 Interrupt              */
+    UART1_IRQn                  = 51,            /*!< UART1 Interrupt              */
+    UART2_IRQn                  = 52,            /*!< UART2 Interrupt              */
+    UART3_IRQn                  = 53,            /*!< UART3 Interrupt              */
+    UART4_IRQn                  = 54,            /*!< UART4 Interrupt              */
+    PWM0_IRQn                   = 55,            /*!< PWM0 Interrupt               */
+    PWM0_PWR_IRQn               = 56,            /*!< PWM0 PWR Interrupt           */
+    TIMER0_IRQn                 = 57,            /*!< TIMER0 Interrupt             */
+    TIMER1_IRQn                 = 58,            /*!< TIMER1 Interrupt             */
+    TIMER2_IRQn                 = 59,            /*!< TIMER2 Interrupt             */
+    TIMER3_IRQn                 = 60,            /*!< TIMER3 Interrupt             */
+    TIMER4_IRQn                 = 61,            /*!< TIMER4 Interrupt             */
+    TIMER5_IRQn                 = 62,            /*!< TIMER5 Interrupt             */
+    TIMER6_IRQn                 = 63,            /*!< TIMER6  Interrupt            */
+    TIMER7_IRQn                 = 64,            /*!< TIMER7  Interrupt            */
+    TIMER8_IRQn                 = 65,            /*!< TIMER8  Interrupt            */
+    TIMER9_IRQn                 = 66,            /*!< TIMER9  Interrupt            */
+    TIMER10_IRQn                = 67,            /*!< TIMER10  Interrupt           */
+    TIMER11_IRQn                = 68,            /*!< TIMER11  Interrupt           */
+    SARADC_IRQn                 = 69,            /*!< SARADC  Interrupt            */
+    TSADC_IRQn                  = 70,            /*!< TSADC  Interrupt             */
+    GPIO0_IRQn                  = 72,            /*!< GPIO0  Interrupt             */
+    GPIO1_IRQn                  = 73,            /*!< GPIO1  Interrupt             */
+    GPIO2_IRQn                  = 74,            /*!< GPIO2  Interrupt             */
+    GPIO3_IRQn                  = 75,            /*!< GPIO3 Interrupt              */
+    GPIO4_IRQn                  = 76,            /*!< GPIO4 Interrupt              */
+    CRYPTO_IRQn                 = 77,            /*!< CRYPTO Interrupt             */
+    VOP_IRQn                    = 78,            /*!< VOP Interrupt                */
+    I2S_8CH_0_IRQn              = 80,            /*!< I2S_8CH_0 Interrupt          */
+    I2S_8CH_1_IRQn              = 81,            /*!< I2S_8CH_1 Interrupt          */
+    I2S_8CH_2_IRQn              = 82,            /*!< I2S_8CH_2 Interrupt          */
+    I2S_8CH_3_IRQn              = 83,            /*!< I2S_8CH_3 Interrupt          */
+    I2S_2CH_0_IRQn              = 84,            /*!< I2S_2CH_0 Interrupt          */
+    I2S_2CH_1_IRQn              = 85,            /*!< I2S_2CH_1 Interrupt          */
+    PDM0_IRQn                   = 86,            /*!< PDM0 Interrupt               */
+    SPDIF_TX_IRQn               = 87,            /*!< SPDIF TX Interrupt           */
+    SPDIF_RX_IRQn               = 88,            /*!< SPDIF RX Interrupt           */
+    VAD_IRQn                    = 89,            /*!< VAD Interrupt                */
+    OWIRE_IRQn                  = 90,            /*!< OWIRE Interrupt              */
+    CAN0_IRQn                   = 91,            /*!< CAN0 Interrupt               */
+    MAC_IRQn                    = 96,            /*!< MAC Interrupt                */
+    MAC_PMT_IRQn                = 97,            /*!< MAC_PMT Interrupt            */
+    USB2OTG_IRQn                = 98,            /*!< USB2OTG Interrupt            */
+    USB2OTG_BVALID_IRQn         = 99,            /*!< USB2OTG_BVALID Interrupt     */
+    USB2OTG_ID_IRQn             = 100,           /*!< USB2OTG_ID Interrupt         */
+    USB2OTG_LINESTATE_IRQn      = 101,           /*!< USB2OTG_LINESTATE Interrupt  */
+    USB2OTG_DISCONNECT_IRQn     = 102,           /*!< USB2OTG_DISCONNECT Interrupt */
+    SDMMC_IRQn                  = 108,           /*!< SDMMC Interrupt              */
+    EMMC_IRQn                   = 109,           /*!< EMMC Interrupt               */
+    SDIO_IRQn                   = 110,           /*!< SDIO Interrupt               */
+    SFC_IRQn                    = 114,           /*!< SFC Interrupt                */
+    AMP0_IRQn                   = 119,           /*!< AMP0   Interrupt             */
+    AMP1_IRQn                   = 120,           /*!< AMP1   Interrupt             */
+    AMP2_IRQn                   = 121,           /*!< AMP2   Interrupt             */
+    AMP3_IRQn                   = 122,           /*!< AMP3   Interrupt             */
+    RPMSG_01_IRQn               = 130,           /*!< RPMSG 0->1 Interrupt         */
+    RPMSG_02_IRQn               = 131,           /*!< RPMSG 0->2 Interrupt         */
+    RPMSG_03_IRQn               = 132,           /*!< RPMSG 0->3 Interrupt         */
+    RPMSG_10_IRQn               = 133,           /*!< RPMSG 1->0 Interrupt         */
+    RPMSG_12_IRQn               = 134,           /*!< RPMSG 1->2 Interrupt         */
+    RPMSG_13_IRQn               = 135,           /*!< RPMSG 1->3 Interrupt         */
+    RPMSG_20_IRQn               = 136,           /*!< RPMSG 2->0 Interrupt         */
+    RPMSG_21_IRQn               = 137,           /*!< RPMSG 2->1 Interrupt         */
+    RPMSG_23_IRQn               = 138,           /*!< RPMSG 2->3 Interrupt         */
+    RPMSG_30_IRQn               = 139,           /*!< RPMSG 3->0 Interrupt         */
+    RPMSG_31_IRQn               = 140,           /*!< RPMSG 3->1 Interrupt         */
+    RPMSG_32_IRQn               = 141,           /*!< RPMSG 3->2 Interrupt         */
+    RSVD0_IRQn                  = 148,           /*!< RSVD0  Interrupt             */
+    NUM_INTERRUPTS              = 160
 } IRQn_Type;
 
 #define RSVD_IRQn(_N) (RSVD0_IRQn + (_N))
@@ -183,6 +188,7 @@ typedef enum {
 #endif /* __ASSEMBLY__ */
 #include "rk3308.h"
 #include "rk3308_acodec.h"
+#include "rk3308_usb.h"
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -192,6 +198,16 @@ typedef enum {
 /* Memory Base */
 #define GIC_DISTRIBUTOR_BASE   (0xFF581000)
 #define GIC_CPU_INTERFACE_BASE (0xFF582000)
+#define USB_OTG_BASE           (0xFF400000U) /* USB OTG base address */
+#define USB_INNO_PHY_BASE      (0xFF008000U) /* USB INNO PHY base address */
+
+/****************************************************************************************/
+/*                                                                                      */
+/*                               Module Variable Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/* Module Variable Define */
+#define USB_OTG                ((struct USB_GLOBAL_REG *) USB_OTG_BASE)
 
 /****************************************************************************************/
 /*                                                                                      */

@@ -1433,7 +1433,7 @@ HAL_Status USB_HCStartXfer(struct USB_GLOBAL_REG *pUSB,
                                  (((uint32_t)numPackets << 19) & USB_OTG_HCTSIZ_PKTCNT) |
                                  ((((uint32_t)pHC->dataPID) << 29) & USB_OTG_HCTSIZ_DPID);
 
-    if (dma) {
+    if (dma && pHC->pxferBuff) {
         HAL_DCACHE_CleanByRange((uint32_t)pHC->pxferBuff, pHC->xferLen);
 
         /* pxferBuff MUST be 32-bits aligned */

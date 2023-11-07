@@ -399,6 +399,29 @@ const struct HAL_UART_DEV g_uart4Dev =
 };
 #endif
 
+#if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
+const struct HAL_USB_DEV g_usbdDev =
+{
+    .pReg = USB_OTG,
+    .hclkGateID = HCLK_OTG_GATE,
+    .utmiclkGateID = USBPHY_REF_SEL,
+    .irqNum = USB2OTG_IRQn,
+    .cfg =
+    {
+        .epNum = 10,
+        .ep0Mps = USB_OTG_MAX_EP0_SIZE,
+        .phyif = USB_PHY_UTMI_WIDTH_16,
+        .speed = USB_OTG_SPEED_HIGH,
+        .hcNum = 8,
+        .dmaEnable = true,
+        .sofEnable = false,
+        .lpmEnable = false,
+        .vbusSensingEnable = false,
+        .suspendEnable = false,
+    },
+};
+#endif
+
 #ifdef HAL_GMAC1000_MODULE_ENABLED
 const struct HAL_GMAC_DEV g_gmac0Dev =
 {

@@ -67,6 +67,10 @@ extern const struct HAL_UART_DEV g_uart3Dev;
 extern const struct HAL_UART_DEV g_uart4Dev;
 #endif
 
+#if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
+extern const struct HAL_USB_DEV g_usbdDev;
+#endif
+
 #ifdef HAL_GMAC1000_MODULE_ENABLED
 extern const struct HAL_GMAC_DEV g_gmac0Dev;
 #endif
