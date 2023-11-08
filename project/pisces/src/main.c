@@ -157,7 +157,7 @@ int main(void)
     return 0;
 }
 
-int _start(void)
+void _start(void)
 {
     main();
 
