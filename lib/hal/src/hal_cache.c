@@ -144,8 +144,9 @@ __STATIC_INLINE HAL_FuncStatus HAL_MPU_IsEnable(void)
  */
 HAL_Status HAL_ICACHE_Enable(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
+#if defined(HAL_ICACHE_MODULE_ENABLED)
 
+#if defined(ICACHE)
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status;
     unsigned long flags;
@@ -175,8 +176,10 @@ HAL_Status HAL_ICACHE_Enable(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_ICACHE_MODULE_ENABLED) && defined(__ICACHE_PRESENT)
+#elif defined(__ICACHE_PRESENT)
     SCB_EnableICache();
+
+#endif
 
 #endif
 
@@ -189,7 +192,9 @@ HAL_Status HAL_ICACHE_Enable(void)
  */
 HAL_Status HAL_ICACHE_Disable(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
+#if defined(HAL_ICACHE_MODULE_ENABLED)
+
+#if defined(ICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     unsigned long flags;
@@ -201,8 +206,10 @@ HAL_Status HAL_ICACHE_Disable(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_ICACHE_MODULE_ENABLED) && defined(__ICACHE_PRESENT)
+#elif defined(__ICACHE_PRESENT)
     SCB_DisableICache();
+
+#endif
 
 #endif
 
@@ -215,7 +222,9 @@ HAL_Status HAL_ICACHE_Disable(void)
  */
 HAL_Status HAL_ICACHE_Invalidate(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
+#if defined(HAL_ICACHE_MODULE_ENABLED)
+
+#if defined(ICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status = 0;
@@ -242,8 +251,10 @@ HAL_Status HAL_ICACHE_Invalidate(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_ICACHE_MODULE_ENABLED) && defined(__ICACHE_PRESENT)
+#elif defined(__ICACHE_PRESENT)
     SCB_InvalidateICache();
+
+#endif
 
 #endif
 
@@ -259,7 +270,9 @@ HAL_Status HAL_ICACHE_Invalidate(void)
 HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
                                         uint32_t sizeByte)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED) && defined(ICACHE)
+#if defined(HAL_ICACHE_MODULE_ENABLED)
+
+#if defined(ICACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t value = 0;
@@ -291,8 +304,10 @@ HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_ICACHE_MODULE_ENABLED) && defined(__ICACHE_PRESENT)
+#elif defined(__ICACHE_PRESENT)
     SCB_InvalidateICache_by_Addr((void *)address, (int32_t)sizeByte);
+
+#endif
 
 #endif
 
@@ -501,7 +516,9 @@ HAL_Status HAL_ICACHE_ClearInt(void)
  */
 HAL_Status HAL_DCACHE_Enable(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+
+#if defined(DCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status;
@@ -533,8 +550,10 @@ HAL_Status HAL_DCACHE_Enable(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT)
     SCB_EnableDCache();
+
+#endif
 
 #endif
 
@@ -547,7 +566,9 @@ HAL_Status HAL_DCACHE_Enable(void)
  */
 HAL_Status HAL_DCACHE_Disable(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+
+#if defined(DCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     unsigned long flags;
@@ -559,8 +580,10 @@ HAL_Status HAL_DCACHE_Disable(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT)
     SCB_DisableDCache();
+
+#endif
 
 #endif
 
@@ -573,7 +596,9 @@ HAL_Status HAL_DCACHE_Disable(void)
  */
 HAL_Status HAL_DCACHE_Invalidate(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+
+#if defined(DCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status = 0;
@@ -600,11 +625,13 @@ HAL_Status HAL_DCACHE_Invalidate(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT)
     SCB_InvalidateDCache();
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+#elif defined(__CORTEX_A)
     L1C_InvalidateDCacheAll();
+
+#endif
 
 #endif
 
@@ -620,7 +647,9 @@ HAL_Status HAL_DCACHE_Invalidate(void)
 HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
                                         uint32_t sizeByte)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+
+#if defined(DCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t value = 0;
@@ -651,10 +680,10 @@ HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT)
     SCB_InvalidateDCache_by_Addr((void *)address, (int32_t)sizeByte);
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+#elif defined(__CORTEX_A)
     uint32_t start, stop, addr;
 
     if (sizeByte == 0) {
@@ -679,6 +708,9 @@ HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
     for (addr = start; addr < stop; addr += CACHE_LINE_SIZE) {
         L1C_InvalidateDCacheMVA((void *)addr);
     }
+
+#endif
+
 #endif
 
     return HAL_OK;
@@ -694,7 +726,9 @@ HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
 HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
                                    uint32_t sizeByte)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+
+#if defined(DCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t value = 0;
@@ -725,10 +759,10 @@ HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT)
     SCB_CleanDCache_by_Addr((void *)address, (int32_t)sizeByte);
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+#elif defined(__CORTEX_A)
     uint32_t start, stop, addr;
 
     if (sizeByte == 0) {
@@ -741,6 +775,9 @@ HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
     for (addr = start; addr <= stop; addr += CACHE_LINE_SIZE) {
         L1C_CleanDCacheMVA((void *)addr);
     }
+
+#endif
+
 #endif
 
     return HAL_OK;
@@ -756,7 +793,9 @@ HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
 HAL_Status
 HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+
+#if defined(DCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t value = 0;
@@ -787,10 +826,10 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT)
     SCB_CleanInvalidateDCache_by_Addr((void *)address, (int32_t)sizeByte);
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+#elif defined(__CORTEX_A)
     uint32_t start, stop, addr;
 
     if (sizeByte == 0) {
@@ -803,6 +842,9 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     for (addr = start; addr <= stop; addr += CACHE_LINE_SIZE) {
         L1C_CleanInvalidateDCacheMVA((void *)addr);
     }
+
+#endif
+
 #endif
 
     return HAL_OK;
@@ -815,7 +857,9 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
  */
 HAL_Status HAL_DCACHE_CleanInvalidate(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED) && defined(DCACHE)
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+
+#if defined(DCACHE)
 
 #if defined(CACHE_REVISION) && (CACHE_REVISION == 0x00000100U)
     uint32_t status = 0;
@@ -835,11 +879,13 @@ HAL_Status HAL_DCACHE_CleanInvalidate(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT)
     SCB_CleanInvalidateDCache();
 
-#elif defined(HAL_DCACHE_MODULE_ENABLED) && defined(__CORTEX_A)
+#elif defined(__CORTEX_A)
     L1C_CleanInvalidateDCacheAll();
+
+#endif
 
 #endif
 
