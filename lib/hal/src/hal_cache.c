@@ -497,16 +497,11 @@ HAL_Status HAL_DCACHE_Enable(void)
 
     flags = HAL_SYS_EnterCriticalSection();
 
-#if defined(SOC_RK3562)
-    /* cache enable */
-    DCACHE->CACHE_CTRL |= DCACHE_CACHE_CTRL_CACHE_EN_MASK;
-#else
     /* stb enable, stb_entry=7, stb_timeout enable, write back, prefetch enable */
     DCACHE->CACHE_CTRL |=
         DCACHE_CACHE_CTRL_CACHE_EN_MASK
         | (7U << DCACHE_CACHE_CTRL_CACHE_ENTRY_THRESH_SHIFT)
         | DCACHE_CACHE_CTRL_STB_TIMEOUT_EN_MASK;
-#endif
     DCACHE->STB_TIMEOUT_CTRL = 1;
 
     /* if mpu has been enable, we will enable cache mpu function */
