@@ -176,12 +176,12 @@ HAL_Status HAL_ICACHE_Enable(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__ICACHE_PRESENT)
+#elif defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
     SCB_EnableICache();
 
 #endif
 
-#endif
+#endif /* HAL_ICACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -206,12 +206,12 @@ HAL_Status HAL_ICACHE_Disable(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__ICACHE_PRESENT)
+#elif defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
     SCB_DisableICache();
 
 #endif
 
-#endif
+#endif /* HAL_ICACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -251,12 +251,12 @@ HAL_Status HAL_ICACHE_Invalidate(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__ICACHE_PRESENT)
+#elif defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
     SCB_InvalidateICache();
 
 #endif
 
-#endif
+#endif /* HAL_ICACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -304,12 +304,12 @@ HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__ICACHE_PRESENT)
+#elif defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
     SCB_InvalidateICache_by_Addr((void *)address, (int32_t)sizeByte);
 
 #endif
 
-#endif
+#endif /* HAL_ICACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -550,12 +550,12 @@ HAL_Status HAL_DCACHE_Enable(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     SCB_EnableDCache();
 
 #endif
 
-#endif
+#endif /* HAL_DCACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -580,12 +580,12 @@ HAL_Status HAL_DCACHE_Disable(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     SCB_DisableDCache();
 
 #endif
 
-#endif
+#endif /* HAL_DCACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -625,7 +625,7 @@ HAL_Status HAL_DCACHE_Invalidate(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     SCB_InvalidateDCache();
 
 #elif defined(__CORTEX_A)
@@ -633,7 +633,7 @@ HAL_Status HAL_DCACHE_Invalidate(void)
 
 #endif
 
-#endif
+#endif /* HAL_DCACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -680,7 +680,7 @@ HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     SCB_InvalidateDCache_by_Addr((void *)address, (int32_t)sizeByte);
 
 #elif defined(__CORTEX_A)
@@ -711,7 +711,7 @@ HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
 
 #endif
 
-#endif
+#endif /* HAL_DCACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -759,7 +759,7 @@ HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     SCB_CleanDCache_by_Addr((void *)address, (int32_t)sizeByte);
 
 #elif defined(__CORTEX_A)
@@ -778,7 +778,7 @@ HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
 
 #endif
 
-#endif
+#endif /* HAL_DCACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -826,7 +826,7 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     SCB_CleanInvalidateDCache_by_Addr((void *)address, (int32_t)sizeByte);
 
 #elif defined(__CORTEX_A)
@@ -845,7 +845,7 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
 
 #endif
 
-#endif
+#endif /* HAL_DCACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
@@ -879,7 +879,7 @@ HAL_Status HAL_DCACHE_CleanInvalidate(void)
     HAL_SYS_ExitCriticalSection(flags);
 #endif
 
-#elif defined(__DCACHE_PRESENT)
+#elif defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     SCB_CleanInvalidateDCache();
 
 #elif defined(__CORTEX_A)
@@ -887,7 +887,7 @@ HAL_Status HAL_DCACHE_CleanInvalidate(void)
 
 #endif
 
-#endif
+#endif /* HAL_DCACHE_MODULE_ENABLED */
 
     return HAL_OK;
 }
