@@ -30,11 +30,16 @@ static struct PLL_CONFIG PLL_TABLE[] = {
     RK_PLL_RATE(1000000000, 3, 250, 2, 1, 1, 0),
     RK_PLL_RATE(816000000, 1, 68, 2, 1, 1, 0),
     RK_PLL_RATE(600000000, 1, 100, 4, 1, 1, 0),
+    RK_PLL_RATE(594000000, 1, 99, 4, 1, 1, 0),
+    RK_PLL_RATE(500000000, 1, 125, 6, 1, 1, 0),
+    RK_PLL_RATE(408000000, 1, 68, 2, 2, 1, 0),
     { /* sentinel */ },
 };
 
 static uint32_t s_gpllFreq;
 static uint32_t s_cpllFreq;
+static uint32_t s_hpllFreq;
+static uint32_t s_vpllFreq;
 
 static struct PLL_SETUP APLL = {
     .conOffset0 = &(TOPCRU->APLL_CON[0]),
@@ -115,8 +120,11 @@ static void CRU_InitPlls(void)
 {
     s_gpllFreq = HAL_CRU_GetPllFreq(&GPLL);
     s_cpllFreq = HAL_CRU_GetPllFreq(&CPLL);
+    s_hpllFreq = HAL_CRU_GetPllFreq(&HPLL);
+    s_vpllFreq = HAL_CRU_GetPllFreq(&VPLL);
 
-    HAL_CRU_DBG("%s: gpll=%ld, cpll=%ld\n", __func__, s_gpllFreq, s_cpllFreq);
+    HAL_CRU_DBG("%s: gpll=%ld, cpll=%ld, hpll=%ld, vpll=%ld\n", __func__,
+                s_gpllFreq, s_cpllFreq, s_hpllFreq, s_vpllFreq);
 }
 
 static uint32_t HAL_CRU_ClkGetUartFreq(eCLOCK_Name clockName)
@@ -344,6 +352,157 @@ static HAL_Status HAL_CRU_ClkSetUartFreq(eCLOCK_Name clockName, uint32_t rate)
     return HAL_OK;
 }
 
+static uint32_t HAL_CRU_ClkGetAudioFreq(eCLOCK_Name clockName)
+{
+    uint32_t mux = CLK_GET_MUX(clockName);
+    uint32_t pRate = 0, rate, n, m;
+    uint32_t muxSrc, divSrc, divFrac;
+
+    switch (clockName) {
+    case CLK_SAI0:
+        muxSrc = CLK_GET_MUX(CLK_SAI0_SRC);
+        divSrc = CLK_GET_DIV(CLK_SAI0_SRC);
+        divFrac = CLK_GET_DIV(CLK_SAI0_FRAC);
+
+        break;
+    case CLK_SAI1:
+        muxSrc = CLK_GET_MUX(CLK_SAI1_SRC);
+        divSrc = CLK_GET_DIV(CLK_SAI1_SRC);
+        divFrac = CLK_GET_DIV(CLK_SAI1_FRAC);
+
+        break;
+    case CLK_SAI2:
+        muxSrc = CLK_GET_MUX(CLK_SAI2_SRC);
+        divSrc = CLK_GET_DIV(CLK_SAI2_SRC);
+        divFrac = CLK_GET_DIV(CLK_SAI2_FRAC);
+
+        break;
+    case CLK_SPDIF:
+        muxSrc = CLK_GET_MUX(CLK_SPDIF_SRC);
+        divSrc = CLK_GET_DIV(CLK_SPDIF_SRC);
+        divFrac = CLK_GET_DIV(CLK_SPDIF_FRAC);
+
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    pRate = HAL_CRU_MuxGetFreq3(muxSrc,
+                                s_gpllFreq / HAL_CRU_ClkGetDiv(divSrc),
+                                s_cpllFreq / HAL_CRU_ClkGetDiv(divSrc),
+                                s_hpllFreq / HAL_CRU_ClkGetDiv(divSrc));
+
+    HAL_CRU_ClkGetFracDiv(divFrac, &n, &m);
+
+    if (clockName == CLK_SPDIF) {
+        rate = HAL_CRU_MuxGetFreq3(mux, pRate, (pRate / m) * n,
+                                   PLL_INPUT_OSC_RATE / 2);
+    } else {
+        rate = HAL_CRU_MuxGetFreq4(mux, pRate, (pRate / m) * n,
+                                   PLL_INPUT_OSC_RATE / 2, HAL_INVAL);
+    }
+
+    HAL_CRU_DBG("%s: (0x%08lX|0x%08lX) => (0x%08lX|0U): rate=%ld, mux=%ld, "
+                "prate0=%ld, prate1=%ld, prate2=%d\n",
+                __func__, muxSrc, divSrc, mux, rate, HAL_CRU_ClkGetMux(mux),
+                pRate, pRate / m * n, PLL_INPUT_OSC_RATE / 2);
+
+    return rate;
+}
+
+static HAL_Status HAL_CRU_ClkSetAudioFreq(eCLOCK_Name clockName, uint32_t rate)
+{
+    uint32_t mux = CLK_GET_MUX(clockName);
+    uint32_t muxSrc, divSrc, divFrac;
+    uint32_t gateId, fracGateId;
+    uint32_t n = 0, m = 0, maxDiv;
+
+    switch (clockName) {
+    case CLK_SAI0:
+        muxSrc = CLK_GET_MUX(CLK_SAI0_SRC);
+        divSrc = CLK_GET_DIV(CLK_SAI0_SRC);
+        divFrac = CLK_GET_DIV(CLK_SAI0_FRAC);
+        gateId = CLK_SAI0_GATE;
+        fracGateId = CLK_SAI0_FRAC_GATE;
+
+        break;
+    case CLK_SAI1:
+        muxSrc = CLK_GET_MUX(CLK_SAI1_SRC);
+        divSrc = CLK_GET_DIV(CLK_SAI1_SRC);
+        divFrac = CLK_GET_DIV(CLK_SAI1_FRAC);
+        gateId = CLK_SAI1_GATE;
+        fracGateId = CLK_SAI1_FRAC_GATE;
+
+        break;
+    case CLK_SAI2:
+        muxSrc = CLK_GET_MUX(CLK_SAI2_SRC);
+        divSrc = CLK_GET_DIV(CLK_SAI2_SRC);
+        divFrac = CLK_GET_DIV(CLK_SAI2_FRAC);
+        gateId = CLK_SAI2_GATE;
+        fracGateId = CLK_SAI2_FRAC_GATE;
+
+        break;
+    case CLK_SPDIF:
+        muxSrc = CLK_GET_MUX(CLK_SPDIF_SRC);
+        divSrc = CLK_GET_DIV(CLK_SPDIF_SRC);
+        divFrac = CLK_GET_DIV(CLK_SPDIF_FRAC);
+        gateId = CLK_SPDIF_GATE;
+        fracGateId = CLK_SPDIF_FRAC_GATE;
+
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    maxDiv = CLK_DIV_GET_MAXDIV(divSrc);
+
+    HAL_CRU_ClkEnable(gateId);
+    HAL_CRU_ClkEnable(fracGateId);
+
+    if (PLL_INPUT_OSC_RATE / 2 == rate) {
+        HAL_CRU_ClkSetMux(mux, 2);
+        HAL_CRU_ClkDisable(fracGateId);
+    } else if (DIV_NO_REM(s_hpllFreq, rate, maxDiv)) {
+        /*
+         * HPLL is designed for audio, we will pre-calculate
+         * a common rate and set it for the most audio requirement.
+         * So HPLL will not be changed like vop to change v0pll.
+         */
+        HAL_CRU_ClkSetDiv(divSrc, s_hpllFreq / rate);
+        HAL_CRU_ClkSetMux(muxSrc, 2);
+        HAL_CRU_ClkSetMux(mux, 0);
+        HAL_CRU_ClkDisable(fracGateId);
+    } else if (DIV_NO_REM(s_cpllFreq, rate, maxDiv)) {
+        HAL_CRU_ClkSetDiv(divSrc, s_cpllFreq / rate);
+        HAL_CRU_ClkSetMux(muxSrc, 1);
+        HAL_CRU_ClkSetMux(mux, 0);
+        HAL_CRU_ClkDisable(fracGateId);
+    } else if (DIV_NO_REM(s_gpllFreq, rate, maxDiv)) {
+        HAL_CRU_ClkSetDiv(divSrc, s_gpllFreq / rate);
+        HAL_CRU_ClkSetMux(muxSrc, 0);
+        HAL_CRU_ClkSetMux(mux, 0);
+        HAL_CRU_ClkDisable(fracGateId);
+    } else {
+        HAL_CRU_FracdivGetConfig(rate, s_gpllFreq, &n, &m);
+        HAL_CRU_ClkSetDiv(divSrc, 1);
+        HAL_CRU_ClkSetMux(muxSrc, 0);
+        HAL_CRU_ClkSetFracDiv(divFrac, n, m);
+        HAL_CRU_ClkSetMux(mux, 1);
+    }
+
+    HAL_CRU_DBG("%s: (0x%08lX|0x%08lX) => (0x%08lX|0U): "
+                "rate=%ld, pRate=%ld, muxSrc=%ld, divSrc=%ld, mux=%ld, "
+                "maxdiv=%ld, n/m=%ld/%ld\n",
+                __func__, muxSrc, divSrc, mux,
+                rate, m ? (rate * m / n) : (rate * HAL_CRU_ClkGetDiv(divSrc)),
+                HAL_CRU_ClkGetMux(muxSrc), HAL_CRU_ClkGetDiv(divSrc),
+                HAL_CRU_ClkGetMux(mux), maxDiv, n, m);
+
+    return HAL_OK;
+}
+
 uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 {
     uint32_t clkMux = CLK_GET_MUX(clockName);
@@ -369,12 +528,16 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         return freq;
 
     case PLL_VPLL:
+        freq = HAL_CRU_GetPllFreq(&VPLL);
+        s_vpllFreq = freq;
 
-        return HAL_CRU_GetPllFreq(&VPLL);
+        return freq;
 
     case PLL_HPLL:
+        freq = HAL_CRU_GetPllFreq(&HPLL);
+        s_hpllFreq = freq;
 
-        return HAL_CRU_GetPllFreq(&HPLL);
+        return freq;
 
     case PLL_CPLL:
         freq = HAL_CRU_GetPllFreq(&CPLL);
@@ -388,6 +551,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 
     case HCLK_BUS:
     case PCLK_BUS:
+    case BCLK_EMMC:
         freq = HAL_CRU_MuxGetFreq2(clkMux, s_gpllFreq, s_cpllFreq);
 
         break;
@@ -404,6 +568,46 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 
         break;
     case SCLK_SFC:
+    case CCLK_EMMC:
+    case CCLK_SDMMC0:
+    case CCLK_SDMMC1:
+        freq = HAL_CRU_MuxGetFreq3(clkMux, s_gpllFreq, s_cpllFreq, PLL_INPUT_OSC_RATE);
+
+        break;
+    case MCLK_PDM:
+        freq = HAL_CRU_MuxGetFreq4(clkMux, s_gpllFreq, s_cpllFreq, s_hpllFreq, PLL_INPUT_OSC_RATE);
+
+        break;
+    case ACLK_VO:
+        freq = HAL_CRU_MuxGetFreq4(clkMux, s_gpllFreq, s_cpllFreq, s_vpllFreq, s_hpllFreq);
+
+        break;
+    case DCLK_VOP:
+        freq = HAL_CRU_MuxGetFreq3(clkMux, s_gpllFreq, s_hpllFreq, s_vpllFreq);
+
+        break;
+    case CLK_GMAC_125M_CRU_I:
+        freq = HAL_CRU_MuxGetFreq2(clkMux, _MHZ(125), PLL_INPUT_OSC_RATE);
+
+        break;
+    case CLK_GMAC_50M_CRU_I:
+    case CLK_MAC100_50M:
+        freq = HAL_CRU_MuxGetFreq2(clkMux, _MHZ(50), PLL_INPUT_OSC_RATE);
+
+        break;
+    case CLK_GMAC_ETH_OUT2IO:
+        freq = HAL_CRU_MuxGetFreq2(clkMux, s_gpllFreq, s_cpllFreq);
+
+        break;
+    case CLK_TSADC:
+    case CLK_TSADC_TSEN:
+        freq = PLL_INPUT_OSC_RATE;
+
+        break;
+    case CLK_CAM0_OUT2IO:
+    case CLK_CAM1_OUT2IO:
+    case CLK_CAM2_OUT2IO:
+    case CLK_CAM3_OUT2IO:
         freq = HAL_CRU_MuxGetFreq3(clkMux, s_gpllFreq, s_cpllFreq, PLL_INPUT_OSC_RATE);
 
         break;
@@ -425,6 +629,12 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         freq = HAL_CRU_MuxGetFreq3(clkMux, _MHZ(100), _MHZ(50), PLL_INPUT_OSC_RATE);
 
         break;
+    case CLK_SAI0:
+    case CLK_SAI1:
+    case CLK_SAI2:
+    case CLK_SPDIF:
+
+        return HAL_CRU_ClkGetAudioFreq(clockName);
     default:
 
         return HAL_INVAL;
@@ -444,6 +654,8 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     return freq;
 }
 
+#define RK3562_VOP_PLL_LIMIT_FREQ 600000000
+
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
     HAL_Status error = HAL_OK;
@@ -459,6 +671,10 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     }
 
     switch (clockName) {
+    case PLL_APLL:
+        error = HAL_CRU_SetPllFreq(&APLL, rate);
+
+        return error;
     case PLL_GPLL:
         error = HAL_CRU_SetPllFreq(&GPLL, rate);
         s_gpllFreq = HAL_CRU_GetPllFreq(&GPLL);
@@ -471,10 +687,26 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return error;
 
+    case PLL_VPLL:
+        error = HAL_CRU_SetPllFreq(&VPLL, rate);
+        s_vpllFreq = HAL_CRU_GetPllFreq(&VPLL);
+
+        return error;
+
+    case PLL_HPLL:
+        error = HAL_CRU_SetPllFreq(&HPLL, rate);
+        s_hpllFreq = HAL_CRU_GetPllFreq(&VPLL);
+
+        return error;
+
     case HCLK_BUS:
     case PCLK_BUS:
         pRate = s_gpllFreq;
         mux = HCLK_BUS_SEL_CLK_GPLL_MUX;
+
+        break;
+    case BCLK_EMMC:
+        mux = HAL_CRU_RoundFreqGetMux2(rate, s_gpllFreq, s_cpllFreq, &pRate);
 
         break;
     case CLK_PMU0_I2C0:
@@ -490,6 +722,53 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         break;
     case SCLK_SFC:
+    case CCLK_EMMC:
+    case CCLK_SDMMC0:
+    case CCLK_SDMMC1:
+        mux = HAL_CRU_RoundFreqGetMux3(rate, s_gpllFreq, s_cpllFreq, PLL_INPUT_OSC_RATE, &pRate);
+
+        break;
+    case MCLK_PDM:
+        mux = HAL_CRU_RoundFreqGetMux4(rate, s_gpllFreq, s_cpllFreq, s_hpllFreq, PLL_INPUT_OSC_RATE, &pRate);
+
+        break;
+    case ACLK_VO:
+        mux = HAL_CRU_RoundFreqGetMux3(rate, s_gpllFreq, s_cpllFreq, s_vpllFreq, &pRate);
+
+        break;
+    case DCLK_VOP:
+        div = HAL_DIV_ROUND_UP(RK3562_VOP_PLL_LIMIT_FREQ, rate);
+        pRate = div * rate;
+        error = HAL_CRU_SetPllFreq(&VPLL, pRate);
+        if (error != HAL_OK) {
+            return error;
+        }
+        s_vpllFreq = HAL_CRU_GetPllFreq(&VPLL);
+        mux = DCLK_VOP_SEL_CLK_VPLL_MUX;
+
+        break;
+    case CLK_GMAC_125M_CRU_I:
+        mux = HAL_CRU_FreqGetMux2(rate, _MHZ(125), PLL_INPUT_OSC_RATE);
+
+        break;
+    case CLK_GMAC_50M_CRU_I:
+    case CLK_MAC100_50M:
+        mux = HAL_CRU_FreqGetMux2(rate, _MHZ(50), PLL_INPUT_OSC_RATE);
+
+        break;
+    case CLK_GMAC_ETH_OUT2IO:
+        mux = HAL_CRU_RoundFreqGetMux2(rate, s_gpllFreq, s_cpllFreq, &pRate);
+
+        break;
+    case CLK_TSADC:
+    case CLK_TSADC_TSEN:
+        pRate = PLL_INPUT_OSC_RATE;
+
+        break;
+    case CLK_CAM0_OUT2IO:
+    case CLK_CAM1_OUT2IO:
+    case CLK_CAM2_OUT2IO:
+    case CLK_CAM3_OUT2IO:
         mux = HAL_CRU_RoundFreqGetMux3(rate, s_gpllFreq, s_cpllFreq, PLL_INPUT_OSC_RATE, &pRate);
 
         break;
@@ -510,6 +789,13 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_PWM3_PERI:
         mux = HAL_CRU_FreqGetMux3(rate, _MHZ(100), _MHZ(50), PLL_INPUT_OSC_RATE);
 
+        break;
+    case CLK_SAI0:
+    case CLK_SAI1:
+    case CLK_SAI2:
+    case CLK_SPDIF:
+
+        return HAL_CRU_ClkSetAudioFreq(clockName, rate);
     default:
 
         return HAL_INVAL;
