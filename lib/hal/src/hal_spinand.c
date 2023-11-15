@@ -243,6 +243,8 @@ static const struct SPINAND_INFO s_spiNandTable[] = {
     { 0xC841, 4, 0x40, 1, 1024, 0x4C, 18, 0x4, 1, { 0x04, 0x14, 0xFF, 0xFF }, &SPINAND_GetEccStatus2 },
     /* GD5F1GM7RExxG */
     { 0xC881, 4, 0x40, 1, 1024, 0x0C, 18, 0x8, 1, { 0x04, 0x14, 0xFF, 0xFF }, &SPINAND_GetEccStatus2 },
+    /* GD5F1GQ5UEYIG */
+    { 0xC851, 4, 0x40, 1, 1024, 0x4C, 18, 0x4, 1, { 0x04, 0x14, 0xFF, 0xFF }, &SPINAND_GetEccStatus2 },
 };
 
 /********************* Private Function Definition ***************************/
