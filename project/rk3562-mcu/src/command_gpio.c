@@ -2,6 +2,8 @@
 /*
  * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
+#ifdef RKMCU_RK3562_BUS
+
 #include <stdio.h>
 #include "hal_base.h"
 #include "simple_console.h"
@@ -418,3 +420,5 @@ struct console_command command_gpio = {
     .help = "Set gpio param",
     .process = command_gpio_process,
 };
+
+#endif
