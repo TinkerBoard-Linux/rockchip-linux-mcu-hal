@@ -549,6 +549,15 @@ static uint32_t HAL_CRU_ClkGetAudioFreq(eCLOCK_Name clockName)
         return HAL_INVAL;
     }
 
+    if (clockName == CLK_I2S1_8CH_TX || clockName == CLK_I2S1_8CH_RX) {
+        pRate = s_cpllFreq / HAL_CRU_ClkGetDiv(divSrc);
+        HAL_CRU_ClkGetFracDiv(divFrac, &n, &m);
+        rate = HAL_CRU_MuxGetFreq3(mux, pRate, pRate / m * n,
+                                   PLL_INPUT_OSC_RATE / 2);
+
+        return rate;
+    }
+
     pRate = HAL_CRU_MuxGetFreq2(muxSrc,
                                 s_gpllFreq / HAL_CRU_ClkGetDiv(divSrc),
                                 s_aupllFreq / HAL_CRU_ClkGetDiv(divSrc));
@@ -741,6 +750,25 @@ static HAL_Status HAL_CRU_ClkSetAudioFreq(eCLOCK_Name clockName, uint32_t rate)
 
     HAL_CRU_ClkEnable(gateId);
     HAL_CRU_ClkEnable(fracGateId);
+
+    if (clockName == CLK_I2S1_8CH_TX || clockName == CLK_I2S1_8CH_RX) {
+        if (PLL_INPUT_OSC_RATE / 2 == rate) {
+            HAL_CRU_ClkSetMux(mux, 2);
+            HAL_CRU_ClkDisable(fracGateId);
+        } else if (DIV_NO_REM(s_cpllFreq, rate, maxDiv)) {
+            HAL_CRU_ClkSetDiv(divSrc, s_cpllFreq / rate);
+            HAL_CRU_ClkSetMux(mux, 0);
+            HAL_CRU_ClkDisable(fracGateId);
+        } else {
+            HAL_CRU_FracdivGetConfig(rate, s_cpllFreq, &n, &m);
+            HAL_CRU_ClkSetDiv(divSrc, 1);
+            HAL_CRU_ClkSetFracDiv(divFrac, n, m);
+            HAL_CRU_ClkSetMux(mux, 1);
+            HAL_CRU_ClkGetFracDiv(divFrac, &n, &m);
+        }
+
+        return HAL_OK;
+    }
 
     if (PLL_INPUT_OSC_RATE / 2 == rate) {
         HAL_CRU_ClkSetMux(mux, 3);
