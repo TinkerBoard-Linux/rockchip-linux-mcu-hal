@@ -60,7 +60,7 @@
 #define PL330_MAX_CHAN_BUFS    2
 #define PL330_CHAN_BUF_LEN     128
 #define PL330_CHANNELS_PER_DEV 8
-#define PL330_NR_IRQS          2
+#define PL330_NR_IRQS          9
 
 /***************************** Structure Definition **************************/
 
