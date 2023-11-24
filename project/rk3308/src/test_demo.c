@@ -636,7 +636,7 @@ static void dmalinklist_test(void)
     __ALIGNED(64) uint8_t buf[PL330_CHAN_BUF_LEN] = { 0 };
     __ALIGNED(64) static uint8_t pxferList[XFER_LIST_SIZE] = { 0 };
     __ALIGNED(64) static uint8_t pdesc[XFER_LIST_SIZE * 2] = { 0 };
-    uint32_t timeout = 1000;
+    int timeout = 1000;
     struct PL330_CHAN *pchan;
     int ret, i;
 
@@ -686,7 +686,7 @@ static void dmalinklist_test(void)
         HAL_DelayUs(10);
     }
 
-    if (!timeout) {
+    if (timeout < 0) {
         printf("Wait DMA finish timeout\n");
 
         return;
