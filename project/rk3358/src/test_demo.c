@@ -483,7 +483,7 @@ static void dmalinklist_test(void)
     }
 
     while (timeout--) {
-        if (pl330->pReg->INTEN & (1 << DMA_TEST_CHANNEL) == 0) {
+        if ((pl330->pReg->INTEN & (1 << DMA_TEST_CHANNEL)) == 0) {
             break;
         }
 
