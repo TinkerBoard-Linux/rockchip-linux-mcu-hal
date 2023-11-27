@@ -34,6 +34,8 @@ struct HAL_ACODEC_DEV {
     eCLOCK_Name hclk;
     uint32_t mclk;
     uint32_t micBias;
+    uint32_t mclkRxOutGate;
+    uint32_t mclkTxOutGate;
     bool micDifferential;
     void *privateData;
 };

@@ -11,6 +11,8 @@ struct HAL_ACODEC_DEV g_acodecDev =
     .pReg = ACODEC,
     .hclk = PCLK_ACODEC_GATE,
     .mclk = 12288000,
+    .mclkRxOutGate = CLK_I2S2_8CH_RX_OUT_CLK_GATE,
+    .mclkTxOutGate = CLK_I2S2_8CH_TX_OUT_CLK_GATE,
     .micBias = RK3308_ADC_MICBIAS_VOLT_0_85,
     .micDifferential = true,
 };
