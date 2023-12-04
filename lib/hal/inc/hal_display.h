@@ -75,6 +75,7 @@
 #define MEDIA_BUS_FMT_SRGB888_DUMMY_4X8  0x101f
 #define MEDIA_BUS_FMT_SBGR888_DUMMY_4X8  0x1020
 #define MEDIA_BUS_FMT_SRBG888_DUMMY_4X8  0x1021
+#define MEDIA_BUS_FMT_SRGB666_3X6        0x1100
 
 /***************************** Structure Definition **************************/
 
