@@ -90,6 +90,80 @@ const struct HAL_I2C_DEV g_i2c5Dev =
 #endif /* RKMCU_RK3562_BUS || HAL_AP_CORE */
 #endif /* HAL_I2C_MODULE_ENABLED */
 
+#ifdef HAL_SAI_MODULE_ENABLED
+struct HAL_SAI_DEV g_sai0Dev =
+{
+    .pReg = SAI0,
+    .mclk = CLK_SAI0,
+    .mclkGate = MCLK_SAI0_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(SAI0->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_SAI0_RX,
+        .dmac = DMA,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(SAI0->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_SAI0_TX,
+        .dmac = DMA,
+    },
+};
+
+struct HAL_SAI_DEV g_sai1Dev =
+{
+    .pReg = SAI1,
+    .mclk = CLK_SAI1,
+    .mclkGate = MCLK_SAI1_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(SAI1->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_SAI1_RX,
+        .dmac = DMA,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(SAI1->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_SAI1_TX,
+        .dmac = DMA,
+    },
+};
+
+struct HAL_SAI_DEV g_sai2Dev =
+{
+    .pReg = SAI2,
+    .mclk = CLK_SAI2,
+    .mclkGate = MCLK_SAI2_GATE,
+    .bclkFs = 64,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(SAI2->RXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_SAI2_RX,
+        .dmac = DMA,
+    },
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(SAI2->TXDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA_REQ_SAI2_TX,
+        .dmac = DMA,
+    },
+};
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 const struct HAL_SPI_DEV g_spi0Dev = {
     .base = SPI0_BASE,

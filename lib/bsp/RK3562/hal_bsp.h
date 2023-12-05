@@ -27,6 +27,12 @@ extern const struct HAL_I2C_DEV g_i2c5Dev;
 #endif /* RKMCU_RK3562_BUS || HAL_AP_CORE */
 #endif
 
+#ifdef HAL_SAI_MODULE_ENABLED
+extern struct HAL_SAI_DEV g_sai0Dev;
+extern struct HAL_SAI_DEV g_sai1Dev;
+extern struct HAL_SAI_DEV g_sai2Dev;
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 extern const struct HAL_SPI_DEV g_spi0Dev;
 #if defined(RKMCU_RK3562_BUS) || defined(HAL_AP_CORE)
