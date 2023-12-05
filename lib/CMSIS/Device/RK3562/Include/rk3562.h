@@ -703,6 +703,32 @@ struct SARADC_REG {
     __I  uint32_t DATA[16];                           /* Address Offset: 0x0120 */
     __IO uint32_t AUTO_CH_EN;                         /* Address Offset: 0x0160 */
 };
+/* SAI Register Structure Define */
+struct SAI_REG {
+    __IO uint32_t TXCR;                               /* Address Offset: 0x0000 */
+    __IO uint32_t FSCR;                               /* Address Offset: 0x0004 */
+    __IO uint32_t RXCR;                               /* Address Offset: 0x0008 */
+    __IO uint32_t MONOCR;                             /* Address Offset: 0x000C */
+    __IO uint32_t XFER;                               /* Address Offset: 0x0010 */
+    __IO uint32_t CLR;                                /* Address Offset: 0x0014 */
+    __IO uint32_t CKR;                                /* Address Offset: 0x0018 */
+    __I  uint32_t TXFIFOLR;                           /* Address Offset: 0x001C */
+    __I  uint32_t RXFIFOLR;                           /* Address Offset: 0x0020 */
+    __IO uint32_t DMACR;                              /* Address Offset: 0x0024 */
+    __IO uint32_t INTCR;                              /* Address Offset: 0x0028 */
+    __I  uint32_t INTSR;                              /* Address Offset: 0x002C */
+    __IO uint32_t TXDR;                               /* Address Offset: 0x0030 */
+    __IO uint32_t RXDR;                               /* Address Offset: 0x0034 */
+    __IO uint32_t PATH_SEL;                           /* Address Offset: 0x0038 */
+    __IO uint32_t TX_SLOT_MASK[4];                    /* Address Offset: 0x003C */
+    __IO uint32_t RX_SLOT_MASK[4];                    /* Address Offset: 0x004C */
+    __I  uint32_t TX_DATA_CNT;                        /* Address Offset: 0x005C */
+    __I  uint32_t RX_DATA_CNT;                        /* Address Offset: 0x0060 */
+    __IO uint32_t TX_TIMING_SHIFT;                    /* Address Offset: 0x0064 */
+    __IO uint32_t RX_TIMING_SHIFT;                    /* Address Offset: 0x0068 */
+         uint32_t RESERVED006C;                       /* Address Offset: 0x006C */
+    __I  uint32_t VERSION;                            /* Address Offset: 0x0070 */
+};
 /* FSPI Register Structure Define */
 struct FSPI_REG {
     __IO uint32_t CTRL0;                              /* Address Offset: 0x0000 */
@@ -1121,6 +1147,9 @@ struct INTMUX_REG {
 #define PWM2_BASE                      0xFF710000U /* PWM2 base address */
 #define PWM3_BASE                      0xFF720000U /* PWM3 base address */
 #define SARADC0_BASE                   0xFF730000U /* SARADC0 base address */
+#define SAI0_BASE                      0xFF800000U /* SAI0 base address */
+#define SAI1_BASE                      0xFF810000U /* SAI1 base address */
+#define SAI2_BASE                      0xFF820000U /* SAI2 base address */
 #define FSPI_BASE                      0xFF860000U /* FSPI base address */
 #define DMA_BASE                       0xFF990000U /* DMA base address */
 #define SPINLOCK_BASE                  0xFF9E0000U /* SPINLOCK base address */
@@ -1190,6 +1219,9 @@ struct INTMUX_REG {
 #define PWM2                ((struct PWM_REG *) PWM2_BASE)
 #define PWM3                ((struct PWM_REG *) PWM3_BASE)
 #define SARADC0             ((struct SARADC_REG *) SARADC0_BASE)
+#define SAI0                ((struct SAI_REG *) SAI0_BASE)
+#define SAI1                ((struct SAI_REG *) SAI1_BASE)
+#define SAI2                ((struct SAI_REG *) SAI2_BASE)
 #define FSPI                ((struct FSPI_REG *) FSPI_BASE)
 #define DMA                 ((struct DMA_REG *) DMA_BASE)
 #define SPINLOCK            ((struct SPINLOCK_REG *) SPINLOCK_BASE)
@@ -1241,6 +1273,7 @@ struct INTMUX_REG {
 #define IS_PWM_INSTANCE(instance) (((instance) == PWM0) || ((instance) == PWM1) || ((instance) == PWM2) || ((instance) == PWM3))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4) || ((instance) == GPIO0_EXP) || ((instance) == GPIO1_EXP) || ((instance) == GPIO2_EXP) || ((instance) == GPIO3_EXP) || ((instance) == GPIO4_EXP))
 #define IS_SARADC_INSTANCE(instance) (((instance) == SARADC0) || ((instance) == SARADC1))
+#define IS_SAI_INSTANCE(instance) (((instance) == SAI0) || ((instance) == SAI1) || ((instance) == SAI2))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
 #define IS_GMAC_INSTANCE(instance) ((instance) == GMAC0)
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
@@ -8815,6 +8848,247 @@ struct INTMUX_REG {
 #define SARADC_AUTO_CH_EN_AUTO_CH14_EN_MASK                (0x1U << SARADC_AUTO_CH_EN_AUTO_CH14_EN_SHIFT)               /* 0x00004000 */
 #define SARADC_AUTO_CH_EN_AUTO_CH15_EN_SHIFT               (15U)
 #define SARADC_AUTO_CH_EN_AUTO_CH15_EN_MASK                (0x1U << SARADC_AUTO_CH_EN_AUTO_CH15_EN_SHIFT)               /* 0x00008000 */
+/******************************************SAI*******************************************/
+/* TXCR */
+#define SAI_TXCR_OFFSET                                    (0x0U)
+#define SAI_TXCR_VDW_SHIFT                                 (0U)
+#define SAI_TXCR_VDW_MASK                                  (0x1FU << SAI_TXCR_VDW_SHIFT)                                /* 0x0000001F */
+#define SAI_TXCR_SBW_SHIFT                                 (5U)
+#define SAI_TXCR_SBW_MASK                                  (0x1FU << SAI_TXCR_SBW_SHIFT)                                /* 0x000003E0 */
+#define SAI_TXCR_VDJ_SHIFT                                 (10U)
+#define SAI_TXCR_VDJ_MASK                                  (0x1U << SAI_TXCR_VDJ_SHIFT)                                 /* 0x00000400 */
+#define SAI_TXCR_SNB_SHIFT                                 (11U)
+#define SAI_TXCR_SNB_MASK                                  (0x7FU << SAI_TXCR_SNB_SHIFT)                                /* 0x0003F800 */
+#define SAI_TXCR_FBM_SHIFT                                 (18U)
+#define SAI_TXCR_FBM_MASK                                  (0x1U << SAI_TXCR_FBM_SHIFT)                                 /* 0x00040000 */
+#define SAI_TXCR_SJM_SHIFT                                 (19U)
+#define SAI_TXCR_SJM_MASK                                  (0x1U << SAI_TXCR_SJM_SHIFT)                                 /* 0x00080000 */
+#define SAI_TXCR_LANE_SHIFT                                (20U)
+#define SAI_TXCR_LANE_MASK                                 (0x3U << SAI_TXCR_LANE_SHIFT)                                /* 0x00300000 */
+#define SAI_TXCR_DSE_SHIFT                                 (22U)
+#define SAI_TXCR_DSE_MASK                                  (0x1U << SAI_TXCR_DSE_SHIFT)                                 /* 0x00400000 */
+/* FSCR */
+#define SAI_FSCR_OFFSET                                    (0x4U)
+#define SAI_FSCR_FW_SHIFT                                  (0U)
+#define SAI_FSCR_FW_MASK                                   (0xFFFU << SAI_FSCR_FW_SHIFT)                                /* 0x00000FFF */
+#define SAI_FSCR_FPW_SHIFT                                 (12U)
+#define SAI_FSCR_FPW_MASK                                  (0xFFFU << SAI_FSCR_FPW_SHIFT)                               /* 0x00FFF000 */
+#define SAI_FSCR_EDGE_SHIFT                                (24U)
+#define SAI_FSCR_EDGE_MASK                                 (0x1U << SAI_FSCR_EDGE_SHIFT)                                /* 0x01000000 */
+/* RXCR */
+#define SAI_RXCR_OFFSET                                    (0x8U)
+#define SAI_RXCR_VDW_SHIFT                                 (0U)
+#define SAI_RXCR_VDW_MASK                                  (0x1FU << SAI_RXCR_VDW_SHIFT)                                /* 0x0000001F */
+#define SAI_RXCR_SBW_SHIFT                                 (5U)
+#define SAI_RXCR_SBW_MASK                                  (0x1FU << SAI_RXCR_SBW_SHIFT)                                /* 0x000003E0 */
+#define SAI_RXCR_VDJ_SHIFT                                 (10U)
+#define SAI_RXCR_VDJ_MASK                                  (0x1U << SAI_RXCR_VDJ_SHIFT)                                 /* 0x00000400 */
+#define SAI_RXCR_SNB_SHIFT                                 (11U)
+#define SAI_RXCR_SNB_MASK                                  (0x7FU << SAI_RXCR_SNB_SHIFT)                                /* 0x0003F800 */
+#define SAI_RXCR_FBM_SHIFT                                 (18U)
+#define SAI_RXCR_FBM_MASK                                  (0x1U << SAI_RXCR_FBM_SHIFT)                                 /* 0x00040000 */
+#define SAI_RXCR_SJM_SHIFT                                 (19U)
+#define SAI_RXCR_SJM_MASK                                  (0x1U << SAI_RXCR_SJM_SHIFT)                                 /* 0x00080000 */
+#define SAI_RXCR_LANE_SHIFT                                (20U)
+#define SAI_RXCR_LANE_MASK                                 (0x3U << SAI_RXCR_LANE_SHIFT)                                /* 0x00300000 */
+#define SAI_RXCR_DSE_SHIFT                                 (22U)
+#define SAI_RXCR_DSE_MASK                                  (0x1U << SAI_RXCR_DSE_SHIFT)                                 /* 0x00400000 */
+/* MONOCR */
+#define SAI_MONOCR_OFFSET                                  (0xCU)
+#define SAI_MONOCR_TMONO_SHIFT                             (0U)
+#define SAI_MONOCR_TMONO_MASK                              (0x1U << SAI_MONOCR_TMONO_SHIFT)                             /* 0x00000001 */
+#define SAI_MONOCR_RMONO_SHIFT                             (1U)
+#define SAI_MONOCR_RMONO_MASK                              (0x1U << SAI_MONOCR_RMONO_SHIFT)                             /* 0x00000002 */
+#define SAI_MONOCR_RMONO_SLOT_SHIFT                        (2U)
+#define SAI_MONOCR_RMONO_SLOT_MASK                         (0x7FU << SAI_MONOCR_RMONO_SLOT_SHIFT)                       /* 0x000001FC */
+/* XFER */
+#define SAI_XFER_OFFSET                                    (0x10U)
+#define SAI_XFER_CLK_EN_SHIFT                              (0U)
+#define SAI_XFER_CLK_EN_MASK                               (0x1U << SAI_XFER_CLK_EN_SHIFT)                              /* 0x00000001 */
+#define SAI_XFER_FSS_SHIFT                                 (1U)
+#define SAI_XFER_FSS_MASK                                  (0x1U << SAI_XFER_FSS_SHIFT)                                 /* 0x00000002 */
+#define SAI_XFER_TXS_SHIFT                                 (2U)
+#define SAI_XFER_TXS_MASK                                  (0x1U << SAI_XFER_TXS_SHIFT)                                 /* 0x00000004 */
+#define SAI_XFER_RXS_SHIFT                                 (3U)
+#define SAI_XFER_RXS_MASK                                  (0x1U << SAI_XFER_RXS_SHIFT)                                 /* 0x00000008 */
+#define SAI_XFER_TDC_SHIFT                                 (4U)
+#define SAI_XFER_TDC_MASK                                  (0x1U << SAI_XFER_TDC_SHIFT)                                 /* 0x00000010 */
+#define SAI_XFER_RDC_SHIFT                                 (5U)
+#define SAI_XFER_RDC_MASK                                  (0x1U << SAI_XFER_RDC_SHIFT)                                 /* 0x00000020 */
+#define SAI_XFER_FS_IDLE_SHIFT                             (6U)
+#define SAI_XFER_FS_IDLE_MASK                              (0x1U << SAI_XFER_FS_IDLE_SHIFT)                             /* 0x00000040 */
+#define SAI_XFER_TX_IDLE_SHIFT                             (7U)
+#define SAI_XFER_TX_IDLE_MASK                              (0x1U << SAI_XFER_TX_IDLE_SHIFT)                             /* 0x00000080 */
+#define SAI_XFER_RX_IDLE_SHIFT                             (8U)
+#define SAI_XFER_RX_IDLE_MASK                              (0x1U << SAI_XFER_RX_IDLE_SHIFT)                             /* 0x00000100 */
+/* CLR */
+#define SAI_CLR_OFFSET                                     (0x14U)
+#define SAI_CLR_TXC_SHIFT                                  (0U)
+#define SAI_CLR_TXC_MASK                                   (0x1U << SAI_CLR_TXC_SHIFT)                                  /* 0x00000001 */
+#define SAI_CLR_RXC_SHIFT                                  (1U)
+#define SAI_CLR_RXC_MASK                                   (0x1U << SAI_CLR_RXC_SHIFT)                                  /* 0x00000002 */
+#define SAI_CLR_FSC_SHIFT                                  (2U)
+#define SAI_CLR_FSC_MASK                                   (0x1U << SAI_CLR_FSC_SHIFT)                                  /* 0x00000004 */
+/* CKR */
+#define SAI_CKR_OFFSET                                     (0x18U)
+#define SAI_CKR_FSP_SHIFT                                  (0U)
+#define SAI_CKR_FSP_MASK                                   (0x1U << SAI_CKR_FSP_SHIFT)                                  /* 0x00000001 */
+#define SAI_CKR_CKP_SHIFT                                  (1U)
+#define SAI_CKR_CKP_MASK                                   (0x1U << SAI_CKR_CKP_SHIFT)                                  /* 0x00000002 */
+#define SAI_CKR_MSS_SHIFT                                  (2U)
+#define SAI_CKR_MSS_MASK                                   (0x1U << SAI_CKR_MSS_SHIFT)                                  /* 0x00000004 */
+#define SAI_CKR_MDIV_SHIFT                                 (3U)
+#define SAI_CKR_MDIV_MASK                                  (0xFFFU << SAI_CKR_MDIV_SHIFT)                               /* 0x00007FF8 */
+/* TXFIFOLR */
+#define SAI_TXFIFOLR_OFFSET                                (0x1CU)
+#define SAI_TXFIFOLR                                       (0x0U)
+#define SAI_TXFIFOLR_TFL0_SHIFT                            (0U)
+#define SAI_TXFIFOLR_TFL0_MASK                             (0x3FU << SAI_TXFIFOLR_TFL0_SHIFT)                           /* 0x0000003F */
+#define SAI_TXFIFOLR_TFL1_SHIFT                            (6U)
+#define SAI_TXFIFOLR_TFL1_MASK                             (0x3FU << SAI_TXFIFOLR_TFL1_SHIFT)                           /* 0x00000FC0 */
+#define SAI_TXFIFOLR_TFL2_SHIFT                            (12U)
+#define SAI_TXFIFOLR_TFL2_MASK                             (0x3FU << SAI_TXFIFOLR_TFL2_SHIFT)                           /* 0x0003F000 */
+#define SAI_TXFIFOLR_TFL3_SHIFT                            (18U)
+#define SAI_TXFIFOLR_TFL3_MASK                             (0x3FU << SAI_TXFIFOLR_TFL3_SHIFT)                           /* 0x00FC0000 */
+/* RXFIFOLR */
+#define SAI_RXFIFOLR_OFFSET                                (0x20U)
+#define SAI_RXFIFOLR                                       (0x0U)
+#define SAI_RXFIFOLR_RFL0_SHIFT                            (0U)
+#define SAI_RXFIFOLR_RFL0_MASK                             (0x3FU << SAI_RXFIFOLR_RFL0_SHIFT)                           /* 0x0000003F */
+#define SAI_RXFIFOLR_RFL1_SHIFT                            (6U)
+#define SAI_RXFIFOLR_RFL1_MASK                             (0x3FU << SAI_RXFIFOLR_RFL1_SHIFT)                           /* 0x00000FC0 */
+#define SAI_RXFIFOLR_RFL2_SHIFT                            (12U)
+#define SAI_RXFIFOLR_RFL2_MASK                             (0x3FU << SAI_RXFIFOLR_RFL2_SHIFT)                           /* 0x0003F000 */
+#define SAI_RXFIFOLR_RFL3_SHIFT                            (18U)
+#define SAI_RXFIFOLR_RFL3_MASK                             (0x3FU << SAI_RXFIFOLR_RFL3_SHIFT)                           /* 0x00FC0000 */
+/* DMACR */
+#define SAI_DMACR_OFFSET                                   (0x24U)
+#define SAI_DMACR_TDL_SHIFT                                (0U)
+#define SAI_DMACR_TDL_MASK                                 (0x1FU << SAI_DMACR_TDL_SHIFT)                               /* 0x0000001F */
+#define SAI_DMACR_TDE_SHIFT                                (8U)
+#define SAI_DMACR_TDE_MASK                                 (0x1U << SAI_DMACR_TDE_SHIFT)                                /* 0x00000100 */
+#define SAI_DMACR_RDL_SHIFT                                (16U)
+#define SAI_DMACR_RDL_MASK                                 (0x1FU << SAI_DMACR_RDL_SHIFT)                               /* 0x001F0000 */
+#define SAI_DMACR_RDE_SHIFT                                (24U)
+#define SAI_DMACR_RDE_MASK                                 (0x1U << SAI_DMACR_RDE_SHIFT)                                /* 0x01000000 */
+/* INTCR */
+#define SAI_INTCR_OFFSET                                   (0x28U)
+#define SAI_INTCR_TXEIE_SHIFT                              (0U)
+#define SAI_INTCR_TXEIE_MASK                               (0x1U << SAI_INTCR_TXEIE_SHIFT)                              /* 0x00000001 */
+#define SAI_INTCR_TXUIE_SHIFT                              (1U)
+#define SAI_INTCR_TXUIE_MASK                               (0x1U << SAI_INTCR_TXUIE_SHIFT)                              /* 0x00000002 */
+#define SAI_INTCR_TXUIC_SHIFT                              (2U)
+#define SAI_INTCR_TXUIC_MASK                               (0x1U << SAI_INTCR_TXUIC_SHIFT)                              /* 0x00000004 */
+#define SAI_INTCR_TFT_SHIFT                                (4U)
+#define SAI_INTCR_TFT_MASK                                 (0x1FU << SAI_INTCR_TFT_SHIFT)                               /* 0x000001F0 */
+#define SAI_INTCR_RXFIE_SHIFT                              (16U)
+#define SAI_INTCR_RXFIE_MASK                               (0x1U << SAI_INTCR_RXFIE_SHIFT)                              /* 0x00010000 */
+#define SAI_INTCR_RXOIE_SHIFT                              (17U)
+#define SAI_INTCR_RXOIE_MASK                               (0x1U << SAI_INTCR_RXOIE_SHIFT)                              /* 0x00020000 */
+#define SAI_INTCR_RXOIC_SHIFT                              (18U)
+#define SAI_INTCR_RXOIC_MASK                               (0x1U << SAI_INTCR_RXOIC_SHIFT)                              /* 0x00040000 */
+#define SAI_INTCR_RFT_SHIFT                                (20U)
+#define SAI_INTCR_RFT_MASK                                 (0x1FU << SAI_INTCR_RFT_SHIFT)                               /* 0x01F00000 */
+/* INTSR */
+#define SAI_INTSR_OFFSET                                   (0x2CU)
+#define SAI_INTSR                                          (0x0U)
+#define SAI_INTSR_TXEI_SHIFT                               (0U)
+#define SAI_INTSR_TXEI_MASK                                (0x1U << SAI_INTSR_TXEI_SHIFT)                               /* 0x00000001 */
+#define SAI_INTSR_TXUI_SHIFT                               (1U)
+#define SAI_INTSR_TXUI_MASK                                (0x1U << SAI_INTSR_TXUI_SHIFT)                               /* 0x00000002 */
+#define SAI_INTSR_RXFI_SHIFT                               (16U)
+#define SAI_INTSR_RXFI_MASK                                (0x1U << SAI_INTSR_RXFI_SHIFT)                               /* 0x00010000 */
+#define SAI_INTSR_RXOI_SHIFT                               (17U)
+#define SAI_INTSR_RXOI_MASK                                (0x1U << SAI_INTSR_RXOI_SHIFT)                               /* 0x00020000 */
+/* TXDR */
+#define SAI_TXDR_OFFSET                                    (0x30U)
+#define SAI_TXDR_TXDR_SHIFT                                (0U)
+#define SAI_TXDR_TXDR_MASK                                 (0xFFFFFFFFU << SAI_TXDR_TXDR_SHIFT)                         /* 0xFFFFFFFF */
+/* RXDR */
+#define SAI_RXDR_OFFSET                                    (0x34U)
+#define SAI_RXDR_RXDR_SHIFT                                (0U)
+#define SAI_RXDR_RXDR_MASK                                 (0xFFFFFFFFU << SAI_RXDR_RXDR_SHIFT)                         /* 0xFFFFFFFF */
+/* PATH_SEL */
+#define SAI_PATH_SEL_OFFSET                                (0x38U)
+#define SAI_PATH_SEL_TX_PATH_SELECT0_SHIFT                 (0U)
+#define SAI_PATH_SEL_TX_PATH_SELECT0_MASK                  (0x3U << SAI_PATH_SEL_TX_PATH_SELECT0_SHIFT)                 /* 0x00000003 */
+#define SAI_PATH_SEL_TX_PATH_SELECT1_SHIFT                 (2U)
+#define SAI_PATH_SEL_TX_PATH_SELECT1_MASK                  (0x3U << SAI_PATH_SEL_TX_PATH_SELECT1_SHIFT)                 /* 0x0000000C */
+#define SAI_PATH_SEL_TX_PATH_SELECT2_SHIFT                 (4U)
+#define SAI_PATH_SEL_TX_PATH_SELECT2_MASK                  (0x3U << SAI_PATH_SEL_TX_PATH_SELECT2_SHIFT)                 /* 0x00000030 */
+#define SAI_PATH_SEL_TX_PATH_SELECT3_SHIFT                 (6U)
+#define SAI_PATH_SEL_TX_PATH_SELECT3_MASK                  (0x3U << SAI_PATH_SEL_TX_PATH_SELECT3_SHIFT)                 /* 0x000000C0 */
+#define SAI_PATH_SEL_RX_PATH_SELECT0_SHIFT                 (8U)
+#define SAI_PATH_SEL_RX_PATH_SELECT0_MASK                  (0x3U << SAI_PATH_SEL_RX_PATH_SELECT0_SHIFT)                 /* 0x00000300 */
+#define SAI_PATH_SEL_RX_PATH_SELECT1_SHIFT                 (10U)
+#define SAI_PATH_SEL_RX_PATH_SELECT1_MASK                  (0x3U << SAI_PATH_SEL_RX_PATH_SELECT1_SHIFT)                 /* 0x00000C00 */
+#define SAI_PATH_SEL_RX_PATH_SELECT2_SHIFT                 (12U)
+#define SAI_PATH_SEL_RX_PATH_SELECT2_MASK                  (0x3U << SAI_PATH_SEL_RX_PATH_SELECT2_SHIFT)                 /* 0x00003000 */
+#define SAI_PATH_SEL_RX_PATH_SELECT3_SHIFT                 (14U)
+#define SAI_PATH_SEL_RX_PATH_SELECT3_MASK                  (0x3U << SAI_PATH_SEL_RX_PATH_SELECT3_SHIFT)                 /* 0x0000C000 */
+#define SAI_PATH_SEL_SYNC_IN_SEL_SHIFT                     (16U)
+#define SAI_PATH_SEL_SYNC_IN_SEL_MASK                      (0x1U << SAI_PATH_SEL_SYNC_IN_SEL_SHIFT)                     /* 0x00010000 */
+#define SAI_PATH_SEL_SYNC_OUT_SEL_SHIFT                    (17U)
+#define SAI_PATH_SEL_SYNC_OUT_SEL_MASK                     (0x1U << SAI_PATH_SEL_SYNC_OUT_SEL_SHIFT)                    /* 0x00020000 */
+#define SAI_PATH_SEL_LOOPBACK_SHIFT                        (18U)
+#define SAI_PATH_SEL_LOOPBACK_MASK                         (0xFU << SAI_PATH_SEL_LOOPBACK_SHIFT)                        /* 0x003C0000 */
+#define SAI_PATH_SEL_LOOPBACK_PATH_SEL_SHIFT               (22U)
+#define SAI_PATH_SEL_LOOPBACK_PATH_SEL_MASK                (0xFFU << SAI_PATH_SEL_LOOPBACK_PATH_SEL_SHIFT)              /* 0x3FC00000 */
+/* TX_SLOT_MASK0 */
+#define SAI_TX_SLOT_MASK0_OFFSET                           (0x3CU)
+#define SAI_TX_SLOT_MASK0_TX_SLOT_MASK0_SHIFT              (0U)
+#define SAI_TX_SLOT_MASK0_TX_SLOT_MASK0_MASK               (0xFFFFFFFFU << SAI_TX_SLOT_MASK0_TX_SLOT_MASK0_SHIFT)       /* 0xFFFFFFFF */
+/* TX_SLOT_MASK1 */
+#define SAI_TX_SLOT_MASK1_OFFSET                           (0x40U)
+#define SAI_TX_SLOT_MASK1_TX_SLOT_MASK1_SHIFT              (0U)
+#define SAI_TX_SLOT_MASK1_TX_SLOT_MASK1_MASK               (0xFFFFFFFFU << SAI_TX_SLOT_MASK1_TX_SLOT_MASK1_SHIFT)       /* 0xFFFFFFFF */
+/* TX_SLOT_MASK2 */
+#define SAI_TX_SLOT_MASK2_OFFSET                           (0x44U)
+#define SAI_TX_SLOT_MASK2_TX_SLOT_MASK2_SHIFT              (0U)
+#define SAI_TX_SLOT_MASK2_TX_SLOT_MASK2_MASK               (0xFFFFFFFFU << SAI_TX_SLOT_MASK2_TX_SLOT_MASK2_SHIFT)       /* 0xFFFFFFFF */
+/* TX_SLOT_MASK3 */
+#define SAI_TX_SLOT_MASK3_OFFSET                           (0x48U)
+#define SAI_TX_SLOT_MASK3_TX_SLOT_MASK3_SHIFT              (0U)
+#define SAI_TX_SLOT_MASK3_TX_SLOT_MASK3_MASK               (0xFFFFFFFFU << SAI_TX_SLOT_MASK3_TX_SLOT_MASK3_SHIFT)       /* 0xFFFFFFFF */
+/* RX_SLOT_MASK0 */
+#define SAI_RX_SLOT_MASK0_OFFSET                           (0x4CU)
+#define SAI_RX_SLOT_MASK0_RX_SLOT_MASK0_SHIFT              (0U)
+#define SAI_RX_SLOT_MASK0_RX_SLOT_MASK0_MASK               (0xFFFFFFFFU << SAI_RX_SLOT_MASK0_RX_SLOT_MASK0_SHIFT)       /* 0xFFFFFFFF */
+/* RX_SLOT_MASK1 */
+#define SAI_RX_SLOT_MASK1_OFFSET                           (0x50U)
+#define SAI_RX_SLOT_MASK1_RX_SLOT_MASK1_SHIFT              (0U)
+#define SAI_RX_SLOT_MASK1_RX_SLOT_MASK1_MASK               (0xFFFFFFFFU << SAI_RX_SLOT_MASK1_RX_SLOT_MASK1_SHIFT)       /* 0xFFFFFFFF */
+/* RX_SLOT_MASK2 */
+#define SAI_RX_SLOT_MASK2_OFFSET                           (0x54U)
+#define SAI_RX_SLOT_MASK2_RX_SLOT_MASK2_SHIFT              (0U)
+#define SAI_RX_SLOT_MASK2_RX_SLOT_MASK2_MASK               (0xFFFFFFFFU << SAI_RX_SLOT_MASK2_RX_SLOT_MASK2_SHIFT)       /* 0xFFFFFFFF */
+/* RX_SLOT_MASK3 */
+#define SAI_RX_SLOT_MASK3_OFFSET                           (0x58U)
+#define SAI_RX_SLOT_MASK3_RX_SLOT_MASK3_SHIFT              (0U)
+#define SAI_RX_SLOT_MASK3_RX_SLOT_MASK3_MASK               (0xFFFFFFFFU << SAI_RX_SLOT_MASK3_RX_SLOT_MASK3_SHIFT)       /* 0xFFFFFFFF */
+/* TX_DATA_CNT */
+#define SAI_TX_DATA_CNT_OFFSET                             (0x5CU)
+#define SAI_TX_DATA_CNT                                    (0x0U)
+#define SAI_TX_DATA_CNT_TX_DATA_CNT_SHIFT                  (0U)
+#define SAI_TX_DATA_CNT_TX_DATA_CNT_MASK                   (0xFFFFFFFFU << SAI_TX_DATA_CNT_TX_DATA_CNT_SHIFT)           /* 0xFFFFFFFF */
+/* RX_DATA_CNT */
+#define SAI_RX_DATA_CNT_OFFSET                             (0x60U)
+#define SAI_RX_DATA_CNT                                    (0x0U)
+#define SAI_RX_DATA_CNT_RX_DATA_CNT_SHIFT                  (0U)
+#define SAI_RX_DATA_CNT_RX_DATA_CNT_MASK                   (0xFFFFFFFFU << SAI_RX_DATA_CNT_RX_DATA_CNT_SHIFT)           /* 0xFFFFFFFF */
+/* TX_TIMING_SHIFT */
+#define SAI_TX_TIMING_SHIFT_OFFSET                         (0x64U)
+#define SAI_TX_TIMING_SHIFT_DATA_SHIFT_RIGHT_SHIFT         (0U)
+#define SAI_TX_TIMING_SHIFT_DATA_SHIFT_RIGHT_MASK          (0xFFFFFFU << SAI_TX_TIMING_SHIFT_DATA_SHIFT_RIGHT_SHIFT)    /* 0x00FFFFFF */
+/* RX_TIMING_SHIFT */
+#define SAI_RX_TIMING_SHIFT_OFFSET                         (0x68U)
+#define SAI_RX_TIMING_SHIFT_DATA_SHIFT_RIGHT_SHIFT         (0U)
+#define SAI_RX_TIMING_SHIFT_DATA_SHIFT_RIGHT_MASK          (0xFFFFFFU << SAI_RX_TIMING_SHIFT_DATA_SHIFT_RIGHT_SHIFT)    /* 0x00FFFFFF */
+/* VERSION */
+#define SAI_VERSION_OFFSET                                 (0x70U)
+#define SAI_VERSION                                        (0x20200520U)
+#define SAI_VERSION_SAI_VERTION_SHIFT                      (0U)
+#define SAI_VERSION_SAI_VERTION_MASK                       (0xFFFFFFFFU << SAI_VERSION_SAI_VERTION_SHIFT)               /* 0xFFFFFFFF */
 /******************************************FSPI******************************************/
 /* CTRL0 */
 #define FSPI_CTRL0_OFFSET                                  (0x0U)
