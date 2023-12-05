@@ -159,6 +159,10 @@ typedef enum {
     GLB_RST_SND_WDT1,
     GLB_RST_FST_WDT2,
     GLB_RST_SND_WDT2,
+    GLB_RST_FST_WDT3,
+    GLB_RST_SND_WDT3,
+    GLB_RST_FST_WDT4,
+    GLB_RST_SND_WDT4,
 } eCRU_WdtRstType;
 
 struct CRU_BANK_INFO {
@@ -192,12 +196,14 @@ int HAL_CRU_FreqGetMux4(uint32_t freq, uint32_t freq0, uint32_t freq1,
 int HAL_CRU_FreqGetMux3(uint32_t freq, uint32_t freq0, uint32_t freq1,
                         uint32_t freq2);
 int HAL_CRU_FreqGetMux2(uint32_t freq, uint32_t freq0, uint32_t freq1);
+int HAL_CRU_FreqGetMuxArray(uint32_t freq, uint32_t *table, int num);
 
 uint32_t HAL_CRU_MuxGetFreq4(uint32_t muxName, uint32_t freq0, uint32_t freq1,
                              uint32_t freq2, uint32_t freq3);
 uint32_t HAL_CRU_MuxGetFreq3(uint32_t muxName, uint32_t freq0, uint32_t freq1,
                              uint32_t freq2);
 uint32_t HAL_CRU_MuxGetFreq2(uint32_t muxName, uint32_t freq0, uint32_t freq1);
+uint32_t HAL_CRU_MuxGetFreqArray(uint32_t muxName, uint32_t *table, int num);
 
 int HAL_CRU_RoundFreqGetMux4(uint32_t freq, uint32_t pFreq0, uint32_t pFreq1,
                              uint32_t pFreq2, uint32_t pFreq3, uint32_t *pFreqOut);
@@ -205,6 +211,7 @@ int HAL_CRU_RoundFreqGetMux3(uint32_t freq, uint32_t pFreq0, uint32_t pFreq1,
                              uint32_t pFreq2, uint32_t *pFreqOut);
 int HAL_CRU_RoundFreqGetMux2(uint32_t freq, uint32_t pFreq0, uint32_t pFreq1,
                              uint32_t *pFreqOut);
+int HAL_CRU_RoundFreqGetMuxArray(uint32_t freq, uint32_t *table, int num, uint32_t *pFreqOut, bool is_div);
 
 /** @} */
 
@@ -371,6 +378,18 @@ uint32_t HAL_CRU_ClkGetMux(uint32_t muxName);
 HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
                                     uint32_t *numerator,
                                     uint32_t *denominator);
+
+/**
+ * @brief  Get frac div config V2(24bit).
+ * @param  rateOut: clk out rate.
+ * @param  rate: clk src rate.
+ * @param  numerator: the returned numerator.
+ * @param  denominator: the returned denominator.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_CRU_FracdivGetConfigV2(uint32_t rateOut, uint32_t rate,
+                                      uint32_t *numerator,
+                                      uint32_t *denominator);
 /**
  * @brief Get clk freq.
  * @param  clockName: CLOCK_Name id.

@@ -147,6 +147,22 @@ static int isBetterFreq(uint32_t now, uint32_t new, uint32_t best)
     return (new <= now && new > best);
 }
 
+int HAL_CRU_FreqGetMuxArray(uint32_t freq, uint32_t *table, int num)
+{
+    uint32_t best = 0, mux = 0;
+    int i;
+
+    for (i = 0; i < num; i++) {
+        if (isBetterFreq(freq, table[i], best)) {
+            best = table[i];
+            mux = i;
+            break;
+        }
+    }
+
+    return mux;
+}
+
 int HAL_CRU_FreqGetMux4(uint32_t freq, uint32_t freq0, uint32_t freq1,
                         uint32_t freq2, uint32_t freq3)
 {
@@ -191,6 +207,17 @@ int HAL_CRU_FreqGetMux2(uint32_t freq, uint32_t freq0, uint32_t freq1)
     return HAL_CRU_FreqGetMux4(freq, freq0, freq1, freq1, freq1);
 }
 
+uint32_t HAL_CRU_MuxGetFreqArray(uint32_t muxName, uint32_t *table, int num)
+{
+    uint32_t mux = HAL_CRU_ClkGetMux(muxName);
+
+    if (mux <= (uint32_t)num) {
+        return table[mux];
+    } else {
+        return HAL_INVAL;
+    }
+}
+
 uint32_t HAL_CRU_MuxGetFreq4(uint32_t muxName, uint32_t freq0, uint32_t freq1,
                              uint32_t freq2, uint32_t freq3)
 {
@@ -221,6 +248,30 @@ uint32_t HAL_CRU_MuxGetFreq3(uint32_t muxName, uint32_t freq0,
 uint32_t HAL_CRU_MuxGetFreq2(uint32_t muxName, uint32_t freq0, uint32_t freq1)
 {
     return HAL_CRU_MuxGetFreq4(muxName, freq0, freq1, freq1, freq1);
+}
+
+int HAL_CRU_RoundFreqGetMuxArray(uint32_t freq, uint32_t *table, int num, uint32_t *pFreqOut, bool is_div)
+{
+    uint32_t mux = 0;
+    int i = 0;
+
+    for (i = 0; i < num; i++) {
+        if (is_div) {
+            if (table[i] && (table[i] % freq == 0)) {
+                mux = i;
+                break;
+            }
+        } else {
+            if (table[i] && (table[i] == freq)) {
+                mux = i;
+                break;
+            }
+        }
+    }
+
+    *pFreqOut = table[mux];
+
+    return mux;
 }
 
 int HAL_CRU_RoundFreqGetMux4(uint32_t freq, uint32_t pFreq0,
