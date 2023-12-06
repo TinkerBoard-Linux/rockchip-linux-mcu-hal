@@ -221,8 +221,10 @@ const struct HAL_USBH_DEV g_usbhDev =
 const struct HAL_GMAC_DEV g_gmacDev =
 {
     .pReg = GMAC,
-    .clkID = CLK_GMAC,
-    .clkGateID = ACLK_PDGMAC_CLK_GATE,
+    .clkID125M = CLK_GMAC,
+    .clkID50M = CLK_GMAC,
+    .clkGateID125M = ACLK_PDGMAC_CLK_GATE,
+    .clkGateID50M = ACLK_PDGMAC_CLK_GATE,
     .pclkID = PCLK_GMAC,
     .pclkGateID = PCLK_GMAC_CLK_GATE,
     .irqNum = GMAC0_IRQn,

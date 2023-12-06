@@ -324,8 +324,10 @@ const struct HAL_CANFD_DEV g_can2Dev =
 const struct HAL_GMAC_DEV g_gmac0Dev =
 {
     .pReg = GMAC0,
-    .clkID = CLK_MAC0_2TOP,
-    .clkGateID = CLK_MAC0_2TOP_GATE,
+    .clkID125M = CLK_MAC0_2TOP,
+    .clkID50M = CLK_MAC0_2TOP,
+    .clkGateID125M = CLK_MAC0_2TOP_GATE,
+    .clkGateID50M = CLK_MAC0_2TOP_GATE,
     .pclkID = PCLK_PHP,
     .pclkGateID = PCLK_GMAC0_GATE,
     .irqNum = GMAC0_IRQn,
@@ -334,8 +336,10 @@ const struct HAL_GMAC_DEV g_gmac0Dev =
 const struct HAL_GMAC_DEV g_gmac1Dev =
 {
     .pReg = GMAC1,
-    .clkID = CLK_MAC1_2TOP,
-    .clkGateID = CLK_MAC1_2TOP_GATE,
+    .clkID125M = CLK_MAC1_2TOP,
+    .clkID50M = CLK_MAC1_2TOP,
+    .clkGateID125M = CLK_MAC1_2TOP_GATE,
+    .clkGateID50M = CLK_MAC1_2TOP_GATE,
     .pclkID = PCLK_USB,
     .pclkGateID = PCLK_GMAC1_GATE,
     .irqNum = GMAC1_IRQn,

@@ -428,8 +428,10 @@ const struct HAL_USB_DEV g_usbdDev =
 const struct HAL_GMAC_DEV g_gmac0Dev =
 {
     .pReg = GMAC0,
-    .clkID = CLK_MAC,
-    .clkGateID = CLK_MAC_TXRX_GATE,
+    .clkID125M = CLK_MAC,
+    .clkID50M = CLK_MAC,
+    .clkGateID125M = CLK_MAC_TXRX_GATE,
+    .clkGateID50M = CLK_MAC_TXRX_GATE,
     .pclkID = PCLK_PERI,
     .pclkGateID = PCLK_MAC_GATE,
     .irqNum = MAC_IRQn,
