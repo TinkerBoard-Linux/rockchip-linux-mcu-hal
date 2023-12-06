@@ -329,6 +329,20 @@ const struct HAL_PWM_DEV g_pwm3Dev =
 };
 #endif
 
+#ifdef HAL_GMAC_MODULE_ENABLED
+const struct HAL_GMAC_DEV g_gmac0Dev =
+{
+    .pReg = GMAC0,
+    .clkID125M = CLK_GMAC_125M_CRU_I,
+    .clkID50M = CLK_GMAC_50M_CRU_I,
+    .clkGateID125M = CLK_GMAC_125M_CRU_GATE,
+    .clkGateID50M = CLK_GMAC_50M_CRU_GATE,
+    .pclkID = PCLK_BUS,
+    .pclkGateID = PCLK_GMAC_GATE,
+    .irqNum = GMAC0_IRQn,
+};
+#endif
+
 void BSP_Init(void)
 {
 }

@@ -152,6 +152,7 @@ typedef enum {
   SPI0_IRQn                 =  84 + NUM_INTERRUPTS,     /*!< SPI0 Interrupt                 */
   SPI1_IRQn                 =  85 + NUM_INTERRUPTS,     /*!< SPI1 Interrupt                 */
   SPI2_IRQn                 =  86 + NUM_INTERRUPTS,     /*!< SPI2 Interrupt                 */
+  GMAC0_IRQn                =  105 + NUM_INTERRUPTS,    /*!< GMAC0 Interrupt                */
   WDT0_IRQn                 =  134 + NUM_INTERRUPTS,    /*!< WDT0 Interrupt                 */
   SARADC1_IRQn              =  156 + NUM_INTERRUPTS,    /*!< SARADC1 Interrupt              */
   FSPI0_IRQn                =  160 + NUM_INTERRUPTS,    /*!< FSPI0 Interrupt                */
@@ -268,6 +269,7 @@ typedef enum {
   SPI0_IRQn                 =  84,      /*!< SPI0 Interrupt                */
   SPI1_IRQn                 =  85,      /*!< SPI1 Interrupt                */
   SPI2_IRQn                 =  86,      /*!< SPI2 Interrupt                */
+  GMAC0_IRQn                =  105,     /*!< GMAC0 Interrupt               */
   WDT0_IRQn                 =  134,     /*!< WDT Interrupt                 */
   DMAC_ABORT_IRQn           =  142,     /*!< DMAC Abort Interrupt          */
   DMAC_IRQn                 =  143,     /*!< DMAC Interrupt                */

@@ -70,6 +70,10 @@ extern const struct HAL_PWM_DEV g_pwm2Dev;
 extern const struct HAL_PWM_DEV g_pwm3Dev;
 #endif
 
+#ifdef HAL_GMAC_MODULE_ENABLED
+extern const struct HAL_GMAC_DEV g_gmac0Dev;
+#endif
+
 /***************************** Function Declare ******************************/
 void BSP_Init(void);
 void BSP_SetLoaderFlag(void);
