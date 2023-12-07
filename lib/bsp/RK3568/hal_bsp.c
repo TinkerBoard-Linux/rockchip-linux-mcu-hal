@@ -366,7 +366,7 @@ const struct HAL_PWM_DEV g_pwm0Dev =
     .clkID = 0,
     .clkGateID = CLK_PWM0_GATE,
     .pclkGateID = PCLK_PWM0_GATE,
-    .irqNum = PWM_PMU_IRQn,
+    .irqNum[0] = PWM_PMU_IRQn,
 };
 
 const struct HAL_PWM_DEV g_pwm1Dev =
@@ -375,7 +375,7 @@ const struct HAL_PWM_DEV g_pwm1Dev =
     .clkID = CLK_PWM1,
     .clkGateID = CLK_PWM1_GATE,
     .pclkGateID = PCLK_PWM1_GATE,
-    .irqNum = PWM1_IRQn,
+    .irqNum[0] = PWM1_IRQn,
 };
 
 const struct HAL_PWM_DEV g_pwm2Dev =
@@ -384,7 +384,7 @@ const struct HAL_PWM_DEV g_pwm2Dev =
     .clkID = CLK_PWM2,
     .clkGateID = CLK_PWM2_GATE,
     .pclkGateID = PCLK_PWM2_GATE,
-    .irqNum = PWM2_IRQn,
+    .irqNum[0] = PWM2_IRQn,
 };
 
 const struct HAL_PWM_DEV g_pwm3Dev =
@@ -393,7 +393,7 @@ const struct HAL_PWM_DEV g_pwm3Dev =
     .clkID = CLK_PWM3,
     .clkGateID = CLK_PWM3_GATE,
     .pclkGateID = PCLK_PWM3_GATE,
-    .irqNum = PWM3_IRQn,
+    .irqNum[0] = PWM3_IRQn,
 };
 #endif
 

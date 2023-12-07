@@ -251,7 +251,7 @@ const struct HAL_PWM_DEV g_pwm0Dev =
     .clkID = CLK_PWM,
     .clkGateID = CLK_PWM_GATE,
     .pclkGateID = PCLK_PWM_GATE,
-    .irqNum = PWM_IRQn,
+    .irqNum[0] = PWM_IRQn,
 };
 #endif
 
