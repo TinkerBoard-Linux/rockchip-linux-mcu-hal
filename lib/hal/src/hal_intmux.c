@@ -255,6 +255,54 @@ static void HAL_INTMUX_OUT7_Handler(void)
     INTMUX_Dispatch(7);
 }
 #endif
+#ifdef INTMUX_IRQ_OUT8
+static void HAL_INTMUX_OUT8_Handler(void)
+{
+    INTMUX_Dispatch(8);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT9
+static void HAL_INTMUX_OUT9_Handler(void)
+{
+    INTMUX_Dispatch(9);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT10
+static void HAL_INTMUX_OUT10_Handler(void)
+{
+    INTMUX_Dispatch(10);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT11
+static void HAL_INTMUX_OUT11_Handler(void)
+{
+    INTMUX_Dispatch(11);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT12
+static void HAL_INTMUX_OUT12_Handler(void)
+{
+    INTMUX_Dispatch(12);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT13
+static void HAL_INTMUX_OUT13_Handler(void)
+{
+    INTMUX_Dispatch(13);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT14
+static void HAL_INTMUX_OUT14_Handler(void)
+{
+    INTMUX_Dispatch(14);
+}
+#endif
+#ifdef INTMUX_IRQ_OUT15
+static void HAL_INTMUX_OUT15_Handler(void)
+{
+    INTMUX_Dispatch(15);
+}
+#endif
 
 /**
  * @brief  Intmux direct dispatch
@@ -325,6 +373,38 @@ HAL_Status HAL_INTMUX_Init(void)
 #ifdef INTMUX_IRQ_OUT7
     HAL_NVIC_SetIRQHandler(INTMUX_OUT7_IRQn, HAL_INTMUX_OUT7_Handler);
     HAL_NVIC_EnableIRQ(INTMUX_OUT7_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT8
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT8_IRQn, HAL_INTMUX_OUT8_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT8_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT9
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT9_IRQn, HAL_INTMUX_OUT9_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT9_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT10
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT10_IRQn, HAL_INTMUX_OUT10_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT10_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT11
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT11_IRQn, HAL_INTMUX_OUT11_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT11_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT12
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT12_IRQn, HAL_INTMUX_OUT12_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT12_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT13
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT13_IRQn, HAL_INTMUX_OUT13_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT13_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT14
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT14_IRQn, HAL_INTMUX_OUT14_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT14_IRQn);
+#endif
+#ifdef INTMUX_IRQ_OUT15
+    HAL_NVIC_SetIRQHandler(INTMUX_OUT15_IRQn, HAL_INTMUX_OUT15_Handler);
+    HAL_NVIC_EnableIRQ(INTMUX_OUT15_IRQn);
 #endif
 #endif
 #ifdef HAL_RISCVIC_MODULE_ENABLED
