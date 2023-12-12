@@ -23,6 +23,7 @@
 //#define SPINLOCK_TEST
 //#define TIMER_TEST
 //#define UNITY_TEST
+//#define WDT_TEST
 
 #ifdef GPIO_IRQ_GROUP_TEST
 
@@ -79,6 +80,10 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     GIC_AMP_IRQ_CFG_ROUTE(TIMER1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(TIMER2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(TIMER3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
+
+#ifdef WDT_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(WDT0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
 #endif
 
 #ifdef HAL_GIC_WAIT_LINUX_INIT_ENABLED
@@ -1250,6 +1255,51 @@ static void timer_test(void)
 }
 #endif
 
+/************************************************/
+/*                                              */
+/*                  WDT_TEST                    */
+/*                                              */
+/************************************************/
+#ifdef WDT_TEST
+
+#define WDT_TEST_FREQ        PLL_INPUT_OSC_RATE
+#define WDT_TEST_CLEAR_COUNT 3
+
+static struct WDT_REG *pWdt = WDT;
+
+static int wdt_int_count = 0;
+
+static void wdt_isr(uint32_t irq, void *args)
+{
+    if (wdt_int_count < WDT_TEST_CLEAR_COUNT) {
+        printf("wdt_test: isr eoi\n");
+        HAL_WDT_ClearInterrupt();
+    }
+    wdt_int_count++;
+}
+
+static void wdt_test(void)
+{
+    int wdt_timeout = 4;
+    uint32_t wdt_left_start, wdt_left_end;
+
+    printf("wdt_test start:\n");
+    HAL_WDT_Init(WDT_TEST_FREQ, pWdt);
+    HAL_WDT_SetTimeout(wdt_timeout);
+    HAL_IRQ_HANDLER_SetIRQHandler(WDT0_IRQn, wdt_isr, NULL);
+    HAL_GIC_Enable(WDT0_IRQn);
+
+    printf("wdt_test: timeout set-%ds, get-%ds, TORR-0x%lx\n",
+           wdt_timeout, HAL_WDT_GetTimeout(), pWdt->TORR);
+    HAL_WDT_Start(INDIRECT_SYSTEM_RESET);
+    wdt_left_start = HAL_WDT_GetTimeLeft();
+    HAL_DelayMs(1000);
+    wdt_left_end = HAL_WDT_GetTimeLeft();
+    printf("wdt_test: 1s(delay) = %ldus(wdt)\n",
+           (wdt_left_start - wdt_left_end) / (WDT_TEST_FREQ / 1000000));
+}
+#endif
+
 /********************* Public Function Definition ****************************/
 
 void TEST_DEMO_GIC_Init(void)
@@ -1328,6 +1378,10 @@ void test_demo(void)
 
 #ifdef TIMER_TEST
     timer_test();
+#endif
+
+#if defined(WDT_TEST) && defined(PRIMARY_CPU)
+    wdt_test();
 #endif
 
 #if defined(UNITY_TEST) && defined(PRIMARY_CPU)
