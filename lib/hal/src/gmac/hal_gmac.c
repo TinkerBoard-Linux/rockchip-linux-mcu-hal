@@ -283,6 +283,7 @@
 #define GMAC_DESC3_FD    (0x1 << 29)
 #define GMAC_DESC3_LD    (0x1 << 28)
 #define GMAC_DESC3_BUF1V (0x1 << 24)
+#define GMAC_DESC3_CIC   (0x3 << 16)
 
 #define DES3_ERROR_SUMMARY (1 << 15)
 #define DES3_ERROR_SUMMARY (1 << 15)
@@ -1985,7 +1986,7 @@ HAL_Status HAL_GMAC_Send(struct GMAC_HANDLE *pGMAC, void *packet,
      * Make sure that if HW sees the _OWN write below, it will see all the
      * writes to the rest of the descriptor too.
      */
-    desc->des3 = GMAC_DESC3_OWN | GMAC_DESC3_FD | GMAC_DESC3_LD;
+    desc->des3 = GMAC_DESC3_OWN | GMAC_DESC3_FD | GMAC_DESC3_LD | GMAC_DESC3_CIC;
 
     WRITE_REG(pGMAC->pReg->DMA_CH0_TXDESC_TAIL_POINTER,
               (uint32_t)(pGMAC->txDescs + pGMAC->txDescIdx));
