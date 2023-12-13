@@ -180,7 +180,7 @@ static int float2str(float value, char *str, uint8_t precision)
 
 /**
  * @brief  format and print data
- * @param  format: format printf param. only support: \%d, \%s, \%ld, \%lld \%f
+ * @param  format: format printf param. only support: \%d, \%x, \%s, \%ld, \%lx, \%lld, \%llx, \%f
  * @return int32_t.
  */
 __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
@@ -222,6 +222,19 @@ __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
                 i = float2str(f, str, 3);
                 str = &str[i];
 #endif
+            } else if (*format == 'x') {
+                unsigned int i = va_arg(args, unsigned int);
+                char *start = str, c;
+                do {
+                    c = i % 16;
+                    if (c < 10) {
+                        *str++ = '0' + c;
+                    } else {
+                        *str++ = 'a' - 10 + c;
+                    }
+                    i /= 16;
+                } while (i > 0);
+                reverse(start, str - 1);
             } else if (*format == 's') {
                 char *s = va_arg(args, char *);
                 while (*s) {
@@ -237,6 +250,19 @@ __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
                         i /= 10;
                     } while (i > 0);
                     reverse(start, str - 1);
+                } else if (*format == 'x') {
+                    unsigned long i = va_arg(args, unsigned long);
+                    char *start = str, c;
+                    do {
+                        c = i % 16;
+                        if (c < 10) {
+                            *str++ = '0' + c;
+                        } else {
+                            *str++ = 'a' - 10 + c;
+                        }
+                        i /= 16;
+                    } while (i > 0);
+                    reverse(start, str - 1);
                 } else if (*format == 'l') {
                     format++;
                     if (*format == 'd') {
@@ -245,6 +271,19 @@ __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
                         do {
                             *str++ = '0' + (i % 10);
                             i /= 10;
+                        } while (i > 0);
+                        reverse(start, str - 1);
+                    } else if (*format == 'x') {
+                        unsigned long long int i = va_arg(args, unsigned long long int);
+                        char *start = str, c;
+                        do {
+                            c = i % 16;
+                            if (c < 10) {
+                                *str++ = '0' + c;
+                            } else {
+                                *str++ = 'a' - 10 + c;
+                            }
+                            i /= 16;
                         } while (i > 0);
                         reverse(start, str - 1);
                     }
