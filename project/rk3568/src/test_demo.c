@@ -13,6 +13,7 @@
 //#define GPIO_TEST
 //#define GPIO_IRQ_GROUP_TEST
 //#define IPI_SGI_TEST
+//#define IRQ_LATENCY_TEST
 //#define MBOX_TEST
 //#define PERF_TEST
 //#define PWM_TEST
@@ -55,6 +56,10 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
  */
 #ifdef GPIO_TEST
     GIC_AMP_IRQ_CFG_ROUTE(GPIO3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
+
+#ifdef IRQ_LATENCY_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
 #endif
 
 #ifdef MBOX_TEST
@@ -340,6 +345,61 @@ static void ipi_sgi_test(void)
         HAL_DelayMs(4000);
         HAL_GIC_SendSGI(IPI_SGI7, IPI_CPU3 | IPI_CPU2 | IPI_CPU0, IPI_TO_TARGETLIST);
     }
+}
+#endif
+
+/************************************************/
+/*                                              */
+/*             IRQ_LATENCY_TEST                 */
+/*                                              */
+/************************************************/
+#ifdef IRQ_LATENCY_TEST
+#define IRQ_LATENCY_TEST_NUM   10
+#define IRQ_LATENCY_TEST_LOOP  10000
+#define IRQ_LATENCY_TEST_DELAY 500
+
+static uint64_t time_start, time_end;
+static double time_one, time_sum, time_max, time_min;
+
+static void irq_rsvd_isr(void)
+{
+    time_end = HAL_GetSysTimerCount();
+    time_one = ((time_end - time_start) * 1000000.0) / PLL_INPUT_OSC_RATE;
+    time_sum += time_one;
+    if (time_one > time_max) {
+        time_max = time_one;
+    }
+    if (time_one < time_min) {
+        time_min = time_one;
+    }
+//    printf("irq_rsvd: latency = %.2f us\n", time_one);
+}
+
+static void irq_latency_test(void)
+{
+    int i, j;
+
+    printf("irq_latency_test start:\n");
+
+    printf("irq_rsvd:\n");
+    HAL_IRQ_HANDLER_SetIRQHandler(RSVD0_IRQn, irq_rsvd_isr, NULL);
+    HAL_GIC_Enable(RSVD0_IRQn);
+    HAL_DelayMs(2000);
+
+    for (i = 0; i < IRQ_LATENCY_TEST_NUM; i++) {
+        time_sum = 0;
+        time_max = 0;
+        time_min = 1000;
+        for (j = 0; j < IRQ_LATENCY_TEST_LOOP; j++) {
+            time_start = HAL_GetSysTimerCount();
+            HAL_GIC_SetPending(RSVD0_IRQn);
+            HAL_DelayUs(IRQ_LATENCY_TEST_DELAY);
+        }
+        printf("irq_rsvd latency: avg = %.2f us, max = %.2f us, min = %.2f us\n",
+               time_sum / IRQ_LATENCY_TEST_LOOP, time_max, time_min);
+    }
+
+    printf("irq_latency_test end.\n");
 }
 #endif
 
@@ -1381,6 +1441,10 @@ void test_demo(void)
 
 #ifdef IPI_SGI_TEST
     ipi_sgi_test();
+#endif
+
+#if defined(IRQ_LATENCY_TEST) && defined(PRIMARY_CPU)
+    irq_latency_test();
 #endif
 
 #ifdef MBOX_TEST
