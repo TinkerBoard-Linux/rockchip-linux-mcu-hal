@@ -22,6 +22,7 @@
 //#define SOFTIRQ_TEST
 //#define SPINLOCK_TEST
 //#define TIMER_TEST
+//#define UART_TEST
 //#define UNITY_TEST
 //#define WDT_TEST
 
@@ -80,6 +81,10 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     GIC_AMP_IRQ_CFG_ROUTE(TIMER1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(TIMER2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(TIMER3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
+
+#ifdef UART_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(UART4_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
 #endif
 
 #ifdef WDT_TEST
@@ -1257,6 +1262,56 @@ static void timer_test(void)
 
 /************************************************/
 /*                                              */
+/*                  UART_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef UART_TEST
+
+struct HAL_UART_DEV *uart_test_dev = &g_uart4Dev;
+
+int uart_test_send(char *ptr, int len)
+{
+    int i = 0;
+
+    while (*ptr && (i < len)) {
+        if (*ptr == '\n') {
+            HAL_UART_SerialOutChar(uart_test_dev->pReg, '\r');
+        }
+        HAL_UART_SerialOutChar(uart_test_dev->pReg, *ptr);
+
+        i++;
+        ptr++;
+    }
+
+    return i;
+}
+
+void uart_test_isr(uint32_t irq, void *args)
+{
+    uint8_t data = 0;
+    uint8_t buf[16];
+
+    if (HAL_UART_GetIrqID(uart_test_dev->pReg) != UART_IIR_RX_TIMEOUT) {
+        return;
+    }
+
+    HAL_UART_SerialIn(uart_test_dev->pReg, &data, 1);
+    sprintf(buf, "echo test:%c\n", (char)data);
+    uart_test_send(buf, strlen(buf));
+}
+
+void uart_test(void)
+{
+    HAL_IRQ_HANDLER_SetIRQHandler(uart_test_dev->irqNum, uart_test_isr, NULL);
+    HAL_GIC_Enable(uart_test_dev->irqNum);
+    HAL_UART_EnableIrq(uart_test_dev->pReg, 1);
+
+    printf("uart test, input character\n");
+}
+#endif
+
+/************************************************/
+/*                                              */
 /*                  WDT_TEST                    */
 /*                                              */
 /************************************************/
@@ -1378,6 +1433,10 @@ void test_demo(void)
 
 #ifdef TIMER_TEST
     timer_test();
+#endif
+
+#if defined(UART_TEST) && defined(PRIMARY_CPU)
+    uart_test();
 #endif
 
 #if defined(WDT_TEST) && defined(PRIMARY_CPU)
