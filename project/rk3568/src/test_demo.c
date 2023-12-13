@@ -23,6 +23,7 @@
 //#define SOFTIRQ_TEST
 //#define SPINLOCK_TEST
 //#define TIMER_TEST
+//#define TSADC_TEST
 //#define UART_TEST
 //#define UNITY_TEST
 //#define WDT_TEST
@@ -1322,6 +1323,20 @@ static void timer_test(void)
 
 /************************************************/
 /*                                              */
+/*                 TSADC_TEST                   */
+/*                                              */
+/************************************************/
+#ifdef TSADC_TEST
+static void tsadc_test(void)
+{
+    HAL_CRU_ClkSetFreq(CLK_TSADC, 50000);
+    HAL_TSADC_Enable_AUTO(0, 0, 0);
+    printf("GET TEMP %d!\n", HAL_TSADC_GetTemperature_AUTO(0));
+}
+#endif
+
+/************************************************/
+/*                                              */
 /*                  UART_TEST                   */
 /*                                              */
 /************************************************/
@@ -1497,6 +1512,10 @@ void test_demo(void)
 
 #ifdef TIMER_TEST
     timer_test();
+#endif
+
+#ifdef TSADC_TEST
+    tsadc_test();
 #endif
 
 #if defined(UART_TEST) && defined(PRIMARY_CPU)
