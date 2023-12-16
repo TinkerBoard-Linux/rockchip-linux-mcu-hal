@@ -87,11 +87,12 @@
 #define FSPI_RISR_TRANSS_ACTIVE (1 << FSPI_RISR_TRANSS_SHIFT)
 
 /* FSPI attributes */
-#define FSPI_VER_VER_1 1
-#define FSPI_VER_VER_3 3
-#define FSPI_VER_VER_4 4
-#define FSPI_VER_VER_5 5
-#define FSPI_VER_VER_6 6
+#define FSPI_VER_VER_1  1
+#define FSPI_VER_VER_3  3
+#define FSPI_VER_VER_4  4
+#define FSPI_VER_VER_5  5
+#define FSPI_VER_VER_6  6
+#define FSPI_VER_VER_10 10
 
 #define FSPI_NOR_FLASH_PAGE_SIZE 0x100
 
@@ -111,8 +112,8 @@ typedef union {
         unsigned rxempty : 1; /* rx fifo empty */
         unsigned rxfull : 1; /* tx fifo empty interrupt mask */
         unsigned reserved7_4 : 4;
-        unsigned txlevel : 5; /* tx fifo: 0: full; 1: left 1 entry; ... */
-        unsigned reserved15_13 : 3;
+        unsigned txlevel : 7; /* tx fifo: 0: full; 1: left 1 entry; ... */
+        unsigned reserved15 : 1;
         unsigned rxlevel : 5; /* rx fifo: 0: full; 1: left 1 entry; ... */
         unsigned reserved31_21 : 11;
     } b;
@@ -219,8 +220,76 @@ static void FSPI_ContModeDeInit(struct HAL_FSPI_HOST *host)
               0x88 << FSPI_EXT_AX_AX_CANCEL_PAT_SHIFT);
 }
 
+static HAL_Status FSPI_PollingEnable(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op)
+{
+    HAL_Status ret = HAL_OK;
+
+#ifdef FSPI_HRDYMASK_XIP_HUP_STATE_MASK
+    int32_t timeout = 0;
+
+    if (READ_REG(host->instance->MODE) & FSPI_MODE_XMMC_MODE_EN_MASK) {
+        WRITE_REG(host->instance->HRDYMASK, FSPI_HRDYMASK_XIP_HUP_REQ_MASK);
+        while (!(READ_REG(host->instance->HRDYMASK) & FSPI_HRDYMASK_XIP_HUP_STATE_MASK)) {
+            HAL_CPUDelayUs(1);
+            if (timeout++ > 100000) { /*wait 100ms*/
+                ret = HAL_TIMEOUT;
+                break;
+            }
+        }
+    }
+    WRITE_REG(host->instance->POLLDLY_CTRL, 0x80000100);
+    WRITE_REG(host->instance->POLL_CTRL, FSPI_POLL_CTRL_ST_POLL_EN_MASK | (op->cmd.opcode & 0xFF) << FSPI_POLL_CTRL_ST_POLL_CMD_PARA_SHIFT | 2 |
+              ((uint8_t *)op->data.buf.in)[0] << FSPI_POLL_CTRL_ST_POLL_EXPECT_DATA_SHIFT |
+              ((uint8_t *)op->data.buf.in)[1] << FSPI_POLL_CTRL_ST_POLL_BIT_COMP_EN_SHIFT);
+    CLEAR_BIT(host->instance->IMR, FSPI_IMR_STPOLLM_MASK);
+    WRITE_REG(host->instance->ICLR, FSPI_RISR_STPOLLS_MASK);
+#endif
+
+    return ret;
+}
+
+static HAL_Status FSPI_PollingDisable(struct HAL_FSPI_HOST *host)
+{
+#ifdef FSPI_POLL_CTRL_OFFSET
+    WRITE_REG(host->instance->POLL_CTRL, 0);
+    WRITE_REG(host->instance->ICLR, FSPI_RISR_STPOLLS_MASK);
+    SET_BIT(host->instance->IMR, FSPI_IMR_STPOLLM_MASK);
+#endif
+
+    return HAL_OK;
+}
+
 /** @} */
 /********************* Public Function Definition ****************************/
+
+/** @defgroup FSPI_Exported_Functions_Group2 State and Errors Functions
+ *  @{
+ */
+
+/**
+ * @brief  Get the status of Polling Progress.
+ * @param  host: FSPI host.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_FSPI_IsPollFinished(struct HAL_FSPI_HOST *host)
+{
+    HAL_Status ret = HAL_OK;
+
+#ifdef FSPI_RISR_STPOLLS_SHIFT
+    if (READ_REG(host->instance->RISR) & FSPI_RISR_STPOLLS_MASK) {
+        // HAL_DBG_HEX("FSPI-POLL-2:", FSPI0, 4, 0x41); /* Debug-POLL */
+        FSPI_PollingDisable(host);
+        ret = HAL_OK;
+    } else {
+        FSPI_Reset(host);
+        ret = HAL_BUSY;
+    }
+#endif
+
+    return ret;
+}
+
+/** @} */
 
 /** @defgroup FSPI_Exported_Functions_Group3 IO Functions
 
@@ -243,16 +312,35 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
     struct FSPI_REG *pReg = host->instance;
     FSPICMD_DATA FSPICmd;
     FSPICTRL_DATA FSPICtrl;
+    uint32_t ctrlTemp;
+
+#ifdef FSPI_CMD_EXT_OFFSET
+    uint32_t cmdExt = 0, dummyExt = 0;
+#endif
 
     FSPICmd.d32 = 0;
     FSPICtrl.d32 = 0;
+    ctrlTemp = READ_REG(pReg->CTRL0);
 
     /* set CMD */
-    FSPICmd.b.cmd = op->cmd.opcode;
-    if (op->cmd.buswidth == 4) {
-        FSPICtrl.b.cmdlines = FSPI_LINES_X4;
-        FSPICtrl.b.datalines = FSPI_LINES_X4; /* cmdlines work with datalines */
+#ifdef FSPI_CMD_EXT_OFFSET
+    if (op->cmd.nbytes == 2) {
+        cmdExt = op->cmd.opcode;
+        FSPICmd.b.cmd = op->cmd.opcode & 0xFF;
+        FSPICtrl.b.cmd_ctrl = 2;
     }
+#endif
+    FSPICmd.b.cmd = op->cmd.opcode & 0xFF;
+
+    if (op->cmd.buswidth == 8) {
+        FSPICtrl.b.cmdlines = FSPI_LINES_X8;
+        FSPICtrl.b.addrlines = FSPI_LINES_X8;
+        FSPICtrl.b.datalines = FSPI_LINES_X8;
+    } else if (op->cmd.buswidth == 4) {
+        FSPICtrl.b.cmdlines = FSPI_LINES_X4;
+        FSPICtrl.b.datalines = FSPI_LINES_X4;
+    }
+    FSPICtrl.b.cmd_str = op->cmd.dtr ? 0 : 1;
 
     /* set ADDR */
     if (op->addr.nbytes) {
@@ -265,12 +353,23 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
             pReg->ABIT0 = op->addr.nbytes * 8 - 1;
         }
 
-        FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+        if (op->addr.buswidth == 8) {
+            FSPICtrl.b.addrlines = FSPI_LINES_X8;
+        } else if (op->addr.buswidth == 4) {
+            FSPICtrl.b.addrlines = FSPI_LINES_X4;
+        }
     }
+    FSPICtrl.b.addr_str = op->addr.dtr ? 0 : 1;
 
     /* set DUMMY*/
     if (op->dummy.nbytes) {
         switch (op->dummy.buswidth) {
+#ifdef FSPI_DUMM_CTRL_DUMM_EXT_SHIFT
+        case 8:
+            dummyExt = ((op->dummy.nbytes >> op->dummy.dtr) << FSPI_DUMM_CTRL_DUMM_EXT_SHIFT) | FSPI_DUMM_CTRL_DUMM_SEL_MASK;
+            dummyExt |= FSPI_DUMM_CTRL_DUMM_SEL_MASK;
+            break;
+#endif
         case 4:
             FSPICmd.b.dummybits = op->dummy.nbytes * 2;
             break;
@@ -293,7 +392,9 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
         if (op->data.dir == HAL_SPI_MEM_DATA_OUT) {
             FSPICmd.b.rw = FSPI_WRITE;
         }
-        if (op->data.buswidth == 4) {
+        if (op->data.buswidth == 8) {
+            FSPICtrl.b.datalines = FSPI_LINES_X8;
+        } else if (op->data.buswidth == 4) {
             FSPICtrl.b.datalines = FSPI_LINES_X4;
         } else if (op->data.buswidth == 2) {
             FSPICtrl.b.datalines = FSPI_LINES_X2;
@@ -301,6 +402,7 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
             FSPICtrl.b.datalines = FSPI_LINES_X1;
         }
     }
+    FSPICtrl.b.dtr_mode = op->data.dtr ? 1 : 0;
 
     /* spitial setting */
     FSPICtrl.b.sps = host->mode & HAL_SPI_CPHA;
@@ -311,6 +413,7 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
 #else
     FSPICmd.b.cs = host->cs;
 #endif
+    FSPICtrl.b.dqs_mode = host->mode & HAL_SPI_DQS ? 1 : 0;
     if (op->data.nbytes == 0 && op->addr.nbytes) {
         FSPICmd.b.rw = FSPI_WRITE;
     }
@@ -319,10 +422,18 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
         FSPI_Reset(host);
     }
 
+    if (op->data.poll) {
+        FSPICtrl.d32 = ctrlTemp;
+    }
+
     // FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes);
-    // FSPI_DBG("%s 2 %lx %lx %lx %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val, host->cs);
+    // FSPI_DBG("%s 2 %lx %lx %lx %lx %lx %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt, op->addr.val, host->cs);
 
     /* config FSPI */
+#ifdef FSPI_CMD_EXT_OFFSET
+    WRITE_REG(pReg->CMD_EXT, cmdExt);
+    WRITE_REG(pReg->DUMM_CTRL, dummyExt);
+#endif
     switch (host->cs) {
     case 0:
         pReg->CTRL0 = FSPICtrl.d32;
@@ -386,8 +497,8 @@ HAL_Status HAL_FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *dat
     if (dir == FSPI_WRITE) {
         words = (len + 3) >> 2;
         while (words) {
-            fifostat.d32 = pReg->FSR;
-            if (fifostat.b.txlevel > 0) {
+            fifostat.d32 = (pReg->FSR & FSPI_FSR_TXWLVL_MASK);
+            if ((fifostat.b.txlevel) > 0) {
                 uint32_t count = HAL_MIN(words, fifostat.b.txlevel);
 
                 for (i = 0; i < count; i++) {
@@ -491,6 +602,9 @@ HAL_Status HAL_FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, void 
 
     HAL_ASSERT(data && len);
 
+    if (dir == HAL_SPI_MEM_DATA_OUT) {
+        HAL_DCACHE_CleanInvalidateByRange((uint32_t)data, len);
+    }
     pReg->ICLR = 0xFFFFFFFF;
     pReg->DMAADDR = (uint32_t)data;
     pReg->DMATR = FSPI_DMATR_DMATR_START;
@@ -506,6 +620,10 @@ HAL_Status HAL_FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, void 
     pReg->ICLR = 0xFFFFFFFF;
     if (timeout <= 0) {
         ret = HAL_TIMEOUT;
+    }
+
+    if (dir == HAL_SPI_MEM_DATA_IN) {
+        HAL_DCACHE_InvalidateByRange((uint32_t)data, len);
     }
 
     return ret;
@@ -525,6 +643,7 @@ HAL_Status HAL_FSPI_XferDone(struct HAL_FSPI_HOST *host)
         HAL_CPUDelayUs(1);
         if (timeout++ > 100000) { /*wait 100ms*/
             ret = HAL_TIMEOUT;
+            FSPI_Reset(host);
             break;
         }
     }
@@ -554,16 +673,23 @@ HAL_Status HAL_FSPI_SpiXfer(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *o
         pData = (void *)op->data.buf.out;
     }
 
-    HAL_FSPI_XferStart(host, op);
+    ret = HAL_FSPI_XferStart(host, op);
+    if (ret) {
+        return ret;
+    }
+
     if (pData) {
 #if defined(HAL_FSPI_DMA_ENABLED)
         if ((op->data.nbytes >= FSPI_NOR_FLASH_PAGE_SIZE) &&
-            (dir == HAL_SPI_MEM_DATA_IN)) {
+            (dir == HAL_SPI_MEM_DATA_IN) &&
+            HAL_IS_CACHELINE_ALIGNED(pData) &&
+            HAL_IS_CACHELINE_ALIGNED(op->data.nbytes)) {
             ret = HAL_FSPI_XferData_DMA(host, op->data.nbytes, pData, dir);
         } else
 #endif
         ret = HAL_FSPI_XferData(host, op->data.nbytes, pData, dir);
         if (ret) {
+            FSPI_Reset(host);
             FSPI_DBG("%s xfer data failed ret %d\n", __func__, ret);
 
             return ret;
@@ -571,6 +697,35 @@ HAL_Status HAL_FSPI_SpiXfer(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *o
     }
 
     return HAL_FSPI_XferDone(host);
+}
+
+/**
+ * @brief  SPI Nor flash data transmission interface with polling enable.
+ * @param  host: FSPI host.
+ * @param  op: flash operation protocol.
+ * @return HAL_Status.
+ * @attention Set host->cs to select chip.
+ */
+HAL_Status HAL_FSPI_SpiXferHWPolling(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *op)
+{
+    HAL_Status ret = HAL_OK;
+
+    HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
+    if (!op->data.buf.in || op->data.nbytes < HAL_SPI_POLL_DATA_FORMAT_SIZE) {
+        return HAL_INVAL;
+    }
+    ret = FSPI_PollingEnable(host, op);
+    if (ret) {
+        return ret;
+    }
+    // HAL_DBG_HEX("FSPI-POLL-1:", FSPI0, 4, 0x41); /* Debug-POLL */
+
+    ret = HAL_FSPI_XferStart(host, op);
+    if (ret) {
+        FSPI_PollingDisable(host);
+    }
+
+    return ret;
 }
 
 /** @} */
@@ -667,7 +822,6 @@ HAL_Status HAL_FSPI_UnmaskDMAInterrupt(struct HAL_FSPI_HOST *host)
  */
 HAL_Status HAL_FSPI_IRQHelper(struct HAL_FSPI_HOST *host)
 {
-    HAL_ASSERT(HAL_IS_BIT_SET(host->instance->ISR, FSPI_ISR_DMAS_ACTIVE)); /* Only support DMA IT */
     FSPI_ClearIsr(host);
 
     return HAL_OK;
@@ -685,6 +839,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     FSPICMD_DATA FSPICmd;
     FSPICTRL_DATA FSPICtrl;
     FSPIXMMCCTRL_DATA xmmcCtrl;
+    uint32_t cmdExt = 0, dummyExt = 0;
 
     HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
 
@@ -692,43 +847,82 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     FSPICtrl.d32 = 0;
 
     /* set CMD */
-    FSPICmd.b.cmd = op->cmd.opcode;
-    FSPICtrl.b.cmdlines = op->cmd.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+    if (op->cmd.nbytes == 2) {
+        cmdExt = op->cmd.opcode;
+        FSPICtrl.b.cmd_ctrl = 2;
+    }
+    FSPICmd.b.cmd = op->cmd.opcode & 0xFF;
+
+    if (op->cmd.buswidth == 8) {
+        FSPICtrl.b.cmdlines = FSPI_LINES_X8;
+        FSPICtrl.b.addrlines = FSPI_LINES_X8;
+        FSPICtrl.b.datalines = FSPI_LINES_X8;
+    } else if (op->cmd.buswidth == 4) {
+        FSPICtrl.b.cmdlines = FSPI_LINES_X4;
+        FSPICtrl.b.datalines = FSPI_LINES_X4;
+    }
+    FSPICtrl.b.cmd_str = op->cmd.dtr ? 0 : 1;
     if (op->addr.buswidth == 4 && (host->xmmcDev[host->cs].type == DEV_NOR || host->xmmcDev[host->cs].type == DEV_SPINAND)) {
         FSPICmd.b.readmode = 1;
     }
 
     /* set ADDR */
-    FSPICmd.b.addrbits = op->addr.nbytes == 4 ? FSPI_ADDR_32BITS : FSPI_ADDR_24BITS;
-    FSPICtrl.b.addrlines = op->addr.buswidth == 4 ? FSPI_LINES_X4 : FSPI_LINES_X1;
+    if (op->addr.nbytes) {
+        if (op->addr.nbytes == 4) {
+            FSPICmd.b.addrbits = FSPI_ADDR_32BITS;
+        } else if (op->addr.nbytes == 3) {
+            FSPICmd.b.addrbits = FSPI_ADDR_24BITS;
+        } else {
+            FSPICmd.b.addrbits = FSPI_ADDR_XBITS;
+        }
+
+        if (op->addr.buswidth == 8) {
+            FSPICtrl.b.addrlines = FSPI_LINES_X8;
+        } else if (op->addr.buswidth == 4) {
+            FSPICtrl.b.addrlines = FSPI_LINES_X4;
+        }
+    }
+    FSPICtrl.b.addr_str = op->addr.dtr ? 0 : 1;
 
     /* set DUMMY*/
     FSPICtrl.b.scic = op->dummy.a2dIdle;
-    switch (op->dummy.buswidth) {
-    case 4:
-        FSPICmd.b.dummybits = op->dummy.nbytes * 2;
-        break;
-    case 2:
-        FSPICmd.b.dummybits = op->dummy.nbytes * 4;
-        break;
-    default:
-        FSPICmd.b.dummybits = op->dummy.nbytes * 8;
-        break;
+    if (op->dummy.nbytes) {
+        switch (op->dummy.buswidth) {
+#ifdef FSPI_DUMM_CTRL_DUMM_EXT_SHIFT
+        case 8:
+            dummyExt = ((op->dummy.nbytes >> op->dummy.dtr) << FSPI_DUMM_CTRL_DUMM_EXT_SHIFT) | FSPI_DUMM_CTRL_DUMM_SEL_MASK;
+            dummyExt |= FSPI_DUMM_CTRL_DUMM_SEL_MASK;
+            break;
+#endif
+        case 4:
+            FSPICmd.b.dummybits = op->dummy.nbytes * 2;
+            break;
+        case 2:
+            FSPICmd.b.dummybits = op->dummy.nbytes * 4;
+            break;
+        default:
+            FSPICmd.b.dummybits = op->dummy.nbytes * 8;
+            break;
+        }
     }
+
     if (FSPICmd.b.readmode) {
-        FSPICmd.b.dummybits -= 2; /* M7-0 ocuppy Dummy 2 cycles  */
+        FSPICmd.b.dummybits -= op->data.dtr ? 1 : 2; /* M7-0 ocuppy Dummy 2 cycles  */
     }
     /* set DATA */
     if (op->data.dir == HAL_SPI_MEM_DATA_OUT) {
         FSPICmd.b.rw = FSPI_WRITE;
     }
-    if (op->data.buswidth == 4) {
+    if (op->data.buswidth == 8) {
+        FSPICtrl.b.datalines = FSPI_LINES_X8;
+    } else if (op->data.buswidth == 4) {
         FSPICtrl.b.datalines = FSPI_LINES_X4;
     } else if (op->data.buswidth == 2) {
         FSPICtrl.b.datalines = FSPI_LINES_X2;
     } else {
         FSPICtrl.b.datalines = FSPI_LINES_X1;
     }
+    FSPICtrl.b.dtr_mode = op->data.dtr ? 1 : 0;
 
     /* set XMMC */
     if (host->xmmcDev[0].type == DEV_PSRAM || host->xmmcDev[1].type == DEV_PSRAM) {
@@ -743,16 +937,25 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
         FSPI_TimeOutInit(host);
 #endif
     }
+    FSPICtrl.b.dqs_mode = host->mode & HAL_SPI_DQS ? 1 : 0;
 
     /* spetial setting */
     FSPICtrl.b.sps = host->mode & HAL_SPI_CPHA;
+    FSPICtrl.b.dqs_mode = host->mode & HAL_SPI_DQS ? 1 : 0;
+    FSPICtrl.b.dtr_mode = host->mode & HAL_SPI_DTR ? 1 : 0;
+#ifdef FSPI_SLF_DQS_CTRL_OFFSET
+    if (!FSPICtrl.b.dqs_mode && FSPICtrl.b.dtr_mode) {
+        WRITE_REG(host->instance->SLF_DQS_CTRL, FSPI_SLF_DQS_CTRL_SLF_BLD_DQS_EN0_MASK | FSPI_SLF_DQS_CTRL_SLF_BLD_DQS_EN1_MASK);
+    }
+#endif
 
-    /* FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
-    /* FSPI_DBG("%s 2 %lx %lx %lx\n", __func__, FSPICtrl.d32, FSPICmd.d32, op->addr.val); */
+    // HAL_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes);
+    // HAL_DBG("%s 2 %lx %lx %lx %lx %lx %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt, op->addr.val, host->cs);
     host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
     host->xmmcCtrl = xmmcCtrl.d32;
+    host->xmmcDummyCtrl = dummyExt;
     if (op->data.dir == HAL_SPI_MEM_DATA_IN) {
-        host->xmmcDev[host->cs].readCmd = FSPICmd.d32;
+        host->xmmcDev[host->cs].readCmd = FSPICmd.d32 | (cmdExt << 16);
     } else {
         host->xmmcDev[host->cs].writeCmd = FSPICmd.d32;
     }
@@ -796,6 +999,11 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
         WRITE_REG(pReg->XMMC_RCMD1, host->xmmcDev[1].readCmd);
         WRITE_REG(pReg->XMMC_WCMD1, host->xmmcDev[1].writeCmd);
 
+#ifdef FSPI_CMD_EXT_OFFSET
+        WRITE_REG(pReg->DUMM_CTRL, host->xmmcDummyCtrl);
+#endif
+
+        // HAL_DBG_HEX("FSPI:", FSPI0, 4, 0x41);
         WRITE_REG(pReg->MODE, 1);
     } else {
         /* FSPI_DBG("%s diable\n", __func__); */
