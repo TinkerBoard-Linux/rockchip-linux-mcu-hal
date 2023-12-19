@@ -1,25 +1,12 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V5.0.4
- * @date     09. April 2018
+ * @version  V1.0.0
+ * @date     20 Dec 2023
  ******************************************************************************/
+/* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
 #ifndef __CMSIS_GCC_H
@@ -113,57 +100,78 @@ __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
 #ifndef   __RESTRICT
   #define __RESTRICT __restrict
 #endif
+#ifndef   __COMPILER_BARRIER
+  #define __COMPILER_BARRIER() __ASM volatile("":::"memory")
+#endif
+#ifndef __NO_INIT
+  #define __NO_INIT __attribute__ ((section (".bss.noinit")))
+#endif
+#ifndef __ALIAS
+  #define __ALIAS(x) __attribute__ ((alias(x)))
+#endif
+
+/* IO definitions (access restrictions to peripheral registers) */
+/**
+    \defgroup CMSIS_glob_defs CMSIS Global Defines
+
+    <strong>IO Type Qualifiers</strong> are used
+    \li to specify the access to peripheral variables.
+    \li for automatic generation of peripheral register debug information.
+*/
+#ifdef __cplusplus
+  #define   __I volatile                 /*!< Defines 'read only' permissions */
+#else
+  #define   __I volatile const           /*!< Defines 'read only' permissions */
+#endif
+#define     __O  volatile                /*!< Defines 'write only' permissions */
+#define     __IO volatile                /*!< Defines 'read / write' permissions */
+
+/* following defines should be used for structure members */
+#define     __IM  volatile const         /*! Defines 'read only' structure member permissions */
+#define     __OM  volatile               /*! Defines 'write only' structure member permissions */
+#define     __IOM volatile               /*! Defines 'read / write' structure member permissions */
+
+/* ##########################  Core Instruction Access  ######################### */
+/** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+  Access to dedicated instructions
+  @{
+*/
+
+/**
+  \brief   No Operation
+  \details No Operation does nothing. This instruction can be used for code alignment purposes.
+ */
+#define __NOP() __ASM volatile ("nop")
 
 /**
   \brief   Wait For Interrupt
   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
  */
-#define __WFI()                             __ASM volatile ("wfi":::"memory")
+#define __WFI() __ASM volatile ("waiti 0":::"memory")
+
+/**
+  \brief   Data Memory Barrier
+  \details Ensures the apparent order of the explicit memory operations before
+           and after the instruction, without ensuring their completion.
+ */
+__STATIC_FORCEINLINE void __DMB(void)
+{
+    __ASM volatile ("memw" ::: "memory");
+}
 
 /**
   \brief   Count leading zeros
   \details Counts the number of leading zeros of a data value.
   \param [in]  value  Value to count the leading zeros
-  \return	      number of leading zeros in value
+  \return             number of leading zeros in value
  */
 __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
 {
-  /* Even though __builtin_clz produces a CLZ instruction on ARM, formally
-     __builtin_clz(0) is undefined behaviour, so handle this case specially.
-     This guarantees ARM-compatible results if happening to compile on a non-ARM
-     target, and ensures the compiler doesn't decide to activate any
-     optimisations using the logic "value was passed to __builtin_clz, so it
-     is non-zero".
-     ARM GCC 7.3 and possibly earlier will optimise this test away, leaving a
-     single CLZ instruction.
-   */
-  if (value == 0U)
-  {
-    return 32U;
-  }
-  return __builtin_clz(value);
-}
+    if (value == 0U) {
+        return 32U;
+    }
 
-/* ###########################  Core Function Access  ########################### */
-
-/**
-  \brief   Enable IRQ Interrupts
-  \details Enables IRQ interrupts by clearing the I-bit in the mstatus.
-           Can only be executed in Privileged modes.
- */
-__STATIC_FORCEINLINE void __enable_irq(void)
-{
-    __ASM volatile("csrrsi a0, mstatus, 8");
-}
-
-/**
-  \brief   Disable IRQ Interrupts
-  \details Disables IRQ interrupts by setting the I-bit in the mstatus.
-  Can only be executed in Privileged modes.
- */
-__STATIC_FORCEINLINE  void __disable_irq(void)
-{
-    __ASM volatile("csrrci a0, mstatus, 8");
+    return __builtin_clz(value);
 }
 
 #pragma GCC diagnostic pop

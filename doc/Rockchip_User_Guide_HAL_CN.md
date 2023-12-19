@@ -2,9 +2,9 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V3.1.0
+发布版本：V3.2.0
 
-日期：2023-08-30
+日期：2023-12-19
 
 文件密级：□绝密   □秘密   □内部资料   ■公开
 
@@ -20,7 +20,7 @@
 
 本文档可能提及的其他所有注册商标或商标，由其各自拥有者所有。
 
-**版权所有 © 2020 瑞芯微电子股份有限公司**
+**版权所有 © 2023 瑞芯微电子股份有限公司**
 
 超越合理使用范畴，非经本公司书面许可，任何单位和个人不得擅自摘抄、复制本文档内容的部分或全部，并不得以任何形式传播。
 
@@ -88,6 +88,7 @@ Rockchip Electronics Co., Ltd.
 | V3.0.0 | 2021.06 | Jon Lin | 增加多核相关编程规范 |
 | V3.0.1 | 2023.06 | Cliff | 修改打印调试配置说明 |
 | V3.1.0 | 2023.08 | Steven Liu | 增加芯片差异兼容性处理补充规范 |
+| V3.2.0 | 2023.12 | Cliff | 增加HAL_DSP_CORE定义 |
 
 ---
 
@@ -1523,6 +1524,7 @@ static void CPUCycleLoop(uint32_t cycles)
 | ---- | ------------ | ---------- | -------- |
 | AP   | HAL_AP_CORE  | hal_conf.h | HAL      |
 | MCU  | HAL_MCU_CORE | hal_conf.h | HAL      |
+| DSP  | HAL_DSP_CORE | hal_conf.h | HAL      |
 
 #### 异构核核间差异兼容性处理补充规范
 
@@ -1539,7 +1541,8 @@ static void CPUCycleLoop(uint32_t cycles)
 | 应用 | 文件名命名             | 文件内添加宏限制    | 实例                    |
 | ---- | ---------------------- | ------------------- | ----------------------- |
 | AP   | 默认为大核，不添加尾缀 | #ifdef HAL_AP_CORE  | e.g. start_rk3568.c     |
-| MCU  | 添加"_mcu" 尾缀        | #ifdef HAL_MCU_CORE | e.g. start_rkxxxx_mcu.c |
+| MCU  | 添加 "_mcu" 尾缀       | #ifdef HAL_MCU_CORE | e.g. start_rkxxxx_mcu.c |
+| DSP  | 添加 "_dsp" 尾缀       | #ifdef HAL_DSP_CORE | 略                      |
 
 例如：
 

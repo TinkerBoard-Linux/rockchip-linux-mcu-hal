@@ -113,6 +113,20 @@ static void CPUCycleLoop(uint32_t cycles)
         : : "r" (cycles)
         );
 }
+#elif defined(__xtensa__)
+static void CPUCycleLoop(uint32_t cycles)
+{
+    cycles /= 2;                  // 一次loop两个cycles
+
+    __asm__ volatile (
+        "1:                 \n"
+        "   addi %0, %0, -1 \n"   // 减少计数器
+        "   bnez %0, 1b     \n"   // 如果计数器不为0，跳回到1
+        : "+r" (cycles)           // 输入+输出操作数（读写）
+        :                         // 无输入
+        : "cc"                    // clobber 条目
+        );
+}
 #endif
 
 #if defined(SYS_TIMER) && defined(HAL_TIMER_MODULE_ENABLED)
@@ -394,7 +408,7 @@ void HAL_CPU_EnterIdle(void)
     g_last_enter_idle_time = HAL_GetSysTimerCount();
 #endif
 
-    __asm volatile ("wfi");
+    __WFI();
 
 #if defined(HAL_CPU_USAGE_ENABLED)
     idle_time = HAL_GetSysTimerCount() - g_last_enter_idle_time;
