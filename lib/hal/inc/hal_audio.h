@@ -78,9 +78,18 @@ typedef enum {
  * enum AUDIO_fmtType - audio format.
  */
 typedef enum {
+    /** common format */
     AUDIO_FMT_I2S,
     AUDIO_FMT_RIGHT_J,
     AUDIO_FMT_LEFT_J,
+    AUDIO_FMT_DSP_A,
+    AUDIO_FMT_DSP_B,
+    AUDIO_FMT_TDM_I2S,
+    AUDIO_FMT_TDM_LEFT_J,
+    AUDIO_FMT_TDM_RIGHT_J,
+    AUDIO_FMT_TDM_DSP_A,
+    AUDIO_FMT_TDM_DSP_B,
+    /** i2stdm controller format */
     AUDIO_FMT_PCM,
     AUDIO_FMT_PCM_DELAY1,
     AUDIO_FMT_PCM_DELAY2,
@@ -96,6 +105,7 @@ typedef enum {
     AUDIO_FMT_TDM_RIGHT_J_ONE_FRAME,
     AUDIO_FMT_TDM_LEFT_J_HALF_FRAME,
     AUDIO_FMT_TDM_LEFT_J_ONE_FRAME,
+    /** pdm format */
     AUDIO_FMT_PDM,
 } eAUDIO_fmtType;
 
