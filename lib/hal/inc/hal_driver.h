@@ -238,6 +238,10 @@
 #include "hal_tsadc.h"
 #endif
 
+#ifdef HAL_SAI_MODULE_ENABLED
+#include "hal_sai.h"
+#endif
+
 #ifdef HAL_SARADC_MODULE_ENABLED
 #include "hal_saradc.h"
 #endif
