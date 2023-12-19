@@ -57,16 +57,6 @@ typedef enum {
 } eAUDIO_sampleBits;
 
 /**
- * enum AUDIO_channels - audio channels: up to 8 channels.
- */
-typedef enum {
-    AUDIO_CHANNELS_2 = 2,
-    AUDIO_CHANNELS_4 = 4,
-    AUDIO_CHANNELS_6 = 6,
-    AUDIO_CHANNELS_8 = 8,
-} eAUDIO_channels;
-
-/**
  * enum AUDIO_streamType - audio stream is playback or capture.
  */
 typedef enum {
@@ -174,7 +164,7 @@ struct AUDIO_PARAMS {
     eAUDIO_sampleRate sampleRate; /**< sample rate: from 8k ~ 192k. */
     eAUDIO_sampleRate reSampleRate; /**< resample rate: from 8k ~ 192k. */
     eAUDIO_sampleBits sampleBits; /**< bit per sample: 8bits, 16bits, 32bits. */
-    eAUDIO_channels channels; /**< channels: up to 8ch. */
+    uint16_t channels; /**< channels: e.g. 32ch */
 };
 
 /**
