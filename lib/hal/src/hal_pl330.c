@@ -30,6 +30,33 @@
  - Invoke HAL_PL330_DeInit to deinitialize pl330.
  - More details refer to APIs' descriptions as below.
 
+ Trigger Master and Slave API Usage:
+
+ - Invoke mstCh0 = HAL_PL330_RequestChannel(pl330Dev1)
+ - Invoke slvCh0 = HAL_PL330_RequestChannel(pl330Dev1)
+ - Invoke slvCh1 = HAL_PL330_RequestChannel(pl330Dev1)
+ - Invoke trigMstCh = HAL_PL330_GetChanId(mstCh0)
+ - Invoke HAL_PL330_SetTriggerMaster(mstCh0)
+ - Invoke HAL_PL330_SetTriggerSlave(slvCh0, trigMstCh)
+ - Invoke HAL_PL330_SetTriggerSlave(slvCh1, trigMstCh)
+ - Invoke HAL_PL330_Config to config dma transfer config for mst/slv each
+ - Invoke HAL_PL330_PrepDmaSingle/Cyclic for single/cyclic transfer for mst/slv each.
+ - Invoke HAL_PL330_Start(slvCh0) to start a ready slv dma transfer, wait for mst trigger.
+ - Invoke HAL_PL330_Start(slvCh1) to start a ready slv dma transfer, wait for mst trigger.
+ - Invoke HAL_PL330_Start(mstCh0) to start a ready mst dma transfer.
+
+ - Running Each mst dma transfer complete will trigger slv 0/1 dma start.
+
+ - Invoke HAL_PL330_Stop(slvCh0) to stop the slv0 dma channel.
+ - Invoke HAL_PL330_Stop(slvCh1) to stop the slv1 dma channel.
+ - Invoke HAL_PL330_Stop(mstCh0) to stop the mst0 dma channel.
+ - Invoke HAL_PL330_ReleaseChannel(slvCh0) to release the slv0 dma channel.
+ - Invoke HAL_PL330_ReleaseChannel(slvCh1) to release the slv1 dma channel.
+ - Invoke HAL_PL330_ReleaseChannel(mstCh0) to release the mst0 dma channel.
+
+ Note:
+ This function requires the TriggerMaster and TriggerSlaves in the same DMAC.
+
  @} */
 
 /** @defgroup PL330_Private_Definition Private Definition
@@ -183,6 +210,72 @@
  */
 #define PL330_DBGINST0(b1, b0, ch, dbg_th) \
     (((b1) << 24) | ((b0) << 16) | (((ch) & 0x7) << 8) | ((dbg_th & 0x1)))
+
+/*
+ * When the DMAC executes DMASEV instruction, each bit of the INTEN Register
+ * controls if the DMAC signals:
+ *
+ * BIT[N]=0
+ * if the DMAC executes DMASEV for the event-interrupt resource N then the DMAC
+ * signals event N to all of the threads.
+ *
+ * BIT[N]=1
+ * if the DMAC executes DMASEV for the event-interrupt resource N then the DMAC
+ * sets irq[N] HIGH to signal an interrupt request.
+ *
+ * Considering the max dmac channels is 8, so, let's assign BIT[7~0] for IRQn,
+ * and BIT[15~8] for EVENTn.
+ *
+ * INTEN Register bit assignments:
+ *
+ *  15 14 13 12 11 10 09 08 07 06 05 04 03 02 01 00
+ * +-----------------------------------------------+
+ * |        EVENTn         |          IRQn         |
+ * +-----------------------------------------------+
+ *
+ * Using an event to restart DMA channels
+ *
+ * When you program the INTEN Register to generate an event, you can use the
+ * DMASEV and DMAWFE instructions to restart one or more DMA channels.
+ *
+ * Two situation:
+ *
+ * DMAC executes DMAWFE before DMASEV
+ *
+ * To restart a single DMA channel:
+ *
+ * 1. The first DMA channel executes DMAWFE and then stalls while it waits for
+ *    the event to occur.
+ *
+ * 2. The other DMA channel executes DMASEV using the same event number, This
+ *    generates an event, and the first DMA channel restarts. The DMAC clears
+ *    the event, one aclk cycle after it executes DMASEV.
+ *
+ * You can program multiple channels to wait for the same event. for example,
+ * if four DMA channels have all executed DMAWFE for event 12, then when another
+ * DMA channel executes DMASEV for 12, the four DMA channels all restart at the
+ * same time. The DMAC clears the event, one aclk cycle after it executes DMASEV.
+ *
+ * DMA executes DMASEV before DMAWFE
+ *
+ * If the DMAC executes DMASEV before another channel executes DMAWFE then the
+ * event remains pending until the DMAC executes DMAWFE. When the DMAC executes
+ * DMAWFE it halts execution for one aclk cycle, clear the event and then continues
+ * execution of the channel thread.
+ *
+ * For example, if the DMAC executes DMASEV 9 and none of the other threads have
+ * executed DMAWFE 9 then the event remains pending. if the DMAC executes DMAWFE 9
+ * instruction for channel 4 and then executes DMAWFE 9 for channel 3. then:
+ *
+ * 1. The DMAC halts execution of the channel 4 thread for one aclk cycle.
+ * 2. The DMAC clears event 9.
+ * 3. The DMAC resumes execution of the channel 4 thread.
+ * 4. The DMAC halts execution of the channel 3 thread and the thread stalls while
+ *    it waits for the next occurrence of event 9.
+ */
+#define PL330_EVENT_ID(ev)       ((ev) + 8)
+#define PL330_EVENT_ID_VALID(ev) ((ev) >= 8 && (ev) <= 16)
+#define PL330_EVENT_ID_INVALID   0xff
 
 /********************* Private Structure Definition **************************/
 
@@ -786,6 +879,7 @@ static int _Period(uint8_t dryRun, struct HAL_PL330_DEV *pl330, char *buf,
     unsigned int lcnt1, ljmp1;
     int cyc, off = 0;
     struct PL330_XFER *x = &pxs->desc->px;
+    struct PL330_CHAN *pchan = &pl330->chans[ev];
 
     if (bursts > 256) {
         lcnt1 = 256;
@@ -793,6 +887,10 @@ static int _Period(uint8_t dryRun, struct HAL_PL330_DEV *pl330, char *buf,
     } else {
         lcnt1 = bursts;
         cyc = 1;
+    }
+
+    if (pchan && !pchan->trigMst && PL330_EVENT_ID_VALID(pchan->trigId)) {
+        off += PL330_Instr_DMAWFE(dryRun, &buf[off], pchan->trigId, 0);
     }
 
     /* loop1 */
@@ -835,6 +933,10 @@ static int _Period(uint8_t dryRun, struct HAL_PL330_DEV *pl330, char *buf,
     }
 
     off += PL330_Instr_DMASEV(dryRun, &buf[off], ev);
+
+    if (pchan && pchan->trigMst && PL330_EVENT_ID_VALID(pchan->trigId)) {
+        off += PL330_Instr_DMASEV(dryRun, &buf[off], pchan->trigId);
+    }
 
     return off;
 }
@@ -914,15 +1016,20 @@ static int _Setup_Loops(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
 }
 
 static int _Setup_Xfer(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
-                       char *buf, struct PL330_XFER_SPEC *pxs)
+                       char *buf, struct PL330_XFER_SPEC *pxs, int ev)
 {
     struct PL330_XFER *x = &pxs->desc->px;
+    struct PL330_CHAN *pchan = &pl330->chans[ev];
     int off = 0;
 
     /* DMAMOV SAR, x->src_addr */
     off += PL330_Instr_DMAMOV(dryRun, &buf[off], SAR, x->srcAddr);
     /* DMAMOV DAR, x->dst_addr */
     off += PL330_Instr_DMAMOV(dryRun, &buf[off], DAR, x->dstAddr);
+
+    if (pchan && !pchan->trigMst && PL330_EVENT_ID_VALID(pchan->trigId)) {
+        off += PL330_Instr_DMAWFE(dryRun, &buf[off], pchan->trigId, 0);
+    }
 
     /* Setup Loop(s) */
     off += _Setup_Loops(dryRun, pl330, &buf[off], pxs);
@@ -1206,6 +1313,7 @@ static int PL330_BuildDmaProg(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
 {
     char *buf = (char *)pxs->desc->mcBuf;
     struct PL330_XFER *x;
+    struct PL330_CHAN *pchan = &pl330->chans[channel];
 
     /* DMAMOV CCR, ccr */
     *off += PL330_Instr_DMAMOV(dryRun, &buf[*off], CCR, pxs->ccr);
@@ -1220,11 +1328,16 @@ static int PL330_BuildDmaProg(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     }
 
     if (!pxs->desc->cyclic) {
-        *off += _Setup_Xfer(dryRun, pl330, &buf[*off], pxs);
+        *off += _Setup_Xfer(dryRun, pl330, &buf[*off], pxs, channel);
         /* Test the list end here, then add end the dma instructions here */
         if (pxs->desc->node.next == &pl330->chans[channel].descLinkList) {
             /* DMASEV peripheral/event */
             *off += PL330_Instr_DMASEV(dryRun, &buf[*off], channel);
+
+            if (pchan && pchan->trigMst && PL330_EVENT_ID_VALID(pchan->trigId)) {
+                *off += PL330_Instr_DMASEV(dryRun, &buf[*off], pchan->trigId);
+            }
+
             /* DMAEND */
             *off += PL330_Instr_DMAEND(dryRun, &buf[*off]);
         }
@@ -1448,7 +1561,9 @@ HAL_Status HAL_PL330_Init(struct HAL_PL330_DEV *pl330)
 
     for (channel = 0; channel < PL330_CHANNELS_PER_DEV; channel++) {
         pchan = pl330->chans + channel;
+        pchan->pl330 = pl330;
         pchan->chanId = channel;
+        pchan->trigId = PL330_EVENT_ID_INVALID;
     }
 
     PL330_Read_Config(pl330);
@@ -1716,11 +1831,64 @@ struct PL330_CHAN *HAL_PL330_RequestChannel(struct HAL_PL330_DEV *pl330, DMA_REQ
         pchan = &pl330->chans[i];
         pchan->used = true;
         pchan->periId = id;
-        pchan->pl330 = pl330;
         break;
     }
 
     return pchan;
+}
+
+/**
+ * @brief Get dma channel id
+ *
+ * @param pchan: the handle of struct PL330_CHAN.
+ *
+ * @return dma channel id.
+ */
+int HAL_PL330_GetChanId(struct PL330_CHAN *pchan)
+{
+    HAL_ASSERT(pchan);
+
+    return pchan->chanId;
+}
+
+/**
+ * @brief Set a dma channel as trigger master
+ *
+ * @param pchan: the handle of struct PL330_CHAN.
+ *
+ * @return
+ *        - HAL_OK on success.
+ *        - HAL_ERROR on fail.
+ */
+HAL_Status HAL_PL330_SetTriggerMaster(struct PL330_CHAN *pchan)
+{
+    HAL_ASSERT(pchan != NULL);
+
+    pchan->trigId = PL330_EVENT_ID(pchan->chanId);
+    pchan->trigMst = true;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief Set a dma channel as trigger slave
+ *
+ * @param pchan: the handle of struct PL330_CHAN.
+ * @param trigMstCh: the trigger master dma channel id.
+ *
+ * @return
+ *        - HAL_OK on success.
+ *        - HAL_ERROR on fail.
+ */
+HAL_Status HAL_PL330_SetTriggerSlave(struct PL330_CHAN *pchan, int trigMstCh)
+{
+    HAL_ASSERT(pchan != NULL);
+    HAL_ASSERT(trigMstCh <= PL330_CHANNELS_PER_DEV);
+
+    pchan->trigId = PL330_EVENT_ID(trigMstCh);
+    pchan->trigMst = false;
+
+    return HAL_OK;
 }
 
 /**
@@ -1737,6 +1905,8 @@ HAL_Status HAL_PL330_ReleaseChannel(struct PL330_CHAN *pchan)
     HAL_ASSERT(pchan);
 
     pchan->periId = 0;
+    pchan->trigId = PL330_EVENT_ID_INVALID;
+    pchan->trigMst = false;
     pchan->used = false;
 
     return HAL_OK;

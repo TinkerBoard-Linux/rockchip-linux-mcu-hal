@@ -180,6 +180,7 @@ struct HAL_PL330_DEV;
 struct PL330_CHAN {
     uint16_t periId;
     uint16_t chanId;
+    uint16_t trigId;
     uint32_t fifoAddr;
     uint32_t brstSz;
     uint32_t brstLen;
@@ -191,6 +192,7 @@ struct PL330_CHAN {
     struct HAL_PL330_DEV *pl330;
     void *mcBuf;
     bool used;
+    bool trigMst;
 };
 
 /**
@@ -225,6 +227,10 @@ HAL_Status HAL_PL330_Stop(struct PL330_CHAN *pchan);
 
 struct PL330_CHAN *HAL_PL330_RequestChannel(struct HAL_PL330_DEV *pl330, DMA_REQ_Type id);
 HAL_Status HAL_PL330_ReleaseChannel(struct PL330_CHAN *pchan);
+
+int HAL_PL330_GetChanId(struct PL330_CHAN *pchan);
+HAL_Status HAL_PL330_SetTriggerMaster(struct PL330_CHAN *pchan);
+HAL_Status HAL_PL330_SetTriggerSlave(struct PL330_CHAN *pchan, int trigMstCh);
 
 HAL_Status HAL_PL330_Config(struct PL330_CHAN *pchan, struct DMA_SLAVE_CONFIG *config);
 HAL_Status HAL_PL330_PrepDmaMemcpy(struct PL330_CHAN *pchan, uint32_t dst,
