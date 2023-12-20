@@ -2301,6 +2301,40 @@ HAL_Status HAL_PL330_PrepDmaMemcpy(struct PL330_CHAN *pchan, uint32_t dst,
     return HAL_OK;
 }
 
+/**
+ * @brief Prepare a cyclic dma memcpy
+ *
+ * @param pchan: the handle of struct PL330_CHAN.
+ * @param dst: the memory dst addr.
+ * @param src: the memory src addr.
+ * @param len: data len.
+ * @param periodLen: periodic len.
+ * @param callback: callback function.
+ * @param cparam: callback param.
+ *
+ * @return
+ *        - HAL_OK on success.
+ *        - HAL_ERROR on fail.
+ */
+HAL_Status HAL_PL330_PrepDmaMemcpyCyclic(struct PL330_CHAN *pchan, uint32_t dst,
+                                         uint32_t src, uint32_t len, uint32_t periodLen,
+                                         PL330_Callback callback, void *cparam)
+{
+    struct PL330_DESC *desc = &pchan->desc;
+
+    HAL_ASSERT(pchan != NULL);
+    HAL_ASSERT(periodLen != 0);
+    HAL_ASSERT(len % periodLen == 0);
+
+    HAL_PL330_PrepDmaMemcpy(pchan, dst, src, periodLen, callback, cparam);
+
+    desc->bytesReq = len;
+    desc->cyclic = true;
+    desc->numPeriods = len / periodLen;
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /** @} */

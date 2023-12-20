@@ -236,6 +236,9 @@ HAL_Status HAL_PL330_Config(struct PL330_CHAN *pchan, struct DMA_SLAVE_CONFIG *c
 HAL_Status HAL_PL330_PrepDmaMemcpy(struct PL330_CHAN *pchan, uint32_t dst,
                                    uint32_t src, uint32_t len,
                                    PL330_Callback callback, void *cparam);
+HAL_Status HAL_PL330_PrepDmaMemcpyCyclic(struct PL330_CHAN *pchan, uint32_t dst,
+                                         uint32_t src, uint32_t len, uint32_t periodLen,
+                                         PL330_Callback callback, void *cparam);
 HAL_Status HAL_PL330_PrepDmaCyclic(struct PL330_CHAN *pchan, uint32_t dmaAddr,
                                    uint32_t len, uint32_t periodLen,
                                    eDMA_TRANSFER_DIRECTION direction,
