@@ -7,6 +7,292 @@
 
 #ifdef HAL_INTMUX_MODULE_ENABLED
 
+#ifdef INTMUX_IRQ_INTEN_L_OFFSET
+#ifdef __xtensa__
+#include <xtensa/xtruntime.h>
+#endif
+
+/** @addtogroup RK_HAL_Driver
+ *  @{
+ */
+
+/** @addtogroup INTMUX
+ *  @{
+ */
+
+/** @defgroup INTMUX_How_To_Use How To Use
+ *  @{
+
+ The INTMUX implement can be used as follows:
+ - Invoke HAL_INTMUX_EnableIRQ() to enable irq.
+ - Invoke HAL_INTMUX_DisableIRQ() to disable irq.
+ - Invoke HAL_INTMUX_SetIRQHandler() to set handler for intmux irq.
+ - Invoke HAL_INTMUX_Init() to init intmux.
+ - Invoke HAL_INTMUX_SetPendingIRQ() to set pending interrupt.
+ - Invoke HAL_INTMUX_ClearPendingIRQ() to clear pending interrupt.
+
+ @} */
+
+/** @defgroup INTMUX_Private_Definition Private Definition
+ *  @{
+ */
+/********************* Private MACRO Definition ******************************/
+#define INTMUX_IRQ_NUM_PER_CH 64
+#define INTMUX_IRQ_NUM_PER_ST 32
+#define INTMUX_CH_NUM         4
+#define INTMUX_IRQ_NUM        (INTMUX_CH_NUM * INTMUX_IRQ_NUM_PER_CH)
+#define TO_INTMUX_CH(n)       ((n) / INTMUX_IRQ_NUM_PER_CH)
+#define TO_INTMUX_CH_NUM(n)   ((n) % INTMUX_IRQ_NUM_PER_CH)
+
+#define DEFINE_INTMUX_HANDLER_CTRL(channel) \
+static struct HAL_INTMUX_HANDLER_CTRL s_intmuxHandler[channel][INTMUX_IRQ_NUM_PER_CH];
+
+#define DEFINE_INTMUX_DISPATCH(ID)                                                       \
+static void INTMUX_DispatchCh##ID(void)                                                  \
+{                                                                                        \
+    uint32_t irqNum;                                                                     \
+    uint32_t statusL = INTMUX##ID->IRQ_STATUS_L;                                         \
+    uint32_t statusH = INTMUX##ID->IRQ_STATUS_H;                                         \
+                                                                                         \
+    while (statusL != 0) {                                                               \
+        irqNum = __builtin_ffs(statusL) - 1;                                             \
+        HAL_ASSERT(s_intmuxHandler[ID][irqNum].handler != NULL);                         \
+        s_intmuxHandler[ID][irqNum].handler(irqNum +                                     \
+            INTMUX_IRQ_NUM_PER_CH * ID,                                                  \
+            s_intmuxHandler[ID][irqNum].args);                                           \
+        statusL &= ~(1 << irqNum);                                                       \
+    }                                                                                    \
+    while (statusH != 0) {                                                               \
+        irqNum = __builtin_ffs(statusH) - 1;                                             \
+        HAL_ASSERT(s_intmuxHandler[ID][irqNum + INTMUX_IRQ_NUM_PER_ST].handler != NULL); \
+        s_intmuxHandler[ID][irqNum + INTMUX_IRQ_NUM_PER_ST].handler(                     \
+            irqNum + INTMUX_IRQ_NUM_PER_ST + INTMUX_IRQ_NUM_PER_CH * ID,                 \
+            s_intmuxHandler[ID][irqNum + INTMUX_IRQ_NUM_PER_ST].args);                   \
+        statusH &= ~(1 << irqNum);                                                       \
+    }                                                                                    \
+}                                                                                        \
+                                                                                         \
+static void INTMUX_Extint##ID##Handler(void *arg)                                        \
+{                                                                                        \
+    INTMUX_DispatchCh##ID();                                                             \
+}
+
+/********************* Private Structure Definition **************************/
+struct HAL_INTMUX_HANDLER_CTRL {
+    HAL_INTMUX_HANDLER handler;
+    void *args;
+};
+
+/********************* Private Variable Definition ***************************/
+DEFINE_INTMUX_HANDLER_CTRL(INTMUX_CH_NUM);
+
+/********************* Private Function Definition ***************************/
+static void INTMUX_SetIrqEnable(uint32_t irq, bool enable)
+{
+    uint32_t irqCh = TO_INTMUX_CH(irq);
+    uint32_t irqChNum = TO_INTMUX_CH_NUM(irq);
+    volatile uint32_t *reg = NULL;
+
+    switch (irqCh) {
+    case 0:
+        reg = &INTMUX0->IRQ_INTEN_L;
+        break;
+    case 1:
+        reg = &INTMUX1->IRQ_INTEN_L;
+        break;
+    case 2:
+        reg = &INTMUX2->IRQ_INTEN_L;
+        break;
+    case 3:
+        reg = &INTMUX3->IRQ_INTEN_L;
+        break;
+    default:
+
+        return;
+    }
+
+    if (irqChNum < INTMUX_IRQ_NUM_PER_ST) {
+        if (enable) {
+            *reg |= 0x1U << irqChNum;
+        } else {
+            *reg &= ~(0x1U << irqChNum);
+        }
+    } else {
+        reg++;
+        if (enable) {
+            *reg |= 0x1U << (irqChNum - INTMUX_IRQ_NUM_PER_ST);
+        } else {
+            *reg &= ~(0x1U << (irqChNum - INTMUX_IRQ_NUM_PER_ST));
+        }
+    }
+}
+
+static void INTMUX_SetIrqForceEnable(uint32_t irq, bool enable)
+{
+    uint32_t irqCh = TO_INTMUX_CH(irq);
+    uint32_t irqChNum = TO_INTMUX_CH_NUM(irq);
+    volatile uint32_t *reg = NULL;
+
+    switch (irqCh) {
+    case 0:
+        reg = &INTMUX0->IRQ_INTFORCE_L;
+        break;
+    case 1:
+        reg = &INTMUX1->IRQ_INTFORCE_L;
+        break;
+    case 2:
+        reg = &INTMUX2->IRQ_INTFORCE_L;
+        break;
+    case 3:
+        reg = &INTMUX3->IRQ_INTFORCE_L;
+        break;
+    default:
+
+        return;
+    }
+
+    if (irqChNum < INTMUX_IRQ_NUM_PER_ST) {
+        if (enable) {
+            *reg |= 0x1U << irqChNum;
+        } else {
+            *reg &= ~(0x1U << irqChNum);
+        }
+    } else {
+        reg++;
+        if (enable) {
+            *reg |= 0x1U << (irqChNum - INTMUX_IRQ_NUM_PER_ST);
+        } else {
+            *reg &= ~(0x1U << (irqChNum - INTMUX_IRQ_NUM_PER_ST));
+        }
+    }
+}
+
+/* Define interrupt dispatch functions for each channel */
+DEFINE_INTMUX_DISPATCH(0)
+DEFINE_INTMUX_DISPATCH(1)
+DEFINE_INTMUX_DISPATCH(2)
+DEFINE_INTMUX_DISPATCH(3)
+
+/** @} */
+
+/********************* Public Function Definition ****************************/
+
+/** @defgroup INTMUX_Exported_Functions_Group5 Other Functions
+ *  @{
+ */
+
+/**
+ * @brief  Set pending interrupt.
+ * @param  irq number
+ * @return HAL_Status.
+ */
+HAL_Status HAL_INTMUX_SetPendingIRQ(uint32_t irq)
+{
+    HAL_ASSERT(irq < INTMUX_IRQ_NUM);
+
+    INTMUX_SetIrqForceEnable(irq, true);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Clear pending interrupt.
+ * @param  irq number
+ * @return HAL_Status.
+ */
+HAL_Status HAL_INTMUX_ClearPendingIRQ(uint32_t irq)
+{
+    HAL_ASSERT(irq < INTMUX_IRQ_NUM);
+
+    INTMUX_SetIrqForceEnable(irq, false);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Enable intmux irq.
+ * @param  irq number
+ * @return HAL_Status.
+ */
+HAL_Status HAL_INTMUX_EnableIRQ(uint32_t irq)
+{
+    HAL_ASSERT(irq < INTMUX_IRQ_NUM);
+
+    INTMUX_SetIrqEnable(irq, true);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable intmux irq.
+ * @param  irq number
+ * @return HAL_Status.
+ */
+HAL_Status HAL_INTMUX_DisableIRQ(uint32_t irq)
+{
+    HAL_ASSERT(irq < INTMUX_IRQ_NUM);
+
+    INTMUX_SetIrqEnable(irq, false);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Intmux direct dispatch
+ * @param  irq: irq id
+ * @return NONE
+ */
+void HAL_INTMUX_DirectDispatch(uint32_t irq)
+{
+}
+
+/**
+ * @brief  Set handler for intmux irq
+ * @param  irq: irq id.
+ * @param  handler: handler callback
+ * @param  args: private parameters
+ * @return HAL_Status.
+ */
+HAL_Status HAL_INTMUX_SetIRQHandler(uint32_t irq, HAL_INTMUX_HANDLER handler, void *args)
+{
+    uint32_t irqCh = TO_INTMUX_CH(irq);
+    uint32_t irqChNum = TO_INTMUX_CH_NUM(irq);
+
+    HAL_ASSERT(irq < INTMUX_IRQ_NUM);
+    HAL_ASSERT(handler);
+
+    s_intmuxHandler[irqCh][irqChNum].handler = handler;
+    s_intmuxHandler[irqCh][irqChNum].args = args;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Init intmux
+ * @return HAL_Status.
+ */
+HAL_Status HAL_INTMUX_Init(void)
+{
+#ifdef __xtensa__
+    xtos_set_interrupt_handler(XCHAL_EXTINT0_NUM, INTMUX_Extint0Handler, NULL, NULL);
+    xtos_interrupt_enable(XCHAL_EXTINT0_NUM);
+    xtos_set_interrupt_handler(XCHAL_EXTINT1_NUM, INTMUX_Extint1Handler, NULL, NULL);
+    xtos_interrupt_enable(XCHAL_EXTINT1_NUM);
+    xtos_set_interrupt_handler(XCHAL_EXTINT2_NUM, INTMUX_Extint2Handler, NULL, NULL);
+    xtos_interrupt_enable(XCHAL_EXTINT2_NUM);
+    xtos_set_interrupt_handler(XCHAL_EXTINT3_NUM, INTMUX_Extint3Handler, NULL, NULL);
+    xtos_interrupt_enable(XCHAL_EXTINT3_NUM);
+#endif
+
+    return HAL_OK;
+}
+
+/** @} */
+
+/** @} */
+
+/** @} */
+#else
 /** @addtogroup RK_HAL_Driver
  *  @{
  */
@@ -58,6 +344,26 @@ static struct HAL_INTMUX_HANDLER_CTRL s_intmuxHandler[NUM_EXT_INTERRUPTS];
 /** @defgroup INTMUX_Exported_Functions_Group5 Other Functions
  *  @{
  */
+
+/**
+ * @brief  Set pending interrupt.
+ * @param  irq number
+ * @return HAL_Status.
+ */
+HAL_Status HAL_INTMUX_SetPendingIRQ(uint32_t irq)
+{
+    return HAL_OK;
+}
+
+/**
+ * @brief  Clear pending interrupt.
+ * @param  irq number
+ * @return HAL_Status.
+ */
+HAL_Status HAL_INTMUX_ClearPendingIRQ(uint32_t irq)
+{
+    return HAL_OK;
+}
 
 /**
  * @brief  Enable intmux irq.
@@ -419,4 +725,5 @@ HAL_Status HAL_INTMUX_Init(void)
 /** @} */
 
 /** @} */
+#endif /* INTMUX_IRQ_INTEN_L_OFFSET */
 #endif /* HAL_INTMUX_MODULE_ENABLED */
