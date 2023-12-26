@@ -128,6 +128,17 @@ typedef enum {
 } ePDM_mode;
 
 /**
+ * enum eASRC_mode - ASRC modes
+ */
+typedef enum {
+    ASRC_REAL_TIME_M2M_MODE = 0,
+    ASRC_REAL_TIME_S2M_MODE,
+    ASRC_REAL_TIME_M2D_MODE,
+    ASRC_REAL_TIME_S2D_MODE,
+    ASRC_FILE_MODE,
+} eASRC_mode;
+
+/**
  * struct AUDIO_INIT_CONFIG - init config for dai/codec init.
  */
 struct AUDIO_INIT_CONFIG {
@@ -137,6 +148,7 @@ struct AUDIO_INIT_CONFIG {
     eAUDIO_fmtType format;
     eTRCM_modeType trcmMode;
     ePDM_mode pdmMode;
+    eASRC_mode asrcMode;
     uint16_t txMap; /**< route mapping of PATHx to SDOx, 4 bits per path.
                       *  |15:12|11:8|7:4|3:0|-->|p3|p2|p1|p0|
                       *  each path can choose one sdo as its sink.
@@ -160,6 +172,7 @@ struct AUDIO_INIT_CONFIG {
  */
 struct AUDIO_PARAMS {
     eAUDIO_sampleRate sampleRate; /**< sample rate: from 8k ~ 192k. */
+    eAUDIO_sampleRate reSampleRate; /**< resample rate: from 8k ~ 192k. */
     eAUDIO_sampleBits sampleBits; /**< bit per sample: 8bits, 16bits, 32bits. */
     eAUDIO_channels channels; /**< channels: up to 8ch. */
 };

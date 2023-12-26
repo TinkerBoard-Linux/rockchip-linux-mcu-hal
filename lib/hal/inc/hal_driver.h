@@ -20,6 +20,10 @@
 #include "hal_archtimer.h"
 #endif
 
+#ifdef HAL_ASRC_MODULE_ENABLED
+#include "hal_asrc.h"
+#endif
+
 #ifdef HAL_AUDIOPWM_MODULE_ENABLED
 #include "hal_audiopwm.h"
 #endif
