@@ -43,6 +43,7 @@
 #define TSADC_AUTO_PERIOD_TIME           250
 #define TSADC_AUTO_PERIOD_HT_TIME        50
 #define TSADC_TSHUT_TEMP                 (120000)
+#define TSADC_Q_MAX_VALUE                0x3ff
 
 #define TSADCV2_USER_INTER_PD_SOC   0x8fc0 /* 97us, at least 90us */
 #define TSADCV2_AUTO_PERIOD_TIME    1622 /* 2.5ms */
@@ -125,6 +126,14 @@ static const struct TSADC_TABLE s_tsadcTable[] =
     { 825, 165000 },
     { 900, MAX_TEMP },
     { 0xfff, MAX_TEMP },
+};
+#elif defined(RKMCU_RK2118)
+static const struct TSADC_TABLE s_tsadcTable[] =
+{
+    { 362, MIN_TEMP },
+    { 395, -40000 },
+    { 672, 125000 },
+    { 783, MAX_TEMP },
 };
 #endif
 
@@ -368,6 +377,23 @@ static void TSADC_Config(eTSADC_tshutPolarity polarity)
     GRF->SOC_CON[2] = 0x10001 << 1;
     HAL_DelayUs(15);
 }
+#elif defined(RKMCU_RK2118)
+static void TSADC_Config(eTSADC_tshutPolarity polarity)
+{
+    /* set tshut_polarity 0: Low active , 1: High active */
+    WRITE_REG_MASK_WE(TSADC->AUTO_CON, TSADC_AUTO_CON_TSHUT_POLARITY_MASK, polarity << TSADC_AUTO_CON_TSHUT_POLARITY_SHIFT);
+
+    /* set temperature coefficient positive or negative */
+    WRITE_REG_MASK_WE(TSADC->AUTO_CON, TSADC_AUTO_CON_Q_SEL_MASK, 0x1 << TSADC_AUTO_CON_Q_SEL_SHIFT);
+
+    /* set q_max */
+    TSADC->Q_MAX = TSADC_Q_MAX_Q_MAX_MASK & TSADC_Q_MAX_VALUE;
+
+    TSADC->AUTO_PERIOD = TSADC_AUTO_PERIOD_TIME;
+    TSADC->HIGH_INT_DEBOUNCE = TSADC_HIGHT_INT_DEBOUNCE_COUNT;
+    TSADC->AUTO_PERIOD_HT = TSADC_AUTO_PERIOD_HT_TIME;
+    TSADC->HIGH_TSHUT_DEBOUNCE = TSADC_HIGHT_TSHUT_DEBOUNCE_COUNT;
+}
 #endif
 
 /**
@@ -375,6 +401,10 @@ static void TSADC_Config(eTSADC_tshutPolarity polarity)
  */
 static void TSADC_EnAuto(void)
 {
+#ifdef TSADC_AUTO_SRC_AUTO_SRC_MASK
+    /* enable tsadc auto mode */
+    WRITE_REG_MASK_WE(TSADC->AUTO_CON, TSADC_AUTO_CON_AUTO_EN_MASK, 0x1 << TSADC_AUTO_CON_AUTO_EN_SHIFT);
+#else
     /* enable tsadc pd */
 #ifdef GRF_SOC_CON30_OFFSET
     WRITE_REG_MASK_WE(GRF->SOC_CON30, GRF_SOC_CON30_GRF_TSADC_TSEN_PD_MASK, 0 << GRF_SOC_CON30_GRF_TSADC_TSEN_PD_SHIFT);
@@ -397,6 +427,7 @@ static void TSADC_EnAuto(void)
     /* set temperature coefficient positive or negative */
     SET_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_TSADC_Q_SEL_MASK);
 #endif
+#endif /* TSADC_AUTO_SRC_AUTO_SRC_MASK */
 }
 
 /**
@@ -404,6 +435,10 @@ static void TSADC_EnAuto(void)
  */
 static void TSADC_DisAuto(void)
 {
+#ifdef TSADC_AUTO_SRC_AUTO_SRC_MASK
+    /* disable tsadc auto mode */
+    WRITE_REG_MASK_WE(TSADC->AUTO_CON, TSADC_AUTO_CON_AUTO_EN_MASK, 0x0 << TSADC_AUTO_CON_AUTO_EN_SHIFT);
+#else
 #ifdef TSADC_AUTO_CON_AUTO_EN_MASK
     /* disable tsadc auto mode */
     CLEAR_BIT(TSADC->AUTO_CON, TSADC_AUTO_CON_AUTO_EN_MASK);
@@ -413,6 +448,7 @@ static void TSADC_DisAuto(void)
 #ifdef GRF_SOC_CON30_OFFSET
     WRITE_REG_MASK_WE(GRF->SOC_CON30, GRF_SOC_CON30_GRF_TSADC_TSEN_PD_MASK, 1 << GRF_SOC_CON30_GRF_TSADC_TSEN_PD_SHIFT);
 #endif
+#endif /* TSADC_AUTO_SRC_AUTO_SRC_MASK */
 }
 
 /**
@@ -420,6 +456,10 @@ static void TSADC_DisAuto(void)
  */
 static void TSADC_IrqAck(void)
 {
+#ifdef TSADC_AUTO_SRC_AUTO_SRC_MASK
+    SET_BIT(TSADC->EOC_HSHUT_PD, TSADC_EOC_HSHUT_PD_ROUND_INT_PD_MASK);
+#endif
+
 #ifdef TSADC_INT_PD_EOC_INT_PD_MASK
     CLEAR_BIT(TSADC->INT_PD, TSADC_INT_PD_EOC_INT_PD_MASK);
 #endif
@@ -434,7 +474,11 @@ static void TSADC_IrqAck(void)
 static void TSADC_TshutTemp(const struct TSADC_CONFIG *config, int chn, int temp)
 {
     TSADC->COMP_SHUT[chn] = TSADC_TempToCode(config, temp);
+#ifdef TSADC_AUTO_SRC_AUTO_SRC_MASK
+    WRITE_REG_MASK_WE(TSADC->AUTO_SRC, 0x1 << chn, 0x1 << chn);
+#else
     SET_BIT(TSADC->AUTO_CON, TSADC_AUTO_SRC_EN(chn));
+#endif
 }
 
 /**
@@ -444,6 +488,15 @@ static void TSADC_TshutTemp(const struct TSADC_CONFIG *config, int chn, int temp
  */
 static void TSADC_TshutMode(int chn, eTSADC_tshutMode mode)
 {
+#ifdef TSADC_AUTO_SRC_AUTO_SRC_MASK
+    if (mode == TSHUT_MODE_GPIO) {
+        WRITE_REG_MASK_WE(TSADC->CRU_EN, 0x1 << chn, 0x0 << chn);
+        WRITE_REG_MASK_WE(TSADC->GPIO_EN, 0x1 << chn, 0x1 << chn);
+    } else {
+        WRITE_REG_MASK_WE(TSADC->GPIO_EN, 0x1 << chn, 0x0 << chn);
+        WRITE_REG_MASK_WE(TSADC->CRU_EN, 0x1 << chn, 0x1 << chn);
+    }
+#else
     if (mode == TSHUT_MODE_GPIO) {
         CLEAR_BIT(TSADC->INT_EN, TSADC_SHUT_2CRU_SRC_EN(chn));
         SET_BIT(TSADC->INT_EN, TSADC_SHUT_2GPIO_SRC_EN(chn));
@@ -451,6 +504,7 @@ static void TSADC_TshutMode(int chn, eTSADC_tshutMode mode)
         CLEAR_BIT(TSADC->INT_EN, TSADC_SHUT_2GPIO_SRC_EN(chn));
         SET_BIT(TSADC->INT_EN, TSADC_SHUT_2CRU_SRC_EN(chn));
     }
+#endif
 }
 
 /** @} */
@@ -498,6 +552,18 @@ HAL_Status HAL_TSADC_Enable_AUTO(int chn, eTSADC_tshutPolarity polarity, eTSADC_
  * @return HAL_TRUE: tsadc enabled
  * @return HAL_FALSE: tsadc disabled
  */
+#ifdef TSADC_AUTO_SRC_AUTO_SRC_MASK
+HAL_Check HAL_TSADC_IsEnabled_AUTO(int chn)
+{
+    int valAutoCon;
+    int valAutoSrc;
+
+    valAutoCon = TSADC->AUTO_CON & TSADC_AUTO_CON_AUTO_EN_MASK;
+    valAutoSrc = TSADC->AUTO_SRC & (0x1 << chn);
+
+    return (valAutoCon && valAutoSrc) ? HAL_TRUE : HAL_FALSE;
+}
+#else
 HAL_Check HAL_TSADC_IsEnabled_AUTO(int chn)
 {
     int val;
@@ -507,6 +573,7 @@ HAL_Check HAL_TSADC_IsEnabled_AUTO(int chn)
 
     return val ? HAL_TRUE : HAL_FALSE;
 }
+#endif
 
 /**
  * @brief disable tsadc auto mode.
