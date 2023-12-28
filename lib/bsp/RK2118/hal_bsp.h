@@ -7,6 +7,7 @@
 #define __BSP_H__
 
 #include "hal_base.h"
+#include "hal_spinlock_id.h"
 
 /***************************** MACRO Definition ******************************/
 
