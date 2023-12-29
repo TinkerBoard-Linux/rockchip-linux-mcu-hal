@@ -1195,59 +1195,17 @@ struct TSADC_REG {
     __IO uint32_t HLT_INT_PD;                         /* Address Offset: 0x0024 */
     __IO uint32_t EOC_HSHUT_PD;                       /* Address Offset: 0x0028 */
     __I  uint32_t DATA[16];                           /* Address Offset: 0x002C */
-    __IO uint32_t COMP0_INT;                          /* Address Offset: 0x006C */
-    __IO uint32_t COMP1_INT;                          /* Address Offset: 0x0070 */
-    __IO uint32_t COMP2_INT;                          /* Address Offset: 0x0074 */
-    __IO uint32_t COMP3_INT;                          /* Address Offset: 0x0078 */
-    __IO uint32_t COMP4_INT;                          /* Address Offset: 0x007C */
-    __IO uint32_t COMP5_INT;                          /* Address Offset: 0x0080 */
-    __IO uint32_t COMP6_INT;                          /* Address Offset: 0x0084 */
-    __IO uint32_t COMP7_INT;                          /* Address Offset: 0x0088 */
-    __IO uint32_t COMP8_INT;                          /* Address Offset: 0x008C */
-    __IO uint32_t COMP9_INT;                          /* Address Offset: 0x0090 */
-    __IO uint32_t COMP10_INT;                         /* Address Offset: 0x0094 */
-    __IO uint32_t COMP11_INT;                         /* Address Offset: 0x0098 */
-    __IO uint32_t COMP12_INT;                         /* Address Offset: 0x009C */
+    __IO uint32_t COMP_INT[13];                       /* Address Offset: 0x006C */
          uint32_t RESERVED00A0[24];                   /* Address Offset: 0x00A0 */
     __IO uint32_t COMP13_INT;                         /* Address Offset: 0x0100 */
     __IO uint32_t COMP14_INT;                         /* Address Offset: 0x0104 */
     __IO uint32_t COMP15_INT;                         /* Address Offset: 0x0108 */
-    __IO uint32_t COMP0_SHUT;                         /* Address Offset: 0x010C */
-    __IO uint32_t COMP1_SHUT;                         /* Address Offset: 0x0110 */
-    __IO uint32_t COMP2_SHUT;                         /* Address Offset: 0x0114 */
-    __IO uint32_t COMP3_SHUT;                         /* Address Offset: 0x0118 */
-    __IO uint32_t COMP4_SHUT;                         /* Address Offset: 0x011C */
-    __IO uint32_t COMP5_SHUT;                         /* Address Offset: 0x0120 */
-    __IO uint32_t COMP6_SHUT;                         /* Address Offset: 0x0124 */
-    __IO uint32_t COMP7_SHUT;                         /* Address Offset: 0x0128 */
-    __IO uint32_t COMP8_SHUT;                         /* Address Offset: 0x012C */
-    __IO uint32_t COMP9_SHUT;                         /* Address Offset: 0x0130 */
-    __IO uint32_t COMP10_SHUT;                        /* Address Offset: 0x0134 */
-    __IO uint32_t COMP11_SHUT;                        /* Address Offset: 0x0138 */
-    __IO uint32_t COMP12_SHUT;                        /* Address Offset: 0x013C */
-    __IO uint32_t COMP13_SHUT;                        /* Address Offset: 0x0140 */
-    __IO uint32_t COMP14_SHUT;                        /* Address Offset: 0x0144 */
-    __IO uint32_t COMP15_SHUT;                        /* Address Offset: 0x0148 */
+    __IO uint32_t COMP_SHUT[16];                      /* Address Offset: 0x010C */
     __IO uint32_t HIGH_INT_DEBOUNCE;                  /* Address Offset: 0x014C */
     __IO uint32_t HIGH_TSHUT_DEBOUNCE;                /* Address Offset: 0x0150 */
     __IO uint32_t AUTO_PERIOD;                        /* Address Offset: 0x0154 */
     __IO uint32_t AUTO_PERIOD_HT;                     /* Address Offset: 0x0158 */
-    __IO uint32_t COMP0_LOW_INT;                      /* Address Offset: 0x015C */
-    __IO uint32_t COMP1_LOW_INT;                      /* Address Offset: 0x0160 */
-    __IO uint32_t COMP2_LOW_INT;                      /* Address Offset: 0x0164 */
-    __IO uint32_t COMP3_LOW_INT;                      /* Address Offset: 0x0168 */
-    __IO uint32_t COMP4_LOW_INT;                      /* Address Offset: 0x016C */
-    __IO uint32_t COMP5_LOW_INT;                      /* Address Offset: 0x0170 */
-    __IO uint32_t COMP6_LOW_INT;                      /* Address Offset: 0x0174 */
-    __IO uint32_t COMP7_LOW_INT;                      /* Address Offset: 0x0178 */
-    __IO uint32_t COMP8_LOW_INT;                      /* Address Offset: 0x017C */
-    __IO uint32_t COMP9_LOW_INT;                      /* Address Offset: 0x0180 */
-    __IO uint32_t COMP10_LOW_INT;                     /* Address Offset: 0x0184 */
-    __IO uint32_t COMP11_LOW_INT;                     /* Address Offset: 0x0188 */
-    __IO uint32_t COMP12_LOW_INT;                     /* Address Offset: 0x018C */
-    __IO uint32_t COMP13_LOW_INT;                     /* Address Offset: 0x0190 */
-    __IO uint32_t COMP14_LOW_INT;                     /* Address Offset: 0x0194 */
-    __IO uint32_t COMP15_LOW_INT;                     /* Address Offset: 0x0198 */
+    __IO uint32_t COMP_LOW_INT[16];                   /* Address Offset: 0x015C */
     __IO uint32_t T_SETUP;                            /* Address Offset: 0x019C */
          uint32_t RESERVED01A0[24];                   /* Address Offset: 0x01A0 */
     __IO uint32_t T_PW_EN;                            /* Address Offset: 0x0200 */
