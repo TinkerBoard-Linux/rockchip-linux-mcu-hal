@@ -61,7 +61,7 @@ typedef enum {
     VOP_MCU_SPLIT_32_BIT,
 } eVOP_McuSplit;
 
-typedef enum vop_data_format {
+typedef enum {
     VOP_FMT_ARGB8888 = 0,
     VOP_FMT_RGB888,
     VOP_FMT_RGB565,
@@ -82,9 +82,10 @@ typedef enum vop_data_format {
     VOP_FMT_8BPP,
 } eVOP_DataFormat;
 
-typedef enum VOP_mcu_cmd {
+typedef enum {
     MCU_WRCMD = 0,
     MCU_WRDATA,
+    MCU_RDDATA,
     MCU_SETBYPASS,
 } eVOP_McuCmd;
 
