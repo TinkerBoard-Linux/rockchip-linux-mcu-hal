@@ -278,7 +278,7 @@ typedef enum {
   SARADC1_IRQn              =  156,     /*!< SARADC1 Interrupt             */
   FSPI0_IRQn                =  160,     /*!< FSPI0 Interrupt               */
   RSVD0_IRQn                =  280,     /*!< RSVD0 Interrupt               */
-  NUM_INTERRUPTS            =  282,
+  NUM_INTERRUPTS            =  288,
 } IRQn_Type;
 
 #define RSVD_IRQn(_N)               (RSVD0_IRQn + (_N))
