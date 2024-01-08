@@ -197,16 +197,24 @@ __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
     va_end(args);
     len = str - g_printf_buf;
 
+#if defined(HAL_SHARED_UART_LOCK_ID) && defined(HAL_SPINLOCK_MODULE_ENABLED)
+    HAL_SPINLOCK_Lock(HAL_SHARED_UART_LOCK_ID);
+#endif
+
 #ifdef __GNUC__
 
-    return _write(2, g_printf_buf, len);
+    len = _write(2, g_printf_buf, len);
 #else
     for (int i = 0; i < len; i++) {
         fputc(g_printf_buf[i], stdout);
     }
+#endif
+
+#if defined(HAL_SHARED_UART_LOCK_ID) && defined(HAL_SPINLOCK_MODULE_ENABLED)
+    HAL_SPINLOCK_Unlock(HAL_SHARED_UART_LOCK_ID);
+#endif
 
     return len;
-#endif
 }
 #else
 /**
