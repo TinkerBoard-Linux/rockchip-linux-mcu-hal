@@ -37,7 +37,7 @@
 //#define HAL_MCU_CORE /**< Only be defined in Asymmetric Multi-Processing MCU project */
 //#define HAL_DSP_CORE /**< Only be defined in Asymmetric Multi-Processing DSP project */
 
-#define SYS_TIMER TIMER10 /**< System timer designation (RK TIMER) */
+#define SYS_TIMER TIMER10 /**< System timer designation (RK TIMER), it must be a increased timer */
 
 /************************ HAL Driver Config ***********************************/
 

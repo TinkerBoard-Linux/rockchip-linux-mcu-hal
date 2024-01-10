@@ -145,6 +145,10 @@ __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
     int32_t len = 0;
     va_list args;
 
+#if defined(HAL_SHARED_DEBUG_UART_LOCK_ID) && defined(HAL_SPINLOCK_MODULE_ENABLED)
+    bool locked = false;
+#endif
+
     va_start(args, format);
 
     while (*format != '\0') {
@@ -197,8 +201,20 @@ __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
     va_end(args);
     len = str - g_printf_buf;
 
-#if defined(HAL_SHARED_UART_LOCK_ID) && defined(HAL_SPINLOCK_MODULE_ENABLED)
-    HAL_SPINLOCK_Lock(HAL_SHARED_UART_LOCK_ID);
+#if defined(HAL_SHARED_DEBUG_UART_LOCK_ID) && defined(HAL_SPINLOCK_MODULE_ENABLED)
+    {
+        HAL_Check ret;
+        uint64_t timeout = PLL_INPUT_OSC_RATE / 1000; /* 1ms */
+
+        timeout += HAL_GetSysTimerCount();
+        do {
+            ret = HAL_SPINLOCK_TryLock(HAL_SHARED_DEBUG_UART_LOCK_ID);
+        } while(!ret && HAL_GetSysTimerCount() < timeout);
+
+        if (ret) {
+            locked = true;
+        }
+    }
 #endif
 
 #ifdef __GNUC__
@@ -210,8 +226,10 @@ __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
     }
 #endif
 
-#if defined(HAL_SHARED_UART_LOCK_ID) && defined(HAL_SPINLOCK_MODULE_ENABLED)
-    HAL_SPINLOCK_Unlock(HAL_SHARED_UART_LOCK_ID);
+#if defined(HAL_SHARED_DEBUG_UART_LOCK_ID) && defined(HAL_SPINLOCK_MODULE_ENABLED)
+    if (locked) {
+        HAL_SPINLOCK_Unlock(HAL_SHARED_DEBUG_UART_LOCK_ID);
+    }
 #endif
 
     return len;
