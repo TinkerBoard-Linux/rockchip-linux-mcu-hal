@@ -133,20 +133,76 @@ static void reverse(char *start, char *end)
 extern int _write(int fd, char *ptr, int len);
 #endif
 
+static int int2str(int num, char *str, int d)
+{
+    int i = 0;
+
+    do {
+        str[i++] = (num % 10) + '0';
+        num = num / 10;
+    } while (num > 0);
+
+    while (i < d) {
+        str[i++] = '0';
+    }
+
+    reverse(str, &str[i - 1]);
+    str[i] = '\0';
+
+    return i;
+}
+
+#if defined(HAL_DBG_USING_HAL_PRINTF_TIMESTAMP) || defined(HAL_DBG_USING_HAL_PRINTF_FLOAT)
+static int float2str(float value, char *str, uint8_t precision)
+{
+    uint32_t i_value = (int)value;
+    float f_value = value - (float)i_value;
+    int len;
+
+    len = int2str(i_value, str, 8);
+    str = &str[len];
+
+    if (precision > 0) {
+        int i;
+
+        *str = '.';
+
+        for (i = 0; i < precision; i++) {
+            f_value *= 10;
+        }
+        int2str((int)f_value, ++str, precision);
+        len += precision + 1;
+    }
+
+    return len;
+}
+#endif /* defined(HAL_DBG_USING_HAL_PRINTF_TIMESTAMP) || defined(HAL_DBG_USING_HAL_PRINTF_FLOAT) */
+
 /**
  * @brief  format and print data
- * @param  format: format printf param. only support: \%d, \%s, \%ld, \%lld
+ * @param  format: format printf param. only support: \%d, \%s, \%ld, \%lld \%f
  * @return int32_t.
  */
 __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
 {
-    static char g_printf_buf[HAL_PRINTF_BUF_SIZE];
+    char g_printf_buf[HAL_PRINTF_BUF_SIZE];
     char *str = g_printf_buf;
     int32_t len = 0;
     va_list args;
 
 #if defined(HAL_SHARED_DEBUG_UART_LOCK_ID) && defined(HAL_SPINLOCK_MODULE_ENABLED)
     bool locked = false;
+#endif
+
+#ifdef HAL_DBG_USING_HAL_PRINTF_TIMESTAMP
+    uint64_t now;
+    float timestamp;
+
+    now = HAL_GetSysTimerCount();
+    timestamp = (now * 1.0) / PLL_INPUT_OSC_RATE;
+    len = float2str(timestamp, str, 3);
+    str = &g_printf_buf[len];
+    *str++ = ' ';
 #endif
 
     va_start(args, format);
@@ -156,12 +212,16 @@ __WEAK int32_t HAL_DBG_Printf(const char *format, ...)
             format++;
             if (*format == 'd') {
                 int i = va_arg(args, int);
-                char *start = str;
-                do {
-                    *str++ = '0' + (i % 10);
-                    i /= 10;
-                } while (i > 0);
-                reverse(start, str - 1);
+                i = int2str(i, str, 0);
+                str = &str[i];
+#ifdef HAL_DBG_USING_HAL_PRINTF_FLOAT
+            } else if (*format == 'f') {
+                int i;
+
+                float f = va_arg(args, double);
+                i = float2str(f, str, 3);
+                str = &str[i];
+#endif
             } else if (*format == 's') {
                 char *s = va_arg(args, char *);
                 while (*s) {
