@@ -82,7 +82,17 @@ HAL_Check HAL_HWSPINLOCK_TryLock(uint32_t lockID)
  */
 void HAL_HWSPINLOCK_Unlock(uint32_t lockID)
 {
+    uint32_t owner;
+
     HAL_ASSERT(IS_VALID_LOCKID(lockID));
+
+    owner = READ_REG(SPINLOCK_STATUS(lockID)) & HWSPINLOCK_STATUS_MASK;
+    if (g_ownerID != owner) {
+        HAL_DBG_WRN("WARNING: against caller %lu release a lock held by %lu\n",
+                    g_ownerID, owner);
+
+        return;
+    }
 
     /* Release the lock by writing 0 to it */
     WRITE_REG(SPINLOCK_STATUS(lockID), 0);
