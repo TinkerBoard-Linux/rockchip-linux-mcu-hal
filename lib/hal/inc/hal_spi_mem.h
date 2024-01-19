@@ -78,6 +78,7 @@
 #define HAL_SPI_MEM_OP_CMD(__opcode, __buswidth) \
     {                                            \
         .buswidth = __buswidth,                  \
+        .dtr = 0,                                \
         .opcode = __opcode,                      \
         .nbytes = __buswidth == 8 ? 2 : 1,       \
     }
@@ -85,6 +86,7 @@
 #define HAL_SPI_MEM_OP_ADDR(__nbytes, __val, __buswidth) \
     {                                                    \
         .nbytes = __nbytes,                              \
+        .dtr = 0,                                        \
         .val = __val,                                    \
         .buswidth = __buswidth,                          \
     }
@@ -92,6 +94,7 @@
 #define HAL_SPI_MEM_OP_NO_ADDR \
     {                          \
         .nbytes = 0,           \
+        .dtr = 0,              \
         .val = 0,              \
         .buswidth = 0,         \
     }
@@ -99,6 +102,7 @@
 #define HAL_SPI_MEM_OP_DUMMY(__nbytes, __buswidth) \
     {                                              \
         .a2dIdle = 0,                              \
+        .dtr = 0,                                  \
         .nbytes = __nbytes,                        \
         .buswidth = __buswidth,                    \
     }
@@ -106,6 +110,7 @@
 #define HAL_SPI_MEM_OP_NO_DUMMY \
     {                           \
         .a2dIdle = 0,           \
+        .dtr = 0,               \
         .nbytes = 0,            \
         .buswidth = 0,          \
     }
@@ -117,6 +122,7 @@
         .buf.in = __buf,                                    \
         .buswidth = __buswidth,                             \
         .poll = false,                                      \
+        .dtr = 0,                                           \
     }
 
 #define HAL_SPI_MEM_OP_DATA_IN_POLL(__nbytes, __buf, __buswidth) \
@@ -126,6 +132,7 @@
         .buf.in = __buf,                                         \
         .buswidth = __buswidth,                                  \
         .poll = true,                                            \
+        .dtr = 0,                                                \
     }
 
 #define HAL_SPI_MEM_OP_DATA_OUT(__nbytes, __buf, __buswidth) \
@@ -134,6 +141,8 @@
         .nbytes = __nbytes,                                  \
         .buf.out = __buf,                                    \
         .buswidth = __buswidth,                              \
+        .poll = false,                                       \
+        .dtr = 0,                                            \
     }
 
 #define HAL_SPI_MEM_OP_NO_DATA      \
@@ -141,7 +150,9 @@
         .dir = HAL_SPI_MEM_DATA_IN, \
         .nbytes = 0,                \
         .buf.out = NULL,            \
-        .buswidth = 0,              \
+        .buswidth = 1,              \
+        .poll = false,              \
+        .dtr = 0,                   \
     }
 
 #define HAL_SPI_OP_LEN_MAX            0x10/**< Max len case: cmd(1) + addr(4) + dummy(4) */
