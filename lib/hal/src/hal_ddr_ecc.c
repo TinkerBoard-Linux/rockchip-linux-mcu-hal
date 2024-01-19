@@ -4,10 +4,10 @@
  */
 
 #include "hal_base.h"
-#include "hal_bsp.h"
 
 #ifdef HAL_DDR_ECC_MODULE_ENABLED
 
+#include "hal_bsp.h"
 #include "hal_ddr_ecc.h"
 
 /** @addtogroup RK_HAL_Driver
