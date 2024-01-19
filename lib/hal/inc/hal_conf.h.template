@@ -143,7 +143,7 @@
 #endif
 
 #ifdef HAL_GPIO_MODULE_ENABLED
-#define HAL_GPIO_IRQ_DISPATCH_FEATURE_ENABLED /**< Support HAL's own GPIO IRQ dispatch */
+#define HAL_GPIO_IRQ_DISPATCH_FEATURE_ENABLED  /**< Support HAL's own GPIO IRQ dispatch */
 #define HAL_GPIO_VIRTUAL_MODEL_FEATURE_ENABLED /**< Support GPIO hardware grouping */
 #endif
 
@@ -163,6 +163,20 @@
 #define HAL_SNOR_FSPI_HOST /**< Choose SNOR Host: FSPI */
 //#define HAL_SNOR_SPI_HOST /**< Choose SNOR Host: SPI */
 //#define HAL_SNOR_SFC_HOST /**< Choose SNOR Host: SFC */
+//#define HAL_SNOR_SUPPORT_DEVICES_SELECT /**< Select the specific devices, or select all */
+#ifdef HAL_SNOR_SUPPORT_DEVICES_SELECT
+#define HAL_SNOR_SUPPORT_GIGADEV
+#define HAL_SNOR_SUPPORT_WINBOND
+#define HAL_SNOR_SUPPORT_MXIC
+#define HAL_SNOR_SUPPORT_XMC
+#define HAL_SNOR_SUPPORT_XTX
+#define HAL_SNOR_SUPPORT_EON
+#define HAL_SNOR_SUPPORT_PUYA
+#define HAL_SNOR_SUPPORT_ZBIT
+#define HAL_SNOR_SUPPORT_HUAHONG
+#define HAL_SNOR_SUPPORT_FUDAN
+#define HAL_SNOR_SUPPORT_ISSI
+#endif
 #endif
 
 #ifdef HAL_WDT_MODULE_ENABLED

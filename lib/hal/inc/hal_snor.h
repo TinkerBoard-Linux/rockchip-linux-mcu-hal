@@ -108,6 +108,35 @@ static inline bool HAL_SNOR_ProtocolIsDtr(enum SPI_NOR_PROTOCOL proto)
 #define SPINOR_OP_ENQPI38    0x38 /**< Enter qpi mode by 38h cmd */
 #define SPINOR_OP_EXITQPIFF  0xff /**< Enter qpi mode by FFh cmd */
 
+#ifndef HAL_SNOR_SUPPORT_DEVICES_SELECT
+#define HAL_SNOR_SUPPORT_GIGADEV
+#define HAL_SNOR_SUPPORT_WINBOND
+#define HAL_SNOR_SUPPORT_MXIC
+#define HAL_SNOR_SUPPORT_XMC
+#define HAL_SNOR_SUPPORT_XTX
+#define HAL_SNOR_SUPPORT_EON
+#define HAL_SNOR_SUPPORT_PUYA
+#define HAL_SNOR_SUPPORT_ZBIT
+#define HAL_SNOR_SUPPORT_HUAHONG
+#define HAL_SNOR_SUPPORT_FUDAN
+#define HAL_SNOR_SUPPORT_ISSI
+#else
+#if !defined(HAL_SNOR_SUPPORT_GIGADEV) && \
+    !defined(HAL_SNOR_SUPPORT_GIGADEV) && \
+    !defined(HAL_SNOR_SUPPORT_WINBOND) && \
+    !defined(HAL_SNOR_SUPPORT_MXIC) &&    \
+    !defined(HAL_SNOR_SUPPORT_XMC) &&     \
+    !defined(HAL_SNOR_SUPPORT_XTX) &&     \
+    !defined(HAL_SNOR_SUPPORT_EON) &&     \
+    !defined(HAL_SNOR_SUPPORT_PUYA) &&    \
+    !defined(HAL_SNOR_SUPPORT_ZBIT) &&    \
+    !defined(HAL_SNOR_SUPPORT_HUAHONG) && \
+    !defined(HAL_SNOR_SUPPORT_FUDAN) &&   \
+    !defined(HAL_SNOR_SUPPORT_ISSI)
+#error "select the specific spinor devices!"
+#endif
+#endif
+
 struct OPI_DTR_OP_CODE {
     uint16_t iomodeAddr;
     uint16_t dummyAddr;
