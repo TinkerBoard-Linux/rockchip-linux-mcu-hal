@@ -5,7 +5,7 @@
 
 #include "hal_base.h"
 
-#ifdef HAL_PDM_MODULE_ENABLED
+#if defined(HAL_PDM_MODULE_ENABLED) && (PDM_VERSION == 0x59313030U)
 
 /** @addtogroup RK_HAL_Driver
  *  @{
