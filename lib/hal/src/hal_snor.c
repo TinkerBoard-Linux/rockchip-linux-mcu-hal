@@ -1203,7 +1203,8 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
             nor->readProto = SNOR_PROTO_1_1_2;
         }
 
-        if (nor->spi->mode & HAL_SPI_TX_QUAD) {
+        if ((nor->spi->mode & HAL_SPI_TX_QUAD) &&
+            (SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto) == 4)) {
             if (info->QEBits) {
                 ret = SNOR_EnableQE(nor);
             }
@@ -1234,7 +1235,8 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
             spiMode &= ~HAL_SPI_DTR;
         }
 
-        if (info->extention & EXT_QPI) {
+        if ((info->extention & EXT_QPI) &&
+            (SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto) == 4)) {
             nor->qpi = true;
         }
         /* Clear the Octal SPI attribute to simplify logic  */
