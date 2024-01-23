@@ -937,12 +937,10 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
         FSPI_TimeOutInit(host);
 #endif
     }
-    FSPICtrl.b.dqs_mode = host->mode & HAL_SPI_DQS ? 1 : 0;
 
     /* spetial setting */
     FSPICtrl.b.sps = host->mode & HAL_SPI_CPHA;
     FSPICtrl.b.dqs_mode = host->mode & HAL_SPI_DQS ? 1 : 0;
-    FSPICtrl.b.dtr_mode = host->mode & HAL_SPI_DTR ? 1 : 0;
 #ifdef FSPI_SLF_DQS_CTRL_OFFSET
     if (!FSPICtrl.b.dqs_mode && FSPICtrl.b.dtr_mode) {
         WRITE_REG(host->instance->SLF_DQS_CTRL, FSPI_SLF_DQS_CTRL_SLF_BLD_DQS_EN0_MASK | FSPI_SLF_DQS_CTRL_SLF_BLD_DQS_EN1_MASK);
