@@ -86,9 +86,9 @@ __STATIC_INLINE void HAL_SYS_ExitCriticalSection(unsigned long flags)
  * @param cpuAddr: the address mapping to sram, only can be accessed by cpu
  * @return sramAddr: the real address of sram, it can be accessed by cpu & device
  */
-uint32_t HAL_CpuAddrToDmaAddr(uint32_t cpuAddr)
+uintptr_t HAL_CpuAddrToDmaAddr(uintptr_t cpuAddr)
 {
-    uint32_t sramAddr = cpuAddr;
+    uintptr_t sramAddr = cpuAddr;
 
 #ifdef SRAM_IADDR_TO_DADDR_OFFSET
 
@@ -267,7 +267,7 @@ HAL_Status HAL_ICACHE_Invalidate(void)
  * @param  sizeByte: the length in bytes of invalidate range.
  * @return HAL_OK if success.
  */
-HAL_Status HAL_ICACHE_InvalidateByRange(uint32_t address,
+HAL_Status HAL_ICACHE_InvalidateByRange(uintptr_t address,
                                         uint32_t sizeByte)
 {
 #if defined(HAL_ICACHE_MODULE_ENABLED)
@@ -468,9 +468,9 @@ HAL_Check HAL_ICACHE_GetInt(void)
  * @return ahb buss error address if success.
  * @attention The return value is only valid if you get a ahb error from CACHE_INT_ST
  */
-uint32_t HAL_ICACHE_GetErrAddr(void)
+uintptr_t HAL_ICACHE_GetErrAddr(void)
 {
-    uint32_t address = -1;
+    uintptr_t address = -1;
 
 #if defined(ICACHE)
 
@@ -644,7 +644,7 @@ HAL_Status HAL_DCACHE_Invalidate(void)
  * @param  sizeByte: the length in bytes of invalidate range.
  * @return HAL_OK if success.
  */
-HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
+HAL_Status HAL_DCACHE_InvalidateByRange(uintptr_t address,
                                         uint32_t sizeByte)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED)
@@ -684,7 +684,7 @@ HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
     SCB_InvalidateDCache_by_Addr((void *)address, (int32_t)sizeByte);
 
 #elif defined(__CORTEX_A)
-    uint32_t start, stop, addr;
+    uintptr_t start, stop, addr;
 
     if (sizeByte == 0) {
         return HAL_OK;
@@ -723,7 +723,7 @@ HAL_Status HAL_DCACHE_InvalidateByRange(uint32_t address,
  * @param  sizeByte: the length in bytes of invalidate range.
  * @return HAL_OK if success.
  */
-HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
+HAL_Status HAL_DCACHE_CleanByRange(uintptr_t address,
                                    uint32_t sizeByte)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED)
@@ -763,7 +763,7 @@ HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
     SCB_CleanDCache_by_Addr((void *)address, (int32_t)sizeByte);
 
 #elif defined(__CORTEX_A)
-    uint32_t start, stop, addr;
+    uintptr_t start, stop, addr;
 
     if (sizeByte == 0) {
         return HAL_OK;
@@ -791,7 +791,7 @@ HAL_Status HAL_DCACHE_CleanByRange(uint32_t address,
  * @return HAL_OK if success.
  */
 HAL_Status
-HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
+HAL_DCACHE_CleanInvalidateByRange(uintptr_t address, uint32_t sizeByte)
 {
 #if defined(HAL_DCACHE_MODULE_ENABLED)
 
@@ -830,7 +830,7 @@ HAL_DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t sizeByte)
     SCB_CleanInvalidateDCache_by_Addr((void *)address, (int32_t)sizeByte);
 
 #elif defined(__CORTEX_A)
-    uint32_t start, stop, addr;
+    uintptr_t start, stop, addr;
 
     if (sizeByte == 0) {
         return HAL_OK;
@@ -1069,9 +1069,9 @@ HAL_Status HAL_DCACHE_ClearInt(void)
  * @return ahb buss error address if success.
  * @attention The return value is only valid if you get a ahb error from CACHE_INT_ST
  */
-uint32_t HAL_DCACHE_GetErrAddr(void)
+uintptr_t HAL_DCACHE_GetErrAddr(void)
 {
-    uint32_t address = -1;
+    uintptr_t address = -1;
 
 #if defined(DCACHE)
 

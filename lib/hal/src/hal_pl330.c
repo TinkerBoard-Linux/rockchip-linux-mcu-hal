@@ -1234,8 +1234,8 @@ static int PL330_BuildDmaProg(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
 
     /* make sure the buf and bufsize is cache line aligned. */
     if (!dryRun) {
-        HAL_ASSERT(HAL_IS_CACHELINE_ALIGNED((uint32_t)buf));
-        HAL_DCACHE_CleanByRange((uint32_t)buf, PL330_CHAN_BUF_LEN);
+        HAL_ASSERT(HAL_IS_CACHELINE_ALIGNED(buf));
+        HAL_DCACHE_CleanByRange((uintptr_t)buf, PL330_CHAN_BUF_LEN);
     }
 
     return *off;
@@ -1560,7 +1560,7 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
     /* enable the interrupt */
     SET_BIT(reg->INTEN, 0x01 << channel);
 
-    return PL330_Exec_DMAGO(pl330->pReg, channel, (uint32_t)desc->mcBuf);
+    return PL330_Exec_DMAGO(pl330->pReg, channel, (uintptr_t)desc->mcBuf);
 }
 
 /**
