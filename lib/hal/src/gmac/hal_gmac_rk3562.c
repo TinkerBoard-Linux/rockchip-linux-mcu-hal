@@ -133,7 +133,7 @@ void HAL_GMAC_SetToRGMII(struct GMAC_HANDLE *pGMAC,
  */
 void HAL_GMAC_SetToRMII(struct GMAC_HANDLE *pGMAC)
 {
-    if (pGMAC->pReg != GMAC0) {
+    if (pGMAC->pReg == GMAC0) {
         WRITE_REG(SYS_GRF->SOC_CON0, RK3562_GMAC0_CLK_RMII_MODE);
     }
 }
@@ -243,6 +243,7 @@ void HAL_GMAC_SetExtclkSrc(struct GMAC_HANDLE *pGMAC, bool extClk)
  */
 void HAL_GMAC_SetRMIISpeed(struct GMAC_HANDLE *pGMAC, int32_t speed)
 {
+    return HAL_GMAC_SetRGMIISpeed(pGMAC, speed);
 }
 
 /** @} */
