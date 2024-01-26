@@ -432,9 +432,10 @@ typedef enum IRQn
                                       ((instance) == INTMUX3))
 #endif
 
-#define PLL_INPUT_OSC_RATE        24000000U /* freqency of OSC */
-#define TIMER_CHAN_CNT            8         /* Core0 and core1 use 4 timer respectively */
-#define MBOX_CNT                  16        /* Total Mailbox in SoC */
+extern uint32_t g_oscRate;
+#define PLL_INPUT_OSC_RATE        g_oscRate  /* freqency of OSC */
+#define TIMER_CHAN_CNT            8          /* Core0 and core1 use 4 timer respectively */
+#define MBOX_CNT                  16         /* Total Mailbox in SoC */
 
 /****************************************************************************************/
 /*                                                                                      */

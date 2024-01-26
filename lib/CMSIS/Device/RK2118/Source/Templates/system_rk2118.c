@@ -26,6 +26,7 @@ extern const uint32_t __vector_remap__[];
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
+uint32_t g_oscRate = 24000000;            /* OSC Frequency */
 
 void CacheInit(void)
 {
@@ -51,6 +52,9 @@ void SystemCoreClockUpdate(void)
  *----------------------------------------------------------------------------*/
 void SystemInit(void)
 {
+    if (GRF_PMU->OS_REG8 == 3)
+        g_oscRate = 24576000;
+
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
     SCB->VTOR = (uint32_t)(__vector_remap__);
 #endif
