@@ -498,11 +498,6 @@ typedef enum CLOCK_Name {
 #define MBOX_CNT                (2)
 #define MBOX_CHAN_CNT           (4)
 
-/****************************************GPIO********************************************/
-#ifdef GPIO_VER_ID
-#undef GPIO_VER_ID
-#define GPIO_VER_ID             (0x01000C2BU)
-#endif
 /****************************************PMU*********************************************/
 #ifndef __ASSEMBLY__
 typedef enum PD_Id {

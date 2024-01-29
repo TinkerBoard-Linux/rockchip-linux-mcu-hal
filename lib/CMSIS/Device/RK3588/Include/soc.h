@@ -724,11 +724,6 @@ struct INTMUX_REG {
 
 #endif
 
-/****************************************GPIO********************************************/
-#ifdef GPIO_VER_ID
-#undef GPIO_VER_ID
-#define GPIO_VER_ID             (0x01000C2BU)
-#endif
 /****************************************PCIE********************************************/
 #define PCIE3_4L_S_BASE                0xF0000000U /* PCIE 32btis mmio base address */
 #define PCIE3_4L_DBI_BASE              0xF5000000U /* PCIE dbi base address */
