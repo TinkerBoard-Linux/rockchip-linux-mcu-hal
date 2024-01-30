@@ -52,6 +52,101 @@ struct IIR_ACC_TCB_REG {
     __IO uint32_t SCTL2;                              /* Address Offset: 0x0038 */
     __IO uint32_t SGCTL;                              /* Address Offset: 0x003C */
 };
+/* CRYPTO Register Structure Define */
+struct CRYPTO_REG {
+    __IO uint32_t CLK_CTL;                            /* Address Offset: 0x0000 */
+    __IO uint32_t RST_CTL;                            /* Address Offset: 0x0004 */
+    __IO uint32_t DMA_INT_EN;                         /* Address Offset: 0x0008 */
+    __IO uint32_t DMA_INT_ST;                         /* Address Offset: 0x000C */
+    __IO uint32_t DMA_CTL;                            /* Address Offset: 0x0010 */
+    __IO uint32_t DMA_LLI_ADDR;                       /* Address Offset: 0x0014 */
+    __I  uint32_t DMA_ST;                             /* Address Offset: 0x0018 */
+    __I  uint32_t DMA_STATE;                          /* Address Offset: 0x001C */
+    __I  uint32_t DMA_LLI_RADDR;                      /* Address Offset: 0x0020 */
+    __I  uint32_t DMA_SRC_RADDR;                      /* Address Offset: 0x0024 */
+    __I  uint32_t DMA_DST_WADDR;                      /* Address Offset: 0x0028 */
+    __I  uint32_t DMA_ITEM_ID;                        /* Address Offset: 0x002C */
+         uint32_t RESERVED0030[4];                    /* Address Offset: 0x0030 */
+    __IO uint32_t FIFO_CTL;                           /* Address Offset: 0x0040 */
+    __IO uint32_t BC_CTL;                             /* Address Offset: 0x0044 */
+    __IO uint32_t HASH_CTL;                           /* Address Offset: 0x0048 */
+    __I  uint32_t CIPHER_ST;                          /* Address Offset: 0x004C */
+    __I  uint32_t CIPHER_STATE;                       /* Address Offset: 0x0050 */
+         uint32_t RESERVED0054[3];                    /* Address Offset: 0x0054 */
+    __IO uint32_t BC_MID_IV[6];                       /* Address Offset: 0x0060 */
+         uint32_t RESERVED0078[34];                   /* Address Offset: 0x0078 */
+    __IO uint32_t CHN_IV[1][4];                       /* Address Offset: 0x0100 */
+         uint32_t RESERVED0110[28];                   /* Address Offset: 0x0110 */
+    __O  uint32_t CHN_KEY[8][4];                      /* Address Offset: 0x0180 */
+         uint32_t RESERVED0200[32];                   /* Address Offset: 0x0200 */
+    __IO uint32_t CHN_PC_LEN[1][2];                   /* Address Offset: 0x0280 */
+         uint32_t RESERVED0288[14];                   /* Address Offset: 0x0288 */
+    __IO uint32_t CHN_AAD_LEN[1][2];                  /* Address Offset: 0x02C0 */
+         uint32_t RESERVED02C8[14];                   /* Address Offset: 0x02C8 */
+    __IO uint32_t CHN_IV_LEN[1][1];                   /* Address Offset: 0x0300 */
+         uint32_t RESERVED0304[7];                    /* Address Offset: 0x0304 */
+    __I  uint32_t CHN_TAG[1][4];                      /* Address Offset: 0x0320 */
+         uint32_t RESERVED0330[28];                   /* Address Offset: 0x0330 */
+    __I  uint32_t HASH_DOUT[8];                       /* Address Offset: 0x03A0 */
+         uint32_t RESERVED03C0[8];                    /* Address Offset: 0x03C0 */
+    __IO uint32_t TAG_VALID;                          /* Address Offset: 0x03E0 */
+    __IO uint32_t HASH_VALID;                         /* Address Offset: 0x03E4 */
+    __IO uint32_t MID_VALID;                          /* Address Offset: 0x03E8 */
+         uint32_t RESERVED03EC;                       /* Address Offset: 0x03EC */
+    __IO uint32_t ECC_CTL;                            /* Address Offset: 0x03F0 */
+    __IO uint32_t ECC_INT_EN;                         /* Address Offset: 0x03F4 */
+    __IO uint32_t ECC_INT_ST;                         /* Address Offset: 0x03F8 */
+    __I  uint32_t ECC_ABN_ST;                         /* Address Offset: 0x03FC */
+         uint32_t RESERVED0400[32];                   /* Address Offset: 0x0400 */
+    __IO uint32_t RAM_CTL;                            /* Address Offset: 0x0480 */
+    __I  uint32_t RAM_ST;                             /* Address Offset: 0x0484 */
+         uint32_t RESERVED0488[6];                    /* Address Offset: 0x0488 */
+    __IO uint32_t DEBUG_CTL;                          /* Address Offset: 0x04A0 */
+    __I  uint32_t DEBUG_ST;                           /* Address Offset: 0x04A4 */
+    __I  uint32_t DEBUG_MONITOR;                      /* Address Offset: 0x04A8 */
+         uint32_t RESERVED04AC[85];                   /* Address Offset: 0x04AC */
+    __I  uint32_t CRYPTO_KL_KEY_STATUS;               /* Address Offset: 0x0600 */
+         uint32_t RESERVED0604[3];                    /* Address Offset: 0x0604 */
+    __IO uint32_t CRYPTO_KEY_SEL;                     /* Address Offset: 0x0610 */
+         uint32_t RESERVED0614;                       /* Address Offset: 0x0614 */
+    __I  uint32_t CRYPTO_LOCKSTEP;                    /* Address Offset: 0x0618 */
+    __IO uint32_t CRYPTO_LOCKSTEP_EN;                 /* Address Offset: 0x061C */
+         uint32_t RESERVED0620[4];                    /* Address Offset: 0x0620 */
+    __IO uint32_t MID_VALID_SWITCH;                   /* Address Offset: 0x0630 */
+         uint32_t RESERVED0634[19];                   /* Address Offset: 0x0634 */
+    __IO uint32_t AES_VERSION;                        /* Address Offset: 0x0680 */
+    __IO uint32_t DES_VERSION;                        /* Address Offset: 0x0684 */
+    __IO uint32_t SM4_VERSION;                        /* Address Offset: 0x0688 */
+    __IO uint32_t HASH_VERSION;                       /* Address Offset: 0x068C */
+    __IO uint32_t HMAC_VERSION;                       /* Address Offset: 0x0690 */
+         uint32_t RESERVED0694;                       /* Address Offset: 0x0694 */
+    __IO uint32_t PKA_VERSION;                        /* Address Offset: 0x0698 */
+    __I  uint32_t EXTRA_FEATURE;                      /* Address Offset: 0x069C */
+         uint32_t RESERVED06A0[20];                   /* Address Offset: 0x06A0 */
+    __IO uint32_t CRYPTO_VERSION;                     /* Address Offset: 0x06F0 */
+         uint32_t RESERVED06F4[3];                    /* Address Offset: 0x06F4 */
+    __IO uint32_t HASH_MID_DATA[26];                  /* Address Offset: 0x0700 */
+         uint32_t RESERVED0768[38];                   /* Address Offset: 0x0768 */
+    __IO uint32_t PKA_MEM_MAP[32];                    /* Address Offset: 0x0800 */
+    __O  uint32_t PKA_OPCODE;                         /* Address Offset: 0x0880 */
+    __IO uint32_t N_NP_T0_T1_ADDR;                    /* Address Offset: 0x0884 */
+    __I  uint32_t PKA_STATUS;                         /* Address Offset: 0x0888 */
+    __O  uint32_t PKA_SW_RESET;                       /* Address Offset: 0x088C */
+    __IO uint32_t PKA_L[8];                           /* Address Offset: 0x0890 */
+    __I  uint32_t PKA_PIPE_RDY;                       /* Address Offset: 0x08B0 */
+    __I  uint32_t PKA_DONE;                           /* Address Offset: 0x08B4 */
+    __IO uint32_t PKA_MON_SELECT;                     /* Address Offset: 0x08B8 */
+    __IO uint32_t PKA_DEBUG_REG_EN;                   /* Address Offset: 0x08BC */
+    __IO uint32_t DEBUG_CNT_ADDR;                     /* Address Offset: 0x08C0 */
+    __O  uint32_t DEBUG_EXT_ADDR;                     /* Address Offset: 0x08C4 */
+    __I  uint32_t PKA_DEBUG_HALT;                     /* Address Offset: 0x08C8 */
+         uint32_t RESERVED08CC;                       /* Address Offset: 0x08CC */
+    __I  uint32_t PKA_MON_READ;                       /* Address Offset: 0x08D0 */
+    __IO uint32_t PKA_INT_ENA;                        /* Address Offset: 0x08D4 */
+    __IO uint32_t PKA_INT_ST;                         /* Address Offset: 0x08D8 */
+         uint32_t RESERVED08DC[457];                  /* Address Offset: 0x08DC */
+    __IO uint32_t SRAM_ADDR;                          /* Address Offset: 0x1000 */
+};
 /* CAN Register Structure Define */
 struct CAN_REG {
     __IO uint32_t MODE;                               /* Address Offset: 0x0000 */
@@ -1990,6 +2085,7 @@ struct IIR_ACC_REG_REG {
 /* Memory Base */
 #define FIR_ACC_TCB_BASE               0x00000000U /* FIR_ACC_TCB base address */
 #define IIR_ACC_TCB_BASE               0x00000000U /* IIR_ACC_TCB base address */
+#define CRYPTO_BASE                    0x50000000U /* CRYPTO base address */
 #define CAN_BASE                       0x500A0000U /* CAN base address */
 #define MMC0_BASE                      0x50180000U /* MMC0 base address */
 #define VOP_BASE                       0x50190000U /* VOP base address */
@@ -2135,6 +2231,7 @@ struct IIR_ACC_REG_REG {
 
 #define FIR_ACC_TCB         ((struct FIR_ACC_TCB_REG *) FIR_ACC_TCB_BASE)
 #define IIR_ACC_TCB         ((struct IIR_ACC_TCB_REG *) IIR_ACC_TCB_BASE)
+#define CRYPTO              ((struct CRYPTO_REG *) CRYPTO_BASE)
 #define CAN                 ((struct CAN_REG *) CAN_BASE)
 #define MMC0                ((struct MMC_REG *) MMC0_BASE)
 #define VOP                 ((struct VOP_REG *) VOP_BASE)
@@ -2274,6 +2371,7 @@ struct IIR_ACC_REG_REG {
 
 #define IS_FIR_ACC_TCB_INSTANCE(instance) ((instance) == FIR_ACC_TCB)
 #define IS_IIR_ACC_TCB_INSTANCE(instance) ((instance) == IIR_ACC_TCB)
+#define IS_CRYPTO_INSTANCE(instance) ((instance) == CRYPTO)
 #define IS_CAN_INSTANCE(instance) ((instance) == CAN)
 #define IS_VOP_INSTANCE(instance) ((instance) == VOP)
 #define IS_FLEXBUS_INSTANCE(instance) ((instance) == FLEXBUS)
@@ -2477,6 +2575,1017 @@ struct IIR_ACC_REG_REG {
 #define IIR_ACC_TCB_SGCTL_SSESEL_MASK                      (0x1U << IIR_ACC_TCB_SGCTL_SSESEL_SHIFT)                     /* 0x00000800 */
 #define IIR_ACC_TCB_SGCTL_RND_SHIFT                        (14U)
 #define IIR_ACC_TCB_SGCTL_RND_MASK                         (0x1U << IIR_ACC_TCB_SGCTL_RND_SHIFT)                        /* 0x00004000 */
+/*****************************************CRYPTO*****************************************/
+/* CLK_CTL */
+#define CRYPTO_CLK_CTL_OFFSET                              (0x0U)
+#define CRYPTO_CLK_CTL_AUTO_CLKGATE_EN_SHIFT               (0U)
+#define CRYPTO_CLK_CTL_AUTO_CLKGATE_EN_MASK                (0x1U << CRYPTO_CLK_CTL_AUTO_CLKGATE_EN_SHIFT)               /* 0x00000001 */
+/* RST_CTL */
+#define CRYPTO_RST_CTL_OFFSET                              (0x4U)
+#define CRYPTO_RST_CTL_SW_CC_RESET_SHIFT                   (0U)
+#define CRYPTO_RST_CTL_SW_CC_RESET_MASK                    (0x1U << CRYPTO_RST_CTL_SW_CC_RESET_SHIFT)                   /* 0x00000001 */
+#define CRYPTO_RST_CTL_SW_PKA_RESET_SHIFT                  (2U)
+#define CRYPTO_RST_CTL_SW_PKA_RESET_MASK                   (0x1U << CRYPTO_RST_CTL_SW_PKA_RESET_SHIFT)                  /* 0x00000004 */
+/* DMA_INT_EN */
+#define CRYPTO_DMA_INT_EN_OFFSET                           (0x8U)
+#define CRYPTO_DMA_INT_EN_LIST_DONE_INT_EN_SHIFT           (0U)
+#define CRYPTO_DMA_INT_EN_LIST_DONE_INT_EN_MASK            (0x1U << CRYPTO_DMA_INT_EN_LIST_DONE_INT_EN_SHIFT)           /* 0x00000001 */
+#define CRYPTO_DMA_INT_EN_DST_ITEM_DONE_INT_EN_SHIFT       (1U)
+#define CRYPTO_DMA_INT_EN_DST_ITEM_DONE_INT_EN_MASK        (0x1U << CRYPTO_DMA_INT_EN_DST_ITEM_DONE_INT_EN_SHIFT)       /* 0x00000002 */
+#define CRYPTO_DMA_INT_EN_SRC_ITEM_DONE_INT_EN_SHIFT       (2U)
+#define CRYPTO_DMA_INT_EN_SRC_ITEM_DONE_INT_EN_MASK        (0x1U << CRYPTO_DMA_INT_EN_SRC_ITEM_DONE_INT_EN_SHIFT)       /* 0x00000004 */
+#define CRYPTO_DMA_INT_EN_DST_ERR_INT_EN_SHIFT             (3U)
+#define CRYPTO_DMA_INT_EN_DST_ERR_INT_EN_MASK              (0x1U << CRYPTO_DMA_INT_EN_DST_ERR_INT_EN_SHIFT)             /* 0x00000008 */
+#define CRYPTO_DMA_INT_EN_SRC_ERR_INT_EN_SHIFT             (4U)
+#define CRYPTO_DMA_INT_EN_SRC_ERR_INT_EN_MASK              (0x1U << CRYPTO_DMA_INT_EN_SRC_ERR_INT_EN_SHIFT)             /* 0x00000010 */
+#define CRYPTO_DMA_INT_EN_LIST_ERR_INT_EN_SHIFT            (5U)
+#define CRYPTO_DMA_INT_EN_LIST_ERR_INT_EN_MASK             (0x1U << CRYPTO_DMA_INT_EN_LIST_ERR_INT_EN_SHIFT)            /* 0x00000020 */
+#define CRYPTO_DMA_INT_EN_ZERO_LEN_INT_EN_SHIFT            (6U)
+#define CRYPTO_DMA_INT_EN_ZERO_LEN_INT_EN_MASK             (0x1U << CRYPTO_DMA_INT_EN_ZERO_LEN_INT_EN_SHIFT)            /* 0x00000040 */
+#define CRYPTO_DMA_INT_EN_LOCKSTEP_INT_EN_SHIFT            (7U)
+#define CRYPTO_DMA_INT_EN_LOCKSTEP_INT_EN_MASK             (0x1U << CRYPTO_DMA_INT_EN_LOCKSTEP_INT_EN_SHIFT)            /* 0x00000080 */
+#define CRYPTO_DMA_INT_EN_UNEQUAL_LEN_INT_EN_SHIFT         (9U)
+#define CRYPTO_DMA_INT_EN_UNEQUAL_LEN_INT_EN_MASK          (0x1U << CRYPTO_DMA_INT_EN_UNEQUAL_LEN_INT_EN_SHIFT)         /* 0x00000200 */
+/* DMA_INT_ST */
+#define CRYPTO_DMA_INT_ST_OFFSET                           (0xCU)
+#define CRYPTO_DMA_INT_ST_LIST_DONE_SHIFT                  (0U)
+#define CRYPTO_DMA_INT_ST_LIST_DONE_MASK                   (0x1U << CRYPTO_DMA_INT_ST_LIST_DONE_SHIFT)                  /* 0x00000001 */
+#define CRYPTO_DMA_INT_ST_DST_ITEM_DONE_SHIFT              (1U)
+#define CRYPTO_DMA_INT_ST_DST_ITEM_DONE_MASK               (0x1U << CRYPTO_DMA_INT_ST_DST_ITEM_DONE_SHIFT)              /* 0x00000002 */
+#define CRYPTO_DMA_INT_ST_SRC_ITEM_DONE_SHIFT              (2U)
+#define CRYPTO_DMA_INT_ST_SRC_ITEM_DONE_MASK               (0x1U << CRYPTO_DMA_INT_ST_SRC_ITEM_DONE_SHIFT)              /* 0x00000004 */
+#define CRYPTO_DMA_INT_ST_DST_ERR_SHIFT                    (3U)
+#define CRYPTO_DMA_INT_ST_DST_ERR_MASK                     (0x1U << CRYPTO_DMA_INT_ST_DST_ERR_SHIFT)                    /* 0x00000008 */
+#define CRYPTO_DMA_INT_ST_SRC_ERR_SHIFT                    (4U)
+#define CRYPTO_DMA_INT_ST_SRC_ERR_MASK                     (0x1U << CRYPTO_DMA_INT_ST_SRC_ERR_SHIFT)                    /* 0x00000010 */
+#define CRYPTO_DMA_INT_ST_LIST_ERR_SHIFT                   (5U)
+#define CRYPTO_DMA_INT_ST_LIST_ERR_MASK                    (0x1U << CRYPTO_DMA_INT_ST_LIST_ERR_SHIFT)                   /* 0x00000020 */
+#define CRYPTO_DMA_INT_ST_ZERO_LEN_SHIFT                   (6U)
+#define CRYPTO_DMA_INT_ST_ZERO_LEN_MASK                    (0x1U << CRYPTO_DMA_INT_ST_ZERO_LEN_SHIFT)                   /* 0x00000040 */
+#define CRYPTO_DMA_INT_ST_LOCKSTEP_FLAG_SHIFT              (7U)
+#define CRYPTO_DMA_INT_ST_LOCKSTEP_FLAG_MASK               (0x1U << CRYPTO_DMA_INT_ST_LOCKSTEP_FLAG_SHIFT)              /* 0x00000080 */
+#define CRYPTO_DMA_INT_ST_UNEQUAL_LEN_SHIFT                (9U)
+#define CRYPTO_DMA_INT_ST_UNEQUAL_LEN_MASK                 (0x1U << CRYPTO_DMA_INT_ST_UNEQUAL_LEN_SHIFT)                /* 0x00000200 */
+/* DMA_CTL */
+#define CRYPTO_DMA_CTL_OFFSET                              (0x10U)
+#define CRYPTO_DMA_CTL_DMA_START_SHIFT                     (0U)
+#define CRYPTO_DMA_CTL_DMA_START_MASK                      (0x1U << CRYPTO_DMA_CTL_DMA_START_SHIFT)                     /* 0x00000001 */
+#define CRYPTO_DMA_CTL_DMA_RESTART_SHIFT                   (1U)
+#define CRYPTO_DMA_CTL_DMA_RESTART_MASK                    (0x1U << CRYPTO_DMA_CTL_DMA_RESTART_SHIFT)                   /* 0x00000002 */
+/* DMA_LLI_ADDR */
+#define CRYPTO_DMA_LLI_ADDR_OFFSET                         (0x14U)
+#define CRYPTO_DMA_LLI_ADDR_DMA_LLI_ADDR_SHIFT             (0U)
+#define CRYPTO_DMA_LLI_ADDR_DMA_LLI_ADDR_MASK              (0xFFFFFFFFU << CRYPTO_DMA_LLI_ADDR_DMA_LLI_ADDR_SHIFT)      /* 0xFFFFFFFF */
+/* DMA_ST */
+#define CRYPTO_DMA_ST_OFFSET                               (0x18U)
+#define CRYPTO_DMA_ST                                      (0x0U)
+#define CRYPTO_DMA_ST_DMA_BUSY_SHIFT                       (0U)
+#define CRYPTO_DMA_ST_DMA_BUSY_MASK                        (0x1U << CRYPTO_DMA_ST_DMA_BUSY_SHIFT)                       /* 0x00000001 */
+/* DMA_STATE */
+#define CRYPTO_DMA_STATE_OFFSET                            (0x1CU)
+#define CRYPTO_DMA_STATE                                   (0x0U)
+#define CRYPTO_DMA_STATE_DMA_DST_STATE_SHIFT               (0U)
+#define CRYPTO_DMA_STATE_DMA_DST_STATE_MASK                (0x3U << CRYPTO_DMA_STATE_DMA_DST_STATE_SHIFT)               /* 0x00000003 */
+#define CRYPTO_DMA_STATE_DMA_SRC_STATE_SHIFT               (2U)
+#define CRYPTO_DMA_STATE_DMA_SRC_STATE_MASK                (0x3U << CRYPTO_DMA_STATE_DMA_SRC_STATE_SHIFT)               /* 0x0000000C */
+#define CRYPTO_DMA_STATE_DMA_LLI_STATE_SHIFT               (4U)
+#define CRYPTO_DMA_STATE_DMA_LLI_STATE_MASK                (0x3U << CRYPTO_DMA_STATE_DMA_LLI_STATE_SHIFT)               /* 0x00000030 */
+/* DMA_LLI_RADDR */
+#define CRYPTO_DMA_LLI_RADDR_OFFSET                        (0x20U)
+#define CRYPTO_DMA_LLI_RADDR                               (0x0U)
+#define CRYPTO_DMA_LLI_RADDR_DMA_LLI_RADDR_SHIFT           (0U)
+#define CRYPTO_DMA_LLI_RADDR_DMA_LLI_RADDR_MASK            (0xFFFFFFFFU << CRYPTO_DMA_LLI_RADDR_DMA_LLI_RADDR_SHIFT)    /* 0xFFFFFFFF */
+/* DMA_SRC_RADDR */
+#define CRYPTO_DMA_SRC_RADDR_OFFSET                        (0x24U)
+#define CRYPTO_DMA_SRC_RADDR                               (0x0U)
+#define CRYPTO_DMA_SRC_RADDR_DMA_SRC_RADDR_SHIFT           (0U)
+#define CRYPTO_DMA_SRC_RADDR_DMA_SRC_RADDR_MASK            (0xFFFFFFFFU << CRYPTO_DMA_SRC_RADDR_DMA_SRC_RADDR_SHIFT)    /* 0xFFFFFFFF */
+/* DMA_DST_WADDR */
+#define CRYPTO_DMA_DST_WADDR_OFFSET                        (0x28U)
+#define CRYPTO_DMA_DST_WADDR                               (0x0U)
+#define CRYPTO_DMA_DST_WADDR_DMA_DST_WADDR_SHIFT           (0U)
+#define CRYPTO_DMA_DST_WADDR_DMA_DST_WADDR_MASK            (0xFFFFFFFFU << CRYPTO_DMA_DST_WADDR_DMA_DST_WADDR_SHIFT)    /* 0xFFFFFFFF */
+/* DMA_ITEM_ID */
+#define CRYPTO_DMA_ITEM_ID_OFFSET                          (0x2CU)
+#define CRYPTO_DMA_ITEM_ID                                 (0x0U)
+#define CRYPTO_DMA_ITEM_ID_DMA_ITEM_ID_SHIFT               (0U)
+#define CRYPTO_DMA_ITEM_ID_DMA_ITEM_ID_MASK                (0xFFU << CRYPTO_DMA_ITEM_ID_DMA_ITEM_ID_SHIFT)              /* 0x000000FF */
+/* FIFO_CTL */
+#define CRYPTO_FIFO_CTL_OFFSET                             (0x40U)
+#define CRYPTO_FIFO_CTL_DIN_BYTESWAP_SHIFT                 (0U)
+#define CRYPTO_FIFO_CTL_DIN_BYTESWAP_MASK                  (0x1U << CRYPTO_FIFO_CTL_DIN_BYTESWAP_SHIFT)                 /* 0x00000001 */
+#define CRYPTO_FIFO_CTL_DOUT_BYTESWAP_SHIFT                (1U)
+#define CRYPTO_FIFO_CTL_DOUT_BYTESWAP_MASK                 (0x1U << CRYPTO_FIFO_CTL_DOUT_BYTESWAP_SHIFT)                /* 0x00000002 */
+/* BC_CTL */
+#define CRYPTO_BC_CTL_OFFSET                               (0x44U)
+#define CRYPTO_BC_CTL_BC_ENABLE_SHIFT                      (0U)
+#define CRYPTO_BC_CTL_BC_ENABLE_MASK                       (0x1U << CRYPTO_BC_CTL_BC_ENABLE_SHIFT)                      /* 0x00000001 */
+#define CRYPTO_BC_CTL_DECRYPT_SHIFT                        (1U)
+#define CRYPTO_BC_CTL_DECRYPT_MASK                         (0x1U << CRYPTO_BC_CTL_DECRYPT_SHIFT)                        /* 0x00000002 */
+#define CRYPTO_BC_CTL_KEY_SIZE_SHIFT                       (2U)
+#define CRYPTO_BC_CTL_KEY_SIZE_MASK                        (0x3U << CRYPTO_BC_CTL_KEY_SIZE_SHIFT)                       /* 0x0000000C */
+#define CRYPTO_BC_CTL_MODE_SHIFT                           (4U)
+#define CRYPTO_BC_CTL_MODE_MASK                            (0xFU << CRYPTO_BC_CTL_MODE_SHIFT)                           /* 0x000000F0 */
+#define CRYPTO_BC_CTL_BC_CIPHER_SEL_SHIFT                  (8U)
+#define CRYPTO_BC_CTL_BC_CIPHER_SEL_MASK                   (0x3U << CRYPTO_BC_CTL_BC_CIPHER_SEL_SHIFT)                  /* 0x00000300 */
+/* HASH_CTL */
+#define CRYPTO_HASH_CTL_OFFSET                             (0x48U)
+#define CRYPTO_HASH_CTL_HASH_ENABLE_SHIFT                  (0U)
+#define CRYPTO_HASH_CTL_HASH_ENABLE_MASK                   (0x1U << CRYPTO_HASH_CTL_HASH_ENABLE_SHIFT)                  /* 0x00000001 */
+#define CRYPTO_HASH_CTL_HASH_SRC_SEL_SHIFT                 (1U)
+#define CRYPTO_HASH_CTL_HASH_SRC_SEL_MASK                  (0x1U << CRYPTO_HASH_CTL_HASH_SRC_SEL_SHIFT)                 /* 0x00000002 */
+#define CRYPTO_HASH_CTL_HW_PAD_ENABLE_SHIFT                (2U)
+#define CRYPTO_HASH_CTL_HW_PAD_ENABLE_MASK                 (0x1U << CRYPTO_HASH_CTL_HW_PAD_ENABLE_SHIFT)                /* 0x00000004 */
+#define CRYPTO_HASH_CTL_HMAC_ENABLE_SHIFT                  (3U)
+#define CRYPTO_HASH_CTL_HMAC_ENABLE_MASK                   (0x1U << CRYPTO_HASH_CTL_HMAC_ENABLE_SHIFT)                  /* 0x00000008 */
+#define CRYPTO_HASH_CTL_HASH_CIPHER_SEL_SHIFT              (4U)
+#define CRYPTO_HASH_CTL_HASH_CIPHER_SEL_MASK               (0xFU << CRYPTO_HASH_CTL_HASH_CIPHER_SEL_SHIFT)              /* 0x000000F0 */
+/* CIPHER_ST */
+#define CRYPTO_CIPHER_ST_OFFSET                            (0x4CU)
+#define CRYPTO_CIPHER_ST                                   (0x0U)
+#define CRYPTO_CIPHER_ST_BLOCK_CIPHER_BUSY_SHIFT           (0U)
+#define CRYPTO_CIPHER_ST_BLOCK_CIPHER_BUSY_MASK            (0x1U << CRYPTO_CIPHER_ST_BLOCK_CIPHER_BUSY_SHIFT)           /* 0x00000001 */
+#define CRYPTO_CIPHER_ST_HASH_BUSY_SHIFT                   (1U)
+#define CRYPTO_CIPHER_ST_HASH_BUSY_MASK                    (0x1U << CRYPTO_CIPHER_ST_HASH_BUSY_SHIFT)                   /* 0x00000002 */
+/* CIPHER_STATE */
+#define CRYPTO_CIPHER_STATE_OFFSET                         (0x50U)
+#define CRYPTO_CIPHER_STATE                                (0x400U)
+#define CRYPTO_CIPHER_STATE_SERIAL_STATE_SHIFT             (0U)
+#define CRYPTO_CIPHER_STATE_SERIAL_STATE_MASK              (0x3U << CRYPTO_CIPHER_STATE_SERIAL_STATE_SHIFT)             /* 0x00000003 */
+#define CRYPTO_CIPHER_STATE_MAC_STATE_SHIFT                (2U)
+#define CRYPTO_CIPHER_STATE_MAC_STATE_MASK                 (0x3U << CRYPTO_CIPHER_STATE_MAC_STATE_SHIFT)                /* 0x0000000C */
+#define CRYPTO_CIPHER_STATE_PARALLEL_STATE_SHIFT           (4U)
+#define CRYPTO_CIPHER_STATE_PARALLEL_STATE_MASK            (0x3U << CRYPTO_CIPHER_STATE_PARALLEL_STATE_SHIFT)           /* 0x00000030 */
+#define CRYPTO_CIPHER_STATE_CCM_STATE_SHIFT                (6U)
+#define CRYPTO_CIPHER_STATE_CCM_STATE_MASK                 (0x3U << CRYPTO_CIPHER_STATE_CCM_STATE_SHIFT)                /* 0x000000C0 */
+#define CRYPTO_CIPHER_STATE_GCM_STATE_SHIFT                (8U)
+#define CRYPTO_CIPHER_STATE_GCM_STATE_MASK                 (0x3U << CRYPTO_CIPHER_STATE_GCM_STATE_SHIFT)                /* 0x00000300 */
+#define CRYPTO_CIPHER_STATE_HASH_STATE_SHIFT               (10U)
+#define CRYPTO_CIPHER_STATE_HASH_STATE_MASK                (0x1FU << CRYPTO_CIPHER_STATE_HASH_STATE_SHIFT)              /* 0x00007C00 */
+/* BC_MID_IV_0 */
+#define CRYPTO_BC_MID_IV_0_OFFSET                          (0x60U)
+#define CRYPTO_BC_MID_IV_0_BC_MID_IV_0_SHIFT               (0U)
+#define CRYPTO_BC_MID_IV_0_BC_MID_IV_0_MASK                (0xFFFFFFFFU << CRYPTO_BC_MID_IV_0_BC_MID_IV_0_SHIFT)        /* 0xFFFFFFFF */
+/* BC_MID_IV_1 */
+#define CRYPTO_BC_MID_IV_1_OFFSET                          (0x64U)
+#define CRYPTO_BC_MID_IV_1_BC_MID_IV_1_SHIFT               (0U)
+#define CRYPTO_BC_MID_IV_1_BC_MID_IV_1_MASK                (0xFFFFFFFFU << CRYPTO_BC_MID_IV_1_BC_MID_IV_1_SHIFT)        /* 0xFFFFFFFF */
+/* BC_MID_IV_2 */
+#define CRYPTO_BC_MID_IV_2_OFFSET                          (0x68U)
+#define CRYPTO_BC_MID_IV_2_BC_MID_IV_2_SHIFT               (0U)
+#define CRYPTO_BC_MID_IV_2_BC_MID_IV_2_MASK                (0xFFFFFFFFU << CRYPTO_BC_MID_IV_2_BC_MID_IV_2_SHIFT)        /* 0xFFFFFFFF */
+/* BC_MID_IV_3 */
+#define CRYPTO_BC_MID_IV_3_OFFSET                          (0x6CU)
+#define CRYPTO_BC_MID_IV_3_BC_MID_IV_3_SHIFT               (0U)
+#define CRYPTO_BC_MID_IV_3_BC_MID_IV_3_MASK                (0xFFFFFFFFU << CRYPTO_BC_MID_IV_3_BC_MID_IV_3_SHIFT)        /* 0xFFFFFFFF */
+/* BC_MID_IV_4 */
+#define CRYPTO_BC_MID_IV_4_OFFSET                          (0x70U)
+#define CRYPTO_BC_MID_IV_4_BC_MID_IV_4_SHIFT               (0U)
+#define CRYPTO_BC_MID_IV_4_BC_MID_IV_4_MASK                (0xFFFFFFFFU << CRYPTO_BC_MID_IV_4_BC_MID_IV_4_SHIFT)        /* 0xFFFFFFFF */
+/* BC_MID_IV_5 */
+#define CRYPTO_BC_MID_IV_5_OFFSET                          (0x74U)
+#define CRYPTO_BC_MID_IV_5_BC_MID_IV_5_SHIFT               (0U)
+#define CRYPTO_BC_MID_IV_5_BC_MID_IV_5_MASK                (0xFFFFFFFFU << CRYPTO_BC_MID_IV_5_BC_MID_IV_5_SHIFT)        /* 0xFFFFFFFF */
+/* CH0_IV_0 */
+#define CRYPTO_CH0_IV_0_OFFSET                             (0x100U)
+#define CRYPTO_CH0_IV_0_CH0_IV_0_SHIFT                     (0U)
+#define CRYPTO_CH0_IV_0_CH0_IV_0_MASK                      (0xFFFFFFFFU << CRYPTO_CH0_IV_0_CH0_IV_0_SHIFT)              /* 0xFFFFFFFF */
+/* CH0_IV_1 */
+#define CRYPTO_CH0_IV_1_OFFSET                             (0x104U)
+#define CRYPTO_CH0_IV_1_CH0_IV_1_SHIFT                     (0U)
+#define CRYPTO_CH0_IV_1_CH0_IV_1_MASK                      (0xFFFFFFFFU << CRYPTO_CH0_IV_1_CH0_IV_1_SHIFT)              /* 0xFFFFFFFF */
+/* CH0_IV_2 */
+#define CRYPTO_CH0_IV_2_OFFSET                             (0x108U)
+#define CRYPTO_CH0_IV_2_CH0_IV_2_SHIFT                     (0U)
+#define CRYPTO_CH0_IV_2_CH0_IV_2_MASK                      (0xFFFFFFFFU << CRYPTO_CH0_IV_2_CH0_IV_2_SHIFT)              /* 0xFFFFFFFF */
+/* CH0_IV_3 */
+#define CRYPTO_CH0_IV_3_OFFSET                             (0x10CU)
+#define CRYPTO_CH0_IV_3_CH0_IV_3_SHIFT                     (0U)
+#define CRYPTO_CH0_IV_3_CH0_IV_3_MASK                      (0xFFFFFFFFU << CRYPTO_CH0_IV_3_CH0_IV_3_SHIFT)              /* 0xFFFFFFFF */
+/* CH0_KEY_0 */
+#define CRYPTO_CH0_KEY_0_OFFSET                            (0x180U)
+#define CRYPTO_CH0_KEY_0_CH0_KEY_0_SHIFT                   (0U)
+#define CRYPTO_CH0_KEY_0_CH0_KEY_0_MASK                    (0xFFFFFFFFU << CRYPTO_CH0_KEY_0_CH0_KEY_0_SHIFT)            /* 0xFFFFFFFF */
+/* CH0_KEY_1 */
+#define CRYPTO_CH0_KEY_1_OFFSET                            (0x184U)
+#define CRYPTO_CH0_KEY_1_CH0_KEY_1_SHIFT                   (0U)
+#define CRYPTO_CH0_KEY_1_CH0_KEY_1_MASK                    (0xFFFFFFFFU << CRYPTO_CH0_KEY_1_CH0_KEY_1_SHIFT)            /* 0xFFFFFFFF */
+/* CH0_KEY_2 */
+#define CRYPTO_CH0_KEY_2_OFFSET                            (0x188U)
+#define CRYPTO_CH0_KEY_2_CH0_KEY_2_SHIFT                   (0U)
+#define CRYPTO_CH0_KEY_2_CH0_KEY_2_MASK                    (0xFFFFFFFFU << CRYPTO_CH0_KEY_2_CH0_KEY_2_SHIFT)            /* 0xFFFFFFFF */
+/* CH0_KEY_3 */
+#define CRYPTO_CH0_KEY_3_OFFSET                            (0x18CU)
+#define CRYPTO_CH0_KEY_3_CH0_KEY_3_SHIFT                   (0U)
+#define CRYPTO_CH0_KEY_3_CH0_KEY_3_MASK                    (0xFFFFFFFFU << CRYPTO_CH0_KEY_3_CH0_KEY_3_SHIFT)            /* 0xFFFFFFFF */
+/* CH1_KEY_0 */
+#define CRYPTO_CH1_KEY_0_OFFSET                            (0x190U)
+#define CRYPTO_CH1_KEY_0_CH1_KEY_0_SHIFT                   (0U)
+#define CRYPTO_CH1_KEY_0_CH1_KEY_0_MASK                    (0xFFFFFFFFU << CRYPTO_CH1_KEY_0_CH1_KEY_0_SHIFT)            /* 0xFFFFFFFF */
+/* CH1_KEY_1 */
+#define CRYPTO_CH1_KEY_1_OFFSET                            (0x194U)
+#define CRYPTO_CH1_KEY_1_CH1_KEY_1_SHIFT                   (0U)
+#define CRYPTO_CH1_KEY_1_CH1_KEY_1_MASK                    (0xFFFFFFFFU << CRYPTO_CH1_KEY_1_CH1_KEY_1_SHIFT)            /* 0xFFFFFFFF */
+/* CH1_KEY_2 */
+#define CRYPTO_CH1_KEY_2_OFFSET                            (0x198U)
+#define CRYPTO_CH1_KEY_2_CH1_KEY_2_SHIFT                   (0U)
+#define CRYPTO_CH1_KEY_2_CH1_KEY_2_MASK                    (0xFFFFFFFFU << CRYPTO_CH1_KEY_2_CH1_KEY_2_SHIFT)            /* 0xFFFFFFFF */
+/* CH1_KEY_3 */
+#define CRYPTO_CH1_KEY_3_OFFSET                            (0x19CU)
+#define CRYPTO_CH1_KEY_3_CH1_KEY_3_SHIFT                   (0U)
+#define CRYPTO_CH1_KEY_3_CH1_KEY_3_MASK                    (0xFFFFFFFFU << CRYPTO_CH1_KEY_3_CH1_KEY_3_SHIFT)            /* 0xFFFFFFFF */
+/* CH2_KEY_0 */
+#define CRYPTO_CH2_KEY_0_OFFSET                            (0x1A0U)
+#define CRYPTO_CH2_KEY_0_CH2_KEY_0_SHIFT                   (0U)
+#define CRYPTO_CH2_KEY_0_CH2_KEY_0_MASK                    (0xFFFFFFFFU << CRYPTO_CH2_KEY_0_CH2_KEY_0_SHIFT)            /* 0xFFFFFFFF */
+/* CH2_KEY_1 */
+#define CRYPTO_CH2_KEY_1_OFFSET                            (0x1A4U)
+#define CRYPTO_CH2_KEY_1_CH2_KEY_1_SHIFT                   (0U)
+#define CRYPTO_CH2_KEY_1_CH2_KEY_1_MASK                    (0xFFFFFFFFU << CRYPTO_CH2_KEY_1_CH2_KEY_1_SHIFT)            /* 0xFFFFFFFF */
+/* CH2_KEY_2 */
+#define CRYPTO_CH2_KEY_2_OFFSET                            (0x1A8U)
+#define CRYPTO_CH2_KEY_2_CH2_KEY_2_SHIFT                   (0U)
+#define CRYPTO_CH2_KEY_2_CH2_KEY_2_MASK                    (0xFFFFFFFFU << CRYPTO_CH2_KEY_2_CH2_KEY_2_SHIFT)            /* 0xFFFFFFFF */
+/* CH2_KEY_3 */
+#define CRYPTO_CH2_KEY_3_OFFSET                            (0x1ACU)
+#define CRYPTO_CH2_KEY_3_CH2_KEY_3_SHIFT                   (0U)
+#define CRYPTO_CH2_KEY_3_CH2_KEY_3_MASK                    (0xFFFFFFFFU << CRYPTO_CH2_KEY_3_CH2_KEY_3_SHIFT)            /* 0xFFFFFFFF */
+/* CH3_KEY_0 */
+#define CRYPTO_CH3_KEY_0_OFFSET                            (0x1B0U)
+#define CRYPTO_CH3_KEY_0_CH3_KEY_0_SHIFT                   (0U)
+#define CRYPTO_CH3_KEY_0_CH3_KEY_0_MASK                    (0xFFFFFFFFU << CRYPTO_CH3_KEY_0_CH3_KEY_0_SHIFT)            /* 0xFFFFFFFF */
+/* CH3_KEY_1 */
+#define CRYPTO_CH3_KEY_1_OFFSET                            (0x1B4U)
+#define CRYPTO_CH3_KEY_1_CH3_KEY_1_SHIFT                   (0U)
+#define CRYPTO_CH3_KEY_1_CH3_KEY_1_MASK                    (0xFFFFFFFFU << CRYPTO_CH3_KEY_1_CH3_KEY_1_SHIFT)            /* 0xFFFFFFFF */
+/* CH3_KEY_2 */
+#define CRYPTO_CH3_KEY_2_OFFSET                            (0x1B8U)
+#define CRYPTO_CH3_KEY_2_CH3_KEY_2_SHIFT                   (0U)
+#define CRYPTO_CH3_KEY_2_CH3_KEY_2_MASK                    (0xFFFFFFFFU << CRYPTO_CH3_KEY_2_CH3_KEY_2_SHIFT)            /* 0xFFFFFFFF */
+/* CH3_KEY_3 */
+#define CRYPTO_CH3_KEY_3_OFFSET                            (0x1BCU)
+#define CRYPTO_CH3_KEY_3_CH3_KEY_3_SHIFT                   (0U)
+#define CRYPTO_CH3_KEY_3_CH3_KEY_3_MASK                    (0xFFFFFFFFU << CRYPTO_CH3_KEY_3_CH3_KEY_3_SHIFT)            /* 0xFFFFFFFF */
+/* CH4_KEY_0 */
+#define CRYPTO_CH4_KEY_0_OFFSET                            (0x1C0U)
+#define CRYPTO_CH4_KEY_0_CH4_KEY_0_SHIFT                   (0U)
+#define CRYPTO_CH4_KEY_0_CH4_KEY_0_MASK                    (0xFFFFFFFFU << CRYPTO_CH4_KEY_0_CH4_KEY_0_SHIFT)            /* 0xFFFFFFFF */
+/* CH4_KEY_1 */
+#define CRYPTO_CH4_KEY_1_OFFSET                            (0x1C4U)
+#define CRYPTO_CH4_KEY_1_CH4_KEY_1_SHIFT                   (0U)
+#define CRYPTO_CH4_KEY_1_CH4_KEY_1_MASK                    (0xFFFFFFFFU << CRYPTO_CH4_KEY_1_CH4_KEY_1_SHIFT)            /* 0xFFFFFFFF */
+/* CH4_KEY_2 */
+#define CRYPTO_CH4_KEY_2_OFFSET                            (0x1C8U)
+#define CRYPTO_CH4_KEY_2_CH4_KEY_2_SHIFT                   (0U)
+#define CRYPTO_CH4_KEY_2_CH4_KEY_2_MASK                    (0xFFFFFFFFU << CRYPTO_CH4_KEY_2_CH4_KEY_2_SHIFT)            /* 0xFFFFFFFF */
+/* CH4_KEY_3 */
+#define CRYPTO_CH4_KEY_3_OFFSET                            (0x1CCU)
+#define CRYPTO_CH4_KEY_3_CH4_KEY_3_SHIFT                   (0U)
+#define CRYPTO_CH4_KEY_3_CH4_KEY_3_MASK                    (0xFFFFFFFFU << CRYPTO_CH4_KEY_3_CH4_KEY_3_SHIFT)            /* 0xFFFFFFFF */
+/* CH5_KEY_0 */
+#define CRYPTO_CH5_KEY_0_OFFSET                            (0x1D0U)
+#define CRYPTO_CH5_KEY_0_CH5_KEY_0_SHIFT                   (0U)
+#define CRYPTO_CH5_KEY_0_CH5_KEY_0_MASK                    (0xFFFFFFFFU << CRYPTO_CH5_KEY_0_CH5_KEY_0_SHIFT)            /* 0xFFFFFFFF */
+/* CH5_KEY_1 */
+#define CRYPTO_CH5_KEY_1_OFFSET                            (0x1D4U)
+#define CRYPTO_CH5_KEY_1_CH5_KEY_1_SHIFT                   (0U)
+#define CRYPTO_CH5_KEY_1_CH5_KEY_1_MASK                    (0xFFFFFFFFU << CRYPTO_CH5_KEY_1_CH5_KEY_1_SHIFT)            /* 0xFFFFFFFF */
+/* CH5_KEY_2 */
+#define CRYPTO_CH5_KEY_2_OFFSET                            (0x1D8U)
+#define CRYPTO_CH5_KEY_2_CH5_KEY_2_SHIFT                   (0U)
+#define CRYPTO_CH5_KEY_2_CH5_KEY_2_MASK                    (0xFFFFFFFFU << CRYPTO_CH5_KEY_2_CH5_KEY_2_SHIFT)            /* 0xFFFFFFFF */
+/* CH5_KEY_3 */
+#define CRYPTO_CH5_KEY_3_OFFSET                            (0x1DCU)
+#define CRYPTO_CH5_KEY_3_CH5_KEY_3_SHIFT                   (0U)
+#define CRYPTO_CH5_KEY_3_CH5_KEY_3_MASK                    (0xFFFFFFFFU << CRYPTO_CH5_KEY_3_CH5_KEY_3_SHIFT)            /* 0xFFFFFFFF */
+/* CH6_KEY_0 */
+#define CRYPTO_CH6_KEY_0_OFFSET                            (0x1E0U)
+#define CRYPTO_CH6_KEY_0_CH6_KEY_0_SHIFT                   (0U)
+#define CRYPTO_CH6_KEY_0_CH6_KEY_0_MASK                    (0xFFFFFFFFU << CRYPTO_CH6_KEY_0_CH6_KEY_0_SHIFT)            /* 0xFFFFFFFF */
+/* CH6_KEY_1 */
+#define CRYPTO_CH6_KEY_1_OFFSET                            (0x1E4U)
+#define CRYPTO_CH6_KEY_1_CH6_KEY_1_SHIFT                   (0U)
+#define CRYPTO_CH6_KEY_1_CH6_KEY_1_MASK                    (0xFFFFFFFFU << CRYPTO_CH6_KEY_1_CH6_KEY_1_SHIFT)            /* 0xFFFFFFFF */
+/* CH6_KEY_2 */
+#define CRYPTO_CH6_KEY_2_OFFSET                            (0x1E8U)
+#define CRYPTO_CH6_KEY_2_CH6_KEY_2_SHIFT                   (0U)
+#define CRYPTO_CH6_KEY_2_CH6_KEY_2_MASK                    (0xFFFFFFFFU << CRYPTO_CH6_KEY_2_CH6_KEY_2_SHIFT)            /* 0xFFFFFFFF */
+/* CH6_KEY_3 */
+#define CRYPTO_CH6_KEY_3_OFFSET                            (0x1ECU)
+#define CRYPTO_CH6_KEY_3_CH6_KEY_3_SHIFT                   (0U)
+#define CRYPTO_CH6_KEY_3_CH6_KEY_3_MASK                    (0xFFFFFFFFU << CRYPTO_CH6_KEY_3_CH6_KEY_3_SHIFT)            /* 0xFFFFFFFF */
+/* CH7_KEY_0 */
+#define CRYPTO_CH7_KEY_0_OFFSET                            (0x1F0U)
+#define CRYPTO_CH7_KEY_0_CH7_KEY_0_SHIFT                   (0U)
+#define CRYPTO_CH7_KEY_0_CH7_KEY_0_MASK                    (0xFFFFFFFFU << CRYPTO_CH7_KEY_0_CH7_KEY_0_SHIFT)            /* 0xFFFFFFFF */
+/* CH7_KEY_1 */
+#define CRYPTO_CH7_KEY_1_OFFSET                            (0x1F4U)
+#define CRYPTO_CH7_KEY_1_CH7_KEY_1_SHIFT                   (0U)
+#define CRYPTO_CH7_KEY_1_CH7_KEY_1_MASK                    (0xFFFFFFFFU << CRYPTO_CH7_KEY_1_CH7_KEY_1_SHIFT)            /* 0xFFFFFFFF */
+/* CH7_KEY_2 */
+#define CRYPTO_CH7_KEY_2_OFFSET                            (0x1F8U)
+#define CRYPTO_CH7_KEY_2_CH7_KEY_2_SHIFT                   (0U)
+#define CRYPTO_CH7_KEY_2_CH7_KEY_2_MASK                    (0xFFFFFFFFU << CRYPTO_CH7_KEY_2_CH7_KEY_2_SHIFT)            /* 0xFFFFFFFF */
+/* CH7_KEY_3 */
+#define CRYPTO_CH7_KEY_3_OFFSET                            (0x1FCU)
+#define CRYPTO_CH7_KEY_3_CH7_KEY_3_SHIFT                   (0U)
+#define CRYPTO_CH7_KEY_3_CH7_KEY_3_MASK                    (0xFFFFFFFFU << CRYPTO_CH7_KEY_3_CH7_KEY_3_SHIFT)            /* 0xFFFFFFFF */
+/* CH0_PC_LEN_0 */
+#define CRYPTO_CH0_PC_LEN_0_OFFSET                         (0x280U)
+#define CRYPTO_CH0_PC_LEN_0_CH0_PC_LEN_0_SHIFT             (0U)
+#define CRYPTO_CH0_PC_LEN_0_CH0_PC_LEN_0_MASK              (0xFFFFFFFFU << CRYPTO_CH0_PC_LEN_0_CH0_PC_LEN_0_SHIFT)      /* 0xFFFFFFFF */
+/* CH0_PC_LEN_1 */
+#define CRYPTO_CH0_PC_LEN_1_OFFSET                         (0x284U)
+#define CRYPTO_CH0_PC_LEN_1_CH0_PC_LEN_1_SHIFT             (0U)
+#define CRYPTO_CH0_PC_LEN_1_CH0_PC_LEN_1_MASK              (0x1FFFFFFFU << CRYPTO_CH0_PC_LEN_1_CH0_PC_LEN_1_SHIFT)      /* 0x1FFFFFFF */
+/* CH0_AAD_LEN_0 */
+#define CRYPTO_CH0_AAD_LEN_0_OFFSET                        (0x2C0U)
+#define CRYPTO_CH0_AAD_LEN_0_CH0_AAD_LEN_0_SHIFT           (0U)
+#define CRYPTO_CH0_AAD_LEN_0_CH0_AAD_LEN_0_MASK            (0xFFFFFFFFU << CRYPTO_CH0_AAD_LEN_0_CH0_AAD_LEN_0_SHIFT)    /* 0xFFFFFFFF */
+/* CH0_AAD_LEN_1 */
+#define CRYPTO_CH0_AAD_LEN_1_OFFSET                        (0x2C4U)
+#define CRYPTO_CH0_AAD_LEN_1_CH0_AAD_LEN_1_SHIFT           (0U)
+#define CRYPTO_CH0_AAD_LEN_1_CH0_AAD_LEN_1_MASK            (0x1FFFFFFFU << CRYPTO_CH0_AAD_LEN_1_CH0_AAD_LEN_1_SHIFT)    /* 0x1FFFFFFF */
+/* CH0_IV_LEN_0 */
+#define CRYPTO_CH0_IV_LEN_0_OFFSET                         (0x300U)
+#define CRYPTO_CH0_IV_LEN_0_CH0_IV_LEN_SHIFT               (0U)
+#define CRYPTO_CH0_IV_LEN_0_CH0_IV_LEN_MASK                (0x1FU << CRYPTO_CH0_IV_LEN_0_CH0_IV_LEN_SHIFT)              /* 0x0000001F */
+/* CH0_TAG_0 */
+#define CRYPTO_CH0_TAG_0_OFFSET                            (0x320U)
+#define CRYPTO_CH0_TAG_0                                   (0x0U)
+#define CRYPTO_CH0_TAG_0_CH0_TAG_0_SHIFT                   (0U)
+#define CRYPTO_CH0_TAG_0_CH0_TAG_0_MASK                    (0xFFFFFFFFU << CRYPTO_CH0_TAG_0_CH0_TAG_0_SHIFT)            /* 0xFFFFFFFF */
+/* CH0_TAG_1 */
+#define CRYPTO_CH0_TAG_1_OFFSET                            (0x324U)
+#define CRYPTO_CH0_TAG_1                                   (0x0U)
+#define CRYPTO_CH0_TAG_1_CH0_TAG_1_SHIFT                   (0U)
+#define CRYPTO_CH0_TAG_1_CH0_TAG_1_MASK                    (0xFFFFFFFFU << CRYPTO_CH0_TAG_1_CH0_TAG_1_SHIFT)            /* 0xFFFFFFFF */
+/* CH0_TAG_2 */
+#define CRYPTO_CH0_TAG_2_OFFSET                            (0x328U)
+#define CRYPTO_CH0_TAG_2                                   (0x0U)
+#define CRYPTO_CH0_TAG_2_CH0_TAG_2_SHIFT                   (0U)
+#define CRYPTO_CH0_TAG_2_CH0_TAG_2_MASK                    (0xFFFFFFFFU << CRYPTO_CH0_TAG_2_CH0_TAG_2_SHIFT)            /* 0xFFFFFFFF */
+/* CH0_TAG_3 */
+#define CRYPTO_CH0_TAG_3_OFFSET                            (0x32CU)
+#define CRYPTO_CH0_TAG_3                                   (0x0U)
+#define CRYPTO_CH0_TAG_3_CH0_TAG_3_SHIFT                   (0U)
+#define CRYPTO_CH0_TAG_3_CH0_TAG_3_MASK                    (0xFFFFFFFFU << CRYPTO_CH0_TAG_3_CH0_TAG_3_SHIFT)            /* 0xFFFFFFFF */
+/* HASH_DOUT_0 */
+#define CRYPTO_HASH_DOUT_0_OFFSET                          (0x3A0U)
+#define CRYPTO_HASH_DOUT_0                                 (0x0U)
+#define CRYPTO_HASH_DOUT_0_HASH_DOUT_0_SHIFT               (0U)
+#define CRYPTO_HASH_DOUT_0_HASH_DOUT_0_MASK                (0xFFFFFFFFU << CRYPTO_HASH_DOUT_0_HASH_DOUT_0_SHIFT)        /* 0xFFFFFFFF */
+/* HASH_DOUT_1 */
+#define CRYPTO_HASH_DOUT_1_OFFSET                          (0x3A4U)
+#define CRYPTO_HASH_DOUT_1                                 (0x0U)
+#define CRYPTO_HASH_DOUT_1_HASH_DOUT_1_SHIFT               (0U)
+#define CRYPTO_HASH_DOUT_1_HASH_DOUT_1_MASK                (0xFFFFFFFFU << CRYPTO_HASH_DOUT_1_HASH_DOUT_1_SHIFT)        /* 0xFFFFFFFF */
+/* HASH_DOUT_2 */
+#define CRYPTO_HASH_DOUT_2_OFFSET                          (0x3A8U)
+#define CRYPTO_HASH_DOUT_2                                 (0x0U)
+#define CRYPTO_HASH_DOUT_2_HASH_DOUT_2_SHIFT               (0U)
+#define CRYPTO_HASH_DOUT_2_HASH_DOUT_2_MASK                (0xFFFFFFFFU << CRYPTO_HASH_DOUT_2_HASH_DOUT_2_SHIFT)        /* 0xFFFFFFFF */
+/* HASH_DOUT_3 */
+#define CRYPTO_HASH_DOUT_3_OFFSET                          (0x3ACU)
+#define CRYPTO_HASH_DOUT_3                                 (0x0U)
+#define CRYPTO_HASH_DOUT_3_HASH_DOUT_3_SHIFT               (0U)
+#define CRYPTO_HASH_DOUT_3_HASH_DOUT_3_MASK                (0xFFFFFFFFU << CRYPTO_HASH_DOUT_3_HASH_DOUT_3_SHIFT)        /* 0xFFFFFFFF */
+/* HASH_DOUT_4 */
+#define CRYPTO_HASH_DOUT_4_OFFSET                          (0x3B0U)
+#define CRYPTO_HASH_DOUT_4                                 (0x0U)
+#define CRYPTO_HASH_DOUT_4_HASH_DOUT_4_SHIFT               (0U)
+#define CRYPTO_HASH_DOUT_4_HASH_DOUT_4_MASK                (0xFFFFFFFFU << CRYPTO_HASH_DOUT_4_HASH_DOUT_4_SHIFT)        /* 0xFFFFFFFF */
+/* HASH_DOUT_5 */
+#define CRYPTO_HASH_DOUT_5_OFFSET                          (0x3B4U)
+#define CRYPTO_HASH_DOUT_5                                 (0x0U)
+#define CRYPTO_HASH_DOUT_5_HASH_DOUT_5_SHIFT               (0U)
+#define CRYPTO_HASH_DOUT_5_HASH_DOUT_5_MASK                (0xFFFFFFFFU << CRYPTO_HASH_DOUT_5_HASH_DOUT_5_SHIFT)        /* 0xFFFFFFFF */
+/* HASH_DOUT_6 */
+#define CRYPTO_HASH_DOUT_6_OFFSET                          (0x3B8U)
+#define CRYPTO_HASH_DOUT_6                                 (0x0U)
+#define CRYPTO_HASH_DOUT_6_HASH_DOUT_6_SHIFT               (0U)
+#define CRYPTO_HASH_DOUT_6_HASH_DOUT_6_MASK                (0xFFFFFFFFU << CRYPTO_HASH_DOUT_6_HASH_DOUT_6_SHIFT)        /* 0xFFFFFFFF */
+/* HASH_DOUT_7 */
+#define CRYPTO_HASH_DOUT_7_OFFSET                          (0x3BCU)
+#define CRYPTO_HASH_DOUT_7                                 (0x0U)
+#define CRYPTO_HASH_DOUT_7_HASH_DOUT_7_SHIFT               (0U)
+#define CRYPTO_HASH_DOUT_7_HASH_DOUT_7_MASK                (0xFFFFFFFFU << CRYPTO_HASH_DOUT_7_HASH_DOUT_7_SHIFT)        /* 0xFFFFFFFF */
+/* TAG_VALID */
+#define CRYPTO_TAG_VALID_OFFSET                            (0x3E0U)
+#define CRYPTO_TAG_VALID_CH0_TAG_VALID_SHIFT               (0U)
+#define CRYPTO_TAG_VALID_CH0_TAG_VALID_MASK                (0x1U << CRYPTO_TAG_VALID_CH0_TAG_VALID_SHIFT)               /* 0x00000001 */
+#define CRYPTO_TAG_VALID_CH1_TAG_VALID_SHIFT               (1U)
+#define CRYPTO_TAG_VALID_CH1_TAG_VALID_MASK                (0x1U << CRYPTO_TAG_VALID_CH1_TAG_VALID_SHIFT)               /* 0x00000002 */
+#define CRYPTO_TAG_VALID_CH2_TAG_VALID_SHIFT               (2U)
+#define CRYPTO_TAG_VALID_CH2_TAG_VALID_MASK                (0x1U << CRYPTO_TAG_VALID_CH2_TAG_VALID_SHIFT)               /* 0x00000004 */
+#define CRYPTO_TAG_VALID_CH3_TAG_VALID_SHIFT               (3U)
+#define CRYPTO_TAG_VALID_CH3_TAG_VALID_MASK                (0x1U << CRYPTO_TAG_VALID_CH3_TAG_VALID_SHIFT)               /* 0x00000008 */
+#define CRYPTO_TAG_VALID_CH4_TAG_VALID_SHIFT               (4U)
+#define CRYPTO_TAG_VALID_CH4_TAG_VALID_MASK                (0x1U << CRYPTO_TAG_VALID_CH4_TAG_VALID_SHIFT)               /* 0x00000010 */
+#define CRYPTO_TAG_VALID_CH5_TAG_VALID_SHIFT               (5U)
+#define CRYPTO_TAG_VALID_CH5_TAG_VALID_MASK                (0x1U << CRYPTO_TAG_VALID_CH5_TAG_VALID_SHIFT)               /* 0x00000020 */
+#define CRYPTO_TAG_VALID_CH6_TAG_VALID_SHIFT               (6U)
+#define CRYPTO_TAG_VALID_CH6_TAG_VALID_MASK                (0x1U << CRYPTO_TAG_VALID_CH6_TAG_VALID_SHIFT)               /* 0x00000040 */
+#define CRYPTO_TAG_VALID_CH7_TAG_VALID_SHIFT               (7U)
+#define CRYPTO_TAG_VALID_CH7_TAG_VALID_MASK                (0x1U << CRYPTO_TAG_VALID_CH7_TAG_VALID_SHIFT)               /* 0x00000080 */
+/* HASH_VALID */
+#define CRYPTO_HASH_VALID_OFFSET                           (0x3E4U)
+#define CRYPTO_HASH_VALID_HASH_VALID_SHIFT                 (0U)
+#define CRYPTO_HASH_VALID_HASH_VALID_MASK                  (0x1U << CRYPTO_HASH_VALID_HASH_VALID_SHIFT)                 /* 0x00000001 */
+/* MID_VALID */
+#define CRYPTO_MID_VALID_OFFSET                            (0x3E8U)
+#define CRYPTO_MID_VALID_BC_MID_VALID_SHIFT                (0U)
+#define CRYPTO_MID_VALID_BC_MID_VALID_MASK                 (0x1U << CRYPTO_MID_VALID_BC_MID_VALID_SHIFT)                /* 0x00000001 */
+#define CRYPTO_MID_VALID_HASH_MID_VALID_SHIFT              (1U)
+#define CRYPTO_MID_VALID_HASH_MID_VALID_MASK               (0x1U << CRYPTO_MID_VALID_HASH_MID_VALID_SHIFT)              /* 0x00000002 */
+/* ECC_CTL */
+#define CRYPTO_ECC_CTL_OFFSET                              (0x3F0U)
+#define CRYPTO_ECC_CTL_ECC_REQ_SHIFT                       (0U)
+#define CRYPTO_ECC_CTL_ECC_REQ_MASK                        (0x1U << CRYPTO_ECC_CTL_ECC_REQ_SHIFT)                       /* 0x00000001 */
+#define CRYPTO_ECC_CTL_FUNC_SEL_SHIFT                      (4U)
+#define CRYPTO_ECC_CTL_FUNC_SEL_MASK                       (0x1FU << CRYPTO_ECC_CTL_FUNC_SEL_SHIFT)                     /* 0x000001F0 */
+#define CRYPTO_ECC_CTL_RAND_K_SRC_SHIFT                    (12U)
+#define CRYPTO_ECC_CTL_RAND_K_SRC_MASK                     (0x1U << CRYPTO_ECC_CTL_RAND_K_SRC_SHIFT)                    /* 0x00001000 */
+/* ECC_INT_EN */
+#define CRYPTO_ECC_INT_EN_OFFSET                           (0x3F4U)
+#define CRYPTO_ECC_INT_EN_DONE_INT_EN_SHIFT                (0U)
+#define CRYPTO_ECC_INT_EN_DONE_INT_EN_MASK                 (0x1U << CRYPTO_ECC_INT_EN_DONE_INT_EN_SHIFT)                /* 0x00000001 */
+/* ECC_INT_ST */
+#define CRYPTO_ECC_INT_ST_OFFSET                           (0x3F8U)
+#define CRYPTO_ECC_INT_ST_DONE_INT_ST_SHIFT                (0U)
+#define CRYPTO_ECC_INT_ST_DONE_INT_ST_MASK                 (0x1U << CRYPTO_ECC_INT_ST_DONE_INT_ST_SHIFT)                /* 0x00000001 */
+/* ECC_ABN_ST */
+#define CRYPTO_ECC_ABN_ST_OFFSET                           (0x3FCU)
+#define CRYPTO_ECC_ABN_ST                                  (0x0U)
+#define CRYPTO_ECC_ABN_ST_BAD_POINT_OUT_SHIFT              (0U)
+#define CRYPTO_ECC_ABN_ST_BAD_POINT_OUT_MASK               (0x1U << CRYPTO_ECC_ABN_ST_BAD_POINT_OUT_SHIFT)              /* 0x00000001 */
+#define CRYPTO_ECC_ABN_ST_BAD_T_OUT_SHIFT                  (1U)
+#define CRYPTO_ECC_ABN_ST_BAD_T_OUT_MASK                   (0x1U << CRYPTO_ECC_ABN_ST_BAD_T_OUT_SHIFT)                  /* 0x00000002 */
+#define CRYPTO_ECC_ABN_ST_BAD_S_OUT_SHIFT                  (2U)
+#define CRYPTO_ECC_ABN_ST_BAD_S_OUT_MASK                   (0x1U << CRYPTO_ECC_ABN_ST_BAD_S_OUT_SHIFT)                  /* 0x00000004 */
+#define CRYPTO_ECC_ABN_ST_BAD_R_OUT_SHIFT                  (3U)
+#define CRYPTO_ECC_ABN_ST_BAD_R_OUT_MASK                   (0x1U << CRYPTO_ECC_ABN_ST_BAD_R_OUT_SHIFT)                  /* 0x00000008 */
+#define CRYPTO_ECC_ABN_ST_BAD_R_K_MID_SHIFT                (4U)
+#define CRYPTO_ECC_ABN_ST_BAD_R_K_MID_MASK                 (0x1U << CRYPTO_ECC_ABN_ST_BAD_R_K_MID_SHIFT)                /* 0x00000010 */
+#define CRYPTO_ECC_ABN_ST_BAD_S_IN_SHIFT                   (5U)
+#define CRYPTO_ECC_ABN_ST_BAD_S_IN_MASK                    (0x1U << CRYPTO_ECC_ABN_ST_BAD_S_IN_SHIFT)                   /* 0x00000020 */
+#define CRYPTO_ECC_ABN_ST_BAD_R_IN_SHIFT                   (6U)
+#define CRYPTO_ECC_ABN_ST_BAD_R_IN_MASK                    (0x1U << CRYPTO_ECC_ABN_ST_BAD_R_IN_SHIFT)                   /* 0x00000040 */
+#define CRYPTO_ECC_ABN_ST_BAD_K_IN_SHIFT                   (7U)
+#define CRYPTO_ECC_ABN_ST_BAD_K_IN_MASK                    (0x1U << CRYPTO_ECC_ABN_ST_BAD_K_IN_SHIFT)                   /* 0x00000080 */
+/* RAM_CTL */
+#define CRYPTO_RAM_CTL_OFFSET                              (0x480U)
+#define CRYPTO_RAM_CTL_RAM_PKA_RDY_SHIFT                   (0U)
+#define CRYPTO_RAM_CTL_RAM_PKA_RDY_MASK                    (0x1U << CRYPTO_RAM_CTL_RAM_PKA_RDY_SHIFT)                   /* 0x00000001 */
+/* RAM_ST */
+#define CRYPTO_RAM_ST_OFFSET                               (0x484U)
+#define CRYPTO_RAM_ST                                      (0x1U)
+#define CRYPTO_RAM_ST_CLK_RAM_RDY_SHIFT                    (0U)
+#define CRYPTO_RAM_ST_CLK_RAM_RDY_MASK                     (0x1U << CRYPTO_RAM_ST_CLK_RAM_RDY_SHIFT)                    /* 0x00000001 */
+/* DEBUG_CTL */
+#define CRYPTO_DEBUG_CTL_OFFSET                            (0x4A0U)
+#define CRYPTO_DEBUG_CTL_PKA_DEBUG_MODE_SHIFT              (0U)
+#define CRYPTO_DEBUG_CTL_PKA_DEBUG_MODE_MASK               (0x1U << CRYPTO_DEBUG_CTL_PKA_DEBUG_MODE_SHIFT)              /* 0x00000001 */
+/* DEBUG_ST */
+#define CRYPTO_DEBUG_ST_OFFSET                             (0x4A4U)
+#define CRYPTO_DEBUG_ST                                    (0x1U)
+#define CRYPTO_DEBUG_ST_PKA_DEBUG_CLK_EN_SHIFT             (0U)
+#define CRYPTO_DEBUG_ST_PKA_DEBUG_CLK_EN_MASK              (0x1U << CRYPTO_DEBUG_ST_PKA_DEBUG_CLK_EN_SHIFT)             /* 0x00000001 */
+/* DEBUG_MONITOR */
+#define CRYPTO_DEBUG_MONITOR_OFFSET                        (0x4A8U)
+#define CRYPTO_DEBUG_MONITOR                               (0xFEEFU)
+#define CRYPTO_DEBUG_MONITOR_PKA_MONITOR_BUS_SHIFT         (0U)
+#define CRYPTO_DEBUG_MONITOR_PKA_MONITOR_BUS_MASK          (0xFFFFFFFFU << CRYPTO_DEBUG_MONITOR_PKA_MONITOR_BUS_SHIFT)  /* 0xFFFFFFFF */
+/* CRYPTO_KL_KEY_STATUS */
+#define CRYPTO_CRYPTO_KL_KEY_STATUS_OFFSET                 (0x600U)
+#define CRYPTO_CRYPTO_KL_KEY_STATUS                        (0x0U)
+#define CRYPTO_CRYPTO_KL_KEY_STATUS_KL_KEY_FLAG_SHIFT      (0U)
+#define CRYPTO_CRYPTO_KL_KEY_STATUS_KL_KEY_FLAG_MASK       (0xFFFFU << CRYPTO_CRYPTO_KL_KEY_STATUS_KL_KEY_FLAG_SHIFT)   /* 0x0000FFFF */
+/* CRYPTO_KEY_SEL */
+#define CRYPTO_CRYPTO_KEY_SEL_OFFSET                       (0x610U)
+#define CRYPTO_CRYPTO_KEY_SEL_KEY_SELECT_SHIFT             (0U)
+#define CRYPTO_CRYPTO_KEY_SEL_KEY_SELECT_MASK              (0x7FFFFFFFU << CRYPTO_CRYPTO_KEY_SEL_KEY_SELECT_SHIFT)      /* 0x7FFFFFFF */
+#define CRYPTO_CRYPTO_KEY_SEL_KLAD_KL_HIGH_SEL_SHIFT       (31U)
+#define CRYPTO_CRYPTO_KEY_SEL_KLAD_KL_HIGH_SEL_MASK        (0x1U << CRYPTO_CRYPTO_KEY_SEL_KLAD_KL_HIGH_SEL_SHIFT)       /* 0x80000000 */
+/* CRYPTO_LOCKSTEP */
+#define CRYPTO_CRYPTO_LOCKSTEP_OFFSET                      (0x618U)
+#define CRYPTO_CRYPTO_LOCKSTEP                             (0x0U)
+#define CRYPTO_CRYPTO_LOCKSTEP_LOCK_STEP_FLAG_SHIFT        (0U)
+#define CRYPTO_CRYPTO_LOCKSTEP_LOCK_STEP_FLAG_MASK         (0x1U << CRYPTO_CRYPTO_LOCKSTEP_LOCK_STEP_FLAG_SHIFT)        /* 0x00000001 */
+/* CRYPTO_LOCKSTEP_EN */
+#define CRYPTO_CRYPTO_LOCKSTEP_EN_OFFSET                   (0x61CU)
+#define CRYPTO_CRYPTO_LOCKSTEP_EN_LOCKSTEP_EN_SHIFT        (0U)
+#define CRYPTO_CRYPTO_LOCKSTEP_EN_LOCKSTEP_EN_MASK         (0x1U << CRYPTO_CRYPTO_LOCKSTEP_EN_LOCKSTEP_EN_SHIFT)        /* 0x00000001 */
+/* MID_VALID_SWITCH */
+#define CRYPTO_MID_VALID_SWITCH_OFFSET                     (0x630U)
+#define CRYPTO_MID_VALID_SWITCH_SWITCH_SHIFT               (0U)
+#define CRYPTO_MID_VALID_SWITCH_SWITCH_MASK                (0x1U << CRYPTO_MID_VALID_SWITCH_SWITCH_SHIFT)               /* 0x00000001 */
+/* AES_VERSION */
+#define CRYPTO_AES_VERSION_OFFSET                          (0x680U)
+#define CRYPTO_AES_VERSION_ECB_FLAG_SHIFT                  (0U)
+#define CRYPTO_AES_VERSION_ECB_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_ECB_FLAG_SHIFT)                  /* 0x00000001 */
+#define CRYPTO_AES_VERSION_CBC_FLAG_SHIFT                  (1U)
+#define CRYPTO_AES_VERSION_CBC_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_CBC_FLAG_SHIFT)                  /* 0x00000002 */
+#define CRYPTO_AES_VERSION_CTS_FLAG_SHIFT                  (2U)
+#define CRYPTO_AES_VERSION_CTS_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_CTS_FLAG_SHIFT)                  /* 0x00000004 */
+#define CRYPTO_AES_VERSION_CTR_FLAG_SHIFT                  (3U)
+#define CRYPTO_AES_VERSION_CTR_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_CTR_FLAG_SHIFT)                  /* 0x00000008 */
+#define CRYPTO_AES_VERSION_CFB_FLAG_SHIFT                  (4U)
+#define CRYPTO_AES_VERSION_CFB_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_CFB_FLAG_SHIFT)                  /* 0x00000010 */
+#define CRYPTO_AES_VERSION_OFB_FLAG_SHIFT                  (5U)
+#define CRYPTO_AES_VERSION_OFB_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_OFB_FLAG_SHIFT)                  /* 0x00000020 */
+#define CRYPTO_AES_VERSION_XTS_FLAG_SHIFT                  (6U)
+#define CRYPTO_AES_VERSION_XTS_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_XTS_FLAG_SHIFT)                  /* 0x00000040 */
+#define CRYPTO_AES_VERSION_CCM_FLAG_SHIFT                  (7U)
+#define CRYPTO_AES_VERSION_CCM_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_CCM_FLAG_SHIFT)                  /* 0x00000080 */
+#define CRYPTO_AES_VERSION_GCM_FLAG_SHIFT                  (8U)
+#define CRYPTO_AES_VERSION_GCM_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_GCM_FLAG_SHIFT)                  /* 0x00000100 */
+#define CRYPTO_AES_VERSION_CMAC_FLAG_SHIFT                 (9U)
+#define CRYPTO_AES_VERSION_CMAC_FLAG_MASK                  (0x1U << CRYPTO_AES_VERSION_CMAC_FLAG_SHIFT)                 /* 0x00000200 */
+#define CRYPTO_AES_VERSION_CBC_MAC_FLAG_SHIFT              (10U)
+#define CRYPTO_AES_VERSION_CBC_MAC_FLAG_MASK               (0x1U << CRYPTO_AES_VERSION_CBC_MAC_FLAG_SHIFT)              /* 0x00000400 */
+#define CRYPTO_AES_VERSION_BYPASS_SHIFT                    (12U)
+#define CRYPTO_AES_VERSION_BYPASS_MASK                     (0x1U << CRYPTO_AES_VERSION_BYPASS_SHIFT)                    /* 0x00001000 */
+#define CRYPTO_AES_VERSION_AES128_FLAG_SHIFT               (16U)
+#define CRYPTO_AES_VERSION_AES128_FLAG_MASK                (0x1U << CRYPTO_AES_VERSION_AES128_FLAG_SHIFT)               /* 0x00010000 */
+#define CRYPTO_AES_VERSION_AES192_FLAG_SHIFT               (17U)
+#define CRYPTO_AES_VERSION_AES192_FLAG_MASK                (0x1U << CRYPTO_AES_VERSION_AES192_FLAG_SHIFT)               /* 0x00020000 */
+#define CRYPTO_AES_VERSION_AES256_FLAG_SHIFT               (18U)
+#define CRYPTO_AES_VERSION_AES256_FLAG_MASK                (0x1U << CRYPTO_AES_VERSION_AES256_FLAG_SHIFT)               /* 0x00040000 */
+#define CRYPTO_AES_VERSION_LOCKSTEP_FLAG_SHIFT             (20U)
+#define CRYPTO_AES_VERSION_LOCKSTEP_FLAG_MASK              (0x1U << CRYPTO_AES_VERSION_LOCKSTEP_FLAG_SHIFT)             /* 0x00100000 */
+#define CRYPTO_AES_VERSION_SECURE_FLAG_SHIFT               (21U)
+#define CRYPTO_AES_VERSION_SECURE_FLAG_MASK                (0x1U << CRYPTO_AES_VERSION_SECURE_FLAG_SHIFT)               /* 0x00200000 */
+#define CRYPTO_AES_VERSION_MULTICHANNEL_FLAG_SHIFT         (22U)
+#define CRYPTO_AES_VERSION_MULTICHANNEL_FLAG_MASK          (0x1U << CRYPTO_AES_VERSION_MULTICHANNEL_FLAG_SHIFT)         /* 0x00400000 */
+/* DES_VERSION */
+#define CRYPTO_DES_VERSION_OFFSET                          (0x684U)
+#define CRYPTO_DES_VERSION_ECB_FLAG_SHIFT                  (0U)
+#define CRYPTO_DES_VERSION_ECB_FLAG_MASK                   (0x1U << CRYPTO_DES_VERSION_ECB_FLAG_SHIFT)                  /* 0x00000001 */
+#define CRYPTO_DES_VERSION_CBC_FLAG_SHIFT                  (1U)
+#define CRYPTO_DES_VERSION_CBC_FLAG_MASK                   (0x1U << CRYPTO_DES_VERSION_CBC_FLAG_SHIFT)                  /* 0x00000002 */
+#define CRYPTO_DES_VERSION_CFB_FLAG_SHIFT                  (4U)
+#define CRYPTO_DES_VERSION_CFB_FLAG_MASK                   (0x1U << CRYPTO_DES_VERSION_CFB_FLAG_SHIFT)                  /* 0x00000010 */
+#define CRYPTO_DES_VERSION_OFB_FLAG_SHIFT                  (5U)
+#define CRYPTO_DES_VERSION_OFB_FLAG_MASK                   (0x1U << CRYPTO_DES_VERSION_OFB_FLAG_SHIFT)                  /* 0x00000020 */
+#define CRYPTO_DES_VERSION_TDES_FLAG_SHIFT                 (16U)
+#define CRYPTO_DES_VERSION_TDES_FLAG_MASK                  (0x1U << CRYPTO_DES_VERSION_TDES_FLAG_SHIFT)                 /* 0x00010000 */
+#define CRYPTO_DES_VERSION_EEE_FLAG_SHIFT                  (17U)
+#define CRYPTO_DES_VERSION_EEE_FLAG_MASK                   (0x1U << CRYPTO_DES_VERSION_EEE_FLAG_SHIFT)                  /* 0x00020000 */
+#define CRYPTO_DES_VERSION_EDE_FLAG_SHIFT                  (18U)
+#define CRYPTO_DES_VERSION_EDE_FLAG_MASK                   (0x1U << CRYPTO_DES_VERSION_EDE_FLAG_SHIFT)                  /* 0x00040000 */
+#define CRYPTO_DES_VERSION_LOCKSTEP_FLAG_SHIFT             (20U)
+#define CRYPTO_DES_VERSION_LOCKSTEP_FLAG_MASK              (0x1U << CRYPTO_DES_VERSION_LOCKSTEP_FLAG_SHIFT)             /* 0x00100000 */
+#define CRYPTO_DES_VERSION_SECURE_FLAG_SHIFT               (21U)
+#define CRYPTO_DES_VERSION_SECURE_FLAG_MASK                (0x1U << CRYPTO_DES_VERSION_SECURE_FLAG_SHIFT)               /* 0x00200000 */
+#define CRYPTO_DES_VERSION_MULTICHANNEL_FLAG_SHIFT         (22U)
+#define CRYPTO_DES_VERSION_MULTICHANNEL_FLAG_MASK          (0x1U << CRYPTO_DES_VERSION_MULTICHANNEL_FLAG_SHIFT)         /* 0x00400000 */
+/* SM4_VERSION */
+#define CRYPTO_SM4_VERSION_OFFSET                          (0x688U)
+#define CRYPTO_SM4_VERSION_ECB_FLAG_SHIFT                  (0U)
+#define CRYPTO_SM4_VERSION_ECB_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_ECB_FLAG_SHIFT)                  /* 0x00000001 */
+#define CRYPTO_SM4_VERSION_CBC_FLAG_SHIFT                  (1U)
+#define CRYPTO_SM4_VERSION_CBC_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_CBC_FLAG_SHIFT)                  /* 0x00000002 */
+#define CRYPTO_SM4_VERSION_CTS_FLAG_SHIFT                  (2U)
+#define CRYPTO_SM4_VERSION_CTS_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_CTS_FLAG_SHIFT)                  /* 0x00000004 */
+#define CRYPTO_SM4_VERSION_CTR_FLAG_SHIFT                  (3U)
+#define CRYPTO_SM4_VERSION_CTR_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_CTR_FLAG_SHIFT)                  /* 0x00000008 */
+#define CRYPTO_SM4_VERSION_CFB_FLAG_SHIFT                  (4U)
+#define CRYPTO_SM4_VERSION_CFB_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_CFB_FLAG_SHIFT)                  /* 0x00000010 */
+#define CRYPTO_SM4_VERSION_OFB_FLAG_SHIFT                  (5U)
+#define CRYPTO_SM4_VERSION_OFB_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_OFB_FLAG_SHIFT)                  /* 0x00000020 */
+#define CRYPTO_SM4_VERSION_XTS_FLAG_SHIFT                  (6U)
+#define CRYPTO_SM4_VERSION_XTS_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_XTS_FLAG_SHIFT)                  /* 0x00000040 */
+#define CRYPTO_SM4_VERSION_CCM_FLAG_SHIFT                  (7U)
+#define CRYPTO_SM4_VERSION_CCM_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_CCM_FLAG_SHIFT)                  /* 0x00000080 */
+#define CRYPTO_SM4_VERSION_GCM_FLAG_SHIFT                  (8U)
+#define CRYPTO_SM4_VERSION_GCM_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_GCM_FLAG_SHIFT)                  /* 0x00000100 */
+#define CRYPTO_SM4_VERSION_CMAC_FLAG_SHIFT                 (9U)
+#define CRYPTO_SM4_VERSION_CMAC_FLAG_MASK                  (0x1U << CRYPTO_SM4_VERSION_CMAC_FLAG_SHIFT)                 /* 0x00000200 */
+#define CRYPTO_SM4_VERSION_CBC_MAC_FLAG_SHIFT              (10U)
+#define CRYPTO_SM4_VERSION_CBC_MAC_FLAG_MASK               (0x1U << CRYPTO_SM4_VERSION_CBC_MAC_FLAG_SHIFT)              /* 0x00000400 */
+#define CRYPTO_SM4_VERSION_LOCKSTEP_FLAG_SHIFT             (20U)
+#define CRYPTO_SM4_VERSION_LOCKSTEP_FLAG_MASK              (0x1U << CRYPTO_SM4_VERSION_LOCKSTEP_FLAG_SHIFT)             /* 0x00100000 */
+#define CRYPTO_SM4_VERSION_SECURE_FLAG_SHIFT               (21U)
+#define CRYPTO_SM4_VERSION_SECURE_FLAG_MASK                (0x1U << CRYPTO_SM4_VERSION_SECURE_FLAG_SHIFT)               /* 0x00200000 */
+#define CRYPTO_SM4_VERSION_MULTICHANNEL_FLAG_SHIFT         (22U)
+#define CRYPTO_SM4_VERSION_MULTICHANNEL_FLAG_MASK          (0x1U << CRYPTO_SM4_VERSION_MULTICHANNEL_FLAG_SHIFT)         /* 0x00400000 */
+/* HASH_VERSION */
+#define CRYPTO_HASH_VERSION_OFFSET                         (0x68CU)
+#define CRYPTO_HASH_VERSION_SHA1_FLAG_SHIFT                (0U)
+#define CRYPTO_HASH_VERSION_SHA1_FLAG_MASK                 (0x1U << CRYPTO_HASH_VERSION_SHA1_FLAG_SHIFT)                /* 0x00000001 */
+#define CRYPTO_HASH_VERSION_SHA224_FLAG_SHIFT              (1U)
+#define CRYPTO_HASH_VERSION_SHA224_FLAG_MASK               (0x1U << CRYPTO_HASH_VERSION_SHA224_FLAG_SHIFT)              /* 0x00000002 */
+#define CRYPTO_HASH_VERSION_SHA256_FLAG_SHIFT              (2U)
+#define CRYPTO_HASH_VERSION_SHA256_FLAG_MASK               (0x1U << CRYPTO_HASH_VERSION_SHA256_FLAG_SHIFT)              /* 0x00000004 */
+#define CRYPTO_HASH_VERSION_SHA384_FLAG_SHIFT              (3U)
+#define CRYPTO_HASH_VERSION_SHA384_FLAG_MASK               (0x1U << CRYPTO_HASH_VERSION_SHA384_FLAG_SHIFT)              /* 0x00000008 */
+#define CRYPTO_HASH_VERSION_SHA512_FLAG_SHIFT              (4U)
+#define CRYPTO_HASH_VERSION_SHA512_FLAG_MASK               (0x1U << CRYPTO_HASH_VERSION_SHA512_FLAG_SHIFT)              /* 0x00000010 */
+#define CRYPTO_HASH_VERSION_SHA512_224_FLAG_SHIFT          (5U)
+#define CRYPTO_HASH_VERSION_SHA512_224_FLAG_MASK           (0x1U << CRYPTO_HASH_VERSION_SHA512_224_FLAG_SHIFT)          /* 0x00000020 */
+#define CRYPTO_HASH_VERSION_SHA512_256_FLAG_SHIFT          (6U)
+#define CRYPTO_HASH_VERSION_SHA512_256_FLAG_MASK           (0x1U << CRYPTO_HASH_VERSION_SHA512_256_FLAG_SHIFT)          /* 0x00000040 */
+#define CRYPTO_HASH_VERSION_MD5_FLAG_SHIFT                 (7U)
+#define CRYPTO_HASH_VERSION_MD5_FLAG_MASK                  (0x1U << CRYPTO_HASH_VERSION_MD5_FLAG_SHIFT)                 /* 0x00000080 */
+#define CRYPTO_HASH_VERSION_SM3_FLAG_SHIFT                 (8U)
+#define CRYPTO_HASH_VERSION_SM3_FLAG_MASK                  (0x1U << CRYPTO_HASH_VERSION_SM3_FLAG_SHIFT)                 /* 0x00000100 */
+#define CRYPTO_HASH_VERSION_LOCKSTEP_FLAG_SHIFT            (20U)
+#define CRYPTO_HASH_VERSION_LOCKSTEP_FLAG_MASK             (0x1U << CRYPTO_HASH_VERSION_LOCKSTEP_FLAG_SHIFT)            /* 0x00100000 */
+/* HMAC_VERSION */
+#define CRYPTO_HMAC_VERSION_OFFSET                         (0x690U)
+#define CRYPTO_HMAC_VERSION_SHA1_FLAG_SHIFT                (0U)
+#define CRYPTO_HMAC_VERSION_SHA1_FLAG_MASK                 (0x1U << CRYPTO_HMAC_VERSION_SHA1_FLAG_SHIFT)                /* 0x00000001 */
+#define CRYPTO_HMAC_VERSION_SHA256_FLAG_SHIFT              (1U)
+#define CRYPTO_HMAC_VERSION_SHA256_FLAG_MASK               (0x1U << CRYPTO_HMAC_VERSION_SHA256_FLAG_SHIFT)              /* 0x00000002 */
+#define CRYPTO_HMAC_VERSION_SHA512_FLAG_SHIFT              (2U)
+#define CRYPTO_HMAC_VERSION_SHA512_FLAG_MASK               (0x1U << CRYPTO_HMAC_VERSION_SHA512_FLAG_SHIFT)              /* 0x00000004 */
+#define CRYPTO_HMAC_VERSION_MD5_FLAG_SHIFT                 (3U)
+#define CRYPTO_HMAC_VERSION_MD5_FLAG_MASK                  (0x1U << CRYPTO_HMAC_VERSION_MD5_FLAG_SHIFT)                 /* 0x00000008 */
+#define CRYPTO_HMAC_VERSION_SM3_FLAG_SHIFT                 (4U)
+#define CRYPTO_HMAC_VERSION_SM3_FLAG_MASK                  (0x1U << CRYPTO_HMAC_VERSION_SM3_FLAG_SHIFT)                 /* 0x00000010 */
+#define CRYPTO_HMAC_VERSION_LOCKSTEP_FLAG_SHIFT            (20U)
+#define CRYPTO_HMAC_VERSION_LOCKSTEP_FLAG_MASK             (0x1U << CRYPTO_HMAC_VERSION_LOCKSTEP_FLAG_SHIFT)            /* 0x00100000 */
+#define CRYPTO_HMAC_VERSION_MULTICHANNEL_SHIFT             (22U)
+#define CRYPTO_HMAC_VERSION_MULTICHANNEL_MASK              (0x1U << CRYPTO_HMAC_VERSION_MULTICHANNEL_SHIFT)             /* 0x00400000 */
+/* PKA_VERSION */
+#define CRYPTO_PKA_VERSION_OFFSET                          (0x698U)
+#define CRYPTO_PKA_VERSION_PKA_VERSION_CODE_SHIFT          (0U)
+#define CRYPTO_PKA_VERSION_PKA_VERSION_CODE_MASK           (0xFFFFFFFFU << CRYPTO_PKA_VERSION_PKA_VERSION_CODE_SHIFT)   /* 0xFFFFFFFF */
+/* EXTRA_FEATURE */
+#define CRYPTO_EXTRA_FEATURE_OFFSET                        (0x69CU)
+#define CRYPTO_EXTRA_FEATURE                               (0x0U)
+#define CRYPTO_EXTRA_FEATURE_AXI_EXPAND_BIT_SHIFT          (0U)
+#define CRYPTO_EXTRA_FEATURE_AXI_EXPAND_BIT_MASK           (0xFU << CRYPTO_EXTRA_FEATURE_AXI_EXPAND_BIT_SHIFT)          /* 0x0000000F */
+/* CRYPTO_VERSION */
+#define CRYPTO_CRYPTO_VERSION_OFFSET                       (0x6F0U)
+#define CRYPTO_CRYPTO_VERSION_CRYPTO_VERSION_CODE_SHIFT    (0U)
+#define CRYPTO_CRYPTO_VERSION_CRYPTO_VERSION_CODE_MASK     (0xFFFFFFFFU << CRYPTO_CRYPTO_VERSION_CRYPTO_VERSION_CODE_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_0 */
+#define CRYPTO_HASH_MID_DATA_0_OFFSET                      (0x700U)
+#define CRYPTO_HASH_MID_DATA_0_HASH_MID_DATA_0_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_0_HASH_MID_DATA_0_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_0_HASH_MID_DATA_0_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_1 */
+#define CRYPTO_HASH_MID_DATA_1_OFFSET                      (0x704U)
+#define CRYPTO_HASH_MID_DATA_1_HASH_MID_DATA_1_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_1_HASH_MID_DATA_1_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_1_HASH_MID_DATA_1_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_2 */
+#define CRYPTO_HASH_MID_DATA_2_OFFSET                      (0x708U)
+#define CRYPTO_HASH_MID_DATA_2_HASH_MID_DATA_2_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_2_HASH_MID_DATA_2_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_2_HASH_MID_DATA_2_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_3 */
+#define CRYPTO_HASH_MID_DATA_3_OFFSET                      (0x70CU)
+#define CRYPTO_HASH_MID_DATA_3_HASH_MID_DATA_3_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_3_HASH_MID_DATA_3_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_3_HASH_MID_DATA_3_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_4 */
+#define CRYPTO_HASH_MID_DATA_4_OFFSET                      (0x710U)
+#define CRYPTO_HASH_MID_DATA_4_HASH_MID_DATA_4_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_4_HASH_MID_DATA_4_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_4_HASH_MID_DATA_4_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_5 */
+#define CRYPTO_HASH_MID_DATA_5_OFFSET                      (0x714U)
+#define CRYPTO_HASH_MID_DATA_5_HASH_MID_DATA_5_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_5_HASH_MID_DATA_5_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_5_HASH_MID_DATA_5_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_6 */
+#define CRYPTO_HASH_MID_DATA_6_OFFSET                      (0x718U)
+#define CRYPTO_HASH_MID_DATA_6_HASH_MID_DATA_6_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_6_HASH_MID_DATA_6_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_6_HASH_MID_DATA_6_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_7 */
+#define CRYPTO_HASH_MID_DATA_7_OFFSET                      (0x71CU)
+#define CRYPTO_HASH_MID_DATA_7_HASH_MID_DATA_7_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_7_HASH_MID_DATA_7_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_7_HASH_MID_DATA_7_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_8 */
+#define CRYPTO_HASH_MID_DATA_8_OFFSET                      (0x720U)
+#define CRYPTO_HASH_MID_DATA_8_HASH_MID_DATA_8_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_8_HASH_MID_DATA_8_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_8_HASH_MID_DATA_8_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_9 */
+#define CRYPTO_HASH_MID_DATA_9_OFFSET                      (0x724U)
+#define CRYPTO_HASH_MID_DATA_9_HASH_MID_DATA_9_SHIFT       (0U)
+#define CRYPTO_HASH_MID_DATA_9_HASH_MID_DATA_9_MASK        (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_9_HASH_MID_DATA_9_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_10 */
+#define CRYPTO_HASH_MID_DATA_10_OFFSET                     (0x728U)
+#define CRYPTO_HASH_MID_DATA_10_HASH_MID_DATA_10_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_10_HASH_MID_DATA_10_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_10_HASH_MID_DATA_10_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_11 */
+#define CRYPTO_HASH_MID_DATA_11_OFFSET                     (0x72CU)
+#define CRYPTO_HASH_MID_DATA_11_HASH_MID_DATA_11_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_11_HASH_MID_DATA_11_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_11_HASH_MID_DATA_11_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_12 */
+#define CRYPTO_HASH_MID_DATA_12_OFFSET                     (0x730U)
+#define CRYPTO_HASH_MID_DATA_12_HASH_MID_DATA_12_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_12_HASH_MID_DATA_12_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_12_HASH_MID_DATA_12_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_13 */
+#define CRYPTO_HASH_MID_DATA_13_OFFSET                     (0x734U)
+#define CRYPTO_HASH_MID_DATA_13_HASH_MID_DATA_13_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_13_HASH_MID_DATA_13_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_13_HASH_MID_DATA_13_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_14 */
+#define CRYPTO_HASH_MID_DATA_14_OFFSET                     (0x738U)
+#define CRYPTO_HASH_MID_DATA_14_HASH_MID_DATA_14_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_14_HASH_MID_DATA_14_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_14_HASH_MID_DATA_14_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_15 */
+#define CRYPTO_HASH_MID_DATA_15_OFFSET                     (0x73CU)
+#define CRYPTO_HASH_MID_DATA_15_HASH_MID_DATA_15_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_15_HASH_MID_DATA_15_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_15_HASH_MID_DATA_15_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_16 */
+#define CRYPTO_HASH_MID_DATA_16_OFFSET                     (0x740U)
+#define CRYPTO_HASH_MID_DATA_16_HASH_MID_DATA_16_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_16_HASH_MID_DATA_16_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_16_HASH_MID_DATA_16_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_17 */
+#define CRYPTO_HASH_MID_DATA_17_OFFSET                     (0x744U)
+#define CRYPTO_HASH_MID_DATA_17_HASH_MID_DATA_17_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_17_HASH_MID_DATA_17_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_17_HASH_MID_DATA_17_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_18 */
+#define CRYPTO_HASH_MID_DATA_18_OFFSET                     (0x748U)
+#define CRYPTO_HASH_MID_DATA_18_HASH_MID_DATA_18_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_18_HASH_MID_DATA_18_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_18_HASH_MID_DATA_18_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_19 */
+#define CRYPTO_HASH_MID_DATA_19_OFFSET                     (0x74CU)
+#define CRYPTO_HASH_MID_DATA_19_HASH_MID_DATA_19_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_19_HASH_MID_DATA_19_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_19_HASH_MID_DATA_19_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_20 */
+#define CRYPTO_HASH_MID_DATA_20_OFFSET                     (0x750U)
+#define CRYPTO_HASH_MID_DATA_20_HASH_MID_DATA_20_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_20_HASH_MID_DATA_20_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_20_HASH_MID_DATA_20_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_21 */
+#define CRYPTO_HASH_MID_DATA_21_OFFSET                     (0x754U)
+#define CRYPTO_HASH_MID_DATA_21_HASH_MID_DATA_21_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_21_HASH_MID_DATA_21_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_21_HASH_MID_DATA_21_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_22 */
+#define CRYPTO_HASH_MID_DATA_22_OFFSET                     (0x758U)
+#define CRYPTO_HASH_MID_DATA_22_HASH_MID_DATA_22_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_22_HASH_MID_DATA_22_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_22_HASH_MID_DATA_22_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_23 */
+#define CRYPTO_HASH_MID_DATA_23_OFFSET                     (0x75CU)
+#define CRYPTO_HASH_MID_DATA_23_HASH_MID_DATA_23_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_23_HASH_MID_DATA_23_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_23_HASH_MID_DATA_23_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_24 */
+#define CRYPTO_HASH_MID_DATA_24_OFFSET                     (0x760U)
+#define CRYPTO_HASH_MID_DATA_24_HASH_MID_DATA_24_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_24_HASH_MID_DATA_24_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_24_HASH_MID_DATA_24_SHIFT) /* 0xFFFFFFFF */
+/* HASH_MID_DATA_25 */
+#define CRYPTO_HASH_MID_DATA_25_OFFSET                     (0x764U)
+#define CRYPTO_HASH_MID_DATA_25_HASH_MID_DATA_25_SHIFT     (0U)
+#define CRYPTO_HASH_MID_DATA_25_HASH_MID_DATA_25_MASK      (0xFFFFFFFFU << CRYPTO_HASH_MID_DATA_25_HASH_MID_DATA_25_SHIFT) /* 0xFFFFFFFF */
+/* PKA_MEM_MAP0 */
+#define CRYPTO_PKA_MEM_MAP0_OFFSET                         (0x800U)
+#define CRYPTO_PKA_MEM_MAP0_MEMORY_MAP0_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP0_MEMORY_MAP0_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP0_MEMORY_MAP0_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP1 */
+#define CRYPTO_PKA_MEM_MAP1_OFFSET                         (0x804U)
+#define CRYPTO_PKA_MEM_MAP1_MEMORY_MAP1_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP1_MEMORY_MAP1_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP1_MEMORY_MAP1_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP2 */
+#define CRYPTO_PKA_MEM_MAP2_OFFSET                         (0x808U)
+#define CRYPTO_PKA_MEM_MAP2_MEMORY_MAP2_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP2_MEMORY_MAP2_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP2_MEMORY_MAP2_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP3 */
+#define CRYPTO_PKA_MEM_MAP3_OFFSET                         (0x80CU)
+#define CRYPTO_PKA_MEM_MAP3_MEMORY_MAP3_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP3_MEMORY_MAP3_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP3_MEMORY_MAP3_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP4 */
+#define CRYPTO_PKA_MEM_MAP4_OFFSET                         (0x810U)
+#define CRYPTO_PKA_MEM_MAP4_MEMORY_MAP4_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP4_MEMORY_MAP4_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP4_MEMORY_MAP4_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP5 */
+#define CRYPTO_PKA_MEM_MAP5_OFFSET                         (0x814U)
+#define CRYPTO_PKA_MEM_MAP5_MEMORY_MAP5_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP5_MEMORY_MAP5_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP5_MEMORY_MAP5_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP6 */
+#define CRYPTO_PKA_MEM_MAP6_OFFSET                         (0x818U)
+#define CRYPTO_PKA_MEM_MAP6_MEMORY_MAP6_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP6_MEMORY_MAP6_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP6_MEMORY_MAP6_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP7 */
+#define CRYPTO_PKA_MEM_MAP7_OFFSET                         (0x81CU)
+#define CRYPTO_PKA_MEM_MAP7_MEMORY_MAP7_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP7_MEMORY_MAP7_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP7_MEMORY_MAP7_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP8 */
+#define CRYPTO_PKA_MEM_MAP8_OFFSET                         (0x820U)
+#define CRYPTO_PKA_MEM_MAP8_MEMORY_MAP8_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP8_MEMORY_MAP8_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP8_MEMORY_MAP8_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP9 */
+#define CRYPTO_PKA_MEM_MAP9_OFFSET                         (0x824U)
+#define CRYPTO_PKA_MEM_MAP9_MEMORY_MAP9_SHIFT              (2U)
+#define CRYPTO_PKA_MEM_MAP9_MEMORY_MAP9_MASK               (0x3FFU << CRYPTO_PKA_MEM_MAP9_MEMORY_MAP9_SHIFT)            /* 0x00000FFC */
+/* PKA_MEM_MAP10 */
+#define CRYPTO_PKA_MEM_MAP10_OFFSET                        (0x828U)
+#define CRYPTO_PKA_MEM_MAP10_MEMORY_MAP10_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP10_MEMORY_MAP10_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP10_MEMORY_MAP10_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP11 */
+#define CRYPTO_PKA_MEM_MAP11_OFFSET                        (0x82CU)
+#define CRYPTO_PKA_MEM_MAP11_MEMORY_MAP11_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP11_MEMORY_MAP11_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP11_MEMORY_MAP11_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP12 */
+#define CRYPTO_PKA_MEM_MAP12_OFFSET                        (0x830U)
+#define CRYPTO_PKA_MEM_MAP12_MEMORY_MAP12_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP12_MEMORY_MAP12_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP12_MEMORY_MAP12_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP13 */
+#define CRYPTO_PKA_MEM_MAP13_OFFSET                        (0x834U)
+#define CRYPTO_PKA_MEM_MAP13_MEMORY_MAP13_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP13_MEMORY_MAP13_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP13_MEMORY_MAP13_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP14 */
+#define CRYPTO_PKA_MEM_MAP14_OFFSET                        (0x838U)
+#define CRYPTO_PKA_MEM_MAP14_MEMORY_MAP14_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP14_MEMORY_MAP14_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP14_MEMORY_MAP14_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP15 */
+#define CRYPTO_PKA_MEM_MAP15_OFFSET                        (0x83CU)
+#define CRYPTO_PKA_MEM_MAP15_MEMORY_MAP15_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP15_MEMORY_MAP15_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP15_MEMORY_MAP15_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP16 */
+#define CRYPTO_PKA_MEM_MAP16_OFFSET                        (0x840U)
+#define CRYPTO_PKA_MEM_MAP16_MEMORY_MAP16_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP16_MEMORY_MAP16_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP16_MEMORY_MAP16_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP17 */
+#define CRYPTO_PKA_MEM_MAP17_OFFSET                        (0x844U)
+#define CRYPTO_PKA_MEM_MAP17_MEMORY_MAP17_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP17_MEMORY_MAP17_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP17_MEMORY_MAP17_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP18 */
+#define CRYPTO_PKA_MEM_MAP18_OFFSET                        (0x848U)
+#define CRYPTO_PKA_MEM_MAP18_MEMORY_MAP18_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP18_MEMORY_MAP18_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP18_MEMORY_MAP18_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP19 */
+#define CRYPTO_PKA_MEM_MAP19_OFFSET                        (0x84CU)
+#define CRYPTO_PKA_MEM_MAP19_MEMORY_MAP19_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP19_MEMORY_MAP19_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP19_MEMORY_MAP19_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP20 */
+#define CRYPTO_PKA_MEM_MAP20_OFFSET                        (0x850U)
+#define CRYPTO_PKA_MEM_MAP20_MEMORY_MAP20_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP20_MEMORY_MAP20_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP20_MEMORY_MAP20_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP21 */
+#define CRYPTO_PKA_MEM_MAP21_OFFSET                        (0x854U)
+#define CRYPTO_PKA_MEM_MAP21_MEMORY_MAP21_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP21_MEMORY_MAP21_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP21_MEMORY_MAP21_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP22 */
+#define CRYPTO_PKA_MEM_MAP22_OFFSET                        (0x858U)
+#define CRYPTO_PKA_MEM_MAP22_MEMORY_MAP22_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP22_MEMORY_MAP22_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP22_MEMORY_MAP22_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP23 */
+#define CRYPTO_PKA_MEM_MAP23_OFFSET                        (0x85CU)
+#define CRYPTO_PKA_MEM_MAP23_MEMORY_MAP23_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP23_MEMORY_MAP23_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP23_MEMORY_MAP23_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP24 */
+#define CRYPTO_PKA_MEM_MAP24_OFFSET                        (0x860U)
+#define CRYPTO_PKA_MEM_MAP24_MEMORY_MAP24_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP24_MEMORY_MAP24_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP24_MEMORY_MAP24_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP25 */
+#define CRYPTO_PKA_MEM_MAP25_OFFSET                        (0x864U)
+#define CRYPTO_PKA_MEM_MAP25_MEMORY_MAP25_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP25_MEMORY_MAP25_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP25_MEMORY_MAP25_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP26 */
+#define CRYPTO_PKA_MEM_MAP26_OFFSET                        (0x868U)
+#define CRYPTO_PKA_MEM_MAP26_MEMORY_MAP26_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP26_MEMORY_MAP26_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP26_MEMORY_MAP26_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP27 */
+#define CRYPTO_PKA_MEM_MAP27_OFFSET                        (0x86CU)
+#define CRYPTO_PKA_MEM_MAP27_MEMORY_MAP27_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP27_MEMORY_MAP27_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP27_MEMORY_MAP27_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP28 */
+#define CRYPTO_PKA_MEM_MAP28_OFFSET                        (0x870U)
+#define CRYPTO_PKA_MEM_MAP28_MEMORY_MAP28_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP28_MEMORY_MAP28_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP28_MEMORY_MAP28_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP29 */
+#define CRYPTO_PKA_MEM_MAP29_OFFSET                        (0x874U)
+#define CRYPTO_PKA_MEM_MAP29_MEMORY_MAP29_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP29_MEMORY_MAP29_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP29_MEMORY_MAP29_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP30 */
+#define CRYPTO_PKA_MEM_MAP30_OFFSET                        (0x878U)
+#define CRYPTO_PKA_MEM_MAP30_MEMORY_MAP30_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP30_MEMORY_MAP30_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP30_MEMORY_MAP30_SHIFT)          /* 0x00000FFC */
+/* PKA_MEM_MAP31 */
+#define CRYPTO_PKA_MEM_MAP31_OFFSET                        (0x87CU)
+#define CRYPTO_PKA_MEM_MAP31_MEMORY_MAP31_SHIFT            (2U)
+#define CRYPTO_PKA_MEM_MAP31_MEMORY_MAP31_MASK             (0x3FFU << CRYPTO_PKA_MEM_MAP31_MEMORY_MAP31_SHIFT)          /* 0x00000FFC */
+/* PKA_OPCODE */
+#define CRYPTO_PKA_OPCODE_OFFSET                           (0x880U)
+#define CRYPTO_PKA_OPCODE_TAG_SHIFT                        (0U)
+#define CRYPTO_PKA_OPCODE_TAG_MASK                         (0x3FU << CRYPTO_PKA_OPCODE_TAG_SHIFT)                       /* 0x0000003F */
+#define CRYPTO_PKA_OPCODE_REG_R_SHIFT                      (6U)
+#define CRYPTO_PKA_OPCODE_REG_R_MASK                       (0x3FU << CRYPTO_PKA_OPCODE_REG_R_SHIFT)                     /* 0x00000FC0 */
+#define CRYPTO_PKA_OPCODE_REG_B_SHIFT                      (12U)
+#define CRYPTO_PKA_OPCODE_REG_B_MASK                       (0x3FU << CRYPTO_PKA_OPCODE_REG_B_SHIFT)                     /* 0x0003F000 */
+#define CRYPTO_PKA_OPCODE_REG_A_SHIFT                      (18U)
+#define CRYPTO_PKA_OPCODE_REG_A_MASK                       (0x3FU << CRYPTO_PKA_OPCODE_REG_A_SHIFT)                     /* 0x00FC0000 */
+#define CRYPTO_PKA_OPCODE_LEN_SHIFT                        (24U)
+#define CRYPTO_PKA_OPCODE_LEN_MASK                         (0x7U << CRYPTO_PKA_OPCODE_LEN_SHIFT)                        /* 0x07000000 */
+#define CRYPTO_PKA_OPCODE_OPCODE_SHIFT                     (27U)
+#define CRYPTO_PKA_OPCODE_OPCODE_MASK                      (0x1FU << CRYPTO_PKA_OPCODE_OPCODE_SHIFT)                    /* 0xF8000000 */
+/* N_NP_T0_T1_ADDR */
+#define CRYPTO_N_NP_T0_T1_ADDR_OFFSET                      (0x884U)
+#define CRYPTO_N_NP_T0_T1_ADDR_REG_N_SHIFT                 (0U)
+#define CRYPTO_N_NP_T0_T1_ADDR_REG_N_MASK                  (0x1FU << CRYPTO_N_NP_T0_T1_ADDR_REG_N_SHIFT)                /* 0x0000001F */
+#define CRYPTO_N_NP_T0_T1_ADDR_REG_NP_SHIFT                (5U)
+#define CRYPTO_N_NP_T0_T1_ADDR_REG_NP_MASK                 (0x1FU << CRYPTO_N_NP_T0_T1_ADDR_REG_NP_SHIFT)               /* 0x000003E0 */
+#define CRYPTO_N_NP_T0_T1_ADDR_REG_T0_SHIFT                (10U)
+#define CRYPTO_N_NP_T0_T1_ADDR_REG_T0_MASK                 (0x1FU << CRYPTO_N_NP_T0_T1_ADDR_REG_T0_SHIFT)               /* 0x00007C00 */
+#define CRYPTO_N_NP_T0_T1_ADDR_REG_T1_SHIFT                (15U)
+#define CRYPTO_N_NP_T0_T1_ADDR_REG_T1_MASK                 (0x1FU << CRYPTO_N_NP_T0_T1_ADDR_REG_T1_SHIFT)               /* 0x000F8000 */
+/* PKA_STATUS */
+#define CRYPTO_PKA_STATUS_OFFSET                           (0x888U)
+#define CRYPTO_PKA_STATUS                                  (0x1U)
+#define CRYPTO_PKA_STATUS_PIPE_IS_BUSY_SHIFT               (0U)
+#define CRYPTO_PKA_STATUS_PIPE_IS_BUSY_MASK                (0x1U << CRYPTO_PKA_STATUS_PIPE_IS_BUSY_SHIFT)               /* 0x00000001 */
+#define CRYPTO_PKA_STATUS_PKA_BUSY_SHIFT                   (1U)
+#define CRYPTO_PKA_STATUS_PKA_BUSY_MASK                    (0x1U << CRYPTO_PKA_STATUS_PKA_BUSY_SHIFT)                   /* 0x00000002 */
+#define CRYPTO_PKA_STATUS_ALU_OUT_ZERO_SHIFT               (2U)
+#define CRYPTO_PKA_STATUS_ALU_OUT_ZERO_MASK                (0x1U << CRYPTO_PKA_STATUS_ALU_OUT_ZERO_SHIFT)               /* 0x00000004 */
+#define CRYPTO_PKA_STATUS_ALU_MOD_OVFLW_SHIFT              (3U)
+#define CRYPTO_PKA_STATUS_ALU_MOD_OVFLW_MASK               (0x1U << CRYPTO_PKA_STATUS_ALU_MOD_OVFLW_SHIFT)              /* 0x00000008 */
+#define CRYPTO_PKA_STATUS_DIV_BY_ZERO_SHIFT                (4U)
+#define CRYPTO_PKA_STATUS_DIV_BY_ZERO_MASK                 (0x1U << CRYPTO_PKA_STATUS_DIV_BY_ZERO_SHIFT)                /* 0x00000010 */
+#define CRYPTO_PKA_STATUS_ALU_CARRY_SHIFT                  (5U)
+#define CRYPTO_PKA_STATUS_ALU_CARRY_MASK                   (0x1U << CRYPTO_PKA_STATUS_ALU_CARRY_SHIFT)                  /* 0x00000020 */
+#define CRYPTO_PKA_STATUS_ALU_SIGN_OUT_SHIFT               (6U)
+#define CRYPTO_PKA_STATUS_ALU_SIGN_OUT_MASK                (0x1U << CRYPTO_PKA_STATUS_ALU_SIGN_OUT_SHIFT)               /* 0x00000040 */
+#define CRYPTO_PKA_STATUS_MODINV_OF_ZERO_SHIFT             (7U)
+#define CRYPTO_PKA_STATUS_MODINV_OF_ZERO_MASK              (0x1U << CRYPTO_PKA_STATUS_MODINV_OF_ZERO_SHIFT)             /* 0x00000080 */
+#define CRYPTO_PKA_STATUS_PKA_CPU_BUSY_SHIFT               (8U)
+#define CRYPTO_PKA_STATUS_PKA_CPU_BUSY_MASK                (0x1U << CRYPTO_PKA_STATUS_PKA_CPU_BUSY_SHIFT)               /* 0x00000100 */
+#define CRYPTO_PKA_STATUS_OPCODE_SHIFT                     (9U)
+#define CRYPTO_PKA_STATUS_OPCODE_MASK                      (0x1FU << CRYPTO_PKA_STATUS_OPCODE_SHIFT)                    /* 0x00003E00 */
+#define CRYPTO_PKA_STATUS_TAG_SHIFT                        (14U)
+#define CRYPTO_PKA_STATUS_TAG_MASK                         (0x3FU << CRYPTO_PKA_STATUS_TAG_SHIFT)                       /* 0x000FC000 */
+/* PKA_SW_RESET */
+#define CRYPTO_PKA_SW_RESET_OFFSET                         (0x88CU)
+#define CRYPTO_PKA_SW_RESET_PKA_SW_RESET_SHIFT             (0U)
+#define CRYPTO_PKA_SW_RESET_PKA_SW_RESET_MASK              (0x1U << CRYPTO_PKA_SW_RESET_PKA_SW_RESET_SHIFT)             /* 0x00000001 */
+/* PKA_L0 */
+#define CRYPTO_PKA_L0_OFFSET                               (0x890U)
+#define CRYPTO_PKA_L0_PKA_L0_SHIFT                         (0U)
+#define CRYPTO_PKA_L0_PKA_L0_MASK                          (0x1FFFU << CRYPTO_PKA_L0_PKA_L0_SHIFT)                      /* 0x00001FFF */
+/* PKA_L1 */
+#define CRYPTO_PKA_L1_OFFSET                               (0x894U)
+#define CRYPTO_PKA_L1_PKA_L1_SHIFT                         (0U)
+#define CRYPTO_PKA_L1_PKA_L1_MASK                          (0x1FFFU << CRYPTO_PKA_L1_PKA_L1_SHIFT)                      /* 0x00001FFF */
+/* PKA_L2 */
+#define CRYPTO_PKA_L2_OFFSET                               (0x898U)
+#define CRYPTO_PKA_L2_PKA_L2_SHIFT                         (0U)
+#define CRYPTO_PKA_L2_PKA_L2_MASK                          (0x1FFFU << CRYPTO_PKA_L2_PKA_L2_SHIFT)                      /* 0x00001FFF */
+/* PKA_L3 */
+#define CRYPTO_PKA_L3_OFFSET                               (0x89CU)
+#define CRYPTO_PKA_L3_PKA_L3_SHIFT                         (0U)
+#define CRYPTO_PKA_L3_PKA_L3_MASK                          (0x1FFFU << CRYPTO_PKA_L3_PKA_L3_SHIFT)                      /* 0x00001FFF */
+/* PKA_L4 */
+#define CRYPTO_PKA_L4_OFFSET                               (0x8A0U)
+#define CRYPTO_PKA_L4_PKA_L4_SHIFT                         (0U)
+#define CRYPTO_PKA_L4_PKA_L4_MASK                          (0x1FFFU << CRYPTO_PKA_L4_PKA_L4_SHIFT)                      /* 0x00001FFF */
+/* PKA_L5 */
+#define CRYPTO_PKA_L5_OFFSET                               (0x8A4U)
+#define CRYPTO_PKA_L5_PKA_L5_SHIFT                         (0U)
+#define CRYPTO_PKA_L5_PKA_L5_MASK                          (0x1FFFU << CRYPTO_PKA_L5_PKA_L5_SHIFT)                      /* 0x00001FFF */
+/* PKA_L6 */
+#define CRYPTO_PKA_L6_OFFSET                               (0x8A8U)
+#define CRYPTO_PKA_L6_PKA_L6_SHIFT                         (0U)
+#define CRYPTO_PKA_L6_PKA_L6_MASK                          (0x1FFFU << CRYPTO_PKA_L6_PKA_L6_SHIFT)                      /* 0x00001FFF */
+/* PKA_L7 */
+#define CRYPTO_PKA_L7_OFFSET                               (0x8ACU)
+#define CRYPTO_PKA_L7_PKA_L7_SHIFT                         (0U)
+#define CRYPTO_PKA_L7_PKA_L7_MASK                          (0x1FFFU << CRYPTO_PKA_L7_PKA_L7_SHIFT)                      /* 0x00001FFF */
+/* PKA_PIPE_RDY */
+#define CRYPTO_PKA_PIPE_RDY_OFFSET                         (0x8B0U)
+#define CRYPTO_PKA_PIPE_RDY                                (0x1U)
+#define CRYPTO_PKA_PIPE_RDY_PKA_PIPE_RDY_SHIFT             (0U)
+#define CRYPTO_PKA_PIPE_RDY_PKA_PIPE_RDY_MASK              (0x1U << CRYPTO_PKA_PIPE_RDY_PKA_PIPE_RDY_SHIFT)             /* 0x00000001 */
+/* PKA_DONE */
+#define CRYPTO_PKA_DONE_OFFSET                             (0x8B4U)
+#define CRYPTO_PKA_DONE                                    (0x1U)
+#define CRYPTO_PKA_DONE_PKA_DONE_SHIFT                     (0U)
+#define CRYPTO_PKA_DONE_PKA_DONE_MASK                      (0x1U << CRYPTO_PKA_DONE_PKA_DONE_SHIFT)                     /* 0x00000001 */
+/* PKA_MON_SELECT */
+#define CRYPTO_PKA_MON_SELECT_OFFSET                       (0x8B8U)
+#define CRYPTO_PKA_MON_SELECT_PKA_MON_SELECT_SHIFT         (0U)
+#define CRYPTO_PKA_MON_SELECT_PKA_MON_SELECT_MASK          (0xFU << CRYPTO_PKA_MON_SELECT_PKA_MON_SELECT_SHIFT)         /* 0x0000000F */
+/* PKA_DEBUG_REG_EN */
+#define CRYPTO_PKA_DEBUG_REG_EN_OFFSET                     (0x8BCU)
+#define CRYPTO_PKA_DEBUG_REG_EN_PKA_DEBUG_REG_EN_SHIFT     (0U)
+#define CRYPTO_PKA_DEBUG_REG_EN_PKA_DEBUG_REG_EN_MASK      (0x1U << CRYPTO_PKA_DEBUG_REG_EN_PKA_DEBUG_REG_EN_SHIFT)     /* 0x00000001 */
+/* DEBUG_CNT_ADDR */
+#define CRYPTO_DEBUG_CNT_ADDR_OFFSET                       (0x8C0U)
+#define CRYPTO_DEBUG_CNT_ADDR_DEBUG_CNT_ADDR_SHIFT         (0U)
+#define CRYPTO_DEBUG_CNT_ADDR_DEBUG_CNT_ADDR_MASK          (0xFFFFFU << CRYPTO_DEBUG_CNT_ADDR_DEBUG_CNT_ADDR_SHIFT)     /* 0x000FFFFF */
+/* DEBUG_EXT_ADDR */
+#define CRYPTO_DEBUG_EXT_ADDR_OFFSET                       (0x8C4U)
+#define CRYPTO_DEBUG_EXT_ADDR_DEBUG_EXT_ADDR_SHIFT         (0U)
+#define CRYPTO_DEBUG_EXT_ADDR_DEBUG_EXT_ADDR_MASK          (0x1U << CRYPTO_DEBUG_EXT_ADDR_DEBUG_EXT_ADDR_SHIFT)         /* 0x00000001 */
+/* PKA_DEBUG_HALT */
+#define CRYPTO_PKA_DEBUG_HALT_OFFSET                       (0x8C8U)
+#define CRYPTO_PKA_DEBUG_HALT                              (0x0U)
+#define CRYPTO_PKA_DEBUG_HALT_PKA_DEBUG_HALT_SHIFT         (0U)
+#define CRYPTO_PKA_DEBUG_HALT_PKA_DEBUG_HALT_MASK          (0x1U << CRYPTO_PKA_DEBUG_HALT_PKA_DEBUG_HALT_SHIFT)         /* 0x00000001 */
+/* PKA_MON_READ */
+#define CRYPTO_PKA_MON_READ_OFFSET                         (0x8D0U)
+#define CRYPTO_PKA_MON_READ                                (0xFEEFU)
+#define CRYPTO_PKA_MON_READ_PKA_MON_READ_SHIFT             (0U)
+#define CRYPTO_PKA_MON_READ_PKA_MON_READ_MASK              (0xFFFFFFFFU << CRYPTO_PKA_MON_READ_PKA_MON_READ_SHIFT)      /* 0xFFFFFFFF */
+/* PKA_INT_ENA */
+#define CRYPTO_PKA_INT_ENA_OFFSET                          (0x8D4U)
+#define CRYPTO_PKA_INT_ENA_PKA_INT_ENA_SHIFT               (0U)
+#define CRYPTO_PKA_INT_ENA_PKA_INT_ENA_MASK                (0x1U << CRYPTO_PKA_INT_ENA_PKA_INT_ENA_SHIFT)               /* 0x00000001 */
+/* PKA_INT_ST */
+#define CRYPTO_PKA_INT_ST_OFFSET                           (0x8D8U)
+#define CRYPTO_PKA_INT_ST_PKA_INT_ST_SHIFT                 (0U)
+#define CRYPTO_PKA_INT_ST_PKA_INT_ST_MASK                  (0x1U << CRYPTO_PKA_INT_ST_PKA_INT_ST_SHIFT)                 /* 0x00000001 */
+/* SRAM_ADDR */
+#define CRYPTO_SRAM_ADDR_OFFSET                            (0x1000U)
+#define CRYPTO_SRAM_ADDR_SRAM_ADDR_SHIFT                   (0U)
+#define CRYPTO_SRAM_ADDR_SRAM_ADDR_MASK                    (0xFFFFFFFFU << CRYPTO_SRAM_ADDR_SRAM_ADDR_SHIFT)            /* 0xFFFFFFFF */
 /******************************************CAN*******************************************/
 /* MODE */
 #define CAN_MODE_OFFSET                                    (0x0U)
