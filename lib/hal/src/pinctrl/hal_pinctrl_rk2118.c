@@ -24,6 +24,7 @@
  The pinctrl driver provides APIs:
    - HAL_PINCTRL_SetIOMUX() to set pin iomux
    - HAL_PINCTRL_SetParam() to set pin iomux/pull/drive strength/slew rate/schmitt trigger
+   - HAL_PINCTRL_SetRMIO() to set Rockchip Matrix IO
 
  Example:
 
@@ -36,6 +37,14 @@
                           PIN_CONFIG_MUX_FUNC1 |
                           PIN_CONFIG_PUL_UP |
                           PIN_CONFIG_DRV_LEVEL2);
+
+     Note! Please refer to RK2118 TRM Rockchip Matrix IO Chapter and eRMIO_Name in soc.h
+     Use HAL_PINCTRL_SetRMIO for configuration instead of using HAL_PINCTRL_SetIOMUX.
+
+     HAL_PINCTRL_SetRMIO(GPIO_BANK0,
+                         GPIO_PIN_A0,
+                         RMIO_I2C0_SCL);
+
  @} */
 
 /** @defgroup PINCTRL_Private_Definition Private Definition
@@ -242,6 +251,52 @@
 #define RK_SET_SMT_AB_0(B, G, BP, V)      SET_SMT_AB_0(B, G, BP % SMT_8_PIN_PER_REG, V, SMT_1_BIT_PER_PIN)
 #define RK_SET_SMT_CD_0(B, G, BP, V)      SET_SMT_CD_0(B, G, BP % SMT_8_PIN_PER_REG, V, SMT_1_BIT_PER_PIN)
 
+#define RMIO_5_BIT_PER_PIN      (5)
+#define RMIO_6_BIT_PER_PIN      (6)
+#define RMIO_SET_FUNC(__W, __V) ((_TO_MASK(__W) << 16) | ((__V) & _TO_MASK(__W)))
+#define RMIO_SET_FUNC_5_BIT(_V) RMIO_SET_FUNC(RMIO_5_BIT_PER_PIN, _V)
+#define RMIO_SET_FUNC_6_BIT(_V) RMIO_SET_FUNC(RMIO_6_BIT_PER_PIN, _V)
+#define SET_RM0_IO(_G, _P)      (RM0_IO->rm0_gpio0##_G##_P##_sel)
+#define RK_SET_RM0_IO(G, P, V)  (SET_RM0_IO(G, P) = RMIO_SET_FUNC_5_BIT(V))
+#define SET_RM1_IO(_G, _P)      (RM1_IO->rm1_gpio3##_G##_P##_sel)
+#define RK_SET_RM1_IO(G, P, V)  (SET_RM1_IO(G, P) = RMIO_SET_FUNC_6_BIT(V))
+#define SET_RM2_IO(_G, _P)      (RM2_IO->rm2_gpio2##_G##_P##_sel)
+#define RK_SET_RM2_IO(G, P, V)  (SET_RM2_IO(G, P) = RMIO_SET_FUNC_5_BIT(V))
+#define SET_RM3_IO(_G, _P)      (RM3_IO->rm3_gpio4##_G##_P##_sel)
+#define RK_SET_RM3_IO(G, P, V)  (SET_RM3_IO(G, P) = RMIO_SET_FUNC_6_BIT(V))
+#define SET_RM4_IO(_G, _P)      (RM4_IO->rm4_gpio4##_G##_P##_sel)
+#define RK_SET_RM4_IO(G, P, V)  (SET_RM4_IO(G, P) = RMIO_SET_FUNC_6_BIT(V))
+#define RMIO_SET_RM0(BANK_PIN, GROUP, GROUP_PIN)   \
+{                                                  \
+        if (pin == BANK_PIN) {                     \
+            RK_SET_RM0_IO(GROUP, GROUP_PIN, func); \
+        }                                          \
+}
+#define RMIO_SET_RM1(BANK_PIN, GROUP, GROUP_PIN)   \
+{                                                  \
+        if (pin == BANK_PIN) {                     \
+            RK_SET_RM1_IO(GROUP, GROUP_PIN, func); \
+        }                                          \
+}
+#define RMIO_SET_RM2(BANK_PIN, GROUP, GROUP_PIN)   \
+{                                                  \
+        if (pin == BANK_PIN) {                     \
+            RK_SET_RM2_IO(GROUP, GROUP_PIN, func); \
+        }                                          \
+}
+#define RMIO_SET_RM3(BANK_PIN, GROUP, GROUP_PIN)   \
+{                                                  \
+        if (pin == BANK_PIN) {                     \
+            RK_SET_RM3_IO(GROUP, GROUP_PIN, func); \
+        }                                          \
+}
+#define RMIO_SET_RM4(BANK_PIN, GROUP, GROUP_PIN)   \
+{                                                  \
+        if (pin == BANK_PIN) {                     \
+            RK_SET_RM4_IO(GROUP, GROUP_PIN, func); \
+        }                                          \
+}
+
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
@@ -302,6 +357,126 @@ static HAL_Status PINCTRL_SetIOMUX(eGPIO_bankId bank, uint8_t pin, uint32_t val)
     default:
         HAL_DBG("unknown gpio%d\n", bank);
         break;
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Private function to set GRF select IOC.
+ * @param  bank: pin bank.
+ * @param  pin: bank pin number 0~31.
+ * @param  val: value to write.
+ * @return HAL_Status.
+ */
+static HAL_Status PINCTRL_GRFSelIOC(eGPIO_bankId bank, uint8_t pin, uint32_t val)
+{
+    if (bank == 4) {
+        if ((pin == 25) && (val == 1)) {
+            GRF->SOC_CON4 = RK_GEN_VAL(5, 2, 2);
+        }
+        if ((pin == 26) && (val == 2)) {
+            GRF->SOC_CON4 = RK_GEN_VAL(4, 2, 2);
+        }
+        if ((pin == 17) && (val == 1)) {
+            GRF->SOC_CON4 = RK_GEN_VAL(3, 2, 2);
+        }
+        if ((pin == 18) && (val == 1)) {
+            GRF->SOC_CON4 = RK_GEN_VAL(2, 2, 2);
+        }
+        if ((pin == 12) && (val == 1)) {
+            GRF->SOC_CON4 = RK_GEN_VAL(1, 2, 2);
+        }
+        if ((pin == 13) && (val == 1)) {
+            GRF->SOC_CON4 = RK_GEN_VAL(0, 2, 2);
+        }
+        if ((pin == 2) && (val == 2)) {
+            GRF->SOC_CON8 = RK_GEN_VAL(9, 1, 1);
+        }
+        if ((pin == 27) && (val == 1)) {
+            GRF->SOC_CON11 = RK_GEN_VAL(7, 2, 2);
+        }
+        if ((pin == 26) && (val == 1)) {
+            GRF->SOC_CON11 = RK_GEN_VAL(6, 2, 2);
+        }
+        if ((pin == 6) && (val == 1)) {
+            GRF->SOC_CON11 = RK_GEN_VAL(5, 2, 2);
+        }
+        if ((pin == 5) && (val == 1)) {
+            GRF->SOC_CON11 = RK_GEN_VAL(4, 2, 2);
+        }
+        if ((pin == 4) && (val == 1)) {
+            GRF->SOC_CON11 = RK_GEN_VAL(3, 2, 2);
+        }
+        if ((pin == 3) && (val == 1)) {
+            GRF->SOC_CON11 = RK_GEN_VAL(2, 2, 2);
+        }
+        if ((pin == 2) && (val == 1)) {
+            GRF->SOC_CON11 = RK_GEN_VAL(1, 2, 2);
+        }
+        if ((pin == 1) && (val == 1)) {
+            GRF->SOC_CON11 = RK_GEN_VAL(0, 2, 2);
+        }
+        if ((pin == 31) && (val == 1)) {
+            GRF->SOC_CON12 = RK_GEN_VAL(3, 2, 2);
+        }
+        if ((pin == 30) && (val == 1)) {
+            GRF->SOC_CON12 = RK_GEN_VAL(2, 2, 2);
+        }
+        if ((pin == 29) && (val == 1)) {
+            GRF->SOC_CON12 = RK_GEN_VAL(1, 2, 2);
+        }
+        if ((pin == 28) && (val == 1)) {
+            GRF->SOC_CON12 = RK_GEN_VAL(0, 2, 2);
+        }
+        if ((pin == 23) && (val == 1)) {
+            GRF->SOC_CON21 = RK_GEN_VAL(3, 1, 1);
+        }
+        if ((pin == 22) && (val == 1)) {
+            GRF->SOC_CON21 = RK_GEN_VAL(2, 1, 1);
+        }
+        if ((pin == 21) && (val == 1)) {
+            GRF->SOC_CON21 = RK_GEN_VAL(1, 1, 1);
+        }
+        if ((pin == 20) && (val == 1)) {
+            GRF->SOC_CON21 = RK_GEN_VAL(0, 1, 1);
+        }
+        if ((pin == 31) && (val == 3)) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(7, 2, 2);
+        }
+        if ((pin == 30) && (val == 3)) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(6, 2, 2);
+        }
+        if ((pin == 29) && (val == 3)) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(5, 2, 2);
+        }
+        if ((pin == 28) && (val == 3)) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(4, 2, 2);
+        }
+        if ((pin == 27) && (val == 3)) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(3, 2, 2);
+        }
+        if ((pin == 26) && (val == 3)) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(2, 2, 2);
+        }
+        if ((pin == 25) && (val == 3)) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(1, 2, 2);
+        }
+        if ((pin == 24) && (val == 3)) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(0, 2, 2);
+        }
+        if ((pin == 10) && (val == 1)) {
+            GRF_PMU->SOC_CON6 = RK_GEN_VAL(3, 1, 1);
+        }
+        if ((pin == 9) && (val == 1)) {
+            GRF_PMU->SOC_CON6 = RK_GEN_VAL(2, 1, 1);
+        }
+        if ((pin == 8) && (val == 1)) {
+            GRF_PMU->SOC_CON6 = RK_GEN_VAL(1, 1, 1);
+        }
+        if ((pin == 7) && (val == 1)) {
+            GRF_PMU->SOC_CON6 = RK_GEN_VAL(0, 1, 1);
+        }
     }
 
     return HAL_OK;
@@ -564,6 +739,7 @@ static HAL_Status PINCTRL_SetPinParam(eGPIO_bankId bank, uint8_t pin, uint32_t p
 
     if (param & FLAG_MUX) {
         rc |= PINCTRL_SetIOMUX(bank, pin, (uint8_t)((param & MASK_MUX) >> SHIFT_MUX));
+        rc |= PINCTRL_GRFSelIOC(bank, pin, (uint8_t)((param & MASK_MUX) >> SHIFT_MUX));
     }
 
     if (param & FLAG_PUL) {
@@ -584,6 +760,308 @@ static HAL_Status PINCTRL_SetPinParam(eGPIO_bankId bank, uint8_t pin, uint32_t p
 
     return rc;
 }
+
+/**
+ * @brief  Private function to set Rockchip Matrix IO for one pin.
+ * @param  bank: pin bank.
+ * @param  pin: bank pin number 0~31.
+ * @param  func: RMIO function defined in @ref eRMIO_Name,
+ * @return HAL_Status.
+ */
+static HAL_Status PINCTRL_SetRMIO(eGPIO_bankId bank, uint8_t pin, uint32_t func)
+{
+    switch (bank) {
+    case 0:
+        RMIO_SET_RM0(0, a, 0)
+        RMIO_SET_RM0(1, a, 1)
+        RMIO_SET_RM0(2, a, 2)
+        RMIO_SET_RM0(3, a, 3)
+        RMIO_SET_RM0(4, a, 4)
+        RMIO_SET_RM0(5, a, 5)
+        RMIO_SET_RM0(6, a, 6)
+        RMIO_SET_RM0(7, a, 7)
+        RMIO_SET_RM0(8, b, 0)
+        RMIO_SET_RM0(9, b, 1)
+        RMIO_SET_RM0(10, b, 2)
+        if (pin > 10) {
+            HAL_DBG("unknown rmio bank0 pin-%d\n", pin);
+        }
+        break;
+    case 1:
+        HAL_DBG("unknown rmio bank1 pin-%d\n", pin);
+        break;
+    case 2:
+        RMIO_SET_RM2(0, a, 0)
+        RMIO_SET_RM2(1, a, 1)
+        RMIO_SET_RM2(2, a, 2)
+        RMIO_SET_RM2(3, a, 3)
+        RMIO_SET_RM2(4, a, 4)
+        RMIO_SET_RM2(5, a, 5)
+        RMIO_SET_RM2(6, a, 6)
+        RMIO_SET_RM2(7, a, 7)
+        RMIO_SET_RM2(8, b, 0)
+        if (pin > 8) {
+            HAL_DBG("unknown rmio bank2 pin-%d\n", pin);
+        }
+        break;
+    case 3:
+        RMIO_SET_RM1(0, a, 0)
+        RMIO_SET_RM1(1, a, 1)
+        RMIO_SET_RM1(2, a, 2)
+        RMIO_SET_RM1(3, a, 3)
+        RMIO_SET_RM1(4, a, 4)
+        RMIO_SET_RM1(5, a, 5)
+        RMIO_SET_RM1(6, a, 6)
+        RMIO_SET_RM1(7, a, 7)
+        RMIO_SET_RM1(8, b, 0)
+        RMIO_SET_RM1(9, b, 1)
+        RMIO_SET_RM1(10, b, 2)
+        RMIO_SET_RM1(11, b, 3)
+        RMIO_SET_RM1(12, b, 4)
+        RMIO_SET_RM1(13, b, 5)
+        RMIO_SET_RM1(14, b, 6)
+        RMIO_SET_RM1(15, b, 7)
+        RMIO_SET_RM1(16, c, 0)
+        RMIO_SET_RM1(17, c, 1)
+        RMIO_SET_RM1(18, c, 2)
+        RMIO_SET_RM1(19, c, 3)
+        RMIO_SET_RM1(20, c, 4)
+        RMIO_SET_RM1(21, c, 5)
+        RMIO_SET_RM1(22, c, 6)
+        RMIO_SET_RM1(23, c, 7)
+        RMIO_SET_RM1(24, d, 0)
+        RMIO_SET_RM1(25, d, 1)
+        RMIO_SET_RM1(26, d, 2)
+        RMIO_SET_RM1(27, d, 3)
+        if (pin > 27) {
+            HAL_DBG("unknown rmio bank3 pin-%d\n", pin);
+        }
+        break;
+    case 4:
+        RMIO_SET_RM3(0, a, 0)
+        RMIO_SET_RM3(1, a, 1)
+        RMIO_SET_RM3(2, a, 2)
+        RMIO_SET_RM3(3, a, 3)
+        RMIO_SET_RM3(4, a, 4)
+        RMIO_SET_RM3(5, a, 5)
+        RMIO_SET_RM3(6, a, 6)
+        RMIO_SET_RM3(7, a, 7)
+        RMIO_SET_RM3(8, b, 0)
+        RMIO_SET_RM3(9, b, 1)
+        RMIO_SET_RM3(10, b, 2)
+        RMIO_SET_RM3(11, b, 3)
+        RMIO_SET_RM3(12, b, 4)
+        RMIO_SET_RM3(13, b, 5)
+        RMIO_SET_RM3(14, b, 6)
+        RMIO_SET_RM3(15, b, 7)
+        RMIO_SET_RM4(16, c, 0)
+        RMIO_SET_RM4(17, c, 1)
+        RMIO_SET_RM4(18, c, 2)
+        RMIO_SET_RM4(19, c, 3)
+        RMIO_SET_RM4(20, c, 4)
+        RMIO_SET_RM4(21, c, 5)
+        RMIO_SET_RM4(22, c, 6)
+        RMIO_SET_RM4(23, c, 7)
+        RMIO_SET_RM4(24, d, 0)
+        RMIO_SET_RM4(25, d, 1)
+        RMIO_SET_RM4(26, d, 2)
+        RMIO_SET_RM4(27, d, 3)
+        RMIO_SET_RM4(28, d, 4)
+        RMIO_SET_RM4(29, d, 5)
+        RMIO_SET_RM4(30, d, 6)
+        RMIO_SET_RM4(31, d, 7)
+        if (pin > 31) {
+            HAL_DBG("unknown rmio bank4 pin-%d\n", pin);
+        }
+        break;
+    default:
+        HAL_DBG("unknown rmio bank-%d\n", bank);
+        break;
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Private function to set GRF select RMIO.
+ * @param  bank: pin bank.
+ * @param  pin: bank pin number 0~31.
+ * @param  func: RMIO function defined in @ref eRMIO_Name,
+ * @return HAL_Status.
+ */
+static HAL_Status PINCTRL_GRFSelRMIO(eGPIO_bankId bank, uint8_t pin, uint32_t func)
+{
+    switch (bank) {
+    case 0:
+        if (func == 0x14) {
+            GRF->SOC_CON8 = RK_GEN_VAL(9, 0, 1);
+        }
+        if (func == 0x4) {
+            GRF->SOC_CON11 = RK_GEN_VAL(3, 0, 2);
+        }
+        if (func == 0x3) {
+            GRF->SOC_CON11 = RK_GEN_VAL(2, 0, 2);
+        }
+        if (func == 0x2) {
+            GRF->SOC_CON11 = RK_GEN_VAL(1, 0, 2);
+        }
+        if (func == 0x1) {
+            GRF->SOC_CON11 = RK_GEN_VAL(0, 0, 2);
+        }
+        if (func == 0xd) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(3, 0, 2);
+        }
+        if (func == 0xc) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(2, 0, 2);
+        }
+        if (func == 0xb) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(1, 0, 2);
+        }
+        if (func == 0xa) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(0, 0, 2);
+        }
+        if (func == 0x8) {
+            GRF_PMU->SOC_CON6 = RK_GEN_VAL(3, 0, 1);
+        }
+        if (func == 0x7) {
+            GRF_PMU->SOC_CON6 = RK_GEN_VAL(2, 0, 1);
+        }
+        if (func == 0x6) {
+            GRF_PMU->SOC_CON6 = RK_GEN_VAL(1, 0, 1);
+        }
+        if (func == 0x5) {
+            GRF_PMU->SOC_CON6 = RK_GEN_VAL(0, 0, 1);
+        }
+        break;
+    case 1:
+        break;
+    case 2:
+        if (func == 0x6) {
+            GRF->SOC_CON4 = RK_GEN_VAL(3, 1, 2);
+        }
+        if (func == 0x7) {
+            GRF->SOC_CON4 = RK_GEN_VAL(2, 1, 2);
+        }
+        if (func == 0x2) {
+            GRF->SOC_CON4 = RK_GEN_VAL(1, 1, 2);
+        }
+        if (func == 0x3) {
+            GRF->SOC_CON4 = RK_GEN_VAL(0, 1, 2);
+        }
+        if (func == 0xc) {
+            GRF->SOC_CON11 = RK_GEN_VAL(7, 1, 2);
+        }
+        if (func == 0xb) {
+            GRF->SOC_CON11 = RK_GEN_VAL(6, 1, 2);
+        }
+        if (func == 0xa) {
+            GRF->SOC_CON11 = RK_GEN_VAL(5, 1, 2);
+        }
+        if (func == 0x9) {
+            GRF->SOC_CON11 = RK_GEN_VAL(4, 1, 2);
+        }
+        if (func == 0x10) {
+            GRF->SOC_CON12 = RK_GEN_VAL(3, 1, 2);
+        }
+        if (func == 0xf) {
+            GRF->SOC_CON12 = RK_GEN_VAL(2, 1, 2);
+        }
+        if (func == 0xe) {
+            GRF->SOC_CON12 = RK_GEN_VAL(1, 1, 2);
+        }
+        if (func == 0xd) {
+            GRF->SOC_CON12 = RK_GEN_VAL(0, 1, 2);
+        }
+        break;
+    case 3:
+        if (func == 0xa) {
+            GRF->SOC_CON4 = RK_GEN_VAL(5, 0, 2);
+        }
+        if (func == 0xb) {
+            GRF->SOC_CON4 = RK_GEN_VAL(4, 0, 2);
+        }
+        if (func == 0x6) {
+            GRF->SOC_CON4 = RK_GEN_VAL(3, 0, 2);
+        }
+        if (func == 0x7) {
+            GRF->SOC_CON4 = RK_GEN_VAL(2, 0, 2);
+        }
+        if (func == 0x2) {
+            GRF->SOC_CON4 = RK_GEN_VAL(1, 0, 2);
+        }
+        if (func == 0x3) {
+            GRF->SOC_CON4 = RK_GEN_VAL(0, 0, 2);
+        }
+        if (func == 0x10) {
+            GRF->SOC_CON11 = RK_GEN_VAL(7, 0, 2);
+        }
+        if (func == 0xf) {
+            GRF->SOC_CON11 = RK_GEN_VAL(6, 0, 2);
+        }
+        if (func == 0xe) {
+            GRF->SOC_CON11 = RK_GEN_VAL(5, 0, 2);
+        }
+        if (func == 0xd) {
+            GRF->SOC_CON11 = RK_GEN_VAL(4, 0, 2);
+        }
+        if (func == 0x14) {
+            GRF->SOC_CON12 = RK_GEN_VAL(3, 0, 2);
+        }
+        if (func == 0x13) {
+            GRF->SOC_CON12 = RK_GEN_VAL(2, 0, 2);
+        }
+        if (func == 0x12) {
+            GRF->SOC_CON12 = RK_GEN_VAL(1, 0, 2);
+        }
+        if (func == 0x11) {
+            GRF->SOC_CON12 = RK_GEN_VAL(0, 0, 2);
+        }
+        if (func == 0x1a) {
+            GRF->SOC_CON21 = RK_GEN_VAL(3, 0, 1);
+        }
+        if (func == 0x19) {
+            GRF->SOC_CON21 = RK_GEN_VAL(2, 0, 1);
+        }
+        if (func == 0x18) {
+            GRF->SOC_CON21 = RK_GEN_VAL(1, 0, 1);
+        }
+        if (func == 0x17) {
+            GRF->SOC_CON21 = RK_GEN_VAL(0, 0, 1);
+        }
+        if (func == 0x23) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(7, 1, 2);
+        }
+        if (func == 0x22) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(6, 1, 2);
+        }
+        if (func == 0x21) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(5, 1, 2);
+        }
+        if (func == 0x20) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(4, 1, 2);
+        }
+        if (func == 0x1f) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(3, 1, 2);
+        }
+        if (func == 0x1e) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(2, 1, 2);
+        }
+        if (func == 0x1d) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(1, 1, 2);
+        }
+        if (func == 0x1c) {
+            GRF_PMU->SOC_CON5 = RK_GEN_VAL(0, 1, 2);
+        }
+        break;
+    case 4:
+        break;
+    default:
+        break;
+    }
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /********************* Public Function Definition ****************************/
@@ -663,6 +1141,46 @@ HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_conf
 {
     return HAL_PINCTRL_SetParam(bank, mPins, param);
 }
+
+/**
+ * @brief  Public function to set Rockchip Matrix IO for one pin.
+ * @param  bank: pin bank.
+ * @param  rmioPin: pin defined in @ref ePINCTRL_GPIO_PINS.
+ * @param  rmioFunc: RMIO function defined in @ref eRMIO_Name,
+ * @return HAL_Status.
+ */
+HAL_Status HAL_PINCTRL_SetRMIO(eGPIO_bankId bank, uint32_t rmioPin, eRMIO_Name rmioFunc)
+{
+    uint8_t pin;
+    uint32_t remainPins = rmioPin;
+    HAL_Status rc;
+
+    HAL_ASSERT(bank < GPIO_BANK_NUM);
+
+    pin = __builtin_ffs(remainPins) - 1;
+    /* RK2118 RMIO IOC function value is PIN_CONFIG_MUX_FUNC4 */
+    rc = PINCTRL_SetIOMUX(bank, pin, 4);
+    if (rc) {
+        return rc;
+    }
+    rc = PINCTRL_SetRMIO(bank, pin, rmioFunc);
+    if (rc) {
+        return rc;
+    }
+    rc = PINCTRL_GRFSelRMIO(bank, pin, rmioFunc);
+    if (rc) {
+        return rc;
+    }
+    remainPins &= ~(1 << pin);
+    if (remainPins) {
+        HAL_DBG("pinctrl: set one RMIO pin at a time!\n");
+
+        return HAL_INVAL;
+    }
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /** @} */

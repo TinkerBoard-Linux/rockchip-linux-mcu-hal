@@ -678,6 +678,9 @@ HAL_Status HAL_PINCTRL_DeInit(void);
 
 HAL_Status HAL_PINCTRL_SetParam(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_configParam param);
 HAL_Status HAL_PINCTRL_SetIOMUX(eGPIO_bankId bank, uint32_t mPins, ePINCTRL_configParam param);
+#ifdef RM0_IO
+HAL_Status HAL_PINCTRL_SetRMIO(eGPIO_bankId bank, uint32_t rmioPin, eRMIO_Name rmioFunc);
+#endif
 
 HAL_Status HAL_PINCTRL_IOFuncSelForCIF(eIOFUNC_SEL mode);
 HAL_Status HAL_PINCTRL_IOFuncSelForEMMC(eIOFUNC_SEL mode);
