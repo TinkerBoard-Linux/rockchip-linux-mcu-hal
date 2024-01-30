@@ -1,11 +1,11 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
- * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2020-2024 Rockchip Electronics Co., Ltd.
  */
 
 #include "hal_base.h"
 
-#if defined(RKMCU_RK2206) && defined(HAL_CRYPTO_MODULE_ENABLED)
+#if (defined(RKMCU_RK2206) || defined(RKMCU_RK2118)) && defined(HAL_CRYPTO_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver
  *  @{
