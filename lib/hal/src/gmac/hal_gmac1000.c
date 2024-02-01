@@ -1251,8 +1251,6 @@ HAL_Status HAL_GMAC_MDIOWrite(struct GMAC_HANDLE *pGMAC, int32_t mdioAddr,
 
     HAL_ASSERT(pGMAC != NULL);
 
-    HAL_DBG("%s(addr=%lx, reg=%ld, val=%x):\n", __func__,
-            mdioAddr, mdioReg, mdioVal);
     status = Mdio_WaitIdle(pGMAC);
     if (status) {
         HAL_DBG("MDIO not idle at entry");

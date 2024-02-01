@@ -1125,7 +1125,6 @@ int32_t HAL_GMAC_MDIORead(struct GMAC_HANDLE *pGMAC, int32_t mdioAddr,
 
     HAL_ASSERT(pGMAC != NULL);
 
-    HAL_DBG("Mdio Read addr=%ld, reg=%ld\n", mdioAddr, mdioReg);
     status = Mdio_WaitIdle(pGMAC);
     if (status) {
         HAL_DBG("MDIO not idle at entry");
@@ -1175,8 +1174,6 @@ HAL_Status HAL_GMAC_MDIOWrite(struct GMAC_HANDLE *pGMAC, int32_t mdioAddr,
 
     HAL_ASSERT(pGMAC != NULL);
 
-    HAL_DBG("%s(addr=%lx, reg=%ld, val=%x):\n", __func__,
-            mdioAddr, mdioReg, mdioVal);
     status = Mdio_WaitIdle(pGMAC);
     if (status) {
         HAL_DBG("MDIO not idle at entry");
@@ -2028,8 +2025,6 @@ uint8_t *HAL_GMAC_Recv(struct GMAC_HANDLE *pGMAC, int32_t *length)
     desc = pGMAC->rxDescs + pGMAC->rxDescIdx;
     des3 = desc->des3;
     if (des3 & GMAC_DESC3_OWN) {
-        HAL_DBG("%s: RX packet not available\n", __func__);
-
         return NULL;
     }
 
