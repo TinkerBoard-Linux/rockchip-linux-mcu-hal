@@ -147,6 +147,78 @@ struct CRYPTO_REG {
          uint32_t RESERVED08DC[457];                  /* Address Offset: 0x08DC */
     __IO uint32_t SRAM_ADDR;                          /* Address Offset: 0x1000 */
 };
+/* TRNG Register Structure Define */
+struct TRNG_REG {
+    __IO uint32_t CFG;                                /* Address Offset: 0x0000 */
+         uint32_t RESERVED0004;                       /* Address Offset: 0x0004 */
+    __IO uint32_t NONCE_LEN;                          /* Address Offset: 0x0008 */
+    __IO uint32_t ADDITION_LEN;                       /* Address Offset: 0x000C */
+    __O  uint32_t CTRL;                               /* Address Offset: 0x0010 */
+    __IO uint32_t STATE;                              /* Address Offset: 0x0014 */
+    __IO uint32_t INT_EN;                             /* Address Offset: 0x0018 */
+    __IO uint32_t TEST_CNT;                           /* Address Offset: 0x001C */
+    __IO uint32_t RESEED_CNT;                         /* Address Offset: 0x0020 */
+    __IO uint32_t UPDATE_CNT;                         /* Address Offset: 0x0024 */
+    __IO uint32_t ALLAN_ACC_NUM;                      /* Address Offset: 0x0028 */
+    __IO uint32_t ALLAN_LIMIT_LOW;                    /* Address Offset: 0x002C */
+    __IO uint32_t ALLAN_LIMIT_HIGH;                   /* Address Offset: 0x0030 */
+    __IO uint32_t ALLAN_AVAR_RESULT;                  /* Address Offset: 0x0034 */
+    __IO uint32_t AUTO_CLK_GATE;                      /* Address Offset: 0x0038 */
+         uint32_t RESERVED003C[2];                    /* Address Offset: 0x003C */
+    __I  uint32_t VERSION;                            /* Address Offset: 0x0044 */
+         uint32_t RESERVED0048[2];                    /* Address Offset: 0x0048 */
+    __I  uint32_t TRNG_DATA[8];                       /* Address Offset: 0x0050 */
+    __I  uint32_t DRNG_DATA[8];                       /* Address Offset: 0x0070 */
+    __IO uint32_t WORK_CLK_EN;                        /* Address Offset: 0x0090 */
+    __IO uint32_t WORK_CLK_FLAG;                      /* Address Offset: 0x0094 */
+    __IO uint32_t WORK_CLK_NUM_LIMIT;                 /* Address Offset: 0x0098 */
+    __IO uint32_t SOFT_RING_EN0;                      /* Address Offset: 0x009C */
+         uint32_t RESERVED00A0;                       /* Address Offset: 0x00A0 */
+    __IO uint32_t SOFT_RING_EN2;                      /* Address Offset: 0x00A4 */
+         uint32_t RESERVED00A8;                       /* Address Offset: 0x00A8 */
+    __IO uint32_t STR1_0_INIT;                        /* Address Offset: 0x00AC */
+         uint32_t RESERVED00B0[2];                    /* Address Offset: 0x00B0 */
+    __IO uint32_t ENTROPY_EN_CTL;                     /* Address Offset: 0x00B8 */
+    __IO uint32_t ENTROPY_MASK_CTL;                   /* Address Offset: 0x00BC */
+    __IO uint32_t ENTROPY_POST_CTL;                   /* Address Offset: 0x00C0 */
+    __IO uint32_t ENTROPY_CK_CTL;                     /* Address Offset: 0x00C4 */
+    __IO uint32_t ENTROPY_FB_LIMIT0;                  /* Address Offset: 0x00C8 */
+    __IO uint32_t ENTROPY_FB_LIMIT1;                  /* Address Offset: 0x00CC */
+    __IO uint32_t ENTROPY_FI_BIT_NUM;                 /* Address Offset: 0x00D0 */
+    __IO uint32_t ENTROPY_FI_LIMIT;                   /* Address Offset: 0x00D4 */
+    __IO uint32_t ENTROPY_BI_CTL;                     /* Address Offset: 0x00D8 */
+    __IO uint32_t ENTROPY_BI_LIMIT_LOW0;              /* Address Offset: 0x00DC */
+    __IO uint32_t ENTROPY_BI_LIMIT_LOW1;              /* Address Offset: 0x00E0 */
+    __IO uint32_t ENTROPY_BI_LIMITHIGH0;              /* Address Offset: 0x00E4 */
+    __IO uint32_t ENTROPY_BI_LIMIT_HIGH1;             /* Address Offset: 0x00E8 */
+    __IO uint32_t TRAND_CK_CTL;                       /* Address Offset: 0x00EC */
+    __IO uint32_t TRAND_FB_LIMIT0;                    /* Address Offset: 0x00F0 */
+    __IO uint32_t TRAND_FB_LIMIT1;                    /* Address Offset: 0x00F4 */
+    __IO uint32_t TRAND_FI_BIT_NUM;                   /* Address Offset: 0x00F8 */
+    __IO uint32_t TRAND_FI_LIMIT;                     /* Address Offset: 0x00FC */
+    __IO uint32_t TRAND_BI_CTL;                       /* Address Offset: 0x0100 */
+    __IO uint32_t TRAND_BI_LIMIT_LOW0;                /* Address Offset: 0x0104 */
+    __IO uint32_t TRAND_BI_LIMIT_LOW1;                /* Address Offset: 0x0108 */
+    __IO uint32_t TRAND_BI_LIMIT_HIGH0;               /* Address Offset: 0x010C */
+    __IO uint32_t TRAND_BI_LIMIT_HIGH1;               /* Address Offset: 0x0110 */
+    __IO uint32_t BI_PASS_AUTO;                       /* Address Offset: 0x0114 */
+    __IO uint32_t SOFT_BI_RESULT_VLD;                 /* Address Offset: 0x0118 */
+    __IO uint32_t SOFT_BI_RESULT_PASS;                /* Address Offset: 0x011C */
+    __IO uint32_t ENTROPY_CK_RESULT_VLD;              /* Address Offset: 0x0120 */
+    __IO uint32_t ENTROPY_FB_CK_RESULT;               /* Address Offset: 0x0124 */
+    __IO uint32_t ENTROPY_FI_CK_RESULT;               /* Address Offset: 0x0128 */
+    __IO uint32_t ENTROPY_BI_CK_RESULT0;              /* Address Offset: 0x012C */
+    __IO uint32_t ENTROPY_BI_CK_RESULT1;              /* Address Offset: 0x0130 */
+    __IO uint32_t TRAND_CK_RESULT_VLD;                /* Address Offset: 0x0134 */
+    __IO uint32_t TRAND_FB_CK_RESULT;                 /* Address Offset: 0x0138 */
+    __IO uint32_t TRAND_FI_CK_RESULT;                 /* Address Offset: 0x013C */
+    __IO uint32_t TRAND_BI_CK_RESULT0;                /* Address Offset: 0x0140 */
+    __IO uint32_t TRAND_BI_CK_RESULT1;                /* Address Offset: 0x0144 */
+         uint32_t RESERVED0148[46];                   /* Address Offset: 0x0148 */
+    __O  uint32_t NONCE[12];                          /* Address Offset: 0x0200 */
+         uint32_t RESERVED0230[52];                   /* Address Offset: 0x0230 */
+    __O  uint32_t ADDITION[12];                       /* Address Offset: 0x0300 */
+};
 /* CAN Register Structure Define */
 struct CAN_REG {
     __IO uint32_t MODE;                               /* Address Offset: 0x0000 */
@@ -2086,6 +2158,7 @@ struct IIR_ACC_REG_REG {
 #define FIR_ACC_TCB_BASE               0x00000000U /* FIR_ACC_TCB base address */
 #define IIR_ACC_TCB_BASE               0x00000000U /* IIR_ACC_TCB base address */
 #define CRYPTO_BASE                    0x50000000U /* CRYPTO base address */
+#define TRNG_BASE                      0x50010000U /* TRNG base address */
 #define CAN_BASE                       0x500A0000U /* CAN base address */
 #define MMC0_BASE                      0x50180000U /* MMC0 base address */
 #define VOP_BASE                       0x50190000U /* VOP base address */
@@ -2232,6 +2305,7 @@ struct IIR_ACC_REG_REG {
 #define FIR_ACC_TCB         ((struct FIR_ACC_TCB_REG *) FIR_ACC_TCB_BASE)
 #define IIR_ACC_TCB         ((struct IIR_ACC_TCB_REG *) IIR_ACC_TCB_BASE)
 #define CRYPTO              ((struct CRYPTO_REG *) CRYPTO_BASE)
+#define TRNG                ((struct TRNG_REG *) TRNG_BASE)
 #define CAN                 ((struct CAN_REG *) CAN_BASE)
 #define MMC0                ((struct MMC_REG *) MMC0_BASE)
 #define VOP                 ((struct VOP_REG *) VOP_BASE)
@@ -2372,6 +2446,7 @@ struct IIR_ACC_REG_REG {
 #define IS_FIR_ACC_TCB_INSTANCE(instance) ((instance) == FIR_ACC_TCB)
 #define IS_IIR_ACC_TCB_INSTANCE(instance) ((instance) == IIR_ACC_TCB)
 #define IS_CRYPTO_INSTANCE(instance) ((instance) == CRYPTO)
+#define IS_TRNG_INSTANCE(instance) ((instance) == TRNG)
 #define IS_CAN_INSTANCE(instance) ((instance) == CAN)
 #define IS_VOP_INSTANCE(instance) ((instance) == VOP)
 #define IS_FLEXBUS_INSTANCE(instance) ((instance) == FLEXBUS)
@@ -3586,6 +3661,597 @@ struct IIR_ACC_REG_REG {
 #define CRYPTO_SRAM_ADDR_OFFSET                            (0x1000U)
 #define CRYPTO_SRAM_ADDR_SRAM_ADDR_SHIFT                   (0U)
 #define CRYPTO_SRAM_ADDR_SRAM_ADDR_MASK                    (0xFFFFFFFFU << CRYPTO_SRAM_ADDR_SRAM_ADDR_SHIFT)            /* 0xFFFFFFFF */
+/******************************************TRNG******************************************/
+/* CFG */
+#define TRNG_CFG_OFFSET                                    (0x0U)
+#define TRNG_CFG_AES_KEY_SIZE_SHIFT                        (0U)
+#define TRNG_CFG_AES_KEY_SIZE_MASK                         (0x3U << TRNG_CFG_AES_KEY_SIZE_SHIFT)                        /* 0x00000003 */
+#define TRNG_CFG_PR_FLAG_SHIFT                             (2U)
+#define TRNG_CFG_PR_FLAG_MASK                              (0x1U << TRNG_CFG_PR_FLAG_SHIFT)                             /* 0x00000004 */
+#define TRNG_CFG_HASH_DF_SHIFT                             (3U)
+#define TRNG_CFG_HASH_DF_MASK                              (0x1U << TRNG_CFG_HASH_DF_SHIFT)                             /* 0x00000008 */
+/* NONCE_LEN */
+#define TRNG_NONCE_LEN_OFFSET                              (0x8U)
+#define TRNG_NONCE_LEN_NONCE_LEN_SHIFT                     (0U)
+#define TRNG_NONCE_LEN_NONCE_LEN_MASK                      (0xFFFFFFFFU << TRNG_NONCE_LEN_NONCE_LEN_SHIFT)              /* 0xFFFFFFFF */
+/* ADDITION_LEN */
+#define TRNG_ADDITION_LEN_OFFSET                           (0xCU)
+#define TRNG_ADDITION_LEN_ADDITION_LEN_SHIFT               (0U)
+#define TRNG_ADDITION_LEN_ADDITION_LEN_MASK                (0xFFFFFFFFU << TRNG_ADDITION_LEN_ADDITION_LEN_SHIFT)        /* 0xFFFFFFFF */
+/* CTRL */
+#define TRNG_CTRL_OFFSET                                   (0x10U)
+#define TRNG_CTRL_INST_REQ_SHIFT                           (0U)
+#define TRNG_CTRL_INST_REQ_MASK                            (0x1U << TRNG_CTRL_INST_REQ_SHIFT)                           /* 0x00000001 */
+#define TRNG_CTRL_RESEED_REQ_SHIFT                         (1U)
+#define TRNG_CTRL_RESEED_REQ_MASK                          (0x1U << TRNG_CTRL_RESEED_REQ_SHIFT)                         /* 0x00000002 */
+#define TRNG_CTRL_TEST_REQ_SHIFT                           (2U)
+#define TRNG_CTRL_TEST_REQ_MASK                            (0x1U << TRNG_CTRL_TEST_REQ_SHIFT)                           /* 0x00000004 */
+#define TRNG_CTRL_SW_DRNG_REQ_SHIFT                        (3U)
+#define TRNG_CTRL_SW_DRNG_REQ_MASK                         (0x1U << TRNG_CTRL_SW_DRNG_REQ_SHIFT)                        /* 0x00000008 */
+#define TRNG_CTRL_SW_TRNG_REQ_SHIFT                        (4U)
+#define TRNG_CTRL_SW_TRNG_REQ_MASK                         (0x1U << TRNG_CTRL_SW_TRNG_REQ_SHIFT)                        /* 0x00000010 */
+/* STATE */
+#define TRNG_STATE_OFFSET                                  (0x14U)
+#define TRNG_STATE_INST_ACK_SHIFT                          (0U)
+#define TRNG_STATE_INST_ACK_MASK                           (0x1U << TRNG_STATE_INST_ACK_SHIFT)                          /* 0x00000001 */
+#define TRNG_STATE_RESEED_ACK_SHIFT                        (1U)
+#define TRNG_STATE_RESEED_ACK_MASK                         (0x1U << TRNG_STATE_RESEED_ACK_SHIFT)                        /* 0x00000002 */
+#define TRNG_STATE_TEST_ACK_SHIFT                          (2U)
+#define TRNG_STATE_TEST_ACK_MASK                           (0x1U << TRNG_STATE_TEST_ACK_SHIFT)                          /* 0x00000004 */
+#define TRNG_STATE_SW_DRNG_ACK_SHIFT                       (3U)
+#define TRNG_STATE_SW_DRNG_ACK_MASK                        (0x1U << TRNG_STATE_SW_DRNG_ACK_SHIFT)                       /* 0x00000008 */
+#define TRNG_STATE_SW_TRNG_ACK_SHIFT                       (4U)
+#define TRNG_STATE_SW_TRNG_ACK_MASK                        (0x1U << TRNG_STATE_SW_TRNG_ACK_SHIFT)                       /* 0x00000010 */
+#define TRNG_STATE_DRNG_TEST_FAIL_SHIFT                    (5U)
+#define TRNG_STATE_DRNG_TEST_FAIL_MASK                     (0x1U << TRNG_STATE_DRNG_TEST_FAIL_SHIFT)                    /* 0x00000020 */
+#define TRNG_STATE_ALLAN_AVAR_OVERFLOW_SHIFT               (6U)
+#define TRNG_STATE_ALLAN_AVAR_OVERFLOW_MASK                (0x1U << TRNG_STATE_ALLAN_AVAR_OVERFLOW_SHIFT)               /* 0x00000040 */
+#define TRNG_STATE_WORK_CLK_ABNORMAL_SHIFT                 (7U)
+#define TRNG_STATE_WORK_CLK_ABNORMAL_MASK                  (0x1U << TRNG_STATE_WORK_CLK_ABNORMAL_SHIFT)                 /* 0x00000080 */
+/* INT_EN */
+#define TRNG_INT_EN_OFFSET                                 (0x18U)
+#define TRNG_INT_EN_INST_INT_EN_SHIFT                      (0U)
+#define TRNG_INT_EN_INST_INT_EN_MASK                       (0x1U << TRNG_INT_EN_INST_INT_EN_SHIFT)                      /* 0x00000001 */
+#define TRNG_INT_EN_RESEED_INT_EN_SHIFT                    (1U)
+#define TRNG_INT_EN_RESEED_INT_EN_MASK                     (0x1U << TRNG_INT_EN_RESEED_INT_EN_SHIFT)                    /* 0x00000002 */
+#define TRNG_INT_EN_TEST_INT_EN_SHIFT                      (2U)
+#define TRNG_INT_EN_TEST_INT_EN_MASK                       (0x1U << TRNG_INT_EN_TEST_INT_EN_SHIFT)                      /* 0x00000004 */
+#define TRNG_INT_EN_SW_DRNG_INT_EN_SHIFT                   (3U)
+#define TRNG_INT_EN_SW_DRNG_INT_EN_MASK                    (0x1U << TRNG_INT_EN_SW_DRNG_INT_EN_SHIFT)                   /* 0x00000008 */
+#define TRNG_INT_EN_SW_TRNG_INT_EN_SHIFT                   (4U)
+#define TRNG_INT_EN_SW_TRNG_INT_EN_MASK                    (0x1U << TRNG_INT_EN_SW_TRNG_INT_EN_SHIFT)                   /* 0x00000010 */
+#define TRNG_INT_EN_DRNG_TEST_FAIL_INT_EN_SHIFT            (5U)
+#define TRNG_INT_EN_DRNG_TEST_FAIL_INT_EN_MASK             (0x1U << TRNG_INT_EN_DRNG_TEST_FAIL_INT_EN_SHIFT)            /* 0x00000020 */
+#define TRNG_INT_EN_ALLAN_INT_EN_SHIFT                     (6U)
+#define TRNG_INT_EN_ALLAN_INT_EN_MASK                      (0x1U << TRNG_INT_EN_ALLAN_INT_EN_SHIFT)                     /* 0x00000040 */
+#define TRNG_INT_EN_WORK_CLK_ABNORMAL_INT_EN_SHIFT         (7U)
+#define TRNG_INT_EN_WORK_CLK_ABNORMAL_INT_EN_MASK          (0x1U << TRNG_INT_EN_WORK_CLK_ABNORMAL_INT_EN_SHIFT)         /* 0x00000080 */
+/* TEST_CNT */
+#define TRNG_TEST_CNT_OFFSET                               (0x1CU)
+#define TRNG_TEST_CNT_TEST_INTERVAL_SHIFT                  (0U)
+#define TRNG_TEST_CNT_TEST_INTERVAL_MASK                   (0xFFFFFFFFU << TRNG_TEST_CNT_TEST_INTERVAL_SHIFT)           /* 0xFFFFFFFF */
+/* RESEED_CNT */
+#define TRNG_RESEED_CNT_OFFSET                             (0x20U)
+#define TRNG_RESEED_CNT_RESEED_INTERVAL_SHIFT              (0U)
+#define TRNG_RESEED_CNT_RESEED_INTERVAL_MASK               (0xFFFFFFFFU << TRNG_RESEED_CNT_RESEED_INTERVAL_SHIFT)       /* 0xFFFFFFFF */
+/* UPDATE_CNT */
+#define TRNG_UPDATE_CNT_OFFSET                             (0x24U)
+#define TRNG_UPDATE_CNT_UPDATE_INTERVAL_SHIFT              (0U)
+#define TRNG_UPDATE_CNT_UPDATE_INTERVAL_MASK               (0xFFFFFFFFU << TRNG_UPDATE_CNT_UPDATE_INTERVAL_SHIFT)       /* 0xFFFFFFFF */
+/* ALLAN_ACC_NUM */
+#define TRNG_ALLAN_ACC_NUM_OFFSET                          (0x28U)
+#define TRNG_ALLAN_ACC_NUM_ALLAN_ACC_NUM_SHIFT             (0U)
+#define TRNG_ALLAN_ACC_NUM_ALLAN_ACC_NUM_MASK              (0xFFFFU << TRNG_ALLAN_ACC_NUM_ALLAN_ACC_NUM_SHIFT)          /* 0x0000FFFF */
+/* ALLAN_LIMIT_LOW */
+#define TRNG_ALLAN_LIMIT_LOW_OFFSET                        (0x2CU)
+#define TRNG_ALLAN_LIMIT_LOW_ALLAN_LIMIT_LOW_SHIFT         (0U)
+#define TRNG_ALLAN_LIMIT_LOW_ALLAN_LIMIT_LOW_MASK          (0x7FFFFFU << TRNG_ALLAN_LIMIT_LOW_ALLAN_LIMIT_LOW_SHIFT)    /* 0x007FFFFF */
+/* ALLAN_LIMIT_HIGH */
+#define TRNG_ALLAN_LIMIT_HIGH_OFFSET                       (0x30U)
+#define TRNG_ALLAN_LIMIT_HIGH_ALLAN_LIMIT_HIGH_SHIFT       (0U)
+#define TRNG_ALLAN_LIMIT_HIGH_ALLAN_LIMIT_HIGH_MASK        (0x7FFFFFU << TRNG_ALLAN_LIMIT_HIGH_ALLAN_LIMIT_HIGH_SHIFT)  /* 0x007FFFFF */
+/* ALLAN_AVAR_RESULT */
+#define TRNG_ALLAN_AVAR_RESULT_OFFSET                      (0x34U)
+#define TRNG_ALLAN_AVAR_RESULT_ALLAN_AVAR_RESULT_SHIFT     (0U)
+#define TRNG_ALLAN_AVAR_RESULT_ALLAN_AVAR_RESULT_MASK      (0x7FFFFFU << TRNG_ALLAN_AVAR_RESULT_ALLAN_AVAR_RESULT_SHIFT) /* 0x007FFFFF */
+/* AUTO_CLK_GATE */
+#define TRNG_AUTO_CLK_GATE_OFFSET                          (0x38U)
+#define TRNG_AUTO_CLK_GATE_AUTO_CLKGATE_EN_SHIFT           (0U)
+#define TRNG_AUTO_CLK_GATE_AUTO_CLKGATE_EN_MASK            (0x1U << TRNG_AUTO_CLK_GATE_AUTO_CLKGATE_EN_SHIFT)           /* 0x00000001 */
+/* VERSION */
+#define TRNG_VERSION_OFFSET                                (0x44U)
+#define TRNG_VERSION                                       (0x1U)
+#define TRNG_VERSION_VERSION_CODE_SHIFT                    (0U)
+#define TRNG_VERSION_VERSION_CODE_MASK                     (0xFFFFFFFFU << TRNG_VERSION_VERSION_CODE_SHIFT)             /* 0xFFFFFFFF */
+/* TRNG_DATA_0 */
+#define TRNG_TRNG_DATA_0_OFFSET                            (0x50U)
+#define TRNG_TRNG_DATA_0                                   (0x0U)
+#define TRNG_TRNG_DATA_0_TRNG_DATA_0_SHIFT                 (0U)
+#define TRNG_TRNG_DATA_0_TRNG_DATA_0_MASK                  (0xFFFFFFFFU << TRNG_TRNG_DATA_0_TRNG_DATA_0_SHIFT)          /* 0xFFFFFFFF */
+/* TRNG_DATA_1 */
+#define TRNG_TRNG_DATA_1_OFFSET                            (0x54U)
+#define TRNG_TRNG_DATA_1                                   (0x0U)
+#define TRNG_TRNG_DATA_1_TRNG_DATA_1_SHIFT                 (0U)
+#define TRNG_TRNG_DATA_1_TRNG_DATA_1_MASK                  (0xFFFFFFFFU << TRNG_TRNG_DATA_1_TRNG_DATA_1_SHIFT)          /* 0xFFFFFFFF */
+/* TRNG_DATA_2 */
+#define TRNG_TRNG_DATA_2_OFFSET                            (0x58U)
+#define TRNG_TRNG_DATA_2                                   (0x0U)
+#define TRNG_TRNG_DATA_2_TRNG_DATA_2_SHIFT                 (0U)
+#define TRNG_TRNG_DATA_2_TRNG_DATA_2_MASK                  (0xFFFFFFFFU << TRNG_TRNG_DATA_2_TRNG_DATA_2_SHIFT)          /* 0xFFFFFFFF */
+/* TRNG_DATA_3 */
+#define TRNG_TRNG_DATA_3_OFFSET                            (0x5CU)
+#define TRNG_TRNG_DATA_3                                   (0x0U)
+#define TRNG_TRNG_DATA_3_TRNG_DATA_3_SHIFT                 (0U)
+#define TRNG_TRNG_DATA_3_TRNG_DATA_3_MASK                  (0xFFFFFFFFU << TRNG_TRNG_DATA_3_TRNG_DATA_3_SHIFT)          /* 0xFFFFFFFF */
+/* TRNG_DATA_4 */
+#define TRNG_TRNG_DATA_4_OFFSET                            (0x60U)
+#define TRNG_TRNG_DATA_4                                   (0x0U)
+#define TRNG_TRNG_DATA_4_TRNG_DATA_4_SHIFT                 (0U)
+#define TRNG_TRNG_DATA_4_TRNG_DATA_4_MASK                  (0xFFFFFFFFU << TRNG_TRNG_DATA_4_TRNG_DATA_4_SHIFT)          /* 0xFFFFFFFF */
+/* TRNG_DATA_5 */
+#define TRNG_TRNG_DATA_5_OFFSET                            (0x64U)
+#define TRNG_TRNG_DATA_5                                   (0x0U)
+#define TRNG_TRNG_DATA_5_TRNG_DATA_5_SHIFT                 (0U)
+#define TRNG_TRNG_DATA_5_TRNG_DATA_5_MASK                  (0xFFFFFFFFU << TRNG_TRNG_DATA_5_TRNG_DATA_5_SHIFT)          /* 0xFFFFFFFF */
+/* TRNG_DATA_6 */
+#define TRNG_TRNG_DATA_6_OFFSET                            (0x68U)
+#define TRNG_TRNG_DATA_6                                   (0x0U)
+#define TRNG_TRNG_DATA_6_TRNG_DATA_6_SHIFT                 (0U)
+#define TRNG_TRNG_DATA_6_TRNG_DATA_6_MASK                  (0xFFFFFFFFU << TRNG_TRNG_DATA_6_TRNG_DATA_6_SHIFT)          /* 0xFFFFFFFF */
+/* TRNG_DATA_7 */
+#define TRNG_TRNG_DATA_7_OFFSET                            (0x6CU)
+#define TRNG_TRNG_DATA_7                                   (0x0U)
+#define TRNG_TRNG_DATA_7_TRNG_DATA_7_SHIFT                 (0U)
+#define TRNG_TRNG_DATA_7_TRNG_DATA_7_MASK                  (0xFFFFFFFFU << TRNG_TRNG_DATA_7_TRNG_DATA_7_SHIFT)          /* 0xFFFFFFFF */
+/* DRNG_DATA_0 */
+#define TRNG_DRNG_DATA_0_OFFSET                            (0x70U)
+#define TRNG_DRNG_DATA_0                                   (0x0U)
+#define TRNG_DRNG_DATA_0_DRNG_DATA_0_SHIFT                 (0U)
+#define TRNG_DRNG_DATA_0_DRNG_DATA_0_MASK                  (0xFFFFFFFFU << TRNG_DRNG_DATA_0_DRNG_DATA_0_SHIFT)          /* 0xFFFFFFFF */
+/* DRNG_DATA_1 */
+#define TRNG_DRNG_DATA_1_OFFSET                            (0x74U)
+#define TRNG_DRNG_DATA_1                                   (0x0U)
+#define TRNG_DRNG_DATA_1_DRNG_DATA_1_SHIFT                 (0U)
+#define TRNG_DRNG_DATA_1_DRNG_DATA_1_MASK                  (0xFFFFFFFFU << TRNG_DRNG_DATA_1_DRNG_DATA_1_SHIFT)          /* 0xFFFFFFFF */
+/* DRNG_DATA_2 */
+#define TRNG_DRNG_DATA_2_OFFSET                            (0x78U)
+#define TRNG_DRNG_DATA_2                                   (0x0U)
+#define TRNG_DRNG_DATA_2_DRNG_DATA_2_SHIFT                 (0U)
+#define TRNG_DRNG_DATA_2_DRNG_DATA_2_MASK                  (0xFFFFFFFFU << TRNG_DRNG_DATA_2_DRNG_DATA_2_SHIFT)          /* 0xFFFFFFFF */
+/* DRNG_DATA_3 */
+#define TRNG_DRNG_DATA_3_OFFSET                            (0x7CU)
+#define TRNG_DRNG_DATA_3                                   (0x0U)
+#define TRNG_DRNG_DATA_3_DRNG_DATA_3_SHIFT                 (0U)
+#define TRNG_DRNG_DATA_3_DRNG_DATA_3_MASK                  (0xFFFFFFFFU << TRNG_DRNG_DATA_3_DRNG_DATA_3_SHIFT)          /* 0xFFFFFFFF */
+/* DRNG_DATA_4 */
+#define TRNG_DRNG_DATA_4_OFFSET                            (0x80U)
+#define TRNG_DRNG_DATA_4                                   (0x0U)
+#define TRNG_DRNG_DATA_4_DRNG_DATA_4_SHIFT                 (0U)
+#define TRNG_DRNG_DATA_4_DRNG_DATA_4_MASK                  (0xFFFFFFFFU << TRNG_DRNG_DATA_4_DRNG_DATA_4_SHIFT)          /* 0xFFFFFFFF */
+/* DRNG_DATA_5 */
+#define TRNG_DRNG_DATA_5_OFFSET                            (0x84U)
+#define TRNG_DRNG_DATA_5                                   (0x0U)
+#define TRNG_DRNG_DATA_5_DRNG_DATA_5_SHIFT                 (0U)
+#define TRNG_DRNG_DATA_5_DRNG_DATA_5_MASK                  (0xFFFFFFFFU << TRNG_DRNG_DATA_5_DRNG_DATA_5_SHIFT)          /* 0xFFFFFFFF */
+/* DRNG_DATA_6 */
+#define TRNG_DRNG_DATA_6_OFFSET                            (0x88U)
+#define TRNG_DRNG_DATA_6                                   (0x0U)
+#define TRNG_DRNG_DATA_6_DRNG_DATA_6_SHIFT                 (0U)
+#define TRNG_DRNG_DATA_6_DRNG_DATA_6_MASK                  (0xFFFFFFFFU << TRNG_DRNG_DATA_6_DRNG_DATA_6_SHIFT)          /* 0xFFFFFFFF */
+/* DRNG_DATA_7 */
+#define TRNG_DRNG_DATA_7_OFFSET                            (0x8CU)
+#define TRNG_DRNG_DATA_7                                   (0x0U)
+#define TRNG_DRNG_DATA_7_DRNG_DATA_7_SHIFT                 (0U)
+#define TRNG_DRNG_DATA_7_DRNG_DATA_7_MASK                  (0xFFFFFFFFU << TRNG_DRNG_DATA_7_DRNG_DATA_7_SHIFT)          /* 0xFFFFFFFF */
+/* WORK_CLK_EN */
+#define TRNG_WORK_CLK_EN_OFFSET                            (0x90U)
+#define TRNG_WORK_CLK_EN_WORK_CLK_EN_SHIFT                 (0U)
+#define TRNG_WORK_CLK_EN_WORK_CLK_EN_MASK                  (0x1U << TRNG_WORK_CLK_EN_WORK_CLK_EN_SHIFT)                 /* 0x00000001 */
+/* WORK_CLK_FLAG */
+#define TRNG_WORK_CLK_FLAG_OFFSET                          (0x94U)
+#define TRNG_WORK_CLK_FLAG_WORK_CLK_FLAG_SHIFT             (0U)
+#define TRNG_WORK_CLK_FLAG_WORK_CLK_FLAG_MASK              (0x1U << TRNG_WORK_CLK_FLAG_WORK_CLK_FLAG_SHIFT)             /* 0x00000001 */
+/* WORK_CLK_NUM_LIMIT */
+#define TRNG_WORK_CLK_NUM_LIMIT_OFFSET                     (0x98U)
+#define TRNG_WORK_CLK_NUM_LIMIT_WORK_CLK_NUM_LIMIT_SHIFT   (0U)
+#define TRNG_WORK_CLK_NUM_LIMIT_WORK_CLK_NUM_LIMIT_MASK    (0xFFFFU << TRNG_WORK_CLK_NUM_LIMIT_WORK_CLK_NUM_LIMIT_SHIFT) /* 0x0000FFFF */
+/* SOFT_RING_EN0 */
+#define TRNG_SOFT_RING_EN0_OFFSET                          (0x9CU)
+#define TRNG_SOFT_RING_EN0_SOFT_RING_EN0_SHIFT             (0U)
+#define TRNG_SOFT_RING_EN0_SOFT_RING_EN0_MASK              (0xFFFFU << TRNG_SOFT_RING_EN0_SOFT_RING_EN0_SHIFT)          /* 0x0000FFFF */
+/* SOFT_RING_EN2 */
+#define TRNG_SOFT_RING_EN2_OFFSET                          (0xA4U)
+#define TRNG_SOFT_RING_EN2_SOFT_RING_EN2_SHIFT             (0U)
+#define TRNG_SOFT_RING_EN2_SOFT_RING_EN2_MASK              (0x1U << TRNG_SOFT_RING_EN2_SOFT_RING_EN2_SHIFT)             /* 0x00000001 */
+/* STR1_0_INIT */
+#define TRNG_STR1_0_INIT_OFFSET                            (0xACU)
+#define TRNG_STR1_0_INIT_STR1_0_INIT_SHIFT                 (0U)
+#define TRNG_STR1_0_INIT_STR1_0_INIT_MASK                  (0x7FFFFFFFU << TRNG_STR1_0_INIT_STR1_0_INIT_SHIFT)          /* 0x7FFFFFFF */
+/* ENTROPY_EN_CTL */
+#define TRNG_ENTROPY_EN_CTL_OFFSET                         (0xB8U)
+#define TRNG_ENTROPY_EN_CTL_ENTROPY_EN_SHIFT               (0U)
+#define TRNG_ENTROPY_EN_CTL_ENTROPY_EN_MASK                (0x1U << TRNG_ENTROPY_EN_CTL_ENTROPY_EN_SHIFT)               /* 0x00000001 */
+#define TRNG_ENTROPY_EN_CTL_ENTROPY_DLY_NUM_SHIFT          (8U)
+#define TRNG_ENTROPY_EN_CTL_ENTROPY_DLY_NUM_MASK           (0xFFU << TRNG_ENTROPY_EN_CTL_ENTROPY_DLY_NUM_SHIFT)         /* 0x0000FF00 */
+#define TRNG_ENTROPY_EN_CTL_ENTROPY_CNT_NUM_SHIFT          (16U)
+#define TRNG_ENTROPY_EN_CTL_ENTROPY_CNT_NUM_MASK           (0xFFFFU << TRNG_ENTROPY_EN_CTL_ENTROPY_CNT_NUM_SHIFT)       /* 0xFFFF0000 */
+/* ENTROPY_MASK_CTL */
+#define TRNG_ENTROPY_MASK_CTL_OFFSET                       (0xBCU)
+#define TRNG_ENTROPY_MASK_CTL_ENTROPY_CK_MASK_SHIFT        (0U)
+#define TRNG_ENTROPY_MASK_CTL_ENTROPY_CK_MASK_MASK         (0x3U << TRNG_ENTROPY_MASK_CTL_ENTROPY_CK_MASK_SHIFT)        /* 0x00000003 */
+#define TRNG_ENTROPY_MASK_CTL_ENTROPY_XOR_MASK_SHIFT       (4U)
+#define TRNG_ENTROPY_MASK_CTL_ENTROPY_XOR_MASK_MASK        (0x3U << TRNG_ENTROPY_MASK_CTL_ENTROPY_XOR_MASK_SHIFT)       /* 0x00000030 */
+/* ENTROPY_POST_CTL */
+#define TRNG_ENTROPY_POST_CTL_OFFSET                       (0xC0U)
+#define TRNG_ENTROPY_POST_CTL_ENTROPY_POST_XOR_EN_SHIFT    (0U)
+#define TRNG_ENTROPY_POST_CTL_ENTROPY_POST_XOR_EN_MASK     (0x1U << TRNG_ENTROPY_POST_CTL_ENTROPY_POST_XOR_EN_SHIFT)    /* 0x00000001 */
+#define TRNG_ENTROPY_POST_CTL_ENTROPY_POST_JVN_EN_SHIFT    (1U)
+#define TRNG_ENTROPY_POST_CTL_ENTROPY_POST_JVN_EN_MASK     (0x1U << TRNG_ENTROPY_POST_CTL_ENTROPY_POST_JVN_EN_SHIFT)    /* 0x00000002 */
+#define TRNG_ENTROPY_POST_CTL_BYPASS_NUM_JVN_SHIFT         (2U)
+#define TRNG_ENTROPY_POST_CTL_BYPASS_NUM_JVN_MASK          (0xFFU << TRNG_ENTROPY_POST_CTL_BYPASS_NUM_JVN_SHIFT)        /* 0x000003FC */
+/* ENTROPY_CK_CTL */
+#define TRNG_ENTROPY_CK_CTL_OFFSET                         (0xC4U)
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_FB_CHECK_EN_SHIFT      (0U)
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_FB_CHECK_EN_MASK       (0x1U << TRNG_ENTROPY_CK_CTL_ENTROPY_FB_CHECK_EN_SHIFT)      /* 0x00000001 */
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_FI_CHECK_EN_SHIFT      (1U)
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_FI_CHECK_EN_MASK       (0x1U << TRNG_ENTROPY_CK_CTL_ENTROPY_FI_CHECK_EN_SHIFT)      /* 0x00000002 */
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_BI_CHECK_EN_SHIFT      (2U)
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_BI_CHECK_EN_MASK       (0x1U << TRNG_ENTROPY_CK_CTL_ENTROPY_BI_CHECK_EN_SHIFT)      /* 0x00000004 */
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_CHECK_MUST_PASS_SHIFT  (3U)
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_CHECK_MUST_PASS_MASK   (0x1U << TRNG_ENTROPY_CK_CTL_ENTROPY_CHECK_MUST_PASS_SHIFT)  /* 0x00000008 */
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_ALWAYS_CHECK_SHIFT     (4U)
+#define TRNG_ENTROPY_CK_CTL_ENTROPY_ALWAYS_CHECK_MASK      (0x1U << TRNG_ENTROPY_CK_CTL_ENTROPY_ALWAYS_CHECK_SHIFT)     /* 0x00000010 */
+/* ENTROPY_FB_LIMIT0 */
+#define TRNG_ENTROPY_FB_LIMIT0_OFFSET                      (0xC8U)
+#define TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT8_LIMIT_SHIFT (0U)
+#define TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT8_LIMIT_MASK  (0x7U << TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT8_LIMIT_SHIFT) /* 0x00000007 */
+#define TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT16_LIMIT_SHIFT (8U)
+#define TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT16_LIMIT_MASK (0xFU << TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT16_LIMIT_SHIFT) /* 0x00000F00 */
+#define TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT32_LIMIT_SHIFT (16U)
+#define TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT32_LIMIT_MASK (0x1FU << TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT32_LIMIT_SHIFT) /* 0x001F0000 */
+#define TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT64_LIMIT_SHIFT (24U)
+#define TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT64_LIMIT_MASK (0x3FU << TRNG_ENTROPY_FB_LIMIT0_ENTROPY_FB_BIT64_LIMIT_SHIFT) /* 0x3F000000 */
+/* ENTROPY_FB_LIMIT1 */
+#define TRNG_ENTROPY_FB_LIMIT1_OFFSET                      (0xCCU)
+#define TRNG_ENTROPY_FB_LIMIT1_ENTROPY_FB_BIT128_LIMIT_SHIFT (0U)
+#define TRNG_ENTROPY_FB_LIMIT1_ENTROPY_FB_BIT128_LIMIT_MASK (0x7FU << TRNG_ENTROPY_FB_LIMIT1_ENTROPY_FB_BIT128_LIMIT_SHIFT) /* 0x0000007F */
+#define TRNG_ENTROPY_FB_LIMIT1_ENTROPY_FB_BIT_FULL_LIMIT_SHIFT (16U)
+#define TRNG_ENTROPY_FB_LIMIT1_ENTROPY_FB_BIT_FULL_LIMIT_MASK (0x1FFU << TRNG_ENTROPY_FB_LIMIT1_ENTROPY_FB_BIT_FULL_LIMIT_SHIFT) /* 0x01FF0000 */
+/* ENTROPY_FI_BIT_NUM */
+#define TRNG_ENTROPY_FI_BIT_NUM_OFFSET                     (0xD0U)
+#define TRNG_ENTROPY_FI_BIT_NUM_ENTROPY_FI_BIT_NUM_SHIFT   (0U)
+#define TRNG_ENTROPY_FI_BIT_NUM_ENTROPY_FI_BIT_NUM_MASK    (0xFFFFU << TRNG_ENTROPY_FI_BIT_NUM_ENTROPY_FI_BIT_NUM_SHIFT) /* 0x0000FFFF */
+/* ENTROPY_FI_LIMIT */
+#define TRNG_ENTROPY_FI_LIMIT_OFFSET                       (0xD4U)
+#define TRNG_ENTROPY_FI_LIMIT_ENTROPY_FI_LIMIT_LOW_SHIFT   (0U)
+#define TRNG_ENTROPY_FI_LIMIT_ENTROPY_FI_LIMIT_LOW_MASK    (0xFFFFU << TRNG_ENTROPY_FI_LIMIT_ENTROPY_FI_LIMIT_LOW_SHIFT) /* 0x0000FFFF */
+#define TRNG_ENTROPY_FI_LIMIT_ENTROPY_FI_LIMIT_HIGH_SHIFT  (16U)
+#define TRNG_ENTROPY_FI_LIMIT_ENTROPY_FI_LIMIT_HIGH_MASK   (0xFFFFU << TRNG_ENTROPY_FI_LIMIT_ENTROPY_FI_LIMIT_HIGH_SHIFT) /* 0xFFFF0000 */
+/* ENTROPY_BI_CTL */
+#define TRNG_ENTROPY_BI_CTL_OFFSET                         (0xD8U)
+#define TRNG_ENTROPY_BI_CTL_ENTROPY_BI_COUNT_SEL_SHIFT     (0U)
+#define TRNG_ENTROPY_BI_CTL_ENTROPY_BI_COUNT_SEL_MASK      (0x3U << TRNG_ENTROPY_BI_CTL_ENTROPY_BI_COUNT_SEL_SHIFT)     /* 0x00000003 */
+#define TRNG_ENTROPY_BI_CTL_ENTROPY_BI_BIT_NUM_SHIFT       (2U)
+#define TRNG_ENTROPY_BI_CTL_ENTROPY_BI_BIT_NUM_MASK        (0xFFFFFU << TRNG_ENTROPY_BI_CTL_ENTROPY_BI_BIT_NUM_SHIFT)   /* 0x003FFFFC */
+/* ENTROPY_BI_LIMIT_LOW0 */
+#define TRNG_ENTROPY_BI_LIMIT_LOW0_OFFSET                  (0xDCU)
+#define TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V0_LOW_SHIFT (0U)
+#define TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V0_LOW_MASK  (0xFFU << TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V0_LOW_SHIFT) /* 0x000000FF */
+#define TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V1_LOW_SHIFT (8U)
+#define TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V1_LOW_MASK  (0xFFU << TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V1_LOW_SHIFT) /* 0x0000FF00 */
+#define TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V2_LOW_SHIFT (16U)
+#define TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V2_LOW_MASK  (0xFFU << TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V2_LOW_SHIFT) /* 0x00FF0000 */
+#define TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V3_LOW_SHIFT (24U)
+#define TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V3_LOW_MASK  (0xFFU << TRNG_ENTROPY_BI_LIMIT_LOW0_ENTROPY_BI_V3_LOW_SHIFT) /* 0xFF000000 */
+/* ENTROPY_BI_LIMIT_LOW1 */
+#define TRNG_ENTROPY_BI_LIMIT_LOW1_OFFSET                  (0xE0U)
+#define TRNG_ENTROPY_BI_LIMIT_LOW1_ENTROPY_BI_V4_LOW_SHIFT (0U)
+#define TRNG_ENTROPY_BI_LIMIT_LOW1_ENTROPY_BI_V4_LOW_MASK  (0xFFU << TRNG_ENTROPY_BI_LIMIT_LOW1_ENTROPY_BI_V4_LOW_SHIFT) /* 0x000000FF */
+#define TRNG_ENTROPY_BI_LIMIT_LOW1_ENTROPY_BI_V5_LOW_SHIFT (8U)
+#define TRNG_ENTROPY_BI_LIMIT_LOW1_ENTROPY_BI_V5_LOW_MASK  (0xFFU << TRNG_ENTROPY_BI_LIMIT_LOW1_ENTROPY_BI_V5_LOW_SHIFT) /* 0x0000FF00 */
+#define TRNG_ENTROPY_BI_LIMIT_LOW1_ENTROPY_BI_V6_LOW_SHIFT (16U)
+#define TRNG_ENTROPY_BI_LIMIT_LOW1_ENTROPY_BI_V6_LOW_MASK  (0xFFU << TRNG_ENTROPY_BI_LIMIT_LOW1_ENTROPY_BI_V6_LOW_SHIFT) /* 0x00FF0000 */
+/* ENTROPY_BI_LIMITHIGH0 */
+#define TRNG_ENTROPY_BI_LIMITHIGH0_OFFSET                  (0xE4U)
+#define TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V0_HIGH_SHIFT (0U)
+#define TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V0_HIGH_MASK (0xFFU << TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V0_HIGH_SHIFT) /* 0x000000FF */
+#define TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V1_HIGH_SHIFT (8U)
+#define TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V1_HIGH_MASK (0xFFU << TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V1_HIGH_SHIFT) /* 0x0000FF00 */
+#define TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V2_HIGH_SHIFT (16U)
+#define TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V2_HIGH_MASK (0xFFU << TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V2_HIGH_SHIFT) /* 0x00FF0000 */
+#define TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V3_HIGH_SHIFT (24U)
+#define TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V3_HIGH_MASK (0xFFU << TRNG_ENTROPY_BI_LIMITHIGH0_ENTROPY_BI_V3_HIGH_SHIFT) /* 0xFF000000 */
+/* ENTROPY_BI_LIMIT_HIGH1 */
+#define TRNG_ENTROPY_BI_LIMIT_HIGH1_OFFSET                 (0xE8U)
+#define TRNG_ENTROPY_BI_LIMIT_HIGH1_ENTROPY_BI_V4_HIGH_SHIFT (0U)
+#define TRNG_ENTROPY_BI_LIMIT_HIGH1_ENTROPY_BI_V4_HIGH_MASK (0xFFU << TRNG_ENTROPY_BI_LIMIT_HIGH1_ENTROPY_BI_V4_HIGH_SHIFT) /* 0x000000FF */
+#define TRNG_ENTROPY_BI_LIMIT_HIGH1_ENTROPY_BI_V5_HIGH_SHIFT (8U)
+#define TRNG_ENTROPY_BI_LIMIT_HIGH1_ENTROPY_BI_V5_HIGH_MASK (0xFFU << TRNG_ENTROPY_BI_LIMIT_HIGH1_ENTROPY_BI_V5_HIGH_SHIFT) /* 0x0000FF00 */
+#define TRNG_ENTROPY_BI_LIMIT_HIGH1_ENTROPY_BI_V6_HIGH_SHIFT (16U)
+#define TRNG_ENTROPY_BI_LIMIT_HIGH1_ENTROPY_BI_V6_HIGH_MASK (0xFFU << TRNG_ENTROPY_BI_LIMIT_HIGH1_ENTROPY_BI_V6_HIGH_SHIFT) /* 0x00FF0000 */
+/* TRAND_CK_CTL */
+#define TRNG_TRAND_CK_CTL_OFFSET                           (0xECU)
+#define TRNG_TRAND_CK_CTL_TRAND_FB_CHECK_EN_SHIFT          (0U)
+#define TRNG_TRAND_CK_CTL_TRAND_FB_CHECK_EN_MASK           (0x1U << TRNG_TRAND_CK_CTL_TRAND_FB_CHECK_EN_SHIFT)          /* 0x00000001 */
+#define TRNG_TRAND_CK_CTL_TRAND_FI_CHECK_EN_SHIFT          (1U)
+#define TRNG_TRAND_CK_CTL_TRAND_FI_CHECK_EN_MASK           (0x1U << TRNG_TRAND_CK_CTL_TRAND_FI_CHECK_EN_SHIFT)          /* 0x00000002 */
+#define TRNG_TRAND_CK_CTL_TRAND_BI_CHECK_EN_SHIFT          (2U)
+#define TRNG_TRAND_CK_CTL_TRAND_BI_CHECK_EN_MASK           (0x1U << TRNG_TRAND_CK_CTL_TRAND_BI_CHECK_EN_SHIFT)          /* 0x00000004 */
+#define TRNG_TRAND_CK_CTL_TRAND_CHECK_MUST_PASS_SHIFT      (3U)
+#define TRNG_TRAND_CK_CTL_TRAND_CHECK_MUST_PASS_MASK       (0x1U << TRNG_TRAND_CK_CTL_TRAND_CHECK_MUST_PASS_SHIFT)      /* 0x00000008 */
+/* TRAND_FB_LIMIT0 */
+#define TRNG_TRAND_FB_LIMIT0_OFFSET                        (0xF0U)
+#define TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT8_LIMIT_SHIFT     (0U)
+#define TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT8_LIMIT_MASK      (0x7U << TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT8_LIMIT_SHIFT)     /* 0x00000007 */
+#define TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT16_LIMIT_SHIFT    (8U)
+#define TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT16_LIMIT_MASK     (0xFU << TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT16_LIMIT_SHIFT)    /* 0x00000F00 */
+#define TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT32_LIMIT_SHIFT    (16U)
+#define TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT32_LIMIT_MASK     (0x1FU << TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT32_LIMIT_SHIFT)   /* 0x001F0000 */
+#define TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT64_LIMIT_SHIFT    (24U)
+#define TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT64_LIMIT_MASK     (0x3FU << TRNG_TRAND_FB_LIMIT0_TRAND_FB_BIT64_LIMIT_SHIFT)   /* 0x3F000000 */
+/* TRAND_FB_LIMIT1 */
+#define TRNG_TRAND_FB_LIMIT1_OFFSET                        (0xF4U)
+#define TRNG_TRAND_FB_LIMIT1_TRAND_FB_BIT128_LIMIT_SHIFT   (0U)
+#define TRNG_TRAND_FB_LIMIT1_TRAND_FB_BIT128_LIMIT_MASK    (0x7FU << TRNG_TRAND_FB_LIMIT1_TRAND_FB_BIT128_LIMIT_SHIFT)  /* 0x0000007F */
+#define TRNG_TRAND_FB_LIMIT1_TRAND_FB_BIT_FULL_LIMIT_SHIFT (16U)
+#define TRNG_TRAND_FB_LIMIT1_TRAND_FB_BIT_FULL_LIMIT_MASK  (0x1FFU << TRNG_TRAND_FB_LIMIT1_TRAND_FB_BIT_FULL_LIMIT_SHIFT) /* 0x01FF0000 */
+/* TRAND_FI_BIT_NUM */
+#define TRNG_TRAND_FI_BIT_NUM_OFFSET                       (0xF8U)
+#define TRNG_TRAND_FI_BIT_NUM_TRAND_FI_BIT_NUM_SHIFT       (0U)
+#define TRNG_TRAND_FI_BIT_NUM_TRAND_FI_BIT_NUM_MASK        (0xFFFFU << TRNG_TRAND_FI_BIT_NUM_TRAND_FI_BIT_NUM_SHIFT)    /* 0x0000FFFF */
+/* TRAND_FI_LIMIT */
+#define TRNG_TRAND_FI_LIMIT_OFFSET                         (0xFCU)
+#define TRNG_TRAND_FI_LIMIT_TRAND_FI_LIMIT_LOW_SHIFT       (0U)
+#define TRNG_TRAND_FI_LIMIT_TRAND_FI_LIMIT_LOW_MASK        (0xFFFFU << TRNG_TRAND_FI_LIMIT_TRAND_FI_LIMIT_LOW_SHIFT)    /* 0x0000FFFF */
+#define TRNG_TRAND_FI_LIMIT_TRAND_FI_LIMIT_HIGH_SHIFT      (16U)
+#define TRNG_TRAND_FI_LIMIT_TRAND_FI_LIMIT_HIGH_MASK       (0xFFFFU << TRNG_TRAND_FI_LIMIT_TRAND_FI_LIMIT_HIGH_SHIFT)   /* 0xFFFF0000 */
+/* TRAND_BI_CTL */
+#define TRNG_TRAND_BI_CTL_OFFSET                           (0x100U)
+#define TRNG_TRAND_BI_CTL_TRAND_BI_COUNT_SEL_SHIFT         (0U)
+#define TRNG_TRAND_BI_CTL_TRAND_BI_COUNT_SEL_MASK          (0x3U << TRNG_TRAND_BI_CTL_TRAND_BI_COUNT_SEL_SHIFT)         /* 0x00000003 */
+#define TRNG_TRAND_BI_CTL_TRAND_BI_BIT_NUM_SHIFT           (2U)
+#define TRNG_TRAND_BI_CTL_TRAND_BI_BIT_NUM_MASK            (0xFFFFFU << TRNG_TRAND_BI_CTL_TRAND_BI_BIT_NUM_SHIFT)       /* 0x003FFFFC */
+/* TRAND_BI_LIMIT_LOW0 */
+#define TRNG_TRAND_BI_LIMIT_LOW0_OFFSET                    (0x104U)
+#define TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V0_LOW_SHIFT     (0U)
+#define TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V0_LOW_MASK      (0xFFU << TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V0_LOW_SHIFT)    /* 0x000000FF */
+#define TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V1_LOW_SHIFT     (8U)
+#define TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V1_LOW_MASK      (0xFFU << TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V1_LOW_SHIFT)    /* 0x0000FF00 */
+#define TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V2_LOW_SHIFT     (16U)
+#define TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V2_LOW_MASK      (0xFFU << TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V2_LOW_SHIFT)    /* 0x00FF0000 */
+#define TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V3_LOW_SHIFT     (24U)
+#define TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V3_LOW_MASK      (0xFFU << TRNG_TRAND_BI_LIMIT_LOW0_TRAND_BI_V3_LOW_SHIFT)    /* 0xFF000000 */
+/* TRAND_BI_LIMIT_LOW1 */
+#define TRNG_TRAND_BI_LIMIT_LOW1_OFFSET                    (0x108U)
+#define TRNG_TRAND_BI_LIMIT_LOW1_TRAND_BI_V4_LOW_SHIFT     (0U)
+#define TRNG_TRAND_BI_LIMIT_LOW1_TRAND_BI_V4_LOW_MASK      (0xFFU << TRNG_TRAND_BI_LIMIT_LOW1_TRAND_BI_V4_LOW_SHIFT)    /* 0x000000FF */
+#define TRNG_TRAND_BI_LIMIT_LOW1_TRAND_BI_V5_LOW_SHIFT     (8U)
+#define TRNG_TRAND_BI_LIMIT_LOW1_TRAND_BI_V5_LOW_MASK      (0xFFU << TRNG_TRAND_BI_LIMIT_LOW1_TRAND_BI_V5_LOW_SHIFT)    /* 0x0000FF00 */
+#define TRNG_TRAND_BI_LIMIT_LOW1_TRAND_BI_V6_LOW_SHIFT     (16U)
+#define TRNG_TRAND_BI_LIMIT_LOW1_TRAND_BI_V6_LOW_MASK      (0xFFU << TRNG_TRAND_BI_LIMIT_LOW1_TRAND_BI_V6_LOW_SHIFT)    /* 0x00FF0000 */
+/* TRAND_BI_LIMIT_HIGH0 */
+#define TRNG_TRAND_BI_LIMIT_HIGH0_OFFSET                   (0x10CU)
+#define TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V0_HIGH_SHIFT   (0U)
+#define TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V0_HIGH_MASK    (0xFFU << TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V0_HIGH_SHIFT)  /* 0x000000FF */
+#define TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V1_HIGH_SHIFT   (8U)
+#define TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V1_HIGH_MASK    (0xFFU << TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V1_HIGH_SHIFT)  /* 0x0000FF00 */
+#define TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V2_HIGH_SHIFT   (16U)
+#define TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V2_HIGH_MASK    (0xFFU << TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V2_HIGH_SHIFT)  /* 0x00FF0000 */
+#define TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V3_HIGH_SHIFT   (24U)
+#define TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V3_HIGH_MASK    (0xFFU << TRNG_TRAND_BI_LIMIT_HIGH0_TRAND_BI_V3_HIGH_SHIFT)  /* 0xFF000000 */
+/* TRAND_BI_LIMIT_HIGH1 */
+#define TRNG_TRAND_BI_LIMIT_HIGH1_OFFSET                   (0x110U)
+#define TRNG_TRAND_BI_LIMIT_HIGH1_TRAND_BI_V4_HIGH_SHIFT   (0U)
+#define TRNG_TRAND_BI_LIMIT_HIGH1_TRAND_BI_V4_HIGH_MASK    (0xFFU << TRNG_TRAND_BI_LIMIT_HIGH1_TRAND_BI_V4_HIGH_SHIFT)  /* 0x000000FF */
+#define TRNG_TRAND_BI_LIMIT_HIGH1_TRAND_BI_V5_HIGH_SHIFT   (8U)
+#define TRNG_TRAND_BI_LIMIT_HIGH1_TRAND_BI_V5_HIGH_MASK    (0xFFU << TRNG_TRAND_BI_LIMIT_HIGH1_TRAND_BI_V5_HIGH_SHIFT)  /* 0x0000FF00 */
+#define TRNG_TRAND_BI_LIMIT_HIGH1_TRAND_BI_V6_HIGH_SHIFT   (16U)
+#define TRNG_TRAND_BI_LIMIT_HIGH1_TRAND_BI_V6_HIGH_MASK    (0xFFU << TRNG_TRAND_BI_LIMIT_HIGH1_TRAND_BI_V6_HIGH_SHIFT)  /* 0x00FF0000 */
+/* BI_PASS_AUTO */
+#define TRNG_BI_PASS_AUTO_OFFSET                           (0x114U)
+#define TRNG_BI_PASS_AUTO_BI_PASS_AUTO_SHIFT               (0U)
+#define TRNG_BI_PASS_AUTO_BI_PASS_AUTO_MASK                (0x1U << TRNG_BI_PASS_AUTO_BI_PASS_AUTO_SHIFT)               /* 0x00000001 */
+/* SOFT_BI_RESULT_VLD */
+#define TRNG_SOFT_BI_RESULT_VLD_OFFSET                     (0x118U)
+#define TRNG_SOFT_BI_RESULT_VLD_SOFT_BI_RESULT_VLD_SHIFT   (0U)
+#define TRNG_SOFT_BI_RESULT_VLD_SOFT_BI_RESULT_VLD_MASK    (0x1U << TRNG_SOFT_BI_RESULT_VLD_SOFT_BI_RESULT_VLD_SHIFT)   /* 0x00000001 */
+/* SOFT_BI_RESULT_PASS */
+#define TRNG_SOFT_BI_RESULT_PASS_OFFSET                    (0x11CU)
+#define TRNG_SOFT_BI_RESULT_PASS_SOFT_BI_RESULT_PASS_SHIFT (0U)
+#define TRNG_SOFT_BI_RESULT_PASS_SOFT_BI_RESULT_PASS_MASK  (0x1U << TRNG_SOFT_BI_RESULT_PASS_SOFT_BI_RESULT_PASS_SHIFT) /* 0x00000001 */
+/* ENTROPY_CK_RESULT_VLD */
+#define TRNG_ENTROPY_CK_RESULT_VLD_OFFSET                  (0x120U)
+#define TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_FB_CK_VLD_SHIFT (0U)
+#define TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_FB_CK_VLD_MASK  (0x1U << TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_FB_CK_VLD_SHIFT) /* 0x00000001 */
+#define TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_FI_CK_VLD_SHIFT (1U)
+#define TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_FI_CK_VLD_MASK  (0x1U << TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_FI_CK_VLD_SHIFT) /* 0x00000002 */
+#define TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_BI_CK_VLD_SHIFT (2U)
+#define TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_BI_CK_VLD_MASK  (0x1U << TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_BI_CK_VLD_SHIFT) /* 0x00000004 */
+#define TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_AVAR_VLD_SHIFT  (3U)
+#define TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_AVAR_VLD_MASK   (0x1U << TRNG_ENTROPY_CK_RESULT_VLD_ENTROPY_AVAR_VLD_SHIFT)  /* 0x00000008 */
+/* ENTROPY_FB_CK_RESULT */
+#define TRNG_ENTROPY_FB_CK_RESULT_OFFSET                   (0x124U)
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT8_RESULT_SHIFT (0U)
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT8_RESULT_MASK (0x1U << TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT8_RESULT_SHIFT) /* 0x00000001 */
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT16_RESULT_SHIFT (1U)
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT16_RESULT_MASK (0x1U << TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT16_RESULT_SHIFT) /* 0x00000002 */
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT32_RESULT_SHIFT (2U)
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT32_RESULT_MASK (0x1U << TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT32_RESULT_SHIFT) /* 0x00000004 */
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT64_RESULT_SHIFT (3U)
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT64_RESULT_MASK (0x1U << TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT64_RESULT_SHIFT) /* 0x00000008 */
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT128_RESULT_SHIFT (4U)
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT128_RESULT_MASK (0x1U << TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT128_RESULT_SHIFT) /* 0x00000010 */
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT_FULL_RESULT_SHIFT (5U)
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT_FULL_RESULT_MASK (0x1U << TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT_FULL_RESULT_SHIFT) /* 0x00000020 */
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT_GLOBAL_RESULT_SHIFT (6U)
+#define TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT_GLOBAL_RESULT_MASK (0x1U << TRNG_ENTROPY_FB_CK_RESULT_ENTROPY_FB_BIT_GLOBAL_RESULT_SHIFT) /* 0x00000040 */
+/* ENTROPY_FI_CK_RESULT */
+#define TRNG_ENTROPY_FI_CK_RESULT_OFFSET                   (0x128U)
+#define TRNG_ENTROPY_FI_CK_RESULT_ENTROPY_FI_CHECK_RESULT_SHIFT (0U)
+#define TRNG_ENTROPY_FI_CK_RESULT_ENTROPY_FI_CHECK_RESULT_MASK (0x1U << TRNG_ENTROPY_FI_CK_RESULT_ENTROPY_FI_CHECK_RESULT_SHIFT) /* 0x00000001 */
+/* ENTROPY_BI_CK_RESULT0 */
+#define TRNG_ENTROPY_BI_CK_RESULT0_OFFSET                  (0x12CU)
+#define TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V0_RESULT_SHIFT (0U)
+#define TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V0_RESULT_MASK (0xFFU << TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V0_RESULT_SHIFT) /* 0x000000FF */
+#define TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V1_RESULT_SHIFT (8U)
+#define TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V1_RESULT_MASK (0xFFU << TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V1_RESULT_SHIFT) /* 0x0000FF00 */
+#define TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V2_RESULT_SHIFT (16U)
+#define TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V2_RESULT_MASK (0xFFU << TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V2_RESULT_SHIFT) /* 0x00FF0000 */
+#define TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V3_RESULT_SHIFT (24U)
+#define TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V3_RESULT_MASK (0xFFU << TRNG_ENTROPY_BI_CK_RESULT0_ENTROPY_BI_V3_RESULT_SHIFT) /* 0xFF000000 */
+/* ENTROPY_BI_CK_RESULT1 */
+#define TRNG_ENTROPY_BI_CK_RESULT1_OFFSET                  (0x130U)
+#define TRNG_ENTROPY_BI_CK_RESULT1_ENTROPY_BI_V4_RESULT_SHIFT (0U)
+#define TRNG_ENTROPY_BI_CK_RESULT1_ENTROPY_BI_V4_RESULT_MASK (0xFFU << TRNG_ENTROPY_BI_CK_RESULT1_ENTROPY_BI_V4_RESULT_SHIFT) /* 0x000000FF */
+#define TRNG_ENTROPY_BI_CK_RESULT1_ENTROPY_BI_V5_RESULT_SHIFT (8U)
+#define TRNG_ENTROPY_BI_CK_RESULT1_ENTROPY_BI_V5_RESULT_MASK (0xFFU << TRNG_ENTROPY_BI_CK_RESULT1_ENTROPY_BI_V5_RESULT_SHIFT) /* 0x0000FF00 */
+#define TRNG_ENTROPY_BI_CK_RESULT1_ENTROPY_BI_V6_RESULT_SHIFT (16U)
+#define TRNG_ENTROPY_BI_CK_RESULT1_ENTROPY_BI_V6_RESULT_MASK (0xFFU << TRNG_ENTROPY_BI_CK_RESULT1_ENTROPY_BI_V6_RESULT_SHIFT) /* 0x00FF0000 */
+/* TRAND_CK_RESULT_VLD */
+#define TRNG_TRAND_CK_RESULT_VLD_OFFSET                    (0x134U)
+#define TRNG_TRAND_CK_RESULT_VLD_TRAND_FB_CK_VLD_SHIFT     (0U)
+#define TRNG_TRAND_CK_RESULT_VLD_TRAND_FB_CK_VLD_MASK      (0x1U << TRNG_TRAND_CK_RESULT_VLD_TRAND_FB_CK_VLD_SHIFT)     /* 0x00000001 */
+#define TRNG_TRAND_CK_RESULT_VLD_TRAND_FI_CK_VLD_SHIFT     (1U)
+#define TRNG_TRAND_CK_RESULT_VLD_TRAND_FI_CK_VLD_MASK      (0x1U << TRNG_TRAND_CK_RESULT_VLD_TRAND_FI_CK_VLD_SHIFT)     /* 0x00000002 */
+#define TRNG_TRAND_CK_RESULT_VLD_TRAND_BI_CK_VLD_SHIFT     (2U)
+#define TRNG_TRAND_CK_RESULT_VLD_TRAND_BI_CK_VLD_MASK      (0x1U << TRNG_TRAND_CK_RESULT_VLD_TRAND_BI_CK_VLD_SHIFT)     /* 0x00000004 */
+#define TRNG_TRAND_CK_RESULT_VLD_TRAND_AVAR_VLD_SHIFT      (3U)
+#define TRNG_TRAND_CK_RESULT_VLD_TRAND_AVAR_VLD_MASK       (0x1U << TRNG_TRAND_CK_RESULT_VLD_TRAND_AVAR_VLD_SHIFT)      /* 0x00000008 */
+/* TRAND_FB_CK_RESULT */
+#define TRNG_TRAND_FB_CK_RESULT_OFFSET                     (0x138U)
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT8_RESULT_SHIFT (0U)
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT8_RESULT_MASK  (0x1U << TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT8_RESULT_SHIFT) /* 0x00000001 */
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT16_RESULT_SHIFT (1U)
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT16_RESULT_MASK (0x1U << TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT16_RESULT_SHIFT) /* 0x00000002 */
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT32_RESULT_SHIFT (2U)
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT32_RESULT_MASK (0x1U << TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT32_RESULT_SHIFT) /* 0x00000004 */
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT64_RESULT_SHIFT (3U)
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT64_RESULT_MASK (0x1U << TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT64_RESULT_SHIFT) /* 0x00000008 */
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT128_RESULT_SHIFT (4U)
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT128_RESULT_MASK (0x1U << TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT128_RESULT_SHIFT) /* 0x00000010 */
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT_FULL_RESULT_SHIFT (5U)
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT_FULL_RESULT_MASK (0x1U << TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT_FULL_RESULT_SHIFT) /* 0x00000020 */
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT_GLOBAL_RESULT_SHIFT (6U)
+#define TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT_GLOBAL_RESULT_MASK (0x1U << TRNG_TRAND_FB_CK_RESULT_TRAND_FB_BIT_GLOBAL_RESULT_SHIFT) /* 0x00000040 */
+/* TRAND_FI_CK_RESULT */
+#define TRNG_TRAND_FI_CK_RESULT_OFFSET                     (0x13CU)
+#define TRNG_TRAND_FI_CK_RESULT_TRAND_FI_CHECK_RESULT_SHIFT (0U)
+#define TRNG_TRAND_FI_CK_RESULT_TRAND_FI_CHECK_RESULT_MASK (0x1U << TRNG_TRAND_FI_CK_RESULT_TRAND_FI_CHECK_RESULT_SHIFT) /* 0x00000001 */
+/* TRAND_BI_CK_RESULT0 */
+#define TRNG_TRAND_BI_CK_RESULT0_OFFSET                    (0x140U)
+#define TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V0_RESULT_SHIFT  (0U)
+#define TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V0_RESULT_MASK   (0xFFU << TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V0_RESULT_SHIFT) /* 0x000000FF */
+#define TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V1_RESULT_SHIFT  (8U)
+#define TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V1_RESULT_MASK   (0xFFU << TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V1_RESULT_SHIFT) /* 0x0000FF00 */
+#define TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V2_RESULT_SHIFT  (16U)
+#define TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V2_RESULT_MASK   (0xFFU << TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V2_RESULT_SHIFT) /* 0x00FF0000 */
+#define TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V3_RESULT_SHIFT  (24U)
+#define TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V3_RESULT_MASK   (0xFFU << TRNG_TRAND_BI_CK_RESULT0_TRAND_BI_V3_RESULT_SHIFT) /* 0xFF000000 */
+/* TRAND_BI_CK_RESULT1 */
+#define TRNG_TRAND_BI_CK_RESULT1_OFFSET                    (0x144U)
+#define TRNG_TRAND_BI_CK_RESULT1_TRAND_BI_V4_RESULT_SHIFT  (0U)
+#define TRNG_TRAND_BI_CK_RESULT1_TRAND_BI_V4_RESULT_MASK   (0xFFU << TRNG_TRAND_BI_CK_RESULT1_TRAND_BI_V4_RESULT_SHIFT) /* 0x000000FF */
+#define TRNG_TRAND_BI_CK_RESULT1_TRAND_BI_V5_RESULT_SHIFT  (8U)
+#define TRNG_TRAND_BI_CK_RESULT1_TRAND_BI_V5_RESULT_MASK   (0xFFU << TRNG_TRAND_BI_CK_RESULT1_TRAND_BI_V5_RESULT_SHIFT) /* 0x0000FF00 */
+#define TRNG_TRAND_BI_CK_RESULT1_TRAND_BI_V6_RESULT_SHIFT  (16U)
+#define TRNG_TRAND_BI_CK_RESULT1_TRAND_BI_V6_RESULT_MASK   (0xFFU << TRNG_TRAND_BI_CK_RESULT1_TRAND_BI_V6_RESULT_SHIFT) /* 0x00FF0000 */
+/* NONCE_0 */
+#define TRNG_NONCE_0_OFFSET                                (0x200U)
+#define TRNG_NONCE_0_NONCE_0_SHIFT                         (0U)
+#define TRNG_NONCE_0_NONCE_0_MASK                          (0xFFFFFFFFU << TRNG_NONCE_0_NONCE_0_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_1 */
+#define TRNG_NONCE_1_OFFSET                                (0x204U)
+#define TRNG_NONCE_1_NONCE_1_SHIFT                         (0U)
+#define TRNG_NONCE_1_NONCE_1_MASK                          (0xFFFFFFFFU << TRNG_NONCE_1_NONCE_1_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_2 */
+#define TRNG_NONCE_2_OFFSET                                (0x208U)
+#define TRNG_NONCE_2_NONCE_2_SHIFT                         (0U)
+#define TRNG_NONCE_2_NONCE_2_MASK                          (0xFFFFFFFFU << TRNG_NONCE_2_NONCE_2_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_3 */
+#define TRNG_NONCE_3_OFFSET                                (0x20CU)
+#define TRNG_NONCE_3_NONCE_3_SHIFT                         (0U)
+#define TRNG_NONCE_3_NONCE_3_MASK                          (0xFFFFFFFFU << TRNG_NONCE_3_NONCE_3_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_4 */
+#define TRNG_NONCE_4_OFFSET                                (0x210U)
+#define TRNG_NONCE_4_NONCE_4_SHIFT                         (0U)
+#define TRNG_NONCE_4_NONCE_4_MASK                          (0xFFFFFFFFU << TRNG_NONCE_4_NONCE_4_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_5 */
+#define TRNG_NONCE_5_OFFSET                                (0x214U)
+#define TRNG_NONCE_5_NONCE_5_SHIFT                         (0U)
+#define TRNG_NONCE_5_NONCE_5_MASK                          (0xFFFFFFFFU << TRNG_NONCE_5_NONCE_5_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_6 */
+#define TRNG_NONCE_6_OFFSET                                (0x218U)
+#define TRNG_NONCE_6_NONCE_6_SHIFT                         (0U)
+#define TRNG_NONCE_6_NONCE_6_MASK                          (0xFFFFFFFFU << TRNG_NONCE_6_NONCE_6_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_7 */
+#define TRNG_NONCE_7_OFFSET                                (0x21CU)
+#define TRNG_NONCE_7                                       (0x0U)
+#define TRNG_NONCE_7_NONCE_7_SHIFT                         (0U)
+#define TRNG_NONCE_7_NONCE_7_MASK                          (0xFFFFFFFFU << TRNG_NONCE_7_NONCE_7_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_8 */
+#define TRNG_NONCE_8_OFFSET                                (0x220U)
+#define TRNG_NONCE_8_NONCE_8_SHIFT                         (0U)
+#define TRNG_NONCE_8_NONCE_8_MASK                          (0xFFFFFFFFU << TRNG_NONCE_8_NONCE_8_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_9 */
+#define TRNG_NONCE_9_OFFSET                                (0x224U)
+#define TRNG_NONCE_9_NONCE_9_SHIFT                         (0U)
+#define TRNG_NONCE_9_NONCE_9_MASK                          (0xFFFFFFFFU << TRNG_NONCE_9_NONCE_9_SHIFT)                  /* 0xFFFFFFFF */
+/* NONCE_10 */
+#define TRNG_NONCE_10_OFFSET                               (0x228U)
+#define TRNG_NONCE_10_NONCE_10_SHIFT                       (0U)
+#define TRNG_NONCE_10_NONCE_10_MASK                        (0xFFFFFFFFU << TRNG_NONCE_10_NONCE_10_SHIFT)                /* 0xFFFFFFFF */
+/* NONCE_11 */
+#define TRNG_NONCE_11_OFFSET                               (0x22CU)
+#define TRNG_NONCE_11_NONCE_11_SHIFT                       (0U)
+#define TRNG_NONCE_11_NONCE_11_MASK                        (0xFFFFFFFFU << TRNG_NONCE_11_NONCE_11_SHIFT)                /* 0xFFFFFFFF */
+/* ADDITION_0 */
+#define TRNG_ADDITION_0_OFFSET                             (0x300U)
+#define TRNG_ADDITION_0_ADDITION_0_SHIFT                   (0U)
+#define TRNG_ADDITION_0_ADDITION_0_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_0_ADDITION_0_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_1 */
+#define TRNG_ADDITION_1_OFFSET                             (0x304U)
+#define TRNG_ADDITION_1_ADDITION_1_SHIFT                   (0U)
+#define TRNG_ADDITION_1_ADDITION_1_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_1_ADDITION_1_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_2 */
+#define TRNG_ADDITION_2_OFFSET                             (0x308U)
+#define TRNG_ADDITION_2_ADDITION_2_SHIFT                   (0U)
+#define TRNG_ADDITION_2_ADDITION_2_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_2_ADDITION_2_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_3 */
+#define TRNG_ADDITION_3_OFFSET                             (0x30CU)
+#define TRNG_ADDITION_3_ADDITION_3_SHIFT                   (0U)
+#define TRNG_ADDITION_3_ADDITION_3_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_3_ADDITION_3_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_4 */
+#define TRNG_ADDITION_4_OFFSET                             (0x310U)
+#define TRNG_ADDITION_4_ADDITION_4_SHIFT                   (0U)
+#define TRNG_ADDITION_4_ADDITION_4_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_4_ADDITION_4_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_5 */
+#define TRNG_ADDITION_5_OFFSET                             (0x314U)
+#define TRNG_ADDITION_5_ADDITION_5_SHIFT                   (0U)
+#define TRNG_ADDITION_5_ADDITION_5_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_5_ADDITION_5_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_6 */
+#define TRNG_ADDITION_6_OFFSET                             (0x318U)
+#define TRNG_ADDITION_6_ADDITION_6_SHIFT                   (0U)
+#define TRNG_ADDITION_6_ADDITION_6_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_6_ADDITION_6_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_7 */
+#define TRNG_ADDITION_7_OFFSET                             (0x31CU)
+#define TRNG_ADDITION_7_ADDITION_7_SHIFT                   (0U)
+#define TRNG_ADDITION_7_ADDITION_7_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_7_ADDITION_7_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_8 */
+#define TRNG_ADDITION_8_OFFSET                             (0x320U)
+#define TRNG_ADDITION_8_ADDITION_8_SHIFT                   (0U)
+#define TRNG_ADDITION_8_ADDITION_8_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_8_ADDITION_8_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_9 */
+#define TRNG_ADDITION_9_OFFSET                             (0x324U)
+#define TRNG_ADDITION_9_ADDITION_9_SHIFT                   (0U)
+#define TRNG_ADDITION_9_ADDITION_9_MASK                    (0xFFFFFFFFU << TRNG_ADDITION_9_ADDITION_9_SHIFT)            /* 0xFFFFFFFF */
+/* ADDITION_10 */
+#define TRNG_ADDITION_10_OFFSET                            (0x328U)
+#define TRNG_ADDITION_10_ADDITION_10_SHIFT                 (0U)
+#define TRNG_ADDITION_10_ADDITION_10_MASK                  (0xFFFFFFFFU << TRNG_ADDITION_10_ADDITION_10_SHIFT)          /* 0xFFFFFFFF */
+/* ADDITION_11 */
+#define TRNG_ADDITION_11_OFFSET                            (0x32CU)
+#define TRNG_ADDITION_11_ADDITION_11_SHIFT                 (0U)
+#define TRNG_ADDITION_11_ADDITION_11_MASK                  (0xFFFFFFFFU << TRNG_ADDITION_11_ADDITION_11_SHIFT)          /* 0xFFFFFFFF */
 /******************************************CAN*******************************************/
 /* MODE */
 #define CAN_MODE_OFFSET                                    (0x0U)
