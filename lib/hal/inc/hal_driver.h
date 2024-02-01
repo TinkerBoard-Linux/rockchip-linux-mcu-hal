@@ -234,6 +234,10 @@
 #include "hal_touchkey.h"
 #endif
 
+#ifdef HAL_TRNG_MODULE_ENABLED
+#include "hal_trng.h"
+#endif
+
 #ifdef HAL_TSADC_MODULE_ENABLED
 #include "hal_tsadc.h"
 #endif

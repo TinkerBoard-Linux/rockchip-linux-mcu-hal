@@ -809,6 +809,19 @@ const struct HAL_SPI_DEV g_spi2Dev = {
 };
 #endif
 
+#ifdef HAL_TRNG_MODULE_ENABLED
+const struct HAL_TRNG_DEV g_trngnsDev =
+{
+    .pReg = TRNG0,
+};
+
+const struct HAL_TRNG_DEV g_trngsDev =
+{
+    .pReg = TRNG1,
+};
+
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
