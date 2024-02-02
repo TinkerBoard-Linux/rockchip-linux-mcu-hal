@@ -615,6 +615,20 @@ static void CRU_Init(void)
     s_fracCom0Freq = HAL_CRU_ClkGetOtherFreq(CLK_FRAC_COMMON0);
     s_fracCom1Freq = HAL_CRU_ClkGetOtherFreq(CLK_FRAC_COMMON1);
     s_fracCom2Freq = HAL_CRU_ClkGetOtherFreq(CLK_FRAC_COMMON2);
+    if (GRF_PMU->OS_REG2 == 0) {
+        HAL_CRU_ClkDisable(ACLK_DMA2DDR_GATE);
+        HAL_CRU_ClkDisable(PCLK_DMA2DDR_GATE);
+        HAL_CRU_ClkDisable(HCLK_DDR_PHY_GATE);
+        HAL_CRU_ClkDisable(PCLK_DDRC_GATE);
+        HAL_CRU_ClkDisable(PCLK_DDR_MONITOR_GATE);
+        HAL_CRU_ClkDisable(CLK_DDR_MONITOR_TIMER_GATE);
+        HAL_CRU_ClkDisable(PCLK_DDR_HWLP_GATE);
+        HAL_CRU_ClkDisable(ACLK_DDRC_0_GATE);
+        HAL_CRU_ClkDisable(ACLK_DDRC_1_GATE);
+        HAL_CRU_ClkDisable(ACLK_DDR_NIU_GATE);
+        HAL_CRU_ClkDisable(CLK_DDRC_GATE);
+        HAL_CRU_ClkDisable(CLK_DDR_MONITOR_GATE);
+    }
 }
 
 /**
@@ -798,17 +812,26 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
     switch (clockName) {
     case PLL_GPLL:
-        error = HAL_CRU_SetPllFreq(&GPLL, rate);
+        /* if have ddr and ddr parent pll is GPLL, GPLL not allow setting */
+        if ((GRF_PMU->OS_REG2 == 0) || (HAL_CRU_ClkGetMux(CLK_DDRPHY_SEL) != 0)) {
+            error = HAL_CRU_SetPllFreq(&GPLL, rate);
+        }
         s_gpllFreq = HAL_CRU_GetPllFreq(&GPLL);
 
         return error;
     case PLL_VPLL0:
-        error = HAL_CRU_SetPllFreq(&VPLL0, rate);
+        /* if have ddr and ddr parent pll is VPLL0, VPLL0 not allow setting */
+        if ((GRF_PMU->OS_REG2 == 0) || (HAL_CRU_ClkGetMux(CLK_DDRPHY_SEL) != 1)) {
+            error = HAL_CRU_SetPllFreq(&VPLL0, rate);
+        }
         s_vpll0Freq = HAL_CRU_GetPllFreq(&VPLL0);
 
         return error;
     case PLL_VPLL1:
-        error = HAL_CRU_SetPllFreq(&VPLL1, rate);
+        /* if have ddr and ddr parent pll is vpll1, vpll1 not allow setting */
+        if ((GRF_PMU->OS_REG2 == 0) || (HAL_CRU_ClkGetMux(CLK_DDRPHY_SEL) != 2)) {
+            error = HAL_CRU_SetPllFreq(&VPLL1, rate);
+        }
         s_vpll1Freq = HAL_CRU_GetPllFreq(&VPLL1);
 
         return error;
