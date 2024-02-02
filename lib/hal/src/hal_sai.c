@@ -523,15 +523,15 @@ HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
     MODIFY_REG(sai->pReg->FSCR, SAI_FSCR_FW_MASK | SAI_FSCR_FPW_MASK, fscr);
 
     bclkRate = sai->fwRatio * slotWidth * chPerLane * params->sampleRate;
+#if defined(HAL_CRU_MODULE_ENABLED)
     if (sai->isClkAuto) {
         HAL_CRU_ClkSetFreq(sai->mclk, bclkRate);
     }
 
     mclkRate = HAL_CRU_ClkGetFreq(sai->mclk);
-    if (mclkRate == 0) { /* In case of CRU module not defined */
-        mclkRate = bclkRate;
-    }
-
+#else
+    mclkRate = bclkRate;
+#endif
     divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
     mclkReqRate = bclkRate * divBclk;
 
