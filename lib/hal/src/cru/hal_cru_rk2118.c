@@ -21,13 +21,23 @@
 /********************* Private MACRO Definition ******************************/
 /********************* Private Structure Definition **************************/
 
-static struct PLL_CONFIG PLL_TABLE[] = {
+static struct PLL_CONFIG PLL_TABLE_24M[] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
     RK_PLL_RATE(1350000000, 4, 225, 1, 1, 0, 0),
     RK_PLL_RATE(1179648000, 1, 49, 1, 1, 1, 2550137),
     RK_PLL_RATE(1000000000, 3, 125, 1, 1, 0, 0),
     RK_PLL_RATE(903168000, 1, 75, 2, 1, 1, 4429185),
     RK_PLL_RATE(800000000, 3, 200, 2, 1, 0, 0),
+    { 0 /* sentinel */ },
+};
+
+static struct PLL_CONFIG PLL_TABLE_24P576M[] = {
+    /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
+    RK_PLL_RATE(1350000000, 1, 54, 1, 1, 1, 15630336),
+    RK_PLL_RATE(1179648000, 1, 48, 1, 1, 0, 0),
+    RK_PLL_RATE(1000000000, 1, 40, 1, 1, 1, 11578026),
+    RK_PLL_RATE(903168000, 2, 147, 2, 1, 0, 0),
+    RK_PLL_RATE(800000000, 1, 65, 2, 1, 1, 1747626),
     { 0 /* sentinel */ },
 };
 
@@ -62,7 +72,7 @@ static struct PLL_SETUP GPLL = {
     .modeShift = 0,
     .lockShift = 10,
     .modeMask = 0x3 << 0,
-    .rateTable = PLL_TABLE,
+    .rateTable = PLL_TABLE_24M,
 };
 
 static struct PLL_SETUP VPLL0 = {
@@ -73,7 +83,7 @@ static struct PLL_SETUP VPLL0 = {
     .modeShift = 2,
     .lockShift = 10,
     .modeMask = 0x3 << 2,
-    .rateTable = PLL_TABLE,
+    .rateTable = PLL_TABLE_24M,
 };
 
 static struct PLL_SETUP VPLL1 = {
@@ -84,7 +94,7 @@ static struct PLL_SETUP VPLL1 = {
     .modeShift = 4,
     .lockShift = 10,
     .modeMask = 0x3 << 4,
-    .rateTable = PLL_TABLE,
+    .rateTable = PLL_TABLE_24M,
 };
 /********************* Private Variable Definition ***************************/
 
@@ -617,6 +627,11 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     uint32_t clkDiv = CLK_GET_DIV(clockName);
     uint32_t pRate = s_gpllFreq;
 
+    if (PLL_INPUT_OSC_RATE == 24576000) {
+        GPLL.rateTable = PLL_TABLE_24P576M;
+        VPLL0.rateTable = PLL_TABLE_24P576M;
+        VPLL1.rateTable = PLL_TABLE_24P576M;
+    }
     if (!s_gpllFreq) {
         CRU_Init();
     }
@@ -767,6 +782,12 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     uint32_t clkMux = CLK_GET_MUX(clockName), mux = 0;
     uint32_t clkDiv = CLK_GET_DIV(clockName), div = 0;
     uint32_t pRate;
+
+    if (PLL_INPUT_OSC_RATE == 24576000) {
+        GPLL.rateTable = PLL_TABLE_24P576M;
+        VPLL0.rateTable = PLL_TABLE_24P576M;
+        VPLL1.rateTable = PLL_TABLE_24P576M;
+    }
 
     if (!s_gpllFreq) {
         CRU_Init();
