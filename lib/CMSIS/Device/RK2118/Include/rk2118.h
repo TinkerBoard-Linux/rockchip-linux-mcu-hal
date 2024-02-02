@@ -52,6 +52,193 @@ struct IIR_ACC_TCB_REG {
     __IO uint32_t SCTL2;                              /* Address Offset: 0x0038 */
     __IO uint32_t SGCTL;                              /* Address Offset: 0x003C */
 };
+/* GMAC Register Structure Define */
+struct GMAC_REG {
+    __IO uint32_t MAC_CONFIGURATION;                  /* Address Offset: 0x0000 */
+    __IO uint32_t MAC_EXT_CONFIGURATION;              /* Address Offset: 0x0004 */
+    __IO uint32_t MAC_PACKET_FILTER;                  /* Address Offset: 0x0008 */
+    __IO uint32_t MAC_WATCHDOG_TIMEOUT;               /* Address Offset: 0x000C */
+    __IO uint32_t MAC_Hash_Table_Reg[2];              /* Address Offset: 0x0010 */
+         uint32_t RESERVED0018[14];                   /* Address Offset: 0x0018 */
+    __IO uint32_t MAC_VLAN_TAG;                       /* Address Offset: 0x0050 */
+         uint32_t RESERVED0054;                       /* Address Offset: 0x0054 */
+    __IO uint32_t MAC_VLAN_HASH_TABLE;                /* Address Offset: 0x0058 */
+         uint32_t RESERVED005C[5];                    /* Address Offset: 0x005C */
+    __IO uint32_t MAC_Q0_TX_FLOW_CTRL;                /* Address Offset: 0x0070 */
+         uint32_t RESERVED0074[7];                    /* Address Offset: 0x0074 */
+    __IO uint32_t MAC_RX_FLOW_CTRL;                   /* Address Offset: 0x0090 */
+         uint32_t RESERVED0094[7];                    /* Address Offset: 0x0094 */
+    __I  uint32_t MAC_INTERRUPT_STATUS;               /* Address Offset: 0x00B0 */
+    __IO uint32_t MAC_INTERRUPT_ENABLE;               /* Address Offset: 0x00B4 */
+    __I  uint32_t MAC_RX_TX_STATUS;                   /* Address Offset: 0x00B8 */
+         uint32_t RESERVED00BC;                       /* Address Offset: 0x00BC */
+    __IO uint32_t MAC_PMT_CONTROL_STATUS;             /* Address Offset: 0x00C0 */
+    union {
+        __IO uint32_t MAC_RWK_PACKET_FILTER;              /* Address Offset: 0x00C4 */
+        __IO uint32_t RWK_FILTER0_BYTE_MASK;              /* Address Offset: 0x00C4 */
+        __IO uint32_t RWK_FILTER1_BYTE_MASK;              /* Address Offset: 0x00C4 */
+        __IO uint32_t RWK_FILTER2_BYTE_MASK;              /* Address Offset: 0x00C4 */
+        __IO uint32_t RWK_FILTER3_BYTE_MASK;              /* Address Offset: 0x00C4 */
+        __IO uint32_t RWK_FILTER01_CRC;                   /* Address Offset: 0x00C4 */
+        __IO uint32_t RWK_FILTER23_CRC;                   /* Address Offset: 0x00C4 */
+        __IO uint32_t RWK_FILTER_OFFSET;                  /* Address Offset: 0x00C4 */
+        __IO uint32_t RWK_FILTER_COMMAND;                 /* Address Offset: 0x00C4 */
+    };
+         uint32_t RESERVED00C8[18];                   /* Address Offset: 0x00C8 */
+    __IO uint32_t MAC_VERSION;                        /* Address Offset: 0x0110 */
+    __I  uint32_t MAC_DEBUG;                          /* Address Offset: 0x0114 */
+         uint32_t RESERVED0118;                       /* Address Offset: 0x0118 */
+    __I  uint32_t MAC_HW_Feature[4];                  /* Address Offset: 0x011C */
+         uint32_t RESERVED012C[53];                   /* Address Offset: 0x012C */
+    __IO uint32_t MAC_MDIO_ADDRESS;                   /* Address Offset: 0x0200 */
+    __IO uint32_t MAC_MDIO_DATA;                      /* Address Offset: 0x0204 */
+         uint32_t RESERVED0208[2];                    /* Address Offset: 0x0208 */
+    __IO uint32_t MAC_ARP_ADDRESS;                    /* Address Offset: 0x0210 */
+         uint32_t RESERVED0214[7];                    /* Address Offset: 0x0214 */
+    __IO uint32_t MAC_CSR_SW_CTRL;                    /* Address Offset: 0x0230 */
+         uint32_t RESERVED0234;                       /* Address Offset: 0x0234 */
+    __IO uint32_t MAC_Ext_Cfg[1];                     /* Address Offset: 0x0238 */
+         uint32_t RESERVED023C[49];                   /* Address Offset: 0x023C */
+    __IO uint32_t MAC_ADDRESS0_HIGH;                  /* Address Offset: 0x0300 */
+    __IO uint32_t MAC_ADDRESS0_LOW;                   /* Address Offset: 0x0304 */
+         uint32_t RESERVED0308[254];                  /* Address Offset: 0x0308 */
+    __IO uint32_t MMC_CONTROL;                        /* Address Offset: 0x0700 */
+    __I  uint32_t MMC_RX_INTERRUPT;                   /* Address Offset: 0x0704 */
+    __I  uint32_t MMC_TX_INTERRUPT;                   /* Address Offset: 0x0708 */
+    __IO uint32_t MMC_RX_INTERRUPT_MASK;              /* Address Offset: 0x070C */
+    __IO uint32_t MMC_TX_INTERRUPT_MASK;              /* Address Offset: 0x0710 */
+    __I  uint32_t TX_OCTET_COUNT_GOOD_BAD;            /* Address Offset: 0x0714 */
+    __I  uint32_t TX_PACKET_COUNT_GOOD_BAD;           /* Address Offset: 0x0718 */
+         uint32_t RESERVED071C[11];                   /* Address Offset: 0x071C */
+    __I  uint32_t TX_UNDERFLOW_ERROR_PACKETS;         /* Address Offset: 0x0748 */
+         uint32_t RESERVED074C[5];                    /* Address Offset: 0x074C */
+    __I  uint32_t TX_CARRIER_ERROR_PACKETS;           /* Address Offset: 0x0760 */
+    __I  uint32_t TX_OCTET_COUNT_GOOD;                /* Address Offset: 0x0764 */
+    __I  uint32_t TX_PACKET_COUNT_GOOD;               /* Address Offset: 0x0768 */
+         uint32_t RESERVED076C;                       /* Address Offset: 0x076C */
+    __I  uint32_t TX_PAUSE_PACKETS;                   /* Address Offset: 0x0770 */
+         uint32_t RESERVED0774[3];                    /* Address Offset: 0x0774 */
+    __I  uint32_t RX_PACKETS_COUNT_GOOD_BAD;          /* Address Offset: 0x0780 */
+    __I  uint32_t RX_OCTET_COUNT_GOOD_BAD;            /* Address Offset: 0x0784 */
+    __I  uint32_t RX_OCTET_COUNT_GOOD;                /* Address Offset: 0x0788 */
+         uint32_t RESERVED078C;                       /* Address Offset: 0x078C */
+    __I  uint32_t RX_MULTICAST_PACKETS_GOOD;          /* Address Offset: 0x0790 */
+    __I  uint32_t RX_CRC_ERROR_PACKETS;               /* Address Offset: 0x0794 */
+         uint32_t RESERVED0798[12];                   /* Address Offset: 0x0798 */
+    __I  uint32_t RX_LENGTH_ERROR_PACKETS;            /* Address Offset: 0x07C8 */
+         uint32_t RESERVED07CC;                       /* Address Offset: 0x07CC */
+    __I  uint32_t RX_PAUSE_PACKETS;                   /* Address Offset: 0x07D0 */
+    __I  uint32_t RX_FIFO_OVERFLOW_PACKETS;           /* Address Offset: 0x07D4 */
+         uint32_t RESERVED07D8[10];                   /* Address Offset: 0x07D8 */
+    __IO uint32_t MMC_IPC_RX_INTERRUPT_MASK;          /* Address Offset: 0x0800 */
+         uint32_t RESERVED0804;                       /* Address Offset: 0x0804 */
+    __I  uint32_t MMC_IPC_RX_INTERRUPT;               /* Address Offset: 0x0808 */
+         uint32_t RESERVED080C;                       /* Address Offset: 0x080C */
+    __I  uint32_t RXIPV4_GOOD_PACKETS;                /* Address Offset: 0x0810 */
+    __I  uint32_t RXIPV4_HEADER_ERROR_PACKETS;        /* Address Offset: 0x0814 */
+         uint32_t RESERVED0818[3];                    /* Address Offset: 0x0818 */
+    __I  uint32_t RXIPV6_GOOD_PACKETS;                /* Address Offset: 0x0824 */
+    __I  uint32_t RXIPV6_HEADER_ERROR_PACKETS;        /* Address Offset: 0x0828 */
+         uint32_t RESERVED082C[2];                    /* Address Offset: 0x082C */
+    __I  uint32_t RXUDP_ERROR_PACKETS;                /* Address Offset: 0x0834 */
+         uint32_t RESERVED0838;                       /* Address Offset: 0x0838 */
+    __I  uint32_t RXTCP_ERROR_PACKETS;                /* Address Offset: 0x083C */
+         uint32_t RESERVED0840;                       /* Address Offset: 0x0840 */
+    __I  uint32_t RXICMP_ERROR_PACKETS;               /* Address Offset: 0x0844 */
+         uint32_t RESERVED0848[3];                    /* Address Offset: 0x0848 */
+    __I  uint32_t RXIPV4_HEADER_ERROR_OCTETS;         /* Address Offset: 0x0854 */
+         uint32_t RESERVED0858[4];                    /* Address Offset: 0x0858 */
+    __I  uint32_t RXIPV6_HEADER_ERROR_OCTETS;         /* Address Offset: 0x0868 */
+         uint32_t RESERVED086C[2];                    /* Address Offset: 0x086C */
+    __I  uint32_t RXUDP_ERROR_OCTETS;                 /* Address Offset: 0x0874 */
+         uint32_t RESERVED0878;                       /* Address Offset: 0x0878 */
+    __I  uint32_t RXTCP_ERROR_OCTETS;                 /* Address Offset: 0x087C */
+         uint32_t RESERVED0880;                       /* Address Offset: 0x0880 */
+    __I  uint32_t RXICMP_ERROR_OCTETS;                /* Address Offset: 0x0884 */
+         uint32_t RESERVED0888[158];                  /* Address Offset: 0x0888 */
+    __IO uint32_t MAC_TIMESTAMP_CONTROL;              /* Address Offset: 0x0B00 */
+    __IO uint32_t MAC_SUB_SECOND_INCREMENT;           /* Address Offset: 0x0B04 */
+    __IO uint32_t MAC_SYSTEM_TIME_SECS;               /* Address Offset: 0x0B08 */
+    __IO uint32_t MAC_SYSTEM_TIME_NS;                 /* Address Offset: 0x0B0C */
+    __IO uint32_t MAC_SYS_TIME_SECS_UPDATE;           /* Address Offset: 0x0B10 */
+    __IO uint32_t MAC_SYS_TIME_NS_UPDATE;             /* Address Offset: 0x0B14 */
+         uint32_t RESERVED0B18[2];                    /* Address Offset: 0x0B18 */
+    union {
+        __IO uint32_t MAC_TIMESTAMP_ADDEND;               /* Address Offset: 0x0B20 */
+        __I  uint32_t MAC_TIMESTAMP_STATUS;               /* Address Offset: 0x0B20 */
+    };
+         uint32_t RESERVED0B24[3];                    /* Address Offset: 0x0B24 */
+    __I  uint32_t MAC_TX_TS_STATUS_NS;                /* Address Offset: 0x0B30 */
+    __I  uint32_t MAC_TX_TS_STATUS_SECS;              /* Address Offset: 0x0B34 */
+         uint32_t RESERVED0B38[2];                    /* Address Offset: 0x0B38 */
+    __IO uint32_t MAC_AUXILIARY_CONTROL;              /* Address Offset: 0x0B40 */
+         uint32_t RESERVED0B44;                       /* Address Offset: 0x0B44 */
+    __I  uint32_t MAC_AUXILIARY_TS_NS;                /* Address Offset: 0x0B48 */
+    __I  uint32_t MAC_AUXILIARY_TS_SECS;              /* Address Offset: 0x0B4C */
+         uint32_t RESERVED0B50[2];                    /* Address Offset: 0x0B50 */
+    __IO uint32_t MAC_TS_INGRESS_CORR_NS;             /* Address Offset: 0x0B58 */
+    __IO uint32_t MAC_TS_EGRESS_CORR_NS;              /* Address Offset: 0x0B5C */
+         uint32_t RESERVED0B60[2];                    /* Address Offset: 0x0B60 */
+    __I  uint32_t MAC_TS_INGRESS_LATENCY;             /* Address Offset: 0x0B68 */
+    __I  uint32_t MAC_TS_EGRESS_LATENCY;              /* Address Offset: 0x0B6C */
+    __IO uint32_t MAC_PPS_CONTROL;                    /* Address Offset: 0x0B70 */
+         uint32_t RESERVED0B74[3];                    /* Address Offset: 0x0B74 */
+    __IO uint32_t MAC_PPS0_TARGET_TIME_SECONDS;       /* Address Offset: 0x0B80 */
+    __IO uint32_t MAC_PPS0_TARGET_TIME_NS;            /* Address Offset: 0x0B84 */
+    __IO uint32_t MAC_PPS0_INTERVAL;                  /* Address Offset: 0x0B88 */
+    __IO uint32_t MAC_PPS0_WIDTH;                     /* Address Offset: 0x0B8C */
+         uint32_t RESERVED0B90[28];                   /* Address Offset: 0x0B90 */
+    __IO uint32_t MTL_OPERATION_MODE;                 /* Address Offset: 0x0C00 */
+         uint32_t RESERVED0C04;                       /* Address Offset: 0x0C04 */
+    __IO uint32_t MTL_DBG_CTL;                        /* Address Offset: 0x0C08 */
+    __IO uint32_t MTL_DBG_STS;                        /* Address Offset: 0x0C0C */
+    __IO uint32_t MTL_FIFO_DEBUG_DATA;                /* Address Offset: 0x0C10 */
+         uint32_t RESERVED0C14[3];                    /* Address Offset: 0x0C14 */
+    __I  uint32_t MTL_INTERRUPT_STATUS;               /* Address Offset: 0x0C20 */
+         uint32_t RESERVED0C24[55];                   /* Address Offset: 0x0C24 */
+    __IO uint32_t MTL_TXQ0_OPERATION_MODE;            /* Address Offset: 0x0D00 */
+    __I  uint32_t MTL_TXQ0_UNDERFLOW;                 /* Address Offset: 0x0D04 */
+    __I  uint32_t MTL_TXQ0_DEBUG;                     /* Address Offset: 0x0D08 */
+         uint32_t RESERVED0D0C[8];                    /* Address Offset: 0x0D0C */
+    __IO uint32_t MTL_Q0_INTERRUPT_CTRL_STATUS;       /* Address Offset: 0x0D2C */
+    __IO uint32_t MTL_RXQ0_OPERATION_MODE;            /* Address Offset: 0x0D30 */
+    __I  uint32_t MTL_RXQ0_MISS_PKT_OVF_CNT;          /* Address Offset: 0x0D34 */
+    __I  uint32_t MTL_RXQ0_DEBUG;                     /* Address Offset: 0x0D38 */
+         uint32_t RESERVED0D3C[177];                  /* Address Offset: 0x0D3C */
+    __IO uint32_t DMA_MODE;                           /* Address Offset: 0x1000 */
+    __IO uint32_t DMA_SYSBUS_MODE;                    /* Address Offset: 0x1004 */
+    __I  uint32_t DMA_INTERRUPT_STATUS;               /* Address Offset: 0x1008 */
+    __I  uint32_t DMA_Debug_Status[1];                /* Address Offset: 0x100C */
+         uint32_t RESERVED1010[12];                   /* Address Offset: 0x1010 */
+    __IO uint32_t AXI_LPI_ENTRY_INTERVAL;             /* Address Offset: 0x1040 */
+         uint32_t RESERVED1044[47];                   /* Address Offset: 0x1044 */
+    __IO uint32_t DMA_CH0_CONTROL;                    /* Address Offset: 0x1100 */
+    __IO uint32_t DMA_CH0_TX_CONTROL;                 /* Address Offset: 0x1104 */
+    __IO uint32_t DMA_CH0_RX_CONTROL;                 /* Address Offset: 0x1108 */
+         uint32_t RESERVED110C;                       /* Address Offset: 0x110C */
+    __IO uint32_t DMA_CH0_TXDESC_LIST_HADDRESS;       /* Address Offset: 0x1110 */
+    __IO uint32_t DMA_CH0_TXDESC_LIST_ADDRESS;        /* Address Offset: 0x1114 */
+    __IO uint32_t DMA_CH0_RXDESC_LIST_HAADDRESS;      /* Address Offset: 0x1118 */
+    __IO uint32_t DMA_CH0_RXDESC_LIST_ADDRESS;        /* Address Offset: 0x111C */
+    __IO uint32_t DMA_CH0_TXDESC_TAIL_POINTER;        /* Address Offset: 0x1120 */
+         uint32_t RESERVED1124;                       /* Address Offset: 0x1124 */
+    __IO uint32_t DMA_CH0_RXDESC_TAIL_POINTER;        /* Address Offset: 0x1128 */
+    __IO uint32_t DMA_CH0_TXDESC_RING_LENGTH;         /* Address Offset: 0x112C */
+    __IO uint32_t DMA_CH0_RXDESC_RING_LENGTH;         /* Address Offset: 0x1130 */
+    __IO uint32_t DMA_CH0_INTERRUPT_ENABLE;           /* Address Offset: 0x1134 */
+    __IO uint32_t DMA_CH0_RX_INTERRUPT_WATCHDOG_TIMER; /* Address Offset: 0x1138 */
+         uint32_t RESERVED113C[2];                    /* Address Offset: 0x113C */
+    __I  uint32_t DMA_CH0_CURRENT_APP_TXDESC;         /* Address Offset: 0x1144 */
+         uint32_t RESERVED1148;                       /* Address Offset: 0x1148 */
+    __I  uint32_t DMA_CH0_CURRENT_APP_RXDESC;         /* Address Offset: 0x114C */
+    __I  uint32_t DMA_CH0_CURREN_APP_TXBUFFER_H;      /* Address Offset: 0x1150 */
+    __I  uint32_t DMA_CH0_CURRENT_APP_TXBUFFER;       /* Address Offset: 0x1154 */
+    __I  uint32_t DMA_CH0_CURRENT_APP_RXBUFFER_H;     /* Address Offset: 0x1158 */
+    __I  uint32_t DMA_CH0_CURRENT_APP_RXBUFFER;       /* Address Offset: 0x115C */
+    __IO uint32_t DMA_CH0_STATUS;                     /* Address Offset: 0x1160 */
+    __I  uint32_t DMA_CH0_MISS_FRAME_CNT;             /* Address Offset: 0x1164 */
+    __I  uint32_t DMA_CH0_RX_ERI_CNT;                 /* Address Offset: 0x1168 */
+};
 /* CAN Register Structure Define */
 struct CAN_REG {
     __IO uint32_t MODE;                               /* Address Offset: 0x0000 */
@@ -1843,6 +2030,7 @@ struct IIR_ACC_REG_REG {
 /* Memory Base */
 #define FIR_ACC_TCB_BASE               0x00000000U /* FIR_ACC_TCB base address */
 #define IIR_ACC_TCB_BASE               0x00000000U /* IIR_ACC_TCB base address */
+#define GMAC_BASE                      0x40A40000U /* GMAC base address */
 #define CAN_BASE                       0x500A0000U /* CAN base address */
 #define MMC0_BASE                      0x50180000U /* MMC0 base address */
 #define VOP_BASE                       0x50190000U /* VOP base address */
@@ -1987,6 +2175,7 @@ struct IIR_ACC_REG_REG {
 
 #define FIR_ACC_TCB         ((struct FIR_ACC_TCB_REG *) FIR_ACC_TCB_BASE)
 #define IIR_ACC_TCB         ((struct IIR_ACC_TCB_REG *) IIR_ACC_TCB_BASE)
+#define GMAC                ((struct GMAC_REG *) GMAC_BASE)
 #define CAN                 ((struct CAN_REG *) CAN_BASE)
 #define MMC0                ((struct MMC_REG *) MMC0_BASE)
 #define VOP                 ((struct VOP_REG *) VOP_BASE)
@@ -2125,6 +2314,7 @@ struct IIR_ACC_REG_REG {
 
 #define IS_FIR_ACC_TCB_INSTANCE(instance) ((instance) == FIR_ACC_TCB)
 #define IS_IIR_ACC_TCB_INSTANCE(instance) ((instance) == IIR_ACC_TCB)
+#define IS_GMAC_INSTANCE(instance) ((instance) == GMAC)
 #define IS_CAN_INSTANCE(instance) ((instance) == CAN)
 #define IS_VOP_INSTANCE(instance) ((instance) == VOP)
 #define IS_FLEXBUS_INSTANCE(instance) ((instance) == FLEXBUS)
@@ -2327,6 +2517,1235 @@ struct IIR_ACC_REG_REG {
 #define IIR_ACC_TCB_SGCTL_SSESEL_MASK                      (0x1U << IIR_ACC_TCB_SGCTL_SSESEL_SHIFT)                     /* 0x00000800 */
 #define IIR_ACC_TCB_SGCTL_RND_SHIFT                        (14U)
 #define IIR_ACC_TCB_SGCTL_RND_MASK                         (0x1U << IIR_ACC_TCB_SGCTL_RND_SHIFT)                        /* 0x00004000 */
+/******************************************GMAC******************************************/
+/* MAC_CONFIGURATION */
+#define GMAC_MAC_CONFIGURATION_OFFSET                      (0x0U)
+#define GMAC_MAC_CONFIGURATION_RE_SHIFT                    (0U)
+#define GMAC_MAC_CONFIGURATION_RE_MASK                     (0x1U << GMAC_MAC_CONFIGURATION_RE_SHIFT)                    /* 0x00000001 */
+#define GMAC_MAC_CONFIGURATION_PRELEN_SHIFT                (2U)
+#define GMAC_MAC_CONFIGURATION_PRELEN_MASK                 (0x3U << GMAC_MAC_CONFIGURATION_PRELEN_SHIFT)                /* 0x0000000C */
+#define GMAC_MAC_CONFIGURATION_DC_SHIFT                    (4U)
+#define GMAC_MAC_CONFIGURATION_DC_MASK                     (0x1U << GMAC_MAC_CONFIGURATION_DC_SHIFT)                    /* 0x00000010 */
+#define GMAC_MAC_CONFIGURATION_BL_SHIFT                    (5U)
+#define GMAC_MAC_CONFIGURATION_BL_MASK                     (0x3U << GMAC_MAC_CONFIGURATION_BL_SHIFT)                    /* 0x00000060 */
+#define GMAC_MAC_CONFIGURATION_DR_SHIFT                    (8U)
+#define GMAC_MAC_CONFIGURATION_DR_MASK                     (0x1U << GMAC_MAC_CONFIGURATION_DR_SHIFT)                    /* 0x00000100 */
+#define GMAC_MAC_CONFIGURATION_DCRS_SHIFT                  (9U)
+#define GMAC_MAC_CONFIGURATION_DCRS_MASK                   (0x1U << GMAC_MAC_CONFIGURATION_DCRS_SHIFT)                  /* 0x00000200 */
+#define GMAC_MAC_CONFIGURATION_LM_SHIFT                    (12U)
+#define GMAC_MAC_CONFIGURATION_LM_MASK                     (0x1U << GMAC_MAC_CONFIGURATION_LM_SHIFT)                    /* 0x00001000 */
+#define GMAC_MAC_CONFIGURATION_DM_SHIFT                    (13U)
+#define GMAC_MAC_CONFIGURATION_DM_MASK                     (0x1U << GMAC_MAC_CONFIGURATION_DM_SHIFT)                    /* 0x00002000 */
+#define GMAC_MAC_CONFIGURATION_PS_SHIFT                    (15U)
+#define GMAC_MAC_CONFIGURATION_PS_MASK                     (0x1U << GMAC_MAC_CONFIGURATION_PS_SHIFT)                    /* 0x00008000 */
+#define GMAC_MAC_CONFIGURATION_JE_SHIFT                    (16U)
+#define GMAC_MAC_CONFIGURATION_JE_MASK                     (0x1U << GMAC_MAC_CONFIGURATION_JE_SHIFT)                    /* 0x00010000 */
+#define GMAC_MAC_CONFIGURATION_WD_SHIFT                    (19U)
+#define GMAC_MAC_CONFIGURATION_WD_MASK                     (0x1U << GMAC_MAC_CONFIGURATION_WD_SHIFT)                    /* 0x00080000 */
+#define GMAC_MAC_CONFIGURATION_ACS_SHIFT                   (20U)
+#define GMAC_MAC_CONFIGURATION_ACS_MASK                    (0x1U << GMAC_MAC_CONFIGURATION_ACS_SHIFT)                   /* 0x00100000 */
+#define GMAC_MAC_CONFIGURATION_CST_SHIFT                   (21U)
+#define GMAC_MAC_CONFIGURATION_CST_MASK                    (0x1U << GMAC_MAC_CONFIGURATION_CST_SHIFT)                   /* 0x00200000 */
+#define GMAC_MAC_CONFIGURATION_S2KP_SHIFT                  (22U)
+#define GMAC_MAC_CONFIGURATION_S2KP_MASK                   (0x1U << GMAC_MAC_CONFIGURATION_S2KP_SHIFT)                  /* 0x00400000 */
+#define GMAC_MAC_CONFIGURATION_GPSLCE_SHIFT                (23U)
+#define GMAC_MAC_CONFIGURATION_GPSLCE_MASK                 (0x1U << GMAC_MAC_CONFIGURATION_GPSLCE_SHIFT)                /* 0x00800000 */
+#define GMAC_MAC_CONFIGURATION_IPG_SHIFT                   (24U)
+#define GMAC_MAC_CONFIGURATION_IPG_MASK                    (0x7U << GMAC_MAC_CONFIGURATION_IPG_SHIFT)                   /* 0x07000000 */
+#define GMAC_MAC_CONFIGURATION_IPC_SHIFT                   (27U)
+#define GMAC_MAC_CONFIGURATION_IPC_MASK                    (0x1U << GMAC_MAC_CONFIGURATION_IPC_SHIFT)                   /* 0x08000000 */
+#define GMAC_MAC_CONFIGURATION_ARPEN_SHIFT                 (31U)
+#define GMAC_MAC_CONFIGURATION_ARPEN_MASK                  (0x1U << GMAC_MAC_CONFIGURATION_ARPEN_SHIFT)                 /* 0x80000000 */
+/* MAC_EXT_CONFIGURATION */
+#define GMAC_MAC_EXT_CONFIGURATION_OFFSET                  (0x4U)
+#define GMAC_MAC_EXT_CONFIGURATION_GPSL_SHIFT              (0U)
+#define GMAC_MAC_EXT_CONFIGURATION_GPSL_MASK               (0x3FFFU << GMAC_MAC_EXT_CONFIGURATION_GPSL_SHIFT)           /* 0x00003FFF */
+#define GMAC_MAC_EXT_CONFIGURATION_DCRCC_SHIFT             (16U)
+#define GMAC_MAC_EXT_CONFIGURATION_DCRCC_MASK              (0x1U << GMAC_MAC_EXT_CONFIGURATION_DCRCC_SHIFT)             /* 0x00010000 */
+#define GMAC_MAC_EXT_CONFIGURATION_SPEN_SHIFT              (17U)
+#define GMAC_MAC_EXT_CONFIGURATION_SPEN_MASK               (0x1U << GMAC_MAC_EXT_CONFIGURATION_SPEN_SHIFT)              /* 0x00020000 */
+#define GMAC_MAC_EXT_CONFIGURATION_USP_SHIFT               (18U)
+#define GMAC_MAC_EXT_CONFIGURATION_USP_MASK                (0x1U << GMAC_MAC_EXT_CONFIGURATION_USP_SHIFT)               /* 0x00040000 */
+#define GMAC_MAC_EXT_CONFIGURATION_HDSMS_SHIFT             (20U)
+#define GMAC_MAC_EXT_CONFIGURATION_HDSMS_MASK              (0x7U << GMAC_MAC_EXT_CONFIGURATION_HDSMS_SHIFT)             /* 0x00700000 */
+#define GMAC_MAC_EXT_CONFIGURATION_EIPGEN_SHIFT            (24U)
+#define GMAC_MAC_EXT_CONFIGURATION_EIPGEN_MASK             (0x1U << GMAC_MAC_EXT_CONFIGURATION_EIPGEN_SHIFT)            /* 0x01000000 */
+#define GMAC_MAC_EXT_CONFIGURATION_EIPG_SHIFT              (25U)
+#define GMAC_MAC_EXT_CONFIGURATION_EIPG_MASK               (0x1FU << GMAC_MAC_EXT_CONFIGURATION_EIPG_SHIFT)             /* 0x3E000000 */
+/* MAC_PACKET_FILTER */
+#define GMAC_MAC_PACKET_FILTER_OFFSET                      (0x8U)
+#define GMAC_MAC_PACKET_FILTER_HMC_SHIFT                   (2U)
+#define GMAC_MAC_PACKET_FILTER_HMC_MASK                    (0x1U << GMAC_MAC_PACKET_FILTER_HMC_SHIFT)                   /* 0x00000004 */
+#define GMAC_MAC_PACKET_FILTER_DAIF_SHIFT                  (3U)
+#define GMAC_MAC_PACKET_FILTER_DAIF_MASK                   (0x1U << GMAC_MAC_PACKET_FILTER_DAIF_SHIFT)                  /* 0x00000008 */
+#define GMAC_MAC_PACKET_FILTER_PM_SHIFT                    (4U)
+#define GMAC_MAC_PACKET_FILTER_PM_MASK                     (0x1U << GMAC_MAC_PACKET_FILTER_PM_SHIFT)                    /* 0x00000010 */
+#define GMAC_MAC_PACKET_FILTER_DBF_SHIFT                   (5U)
+#define GMAC_MAC_PACKET_FILTER_DBF_MASK                    (0x1U << GMAC_MAC_PACKET_FILTER_DBF_SHIFT)                   /* 0x00000020 */
+#define GMAC_MAC_PACKET_FILTER_PCF_SHIFT                   (6U)
+#define GMAC_MAC_PACKET_FILTER_PCF_MASK                    (0x3U << GMAC_MAC_PACKET_FILTER_PCF_SHIFT)                   /* 0x000000C0 */
+#define GMAC_MAC_PACKET_FILTER_HPF_SHIFT                   (10U)
+#define GMAC_MAC_PACKET_FILTER_HPF_MASK                    (0x1U << GMAC_MAC_PACKET_FILTER_HPF_SHIFT)                   /* 0x00000400 */
+#define GMAC_MAC_PACKET_FILTER_VTFE_SHIFT                  (16U)
+#define GMAC_MAC_PACKET_FILTER_VTFE_MASK                   (0x1U << GMAC_MAC_PACKET_FILTER_VTFE_SHIFT)                  /* 0x00010000 */
+#define GMAC_MAC_PACKET_FILTER_RA_SHIFT                    (31U)
+#define GMAC_MAC_PACKET_FILTER_RA_MASK                     (0x1U << GMAC_MAC_PACKET_FILTER_RA_SHIFT)                    /* 0x80000000 */
+/* MAC_WATCHDOG_TIMEOUT */
+#define GMAC_MAC_WATCHDOG_TIMEOUT_OFFSET                   (0xCU)
+#define GMAC_MAC_WATCHDOG_TIMEOUT_WTO_SHIFT                (0U)
+#define GMAC_MAC_WATCHDOG_TIMEOUT_WTO_MASK                 (0xFU << GMAC_MAC_WATCHDOG_TIMEOUT_WTO_SHIFT)                /* 0x0000000F */
+#define GMAC_MAC_WATCHDOG_TIMEOUT_PWE_SHIFT                (8U)
+#define GMAC_MAC_WATCHDOG_TIMEOUT_PWE_MASK                 (0x1U << GMAC_MAC_WATCHDOG_TIMEOUT_PWE_SHIFT)                /* 0x00000100 */
+/* MAC_HASH_TABLE_REG0 */
+#define GMAC_MAC_HASH_TABLE_REG0_OFFSET                    (0x10U)
+#define GMAC_MAC_HASH_TABLE_REG0_HT31T0_SHIFT              (0U)
+#define GMAC_MAC_HASH_TABLE_REG0_HT31T0_MASK               (0xFFFFFFFFU << GMAC_MAC_HASH_TABLE_REG0_HT31T0_SHIFT)       /* 0xFFFFFFFF */
+/* MAC_HASH_TABLE_REG1 */
+#define GMAC_MAC_HASH_TABLE_REG1_OFFSET                    (0x14U)
+#define GMAC_MAC_HASH_TABLE_REG1_HT63T32_SHIFT             (0U)
+#define GMAC_MAC_HASH_TABLE_REG1_HT63T32_MASK              (0xFFFFFFFFU << GMAC_MAC_HASH_TABLE_REG1_HT63T32_SHIFT)      /* 0xFFFFFFFF */
+/* MAC_VLAN_TAG */
+#define GMAC_MAC_VLAN_TAG_OFFSET                           (0x50U)
+#define GMAC_MAC_VLAN_TAG_VL_SHIFT                         (0U)
+#define GMAC_MAC_VLAN_TAG_VL_MASK                          (0xFFFFU << GMAC_MAC_VLAN_TAG_VL_SHIFT)                      /* 0x0000FFFF */
+#define GMAC_MAC_VLAN_TAG_ETV_SHIFT                        (16U)
+#define GMAC_MAC_VLAN_TAG_ETV_MASK                         (0x1U << GMAC_MAC_VLAN_TAG_ETV_SHIFT)                        /* 0x00010000 */
+#define GMAC_MAC_VLAN_TAG_VTIM_SHIFT                       (17U)
+#define GMAC_MAC_VLAN_TAG_VTIM_MASK                        (0x1U << GMAC_MAC_VLAN_TAG_VTIM_SHIFT)                       /* 0x00020000 */
+#define GMAC_MAC_VLAN_TAG_ESVL_SHIFT                       (18U)
+#define GMAC_MAC_VLAN_TAG_ESVL_MASK                        (0x1U << GMAC_MAC_VLAN_TAG_ESVL_SHIFT)                       /* 0x00040000 */
+#define GMAC_MAC_VLAN_TAG_ERSVLM_SHIFT                     (19U)
+#define GMAC_MAC_VLAN_TAG_ERSVLM_MASK                      (0x1U << GMAC_MAC_VLAN_TAG_ERSVLM_SHIFT)                     /* 0x00080000 */
+#define GMAC_MAC_VLAN_TAG_DOVLTC_SHIFT                     (20U)
+#define GMAC_MAC_VLAN_TAG_DOVLTC_MASK                      (0x1U << GMAC_MAC_VLAN_TAG_DOVLTC_SHIFT)                     /* 0x00100000 */
+#define GMAC_MAC_VLAN_TAG_EVLS_SHIFT                       (21U)
+#define GMAC_MAC_VLAN_TAG_EVLS_MASK                        (0x3U << GMAC_MAC_VLAN_TAG_EVLS_SHIFT)                       /* 0x00600000 */
+#define GMAC_MAC_VLAN_TAG_EVLRXS_SHIFT                     (24U)
+#define GMAC_MAC_VLAN_TAG_EVLRXS_MASK                      (0x1U << GMAC_MAC_VLAN_TAG_EVLRXS_SHIFT)                     /* 0x01000000 */
+/* MAC_VLAN_HASH_TABLE */
+#define GMAC_MAC_VLAN_HASH_TABLE_OFFSET                    (0x58U)
+#define GMAC_MAC_VLAN_HASH_TABLE_VLHT_SHIFT                (0U)
+#define GMAC_MAC_VLAN_HASH_TABLE_VLHT_MASK                 (0xFFFFU << GMAC_MAC_VLAN_HASH_TABLE_VLHT_SHIFT)             /* 0x0000FFFF */
+/* MAC_Q0_TX_FLOW_CTRL */
+#define GMAC_MAC_Q0_TX_FLOW_CTRL_OFFSET                    (0x70U)
+#define GMAC_MAC_Q0_TX_FLOW_CTRL_FCB_BPA_SHIFT             (0U)
+#define GMAC_MAC_Q0_TX_FLOW_CTRL_FCB_BPA_MASK              (0x1U << GMAC_MAC_Q0_TX_FLOW_CTRL_FCB_BPA_SHIFT)             /* 0x00000001 */
+#define GMAC_MAC_Q0_TX_FLOW_CTRL_TFE_SHIFT                 (1U)
+#define GMAC_MAC_Q0_TX_FLOW_CTRL_TFE_MASK                  (0x1U << GMAC_MAC_Q0_TX_FLOW_CTRL_TFE_SHIFT)                 /* 0x00000002 */
+#define GMAC_MAC_Q0_TX_FLOW_CTRL_DZPQ_SHIFT                (7U)
+#define GMAC_MAC_Q0_TX_FLOW_CTRL_DZPQ_MASK                 (0x1U << GMAC_MAC_Q0_TX_FLOW_CTRL_DZPQ_SHIFT)                /* 0x00000080 */
+#define GMAC_MAC_Q0_TX_FLOW_CTRL_PT_SHIFT                  (16U)
+#define GMAC_MAC_Q0_TX_FLOW_CTRL_PT_MASK                   (0xFFFFU << GMAC_MAC_Q0_TX_FLOW_CTRL_PT_SHIFT)               /* 0xFFFF0000 */
+/* MAC_RX_FLOW_CTRL */
+#define GMAC_MAC_RX_FLOW_CTRL_OFFSET                       (0x90U)
+#define GMAC_MAC_RX_FLOW_CTRL_RFE_SHIFT                    (0U)
+#define GMAC_MAC_RX_FLOW_CTRL_RFE_MASK                     (0x1U << GMAC_MAC_RX_FLOW_CTRL_RFE_SHIFT)                    /* 0x00000001 */
+#define GMAC_MAC_RX_FLOW_CTRL_UP_SHIFT                     (1U)
+#define GMAC_MAC_RX_FLOW_CTRL_UP_MASK                      (0x1U << GMAC_MAC_RX_FLOW_CTRL_UP_SHIFT)                     /* 0x00000002 */
+/* MAC_INTERRUPT_STATUS */
+#define GMAC_MAC_INTERRUPT_STATUS_OFFSET                   (0xB0U)
+#define GMAC_MAC_INTERRUPT_STATUS                          (0x0U)
+#define GMAC_MAC_INTERRUPT_STATUS_PHYIS_SHIFT              (3U)
+#define GMAC_MAC_INTERRUPT_STATUS_PHYIS_MASK               (0x1U << GMAC_MAC_INTERRUPT_STATUS_PHYIS_SHIFT)              /* 0x00000008 */
+#define GMAC_MAC_INTERRUPT_STATUS_PMTIS_SHIFT              (4U)
+#define GMAC_MAC_INTERRUPT_STATUS_PMTIS_MASK               (0x1U << GMAC_MAC_INTERRUPT_STATUS_PMTIS_SHIFT)              /* 0x00000010 */
+#define GMAC_MAC_INTERRUPT_STATUS_MMCIS_SHIFT              (8U)
+#define GMAC_MAC_INTERRUPT_STATUS_MMCIS_MASK               (0x1U << GMAC_MAC_INTERRUPT_STATUS_MMCIS_SHIFT)              /* 0x00000100 */
+#define GMAC_MAC_INTERRUPT_STATUS_MMCRXIS_SHIFT            (9U)
+#define GMAC_MAC_INTERRUPT_STATUS_MMCRXIS_MASK             (0x1U << GMAC_MAC_INTERRUPT_STATUS_MMCRXIS_SHIFT)            /* 0x00000200 */
+#define GMAC_MAC_INTERRUPT_STATUS_MMCTXIS_SHIFT            (10U)
+#define GMAC_MAC_INTERRUPT_STATUS_MMCTXIS_MASK             (0x1U << GMAC_MAC_INTERRUPT_STATUS_MMCTXIS_SHIFT)            /* 0x00000400 */
+#define GMAC_MAC_INTERRUPT_STATUS_MMCRXIPIS_SHIFT          (11U)
+#define GMAC_MAC_INTERRUPT_STATUS_MMCRXIPIS_MASK           (0x1U << GMAC_MAC_INTERRUPT_STATUS_MMCRXIPIS_SHIFT)          /* 0x00000800 */
+#define GMAC_MAC_INTERRUPT_STATUS_TXSTSIS_SHIFT            (13U)
+#define GMAC_MAC_INTERRUPT_STATUS_TXSTSIS_MASK             (0x1U << GMAC_MAC_INTERRUPT_STATUS_TXSTSIS_SHIFT)            /* 0x00002000 */
+#define GMAC_MAC_INTERRUPT_STATUS_RXSTSIS_SHIFT            (14U)
+#define GMAC_MAC_INTERRUPT_STATUS_RXSTSIS_MASK             (0x1U << GMAC_MAC_INTERRUPT_STATUS_RXSTSIS_SHIFT)            /* 0x00004000 */
+#define GMAC_MAC_INTERRUPT_STATUS_MDIOIS_SHIFT             (18U)
+#define GMAC_MAC_INTERRUPT_STATUS_MDIOIS_MASK              (0x1U << GMAC_MAC_INTERRUPT_STATUS_MDIOIS_SHIFT)             /* 0x00040000 */
+/* MAC_INTERRUPT_ENABLE */
+#define GMAC_MAC_INTERRUPT_ENABLE_OFFSET                   (0xB4U)
+#define GMAC_MAC_INTERRUPT_ENABLE_PHYIE_SHIFT              (3U)
+#define GMAC_MAC_INTERRUPT_ENABLE_PHYIE_MASK               (0x1U << GMAC_MAC_INTERRUPT_ENABLE_PHYIE_SHIFT)              /* 0x00000008 */
+#define GMAC_MAC_INTERRUPT_ENABLE_PMTIE_SHIFT              (4U)
+#define GMAC_MAC_INTERRUPT_ENABLE_PMTIE_MASK               (0x1U << GMAC_MAC_INTERRUPT_ENABLE_PMTIE_SHIFT)              /* 0x00000010 */
+#define GMAC_MAC_INTERRUPT_ENABLE_TXSTSIE_SHIFT            (13U)
+#define GMAC_MAC_INTERRUPT_ENABLE_TXSTSIE_MASK             (0x1U << GMAC_MAC_INTERRUPT_ENABLE_TXSTSIE_SHIFT)            /* 0x00002000 */
+#define GMAC_MAC_INTERRUPT_ENABLE_RXSTSIE_SHIFT            (14U)
+#define GMAC_MAC_INTERRUPT_ENABLE_RXSTSIE_MASK             (0x1U << GMAC_MAC_INTERRUPT_ENABLE_RXSTSIE_SHIFT)            /* 0x00004000 */
+#define GMAC_MAC_INTERRUPT_ENABLE_MDIOIE_SHIFT             (18U)
+#define GMAC_MAC_INTERRUPT_ENABLE_MDIOIE_MASK              (0x1U << GMAC_MAC_INTERRUPT_ENABLE_MDIOIE_SHIFT)             /* 0x00040000 */
+/* MAC_RX_TX_STATUS */
+#define GMAC_MAC_RX_TX_STATUS_OFFSET                       (0xB8U)
+#define GMAC_MAC_RX_TX_STATUS                              (0x0U)
+#define GMAC_MAC_RX_TX_STATUS_TJT_SHIFT                    (0U)
+#define GMAC_MAC_RX_TX_STATUS_TJT_MASK                     (0x1U << GMAC_MAC_RX_TX_STATUS_TJT_SHIFT)                    /* 0x00000001 */
+#define GMAC_MAC_RX_TX_STATUS_NCARR_SHIFT                  (1U)
+#define GMAC_MAC_RX_TX_STATUS_NCARR_MASK                   (0x1U << GMAC_MAC_RX_TX_STATUS_NCARR_SHIFT)                  /* 0x00000002 */
+#define GMAC_MAC_RX_TX_STATUS_LCARR_SHIFT                  (2U)
+#define GMAC_MAC_RX_TX_STATUS_LCARR_MASK                   (0x1U << GMAC_MAC_RX_TX_STATUS_LCARR_SHIFT)                  /* 0x00000004 */
+#define GMAC_MAC_RX_TX_STATUS_EXDEF_SHIFT                  (3U)
+#define GMAC_MAC_RX_TX_STATUS_EXDEF_MASK                   (0x1U << GMAC_MAC_RX_TX_STATUS_EXDEF_SHIFT)                  /* 0x00000008 */
+#define GMAC_MAC_RX_TX_STATUS_LCOL_SHIFT                   (4U)
+#define GMAC_MAC_RX_TX_STATUS_LCOL_MASK                    (0x1U << GMAC_MAC_RX_TX_STATUS_LCOL_SHIFT)                   /* 0x00000010 */
+#define GMAC_MAC_RX_TX_STATUS_RWT_SHIFT                    (8U)
+#define GMAC_MAC_RX_TX_STATUS_RWT_MASK                     (0x1U << GMAC_MAC_RX_TX_STATUS_RWT_SHIFT)                    /* 0x00000100 */
+/* MAC_PMT_CONTROL_STATUS */
+#define GMAC_MAC_PMT_CONTROL_STATUS_OFFSET                 (0xC0U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_PWRDWN_SHIFT           (0U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_PWRDWN_MASK            (0x1U << GMAC_MAC_PMT_CONTROL_STATUS_PWRDWN_SHIFT)           /* 0x00000001 */
+#define GMAC_MAC_PMT_CONTROL_STATUS_MGKPKTEN_SHIFT         (1U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_MGKPKTEN_MASK          (0x1U << GMAC_MAC_PMT_CONTROL_STATUS_MGKPKTEN_SHIFT)         /* 0x00000002 */
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKPKTEN_SHIFT         (2U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKPKTEN_MASK          (0x1U << GMAC_MAC_PMT_CONTROL_STATUS_RWKPKTEN_SHIFT)         /* 0x00000004 */
+#define GMAC_MAC_PMT_CONTROL_STATUS_MGKPRCVD_SHIFT         (5U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_MGKPRCVD_MASK          (0x1U << GMAC_MAC_PMT_CONTROL_STATUS_MGKPRCVD_SHIFT)         /* 0x00000020 */
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKPRCVD_SHIFT         (6U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKPRCVD_MASK          (0x1U << GMAC_MAC_PMT_CONTROL_STATUS_RWKPRCVD_SHIFT)         /* 0x00000040 */
+#define GMAC_MAC_PMT_CONTROL_STATUS_GLBLUCAST_SHIFT        (9U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_GLBLUCAST_MASK         (0x1U << GMAC_MAC_PMT_CONTROL_STATUS_GLBLUCAST_SHIFT)        /* 0x00000200 */
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKPFE_SHIFT           (10U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKPFE_MASK            (0x1U << GMAC_MAC_PMT_CONTROL_STATUS_RWKPFE_SHIFT)           /* 0x00000400 */
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKPTR_SHIFT           (24U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKPTR_MASK            (0x1FU << GMAC_MAC_PMT_CONTROL_STATUS_RWKPTR_SHIFT)          /* 0x1F000000 */
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKFILTRST_SHIFT       (31U)
+#define GMAC_MAC_PMT_CONTROL_STATUS_RWKFILTRST_MASK        (0x1U << GMAC_MAC_PMT_CONTROL_STATUS_RWKFILTRST_SHIFT)       /* 0x80000000 */
+/* MAC_RWK_PACKET_FILTER */
+#define GMAC_MAC_RWK_PACKET_FILTER_OFFSET                  (0xC4U)
+#define GMAC_MAC_RWK_PACKET_FILTER_WKUPFRMFTR_CONT_SHIFT   (0U)
+#define GMAC_MAC_RWK_PACKET_FILTER_WKUPFRMFTR_CONT_MASK    (0xFFFFFFFFU << GMAC_MAC_RWK_PACKET_FILTER_WKUPFRMFTR_CONT_SHIFT) /* 0xFFFFFFFF */
+/* RWK_FILTER0_BYTE_MASK */
+#define GMAC_RWK_FILTER0_BYTE_MASK_OFFSET                  (0xC4U)
+#define GMAC_RWK_FILTER0_BYTE_MASK_FILTER0_BYTE_MASK_SHIFT (0U)
+#define GMAC_RWK_FILTER0_BYTE_MASK_FILTER0_BYTE_MASK_MASK  (0xFFFFFFFFU << GMAC_RWK_FILTER0_BYTE_MASK_FILTER0_BYTE_MASK_SHIFT) /* 0xFFFFFFFF */
+/* RWK_FILTER1_BYTE_MASK */
+#define GMAC_RWK_FILTER1_BYTE_MASK_OFFSET                  (0xC4U)
+#define GMAC_RWK_FILTER1_BYTE_MASK_FILTER1_BYTE_MASK_SHIFT (0U)
+#define GMAC_RWK_FILTER1_BYTE_MASK_FILTER1_BYTE_MASK_MASK  (0xFFFFFFFFU << GMAC_RWK_FILTER1_BYTE_MASK_FILTER1_BYTE_MASK_SHIFT) /* 0xFFFFFFFF */
+/* RWK_FILTER2_BYTE_MASK */
+#define GMAC_RWK_FILTER2_BYTE_MASK_OFFSET                  (0xC4U)
+#define GMAC_RWK_FILTER2_BYTE_MASK_FILTER2_BYTE_MASK_SHIFT (0U)
+#define GMAC_RWK_FILTER2_BYTE_MASK_FILTER2_BYTE_MASK_MASK  (0xFFFFFFFFU << GMAC_RWK_FILTER2_BYTE_MASK_FILTER2_BYTE_MASK_SHIFT) /* 0xFFFFFFFF */
+/* RWK_FILTER3_BYTE_MASK */
+#define GMAC_RWK_FILTER3_BYTE_MASK_OFFSET                  (0xC4U)
+#define GMAC_RWK_FILTER3_BYTE_MASK_FILTER3_BYTE_MASK_SHIFT (0U)
+#define GMAC_RWK_FILTER3_BYTE_MASK_FILTER3_BYTE_MASK_MASK  (0xFFFFFFFFU << GMAC_RWK_FILTER3_BYTE_MASK_FILTER3_BYTE_MASK_SHIFT) /* 0xFFFFFFFF */
+/* RWK_FILTER01_CRC */
+#define GMAC_RWK_FILTER01_CRC_OFFSET                       (0xC4U)
+#define GMAC_RWK_FILTER01_CRC_FILTER0_CRC_SHIFT            (0U)
+#define GMAC_RWK_FILTER01_CRC_FILTER0_CRC_MASK             (0xFFFFU << GMAC_RWK_FILTER01_CRC_FILTER0_CRC_SHIFT)         /* 0x0000FFFF */
+#define GMAC_RWK_FILTER01_CRC_FILTER1_CRC_SHIFT            (16U)
+#define GMAC_RWK_FILTER01_CRC_FILTER1_CRC_MASK             (0xFFFFU << GMAC_RWK_FILTER01_CRC_FILTER1_CRC_SHIFT)         /* 0xFFFF0000 */
+/* RWK_FILTER23_CRC */
+#define GMAC_RWK_FILTER23_CRC_OFFSET                       (0xC4U)
+#define GMAC_RWK_FILTER23_CRC_FILTER2_CRC_SHIFT            (0U)
+#define GMAC_RWK_FILTER23_CRC_FILTER2_CRC_MASK             (0xFFFFU << GMAC_RWK_FILTER23_CRC_FILTER2_CRC_SHIFT)         /* 0x0000FFFF */
+#define GMAC_RWK_FILTER23_CRC_FILTER3_CRC_SHIFT            (16U)
+#define GMAC_RWK_FILTER23_CRC_FILTER3_CRC_MASK             (0xFFFFU << GMAC_RWK_FILTER23_CRC_FILTER3_CRC_SHIFT)         /* 0xFFFF0000 */
+/* RWK_FILTER_OFFSET */
+#define GMAC_RWK_FILTER_OFFSET_OFFSET                      (0xC4U)
+#define GMAC_RWK_FILTER_OFFSET_FILTER0_OFFSET_SHIFT        (0U)
+#define GMAC_RWK_FILTER_OFFSET_FILTER0_OFFSET_MASK         (0xFFU << GMAC_RWK_FILTER_OFFSET_FILTER0_OFFSET_SHIFT)       /* 0x000000FF */
+#define GMAC_RWK_FILTER_OFFSET_FILTER1_OFFSET_SHIFT        (8U)
+#define GMAC_RWK_FILTER_OFFSET_FILTER1_OFFSET_MASK         (0xFFU << GMAC_RWK_FILTER_OFFSET_FILTER1_OFFSET_SHIFT)       /* 0x0000FF00 */
+#define GMAC_RWK_FILTER_OFFSET_FILTER2_OFFSET_SHIFT        (16U)
+#define GMAC_RWK_FILTER_OFFSET_FILTER2_OFFSET_MASK         (0xFFU << GMAC_RWK_FILTER_OFFSET_FILTER2_OFFSET_SHIFT)       /* 0x00FF0000 */
+#define GMAC_RWK_FILTER_OFFSET_FILTER3_OFFSET_SHIFT        (24U)
+#define GMAC_RWK_FILTER_OFFSET_FILTER3_OFFSET_MASK         (0xFFU << GMAC_RWK_FILTER_OFFSET_FILTER3_OFFSET_SHIFT)       /* 0xFF000000 */
+/* RWK_FILTER_COMMAND */
+#define GMAC_RWK_FILTER_COMMAND_OFFSET                     (0xC4U)
+#define GMAC_RWK_FILTER_COMMAND_FILTER0_COMMAND_SHIFT      (0U)
+#define GMAC_RWK_FILTER_COMMAND_FILTER0_COMMAND_MASK       (0xFU << GMAC_RWK_FILTER_COMMAND_FILTER0_COMMAND_SHIFT)      /* 0x0000000F */
+#define GMAC_RWK_FILTER_COMMAND_FILTER1_COMMAND_SHIFT      (8U)
+#define GMAC_RWK_FILTER_COMMAND_FILTER1_COMMAND_MASK       (0xFU << GMAC_RWK_FILTER_COMMAND_FILTER1_COMMAND_SHIFT)      /* 0x00000F00 */
+#define GMAC_RWK_FILTER_COMMAND_FILTER2_COMMAND_SHIFT      (16U)
+#define GMAC_RWK_FILTER_COMMAND_FILTER2_COMMAND_MASK       (0xFU << GMAC_RWK_FILTER_COMMAND_FILTER2_COMMAND_SHIFT)      /* 0x000F0000 */
+/* MAC_VERSION */
+#define GMAC_MAC_VERSION_OFFSET                            (0x110U)
+#define GMAC_MAC_VERSION_RKVER_SHIFT                       (0U)
+#define GMAC_MAC_VERSION_RKVER_MASK                        (0xFFU << GMAC_MAC_VERSION_RKVER_SHIFT)                      /* 0x000000FF */
+#define GMAC_MAC_VERSION_USERVER_SHIFT                     (8U)
+#define GMAC_MAC_VERSION_USERVER_MASK                      (0xFFU << GMAC_MAC_VERSION_USERVER_SHIFT)                    /* 0x0000FF00 */
+/* MAC_DEBUG */
+#define GMAC_MAC_DEBUG_OFFSET                              (0x114U)
+#define GMAC_MAC_DEBUG                                     (0x0U)
+#define GMAC_MAC_DEBUG_RPESTS_SHIFT                        (0U)
+#define GMAC_MAC_DEBUG_RPESTS_MASK                         (0x1U << GMAC_MAC_DEBUG_RPESTS_SHIFT)                        /* 0x00000001 */
+#define GMAC_MAC_DEBUG_RFCFCSTS_SHIFT                      (1U)
+#define GMAC_MAC_DEBUG_RFCFCSTS_MASK                       (0x3U << GMAC_MAC_DEBUG_RFCFCSTS_SHIFT)                      /* 0x00000006 */
+#define GMAC_MAC_DEBUG_TPESTS_SHIFT                        (16U)
+#define GMAC_MAC_DEBUG_TPESTS_MASK                         (0x1U << GMAC_MAC_DEBUG_TPESTS_SHIFT)                        /* 0x00010000 */
+#define GMAC_MAC_DEBUG_TFCSTS_SHIFT                        (17U)
+#define GMAC_MAC_DEBUG_TFCSTS_MASK                         (0x3U << GMAC_MAC_DEBUG_TFCSTS_SHIFT)                        /* 0x00060000 */
+/* MAC_HW_FEATURE0 */
+#define GMAC_MAC_HW_FEATURE0_OFFSET                        (0x11CU)
+#define GMAC_MAC_HW_FEATURE0                               (0x400113E1U)
+#define GMAC_MAC_HW_FEATURE0_MIISEL_SHIFT                  (0U)
+#define GMAC_MAC_HW_FEATURE0_MIISEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE0_MIISEL_SHIFT)                  /* 0x00000001 */
+#define GMAC_MAC_HW_FEATURE0_GMIISEL_SHIFT                 (1U)
+#define GMAC_MAC_HW_FEATURE0_GMIISEL_MASK                  (0x1U << GMAC_MAC_HW_FEATURE0_GMIISEL_SHIFT)                 /* 0x00000002 */
+#define GMAC_MAC_HW_FEATURE0_HDSEL_SHIFT                   (2U)
+#define GMAC_MAC_HW_FEATURE0_HDSEL_MASK                    (0x1U << GMAC_MAC_HW_FEATURE0_HDSEL_SHIFT)                   /* 0x00000004 */
+#define GMAC_MAC_HW_FEATURE0_PCSSEL_SHIFT                  (3U)
+#define GMAC_MAC_HW_FEATURE0_PCSSEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE0_PCSSEL_SHIFT)                  /* 0x00000008 */
+#define GMAC_MAC_HW_FEATURE0_VLHASH_SHIFT                  (4U)
+#define GMAC_MAC_HW_FEATURE0_VLHASH_MASK                   (0x1U << GMAC_MAC_HW_FEATURE0_VLHASH_SHIFT)                  /* 0x00000010 */
+#define GMAC_MAC_HW_FEATURE0_SMASEL_SHIFT                  (5U)
+#define GMAC_MAC_HW_FEATURE0_SMASEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE0_SMASEL_SHIFT)                  /* 0x00000020 */
+#define GMAC_MAC_HW_FEATURE0_RWKSEL_SHIFT                  (6U)
+#define GMAC_MAC_HW_FEATURE0_RWKSEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE0_RWKSEL_SHIFT)                  /* 0x00000040 */
+#define GMAC_MAC_HW_FEATURE0_MGKSEL_SHIFT                  (7U)
+#define GMAC_MAC_HW_FEATURE0_MGKSEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE0_MGKSEL_SHIFT)                  /* 0x00000080 */
+#define GMAC_MAC_HW_FEATURE0_MMCSEL_SHIFT                  (8U)
+#define GMAC_MAC_HW_FEATURE0_MMCSEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE0_MMCSEL_SHIFT)                  /* 0x00000100 */
+#define GMAC_MAC_HW_FEATURE0_ARPOFFSEL_SHIFT               (9U)
+#define GMAC_MAC_HW_FEATURE0_ARPOFFSEL_MASK                (0x1U << GMAC_MAC_HW_FEATURE0_ARPOFFSEL_SHIFT)               /* 0x00000200 */
+#define GMAC_MAC_HW_FEATURE0_TSSEL_SHIFT                   (12U)
+#define GMAC_MAC_HW_FEATURE0_TSSEL_MASK                    (0x1U << GMAC_MAC_HW_FEATURE0_TSSEL_SHIFT)                   /* 0x00001000 */
+#define GMAC_MAC_HW_FEATURE0_EEESEL_SHIFT                  (13U)
+#define GMAC_MAC_HW_FEATURE0_EEESEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE0_EEESEL_SHIFT)                  /* 0x00002000 */
+#define GMAC_MAC_HW_FEATURE0_RXCOESEL_SHIFT                (16U)
+#define GMAC_MAC_HW_FEATURE0_RXCOESEL_MASK                 (0x1U << GMAC_MAC_HW_FEATURE0_RXCOESEL_SHIFT)                /* 0x00010000 */
+#define GMAC_MAC_HW_FEATURE0_ADDMACADRSEL_SHIFT            (18U)
+#define GMAC_MAC_HW_FEATURE0_ADDMACADRSEL_MASK             (0x1FU << GMAC_MAC_HW_FEATURE0_ADDMACADRSEL_SHIFT)           /* 0x007C0000 */
+#define GMAC_MAC_HW_FEATURE0_MACADR32SEL_SHIFT             (23U)
+#define GMAC_MAC_HW_FEATURE0_MACADR32SEL_MASK              (0x1U << GMAC_MAC_HW_FEATURE0_MACADR32SEL_SHIFT)             /* 0x00800000 */
+#define GMAC_MAC_HW_FEATURE0_TSSTSSEL_SHIFT                (25U)
+#define GMAC_MAC_HW_FEATURE0_TSSTSSEL_MASK                 (0x3U << GMAC_MAC_HW_FEATURE0_TSSTSSEL_SHIFT)                /* 0x06000000 */
+#define GMAC_MAC_HW_FEATURE0_SAVLANINS_SHIFT               (27U)
+#define GMAC_MAC_HW_FEATURE0_SAVLANINS_MASK                (0x1U << GMAC_MAC_HW_FEATURE0_SAVLANINS_SHIFT)               /* 0x08000000 */
+#define GMAC_MAC_HW_FEATURE0_ACTPHYSEL_SHIFT               (28U)
+#define GMAC_MAC_HW_FEATURE0_ACTPHYSEL_MASK                (0xFU << GMAC_MAC_HW_FEATURE0_ACTPHYSEL_SHIFT)               /* 0xF0000000 */
+/* MAC_HW_FEATURE1 */
+#define GMAC_MAC_HW_FEATURE1_OFFSET                        (0x120U)
+#define GMAC_MAC_HW_FEATURE1                               (0x10E4166U)
+#define GMAC_MAC_HW_FEATURE1_RXFIFOSIZE_SHIFT              (0U)
+#define GMAC_MAC_HW_FEATURE1_RXFIFOSIZE_MASK               (0x1FU << GMAC_MAC_HW_FEATURE1_RXFIFOSIZE_SHIFT)             /* 0x0000001F */
+#define GMAC_MAC_HW_FEATURE1_SPRAM_SHIFT                   (5U)
+#define GMAC_MAC_HW_FEATURE1_SPRAM_MASK                    (0x1U << GMAC_MAC_HW_FEATURE1_SPRAM_SHIFT)                   /* 0x00000020 */
+#define GMAC_MAC_HW_FEATURE1_TXFIFOSIZE_SHIFT              (6U)
+#define GMAC_MAC_HW_FEATURE1_TXFIFOSIZE_MASK               (0x1FU << GMAC_MAC_HW_FEATURE1_TXFIFOSIZE_SHIFT)             /* 0x000007C0 */
+#define GMAC_MAC_HW_FEATURE1_OSTEN_SHIFT                   (11U)
+#define GMAC_MAC_HW_FEATURE1_OSTEN_MASK                    (0x1U << GMAC_MAC_HW_FEATURE1_OSTEN_SHIFT)                   /* 0x00000800 */
+#define GMAC_MAC_HW_FEATURE1_PTOEN_SHIFT                   (12U)
+#define GMAC_MAC_HW_FEATURE1_PTOEN_MASK                    (0x1U << GMAC_MAC_HW_FEATURE1_PTOEN_SHIFT)                   /* 0x00001000 */
+#define GMAC_MAC_HW_FEATURE1_ADDR64_SHIFT                  (14U)
+#define GMAC_MAC_HW_FEATURE1_ADDR64_MASK                   (0x3U << GMAC_MAC_HW_FEATURE1_ADDR64_SHIFT)                  /* 0x0000C000 */
+#define GMAC_MAC_HW_FEATURE1_DCBEN_SHIFT                   (16U)
+#define GMAC_MAC_HW_FEATURE1_DCBEN_MASK                    (0x1U << GMAC_MAC_HW_FEATURE1_DCBEN_SHIFT)                   /* 0x00010000 */
+#define GMAC_MAC_HW_FEATURE1_SPHEN_SHIFT                   (17U)
+#define GMAC_MAC_HW_FEATURE1_SPHEN_MASK                    (0x1U << GMAC_MAC_HW_FEATURE1_SPHEN_SHIFT)                   /* 0x00020000 */
+#define GMAC_MAC_HW_FEATURE1_TSOEN_SHIFT                   (18U)
+#define GMAC_MAC_HW_FEATURE1_TSOEN_MASK                    (0x1U << GMAC_MAC_HW_FEATURE1_TSOEN_SHIFT)                   /* 0x00040000 */
+#define GMAC_MAC_HW_FEATURE1_DBGMEMA_SHIFT                 (19U)
+#define GMAC_MAC_HW_FEATURE1_DBGMEMA_MASK                  (0x1U << GMAC_MAC_HW_FEATURE1_DBGMEMA_SHIFT)                 /* 0x00080000 */
+#define GMAC_MAC_HW_FEATURE1_AVSEL_SHIFT                   (20U)
+#define GMAC_MAC_HW_FEATURE1_AVSEL_MASK                    (0x1U << GMAC_MAC_HW_FEATURE1_AVSEL_SHIFT)                   /* 0x00100000 */
+#define GMAC_MAC_HW_FEATURE1_RAVSEL_SHIFT                  (21U)
+#define GMAC_MAC_HW_FEATURE1_RAVSEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE1_RAVSEL_SHIFT)                  /* 0x00200000 */
+#define GMAC_MAC_HW_FEATURE1_POUOST_SHIFT                  (23U)
+#define GMAC_MAC_HW_FEATURE1_POUOST_MASK                   (0x1U << GMAC_MAC_HW_FEATURE1_POUOST_SHIFT)                  /* 0x00800000 */
+#define GMAC_MAC_HW_FEATURE1_HASHTBLSZ_SHIFT               (24U)
+#define GMAC_MAC_HW_FEATURE1_HASHTBLSZ_MASK                (0x3U << GMAC_MAC_HW_FEATURE1_HASHTBLSZ_SHIFT)               /* 0x03000000 */
+#define GMAC_MAC_HW_FEATURE1_L3L4FNUM_SHIFT                (27U)
+#define GMAC_MAC_HW_FEATURE1_L3L4FNUM_MASK                 (0xFU << GMAC_MAC_HW_FEATURE1_L3L4FNUM_SHIFT)                /* 0x78000000 */
+/* MAC_HW_FEATURE2 */
+#define GMAC_MAC_HW_FEATURE2_OFFSET                        (0x124U)
+#define GMAC_MAC_HW_FEATURE2                               (0x11000000U)
+#define GMAC_MAC_HW_FEATURE2_RXQCNT_SHIFT                  (0U)
+#define GMAC_MAC_HW_FEATURE2_RXQCNT_MASK                   (0xFU << GMAC_MAC_HW_FEATURE2_RXQCNT_SHIFT)                  /* 0x0000000F */
+#define GMAC_MAC_HW_FEATURE2_TXQCNT_SHIFT                  (6U)
+#define GMAC_MAC_HW_FEATURE2_TXQCNT_MASK                   (0xFU << GMAC_MAC_HW_FEATURE2_TXQCNT_SHIFT)                  /* 0x000003C0 */
+#define GMAC_MAC_HW_FEATURE2_RXCHCNT_SHIFT                 (12U)
+#define GMAC_MAC_HW_FEATURE2_RXCHCNT_MASK                  (0xFU << GMAC_MAC_HW_FEATURE2_RXCHCNT_SHIFT)                 /* 0x0000F000 */
+#define GMAC_MAC_HW_FEATURE2_TXCHCNT_SHIFT                 (18U)
+#define GMAC_MAC_HW_FEATURE2_TXCHCNT_MASK                  (0xFU << GMAC_MAC_HW_FEATURE2_TXCHCNT_SHIFT)                 /* 0x003C0000 */
+#define GMAC_MAC_HW_FEATURE2_PPSOUTNUM_SHIFT               (24U)
+#define GMAC_MAC_HW_FEATURE2_PPSOUTNUM_MASK                (0x7U << GMAC_MAC_HW_FEATURE2_PPSOUTNUM_SHIFT)               /* 0x07000000 */
+#define GMAC_MAC_HW_FEATURE2_AUXSNAPNUM_SHIFT              (28U)
+#define GMAC_MAC_HW_FEATURE2_AUXSNAPNUM_MASK               (0x7U << GMAC_MAC_HW_FEATURE2_AUXSNAPNUM_SHIFT)              /* 0x70000000 */
+/* MAC_HW_FEATURE3 */
+#define GMAC_MAC_HW_FEATURE3_OFFSET                        (0x128U)
+#define GMAC_MAC_HW_FEATURE3_NRVF_SHIFT                    (0U)
+#define GMAC_MAC_HW_FEATURE3_NRVF_MASK                     (0x7U << GMAC_MAC_HW_FEATURE3_NRVF_SHIFT)                    /* 0x00000007 */
+#define GMAC_MAC_HW_FEATURE3_CBTISEL_SHIFT                 (4U)
+#define GMAC_MAC_HW_FEATURE3_CBTISEL_MASK                  (0x1U << GMAC_MAC_HW_FEATURE3_CBTISEL_SHIFT)                 /* 0x00000010 */
+#define GMAC_MAC_HW_FEATURE3_DVLAN_SHIFT                   (5U)
+#define GMAC_MAC_HW_FEATURE3_DVLAN_MASK                    (0x1U << GMAC_MAC_HW_FEATURE3_DVLAN_SHIFT)                   /* 0x00000020 */
+#define GMAC_MAC_HW_FEATURE3_FRPBS_SHIFT                   (11U)
+#define GMAC_MAC_HW_FEATURE3_FRPBS_MASK                    (0x3U << GMAC_MAC_HW_FEATURE3_FRPBS_SHIFT)                   /* 0x00001800 */
+#define GMAC_MAC_HW_FEATURE3_FRPES_SHIFT                   (13U)
+#define GMAC_MAC_HW_FEATURE3_FRPES_MASK                    (0x3U << GMAC_MAC_HW_FEATURE3_FRPES_SHIFT)                   /* 0x00006000 */
+#define GMAC_MAC_HW_FEATURE3_ESTSEL_SHIFT                  (16U)
+#define GMAC_MAC_HW_FEATURE3_ESTSEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE3_ESTSEL_SHIFT)                  /* 0x00010000 */
+#define GMAC_MAC_HW_FEATURE3_ESTDEP_SHIFT                  (17U)
+#define GMAC_MAC_HW_FEATURE3_ESTDEP_MASK                   (0x7U << GMAC_MAC_HW_FEATURE3_ESTDEP_SHIFT)                  /* 0x000E0000 */
+#define GMAC_MAC_HW_FEATURE3_ESTWID_SHIFT                  (20U)
+#define GMAC_MAC_HW_FEATURE3_ESTWID_MASK                   (0x3U << GMAC_MAC_HW_FEATURE3_ESTWID_SHIFT)                  /* 0x00300000 */
+#define GMAC_MAC_HW_FEATURE3_FPESEL_SHIFT                  (26U)
+#define GMAC_MAC_HW_FEATURE3_FPESEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE3_FPESEL_SHIFT)                  /* 0x04000000 */
+#define GMAC_MAC_HW_FEATURE3_TBSSEL_SHIFT                  (27U)
+#define GMAC_MAC_HW_FEATURE3_TBSSEL_MASK                   (0x1U << GMAC_MAC_HW_FEATURE3_TBSSEL_SHIFT)                  /* 0x08000000 */
+#define GMAC_MAC_HW_FEATURE3_ASP_SHIFT                     (28U)
+#define GMAC_MAC_HW_FEATURE3_ASP_MASK                      (0x3U << GMAC_MAC_HW_FEATURE3_ASP_SHIFT)                     /* 0x30000000 */
+/* MAC_MDIO_ADDRESS */
+#define GMAC_MAC_MDIO_ADDRESS_OFFSET                       (0x200U)
+#define GMAC_MAC_MDIO_ADDRESS_GB_SHIFT                     (0U)
+#define GMAC_MAC_MDIO_ADDRESS_GB_MASK                      (0x1U << GMAC_MAC_MDIO_ADDRESS_GB_SHIFT)                     /* 0x00000001 */
+#define GMAC_MAC_MDIO_ADDRESS_C45E_SHIFT                   (1U)
+#define GMAC_MAC_MDIO_ADDRESS_C45E_MASK                    (0x1U << GMAC_MAC_MDIO_ADDRESS_C45E_SHIFT)                   /* 0x00000002 */
+#define GMAC_MAC_MDIO_ADDRESS_GOC_0_SHIFT                  (2U)
+#define GMAC_MAC_MDIO_ADDRESS_GOC_0_MASK                   (0x1U << GMAC_MAC_MDIO_ADDRESS_GOC_0_SHIFT)                  /* 0x00000004 */
+#define GMAC_MAC_MDIO_ADDRESS_GOC_1_SHIFT                  (3U)
+#define GMAC_MAC_MDIO_ADDRESS_GOC_1_MASK                   (0x1U << GMAC_MAC_MDIO_ADDRESS_GOC_1_SHIFT)                  /* 0x00000008 */
+#define GMAC_MAC_MDIO_ADDRESS_SKAP_SHIFT                   (4U)
+#define GMAC_MAC_MDIO_ADDRESS_SKAP_MASK                    (0x1U << GMAC_MAC_MDIO_ADDRESS_SKAP_SHIFT)                   /* 0x00000010 */
+#define GMAC_MAC_MDIO_ADDRESS_CR_SHIFT                     (8U)
+#define GMAC_MAC_MDIO_ADDRESS_CR_MASK                      (0xFU << GMAC_MAC_MDIO_ADDRESS_CR_SHIFT)                     /* 0x00000F00 */
+#define GMAC_MAC_MDIO_ADDRESS_NTC_SHIFT                    (12U)
+#define GMAC_MAC_MDIO_ADDRESS_NTC_MASK                     (0x7U << GMAC_MAC_MDIO_ADDRESS_NTC_SHIFT)                    /* 0x00007000 */
+#define GMAC_MAC_MDIO_ADDRESS_RDA_SHIFT                    (16U)
+#define GMAC_MAC_MDIO_ADDRESS_RDA_MASK                     (0x1FU << GMAC_MAC_MDIO_ADDRESS_RDA_SHIFT)                   /* 0x001F0000 */
+#define GMAC_MAC_MDIO_ADDRESS_PA_SHIFT                     (21U)
+#define GMAC_MAC_MDIO_ADDRESS_PA_MASK                      (0x1FU << GMAC_MAC_MDIO_ADDRESS_PA_SHIFT)                    /* 0x03E00000 */
+#define GMAC_MAC_MDIO_ADDRESS_BTB_SHIFT                    (26U)
+#define GMAC_MAC_MDIO_ADDRESS_BTB_MASK                     (0x1U << GMAC_MAC_MDIO_ADDRESS_BTB_SHIFT)                    /* 0x04000000 */
+#define GMAC_MAC_MDIO_ADDRESS_PSE_SHIFT                    (27U)
+#define GMAC_MAC_MDIO_ADDRESS_PSE_MASK                     (0x1U << GMAC_MAC_MDIO_ADDRESS_PSE_SHIFT)                    /* 0x08000000 */
+/* MAC_MDIO_DATA */
+#define GMAC_MAC_MDIO_DATA_OFFSET                          (0x204U)
+#define GMAC_MAC_MDIO_DATA_GD_SHIFT                        (0U)
+#define GMAC_MAC_MDIO_DATA_GD_MASK                         (0xFFFFU << GMAC_MAC_MDIO_DATA_GD_SHIFT)                     /* 0x0000FFFF */
+#define GMAC_MAC_MDIO_DATA_RA_SHIFT                        (16U)
+#define GMAC_MAC_MDIO_DATA_RA_MASK                         (0x1U << GMAC_MAC_MDIO_DATA_RA_SHIFT)                        /* 0x00010000 */
+/* MAC_ARP_ADDRESS */
+#define GMAC_MAC_ARP_ADDRESS_OFFSET                        (0x210U)
+#define GMAC_MAC_ARP_ADDRESS_ARPPA_SHIFT                   (0U)
+#define GMAC_MAC_ARP_ADDRESS_ARPPA_MASK                    (0xFFFFFFFFU << GMAC_MAC_ARP_ADDRESS_ARPPA_SHIFT)            /* 0xFFFFFFFF */
+/* MAC_CSR_SW_CTRL */
+#define GMAC_MAC_CSR_SW_CTRL_OFFSET                        (0x230U)
+#define GMAC_MAC_CSR_SW_CTRL_RCWE_SHIFT                    (0U)
+#define GMAC_MAC_CSR_SW_CTRL_RCWE_MASK                     (0x1U << GMAC_MAC_CSR_SW_CTRL_RCWE_SHIFT)                    /* 0x00000001 */
+/* MAC_EXT_CFG1 */
+#define GMAC_MAC_EXT_CFG1_OFFSET                           (0x238U)
+#define GMAC_MAC_EXT_CFG1_SPLOFST_SHIFT                    (0U)
+#define GMAC_MAC_EXT_CFG1_SPLOFST_MASK                     (0x7FU << GMAC_MAC_EXT_CFG1_SPLOFST_SHIFT)                   /* 0x0000007F */
+#define GMAC_MAC_EXT_CFG1_SPLM_SHIFT                       (8U)
+#define GMAC_MAC_EXT_CFG1_SPLM_MASK                        (0x3U << GMAC_MAC_EXT_CFG1_SPLM_SHIFT)                       /* 0x00000300 */
+/* MAC_ADDRESS0_HIGH */
+#define GMAC_MAC_ADDRESS0_HIGH_OFFSET                      (0x300U)
+#define GMAC_MAC_ADDRESS0_HIGH_ADDRHI_SHIFT                (0U)
+#define GMAC_MAC_ADDRESS0_HIGH_ADDRHI_MASK                 (0xFFFFU << GMAC_MAC_ADDRESS0_HIGH_ADDRHI_SHIFT)             /* 0x0000FFFF */
+#define GMAC_MAC_ADDRESS0_HIGH_AE_SHIFT                    (31U)
+#define GMAC_MAC_ADDRESS0_HIGH_AE_MASK                     (0x1U << GMAC_MAC_ADDRESS0_HIGH_AE_SHIFT)                    /* 0x80000000 */
+/* MAC_ADDRESS0_LOW */
+#define GMAC_MAC_ADDRESS0_LOW_OFFSET                       (0x304U)
+#define GMAC_MAC_ADDRESS0_LOW_ADDRLO_SHIFT                 (0U)
+#define GMAC_MAC_ADDRESS0_LOW_ADDRLO_MASK                  (0xFFFFFFFFU << GMAC_MAC_ADDRESS0_LOW_ADDRLO_SHIFT)          /* 0xFFFFFFFF */
+/* MMC_CONTROL */
+#define GMAC_MMC_CONTROL_OFFSET                            (0x700U)
+#define GMAC_MMC_CONTROL_CNTRST_SHIFT                      (0U)
+#define GMAC_MMC_CONTROL_CNTRST_MASK                       (0x1U << GMAC_MMC_CONTROL_CNTRST_SHIFT)                      /* 0x00000001 */
+#define GMAC_MMC_CONTROL_CNTSTOPRO_SHIFT                   (1U)
+#define GMAC_MMC_CONTROL_CNTSTOPRO_MASK                    (0x1U << GMAC_MMC_CONTROL_CNTSTOPRO_SHIFT)                   /* 0x00000002 */
+#define GMAC_MMC_CONTROL_RSTONRD_SHIFT                     (2U)
+#define GMAC_MMC_CONTROL_RSTONRD_MASK                      (0x1U << GMAC_MMC_CONTROL_RSTONRD_SHIFT)                     /* 0x00000004 */
+#define GMAC_MMC_CONTROL_CNTFREEZ_SHIFT                    (3U)
+#define GMAC_MMC_CONTROL_CNTFREEZ_MASK                     (0x1U << GMAC_MMC_CONTROL_CNTFREEZ_SHIFT)                    /* 0x00000008 */
+#define GMAC_MMC_CONTROL_CNTPRST_SHIFT                     (4U)
+#define GMAC_MMC_CONTROL_CNTPRST_MASK                      (0x1U << GMAC_MMC_CONTROL_CNTPRST_SHIFT)                     /* 0x00000010 */
+#define GMAC_MMC_CONTROL_CNTPRSTLVL_SHIFT                  (5U)
+#define GMAC_MMC_CONTROL_CNTPRSTLVL_MASK                   (0x1U << GMAC_MMC_CONTROL_CNTPRSTLVL_SHIFT)                  /* 0x00000020 */
+#define GMAC_MMC_CONTROL_UCDBC_SHIFT                       (8U)
+#define GMAC_MMC_CONTROL_UCDBC_MASK                        (0x1U << GMAC_MMC_CONTROL_UCDBC_SHIFT)                       /* 0x00000100 */
+/* MMC_RX_INTERRUPT */
+#define GMAC_MMC_RX_INTERRUPT_OFFSET                       (0x704U)
+#define GMAC_MMC_RX_INTERRUPT                              (0x0U)
+#define GMAC_MMC_RX_INTERRUPT_RXGBPKTIS_SHIFT              (0U)
+#define GMAC_MMC_RX_INTERRUPT_RXGBPKTIS_MASK               (0x1U << GMAC_MMC_RX_INTERRUPT_RXGBPKTIS_SHIFT)              /* 0x00000001 */
+#define GMAC_MMC_RX_INTERRUPT_RXGBOCTIS_SHIFT              (1U)
+#define GMAC_MMC_RX_INTERRUPT_RXGBOCTIS_MASK               (0x1U << GMAC_MMC_RX_INTERRUPT_RXGBOCTIS_SHIFT)              /* 0x00000002 */
+#define GMAC_MMC_RX_INTERRUPT_RXGOCTIS_SHIFT               (2U)
+#define GMAC_MMC_RX_INTERRUPT_RXGOCTIS_MASK                (0x1U << GMAC_MMC_RX_INTERRUPT_RXGOCTIS_SHIFT)               /* 0x00000004 */
+#define GMAC_MMC_RX_INTERRUPT_RXMCGPIS_SHIFT               (4U)
+#define GMAC_MMC_RX_INTERRUPT_RXMCGPIS_MASK                (0x1U << GMAC_MMC_RX_INTERRUPT_RXMCGPIS_SHIFT)               /* 0x00000010 */
+#define GMAC_MMC_RX_INTERRUPT_RXCRCERPIS_SHIFT             (5U)
+#define GMAC_MMC_RX_INTERRUPT_RXCRCERPIS_MASK              (0x1U << GMAC_MMC_RX_INTERRUPT_RXCRCERPIS_SHIFT)             /* 0x00000020 */
+#define GMAC_MMC_RX_INTERRUPT_RXLENERPIS_SHIFT             (18U)
+#define GMAC_MMC_RX_INTERRUPT_RXLENERPIS_MASK              (0x1U << GMAC_MMC_RX_INTERRUPT_RXLENERPIS_SHIFT)             /* 0x00040000 */
+#define GMAC_MMC_RX_INTERRUPT_RXPAUSPIS_SHIFT              (20U)
+#define GMAC_MMC_RX_INTERRUPT_RXPAUSPIS_MASK               (0x1U << GMAC_MMC_RX_INTERRUPT_RXPAUSPIS_SHIFT)              /* 0x00100000 */
+#define GMAC_MMC_RX_INTERRUPT_RXFOVPIS_SHIFT               (21U)
+#define GMAC_MMC_RX_INTERRUPT_RXFOVPIS_MASK                (0x1U << GMAC_MMC_RX_INTERRUPT_RXFOVPIS_SHIFT)               /* 0x00200000 */
+/* MMC_TX_INTERRUPT */
+#define GMAC_MMC_TX_INTERRUPT_OFFSET                       (0x708U)
+#define GMAC_MMC_TX_INTERRUPT                              (0x0U)
+#define GMAC_MMC_TX_INTERRUPT_TXGBOCTIS_SHIFT              (0U)
+#define GMAC_MMC_TX_INTERRUPT_TXGBOCTIS_MASK               (0x1U << GMAC_MMC_TX_INTERRUPT_TXGBOCTIS_SHIFT)              /* 0x00000001 */
+#define GMAC_MMC_TX_INTERRUPT_TXGBPKTIS_SHIFT              (1U)
+#define GMAC_MMC_TX_INTERRUPT_TXGBPKTIS_MASK               (0x1U << GMAC_MMC_TX_INTERRUPT_TXGBPKTIS_SHIFT)              /* 0x00000002 */
+#define GMAC_MMC_TX_INTERRUPT_TXUFLOWERPIS_SHIFT           (13U)
+#define GMAC_MMC_TX_INTERRUPT_TXUFLOWERPIS_MASK            (0x1U << GMAC_MMC_TX_INTERRUPT_TXUFLOWERPIS_SHIFT)           /* 0x00002000 */
+#define GMAC_MMC_TX_INTERRUPT_TXCARERPIS_SHIFT             (19U)
+#define GMAC_MMC_TX_INTERRUPT_TXCARERPIS_MASK              (0x1U << GMAC_MMC_TX_INTERRUPT_TXCARERPIS_SHIFT)             /* 0x00080000 */
+#define GMAC_MMC_TX_INTERRUPT_TXGOCTIS_SHIFT               (20U)
+#define GMAC_MMC_TX_INTERRUPT_TXGOCTIS_MASK                (0x1U << GMAC_MMC_TX_INTERRUPT_TXGOCTIS_SHIFT)               /* 0x00100000 */
+#define GMAC_MMC_TX_INTERRUPT_TXGPKTIS_SHIFT               (21U)
+#define GMAC_MMC_TX_INTERRUPT_TXGPKTIS_MASK                (0x1U << GMAC_MMC_TX_INTERRUPT_TXGPKTIS_SHIFT)               /* 0x00200000 */
+#define GMAC_MMC_TX_INTERRUPT_TXPAUSPIS_SHIFT              (23U)
+#define GMAC_MMC_TX_INTERRUPT_TXPAUSPIS_MASK               (0x1U << GMAC_MMC_TX_INTERRUPT_TXPAUSPIS_SHIFT)              /* 0x00800000 */
+/* MMC_RX_INTERRUPT_MASK */
+#define GMAC_MMC_RX_INTERRUPT_MASK_OFFSET                  (0x70CU)
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXGBPKTIM_SHIFT         (0U)
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXGBPKTIM_MASK          (0x1U << GMAC_MMC_RX_INTERRUPT_MASK_RXGBPKTIM_SHIFT)         /* 0x00000001 */
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXGBOCTIM_SHIFT         (1U)
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXGBOCTIM_MASK          (0x1U << GMAC_MMC_RX_INTERRUPT_MASK_RXGBOCTIM_SHIFT)         /* 0x00000002 */
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXGOCTIM_SHIFT          (2U)
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXGOCTIM_MASK           (0x1U << GMAC_MMC_RX_INTERRUPT_MASK_RXGOCTIM_SHIFT)          /* 0x00000004 */
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXMCGPIM_SHIFT          (4U)
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXMCGPIM_MASK           (0x1U << GMAC_MMC_RX_INTERRUPT_MASK_RXMCGPIM_SHIFT)          /* 0x00000010 */
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXCRCERPIM_SHIFT        (5U)
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXCRCERPIM_MASK         (0x1U << GMAC_MMC_RX_INTERRUPT_MASK_RXCRCERPIM_SHIFT)        /* 0x00000020 */
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXLENERPIM_SHIFT        (18U)
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXLENERPIM_MASK         (0x1U << GMAC_MMC_RX_INTERRUPT_MASK_RXLENERPIM_SHIFT)        /* 0x00040000 */
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXPAUSPIM_SHIFT         (10U)
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXPAUSPIM_MASK          (0x1U << GMAC_MMC_RX_INTERRUPT_MASK_RXPAUSPIM_SHIFT)         /* 0x00000400 */
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXFOVPIM_SHIFT          (21U)
+#define GMAC_MMC_RX_INTERRUPT_MASK_RXFOVPIM_MASK           (0x1U << GMAC_MMC_RX_INTERRUPT_MASK_RXFOVPIM_SHIFT)          /* 0x00200000 */
+/* MMC_TX_INTERRUPT_MASK */
+#define GMAC_MMC_TX_INTERRUPT_MASK_OFFSET                  (0x710U)
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXGBOCTIM_SHIFT         (0U)
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXGBOCTIM_MASK          (0x1U << GMAC_MMC_TX_INTERRUPT_MASK_TXGBOCTIM_SHIFT)         /* 0x00000001 */
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXGBPKTIM_SHIFT         (1U)
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXGBPKTIM_MASK          (0x1U << GMAC_MMC_TX_INTERRUPT_MASK_TXGBPKTIM_SHIFT)         /* 0x00000002 */
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXUFLOWERPIM_SHIFT      (13U)
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXUFLOWERPIM_MASK       (0x1U << GMAC_MMC_TX_INTERRUPT_MASK_TXUFLOWERPIM_SHIFT)      /* 0x00002000 */
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXCARERPIM_SHIFT        (19U)
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXCARERPIM_MASK         (0x1U << GMAC_MMC_TX_INTERRUPT_MASK_TXCARERPIM_SHIFT)        /* 0x00080000 */
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXGOCTIM_SHIFT          (20U)
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXGOCTIM_MASK           (0x1U << GMAC_MMC_TX_INTERRUPT_MASK_TXGOCTIM_SHIFT)          /* 0x00100000 */
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXGPKTIM_SHIFT          (21U)
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXGPKTIM_MASK           (0x1U << GMAC_MMC_TX_INTERRUPT_MASK_TXGPKTIM_SHIFT)          /* 0x00200000 */
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXPAUSPIM_SHIFT         (23U)
+#define GMAC_MMC_TX_INTERRUPT_MASK_TXPAUSPIM_MASK          (0x1U << GMAC_MMC_TX_INTERRUPT_MASK_TXPAUSPIM_SHIFT)         /* 0x00800000 */
+/* TX_OCTET_COUNT_GOOD_BAD */
+#define GMAC_TX_OCTET_COUNT_GOOD_BAD_OFFSET                (0x714U)
+#define GMAC_TX_OCTET_COUNT_GOOD_BAD                       (0x0U)
+#define GMAC_TX_OCTET_COUNT_GOOD_BAD_TXOCTGB_SHIFT         (0U)
+#define GMAC_TX_OCTET_COUNT_GOOD_BAD_TXOCTGB_MASK          (0xFFFFFFFFU << GMAC_TX_OCTET_COUNT_GOOD_BAD_TXOCTGB_SHIFT)  /* 0xFFFFFFFF */
+/* TX_PACKET_COUNT_GOOD_BAD */
+#define GMAC_TX_PACKET_COUNT_GOOD_BAD_OFFSET               (0x718U)
+#define GMAC_TX_PACKET_COUNT_GOOD_BAD                      (0x0U)
+#define GMAC_TX_PACKET_COUNT_GOOD_BAD_TXPKTGB_SHIFT        (0U)
+#define GMAC_TX_PACKET_COUNT_GOOD_BAD_TXPKTGB_MASK         (0xFFFFFFFFU << GMAC_TX_PACKET_COUNT_GOOD_BAD_TXPKTGB_SHIFT) /* 0xFFFFFFFF */
+/* TX_UNDERFLOW_ERROR_PACKETS */
+#define GMAC_TX_UNDERFLOW_ERROR_PACKETS_OFFSET             (0x748U)
+#define GMAC_TX_UNDERFLOW_ERROR_PACKETS                    (0x0U)
+#define GMAC_TX_UNDERFLOW_ERROR_PACKETS_TXUNDRFLW_SHIFT    (0U)
+#define GMAC_TX_UNDERFLOW_ERROR_PACKETS_TXUNDRFLW_MASK     (0xFFFFFFFFU << GMAC_TX_UNDERFLOW_ERROR_PACKETS_TXUNDRFLW_SHIFT) /* 0xFFFFFFFF */
+/* TX_CARRIER_ERROR_PACKETS */
+#define GMAC_TX_CARRIER_ERROR_PACKETS_OFFSET               (0x760U)
+#define GMAC_TX_CARRIER_ERROR_PACKETS                      (0x0U)
+#define GMAC_TX_CARRIER_ERROR_PACKETS_TXCARR_SHIFT         (0U)
+#define GMAC_TX_CARRIER_ERROR_PACKETS_TXCARR_MASK          (0xFFFFFFFFU << GMAC_TX_CARRIER_ERROR_PACKETS_TXCARR_SHIFT)  /* 0xFFFFFFFF */
+/* TX_OCTET_COUNT_GOOD */
+#define GMAC_TX_OCTET_COUNT_GOOD_OFFSET                    (0x764U)
+#define GMAC_TX_OCTET_COUNT_GOOD                           (0x0U)
+#define GMAC_TX_OCTET_COUNT_GOOD_TXOCTG_SHIFT              (0U)
+#define GMAC_TX_OCTET_COUNT_GOOD_TXOCTG_MASK               (0xFFFFFFFFU << GMAC_TX_OCTET_COUNT_GOOD_TXOCTG_SHIFT)       /* 0xFFFFFFFF */
+/* TX_PACKET_COUNT_GOOD */
+#define GMAC_TX_PACKET_COUNT_GOOD_OFFSET                   (0x768U)
+#define GMAC_TX_PACKET_COUNT_GOOD                          (0x0U)
+#define GMAC_TX_PACKET_COUNT_GOOD_TXPKTG_SHIFT             (0U)
+#define GMAC_TX_PACKET_COUNT_GOOD_TXPKTG_MASK              (0xFFFFFFFFU << GMAC_TX_PACKET_COUNT_GOOD_TXPKTG_SHIFT)      /* 0xFFFFFFFF */
+/* TX_PAUSE_PACKETS */
+#define GMAC_TX_PAUSE_PACKETS_OFFSET                       (0x770U)
+#define GMAC_TX_PAUSE_PACKETS                              (0x0U)
+#define GMAC_TX_PAUSE_PACKETS_TXPAUSE_SHIFT                (0U)
+#define GMAC_TX_PAUSE_PACKETS_TXPAUSE_MASK                 (0xFFFFFFFFU << GMAC_TX_PAUSE_PACKETS_TXPAUSE_SHIFT)         /* 0xFFFFFFFF */
+/* RX_PACKETS_COUNT_GOOD_BAD */
+#define GMAC_RX_PACKETS_COUNT_GOOD_BAD_OFFSET              (0x780U)
+#define GMAC_RX_PACKETS_COUNT_GOOD_BAD                     (0x0U)
+#define GMAC_RX_PACKETS_COUNT_GOOD_BAD_RXPKTGB_SHIFT       (0U)
+#define GMAC_RX_PACKETS_COUNT_GOOD_BAD_RXPKTGB_MASK        (0xFFFFFFFFU << GMAC_RX_PACKETS_COUNT_GOOD_BAD_RXPKTGB_SHIFT) /* 0xFFFFFFFF */
+/* RX_OCTET_COUNT_GOOD_BAD */
+#define GMAC_RX_OCTET_COUNT_GOOD_BAD_OFFSET                (0x784U)
+#define GMAC_RX_OCTET_COUNT_GOOD_BAD                       (0x0U)
+#define GMAC_RX_OCTET_COUNT_GOOD_BAD_RXOCTGB_SHIFT         (0U)
+#define GMAC_RX_OCTET_COUNT_GOOD_BAD_RXOCTGB_MASK          (0xFFFFFFFFU << GMAC_RX_OCTET_COUNT_GOOD_BAD_RXOCTGB_SHIFT)  /* 0xFFFFFFFF */
+/* RX_OCTET_COUNT_GOOD */
+#define GMAC_RX_OCTET_COUNT_GOOD_OFFSET                    (0x788U)
+#define GMAC_RX_OCTET_COUNT_GOOD                           (0x0U)
+#define GMAC_RX_OCTET_COUNT_GOOD_RXOCTG_SHIFT              (0U)
+#define GMAC_RX_OCTET_COUNT_GOOD_RXOCTG_MASK               (0xFFFFFFFFU << GMAC_RX_OCTET_COUNT_GOOD_RXOCTG_SHIFT)       /* 0xFFFFFFFF */
+/* RX_MULTICAST_PACKETS_GOOD */
+#define GMAC_RX_MULTICAST_PACKETS_GOOD_OFFSET              (0x790U)
+#define GMAC_RX_MULTICAST_PACKETS_GOOD                     (0x0U)
+#define GMAC_RX_MULTICAST_PACKETS_GOOD_RXMCASTG_SHIFT      (0U)
+#define GMAC_RX_MULTICAST_PACKETS_GOOD_RXMCASTG_MASK       (0xFFFFFFFFU << GMAC_RX_MULTICAST_PACKETS_GOOD_RXMCASTG_SHIFT) /* 0xFFFFFFFF */
+/* RX_CRC_ERROR_PACKETS */
+#define GMAC_RX_CRC_ERROR_PACKETS_OFFSET                   (0x794U)
+#define GMAC_RX_CRC_ERROR_PACKETS                          (0x0U)
+#define GMAC_RX_CRC_ERROR_PACKETS_RXCRCERR_SHIFT           (0U)
+#define GMAC_RX_CRC_ERROR_PACKETS_RXCRCERR_MASK            (0xFFFFFFFFU << GMAC_RX_CRC_ERROR_PACKETS_RXCRCERR_SHIFT)    /* 0xFFFFFFFF */
+/* RX_LENGTH_ERROR_PACKETS */
+#define GMAC_RX_LENGTH_ERROR_PACKETS_OFFSET                (0x7C8U)
+#define GMAC_RX_LENGTH_ERROR_PACKETS                       (0x0U)
+#define GMAC_RX_LENGTH_ERROR_PACKETS_RXLENERR_SHIFT        (0U)
+#define GMAC_RX_LENGTH_ERROR_PACKETS_RXLENERR_MASK         (0xFFFFFFFFU << GMAC_RX_LENGTH_ERROR_PACKETS_RXLENERR_SHIFT) /* 0xFFFFFFFF */
+/* RX_PAUSE_PACKETS */
+#define GMAC_RX_PAUSE_PACKETS_OFFSET                       (0x7D0U)
+#define GMAC_RX_PAUSE_PACKETS                              (0x0U)
+#define GMAC_RX_PAUSE_PACKETS_RXPAUSEPKT_SHIFT             (0U)
+#define GMAC_RX_PAUSE_PACKETS_RXPAUSEPKT_MASK              (0xFFFFFFFFU << GMAC_RX_PAUSE_PACKETS_RXPAUSEPKT_SHIFT)      /* 0xFFFFFFFF */
+/* RX_FIFO_OVERFLOW_PACKETS */
+#define GMAC_RX_FIFO_OVERFLOW_PACKETS_OFFSET               (0x7D4U)
+#define GMAC_RX_FIFO_OVERFLOW_PACKETS                      (0x0U)
+#define GMAC_RX_FIFO_OVERFLOW_PACKETS_RXFIFOOVFL_SHIFT     (0U)
+#define GMAC_RX_FIFO_OVERFLOW_PACKETS_RXFIFOOVFL_MASK      (0xFFFFFFFFU << GMAC_RX_FIFO_OVERFLOW_PACKETS_RXFIFOOVFL_SHIFT) /* 0xFFFFFFFF */
+/* MMC_IPC_RX_INTERRUPT_MASK */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_OFFSET              (0x800U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV4GPIM_SHIFT    (0U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV4GPIM_MASK     (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV4GPIM_SHIFT)    /* 0x00000001 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV4HERPIM_SHIFT  (1U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV4HERPIM_MASK   (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV4HERPIM_SHIFT)  /* 0x00000002 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV6GPIM_SHIFT    (5U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV6GPIM_MASK     (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV6GPIM_SHIFT)    /* 0x00000020 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV6HERPIM_SHIFT  (6U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV6HERPIM_MASK   (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV6HERPIM_SHIFT)  /* 0x00000040 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXUDPERPIM_SHIFT    (9U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXUDPERPIM_MASK     (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXUDPERPIM_SHIFT)    /* 0x00000200 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXTCPERPIM_SHIFT    (11U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXTCPERPIM_MASK     (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXTCPERPIM_SHIFT)    /* 0x00000800 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXICMPERPIM_SHIFT   (13U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXICMPERPIM_MASK    (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXICMPERPIM_SHIFT)   /* 0x00002000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV4HEROIM_SHIFT  (17U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV4HEROIM_MASK   (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV4HEROIM_SHIFT)  /* 0x00020000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV6HEROIM_SHIFT  (22U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV6HEROIM_MASK   (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXIPV6HEROIM_SHIFT)  /* 0x00400000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXUDPEROIM_SHIFT    (25U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXUDPEROIM_MASK     (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXUDPEROIM_SHIFT)    /* 0x02000000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXTCPEROIM_SHIFT    (27U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXTCPEROIM_MASK     (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXTCPEROIM_SHIFT)    /* 0x08000000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXICMPEROIM_SHIFT   (29U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXICMPEROIM_MASK    (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_MASK_RXICMPEROIM_SHIFT)   /* 0x20000000 */
+/* MMC_IPC_RX_INTERRUPT */
+#define GMAC_MMC_IPC_RX_INTERRUPT_OFFSET                   (0x808U)
+#define GMAC_MMC_IPC_RX_INTERRUPT                          (0x0U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV4GPIS_SHIFT         (0U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV4GPIS_MASK          (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXIPV4GPIS_SHIFT)         /* 0x00000001 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV4HERPIS_SHIFT       (1U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV4HERPIS_MASK        (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXIPV4HERPIS_SHIFT)       /* 0x00000002 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV6GPIS_SHIFT         (5U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV6GPIS_MASK          (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXIPV6GPIS_SHIFT)         /* 0x00000020 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV6HERPIS_SHIFT       (6U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV6HERPIS_MASK        (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXIPV6HERPIS_SHIFT)       /* 0x00000040 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXUDPERPIS_SHIFT         (9U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXUDPERPIS_MASK          (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXUDPERPIS_SHIFT)         /* 0x00000200 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXTCPERPIS_SHIFT         (11U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXTCPERPIS_MASK          (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXTCPERPIS_SHIFT)         /* 0x00000800 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXICMPERPIS_SHIFT        (13U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXICMPERPIS_MASK         (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXICMPERPIS_SHIFT)        /* 0x00002000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV4HEROIS_SHIFT       (17U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV4HEROIS_MASK        (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXIPV4HEROIS_SHIFT)       /* 0x00020000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV6HEROIS_SHIFT       (22U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXIPV6HEROIS_MASK        (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXIPV6HEROIS_SHIFT)       /* 0x00400000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXUDPEROIS_SHIFT         (25U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXUDPEROIS_MASK          (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXUDPEROIS_SHIFT)         /* 0x02000000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXTCPEROIS_SHIFT         (27U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXTCPEROIS_MASK          (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXTCPEROIS_SHIFT)         /* 0x08000000 */
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXICMPEROIS_SHIFT        (29U)
+#define GMAC_MMC_IPC_RX_INTERRUPT_RXICMPEROIS_MASK         (0x1U << GMAC_MMC_IPC_RX_INTERRUPT_RXICMPEROIS_SHIFT)        /* 0x20000000 */
+/* RXIPV4_GOOD_PACKETS */
+#define GMAC_RXIPV4_GOOD_PACKETS_OFFSET                    (0x810U)
+#define GMAC_RXIPV4_GOOD_PACKETS                           (0x0U)
+#define GMAC_RXIPV4_GOOD_PACKETS_RXIPV4GDPKT_SHIFT         (0U)
+#define GMAC_RXIPV4_GOOD_PACKETS_RXIPV4GDPKT_MASK          (0xFFFFFFFFU << GMAC_RXIPV4_GOOD_PACKETS_RXIPV4GDPKT_SHIFT)  /* 0xFFFFFFFF */
+/* RXIPV4_HEADER_ERROR_PACKETS */
+#define GMAC_RXIPV4_HEADER_ERROR_PACKETS_OFFSET            (0x814U)
+#define GMAC_RXIPV4_HEADER_ERROR_PACKETS                   (0x0U)
+#define GMAC_RXIPV4_HEADER_ERROR_PACKETS_RXIPV4HDRERRPKT_SHIFT (0U)
+#define GMAC_RXIPV4_HEADER_ERROR_PACKETS_RXIPV4HDRERRPKT_MASK (0xFFFFFFFFU << GMAC_RXIPV4_HEADER_ERROR_PACKETS_RXIPV4HDRERRPKT_SHIFT) /* 0xFFFFFFFF */
+/* RXIPV6_GOOD_PACKETS */
+#define GMAC_RXIPV6_GOOD_PACKETS_OFFSET                    (0x824U)
+#define GMAC_RXIPV6_GOOD_PACKETS                           (0x0U)
+#define GMAC_RXIPV6_GOOD_PACKETS_RXIPV6GDPKT_SHIFT         (0U)
+#define GMAC_RXIPV6_GOOD_PACKETS_RXIPV6GDPKT_MASK          (0xFFFFFFFFU << GMAC_RXIPV6_GOOD_PACKETS_RXIPV6GDPKT_SHIFT)  /* 0xFFFFFFFF */
+/* RXIPV6_HEADER_ERROR_PACKETS */
+#define GMAC_RXIPV6_HEADER_ERROR_PACKETS_OFFSET            (0x828U)
+#define GMAC_RXIPV6_HEADER_ERROR_PACKETS                   (0x0U)
+#define GMAC_RXIPV6_HEADER_ERROR_PACKETS_RXIPV6HDRERRPKT_SHIFT (0U)
+#define GMAC_RXIPV6_HEADER_ERROR_PACKETS_RXIPV6HDRERRPKT_MASK (0xFFFFFFFFU << GMAC_RXIPV6_HEADER_ERROR_PACKETS_RXIPV6HDRERRPKT_SHIFT) /* 0xFFFFFFFF */
+/* RXUDP_ERROR_PACKETS */
+#define GMAC_RXUDP_ERROR_PACKETS_OFFSET                    (0x834U)
+#define GMAC_RXUDP_ERROR_PACKETS                           (0x0U)
+#define GMAC_RXUDP_ERROR_PACKETS_RXUDPERRPKT_SHIFT         (0U)
+#define GMAC_RXUDP_ERROR_PACKETS_RXUDPERRPKT_MASK          (0xFFFFFFFFU << GMAC_RXUDP_ERROR_PACKETS_RXUDPERRPKT_SHIFT)  /* 0xFFFFFFFF */
+/* RXTCP_ERROR_PACKETS */
+#define GMAC_RXTCP_ERROR_PACKETS_OFFSET                    (0x83CU)
+#define GMAC_RXTCP_ERROR_PACKETS                           (0x0U)
+#define GMAC_RXTCP_ERROR_PACKETS_RXTCPERRPKT_SHIFT         (0U)
+#define GMAC_RXTCP_ERROR_PACKETS_RXTCPERRPKT_MASK          (0xFFFFFFFFU << GMAC_RXTCP_ERROR_PACKETS_RXTCPERRPKT_SHIFT)  /* 0xFFFFFFFF */
+/* RXICMP_ERROR_PACKETS */
+#define GMAC_RXICMP_ERROR_PACKETS_OFFSET                   (0x844U)
+#define GMAC_RXICMP_ERROR_PACKETS                          (0x0U)
+#define GMAC_RXICMP_ERROR_PACKETS_RXICMPERRPKT_SHIFT       (0U)
+#define GMAC_RXICMP_ERROR_PACKETS_RXICMPERRPKT_MASK        (0xFFFFFFFFU << GMAC_RXICMP_ERROR_PACKETS_RXICMPERRPKT_SHIFT) /* 0xFFFFFFFF */
+/* RXIPV4_HEADER_ERROR_OCTETS */
+#define GMAC_RXIPV4_HEADER_ERROR_OCTETS_OFFSET             (0x854U)
+#define GMAC_RXIPV4_HEADER_ERROR_OCTETS                    (0x0U)
+#define GMAC_RXIPV4_HEADER_ERROR_OCTETS_RXIPV4HDRERROCT_SHIFT (0U)
+#define GMAC_RXIPV4_HEADER_ERROR_OCTETS_RXIPV4HDRERROCT_MASK (0xFFFFFFFFU << GMAC_RXIPV4_HEADER_ERROR_OCTETS_RXIPV4HDRERROCT_SHIFT) /* 0xFFFFFFFF */
+/* RXIPV6_HEADER_ERROR_OCTETS */
+#define GMAC_RXIPV6_HEADER_ERROR_OCTETS_OFFSET             (0x868U)
+#define GMAC_RXIPV6_HEADER_ERROR_OCTETS                    (0x0U)
+#define GMAC_RXIPV6_HEADER_ERROR_OCTETS_RXIPV6HDRERROCT_SHIFT (0U)
+#define GMAC_RXIPV6_HEADER_ERROR_OCTETS_RXIPV6HDRERROCT_MASK (0xFFFFFFFFU << GMAC_RXIPV6_HEADER_ERROR_OCTETS_RXIPV6HDRERROCT_SHIFT) /* 0xFFFFFFFF */
+/* RXUDP_ERROR_OCTETS */
+#define GMAC_RXUDP_ERROR_OCTETS_OFFSET                     (0x874U)
+#define GMAC_RXUDP_ERROR_OCTETS                            (0x0U)
+#define GMAC_RXUDP_ERROR_OCTETS_RXUDPERROCT_SHIFT          (0U)
+#define GMAC_RXUDP_ERROR_OCTETS_RXUDPERROCT_MASK           (0xFFFFFFFFU << GMAC_RXUDP_ERROR_OCTETS_RXUDPERROCT_SHIFT)   /* 0xFFFFFFFF */
+/* RXTCP_ERROR_OCTETS */
+#define GMAC_RXTCP_ERROR_OCTETS_OFFSET                     (0x87CU)
+#define GMAC_RXTCP_ERROR_OCTETS                            (0x0U)
+#define GMAC_RXTCP_ERROR_OCTETS_RXTCPERROCT_SHIFT          (0U)
+#define GMAC_RXTCP_ERROR_OCTETS_RXTCPERROCT_MASK           (0xFFFFFFFFU << GMAC_RXTCP_ERROR_OCTETS_RXTCPERROCT_SHIFT)   /* 0xFFFFFFFF */
+/* RXICMP_ERROR_OCTETS */
+#define GMAC_RXICMP_ERROR_OCTETS_OFFSET                    (0x884U)
+#define GMAC_RXICMP_ERROR_OCTETS                           (0x0U)
+#define GMAC_RXICMP_ERROR_OCTETS_RXICMPERROCT_SHIFT        (0U)
+#define GMAC_RXICMP_ERROR_OCTETS_RXICMPERROCT_MASK         (0xFFFFFFFFU << GMAC_RXICMP_ERROR_OCTETS_RXICMPERROCT_SHIFT) /* 0xFFFFFFFF */
+/* MAC_TIMESTAMP_CONTROL */
+#define GMAC_MAC_TIMESTAMP_CONTROL_OFFSET                  (0xB00U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSENA_SHIFT             (0U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSENA_MASK              (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSENA_SHIFT)             /* 0x00000001 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSCFUPDT_SHIFT          (1U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSCFUPDT_MASK           (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSCFUPDT_SHIFT)          /* 0x00000002 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSINIT_SHIFT            (2U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSINIT_MASK             (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSINIT_SHIFT)            /* 0x00000004 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSUPDT_SHIFT            (3U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSUPDT_MASK             (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSUPDT_SHIFT)            /* 0x00000008 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSADDREG_SHIFT          (5U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSADDREG_MASK           (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSADDREG_SHIFT)          /* 0x00000020 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_PTGE_SHIFT              (6U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_PTGE_MASK               (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_PTGE_SHIFT)              /* 0x00000040 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSENALL_SHIFT           (8U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSENALL_MASK            (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSENALL_SHIFT)           /* 0x00000100 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSCTRLSSR_SHIFT         (9U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSCTRLSSR_MASK          (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSCTRLSSR_SHIFT)         /* 0x00000200 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSVER2ENA_SHIFT         (10U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSVER2ENA_MASK          (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSVER2ENA_SHIFT)         /* 0x00000400 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSIPENA_SHIFT           (11U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSIPENA_MASK            (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSIPENA_SHIFT)           /* 0x00000800 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSIPV6ENA_SHIFT         (12U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSIPV6ENA_MASK          (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSIPV6ENA_SHIFT)         /* 0x00001000 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSIPV4ENA_SHIFT         (13U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSIPV4ENA_MASK          (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSIPV4ENA_SHIFT)         /* 0x00002000 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSEVNTENA_SHIFT         (14U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSEVNTENA_MASK          (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSEVNTENA_SHIFT)         /* 0x00004000 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSMSTRENA_SHIFT         (15U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSMSTRENA_MASK          (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSMSTRENA_SHIFT)         /* 0x00008000 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_SNAPTYPSEL_SHIFT        (16U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_SNAPTYPSEL_MASK         (0x3U << GMAC_MAC_TIMESTAMP_CONTROL_SNAPTYPSEL_SHIFT)        /* 0x00030000 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSENMACADDR_SHIFT       (18U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TSENMACADDR_MASK        (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TSENMACADDR_SHIFT)       /* 0x00040000 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_TXTSSTSM_SHIFT          (24U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_TXTSSTSM_MASK           (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_TXTSSTSM_SHIFT)          /* 0x01000000 */
+#define GMAC_MAC_TIMESTAMP_CONTROL_AV8021ASMEN_SHIFT       (28U)
+#define GMAC_MAC_TIMESTAMP_CONTROL_AV8021ASMEN_MASK        (0x1U << GMAC_MAC_TIMESTAMP_CONTROL_AV8021ASMEN_SHIFT)       /* 0x10000000 */
+/* MAC_SUB_SECOND_INCREMENT */
+#define GMAC_MAC_SUB_SECOND_INCREMENT_OFFSET               (0xB04U)
+#define GMAC_MAC_SUB_SECOND_INCREMENT_SSINC_SHIFT          (16U)
+#define GMAC_MAC_SUB_SECOND_INCREMENT_SSINC_MASK           (0xFFU << GMAC_MAC_SUB_SECOND_INCREMENT_SSINC_SHIFT)         /* 0x00FF0000 */
+/* MAC_SYSTEM_TIME_SECS */
+#define GMAC_MAC_SYSTEM_TIME_SECS_OFFSET                   (0xB08U)
+#define GMAC_MAC_SYSTEM_TIME_SECS_TSS_SHIFT                (0U)
+#define GMAC_MAC_SYSTEM_TIME_SECS_TSS_MASK                 (0xFFFFFFFFU << GMAC_MAC_SYSTEM_TIME_SECS_TSS_SHIFT)         /* 0xFFFFFFFF */
+/* MAC_SYSTEM_TIME_NS */
+#define GMAC_MAC_SYSTEM_TIME_NS_OFFSET                     (0xB0CU)
+#define GMAC_MAC_SYSTEM_TIME_NS_TSSS_SHIFT                 (0U)
+#define GMAC_MAC_SYSTEM_TIME_NS_TSSS_MASK                  (0x7FFFFFFFU << GMAC_MAC_SYSTEM_TIME_NS_TSSS_SHIFT)          /* 0x7FFFFFFF */
+/* MAC_SYS_TIME_SECS_UPDATE */
+#define GMAC_MAC_SYS_TIME_SECS_UPDATE_OFFSET               (0xB10U)
+#define GMAC_MAC_SYS_TIME_SECS_UPDATE_TSS_SHIFT            (0U)
+#define GMAC_MAC_SYS_TIME_SECS_UPDATE_TSS_MASK             (0xFFFFFFFFU << GMAC_MAC_SYS_TIME_SECS_UPDATE_TSS_SHIFT)     /* 0xFFFFFFFF */
+/* MAC_SYS_TIME_NS_UPDATE */
+#define GMAC_MAC_SYS_TIME_NS_UPDATE_OFFSET                 (0xB14U)
+#define GMAC_MAC_SYS_TIME_NS_UPDATE_TSSS_SHIFT             (0U)
+#define GMAC_MAC_SYS_TIME_NS_UPDATE_TSSS_MASK              (0x7FFFFFFFU << GMAC_MAC_SYS_TIME_NS_UPDATE_TSSS_SHIFT)      /* 0x7FFFFFFF */
+#define GMAC_MAC_SYS_TIME_NS_UPDATE_ADDSUB_SHIFT           (31U)
+#define GMAC_MAC_SYS_TIME_NS_UPDATE_ADDSUB_MASK            (0x1U << GMAC_MAC_SYS_TIME_NS_UPDATE_ADDSUB_SHIFT)           /* 0x80000000 */
+/* MAC_TIMESTAMP_ADDEND */
+#define GMAC_MAC_TIMESTAMP_ADDEND_OFFSET                   (0xB20U)
+#define GMAC_MAC_TIMESTAMP_ADDEND_TSAR_SHIFT               (0U)
+#define GMAC_MAC_TIMESTAMP_ADDEND_TSAR_MASK                (0xFFFFFFFFU << GMAC_MAC_TIMESTAMP_ADDEND_TSAR_SHIFT)        /* 0xFFFFFFFF */
+/* MAC_TIMESTAMP_STATUS */
+#define GMAC_MAC_TIMESTAMP_STATUS_OFFSET                   (0xB20U)
+#define GMAC_MAC_TIMESTAMP_STATUS                          (0x0U)
+#define GMAC_MAC_TIMESTAMP_STATUS_TSSOVF_SHIFT             (0U)
+#define GMAC_MAC_TIMESTAMP_STATUS_TSSOVF_MASK              (0x1U << GMAC_MAC_TIMESTAMP_STATUS_TSSOVF_SHIFT)             /* 0x00000001 */
+#define GMAC_MAC_TIMESTAMP_STATUS_TSTARGT0_SHIFT           (1U)
+#define GMAC_MAC_TIMESTAMP_STATUS_TSTARGT0_MASK            (0x1U << GMAC_MAC_TIMESTAMP_STATUS_TSTARGT0_SHIFT)           /* 0x00000002 */
+#define GMAC_MAC_TIMESTAMP_STATUS_AUXTSTRIG_SHIFT          (2U)
+#define GMAC_MAC_TIMESTAMP_STATUS_AUXTSTRIG_MASK           (0x1U << GMAC_MAC_TIMESTAMP_STATUS_AUXTSTRIG_SHIFT)          /* 0x00000004 */
+#define GMAC_MAC_TIMESTAMP_STATUS_TSTRGTERR0_SHIFT         (3U)
+#define GMAC_MAC_TIMESTAMP_STATUS_TSTRGTERR0_MASK          (0x1U << GMAC_MAC_TIMESTAMP_STATUS_TSTRGTERR0_SHIFT)         /* 0x00000008 */
+#define GMAC_MAC_TIMESTAMP_STATUS_TXTSSIS_SHIFT            (15U)
+#define GMAC_MAC_TIMESTAMP_STATUS_TXTSSIS_MASK             (0x1U << GMAC_MAC_TIMESTAMP_STATUS_TXTSSIS_SHIFT)            /* 0x00008000 */
+#define GMAC_MAC_TIMESTAMP_STATUS_ATSSTM_SHIFT             (24U)
+#define GMAC_MAC_TIMESTAMP_STATUS_ATSSTM_MASK              (0x1U << GMAC_MAC_TIMESTAMP_STATUS_ATSSTM_SHIFT)             /* 0x01000000 */
+#define GMAC_MAC_TIMESTAMP_STATUS_ATSNS_SHIFT              (25U)
+#define GMAC_MAC_TIMESTAMP_STATUS_ATSNS_MASK               (0x1FU << GMAC_MAC_TIMESTAMP_STATUS_ATSNS_SHIFT)             /* 0x3E000000 */
+/* MAC_TX_TS_STATUS_NS */
+#define GMAC_MAC_TX_TS_STATUS_NS_OFFSET                    (0xB30U)
+#define GMAC_MAC_TX_TS_STATUS_NS                           (0x0U)
+#define GMAC_MAC_TX_TS_STATUS_NS_TXTSSLO_SHIFT             (0U)
+#define GMAC_MAC_TX_TS_STATUS_NS_TXTSSLO_MASK              (0x7FFFFFFFU << GMAC_MAC_TX_TS_STATUS_NS_TXTSSLO_SHIFT)      /* 0x7FFFFFFF */
+#define GMAC_MAC_TX_TS_STATUS_NS_TXTSSMIS_SHIFT            (31U)
+#define GMAC_MAC_TX_TS_STATUS_NS_TXTSSMIS_MASK             (0x1U << GMAC_MAC_TX_TS_STATUS_NS_TXTSSMIS_SHIFT)            /* 0x80000000 */
+/* MAC_TX_TS_STATUS_SECS */
+#define GMAC_MAC_TX_TS_STATUS_SECS_OFFSET                  (0xB34U)
+#define GMAC_MAC_TX_TS_STATUS_SECS                         (0x0U)
+#define GMAC_MAC_TX_TS_STATUS_SECS_TXTSSHI_SHIFT           (0U)
+#define GMAC_MAC_TX_TS_STATUS_SECS_TXTSSHI_MASK            (0xFFFFFFFFU << GMAC_MAC_TX_TS_STATUS_SECS_TXTSSHI_SHIFT)    /* 0xFFFFFFFF */
+/* MAC_AUXILIARY_CONTROL */
+#define GMAC_MAC_AUXILIARY_CONTROL_OFFSET                  (0xB40U)
+#define GMAC_MAC_AUXILIARY_CONTROL_ATSFC_SHIFT             (0U)
+#define GMAC_MAC_AUXILIARY_CONTROL_ATSFC_MASK              (0x1U << GMAC_MAC_AUXILIARY_CONTROL_ATSFC_SHIFT)             /* 0x00000001 */
+#define GMAC_MAC_AUXILIARY_CONTROL_ATSEN0_SHIFT            (4U)
+#define GMAC_MAC_AUXILIARY_CONTROL_ATSEN0_MASK             (0x1U << GMAC_MAC_AUXILIARY_CONTROL_ATSEN0_SHIFT)            /* 0x00000010 */
+/* MAC_AUXILIARY_TS_NS */
+#define GMAC_MAC_AUXILIARY_TS_NS_OFFSET                    (0xB48U)
+#define GMAC_MAC_AUXILIARY_TS_NS                           (0x0U)
+#define GMAC_MAC_AUXILIARY_TS_NS_AUXTSLO_SHIFT             (0U)
+#define GMAC_MAC_AUXILIARY_TS_NS_AUXTSLO_MASK              (0x7FFFFFFFU << GMAC_MAC_AUXILIARY_TS_NS_AUXTSLO_SHIFT)      /* 0x7FFFFFFF */
+/* MAC_AUXILIARY_TS_SECS */
+#define GMAC_MAC_AUXILIARY_TS_SECS_OFFSET                  (0xB4CU)
+#define GMAC_MAC_AUXILIARY_TS_SECS                         (0x0U)
+#define GMAC_MAC_AUXILIARY_TS_SECS_AUXTSHI_SHIFT           (0U)
+#define GMAC_MAC_AUXILIARY_TS_SECS_AUXTSHI_MASK            (0xFFFFFFFFU << GMAC_MAC_AUXILIARY_TS_SECS_AUXTSHI_SHIFT)    /* 0xFFFFFFFF */
+/* MAC_TS_INGRESS_CORR_NS */
+#define GMAC_MAC_TS_INGRESS_CORR_NS_OFFSET                 (0xB58U)
+#define GMAC_MAC_TS_INGRESS_CORR_NS_TSIC_SHIFT             (0U)
+#define GMAC_MAC_TS_INGRESS_CORR_NS_TSIC_MASK              (0xFFFFFFFFU << GMAC_MAC_TS_INGRESS_CORR_NS_TSIC_SHIFT)      /* 0xFFFFFFFF */
+/* MAC_TS_EGRESS_CORR_NS */
+#define GMAC_MAC_TS_EGRESS_CORR_NS_OFFSET                  (0xB5CU)
+#define GMAC_MAC_TS_EGRESS_CORR_NS_TSEC_SHIFT              (0U)
+#define GMAC_MAC_TS_EGRESS_CORR_NS_TSEC_MASK               (0xFFFFFFFFU << GMAC_MAC_TS_EGRESS_CORR_NS_TSEC_SHIFT)       /* 0xFFFFFFFF */
+/* MAC_TS_INGRESS_LATENCY */
+#define GMAC_MAC_TS_INGRESS_LATENCY_OFFSET                 (0xB68U)
+#define GMAC_MAC_TS_INGRESS_LATENCY                        (0x0U)
+#define GMAC_MAC_TS_INGRESS_LATENCY_ITLSNS_SHIFT           (8U)
+#define GMAC_MAC_TS_INGRESS_LATENCY_ITLSNS_MASK            (0xFFU << GMAC_MAC_TS_INGRESS_LATENCY_ITLSNS_SHIFT)          /* 0x0000FF00 */
+#define GMAC_MAC_TS_INGRESS_LATENCY_ITLNS_SHIFT            (16U)
+#define GMAC_MAC_TS_INGRESS_LATENCY_ITLNS_MASK             (0xFFU << GMAC_MAC_TS_INGRESS_LATENCY_ITLNS_SHIFT)           /* 0x00FF0000 */
+/* MAC_TS_EGRESS_LATENCY */
+#define GMAC_MAC_TS_EGRESS_LATENCY_OFFSET                  (0xB6CU)
+#define GMAC_MAC_TS_EGRESS_LATENCY                         (0x0U)
+#define GMAC_MAC_TS_EGRESS_LATENCY_ETLSNS_SHIFT            (8U)
+#define GMAC_MAC_TS_EGRESS_LATENCY_ETLSNS_MASK             (0xFFU << GMAC_MAC_TS_EGRESS_LATENCY_ETLSNS_SHIFT)           /* 0x0000FF00 */
+#define GMAC_MAC_TS_EGRESS_LATENCY_ETLNS_SHIFT             (16U)
+#define GMAC_MAC_TS_EGRESS_LATENCY_ETLNS_MASK              (0xFFU << GMAC_MAC_TS_EGRESS_LATENCY_ETLNS_SHIFT)            /* 0x00FF0000 */
+/* MAC_PPS_CONTROL */
+#define GMAC_MAC_PPS_CONTROL_OFFSET                        (0xB70U)
+#define GMAC_MAC_PPS_CONTROL_PPSCTRL_PPSCMD_SHIFT          (0U)
+#define GMAC_MAC_PPS_CONTROL_PPSCTRL_PPSCMD_MASK           (0xFU << GMAC_MAC_PPS_CONTROL_PPSCTRL_PPSCMD_SHIFT)          /* 0x0000000F */
+#define GMAC_MAC_PPS_CONTROL_PPSCTRL_PPSCMD_CONT_SHIFT     (0U)
+#define GMAC_MAC_PPS_CONTROL_PPSCTRL_PPSCMD_CONT_MASK      (0xFU << GMAC_MAC_PPS_CONTROL_PPSCTRL_PPSCMD_CONT_SHIFT)     /* 0x0000000F */
+#define GMAC_MAC_PPS_CONTROL_PPSEN0_SHIFT                  (4U)
+#define GMAC_MAC_PPS_CONTROL_PPSEN0_MASK                   (0x1U << GMAC_MAC_PPS_CONTROL_PPSEN0_SHIFT)                  /* 0x00000010 */
+#define GMAC_MAC_PPS_CONTROL_TRGTMODSEL0_SHIFT             (5U)
+#define GMAC_MAC_PPS_CONTROL_TRGTMODSEL0_MASK              (0x3U << GMAC_MAC_PPS_CONTROL_TRGTMODSEL0_SHIFT)             /* 0x00000060 */
+#define GMAC_MAC_PPS_CONTROL_MCGREN0_SHIFT                 (7U)
+#define GMAC_MAC_PPS_CONTROL_MCGREN0_MASK                  (0x1U << GMAC_MAC_PPS_CONTROL_MCGREN0_SHIFT)                 /* 0x00000080 */
+/* MAC_PPS0_TARGET_TIME_SECONDS */
+#define GMAC_MAC_PPS0_TARGET_TIME_SECONDS_OFFSET           (0xB80U)
+#define GMAC_MAC_PPS0_TARGET_TIME_SECONDS_TSTRH0_SHIFT     (0U)
+#define GMAC_MAC_PPS0_TARGET_TIME_SECONDS_TSTRH0_MASK      (0xFFFFFFFFU << GMAC_MAC_PPS0_TARGET_TIME_SECONDS_TSTRH0_SHIFT) /* 0xFFFFFFFF */
+/* MAC_PPS0_TARGET_TIME_NS */
+#define GMAC_MAC_PPS0_TARGET_TIME_NS_OFFSET                (0xB84U)
+#define GMAC_MAC_PPS0_TARGET_TIME_NS_TTSL0_SHIFT           (0U)
+#define GMAC_MAC_PPS0_TARGET_TIME_NS_TTSL0_MASK            (0x7FFFFFFFU << GMAC_MAC_PPS0_TARGET_TIME_NS_TTSL0_SHIFT)    /* 0x7FFFFFFF */
+#define GMAC_MAC_PPS0_TARGET_TIME_NS_TRGTBUSY0_SHIFT       (31U)
+#define GMAC_MAC_PPS0_TARGET_TIME_NS_TRGTBUSY0_MASK        (0x1U << GMAC_MAC_PPS0_TARGET_TIME_NS_TRGTBUSY0_SHIFT)       /* 0x80000000 */
+/* MAC_PPS0_INTERVAL */
+#define GMAC_MAC_PPS0_INTERVAL_OFFSET                      (0xB88U)
+#define GMAC_MAC_PPS0_INTERVAL_PPSINT0_SHIFT               (0U)
+#define GMAC_MAC_PPS0_INTERVAL_PPSINT0_MASK                (0xFFFFFFFFU << GMAC_MAC_PPS0_INTERVAL_PPSINT0_SHIFT)        /* 0xFFFFFFFF */
+/* MAC_PPS0_WIDTH */
+#define GMAC_MAC_PPS0_WIDTH_OFFSET                         (0xB8CU)
+#define GMAC_MAC_PPS0_WIDTH_PPSWIDTH0_SHIFT                (0U)
+#define GMAC_MAC_PPS0_WIDTH_PPSWIDTH0_MASK                 (0xFFFFFFFFU << GMAC_MAC_PPS0_WIDTH_PPSWIDTH0_SHIFT)         /* 0xFFFFFFFF */
+/* MTL_OPERATION_MODE */
+#define GMAC_MTL_OPERATION_MODE_OFFSET                     (0xC00U)
+#define GMAC_MTL_OPERATION_MODE_DTXSTS_SHIFT               (1U)
+#define GMAC_MTL_OPERATION_MODE_DTXSTS_MASK                (0x1U << GMAC_MTL_OPERATION_MODE_DTXSTS_SHIFT)               /* 0x00000002 */
+#define GMAC_MTL_OPERATION_MODE_CNTPRST_SHIFT              (8U)
+#define GMAC_MTL_OPERATION_MODE_CNTPRST_MASK               (0x1U << GMAC_MTL_OPERATION_MODE_CNTPRST_SHIFT)              /* 0x00000100 */
+#define GMAC_MTL_OPERATION_MODE_CNTCLR_SHIFT               (9U)
+#define GMAC_MTL_OPERATION_MODE_CNTCLR_MASK                (0x1U << GMAC_MTL_OPERATION_MODE_CNTCLR_SHIFT)               /* 0x00000200 */
+/* MTL_DBG_CTL */
+#define GMAC_MTL_DBG_CTL_OFFSET                            (0xC08U)
+#define GMAC_MTL_DBG_CTL_FDBGEN_SHIFT                      (0U)
+#define GMAC_MTL_DBG_CTL_FDBGEN_MASK                       (0x1U << GMAC_MTL_DBG_CTL_FDBGEN_SHIFT)                      /* 0x00000001 */
+#define GMAC_MTL_DBG_CTL_DBGMOD_SHIFT                      (1U)
+#define GMAC_MTL_DBG_CTL_DBGMOD_MASK                       (0x1U << GMAC_MTL_DBG_CTL_DBGMOD_SHIFT)                      /* 0x00000002 */
+#define GMAC_MTL_DBG_CTL_BYTEEN_SHIFT                      (2U)
+#define GMAC_MTL_DBG_CTL_BYTEEN_MASK                       (0x3U << GMAC_MTL_DBG_CTL_BYTEEN_SHIFT)                      /* 0x0000000C */
+#define GMAC_MTL_DBG_CTL_PKTSTATE_SHIFT                    (5U)
+#define GMAC_MTL_DBG_CTL_PKTSTATE_MASK                     (0x3U << GMAC_MTL_DBG_CTL_PKTSTATE_SHIFT)                    /* 0x00000060 */
+#define GMAC_MTL_DBG_CTL_RSTALL_SHIFT                      (8U)
+#define GMAC_MTL_DBG_CTL_RSTALL_MASK                       (0x1U << GMAC_MTL_DBG_CTL_RSTALL_SHIFT)                      /* 0x00000100 */
+#define GMAC_MTL_DBG_CTL_RSTSEL_SHIFT                      (9U)
+#define GMAC_MTL_DBG_CTL_RSTSEL_MASK                       (0x1U << GMAC_MTL_DBG_CTL_RSTSEL_SHIFT)                      /* 0x00000200 */
+#define GMAC_MTL_DBG_CTL_FIFORDEN_SHIFT                    (10U)
+#define GMAC_MTL_DBG_CTL_FIFORDEN_MASK                     (0x1U << GMAC_MTL_DBG_CTL_FIFORDEN_SHIFT)                    /* 0x00000400 */
+#define GMAC_MTL_DBG_CTL_FIFOWREN_SHIFT                    (11U)
+#define GMAC_MTL_DBG_CTL_FIFOWREN_MASK                     (0x1U << GMAC_MTL_DBG_CTL_FIFOWREN_SHIFT)                    /* 0x00000800 */
+#define GMAC_MTL_DBG_CTL_FIFOSEL_SHIFT                     (12U)
+#define GMAC_MTL_DBG_CTL_FIFOSEL_MASK                      (0x3U << GMAC_MTL_DBG_CTL_FIFOSEL_SHIFT)                     /* 0x00003000 */
+#define GMAC_MTL_DBG_CTL_PKTIE_SHIFT                       (14U)
+#define GMAC_MTL_DBG_CTL_PKTIE_MASK                        (0x1U << GMAC_MTL_DBG_CTL_PKTIE_SHIFT)                       /* 0x00004000 */
+#define GMAC_MTL_DBG_CTL_STSIE_SHIFT                       (15U)
+#define GMAC_MTL_DBG_CTL_STSIE_MASK                        (0x1U << GMAC_MTL_DBG_CTL_STSIE_SHIFT)                       /* 0x00008000 */
+/* MTL_DBG_STS */
+#define GMAC_MTL_DBG_STS_OFFSET                            (0xC0CU)
+#define GMAC_MTL_DBG_STS_FIFOBUSY_SHIFT                    (0U)
+#define GMAC_MTL_DBG_STS_FIFOBUSY_MASK                     (0x1U << GMAC_MTL_DBG_STS_FIFOBUSY_SHIFT)                    /* 0x00000001 */
+#define GMAC_MTL_DBG_STS_PKTSTATE_SHIFT                    (1U)
+#define GMAC_MTL_DBG_STS_PKTSTATE_MASK                     (0x3U << GMAC_MTL_DBG_STS_PKTSTATE_SHIFT)                    /* 0x00000006 */
+#define GMAC_MTL_DBG_STS_BYTEEN_SHIFT                      (3U)
+#define GMAC_MTL_DBG_STS_BYTEEN_MASK                       (0x3U << GMAC_MTL_DBG_STS_BYTEEN_SHIFT)                      /* 0x00000018 */
+#define GMAC_MTL_DBG_STS_PKTI_SHIFT                        (8U)
+#define GMAC_MTL_DBG_STS_PKTI_MASK                         (0x1U << GMAC_MTL_DBG_STS_PKTI_SHIFT)                        /* 0x00000100 */
+#define GMAC_MTL_DBG_STS_STSI_SHIFT                        (9U)
+#define GMAC_MTL_DBG_STS_STSI_MASK                         (0x1U << GMAC_MTL_DBG_STS_STSI_SHIFT)                        /* 0x00000200 */
+#define GMAC_MTL_DBG_STS_LOCR_SHIFT                        (15U)
+#define GMAC_MTL_DBG_STS_LOCR_MASK                         (0x1FFFFU << GMAC_MTL_DBG_STS_LOCR_SHIFT)                    /* 0xFFFF8000 */
+/* MTL_FIFO_DEBUG_DATA */
+#define GMAC_MTL_FIFO_DEBUG_DATA_OFFSET                    (0xC10U)
+#define GMAC_MTL_FIFO_DEBUG_DATA_FDBGDATA_SHIFT            (0U)
+#define GMAC_MTL_FIFO_DEBUG_DATA_FDBGDATA_MASK             (0xFFFFFFFFU << GMAC_MTL_FIFO_DEBUG_DATA_FDBGDATA_SHIFT)     /* 0xFFFFFFFF */
+/* MTL_INTERRUPT_STATUS */
+#define GMAC_MTL_INTERRUPT_STATUS_OFFSET                   (0xC20U)
+#define GMAC_MTL_INTERRUPT_STATUS                          (0x0U)
+#define GMAC_MTL_INTERRUPT_STATUS_Q0IS_SHIFT               (0U)
+#define GMAC_MTL_INTERRUPT_STATUS_Q0IS_MASK                (0x1U << GMAC_MTL_INTERRUPT_STATUS_Q0IS_SHIFT)               /* 0x00000001 */
+#define GMAC_MTL_INTERRUPT_STATUS_DBGIS_SHIFT              (17U)
+#define GMAC_MTL_INTERRUPT_STATUS_DBGIS_MASK               (0x1U << GMAC_MTL_INTERRUPT_STATUS_DBGIS_SHIFT)              /* 0x00020000 */
+/* MTL_TXQ0_OPERATION_MODE */
+#define GMAC_MTL_TXQ0_OPERATION_MODE_OFFSET                (0xD00U)
+#define GMAC_MTL_TXQ0_OPERATION_MODE_FTQ_SHIFT             (0U)
+#define GMAC_MTL_TXQ0_OPERATION_MODE_FTQ_MASK              (0x1U << GMAC_MTL_TXQ0_OPERATION_MODE_FTQ_SHIFT)             /* 0x00000001 */
+#define GMAC_MTL_TXQ0_OPERATION_MODE_TSF_SHIFT             (1U)
+#define GMAC_MTL_TXQ0_OPERATION_MODE_TSF_MASK              (0x1U << GMAC_MTL_TXQ0_OPERATION_MODE_TSF_SHIFT)             /* 0x00000002 */
+#define GMAC_MTL_TXQ0_OPERATION_MODE_TTC_SHIFT             (4U)
+#define GMAC_MTL_TXQ0_OPERATION_MODE_TTC_MASK              (0x7U << GMAC_MTL_TXQ0_OPERATION_MODE_TTC_SHIFT)             /* 0x00000070 */
+/* MTL_TXQ0_UNDERFLOW */
+#define GMAC_MTL_TXQ0_UNDERFLOW_OFFSET                     (0xD04U)
+#define GMAC_MTL_TXQ0_UNDERFLOW                            (0x0U)
+#define GMAC_MTL_TXQ0_UNDERFLOW_UFFRMCNT_SHIFT             (0U)
+#define GMAC_MTL_TXQ0_UNDERFLOW_UFFRMCNT_MASK              (0x7FFU << GMAC_MTL_TXQ0_UNDERFLOW_UFFRMCNT_SHIFT)           /* 0x000007FF */
+#define GMAC_MTL_TXQ0_UNDERFLOW_UFCNTOVF_SHIFT             (11U)
+#define GMAC_MTL_TXQ0_UNDERFLOW_UFCNTOVF_MASK              (0x1U << GMAC_MTL_TXQ0_UNDERFLOW_UFCNTOVF_SHIFT)             /* 0x00000800 */
+/* MTL_TXQ0_DEBUG */
+#define GMAC_MTL_TXQ0_DEBUG_OFFSET                         (0xD08U)
+#define GMAC_MTL_TXQ0_DEBUG                                (0x0U)
+#define GMAC_MTL_TXQ0_DEBUG_TXQPAUSED_SHIFT                (0U)
+#define GMAC_MTL_TXQ0_DEBUG_TXQPAUSED_MASK                 (0x1U << GMAC_MTL_TXQ0_DEBUG_TXQPAUSED_SHIFT)                /* 0x00000001 */
+#define GMAC_MTL_TXQ0_DEBUG_TRCSTS_SHIFT                   (1U)
+#define GMAC_MTL_TXQ0_DEBUG_TRCSTS_MASK                    (0x3U << GMAC_MTL_TXQ0_DEBUG_TRCSTS_SHIFT)                   /* 0x00000006 */
+#define GMAC_MTL_TXQ0_DEBUG_TWCSTS_SHIFT                   (3U)
+#define GMAC_MTL_TXQ0_DEBUG_TWCSTS_MASK                    (0x1U << GMAC_MTL_TXQ0_DEBUG_TWCSTS_SHIFT)                   /* 0x00000008 */
+#define GMAC_MTL_TXQ0_DEBUG_TXQSTS_SHIFT                   (4U)
+#define GMAC_MTL_TXQ0_DEBUG_TXQSTS_MASK                    (0x1U << GMAC_MTL_TXQ0_DEBUG_TXQSTS_SHIFT)                   /* 0x00000010 */
+#define GMAC_MTL_TXQ0_DEBUG_TXSTSFSTS_SHIFT                (5U)
+#define GMAC_MTL_TXQ0_DEBUG_TXSTSFSTS_MASK                 (0x1U << GMAC_MTL_TXQ0_DEBUG_TXSTSFSTS_SHIFT)                /* 0x00000020 */
+#define GMAC_MTL_TXQ0_DEBUG_PTXQ_SHIFT                     (16U)
+#define GMAC_MTL_TXQ0_DEBUG_PTXQ_MASK                      (0x7U << GMAC_MTL_TXQ0_DEBUG_PTXQ_SHIFT)                     /* 0x00070000 */
+#define GMAC_MTL_TXQ0_DEBUG_STXSTSF_SHIFT                  (20U)
+#define GMAC_MTL_TXQ0_DEBUG_STXSTSF_MASK                   (0x7U << GMAC_MTL_TXQ0_DEBUG_STXSTSF_SHIFT)                  /* 0x00700000 */
+/* MTL_Q0_INTERRUPT_CTRL_STATUS */
+#define GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_OFFSET           (0xD2CU)
+#define GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_TXUNFIS_SHIFT    (0U)
+#define GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_TXUNFIS_MASK     (0x1U << GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_TXUNFIS_SHIFT)    /* 0x00000001 */
+#define GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_TXUIE_SHIFT      (8U)
+#define GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_TXUIE_MASK       (0x1U << GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_TXUIE_SHIFT)      /* 0x00000100 */
+#define GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_RXOVFIS_SHIFT    (16U)
+#define GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_RXOVFIS_MASK     (0x1U << GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_RXOVFIS_SHIFT)    /* 0x00010000 */
+#define GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_RXOIE_SHIFT      (24U)
+#define GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_RXOIE_MASK       (0x1U << GMAC_MTL_Q0_INTERRUPT_CTRL_STATUS_RXOIE_SHIFT)      /* 0x01000000 */
+/* MTL_RXQ0_OPERATION_MODE */
+#define GMAC_MTL_RXQ0_OPERATION_MODE_OFFSET                (0xD30U)
+#define GMAC_MTL_RXQ0_OPERATION_MODE_RTC_SHIFT             (0U)
+#define GMAC_MTL_RXQ0_OPERATION_MODE_RTC_MASK              (0x3U << GMAC_MTL_RXQ0_OPERATION_MODE_RTC_SHIFT)             /* 0x00000003 */
+#define GMAC_MTL_RXQ0_OPERATION_MODE_FUP_SHIFT             (3U)
+#define GMAC_MTL_RXQ0_OPERATION_MODE_FUP_MASK              (0x1U << GMAC_MTL_RXQ0_OPERATION_MODE_FUP_SHIFT)             /* 0x00000008 */
+#define GMAC_MTL_RXQ0_OPERATION_MODE_FEP_SHIFT             (4U)
+#define GMAC_MTL_RXQ0_OPERATION_MODE_FEP_MASK              (0x1U << GMAC_MTL_RXQ0_OPERATION_MODE_FEP_SHIFT)             /* 0x00000010 */
+#define GMAC_MTL_RXQ0_OPERATION_MODE_RSF_SHIFT             (5U)
+#define GMAC_MTL_RXQ0_OPERATION_MODE_RSF_MASK              (0x1U << GMAC_MTL_RXQ0_OPERATION_MODE_RSF_SHIFT)             /* 0x00000020 */
+#define GMAC_MTL_RXQ0_OPERATION_MODE_DIS_TCP_EF_SHIFT      (6U)
+#define GMAC_MTL_RXQ0_OPERATION_MODE_DIS_TCP_EF_MASK       (0x1U << GMAC_MTL_RXQ0_OPERATION_MODE_DIS_TCP_EF_SHIFT)      /* 0x00000040 */
+#define GMAC_MTL_RXQ0_OPERATION_MODE_EHFC_SHIFT            (7U)
+#define GMAC_MTL_RXQ0_OPERATION_MODE_EHFC_MASK             (0x1U << GMAC_MTL_RXQ0_OPERATION_MODE_EHFC_SHIFT)            /* 0x00000080 */
+#define GMAC_MTL_RXQ0_OPERATION_MODE_RFA_SHIFT             (8U)
+#define GMAC_MTL_RXQ0_OPERATION_MODE_RFA_MASK              (0xFU << GMAC_MTL_RXQ0_OPERATION_MODE_RFA_SHIFT)             /* 0x00000F00 */
+#define GMAC_MTL_RXQ0_OPERATION_MODE_RFD_SHIFT             (14U)
+#define GMAC_MTL_RXQ0_OPERATION_MODE_RFD_MASK              (0xFU << GMAC_MTL_RXQ0_OPERATION_MODE_RFD_SHIFT)             /* 0x0003C000 */
+/* MTL_RXQ0_MISS_PKT_OVF_CNT */
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_OFFSET              (0xD34U)
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT                     (0x0U)
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_OVFPKTCNT_SHIFT     (0U)
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_OVFPKTCNT_MASK      (0x7FFU << GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_OVFPKTCNT_SHIFT)   /* 0x000007FF */
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_OVFCNTOVF_SHIFT     (11U)
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_OVFCNTOVF_MASK      (0x1U << GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_OVFCNTOVF_SHIFT)     /* 0x00000800 */
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_MISPKTCNT_SHIFT     (16U)
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_MISPKTCNT_MASK      (0x7FFU << GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_MISPKTCNT_SHIFT)   /* 0x07FF0000 */
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_MISCNTOVF_SHIFT     (27U)
+#define GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_MISCNTOVF_MASK      (0x1U << GMAC_MTL_RXQ0_MISS_PKT_OVF_CNT_MISCNTOVF_SHIFT)     /* 0x08000000 */
+/* MTL_RXQ0_DEBUG */
+#define GMAC_MTL_RXQ0_DEBUG_OFFSET                         (0xD38U)
+#define GMAC_MTL_RXQ0_DEBUG                                (0x0U)
+#define GMAC_MTL_RXQ0_DEBUG_RWCSTS_SHIFT                   (0U)
+#define GMAC_MTL_RXQ0_DEBUG_RWCSTS_MASK                    (0x1U << GMAC_MTL_RXQ0_DEBUG_RWCSTS_SHIFT)                   /* 0x00000001 */
+#define GMAC_MTL_RXQ0_DEBUG_RRCSTS_SHIFT                   (1U)
+#define GMAC_MTL_RXQ0_DEBUG_RRCSTS_MASK                    (0x3U << GMAC_MTL_RXQ0_DEBUG_RRCSTS_SHIFT)                   /* 0x00000006 */
+#define GMAC_MTL_RXQ0_DEBUG_RXQSTS_SHIFT                   (4U)
+#define GMAC_MTL_RXQ0_DEBUG_RXQSTS_MASK                    (0x3U << GMAC_MTL_RXQ0_DEBUG_RXQSTS_SHIFT)                   /* 0x00000030 */
+#define GMAC_MTL_RXQ0_DEBUG_PRXQ_SHIFT                     (16U)
+#define GMAC_MTL_RXQ0_DEBUG_PRXQ_MASK                      (0xFU << GMAC_MTL_RXQ0_DEBUG_PRXQ_SHIFT)                     /* 0x000F0000 */
+/* DMA_MODE */
+#define GMAC_DMA_MODE_OFFSET                               (0x1000U)
+#define GMAC_DMA_MODE_SWR_SHIFT                            (0U)
+#define GMAC_DMA_MODE_SWR_MASK                             (0x1U << GMAC_DMA_MODE_SWR_SHIFT)                            /* 0x00000001 */
+#define GMAC_DMA_MODE_DSPW_SHIFT                           (8U)
+#define GMAC_DMA_MODE_DSPW_MASK                            (0x1U << GMAC_DMA_MODE_DSPW_SHIFT)                           /* 0x00000100 */
+#define GMAC_DMA_MODE_INTM_SHIFT                           (16U)
+#define GMAC_DMA_MODE_INTM_MASK                            (0x3U << GMAC_DMA_MODE_INTM_SHIFT)                           /* 0x00030000 */
+/* DMA_SYSBUS_MODE */
+#define GMAC_DMA_SYSBUS_MODE_OFFSET                        (0x1004U)
+#define GMAC_DMA_SYSBUS_MODE_FB_SHIFT                      (0U)
+#define GMAC_DMA_SYSBUS_MODE_FB_MASK                       (0x1U << GMAC_DMA_SYSBUS_MODE_FB_SHIFT)                      /* 0x00000001 */
+#define GMAC_DMA_SYSBUS_MODE_BLEN4_SHIFT                   (1U)
+#define GMAC_DMA_SYSBUS_MODE_BLEN4_MASK                    (0x1U << GMAC_DMA_SYSBUS_MODE_BLEN4_SHIFT)                   /* 0x00000002 */
+#define GMAC_DMA_SYSBUS_MODE_BLEN8_SHIFT                   (2U)
+#define GMAC_DMA_SYSBUS_MODE_BLEN8_MASK                    (0x1U << GMAC_DMA_SYSBUS_MODE_BLEN8_SHIFT)                   /* 0x00000004 */
+#define GMAC_DMA_SYSBUS_MODE_BLEN16_SHIFT                  (3U)
+#define GMAC_DMA_SYSBUS_MODE_BLEN16_MASK                   (0x1U << GMAC_DMA_SYSBUS_MODE_BLEN16_SHIFT)                  /* 0x00000008 */
+#define GMAC_DMA_SYSBUS_MODE_AALE_SHIFT                    (10U)
+#define GMAC_DMA_SYSBUS_MODE_AALE_MASK                     (0x1U << GMAC_DMA_SYSBUS_MODE_AALE_SHIFT)                    /* 0x00000400 */
+#define GMAC_DMA_SYSBUS_MODE_EAME_SHIFT                    (11U)
+#define GMAC_DMA_SYSBUS_MODE_EAME_MASK                     (0x1U << GMAC_DMA_SYSBUS_MODE_EAME_SHIFT)                    /* 0x00000800 */
+#define GMAC_DMA_SYSBUS_MODE_AAL_SHIFT                     (12U)
+#define GMAC_DMA_SYSBUS_MODE_AAL_MASK                      (0x1U << GMAC_DMA_SYSBUS_MODE_AAL_SHIFT)                     /* 0x00001000 */
+#define GMAC_DMA_SYSBUS_MODE_RD_OSR_LMT_SHIFT              (16U)
+#define GMAC_DMA_SYSBUS_MODE_RD_OSR_LMT_MASK               (0x7U << GMAC_DMA_SYSBUS_MODE_RD_OSR_LMT_SHIFT)              /* 0x00070000 */
+#define GMAC_DMA_SYSBUS_MODE_WR_OSR_LMT_SHIFT              (24U)
+#define GMAC_DMA_SYSBUS_MODE_WR_OSR_LMT_MASK               (0x3U << GMAC_DMA_SYSBUS_MODE_WR_OSR_LMT_SHIFT)              /* 0x03000000 */
+#define GMAC_DMA_SYSBUS_MODE_LPI_XIT_PKT_SHIFT             (30U)
+#define GMAC_DMA_SYSBUS_MODE_LPI_XIT_PKT_MASK              (0x1U << GMAC_DMA_SYSBUS_MODE_LPI_XIT_PKT_SHIFT)             /* 0x40000000 */
+#define GMAC_DMA_SYSBUS_MODE_EN_LPI_SHIFT                  (31U)
+#define GMAC_DMA_SYSBUS_MODE_EN_LPI_MASK                   (0x1U << GMAC_DMA_SYSBUS_MODE_EN_LPI_SHIFT)                  /* 0x80000000 */
+/* DMA_INTERRUPT_STATUS */
+#define GMAC_DMA_INTERRUPT_STATUS_OFFSET                   (0x1008U)
+#define GMAC_DMA_INTERRUPT_STATUS                          (0x0U)
+#define GMAC_DMA_INTERRUPT_STATUS_DC0IS_SHIFT              (0U)
+#define GMAC_DMA_INTERRUPT_STATUS_DC0IS_MASK               (0x1U << GMAC_DMA_INTERRUPT_STATUS_DC0IS_SHIFT)              /* 0x00000001 */
+#define GMAC_DMA_INTERRUPT_STATUS_MTLIS_SHIFT              (16U)
+#define GMAC_DMA_INTERRUPT_STATUS_MTLIS_MASK               (0x1U << GMAC_DMA_INTERRUPT_STATUS_MTLIS_SHIFT)              /* 0x00010000 */
+#define GMAC_DMA_INTERRUPT_STATUS_MACIS_SHIFT              (17U)
+#define GMAC_DMA_INTERRUPT_STATUS_MACIS_MASK               (0x1U << GMAC_DMA_INTERRUPT_STATUS_MACIS_SHIFT)              /* 0x00020000 */
+/* DMA_DEBUG_STATUS0 */
+#define GMAC_DMA_DEBUG_STATUS0_OFFSET                      (0x100CU)
+#define GMAC_DMA_DEBUG_STATUS0                             (0x0U)
+#define GMAC_DMA_DEBUG_STATUS0_AXWHSTS_SHIFT               (0U)
+#define GMAC_DMA_DEBUG_STATUS0_AXWHSTS_MASK                (0x1U << GMAC_DMA_DEBUG_STATUS0_AXWHSTS_SHIFT)               /* 0x00000001 */
+#define GMAC_DMA_DEBUG_STATUS0_AXRHSTS_SHIFT               (1U)
+#define GMAC_DMA_DEBUG_STATUS0_AXRHSTS_MASK                (0x1U << GMAC_DMA_DEBUG_STATUS0_AXRHSTS_SHIFT)               /* 0x00000002 */
+#define GMAC_DMA_DEBUG_STATUS0_RPS0_SHIFT                  (8U)
+#define GMAC_DMA_DEBUG_STATUS0_RPS0_MASK                   (0xFU << GMAC_DMA_DEBUG_STATUS0_RPS0_SHIFT)                  /* 0x00000F00 */
+#define GMAC_DMA_DEBUG_STATUS0_TPS0_SHIFT                  (12U)
+#define GMAC_DMA_DEBUG_STATUS0_TPS0_MASK                   (0xFU << GMAC_DMA_DEBUG_STATUS0_TPS0_SHIFT)                  /* 0x0000F000 */
+/* AXI_LPI_ENTRY_INTERVAL */
+#define GMAC_AXI_LPI_ENTRY_INTERVAL_OFFSET                 (0x1040U)
+#define GMAC_AXI_LPI_ENTRY_INTERVAL_LPIEI_SHIFT            (0U)
+#define GMAC_AXI_LPI_ENTRY_INTERVAL_LPIEI_MASK             (0xFU << GMAC_AXI_LPI_ENTRY_INTERVAL_LPIEI_SHIFT)            /* 0x0000000F */
+/* DMA_CH0_CONTROL */
+#define GMAC_DMA_CH0_CONTROL_OFFSET                        (0x1100U)
+#define GMAC_DMA_CH0_CONTROL_MSS_SHIFT                     (0U)
+#define GMAC_DMA_CH0_CONTROL_MSS_MASK                      (0x3FFFU << GMAC_DMA_CH0_CONTROL_MSS_SHIFT)                  /* 0x00003FFF */
+#define GMAC_DMA_CH0_CONTROL_PBLX8_SHIFT                   (16U)
+#define GMAC_DMA_CH0_CONTROL_PBLX8_MASK                    (0x1U << GMAC_DMA_CH0_CONTROL_PBLX8_SHIFT)                   /* 0x00010000 */
+#define GMAC_DMA_CH0_CONTROL_DSL_SHIFT                     (18U)
+#define GMAC_DMA_CH0_CONTROL_DSL_MASK                      (0x7U << GMAC_DMA_CH0_CONTROL_DSL_SHIFT)                     /* 0x001C0000 */
+#define GMAC_DMA_CH0_CONTROL_SPH_SHIFT                     (24U)
+#define GMAC_DMA_CH0_CONTROL_SPH_MASK                      (0x1U << GMAC_DMA_CH0_CONTROL_SPH_SHIFT)                     /* 0x01000000 */
+/* DMA_CH0_TX_CONTROL */
+#define GMAC_DMA_CH0_TX_CONTROL_OFFSET                     (0x1104U)
+#define GMAC_DMA_CH0_TX_CONTROL_ST_SHIFT                   (0U)
+#define GMAC_DMA_CH0_TX_CONTROL_ST_MASK                    (0x1U << GMAC_DMA_CH0_TX_CONTROL_ST_SHIFT)                   /* 0x00000001 */
+#define GMAC_DMA_CH0_TX_CONTROL_OSF_SHIFT                  (4U)
+#define GMAC_DMA_CH0_TX_CONTROL_OSF_MASK                   (0x1U << GMAC_DMA_CH0_TX_CONTROL_OSF_SHIFT)                  /* 0x00000010 */
+#define GMAC_DMA_CH0_TX_CONTROL_TSE_SHIFT                  (12U)
+#define GMAC_DMA_CH0_TX_CONTROL_TSE_MASK                   (0x1U << GMAC_DMA_CH0_TX_CONTROL_TSE_SHIFT)                  /* 0x00001000 */
+#define GMAC_DMA_CH0_TX_CONTROL_TSE_MODE_SHIFT             (13U)
+#define GMAC_DMA_CH0_TX_CONTROL_TSE_MODE_MASK              (0x3U << GMAC_DMA_CH0_TX_CONTROL_TSE_MODE_SHIFT)             /* 0x00006000 */
+#define GMAC_DMA_CH0_TX_CONTROL_IPBL_SHIFT                 (15U)
+#define GMAC_DMA_CH0_TX_CONTROL_IPBL_MASK                  (0x1U << GMAC_DMA_CH0_TX_CONTROL_IPBL_SHIFT)                 /* 0x00008000 */
+#define GMAC_DMA_CH0_TX_CONTROL_TXPBL_SHIFT                (16U)
+#define GMAC_DMA_CH0_TX_CONTROL_TXPBL_MASK                 (0x3FU << GMAC_DMA_CH0_TX_CONTROL_TXPBL_SHIFT)               /* 0x003F0000 */
+/* DMA_CH0_RX_CONTROL */
+#define GMAC_DMA_CH0_RX_CONTROL_OFFSET                     (0x1108U)
+#define GMAC_DMA_CH0_RX_CONTROL_SR_SHIFT                   (0U)
+#define GMAC_DMA_CH0_RX_CONTROL_SR_MASK                    (0x1U << GMAC_DMA_CH0_RX_CONTROL_SR_SHIFT)                   /* 0x00000001 */
+#define GMAC_DMA_CH0_RX_CONTROL_RBSZ_3_0_SHIFT             (1U)
+#define GMAC_DMA_CH0_RX_CONTROL_RBSZ_3_0_MASK              (0x7U << GMAC_DMA_CH0_RX_CONTROL_RBSZ_3_0_SHIFT)             /* 0x0000000E */
+#define GMAC_DMA_CH0_RX_CONTROL_RBSZ_13_Y_SHIFT            (4U)
+#define GMAC_DMA_CH0_RX_CONTROL_RBSZ_13_Y_MASK             (0x7FFU << GMAC_DMA_CH0_RX_CONTROL_RBSZ_13_Y_SHIFT)          /* 0x00007FF0 */
+#define GMAC_DMA_CH0_RX_CONTROL_RXPBL_SHIFT                (16U)
+#define GMAC_DMA_CH0_RX_CONTROL_RXPBL_MASK                 (0x3FU << GMAC_DMA_CH0_RX_CONTROL_RXPBL_SHIFT)               /* 0x003F0000 */
+#define GMAC_DMA_CH0_RX_CONTROL_RPF_SHIFT                  (31U)
+#define GMAC_DMA_CH0_RX_CONTROL_RPF_MASK                   (0x1U << GMAC_DMA_CH0_RX_CONTROL_RPF_SHIFT)                  /* 0x80000000 */
+/* DMA_CH0_TXDESC_LIST_HADDRESS */
+#define GMAC_DMA_CH0_TXDESC_LIST_HADDRESS_OFFSET           (0x1110U)
+#define GMAC_DMA_CH0_TXDESC_LIST_HADDRESS_TDESHA_SHIFT     (0U)
+#define GMAC_DMA_CH0_TXDESC_LIST_HADDRESS_TDESHA_MASK      (0xFFU << GMAC_DMA_CH0_TXDESC_LIST_HADDRESS_TDESHA_SHIFT)    /* 0x000000FF */
+/* DMA_CH0_TXDESC_LIST_ADDRESS */
+#define GMAC_DMA_CH0_TXDESC_LIST_ADDRESS_OFFSET            (0x1114U)
+#define GMAC_DMA_CH0_TXDESC_LIST_ADDRESS_TDESLA_SHIFT      (3U)
+#define GMAC_DMA_CH0_TXDESC_LIST_ADDRESS_TDESLA_MASK       (0x1FFFFFFFU << GMAC_DMA_CH0_TXDESC_LIST_ADDRESS_TDESLA_SHIFT) /* 0xFFFFFFF8 */
+/* DMA_CH0_RXDESC_LIST_HAADDRESS */
+#define GMAC_DMA_CH0_RXDESC_LIST_HAADDRESS_OFFSET          (0x1118U)
+#define GMAC_DMA_CH0_RXDESC_LIST_HAADDRESS_RDESHA_SHIFT    (0U)
+#define GMAC_DMA_CH0_RXDESC_LIST_HAADDRESS_RDESHA_MASK     (0xFFU << GMAC_DMA_CH0_RXDESC_LIST_HAADDRESS_RDESHA_SHIFT)   /* 0x000000FF */
+/* DMA_CH0_RXDESC_LIST_ADDRESS */
+#define GMAC_DMA_CH0_RXDESC_LIST_ADDRESS_OFFSET            (0x111CU)
+#define GMAC_DMA_CH0_RXDESC_LIST_ADDRESS_RDESLA_SHIFT      (3U)
+#define GMAC_DMA_CH0_RXDESC_LIST_ADDRESS_RDESLA_MASK       (0x1FFFFFFFU << GMAC_DMA_CH0_RXDESC_LIST_ADDRESS_RDESLA_SHIFT) /* 0xFFFFFFF8 */
+/* DMA_CH0_TXDESC_TAIL_POINTER */
+#define GMAC_DMA_CH0_TXDESC_TAIL_POINTER_OFFSET            (0x1120U)
+#define GMAC_DMA_CH0_TXDESC_TAIL_POINTER_TDTP_SHIFT        (3U)
+#define GMAC_DMA_CH0_TXDESC_TAIL_POINTER_TDTP_MASK         (0x1FFFFFFFU << GMAC_DMA_CH0_TXDESC_TAIL_POINTER_TDTP_SHIFT) /* 0xFFFFFFF8 */
+/* DMA_CH0_RXDESC_TAIL_POINTER */
+#define GMAC_DMA_CH0_RXDESC_TAIL_POINTER_OFFSET            (0x1128U)
+#define GMAC_DMA_CH0_RXDESC_TAIL_POINTER_RDRT_SHIFT        (3U)
+#define GMAC_DMA_CH0_RXDESC_TAIL_POINTER_RDRT_MASK         (0x1FFFFFFFU << GMAC_DMA_CH0_RXDESC_TAIL_POINTER_RDRT_SHIFT) /* 0xFFFFFFF8 */
+/* DMA_CH0_TXDESC_RING_LENGTH */
+#define GMAC_DMA_CH0_TXDESC_RING_LENGTH_OFFSET             (0x112CU)
+#define GMAC_DMA_CH0_TXDESC_RING_LENGTH_TDRL_SHIFT         (0U)
+#define GMAC_DMA_CH0_TXDESC_RING_LENGTH_TDRL_MASK          (0x3FFU << GMAC_DMA_CH0_TXDESC_RING_LENGTH_TDRL_SHIFT)       /* 0x000003FF */
+/* DMA_CH0_RXDESC_RING_LENGTH */
+#define GMAC_DMA_CH0_RXDESC_RING_LENGTH_OFFSET             (0x1130U)
+#define GMAC_DMA_CH0_RXDESC_RING_LENGTH_RDRL_SHIFT         (0U)
+#define GMAC_DMA_CH0_RXDESC_RING_LENGTH_RDRL_MASK          (0x3FFU << GMAC_DMA_CH0_RXDESC_RING_LENGTH_RDRL_SHIFT)       /* 0x000003FF */
+/* DMA_CH0_INTERRUPT_ENABLE */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_OFFSET               (0x1134U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_TIE_SHIFT            (0U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_TIE_MASK             (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_TIE_SHIFT)            /* 0x00000001 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_TXSE_SHIFT           (1U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_TXSE_MASK            (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_TXSE_SHIFT)           /* 0x00000002 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_TBUE_SHIFT           (2U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_TBUE_MASK            (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_TBUE_SHIFT)           /* 0x00000004 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_RIE_SHIFT            (6U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_RIE_MASK             (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_RIE_SHIFT)            /* 0x00000040 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_RBUE_SHIFT           (7U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_RBUE_MASK            (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_RBUE_SHIFT)           /* 0x00000080 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_RSE_SHIFT            (8U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_RSE_MASK             (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_RSE_SHIFT)            /* 0x00000100 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_RWTE_SHIFT           (9U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_RWTE_MASK            (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_RWTE_SHIFT)           /* 0x00000200 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_ETIE_SHIFT           (10U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_ETIE_MASK            (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_ETIE_SHIFT)           /* 0x00000400 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_ERIE_SHIFT           (11U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_ERIE_MASK            (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_ERIE_SHIFT)           /* 0x00000800 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_FBEE_SHIFT           (12U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_FBEE_MASK            (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_FBEE_SHIFT)           /* 0x00001000 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_CDEE_SHIFT           (13U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_CDEE_MASK            (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_CDEE_SHIFT)           /* 0x00002000 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_AIE_SHIFT            (14U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_AIE_MASK             (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_AIE_SHIFT)            /* 0x00004000 */
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_NIE_SHIFT            (15U)
+#define GMAC_DMA_CH0_INTERRUPT_ENABLE_NIE_MASK             (0x1U << GMAC_DMA_CH0_INTERRUPT_ENABLE_NIE_SHIFT)            /* 0x00008000 */
+/* DMA_CH0_RX_INTERRUPT_WATCHDOG_TIMER */
+#define GMAC_DMA_CH0_RX_INTERRUPT_WATCHDOG_TIMER_OFFSET    (0x1138U)
+#define GMAC_DMA_CH0_RX_INTERRUPT_WATCHDOG_TIMER_RWT_SHIFT (0U)
+#define GMAC_DMA_CH0_RX_INTERRUPT_WATCHDOG_TIMER_RWT_MASK  (0xFFU << GMAC_DMA_CH0_RX_INTERRUPT_WATCHDOG_TIMER_RWT_SHIFT) /* 0x000000FF */
+#define GMAC_DMA_CH0_RX_INTERRUPT_WATCHDOG_TIMER_RWTU_SHIFT (16U)
+#define GMAC_DMA_CH0_RX_INTERRUPT_WATCHDOG_TIMER_RWTU_MASK (0x3U << GMAC_DMA_CH0_RX_INTERRUPT_WATCHDOG_TIMER_RWTU_SHIFT) /* 0x00030000 */
+/* DMA_CH0_CURRENT_APP_TXDESC */
+#define GMAC_DMA_CH0_CURRENT_APP_TXDESC_OFFSET             (0x1144U)
+#define GMAC_DMA_CH0_CURRENT_APP_TXDESC                    (0x0U)
+#define GMAC_DMA_CH0_CURRENT_APP_TXDESC_CURTDESAPTR_SHIFT  (0U)
+#define GMAC_DMA_CH0_CURRENT_APP_TXDESC_CURTDESAPTR_MASK   (0xFFFFFFFFU << GMAC_DMA_CH0_CURRENT_APP_TXDESC_CURTDESAPTR_SHIFT) /* 0xFFFFFFFF */
+/* DMA_CH0_CURRENT_APP_RXDESC */
+#define GMAC_DMA_CH0_CURRENT_APP_RXDESC_OFFSET             (0x114CU)
+#define GMAC_DMA_CH0_CURRENT_APP_RXDESC                    (0x0U)
+#define GMAC_DMA_CH0_CURRENT_APP_RXDESC_CURRDESAPTR_SHIFT  (0U)
+#define GMAC_DMA_CH0_CURRENT_APP_RXDESC_CURRDESAPTR_MASK   (0xFFFFFFFFU << GMAC_DMA_CH0_CURRENT_APP_RXDESC_CURRDESAPTR_SHIFT) /* 0xFFFFFFFF */
+/* DMA_CH0_CURREN_APP_TXBUFFER_H */
+#define GMAC_DMA_CH0_CURREN_APP_TXBUFFER_H_OFFSET          (0x1150U)
+#define GMAC_DMA_CH0_CURREN_APP_TXBUFFER_H                 (0x0U)
+#define GMAC_DMA_CH0_CURREN_APP_TXBUFFER_H_CURTBUFAPTRH_SHIFT (0U)
+#define GMAC_DMA_CH0_CURREN_APP_TXBUFFER_H_CURTBUFAPTRH_MASK (0xFFU << GMAC_DMA_CH0_CURREN_APP_TXBUFFER_H_CURTBUFAPTRH_SHIFT) /* 0x000000FF */
+/* DMA_CH0_CURRENT_APP_TXBUFFER */
+#define GMAC_DMA_CH0_CURRENT_APP_TXBUFFER_OFFSET           (0x1154U)
+#define GMAC_DMA_CH0_CURRENT_APP_TXBUFFER                  (0x0U)
+#define GMAC_DMA_CH0_CURRENT_APP_TXBUFFER_CURTBUFAPTR_SHIFT (0U)
+#define GMAC_DMA_CH0_CURRENT_APP_TXBUFFER_CURTBUFAPTR_MASK (0xFFFFFFFFU << GMAC_DMA_CH0_CURRENT_APP_TXBUFFER_CURTBUFAPTR_SHIFT) /* 0xFFFFFFFF */
+/* DMA_CH0_CURRENT_APP_RXBUFFER_H */
+#define GMAC_DMA_CH0_CURRENT_APP_RXBUFFER_H_OFFSET         (0x1158U)
+#define GMAC_DMA_CH0_CURRENT_APP_RXBUFFER_H                (0x0U)
+#define GMAC_DMA_CH0_CURRENT_APP_RXBUFFER_H_CURRBUFAPTRH_SHIFT (0U)
+#define GMAC_DMA_CH0_CURRENT_APP_RXBUFFER_H_CURRBUFAPTRH_MASK (0xFFU << GMAC_DMA_CH0_CURRENT_APP_RXBUFFER_H_CURRBUFAPTRH_SHIFT) /* 0x000000FF */
+/* DMA_CH0_CURRENT_APP_RXBUFFER */
+#define GMAC_DMA_CH0_CURRENT_APP_RXBUFFER_OFFSET           (0x115CU)
+#define GMAC_DMA_CH0_CURRENT_APP_RXBUFFER                  (0x0U)
+#define GMAC_DMA_CH0_CURRENT_APP_RXBUFFER_CURRBUFAPTR_SHIFT (0U)
+#define GMAC_DMA_CH0_CURRENT_APP_RXBUFFER_CURRBUFAPTR_MASK (0xFFFFFFFFU << GMAC_DMA_CH0_CURRENT_APP_RXBUFFER_CURRBUFAPTR_SHIFT) /* 0xFFFFFFFF */
+/* DMA_CH0_STATUS */
+#define GMAC_DMA_CH0_STATUS_OFFSET                         (0x1160U)
+#define GMAC_DMA_CH0_STATUS_TI_SHIFT                       (0U)
+#define GMAC_DMA_CH0_STATUS_TI_MASK                        (0x1U << GMAC_DMA_CH0_STATUS_TI_SHIFT)                       /* 0x00000001 */
+#define GMAC_DMA_CH0_STATUS_TPS_SHIFT                      (1U)
+#define GMAC_DMA_CH0_STATUS_TPS_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_TPS_SHIFT)                      /* 0x00000002 */
+#define GMAC_DMA_CH0_STATUS_TBU_SHIFT                      (2U)
+#define GMAC_DMA_CH0_STATUS_TBU_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_TBU_SHIFT)                      /* 0x00000004 */
+#define GMAC_DMA_CH0_STATUS_RI_SHIFT                       (6U)
+#define GMAC_DMA_CH0_STATUS_RI_MASK                        (0x1U << GMAC_DMA_CH0_STATUS_RI_SHIFT)                       /* 0x00000040 */
+#define GMAC_DMA_CH0_STATUS_RBU_SHIFT                      (7U)
+#define GMAC_DMA_CH0_STATUS_RBU_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_RBU_SHIFT)                      /* 0x00000080 */
+#define GMAC_DMA_CH0_STATUS_RPS_SHIFT                      (8U)
+#define GMAC_DMA_CH0_STATUS_RPS_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_RPS_SHIFT)                      /* 0x00000100 */
+#define GMAC_DMA_CH0_STATUS_ETI_SHIFT                      (10U)
+#define GMAC_DMA_CH0_STATUS_ETI_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_ETI_SHIFT)                      /* 0x00000400 */
+#define GMAC_DMA_CH0_STATUS_ERI_SHIFT                      (11U)
+#define GMAC_DMA_CH0_STATUS_ERI_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_ERI_SHIFT)                      /* 0x00000800 */
+#define GMAC_DMA_CH0_STATUS_FBE_SHIFT                      (12U)
+#define GMAC_DMA_CH0_STATUS_FBE_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_FBE_SHIFT)                      /* 0x00001000 */
+#define GMAC_DMA_CH0_STATUS_CDE_SHIFT                      (13U)
+#define GMAC_DMA_CH0_STATUS_CDE_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_CDE_SHIFT)                      /* 0x00002000 */
+#define GMAC_DMA_CH0_STATUS_AIS_SHIFT                      (14U)
+#define GMAC_DMA_CH0_STATUS_AIS_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_AIS_SHIFT)                      /* 0x00004000 */
+#define GMAC_DMA_CH0_STATUS_NIS_SHIFT                      (15U)
+#define GMAC_DMA_CH0_STATUS_NIS_MASK                       (0x1U << GMAC_DMA_CH0_STATUS_NIS_SHIFT)                      /* 0x00008000 */
+#define GMAC_DMA_CH0_STATUS_TEB_SHIFT                      (16U)
+#define GMAC_DMA_CH0_STATUS_TEB_MASK                       (0x7U << GMAC_DMA_CH0_STATUS_TEB_SHIFT)                      /* 0x00070000 */
+#define GMAC_DMA_CH0_STATUS_REB_SHIFT                      (19U)
+#define GMAC_DMA_CH0_STATUS_REB_MASK                       (0x7U << GMAC_DMA_CH0_STATUS_REB_SHIFT)                      /* 0x00380000 */
+/* DMA_CH0_MISS_FRAME_CNT */
+#define GMAC_DMA_CH0_MISS_FRAME_CNT_OFFSET                 (0x1164U)
+#define GMAC_DMA_CH0_MISS_FRAME_CNT                        (0x0U)
+#define GMAC_DMA_CH0_MISS_FRAME_CNT_MFC_SHIFT              (0U)
+#define GMAC_DMA_CH0_MISS_FRAME_CNT_MFC_MASK               (0x7FFU << GMAC_DMA_CH0_MISS_FRAME_CNT_MFC_SHIFT)            /* 0x000007FF */
+#define GMAC_DMA_CH0_MISS_FRAME_CNT_MFC0_SHIFT             (15U)
+#define GMAC_DMA_CH0_MISS_FRAME_CNT_MFC0_MASK              (0x1U << GMAC_DMA_CH0_MISS_FRAME_CNT_MFC0_SHIFT)             /* 0x00008000 */
+/* DMA_CH0_RX_ERI_CNT */
+#define GMAC_DMA_CH0_RX_ERI_CNT_OFFSET                     (0x1168U)
+#define GMAC_DMA_CH0_RX_ERI_CNT                            (0x0U)
+#define GMAC_DMA_CH0_RX_ERI_CNT_ECNT_SHIFT                 (0U)
+#define GMAC_DMA_CH0_RX_ERI_CNT_ECNT_MASK                  (0x1U << GMAC_DMA_CH0_RX_ERI_CNT_ECNT_SHIFT)                 /* 0x00000001 */
 /******************************************CAN*******************************************/
 /* MODE */
 #define CAN_MODE_OFFSET                                    (0x0U)
