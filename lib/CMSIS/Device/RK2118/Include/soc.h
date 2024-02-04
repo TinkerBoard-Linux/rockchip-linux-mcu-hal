@@ -514,6 +514,11 @@ typedef enum CLOCK_Name {
     PLL_GPLL,
     PLL_VPLL0,
     PLL_VPLL1,
+    CLK_WDT0,
+    CLK_WDT1,
+    CLK_WDT2,
+    CLK_WDT3,
+    CLK_WDT4,
 
     PLL_GPLL_DIV      = CLK64(0U, CLK_GPLL_DIV_DIV),
     PLL_VPLL0_DIV     = CLK64(0U, CLK_V0PLL_DIV_DIV),

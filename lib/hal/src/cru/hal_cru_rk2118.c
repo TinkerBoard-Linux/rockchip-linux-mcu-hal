@@ -730,6 +730,13 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case DBCLK_GPIO3:
     case DBCLK_GPIO4:
         return HAL_CRU_MuxGetFreq3(clkMux, PLL_INPUT_OSC_RATE, s_clkRcFreq, 32768);
+
+    case CLK_WDT0:
+    case CLK_WDT1:
+    case CLK_WDT2:
+    case CLK_WDT3:
+    case CLK_WDT4:
+        return PLL_INPUT_OSC_RATE;
     default:
 
         return HAL_CRU_ClkGetOtherFreq(clockName);
