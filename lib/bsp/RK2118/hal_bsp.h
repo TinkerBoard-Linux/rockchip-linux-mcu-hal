@@ -20,6 +20,10 @@ extern struct HAL_FSPI_HOST g_fspi0Dev;
 extern struct HAL_PDM_DEV g_pdm0Dev;
 #endif
 
+#ifdef HAL_GMAC_MODULE_ENABLED
+extern const struct HAL_GMAC_DEV g_gmac0Dev;
+#endif
+
 #ifdef HAL_PL330_MODULE_ENABLED
 extern struct HAL_PL330_DEV g_pl330Dev0;
 extern struct HAL_PL330_DEV g_pl330Dev1;

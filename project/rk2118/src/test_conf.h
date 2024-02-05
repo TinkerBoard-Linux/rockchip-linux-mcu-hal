@@ -10,5 +10,5 @@
 #define UNITY_HAL_SPIFLASH
 
 /* Unity HAL Test Sub Config */
-
+#define UNITY_HAL_GMAC
 #endif
