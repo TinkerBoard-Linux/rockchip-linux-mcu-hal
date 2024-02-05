@@ -24,6 +24,15 @@ extern struct HAL_PDM_DEV g_pdm0Dev;
 extern const struct HAL_GMAC_DEV g_gmac0Dev;
 #endif
 
+#ifdef HAL_I2C_MODULE_ENABLED
+extern const struct HAL_I2C_DEV g_i2c0Dev;
+extern const struct HAL_I2C_DEV g_i2c1Dev;
+extern const struct HAL_I2C_DEV g_i2c2Dev;
+extern const struct HAL_I2C_DEV g_i2c3Dev;
+extern const struct HAL_I2C_DEV g_i2c4Dev;
+extern const struct HAL_I2C_DEV g_i2c5Dev;
+#endif
+
 #ifdef HAL_PL330_MODULE_ENABLED
 extern struct HAL_PL330_DEV g_pl330Dev0;
 extern struct HAL_PL330_DEV g_pl330Dev1;

@@ -61,6 +61,62 @@ const struct HAL_GMAC_DEV g_gmac0Dev =
 };
 #endif
 
+#ifdef HAL_I2C_MODULE_ENABLED
+const struct HAL_I2C_DEV g_i2c0Dev =
+{
+    .pReg = I2C0,
+    .irqNum = I2C0_IRQn,
+    .clkID = CLK_I2C0,
+    .clkGateID = CLK_I2C0_GATE,
+    .pclkGateID = PCLK_I2C0_GATE,
+};
+
+const struct HAL_I2C_DEV g_i2c1Dev =
+{
+    .pReg = I2C1,
+    .irqNum = I2C1_IRQn,
+    .clkID = CLK_I2C1,
+    .clkGateID = CLK_I2C1_GATE,
+    .pclkGateID = PCLK_I2C1_GATE,
+};
+
+const struct HAL_I2C_DEV g_i2c2Dev =
+{
+    .pReg = I2C2,
+    .irqNum = I2C2_IRQn,
+    .clkID = CLK_I2C2,
+    .clkGateID = CLK_I2C2_GATE,
+    .pclkGateID = PCLK_I2C2_GATE,
+};
+
+const struct HAL_I2C_DEV g_i2c3Dev =
+{
+    .pReg = I2C3,
+    .irqNum = I2C3_IRQn,
+    .clkID = CLK_I2C3,
+    .clkGateID = CLK_I2C3_GATE,
+    .pclkGateID = PCLK_I2C3_GATE,
+};
+
+const struct HAL_I2C_DEV g_i2c4Dev =
+{
+    .pReg = I2C4,
+    .irqNum = I2C4_IRQn,
+    .clkID = CLK_I2C4,
+    .clkGateID = CLK_I2C4_GATE,
+    .pclkGateID = PCLK_I2C4_GATE,
+};
+
+const struct HAL_I2C_DEV g_i2c5Dev =
+{
+    .pReg = I2C5,
+    .irqNum = I2C5_IRQn,
+    .clkID = CLK_I2C5,
+    .clkGateID = CLK_I2C5_GATE,
+    .pclkGateID = PCLK_I2C5_GATE,
+};
+#endif /* HAL_I2C_MODULE_ENABLED */
+
 #ifdef HAL_PDM_MODULE_ENABLED
 struct HAL_PDM_DEV g_pdm0Dev =
 {
