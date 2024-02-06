@@ -21,6 +21,11 @@ typedef void(*VECTOR_TABLE_Type)(void);
 extern uint32_t SystemCoreClock;
 
 /**
+  \brief Enable I&Dcache
+ */
+extern void CacheInit(void);
+
+/**
   \brief Setup the microcontroller system.
 
    Initialize the System and update the SystemCoreClock variable.

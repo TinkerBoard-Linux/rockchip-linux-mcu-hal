@@ -20,21 +20,21 @@
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector table
  *----------------------------------------------------------------------------*/
-extern const VECTOR_TABLE_Type __VECTOR_TABLE[496];
+extern const uint32_t __vector_remap__[];
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
 
-static void CacheInit(void)
+void CacheInit(void)
 {
-#if defined(HAL_ICACHE_MODULE_ENABLED)
-    SCB_EnableICache();
-#endif
-
 #if defined(HAL_DCACHE_MODULE_ENABLED)
     SCB_EnableDCache();
+#endif
+
+#if defined(HAL_ICACHE_MODULE_ENABLED)
+    SCB_EnableICache();
 #endif
 }
 
@@ -51,10 +51,8 @@ void SystemCoreClockUpdate(void)
  *----------------------------------------------------------------------------*/
 void SystemInit(void)
 {
-    CacheInit();
-
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-    SCB->VTOR = (uint32_t)&(__VECTOR_TABLE[0]);
+    SCB->VTOR = (uint32_t)(__vector_remap__);
 #endif
 
 #if defined(__FPU_USED) && (__FPU_USED == 1U)

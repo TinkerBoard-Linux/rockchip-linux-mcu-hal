@@ -96,6 +96,7 @@ SECTIONS
 {
   .text :
   {
+    PROVIDE(__vector_remap__ = .);
     KEEP(*(.vectors))
     *(.text*)
 
