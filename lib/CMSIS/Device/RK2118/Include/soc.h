@@ -885,6 +885,52 @@ typedef enum PD_Id {
     PD_INVALID = 0U,
 } ePD_Id;
 #endif /* __ASSEMBLY__ */
+/****************************************SARADC******************************************/
+#define SARADC SARADC0
+
+/****************************************WDT*********************************************/
+#define WDT_CR_WDT_EN_MASK WDT_CR_EN_MASK
+
+#if defined(RK2118_CPU_CORE0)
+#define WDT WDT0
+#define PCLK_WDT CLK_WDT0
+#elif defined(RK2118_CPU_CORE1)
+#define WDT WDT1
+#undef WDT0_IRQn
+#define WDT0_IRQn WDT1_IRQn
+#define PCLK_WDT CLK_WDT1
+#undef PCLK_WDT0_GATE
+#define PCLK_WDT0_GATE PCLK_WDT1_GATE
+#undef TCLK_WDT0_GATE
+#define TCLK_WDT0_GATE TCLK_WDT1_GATE
+#elif defined(RK2118_DSP_CORE0)
+#define WDT WDT2
+#undef WDT0_IRQn
+#define WDT0_IRQn WDT2_IRQn
+#define PCLK_WDT CLK_WDT2
+#undef PCLK_WDT0_GATE
+#define PCLK_WDT0_GATE PCLK_WDT2_GATE
+#undef TCLK_WDT0_GATE
+#define TCLK_WDT0_GATE TCLK_WDT2_GATE
+#elif defined(RK2118_DSP_CORE1)
+#define WDT WDT3
+#undef WDT0_IRQn
+#define WDT0_IRQn WDT3_IRQn
+#define PCLK_WDT CLK_WDT3
+#undef PCLK_WDT0_GATE
+#define PCLK_WDT0_GATE PCLK_WDT3_GATE
+#undef TCLK_WDT0_GATE
+#define TCLK_WDT0_GATE TCLK_WDT3_GATE
+#elif defined(RK2118_DSP_CORE2)
+#define WDT WDT4
+#undef WDT0_IRQn
+#define WDT0_IRQn WDT4_IRQn
+#define PCLK_WDT CLK_WDT4
+#undef PCLK_WDT0_GATE
+#define PCLK_WDT0_GATE PCLK_WDT4_GATE
+#undef TCLK_WDT0_GATE
+#define TCLK_WDT0_GATE TCLK_WDT4_GATE
+#endif
 
 #ifdef __cplusplus
 }
