@@ -207,6 +207,26 @@ static struct GIC_REDISTRIBUTOR_SGI_REG *pGICRSGI;
 #endif
 /********************* Private Function Definition ***************************/
 #ifndef HAL_GIC_V2
+static inline void GIC_WriteNonAtomic(volatile void *addr, uint64_t val)
+{
+    volatile uint32_t *p_32 = addr;
+
+    *p_32 = (uint32_t)(val & 0xffffffff);
+    p_32++;
+    *p_32 = (uint32_t)(val >> 32);
+}
+
+static inline uint64_t GIC_ReadNonAtomic(const volatile void *addr)
+{
+    uint64_t val;
+    const volatile uint32_t *p_32 = addr;
+
+    val = (uint64_t)*p_32;
+    val |= (uint64_t)*(p_32 + 1) << 32;
+
+    return val;
+}
+
 static inline uint32_t GIC_GetIccCtlr(void)
 {
     uint32_t val;
@@ -638,7 +658,7 @@ static inline void GIC_SetIRouter(uint32_t irq, uint32_t aff)
     }
 #else
     if (irq > 31) {
-        pGICD->IROUTER[irq - 32U] = aff;
+        GIC_WriteNonAtomic(&pGICD->IROUTER[irq - 32U], aff);
     }
 #endif
 }
@@ -657,7 +677,7 @@ static inline uint32_t GIC_GetITargetRouter(uint32_t irq)
     }
 #else
     if (irq > 31) {
-        return (uint32_t)pGICD->IROUTER[irq - 32U];
+        return (uint32_t)GIC_ReadNonAtomic(&pGICD->IROUTER[irq - 32U]);
     } else {
         return 0xffff;
     }
@@ -813,7 +833,7 @@ static bool GIC_AMPCheckIRouter(uint32_t irq, uint32_t aff)
     HAL_ASSERT(irq < NUM_INTERRUPTS);
 
     if (irq > 31) {
-        irqAff = pGICD->IROUTER[irq - 32U] & MPIDR_LEVEL01_MASK;
+        irqAff = (uint32_t)(GIC_ReadNonAtomic(&pGICD->IROUTER[irq - 32U]) & MPIDR_LEVEL01_MASK);
         if ((uint32_t)irqAff != aff) {
             GIC_DBG("GIC_AMPCheckIRouter: irq-%ld %lx != %lx\n", irq, aff, (uint32_t)irqAff);
 
