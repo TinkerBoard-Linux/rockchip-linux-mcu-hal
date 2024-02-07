@@ -1639,6 +1639,7 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
     struct HAL_PL330_DEV *pl330 = pchan->pl330;
     struct PL330_DESC *desc = &pchan->desc;
     struct DMA_REG *reg = pl330->pReg;
+    uint32_t mcBufDmaAddr;
 
     HAL_ASSERT(pl330 != NULL);
     HAL_ASSERT(pchan->mcBuf);
@@ -1675,7 +1676,13 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
     /* enable the interrupt */
     SET_BIT(reg->INTEN, 0x01 << channel);
 
-    return PL330_Exec_DMAGO(pl330->pReg, channel, (uintptr_t)desc->mcBuf);
+    mcBufDmaAddr = (uint32_t)pchan->mcBuf;
+
+    if (pchan->toDmaAddrFunc) {
+        mcBufDmaAddr = pchan->toDmaAddrFunc(mcBufDmaAddr);
+    }
+
+    return PL330_Exec_DMAGO(pl330->pReg, channel, mcBufDmaAddr);
 }
 
 /**
@@ -1761,6 +1768,26 @@ uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
 
     /* return raw irq status */
     return val;
+}
+
+/**
+ * @brief Set addr translate function for mc buf for DMA access
+ *
+ * @param pchan: the handle of struct PL330_CHAN.
+ * @param toDmaAddrFunc: the function for address xlate.
+ *
+ * @return HAL_Status.
+ *
+ * @note must be invoked before function HAL_PL330_Start.
+ */
+HAL_Status HAL_PL330_SetMcBufAddrXlateFunc(struct PL330_CHAN *pchan,
+                                           DMA_ToDmaAddrFunc toDmaAddrFunc)
+{
+    HAL_ASSERT(pchan);
+
+    pchan->toDmaAddrFunc = toDmaAddrFunc;
+
+    return HAL_OK;
 }
 
 /**
