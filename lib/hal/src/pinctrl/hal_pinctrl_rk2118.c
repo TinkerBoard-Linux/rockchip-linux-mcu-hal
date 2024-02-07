@@ -1158,8 +1158,8 @@ HAL_Status HAL_PINCTRL_SetRMIO(eGPIO_bankId bank, uint32_t rmioPin, eRMIO_Name r
     HAL_ASSERT(bank < GPIO_BANK_NUM);
 
     pin = __builtin_ffs(remainPins) - 1;
-    /* RK2118 RMIO IOC function value is PIN_CONFIG_MUX_FUNC4 */
-    rc = PINCTRL_SetIOMUX(bank, pin, 4);
+    /* RK2118 RMIO IOC function value is PIN_CONFIG_MUX_FUNC5 */
+    rc = PINCTRL_SetIOMUX(bank, pin, 5);
     if (rc) {
         return rc;
     }
