@@ -406,6 +406,8 @@ typedef enum IRQn
 #undef INTMUX9
 #undef INTMUX10
 #undef INTMUX11
+#undef IS_INTMUX_INSTANCE
+
 #if defined(HAL_DSP_CORE)
 #if defined(RK2118_DSP_CORE0)
 #define INTMUX0             ((struct INTMUX_REG *) INTMUX0_BASE)
