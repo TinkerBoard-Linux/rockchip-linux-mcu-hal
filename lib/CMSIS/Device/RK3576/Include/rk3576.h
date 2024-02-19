@@ -237,20 +237,25 @@ struct GPIO4_IOC_REG {
          uint32_t RESERVED6248[3986];                 /* Address Offset: 0x6248 */
     __IO uint32_t GPIO4C_DS_L;                        /* Address Offset: 0xA090 */
     __IO uint32_t GPIO4C_DS_H;                        /* Address Offset: 0xA094 */
-    __IO uint32_t GPIO4D_DS_L;                        /* Address Offset: 0xA098 */
-         uint32_t RESERVEDA09C[43];                   /* Address Offset: 0xA09C */
+         uint32_t RESERVEDA098[44];                   /* Address Offset: 0xA098 */
     __IO uint32_t GPIO4C_PULL;                        /* Address Offset: 0xA148 */
-    __IO uint32_t GPIO4D_PULL;                        /* Address Offset: 0xA14C */
-         uint32_t RESERVEDA150[26];                   /* Address Offset: 0xA150 */
+         uint32_t RESERVEDA14C[27];                   /* Address Offset: 0xA14C */
     __IO uint32_t GPIO4C_IE;                          /* Address Offset: 0xA1B8 */
-    __IO uint32_t GPIO4D_IE;                          /* Address Offset: 0xA1BC */
-         uint32_t RESERVEDA1C0[34];                   /* Address Offset: 0xA1C0 */
+         uint32_t RESERVEDA1BC[35];                   /* Address Offset: 0xA1BC */
     __IO uint32_t GPIO4C_SMT;                         /* Address Offset: 0xA248 */
-    __IO uint32_t GPIO4D_SMT;                         /* Address Offset: 0xA24C */
-         uint32_t RESERVEDA250[80];                   /* Address Offset: 0xA250 */
+         uint32_t RESERVEDA24C[81];                   /* Address Offset: 0xA24C */
     __IO uint32_t GPIO4C_IOMUX_SEL_L;                 /* Address Offset: 0xA390 */
     __IO uint32_t GPIO4C_IOMUX_SEL_H;                 /* Address Offset: 0xA394 */
-    __IO uint32_t GPIO4D_IOMUX_SEL_L;                 /* Address Offset: 0xA398 */
+         uint32_t RESERVEDA398[832];                  /* Address Offset: 0xA398 */
+    __IO uint32_t GPIO4D_DS_L;                        /* Address Offset: 0xB098 */
+         uint32_t RESERVEDB09C[44];                   /* Address Offset: 0xB09C */
+    __IO uint32_t GPIO4D_PULL;                        /* Address Offset: 0xB14C */
+         uint32_t RESERVEDB150[27];                   /* Address Offset: 0xB150 */
+    __IO uint32_t GPIO4D_IE;                          /* Address Offset: 0xB1BC */
+         uint32_t RESERVEDB1C0[35];                   /* Address Offset: 0xB1C0 */
+    __IO uint32_t GPIO4D_SMT;                         /* Address Offset: 0xB24C */
+         uint32_t RESERVEDB250[82];                   /* Address Offset: 0xB250 */
+    __IO uint32_t GPIO4D_IOMUX_SEL_L;                 /* Address Offset: 0xB398 */
 };
 /* UART Register Structure Define */
 struct UART_REG {
@@ -2256,7 +2261,7 @@ struct INTMUX_REG {
 #define GPIO4_IOC_GPIO4C_IOMUX_SEL_H_GPIO4C7_SEL_SHIFT     (12U)
 #define GPIO4_IOC_GPIO4C_IOMUX_SEL_H_GPIO4C7_SEL_MASK      (0xFU << GPIO4_IOC_GPIO4C_IOMUX_SEL_H_GPIO4C7_SEL_SHIFT)     /* 0x0000F000 */
 /* GPIO4D_IOMUX_SEL_L */
-#define GPIO4_IOC_GPIO4D_IOMUX_SEL_L_OFFSET                (0xA398U)
+#define GPIO4_IOC_GPIO4D_IOMUX_SEL_L_OFFSET                (0xB398U)
 #define GPIO4_IOC_GPIO4D_IOMUX_SEL_L_GPIO4D0_SEL_SHIFT     (0U)
 #define GPIO4_IOC_GPIO4D_IOMUX_SEL_L_GPIO4D0_SEL_MASK      (0xFU << GPIO4_IOC_GPIO4D_IOMUX_SEL_L_GPIO4D0_SEL_SHIFT)     /* 0x0000000F */
 #define GPIO4_IOC_GPIO4D_IOMUX_SEL_L_GPIO4D1_SEL_SHIFT     (4U)
@@ -2318,7 +2323,7 @@ struct INTMUX_REG {
 #define GPIO4_IOC_GPIO4C_DS_H_GPIO4C7_DS_SHIFT             (12U)
 #define GPIO4_IOC_GPIO4C_DS_H_GPIO4C7_DS_MASK              (0x7U << GPIO4_IOC_GPIO4C_DS_H_GPIO4C7_DS_SHIFT)             /* 0x00007000 */
 /* GPIO4D_DS_L */
-#define GPIO4_IOC_GPIO4D_DS_L_OFFSET                       (0xA098U)
+#define GPIO4_IOC_GPIO4D_DS_L_OFFSET                       (0xB098U)
 #define GPIO4_IOC_GPIO4D_DS_L_GPIO4D0_DS_SHIFT             (0U)
 #define GPIO4_IOC_GPIO4D_DS_L_GPIO4D0_DS_MASK              (0x7U << GPIO4_IOC_GPIO4D_DS_L_GPIO4D0_DS_SHIFT)             /* 0x00000007 */
 #define GPIO4_IOC_GPIO4D_DS_L_GPIO4D1_DS_SHIFT             (4U)
@@ -2374,7 +2379,7 @@ struct INTMUX_REG {
 #define GPIO4_IOC_GPIO4C_PULL_GPIO4C7_PULL_SHIFT           (14U)
 #define GPIO4_IOC_GPIO4C_PULL_GPIO4C7_PULL_MASK            (0x3U << GPIO4_IOC_GPIO4C_PULL_GPIO4C7_PULL_SHIFT)           /* 0x0000C000 */
 /* GPIO4D_PULL */
-#define GPIO4_IOC_GPIO4D_PULL_OFFSET                       (0xA14CU)
+#define GPIO4_IOC_GPIO4D_PULL_OFFSET                       (0xB14CU)
 #define GPIO4_IOC_GPIO4D_PULL_GPIO4D0_PULL_SHIFT           (0U)
 #define GPIO4_IOC_GPIO4D_PULL_GPIO4D0_PULL_MASK            (0x3U << GPIO4_IOC_GPIO4D_PULL_GPIO4D0_PULL_SHIFT)           /* 0x00000003 */
 #define GPIO4_IOC_GPIO4D_PULL_GPIO4D1_PULL_SHIFT           (2U)
@@ -2430,7 +2435,7 @@ struct INTMUX_REG {
 #define GPIO4_IOC_GPIO4C_IE_GPIO4C7_IE_SHIFT               (7U)
 #define GPIO4_IOC_GPIO4C_IE_GPIO4C7_IE_MASK                (0x1U << GPIO4_IOC_GPIO4C_IE_GPIO4C7_IE_SHIFT)               /* 0x00000080 */
 /* GPIO4D_IE */
-#define GPIO4_IOC_GPIO4D_IE_OFFSET                         (0xA1BCU)
+#define GPIO4_IOC_GPIO4D_IE_OFFSET                         (0xB1BCU)
 #define GPIO4_IOC_GPIO4D_IE_GPIO4D0_IE_SHIFT               (0U)
 #define GPIO4_IOC_GPIO4D_IE_GPIO4D0_IE_MASK                (0x1U << GPIO4_IOC_GPIO4D_IE_GPIO4D0_IE_SHIFT)               /* 0x00000001 */
 #define GPIO4_IOC_GPIO4D_IE_GPIO4D1_IE_SHIFT               (1U)
@@ -2486,7 +2491,7 @@ struct INTMUX_REG {
 #define GPIO4_IOC_GPIO4C_SMT_GPIO4C7_SMT_SHIFT             (7U)
 #define GPIO4_IOC_GPIO4C_SMT_GPIO4C7_SMT_MASK              (0x1U << GPIO4_IOC_GPIO4C_SMT_GPIO4C7_SMT_SHIFT)             /* 0x00000080 */
 /* GPIO4D_SMT */
-#define GPIO4_IOC_GPIO4D_SMT_OFFSET                        (0xA24CU)
+#define GPIO4_IOC_GPIO4D_SMT_OFFSET                        (0xB24CU)
 #define GPIO4_IOC_GPIO4D_SMT_GPIO4D0_SMT_SHIFT             (0U)
 #define GPIO4_IOC_GPIO4D_SMT_GPIO4D0_SMT_MASK              (0x1U << GPIO4_IOC_GPIO4D_SMT_GPIO4D0_SMT_SHIFT)             /* 0x00000001 */
 #define GPIO4_IOC_GPIO4D_SMT_GPIO4D1_SMT_SHIFT             (1U)
