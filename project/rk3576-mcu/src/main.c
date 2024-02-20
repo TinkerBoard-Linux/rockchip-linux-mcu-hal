@@ -8,15 +8,27 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
+//#define TEST_USE_UART5M2
 
 /********************* Private Structure Definition **************************/
+
+#ifdef TEST_USE_UART5M2
+static void HAL_IOMUX_Uart5M2Config(void)
+{
+    GPIO2_IOC->GPIO2A_IOMUX_SEL_H = 0x00ff99;
+}
+#endif
 
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
 
 /********************* Public Function Definition ****************************/
+#ifdef TEST_USE_UART5M2
+static struct UART_REG *pUart = UART5;
+#else
 static struct UART_REG *pUart = UART0;
+#endif
 
 #ifdef __GNUC__
 __USED int _write(int fd, char *ptr, int len)
@@ -122,9 +134,14 @@ int main(void)
     BSP_Init();
 
     /* UART Init */
+#ifdef TEST_USE_UART7M1
+    HAL_IOMUX_Uart5M2Config();
+    HAL_UART_Init(&g_uart5Dev, &hal_uart_config);
+#else
     HAL_UART_Init(&g_uart0Dev, &hal_uart_config);
+#endif
 
-    printf("Hello RK3562 mcu\n");
+    printf("Hello RK3576 mcu\n");
 
 #ifdef TEST_DEMO
     test_demo();
