@@ -15,9 +15,9 @@
 
 /* TODO: Cache maintain need the decoded addr,
  * it must be matched with pre-loader!
- * default: 0x40100000
+ * default: 0x48200000
  */
-#define HAL_CACHE_DECODED_ADDR_BASE 0x40100000
+#define HAL_CACHE_DECODED_ADDR_BASE 0x48200000
 /* System timer designation (RK TIMER) */
 #define SYS_TIMER TIMER11
 
