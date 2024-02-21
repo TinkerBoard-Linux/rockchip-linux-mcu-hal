@@ -28,6 +28,71 @@ const struct HAL_CRU_DEV g_cruDev = {
 };
 #endif
 
+#ifdef HAL_I2C_MODULE_ENABLED
+const struct HAL_I2C_DEV g_i2c0Dev =
+{
+    .pReg = I2C0,
+    .irqNum = I2C0_IRQn,
+    .clkID = CLK_I2C0,
+};
+
+const struct HAL_I2C_DEV g_i2c1Dev =
+{
+    .pReg = I2C1,
+    .irqNum = I2C1_IRQn,
+    .clkID = CLK_I2C1,
+};
+
+const struct HAL_I2C_DEV g_i2c2Dev =
+{
+    .pReg = I2C2,
+    .irqNum = I2C2_IRQn,
+    .clkID = CLK_I2C2,
+};
+
+const struct HAL_I2C_DEV g_i2c3Dev =
+{
+    .pReg = I2C3,
+    .irqNum = I2C3_IRQn,
+    .clkID = CLK_I2C3,
+};
+
+const struct HAL_I2C_DEV g_i2c4Dev =
+{
+    .pReg = I2C4,
+    .irqNum = I2C4_IRQn,
+    .clkID = CLK_I2C4,
+};
+
+const struct HAL_I2C_DEV g_i2c5Dev =
+{
+    .pReg = I2C5,
+    .irqNum = I2C5_IRQn,
+    .clkID = CLK_I2C5,
+};
+
+const struct HAL_I2C_DEV g_i2c6Dev =
+{
+    .pReg = I2C6,
+    .irqNum = I2C6_IRQn,
+    .clkID = CLK_I2C6,
+};
+
+const struct HAL_I2C_DEV g_i2c7Dev =
+{
+    .pReg = I2C7,
+    .irqNum = I2C7_IRQn,
+    .clkID = CLK_I2C7,
+};
+
+const struct HAL_I2C_DEV g_i2c8Dev =
+{
+    .pReg = I2C8,
+    .irqNum = I2C8_IRQn,
+    .clkID = CLK_I2C8,
+};
+#endif /* HAL_I2C_MODULE_ENABLED */
+
 #ifdef HAL_I2STDM_MODULE_ENABLED
 struct HAL_I2STDM_DEV g_i2sTdm0Dev =
 {
@@ -207,6 +272,93 @@ struct HAL_PL330_DEV g_pl330Dev1 =
     .pd = 0,
 };
 #endif
+
+#ifdef HAL_SPI_MODULE_ENABLED
+const struct HAL_SPI_DEV g_spi0Dev = {
+    .base = SPI0_BASE,
+    .clkId = CLK_SPI0,
+    .irqNum = SPI0_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI0_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI0_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI0_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI0_BASE + 0x800,
+    },
+};
+
+const struct HAL_SPI_DEV g_spi1Dev = {
+    .base = SPI1_BASE,
+    .clkId = CLK_SPI1,
+    .irqNum = SPI1_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI1_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI1_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI1_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI1_BASE + 0x800,
+    },
+};
+
+const struct HAL_SPI_DEV g_spi2Dev = {
+    .base = SPI2_BASE,
+    .clkId = CLK_SPI2,
+    .irqNum = SPI2_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI2_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI2_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI2_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI2_BASE + 0x800,
+    },
+};
+
+const struct HAL_SPI_DEV g_spi3Dev = {
+    .base = SPI3_BASE,
+    .clkId = CLK_SPI3,
+    .irqNum = SPI3_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI3_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI3_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI3_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI3_BASE + 0x800,
+    },
+};
+
+const struct HAL_SPI_DEV g_spi4Dev = {
+    .base = SPI4_BASE,
+    .clkId = CLK_SPI4,
+    .irqNum = SPI4_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI4_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI4_BASE + 0x400,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI4_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI4_BASE + 0x800,
+    },
+};
+#endif /* HAL_SPI_MODULE_ENABLED */
 
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =

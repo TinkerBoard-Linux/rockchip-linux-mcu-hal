@@ -119,7 +119,7 @@ struct HAL_SPI_DEV {
     const eCLOCK_Name clkId;
     const uint32_t clkGateID;
     const uint32_t pclkGateID;
-    const uint8_t irqNum;
+    const uint32_t irqNum;
     const uint8_t isSlave;
     const struct HAL_SPI_DMA_INFO txDma;
     const struct HAL_SPI_DMA_INFO rxDma;
