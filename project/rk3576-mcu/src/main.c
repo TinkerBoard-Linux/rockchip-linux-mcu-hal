@@ -8,20 +8,26 @@
 
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
-//#define TEST_USE_UART5M2
+#define TEST_USE_UART5M2
 
 /********************* Private Structure Definition **************************/
-
-#ifdef TEST_USE_UART5M2
-static void HAL_IOMUX_Uart5M2Config(void)
-{
-    GPIO2_IOC->GPIO2A_IOMUX_SEL_H = 0x00ff99;
-}
-#endif
 
 /********************* Private Variable Definition ***************************/
 
 /********************* Private Function Definition ***************************/
+
+#ifdef TEST_USE_UART5M2
+static void HAL_IOMUX_Uart5M2Config(void)
+{
+    GPIO2_IOC->GPIO2A_IOMUX_SEL_H = 0x00ff0099;
+}
+#endif
+
+/* TODO: wait for CRU driver */
+static void HAL_CRU_Init_Temp()
+{
+    CRU->CLKSEL_CON64 = 0x00ff0000;
+}
 
 /********************* Public Function Definition ****************************/
 #ifdef TEST_USE_UART5M2
@@ -133,8 +139,11 @@ int main(void)
     /* BSP Init */
     BSP_Init();
 
+    /* TODO: wait for CRU driver */
+    HAL_CRU_Init_Temp();
+
     /* UART Init */
-#ifdef TEST_USE_UART7M1
+#ifdef TEST_USE_UART5M2
     HAL_IOMUX_Uart5M2Config();
     HAL_UART_Init(&g_uart5Dev, &hal_uart_config);
 #else
