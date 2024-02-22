@@ -244,6 +244,7 @@ struct HAL_USB_DEV {
     uint32_t utmiclkGateID;
     uint32_t usbPhyGateID;
     IRQn_Type irqNum;
+    IRQn_Type BvalidIrqNum;
     struct USB_OTG_CFG cfg;
 };
 

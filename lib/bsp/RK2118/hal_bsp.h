@@ -68,6 +68,10 @@ extern const struct HAL_UART_DEV g_uart3Dev;
 extern const struct HAL_CANFD_DEV g_can0Dev;
 #endif
 
+#if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
+extern const struct HAL_USB_DEV g_usbdDev;
+#endif
+
 /***************************** Function Declare ******************************/
 
 void BSP_MPU_Init(void);
