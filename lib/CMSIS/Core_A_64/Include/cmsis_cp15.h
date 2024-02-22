@@ -335,4 +335,33 @@ __STATIC_FORCEINLINE uint64_t __get_CNTP_CTL(void)
   __ASM volatile ("mrs %0, cntp_ctl_el0" : "=r" (result));
   return result;
 }
+
+/** \brief  Set TLBIALL
+
+  TLB Invalidate All
+ */
+__STATIC_FORCEINLINE void __set_TLBIALL(uint32_t value)
+{
+  __ASM volatile ("TLBI     VMALLE1       \n"
+                  "DSB      SY            \n"
+                  "ISB                    \n");
+}
+
+/** \brief  Set ICIALLU
+
+  Instruction Cache Invalidate All
+ */
+__STATIC_FORCEINLINE void __set_ICIALLU(uint32_t value)
+{
+  __ASM volatile ("IC IALLUIS             \n"
+                  "ISB                    \n");
+}
+
+/** \brief  Enable Branch Prediction by setting Z bit in SCTLR register.
+*/
+__STATIC_FORCEINLINE void L1C_EnableBTAC(void) {
+  __set_SCTLR( __get_SCTLR() | (1UL << 11));
+  __ISB();
+}
+
 #endif /* __CMSIS_CP15_H */

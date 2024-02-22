@@ -39,6 +39,9 @@
 #ifndef   __NO_RETURN
   #define __NO_RETURN __attribute__((__noreturn__))
 #endif
+#ifndef   CMSIS_DEPRECATED
+ #define  CMSIS_DEPRECATED                       __attribute__((deprecated))
+#endif
 #ifndef   __USED
   #define __USED __attribute__((used))
 #endif
