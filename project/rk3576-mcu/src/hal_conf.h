@@ -21,7 +21,9 @@
 /* System timer designation (RK TIMER) */
 #define SYS_TIMER TIMER11
 
+#ifdef RKMCU_RK3576_BUS
 #define HAL_DBG_ON
+#endif
 
 /* HAL Driver Config */
 #define HAL_DCACHE_MODULE_ENABLED

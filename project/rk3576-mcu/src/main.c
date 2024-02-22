@@ -150,7 +150,20 @@ int main(void)
     HAL_UART_Init(&g_uart0Dev, &hal_uart_config);
 #endif
 
+#ifdef RKMCU_RK3576_BUS
     printf("Hello RK3576 mcu\n");
+#else
+    HAL_UART_SerialOutChar(pUart, 'R');
+    HAL_UART_SerialOutChar(pUart, 'K');
+    HAL_UART_SerialOutChar(pUart, '3');
+    HAL_UART_SerialOutChar(pUart, '5');
+    HAL_UART_SerialOutChar(pUart, '7');
+    HAL_UART_SerialOutChar(pUart, '6');
+    HAL_UART_SerialOutChar(pUart, ' ');
+    HAL_UART_SerialOutChar(pUart, 'm');
+    HAL_UART_SerialOutChar(pUart, 'c');
+    HAL_UART_SerialOutChar(pUart, 'u');
+#endif
 
 #ifdef TEST_DEMO
     test_demo();

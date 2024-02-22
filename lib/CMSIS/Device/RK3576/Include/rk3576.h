@@ -1138,7 +1138,11 @@ struct INTMUX_REG {
 #define GPIO2_BASE                     (0x2AE20000U + MCU_OFFSET) /* GPIO2 base address */
 #define GPIO3_BASE                     (0x2AE30000U + MCU_OFFSET) /* GPIO3 base address */
 #define GPIO4_BASE                     (0x2AE40000U + MCU_OFFSET) /* GPIO4 base address */
+#ifdef RKMCU_RK3576_PMU
+#define INTMUX_BASE                    (0x2AE90000U + MCU_OFFSET) /* INTMUX base address */
+#else
 #define INTMUX_BASE                    (0x2AEC0000U + MCU_OFFSET) /* INTMUX base address */
+#endif
 #define UART10_BASE                    (0x2AFC0000U + MCU_OFFSET) /* UART10 base address */
 #define UART11_BASE                    (0x2AFD0000U + MCU_OFFSET) /* UART11 base address */
 /****************************************************************************************/

@@ -110,6 +110,8 @@ typedef enum {
 /* ================================================================================ */
 #ifdef HAL_MCU_CORE
 
+#if defined(RKMCU_RK3576_BUS)
+
 #define INTMUX_NUM_INT_PER_CON    416
 #define INTMUX_NUM_OUT_PER_CON    13
 #define INTMUX_NUM_INT_PER_OUT    32
@@ -134,8 +136,6 @@ typedef enum {
 #define INTMUX_OUT_IRQ_START_NUM  16
 
 #define NUM_EXT_INTERRUPTS        416
-
-#if defined(RKMCU_RK3576_BUS)
 
 typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
@@ -206,6 +206,31 @@ typedef enum {
 } IRQn_Type;
 
 #elif defined(RKMCU_RK3576_PMU)
+
+#define INTMUX_NUM_INT_PER_CON    416
+#define INTMUX_NUM_OUT_PER_CON    13
+#define INTMUX_NUM_INT_PER_OUT    32
+#define INTMUX_NUM_GROUP_PER_OUT  1
+#define INTMUX_NUM_GROUP_PER_CON  13
+#define INTMUX_NUM_INT_PER_GROUP  32
+/* INTMUX IRQ start from GIC irq num 64 */
+#define INTMUX_IRQ_START_NUM      64
+#define INTMUX_IRQ_OUT0
+#define INTMUX_IRQ_OUT1
+#define INTMUX_IRQ_OUT2
+#define INTMUX_IRQ_OUT3
+#define INTMUX_IRQ_OUT4
+#define INTMUX_IRQ_OUT5
+#define INTMUX_IRQ_OUT6
+#define INTMUX_IRQ_OUT7
+#define INTMUX_IRQ_OUT8
+#define INTMUX_IRQ_OUT9
+#define INTMUX_IRQ_OUT10
+#define INTMUX_IRQ_OUT11
+#define INTMUX_IRQ_OUT12
+#define INTMUX_OUT_IRQ_START_NUM  14
+
+#define NUM_EXT_INTERRUPTS        416
 
 typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
