@@ -445,7 +445,7 @@ extern uint32_t g_oscRate;
 /* Memory Base */
 #define USB_OTG_BASE            0x50040000U /* USB OTG base address */
 #define USB_INNO_PHY_BASE       0x503C0000U /* USB INNO base address */
-#define USB_PHY_CON_BASE        (GRF->GRF_SOC_CON24) /* USB PHY control base address */
+#define USB_PHY_CON_BASE        (GRF->SOC_CON24) /* USB PHY control base address */
 #define USB_PHY_STATUS_BASE     (GRF->SOC_STATUS6)   /* USB PHY status base address */
 /****************************************************************************************/
 /*                                                                                      */
@@ -463,15 +463,15 @@ extern uint32_t g_oscRate;
 /****************************************************************************************/
 /******************************************USB*******************************************/
 #define USB_PHY_SUSPEND_MASK \
-    (GRF_GRF_SOC_CON24_USBOTG_SW_EN_MASK | \
-     GRF_GRF_SOC_CON24_USBOTG_UTMI_SUSPEND_N_MASK | \
-     GRF_GRF_SOC_CON24_USBOTG_UTMI_OPMODE_MASK | \
-     GRF_GRF_SOC_CON24_USBOTG_UTMI_XCVRSELECT_MASK | \
-     GRF_GRF_SOC_CON24_USBOTG_UTMI_TERMSELECT_MASK | \
-     GRF_GRF_SOC_CON24_USBOTG_UTMI_DPPULLDOWN_MASK | \
-     GRF_GRF_SOC_CON24_USBOTG_UTMI_DMPULLDOWN_MASK)
-#define USB_PHY_RESUME_MASK         GRF_GRF_SOC_CON24_USBOTG_SW_EN_MASK
-#define USB_PHY_CON_SHIFT           GRF_GRF_SOC_CON24_USBOTG_SW_EN_SHIFT
+    (GRF_SOC_CON24_USBOTG_SW_EN_MASK | \
+     GRF_SOC_CON24_USBOTG_UTMI_SUSPEND_N_MASK | \
+     GRF_SOC_CON24_USBOTG_UTMI_OPMODE_MASK | \
+     GRF_SOC_CON24_USBOTG_UTMI_XCVRSELECT_MASK | \
+     GRF_SOC_CON24_USBOTG_UTMI_TERMSELECT_MASK | \
+     GRF_SOC_CON24_USBOTG_UTMI_DPPULLDOWN_MASK | \
+     GRF_SOC_CON24_USBOTG_UTMI_DMPULLDOWN_MASK)
+#define USB_PHY_RESUME_MASK         GRF_SOC_CON24_USBOTG_SW_EN_MASK
+#define USB_PHY_CON_SHIFT           GRF_SOC_CON24_USBOTG_SW_EN_SHIFT
 #define USB_PHY_SUSPEND_VAL         0x1D1U
 #define USB_PHY_RESUME_VAL          0
 /* --------  End of section using anonymous unions and disabling warnings  -------- */
