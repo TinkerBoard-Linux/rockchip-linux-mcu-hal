@@ -127,10 +127,20 @@ HAL_Status HAL_USB_PhyInit(void)
 {
     /* Reset USB PHY only for Swallow FPGA */
 #if defined(SOC_SWALLOW) && defined(IS_FPGA)
-    *(volatile uint32_t *)(CRU_BASE + 0x1004U) = 0x1;
+    WRITE_REG(*(uint32_t *)(CRU_BASE + 0x1004U), 0x1);
     HAL_DelayUs(500);
-    *(volatile uint32_t *)(CRU_BASE + 0x1004U) = 0x0;
+    WRITE_REG(*(uint32_t *)(CRU_BASE + 0x1004U), 0x0);
     HAL_DelayUs(2000);
+#elif defined(RKMCU_RK2118)
+    /* Set bvalid and iddig comes from USBPHY */
+    WRITE_REG_MASK_WE(USB_PHY_CON_BASE,
+                      GRF_SOC_CON24_USBOTG_UTMI_IDDIG_SEL_MASK |
+                      GRF_SOC_CON24_USBOTG_UTMI_BVALID_SEL_MASK,
+                      0 << GRF_SOC_CON24_USBOTG_UTMI_IDDIG_SEL_SHIFT |
+                      0 << GRF_SOC_CON24_USBOTG_UTMI_BVALID_SEL_SHIFT);
+
+    /* Set HS disconnect detect mode to single ended detect mode */
+    WRITE_REG(*(uint32_t *)(USB_INNO_PHY_BASE + 0x0070U), 0xb4);
 #endif
 
     return HAL_OK;
