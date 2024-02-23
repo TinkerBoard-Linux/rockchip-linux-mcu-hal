@@ -68,6 +68,15 @@ extern struct HAL_SAI_DEV g_sai6Dev;
 extern struct HAL_SAI_DEV g_sai7Dev;
 #endif
 
+#ifdef HAL_SPDIFRX_MODULE_ENABLED
+extern struct HAL_SPDIFRX_DEV g_spdifrx0Dev;
+extern struct HAL_SPDIFRX_DEV g_spdifrx1Dev;
+#endif
+
+#ifdef HAL_SPDIFTX_MODULE_ENABLED
+extern struct HAL_SPDIFTX_DEV g_spdiftx0Dev;
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 extern const struct HAL_SPI_DEV g_spi1Dev;
 extern const struct HAL_SPI_DEV g_spi2Dev;

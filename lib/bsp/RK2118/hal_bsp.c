@@ -713,6 +713,58 @@ struct HAL_SAI_DEV g_sai7Dev =
 };
 #endif
 
+#ifdef HAL_SPDIFRX_MODULE_ENABLED
+struct HAL_SPDIFRX_DEV g_spdifrx0Dev =
+{
+    .pReg = SPDIFRX0,
+    .mclk = MCLK_SPDIFRX0,
+    .mclkGate = MCLK_SPDIFRX0_GATE,
+    .irqNum = SPDIF_RX0_IRQn,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(SPDIFRX0->SMPDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA1_REQ_AUDIO0_SPDIF_RX,
+        .dmac = DMA1,
+    },
+};
+
+struct HAL_SPDIFRX_DEV g_spdifrx1Dev =
+{
+    .pReg = SPDIFRX0,
+    .mclk = MCLK_SPDIFRX1,
+    .mclkGate = MCLK_SPDIFRX1_GATE,
+    .irqNum = SPDIF_RX1_IRQn,
+    .rxDmaData =
+    {
+        .addr = (uint32_t)&(SPDIFRX1->SMPDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA3_REQ_AUDIO1_SPDIF_RX,
+        .dmac = DMA3,
+    },
+};
+#endif
+
+#ifdef HAL_SPDIFTX_MODULE_ENABLED
+struct HAL_SPDIFTX_DEV g_spdiftx0Dev =
+{
+    .pReg = SPDIFTX0,
+    .mclk = MCLK_SPDIFTX,
+    .mclkGate = MCLK_SPDIFTX_GATE,
+    .irqNum = SPDIF_TX_IRQn,
+    .txDmaData =
+    {
+        .addr = (uint32_t)&(SPDIFTX0->SMPDR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 8,
+        .dmaReqCh = DMA4_REQ_AUDIO1_SPDIF_TX,
+        .dmac = DMA4,
+    },
+};
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 const struct HAL_SPI_DEV g_spi1Dev = {
     .base = SPI1_BASE,
