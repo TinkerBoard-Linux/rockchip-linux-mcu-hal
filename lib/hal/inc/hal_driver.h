@@ -254,6 +254,10 @@
 #include "hal_keyctrl.h"
 #endif
 
+#ifdef HAL_SPDIFRX_MODULE_ENABLED
+#include "hal_spdifrx.h"
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 #include "hal_spi.h"
 #endif
