@@ -258,6 +258,10 @@
 #include "hal_spdifrx.h"
 #endif
 
+#ifdef HAL_SPDIFTX_MODULE_ENABLED
+#include "hal_spdiftx.h"
+#endif
+
 #ifdef HAL_SPI_MODULE_ENABLED
 #include "hal_spi.h"
 #endif
