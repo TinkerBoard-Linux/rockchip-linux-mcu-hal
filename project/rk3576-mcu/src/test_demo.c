@@ -11,6 +11,7 @@
 /********************* Private MACRO Definition ******************************/
 //#define PERF_TEST
 //#define SOFTIRQ_TEST
+//#define SYSTICK_TEST
 //#define TIMER_TEST
 //#define TIMER_INTMUX_TEST
 
@@ -91,6 +92,51 @@ static void softirq_test(void)
 
     HAL_DelayMs(4000);
     HAL_NVIC_SetPendingIRQ(31);
+}
+#endif
+
+/************************************************/
+/*                                              */
+/*                SYSTICK_TEST                  */
+/*                                              */
+/************************************************/
+#ifdef SYSTICK_TEST
+
+#define SYSTICK_CORE_RATE 396000000 /* BUS M0 396MHz */
+
+static int systick_int_count = 0;
+static uint32_t systick_latency_sum = 0;
+static uint32_t systick_latency_max = 0;
+
+static void systick_isr(void)
+{
+    uint32_t count_reload, count;
+    uint32_t latency;
+
+    count_reload = SysTick->VAL;
+    count = SYSTICK_CORE_RATE / 100 - 1 - count_reload;
+    latency = 1000 * count / (SYSTICK_CORE_RATE / 1000000);
+    systick_int_count++;
+    systick_latency_sum += latency;
+    systick_latency_max = systick_latency_max > latency ? systick_latency_max : latency;
+    if (systick_int_count == 100) {
+        printf("systick_test: latency=%ldns(count=%ld)\n", latency, count);
+        printf("systick_test: latency avg=%dns,max=%dns\n", systick_latency_sum / systick_int_count, systick_latency_max);
+        systick_int_count = 0;
+        systick_latency_sum = 0;
+        systick_latency_max = 0;
+        HAL_SYSTICK_Disable();
+    }
+}
+
+static void systick_test(void)
+{
+    printf("softirq_test start\n");
+    HAL_NVIC_SetIRQHandler(SysTick_IRQn, systick_isr);
+    HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
+    HAL_SYSTICK_CLKSourceConfig(HAL_SYSTICK_CLKSRC_CORE);
+    HAL_SYSTICK_Config((SYSTICK_CORE_RATE / 100) - 1);
+    HAL_SYSTICK_Enable();
 }
 #endif
 
@@ -234,6 +280,10 @@ void test_demo(void)
 
 #ifdef SOFTIRQ_TEST
     softirq_test();
+#endif
+
+#ifdef SYSTICK_TEST
+    systick_test();
 #endif
 
 #ifdef TIMER_TEST
