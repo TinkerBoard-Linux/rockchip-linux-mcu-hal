@@ -975,8 +975,8 @@ struct PDM_REG {
     __I  uint32_t VERSION;                            /* Address Offset: 0x0038 */
     __IO uint32_t GAIN_CTRL;                          /* Address Offset: 0x003C */
 };
-/* SPDIF_RX Register Structure Define */
-struct SPDIF_RX_REG {
+/* SPDIFRX Register Structure Define */
+struct SPDIFRX_REG {
     __I  uint32_t VERSION;                            /* Address Offset: 0x0000 */
     __IO uint32_t CFGR;                               /* Address Offset: 0x0004 */
     __IO uint32_t CLR;                                /* Address Offset: 0x0008 */
@@ -989,11 +989,12 @@ struct SPDIF_RX_REG {
     __I  uint32_t INTSR;                              /* Address Offset: 0x0024 */
     __IO uint32_t INTCLR;                             /* Address Offset: 0x0028 */
     __I  uint32_t SMPDR;                              /* Address Offset: 0x002C */
-    __I  uint32_t USRDRn;                             /* Address Offset: 0x0030 */
-         uint32_t RESERVED0034[11];                   /* Address Offset: 0x0034 */
-    __IO uint32_t CHNSRn;                             /* Address Offset: 0x0060 */
-         uint32_t RESERVED0064[39];                   /* Address Offset: 0x0064 */
-    __IO uint32_t BURTSINFO;                          /* Address Offset: 0x0100 */
+    __I  uint32_t USRDR[12];                          /* Address Offset: 0x0030 */
+    __I  uint32_t CHNSR[12];                          /* Address Offset: 0x0060 */
+    __IO uint32_t CDR_TIME;                           /* Address Offset: 0x0090 */
+    __I  uint32_t STATUS;                             /* Address Offset: 0x0094 */
+         uint32_t RESERVED0098[26];                   /* Address Offset: 0x0098 */
+    __I  uint32_t BURSTINFO;                          /* Address Offset: 0x0100 */
 };
 /* TSADC Register Structure Define */
 struct TSADC_REG {
@@ -1100,10 +1101,10 @@ struct RM3_IO_REG {
     __I  uint32_t test_status1;                       /* Address Offset: 0x0BC4 */
     __I  uint32_t test_status2;                       /* Address Offset: 0x0BC8 */
 };
-/* SPDIF_TX Register Structure Define */
-struct SPDIF_TX_REG {
+/* SPDIFTX Register Structure Define */
+struct SPDIFTX_REG {
     __IO uint32_t CFGR;                               /* Address Offset: 0x0000 */
-    __IO uint32_t SDBLR;                              /* Address Offset: 0x0004 */
+    __I  uint32_t SDBLR;                              /* Address Offset: 0x0004 */
     __IO uint32_t DMACR;                              /* Address Offset: 0x0008 */
     __IO uint32_t INTCR;                              /* Address Offset: 0x000C */
     __IO uint32_t INTSR;                              /* Address Offset: 0x0010 */
@@ -1112,16 +1113,13 @@ struct SPDIF_TX_REG {
          uint32_t RESERVED001C;                       /* Address Offset: 0x001C */
     __IO uint32_t SMPDR;                              /* Address Offset: 0x0020 */
          uint32_t RESERVED0024[15];                   /* Address Offset: 0x0024 */
-    __IO uint32_t VLDFRn;                             /* Address Offset: 0x0060 */
-         uint32_t RESERVED0064[11];                   /* Address Offset: 0x0064 */
-    __IO uint32_t USRDRn;                             /* Address Offset: 0x0090 */
-         uint32_t RESERVED0094[11];                   /* Address Offset: 0x0094 */
-    __IO uint32_t CHNSRn;                             /* Address Offset: 0x00C0 */
-         uint32_t RESERVED00C4[3];                    /* Address Offset: 0x00C4 */
-    __IO uint32_t BURTSINFO;                          /* Address Offset: 0x00D0 */
-         uint32_t RESERVED00D4[12];                   /* Address Offset: 0x00D4 */
+    __IO uint32_t VLDFR[12];                          /* Address Offset: 0x0060 */
+    __IO uint32_t USRDR[12];                          /* Address Offset: 0x0090 */
+    __IO uint32_t CHNSR[12];                          /* Address Offset: 0x00C0 */
+         uint32_t RESERVED00F0[4];                    /* Address Offset: 0x00F0 */
+    __IO uint32_t BURSTINFO;                          /* Address Offset: 0x0100 */
     __IO uint32_t REPETTION;                          /* Address Offset: 0x0104 */
-    __I  uint32_t BURTSINFO_SHD;                      /* Address Offset: 0x0108 */
+    __I  uint32_t BURSTINFO_SHD;                      /* Address Offset: 0x0108 */
     __IO uint32_t REPETTION_SHD;                      /* Address Offset: 0x010C */
          uint32_t RESERVED0110[32];                   /* Address Offset: 0x0110 */
     __I  uint32_t USRDR_SHDn;                         /* Address Offset: 0x0190 */
@@ -2087,7 +2085,7 @@ struct IIR_ACC_REG_REG {
 #define ASRC2_BASE                     0x506A0000U /* ASRC2 base address */
 #define ASRC3_BASE                     0x506B0000U /* ASRC3 base address */
 #define PDM_BASE                       0x50700000U /* PDM base address */
-#define SPDIF_RX0_BASE                 0x50720000U /* SPDIF_RX0 base address */
+#define SPDIFRX0_BASE                  0x50720000U /* SPDIFRX0 base address */
 #define DMA1_BASE                      0x50780000U /* DMA1 base address */
 #define DMA2_BASE                      0x50790000U /* DMA2 base address */
 #define TSADC_BASE                     0x507C0000U /* TSADC base address */
@@ -2101,8 +2099,8 @@ struct IIR_ACC_REG_REG {
 #define ASRC5_BASE                     0x50890000U /* ASRC5 base address */
 #define ASRC6_BASE                     0x508A0000U /* ASRC6 base address */
 #define ASRC7_BASE                     0x508B0000U /* ASRC7 base address */
-#define SPDIF_TX0_BASE                 0x50900000U /* SPDIF_TX0 base address */
-#define SPDIF_RX1_BASE                 0x50920000U /* SPDIF_RX1 base address */
+#define SPDIFTX0_BASE                  0x50900000U /* SPDIFTX0 base address */
+#define SPDIFRX1_BASE                  0x50920000U /* SPDIFRX1 base address */
 #define DMA3_BASE                      0x50980000U /* DMA3 base address */
 #define DMA4_BASE                      0x50990000U /* DMA4 base address */
 #define GPIO4_CD_IOC_BASE              0x509D0000U /* GPIO4_CD_IOC base address */
@@ -2232,7 +2230,7 @@ struct IIR_ACC_REG_REG {
 #define ASRC2               ((struct ASRC_REG *) ASRC2_BASE)
 #define ASRC3               ((struct ASRC_REG *) ASRC3_BASE)
 #define PDM                 ((struct PDM_REG *) PDM_BASE)
-#define SPDIF_RX0           ((struct SPDIF_RX_REG *) SPDIF_RX0_BASE)
+#define SPDIFRX0            ((struct SPDIFRX_REG *) SPDIFRX0_BASE)
 #define DMA1                ((struct DMA_REG *) DMA1_BASE)
 #define DMA2                ((struct DMA_REG *) DMA2_BASE)
 #define TSADC               ((struct TSADC_REG *) TSADC_BASE)
@@ -2246,8 +2244,8 @@ struct IIR_ACC_REG_REG {
 #define ASRC5               ((struct ASRC_REG *) ASRC5_BASE)
 #define ASRC6               ((struct ASRC_REG *) ASRC6_BASE)
 #define ASRC7               ((struct ASRC_REG *) ASRC7_BASE)
-#define SPDIF_TX0           ((struct SPDIF_TX_REG *) SPDIF_TX0_BASE)
-#define SPDIF_RX1           ((struct SPDIF_RX_REG *) SPDIF_RX1_BASE)
+#define SPDIFTX0            ((struct SPDIFTX_REG *) SPDIFTX0_BASE)
+#define SPDIFRX1            ((struct SPDIFRX_REG *) SPDIFRX1_BASE)
 #define DMA3                ((struct DMA_REG *) DMA3_BASE)
 #define DMA4                ((struct DMA_REG *) DMA4_BASE)
 #define GPIO4_CD_IOC        ((struct GPIO4_CD_IOC_REG *) GPIO4_CD_IOC_BASE)
@@ -2317,8 +2315,8 @@ struct IIR_ACC_REG_REG {
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4) || ((instance) == GPIO0))
 #define IS_SAI_INSTANCE(instance) (((instance) == SAI0) || ((instance) == SAI1) || ((instance) == SAI2) || ((instance) == SAI3) || ((instance) == SAI4) || ((instance) == SAI5) || ((instance) == SAI6) || ((instance) == SAI7))
 #define IS_ASRC_INSTANCE(instance) (((instance) == ASRC0) || ((instance) == ASRC1) || ((instance) == ASRC2) || ((instance) == ASRC3) || ((instance) == ASRC4) || ((instance) == ASRC5) || ((instance) == ASRC6) || ((instance) == ASRC7))
-#define IS_SPDIF_RX_INSTANCE(instance) (((instance) == SPDIF_RX0) || ((instance) == SPDIF_RX1))
-#define IS_SPDIF_TX_INSTANCE(instance) ((instance) == SPDIF_TX0)
+#define IS_SPDIFRX_INSTANCE(instance) (((instance) == SPDIFRX0) || ((instance) == SPDIFRX1))
+#define IS_SPDIFTX_INSTANCE(instance) ((instance) == SPDIFTX0)
 #define IS_FSPI_INSTANCE(instance) ((instance) == FSPI0)
 #define IS_SARADC_INSTANCE(instance) ((instance) == SARADC0)
 #define IS_TIMER_HP_INSTANCE(instance) ((instance) == TIMER_HP0)
@@ -9942,189 +9940,224 @@ struct IIR_ACC_REG_REG {
 #define PDM_GAIN_CTRL_OFFSET                               (0x3CU)
 #define PDM_GAIN_CTRL_GAIN_CTRL_SHIFT                      (0U)
 #define PDM_GAIN_CTRL_GAIN_CTRL_MASK                       (0xFFU << PDM_GAIN_CTRL_GAIN_CTRL_SHIFT)                     /* 0x000000FF */
-/****************************************SPDIF_RX****************************************/
+/****************************************SPDIFRX*****************************************/
 /* VERSION */
-#define SPDIF_RX_VERSION_OFFSET                            (0x0U)
-#define SPDIF_RX_VERSION                                   (0x100U)
-#define SPDIF_RX_VERSION_VER_SHIFT                         (0U)
-#define SPDIF_RX_VERSION_VER_MASK                          (0xFFFFFFFFU << SPDIF_RX_VERSION_VER_SHIFT)                  /* 0xFFFFFFFF */
+#define SPDIFRX_VERSION_OFFSET                             (0x0U)
+#define SPDIFRX_VERSION                                    (0x23122118U)
+#define SPDIFRX_VERSION_VER_SHIFT                          (0U)
+#define SPDIFRX_VERSION_VER_MASK                           (0xFFFFFFFFU << SPDIFRX_VERSION_VER_SHIFT)                   /* 0xFFFFFFFF */
 /* CFGR */
-#define SPDIF_RX_CFGR_OFFSET                               (0x4U)
-#define SPDIF_RX_CFGR_EN_SHIFT                             (0U)
-#define SPDIF_RX_CFGR_EN_MASK                              (0x1U << SPDIF_RX_CFGR_EN_SHIFT)                             /* 0x00000001 */
-#define SPDIF_RX_CFGR_TWAD_SHIFT                           (1U)
-#define SPDIF_RX_CFGR_TWAD_MASK                            (0x1U << SPDIF_RX_CFGR_TWAD_SHIFT)                           /* 0x00000002 */
+#define SPDIFRX_CFGR_OFFSET                                (0x4U)
+#define SPDIFRX_CFGR_EN_SHIFT                              (0U)
+#define SPDIFRX_CFGR_EN_MASK                               (0x1U << SPDIFRX_CFGR_EN_SHIFT)                              /* 0x00000001 */
+#define SPDIFRX_CFGR_TWAD_SHIFT                            (1U)
+#define SPDIFRX_CFGR_TWAD_MASK                             (0x1U << SPDIFRX_CFGR_TWAD_SHIFT)                            /* 0x00000002 */
+#define SPDIFRX_CFGR_DAT_SHIFT                             (2U)
+#define SPDIFRX_CFGR_DAT_MASK                              (0x1U << SPDIFRX_CFGR_DAT_SHIFT)                             /* 0x00000004 */
 /* CLR */
-#define SPDIF_RX_CLR_OFFSET                                (0x8U)
-#define SPDIF_RX_CLR_RXSC_SHIFT                            (0U)
-#define SPDIF_RX_CLR_RXSC_MASK                             (0x1U << SPDIF_RX_CLR_RXSC_SHIFT)                            /* 0x00000001 */
+#define SPDIFRX_CLR_OFFSET                                 (0x8U)
+#define SPDIFRX_CLR_RXSC_SHIFT                             (0U)
+#define SPDIFRX_CLR_RXSC_MASK                              (0x1U << SPDIFRX_CLR_RXSC_SHIFT)                             /* 0x00000001 */
 /* CDR */
-#define SPDIF_RX_CDR_OFFSET                                (0xCU)
-#define SPDIF_RX_CDR_BYPASS_SHIFT                          (0U)
-#define SPDIF_RX_CDR_BYPASS_MASK                           (0x1U << SPDIF_RX_CDR_BYPASS_SHIFT)                          /* 0x00000001 */
-#define SPDIF_RX_CDR_AVGSEL_SHIFT                          (1U)
-#define SPDIF_RX_CDR_AVGSEL_MASK                           (0x1U << SPDIF_RX_CDR_AVGSEL_SHIFT)                          /* 0x00000002 */
-#define SPDIF_RX_CDR_AVGWIN_SHIFT                          (2U)
-#define SPDIF_RX_CDR_AVGWIN_MASK                           (0x7U << SPDIF_RX_CDR_AVGWIN_SHIFT)                          /* 0x0000001C */
-#define SPDIF_RX_CDR_EMPTY_SHIFT                           (5U)
-#define SPDIF_RX_CDR_EMPTY_MASK                            (0x1U << SPDIF_RX_CDR_EMPTY_SHIFT)                           /* 0x00000020 */
-#define SPDIF_RX_CDR_FULL_SHIFT                            (6U)
-#define SPDIF_RX_CDR_FULL_MASK                             (0x1U << SPDIF_RX_CDR_FULL_SHIFT)                            /* 0x00000040 */
-#define SPDIF_RX_CDR_JITST_SHIFT                           (7U)
-#define SPDIF_RX_CDR_JITST_MASK                            (0x3U << SPDIF_RX_CDR_JITST_SHIFT)                           /* 0x00000180 */
-#define SPDIF_RX_CDR_CS_SHIFT                              (9U)
-#define SPDIF_RX_CDR_CS_MASK                               (0x3U << SPDIF_RX_CDR_CS_SHIFT)                              /* 0x00000600 */
-#define SPDIF_RX_CDR_MIDRGE_SHIFT                          (16U)
-#define SPDIF_RX_CDR_MIDRGE_MASK                           (0xFFU << SPDIF_RX_CDR_MIDRGE_SHIFT)                         /* 0x00FF0000 */
-#define SPDIF_RX_CDR_JITTRSH_SHIFT                         (24U)
-#define SPDIF_RX_CDR_JITTRSH_MASK                          (0x1U << SPDIF_RX_CDR_JITTRSH_SHIFT)                         /* 0x01000000 */
+#define SPDIFRX_CDR_OFFSET                                 (0xCU)
+#define SPDIFRX_CDR_BYPASS_SHIFT                           (0U)
+#define SPDIFRX_CDR_BYPASS_MASK                            (0x1U << SPDIFRX_CDR_BYPASS_SHIFT)                           /* 0x00000001 */
+#define SPDIFRX_CDR_AVGSEL_SHIFT                           (1U)
+#define SPDIFRX_CDR_AVGSEL_MASK                            (0x1U << SPDIFRX_CDR_AVGSEL_SHIFT)                           /* 0x00000002 */
+#define SPDIFRX_CDR_AVGWIN_SHIFT                           (2U)
+#define SPDIFRX_CDR_AVGWIN_MASK                            (0x7U << SPDIFRX_CDR_AVGWIN_SHIFT)                           /* 0x0000001C */
+#define SPDIFRX_CDR_EMPTY_SHIFT                            (5U)
+#define SPDIFRX_CDR_EMPTY_MASK                             (0x1U << SPDIFRX_CDR_EMPTY_SHIFT)                            /* 0x00000020 */
+#define SPDIFRX_CDR_FULL_SHIFT                             (6U)
+#define SPDIFRX_CDR_FULL_MASK                              (0x1U << SPDIFRX_CDR_FULL_SHIFT)                             /* 0x00000040 */
+#define SPDIFRX_CDR_JITST_SHIFT                            (7U)
+#define SPDIFRX_CDR_JITST_MASK                             (0x3U << SPDIFRX_CDR_JITST_SHIFT)                            /* 0x00000180 */
+#define SPDIFRX_CDR_CS_SHIFT                               (9U)
+#define SPDIFRX_CDR_CS_MASK                                (0x3U << SPDIFRX_CDR_CS_SHIFT)                               /* 0x00000600 */
+#define SPDIFRX_CDR_MIDRGE_SHIFT                           (16U)
+#define SPDIFRX_CDR_MIDRGE_MASK                            (0xFFU << SPDIFRX_CDR_MIDRGE_SHIFT)                          /* 0x00FF0000 */
+#define SPDIFRX_CDR_JITTRSH_SHIFT                          (24U)
+#define SPDIFRX_CDR_JITTRSH_MASK                           (0xFFU << SPDIFRX_CDR_JITTRSH_SHIFT)                         /* 0xFF000000 */
 /* CDRST */
-#define SPDIF_RX_CDRST_OFFSET                              (0x10U)
-#define SPDIF_RX_CDRST_MINCNT_SHIFT                        (0U)
-#define SPDIF_RX_CDRST_MINCNT_MASK                         (0xFFU << SPDIF_RX_CDRST_MINCNT_SHIFT)                       /* 0x000000FF */
-#define SPDIF_RX_CDRST_MAXCNT_SHIFT                        (8U)
-#define SPDIF_RX_CDRST_MAXCNT_MASK                         (0xFFU << SPDIF_RX_CDRST_MAXCNT_SHIFT)                       /* 0x0000FF00 */
-#define SPDIF_RX_CDRST_NOSTRTHR_SHIFT                      (16U)
-#define SPDIF_RX_CDRST_NOSTRTHR_MASK                       (0xFFFFU << SPDIF_RX_CDRST_NOSTRTHR_SHIFT)                   /* 0xFFFF0000 */
+#define SPDIFRX_CDRST_OFFSET                               (0x10U)
+#define SPDIFRX_CDRST_MINCNT_SHIFT                         (0U)
+#define SPDIFRX_CDRST_MINCNT_MASK                          (0xFFU << SPDIFRX_CDRST_MINCNT_SHIFT)                        /* 0x000000FF */
+#define SPDIFRX_CDRST_MAXCNT_SHIFT                         (8U)
+#define SPDIFRX_CDRST_MAXCNT_MASK                          (0xFFU << SPDIFRX_CDRST_MAXCNT_SHIFT)                        /* 0x0000FF00 */
+#define SPDIFRX_CDRST_NOSTRTHR_SHIFT                       (16U)
+#define SPDIFRX_CDRST_NOSTRTHR_MASK                        (0xFFFFU << SPDIFRX_CDRST_NOSTRTHR_SHIFT)                    /* 0xFFFF0000 */
 /* DMACR */
-#define SPDIF_RX_DMACR_OFFSET                              (0x14U)
-#define SPDIF_RX_DMACR_RDL_SHIFT                           (0U)
-#define SPDIF_RX_DMACR_RDL_MASK                            (0x1FU << SPDIF_RX_DMACR_RDL_SHIFT)                          /* 0x0000001F */
-#define SPDIF_RX_DMACR_RDE_SHIFT                           (5U)
-#define SPDIF_RX_DMACR_RDE_MASK                            (0x1U << SPDIF_RX_DMACR_RDE_SHIFT)                           /* 0x00000020 */
+#define SPDIFRX_DMACR_OFFSET                               (0x14U)
+#define SPDIFRX_DMACR_RDL_SHIFT                            (0U)
+#define SPDIFRX_DMACR_RDL_MASK                             (0x1FU << SPDIFRX_DMACR_RDL_SHIFT)                           /* 0x0000001F */
+#define SPDIFRX_DMACR_RDE_SHIFT                            (5U)
+#define SPDIFRX_DMACR_RDE_MASK                             (0x1U << SPDIFRX_DMACR_RDE_SHIFT)                            /* 0x00000020 */
 /* FIFOCTRL */
-#define SPDIF_RX_FIFOCTRL_OFFSET                           (0x18U)
-#define SPDIF_RX_FIFOCTRL_RFT_SHIFT                        (0U)
-#define SPDIF_RX_FIFOCTRL_RFT_MASK                         (0x1FU << SPDIF_RX_FIFOCTRL_RFT_SHIFT)                       /* 0x0000001F */
-#define SPDIF_RX_FIFOCTRL_RFL_SHIFT                        (8U)
-#define SPDIF_RX_FIFOCTRL_RFL_MASK                         (0x3FU << SPDIF_RX_FIFOCTRL_RFL_SHIFT)                       /* 0x00003F00 */
+#define SPDIFRX_FIFOCTRL_OFFSET                            (0x18U)
+#define SPDIFRX_FIFOCTRL_RFT_SHIFT                         (0U)
+#define SPDIFRX_FIFOCTRL_RFT_MASK                          (0x1FU << SPDIFRX_FIFOCTRL_RFT_SHIFT)                        /* 0x0000001F */
+#define SPDIFRX_FIFOCTRL_RFL_SHIFT                         (8U)
+#define SPDIFRX_FIFOCTRL_RFL_MASK                          (0x3FU << SPDIFRX_FIFOCTRL_RFL_SHIFT)                        /* 0x00003F00 */
 /* INTEN */
-#define SPDIF_RX_INTEN_OFFSET                              (0x1CU)
-#define SPDIF_RX_INTEN_PEIE_SHIFT                          (0U)
-#define SPDIF_RX_INTEN_PEIE_MASK                           (0x1U << SPDIF_RX_INTEN_PEIE_SHIFT)                          /* 0x00000001 */
-#define SPDIF_RX_INTEN_CSCIE_SHIFT                         (1U)
-#define SPDIF_RX_INTEN_CSCIE_MASK                          (0x1U << SPDIF_RX_INTEN_CSCIE_SHIFT)                         /* 0x00000002 */
-#define SPDIF_RX_INTEN_NVLDIE_SHIFT                        (2U)
-#define SPDIF_RX_INTEN_NVLDIE_MASK                         (0x1U << SPDIF_RX_INTEN_NVLDIE_SHIFT)                        /* 0x00000004 */
-#define SPDIF_RX_INTEN_NPSPIE_SHIFT                        (3U)
-#define SPDIF_RX_INTEN_NPSPIE_MASK                         (0x1U << SPDIF_RX_INTEN_NPSPIE_SHIFT)                        /* 0x00000008 */
-#define SPDIF_RX_INTEN_RXFIE_SHIFT                         (4U)
-#define SPDIF_RX_INTEN_RXFIE_MASK                          (0x1U << SPDIF_RX_INTEN_RXFIE_SHIFT)                         /* 0x00000010 */
-#define SPDIF_RX_INTEN_RXOIE_SHIFT                         (5U)
-#define SPDIF_RX_INTEN_RXOIE_MASK                          (0x1U << SPDIF_RX_INTEN_RXOIE_SHIFT)                         /* 0x00000020 */
-#define SPDIF_RX_INTEN_BMDEIE_SHIFT                        (6U)
-#define SPDIF_RX_INTEN_BMDEIE_MASK                         (0x1U << SPDIF_RX_INTEN_BMDEIE_SHIFT)                        /* 0x00000040 */
-#define SPDIF_RX_INTEN_NSYNCIE_SHIFT                       (7U)
-#define SPDIF_RX_INTEN_NSYNCIE_MASK                        (0x1U << SPDIF_RX_INTEN_NSYNCIE_SHIFT)                       /* 0x00000080 */
-#define SPDIF_RX_INTEN_BTEIE_SHIFT                         (8U)
-#define SPDIF_RX_INTEN_BTEIE_MASK                          (0x1U << SPDIF_RX_INTEN_BTEIE_SHIFT)                         /* 0x00000100 */
-#define SPDIF_RX_INTEN_ESYNCIE_SHIFT                       (9U)
-#define SPDIF_RX_INTEN_ESYNCIE_MASK                        (0x1U << SPDIF_RX_INTEN_ESYNCIE_SHIFT)                       /* 0x00000200 */
-#define SPDIF_RX_INTEN_UBCIE_SHIFT                         (10U)
-#define SPDIF_RX_INTEN_UBCIE_MASK                          (0x1U << SPDIF_RX_INTEN_UBCIE_SHIFT)                         /* 0x00000400 */
+#define SPDIFRX_INTEN_OFFSET                               (0x1CU)
+#define SPDIFRX_INTEN_PEIE_SHIFT                           (0U)
+#define SPDIFRX_INTEN_PEIE_MASK                            (0x1U << SPDIFRX_INTEN_PEIE_SHIFT)                           /* 0x00000001 */
+#define SPDIFRX_INTEN_CSCIE_SHIFT                          (1U)
+#define SPDIFRX_INTEN_CSCIE_MASK                           (0x1U << SPDIFRX_INTEN_CSCIE_SHIFT)                          /* 0x00000002 */
+#define SPDIFRX_INTEN_NVLDIE_SHIFT                         (2U)
+#define SPDIFRX_INTEN_NVLDIE_MASK                          (0x1U << SPDIFRX_INTEN_NVLDIE_SHIFT)                         /* 0x00000004 */
+#define SPDIFRX_INTEN_NPSPIE_SHIFT                         (3U)
+#define SPDIFRX_INTEN_NPSPIE_MASK                          (0x1U << SPDIFRX_INTEN_NPSPIE_SHIFT)                         /* 0x00000008 */
+#define SPDIFRX_INTEN_RXFIE_SHIFT                          (4U)
+#define SPDIFRX_INTEN_RXFIE_MASK                           (0x1U << SPDIFRX_INTEN_RXFIE_SHIFT)                          /* 0x00000010 */
+#define SPDIFRX_INTEN_RXOIE_SHIFT                          (5U)
+#define SPDIFRX_INTEN_RXOIE_MASK                           (0x1U << SPDIFRX_INTEN_RXOIE_SHIFT)                          /* 0x00000020 */
+#define SPDIFRX_INTEN_BMDEIE_SHIFT                         (6U)
+#define SPDIFRX_INTEN_BMDEIE_MASK                          (0x1U << SPDIFRX_INTEN_BMDEIE_SHIFT)                         /* 0x00000040 */
+#define SPDIFRX_INTEN_NSYNCIE_SHIFT                        (7U)
+#define SPDIFRX_INTEN_NSYNCIE_MASK                         (0x1U << SPDIFRX_INTEN_NSYNCIE_SHIFT)                        /* 0x00000080 */
+#define SPDIFRX_INTEN_BTEIE_SHIFT                          (8U)
+#define SPDIFRX_INTEN_BTEIE_MASK                           (0x1U << SPDIFRX_INTEN_BTEIE_SHIFT)                          /* 0x00000100 */
+#define SPDIFRX_INTEN_SYNCIE_SHIFT                         (9U)
+#define SPDIFRX_INTEN_SYNCIE_MASK                          (0x1U << SPDIFRX_INTEN_SYNCIE_SHIFT)                         /* 0x00000200 */
+#define SPDIFRX_INTEN_UBCIE_SHIFT                          (10U)
+#define SPDIFRX_INTEN_UBCIE_MASK                           (0x1U << SPDIFRX_INTEN_UBCIE_SHIFT)                          /* 0x00000400 */
+#define SPDIFRX_INTEN_VCGIE_SHIFT                          (11U)
+#define SPDIFRX_INTEN_VCGIE_MASK                           (0x1U << SPDIFRX_INTEN_VCGIE_SHIFT)                          /* 0x00000800 */
+#define SPDIFRX_INTEN_TYPEIE_SHIFT                         (12U)
+#define SPDIFRX_INTEN_TYPEIE_MASK                          (0x1U << SPDIFRX_INTEN_TYPEIE_SHIFT)                         /* 0x00001000 */
 /* INTMASK */
-#define SPDIF_RX_INTMASK_OFFSET                            (0x20U)
-#define SPDIF_RX_INTMASK_PEIMSK_SHIFT                      (0U)
-#define SPDIF_RX_INTMASK_PEIMSK_MASK                       (0x1U << SPDIF_RX_INTMASK_PEIMSK_SHIFT)                      /* 0x00000001 */
-#define SPDIF_RX_INTMASK_CSCIMSK_SHIFT                     (1U)
-#define SPDIF_RX_INTMASK_CSCIMSK_MASK                      (0x1U << SPDIF_RX_INTMASK_CSCIMSK_SHIFT)                     /* 0x00000002 */
-#define SPDIF_RX_INTMASK_NVLDIMSK_SHIFT                    (2U)
-#define SPDIF_RX_INTMASK_NVLDIMSK_MASK                     (0x1U << SPDIF_RX_INTMASK_NVLDIMSK_SHIFT)                    /* 0x00000004 */
-#define SPDIF_RX_INTMASK_NPSPIMSK_SHIFT                    (3U)
-#define SPDIF_RX_INTMASK_NPSPIMSK_MASK                     (0x1U << SPDIF_RX_INTMASK_NPSPIMSK_SHIFT)                    /* 0x00000008 */
-#define SPDIF_RX_INTMASK_RXFIMSK_SHIFT                     (4U)
-#define SPDIF_RX_INTMASK_RXFIMSK_MASK                      (0x1U << SPDIF_RX_INTMASK_RXFIMSK_SHIFT)                     /* 0x00000010 */
-#define SPDIF_RX_INTMASK_RXOIMSK_SHIFT                     (5U)
-#define SPDIF_RX_INTMASK_RXOIMSK_MASK                      (0x1U << SPDIF_RX_INTMASK_RXOIMSK_SHIFT)                     /* 0x00000020 */
-#define SPDIF_RX_INTMASK_BMDEIMSK_SHIFT                    (6U)
-#define SPDIF_RX_INTMASK_BMDEIMSK_MASK                     (0x1U << SPDIF_RX_INTMASK_BMDEIMSK_SHIFT)                    /* 0x00000040 */
-#define SPDIF_RX_INTMASK_NSYNCIMSK_SHIFT                   (7U)
-#define SPDIF_RX_INTMASK_NSYNCIMSK_MASK                    (0x1U << SPDIF_RX_INTMASK_NSYNCIMSK_SHIFT)                   /* 0x00000080 */
-#define SPDIF_RX_INTMASK_BTEIMSK_SHIFT                     (8U)
-#define SPDIF_RX_INTMASK_BTEIMSK_MASK                      (0x1U << SPDIF_RX_INTMASK_BTEIMSK_SHIFT)                     /* 0x00000100 */
-#define SPDIF_RX_INTMASK_ESYNCIMSK_SHIFT                   (9U)
-#define SPDIF_RX_INTMASK_ESYNCIMSK_MASK                    (0x1U << SPDIF_RX_INTMASK_ESYNCIMSK_SHIFT)                   /* 0x00000200 */
-#define SPDIF_RX_INTMASK_UBCIMSK_SHIFT                     (10U)
-#define SPDIF_RX_INTMASK_UBCIMSK_MASK                      (0x1U << SPDIF_RX_INTMASK_UBCIMSK_SHIFT)                     /* 0x00000400 */
+#define SPDIFRX_INTMASK_OFFSET                             (0x20U)
+#define SPDIFRX_INTMASK_PEIMSK_SHIFT                       (0U)
+#define SPDIFRX_INTMASK_PEIMSK_MASK                        (0x1U << SPDIFRX_INTMASK_PEIMSK_SHIFT)                       /* 0x00000001 */
+#define SPDIFRX_INTMASK_CSCIMSK_SHIFT                      (1U)
+#define SPDIFRX_INTMASK_CSCIMSK_MASK                       (0x1U << SPDIFRX_INTMASK_CSCIMSK_SHIFT)                      /* 0x00000002 */
+#define SPDIFRX_INTMASK_NVLDIMSK_SHIFT                     (2U)
+#define SPDIFRX_INTMASK_NVLDIMSK_MASK                      (0x1U << SPDIFRX_INTMASK_NVLDIMSK_SHIFT)                     /* 0x00000004 */
+#define SPDIFRX_INTMASK_NPSPIMSK_SHIFT                     (3U)
+#define SPDIFRX_INTMASK_NPSPIMSK_MASK                      (0x1U << SPDIFRX_INTMASK_NPSPIMSK_SHIFT)                     /* 0x00000008 */
+#define SPDIFRX_INTMASK_RXFIMSK_SHIFT                      (4U)
+#define SPDIFRX_INTMASK_RXFIMSK_MASK                       (0x1U << SPDIFRX_INTMASK_RXFIMSK_SHIFT)                      /* 0x00000010 */
+#define SPDIFRX_INTMASK_RXOIMSK_SHIFT                      (5U)
+#define SPDIFRX_INTMASK_RXOIMSK_MASK                       (0x1U << SPDIFRX_INTMASK_RXOIMSK_SHIFT)                      /* 0x00000020 */
+#define SPDIFRX_INTMASK_BMDEIMSK_SHIFT                     (6U)
+#define SPDIFRX_INTMASK_BMDEIMSK_MASK                      (0x1U << SPDIFRX_INTMASK_BMDEIMSK_SHIFT)                     /* 0x00000040 */
+#define SPDIFRX_INTMASK_NSYNCIMSK_SHIFT                    (7U)
+#define SPDIFRX_INTMASK_NSYNCIMSK_MASK                     (0x1U << SPDIFRX_INTMASK_NSYNCIMSK_SHIFT)                    /* 0x00000080 */
+#define SPDIFRX_INTMASK_BTEIMSK_SHIFT                      (8U)
+#define SPDIFRX_INTMASK_BTEIMSK_MASK                       (0x1U << SPDIFRX_INTMASK_BTEIMSK_SHIFT)                      /* 0x00000100 */
+#define SPDIFRX_INTMASK_SYNCIMSK_SHIFT                     (9U)
+#define SPDIFRX_INTMASK_SYNCIMSK_MASK                      (0x1U << SPDIFRX_INTMASK_SYNCIMSK_SHIFT)                     /* 0x00000200 */
+#define SPDIFRX_INTMASK_UBCIMSK_SHIFT                      (10U)
+#define SPDIFRX_INTMASK_UBCIMSK_MASK                       (0x1U << SPDIFRX_INTMASK_UBCIMSK_SHIFT)                      /* 0x00000400 */
+#define SPDIFRX_INTMASK_VCGIMSK_SHIFT                      (11U)
+#define SPDIFRX_INTMASK_VCGIMSK_MASK                       (0x1U << SPDIFRX_INTMASK_VCGIMSK_SHIFT)                      /* 0x00000800 */
+#define SPDIFRX_INTMASK_TYPEIMSK_SHIFT                     (12U)
+#define SPDIFRX_INTMASK_TYPEIMSK_MASK                      (0x1U << SPDIFRX_INTMASK_TYPEIMSK_SHIFT)                     /* 0x00001000 */
 /* INTSR */
-#define SPDIF_RX_INTSR_OFFSET                              (0x24U)
-#define SPDIF_RX_INTSR                                     (0x0U)
-#define SPDIF_RX_INTSR_PEIS_SHIFT                          (0U)
-#define SPDIF_RX_INTSR_PEIS_MASK                           (0x1U << SPDIF_RX_INTSR_PEIS_SHIFT)                          /* 0x00000001 */
-#define SPDIF_RX_INTSR_CSCIS_SHIFT                         (1U)
-#define SPDIF_RX_INTSR_CSCIS_MASK                          (0x1U << SPDIF_RX_INTSR_CSCIS_SHIFT)                         /* 0x00000002 */
-#define SPDIF_RX_INTSR_NVLDIS_SHIFT                        (2U)
-#define SPDIF_RX_INTSR_NVLDIS_MASK                         (0x1U << SPDIF_RX_INTSR_NVLDIS_SHIFT)                        /* 0x00000004 */
-#define SPDIF_RX_INTSR_NPSPIS_SHIFT                        (3U)
-#define SPDIF_RX_INTSR_NPSPIS_MASK                         (0x1U << SPDIF_RX_INTSR_NPSPIS_SHIFT)                        /* 0x00000008 */
-#define SPDIF_RX_INTSR_RXFIS_SHIFT                         (4U)
-#define SPDIF_RX_INTSR_RXFIS_MASK                          (0x1U << SPDIF_RX_INTSR_RXFIS_SHIFT)                         /* 0x00000010 */
-#define SPDIF_RX_INTSR_RXOIS_SHIFT                         (5U)
-#define SPDIF_RX_INTSR_RXOIS_MASK                          (0x1U << SPDIF_RX_INTSR_RXOIS_SHIFT)                         /* 0x00000020 */
-#define SPDIF_RX_INTSR_BMDEISR_SHIFT                       (6U)
-#define SPDIF_RX_INTSR_BMDEISR_MASK                        (0x1U << SPDIF_RX_INTSR_BMDEISR_SHIFT)                       /* 0x00000040 */
-#define SPDIF_RX_INTSR_NSYNCISR_SHIFT                      (7U)
-#define SPDIF_RX_INTSR_NSYNCISR_MASK                       (0x1U << SPDIF_RX_INTSR_NSYNCISR_SHIFT)                      /* 0x00000080 */
-#define SPDIF_RX_INTSR_BTEISR_SHIFT                        (8U)
-#define SPDIF_RX_INTSR_BTEISR_MASK                         (0x1U << SPDIF_RX_INTSR_BTEISR_SHIFT)                        /* 0x00000100 */
-#define SPDIF_RX_INTSR_ESYNCISR_SHIFT                      (9U)
-#define SPDIF_RX_INTSR_ESYNCISR_MASK                       (0x1U << SPDIF_RX_INTSR_ESYNCISR_SHIFT)                      /* 0x00000200 */
-#define SPDIF_RX_INTSR_UBCISR_SHIFT                        (10U)
-#define SPDIF_RX_INTSR_UBCISR_MASK                         (0x1U << SPDIF_RX_INTSR_UBCISR_SHIFT)                        /* 0x00000400 */
+#define SPDIFRX_INTSR_OFFSET                               (0x24U)
+#define SPDIFRX_INTSR                                      (0x0U)
+#define SPDIFRX_INTSR_PEISR_SHIFT                          (0U)
+#define SPDIFRX_INTSR_PEISR_MASK                           (0x1U << SPDIFRX_INTSR_PEISR_SHIFT)                          /* 0x00000001 */
+#define SPDIFRX_INTSR_CSCISR_SHIFT                         (1U)
+#define SPDIFRX_INTSR_CSCISR_MASK                          (0x1U << SPDIFRX_INTSR_CSCISR_SHIFT)                         /* 0x00000002 */
+#define SPDIFRX_INTSR_NVLDISR_SHIFT                        (2U)
+#define SPDIFRX_INTSR_NVLDISR_MASK                         (0x1U << SPDIFRX_INTSR_NVLDISR_SHIFT)                        /* 0x00000004 */
+#define SPDIFRX_INTSR_NPSPISR_SHIFT                        (3U)
+#define SPDIFRX_INTSR_NPSPISR_MASK                         (0x1U << SPDIFRX_INTSR_NPSPISR_SHIFT)                        /* 0x00000008 */
+#define SPDIFRX_INTSR_RXFISR_SHIFT                         (4U)
+#define SPDIFRX_INTSR_RXFISR_MASK                          (0x1U << SPDIFRX_INTSR_RXFISR_SHIFT)                         /* 0x00000010 */
+#define SPDIFRX_INTSR_RXOISR_SHIFT                         (5U)
+#define SPDIFRX_INTSR_RXOISR_MASK                          (0x1U << SPDIFRX_INTSR_RXOISR_SHIFT)                         /* 0x00000020 */
+#define SPDIFRX_INTSR_BMDEISR_SHIFT                        (6U)
+#define SPDIFRX_INTSR_BMDEISR_MASK                         (0x1U << SPDIFRX_INTSR_BMDEISR_SHIFT)                        /* 0x00000040 */
+#define SPDIFRX_INTSR_NSYNCISR_SHIFT                       (7U)
+#define SPDIFRX_INTSR_NSYNCISR_MASK                        (0x1U << SPDIFRX_INTSR_NSYNCISR_SHIFT)                       /* 0x00000080 */
+#define SPDIFRX_INTSR_BTEISR_SHIFT                         (8U)
+#define SPDIFRX_INTSR_BTEISR_MASK                          (0x1U << SPDIFRX_INTSR_BTEISR_SHIFT)                         /* 0x00000100 */
+#define SPDIFRX_INTSR_SYNCISR_SHIFT                        (9U)
+#define SPDIFRX_INTSR_SYNCISR_MASK                         (0x1U << SPDIFRX_INTSR_SYNCISR_SHIFT)                        /* 0x00000200 */
+#define SPDIFRX_INTSR_UBCISR_SHIFT                         (10U)
+#define SPDIFRX_INTSR_UBCISR_MASK                          (0x1U << SPDIFRX_INTSR_UBCISR_SHIFT)                         /* 0x00000400 */
+#define SPDIFRX_INTSR_VCGISR_SHIFT                         (11U)
+#define SPDIFRX_INTSR_VCGISR_MASK                          (0x1U << SPDIFRX_INTSR_VCGISR_SHIFT)                         /* 0x00000800 */
+#define SPDIFRX_INTSR_TYPEISR_SHIFT                        (12U)
+#define SPDIFRX_INTSR_TYPEISR_MASK                         (0x1U << SPDIFRX_INTSR_TYPEISR_SHIFT)                        /* 0x00001000 */
 /* INTCLR */
-#define SPDIF_RX_INTCLR_OFFSET                             (0x28U)
-#define SPDIF_RX_INTCLR_PEICLR_SHIFT                       (0U)
-#define SPDIF_RX_INTCLR_PEICLR_MASK                        (0x1U << SPDIF_RX_INTCLR_PEICLR_SHIFT)                       /* 0x00000001 */
-#define SPDIF_RX_INTCLR_CSCICLR_SHIFT                      (1U)
-#define SPDIF_RX_INTCLR_CSCICLR_MASK                       (0x1U << SPDIF_RX_INTCLR_CSCICLR_SHIFT)                      /* 0x00000002 */
-#define SPDIF_RX_INTCLR_NVLDICLR_SHIFT                     (2U)
-#define SPDIF_RX_INTCLR_NVLDICLR_MASK                      (0x1U << SPDIF_RX_INTCLR_NVLDICLR_SHIFT)                     /* 0x00000004 */
-#define SPDIF_RX_INTCLR_NPSPICLR_SHIFT                     (3U)
-#define SPDIF_RX_INTCLR_NPSPICLR_MASK                      (0x1U << SPDIF_RX_INTCLR_NPSPICLR_SHIFT)                     /* 0x00000008 */
-#define SPDIF_RX_INTCLR_RXFICLR_SHIFT                      (4U)
-#define SPDIF_RX_INTCLR_RXFICLR_MASK                       (0x1U << SPDIF_RX_INTCLR_RXFICLR_SHIFT)                      /* 0x00000010 */
-#define SPDIF_RX_INTCLR_RXOICLR_SHIFT                      (5U)
-#define SPDIF_RX_INTCLR_RXOICLR_MASK                       (0x1U << SPDIF_RX_INTCLR_RXOICLR_SHIFT)                      /* 0x00000020 */
-#define SPDIF_RX_INTCLR_BMDEICLR_SHIFT                     (6U)
-#define SPDIF_RX_INTCLR_BMDEICLR_MASK                      (0x1U << SPDIF_RX_INTCLR_BMDEICLR_SHIFT)                     /* 0x00000040 */
-#define SPDIF_RX_INTCLR_NSYNCICLR_SHIFT                    (7U)
-#define SPDIF_RX_INTCLR_NSYNCICLR_MASK                     (0x1U << SPDIF_RX_INTCLR_NSYNCICLR_SHIFT)                    /* 0x00000080 */
-#define SPDIF_RX_INTCLR_BTEICLR_SHIFT                      (8U)
-#define SPDIF_RX_INTCLR_BTEICLR_MASK                       (0x1U << SPDIF_RX_INTCLR_BTEICLR_SHIFT)                      /* 0x00000100 */
-#define SPDIF_RX_INTCLR_ESYNCICLR_SHIFT                    (9U)
-#define SPDIF_RX_INTCLR_ESYNCICLR_MASK                     (0x1U << SPDIF_RX_INTCLR_ESYNCICLR_SHIFT)                    /* 0x00000200 */
-#define SPDIF_RX_INTCLR_UBCICLR_SHIFT                      (10U)
-#define SPDIF_RX_INTCLR_UBCICLR_MASK                       (0x1U << SPDIF_RX_INTCLR_UBCICLR_SHIFT)                      /* 0x00000400 */
+#define SPDIFRX_INTCLR_OFFSET                              (0x28U)
+#define SPDIFRX_INTCLR_PEICLR_SHIFT                        (0U)
+#define SPDIFRX_INTCLR_PEICLR_MASK                         (0x1U << SPDIFRX_INTCLR_PEICLR_SHIFT)                        /* 0x00000001 */
+#define SPDIFRX_INTCLR_CSCICLR_SHIFT                       (1U)
+#define SPDIFRX_INTCLR_CSCICLR_MASK                        (0x1U << SPDIFRX_INTCLR_CSCICLR_SHIFT)                       /* 0x00000002 */
+#define SPDIFRX_INTCLR_NVLDICLR_SHIFT                      (2U)
+#define SPDIFRX_INTCLR_NVLDICLR_MASK                       (0x1U << SPDIFRX_INTCLR_NVLDICLR_SHIFT)                      /* 0x00000004 */
+#define SPDIFRX_INTCLR_NPSPICLR_SHIFT                      (3U)
+#define SPDIFRX_INTCLR_NPSPICLR_MASK                       (0x1U << SPDIFRX_INTCLR_NPSPICLR_SHIFT)                      /* 0x00000008 */
+#define SPDIFRX_INTCLR_RXFICLR_SHIFT                       (4U)
+#define SPDIFRX_INTCLR_RXFICLR_MASK                        (0x1U << SPDIFRX_INTCLR_RXFICLR_SHIFT)                       /* 0x00000010 */
+#define SPDIFRX_INTCLR_RXOICLR_SHIFT                       (5U)
+#define SPDIFRX_INTCLR_RXOICLR_MASK                        (0x1U << SPDIFRX_INTCLR_RXOICLR_SHIFT)                       /* 0x00000020 */
+#define SPDIFRX_INTCLR_BMDEICLR_SHIFT                      (6U)
+#define SPDIFRX_INTCLR_BMDEICLR_MASK                       (0x1U << SPDIFRX_INTCLR_BMDEICLR_SHIFT)                      /* 0x00000040 */
+#define SPDIFRX_INTCLR_NSYNCICLR_SHIFT                     (7U)
+#define SPDIFRX_INTCLR_NSYNCICLR_MASK                      (0x1U << SPDIFRX_INTCLR_NSYNCICLR_SHIFT)                     /* 0x00000080 */
+#define SPDIFRX_INTCLR_BTEICLR_SHIFT                       (8U)
+#define SPDIFRX_INTCLR_BTEICLR_MASK                        (0x1U << SPDIFRX_INTCLR_BTEICLR_SHIFT)                       /* 0x00000100 */
+#define SPDIFRX_INTCLR_SYNCICLR_SHIFT                      (9U)
+#define SPDIFRX_INTCLR_SYNCICLR_MASK                       (0x1U << SPDIFRX_INTCLR_SYNCICLR_SHIFT)                      /* 0x00000200 */
+#define SPDIFRX_INTCLR_UBCICLR_SHIFT                       (10U)
+#define SPDIFRX_INTCLR_UBCICLR_MASK                        (0x1U << SPDIFRX_INTCLR_UBCICLR_SHIFT)                       /* 0x00000400 */
+#define SPDIFRX_INTCLR_VCGICLR_SHIFT                       (11U)
+#define SPDIFRX_INTCLR_VCGICLR_MASK                        (0x1U << SPDIFRX_INTCLR_VCGICLR_SHIFT)                       /* 0x00000800 */
+#define SPDIFRX_INTCLR_TYPEICLR_SHIFT                      (12U)
+#define SPDIFRX_INTCLR_TYPEICLR_MASK                       (0x1U << SPDIFRX_INTCLR_TYPEICLR_SHIFT)                      /* 0x00001000 */
 /* SMPDR */
-#define SPDIF_RX_SMPDR_OFFSET                              (0x2CU)
-#define SPDIF_RX_SMPDR                                     (0x0U)
-#define SPDIF_RX_SMPDR_SMPDR_SHIFT                         (0U)
-#define SPDIF_RX_SMPDR_SMPDR_MASK                          (0xFFFFFFFFU << SPDIF_RX_SMPDR_SMPDR_SHIFT)                  /* 0xFFFFFFFF */
+#define SPDIFRX_SMPDR_OFFSET                               (0x2CU)
+#define SPDIFRX_SMPDR                                      (0x0U)
+#define SPDIFRX_SMPDR_SMPDR_SHIFT                          (0U)
+#define SPDIFRX_SMPDR_SMPDR_MASK                           (0xFFFFFFFFU << SPDIFRX_SMPDR_SMPDR_SHIFT)                   /* 0xFFFFFFFF */
 /* USRDRN */
-#define SPDIF_RX_USRDRN_OFFSET                             (0x30U)
-#define SPDIF_RX_USRDRN                                    (0x0U)
-#define SPDIF_RX_USRDRN_USR_SUB_0_SHIFT                    (0U)
-#define SPDIF_RX_USRDRN_USR_SUB_0_MASK                     (0xFFFFU << SPDIF_RX_USRDRN_USR_SUB_0_SHIFT)                 /* 0x0000FFFF */
-#define SPDIF_RX_USRDRN_USR_SUB_1_SHIFT                    (16U)
-#define SPDIF_RX_USRDRN_USR_SUB_1_MASK                     (0xFFFFU << SPDIF_RX_USRDRN_USR_SUB_1_SHIFT)                 /* 0xFFFF0000 */
+#define SPDIFRX_USRDRN_OFFSET                              (0x30U)
+#define SPDIFRX_USRDRN                                     (0x0U)
+#define SPDIFRX_USRDRN_USR_SUB_0_SHIFT                     (0U)
+#define SPDIFRX_USRDRN_USR_SUB_0_MASK                      (0xFFFFU << SPDIFRX_USRDRN_USR_SUB_0_SHIFT)                  /* 0x0000FFFF */
+#define SPDIFRX_USRDRN_USR_SUB_1_SHIFT                     (16U)
+#define SPDIFRX_USRDRN_USR_SUB_1_MASK                      (0xFFFFU << SPDIFRX_USRDRN_USR_SUB_1_SHIFT)                  /* 0xFFFF0000 */
 /* CHNSRN */
-#define SPDIF_RX_CHNSRN_OFFSET                             (0x60U)
-#define SPDIF_RX_CHNSRN_CHNSR_SUB_0_SHIFT                  (0U)
-#define SPDIF_RX_CHNSRN_CHNSR_SUB_0_MASK                   (0xFFFFU << SPDIF_RX_CHNSRN_CHNSR_SUB_0_SHIFT)               /* 0x0000FFFF */
-#define SPDIF_RX_CHNSRN_CHNSR_SUB_1_SHIFT                  (16U)
-#define SPDIF_RX_CHNSRN_CHNSR_SUB_1_MASK                   (0xFFFFU << SPDIF_RX_CHNSRN_CHNSR_SUB_1_SHIFT)               /* 0xFFFF0000 */
-/* BURTSINFO */
-#define SPDIF_RX_BURTSINFO_OFFSET                          (0x100U)
-#define SPDIF_RX_BURTSINFO_DATATYPE_SHIFT                  (0U)
-#define SPDIF_RX_BURTSINFO_DATATYPE_MASK                   (0x7FU << SPDIF_RX_BURTSINFO_DATATYPE_SHIFT)                 /* 0x0000007F */
-#define SPDIF_RX_BURTSINFO_ERRFLAG_SHIFT                   (7U)
-#define SPDIF_RX_BURTSINFO_ERRFLAG_MASK                    (0x1U << SPDIF_RX_BURTSINFO_ERRFLAG_SHIFT)                   /* 0x00000080 */
-#define SPDIF_RX_BURTSINFO_DATAINFO_SHIFT                  (8U)
-#define SPDIF_RX_BURTSINFO_DATAINFO_MASK                   (0x1FU << SPDIF_RX_BURTSINFO_DATAINFO_SHIFT)                 /* 0x00001F00 */
-#define SPDIF_RX_BURTSINFO_BSNUM_SHIFT                     (13U)
-#define SPDIF_RX_BURTSINFO_BSNUM_MASK                      (0x7U << SPDIF_RX_BURTSINFO_BSNUM_SHIFT)                     /* 0x0000E000 */
-#define SPDIF_RX_BURTSINFO_PD_SHIFT                        (16U)
-#define SPDIF_RX_BURTSINFO_PD_MASK                         (0xFFFFU << SPDIF_RX_BURTSINFO_PD_SHIFT)                     /* 0xFFFF0000 */
+#define SPDIFRX_CHNSRN_OFFSET                              (0x60U)
+#define SPDIFRX_CHNSRN                                     (0x0U)
+#define SPDIFRX_CHNSRN_CHNSR_SUB_0_SHIFT                   (0U)
+#define SPDIFRX_CHNSRN_CHNSR_SUB_0_MASK                    (0xFFFFU << SPDIFRX_CHNSRN_CHNSR_SUB_0_SHIFT)                /* 0x0000FFFF */
+#define SPDIFRX_CHNSRN_CHNSR_SUB_1_SHIFT                   (16U)
+#define SPDIFRX_CHNSRN_CHNSR_SUB_1_MASK                    (0xFFFFU << SPDIFRX_CHNSRN_CHNSR_SUB_1_SHIFT)                /* 0xFFFF0000 */
+/* CDR_TIME */
+#define SPDIFRX_CDR_TIME_OFFSET                            (0x90U)
+#define SPDIFRX_CDR_TIME_CDR_WAIT_TIME_SHIFT               (0U)
+#define SPDIFRX_CDR_TIME_CDR_WAIT_TIME_MASK                (0xFFFFU << SPDIFRX_CDR_TIME_CDR_WAIT_TIME_SHIFT)            /* 0x0000FFFF */
+#define SPDIFRX_CDR_TIME_CDR_COUNT_TIME_SHIFT              (16U)
+#define SPDIFRX_CDR_TIME_CDR_COUNT_TIME_MASK               (0xFFFFU << SPDIFRX_CDR_TIME_CDR_COUNT_TIME_SHIFT)           /* 0xFFFF0000 */
+/* STATUS */
+#define SPDIFRX_STATUS_OFFSET                              (0x94U)
+#define SPDIFRX_STATUS                                     (0x0U)
+#define SPDIFRX_STATUS_AUDIO_TYPE_SHIFT                    (0U)
+#define SPDIFRX_STATUS_AUDIO_TYPE_MASK                     (0x1U << SPDIFRX_STATUS_AUDIO_TYPE_SHIFT)                    /* 0x00000001 */
+#define SPDIFRX_STATUS_CH0_DATA_VLD_SHIFT                  (1U)
+#define SPDIFRX_STATUS_CH0_DATA_VLD_MASK                   (0xFU << SPDIFRX_STATUS_CH0_DATA_VLD_SHIFT)                  /* 0x0000001E */
+#define SPDIFRX_STATUS_CH1_DATA_VLD_SHIFT                  (5U)
+#define SPDIFRX_STATUS_CH1_DATA_VLD_MASK                   (0xFU << SPDIFRX_STATUS_CH1_DATA_VLD_SHIFT)                  /* 0x000001E0 */
+/* BURSTINFO */
+#define SPDIFRX_BURSTINFO_OFFSET                           (0x100U)
+#define SPDIFRX_BURSTINFO                                  (0x0U)
+#define SPDIFRX_BURSTINFO_DATATYPE_SHIFT                   (0U)
+#define SPDIFRX_BURSTINFO_DATATYPE_MASK                    (0x7FU << SPDIFRX_BURSTINFO_DATATYPE_SHIFT)                  /* 0x0000007F */
+#define SPDIFRX_BURSTINFO_ERRFLAG_SHIFT                    (7U)
+#define SPDIFRX_BURSTINFO_ERRFLAG_MASK                     (0x1U << SPDIFRX_BURSTINFO_ERRFLAG_SHIFT)                    /* 0x00000080 */
+#define SPDIFRX_BURSTINFO_DATAINFO_SHIFT                   (8U)
+#define SPDIFRX_BURSTINFO_DATAINFO_MASK                    (0x1FU << SPDIFRX_BURSTINFO_DATAINFO_SHIFT)                  /* 0x00001F00 */
+#define SPDIFRX_BURSTINFO_BSNUM_SHIFT                      (13U)
+#define SPDIFRX_BURSTINFO_BSNUM_MASK                       (0x7U << SPDIFRX_BURSTINFO_BSNUM_SHIFT)                      /* 0x0000E000 */
+#define SPDIFRX_BURSTINFO_PD_SHIFT                         (16U)
+#define SPDIFRX_BURSTINFO_PD_MASK                          (0xFFFFU << SPDIFRX_BURSTINFO_PD_SHIFT)                      /* 0xFFFF0000 */
 /*****************************************TSADC******************************************/
 /* USER_CON */
 #define TSADC_USER_CON_OFFSET                              (0x0U)
@@ -10954,125 +10987,128 @@ struct IIR_ACC_REG_REG {
 #define RM3_IO_TEST_STATUS2                                (0x0U)
 #define RM3_IO_TEST_STATUS2_SIG_FROM_PAD_SHIFT             (0U)
 #define RM3_IO_TEST_STATUS2_SIG_FROM_PAD_MASK              (0xFFFFU << RM3_IO_TEST_STATUS2_SIG_FROM_PAD_SHIFT)          /* 0x0000FFFF */
-/****************************************SPDIF_TX****************************************/
+/****************************************SPDIFTX*****************************************/
 /* CFGR */
-#define SPDIF_TX_CFGR_OFFSET                               (0x0U)
-#define SPDIF_TX_CFGR_VDW_SHIFT                            (0U)
-#define SPDIF_TX_CFGR_VDW_MASK                             (0x3U << SPDIF_TX_CFGR_VDW_SHIFT)                            /* 0x00000003 */
-#define SPDIF_TX_CFGR_HWT_SHIFT                            (2U)
-#define SPDIF_TX_CFGR_HWT_MASK                             (0x1U << SPDIF_TX_CFGR_HWT_SHIFT)                            /* 0x00000004 */
-#define SPDIF_TX_CFGR_ADJ_SHIFT                            (3U)
-#define SPDIF_TX_CFGR_ADJ_MASK                             (0x1U << SPDIF_TX_CFGR_ADJ_SHIFT)                            /* 0x00000008 */
-#define SPDIF_TX_CFGR_VFE_SHIFT                            (4U)
-#define SPDIF_TX_CFGR_VFE_MASK                             (0x1U << SPDIF_TX_CFGR_VFE_SHIFT)                            /* 0x00000010 */
-#define SPDIF_TX_CFGR_UDE_SHIFT                            (5U)
-#define SPDIF_TX_CFGR_UDE_MASK                             (0x1U << SPDIF_TX_CFGR_UDE_SHIFT)                            /* 0x00000020 */
-#define SPDIF_TX_CFGR_CSE_SHIFT                            (6U)
-#define SPDIF_TX_CFGR_CSE_MASK                             (0x1U << SPDIF_TX_CFGR_CSE_SHIFT)                            /* 0x00000040 */
-#define SPDIF_TX_CFGR_CLR_SHIFT                            (7U)
-#define SPDIF_TX_CFGR_CLR_MASK                             (0x1U << SPDIF_TX_CFGR_CLR_SHIFT)                            /* 0x00000080 */
-#define SPDIF_TX_CFGR_PCMTYPE_SHIFT                        (8U)
-#define SPDIF_TX_CFGR_PCMTYPE_MASK                         (0x1U << SPDIF_TX_CFGR_PCMTYPE_SHIFT)                        /* 0x00000100 */
-#define SPDIF_TX_CFGR_MCD_SHIFT                            (16U)
-#define SPDIF_TX_CFGR_MCD_MASK                             (0xFFU << SPDIF_TX_CFGR_MCD_SHIFT)                           /* 0x00FF0000 */
+#define SPDIFTX_CFGR_OFFSET                                (0x0U)
+#define SPDIFTX_CFGR_VDW_SHIFT                             (0U)
+#define SPDIFTX_CFGR_VDW_MASK                              (0x3U << SPDIFTX_CFGR_VDW_SHIFT)                             /* 0x00000003 */
+#define SPDIFTX_CFGR_HWT_SHIFT                             (2U)
+#define SPDIFTX_CFGR_HWT_MASK                              (0x1U << SPDIFTX_CFGR_HWT_SHIFT)                             /* 0x00000004 */
+#define SPDIFTX_CFGR_ADJ_SHIFT                             (3U)
+#define SPDIFTX_CFGR_ADJ_MASK                              (0x1U << SPDIFTX_CFGR_ADJ_SHIFT)                             /* 0x00000008 */
+#define SPDIFTX_CFGR_VFE_SHIFT                             (4U)
+#define SPDIFTX_CFGR_VFE_MASK                              (0x1U << SPDIFTX_CFGR_VFE_SHIFT)                             /* 0x00000010 */
+#define SPDIFTX_CFGR_UDE_SHIFT                             (5U)
+#define SPDIFTX_CFGR_UDE_MASK                              (0x1U << SPDIFTX_CFGR_UDE_SHIFT)                             /* 0x00000020 */
+#define SPDIFTX_CFGR_CSE_SHIFT                             (6U)
+#define SPDIFTX_CFGR_CSE_MASK                              (0x1U << SPDIFTX_CFGR_CSE_SHIFT)                             /* 0x00000040 */
+#define SPDIFTX_CFGR_CLR_SHIFT                             (7U)
+#define SPDIFTX_CFGR_CLR_MASK                              (0x1U << SPDIFTX_CFGR_CLR_SHIFT)                             /* 0x00000080 */
+#define SPDIFTX_CFGR_PCMTYPE_SHIFT                         (8U)
+#define SPDIFTX_CFGR_PCMTYPE_MASK                          (0x1U << SPDIFTX_CFGR_PCMTYPE_SHIFT)                         /* 0x00000100 */
+#define SPDIFTX_CFGR_PRECHANGE_SHIFT                       (9U)
+#define SPDIFTX_CFGR_PRECHANGE_MASK                        (0x1U << SPDIFTX_CFGR_PRECHANGE_SHIFT)                       /* 0x00000200 */
+#define SPDIFTX_CFGR_MCD_SHIFT                             (16U)
+#define SPDIFTX_CFGR_MCD_MASK                              (0xFFU << SPDIFTX_CFGR_MCD_SHIFT)                            /* 0x00FF0000 */
 /* SDBLR */
-#define SPDIF_TX_SDBLR_OFFSET                              (0x4U)
-#define SPDIF_TX_SDBLR_SDBLR_SHIFT                         (0U)
-#define SPDIF_TX_SDBLR_SDBLR_MASK                          (0x3FU << SPDIF_TX_SDBLR_SDBLR_SHIFT)                        /* 0x0000003F */
+#define SPDIFTX_SDBLR_OFFSET                               (0x4U)
+#define SPDIFTX_SDBLR                                      (0x0U)
+#define SPDIFTX_SDBLR_TFL_SHIFT                            (0U)
+#define SPDIFTX_SDBLR_TFL_MASK                             (0x3FU << SPDIFTX_SDBLR_TFL_SHIFT)                           /* 0x0000003F */
 /* DMACR */
-#define SPDIF_TX_DMACR_OFFSET                              (0x8U)
-#define SPDIF_TX_DMACR_TDL_SHIFT                           (0U)
-#define SPDIF_TX_DMACR_TDL_MASK                            (0x1FU << SPDIF_TX_DMACR_TDL_SHIFT)                          /* 0x0000001F */
-#define SPDIF_TX_DMACR_TDE_SHIFT                           (5U)
-#define SPDIF_TX_DMACR_TDE_MASK                            (0x1U << SPDIF_TX_DMACR_TDE_SHIFT)                           /* 0x00000020 */
+#define SPDIFTX_DMACR_OFFSET                               (0x8U)
+#define SPDIFTX_DMACR_TDL_SHIFT                            (0U)
+#define SPDIFTX_DMACR_TDL_MASK                             (0x1FU << SPDIFTX_DMACR_TDL_SHIFT)                           /* 0x0000001F */
+#define SPDIFTX_DMACR_TDE_SHIFT                            (5U)
+#define SPDIFTX_DMACR_TDE_MASK                             (0x1U << SPDIFTX_DMACR_TDE_SHIFT)                            /* 0x00000020 */
 /* INTCR */
-#define SPDIF_TX_INTCR_OFFSET                              (0xCU)
-#define SPDIF_TX_INTCR_UDTIE_SHIFT                         (2U)
-#define SPDIF_TX_INTCR_UDTIE_MASK                          (0x1U << SPDIF_TX_INTCR_UDTIE_SHIFT)                         /* 0x00000004 */
-#define SPDIF_TX_INTCR_BTTIE_SHIFT                         (3U)
-#define SPDIF_TX_INTCR_BTTIE_MASK                          (0x1U << SPDIF_TX_INTCR_BTTIE_SHIFT)                         /* 0x00000008 */
-#define SPDIF_TX_INTCR_SDBEIE_SHIFT                        (4U)
-#define SPDIF_TX_INTCR_SDBEIE_MASK                         (0x1U << SPDIF_TX_INTCR_SDBEIE_SHIFT)                        /* 0x00000010 */
-#define SPDIF_TX_INTCR_SDBT_SHIFT                          (5U)
-#define SPDIF_TX_INTCR_SDBT_MASK                           (0x1FU << SPDIF_TX_INTCR_SDBT_SHIFT)                         /* 0x000003E0 */
-#define SPDIF_TX_INTCR_BTTIC_SHIFT                         (16U)
-#define SPDIF_TX_INTCR_BTTIC_MASK                          (0x1U << SPDIF_TX_INTCR_BTTIC_SHIFT)                         /* 0x00010000 */
-#define SPDIF_TX_INTCR_UDTIC_SHIFT                         (17U)
-#define SPDIF_TX_INTCR_UDTIC_MASK                          (0x1U << SPDIF_TX_INTCR_UDTIC_SHIFT)                         /* 0x00020000 */
+#define SPDIFTX_INTCR_OFFSET                               (0xCU)
+#define SPDIFTX_INTCR_UDTIE_SHIFT                          (2U)
+#define SPDIFTX_INTCR_UDTIE_MASK                           (0x1U << SPDIFTX_INTCR_UDTIE_SHIFT)                          /* 0x00000004 */
+#define SPDIFTX_INTCR_BTTIE_SHIFT                          (3U)
+#define SPDIFTX_INTCR_BTTIE_MASK                           (0x1U << SPDIFTX_INTCR_BTTIE_SHIFT)                          /* 0x00000008 */
+#define SPDIFTX_INTCR_SDBEIE_SHIFT                         (4U)
+#define SPDIFTX_INTCR_SDBEIE_MASK                          (0x1U << SPDIFTX_INTCR_SDBEIE_SHIFT)                         /* 0x00000010 */
+#define SPDIFTX_INTCR_SDBT_SHIFT                           (5U)
+#define SPDIFTX_INTCR_SDBT_MASK                            (0x1FU << SPDIFTX_INTCR_SDBT_SHIFT)                          /* 0x000003E0 */
+#define SPDIFTX_INTCR_BTTIC_SHIFT                          (16U)
+#define SPDIFTX_INTCR_BTTIC_MASK                           (0x1U << SPDIFTX_INTCR_BTTIC_SHIFT)                          /* 0x00010000 */
+#define SPDIFTX_INTCR_UDTIC_SHIFT                          (17U)
+#define SPDIFTX_INTCR_UDTIC_MASK                           (0x1U << SPDIFTX_INTCR_UDTIC_SHIFT)                          /* 0x00020000 */
 /* INTSR */
-#define SPDIF_TX_INTSR_OFFSET                              (0x10U)
-#define SPDIF_TX_INTSR_UDTIS_SHIFT                         (2U)
-#define SPDIF_TX_INTSR_UDTIS_MASK                          (0x1U << SPDIF_TX_INTSR_UDTIS_SHIFT)                         /* 0x00000004 */
-#define SPDIF_TX_INTSR_BTTIS_SHIFT                         (3U)
-#define SPDIF_TX_INTSR_BTTIS_MASK                          (0x1U << SPDIF_TX_INTSR_BTTIS_SHIFT)                         /* 0x00000008 */
-#define SPDIF_TX_INTSR_SDBEIS_SHIFT                        (4U)
-#define SPDIF_TX_INTSR_SDBEIS_MASK                         (0x1U << SPDIF_TX_INTSR_SDBEIS_SHIFT)                        /* 0x00000010 */
+#define SPDIFTX_INTSR_OFFSET                               (0x10U)
+#define SPDIFTX_INTSR_UDTIS_SHIFT                          (2U)
+#define SPDIFTX_INTSR_UDTIS_MASK                           (0x1U << SPDIFTX_INTSR_UDTIS_SHIFT)                          /* 0x00000004 */
+#define SPDIFTX_INTSR_BTTIS_SHIFT                          (3U)
+#define SPDIFTX_INTSR_BTTIS_MASK                           (0x1U << SPDIFTX_INTSR_BTTIS_SHIFT)                          /* 0x00000008 */
+#define SPDIFTX_INTSR_SDBEIS_SHIFT                         (4U)
+#define SPDIFTX_INTSR_SDBEIS_MASK                          (0x1U << SPDIFTX_INTSR_SDBEIS_SHIFT)                         /* 0x00000010 */
 /* XFER */
-#define SPDIF_TX_XFER_OFFSET                               (0x18U)
-#define SPDIF_TX_XFER_XFER_SHIFT                           (0U)
-#define SPDIF_TX_XFER_XFER_MASK                            (0x1U << SPDIF_TX_XFER_XFER_SHIFT)                           /* 0x00000001 */
+#define SPDIFTX_XFER_OFFSET                                (0x18U)
+#define SPDIFTX_XFER_EN_SHIFT                              (0U)
+#define SPDIFTX_XFER_EN_MASK                               (0x1U << SPDIFTX_XFER_EN_SHIFT)                              /* 0x00000001 */
 /* SMPDR */
-#define SPDIF_TX_SMPDR_OFFSET                              (0x20U)
-#define SPDIF_TX_SMPDR_SMPDR_SHIFT                         (0U)
-#define SPDIF_TX_SMPDR_SMPDR_MASK                          (0xFFFFFFFFU << SPDIF_TX_SMPDR_SMPDR_SHIFT)                  /* 0xFFFFFFFF */
+#define SPDIFTX_SMPDR_OFFSET                               (0x20U)
+#define SPDIFTX_SMPDR_SMPDR_SHIFT                          (0U)
+#define SPDIFTX_SMPDR_SMPDR_MASK                           (0xFFFFFFFFU << SPDIFTX_SMPDR_SMPDR_SHIFT)                   /* 0xFFFFFFFF */
 /* VLDFRN */
-#define SPDIF_TX_VLDFRN_OFFSET                             (0x60U)
-#define SPDIF_TX_VLDFRN_VLDFR_SUB_0_SHIFT                  (0U)
-#define SPDIF_TX_VLDFRN_VLDFR_SUB_0_MASK                   (0xFFFFU << SPDIF_TX_VLDFRN_VLDFR_SUB_0_SHIFT)               /* 0x0000FFFF */
-#define SPDIF_TX_VLDFRN_VLDFR_SUB_1_SHIFT                  (16U)
-#define SPDIF_TX_VLDFRN_VLDFR_SUB_1_MASK                   (0xFFFFU << SPDIF_TX_VLDFRN_VLDFR_SUB_1_SHIFT)               /* 0xFFFF0000 */
+#define SPDIFTX_VLDFRN_OFFSET                              (0x60U)
+#define SPDIFTX_VLDFRN_VLDFR_SUB_0_SHIFT                   (0U)
+#define SPDIFTX_VLDFRN_VLDFR_SUB_0_MASK                    (0xFFFFU << SPDIFTX_VLDFRN_VLDFR_SUB_0_SHIFT)                /* 0x0000FFFF */
+#define SPDIFTX_VLDFRN_VLDFR_SUB_1_SHIFT                   (16U)
+#define SPDIFTX_VLDFRN_VLDFR_SUB_1_MASK                    (0xFFFFU << SPDIFTX_VLDFRN_VLDFR_SUB_1_SHIFT)                /* 0xFFFF0000 */
 /* USRDRN */
-#define SPDIF_TX_USRDRN_OFFSET                             (0x90U)
-#define SPDIF_TX_USRDRN_USR_SUB_0_SHIFT                    (0U)
-#define SPDIF_TX_USRDRN_USR_SUB_0_MASK                     (0xFFFFU << SPDIF_TX_USRDRN_USR_SUB_0_SHIFT)                 /* 0x0000FFFF */
-#define SPDIF_TX_USRDRN_USR_SUB_1_SHIFT                    (16U)
-#define SPDIF_TX_USRDRN_USR_SUB_1_MASK                     (0xFFFFU << SPDIF_TX_USRDRN_USR_SUB_1_SHIFT)                 /* 0xFFFF0000 */
+#define SPDIFTX_USRDRN_OFFSET                              (0x90U)
+#define SPDIFTX_USRDRN_USR_SUB_0_SHIFT                     (0U)
+#define SPDIFTX_USRDRN_USR_SUB_0_MASK                      (0xFFFFU << SPDIFTX_USRDRN_USR_SUB_0_SHIFT)                  /* 0x0000FFFF */
+#define SPDIFTX_USRDRN_USR_SUB_1_SHIFT                     (16U)
+#define SPDIFTX_USRDRN_USR_SUB_1_MASK                      (0xFFFFU << SPDIFTX_USRDRN_USR_SUB_1_SHIFT)                  /* 0xFFFF0000 */
 /* CHNSRN */
-#define SPDIF_TX_CHNSRN_OFFSET                             (0xC0U)
-#define SPDIF_TX_CHNSRN_CHNSR_SUB_0_SHIFT                  (0U)
-#define SPDIF_TX_CHNSRN_CHNSR_SUB_0_MASK                   (0xFFFFU << SPDIF_TX_CHNSRN_CHNSR_SUB_0_SHIFT)               /* 0x0000FFFF */
-#define SPDIF_TX_CHNSRN_CHNSR_SUB_1_SHIFT                  (16U)
-#define SPDIF_TX_CHNSRN_CHNSR_SUB_1_MASK                   (0xFFFFU << SPDIF_TX_CHNSRN_CHNSR_SUB_1_SHIFT)               /* 0xFFFF0000 */
-/* BURTSINFO */
-#define SPDIF_TX_BURTSINFO_OFFSET                          (0xD0U)
-#define SPDIF_TX_BURTSINFO_DATATYPE_SHIFT                  (0U)
-#define SPDIF_TX_BURTSINFO_DATATYPE_MASK                   (0x7FU << SPDIF_TX_BURTSINFO_DATATYPE_SHIFT)                 /* 0x0000007F */
-#define SPDIF_TX_BURTSINFO_ERRFLAG_SHIFT                   (7U)
-#define SPDIF_TX_BURTSINFO_ERRFLAG_MASK                    (0x1U << SPDIF_TX_BURTSINFO_ERRFLAG_SHIFT)                   /* 0x00000080 */
-#define SPDIF_TX_BURTSINFO_DATAINFO_SHIFT                  (8U)
-#define SPDIF_TX_BURTSINFO_DATAINFO_MASK                   (0x1FU << SPDIF_TX_BURTSINFO_DATAINFO_SHIFT)                 /* 0x00001F00 */
-#define SPDIF_TX_BURTSINFO_BSNUM_SHIFT                     (13U)
-#define SPDIF_TX_BURTSINFO_BSNUM_MASK                      (0x7U << SPDIF_TX_BURTSINFO_BSNUM_SHIFT)                     /* 0x0000E000 */
-#define SPDIF_TX_BURTSINFO_PD_SHIFT                        (16U)
-#define SPDIF_TX_BURTSINFO_PD_MASK                         (0xFFFFU << SPDIF_TX_BURTSINFO_PD_SHIFT)                     /* 0xFFFF0000 */
+#define SPDIFTX_CHNSRN_OFFSET                              (0xC0U)
+#define SPDIFTX_CHNSRN_CHNSR_SUB_0_SHIFT                   (0U)
+#define SPDIFTX_CHNSRN_CHNSR_SUB_0_MASK                    (0xFFFFU << SPDIFTX_CHNSRN_CHNSR_SUB_0_SHIFT)                /* 0x0000FFFF */
+#define SPDIFTX_CHNSRN_CHNSR_SUB_1_SHIFT                   (16U)
+#define SPDIFTX_CHNSRN_CHNSR_SUB_1_MASK                    (0xFFFFU << SPDIFTX_CHNSRN_CHNSR_SUB_1_SHIFT)                /* 0xFFFF0000 */
+/* BURSTINFO */
+#define SPDIFTX_BURSTINFO_OFFSET                           (0x100U)
+#define SPDIFTX_BURSTINFO_DATATYPE_SHIFT                   (0U)
+#define SPDIFTX_BURSTINFO_DATATYPE_MASK                    (0x7FU << SPDIFTX_BURSTINFO_DATATYPE_SHIFT)                  /* 0x0000007F */
+#define SPDIFTX_BURSTINFO_ERRFLAG_SHIFT                    (7U)
+#define SPDIFTX_BURSTINFO_ERRFLAG_MASK                     (0x1U << SPDIFTX_BURSTINFO_ERRFLAG_SHIFT)                    /* 0x00000080 */
+#define SPDIFTX_BURSTINFO_DATAINFO_SHIFT                   (8U)
+#define SPDIFTX_BURSTINFO_DATAINFO_MASK                    (0x1FU << SPDIFTX_BURSTINFO_DATAINFO_SHIFT)                  /* 0x00001F00 */
+#define SPDIFTX_BURSTINFO_BSNUM_SHIFT                      (13U)
+#define SPDIFTX_BURSTINFO_BSNUM_MASK                       (0x7U << SPDIFTX_BURSTINFO_BSNUM_SHIFT)                      /* 0x0000E000 */
+#define SPDIFTX_BURSTINFO_PD_SHIFT                         (16U)
+#define SPDIFTX_BURSTINFO_PD_MASK                          (0xFFFFU << SPDIFTX_BURSTINFO_PD_SHIFT)                      /* 0xFFFF0000 */
 /* REPETTION */
-#define SPDIF_TX_REPETTION_OFFSET                          (0x104U)
-#define SPDIF_TX_REPETTION_REPETTION_SHIFT                 (0U)
-#define SPDIF_TX_REPETTION_REPETTION_MASK                  (0xFFFFU << SPDIF_TX_REPETTION_REPETTION_SHIFT)              /* 0x0000FFFF */
-/* BURTSINFO_SHD */
-#define SPDIF_TX_BURTSINFO_SHD_OFFSET                      (0x108U)
-#define SPDIF_TX_BURTSINFO_SHD                             (0x0U)
-#define SPDIF_TX_BURTSINFO_SHD_DATATYPE_SHIFT              (0U)
-#define SPDIF_TX_BURTSINFO_SHD_DATATYPE_MASK               (0x7FU << SPDIF_TX_BURTSINFO_SHD_DATATYPE_SHIFT)             /* 0x0000007F */
-#define SPDIF_TX_BURTSINFO_SHD_ERRFLAG_SHIFT               (7U)
-#define SPDIF_TX_BURTSINFO_SHD_ERRFLAG_MASK                (0x1U << SPDIF_TX_BURTSINFO_SHD_ERRFLAG_SHIFT)               /* 0x00000080 */
-#define SPDIF_TX_BURTSINFO_SHD_DATAINFO_SHIFT              (8U)
-#define SPDIF_TX_BURTSINFO_SHD_DATAINFO_MASK               (0x1FU << SPDIF_TX_BURTSINFO_SHD_DATAINFO_SHIFT)             /* 0x00001F00 */
-#define SPDIF_TX_BURTSINFO_SHD_BSNUM_SHIFT                 (13U)
-#define SPDIF_TX_BURTSINFO_SHD_BSNUM_MASK                  (0x7U << SPDIF_TX_BURTSINFO_SHD_BSNUM_SHIFT)                 /* 0x0000E000 */
-#define SPDIF_TX_BURTSINFO_SHD_PD_SHIFT                    (16U)
-#define SPDIF_TX_BURTSINFO_SHD_PD_MASK                     (0xFFFFU << SPDIF_TX_BURTSINFO_SHD_PD_SHIFT)                 /* 0xFFFF0000 */
+#define SPDIFTX_REPETTION_OFFSET                           (0x104U)
+#define SPDIFTX_REPETTION_PERIOD_SHIFT                     (0U)
+#define SPDIFTX_REPETTION_PERIOD_MASK                      (0xFFFFU << SPDIFTX_REPETTION_PERIOD_SHIFT)                  /* 0x0000FFFF */
+/* BURSTINFO_SHD */
+#define SPDIFTX_BURSTINFO_SHD_OFFSET                       (0x108U)
+#define SPDIFTX_BURSTINFO_SHD                              (0x0U)
+#define SPDIFTX_BURSTINFO_SHD_DATATYPE_SHIFT               (0U)
+#define SPDIFTX_BURSTINFO_SHD_DATATYPE_MASK                (0x7FU << SPDIFTX_BURSTINFO_SHD_DATATYPE_SHIFT)              /* 0x0000007F */
+#define SPDIFTX_BURSTINFO_SHD_ERRFLAG_SHIFT                (7U)
+#define SPDIFTX_BURSTINFO_SHD_ERRFLAG_MASK                 (0x1U << SPDIFTX_BURSTINFO_SHD_ERRFLAG_SHIFT)                /* 0x00000080 */
+#define SPDIFTX_BURSTINFO_SHD_DATAINFO_SHIFT               (8U)
+#define SPDIFTX_BURSTINFO_SHD_DATAINFO_MASK                (0x1FU << SPDIFTX_BURSTINFO_SHD_DATAINFO_SHIFT)              /* 0x00001F00 */
+#define SPDIFTX_BURSTINFO_SHD_BSNUM_SHIFT                  (13U)
+#define SPDIFTX_BURSTINFO_SHD_BSNUM_MASK                   (0x7U << SPDIFTX_BURSTINFO_SHD_BSNUM_SHIFT)                  /* 0x0000E000 */
+#define SPDIFTX_BURSTINFO_SHD_PD_SHIFT                     (16U)
+#define SPDIFTX_BURSTINFO_SHD_PD_MASK                      (0xFFFFU << SPDIFTX_BURSTINFO_SHD_PD_SHIFT)                  /* 0xFFFF0000 */
 /* REPETTION_SHD */
-#define SPDIF_TX_REPETTION_SHD_OFFSET                      (0x10CU)
-#define SPDIF_TX_REPETTION_SHD_REPETTION_SHIFT             (0U)
-#define SPDIF_TX_REPETTION_SHD_REPETTION_MASK              (0xFFFFU << SPDIF_TX_REPETTION_SHD_REPETTION_SHIFT)          /* 0x0000FFFF */
+#define SPDIFTX_REPETTION_SHD_OFFSET                       (0x10CU)
+#define SPDIFTX_REPETTION_SHD_PERIOD_SHIFT                 (0U)
+#define SPDIFTX_REPETTION_SHD_PERIOD_MASK                  (0xFFFFU << SPDIFTX_REPETTION_SHD_PERIOD_SHIFT)              /* 0x0000FFFF */
 /* USRDR_SHDN */
-#define SPDIF_TX_USRDR_SHDN_OFFSET                         (0x190U)
-#define SPDIF_TX_USRDR_SHDN                                (0x0U)
-#define SPDIF_TX_USRDR_SHDN_USR_SUB_0_SHIFT                (0U)
-#define SPDIF_TX_USRDR_SHDN_USR_SUB_0_MASK                 (0xFFFFU << SPDIF_TX_USRDR_SHDN_USR_SUB_0_SHIFT)             /* 0x0000FFFF */
-#define SPDIF_TX_USRDR_SHDN_USR_SUB_1_SHIFT                (16U)
-#define SPDIF_TX_USRDR_SHDN_USR_SUB_1_MASK                 (0xFFFFU << SPDIF_TX_USRDR_SHDN_USR_SUB_1_SHIFT)             /* 0xFFFF0000 */
+#define SPDIFTX_USRDR_SHDN_OFFSET                          (0x190U)
+#define SPDIFTX_USRDR_SHDN                                 (0x0U)
+#define SPDIFTX_USRDR_SHDN_USR_SUB_0_SHIFT                 (0U)
+#define SPDIFTX_USRDR_SHDN_USR_SUB_0_MASK                  (0xFFFFU << SPDIFTX_USRDR_SHDN_USR_SUB_0_SHIFT)              /* 0x0000FFFF */
+#define SPDIFTX_USRDR_SHDN_USR_SUB_1_SHIFT                 (16U)
+#define SPDIFTX_USRDR_SHDN_USR_SUB_1_MASK                  (0xFFFFU << SPDIFTX_USRDR_SHDN_USR_SUB_1_SHIFT)              /* 0xFFFF0000 */
 /**************************************GPIO4_CD_IOC**************************************/
 /* GPIO4C_IOMUX_SEL_0 */
 #define GPIO4_CD_IOC_GPIO4C_IOMUX_SEL_0_OFFSET             (0x90U)
