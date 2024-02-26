@@ -351,6 +351,8 @@ typedef enum {
 #define PLL_INPUT_32K_RATE       (32 * 1000)
 #define PLL_INPUT_OSC_RATE       (24 * 1000 * 1000)
 
+#define MBOX_CNT                  14         /* Total Mailbox in SoC */
+
 /* --------  Configuration of Core Peripherals  ----------------------------------- */
 #if defined(HAL_AP_CORE) && defined(HAL_MCU_CORE)
 #error "HAL_AP_CORE and HAL_MCU_CORE only one of them can be enabled"
