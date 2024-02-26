@@ -6,6 +6,8 @@
 #include "soc.h"
 #include "hal_base.h"
 
+uint32_t g_oscRate = 24000000;            /* OSC Frequency */
+
 #if defined(HAL_MCU_CORE)
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -26,7 +28,6 @@ extern const uint32_t __vector_remap__[];
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
-uint32_t g_oscRate = 24000000;            /* OSC Frequency */
 
 void CacheInit(void)
 {
@@ -96,5 +97,11 @@ uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
 void SystemCoreClockUpdate(void)
 {
     SystemCoreClock = SYSTEM_CLOCK;
+}
+
+void SystemInit(void)
+{
+    if (GRF_PMU->OS_REG8 == 3)
+        g_oscRate = 24576000;
 }
 #endif
