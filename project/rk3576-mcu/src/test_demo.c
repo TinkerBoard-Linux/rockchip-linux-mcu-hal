@@ -157,12 +157,15 @@ static void timer_isr(void)
     uint32_t latency;
 
     count = (uint32_t)HAL_TIMER_GetCount(test_timer);
-    /* 24M timer: 41.67ns per count */
-    latency = count * 41;
-    printf("timer_test: latency=%ldns(count=%ld)\n", latency, count);
-    timer_int_count++;
-    latency_sum += latency;
-    latency_max = latency_max > latency ? latency_max : latency;
+    if (count < 1000000) {
+        /* 24M timer: 41.67ns per count */
+        latency = count * 41;
+        timer_int_count++;
+        printf("timer_test: latency=%ldns(count=%ld)\n", latency, count);
+        latency_sum += latency;
+        latency_max = latency_max > latency ? latency_max : latency;
+    }
+
     if (timer_int_count == 100) {
         printf("timer_test: latency avg=%dns,max=%dns\n", latency_sum / timer_int_count, latency_max);
         timer_int_count = 0;
