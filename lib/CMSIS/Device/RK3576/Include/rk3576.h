@@ -1076,6 +1076,17 @@ struct TIMER_REG {
          uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
     __IO uint32_t INTSTATUS;                          /* Address Offset: 0x0018 */
 };
+/* MBOX Register Structure Define */
+struct MBOX_REG {
+    __IO uint32_t A2B_INTEN;                          /* Address Offset: 0x0000 */
+    __IO uint32_t A2B_STATUS;                         /* Address Offset: 0x0004 */
+    __IO uint32_t A2B_CMD;                            /* Address Offset: 0x0008 */
+    __IO uint32_t A2B_DATA;                           /* Address Offset: 0x000C */
+    __IO uint32_t B2A_INTEN;                          /* Address Offset: 0x0010 */
+    __IO uint32_t B2A_STATUS;                         /* Address Offset: 0x0014 */
+    __IO uint32_t B2A_CMD;                            /* Address Offset: 0x0018 */
+    __IO uint32_t B2A_DATA;                           /* Address Offset: 0x001C */
+};
 /* INTMUX Register Structure Define */
 struct INTMUX_REG {
     __IO uint32_t INT_ENABLE_GROUP[16];               /* Address Offset: 0x0000 */
@@ -1138,6 +1149,20 @@ struct INTMUX_REG {
 #define GPIO2_BASE                     (0x2AE20000U + MCU_OFFSET) /* GPIO2 base address */
 #define GPIO3_BASE                     (0x2AE30000U + MCU_OFFSET) /* GPIO3 base address */
 #define GPIO4_BASE                     (0x2AE40000U + MCU_OFFSET) /* GPIO4 base address */
+#define MBOX0_BASE                     (0x2AE50000U + MCU_OFFSET) /* MBOX0 base address */
+#define MBOX1_BASE                     (0x2AE51000U + MCU_OFFSET) /* MBOX1 base address */
+#define MBOX2_BASE                     (0x2AE52000U + MCU_OFFSET) /* MBOX2 base address */
+#define MBOX3_BASE                     (0x2AE53000U + MCU_OFFSET) /* MBOX3 base address */
+#define MBOX4_BASE                     (0x2AE54000U + MCU_OFFSET) /* MBOX4 base address */
+#define MBOX5_BASE                     (0x2AE55000U + MCU_OFFSET) /* MBOX5 base address */
+#define MBOX6_BASE                     (0x2AE56000U + MCU_OFFSET) /* MBOX6 base address */
+#define MBOX7_BASE                     (0x2AE57000U + MCU_OFFSET) /* MBOX7 base address */
+#define MBOX8_BASE                     (0x2AE58000U + MCU_OFFSET) /* MBOX8 base address */
+#define MBOX9_BASE                     (0x2AE59000U + MCU_OFFSET) /* MBOX9 base address */
+#define MBOX10_BASE                    (0x2AE5A000U + MCU_OFFSET) /* MBOX10 base address */
+#define MBOX11_BASE                    (0x2AE5B000U + MCU_OFFSET) /* MBOX11 base address */
+#define MBOX12_BASE                    (0x2AE5C000U + MCU_OFFSET) /* MBOX12 base address */
+#define MBOX13_BASE                    (0x2AE5D000U + MCU_OFFSET) /* MBOX13 base address */
 #ifdef RKMCU_RK3576_PMU
 #define INTMUX_BASE                    (0x2AE90000U + MCU_OFFSET) /* INTMUX base address */
 #else
@@ -1195,6 +1220,20 @@ struct INTMUX_REG {
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
 #define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
+#define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
+#define MBOX1               ((struct MBOX_REG *) MBOX1_BASE)
+#define MBOX2               ((struct MBOX_REG *) MBOX2_BASE)
+#define MBOX3               ((struct MBOX_REG *) MBOX3_BASE)
+#define MBOX4               ((struct MBOX_REG *) MBOX4_BASE)
+#define MBOX5               ((struct MBOX_REG *) MBOX5_BASE)
+#define MBOX6               ((struct MBOX_REG *) MBOX6_BASE)
+#define MBOX7               ((struct MBOX_REG *) MBOX7_BASE)
+#define MBOX8               ((struct MBOX_REG *) MBOX8_BASE)
+#define MBOX9               ((struct MBOX_REG *) MBOX9_BASE)
+#define MBOX10              ((struct MBOX_REG *) MBOX10_BASE)
+#define MBOX11              ((struct MBOX_REG *) MBOX11_BASE)
+#define MBOX12              ((struct MBOX_REG *) MBOX12_BASE)
+#define MBOX13              ((struct MBOX_REG *) MBOX13_BASE)
 #define INTMUX              ((struct INTMUX_REG *) INTMUX_BASE)
 #define UART10              ((struct UART_REG *) UART10_BASE)
 #define UART11              ((struct UART_REG *) UART11_BASE)
@@ -1219,6 +1258,7 @@ struct INTMUX_REG {
 #define IS_UART_INSTANCE(instance) (((instance) == UART1) || ((instance) == UART0) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9) || ((instance) == UART10) || ((instance) == UART11))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER8) || ((instance) == TIMER9) || ((instance) == TIMER10) || ((instance) == TIMER11))
+#define IS_MBOX_INSTANCE(instance) (((instance) == MBOX0) || ((instance) == MBOX1) || ((instance) == MBOX2) || ((instance) == MBOX3) || ((instance) == MBOX4) || ((instance) == MBOX5) || ((instance) == MBOX6) || ((instance) == MBOX7) || ((instance) == MBOX8) || ((instance) == MBOX9) || ((instance) == MBOX10) || ((instance) == MBOX11) || ((instance) == MBOX12) || ((instance) == MBOX13))
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
@@ -10073,6 +10113,43 @@ struct INTMUX_REG {
 #define TIMER_INTSTATUS_OFFSET                             (0x18U)
 #define TIMER_INTSTATUS_INT_PD_SHIFT                       (0U)
 #define TIMER_INTSTATUS_INT_PD_MASK                        (0x1U << TIMER_INTSTATUS_INT_PD_SHIFT)                       /* 0x00000001 */
+/******************************************MBOX******************************************/
+/* A2B_INTEN */
+#define MBOX_A2B_INTEN_OFFSET                              (0x0U)
+#define MBOX_A2B_INTEN_A2B_INTENX_SHIFT                    (0U)
+#define MBOX_A2B_INTEN_A2B_INTENX_MASK                     (0x1U << MBOX_A2B_INTEN_A2B_INTENX_SHIFT)                    /* 0x00000001 */
+#define MBOX_A2B_INTEN_A2B_TRIG_MODEX_SHIFT                (8U)
+#define MBOX_A2B_INTEN_A2B_TRIG_MODEX_MASK                 (0x1U << MBOX_A2B_INTEN_A2B_TRIG_MODEX_SHIFT)                /* 0x00000100 */
+/* A2B_STATUS */
+#define MBOX_A2B_STATUS_OFFSET                             (0x4U)
+#define MBOX_A2B_STATUS_A2B_INTX_SHIFT                     (0U)
+#define MBOX_A2B_STATUS_A2B_INTX_MASK                      (0x1U << MBOX_A2B_STATUS_A2B_INTX_SHIFT)                     /* 0x00000001 */
+/* A2B_CMD */
+#define MBOX_A2B_CMD_OFFSET                                (0x8U)
+#define MBOX_A2B_CMD_COMMAND_SHIFT                         (0U)
+#define MBOX_A2B_CMD_COMMAND_MASK                          (0xFFFFFFFFU << MBOX_A2B_CMD_COMMAND_SHIFT)                  /* 0xFFFFFFFF */
+/* A2B_DATA */
+#define MBOX_A2B_DATA_OFFSET                               (0xCU)
+#define MBOX_A2B_DATA_DATA_SHIFT                           (0U)
+#define MBOX_A2B_DATA_DATA_MASK                            (0xFFFFFFFFU << MBOX_A2B_DATA_DATA_SHIFT)                    /* 0xFFFFFFFF */
+/* B2A_INTEN */
+#define MBOX_B2A_INTEN_OFFSET                              (0x10U)
+#define MBOX_B2A_INTEN_B2A_INTENX_SHIFT                    (0U)
+#define MBOX_B2A_INTEN_B2A_INTENX_MASK                     (0x1U << MBOX_B2A_INTEN_B2A_INTENX_SHIFT)                    /* 0x00000001 */
+#define MBOX_B2A_INTEN_B2A_TRIG_MODEX_SHIFT                (8U)
+#define MBOX_B2A_INTEN_B2A_TRIG_MODEX_MASK                 (0x1U << MBOX_B2A_INTEN_B2A_TRIG_MODEX_SHIFT)                /* 0x00000100 */
+/* B2A_STATUS */
+#define MBOX_B2A_STATUS_OFFSET                             (0x14U)
+#define MBOX_B2A_STATUS_B2A_INTX_SHIFT                     (0U)
+#define MBOX_B2A_STATUS_B2A_INTX_MASK                      (0x1U << MBOX_B2A_STATUS_B2A_INTX_SHIFT)                     /* 0x00000001 */
+/* B2A_CMD */
+#define MBOX_B2A_CMD_OFFSET                                (0x18U)
+#define MBOX_B2A_CMD_COMMAND_SHIFT                         (0U)
+#define MBOX_B2A_CMD_COMMAND_MASK                          (0xFFFFFFFFU << MBOX_B2A_CMD_COMMAND_SHIFT)                  /* 0xFFFFFFFF */
+/* B2A_DATA */
+#define MBOX_B2A_DATA_OFFSET                               (0x1CU)
+#define MBOX_B2A_DATA_DATA_SHIFT                           (0U)
+#define MBOX_B2A_DATA_DATA_MASK                            (0xFFFFFFFFU << MBOX_B2A_DATA_DATA_SHIFT)                    /* 0xFFFFFFFF */
 /*****************************************INTMUX*****************************************/
 /* INT_ENABLE_GROUP0 */
 #define INTMUX_INT_ENABLE_GROUP0_OFFSET                    (0x0U)
