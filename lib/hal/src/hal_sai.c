@@ -315,7 +315,7 @@ HAL_Status HAL_SAI_DevInit(struct HAL_SAI_DEV *sai, struct AUDIO_INIT_CONFIG *co
     MODIFY_REG(sai->pReg->CKR, mask, val);
 
     mask = SAI_CKR_CKP_MASK;
-    val = config->clkInvert ? SAI_CKR_CKP_NORMAL : SAI_CKR_CKP_INVERTED;
+    val = config->clkInvert ? SAI_CKR_CKP_INVERTED : SAI_CKR_CKP_NORMAL;
     MODIFY_REG(sai->pReg->CKR, mask, val);
 
     MODIFY_REG(sai->pReg->DMACR, SAI_DMACR_TDL_MASK, SAI_DMACR_TDL(SAI_DMA_BURST_SIZE));
