@@ -202,6 +202,19 @@ typedef enum {
   UART8_IRQn                =  116 + NUM_INTERRUPTS,    /*!< UART8 Interrupt                */
   UART9_IRQn                =  117 + NUM_INTERRUPTS,    /*!< UART9 Interrupt                */
   UART10_IRQn               =  118 + NUM_INTERRUPTS,    /*!< UART10 Interrupt               */
+  MBOX_BB1_IRQn             =  172 + NUM_INTERRUPTS,    /*!< MBOX1 Interrupt                */
+  MBOX_BB2_IRQn             =  173 + NUM_INTERRUPTS,    /*!< MBOX2 Interrupt                */
+  MBOX_BB3_IRQn             =  174 + NUM_INTERRUPTS,    /*!< MBOX3 Interrupt                */
+  MBOX_BB4_IRQn             =  175 + NUM_INTERRUPTS,    /*!< MBOX4 Interrupt                */
+  MBOX_BB5_IRQn             =  176 + NUM_INTERRUPTS,    /*!< MBOX5 Interrupt                */
+  MBOX_BB6_IRQn             =  177 + NUM_INTERRUPTS,    /*!< MBOX6 Interrupt                */
+  MBOX_BB7_IRQn             =  178 + NUM_INTERRUPTS,    /*!< MBOX7 Interrupt                */
+  MBOX_BB8_IRQn             =  179 + NUM_INTERRUPTS,    /*!< MBOX8 Interrupt                */
+  MBOX_BB9_IRQn             =  180 + NUM_INTERRUPTS,    /*!< MBOX9 Interrupt                */
+  MBOX_BB10_IRQn            =  181 + NUM_INTERRUPTS,    /*!< MBOX10 Interrupt               */
+  MBOX_BB11_IRQn            =  182 + NUM_INTERRUPTS,    /*!< MBOX11 Interrupt               */
+  MBOX_BB12_IRQn            =  183 + NUM_INTERRUPTS,    /*!< MBOX12 Interrupt               */
+  MBOX_BB13_IRQn            =  184 + NUM_INTERRUPTS,    /*!< MBOX13 Interrup                */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 
@@ -297,6 +310,19 @@ typedef enum {
   UART9_IRQn                =  117 + NUM_INTERRUPTS,    /*!< UART9 Interrupt                */
   UART10_IRQn               =  118 + NUM_INTERRUPTS,    /*!< UART10 Interrupt               */
   UART11_IRQn               =  119 + NUM_INTERRUPTS,    /*!< UART11 Interrupt               */
+  MBOX_BB0_IRQn             =  171 + NUM_INTERRUPTS,    /*!< MBOX0 Interrupt                */
+  MBOX_BB1_IRQn             =  172 + NUM_INTERRUPTS,    /*!< MBOX1 Interrupt                */
+  MBOX_BB2_IRQn             =  173 + NUM_INTERRUPTS,    /*!< MBOX2 Interrupt                */
+  MBOX_BB3_IRQn             =  174 + NUM_INTERRUPTS,    /*!< MBOX3 Interrupt                */
+  MBOX_BB4_IRQn             =  175 + NUM_INTERRUPTS,    /*!< MBOX4 Interrupt                */
+  MBOX_BB5_IRQn             =  176 + NUM_INTERRUPTS,    /*!< MBOX5 Interrupt                */
+  MBOX_BB7_IRQn             =  178 + NUM_INTERRUPTS,    /*!< MBOX7 Interrupt                */
+  MBOX_BB8_IRQn             =  179 + NUM_INTERRUPTS,    /*!< MBOX8 Interrupt                */
+  MBOX_BB9_IRQn             =  180 + NUM_INTERRUPTS,    /*!< MBOX9 Interrupt                */
+  MBOX_BB10_IRQn            =  181 + NUM_INTERRUPTS,    /*!< MBOX10 Interrupt               */
+  MBOX_BB11_IRQn            =  182 + NUM_INTERRUPTS,    /*!< MBOX11 Interrupt               */
+  MBOX_BB12_IRQn            =  183 + NUM_INTERRUPTS,    /*!< MBOX12 Interrupt               */
+  MBOX_BB13_IRQn            =  184 + NUM_INTERRUPTS,    /*!< MBOX13 Interrup                */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 
