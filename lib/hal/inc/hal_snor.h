@@ -27,9 +27,11 @@
 
 /***************************** Structure Definition **************************/
 
-#define SPI_NOR_MAX_CMD_SIZE 8
-#define SNOR_SPEED_MAX       133000000
-#define SNOR_SPEED_DEFAULT   80000000
+#define SPI_NOR_MAX_CMD_SIZE  8
+#define SNOR_SPEED_MAX        133000000
+#define SNOR_SPEED_DEFAULT    80000000
+#define SNOR_SPEED_X2_MAX     266000000
+#define SNOR_SPEED_X2_DEFAULT 160000000
 
 #define SNOR_PROTO_IS_DTR HAL_BIT(24)   /* Double Transfer Rate */
 
