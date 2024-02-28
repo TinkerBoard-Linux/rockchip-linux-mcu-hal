@@ -299,6 +299,8 @@ HAL_SECTION_SRAM_CODE static const struct FLASH_INFO s_spiFlashbl[] = {
 #if defined(HAL_SNOR_SUPPORT_ISSI)
     /* IS25LP512M */
     { 0x9D601A, 128, 8, 0x13, 0x12, 0x6C, 0x34, 0x21, 0xDC, 0x3C, 17, 6, 0 },
+    /* IS25LP512MG */
+    { 0x9D6020, 128, 8, 0x13, 0x12, 0x6C, 0x34, 0x21, 0xDC, 0x3C, 17, 6, 0 },
 #endif
 };
 
