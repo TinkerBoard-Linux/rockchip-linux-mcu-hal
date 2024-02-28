@@ -2067,8 +2067,6 @@ HAL_Status HAL_PL330_PrepDmaCyclic(struct PL330_CHAN *pchan, uint32_t dmaAddr,
     desc->dstInterlaceSize = pchan->dstInterlaceSize;
 
     HAL_LIST_InsertAfter(&pchan->descLinkList, &desc->node);
-    HAL_DBG("%s: srcInterlaceSize: %d, dstInterlaceSize: %d\n", __func__,
-            desc->srcInterlaceSize, desc->dstInterlaceSize);
 
     return HAL_OK;
 }
