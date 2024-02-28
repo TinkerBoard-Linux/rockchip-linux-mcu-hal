@@ -186,7 +186,8 @@ static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
         return freq;
     case CLK_32K_FRAC:
         pRate = PLL_INPUT_OSC_RATE;
-        HAL_CRU_ClkGetFracDiv(divFrac, &n, &m);
+        n = (PMU_CRU->CLKSEL_CON[3] & 0xffff0000) >> 16;
+        m = (PMU_CRU->CLKSEL_CON[3] & 0xffff);
         freq = pRate / m * n;
 
         return freq;
@@ -240,6 +241,7 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         divFrac = CLK_GET_DIV(CLK_FRAC_COMMON2);
         break;
     case CLK_32K_FRAC:
+        muxSrc = CLK_GET_MUX(CLK_32K);
         divFrac = CLK_GET_DIV(CLK_32K_FRAC);
         pRate = PLL_INPUT_OSC_RATE;
         break;
@@ -295,7 +297,8 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
         return HAL_OK;
     case CLK_32K_FRAC:
         HAL_CRU_FracdivGetConfig(rate, PLL_INPUT_OSC_RATE, &n, &m);
-        PMU_CRU->CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac)] = (n << 16) | m;
+        PMU_CRU->CLKSEL_CON[3] = (n << 16) | m;
+        HAL_CRU_ClkSetMux(muxSrc, 2);
 
         return HAL_OK;
     default:
