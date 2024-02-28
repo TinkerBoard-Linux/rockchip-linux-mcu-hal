@@ -862,7 +862,7 @@ HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
  */
 uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
 {
-    uint32_t refDiv, fbDiv, postdDv1, postDiv2, frac, dsmpd;
+    uint64_t refDiv, fbDiv, postdDv1, postDiv2, frac, dsmpd;
     uint32_t mode = 0, rate = PLL_INPUT_OSC_RATE;
 
     mode = PLL_GET_PLLMODE(READ_REG(*(pSetup->modeOffset)), pSetup->modeShift,
@@ -880,7 +880,7 @@ uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
         dsmpd = PLL_GET_DSMPD(READ_REG(*(pSetup->conOffset1)));
         frac = PLL_GET_FRAC(READ_REG(*(pSetup->conOffset2)));
         rate = (rate / refDiv) * fbDiv;
-        if (dsmpd == 0) {
+        if (dsmpd == 1) {
             uint64_t fracRate = PLL_INPUT_OSC_RATE;
 
             fracRate *= frac;
