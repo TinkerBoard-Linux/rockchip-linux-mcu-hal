@@ -793,6 +793,8 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
  * @return HAL_Status.
  * @attention these APIs allow direct use in the HAL layer.
  */
+
+HAL_SECTION_SRAM_CODE
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
     HAL_Status error = HAL_OK;
@@ -935,7 +937,6 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_CAN:
     case CLK_SDMMC:
     case CCLK_SRC_EMMC:
-    case SCLK_SFC:
     case DCLK_VOP:
     case CLK_RKFACC:
     case CLK_REF_OUT0:
@@ -949,7 +950,10 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case DBCLK_GPIO4:
         mux = HAL_CRU_RoundFreqGetMux3(rate, PLL_INPUT_OSC_RATE, s_clkRcFreq, 32768, &pRate);
         break;
-
+    case SCLK_SFC:
+        mux = 2;
+        pRate = s_vpll0Freq;
+        break;
     default:
 
         return HAL_CRU_ClkSetOtherFreq(clockName, rate);

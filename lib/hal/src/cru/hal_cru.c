@@ -1028,6 +1028,7 @@ HAL_Check HAL_CRU_ClkIsEnabled(uint32_t clk)
     return ret;
 }
 
+HAL_SECTION_SRAM_CODE
 HAL_Status HAL_CRU_ClkEnable(uint32_t clk)
 {
     const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
@@ -1158,6 +1159,7 @@ HAL_Status HAL_CRU_ClkResetSyncDeassert(int numClks, uint32_t *clks)
     return HAL_OK;
 }
 
+HAL_SECTION_SRAM_CODE
 HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
 {
     const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
@@ -1466,6 +1468,7 @@ HAL_Status HAL_CRU_ClkResetSyncDeassert(int numClks, uint32_t *clks)
     return HAL_OK;
 }
 
+HAL_SECTION_SRAM_CODE
 HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
 {
     uint32_t shift, mask, index;

@@ -286,6 +286,7 @@ static struct CRU_BANK_INFO cruBanks[] = {
     CRU_BANK_CFG_FLAGS(SCRU_BASE, 0x0, 0x40, 0x80),
 };
 
+HAL_SECTION_SRAM_DATA
 const struct HAL_CRU_DEV g_cruDev = {
     .banks = cruBanks,
     .banksNum = HAL_ARRAY_SIZE(cruBanks),
