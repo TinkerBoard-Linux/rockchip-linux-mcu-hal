@@ -23,21 +23,21 @@
 
 static struct PLL_CONFIG PLL_TABLE_24M[] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
-    RK_PLL_RATE(1350000000, 4, 225, 1, 1, 0, 0),
-    RK_PLL_RATE(1179648000, 1, 49, 1, 1, 1, 2550137),
-    RK_PLL_RATE(1000000000, 3, 125, 1, 1, 0, 0),
-    RK_PLL_RATE(903168000, 1, 75, 2, 1, 1, 4429185),
-    RK_PLL_RATE(800000000, 3, 200, 2, 1, 0, 0),
+    RK_PLL_RATE(1350000000, 4, 225, 1, 1, 1, 0),
+    RK_PLL_RATE(1179648000, 1, 49, 1, 1, 0, 2550137),
+    RK_PLL_RATE(1000000000, 3, 125, 1, 1, 1, 0),
+    RK_PLL_RATE(903168000, 1, 75, 2, 1, 0, 4429185),
+    RK_PLL_RATE(800000000, 3, 200, 2, 1, 1, 0),
     { 0 /* sentinel */ },
 };
 
 static struct PLL_CONFIG PLL_TABLE_24P576M[] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
-    RK_PLL_RATE(1350000000, 1, 54, 1, 1, 1, 15630336),
-    RK_PLL_RATE(1179648000, 1, 48, 1, 1, 0, 0),
-    RK_PLL_RATE(1000000000, 1, 40, 1, 1, 1, 11578026),
-    RK_PLL_RATE(903168000, 2, 147, 2, 1, 0, 0),
-    RK_PLL_RATE(800000000, 1, 65, 2, 1, 1, 1747626),
+    RK_PLL_RATE(1350000000, 1, 54, 1, 1, 0, 15630336),
+    RK_PLL_RATE(1179648000, 1, 48, 1, 1, 1, 0),
+    RK_PLL_RATE(1000000000, 1, 40, 1, 1, 0, 11578026),
+    RK_PLL_RATE(903168000, 2, 147, 2, 1, 1, 0),
+    RK_PLL_RATE(800000000, 1, 65, 2, 1, 0, 1747626),
     { 0 /* sentinel */ },
 };
 

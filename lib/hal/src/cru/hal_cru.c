@@ -880,7 +880,7 @@ uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
         dsmpd = PLL_GET_DSMPD(READ_REG(*(pSetup->conOffset1)));
         frac = PLL_GET_FRAC(READ_REG(*(pSetup->conOffset2)));
         rate = (rate / refDiv) * fbDiv;
-        if (dsmpd == 1) {
+        if (dsmpd == 0) {
             uint64_t fracRate = PLL_INPUT_OSC_RATE;
 
             fracRate *= frac;
