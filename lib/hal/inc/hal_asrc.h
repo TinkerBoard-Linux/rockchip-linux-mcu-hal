@@ -67,7 +67,7 @@ struct HAL_ASRC_DEV {
 HAL_Status HAL_ASRC_Supsend(struct HAL_ASRC_DEV *asrc);
 HAL_Status HAL_ASRC_Resume(struct HAL_ASRC_DEV *asrc);
 HAL_Status HAL_ASRC_Init(struct HAL_ASRC_DEV *asrc, struct AUDIO_INIT_CONFIG *config);
-HAL_Status HAL_ASRC_DeInit(struct HAL_ASRC_DEV *asrc, struct AUDIO_INIT_CONFIG *config);
+HAL_Status HAL_ASRC_DeInit(struct HAL_ASRC_DEV *asrc);
 HAL_Status HAL_ASRC_Start(struct HAL_ASRC_DEV *asrc);
 HAL_Status HAL_ASRC_Stop(struct HAL_ASRC_DEV *asrc);
 HAL_Status HAL_ASRC_Config(struct HAL_ASRC_DEV *asrc, struct AUDIO_PARAMS *params);

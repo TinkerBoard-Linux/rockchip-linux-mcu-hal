@@ -280,13 +280,11 @@ HAL_Status HAL_ASRC_Init(struct HAL_ASRC_DEV *asrc, struct AUDIO_INIT_CONFIG *co
 /**
  * @brief  DeInit ASRC controller.
  * @param  asrc: the handle of asrc.
- * @param  config: init config for asrc init.
  * @return HAL_Status
  */
-HAL_Status HAL_ASRC_DeInit(struct HAL_ASRC_DEV *asrc, struct AUDIO_INIT_CONFIG *config)
+HAL_Status HAL_ASRC_DeInit(struct HAL_ASRC_DEV *asrc)
 {
     HAL_ASSERT(asrc != NULL);
-    HAL_ASSERT(config != NULL);
 #ifdef HAL_CRU_MODULE_ENABLED
     HAL_CRU_ClkDisable(asrc->mclk);
 #endif
