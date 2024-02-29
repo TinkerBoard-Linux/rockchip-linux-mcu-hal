@@ -19,7 +19,12 @@
 #ifdef TEST_USE_UART5M2
 static void HAL_IOMUX_Uart5M2Config(void)
 {
-    GPIO2_IOC->GPIO2A_IOMUX_SEL_H = 0x00ff0099;
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK2,
+                         GPIO_PIN_A4,
+                         PIN_CONFIG_MUX_FUNC9);
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK2,
+                         GPIO_PIN_A5,
+                         PIN_CONFIG_MUX_FUNC9);
 }
 #endif
 
