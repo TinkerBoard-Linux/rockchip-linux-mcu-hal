@@ -12,6 +12,17 @@
 /***************************** MACRO Definition ******************************/
 
 /***************************** Structure Definition **************************/
+#ifdef HAL_ASRC_MODULE_ENABLED
+extern struct HAL_ASRC_DEV g_asrc0Dev;
+extern struct HAL_ASRC_DEV g_asrc1Dev;
+extern struct HAL_ASRC_DEV g_asrc2Dev;
+extern struct HAL_ASRC_DEV g_asrc3Dev;
+extern struct HAL_ASRC_DEV g_asrc4Dev;
+extern struct HAL_ASRC_DEV g_asrc5Dev;
+extern struct HAL_ASRC_DEV g_asrc6Dev;
+extern struct HAL_ASRC_DEV g_asrc7Dev;
+#endif
+
 #ifdef HAL_FSPI_MODULE_ENABLED
 extern struct HAL_FSPI_HOST g_fspi0Dev;
 #endif

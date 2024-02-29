@@ -5,6 +5,264 @@
 
 #include "hal_bsp.h"
 
+#ifdef HAL_ASRC_MODULE_ENABLED
+struct HAL_ASRC_DEV g_asrc0DEV =
+{
+    .pReg = ASRC0,
+    .mclk = MCLK_ASRC0,
+    .mclkGate = MCLK_ASRC0_GATE,
+    .channels = 8,
+    .txParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC0->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC0_TX,
+            .dmac = DMA1,
+        },
+    },
+    .rxParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC0->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC0_RX,
+            .dmac = DMA1,
+        }
+    },
+};
+
+struct HAL_ASRC_DEV g_asrc1DEV =
+{
+    .pReg = ASRC1,
+    .mclk = MCLK_ASRC1,
+    .mclkGate = MCLK_ASRC1_GATE,
+    .channels = 8,
+    .txParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC1->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC1_TX,
+            .dmac = DMA1,
+        },
+    },
+    .rxParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC1->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC1_RX,
+            .dmac = DMA1,
+        }
+    },
+};
+
+struct HAL_ASRC_DEV g_asrc2DEV =
+{
+    .pReg = ASRC2,
+    .mclk = MCLK_ASRC2,
+    .mclkGate = MCLK_ASRC2_GATE,
+    .channels = 8,
+    .txParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC2->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC2_TX,
+            .dmac = DMA1,
+        },
+    },
+    .rxParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC2->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC2_RX,
+            .dmac = DMA1,
+        }
+    },
+};
+
+struct HAL_ASRC_DEV g_asrc3DEV =
+{
+    .pReg = ASRC3,
+    .mclk = MCLK_ASRC3,
+    .mclkGate = MCLK_ASRC3_GATE,
+    .channels = 8,
+    .txParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC3->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC3_TX,
+            .dmac = DMA1,
+        },
+    },
+    .rxParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC3->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC3_RX,
+            .dmac = DMA1,
+        }
+    },
+};
+
+struct HAL_ASRC_DEV g_asrc4DEV =
+{
+    .pReg = ASRC4,
+    .mclk = MCLK_ASRC4,
+    .mclkGate = MCLK_ASRC4_GATE,
+    .channels = 8,
+    .txParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC4->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC4_TX,
+            .dmac = DMA3,
+        },
+    },
+    .rxParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC4->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC4_RX,
+            .dmac = DMA3,
+        }
+    },
+};
+
+struct HAL_ASRC_DEV g_asrc5DEV =
+{
+    .pReg = ASRC5,
+    .mclk = MCLK_ASRC5,
+    .mclkGate = MCLK_ASRC5_GATE,
+    .channels = 8,
+    .txParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC5->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC5_TX,
+            .dmac = DMA3,
+        },
+    },
+    .rxParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC5->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC5_RX,
+            .dmac = DMA3,
+        }
+    },
+};
+
+struct HAL_ASRC_DEV g_asrc6DEV =
+{
+    .pReg = ASRC6,
+    .mclk = MCLK_ASRC6,
+    .mclkGate = MCLK_ASRC6_GATE,
+    .channels = 8,
+    .txParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC6->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC6_TX,
+            .dmac = DMA3,
+        },
+    },
+    .rxParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC6->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC6_RX,
+            .dmac = DMA3,
+        }
+    },
+};
+
+struct HAL_ASRC_DEV g_asrc7DEV =
+{
+    .pReg = ASRC7,
+    .mclk = MCLK_ASRC7,
+    .mclkGate = MCLK_ASRC7_GATE,
+    .channels = 8,
+    .txParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC7->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC7_TX,
+            .dmac = DMA3,
+        },
+    },
+    .rxParams =
+    {
+        .lrck = 48000,
+        .dmaData =
+        {
+            .addr = (uint32_t)&(ASRC7->FIFO_IN_FIXED_DR),
+            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+            .maxBurst = 4,
+            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC7_RX,
+            .dmac = DMA3,
+        }
+    },
+};
+#endif
+
 #if defined(HAL_CRU_MODULE_ENABLED)
 static struct CRU_BANK_INFO cruBanks[] = {
     CRU_BANK_CFG_FLAGS(CRU_BASE, 0x300, 0x800, 0xa00),
