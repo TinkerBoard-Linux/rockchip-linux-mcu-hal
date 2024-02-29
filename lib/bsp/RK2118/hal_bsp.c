@@ -6,7 +6,7 @@
 #include "hal_bsp.h"
 
 #ifdef HAL_ASRC_MODULE_ENABLED
-struct HAL_ASRC_DEV g_asrc0DEV =
+struct HAL_ASRC_DEV g_asrc0Dev =
 {
     .pReg = ASRC0,
     .mclk = MCLK_ASRC0,
@@ -14,7 +14,8 @@ struct HAL_ASRC_DEV g_asrc0DEV =
     .channels = 8,
     .txParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC0_DST,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC0->FIFO_IN_FIXED_DR),
@@ -26,7 +27,8 @@ struct HAL_ASRC_DEV g_asrc0DEV =
     },
     .rxParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC0_SRC,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC0->FIFO_IN_FIXED_DR),
@@ -38,7 +40,7 @@ struct HAL_ASRC_DEV g_asrc0DEV =
     },
 };
 
-struct HAL_ASRC_DEV g_asrc1DEV =
+struct HAL_ASRC_DEV g_asrc1Dev =
 {
     .pReg = ASRC1,
     .mclk = MCLK_ASRC1,
@@ -46,7 +48,8 @@ struct HAL_ASRC_DEV g_asrc1DEV =
     .channels = 8,
     .txParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC1_DST,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC1->FIFO_IN_FIXED_DR),
@@ -58,7 +61,8 @@ struct HAL_ASRC_DEV g_asrc1DEV =
     },
     .rxParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC1_SRC,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC1->FIFO_IN_FIXED_DR),
@@ -70,7 +74,7 @@ struct HAL_ASRC_DEV g_asrc1DEV =
     },
 };
 
-struct HAL_ASRC_DEV g_asrc2DEV =
+struct HAL_ASRC_DEV g_asrc2Dev =
 {
     .pReg = ASRC2,
     .mclk = MCLK_ASRC2,
@@ -78,7 +82,8 @@ struct HAL_ASRC_DEV g_asrc2DEV =
     .channels = 8,
     .txParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC2_DST,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC2->FIFO_IN_FIXED_DR),
@@ -90,7 +95,8 @@ struct HAL_ASRC_DEV g_asrc2DEV =
     },
     .rxParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC2_SRC,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC2->FIFO_IN_FIXED_DR),
@@ -102,7 +108,7 @@ struct HAL_ASRC_DEV g_asrc2DEV =
     },
 };
 
-struct HAL_ASRC_DEV g_asrc3DEV =
+struct HAL_ASRC_DEV g_asrc3Dev =
 {
     .pReg = ASRC3,
     .mclk = MCLK_ASRC3,
@@ -110,7 +116,8 @@ struct HAL_ASRC_DEV g_asrc3DEV =
     .channels = 8,
     .txParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC3_DST,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC3->FIFO_IN_FIXED_DR),
@@ -122,7 +129,8 @@ struct HAL_ASRC_DEV g_asrc3DEV =
     },
     .rxParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC3_SRC,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC3->FIFO_IN_FIXED_DR),
@@ -134,7 +142,7 @@ struct HAL_ASRC_DEV g_asrc3DEV =
     },
 };
 
-struct HAL_ASRC_DEV g_asrc4DEV =
+struct HAL_ASRC_DEV g_asrc4Dev =
 {
     .pReg = ASRC4,
     .mclk = MCLK_ASRC4,
@@ -142,7 +150,8 @@ struct HAL_ASRC_DEV g_asrc4DEV =
     .channels = 8,
     .txParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC4_DST,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC4->FIFO_IN_FIXED_DR),
@@ -154,7 +163,8 @@ struct HAL_ASRC_DEV g_asrc4DEV =
     },
     .rxParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC4_SRC,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC4->FIFO_IN_FIXED_DR),
@@ -166,7 +176,7 @@ struct HAL_ASRC_DEV g_asrc4DEV =
     },
 };
 
-struct HAL_ASRC_DEV g_asrc5DEV =
+struct HAL_ASRC_DEV g_asrc5Dev =
 {
     .pReg = ASRC5,
     .mclk = MCLK_ASRC5,
@@ -174,7 +184,8 @@ struct HAL_ASRC_DEV g_asrc5DEV =
     .channels = 8,
     .txParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC5_DST,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC5->FIFO_IN_FIXED_DR),
@@ -186,7 +197,8 @@ struct HAL_ASRC_DEV g_asrc5DEV =
     },
     .rxParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC5_SRC,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC5->FIFO_IN_FIXED_DR),
@@ -198,7 +210,7 @@ struct HAL_ASRC_DEV g_asrc5DEV =
     },
 };
 
-struct HAL_ASRC_DEV g_asrc6DEV =
+struct HAL_ASRC_DEV g_asrc6Dev =
 {
     .pReg = ASRC6,
     .mclk = MCLK_ASRC6,
@@ -206,7 +218,8 @@ struct HAL_ASRC_DEV g_asrc6DEV =
     .channels = 8,
     .txParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC6_DST,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC6->FIFO_IN_FIXED_DR),
@@ -218,7 +231,8 @@ struct HAL_ASRC_DEV g_asrc6DEV =
     },
     .rxParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC6_SRC,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC6->FIFO_IN_FIXED_DR),
@@ -230,7 +244,7 @@ struct HAL_ASRC_DEV g_asrc6DEV =
     },
 };
 
-struct HAL_ASRC_DEV g_asrc7DEV =
+struct HAL_ASRC_DEV g_asrc7Dev =
 {
     .pReg = ASRC7,
     .mclk = MCLK_ASRC7,
@@ -238,7 +252,8 @@ struct HAL_ASRC_DEV g_asrc7DEV =
     .channels = 8,
     .txParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC7_DST,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC7->FIFO_IN_FIXED_DR),
@@ -250,7 +265,8 @@ struct HAL_ASRC_DEV g_asrc7DEV =
     },
     .rxParams =
     {
-        .lrck = 48000,
+        .lrck = LRCK_ASRC7_SRC,
+        .sampleRate = 48000,
         .dmaData =
         {
             .addr = (uint32_t)&(ASRC7->FIFO_IN_FIXED_DR),
