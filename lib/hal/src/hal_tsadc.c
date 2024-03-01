@@ -380,6 +380,9 @@ static void TSADC_Config(eTSADC_tshutPolarity polarity)
 #elif defined(RKMCU_RK2118)
 static void TSADC_Config(eTSADC_tshutPolarity polarity)
 {
+    WRITE_REG_MASK_WE(GRF->SOC_CON5, 0x107,
+                      GRF_SOC_CON5_TSADC_PHY_PD_SEL_MASK | GRF_SOC_CON5_TSADC_PHY_PD_MASK | GRF_SOC_CON5_TSADC_TSEN_EN_MASK | GRF_SOC_CON5_TSADC_ANA_REG_MASK);
+
     /* set tshut_polarity 0: Low active , 1: High active */
     WRITE_REG_MASK_WE(TSADC->AUTO_CON, TSADC_AUTO_CON_TSHUT_POLARITY_MASK, polarity << TSADC_AUTO_CON_TSHUT_POLARITY_SHIFT);
 
