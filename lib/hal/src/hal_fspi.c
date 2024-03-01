@@ -403,6 +403,7 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
         }
     }
     FSPICtrl.b.dtr_mode = op->data.dtr ? 1 : 0;
+    FSPICtrl.b.dat_mode = op->data.swap ? 1 : 0;
 
     /* spitial setting */
     FSPICtrl.b.sps = host->mode & HAL_SPI_CPHA;
@@ -923,6 +924,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
         FSPICtrl.b.datalines = FSPI_LINES_X1;
     }
     FSPICtrl.b.dtr_mode = op->data.dtr ? 1 : 0;
+    FSPICtrl.b.dat_mode = op->data.swap ? 1 : 0;
 
     /* set XMMC */
     if (host->xmmcDev[0].type == DEV_PSRAM || host->xmmcDev[1].type == DEV_PSRAM) {
