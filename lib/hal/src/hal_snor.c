@@ -163,6 +163,8 @@ HAL_SECTION_SRAM_CODE static const struct FLASH_INFO s_spiFlashbl[] = {
     { 0xc84018, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0C, 15, 9, 0 },
     /* GD25Q256B/C/D */
     { 0xc84019, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1C, 16, 6, 0 },
+    /* GD55LT01GE */
+    { 0xc8661b, 128, 8, 0x13, 0x12, 0x6B, 0x32, 0x20, 0xD8, 0x3C, 18, 0, 0 },
     /* GD25LQ64C */
     { 0xc86017, 128, 8, 0x03, 0x02, 0x6B, 0x32, 0x20, 0xD8, 0x0D, 14, 9, 0 },
     /* GD25LQ32E */
@@ -500,8 +502,15 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
     /* HAL_SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
 
     /* special setting */
-    if (nor->info->id == 0x1c7017) {
+    switch (nor->info->id) {
+    case 0x1c7017:
         op.dummy.a2dIdle = 1;
+        break;
+    case 0xc8661b:
+        op.dummy.nbytes = 8;
+        break;
+    default:
+        break;
     }
 
     SNOR_SpimemSetUp(nor, &op, nor->readProto);
