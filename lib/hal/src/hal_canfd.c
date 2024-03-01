@@ -322,6 +322,10 @@ HAL_Status HAL_CANFD_SetDBps(struct CAN_REG *pReg, eCANFD_Bps bps)
         WRITE_REG(pReg->FD_TDC,
                   (tdc << CAN_FD_TDC_TDC_OFFSET_SHIFT) | CAN_FD_TDC_TDC_ENABLE_MASK);
     }
+    WRITE_REG(pReg->FD_DATA_BITTIMING,
+              CAN_FD_DATA_BITTIMING_BRS_MODE_MASK |
+              ((tseg1 - 4) << CAN_FD_DATA_BITTIMING_BRS_TSEG1_SHIFT) |
+              pReg->FD_DATA_BITTIMING);
 #endif
 
     return HAL_OK;
