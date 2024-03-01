@@ -123,6 +123,7 @@
         .buswidth = __buswidth,                             \
         .poll = false,                                      \
         .dtr = 0,                                           \
+        .swap = 0,                                          \
     }
 
 #define HAL_SPI_MEM_OP_DATA_IN_POLL(__nbytes, __buf, __buswidth) \
@@ -133,6 +134,7 @@
         .buswidth = __buswidth,                                  \
         .poll = true,                                            \
         .dtr = 0,                                                \
+        .swap = 0,                                               \
     }
 
 #define HAL_SPI_MEM_OP_DATA_OUT(__nbytes, __buf, __buswidth) \
@@ -143,6 +145,7 @@
         .buswidth = __buswidth,                              \
         .poll = false,                                       \
         .dtr = 0,                                            \
+        .swap = 0,                                           \
     }
 
 #define HAL_SPI_MEM_OP_NO_DATA      \
@@ -153,6 +156,7 @@
         .buswidth = 1,              \
         .poll = false,              \
         .dtr = 0,                   \
+        .swap = 0,                  \
     }
 
 #define HAL_SPI_OP_LEN_MAX            0x10/**< Max len case: cmd(1) + addr(4) + dummy(4) */
@@ -190,6 +194,7 @@ struct HAL_SPI_MEM_OP {
     struct {
         uint8_t buswidth;
         uint8_t dtr;
+        uint8_t swap;
         enum SPI_MEM_DATA_DIR dir;
         unsigned int nbytes;
         /**< buf.{in,out} must be DMA-able. */
