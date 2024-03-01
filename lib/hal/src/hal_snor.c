@@ -207,6 +207,8 @@ HAL_SECTION_SRAM_CODE static const struct FLASH_INFO s_spiFlashbl[] = {
     { 0xc28039, 128, 8, 0x13, 0x12, 0x00, 0x00, 0x21, 0xDC, 0x10, 16, 0, 0x1D },
     /* MX25U25645G */
     { 0xc22539, 128, 8, 0x13, 0x12, 0x6C, 0x3E, 0x21, 0xDC, 0x1E, 16, 6, 0x06 },
+    /* MX25LM25645G */
+    { 0xc2813a, 128, 8, 0x13, 0x12, 0x00, 0x00, 0x21, 0xDC, 0x10, 17, 0, 0x1D },
 #endif
 
 #if defined(HAL_SNOR_SUPPORT_XMC)
@@ -325,6 +327,7 @@ static inline HAL_Status SNOR_SpimemSetUp(struct SPI_NOR *nor, struct HAL_SPI_ME
         op->addr.dtr = true;
         op->dummy.dtr = true;
         op->data.dtr = true;
+        op->data.swap = nor->swap ? 1 : 0;
 
         /* 2 bytes per clock cycle in DTR mode. */
         op->dummy.nbytes *= 2;
@@ -493,6 +496,7 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
         op.dummy.nbytes = 3;
         op.data.buswidth = 4;
     }
+
     /* HAL_SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
 
     /* special setting */
@@ -1240,6 +1244,10 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         if ((info->extention & EXT_QPI) &&
             (SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto) == 4)) {
             nor->qpi = true;
+        }
+
+        if (((info->extention & EXT_DTR_OPCODE_MASK) >> EXT_DTR_OPCODE_SHIFT) == 0x1) {
+            nor->swap = true;
         }
         /* Clear the Octal SPI attribute to simplify logic  */
         spiMode &= ~(HAL_SPI_TX_OCTAL | HAL_SPI_RX_OCTAL | HAL_SPI_DQS);

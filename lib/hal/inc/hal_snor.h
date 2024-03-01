@@ -190,6 +190,7 @@ struct SPI_NOR {
     bool dtr; /* Whether enable DTR */
     bool poll; /* Whether enable poll status feature */
     bool qpi; /* Whether enable QPI */
+    bool swap; /* Whether enable data swap */
 
     const char *name;
     uint32_t size;
