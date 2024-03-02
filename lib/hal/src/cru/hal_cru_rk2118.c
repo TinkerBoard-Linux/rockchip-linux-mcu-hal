@@ -19,7 +19,27 @@
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
+
+#define RK2118_PVTPLL(_rate, _ring, _length) \
+    {                                        \
+        .rate = _rate##U,                    \
+        .ring = _ring,                       \
+        .length = _length,                   \
+    }
+
 /********************* Private Structure Definition **************************/
+
+struct PVTPLL_CONFIG {
+    uint32_t rate;
+    uint32_t ring;
+    uint32_t length;
+};
+
+static struct PVTPLL_CONFIG s_pvtDsp0Table[] = {
+    /* rate_hz, ring_sel, length */
+    RK2118_PVTPLL(700000000, 0, 96),
+    { /* sentinel */ },
+};
 
 static struct PLL_CONFIG PLL_TABLE_24M[] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
@@ -55,6 +75,7 @@ static uint32_t s_fracCom2Freq;
 static uint32_t s_intVoice0Freq;
 static uint32_t s_intVoice1Freq;
 static uint32_t s_intVoice2Freq;
+static uint32_t s_dsp0PvtFreq;
 static uint32_t s_sai0MclkIoIn;
 static uint32_t s_sai1MclkIoIn;
 static uint32_t s_sai2MclkIoIn;
@@ -303,6 +324,65 @@ static HAL_Status HAL_CRU_ClkFracSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return HAL_INVAL;
     }
+}
+
+static struct PVTPLL_CONFIG *HAL_CRU_PVTGetSettings(uint32_t rate)
+{
+    uint32_t rateCount = HAL_ARRAY_SIZE(s_pvtDsp0Table);
+    uint32_t i = 0;
+
+    for (i = 0; i < rateCount; i++) {
+        if (rate == s_pvtDsp0Table[i].rate) {
+            return &s_pvtDsp0Table[i];
+        }
+    }
+
+    return NULL;
+}
+
+static uint32_t HAL_CRU_ClkGetDsp0Freq(void)
+{
+    if (s_dsp0PvtFreq &&
+        (CRU->CLKSEL_CON[18] & CRU_CLKSEL_CON18_CLK_DSP0_SRC_PVTMUX_SEL_MASK)) {
+        return s_dsp0PvtFreq;
+    }
+
+    return HAL_CRU_ClkGetFreq(CLK_DSP0_SRC);
+}
+
+static HAL_Status HAL_CRU_ClkSetDsp0Freq(uint32_t rate)
+{
+    const struct PVTPLL_CONFIG *pConfig = NULL;
+    HAL_Status error = HAL_OK;
+
+    pConfig = HAL_CRU_PVTGetSettings(rate);
+    if (!pConfig) {
+        error = HAL_CRU_ClkSetFreq(CLK_DSP0_SRC, rate);
+        if (error == HAL_OK) {
+            CRU->CLKSEL_CON[18] = VAL_MASK_WE(CRU_CLKSEL_CON18_CLK_DSP0_SRC_PVTMUX_SEL_MASK, 0);
+        }
+
+        return error;
+    }
+
+    GRF->PVTPLL_CON0_L = VAL_MASK_WE(GRF_PVTPLL_CON0_L_OSC_RING_SEL_MASK,
+                                     pConfig->ring << GRF_PVTPLL_CON0_L_OSC_RING_SEL_SHIFT);
+    GRF->PVTPLL_CON0_H = VAL_MASK_WE(GRF_PVTPLL_CON0_H_RING_LENGTH_SEL_MASK,
+                                     pConfig->length << GRF_PVTPLL_CON0_H_RING_LENGTH_SEL_SHIFT);
+    GRF->PVTPLL_CON0_L = VAL_MASK_WE(GRF_PVTPLL_CON0_L_OSC_EN_MASK,
+                                     0x1U << GRF_PVTPLL_CON0_L_OSC_EN_SHIFT);
+    GRF->PVTPLL_CON0_L = VAL_MASK_WE(GRF_PVTPLL_CON0_L_START_MASK,
+                                     0x1U << GRF_PVTPLL_CON0_L_START_SHIFT);
+    /* Set clk_dsp0_pvtpll_src_sel to pvtpll */
+    CRU->CLKSEL_CON[18] = VAL_MASK_WE(CRU_CLKSEL_CON18_CLK_DSP0_PVTPLL_SRC_SEL_MASK,
+                                      0x1U << CRU_CLKSEL_CON18_CLK_DSP0_PVTPLL_SRC_SEL_SHIFT);
+    /* Set clk_dsp0_src_pvtmux_sel to pvtpll */
+    CRU->CLKSEL_CON[18] = VAL_MASK_WE(CRU_CLKSEL_CON18_CLK_DSP0_SRC_PVTMUX_SEL_MASK,
+                                      0x1U << CRU_CLKSEL_CON18_CLK_DSP0_SRC_PVTMUX_SEL_SHIFT);
+
+    s_dsp0PvtFreq = rate;
+
+    return HAL_OK;
 }
 
 static uint32_t HAL_CRU_ClkGetOtherFreq(eCLOCK_Name clockName)
@@ -720,7 +800,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         pRate = HAL_CRU_MuxGetFreq3(clkMux, s_gpllFreq, s_vpll0Freq, s_vpll1Freq);
         break;
     case CLK_DSP0:
-        return HAL_CRU_ClkGetFreq(CLK_DSP0_SRC);
+        return HAL_CRU_ClkGetDsp0Freq();
     case ACLK_HSPERI:
     case ACLK_PERIB:
     case HCLK_PERIB:
@@ -922,8 +1002,8 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         mux = HAL_CRU_RoundFreqGetMux3(rate, s_gpllFreq, s_vpll0Freq, s_vpll1Freq, &pRate);
         break;
     case CLK_DSP0:
-        mux = 0;
-        break;
+
+        return HAL_CRU_ClkSetDsp0Freq(rate);
     case ACLK_HSPERI:
     case ACLK_PERIB:
     case HCLK_PERIB:
