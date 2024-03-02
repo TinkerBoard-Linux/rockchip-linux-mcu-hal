@@ -45,7 +45,11 @@ void CacheInit(void)
  *----------------------------------------------------------------------------*/
 void SystemCoreClockUpdate(void)
 {
-    SystemCoreClock = SYSTEM_CLOCK;
+#if defined(RK2118_CPU_CORE0)
+    SystemCoreClock = HAL_CRU_ClkGetFreq(CLK_STARSE0);
+#elif defined(RK2118_CPU_CORE1)
+    SystemCoreClock = HAL_CRU_ClkGetFreq(CLK_STARSE1);
+#endif
 }
 
 /*----------------------------------------------------------------------------
