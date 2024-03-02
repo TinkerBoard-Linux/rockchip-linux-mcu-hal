@@ -711,6 +711,50 @@ struct HAL_SAI_DEV g_sai7Dev =
 };
 #endif
 
+#ifdef HAL_SPI_MODULE_ENABLED
+const struct HAL_SPI_DEV g_spi1Dev = {
+    .base = SPI1_BASE,
+    .clkId = CLK_SPI1,
+    .clkGateID = CLK_SPI1_GATE,
+    .pclkGateID = PCLK_SPI1_GATE,
+    .irqNum = SPI1_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA0_REQ_BUS_SPI1_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI1_BASE + 0x400,
+        .dmac = DMA0,
+    },
+    .rxDma = {
+        .channel = DMA0_REQ_BUS_SPI1_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI1_BASE + 0x800,
+        .dmac = DMA0,
+    },
+};
+
+const struct HAL_SPI_DEV g_spi2Dev = {
+    .base = SPI2_BASE,
+    .clkId = CLK_SPI2,
+    .clkGateID = CLK_SPI2_GATE,
+    .pclkGateID = PCLK_SPI2_GATE,
+    .irqNum = SPI2_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA0_REQ_BUS_SPI2_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI2_BASE + 0x400,
+        .dmac = DMA0,
+    },
+    .rxDma = {
+        .channel = DMA0_REQ_BUS_SPI2_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI2_BASE + 0x800,
+        .dmac = DMA0,
+    },
+};
+#endif
+
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
 {
