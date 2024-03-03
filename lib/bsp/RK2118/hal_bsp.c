@@ -785,7 +785,7 @@ const struct HAL_UART_DEV g_uart2Dev =
     .sclkGateID = 0,
     .pclkGateID = 0,
     .irqNum = UART2_IRQn,
-    .isAutoFlow = true,
+    .isAutoFlow = false,
     .runtimeID = PM_RUNTIME_ID_UART2,
 };
 
