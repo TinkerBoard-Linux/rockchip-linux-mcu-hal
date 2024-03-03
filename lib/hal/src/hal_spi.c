@@ -223,6 +223,11 @@ HAL_Status HAL_SPI_DeInit(struct SPI_HANDLE *pSPI)
   */
 static inline HAL_Status HAL_SPI_EnableChip(struct SPI_HANDLE *pSPI, int enable)
 {
+#ifdef SPI_BPENR_OFFSET
+    if (HAL_SPI_IsSlave(pSPI)) {
+        WRITE_REG(pSPI->pReg->BPENR, (enable ? 1 : 0));
+    }
+#endif
     WRITE_REG(pSPI->pReg->ENR, (enable ? 1 : 0));
 
     return HAL_OK;
@@ -334,9 +339,18 @@ HAL_Status HAL_SPI_QueryBusState(struct SPI_HANDLE *pSPI)
             return HAL_OK;
         }
 #else
+#ifdef SPI_BPENR_OFFSET
+
+        /*
+         * When using external clock, tx clk can function normally
+         * without waiting for idle
+         */
+        return HAL_OK;
+#else
         if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_STB_BUSY)) {
             return HAL_OK;
         }
+#endif
 #endif
     } else {
         if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_BUSY)) {
@@ -811,7 +825,11 @@ bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI)
     }
 #endif
 
-    return (pSPI->len > HAL_SPI_DMA_SIZE_MIN);
+    if (HAL_SPI_IsSlave(pSPI)) {
+        return (pSPI->len > HAL_SPI_FIFO_LENGTH / 2);
+    } else {
+        return (pSPI->len > HAL_SPI_DMA_SIZE_MIN);
+    }
 }
 
 /**
@@ -888,6 +906,11 @@ static HAL_Status HAL_SPI_ConfigureTransferMode(struct SPI_HANDLE *pSPI)
     WRITE_REG(pSPI->pReg->DMARDLR, pSPI->dmaBurstSize - 1);
 
     WRITE_REG(pSPI->pReg->CTRLR[0], cr0);
+#ifdef SPI_BPENR_OFFSET
+    if (HAL_SPI_IsSlave(pSPI)) {
+        WRITE_REG(pSPI->pReg->BYPASS, SPI_BYPASS_TXFIE_MASK | SPI_BYPASS_BYEN_MASK);
+    }
+#endif
 
     return HAL_OK;
 }
