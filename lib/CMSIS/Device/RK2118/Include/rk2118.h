@@ -296,7 +296,8 @@ struct SPI_REG {
     __I  uint32_t VERSION;                            /* Address Offset: 0x0048 */
     __IO uint32_t TIMEOUT;                            /* Address Offset: 0x004C */
     __IO uint32_t BYPASS;                             /* Address Offset: 0x0050 */
-         uint32_t RESERVED0054[235];                  /* Address Offset: 0x0054 */
+    __IO uint32_t BPENR;                              /* Address Offset: 0x0054 */
+         uint32_t RESERVED0058[234];                  /* Address Offset: 0x0058 */
     __O  uint32_t TXDR;                               /* Address Offset: 0x0400 */
          uint32_t RESERVED0404[255];                  /* Address Offset: 0x0404 */
     __I  uint32_t RXDR;                               /* Address Offset: 0x0800 */
@@ -4541,7 +4542,7 @@ struct IIR_ACC_REG_REG {
 #define SPI_DMARDLR_RDL_MASK                               (0x3FU << SPI_DMARDLR_RDL_SHIFT)                             /* 0x0000003F */
 /* VERSION */
 #define SPI_VERSION_OFFSET                                 (0x48U)
-#define SPI_VERSION                                        (0x110002U)
+#define SPI_VERSION                                        (0x3110003U)
 #define SPI_VERSION_VERSION_SHIFT                          (0U)
 #define SPI_VERSION_VERSION_MASK                           (0xFFFFFFFFU << SPI_VERSION_VERSION_SHIFT)                   /* 0xFFFFFFFF */
 /* TIMEOUT */
@@ -4550,18 +4551,22 @@ struct IIR_ACC_REG_REG {
 #define SPI_TIMEOUT_TOV_MASK                               (0xFFFFU << SPI_TIMEOUT_TOV_SHIFT)                           /* 0x0000FFFF */
 #define SPI_TIMEOUT_TOE_SHIFT                              (16U)
 #define SPI_TIMEOUT_TOE_MASK                               (0x1U << SPI_TIMEOUT_TOE_SHIFT)                              /* 0x00010000 */
+#define SPI_TIMEOUT_TSB_SHIFT                              (17U)
+#define SPI_TIMEOUT_TSB_MASK                               (0x1U << SPI_TIMEOUT_TSB_SHIFT)                              /* 0x00020000 */
+#define SPI_TIMEOUT_DTSR_SHIFT                             (18U)
+#define SPI_TIMEOUT_DTSR_MASK                              (0x1U << SPI_TIMEOUT_DTSR_SHIFT)                             /* 0x00040000 */
 /* BYPASS */
 #define SPI_BYPASS_OFFSET                                  (0x50U)
 #define SPI_BYPASS_BYEN_SHIFT                              (0U)
 #define SPI_BYPASS_BYEN_MASK                               (0x1U << SPI_BYPASS_BYEN_SHIFT)                              /* 0x00000001 */
-#define SPI_BYPASS_FBM_SHIFT                               (1U)
-#define SPI_BYPASS_FBM_MASK                                (0x1U << SPI_BYPASS_FBM_SHIFT)                               /* 0x00000002 */
-#define SPI_BYPASS_END_SHIFT                               (2U)
-#define SPI_BYPASS_END_MASK                                (0x1U << SPI_BYPASS_END_SHIFT)                               /* 0x00000004 */
-#define SPI_BYPASS_RXCP_SHIFT                              (3U)
-#define SPI_BYPASS_RXCP_MASK                               (0x1U << SPI_BYPASS_RXCP_SHIFT)                              /* 0x00000008 */
-#define SPI_BYPASS_TXCP_SHIFT                              (4U)
-#define SPI_BYPASS_TXCP_MASK                               (0x1U << SPI_BYPASS_TXCP_SHIFT)                              /* 0x00000010 */
+#define SPI_BYPASS_TXFIE_SHIFT                             (1U)
+#define SPI_BYPASS_TXFIE_MASK                              (0x1U << SPI_BYPASS_TXFIE_SHIFT)                             /* 0x00000002 */
+#define SPI_BYPASS_CKGEN_SHIFT                             (2U)
+#define SPI_BYPASS_CKGEN_MASK                              (0x3U << SPI_BYPASS_CKGEN_SHIFT)                             /* 0x0000000C */
+/* BPENR */
+#define SPI_BPENR_OFFSET                                   (0x54U)
+#define SPI_BPENR_BPENR_SHIFT                              (0U)
+#define SPI_BPENR_BPENR_MASK                               (0x1U << SPI_BPENR_BPENR_SHIFT)                              /* 0x00000001 */
 /* TXDR */
 #define SPI_TXDR_OFFSET                                    (0x400U)
 #define SPI_TXDR_TXDR_SHIFT                                (0U)
