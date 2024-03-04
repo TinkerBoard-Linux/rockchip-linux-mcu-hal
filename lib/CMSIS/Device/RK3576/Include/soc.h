@@ -181,6 +181,7 @@ typedef enum {
   GPIO4_EXP1_IRQn           =  30,     /*!< GPIO4 EXP1 Interrupt          */
   GPIO4_EXP2_IRQn           =  31,     /*!< GPIO4 EXP2 Interrupt          */
   NUM_INTERRUPTS            =  32,     /*!< Number of internal IRQ        */
+  WDT0_IRQn                 =  72 + NUM_INTERRUPTS,     /*!< WDT0 Interrupt                 */
   TIMER0_IRQn               =  77 + NUM_INTERRUPTS,     /*!< TIMER0 Interrupt               */
   TIMER1_IRQn               =  78 + NUM_INTERRUPTS,     /*!< TIMER1 Interrupt               */
   TIMER2_IRQn               =  79 + NUM_INTERRUPTS,     /*!< TIMER2 Interrupt               */
@@ -470,6 +471,11 @@ typedef enum {
 #endif
 
 #endif /* HAL_MCU_CORE */
+
+/****************************************WDT*********************************************/
+#define WDT_CR_WDT_EN_MASK WDT_CR_EN_MASK
+#define GLB_RST_SND_WDT GLB_RST_SND_WDT0
+#define GLB_RST_FST_WDT GLB_RST_FST_WDT0
 
 /****************************************************************************************/
 /*                                                                                      */
