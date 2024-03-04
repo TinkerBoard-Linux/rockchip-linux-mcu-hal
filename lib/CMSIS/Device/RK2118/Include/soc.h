@@ -382,6 +382,10 @@ typedef enum IRQn
 #define __DCACHE_PRESENT          1U        /* DCache present */
 #define NVIC_PERIPH_IRQ_OFFSET    16U       /* Interrupt offset for NVIC peripherals*/
 
+#define CACHE_LINE_SHIFT                (5U)
+#define CACHE_LINE_SIZE                 (0x1U << CACHE_LINE_SHIFT)
+#define CACHE_LINE_ADDR_MASK            (0xFFFFFFFFU << CACHE_LINE_SHIFT)
+
 #include "core_starmc1.h"                   /* Processor and core peripherals */
 #include "system_rk2118.h"                  /* System Header */
 #include "rk2118.h"                         /* SOC peripherals */
