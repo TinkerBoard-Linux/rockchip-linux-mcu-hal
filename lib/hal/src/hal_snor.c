@@ -123,6 +123,7 @@ struct FLASH_INFO {
 #define MID_XTX      0x0B
 #define MID_PUYA     0x85
 #define MID_XMC      0x20
+#define MID_ISSI     0x9D
 
 /* Used for Macronix and Winbond flashes. */
 #define SPINOR_OP_EN4B 0xb7 /* Enter 4-byte mode */
@@ -304,7 +305,7 @@ HAL_SECTION_SRAM_CODE static const struct FLASH_INFO s_spiFlashbl[] = {
     /* IS25LP512M */
     { 0x9D601A, 128, 8, 0x13, 0x12, 0x6C, 0x34, 0x21, 0xDC, 0x3C, 17, 6, 0 },
     /* IS25LP512MG */
-    { 0x9D6020, 128, 8, 0x13, 0x12, 0x6C, 0x34, 0x21, 0xDC, 0x3C, 17, 6, 0 },
+    { 0x9D6020, 128, 8, 0x13, 0x12, 0x6C, 0x34, 0x21, 0xDC, 0x3C, 17, 6, 02 },
 #endif
 };
 
@@ -379,6 +380,9 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint16_t code, uint8_t *val,
     if (SNOR_GET_PROTOCOL_CMD_BITS(nor->readProto) == 8) {
         op.dummy.buswidth = op.cmd.buswidth;
         op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) >> 3;
+    } else if (nor->dtr) {
+        op.cmd.buswidth = 4;
+        op.data.buswidth = 4;
     }
 
     SNOR_SpimemSetUp(nor, &op, nor->readProto);
@@ -486,17 +490,15 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
     if (nor->spi->mode & HAL_SPI_RX_QUAD) {
         if (nor->dtr) {
             op.cmd.opcode = SPINOR_OP_4DTRD4B;
-            op.cmd.buswidth = 4;
             op.addr.dtr = 1;
             op.data.dtr = 1;
         } else {
             op.cmd.opcode = op.addr.nbytes == 4 ? SPINOR_OP_READ_EC : SPINOR_OP_READ_1_4_4;
+            op.dummy.nbytes = 3;
         }
 
         op.addr.buswidth = 4;
         op.dummy.buswidth = 4;
-        op.dummy.nbytes = 3;
-        op.data.buswidth = 4;
     }
 
     /* HAL_SNOR_DBG("%s %x %x %x %x\n", __func__, nor->readOpcode, nor->readDummy, op.dummy.buswidth, op.data.buswidth); */
@@ -603,21 +605,23 @@ static HAL_Status SNOR_WriteEnable(struct SPI_NOR *nor)
 
 static HAL_Status SNOR_EnterQPI(struct SPI_NOR *nor)
 {
-    if ((nor->info->id >> 16 & 0xff) == MID_MACRONIX) {
+    if ((nor->info->id >> 16 & 0xff) == MID_MACRONIX ||
+        (nor->info->id >> 16 & 0xff) == MID_ISSI) {
         return nor->writeReg(nor, SPINOR_OP_ENQPI35, NULL, 0);
     } else {
-        return nor->writeReg(nor, SPINOR_OP_EXITQPIF5, NULL, 0);
+        return nor->writeReg(nor, SPINOR_OP_ENQPI38, NULL, 0);
     }
 }
 
-static HAL_Status SNOR_ExitQPI(struct SPI_NOR *nor)
+HAL_UNUSED static HAL_Status SNOR_ExitQPI(struct SPI_NOR *nor)
 {
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(SPINOR_OP_EXITQPIFF, 4),
                                                      HAL_SPI_MEM_OP_NO_ADDR,
                                                      HAL_SPI_MEM_OP_NO_DUMMY,
                                                      HAL_SPI_MEM_OP_NO_DATA);
 
-    if ((nor->info->id >> 16 & 0xff) == MID_MACRONIX) {
+    if ((nor->info->id >> 16 & 0xff) == MID_MACRONIX ||
+        (nor->info->id >> 16 & 0xff) == MID_ISSI) {
         op.cmd.opcode = SPINOR_OP_EXITQPIF5;
     }
 
@@ -639,13 +643,7 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
     if (nor->poll) {
         status[0] = 0x00; /* expect data */
         status[1] = 0x01; /* bit_compare */
-        if (nor->qpi) {
-            SNOR_EnterQPI(nor);
-        }
         ret = nor->readRegPoll(nor, nor->rdsrOpcode, status, HAL_SPI_POLL_DATA_FORMAT_SIZE);
-        if (nor->qpi) {
-            SNOR_ExitQPI(nor);
-        }
     } else {
         /* HAL_SNOR_DBG("%s %lx\n", __func__, timeout); */
         for (i = 0; i < timeout; i++) {
@@ -841,6 +839,24 @@ static HAL_Status SNOR_WRCR(struct SPI_NOR *nor, uint32_t addr, uint32_t addrSiz
     return HAL_OK;
 }
 
+static HAL_Status SNOR_WRCRQPI(struct SPI_NOR *nor, uint8_t reg)
+{
+    struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(0x63, 1),
+                                                     HAL_SPI_MEM_OP_NO_ADDR,
+                                                     HAL_SPI_MEM_OP_NO_DUMMY,
+                                                     HAL_SPI_MEM_OP_DATA_OUT(1, &reg, 1));
+    int32_t ret;
+
+    SNOR_WriteEnable(nor);
+
+    ret = SNOR_SPIMemExecOp(nor->spi, &op);
+    if (ret) {
+        return HAL_ERROR;
+    }
+
+    return HAL_OK;
+}
+
 static HAL_Status SNOR_SetDummy(struct SPI_NOR *nor, uint8_t dummy)
 {
     return SNOR_WRCR(nor, nor->opcode->dummyAddr, nor->opcode->srAddrSize, nor->opcode->dummyVal);
@@ -918,10 +934,6 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
         return HAL_INVAL;
     }
 
-    if (nor->qpi) {
-        SNOR_ExitQPI(nor);
-    }
-
     while (remain) {
         pageOffset = to & (nor->pageSize - 1);
         size = HAL_MIN(nor->pageSize - pageOffset, remain);
@@ -964,11 +976,8 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE era
         return HAL_INVAL;
     }
 
-    if (nor->qpi) {
-        SNOR_ExitQPI(nor);
-    }
-
     SNOR_WriteEnable(nor);
+
     if (eraseType == ERASE_SECTOR) {
         ret = SNOR_EraseSec(nor, addr);
     } else if (eraseType == ERASE_BLOCK64K) {
@@ -1023,10 +1032,6 @@ int32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *p
 
     if (!pData) {
         return HAL_INVAL;
-    }
-
-    if (nor->qpi) {
-        SNOR_ExitQPI(nor);
     }
 
     /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
@@ -1114,14 +1119,17 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     /* Initialize SPI Nor under Single mode */
     spiMode = nor->spi->mode;
     if ((spiMode & HAL_SPI_TX_OCTAL) && (spiMode & HAL_SPI_RX_OCTAL)) {
-        nor->readProto = SNOR_PROTO_8_8_8;
-        nor->writeProto = SNOR_PROTO_8_8_8;
-        HAL_SNOR_ResetDevice(nor);
+        HAL_SNOR_ReadID(nor, idByte);
+        if ((idByte[0] == 0xFF) || (idByte[0] == 0x00)) {
+            nor->readProto = SNOR_PROTO_8_8_8;
+            nor->writeProto = SNOR_PROTO_8_8_8;
+            HAL_SNOR_ResetDevice(nor);
 
-        nor->readProto = SNOR_PROTO_1_1_1;
-        nor->writeProto = SNOR_PROTO_1_1_1;
-        nor->spi->mode &= ~(HAL_SPI_TX_OCTAL | HAL_SPI_RX_OCTAL | HAL_SPI_DTR | HAL_SPI_DQS);
-        SNOR_WaitBusy(nor, 1000000);
+            nor->readProto = SNOR_PROTO_1_1_1;
+            nor->writeProto = SNOR_PROTO_1_1_1;
+            nor->spi->mode &= ~(HAL_SPI_TX_OCTAL | HAL_SPI_RX_OCTAL | HAL_SPI_DTR | HAL_SPI_DQS);
+            SNOR_WaitBusy(nor, 1000000);
+        }
     }
 
     HAL_SNOR_ReadID(nor, idByte);
@@ -1245,6 +1253,12 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         }
 
         if (info->extention & EXT_DTR && spiMode & HAL_SPI_DTR) {
+            if (nor->info->id == 0x9D6020) {
+                SNOR_WRCRQPI(nor, 0x40);
+                nor->readDummy = 8;
+            } else {
+                nor->readDummy = 6;
+            }
             nor->dtr = true;
         } else {
             spiMode &= ~HAL_SPI_DTR;
@@ -1252,6 +1266,11 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
 
         if ((info->extention & EXT_QPI) &&
             (SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto) == 4)) {
+            SNOR_EnterQPI(nor);
+            nor->readProto = SNOR_PROTO_4_4_4;
+            nor->writeProto = SNOR_PROTO_4_4_4;
+            nor->readOpcode = SPINOR_OP_READ_EC;
+            nor->programOpcode = SPINOR_OP_PP;
             nor->qpi = true;
         }
 
@@ -1262,8 +1281,11 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         spiMode &= ~(HAL_SPI_TX_OCTAL | HAL_SPI_RX_OCTAL | HAL_SPI_DQS);
     }
 
-    if (spiMode & HAL_SPI_POLL && !((idByte[0] == MID_MACRONIX) && (nor->qpi == true))) {
+    if (spiMode & HAL_SPI_POLL) {
         nor->poll = true;
+        if (nor->qpi && (nor->dtr || idByte[0] == MID_MACRONIX)) {
+            nor->poll = false;
+        }
     }
 
     if (info->feature & FEA_4BYTE_ADDR) {
@@ -1338,10 +1360,6 @@ HAL_Status HAL_SNOR_ReadID(struct SPI_NOR *nor, uint8_t *data)
         return HAL_INVAL;
     }
 
-    if (nor->qpi) {
-        SNOR_ExitQPI(nor);
-    }
-
     ret = nor->readReg(nor, SPINOR_OP_RDID, data, 3);
     if (ret) {
         HAL_SNOR_DBG("error reading JEDEC ID%x %x %x\n", data[0], data[1], data[2]);
@@ -1369,10 +1387,6 @@ uint32_t HAL_SNOR_GetCapacity(struct SPI_NOR *nor)
  */
 HAL_Status HAL_SNOR_XIPEnable(struct SPI_NOR *nor)
 {
-    if (nor->qpi) {
-        SNOR_EnterQPI(nor);
-    }
-
     return SNOR_XipExecOp(nor->spi, NULL, 1);
 }
 
@@ -1417,10 +1431,6 @@ HAL_Status HAL_SNOR_ReadUUID(struct SPI_NOR *nor, void *buf)
                                                      HAL_SPI_MEM_OP_ADDR(4, 0, 1),
                                                      HAL_SPI_MEM_OP_DUMMY(0, 1),
                                                      HAL_SPI_MEM_OP_DATA_IN(8, buf, 1));
-
-    if (nor->qpi) {
-        SNOR_ExitQPI(nor);
-    }
 
     SNOR_SpimemSetUp(nor, &op, nor->readProto);
 

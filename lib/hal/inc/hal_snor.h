@@ -104,9 +104,9 @@ static inline bool HAL_SNOR_ProtocolIsDtr(enum SPI_NOR_PROTOCOL proto)
 #define SPINOR_OP_EN_RESET   0x66 /**< Enable reset */
 #define SPINOR_OP_RESET      0x99 /**< Reset devices */
 #define SPINOR_OP_ENQPI35    0x35 /**< Enter qpi mode by 35h cmd */
-#define SPINOR_OP_EXITQPIF5  0xf5 /**< Enter qpi mode by F5h cmd */
+#define SPINOR_OP_EXITQPIF5  0xf5 /**< Exit qpi mode by F5h cmd */
 #define SPINOR_OP_ENQPI38    0x38 /**< Enter qpi mode by 38h cmd */
-#define SPINOR_OP_EXITQPIFF  0xff /**< Enter qpi mode by FFh cmd */
+#define SPINOR_OP_EXITQPIFF  0xff /**< Exit qpi mode by FFh cmd */
 
 #ifndef HAL_SNOR_SUPPORT_DEVICES_SELECT
 #define HAL_SNOR_SUPPORT_GIGADEV
