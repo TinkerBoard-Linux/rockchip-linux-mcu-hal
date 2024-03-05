@@ -1658,6 +1658,31 @@ HAL_Status HAL_CRU_FracdivGetConfig(uint32_t rateOut, uint32_t rate,
     return HAL_OK;
 }
 
+HAL_Status HAL_CRU_FracdivGetConfigV2(uint32_t rateOut, uint32_t rate,
+                                      uint32_t *numerator,
+                                      uint32_t *denominator)
+{
+    uint32_t gcdVal;
+
+    gcdVal = CRU_Gcd(rate, rateOut);
+    if (!gcdVal) {
+        return HAL_ERROR;
+    }
+
+    *numerator = rateOut / gcdVal;
+    *denominator = rate / gcdVal;
+
+    if (*numerator < 4) {
+        *numerator *= 4;
+        *denominator *= 4;
+    }
+    if (*numerator > 0xffffff || *denominator > 0xffffff) {
+        return HAL_INVAL;
+    }
+
+    return HAL_OK;
+}
+
 HAL_Status HAL_CRU_ClkNp5BestDiv(eCLOCK_Name clockName, uint32_t rate, uint32_t pRate, uint32_t *bestdiv)
 {
     uint32_t div = CLK_GET_DIV(clockName);
