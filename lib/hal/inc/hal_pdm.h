@@ -37,6 +37,8 @@ struct HAL_PDM_DEV {
     eCLOCK_Name mclk;
     uint32_t mclkGate;
     uint32_t mclkRate;
+    eCLOCK_Name clkOut;
+    uint32_t clkOutRate;
     eCLOCK_Name hclk;
     uint32_t reset;
     uint32_t gain;

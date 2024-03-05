@@ -80,7 +80,7 @@ static HAL_Status PDM_ChangeSampleRate(struct HAL_PDM_DEV *pdm,
     HAL_Status ret = HAL_OK;
 
     HAL_ASSERT(IS_PDM_INSTANCE(reg));
-    ratio = pdm->mclkRate / params->sampleRate / 2;
+    ratio = pdm->clkOutRate / params->sampleRate / 2;
     switch (ratio) {
     case 8: scale = 27; break;
     case 12: scale = 33; break;
@@ -117,7 +117,8 @@ static HAL_Status PDM_ChangeClkFreq(struct HAL_PDM_DEV *pdm,
     HAL_Status ret = HAL_OK;
 
 #ifdef HAL_CRU_MODULE_ENABLED
-    HAL_CRU_ClkSetFreq(pdm->mclk, pdm->mclkRate);
+    HAL_CRU_ClkEnable(pdm->clkOut);
+    HAL_CRU_ClkSetFreq(pdm->clkOut, pdm->clkOutRate);
 #endif
 
     ret = PDM_ChangeSampleRate(pdm, params);
@@ -194,9 +195,6 @@ HAL_Status HAL_PDM_Resume(struct HAL_PDM_DEV *pdm)
  */
 HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *config)
 {
-#ifdef HAL_CRU_MODULE_ENABLED
-    HAL_CRU_ClkEnable(pdm->hclk);
-#endif
     pdm->mode = config->pdmMode;
 
     return HAL_OK;
@@ -210,9 +208,6 @@ HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *confi
 HAL_Status HAL_PDM_DeInit(struct HAL_PDM_DEV *pdm)
 {
     HAL_ASSERT(IS_PDM_INSTANCE(pdm->pReg));
-#ifdef HAL_CRU_MODULE_ENABLED
-    HAL_CRU_ClkDisable(pdm->hclk);
-#endif
 
     return HAL_OK;
 }
