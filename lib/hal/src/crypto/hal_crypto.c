@@ -60,8 +60,10 @@
 #define FEATURE_AUTO_ALGO_CHECK
 #elif (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V3)
 #define FEATURE_AUTO_ALGO_CHECK
+#define FEATURE_MID_DATA
 #elif (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V4)
 #define FEATURE_AUTO_ALGO_CHECK
+#define FEATURE_MID_DATA
 #endif
 
 #define CRYPTO_WRITE_MASK_ALL (0xffffu)
@@ -942,6 +944,14 @@ HAL_Status HAL_CRYPTO_Init(struct CRYPTO_DEV *pCrypto)
     pCrypto->privAlign = LLI_ADDR_ALIGN_SIZE;
     pCrypto->dataAlign = DATA_ADDR_ALIGN_SIZE;
 
+#if defined(FEATURE_MID_DATA)
+    pCrypto->hashMidDataSize = sizeof(CRYPTO->HASH_MID_DATA);
+
+    WRITE_REG_MASK_WE(CRYPTO->MID_VALID_SWITCH,
+                      CRYPTO_MID_VALID_SWITCH_SWITCH_MASK,
+                      CRYPTO_MID_VALID_SWITCH_SWITCH_MASK);
+#endif
+
     return HAL_OK;
 }
 
@@ -1049,6 +1059,10 @@ HAL_Status HAL_CRYPTO_DMAConfig(struct CRYPTO_DEV *pCrypto,
     pPriv->lliDesc.srcLen = pConfig->srcLen;
     pPriv->lliDesc.dstAddr = pConfig->dstAddr;
     pPriv->lliDesc.dstLen = pConfig->dstLen;
+
+    if (pConfig->forceRestart) {
+        pPriv->cipherStart = 1;
+    }
 
     if (!pConfig->isLast) {
         pPriv->lliDesc.nextAddr = (uint32_t)&pPriv->lliDesc;
@@ -1240,6 +1254,75 @@ HAL_Status HAL_CRYPTO_ClearISR(struct CRYPTO_DEV *pCrypto)
 
     return HAL_OK;
 }
+
+/**
+ * @brief  store calculation mid data to buffer
+ * @param  pCrypto     : the handle of crypto.
+ * @param  algo        : cipher algo.
+ * @param  buffer      : buffer to save middle data.
+ * @param  bufferSize  : buffer size.
+ * @return HAL_Status
+ */
+HAL_Status HAL_CRYPTO_StoreMidData(struct CRYPTO_DEV *pCrypto, uint32_t algo, uint8_t *buffer, uint32_t bufferSize)
+{
+#if defined(FEATURE_MID_DATA)
+    uint32_t *pTmp = (uint32_t *)buffer;
+    uint32_t i;
+
+    HAL_ASSERT(pCrypto);
+    HAL_ASSERT(buffer);
+
+    if (algo == CRYPTO_ALGO_HASH) {
+        if (bufferSize < sizeof(CRYPTO->HASH_MID_DATA)) {
+            return HAL_INVAL;
+        }
+
+        while (!(READ_REG(CRYPTO->MID_VALID) & CRYPTO_MID_VALID_HASH_MID_VALID_MASK)) {
+            ;
+        }
+
+        WRITE_REG_MASK_WE(CRYPTO->MID_VALID, CRYPTO_MID_VALID_HASH_MID_VALID_MASK, CRYPTO_MID_VALID_HASH_MID_VALID_MASK);
+
+        for (i = 0; i < HAL_ARRAY_SIZE(CRYPTO->HASH_MID_DATA); i++) {
+            pTmp[i] = READ_REG(CRYPTO->HASH_MID_DATA[i]);
+        }
+    }
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  restore calculation mid data from buffer
+ * @param  pCrypto     : the handle of crypto.
+ * @param  algo        : cipher algo.
+ * @param  buffer      : buffer to save middle data.
+ * @param  bufferSize  : buffer size.
+ * @return HAL_Status
+ */
+HAL_Status HAL_CRYPTO_RestoreMidData(struct CRYPTO_DEV *pCrypto, uint32_t algo, uint8_t *buffer, uint32_t bufferSize)
+{
+#if defined(FEATURE_MID_DATA)
+    uint32_t *pTmp = (uint32_t *)buffer;
+    uint32_t i;
+
+    HAL_ASSERT(pCrypto);
+    HAL_ASSERT(buffer);
+
+    if (algo == CRYPTO_ALGO_HASH) {
+        if (bufferSize < sizeof(CRYPTO->HASH_MID_DATA)) {
+            return HAL_INVAL;
+        }
+
+        for (i = 0; i < HAL_ARRAY_SIZE(CRYPTO->HASH_MID_DATA); i++) {
+            WRITE_REG(CRYPTO->HASH_MID_DATA[i], pTmp[i]);
+        }
+    }
+#endif
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /** @} */
