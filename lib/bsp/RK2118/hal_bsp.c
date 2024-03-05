@@ -396,7 +396,9 @@ const struct HAL_I2C_DEV g_i2c5Dev =
 struct HAL_PDM_DEV g_pdm0Dev =
 {
     .pReg = PDM,
-    .mclkRate = 2048000,
+    .mclk = MCLK_PDM,
+    .clkOut = CLKOUT_PDM,
+    .clkOutRate = 2048000,
     .gain = 0xaf,
     .rxDmaData =
     {
