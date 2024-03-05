@@ -9995,6 +9995,7 @@ struct SPI2APB_REG {
 #define CRYPTO_HASH_VALID_HASH_VALID_MASK                  (0x1U << CRYPTO_HASH_VALID_HASH_VALID_SHIFT)                 /* 0x00000001 */
 /* VERSION */
 #define CRYPTO_VERSION_OFFSET                              (0x3F0U)
+#define CRYPTO_CRYPTO_VERSION                              (0x01000001U)
 #define CRYPTO_VERSION_VERSION_NUM_SHIFT                   (0U)
 #define CRYPTO_VERSION_VERSION_NUM_MASK                    (0xFFFFFFFFU << CRYPTO_VERSION_VERSION_NUM_SHIFT)            /* 0xFFFFFFFF */
 /* RNG_CTL */

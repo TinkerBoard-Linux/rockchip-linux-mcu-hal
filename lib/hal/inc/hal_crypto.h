@@ -57,7 +57,7 @@ struct CRYPTO_DEV {
 };
 
 /**
- * struct CRYPTO_BIGNUM - crypto bignum struct.
+ * struct CRYPTO_BIGNUM - crypto bignum struct with little endian
  */
 struct CRYPTO_BIGNUM {
     uint32_t nWords;

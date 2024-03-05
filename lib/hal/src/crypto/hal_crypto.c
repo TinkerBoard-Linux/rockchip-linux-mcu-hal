@@ -5,7 +5,7 @@
 
 #include "hal_base.h"
 
-#if (defined(RKMCU_RK2206) || defined(RKMCU_RK2118)) && defined(HAL_CRYPTO_MODULE_ENABLED)
+#if defined(CRYPTO_CRYPTO_VERSION) && defined(HAL_CRYPTO_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver
  *  @{
@@ -48,6 +48,21 @@
         }                                               \
     }                                                   \
 } while(0)
+
+#define CRYPTO_VERSION_MAJOR            (CRYPTO_CRYPTO_VERSION & 0xff000000)
+#define CRYPTO_VERSION_MAJOR_V2_BASIC   (0x01000000)
+#define CRYPTO_VERSION_MAJOR_V2_ENHANCE (0x02000000)
+#define CRYPTO_VERSION_MAJOR_V3         (0x03000000)
+#define CRYPTO_VERSION_MAJOR_V4         (0x04000000)
+
+#if (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V2_BASIC)
+#elif (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V2_ENHANCE)
+#define FEATURE_AUTO_ALGO_CHECK
+#elif (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V3)
+#define FEATURE_AUTO_ALGO_CHECK
+#elif (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V4)
+#define FEATURE_AUTO_ALGO_CHECK
+#endif
 
 #define CRYPTO_WRITE_MASK_ALL (0xffffu)
 
@@ -296,6 +311,13 @@ static const uint32_t gs_HashLenTab[CRYPTO_MODE_HASH_MAX] = {
     [CRYPTO_MODE_HASH_SHA512] = RK_HASH_SHA512_SIZE,
     [CRYPTO_MODE_HASH_SHA512_224] = RK_HASH_SHA512_224_SIZE,
     [CRYPTO_MODE_HASH_SHA512_256] = RK_HASH_SHA512_256_SIZE
+};
+
+static const uint32_t gs_HmacLenTab[CRYPTO_MODE_HMAC_MAX] = {
+    [CRYPTO_MODE_HMAC_MD5] = RK_HASH_MD5_SIZE,
+    [CRYPTO_MODE_HMAC_SHA1] = RK_HASH_SHA1_SIZE,
+    [CRYPTO_MODE_HMAC_SHA256] = RK_HASH_SHA256_SIZE,
+    [CRYPTO_MODE_HMAC_SHA512] = RK_HASH_SHA512_SIZE,
 };
 
 static const P_INIT_FUNC gs_CryptoInitFuncs[CRYPTO_ALGO_MAX] = {
@@ -788,6 +810,115 @@ static HAL_Status CRYPTO_AesHashDeinit(void)
     return HAL_OK;
 }
 
+#if defined(FEATURE_AUTO_ALGO_CHECK)
+static HAL_Check CRYTPO_CheckAlgoModeValid(uint32_t algo, uint32_t mode)
+{
+    static const uint32_t aes_maps[CRYPTO_MODE_CIPHER_MAX] = {
+        [CRYPTO_MODE_CIPHER_ECB] = CRYPTO_AES_VERSION_ECB_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_CBC] = CRYPTO_AES_VERSION_CBC_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_CFB] = CRYPTO_AES_VERSION_CFB_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_OFB] = CRYPTO_AES_VERSION_OFB_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_CTS] = CRYPTO_AES_VERSION_CTS_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_CTR] = CRYPTO_AES_VERSION_CTR_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_XTS] = CRYPTO_AES_VERSION_XTS_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_CCM] = CRYPTO_AES_VERSION_CCM_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_GCM] = CRYPTO_AES_VERSION_GCM_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_CMAC] = CRYPTO_AES_VERSION_CMAC_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_CBC_MAC] = CRYPTO_AES_VERSION_CBC_MAC_FLAG_MASK,
+    };
+
+    static const uint32_t des_maps[CRYPTO_MODE_CIPHER_MAX] = {
+        [CRYPTO_MODE_CIPHER_ECB] = CRYPTO_DES_VERSION_ECB_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_CBC] = CRYPTO_DES_VERSION_CBC_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_CFB] = CRYPTO_DES_VERSION_CFB_FLAG_MASK,
+        [CRYPTO_MODE_CIPHER_OFB] = CRYPTO_DES_VERSION_OFB_FLAG_MASK,
+    };
+
+    static const uint32_t hash_maps[CRYPTO_MODE_HASH_MAX] = {
+        [CRYPTO_MODE_HASH_MD5] = CRYPTO_HASH_VERSION_MD5_FLAG_MASK,
+        [CRYPTO_MODE_HASH_SHA1] = CRYPTO_HASH_VERSION_SHA1_FLAG_MASK,
+        [CRYPTO_MODE_HASH_SHA224] = CRYPTO_HASH_VERSION_SHA224_FLAG_MASK,
+        [CRYPTO_MODE_HASH_SHA256] = CRYPTO_HASH_VERSION_SHA256_FLAG_MASK,
+        [CRYPTO_MODE_HASH_SHA384] = CRYPTO_HASH_VERSION_SHA384_FLAG_MASK,
+        [CRYPTO_MODE_HASH_SHA512] = CRYPTO_HASH_VERSION_SHA512_FLAG_MASK,
+        [CRYPTO_MODE_HASH_SHA512_224] = CRYPTO_HASH_VERSION_SHA512_224_FLAG_MASK,
+        [CRYPTO_MODE_HASH_SHA512_256] = CRYPTO_HASH_VERSION_SHA512_256_FLAG_MASK,
+    };
+
+    static const uint32_t hmac_maps[CRYPTO_MODE_HASH_MAX] = {
+        [CRYPTO_MODE_HMAC_MD5] = CRYPTO_HMAC_VERSION_MD5_FLAG_MASK,
+        [CRYPTO_MODE_HMAC_SHA1] = CRYPTO_HMAC_VERSION_SHA1_FLAG_MASK,
+        [CRYPTO_MODE_HMAC_SHA256] = CRYPTO_HMAC_VERSION_SHA256_FLAG_MASK,
+        [CRYPTO_MODE_HMAC_SHA512] = CRYPTO_HASH_VERSION_SHA512_FLAG_MASK,
+    };
+
+    uint32_t version = 0;
+    uint32_t mask = 0;
+
+    switch (algo) {
+    case CRYPTO_ALGO_AES:
+        version = READ_REG(CRYPTO->AES_VERSION);
+        mask = aes_maps[mode];
+        break;
+    case CRYPTO_ALGO_DES:
+    case CRYPTO_ALGO_TDES:
+        version = READ_REG(CRYPTO->DES_VERSION);
+        mask = des_maps[mode];
+        break;
+    case CRYPTO_ALGO_HASH:
+        version = READ_REG(CRYPTO->HASH_VERSION);
+        mask = hash_maps[mode];
+        break;
+    case CRYPTO_ALGO_HMAC:
+        version = READ_REG(CRYPTO->HMAC_VERSION);
+        mask = hmac_maps[mode];
+        break;
+    default:
+
+        return HAL_FALSE;
+    }
+
+    return !!(version & mask);
+}
+#else
+static HAL_Check CRYTPO_CheckAlgoModeValid(uint32_t algo, uint32_t mode)
+{
+    switch (algo) {
+    case CRYPTO_ALGO_AES:
+        if (mode < CRYPTO_MODE_CIPHER_MAX) {
+            return HAL_TRUE;
+        }
+        break;
+    case CRYPTO_ALGO_DES:
+    case CRYPTO_ALGO_TDES:
+        if (mode == CRYPTO_MODE_CIPHER_ECB ||
+            mode == CRYPTO_MODE_CIPHER_CBC ||
+            mode == CRYPTO_MODE_CIPHER_CFB ||
+            mode == CRYPTO_MODE_CIPHER_OFB) {
+            return HAL_TRUE;
+        }
+        break;
+    case CRYPTO_ALGO_HASH:
+        if (mode < CRYPTO_MODE_HASH_MAX) {
+            return HAL_TRUE;
+        }
+        break;
+    case CRYPTO_ALGO_HMAC:
+        if (mode == CRYPTO_MODE_HASH_MD5 ||
+            mode == CRYPTO_MODE_HASH_SHA1 ||
+            mode == CRYPTO_MODE_HASH_SHA256 ||
+            mode == CRYPTO_MODE_HASH_SHA512) {
+            return HAL_TRUE;
+        }
+        break;
+    default:
+        break;
+    }
+
+    return HAL_FALSE;
+}
+#endif
+
 /** @} */
 /********************* Public Function Definition ***************************/
 
@@ -846,6 +977,11 @@ HAL_Status HAL_CRYPTO_AlgoInit(struct CRYPTO_DEV *pCrypto,
     HAL_ASSERT(pCrypto);
     HAL_ASSERT(pConfig);
     HAL_ASSERT(pConfig->algo < CRYPTO_ALGO_MAX);
+    HAL_ASSERT(pConfig->chn == 0);
+
+    if (!CRYTPO_CheckAlgoModeValid(pConfig->algo, pConfig->mode)) {
+        return HAL_INVAL;
+    }
 
     WRITE_REG_MASK_WE(CRYPTO->RST_CTL,
                       CRYPTO_RST_CTL_SW_CC_RESET_MASK,
@@ -926,6 +1062,7 @@ HAL_Status HAL_CRYPTO_DMAConfig(struct CRYPTO_DEV *pCrypto,
 
     switch (pPriv->algo) {
     case CRYPTO_ALGO_DES:
+    case CRYPTO_ALGO_TDES:
     case CRYPTO_ALGO_AES:
     case CRYPTO_ALGO_AES_HASH:
         if (pPriv->mode == CRYPTO_MODE_CIPHER_CMAC || pPriv->mode == CRYPTO_MODE_CIPHER_CBC_MAC) {
@@ -1043,7 +1180,7 @@ HAL_Status HAL_CRYPTO_ReadHashReg(struct CRYPTO_DEV *pCrypto,
                                   uint8_t *out, uint32_t *outLen)
 {
     struct CRYPTO_V2_PRIV_DATA *pPriv;
-    uint32_t val;
+    uint32_t val, hash_len;
     uint32_t i;
 
     HAL_ASSERT(pCrypto);
@@ -1054,11 +1191,13 @@ HAL_Status HAL_CRYPTO_ReadHashReg(struct CRYPTO_DEV *pCrypto,
         return HAL_ERROR;
     }
 
-    for (i = 0; i < gs_HashLenTab[pPriv->mode] / 4; i++) {
+    hash_len = pPriv->algo == CRYPTO_ALGO_HMAC ? gs_HmacLenTab[pPriv->mode] : gs_HashLenTab[pPriv->mode];
+
+    for (i = 0; i < hash_len / 4; i++) {
         Word2Byte(CRYPTO->HASH_DOUT[i], out + i * 4, BIG_ENDIAN);
     }
 
-    *outLen = gs_HashLenTab[pPriv->mode];
+    *outLen = hash_len;
 
     val = READ_REG(CRYPTO->HASH_VALID);
     WRITE_REG(CRYPTO->HASH_VALID, val);
