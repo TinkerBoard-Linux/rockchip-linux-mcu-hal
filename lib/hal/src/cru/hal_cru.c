@@ -1164,14 +1164,15 @@ HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
 {
     const struct HAL_CRU_DEV *ctrl = CRU_GetInfo();
     uint32_t shift, mask, index;
-    uint32_t reg, bank;
+    uint32_t reg, bank, maxDiv;
 
     index = CLK_DIV_GET_REG_OFFSET(divName);
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
     HAL_ASSERT(shift < 16);
     mask = CLK_DIV_GET_MASK(divName);
-    if (divValue > mask) {
-        divValue = mask;
+    maxDiv = CLK_DIV_GET_MAXDIV(divName) + 1;
+    if (divValue > maxDiv) {
+        divValue = maxDiv;
     }
 
     bank = CLK_DIV_GET_BANK(divName);
@@ -1471,14 +1472,15 @@ HAL_Status HAL_CRU_ClkResetSyncDeassert(int numClks, uint32_t *clks)
 HAL_SECTION_SRAM_CODE
 HAL_Status HAL_CRU_ClkSetDiv(uint32_t divName, uint32_t divValue)
 {
-    uint32_t shift, mask, index;
+    uint32_t shift, mask, index, maxDiv;
 
     index = CLK_DIV_GET_REG_OFFSET(divName);
     shift = CLK_DIV_GET_BITS_SHIFT(divName);
     HAL_ASSERT(shift < 16);
     mask = CLK_DIV_GET_MASK(divName);
-    if (divValue > mask) {
-        divValue = mask;
+    maxDiv = CLK_DIV_GET_MAXDIV(divName) + 1;
+    if (divValue > maxDiv) {
+        divValue = maxDiv;
     }
 
 #ifdef CRU_CLK_DIV_CON_CNT
