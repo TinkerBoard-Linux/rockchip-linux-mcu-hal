@@ -49,10 +49,10 @@
 #define PKA_T0 30UL
 #define PKA_T1 31UL
 #define RK_PKA_N_NP_T0_T1_REG_DEFAULT_VAL                        \
-                (PKA_N  << CRYPTO_N_NP_TO_T1_ADDR_REG_N_SHIFT  | \
-                 PKA_NP << CRYPTO_N_NP_TO_T1_ADDR_REG_NP_SHIFT | \
-                 PKA_T0 << CRYPTO_N_NP_TO_T1_ADDR_REG_T0_SHIFT | \
-                 PKA_T1 << CRYPTO_N_NP_TO_T1_ADDR_REG_T1_SHIFT)
+                (PKA_N  << CRYPTO_N_NP_T0_T1_ADDR_REG_N_SHIFT  | \
+                 PKA_NP << CRYPTO_N_NP_T0_T1_ADDR_REG_NP_SHIFT | \
+                 PKA_T0 << CRYPTO_N_NP_T0_T1_ADDR_REG_T0_SHIFT | \
+                 PKA_T1 << CRYPTO_N_NP_T0_T1_ADDR_REG_T1_SHIFT)
 
 #define RES_DISCARD 0x3F
 
