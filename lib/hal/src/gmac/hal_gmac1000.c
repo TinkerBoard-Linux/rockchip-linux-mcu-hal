@@ -2038,7 +2038,9 @@ HAL_Status HAL_GMAC_Send(struct GMAC_HANDLE *pGMAC, void *packet,
      */
     desc->des0 = TDES0_OWN;
     desc->des1 = (length & TDES1_BUFFER1_SIZE_MASK) | TDES1_FIRST_SEGMENT | TDES1_LAST_SEGMENT;
+#ifdef HAL_GMAC1000_HWCHECKSUM_FEATURE_ENABLED
     desc->des1 |= (3 << TDES1_CHECKSUM_INSERTION_SHIFT);
+#endif
     if (entry == (pGMAC->txSize - 1)) {
         desc->des1 |= TDES1_END_RING;
     }
