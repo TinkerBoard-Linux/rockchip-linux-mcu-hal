@@ -223,6 +223,8 @@ typedef enum PD_Id {
 #define USB_PHY_SUSPEND_VAL                     0x1d1U
 #define USB_PHY_RESUME_VAL                      0
 
+#define DCLK_VOP                                DCLK_VOP_S
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
