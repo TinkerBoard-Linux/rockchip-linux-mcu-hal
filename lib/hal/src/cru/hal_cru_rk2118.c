@@ -767,6 +767,21 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     case CLK_WDT3:
     case CLK_WDT4:
         return PLL_INPUT_OSC_RATE;
+    case CLK_RKTIMER0_TIME0:
+    case CLK_RKTIMER0_TIME1:
+    case CLK_RKTIMER0_TIME2:
+    case CLK_RKTIMER0_TIME3:
+    case CLK_RKTIMER1_TIME0:
+    case CLK_RKTIMER1_TIME1:
+    case CLK_RKTIMER1_TIME2:
+    case CLK_RKTIMER1_TIME3:
+    case CLK_RKTIMER2_TIME0:
+    case CLK_RKTIMER2_TIME1:
+    case CLK_RKTIMER2_TIME2:
+    case CLK_RKTIMER2_TIME3:
+        pRate = HAL_CRU_MuxGetFreq4(clkMux, PLL_INPUT_OSC_RATE, s_gpllFreq / 8, 32768, 0);
+        break;
+
     default:
 
         return HAL_CRU_ClkGetOtherFreq(clockName);
@@ -951,6 +966,20 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case SCLK_SFC:
         mux = 2;
         pRate = s_vpll0Freq;
+        break;
+    case CLK_RKTIMER0_TIME0:
+    case CLK_RKTIMER0_TIME1:
+    case CLK_RKTIMER0_TIME2:
+    case CLK_RKTIMER0_TIME3:
+    case CLK_RKTIMER1_TIME0:
+    case CLK_RKTIMER1_TIME1:
+    case CLK_RKTIMER1_TIME2:
+    case CLK_RKTIMER1_TIME3:
+    case CLK_RKTIMER2_TIME0:
+    case CLK_RKTIMER2_TIME1:
+    case CLK_RKTIMER2_TIME2:
+    case CLK_RKTIMER2_TIME3:
+        mux = HAL_CRU_RoundFreqGetMux4(rate, PLL_INPUT_OSC_RATE, s_gpllFreq / 8, 32768, 0, &pRate);
         break;
     default:
 
