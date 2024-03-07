@@ -886,7 +886,7 @@ HAL_Status HAL_PWM_ClearCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel)
 }
 
 /**
- * @brief  Enable PWM freqency meter mode.
+ * @brief  Enable PWM frequency meter mode.
  * @param  pPWM: pointer to a PWM_HANDLE structure that contains
  *               the information for PWM module.
  * @param  channel: PWM channel.
@@ -903,7 +903,7 @@ HAL_Status HAL_PWM_EnableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel, uin
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_ASSERT(delayMs != 0);
-    HAL_DBG("channel=%d, freqency meter enable\n", channel);
+    HAL_DBG("channel=%d, frequency meter enable\n", channel);
 
     arbiter = BIT(channel) << PWM_FREQ_ARBITER_FREQ_READ_LOCK_SHIFT |
               BIT(channel) << PWM_FREQ_ARBITER_FREQ_GRANT_SHIFT;
@@ -927,7 +927,7 @@ HAL_Status HAL_PWM_EnableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel, uin
 }
 
 /**
- * @brief  Disable PWM freqency meter mode.
+ * @brief  Disable PWM frequency meter mode.
  * @param  pPWM: pointer to a PWM_HANDLE structure that contains
  *               the information for PWM module.
  * @param  channel: PWM channel.
@@ -940,7 +940,7 @@ HAL_Status HAL_PWM_DisableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel)
     Hal_PWM_ParaCheck(pPWM, channel);
     reg = pPWM->pChHandle[channel].pReg;
 
-    HAL_DBG("channel=%d, freqency meter disable\n", channel);
+    HAL_DBG("channel=%d, frequency meter disable\n", channel);
 
     WRITE_REG(reg->FREQ_TIMER_VALUE, 0);
     WRITE_REG(reg->INT_EN, FREQ_INT_EN(false));
@@ -952,7 +952,7 @@ HAL_Status HAL_PWM_DisableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel)
 }
 
 /**
- * @brief  Set PWM freqency meter mode.
+ * @brief  Set PWM frequency meter mode.
  * @param  pPWM: pointer to a PWM_HANDLE structure that contains
  *               the information for PWM module.
  * @param  channel: PWM channel.
@@ -964,6 +964,8 @@ HAL_Status HAL_PWM_GetFreqMeterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uin
 {
     struct PWM_REG *reg;
     uint32_t status;
+    uint32_t freqRes;
+    uint32_t freqTimer;
 
     Hal_PWM_ParaCheck(pPWM, channel);
     reg = pPWM->pChHandle[channel].pReg;
@@ -979,12 +981,14 @@ HAL_Status HAL_PWM_GetFreqMeterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uin
     }
     WRITE_REG(reg->INTSTS, FREQ_INT);
 
-    *freqHz = READ_REG(reg->FREQ_RESULT_VALUE);
+    freqRes = READ_REG(reg->FREQ_RESULT_VALUE);
+    freqTimer = READ_REG(reg->FREQ_TIMER_VALUE);
+    *freqHz = HAL_DivU64((uint64_t)pPWM->freq * freqRes, freqTimer);
     if (!*freqHz) {
         return HAL_INVAL;
     }
 
-    HAL_DBG("channel=%d, freqency meter get result: %ldHz\n", channel, *freqHz);
+    HAL_DBG("channel=%d, frequency meter get result: %ldHz\n", channel, *freqHz);
 
     return HAL_OK;
 }
