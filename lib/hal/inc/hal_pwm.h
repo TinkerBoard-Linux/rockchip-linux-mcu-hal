@@ -168,6 +168,9 @@ struct PWM_HANDLE {
     uint32_t scaler;
     uint8_t globalGrantMask;
     uint8_t globalMask;
+    bool freqMeterSupport;
+    bool counterSupport;
+    bool waveSupport;
 };
 #else
 /**

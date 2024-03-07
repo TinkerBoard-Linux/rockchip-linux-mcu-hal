@@ -28,27 +28,41 @@
    ```
  - Invoke HAL_PWM_Init() API to initialize base address and clock frequency:
      - Base register address;
+     - Check features support;
      - Input clock frequency.
 
- - (optionally)Invoke HAL_PWM_GlobalLock() API to make configuration of channels unchangeable:
-     - Use HAL_PWM_GlobalLock() to lock specified channels.
+ - Continous/oneshot mode
+     - (optionally)Invoke HAL_PWM_SetWaveTable() to initialize wave table in wave generator mode;
+     - (optionally)Invoke HAL_PWM_SetWave() to setup wave generator configurations;
+     - (optionally)Invoke HAL_PWM_GlobalLock() to make configuration of channels unchangeable;
+     - Invoke HAL_PWM_SetConfig() to configurate the output configurations;
+     - (optionally)Invoke HAL_PWM_SetOutputOffset() to configurate the output offset;
+     - Invoke HAL_PWM_Enable()/HAL_PWM_Disable() to start/stop PWM in continous/oneshot mode;
+     - (optionally)Invoke HAL_PWM_GlobalUnlock() API to make sure channels update configuration simultaneously.
 
- - Invoke HAL_PWM_SetConfig() API and HAL_PWM_SetEnable() to start/stop:
-     - Use HAL_PWM_SetConfig() to configurate the request mode;
-     - (optionally)Use HAL_PWM_SetOutputOffset() to configurate the output offset;
-     - Use HAL_PWM_Enable() to start PWM;
-     - Use HAL_PWM_Disable() to stop PWM.
+ - Capture mode
+     - (optionally)Invoke HAL_PWM_EnableCaptureCnt() API to enable interrupt of high/low effective cycles capture;
+     - Invoke HAL_PWM_Enable() to start PWM in capture mode;
+     - Invoke HAL_PWM_GetPosCaptureCnt() to read the number of high effective cycles in capture mode;
+     - Invoke HAL_PWM_GetNegCaptureCnt() to read the number of low effective cycles in capture mode.
+     - Invoke HAL_PWM_Disable() to stop PWM in capture mode;
+     - (optionally)Invoke HAL_PWM_DisableCaptureCnt() API to disable interrupt of high/low effective cycles capture.
 
- - (optionally)Invoke HAL_PWM_GlobalUnlock() API to make sure channels update configuration simultaneously:
-     - Use HAL_PWM_GlobalUnlock() to unlock specified channels.
+ - Counter mode
+     - Invoke HAL_PWM_EnableCounter() API to enable wave counter mode.
+     - Invoke HAL_PWM_GetCounterRes() API to get counter result.
+     - Invoke HAL_PWM_ClearCounterRes() API to clear counter result.
+     - Invoke HAL_PWM_DisableCounter() API to disable wave counter mode.
 
- - (optionally)Invoke HAL_PWM_EnableCaptureCnt() API to enable postive/negtive capture counter:
-     - Use HAL_PWM_GetPosCaptureCnt() to read the number of rising edges in capture mode;
-     - Use HAL_PWM_GetNegCaptureCnt() to read the number of falling edges in capture mode.
+ - Frequency meter mode
+     - Invoke HAL_PWM_EnableFreqMeter() API to enable freqency meter mode.
+     - Invoke HAL_PWM_GetFreqMeterRes() API to get freqency meter result.
+     - Invoke HAL_PWM_DisableFreqMeter() API to disable freqency meter mode.
 
- - (optionally)Invoke HAL_PWM_DisableCaptureCnt() API to disable postive/negtive capture counter.
-
- - (optionally)Invoke HAL_PWM_EnableCounter() API to disable postive/negtive capture counter.
+ - Frequency meter mode
+     - Invoke HAL_PWM_EnableFreqMeter() API to enable freqency meter mode.
+     - Invoke HAL_PWM_GetFreqMeterRes() API to get freqency meter result.
+     - Invoke HAL_PWM_DisableFreqMeter() API to disable freqency meter mode.
 
  - Invoke HAL_PWM_DeInit() if necessary.
 
@@ -792,6 +806,12 @@ HAL_Status HAL_PWM_EnableCounter(struct PWM_HANDLE *pPWM, uint8_t channel)
     uint32_t val, arbiter;
 
     Hal_PWM_ParaCheck(pPWM, channel);
+
+    if (!pPWM->counterSupport) {
+        HAL_DBG("channel=%d, unsupported counter mode\n", channel);
+
+        return HAL_INVAL;
+    }
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_DBG("channel=%d, wave counter enable\n", channel);
@@ -824,6 +844,12 @@ HAL_Status HAL_PWM_DisableCounter(struct PWM_HANDLE *pPWM, uint8_t channel)
     struct PWM_REG *reg;
 
     Hal_PWM_ParaCheck(pPWM, channel);
+
+    if (!pPWM->counterSupport) {
+        HAL_DBG("channel=%d, unsupported counter mode\n", channel);
+
+        return HAL_INVAL;
+    }
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_DBG("channel=%d, wave counter disable\n", channel);
@@ -849,6 +875,12 @@ HAL_Status HAL_PWM_GetCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uint3
     uint64_t low, high;
 
     Hal_PWM_ParaCheck(pPWM, channel);
+
+    if (!pPWM->counterSupport) {
+        HAL_DBG("channel=%d, unsupported counter mode\n", channel);
+
+        return HAL_INVAL;
+    }
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_ASSERT(cntRes != NULL);
@@ -876,6 +908,12 @@ HAL_Status HAL_PWM_ClearCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel)
     struct PWM_REG *reg;
 
     Hal_PWM_ParaCheck(pPWM, channel);
+
+    if (!pPWM->counterSupport) {
+        HAL_DBG("channel=%d, unsupported counter mode\n", channel);
+
+        return HAL_INVAL;
+    }
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_DBG("channel=%d, clear wave counter result\n", channel);
@@ -900,6 +938,12 @@ HAL_Status HAL_PWM_EnableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel, uin
     uint32_t val, arbiter;
 
     Hal_PWM_ParaCheck(pPWM, channel);
+
+    if (!pPWM->freqMeterSupport) {
+        HAL_DBG("channel=%d, unsupported frequency meter mode\n", channel);
+
+        return HAL_INVAL;
+    }
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_ASSERT(delayMs != 0);
@@ -938,6 +982,12 @@ HAL_Status HAL_PWM_DisableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel)
     struct PWM_REG *reg;
 
     Hal_PWM_ParaCheck(pPWM, channel);
+
+    if (!pPWM->freqMeterSupport) {
+        HAL_DBG("channel=%d, unsupported frequency meter mode\n", channel);
+
+        return HAL_INVAL;
+    }
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_DBG("channel=%d, frequency meter disable\n", channel);
@@ -968,6 +1018,12 @@ HAL_Status HAL_PWM_GetFreqMeterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uin
     uint32_t freqTimer;
 
     Hal_PWM_ParaCheck(pPWM, channel);
+
+    if (!pPWM->freqMeterSupport) {
+        HAL_DBG("channel=%d, unsupported frequency meter mode\n", channel);
+
+        return HAL_INVAL;
+    }
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_ASSERT(delayMs != 0);
@@ -1018,6 +1074,12 @@ HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct
     uint16_t i;
 
     Hal_PWM_ParaCheck(pPWM, channel);
+
+    if (!pPWM->waveSupport) {
+        HAL_DBG("channel=%d, unsupported wave generator mode\n", channel);
+
+        return HAL_INVAL;
+    }
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_ASSERT(table != NULL);
@@ -1109,6 +1171,12 @@ HAL_Status HAL_PWM_SetWave(struct PWM_HANDLE *pPWM, uint8_t channel, struct PWM_
     uint8_t factor = 0;
 
     Hal_PWM_ParaCheck(pPWM, channel);
+
+    if (!pPWM->waveSupport) {
+        HAL_DBG("channel=%d, unsupported wave generator mode\n", channel);
+
+        return HAL_INVAL;
+    }
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_ASSERT(config != NULL);
@@ -1619,14 +1687,18 @@ HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *pReg, uint32_t 
 {
 #if (PWM_MAIN_VERSION(PWM_VERSION_ID) >= 4)
     uint32_t reg;
+    uint32_t version;
     uint8_t i;
 
     HAL_ASSERT(pPWM != NULL);
 
     pPWM->freq = freq;
 
-    pPWM->channelNum = READ_BIT(pReg->VERSION_ID, PWM_VERSION_ID_CHANNEL_NUM_SUPPORT_MASK) >>
-                       PWM_VERSION_ID_CHANNEL_NUM_SUPPORT_SHIFT;
+    version = READ_REG(pReg->VERSION_ID);
+    pPWM->channelNum = (version & PWM_VERSION_ID_CHANNEL_NUM_SUPPORT_MASK) >> PWM_VERSION_ID_CHANNEL_NUM_SUPPORT_SHIFT;
+    pPWM->freqMeterSupport = !!(version & PWM_VERSION_ID_FREQ_METER_SUPPORT_MASK);
+    pPWM->counterSupport = !!(version & PWM_VERSION_ID_COUNTER_SUPPORT_MASK);
+    pPWM->waveSupport = !!(version & PWM_VERSION_ID_WAVE_SUPPORT_MASK);
 
     for (i = 0; i < pPWM->channelNum; i++) {
         reg = (uint32_t)pReg + i * PWM_CHANNEL_OFFSET;
