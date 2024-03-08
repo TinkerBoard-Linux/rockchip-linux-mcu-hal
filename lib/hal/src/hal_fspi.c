@@ -238,8 +238,10 @@ static HAL_Status FSPI_PollingEnable(struct HAL_FSPI_HOST *host, struct HAL_SPI_
         }
     }
     WRITE_REG(host->instance->POLLDLY_CTRL, 0x80000100);
-    WRITE_REG(host->instance->POLL_CTRL, FSPI_POLL_CTRL_ST_POLL_EN_MASK | (op->cmd.opcode & 0xFF) << FSPI_POLL_CTRL_ST_POLL_CMD_PARA_SHIFT | 2 |
-              ((uint8_t *)op->data.buf.in)[0] << FSPI_POLL_CTRL_ST_POLL_EXPECT_DATA_SHIFT |
+    WRITE_REG(host->instance->POLL_CTRL, FSPI_POLL_CTRL_ST_POLL_EN_MASK |                   \
+              (op->cmd.opcode & 0xFF) << FSPI_POLL_CTRL_ST_POLL_CMD_PARA_SHIFT |            \
+              FSPI_POLL_CTRL_POLL_DLY_EN_MASK |                                             \
+              ((uint8_t *)op->data.buf.in)[0] << FSPI_POLL_CTRL_ST_POLL_EXPECT_DATA_SHIFT | \
               ((uint8_t *)op->data.buf.in)[1] << FSPI_POLL_CTRL_ST_POLL_BIT_COMP_EN_SHIFT);
     CLEAR_BIT(host->instance->IMR, FSPI_IMR_STPOLLM_MASK);
     WRITE_REG(host->instance->ICLR, FSPI_RISR_STPOLLS_MASK);
@@ -281,7 +283,6 @@ HAL_Status HAL_FSPI_IsPollFinished(struct HAL_FSPI_HOST *host)
         FSPI_PollingDisable(host);
         ret = HAL_OK;
     } else {
-        FSPI_Reset(host);
         ret = HAL_BUSY;
     }
 #endif
