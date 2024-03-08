@@ -84,7 +84,7 @@ typedef enum {
 /**
  * @brief PWM wave generator update mode
  */
-enum rockchip_pwm_wave_update_mode {
+typedef enum {
     /**
       * The wave table address will wrap back to minimum address when increase to
       * maximum and then increase again.
@@ -95,7 +95,7 @@ enum rockchip_pwm_wave_update_mode {
       * address. it will return to increasing when decrease to the minimum value.
       */
     HAL_PWM_WAVE_INCREASING_THEN_DECREASING,
-};
+} ePWM_waveUpdateMode;
 
 /**
   * @brief  PWM HW information definition
@@ -165,6 +165,7 @@ struct PWM_HANDLE {
     struct PWM_CHANNEL_HANDLE pChHandle[PWM_CHANNEL_MAX];
     uint32_t freq;
     uint32_t channelNum;
+    uint32_t scaler;
     uint8_t globalGrantMask;
     uint8_t globalMask;
 };
@@ -199,6 +200,7 @@ struct PWM_WAVE_TABLE {
   * @param  enable: enable or disable wave generator
   * @param  dutyEnable: to update duty by duty table or not
   * @param  periodEnable: to update period by period table or not
+  * @param  rpt: the number of repeated effective periods
   * @param  widthMode: the width mode of wave table
   * @param  updateMode: the update mode of wave generator
   * @param  dutyMax: the maximum address of duty table
@@ -210,6 +212,7 @@ struct PWM_WAVE_TABLE {
   * @param  maxHold: the time to stop at maximum address
   * @param  minHold: the time to stop at minimum address
   * @param  middleHold: the time to stop at middle address
+  * @param  clkRate: the dclk rate in wave generator mode
   */
 struct PWM_WAVE_CONFIG {
     struct PWM_WAVE_TABLE *dutyTable;
@@ -229,6 +232,7 @@ struct PWM_WAVE_CONFIG {
     uint32_t maxHold;
     uint32_t minHold;
     uint32_t middleHold;
+    uint64_t clkRate;
 };
 
 /**
@@ -312,7 +316,7 @@ HAL_Status HAL_PWM_EnableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel, uin
 HAL_Status HAL_PWM_DisableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_GetFreqMeterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t delayMs, uint32_t *freqHz);
 HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct PWM_WAVE_TABLE *table,
-                                ePWM_waveTableWidthMode widthMode);
+                                ePWM_waveTableWidthMode widthMode, uint64_t clkRate);
 HAL_Status HAL_PWM_SetWave(struct PWM_HANDLE *pPWM, uint8_t channel, struct PWM_WAVE_CONFIG *config);
 #else
 inline HAL_Status HAL_PWM_GlobalUpdate(struct PWM_HANDLE *pPWM)
@@ -356,7 +360,7 @@ inline HAL_Status HAL_PWM_GetFreqMeterRes(struct PWM_HANDLE *pPWM, uint8_t chann
     return HAL_OK;
 }
 inline HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct PWM_WAVE_TABLE *table,
-                                       ePWM_waveTableWidthMode widthMode)
+                                       ePWM_waveTableWidthMode widthMode, uint64_t clkRate)
 {
     return HAL_OK;
 }

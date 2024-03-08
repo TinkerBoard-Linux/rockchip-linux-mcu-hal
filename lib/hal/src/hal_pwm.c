@@ -277,6 +277,9 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
 {
     struct PWM_REG *reg;
     unsigned long period, duty;
+    uint64_t freqKhz;
+    uint64_t tmp;
+    uint32_t scaler;
 
     Hal_PWM_ParaCheck(pPWM, channel);
     reg = pPWM->pChHandle[channel].pReg;
@@ -285,8 +288,12 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
     HAL_DBG("channel=%d, period_ns=%ld, duty_ns=%ld\n",
             channel, config->periodNS, config->dutyNS);
 
-    period = HAL_DivU64((uint64_t)pPWM->freq * config->periodNS, 1000000000);
-    duty = HAL_DivU64((uint64_t)pPWM->freq * config->dutyNS, 1000000000);
+    scaler = pPWM->scaler ? pPWM->scaler * 2 : 1;
+    freqKhz = pPWM->freq / 1000;
+    tmp = (uint64_t)scaler * 1000000;
+
+    period = HAL_DivU64((uint64_t)freqKhz * config->periodNS, tmp);
+    duty = HAL_DivU64((uint64_t)freqKhz * config->dutyNS, tmp);
 
     WRITE_REG(reg->PERIOD, period);
     WRITE_REG(reg->DUTY, duty);
@@ -990,15 +997,19 @@ HAL_Status HAL_PWM_GetFreqMeterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uin
  * @param  table: pointer to PWM_WAVE_TABLE structure that contains
  *                the wave table information.
  * @param  widthMode: wave table element width.
+ * @param  clkRate: the dclk rate in wave generator mode
  * @retval HAL status
  */
 HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct PWM_WAVE_TABLE *table,
-                                ePWM_waveTableWidthMode widthMode)
+                                ePWM_waveTableWidthMode widthMode, uint64_t clkRate)
 {
     struct PWM_REG *reg;
     uint64_t tableVal;
+    uint64_t freqKhz;
     uint64_t div;
+    uint64_t tmp;
     uint32_t val, arbiter;
+    uint32_t scaler;
     uint16_t tableMax;
     uint16_t i;
 
@@ -1006,6 +1017,7 @@ HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_ASSERT(table != NULL);
+    HAL_ASSERT(clkRate != 0);
     HAL_DBG("channel=%d, wave table init\n", channel);
 
     if (widthMode == HAL_PWM_WAVE_TABLE_16BITS_WIDTH) {
@@ -1013,6 +1025,14 @@ HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct
     } else {
         tableMax = PWM_WAVE_TABEL_MAX;
     }
+
+    pPWM->scaler = HAL_DivU64(pPWM->freq, clkRate * 2);
+    if (pPWM->scaler > 256) {
+        HAL_DBG_ERR("unsupported scale factor %d(max: 512) for for channel%d\n", pPWM->scaler * 2, channel);
+
+        return HAL_INVAL;
+    }
+    scaler = pPWM->scaler ? pPWM->scaler * 2 : 1;
 
     if (!table->data || table->offset > tableMax || table->len > tableMax) {
         HAL_DBG_ERR("the wave table to set is out of range for channel%d\n", channel);
@@ -1031,10 +1051,12 @@ HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct
         return HAL_INVAL;
     }
 
+    freqKhz = pPWM->freq / 1000;
     if (widthMode == HAL_PWM_WAVE_TABLE_16BITS_WIDTH) {
         for (i = 0; i < table->len; i++) {
-            div = (uint64_t)pPWM->freq * table->data[i];
-            tableVal = HAL_DivU64(div, 1000000000);
+            div = (uint64_t)freqKhz * table->data[i];
+            tmp = (uint64_t)scaler * 1000000;
+            tableVal = HAL_DivU64(div, tmp);
             *(volatile uint32_t *)(&reg->WAVE_MEM + (table->offset + i) * 2) = tableVal & 0xff;
             while (!(READ_REG(reg->WAVE_MEM_STATUS) & BIT(PWM_WAVE_MEM_STATUS_ACCESS_DONE_SHIFT))) {
                 ;
@@ -1047,8 +1069,9 @@ HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct
         }
     } else {
         for (i = 0; i < table->len; i++) {
-            div = (uint64_t)pPWM->freq * table->data[i];
-            tableVal = HAL_DivU64(div, 1000000000);
+            div = (uint64_t)freqKhz * table->data[i];
+            tmp = (uint64_t)scaler * 1000000;
+            tableVal = HAL_DivU64(div, tmp);
             *(volatile uint32_t *)(&reg->WAVE_MEM + (table->offset + i)) = tableVal;
             while (!(READ_REG(reg->WAVE_MEM_STATUS) & BIT(PWM_WAVE_MEM_STATUS_ACCESS_DONE_SHIFT))) {
                 ;
@@ -1111,9 +1134,11 @@ HAL_Status HAL_PWM_SetWave(struct PWM_HANDLE *pPWM, uint8_t channel, struct PWM_
 
         rpt = config->rpt << PWM_RPT_RPT_FIRST_DIMENSIONAL_SHIFT;
     } else {
+        pPWM->scaler = 0;
         ctrl = WAVE_DUTY_EN(false) | WAVE_PERIOD_EN(false);
     }
 
+    WRITE_REG(reg->CLK_CTRL, CLK_SCALE(pPWM->scaler));
     WRITE_REG(reg->WAVE_CTRL, ctrl);
     WRITE_REG(reg->WAVE_MAX, maxVal);
     WRITE_REG(reg->WAVE_MIN, minVal);
