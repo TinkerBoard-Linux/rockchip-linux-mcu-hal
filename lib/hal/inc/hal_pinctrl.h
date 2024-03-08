@@ -490,7 +490,7 @@ typedef enum {
     PIN_CONFIG_PUL_DEFAULT = PIN_CONFIG_PUL_NORMAL,
 #endif
 
-#if defined(SOC_RK3568) || defined(SOC_RV1106) || defined(SOC_RK3562)
+#if defined(SOC_RK3568) || defined(SOC_RV1106) || defined(SOC_RK3562) || defined(RKMCU_RK2118)
     PIN_CONFIG_DRV_LEVEL0        = (0x1 << SHIFT_DRV | FLAG_DRV),
     PIN_CONFIG_DRV_LEVEL1        = (0x3 << SHIFT_DRV | FLAG_DRV),
     PIN_CONFIG_DRV_LEVEL2        = (0x7 << SHIFT_DRV | FLAG_DRV),
