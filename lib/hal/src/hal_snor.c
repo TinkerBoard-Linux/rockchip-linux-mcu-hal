@@ -379,7 +379,7 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint16_t code, uint8_t *val,
     /* Workaround for Octal SP: Adding dummy in default. */
     if (SNOR_GET_PROTOCOL_CMD_BITS(nor->readProto) == 8) {
         op.dummy.buswidth = op.cmd.buswidth;
-        op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) >> 3;
+        op.dummy.nbytes = (nor->opcode->dummySlow * op.dummy.buswidth) >> 3;
     } else if (nor->dtr) {
         op.cmd.buswidth = 4;
         op.data.buswidth = 4;
@@ -647,7 +647,7 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
     } else {
         /* HAL_SNOR_DBG("%s %lx\n", __func__, timeout); */
         for (i = 0; i < timeout; i++) {
-            ret = nor->readReg(nor, nor->rdsrOpcode, status, 1);
+            ret = nor->readReg(nor, nor->rdsrOpcode, status, nor->dtr ? HAL_SPI_POLL_DATA_FORMAT_SIZE : 1);
             if (ret != HAL_OK) {
                 return ret;
             }
@@ -831,11 +831,6 @@ static HAL_Status SNOR_WRCR(struct SPI_NOR *nor, uint32_t addr, uint32_t addrSiz
         return HAL_ERROR;
     }
 
-    ret = SNOR_WaitBusy(nor, 10000);
-    if (ret) {
-        return HAL_ERROR;
-    }
-
     return HAL_OK;
 }
 
@@ -859,7 +854,7 @@ static HAL_Status SNOR_WRCRQPI(struct SPI_NOR *nor, uint8_t reg)
 
 static HAL_Status SNOR_SetDummy(struct SPI_NOR *nor, uint8_t dummy)
 {
-    return SNOR_WRCR(nor, nor->opcode->dummyAddr, nor->opcode->srAddrSize, nor->opcode->dummyVal);
+    return SNOR_WRCR(nor, nor->opcode->dummyAddr, nor->opcode->srAddrSize, dummy);
 }
 
 static HAL_Status SNOR_SetIoMode(struct SPI_NOR *nor)
@@ -1172,23 +1167,23 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     if ((spiMode & HAL_SPI_TX_OCTAL) && (spiMode & HAL_SPI_RX_OCTAL) &&
         (spiMode & HAL_SPI_DTR) && (spiMode & HAL_SPI_DQS) &&
         (info->extention & EXT_OCTAL) && (info->extention & EXT_DQS)) {
+        /* Set dummy cycles */
         status = (info->extention & EXT_DTR_OPCODE_MASK) >> EXT_DTR_OPCODE_SHIFT;
         nor->opcode = &opcodes[status];
         nor->readProto = SNOR_PROTO_1_1_1;
         nor->writeProto = SNOR_PROTO_1_1_1;
         nor->rdcrOpcode = (nor->opcode->rdcr & 0xFF00) >> 8;
         nor->wrcrOpcode = (nor->opcode->wrcr & 0xFF00) >> 8;
-        SNOR_SetDummy(nor, 8);
+        SNOR_SetDummy(nor, nor->opcode->dummyVal);
         nor->readDummy = nor->opcode->dummyFast;
-        SNOR_RDCR(nor, 0, &status);
-        HAL_SNOR_DBG("rdcr 0 : %x\n", status);
-        SNOR_RDCR(nor, 1, &status);
-        HAL_SNOR_DBG("rdcr 1 : %x\n", status);
+        SNOR_WaitBusy(nor, 1000);
 
+        /* Set IO mode */
         if (info->extention & EXT_DTR) {
             SNOR_SetIoMode(nor);
             nor->readProto = SNOR_PROTO_8_8_8_DTR;
             nor->writeProto = SNOR_PROTO_8_8_8_DTR;
+            nor->dtr = true;
         } else {
             return HAL_ERROR;
         }
@@ -1202,6 +1197,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         nor->rdsrOpcode = nor->opcode->rdsr;
         /* Clear the Quad SPI attribute to simplify logic  */
         spiMode &= ~(HAL_SPI_TX_QUAD | HAL_SPI_RX_QUAD);
+        SNOR_WaitBusy(nor, 1000);
     } else {
         if (nor->spi->mode & HAL_SPI_RX_QUAD) {
             if (info->QEBits) {
@@ -1360,7 +1356,7 @@ HAL_Status HAL_SNOR_ReadID(struct SPI_NOR *nor, uint8_t *data)
         return HAL_INVAL;
     }
 
-    ret = nor->readReg(nor, SPINOR_OP_RDID, data, 3);
+    ret = nor->readReg(nor, SPINOR_OP_RDID, data, 4);
     if (ret) {
         HAL_SNOR_DBG("error reading JEDEC ID%x %x %x\n", data[0], data[1], data[2]);
 
