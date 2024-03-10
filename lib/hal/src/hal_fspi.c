@@ -55,6 +55,54 @@
 #define FSPI_DBG(...)
 #endif
 
+// #define XIP_DEBUG
+#ifdef XIP_DEBUG
+static void XIP_DBG(uint32_t value, int digits)
+{
+    uint32_t tmp;
+
+    while (digits-- > 0) {
+        tmp = value >> (4 * digits);
+        tmp &= 0xf;
+
+        if (tmp < 10) {
+            WRITE_REG(UART0->THR, (uint8_t)(tmp + '0'));
+        } else {
+            WRITE_REG(UART0->THR, (uint8_t)(tmp - 10 + 'A'));
+        }
+    }
+}
+
+void XIP_DBGCOMBO(char tag, uint32_t value1, uint32_t value2, uint32_t value3, uint32_t value4)
+{
+    WRITE_REG(UART0->THR, tag);
+    WRITE_REG(UART0->THR, '_');
+    XIP_DBG(value1, 8);
+    WRITE_REG(UART0->THR, '_');
+    XIP_DBG(value2, 8);
+    WRITE_REG(UART0->THR, '_');
+    XIP_DBG(value3, 8);
+    WRITE_REG(UART0->THR, '_');
+    XIP_DBG(value4, 8);
+    WRITE_REG(UART0->THR, '\r');
+    WRITE_REG(UART0->THR, '\n');
+    HAL_DelayUs(1000);
+}
+
+HAL_Status XIP_DBGHEX(char *s, void *buf, uint32_t width, uint32_t len)
+{
+    uint32_t i;
+    uint32_t *p32 = (uint32_t *)buf;
+
+    for (i = 0; i < len; i += 4) {
+        XIP_DBGCOMBO('_', p32[i + 0], p32[i + 1], p32[i + 2], p32[i + 3]);
+    }
+
+    return HAL_OK;
+}
+
+#endif
+
 /* FSPI_CTRL */
 #define FSPI_CTRL_SHIFTPHASE_NEGEDGE 1
 
@@ -430,6 +478,7 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
 
     // FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes);
     // FSPI_DBG("%s 2 %lx %lx %lx %lx %lx %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt, op->addr.val, host->cs);
+    // XIP_DBGCOMBO('2', FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt);
 
     /* config FSPI */
 #ifdef FSPI_CMD_EXT_OFFSET
@@ -1000,6 +1049,7 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
 #endif
 
         // HAL_DBG_HEX("FSPI:", FSPI0, 4, 0x41);
+        // XIP_DBGHEX("FSPI:", FSPI0, 4, 0x40);
         WRITE_REG(pReg->MODE, 1);
     } else {
         /* FSPI_DBG("%s diable\n", __func__); */
