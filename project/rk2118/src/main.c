@@ -174,6 +174,7 @@ int main(void)
     HAL_UART_Init(&g_uart0Dev, &hal_uart_config);
 
     printf("Hello RK2118\n");
+    printf("test jenkins\n");
 
     /* Unity Test  */
     //test_main();
