@@ -719,6 +719,7 @@ struct HAL_SPDIFRX_DEV g_spdifrx0Dev =
     .pReg = SPDIFRX0,
     .mclk = MCLK_SPDIFRX0,
     .mclkGate = MCLK_SPDIFRX0_GATE,
+    .rst = SRST_RESETN_SPDIFRX0,
     .irqNum = SPDIF_RX0_IRQn,
     .rxDmaData =
     {
@@ -732,9 +733,10 @@ struct HAL_SPDIFRX_DEV g_spdifrx0Dev =
 
 struct HAL_SPDIFRX_DEV g_spdifrx1Dev =
 {
-    .pReg = SPDIFRX0,
+    .pReg = SPDIFRX1,
     .mclk = MCLK_SPDIFRX1,
     .mclkGate = MCLK_SPDIFRX1_GATE,
+    .rst = SRST_RESETN_SPDIFRX1,
     .irqNum = SPDIF_RX1_IRQn,
     .rxDmaData =
     {
