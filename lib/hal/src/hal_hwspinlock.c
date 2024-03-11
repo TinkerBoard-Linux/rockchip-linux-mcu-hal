@@ -28,7 +28,7 @@
 #define SPINLOCK_STATUS(n) SPINLOCK->STATUS[n]
 #elif defined(SPINLOCK0)
 #define SPINLOCK_STATUS(n) \
-  (((struct SPINLOCK_REG *)(SPINLOCK0 + (n / 8 * 0x1000U)))->STATUS[n % 8])
+  (((struct SPINLOCK_REG *)(SPINLOCK0_BASE + (n / 8 * 0x1000U)))->STATUS[n % 8])
 #else
 #error "SPINLOCK base address is required"
 #endif
