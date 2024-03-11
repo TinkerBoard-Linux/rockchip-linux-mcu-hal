@@ -943,11 +943,6 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     /* spetial setting */
     FSPICtrl.b.sps = host->mode & HAL_SPI_CPHA;
     FSPICtrl.b.dqs_mode = host->mode & HAL_SPI_DQS ? 1 : 0;
-#ifdef FSPI_SLF_DQS_CTRL_OFFSET
-    if (!FSPICtrl.b.dqs_mode && FSPICtrl.b.dtr_mode) {
-        WRITE_REG(host->instance->SLF_DQS_CTRL, FSPI_SLF_DQS_CTRL_SLF_BLD_DQS_EN0_MASK | FSPI_SLF_DQS_CTRL_SLF_BLD_DQS_EN1_MASK);
-    }
-#endif
 
     // HAL_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes);
     // HAL_DBG("%s 2 %lx %lx %lx %lx %lx %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt, op->addr.val, host->cs);
@@ -1014,6 +1009,19 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
                 return HAL_TIMEOUT;
             }
         }
+#ifdef RKMCU_RK2118
+        WRITE_REG(CRU->SOFTRST_CON[38], 0x05000500);
+        HAL_CPUDelayUs(1);
+        WRITE_REG(CRU->SOFTRST_CON[38], 0x05000000);
+        HAL_CPUDelayUs(1);
+        HAL_FSPI_Init(host);
+#ifdef FSPI_SLF_DQS_CTRL_OFFSET
+        if (!(host->xmmcDev[0].ctrl & FSPI_CTRL0_DQS_MODE_MASK) && (host->xmmcDev[0].ctrl & FSPI_CTRL0_DTR_MODE_MASK)) {
+            WRITE_REG(host->instance->SLF_DQS_CTRL, FSPI_SLF_DQS_CTRL_SLF_BLD_DQS_EN0_MASK | FSPI_SLF_DQS_CTRL_SLF_BLD_DQS_EN1_MASK);
+        }
+        HAL_FSPI_SetDelayLines(host, host->cell);
+#endif
+#endif
     }
 
     return HAL_OK;
