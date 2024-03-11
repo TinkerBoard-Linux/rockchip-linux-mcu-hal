@@ -473,7 +473,7 @@ void i2stdm0_demo(void)
     struct AUDIO_INIT_CONFIG config;
 
     printf("zzz---i2stdm0_demo\n");
-    params.channels = AUDIO_CHANNELS_2;
+    params.channels = 2;
     params.sampleBits = AUDIO_SAMPLEBITS_16;
     params.sampleRate = AUDIO_SAMPLERATE_48000;
     /* iomux init */
