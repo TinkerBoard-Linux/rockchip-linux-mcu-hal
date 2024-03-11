@@ -170,6 +170,30 @@
  *  @{
  */
 
+/**
+ * @brief  Init spdifrx controller dev.
+ * @param  spdifrx: the handle of spdifrx dev.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SPDIFRX_DevInit(struct HAL_SPDIFRX_DEV *spdifrx)
+{
+    HAL_ASSERT(spdifrx != NULL);
+
+    return HAL_SPDIFRX_Init(spdifrx->pReg);
+}
+
+/**
+ * @brief  DeInit spdifrx controller dev.
+ * @param  spdifrx: the handle of spdifrx dev.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SPDIFRX_DevDeInit(struct HAL_SPDIFRX_DEV *spdifrx)
+{
+    HAL_ASSERT(spdifrx != NULL);
+
+    return HAL_SPDIFRX_DeInit(spdifrx->pReg);
+}
+
 /** @} */
 
 /** @defgroup SPDIFRX_Exported_Functions_Group5 Other Functions
@@ -369,6 +393,49 @@ uint32_t HAL_SPDIFRX_IrqHandler(struct SPDIFRX_REG *pReg)
     WRITE_REG(pReg->INTCLR, irqStatus);
 
     return irqStatus;
+}
+
+/** @} */
+
+/** @defgroup SAI_Dev_Level_Functions Dev Level Functions
+ *  @{
+ */
+
+/**
+ * @brief  Enable spdifrx.
+ * @param  spdifrx: the handle of HAL_SPDIFRX_DEV.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SPDIFRX_DevEnable(struct HAL_SPDIFRX_DEV *spdifrx)
+{
+#if defined(HAL_CRU_MODULE_ENABLED)
+    HAL_ASSERT(spdifrx != NULL);
+
+    if (!HAL_SPDIFRX_IsLocked(spdifrx->pReg)) {
+        HAL_DBG_ERR("%s: Pre CDR has not been locked\n", __func__);
+
+        return HAL_ERROR;
+    }
+
+    HAL_CRU_ClkResetAssert(spdifrx->rst);
+    HAL_DelayUs(10);
+    HAL_CRU_ClkResetDeassert(spdifrx->rst);
+    HAL_DelayUs(1000);
+#endif
+
+    return HAL_SPDIFRX_Enable(spdifrx->pReg);
+}
+
+/**
+ * @brief  Disable spdifrx.
+ * @param  spdifrx: the handle of HAL_SPDIFRX_DEV.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SPDIFRX_DevDisable(struct HAL_SPDIFRX_DEV *spdifrx)
+{
+    HAL_ASSERT(spdifrx != NULL);
+
+    return HAL_SPDIFRX_Disable(spdifrx->pReg);
 }
 
 /** @} */

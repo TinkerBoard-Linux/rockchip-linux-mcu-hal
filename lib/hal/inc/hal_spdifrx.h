@@ -70,6 +70,7 @@ struct HAL_SPDIFRX_DEV {
     struct AUDIO_DMA_DATA rxDmaData;
     eCLOCK_Name mclk;
     uint32_t mclkGate;
+    uint32_t rst;
     IRQn_Type irqNum;
 };
 
@@ -78,6 +79,16 @@ struct HAL_SPDIFRX_DEV {
 /** @defgroup SPDIFRX_Public_Function_Declare Public Function Declare
  *  @{
  */
+
+/** @defgroup SPDIFRX_Dev_Level_API Dev Level API
+ *  @{
+ */
+HAL_Status HAL_SPDIFRX_DevInit(struct HAL_SPDIFRX_DEV *spdifrx);
+HAL_Status HAL_SPDIFRX_DevDeInit(struct HAL_SPDIFRX_DEV *spdifrx);
+HAL_Status HAL_SPDIFRX_DevEnable(struct HAL_SPDIFRX_DEV *spdifrx);
+HAL_Status HAL_SPDIFRX_DevDisable(struct HAL_SPDIFRX_DEV *spdifrx);
+
+/** @} */
 
 /** @defgroup SPDIFRX_Low_Level_API Low Level API
  *  @{
