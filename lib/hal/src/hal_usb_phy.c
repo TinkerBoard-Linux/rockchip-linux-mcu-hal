@@ -75,6 +75,113 @@ HAL_Status HAL_USB_PhyResume(void)
 }
 #endif
 
+#ifdef USB_PHY_BVALID_IRQ_CON_BASE
+/**
+ * @brief  Enable USB Bvalid Irq.
+ * @return HAL status
+ */
+HAL_Status HAL_USB_PhyBvalidIrqEnable(uint8_t enable)
+{
+    if (enable) {
+        /* Clear bvalid rise and fall irq state */
+        WRITE_REG_MASK_WE(USB_PHY_BVALID_IRQ_CLR_BASE,
+                          USB_PHY_BVALID_RISE_IRQ_CLR_MASK |
+                          USB_PHY_BVALID_FALL_IRQ_CLR_MASK,
+                          USB_PHY_BVALID_RISE_IRQ_CLR_EN |
+                          USB_PHY_BVALID_FALL_IRQ_CLR_EN);
+
+        /* Enable bvalid rise and fall irq */
+        WRITE_REG_MASK_WE(USB_PHY_BVALID_IRQ_CON_BASE,
+                          USB_PHY_BVALID_RISE_IRQ_CON_MASK |
+                          USB_PHY_BVALID_FALL_IRQ_CON_MASK,
+                          USB_PHY_BVALID_RISE_IRQ_CON_EN |
+                          USB_PHY_BVALID_FALL_IRQ_CON_EN);
+    } else {
+        /* Disable bvalid rise and fall irq */
+        WRITE_REG_MASK_WE(USB_PHY_BVALID_IRQ_CON_BASE,
+                          USB_PHY_BVALID_RISE_IRQ_CON_MASK |
+                          USB_PHY_BVALID_FALL_IRQ_CON_MASK,
+                          0);
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get Bvalid Irq Rise status.
+ * @return irq_status.
+ */
+uint8_t HAL_USB_PhyBvalidIrqRise_Status(void)
+{
+    uint8_t irq_status;
+
+    irq_status = READ_BIT(USB_PHY_BVALID_IRQ_STATUS_BASE,
+                          USB_PHY_BVALID_RISE_IRQ_STATUS_MASK) >>
+                 USB_PHY_BVALID_RISE_IRQ_STATUS_SHIFT;
+
+    return irq_status;
+}
+
+/**
+ * @brief  Get Bvalid Irq Fall status.
+ * @return irq_status.
+ */
+uint8_t HAL_USB_PhyBvalidIrqFall_Status(void)
+{
+    uint8_t irq_status;
+
+    irq_status = READ_BIT(USB_PHY_BVALID_IRQ_STATUS_BASE,
+                          USB_PHY_BVALID_FALL_IRQ_STATUS_MASK) >>
+                 USB_PHY_BVALID_FALL_IRQ_STATUS_SHIFT;
+
+    return irq_status;
+}
+
+/**
+ * @brief Clear Bvalid Irq Rise status.
+ */
+void HAL_USB_PhyBvalidIrqRise_Clear(void)
+{
+    WRITE_REG_MASK_WE(USB_PHY_BVALID_IRQ_CLR_BASE,
+                      USB_PHY_BVALID_RISE_IRQ_CLR_MASK,
+                      USB_PHY_BVALID_RISE_IRQ_CLR_EN);
+}
+
+/**
+ * @brief Clear Bvalid Irq Fall status.
+ */
+void HAL_USB_PhyBvalidIrqFall_Clear(void)
+{
+    WRITE_REG_MASK_WE(USB_PHY_BVALID_IRQ_CLR_BASE,
+                      USB_PHY_BVALID_FALL_IRQ_CLR_MASK,
+                      USB_PHY_BVALID_FALL_IRQ_CLR_EN);
+}
+
+#else
+HAL_Status HAL_USB_PhyBvalidIrqEnable(uint8_t enable)
+{
+    return HAL_OK;
+}
+
+uint8_t HAL_USB_PhyBvalidIrqRise_Status(void)
+{
+    return 0;
+}
+
+uint8_t HAL_USB_PhyBvalidIrqFall_Status(void)
+{
+    return 0;
+}
+
+void HAL_USB_PhyBvalidIrqRise_Clear(void)
+{
+}
+
+void HAL_USB_PhyBvalidIrqFall_Clear(void)
+{
+}
+#endif
+
 /** @} */
 
 /** @defgroup PCD_Exported_Functions_Group4 Init and DeInit Functions

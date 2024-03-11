@@ -28,6 +28,11 @@
 HAL_Status HAL_USB_PhySuspend(void);
 HAL_Status HAL_USB_PhyResume(void);
 HAL_Status HAL_USB_PhyInit(void);
+HAL_Status HAL_USB_PhyBvalidIrqEnable(uint8_t enable);
+uint8_t HAL_USB_PhyBvalidIrqRise_Status(void);
+uint8_t HAL_USB_PhyBvalidIrqFall_Status(void);
+void HAL_USB_PhyBvalidIrqRise_Clear(void);
+void HAL_USB_PhyBvalidIrqFall_Clear(void);
 /** @} */
 
 #endif /* _HAL_USB_PHY_H_ */
