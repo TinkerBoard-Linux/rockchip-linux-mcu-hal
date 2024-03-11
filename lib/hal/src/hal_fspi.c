@@ -214,6 +214,7 @@ static HAL_Status FSPI_ClearIsr(struct HAL_FSPI_HOST *host)
  *   FSPI0: CS divide in average, each CS up to 16MB
  *   FSPI1-n: all map space in CS0
  * VER 4-n: It's configurable, 1/2/4 CS, TBD
+ * others: FSPI0: CS divide in average, each CS up to 64MB
  */
 static void FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
 {
@@ -229,6 +230,10 @@ static void FSPI_XmmcDevRegionInit(struct HAL_FSPI_HOST *host)
         host->instance->DEVSIZE1 = 23;
 #endif
     }
+#else
+    host->instance->DEVRGN = 27;
+    host->instance->DEVSIZE0 = 26;
+    host->instance->DEVSIZE1 = 26;
 #endif /* FSPI_VER == FSPI_VER_VER_3 */
 }
 
