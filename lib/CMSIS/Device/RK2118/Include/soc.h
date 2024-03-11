@@ -447,10 +447,15 @@ extern uint32_t g_oscRate;
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
-#define USB_OTG_BASE            0x50040000U /* USB OTG base address */
-#define USB_INNO_PHY_BASE       0x503C0000U /* USB INNO base address */
-#define USB_PHY_CON_BASE        (GRF->SOC_CON24) /* USB PHY control base address */
-#define USB_PHY_STATUS_BASE     (GRF->SOC_STATUS6)   /* USB PHY status base address */
+#define USB_OTG_BASE                             0x50040000U /* USB OTG base address */
+#define USB_INNO_PHY_BASE                        0x503C0000U /* USB INNO base address */
+#define USB_PHY_CON_BASE                         (GRF->SOC_CON24) /* USB PHY control base address */
+#define USB_PHY_BCD_DET_CON                      (GRF->SOC_CON27) /* USB PHY BCD control base address*/
+#define USB_PHY_STATUS_BASE                      (GRF->SOC_STATUS6) /* USB PHY status base address */
+#define USB_PHY_BCD_DET_BASE                     USB_PHY_STATUS_BASE /* USB PHY BCD status base address */
+#define USB_PHY_BVALID_IRQ_CON_BASE              (GRF->USBOTG_SIG_DETECT_CON)
+#define USB_PHY_BVALID_IRQ_CLR_BASE              (GRF->USBOTG_SIG_DETECT_CLR)
+#define USB_PHY_BVALID_IRQ_STATUS_BASE           (GRF->USBOTG_SIG_DETECT_STATUS)
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -474,10 +479,41 @@ extern uint32_t g_oscRate;
      GRF_SOC_CON24_USBOTG_UTMI_TERMSELECT_MASK | \
      GRF_SOC_CON24_USBOTG_UTMI_DPPULLDOWN_MASK | \
      GRF_SOC_CON24_USBOTG_UTMI_DMPULLDOWN_MASK)
-#define USB_PHY_RESUME_MASK         GRF_SOC_CON24_USBOTG_SW_EN_MASK
-#define USB_PHY_CON_SHIFT           GRF_SOC_CON24_USBOTG_SW_EN_SHIFT
-#define USB_PHY_SUSPEND_VAL         0x1D1U
-#define USB_PHY_RESUME_VAL          0
+#define USB_PHY_RESUME_MASK                      GRF_SOC_CON24_USBOTG_SW_EN_MASK
+#define USB_PHY_CON_SHIFT                        GRF_SOC_CON24_USBOTG_SW_EN_SHIFT
+#define USB_PHY_SUSPEND_VAL                      0x1D1U
+#define USB_PHY_RESUME_VAL                       0
+#define USB_OTG_UTMI_BVALID_MASK                 GRF_SOC_STATUS6_USBOTG_UTMI_BVALID_MASK
+#define USB_OTG_UTMI_BVALID_SHIFT                GRF_SOC_STATUS6_USBOTG_UTMI_BVALID_SHIFT
+#define USB_PHY_BVALID_RISE_IRQ_CON_MASK         GRF_USBOTG_SIG_DETECT_CON_OTG_BVALID_RISE_IRQ_EN_MASK
+#define USB_PHY_BVALID_RISE_IRQ_CON_EN           USB_PHY_BVALID_RISE_IRQ_CON_MASK
+#define USB_PHY_BVALID_RISE_IRQ_CLR_MASK         GRF_USBOTG_SIG_DETECT_CLR_OTG_BVALID_RISE_IRQ_CLR_MASK
+#define USB_PHY_BVALID_RISE_IRQ_CLR_EN           USB_PHY_BVALID_RISE_IRQ_CLR_MASK
+#define USB_PHY_BVALID_RISE_IRQ_STATUS_MASK      GRF_USBOTG_SIG_DETECT_STATUS_OTG_BVALID_RISE_IRQ_MASK
+#define USB_PHY_BVALID_RISE_IRQ_STATUS_SHIFT     GRF_USBOTG_SIG_DETECT_STATUS_OTG_BVALID_RISE_IRQ_SHIFT
+#define USB_PHY_BVALID_FALL_IRQ_CON_MASK         GRF_USBOTG_SIG_DETECT_CON_OTG_BVALID_FALL_IRQ_EN_MASK
+#define USB_PHY_BVALID_FALL_IRQ_CON_EN           USB_PHY_BVALID_FALL_IRQ_CON_MASK
+#define USB_PHY_BVALID_FALL_IRQ_CLR_MASK         GRF_USBOTG_SIG_DETECT_CLR_OTG_BVALID_FALL_IRQ_CLR_MASK
+#define USB_PHY_BVALID_FALL_IRQ_CLR_EN           USB_PHY_BVALID_FALL_IRQ_CLR_MASK
+#define USB_PHY_BVALID_FALL_IRQ_STATUS_MASK      GRF_USBOTG_SIG_DETECT_STATUS_OTG_BVALID_FALL_IRQ_MASK
+#define USB_PHY_BVALID_FALL_IRQ_STATUS_SHIFT     GRF_USBOTG_SIG_DETECT_STATUS_OTG_BVALID_FALL_IRQ_SHIFT
+#define USB_PHY_IDP_SINK_MASK                    GRF_SOC_CON27_USBPHY_IDP_SINK_EN_MASK
+#define USB_PHY_IDP_SINK_EN                      USB_PHY_IDP_SINK_MASK
+#define USB_PHY_IDM_SINK_MASK                    GRF_SOC_CON27_USBPHY_IDM_SINK_EN_MASK
+#define USB_PHY_IDM_SINK_EN                      USB_PHY_IDM_SINK_MASK
+#define USB_PHY_IDP_SRC_MASK                     GRF_SOC_CON27_USBPHY_IDP_SRC_EN_MASK
+#define USB_PHY_IDP_SRC_EN                       USB_PHY_IDP_SRC_MASK
+#define USB_PHY_RDM_PDWN_MASK                    GRF_SOC_CON27_USBPHY_RDM_PDWN_EN_MASK
+#define USB_PHY_RDM_PDWN_EN                      USB_PHY_RDM_PDWN_MASK
+#define USB_PHY_VDP_SRC_MASK                     GRF_SOC_CON27_USBPHY_VDP_SRC_EN_MASK
+#define USB_PHY_VDP_SRC_EN                       USB_PHY_VDP_SRC_MASK
+#define USB_PHY_VDM_SRC_MASK                     GRF_SOC_CON27_USBPHY_VDM_SRC_EN_MASK
+#define USB_PHY_VDM_SRC_EN                       USB_PHY_VDM_SRC_MASK
+#define USB_PHY_CHG_MODE_MASK                    (0x1FFU)
+#define USB_PHY_CHG_MODE_VAL                     (0x057U)
+#define USB_PHY_CP_DET_BIT                       (HAL_BIT(19))
+#define USB_PHY_DCP_DET_BIT                      (HAL_BIT(18))
+#define USB_PHY_DP_DET_BIT                       (HAL_BIT(20))
 /* --------  End of section using anonymous unions and disabling warnings  -------- */
 #if   defined (__CC_ARM)
   #pragma pop
