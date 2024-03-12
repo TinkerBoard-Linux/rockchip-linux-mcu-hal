@@ -307,7 +307,7 @@ HAL_SECTION_SRAM_CODE static const struct FLASH_INFO s_spiFlashbl[] = {
     /* IS25LP512M */
     { 0x9D601A, 128, 8, 0x13, 0x12, 0x6C, 0x34, 0x21, 0xDC, 0x3C, 17, 6, 0 },
     /* IS25LP512MG */
-    { 0x9D6020, 128, 8, 0x13, 0x12, 0x6C, 0x34, 0x21, 0xDC, 0x3C, 17, 6, 00 },
+    { 0x9D6020, 128, 8, 0x13, 0x12, 0x6C, 0x34, 0x21, 0xDC, 0x3C, 17, 6, 0 },
 #endif
 };
 
@@ -1200,6 +1200,10 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         /* Clear the Quad SPI attribute to simplify logic  */
         spiMode &= ~(HAL_SPI_TX_QUAD | HAL_SPI_RX_QUAD);
         SNOR_WaitBusy(nor, 1000);
+
+        if (spiMode & HAL_SPI_POLL) {
+            nor->poll = true;
+        }
     } else {
         if (nor->spi->mode & HAL_SPI_RX_QUAD) {
             if (info->QEBits) {
@@ -1275,15 +1279,17 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         if (((info->extention & EXT_DTR_OPCODE_MASK) >> EXT_DTR_OPCODE_SHIFT) == 0x1) {
             nor->swap = true;
         }
+
+        /*
+         * 05H 1_1_1 sdr is matched with 02H 1_1_1 sdr, TBD;
+         * 05H 4_4_4 sdr is matched with EEH 4_4_4 sdr, it's supported;
+         * 05H 4_4_4 sdr is mismatch with EEH 4_4_4 ddr, it's unsupported.
+         */
+        if ((spiMode & HAL_SPI_POLL) && nor->qpi && !nor->dtr) {
+            nor->poll = true;
+        }
         /* Clear the Octal SPI attribute to simplify logic  */
         spiMode &= ~(HAL_SPI_TX_OCTAL | HAL_SPI_RX_OCTAL | HAL_SPI_DQS);
-    }
-
-    if (spiMode & HAL_SPI_POLL) {
-        nor->poll = true;
-        if (nor->qpi && (nor->dtr || idByte[0] == MID_MACRONIX)) {
-            nor->poll = false;
-        }
     }
 
     if (info->feature & FEA_4BYTE_ADDR) {
