@@ -114,16 +114,16 @@ struct CRYPTO_REG {
          uint32_t RESERVED0620[4];                    /* Address Offset: 0x0620 */
     __IO uint32_t MID_VALID_SWITCH;                   /* Address Offset: 0x0630 */
          uint32_t RESERVED0634[19];                   /* Address Offset: 0x0634 */
-    __IO uint32_t AES_VERSION;                        /* Address Offset: 0x0680 */
-    __IO uint32_t DES_VERSION;                        /* Address Offset: 0x0684 */
-    __IO uint32_t SM4_VERSION;                        /* Address Offset: 0x0688 */
-    __IO uint32_t HASH_VERSION;                       /* Address Offset: 0x068C */
-    __IO uint32_t HMAC_VERSION;                       /* Address Offset: 0x0690 */
+    __I  uint32_t AES_VERSION;                        /* Address Offset: 0x0680 */
+    __I  uint32_t DES_VERSION;                        /* Address Offset: 0x0684 */
+    __I  uint32_t SM4_VERSION;                        /* Address Offset: 0x0688 */
+    __I  uint32_t HASH_VERSION;                       /* Address Offset: 0x068C */
+    __I  uint32_t HMAC_VERSION;                       /* Address Offset: 0x0690 */
          uint32_t RESERVED0694;                       /* Address Offset: 0x0694 */
-    __IO uint32_t PKA_VERSION;                        /* Address Offset: 0x0698 */
+    __I  uint32_t PKA_VERSION;                        /* Address Offset: 0x0698 */
     __I  uint32_t EXTRA_FEATURE;                      /* Address Offset: 0x069C */
          uint32_t RESERVED06A0[20];                   /* Address Offset: 0x06A0 */
-    __IO uint32_t CRYPTO_VERSION;                     /* Address Offset: 0x06F0 */
+    __I  uint32_t CRYPTO_VERSION;                     /* Address Offset: 0x06F0 */
          uint32_t RESERVED06F4[3];                    /* Address Offset: 0x06F4 */
     __IO uint32_t HASH_MID_DATA[26];                  /* Address Offset: 0x0700 */
          uint32_t RESERVED0768[38];                   /* Address Offset: 0x0768 */
@@ -3157,6 +3157,7 @@ struct IIR_ACC_REG_REG {
 #define CRYPTO_MID_VALID_SWITCH_SWITCH_MASK                (0x1U << CRYPTO_MID_VALID_SWITCH_SWITCH_SHIFT)               /* 0x00000001 */
 /* AES_VERSION */
 #define CRYPTO_AES_VERSION_OFFSET                          (0x680U)
+#define CRYPTO_AES_VERSION                                 (0x717FFU)
 #define CRYPTO_AES_VERSION_ECB_FLAG_SHIFT                  (0U)
 #define CRYPTO_AES_VERSION_ECB_FLAG_MASK                   (0x1U << CRYPTO_AES_VERSION_ECB_FLAG_SHIFT)                  /* 0x00000001 */
 #define CRYPTO_AES_VERSION_CBC_FLAG_SHIFT                  (1U)
@@ -3195,6 +3196,7 @@ struct IIR_ACC_REG_REG {
 #define CRYPTO_AES_VERSION_MULTICHANNEL_FLAG_MASK          (0x1U << CRYPTO_AES_VERSION_MULTICHANNEL_FLAG_SHIFT)         /* 0x00400000 */
 /* DES_VERSION */
 #define CRYPTO_DES_VERSION_OFFSET                          (0x684U)
+#define CRYPTO_DES_VERSION                                 (0x0U)
 #define CRYPTO_DES_VERSION_ECB_FLAG_SHIFT                  (0U)
 #define CRYPTO_DES_VERSION_ECB_FLAG_MASK                   (0x1U << CRYPTO_DES_VERSION_ECB_FLAG_SHIFT)                  /* 0x00000001 */
 #define CRYPTO_DES_VERSION_CBC_FLAG_SHIFT                  (1U)
@@ -3217,6 +3219,7 @@ struct IIR_ACC_REG_REG {
 #define CRYPTO_DES_VERSION_MULTICHANNEL_FLAG_MASK          (0x1U << CRYPTO_DES_VERSION_MULTICHANNEL_FLAG_SHIFT)         /* 0x00400000 */
 /* SM4_VERSION */
 #define CRYPTO_SM4_VERSION_OFFSET                          (0x688U)
+#define CRYPTO_SM4_VERSION                                 (0x0U)
 #define CRYPTO_SM4_VERSION_ECB_FLAG_SHIFT                  (0U)
 #define CRYPTO_SM4_VERSION_ECB_FLAG_MASK                   (0x1U << CRYPTO_SM4_VERSION_ECB_FLAG_SHIFT)                  /* 0x00000001 */
 #define CRYPTO_SM4_VERSION_CBC_FLAG_SHIFT                  (1U)
@@ -3247,6 +3250,7 @@ struct IIR_ACC_REG_REG {
 #define CRYPTO_SM4_VERSION_MULTICHANNEL_FLAG_MASK          (0x1U << CRYPTO_SM4_VERSION_MULTICHANNEL_FLAG_SHIFT)         /* 0x00400000 */
 /* HASH_VERSION */
 #define CRYPTO_HASH_VERSION_OFFSET                         (0x68CU)
+#define CRYPTO_HASH_VERSION                                (0x87U)
 #define CRYPTO_HASH_VERSION_SHA1_FLAG_SHIFT                (0U)
 #define CRYPTO_HASH_VERSION_SHA1_FLAG_MASK                 (0x1U << CRYPTO_HASH_VERSION_SHA1_FLAG_SHIFT)                /* 0x00000001 */
 #define CRYPTO_HASH_VERSION_SHA224_FLAG_SHIFT              (1U)
@@ -3269,6 +3273,7 @@ struct IIR_ACC_REG_REG {
 #define CRYPTO_HASH_VERSION_LOCKSTEP_FLAG_MASK             (0x1U << CRYPTO_HASH_VERSION_LOCKSTEP_FLAG_SHIFT)            /* 0x00100000 */
 /* HMAC_VERSION */
 #define CRYPTO_HMAC_VERSION_OFFSET                         (0x690U)
+#define CRYPTO_HMAC_VERSION                                (0xBU)
 #define CRYPTO_HMAC_VERSION_SHA1_FLAG_SHIFT                (0U)
 #define CRYPTO_HMAC_VERSION_SHA1_FLAG_MASK                 (0x1U << CRYPTO_HMAC_VERSION_SHA1_FLAG_SHIFT)                /* 0x00000001 */
 #define CRYPTO_HMAC_VERSION_SHA256_FLAG_SHIFT              (1U)
@@ -3285,6 +3290,7 @@ struct IIR_ACC_REG_REG {
 #define CRYPTO_HMAC_VERSION_MULTICHANNEL_MASK              (0x1U << CRYPTO_HMAC_VERSION_MULTICHANNEL_SHIFT)             /* 0x00400000 */
 /* PKA_VERSION */
 #define CRYPTO_PKA_VERSION_OFFSET                          (0x698U)
+#define CRYPTO_PKA_VERSION                                 (0x2000000U)
 #define CRYPTO_PKA_VERSION_PKA_VERSION_CODE_SHIFT          (0U)
 #define CRYPTO_PKA_VERSION_PKA_VERSION_CODE_MASK           (0xFFFFFFFFU << CRYPTO_PKA_VERSION_PKA_VERSION_CODE_SHIFT)   /* 0xFFFFFFFF */
 /* EXTRA_FEATURE */
@@ -3294,6 +3300,7 @@ struct IIR_ACC_REG_REG {
 #define CRYPTO_EXTRA_FEATURE_AXI_EXPAND_BIT_MASK           (0xFU << CRYPTO_EXTRA_FEATURE_AXI_EXPAND_BIT_SHIFT)          /* 0x0000000F */
 /* CRYPTO_VERSION */
 #define CRYPTO_CRYPTO_VERSION_OFFSET                       (0x6F0U)
+#define CRYPTO_CRYPTO_VERSION                              (0x4000001U)
 #define CRYPTO_CRYPTO_VERSION_CRYPTO_VERSION_CODE_SHIFT    (0U)
 #define CRYPTO_CRYPTO_VERSION_CRYPTO_VERSION_CODE_MASK     (0xFFFFFFFFU << CRYPTO_CRYPTO_VERSION_CRYPTO_VERSION_CODE_SHIFT) /* 0xFFFFFFFF */
 /* HASH_MID_DATA_0 */
