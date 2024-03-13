@@ -79,6 +79,7 @@ HAL_Status HAL_SAI_EnableTX(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_EnableRX(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_DisableTX(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_DisableRX(struct SAI_REG *pReg);
+HAL_Status HAL_SAI_SetBclkDiv(struct SAI_REG *pReg, int div);
 
 /** @} */
 

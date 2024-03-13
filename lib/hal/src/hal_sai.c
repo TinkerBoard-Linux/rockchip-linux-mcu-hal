@@ -254,6 +254,37 @@ static uint8_t SAI_lanesAuto(struct HAL_SAI_DEV *sai, uint16_t channels)
     return lanes;
 }
 
+static HAL_Status SAI_SetBclkDivAuto(struct HAL_SAI_DEV *sai, uint32_t slotWidth,
+                                     uint32_t chPerLane, uint32_t sampleRate)
+{
+#if defined(HAL_CRU_MODULE_ENABLED)
+    HAL_ASSERT(sai != NULL);
+
+    uint32_t mclkRate, mclkReqRate, bclkRate, divBclk;
+
+    bclkRate = sai->fwRatio * slotWidth * chPerLane * sampleRate;
+    if (sai->isClkAuto) {
+        HAL_CRU_ClkSetFreq(sai->mclk, bclkRate);
+    }
+
+    mclkRate = HAL_CRU_ClkGetFreq(sai->mclk);
+    divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
+    mclkReqRate = bclkRate * divBclk;
+
+    if (mclkRate < mclkReqRate - CLK_SHIFT_RATE_HZ_MAX ||
+        mclkRate > mclkReqRate + CLK_SHIFT_RATE_HZ_MAX) {
+        HAL_DBG_ERR("%s: Mismatch mclk: %lu, expected %lu (+/- %dHz)\n",
+                    __func__, mclkRate, mclkReqRate, CLK_SHIFT_RATE_HZ_MAX);
+
+        return HAL_INVAL;
+    }
+
+    HAL_SAI_SetBclkDiv(sai->pReg, divBclk);
+#endif
+
+    return HAL_OK;
+}
+
 /** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup SAI_Exported_Functions_Group1 Suspend and Resume Functions
@@ -415,6 +446,21 @@ HAL_Status HAL_SAI_DisableRX(struct SAI_REG *pReg)
     return HAL_OK;
 }
 
+/**
+ * @brief  Set sai bclk div.
+ * @param  pReg: the handle of SAI_REG.
+ * @param  div: the ratio of mclk / bclk.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_SetBclkDiv(struct SAI_REG *pReg, int div)
+{
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->CKR, SAI_CKR_MDIV_MASK, SAI_CKR_MDIV(div));
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /** @defgroup SAI_Dev_Level_Functions Dev Level Functions
@@ -469,7 +515,6 @@ HAL_Status HAL_SAI_DevDisable(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream)
 HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
                              struct AUDIO_PARAMS *params)
 {
-    uint32_t mclkRate, mclkReqRate, bclkRate, divBclk;
     uint32_t val, slotWidth, chPerLane, fscr;
     uint8_t lanes;
     HAL_Status ret = HAL_OK;
@@ -522,28 +567,11 @@ HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
 
     MODIFY_REG(sai->pReg->FSCR, SAI_FSCR_FW_MASK | SAI_FSCR_FPW_MASK, fscr);
 
-    bclkRate = sai->fwRatio * slotWidth * chPerLane * params->sampleRate;
-#if defined(HAL_CRU_MODULE_ENABLED)
-    if (sai->isClkAuto) {
-        HAL_CRU_ClkSetFreq(sai->mclk, bclkRate);
+    ret = SAI_SetBclkDivAuto(sai, slotWidth, chPerLane, params->sampleRate);
+    if (ret) {
+        return ret;
     }
 
-    mclkRate = HAL_CRU_ClkGetFreq(sai->mclk);
-#else
-    mclkRate = bclkRate;
-#endif
-    divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
-    mclkReqRate = bclkRate * divBclk;
-
-    if (mclkRate < mclkReqRate - CLK_SHIFT_RATE_HZ_MAX ||
-        mclkRate > mclkReqRate + CLK_SHIFT_RATE_HZ_MAX) {
-        HAL_DBG_ERR("%s: Mismatch mclk: %lu, expected %lu (+/- %dHz)\n",
-                    __func__, mclkRate, mclkReqRate, CLK_SHIFT_RATE_HZ_MAX);
-
-        return HAL_INVAL;
-    }
-
-    MODIFY_REG(sai->pReg->CKR, SAI_CKR_MDIV_MASK, SAI_CKR_MDIV(divBclk));
     /*
      * Should wait for one BCLK ready after DIV and then ungate
      * output clk to achieve the clean clk.
