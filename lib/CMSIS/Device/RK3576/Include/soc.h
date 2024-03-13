@@ -482,6 +482,12 @@ typedef enum {
 /*                           Platform Differences Section                               */
 /*                                                                                      */
 /****************************************************************************************/
+#if defined(HAL_AP_CORE)
+
+#undef DCACHE
+#undef ICACHE
+
+#endif
 
 /******************************************CRU*******************************************/
 #define CRU_CLK_USE_CON_BANK
