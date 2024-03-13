@@ -5,7 +5,330 @@
 
 #include "hal_base.h"
 
-#if defined(RKMCU_RK2118) && defined(HAL_CRU_MODULE_ENABLED)
+/* for dsp simple cru driver */
+#if defined(RKMCU_RK2118) && defined(HAL_DSP_CORE) && defined(HAL_CRU_MODULE_ENABLED)
+
+static uint32_t s_gpllFreq = 800000000;
+static uint32_t s_vpll0Freq = 1179648000;
+static uint32_t s_vpll1Freq = 903168000;
+static uint32_t s_fracVoice0Freq;
+static uint32_t s_fracVoice1Freq;
+static uint32_t s_fracCom0Freq;
+static uint32_t s_fracCom1Freq;
+static uint32_t s_fracCom2Freq;
+static uint32_t s_intVoice0Freq;
+static uint32_t s_intVoice1Freq;
+static uint32_t s_intVoice2Freq;
+static uint32_t s_sai0MclkIoIn;
+static uint32_t s_sai1MclkIoIn;
+static uint32_t s_sai2MclkIoIn;
+static uint32_t s_sai3MclkIoIn;
+static uint32_t s_sai4MclkIoIn;
+static uint32_t s_sai5MclkIoIn;
+static uint32_t s_sai6MclkIoIn;
+static uint32_t s_sai7MclkIoIn;
+
+#define CRU_READ(r)           (*(volatile uint32_t *)((uintptr_t)(r)))
+#define CRU_WRITE(r, b, w, v) (*(volatile uint32_t *)((uintptr_t)(r)) = ((w) << (16) | (v) << (b)))
+
+static const struct HAL_CRU_DEV *CRU_GetInfo(void)
+{
+    return &g_cruDev;
+}
+
+/**
+ * @brief Get frac clk freq.
+ * @param  clockName: CLOCK_Name id
+ * @return clk rate.
+ * How to calculate the Frac clk divider:
+ *     numerator is frac register[31:16]
+ *     denominator is frac register[15:0]
+ *     clk rate = pRate * numerator / denominator
+ *     for a better jitter, pRate > 20 * rate
+ */
+static uint32_t HAL_CRU_ClkFracGetFreq(eCLOCK_Name clockName)
+{
+    uint32_t freq = 0;
+    uint32_t muxSrc = 0, divFrac = 0;
+    uint32_t n, m, pRate, n_h, m_h;
+
+    switch (clockName) {
+    case CLK_FRAC_VOICE0:
+        muxSrc = CLK_GET_MUX(CLK_FRAC_VOICE0);
+        divFrac = CLK_GET_DIV(CLK_FRAC_VOICE0);
+        break;
+    case CLK_FRAC_VOICE1:
+        muxSrc = CLK_GET_MUX(CLK_FRAC_VOICE1);
+        divFrac = CLK_GET_DIV(CLK_FRAC_VOICE1);
+        break;
+    case CLK_FRAC_COMMON0:
+        muxSrc = CLK_GET_MUX(CLK_FRAC_COMMON0);
+        divFrac = CLK_GET_DIV(CLK_FRAC_COMMON0);
+        break;
+    case CLK_FRAC_COMMON1:
+        muxSrc = CLK_GET_MUX(CLK_FRAC_COMMON1);
+        divFrac = CLK_GET_DIV(CLK_FRAC_COMMON1);
+        break;
+    case CLK_FRAC_COMMON2:
+        muxSrc = CLK_GET_MUX(CLK_FRAC_COMMON2);
+        divFrac = CLK_GET_DIV(CLK_FRAC_COMMON2);
+        break;
+    case CLK_32K_FRAC:
+        divFrac = CLK_GET_DIV(CLK_32K_FRAC);
+        pRate = PLL_INPUT_OSC_RATE;
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    switch (clockName) {
+    case CLK_FRAC_COMMON0:
+    case CLK_FRAC_COMMON1:
+    case CLK_FRAC_COMMON2:
+        pRate = HAL_CRU_MuxGetFreq4(muxSrc, PLL_INPUT_OSC_RATE, s_gpllFreq, s_vpll0Freq, s_vpll1Freq);
+        HAL_CRU_ClkGetFracDiv(divFrac, &n, &m);
+        freq = pRate / m * n;
+
+        return freq;
+    case CLK_FRAC_VOICE0:
+    case CLK_FRAC_VOICE1:
+        pRate = HAL_CRU_MuxGetFreq4(muxSrc, PLL_INPUT_OSC_RATE, s_gpllFreq, s_vpll0Freq, s_vpll1Freq);
+        HAL_CRU_ClkGetFracDiv(divFrac, &n, &m);
+        n_h = (CRU->CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac) + 1] & 0xff00) >> 8;
+        m_h = (CRU->CLKSEL_CON[CLK_DIV_GET_REG_OFFSET(divFrac) + 1] & 0xff);
+        n = (n_h << 16) | n;
+        m = (m_h << 16) | m;
+        freq = pRate / m * n;
+
+        return freq;
+    default:
+
+        return HAL_INVAL;
+    }
+}
+
+static uint32_t HAL_CRU_ClkGetOtherFreq(eCLOCK_Name clockName)
+{
+    uint32_t clkMux = CLK_GET_MUX(clockName);
+    uint32_t clkDiv = CLK_GET_DIV(clockName);
+    uint32_t pRate = s_gpllFreq, freq;
+    uint32_t table[16];
+    uint32_t voiceTable0[14] = { PLL_INPUT_OSC_RATE, s_intVoice0Freq, s_intVoice1Freq, s_intVoice2Freq, s_fracVoice0Freq, s_fracVoice1Freq,
+                                 s_fracCom0Freq, s_fracCom1Freq, s_fracCom2Freq, s_sai0MclkIoIn, s_sai1MclkIoIn, s_sai2MclkIoIn, s_sai3MclkIoIn };
+    uint32_t voiceTable1[14] = { PLL_INPUT_OSC_RATE, s_intVoice0Freq, s_intVoice1Freq, s_intVoice2Freq, s_fracVoice0Freq, s_fracVoice1Freq,
+                                 s_fracCom0Freq, s_fracCom1Freq, s_fracCom2Freq, s_sai4MclkIoIn, s_sai5MclkIoIn, s_sai6MclkIoIn, s_sai7MclkIoIn };
+
+    switch (clockName) {
+    case CLK_FRAC_VOICE0:
+    case CLK_FRAC_VOICE1:
+    case CLK_FRAC_COMMON0:
+    case CLK_FRAC_COMMON1:
+    case CLK_FRAC_COMMON2:
+        return HAL_CRU_ClkFracGetFreq(clockName);
+    case MCLK_PDM:
+    case CLKOUT_PDM:
+        voiceTable0[13] = s_gpllFreq;
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable0, 14);
+        break;
+
+    case SCLK_SAI0:
+        voiceTable0[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI0);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable0, 14);
+        break;
+    case SCLK_SAI1:
+        voiceTable0[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI1);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable0, 14);
+        break;
+    case SCLK_SAI2:
+        voiceTable0[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI2);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable0, 14);
+        break;
+    case SCLK_SAI3:
+        voiceTable0[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI3);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable0, 14);
+        break;
+    case SCLK_SAI4:
+        voiceTable1[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI4);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable1, 14);
+        break;
+    case SCLK_SAI5:
+        voiceTable1[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI5);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable1, 14);
+        break;
+    case SCLK_SAI6:
+        voiceTable1[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI6);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable1, 14);
+        break;
+    case SCLK_SAI7:
+        voiceTable1[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI7);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable1, 14);
+        break;
+    case MCLK_OUT_SAI0:
+    case MCLK_OUT_SAI1:
+    case MCLK_OUT_SAI2:
+    case MCLK_OUT_SAI3:
+    case MCLK_ASRC0:
+    case MCLK_ASRC1:
+    case MCLK_ASRC2:
+    case MCLK_ASRC3:
+    case MCLK_ASRC4:
+    case MCLK_ASRC5:
+    case MCLK_ASRC6:
+    case MCLK_ASRC7:
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable0, 13);
+        break;
+    case MCLK_OUT_SAI4:
+    case MCLK_OUT_SAI5:
+    case MCLK_OUT_SAI6:
+    case MCLK_OUT_SAI7:
+    case MCLK_SPDIFTX:
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, voiceTable1, 13);
+        break;
+    case LRCK_ASRC0_SRC:
+    case LRCK_ASRC1_SRC:
+    case LRCK_ASRC2_SRC:
+    case LRCK_ASRC3_SRC:
+    case LRCK_ASRC0_DST:
+    case LRCK_ASRC1_DST:
+    case LRCK_ASRC2_DST:
+    case LRCK_ASRC3_DST:
+        table[0] = HAL_CRU_ClkGetOtherFreq(MCLK_ASRC0);
+        table[1] = HAL_CRU_ClkGetOtherFreq(MCLK_ASRC1);
+        table[2] = HAL_CRU_ClkGetOtherFreq(MCLK_ASRC2);
+        table[3] = HAL_CRU_ClkGetOtherFreq(MCLK_ASRC3);
+        table[4] = HAL_CRU_ClkGetFreq(MCLK_SPDIFRX0);
+        table[5] = HAL_CRU_ClkGetOtherFreq(CLKOUT_PDM);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, table, 11);
+        break;
+    case LRCK_ASRC4_SRC:
+    case LRCK_ASRC5_SRC:
+    case LRCK_ASRC6_SRC:
+    case LRCK_ASRC7_SRC:
+    case LRCK_ASRC4_DST:
+    case LRCK_ASRC5_DST:
+    case LRCK_ASRC6_DST:
+    case LRCK_ASRC7_DST:
+        table[0] = HAL_CRU_ClkGetOtherFreq(MCLK_ASRC4);
+        table[1] = HAL_CRU_ClkGetOtherFreq(MCLK_ASRC5);
+        table[2] = HAL_CRU_ClkGetOtherFreq(MCLK_ASRC6);
+        table[3] = HAL_CRU_ClkGetOtherFreq(MCLK_ASRC7);
+        table[4] = HAL_CRU_ClkGetOtherFreq(MCLK_SPDIFTX);
+        table[5] = HAL_CRU_ClkGetFreq(MCLK_SPDIFRX1);
+        pRate = HAL_CRU_MuxGetFreqArray(clkMux, table, 11);
+        break;
+    default:
+        break;
+    }
+    if (clkDiv) {
+        freq = pRate / (HAL_CRU_ClkGetDiv(clkDiv));
+    } else {
+        freq = pRate;
+    }
+
+    return freq;
+}
+
+static uint32_t HAL_CRU_ClkGetIntVoiceFreq(eCLOCK_Name clockName)
+{
+    uint32_t pRate, freq;
+    uint32_t clkMux = CLK_GET_MUX(clockName);
+    uint32_t clkDiv = CLK_GET_DIV(clockName);
+
+    switch (clockName) {
+    case CLK_INT_VOICE0:
+    case CLK_INT_VOICE2:
+        pRate = s_vpll0Freq;
+        break;
+    case CLK_INT_VOICE1:
+        pRate = s_vpll1Freq;
+        break;
+    default:
+        return 0;
+    }
+
+    if ((clkMux == 0) && (clkDiv == 0)) {
+        return 0;
+    }
+
+    if (clkDiv) {
+        freq = pRate / (HAL_CRU_ClkGetDiv(clkDiv));
+    } else {
+        freq = pRate;
+    }
+
+    return freq;
+}
+
+static void CRU_Init(void)
+{
+    s_intVoice0Freq = HAL_CRU_ClkGetIntVoiceFreq(CLK_INT_VOICE0);
+    s_intVoice1Freq = HAL_CRU_ClkGetIntVoiceFreq(CLK_INT_VOICE1);
+    s_intVoice2Freq = HAL_CRU_ClkGetIntVoiceFreq(CLK_INT_VOICE2);
+    s_fracVoice0Freq = HAL_CRU_ClkGetOtherFreq(CLK_FRAC_VOICE0);
+    s_fracVoice1Freq = HAL_CRU_ClkGetOtherFreq(CLK_FRAC_VOICE1);
+    s_fracCom0Freq = HAL_CRU_ClkGetOtherFreq(CLK_FRAC_COMMON0);
+    s_fracCom1Freq = HAL_CRU_ClkGetOtherFreq(CLK_FRAC_COMMON1);
+    s_fracCom2Freq = HAL_CRU_ClkGetOtherFreq(CLK_FRAC_COMMON2);
+}
+
+/**
+ * @brief Get clk freq.
+ * @param  clockName: CLOCK_Name id.
+ * @return rate.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
+uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
+{
+    uint32_t freq;
+    uint32_t clkMux = CLK_GET_MUX(clockName);
+    uint32_t clkDiv = CLK_GET_DIV(clockName);
+    uint32_t pRate = s_gpllFreq;
+
+    CRU_Init();
+
+    switch (clockName) {
+    case CLK_INT_VOICE0:
+        return s_intVoice0Freq;
+    case CLK_INT_VOICE1:
+        return s_intVoice1Freq;
+    case CLK_INT_VOICE2:
+        return s_intVoice2Freq;
+    case MCLK_SPDIFRX0:
+    case MCLK_SPDIFRX1:
+        pRate = HAL_CRU_MuxGetFreq3(clkMux, s_gpllFreq, s_vpll0Freq, s_vpll1Freq);
+        break;
+    default:
+
+        return HAL_CRU_ClkGetOtherFreq(clockName);
+    }
+    if ((clkMux == 0) && (clkDiv == 0)) {
+        return 0;
+    }
+
+    if (clkDiv) {
+        freq = pRate / (HAL_CRU_ClkGetDiv(clkDiv));
+    } else {
+        freq = pRate;
+    }
+
+    return freq;
+}
+
+/**
+ * @brief Set clk freq.
+ * @param  clockName: CLOCK_Name id.
+ * @param  rate: clk rate.
+ * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
+HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
+{
+    /* Do nothing */
+    return HAL_OK;
+}
+
+#elif defined(RKMCU_RK2118) && defined(HAL_CRU_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver
  *  @{
