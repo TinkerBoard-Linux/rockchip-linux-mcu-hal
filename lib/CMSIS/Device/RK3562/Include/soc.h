@@ -507,6 +507,10 @@ typedef enum PD_Id {
 /****************************************FSPI********************************************/
 #define FSPI_CHIP_CNT           (2)
 
+/****************************************WDT*********************************************/
+#define GLB_RST_SND_WDT GLB_RST_SND_WDT0
+#define GLB_RST_FST_WDT GLB_RST_FST_WDT0
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
