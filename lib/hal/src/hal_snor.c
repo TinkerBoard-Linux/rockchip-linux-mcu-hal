@@ -382,9 +382,6 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint16_t code, uint8_t *val,
     if (SNOR_GET_PROTOCOL_CMD_BITS(nor->readProto) == 8) {
         op.dummy.buswidth = op.cmd.buswidth;
         op.dummy.nbytes = (nor->opcode->dummySlow * op.dummy.buswidth) >> 3;
-    } else if (nor->dtr) {
-        op.cmd.buswidth = 4;
-        op.data.buswidth = 4;
     }
 
     SNOR_SpimemSetUp(nor, &op, nor->readProto);
@@ -490,7 +487,7 @@ static HAL_Status SNOR_XipInit(struct SPI_NOR *nor)
 
     /* Change to use EBh */
     if (nor->spi->mode & HAL_SPI_RX_QUAD) {
-        if (nor->dtr) {
+        if (HAL_SNOR_IsDtr(nor)) {
             op.cmd.opcode = SPINOR_OP_4DTRD4B;
             op.addr.dtr = 1;
             op.data.dtr = 1;
@@ -649,7 +646,7 @@ static HAL_Status SNOR_WaitBusy(struct SPI_NOR *nor, unsigned long timeout)
     } else {
         /* HAL_SNOR_DBG("%s %lx\n", __func__, timeout); */
         for (i = 0; i < timeout; i++) {
-            ret = nor->readReg(nor, nor->rdsrOpcode, status, nor->dtr ? HAL_SPI_POLL_DATA_FORMAT_SIZE : 1);
+            ret = nor->readReg(nor, nor->rdsrOpcode, status, HAL_SNOR_ProtocolIsDtr(nor->readProto) ? HAL_SPI_POLL_DATA_FORMAT_SIZE : 1);
             if (ret != HAL_OK) {
                 return ret;
             }
@@ -1285,7 +1282,7 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
          * 05H 4_4_4 sdr is matched with EEH 4_4_4 sdr, it's supported;
          * 05H 4_4_4 sdr is mismatch with EEH 4_4_4 ddr, it's unsupported.
          */
-        if ((spiMode & HAL_SPI_POLL) && nor->qpi && !nor->dtr) {
+        if ((spiMode & HAL_SPI_POLL) && nor->qpi && !HAL_SNOR_IsDtr(nor)) {
             nor->poll = true;
         }
         /* Clear the Octal SPI attribute to simplify logic  */
@@ -1359,16 +1356,36 @@ HAL_Status HAL_SNOR_DeInit(struct SPI_NOR *nor)
 HAL_Status HAL_SNOR_ReadID(struct SPI_NOR *nor, uint8_t *data)
 {
     int32_t ret;
+    uint16_t opcode = SPINOR_OP_RDID;
+    uint32_t len = SNOR_ID_LENGTH_DEFAULT;
 
     if (!data) {
         return HAL_INVAL;
     }
 
-    ret = nor->readReg(nor, SPINOR_OP_RDID, data, 4);
+    if (SNOR_GET_PROTOCOL_CMD_BITS(nor->readProto) == 8 && HAL_SNOR_ProtocolIsDtr(nor->readProto)) {
+        opcode = nor->opcode->rdid;
+        if ((nor->info->id >> 16 & 0xff) == MID_MACRONIX) {
+            len = SNOR_ID_LENGTH_MACRONIX;
+        }
+    }
+
+    ret = nor->readReg(nor, opcode, data, len);
     if (ret) {
         HAL_SNOR_DBG("error reading JEDEC ID%x %x %x\n", data[0], data[1], data[2]);
 
         return HAL_ERROR;
+    }
+
+    if (SNOR_GET_PROTOCOL_CMD_BITS(nor->readProto) == 8 && HAL_SNOR_ProtocolIsDtr(nor->readProto)) {
+        /*
+         * Macronix OPI DTR RDID data order MID_MID_TYPE_TYPE_DENSITY_DENSITY
+         * Common OPI DTR RDID data order MID_TYPE_DENSITY
+         */
+        if ((nor->info->id >> 16 & 0xff) == MID_MACRONIX) {
+            data[1] = data[2];
+            data[2] = data[4];
+        }
     }
 
     return HAL_OK;
@@ -1429,6 +1446,12 @@ HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId)
     return HAL_FALSE;
 }
 
+/**
+ * @brief  Read flash uuid.
+ * @param  nor: nor dev.
+ * @param  buf: data buffer.
+ * @return HAL_Status.
+ */
 HAL_Status HAL_SNOR_ReadUUID(struct SPI_NOR *nor, void *buf)
 {
     struct HAL_SPI_MEM_OP op = HAL_SPI_MEM_OP_FORMAT(HAL_SPI_MEM_OP_CMD(SPINOR_OP_READ_UUID, 1),
@@ -1441,6 +1464,11 @@ HAL_Status HAL_SNOR_ReadUUID(struct SPI_NOR *nor, void *buf)
     return SNOR_SPIMemExecOp(nor->spi, &op);
 }
 
+/**
+ * @brief  Nor flash soft reset.
+ * @param  nor: nor dev.
+ * @return HAL_Status.
+ */
 HAL_Status HAL_SNOR_ResetDevice(struct SPI_NOR *nor)
 {
     nor->writeReg(nor, SPINOR_OP_EN_RESET, NULL, 0);
@@ -1448,6 +1476,16 @@ HAL_Status HAL_SNOR_ResetDevice(struct SPI_NOR *nor)
     HAL_CPUDelayUs(1000);
 
     return HAL_OK;
+}
+
+/**
+ * @brief  Check whether this Nor flash is dtr transfer enabled.
+ * @param  nor: nor dev.
+ * @return bool.
+ */
+bool HAL_SNOR_IsDtr(struct SPI_NOR *nor)
+{
+    return nor->dtr;
 }
 
 /** @} */

@@ -27,9 +27,12 @@
 
 /***************************** Structure Definition **************************/
 
-#define SPI_NOR_MAX_CMD_SIZE 8
-#define SNOR_SPEED_MAX       133000000
-#define SNOR_SPEED_DEFAULT   80000000
+#define SPI_NOR_MAX_CMD_SIZE    8
+#define SNOR_SPEED_MAX          133000000
+#define SNOR_SPEED_DEFAULT      80000000
+#define SNOR_ID_LENGTH_DEFAULT  4
+#define SNOR_ID_LENGTH_MAX      6
+#define SNOR_ID_LENGTH_MACRONIX SNOR_ID_LENGTH_MAX
 
 #define SNOR_PROTO_IS_DTR HAL_BIT(24)   /* Double Transfer Rate */
 
@@ -236,6 +239,7 @@ HAL_Status HAL_SNOR_XIPDisable(struct SPI_NOR *nor);
 HAL_Check HAL_SNOR_IsFlashSupported(uint8_t *flashId);
 HAL_Status HAL_SNOR_ReadUUID(struct SPI_NOR *nor, void *buf);
 HAL_Status HAL_SNOR_ResetDevice(struct SPI_NOR *nor);
+bool HAL_SNOR_IsDtr(struct SPI_NOR *nor);
 
 /** @} */
 
