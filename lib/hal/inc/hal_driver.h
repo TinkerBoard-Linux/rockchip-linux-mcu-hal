@@ -34,16 +34,16 @@
 #include "hal_bufmgr.h"
 #endif
 
+#ifdef HAL_CACHE_ECC_MODULE_ENABLED
+#include "hal_cache_ecc.h"
+#endif
+
 #ifdef HAL_CANFD_MODULE_ENABLED
 #include "hal_canfd.h"
 #endif
 
 #ifdef HAL_CKCAL_MODULE_ENABLED
 #include "hal_ckcal.h"
-#endif
-
-#ifdef HAL_CACHE_ECC_MODULE_ENABLED
-#include "hal_cache_ecc.h"
 #endif
 
 #ifdef HAL_CPU_TOPOLOGY_MODULE_ENABLED
@@ -58,17 +58,17 @@
 #include "hal_crypto.h"
 #endif
 
-#ifdef HAL_DSI_MODULE_ENABLED
-#include "hal_display.h"
-#include "hal_dsi.h"
+#ifdef HAL_DDR_ECC_MODULE_ENABLED
+#include "hal_ddr_ecc.h"
 #endif
 
 #ifdef HAL_DEMO_MODULE_ENABLED
 #include "hal_demo.h"
 #endif
 
-#ifdef HAL_DDR_ECC_MODULE_ENABLED
-#include "hal_ddr_ecc.h"
+#ifdef HAL_DSI_MODULE_ENABLED
+#include "hal_display.h"
+#include "hal_dsi.h"
 #endif
 
 #ifdef HAL_DSP_MODULE_ENABLED
@@ -85,6 +85,15 @@
 #include "hal_efuse.h"
 #endif
 
+#ifdef HAL_FSPI_MODULE_ENABLED
+#include "hal_spi_mem.h"
+#include "hal_fspi.h"
+#endif
+
+#ifdef HAL_GIC_MODULE_ENABLED
+#include "hal_gic.h"
+#endif
+
 #if defined(HAL_GMAC_MODULE_ENABLED) || defined(HAL_GMAC1000_MODULE_ENABLED)
 #include "hal_gmac.h"
 #endif
@@ -95,10 +104,6 @@
 
 #ifdef HAL_GPIO_IRQ_GROUP_MODULE_ENABLED
 #include "hal_gpio_irq_group.h"
-#endif
-
-#ifdef HAL_PINCTRL_MODULE_ENABLED
-#include "hal_pinctrl.h"
 #endif
 
 #if defined(HAL_HCD_MODULE_ENABLED) || defined(HAL_PCD_MODULE_ENABLED)
@@ -146,8 +151,8 @@
 #include "hal_irq_handler.h"
 #endif
 
-#ifdef HAL_GIC_MODULE_ENABLED
-#include "hal_gic.h"
+#ifdef HAL_KEYCTRL_MODULE_ENABLED
+#include "hal_keyctrl.h"
 #endif
 
 #ifdef HAL_MBOX_MODULE_ENABLED
@@ -172,6 +177,10 @@
 #include "hal_pdm.h"
 #endif
 
+#ifdef HAL_PINCTRL_MODULE_ENABLED
+#include "hal_pinctrl.h"
+#endif
+
 #ifdef HAL_PL330_MODULE_ENABLED
 #include "hal_pl330.h"
 #endif
@@ -190,12 +199,35 @@
 
 #include "hal_pwr.h"
 
+#ifdef HAL_QPIPSRAM_MODULE_ENABLED
+#include "hal_spi_mem.h"
+#include "hal_qpipsram.h"
+#endif
+
 #ifdef HAL_RISCVIC_MODULE_ENABLED
 #include "hal_riscvic.h"
 #endif
 
+#ifdef HAL_SAI_MODULE_ENABLED
+#include "hal_sai.h"
+#endif
+
+#ifdef HAL_SARADC_MODULE_ENABLED
+#include "hal_saradc.h"
+#endif
+
 #ifdef HAL_SDIO_MODULE_ENABLED
 #include "hal_sdio.h"
+#endif
+
+#ifdef HAL_SFC_MODULE_ENABLED
+#include "hal_spi_mem.h"
+#include "hal_snor.h"
+#include "hal_sfc.h"
+#endif
+
+#ifdef HAL_SMCCC_MODULE_ENABLED
+#include "hal_smccc.h"
 #endif
 
 #ifdef HAL_SNOR_MODULE_ENABLED
@@ -203,8 +235,20 @@
 #include "hal_snor.h"
 #endif
 
-#ifdef HAL_SFC_MODULE_ENABLED
-#include "hal_sfc.h"
+#ifdef HAL_SPDIFRX_MODULE_ENABLED
+#include "hal_spdifrx.h"
+#endif
+
+#ifdef HAL_SPDIFTX_MODULE_ENABLED
+#include "hal_spdiftx.h"
+#endif
+
+#ifdef HAL_SPI2APB_MODULE_ENABLED
+#include "hal_spi2apb.h"
+#endif
+
+#ifdef HAL_SPI_MODULE_ENABLED
+#include "hal_spi.h"
 #endif
 
 #ifdef HAL_SPINAND_MODULE_ENABLED
@@ -220,14 +264,8 @@
 #include "hal_systick.h"
 #endif
 
-#ifdef HAL_FSPI_MODULE_ENABLED
-#include "hal_spi_mem.h"
-#include "hal_fspi.h"
-#endif
-
-#ifdef HAL_QPIPSRAM_MODULE_ENABLED
-#include "hal_spi_mem.h"
-#include "hal_qpipsram.h"
+#ifdef HAL_TIMER_MODULE_ENABLED
+#include "hal_timer.h"
 #endif
 
 #ifdef HAL_TOUCHKEY_MODULE_ENABLED
@@ -240,42 +278,6 @@
 
 #ifdef HAL_TSADC_MODULE_ENABLED
 #include "hal_tsadc.h"
-#endif
-
-#ifdef HAL_SAI_MODULE_ENABLED
-#include "hal_sai.h"
-#endif
-
-#ifdef HAL_SARADC_MODULE_ENABLED
-#include "hal_saradc.h"
-#endif
-
-#ifdef HAL_SMCCC_MODULE_ENABLED
-#include "hal_smccc.h"
-#endif
-
-#ifdef HAL_KEYCTRL_MODULE_ENABLED
-#include "hal_keyctrl.h"
-#endif
-
-#ifdef HAL_SPDIFRX_MODULE_ENABLED
-#include "hal_spdifrx.h"
-#endif
-
-#ifdef HAL_SPDIFTX_MODULE_ENABLED
-#include "hal_spdiftx.h"
-#endif
-
-#ifdef HAL_SPI_MODULE_ENABLED
-#include "hal_spi.h"
-#endif
-
-#ifdef HAL_SPI2APB_MODULE_ENABLED
-#include "hal_spi2apb.h"
-#endif
-
-#ifdef HAL_TIMER_MODULE_ENABLED
-#include "hal_timer.h"
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED
