@@ -907,5 +907,5 @@ void BSP_Init(void)
 
 void BSP_SetLoaderFlag(void)
 {
-    //GRF->OS_REG0 = SYS_UPGRADE_FLAG;
+    GRF_PMU->OS_REG0 = SYS_UPGRADE_FLAG;
 }
