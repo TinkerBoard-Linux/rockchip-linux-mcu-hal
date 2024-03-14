@@ -139,6 +139,16 @@
 #define SAI_INTSR_TXUI_ACT    HAL_BIT(SAI_INTSR_TXUI_SHIFT)
 #define SAI_INTSR_TXUI_INA    0
 
+/* FSXN Frame Sync xN Register */
+#define SAI_FSXN_FSXN1_SHIFT(x) ((x) << SAI_FSXN_FSXN1_SHIFT_SHIFT)
+#define SAI_FSXN_FSXN0_SHIFT(x) ((x) << SAI_FSXN_FSXN0_SHIFT_SHIFT)
+#define SAI_FSXN_FSXN1_FW(x)    ((x - 1) << SAI_FSXN_FSXN1_FW_SHIFT)
+#define SAI_FSXN_FSXN1_EN       HAL_BIT(SAI_FSXN_FSXN1_EN_SHIFT)
+#define SAI_FSXN_FSXN1_DIS      0
+#define SAI_FSXN_FSXN0_FW(x)    ((x - 1) << SAI_FSXN_FSXN0_FW_SHIFT)
+#define SAI_FSXN_FSXN0_EN       HAL_BIT(SAI_FSXN_FSXN0_EN_SHIFT)
+#define SAI_FSXN_FSXN0_DIS      0
+
 /* XSHIFT: Transfer / Receive Frame Sync Shift Register */
 #define SAI_XSHIFT_SHIFT_RIGHT_MASK HAL_GENMASK(23, 0)
 #define SAI_XSHIFT_SHIFT_RIGHT(x)   ((x) << 0)
@@ -354,6 +364,9 @@ HAL_Status HAL_SAI_DevInit(struct HAL_SAI_DEV *sai, struct AUDIO_INIT_CONFIG *co
 
     ret = SAI_createFmt(sai, config->format);
 
+    HAL_SAI_SetFsxn0FrameWidth(sai->pReg, 64, 1);
+    HAL_SAI_SetFsxn1FrameWidth(sai->pReg, 64, 1);
+
     return ret;
 }
 
@@ -457,6 +470,108 @@ HAL_Status HAL_SAI_SetBclkDiv(struct SAI_REG *pReg, int div)
     HAL_ASSERT(IS_SAI_INSTANCE(pReg));
 
     MODIFY_REG(pReg->CKR, SAI_CKR_MDIV_MASK, SAI_CKR_MDIV(div));
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set sai fsxn0 clk.
+ * @param  pReg: the handle of SAI_REG.
+ * @param  frameWidth: the frame width of fsxn clk.
+ * @param  shiftFrame: shift to the left by shiftFrame releative to frame sync edge.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_SetFsxn0FrameWidth(struct SAI_REG *pReg, int frameWidth, int shiftFrame)
+{
+#ifdef SAI_FSXN_OFFSET
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->FSXN, SAI_FSXN_FSXN0_FW_MASK, SAI_FSXN_FSXN0_FW(frameWidth));
+    MODIFY_REG(pReg->FSXN, SAI_FSXN_FSXN0_SHIFT_MASK, SAI_FSXN_FSXN0_SHIFT(shiftFrame));
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Set sai fsxn1 clk.
+ * @param  pReg: the handle of SAI_REG.
+ * @param  frameWidth: the frame width of fsxn clk.
+ * @param  shiftFrame: shift to the left by shiftFrame releative to frame sync edge.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_SetFsxn1FrameWidth(struct SAI_REG *pReg, int frameWidth, int shiftFrame)
+{
+#ifdef SAI_FSXN_OFFSET
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->FSXN, SAI_FSXN_FSXN1_FW_MASK, SAI_FSXN_FSXN1_FW(frameWidth));
+    MODIFY_REG(pReg->FSXN, SAI_FSXN_FSXN1_SHIFT_MASK, SAI_FSXN_FSXN1_SHIFT(shiftFrame));
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Enable FSXN0 clk
+ * @param  pReg: the handle of SAI_REG.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_EnableFsxn0(struct SAI_REG *pReg)
+{
+#ifdef SAI_FSXN_OFFSET
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->FSXN, SAI_FSXN_FSXN0_EN_MASK, SAI_FSXN_FSXN0_EN);
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Enable FSXN1 clk
+ * @param  pReg: the handle of SAI_REG.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_EnableFsxn1(struct SAI_REG *pReg)
+{
+#ifdef SAI_FSXN_OFFSET
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->FSXN, SAI_FSXN_FSXN1_EN_MASK, SAI_FSXN_FSXN1_EN);
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable FSXN0 clk
+ * @param  pReg: the handle of SAI_REG.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_DisableFsxn0(struct SAI_REG *pReg)
+{
+#ifdef SAI_FSXN_OFFSET
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->FSXN, SAI_FSXN_FSXN0_EN_MASK, SAI_FSXN_FSXN0_DIS);
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable FSXN1 clk
+ * @param  pReg: the handle of SAI_REG.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_DisableFsxn1(struct SAI_REG *pReg)
+{
+#ifdef SAI_FSXN_OFFSET
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->FSXN, SAI_FSXN_FSXN1_EN_MASK, SAI_FSXN_FSXN1_DIS);
+#endif
 
     return HAL_OK;
 }

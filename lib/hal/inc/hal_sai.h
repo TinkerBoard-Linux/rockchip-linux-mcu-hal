@@ -80,6 +80,12 @@ HAL_Status HAL_SAI_EnableRX(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_DisableTX(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_DisableRX(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_SetBclkDiv(struct SAI_REG *pReg, int div);
+HAL_Status HAL_SAI_SetFsxn0FrameWidth(struct SAI_REG *pReg, int frameWidth, int shiftFrame);
+HAL_Status HAL_SAI_SetFsxn1FrameWidth(struct SAI_REG *pReg, int frameWidth, int shiftFrame);
+HAL_Status HAL_SAI_EnableFsxn0(struct SAI_REG *pReg);
+HAL_Status HAL_SAI_EnableFsxn1(struct SAI_REG *pReg);
+HAL_Status HAL_SAI_DisableFsxn0(struct SAI_REG *pReg);
+HAL_Status HAL_SAI_DisableFsxn1(struct SAI_REG *pReg);
 
 /** @} */
 
