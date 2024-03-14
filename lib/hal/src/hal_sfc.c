@@ -121,7 +121,7 @@ HAL_UNUSED static HAL_Check SFC_IsDMAInterrupt(struct HAL_SFC_HOST *host)
     return (HAL_Check)HAL_IS_BIT_SET(host->instance->ISR, SFC_ISR_DMAS_ACTIVE);
 }
 
-#ifdef HAL_SNOR_MODULE_ENABLED
+#if defined(HAL_SNOR_MODULE_ENABLED) || defined(HAL_SPINAND_MODULE_ENABLED)
 /**
  * @brief  Configuration register with flash operation protocol.
  * @param  host: SFC host.
@@ -142,7 +142,14 @@ static HAL_Status SFC_XferStart(struct HAL_SFC_HOST *host, struct HAL_SPI_MEM_OP
 
     /* set ADDR */
     if (op->addr.nbytes) {
-        sfcCmd.b.addrbits = op->addr.nbytes == 4 ? SFC_ADDR_32BITS : SFC_ADDR_24BITS;
+        if (op->addr.nbytes == 4) {
+            sfcCmd.b.addrbits = SFC_ADDR_32BITS;
+        } else if (op->addr.nbytes == 3) {
+            sfcCmd.b.addrbits = SFC_ADDR_24BITS;
+        } else {
+            sfcCmd.b.addrbits = SFC_ADDR_XBITS;
+            pReg->ABIT = op->addr.nbytes * 8 - 1;
+        }
         sfcCtrl.b.addrlines = op->addr.buswidth == 4 ? SFC_LINES_X4 : SFC_LINES_X1;
     }
     /* set DUMMY*/
@@ -313,6 +320,40 @@ static HAL_Status SFC_XferDone(struct HAL_SFC_HOST *host)
  * @return HAL_Status.
  */
 HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
+{
+    struct HAL_SFC_HOST *host = (struct HAL_SFC_HOST *)spi->userdata;
+    uint32_t ret = HAL_OK;
+    uint32_t dir = op->data.dir;
+    void *pData = NULL;
+
+    if (op->data.buf.in) {
+        pData = (void *)op->data.buf.in;
+    } else if (op->data.buf.out) {
+        pData = (void *)op->data.buf.out;
+    }
+
+    SFC_XferStart(host, op);
+    if (pData) {
+        ret = SFC_XferData(host, op->data.nbytes, pData, dir);
+        if (ret) {
+            HAL_DBG("%s xfer data failed ret %ld\n", __func__, ret);
+
+            return ret;
+        }
+    }
+
+    return SFC_XferDone(host);
+}
+#endif
+
+#ifdef HAL_SPINAND_MODULE_ENABLED
+/**
+ * @brief  SPI Nand flash data transmission interface supporting open source specifications.
+ * @param  spi: host abstract.
+ * @param  op: flash operation protocol.
+ * @return HAL_Status.
+ */
+HAL_Status HAL_SFC_SPINandSpiXfer(struct SPI_NAND_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
     struct HAL_SFC_HOST *host = (struct HAL_SFC_HOST *)spi->userdata;
     uint32_t ret = HAL_OK;

@@ -5,7 +5,7 @@
 
 #include "hal_conf.h"
 
-#if defined(HAL_SNOR_MODULE_ENABLED) || defined(HAL_QPIPSRAM_MODULE_ENABLED) || defined(HAL_FSPI_MODULE_ENABLED)
+#if defined(HAL_SNOR_MODULE_ENABLED) || defined(HAL_QPIPSRAM_MODULE_ENABLED) || defined(HAL_FSPI_MODULE_ENABLED) || defined(HAL_SFC_MODULE_ENABLED)
 
 /** @addtogroup RK_HAL_Driver
  *  @{

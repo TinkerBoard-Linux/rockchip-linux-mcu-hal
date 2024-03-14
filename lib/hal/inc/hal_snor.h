@@ -19,6 +19,7 @@
 #define _HAL_SFC_NOR_H_
 
 #include "hal_def.h"
+#include "hal_spi_mem.h"
 
 /***************************** MACRO Definition ******************************/
 /** @defgroup SNOR_Exported_Definition_Group1 Basic Definition

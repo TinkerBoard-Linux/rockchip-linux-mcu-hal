@@ -224,9 +224,7 @@
 #include "hal_sdio.h"
 #endif
 
-#ifdef HAL_SFC_MODULE_ENABLED
-#include "hal_spi_mem.h"
-#include "hal_snor.h"
+#if defined(HAL_SFC_MODULE_ENABLED) && (defined(HAL_SNOR_MODULE_ENABLED) || defined(HAL_SPINAND_MODULE_ENABLED))
 #include "hal_sfc.h"
 #endif
 
@@ -235,7 +233,6 @@
 #endif
 
 #ifdef HAL_SNOR_MODULE_ENABLED
-#include "hal_spi_mem.h"
 #include "hal_snor.h"
 #endif
 
@@ -256,7 +253,6 @@
 #endif
 
 #ifdef HAL_SPINAND_MODULE_ENABLED
-#include "hal_spi_mem.h"
 #include "hal_spinand.h"
 #endif
 
