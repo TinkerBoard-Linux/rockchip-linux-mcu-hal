@@ -660,6 +660,8 @@ HAL_Status HAL_FSPI_XferData_DMA(struct HAL_FSPI_HOST *host, uint32_t len, void 
 
     if (dir == HAL_SPI_MEM_DATA_OUT) {
         HAL_DCACHE_CleanInvalidateByRange((uint32_t)data, len);
+    } else {
+        HAL_DCACHE_InvalidateByRange((uint32_t)data, len);
     }
     pReg->ICLR = 0xFFFFFFFF;
     pReg->DMAADDR = (uint32_t)data;
@@ -1134,7 +1136,7 @@ HAL_Status HAL_FSPI_DLLDisable(struct HAL_FSPI_HOST *host)
 /**
  * @brief  Get FSPI XMMC status.
  * @param  host: FSPI host.
- * @return uiint32_t: XMMC status.
+ * @return uint32_t: XMMC status.
  */
 uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host)
 {
@@ -1143,6 +1145,11 @@ uint32_t HAL_FSPI_GetXMMCStatus(struct HAL_FSPI_HOST *host)
     return (uint32_t)host->instance->XMMCSR;
 }
 
+/**
+ * @brief  Get FSPI supported max io transmition size.
+ * @param  host: FSPI host.
+ * @return uint32_t: size in bytes.
+ */
 uint32_t HAL_FSPI_GetMaxIoSize(struct HAL_FSPI_HOST *host)
 {
     HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
@@ -1156,6 +1163,11 @@ uint32_t HAL_FSPI_GetMaxIoSize(struct HAL_FSPI_HOST *host)
 #endif
 }
 
+/**
+ * @brief  Get FSPI supported max delay line cess.
+ * @param  host: FSPI host.
+ * @return uint32_t: the numbers of cells.
+ */
 uint32_t HAL_FSPI_GetMaxDllCells(struct HAL_FSPI_HOST *host)
 {
     HAL_ASSERT(IS_FSPI_INSTANCE(host->instance));
