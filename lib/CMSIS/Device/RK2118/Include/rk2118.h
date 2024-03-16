@@ -1629,7 +1629,7 @@ struct GMAC_REG {
 };
 /* SPI2APB Register Structure Define */
 struct SPI2APB_REG {
-    __IO uint32_t CTRL[1];                            /* Address Offset: 0x0000 */
+    __IO uint32_t CTRL0;                              /* Address Offset: 0x0000 */
          uint32_t RESERVED0004[8];                    /* Address Offset: 0x0004 */
     __I  uint32_t SR;                                 /* Address Offset: 0x0024 */
          uint32_t RESERVED0028;                       /* Address Offset: 0x0028 */
