@@ -420,7 +420,7 @@ HAL_Status HAL_SPDIFRX_DevEnable(struct HAL_SPDIFRX_DEV *spdifrx)
     HAL_CRU_ClkResetAssert(spdifrx->rst);
     HAL_DelayUs(10);
     HAL_CRU_ClkResetDeassert(spdifrx->rst);
-    HAL_DelayUs(1000);
+    HAL_DelayUs(2000);
 #endif
 
     return HAL_SPDIFRX_Enable(spdifrx->pReg);
