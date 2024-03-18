@@ -259,338 +259,22 @@ struct GPIO4_IOC_REG {
 };
 /* CRU Register Structure Define */
 struct CRU_REG {
-    __IO uint32_t BPLL_CON0;                          /* Address Offset: 0x0000 */
-    __IO uint32_t BPLL_CON1;                          /* Address Offset: 0x0004 */
-         uint32_t RESERVED0008[2];                    /* Address Offset: 0x0008 */
-    __IO uint32_t BPLL_CON4;                          /* Address Offset: 0x0010 */
-    __IO uint32_t BPLL_CON5;                          /* Address Offset: 0x0014 */
-    __IO uint32_t BPLL_CON6;                          /* Address Offset: 0x0018 */
+    __IO uint32_t BPLL_CON[7];                        /* Address Offset: 0x0000 */
          uint32_t RESERVED001C[81];                   /* Address Offset: 0x001C */
-    __IO uint32_t VPLL_CON0;                          /* Address Offset: 0x0160 */
-    __IO uint32_t VPLL_CON1;                          /* Address Offset: 0x0164 */
-    __IO uint32_t VPLL_CON2;                          /* Address Offset: 0x0168 */
-    __IO uint32_t VPLL_CON3;                          /* Address Offset: 0x016C */
-    __IO uint32_t VPLL_CON4;                          /* Address Offset: 0x0170 */
-    __IO uint32_t VPLL_CON5;                          /* Address Offset: 0x0174 */
-    __IO uint32_t VPLL_CON6;                          /* Address Offset: 0x0178 */
+    __IO uint32_t VPLL_CON[7];                        /* Address Offset: 0x0160 */
          uint32_t RESERVED017C;                       /* Address Offset: 0x017C */
-    __IO uint32_t AUPLL_CON0;                         /* Address Offset: 0x0180 */
-    __IO uint32_t AUPLL_CON1;                         /* Address Offset: 0x0184 */
-    __IO uint32_t AUPLL_CON2;                         /* Address Offset: 0x0188 */
-    __IO uint32_t AUPLL_CON3;                         /* Address Offset: 0x018C */
-    __IO uint32_t AUPLL_CON4;                         /* Address Offset: 0x0190 */
-    __IO uint32_t AUPLL_CON5;                         /* Address Offset: 0x0194 */
-    __IO uint32_t AUPLL_CON6;                         /* Address Offset: 0x0198 */
+    __IO uint32_t AUPLL_CON[7];                       /* Address Offset: 0x0180 */
          uint32_t RESERVED019C;                       /* Address Offset: 0x019C */
-    __IO uint32_t CPLL_CON0;                          /* Address Offset: 0x01A0 */
-    __IO uint32_t CPLL_CON1;                          /* Address Offset: 0x01A4 */
-    __IO uint32_t CPLL_CON2;                          /* Address Offset: 0x01A8 */
-    __IO uint32_t CPLL_CON3;                          /* Address Offset: 0x01AC */
-    __IO uint32_t CPLL_CON4;                          /* Address Offset: 0x01B0 */
-    __IO uint32_t CPLL_CON5;                          /* Address Offset: 0x01B4 */
-    __IO uint32_t CPLL_CON6;                          /* Address Offset: 0x01B8 */
+    __IO uint32_t CPLL_CON[7];                        /* Address Offset: 0x01A0 */
          uint32_t RESERVED01BC;                       /* Address Offset: 0x01BC */
-    __IO uint32_t GPLL_CON0;                          /* Address Offset: 0x01C0 */
-    __IO uint32_t GPLL_CON1;                          /* Address Offset: 0x01C4 */
-    __IO uint32_t GPLL_CON2;                          /* Address Offset: 0x01C8 */
-    __IO uint32_t GPLL_CON3;                          /* Address Offset: 0x01CC */
-    __IO uint32_t GPLL_CON4;                          /* Address Offset: 0x01D0 */
-    __IO uint32_t GPLL_CON5;                          /* Address Offset: 0x01D4 */
-    __IO uint32_t GPLL_CON6;                          /* Address Offset: 0x01D8 */
+    __IO uint32_t GPLL_CON[7];                        /* Address Offset: 0x01C0 */
          uint32_t RESERVED01DC[41];                   /* Address Offset: 0x01DC */
     __IO uint32_t MODE_CON00;                         /* Address Offset: 0x0280 */
          uint32_t RESERVED0284[31];                   /* Address Offset: 0x0284 */
-    __IO uint32_t CLKSEL_CON00;                       /* Address Offset: 0x0300 */
-    __IO uint32_t CLKSEL_CON01;                       /* Address Offset: 0x0304 */
-    __IO uint32_t CLKSEL_CON02;                       /* Address Offset: 0x0308 */
-    __IO uint32_t CLKSEL_CON03;                       /* Address Offset: 0x030C */
-    __IO uint32_t CLKSEL_CON04;                       /* Address Offset: 0x0310 */
-    __IO uint32_t CLKSEL_CON05;                       /* Address Offset: 0x0314 */
-    __IO uint32_t CLKSEL_CON06;                       /* Address Offset: 0x0318 */
-         uint32_t RESERVED031C;                       /* Address Offset: 0x031C */
-    __IO uint32_t CLKSEL_CON08;                       /* Address Offset: 0x0320 */
-    __IO uint32_t CLKSEL_CON09;                       /* Address Offset: 0x0324 */
-    __IO uint32_t CLKSEL_CON10;                       /* Address Offset: 0x0328 */
-    __IO uint32_t CLKSEL_CON11;                       /* Address Offset: 0x032C */
-    __IO uint32_t CLKSEL_CON12;                       /* Address Offset: 0x0330 */
-    __IO uint32_t CLKSEL_CON13;                       /* Address Offset: 0x0334 */
-    __IO uint32_t CLKSEL_CON14;                       /* Address Offset: 0x0338 */
-    __IO uint32_t CLKSEL_CON15;                       /* Address Offset: 0x033C */
-    __IO uint32_t CLKSEL_CON16;                       /* Address Offset: 0x0340 */
-    __IO uint32_t CLKSEL_CON17;                       /* Address Offset: 0x0344 */
-    __IO uint32_t CLKSEL_CON18;                       /* Address Offset: 0x0348 */
-    __IO uint32_t CLKSEL_CON19;                       /* Address Offset: 0x034C */
-         uint32_t RESERVED0350;                       /* Address Offset: 0x0350 */
-    __IO uint32_t CLKSEL_CON21;                       /* Address Offset: 0x0354 */
-    __IO uint32_t CLKSEL_CON22;                       /* Address Offset: 0x0358 */
-    __IO uint32_t CLKSEL_CON23;                       /* Address Offset: 0x035C */
-    __IO uint32_t CLKSEL_CON24;                       /* Address Offset: 0x0360 */
-    __IO uint32_t CLKSEL_CON25;                       /* Address Offset: 0x0364 */
-    __IO uint32_t CLKSEL_CON26;                       /* Address Offset: 0x0368 */
-    __IO uint32_t CLKSEL_CON27;                       /* Address Offset: 0x036C */
-    __IO uint32_t CLKSEL_CON28;                       /* Address Offset: 0x0370 */
-    __IO uint32_t CLKSEL_CON29;                       /* Address Offset: 0x0374 */
-    __IO uint32_t CLKSEL_CON30;                       /* Address Offset: 0x0378 */
-    __IO uint32_t CLKSEL_CON31;                       /* Address Offset: 0x037C */
-    __IO uint32_t CLKSEL_CON32;                       /* Address Offset: 0x0380 */
-    __IO uint32_t CLKSEL_CON33;                       /* Address Offset: 0x0384 */
-    __IO uint32_t CLKSEL_CON34;                       /* Address Offset: 0x0388 */
-    __IO uint32_t CLKSEL_CON35;                       /* Address Offset: 0x038C */
-    __IO uint32_t CLKSEL_CON36;                       /* Address Offset: 0x0390 */
-    __IO uint32_t CLKSEL_CON37;                       /* Address Offset: 0x0394 */
-    __IO uint32_t CLKSEL_CON38;                       /* Address Offset: 0x0398 */
-    __IO uint32_t CLKSEL_CON39;                       /* Address Offset: 0x039C */
-    __IO uint32_t CLKSEL_CON40;                       /* Address Offset: 0x03A0 */
-    __IO uint32_t CLKSEL_CON41;                       /* Address Offset: 0x03A4 */
-    __IO uint32_t CLKSEL_CON42;                       /* Address Offset: 0x03A8 */
-    __IO uint32_t CLKSEL_CON43;                       /* Address Offset: 0x03AC */
-    __IO uint32_t CLKSEL_CON44;                       /* Address Offset: 0x03B0 */
-    __IO uint32_t CLKSEL_CON45;                       /* Address Offset: 0x03B4 */
-    __IO uint32_t CLKSEL_CON46;                       /* Address Offset: 0x03B8 */
-    __IO uint32_t CLKSEL_CON47;                       /* Address Offset: 0x03BC */
-    __IO uint32_t CLKSEL_CON48;                       /* Address Offset: 0x03C0 */
-    __IO uint32_t CLKSEL_CON49;                       /* Address Offset: 0x03C4 */
-    __IO uint32_t CLKSEL_CON50;                       /* Address Offset: 0x03C8 */
-    __IO uint32_t CLKSEL_CON51;                       /* Address Offset: 0x03CC */
-    __IO uint32_t CLKSEL_CON52;                       /* Address Offset: 0x03D0 */
-    __IO uint32_t CLKSEL_CON53;                       /* Address Offset: 0x03D4 */
-         uint32_t RESERVED03D8;                       /* Address Offset: 0x03D8 */
-    __IO uint32_t CLKSEL_CON55;                       /* Address Offset: 0x03DC */
-    __IO uint32_t CLKSEL_CON56;                       /* Address Offset: 0x03E0 */
-    __IO uint32_t CLKSEL_CON57;                       /* Address Offset: 0x03E4 */
-    __IO uint32_t CLKSEL_CON58;                       /* Address Offset: 0x03E8 */
-    __IO uint32_t CLKSEL_CON59;                       /* Address Offset: 0x03EC */
-    __IO uint32_t CLKSEL_CON60;                       /* Address Offset: 0x03F0 */
-    __IO uint32_t CLKSEL_CON61;                       /* Address Offset: 0x03F4 */
-    __IO uint32_t CLKSEL_CON62;                       /* Address Offset: 0x03F8 */
-    __IO uint32_t CLKSEL_CON63;                       /* Address Offset: 0x03FC */
-    __IO uint32_t CLKSEL_CON64;                       /* Address Offset: 0x0400 */
-    __IO uint32_t CLKSEL_CON65;                       /* Address Offset: 0x0404 */
-    __IO uint32_t CLKSEL_CON66;                       /* Address Offset: 0x0408 */
-    __IO uint32_t CLKSEL_CON67;                       /* Address Offset: 0x040C */
-    __IO uint32_t CLKSEL_CON68;                       /* Address Offset: 0x0410 */
-    __IO uint32_t CLKSEL_CON69;                       /* Address Offset: 0x0414 */
-    __IO uint32_t CLKSEL_CON70;                       /* Address Offset: 0x0418 */
-    __IO uint32_t CLKSEL_CON71;                       /* Address Offset: 0x041C */
-    __IO uint32_t CLKSEL_CON72;                       /* Address Offset: 0x0420 */
-    __IO uint32_t CLKSEL_CON73;                       /* Address Offset: 0x0424 */
-    __IO uint32_t CLKSEL_CON74;                       /* Address Offset: 0x0428 */
-    __IO uint32_t CLKSEL_CON75;                       /* Address Offset: 0x042C */
-    __IO uint32_t CLKSEL_CON76;                       /* Address Offset: 0x0430 */
-    __IO uint32_t CLKSEL_CON77;                       /* Address Offset: 0x0434 */
-    __IO uint32_t CLKSEL_CON78;                       /* Address Offset: 0x0438 */
-         uint32_t RESERVED043C;                       /* Address Offset: 0x043C */
-    __IO uint32_t CLKSEL_CON80;                       /* Address Offset: 0x0440 */
-         uint32_t RESERVED0444;                       /* Address Offset: 0x0444 */
-    __IO uint32_t CLKSEL_CON82;                       /* Address Offset: 0x0448 */
-         uint32_t RESERVED044C[3];                    /* Address Offset: 0x044C */
-    __IO uint32_t CLKSEL_CON86;                       /* Address Offset: 0x0458 */
-    __IO uint32_t CLKSEL_CON87;                       /* Address Offset: 0x045C */
-    __IO uint32_t CLKSEL_CON88;                       /* Address Offset: 0x0460 */
-    __IO uint32_t CLKSEL_CON89;                       /* Address Offset: 0x0464 */
-    __IO uint32_t CLKSEL_CON90;                       /* Address Offset: 0x0468 */
-         uint32_t RESERVED046C;                       /* Address Offset: 0x046C */
-    __IO uint32_t CLKSEL_CON92;                       /* Address Offset: 0x0470 */
-    __IO uint32_t CLKSEL_CON93;                       /* Address Offset: 0x0474 */
-         uint32_t RESERVED0478[9];                    /* Address Offset: 0x0478 */
-    __IO uint32_t CLKSEL_CON103;                      /* Address Offset: 0x049C */
-    __IO uint32_t CLKSEL_CON104;                      /* Address Offset: 0x04A0 */
-    __IO uint32_t CLKSEL_CON105;                      /* Address Offset: 0x04A4 */
-    __IO uint32_t CLKSEL_CON106;                      /* Address Offset: 0x04A8 */
-    __IO uint32_t CLKSEL_CON107;                      /* Address Offset: 0x04AC */
-    __IO uint32_t CLKSEL_CON108;                      /* Address Offset: 0x04B0 */
-         uint32_t RESERVED04B4;                       /* Address Offset: 0x04B4 */
-    __IO uint32_t CLKSEL_CON110;                      /* Address Offset: 0x04B8 */
-    __IO uint32_t CLKSEL_CON111;                      /* Address Offset: 0x04BC */
-         uint32_t RESERVED04C0[3];                    /* Address Offset: 0x04C0 */
-    __IO uint32_t CLKSEL_CON115;                      /* Address Offset: 0x04CC */
-         uint32_t RESERVED04D0[2];                    /* Address Offset: 0x04D0 */
-    __IO uint32_t CLKSEL_CON118;                      /* Address Offset: 0x04D8 */
-    __IO uint32_t CLKSEL_CON119;                      /* Address Offset: 0x04DC */
-    __IO uint32_t CLKSEL_CON120;                      /* Address Offset: 0x04E0 */
-    __IO uint32_t CLKSEL_CON121;                      /* Address Offset: 0x04E4 */
-    __IO uint32_t CLKSEL_CON122;                      /* Address Offset: 0x04E8 */
-    __IO uint32_t CLKSEL_CON123;                      /* Address Offset: 0x04EC */
-    __IO uint32_t CLKSEL_CON124;                      /* Address Offset: 0x04F0 */
-         uint32_t RESERVED04F4[3];                    /* Address Offset: 0x04F4 */
-    __IO uint32_t CLKSEL_CON128;                      /* Address Offset: 0x0500 */
-    __IO uint32_t CLKSEL_CON129;                      /* Address Offset: 0x0504 */
-    __IO uint32_t CLKSEL_CON130;                      /* Address Offset: 0x0508 */
-         uint32_t RESERVED050C[13];                   /* Address Offset: 0x050C */
-    __IO uint32_t CLKSEL_CON144;                      /* Address Offset: 0x0540 */
-    __IO uint32_t CLKSEL_CON145;                      /* Address Offset: 0x0544 */
-    __IO uint32_t CLKSEL_CON146;                      /* Address Offset: 0x0548 */
-    __IO uint32_t CLKSEL_CON147;                      /* Address Offset: 0x054C */
-         uint32_t RESERVED0550;                       /* Address Offset: 0x0550 */
-    __IO uint32_t CLKSEL_CON149;                      /* Address Offset: 0x0554 */
-         uint32_t RESERVED0558;                       /* Address Offset: 0x0558 */
-    __IO uint32_t CLKSEL_CON151;                      /* Address Offset: 0x055C */
-    __IO uint32_t CLKSEL_CON152;                      /* Address Offset: 0x0560 */
-         uint32_t RESERVED0564;                       /* Address Offset: 0x0564 */
-    __IO uint32_t CLKSEL_CON154;                      /* Address Offset: 0x0568 */
-    __IO uint32_t CLKSEL_CON155;                      /* Address Offset: 0x056C */
-    __IO uint32_t CLKSEL_CON156;                      /* Address Offset: 0x0570 */
-    __IO uint32_t CLKSEL_CON157;                      /* Address Offset: 0x0574 */
-    __IO uint32_t CLKSEL_CON158;                      /* Address Offset: 0x0578 */
-    __IO uint32_t CLKSEL_CON159;                      /* Address Offset: 0x057C */
-    __IO uint32_t CLKSEL_CON160;                      /* Address Offset: 0x0580 */
-    __IO uint32_t CLKSEL_CON161;                      /* Address Offset: 0x0584 */
-    __IO uint32_t CLKSEL_CON162;                      /* Address Offset: 0x0588 */
-    __IO uint32_t CLKSEL_CON163;                      /* Address Offset: 0x058C */
-    __IO uint32_t CLKSEL_CON164;                      /* Address Offset: 0x0590 */
-    __IO uint32_t CLKSEL_CON165;                      /* Address Offset: 0x0594 */
-    __IO uint32_t CLKSEL_CON166;                      /* Address Offset: 0x0598 */
-    __IO uint32_t CLKSEL_CON167;                      /* Address Offset: 0x059C */
-    __IO uint32_t CLKSEL_CON168;                      /* Address Offset: 0x05A0 */
-         uint32_t RESERVED05A4[9];                    /* Address Offset: 0x05A4 */
-    __IO uint32_t CLKSEL_CON178;                      /* Address Offset: 0x05C8 */
-         uint32_t RESERVED05CC;                       /* Address Offset: 0x05CC */
-    __IO uint32_t CLKSEL_CON180;                      /* Address Offset: 0x05D0 */
+    __IO uint32_t CLKSEL_CON[181];                    /* Address Offset: 0x0300 */
          uint32_t RESERVED05D4[139];                  /* Address Offset: 0x05D4 */
-    __IO uint32_t GATE_CON00;                         /* Address Offset: 0x0800 */
-    __IO uint32_t GATE_CON01;                         /* Address Offset: 0x0804 */
-    __IO uint32_t GATE_CON02;                         /* Address Offset: 0x0808 */
-    __IO uint32_t GATE_CON03;                         /* Address Offset: 0x080C */
-    __IO uint32_t GATE_CON04;                         /* Address Offset: 0x0810 */
-    __IO uint32_t GATE_CON05;                         /* Address Offset: 0x0814 */
-    __IO uint32_t GATE_CON06;                         /* Address Offset: 0x0818 */
-    __IO uint32_t GATE_CON07;                         /* Address Offset: 0x081C */
-    __IO uint32_t GATE_CON08;                         /* Address Offset: 0x0820 */
-    __IO uint32_t GATE_CON09;                         /* Address Offset: 0x0824 */
-    __IO uint32_t GATE_CON10;                         /* Address Offset: 0x0828 */
-    __IO uint32_t GATE_CON11;                         /* Address Offset: 0x082C */
-    __IO uint32_t GATE_CON12;                         /* Address Offset: 0x0830 */
-    __IO uint32_t GATE_CON13;                         /* Address Offset: 0x0834 */
-    __IO uint32_t GATE_CON14;                         /* Address Offset: 0x0838 */
-    __IO uint32_t GATE_CON15;                         /* Address Offset: 0x083C */
-    __IO uint32_t GATE_CON16;                         /* Address Offset: 0x0840 */
-    __IO uint32_t GATE_CON17;                         /* Address Offset: 0x0844 */
-    __IO uint32_t GATE_CON18;                         /* Address Offset: 0x0848 */
-    __IO uint32_t GATE_CON19;                         /* Address Offset: 0x084C */
-    __IO uint32_t GATE_CON20;                         /* Address Offset: 0x0850 */
-    __IO uint32_t GATE_CON21;                         /* Address Offset: 0x0854 */
-    __IO uint32_t GATE_CON22;                         /* Address Offset: 0x0858 */
-    __IO uint32_t GATE_CON23;                         /* Address Offset: 0x085C */
-         uint32_t RESERVED0860;                       /* Address Offset: 0x0860 */
-    __IO uint32_t GATE_CON25;                         /* Address Offset: 0x0864 */
-    __IO uint32_t GATE_CON26;                         /* Address Offset: 0x0868 */
-    __IO uint32_t GATE_CON27;                         /* Address Offset: 0x086C */
-    __IO uint32_t GATE_CON28;                         /* Address Offset: 0x0870 */
-    __IO uint32_t GATE_CON29;                         /* Address Offset: 0x0874 */
-         uint32_t RESERVED0878;                       /* Address Offset: 0x0878 */
-    __IO uint32_t GATE_CON31;                         /* Address Offset: 0x087C */
-    __IO uint32_t GATE_CON32;                         /* Address Offset: 0x0880 */
-    __IO uint32_t GATE_CON33;                         /* Address Offset: 0x0884 */
-    __IO uint32_t GATE_CON34;                         /* Address Offset: 0x0888 */
-    __IO uint32_t GATE_CON35;                         /* Address Offset: 0x088C */
-    __IO uint32_t GATE_CON36;                         /* Address Offset: 0x0890 */
-    __IO uint32_t GATE_CON37;                         /* Address Offset: 0x0894 */
-    __IO uint32_t GATE_CON38;                         /* Address Offset: 0x0898 */
-    __IO uint32_t GATE_CON39;                         /* Address Offset: 0x089C */
-    __IO uint32_t GATE_CON40;                         /* Address Offset: 0x08A0 */
-         uint32_t RESERVED08A4;                       /* Address Offset: 0x08A4 */
-    __IO uint32_t GATE_CON42;                         /* Address Offset: 0x08A8 */
-    __IO uint32_t GATE_CON43;                         /* Address Offset: 0x08AC */
-         uint32_t RESERVED08B0;                       /* Address Offset: 0x08B0 */
-    __IO uint32_t GATE_CON45;                         /* Address Offset: 0x08B4 */
-         uint32_t RESERVED08B8;                       /* Address Offset: 0x08B8 */
-    __IO uint32_t GATE_CON47;                         /* Address Offset: 0x08BC */
-    __IO uint32_t GATE_CON48;                         /* Address Offset: 0x08C0 */
-    __IO uint32_t GATE_CON49;                         /* Address Offset: 0x08C4 */
-    __IO uint32_t GATE_CON50;                         /* Address Offset: 0x08C8 */
-    __IO uint32_t GATE_CON51;                         /* Address Offset: 0x08CC */
-         uint32_t RESERVED08D0;                       /* Address Offset: 0x08D0 */
-    __IO uint32_t GATE_CON53;                         /* Address Offset: 0x08D4 */
-    __IO uint32_t GATE_CON54;                         /* Address Offset: 0x08D8 */
-         uint32_t RESERVED08DC[4];                    /* Address Offset: 0x08DC */
-    __IO uint32_t GATE_CON59;                         /* Address Offset: 0x08EC */
-         uint32_t RESERVED08F0;                       /* Address Offset: 0x08F0 */
-    __IO uint32_t GATE_CON61;                         /* Address Offset: 0x08F4 */
-    __IO uint32_t GATE_CON62;                         /* Address Offset: 0x08F8 */
-    __IO uint32_t GATE_CON63;                         /* Address Offset: 0x08FC */
-    __IO uint32_t GATE_CON64;                         /* Address Offset: 0x0900 */
-    __IO uint32_t GATE_CON65;                         /* Address Offset: 0x0904 */
-    __IO uint32_t GATE_CON66;                         /* Address Offset: 0x0908 */
-    __IO uint32_t GATE_CON67;                         /* Address Offset: 0x090C */
-    __IO uint32_t GATE_CON68;                         /* Address Offset: 0x0910 */
-    __IO uint32_t GATE_CON69;                         /* Address Offset: 0x0914 */
-         uint32_t RESERVED0918[2];                    /* Address Offset: 0x0918 */
-    __IO uint32_t GATE_CON72;                         /* Address Offset: 0x0920 */
-         uint32_t RESERVED0924[5];                    /* Address Offset: 0x0924 */
-    __IO uint32_t GATE_CON78;                         /* Address Offset: 0x0938 */
-    __IO uint32_t GATE_CON79;                         /* Address Offset: 0x093C */
-         uint32_t RESERVED0940[49];                   /* Address Offset: 0x0940 */
-    __IO uint32_t SOFTRST_CON01;                      /* Address Offset: 0x0A04 */
-    __IO uint32_t SOFTRST_CON02;                      /* Address Offset: 0x0A08 */
-         uint32_t RESERVED0A0C[3];                    /* Address Offset: 0x0A0C */
-    __IO uint32_t SOFTRST_CON06;                      /* Address Offset: 0x0A18 */
-    __IO uint32_t SOFTRST_CON07;                      /* Address Offset: 0x0A1C */
-    __IO uint32_t SOFTRST_CON08;                      /* Address Offset: 0x0A20 */
-    __IO uint32_t SOFTRST_CON09;                      /* Address Offset: 0x0A24 */
-         uint32_t RESERVED0A28;                       /* Address Offset: 0x0A28 */
-    __IO uint32_t SOFTRST_CON11;                      /* Address Offset: 0x0A2C */
-    __IO uint32_t SOFTRST_CON12;                      /* Address Offset: 0x0A30 */
-    __IO uint32_t SOFTRST_CON13;                      /* Address Offset: 0x0A34 */
-    __IO uint32_t SOFTRST_CON14;                      /* Address Offset: 0x0A38 */
-    __IO uint32_t SOFTRST_CON15;                      /* Address Offset: 0x0A3C */
-    __IO uint32_t SOFTRST_CON16;                      /* Address Offset: 0x0A40 */
-    __IO uint32_t SOFTRST_CON17;                      /* Address Offset: 0x0A44 */
-    __IO uint32_t SOFTRST_CON18;                      /* Address Offset: 0x0A48 */
-    __IO uint32_t SOFTRST_CON19;                      /* Address Offset: 0x0A4C */
-    __IO uint32_t SOFTRST_CON20;                      /* Address Offset: 0x0A50 */
-    __IO uint32_t SOFTRST_CON21;                      /* Address Offset: 0x0A54 */
-    __IO uint32_t SOFTRST_CON22;                      /* Address Offset: 0x0A58 */
-    __IO uint32_t SOFTRST_CON23;                      /* Address Offset: 0x0A5C */
-         uint32_t RESERVED0A60;                       /* Address Offset: 0x0A60 */
-    __IO uint32_t SOFTRST_CON25;                      /* Address Offset: 0x0A64 */
-    __IO uint32_t SOFTRST_CON26;                      /* Address Offset: 0x0A68 */
-    __IO uint32_t SOFTRST_CON27;                      /* Address Offset: 0x0A6C */
-    __IO uint32_t SOFTRST_CON28;                      /* Address Offset: 0x0A70 */
-    __IO uint32_t SOFTRST_CON29;                      /* Address Offset: 0x0A74 */
-         uint32_t RESERVED0A78;                       /* Address Offset: 0x0A78 */
-    __IO uint32_t SOFTRST_CON31;                      /* Address Offset: 0x0A7C */
-    __IO uint32_t SOFTRST_CON32;                      /* Address Offset: 0x0A80 */
-    __IO uint32_t SOFTRST_CON33;                      /* Address Offset: 0x0A84 */
-    __IO uint32_t SOFTRST_CON34;                      /* Address Offset: 0x0A88 */
-    __IO uint32_t SOFTRST_CON35;                      /* Address Offset: 0x0A8C */
-    __IO uint32_t SOFTRST_CON36;                      /* Address Offset: 0x0A90 */
-    __IO uint32_t SOFTRST_CON37;                      /* Address Offset: 0x0A94 */
-         uint32_t RESERVED0A98[2];                    /* Address Offset: 0x0A98 */
-    __IO uint32_t SOFTRST_CON40;                      /* Address Offset: 0x0AA0 */
-         uint32_t RESERVED0AA4;                       /* Address Offset: 0x0AA4 */
-    __IO uint32_t SOFTRST_CON42;                      /* Address Offset: 0x0AA8 */
-    __IO uint32_t SOFTRST_CON43;                      /* Address Offset: 0x0AAC */
-         uint32_t RESERVED0AB0;                       /* Address Offset: 0x0AB0 */
-    __IO uint32_t SOFTRST_CON45;                      /* Address Offset: 0x0AB4 */
-         uint32_t RESERVED0AB8;                       /* Address Offset: 0x0AB8 */
-    __IO uint32_t SOFTRST_CON47;                      /* Address Offset: 0x0ABC */
-    __IO uint32_t SOFTRST_CON48;                      /* Address Offset: 0x0AC0 */
-    __IO uint32_t SOFTRST_CON49;                      /* Address Offset: 0x0AC4 */
-    __IO uint32_t SOFTRST_CON50;                      /* Address Offset: 0x0AC8 */
-    __IO uint32_t SOFTRST_CON51;                      /* Address Offset: 0x0ACC */
-         uint32_t RESERVED0AD0;                       /* Address Offset: 0x0AD0 */
-    __IO uint32_t SOFTRST_CON53;                      /* Address Offset: 0x0AD4 */
-    __IO uint32_t SOFTRST_CON54;                      /* Address Offset: 0x0AD8 */
-         uint32_t RESERVED0ADC[4];                    /* Address Offset: 0x0ADC */
-    __IO uint32_t SOFTRST_CON59;                      /* Address Offset: 0x0AEC */
-         uint32_t RESERVED0AF0;                       /* Address Offset: 0x0AF0 */
-    __IO uint32_t SOFTRST_CON61;                      /* Address Offset: 0x0AF4 */
-    __IO uint32_t SOFTRST_CON62;                      /* Address Offset: 0x0AF8 */
-    __IO uint32_t SOFTRST_CON63;                      /* Address Offset: 0x0AFC */
-    __IO uint32_t SOFTRST_CON64;                      /* Address Offset: 0x0B00 */
-    __IO uint32_t SOFTRST_CON65;                      /* Address Offset: 0x0B04 */
-    __IO uint32_t SOFTRST_CON66;                      /* Address Offset: 0x0B08 */
-    __IO uint32_t SOFTRST_CON67;                      /* Address Offset: 0x0B0C */
-    __IO uint32_t SOFTRST_CON68;                      /* Address Offset: 0x0B10 */
-    __IO uint32_t SOFTRST_CON69;                      /* Address Offset: 0x0B14 */
-         uint32_t RESERVED0B18[2];                    /* Address Offset: 0x0B18 */
-    __IO uint32_t SOFTRST_CON72;                      /* Address Offset: 0x0B20 */
-         uint32_t RESERVED0B24[2];                    /* Address Offset: 0x0B24 */
-    __IO uint32_t SOFTRST_CON75;                      /* Address Offset: 0x0B2C */
-         uint32_t RESERVED0B30[2];                    /* Address Offset: 0x0B30 */
-    __IO uint32_t SOFTRST_CON78;                      /* Address Offset: 0x0B38 */
-    __IO uint32_t SOFTRST_CON79;                      /* Address Offset: 0x0B3C */
-         uint32_t RESERVED0B40[48];                   /* Address Offset: 0x0B40 */
+    __IO uint32_t GATE_CON[80];                       /* Address Offset: 0x0800 */
+         uint32_t RESERVED0940[176];                  /* Address Offset: 0x0940 */
     __IO uint32_t GLB_CNT_TH;                         /* Address Offset: 0x0C00 */
     __IO uint32_t GLBRST_ST;                          /* Address Offset: 0x0C04 */
     __IO uint32_t GLB_SRST_FST_VALUE;                 /* Address Offset: 0x0C08 */
@@ -730,22 +414,13 @@ struct CRU_REG {
 /* PHPTOPCRU Register Structure Define */
 struct PHPTOPCRU_REG {
          uint32_t RESERVED0000[128];                  /* Address Offset: 0x0000 */
-    __IO uint32_t PPLL_CON0;                          /* Address Offset: 0x0200 */
-    __IO uint32_t PPLL_CON1;                          /* Address Offset: 0x0204 */
-    __IO uint32_t PPLL_CON2;                          /* Address Offset: 0x0208 */
-    __IO uint32_t PPLL_CON3;                          /* Address Offset: 0x020C */
-    __IO uint32_t PPLL_CON4;                          /* Address Offset: 0x0210 */
-    __IO uint32_t PPLL_CON5;                          /* Address Offset: 0x0214 */
-    __IO uint32_t PPLL_CON6;                          /* Address Offset: 0x0218 */
+    __IO uint32_t PPLL_CON[7];                        /* Address Offset: 0x0200 */
          uint32_t RESERVED021C[57];                   /* Address Offset: 0x021C */
-    __IO uint32_t CLKSEL_CON00;                       /* Address Offset: 0x0300 */
-    __IO uint32_t CLKSEL_CON01;                       /* Address Offset: 0x0304 */
+    __IO uint32_t CLKSEL_CON[2];                      /* Address Offset: 0x0300 */
          uint32_t RESERVED0308[318];                  /* Address Offset: 0x0308 */
-    __IO uint32_t GATE_CON00;                         /* Address Offset: 0x0800 */
-    __IO uint32_t GATE_CON01;                         /* Address Offset: 0x0804 */
+    __IO uint32_t GATE_CON[2];                        /* Address Offset: 0x0800 */
          uint32_t RESERVED0808[126];                  /* Address Offset: 0x0808 */
-    __IO uint32_t SOFTRST_CON00;                      /* Address Offset: 0x0A00 */
-    __IO uint32_t SOFTRST_CON01;                      /* Address Offset: 0x0A04 */
+    __IO uint32_t SOFTRST_CON[2];                     /* Address Offset: 0x0A00 */
 };
 /* SECURECRU Register Structure Define */
 struct SECURECRU_REG {
@@ -909,18 +584,11 @@ struct BIGCORECRU_REG {
          uint32_t RESERVED0000[160];                  /* Address Offset: 0x0000 */
     __IO uint32_t MODE_CON00;                         /* Address Offset: 0x0280 */
          uint32_t RESERVED0284[31];                   /* Address Offset: 0x0284 */
-    __IO uint32_t CLKSEL_CON00;                       /* Address Offset: 0x0300 */
-    __IO uint32_t CLKSEL_CON01;                       /* Address Offset: 0x0304 */
-    __IO uint32_t CLKSEL_CON02;                       /* Address Offset: 0x0308 */
-    __IO uint32_t CLKSEL_CON03;                       /* Address Offset: 0x030C */
+    __IO uint32_t CLKSEL_CON[4];                      /* Address Offset: 0x0300 */
          uint32_t RESERVED0310[316];                  /* Address Offset: 0x0310 */
-    __IO uint32_t GATE_CON00;                         /* Address Offset: 0x0800 */
-    __IO uint32_t GATE_CON01;                         /* Address Offset: 0x0804 */
+    __IO uint32_t GATE_CON[2];                        /* Address Offset: 0x0800 */
          uint32_t RESERVED0808[126];                  /* Address Offset: 0x0808 */
-    __IO uint32_t SOFTRST_CON00;                      /* Address Offset: 0x0A00 */
-    __IO uint32_t SOFTRST_CON01;                      /* Address Offset: 0x0A04 */
-         uint32_t RESERVED0A08;                       /* Address Offset: 0x0A08 */
-    __IO uint32_t SOFTRST_CON03;                      /* Address Offset: 0x0A0C */
+    __IO uint32_t SOFTRST_CON[4];                     /* Address Offset: 0x0A00 */
          uint32_t RESERVED0A10[172];                  /* Address Offset: 0x0A10 */
     __IO uint32_t SMOTH_DIVFREE_CON00;                /* Address Offset: 0x0CC0 */
          uint32_t RESERVED0CC4[153];                  /* Address Offset: 0x0CC4 */
@@ -932,18 +600,11 @@ struct LITCORECRU_REG {
          uint32_t RESERVED0000[160];                  /* Address Offset: 0x0000 */
     __IO uint32_t MODE_CON00;                         /* Address Offset: 0x0280 */
          uint32_t RESERVED0284[31];                   /* Address Offset: 0x0284 */
-    __IO uint32_t CLKSEL_CON00;                       /* Address Offset: 0x0300 */
-    __IO uint32_t CLKSEL_CON01;                       /* Address Offset: 0x0304 */
-    __IO uint32_t CLKSEL_CON02;                       /* Address Offset: 0x0308 */
-    __IO uint32_t CLKSEL_CON03;                       /* Address Offset: 0x030C */
+    __IO uint32_t CLKSEL_CON[4];                      /* Address Offset: 0x0300 */
          uint32_t RESERVED0310[316];                  /* Address Offset: 0x0310 */
-    __IO uint32_t GATE_CON00;                         /* Address Offset: 0x0800 */
-    __IO uint32_t GATE_CON01;                         /* Address Offset: 0x0804 */
-         uint32_t RESERVED0808[126];                  /* Address Offset: 0x0808 */
-    __IO uint32_t SOFTRST_CON00;                      /* Address Offset: 0x0A00 */
-    __IO uint32_t SOFTRST_CON01;                      /* Address Offset: 0x0A04 */
-         uint32_t RESERVED0A08;                       /* Address Offset: 0x0A08 */
-    __IO uint32_t SOFTRST_CON03;                      /* Address Offset: 0x0A0C */
+    __IO uint32_t GATE_CON[2];                        /* Address Offset: 0x0800 */
+         uint32_t RESERVED0806[126];                  /* Address Offset: 0x0806 */
+    __IO uint32_t SOFTRST_CON[4];                     /* Address Offset: 0x0A00 */
          uint32_t RESERVED0A10[172];                  /* Address Offset: 0x0A10 */
     __IO uint32_t SMOTH_DIVFREE_CON00;                /* Address Offset: 0x0CC0 */
          uint32_t RESERVED0CC4[157];                  /* Address Offset: 0x0CC4 */
@@ -953,21 +614,8 @@ struct LITCORECRU_REG {
 /* CCICRU Register Structure Define */
 struct CCICRU_REG {
          uint32_t RESERVED0000[16];                   /* Address Offset: 0x0000 */
-    __IO uint32_t LPLL_CON0;                          /* Address Offset: 0x0040 */
-    __IO uint32_t LPLL_CON1;                          /* Address Offset: 0x0044 */
-         uint32_t RESERVED0048[2];                    /* Address Offset: 0x0048 */
-    __IO uint32_t LPLL_CON4;                          /* Address Offset: 0x0050 */
-    __IO uint32_t LPLL_CON5;                          /* Address Offset: 0x0054 */
-    __IO uint32_t LPLL_CON6;                          /* Address Offset: 0x0058 */
-         uint32_t RESERVED005C[173];                  /* Address Offset: 0x005C */
-    __IO uint32_t CLKSEL_CON04;                       /* Address Offset: 0x0310 */
-         uint32_t RESERVED0314[316];                  /* Address Offset: 0x0314 */
-    __IO uint32_t GATE_CON01;                         /* Address Offset: 0x0804 */
-    __IO uint32_t GATE_CON02;                         /* Address Offset: 0x0808 */
-         uint32_t RESERVED080C[126];                  /* Address Offset: 0x080C */
-    __IO uint32_t SOFTRST_CON01;                      /* Address Offset: 0x0A04 */
-    __IO uint32_t SOFTRST_CON02;                      /* Address Offset: 0x0A08 */
-         uint32_t RESERVED0A0C[145];                  /* Address Offset: 0x0A0C */
+    __IO uint32_t LPLL_CON[7];                        /* Address Offset: 0x0040 */
+         uint32_t RESERVED005C[765];                  /* Address Offset: 0x005C */
     __IO uint32_t AUTOCS_CTRL_BIGCORE_EXTRA_CCI;      /* Address Offset: 0x0C50 */
     __IO uint32_t AUTOCS_CTRL_LITCORE_EXTRA_CCI;      /* Address Offset: 0x0C54 */
     __IO uint32_t AUTOCS_CTRL_CCI2CORE;               /* Address Offset: 0x0C58 */
@@ -10339,6 +9987,3532 @@ struct INTMUX_REG {
 #define INTMUX_INT_FLAG_GROUP15                            (0x0U)
 #define INTMUX_INT_FLAG_GROUP15_FLAG_SHIFT                 (0U)
 #define INTMUX_INT_FLAG_GROUP15_FLAG_MASK                  (0xFFFFFFFFU << INTMUX_INT_FLAG_GROUP15_FLAG_SHIFT)          /* 0xFFFFFFFF */
+
+// ========================= CRU module definition bank=0 =========================
+// CRU_SOFTRST_CON01(Offset:0xA04)
+#define SRST_ARESETN_TOP_BIU         0x00000013
+#define SRST_PRESETN_TOP_BIU         0x00000015
+#define SRST_ARESETN_TOP_MID_BIU     0x00000016
+#define SRST_ARESETN_SECURE_HIGH_BIU 0x00000017
+#define SRST_HRESETN_TOP_BIU         0x0000001E
+
+// CRU_SOFTRST_CON02(Offset:0xA08)
+#define SRST_HRESETN_VO0VOP_CHANNEL_BIU 0x00000020
+#define SRST_ARESETN_VO0VOP_CHANNEL_BIU 0x00000021
+
+// CRU_SOFTRST_CON06(Offset:0xA18)
+#define SRST_RESETN_BISRINTF 0x00000062
+
+// CRU_SOFTRST_CON07(Offset:0xA1C)
+#define SRST_HRESETN_AUDIO_BIU  0x00000072
+#define SRST_HRESETN_ASRC_2CH_0 0x00000073
+#define SRST_HRESETN_ASRC_2CH_1 0x00000074
+#define SRST_HRESETN_ASRC_4CH_0 0x00000075
+#define SRST_HRESETN_ASRC_4CH_1 0x00000076
+#define SRST_RESETN_ASRC_2CH_0  0x00000077
+#define SRST_RESETN_ASRC_2CH_1  0x00000078
+#define SRST_RESETN_ASRC_4CH_0  0x00000079
+#define SRST_RESETN_ASRC_4CH_1  0x0000007A
+#define SRST_MRESETN_SAI0_8CH   0x0000007C
+#define SRST_HRESETN_SAI0_8CH   0x0000007D
+#define SRST_HRESETN_SPDIFRX0   0x0000007E
+#define SRST_MRESETN_SPDIFRX0   0x0000007F
+
+// CRU_SOFTRST_CON08(Offset:0xA20)
+#define SRST_HRESETN_SPDIFRX1 0x00000080
+#define SRST_MRESETN_SPDIFRX1 0x00000081
+#define SRST_MRESETN_SAI1_8CH 0x00000085
+#define SRST_HRESETN_SAI1_8CH 0x00000086
+#define SRST_MRESETN_SAI2_2CH 0x00000088
+#define SRST_HRESETN_SAI2_2CH 0x0000008A
+#define SRST_MRESETN_SAI3_2CH 0x0000008C
+#define SRST_HRESETN_SAI3_2CH 0x0000008E
+
+// CRU_SOFTRST_CON09(Offset:0xA24)
+#define SRST_MRESETN_SAI4_2CH    0x00000090
+#define SRST_HRESETN_SAI4_2CH    0x00000092
+#define SRST_HRESETN_ACDCDIG_DSM 0x00000093
+#define SRST_MRESETN_ACDCDIG_DSM 0x00000094
+#define SRST_RESETN_PDM1         0x00000095
+#define SRST_HRESETN_PDM1        0x00000097
+#define SRST_MRESETN_PDM1        0x00000098
+#define SRST_HRESETN_SPDIF_TX0   0x00000099
+#define SRST_MRESETN_SPDIF_TX0   0x0000009A
+#define SRST_HRESETN_SPDIF_TX1   0x0000009B
+#define SRST_MRESETN_SPDIF_TX1   0x0000009C
+
+// CRU_SOFTRST_CON11(Offset:0xA2C)
+#define SRST_ARESETN_BUS_BIU    0x000000B3
+#define SRST_PRESETN_BUS_BIU    0x000000B4
+#define SRST_PRESETN_CRU        0x000000B5
+#define SRST_HRESETN_CAN0       0x000000B6
+#define SRST_RESETN_CAN0        0x000000B7
+#define SRST_HRESETN_CAN1       0x000000B8
+#define SRST_RESETN_CAN1        0x000000B9
+#define SRST_PRESETN_INTMUX2BUS 0x000000BC
+#define SRST_PRESETN_VCCIO_IOC  0x000000BD
+#define SRST_HRESETN_BUS_BIU    0x000000BE
+#define SRST_RESETN_KEY_SHIFT   0x000000BF
+
+// CRU_SOFTRST_CON12(Offset:0xA30)
+#define SRST_PRESETN_I2C1       0x000000C0
+#define SRST_PRESETN_I2C2       0x000000C1
+#define SRST_PRESETN_I2C3       0x000000C2
+#define SRST_PRESETN_I2C4       0x000000C3
+#define SRST_PRESETN_I2C5       0x000000C4
+#define SRST_PRESETN_I2C6       0x000000C5
+#define SRST_PRESETN_I2C7       0x000000C6
+#define SRST_PRESETN_I2C8       0x000000C7
+#define SRST_PRESETN_I2C9       0x000000C8
+#define SRST_PRESETN_WDT_BUSMCU 0x000000C9
+#define SRST_TRESETN_WDT_BUSMCU 0x000000CA
+#define SRST_ARESETN_GIC        0x000000CB
+#define SRST_RESETN_I2C1        0x000000CC
+#define SRST_RESETN_I2C2        0x000000CD
+#define SRST_RESETN_I2C3        0x000000CE
+#define SRST_RESETN_I2C4        0x000000CF
+
+// CRU_SOFTRST_CON13(Offset:0xA34)
+#define SRST_RESETN_I2C5    0x000000D0
+#define SRST_RESETN_I2C6    0x000000D1
+#define SRST_RESETN_I2C7    0x000000D2
+#define SRST_RESETN_I2C8    0x000000D3
+#define SRST_RESETN_I2C9    0x000000D4
+#define SRST_PRESETN_SARADC 0x000000D6
+#define SRST_RESETN_SARADC  0x000000D7
+#define SRST_PRESETN_TSADC  0x000000D8
+#define SRST_RESETN_TSADC   0x000000D9
+#define SRST_PRESETN_UART0  0x000000DA
+#define SRST_PRESETN_UART2  0x000000DB
+#define SRST_PRESETN_UART3  0x000000DC
+#define SRST_PRESETN_UART4  0x000000DD
+#define SRST_PRESETN_UART5  0x000000DE
+#define SRST_PRESETN_UART6  0x000000DF
+
+// CRU_SOFTRST_CON14(Offset:0xA38)
+#define SRST_PRESETN_UART7  0x000000E0
+#define SRST_PRESETN_UART8  0x000000E1
+#define SRST_PRESETN_UART9  0x000000E2
+#define SRST_PRESETN_UART10 0x000000E3
+#define SRST_PRESETN_UART11 0x000000E4
+#define SRST_SRESETN_UART0  0x000000E5
+#define SRST_SRESETN_UART2  0x000000E6
+#define SRST_SRESETN_UART3  0x000000E9
+#define SRST_SRESETN_UART4  0x000000EC
+#define SRST_SRESETN_UART5  0x000000EF
+
+// CRU_SOFTRST_CON15(Offset:0xA3C)
+#define SRST_SRESETN_UART6  0x000000F2
+#define SRST_SRESETN_UART7  0x000000F5
+#define SRST_SRESETN_UART8  0x000000F8
+#define SRST_SRESETN_UART9  0x000000F9
+#define SRST_SRESETN_UART10 0x000000FA
+#define SRST_SRESETN_UART11 0x000000FB
+#define SRST_PRESETN_SPI0   0x000000FD
+#define SRST_PRESETN_SPI1   0x000000FE
+#define SRST_PRESETN_SPI2   0x000000FF
+
+// CRU_SOFTRST_CON16(Offset:0xA40)
+#define SRST_PRESETN_SPI3    0x00000100
+#define SRST_PRESETN_SPI4    0x00000101
+#define SRST_RESETN_SPI0     0x00000102
+#define SRST_RESETN_SPI1     0x00000103
+#define SRST_RESETN_SPI2     0x00000104
+#define SRST_RESETN_SPI3     0x00000105
+#define SRST_RESETN_SPI4     0x00000106
+#define SRST_PRESETN_WDT0    0x00000107
+#define SRST_TRESETN_WDT0    0x00000108
+#define SRST_PRESETN_SYS_GRF 0x00000109
+#define SRST_PRESETN_PWM1    0x0000010A
+#define SRST_RESETN_PWM1     0x0000010B
+
+// CRU_SOFTRST_CON17(Offset:0xA44)
+#define SRST_PRESETN_BUSTIMER0 0x00000113
+#define SRST_PRESETN_BUSTIMER1 0x00000114
+#define SRST_RESETN_TIMER0     0x00000116
+#define SRST_RESETN_TIMER1     0x00000117
+#define SRST_RESETN_TIMER2     0x00000118
+#define SRST_RESETN_TIMER3     0x00000119
+#define SRST_RESETN_TIMER4     0x0000011A
+#define SRST_RESETN_TIMER5     0x0000011B
+#define SRST_PRESETN_BUSIOC    0x0000011C
+#define SRST_PRESETN_MAILBOX0  0x0000011D
+#define SRST_PRESETN_GPIO1     0x0000011F
+
+// CRU_SOFTRST_CON18(Offset:0xA48)
+#define SRST_DBRESETN_GPIO1 0x00000120
+#define SRST_PRESETN_GPIO2  0x00000121
+#define SRST_DBRESETN_GPIO2 0x00000122
+#define SRST_PRESETN_GPIO3  0x00000123
+#define SRST_DBRESETN_GPIO3 0x00000124
+#define SRST_PRESETN_GPIO4  0x00000125
+#define SRST_DBRESETN_GPIO4 0x00000126
+#define SRST_ARESETN_DECOM  0x00000127
+#define SRST_PRESETN_DECOM  0x00000128
+#define SRST_DRESETN_DECOM  0x00000129
+#define SRST_RESETN_TIMER6  0x0000012B
+#define SRST_RESETN_TIMER7  0x0000012C
+#define SRST_RESETN_TIMER8  0x0000012D
+#define SRST_RESETN_TIMER9  0x0000012E
+#define SRST_RESETN_TIMER10 0x0000012F
+
+// CRU_SOFTRST_CON19(Offset:0xA4C)
+#define SRST_RESETN_TIMER11        0x00000130
+#define SRST_ARESETN_DMAC0         0x00000131
+#define SRST_ARESETN_DMAC1         0x00000132
+#define SRST_ARESETN_DMAC2         0x00000133
+#define SRST_ARESETN_SPINLOCK      0x00000134
+#define SRST_RESETN_REF_PVTPLL_BUS 0x00000135
+#define SRST_HRESETN_I3C0          0x00000137
+#define SRST_HRESETN_I3C1          0x00000139
+#define SRST_HRESETN_BUS_CM0_BIU   0x0000013B
+#define SRST_FRESETN_BUS_CM0_CORE  0x0000013C
+#define SRST_TRESETN_BUS_CM0_JTAG  0x0000013D
+
+// CRU_SOFTRST_CON20(Offset:0xA50)
+#define SRST_PRESETN_INTMUX2PMU  0x00000140
+#define SRST_PRESETN_INTMUX2DDR  0x00000141
+#define SRST_PRESETN_PVTPLL_BUS  0x00000143
+#define SRST_PRESETN_PWM2        0x00000144
+#define SRST_RESETN_PWM2         0x00000145
+#define SRST_RESETN_FREQ_PWM1    0x00000148
+#define SRST_RESETN_COUNTER_PWM1 0x00000149
+#define SRST_RESETN_I3C0         0x0000014C
+#define SRST_RESETN_I3C1         0x0000014D
+
+// CRU_SOFTRST_CON21(Offset:0xA54)
+#define SRST_PRESETN_DDR_MON_CH0   0x00000151
+#define SRST_PRESETN_DDR_BIU       0x00000152
+#define SRST_PRESETN_DDR_UPCTL_CH0 0x00000153
+#define SRST_TMRESETN_DDR_MON_CH0  0x00000154
+#define SRST_ARESETN_DDR_BIU       0x00000155
+#define SRST_RESETN_DFI_CH0        0x00000156
+#define SRST_RESETN_DDR_MON_CH0    0x0000015A
+#define SRST_PRESETN_DDR_HWLP_CH0  0x0000015D
+#define SRST_PRESETN_DDR_MON_CH1   0x0000015E
+#define SRST_PRESETN_DDR_HWLP_CH1  0x0000015F
+
+// CRU_SOFTRST_CON22(Offset:0xA58)
+#define SRST_PRESETN_DDR_UPCTL_CH1   0x00000160
+#define SRST_TMRESETN_DDR_MON_CH1    0x00000161
+#define SRST_RESETN_DFI_CH1          0x00000162
+#define SRST_ARESETN_DDR01_MSCH0     0x00000163
+#define SRST_ARESETN_DDR01_MSCH1     0x00000164
+#define SRST_RESETN_DDR_MON_CH1      0x00000166
+#define SRST_RESETN_DDR_SCRAMBLE_CH0 0x00000169
+#define SRST_RESETN_DDR_SCRAMBLE_CH1 0x0000016A
+#define SRST_PRESETN_AHB2APB         0x0000016C
+#define SRST_HRESETN_AHB2APB         0x0000016D
+#define SRST_HRESETN_DDR_BIU         0x0000016E
+#define SRST_FRESETN_DDR_CM0_CORE    0x0000016F
+
+// CRU_SOFTRST_CON23(Offset:0xA5C)
+#define SRST_PRESETN_DDR01_MSCH0  0x00000171
+#define SRST_PRESETN_DDR01_MSCH1  0x00000172
+#define SRST_RESETN_DDR_TIMER0    0x00000174
+#define SRST_RESETN_DDR_TIMER1    0x00000175
+#define SRST_TRESETN_WDT_DDR      0x00000176
+#define SRST_PRESETN_WDT          0x00000177
+#define SRST_PRESETN_TIMER        0x00000178
+#define SRST_TRESETN_DDR_CM0_JTAG 0x00000179
+#define SRST_PRESETN_DDR_GRF      0x0000017B
+
+// CRU_SOFTRST_CON25(Offset:0xA64)
+#define SRST_RESETN_DDR_UPCTL_CH0    0x00000191
+#define SRST_ARESETN_DDR_UPCTL_0_CH0 0x00000192
+#define SRST_ARESETN_DDR_UPCTL_1_CH0 0x00000193
+#define SRST_ARESETN_DDR_UPCTL_2_CH0 0x00000194
+#define SRST_ARESETN_DDR_UPCTL_3_CH0 0x00000195
+#define SRST_ARESETN_DDR_UPCTL_4_CH0 0x00000196
+
+// CRU_SOFTRST_CON26(Offset:0xA68)
+#define SRST_RESETN_DDR_UPCTL_CH1    0x000001A1
+#define SRST_ARESETN_DDR_UPCTL_0_CH1 0x000001A2
+#define SRST_ARESETN_DDR_UPCTL_1_CH1 0x000001A3
+#define SRST_ARESETN_DDR_UPCTL_2_CH1 0x000001A4
+#define SRST_ARESETN_DDR_UPCTL_3_CH1 0x000001A5
+#define SRST_ARESETN_DDR_UPCTL_4_CH1 0x000001A6
+
+// CRU_SOFTRST_CON27(Offset:0xA6C)
+#define SRST_RESETN_REF_PVTPLL_DDR 0x000001B0
+#define SRST_PRESETN_PVTPLL_DDR    0x000001B1
+
+// CRU_SOFTRST_CON28(Offset:0xA70)
+#define SRST_ARESETN_RKNN0     0x000001C9
+#define SRST_ARESETN_RKNN0_BIU 0x000001CB
+#define SRST_LRESETN_RKNN0_BIU 0x000001CC
+
+// CRU_SOFTRST_CON29(Offset:0xA74)
+#define SRST_ARESETN_RKNN1     0x000001D0
+#define SRST_ARESETN_RKNN1_BIU 0x000001D2
+#define SRST_LRESETN_RKNN1_BIU 0x000001D3
+
+// CRU_SOFTRST_CON31(Offset:0xA7C)
+#define SRST_RESETN_NPU_DAP        0x000001F0
+#define SRST_LRESETN_NPUSUBSYS_BIU 0x000001F1
+#define SRST_PRESETN_NPUTOP_BIU    0x000001F9
+#define SRST_PRESETN_NPU_TIMER     0x000001FA
+#define SRST_RESETN_NPUTIMER0      0x000001FC
+#define SRST_RESETN_NPUTIMER1      0x000001FD
+#define SRST_PRESETN_NPU_WDT       0x000001FE
+#define SRST_TRESETN_NPU_WDT       0x000001FF
+
+// CRU_SOFTRST_CON32(Offset:0xA80)
+#define SRST_ARESETN_RKNN_CBUF    0x00000200
+#define SRST_ARESETN_RVCORE0      0x00000201
+#define SRST_PRESETN_NPU_GRF      0x00000202
+#define SRST_PRESETN_PVTPLL_NPU   0x00000203
+#define SRST_RESETN_NPU_PVTPLL    0x00000204
+#define SRST_HRESETN_NPU_CM0_BIU  0x00000206
+#define SRST_FRESETN_NPU_CM0_CORE 0x00000207
+#define SRST_TRESETN_NPU_CM0_JTAG 0x00000208
+#define SRST_ARESETN_RKNNTOP_BIU  0x0000020B
+#define SRST_HRESETN_RKNN_CBUF    0x0000020C
+#define SRST_HRESETN_RKNNTOP_BIU  0x0000020D
+
+// CRU_SOFTRST_CON33(Offset:0xA84)
+#define SRST_HRESETN_NVM_BIU 0x00000212
+#define SRST_ARESETN_NVM_BIU 0x00000213
+#define SRST_SRESETN_FSPI    0x00000216
+#define SRST_HRESETN_FSPI    0x00000217
+#define SRST_CRESETN_EMMC    0x00000218
+#define SRST_HRESETN_EMMC    0x00000219
+#define SRST_ARESETN_EMMC    0x0000021A
+#define SRST_BRESETN_EMMC    0x0000021B
+#define SRST_TRESETN_EMMC    0x0000021C
+
+// CRU_SOFTRST_CON34(Offset:0xA88)
+#define SRST_PRESETN_GRF           0x00000221
+#define SRST_PRESETN_PHP_BIU       0x00000225
+#define SRST_ARESETN_PHP_BIU       0x00000229
+#define SRST_PRESETN_PCIE0         0x0000022D
+#define SRST_RESETN_PCIE0_POWER_UP 0x0000022F
+
+// CRU_SOFTRST_CON35(Offset:0xA8C)
+#define SRST_ARESETN_USB3OTG1 0x00000233
+#define SRST_ARESETN_MMU0     0x0000023B
+#define SRST_ARESETN_SLV_MMU0 0x0000023D
+#define SRST_ARESETN_MMU1     0x0000023E
+
+// CRU_SOFTRST_CON36(Offset:0xA90)
+#define SRST_ARESETN_SLV_MMU1      0x00000240
+#define SRST_PRESETN_PCIE1         0x00000247
+#define SRST_RESETN_PCIE1_POWER_UP 0x00000249
+
+// CRU_SOFTRST_CON37(Offset:0xA94)
+#define SRST_RESETN_RXOOB0   0x00000250
+#define SRST_RESETN_RXOOB1   0x00000251
+#define SRST_RESETN_PMALIVE0 0x00000252
+#define SRST_RESETN_PMALIVE1 0x00000253
+#define SRST_ARESETN_SATA0   0x00000254
+#define SRST_ARESETN_SATA1   0x00000255
+#define SRST_RESETN_ASIC1    0x00000256
+#define SRST_RESETN_ASIC0    0x00000257
+
+// CRU_SOFTRST_CON40(Offset:0xAA0)
+#define SRST_PRESETN_CSIDPHY1    0x00000282
+#define SRST_SCANRESETN_CSIDPHY1 0x00000283
+
+// CRU_SOFTRST_CON42(Offset:0xAA8)
+#define SRST_PRESETN_SDGMAC_GRF 0x000002A3
+#define SRST_PRESETN_SDGMAC_BIU 0x000002A4
+#define SRST_ARESETN_SDGMAC_BIU 0x000002A5
+#define SRST_HRESETN_SDGMAC_BIU 0x000002A6
+#define SRST_ARESETN_GMAC0      0x000002A7
+#define SRST_ARESETN_GMAC1      0x000002A8
+#define SRST_PRESETN_GMAC0      0x000002A9
+#define SRST_PRESETN_GMAC1      0x000002AA
+#define SRST_HRESETN_SDIO       0x000002AC
+
+// CRU_SOFTRST_CON43(Offset:0xAAC)
+#define SRST_HRESETN_SDMMC0   0x000002B2
+#define SRST_SRESETN_FSPI1    0x000002B3
+#define SRST_HRESETN_FSPI1    0x000002B4
+#define SRST_ARESETN_DSMC_BIU 0x000002B6
+#define SRST_ARESETN_DSMC     0x000002B7
+#define SRST_PRESETN_DSMC     0x000002B8
+#define SRST_HRESETN_FLEXBUS  0x000002BA
+#define SRST_RESETN_FLEXBUS   0x000002BB
+#define SRST_ARESETN_FLEXBUS  0x000002BD
+
+// CRU_SOFTRST_CON45(Offset:0xAB4)
+#define SRST_HRESETN_RKVDEC        0x000002D3
+#define SRST_HRESETN_RKVDEC_BIU    0x000002D5
+#define SRST_ARESETN_RKVDEC_BIU    0x000002D6
+#define SRST_RESETN_RKVDEC_HEVC_CA 0x000002D8
+#define SRST_RESETN_RKVDEC_CORE    0x000002D9
+
+// CRU_SOFTRST_CON47(Offset:0xABC)
+#define SRST_ARESETN_USB_BIU    0x000002F3
+#define SRST_PRESETN_USBUFS_BIU 0x000002F4
+#define SRST_ARESETN_USB3OTG0   0x000002F5
+#define SRST_ARESETN_UFS_BIU    0x000002FA
+#define SRST_ARESETN_MMU2       0x000002FC
+#define SRST_ARESETN_SLV_MMU2   0x000002FD
+#define SRST_ARESETN_UFS_SYS    0x000002FF
+
+// CRU_SOFTRST_CON48(Offset:0xAC0)
+#define SRST_ARESETN_UFS        0x00000300
+#define SRST_PRESETN_USBUFS_GRF 0x00000301
+#define SRST_PRESETN_UFS_GRF    0x00000302
+
+// CRU_SOFTRST_CON49(Offset:0xAC4)
+#define SRST_HRESETN_VPU_BIU     0x00000316
+#define SRST_ARESETN_JPEG_BIU    0x00000317
+#define SRST_ARESETN_RGA_BIU     0x0000031A
+#define SRST_ARESETN_VDPP_BIU    0x0000031B
+#define SRST_ARESETN_EBC_BIU     0x0000031C
+#define SRST_HRESETN_RGA2E_0     0x0000031D
+#define SRST_ARESETN_RGA2E_0     0x0000031E
+#define SRST_RESETN_CORE_RGA2E_0 0x0000031F
+
+// CRU_SOFTRST_CON50(Offset:0xAC8)
+#define SRST_ARESETN_JPEG        0x00000320
+#define SRST_HRESETN_JPEG        0x00000321
+#define SRST_HRESETN_VDPP        0x00000322
+#define SRST_ARESETN_VDPP        0x00000323
+#define SRST_RESETN_CORE_VDPP    0x00000324
+#define SRST_HRESETN_RGA2E_1     0x00000325
+#define SRST_ARESETN_RGA2E_1     0x00000326
+#define SRST_RESETN_CORE_RGA2E_1 0x00000327
+#define SRST_HRESETN_EBC         0x0000032A
+#define SRST_ARESETN_EBC         0x0000032B
+#define SRST_DRESETN_EBC         0x0000032C
+
+// CRU_SOFTRST_CON51(Offset:0xACC)
+#define SRST_HRESETN_VEPU0_BIU 0x00000332
+#define SRST_ARESETN_VEPU0_BIU 0x00000333
+#define SRST_HRESETN_VEPU0     0x00000334
+#define SRST_ARESETN_VEPU0     0x00000335
+#define SRST_RESETN_VEPU0_CORE 0x00000336
+
+// CRU_SOFTRST_CON53(Offset:0xAD4)
+#define SRST_ARESETN_VI_BIU    0x00000353
+#define SRST_HRESETN_VI_BIU    0x00000354
+#define SRST_PRESETN_VI_BIU    0x00000355
+#define SRST_DRESETN_VICAP     0x00000356
+#define SRST_ARESETN_VICAP     0x00000357
+#define SRST_HRESETN_VICAP     0x00000358
+#define SRST_RESETN_ISP0       0x0000035A
+#define SRST_RESETN_ISP0_VICAP 0x0000035B
+
+// CRU_SOFTRST_CON54(Offset:0xAD8)
+#define SRST_RESETN_CORE_VPSS   0x00000361
+#define SRST_PRESETN_CSI_HOST_0 0x00000364
+#define SRST_PRESETN_CSI_HOST_1 0x00000365
+#define SRST_PRESETN_CSI_HOST_2 0x00000366
+#define SRST_PRESETN_CSI_HOST_3 0x00000367
+#define SRST_PRESETN_CSI_HOST_4 0x00000368
+
+// CRU_SOFTRST_CON59(Offset:0xAEC)
+#define SRST_RESETN_CIFIN       0x000003B0
+#define SRST_RESETN_VICAP_I0CLK 0x000003B1
+#define SRST_RESETN_VICAP_I1CLK 0x000003B2
+#define SRST_RESETN_VICAP_I2CLK 0x000003B3
+#define SRST_RESETN_VICAP_I3CLK 0x000003B4
+#define SRST_RESETN_VICAP_I4CLK 0x000003B5
+
+// CRU_SOFTRST_CON61(Offset:0xAF4)
+#define SRST_ARESETN_VOP_BIU  0x000003D4
+#define SRST_ARESETN_VOP2_BIU 0x000003D5
+#define SRST_HRESETN_VOP_BIU  0x000003D6
+#define SRST_PRESETN_VOP_BIU  0x000003D7
+#define SRST_HRESETN_VOP      0x000003D8
+#define SRST_ARESETN_VOP      0x000003D9
+#define SRST_DRESETN_VP0      0x000003DD
+
+// CRU_SOFTRST_CON62(Offset:0xAF8)
+#define SRST_DRESETN_VP1      0x000003E0
+#define SRST_DRESETN_VP2      0x000003E1
+#define SRST_PRESETN_VOP2_BIU 0x000003E2
+#define SRST_PRESETN_VOPGRF   0x000003E3
+
+// CRU_SOFTRST_CON63(Offset:0xAFC)
+#define SRST_HRESETN_VO0_BIU   0x000003F5
+#define SRST_PRESETN_VO0_BIU   0x000003F7
+#define SRST_ARESETN_HDCP0_BIU 0x000003F9
+#define SRST_PRESETN_VO0_GRF   0x000003FA
+#define SRST_ARESETN_HDCP0     0x000003FC
+#define SRST_HRESETN_HDCP0     0x000003FD
+#define SRST_RESETN_HDCP0      0x000003FE
+
+// CRU_SOFTRST_CON64(Offset:0xB00)
+#define SRST_PRESETN_DSIHOST0   0x00000405
+#define SRST_RESETN_DSIHOST0    0x00000406
+#define SRST_PRESETN_HDMITX0    0x00000407
+#define SRST_RESETN_HDMITX0_REF 0x00000409
+#define SRST_PRESETN_EDP0       0x0000040D
+#define SRST_RESETN_EDP0_24M    0x0000040E
+
+// CRU_SOFTRST_CON65(Offset:0xB04)
+#define SRST_MRESETN_SAI5_8CH  0x00000414
+#define SRST_HRESETN_SAI5_8CH  0x00000415
+#define SRST_MRESETN_SAI6_8CH  0x00000418
+#define SRST_HRESETN_SAI6_8CH  0x00000419
+#define SRST_HRESETN_SPDIF_TX2 0x0000041A
+#define SRST_MRESETN_SPDIF_TX2 0x0000041D
+#define SRST_HRESETN_SPDIFRX2  0x0000041E
+#define SRST_MRESETN_SPDIFRX2  0x0000041F
+
+// CRU_SOFTRST_CON66(Offset:0xB08)
+#define SRST_HRESETN_SAI8_8CH 0x00000420
+#define SRST_MRESETN_SAI8_8CH 0x00000422
+
+// CRU_SOFTRST_CON67(Offset:0xB0C)
+#define SRST_HRESETN_VO1_BIU   0x00000435
+#define SRST_PRESETN_VO1_BIU   0x00000436
+#define SRST_MRESETN_SAI7_8CH  0x00000439
+#define SRST_HRESETN_SAI7_8CH  0x0000043A
+#define SRST_HRESETN_SPDIF_TX3 0x0000043B
+#define SRST_HRESETN_SPDIF_TX4 0x0000043C
+#define SRST_HRESETN_SPDIF_TX5 0x0000043D
+#define SRST_MRESETN_SPDIF_TX3 0x0000043E
+
+// CRU_SOFTRST_CON68(Offset:0xB10)
+#define SRST_RESETN_DP0        0x00000440
+#define SRST_PRESETN_VO1_GRF   0x00000442
+#define SRST_ARESETN_HDCP1_BIU 0x00000443
+#define SRST_ARESETN_HDCP1     0x00000444
+#define SRST_HRESETN_HDCP1     0x00000445
+#define SRST_RESETN_HDCP1      0x00000446
+#define SRST_HRESETN_SAI9_8CH  0x00000449
+#define SRST_MRESETN_SAI9_8CH  0x0000044B
+#define SRST_MRESETN_SPDIF_TX4 0x0000044C
+#define SRST_MRESETN_SPDIF_TX5 0x0000044D
+
+// CRU_SOFTRST_CON69(Offset:0xB14)
+#define SRST_RESETN_GPU         0x00000453
+#define SRST_ARESETN_S_GPU_BIU  0x00000456
+#define SRST_ARESETN_M0_GPU_BIU 0x00000457
+#define SRST_PRESETN_GPU_BIU    0x00000459
+#define SRST_PRESETN_GPU_GRF    0x0000045D
+#define SRST_RESETN_GPU_PVTPLL  0x0000045E
+#define SRST_PRESETN_PVTPLL_GPU 0x0000045F
+
+// CRU_SOFTRST_CON72(Offset:0xB20)
+#define SRST_ARESETN_CENTER_BIU       0x00000484
+#define SRST_ARESETN_DMA2DDR          0x00000485
+#define SRST_ARESETN_DDR_SHAREMEM     0x00000486
+#define SRST_ARESETN_DDR_SHAREMEM_BIU 0x00000487
+#define SRST_HRESETN_CENTER_BIU       0x00000488
+#define SRST_PRESETN_CENTER_GRF       0x00000489
+#define SRST_PRESETN_DMA2DDR          0x0000048A
+#define SRST_PRESETN_SHAREMEM         0x0000048B
+#define SRST_PRESETN_CENTER_BIU       0x0000048C
+
+// CRU_SOFTRST_CON75(Offset:0xB2C)
+#define SRST_RESETN_LINKSYM_HDMITXPHY0 0x000004B1
+
+// CRU_SOFTRST_CON78(Offset:0xB38)
+#define SRST_RESETN_DP0_PIXELCLK 0x000004E1
+#define SRST_RESETN_PHY_DP0_TX   0x000004E2
+#define SRST_RESETN_DP1_PIXELCLK 0x000004E3
+#define SRST_RESETN_DP2_PIXELCLK 0x000004E4
+
+// CRU_SOFTRST_CON79(Offset:0xB3C)
+#define SRST_HRESETN_VEPU1_BIU 0x000004F1
+#define SRST_ARESETN_VEPU1_BIU 0x000004F2
+#define SRST_HRESETN_VEPU1     0x000004F3
+#define SRST_ARESETN_VEPU1     0x000004F4
+#define SRST_RESETN_VEPU1_CORE 0x000004F5
+
+// CRU_GATE_CON00(Offset:0x800)
+#define CLK_MATRIX_50M_SRC_GATE  0x00000000
+#define CLK_MATRIX_100M_SRC_GATE 0x00000001
+#define CLK_MATRIX_150M_SRC_GATE 0x00000002
+#define CLK_MATRIX_200M_SRC_GATE 0x00000003
+#define CLK_MATRIX_250M_SRC_GATE 0x00000004
+#define CLK_MATRIX_300M_SRC_GATE 0x00000005
+#define CLK_MATRIX_350M_SRC_GATE 0x00000006
+#define CLK_MATRIX_400M_SRC_GATE 0x00000007
+#define CLK_MATRIX_500M_SRC_GATE 0x00000009
+#define CLK_MATRIX_600M_SRC_GATE 0x0000000A
+#define CLK_MATRIX_700M_SRC_GATE 0x0000000C
+
+// CRU_GATE_CON01(Offset:0x804)
+#define PCLK_TOP_ROOT_GATE           0x00000011
+#define ACLK_TOP_BIU_GATE            0x00000013
+#define CLK_LPLL_SRC_GATE            0x00000014
+#define PCLK_TOP_BIU_GATE            0x00000015
+#define ACLK_LOW_TOP_ROOT_GATE       0x00000016
+#define ACLK_SECURE_HIGH_BIU_GATE    0x00000017
+#define CLK_BPLL_SRC_GATE            0x00000018
+#define CLK_MATRIX_AUDIO_FRAC_0_GATE 0x0000001A
+#define CLK_MATRIX_AUDIO_FRAC_1_GATE 0x0000001B
+#define CLK_MATRIX_AUDIO_FRAC_2_GATE 0x0000001C
+#define CLK_MATRIX_AUDIO_FRAC_3_GATE 0x0000001D
+#define HCLK_TOP_BIU_GATE            0x0000001E
+
+// CRU_GATE_CON02(Offset:0x808)
+#define HCLK_VO0VOP_CHANNEL_BIU_GATE 0x00000020
+#define ACLK_VO0VOP_CHANNEL_BIU_GATE 0x00000021
+#define CLK_MATRIX_UART_FRAC_0_GATE  0x00000025
+#define CLK_MATRIX_UART_FRAC_1_GATE  0x00000026
+#define CLK_MATRIX_UART_FRAC_2_GATE  0x00000027
+#define CLK_TESTOUT_TOP_GATE         0x00000028
+#define CLK_TESTOUT_GATE             0x00000029
+#define CLK_TESTOUT_GRP0_GATE        0x0000002B
+#define CLK_UART1_SRC_TOP_GATE       0x0000002D
+#define CLK_MATRIX_AUDIO_INT_0_GATE  0x0000002E
+#define CLK_MATRIX_AUDIO_INT_1_GATE  0x0000002F
+
+// CRU_GATE_CON03(Offset:0x80C)
+#define CLK_MATRIX_AUDIO_INT_2_GATE    0x00000030
+#define CLK_PDM0_SRC_TOP_GATE          0x00000032
+#define CLK_PDM1_OUT_GATE              0x00000035
+#define CLK_MATRIX_GMAC0_125M_SRC_GATE 0x00000036
+#define CLK_MATRIX_GMAC1_125M_SRC_GATE 0x00000037
+#define LCLK_ASRC_SRC_0_GATE           0x0000003A
+#define LCLK_ASRC_SRC_1_GATE           0x0000003B
+
+// CRU_GATE_CON04(Offset:0x810)
+#define REF_CLK0_OUT_PLL_GATE 0x00000041
+#define REF_CLK1_OUT_PLL_GATE 0x00000042
+#define REF_CLK2_OUT_PLL_GATE 0x00000043
+
+// CRU_GATE_CON05(Offset:0x814)
+#define REFCLKO25M_ETH0_OUT_GATE 0x0000005A
+#define REFCLKO25M_ETH1_OUT_GATE 0x0000005B
+#define CLK_CIFOUT_OUT_GATE      0x0000005C
+#define CLK_GMAC0_RMII_CRU_GATE  0x0000005D
+#define CLK_GMAC1_RMII_CRU_GATE  0x0000005E
+#define CLK_OTPC_AUTO_RD_GATE    0x0000005F
+
+// CRU_GATE_CON06(Offset:0x818)
+#define CLK_OTP_PHY_GATE           0x00000060
+#define CLK_BISRINTF_PLLSRC_GATE   0x00000061
+#define CLK_BISRINTF_GATE          0x00000062
+#define CLK_MIPI_CAMERAOUT_M0_GATE 0x00000063
+#define CLK_MIPI_CAMERAOUT_M1_GATE 0x00000064
+#define CLK_MIPI_CAMERAOUT_M2_GATE 0x00000065
+#define MCLK_PDM0_SRC_TOP_GATE     0x00000068
+
+// CRU_GATE_CON07(Offset:0x81C)
+#define HCLK_AUDIO_ROOT_GATE   0x00000071
+#define HCLK_AUDIO_BIU_GATE    0x00000072
+#define HCLK_ASRC_2CH_0_GATE   0x00000073
+#define HCLK_ASRC_2CH_1_GATE   0x00000074
+#define HCLK_ASRC_4CH_0_GATE   0x00000075
+#define HCLK_ASRC_4CH_1_GATE   0x00000076
+#define CLK_ASRC_2CH_0_GATE    0x00000077
+#define CLK_ASRC_2CH_1_GATE    0x00000078
+#define CLK_ASRC_4CH_0_GATE    0x00000079
+#define CLK_ASRC_4CH_1_GATE    0x0000007A
+#define MCLK_SAI0_8CH_SRC_GATE 0x0000007B
+#define MCLK_SAI0_8CH_GATE     0x0000007C
+#define HCLK_SAI0_8CH_GATE     0x0000007D
+#define HCLK_SPDIFRX0_GATE     0x0000007E
+#define MCLK_SPDIFRX0_GATE     0x0000007F
+
+// CRU_GATE_CON08(Offset:0x820)
+#define HCLK_SPDIFRX1_GATE     0x00000080
+#define MCLK_SPDIFRX1_GATE     0x00000081
+#define MCLK_SAI1_8CH_SRC_GATE 0x00000084
+#define MCLK_SAI1_8CH_GATE     0x00000085
+#define HCLK_SAI1_8CH_GATE     0x00000086
+#define MCLK_SAI2_2CH_SRC_GATE 0x00000087
+#define MCLK_SAI2_2CH_GATE     0x00000088
+#define HCLK_SAI2_2CH_GATE     0x0000008A
+#define MCLK_SAI3_2CH_SRC_GATE 0x0000008B
+#define MCLK_SAI3_2CH_GATE     0x0000008C
+#define HCLK_SAI3_2CH_GATE     0x0000008E
+#define MCLK_SAI4_2CH_SRC_GATE 0x0000008F
+
+// CRU_GATE_CON09(Offset:0x824)
+#define MCLK_SAI4_2CH_GATE    0x00000090
+#define HCLK_SAI4_2CH_GATE    0x00000092
+#define HCLK_ACDCDIG_DSM_GATE 0x00000093
+#define MCLK_ACDCDIG_DSM_GATE 0x00000094
+#define CLK_PDM1_GATE         0x00000095
+#define HCLK_PDM1_GATE        0x00000097
+#define MCLK_PDM1_GATE        0x00000098
+#define HCLK_SPDIF_TX0_GATE   0x00000099
+#define MCLK_SPDIF_TX0_GATE   0x0000009A
+#define HCLK_SPDIF_TX1_GATE   0x0000009B
+#define MCLK_SPDIF_TX1_GATE   0x0000009C
+#define CLK_SAI1_MCLKOUT_GATE 0x0000009D
+#define CLK_SAI2_MCLKOUT_GATE 0x0000009E
+#define CLK_SAI3_MCLKOUT_GATE 0x0000009F
+
+// CRU_GATE_CON10(Offset:0x828)
+#define CLK_SAI4_MCLKOUT_GATE 0x000000A0
+#define CLK_SAI0_MCLKOUT_GATE 0x000000A1
+
+// CRU_GATE_CON11(Offset:0x82C)
+#define HCLK_BUS_ROOT_GATE   0x000000B0
+#define PCLK_BUS_ROOT_GATE   0x000000B1
+#define ACLK_BUS_ROOT_GATE   0x000000B2
+#define ACLK_BUS_BIU_GATE    0x000000B3
+#define PCLK_BUS_BIU_GATE    0x000000B4
+#define PCLK_CRU_GATE        0x000000B5
+#define HCLK_CAN0_GATE       0x000000B6
+#define CLK_CAN0_GATE        0x000000B7
+#define HCLK_CAN1_GATE       0x000000B8
+#define CLK_CAN1_GATE        0x000000B9
+#define PCLK_INTMUX2BUS_GATE 0x000000BC
+#define PCLK_VCCIO_IOC_GATE  0x000000BD
+#define HCLK_BUS_BIU_GATE    0x000000BE
+#define CLK_KEY_SHIFT_GATE   0x000000BF
+
+// CRU_GATE_CON12(Offset:0x830)
+#define PCLK_I2C1_GATE       0x000000C0
+#define PCLK_I2C2_GATE       0x000000C1
+#define PCLK_I2C3_GATE       0x000000C2
+#define PCLK_I2C4_GATE       0x000000C3
+#define PCLK_I2C5_GATE       0x000000C4
+#define PCLK_I2C6_GATE       0x000000C5
+#define PCLK_I2C7_GATE       0x000000C6
+#define PCLK_I2C8_GATE       0x000000C7
+#define PCLK_I2C9_GATE       0x000000C8
+#define PCLK_WDT_BUSMCU_GATE 0x000000C9
+#define TCLK_WDT_BUSMCU_GATE 0x000000CA
+#define ACLK_GIC_GATE        0x000000CB
+#define CLK_I2C1_GATE        0x000000CC
+#define CLK_I2C2_GATE        0x000000CD
+#define CLK_I2C3_GATE        0x000000CE
+#define CLK_I2C4_GATE        0x000000CF
+
+// CRU_GATE_CON13(Offset:0x834)
+#define CLK_I2C5_GATE    0x000000D0
+#define CLK_I2C6_GATE    0x000000D1
+#define CLK_I2C7_GATE    0x000000D2
+#define CLK_I2C8_GATE    0x000000D3
+#define CLK_I2C9_GATE    0x000000D4
+#define PCLK_SARADC_GATE 0x000000D6
+#define CLK_SARADC_GATE  0x000000D7
+#define PCLK_TSADC_GATE  0x000000D8
+#define CLK_TSADC_GATE   0x000000D9
+#define PCLK_UART0_GATE  0x000000DA
+#define PCLK_UART2_GATE  0x000000DB
+#define PCLK_UART3_GATE  0x000000DC
+#define PCLK_UART4_GATE  0x000000DD
+#define PCLK_UART5_GATE  0x000000DE
+#define PCLK_UART6_GATE  0x000000DF
+
+// CRU_GATE_CON14(Offset:0x838)
+#define PCLK_UART7_GATE  0x000000E0
+#define PCLK_UART8_GATE  0x000000E1
+#define PCLK_UART9_GATE  0x000000E2
+#define PCLK_UART10_GATE 0x000000E3
+#define PCLK_UART11_GATE 0x000000E4
+#define SCLK_UART0_GATE  0x000000E5
+#define SCLK_UART2_GATE  0x000000E6
+#define SCLK_UART3_GATE  0x000000E9
+#define SCLK_UART4_GATE  0x000000EC
+#define SCLK_UART5_GATE  0x000000EF
+
+// CRU_GATE_CON15(Offset:0x83C)
+#define SCLK_UART6_GATE  0x000000F2
+#define SCLK_UART7_GATE  0x000000F5
+#define SCLK_UART8_GATE  0x000000F8
+#define SCLK_UART9_GATE  0x000000F9
+#define SCLK_UART10_GATE 0x000000FA
+#define SCLK_UART11_GATE 0x000000FB
+#define PCLK_SPI0_GATE   0x000000FD
+#define PCLK_SPI1_GATE   0x000000FE
+#define PCLK_SPI2_GATE   0x000000FF
+
+// CRU_GATE_CON16(Offset:0x840)
+#define PCLK_SPI3_GATE    0x00000100
+#define PCLK_SPI4_GATE    0x00000101
+#define CLK_SPI0_GATE     0x00000102
+#define CLK_SPI1_GATE     0x00000103
+#define CLK_SPI2_GATE     0x00000104
+#define CLK_SPI3_GATE     0x00000105
+#define CLK_SPI4_GATE     0x00000106
+#define PCLK_WDT0_GATE    0x00000107
+#define TCLK_WDT0_GATE    0x00000108
+#define PCLK_SYS_GRF_GATE 0x00000109
+#define PCLK_PWM1_GATE    0x0000010A
+#define CLK_PWM1_GATE     0x0000010B
+#define CLK_OSC_PWM1_GATE 0x0000010D
+#define CLK_RC_PWM1_GATE  0x0000010F
+
+// CRU_GATE_CON17(Offset:0x844)
+#define PCLK_BUSTIMER0_GATE  0x00000113
+#define PCLK_BUSTIMER1_GATE  0x00000114
+#define CLK_TIMER0_ROOT_GATE 0x00000115
+#define CLK_TIMER0_GATE      0x00000116
+#define CLK_TIMER1_GATE      0x00000117
+#define CLK_TIMER2_GATE      0x00000118
+#define CLK_TIMER3_GATE      0x00000119
+#define CLK_TIMER4_GATE      0x0000011A
+#define CLK_TIMER5_GATE      0x0000011B
+#define PCLK_BUSIOC_GATE     0x0000011C
+#define PCLK_MAILBOX0_GATE   0x0000011D
+#define PCLK_GPIO1_GATE      0x0000011F
+
+// CRU_GATE_CON18(Offset:0x848)
+#define DBCLK_GPIO1_GATE     0x00000120
+#define PCLK_GPIO2_GATE      0x00000121
+#define DBCLK_GPIO2_GATE     0x00000122
+#define PCLK_GPIO3_GATE      0x00000123
+#define DBCLK_GPIO3_GATE     0x00000124
+#define PCLK_GPIO4_GATE      0x00000125
+#define DBCLK_GPIO4_GATE     0x00000126
+#define ACLK_DECOM_GATE      0x00000127
+#define PCLK_DECOM_GATE      0x00000128
+#define DCLK_DECOM_GATE      0x00000129
+#define CLK_TIMER1_ROOT_GATE 0x0000012A
+#define CLK_TIMER6_GATE      0x0000012B
+#define CLK_TIMER7_GATE      0x0000012C
+#define CLK_TIMER8_GATE      0x0000012D
+#define CLK_TIMER9_GATE      0x0000012E
+#define CLK_TIMER10_GATE     0x0000012F
+
+// CRU_GATE_CON19(Offset:0x84C)
+#define CLK_TIMER11_GATE        0x00000130
+#define ACLK_DMAC0_GATE         0x00000131
+#define ACLK_DMAC1_GATE         0x00000132
+#define ACLK_DMAC2_GATE         0x00000133
+#define ACLK_SPINLOCK_GATE      0x00000134
+#define CLK_REF_PVTPLL_BUS_GATE 0x00000135
+#define HCLK_I3C0_GATE          0x00000137
+#define HCLK_I3C1_GATE          0x00000139
+#define HCLK_BUS_CM0_ROOT_GATE  0x0000013A
+#define HCLK_BUS_CM0_BIU_GATE   0x0000013B
+#define FCLK_BUS_CM0_CORE_GATE  0x0000013C
+#define CLK_BUS_CM0_RTC_GATE    0x0000013E
+#define PCLK_PMU2_GATE          0x0000013F
+
+// CRU_GATE_CON20(Offset:0x850)
+#define PCLK_INTMUX2PMU_GATE        0x00000140
+#define PCLK_INTMUX2DDR_GATE        0x00000141
+#define CLK_EXTREF_TIMEOUT_BUS_GATE 0x00000142
+#define PCLK_PVTPLL_BUS_GATE        0x00000143
+#define PCLK_PWM2_GATE              0x00000144
+#define CLK_PWM2_GATE               0x00000145
+#define CLK_RC_PWM2_GATE            0x00000146
+#define CLK_OSC_PWM2_GATE           0x00000147
+#define CLK_FREQ_PWM1_GATE          0x00000148
+#define CLK_COUNTER_PWM1_GATE       0x00000149
+#define SAI_SCLKIN_FREQ_GATE        0x0000014A
+#define SAI_SCLKIN_COUNTER_GATE     0x0000014B
+#define CLK_I3C0_GATE               0x0000014C
+#define CLK_I3C1_GATE               0x0000014D
+
+// CRU_GATE_CON21(Offset:0x854)
+#define PCLK_DDR_ROOT_GATE      0x00000150
+#define PCLK_DDR_MON_CH0_GATE   0x00000151
+#define PCLK_DDR_BIU_GATE       0x00000152
+#define PCLK_DDR_UPCTL_CH0_GATE 0x00000153
+#define TMCLK_DDR_MON_CH0_GATE  0x00000154
+#define ACLK_DDR_BIU_GATE       0x00000155
+#define CLK_DFI_CH0_GATE        0x00000156
+#define ACLK_DDR_ROOT_GATE      0x00000159
+#define CLK_DDR_MON_CH0_GATE    0x0000015A
+#define PCLK_DDR_HWLP_CH0_GATE  0x0000015D
+#define PCLK_DDR_MON_CH1_GATE   0x0000015E
+#define PCLK_DDR_HWLP_CH1_GATE  0x0000015F
+
+// CRU_GATE_CON22(Offset:0x858)
+#define PCLK_DDR_UPCTL_CH1_GATE   0x00000160
+#define TMCLK_DDR_MON_CH1_GATE    0x00000161
+#define CLK_DFI_CH1_GATE          0x00000162
+#define ACLK_DDR01_MSCH0_GATE     0x00000163
+#define ACLK_DDR01_MSCH1_GATE     0x00000164
+#define CLK_DDR_MON_CH1_GATE      0x00000166
+#define PCLK_DDRPHY_SRC_CH0_GATE  0x00000167
+#define PCLK_DDRPHY_SRC_CH1_GATE  0x00000168
+#define CLK_DDR_SCRAMBLE_CH0_GATE 0x00000169
+#define CLK_DDR_SCRAMBLE_CH1_GATE 0x0000016A
+#define HCLK_DDR_ROOT_GATE        0x0000016B
+#define PCLK_AHB2APB_GATE         0x0000016C
+#define HCLK_AHB2APB_GATE         0x0000016D
+#define HCLK_DDR_BIU_GATE         0x0000016E
+#define FCLK_DDR_CM0_CORE_GATE    0x0000016F
+
+// CRU_GATE_CON23(Offset:0x85C)
+#define PCLK_DDR01_MSCH0_GATE   0x00000171
+#define PCLK_DDR01_MSCH1_GATE   0x00000172
+#define CLK_DDR_TIMER_ROOT_GATE 0x00000173
+#define CLK_DDR_TIMER0_GATE     0x00000174
+#define CLK_DDR_TIMER1_GATE     0x00000175
+#define TCLK_WDT_DDR_GATE       0x00000176
+#define PCLK_WDT_GATE           0x00000177
+#define PCLK_TIMER_GATE         0x00000178
+#define CLK_DDR_CM0_RTC_GATE    0x0000017A
+#define PCLK_DDR_GRF_GATE       0x0000017B
+
+// CRU_GATE_CON25(Offset:0x864)
+#define CLK_DDR_UPCTL_CH0_GATE    0x00000191
+#define ACLK_DDR_UPCTL_0_CH0_GATE 0x00000192
+#define ACLK_DDR_UPCTL_1_CH0_GATE 0x00000193
+#define ACLK_DDR_UPCTL_2_CH0_GATE 0x00000194
+#define ACLK_DDR_UPCTL_3_CH0_GATE 0x00000195
+#define ACLK_DDR_UPCTL_4_CH0_GATE 0x00000196
+
+// CRU_GATE_CON26(Offset:0x868)
+#define CLK_DDR_UPCTL_CH1_GATE    0x000001A1
+#define ACLK_DDR_UPCTL_0_CH1_GATE 0x000001A2
+#define ACLK_DDR_UPCTL_1_CH1_GATE 0x000001A3
+#define ACLK_DDR_UPCTL_2_CH1_GATE 0x000001A4
+#define ACLK_DDR_UPCTL_3_CH1_GATE 0x000001A5
+#define ACLK_DDR_UPCTL_4_CH1_GATE 0x000001A6
+
+// CRU_GATE_CON27(Offset:0x86C)
+#define CLK_REF_PVTPLL_DDR_GATE 0x000001B0
+#define PCLK_PVTPLL_DDR_GATE    0x000001B1
+
+// CRU_GATE_CON28(Offset:0x870)
+#define ACLK_RKNN0_GATE     0x000001C9
+#define ACLK_RKNN0_BIU_GATE 0x000001CB
+#define LCLK_RKNN0_BIU_GATE 0x000001CC
+
+// CRU_GATE_CON29(Offset:0x874)
+#define ACLK_RKNN1_GATE     0x000001D0
+#define ACLK_RKNN1_BIU_GATE 0x000001D2
+#define LCLK_RKNN1_BIU_GATE 0x000001D3
+
+// CRU_GATE_CON31(Offset:0x87C)
+#define LCLK_NPUSUBSYS_BIU_GATE 0x000001F1
+#define HCLK_RKNN_ROOT_GATE     0x000001F4
+#define CLK_RKNN_DSU0_DF_GATE   0x000001F5
+#define CLK_NPU_PVTPLL_SRC_GATE 0x000001F6
+#define CLK_RKNN_DSU0_GATE      0x000001F7
+#define PCLK_NPUTOP_ROOT_GATE   0x000001F8
+#define PCLK_NPUTOP_BIU_GATE    0x000001F9
+#define PCLK_NPU_TIMER_GATE     0x000001FA
+#define CLK_NPUTIMER_ROOT_GATE  0x000001FB
+#define CLK_NPUTIMER0_GATE      0x000001FC
+#define CLK_NPUTIMER1_GATE      0x000001FD
+#define PCLK_NPU_WDT_GATE       0x000001FE
+#define TCLK_NPU_WDT_GATE       0x000001FF
+
+// CRU_GATE_CON32(Offset:0x880)
+#define ACLK_RKNN_CBUF_GATE     0x00000200
+#define PCLK_NPU_GRF_GATE       0x00000202
+#define PCLK_PVTPLL_NPU_GATE    0x00000203
+#define CLK_REF_PVTPLL_NPU_GATE 0x00000204
+#define HCLK_NPU_CM0_ROOT_GATE  0x00000205
+#define HCLK_NPU_CM0_BIU_GATE   0x00000206
+#define FCLK_NPU_CM0_CORE_GATE  0x00000207
+#define CLK_NPU_CM0_RTC_GATE    0x00000209
+#define ACLK_RKNNTOP_BIU_GATE   0x0000020B
+#define HCLK_RKNN_CBUF_GATE     0x0000020C
+#define HCLK_RKNNTOP_BIU_GATE   0x0000020D
+
+// CRU_GATE_CON33(Offset:0x884)
+#define HCLK_NVM_ROOT_GATE          0x00000210
+#define ACLK_NVM_ROOT_GATE          0x00000211
+#define HCLK_NVM_BIU_GATE           0x00000212
+#define ACLK_NVM_BIU_GATE           0x00000213
+#define SCLK_FSPI_X2_GATE           0x00000216
+#define HCLK_FSPI_GATE              0x00000217
+#define CCLK_SRC_EMMC_GATE          0x00000218
+#define HCLK_EMMC_GATE              0x00000219
+#define ACLK_EMMC_GATE              0x0000021A
+#define BCLK_EMMC_GATE              0x0000021B
+#define TCLK_EMMC_GATE              0x0000021C
+#define CLK_EXTREF_TIMEOUT_NVM_GATE 0x0000021D
+
+// CRU_GATE_CON34(Offset:0x888)
+#define PCLK_PHP_ROOT_GATE   0x00000220
+#define PCLK_GRF_GATE        0x00000221
+#define PCLK_PHP_BIU_GATE    0x00000225
+#define ACLK_PHP_ROOT_GATE   0x00000227
+#define ACLK_PHP_BIU_GATE    0x00000229
+#define PCLK_PCIE0_GATE      0x0000022D
+#define CLK_PCIE0_AUX_GATE   0x0000022E
+#define ACLK_PCIE0_MSTR_GATE 0x0000022F
+
+// CRU_GATE_CON35(Offset:0x88C)
+#define ACLK_PCIE0_SLV_GATE       0x00000230
+#define ACLK_PCIE0_DBI_GATE       0x00000231
+#define ACLK_USB3OTG1_GATE        0x00000233
+#define CLK_REF_USB3OTG1_GATE     0x00000234
+#define CLK_SUSPEND_USB3OTG1_GATE 0x00000235
+#define ACLK_MMU0_GATE            0x0000023B
+#define ACLK_SLV_MMU0_GATE        0x0000023D
+#define ACLK_MMU1_GATE            0x0000023E
+
+// CRU_GATE_CON36(Offset:0x890)
+#define ACLK_SLV_MMU1_GATE          0x00000240
+#define CLK_EXTREF_TIMEOUT_PHP_GATE 0x00000242
+#define PCLK_PCIE1_GATE             0x00000247
+#define CLK_PCIE1_AUX_GATE          0x00000248
+#define ACLK_PCIE1_MSTR_GATE        0x00000249
+#define ACLK_PCIE1_SLV_GATE         0x0000024A
+#define ACLK_PCIE1_DBI_GATE         0x0000024B
+
+// CRU_GATE_CON37(Offset:0x894)
+#define CLK_RXOOB0_GATE   0x00000250
+#define CLK_RXOOB1_GATE   0x00000251
+#define CLK_PMALIVE0_GATE 0x00000252
+#define CLK_PMALIVE1_GATE 0x00000253
+#define ACLK_SATA0_GATE   0x00000254
+#define ACLK_SATA1_GATE   0x00000255
+#define CLK_ASIC1_GATE    0x00000256
+#define CLK_ASIC0_GATE    0x00000257
+
+// CRU_GATE_CON38(Offset:0x898)
+#define CLK_USB3OTG1_PIPE_PCLK_GATE 0x00000260
+#define CLK_USB3OTG1_UTMI_GATE      0x00000261
+
+// CRU_GATE_CON39(Offset:0x89C)
+#define CLK_USB3OTG0_PIPE_PCLK_GATE 0x00000270
+#define CLK_USB3OTG0_UTMI_GATE      0x00000271
+
+// CRU_GATE_CON40(Offset:0x8A0)
+#define PCLK_CSIDPHY1_GATE 0x00000282
+
+// CRU_GATE_CON42(Offset:0x8A8)
+#define HCLK_SDGMAC_ROOT_GATE      0x000002A0
+#define ACLK_SDGMAC_ROOT_GATE      0x000002A1
+#define PCLK_SDGMAC_ROOT_GATE      0x000002A2
+#define PCLK_SDGMAC_GRF_GATE       0x000002A3
+#define PCLK_SDGMAC_BIU_GATE       0x000002A4
+#define ACLK_SDGMAC_BIU_GATE       0x000002A5
+#define HCLK_SDGMAC_BIU_GATE       0x000002A6
+#define ACLK_GMAC0_GATE            0x000002A7
+#define ACLK_GMAC1_GATE            0x000002A8
+#define PCLK_GMAC0_GATE            0x000002A9
+#define PCLK_GMAC1_GATE            0x000002AA
+#define CCLK_SRC_SDIO_GATE         0x000002AB
+#define HCLK_SDIO_GATE             0x000002AC
+#define CLK_GMAC1_PTP_REF_GATE     0x000002AD
+#define CLK_GMAC0_PTP_REF_GATE     0x000002AE
+#define CLK_GMAC1_PTP_REF_SRC_GATE 0x000002AF
+
+// CRU_GATE_CON43(Offset:0x8AC)
+#define CLK_GMAC0_PTP_REF_SRC_GATE     0x000002B0
+#define CCLK_SRC_SDMMC0_GATE           0x000002B1
+#define HCLK_SDMMC0_GATE               0x000002B2
+#define SCLK_FSPI1_X2_GATE             0x000002B3
+#define HCLK_FSPI1_GATE                0x000002B4
+#define ACLK_DSMC_ROOT_GATE            0x000002B5
+#define ACLK_DSMC_BIU_GATE             0x000002B6
+#define ACLK_DSMC_GATE                 0x000002B7
+#define PCLK_DSMC_GATE                 0x000002B8
+#define CLK_DSMC_SYS_GATE              0x000002B9
+#define HCLK_FLEXBUS_GATE              0x000002BA
+#define CLK_FLEXBUS_TX_GATE            0x000002BB
+#define CLK_FLEXBUS_RX_GATE            0x000002BC
+#define ACLK_FLEXBUS_GATE              0x000002BD
+#define CLK_EXTREF_TIMEOUT_SDGMAC_GATE 0x000002BE
+
+// CRU_GATE_CON45(Offset:0x8B4)
+#define HCLK_RKVDEC_ROOT_GATE     0x000002D0
+#define ACLK_RKVDEC_ROOT_PRE_GATE 0x000002D1
+#define ACLK_RKVDEC_ROOT_BAK_GATE 0x000002D2
+#define HCLK_RKVDEC_GATE          0x000002D3
+#define HCLK_RKVDEC_BIU_GATE      0x000002D5
+#define ACLK_RKVDEC_BIU_GATE      0x000002D6
+#define ACLK_RKVDEC_ROOT_GATE     0x000002D7
+#define CLK_RKVDEC_HEVC_CA_GATE   0x000002D8
+#define CLK_RKVDEC_CORE_GATE      0x000002D9
+
+// CRU_GATE_CON47(Offset:0x8BC)
+#define ACLK_UFS_ROOT_GATE        0x000002F0
+#define ACLK_USB_ROOT_GATE        0x000002F1
+#define PCLK_USB_ROOT_GATE        0x000002F2
+#define ACLK_USB_BIU_GATE         0x000002F3
+#define PCLK_USBUFS_BIU_GATE      0x000002F4
+#define ACLK_USB3OTG0_GATE        0x000002F5
+#define CLK_REF_USB3OTG0_GATE     0x000002F6
+#define CLK_SUSPEND_USB3OTG0_GATE 0x000002F7
+#define ACLK_UFS_BIU_GATE         0x000002FA
+#define ACLK_MMU2_GATE            0x000002FC
+#define ACLK_SLV_MMU2_GATE        0x000002FD
+#define ACLK_UFS_SYS_GATE         0x000002FF
+
+// CRU_GATE_CON48(Offset:0x8C0)
+#define PCLK_USBUFS_GRF_GATE        0x00000301
+#define PCLK_UFS_GRF_GATE           0x00000302
+#define CLK_EXTREF_TIMEOUT_USB_GATE 0x00000303
+
+// CRU_GATE_CON49(Offset:0x8C4)
+#define ACLK_VPU_ROOT_GATE     0x00000310
+#define ACLK_VPU_MID_ROOT_GATE 0x00000311
+#define HCLK_VPU_ROOT_GATE     0x00000312
+#define ACLK_JPEG_ROOT_GATE    0x00000313
+#define ACLK_VPU_LOW_ROOT_GATE 0x00000314
+#define HCLK_VPU_BIU_GATE      0x00000316
+#define ACLK_JPEG_BIU_GATE     0x00000317
+#define ACLK_RGA_BIU_GATE      0x0000031A
+#define ACLK_VDPP_BIU_GATE     0x0000031B
+#define ACLK_EBC_BIU_GATE      0x0000031C
+#define HCLK_RGA2E_0_GATE      0x0000031D
+#define ACLK_RGA2E_0_GATE      0x0000031E
+#define CLK_CORE_RGA2E_0_GATE  0x0000031F
+
+// CRU_GATE_CON50(Offset:0x8C8)
+#define ACLK_JPEG_GATE         0x00000320
+#define HCLK_JPEG_GATE         0x00000321
+#define HCLK_VDPP_GATE         0x00000322
+#define ACLK_VDPP_GATE         0x00000323
+#define CLK_CORE_VDPP_GATE     0x00000324
+#define HCLK_RGA2E_1_GATE      0x00000325
+#define ACLK_RGA2E_1_GATE      0x00000326
+#define CLK_CORE_RGA2E_1_GATE  0x00000327
+#define DCLK_EBC_FRAC_SRC_GATE 0x00000329
+#define HCLK_EBC_GATE          0x0000032A
+#define ACLK_EBC_GATE          0x0000032B
+#define DCLK_EBC_GATE          0x0000032C
+
+// CRU_GATE_CON51(Offset:0x8CC)
+#define HCLK_VEPU0_ROOT_GATE 0x00000330
+#define ACLK_VEPU0_ROOT_GATE 0x00000331
+#define HCLK_VEPU0_BIU_GATE  0x00000332
+#define ACLK_VEPU0_BIU_GATE  0x00000333
+#define HCLK_VEPU0_GATE      0x00000334
+#define ACLK_VEPU0_GATE      0x00000335
+#define CLK_VEPU0_CORE_GATE  0x00000336
+
+// CRU_GATE_CON53(Offset:0x8D4)
+#define ACLK_VI_ROOT_GATE         0x00000350
+#define HCLK_VI_ROOT_GATE         0x00000351
+#define PCLK_VI_ROOT_GATE         0x00000352
+#define ACLK_VI_BIU_GATE          0x00000353
+#define HCLK_VI_BIU_GATE          0x00000354
+#define PCLK_VI_BIU_GATE          0x00000355
+#define DCLK_VICAP_GATE           0x00000356
+#define ACLK_VICAP_GATE           0x00000357
+#define HCLK_VICAP_GATE           0x00000358
+#define CLK_ISP0_CORE_GATE        0x00000359
+#define CLK_ISP0_CORE_MARVIN_GATE 0x0000035A
+#define CLK_ISP0_CORE_VICAP_GATE  0x0000035B
+#define ACLK_ISP0_GATE            0x0000035C
+#define HCLK_ISP0_GATE            0x0000035D
+#define ACLK_VPSS_GATE            0x0000035F
+
+// CRU_GATE_CON54(Offset:0x8D8)
+#define HCLK_VPSS_GATE          0x00000360
+#define CLK_CORE_VPSS_GATE      0x00000361
+#define PCLK_CSI_HOST_0_GATE    0x00000364
+#define PCLK_CSI_HOST_1_GATE    0x00000365
+#define PCLK_CSI_HOST_2_GATE    0x00000366
+#define PCLK_CSI_HOST_3_GATE    0x00000367
+#define PCLK_CSI_HOST_4_GATE    0x00000368
+#define ICLK_CSIHOST01_GATE     0x0000036A
+#define ICLK_CSIHOST0_GATE      0x0000036B
+#define CLK_ISP_PVTPLL_SRC_GATE 0x0000036C
+#define ACLK_VI_ROOT_INTER_GATE 0x0000036D
+
+// CRU_GATE_CON59(Offset:0x8EC)
+#define CLK_VICAP_I0CLK_GATE 0x000003B1
+#define CLK_VICAP_I1CLK_GATE 0x000003B2
+#define CLK_VICAP_I2CLK_GATE 0x000003B3
+#define CLK_VICAP_I3CLK_GATE 0x000003B4
+#define CLK_VICAP_I4CLK_GATE 0x000003B5
+
+// CRU_GATE_CON61(Offset:0x8F4)
+#define ACLK_VOP_ROOT_GATE 0x000003D0
+#define HCLK_VOP_ROOT_GATE 0x000003D2
+#define PCLK_VOP_ROOT_GATE 0x000003D3
+#define ACLK_VOP_BIU_GATE  0x000003D4
+#define ACLK_VOP2_BIU_GATE 0x000003D5
+#define HCLK_VOP_BIU_GATE  0x000003D6
+#define PCLK_VOP_BIU_GATE  0x000003D7
+#define HCLK_VOP_GATE      0x000003D8
+#define ACLK_VOP_GATE      0x000003D9
+#define DCLK_VP0_SRC_GATE  0x000003DA
+#define DCLK_VP1_SRC_GATE  0x000003DB
+#define DCLK_VP2_SRC_GATE  0x000003DC
+#define DCLK_VP0_GATE      0x000003DD
+
+// CRU_GATE_CON62(Offset:0x8F8)
+#define DCLK_VP1_GATE      0x000003E0
+#define DCLK_VP2_GATE      0x000003E1
+#define PCLK_VOP2_BIU_GATE 0x000003E2
+#define PCLK_VOPGRF_GATE   0x000003E3
+
+// CRU_GATE_CON63(Offset:0x8FC)
+#define ACLK_VO0_ROOT_GATE  0x000003F0
+#define HCLK_VO0_ROOT_GATE  0x000003F1
+#define PCLK_VO0_ROOT_GATE  0x000003F3
+#define HCLK_VO0_BIU_GATE   0x000003F5
+#define PCLK_VO0_BIU_GATE   0x000003F7
+#define ACLK_HDCP0_BIU_GATE 0x000003F9
+#define PCLK_VO0_GRF_GATE   0x000003FA
+#define ACLK_HDCP0_GATE     0x000003FC
+#define HCLK_HDCP0_GATE     0x000003FD
+#define PCLK_HDCP0_GATE     0x000003FE
+
+// CRU_GATE_CON64(Offset:0x900)
+#define CLK_TRNG0_SKP_GATE          0x00000404
+#define PCLK_DSIHOST0_GATE          0x00000405
+#define CLK_DSIHOST0_GATE           0x00000406
+#define PCLK_HDMITX0_GATE           0x00000407
+#define CLK_HDMITX0_EARC_GATE       0x00000408
+#define CLK_HDMITX0_REF_GATE        0x00000409
+#define CLK_EXTREF_TIMEOUT_VO0_GATE 0x0000040B
+#define PCLK_EDP0_GATE              0x0000040D
+#define CLK_EDP0_24M_GATE           0x0000040E
+#define CLK_EDP0_200M_GATE          0x0000040F
+
+// CRU_GATE_CON65(Offset:0x904)
+#define MCLK_SAI5_8CH_SRC_GATE 0x00000413
+#define MCLK_SAI5_8CH_GATE     0x00000414
+#define HCLK_SAI5_8CH_GATE     0x00000415
+#define MCLK_SAI6_8CH_SRC_GATE 0x00000417
+#define MCLK_SAI6_8CH_GATE     0x00000418
+#define HCLK_SAI6_8CH_GATE     0x00000419
+#define HCLK_SPDIF_TX2_GATE    0x0000041A
+#define MCLK_SPDIF_TX2_GATE    0x0000041D
+#define HCLK_SPDIFRX2_GATE     0x0000041E
+#define MCLK_SPDIFRX2_GATE     0x0000041F
+
+// CRU_GATE_CON66(Offset:0x908)
+#define HCLK_SAI8_8CH_GATE     0x00000420
+#define MCLK_SAI8_8CH_SRC_GATE 0x00000421
+#define MCLK_SAI8_8CH_GATE     0x00000422
+
+// CRU_GATE_CON67(Offset:0x90C)
+#define ACLK_VO1_ROOT_GATE     0x00000431
+#define HCLK_VO1_ROOT_GATE     0x00000432
+#define PCLK_VO1_ROOT_GATE     0x00000433
+#define HCLK_VO1_BIU_GATE      0x00000435
+#define PCLK_VO1_BIU_GATE      0x00000436
+#define MCLK_SAI7_8CH_SRC_GATE 0x00000438
+#define MCLK_SAI7_8CH_GATE     0x00000439
+#define HCLK_SAI7_8CH_GATE     0x0000043A
+#define HCLK_SPDIF_TX3_GATE    0x0000043B
+#define HCLK_SPDIF_TX4_GATE    0x0000043C
+#define HCLK_SPDIF_TX5_GATE    0x0000043D
+#define MCLK_SPDIF_TX3_GATE    0x0000043E
+#define CLK_AUX16MHZ_0_GATE    0x0000043F
+
+// CRU_GATE_CON68(Offset:0x910)
+#define ACLK_DP0_GATE          0x00000440
+#define PCLK_DP0_GATE          0x00000441
+#define PCLK_VO1_GRF_GATE      0x00000442
+#define ACLK_HDCP1_BIU_GATE    0x00000443
+#define ACLK_HDCP1_GATE        0x00000444
+#define HCLK_HDCP1_GATE        0x00000445
+#define PCLK_HDCP1_GATE        0x00000446
+#define CLK_TRNG1_SKP_GATE     0x00000447
+#define HCLK_SAI9_8CH_GATE     0x00000449
+#define MCLK_SAI9_8CH_SRC_GATE 0x0000044A
+#define MCLK_SAI9_8CH_GATE     0x0000044B
+#define MCLK_SPDIF_TX4_GATE    0x0000044C
+#define MCLK_SPDIF_TX5_GATE    0x0000044D
+
+// CRU_GATE_CON69(Offset:0x914)
+#define CLK_GPU_SRC_PRE_GATE    0x00000451
+#define CLK_GPU_INNER_GATE      0x00000452
+#define CLK_GPU_GATE            0x00000453
+#define CLK_GPU_PVTPLL_SRC_GATE 0x00000454
+#define ACLK_S_GPU_BIU_GATE     0x00000456
+#define ACLK_M0_GPU_BIU_GATE    0x00000457
+#define PCLK_GPU_ROOT_GATE      0x00000458
+#define PCLK_GPU_BIU_GATE       0x00000459
+#define PCLK_GPU_GRF_GATE       0x0000045D
+#define CLK_REF_PVTPLL_GPU_GATE 0x0000045E
+#define PCLK_PVTPLL_GPU_GATE    0x0000045F
+
+// CRU_GATE_CON72(Offset:0x920)
+#define ACLK_CENTER_ROOT_GATE      0x00000480
+#define ACLK_CENTER_LOW_ROOT_GATE  0x00000481
+#define HCLK_CENTER_ROOT_GATE      0x00000482
+#define PCLK_CENTER_ROOT_GATE      0x00000483
+#define ACLK_CENTER_BIU_GATE       0x00000484
+#define ACLK_DMA2DDR_GATE          0x00000485
+#define ACLK_DDR_SHAREMEM_GATE     0x00000486
+#define ACLK_DDR_SHAREMEM_BIU_GATE 0x00000487
+#define HCLK_CENTER_BIU_GATE       0x00000488
+#define PCLK_CENTER_GRF_GATE       0x00000489
+#define PCLK_DMA2DDR_GATE          0x0000048A
+#define PCLK_SHAREMEM_GATE         0x0000048B
+#define PCLK_CENTER_BIU_GATE       0x0000048C
+
+// CRU_GATE_CON78(Offset:0x938)
+#define HCLK_VEPU1_ROOT_GATE 0x000004E0
+
+// CRU_GATE_CON79(Offset:0x93C)
+#define ACLK_VEPU1_ROOT_GATE 0x000004F0
+#define HCLK_VEPU1_BIU_GATE  0x000004F1
+#define ACLK_VEPU1_BIU_GATE  0x000004F2
+#define HCLK_VEPU1_GATE      0x000004F3
+#define ACLK_VEPU1_GATE      0x000004F4
+#define CLK_VEPU1_CORE_GATE  0x000004F5
+
+// CRU_CLKSEL_CON00(Offset:0x300)
+#define CLK_MATRIX_50M_SRC_DIV               0x05000000
+#define CLK_MATRIX_100M_SRC_DIV              0x05060000
+#define CLK_MATRIX_50M_SRC_SEL               0x01050000
+#define CLK_MATRIX_50M_SRC_SEL_CLK_GPLL_MUX  0U
+#define CLK_MATRIX_50M_SRC_SEL_CLK_CPLL_MUX  1U
+#define CLK_MATRIX_100M_SRC_SEL              0x010B0000
+#define CLK_MATRIX_100M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_100M_SRC_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON01(Offset:0x304)
+#define CLK_MATRIX_150M_SRC_DIV              0x05000001
+#define CLK_MATRIX_200M_SRC_DIV              0x05060001
+#define CLK_MATRIX_150M_SRC_SEL              0x01050001
+#define CLK_MATRIX_150M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_150M_SRC_SEL_CLK_CPLL_MUX 1U
+#define CLK_MATRIX_200M_SRC_SEL              0x010B0001
+#define CLK_MATRIX_200M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_200M_SRC_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON02(Offset:0x308)
+#define CLK_MATRIX_250M_SRC_DIV              0x05000002
+#define CLK_MATRIX_300M_SRC_DIV              0x05060002
+#define CLK_MATRIX_250M_SRC_SEL              0x01050002
+#define CLK_MATRIX_250M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_250M_SRC_SEL_CLK_CPLL_MUX 1U
+#define CLK_MATRIX_300M_SRC_SEL              0x010B0002
+#define CLK_MATRIX_300M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_300M_SRC_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON03(Offset:0x30C)
+#define CLK_MATRIX_350M_SRC_DIV              0x05000003
+#define CLK_MATRIX_400M_SRC_DIV              0x05070003
+#define CLK_MATRIX_350M_SRC_SEL              0x02050003
+#define CLK_MATRIX_350M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_350M_SRC_SEL_CLK_CPLL_MUX 1U
+#define CLK_MATRIX_350M_SRC_SEL_CLK_SPLL_MUX 2U
+#define CLK_MATRIX_350M_SRC_SEL_CLK_BPLL_SRC 3U
+#define CLK_MATRIX_400M_SRC_SEL              0x010C0003
+#define CLK_MATRIX_400M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_400M_SRC_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON04(Offset:0x310)
+#define CLK_MATRIX_500M_SRC_DIV              0x05060004
+#define CLK_MATRIX_500M_SRC_SEL              0x010B0004
+#define CLK_MATRIX_500M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_500M_SRC_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON05(Offset:0x314)
+#define CLK_MATRIX_600M_SRC_DIV              0x05000005
+#define CLK_MATRIX_600M_SRC_SEL              0x01050005
+#define CLK_MATRIX_600M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_600M_SRC_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON06(Offset:0x318)
+#define CLK_MATRIX_700M_SRC_DIV              0x05000006
+#define CLK_MATRIX_700M_SRC_SEL              0x03050006
+#define CLK_MATRIX_700M_SRC_SEL_CLK_GPLL_MUX 0U
+#define CLK_MATRIX_700M_SRC_SEL_CLK_CPLL_MUX 1U
+#define CLK_MATRIX_700M_SRC_SEL_CLK_SPLL_MUX 2U
+#define CLK_MATRIX_700M_SRC_SEL_CLK_BPLL_SRC 3U
+#define CLK_MATRIX_700M_SRC_SEL_CLK_LPLL_SRC 4U
+
+// CRU_CLKSEL_CON08(Offset:0x320)
+#define PCLK_TOP_ROOT_SEL                     0x02070008
+#define PCLK_TOP_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define PCLK_TOP_ROOT_SEL_CLK_MATRIX_50M_SRC  1U
+#define PCLK_TOP_ROOT_SEL_XIN_OSC0_FUNC       2U
+
+// CRU_CLKSEL_CON09(Offset:0x324)
+#define ACLK_TOP_BIU_DIV               0x05000009
+#define CLK_LPLL_SRC_DIV               0x05070009
+#define ACLK_TOP_BIU_SEL               0x02050009
+#define ACLK_TOP_BIU_SEL_CLK_GPLL_MUX  0U
+#define ACLK_TOP_BIU_SEL_CLK_CPLL_MUX  1U
+#define ACLK_TOP_BIU_SEL_CLK_AUPLL_MUX 2U
+#define CLK_LPLL_SRC_SEL               0x010C0009
+#define CLK_LPLL_SRC_SEL_CLK_LPLL      0U
+#define CLK_LPLL_SRC_SEL_XIN_OSC0_FUNC 1U
+
+// CRU_CLKSEL_CON10(Offset:0x328)
+#define ACLK_TOP_MID_BIU_DIV                   0x0500000A
+#define ACLK_SECURE_HIGH_BIU_DIV               0x0506000A
+#define ACLK_TOP_MID_BIU_SEL                   0x0105000A
+#define ACLK_TOP_MID_BIU_SEL_CLK_GPLL_MUX      0U
+#define ACLK_TOP_MID_BIU_SEL_CLK_CPLL_MUX      1U
+#define ACLK_SECURE_HIGH_BIU_SEL               0x030B000A
+#define ACLK_SECURE_HIGH_BIU_SEL_CLK_GPLL_MUX  0U
+#define ACLK_SECURE_HIGH_BIU_SEL_CLK_SPLL_MUX  1U
+#define ACLK_SECURE_HIGH_BIU_SEL_CLK_AUPLL_MUX 2U
+#define ACLK_SECURE_HIGH_BIU_SEL_CLK_BPLL_SRC  3U
+#define ACLK_SECURE_HIGH_BIU_SEL_CLK_LPLL_SRC  4U
+
+// CRU_CLKSEL_CON11(Offset:0x32C)
+#define CLK_BPLL_SRC_DIV               0x0500000B
+#define CLK_BPLL_SRC_SEL               0x0105000B
+#define CLK_BPLL_SRC_SEL_CLK_BPLL      0U
+#define CLK_BPLL_SRC_SEL_XIN_OSC0_FUNC 1U
+
+// CRU_CLKSEL_CON12(Offset:0x330)
+#define CLK_MATRIX_AUDIO_FRAC_0_DIV 0x2000000C
+
+// CRU_CLKSEL_CON13(Offset:0x334)
+#define CLK_MATRIX_AUDIO_FRAC_0_SEL                   0x0200000D
+#define CLK_MATRIX_AUDIO_FRAC_0_SEL_CLK_GPLL_MUX      0U
+#define CLK_MATRIX_AUDIO_FRAC_0_SEL_CLK_CPLL_MUX      1U
+#define CLK_MATRIX_AUDIO_FRAC_0_SEL_CLK_AUPLL_MUX     2U
+#define CLK_MATRIX_AUDIO_FRAC_0_SEL_XIN_OSC0_FUNC_MUX 3U
+
+// CRU_CLKSEL_CON14(Offset:0x338)
+#define CLK_MATRIX_AUDIO_FRAC_1_DIV 0x2000000E
+
+// CRU_CLKSEL_CON15(Offset:0x33C)
+#define CLK_MATRIX_AUDIO_FRAC_1_SEL                   0x0200000F
+#define CLK_MATRIX_AUDIO_FRAC_1_SEL_CLK_GPLL_MUX      0U
+#define CLK_MATRIX_AUDIO_FRAC_1_SEL_CLK_CPLL_MUX      1U
+#define CLK_MATRIX_AUDIO_FRAC_1_SEL_CLK_AUPLL_MUX     2U
+#define CLK_MATRIX_AUDIO_FRAC_1_SEL_XIN_OSC0_FUNC_MUX 3U
+
+// CRU_CLKSEL_CON16(Offset:0x340)
+#define CLK_MATRIX_AUDIO_FRAC_2_DIV 0x20000010
+
+// CRU_CLKSEL_CON17(Offset:0x344)
+#define CLK_MATRIX_AUDIO_FRAC_2_SEL                   0x02000011
+#define CLK_MATRIX_AUDIO_FRAC_2_SEL_CLK_GPLL_MUX      0U
+#define CLK_MATRIX_AUDIO_FRAC_2_SEL_CLK_CPLL_MUX      1U
+#define CLK_MATRIX_AUDIO_FRAC_2_SEL_CLK_AUPLL_MUX     2U
+#define CLK_MATRIX_AUDIO_FRAC_2_SEL_XIN_OSC0_FUNC_MUX 3U
+
+// CRU_CLKSEL_CON18(Offset:0x348)
+#define CLK_MATRIX_AUDIO_FRAC_3_DIV 0x20000012
+
+// CRU_CLKSEL_CON19(Offset:0x34C)
+#define ACLK_VO0VOP_CHANNEL_BIU_DIV                     0x04080013
+#define CLK_MATRIX_AUDIO_FRAC_3_SEL                     0x02000013
+#define CLK_MATRIX_AUDIO_FRAC_3_SEL_CLK_GPLL_MUX        0U
+#define CLK_MATRIX_AUDIO_FRAC_3_SEL_CLK_CPLL_MUX        1U
+#define CLK_MATRIX_AUDIO_FRAC_3_SEL_CLK_AUPLL_MUX       2U
+#define CLK_MATRIX_AUDIO_FRAC_3_SEL_XIN_OSC0_FUNC_MUX   3U
+#define HCLK_TOP_BIU_SEL                                0x02020013
+#define HCLK_TOP_BIU_SEL_CLK_MATRIX_200M_SRC            0U
+#define HCLK_TOP_BIU_SEL_CLK_MATRIX_100M_SRC            1U
+#define HCLK_TOP_BIU_SEL_CLK_MATRIX_50M_SRC             2U
+#define HCLK_TOP_BIU_SEL_XIN_OSC0_FUNC                  3U
+#define HCLK_VO0VOP_CHANNEL_BIU_SEL                     0x02060013
+#define HCLK_VO0VOP_CHANNEL_BIU_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_VO0VOP_CHANNEL_BIU_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_VO0VOP_CHANNEL_BIU_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_VO0VOP_CHANNEL_BIU_SEL_XIN_OSC0_FUNC       3U
+#define ACLK_VO0VOP_CHANNEL_BIU_SEL                     0x020C0013
+#define ACLK_VO0VOP_CHANNEL_BIU_SEL_CLK_GPLL_MUX        0U
+#define ACLK_VO0VOP_CHANNEL_BIU_SEL_CLK_CPLL_MUX        1U
+#define ACLK_VO0VOP_CHANNEL_BIU_SEL_CLK_LPLL_SRC        2U
+#define ACLK_VO0VOP_CHANNEL_BIU_SEL_CLK_BPLL_SRC        3U
+
+// CRU_CLKSEL_CON21(Offset:0x354)
+#define CLK_MATRIX_UART_FRAC_0_DIV 0x20000015
+
+// CRU_CLKSEL_CON22(Offset:0x358)
+#define CLK_MATRIX_UART_FRAC_0_SEL                   0x02000016
+#define CLK_MATRIX_UART_FRAC_0_SEL_CLK_GPLL_MUX      0U
+#define CLK_MATRIX_UART_FRAC_0_SEL_CLK_CPLL_MUX      1U
+#define CLK_MATRIX_UART_FRAC_0_SEL_CLK_AUPLL_MUX     2U
+#define CLK_MATRIX_UART_FRAC_0_SEL_XIN_OSC0_FUNC_MUX 3U
+
+// CRU_CLKSEL_CON23(Offset:0x35C)
+#define CLK_MATRIX_UART_FRAC_1_DIV 0x20000017
+
+// CRU_CLKSEL_CON24(Offset:0x360)
+#define CLK_MATRIX_UART_FRAC_1_SEL                   0x02000018
+#define CLK_MATRIX_UART_FRAC_1_SEL_CLK_GPLL_MUX      0U
+#define CLK_MATRIX_UART_FRAC_1_SEL_CLK_CPLL_MUX      1U
+#define CLK_MATRIX_UART_FRAC_1_SEL_CLK_AUPLL_MUX     2U
+#define CLK_MATRIX_UART_FRAC_1_SEL_XIN_OSC0_FUNC_MUX 3U
+
+// CRU_CLKSEL_CON25(Offset:0x364)
+#define CLK_MATRIX_UART_FRAC_2_DIV 0x20000019
+
+// CRU_CLKSEL_CON26(Offset:0x368)
+#define CLK_TESTOUT_TOP_DIV                          0x0602001A
+#define CLK_MATRIX_UART_FRAC_2_SEL                   0x0200001A
+#define CLK_MATRIX_UART_FRAC_2_SEL_CLK_GPLL_MUX      0U
+#define CLK_MATRIX_UART_FRAC_2_SEL_CLK_CPLL_MUX      1U
+#define CLK_MATRIX_UART_FRAC_2_SEL_CLK_AUPLL_MUX     2U
+#define CLK_MATRIX_UART_FRAC_2_SEL_XIN_OSC0_FUNC_MUX 3U
+#define CLK_TESTOUT_TOP_SEL                          0x0308001A
+#define CLK_TESTOUT_TOP_SEL_CLK_GPLL_MUX             0U
+#define CLK_TESTOUT_TOP_SEL_CLK_CPLL_MUX             1U
+#define CLK_TESTOUT_TOP_SEL_CLK_AUPLL_MUX            2U
+#define CLK_TESTOUT_TOP_SEL_CLK_SPLL_MUX             3U
+#define CLK_TESTOUT_TOP_SEL_CLK_DEEPSLOW             4U
+#define CLK_TESTOUT_SEL                              0x030B001A
+#define CLK_TESTOUT_SEL_CLK_TESTOUT_GRP0             0U
+#define CLK_TESTOUT_SEL_CLK_TESTOUT_PVTPLL_BIGCORE   1U
+#define CLK_TESTOUT_SEL_CLK_TESTOUT_PVTPLL_LITCORE   2U
+#define CLK_TESTOUT_SEL_CLK_TESTOUT_HDMIPHY_DBG      3U
+
+// CRU_CLKSEL_CON27(Offset:0x36C)
+#define CLK_UART1_SRC_TOP_DIV                           0x0805001B
+#define CLK_TESTOUT_GRP0_SEL                            0x0300001B
+#define CLK_TESTOUT_GRP0_SEL_CLK_PVTMPMU_CLKOUT_MEASURE 0U
+#define CLK_TESTOUT_GRP0_SEL_CLK_TESTOUT_TOP            1U
+#define CLK_TESTOUT_GRP0_SEL_CLK_TESTOUT_PVTPLL_GPU     2U
+#define CLK_TESTOUT_GRP0_SEL_CLK_TESTOUT_PVTPLL_NPU     3U
+#define CLK_TESTOUT_GRP0_SEL_CLK_TESTOUT_PVTPLL_CCI     4U
+#define CLK_TESTOUT_GRP0_SEL_CLK_TESTOUT_PVTPLL_DDR     5U
+#define CLK_UART1_SRC_TOP_SEL                           0x030D001B
+#define CLK_UART1_SRC_TOP_SEL_CLK_GPLL_MUX              0U
+#define CLK_UART1_SRC_TOP_SEL_CLK_CPLL_MUX              1U
+#define CLK_UART1_SRC_TOP_SEL_CLK_AUPLL_MUX             2U
+#define CLK_UART1_SRC_TOP_SEL_XIN_OSC0_FUNC_MUX         3U
+#define CLK_UART1_SRC_TOP_SEL_CLK_MATRIX_UART_FRAC_0    4U
+#define CLK_UART1_SRC_TOP_SEL_CLK_MATRIX_UART_FRAC_1    5U
+#define CLK_UART1_SRC_TOP_SEL_CLK_MATRIX_UART_FRAC_2    6U
+
+// CRU_CLKSEL_CON28(Offset:0x370)
+#define CLK_MATRIX_AUDIO_INT_0_DIV 0x0500001C
+#define CLK_MATRIX_AUDIO_INT_1_DIV 0x0505001C
+#define CLK_MATRIX_AUDIO_INT_2_DIV 0x050A001C
+
+// CRU_CLKSEL_CON29(Offset:0x374)
+#define CLK_PDM0_SRC_TOP_DIV                         0x0900001D
+#define CLK_PDM0_SRC_TOP_SEL                         0x0309001D
+#define CLK_PDM0_SRC_TOP_SEL_XIN_OSC0_FUNC_MUX       0U
+#define CLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define CLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define CLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define CLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define CLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define CLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define CLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+
+// CRU_CLKSEL_CON30(Offset:0x378)
+#define CLK_MATRIX_GMAC0_125M_SRC_DIV 0x050A001E
+
+// CRU_CLKSEL_CON31(Offset:0x37C)
+#define CLK_MATRIX_GMAC1_125M_SRC_DIV               0x0500001F
+#define LCLK_ASRC_SRC_0_DIV                         0x0505001F
+#define LCLK_ASRC_SRC_0_SEL                         0x020A001F
+#define LCLK_ASRC_SRC_0_SEL_CLK_MATRIX_AUDIO_FRAC_0 0U
+#define LCLK_ASRC_SRC_0_SEL_CLK_MATRIX_AUDIO_FRAC_1 1U
+#define LCLK_ASRC_SRC_0_SEL_CLK_MATRIX_AUDIO_FRAC_2 2U
+#define LCLK_ASRC_SRC_0_SEL_CLK_MATRIX_AUDIO_FRAC_3 3U
+
+// CRU_CLKSEL_CON32(Offset:0x380)
+#define LCLK_ASRC_SRC_1_DIV                         0x05000020
+#define LCLK_ASRC_SRC_1_SEL                         0x02050020
+#define LCLK_ASRC_SRC_1_SEL_CLK_MATRIX_AUDIO_FRAC_0 0U
+#define LCLK_ASRC_SRC_1_SEL_CLK_MATRIX_AUDIO_FRAC_1 1U
+#define LCLK_ASRC_SRC_1_SEL_CLK_MATRIX_AUDIO_FRAC_2 2U
+#define LCLK_ASRC_SRC_1_SEL_CLK_MATRIX_AUDIO_FRAC_3 3U
+
+// CRU_CLKSEL_CON33(Offset:0x384)
+#define REF_CLK0_OUT_PLL_DIV                   0x08000021
+#define REF_CLK0_OUT_PLL_SEL                   0x03080021
+#define REF_CLK0_OUT_PLL_SEL_CLK_GPLL_MUX      0U
+#define REF_CLK0_OUT_PLL_SEL_CLK_CPLL_MUX      1U
+#define REF_CLK0_OUT_PLL_SEL_CLK_SPLL_MUX      2U
+#define REF_CLK0_OUT_PLL_SEL_CLK_AUPLL_MUX     3U
+#define REF_CLK0_OUT_PLL_SEL_CLK_LPLL_SRC      4U
+#define REF_CLK0_OUT_PLL_SEL_XIN_OSC0_FUNC_MUX 5U
+
+// CRU_CLKSEL_CON34(Offset:0x388)
+#define REF_CLK1_OUT_PLL_DIV                   0x08000022
+#define REF_CLK1_OUT_PLL_SEL                   0x03080022
+#define REF_CLK1_OUT_PLL_SEL_CLK_GPLL_MUX      0U
+#define REF_CLK1_OUT_PLL_SEL_CLK_CPLL_MUX      1U
+#define REF_CLK1_OUT_PLL_SEL_CLK_SPLL_MUX      2U
+#define REF_CLK1_OUT_PLL_SEL_CLK_AUPLL_MUX     3U
+#define REF_CLK1_OUT_PLL_SEL_CLK_LPLL_SRC      4U
+#define REF_CLK1_OUT_PLL_SEL_XIN_OSC0_FUNC_MUX 5U
+
+// CRU_CLKSEL_CON35(Offset:0x38C)
+#define REF_CLK2_OUT_PLL_DIV                   0x08000023
+#define REF_CLK2_OUT_PLL_SEL                   0x03080023
+#define REF_CLK2_OUT_PLL_SEL_CLK_GPLL_MUX      0U
+#define REF_CLK2_OUT_PLL_SEL_CLK_CPLL_MUX      1U
+#define REF_CLK2_OUT_PLL_SEL_CLK_SPLL_MUX      2U
+#define REF_CLK2_OUT_PLL_SEL_CLK_AUPLL_MUX     3U
+#define REF_CLK2_OUT_PLL_SEL_CLK_LPLL_SRC      4U
+#define REF_CLK2_OUT_PLL_SEL_XIN_OSC0_FUNC_MUX 5U
+
+// CRU_CLKSEL_CON36(Offset:0x390)
+#define REFCLKO25M_GMAC0_OUT_DIV              0x07000024
+#define REFCLKO25M_GMAC1_OUT_DIV              0x07080024
+#define REFCLKO25M_GMAC0_OUT_SEL              0x01070024
+#define REFCLKO25M_GMAC0_OUT_SEL_CLK_GPLL_MUX 0U
+#define REFCLKO25M_GMAC0_OUT_SEL_CLK_CPLL_MUX 1U
+#define REFCLKO25M_GMAC1_OUT_SEL              0x010F0024
+#define REFCLKO25M_GMAC1_OUT_SEL_CLK_GPLL_MUX 0U
+#define REFCLKO25M_GMAC1_OUT_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON37(Offset:0x394)
+#define CLK_CIFOUT_OUT_DIV                   0x08000025
+#define CLK_BISRINTF_PLLSRC_DIV              0x050A0025
+#define CLK_CIFOUT_OUT_SEL                   0x02080025
+#define CLK_CIFOUT_OUT_SEL_CLK_GPLL_MUX      0U
+#define CLK_CIFOUT_OUT_SEL_CLK_CPLL_MUX      1U
+#define CLK_CIFOUT_OUT_SEL_XIN_OSC0_FUNC_MUX 2U
+#define CLK_CIFOUT_OUT_SEL_CLK_SPLL_MUX      3U
+
+// CRU_CLKSEL_CON38(Offset:0x398)
+#define CLK_MIPI_CAMERAOUT_M0_DIV                   0x08000026
+#define CLK_MIPI_CAMERAOUT_M0_SEL                   0x02080026
+#define CLK_MIPI_CAMERAOUT_M0_SEL_XIN_OSC0_FUNC_MUX 0U
+#define CLK_MIPI_CAMERAOUT_M0_SEL_CLK_SPLL_MUX      1U
+#define CLK_MIPI_CAMERAOUT_M0_SEL_CLK_GPLL_MUX      2U
+#define CLK_MIPI_CAMERAOUT_M0_SEL_CLK_CPLL_MUX      3U
+
+// CRU_CLKSEL_CON39(Offset:0x39C)
+#define CLK_MIPI_CAMERAOUT_M1_DIV                   0x08000027
+#define CLK_MIPI_CAMERAOUT_M1_SEL                   0x02080027
+#define CLK_MIPI_CAMERAOUT_M1_SEL_XIN_OSC0_FUNC_MUX 0U
+#define CLK_MIPI_CAMERAOUT_M1_SEL_CLK_SPLL_MUX      1U
+#define CLK_MIPI_CAMERAOUT_M1_SEL_CLK_GPLL_MUX      2U
+#define CLK_MIPI_CAMERAOUT_M1_SEL_CLK_CPLL_MUX      3U
+
+// CRU_CLKSEL_CON40(Offset:0x3A0)
+#define CLK_MIPI_CAMERAOUT_M2_DIV                   0x08000028
+#define CLK_MIPI_CAMERAOUT_M2_SEL                   0x02080028
+#define CLK_MIPI_CAMERAOUT_M2_SEL_XIN_OSC0_FUNC_MUX 0U
+#define CLK_MIPI_CAMERAOUT_M2_SEL_CLK_SPLL_MUX      1U
+#define CLK_MIPI_CAMERAOUT_M2_SEL_CLK_GPLL_MUX      2U
+#define CLK_MIPI_CAMERAOUT_M2_SEL_CLK_CPLL_MUX      3U
+#define XIN_OSC0_FUNC_MUX_SEL                       0x010A0028
+#define XIN_OSC0_FUNC_MUX_SEL_XIN_OSC0_FUNC         0U
+#define XIN_OSC0_FUNC_MUX_SEL_XIN_OSC0_PLL_USBPHY   1U
+
+// CRU_CLKSEL_CON41(Offset:0x3A4)
+#define MCLK_PDM0_SRC_TOP_DIV                         0x05020029
+#define MCLK_PDM0_SRC_TOP_SEL                         0x03070029
+#define MCLK_PDM0_SRC_TOP_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_PDM0_SRC_TOP_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+
+// CRU_CLKSEL_CON42(Offset:0x3A8)
+#define CLK_ASRC_2CH_0_DIV                      0x0502002A
+#define CLK_ASRC_2CH_1_DIV                      0x0509002A
+#define HCLK_AUDIO_ROOT_SEL                     0x0200002A
+#define HCLK_AUDIO_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_AUDIO_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_AUDIO_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_AUDIO_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define CLK_ASRC_2CH_0_SEL                      0x0207002A
+#define CLK_ASRC_2CH_0_SEL_CLK_GPLL_MUX         0U
+#define CLK_ASRC_2CH_0_SEL_CLK_CPLL_MUX         1U
+#define CLK_ASRC_2CH_0_SEL_CLK_AUPLL_MUX        2U
+#define CLK_ASRC_2CH_1_SEL                      0x020E002A
+#define CLK_ASRC_2CH_1_SEL_CLK_GPLL_MUX         0U
+#define CLK_ASRC_2CH_1_SEL_CLK_CPLL_MUX         1U
+#define CLK_ASRC_2CH_1_SEL_CLK_AUPLL_MUX        2U
+
+// CRU_CLKSEL_CON43(Offset:0x3AC)
+#define CLK_ASRC_4CH_0_DIV               0x0500002B
+#define CLK_ASRC_4CH_1_DIV               0x0507002B
+#define CLK_ASRC_4CH_0_SEL               0x0205002B
+#define CLK_ASRC_4CH_0_SEL_CLK_GPLL_MUX  0U
+#define CLK_ASRC_4CH_0_SEL_CLK_CPLL_MUX  1U
+#define CLK_ASRC_4CH_0_SEL_CLK_AUPLL_MUX 2U
+#define CLK_ASRC_4CH_1_SEL               0x020C002B
+#define CLK_ASRC_4CH_1_SEL_CLK_GPLL_MUX  0U
+#define CLK_ASRC_4CH_1_SEL_CLK_CPLL_MUX  1U
+#define CLK_ASRC_4CH_1_SEL_CLK_AUPLL_MUX 2U
+
+// CRU_CLKSEL_CON44(Offset:0x3B0)
+#define MCLK_SAI0_8CH_SRC_DIV                         0x0800002C
+#define MCLK_SAI0_8CH_SRC_SEL                         0x0308002C
+#define MCLK_SAI0_8CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI0_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI0_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI0_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI0_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI0_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI0_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI0_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI0_8CH_SEL                             0x020B002C
+#define MCLK_SAI0_8CH_SEL_MCLK_SAI0_8CH_SRC           0U
+#define MCLK_SAI0_8CH_SEL_SAI0_MCLKIN                 1U
+#define MCLK_SAI0_8CH_SEL_SAI1_MCLKIN                 2U
+
+// CRU_CLKSEL_CON45(Offset:0x3B4)
+#define MCLK_SPDIFRX0_DIV               0x0500002D
+#define MCLK_SPDIFRX1_DIV               0x0507002D
+#define MCLK_SPDIFRX0_SEL               0x0205002D
+#define MCLK_SPDIFRX0_SEL_CLK_GPLL_MUX  0U
+#define MCLK_SPDIFRX0_SEL_CLK_CPLL_MUX  1U
+#define MCLK_SPDIFRX0_SEL_CLK_AUPLL_MUX 2U
+#define MCLK_SPDIFRX1_SEL               0x020C002D
+#define MCLK_SPDIFRX1_SEL_CLK_GPLL_MUX  0U
+#define MCLK_SPDIFRX1_SEL_CLK_CPLL_MUX  1U
+#define MCLK_SPDIFRX1_SEL_CLK_AUPLL_MUX 2U
+
+// CRU_CLKSEL_CON46(Offset:0x3B8)
+#define MCLK_SAI1_8CH_SRC_DIV                         0x0800002E
+#define MCLK_SAI1_8CH_SRC_SEL                         0x0308002E
+#define MCLK_SAI1_8CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI1_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI1_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI1_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI1_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI1_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI1_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI1_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI1_8CH_SEL                             0x010B002E
+#define MCLK_SAI1_8CH_SEL_MCLK_SAI1_8CH_SRC           0U
+#define MCLK_SAI1_8CH_SEL_SAI1_MCLKIN                 1U
+
+// CRU_CLKSEL_CON47(Offset:0x3BC)
+#define MCLK_SAI2_2CH_SRC_DIV                         0x0800002F
+#define MCLK_SAI2_2CH_SRC_SEL                         0x0308002F
+#define MCLK_SAI2_2CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI2_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI2_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI2_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI2_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI2_2CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI2_2CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI2_2CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI2_2CH_SEL                             0x020B002F
+#define MCLK_SAI2_2CH_SEL_MCLK_SAI2_2CH_SRC           0U
+#define MCLK_SAI2_2CH_SEL_SAI2_MCLKIN                 1U
+#define MCLK_SAI2_2CH_SEL_SAI1_MCLKIN                 2U
+
+// CRU_CLKSEL_CON48(Offset:0x3C0)
+#define MCLK_SAI3_2CH_SRC_DIV                         0x08000030
+#define MCLK_SAI3_2CH_SRC_SEL                         0x03080030
+#define MCLK_SAI3_2CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI3_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI3_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI3_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI3_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI3_2CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI3_2CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI3_2CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI3_2CH_SEL                             0x020B0030
+#define MCLK_SAI3_2CH_SEL_MCLK_SAI3_2CH_SRC           0U
+#define MCLK_SAI3_2CH_SEL_SAI3_MCLKIN                 1U
+#define MCLK_SAI3_2CH_SEL_SAI1_MCLKIN                 2U
+
+// CRU_CLKSEL_CON49(Offset:0x3C4)
+#define MCLK_SAI4_2CH_SRC_DIV                         0x08000031
+#define MCLK_SAI4_2CH_SRC_SEL                         0x03080031
+#define MCLK_SAI4_2CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI4_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI4_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI4_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI4_2CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI4_2CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI4_2CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI4_2CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI4_2CH_SEL                             0x020B0031
+#define MCLK_SAI4_2CH_SEL_MCLK_SAI4_2CH_SRC           0U
+#define MCLK_SAI4_2CH_SEL_SAI4_MCLKIN                 1U
+#define MCLK_SAI4_2CH_SEL_SAI1_MCLKIN                 2U
+
+// CRU_CLKSEL_CON50(Offset:0x3C8)
+#define CLK_PDM1_DIV                         0x09000032
+#define CLK_PDM1_SEL                         0x03090032
+#define CLK_PDM1_SEL_XIN_OSC0_FUNC_MUX       0U
+#define CLK_PDM1_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define CLK_PDM1_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define CLK_PDM1_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define CLK_PDM1_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define CLK_PDM1_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define CLK_PDM1_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define CLK_PDM1_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+
+// CRU_CLKSEL_CON51(Offset:0x3CC)
+#define MCLK_PDM1_DIV                         0x05000033
+#define MCLK_PDM1_SEL                         0x03050033
+#define MCLK_PDM1_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_PDM1_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_PDM1_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_PDM1_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_PDM1_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_PDM1_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_PDM1_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_PDM1_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+
+// CRU_CLKSEL_CON52(Offset:0x3D0)
+#define MCLK_SPDIF_TX0_DIV                         0x08000034
+#define MCLK_SPDIF_TX0_SEL                         0x03080034
+#define MCLK_SPDIF_TX0_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SPDIF_TX0_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SPDIF_TX0_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SPDIF_TX0_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SPDIF_TX0_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SPDIF_TX0_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SPDIF_TX0_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SPDIF_TX0_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+
+// CRU_CLKSEL_CON53(Offset:0x3D4)
+#define MCLK_SPDIF_TX1_DIV                         0x08000035
+#define MCLK_SPDIF_TX1_SEL                         0x03080035
+#define MCLK_SPDIF_TX1_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SPDIF_TX1_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SPDIF_TX1_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SPDIF_TX1_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SPDIF_TX1_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SPDIF_TX1_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SPDIF_TX1_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SPDIF_TX1_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+
+// CRU_CLKSEL_CON55(Offset:0x3DC)
+#define ACLK_BUS_ROOT_DIV                     0x05040037
+#define HCLK_BUS_ROOT_SEL                     0x02000037
+#define HCLK_BUS_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_BUS_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_BUS_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_BUS_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define PCLK_BUS_ROOT_SEL                     0x02020037
+#define PCLK_BUS_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define PCLK_BUS_ROOT_SEL_CLK_MATRIX_50M_SRC  1U
+#define PCLK_BUS_ROOT_SEL_XIN_OSC0_FUNC       2U
+#define ACLK_BUS_ROOT_SEL                     0x01090037
+#define ACLK_BUS_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_BUS_ROOT_SEL_CLK_CPLL_MUX        1U
+
+// CRU_CLKSEL_CON56(Offset:0x3E0)
+#define CLK_CAN0_DIV               0x05000038
+#define CLK_CAN1_DIV               0x05070038
+#define CLK_CAN0_SEL               0x02050038
+#define CLK_CAN0_SEL_CLK_GPLL_MUX  0U
+#define CLK_CAN0_SEL_CLK_CPLL_MUX  1U
+#define CLK_CAN0_SEL_XIN_OSC0_FUNC 2U
+#define CLK_CAN1_SEL               0x020C0038
+#define CLK_CAN1_SEL_CLK_GPLL_MUX  0U
+#define CLK_CAN1_SEL_CLK_CPLL_MUX  1U
+#define CLK_CAN1_SEL_XIN_OSC0_FUNC 2U
+
+// CRU_CLKSEL_CON57(Offset:0x3E4)
+#define CLK_I2C1_SEL                     0x02000039
+#define CLK_I2C1_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_I2C1_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_I2C1_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_I2C1_SEL_XIN_OSC0_FUNC       3U
+#define CLK_I2C2_SEL                     0x02020039
+#define CLK_I2C2_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_I2C2_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_I2C2_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_I2C2_SEL_XIN_OSC0_FUNC       3U
+#define CLK_I2C3_SEL                     0x02040039
+#define CLK_I2C3_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_I2C3_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_I2C3_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_I2C3_SEL_XIN_OSC0_FUNC       3U
+#define CLK_I2C4_SEL                     0x02060039
+#define CLK_I2C4_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_I2C4_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_I2C4_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_I2C4_SEL_XIN_OSC0_FUNC       3U
+#define CLK_I2C5_SEL                     0x02080039
+#define CLK_I2C5_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_I2C5_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_I2C5_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_I2C5_SEL_XIN_OSC0_FUNC       3U
+#define CLK_I2C6_SEL                     0x020A0039
+#define CLK_I2C6_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_I2C6_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_I2C6_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_I2C6_SEL_XIN_OSC0_FUNC       3U
+#define CLK_I2C7_SEL                     0x020C0039
+#define CLK_I2C7_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_I2C7_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_I2C7_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_I2C7_SEL_XIN_OSC0_FUNC       3U
+#define CLK_I2C8_SEL                     0x020E0039
+#define CLK_I2C8_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_I2C8_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_I2C8_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_I2C8_SEL_XIN_OSC0_FUNC       3U
+
+// CRU_CLKSEL_CON58(Offset:0x3E8)
+#define CLK_SARADC_DIV                   0x0804003A
+#define CLK_I2C9_SEL                     0x0200003A
+#define CLK_I2C9_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_I2C9_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_I2C9_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_I2C9_SEL_XIN_OSC0_FUNC       3U
+#define CLK_SARADC_SEL                   0x010C003A
+#define CLK_SARADC_SEL_CLK_GPLL_MUX      0U
+#define CLK_SARADC_SEL_XIN_OSC0_FUNC     1U
+
+// CRU_CLKSEL_CON59(Offset:0x3EC)
+#define CLK_TSADC_DIV 0x0800003B
+
+// CRU_CLKSEL_CON60(Offset:0x3F0)
+#define SCLK_UART0_DIV                        0x0800003C
+#define SCLK_UART0_SEL                        0x0308003C
+#define SCLK_UART0_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART0_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART0_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART0_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART0_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART0_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART0_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON61(Offset:0x3F4)
+#define SCLK_UART2_DIV                        0x0800003D
+#define SCLK_UART2_SEL                        0x0308003D
+#define SCLK_UART2_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART2_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART2_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART2_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART2_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART2_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART2_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON62(Offset:0x3F8)
+#define SCLK_UART3_DIV                        0x0800003E
+#define SCLK_UART3_SEL                        0x0308003E
+#define SCLK_UART3_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART3_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART3_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART3_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART3_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART3_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART3_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON63(Offset:0x3FC)
+#define SCLK_UART4_DIV                        0x0800003F
+#define SCLK_UART4_SEL                        0x0308003F
+#define SCLK_UART4_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART4_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART4_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART4_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART4_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART4_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART4_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON64(Offset:0x400)
+#define SCLK_UART5_DIV                        0x08000040
+#define SCLK_UART5_SEL                        0x03080040
+#define SCLK_UART5_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART5_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART5_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART5_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART5_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART5_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART5_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON65(Offset:0x404)
+#define SCLK_UART6_DIV                        0x08000041
+#define SCLK_UART6_SEL                        0x03080041
+#define SCLK_UART6_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART6_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART6_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART6_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART6_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART6_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART6_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON66(Offset:0x408)
+#define SCLK_UART7_DIV                        0x08000042
+#define SCLK_UART7_SEL                        0x03080042
+#define SCLK_UART7_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART7_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART7_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART7_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART7_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART7_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART7_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON67(Offset:0x40C)
+#define SCLK_UART8_DIV                        0x08000043
+#define SCLK_UART8_SEL                        0x03080043
+#define SCLK_UART8_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART8_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART8_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART8_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART8_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART8_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART8_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON68(Offset:0x410)
+#define SCLK_UART9_DIV                        0x08000044
+#define SCLK_UART9_SEL                        0x03080044
+#define SCLK_UART9_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART9_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART9_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART9_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART9_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART9_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART9_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON69(Offset:0x414)
+#define SCLK_UART10_DIV                        0x08000045
+#define SCLK_UART10_SEL                        0x03080045
+#define SCLK_UART10_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART10_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART10_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART10_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART10_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART10_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART10_SEL_CLK_MATRIX_UART_FRAC_2 6U
+
+// CRU_CLKSEL_CON70(Offset:0x418)
+#define SCLK_UART11_DIV                        0x08000046
+#define SCLK_UART11_SEL                        0x03080046
+#define SCLK_UART11_SEL_CLK_GPLL_MUX           0U
+#define SCLK_UART11_SEL_CLK_CPLL_MUX           1U
+#define SCLK_UART11_SEL_CLK_AUPLL_MUX          2U
+#define SCLK_UART11_SEL_XIN_OSC0_FUNC_MUX      3U
+#define SCLK_UART11_SEL_CLK_MATRIX_UART_FRAC_0 4U
+#define SCLK_UART11_SEL_CLK_MATRIX_UART_FRAC_1 5U
+#define SCLK_UART11_SEL_CLK_MATRIX_UART_FRAC_2 6U
+#define CLK_SPI0_SEL                           0x020D0046
+#define CLK_SPI0_SEL_CLK_MATRIX_200M_SRC       0U
+#define CLK_SPI0_SEL_CLK_MATRIX_150M_SRC       1U
+#define CLK_SPI0_SEL_CLK_MATRIX_100M_SRC       2U
+#define CLK_SPI0_SEL_XIN_OSC0_FUNC             3U
+
+// CRU_CLKSEL_CON71(Offset:0x41C)
+#define CLK_SPI1_SEL                            0x02000047
+#define CLK_SPI1_SEL_CLK_MATRIX_200M_SRC        0U
+#define CLK_SPI1_SEL_CLK_MATRIX_150M_SRC        1U
+#define CLK_SPI1_SEL_CLK_MATRIX_100M_SRC        2U
+#define CLK_SPI1_SEL_XIN_OSC0_FUNC              3U
+#define CLK_SPI2_SEL                            0x02020047
+#define CLK_SPI2_SEL_CLK_MATRIX_200M_SRC        0U
+#define CLK_SPI2_SEL_CLK_MATRIX_150M_SRC        1U
+#define CLK_SPI2_SEL_CLK_MATRIX_100M_SRC        2U
+#define CLK_SPI2_SEL_XIN_OSC0_FUNC              3U
+#define CLK_SPI3_SEL                            0x02040047
+#define CLK_SPI3_SEL_CLK_MATRIX_200M_SRC        0U
+#define CLK_SPI3_SEL_CLK_MATRIX_150M_SRC        1U
+#define CLK_SPI3_SEL_CLK_MATRIX_100M_SRC        2U
+#define CLK_SPI3_SEL_XIN_OSC0_FUNC              3U
+#define CLK_SPI4_SEL                            0x02060047
+#define CLK_SPI4_SEL_CLK_MATRIX_200M_SRC        0U
+#define CLK_SPI4_SEL_CLK_MATRIX_150M_SRC        1U
+#define CLK_SPI4_SEL_CLK_MATRIX_100M_SRC        2U
+#define CLK_SPI4_SEL_XIN_OSC0_FUNC              3U
+#define CLK_PWM1_SEL                            0x02080047
+#define CLK_PWM1_SEL_CLK_MATRIX_100M_SRC        0U
+#define CLK_PWM1_SEL_CLK_MATRIX_50M_SRC         1U
+#define CLK_PWM1_SEL_XIN_OSC0_FUNC              2U
+#define CLK_TIMER0_ROOT_SEL                     0x010E0047
+#define CLK_TIMER0_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define CLK_TIMER0_ROOT_SEL_XIN_OSC0_FUNC       1U
+
+// CRU_CLKSEL_CON72(Offset:0x420)
+#define DCLK_DECOM_DIV                          0x05000048
+#define CLK_TIMER7_DIV                          0x05070048
+#define DCLK_DECOM_SEL                          0x01050048
+#define DCLK_DECOM_SEL_CLK_GPLL_MUX             0U
+#define DCLK_DECOM_SEL_CLK_SPLL_MUX             1U
+#define CLK_TIMER1_ROOT_SEL                     0x01060048
+#define CLK_TIMER1_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define CLK_TIMER1_ROOT_SEL_XIN_OSC0_FUNC       1U
+#define CLK_TIMER7_SEL                          0x020C0048
+#define CLK_TIMER7_SEL_CLK_MATRIX_100M_SRC      0U
+#define CLK_TIMER7_SEL_XIN_OSC0_FUNC            1U
+#define CLK_TIMER7_SEL_LCLK_ASRC_SRC_0          2U
+
+// CRU_CLKSEL_CON73(Offset:0x424)
+#define CLK_TIMER8_DIV                            0x05000049
+#define CLK_TIMER8_SEL                            0x02050049
+#define CLK_TIMER8_SEL_CLK_MATRIX_100M_SRC        0U
+#define CLK_TIMER8_SEL_XIN_OSC0_FUNC              1U
+#define CLK_TIMER8_SEL_LCLK_ASRC_SRC_1            2U
+#define HCLK_BUS_CM0_ROOT_SEL                     0x020D0049
+#define HCLK_BUS_CM0_ROOT_SEL_CLK_MATRIX_400M_SRC 0U
+#define HCLK_BUS_CM0_ROOT_SEL_CLK_MATRIX_200M_SRC 1U
+#define HCLK_BUS_CM0_ROOT_SEL_CLK_MATRIX_100M_SRC 2U
+#define HCLK_BUS_CM0_ROOT_SEL_XIN_OSC0_FUNC       3U
+
+// CRU_CLKSEL_CON74(Offset:0x428)
+#define CLK_BUS_CM0_RTC_DIV                     0x0500004A
+#define CLK_BUS_CM0_RTC_SEL                     0x0105004A
+#define CLK_BUS_CM0_RTC_SEL_XIN_OSC0_FUNC       0U
+#define CLK_BUS_CM0_RTC_SEL_CLK_DEEPSLOW        1U
+#define CLK_PWM2_SEL                            0x0206004A
+#define CLK_PWM2_SEL_CLK_MATRIX_100M_SRC        0U
+#define CLK_PWM2_SEL_CLK_MATRIX_50M_SRC         1U
+#define CLK_PWM2_SEL_XIN_OSC0_FUNC              2U
+#define CLK_FREQ_PWM1_SEL                       0x0308004A
+#define CLK_FREQ_PWM1_SEL_SAI0_MCLKIN           0U
+#define CLK_FREQ_PWM1_SEL_SAI1_MCLKIN           1U
+#define CLK_FREQ_PWM1_SEL_SAI2_MCLKIN           2U
+#define CLK_FREQ_PWM1_SEL_SAI3_MCLKIN           3U
+#define CLK_FREQ_PWM1_SEL_SAI4_MCLKIN           4U
+#define CLK_FREQ_PWM1_SEL_SAI_SCLKIN_FREQ       5U
+#define CLK_COUNTER_PWM1_SEL                    0x030B004A
+#define CLK_COUNTER_PWM1_SEL_SAI0_MCLKIN        0U
+#define CLK_COUNTER_PWM1_SEL_SAI1_MCLKIN        1U
+#define CLK_COUNTER_PWM1_SEL_SAI2_MCLKIN        2U
+#define CLK_COUNTER_PWM1_SEL_SAI3_MCLKIN        3U
+#define CLK_COUNTER_PWM1_SEL_SAI4_MCLKIN        4U
+#define CLK_COUNTER_PWM1_SEL_SAI_SCLKIN_COUNTER 5U
+
+// CRU_CLKSEL_CON75(Offset:0x42C)
+#define SAI_SCLKIN_FREQ_SEL                 0x0300004B
+#define SAI_SCLKIN_FREQ_SEL_SAI0_SCLK_IN    0U
+#define SAI_SCLKIN_FREQ_SEL_SAI1_SCLK_IN    1U
+#define SAI_SCLKIN_FREQ_SEL_SAI2_SCLK_IN    2U
+#define SAI_SCLKIN_FREQ_SEL_SAI3_SCLK_IN    3U
+#define SAI_SCLKIN_FREQ_SEL_SAI4_SCLK_IN    4U
+#define SAI_SCLKIN_COUNTER_SEL              0x0303004B
+#define SAI_SCLKIN_COUNTER_SEL_SAI0_SCLK_IN 0U
+#define SAI_SCLKIN_COUNTER_SEL_SAI1_SCLK_IN 1U
+#define SAI_SCLKIN_COUNTER_SEL_SAI2_SCLK_IN 2U
+#define SAI_SCLKIN_COUNTER_SEL_SAI3_SCLK_IN 3U
+#define SAI_SCLKIN_COUNTER_SEL_SAI4_SCLK_IN 4U
+
+// CRU_CLKSEL_CON76(Offset:0x430)
+#define PCLK_DDR_ROOT_DIV               0x0500004C
+#define ACLK_DDR_ROOT_DIV               0x0507004C
+#define PCLK_DDR_ROOT_SEL               0x0205004C
+#define PCLK_DDR_ROOT_SEL_CLK_GPLL_MUX  0U
+#define PCLK_DDR_ROOT_SEL_CLK_CPLL_MUX  1U
+#define PCLK_DDR_ROOT_SEL_XIN_OSC0_FUNC 2U
+#define ACLK_DDR_ROOT_SEL               0x010C004C
+#define ACLK_DDR_ROOT_SEL_CLK_GPLL_MUX  0U
+#define ACLK_DDR_ROOT_SEL_CLK_CPLL_MUX  1U
+
+// CRU_CLKSEL_CON77(Offset:0x434)
+#define HCLK_DDR_ROOT_DIV                          0x0500004D
+#define CLK_DDR_CM0_RTC_DIV                        0x0507004D
+#define HCLK_DDR_ROOT_SEL                          0x0105004D
+#define HCLK_DDR_ROOT_SEL_CLK_GPLL_MUX             0U
+#define HCLK_DDR_ROOT_SEL_CLK_CPLL_MUX             1U
+#define CLK_DDR_TIMER_ROOT_SEL                     0x0106004D
+#define CLK_DDR_TIMER_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define CLK_DDR_TIMER_ROOT_SEL_XIN_OSC0_FUNC       1U
+#define CLK_DDR_CM0_RTC_SEL                        0x010C004D
+#define CLK_DDR_CM0_RTC_SEL_XIN_OSC0_FUNC          0U
+#define CLK_DDR_CM0_RTC_SEL_CLK_DEEPSLOW           1U
+
+// CRU_CLKSEL_CON78(Offset:0x438)
+#define CLK_I3C0_DIV               0x0500004E
+#define CLK_I3C1_DIV               0x0507004E
+#define CLK_I3C0_SEL               0x0205004E
+#define CLK_I3C0_SEL_CLK_GPLL_MUX  0U
+#define CLK_I3C0_SEL_CLK_CPLL_MUX  1U
+#define CLK_I3C0_SEL_CLK_AUPLL_MUX 2U
+#define CLK_I3C0_SEL_CLK_SPLL_MUX  3U
+#define CLK_I3C1_SEL               0x020C004E
+#define CLK_I3C1_SEL_CLK_GPLL_MUX  0U
+#define CLK_I3C1_SEL_CLK_CPLL_MUX  1U
+#define CLK_I3C1_SEL_CLK_AUPLL_MUX 2U
+#define CLK_I3C1_SEL_CLK_SPLL_MUX  3U
+
+// CRU_CLKSEL_CON80(Offset:0x440)
+#define MBIST_CLK_ACLK_RKNN0_SEL                    0x01000050
+#define MBIST_CLK_ACLK_RKNN0_SEL_MBIST_CLK_NPU      0U
+#define MBIST_CLK_ACLK_RKNN0_SEL_CLK_NPU_PVTPLL_SRC 1U
+
+// CRU_CLKSEL_CON82(Offset:0x448)
+#define MBIST_CLK_ACLK_RKNN1_SEL                    0x01000052
+#define MBIST_CLK_ACLK_RKNN1_SEL_MBIST_CLK_NPU      0U
+#define MBIST_CLK_ACLK_RKNN1_SEL_CLK_NPU_PVTPLL_SRC 1U
+
+// CRU_CLKSEL_CON86(Offset:0x458)
+#define CLK_RKNN_DSU0_SRC_T_DIV                0x05020056
+#define CLK_RKNN_DSU0_DIV                      0x050A0056
+#define HCLK_RKNN_ROOT_SEL                     0x02000056
+#define HCLK_RKNN_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_RKNN_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_RKNN_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_RKNN_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define CLK_RKNN_DSU0_SRC_T_SEL                0x02070056
+#define CLK_RKNN_DSU0_SRC_T_SEL_CLK_GPLL_MUX   0U
+#define CLK_RKNN_DSU0_SRC_T_SEL_CLK_CPLL_MUX   1U
+#define CLK_RKNN_DSU0_SRC_T_SEL_CLK_AUPLL_MUX  2U
+#define CLK_RKNN_DSU0_SRC_T_SEL_CLK_SPLL_MUX   3U
+#define CLK_NPU_PVTPLL_SRC_SEL                 0x01090056
+#define CLK_NPU_PVTPLL_SRC_SEL_CLK_DEEPSLOW    0U
+#define CLK_NPU_PVTPLL_SRC_SEL_CLK_NPU_PVTPLL  1U
+#define CLK_RKNN_DSU0_SEL                      0x010F0056
+#define CLK_RKNN_DSU0_SEL_CLK_RKNN_DSU0_SRC_T  0U
+#define CLK_RKNN_DSU0_SEL_CLK_NPU_PVTPLL_SRC   1U
+
+// CRU_CLKSEL_CON87(Offset:0x45C)
+#define CLK_NPU_CM0_RTC_DIV                           0x05050057
+#define PCLK_NPUTOP_ROOT_SEL                          0x02000057
+#define PCLK_NPUTOP_ROOT_SEL_CLK_MATRIX_100M_SRC      0U
+#define PCLK_NPUTOP_ROOT_SEL_CLK_MATRIX_50M_SRC       1U
+#define PCLK_NPUTOP_ROOT_SEL_XIN_OSC0_FUNC            2U
+#define CLK_NPUTIMER_ROOT_SEL                         0x01020057
+#define CLK_NPUTIMER_ROOT_SEL_CLK_MATRIX_100M_SRC     0U
+#define CLK_NPUTIMER_ROOT_SEL_XIN_OSC0_FUNC           1U
+#define HCLK_NPU_CM0_ROOT_SEL                         0x02030057
+#define HCLK_NPU_CM0_ROOT_SEL_CLK_MATRIX_400M_SRC     0U
+#define HCLK_NPU_CM0_ROOT_SEL_CLK_MATRIX_200M_SRC     1U
+#define HCLK_NPU_CM0_ROOT_SEL_CLK_MATRIX_100M_SRC     2U
+#define HCLK_NPU_CM0_ROOT_SEL_XIN_OSC0_FUNC           3U
+#define CLK_NPU_CM0_RTC_SEL                           0x010A0057
+#define CLK_NPU_CM0_RTC_SEL_XIN_OSC0_FUNC             0U
+#define CLK_NPU_CM0_RTC_SEL_CLK_DEEPSLOW              1U
+#define MBIST_CLK_ACLK_RKNNTOP_SEL                    0x010B0057
+#define MBIST_CLK_ACLK_RKNNTOP_SEL_MBIST_CLK_NPU      0U
+#define MBIST_CLK_ACLK_RKNNTOP_SEL_CLK_NPU_PVTPLL_SRC 1U
+
+// CRU_CLKSEL_CON88(Offset:0x460)
+#define ACLK_NVM_ROOT_DIV                     0x05020058
+#define HCLK_NVM_ROOT_SEL                     0x02000058
+#define HCLK_NVM_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_NVM_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_NVM_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_NVM_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define ACLK_NVM_ROOT_SEL                     0x01070058
+#define ACLK_NVM_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_NVM_ROOT_SEL_CLK_CPLL_MUX        1U
+
+// CRU_CLKSEL_CON89(Offset:0x464)
+#define SCLK_FSPI_X2_DIV                0x06000059
+#define CCLK_SRC_EMMC_DIV               0x06080059
+#define SCLK_FSPI_X2_SEL                0x02060059
+#define SCLK_FSPI_X2_SEL_CLK_GPLL_MUX   0U
+#define SCLK_FSPI_X2_SEL_CLK_CPLL_MUX   1U
+#define SCLK_FSPI_X2_SEL_XIN_OSC0_FUNC  2U
+#define CCLK_SRC_EMMC_SEL               0x020E0059
+#define CCLK_SRC_EMMC_SEL_CLK_GPLL_MUX  0U
+#define CCLK_SRC_EMMC_SEL_CLK_CPLL_MUX  1U
+#define CCLK_SRC_EMMC_SEL_XIN_OSC0_FUNC 2U
+
+// CRU_CLKSEL_CON90(Offset:0x468)
+#define BCLK_EMMC_SEL                     0x0200005A
+#define BCLK_EMMC_SEL_CLK_MATRIX_200M_SRC 0U
+#define BCLK_EMMC_SEL_CLK_MATRIX_100M_SRC 1U
+#define BCLK_EMMC_SEL_CLK_MATRIX_50M_SRC  2U
+#define BCLK_EMMC_SEL_XIN_OSC0_FUNC       3U
+
+// CRU_CLKSEL_CON92(Offset:0x470)
+#define ACLK_PHP_ROOT_DIV                     0x0504005C
+#define PCLK_PHP_ROOT_SEL                     0x0200005C
+#define PCLK_PHP_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define PCLK_PHP_ROOT_SEL_CLK_MATRIX_50M_SRC  1U
+#define PCLK_PHP_ROOT_SEL_XIN_OSC0_FUNC       2U
+#define ACLK_PHP_ROOT_SEL                     0x0109005C
+#define ACLK_PHP_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_PHP_ROOT_SEL_CLK_CPLL_MUX        1U
+
+// CRU_CLKSEL_CON93(Offset:0x474)
+#define CLK_RXOOB0_DIV              0x0700005D
+#define CLK_RXOOB1_DIV              0x0708005D
+#define CLK_RXOOB0_SEL              0x0107005D
+#define CLK_RXOOB0_SEL_CLK_GPLL_MUX 0U
+#define CLK_RXOOB0_SEL_CLK_CPLL_MUX 1U
+#define CLK_RXOOB1_SEL              0x010F005D
+#define CLK_RXOOB1_SEL_CLK_GPLL_MUX 0U
+#define CLK_RXOOB1_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON103(Offset:0x49C)
+#define ACLK_SDGMAC_ROOT_DIV                     0x05020067
+#define HCLK_SDGMAC_ROOT_SEL                     0x02000067
+#define HCLK_SDGMAC_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_SDGMAC_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_SDGMAC_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_SDGMAC_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define ACLK_SDGMAC_ROOT_SEL                     0x01070067
+#define ACLK_SDGMAC_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_SDGMAC_ROOT_SEL_CLK_CPLL_MUX        1U
+#define PCLK_SDGMAC_ROOT_SEL                     0x02080067
+#define PCLK_SDGMAC_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define PCLK_SDGMAC_ROOT_SEL_CLK_MATRIX_50M_SRC  1U
+#define PCLK_SDGMAC_ROOT_SEL_XIN_OSC0_FUNC       2U
+
+// CRU_CLKSEL_CON104(Offset:0x4A0)
+#define CCLK_SRC_SDIO_DIV                             0x06000068
+#define CLK_GMAC1_PTP_REF_SRC_DIV                     0x05080068
+#define CCLK_SRC_SDIO_SEL                             0x02060068
+#define CCLK_SRC_SDIO_SEL_CLK_GPLL_MUX                0U
+#define CCLK_SRC_SDIO_SEL_CLK_CPLL_MUX                1U
+#define CCLK_SRC_SDIO_SEL_XIN_OSC0_FUNC               2U
+#define CLK_GMAC1_PTP_REF_SRC_SEL                     0x020D0068
+#define CLK_GMAC1_PTP_REF_SRC_SEL_CLK_GPLL_MUX        0U
+#define CLK_GMAC1_PTP_REF_SRC_SEL_CLK_CPLL_MUX        1U
+#define CLK_GMAC1_PTP_REF_SRC_SEL_GMAC1_PTP_REFCLK_IN 2U
+
+// CRU_CLKSEL_CON105(Offset:0x4A4)
+#define CLK_GMAC0_PTP_REF_SRC_DIV                     0x05000069
+#define CCLK_SRC_SDMMC0_DIV                           0x06070069
+#define CLK_GMAC0_PTP_REF_SRC_SEL                     0x02050069
+#define CLK_GMAC0_PTP_REF_SRC_SEL_CLK_GPLL_MUX        0U
+#define CLK_GMAC0_PTP_REF_SRC_SEL_CLK_CPLL_MUX        1U
+#define CLK_GMAC0_PTP_REF_SRC_SEL_GMAC0_PTP_REFCLK_IN 2U
+#define CCLK_SRC_SDMMC0_SEL                           0x020D0069
+#define CCLK_SRC_SDMMC0_SEL_CLK_GPLL_MUX              0U
+#define CCLK_SRC_SDMMC0_SEL_CLK_CPLL_MUX              1U
+#define CCLK_SRC_SDMMC0_SEL_XIN_OSC0_FUNC             2U
+
+// CRU_CLKSEL_CON106(Offset:0x4A8)
+#define SCLK_FSPI1_X2_DIV               0x0600006A
+#define ACLK_DSMC_ROOT_DIV              0x0508006A
+#define SCLK_FSPI1_X2_SEL               0x0206006A
+#define SCLK_FSPI1_X2_SEL_CLK_GPLL_MUX  0U
+#define SCLK_FSPI1_X2_SEL_CLK_CPLL_MUX  1U
+#define SCLK_FSPI1_X2_SEL_XIN_OSC0_FUNC 2U
+#define ACLK_DSMC_ROOT_SEL              0x010D006A
+#define ACLK_DSMC_ROOT_SEL_CLK_GPLL_MUX 0U
+#define ACLK_DSMC_ROOT_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON107(Offset:0x4AC)
+#define CLK_DSMC_SYS_DIV                 0x0500006B
+#define CLK_FLEXBUS_TX_DIV               0x0506006B
+#define CLK_DSMC_SYS_SEL                 0x0105006B
+#define CLK_DSMC_SYS_SEL_CLK_GPLL_MUX    0U
+#define CLK_DSMC_SYS_SEL_CLK_CPLL_MUX    1U
+#define CLK_FLEXBUS_TX_SEL               0x020B006B
+#define CLK_FLEXBUS_TX_SEL_CLK_GPLL_MUX  0U
+#define CLK_FLEXBUS_TX_SEL_CLK_CPLL_MUX  1U
+#define CLK_FLEXBUS_TX_SEL_XIN_OSC0_FUNC 2U
+
+// CRU_CLKSEL_CON108(Offset:0x4B0)
+#define CLK_FLEXBUS_RX_DIV               0x0500006C
+#define CLK_FLEXBUS_RX_SEL               0x0205006C
+#define CLK_FLEXBUS_RX_SEL_CLK_GPLL_MUX  0U
+#define CLK_FLEXBUS_RX_SEL_CLK_CPLL_MUX  1U
+#define CLK_FLEXBUS_RX_SEL_XIN_OSC0_FUNC 2U
+
+// CRU_CLKSEL_CON110(Offset:0x4B8)
+#define ACLK_RKVDEC_ROOT_PRE_DIV                 0x0502006E
+#define ACLK_RKVDEC_ROOT_BAK_DIV                 0x0509006E
+#define HCLK_RKVDEC_ROOT_SEL                     0x0200006E
+#define HCLK_RKVDEC_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_RKVDEC_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_RKVDEC_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_RKVDEC_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define ACLK_RKVDEC_ROOT_PRE_SEL                 0x0207006E
+#define ACLK_RKVDEC_ROOT_PRE_SEL_CLK_GPLL_MUX    0U
+#define ACLK_RKVDEC_ROOT_PRE_SEL_CLK_CPLL_MUX    1U
+#define ACLK_RKVDEC_ROOT_PRE_SEL_CLK_SPLL_MUX    2U
+#define ACLK_RKVDEC_ROOT_BAK_SEL                 0x020E006E
+#define ACLK_RKVDEC_ROOT_BAK_SEL_CLK_CPLL_MUX    0U
+#define ACLK_RKVDEC_ROOT_BAK_SEL_CLK_VPLL_MUX    1U
+#define ACLK_RKVDEC_ROOT_BAK_SEL_CLK_LPLL_SRC    2U
+#define ACLK_RKVDEC_ROOT_BAK_SEL_CLK_BPLL_SRC    3U
+
+// CRU_CLKSEL_CON111(Offset:0x4BC)
+#define CLK_RKVDEC_HEVC_CA_DIV              0x0500006F
+#define CLK_RKVDEC_HEVC_CA_SEL              0x0205006F
+#define CLK_RKVDEC_HEVC_CA_SEL_CLK_GPLL_MUX 0U
+#define CLK_RKVDEC_HEVC_CA_SEL_CLK_CPLL_MUX 1U
+#define CLK_RKVDEC_HEVC_CA_SEL_CLK_LPLL_SRC 2U
+#define CLK_RKVDEC_HEVC_CA_SEL_CLK_BPLL_SRC 3U
+
+// CRU_CLKSEL_CON115(Offset:0x4CC)
+#define ACLK_UFS_ROOT_DIV                     0x05000073
+#define ACLK_USB_ROOT_DIV                     0x05060073
+#define ACLK_UFS_ROOT_SEL                     0x01050073
+#define ACLK_UFS_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_UFS_ROOT_SEL_CLK_CPLL_MUX        1U
+#define ACLK_USB_ROOT_SEL                     0x010B0073
+#define ACLK_USB_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_USB_ROOT_SEL_CLK_CPLL_MUX        1U
+#define PCLK_USB_ROOT_SEL                     0x020C0073
+#define PCLK_USB_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define PCLK_USB_ROOT_SEL_CLK_MATRIX_50M_SRC  1U
+#define PCLK_USB_ROOT_SEL_XIN_OSC0_FUNC       2U
+
+// CRU_CLKSEL_CON118(Offset:0x4D8)
+#define ACLK_VPU_ROOT_DIV                         0x05000076
+#define ACLK_VPU_ROOT_SEL                         0x03050076
+#define ACLK_VPU_ROOT_SEL_CLK_GPLL_MUX            0U
+#define ACLK_VPU_ROOT_SEL_CLK_SPLL_MUX            1U
+#define ACLK_VPU_ROOT_SEL_CLK_CPLL_MUX            2U
+#define ACLK_VPU_ROOT_SEL_CLK_BPLL_SRC            3U
+#define ACLK_VPU_ROOT_SEL_CLK_LPLL_SRC            4U
+#define ACLK_VPU_MID_ROOT_SEL                     0x02080076
+#define ACLK_VPU_MID_ROOT_SEL_CLK_MATRIX_600M_SRC 0U
+#define ACLK_VPU_MID_ROOT_SEL_CLK_MATRIX_400M_SRC 1U
+#define ACLK_VPU_MID_ROOT_SEL_CLK_MATRIX_300M_SRC 2U
+#define ACLK_VPU_MID_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define HCLK_VPU_ROOT_SEL                         0x020A0076
+#define HCLK_VPU_ROOT_SEL_CLK_MATRIX_200M_SRC     0U
+#define HCLK_VPU_ROOT_SEL_CLK_MATRIX_100M_SRC     1U
+#define HCLK_VPU_ROOT_SEL_CLK_MATRIX_50M_SRC      2U
+#define HCLK_VPU_ROOT_SEL_XIN_OSC0_FUNC           3U
+
+// CRU_CLKSEL_CON119(Offset:0x4DC)
+#define ACLK_JPEG_ROOT_DIV                        0x05000077
+#define ACLK_JPEG_ROOT_SEL                        0x02050077
+#define ACLK_JPEG_ROOT_SEL_CLK_GPLL_MUX           0U
+#define ACLK_JPEG_ROOT_SEL_CLK_CPLL_MUX           1U
+#define ACLK_JPEG_ROOT_SEL_CLK_AUPLL_MUX          2U
+#define ACLK_JPEG_ROOT_SEL_CLK_SPLL_MUX           3U
+#define ACLK_VPU_LOW_ROOT_SEL                     0x02070077
+#define ACLK_VPU_LOW_ROOT_SEL_CLK_MATRIX_400M_SRC 0U
+#define ACLK_VPU_LOW_ROOT_SEL_CLK_MATRIX_200M_SRC 1U
+#define ACLK_VPU_LOW_ROOT_SEL_CLK_MATRIX_100M_SRC 2U
+#define ACLK_VPU_LOW_ROOT_SEL_XIN_OSC0_FUNC       3U
+
+// CRU_CLKSEL_CON120(Offset:0x4E0)
+#define CLK_CORE_RGA2E_0_DIV              0x05000078
+#define CLK_CORE_VDPP_DIV                 0x05080078
+#define CLK_CORE_RGA2E_0_SEL              0x03050078
+#define CLK_CORE_RGA2E_0_SEL_CLK_GPLL_MUX 0U
+#define CLK_CORE_RGA2E_0_SEL_CLK_SPLL_MUX 1U
+#define CLK_CORE_RGA2E_0_SEL_CLK_CPLL_MUX 2U
+#define CLK_CORE_RGA2E_0_SEL_CLK_BPLL_SRC 3U
+#define CLK_CORE_RGA2E_0_SEL_CLK_LPLL_SRC 4U
+#define CLK_CORE_VDPP_SEL                 0x010D0078
+#define CLK_CORE_VDPP_SEL_CLK_GPLL_MUX    0U
+#define CLK_CORE_VDPP_SEL_CLK_CPLL_MUX    1U
+
+// CRU_CLKSEL_CON121(Offset:0x4E4)
+#define CLK_CORE_RGA2E_1_DIV              0x05000079
+#define CLK_CORE_RGA2E_1_SEL              0x03050079
+#define CLK_CORE_RGA2E_1_SEL_CLK_GPLL_MUX 0U
+#define CLK_CORE_RGA2E_1_SEL_CLK_SPLL_MUX 1U
+#define CLK_CORE_RGA2E_1_SEL_CLK_CPLL_MUX 2U
+#define CLK_CORE_RGA2E_1_SEL_CLK_BPLL_SRC 3U
+#define CLK_CORE_RGA2E_1_SEL_CLK_LPLL_SRC 4U
+
+// CRU_CLKSEL_CON122(Offset:0x4E8)
+#define DCLK_EBC_FRAC_SRC_DIV 0x2000007A
+
+// CRU_CLKSEL_CON123(Offset:0x4EC)
+#define DCLK_EBC_DIV                        0x0903007B
+#define DCLK_EBC_FRAC_SRC_SEL               0x0300007B
+#define DCLK_EBC_FRAC_SRC_SEL_CLK_GPLL_MUX  0U
+#define DCLK_EBC_FRAC_SRC_SEL_CLK_CPLL_MUX  1U
+#define DCLK_EBC_FRAC_SRC_SEL_CLK_VPLL_MUX  2U
+#define DCLK_EBC_FRAC_SRC_SEL_CLK_AUPLL_MUX 3U
+#define DCLK_EBC_FRAC_SRC_SEL_XIN_OSC0_FUNC 4U
+#define DCLK_EBC_SEL                        0x030C007B
+#define DCLK_EBC_SEL_CLK_GPLL_MUX           0U
+#define DCLK_EBC_SEL_CLK_CPLL_MUX           1U
+#define DCLK_EBC_SEL_CLK_VPLL_MUX           2U
+#define DCLK_EBC_SEL_CLK_AUPLL_MUX          3U
+#define DCLK_EBC_SEL_CLK_LPLL_SRC           4U
+#define DCLK_EBC_SEL_DCLK_EBC_FRAC_SRC      5U
+#define DCLK_EBC_SEL_XIN_OSC0_FUNC          6U
+
+// CRU_CLKSEL_CON124(Offset:0x4F0)
+#define ACLK_VEPU0_ROOT_DIV                     0x0502007C
+#define CLK_VEPU0_CORE_DIV                      0x0508007C
+#define HCLK_VEPU0_ROOT_SEL                     0x0200007C
+#define HCLK_VEPU0_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_VEPU0_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_VEPU0_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_VEPU0_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define ACLK_VEPU0_ROOT_SEL                     0x0107007C
+#define ACLK_VEPU0_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_VEPU0_ROOT_SEL_CLK_CPLL_MUX        1U
+#define CLK_VEPU0_CORE_SEL                      0x030D007C
+#define CLK_VEPU0_CORE_SEL_CLK_GPLL_MUX         0U
+#define CLK_VEPU0_CORE_SEL_CLK_CPLL_MUX         1U
+#define CLK_VEPU0_CORE_SEL_CLK_SPLL_MUX         2U
+#define CLK_VEPU0_CORE_SEL_CLK_LPLL_SRC         3U
+#define CLK_VEPU0_CORE_SEL_CLK_BPLL_SRC         4U
+
+// CRU_CLKSEL_CON128(Offset:0x500)
+#define ACLK_VI_ROOT_DIV                     0x05000080
+#define ACLK_VI_ROOT_SEL                     0x03050080
+#define ACLK_VI_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_VI_ROOT_SEL_CLK_SPLL_MUX        1U
+#define ACLK_VI_ROOT_SEL_CLK_ISP_PVTPLL_SRC  2U
+#define ACLK_VI_ROOT_SEL_CLK_BPLL_SRC        3U
+#define ACLK_VI_ROOT_SEL_CLK_LPLL_SRC        4U
+#define HCLK_VI_ROOT_SEL                     0x02080080
+#define HCLK_VI_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_VI_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_VI_ROOT_SEL_ACLK_VI_ROOT_INTER  2U
+#define HCLK_VI_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define PCLK_VI_ROOT_SEL                     0x020A0080
+#define PCLK_VI_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define PCLK_VI_ROOT_SEL_CLK_MATRIX_50M_SRC  1U
+#define PCLK_VI_ROOT_SEL_XIN_OSC0_FUNC       2U
+
+// CRU_CLKSEL_CON129(Offset:0x504)
+#define DCLK_VICAP_DIV                       0x05000081
+#define CLK_ISP0_CORE_DIV                    0x05060081
+#define DCLK_VICAP_SEL                       0x01050081
+#define DCLK_VICAP_SEL_CLK_GPLL_MUX          0U
+#define DCLK_VICAP_SEL_CLK_CPLL_MUX          1U
+#define CLK_ISP0_CORE_SEL                    0x030B0081
+#define CLK_ISP0_CORE_SEL_CLK_GPLL_MUX       0U
+#define CLK_ISP0_CORE_SEL_CLK_SPLL_MUX       1U
+#define CLK_ISP0_CORE_SEL_CLK_ISP_PVTPLL_SRC 2U
+#define CLK_ISP0_CORE_SEL_CLK_BPLL_SRC       3U
+#define CLK_ISP0_CORE_SEL_CLK_LPLL_SRC       4U
+
+// CRU_CLKSEL_CON130(Offset:0x508)
+#define ACLK_VI_ROOT_INTER_DIV                 0x030A0082
+#define ICLK_CSIHOST01_SEL                     0x02070082
+#define ICLK_CSIHOST01_SEL_CLK_MATRIX_400M_SRC 0U
+#define ICLK_CSIHOST01_SEL_CLK_MATRIX_200M_SRC 1U
+#define ICLK_CSIHOST01_SEL_CLK_MATRIX_100M_SRC 2U
+#define ICLK_CSIHOST01_SEL_XIN_OSC0_FUNC       3U
+#define CLK_ISP_PVTPLL_SRC_SEL                 0x01090082
+#define CLK_ISP_PVTPLL_SRC_SEL_CLK_DEEPSLOW    0U
+#define CLK_ISP_PVTPLL_SRC_SEL_CLKSP_PVTPLL    1U
+
+// CRU_CLKSEL_CON144(Offset:0x540)
+#define ACLK_VOP_ROOT_DIV                     0x05000090
+#define ACLK_VOP_ROOT_SEL                     0x03050090
+#define ACLK_VOP_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_VOP_ROOT_SEL_CLK_CPLL_MUX        1U
+#define ACLK_VOP_ROOT_SEL_CLK_AUPLL_MUX       2U
+#define ACLK_VOP_ROOT_SEL_CLK_SPLL_MUX        3U
+#define ACLK_VOP_ROOT_SEL_CLK_LPLL_SRC        4U
+#define HCLK_VOP_ROOT_SEL                     0x020A0090
+#define HCLK_VOP_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_VOP_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_VOP_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_VOP_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define PCLK_VOP_ROOT_SEL                     0x020C0090
+#define PCLK_VOP_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define PCLK_VOP_ROOT_SEL_CLK_MATRIX_50M_SRC  1U
+#define PCLK_VOP_ROOT_SEL_XIN_OSC0_FUNC       2U
+
+// CRU_CLKSEL_CON145(Offset:0x544)
+#define DCLK_VP0_SRC_DIV              0x08000091
+#define DCLK_VP0_SRC_SEL              0x03080091
+#define DCLK_VP0_SRC_SEL_CLK_GPLL_MUX 0U
+#define DCLK_VP0_SRC_SEL_CLK_CPLL_MUX 1U
+#define DCLK_VP0_SRC_SEL_CLK_VPLL_MUX 2U
+#define DCLK_VP0_SRC_SEL_CLK_BPLL_SRC 3U
+#define DCLK_VP0_SRC_SEL_CLK_LPLL_SRC 4U
+
+// CRU_CLKSEL_CON146(Offset:0x548)
+#define DCLK_VP1_SRC_DIV              0x08000092
+#define DCLK_VP1_SRC_SEL              0x03080092
+#define DCLK_VP1_SRC_SEL_CLK_GPLL_MUX 0U
+#define DCLK_VP1_SRC_SEL_CLK_CPLL_MUX 1U
+#define DCLK_VP1_SRC_SEL_CLK_VPLL_MUX 2U
+#define DCLK_VP1_SRC_SEL_CLK_BPLL_SRC 3U
+#define DCLK_VP1_SRC_SEL_CLK_LPLL_SRC 4U
+
+// CRU_CLKSEL_CON147(Offset:0x54C)
+#define DCLK_VP2_SRC_DIV                  0x08000093
+#define DCLK_VP2_SRC_SEL                  0x03080093
+#define DCLK_VP2_SRC_SEL_CLK_GPLL_MUX     0U
+#define DCLK_VP2_SRC_SEL_CLK_CPLL_MUX     1U
+#define DCLK_VP2_SRC_SEL_CLK_VPLL_MUX     2U
+#define DCLK_VP2_SRC_SEL_CLK_BPLL_SRC     3U
+#define DCLK_VP2_SRC_SEL_CLK_LPLL_SRC     4U
+#define DCLK_VP0_SEL                      0x010B0093
+#define DCLK_VP0_SEL_DCLK_VP0_SRC         0U
+#define DCLK_VP0_SEL_CLK_HDMIPHY_PIXEL0_O 1U
+#define DCLK_VP1_SEL                      0x010C0093
+#define DCLK_VP1_SEL_DCLK_VP1_SRC         0U
+#define DCLK_VP1_SEL_CLK_HDMIPHY_PIXEL0_O 1U
+#define DCLK_VP2_SEL                      0x010D0093
+#define DCLK_VP2_SEL_DCLK_VP2_SRC         0U
+#define DCLK_VP2_SEL_CLK_HDMIPHY_PIXEL0_O 1U
+
+// CRU_CLKSEL_CON149(Offset:0x554)
+#define ACLK_VO0_ROOT_DIV                     0x05000095
+#define ACLK_VO0_ROOT_SEL                     0x02050095
+#define ACLK_VO0_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_VO0_ROOT_SEL_CLK_CPLL_MUX        1U
+#define ACLK_VO0_ROOT_SEL_CLK_LPLL_SRC        2U
+#define ACLK_VO0_ROOT_SEL_CLK_BPLL_SRC        3U
+#define HCLK_VO0_ROOT_SEL                     0x02070095
+#define HCLK_VO0_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_VO0_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_VO0_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_VO0_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define PCLK_VO0_ROOT_SEL                     0x020B0095
+#define PCLK_VO0_ROOT_SEL_CLK_MATRIX_150M_SRC 0U
+#define PCLK_VO0_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define PCLK_VO0_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define PCLK_VO0_ROOT_SEL_XIN_OSC0_FUNC       3U
+
+// CRU_CLKSEL_CON151(Offset:0x55C)
+#define CLK_DSIHOST0_DIV                  0x07000097
+#define CLK_HDMITX0_EARC_DIV              0x050A0097
+#define CLK_DSIHOST0_SEL                  0x03070097
+#define CLK_DSIHOST0_SEL_CLK_GPLL_MUX     0U
+#define CLK_DSIHOST0_SEL_CLK_CPLL_MUX     1U
+#define CLK_DSIHOST0_SEL_CLK_SPLL_MUX     2U
+#define CLK_DSIHOST0_SEL_CLK_VPLL_MUX     3U
+#define CLK_DSIHOST0_SEL_CLK_BPLL_SRC     4U
+#define CLK_DSIHOST0_SEL_CLK_LPLL_SRC     5U
+#define CLK_HDMITX0_EARC_SEL              0x010F0097
+#define CLK_HDMITX0_EARC_SEL_CLK_GPLL_MUX 0U
+#define CLK_HDMITX0_EARC_SEL_CLK_CPLL_MUX 1U
+
+// CRU_CLKSEL_CON152(Offset:0x560)
+#define CLK_EDP0_200M_SEL                     0x02010098
+#define CLK_EDP0_200M_SEL_CLK_MATRIX_200M_SRC 0U
+#define CLK_EDP0_200M_SEL_CLK_MATRIX_100M_SRC 1U
+#define CLK_EDP0_200M_SEL_CLK_MATRIX_50M_SRC  2U
+#define CLK_EDP0_200M_SEL_XIN_OSC0_FUNC       3U
+
+// CRU_CLKSEL_CON154(Offset:0x568)
+#define MCLK_SAI5_8CH_SRC_DIV                         0x0802009A
+#define MCLK_SAI5_8CH_SRC_SEL                         0x030A009A
+#define MCLK_SAI5_8CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI5_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI5_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI5_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI5_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI5_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI5_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI5_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI5_8CH_SEL                             0x010D009A
+#define MCLK_SAI5_8CH_SEL_MCLK_SAI5_8CH_SRC           0U
+#define MCLK_SAI5_8CH_SEL_SAI1_MCLKIN                 1U
+
+// CRU_CLKSEL_CON155(Offset:0x56C)
+#define MCLK_SAI6_8CH_SRC_DIV                         0x0800009B
+#define MCLK_SAI6_8CH_SRC_SEL                         0x0308009B
+#define MCLK_SAI6_8CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI6_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI6_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI6_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI6_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI6_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI6_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI6_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI6_8CH_SEL                             0x010B009B
+#define MCLK_SAI6_8CH_SEL_MCLK_SAI6_8CH_SRC           0U
+#define MCLK_SAI6_8CH_SEL_SAI1_MCLKIN                 1U
+
+// CRU_CLKSEL_CON156(Offset:0x570)
+#define MCLK_SPDIF_TX2_DIV                         0x0500009C
+#define MCLK_SPDIFRX2_DIV                          0x0508009C
+#define MCLK_SPDIF_TX2_SEL                         0x0305009C
+#define MCLK_SPDIF_TX2_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SPDIF_TX2_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SPDIF_TX2_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SPDIF_TX2_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SPDIF_TX2_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SPDIF_TX2_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SPDIF_TX2_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SPDIF_TX2_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SPDIFRX2_SEL                          0x020D009C
+#define MCLK_SPDIFRX2_SEL_CLK_GPLL_MUX             0U
+#define MCLK_SPDIFRX2_SEL_CLK_CPLL_MUX             1U
+#define MCLK_SPDIFRX2_SEL_CLK_AUPLL_MUX            2U
+
+// CRU_CLKSEL_CON157(Offset:0x574)
+#define MCLK_SAI8_8CH_SRC_DIV                         0x0800009D
+#define MCLK_SAI8_8CH_SRC_SEL                         0x0308009D
+#define MCLK_SAI8_8CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI8_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI8_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI8_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI8_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI8_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI8_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI8_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI8_8CH_SEL                             0x010B009D
+#define MCLK_SAI8_8CH_SEL_MCLK_SAI8_8CH_SRC           0U
+#define MCLK_SAI8_8CH_SEL_SAI1_MCLKIN                 1U
+
+// CRU_CLKSEL_CON158(Offset:0x578)
+#define ACLK_VO1_ROOT_DIV                     0x0500009E
+#define ACLK_VO1_ROOT_SEL                     0x0205009E
+#define ACLK_VO1_ROOT_SEL_CLK_GPLL_MUX        0U
+#define ACLK_VO1_ROOT_SEL_CLK_CPLL_MUX        1U
+#define ACLK_VO1_ROOT_SEL_CLK_LPLL_SRC        2U
+#define ACLK_VO1_ROOT_SEL_CLK_BPLL_SRC        3U
+#define HCLK_VO1_ROOT_SEL                     0x0207009E
+#define HCLK_VO1_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_VO1_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_VO1_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_VO1_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define PCLK_VO1_ROOT_SEL                     0x0209009E
+#define PCLK_VO1_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define PCLK_VO1_ROOT_SEL_CLK_MATRIX_50M_SRC  1U
+#define PCLK_VO1_ROOT_SEL_XIN_OSC0_FUNC       2U
+
+// CRU_CLKSEL_CON159(Offset:0x57C)
+#define MCLK_SAI7_8CH_SRC_DIV                         0x0800009F
+#define MCLK_SAI7_8CH_SRC_SEL                         0x0308009F
+#define MCLK_SAI7_8CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI7_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI7_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI7_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI7_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI7_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI7_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI7_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI7_8CH_SEL                             0x010B009F
+#define MCLK_SAI7_8CH_SEL_MCLK_SAI7_8CH_SRC           0U
+#define MCLK_SAI7_8CH_SEL_SAI1_MCLKIN                 1U
+
+// CRU_CLKSEL_CON160(Offset:0x580)
+#define MCLK_SPDIF_TX3_DIV                         0x080000A0
+#define MCLK_SPDIF_TX3_SEL                         0x030800A0
+#define MCLK_SPDIF_TX3_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SPDIF_TX3_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SPDIF_TX3_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SPDIF_TX3_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SPDIF_TX3_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SPDIF_TX3_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SPDIF_TX3_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SPDIF_TX3_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+
+// CRU_CLKSEL_CON161(Offset:0x584)
+#define CLK_AUX16MHZ_0_DIV 0x080000A1
+
+// CRU_CLKSEL_CON162(Offset:0x588)
+#define MCLK_SAI9_8CH_SRC_DIV                         0x080000A2
+#define MCLK_SAI9_8CH_SRC_SEL                         0x030800A2
+#define MCLK_SAI9_8CH_SRC_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SAI9_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SAI9_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SAI9_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SAI9_8CH_SRC_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SAI9_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SAI9_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SAI9_8CH_SRC_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+#define MCLK_SAI9_8CH_SEL                             0x010B00A2
+#define MCLK_SAI9_8CH_SEL_MCLK_SAI9_8CH_SRC           0U
+#define MCLK_SAI9_8CH_SEL_SAI1_MCLKIN                 1U
+
+// CRU_CLKSEL_CON163(Offset:0x58C)
+#define MCLK_SPDIF_TX4_DIV                         0x080000A3
+#define MCLK_SPDIF_TX4_SEL                         0x030800A3
+#define MCLK_SPDIF_TX4_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SPDIF_TX4_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SPDIF_TX4_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SPDIF_TX4_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SPDIF_TX4_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SPDIF_TX4_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SPDIF_TX4_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SPDIF_TX4_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+
+// CRU_CLKSEL_CON164(Offset:0x590)
+#define MCLK_SPDIF_TX5_DIV                         0x080000A4
+#define MCLK_SPDIF_TX5_SEL                         0x030800A4
+#define MCLK_SPDIF_TX5_SEL_XIN_OSC0_FUNC_MUX       0U
+#define MCLK_SPDIF_TX5_SEL_CLK_MATRIX_AUDIO_FRAC_0 1U
+#define MCLK_SPDIF_TX5_SEL_CLK_MATRIX_AUDIO_FRAC_1 2U
+#define MCLK_SPDIF_TX5_SEL_CLK_MATRIX_AUDIO_FRAC_2 3U
+#define MCLK_SPDIF_TX5_SEL_CLK_MATRIX_AUDIO_FRAC_3 4U
+#define MCLK_SPDIF_TX5_SEL_CLK_MATRIX_AUDIO_INT_0  5U
+#define MCLK_SPDIF_TX5_SEL_CLK_MATRIX_AUDIO_INT_1  6U
+#define MCLK_SPDIF_TX5_SEL_CLK_MATRIX_AUDIO_INT_2  7U
+
+// CRU_CLKSEL_CON165(Offset:0x594)
+#define CLK_GPU_SRC_PRE_DIV                   0x050000A5
+#define CLK_GPU_SRC_PRE_SEL                   0x030500A5
+#define CLK_GPU_SRC_PRE_SEL_CLK_GPLL_MUX      0U
+#define CLK_GPU_SRC_PRE_SEL_CLK_CPLL_MUX      1U
+#define CLK_GPU_SRC_PRE_SEL_CLK_AUPLL_MUX     2U
+#define CLK_GPU_SRC_PRE_SEL_CLK_SPLL_MUX      3U
+#define CLK_GPU_SRC_PRE_SEL_CLK_LPLL_SRC      4U
+#define CLK_GPU_INNER_SEL                     0x010800A5
+#define CLK_GPU_INNER_SEL_CLK_GPU_SRC         0U
+#define CLK_GPU_INNER_SEL_CLK_GPU_PVTPLL_SRC  1U
+#define CLK_GPU_PVTPLL_SRC_SEL                0x010900A5
+#define CLK_GPU_PVTPLL_SRC_SEL_CLK_DEEPSLOW   0U
+#define CLK_GPU_PVTPLL_SRC_SEL_CLK_GPU_PVTPLL 1U
+
+// CRU_CLKSEL_CON166(Offset:0x598)
+#define ACLK_S_GPU_BIU_DIV                    0x050000A6
+#define ACLK_M0_GPU_BIU_DIV                   0x050500A6
+#define PCLK_GPU_ROOT_SEL                     0x020A00A6
+#define PCLK_GPU_ROOT_SEL_CLK_MATRIX_100M_SRC 0U
+#define PCLK_GPU_ROOT_SEL_CLK_MATRIX_50M_SRC  1U
+#define PCLK_GPU_ROOT_SEL_XIN_OSC0_FUNC       2U
+
+// CRU_CLKSEL_CON167(Offset:0x59C)
+#define ACLK_CENTER_ROOT_DIV 0x050900A7
+
+// CRU_CLKSEL_CON168(Offset:0x5A0)
+#define ACLK_CENTER_ROOT_SEL                         0x030500A8
+#define ACLK_CENTER_ROOT_SEL_CLK_GPLL_MUX            0U
+#define ACLK_CENTER_ROOT_SEL_CLK_CPLL_MUX            1U
+#define ACLK_CENTER_ROOT_SEL_CLK_SPLL_MUX            2U
+#define ACLK_CENTER_ROOT_SEL_CLK_AUPLL_MUX           3U
+#define ACLK_CENTER_ROOT_SEL_CLK_BPLL_SRC            4U
+#define ACLK_CENTER_LOW_ROOT_SEL                     0x020800A8
+#define ACLK_CENTER_LOW_ROOT_SEL_CLK_MATRIX_500M_SRC 0U
+#define ACLK_CENTER_LOW_ROOT_SEL_CLK_MATRIX_250M_SRC 1U
+#define ACLK_CENTER_LOW_ROOT_SEL_CLK_MATRIX_100M_SRC 2U
+#define ACLK_CENTER_LOW_ROOT_SEL_XIN_OSC0_FUNC       3U
+#define HCLK_CENTER_ROOT_SEL                         0x020A00A8
+#define HCLK_CENTER_ROOT_SEL_CLK_MATRIX_200M_SRC     0U
+#define HCLK_CENTER_ROOT_SEL_CLK_MATRIX_100M_SRC     1U
+#define HCLK_CENTER_ROOT_SEL_CLK_MATRIX_50M_SRC      2U
+#define HCLK_CENTER_ROOT_SEL_XIN_OSC0_FUNC           3U
+#define PCLK_CENTER_ROOT_SEL                         0x020C00A8
+#define PCLK_CENTER_ROOT_SEL_CLK_MATRIX_200M_SRC     0U
+#define PCLK_CENTER_ROOT_SEL_CLK_MATRIX_100M_SRC     1U
+#define PCLK_CENTER_ROOT_SEL_CLK_MATRIX_50M_SRC      2U
+#define PCLK_CENTER_ROOT_SEL_XIN_OSC0_FUNC           3U
+
+// CRU_CLKSEL_CON178(Offset:0x5C8)
+#define HCLK_VEPU1_ROOT_SEL                     0x020000B2
+#define HCLK_VEPU1_ROOT_SEL_CLK_MATRIX_200M_SRC 0U
+#define HCLK_VEPU1_ROOT_SEL_CLK_MATRIX_100M_SRC 1U
+#define HCLK_VEPU1_ROOT_SEL_CLK_MATRIX_50M_SRC  2U
+#define HCLK_VEPU1_ROOT_SEL_XIN_OSC0_FUNC       3U
+
+// CRU_CLKSEL_CON180(Offset:0x5D0)
+#define ACLK_VEPU1_ROOT_DIV              0x050000B4
+#define CLK_VEPU1_CORE_DIV               0x050600B4
+#define ACLK_VEPU1_ROOT_SEL              0x010500B4
+#define ACLK_VEPU1_ROOT_SEL_CLK_GPLL_MUX 0U
+#define ACLK_VEPU1_ROOT_SEL_CLK_CPLL_MUX 1U
+#define CLK_VEPU1_CORE_SEL               0x030B00B4
+#define CLK_VEPU1_CORE_SEL_CLK_GPLL_MUX  0U
+#define CLK_VEPU1_CORE_SEL_CLK_CPLL_MUX  1U
+#define CLK_VEPU1_CORE_SEL_CLK_SPLL_MUX  2U
+#define CLK_VEPU1_CORE_SEL_CLK_LPLL_SRC  3U
+#define CLK_VEPU1_CORE_SEL_CLK_BPLL_SRC  4U
+
+// ====================== PHPTOPCRU module definition bank=1 ======================
+// PHPTOPCRU_SOFTRST_CON00(Offset:0xA00)
+#define SRST_PRESETN_PHPPHY_CRU           0x00001001
+#define SRST_PRESETN_APB2ASB_SLV_CHIP_TOP 0x00001003
+#define SRST_PRESETN_PCIE2_COMBOPHY0      0x00001005
+#define SRST_PRESETN_PCIE2_COMBOPHY0_GRF  0x00001006
+#define SRST_PRESETN_PCIE2_COMBOPHY1      0x00001007
+#define SRST_PRESETN_PCIE2_COMBOPHY1_GRF  0x00001008
+
+// PHPTOPCRU_SOFTRST_CON01(Offset:0xA04)
+#define SRST_RESETN_PCIE0_PIPE_PHY 0x00001015
+#define SRST_RESETN_PCIE1_PIPE_PHY 0x00001018
+
+// PHPTOPCRU_GATE_CON00(Offset:0x800)
+#define PCLK_PHPPHY_CRU_GATE           0x00001001
+#define PCLK_PHPPHY_ROOT_GATE          0x00001002
+#define PCLK_APB2ASB_SLV_CHIP_TOP_GATE 0x00001003
+#define PCLK_PCIE2_COMBOPHY0_GATE      0x00001005
+#define PCLK_PCIE2_COMBOPHY0_GRF_GATE  0x00001006
+#define PCLK_PCIE2_COMBOPHY1_GATE      0x00001007
+#define PCLK_PCIE2_COMBOPHY1_GRF_GATE  0x00001008
+
+// PHPTOPCRU_GATE_CON01(Offset:0x804)
+#define CLK_MATRIX_PCIE_100M_SRC_GATE       0x00001011
+#define CLK_MATRIX_PCIE_100M_NDUTY_SRC_GATE 0x00001012
+#define CLK_REF_PCIE0_INNER_GATE            0x00001015
+#define CLK_REF_PCIE1_INNER_GATE            0x00001018
+#define CLK_REF_MPHY_26M_GATE               0x00001019
+
+// PHPTOPCRU_CLKSEL_CON00(Offset:0x300)
+#define CLK_MATRIX_PCIE_100M_SRC_DIV                               0x05020100
+#define CLK_MATRIX_PCIE_100M_NDUTY_SRC_DIV                         0x05070100
+#define CLK_REF_PCIE0_INNER_PHY_SEL                                0x020C0100
+#define CLK_REF_PCIE0_INNER_PHY_SEL_CLK_MATRIX_PCIE_100M_SRC       0U
+#define CLK_REF_PCIE0_INNER_PHY_SEL_CLK_MATRIX_PCIE_100M_NDUTY_SRC 1U
+#define CLK_REF_PCIE0_INNER_PHY_SEL_XIN_OSC0_PLL                   2U
+#define CLK_REF_PCIE1_INNER_PHY_SEL                                0x020E0100
+#define CLK_REF_PCIE1_INNER_PHY_SEL_CLK_MATRIX_PCIE_100M_SRC       0U
+#define CLK_REF_PCIE1_INNER_PHY_SEL_CLK_MATRIX_PCIE_100M_NDUTY_SRC 1U
+#define CLK_REF_PCIE1_INNER_PHY_SEL_XIN_OSC0_PLL                   2U
+
+// PHPTOPCRU_CLKSEL_CON01(Offset:0x304)
+#define CLK_REF_MPHY_26M_DIV 0x08000101
+
+// ====================== SECURECRU module definition bank=2 ======================
+// SECURECRU_SOFTRST_CON00(Offset:0xA00)
+#define SRST_HRESETN_CRYPTO_NS     0x00002003
+#define SRST_HRESETN_TRNG_NS       0x00002004
+#define SRST_PRESETN_SECURE_NS_BIU 0x00002005
+#define SRST_ARESETN_SECURE_NS_BIU 0x00002006
+#define SRST_HRESETN_SECURE_NS_BIU 0x00002007
+#define SRST_PRESETN_OTPC_NS       0x00002008
+#define SRST_RESETN_OTPC_NS        0x00002009
+
+// SECURECRU_SOFTRST_CON10(Offset:0x4050)
+#define SRST_PRESETN_STIMER0 0x000020AA
+#define SRST_RESETN_STIMER0  0x000020AB
+#define SRST_RESETN_STIMER1  0x000020AC
+#define SRST_RESETN_STIMER2  0x000020AD
+#define SRST_RESETN_STIMER3  0x000020AE
+#define SRST_RESETN_STIMER4  0x000020AF
+
+// SECURECRU_SOFTRST_CON11(Offset:0x4054)
+#define SRST_RESETN_STIMER5   0x000020B0
+#define SRST_PRESETN_STIMER1  0x000020B2
+#define SRST_PRESETN_OTPMASK  0x000020B4
+#define SRST_RESETN_OTPMASK   0x000020B5
+#define SRST_RESETN_STIMER6   0x000020B7
+#define SRST_RESETN_STIMER7   0x000020B8
+#define SRST_RESETN_STIMER8   0x000020B9
+#define SRST_RESETN_STIMER9   0x000020BA
+#define SRST_RESETN_STIMER10  0x000020BB
+#define SRST_RESETN_STIMER11  0x000020BC
+#define SRST_PRESETN_SYS_SGRF 0x000020BD
+#define SRST_PRESETN_DFT2APB  0x000020BE
+
+// SECURECRU_SOFTRST_CON12(Offset:0x4058)
+#define SRST_RESETN_OTPC_ARB      0x000020C1
+#define SRST_ARESETN_SECURE_S_BIU 0x000020C4
+#define SRST_HRESETN_SECURE_S_BIU 0x000020C5
+#define SRST_PRESETN_SECURE_S_BIU 0x000020C6
+#define SRST_PRESETN_KLAD         0x000020C7
+#define SRST_HRESETN_CRYPTO_S     0x000020C8
+#define SRST_HRESETN_KLAD         0x000020C9
+#define SRST_RESETN_PKA_CRYPTO_S  0x000020CB
+#define SRST_ARESETN_CRYPTO_S     0x000020CC
+
+// SECURECRU_SOFTRST_CON13(Offset:0x405C)
+#define SRST_HRESETN_TRNG_S     0x000020D0
+#define SRST_PRESETN_OTPC_S     0x000020D3
+#define SRST_RESETN_OTPC_S      0x000020D4
+#define SRST_HRESETN_BOOTROM    0x000020D5
+#define SRST_PRESETN_JDBCK_DAP  0x000020D6
+#define SRST_RESETN_JDBCK_DAP   0x000020D7
+#define SRST_PRESETN_SECURE_CRU 0x000020D8
+#define SRST_PRESETN_WDT_S      0x000020D9
+#define SRST_TRESETN_WDT_S      0x000020DA
+
+// SECURECRU_SOFTRST_CON14(Offset:0x4060)
+#define SRST_PRESETN_HDCP1_TRNG 0x000020E0
+#define SRST_HRESETN_VO1_S_BIU  0x000020E2
+#define SRST_HRESETN_HDCP_KEY1  0x000020E3
+
+// SECURECRU_SOFTRST_CON15(Offset:0x4064)
+#define SRST_PRESETN_HDCP0_TRNG 0x000020F0
+#define SRST_HRESETN_VO0_S_BIU  0x000020F2
+#define SRST_HRESETN_HDCP_KEY0  0x000020F3
+#define SRST_PRESETN_EDP_S      0x000020F5
+#define SRST_PRESETN_EDP_BIU    0x000020F6
+
+// SECURECRU_GATE_CON00(Offset:0x800)
+#define ACLK_SECURE_NS_ROOT_GATE 0x00002000
+#define HCLK_SECURE_NS_ROOT_GATE 0x00002001
+#define PCLK_SECURE_NS_ROOT_GATE 0x00002002
+#define HCLK_CRYPTO_NS_GATE      0x00002003
+#define HCLK_TRNG_NS_GATE        0x00002004
+#define PCLK_SECURE_NS_BIU_GATE  0x00002005
+#define ACLK_SECURE_NS_BIU_GATE  0x00002006
+#define HCLK_SECURE_NS_BIU_GATE  0x00002007
+#define PCLK_OTPC_NS_GATE        0x00002008
+#define CLK_OTPC_NS_GATE         0x00002009
+
+// SECURECRU_GATE_CON10(Offset:0x4028)
+#define CLK_MATRIX_SEC_350M_SRC_GATE 0x000020A0
+#define CLK_MATRIX_SEC_58M_SRC_GATE  0x000020A1
+#define CLK_MATRIX_SEC_116M_SRC_GATE 0x000020A2
+#define CLK_MATRIX_SEC_175M_SRC_GATE 0x000020A3
+#define ACLK_SECURE_S_ROOT_GATE      0x000020A6
+#define HCLK_SECURE_S_ROOT_GATE      0x000020A7
+#define PCLK_SECURE_S_ROOT_GATE      0x000020A8
+#define CLK_BUS_STIMER0_ROOT_GATE    0x000020A9
+#define PCLK_STIMER0_GATE            0x000020AA
+#define CLK_STIMER0_GATE             0x000020AB
+#define CLK_STIMER1_GATE             0x000020AC
+#define CLK_STIMER2_GATE             0x000020AD
+#define CLK_STIMER3_GATE             0x000020AE
+#define CLK_STIMER4_GATE             0x000020AF
+
+// SECURECRU_GATE_CON11(Offset:0x402C)
+#define CLK_STIMER5_GATE             0x000020B0
+#define CLK_STIMER1_ROOT_GATE        0x000020B1
+#define PCLK_STIMER1_GATE            0x000020B2
+#define CLK_MATRIX_SEC_100M_SRC_GATE 0x000020B3
+#define PCLK_OTPMASK_GATE            0x000020B4
+#define CLK_STIMER6_GATE             0x000020B7
+#define CLK_STIMER7_GATE             0x000020B8
+#define CLK_STIMER8_GATE             0x000020B9
+#define CLK_STIMER9_GATE             0x000020BA
+#define CLK_STIMER10_GATE            0x000020BB
+#define CLK_STIMER11_GATE            0x000020BC
+#define PCLK_SYS_SGRF_GATE           0x000020BD
+#define PCLK_DFT2APB_GATE            0x000020BE
+
+// SECURECRU_GATE_CON12(Offset:0x4030)
+#define ACLK_SECURE_S_BIU_GATE 0x000020C4
+#define HCLK_SECURE_S_BIU_GATE 0x000020C5
+#define PCLK_SECURE_S_BIU_GATE 0x000020C6
+#define PCLK_KLAD_GATE         0x000020C7
+#define HCLK_CRYPTO_S_GATE     0x000020C8
+#define HCLK_KLAD_GATE         0x000020C9
+#define CLK_PKA_CRYPTO_S_GATE  0x000020CB
+#define ACLK_CRYPTO_S_GATE     0x000020CC
+
+// SECURECRU_GATE_CON13(Offset:0x4034)
+#define HCLK_TRNG_S_GATE     0x000020D0
+#define PCLK_OTPC_S_GATE     0x000020D3
+#define CLK_OTPC_S_GATE      0x000020D4
+#define HCLK_BOOTROM_GATE    0x000020D5
+#define PCLK_JDBCK_DAP_GATE  0x000020D6
+#define CLK_JDBCK_DAP_GATE   0x000020D7
+#define PCLK_SECURE_CRU_GATE 0x000020D8
+#define PCLK_WDT_S_GATE      0x000020D9
+#define TCLK_WDT_S_GATE      0x000020DA
+
+// SECURECRU_GATE_CON14(Offset:0x4038)
+#define PCLK_HDCP1_TRNG_GATE 0x000020E0
+#define HCLK_VO1_S_ROOT_GATE 0x000020E1
+#define HCLK_VO1_S_BIU_GATE  0x000020E2
+#define HCLK_HDCP_KEY1_GATE  0x000020E3
+
+// SECURECRU_GATE_CON15(Offset:0x403C)
+#define PCLK_HDCP0_TRNG_GATE 0x000020F0
+#define HCLK_VO0_S_ROOT_GATE 0x000020F1
+#define HCLK_VO0_S_BIU_GATE  0x000020F2
+#define HCLK_HDCP_KEY0_GATE  0x000020F3
+#define PCLK_VO0_S_ROOT_GATE 0x000020F4
+#define PCLK_EDP_S_GATE      0x000020F5
+#define PCLK_EDP_BIU_GATE    0x000020F6
+
+// SECURECRU_CLKSEL_CON00(Offset:0x300)
+#define ACLK_SECURE_NS_ROOT_SEL                         0x02000200
+#define ACLK_SECURE_NS_ROOT_SEL_CLK_MATRIX_SEC_350M_SRC 0U
+#define ACLK_SECURE_NS_ROOT_SEL_CLK_MATRIX_SEC_175M_SRC 1U
+#define ACLK_SECURE_NS_ROOT_SEL_CLK_MATRIX_SEC_116M_SRC 2U
+#define ACLK_SECURE_NS_ROOT_SEL_XIN_OSC0_FUNC           3U
+#define HCLK_SECURE_NS_ROOT_SEL                         0x02020200
+#define HCLK_SECURE_NS_ROOT_SEL_CLK_MATRIX_SEC_175M_SRC 0U
+#define HCLK_SECURE_NS_ROOT_SEL_CLK_MATRIX_SEC_116M_SRC 1U
+#define HCLK_SECURE_NS_ROOT_SEL_CLK_MATRIX_SEC_58M_SRC  2U
+#define HCLK_SECURE_NS_ROOT_SEL_XIN_OSC0_FUNC           3U
+#define PCLK_SECURE_NS_ROOT_SEL                         0x02040200
+#define PCLK_SECURE_NS_ROOT_SEL_CLK_MATRIX_SEC_116M_SRC 0U
+#define PCLK_SECURE_NS_ROOT_SEL_CLK_MATRIX_SEC_58M_SRC  1U
+#define PCLK_SECURE_NS_ROOT_SEL_XIN_OSC0_FUNC           2U
+
+// SECURECRU_CLKSEL_CON10(Offset:0x4000)
+#define CLK_MATRIX_SEC_350M_SRC_DIV 0x0300020A
+#define CLK_MATRIX_SEC_58M_SRC_DIV  0x0303020A
+#define CLK_MATRIX_SEC_116M_SRC_DIV 0x0306020A
+#define CLK_MATRIX_SEC_175M_SRC_DIV 0x0309020A
+
+// SECURECRU_CLKSEL_CON11(Offset:0x4004)
+#define CLK_MATRIX_SEC_100M_SRC_DIV                    0x0308020B
+#define ACLK_SECURE_S_ROOT_SEL                         0x0200020B
+#define ACLK_SECURE_S_ROOT_SEL_CLK_MATRIX_SEC_350M_SRC 0U
+#define ACLK_SECURE_S_ROOT_SEL_CLK_MATRIX_SEC_175M_SRC 1U
+#define ACLK_SECURE_S_ROOT_SEL_CLK_MATRIX_SEC_116M_SRC 2U
+#define ACLK_SECURE_S_ROOT_SEL_XIN_OSC0_FUNC           3U
+#define HCLK_SECURE_S_ROOT_SEL                         0x0202020B
+#define HCLK_SECURE_S_ROOT_SEL_CLK_MATRIX_SEC_175M_SRC 0U
+#define HCLK_SECURE_S_ROOT_SEL_CLK_MATRIX_SEC_116M_SRC 1U
+#define HCLK_SECURE_S_ROOT_SEL_CLK_MATRIX_SEC_58M_SRC  2U
+#define HCLK_SECURE_S_ROOT_SEL_XIN_OSC0_FUNC           3U
+#define PCLK_SECURE_S_ROOT_SEL                         0x0204020B
+#define PCLK_SECURE_S_ROOT_SEL_CLK_MATRIX_SEC_116M_SRC 0U
+#define PCLK_SECURE_S_ROOT_SEL_CLK_MATRIX_SEC_58M_SRC  1U
+#define PCLK_SECURE_S_ROOT_SEL_XIN_OSC0_FUNC           2U
+#define CLK_STIMER0_ROOT_SEL                           0x0106020B
+#define CLK_STIMER0_ROOT_SEL_CLK_MATRIX_SEC_100M_SRC   0U
+#define CLK_STIMER0_ROOT_SEL_XIN_OSC0_FUNC             1U
+#define CLK_STIMER1_ROOT_SEL                           0x0107020B
+#define CLK_STIMER1_ROOT_SEL_CLK_MATRIX_SEC_100M_SRC   0U
+#define CLK_STIMER1_ROOT_SEL_XIN_OSC0_FUNC             1U
+#define CLK_PKA_CRYPTO_S_SEL                           0x020B020B
+#define CLK_PKA_CRYPTO_S_SEL_CLK_MATRIX_SEC_350M_SRC   0U
+#define CLK_PKA_CRYPTO_S_SEL_CLK_MATRIX_SEC_175M_SRC   1U
+#define CLK_PKA_CRYPTO_S_SEL_CLK_MATRIX_SEC_116M_SRC   2U
+#define CLK_PKA_CRYPTO_S_SEL_XIN_OSC0_FUNC             3U
+
+// SECURECRU_CLKSEL_CON14(Offset:0x4010)
+#define HCLK_VO1_S_ROOT_SEL                         0x0200020E
+#define HCLK_VO1_S_ROOT_SEL_CLK_MATRIX_SEC_175M_SRC 0U
+#define HCLK_VO1_S_ROOT_SEL_CLK_MATRIX_SEC_116M_SRC 1U
+#define HCLK_VO1_S_ROOT_SEL_CLK_MATRIX_SEC_58M_SRC  2U
+#define HCLK_VO1_S_ROOT_SEL_XIN_OSC0_FUNC           3U
+
+// SECURECRU_CLKSEL_CON16(Offset:0x4018)
+#define HCLK_VO0_S_ROOT_SEL                         0x02000210
+#define HCLK_VO0_S_ROOT_SEL_CLK_MATRIX_SEC_175M_SRC 0U
+#define HCLK_VO0_S_ROOT_SEL_CLK_MATRIX_SEC_116M_SRC 1U
+#define HCLK_VO0_S_ROOT_SEL_CLK_MATRIX_SEC_58M_SRC  2U
+#define HCLK_VO0_S_ROOT_SEL_XIN_OSC0_FUNC           3U
+#define PCLK_VO0_S_ROOT_SEL                         0x02020210
+#define PCLK_VO0_S_ROOT_SEL_CLK_MATRIX_SEC_116M_SRC 0U
+#define PCLK_VO0_S_ROOT_SEL_CLK_MATRIX_SEC_58M_SRC  1U
+#define PCLK_VO0_S_ROOT_SEL_XIN_OSC0_FUNC           2U
+
+// ======================= PMU1CRU module definition bank=3 =======================
+// PMU1CRU_SOFTRST_CON00(Offset:0xA00)
+#define SRST_PRESETN_HDPTX_GRF           0x00003000
+#define SRST_PRESETN_HDPTX_APB           0x00003001
+#define SRST_PRESETN_MIPI_DCPHY          0x00003002
+#define SRST_PRESETN_DCPHY_GRF           0x00003003
+#define SRST_PRESETN_BOT0_APB2ASB        0x00003004
+#define SRST_PRESETN_BOT1_APB2ASB        0x00003005
+#define SRST_RESETN_USB2DEBUG            0x00003006
+#define SRST_PRESETN_CSIDPHY_GRF         0x00003007
+#define SRST_PRESETN_CSIDPHY             0x00003008
+#define SRST_PRESETN_USBPHY_GRF_0        0x00003009
+#define SRST_PRESETN_USBPHY_GRF_1        0x0000300A
+#define SRST_PRESETN_USBDP_GRF           0x0000300B
+#define SRST_PRESETN_USBDPPHY            0x0000300C
+#define SRST_RESETN_USBDP_COMBO_PHY_INIT 0x0000300F
+
+// PMU1CRU_SOFTRST_CON01(Offset:0xA04)
+#define SRST_RESETN_USBDP_COMBO_PHY_CMN  0x00003010
+#define SRST_RESETN_USBDP_COMBO_PHY_LANE 0x00003011
+#define SRST_RESETN_USBDP_COMBO_PHY_PCS  0x00003012
+#define SRST_MRESETN_MIPI_DCPHY          0x00003013
+#define SRST_SRESETN_MIPI_DCPHY          0x00003014
+#define SRST_SCANRESETN_CSIDPHY          0x00003015
+#define SRST_PRESETN_VCCIO6_IOC          0x00003016
+#define SRST_RESETN_OTGPHY_0             0x00003017
+#define SRST_RESETN_OTGPHY_1             0x00003018
+#define SRST_RESETN_HDPTX_INIT           0x00003019
+#define SRST_RESETN_HDPTX_CMN            0x0000301A
+#define SRST_RESETN_HDPTX_LANE           0x0000301B
+#define SRST_RESETN_HDMITXHPD            0x0000301D
+
+// PMU1CRU_SOFTRST_CON02(Offset:0xA08)
+#define SRST_RESETN_MPHY_INIT   0x00003020
+#define SRST_PRESETN_MPHY_GRF   0x00003021
+#define SRST_PRESETN_VCCIO7_IOC 0x00003023
+
+// PMU1CRU_SOFTRST_CON03(Offset:0xA0C)
+#define SRST_HRESETN_PMU1_BIU      0x00003039
+#define SRST_PRESETN_PMU1_BIU      0x0000303A
+#define SRST_HRESETN_PMU_CM0_BIU   0x0000303B
+#define SRST_FRESETN_PMU_CM0_CORE  0x0000303C
+#define SRST_TRESETN_PMU1_CM0_JTAG 0x0000303D
+
+// PMU1CRU_SOFTRST_CON04(Offset:0xA10)
+#define SRST_PRESETN_CRU_PMU1 0x00003041
+#define SRST_PRESETN_PMU1_GRF 0x00003043
+#define SRST_PRESETN_PMU1_IOC 0x00003044
+#define SRST_PRESETN_PMU1WDT  0x00003045
+#define SRST_TRESETN_PMU1WDT  0x00003046
+#define SRST_PRESETN_PMUTIMER 0x00003047
+#define SRST_RESETN_PMUTIMER0 0x00003049
+#define SRST_RESETN_PMUTIMER1 0x0000304A
+#define SRST_PRESETN_PMU1PWM  0x0000304B
+#define SRST_RESETN_PMU1PWM   0x0000304C
+
+// PMU1CRU_SOFTRST_CON05(Offset:0xA14)
+#define SRST_PRESETN_I2C0  0x00003051
+#define SRST_RESETN_I2C0   0x00003052
+#define SRST_SRESETN_UART1 0x00003055
+#define SRST_PRESETN_UART1 0x00003056
+#define SRST_RESETN_PDM0   0x0000305D
+#define SRST_HRESETN_PDM0  0x0000305F
+
+// PMU1CRU_SOFTRST_CON06(Offset:0xA18)
+#define SRST_MRESETN_PDM0 0x00003060
+#define SRST_HRESETN_VAD  0x00003061
+
+// PMU1CRU_SOFTRST_CON07(Offset:0xA1C)
+#define SRST_PRESETN_PMU0GRF 0x00003074
+#define SRST_PRESETN_PMU0IOC 0x00003075
+#define SRST_PRESETN_GPIO0   0x00003076
+#define SRST_DBRESETN_GPIO0  0x00003077
+
+// PMU1CRU_SOFTRST_CON10(Offset:0x4050)
+#define SRST_HRESETN_PMU1_S_BIU   0x000030A2
+#define SRST_PRESETN_PMU1_OSC_CHK 0x000030A3
+#define SRST_HRESETN_PMU1_MEM     0x000030A4
+#define SRST_PRESETN_PMU1_SGRF    0x000030A5
+#define SRST_PRESETN_PMU1_S_BIU   0x000030A6
+
+// PMU1CRU_SOFTRST_CON12(Offset:0x4058)
+#define SRST_RESETN_PMU0PVTM          0x000030C2
+#define SRST_PRESETN_PMU0PVTM         0x000030C3
+#define SRST_PRESETN_PMU_SGRF         0x000030C4
+#define SRST_PRESETN_PMU_SGRF_REMAP   0x000030C5
+#define SRST_PRESETN_PMU0_HP_TIMER    0x000030C6
+#define SRST_RESETN_PMU0_HP_TIMER     0x000030C7
+#define SRST_RESETN_PMU0_32K_HP_TIMER 0x000030C8
+
+// PMU1CRU_GATE_CON00(Offset:0x800)
+#define PCLK_HDPTX_GRF_GATE               0x00003000
+#define PCLK_HDPTX_APB_GATE               0x00003001
+#define PCLK_MIPI_DCPHY_GATE              0x00003002
+#define PCLK_DCPHY_GRF_GATE               0x00003003
+#define PCLK_BOT0_APB2ASB_GATE            0x00003004
+#define PCLK_BOT1_APB2ASB_GATE            0x00003005
+#define CLK_32K_USB2DEBUG_GATE            0x00003006
+#define PCLK_CSIDPHY_GRF_GATE             0x00003007
+#define PCLK_CSIDPHY_GATE                 0x00003008
+#define PCLK_USBPHY_GRF_0_GATE            0x00003009
+#define PCLK_USBPHY_GRF_1_GATE            0x0000300A
+#define PCLK_USBDP_GRF_GATE               0x0000300B
+#define PCLK_USBDPPHY_GATE                0x0000300C
+#define CLK_PMUPHY_REF_SRC_GATE           0x0000300D
+#define CLK_USBDP_COMBO_PHY_IMMORTAL_GATE 0x0000300F
+
+// PMU1CRU_GATE_CON01(Offset:0x804)
+#define PCLK_VCCIO6_IOC_GATE 0x00003016
+#define CLK_HDMITXHPD_GATE   0x0000301D
+
+// PMU1CRU_GATE_CON02(Offset:0x808)
+#define PCLK_MPHY_GATE          0x00003020
+#define PCLK_MPHY_GRF_GATE      0x00003021
+#define PCLK_VCCIO7_IOC_GATE    0x00003023
+#define CLK_REF_UFS_CLKOUT_GATE 0x00003025
+
+// PMU1CRU_GATE_CON03(Offset:0x80C)
+#define HCLK_PMU1_ROOT_SRC_GATE      0x00003030
+#define HCLK_PMU1_CM0_ROOT_SRC_GATE  0x00003031
+#define CLK_MATRIX_200M_PMU_SRC_GATE 0x00003032
+#define CLK_MATRIX_100M_PMU_SRC_GATE 0x00003033
+#define CLK_MATRIX_50M_PMU_SRC_GATE  0x00003034
+#define HCLK_PMU1_ROOT_GATE          0x00003035
+#define HCLK_PMU_CM0_ROOT_GATE       0x00003038
+#define HCLK_PMU1_BIU_GATE           0x00003039
+#define PCLK_PMU1_BIU_GATE           0x0000303A
+#define HCLK_PMU_CM0_BIU_GATE        0x0000303B
+#define FCLK_PMU_CM0_CORE_GATE       0x0000303C
+#define CLK_PMU_CM0_RTC_GATE         0x0000303E
+#define PCLK_PMU1_GATE               0x0000303F
+
+// PMU1CRU_GATE_CON04(Offset:0x810)
+#define PCLK_PMU1_CRU_GATE     0x00003041
+#define CLK_PMU1_GATE          0x00003042
+#define PCLK_PMU1_GRF_GATE     0x00003043
+#define PCLK_PMU1_IOC_GATE     0x00003044
+#define PCLK_PMU1WDT_GATE      0x00003045
+#define TCLK_PMU1WDT_GATE      0x00003046
+#define PCLK_PMUTIMER_GATE     0x00003047
+#define CLK_PMUTIMER_ROOT_GATE 0x00003048
+#define CLK_PMUTIMER0_GATE     0x00003049
+#define CLK_PMUTIMER1_GATE     0x0000304A
+#define PCLK_PMU1PWM_GATE      0x0000304B
+#define CLK_PMU1PWM_GATE       0x0000304C
+#define CLK_PMU1PWM_OSC_GATE   0x0000304D
+
+// PMU1CRU_GATE_CON05(Offset:0x814)
+#define PCLK_PMUPHY_ROOT_GATE 0x00003050
+#define PCLK_I2C0_GATE        0x00003051
+#define CLK_I2C0_GATE         0x00003052
+#define SCLK_UART1_GATE       0x00003055
+#define PCLK_UART1_GATE       0x00003056
+#define CLK_PMU1PWM_RC_GATE   0x00003057
+#define CLK_PDM0_GATE         0x0000305D
+#define HCLK_PDM0_GATE        0x0000305F
+
+// PMU1CRU_GATE_CON06(Offset:0x818)
+#define MCLK_PDM0_GATE       0x00003060
+#define HCLK_VAD_GATE        0x00003061
+#define CLK_OSCCHK_PVTM_GATE 0x00003064
+#define CLK_PDM0_OUT_GATE    0x00003068
+#define CLK_HPTIMER_SRC_GATE 0x0000306A
+
+// PMU1CRU_GATE_CON07(Offset:0x81C)
+#define PCLK_PMU0_ROOT_SRC_GATE 0x00003070
+#define PCLK_PMU0_ROOT_GATE     0x00003071
+#define CLK_PMU0_GATE           0x00003072
+#define PCLK_PMU0_GATE          0x00003073
+#define PCLK_PMU0GRF_GATE       0x00003074
+#define PCLK_PMU0IOC_GATE       0x00003075
+#define PCLK_GPIO0_GATE         0x00003076
+#define DBCLK_GPIO0_GATE        0x00003077
+#define CLK_OSC0_PMU1_GATE      0x00003078
+#define PCLK_PMU1_ROOT_GATE     0x00003079
+#define REF_CLK0_OUT_GATE       0x0000307A
+#define REF_CLK1_OUT_GATE       0x0000307B
+#define REF_CLK2_OUT_GATE       0x0000307C
+#define XIN_OSC0_DIV_GATE       0x0000307D
+
+// PMU1CRU_GATE_CON10(Offset:0x4028)
+#define HCLK_PMU_S_ROOT_SRC_GATE 0x000030A0
+#define HCLK_PMU_S_ROOT_GATE     0x000030A1
+#define HCLK_PMU1_S_BIU_GATE     0x000030A2
+#define PCLK_PMU1_OSC_CHK_GATE   0x000030A3
+#define HCLK_PMU1_MEM_GATE       0x000030A4
+#define PCLK_PMU1_SGRF_GATE      0x000030A5
+#define PCLK_PMU1_S_BIU_GATE     0x000030A6
+
+// PMU1CRU_GATE_CON12(Offset:0x4030)
+#define PCLK_PMU0_SCRKEYGEN_GATE   0x000030C0
+#define CLK_SCRKEYGEN_GATE         0x000030C1
+#define CLK_PMU0PVTM_GATE          0x000030C2
+#define PCLK_PMU0PVTM_GATE         0x000030C3
+#define PCLK_PMU_SGRF_GATE         0x000030C4
+#define PCLK_PMU0_HP_TIMER_GATE    0x000030C6
+#define CLK_PMU0_HP_TIMER_GATE     0x000030C7
+#define CLK_PMU0_32K_HP_TIMER_GATE 0x000030C8
+#define PCLK_PMU_S_ROOT_SRC_GATE   0x000030C9
+#define PCLK_PMU1_S_ROOT_GATE      0x000030CA
+#define PCLK_PMU_S_ROOT_GATE       0x000030CB
+
+// PMU1CRU_CLKSEL_CON00(Offset:0x300)
+#define CLK_PMUPHY_REF_SRC_DIV 0x05000300
+
+// PMU1CRU_CLKSEL_CON03(Offset:0x30C)
+#define CLK_REF_OSC_MPHY_SEL                  0x02000303
+#define CLK_REF_OSC_MPHY_SEL_XIN_OSC0_PLL     0U
+#define CLK_REF_OSC_MPHY_SEL_CLK_GPIO_MPHY    1U
+#define CLK_REF_OSC_MPHY_SEL_CLK_REF_MPHY_26M 2U
+
+// PMU1CRU_CLKSEL_CON04(Offset:0x310)
+#define CLK_MATRIX_100M_PMU_SRC_DIV                       0x05040304
+#define CLK_PMU_CM0_RTC_DIV                               0x05090304
+#define HCLK_PMU1_ROOT_SRC_SEL                            0x02000304
+#define HCLK_PMU1_ROOT_SRC_SEL_CLK_MATRIX_200M_PMU_SRC    0U
+#define HCLK_PMU1_ROOT_SRC_SEL_CLK_MATRIX_100M_PMU_SRC    1U
+#define HCLK_PMU1_ROOT_SRC_SEL_CLK_MATRIX_50M_PMU_SRC     2U
+#define HCLK_PMU1_ROOT_SRC_SEL_XIN_OSC0_FUNC              3U
+#define HCLK_PMU_CM0_ROOT_SRC_SEL                         0x02020304
+#define HCLK_PMU_CM0_ROOT_SRC_SEL_CLK_MATRIX_200M_PMU_SRC 0U
+#define HCLK_PMU_CM0_ROOT_SRC_SEL_CLK_MATRIX_100M_PMU_SRC 1U
+#define HCLK_PMU_CM0_ROOT_SRC_SEL_CLK_MATRIX_50M_PMU_SRC  2U
+#define HCLK_PMU_CM0_ROOT_SRC_SEL_XIN_OSC0_FUNC           3U
+#define CLK_PMU_CM0_RTC_SEL                               0x010E0304
+#define CLK_PMU_CM0_RTC_SEL_XIN_OSC0_FUNC                 0U
+#define CLK_PMU_CM0_RTC_SEL_CLK_DEEPSLOW                  1U
+#define TCLK_PMU1WDT_SEL                                  0x010F0304
+#define TCLK_PMU1WDT_SEL_XIN_OSC0_FUNC                    0U
+#define TCLK_PMU1WDT_SEL_CLK_DEEPSLOW                     1U
+
+// PMU1CRU_CLKSEL_CON05(Offset:0x314)
+#define CLK_PMUTIMER_ROOT_SEL                         0x02000305
+#define CLK_PMUTIMER_ROOT_SEL_CLK_MATRIX_100M_PMU_SRC 0U
+#define CLK_PMUTIMER_ROOT_SEL_XIN_OSC0_FUNC           1U
+#define CLK_PMUTIMER_ROOT_SEL_CLK_DEEPSLOW            2U
+#define CLK_PMU1PWM_SEL                               0x02020305
+#define CLK_PMU1PWM_SEL_CLK_MATRIX_100M_PMU_SRC       0U
+#define CLK_PMU1PWM_SEL_CLK_MATRIX_50M_PMU_SRC        1U
+#define CLK_PMU1PWM_SEL_XIN_OSC0_FUNC                 2U
+
+// PMU1CRU_CLKSEL_CON06(Offset:0x318)
+#define CLK_I2C0_SEL                         0x02070306
+#define CLK_I2C0_SEL_CLK_MATRIX_200M_PMU_SRC 0U
+#define CLK_I2C0_SEL_CLK_MATRIX_100M_PMU_SRC 1U
+#define CLK_I2C0_SEL_CLK_MATRIX_50M_PMU_SRC  2U
+#define CLK_I2C0_SEL_XIN_OSC0_FUNC           3U
+
+// PMU1CRU_CLKSEL_CON08(Offset:0x320)
+#define SCLK_UART1_SEL                   0x01000308
+#define SCLK_UART1_SEL_CLK_UART1_SRC_TOP 0U
+#define SCLK_UART1_SEL_XIN_OSC0_FUNC     1U
+
+// PMU1CRU_CLKSEL_CON11(Offset:0x32C)
+#define CLK_HPTIMER_SRC_DIV               0x0501030B
+#define CLK_HPTIMER_SRC_SEL               0x0106030B
+#define CLK_HPTIMER_SRC_SEL_CLK_CPLL_MUX  0U
+#define CLK_HPTIMER_SRC_SEL_XIN_OSC0_FUNC 1U
+
+// PMU1CRU_CLKSEL_CON20(Offset:0x350)
+#define PCLK_PMU0_ROOT_SRC_SEL                         0x02000314
+#define PCLK_PMU0_ROOT_SRC_SEL_CLK_MATRIX_100M_PMU_SRC 0U
+#define PCLK_PMU0_ROOT_SRC_SEL_CLK_MATRIX_50M_PMU_SRC  1U
+#define PCLK_PMU0_ROOT_SRC_SEL_XIN_OSC0_FUNC           2U
+#define DBCLK_GPIO0_SEL                                0x01020314
+
+// PMU1CRU_CLKSEL_CON21(Offset:0x354)
+#define XIN_OSC0_DIV_DIV 0x20000315
+
+// PMU1CRU_CLKSEL_CON30(Offset:0x4000)
+#define HCLK_PMU_S_ROOT_SRC_SEL                         0x0200031E
+#define HCLK_PMU_S_ROOT_SRC_SEL_CLK_MATRIX_SEC_175M_SRC 0U
+#define HCLK_PMU_S_ROOT_SRC_SEL_CLK_MATRIX_SEC_116M_SRC 1U
+#define HCLK_PMU_S_ROOT_SRC_SEL_XIN_OSC0_FUNC           2U
+
+// PMU1CRU_CLKSEL_CON32(Offset:0x4008)
+#define CLK_PVTM_32K_DIV                                0x0C010320
+#define PCLK_PMU_S_ROOT_SRC_SEL                         0x01000320
+#define PCLK_PMU_S_ROOT_SRC_SEL_CLK_MATRIX_SEC_116M_SRC 0U
+#define PCLK_PMU_S_ROOT_SRC_SEL_XIN_OSC0_FUNC           1U
+
+// ======================= DDR0CRU module definition bank=4 =======================
+// DDR0CRU_SOFTRST_CON00(Offset:0xA00)
+#define SRST_RESETN_DDRPHY2XDIV_CH0 0x00004001
+#define SRST_RESETN_DDRPHY2X_CH0    0x00004002
+#define SRST_PRESETN_DDR_CRU_CH0    0x00004003
+#define SRST_PRESETN_DDRPHY_CH0     0x00004004
+
+// DDR0CRU_GATE_CON00(Offset:0x800)
+#define PCLK_DDR_CRU_CH0_GATE   0x00004003
+#define PCLK_DDRPHY_CH0_GATE    0x00004004
+#define CLK_OSC_DDRPHY_CH0_GATE 0x00004005
+
+// DDR0CRU_CLKSEL_CON00(Offset:0x300)
+#define CLK_DDRPHY2X_CH0_SEL              0x01000400
+#define CLK_DDRPHY2X_CH0_SEL_CLK_D0APLL_T 0U
+#define CLK_DDRPHY2X_CH0_SEL_CLK_D0BPLL   1U
+
+// ======================= DDR1CRU module definition bank=5 =======================
+// DDR1CRU_SOFTRST_CON00(Offset:0xA00)
+#define SRST_RESETN_DDRPHY2XDIV_CH1 0x00005001
+#define SRST_RESETN_DDRPHY2X_CH1    0x00005002
+#define SRST_PRESETN_DDR_CRU_CH1    0x00005003
+#define SRST_PRESETN_DDRPHY_CH1     0x00005004
+
+// DDR1CRU_GATE_CON00(Offset:0x800)
+#define PCLK_DDR_CRU_CH1_GATE   0x00005003
+#define PCLK_DDRPHY_CH1_GATE    0x00005004
+#define CLK_OSC_DDRPHY_CH1_GATE 0x00005005
+
+// DDR1CRU_CLKSEL_CON00(Offset:0x300)
+#define CLK_DDRPHY2X_CH1_SEL              0x01000500
+#define CLK_DDRPHY2X_CH1_SEL_CLK_D1APLL_T 0U
+#define CLK_DDRPHY2X_CH1_SEL_CLK_D1BPLL   1U
+
+// ===================== BIGCORECRU module definition bank=6 ======================
+// BIGCORECRU_SOFTRST_CON00(Offset:0xA00)
+#define SRST_RESETN_REF_PVTPLL_BIGCORE 0x00006001
+#define SRST_PRESETN_BIGCORE_BIU       0x00006005
+#define SRST_PRESETN_BIGCORE_GRF       0x00006007
+#define SRST_PRESETN_BIGCORE_CRU       0x00006008
+#define SRST_PRESETN_PVTPLL_BIGCORE    0x00006009
+#define SRST_NBIGCOREPORESET0          0x0000600E
+#define SRST_NBIGCOREPORESET1          0x0000600F
+
+// BIGCORECRU_SOFTRST_CON01(Offset:0xA04)
+#define SRST_NBIGCOREPORESET2       0x00006010
+#define SRST_NBIGCOREPORESET3       0x00006011
+#define SRST_NBIGCORESET0           0x00006012
+#define SRST_NBIGCORESET1           0x00006013
+#define SRST_NBIGCORESET2           0x00006014
+#define SRST_NBIGCORESET3           0x00006015
+#define SRST_NL2RESET_BIGCORE       0x00006016
+#define SRST_PRESETN_DBG_BIGCORE    0x00006018
+#define SRST_ARESETN_ADB400_A72_CCI 0x0000601B
+
+// BIGCORECRU_SOFTRST_CON03(Offset:0xA0C)
+#define SRST_NBIGCOREPORESET0_AC 0x00006030
+#define SRST_NBIGCOREPORESET1_AC 0x00006031
+#define SRST_NBIGCOREPORESET2_AC 0x00006032
+#define SRST_NBIGCOREPORESET3_AC 0x00006033
+#define SRST_NBIGCORESET0_AC     0x00006034
+#define SRST_NBIGCORESET1_AC     0x00006035
+#define SRST_NBIGCORESET2_AC     0x00006036
+#define SRST_NBIGCORESET3_AC     0x00006037
+#define SRST_NL2RESET_BIGCORE_AC 0x00006038
+
+// BIGCORECRU_GATE_CON00(Offset:0x800)
+#define CLK_REF_PVTPLL_BIGCORE_GATE 0x00006001
+#define PCLK_BIGCORE_ROOT_GATE      0x00006004
+#define PCLK_BIGCORE_BIU_GATE       0x00006005
+#define PCLK_BIGCORE_GRF_GATE       0x00006007
+#define PCLK_BIGCORE_CRU_GATE       0x00006008
+#define PCLK_PVTPLL_BIGCORE_GATE    0x00006009
+#define CLK_BIGCORE_CLEAN_GATE      0x0000600B
+#define CLK_BIGCORE_SRC_GATE        0x0000600D
+#define CLK_BIGCORE_GATE            0x0000600E
+
+// BIGCORECRU_GATE_CON01(Offset:0x804)
+#define ACLK_M_BIGCORE_GATE      0x00006017
+#define PCLK_DBG_BIGCORE_GATE    0x00006018
+#define CLK_SCANHS_BIGCORE_GATE  0x0000601A
+#define ACLK_ADB400_A72_CCI_GATE 0x0000601B
+
+// BIGCORECRU_CLKSEL_CON00(Offset:0x300)
+#define PCLK_BIGCORE_ROOT_DIV              0x05070600
+#define PCLK_BIGCORE_ROOT_SEL              0x010C0600
+#define PCLK_BIGCORE_ROOT_SEL_CLK_GPLL_MUX 0U
+#define PCLK_BIGCORE_ROOT_SEL_CLK_BPLL_MUX 1U
+
+// BIGCORECRU_CLKSEL_CON01(Offset:0x304)
+#define MBIST_CLK_CLK_BIGCORE_SRC_DIV              0x03000601
+#define CLK_BIGCORE_SRC_DIV                        0x05070601
+#define CLK_BIGCORE_SRC_SEL                        0x020C0601
+#define CLK_BIGCORE_SRC_SEL_CLK_BPLL_MUX           0U
+#define CLK_BIGCORE_SRC_SEL_CLK_GPLL_MUX           1U
+#define CLK_BIGCORE_SRC_SEL_CLK_BIGCORE_PVTPLL_SRC 2U
+#define CLK_BIGCORE_SEL                            0x020E0601
+#define CLK_BIGCORE_SEL_CLK_BIGCORE_SRC_OUT        0U
+#define CLK_BIGCORE_SEL_CLK_BIGCORE_PVTPLL_SRC     1U
+#define CLK_BIGCORE_SEL_CLK_BIGCORE_CLEAN          2U
+
+// BIGCORECRU_CLKSEL_CON02(Offset:0x308)
+#define ACLK_M_BIGCORE_DIV                            0x05000602
+#define CLK_BIGCORE_PVTPLL_SRC_SEL                    0x01050602
+#define CLK_BIGCORE_PVTPLL_SRC_SEL_CLK_DEEPSLOW       0U
+#define CLK_BIGCORE_PVTPLL_SRC_SEL_CLK_BIGCORE_PVTPLL 1U
+
+// BIGCORECRU_CLKSEL_CON03(Offset:0x30C)
+#define CLK_SCANHS_ACLK_M_BIGCORE_DIV 0x05000603
+
+// ===================== LITCORECRU module definition bank=7 ======================
+// LITCORECRU_SOFTRST_CON00(Offset:0xA00)
+#define SRST_RESETN_REF_LITCORE_PVTPLL 0x00007000
+#define SRST_NLITCOREPORESET0          0x00007005
+#define SRST_NLITCOREPORESET1          0x00007006
+#define SRST_NLITCOREPORESET2          0x00007007
+#define SRST_NLITCOREPORESET3          0x00007008
+#define SRST_NLITCORESET0              0x00007009
+#define SRST_NLITCORESET1              0x0000700A
+#define SRST_NLITCORESET2              0x0000700B
+#define SRST_NLITCORESET3              0x0000700C
+#define SRST_NL2RESET_LITCORE          0x0000700D
+#define SRST_PRESETN_DBG_LITCORE       0x0000700F
+
+// LITCORECRU_SOFTRST_CON01(Offset:0xA04)
+#define SRST_PRESETN_LITCORE_GRF    0x00007010
+#define SRST_PRESETN_LITCORE_BIU    0x00007011
+#define SRST_ARESETN_ADB400_A53_CCI 0x00007012
+#define SRST_PRESETN_PVTPLL_LITCORE 0x00007013
+#define SRST_PRESETN_LITCORE_CRU    0x00007014
+
+// LITCORECRU_SOFTRST_CON03(Offset:0xA0C)
+#define SRST_NLITCOREPORESET0_AC 0x00007030
+#define SRST_NLITCOREPORESET1_AC 0x00007031
+#define SRST_NLITCOREPORESET2_AC 0x00007032
+#define SRST_NLITCOREPORESET3_AC 0x00007033
+#define SRST_NLITCORESET0_AC     0x00007034
+#define SRST_NLITCORESET1_AC     0x00007035
+#define SRST_NLITCORESET2_AC     0x00007036
+#define SRST_NLITCORESET3_AC     0x00007037
+#define SRST_NL2RESET_LITCORE_AC 0x00007038
+
+// LITCORECRU_GATE_CON00(Offset:0x800)
+#define CLK_REF_PVTPLL_LITCORE_GATE 0x00007000
+#define CLK_LITCORE_CLEAN_GATE      0x00007001
+#define CLK_LITCORE_SRC_GATE        0x00007002
+#define PCLK_LITCORE_ROOT_GATE      0x00007004
+#define CLK_LITCORE_GATE            0x00007005
+#define ACLK_M_LITCORE_GATE         0x0000700E
+#define PCLK_DBG_LITCORE_GATE       0x0000700F
+
+// LITCORECRU_GATE_CON01(Offset:0x804)
+#define PCLK_LITCORE_GRF_GATE    0x00007010
+#define PCLK_LITCORE_BIU_GATE    0x00007011
+#define ACLK_ADB400_A53_CCI_GATE 0x00007012
+#define PCLK_PVTPLL_LITCORE_GATE 0x00007013
+#define PCLK_LITCORE_CRU_GATE    0x00007014
+#define CLK_SCANHS_LITCORE_GATE  0x00007015
+
+// LITCORECRU_CLKSEL_CON00(Offset:0x300)
+#define MBIST_CLK_CLK_LITCORE_SRC_DIV              0x03040700
+#define CLK_LITCORE_SRC_DIV                        0x05070700
+#define CLK_LITCORE_SRC_SEL                        0x020C0700
+#define CLK_LITCORE_SRC_SEL_CLK_LPLL_MUX           0U
+#define CLK_LITCORE_SRC_SEL_CLK_GPLL_MUX           1U
+#define CLK_LITCORE_SRC_SEL_CLK_LITCORE_PVTPLL_SRC 2U
+
+// LITCORECRU_CLKSEL_CON01(Offset:0x304)
+#define PCLK_LITCORE_ROOT_DIV                         0x05000701
+#define ACLK_M_LITCORE_DIV                            0x05080701
+#define PCLK_LITCORE_ROOT_SEL                         0x01050701
+#define PCLK_LITCORE_ROOT_SEL_CLK_GPLL_MUX            0U
+#define PCLK_LITCORE_ROOT_SEL_CLK_LPLL_MUX            1U
+#define CLK_LITCORE_SEL                               0x02060701
+#define CLK_LITCORE_SEL_CLK_LITCORE_SRC_OUT           0U
+#define CLK_LITCORE_SEL_CLK_LITCORE_PVTPLL_SRC        1U
+#define CLK_LITCORE_SEL_CLK_LITCORE_CLEAN             2U
+#define CLK_LITCORE_PVTPLL_SRC_SEL                    0x010D0701
+#define CLK_LITCORE_PVTPLL_SRC_SEL_CLK_DEEPSLOW       0U
+#define CLK_LITCORE_PVTPLL_SRC_SEL_CLK_LITCORE_PVTPLL 1U
+
+// LITCORECRU_CLKSEL_CON02(Offset:0x308)
+#define PCLK_DBG_LITCORE_DIV 0x05000702
+
+// LITCORECRU_CLKSEL_CON03(Offset:0x30C)
+#define CLK_SCANHS_PCLK_DBG_LITCORE_DIV 0x05000703
+#define CLK_SCANHS_ACLK_M_LITCORE_DIV   0x05050703
+
+// ======================= CCICRU module definition bank=8 ========================
+// CCICRU_SOFTRST_CON01(Offset:0xA04)
+#define SRST_ARESETN_CPE     0x0000801C
+#define SRST_PRESETN_CCI_BIU 0x0000801D
+#define SRST_ARESETN_CCI_BIU 0x0000801E
+#define SRST_PRESETN_DBG_M   0x0000801F
+
+// CCICRU_SOFTRST_CON02(Offset:0xA08)
+#define SRST_PRESETN_DBG_SYS        0x00008020
+#define SRST_PRESETN_CCI_GRF        0x00008021
+#define SRST_PRESETN_CCI_CRU        0x00008022
+#define SRST_ARESETN_CCI            0x00008023
+#define SRST_PORESETN_JTAG          0x00008024
+#define SRST_ARESETN_CCI_DDRSCH_BIU 0x00008025
+#define SRST_ARESETN_ADB400_CCI_A72 0x00008026
+#define SRST_ARESETN_ADB400_CCI_A53 0x00008027
+#define SRST_PRESETN_PVTPLL_CCI     0x00008028
+#define SRST_PRESETN_CCI_DDRSCH_BIU 0x0000802A
+#define SRST_PRESETN_DBG_M_BIU      0x0000802B
+#define SRST_RESETN_REF_CCI_PVTPLL  0x0000802C
+
+// CCICRU_GATE_CON01(Offset:0x804)
+#define PCLK_CCI_ROOT_GATE 0x0000801A
+#define ACLK_CCI_ROOT_GATE 0x0000801B
+#define ACLK_CPE_GATE      0x0000801C
+#define PCLK_CCI_BIU_GATE  0x0000801D
+#define ACLK_CCI_BIU_GATE  0x0000801E
+#define PCLK_DBG_M_GATE    0x0000801F
+
+// CCICRU_GATE_CON02(Offset:0x808)
+#define PCLK_DBG_SYS_GATE        0x00008020
+#define PCLK_CCI_GRF_GATE        0x00008021
+#define PCLK_CCI_CRU_GATE        0x00008022
+#define ACLK_CCI_GATE            0x00008023
+#define ACLK_CCI_DDRSCH_BIU_GATE 0x00008025
+#define ACLK_ADB400_CCI_A72_GATE 0x00008026
+#define ACLK_ADB400_CCI_A53_GATE 0x00008027
+#define PCLK_PVTPLL_CCI_GATE     0x00008028
+#define PCLK_CCI_DDRSCH_BIU_GATE 0x0000802A
+#define PCLK_DBG_M_BIU_GATE      0x0000802B
+#define CLK_REF_PVTPLL_CCI_GATE  0x0000802C
+
+// CCICRU_CLKSEL_CON04(Offset:0x310)
+#define PCLK_CCI_ROOT_DIV                     0x05000804
+#define ACLK_CCI_ROOT_DIV                     0x05070804
+#define PCLK_CCI_ROOT_SEL                     0x02050804
+#define PCLK_CCI_ROOT_SEL_XIN_OSC0_FUNC       0U
+#define PCLK_CCI_ROOT_SEL_CLK_CCI_PVTPLL_SRC  1U
+#define PCLK_CCI_ROOT_SEL_CLK_GPLL_MUX        2U
+#define PCLK_CCI_ROOT_SEL_CLK_LPLL            3U
+#define ACLK_CCI_ROOT_SEL                     0x020C0804
+#define ACLK_CCI_ROOT_SEL_XIN_OSC0_FUNC       0U
+#define ACLK_CCI_ROOT_SEL_CLK_CCI_PVTPLL_SRC  1U
+#define ACLK_CCI_ROOT_SEL_CLK_GPLL_MUX        2U
+#define ACLK_CCI_ROOT_SEL_CLK_LPLL            3U
+#define CLK_CCI_PVTPLL_SRC_SEL                0x010E0804
+#define CLK_CCI_PVTPLL_SRC_SEL_CLK_DEEPSLOW   0U
+#define CLK_CCI_PVTPLL_SRC_SEL_CLK_CCI_PVTPLL 1U
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
