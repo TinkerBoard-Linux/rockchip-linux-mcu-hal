@@ -67,4 +67,8 @@
 #define HAL_SNOR_SFC_HOST
 #endif
 
+#ifdef HAL_TSADC_MODULE_ENABLED
+#define TSADC_NONLINEAR
+#endif
+
 #endif
