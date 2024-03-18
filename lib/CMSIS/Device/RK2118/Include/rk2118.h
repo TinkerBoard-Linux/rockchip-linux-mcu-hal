@@ -2130,8 +2130,8 @@ struct RM0_IO_REG {
     __IO uint32_t test_status0;                       /* Address Offset: 0x0BD0 */
     __IO uint32_t test_status1;                       /* Address Offset: 0x0BD4 */
 };
-/* FIR_ACC_REG Register Structure Define */
-struct FIR_ACC_REG_REG {
+/* FIR_ACC Register Structure Define */
+struct FIR_ACC_REG {
     __I  uint32_t VERSION;                            /* Address Offset: 0x0000 */
     __IO uint32_t RUNCTL;                             /* Address Offset: 0x0004 */
     __IO uint32_t FGCTL;                              /* Address Offset: 0x0008 */
@@ -2141,10 +2141,11 @@ struct FIR_ACC_REG_REG {
     __IO uint32_t WDTCNT;                             /* Address Offset: 0x0018 */
          uint32_t RESERVED001C;                       /* Address Offset: 0x001C */
     __IO uint32_t TCBRDINDEX;                         /* Address Offset: 0x0020 */
-         uint32_t WDTRCNT;                            /* Address Offset: 0x0024 */
+    __IO uint32_t WDTRCNT;                            /* Address Offset: 0x0024 */
+    __IO uint32_t MACSTAT_S2;                         /* Address Offset: 0x0028 */
 };
-/* IIR_ACC_REG Register Structure Define */
-struct IIR_ACC_REG_REG {
+/* IIR_ACC Register Structure Define */
+struct IIR_ACC_REG {
     __I  uint32_t VERSION;                            /* Address Offset: 0x0000 */
     __IO uint32_t RUNCTL;                             /* Address Offset: 0x0004 */
     __IO uint32_t FGCTL;                              /* Address Offset: 0x0008 */
@@ -2302,8 +2303,8 @@ struct IIR_ACC_REG_REG {
 #define TOUCH_SENSOR_BASE              0x50B80000U /* TOUCH_SENSOR base address */
 #define GPIO0_IOC_BASE                 0x50BC0000U /* GPIO0_IOC base address */
 #define RM0_IO_BASE                    0x50BC0000U /* RM0_IO base address */
-#define FIR_ACC_REG_BASE               0x50CC0000U /* FIR_ACC_REG base address */
-#define IIR_ACC_REG_BASE               0x50CC2000U /* IIR_ACC_REG base address */
+#define FIR_ACC_BASE                   0x50CC0000U /* FIR_ACC base address */
+#define IIR_ACC_BASE                   0x50CC2000U /* IIR_ACC base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -2450,8 +2451,8 @@ struct IIR_ACC_REG_REG {
 #define TOUCH_SENSOR        ((struct TOUCH_SENSOR_REG *) TOUCH_SENSOR_BASE)
 #define GPIO0_IOC           ((struct GPIO0_IOC_REG *) GPIO0_IOC_BASE)
 #define RM0_IO              ((struct RM0_IO_REG *) RM0_IO_BASE)
-#define FIR_ACC_REG         ((struct FIR_ACC_REG_REG *) FIR_ACC_REG_BASE)
-#define IIR_ACC_REG         ((struct IIR_ACC_REG_REG *) IIR_ACC_REG_BASE)
+#define FIR_ACC             ((struct FIR_ACC_REG *) FIR_ACC_BASE)
+#define IIR_ACC             ((struct IIR_ACC_REG *) IIR_ACC_BASE)
 
 #define IS_FIR_ACC_TCB_INSTANCE(instance) ((instance) == FIR_ACC_TCB)
 #define IS_IIR_ACC_TCB_INSTANCE(instance) ((instance) == IIR_ACC_TCB)
@@ -2481,8 +2482,8 @@ struct IIR_ACC_REG_REG {
 #define IS_TOUCH_SENSOR_INSTANCE(instance) ((instance) == TOUCH_SENSOR)
 #define IS_GPIO0_IOC_INSTANCE(instance) ((instance) == GPIO0_IOC)
 #define IS_RM0_IO_INSTANCE(instance) ((instance) == RM0_IO)
-#define IS_FIR_ACC_REG_INSTANCE(instance) ((instance) == FIR_ACC_REG)
-#define IS_IIR_ACC_REG_INSTANCE(instance) ((instance) == IIR_ACC_REG)
+#define IS_FIR_ACC_INSTANCE(instance) ((instance) == FIR_ACC)
+#define IS_IIR_ACC_INSTANCE(instance) ((instance) == IIR_ACC)
 #define IS_TRNG_INSTANCE(instance) (((instance) == TRNG1) || ((instance) == TRNG0))
 #define IS_MMC_INSTANCE(instance) (((instance) == MMC0) || ((instance) == MMC1))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI2) || ((instance) == SPI1))
@@ -2654,12 +2655,16 @@ struct IIR_ACC_REG_REG {
 #define IIR_ACC_TCB_SCTL2_VALUE_MASK                       (0xFFFFFFFFU << IIR_ACC_TCB_SCTL2_VALUE_SHIFT)               /* 0xFFFFFFFF */
 /* SGCTL */
 #define IIR_ACC_TCB_SGCTL_OFFSET                           (0x3CU)
+#define IIR_ACC_TCB_SGCTL_SST_SHIFT                        (9U)
+#define IIR_ACC_TCB_SGCTL_SST_MASK                         (0x1U << IIR_ACC_TCB_SGCTL_SST_SHIFT)                        /* 0x00000200 */
 #define IIR_ACC_TCB_SGCTL_SS_SHIFT                         (10U)
 #define IIR_ACC_TCB_SGCTL_SS_MASK                          (0x1U << IIR_ACC_TCB_SGCTL_SS_SHIFT)                         /* 0x00000400 */
 #define IIR_ACC_TCB_SGCTL_SSESEL_SHIFT                     (11U)
 #define IIR_ACC_TCB_SGCTL_SSESEL_MASK                      (0x1U << IIR_ACC_TCB_SGCTL_SSESEL_SHIFT)                     /* 0x00000800 */
 #define IIR_ACC_TCB_SGCTL_RND_SHIFT                        (14U)
 #define IIR_ACC_TCB_SGCTL_RND_MASK                         (0x1U << IIR_ACC_TCB_SGCTL_RND_SHIFT)                        /* 0x00004000 */
+#define IIR_ACC_TCB_SGCTL_DKWITRSP_SHIFT                   (8U)
+#define IIR_ACC_TCB_SGCTL_DKWITRSP_MASK                    (0x1U << IIR_ACC_TCB_SGCTL_DKWITRSP_SHIFT)                   /* 0x00000100 */
 /******************************************TRNG******************************************/
 /* CFG */
 #define TRNG_CFG_OFFSET                                    (0x0U)
@@ -20190,243 +20195,289 @@ struct IIR_ACC_REG_REG {
 #define RM0_IO_TEST_STATUS1_OFFSET                         (0xBD4U)
 #define RM0_IO_TEST_STATUS1_SIG_FROM_PAD_SHIFT             (0U)
 #define RM0_IO_TEST_STATUS1_SIG_FROM_PAD_MASK              (0x7FFU << RM0_IO_TEST_STATUS1_SIG_FROM_PAD_SHIFT)           /* 0x000007FF */
-/**************************************FIR_ACC_REG***************************************/
+/****************************************FIR_ACC*****************************************/
 /* VERSION */
-#define FIR_ACC_REG_VERSION_OFFSET                         (0x0U)
-#define FIR_ACC_REG_VERSION                                (0x0U)
-#define FIR_ACC_REG_VERSION_VALUE_SHIFT                    (0U)
-#define FIR_ACC_REG_VERSION_VALUE_MASK                     (0x1U << FIR_ACC_REG_VERSION_VALUE_SHIFT)                    /* 0x00000001 */
+#define FIR_ACC_VERSION_OFFSET                             (0x0U)
+#define FIR_ACC_VERSION                                    (0x20220008U)
+#define FIR_ACC_VERSION_VALUE_SHIFT                        (0U)
+#define FIR_ACC_VERSION_VALUE_MASK                         (0xFFFFFFFFU << FIR_ACC_VERSION_VALUE_SHIFT)                 /* 0xFFFFFFFF */
 /* RUNCTL */
-#define FIR_ACC_REG_RUNCTL_OFFSET                          (0x4U)
-#define FIR_ACC_REG_RUNCTL_EN_SHIFT                        (0U)
-#define FIR_ACC_REG_RUNCTL_EN_MASK                         (0x1U << FIR_ACC_REG_RUNCTL_EN_SHIFT)                        /* 0x00000001 */
-#define FIR_ACC_REG_RUNCTL_IRQEN_SHIFT                     (1U)
-#define FIR_ACC_REG_RUNCTL_IRQEN_MASK                      (0x1U << FIR_ACC_REG_RUNCTL_IRQEN_SHIFT)                     /* 0x00000002 */
-#define FIR_ACC_REG_RUNCTL_TIMEOUTIRQEN_SHIFT              (2U)
-#define FIR_ACC_REG_RUNCTL_TIMEOUTIRQEN_MASK               (0x1U << FIR_ACC_REG_RUNCTL_TIMEOUTIRQEN_SHIFT)              /* 0x00000004 */
-#define FIR_ACC_REG_RUNCTL_MACIRQEN_SHIFT                  (3U)
-#define FIR_ACC_REG_RUNCTL_MACIRQEN_MASK                   (0x1U << FIR_ACC_REG_RUNCTL_MACIRQEN_SHIFT)                  /* 0x00000008 */
-#define FIR_ACC_REG_RUNCTL_AXIERRORIRQEN_SHIFT             (4U)
-#define FIR_ACC_REG_RUNCTL_AXIERRORIRQEN_MASK              (0x1U << FIR_ACC_REG_RUNCTL_AXIERRORIRQEN_SHIFT)             /* 0x00000010 */
-#define FIR_ACC_REG_RUNCTL_DONEIRQEN_SHIFT                 (5U)
-#define FIR_ACC_REG_RUNCTL_DONEIRQEN_MASK                  (0x1U << FIR_ACC_REG_RUNCTL_DONEIRQEN_SHIFT)                 /* 0x00000020 */
-#define FIR_ACC_REG_RUNCTL_CLRWDT_SHIFT                    (6U)
-#define FIR_ACC_REG_RUNCTL_CLRWDT_MASK                     (0x1U << FIR_ACC_REG_RUNCTL_CLRWDT_SHIFT)                    /* 0x00000040 */
-#define FIR_ACC_REG_RUNCTL_SWRST_SHIFT                     (8U)
-#define FIR_ACC_REG_RUNCTL_SWRST_MASK                      (0x1U << FIR_ACC_REG_RUNCTL_SWRST_SHIFT)                     /* 0x00000100 */
-#define FIR_ACC_REG_RUNCTL_HALT_SHIFT                      (9U)
-#define FIR_ACC_REG_RUNCTL_HALT_MASK                       (0x1U << FIR_ACC_REG_RUNCTL_HALT_SHIFT)                      /* 0x00000200 */
-#define FIR_ACC_REG_RUNCTL_WDTEN_SHIFT                     (10U)
-#define FIR_ACC_REG_RUNCTL_WDTEN_MASK                      (0x1U << FIR_ACC_REG_RUNCTL_WDTEN_SHIFT)                     /* 0x00000400 */
-#define FIR_ACC_REG_RUNCTL_MEMGAT_SHIFT                    (12U)
-#define FIR_ACC_REG_RUNCTL_MEMGAT_MASK                     (0x1U << FIR_ACC_REG_RUNCTL_MEMGAT_SHIFT)                    /* 0x00001000 */
-#define FIR_ACC_REG_RUNCTL_CLRIRQ_SHIFT                    (14U)
-#define FIR_ACC_REG_RUNCTL_CLRIRQ_MASK                     (0x1U << FIR_ACC_REG_RUNCTL_CLRIRQ_SHIFT)                    /* 0x00004000 */
-#define FIR_ACC_REG_RUNCTL_GENIRQ_SHIFT                    (15U)
-#define FIR_ACC_REG_RUNCTL_GENIRQ_MASK                     (0x1U << FIR_ACC_REG_RUNCTL_GENIRQ_SHIFT)                    /* 0x00008000 */
-#define FIR_ACC_REG_RUNCTL_MASK_SHIFT                      (16U)
-#define FIR_ACC_REG_RUNCTL_MASK_MASK                       (0xFFFFU << FIR_ACC_REG_RUNCTL_MASK_SHIFT)                   /* 0xFFFF0000 */
+#define FIR_ACC_RUNCTL_OFFSET                              (0x4U)
+#define FIR_ACC_RUNCTL_EN_SHIFT                            (0U)
+#define FIR_ACC_RUNCTL_EN_MASK                             (0x1U << FIR_ACC_RUNCTL_EN_SHIFT)                            /* 0x00000001 */
+#define FIR_ACC_RUNCTL_IRQEN_SHIFT                         (1U)
+#define FIR_ACC_RUNCTL_IRQEN_MASK                          (0x1U << FIR_ACC_RUNCTL_IRQEN_SHIFT)                         /* 0x00000002 */
+#define FIR_ACC_RUNCTL_TIMEOUTIRQEN_SHIFT                  (2U)
+#define FIR_ACC_RUNCTL_TIMEOUTIRQEN_MASK                   (0x1U << FIR_ACC_RUNCTL_TIMEOUTIRQEN_SHIFT)                  /* 0x00000004 */
+#define FIR_ACC_RUNCTL_MACIRQEN_SHIFT                      (3U)
+#define FIR_ACC_RUNCTL_MACIRQEN_MASK                       (0x1U << FIR_ACC_RUNCTL_MACIRQEN_SHIFT)                      /* 0x00000008 */
+#define FIR_ACC_RUNCTL_AXIERRORIRQEN_SHIFT                 (4U)
+#define FIR_ACC_RUNCTL_AXIERRORIRQEN_MASK                  (0x1U << FIR_ACC_RUNCTL_AXIERRORIRQEN_SHIFT)                 /* 0x00000010 */
+#define FIR_ACC_RUNCTL_DONEIRQEN_SHIFT                     (5U)
+#define FIR_ACC_RUNCTL_DONEIRQEN_MASK                      (0x1U << FIR_ACC_RUNCTL_DONEIRQEN_SHIFT)                     /* 0x00000020 */
+#define FIR_ACC_RUNCTL_CAI_SHIFT                           (7U)
+#define FIR_ACC_RUNCTL_CAI_MASK                            (0x1U << FIR_ACC_RUNCTL_CAI_SHIFT)                           /* 0x00000080 */
+#define FIR_ACC_RUNCTL_SWRST_SHIFT                         (8U)
+#define FIR_ACC_RUNCTL_SWRST_MASK                          (0x1U << FIR_ACC_RUNCTL_SWRST_SHIFT)                         /* 0x00000100 */
+#define FIR_ACC_RUNCTL_HALT_SHIFT                          (9U)
+#define FIR_ACC_RUNCTL_HALT_MASK                           (0x1U << FIR_ACC_RUNCTL_HALT_SHIFT)                          /* 0x00000200 */
+#define FIR_ACC_RUNCTL_WDTEN_SHIFT                         (10U)
+#define FIR_ACC_RUNCTL_WDTEN_MASK                          (0x1U << FIR_ACC_RUNCTL_WDTEN_SHIFT)                         /* 0x00000400 */
+#define FIR_ACC_RUNCTL_CLRWDT_SHIFT                        (11U)
+#define FIR_ACC_RUNCTL_CLRWDT_MASK                         (0x1U << FIR_ACC_RUNCTL_CLRWDT_SHIFT)                        /* 0x00000800 */
+#define FIR_ACC_RUNCTL_MEMGAT_SHIFT                        (12U)
+#define FIR_ACC_RUNCTL_MEMGAT_MASK                         (0x1U << FIR_ACC_RUNCTL_MEMGAT_SHIFT)                        /* 0x00001000 */
+#define FIR_ACC_RUNCTL_CLRIRQ_SHIFT                        (14U)
+#define FIR_ACC_RUNCTL_CLRIRQ_MASK                         (0x1U << FIR_ACC_RUNCTL_CLRIRQ_SHIFT)                        /* 0x00004000 */
+#define FIR_ACC_RUNCTL_GENIRQ_SHIFT                        (15U)
+#define FIR_ACC_RUNCTL_GENIRQ_MASK                         (0x1U << FIR_ACC_RUNCTL_GENIRQ_SHIFT)                        /* 0x00008000 */
+#define FIR_ACC_RUNCTL_MASK_SHIFT                          (16U)
+#define FIR_ACC_RUNCTL_MASK_MASK                           (0xFFFFU << FIR_ACC_RUNCTL_MASK_SHIFT)                       /* 0xFFFF0000 */
 /* FGCTL */
-#define FIR_ACC_REG_FGCTL_OFFSET                           (0x8U)
-#define FIR_ACC_REG_FGCTL_AXIHIPRO_SHIFT                   (0U)
-#define FIR_ACC_REG_FGCTL_AXIHIPRO_MASK                    (0x1U << FIR_ACC_REG_FGCTL_AXIHIPRO_SHIFT)                   /* 0x00000001 */
-#define FIR_ACC_REG_FGCTL_CH_SHIFT                         (1U)
-#define FIR_ACC_REG_FGCTL_CH_MASK                          (0x1FU << FIR_ACC_REG_FGCTL_CH_SHIFT)                        /* 0x0000003E */
-#define FIR_ACC_REG_FGCTL_DMAEN_SHIFT                      (8U)
-#define FIR_ACC_REG_FGCTL_DMAEN_MASK                       (0x1U << FIR_ACC_REG_FGCTL_DMAEN_SHIFT)                      /* 0x00000100 */
-#define FIR_ACC_REG_FGCTL_CAI_SHIFT                        (9U)
-#define FIR_ACC_REG_FGCTL_CAI_MASK                         (0x1U << FIR_ACC_REG_FGCTL_CAI_SHIFT)                        /* 0x00000200 */
-#define FIR_ACC_REG_FGCTL_CCINTR_SHIFT                     (10U)
-#define FIR_ACC_REG_FGCTL_CCINTR_MASK                      (0x1U << FIR_ACC_REG_FGCTL_CCINTR_SHIFT)                     /* 0x00000400 */
-#define FIR_ACC_REG_FGCTL_FXD_SHIFT                        (11U)
-#define FIR_ACC_REG_FGCTL_FXD_MASK                         (0x1U << FIR_ACC_REG_FGCTL_FXD_SHIFT)                        /* 0x00000800 */
-#define FIR_ACC_REG_FGCTL_TC_SHIFT                         (12U)
-#define FIR_ACC_REG_FGCTL_TC_MASK                          (0x1U << FIR_ACC_REG_FGCTL_TC_SHIFT)                         /* 0x00001000 */
-#define FIR_ACC_REG_FGCTL_RND_SHIFT                        (13U)
-#define FIR_ACC_REG_FGCTL_RND_MASK                         (0x1U << FIR_ACC_REG_FGCTL_RND_SHIFT)                        /* 0x00002000 */
-#define FIR_ACC_REG_FGCTL_INTO_SHIFT                       (14U)
-#define FIR_ACC_REG_FGCTL_INTO_MASK                        (0x1U << FIR_ACC_REG_FGCTL_INTO_SHIFT)                       /* 0x00004000 */
-#define FIR_ACC_REG_FGCTL_ISBIG_SHIFT                      (15U)
-#define FIR_ACC_REG_FGCTL_ISBIG_MASK                       (0x1U << FIR_ACC_REG_FGCTL_ISBIG_SHIFT)                      /* 0x00008000 */
-#define FIR_ACC_REG_FGCTL_OUTSTD_SHIFT                     (16U)
-#define FIR_ACC_REG_FGCTL_OUTSTD_MASK                      (0xFU << FIR_ACC_REG_FGCTL_OUTSTD_SHIFT)                     /* 0x000F0000 */
-#define FIR_ACC_REG_FGCTL_BLEN_SHIFT                       (20U)
-#define FIR_ACC_REG_FGCTL_BLEN_MASK                        (0xFU << FIR_ACC_REG_FGCTL_BLEN_SHIFT)                       /* 0x00F00000 */
-#define FIR_ACC_REG_FGCTL_WRDNTYPE_SHIFT                   (28U)
-#define FIR_ACC_REG_FGCTL_WRDNTYPE_MASK                    (0x1U << FIR_ACC_REG_FGCTL_WRDNTYPE_SHIFT)                   /* 0x10000000 */
-#define FIR_ACC_REG_FGCTL_ACM_SHIFT                        (31U)
-#define FIR_ACC_REG_FGCTL_ACM_MASK                         (0x1U << FIR_ACC_REG_FGCTL_ACM_SHIFT)                        /* 0x80000000 */
+#define FIR_ACC_FGCTL_OFFSET                               (0x8U)
+#define FIR_ACC_FGCTL_AXIHIPRO_SHIFT                       (0U)
+#define FIR_ACC_FGCTL_AXIHIPRO_MASK                        (0x1U << FIR_ACC_FGCTL_AXIHIPRO_SHIFT)                       /* 0x00000001 */
+#define FIR_ACC_FGCTL_OUTSTD_RD_SHIFT                      (4U)
+#define FIR_ACC_FGCTL_OUTSTD_RD_MASK                       (0xFU << FIR_ACC_FGCTL_OUTSTD_RD_SHIFT)                      /* 0x000000F0 */
+#define FIR_ACC_FGCTL_CCINTR_SHIFT                         (10U)
+#define FIR_ACC_FGCTL_CCINTR_MASK                          (0x1U << FIR_ACC_FGCTL_CCINTR_SHIFT)                         /* 0x00000400 */
+#define FIR_ACC_FGCTL_ISBIG_SHIFT                          (15U)
+#define FIR_ACC_FGCTL_ISBIG_MASK                           (0x1U << FIR_ACC_FGCTL_ISBIG_SHIFT)                          /* 0x00008000 */
+#define FIR_ACC_FGCTL_OUTSTD_WR_SHIFT                      (16U)
+#define FIR_ACC_FGCTL_OUTSTD_WR_MASK                       (0xFU << FIR_ACC_FGCTL_OUTSTD_WR_SHIFT)                      /* 0x000F0000 */
+#define FIR_ACC_FGCTL_BLEN_SHIFT                           (20U)
+#define FIR_ACC_FGCTL_BLEN_MASK                            (0xFU << FIR_ACC_FGCTL_BLEN_SHIFT)                           /* 0x00F00000 */
+#define FIR_ACC_FGCTL_WRDNTYPE_SHIFT                       (28U)
+#define FIR_ACC_FGCTL_WRDNTYPE_MASK                        (0x1U << FIR_ACC_FGCTL_WRDNTYPE_SHIFT)                       /* 0x10000000 */
+#define FIR_ACC_FGCTL_ACM_SHIFT                            (31U)
+#define FIR_ACC_FGCTL_ACM_MASK                             (0x1U << FIR_ACC_FGCTL_ACM_SHIFT)                            /* 0x80000000 */
 /* CHNPTR */
-#define FIR_ACC_REG_CHNPTR_OFFSET                          (0xCU)
-#define FIR_ACC_REG_CHNPTR_ADDR_POINT_SHIFT                (0U)
-#define FIR_ACC_REG_CHNPTR_ADDR_POINT_MASK                 (0xFFFFFFFFU << FIR_ACC_REG_CHNPTR_ADDR_POINT_SHIFT)         /* 0xFFFFFFFF */
+#define FIR_ACC_CHNPTR_OFFSET                              (0xCU)
+#define FIR_ACC_CHNPTR_ADDR_POINT_SHIFT                    (0U)
+#define FIR_ACC_CHNPTR_ADDR_POINT_MASK                     (0xFFFFFFFFU << FIR_ACC_CHNPTR_ADDR_POINT_SHIFT)             /* 0xFFFFFFFF */
 /* GSTAT */
-#define FIR_ACC_REG_GSTAT_OFFSET                           (0x10U)
-#define FIR_ACC_REG_GSTAT_AXIRDRESP_SHIFT                  (0U)
-#define FIR_ACC_REG_GSTAT_AXIRDRESP_MASK                   (0x7U << FIR_ACC_REG_GSTAT_AXIRDRESP_SHIFT)                  /* 0x00000007 */
-#define FIR_ACC_REG_GSTAT_AXIRDID_SHIFT                    (4U)
-#define FIR_ACC_REG_GSTAT_AXIRDID_MASK                     (0xFU << FIR_ACC_REG_GSTAT_AXIRDID_SHIFT)                    /* 0x000000F0 */
-#define FIR_ACC_REG_GSTAT_AXIWRRESP_SHIFT                  (8U)
-#define FIR_ACC_REG_GSTAT_AXIWRRESP_MASK                   (0x7U << FIR_ACC_REG_GSTAT_AXIWRRESP_SHIFT)                  /* 0x00000700 */
-#define FIR_ACC_REG_GSTAT_AXIWRID_SHIFT                    (12U)
-#define FIR_ACC_REG_GSTAT_AXIWRID_MASK                     (0xFU << FIR_ACC_REG_GSTAT_AXIWRID_SHIFT)                    /* 0x0000F000 */
-#define FIR_ACC_REG_GSTAT_WDTTO_SHIFT                      (16U)
-#define FIR_ACC_REG_GSTAT_WDTTO_MASK                       (0x1U << FIR_ACC_REG_GSTAT_WDTTO_SHIFT)                      /* 0x00010000 */
-#define FIR_ACC_REG_GSTAT_MACERR_SHIFT                     (17U)
-#define FIR_ACC_REG_GSTAT_MACERR_MASK                      (0x1U << FIR_ACC_REG_GSTAT_MACERR_SHIFT)                     /* 0x00020000 */
-#define FIR_ACC_REG_GSTAT_AXIERR_SHIFT                     (18U)
-#define FIR_ACC_REG_GSTAT_AXIERR_MASK                      (0x1U << FIR_ACC_REG_GSTAT_AXIERR_SHIFT)                     /* 0x00040000 */
-#define FIR_ACC_REG_GSTAT_WRITEDONE_SHIFT                  (19U)
-#define FIR_ACC_REG_GSTAT_WRITEDONE_MASK                   (0x1U << FIR_ACC_REG_GSTAT_WRITEDONE_SHIFT)                  /* 0x00080000 */
-#define FIR_ACC_REG_GSTAT_IRQVLD_SHIFT                     (20U)
-#define FIR_ACC_REG_GSTAT_IRQVLD_MASK                      (0x1U << FIR_ACC_REG_GSTAT_IRQVLD_SHIFT)                     /* 0x00100000 */
+#define FIR_ACC_GSTAT_OFFSET                               (0x10U)
+#define FIR_ACC_GSTAT_AXIRDRESP_SHIFT                      (0U)
+#define FIR_ACC_GSTAT_AXIRDRESP_MASK                       (0x7U << FIR_ACC_GSTAT_AXIRDRESP_SHIFT)                      /* 0x00000007 */
+#define FIR_ACC_GSTAT_AXIRDID_SHIFT                        (4U)
+#define FIR_ACC_GSTAT_AXIRDID_MASK                         (0xFU << FIR_ACC_GSTAT_AXIRDID_SHIFT)                        /* 0x000000F0 */
+#define FIR_ACC_GSTAT_AXIWRRESP_SHIFT                      (8U)
+#define FIR_ACC_GSTAT_AXIWRRESP_MASK                       (0x7U << FIR_ACC_GSTAT_AXIWRRESP_SHIFT)                      /* 0x00000700 */
+#define FIR_ACC_GSTAT_AXIWRID_SHIFT                        (12U)
+#define FIR_ACC_GSTAT_AXIWRID_MASK                         (0xFU << FIR_ACC_GSTAT_AXIWRID_SHIFT)                        /* 0x0000F000 */
+#define FIR_ACC_GSTAT_WDTTO_SHIFT                          (16U)
+#define FIR_ACC_GSTAT_WDTTO_MASK                           (0x1U << FIR_ACC_GSTAT_WDTTO_SHIFT)                          /* 0x00010000 */
+#define FIR_ACC_GSTAT_MACERR_SHIFT                         (17U)
+#define FIR_ACC_GSTAT_MACERR_MASK                          (0x1U << FIR_ACC_GSTAT_MACERR_SHIFT)                         /* 0x00020000 */
+#define FIR_ACC_GSTAT_AXIERR_SHIFT                         (18U)
+#define FIR_ACC_GSTAT_AXIERR_MASK                          (0x1U << FIR_ACC_GSTAT_AXIERR_SHIFT)                         /* 0x00040000 */
+#define FIR_ACC_GSTAT_WRITEDONE_SHIFT                      (19U)
+#define FIR_ACC_GSTAT_WRITEDONE_MASK                       (0x1U << FIR_ACC_GSTAT_WRITEDONE_SHIFT)                      /* 0x00080000 */
+#define FIR_ACC_GSTAT_IRQVLD_SHIFT                         (20U)
+#define FIR_ACC_GSTAT_IRQVLD_MASK                          (0x1U << FIR_ACC_GSTAT_IRQVLD_SHIFT)                         /* 0x00100000 */
+#define FIR_ACC_GSTAT_ALLCHDONE_SHIFT                      (21U)
+#define FIR_ACC_GSTAT_ALLCHDONE_MASK                       (0x1U << FIR_ACC_GSTAT_ALLCHDONE_SHIFT)                      /* 0x00200000 */
+#define FIR_ACC_GSTAT_WRSTDONE_SHIFT                       (22U)
+#define FIR_ACC_GSTAT_WRSTDONE_MASK                        (0x1U << FIR_ACC_GSTAT_WRSTDONE_SHIFT)                       /* 0x00400000 */
+#define FIR_ACC_GSTAT_PRRSTDONE_SHIFT                      (24U)
+#define FIR_ACC_GSTAT_PRRSTDONE_MASK                       (0x1U << FIR_ACC_GSTAT_PRRSTDONE_SHIFT)                      /* 0x01000000 */
+#define FIR_ACC_GSTAT_LRRSTDONE_SHIFT                      (25U)
+#define FIR_ACC_GSTAT_LRRSTDONE_MASK                       (0x1U << FIR_ACC_GSTAT_LRRSTDONE_SHIFT)                      /* 0x02000000 */
+#define FIR_ACC_GSTAT_DRRSTDONE_SHIFT                      (26U)
+#define FIR_ACC_GSTAT_DRRSTDONE_MASK                       (0x1U << FIR_ACC_GSTAT_DRRSTDONE_SHIFT)                      /* 0x04000000 */
+#define FIR_ACC_GSTAT_TRRSTDONE_SHIFT                      (27U)
+#define FIR_ACC_GSTAT_TRRSTDONE_MASK                       (0x1U << FIR_ACC_GSTAT_TRRSTDONE_SHIFT)                      /* 0x08000000 */
 /* MACSTAT */
-#define FIR_ACC_REG_MACSTAT_OFFSET                         (0x14U)
-#define FIR_ACC_REG_MACSTAT_MINTOV_SHIFT                   (0U)
-#define FIR_ACC_REG_MACSTAT_MINTOV_MASK                    (0x1U << FIR_ACC_REG_MACSTAT_MINTOV_SHIFT)                   /* 0x00000001 */
-#define FIR_ACC_REG_MACSTAT_MRZ_SHIFT                      (1U)
-#define FIR_ACC_REG_MACSTAT_MRZ_MASK                       (0x1U << FIR_ACC_REG_MACSTAT_MRZ_SHIFT)                      /* 0x00000002 */
-#define FIR_ACC_REG_MACSTAT_MRI_SHIFT                      (2U)
-#define FIR_ACC_REG_MACSTAT_MRI_MASK                       (0x1U << FIR_ACC_REG_MACSTAT_MRI_SHIFT)                      /* 0x00000004 */
-#define FIR_ACC_REG_MACSTAT_MINV_SHIFT                     (3U)
-#define FIR_ACC_REG_MACSTAT_MINV_MASK                      (0x1U << FIR_ACC_REG_MACSTAT_MINV_SHIFT)                     /* 0x00000008 */
-#define FIR_ACC_REG_MACSTAT_MYINF_SHIFT                    (4U)
-#define FIR_ACC_REG_MACSTAT_MYINF_MASK                     (0x1U << FIR_ACC_REG_MACSTAT_MYINF_SHIFT)                    /* 0x00000010 */
-#define FIR_ACC_REG_MACSTAT_MYZERO_SHIFT                   (5U)
-#define FIR_ACC_REG_MACSTAT_MYZERO_MASK                    (0x1U << FIR_ACC_REG_MACSTAT_MYZERO_SHIFT)                   /* 0x00000020 */
-#define FIR_ACC_REG_MACSTAT_ARZ_SHIFT                      (6U)
-#define FIR_ACC_REG_MACSTAT_ARZ_MASK                       (0x1U << FIR_ACC_REG_MACSTAT_ARZ_SHIFT)                      /* 0x00000040 */
-#define FIR_ACC_REG_MACSTAT_ARI_SHIFT                      (7U)
-#define FIR_ACC_REG_MACSTAT_ARI_MASK                       (0x1U << FIR_ACC_REG_MACSTAT_ARI_SHIFT)                      /* 0x00000080 */
-#define FIR_ACC_REG_MACSTAT_AYNAN_SHIFT                    (8U)
-#define FIR_ACC_REG_MACSTAT_AYNAN_MASK                     (0x1U << FIR_ACC_REG_MACSTAT_AYNAN_SHIFT)                    /* 0x00000100 */
-#define FIR_ACC_REG_MACSTAT_AYINF_SHIFT                    (9U)
-#define FIR_ACC_REG_MACSTAT_AYINF_MASK                     (0x1U << FIR_ACC_REG_MACSTAT_AYINF_SHIFT)                    /* 0x00000200 */
-#define FIR_ACC_REG_MACSTAT_AYZERO_SHIFT                   (10U)
-#define FIR_ACC_REG_MACSTAT_AYZERO_MASK                    (0x1U << FIR_ACC_REG_MACSTAT_AYZERO_SHIFT)                   /* 0x00000400 */
-#define FIR_ACC_REG_MACSTAT_SFTOV_SHIFT                    (11U)
-#define FIR_ACC_REG_MACSTAT_SFTOV_MASK                     (0x1U << FIR_ACC_REG_MACSTAT_SFTOV_SHIFT)                    /* 0x00000800 */
+#define FIR_ACC_MACSTAT_OFFSET                             (0x14U)
+#define FIR_ACC_MACSTAT_ARZ_SHIFT                          (0U)
+#define FIR_ACC_MACSTAT_ARZ_MASK                           (0x1U << FIR_ACC_MACSTAT_ARZ_SHIFT)                          /* 0x00000001 */
+#define FIR_ACC_MACSTAT_ARI_SHIFT                          (1U)
+#define FIR_ACC_MACSTAT_ARI_MASK                           (0x1U << FIR_ACC_MACSTAT_ARI_SHIFT)                          /* 0x00000002 */
+#define FIR_ACC_MACSTAT_AYNAN_SHIFT                        (2U)
+#define FIR_ACC_MACSTAT_AYNAN_MASK                         (0x1U << FIR_ACC_MACSTAT_AYNAN_SHIFT)                        /* 0x00000004 */
+#define FIR_ACC_MACSTAT_AYINF_SHIFT                        (3U)
+#define FIR_ACC_MACSTAT_AYINF_MASK                         (0x1U << FIR_ACC_MACSTAT_AYINF_SHIFT)                        /* 0x00000008 */
+#define FIR_ACC_MACSTAT_AYZERO_SHIFT                       (4U)
+#define FIR_ACC_MACSTAT_AYZERO_MASK                        (0x1U << FIR_ACC_MACSTAT_AYZERO_SHIFT)                       /* 0x00000010 */
+#define FIR_ACC_MACSTAT_MINTOV_SHIFT                       (5U)
+#define FIR_ACC_MACSTAT_MINTOV_MASK                        (0x1U << FIR_ACC_MACSTAT_MINTOV_SHIFT)                       /* 0x00000020 */
+#define FIR_ACC_MACSTAT_MRZ_SHIFT                          (6U)
+#define FIR_ACC_MACSTAT_MRZ_MASK                           (0x1U << FIR_ACC_MACSTAT_MRZ_SHIFT)                          /* 0x00000040 */
+#define FIR_ACC_MACSTAT_MRI_SHIFT                          (7U)
+#define FIR_ACC_MACSTAT_MRI_MASK                           (0x1U << FIR_ACC_MACSTAT_MRI_SHIFT)                          /* 0x00000080 */
+#define FIR_ACC_MACSTAT_MINV_SHIFT                         (8U)
+#define FIR_ACC_MACSTAT_MINV_MASK                          (0x1U << FIR_ACC_MACSTAT_MINV_SHIFT)                         /* 0x00000100 */
+#define FIR_ACC_MACSTAT_MYINF_SHIFT                        (9U)
+#define FIR_ACC_MACSTAT_MYINF_MASK                         (0x1U << FIR_ACC_MACSTAT_MYINF_SHIFT)                        /* 0x00000200 */
+#define FIR_ACC_MACSTAT_MYZERO_SHIFT                       (10U)
+#define FIR_ACC_MACSTAT_MYZERO_MASK                        (0x1U << FIR_ACC_MACSTAT_MYZERO_SHIFT)                       /* 0x00000400 */
+#define FIR_ACC_MACSTAT_SFTOV_SHIFT                        (11U)
+#define FIR_ACC_MACSTAT_SFTOV_MASK                         (0x1U << FIR_ACC_MACSTAT_SFTOV_SHIFT)                        /* 0x00000800 */
 /* WDTCNT */
-#define FIR_ACC_REG_WDTCNT_OFFSET                          (0x18U)
-#define FIR_ACC_REG_WDTCNT_COUNTER_SHIFT                   (0U)
-#define FIR_ACC_REG_WDTCNT_COUNTER_MASK                    (0xFFFFFFFFU << FIR_ACC_REG_WDTCNT_COUNTER_SHIFT)            /* 0xFFFFFFFF */
+#define FIR_ACC_WDTCNT_OFFSET                              (0x18U)
+#define FIR_ACC_WDTCNT_COUNTER_SHIFT                       (0U)
+#define FIR_ACC_WDTCNT_COUNTER_MASK                        (0xFFFFFFFFU << FIR_ACC_WDTCNT_COUNTER_SHIFT)                /* 0xFFFFFFFF */
 /* TCBRDINDEX */
-#define FIR_ACC_REG_TCBRDINDEX_OFFSET                      (0x20U)
-#define FIR_ACC_REG_TCBRDINDEX_VALUE_SHIFT                 (0U)
-#define FIR_ACC_REG_TCBRDINDEX_VALUE_MASK                  (0x1U << FIR_ACC_REG_TCBRDINDEX_VALUE_SHIFT)                 /* 0x00000001 */
+#define FIR_ACC_TCBRDINDEX_OFFSET                          (0x20U)
+#define FIR_ACC_TCBRDINDEX_VALUE_SHIFT                     (0U)
+#define FIR_ACC_TCBRDINDEX_VALUE_MASK                      (0x1U << FIR_ACC_TCBRDINDEX_VALUE_SHIFT)                     /* 0x00000001 */
 /* WDTRCNT */
-#define FIR_ACC_REG_WDTRCNT_OFFSET                         (0x24U)
-/**************************************IIR_ACC_REG***************************************/
+#define FIR_ACC_WDTRCNT_OFFSET                             (0x24U)
+#define FIR_ACC_WDTRCNT_VALUE_SHIFT                        (0U)
+#define FIR_ACC_WDTRCNT_VALUE_MASK                         (0x1U << FIR_ACC_WDTRCNT_VALUE_SHIFT)                        /* 0x00000001 */
+/* MACSTAT_S2 */
+#define FIR_ACC_MACSTAT_S2_OFFSET                          (0x28U)
+#define FIR_ACC_MACSTAT_S2_ARZ_SHIFT                       (0U)
+#define FIR_ACC_MACSTAT_S2_ARZ_MASK                        (0x1U << FIR_ACC_MACSTAT_S2_ARZ_SHIFT)                       /* 0x00000001 */
+#define FIR_ACC_MACSTAT_S2_ARI_SHIFT                       (1U)
+#define FIR_ACC_MACSTAT_S2_ARI_MASK                        (0x1U << FIR_ACC_MACSTAT_S2_ARI_SHIFT)                       /* 0x00000002 */
+#define FIR_ACC_MACSTAT_S2_AYNAN_SHIFT                     (2U)
+#define FIR_ACC_MACSTAT_S2_AYNAN_MASK                      (0x1U << FIR_ACC_MACSTAT_S2_AYNAN_SHIFT)                     /* 0x00000004 */
+#define FIR_ACC_MACSTAT_S2_AYINF_SHIFT                     (3U)
+#define FIR_ACC_MACSTAT_S2_AYINF_MASK                      (0x1U << FIR_ACC_MACSTAT_S2_AYINF_SHIFT)                     /* 0x00000008 */
+#define FIR_ACC_MACSTAT_S2_AYZERO_SHIFT                    (4U)
+#define FIR_ACC_MACSTAT_S2_AYZERO_MASK                     (0x1U << FIR_ACC_MACSTAT_S2_AYZERO_SHIFT)                    /* 0x00000010 */
+#define FIR_ACC_MACSTAT_S2_MINTOV_SHIFT                    (5U)
+#define FIR_ACC_MACSTAT_S2_MINTOV_MASK                     (0x1U << FIR_ACC_MACSTAT_S2_MINTOV_SHIFT)                    /* 0x00000020 */
+#define FIR_ACC_MACSTAT_S2_MRZ_SHIFT                       (6U)
+#define FIR_ACC_MACSTAT_S2_MRZ_MASK                        (0x1U << FIR_ACC_MACSTAT_S2_MRZ_SHIFT)                       /* 0x00000040 */
+#define FIR_ACC_MACSTAT_S2_MRI_SHIFT                       (7U)
+#define FIR_ACC_MACSTAT_S2_MRI_MASK                        (0x1U << FIR_ACC_MACSTAT_S2_MRI_SHIFT)                       /* 0x00000080 */
+#define FIR_ACC_MACSTAT_S2_MINV_SHIFT                      (8U)
+#define FIR_ACC_MACSTAT_S2_MINV_MASK                       (0x1U << FIR_ACC_MACSTAT_S2_MINV_SHIFT)                      /* 0x00000100 */
+#define FIR_ACC_MACSTAT_S2_MYINF_SHIFT                     (9U)
+#define FIR_ACC_MACSTAT_S2_MYINF_MASK                      (0x1U << FIR_ACC_MACSTAT_S2_MYINF_SHIFT)                     /* 0x00000200 */
+#define FIR_ACC_MACSTAT_S2_MYZERO_SHIFT                    (10U)
+#define FIR_ACC_MACSTAT_S2_MYZERO_MASK                     (0x1U << FIR_ACC_MACSTAT_S2_MYZERO_SHIFT)                    /* 0x00000400 */
+#define FIR_ACC_MACSTAT_S2_SFTOV_SHIFT                     (11U)
+#define FIR_ACC_MACSTAT_S2_SFTOV_MASK                      (0x1U << FIR_ACC_MACSTAT_S2_SFTOV_SHIFT)                     /* 0x00000800 */
+/****************************************IIR_ACC*****************************************/
 /* VERSION */
-#define IIR_ACC_REG_VERSION_OFFSET                         (0x0U)
-#define IIR_ACC_REG_VERSION                                (0x0U)
-#define IIR_ACC_REG_VERSION_VALUE_SHIFT                    (0U)
-#define IIR_ACC_REG_VERSION_VALUE_MASK                     (0x1U << IIR_ACC_REG_VERSION_VALUE_SHIFT)                    /* 0x00000001 */
+#define IIR_ACC_VERSION_OFFSET                             (0x0U)
+#define IIR_ACC_VERSION                                    (0x20220001U)
+#define IIR_ACC_VERSION_VALUE_SHIFT                        (0U)
+#define IIR_ACC_VERSION_VALUE_MASK                         (0xFFFFFFFFU << IIR_ACC_VERSION_VALUE_SHIFT)                 /* 0xFFFFFFFF */
 /* RUNCTL */
-#define IIR_ACC_REG_RUNCTL_OFFSET                          (0x4U)
-#define IIR_ACC_REG_RUNCTL_EN_SHIFT                        (0U)
-#define IIR_ACC_REG_RUNCTL_EN_MASK                         (0x1U << IIR_ACC_REG_RUNCTL_EN_SHIFT)                        /* 0x00000001 */
-#define IIR_ACC_REG_RUNCTL_IRQEN_SHIFT                     (1U)
-#define IIR_ACC_REG_RUNCTL_IRQEN_MASK                      (0x1U << IIR_ACC_REG_RUNCTL_IRQEN_SHIFT)                     /* 0x00000002 */
-#define IIR_ACC_REG_RUNCTL_TIMEOUTIRQEN_SHIFT              (2U)
-#define IIR_ACC_REG_RUNCTL_TIMEOUTIRQEN_MASK               (0x1U << IIR_ACC_REG_RUNCTL_TIMEOUTIRQEN_SHIFT)              /* 0x00000004 */
-#define IIR_ACC_REG_RUNCTL_MACIRQEN_SHIFT                  (3U)
-#define IIR_ACC_REG_RUNCTL_MACIRQEN_MASK                   (0x1U << IIR_ACC_REG_RUNCTL_MACIRQEN_SHIFT)                  /* 0x00000008 */
-#define IIR_ACC_REG_RUNCTL_AXIERRORIRQEN_SHIFT             (4U)
-#define IIR_ACC_REG_RUNCTL_AXIERRORIRQEN_MASK              (0x1U << IIR_ACC_REG_RUNCTL_AXIERRORIRQEN_SHIFT)             /* 0x00000010 */
-#define IIR_ACC_REG_RUNCTL_DADONEIRQEN_SHIFT               (5U)
-#define IIR_ACC_REG_RUNCTL_DADONEIRQEN_MASK                (0x1U << IIR_ACC_REG_RUNCTL_DADONEIRQEN_SHIFT)               /* 0x00000020 */
-#define IIR_ACC_REG_RUNCTL_DKDONEIRQEN_SHIFT               (6U)
-#define IIR_ACC_REG_RUNCTL_DKDONEIRQEN_MASK                (0x1U << IIR_ACC_REG_RUNCTL_DKDONEIRQEN_SHIFT)               /* 0x00000040 */
-#define IIR_ACC_REG_RUNCTL_CLRWDT_SHIFT                    (7U)
-#define IIR_ACC_REG_RUNCTL_CLRWDT_MASK                     (0x1U << IIR_ACC_REG_RUNCTL_CLRWDT_SHIFT)                    /* 0x00000080 */
-#define IIR_ACC_REG_RUNCTL_SWRST_SHIFT                     (8U)
-#define IIR_ACC_REG_RUNCTL_SWRST_MASK                      (0x1U << IIR_ACC_REG_RUNCTL_SWRST_SHIFT)                     /* 0x00000100 */
-#define IIR_ACC_REG_RUNCTL_HALT_SHIFT                      (9U)
-#define IIR_ACC_REG_RUNCTL_HALT_MASK                       (0x1U << IIR_ACC_REG_RUNCTL_HALT_SHIFT)                      /* 0x00000200 */
-#define IIR_ACC_REG_RUNCTL_MEMGAT_SHIFT                    (12U)
-#define IIR_ACC_REG_RUNCTL_MEMGAT_MASK                     (0x1U << IIR_ACC_REG_RUNCTL_MEMGAT_SHIFT)                    /* 0x00001000 */
-#define IIR_ACC_REG_RUNCTL_CLRIRQ_SHIFT                    (14U)
-#define IIR_ACC_REG_RUNCTL_CLRIRQ_MASK                     (0x1U << IIR_ACC_REG_RUNCTL_CLRIRQ_SHIFT)                    /* 0x00004000 */
-#define IIR_ACC_REG_RUNCTL_MASK_SHIFT                      (16U)
-#define IIR_ACC_REG_RUNCTL_MASK_MASK                       (0xFFFFU << IIR_ACC_REG_RUNCTL_MASK_SHIFT)                   /* 0xFFFF0000 */
+#define IIR_ACC_RUNCTL_OFFSET                              (0x4U)
+#define IIR_ACC_RUNCTL_EN_SHIFT                            (0U)
+#define IIR_ACC_RUNCTL_EN_MASK                             (0x1U << IIR_ACC_RUNCTL_EN_SHIFT)                            /* 0x00000001 */
+#define IIR_ACC_RUNCTL_IRQEN_SHIFT                         (1U)
+#define IIR_ACC_RUNCTL_IRQEN_MASK                          (0x1U << IIR_ACC_RUNCTL_IRQEN_SHIFT)                         /* 0x00000002 */
+#define IIR_ACC_RUNCTL_TIMEOUTIRQEN_SHIFT                  (2U)
+#define IIR_ACC_RUNCTL_TIMEOUTIRQEN_MASK                   (0x1U << IIR_ACC_RUNCTL_TIMEOUTIRQEN_SHIFT)                  /* 0x00000004 */
+#define IIR_ACC_RUNCTL_MACIRQEN_SHIFT                      (3U)
+#define IIR_ACC_RUNCTL_MACIRQEN_MASK                       (0x1U << IIR_ACC_RUNCTL_MACIRQEN_SHIFT)                      /* 0x00000008 */
+#define IIR_ACC_RUNCTL_AXIERRORIRQEN_SHIFT                 (4U)
+#define IIR_ACC_RUNCTL_AXIERRORIRQEN_MASK                  (0x1U << IIR_ACC_RUNCTL_AXIERRORIRQEN_SHIFT)                 /* 0x00000010 */
+#define IIR_ACC_RUNCTL_DADONEIRQEN_SHIFT                   (5U)
+#define IIR_ACC_RUNCTL_DADONEIRQEN_MASK                    (0x1U << IIR_ACC_RUNCTL_DADONEIRQEN_SHIFT)                   /* 0x00000020 */
+#define IIR_ACC_RUNCTL_DKDONEIRQEN_SHIFT                   (6U)
+#define IIR_ACC_RUNCTL_DKDONEIRQEN_MASK                    (0x1U << IIR_ACC_RUNCTL_DKDONEIRQEN_SHIFT)                   /* 0x00000040 */
+#define IIR_ACC_RUNCTL_CAI_SHIFT                           (7U)
+#define IIR_ACC_RUNCTL_CAI_MASK                            (0x1U << IIR_ACC_RUNCTL_CAI_SHIFT)                           /* 0x00000080 */
+#define IIR_ACC_RUNCTL_SWRST_SHIFT                         (8U)
+#define IIR_ACC_RUNCTL_SWRST_MASK                          (0x1U << IIR_ACC_RUNCTL_SWRST_SHIFT)                         /* 0x00000100 */
+#define IIR_ACC_RUNCTL_HALT_SHIFT                          (9U)
+#define IIR_ACC_RUNCTL_HALT_MASK                           (0x1U << IIR_ACC_RUNCTL_HALT_SHIFT)                          /* 0x00000200 */
+#define IIR_ACC_RUNCTL_WDTEN_SHIFT                         (10U)
+#define IIR_ACC_RUNCTL_WDTEN_MASK                          (0x1U << IIR_ACC_RUNCTL_WDTEN_SHIFT)                         /* 0x00000400 */
+#define IIR_ACC_RUNCTL_CLRWDT_SHIFT                        (11U)
+#define IIR_ACC_RUNCTL_CLRWDT_MASK                         (0x1U << IIR_ACC_RUNCTL_CLRWDT_SHIFT)                        /* 0x00000800 */
+#define IIR_ACC_RUNCTL_MEMGAT_SHIFT                        (12U)
+#define IIR_ACC_RUNCTL_MEMGAT_MASK                         (0x1U << IIR_ACC_RUNCTL_MEMGAT_SHIFT)                        /* 0x00001000 */
+#define IIR_ACC_RUNCTL_CLRIRQ_SHIFT                        (14U)
+#define IIR_ACC_RUNCTL_CLRIRQ_MASK                         (0x1U << IIR_ACC_RUNCTL_CLRIRQ_SHIFT)                        /* 0x00004000 */
+#define IIR_ACC_RUNCTL_MASK_SHIFT                          (16U)
+#define IIR_ACC_RUNCTL_MASK_MASK                           (0xFFFFU << IIR_ACC_RUNCTL_MASK_SHIFT)                       /* 0xFFFF0000 */
 /* FGCTL */
-#define IIR_ACC_REG_FGCTL_OFFSET                           (0x8U)
-#define IIR_ACC_REG_FGCTL_CH_SHIFT                         (1U)
-#define IIR_ACC_REG_FGCTL_CH_MASK                          (0x1FU << IIR_ACC_REG_FGCTL_CH_SHIFT)                        /* 0x0000003E */
-#define IIR_ACC_REG_FGCTL_CAI_SHIFT                        (9U)
-#define IIR_ACC_REG_FGCTL_CAI_MASK                         (0x1U << IIR_ACC_REG_FGCTL_CAI_SHIFT)                        /* 0x00000200 */
-#define IIR_ACC_REG_FGCTL_SS_SHIFT                         (10U)
-#define IIR_ACC_REG_FGCTL_SS_MASK                          (0x1U << IIR_ACC_REG_FGCTL_SS_SHIFT)                         /* 0x00000400 */
-#define IIR_ACC_REG_FGCTL_SST_SHIFT                        (11U)
-#define IIR_ACC_REG_FGCTL_SST_MASK                         (0x1U << IIR_ACC_REG_FGCTL_SST_SHIFT)                        /* 0x00000800 */
-#define IIR_ACC_REG_FGCTL_CCINTR_SHIFT                     (12U)
-#define IIR_ACC_REG_FGCTL_CCINTR_MASK                      (0x1U << IIR_ACC_REG_FGCTL_CCINTR_SHIFT)                     /* 0x00001000 */
-#define IIR_ACC_REG_FGCTL_RND_SHIFT                        (14U)
-#define IIR_ACC_REG_FGCTL_RND_MASK                         (0x1U << IIR_ACC_REG_FGCTL_RND_SHIFT)                        /* 0x00004000 */
-#define IIR_ACC_REG_FGCTL_ISBIG_SHIFT                      (15U)
-#define IIR_ACC_REG_FGCTL_ISBIG_MASK                       (0x1U << IIR_ACC_REG_FGCTL_ISBIG_SHIFT)                      /* 0x00008000 */
-#define IIR_ACC_REG_FGCTL_OUTSTD_SHIFT                     (16U)
-#define IIR_ACC_REG_FGCTL_OUTSTD_MASK                      (0xFU << IIR_ACC_REG_FGCTL_OUTSTD_SHIFT)                     /* 0x000F0000 */
-#define IIR_ACC_REG_FGCTL_BLEN_SHIFT                       (20U)
-#define IIR_ACC_REG_FGCTL_BLEN_MASK                        (0xFU << IIR_ACC_REG_FGCTL_BLEN_SHIFT)                       /* 0x00F00000 */
-#define IIR_ACC_REG_FGCTL_WDTEN_SHIFT                      (24U)
-#define IIR_ACC_REG_FGCTL_WDTEN_MASK                       (0x1U << IIR_ACC_REG_FGCTL_WDTEN_SHIFT)                      /* 0x01000000 */
-#define IIR_ACC_REG_FGCTL_SSESEL_SHIFT                     (29U)
-#define IIR_ACC_REG_FGCTL_SSESEL_MASK                      (0x1U << IIR_ACC_REG_FGCTL_SSESEL_SHIFT)                     /* 0x20000000 */
-#define IIR_ACC_REG_FGCTL_ACM_SHIFT                        (31U)
-#define IIR_ACC_REG_FGCTL_ACM_MASK                         (0x1U << IIR_ACC_REG_FGCTL_ACM_SHIFT)                        /* 0x80000000 */
+#define IIR_ACC_FGCTL_OFFSET                               (0x8U)
+#define IIR_ACC_FGCTL_OUTSTD_RD_SHIFT                      (4U)
+#define IIR_ACC_FGCTL_OUTSTD_RD_MASK                       (0xFU << IIR_ACC_FGCTL_OUTSTD_RD_SHIFT)                      /* 0x000000F0 */
+#define IIR_ACC_FGCTL_CCINTR_SHIFT                         (10U)
+#define IIR_ACC_FGCTL_CCINTR_MASK                          (0x1U << IIR_ACC_FGCTL_CCINTR_SHIFT)                         /* 0x00000400 */
+#define IIR_ACC_FGCTL_ISBIG_SHIFT                          (15U)
+#define IIR_ACC_FGCTL_ISBIG_MASK                           (0x1U << IIR_ACC_FGCTL_ISBIG_SHIFT)                          /* 0x00008000 */
+#define IIR_ACC_FGCTL_OUTSTD_SHIFT                         (16U)
+#define IIR_ACC_FGCTL_OUTSTD_MASK                          (0xFU << IIR_ACC_FGCTL_OUTSTD_SHIFT)                         /* 0x000F0000 */
+#define IIR_ACC_FGCTL_BLEN_SHIFT                           (20U)
+#define IIR_ACC_FGCTL_BLEN_MASK                            (0xFU << IIR_ACC_FGCTL_BLEN_SHIFT)                           /* 0x00F00000 */
+#define IIR_ACC_FGCTL_ISPOS_SHIFT                          (24U)
+#define IIR_ACC_FGCTL_ISPOS_MASK                           (0x1U << IIR_ACC_FGCTL_ISPOS_SHIFT)                          /* 0x01000000 */
+#define IIR_ACC_FGCTL_SWPAB_SHIFT                          (25U)
+#define IIR_ACC_FGCTL_SWPAB_MASK                           (0x1U << IIR_ACC_FGCTL_SWPAB_SHIFT)                          /* 0x02000000 */
+#define IIR_ACC_FGCTL_ACM_SHIFT                            (31U)
+#define IIR_ACC_FGCTL_ACM_MASK                             (0x1U << IIR_ACC_FGCTL_ACM_SHIFT)                            /* 0x80000000 */
 /* CHNPTR */
-#define IIR_ACC_REG_CHNPTR_OFFSET                          (0xCU)
-#define IIR_ACC_REG_CHNPTR_ADDR_POINT_SHIFT                (0U)
-#define IIR_ACC_REG_CHNPTR_ADDR_POINT_MASK                 (0xFFFFFFFFU << IIR_ACC_REG_CHNPTR_ADDR_POINT_SHIFT)         /* 0xFFFFFFFF */
+#define IIR_ACC_CHNPTR_OFFSET                              (0xCU)
+#define IIR_ACC_CHNPTR_ADDR_POINT_SHIFT                    (0U)
+#define IIR_ACC_CHNPTR_ADDR_POINT_MASK                     (0xFFFFFFFFU << IIR_ACC_CHNPTR_ADDR_POINT_SHIFT)             /* 0xFFFFFFFF */
 /* GSTAT */
-#define IIR_ACC_REG_GSTAT_OFFSET                           (0x10U)
-#define IIR_ACC_REG_GSTAT_CPLD_SHIFT                       (0U)
-#define IIR_ACC_REG_GSTAT_CPLD_MASK                        (0x1U << IIR_ACC_REG_GSTAT_CPLD_SHIFT)                       /* 0x00000001 */
-#define IIR_ACC_REG_GSTAT_SVDK_SHIFT                       (4U)
-#define IIR_ACC_REG_GSTAT_SVDK_MASK                        (0x1U << IIR_ACC_REG_GSTAT_SVDK_SHIFT)                       /* 0x00000010 */
-#define IIR_ACC_REG_GSTAT_WDONE_SHIFT                      (5U)
-#define IIR_ACC_REG_GSTAT_WDONE_MASK                       (0x1U << IIR_ACC_REG_GSTAT_WDONE_SHIFT)                      /* 0x00000020 */
-#define IIR_ACC_REG_GSTAT_ACDONE_SHIFT                     (6U)
-#define IIR_ACC_REG_GSTAT_ACDONE_MASK                      (0x1U << IIR_ACC_REG_GSTAT_ACDONE_SHIFT)                     /* 0x00000040 */
-#define IIR_ACC_REG_GSTAT_CURCHNL_SHIFT                    (7U)
-#define IIR_ACC_REG_GSTAT_CURCHNL_MASK                     (0x1FU << IIR_ACC_REG_GSTAT_CURCHNL_SHIFT)                   /* 0x00000F80 */
-#define IIR_ACC_REG_GSTAT_HALT_STAT_SHIFT                  (14U)
-#define IIR_ACC_REG_GSTAT_HALT_STAT_MASK                   (0x1U << IIR_ACC_REG_GSTAT_HALT_STAT_SHIFT)                  /* 0x00004000 */
-#define IIR_ACC_REG_GSTAT_WDTTO_SHIFT                      (16U)
-#define IIR_ACC_REG_GSTAT_WDTTO_MASK                       (0x1U << IIR_ACC_REG_GSTAT_WDTTO_SHIFT)                      /* 0x00010000 */
+#define IIR_ACC_GSTAT_OFFSET                               (0x10U)
+#define IIR_ACC_GSTAT_AXIRDRESP_SHIFT                      (0U)
+#define IIR_ACC_GSTAT_AXIRDRESP_MASK                       (0x7U << IIR_ACC_GSTAT_AXIRDRESP_SHIFT)                      /* 0x00000007 */
+#define IIR_ACC_GSTAT_AXIRDID_SHIFT                        (4U)
+#define IIR_ACC_GSTAT_AXIRDID_MASK                         (0xFU << IIR_ACC_GSTAT_AXIRDID_SHIFT)                        /* 0x000000F0 */
+#define IIR_ACC_GSTAT_AXIWRRESP_SHIFT                      (8U)
+#define IIR_ACC_GSTAT_AXIWRRESP_MASK                       (0x7U << IIR_ACC_GSTAT_AXIWRRESP_SHIFT)                      /* 0x00000700 */
+#define IIR_ACC_GSTAT_AXIWRID_SHIFT                        (12U)
+#define IIR_ACC_GSTAT_AXIWRID_MASK                         (0xFU << IIR_ACC_GSTAT_AXIWRID_SHIFT)                        /* 0x0000F000 */
+#define IIR_ACC_GSTAT_WDTTO_SHIFT                          (16U)
+#define IIR_ACC_GSTAT_WDTTO_MASK                           (0x1U << IIR_ACC_GSTAT_WDTTO_SHIFT)                          /* 0x00010000 */
+#define IIR_ACC_GSTAT_WDONE_SHIFT                          (17U)
+#define IIR_ACC_GSTAT_WDONE_MASK                           (0x1U << IIR_ACC_GSTAT_WDONE_SHIFT)                          /* 0x00020000 */
+#define IIR_ACC_GSTAT_SVDKDONE_SHIFT                       (18U)
+#define IIR_ACC_GSTAT_SVDKDONE_MASK                        (0x1U << IIR_ACC_GSTAT_SVDKDONE_SHIFT)                       /* 0x00040000 */
+#define IIR_ACC_GSTAT_MACERR_SHIFT                         (19U)
+#define IIR_ACC_GSTAT_MACERR_MASK                          (0x1U << IIR_ACC_GSTAT_MACERR_SHIFT)                         /* 0x00080000 */
+#define IIR_ACC_GSTAT_AXIERR_SHIFT                         (20U)
+#define IIR_ACC_GSTAT_AXIERR_MASK                          (0x1U << IIR_ACC_GSTAT_AXIERR_SHIFT)                         /* 0x00100000 */
+#define IIR_ACC_GSTAT_IRQVLD_SHIFT                         (21U)
+#define IIR_ACC_GSTAT_IRQVLD_MASK                          (0x1U << IIR_ACC_GSTAT_IRQVLD_SHIFT)                         /* 0x00200000 */
+#define IIR_ACC_GSTAT_DAALLDONE_SHIFT                      (22U)
+#define IIR_ACC_GSTAT_DAALLDONE_MASK                       (0x1U << IIR_ACC_GSTAT_DAALLDONE_SHIFT)                      /* 0x00400000 */
+#define IIR_ACC_GSTAT_DKALLDONE_SHIFT                      (23U)
+#define IIR_ACC_GSTAT_DKALLDONE_MASK                       (0x1U << IIR_ACC_GSTAT_DKALLDONE_SHIFT)                      /* 0x00800000 */
+#define IIR_ACC_GSTAT_DWRSTDONE_SHIFT                      (24U)
+#define IIR_ACC_GSTAT_DWRSTDONE_MASK                       (0x1U << IIR_ACC_GSTAT_DWRSTDONE_SHIFT)                      /* 0x01000000 */
+#define IIR_ACC_GSTAT_KWRSTDONE_SHIFT                      (25U)
+#define IIR_ACC_GSTAT_KWRSTDONE_MASK                       (0x1U << IIR_ACC_GSTAT_KWRSTDONE_SHIFT)                      /* 0x02000000 */
+#define IIR_ACC_GSTAT_TRRSTDONE_SHIFT                      (26U)
+#define IIR_ACC_GSTAT_TRRSTDONE_MASK                       (0x1U << IIR_ACC_GSTAT_TRRSTDONE_SHIFT)                      /* 0x04000000 */
+#define IIR_ACC_GSTAT_DRRSTDONE_SHIFT                      (27U)
+#define IIR_ACC_GSTAT_DRRSTDONE_MASK                       (0x1U << IIR_ACC_GSTAT_DRRSTDONE_SHIFT)                      /* 0x08000000 */
+#define IIR_ACC_GSTAT_PRRSTDONE_SHIFT                      (28U)
+#define IIR_ACC_GSTAT_PRRSTDONE_MASK                       (0x1U << IIR_ACC_GSTAT_PRRSTDONE_SHIFT)                      /* 0x10000000 */
 /* MACSTAT */
-#define IIR_ACC_REG_MACSTAT_OFFSET                         (0x14U)
-#define IIR_ACC_REG_MACSTAT                                (0x0U)
-#define IIR_ACC_REG_MACSTAT_MRZ_SHIFT                      (0U)
-#define IIR_ACC_REG_MACSTAT_MRZ_MASK                       (0x1U << IIR_ACC_REG_MACSTAT_MRZ_SHIFT)                      /* 0x00000001 */
-#define IIR_ACC_REG_MACSTAT_MRI_SHIFT                      (1U)
-#define IIR_ACC_REG_MACSTAT_MRI_MASK                       (0x1U << IIR_ACC_REG_MACSTAT_MRI_SHIFT)                      /* 0x00000002 */
-#define IIR_ACC_REG_MACSTAT_MINV_SHIFT                     (2U)
-#define IIR_ACC_REG_MACSTAT_MINV_MASK                      (0x1U << IIR_ACC_REG_MACSTAT_MINV_SHIFT)                     /* 0x00000004 */
-#define IIR_ACC_REG_MACSTAT_ARZ_SHIFT                      (3U)
-#define IIR_ACC_REG_MACSTAT_ARZ_MASK                       (0x1U << IIR_ACC_REG_MACSTAT_ARZ_SHIFT)                      /* 0x00000008 */
-#define IIR_ACC_REG_MACSTAT_ARI_SHIFT                      (4U)
-#define IIR_ACC_REG_MACSTAT_ARI_MASK                       (0x1U << IIR_ACC_REG_MACSTAT_ARI_SHIFT)                      /* 0x00000010 */
-#define IIR_ACC_REG_MACSTAT_AINV_SHIFT                     (5U)
-#define IIR_ACC_REG_MACSTAT_AINV_MASK                      (0x1U << IIR_ACC_REG_MACSTAT_AINV_SHIFT)                     /* 0x00000020 */
+#define IIR_ACC_MACSTAT_OFFSET                             (0x14U)
+#define IIR_ACC_MACSTAT                                    (0x0U)
+#define IIR_ACC_MACSTAT_ZERO_SHIFT                         (0U)
+#define IIR_ACC_MACSTAT_ZERO_MASK                          (0x1U << IIR_ACC_MACSTAT_ZERO_SHIFT)                         /* 0x00000001 */
+#define IIR_ACC_MACSTAT_INF_SHIFT                          (1U)
+#define IIR_ACC_MACSTAT_INF_MASK                           (0x1U << IIR_ACC_MACSTAT_INF_SHIFT)                          /* 0x00000002 */
+#define IIR_ACC_MACSTAT_INV_SHIFT                          (2U)
+#define IIR_ACC_MACSTAT_INV_MASK                           (0x1U << IIR_ACC_MACSTAT_INV_SHIFT)                          /* 0x00000004 */
+#define IIR_ACC_MACSTAT_TINY_SHIFT                         (3U)
+#define IIR_ACC_MACSTAT_TINY_MASK                          (0x1U << IIR_ACC_MACSTAT_TINY_SHIFT)                         /* 0x00000008 */
+#define IIR_ACC_MACSTAT_HUGE_SHIFT                         (4U)
+#define IIR_ACC_MACSTAT_HUGE_MASK                          (0x1U << IIR_ACC_MACSTAT_HUGE_SHIFT)                         /* 0x00000010 */
+#define IIR_ACC_MACSTAT_INEXACT_SHIFT                      (5U)
+#define IIR_ACC_MACSTAT_INEXACT_MASK                       (0x1U << IIR_ACC_MACSTAT_INEXACT_SHIFT)                      /* 0x00000020 */
 /* WDTCNT */
-#define IIR_ACC_REG_WDTCNT_OFFSET                          (0x18U)
-#define IIR_ACC_REG_WDTCNT_COUNTER_SHIFT                   (0U)
-#define IIR_ACC_REG_WDTCNT_COUNTER_MASK                    (0xFFFFFFFFU << IIR_ACC_REG_WDTCNT_COUNTER_SHIFT)            /* 0xFFFFFFFF */
+#define IIR_ACC_WDTCNT_OFFSET                              (0x18U)
+#define IIR_ACC_WDTCNT_COUNTER_SHIFT                       (0U)
+#define IIR_ACC_WDTCNT_COUNTER_MASK                        (0xFFFFFFFFU << IIR_ACC_WDTCNT_COUNTER_SHIFT)                /* 0xFFFFFFFF */
 /* DKADDR */
-#define IIR_ACC_REG_DKADDR_OFFSET                          (0x1CU)
-#define IIR_ACC_REG_DKADDR_VALUE_SHIFT                     (0U)
-#define IIR_ACC_REG_DKADDR_VALUE_MASK                      (0x3FFFFFFFU << IIR_ACC_REG_DKADDR_VALUE_SHIFT)              /* 0x3FFFFFFF */
+#define IIR_ACC_DKADDR_OFFSET                              (0x1CU)
+#define IIR_ACC_DKADDR_VALUE_SHIFT                         (0U)
+#define IIR_ACC_DKADDR_VALUE_MASK                          (0x3FFFFFFFU << IIR_ACC_DKADDR_VALUE_SHIFT)                  /* 0x3FFFFFFF */
 /* DKLEN */
-#define IIR_ACC_REG_DKLEN_OFFSET                           (0x20U)
-#define IIR_ACC_REG_DKLEN_VALUE_SHIFT                      (0U)
-#define IIR_ACC_REG_DKLEN_VALUE_MASK                       (0x1FFU << IIR_ACC_REG_DKLEN_VALUE_SHIFT)                    /* 0x000001FF */
+#define IIR_ACC_DKLEN_OFFSET                               (0x20U)
+#define IIR_ACC_DKLEN_VALUE_SHIFT                          (0U)
+#define IIR_ACC_DKLEN_VALUE_MASK                           (0x1FFU << IIR_ACC_DKLEN_VALUE_SHIFT)                        /* 0x000001FF */
 /* TCBRDINDEX */
-#define IIR_ACC_REG_TCBRDINDEX_OFFSET                      (0x24U)
-#define IIR_ACC_REG_TCBRDINDEX_VALUE_SHIFT                 (0U)
-#define IIR_ACC_REG_TCBRDINDEX_VALUE_MASK                  (0x1U << IIR_ACC_REG_TCBRDINDEX_VALUE_SHIFT)                 /* 0x00000001 */
+#define IIR_ACC_TCBRDINDEX_OFFSET                          (0x24U)
+#define IIR_ACC_TCBRDINDEX_VALUE_SHIFT                     (0U)
+#define IIR_ACC_TCBRDINDEX_VALUE_MASK                      (0x1U << IIR_ACC_TCBRDINDEX_VALUE_SHIFT)                     /* 0x00000001 */
 // ========================= CRU module definition bank=0 =========================
 // CRU_SOFTRST_CON01(Offset:0xA04)
 #define SRST_PMU_SRSTN_REQ                       0x0000001F
