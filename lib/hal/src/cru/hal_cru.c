@@ -57,7 +57,7 @@
 #define PLL_DSMPD_MASK     1 << PLL_DSMPD_SHIFT
 #define PLL_FRAC_SHIFT     0
 #define PLL_FRAC_MASK      0xffffff << PLL_FRAC_SHIFT
-#elif defined(SOC_RK3588)
+#elif defined(SOC_RK3588) || defined(SOC_RK3576)
 #define PLLCON0_M_SHIFT     0
 #define PLLCON0_M_MASK      0x3ff << PLLCON0_M_SHIFT
 #define PLLCON1_P_SHIFT     0
@@ -308,7 +308,7 @@ int HAL_CRU_RoundFreqGetMux2(uint32_t freq, uint32_t pFreq0, uint32_t pFreq1, ui
     return HAL_CRU_RoundFreqGetMux4(freq, pFreq0, pFreq1, 0, 0, pFreqOut);
 }
 
-#if defined(SOC_RK3588)
+#if defined(SOC_RK3588) || defined(SOC_RK3576)
 /**
  * @brief Get pll parameter by auto.
  * @param  finHz: pll intput freq
@@ -691,7 +691,7 @@ HAL_Status HAL_CRU_SetPllPowerDown(struct PLL_SETUP *pSetup)
     return HAL_OK;
 }
 
-#elif defined(SOC_RK3588)
+#elif defined(SOC_RK3588) || defined(SOC_RK3576)
 /*
  * Formulas also embedded within the fractional PLL Verilog model:
  * If K = 0 (DSM is disabled, "integer mode")
@@ -743,6 +743,12 @@ uint32_t HAL_CRU_GetPllFreq(struct PLL_SETUP *pSetup)
         rate = 32768;
         break;
     }
+
+#if defined(SOC_RK3576)
+    if (!(pSetup->modeMask)) {
+        rate = rate * 2;
+    }
+#endif
 
     return rate;
 }

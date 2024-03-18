@@ -31,7 +31,7 @@ static void HAL_IOMUX_Uart5M2Config(void)
 /* TODO: wait for CRU driver */
 static void HAL_CRU_Init_Temp()
 {
-    CRU->CLKSEL_CON64 = 0x00ff0000;
+    CRU->CLKSEL_CON[64] = 0x00ff0000;
 }
 
 /********************* Public Function Definition ****************************/
