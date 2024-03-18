@@ -26,6 +26,7 @@
 #endif
 
 /* HAL Driver Config */
+#define HAL_CRU_MODULE_ENABLED
 #define HAL_DCACHE_MODULE_ENABLED
 #define HAL_GPIO_MODULE_ENABLED
 #define HAL_ICACHE_MODULE_ENABLED
