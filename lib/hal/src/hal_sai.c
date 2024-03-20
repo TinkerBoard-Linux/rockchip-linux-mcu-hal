@@ -66,6 +66,7 @@
 #define SAI_FSCR_EDGE_RISING 0
 #define SAI_FSCR_FPW(x)      ((x - 1) << SAI_FSCR_FPW_SHIFT)
 #define SAI_FSCR_FW(x)       ((x - 1) << SAI_FSCR_FW_SHIFT)
+#define SAI_FSCR_FW_V(v)     ((((v) & SAI_FSCR_FW_MASK) >> SAI_FSCR_FW_SHIFT) + 1)
 
 /* MONO_CR Mono Control Register */
 #define SAI_MONOCR_RMONO_SLOT_SEL(x) ((x - 1) << SAI_MONOCR_RMONO_SLOT_SHIFT)
@@ -103,13 +104,14 @@
 #define SAI_CLR_TXC HAL_BIT(SAI_CLR_TXC_SHIFT)
 
 /* CKR Clock Generation Register */
-#define SAI_CKR_MDIV(x)      ((x - 1) << SAI_CKR_MDIV_SHIFT)
-#define SAI_CKR_MSS_SLAVE    HAL_BIT(SAI_CKR_MSS_SHIFT)
-#define SAI_CKR_MSS_MASTER   0
-#define SAI_CKR_CKP_INVERTED HAL_BIT(SAI_CKR_CKP_SHIFT)
-#define SAI_CKR_CKP_NORMAL   0
-#define SAI_CKR_FSP_INVERTED HAL_BIT(SAI_CKR_FSP_SHIFT)
-#define SAI_CKR_FSP_NORMAL   0
+#define SAI_CKR_MDIV(x)         ((x - 1) << SAI_CKR_MDIV_SHIFT)
+#define SAI_CKR_MSS_SLAVE       HAL_BIT(SAI_CKR_MSS_SHIFT)
+#define SAI_CKR_MSS_MASTER      0
+#define SAI_CKR_MSS_IS_SLAVE(v) ((v) & SAI_CKR_MSS_SLAVE)
+#define SAI_CKR_CKP_INVERTED    HAL_BIT(SAI_CKR_CKP_SHIFT)
+#define SAI_CKR_CKP_NORMAL      0
+#define SAI_CKR_FSP_INVERTED    HAL_BIT(SAI_CKR_FSP_SHIFT)
+#define SAI_CKR_FSP_NORMAL      0
 
 /* DMACR DMA Control Register */
 #define SAI_DMACR_RDE(x)   ((x) << SAI_DMACR_RDE_SHIFT)
@@ -148,6 +150,11 @@
 #define SAI_FSXN_FSXN0_FW(x)    ((x - 1) << SAI_FSXN_FSXN0_FW_SHIFT)
 #define SAI_FSXN_FSXN0_EN       HAL_BIT(SAI_FSXN_FSXN0_EN_SHIFT)
 #define SAI_FSXN_FSXN0_DIS      0
+
+/* FS_TIMEOUT Frame Sync Lost Detect Register */
+#define SAI_FS_TIMEOUT_EN     HAL_BIT(SAI_FS_TIMEOUT_TIMEOUT_EN_SHIFT)
+#define SAI_FS_TIMEOUT_DIS    0
+#define SAI_FS_TIMEOUT_VAL(x) ((x) << SAI_FS_TIMEOUT_TIMEOUT_VALUE_SHIFT)
 
 /* XSHIFT: Transfer / Receive Frame Sync Shift Register */
 #define SAI_XSHIFT_SHIFT_RIGHT_MASK HAL_GENMASK(23, 0)
@@ -379,6 +386,8 @@ HAL_Status HAL_SAI_DevDeInit(struct HAL_SAI_DEV *sai)
 {
     HAL_ASSERT(sai != NULL);
 
+    HAL_SAI_DisableFsLostDetect(sai->pReg);
+
     MODIFY_REG(sai->pReg->XFER, SAI_XFER_CLK_EN_MASK | SAI_XFER_FSS_MASK,
                SAI_XFER_CLK_DIS | SAI_XFER_FSS_DIS);
 
@@ -576,6 +585,76 @@ HAL_Status HAL_SAI_DisableFsxn1(struct SAI_REG *pReg)
     return HAL_OK;
 }
 
+/**
+ * @brief  Set Fsync Lost Detect Count(nFS).
+ * @param  pReg: the handle of SAI_REG.
+ * @param  frameCount: the count of Fsync clk (at least 2).
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_SetFsLostDetectCount(struct SAI_REG *pReg, int frameCount)
+{
+#ifdef SAI_FS_TIMEOUT_OFFSET
+    uint32_t fw;
+
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    if (frameCount < 2) {
+        frameCount = 2;
+    }
+    /*
+     * The count is drived by SCLK from CRU, not external SCLK,
+     * so, suggest to set SCLK freq equal to external SCLK
+     * in SLAVE mode for better count caculation.
+     */
+    fw = SAI_FSCR_FW_V(READ_REG(pReg->FSCR));
+    MODIFY_REG(pReg->FS_TIMEOUT, SAI_FS_TIMEOUT_TIMEOUT_VALUE_MASK,
+               SAI_FS_TIMEOUT_VAL(frameCount * fw));
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Enable Fsync Lost Detect
+ * @param  pReg: the handle of SAI_REG.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_EnableFsLostDetect(struct SAI_REG *pReg)
+{
+#ifdef SAI_FS_TIMEOUT_OFFSET
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    /* work for slave only */
+    if (!SAI_CKR_MSS_IS_SLAVE(READ_REG(pReg->CKR))) {
+        return HAL_ERROR;
+    }
+
+    MODIFY_REG(pReg->INTCR, SAI_INTCR_FSLOSTC_MASK, SAI_INTCR_FSLOSTC);
+    MODIFY_REG(pReg->INTCR, SAI_INTCR_FSLOST_MASK, SAI_INTCR_FSLOST(1));
+    MODIFY_REG(pReg->FS_TIMEOUT, SAI_FS_TIMEOUT_TIMEOUT_EN_MASK, SAI_FS_TIMEOUT_EN);
+#endif
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable Fsync Lost Detect
+ * @param  pReg: the handle of SAI_REG.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_DisableFsLostDetect(struct SAI_REG *pReg)
+{
+#ifdef SAI_FS_TIMEOUT_OFFSET
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->INTCR, SAI_INTCR_FSLOSTC_MASK, SAI_INTCR_FSLOSTC);
+    MODIFY_REG(pReg->INTCR, SAI_INTCR_FSLOST_MASK, SAI_INTCR_FSLOST(0));
+    MODIFY_REG(pReg->FS_TIMEOUT, SAI_FS_TIMEOUT_TIMEOUT_EN_MASK, SAI_FS_TIMEOUT_DIS);
+#endif
+
+    return HAL_OK;
+}
+
 /** @} */
 
 /** @defgroup SAI_Dev_Level_Functions Dev Level Functions
@@ -700,6 +779,9 @@ HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
     HAL_DelayUs(20);
     MODIFY_REG(sai->pReg->XFER, SAI_XFER_CLK_EN_MASK | SAI_XFER_FSS_MASK,
                SAI_XFER_CLK_EN | SAI_XFER_FSS_EN);
+
+    HAL_SAI_SetFsLostDetectCount(sai->pReg, 2);
+    HAL_SAI_EnableFsLostDetect(sai->pReg);
 
     return ret;
 }

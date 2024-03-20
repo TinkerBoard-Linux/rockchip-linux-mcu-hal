@@ -86,6 +86,9 @@ HAL_Status HAL_SAI_EnableFsxn0(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_EnableFsxn1(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_DisableFsxn0(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_DisableFsxn1(struct SAI_REG *pReg);
+HAL_Status HAL_SAI_SetFsLostDetectCount(struct SAI_REG *pReg, int frameCount);
+HAL_Status HAL_SAI_EnableFsLostDetect(struct SAI_REG *pReg);
+HAL_Status HAL_SAI_DisableFsLostDetect(struct SAI_REG *pReg);
 
 /** @} */
 
