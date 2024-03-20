@@ -9,7 +9,7 @@
 #if defined(RKMCU_RK2118) && defined(HAL_DSP_CORE) && defined(HAL_CRU_MODULE_ENABLED)
 
 static uint32_t s_gpllFreq = 800000000;
-static uint32_t s_vpll0Freq = 1179648000;
+static uint32_t s_vpll0Freq = 983040000;
 static uint32_t s_vpll1Freq = 903168000;
 static uint32_t s_fracVoice0Freq;
 static uint32_t s_fracVoice1Freq;
@@ -369,6 +369,7 @@ static struct PLL_CONFIG PLL_TABLE_24M[] = {
     RK_PLL_RATE(1350000000, 4, 225, 1, 1, 1, 0),
     RK_PLL_RATE(1179648000, 1, 49, 1, 1, 0, 2550137),
     RK_PLL_RATE(1000000000, 3, 125, 1, 1, 1, 0),
+    RK_PLL_RATE(983040000, 1, 40, 1, 1, 0, 16106127),
     RK_PLL_RATE(903168000, 1, 75, 2, 1, 0, 4429185),
     RK_PLL_RATE(800000000, 3, 200, 2, 1, 1, 0),
     { 0 /* sentinel */ },
@@ -379,6 +380,7 @@ static struct PLL_CONFIG PLL_TABLE_24P576M[] = {
     RK_PLL_RATE(1350000000, 1, 54, 1, 1, 0, 15630336),
     RK_PLL_RATE(1179648000, 1, 48, 1, 1, 1, 0),
     RK_PLL_RATE(1000000000, 1, 40, 1, 1, 0, 11578026),
+    RK_PLL_RATE(983040000, 1, 40, 1, 1, 1, 0),
     RK_PLL_RATE(903168000, 2, 147, 2, 1, 1, 0),
     RK_PLL_RATE(800000000, 1, 65, 2, 1, 0, 1747626),
     { 0 /* sentinel */ },
