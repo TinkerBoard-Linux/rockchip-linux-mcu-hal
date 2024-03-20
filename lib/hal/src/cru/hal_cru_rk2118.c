@@ -8,9 +8,9 @@
 /* for dsp simple cru driver */
 #if defined(RKMCU_RK2118) && defined(HAL_DSP_CORE) && defined(HAL_CRU_MODULE_ENABLED)
 
-static uint32_t s_gpllFreq = 800000000;
-static uint32_t s_vpll0Freq = 983040000;
-static uint32_t s_vpll1Freq = 903168000;
+static uint32_t s_gpllFreq;
+static uint32_t s_vpll0Freq;
+static uint32_t s_vpll1Freq;
 static uint32_t s_fracVoice0Freq;
 static uint32_t s_fracVoice1Freq;
 static uint32_t s_fracCom0Freq;
@@ -27,6 +27,36 @@ static uint32_t s_sai4MclkIoIn;
 static uint32_t s_sai5MclkIoIn;
 static uint32_t s_sai6MclkIoIn;
 static uint32_t s_sai7MclkIoIn;
+
+static struct PLL_SETUP GPLL = {
+    .conOffset0 = &(PMU_CRU->GPLL_CON[0]),
+    .conOffset1 = &(PMU_CRU->GPLL_CON[1]),
+    .conOffset2 = &(PMU_CRU->GPLL_CON[2]),
+    .modeOffset = &(CRU->MODE_CON[0]),
+    .modeShift = 0,
+    .lockShift = 10,
+    .modeMask = 0x3 << 0,
+};
+
+static struct PLL_SETUP VPLL0 = {
+    .conOffset0 = &(PMU_CRU->VPLL0_CON[0]),
+    .conOffset1 = &(PMU_CRU->VPLL0_CON[1]),
+    .conOffset2 = &(PMU_CRU->VPLL0_CON[2]),
+    .modeOffset = &(CRU->MODE_CON[0]),
+    .modeShift = 2,
+    .lockShift = 10,
+    .modeMask = 0x3 << 2,
+};
+
+static struct PLL_SETUP VPLL1 = {
+    .conOffset0 = &(PMU_CRU->VPLL1_CON[0]),
+    .conOffset1 = &(PMU_CRU->VPLL1_CON[1]),
+    .conOffset2 = &(PMU_CRU->VPLL1_CON[2]),
+    .modeOffset = &(CRU->MODE_CON[0]),
+    .modeShift = 4,
+    .lockShift = 10,
+    .modeMask = 0x3 << 4,
+};
 
 #define CRU_READ(r)           (*(volatile uint32_t *)((uintptr_t)(r)))
 #define CRU_WRITE(r, b, w, v) (*(volatile uint32_t *)((uintptr_t)(r)) = ((w) << (16) | (v) << (b)))
@@ -262,6 +292,9 @@ static uint32_t HAL_CRU_ClkGetIntVoiceFreq(eCLOCK_Name clockName)
 
 static void CRU_Init(void)
 {
+    s_gpllFreq = HAL_CRU_GetPllFreq(&GPLL);
+    s_vpll0Freq = HAL_CRU_GetPllFreq(&VPLL0);
+    s_vpll1Freq = HAL_CRU_GetPllFreq(&VPLL1);
     s_intVoice0Freq = HAL_CRU_ClkGetIntVoiceFreq(CLK_INT_VOICE0);
     s_intVoice1Freq = HAL_CRU_ClkGetIntVoiceFreq(CLK_INT_VOICE1);
     s_intVoice2Freq = HAL_CRU_ClkGetIntVoiceFreq(CLK_INT_VOICE2);
@@ -285,7 +318,9 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     uint32_t clkDiv = CLK_GET_DIV(clockName);
     uint32_t pRate = s_gpllFreq;
 
-    CRU_Init();
+    if (!s_gpllFreq) {
+        CRU_Init();
+    }
 
     switch (clockName) {
     case CLK_INT_VOICE0:
