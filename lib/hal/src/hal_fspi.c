@@ -739,7 +739,6 @@ HAL_Status HAL_FSPI_SpiXfer(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP *o
     if (pData) {
 #if defined(HAL_FSPI_DMA_ENABLED)
         if ((op->data.nbytes >= FSPI_NOR_FLASH_PAGE_SIZE) &&
-            (dir == HAL_SPI_MEM_DATA_IN) &&
             HAL_IS_CACHELINE_ALIGNED(pData) &&
             HAL_IS_CACHELINE_ALIGNED(op->data.nbytes)) {
             ret = HAL_FSPI_XferData_DMA(host, op->data.nbytes, pData, dir);
