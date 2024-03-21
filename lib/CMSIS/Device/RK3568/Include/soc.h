@@ -415,6 +415,7 @@ typedef enum CLOCK_Name {
     ACLK_USB               = CLK(ACLK_USB_SEL, 0U),
     HCLK_USB               = CLK(HCLK_USB_SEL, 0U),
     PCLK_USB               = CLK(0U, PCLK_USB_DIV),
+    CLK_SDMMC0             = CLK(CLK_SDMMC0_SEL, 0U),
 } eCLOCK_Name;
 #endif
 /****************************************MBOX********************************************/

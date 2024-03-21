@@ -874,6 +874,23 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         }
 
         return freq;
+    case CLK_SDMMC0:
+        if (HAL_CRU_ClkGetMux(clkMux) == 1) {
+            freq = 400000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 2) {
+            freq = 300000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 3) {
+            freq = 100000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 4) {
+            freq = 50000000;
+        } else if (HAL_CRU_ClkGetMux(clkMux) == 5) {
+            freq = 750000;
+        } else {
+            freq = PLL_INPUT_OSC_RATE;
+        }
+
+        return freq;
+
     case ACLK_USB:
     case HCLK_USB:
     case PCLK_USB:
@@ -998,6 +1015,22 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
             mux = 4;
         } else if (rate == 150000000) {
             mux = 5;
+        } else {
+            mux = 0;
+        }
+
+        break;
+    case CLK_SDMMC0:
+        if (rate == 400000000) {
+            mux = 1;
+        } else if (rate == 750000) {
+            mux = 5;
+        } else if (rate == 50000000) {
+            mux = 4;
+        } else if (rate == 100000000) {
+            mux = 3;
+        } else if (rate == 300000000) {
+            mux = 2;
         } else {
             mux = 0;
         }
