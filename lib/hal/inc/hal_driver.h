@@ -85,6 +85,10 @@
 #include "hal_efuse.h"
 #endif
 
+#if defined(HAL_FACC_FIR_MODULE_ENABLED) || defined(HAL_FACC_IIR_MODULE_ENABLED)
+#include "hal_facc.h"
+#endif
+
 #ifdef HAL_FSPI_MODULE_ENABLED
 #include "hal_spi_mem.h"
 #include "hal_fspi.h"
