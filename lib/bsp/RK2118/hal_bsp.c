@@ -304,6 +304,20 @@ const struct HAL_CANFD_DEV g_can0Dev =
 };
 #endif
 
+#ifdef HAL_FACC_FIR_MODULE_ENABLED
+struct HAL_FACC_DEV g_firDev = {
+    .pReg = FIR_ACC,
+    .irqNum = FACC_FIR_IRQn,
+};
+#endif
+
+#ifdef HAL_FACC_IIR_MODULE_ENABLED
+struct HAL_FACC_DEV g_iirDev = {
+    .pReg = IIR_ACC,
+    .irqNum = FACC_IIR_IRQn,
+};
+#endif
+
 #ifdef HAL_FSPI_MODULE_ENABLED
 struct HAL_FSPI_HOST g_fspi0Dev =
 {

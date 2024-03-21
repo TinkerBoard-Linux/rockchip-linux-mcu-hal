@@ -23,6 +23,13 @@ extern struct HAL_ASRC_DEV g_asrc6Dev;
 extern struct HAL_ASRC_DEV g_asrc7Dev;
 #endif
 
+#ifdef HAL_FACC_FIR_MODULE_ENABLED
+extern struct HAL_FACC_DEV g_firDev;
+#endif
+#ifdef HAL_FACC_IIR_MODULE_ENABLED
+extern struct HAL_FACC_DEV g_iirDev;
+#endif
+
 #ifdef HAL_FSPI_MODULE_ENABLED
 extern struct HAL_FSPI_HOST g_fspi0Dev;
 #endif
