@@ -56,13 +56,12 @@ typedef enum {
 } ePWM_Mode;
 
 /**
-  * @brief  PWM capture counter mode definition
+  * @brief  PWM capture interrupt mode definition
   */
 typedef enum {
-    HAL_PWM_POS_CAPTURE = 1, /**< count the number of rising edges */
-    HAL_PWM_NEG_CAPTURE,     /**< count the number of falling edges */
-    HAL_PWM_POS_NEG_CAPTURE, /**< count the number of both rising and falling edges */
-} ePWM_captureCntMode;
+    HAL_PWM_CAP_LPR_INT = 1, /**< enable LPR interrupt in capture mode */
+    HAL_PWM_CAP_HPR_INT,     /**< enable HPR interrupt in capture mode */
+} ePWM_captureIntMode;
 
 /**
   * @brief  PWM aligned mode definition
@@ -254,6 +253,8 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
 HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t count);
 HAL_Status HAL_PWM_SetCapturedFreq(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t freq);
 HAL_Status HAL_PWM_SetMatch(struct PWM_HANDLE *pPWM, uint8_t channel, const struct PWM_MATCH *data);
+uint64_t HAL_PWM_GetCaptureHighNs(struct PWM_HANDLE *pPWM, uint8_t channel);
+uint64_t HAL_PWM_GetCaptureLowNs(struct PWM_HANDLE *pPWM, uint8_t channel);
 #if defined(PWM_PWM0_OFFSET_OFFSET) || defined(PWM_OFFSET_OFFSET)
 HAL_Status HAL_PWM_SetOutputOffset(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t offsetNS);
 #else
@@ -276,30 +277,26 @@ inline HAL_Status HAL_PWM_GlobalUnlock(struct PWM_HANDLE *pPWM, uint8_t channelM
 }
 #endif
 #if defined(PWM_PWM0_CAPTURE_CNT_EN_OFFSET) || defined(PWM_COUNTER_CTRL_OFFSET)
-HAL_Status HAL_PWM_EnableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
-                                    ePWM_captureCntMode mode);
-HAL_Status HAL_PWM_DisableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
-                                     ePWM_captureCntMode mode);
-uint32_t HAL_PWM_GetPosCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel);
-uint32_t HAL_PWM_GetNegCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel);
+HAL_Status HAL_PWM_EnableCounter(struct PWM_HANDLE *pPWM, uint8_t channel);
+HAL_Status HAL_PWM_DisableCounter(struct PWM_HANDLE *pPWM, uint8_t channel);
+HAL_Status HAL_PWM_ClearCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel);
+HAL_Status HAL_PWM_GetCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uint64_t *cntRes);
 #else
-inline HAL_Status HAL_PWM_EnableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
-                                           ePWM_captureCntMode mode)
+inline HAL_Status HAL_PWM_EnableCounter(struct PWM_HANDLE *pPWM, uint8_t channel)
 {
     return HAL_OK;
 }
-inline HAL_Status HAL_PWM_DisableCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel,
-                                            ePWM_captureCntMode mode)
+inline HAL_Status HAL_PWM_DisableCounter(struct PWM_HANDLE *pPWM, uint8_t channel)
 {
     return HAL_OK;
 }
-inline uint32_t HAL_PWM_GetPosCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel)
+inline HAL_Status HAL_PWM_ClearCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel)
 {
-    return 0;
+    return HAL_OK;
 }
-inline uint32_t HAL_PWM_GetNegCaptureCnt(struct PWM_HANDLE *pPWM, uint8_t channel)
+inline HAL_Status HAL_PWM_GetCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uint64_t *cntRes)
 {
-    return 0;
+    return HAL_OK;
 }
 #endif
 ePWM_Mode HAL_PWM_GetMode(struct PWM_HANDLE *pPWM, uint8_t channel);
@@ -308,13 +305,11 @@ HAL_Status HAL_PWM_Disable(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_Init(struct PWM_HANDLE *pPWM, struct PWM_REG *pReg, uint32_t freq);
 HAL_Status HAL_PWM_DeInit(struct PWM_HANDLE *pPWM);
 #if (PWM_MAIN_VERSION(PWM_VERSION_ID) >= 4)
+HAL_Status HAL_PWM_EnableCaptureInt(struct PWM_HANDLE *pPWM, uint8_t channel, ePWM_captureIntMode mode);
+HAL_Status HAL_PWM_DisableCaptureInt(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_GlobalUpdate(struct PWM_HANDLE *pPWM);
 HAL_Status HAL_PWM_GlobalEnable(struct PWM_HANDLE *pPWM);
 HAL_Status HAL_PWM_GlobalDisable(struct PWM_HANDLE *pPWM);
-HAL_Status HAL_PWM_EnableCounter(struct PWM_HANDLE *pPWM, uint8_t channel);
-HAL_Status HAL_PWM_DisableCounter(struct PWM_HANDLE *pPWM, uint8_t channel);
-HAL_Status HAL_PWM_GetCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t *cntRes);
-HAL_Status HAL_PWM_ClearCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_EnableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t delayMs);
 HAL_Status HAL_PWM_DisableFreqMeter(struct PWM_HANDLE *pPWM, uint8_t channel);
 HAL_Status HAL_PWM_GetFreqMeterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t delayMs, uint32_t *freqHz);
@@ -322,6 +317,14 @@ HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct
                                 ePWM_waveTableWidthMode widthMode, uint64_t clkRate);
 HAL_Status HAL_PWM_SetWave(struct PWM_HANDLE *pPWM, uint8_t channel, struct PWM_WAVE_CONFIG *config);
 #else
+inline HAL_Status HAL_PWM_EnableCaptureInt(struct PWM_HANDLE *pPWM, uint8_t channel, ePWM_captureIntMode mode)
+{
+    return HAL_OK;
+}
+inline HAL_Status HAL_PWM_DisableCaptureInt(struct PWM_HANDLE *pPWM, uint8_t channel)
+{
+    return HAL_OK;
+}
 inline HAL_Status HAL_PWM_GlobalUpdate(struct PWM_HANDLE *pPWM)
 {
     return HAL_OK;
@@ -331,22 +334,6 @@ inline HAL_Status HAL_PWM_GlobalEnable(struct PWM_HANDLE *pPWM)
     return HAL_OK;
 }
 inline HAL_Status HAL_PWM_GlobalDisable(struct PWM_HANDLE *pPWM)
-{
-    return HAL_OK;
-}
-inline HAL_Status HAL_PWM_EnableCounter(struct PWM_HANDLE *pPWM, uint8_t channel)
-{
-    return HAL_OK;
-}
-inline HAL_Status HAL_PWM_DisableCounter(struct PWM_HANDLE *pPWM, uint8_t channel)
-{
-    return HAL_OK;
-}
-inline HAL_Status HAL_PWM_GetCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t *cntRes)
-{
-    return HAL_OK;
-}
-inline HAL_Status HAL_PWM_ClearCounterRes(struct PWM_HANDLE *pPWM, uint8_t channel)
 {
     return HAL_OK;
 }

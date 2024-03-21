@@ -611,6 +611,7 @@ static void pwm_isr(uint32_t irq, void *args)
 
 static void pwm_test(void)
 {
+    uint64_t result;
     uint8_t channel_mask;
 
     printf("pwm_test: test start:\n");
@@ -642,17 +643,15 @@ static void pwm_test(void)
 
     HAL_PWM_GlobalUnlock(&hal_pwm1_handle, channel_mask);
 
-    printf("pwm_test: 1s pos/neg counter\n", __func__);
-    HAL_PWM_EnableCaptureCnt(&hal_pwm1_handle, hal_channel1_config.channel,
-                             HAL_PWM_POS_NEG_CAPTURE);
+    printf("pwm_test: 1s counter\n", __func__);
+    HAL_PWM_EnableCounter(&hal_pwm1_handle, hal_channel1_config.channel);
 
     HAL_DelayMs(1000);
-    printf("pwm test: pwm counter res, pos = 0x%08x, neg = 0x%08x\n",
-           HAL_PWM_GetPosCaptureCnt(&hal_pwm1_handle, hal_channel1_config.channel),
-           HAL_PWM_GetNegCaptureCnt(&hal_pwm1_handle, hal_channel1_config.channel));
 
-    HAL_PWM_DisableCaptureCnt(&hal_pwm1_handle, hal_channel1_config.channel,
-                              HAL_PWM_POS_NEG_CAPTURE);
+    HAL_PWM_GetCounterRes(&hal_pwm1_handle, hal_channel1_config.channel, &result);
+    printf("pwm test: pwm counter res = 0x%08lx\n", result);
+
+    HAL_PWM_DisableCounter(&hal_pwm1_handle, hal_channel1_config.channel);
 
     HAL_IRQ_HANDLER_SetIRQHandler(g_pwm1Dev.irqNum, pwm_isr, &hal_pwm1_handle);
     HAL_GIC_Enable(g_pwm1Dev.irqNum);
