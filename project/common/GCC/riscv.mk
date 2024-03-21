@@ -34,7 +34,7 @@ OCFLAGS		= -R .note -R .note.gnu.build-id -R .comment -S
 
 HAL_CFLAGS	+= -Werror
 
-LINKER_SCRIPT	:= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_riscv.ld
+LINKER_SCRIPT	?= $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC/gcc_riscv.ld
 
 #############################################################################
 # Output files
