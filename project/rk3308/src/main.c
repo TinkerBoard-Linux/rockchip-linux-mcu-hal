@@ -10,7 +10,6 @@
 /********************* Private MACRO Definition ******************************/
 //#define TEST_DEMO
 //#define TEST_USE_RPMSG_INIT
-//#define TEST_USE_UART1M0
 
 /********************* Private Structure Definition **************************/
 

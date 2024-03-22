@@ -41,25 +41,15 @@
 static IPC_DATA_T *p_gshare = &share_t;
 
 static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
-    /* The priority higher than 0x80 is non-secure interrupt. */
+    /* Config the irqs here. */
+    // todo...
 
-#if defined(TIMER_TEST) || defined(CPU_USAGE_TEST)
-    GIC_AMP_IRQ_CFG_ROUTE(TIMER0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
-    GIC_AMP_IRQ_CFG_ROUTE(TIMER1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
-    GIC_AMP_IRQ_CFG_ROUTE(TIMER2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
-    GIC_AMP_IRQ_CFG_ROUTE(TIMER3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
-#endif
-
-#ifdef GPIO_TEST
-    GIC_AMP_IRQ_CFG_ROUTE(GPIO0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
-#endif
-
-#ifdef SOFTIRQ_TEST
-    GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
-#endif
-
+    /* The following config must keep same with main.c-->irqsConfig[] */
 #ifdef AMP_LINUX_ENABLE
     GIC_AMP_IRQ_CFG_ROUTE(RPMSG_03_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#if defined(TEST_USE_UART1M0)
+    GIC_AMP_IRQ_CFG_ROUTE(UART1_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
 #else // #ifdef AMP_LINUX_ENABLE
     GIC_AMP_IRQ_CFG_ROUTE(AMP0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
     GIC_AMP_IRQ_CFG_ROUTE(AMP1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
@@ -83,7 +73,23 @@ static struct GIC_AMP_IRQ_INIT_CFG irqsConfig[] = {
     GIC_AMP_IRQ_CFG_ROUTE(RPMSG_32_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
 #endif
 
-    GIC_AMP_IRQ_CFG_ROUTE(UART1_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+    /* The following config used for HAL mode test only */
+#if defined(TIMER_TEST) || defined(CPU_USAGE_TEST)
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER0_IRQn, 0xd0, CPU_GET_AFFINITY(0, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER1_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER2_IRQn, 0xd0, CPU_GET_AFFINITY(2, 0)),
+    GIC_AMP_IRQ_CFG_ROUTE(TIMER3_IRQn, 0xd0, CPU_GET_AFFINITY(3, 0)),
+#endif
+
+#ifdef GPIO_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(GPIO0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+#endif
+
+#ifdef SOFTIRQ_TEST
+    GIC_AMP_IRQ_CFG_ROUTE(RSVD0_IRQn, 0xd0, CPU_GET_AFFINITY(1, 0)),
+#endif
+
+    /* Endoff irq configs */
     GIC_AMP_IRQ_CFG_ROUTE(0, 0, CPU_GET_AFFINITY(DEFAULT_IRQ_CPU, 0)),   /* sentinel */
 };
 
