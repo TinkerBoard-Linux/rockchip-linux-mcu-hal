@@ -95,11 +95,11 @@ static void CPUCycleLoop(uint32_t cycles)
 #elif defined(__RISC_V)
 static void CPUCycleLoop(uint32_t cycles)
 {
+    cycles /= 4;
+
     asm volatile (
         "mv   a0, %0\n\t"
         "addi a0, a0, 2\n\t"   //    1    2    Round to the nearest multiple of 4.
-        "li   a1, 4\n\t"
-        "div  a0, a0, a1\n\t"  //    1    2    Divide by 4 and set flags.
         "li   a1, 2\n\t"
         "bnez a0, 1f\n\t"      //    2    2    Skip if 0.
         "j    2f\n\t"
