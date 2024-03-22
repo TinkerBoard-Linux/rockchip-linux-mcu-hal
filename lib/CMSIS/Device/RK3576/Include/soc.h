@@ -332,6 +332,21 @@ typedef enum {
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 
+#elif defined(RKMCU_RK3576_NPU)
+#define __RISC_V
+
+typedef enum {
+    NPU_EXT0_IRQn            =  0,      /*!< NPU EXT0 Interrupt          */
+    NPU_EXT1_IRQn            =  1,      /*!< NPU EXT1 Interrupt          */
+    UART1_IRQn               =  2,      /*!< UART1 Interrupt             */
+    MBOX_BB12_IRQn           =  3,      /*!< MBOX_BB12 Interrupt         */
+    MBOX_BB13_IRQn           =  4,      /*!< MBOX_BB13 Interrupt         */
+    TIMER0_IRQn              =  5,      /*!< TIMER0 Interrupt            */
+    TIMER1_IRQn              =  6,      /*!< TIMER1 Interrupt            */
+    WDT_IRQn                 =  7,      /*!< WDT Interrupt               */
+    TIMER_INTER_IRQn         =  8,      /*!< TIMER_INTER Interrupt       */
+    SOFT_IRQn                =  9,      /*!< SOFT Interrupt              */
+} IRQn_Type;
 #else
 #error missing IRQn_Type define for interrupt
 #endif
@@ -421,8 +436,7 @@ typedef enum {
 #include "cmsis_compiler.h"                 /* CMSIS compiler specific defines */
 #ifdef __CORTEX_A
 #include "core_ca.h"
-#endif
-#ifdef HAL_MCU_CORE
+#elif defined(HAL_MCU_CORE) && !defined(__RISC_V)
 #include "core_cm0.h"
 #endif
 #include "system_rk3576.h"
@@ -459,7 +473,7 @@ typedef enum {
 
 #endif /* HAL_AP_CORE */
 
-#ifdef HAL_MCU_CORE
+#if defined(HAL_MCU_CORE) && defined(__CORTEX_M)
 /*****************************************CACHE*****************************************/
 /* CACHE LINE SIZE */
 #define CACHE_LINE_SHIFT                (5U)
@@ -475,7 +489,7 @@ typedef enum {
 #error "Please define HAL_CACHE_DECODED_ADDR_BASE on hal_conf.h"
 #endif
 
-#endif /* HAL_MCU_CORE */
+#endif /* defined(HAL_MCU_CORE) && defined(__CORTEX_M) */
 
 /****************************************WDT*********************************************/
 #define WDT_CR_WDT_EN_MASK WDT_CR_EN_MASK

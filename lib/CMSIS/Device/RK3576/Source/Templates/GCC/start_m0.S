@@ -5,7 +5,7 @@
 
 #include "hal_conf.h"
 
-#ifdef HAL_MCU_CORE
+#if defined(HAL_MCU_CORE) && defined(__CORTEX_M)
 
 /*
 ;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
@@ -145,4 +145,4 @@ Default_Handler:
 
                 .end
 
-#endif /* HAL_MCU_CORE */
+#endif /* defined(HAL_MCU_CORE) && defined(__CORTEX_M) */
