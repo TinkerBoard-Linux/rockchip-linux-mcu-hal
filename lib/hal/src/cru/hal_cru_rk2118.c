@@ -497,6 +497,7 @@ static struct PLL_CONFIG PLL_TABLE_24M[] = {
     RK_PLL_RATE(1350000000, 4, 225, 1, 1, 1, 0),
     RK_PLL_RATE(1179648000, 1, 49, 1, 1, 0, 2550137),
     RK_PLL_RATE(1000000000, 3, 125, 1, 1, 1, 0),
+    RK_PLL_RATE(993484800, 1, 41, 1, 1, 0, 6630355),
     RK_PLL_RATE(983040000, 1, 40, 1, 1, 0, 16106127),
     RK_PLL_RATE(903168000, 1, 75, 2, 1, 0, 4429185),
     RK_PLL_RATE(800000000, 3, 200, 2, 1, 1, 0),
@@ -508,9 +509,28 @@ static struct PLL_CONFIG PLL_TABLE_24P576M[] = {
     RK_PLL_RATE(1350000000, 1, 54, 1, 1, 0, 15630336),
     RK_PLL_RATE(1179648000, 1, 48, 1, 1, 1, 0),
     RK_PLL_RATE(1000000000, 1, 40, 1, 1, 0, 11578026),
+    RK_PLL_RATE(993484800, 1, 40, 1, 1, 0, 7130316),
     RK_PLL_RATE(983040000, 1, 40, 1, 1, 1, 0),
     RK_PLL_RATE(903168000, 2, 147, 2, 1, 1, 0),
     RK_PLL_RATE(800000000, 1, 65, 2, 1, 0, 1747626),
+    { 0 /* sentinel */ },
+};
+
+static struct PLL_CONFIG PLL_TABLE_12P288M[] = {
+    /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
+    RK_PLL_RATE(1179648000, 1, 96, 1, 1, 1, 0),
+    RK_PLL_RATE(993484800, 1, 80, 1, 1, 0, 14260532),
+    RK_PLL_RATE(983040000, 1, 80, 1, 1, 1, 0),
+    RK_PLL_RATE(903168000, 1, 147, 2, 1, 1, 0),
+    { 0 /* sentinel */ },
+};
+
+static struct PLL_CONFIG PLL_TABLE_25M[] = {
+    /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
+    RK_PLL_RATE(1179648000, 1, 47, 1, 1, 0, 3119219),
+    RK_PLL_RATE(993484800, 1, 79, 2, 1, 0, 8032662),
+    RK_PLL_RATE(983040000, 1, 78, 2, 1, 0, 10791105),
+    RK_PLL_RATE(903168000, 1, 72, 2, 1, 0, 4252017),
     { 0 /* sentinel */ },
 };
 
@@ -1532,6 +1552,76 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     }
 
     return HAL_OK;
+}
+
+/**
+ * @brief vpll io in.
+ * @param  clockName: CLOCK_Name id.
+ * @param  ioRate: io input rate
+ * @param  rate: pll output rate
+ * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
+HAL_Status HAL_CRU_PllIoIn(eCLOCK_Name clockName, uint32_t ioRate, uint32_t rate)
+{
+    HAL_Status error = HAL_OK;
+
+    switch (ioRate) {
+    case 12288000:
+        if (clockName == PLL_VPLL0) {
+            VPLL0.rateTable = PLL_TABLE_12P288M;
+        } else if (clockName == PLL_VPLL1) {
+            VPLL1.rateTable = PLL_TABLE_12P288M;
+        }
+        break;
+    case 24576000:
+        if (clockName == PLL_VPLL0) {
+            VPLL0.rateTable = PLL_TABLE_24P576M;
+        } else if (clockName == PLL_VPLL1) {
+            VPLL1.rateTable = PLL_TABLE_24P576M;
+        }
+        break;
+    case 25000000:
+        if (clockName == PLL_VPLL0) {
+            VPLL0.rateTable = PLL_TABLE_25M;
+        } else if (clockName == PLL_VPLL1) {
+            VPLL1.rateTable = PLL_TABLE_25M;
+        }
+        break;
+    default:
+
+        return HAL_INVAL;
+    }
+
+    switch (clockName) {
+    case PLL_VPLL0:
+        /* if have ddr and ddr parent pll is VPLL0, VPLL0 not allow setting */
+        if ((GRF_PMU->OS_REG2 == 0) || (HAL_CRU_ClkGetMux(CLK_DDRPHY_SEL) != 1)) {
+            PMU_CRU->CLKSEL_CON[9] = VAL_MASK_WE(PMU_CRU_CLKSEL_CON09_CLK_V0PLL_REF_SEL_MASK, PMU_CRU_CLKSEL_CON09_CLK_V0PLL_REF_SEL_MASK);
+            error = HAL_CRU_SetPllFreq(&VPLL0, rate);
+        } else {
+            HAL_SYSLOG("%s: ddr is in vpll0, not allow setting!\n", __func__);
+            error = HAL_INVAL;
+        }
+        s_vpll0Freq = HAL_CRU_GetPllFreq(&VPLL0);
+
+        return error;
+    case PLL_VPLL1:
+        /* if have ddr and ddr parent pll is vpll1, vpll1 not allow setting */
+        if ((GRF_PMU->OS_REG2 == 0) || (HAL_CRU_ClkGetMux(CLK_DDRPHY_SEL) != 2)) {
+            PMU_CRU->CLKSEL_CON[9] = VAL_MASK_WE(PMU_CRU_CLKSEL_CON09_CLK_V1PLL_REF_SEL_MASK, PMU_CRU_CLKSEL_CON09_CLK_V1PLL_REF_SEL_MASK);
+            error = HAL_CRU_SetPllFreq(&VPLL1, rate);
+        } else {
+            HAL_SYSLOG("%s: ddr is in vpll1, not allow setting!\n", __func__);
+            error = HAL_INVAL;
+        }
+        s_vpll1Freq = HAL_CRU_GetPllFreq(&VPLL1);
+
+        return error;
+    default:
+
+        return HAL_INVAL;
+    }
 }
 
 /**

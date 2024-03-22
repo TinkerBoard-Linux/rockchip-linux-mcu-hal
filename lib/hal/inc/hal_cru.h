@@ -458,6 +458,16 @@ HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType);
 HAL_Status HAL_CRU_PllCompensation(eCLOCK_Name clockName, int ppm);
 
 /**
+ * @brief vpll io in.
+ * @param  clockName: CLOCK_Name id.
+ * @param  ioRate: io input rate
+ * @param  rate: pll output rate
+ * @return HAL_Status.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
+HAL_Status HAL_CRU_PllIoIn(eCLOCK_Name clockName, uint32_t ioRate, uint32_t rate);
+
+/**
  * @brief CRU suspend.
  * @return HAL_Status.
  * @attention these APIs allow direct use in the HAL layer.
