@@ -662,8 +662,6 @@ static HAL_Status CRYPTO_HashInit(uint32_t chn, uint32_t mode, void *pInfo)
     regCtrl = gs_HashMode2BcMode[mode];
     regCtrl |= (CRYPTO_HASH_ENABLE | CRYPTO_HW_PAD_ENABLE);
 
-    CRYPTO_CLEAR_REGS(CRYPTO->HASH_DOUT);
-
     /* din_swap set 1, dout_swap set 1, default 1. */
     WRITE_REG_MASK_WE(CRYPTO->FIFO_CTL,
                       CRYPTO_FIFO_CTL_DIN_BYTESWAP_MASK |
@@ -687,8 +685,6 @@ static HAL_Status CRYPTO_HmacInit(uint32_t chn, uint32_t mode, void *pInfo)
     regCtrl = gs_HmacMode2BcMode[mode];
     regCtrl |= CRYPTO_HMAC_ENABLE;
     regCtrl |= (CRYPTO_HASH_ENABLE | CRYPTO_HW_PAD_ENABLE);
-
-    CRYPTO_CLEAR_REGS(CRYPTO->HASH_DOUT);
 
     CRYPTO_WriteKey(chn, pHmac->key, pHmac->keyLen);
 
@@ -765,8 +761,6 @@ static HAL_Status CRYPTO_AesHashInit(uint32_t chn, uint32_t mode, void *pInfo)
     }
 
     WRITE_REG_MASK_WE(CRYPTO->BC_CTL, CRYPTO_WRITE_MASK_ALL, regCtrl);
-
-    CRYPTO_CLEAR_REGS(CRYPTO->HASH_DOUT);
 
     /* set hash reg */
     regCtrl = gs_HashMode2BcMode[mode] | CRYPTO_HW_PAD_ENABLE | CRYPTO_HASH_ENABLE;
