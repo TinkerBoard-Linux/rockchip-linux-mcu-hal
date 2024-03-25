@@ -58,8 +58,12 @@
 #if (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V2_BASIC)
 #elif (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V2_ENHANCE)
 #define FEATURE_AUTO_ALGO_CHECK
+#define FEATURE_CHECK_HASH_VALID
+#define FEATURE_CHECK_TAG_VALID
 #elif (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V3)
 #define FEATURE_AUTO_ALGO_CHECK
+#define FEATURE_CHECK_HASH_VALID
+#define FEATURE_CHECK_TAG_VALID
 #define FEATURE_MID_DATA
 #elif (CRYPTO_VERSION_MAJOR == CRYPTO_VERSION_MAJOR_V4)
 #define FEATURE_AUTO_ALGO_CHECK
@@ -1161,11 +1165,16 @@ HAL_Check HAL_CRYPTO_CheckHashValid(struct CRYPTO_DEV *pCrypto)
 {
     HAL_ASSERT(pCrypto);
 
+#if defined(FEATURE_CHECK_HASH_VALID)
     if (HAL_IS_BIT_SET(CRYPTO->HASH_VALID, CRYPTO_HASH_VALID_HASH_VALID_MASK)) {
         return HAL_TRUE;
     } else {
         return HAL_FALSE;
     }
+#else
+
+    return HAL_TRUE;
+#endif
 }
 
 /**
@@ -1177,11 +1186,16 @@ HAL_Check HAL_CRYPTO_CheckTagValid(struct CRYPTO_DEV *pCrypto)
 {
     HAL_ASSERT(pCrypto);
 
+#if defined(FEATURE_CHECK_TAG_VALID)
     if (HAL_IS_BIT_SET(CRYPTO->TAG_VALID, CRYPTO_TAG_VALID_CH0_TAG_VALID_MASK)) {
         return HAL_TRUE;
     } else {
         return HAL_FALSE;
     }
+#else
+
+    return HAL_TRUE;
+#endif
 }
 /**
  * @brief  read hash value from regs.
