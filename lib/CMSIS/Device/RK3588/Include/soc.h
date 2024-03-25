@@ -184,6 +184,11 @@ typedef enum {
   TIMER9_IRQn               =  330 + NUM_INTERRUPTS,     /*!< TIMER9 Interrupt              */
   TIMER10_IRQn              =  331 + NUM_INTERRUPTS,     /*!< TIMER10 Interrupt             */
   TIMER11_IRQn              =  332 + NUM_INTERRUPTS,     /*!< TIMER11 Interrupt             */
+  SPI0_IRQn                 =  358 + NUM_INTERRUPTS,     /*!< SPI0 Interrupt                */
+  SPI1_IRQn                 =  359 + NUM_INTERRUPTS,     /*!< SPI1 Interrupt                */
+  SPI2_IRQn                 =  360 + NUM_INTERRUPTS,     /*!< SPI2 Interrupt                */
+  SPI3_IRQn                 =  361 + NUM_INTERRUPTS,     /*!< SPI3 Interrupt                */
+  SPI4_IRQn                 =  362 + NUM_INTERRUPTS,     /*!< SPI4 Interrupt                */
   UART1_IRQn                =  364 + NUM_INTERRUPTS,     /*!< UART1 Interrupt               */
   UART2_IRQn                =  365 + NUM_INTERRUPTS,     /*!< UART2 Interrupt               */
   UART3_IRQn                =  366 + NUM_INTERRUPTS,     /*!< UART3 Interrupt               */
