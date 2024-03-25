@@ -157,6 +157,9 @@ void HAL_GPIO_IRQHandler(struct GPIO_REG *pGPIO, eGPIO_bankId bank);
 HAL_Status HAL_GPIO_EnableVirtualModel(struct GPIO_REG *pGPIO);
 HAL_Status HAL_GPIO_DisableVirtualModel(struct GPIO_REG *pGPIO);
 HAL_Status HAL_GPIO_SetVirtualModel(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, eGPIO_VirtualModel vmodel);
+HAL_FuncStatus HAL_GPIO_GetVirtualModeEn(struct GPIO_REG *pGPIO);
+HAL_Status HAL_GPIO_GetPinsInVirtualMode(struct GPIO_REG *pGPIO, eGPIO_VirtualModel vmodel, ePINCTRL_GPIO_PINS *pin);
+HAL_Status HAL_GPIO_UpdateVirtualMode(struct GPIO_REG *pGPIO, eGPIO_VirtualModel vmodel, ePINCTRL_GPIO_PINS pin, ePINCTRL_GPIO_PINS pin_mask);
 #endif
 
 /* The parameter pin for this function is special, it's 0~31. */
