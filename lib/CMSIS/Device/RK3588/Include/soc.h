@@ -360,6 +360,7 @@ typedef enum
     TIMER9_IRQn            = 330,      /*!< TIMER9 Interrupt            */
     TIMER10_IRQn           = 331,      /*!< TIMER10 Interrupt           */
     TIMER11_IRQn           = 332,      /*!< TIMER11 Interrupt           */
+    WDT0_IRQn              = 347,      /*!< WDT0    Interrupt           */
     I2C0_IRQn              = 349,      /*!< I2C0 Interrupt              */
     I2C1_IRQn              = 350,      /*!< I2C1 Interrupt              */
     I2C2_IRQn              = 351,      /*!< I2C2 Interrupt              */
@@ -384,6 +385,7 @@ typedef enum
     UART7_IRQn             = 370,      /*!< UART7  Interrupt            */
     UART8_IRQn             = 371,      /*!< UART8  Interrupt            */
     UART9_IRQn             = 372,      /*!< UART9  Interrupt            */
+    SARADC_IRQn            = 430,      /*!< SARADC Interrupt            */
     RSVD0_IRQn             = 454,      /*!< RSVD0  Interrupt            */
     NUM_INTERRUPTS         = 512,
 } IRQn_Type;
