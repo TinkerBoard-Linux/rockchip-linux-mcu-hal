@@ -416,6 +416,8 @@ HAL_Status HAL_SAI_EnableTX(struct SAI_REG *pReg)
     MODIFY_REG(pReg->DMACR, SAI_DMACR_TDE_MASK, SAI_DMACR_TDE(1));
     MODIFY_REG(pReg->XFER, SAI_XFER_TXS_MASK, SAI_XFER_TXS_EN);
 
+    HAL_SAI_EnableFIFOXrunDetect(pReg, AUDIO_STREAM_PLAYBACK);
+
     return HAL_OK;
 }
 
@@ -431,6 +433,8 @@ HAL_Status HAL_SAI_EnableRX(struct SAI_REG *pReg)
     MODIFY_REG(pReg->DMACR, SAI_DMACR_RDE_MASK, SAI_DMACR_RDE(1));
     MODIFY_REG(pReg->XFER, SAI_XFER_RXS_MASK, SAI_XFER_RXS_EN);
 
+    HAL_SAI_EnableFIFOXrunDetect(pReg, AUDIO_STREAM_CAPTURE);
+
     return HAL_OK;
 }
 
@@ -442,6 +446,8 @@ HAL_Status HAL_SAI_EnableRX(struct SAI_REG *pReg)
 HAL_Status HAL_SAI_DisableTX(struct SAI_REG *pReg)
 {
     HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    HAL_SAI_DisableFIFOXrunDetect(pReg, AUDIO_STREAM_PLAYBACK);
 
     MODIFY_REG(pReg->DMACR, SAI_DMACR_TDE_MASK, SAI_DMACR_TDE(0));
     MODIFY_REG(pReg->XFER, SAI_XFER_TXS_MASK, SAI_XFER_TXS_DIS);
@@ -459,6 +465,8 @@ HAL_Status HAL_SAI_DisableTX(struct SAI_REG *pReg)
 HAL_Status HAL_SAI_DisableRX(struct SAI_REG *pReg)
 {
     HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    HAL_SAI_DisableFIFOXrunDetect(pReg, AUDIO_STREAM_CAPTURE);
 
     MODIFY_REG(pReg->DMACR, SAI_DMACR_RDE_MASK, SAI_DMACR_RDE(0));
     MODIFY_REG(pReg->XFER, SAI_XFER_RXS_MASK, SAI_XFER_RXS_DIS);
@@ -656,6 +664,48 @@ HAL_Status HAL_SAI_DisableFsLostDetect(struct SAI_REG *pReg)
 }
 
 /**
+ * @brief  Enable FIFO XRUN Detect
+ * @param  pReg: the handle of SAI_REG.
+ * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_EnableFIFOXrunDetect(struct SAI_REG *pReg, int stream)
+{
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    if (stream == AUDIO_STREAM_PLAYBACK) {
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_TXUIC_MASK, SAI_INTCR_TXUIC);
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_TXUIE_MASK, SAI_INTCR_TXUIE(1));
+    } else {
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_RXOIC_MASK, SAI_INTCR_RXOIC);
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_RXOIE_MASK, SAI_INTCR_RXOIE(1));
+    }
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Disable FIFO XRUN Detect
+ * @param  pReg: the handle of SAI_REG.
+ * @param  stream: AUDIO_STREAM_PLAYBACK or AUDIO_STREAM_CAPTURE.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_DisableFIFOXrunDetect(struct SAI_REG *pReg, int stream)
+{
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    if (stream == AUDIO_STREAM_PLAYBACK) {
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_TXUIC_MASK, SAI_INTCR_TXUIC);
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_TXUIE_MASK, SAI_INTCR_TXUIE(0));
+    } else {
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_RXOIC_MASK, SAI_INTCR_RXOIC);
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_RXOIE_MASK, SAI_INTCR_RXOIE(0));
+    }
+
+    return HAL_OK;
+}
+
+/**
  * @brief  sai clear irq
  * @param  pReg: the handle of SAI_REG.
  * @return raw irq status
@@ -844,6 +894,16 @@ HAL_Status HAL_SAI_DevIrqHandler(struct HAL_SAI_DEV *sai)
     HAL_ASSERT(sai != NULL);
 
     event = HAL_SAI_ClearIrq(sai->pReg);
+
+    if (event & SAI_TX_FIFO_UNDERRUN) {
+        HAL_SAI_DisableTX(sai->pReg);
+        HAL_DBG_ERR("SAI-%p: TX FIFO UNDERRUN\n", sai->pReg);
+    }
+
+    if (event & SAI_RX_FIFO_OVERRUN) {
+        HAL_SAI_DisableRX(sai->pReg);
+        HAL_DBG_ERR("SAI-%p: RX FIFO OVERRUN\n", sai->pReg);
+    }
 
     if (sai->pCallback) {
         sai->pCallback(sai->pCBParam, event);

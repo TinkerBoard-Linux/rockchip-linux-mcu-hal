@@ -109,6 +109,8 @@ HAL_Status HAL_SAI_DisableFsxn1(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_SetFsLostDetectCount(struct SAI_REG *pReg, int frameCount);
 HAL_Status HAL_SAI_EnableFsLostDetect(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_DisableFsLostDetect(struct SAI_REG *pReg);
+HAL_Status HAL_SAI_EnableFIFOXrunDetect(struct SAI_REG *pReg, int stream);
+HAL_Status HAL_SAI_DisableFIFOXrunDetect(struct SAI_REG *pReg, int stream);
 uint32_t HAL_SAI_ClearIrq(struct SAI_REG *pReg);
 
 /** @} */
