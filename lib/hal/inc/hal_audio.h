@@ -167,6 +167,7 @@ struct AUDIO_PARAMS {
     eAUDIO_sampleRate reSampleRate; /**< resample rate: from 8k ~ 192k. */
     eAUDIO_sampleBits sampleBits; /**< bit per sample: 8bits, 16bits, 32bits. */
     uint16_t channels; /**< channels: e.g. 32ch */
+    uint16_t slots; /**< slots: e.g. 32slot */
 };
 
 /**

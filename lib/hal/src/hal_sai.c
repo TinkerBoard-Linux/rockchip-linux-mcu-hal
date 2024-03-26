@@ -735,6 +735,62 @@ HAL_Status HAL_SAI_DisableFIFOXrunDetect(struct SAI_REG *pReg, int stream)
 }
 
 /**
+ * @brief  Set tx slot mask
+ * @param  pReg: the handle of SAI_REG.
+ * @param  mask: 32-bits mask for 32 slot, each bit 1:masked, 0:active.
+ * @return HAL_Status
+ * Note    Should set before EnableTX.
+ */
+HAL_Status HAL_SAI_SetTxSlotMask(struct SAI_REG *pReg, uint32_t mask)
+{
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->TX_SLOT_MASK[0], 0xffffffff, mask);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get tx slot mask
+ * @param  pReg: the handle of SAI_REG.
+ * @return mask
+ */
+uint32_t HAL_SAI_GetTxSlotMask(struct SAI_REG *pReg)
+{
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    return READ_REG(pReg->TX_SLOT_MASK[0]);
+}
+
+/**
+ * @brief  Set rx slot mask
+ * @param  pReg: the handle of SAI_REG.
+ * @param  mask: 32-bits mask for 32 slot, each bit 1:masked, 0:active.
+ * @return HAL_Status
+ * Note    Should set before EnableRX.
+ */
+HAL_Status HAL_SAI_SetRxSlotMask(struct SAI_REG *pReg, uint32_t mask)
+{
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    MODIFY_REG(pReg->RX_SLOT_MASK[0], 0xffffffff, mask);
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  Get rx slot mask
+ * @param  pReg: the handle of SAI_REG.
+ * @return mask
+ */
+uint32_t HAL_SAI_GetRxSlotMask(struct SAI_REG *pReg)
+{
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    return READ_REG(pReg->RX_SLOT_MASK[0]);
+}
+
+/**
  * @brief  sai clear irq
  * @param  pReg: the handle of SAI_REG.
  * @return raw irq status
@@ -819,7 +875,7 @@ HAL_Status HAL_SAI_DevDisable(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream)
 HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
                              struct AUDIO_PARAMS *params)
 {
-    uint32_t val, slotWidth, chPerLane, fscr;
+    uint32_t val, slotWidth, chPerLane, slotPerLane, fscr;
     uint8_t lanes;
     HAL_Status ret = HAL_OK;
 
@@ -833,6 +889,12 @@ HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
         slotWidth = SAI_XCR_SBW_V(READ_REG(sai->pReg->TXCR));
         lanes = sai->txLanes ? sai->txLanes : lanes;
         chPerLane = params->channels / lanes;
+        slotPerLane = params->slots / lanes;
+
+        if (slotPerLane > chPerLane) {
+            HAL_SAI_SetTxSlotMask(sai->pReg, HAL_GENMASK(slotPerLane - 1, chPerLane));
+            chPerLane = slotPerLane;
+        }
 
         val |= SAI_XCR_LANE(lanes);
         val |= SAI_XCR_SNB(chPerLane);
@@ -843,6 +905,12 @@ HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
         slotWidth = SAI_XCR_SBW_V(READ_REG(sai->pReg->RXCR));
         lanes = sai->rxLanes ? sai->rxLanes : lanes;
         chPerLane = params->channels / lanes;
+        slotPerLane = params->slots / lanes;
+
+        if (slotPerLane > chPerLane) {
+            HAL_SAI_SetRxSlotMask(sai->pReg, HAL_GENMASK(slotPerLane - 1, chPerLane));
+            chPerLane = slotPerLane;
+        }
 
         val |= SAI_XCR_LANE(lanes);
         val |= SAI_XCR_SNB(chPerLane);

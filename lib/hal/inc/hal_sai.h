@@ -111,6 +111,10 @@ HAL_Status HAL_SAI_EnableFsLostDetect(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_DisableFsLostDetect(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_EnableFIFOXrunDetect(struct SAI_REG *pReg, int stream);
 HAL_Status HAL_SAI_DisableFIFOXrunDetect(struct SAI_REG *pReg, int stream);
+HAL_Status HAL_SAI_SetTxSlotMask(struct SAI_REG *pReg, uint32_t mask);
+HAL_Status HAL_SAI_SetRxSlotMask(struct SAI_REG *pReg, uint32_t mask);
+uint32_t HAL_SAI_GetTxSlotMask(struct SAI_REG *pReg);
+uint32_t HAL_SAI_GetRxSlotMask(struct SAI_REG *pReg);
 uint32_t HAL_SAI_ClearIrq(struct SAI_REG *pReg);
 
 /** @} */
