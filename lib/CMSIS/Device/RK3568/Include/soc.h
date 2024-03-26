@@ -420,6 +420,9 @@ typedef enum CLOCK_Name {
     CLK_SDMMC0             = CLK(CLK_SDMMC0_SEL, 0U),
 } eCLOCK_Name;
 #endif
+/****************************************CRU********************************************/
+#define HCLK_SDIO_GATE HCLK_SDMMC0_GATE
+#define CLK_SDIO_GATE  CLK_SDMMC0_GATE
 /****************************************MBOX********************************************/
 #define MBOX_CNT             2
 #define MBOX_CHAN_CNT        4
