@@ -889,10 +889,7 @@ struct MMC_REG {
     __IO uint32_t INTMASK;                            /* Address Offset: 0x0024 */
     __IO uint32_t CMDARG;                             /* Address Offset: 0x0028 */
     __IO uint32_t CMD;                                /* Address Offset: 0x002C */
-    __I  uint32_t RESP0;                              /* Address Offset: 0x0030 */
-    __I  uint32_t RESP1;                              /* Address Offset: 0x0034 */
-    __I  uint32_t RESP2;                              /* Address Offset: 0x0038 */
-    __I  uint32_t RESP3;                              /* Address Offset: 0x003C */
+    __I  uint32_t RESP[4];                            /* Address Offset: 0x0030 */
     __IO uint32_t MINTSTS;                            /* Address Offset: 0x0040 */
     __IO uint32_t RINTSTS;                            /* Address Offset: 0x0044 */
     __I  uint32_t STATUS;                             /* Address Offset: 0x0048 */
