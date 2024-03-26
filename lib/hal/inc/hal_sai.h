@@ -28,6 +28,20 @@
 
 /***************************** Structure Definition **************************/
 
+typedef void (*RK_SAI_CALLBACK)(void *pCBParam, uint32_t event);
+
+/**
+ * enum eSAI_status - SAI status.
+ */
+typedef enum {
+    SAI_TX_FIFO_EMPTY    = HAL_BIT(0),
+    SAI_TX_FIFO_UNDERRUN = HAL_BIT(1),
+    SAI_RX_FIFO_FULL     = HAL_BIT(16),
+    SAI_RX_FIFO_OVERRUN  = HAL_BIT(17),
+    SAI_FS_CLK_ERR       = HAL_BIT(18),
+    SAI_FS_CLK_LOST      = HAL_BIT(19),
+} eSAI_status;
+
 /**
  * enum FPW_mode - Frame Pluse Width.
  */
@@ -45,6 +59,7 @@ struct HAL_SAI_DEV {
     eCLOCK_Name mclk;
     eFPW_mode fpw;
     ePD_Id pd;
+    IRQn_Type irqNum;
     uint32_t mclkGate;
     uint16_t bclkFs;
     uint8_t txLanes;
@@ -52,6 +67,9 @@ struct HAL_SAI_DEV {
     uint8_t fwRatio;
     bool isClkAuto;
     bool isTdm;
+
+    RK_SAI_CALLBACK pCallback;
+    void *pCBParam;
 };
 
 /** @} */
@@ -69,6 +87,8 @@ HAL_Status HAL_SAI_DevEnable(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream);
 HAL_Status HAL_SAI_DevDisable(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream);
 HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
                              struct AUDIO_PARAMS *params);
+HAL_Status HAL_SAI_DevRegisterCallback(struct HAL_SAI_DEV *sai, RK_SAI_CALLBACK pCB, void *pCBParam);
+HAL_Status HAL_SAI_DevIrqHandler(struct HAL_SAI_DEV *sai);
 
 /** @} */
 
@@ -89,6 +109,7 @@ HAL_Status HAL_SAI_DisableFsxn1(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_SetFsLostDetectCount(struct SAI_REG *pReg, int frameCount);
 HAL_Status HAL_SAI_EnableFsLostDetect(struct SAI_REG *pReg);
 HAL_Status HAL_SAI_DisableFsLostDetect(struct SAI_REG *pReg);
+uint32_t HAL_SAI_ClearIrq(struct SAI_REG *pReg);
 
 /** @} */
 

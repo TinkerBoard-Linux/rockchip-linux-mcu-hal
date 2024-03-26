@@ -655,6 +655,35 @@ HAL_Status HAL_SAI_DisableFsLostDetect(struct SAI_REG *pReg)
     return HAL_OK;
 }
 
+/**
+ * @brief  sai clear irq
+ * @param  pReg: the handle of SAI_REG.
+ * @return raw irq status
+ */
+uint32_t HAL_SAI_ClearIrq(struct SAI_REG *pReg)
+{
+    uint32_t irqStatus;
+
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    irqStatus = READ_REG(pReg->INTSR);
+
+    if (irqStatus & SAI_INTSR_FSLOSTI_ACT) {
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_FSLOSTC_MASK, SAI_INTCR_FSLOSTC);
+    }
+    if (irqStatus & SAI_INTSR_FSERRI_ACT) {
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_FSERRC_MASK, SAI_INTCR_FSERRC);
+    }
+    if (irqStatus & SAI_INTSR_TXUI_ACT) {
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_TXUIC_MASK, SAI_INTCR_TXUIC);
+    }
+    if (irqStatus & SAI_INTSR_RXOI_ACT) {
+        MODIFY_REG(pReg->INTCR, SAI_INTCR_RXOIC_MASK, SAI_INTCR_RXOIC);
+    }
+
+    return irqStatus;
+}
+
 /** @} */
 
 /** @defgroup SAI_Dev_Level_Functions Dev Level Functions
@@ -784,6 +813,43 @@ HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
     HAL_SAI_EnableFsLostDetect(sai->pReg);
 
     return ret;
+}
+
+/**
+ * @brief  Set sai irq callback.
+ * @param  sai: the handle of sai.
+ * @param  pCB: function callback.
+ * @param  pCBParam: the param for function callback.
+ * @return HAL_Status
+ */
+HAL_Status HAL_SAI_DevRegisterCallback(struct HAL_SAI_DEV *sai, RK_SAI_CALLBACK pCB, void *pCBParam)
+{
+    HAL_ASSERT(sai != NULL);
+
+    sai->pCallback = pCB;
+    sai->pCBParam = pCBParam;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief  sai irq handler
+ * @param  sai: the handle of sai.
+ * @return raw irq status
+ */
+HAL_Status HAL_SAI_DevIrqHandler(struct HAL_SAI_DEV *sai)
+{
+    uint32_t event;
+
+    HAL_ASSERT(sai != NULL);
+
+    event = HAL_SAI_ClearIrq(sai->pReg);
+
+    if (sai->pCallback) {
+        sai->pCallback(sai->pCBParam, event);
+    }
+
+    return HAL_OK;
 }
 
 /** @} */
