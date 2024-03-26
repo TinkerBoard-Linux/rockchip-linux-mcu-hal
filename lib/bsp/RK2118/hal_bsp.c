@@ -526,6 +526,7 @@ struct HAL_SAI_DEV g_sai0Dev =
     .mclk = SCLK_SAI0,
     .mclkGate = SCLK_SAI0_GATE,
     .bclkFs = 64,
+    .irqNum = SAI0_IRQn,
     .rxDmaData =
     {
         .addr = (uint32_t)&(SAI0->RXDR),
@@ -550,6 +551,7 @@ struct HAL_SAI_DEV g_sai1Dev =
     .mclk = SCLK_SAI1,
     .mclkGate = SCLK_SAI1_GATE,
     .bclkFs = 64,
+    .irqNum = SAI1_IRQn,
     .rxDmaData =
     {
         .addr = (uint32_t)&(SAI1->RXDR),
@@ -574,6 +576,7 @@ struct HAL_SAI_DEV g_sai2Dev =
     .mclk = SCLK_SAI2,
     .mclkGate = SCLK_SAI2_GATE,
     .bclkFs = 64,
+    .irqNum = SAI2_IRQn,
     .rxDmaData =
     {
         .addr = (uint32_t)&(SAI2->RXDR),
@@ -598,6 +601,7 @@ struct HAL_SAI_DEV g_sai3Dev =
     .mclk = SCLK_SAI3,
     .mclkGate = SCLK_SAI3_GATE,
     .bclkFs = 64,
+    .irqNum = SAI3_IRQn,
     .rxDmaData =
     {
         .addr = (uint32_t)&(SAI3->RXDR),
@@ -622,6 +626,7 @@ struct HAL_SAI_DEV g_sai4Dev =
     .mclk = SCLK_SAI4,
     .mclkGate = SCLK_SAI4_GATE,
     .bclkFs = 64,
+    .irqNum = SAI4_IRQn,
     .rxDmaData =
     {
         .addr = (uint32_t)&(SAI4->RXDR),
@@ -646,6 +651,7 @@ struct HAL_SAI_DEV g_sai5Dev =
     .mclk = SCLK_SAI5,
     .mclkGate = SCLK_SAI5_GATE,
     .bclkFs = 64,
+    .irqNum = SAI5_IRQn,
     .rxDmaData =
     {
         .addr = (uint32_t)&(SAI5->RXDR),
@@ -670,6 +676,7 @@ struct HAL_SAI_DEV g_sai6Dev =
     .mclk = SCLK_SAI6,
     .mclkGate = SCLK_SAI6_GATE,
     .bclkFs = 64,
+    .irqNum = SAI6_IRQn,
     .rxDmaData =
     {
         .addr = (uint32_t)&(SAI6->RXDR),
@@ -694,6 +701,7 @@ struct HAL_SAI_DEV g_sai7Dev =
     .mclk = SCLK_SAI7,
     .mclkGate = SCLK_SAI7_GATE,
     .bclkFs = 64,
+    .irqNum = SAI7_IRQn,
     .rxDmaData =
     {
         .addr = (uint32_t)&(SAI7->RXDR),
