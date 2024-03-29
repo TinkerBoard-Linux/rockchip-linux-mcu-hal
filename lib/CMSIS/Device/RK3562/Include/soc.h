@@ -414,6 +414,7 @@ typedef enum CLOCK_Name {
     PLL_HPLL,
     PLL_CPLL,
     PLL_DPLL,
+    ARMCLK,
 
     HCLK_BUS             = CLK64(HCLK_BUS_SEL, HCLK_BUS_DIV),
     PCLK_BUS             = CLK64(PCLK_BUS_SEL, PCLK_BUS_DIV),

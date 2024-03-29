@@ -18,9 +18,39 @@
  *  @{
  */
 /********************* Private MACRO Definition ******************************/
+
+#define RK3562_PVTPLL(_rate, _ring, _length) \
+    {                                        \
+        .rate = _rate##U,                    \
+        .ring = _ring,                       \
+        .length = _length,                   \
+    }
+
 /********************* Private Structure Definition **************************/
 
 /********************* Private Variable Definition ***************************/
+
+struct PVTPLL_CONFIG {
+    uint32_t rate;
+    uint32_t ring;
+    uint32_t length;
+};
+
+static struct PVTPLL_CONFIG s_pvtCpuTable[] = {
+    /* rate_hz, ring_sel, length */
+    RK3562_PVTPLL(2016000000, 4, 4),
+    RK3562_PVTPLL(1896000000, 4, 5),
+    RK3562_PVTPLL(1800000000, 4, 5),
+    RK3562_PVTPLL(1704000000, 4, 5),
+    RK3562_PVTPLL(1608000000, 4, 5),
+    RK3562_PVTPLL(1416000000, 4, 6),
+    RK3562_PVTPLL(1200000000, 4, 6),
+    RK3562_PVTPLL(1008000000, 4, 10),
+    RK3562_PVTPLL(816000000, 4, 15),
+    RK3562_PVTPLL(600000000, 0, 0),
+    RK3562_PVTPLL(408000000, 0, 0),
+    { /* sentinel */ },
+};
 
 static struct PLL_CONFIG PLL_TABLE[] = {
     /* _mhz, _refDiv, _fbDiv, _postdDv1, _postDiv2, _dsmpd, _frac */
@@ -40,6 +70,7 @@ static uint32_t s_gpllFreq;
 static uint32_t s_cpllFreq;
 static uint32_t s_hpllFreq;
 static uint32_t s_vpllFreq;
+static uint32_t s_cpuPvtFreq;
 
 static struct PLL_SETUP APLL = {
     .conOffset0 = &(TOPCRU->APLL_CON[0]),
@@ -125,6 +156,77 @@ static void CRU_InitPlls(void)
 
     HAL_CRU_DBG("%s: gpll=%ld, cpll=%ld, hpll=%ld, vpll=%ld\n", __func__,
                 s_gpllFreq, s_cpllFreq, s_hpllFreq, s_vpllFreq);
+}
+
+static struct PVTPLL_CONFIG *HAL_CRU_PVTGetSettings(uint32_t rate)
+{
+    uint32_t rateCount = HAL_ARRAY_SIZE(s_pvtCpuTable);
+    uint32_t i = 0;
+
+    for (i = 0; i < rateCount; i++) {
+        if (rate == s_pvtCpuTable[i].rate) {
+            return &s_pvtCpuTable[i];
+        }
+    }
+
+    return NULL;
+}
+
+static uint32_t HAL_CRU_ClkGetCpuFreq(void)
+{
+    if (s_cpuPvtFreq &&
+        (TOPCRU->CLKSEL_CON[10] & TOPCRU_CLKSEL_CON10_CLK_CORE_I_SEL_MASK)) {
+        return s_cpuPvtFreq;
+    }
+
+    return HAL_CRU_GetPllFreq(&APLL);
+}
+
+static HAL_Status HAL_CRU_ClkSetCpuFreq(uint32_t rate)
+{
+    const struct PVTPLL_CONFIG *pConfig = NULL;
+    uint32_t div;
+    HAL_Status error = HAL_OK;
+
+    pConfig = HAL_CRU_PVTGetSettings(rate);
+    if (!pConfig) {
+        return HAL_ERROR;
+    }
+
+    TOPCRU->CLKSEL_CON[12] = VAL_MASK_WE(TOPCRU_CLKSEL_CON12_PCLK_DBG_PRE_DIV_MASK,
+                                         0x9 << TOPCRU_CLKSEL_CON12_PCLK_DBG_PRE_DIV_SHIFT);
+
+    if (pConfig->ring && pConfig->length) {
+        SYS_GRF->CPU_PVTPLL_CON2 = 0x00040000;
+        SYS_GRF->CPU_PVTPLL_CON1 = 0x18;
+        SYS_GRF->CPU_PVTPLL_CON0 = (pConfig->ring << SYS_GRF_CPU_PVTPLL_CON0_PVTPLL_OSC_SEL_SHIFT) |
+                                   (pConfig->length << SYS_GRF_CPU_PVTPLL_CON0_PVTPLL_RING_LENGTH_SEL_SHIFT);
+        SYS_GRF->CPU_PVTPLL_CON0 = (pConfig->ring << SYS_GRF_CPU_PVTPLL_CON0_PVTPLL_OSC_SEL_SHIFT) |
+                                   (pConfig->length << SYS_GRF_CPU_PVTPLL_CON0_PVTPLL_RING_LENGTH_SEL_SHIFT) |
+                                   (0x1U << SYS_GRF_CPU_PVTPLL_CON0_PVTPLL_OSC_EN_SHIFT);
+        SYS_GRF->CPU_PVTPLL_CON0 = (pConfig->ring << SYS_GRF_CPU_PVTPLL_CON0_PVTPLL_OSC_SEL_SHIFT) |
+                                   (pConfig->length << SYS_GRF_CPU_PVTPLL_CON0_PVTPLL_RING_LENGTH_SEL_SHIFT) |
+                                   (0x1U << SYS_GRF_CPU_PVTPLL_CON0_PVTPLL_OSC_EN_SHIFT) |
+                                   (0x1U << SYS_GRF_CPU_PVTPLL_CON0_PVTPLL_START_SHIFT);
+        /* set core mux pvtpll */
+        TOPCRU->CLKSEL_CON[10] = VAL_MASK_WE(TOPCRU_CLKSEL_CON10_CLK_CORE_PVTPLL_SRC_SEL_MASK,
+                                             0x1U << TOPCRU_CLKSEL_CON10_CLK_CORE_PVTPLL_SRC_SEL_SHIFT);
+        TOPCRU->CLKSEL_CON[10] = VAL_MASK_WE(TOPCRU_CLKSEL_CON10_CLK_CORE_I_SEL_MASK,
+                                             0x1U << TOPCRU_CLKSEL_CON10_CLK_CORE_I_SEL_SHIFT);
+    } else {
+        error = HAL_CRU_SetPllFreq(&APLL, rate);
+        if (error == HAL_OK) {
+            TOPCRU->CLKSEL_CON[10] = VAL_MASK_WE(TOPCRU_CLKSEL_CON10_CLK_CORE_I_SEL_MASK, 0);
+        }
+    }
+
+    div = HAL_DIV_ROUND_UP(rate, 150000000);
+    TOPCRU->CLKSEL_CON[12] = VAL_MASK_WE(TOPCRU_CLKSEL_CON12_PCLK_DBG_PRE_DIV_MASK,
+                                         div << TOPCRU_CLKSEL_CON12_PCLK_DBG_PRE_DIV_SHIFT);
+
+    s_cpuPvtFreq = rate;
+
+    return error;
 }
 
 static uint32_t HAL_CRU_ClkGetUartFreq(eCLOCK_Name clockName)
@@ -549,6 +651,9 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
 
         return HAL_CRU_GetPllFreq(&DPLL);
 
+    case ARMCLK:
+
+        return HAL_CRU_ClkGetCpuFreq();
     case HCLK_BUS:
     case PCLK_BUS:
     case BCLK_EMMC:
@@ -699,6 +804,9 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
         return error;
 
+    case ARMCLK:
+
+        return HAL_CRU_ClkSetCpuFreq(rate);
     case HCLK_BUS:
     case PCLK_BUS:
         pRate = s_gpllFreq;
