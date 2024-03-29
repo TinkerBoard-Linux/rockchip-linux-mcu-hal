@@ -290,7 +290,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
                              const struct HAL_PWM_CONFIG *config)
 {
     struct PWM_REG *reg;
-    unsigned long period, duty;
+    uint32_t period, duty;
     uint64_t freqKhz;
     uint64_t tmp;
     uint32_t scaler;
@@ -1265,7 +1265,7 @@ HAL_Status HAL_PWM_IRQHandler(struct PWM_HANDLE *pPWM)
 HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
                              const struct HAL_PWM_CONFIG *config)
 {
-    unsigned long period, duty;
+    uint32_t period, duty;
     uint32_t ctrl;
 
     Hal_PWM_ParaCheck(pPWM, channel);
