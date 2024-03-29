@@ -401,6 +401,19 @@ const struct HAL_UART_DEV g_uart4Dev =
 };
 #endif
 
+#if defined(HAL_EHCI_MODULE_ENABLED) || defined(HAL_OHCI_MODULE_ENABLED)
+const struct HAL_USBH_DEV g_usbhDev =
+{
+    .ehciReg = EHCI,
+    .ohciReg = OHCI,
+    .ehciIrqNum = EHCI_IRQn,
+    .ohciIrqNum = OHCI_IRQn,
+    .usbhGateID = HCLK_HOST_GATE,
+    .usbhArbGateID = HCLK_HOST_ARB_GATE,
+    .utmiclkGateID = USBPHY_REF_SEL,
+};
+#endif
+
 #if defined(HAL_PCD_MODULE_ENABLED) || defined(HAL_HCD_MODULE_ENABLED)
 const struct HAL_USB_DEV g_usbdDev =
 {

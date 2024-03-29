@@ -241,6 +241,7 @@ struct HAL_USBH_DEV {
     IRQn_Type ohciIrqNum;                /**< OHCI interrupt Number                           */
     uint32_t usbhGateID;                 /**< USB Host Gate ID                                */
     uint32_t usbhArbGateID;              /**< USB Host ARB Gate ID                            */
+    uint32_t utmiclkGateID;              /**< USB Host utmi Gate ID                           */
 };
 
 /** @} */
