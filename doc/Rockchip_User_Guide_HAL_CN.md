@@ -2,9 +2,9 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V3.3.0
+发布版本：V3.4.0
 
-日期：2024-05-28
+日期：2024-06-04
 
 文件密级：□绝密   □秘密   □内部资料   ■公开
 
@@ -91,6 +91,7 @@ Rockchip Electronics Co., Ltd.
 | V3.2.0     | Cliff      | 2023.12      | 增加HAL_DSP_CORE定义                                         |
 | V3.2.1     | Tao Huang  | 2024.04      | 调整格式，修订处理器系列说明                                 |
 | V3.3.0     | Cliff      | 2024.05      | 增加同构MCU核间差异补充规范                                  |
+| V3.4.0     | Tao Huang  | 2024.06      | 增加 uint32_t 打印相关说明                                   |
 
 ---
 
@@ -1634,6 +1635,16 @@ HAL_DBG_ERR()
 #define HAL_DBG_ERR_ON                /* 打印等级配置：启用HAL_DBG_ERR */
 #endif
 ```
+
+##### uint32_t 打印
+
+由于不同平台对 uint32_t 定义不同，打印 uint32_t 使用 c99 在 inttypes.h 中定义的宏：
+
+| 宏     | 说明                         | 例子                                                         |
+| ------ | ---------------------------- | ------------------------------------------------------------ |
+| PRIu32 | 输出无符号 10 进制整数值     | HAL_DBG_ERR("Can't wait pll:%" PRIu32 " lock\n", pllId);     |
+| PRIx32 | 输出小写无符号 16 进制整数值 | HAL_DBG("Mcu read 0x%08" PRIx32 ": 0x%08" PRIx32 "\n", val, regVal); |
+| PRIX32 | 输出大写无符号 16 进制整数值 | HAL_DBG("%s: (0x%08" PRIX32 ")\n", __func__, clkMux);        |
 
 ### ASSERT()
 
