@@ -70,11 +70,13 @@ typedef enum {
 typedef enum {
     /** common format */
     AUDIO_FMT_I2S,
+    AUDIO_FMT_I2S_INV,
     AUDIO_FMT_RIGHT_J,
     AUDIO_FMT_LEFT_J,
     AUDIO_FMT_DSP_A,
     AUDIO_FMT_DSP_B,
     AUDIO_FMT_TDM_I2S,
+    AUDIO_FMT_TDM_I2S_INV,
     AUDIO_FMT_TDM_LEFT_J,
     AUDIO_FMT_TDM_RIGHT_J,
     AUDIO_FMT_TDM_DSP_A,

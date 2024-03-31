@@ -231,6 +231,18 @@ static HAL_Status SAI_createFmt(struct HAL_SAI_DEV *sai, eAUDIO_fmtType fmt)
         fscrVal = SAI_FSCR_EDGE_DUAL;
         sai->fpw = FPW_HALF_FRAME_WIDTH;
         break;
+    case AUDIO_FMT_TDM_I2S_INV:
+        sai->isTdm = true;
+    /* fallthrough */
+    case AUDIO_FMT_I2S_INV:
+        xcrMask = SAI_XCR_VDJ_MASK | SAI_XCR_DSE_MASK;
+        xcrVal = SAI_XCR_VDJ_L | SAI_XCR_DSE_RISING;
+        xsftMask = SAI_XSHIFT_SHIFT_RIGHT_MASK;
+        xsftVal = SAI_XSHIFT_SHIFT_RIGHT(2);
+        fscrMask = SAI_FSCR_EDGE_MASK;
+        fscrVal = SAI_FSCR_EDGE_DUAL;
+        sai->fpw = FPW_HALF_FRAME_WIDTH;
+        break;
     case AUDIO_FMT_TDM_DSP_A:
         sai->isTdm = true;
     /* fallthrough */
