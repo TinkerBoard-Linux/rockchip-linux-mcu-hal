@@ -295,13 +295,20 @@ static HAL_Status SAI_SetBclkDivAuto(struct HAL_SAI_DEV *sai, uint32_t slotWidth
     }
 
     mclkRate = HAL_CRU_ClkGetFreq(sai->mclk);
+    if (mclkRate < bclkRate) {
+        HAL_DBG_ERR("sai-%p: %s: Mismatch mclk: %lu Hz, at least %lu Hz\n",
+                    sai->pReg, __func__, mclkRate, bclkRate);
+
+        return HAL_INVAL;
+    }
+
     divBclk = HAL_DivRoundClosest(mclkRate, bclkRate);
     mclkReqRate = bclkRate * divBclk;
 
     if (mclkRate < mclkReqRate - CLK_SHIFT_RATE_HZ_MAX ||
         mclkRate > mclkReqRate + CLK_SHIFT_RATE_HZ_MAX) {
-        HAL_DBG_ERR("%s: Mismatch mclk: %lu, expected %lu (+/- %dHz)\n",
-                    __func__, mclkRate, mclkReqRate, CLK_SHIFT_RATE_HZ_MAX);
+        HAL_DBG_ERR("sai-%p: %s: Mismatch mclk: %lu, expected %lu (+/- %dHz)\n",
+                    sai->pReg, __func__, mclkRate, mclkReqRate, CLK_SHIFT_RATE_HZ_MAX);
 
         return HAL_INVAL;
     }
