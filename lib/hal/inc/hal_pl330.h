@@ -121,6 +121,7 @@ struct PL330_REQCFG {
     bool privileged;
     bool insnaccess;
     uint32_t brstLen;
+    uint32_t brstLenN;
     uint32_t brstSize; /**< bytes */
 
     ePL330_CACHECTRL dcctl;
