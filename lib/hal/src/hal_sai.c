@@ -204,7 +204,7 @@ static HAL_Status SAI_createFmt(struct HAL_SAI_DEV *sai, eAUDIO_fmtType fmt)
         xsftMask = SAI_XSHIFT_SHIFT_RIGHT_MASK;
         xsftVal = SAI_XSHIFT_SHIFT_RIGHT(0);
         fscrMask = SAI_FSCR_EDGE_MASK;
-        fscrVal = SAI_FSCR_EDGE_DUAL;
+        fscrVal = sai->isTdm ? SAI_FSCR_EDGE_RISING : SAI_FSCR_EDGE_DUAL;
         sai->fpw = FPW_HALF_FRAME_WIDTH;
         break;
     case AUDIO_FMT_TDM_LEFT_J:
@@ -216,7 +216,7 @@ static HAL_Status SAI_createFmt(struct HAL_SAI_DEV *sai, eAUDIO_fmtType fmt)
         xsftMask = SAI_XSHIFT_SHIFT_RIGHT_MASK;
         xsftVal = SAI_XSHIFT_SHIFT_RIGHT(0);
         fscrMask = SAI_FSCR_EDGE_MASK;
-        fscrVal = SAI_FSCR_EDGE_DUAL;
+        fscrVal = sai->isTdm ? SAI_FSCR_EDGE_RISING : SAI_FSCR_EDGE_DUAL;
         sai->fpw = FPW_HALF_FRAME_WIDTH;
         break;
     case AUDIO_FMT_TDM_I2S:
@@ -228,7 +228,7 @@ static HAL_Status SAI_createFmt(struct HAL_SAI_DEV *sai, eAUDIO_fmtType fmt)
         xsftMask = SAI_XSHIFT_SHIFT_RIGHT_MASK;
         xsftVal = SAI_XSHIFT_SHIFT_RIGHT(2);
         fscrMask = SAI_FSCR_EDGE_MASK;
-        fscrVal = SAI_FSCR_EDGE_DUAL;
+        fscrVal = sai->isTdm ? SAI_FSCR_EDGE_RISING : SAI_FSCR_EDGE_DUAL;
         sai->fpw = FPW_HALF_FRAME_WIDTH;
         break;
     case AUDIO_FMT_TDM_I2S_INV:
@@ -240,7 +240,7 @@ static HAL_Status SAI_createFmt(struct HAL_SAI_DEV *sai, eAUDIO_fmtType fmt)
         xsftMask = SAI_XSHIFT_SHIFT_RIGHT_MASK;
         xsftVal = SAI_XSHIFT_SHIFT_RIGHT(2);
         fscrMask = SAI_FSCR_EDGE_MASK;
-        fscrVal = SAI_FSCR_EDGE_DUAL;
+        fscrVal = sai->isTdm ? SAI_FSCR_EDGE_RISING : SAI_FSCR_EDGE_DUAL;
         sai->fpw = FPW_HALF_FRAME_WIDTH;
         break;
     case AUDIO_FMT_TDM_DSP_A:
