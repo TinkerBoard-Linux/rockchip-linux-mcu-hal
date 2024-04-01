@@ -248,24 +248,24 @@ static void spinlock_test(void)
     HAL_Check ret;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    printf("begin spinlock test: cpu=%ld\n", cpu_id);
+    printf("begin spinlock test: cpu=%" PRId32 "\n", cpu_id);
 
     while (1) {
         ret = HAL_SPINLOCK_TryLock(0);
         if (ret) {
-            printf("try lock success: %ld\n", cpu_id);
+            printf("try lock success: %" PRId32 "\n", cpu_id);
             HAL_SPINLOCK_Unlock(0);
         } else {
-            printf("try lock failed: %ld\n", cpu_id);
+            printf("try lock failed: %" PRId32 "\n", cpu_id);
         }
         HAL_SPINLOCK_Lock(0);
-        printf("enter cpu%ld\n", cpu_id);
+        printf("enter cpu%" PRId32 "\n", cpu_id);
         HAL_CPUDelayUs(rand() % 2000000);
         owner = HAL_SPINLOCK_GetOwner(0);
         if ((owner >> 1) != cpu_id) {
-            printf("owner id is not matched(%ld, %ld)\n", cpu_id, owner);
+            printf("owner id is not matched(%" PRId32 ", %" PRId32 ")\n", cpu_id, owner);
         }
-        printf("leave cpu%ld\n", cpu_id);
+        printf("leave cpu%" PRId32 "\n", cpu_id);
         HAL_SPINLOCK_Unlock(0);
         HAL_CPUDelayUs(10);
     }
@@ -331,9 +331,9 @@ static void timer_test(void)
     HAL_CPUDelayUs(1000000);
     end = HAL_GetSysTimerCount();
     count = (uint32_t)(end - start);
-    printf("systimer 1s count: %ld(%lld, %lld)\n", count, start, end);
+    printf("systimer 1s count: %" PRId32 "(%lld, %lld)\n", count, start, end);
 
-    printf("\n\ncpu_id=%ld: test internal irq\n", cpu_id);
+    printf("\n\ncpu_id=%" PRId32 ": test internal irq\n", cpu_id);
     timer = g_timer[cpu_id];
     desc_timer = false;
     HAL_TIMER_Init(timer, TIMER_FREE_RUNNING);
@@ -344,7 +344,7 @@ static void timer_test(void)
     end = HAL_TIMER_GetCount(timer);
     count = (uint32_t)(end - start);
     fixed_spend = start;
-    printf("cpu_id=%ld: internal timer 1s count: %ld(%lld, %lld), fixed_spend=%d\n",
+    printf("cpu_id=%" PRId32 ": internal timer 1s count: %" PRId32 "(%lld, %lld), fixed_spend=%d\n",
            cpu_id, count, start, end, fixed_spend);
     HAL_TIMER_Stop(timer);
 
@@ -397,7 +397,7 @@ static void gpio_test(void)
     /* Test GPIO output */
     HAL_GPIO_SetPinDirection(GPIO0, GPIO_PIN_C4, GPIO_OUT);
     level = HAL_GPIO_GetPinLevel(GPIO0, GPIO_PIN_C4);
-    printf("test_gpio level = %ld\n", level);
+    printf("test_gpio level = %" PRId32 "\n", level);
     HAL_DelayMs(5000);
     if (level == GPIO_HIGH) {
         HAL_GPIO_SetPinLevel(GPIO0, GPIO_PIN_C4, GPIO_LOW);
@@ -405,7 +405,7 @@ static void gpio_test(void)
         HAL_GPIO_SetPinLevel(GPIO0, GPIO_PIN_C4, GPIO_HIGH);
     }
     level = HAL_GPIO_GetPinLevel(GPIO0, GPIO_PIN_C4);
-    printf("test_gpio level = %ld\n", level);
+    printf("test_gpio level = %" PRId32 "\n", level);
     HAL_DelayMs(5000);
 
     /* Test GPIO input */
@@ -1321,7 +1321,7 @@ static void rpmsg_perf_master_test(void)
     struct rpmsg_lite_instance *master_rpmsg;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    rk_printf("rpmsg master: master core cpu_id-%ld\n", cpu_id);
+    rk_printf("rpmsg master: master core cpu_id-%" PRId32 "\n", cpu_id);
     master_rpmsg = rpmsg_lite_master_init((void *)RPMSG_PERF_MEM_BASE, RPMSG_PERF_MEM_SIZE,
                                           RL_PLATFORM_SET_LINK_ID(0, 3), RL_NO_FLAGS);
 
@@ -1335,11 +1335,11 @@ static void rpmsg_perf_remote_test(void)
     struct rpmsg_lite_instance *remote_rpmsg;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    rk_printf("rpmsg remote: remote core cpu_id-%ld\n", cpu_id);
+    rk_printf("rpmsg remote: remote core cpu_id-%" PRId32 "\n", cpu_id);
     remote_rpmsg = rpmsg_lite_remote_init((void *)RPMSG_PERF_MEM_BASE,
                                           RL_PLATFORM_SET_LINK_ID(0, 3), RL_NO_FLAGS);
     rpmsg_lite_wait_for_link_up(remote_rpmsg);
-    rk_printf("rpmsg remote: link up! link_id-0x%lx\n", remote_rpmsg->link_id);
+    rk_printf("rpmsg remote: link up! link_id-0x%" PRIx32 "\n", remote_rpmsg->link_id);
     rpmsg_perf_remote_main(remote_rpmsg);
 }
 #endif
@@ -1371,7 +1371,7 @@ static void usage_isr(int vector, void *param)
     t1 = HAL_GetSysTimerCount();
     HAL_CPUDelayUs((cpu_id + 1) * 100000);
     t2 = HAL_GetSysTimerCount();
-    rk_printf("cpu:%ld, irq: %d, HAL_GetCPUUsage: %ld, t=%lld\n", cpu_id, vector, HAL_GetCPUUsage(), t2 - t1);
+    rk_printf("cpu:%" PRId32 ", irq: %d, HAL_GetCPUUsage: %" PRId32 ", t=%lld\n", cpu_id, vector, HAL_GetCPUUsage(), t2 - t1);
 
     HAL_TIMER_ClrInt(info->timer);
     HAL_GIC_EndOfInterrupt(info->irq);
@@ -1383,7 +1383,7 @@ static void usage_test(void)
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
 
-    printf("cpu: %ld, usage_test\n", cpu_id);
+    printf("cpu: %" PRId32 ", usage_test\n", cpu_id);
     HAL_IRQ_HANDLER_SetIRQHandler(g_timer_info[cpu_id].irq, usage_isr, &g_timer_info[cpu_id]);
     HAL_GIC_Enable(g_timer_info[cpu_id].irq);
     HAL_TIMER_Init(g_timer_info[cpu_id].timer, TIMER_FREE_RUNNING);

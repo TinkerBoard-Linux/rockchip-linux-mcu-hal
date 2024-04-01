@@ -233,7 +233,7 @@ static void gpio_test(void)
     /* Test GPIO output */
     HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_C0, GPIO_OUT);
     level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
-    printf("test_gpio 3c0 level = %ld\n", level);
+    printf("test_gpio 3c0 level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
     if (level == GPIO_HIGH) {
         HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_C0, GPIO_LOW);
@@ -241,7 +241,7 @@ static void gpio_test(void)
         HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_C0, GPIO_HIGH);
     }
     level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
-    printf("test_gpio 3c0 level = %ld\n", level);
+    printf("test_gpio 3c0 level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
 
     /* Test GPIO input */
@@ -266,7 +266,7 @@ static HAL_Status c5_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
     uint32_t priority;
 
     priority = HAL_GIC_GetPriority(GPIO4_IRQn);
-    printf("GPIO4C5 high priority 0x%lx.\n", priority);
+    printf("GPIO4C5 high priority 0x%" PRIx32 ".\n", priority);
 
     return HAL_OK;
 }
@@ -276,7 +276,7 @@ static HAL_Status c6_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
     uint32_t priority;
 
     priority = HAL_GIC_GetPriority(RSVD_IRQn(45));
-    printf("GPIO4C6 low priority 0x%lx.\n", priority);
+    printf("GPIO4C6 low priority 0x%" PRIx32 ".\n", priority);
     printf("GPIO4C6 low priority callback enter! delay 8s\n");
     HAL_DelayMs(8000);
     printf("GPIO4C6 low priority callback exit!\n");
@@ -323,7 +323,7 @@ static void ipi_sgi_isr(int vector, void *param)
     } else if (cpu_id == 3) {
         HAL_DelayMs(2000);
     }
-    printf("ipi sgi: cpu_id=%ld vector = %d\n", cpu_id, vector);
+    printf("ipi sgi: cpu_id=%" PRId32 " vector = %d\n", cpu_id, vector);
     HAL_GIC_EndOfInterrupt(vector);
 }
 
@@ -336,7 +336,7 @@ static void ipi_sgi_test(void)
     HAL_GIC_Enable(IPI_SGI7);
 
     if (cpu_id == 1) {
-        printf("ipi sgi: cpu_id=%ld test start\n", cpu_id);
+        printf("ipi sgi: cpu_id=%" PRId32 " test start\n", cpu_id);
         HAL_DelayMs(2000);
         HAL_GIC_SendSGI(IPI_SGI7, 0, IPI_TO_ALL_EXCEPT_SELF);
         HAL_DelayMs(4000);
@@ -430,7 +430,7 @@ static void mbox_master_cb(struct MBOX_CMD_DAT *msg, void *args)
     struct MBOX_CMD_DAT rx_msg = *msg;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    printf("mbox master: recieve cpu-%ld cmd=0x%lx data=0x%lx\n", cpu_id, rx_msg.CMD, rx_msg.DATA);
+    printf("mbox master: recieve cpu-%" PRId32 " cmd=0x%" PRIx32 " data=0x%" PRIx32 "\n", cpu_id, rx_msg.CMD, rx_msg.DATA);
 }
 #else
 static void mbox_remote_isr(int vector, void *param)
@@ -445,7 +445,7 @@ static void mbox_remote_cb(struct MBOX_CMD_DAT *msg, void *args)
     struct MBOX_CMD_DAT rx_msg = *msg;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    printf("mbox remote: recieve cpu-%ld cmd=0x%lx data=0x%lx\n", cpu_id, rx_msg.CMD, rx_msg.DATA);
+    printf("mbox remote: recieve cpu-%" PRId32 " cmd=0x%" PRIx32 " data=0x%" PRIx32 "\n", cpu_id, rx_msg.CMD, rx_msg.DATA);
 }
 #endif
 
@@ -473,7 +473,7 @@ static void mbox_master_test(void)
     HAL_IRQ_HANDLER_SetIRQHandler(MBOX0_CH2_B2A_IRQn, mbox_master_isr, NULL);
     HAL_GIC_Enable(MBOX0_CH2_B2A_IRQn);
     HAL_DelayMs(4000);
-    printf("mbox master: send cmd=0x%lx data=0x%lx\n", tx_msg.CMD, tx_msg.DATA);
+    printf("mbox master: send cmd=0x%" PRIx32 " data=0x%" PRIx32 "\n", tx_msg.CMD, tx_msg.DATA);
     HAL_MBOX_SendMsg(pMBox, MBOX_CH_2, &tx_msg);
 }
 #endif
@@ -501,7 +501,7 @@ static void mbox_remote_test(void)
     HAL_IRQ_HANDLER_SetIRQHandler(MBOX0_CH2_A2B_IRQn, mbox_remote_isr, NULL);
     HAL_GIC_Enable(MBOX0_CH2_A2B_IRQn);
     HAL_DelayMs(2000);
-    printf("mbox remote: send cmd=0x%lx data=0x%lx\n", tx_msg.CMD, tx_msg.DATA);
+    printf("mbox remote: send cmd=0x%" PRIx32 " data=0x%" PRIx32 "\n", tx_msg.CMD, tx_msg.DATA);
     HAL_MBOX_SendMsg(pMBox, MBOX_CH_2, &tx_msg);
 }
 #endif
@@ -525,7 +525,7 @@ static void perf_test(void)
     double time_s;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    printf("perftest: cpu-%ld\n", cpu_id);
+    printf("perftest: cpu-%" PRId32 "\n", cpu_id);
 
     benchmark_main();
 
@@ -1033,7 +1033,7 @@ rpmsg_ns_new_ept_cb rpmsg_ns_cb(uint32_t new_ept, const char *new_ept_name, uint
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
     strncpy(ept_name, new_ept_name, RL_NS_NAME_SIZE);
-    printf("rpmsg remote: new_ept-0x%lx name-%s\n", new_ept, ept_name);
+    printf("rpmsg remote: new_ept-0x%" PRIx32 " name-%s\n", new_ept, ept_name);
 }
 
 static int32_t remote_ept_cb(void *payload, uint32_t payload_len, uint32_t src, void *priv)
@@ -1069,7 +1069,7 @@ static void rpmsg_ns_hal_master_test(void)
 
     rpmsg_share_mem_check();
     master_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    rk_printf("rpmsg master: master core cpu_id-%ld\n", master_id);
+    rk_printf("rpmsg master: master core cpu_id-%" PRId32 "\n", master_id);
 
     /****************** Initial rpmsg ept **************/
     remote_id = REMOTE_ID_3;
@@ -1106,8 +1106,8 @@ static void rpmsg_linux_test(void)
     rpmsg_share_mem_check();
     master_id = MASTER_ID;
     remote_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    rk_printf("rpmsg remote: remote core cpu_id-%ld\n", remote_id);
-//    rk_printf("rpmsg remote: shmem_base-0x%lx shmem_end-%lx\n", RPMSG_LINUX_MEM_BASE, RPMSG_LINUX_MEM_END);
+    rk_printf("rpmsg remote: remote core cpu_id-%" PRId32 "\n", remote_id);
+//    rk_printf("rpmsg remote: shmem_base-0x%" PRIx32 " shmem_end-%" PRIx32 "\n", RPMSG_LINUX_MEM_BASE, RPMSG_LINUX_MEM_END);
 
     info = malloc(sizeof(struct rpmsg_info_t));
     if (info == NULL) {
@@ -1126,7 +1126,7 @@ static void rpmsg_linux_test(void)
 
     info->instance = rpmsg_lite_remote_init((void *)RPMSG_LINUX_MEM_BASE, RL_PLATFORM_SET_LINK_ID(master_id, remote_id), RL_NO_FLAGS);
     rpmsg_lite_wait_for_link_up(info->instance);
-    rk_printf("rpmsg remote: link up! link_id-0x%lx\n", info->instance->link_id);
+    rk_printf("rpmsg remote: link up! link_id-0x%" PRIx32 "\n", info->instance->link_id);
     rpmsg_ns_bind(info->instance, rpmsg_ns_cb, &ns_cb_data);
     info->ept = rpmsg_lite_create_ept(info->instance, RPMSG_HAL_REMOTE_TEST3_EPT, remote_ept_cb, info);
     ept_flags = RL_NS_CREATE;
@@ -1157,7 +1157,7 @@ static void rpmsg_perf_master_test(void)
     struct rpmsg_lite_instance *master_rpmsg;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    rk_printf("rpmsg master: master core cpu_id-%ld\n", cpu_id);
+    rk_printf("rpmsg master: master core cpu_id-%" PRId32 "\n", cpu_id);
     master_rpmsg = rpmsg_lite_master_init((void *)RPMSG_PERF_MEM_BASE, RPMSG_PERF_MEM_SIZE,
                                           RL_PLATFORM_SET_LINK_ID(0, 3), RL_NO_FLAGS);
     rpmsg_perf_master_main(master_rpmsg);
@@ -1169,11 +1169,11 @@ static void rpmsg_perf_remote_test(void)
     struct rpmsg_lite_instance *remote_rpmsg;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    rk_printf("rpmsg remote: remote core cpu_id-%ld\n", cpu_id);
+    rk_printf("rpmsg remote: remote core cpu_id-%" PRId32 "\n", cpu_id);
     remote_rpmsg = rpmsg_lite_remote_init((void *)RPMSG_PERF_MEM_BASE,
                                           RL_PLATFORM_SET_LINK_ID(0, 3), RL_NO_FLAGS);
     rpmsg_lite_wait_for_link_up(remote_rpmsg);
-    rk_printf("rpmsg remote: link up! link_id-0x%lx\n", remote_rpmsg->link_id);
+    rk_printf("rpmsg remote: link up! link_id-0x%" PRIx32 "\n", remote_rpmsg->link_id);
     rpmsg_perf_remote_main(remote_rpmsg);
 }
 #endif
@@ -1211,24 +1211,24 @@ static void spinlock_test(void)
     HAL_Check ret;
 
     cpu_id = HAL_CPU_TOPOLOGY_GetCurrentCpuId();
-    printf("begin spinlock test: cpu=%ld\n", cpu_id);
+    printf("begin spinlock test: cpu=%" PRId32 "\n", cpu_id);
 
     while (1) {
         ret = HAL_SPINLOCK_TryLock(0);
         if (ret) {
-            printf("try lock success: %ld\n", cpu_id);
+            printf("try lock success: %" PRId32 "\n", cpu_id);
             HAL_SPINLOCK_Unlock(0);
         } else {
-            printf("try lock failed: %ld\n", cpu_id);
+            printf("try lock failed: %" PRId32 "\n", cpu_id);
         }
         HAL_SPINLOCK_Lock(0);
-        printf("enter cpu%ld\n", cpu_id);
+        printf("enter cpu%" PRId32 "\n", cpu_id);
         HAL_CPUDelayUs(rand() % 2000000);
         owner = HAL_SPINLOCK_GetOwner(0);
         if ((owner >> 1) != cpu_id) {
-            printf("owner id is not matched(%ld, %ld)\n", cpu_id, owner);
+            printf("owner id is not matched(%" PRId32 ", %" PRId32 ")\n", cpu_id, owner);
         }
-        printf("leave cpu%ld\n", cpu_id);
+        printf("leave cpu%" PRId32 "\n", cpu_id);
         HAL_SPINLOCK_Unlock(0);
         HAL_CPUDelayUs(10);
     }
@@ -1295,9 +1295,9 @@ static void timer_test(void)
     HAL_CPUDelayUs(1000000);
     end = HAL_GetSysTimerCount();
     count = (uint32_t)(end - start);
-    printf("systimer 1s count: %ld(%lld, %lld)\n", count, start, end);
+    printf("systimer 1s count: %" PRId32 "(%lld, %lld)\n", count, start, end);
 
-    printf("\n\ncpu_id=%ld: test internal irq\n", cpu_id);
+    printf("\n\ncpu_id=%" PRId32 ": test internal irq\n", cpu_id);
     timer = g_timer[cpu_id];
     /* Pay attention to the timer type */
     desc_timer = true;
@@ -1309,7 +1309,7 @@ static void timer_test(void)
     end = HAL_TIMER_GetCount(timer);
     count = (uint32_t)(end - start);
     fixed_spend = start;
-    printf("cpu_id=%ld: internal timer 1s count: %ld(%lld, %lld), fixed_spend=%d\n",
+    printf("cpu_id=%" PRId32 ": internal timer 1s count: %" PRId32 "(%lld, %lld), fixed_spend=%d\n",
            cpu_id, count, start, end, fixed_spend);
     HAL_TIMER_Stop(timer);
 
@@ -1419,13 +1419,13 @@ static void wdt_test(void)
     HAL_IRQ_HANDLER_SetIRQHandler(WDT0_IRQn, wdt_isr, NULL);
     HAL_GIC_Enable(WDT0_IRQn);
 
-    printf("wdt_test: timeout set-%ds, get-%ds, TORR-0x%lx\n",
+    printf("wdt_test: timeout set-%ds, get-%ds, TORR-0x%" PRIx32 "\n",
            wdt_timeout, HAL_WDT_GetTimeout(), pWdt->TORR);
     HAL_WDT_Start(INDIRECT_SYSTEM_RESET);
     wdt_left_start = HAL_WDT_GetTimeLeft();
     HAL_DelayMs(1000);
     wdt_left_end = HAL_WDT_GetTimeLeft();
-    printf("wdt_test: 1s(delay) = %ldus(wdt)\n",
+    printf("wdt_test: 1s(delay) = %" PRId32 "us(wdt)\n",
            (wdt_left_start - wdt_left_end) / (WDT_TEST_FREQ / 1000000));
 }
 #endif

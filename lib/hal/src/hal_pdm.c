@@ -207,7 +207,7 @@ static HAL_Status PDM_ChangeClkFreq(struct HAL_PDM_DEV *pdm,
     if (ret) {
         return ret;
     }
-    HAL_DBG("%s: clk: %lu, n: 0x%lx, m: 0x%lx\n", __func__, clkSrc, n, m);
+    HAL_DBG("%s: clk: %" PRIu32 ", n: 0x%" PRIx32 ", m: 0x%" PRIx32 "\n", __func__, clkSrc, n, m);
     old = READ_REG(reg->CTRL[1]);
     val = (n << PDM_CTRL1_FRAC_DIV_NUMERATOR_SHIFT) |
           (m << PDM_CTRL1_FRAC_DIV_DENOMONATOR_SHIFT);

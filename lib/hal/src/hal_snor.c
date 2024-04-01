@@ -386,7 +386,7 @@ static HAL_Status SNOR_ReadReg(struct SPI_NOR *nor, uint16_t code, uint8_t *val,
 
     SNOR_SpimemSetUp(nor, &op, nor->readProto);
 
-    /* HAL_SNOR_DBG("%s %x %lx\n", __func__, code, len); */
+    /* HAL_SNOR_DBG("%s %x %" PRIx32 "\n", __func__, code, len); */
     ret = SNOR_ReadWriteReg(nor, &op, val);
     if (ret) {
         HAL_SNOR_DBG("error %d reading %x\n", ret, code);
@@ -411,7 +411,7 @@ static HAL_Status SNOR_ReadRegPoll(struct SPI_NOR *nor, uint16_t code, uint8_t *
 
     SNOR_SpimemSetUp(nor, &op, nor->readProto);
 
-    /* HAL_SNOR_DBG("%s %x %lx\n", __func__, code, len); */
+    /* HAL_SNOR_DBG("%s %x %" PRIx32 "\n", __func__, code, len); */
     ret = SNOR_ReadWriteReg(nor, &op, val);
     if (ret) {
         HAL_SNOR_DBG("error %d reading %x\n", ret, code);
@@ -427,7 +427,7 @@ static HAL_Status SNOR_WriteReg(struct SPI_NOR *nor, uint16_t opcode, uint8_t *b
                                                      HAL_SPI_MEM_OP_NO_DUMMY,
                                                      HAL_SPI_MEM_OP_DATA_OUT(len, NULL, SNOR_GET_PROTOCOL_CMD_BITS(nor->writeProto)));
 
-    /* HAL_SNOR_DBG("%s %x %ld\n", __func__, opcode, len); */
+    /* HAL_SNOR_DBG("%s %x %" PRId32 "\n", __func__, opcode, len); */
     SNOR_SpimemSetUp(nor, &op, nor->writeProto);
 
     return SNOR_ReadWriteReg(nor, &op, buf);
@@ -441,7 +441,7 @@ static int32_t SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, uint32_t len, u
                                                      HAL_SPI_MEM_OP_DATA_IN(len, buf, SNOR_GET_PROTOCOL_DATA_BITS(nor->readProto)));
     int32_t ret;
 
-    /* HAL_SNOR_DBG("%s %x %lx %lx %lx\n", __func__, nor->readDummy, op.data.nbytes, from, op.addr.val); */
+    /* HAL_SNOR_DBG("%s %x %" PRIx32 " %" PRIx32 " %" PRIx32 "\n", __func__, nor->readDummy, op.data.nbytes, from, op.addr.val); */
     /* convert the dummy cycles to the number of bytes */
     op.dummy.nbytes = (nor->readDummy * op.dummy.buswidth) >> 3;
 
@@ -884,7 +884,7 @@ int32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_
     uint8_t *pBuf = (uint8_t *)buf;
     uint32_t size, remain = len;
 
-    /* HAL_SNOR_DBG("%s from 0x%08lx, len %lx\n", __func__, from, len); */
+    /* HAL_SNOR_DBG("%s from 0x%08" PRIx32 ", len %" PRIx32 "\n", __func__, from, len); */
     if (from >= nor->size || len > nor->size || (from + len) > nor->size) {
         return HAL_INVAL;
     }
@@ -893,7 +893,7 @@ int32_t HAL_SNOR_ReadData(struct SPI_NOR *nor, uint32_t from, void *buf, uint32_
         size = HAL_MIN(READ_MAX_IOSIZE, remain);
         ret = nor->read(nor, from, size, pBuf);
         if (ret != (int32_t)size) {
-            HAL_SNOR_DBG("%s %lu ret= %ld\n", __func__, from >> 9, ret);
+            HAL_SNOR_DBG("%s %" PRIu32 " ret= %" PRId32 "\n", __func__, from >> 9, ret);
 
             return ret;
         }
@@ -923,7 +923,7 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
         return HAL_INVAL;
     }
 
-    /* HAL_SNOR_DBG("%s to 0x%08lx, len %lx\n", __func__, to, len); */
+    /* HAL_SNOR_DBG("%s to 0x%08" PRIx32 ", len %" PRIx32 "\n", __func__, to, len); */
     if (to >= nor->size || len > nor->size || (to + len) > nor->size) {
         return HAL_INVAL;
     }
@@ -935,7 +935,7 @@ int32_t HAL_SNOR_ProgData(struct SPI_NOR *nor, uint32_t to, void *buf, uint32_t 
         ret = nor->write(nor, to, size, pBuf);
 
         if (ret != (int32_t)size) {
-            HAL_SNOR_DBG("%s %lu ret= %ld\n", __func__, to >> 9, ret);
+            HAL_SNOR_DBG("%s %" PRIu32 " ret= %" PRId32 "\n", __func__, to >> 9, ret);
 
             return ret;
         }
@@ -965,7 +965,7 @@ HAL_Status HAL_SNOR_Erase(struct SPI_NOR *nor, uint32_t addr, NOR_ERASE_TYPE era
     HAL_Status ret;
     int32_t timeout[] = { 400, 2000, 40000 };
 
-    /* HAL_SNOR_DBG("%s addr %lx\n", __func__, addr); */
+    /* HAL_SNOR_DBG("%s addr %" PRIx32 "\n", __func__, addr); */
     if (addr >= nor->size) {
         return HAL_INVAL;
     }
@@ -1003,7 +1003,7 @@ int32_t HAL_SNOR_Read(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *pD
         return HAL_INVAL;
     }
 
-    /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
+    /* HAL_SNOR_DBG("%s sec 0x%08" PRIx32 ", nSec %" PRIx32 "\n", __func__, sec, nSec); */
     ret = HAL_SNOR_ReadData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
     if (ret != (int32_t)(nSec * nor->sectorSize)) {
         return ret;
@@ -1028,7 +1028,7 @@ int32_t HAL_SNOR_Write(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, void *p
         return HAL_INVAL;
     }
 
-    /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
+    /* HAL_SNOR_DBG("%s sec 0x%08" PRIx32 ", nSec %" PRIx32 "\n", __func__, sec, nSec); */
     ret = HAL_SNOR_ProgData(nor, sec * nor->sectorSize, pData, nSec * nor->sectorSize);
     if (ret != (int32_t)(nSec * nor->sectorSize)) {
         return ret;
@@ -1055,7 +1055,7 @@ int32_t HAL_SNOR_OverWrite(struct SPI_NOR *nor, uint32_t sec, uint32_t nSec, voi
         return HAL_INVAL;
     }
 
-    /* HAL_SNOR_DBG("%s sec 0x%08lx, nSec %lx\n", __func__, sec, nSec); */
+    /* HAL_SNOR_DBG("%s sec 0x%08" PRIx32 ", nSec %" PRIx32 "\n", __func__, sec, nSec); */
     while (remaining) {
         ret = HAL_SNOR_Erase(nor, sec * nor->sectorSize, ERASE_SECTOR);
         if (ret != HAL_OK) {
@@ -1320,9 +1320,9 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
     HAL_SNOR_DBG("nor->programCmd: %x\n", nor->programOpcode);
     HAL_SNOR_DBG("nor->eraseOpcodeBlk: %x\n", nor->eraseOpcodeBlk);
     HAL_SNOR_DBG("nor->eraseOpcodeSec: %x\n", nor->eraseOpcodeSec);
-    HAL_SNOR_DBG("nor->size: %ldMB\n", nor->size >> 20);
+    HAL_SNOR_DBG("nor->size: %" PRId32 "MB\n", nor->size >> 20);
     HAL_SNOR_DBG("nor->poll %d\n", nor->poll);
-    HAL_SNOR_DBG("xip enable: %lx\n", nor->spi->mode & HAL_SPI_XIP);
+    HAL_SNOR_DBG("xip enable: %" PRIx32 "\n", nor->spi->mode & (uint32_t)HAL_SPI_XIP);
 
     if (nor->spi->mode & HAL_SPI_XIP) {
         SNOR_XipInit(nor);

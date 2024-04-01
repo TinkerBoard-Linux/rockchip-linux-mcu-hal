@@ -299,7 +299,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_ASSERT(config != NULL);
-    HAL_DBG("channel=%d, period_ns=%ld, duty_ns=%ld\n",
+    HAL_DBG("channel=%d, period_ns=%" PRId32 ", duty_ns=%" PRId32 "\n",
             channel, config->periodNS, config->dutyNS);
 
     scaler = pPWM->scaler ? pPWM->scaler * 2 : 1;
@@ -333,7 +333,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
 
     WRITE_REG(reg->ENABLE, PWM_CTRL_UPDATE_EN(true));
 
-    HAL_DBG("channel=%d, period=%lu, duty=%lu, polarity=%d\n",
+    HAL_DBG("channel=%d, period=%" PRIu32 ", duty=%" PRIu32 ", polarity=%d\n",
             channel, period, duty, config->polarity);
 
     return HAL_OK;
@@ -354,7 +354,7 @@ HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t
     Hal_PWM_ParaCheck(pPWM, channel);
     reg = pPWM->pChHandle[channel].pReg;
 
-    HAL_DBG("Oneshot count=%ld\n", count);
+    HAL_DBG("Oneshot count=%" PRId32 "\n", count);
 
     WRITE_REG(reg->RPT, count);
 
@@ -377,7 +377,7 @@ HAL_Status HAL_PWM_SetCapturedFreq(struct PWM_HANDLE *pPWM, uint8_t channel, uin
     reg = pPWM->pChHandle[channel].pReg;
 
     HAL_ASSERT(freq != 0);
-    HAL_DBG("Captured freq=%ld\n", freq);
+    HAL_DBG("Captured freq=%" PRId32 "\n", freq);
 
     WRITE_REG(reg->CLK_CTRL, CLK_SCALE(pPWM->freq / (2 * freq)));
 
@@ -457,7 +457,7 @@ HAL_Status HAL_PWM_SetOutputOffset(struct PWM_HANDLE *pPWM, uint8_t channel, uin
         return HAL_INVAL;
     }
 
-    HAL_DBG("channel=%d, offsetNS=%ld\n", channel, offsetNS);
+    HAL_DBG("channel=%d, offsetNS=%" PRId32 "\n", channel, offsetNS);
 
     WRITE_REG(reg->OFFSET, outOffset);
 
@@ -1040,7 +1040,7 @@ HAL_Status HAL_PWM_GetFreqMeterRes(struct PWM_HANDLE *pPWM, uint8_t channel, uin
         return HAL_INVAL;
     }
 
-    HAL_DBG("channel=%d, frequency meter get result: %ldHz\n", channel, *freqHz);
+    HAL_DBG("channel=%d, frequency meter get result: %" PRId32 "Hz\n", channel, *freqHz);
 
     return HAL_OK;
 }
@@ -1090,7 +1090,7 @@ HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct
 
     pPWM->scaler = HAL_DivU64(pPWM->freq, clkRate * 2);
     if (pPWM->scaler > 256) {
-        HAL_DBG_ERR("unsupported scale factor %ld(max: 512) for for channel%d\n", pPWM->scaler * 2, channel);
+        HAL_DBG_ERR("unsupported scale factor %" PRId32 "(max: 512) for for channel%d\n", pPWM->scaler * 2, channel);
 
         return HAL_INVAL;
     }
@@ -1271,7 +1271,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
     Hal_PWM_ParaCheck(pPWM, channel);
 
     HAL_ASSERT(config != NULL);
-    HAL_DBG("channel=%d, period_ns=%ld, duty_ns=%ld\n",
+    HAL_DBG("channel=%d, period_ns=%" PRId32 ", duty_ns=%" PRId32 "\n",
             channel, config->periodNS, config->dutyNS);
 
     period = HAL_DivU64((uint64_t)pPWM->freq * config->periodNS, 1000000000);
@@ -1322,7 +1322,7 @@ HAL_Status HAL_PWM_SetConfig(struct PWM_HANDLE *pPWM, uint8_t channel,
     ctrl &= ~PWM_LOCK;
     WRITE_REG(PWM_CTRL_REG(pPWM, channel), ctrl);
 
-    HAL_DBG("channel=%d, period=%lu, duty=%lu, polarity=%d\n",
+    HAL_DBG("channel=%d, period=%" PRIu32 ", duty=%" PRIu32 ", polarity=%d\n",
             channel, period, duty, config->polarity);
 
     return HAL_OK;
@@ -1342,7 +1342,7 @@ HAL_Status HAL_PWM_SetOneshot(struct PWM_HANDLE *pPWM, uint8_t channel, uint32_t
 
     Hal_PWM_ParaCheck(pPWM, channel);
 
-    HAL_DBG("Oneshot count=%ld\n", count);
+    HAL_DBG("Oneshot count=%" PRId32 "\n", count);
 
     ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
     ctrl &= ~PWM_PWM0_CTRL_RPT_MASK;
@@ -1367,7 +1367,7 @@ HAL_Status HAL_PWM_SetCapturedFreq(struct PWM_HANDLE *pPWM, uint8_t channel, uin
     Hal_PWM_ParaCheck(pPWM, channel);
 
     HAL_ASSERT(freq != 0);
-    HAL_DBG("Captured freq=%ld\n", freq);
+    HAL_DBG("Captured freq=%" PRId32 "\n", freq);
 
     ctrl = READ_REG(PWM_CTRL_REG(pPWM, channel));
     ctrl &= ~PWM_CTRL_SCALE_MASK;
@@ -1443,7 +1443,7 @@ HAL_Status HAL_PWM_SetOutputOffset(struct PWM_HANDLE *pPWM, uint8_t channel, uin
         return HAL_INVAL;
     }
 
-    HAL_DBG("channel=%d, offsetNS=%ld\n", channel, offsetNS);
+    HAL_DBG("channel=%d, offsetNS=%" PRId32 "\n", channel, offsetNS);
 
     WRITE_REG(pPWM->pReg->OFFSET[channel], offset);
 

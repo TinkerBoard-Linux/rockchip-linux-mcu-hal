@@ -503,7 +503,7 @@ static HAL_Status SPINAND_WaitBusy(struct SPI_NAND *spinand, uint8_t *data, uint
     uint32_t i;
     uint8_t status;
 
-    /* HAL_SPINAND_DBG("%s %lx\n", __func__, timeout); */
+    /* HAL_SPINAND_DBG("%s %" PRIx32 "\n", __func__, timeout); */
     *data = 0;
     for (i = 0; i < timeout; i++) {
         ret = SPINAND_ReadStatus(spinand, 0xC0, &status);
@@ -518,7 +518,7 @@ static HAL_Status SPINAND_WaitBusy(struct SPI_NAND *spinand, uint8_t *data, uint
 
         HAL_DelayUs(1);
     }
-    HAL_SPINAND_DBG("%s error %ld\n", __func__, timeout);
+    HAL_SPINAND_DBG("%s error %" PRId32 "\n", __func__, timeout);
 
     return HAL_BUSY;
 }

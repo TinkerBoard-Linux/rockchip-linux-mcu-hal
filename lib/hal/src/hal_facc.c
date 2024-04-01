@@ -181,12 +181,12 @@ static HAL_Status HAL_FIR_ACC_IrqHandler(struct HAL_FACC_DEV *fir)
         macStat = READ_REG(pReg->MACSTAT);
         if ((macStat & errMask) != 0) {
             fir->irqType |= FACC_IRQ_MAC_ERR;
-            HAL_DBG_WRN("Fir Acc Mac Error: 0x%lx\n", macStat);
+            HAL_DBG_WRN("Fir Acc Mac Error: 0x%" PRIx32 "\n", macStat);
         }
     }
 
     if (gstat & FIR_ACC_GSTAT_AXIERR_MASK) {
-        HAL_DBG_ERR("Fir Acc Axi Error, gstat: 0x%lx\n", gstat);
+        HAL_DBG_ERR("Fir Acc Axi Error, gstat: 0x%" PRIx32 "\n", gstat);
         fir->irqType |= FACC_IRQ_AXI_ERR;
     }
 
@@ -334,12 +334,12 @@ static HAL_Status HAL_IIR_ACC_IrqHandler(struct HAL_FACC_DEV *iir)
         macStat = READ_REG(pReg->MACSTAT);
         if ((macStat & errMask) != 0) {
             iir->irqType |= FACC_IRQ_MAC_ERR;
-            HAL_DBG_WRN("Iir Acc Mac Error: 0x%lx\n", macStat);
+            HAL_DBG_WRN("Iir Acc Mac Error: 0x%" PRIx32 "\n", macStat);
         }
     }
 
     if (gstat & IIR_ACC_GSTAT_AXIERR_MASK) {
-        HAL_DBG_ERR("Iir Acc Axi Error, gstat: 0x%lx\n", gstat);
+        HAL_DBG_ERR("Iir Acc Axi Error, gstat: 0x%" PRIx32 "\n", gstat);
         iir->irqType |= FACC_IRQ_AXI_ERR;
     }
 

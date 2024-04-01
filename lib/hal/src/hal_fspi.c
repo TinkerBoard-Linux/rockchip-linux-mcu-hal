@@ -482,7 +482,7 @@ HAL_Status HAL_FSPI_XferStart(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_OP 
     }
 
     // FSPI_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes);
-    // FSPI_DBG("%s 2 %lx %lx %lx %lx %lx %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt, op->addr.val, host->cs);
+    // FSPI_DBG("%s 2 %" PRIx32 " %" PRIx32 " %" PRIx32 " %" PRIx32 " %" PRIx32 " %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt, op->addr.val, host->cs);
     // XIP_DBGCOMBO('2', FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt);
 
     /* config FSPI */
@@ -549,7 +549,7 @@ HAL_Status HAL_FSPI_XferData(struct HAL_FSPI_HOST *host, uint32_t len, void *dat
 #endif
     }
 
-    /* FSPI_DBG("%s %p len %lx word0 %lx dir %lx\n", __func__, pData, len, pData[0], dir); */
+    /* FSPI_DBG("%s %p len %" PRIx32 " word0 %" PRIx32 " dir %" PRIx32 "\n", __func__, pData, len, pData[0], dir); */
     if (dir == FSPI_WRITE) {
         words = (len + 3) >> 2;
         while (words) {
@@ -1001,7 +1001,7 @@ HAL_Status HAL_FSPI_XmmcSetting(struct HAL_FSPI_HOST *host, struct HAL_SPI_MEM_O
     FSPICtrl.b.dqs_mode = host->mode & HAL_SPI_DQS ? 1 : 0;
 
     // HAL_DBG("%s 1 %x %x %x\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes);
-    // HAL_DBG("%s 2 %lx %lx %lx %lx %lx %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt, op->addr.val, host->cs);
+    // HAL_DBG("%s 2 %" PRIx32 " %" PRIx32 " %" PRIx32 " %" PRIx32 " %" PRIx32 " %x\n", __func__, FSPICtrl.d32, FSPICmd.d32, cmdExt, dummyExt, op->addr.val, host->cs);
     host->xmmcDev[host->cs].ctrl = FSPICtrl.d32;
     host->xmmcCtrl = xmmcCtrl.d32;
     host->xmmcDummyCtrl = dummyExt;
@@ -1038,7 +1038,7 @@ HAL_Status HAL_FSPI_XmmcRequest(struct HAL_FSPI_HOST *host, uint8_t on)
         FSPI_ContModeInit(host);
 
         /* FSPI device config */
-        /* FSPI_DBG("%s %p enable 3 %lx %lx %lx %lx\n", __func__,
+        /* FSPI_DBG("%s %p enable 3 %" PRIx32 " %" PRIx32 " %" PRIx32 " %" PRIx32 "\n", __func__,
                     host->instance,
                     host->xmmcDev[0].ctrl, host->cs,
                     host->xmmcDev[0].readCmd, host->xmmcDev[0].writeCmd); */

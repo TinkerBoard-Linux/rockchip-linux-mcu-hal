@@ -69,7 +69,7 @@
   */
 __WEAK void HAL_AssertFailed(const char *file, uint32_t line)
 {
-    HAL_DBG_ERR("assert failed at %s %lu\n", file, line);
+    HAL_DBG_ERR("assert failed at %s %" PRIu32 "\n", file, line);
     while (1) {
         ;
     }
@@ -95,11 +95,11 @@ HAL_Status HAL_DBG_HEX(char *s, void *buf, uint32_t width, uint32_t len)
     j = 0;
     for (i = 0; i < len; i++) {
         if (j == 0) {
-            HAL_SYSLOG("[HAL_DBG_HEX] %s %p + 0x%lx:", s, buf, i * width);
+            HAL_SYSLOG("[HAL_DBG_HEX] %s %p + 0x%" PRIx32 ":", s, buf, i * width);
         }
 
         if (width == 4) {
-            HAL_SYSLOG("0x%08lx,", p32[i]);
+            HAL_SYSLOG("0x%08" PRIx32 ",", p32[i]);
         } else if (width == 2) {
             HAL_SYSLOG("0x%04x,", p16[i]);
         } else {

@@ -291,7 +291,7 @@ static void EHCI_MoveQhToRemoveList(struct EHCI_HCD *ehci, struct EHCI_QH *qh)
     struct EHCI_REG *pReg = HCD_HANDLE_TO_REG(ehci);
     struct EHCI_QH *q;
 
-    // HAL_DBG("%s: 0x%lx (0x%lx)\n", __func__, (uint32_t)qh, qh->chrst);
+    // HAL_DBG("%s: 0x%" PRIx32 " (0x%" PRIx32 ")\n", __func__, (uint32_t)qh, qh->chrst);
 
     /* Check if this ED found in ed_remove_list */
     q = ehci->qhRemoveList;
@@ -478,7 +478,7 @@ static HAL_Status EHCI_CtrlXfer(struct UTR *utr)
     }
 
     EHCI_QTD_INIT(qtdStatus, utr);
-    HAL_DBG("qh=0x%lx, qtdSetup=0x%lx, qtdData=0x%lx, qtdStatus=0x%lx\n", (uint32_t)qh, (uint32_t)qtdSetup, (uint32_t)qtdData, (uint32_t)qtdStatus);
+    HAL_DBG("qh=0x%" PRIx32 ", qtdSetup=0x%" PRIx32 ", qtdData=0x%" PRIx32 ", qtdStatus=0x%" PRIx32 "\n", (uint32_t)qh, (uint32_t)qtdSetup, (uint32_t)qtdData, (uint32_t)qtdStatus);
 
     /* Prepare SETUP stage qTD */
     qtdSetup->qh = qh;
@@ -631,7 +631,7 @@ static HAL_Status EHCI_BulkXfer(struct UTR *utr)
         qtdPrev = qtd;
     }
 
-    //HAL_DBG("utr=0x%lx, qh=0x%lx, qtd=0x%lx\n", (uint32_t)utr, (uint32_t)qh, (uint32_t)qh->qTDList);
+    //HAL_DBG("utr=0x%" PRIx32 ", qh=0x%" PRIx32 ", qtd=0x%" PRIx32 "\n", (uint32_t)utr, (uint32_t)qh, (uint32_t)qh->qTDList);
 
     qtd = qh->qTDList;
 
@@ -744,7 +744,7 @@ static HAL_Status EHCI_IntrXfer(struct UTR *utr)
     EHCI_AppendQtdToQhList(qh, qtd);
     qtd->token = QTD_IOC | (utr->dataLen << 16) | token | QTD_STS_ACTIVE;
 
-    // HAL_DBG("%s: qh 0x%lx, 0x%lx, 0x%lx\n", __func__, (uint32_t)qh, (uint32_t)qh->chrst, (uint32_t)qh->cap);
+    // HAL_DBG("%s: qh 0x%" PRIx32 ", 0x%" PRIx32 ", 0x%" PRIx32 "\n", __func__, (uint32_t)qh, (uint32_t)qh->chrst, (uint32_t)qh->cap);
 
     pReg->USBCMD |= EHCI_USBCMD_PSEN_MASK; /* periodic list enable */
 
@@ -758,7 +758,7 @@ static HAL_Status EHCI_QuitXfer(void *pHCD, struct UTR *utr,
     struct EHCI_HCD *ehci = (struct EHCI_HCD *)pHCD;
     struct EHCI_QH *qh;
 
-    // HAL_DBG("%s: utr 0x%lx, ep 0x%lx\n", __func__, (uint32_t)utr, (uint32_t)ep);
+    // HAL_DBG("%s: utr 0x%" PRIx32 ", ep 0x%" PRIx32 "\n", __func__, (uint32_t)utr, (uint32_t)ep);
 
     DISABLE_EHCI_IRQ();
     if (HAL_EHCI_QuitIsoXfer(utr, ep) == HAL_OK) {
@@ -799,19 +799,19 @@ static HAL_Check EHCI_VisitQtd(struct EHCI_QTD *qtd)
     if ((qtd->token == 0x11197B3F) || (qtd->token == 0x1197B3F)) {
         return HAL_FALSE; /* A Dummy qTD or qTD on writing, don't touch it. */
     }
-    // HAL_DBG("Visit qtd 0x%lx - 0x%lx\n", (uint32_t)qtd, qtd->token);
+    // HAL_DBG("Visit qtd 0x%" PRIx32 " - 0x%" PRIx32 "\n", (uint32_t)qtd, qtd->token);
 
     if ((qtd->token & QTD_STS_ACTIVE) == 0) {
         if (qtd->token & (QTD_STS_HALT | QTD_STS_DATA_BUFF_ERR |
                           QTD_STS_BABBLE | QTD_STS_XactErr | QTD_STS_MISS_MF)) {
-            HAL_DBG_ERR("qTD 0x%lx error token 0x%lx, bufPage 0x%lx\n", (uint32_t)qtd, qtd->token, qtd->bufPage[0]);
+            HAL_DBG_ERR("qTD 0x%" PRIx32 " error token 0x%" PRIx32 ", bufPage 0x%" PRIx32 "\n", (uint32_t)qtd, qtd->token, qtd->bufPage[0]);
             if (qtd->utr->status == 0) {
                 qtd->utr->status = USBH_ERR_TRANSACTION;
             }
         } else {
             if ((qtd->token & QTD_PID_MASK) != QTD_PID_SETUP) {
                 qtd->utr->xferLen += qtd->xferLen - QTD_TODO_LEN(qtd->token);
-                // HAL_DBG("0x%lx  utr->xferLen += %d\n", qtd->token, qtd->xferLen - QTD_TODO_LEN(qtd->token));
+                // HAL_DBG("0x%" PRIx32 "  utr->xferLen += %d\n", qtd->token, qtd->xferLen - QTD_TODO_LEN(qtd->token));
             }
         }
 
@@ -830,7 +830,7 @@ static void EHCI_ScanAsynchronousList(struct EHCI_HCD *ehci)
 
     qh = QH_PTR(ehci->hQH->hLink);
     while (qh != ehci->hQH) {
-        HAL_DBG("Scan qh=0x%lx, 0x%lx\n", (uint32_t)qh, qh->tokenOL);
+        HAL_DBG("Scan qh=0x%" PRIx32 ", 0x%" PRIx32 "\n", (uint32_t)qh, qh->tokenOL);
 
         utr = NULL;
         qtd = qh->qTDList;
@@ -942,7 +942,7 @@ static void EHCI_IaadRemoveQh(struct EHCI_HCD *ehci)
         qh = ehci->qhRemoveList;
         ehci->qhRemoveList = qh->next;
 
-        // HAL_DBG("%s: remove QH 0x%lx\n", __func__, (uint32_t)qh);
+        // HAL_DBG("%s: remove QH 0x%" PRIx32 "\n", __func__, (uint32_t)qh);
 
         while (qh->doneList) { /* We can free the qTDs now */
             qtd = qh->doneList;
@@ -1049,7 +1049,7 @@ static int EHCI_RtHubPolling(void *pHCD)
     int change = 0;
 
     /* Connect status change */
-    HAL_DBG("EHCI port1 status change: 0x%lx\n", pReg->PORTSC[0]);
+    HAL_DBG("EHCI port1 status change: 0x%" PRIx32 "\n", pReg->PORTSC[0]);
 
     /* Port de-bounce */
     debounceTime = HUB_DEBOUNCE_TIME * 1000;
@@ -1105,7 +1105,7 @@ HAL_Status HAL_EHCI_IRQHandler(void *pHCD)
     intrSts = pReg->USBSTS;
     pReg->USBSTS = intrSts; /* Clear interrupt status */
 
-    HAL_DBG("ehci intrSts = 0x%lx\n\n", intrSts);
+    HAL_DBG("ehci intrSts = 0x%" PRIx32 "\n\n", intrSts);
 
     if (intrSts & EHCI_USBSTS_UERRINT_MASK) {
         HAL_DBG_ERR("Transfer error!\n");

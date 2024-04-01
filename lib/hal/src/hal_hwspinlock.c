@@ -88,7 +88,7 @@ void HAL_HWSPINLOCK_Unlock(uint32_t lockID)
 
     owner = READ_REG(SPINLOCK_STATUS(lockID)) & HWSPINLOCK_STATUS_MASK;
     if (g_ownerID != owner) {
-        HAL_DBG_WRN("WARNING: against caller %lu release a lock held by %lu\n",
+        HAL_DBG_WRN("WARNING: against caller %" PRIu32 " release a lock held by %" PRIu32 "\n",
                     g_ownerID, owner);
 
         return;

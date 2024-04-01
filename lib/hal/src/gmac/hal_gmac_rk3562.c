@@ -194,7 +194,7 @@ void HAL_GMAC_SetRGMIISpeed(struct GMAC_HANDLE *pGMAC, int32_t speed)
     return;
 
 err:
-    HAL_DBG_ERR("unknown speed value for GMAC speed=%ld", speed);
+    HAL_DBG_ERR("unknown speed value for GMAC speed=%" PRId32 "", speed);
 
     return;
 }

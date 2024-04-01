@@ -63,27 +63,27 @@ static void gpio_test(void)
     HAL_PINCTRL_SetParam(GPIO_BANK3,
                          GPIO_PIN_C0,
                          PIN_CONFIG_PUL_UP);
-    printf("GPIO3C_P: %p = 0x%lx\n", &VCCIO3_5_IOC->GPIO3C_P, VCCIO3_5_IOC->GPIO3C_P);
+    printf("GPIO3C_P: %p = 0x%" PRIx32 "\n", &VCCIO3_5_IOC->GPIO3C_P, VCCIO3_5_IOC->GPIO3C_P);
     HAL_DelayMs(3000);
     printf("test_gpio pull DOWN\n");
     HAL_PINCTRL_SetParam(GPIO_BANK3,
                          GPIO_PIN_C0,
                          PIN_CONFIG_PUL_DOWN);
     HAL_DelayMs(3000);
-    printf("GPIO3C_P: %p = 0x%lx\n", &VCCIO3_5_IOC->GPIO3C_P, VCCIO3_5_IOC->GPIO3C_P);
+    printf("GPIO3C_P: %p = 0x%" PRIx32 "\n", &VCCIO3_5_IOC->GPIO3C_P, VCCIO3_5_IOC->GPIO3C_P);
 
     /* Test GPIO output */
     HAL_GPIO_SetPinDirection(GPIO3, GPIO_PIN_C0, GPIO_OUT);
     level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
-    printf("test_gpio 3c0 level = %ld\n", level);
+    printf("test_gpio 3c0 level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
     HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_C0, GPIO_HIGH);
     level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
-    printf("test_gpio 3c0 output high level = %ld\n", level);
+    printf("test_gpio 3c0 output high level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
     HAL_GPIO_SetPinLevel(GPIO3, GPIO_PIN_C0, GPIO_LOW);
     level = HAL_GPIO_GetPinLevel(GPIO3, GPIO_PIN_C0);
-    printf("test_gpio 3c0 output low level = %ld\n", level);
+    printf("test_gpio 3c0 output low level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
 
     /* Test GPIO interrupt */
@@ -179,15 +179,15 @@ static void gpio_virtual_model_test(void)
     /* Test GPIO output */
     HAL_GPIO_SetPinDirection(GPIO3_EXP, GPIO_PIN_C0, GPIO_OUT);
     level = HAL_GPIO_GetPinLevel(GPIO3_EXP, GPIO_PIN_C0);
-    printf("test gpio 3c0 level = %ld\n", level);
+    printf("test gpio 3c0 level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
     HAL_GPIO_SetPinLevel(GPIO3_EXP, GPIO_PIN_C0, GPIO_HIGH);
     level = HAL_GPIO_GetPinLevel(GPIO3_EXP, GPIO_PIN_C0);
-    printf("test_gpio 3c0 output high level = %ld\n", level);
+    printf("test_gpio 3c0 output high level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
     HAL_GPIO_SetPinLevel(GPIO3_EXP, GPIO_PIN_C0, GPIO_LOW);
     level = HAL_GPIO_GetPinLevel(GPIO3_EXP, GPIO_PIN_C0);
-    printf("test_gpio 3c0 output low level = %ld\n", level);
+    printf("test_gpio 3c0 output low level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
 
     /* Test GPIO interrupt */
@@ -284,7 +284,7 @@ static void perf_test(void)
         }
         time_end = HAL_GetTick();
         time_ms = time_end - time_start;
-        printf("memset bw=%ldKB/s, time_ms=%d\n",
+        printf("memset bw=%" PRId32 "KB/s, time_ms=%d\n",
                1000 * (size * loop / 1024) / time_ms, time_ms);
 
         /* prevent optimization */
@@ -445,7 +445,7 @@ static void timer_isr(uint32_t irq, void *args)
     }
     /* 24M timer: 41.67ns per count */
     latency = count * 41;
-    printf("timer_test: latency=%ldns(count=%ld)\n", latency, count);
+    printf("timer_test: latency=%" PRId32 "ns(count=%" PRId32 ")\n", latency, count);
     timer_int_count++;
     latency_sum += latency;
     latency_max = latency_max > latency ? latency_max : latency;
@@ -472,7 +472,7 @@ static void timer_test(void)
     end = HAL_GetSysTimerCount();
     /* sys_timer: TIMER5 is a increment count TIMER */
     count = (uint32_t)(end - start);
-    printf("sys_timer 1s count: %ld(%lld, %lld)\n", count, start, end);
+    printf("sys_timer 1s count: %" PRId32 "(%lld, %lld)\n", count, start, end);
 
     HAL_TIMER_Init(test_timer, TIMER_FREE_RUNNING);
     HAL_TIMER_SetCount(test_timer, 2000000000);
@@ -484,7 +484,7 @@ static void timer_test(void)
     /* test_timer: TIMER10 is a decrement count TIMER */
     desc_timer = true;
     count = (uint32_t)(start - end);
-    printf("test_timer 1s count: %ld(%lld, %lld)\n", count, start, end);
+    printf("test_timer 1s count: %" PRId32 "(%lld, %lld)\n", count, start, end);
     HAL_TIMER_Stop(test_timer);
 
     HAL_INTMUX_SetIRQHandler(TIMER10_IRQn, timer_isr, NULL);

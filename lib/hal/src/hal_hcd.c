@@ -273,7 +273,7 @@ HAL_Status HAL_HCD_HCSubmitRequest(struct HCD_HANDLE *pHCD,
         pHCD->hc[chNum].dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pbuff);
 
         if ((uint32_t)pHCD->hc[chNum].dmaAddr & (DWC2_USB_DMA_ALIGN - 1)) {
-            HAL_SYSLOG("%s: Non-aligned addr 0x%08lx for USB DWC2!\n", __func__, pHCD->hc[chNum].dmaAddr);
+            HAL_SYSLOG("%s: Non-aligned addr 0x%08" PRIx32 " for USB DWC2!\n", __func__, pHCD->hc[chNum].dmaAddr);
         }
     }
 

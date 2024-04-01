@@ -945,7 +945,7 @@ HAL_Status HAL_VOP_SendMcuCmd(struct VOP_REG *pReg, uint8_t type, uint32_t val)
         regVal = VOP_MaskRead(pReg->MCU_RW_BYPASS_PORT,
                               VOP_MCU_RW_BYPASS_PORT_MCU_WRITE_DATA_BYPASS_SHIFT,
                               VOP_MCU_RW_BYPASS_PORT_MCU_WRITE_DATA_BYPASS_MASK);
-        HAL_DBG("Mcu read 0x%08lx: 0x%08lx\n", val, regVal);
+        HAL_DBG("Mcu read 0x%08" PRIx32 ": 0x%08" PRIx32 "\n", val, regVal);
         break;
     case MCU_SETBYPASS:
         VOP_MaskWrite(&s_vopRegMir.MCU, &pReg->MCU, VOP_MCU_MCU_BYPASS_SHIFT,

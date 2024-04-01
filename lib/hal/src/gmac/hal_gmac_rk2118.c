@@ -118,7 +118,7 @@ void HAL_GMAC_SetRMIISpeed(struct GMAC_HANDLE *pGMAC, int32_t speed)
         WRITE_REG(GRF->SOC_CON8, RK2118_MAC_CLK_RMII_DIV2);
         break;
     default:
-        HAL_DBG_ERR("unknown speed value for MAC speed=%ld", speed);
+        HAL_DBG_ERR("unknown speed value for MAC speed=%" PRId32 "", speed);
 
         return;
     }

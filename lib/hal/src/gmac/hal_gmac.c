@@ -1507,7 +1507,7 @@ static HAL_Status GMAC_FlowCtrl(struct GMAC_HANDLE *pGMAC, int32_t duplex,
         HAL_DBG("\tTransmit Flow-Control ON\n");
 
         if (duplex) {
-            HAL_DBG("\tduplex mode: PAUSE %ld\n", pauseTime);
+            HAL_DBG("\tduplex mode: PAUSE %" PRId32 "\n", pauseTime);
         }
 
         flow = GMAC_Q0_TX_FLOW_CTRL_TFE;
@@ -1543,7 +1543,7 @@ static HAL_Status GMAC_DMARXOpMode(struct GMAC_HANDLE *pGMAC, int32_t mode,
         HAL_DBG("GMAC: enable RX store and forward mode\n");
         mtlRXOP |= MTL_RXQ0_OPERATION_MODE_RSF;
     } else {
-        HAL_DBG("GMAC: disable RX SF mode (threshold %ld)\n", mode);
+        HAL_DBG("GMAC: disable RX SF mode (threshold %" PRId32 ")\n", mode);
         mtlRXOP &= ~MTL_RXQ0_OPERATION_MODE_RSF;
         mtlRXOP &= MTL_OP_MODE_RTC_MASK;
         if (mode <= 32) {
@@ -1641,7 +1641,7 @@ static HAL_Status GMAC_DMATXOpMode(struct GMAC_HANDLE *pGMAC, int32_t mode,
         /* Transmit COE type 2 cannot be done in cut-through mode. */
         mtlTXOP |= MTL_OP_MODE_TSF;
     } else {
-        HAL_DBG("GMAC: disabling TX SF (threshold %ld)\n", mode);
+        HAL_DBG("GMAC: disabling TX SF (threshold %" PRId32 ")\n", mode);
         mtlTXOP &= ~MTL_OP_MODE_TSF;
         mtlTXOP &= MTL_OP_MODE_TTC_MASK;
         /* Set the transmit threshold */
@@ -1863,7 +1863,7 @@ HAL_Status HAL_GMAC_PHYInit(struct GMAC_HANDLE *pGMAC, struct GMAC_PHY_Config *c
 
         return HAL_NODEV;
     } else {
-        HAL_DBG("PHY found ID: 0x%lx\n", pGMAC->phyStatus.phyID);
+        HAL_DBG("PHY found ID: 0x%" PRIx32 "\n", pGMAC->phyStatus.phyID);
     }
 
     if (pGMAC->phyOps.init) {
@@ -2628,7 +2628,7 @@ HAL_Status HAL_GMAC_Send(struct GMAC_HANDLE *pGMAC, void *packet,
 
     desc = pGMAC->txDescs + pGMAC->txDescIdx;
     if (desc->des3 & GMAC_DESC3_OWN) {
-        HAL_DBG("%s(desc=%p, index=%ld) is busy\n", __func__, desc,
+        HAL_DBG("%s(desc=%p, index=%" PRId32 ") is busy\n", __func__, desc,
                 pGMAC->txDescIdx);
 
         return HAL_TIMEOUT;
@@ -2839,7 +2839,7 @@ uint8_t *HAL_GMAC_Recv(struct GMAC_HANDLE *pGMAC, int32_t *length)
      * ignored
      */
     if (*length > HAL_GMAC_MAX_FRAME_SIZE || *length <= ETH_FCS_LEN) {
-        HAL_DBG("len %ld is incorrect for max size (%d)\n",
+        HAL_DBG("len %" PRId32 " is incorrect for max size (%d)\n",
                 *length, HAL_GMAC_MAX_FRAME_SIZE);
         *length = 0;
         pGMAC->extraStatus.rxErrors++;

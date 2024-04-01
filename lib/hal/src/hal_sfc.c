@@ -173,8 +173,8 @@ static HAL_Status SFC_XferStart(struct HAL_SFC_HOST *host, struct HAL_SPI_MEM_OP
         SFC_Reset(pReg);
     }
 
-    /* HAL_DBG("%s 1 %lx %lx %lx\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
-    /* HAL_DBG("%s 2 %lx %lx %lx\n", __func__, sfcCtrl.d32, sfcCmd.d32, op->addr.val); */
+    /* HAL_DBG("%s 1 %" PRIx32 " %" PRIx32 " %" PRIx32 "\n", __func__, op->addr.nbytes, op->dummy.nbytes, op->data.nbytes); */
+    /* HAL_DBG("%s 2 %" PRIx32 " %" PRIx32 " %" PRIx32 "\n", __func__, sfcCtrl.d32, sfcCmd.d32, op->addr.val); */
 
     /* config SFC */
     pReg->CTRL = sfcCtrl.d32;
@@ -203,7 +203,7 @@ static HAL_Status SFC_XferData(struct HAL_SFC_HOST *host, uint32_t len, void *da
     uint32_t *pData = (uint32_t *)data;
     struct SFC_REG *pReg = host->instance;
 
-    /* HAL_DBG("%s %p %lx %x %lx %lx\n", __func__, (uint32_t *)host->instance, SFCCmd, cmd.b.datasize, SFCCtrl, addr); */
+    /* HAL_DBG("%s %p %" PRIx32 " %x %" PRIx32 " %" PRIx32 "\n", __func__, (uint32_t *)host->instance, SFCCmd, cmd.b.datasize, SFCCtrl, addr); */
     if (dir == SFC_WRITE) {
         words = (len + 3) >> 2;
         while (words) {

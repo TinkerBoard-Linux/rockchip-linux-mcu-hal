@@ -1137,7 +1137,7 @@ HAL_Status HAL_CRU_ClkResetSyncAssert(int numClks, uint32_t *clks)
 
     reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
     CRU_WRITE(reg, 0, val, val);
-    HAL_DBG("%s: index: 0x%lx, val: 0x%lx\n", __func__, index, val);
+    HAL_DBG("%s: index: 0x%" PRIx32 ", val: 0x%" PRIx32 "\n", __func__, index, val);
 
     return HAL_OK;
 }
@@ -1160,7 +1160,7 @@ HAL_Status HAL_CRU_ClkResetSyncDeassert(int numClks, uint32_t *clks)
 
     reg = ctrl->banks[bank].cruBase + ctrl->banks[bank].softOffset + index * 4;
     CRU_WRITE(reg, 0, val, 0);
-    HAL_DBG("%s: index: 0x%lx, val: 0x%lx\n", __func__, index, val);
+    HAL_DBG("%s: index: 0x%" PRIx32 ", val: 0x%" PRIx32 "\n", __func__, index, val);
 
     return HAL_OK;
 }
@@ -1443,7 +1443,7 @@ HAL_Status HAL_CRU_ClkResetSyncAssert(int numClks, uint32_t *clks)
 #else
     CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(val, val);
 #endif
-    HAL_DBG("%s: index: 0x%lx, val: 0x%lx\n", __func__, index, val);
+    HAL_DBG("%s: index: 0x%" PRIx32 ", val: 0x%" PRIx32 "\n", __func__, index, val);
 
     return HAL_OK;
 }
@@ -1470,7 +1470,7 @@ HAL_Status HAL_CRU_ClkResetSyncDeassert(int numClks, uint32_t *clks)
 #else
     CRU->CRU_SOFTRST_CON[index] = VAL_MASK_WE(val, 0);
 #endif
-    HAL_DBG("%s: index: 0x%lx, val: 0x%lx\n", __func__, index, val);
+    HAL_DBG("%s: index: 0x%" PRIx32 ", val: 0x%" PRIx32 "\n", __func__, index, val);
 
     return HAL_OK;
 }

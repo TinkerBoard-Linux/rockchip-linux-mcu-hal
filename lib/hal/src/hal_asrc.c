@@ -152,14 +152,14 @@ static HAL_Status HAL_ASRC_RefineLrckDiv(struct HAL_ASRC_DEV *asrc, struct ASRC_
     HAL_CRU_ClkSetFreq(asrc->mclk, mclkReqRate);
     mclkRate = HAL_CRU_ClkGetFreq(asrc->mclk);
     if (mclkRate != mclkReqRate) {
-        HAL_DBG_ERR("asrc-%p: %s: Mismatch mclk: %lu Hz, expected %lu Hz\n",
+        HAL_DBG_ERR("asrc-%p: %s: Mismatch mclk: %" PRIu32 " Hz, expected %" PRIu32 " Hz\n",
                     asrc->pReg, __func__, mclkRate, mclkReqRate);
 
         return HAL_INVAL;
     }
 
     if (mclkRate % params->sampleRate) {
-        HAL_DBG_ERR("asrc-%p: %s: Mismatch mclk: %lu Hz for samplerate: %d\n",
+        HAL_DBG_ERR("asrc-%p: %s: Mismatch mclk: %" PRIu32 " Hz for samplerate: %d\n",
                     asrc->pReg, __func__, mclkRate, params->sampleRate);
 
         return HAL_INVAL;
@@ -284,10 +284,10 @@ static void HAL_ASRC_DumpConfig(struct HAL_ASRC_DEV *asrc, struct ASRC_PARAMS *r
 
     HAL_DBG("asrc-%p: ch: %u, mode: %d, glink: %d\n",
             asrc->pReg, asrc->channels, asrc->mode, asrc->groupLink);
-    HAL_DBG("asrc-%p: rx: rate: %u, bits: %u, lrck: %s, div: %lu\n",
+    HAL_DBG("asrc-%p: rx: rate: %u, bits: %u, lrck: %s, div: %" PRIu32 "\n",
             asrc->pReg, rxParams->sampleRate, rxParams->sampleBits,
             lrckName[rxParams->lrckMux], rxParams->lrckDiv);
-    HAL_DBG("asrc-%p: tx: rate: %u, bits: %u, lrck: %s, div: %lu\n",
+    HAL_DBG("asrc-%p: tx: rate: %u, bits: %u, lrck: %s, div: %" PRIu32 "\n",
             asrc->pReg, txParams->sampleRate, txParams->sampleBits,
             lrckName[txParams->lrckMux], txParams->lrckDiv);
 #endif

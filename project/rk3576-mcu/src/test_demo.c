@@ -76,15 +76,15 @@ static void gpio_virtual_model_test(void)
     /* Test GPIO output */
     HAL_GPIO_SetPinDirection(GPIO0_EXP3, GPIO_PIN_C3, GPIO_OUT);
     level = HAL_GPIO_GetPinLevel(GPIO0_EXP3, GPIO_PIN_C3);
-    printf("test gpio 0c3 level = %ld\n", level);
+    printf("test gpio 0c3 level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
     HAL_GPIO_SetPinLevel(GPIO0_EXP3, GPIO_PIN_C3, GPIO_HIGH);
     level = HAL_GPIO_GetPinLevel(GPIO0_EXP3, GPIO_PIN_C3);
-    printf("test_gpio 0c3 output high level = %ld\n", level);
+    printf("test_gpio 0c3 output high level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
     HAL_GPIO_SetPinLevel(GPIO0_EXP3, GPIO_PIN_C3, GPIO_LOW);
     level = HAL_GPIO_GetPinLevel(GPIO0_EXP3, GPIO_PIN_C3);
-    printf("test_gpio 0c3 output low level = %ld\n", level);
+    printf("test_gpio 0c3 output low level = %" PRId32 "\n", level);
     HAL_DelayMs(3000);
 
     /* Test GPIO interrupt */
@@ -126,7 +126,7 @@ static void perf_test(void)
         }
         time_end = HAL_GetTick();
         time_ms = time_end - time_start;
-        printf("memset bw=%ldKB/s, time_ms=%d\n",
+        printf("memset bw=%" PRId32 "KB/s, time_ms=%d\n",
                1000 * (size * loop / 1024) / time_ms, time_ms);
 
         /* prevent optimization */
@@ -189,7 +189,7 @@ static void systick_isr(void)
     systick_latency_sum += latency;
     systick_latency_max = systick_latency_max > latency ? systick_latency_max : latency;
     if (systick_int_count == 100) {
-        printf("systick_test: latency=%ldns(count=%ld)\n", latency, count);
+        printf("systick_test: latency=%" PRId32 "ns(count=%" PRId32 ")\n", latency, count);
         printf("systick_test: latency avg=%dns,max=%dns\n", systick_latency_sum / systick_int_count, systick_latency_max);
         systick_int_count = 0;
         systick_latency_sum = 0;
@@ -230,7 +230,7 @@ static void timer_isr(void)
         /* 24M timer: 41.67ns per count */
         latency = count * 41;
         timer_int_count++;
-        printf("timer_test: latency=%ldns(count=%ld)\n", latency, count);
+        printf("timer_test: latency=%" PRId32 "ns(count=%" PRId32 ")\n", latency, count);
         latency_sum += latency;
         latency_max = latency_max > latency ? latency_max : latency;
     }
@@ -257,7 +257,7 @@ static void timer_test(void)
     HAL_DelayUs(1000000);
     end = HAL_GetSysTimerCount();
     count = (uint32_t)(end - start);
-    printf("sys_timer 1s count: %ld(%lld, %lld)\n", count, start, end);
+    printf("sys_timer 1s count: %" PRId32 "(%lld, %lld)\n", count, start, end);
 
     HAL_TIMER_Init(test_timer, TIMER_FREE_RUNNING);
     HAL_TIMER_SetCount(test_timer, 2000000000);
@@ -266,7 +266,7 @@ static void timer_test(void)
     HAL_DelayUs(1000000);
     end = HAL_TIMER_GetCount(test_timer);
     count = (uint32_t)(end - start);
-    printf("test_timer 1s count: %ld(%lld, %lld)\n", count, start, end);
+    printf("test_timer 1s count: %" PRId32 "(%lld, %lld)\n", count, start, end);
     HAL_TIMER_Stop(test_timer);
 
     HAL_NVIC_SetIRQHandler(TIMER10_IRQn, timer_isr);
@@ -297,7 +297,7 @@ static void timer_isr(uint32_t irq, void *args)
     count = (uint32_t)HAL_TIMER_GetCount(test_timer);
     /* 24M timer: 41.67ns per count */
     latency = count * 41;
-    printf("timer_test: latency=%ldns(count=%ld)\n", latency, count);
+    printf("timer_test: latency=%" PRId32 "ns(count=%" PRId32 ")\n", latency, count);
     timer_int_count++;
     latency_sum += latency;
     latency_max = latency_max > latency ? latency_max : latency;
@@ -323,7 +323,7 @@ static void timer_test(void)
     HAL_DelayUs(1000000);
     end = HAL_GetSysTimerCount();
     count = (uint32_t)(end - start);
-    printf("sys_timer 1s count: %ld(%lld, %lld)\n", count, start, end);
+    printf("sys_timer 1s count: %" PRId32 "(%lld, %lld)\n", count, start, end);
 
     HAL_TIMER_Init(test_timer, TIMER_FREE_RUNNING);
     HAL_TIMER_SetCount(test_timer, 2000000000);
@@ -332,7 +332,7 @@ static void timer_test(void)
     HAL_DelayUs(1000000);
     end = HAL_TIMER_GetCount(test_timer);
     count = (uint32_t)(end - start);
-    printf("test_timer 1s count: %ld(%lld, %lld)\n", count, start, end);
+    printf("test_timer 1s count: %" PRId32 "(%lld, %lld)\n", count, start, end);
     HAL_TIMER_Stop(test_timer);
 
     HAL_INTMUX_SetIRQHandler(TIMER8_IRQn, timer_isr, NULL);

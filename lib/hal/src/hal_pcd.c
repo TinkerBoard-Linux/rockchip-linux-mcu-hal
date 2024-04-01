@@ -310,7 +310,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                  * If the Bvalid signal is always high, the usb core
                  * will enter suspend state when disconnet from Host.
                  */
-                HAL_DBG("USB Disconnect! DSTS: 0x%08lx\n", USB_DEVICE->DSTS);
+                HAL_DBG("USB Disconnect! DSTS: 0x%08" PRIx32 "\n", USB_DEVICE->DSTS);
                 HAL_PCD_DisconnectCallback(pPCD);
                 USB_StopDevice(pUSB);
             } else {
@@ -402,7 +402,7 @@ void HAL_PCD_IRQHandler(struct PCD_HANDLE *pPCD)
                 /* Inform the upper layer that a setup packet is available */
                 HAL_PCD_SetupStageCallback(pPCD);
             } else {
-                HAL_DBG_WRN("unknown status 0x%08lx\n", temp);
+                HAL_DBG_WRN("unknown status 0x%08" PRIx32 "\n", temp);
             }
             USB_UNMASK_INTERRUPT(pPCD->pReg, USB_OTG_GINTSTS_RXFLVL);
         }
@@ -817,7 +817,7 @@ HAL_Status HAL_PCD_EPReceive(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint8_t *p
         pEP->dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pBuf);
 
         if ((uint32_t)pEP->dmaAddr & (DWC2_USB_DMA_ALIGN - 1)) {
-            HAL_SYSLOG("%s: Non-aligned addr 0x%08lx for USB DWC2!\n", __func__, pEP->dmaAddr);
+            HAL_SYSLOG("%s: Non-aligned addr 0x%08" PRIx32 " for USB DWC2!\n", __func__, pEP->dmaAddr);
         }
     }
 
@@ -867,7 +867,7 @@ HAL_Status HAL_PCD_EPTransmit(struct PCD_HANDLE *pPCD, uint8_t epAddr,
         pEP->dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pBuf);
 
         if ((uint32_t)pEP->dmaAddr & (DWC2_USB_DMA_ALIGN - 1)) {
-            HAL_SYSLOG("%s: Non-aligned addr 0x%08lx for USB DWC2!\n", __func__, pEP->dmaAddr);
+            HAL_SYSLOG("%s: Non-aligned addr 0x%08" PRIx32 " for USB DWC2!\n", __func__, pEP->dmaAddr);
         }
     }
 

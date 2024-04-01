@@ -582,7 +582,7 @@ void *HAL_USBH_AllocPool(void)
             pool = (void *)g_usbMem.pools[i];
             memset(pool, 0, MEM_POOL_UNIT_SIZE);
 
-            HAL_DBG("%s: 0x%08lx\n", __func__, (uint32_t)pool);
+            HAL_DBG("%s: 0x%08" PRIx32 "\n", __func__, (uint32_t)pool);
 
             return pool;
         }
@@ -605,13 +605,13 @@ HAL_Status HAL_USBH_FreePool(void *pool)
         if ((uint32_t)g_usbMem.pools[i] == (uint32_t)pool) {
             g_usbMem.poolUsed[i] = 0; /* unmark */
 
-            HAL_DBG("%s: 0x%08lx\n", __func__, (uint32_t)pool);
+            HAL_DBG("%s: 0x%08" PRIx32 "\n", __func__, (uint32_t)pool);
 
             return HAL_OK;
         }
     }
 
-    HAL_DBG_ERR("%s pool cell 0x%08lx not found!\n", __func__, (uint32_t)pool);
+    HAL_DBG_ERR("%s pool cell 0x%08" PRIx32 " not found!\n", __func__, (uint32_t)pool);
 
     return HAL_INVAL;
 }

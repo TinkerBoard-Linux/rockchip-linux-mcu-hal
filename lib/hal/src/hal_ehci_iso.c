@@ -42,7 +42,7 @@ static HAL_Check EHCI_ReviewItd(struct EHCI_REG *pReg, struct EHCI_ITD *itd)
     uint32_t frameCurr = (pReg->FRINDEX >> 3) & 0x3FF;
     int i, fidx;
 
-    // HAL_DBG("R - %d %d, 0x%lx\n", frameCurr, frameIdx, itd->transaction[0]);
+    // HAL_DBG("R - %d %d, 0x%" PRIx32 "\n", frameCurr, frameIdx, itd->transaction[0]);
 
     if (frameCurr == frameIdx) {
         for (i = 0; i < 8; i++) {
@@ -653,7 +653,7 @@ HAL_Status HAL_EHCI_QuitIsoXfer(struct UTR *utr, struct USB_EP_INFO *ep)
             }
 
             if (p == NULL) { /* link list out of control! */
-                HAL_DBG_ERR("%s: An iTD lost reference to periodic frame list! 0x%lx on %ld\n", __func__, (uint32_t)itd, frameIdx);
+                HAL_DBG_ERR("%s: An iTD lost reference to periodic frame list! 0x%" PRIx32 " on %" PRId32 "\n", __func__, (uint32_t)itd, frameIdx);
             } else { /* Remove iTD from list */
                 p->nextLink = itd->nextLink;
             }
@@ -717,7 +717,7 @@ HAL_Status HAL_EHCI_ScanIsochronousList(struct EHCI_HCD *ehci)
                     }
 
                     if (p == NULL) { /* Link list out of control */
-                        HAL_DBG_ERR("An iTD lost refernece to periodic frame list! 0x%lx -> %ld\n", (uint32_t)itd, frameIdx);
+                        HAL_DBG_ERR("An iTD lost refernece to periodic frame list! 0x%" PRIx32 " -> %" PRId32 "\n", (uint32_t)itd, frameIdx);
                     } else { /* Remove iTD from list */
                         p->nextLink = itd->nextLink;
                     }
@@ -755,7 +755,7 @@ HAL_Status HAL_EHCI_ScanIsochronousList(struct EHCI_HCD *ehci)
                     }
 
                     if (sp == NULL) { /* Link list out of control */
-                        HAL_DBG_ERR("An siTD lost reference to periodic frame list! 0x%lx -> %ld\n", (uint32_t)sitd, frameIdx);
+                        HAL_DBG_ERR("An siTD lost reference to periodic frame list! 0x%" PRIx32 " -> %" PRId32 "\n", (uint32_t)sitd, frameIdx);
                     } else { /* remove iTD from list */
                         sp->nextLink = sitd->nextLink;
                     }

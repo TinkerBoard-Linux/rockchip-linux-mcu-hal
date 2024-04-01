@@ -402,7 +402,7 @@ __STATIC_INLINE int PL330_Instr_DMAMOV(uint8_t dryRun, char *buf, uint8_t rd,
     *(buf + 1) = rd & 0x7;
     PL330_Memcpy4(buf + 2, (char *)&imm);
 
-    PL330_DBGCMD_DUMP(buf, "\tDMAMOV %s 0x%lx\n",
+    PL330_DBGCMD_DUMP(buf, "\tDMAMOV %s 0x%" PRIx32 "\n",
                       rd == SAR ? "SAR" : (rd == DAR ? "DAR" : "CCR"), imm);
 
     return SZ_DMAMOV;
@@ -1841,8 +1841,8 @@ uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
         /*
          * if DMA manager is fault
          */
-        HAL_DBG("Fault Type: 0x%lx\n", READ_REG(reg->FTRD));
-        HAL_DBG("Fault PC 0x%lx\n", READ_REG(reg->DPC));
+        HAL_DBG("Fault Type: 0x%" PRIx32 "\n", READ_REG(reg->FTRD));
+        HAL_DBG("Fault PC 0x%" PRIx32 "\n", READ_REG(reg->DPC));
         /* kill the DMA manager thread */
         /* Should we disable interrupt?*/
         PL330_Exec_DMAKILL(pl330->pReg, 0, 0);
@@ -1852,9 +1852,9 @@ uint32_t HAL_PL330_IrqHandler(struct HAL_PL330_DEV *pl330)
     if (val) {
         while (i < pl330->pcfg.numChan) {
             if (val & (1 << i)) {
-                HAL_DBG("Reset Channel-%d\t CS-%lx\n",
+                HAL_DBG("Reset Channel-%d\t CS-%" PRIx32 "\n",
                         i, READ_REG(reg->CHAN_STS[i].CSR));
-                HAL_DBG("Reset Channel-%d\t FTC-%lx\n",
+                HAL_DBG("Reset Channel-%d\t FTC-%" PRIx32 "\n",
                         i, READ_REG(reg->FTR[i]));
                 /* kill the channel thread */
                 /* Should we disable interrupt? */
