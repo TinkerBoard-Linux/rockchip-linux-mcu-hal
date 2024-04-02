@@ -220,6 +220,7 @@ static HAL_Status SAI_createFmt(struct HAL_SAI_DEV *sai, eAUDIO_fmtType fmt)
         sai->fpw = FPW_HALF_FRAME_WIDTH;
         break;
     case AUDIO_FMT_TDM_I2S:
+        MODIFY_REG(sai->pReg->CKR, SAI_CKR_FSP_MASK, SAI_CKR_FSP_INVERTED);
         sai->isTdm = true;
     /* fallthrough */
     case AUDIO_FMT_I2S:
