@@ -198,6 +198,12 @@ typedef enum {
   UART7_IRQn                =  370 + NUM_INTERRUPTS,     /*!< UART7 Interrupt               */
   UART8_IRQn                =  371 + NUM_INTERRUPTS,     /*!< UART8 Interrupt               */
   UART9_IRQn                =  372 + NUM_INTERRUPTS,     /*!< UART9 Interrupt               */
+  PWM1_IRQn                 =  378 + NUM_INTERRUPTS,     /*!< PWM1 Interrupt                */
+  PWM1_PWR_IRQn             =  379 + NUM_INTERRUPTS,     /*!< PWM1 PWR Interrupt            */
+  PWM2_IRQn                 =  380 + NUM_INTERRUPTS,     /*!< PWM2 Interrupt                */
+  PWM2_PWR_IRQn             =  381 + NUM_INTERRUPTS,     /*!< PWM2 PWR Interrupt            */
+  PWM3_IRQn                 =  382 + NUM_INTERRUPTS,     /*!< PWM3 Interrupt                */
+  PWM3_PWR_IRQn             =  383 + NUM_INTERRUPTS,     /*!< PWM3 PWR Interrupt            */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 #elif defined(RKMCU_RK3588_NPU)
