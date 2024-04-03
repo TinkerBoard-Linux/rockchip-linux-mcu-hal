@@ -340,10 +340,10 @@ struct HAL_FSPI_HOST g_fspi0Dev =
 const struct HAL_GMAC_DEV g_gmac0Dev =
 {
     .pReg = GMAC,
-    .clkID125M = CLK_MAC_OUT,
-    .clkID50M = CLK_MAC_OUT,
-    .clkGateID125M = CLK_MAC_OUT_GATE,
-    .clkGateID50M = CLK_MAC_OUT_GATE,
+    .clkID125M = CLK_MAC_ROOT,
+    .clkID50M = CLK_MAC_ROOT,
+    .clkGateID125M = CLK_MAC_ROOT_GATE,
+    .clkGateID50M = CLK_MAC_ROOT_GATE,
     .pclkID = ACLK_HSPERI,
     .pclkGateID = PCLK_MAC_GATE,
     .irqNum = MAC_SBD_IRQn,
