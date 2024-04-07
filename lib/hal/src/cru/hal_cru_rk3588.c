@@ -1415,6 +1415,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
     case CLK_PWM1:
     case CLK_PWM2:
     case CLK_PWM3:
+    case CLK_PMU1PWM:
         mux = HAL_CRU_FreqGetMux3(rate, _MHZ(100), _MHZ(50), PLL_INPUT_OSC_RATE);
         break;
 

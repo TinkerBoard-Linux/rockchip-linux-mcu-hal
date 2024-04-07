@@ -668,6 +668,7 @@ typedef enum CLOCK_Name {
     CLK_PWM1             = CLK64(CLK_PWM1_SEL, 0U),
     CLK_PWM2             = CLK64(CLK_PWM2_SEL, 0U),
     CLK_PWM3             = CLK64(CLK_PWM3_SEL, 0U),
+    CLK_PMU1PWM          = CLK64(CLK_PMU1PWM_SEL, 0U),
 
     CLK_SPI0             = CLK64(CLK_SPI0_SEL, 0U),
     CLK_SPI1             = CLK64(CLK_SPI1_SEL, 0U),
