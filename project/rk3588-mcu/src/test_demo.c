@@ -14,6 +14,7 @@
 //#define GPIO_VIRTUAL_MODEL_TEST
 //#define IRQ_LATENCY_TEST
 //#define PERF_TEST
+//#define PWM_TEST
 //#define SOFTIRQ_TEST
 //#define TIMER_TEST
 
@@ -301,6 +302,106 @@ static void perf_test(void)
 
 /************************************************/
 /*                                              */
+/*                  PWM_TEST                    */
+/*                                              */
+/************************************************/
+#ifdef PWM_TEST
+static uint32_t hal_pwm0_clk = 100000000;
+static struct PWM_HANDLE hal_pwm0_handle;
+struct HAL_PWM_CONFIG hal_channel0_config = {
+    .channel = 0,
+    .periodNS = 100000,
+    .dutyNS = 20000,
+    .polarity = true,
+    .alignedMode = HAL_PWM_CENTER_ALIGNED,
+};
+
+struct HAL_PWM_CONFIG hal_channel1_config = {
+    .channel = 1,
+    .periodNS = 100000,
+    .dutyNS = 40000,
+    .polarity = true,
+    .alignedMode = HAL_PWM_UNALIGNED,
+};
+
+struct HAL_PWM_CONFIG hal_channel2_config = {
+    .channel = 2,
+    .periodNS = 100000,
+    .dutyNS = 60000,
+    .polarity = false,
+    .alignedMode = HAL_PWM_LEFT_ALIGNED,
+};
+
+struct HAL_PWM_CONFIG hal_channel3_config = {
+    .channel = 3,
+    .periodNS = 100000,
+    .dutyNS = 80000,
+    .polarity = false,
+    .alignedMode = HAL_PWM_UNALIGNED,
+};
+
+static void HAL_IOMUX_PWM0_Config(void)
+{
+    /* PWM0 Channel0 M0 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_B7,
+                         PIN_CONFIG_MUX_FUNC3);
+    /* PWM0 Channel1 M0 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_C0,
+                         PIN_CONFIG_MUX_FUNC3);
+    /* PWM0 Channel2 M0 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_C4,
+                         PIN_CONFIG_MUX_FUNC3);
+    /* PWM0 Channel3 M0 */
+    HAL_PINCTRL_SetIOMUX(GPIO_BANK0,
+                         GPIO_PIN_D4,
+                         PIN_CONFIG_MUX_FUNC3);
+}
+
+static void pwm_isr(uint32_t irq, void *args)
+{
+    struct PWM_HANDLE *pPWM = (struct PWM_HANDLE *)args;
+    uint32_t status = READ_REG(pPWM->pReg->INTSTS);
+    uint32_t i;
+
+    HAL_PWM_IRQHandler(pPWM);
+
+    for (i = 0; i < HAL_PWM_NUM_CHANNELS; i++) {
+        if ((status & (1 << i)) &&
+            (pPWM->mode[i] == HAL_PWM_CAPTURE)) {
+            printf("pwm_test: chanel%d period val = %d\n", i, pPWM->result[i].period);
+        }
+    }
+}
+
+static void pwm_test(void)
+{
+    printf("pwm_test: test start:\n");
+
+    HAL_PWM_Init(&hal_pwm0_handle, g_pwm0Dev.pReg, hal_pwm0_clk);
+
+    HAL_IOMUX_PWM0_Config();
+
+    HAL_PWM_SetConfig(&hal_pwm0_handle, hal_channel0_config.channel, &hal_channel0_config);
+    HAL_PWM_SetConfig(&hal_pwm0_handle, hal_channel1_config.channel, &hal_channel1_config);
+    HAL_PWM_SetConfig(&hal_pwm0_handle, hal_channel2_config.channel, &hal_channel2_config);
+    HAL_PWM_SetConfig(&hal_pwm0_handle, hal_channel3_config.channel, &hal_channel3_config);
+
+    HAL_PWM_Enable(&hal_pwm0_handle, hal_channel0_config.channel, HAL_PWM_CONTINUOUS);
+    HAL_PWM_Enable(&hal_pwm0_handle, hal_channel1_config.channel, HAL_PWM_CAPTURE);
+    HAL_PWM_Enable(&hal_pwm0_handle, hal_channel2_config.channel, HAL_PWM_CONTINUOUS);
+    HAL_PWM_Enable(&hal_pwm0_handle, hal_channel3_config.channel, HAL_PWM_CAPTURE);
+
+    HAL_INTMUX_SetIRQHandler(g_pwm0Dev.irqNum, pwm_isr, &hal_pwm0_handle);
+    HAL_INTMUX_EnableIRQ(g_pwm0Dev.irqNum);
+    printf("pwm_test: irq enable\n");
+}
+#endif
+
+/************************************************/
+/*                                              */
 /*                SOFTIRQ_TEST                  */
 /*                                              */
 /************************************************/
@@ -415,6 +516,10 @@ void test_demo(void)
 
 #ifdef PERF_TEST
     perf_test();
+#endif
+
+#ifdef PWM_TEST
+    pwm_test();
 #endif
 
 #ifdef SOFTIRQ_TEST
