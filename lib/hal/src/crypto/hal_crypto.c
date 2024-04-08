@@ -991,9 +991,19 @@ HAL_Status HAL_CRYPTO_AlgoInit(struct CRYPTO_DEV *pCrypto,
         return HAL_INVAL;
     }
 
+    // disable clock auto gate to ensure that the CRYPTO module is reset correctly
+    WRITE_REG_MASK_WE(CRYPTO->CLK_CTL,
+                      CRYPTO_CLK_CTL_AUTO_CLKGATE_EN_MASK,
+                      0);
+
     WRITE_REG_MASK_WE(CRYPTO->RST_CTL,
                       CRYPTO_RST_CTL_SW_CC_RESET_MASK,
                       CRYPTO_SW_CC_RESET);
+
+    // enable clock auto gate after CRYPTO module reset
+    WRITE_REG_MASK_WE(CRYPTO->CLK_CTL,
+                      CRYPTO_CLK_CTL_AUTO_CLKGATE_EN_MASK,
+                      CRYPTO_AUTO_CLKGATE_EN);
 
     CRYPTO_CLEAR_KEY_REGS(CRYPTO->CHN_KEY);
 
