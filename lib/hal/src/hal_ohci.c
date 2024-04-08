@@ -352,43 +352,25 @@ static HAL_Status OHCI_CtrlXfer(struct UTR *utr)
     struct OHCI_REG *pReg = HCD_HANDLE_TO_REG(ohci);
     struct USB_DEV *udev;
     struct OHCI_ED *ed;
-    struct OHCI_TD *tdSetup, *tdData, *tdStatus;
+    struct OHCI_TD *tdSetup, *tdData, *tdStatus, *tdCurrent, *tdHead;
     uint32_t info;
+    uint32_t rmSize, sdSize, maxPacketLen;
+    uint32_t toogle;
 
     udev = utr->udev;
+    maxPacketLen = utr->udev->ep0.wMaxPacketSize;
 
     /* Allocate ED and TDs */
     tdSetup = (struct OHCI_TD *)HAL_USBH_AllocPool();
     OHCI_TD_INIT(tdSetup, utr);
-
-    if (utr->dataLen > 0) {
-        tdData = (struct OHCI_TD *)HAL_USBH_AllocPool();
-        OHCI_TD_INIT(tdData, utr);
-    } else {
-        tdData = NULL;
-    }
-
-    tdStatus = (struct OHCI_TD *)HAL_USBH_AllocPool();
-    if (tdStatus == NULL) {
-        HAL_USBH_FreePool(tdSetup);
-        if (utr->dataLen > 0) {
-            HAL_USBH_FreePool(tdData);
-        }
-
-        return HAL_ERROR;
-    }
-
-    OHCI_TD_INIT(tdStatus, utr);
+    tdCurrent = tdSetup;
+    tdHead = tdSetup;
 
     /* Check if there's any transfer pending on this endpoint... */
     if (udev->ep0.hwPipe == NULL) {
         ed = (struct OHCI_ED *)HAL_USBH_AllocPool();
         if (ed == NULL) {
             HAL_USBH_FreePool(tdSetup);
-            HAL_USBH_FreePool(tdStatus);
-            if (utr->dataLen > 0) {
-                HAL_USBH_FreePool(tdData);
-            }
 
             return HAL_ERROR;
         }
@@ -401,35 +383,65 @@ static HAL_Status OHCI_CtrlXfer(struct UTR *utr)
     OHCI_WriteTd(tdSetup, info, (uint8_t *)&utr->setup, 8);
     tdSetup->ed = ed;
 
+    rmSize = utr->dataLen;
+    sdSize = rmSize;
+    toogle = TD_T_DATA1;
     /* prepare DATA stage TD */
-    if (utr->dataLen > 0) {
+    while (rmSize > 0) {
+        sdSize = rmSize;
+        if (rmSize > maxPacketLen) {
+            sdSize = maxPacketLen;
+        }
+        tdData = (struct OHCI_TD *)HAL_USBH_AllocPool();
+        if (tdData == NULL) {
+            while (tdHead != NULL) {
+                tdCurrent = tdHead;
+                tdHead = tdHead->next;
+                HAL_USBH_FreePool(tdCurrent);
+            }
+
+            return HAL_ERROR;
+        }
+        OHCI_TD_INIT(tdData, utr);
         if (!(utr->setup.bmRequestType & 0x80)) { /* REQ_TYPE_OUT */
-            info = (TD_CC | TD_R | TD_DP_OUT | TD_T_DATA1 |
+            info = (TD_CC | TD_R | TD_DP_OUT | toogle |
                     TD_TYPE_CTRL | TD_CTRL_DATA);
         } else {
-            info = (TD_CC | TD_R | TD_DP_IN | TD_T_DATA1 |
+            info = (TD_CC | TD_R | TD_DP_IN | toogle |
                     TD_TYPE_CTRL | TD_CTRL_DATA);
         }
-
-        OHCI_WriteTd(tdData, info, utr->buff, utr->dataLen);
+        OHCI_WriteTd(tdData, info, utr->buff, sdSize);
         tdData->ed = ed;
-        tdSetup->nextTD = (uint32_t)tdData;
-        tdSetup->next = tdData;
-        tdData->nextTD = (uint32_t)tdStatus;
-        tdData->next = tdStatus;
-    } else {
-        tdSetup->nextTD = (uint32_t)tdStatus;
-        tdSetup->next = tdStatus;
+        tdCurrent->nextTD = (uint32_t)tdData;
+        tdCurrent->next = tdData;
+        tdCurrent = tdData;
+        rmSize -= sdSize;
+        toogle ^= (0x1 << 24);
+        utr->tdCnt++;
     }
 
     /* prepare STATUS stage TD */
+    tdStatus = (struct OHCI_TD *)HAL_USBH_AllocPool();
+    if (tdStatus == NULL) {
+        while (tdHead != NULL) {
+            tdCurrent = tdHead;
+            tdHead = tdHead->next;
+            HAL_USBH_FreePool(tdCurrent);
+        }
+
+        return HAL_ERROR;
+    }
+    OHCI_TD_INIT(tdStatus, utr)
+
     ed->info = OHCI_MakeEdInfo(udev, NULL);
     if (!(utr->setup.bmRequestType & 0x80)) { /* REQ_TYPE_OUT */
         info = (TD_CC | TD_DP_IN | TD_T_DATA1 | TD_TYPE_CTRL);
     } else {
         info = (TD_CC | TD_DP_OUT | TD_T_DATA1 | TD_TYPE_CTRL);
     }
-
+    tdCurrent->nextTD = (uint32_t)tdStatus;
+    tdCurrent->next = tdStatus;
+    tdCurrent = tdStatus;
     OHCI_WriteTd(tdStatus, info, NULL, 0);
     tdStatus->ed = ed;
     tdStatus->nextTD = 0;
@@ -448,7 +460,7 @@ static HAL_Status OHCI_CtrlXfer(struct UTR *utr)
     HAL_DBG("Xfer ED 0x%lx: 0x%lx 0x%lx 0x%lx 0x%lx\n", (uint32_t)ed, ed->info, ed->tailP, ed->headP, ed->nextED);
 
     if (utr->dataLen > 0) {
-        utr->tdCnt = 3;
+        utr->tdCnt += 2;
     } else {
         utr->tdCnt = 2;
     }
