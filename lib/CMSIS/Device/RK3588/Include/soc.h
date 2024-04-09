@@ -184,6 +184,7 @@ typedef enum {
   TIMER9_IRQn               =  330 + NUM_INTERRUPTS,     /*!< TIMER9 Interrupt              */
   TIMER10_IRQn              =  331 + NUM_INTERRUPTS,     /*!< TIMER10 Interrupt             */
   TIMER11_IRQn              =  332 + NUM_INTERRUPTS,     /*!< TIMER11 Interrupt             */
+  WDT0_IRQn                 =  346 + NUM_INTERRUPTS,     /*!< WDT Interrupt                 */
   I2C1_IRQn                 =  350 + NUM_INTERRUPTS,     /*!< I2C1 Interrupt                */
   I2C2_IRQn                 =  351 + NUM_INTERRUPTS,     /*!< I2C2 Interrupt                */
   I2C3_IRQn                 =  352 + NUM_INTERRUPTS,     /*!< I2C3 Interrupt                */
@@ -212,6 +213,7 @@ typedef enum {
   PWM2_PWR_IRQn             =  381 + NUM_INTERRUPTS,     /*!< PWM2 PWR Interrupt            */
   PWM3_IRQn                 =  382 + NUM_INTERRUPTS,     /*!< PWM3 Interrupt                */
   PWM3_PWR_IRQn             =  383 + NUM_INTERRUPTS,     /*!< PWM3 PWR Interrupt            */
+  SARADC_IRQn               =  430 + NUM_INTERRUPTS,     /*!< SARADC Interrupt              */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 #elif defined(RKMCU_RK3588_NPU)
