@@ -36,7 +36,11 @@
 #define TSADC_SHUT_2GPIO_SRC_EN(chn) HAL_BIT(4 + (chn))
 #define TSADC_SHUT_2CRU_SRC_EN(chn)  HAL_BIT(8 + (chn))
 
+#ifdef TSADC_AUTO_SRC_AUTO_SRC_MASK
+#define TSADC_DATA_MASK 0x3ff
+#else
 #define TSADC_DATA_MASK 0xfff
+#endif
 
 #define TSADC_HIGHT_INT_DEBOUNCE_COUNT   4
 #define TSADC_HIGHT_TSHUT_DEBOUNCE_COUNT 4
