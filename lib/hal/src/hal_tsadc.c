@@ -533,10 +533,10 @@ HAL_Status HAL_TSADC_Enable_AUTO(int chn, eTSADC_tshutPolarity polarity, eTSADC_
 #ifndef TSADC_NONLINEAR
     int deltaTemp, deltaCode;
 
-    deltaTemp = s_tsadcTable[1].temp - s_tsadcTable[0].temp;
-    deltaCode = s_tsadcTable[1].code - s_tsadcTable[0].code;
+    deltaTemp = s_tsadcTable[2].temp - s_tsadcTable[1].temp;
+    deltaCode = s_tsadcTable[2].code - s_tsadcTable[1].code;
     kNum = HAL_DIV_ROUND_UP(deltaTemp, deltaCode);
-    bNum = s_tsadcTable[0].temp - (kNum * s_tsadcTable[0].code);
+    bNum = s_tsadcTable[1].temp - (kNum * s_tsadcTable[1].code);
     HAL_ASSERT(kNum != 0);
 #endif
 
