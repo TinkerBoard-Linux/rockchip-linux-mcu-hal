@@ -875,6 +875,658 @@ struct GMAC_REG {
     __I  uint32_t DMA_CH0_MISS_FRAME_CNT;             /* Address Offset: 0x1164 */
     __I  uint32_t DMA_CH0_RX_ERI_CNT;                 /* Address Offset: 0x1168 */
 };
+/* VOP2_SYS Register Structure Define */
+struct VOP2_SYS_REG {
+    __IO uint32_t SYS_REG_CFG_DONE;                   /* Address Offset: 0x0000 */
+    __IO uint32_t SYS_VERSION_INFO;                   /* Address Offset: 0x0004 */
+    __IO uint32_t SYS_AUTO_GATING_CTRL_IMD;           /* Address Offset: 0x0008 */
+         uint32_t SYS_RESVERD;                        /* Address Offset: 0x000C */
+    __IO uint32_t SYS_AXI_CTRL0_IMD;                  /* Address Offset: 0x0010 */
+    __IO uint32_t SYS_AXI_HURRY_CTRL0_IMD;            /* Address Offset: 0x0014 */
+    __IO uint32_t SYS_AXI_HURRY_CTRL1_IMD;            /* Address Offset: 0x0018 */
+    __IO uint32_t SYS_AXI_OUTSTANDING_CTRL0_IMD;      /* Address Offset: 0x001C */
+    __IO uint32_t SYS_AXI_OUTSTANDING_CTRL1_IMD;      /* Address Offset: 0x0020 */
+    __IO uint32_t SYS_AXI_LUT_CTRL_IMD;               /* Address Offset: 0x0024 */
+    __IO uint32_t SYS_DSP_INFACE_EN;                  /* Address Offset: 0x0028 */
+    __IO uint32_t SYS_DSP_INFACE_CTRL;                /* Address Offset: 0x002C */
+    __IO uint32_t SYS_DSP_INFACE_POL;                 /* Address Offset: 0x0030 */
+         uint32_t RESERVED0034[3];                    /* Address Offset: 0x0034 */
+    __IO uint32_t SYS_WB_CTRL0;                       /* Address Offset: 0x0040 */
+    __IO uint32_t SYS_WB_XSPD_FACTOR;                 /* Address Offset: 0x0044 */
+    __IO uint32_t SYS_WB_YRGB_MST;                    /* Address Offset: 0x0048 */
+    __IO uint32_t SYS_WB_CBR_MST;                     /* Address Offset: 0x004C */
+    __IO uint32_t SYS_OTP_WIN_EN_IMD;                 /* Address Offset: 0x0050 */
+         uint32_t RESERVED0054;                       /* Address Offset: 0x0054 */
+    __IO uint32_t SYS_LUT_PORT_SEL;                   /* Address Offset: 0x0058 */
+         uint32_t RESERVED005C;                       /* Address Offset: 0x005C */
+    __IO uint32_t SYS_STATUS0;                        /* Address Offset: 0x0060 */
+    __IO uint32_t SYS_STATUS1;                        /* Address Offset: 0x0064 */
+    __IO uint32_t SYS_STATUS2;                        /* Address Offset: 0x0068 */
+    __IO uint32_t SYS_RESERVED;                       /* Address Offset: 0x006C */
+    __IO uint32_t SYS_LINE_FLAG0;                     /* Address Offset: 0x0070 */
+    __IO uint32_t SYS_LINE_FLAG1;                     /* Address Offset: 0x0074 */
+    __IO uint32_t SYS_LINE_FLAG2;                     /* Address Offset: 0x0078 */
+         uint32_t RESERVED007C;                       /* Address Offset: 0x007C */
+    __IO uint32_t SYS0_INTR_EN;                       /* Address Offset: 0x0080 */
+    __IO uint32_t SYS0_INTR_CLR;                      /* Address Offset: 0x0084 */
+    __IO uint32_t SYS0_INTR_STATUS;                   /* Address Offset: 0x0088 */
+    __IO uint32_t SYS0_INTR_RAW_STATUS;               /* Address Offset: 0x008C */
+    __IO uint32_t SYS1_INTR_EN;                       /* Address Offset: 0x0090 */
+    __IO uint32_t SYS1_INTR_CLR_SYS;                  /* Address Offset: 0x0094 */
+    __IO uint32_t SYS1_INTR_STATUS;                   /* Address Offset: 0x0098 */
+    __IO uint32_t SYS1_INTR_RAW_STATUS;               /* Address Offset: 0x009C */
+    __IO uint32_t PORT0_INTR_EN;                      /* Address Offset: 0x00A0 */
+    __IO uint32_t PORT0_INTR_CLR;                     /* Address Offset: 0x00A4 */
+    __IO uint32_t PORT0_INTR_STATUS;                  /* Address Offset: 0x00A8 */
+    __IO uint32_t PORT0_INTR_RAW_STATUS;              /* Address Offset: 0x00AC */
+    __IO uint32_t PORT1_INTR_EN;                      /* Address Offset: 0x00B0 */
+    __IO uint32_t PORT1_INTR_CLR;                     /* Address Offset: 0x00B4 */
+    __IO uint32_t PORT1_INTR_STATUS;                  /* Address Offset: 0x00B8 */
+    __IO uint32_t PORT1_INTR_RAW_STATUS;              /* Address Offset: 0x00BC */
+    __IO uint32_t PORT2_INTR_EN;                      /* Address Offset: 0x00C0 */
+    __IO uint32_t PORT2_INTR_CLR;                     /* Address Offset: 0x00C4 */
+    __IO uint32_t PORT2_INTR_STATUS;                  /* Address Offset: 0x00C8 */
+    __IO uint32_t PORT2_INTR_RAW_STATUS;              /* Address Offset: 0x00CC */
+    __IO uint32_t AFBCD_INTR_EN;                      /* Address Offset: 0x00D0 */
+    __IO uint32_t AFBCD_INTR_CLR;                     /* Address Offset: 0x00D4 */
+    __IO uint32_t AFBCD_INTR_STATUS;                  /* Address Offset: 0x00D8 */
+    __IO uint32_t AFBCD_INTR_RAW_STATUS;              /* Address Offset: 0x00DC */
+};
+/* VOP2_OVERLAY Register Structure Define */
+struct VOP2_OVERLAY_REG {
+    __IO uint32_t OVERLAY_CTRL;                       /* Address Offset: 0x0000 */
+    __IO uint32_t OVERLAY_LAYER_SEL;                  /* Address Offset: 0x0004 */
+    __IO uint32_t OVERLAY_PORT_SEL;                   /* Address Offset: 0x0008 */
+         uint32_t RESERVED000C;                       /* Address Offset: 0x000C */
+    __IO uint32_t CLUSTER0_MIX_SRC_COLOR_CTRL;        /* Address Offset: 0x0010 */
+    __IO uint32_t CLUSTER0_MIX_DST_COLOR_CTRL;        /* Address Offset: 0x0014 */
+    __IO uint32_t CLUSTER0_MIX_SRC_ALPHA_CTRL;        /* Address Offset: 0x0018 */
+    __IO uint32_t CLUSTER0_MIX_DST_ALPHA_CTRL;        /* Address Offset: 0x001C */
+    __IO uint32_t CLUSTER1_MIX_SRC_COLOR_CTRL;        /* Address Offset: 0x0020 */
+    __IO uint32_t CLUSTER1_MIX_DST_COLOR_CTRL;        /* Address Offset: 0x0024 */
+    __IO uint32_t CLUSTER1_MIX_SRC_ALPHA_CTRL;        /* Address Offset: 0x0028 */
+    __IO uint32_t CLUSTER1_MIX_DST_ALPHA_CTRL;        /* Address Offset: 0x002C */
+         uint32_t RESERVED0030[8];                    /* Address Offset: 0x0030 */
+    __IO uint32_t MIX0_SRC_COLOR_CTRL;                /* Address Offset: 0x0050 */
+    __IO uint32_t MIX0_DST_COLOR_CTRL;                /* Address Offset: 0x0054 */
+    __IO uint32_t MIX0_SRC_ALPHA_CTRL;                /* Address Offset: 0x0058 */
+    __IO uint32_t MIX0_DST_ALPHA_CTRL;                /* Address Offset: 0x005C */
+    __IO uint32_t MIX1_SRC_COLOR_CTRL;                /* Address Offset: 0x0060 */
+    __IO uint32_t MIX1_DST_COLOR_CTRL;                /* Address Offset: 0x0064 */
+    __IO uint32_t MIX1_SRC_ALPHA_CTRL;                /* Address Offset: 0x0068 */
+    __IO uint32_t MIX1_DST_ALPHA_CTRL;                /* Address Offset: 0x006C */
+    __IO uint32_t MIX2_SRC_COLOR_CTRL;                /* Address Offset: 0x0070 */
+    __IO uint32_t MIX2_DST_COLOR_CTRL;                /* Address Offset: 0x0074 */
+    __IO uint32_t MIX2_SRC_ALPHA_CTRL;                /* Address Offset: 0x0078 */
+    __IO uint32_t MIX2_DST_ALPHA_CTRL;                /* Address Offset: 0x007C */
+    __IO uint32_t MIX3_SRC_COLOR_CTRL;                /* Address Offset: 0x0080 */
+    __IO uint32_t MIX3_DST_COLOR_CTRL;                /* Address Offset: 0x0084 */
+    __IO uint32_t MIX3_SRC_ALPHA_CTRL;                /* Address Offset: 0x0088 */
+    __IO uint32_t MIX3_DST_ALPHA_CTRL;                /* Address Offset: 0x008C */
+    __IO uint32_t MIX4_SRC_COLOR_CTRL;                /* Address Offset: 0x0090 */
+    __IO uint32_t MIX4_DST_COLOR_CTRL;                /* Address Offset: 0x0094 */
+    __IO uint32_t MIX4_SRC_ALPHA_CTRL;                /* Address Offset: 0x0098 */
+    __IO uint32_t MIX4_DST_ALPHA_CTRL;                /* Address Offset: 0x009C */
+    __IO uint32_t MIX5_SRC_COLOR_CTRL;                /* Address Offset: 0x00A0 */
+    __IO uint32_t MIX5_DST_COLOR_CTRL;                /* Address Offset: 0x00A4 */
+    __IO uint32_t MIX5_SRC_ALPHA_CTRL;                /* Address Offset: 0x00A8 */
+    __IO uint32_t MIX5_DST_ALPHA_CTRL;                /* Address Offset: 0x00AC */
+    __IO uint32_t MIX6_SRC_COLOR_CTRL;                /* Address Offset: 0x00B0 */
+    __IO uint32_t MIX6_DST_COLOR_CTRL;                /* Address Offset: 0x00B4 */
+    __IO uint32_t MIX6_SRC_ALPHA_CTRL;                /* Address Offset: 0x00B8 */
+    __IO uint32_t MIX6_DST_ALPHA_CTRL;                /* Address Offset: 0x00BC */
+    __IO uint32_t HDR0_MIX_SRC_COLOR_CTRL;            /* Address Offset: 0x00C0 */
+    __IO uint32_t HDR0_MIX_DST_COLOR_CTRL;            /* Address Offset: 0x00C4 */
+    __IO uint32_t HDR0_MIX_SRC_ALPHA_CTRL;            /* Address Offset: 0x00C8 */
+    __IO uint32_t HDR0_MIX_DST_ALPHA_CTRL;            /* Address Offset: 0x00CC */
+         uint32_t RESERVED00D0[4];                    /* Address Offset: 0x00D0 */
+    __IO uint32_t DP0_BG_MIX_CTRL;                    /* Address Offset: 0x00E0 */
+    __IO uint32_t DP1_BG_MIX_CTRL;                    /* Address Offset: 0x00E4 */
+    __IO uint32_t DP2_BG_MIX_CTRL;                    /* Address Offset: 0x00E8 */
+         uint32_t RESERVED00EC;                       /* Address Offset: 0x00EC */
+    __IO uint32_t Cluster_DLY_NUM;                    /* Address Offset: 0x00F0 */
+         uint32_t RESERVED00F4;                       /* Address Offset: 0x00F4 */
+    __IO uint32_t SMART_DLY_NUM;                      /* Address Offset: 0x00F8 */
+};
+/* VOP2_POST0_DSP Register Structure Define */
+struct VOP2_POST0_DSP_REG {
+    __IO uint32_t POST_DSP_CTRL;                      /* Address Offset: 0x0000 */
+    __IO uint32_t POST_MIPI_CTRL;                     /* Address Offset: 0x0004 */
+    __IO uint32_t POST_COLOR_CTRL;                    /* Address Offset: 0x0008 */
+    __IO uint32_t POST_RESERVED2;                     /* Address Offset: 0x000C */
+    __IO uint32_t POST_3D_LUT_CTRL;                   /* Address Offset: 0x0010 */
+    __IO uint32_t POST_3D_LUT_R;                      /* Address Offset: 0x0014 */
+    __IO uint32_t POST_3D_LUT_G;                      /* Address Offset: 0x0018 */
+    __IO uint32_t POST_3D_LUT_B;                      /* Address Offset: 0x001C */
+    __IO uint32_t POST_3DLUT_MST;                     /* Address Offset: 0x0020 */
+         uint32_t RESERVED0024[2];                    /* Address Offset: 0x0024 */
+    __IO uint32_t POST_DSP_BG;                        /* Address Offset: 0x002C */
+    __IO uint32_t POST_PRE_SCAN_HTIMING;              /* Address Offset: 0x0030 */
+    __IO uint32_t POST_DSP_HACT_INFO;                 /* Address Offset: 0x0034 */
+    __IO uint32_t POST_DSP_VACT_INFO;                 /* Address Offset: 0x0038 */
+    __IO uint32_t POST_SCL_FACTOR_YRGB;               /* Address Offset: 0x003C */
+    __IO uint32_t POST_SCL_CTRL;                      /* Address Offset: 0x0040 */
+    __IO uint32_t POST_DSP_VACT_INFO_F1;              /* Address Offset: 0x0044 */
+    __IO uint32_t POST_DSP_HTOTAL_HS_END;             /* Address Offset: 0x0048 */
+    __IO uint32_t POST_DSP_HACT_ST_END;               /* Address Offset: 0x004C */
+    __IO uint32_t POST_DSP_VTOTAL_VS_END;             /* Address Offset: 0x0050 */
+    __IO uint32_t POST_DSP_VACT_ST_END;               /* Address Offset: 0x0054 */
+    __IO uint32_t POST_DSP_VS_ST_END_F1;              /* Address Offset: 0x0058 */
+    __IO uint32_t POST_DSP_VACT_ST_END_F1;            /* Address Offset: 0x005C */
+    __IO uint32_t POST_BCSH_CTRL;                     /* Address Offset: 0x0060 */
+    __IO uint32_t POST_BCSH_BCS;                      /* Address Offset: 0x0064 */
+    __IO uint32_t POST_BCSH_H;                        /* Address Offset: 0x0068 */
+    __IO uint32_t POST_BCSH_COLOR_BAR;                /* Address Offset: 0x006C */
+         uint32_t RESERVED0070[12];                   /* Address Offset: 0x0070 */
+    __IO uint32_t POST_FRC_LOWER01_0;                 /* Address Offset: 0x00A0 */
+    __IO uint32_t POST_FRC_LOWER01_1;                 /* Address Offset: 0x00A4 */
+    __IO uint32_t POST_FRC_LOWER10_0;                 /* Address Offset: 0x00A8 */
+    __IO uint32_t POST_FRC_LOWER10_1;                 /* Address Offset: 0x00AC */
+    __IO uint32_t POST_FRC_LOWER11_0;                 /* Address Offset: 0x00B0 */
+    __IO uint32_t POST_FRC_LOWER11_1;                 /* Address Offset: 0x00B4 */
+};
+/* VOP2_POST1_DSP Register Structure Define */
+struct VOP2_POST1_DSP_REG {
+    __IO uint32_t POST_DSP_CTRL;                      /* Address Offset: 0x0000 */
+    __IO uint32_t POST_MIPI_CTRL;                     /* Address Offset: 0x0004 */
+    __IO uint32_t POST_COLOR_CTRL;                    /* Address Offset: 0x0008 */
+    __IO uint32_t POST_RESERVED2;                     /* Address Offset: 0x000C */
+         uint32_t RESERVED0010[7];                    /* Address Offset: 0x0010 */
+    __IO uint32_t POST_DSP_BG;                        /* Address Offset: 0x002C */
+    __IO uint32_t POST_PRE_SCAN_HTIMING;              /* Address Offset: 0x0030 */
+    __IO uint32_t POST_DSP_HACT_INFO;                 /* Address Offset: 0x0034 */
+    __IO uint32_t POST_DSP_VACT_INFO;                 /* Address Offset: 0x0038 */
+    __IO uint32_t POST_SCL_FACTOR_YRGB;               /* Address Offset: 0x003C */
+    __IO uint32_t POST_SCL_CTRL;                      /* Address Offset: 0x0040 */
+    __IO uint32_t POST_DSP_VACT_INFO_F1;              /* Address Offset: 0x0044 */
+    __IO uint32_t POST_DSP_HTOTAL_HS_END;             /* Address Offset: 0x0048 */
+    __IO uint32_t POST_DSP_HACT_ST_END;               /* Address Offset: 0x004C */
+    __IO uint32_t POST_DSP_VTOTAL_VS_END;             /* Address Offset: 0x0050 */
+    __IO uint32_t POST_DSP_VACT_ST_END;               /* Address Offset: 0x0054 */
+    __IO uint32_t POST_DSP_VS_ST_END_F1;              /* Address Offset: 0x0058 */
+    __IO uint32_t POST_DSP_VACT_ST_END_F1;            /* Address Offset: 0x005C */
+    __IO uint32_t POST_BCSH_CTRL;                     /* Address Offset: 0x0060 */
+    __IO uint32_t POST_BCSH_BCS;                      /* Address Offset: 0x0064 */
+    __IO uint32_t POST_BCSH_H;                        /* Address Offset: 0x0068 */
+    __IO uint32_t POST_BCSH_COLOR_BAR;                /* Address Offset: 0x006C */
+    __IO uint32_t POST_CABC_CTRL0;                    /* Address Offset: 0x0070 */
+    __IO uint32_t POST_CABC_CTRL1;                    /* Address Offset: 0x0074 */
+    __IO uint32_t POST_CABC_CTRL2;                    /* Address Offset: 0x0078 */
+    __IO uint32_t POST_CABC_CTRL3;                    /* Address Offset: 0x007C */
+    __IO uint32_t POST_CABC_GAUSS_LINE0_0;            /* Address Offset: 0x0080 */
+    __IO uint32_t POST_CABC_GAUSS_LINE0_1;            /* Address Offset: 0x0084 */
+    __IO uint32_t POST_CABC_GAUSS_LINE1_0;            /* Address Offset: 0x0088 */
+    __IO uint32_t POST_CABC_GAUSS_LINE1_1;            /* Address Offset: 0x008C */
+    __IO uint32_t POST_CABC_GAUSS_LINE2_0;            /* Address Offset: 0x0090 */
+    __IO uint32_t POST_CABC_GAUSS_LINE2_1;            /* Address Offset: 0x0094 */
+         uint32_t RESERVED0098[10];                   /* Address Offset: 0x0098 */
+    __IO uint32_t POST_PWM_CTRL;                      /* Address Offset: 0x00C0 */
+    __IO uint32_t POST_PWM_PERIOD_HPR;                /* Address Offset: 0x00C4 */
+    __IO uint32_t POST_PWM_DUTY_LPR;                  /* Address Offset: 0x00C8 */
+    __IO uint32_t POST_PWM_CNT;                       /* Address Offset: 0x00CC */
+};
+/* VOP2_POST2_DSP Register Structure Define */
+struct VOP2_POST2_DSP_REG {
+    __IO uint32_t POST_DSP_CTRL;                      /* Address Offset: 0x0000 */
+    __IO uint32_t POST_MIPI_CTRL;                     /* Address Offset: 0x0004 */
+    __IO uint32_t POST_COLOR_CTRL;                    /* Address Offset: 0x0008 */
+    __IO uint32_t POST_RESERVED2;                     /* Address Offset: 0x000C */
+         uint32_t RESERVED0010[7];                    /* Address Offset: 0x0010 */
+    __IO uint32_t POST_DSP_BG;                        /* Address Offset: 0x002C */
+    __IO uint32_t POST_PRE_SCAN_HTIMING;              /* Address Offset: 0x0030 */
+    __IO uint32_t POST_DSP_HACT_INFO;                 /* Address Offset: 0x0034 */
+    __IO uint32_t POST_DSP_VACT_INFO;                 /* Address Offset: 0x0038 */
+    __IO uint32_t POST_SCL_FACTOR_YRGB;               /* Address Offset: 0x003C */
+    __IO uint32_t POST_SCL_CTRL;                      /* Address Offset: 0x0040 */
+    __IO uint32_t POST_DSP_VACT_INFO_F1;              /* Address Offset: 0x0044 */
+    __IO uint32_t POST_DSP_HTOTAL_HS_END;             /* Address Offset: 0x0048 */
+    __IO uint32_t POST_DSP_HACT_ST_END;               /* Address Offset: 0x004C */
+    __IO uint32_t POST_DSP_VTOTAL_VS_END;             /* Address Offset: 0x0050 */
+    __IO uint32_t POST_DSP_VACT_ST_END;               /* Address Offset: 0x0054 */
+    __IO uint32_t POST_DSP_VS_ST_END_F1;              /* Address Offset: 0x0058 */
+    __IO uint32_t POST_DSP_VACT_ST_END_F1;            /* Address Offset: 0x005C */
+    __IO uint32_t POST_BCSH_CTRL;                     /* Address Offset: 0x0060 */
+    __IO uint32_t POST_BCSH_BCS;                      /* Address Offset: 0x0064 */
+    __IO uint32_t POST_BCSH_H;                        /* Address Offset: 0x0068 */
+    __IO uint32_t POST_BCSH_COLOR_BAR;                /* Address Offset: 0x006C */
+};
+/* VOP2_CLUSTER Register Structure Define */
+struct VOP2_CLUSTER_REG {
+    __IO uint32_t WIN0_CTRL0;                         /* Address Offset: 0x0000 */
+    __IO uint32_t WIN0_CTRL1;                         /* Address Offset: 0x0004 */
+    __IO uint32_t WIN0_CTRL2;                         /* Address Offset: 0x0008 */
+         uint32_t RESERVED000C;                       /* Address Offset: 0x000C */
+    __IO uint32_t WIN0_YRGB_MST;                      /* Address Offset: 0x0010 */
+         uint32_t RESERVED0014;                       /* Address Offset: 0x0014 */
+    __IO uint32_t WIN0_VIR;                           /* Address Offset: 0x0018 */
+         uint32_t RESERVED001C;                       /* Address Offset: 0x001C */
+    __IO uint32_t WIN0_ACT_INFO;                      /* Address Offset: 0x0020 */
+    __IO uint32_t WIN0_DSP_INFO;                      /* Address Offset: 0x0024 */
+    __IO uint32_t WIN0_DSP_ST;                        /* Address Offset: 0x0028 */
+    __IO uint32_t WIN0_DSP_BG;                        /* Address Offset: 0x002C */
+    __IO uint32_t WIN0_SCL_FACTOR_YRGB;               /* Address Offset: 0x0030 */
+         uint32_t RESERVED0034;                       /* Address Offset: 0x0034 */
+    __IO uint32_t WIN0_SCL_OFFSET;                    /* Address Offset: 0x0038 */
+         uint32_t RESERVED003C[5];                    /* Address Offset: 0x003C */
+    __IO uint32_t WIN0_AFBCD_MASK_EN;                 /* Address Offset: 0x0050 */
+    __IO uint32_t WIN0_AFBCD_MODE;                    /* Address Offset: 0x0054 */
+    __IO uint32_t WIN0_AFBCD_HDR_PTR;                 /* Address Offset: 0x0058 */
+    __IO uint32_t WIN0_AFBCD_VIR_WIDTH;               /* Address Offset: 0x005C */
+    __IO uint32_t WIN0_AFBCD_SIZE;                    /* Address Offset: 0x0060 */
+    __IO uint32_t WIN0_AFBCD_PIC_OFFSET;              /* Address Offset: 0x0064 */
+    __IO uint32_t WIN0_AFBCD_DIS_OFFSET;              /* Address Offset: 0x0068 */
+    __IO uint32_t WIN0_AFBCD_CTRL;                    /* Address Offset: 0x006C */
+         uint32_t RESERVED0070[4];                    /* Address Offset: 0x0070 */
+    __IO uint32_t WIN1_CTRL0;                         /* Address Offset: 0x0080 */
+    __IO uint32_t WIN1_CTRL1;                         /* Address Offset: 0x0084 */
+    __IO uint32_t WIN1_CTRL2;                         /* Address Offset: 0x0088 */
+         uint32_t RESERVED008C;                       /* Address Offset: 0x008C */
+    __IO uint32_t WIN1_YRGB_MST;                      /* Address Offset: 0x0090 */
+         uint32_t RESERVED0094;                       /* Address Offset: 0x0094 */
+    __IO uint32_t WIN1_VIR;                           /* Address Offset: 0x0098 */
+         uint32_t RESERVED009C;                       /* Address Offset: 0x009C */
+    __IO uint32_t WIN1_ACT_INFO;                      /* Address Offset: 0x00A0 */
+    __IO uint32_t WIN1_DSP_INFO;                      /* Address Offset: 0x00A4 */
+    __IO uint32_t WIN1_DSP_ST;                        /* Address Offset: 0x00A8 */
+    __IO uint32_t WIN1_DSP_BG;                        /* Address Offset: 0x00AC */
+    __IO uint32_t WIN1_SCL_FACTOR_YRGB;               /* Address Offset: 0x00B0 */
+         uint32_t RESERVED00B4;                       /* Address Offset: 0x00B4 */
+    __IO uint32_t WIN1_SCL_OFFSET;                    /* Address Offset: 0x00B8 */
+         uint32_t RESERVED00BC[5];                    /* Address Offset: 0x00BC */
+    __IO uint32_t WIN1_AFBCD_MASK_EN;                 /* Address Offset: 0x00D0 */
+    __IO uint32_t WIN1_AFBCD_MODE;                    /* Address Offset: 0x00D4 */
+    __IO uint32_t WIN1_AFBCD_HDR_PTR;                 /* Address Offset: 0x00D8 */
+    __IO uint32_t WIN1_AFBCD_VIR_WIDTH;               /* Address Offset: 0x00DC */
+    __IO uint32_t WIN1_AFBCD_SIZE;                    /* Address Offset: 0x00E0 */
+    __IO uint32_t WIN1_AFBCD_PIC_OFFSET;              /* Address Offset: 0x00E4 */
+    __IO uint32_t WIN1_AFBCD_DIS_OFFSET;              /* Address Offset: 0x00E8 */
+    __IO uint32_t WIN1_AFBCD_CTRL;                    /* Address Offset: 0x00EC */
+         uint32_t RESERVED00F0[4];                    /* Address Offset: 0x00F0 */
+    __IO uint32_t CLUSTER_CTRL;                       /* Address Offset: 0x0100 */
+         uint32_t RESERVED0104[3];                    /* Address Offset: 0x0104 */
+    __IO uint32_t CLUSTER_LG_COE0;                    /* Address Offset: 0x0110 */
+    __IO uint32_t CLUSTER_LG_COE1;                    /* Address Offset: 0x0114 */
+    __IO uint32_t CLUSTER_LG_COE2;                    /* Address Offset: 0x0118 */
+         uint32_t RESERVED011C;                       /* Address Offset: 0x011C */
+    __IO uint32_t CLUSTER_HG_COE0;                    /* Address Offset: 0x0120 */
+    __IO uint32_t CLUSTER_HG_COE1;                    /* Address Offset: 0x0124 */
+    __IO uint32_t CLUSTER_HG_COE2;                    /* Address Offset: 0x0128 */
+};
+/* VOP2_ESMART Register Structure Define */
+struct VOP2_ESMART_REG {
+    __IO uint32_t ESMART_CTRL0;                       /* Address Offset: 0x0000 */
+    __IO uint32_t ESMART_CTRL1;                       /* Address Offset: 0x0004 */
+         uint32_t RESERVED0008[2];                    /* Address Offset: 0x0008 */
+    __IO uint32_t REGION0_MST_CTL;                    /* Address Offset: 0x0010 */
+    __IO uint32_t REGION0_MST_YRGB;                   /* Address Offset: 0x0014 */
+    __IO uint32_t REGION0_MST_CBCR;                   /* Address Offset: 0x0018 */
+    __IO uint32_t REGION0_VIR;                        /* Address Offset: 0x001C */
+    __IO uint32_t REGION0_ACT_INFO;                   /* Address Offset: 0x0020 */
+    __IO uint32_t REGION0_DSP_INFO;                   /* Address Offset: 0x0024 */
+    __IO uint32_t REGION0_DSP_OFFSET;                 /* Address Offset: 0x0028 */
+         uint32_t RESERVED002C;                       /* Address Offset: 0x002C */
+    __IO uint32_t REGION0_SCL_CTRL;                   /* Address Offset: 0x0030 */
+    __IO uint32_t REGION0_SCL_FACTOR_YRGB;            /* Address Offset: 0x0034 */
+    __IO uint32_t REGION0_SCL_FACTOR_CBCR;            /* Address Offset: 0x0038 */
+    __IO uint32_t REGION0_SCL_OFFSET;                 /* Address Offset: 0x003C */
+    __IO uint32_t REGION1_MST_CTL;                    /* Address Offset: 0x0040 */
+    __IO uint32_t REGION1_MST_YRGB;                   /* Address Offset: 0x0044 */
+    __IO uint32_t REGION1_MST_CBCR;                   /* Address Offset: 0x0048 */
+    __IO uint32_t REGION1_VIR;                        /* Address Offset: 0x004C */
+    __IO uint32_t REGION1_ACT_INFO;                   /* Address Offset: 0x0050 */
+    __IO uint32_t REGION1_DSP_INFO;                   /* Address Offset: 0x0054 */
+    __IO uint32_t REGION1_DSP_OFFSET;                 /* Address Offset: 0x0058 */
+         uint32_t RESERVED005C;                       /* Address Offset: 0x005C */
+    __IO uint32_t REGION1_SCL_CTRL;                   /* Address Offset: 0x0060 */
+    __IO uint32_t REGION1_SCL_FACTOR_YRGB;            /* Address Offset: 0x0064 */
+    __IO uint32_t REGION1_SCL_FACTOR_CBCR;            /* Address Offset: 0x0068 */
+    __IO uint32_t REGION1_SCL_OFFSET;                 /* Address Offset: 0x006C */
+    __IO uint32_t REGION2_MST_CTL;                    /* Address Offset: 0x0070 */
+    __IO uint32_t REGION2_MST_YRGB;                   /* Address Offset: 0x0074 */
+    __IO uint32_t REGION2_MST_CBCR;                   /* Address Offset: 0x0078 */
+    __IO uint32_t REGION2_VIR;                        /* Address Offset: 0x007C */
+    __IO uint32_t REGION2_ACT_INFO;                   /* Address Offset: 0x0080 */
+    __IO uint32_t REGION2_DSP_INFO;                   /* Address Offset: 0x0084 */
+    __IO uint32_t REGION2_DSP_OFFSET;                 /* Address Offset: 0x0088 */
+         uint32_t RESERVED008C;                       /* Address Offset: 0x008C */
+    __IO uint32_t REGION2_SCL_CTRL;                   /* Address Offset: 0x0090 */
+    __IO uint32_t REGION2_SCL_FACTOR_YRGB;            /* Address Offset: 0x0094 */
+    __IO uint32_t REGION2_SCL_FACTOR_CBCR;            /* Address Offset: 0x0098 */
+    __IO uint32_t REGION2_SCL_OFFSET;                 /* Address Offset: 0x009C */
+    __IO uint32_t REGION3_MST_CTL;                    /* Address Offset: 0x00A0 */
+    __IO uint32_t REGION3_MST_YRGB;                   /* Address Offset: 0x00A4 */
+    __IO uint32_t REGION3_MST_CBCR;                   /* Address Offset: 0x00A8 */
+    __IO uint32_t REGION3_VIR;                        /* Address Offset: 0x00AC */
+    __IO uint32_t REGION3_ACT_INFO;                   /* Address Offset: 0x00B0 */
+    __IO uint32_t REGION3_DSP_INFO;                   /* Address Offset: 0x00B4 */
+    __IO uint32_t REGION3_DSP_OFFSET;                 /* Address Offset: 0x00B8 */
+         uint32_t RESERVED00BC;                       /* Address Offset: 0x00BC */
+    __IO uint32_t REGION3_SCL_CTRL;                   /* Address Offset: 0x00C0 */
+    __IO uint32_t REGION3_SCL_FACTOR_YRGB;            /* Address Offset: 0x00C4 */
+    __IO uint32_t REGION3_SCL_FACTOR_CBCR;            /* Address Offset: 0x00C8 */
+    __IO uint32_t REGION3_SCL_OFFSET;                 /* Address Offset: 0x00CC */
+    __IO uint32_t ESMART_KEY_CTRL;                    /* Address Offset: 0x00D0 */
+    __IO uint32_t ESMART_BG_EN;                       /* Address Offset: 0x00D4 */
+};
+/* VOP2_SMART Register Structure Define */
+struct VOP2_SMART_REG {
+    __IO uint32_t ESMART_CTRL0;                       /* Address Offset: 0x0000 */
+    __IO uint32_t ESMART_CTRL1;                       /* Address Offset: 0x0004 */
+         uint32_t RESERVED0008[2];                    /* Address Offset: 0x0008 */
+    __IO uint32_t REGION0_MST_CTL;                    /* Address Offset: 0x0010 */
+    __IO uint32_t REGION0_MST_YRGB;                   /* Address Offset: 0x0014 */
+         uint32_t RESERVED0018;                       /* Address Offset: 0x0018 */
+    __IO uint32_t REGION0_VIR;                        /* Address Offset: 0x001C */
+    __IO uint32_t REGION0_ACT_INFO;                   /* Address Offset: 0x0020 */
+    __IO uint32_t REGION0_DSP_INFO;                   /* Address Offset: 0x0024 */
+    __IO uint32_t REGION0_DSP_OFFSET;                 /* Address Offset: 0x0028 */
+         uint32_t RESERVED002C;                       /* Address Offset: 0x002C */
+    __IO uint32_t REGION0_SCL_CTRL;                   /* Address Offset: 0x0030 */
+    __IO uint32_t REGION0_SCL_FACTOR_YRGB;            /* Address Offset: 0x0034 */
+         uint32_t RESERVED0038;                       /* Address Offset: 0x0038 */
+    __IO uint32_t REGION0_SCL_OFFSET;                 /* Address Offset: 0x003C */
+    __IO uint32_t REGION1_MST_CTL;                    /* Address Offset: 0x0040 */
+    __IO uint32_t REGION1_MST_YRGB;                   /* Address Offset: 0x0044 */
+         uint32_t RESERVED0048;                       /* Address Offset: 0x0048 */
+    __IO uint32_t REGION1_VIR;                        /* Address Offset: 0x004C */
+    __IO uint32_t REGION1_ACT_INFO;                   /* Address Offset: 0x0050 */
+    __IO uint32_t REGION1_DSP_INFO;                   /* Address Offset: 0x0054 */
+    __IO uint32_t REGION1_DSP_OFFSET;                 /* Address Offset: 0x0058 */
+         uint32_t RESERVED005C;                       /* Address Offset: 0x005C */
+    __IO uint32_t REGION1_SCL_CTRL;                   /* Address Offset: 0x0060 */
+    __IO uint32_t REGION1_SCL_FACTOR_YRGB;            /* Address Offset: 0x0064 */
+         uint32_t RESERVED0068;                       /* Address Offset: 0x0068 */
+    __IO uint32_t REGION1_SCL_OFFSET;                 /* Address Offset: 0x006C */
+    __IO uint32_t REGION2_MST_CTL;                    /* Address Offset: 0x0070 */
+    __IO uint32_t REGION2_MST_YRGB;                   /* Address Offset: 0x0074 */
+         uint32_t RESERVED0078;                       /* Address Offset: 0x0078 */
+    __IO uint32_t REGION2_VIR;                        /* Address Offset: 0x007C */
+    __IO uint32_t REGION2_ACT_INFO;                   /* Address Offset: 0x0080 */
+    __IO uint32_t REGION2_DSP_INFO;                   /* Address Offset: 0x0084 */
+    __IO uint32_t REGION2_DSP_OFFSET;                 /* Address Offset: 0x0088 */
+         uint32_t RESERVED008C;                       /* Address Offset: 0x008C */
+    __IO uint32_t REGION2_SCL_CTRL;                   /* Address Offset: 0x0090 */
+    __IO uint32_t REGION2_SCL_FACTOR_YRGB;            /* Address Offset: 0x0094 */
+         uint32_t RESERVED0098;                       /* Address Offset: 0x0098 */
+    __IO uint32_t REGION2_SCL_OFFSET;                 /* Address Offset: 0x009C */
+    __IO uint32_t REGION3_MST_CTL;                    /* Address Offset: 0x00A0 */
+    __IO uint32_t REGION3_MST_YRGB;                   /* Address Offset: 0x00A4 */
+         uint32_t RESERVED00A8;                       /* Address Offset: 0x00A8 */
+    __IO uint32_t REGION3_VIR;                        /* Address Offset: 0x00AC */
+    __IO uint32_t REGION3_ACT_INFO;                   /* Address Offset: 0x00B0 */
+    __IO uint32_t REGION3_DSP_INFO;                   /* Address Offset: 0x00B4 */
+    __IO uint32_t REGION3_DSP_OFFSET;                 /* Address Offset: 0x00B8 */
+         uint32_t RESERVED00BC;                       /* Address Offset: 0x00BC */
+    __IO uint32_t REGION3_SCL_CTRL;                   /* Address Offset: 0x00C0 */
+    __IO uint32_t REGION3_SCL_FACTOR_YRGB;            /* Address Offset: 0x00C4 */
+         uint32_t RESERVED00C8;                       /* Address Offset: 0x00C8 */
+    __IO uint32_t REGION3_SCL_OFFSET;                 /* Address Offset: 0x00CC */
+    __IO uint32_t ESMART_KEY_CTRL;                    /* Address Offset: 0x00D0 */
+    __IO uint32_t ESMART_BG_EN;                       /* Address Offset: 0x00D4 */
+};
+/* VOP2_HDR Register Structure Define */
+struct VOP2_HDR_REG {
+    __IO uint32_t HDR10_LUT_CTRL;                     /* Address Offset: 0x0000 */
+    __IO uint32_t HDR10_LUT_MST;                      /* Address Offset: 0x0004 */
+         uint32_t RESERVED0008[2];                    /* Address Offset: 0x0008 */
+    __IO uint32_t SDR2HDR_CTRL;                       /* Address Offset: 0x0010 */
+         uint32_t RESERVED0014[3];                    /* Address Offset: 0x0014 */
+    __IO uint32_t HDR2SDR_CTRL;                       /* Address Offset: 0x0020 */
+    __IO uint32_t HDR2SDR_SRC_RANGE;                  /* Address Offset: 0x0024 */
+    __IO uint32_t HDR2SDR_NORFACEETF;                 /* Address Offset: 0x0028 */
+    __IO uint32_t HDR2SDR_DST_RANGE;                  /* Address Offset: 0x002C */
+    __IO uint32_t HDR2SDR_NORMFACCGAMMA;              /* Address Offset: 0x0030 */
+         uint32_t RESERVED0034[2];                    /* Address Offset: 0x0034 */
+    __IO uint32_t EETF_OETF0;                         /* Address Offset: 0x003C */
+    __IO uint32_t EETF_OETF1;                         /* Address Offset: 0x0040 */
+    __IO uint32_t EETF_OETF2;                         /* Address Offset: 0x0044 */
+    __IO uint32_t EETF_OETF3;                         /* Address Offset: 0x0048 */
+    __IO uint32_t EETF_OETF4;                         /* Address Offset: 0x004C */
+    __IO uint32_t EETF_OETF5;                         /* Address Offset: 0x0050 */
+    __IO uint32_t EETF_OETF6;                         /* Address Offset: 0x0054 */
+    __IO uint32_t EETF_OETF7;                         /* Address Offset: 0x0058 */
+    __IO uint32_t EETF_OETF8;                         /* Address Offset: 0x005C */
+    __IO uint32_t EETF_OETF9;                         /* Address Offset: 0x0060 */
+    __IO uint32_t EETF_OETF10;                        /* Address Offset: 0x0064 */
+    __IO uint32_t EETF_OETF11;                        /* Address Offset: 0x0068 */
+    __IO uint32_t EETF_OETF12;                        /* Address Offset: 0x006C */
+    __IO uint32_t EETF_OETF13;                        /* Address Offset: 0x0070 */
+    __IO uint32_t EETF_OETF14;                        /* Address Offset: 0x0074 */
+    __IO uint32_t EETF_OETF15;                        /* Address Offset: 0x0078 */
+    __IO uint32_t EETF_OETF16;                        /* Address Offset: 0x007C */
+    __IO uint32_t EETF_OETF17;                        /* Address Offset: 0x0080 */
+    __IO uint32_t EETF_OETF18;                        /* Address Offset: 0x0084 */
+    __IO uint32_t EETF_OETF19;                        /* Address Offset: 0x0088 */
+    __IO uint32_t EETF_OETF20;                        /* Address Offset: 0x008C */
+    __IO uint32_t EETF_OETF21;                        /* Address Offset: 0x0090 */
+    __IO uint32_t EETF_OETF22;                        /* Address Offset: 0x0094 */
+    __IO uint32_t EETF_OETF23;                        /* Address Offset: 0x0098 */
+    __IO uint32_t EETF_OETF24;                        /* Address Offset: 0x009C */
+    __IO uint32_t EETF_OETF25;                        /* Address Offset: 0x00A0 */
+    __IO uint32_t EETF_OETF26;                        /* Address Offset: 0x00A4 */
+    __IO uint32_t EETF_OETF27;                        /* Address Offset: 0x00A8 */
+    __IO uint32_t EETF_OETF28;                        /* Address Offset: 0x00AC */
+    __IO uint32_t EETF_OETF29;                        /* Address Offset: 0x00B0 */
+    __IO uint32_t EETF_OETF30;                        /* Address Offset: 0x00B4 */
+    __IO uint32_t EETF_OETF31;                        /* Address Offset: 0x00B8 */
+    __IO uint32_t EETF_OETF32;                        /* Address Offset: 0x00BC */
+    __IO uint32_t SAT_Y0;                             /* Address Offset: 0x00C0 */
+    __IO uint32_t SAT_Y1;                             /* Address Offset: 0x00C4 */
+    __IO uint32_t SAT_Y2;                             /* Address Offset: 0x00C8 */
+    __IO uint32_t SAT_Y3;                             /* Address Offset: 0x00CC */
+    __IO uint32_t SAT_Y4;                             /* Address Offset: 0x00D0 */
+    __IO uint32_t SAT_Y5;                             /* Address Offset: 0x00D4 */
+    __IO uint32_t SAT_Y6;                             /* Address Offset: 0x00D8 */
+    __IO uint32_t SAT_Y7;                             /* Address Offset: 0x00DC */
+    __IO uint32_t SAT_Y8;                             /* Address Offset: 0x00E0 */
+         uint32_t RESERVED00E4[3];                    /* Address Offset: 0x00E4 */
+    __IO uint32_t EOTF_OETF_Y0;                       /* Address Offset: 0x00F0 */
+    __IO uint32_t EOTF_OETF_Y1;                       /* Address Offset: 0x00F4 */
+    __IO uint32_t EOTF_OETF_Y2;                       /* Address Offset: 0x00F8 */
+    __IO uint32_t EOTF_OETF_Y3;                       /* Address Offset: 0x00FC */
+    __IO uint32_t EOTF_OETF_Y4;                       /* Address Offset: 0x0100 */
+    __IO uint32_t EOTF_OETF_Y5;                       /* Address Offset: 0x0104 */
+    __IO uint32_t EOTF_OETF_Y6;                       /* Address Offset: 0x0108 */
+    __IO uint32_t EOTF_OETF_Y7;                       /* Address Offset: 0x010C */
+    __IO uint32_t EOTF_OETF_Y8;                       /* Address Offset: 0x0110 */
+    __IO uint32_t EOTF_OETF_Y9;                       /* Address Offset: 0x0114 */
+    __IO uint32_t EOTF_OETF_Y10;                      /* Address Offset: 0x0118 */
+    __IO uint32_t EOTF_OETF_Y11;                      /* Address Offset: 0x011C */
+    __IO uint32_t EOTF_OETF_Y12;                      /* Address Offset: 0x0120 */
+    __IO uint32_t EOTF_OETF_Y13;                      /* Address Offset: 0x0124 */
+    __IO uint32_t EOTF_OETF_Y14;                      /* Address Offset: 0x0128 */
+    __IO uint32_t EOTF_OETF_Y15;                      /* Address Offset: 0x012C */
+    __IO uint32_t EOTF_OETF_Y16;                      /* Address Offset: 0x0130 */
+    __IO uint32_t EOTF_OETF_Y17;                      /* Address Offset: 0x0134 */
+    __IO uint32_t EOTF_OETF_Y18;                      /* Address Offset: 0x0138 */
+    __IO uint32_t EOTF_OETF_Y19;                      /* Address Offset: 0x013C */
+    __IO uint32_t EOTF_OETF_Y20;                      /* Address Offset: 0x0140 */
+    __IO uint32_t EOTF_OETF_Y21;                      /* Address Offset: 0x0144 */
+    __IO uint32_t EOTF_OETF_Y22;                      /* Address Offset: 0x0148 */
+    __IO uint32_t EOTF_OETF_Y23;                      /* Address Offset: 0x014C */
+    __IO uint32_t EOTF_OETF_Y24;                      /* Address Offset: 0x0150 */
+    __IO uint32_t EOTF_OETF_Y25;                      /* Address Offset: 0x0154 */
+    __IO uint32_t EOTF_OETF_Y26;                      /* Address Offset: 0x0158 */
+    __IO uint32_t EOTF_OETF_Y27;                      /* Address Offset: 0x015C */
+    __IO uint32_t EOTF_OETF_Y28;                      /* Address Offset: 0x0160 */
+    __IO uint32_t EOTF_OETF_Y29;                      /* Address Offset: 0x0164 */
+    __IO uint32_t EOTF_OETF_Y30;                      /* Address Offset: 0x0168 */
+    __IO uint32_t EOTF_OETF_Y31;                      /* Address Offset: 0x016C */
+    __IO uint32_t EOTF_OETF_Y32;                      /* Address Offset: 0x0170 */
+    __IO uint32_t EOTF_OETF_Y33;                      /* Address Offset: 0x0174 */
+    __IO uint32_t EOTF_OETF_Y34;                      /* Address Offset: 0x0178 */
+    __IO uint32_t EOTF_OETF_Y35;                      /* Address Offset: 0x017C */
+    __IO uint32_t EOTF_OETF_Y36;                      /* Address Offset: 0x0180 */
+    __IO uint32_t EOTF_OETF_Y37;                      /* Address Offset: 0x0184 */
+    __IO uint32_t EOTF_OETF_Y38;                      /* Address Offset: 0x0188 */
+    __IO uint32_t EOTF_OETF_Y39;                      /* Address Offset: 0x018C */
+    __IO uint32_t EOTF_OETF_Y40;                      /* Address Offset: 0x0190 */
+    __IO uint32_t EOTF_OETF_Y41;                      /* Address Offset: 0x0194 */
+    __IO uint32_t EOTF_OETF_Y42;                      /* Address Offset: 0x0198 */
+    __IO uint32_t EOTF_OETF_Y43;                      /* Address Offset: 0x019C */
+    __IO uint32_t EOTF_OETF_Y44;                      /* Address Offset: 0x01A0 */
+    __IO uint32_t EOTF_OETF_Y45;                      /* Address Offset: 0x01A4 */
+    __IO uint32_t EOTF_OETF_Y46;                      /* Address Offset: 0x01A8 */
+    __IO uint32_t EOTF_OETF_Y47;                      /* Address Offset: 0x01AC */
+    __IO uint32_t EOTF_OETF_Y48;                      /* Address Offset: 0x01B0 */
+    __IO uint32_t EOTF_OETF_Y49;                      /* Address Offset: 0x01B4 */
+    __IO uint32_t EOTF_OETF_Y50;                      /* Address Offset: 0x01B8 */
+    __IO uint32_t EOTF_OETF_Y51;                      /* Address Offset: 0x01BC */
+    __IO uint32_t EOTF_OETF_Y52;                      /* Address Offset: 0x01C0 */
+    __IO uint32_t EOTF_OETF_Y53;                      /* Address Offset: 0x01C4 */
+    __IO uint32_t EOTF_OETF_Y54;                      /* Address Offset: 0x01C8 */
+    __IO uint32_t EOTF_OETF_Y55;                      /* Address Offset: 0x01CC */
+    __IO uint32_t EOTF_OETF_Y56;                      /* Address Offset: 0x01D0 */
+    __IO uint32_t EOTF_OETF_Y57;                      /* Address Offset: 0x01D4 */
+    __IO uint32_t EOTF_OETF_Y58;                      /* Address Offset: 0x01D8 */
+    __IO uint32_t EOTF_OETF_Y59;                      /* Address Offset: 0x01DC */
+    __IO uint32_t EOTF_OETF_Y60;                      /* Address Offset: 0x01E0 */
+    __IO uint32_t EOTF_OETF_Y61;                      /* Address Offset: 0x01E4 */
+    __IO uint32_t EOTF_OETF_Y62;                      /* Address Offset: 0x01E8 */
+    __IO uint32_t EOTF_OETF_Y63;                      /* Address Offset: 0x01EC */
+    __IO uint32_t EOTF_OETF_Y64;                      /* Address Offset: 0x01F0 */
+         uint32_t RESERVED01F4[3];                    /* Address Offset: 0x01F4 */
+    __IO uint32_t OETF_DX_DXPOW1;                     /* Address Offset: 0x0200 */
+    __IO uint32_t OETF_DX_DXPOW2;                     /* Address Offset: 0x0204 */
+    __IO uint32_t OETF_DX_DXPOW3;                     /* Address Offset: 0x0208 */
+    __IO uint32_t OETF_DX_DXPOW4;                     /* Address Offset: 0x020C */
+    __IO uint32_t OETF_DX_DXPOW5;                     /* Address Offset: 0x0210 */
+    __IO uint32_t OETF_DX_DXPOW6;                     /* Address Offset: 0x0214 */
+    __IO uint32_t OETF_DX_DXPOW7;                     /* Address Offset: 0x0218 */
+    __IO uint32_t OETF_DX_DXPOW8;                     /* Address Offset: 0x021C */
+    __IO uint32_t OETF_DX_DXPOW9;                     /* Address Offset: 0x0220 */
+    __IO uint32_t OETF_DX_DXPOW10;                    /* Address Offset: 0x0224 */
+    __IO uint32_t OETF_DX_DXPOW11;                    /* Address Offset: 0x0228 */
+    __IO uint32_t OETF_DX_DXPOW12;                    /* Address Offset: 0x022C */
+    __IO uint32_t OETF_DX_DXPOW13;                    /* Address Offset: 0x0230 */
+    __IO uint32_t OETF_DX_DXPOW14;                    /* Address Offset: 0x0234 */
+    __IO uint32_t OETF_DX_DXPOW15;                    /* Address Offset: 0x0238 */
+    __IO uint32_t OETF_DX_DXPOW16;                    /* Address Offset: 0x023C */
+    __IO uint32_t OETF_DX_DXPOW17;                    /* Address Offset: 0x0240 */
+    __IO uint32_t OETF_DX_DXPOW18;                    /* Address Offset: 0x0244 */
+    __IO uint32_t OETF_DX_DXPOW19;                    /* Address Offset: 0x0248 */
+    __IO uint32_t OETF_DX_DXPOW20;                    /* Address Offset: 0x024C */
+    __IO uint32_t OETF_DX_DXPOW21;                    /* Address Offset: 0x0250 */
+    __IO uint32_t OETF_DX_DXPOW22;                    /* Address Offset: 0x0254 */
+    __IO uint32_t OETF_DX_DXPOW23;                    /* Address Offset: 0x0258 */
+    __IO uint32_t OETF_DX_DXPOW24;                    /* Address Offset: 0x025C */
+    __IO uint32_t OETF_DX_DXPOW25;                    /* Address Offset: 0x0260 */
+    __IO uint32_t OETF_DX_DXPOW26;                    /* Address Offset: 0x0264 */
+    __IO uint32_t OETF_DX_DXPOW27;                    /* Address Offset: 0x0268 */
+    __IO uint32_t OETF_DX_DXPOW28;                    /* Address Offset: 0x026C */
+    __IO uint32_t OETF_DX_DXPOW29;                    /* Address Offset: 0x0270 */
+    __IO uint32_t OETF_DX_DXPOW30;                    /* Address Offset: 0x0274 */
+    __IO uint32_t OETF_DX_DXPOW31;                    /* Address Offset: 0x0278 */
+    __IO uint32_t OETF_DX_DXPOW32;                    /* Address Offset: 0x027C */
+    __IO uint32_t OETF_DX_DXPOW33;                    /* Address Offset: 0x0280 */
+    __IO uint32_t OETF_DX_DXPOW34;                    /* Address Offset: 0x0284 */
+    __IO uint32_t OETF_DX_DXPOW35;                    /* Address Offset: 0x0288 */
+    __IO uint32_t OETF_DX_DXPOW36;                    /* Address Offset: 0x028C */
+    __IO uint32_t OETF_DX_DXPOW37;                    /* Address Offset: 0x0290 */
+    __IO uint32_t OETF_DX_DXPOW38;                    /* Address Offset: 0x0294 */
+    __IO uint32_t OETF_DX_DXPOW39;                    /* Address Offset: 0x0298 */
+    __IO uint32_t OETF_DX_DXPOW40;                    /* Address Offset: 0x029C */
+    __IO uint32_t OETF_DX_DXPOW41;                    /* Address Offset: 0x02A0 */
+    __IO uint32_t OETF_DX_DXPOW42;                    /* Address Offset: 0x02A4 */
+    __IO uint32_t OETF_DX_DXPOW43;                    /* Address Offset: 0x02A8 */
+    __IO uint32_t OETF_DX_DXPOW44;                    /* Address Offset: 0x02AC */
+    __IO uint32_t OETF_DX_DXPOW45;                    /* Address Offset: 0x02B0 */
+    __IO uint32_t OETF_DX_DXPOW46;                    /* Address Offset: 0x02B4 */
+    __IO uint32_t OETF_DX_DXPOW47;                    /* Address Offset: 0x02B8 */
+    __IO uint32_t OETF_DX_DXPOW48;                    /* Address Offset: 0x02BC */
+    __IO uint32_t OETF_DX_DXPOW49;                    /* Address Offset: 0x02C0 */
+    __IO uint32_t OETF_DX_DXPOW50;                    /* Address Offset: 0x02C4 */
+    __IO uint32_t OETF_DX_DXPOW51;                    /* Address Offset: 0x02C8 */
+    __IO uint32_t OETF_DX_DXPOW52;                    /* Address Offset: 0x02CC */
+    __IO uint32_t OETF_DX_DXPOW53;                    /* Address Offset: 0x02D0 */
+    __IO uint32_t OETF_DX_DXPOW54;                    /* Address Offset: 0x02D4 */
+    __IO uint32_t OETF_DX_DXPOW55;                    /* Address Offset: 0x02D8 */
+    __IO uint32_t OETF_DX_DXPOW56;                    /* Address Offset: 0x02DC */
+    __IO uint32_t OETF_DX_DXPOW57;                    /* Address Offset: 0x02E0 */
+    __IO uint32_t OETF_DX_DXPOW58;                    /* Address Offset: 0x02E4 */
+    __IO uint32_t OETF_DX_DXPOW59;                    /* Address Offset: 0x02E8 */
+    __IO uint32_t OETF_DX_DXPOW60;                    /* Address Offset: 0x02EC */
+    __IO uint32_t OETF_DX_DXPOW61;                    /* Address Offset: 0x02F0 */
+    __IO uint32_t OETF_DX_DXPOW62;                    /* Address Offset: 0x02F4 */
+    __IO uint32_t OETF_DX_DXPOW63;                    /* Address Offset: 0x02F8 */
+    __IO uint32_t OETF_DX_DXPOW64;                    /* Address Offset: 0x02FC */
+    __IO uint32_t OETF_XN1;                           /* Address Offset: 0x0300 */
+    __IO uint32_t OETF_XN2;                           /* Address Offset: 0x0304 */
+    __IO uint32_t OETF_XN3;                           /* Address Offset: 0x0308 */
+    __IO uint32_t OETF_XN4;                           /* Address Offset: 0x030C */
+    __IO uint32_t OETF_XN5;                           /* Address Offset: 0x0310 */
+    __IO uint32_t OETF_XN6;                           /* Address Offset: 0x0314 */
+    __IO uint32_t OETF_XN7;                           /* Address Offset: 0x0318 */
+    __IO uint32_t OETF_XN8;                           /* Address Offset: 0x031C */
+    __IO uint32_t OETF_XN9;                           /* Address Offset: 0x0320 */
+    __IO uint32_t OETF_XN10;                          /* Address Offset: 0x0324 */
+    __IO uint32_t OETF_XN11;                          /* Address Offset: 0x0328 */
+    __IO uint32_t OETF_XN12;                          /* Address Offset: 0x032C */
+    __IO uint32_t OETF_XN13;                          /* Address Offset: 0x0330 */
+    __IO uint32_t OETF_XN14;                          /* Address Offset: 0x0334 */
+    __IO uint32_t OETF_XN15;                          /* Address Offset: 0x0338 */
+    __IO uint32_t OETF_XN16;                          /* Address Offset: 0x033C */
+    __IO uint32_t OETF_XN17;                          /* Address Offset: 0x0340 */
+    __IO uint32_t OETF_XN18;                          /* Address Offset: 0x0344 */
+    __IO uint32_t OETF_XN19;                          /* Address Offset: 0x0348 */
+    __IO uint32_t OETF_XN20;                          /* Address Offset: 0x034C */
+    __IO uint32_t OETF_XN21;                          /* Address Offset: 0x0350 */
+    __IO uint32_t OETF_XN22;                          /* Address Offset: 0x0354 */
+    __IO uint32_t OETF_XN23;                          /* Address Offset: 0x0358 */
+    __IO uint32_t OETF_XN24;                          /* Address Offset: 0x035C */
+    __IO uint32_t OETF_XN25;                          /* Address Offset: 0x0360 */
+    __IO uint32_t OETF_XN26;                          /* Address Offset: 0x0364 */
+    __IO uint32_t OETF_XN27;                          /* Address Offset: 0x0368 */
+    __IO uint32_t OETF_XN28;                          /* Address Offset: 0x036C */
+    __IO uint32_t OETF_XN29;                          /* Address Offset: 0x0370 */
+    __IO uint32_t OETF_XN30;                          /* Address Offset: 0x0374 */
+    __IO uint32_t OETF_XN31;                          /* Address Offset: 0x0378 */
+    __IO uint32_t OETF_XN32;                          /* Address Offset: 0x037C */
+    __IO uint32_t OETF_XN33;                          /* Address Offset: 0x0380 */
+    __IO uint32_t OETF_XN34;                          /* Address Offset: 0x0384 */
+    __IO uint32_t OETF_XN35;                          /* Address Offset: 0x0388 */
+    __IO uint32_t OETF_XN36;                          /* Address Offset: 0x038C */
+    __IO uint32_t OETF_XN37;                          /* Address Offset: 0x0390 */
+    __IO uint32_t OETF_XN38;                          /* Address Offset: 0x0394 */
+    __IO uint32_t OETF_XN39;                          /* Address Offset: 0x0398 */
+    __IO uint32_t OETF_XN40;                          /* Address Offset: 0x039C */
+    __IO uint32_t OETF_XN41;                          /* Address Offset: 0x03A0 */
+    __IO uint32_t OETF_XN42;                          /* Address Offset: 0x03A4 */
+    __IO uint32_t OETF_XN43;                          /* Address Offset: 0x03A8 */
+    __IO uint32_t OETF_XN44;                          /* Address Offset: 0x03AC */
+    __IO uint32_t OETF_XN45;                          /* Address Offset: 0x03B0 */
+    __IO uint32_t OETF_XN46;                          /* Address Offset: 0x03B4 */
+    __IO uint32_t OETF_XN47;                          /* Address Offset: 0x03B8 */
+    __IO uint32_t OETF_XN48;                          /* Address Offset: 0x03BC */
+    __IO uint32_t OETF_XN49;                          /* Address Offset: 0x03C0 */
+    __IO uint32_t OETF_XN50;                          /* Address Offset: 0x03C4 */
+    __IO uint32_t OETF_XN51;                          /* Address Offset: 0x03C8 */
+    __IO uint32_t OETF_XN52;                          /* Address Offset: 0x03CC */
+    __IO uint32_t OETF_XN53;                          /* Address Offset: 0x03D0 */
+    __IO uint32_t OETF_XN54;                          /* Address Offset: 0x03D4 */
+    __IO uint32_t OETF_XN55;                          /* Address Offset: 0x03D8 */
+    __IO uint32_t OETF_XN56;                          /* Address Offset: 0x03DC */
+    __IO uint32_t OETF_XN57;                          /* Address Offset: 0x03E0 */
+    __IO uint32_t OETF_XN58;                          /* Address Offset: 0x03E4 */
+    __IO uint32_t OETF_XN59;                          /* Address Offset: 0x03E8 */
+    __IO uint32_t OETF_XN60;                          /* Address Offset: 0x03EC */
+    __IO uint32_t OETF_XN61;                          /* Address Offset: 0x03F0 */
+    __IO uint32_t OETF_XN62;                          /* Address Offset: 0x03F4 */
+    __IO uint32_t OETF_XN63;                          /* Address Offset: 0x03F8 */
+};
+/* VOP2_MMU Register Structure Define */
+struct VOP2_MMU_REG {
+    __IO uint32_t MMU_DTE_ADDR;                       /* Address Offset: 0x0000 */
+    __IO uint32_t MMU_STATUS;                         /* Address Offset: 0x0004 */
+    __IO uint32_t MMU_COMMAND;                        /* Address Offset: 0x0008 */
+    __IO uint32_t MMU_PAGE_FAULT_ADDR;                /* Address Offset: 0x000C */
+    __IO uint32_t MMU_ZAP_ONE_LINE;                   /* Address Offset: 0x0010 */
+    __IO uint32_t MMU_INT_RAWSTAT;                    /* Address Offset: 0x0014 */
+    __IO uint32_t MMU_INT_CLEAR;                      /* Address Offset: 0x0018 */
+    __IO uint32_t MMU_INT_MASK;                       /* Address Offset: 0x001C */
+    __IO uint32_t MMU_INT_STATUS;                     /* Address Offset: 0x0020 */
+    __IO uint32_t MMU_AUTO_GATING;                    /* Address Offset: 0x0024 */
+};
 /* MMC Register Structure Define */
 struct MMC_REG {
     __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
@@ -889,7 +1541,10 @@ struct MMC_REG {
     __IO uint32_t INTMASK;                            /* Address Offset: 0x0024 */
     __IO uint32_t CMDARG;                             /* Address Offset: 0x0028 */
     __IO uint32_t CMD;                                /* Address Offset: 0x002C */
-    __I  uint32_t RESP[4];                            /* Address Offset: 0x0030 */
+    __I  uint32_t RESP0;                              /* Address Offset: 0x0030 */
+    __I  uint32_t RESP1;                              /* Address Offset: 0x0034 */
+    __I  uint32_t RESP2;                              /* Address Offset: 0x0038 */
+    __I  uint32_t RESP3;                              /* Address Offset: 0x003C */
     __IO uint32_t MINTSTS;                            /* Address Offset: 0x0040 */
     __IO uint32_t RINTSTS;                            /* Address Offset: 0x0044 */
     __I  uint32_t STATUS;                             /* Address Offset: 0x0048 */
@@ -1181,6 +1836,22 @@ struct INTMUX_REG {
 #define PMU_BASE                       0xFDD90000U /* PMU base address */
 #define SPINLOCK_BASE                  0xFDE30000U /* SPINLOCK base address */
 #define GMAC1_BASE                     0xFE010000U /* GMAC1 base address */
+#define VOP2_SYS_BASE                  0xFE040000U /* VOP2_SYS base address */
+#define VOP2_OVERLAY_BASE              0xFE040600U /* VOP2_OVERLAY base address */
+#define VOP2_POST0_DSP_BASE            0xFE040C00U /* VOP2_POST0_DSP base address */
+#define VOP2_POST1_DSP_BASE            0xFE040D00U /* VOP2_POST1_DSP base address */
+#define VOP2_POST2_DSP_BASE            0xFE040E00U /* VOP2_POST2_DSP base address */
+#define VOP2_CLUSTER0_BASE             0xFE041000U /* VOP2_CLUSTER0 base address */
+#define VOP2_CLUSTER1_BASE             0xFE041200U /* VOP2_CLUSTER1 base address */
+#define VOP2_ESMART0_BASE              0xFE041800U /* VOP2_ESMART0 base address */
+#define VOP2_ESMART1_BASE              0xFE041A00U /* VOP2_ESMART1 base address */
+#define VOP2_SMART0_BASE               0xFE041C00U /* VOP2_SMART0 base address */
+#define VOP2_SMART1_BASE               0xFE041E00U /* VOP2_SMART1 base address */
+#define VOP2_HDR10_BASE                0xFE042000U /* VOP2_HDR10 base address */
+#define VOP2_MMU0_BASE                 0xFE043E00U /* VOP2_MMU0 base address */
+#define VOP2_MMU1_BASE                 0xFE043F00U /* VOP2_MMU1 base address */
+#define GAMMA_LUT_WRADDR_BASE          0xFE044000U /* GAMMA_LUT_WRADDR base address */
+#define BPP_LUT_WRADDR_BASE            0xFE045000U /* BPP_LUT_WRADDR base address */
 #define GMAC0_BASE                     0xFE2A0000U /* GMAC0 base address */
 #define MMC_BASE                       0xFE2B0000U /* MMC base address */
 #define FSPI_BASE                      0xFE300000U /* FSPI base address */
@@ -1244,6 +1915,22 @@ struct INTMUX_REG {
 #define PMU                 ((struct PMU_REG *) PMU_BASE)
 #define SPINLOCK            ((struct SPINLOCK_REG *) SPINLOCK_BASE)
 #define GMAC1               ((struct GMAC_REG *) GMAC1_BASE)
+#define VOP2_SYS            ((struct VOP2_SYS_REG *) VOP2_SYS_BASE)
+#define VOP2_OVERLAY        ((struct VOP2_OVERLAY_REG *) VOP2_OVERLAY_BASE)
+#define VOP2_POST0_DSP      ((struct VOP2_POST0_DSP_REG *) VOP2_POST0_DSP_BASE)
+#define VOP2_POST1_DSP      ((struct VOP2_POST1_DSP_REG *) VOP2_POST1_DSP_BASE)
+#define VOP2_POST2_DSP      ((struct VOP2_POST2_DSP_REG *) VOP2_POST2_DSP_BASE)
+#define VOP2_CLUSTER0       ((struct VOP2_CLUSTER_REG *) VOP2_CLUSTER0_BASE)
+#define VOP2_CLUSTER1       ((struct VOP2_CLUSTER_REG *) VOP2_CLUSTER1_BASE)
+#define VOP2_ESMART0        ((struct VOP2_ESMART_REG *) VOP2_ESMART0_BASE)
+#define VOP2_ESMART1        ((struct VOP2_ESMART_REG *) VOP2_ESMART1_BASE)
+#define VOP2_SMART0         ((struct VOP2_SMART_REG *) VOP2_SMART0_BASE)
+#define VOP2_SMART1         ((struct VOP2_SMART_REG *) VOP2_SMART1_BASE)
+#define VOP2_HDR10          ((struct VOP2_HDR_REG *) VOP2_HDR10_BASE)
+#define VOP2_MMU0           ((struct VOP2_MMU_REG *) VOP2_MMU0_BASE)
+#define VOP2_MMU1           ((struct VOP2_MMU_REG *) VOP2_MMU1_BASE)
+#define GAMMA_LUT_WRADDR    ((struct GAMMA_LUT_WRADDR_REG *) GAMMA_LUT_WRADDR_BASE)
+#define BPP_LUT_WRADDR      ((struct BPP_LUT_WRADDR_REG *) BPP_LUT_WRADDR_BASE)
 #define GMAC0               ((struct GMAC_REG *) GMAC0_BASE)
 #define MMC                 ((struct MMC_REG *) MMC_BASE)
 #define FSPI                ((struct FSPI_REG *) FSPI_BASE)
@@ -1294,6 +1981,13 @@ struct INTMUX_REG {
 #define IS_CRU_INSTANCE(instance) ((instance) == CRU)
 #define IS_PMU_INSTANCE(instance) ((instance) == PMU)
 #define IS_SPINLOCK_INSTANCE(instance) ((instance) == SPINLOCK)
+#define IS_VOP2_SYS_INSTANCE(instance) ((instance) == VOP2_SYS)
+#define IS_VOP2_OVERLAY_INSTANCE(instance) ((instance) == VOP2_OVERLAY)
+#define IS_VOP2_POST0_DSP_INSTANCE(instance) ((instance) == VOP2_POST0_DSP)
+#define IS_VOP2_POST1_DSP_INSTANCE(instance) ((instance) == VOP2_POST1_DSP)
+#define IS_VOP2_POST2_DSP_INSTANCE(instance) ((instance) == VOP2_POST2_DSP)
+#define IS_GAMMA_LUT_WRADDR_INSTANCE(instance) ((instance) == GAMMA_LUT_WRADDR)
+#define IS_BPP_LUT_WRADDR_INSTANCE(instance) ((instance) == BPP_LUT_WRADDR)
 #define IS_MMC_INSTANCE(instance) ((instance) == MMC)
 #define IS_FSPI_INSTANCE(instance) ((instance) == FSPI)
 #define IS_WDT_INSTANCE(instance) ((instance) == WDT)
@@ -1306,6 +2000,11 @@ struct INTMUX_REG {
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
 #define IS_PWM_INSTANCE(instance) (((instance) == PWM0) || ((instance) == PWM1) || ((instance) == PWM2) || ((instance) == PWM3))
 #define IS_GMAC_INSTANCE(instance) (((instance) == GMAC1) || ((instance) == GMAC0))
+#define IS_VOP2_CLUSTER_INSTANCE(instance) (((instance) == VOP2_CLUSTER0) || ((instance) == VOP2_CLUSTER1))
+#define IS_VOP2_ESMART_INSTANCE(instance) (((instance) == VOP2_ESMART0) || ((instance) == VOP2_ESMART1))
+#define IS_VOP2_SMART_INSTANCE(instance) (((instance) == VOP2_SMART0) || ((instance) == VOP2_SMART1))
+#define IS_VOP2_HDR_INSTANCE(instance) ((instance) == VOP2_HDR10)
+#define IS_VOP2_MMU_INSTANCE(instance) (((instance) == VOP2_MMU0) || ((instance) == VOP2_MMU1))
 #define IS_DMA_INSTANCE(instance) (((instance) == DMA0) || ((instance) == DMA1))
 #define IS_CAN_INSTANCE(instance) (((instance) == CAN0) || ((instance) == CAN1) || ((instance) == CAN2))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1) || ((instance) == SPI2) || ((instance) == SPI3))
@@ -12056,6 +12755,4690 @@ struct INTMUX_REG {
 #define GMAC_DMA_CH0_RX_ERI_CNT                            (0x0U)
 #define GMAC_DMA_CH0_RX_ERI_CNT_ECNT_SHIFT                 (0U)
 #define GMAC_DMA_CH0_RX_ERI_CNT_ECNT_MASK                  (0x1U << GMAC_DMA_CH0_RX_ERI_CNT_ECNT_SHIFT)                 /* 0x00000001 */
+/****************************************VOP2_SYS****************************************/
+/* SYS_REG_CFG_DONE */
+#define VOP2_SYS_SYS_REG_CFG_DONE_OFFSET                   (0x0U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_GLOBAL0_EN_SHIFT (0U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_GLOBAL0_EN_MASK (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_GLOBAL0_EN_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_GLOBAL1_EN_SHIFT (1U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_GLOBAL1_EN_MASK (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_GLOBAL1_EN_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_GLOBAL2_EN_SHIFT (2U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_GLOBAL2_EN_MASK (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_GLOBAL2_EN_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SYS0_EN_SHIFT   (3U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SYS0_EN_MASK    (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SYS0_EN_SHIFT)   /* 0x00000008 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SYS1_EN_SHIFT   (4U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SYS1_EN_MASK    (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SYS1_EN_SHIFT)   /* 0x00000010 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SYS2_EN_SHIFT   (5U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SYS2_EN_MASK    (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SYS2_EN_SHIFT)   /* 0x00000020 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_CLUSTER0_EN_SHIFT (6U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_CLUSTER0_EN_MASK (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_CLUSTER0_EN_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_CLUSTER1_EN_SHIFT (7U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_CLUSTER1_EN_MASK (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_CLUSTER1_EN_SHIFT) /* 0x00000080 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_ESMART0_EN_SHIFT (10U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_ESMART0_EN_MASK (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_ESMART0_EN_SHIFT) /* 0x00000400 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_ESMART1_EN_SHIFT (11U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_ESMART1_EN_MASK (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_ESMART1_EN_SHIFT) /* 0x00000800 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SMART0_EN_SHIFT (12U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SMART0_EN_MASK  (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SMART0_EN_SHIFT) /* 0x00001000 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SMART1_EN_SHIFT (13U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SMART1_EN_MASK  (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_SMART1_EN_SHIFT) /* 0x00002000 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_WB_EN_SHIFT     (14U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_WB_EN_MASK      (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_REG_LOAD_WB_EN_SHIFT)     /* 0x00004000 */
+#define VOP2_SYS_SYS_REG_CFG_DONE_SW_GLOBAL_REGDONE_EN_SHIFT (15U)
+#define VOP2_SYS_SYS_REG_CFG_DONE_SW_GLOBAL_REGDONE_EN_MASK (0x1U << VOP2_SYS_SYS_REG_CFG_DONE_SW_GLOBAL_REGDONE_EN_SHIFT) /* 0x00008000 */
+/* SYS_VERSION_INFO */
+#define VOP2_SYS_SYS_VERSION_INFO_OFFSET                   (0x4U)
+#define VOP2_SYS_SYS_VERSION_INFO_SVNBUILD_SHIFT           (0U)
+#define VOP2_SYS_SYS_VERSION_INFO_SVNBUILD_MASK            (0xFFFFU << VOP2_SYS_SYS_VERSION_INFO_SVNBUILD_SHIFT)        /* 0x0000FFFF */
+#define VOP2_SYS_SYS_VERSION_INFO_MINOR_SHIFT              (16U)
+#define VOP2_SYS_SYS_VERSION_INFO_MINOR_MASK               (0xFFU << VOP2_SYS_SYS_VERSION_INFO_MINOR_SHIFT)             /* 0x00FF0000 */
+#define VOP2_SYS_SYS_VERSION_INFO_MAJOR_SHIFT              (24U)
+#define VOP2_SYS_SYS_VERSION_INFO_MAJOR_MASK               (0xFFU << VOP2_SYS_SYS_VERSION_INFO_MAJOR_SHIFT)             /* 0xFF000000 */
+/* SYS_AUTO_GATING_CTRL_IMD */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_OFFSET           (0x8U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_CLUSTER0_ACLK_GATING_EN_SHIFT (0U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_CLUSTER0_ACLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_CLUSTER0_ACLK_GATING_EN_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_CLUSTER1_ACLK_GATING_EN_SHIFT (1U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_CLUSTER1_ACLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_CLUSTER1_ACLK_GATING_EN_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_ESMART0_ACLK_GATING_EN_SHIFT (4U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_ESMART0_ACLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_ESMART0_ACLK_GATING_EN_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_ESMART1_ACLK_GATING_EN_SHIFT (5U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_ESMART1_ACLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_ESMART1_ACLK_GATING_EN_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_SMART0_ACLK_GATING_EN_SHIFT (6U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_SMART0_ACLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_SMART0_ACLK_GATING_EN_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_SMART1_ACLK_GATING_EN_SHIFT (7U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_SMART1_ACLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_SMART1_ACLK_GATING_EN_SHIFT) /* 0x00000080 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_OVERLAY_ACLK_GATING_EN_SHIFT (8U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_OVERLAY_ACLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_OVERLAY_ACLK_GATING_EN_SHIFT) /* 0x00000100 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_GAMMA_DCLK_GATING_EN_SHIFT (9U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_GAMMA_DCLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_GAMMA_DCLK_GATING_EN_SHIFT) /* 0x00000200 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_CABC_DCLK_GATING_EN_SHIFT (10U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_CABC_DCLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_CABC_DCLK_GATING_EN_SHIFT) /* 0x00000400 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_WB_ACLK_GATING_EN_SHIFT (11U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_WB_ACLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_WB_ACLK_GATING_EN_SHIFT) /* 0x00000800 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_PWM_PWMCLK_GATING_EN_SHIFT (12U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_PWM_PWMCLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_PWM_PWMCLK_GATING_EN_SHIFT) /* 0x00001000 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_PRESCAN_ACLK_GATING_EN_SHIFT (13U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_PRESCAN_ACLK_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_PRESCAN_ACLK_GATING_EN_SHIFT) /* 0x00002000 */
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_AUTO_GATING_EN_SHIFT (31U)
+#define VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_AUTO_GATING_EN_MASK (0x1U << VOP2_SYS_SYS_AUTO_GATING_CTRL_IMD_AUTO_GATING_EN_SHIFT) /* 0x80000000 */
+/* SYS_RESVERD */
+#define VOP2_SYS_SYS_RESVERD_OFFSET                        (0xCU)
+/* SYS_AXI_CTRL0_IMD */
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_OFFSET                  (0x10U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_AXI0_DMA_STOP_SHIFT     (0U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_AXI0_DMA_STOP_MASK      (0x1U << VOP2_SYS_SYS_AXI_CTRL0_IMD_AXI0_DMA_STOP_SHIFT)     /* 0x00000001 */
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_AXI1_DMA_STOP_SHIFT     (1U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_AXI1_DMA_STOP_MASK      (0x1U << VOP2_SYS_SYS_AXI_CTRL0_IMD_AXI1_DMA_STOP_SHIFT)     /* 0x00000002 */
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_CLUSTER0_USE_AXI1_SHIFT (4U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_CLUSTER0_USE_AXI1_MASK  (0x1U << VOP2_SYS_SYS_AXI_CTRL0_IMD_CLUSTER0_USE_AXI1_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_CLUSTER1_USE_AXI1_SHIFT (5U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_CLUSTER1_USE_AXI1_MASK  (0x1U << VOP2_SYS_SYS_AXI_CTRL0_IMD_CLUSTER1_USE_AXI1_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_ESMART0_USE_AXI1_SHIFT  (8U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_ESMART0_USE_AXI1_MASK   (0x1U << VOP2_SYS_SYS_AXI_CTRL0_IMD_ESMART0_USE_AXI1_SHIFT)  /* 0x00000100 */
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_ESMART1_USE_AXI1_SHIFT  (9U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_ESMART1_USE_AXI1_MASK   (0x1U << VOP2_SYS_SYS_AXI_CTRL0_IMD_ESMART1_USE_AXI1_SHIFT)  /* 0x00000200 */
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_SMART0_USE_AXI1_SHIFT   (10U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_SMART0_USE_AXI1_MASK    (0x1U << VOP2_SYS_SYS_AXI_CTRL0_IMD_SMART0_USE_AXI1_SHIFT)   /* 0x00000400 */
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_SMART1_USE_AXI1_SHIFT   (11U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_SMART1_USE_AXI1_MASK    (0x1U << VOP2_SYS_SYS_AXI_CTRL0_IMD_SMART1_USE_AXI1_SHIFT)   /* 0x00000800 */
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_LUT_USE_AXI1_SHIFT      (12U)
+#define VOP2_SYS_SYS_AXI_CTRL0_IMD_LUT_USE_AXI1_MASK       (0x1U << VOP2_SYS_SYS_AXI_CTRL0_IMD_LUT_USE_AXI1_SHIFT)      /* 0x00001000 */
+/* SYS_AXI_HURRY_CTRL0_IMD */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_OFFSET            (0x14U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_W_EN_SHIFT (0U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_W_EN_MASK (0x1U << VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_W_EN_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_W_VALUE_SHIFT (1U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_W_VALUE_MASK (0x3U << VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_W_VALUE_SHIFT) /* 0x00000006 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_W_MODE_SHIFT (3U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_W_MODE_MASK (0x3U << VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_W_MODE_SHIFT) /* 0x00000018 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_EN_SHIFT (8U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_EN_MASK (0x1U << VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_EN_SHIFT) /* 0x00000100 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_VALUE_SHIFT (9U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_VALUE_MASK (0x3U << VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_VALUE_SHIFT) /* 0x00000600 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_THRESHOLD_SHIFT (11U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_THRESHOLD_MASK (0x1U << VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_HURRY_THRESHOLD_SHIFT) /* 0x00000800 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_QOS_EN_SHIFT (12U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_QOS_EN_MASK  (0x1U << VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_QOS_EN_SHIFT) /* 0x00001000 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_QOS_VALUE_SHIFT (13U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_QOS_VALUE_MASK (0x3U << VOP2_SYS_SYS_AXI_HURRY_CTRL0_IMD_AXI0_QOS_VALUE_SHIFT) /* 0x00006000 */
+/* SYS_AXI_HURRY_CTRL1_IMD */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_OFFSET            (0x18U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_W_EN_SHIFT (0U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_W_EN_MASK (0x1U << VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_W_EN_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_W_VALUE_SHIFT (1U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_W_VALUE_MASK (0x3U << VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_W_VALUE_SHIFT) /* 0x00000006 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_W_MODE_SHIFT (3U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_W_MODE_MASK (0x3U << VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_W_MODE_SHIFT) /* 0x00000018 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_EN_SHIFT (8U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_EN_MASK (0x1U << VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_EN_SHIFT) /* 0x00000100 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_VALUE_SHIFT (9U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_VALUE_MASK (0x3U << VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_VALUE_SHIFT) /* 0x00000600 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_THRESHOLD_SHIFT (11U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_THRESHOLD_MASK (0x1U << VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_HURRY_THRESHOLD_SHIFT) /* 0x00000800 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_QOS_EN_SHIFT (12U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_QOS_EN_MASK  (0x1U << VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_QOS_EN_SHIFT) /* 0x00001000 */
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_QOS_VALUE_SHIFT (13U)
+#define VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_QOS_VALUE_MASK (0x3U << VOP2_SYS_SYS_AXI_HURRY_CTRL1_IMD_AXI1_QOS_VALUE_SHIFT) /* 0x00006000 */
+/* SYS_AXI_OUTSTANDING_CTRL0_IMD */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_OFFSET      (0x1CU)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI0_OUTSTANDING_EN_SHIFT (0U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI0_OUTSTANDING_EN_MASK (0x1U << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI0_OUTSTANDING_EN_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI0_OUTSTANDING_NUM_SHIFT (3U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI0_OUTSTANDING_NUM_MASK (0x1FU << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI0_OUTSTANDING_NUM_SHIFT) /* 0x000000F8 */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI1_OUTSTANDING_EN_SHIFT (8U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI1_OUTSTANDING_EN_MASK (0x1U << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI1_OUTSTANDING_EN_SHIFT) /* 0x00000100 */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI1_OUTSTANDING_NUM_SHIFT (11U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI1_OUTSTANDING_NUM_MASK (0xFU << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_AXI1_OUTSTANDING_NUM_SHIFT) /* 0x00007800 */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_CLUSTER0_OUTSTANDING_NUM_SHIFT (16U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_CLUSTER0_OUTSTANDING_NUM_MASK (0xFU << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_CLUSTER0_OUTSTANDING_NUM_SHIFT) /* 0x000F0000 */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_CLUSTER1_OUTSTANDING_NUM_SHIFT (20U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_CLUSTER1_OUTSTANDING_NUM_MASK (0xFU << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL0_IMD_CLUSTER1_OUTSTANDING_NUM_SHIFT) /* 0x00F00000 */
+/* SYS_AXI_OUTSTANDING_CTRL1_IMD */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_OFFSET      (0x20U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_ESMART0_OUTSTANDING_NUM_SHIFT (0U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_ESMART0_OUTSTANDING_NUM_MASK (0xFU << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_ESMART0_OUTSTANDING_NUM_SHIFT) /* 0x0000000F */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_ESMART1_OUTSTANDING_NUM_SHIFT (4U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_ESMART1_OUTSTANDING_NUM_MASK (0xFU << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_ESMART1_OUTSTANDING_NUM_SHIFT) /* 0x000000F0 */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_SMART0_OUTSTANDING_NUM_SHIFT (8U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_SMART0_OUTSTANDING_NUM_MASK (0xFU << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_SMART0_OUTSTANDING_NUM_SHIFT) /* 0x00000F00 */
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_SMART1_OUTSTANDING_NUM_SHIFT (12U)
+#define VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_SMART1_OUTSTANDING_NUM_MASK (0x1U << VOP2_SYS_SYS_AXI_OUTSTANDING_CTRL1_IMD_SMART1_OUTSTANDING_NUM_SHIFT) /* 0x00001000 */
+/* SYS_AXI_LUT_CTRL_IMD */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_OFFSET               (0x24U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_EN_SHIFT     (0U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_EN_MASK      (0x1U << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_EN_SHIFT)     /* 0x00000001 */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_STOP_SHIFT   (1U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_STOP_MASK    (0x1U << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_STOP_SHIFT)   /* 0x00000002 */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_RLEN_SHIFT   (2U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_RLEN_MASK    (0x3U << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_RLEN_SHIFT)   /* 0x0000000C */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_RID_SHIFT    (4U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_RID_MASK     (0xFU << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_LUT_DMA_RID_SHIFT)    /* 0x000000F0 */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_VP0_INTERLACE_FRM_REG_DONE_SHIFT (12U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_VP0_INTERLACE_FRM_REG_DONE_MASK (0x1U << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_VP0_INTERLACE_FRM_REG_DONE_SHIFT) /* 0x00001000 */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_VP1_INTERLACE_FRM_REG_DONE_SHIFT (13U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_VP1_INTERLACE_FRM_REG_DONE_MASK (0x1U << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_VP1_INTERLACE_FRM_REG_DONE_SHIFT) /* 0x00002000 */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_VP2_INTERLACE_FRM_REG_DONE_SHIFT (14U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_VP2_INTERLACE_FRM_REG_DONE_MASK (0x1U << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_VP2_INTERLACE_FRM_REG_DONE_SHIFT) /* 0x00004000 */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_MMU0_REGDONE_SEL_SHIFT (18U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_MMU0_REGDONE_SEL_MASK (0x3U << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_MMU0_REGDONE_SEL_SHIFT) /* 0x000C0000 */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_MMU1_REGDONE_SEL_SHIFT (22U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_MMU1_REGDONE_SEL_MASK (0x3U << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_MMU1_REGDONE_SEL_SHIFT) /* 0x00C00000 */
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_MMU_BYPASS_EN_SHIFT  (31U)
+#define VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_MMU_BYPASS_EN_MASK   (0x1U << VOP2_SYS_SYS_AXI_LUT_CTRL_IMD_MMU_BYPASS_EN_SHIFT)  /* 0x80000000 */
+/* SYS_DSP_INFACE_EN */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_OFFSET                  (0x28U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_RGB_OUT_EN_SHIFT        (0U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_RGB_OUT_EN_MASK         (0x1U << VOP2_SYS_SYS_DSP_INFACE_EN_RGB_OUT_EN_SHIFT)        /* 0x00000001 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_HDMI_OUT_EN_SHIFT       (1U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_HDMI_OUT_EN_MASK        (0x1U << VOP2_SYS_SYS_DSP_INFACE_EN_HDMI_OUT_EN_SHIFT)       /* 0x00000002 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_EDP_OUT_EN_SHIFT        (3U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_EDP_OUT_EN_MASK         (0x1U << VOP2_SYS_SYS_DSP_INFACE_EN_EDP_OUT_EN_SHIFT)        /* 0x00000008 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_MIPI_OUT_EN_SHIFT       (4U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_MIPI_OUT_EN_MASK        (0x1U << VOP2_SYS_SYS_DSP_INFACE_EN_MIPI_OUT_EN_SHIFT)       /* 0x00000010 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_LVDS_OUT_EN_SHIFT       (5U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_LVDS_OUT_EN_MASK        (0x1U << VOP2_SYS_SYS_DSP_INFACE_EN_LVDS_OUT_EN_SHIFT)       /* 0x00000020 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_BT1120_OUT_EN_SHIFT     (6U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_BT1120_OUT_EN_MASK      (0x1U << VOP2_SYS_SYS_DSP_INFACE_EN_BT1120_OUT_EN_SHIFT)     /* 0x00000040 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_BT656_OUT_EN_SHIFT      (7U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_BT656_OUT_EN_MASK       (0x1U << VOP2_SYS_SYS_DSP_INFACE_EN_BT656_OUT_EN_SHIFT)      /* 0x00000080 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_RGB_INFACE_MUX_SHIFT    (8U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_RGB_INFACE_MUX_MASK     (0x3U << VOP2_SYS_SYS_DSP_INFACE_EN_RGB_INFACE_MUX_SHIFT)    /* 0x00000300 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_HDMI_INFACE_MUX_SHIFT   (10U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_HDMI_INFACE_MUX_MASK    (0x3U << VOP2_SYS_SYS_DSP_INFACE_EN_HDMI_INFACE_MUX_SHIFT)   /* 0x00000C00 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_EDP_INFACE_MUX_SHIFT    (14U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_EDP_INFACE_MUX_MASK     (0x3U << VOP2_SYS_SYS_DSP_INFACE_EN_EDP_INFACE_MUX_SHIFT)    /* 0x0000C000 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_MIPI_INFACE_MUX_SHIFT   (16U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_MIPI_INFACE_MUX_MASK    (0x3U << VOP2_SYS_SYS_DSP_INFACE_EN_MIPI_INFACE_MUX_SHIFT)   /* 0x00030000 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_LVDS_INFACE_MUX_SHIFT   (18U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_LVDS_INFACE_MUX_MASK    (0x3U << VOP2_SYS_SYS_DSP_INFACE_EN_LVDS_INFACE_MUX_SHIFT)   /* 0x000C0000 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_MIPI1_OUT_EN_SHIFT      (20U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_MIPI1_OUT_EN_MASK       (0x1U << VOP2_SYS_SYS_DSP_INFACE_EN_MIPI1_OUT_EN_SHIFT)      /* 0x00100000 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_MIPI1_INFACE_MUX_SHIFT  (21U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_MIPI1_INFACE_MUX_MASK   (0x3U << VOP2_SYS_SYS_DSP_INFACE_EN_MIPI1_INFACE_MUX_SHIFT)  /* 0x00600000 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_LVDS1_OUT_EN_SHIFT      (24U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_LVDS1_OUT_EN_MASK       (0x1U << VOP2_SYS_SYS_DSP_INFACE_EN_LVDS1_OUT_EN_SHIFT)      /* 0x01000000 */
+#define VOP2_SYS_SYS_DSP_INFACE_EN_LVDS1_INFACE_MUX_SHIFT  (25U)
+#define VOP2_SYS_SYS_DSP_INFACE_EN_LVDS1_INFACE_MUX_MASK   (0x3U << VOP2_SYS_SYS_DSP_INFACE_EN_LVDS1_INFACE_MUX_SHIFT)  /* 0x06000000 */
+/* SYS_DSP_INFACE_CTRL */
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_OFFSET                (0x2CU)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_LVDS_CON_CHASEL_SHIFT (0U)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_LVDS_CON_CHASEL_MASK  (0x1U << VOP2_SYS_SYS_DSP_INFACE_CTRL_LVDS_CON_CHASEL_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_LVDS_CON_DUAL_SEL_SHIFT (1U)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_LVDS_CON_DUAL_SEL_MASK (0x1U << VOP2_SYS_SYS_DSP_INFACE_CTRL_LVDS_CON_DUAL_SEL_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_LVDS_CON_DUAL_SWAP_SHIFT (2U)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_LVDS_CON_DUAL_SWAP_MASK (0x1U << VOP2_SYS_SYS_DSP_INFACE_CTRL_LVDS_CON_DUAL_SWAP_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT656_UV_SWAP_SHIFT   (4U)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT656_UV_SWAP_MASK    (0x1U << VOP2_SYS_SYS_DSP_INFACE_CTRL_BT656_UV_SWAP_SHIFT)   /* 0x00000010 */
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT656_YC_SWAP_SHIFT   (5U)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT656_YC_SWAP_MASK    (0x1U << VOP2_SYS_SYS_DSP_INFACE_CTRL_BT656_YC_SWAP_SHIFT)   /* 0x00000020 */
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT656_DCLK_POL_SHIFT  (6U)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT656_DCLK_POL_MASK   (0x1U << VOP2_SYS_SYS_DSP_INFACE_CTRL_BT656_DCLK_POL_SHIFT)  /* 0x00000040 */
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT1120_UV_SWAP_SHIFT  (8U)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT1120_UV_SWAP_MASK   (0x1U << VOP2_SYS_SYS_DSP_INFACE_CTRL_BT1120_UV_SWAP_SHIFT)  /* 0x00000100 */
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT1120_YC_SWAP_SHIFT  (9U)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT1120_YC_SWAP_MASK   (0x1U << VOP2_SYS_SYS_DSP_INFACE_CTRL_BT1120_YC_SWAP_SHIFT)  /* 0x00000200 */
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT1120_DCLK_POL_SHIFT (10U)
+#define VOP2_SYS_SYS_DSP_INFACE_CTRL_BT1120_DCLK_POL_MASK  (0x1U << VOP2_SYS_SYS_DSP_INFACE_CTRL_BT1120_DCLK_POL_SHIFT) /* 0x00000400 */
+/* SYS_DSP_INFACE_POL */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_OFFSET                 (0x30U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_HSYNC_POL_SHIFT (0U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_HSYNC_POL_MASK (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_HSYNC_POL_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_VSYNC_POL_SHIFT (1U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_VSYNC_POL_MASK (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_VSYNC_POL_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_DEN_POL_SHIFT (2U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_DEN_POL_MASK  (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_DEN_POL_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_CLK_POL_SHIFT (3U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_CLK_POL_MASK  (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_RGB_LVDS_CLK_POL_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_HSYNC_POL_SHIFT   (4U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_HSYNC_POL_MASK    (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_HSYNC_POL_SHIFT)   /* 0x00000010 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_VSYNC_POL_SHIFT   (5U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_VSYNC_POL_MASK    (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_VSYNC_POL_SHIFT)   /* 0x00000020 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_DEN_POL_SHIFT     (6U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_DEN_POL_MASK      (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_DEN_POL_SHIFT)     /* 0x00000040 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_DCLK_POL_SHIFT    (7U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_DCLK_POL_MASK     (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_HDMI_DCLK_POL_SHIFT)    /* 0x00000080 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_EDP_HSYNC_POL_SHIFT    (12U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_EDP_HSYNC_POL_MASK     (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_EDP_HSYNC_POL_SHIFT)    /* 0x00001000 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_EDP_VSYNC_POL_SHIFT    (13U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_EDP_VSYNC_POL_MASK     (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_EDP_VSYNC_POL_SHIFT)    /* 0x00002000 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_EDP_DEN_POL_SHIFT      (14U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_EDP_DEN_POL_MASK       (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_EDP_DEN_POL_SHIFT)      /* 0x00004000 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_EDP_DCLK_POL_SHIFT     (15U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_EDP_DCLK_POL_MASK      (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_EDP_DCLK_POL_SHIFT)     /* 0x00008000 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_HSYNC_POL_SHIFT   (16U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_HSYNC_POL_MASK    (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_HSYNC_POL_SHIFT)   /* 0x00010000 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_VSYNC_POL_SHIFT   (17U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_VSYNC_POL_MASK    (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_VSYNC_POL_SHIFT)   /* 0x00020000 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_DEN_POL_SHIFT     (18U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_DEN_POL_MASK      (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_DEN_POL_SHIFT)     /* 0x00040000 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_DCLK_POL_SHIFT    (19U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_DCLK_POL_MASK     (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_MIPI_DCLK_POL_SHIFT)    /* 0x00080000 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_REGDONE_IMD_EN_SHIFT   (28U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_REGDONE_IMD_EN_MASK    (0x1U << VOP2_SYS_SYS_DSP_INFACE_POL_REGDONE_IMD_EN_SHIFT)   /* 0x10000000 */
+#define VOP2_SYS_SYS_DSP_INFACE_POL_REGDONE_SEL_SHIFT      (30U)
+#define VOP2_SYS_SYS_DSP_INFACE_POL_REGDONE_SEL_MASK       (0x3U << VOP2_SYS_SYS_DSP_INFACE_POL_REGDONE_SEL_SHIFT)      /* 0xC0000000 */
+/* SYS_WB_CTRL0 */
+#define VOP2_SYS_SYS_WB_CTRL0_OFFSET                       (0x40U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_EN_SHIFT                  (0U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_EN_MASK                   (0x1U << VOP2_SYS_SYS_WB_CTRL0_WB_EN_SHIFT)                  /* 0x00000001 */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_FMT_SHIFT                 (1U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_FMT_MASK                  (0x7U << VOP2_SYS_SYS_WB_CTRL0_WB_FMT_SHIFT)                 /* 0x0000000E */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_DITHER_EN_SHIFT           (4U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_DITHER_EN_MASK            (0x1U << VOP2_SYS_SYS_WB_CTRL0_WB_DITHER_EN_SHIFT)           /* 0x00000010 */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_RGB2YUV_EN_SHIFT          (5U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_RGB2YUV_EN_MASK           (0x1U << VOP2_SYS_SYS_WB_CTRL0_WB_RGB2YUV_EN_SHIFT)          /* 0x00000020 */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_RGB2YUV_MODE_SHIFT        (6U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_RGB2YUV_MODE_MASK         (0x1U << VOP2_SYS_SYS_WB_CTRL0_WB_RGB2YUV_MODE_SHIFT)        /* 0x00000040 */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_XPSD_BIL_EN_SHIFT         (7U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_XPSD_BIL_EN_MASK          (0x1U << VOP2_SYS_SYS_WB_CTRL0_WB_XPSD_BIL_EN_SHIFT)         /* 0x00000080 */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_YTHROW_EN_SHIFT           (8U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_YTHROW_EN_MASK            (0x1U << VOP2_SYS_SYS_WB_CTRL0_WB_YTHROW_EN_SHIFT)           /* 0x00000100 */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_YTHROW_MODE_SHIFT         (9U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_YTHROW_MODE_MASK          (0x1U << VOP2_SYS_SYS_WB_CTRL0_WB_YTHROW_MODE_SHIFT)         /* 0x00000200 */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_HANDSHAKE_MODE_SHIFT      (11U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_HANDSHAKE_MODE_MASK       (0x1U << VOP2_SYS_SYS_WB_CTRL0_WB_HANDSHAKE_MODE_SHIFT)      /* 0x00000800 */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_YRGB_ID_SHIFT             (19U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_YRGB_ID_MASK              (0xFU << VOP2_SYS_SYS_WB_CTRL0_WB_YRGB_ID_SHIFT)             /* 0x00780000 */
+#define VOP2_SYS_SYS_WB_CTRL0_WB_UV_ID_SHIFT               (27U)
+#define VOP2_SYS_SYS_WB_CTRL0_WB_UV_ID_MASK                (0xFU << VOP2_SYS_SYS_WB_CTRL0_WB_UV_ID_SHIFT)               /* 0x78000000 */
+/* SYS_WB_XSPD_FACTOR */
+#define VOP2_SYS_SYS_WB_XSPD_FACTOR_OFFSET                 (0x44U)
+#define VOP2_SYS_SYS_WB_XSPD_FACTOR_FIFO_THOLD_SHIFT       (0U)
+#define VOP2_SYS_SYS_WB_XSPD_FACTOR_FIFO_THOLD_MASK        (0x3FFU << VOP2_SYS_SYS_WB_XSPD_FACTOR_FIFO_THOLD_SHIFT)     /* 0x000003FF */
+#define VOP2_SYS_SYS_WB_XSPD_FACTOR_WB_XPSD_BIL_FACTOR_SHIFT (16U)
+#define VOP2_SYS_SYS_WB_XSPD_FACTOR_WB_XPSD_BIL_FACTOR_MASK (0x3FFFU << VOP2_SYS_SYS_WB_XSPD_FACTOR_WB_XPSD_BIL_FACTOR_SHIFT) /* 0x3FFF0000 */
+/* SYS_WB_YRGB_MST */
+#define VOP2_SYS_SYS_WB_YRGB_MST_OFFSET                    (0x48U)
+#define VOP2_SYS_SYS_WB_YRGB_MST_WB_YRGB_MST_SHIFT         (0U)
+#define VOP2_SYS_SYS_WB_YRGB_MST_WB_YRGB_MST_MASK          (0xFFFFFFFFU << VOP2_SYS_SYS_WB_YRGB_MST_WB_YRGB_MST_SHIFT)  /* 0xFFFFFFFF */
+/* SYS_WB_CBR_MST */
+#define VOP2_SYS_SYS_WB_CBR_MST_OFFSET                     (0x4CU)
+#define VOP2_SYS_SYS_WB_CBR_MST_WB_CBR_MST_SHIFT           (0U)
+#define VOP2_SYS_SYS_WB_CBR_MST_WB_CBR_MST_MASK            (0xFFFFFFFFU << VOP2_SYS_SYS_WB_CBR_MST_WB_CBR_MST_SHIFT)    /* 0xFFFFFFFF */
+/* SYS_OTP_WIN_EN_IMD */
+#define VOP2_SYS_SYS_OTP_WIN_EN_IMD_OFFSET                 (0x50U)
+#define VOP2_SYS_SYS_OTP_WIN_EN_IMD_OTP_EN_SHIFT           (0U)
+#define VOP2_SYS_SYS_OTP_WIN_EN_IMD_OTP_EN_MASK            (0x1U << VOP2_SYS_SYS_OTP_WIN_EN_IMD_OTP_EN_SHIFT)           /* 0x00000001 */
+/* SYS_LUT_PORT_SEL */
+#define VOP2_SYS_SYS_LUT_PORT_SEL_OFFSET                   (0x58U)
+#define VOP2_SYS_SYS_LUT_PORT_SEL_GAMMA_PORT_SEL_SHIFT     (0U)
+#define VOP2_SYS_SYS_LUT_PORT_SEL_GAMMA_PORT_SEL_MASK      (0x3U << VOP2_SYS_SYS_LUT_PORT_SEL_GAMMA_PORT_SEL_SHIFT)     /* 0x00000003 */
+#define VOP2_SYS_SYS_LUT_PORT_SEL_BPP_LUT_EN_SHIFT         (4U)
+#define VOP2_SYS_SYS_LUT_PORT_SEL_BPP_LUT_EN_MASK          (0x1U << VOP2_SYS_SYS_LUT_PORT_SEL_BPP_LUT_EN_SHIFT)         /* 0x00000010 */
+#define VOP2_SYS_SYS_LUT_PORT_SEL_BPP_WIN_SEL_SHIFT        (5U)
+#define VOP2_SYS_SYS_LUT_PORT_SEL_BPP_WIN_SEL_MASK         (0x7U << VOP2_SYS_SYS_LUT_PORT_SEL_BPP_WIN_SEL_SHIFT)        /* 0x000000E0 */
+#define VOP2_SYS_SYS_LUT_PORT_SEL_WB_PORT_SEL_SHIFT        (8U)
+#define VOP2_SYS_SYS_LUT_PORT_SEL_WB_PORT_SEL_MASK         (0x3U << VOP2_SYS_SYS_LUT_PORT_SEL_WB_PORT_SEL_SHIFT)        /* 0x00000300 */
+/* SYS_STATUS0 */
+#define VOP2_SYS_SYS_STATUS0_OFFSET                        (0x60U)
+#define VOP2_SYS_SYS_STATUS0_DMA_STOP_VALID0_SHIFT         (0U)
+#define VOP2_SYS_SYS_STATUS0_DMA_STOP_VALID0_MASK          (0x1U << VOP2_SYS_SYS_STATUS0_DMA_STOP_VALID0_SHIFT)         /* 0x00000001 */
+#define VOP2_SYS_SYS_STATUS0_MMU0_IDLE_SHIFT               (1U)
+#define VOP2_SYS_SYS_STATUS0_MMU0_IDLE_MASK                (0x1U << VOP2_SYS_SYS_STATUS0_MMU0_IDLE_SHIFT)               /* 0x00000002 */
+#define VOP2_SYS_SYS_STATUS0_DSP_VCNT0_SHIFT               (16U)
+#define VOP2_SYS_SYS_STATUS0_DSP_VCNT0_MASK                (0x1FFFU << VOP2_SYS_SYS_STATUS0_DSP_VCNT0_SHIFT)            /* 0x1FFF0000 */
+/* SYS_STATUS1 */
+#define VOP2_SYS_SYS_STATUS1_OFFSET                        (0x64U)
+#define VOP2_SYS_SYS_STATUS1_DMA_STOP_VALID1_SHIFT         (0U)
+#define VOP2_SYS_SYS_STATUS1_DMA_STOP_VALID1_MASK          (0x1U << VOP2_SYS_SYS_STATUS1_DMA_STOP_VALID1_SHIFT)         /* 0x00000001 */
+#define VOP2_SYS_SYS_STATUS1_MMU1_IDLE_SHIFT               (1U)
+#define VOP2_SYS_SYS_STATUS1_MMU1_IDLE_MASK                (0x1U << VOP2_SYS_SYS_STATUS1_MMU1_IDLE_SHIFT)               /* 0x00000002 */
+#define VOP2_SYS_SYS_STATUS1_DSP_VCNT1_SHIFT               (16U)
+#define VOP2_SYS_SYS_STATUS1_DSP_VCNT1_MASK                (0x1FFFU << VOP2_SYS_SYS_STATUS1_DSP_VCNT1_SHIFT)            /* 0x1FFF0000 */
+/* SYS_STATUS2 */
+#define VOP2_SYS_SYS_STATUS2_OFFSET                        (0x68U)
+#define VOP2_SYS_SYS_STATUS2_DSP_VCNT2_SHIFT               (16U)
+#define VOP2_SYS_SYS_STATUS2_DSP_VCNT2_MASK                (0x1FFFU << VOP2_SYS_SYS_STATUS2_DSP_VCNT2_SHIFT)            /* 0x1FFF0000 */
+/* SYS_RESERVED */
+#define VOP2_SYS_SYS_RESERVED_OFFSET                       (0x6CU)
+#define VOP2_SYS_SYS_RESERVED_FIELD0000_SHIFT              (0U)
+#define VOP2_SYS_SYS_RESERVED_FIELD0000_MASK               (0x1U << VOP2_SYS_SYS_RESERVED_FIELD0000_SHIFT)              /* 0x00000001 */
+/* SYS_LINE_FLAG0 */
+#define VOP2_SYS_SYS_LINE_FLAG0_OFFSET                     (0x70U)
+#define VOP2_SYS_SYS_LINE_FLAG0_DSP_LINE_FLAG_NUM_0_SHIFT  (0U)
+#define VOP2_SYS_SYS_LINE_FLAG0_DSP_LINE_FLAG_NUM_0_MASK   (0x1FFFU << VOP2_SYS_SYS_LINE_FLAG0_DSP_LINE_FLAG_NUM_0_SHIFT) /* 0x00001FFF */
+#define VOP2_SYS_SYS_LINE_FLAG0_DSP_LINE_FLAG_NUM_1_SHIFT  (16U)
+#define VOP2_SYS_SYS_LINE_FLAG0_DSP_LINE_FLAG_NUM_1_MASK   (0x1FFFU << VOP2_SYS_SYS_LINE_FLAG0_DSP_LINE_FLAG_NUM_1_SHIFT) /* 0x1FFF0000 */
+#define VOP2_SYS_SYS_LINE_FLAG0_DSP_ALMOST_FULL_THOLD_SHIFT (29U)
+#define VOP2_SYS_SYS_LINE_FLAG0_DSP_ALMOST_FULL_THOLD_MASK (0x7U << VOP2_SYS_SYS_LINE_FLAG0_DSP_ALMOST_FULL_THOLD_SHIFT) /* 0xE0000000 */
+/* SYS_LINE_FLAG1 */
+#define VOP2_SYS_SYS_LINE_FLAG1_OFFSET                     (0x74U)
+#define VOP2_SYS_SYS_LINE_FLAG1_DSP_LINE_FLAG_NUM_0_SHIFT  (0U)
+#define VOP2_SYS_SYS_LINE_FLAG1_DSP_LINE_FLAG_NUM_0_MASK   (0x1FFFU << VOP2_SYS_SYS_LINE_FLAG1_DSP_LINE_FLAG_NUM_0_SHIFT) /* 0x00001FFF */
+#define VOP2_SYS_SYS_LINE_FLAG1_DSP_LINE_FLAG_NUM_1_SHIFT  (16U)
+#define VOP2_SYS_SYS_LINE_FLAG1_DSP_LINE_FLAG_NUM_1_MASK   (0x1FFFU << VOP2_SYS_SYS_LINE_FLAG1_DSP_LINE_FLAG_NUM_1_SHIFT) /* 0x1FFF0000 */
+#define VOP2_SYS_SYS_LINE_FLAG1_DSP_ALMOST_FULL_THOLD_SHIFT (29U)
+#define VOP2_SYS_SYS_LINE_FLAG1_DSP_ALMOST_FULL_THOLD_MASK (0x7U << VOP2_SYS_SYS_LINE_FLAG1_DSP_ALMOST_FULL_THOLD_SHIFT) /* 0xE0000000 */
+/* SYS_LINE_FLAG2 */
+#define VOP2_SYS_SYS_LINE_FLAG2_OFFSET                     (0x78U)
+#define VOP2_SYS_SYS_LINE_FLAG2_DSP_LINE_FLAG_NUM_0_SHIFT  (0U)
+#define VOP2_SYS_SYS_LINE_FLAG2_DSP_LINE_FLAG_NUM_0_MASK   (0x1FFFU << VOP2_SYS_SYS_LINE_FLAG2_DSP_LINE_FLAG_NUM_0_SHIFT) /* 0x00001FFF */
+#define VOP2_SYS_SYS_LINE_FLAG2_DSP_LINE_FLAG_NUM_1_SHIFT  (16U)
+#define VOP2_SYS_SYS_LINE_FLAG2_DSP_LINE_FLAG_NUM_1_MASK   (0x1FFFU << VOP2_SYS_SYS_LINE_FLAG2_DSP_LINE_FLAG_NUM_1_SHIFT) /* 0x1FFF0000 */
+#define VOP2_SYS_SYS_LINE_FLAG2_DSP_ALMOST_FULL_THOLD_SHIFT (29U)
+#define VOP2_SYS_SYS_LINE_FLAG2_DSP_ALMOST_FULL_THOLD_MASK (0x7U << VOP2_SYS_SYS_LINE_FLAG2_DSP_ALMOST_FULL_THOLD_SHIFT) /* 0xE0000000 */
+/* SYS0_INTR_EN */
+#define VOP2_SYS_SYS0_INTR_EN_OFFSET                       (0x80U)
+#define VOP2_SYS_SYS0_INTR_EN_INTR_EN_BUS0_ERROR_SHIFT     (1U)
+#define VOP2_SYS_SYS0_INTR_EN_INTR_EN_BUS0_ERROR_MASK      (0x1U << VOP2_SYS_SYS0_INTR_EN_INTR_EN_BUS0_ERROR_SHIFT)     /* 0x00000002 */
+#define VOP2_SYS_SYS0_INTR_EN_INTR_EN_DMA0_FINISH_SHIFT    (2U)
+#define VOP2_SYS_SYS0_INTR_EN_INTR_EN_DMA0_FINISH_MASK     (0x1U << VOP2_SYS_SYS0_INTR_EN_INTR_EN_DMA0_FINISH_SHIFT)    /* 0x00000004 */
+#define VOP2_SYS_SYS0_INTR_EN_INT_EN_WB0_UV_FIFO_FULL_SHIFT (3U)
+#define VOP2_SYS_SYS0_INTR_EN_INT_EN_WB0_UV_FIFO_FULL_MASK (0x1U << VOP2_SYS_SYS0_INTR_EN_INT_EN_WB0_UV_FIFO_FULL_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_SYS0_INTR_EN_INT_EN_WB0_YRGB_FIFO_FULL_SHIFT (4U)
+#define VOP2_SYS_SYS0_INTR_EN_INT_EN_WB0_YRGB_FIFO_FULL_MASK (0x1U << VOP2_SYS_SYS0_INTR_EN_INT_EN_WB0_YRGB_FIFO_FULL_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_SYS0_INTR_EN_INT_EN_WB0_FINISH_SHIFT      (5U)
+#define VOP2_SYS_SYS0_INTR_EN_INT_EN_WB0_FINISH_MASK       (0x1U << VOP2_SYS_SYS0_INTR_EN_INT_EN_WB0_FINISH_SHIFT)      /* 0x00000020 */
+#define VOP2_SYS_SYS0_INTR_EN_INTR_EN_MMU0_SHIFT           (7U)
+#define VOP2_SYS_SYS0_INTR_EN_INTR_EN_MMU0_MASK            (0x1U << VOP2_SYS_SYS0_INTR_EN_INTR_EN_MMU0_SHIFT)           /* 0x00000080 */
+/* SYS0_INTR_CLR */
+#define VOP2_SYS_SYS0_INTR_CLR_OFFSET                      (0x84U)
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_BUS_ERROR_SHIFT    (1U)
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_BUS_ERROR_MASK     (0x1U << VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_BUS_ERROR_SHIFT)    /* 0x00000002 */
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_DMA_FINISH_SHIFT   (2U)
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_DMA_FINISH_MASK    (0x1U << VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_DMA_FINISH_SHIFT)   /* 0x00000004 */
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_WB_UV_FIFO_FULL_SHIFT (3U)
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_WB_UV_FIFO_FULL_MASK (0x1U << VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_WB_UV_FIFO_FULL_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_WB_YRGB_FIFO_FULL_SHIFT (4U)
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_WB_YRGB_FIFO_FULL_MASK (0x1U << VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_WB_YRGB_FIFO_FULL_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_WB_DMA_FINISH_SHIFT (5U)
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_WB_DMA_FINISH_MASK (0x1U << VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_WB_DMA_FINISH_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_MMU0_SHIFT         (7U)
+#define VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_MMU0_MASK          (0x1U << VOP2_SYS_SYS0_INTR_CLR_INTR_CLR_MMU0_SHIFT)         /* 0x00000080 */
+/* SYS0_INTR_STATUS */
+#define VOP2_SYS_SYS0_INTR_STATUS_OFFSET                   (0x88U)
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_BUS_ERROR_SHIFT (1U)
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_BUS_ERROR_MASK (0x1U << VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_BUS_ERROR_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_DMA_FINISH_SHIFT (2U)
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_DMA_FINISH_MASK (0x1U << VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_DMA_FINISH_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_WB_UV_FIFO_FULL_SHIFT (3U)
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_WB_UV_FIFO_FULL_MASK (0x1U << VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_WB_UV_FIFO_FULL_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_WB_YRGB_FIFO_FULL_SHIFT (4U)
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_WB_YRGB_FIFO_FULL_MASK (0x1U << VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_WB_YRGB_FIFO_FULL_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_WB_DMA_FINISH_SHIFT (5U)
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_WB_DMA_FINISH_MASK (0x1U << VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_WB_DMA_FINISH_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_MMU0_SHIFT   (7U)
+#define VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_MMU0_MASK    (0x1U << VOP2_SYS_SYS0_INTR_STATUS_INTR_STATUS_MMU0_SHIFT)   /* 0x00000080 */
+/* SYS0_INTR_RAW_STATUS */
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_OFFSET               (0x8CU)
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_BUS_ERROR_SHIFT (1U)
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_BUS_ERROR_MASK (0x1U << VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_BUS_ERROR_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_DMA_FINISH_SHIFT (2U)
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_DMA_FINISH_MASK (0x1U << VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_DMA_FINISH_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_WB_UV_FIFO_FULL_SHIFT (3U)
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_WB_UV_FIFO_FULL_MASK (0x1U << VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_WB_UV_FIFO_FULL_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_WB_YRGB_FIFO_FULL_SHIFT (4U)
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_WB_YRGB_FIFO_FULL_MASK (0x1U << VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_WB_YRGB_FIFO_FULL_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_WB_DMA_FINISH_SHIFT (5U)
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_WB_DMA_FINISH_MASK (0x1U << VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_WB_DMA_FINISH_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_MMU0_SHIFT (7U)
+#define VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_MMU0_MASK (0x1U << VOP2_SYS_SYS0_INTR_RAW_STATUS_INTR_RAW_STATUS_MMU0_SHIFT) /* 0x00000080 */
+/* SYS1_INTR_EN */
+#define VOP2_SYS_SYS1_INTR_EN_OFFSET                       (0x90U)
+#define VOP2_SYS_SYS1_INTR_EN_INTR_EN_BUS1_ERROR_SHIFT     (1U)
+#define VOP2_SYS_SYS1_INTR_EN_INTR_EN_BUS1_ERROR_MASK      (0x1U << VOP2_SYS_SYS1_INTR_EN_INTR_EN_BUS1_ERROR_SHIFT)     /* 0x00000002 */
+#define VOP2_SYS_SYS1_INTR_EN_INTR_EN_DMA1_FINISH_SHIFT    (2U)
+#define VOP2_SYS_SYS1_INTR_EN_INTR_EN_DMA1_FINISH_MASK     (0x1U << VOP2_SYS_SYS1_INTR_EN_INTR_EN_DMA1_FINISH_SHIFT)    /* 0x00000004 */
+#define VOP2_SYS_SYS1_INTR_EN_INTR_EN_MMU1_SHIFT           (7U)
+#define VOP2_SYS_SYS1_INTR_EN_INTR_EN_MMU1_MASK            (0x1U << VOP2_SYS_SYS1_INTR_EN_INTR_EN_MMU1_SHIFT)           /* 0x00000080 */
+/* SYS1_INTR_CLR_SYS */
+#define VOP2_SYS_SYS1_INTR_CLR_SYS_OFFSET                  (0x94U)
+#define VOP2_SYS_SYS1_INTR_CLR_SYS_INTR_CLR_BUS_ERROR_SHIFT (1U)
+#define VOP2_SYS_SYS1_INTR_CLR_SYS_INTR_CLR_BUS_ERROR_MASK (0x1U << VOP2_SYS_SYS1_INTR_CLR_SYS_INTR_CLR_BUS_ERROR_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_SYS1_INTR_CLR_SYS_INTR_CLR_DMA_FINISH_SHIFT (2U)
+#define VOP2_SYS_SYS1_INTR_CLR_SYS_INTR_CLR_DMA_FINISH_MASK (0x1U << VOP2_SYS_SYS1_INTR_CLR_SYS_INTR_CLR_DMA_FINISH_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_SYS1_INTR_CLR_SYS_INTR_CLR_MMU1_SHIFT     (7U)
+#define VOP2_SYS_SYS1_INTR_CLR_SYS_INTR_CLR_MMU1_MASK      (0x1U << VOP2_SYS_SYS1_INTR_CLR_SYS_INTR_CLR_MMU1_SHIFT)     /* 0x00000080 */
+/* SYS1_INTR_STATUS */
+#define VOP2_SYS_SYS1_INTR_STATUS_OFFSET                   (0x98U)
+#define VOP2_SYS_SYS1_INTR_STATUS_INTR_STATUS_BUS_ERROR_SHIFT (1U)
+#define VOP2_SYS_SYS1_INTR_STATUS_INTR_STATUS_BUS_ERROR_MASK (0x1U << VOP2_SYS_SYS1_INTR_STATUS_INTR_STATUS_BUS_ERROR_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_SYS1_INTR_STATUS_INTR_STATUS_DMA_FINISH_SHIFT (2U)
+#define VOP2_SYS_SYS1_INTR_STATUS_INTR_STATUS_DMA_FINISH_MASK (0x1U << VOP2_SYS_SYS1_INTR_STATUS_INTR_STATUS_DMA_FINISH_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_SYS1_INTR_STATUS_INTR_STATUS_MMU1_SHIFT   (7U)
+#define VOP2_SYS_SYS1_INTR_STATUS_INTR_STATUS_MMU1_MASK    (0x1U << VOP2_SYS_SYS1_INTR_STATUS_INTR_STATUS_MMU1_SHIFT)   /* 0x00000080 */
+/* SYS1_INTR_RAW_STATUS */
+#define VOP2_SYS_SYS1_INTR_RAW_STATUS_OFFSET               (0x9CU)
+#define VOP2_SYS_SYS1_INTR_RAW_STATUS_INTR_RAW_STATUS_BUS_ERROR_SHIFT (1U)
+#define VOP2_SYS_SYS1_INTR_RAW_STATUS_INTR_RAW_STATUS_BUS_ERROR_MASK (0x1U << VOP2_SYS_SYS1_INTR_RAW_STATUS_INTR_RAW_STATUS_BUS_ERROR_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_SYS1_INTR_RAW_STATUS_INTR_RAW_STATUS_DMA_FINISH_SHIFT (2U)
+#define VOP2_SYS_SYS1_INTR_RAW_STATUS_INTR_RAW_STATUS_DMA_FINISH_MASK (0x1U << VOP2_SYS_SYS1_INTR_RAW_STATUS_INTR_RAW_STATUS_DMA_FINISH_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_SYS1_INTR_RAW_STATUS_INTR_RAW_STATUS_MMU1_SHIFT (7U)
+#define VOP2_SYS_SYS1_INTR_RAW_STATUS_INTR_RAW_STATUS_MMU1_MASK (0x1U << VOP2_SYS_SYS1_INTR_RAW_STATUS_INTR_RAW_STATUS_MMU1_SHIFT) /* 0x00000080 */
+/* PORT0_INTR_EN */
+#define VOP2_SYS_PORT0_INTR_EN_OFFSET                      (0xA0U)
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_FS_SHIFT            (0U)
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_FS_MASK             (0x1U << VOP2_SYS_PORT0_INTR_EN_INTR_EN_FS_SHIFT)            /* 0x00000001 */
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_LINE_FLAG0_SHIFT    (2U)
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_LINE_FLAG0_MASK     (0x1U << VOP2_SYS_PORT0_INTR_EN_INTR_EN_LINE_FLAG0_SHIFT)    /* 0x00000004 */
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_LINE_FLAG1_SHIFT    (3U)
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_LINE_FLAG1_MASK     (0x1U << VOP2_SYS_PORT0_INTR_EN_INTR_EN_LINE_FLAG1_SHIFT)    /* 0x00000008 */
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT0_INTR_EN_INTR_EN_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_FS_FIELD_SHIFT      (5U)
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_FS_FIELD_MASK       (0x1U << VOP2_SYS_PORT0_INTR_EN_INTR_EN_FS_FIELD_SHIFT)      /* 0x00000020 */
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT0_INTR_EN_INTR_EN_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_VFP_SHIFT           (7U)
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_VFP_MASK            (0x1U << VOP2_SYS_PORT0_INTR_EN_INTR_EN_VFP_SHIFT)           /* 0x00000080 */
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_POST_FULL_SHIFT     (9U)
+#define VOP2_SYS_PORT0_INTR_EN_INTR_EN_POST_FULL_MASK      (0x1U << VOP2_SYS_PORT0_INTR_EN_INTR_EN_POST_FULL_SHIFT)     /* 0x00000200 */
+/* PORT0_INTR_CLR */
+#define VOP2_SYS_PORT0_INTR_CLR_OFFSET                     (0xA4U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_FS_SHIFT          (0U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_FS_MASK           (0x1U << VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_FS_SHIFT)          /* 0x00000001 */
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_FS_NEW_SHIFT      (1U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_FS_NEW_MASK       (0x1U << VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_FS_NEW_SHIFT)      /* 0x00000002 */
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_LINE_FLAG0_SHIFT  (2U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_LINE_FLAG0_MASK   (0x1U << VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_LINE_FLAG0_SHIFT)  /* 0x00000004 */
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_LINE_FLAG1_SHIFT  (3U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_LINE_FLAG1_MASK   (0x1U << VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_LINE_FLAG1_SHIFT)  /* 0x00000008 */
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_FS_FIELD_SHIFT    (5U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_FS_FIELD_MASK     (0x1U << VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_FS_FIELD_SHIFT)    /* 0x00000020 */
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_VFP_SHIFT         (7U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_VFP_MASK          (0x1U << VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_VFP_SHIFT)         /* 0x00000080 */
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_POST_FULL_SHIFT   (9U)
+#define VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_POST_FULL_MASK    (0x1U << VOP2_SYS_PORT0_INTR_CLR_INTR_CLR_POST_FULL_SHIFT)   /* 0x00000200 */
+/* PORT0_INTR_STATUS */
+#define VOP2_SYS_PORT0_INTR_STATUS_OFFSET                  (0xA8U)
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_FS_SHIFT    (0U)
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_FS_MASK     (0x1U << VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_FS_SHIFT)    /* 0x00000001 */
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_LINE_FLAG0_SHIFT (2U)
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_LINE_FLAG0_MASK (0x1U << VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_LINE_FLAG0_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_LINE_FLAG1_SHIFT (3U)
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_LINE_FLAG1_MASK (0x1U << VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_LINE_FLAG1_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_FS_FIELD_SHIFT (5U)
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_FS_FIELD_MASK (0x1U << VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_FS_FIELD_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_VFP_SHIFT   (7U)
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_VFP_MASK    (0x1U << VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_VFP_SHIFT)   /* 0x00000080 */
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_POST_FULL_SHIFT (9U)
+#define VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_POST_FULL_MASK (0x1U << VOP2_SYS_PORT0_INTR_STATUS_INTR_STATUS_POST_FULL_SHIFT) /* 0x00000200 */
+/* PORT0_INTR_RAW_STATUS */
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_OFFSET              (0xACU)
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_SHIFT (0U)
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_MASK (0x1U << VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG0_SHIFT (2U)
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG0_MASK (0x1U << VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG0_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG1_SHIFT (3U)
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG1_MASK (0x1U << VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG1_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_FIELD_SHIFT (5U)
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_FIELD_MASK (0x1U << VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_FIELD_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_VFP_SHIFT (7U)
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_VFP_MASK (0x1U << VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_VFP_SHIFT) /* 0x00000080 */
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_FULL_SHIFT (9U)
+#define VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_FULL_MASK (0x1U << VOP2_SYS_PORT0_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_FULL_SHIFT) /* 0x00000200 */
+/* PORT1_INTR_EN */
+#define VOP2_SYS_PORT1_INTR_EN_OFFSET                      (0xB0U)
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_FS_SHIFT            (0U)
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_FS_MASK             (0x1U << VOP2_SYS_PORT1_INTR_EN_INTR_EN_FS_SHIFT)            /* 0x00000001 */
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_LINE_FLAG0_SHIFT    (2U)
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_LINE_FLAG0_MASK     (0x1U << VOP2_SYS_PORT1_INTR_EN_INTR_EN_LINE_FLAG0_SHIFT)    /* 0x00000004 */
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_LINE_FLAG1_SHIFT    (3U)
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_LINE_FLAG1_MASK     (0x1U << VOP2_SYS_PORT1_INTR_EN_INTR_EN_LINE_FLAG1_SHIFT)    /* 0x00000008 */
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT1_INTR_EN_INTR_EN_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_FS_FIELD_SHIFT      (5U)
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_FS_FIELD_MASK       (0x1U << VOP2_SYS_PORT1_INTR_EN_INTR_EN_FS_FIELD_SHIFT)      /* 0x00000020 */
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT1_INTR_EN_INTR_EN_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_VFP_SHIFT           (7U)
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_VFP_MASK            (0x1U << VOP2_SYS_PORT1_INTR_EN_INTR_EN_VFP_SHIFT)           /* 0x00000080 */
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_POST_FULL_SHIFT     (9U)
+#define VOP2_SYS_PORT1_INTR_EN_INTR_EN_POST_FULL_MASK      (0x1U << VOP2_SYS_PORT1_INTR_EN_INTR_EN_POST_FULL_SHIFT)     /* 0x00000200 */
+/* PORT1_INTR_CLR */
+#define VOP2_SYS_PORT1_INTR_CLR_OFFSET                     (0xB4U)
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_FS_SHIFT          (0U)
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_FS_MASK           (0x1U << VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_FS_SHIFT)          /* 0x00000001 */
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_LINE_FLAG0_SHIFT  (2U)
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_LINE_FLAG0_MASK   (0x1U << VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_LINE_FLAG0_SHIFT)  /* 0x00000004 */
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_LINE_FLAG1_SHIFT  (3U)
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_LINE_FLAG1_MASK   (0x1U << VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_LINE_FLAG1_SHIFT)  /* 0x00000008 */
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_FS_FIELD_SHIFT    (5U)
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_FS_FIELD_MASK     (0x1U << VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_FS_FIELD_SHIFT)    /* 0x00000020 */
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_VFP_SHIFT         (7U)
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_VFP_MASK          (0x1U << VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_VFP_SHIFT)         /* 0x00000080 */
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_POST_FULL_SHIFT   (9U)
+#define VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_POST_FULL_MASK    (0x1U << VOP2_SYS_PORT1_INTR_CLR_INTR_CLR_POST_FULL_SHIFT)   /* 0x00000200 */
+/* PORT1_INTR_STATUS */
+#define VOP2_SYS_PORT1_INTR_STATUS_OFFSET                  (0xB8U)
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_FS_SHIFT    (0U)
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_FS_MASK     (0x1U << VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_FS_SHIFT)    /* 0x00000001 */
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_LINE_FLAG0_SHIFT (2U)
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_LINE_FLAG0_MASK (0x1U << VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_LINE_FLAG0_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_LINE_FLAG1_SHIFT (3U)
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_LINE_FLAG1_MASK (0x1U << VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_LINE_FLAG1_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_FS_FIELD_SHIFT (5U)
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_FS_FIELD_MASK (0x1U << VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_FS_FIELD_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_VFP_SHIFT   (7U)
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_VFP_MASK    (0x1U << VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_VFP_SHIFT)   /* 0x00000080 */
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_POST_FULL_SHIFT (9U)
+#define VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_POST_FULL_MASK (0x1U << VOP2_SYS_PORT1_INTR_STATUS_INTR_STATUS_POST_FULL_SHIFT) /* 0x00000200 */
+/* PORT1_INTR_RAW_STATUS */
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_OFFSET              (0xBCU)
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_SHIFT (0U)
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_MASK (0x1U << VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG0_SHIFT (2U)
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG0_MASK (0x1U << VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG0_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG1_SHIFT (3U)
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG1_MASK (0x1U << VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG1_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_FIELD_SHIFT (5U)
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_FIELD_MASK (0x1U << VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_FIELD_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_VFP_SHIFT (7U)
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_VFP_MASK (0x1U << VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_VFP_SHIFT) /* 0x00000080 */
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_FULL_SHIFT (9U)
+#define VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_FULL_MASK (0x1U << VOP2_SYS_PORT1_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_FULL_SHIFT) /* 0x00000200 */
+/* PORT2_INTR_EN */
+#define VOP2_SYS_PORT2_INTR_EN_OFFSET                      (0xC0U)
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_FS_SHIFT            (0U)
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_FS_MASK             (0x1U << VOP2_SYS_PORT2_INTR_EN_INTR_EN_FS_SHIFT)            /* 0x00000001 */
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_LINE_FLAG0_SHIFT    (2U)
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_LINE_FLAG0_MASK     (0x1U << VOP2_SYS_PORT2_INTR_EN_INTR_EN_LINE_FLAG0_SHIFT)    /* 0x00000004 */
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_LINE_FLAG1_SHIFT    (3U)
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_LINE_FLAG1_MASK     (0x1U << VOP2_SYS_PORT2_INTR_EN_INTR_EN_LINE_FLAG1_SHIFT)    /* 0x00000008 */
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT2_INTR_EN_INTR_EN_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_FS_FIELD_SHIFT      (5U)
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_FS_FIELD_MASK       (0x1U << VOP2_SYS_PORT2_INTR_EN_INTR_EN_FS_FIELD_SHIFT)      /* 0x00000020 */
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT2_INTR_EN_INTR_EN_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_VFP_SHIFT           (7U)
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_VFP_MASK            (0x1U << VOP2_SYS_PORT2_INTR_EN_INTR_EN_VFP_SHIFT)           /* 0x00000080 */
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_POST_FULL_SHIFT     (9U)
+#define VOP2_SYS_PORT2_INTR_EN_INTR_EN_POST_FULL_MASK      (0x1U << VOP2_SYS_PORT2_INTR_EN_INTR_EN_POST_FULL_SHIFT)     /* 0x00000200 */
+/* PORT2_INTR_CLR */
+#define VOP2_SYS_PORT2_INTR_CLR_OFFSET                     (0xC4U)
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_FS_SHIFT          (0U)
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_FS_MASK           (0x1U << VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_FS_SHIFT)          /* 0x00000001 */
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_LINE_FLAG0_SHIFT  (2U)
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_LINE_FLAG0_MASK   (0x1U << VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_LINE_FLAG0_SHIFT)  /* 0x00000004 */
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_LINE_FLAG1_SHIFT  (3U)
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_LINE_FLAG1_MASK   (0x1U << VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_LINE_FLAG1_SHIFT)  /* 0x00000008 */
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_FS_FIELD_SHIFT    (5U)
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_FS_FIELD_MASK     (0x1U << VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_FS_FIELD_SHIFT)    /* 0x00000020 */
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_VFP_SHIFT         (7U)
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_VFP_MASK          (0x1U << VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_VFP_SHIFT)         /* 0x00000080 */
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_POST_FULL_SHIFT   (9U)
+#define VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_POST_FULL_MASK    (0x1U << VOP2_SYS_PORT2_INTR_CLR_INTR_CLR_POST_FULL_SHIFT)   /* 0x00000200 */
+/* PORT2_INTR_STATUS */
+#define VOP2_SYS_PORT2_INTR_STATUS_OFFSET                  (0xC8U)
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_FS_SHIFT    (0U)
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_FS_MASK     (0x1U << VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_FS_SHIFT)    /* 0x00000001 */
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_LINE_FLAG0_SHIFT (2U)
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_LINE_FLAG0_MASK (0x1U << VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_LINE_FLAG0_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_LINE_FLAG1_SHIFT (3U)
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_LINE_FLAG1_MASK (0x1U << VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_LINE_FLAG1_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_FS_FIELD_SHIFT (5U)
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_FS_FIELD_MASK (0x1U << VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_FS_FIELD_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_VFP_SHIFT   (7U)
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_VFP_MASK    (0x1U << VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_VFP_SHIFT)   /* 0x00000080 */
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_POST_FULL_SHIFT (9U)
+#define VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_POST_FULL_MASK (0x1U << VOP2_SYS_PORT2_INTR_STATUS_INTR_STATUS_POST_FULL_SHIFT) /* 0x00000200 */
+/* PORT2_INTR_RAW_STATUS */
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_OFFSET              (0xCCU)
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_SHIFT (0U)
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_MASK (0x1U << VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG0_SHIFT (2U)
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG0_MASK (0x1U << VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG0_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG1_SHIFT (3U)
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG1_MASK (0x1U << VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_LINE_FLAG1_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_BUF_EMPTY_SHIFT (4U)
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_BUF_EMPTY_MASK (0x1U << VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_BUF_EMPTY_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_FIELD_SHIFT (5U)
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_FIELD_MASK (0x1U << VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_FS_FIELD_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_DSP_HOLD_VALID_SHIFT (6U)
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_DSP_HOLD_VALID_MASK (0x1U << VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_DSP_HOLD_VALID_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_VFP_SHIFT (7U)
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_VFP_MASK (0x1U << VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_VFP_SHIFT) /* 0x00000080 */
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_FULL_SHIFT (9U)
+#define VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_FULL_MASK (0x1U << VOP2_SYS_PORT2_INTR_RAW_STATUS_INTR_RAW_STATUS_POST_FULL_SHIFT) /* 0x00000200 */
+/* AFBCD_INTR_EN */
+#define VOP2_SYS_AFBCD_INTR_EN_OFFSET                      (0xD0U)
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD0_HREG_DEC_RESP_SHIFT (0U)
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD0_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD0_HREG_DEC_RESP_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD0_HREG_AXI_RRESP_SHIFT (1U)
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD0_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD0_HREG_AXI_RRESP_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD1_HREG_DEC_RESP_SHIFT (2U)
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD1_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD1_HREG_DEC_RESP_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD1_HREG_AXI_RRESP_SHIFT (3U)
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD1_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD1_HREG_AXI_RRESP_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD2_HREG_DEC_RESP_SHIFT (4U)
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD2_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD2_HREG_DEC_RESP_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD2_HREG_AXI_RRESP_SHIFT (5U)
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD2_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD2_HREG_AXI_RRESP_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD3_HREG_DEC_RESP_SHIFT (6U)
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD3_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD3_HREG_DEC_RESP_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD3_HREG_AXI_RRESP_SHIFT (7U)
+#define VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD3_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_EN_INT_EN_AFBCD3_HREG_AXI_RRESP_SHIFT) /* 0x00000080 */
+/* AFBCD_INTR_CLR */
+#define VOP2_SYS_AFBCD_INTR_CLR_OFFSET                     (0xD4U)
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD0_HREG_DEC_RESP_SHIFT (0U)
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD0_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD0_HREG_DEC_RESP_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD0_HREG_AXI_RRESP_SHIFT (1U)
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD0_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD0_HREG_AXI_RRESP_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD1_HREG_DEC_RESP_SHIFT (2U)
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD1_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD1_HREG_DEC_RESP_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD1_HREG_AXI_RRESP_SHIFT (3U)
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD1_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD1_HREG_AXI_RRESP_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD2_HREG_DEC_RESP_SHIFT (4U)
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD2_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD2_HREG_DEC_RESP_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD2_HREG_AXI_RRESP_SHIFT (5U)
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD2_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD2_HREG_AXI_RRESP_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD3_HREG_DEC_RESP_SHIFT (6U)
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD3_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD3_HREG_DEC_RESP_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD3_HREG_AXI_RRESP_SHIFT (7U)
+#define VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD3_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_CLR_INT_CLR_AFBCD3_HREG_AXI_RRESP_SHIFT) /* 0x00000080 */
+/* AFBCD_INTR_STATUS */
+#define VOP2_SYS_AFBCD_INTR_STATUS_OFFSET                  (0xD8U)
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD0_HREG_DEC_RESP_SHIFT (0U)
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD0_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD0_HREG_DEC_RESP_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD0_HREG_AXI_RRESP_SHIFT (1U)
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD0_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD0_HREG_AXI_RRESP_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD1_HREG_DEC_RESP_SHIFT (2U)
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD1_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD1_HREG_DEC_RESP_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD1_HREG_AXI_RRESP_SHIFT (3U)
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD1_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD1_HREG_AXI_RRESP_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD2_HREG_DEC_RESP_SHIFT (4U)
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD2_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD2_HREG_DEC_RESP_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD2_HREG_AXI_RRESP_SHIFT (5U)
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD2_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD2_HREG_AXI_RRESP_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD3_HREG_DEC_RESP_SHIFT (6U)
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD3_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD3_HREG_DEC_RESP_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD3_HREG_AXI_RRESP_SHIFT (7U)
+#define VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD3_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_STATUS_INT_STATUS_AFBCD3_HREG_AXI_RRESP_SHIFT) /* 0x00000080 */
+/* AFBCD_INTR_RAW_STATUS */
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_OFFSET              (0xDCU)
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD0_HREG_DEC_RESP_SHIFT (0U)
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD0_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD0_HREG_DEC_RESP_SHIFT) /* 0x00000001 */
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD0_HREG_AXI_RRESP_SHIFT (1U)
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD0_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD0_HREG_AXI_RRESP_SHIFT) /* 0x00000002 */
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD1_HREG_DEC_RESP_SHIFT (2U)
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD1_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD1_HREG_DEC_RESP_SHIFT) /* 0x00000004 */
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD1_HREG_AXI_RRESP_SHIFT (3U)
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD1_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD1_HREG_AXI_RRESP_SHIFT) /* 0x00000008 */
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD2_HREG_DEC_RESP_SHIFT (4U)
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD2_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD2_HREG_DEC_RESP_SHIFT) /* 0x00000010 */
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD2_HREG_AXI_RRESP_SHIFT (5U)
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD2_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD2_HREG_AXI_RRESP_SHIFT) /* 0x00000020 */
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD3_HREG_DEC_RESP_SHIFT (6U)
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD3_HREG_DEC_RESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD3_HREG_DEC_RESP_SHIFT) /* 0x00000040 */
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD3_HREG_AXI_RRESP_SHIFT (7U)
+#define VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD3_HREG_AXI_RRESP_MASK (0x1U << VOP2_SYS_AFBCD_INTR_RAW_STATUS_INT_RAW_STATUS_AFBCD3_HREG_AXI_RRESP_SHIFT) /* 0x00000080 */
+/**************************************VOP2_OVERLAY**************************************/
+/* OVERLAY_CTRL */
+#define VOP2_OVERLAY_OVERLAY_CTRL_OFFSET                   (0x0U)
+#define VOP2_OVERLAY_OVERLAY_CTRL_VP0_OVERLAY_MODE_SHIFT   (0U)
+#define VOP2_OVERLAY_OVERLAY_CTRL_VP0_OVERLAY_MODE_MASK    (0x1U << VOP2_OVERLAY_OVERLAY_CTRL_VP0_OVERLAY_MODE_SHIFT)   /* 0x00000001 */
+#define VOP2_OVERLAY_OVERLAY_CTRL_VP1_OVERLAY_MODE_SHIFT   (1U)
+#define VOP2_OVERLAY_OVERLAY_CTRL_VP1_OVERLAY_MODE_MASK    (0x1U << VOP2_OVERLAY_OVERLAY_CTRL_VP1_OVERLAY_MODE_SHIFT)   /* 0x00000002 */
+#define VOP2_OVERLAY_OVERLAY_CTRL_VP2_OVERLAY_MODE_SHIFT   (2U)
+#define VOP2_OVERLAY_OVERLAY_CTRL_VP2_OVERLAY_MODE_MASK    (0x1U << VOP2_OVERLAY_OVERLAY_CTRL_VP2_OVERLAY_MODE_SHIFT)   /* 0x00000004 */
+#define VOP2_OVERLAY_OVERLAY_CTRL_HDR10_PATH_EN_SHIFT      (4U)
+#define VOP2_OVERLAY_OVERLAY_CTRL_HDR10_PATH_EN_MASK       (0x1U << VOP2_OVERLAY_OVERLAY_CTRL_HDR10_PATH_EN_SHIFT)      /* 0x00000010 */
+#define VOP2_OVERLAY_OVERLAY_CTRL_SDR2HDR_PATH_EN_SHIFT    (5U)
+#define VOP2_OVERLAY_OVERLAY_CTRL_SDR2HDR_PATH_EN_MASK     (0x1U << VOP2_OVERLAY_OVERLAY_CTRL_SDR2HDR_PATH_EN_SHIFT)    /* 0x00000020 */
+#define VOP2_OVERLAY_OVERLAY_CTRL_LAYER_SEL_REGDONE_IMD_SHIFT (28U)
+#define VOP2_OVERLAY_OVERLAY_CTRL_LAYER_SEL_REGDONE_IMD_MASK (0x1U << VOP2_OVERLAY_OVERLAY_CTRL_LAYER_SEL_REGDONE_IMD_SHIFT) /* 0x10000000 */
+#define VOP2_OVERLAY_OVERLAY_CTRL_LAYER_SEL_REGDONE_SEL_IMD_SHIFT (30U)
+#define VOP2_OVERLAY_OVERLAY_CTRL_LAYER_SEL_REGDONE_SEL_IMD_MASK (0x3U << VOP2_OVERLAY_OVERLAY_CTRL_LAYER_SEL_REGDONE_SEL_IMD_SHIFT) /* 0xC0000000 */
+/* OVERLAY_LAYER_SEL */
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_OFFSET              (0x4U)
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER0_SEL_SHIFT    (0U)
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER0_SEL_MASK     (0x7U << VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER0_SEL_SHIFT)    /* 0x00000007 */
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER1_SEL_SHIFT    (4U)
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER1_SEL_MASK     (0x7U << VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER1_SEL_SHIFT)    /* 0x00000070 */
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER2_SEL_SHIFT    (8U)
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER2_SEL_MASK     (0x7U << VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER2_SEL_SHIFT)    /* 0x00000700 */
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER3_SEL_SHIFT    (12U)
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER3_SEL_MASK     (0x7U << VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER3_SEL_SHIFT)    /* 0x00007000 */
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER4_SEL_SHIFT    (16U)
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER4_SEL_MASK     (0x7U << VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER4_SEL_SHIFT)    /* 0x00070000 */
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER5_SEL_SHIFT    (20U)
+#define VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER5_SEL_MASK     (0x7U << VOP2_OVERLAY_OVERLAY_LAYER_SEL_LAYER5_SEL_SHIFT)    /* 0x00700000 */
+/* OVERLAY_PORT_SEL */
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_OFFSET               (0x8U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_PORT0_MUX_SHIFT      (0U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_PORT0_MUX_MASK       (0xFU << VOP2_OVERLAY_OVERLAY_PORT_SEL_PORT0_MUX_SHIFT)      /* 0x0000000F */
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_PORT1_MUX_SHIFT      (4U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_PORT1_MUX_MASK       (0x7U << VOP2_OVERLAY_OVERLAY_PORT_SEL_PORT1_MUX_SHIFT)      /* 0x00000070 */
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_PORT2_MUX_SHIFT      (8U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_PORT2_MUX_MASK       (0x7U << VOP2_OVERLAY_OVERLAY_PORT_SEL_PORT2_MUX_SHIFT)      /* 0x00000700 */
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_CLUSTER0_SEL_PORT_SHIFT (16U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_CLUSTER0_SEL_PORT_MASK (0x3U << VOP2_OVERLAY_OVERLAY_PORT_SEL_CLUSTER0_SEL_PORT_SHIFT) /* 0x00030000 */
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_CLUSTER1_SEL_PORT_SHIFT (18U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_CLUSTER1_SEL_PORT_MASK (0x3U << VOP2_OVERLAY_OVERLAY_PORT_SEL_CLUSTER1_SEL_PORT_SHIFT) /* 0x000C0000 */
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_ESMART0_SEL_PORT_SHIFT (24U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_ESMART0_SEL_PORT_MASK (0x3U << VOP2_OVERLAY_OVERLAY_PORT_SEL_ESMART0_SEL_PORT_SHIFT) /* 0x03000000 */
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_ESMART1_SEL_PORT_SHIFT (26U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_ESMART1_SEL_PORT_MASK (0x3U << VOP2_OVERLAY_OVERLAY_PORT_SEL_ESMART1_SEL_PORT_SHIFT) /* 0x0C000000 */
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_SMART0_SEL_PORT_SHIFT (28U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_SMART0_SEL_PORT_MASK (0x3U << VOP2_OVERLAY_OVERLAY_PORT_SEL_SMART0_SEL_PORT_SHIFT) /* 0x30000000 */
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_SMART1_SEL_PORT_SHIFT (30U)
+#define VOP2_OVERLAY_OVERLAY_PORT_SEL_SMART1_SEL_PORT_MASK (0x3U << VOP2_OVERLAY_OVERLAY_PORT_SEL_SMART1_SEL_PORT_SHIFT) /* 0xC0000000 */
+/* CLUSTER0_MIX_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_OFFSET    (0x10U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_COLOR_MODE0_SHIFT (0U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_COLOR_MODE0_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_COLOR_MODE0_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_ALPHA_MODE0_SHIFT (1U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_ALPHA_MODE0_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_ALPHA_MODE0_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_BLEND_MODE0_SHIFT (2U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_BLEND_MODE0_MASK (0x3U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_BLEND_MODE0_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_ALPHA_CAL_MODE0_SHIFT (4U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_ALPHA_CAL_MODE0_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_ALPHA_CAL_MODE0_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_FACTOR_MODE0_SHIFT (5U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_FACTOR_MODE0_MASK (0x7U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_FACTOR_MODE0_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_DST_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_DST_SWAP_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_DST_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_GLOBAL_ALPHA0_SHIFT (16U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_GLOBAL_ALPHA0_MASK (0xFFU << VOP2_OVERLAY_CLUSTER0_MIX_SRC_COLOR_CTRL_CLUSTER0_MIX_SRC_GLOBAL_ALPHA0_SHIFT) /* 0x00FF0000 */
+/* CLUSTER0_MIX_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_OFFSET    (0x14U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_COLOR_MODE0_SHIFT (0U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_COLOR_MODE0_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_COLOR_MODE0_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_ALPHA_MODE0_SHIFT (1U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_ALPHA_MODE0_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_ALPHA_MODE0_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_BLEND_MODE0_SHIFT (2U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_BLEND_MODE0_MASK (0x3U << VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_BLEND_MODE0_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_ALPHA_CAL_MODE0_SHIFT (4U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_ALPHA_CAL_MODE0_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_ALPHA_CAL_MODE0_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_FACTOR_MODE0_SHIFT (5U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_FACTOR_MODE0_MASK (0x7U << VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_FACTOR_MODE0_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_GLOBAL_ALPHA0_SHIFT (16U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_GLOBAL_ALPHA0_MASK (0xFFU << VOP2_OVERLAY_CLUSTER0_MIX_DST_COLOR_CTRL_CLUSTER0_MIX_DST_GLOBAL_ALPHA0_SHIFT) /* 0x00FF0000 */
+/* CLUSTER0_MIX_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_OFFSET    (0x18U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_ALPHA_MODE1_SHIFT (1U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_ALPHA_MODE1_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_ALPHA_MODE1_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_BLEND_MODE1_SHIFT (2U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_BLEND_MODE1_MASK (0x3U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_BLEND_MODE1_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_ALPHA_CAL_MODE1_SHIFT (4U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_ALPHA_CAL_MODE1_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_ALPHA_CAL_MODE1_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_FACTOR_MODE1_SHIFT (5U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_FACTOR_MODE1_MASK (0x7U << VOP2_OVERLAY_CLUSTER0_MIX_SRC_ALPHA_CTRL_CLUSTER0_MIX_SRC_FACTOR_MODE1_SHIFT) /* 0x000000E0 */
+/* CLUSTER0_MIX_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_OFFSET    (0x1CU)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_ALPHA_MODE1_SHIFT (1U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_ALPHA_MODE1_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_ALPHA_MODE1_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_BLEND_MODE1_SHIFT (2U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_BLEND_MODE1_MASK (0x3U << VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_BLEND_MODE1_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_ALPHA_CAL_MODE1_SHIFT (4U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_ALPHA_CAL_MODE1_MASK (0x1U << VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_ALPHA_CAL_MODE1_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_FACTOR_MODE1_SHIFT (5U)
+#define VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_FACTOR_MODE1_MASK (0x7U << VOP2_OVERLAY_CLUSTER0_MIX_DST_ALPHA_CTRL_CLUSTER0_MIX_DST_FACTOR_MODE1_SHIFT) /* 0x000000E0 */
+/* CLUSTER1_MIX_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_OFFSET    (0x20U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_TOP_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_TOP_SWAP_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_TOP_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_CLUSTER1_MIX_SRC_COLOR_CTRL_CLUSTER1_MIX_SRC_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* CLUSTER1_MIX_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_OFFSET    (0x24U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_CLUSTER1_MIX_DST_COLOR_CTRL_CLUSTER1_MIX_DST_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* CLUSTER1_MIX_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_OFFSET    (0x28U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_CLUSTER1_MIX_SRC_ALPHA_CTRL_CLUSTER1_MIX_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* CLUSTER1_MIX_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_OFFSET    (0x2CU)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_CLUSTER1_MIX_DST_ALPHA_CTRL_CLUSTER1_MIX_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX0_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_OFFSET            (0x50U)
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_TOP_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_TOP_SWAP_MASK (0x1U << VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_TOP_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX0_SRC_COLOR_CTRL_MIX0_SRC_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX0_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_OFFSET            (0x54U)
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX0_DST_COLOR_CTRL_MIX0_DST_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX0_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_OFFSET            (0x58U)
+#define VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX0_SRC_ALPHA_CTRL_MIX0_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX0_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_OFFSET            (0x5CU)
+#define VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX0_DST_ALPHA_CTRL_MIX0_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX1_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_OFFSET            (0x60U)
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_TOP_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_TOP_SWAP_MASK (0x1U << VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_TOP_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX1_SRC_COLOR_CTRL_MIX1_SRC_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX1_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_OFFSET            (0x64U)
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX1_DST_COLOR_CTRL_MIX1_DST_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX1_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_OFFSET            (0x68U)
+#define VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX1_SRC_ALPHA_CTRL_MIX1_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX1_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_OFFSET            (0x6CU)
+#define VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX1_DST_ALPHA_CTRL_MIX1_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX2_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_OFFSET            (0x70U)
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_TOP_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_TOP_SWAP_MASK (0x1U << VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_TOP_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX2_SRC_COLOR_CTRL_MIX2_SRC_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX2_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_OFFSET            (0x74U)
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX2_DST_COLOR_CTRL_MIX2_DST_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX2_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_OFFSET            (0x78U)
+#define VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX2_SRC_ALPHA_CTRL_MIX2_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX2_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_OFFSET            (0x7CU)
+#define VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX2_DST_ALPHA_CTRL_MIX2_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX3_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_OFFSET            (0x80U)
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_TOP_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_TOP_SWAP_MASK (0x1U << VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_TOP_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX3_SRC_COLOR_CTRL_MIX3_SRC_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX3_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_OFFSET            (0x84U)
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX3_DST_COLOR_CTRL_MIX3_DST_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX3_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_OFFSET            (0x88U)
+#define VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX3_SRC_ALPHA_CTRL_MIX3_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX3_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_OFFSET            (0x8CU)
+#define VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX3_DST_ALPHA_CTRL_MIX3_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX4_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_OFFSET            (0x90U)
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_TOP_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_TOP_SWAP_MASK (0x1U << VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_TOP_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX4_SRC_COLOR_CTRL_MIX4_SRC_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX4_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_OFFSET            (0x94U)
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX4_DST_COLOR_CTRL_MIX4_DST_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX4_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_OFFSET            (0x98U)
+#define VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX4_SRC_ALPHA_CTRL_MIX4_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX4_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_OFFSET            (0x9CU)
+#define VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX4_DST_ALPHA_CTRL_MIX4_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX5_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_OFFSET            (0xA0U)
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_TOP_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_TOP_SWAP_MASK (0x1U << VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_TOP_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX5_SRC_COLOR_CTRL_MIX5_SRC_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX5_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_OFFSET            (0xA4U)
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX5_DST_COLOR_CTRL_MIX5_DST_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX5_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_OFFSET            (0xA8U)
+#define VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX5_SRC_ALPHA_CTRL_MIX5_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX5_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_OFFSET            (0xACU)
+#define VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX5_DST_ALPHA_CTRL_MIX5_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX6_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_OFFSET            (0xB0U)
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_TOP_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_TOP_SWAP_MASK (0x1U << VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_TOP_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX6_SRC_COLOR_CTRL_MIX6_SRC_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX6_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_OFFSET            (0xB4U)
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_MIX6_DST_COLOR_CTRL_MIX6_DST_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* MIX6_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_OFFSET            (0xB8U)
+#define VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX6_SRC_ALPHA_CTRL_MIX6_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* MIX6_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_OFFSET            (0xBCU)
+#define VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_MIX6_DST_ALPHA_CTRL_MIX6_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* HDR0_MIX_SRC_COLOR_CTRL */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_OFFSET        (0xC0U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_ALPHA_EN_SHIFT (8U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_ALPHA_EN_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_ALPHA_EN_SHIFT) /* 0x00000100 */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_TOP_SWAP_SHIFT (9U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_TOP_SWAP_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_TOP_SWAP_SHIFT) /* 0x00000200 */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_HDR0_MIX_SRC_COLOR_CTRL_HDR0_MIX_SRC_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* HDR0_MIX_DST_COLOR_CTRL */
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_OFFSET        (0xC4U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_COLOR_MODE_SHIFT (0U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_COLOR_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_COLOR_MODE_SHIFT) /* 0x00000001 */
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_GLOBAL_ALPHA_SHIFT (16U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_HDR0_MIX_DST_COLOR_CTRL_HDR0_MIX_DST_GLOBAL_ALPHA_SHIFT) /* 0x00FF0000 */
+/* HDR0_MIX_SRC_ALPHA_CTRL */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_OFFSET        (0xC8U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_HDR0_MIX_SRC_ALPHA_CTRL_HDR0_MIX_SRC_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* HDR0_MIX_DST_ALPHA_CTRL */
+#define VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_OFFSET        (0xCCU)
+#define VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_BLEND_MODE_SHIFT (2U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_BLEND_MODE_MASK (0x3U << VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_BLEND_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_ALPHA_CAL_MODE_SHIFT (4U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_ALPHA_CAL_MODE_MASK (0x1U << VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_ALPHA_CAL_MODE_SHIFT) /* 0x00000010 */
+#define VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_FACTOR_MODE_SHIFT (5U)
+#define VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_FACTOR_MODE_MASK (0x7U << VOP2_OVERLAY_HDR0_MIX_DST_ALPHA_CTRL_HDR0_MIX_DST_FACTOR_MODE_SHIFT) /* 0x000000E0 */
+/* DP0_BG_MIX_CTRL */
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_OFFSET                (0xE0U)
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_EN_SHIFT  (0U)
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_EN_MASK   (0x1U << VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_EN_SHIFT)  /* 0x00000001 */
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_PRE_MUL_SHIFT (2U)
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_PRE_MUL_MASK (0x1U << VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_PRE_MUL_SHIFT) /* 0x00000004 */
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_SAT_MODE_SHIFT (3U)
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_SAT_MODE_MASK (0x1U << VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_ALPHA_SAT_MODE_SHIFT) /* 0x00000008 */
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_GLOBAL_ALPHA_SHIFT (8U)
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_GLOBAL_ALPHA_SHIFT) /* 0x0000FF00 */
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_DLY_NUM_SHIFT   (24U)
+#define VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_DLY_NUM_MASK    (0xFFU << VOP2_OVERLAY_DP0_BG_MIX_CTRL_DP_BG_DLY_NUM_SHIFT)  /* 0xFF000000 */
+/* DP1_BG_MIX_CTRL */
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_OFFSET                (0xE4U)
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_EN_SHIFT  (0U)
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_EN_MASK   (0x1U << VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_EN_SHIFT)  /* 0x00000001 */
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_PRE_MUL_SHIFT (2U)
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_PRE_MUL_MASK (0x1U << VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_PRE_MUL_SHIFT) /* 0x00000004 */
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_SAT_MODE_SHIFT (3U)
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_SAT_MODE_MASK (0x1U << VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_ALPHA_SAT_MODE_SHIFT) /* 0x00000008 */
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_GLOBAL_ALPHA_SHIFT (8U)
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_GLOBAL_ALPHA_SHIFT) /* 0x0000FF00 */
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_DLY_NUM_SHIFT   (24U)
+#define VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_DLY_NUM_MASK    (0xFFU << VOP2_OVERLAY_DP1_BG_MIX_CTRL_DP_BG_DLY_NUM_SHIFT)  /* 0xFF000000 */
+/* DP2_BG_MIX_CTRL */
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_OFFSET                (0xE8U)
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_EN_SHIFT  (0U)
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_EN_MASK   (0x1U << VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_EN_SHIFT)  /* 0x00000001 */
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_MODE_SHIFT (1U)
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_MODE_MASK (0x1U << VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_MODE_SHIFT) /* 0x00000002 */
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_PRE_MUL_SHIFT (2U)
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_PRE_MUL_MASK (0x1U << VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_PRE_MUL_SHIFT) /* 0x00000004 */
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_SAT_MODE_SHIFT (3U)
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_SAT_MODE_MASK (0x1U << VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_ALPHA_SAT_MODE_SHIFT) /* 0x00000008 */
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_GLOBAL_ALPHA_SHIFT (8U)
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_GLOBAL_ALPHA_MASK (0xFFU << VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_GLOBAL_ALPHA_SHIFT) /* 0x0000FF00 */
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_DLY_NUM_SHIFT   (24U)
+#define VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_DLY_NUM_MASK    (0xFFU << VOP2_OVERLAY_DP2_BG_MIX_CTRL_DP_BG_DLY_NUM_SHIFT)  /* 0xFF000000 */
+/* CLUSTER_DLY_NUM */
+#define VOP2_OVERLAY_CLUSTER_DLY_NUM_OFFSET                (0xF0U)
+#define VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER0_0_DLY_NUM_SHIFT (0U)
+#define VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER0_0_DLY_NUM_MASK (0xFFU << VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER0_0_DLY_NUM_SHIFT) /* 0x000000FF */
+#define VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER0_1_DLY_NUM_SHIFT (8U)
+#define VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER0_1_DLY_NUM_MASK (0xFFU << VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER0_1_DLY_NUM_SHIFT) /* 0x0000FF00 */
+#define VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER1_0_DLY_NUM_SHIFT (16U)
+#define VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER1_0_DLY_NUM_MASK (0xFFU << VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER1_0_DLY_NUM_SHIFT) /* 0x00FF0000 */
+#define VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER1_1_DLY_NUM_SHIFT (24U)
+#define VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER1_1_DLY_NUM_MASK (0xFFU << VOP2_OVERLAY_CLUSTER_DLY_NUM_CLUSTER1_1_DLY_NUM_SHIFT) /* 0xFF000000 */
+/* SMART_DLY_NUM */
+#define VOP2_OVERLAY_SMART_DLY_NUM_OFFSET                  (0xF8U)
+#define VOP2_OVERLAY_SMART_DLY_NUM_ESMART0_DLY_NUM_SHIFT   (0U)
+#define VOP2_OVERLAY_SMART_DLY_NUM_ESMART0_DLY_NUM_MASK    (0xFFU << VOP2_OVERLAY_SMART_DLY_NUM_ESMART0_DLY_NUM_SHIFT)  /* 0x000000FF */
+#define VOP2_OVERLAY_SMART_DLY_NUM_ESMART1_DLY_NUM_SHIFT   (8U)
+#define VOP2_OVERLAY_SMART_DLY_NUM_ESMART1_DLY_NUM_MASK    (0xFFU << VOP2_OVERLAY_SMART_DLY_NUM_ESMART1_DLY_NUM_SHIFT)  /* 0x0000FF00 */
+#define VOP2_OVERLAY_SMART_DLY_NUM_SMART0_DLY_NUM_SHIFT    (16U)
+#define VOP2_OVERLAY_SMART_DLY_NUM_SMART0_DLY_NUM_MASK     (0xFFU << VOP2_OVERLAY_SMART_DLY_NUM_SMART0_DLY_NUM_SHIFT)   /* 0x00FF0000 */
+#define VOP2_OVERLAY_SMART_DLY_NUM_SMART1_DLY_NUM_SHIFT    (24U)
+#define VOP2_OVERLAY_SMART_DLY_NUM_SMART1_DLY_NUM_MASK     (0xFFU << VOP2_OVERLAY_SMART_DLY_NUM_SMART1_DLY_NUM_SHIFT)   /* 0xFF000000 */
+/*************************************VOP2_POST0_DSP*************************************/
+/* POST_DSP_CTRL */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_OFFSET                (0x0U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_OUT_MODE_SHIFT    (0U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_OUT_MODE_MASK     (0xFU << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_OUT_MODE_SHIFT)    /* 0x0000000F */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_CORE_DCLK_SEL_SHIFT (4U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_CORE_DCLK_SEL_MASK (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_CORE_DCLK_SEL_SHIFT) /* 0x00000010 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_P2I_EN_SHIFT      (5U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_P2I_EN_MASK       (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_P2I_EN_SHIFT)      /* 0x00000020 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_FILED_POL_SHIFT   (6U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_FILED_POL_MASK    (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_FILED_POL_SHIFT)   /* 0x00000040 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_INTERLACE_SHIFT   (7U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_INTERLACE_MASK    (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_INTERLACE_SHIFT)   /* 0x00000080 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_BG_SWAP_SHIFT     (8U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_BG_SWAP_MASK      (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_BG_SWAP_SHIFT)     /* 0x00000100 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_RB_SWAP_SHIFT     (9U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_RB_SWAP_MASK      (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_RB_SWAP_SHIFT)     /* 0x00000200 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_RG_SWAP_SHIFT     (10U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_RG_SWAP_MASK      (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_RG_SWAP_SHIFT)     /* 0x00000400 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_DELTA_SWAP_SHIFT  (11U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_DELTA_SWAP_MASK   (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_DELTA_SWAP_SHIFT)  /* 0x00000800 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_DUMMY_SWAP_SHIFT  (12U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_DUMMY_SWAP_MASK   (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_DUMMY_SWAP_SHIFT)  /* 0x00001000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_X_MIR_EN_SHIFT    (13U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_X_MIR_EN_MASK     (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_X_MIR_EN_SHIFT)    /* 0x00002000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_Y_MIR_EN_SHIFT    (14U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_Y_MIR_EN_MASK     (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_Y_MIR_EN_SHIFT)    /* 0x00004000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_WIN_BYPASS_SHIFT  (15U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_WIN_BYPASS_MASK   (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_WIN_BYPASS_SHIFT)  /* 0x00008000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_PRE_DITHER_DOWN_EN_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_PRE_DITHER_DOWN_EN_MASK (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_PRE_DITHER_DOWN_EN_SHIFT) /* 0x00010000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DITHER_DOWN_EN_SHIFT  (17U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DITHER_DOWN_EN_MASK   (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DITHER_DOWN_EN_SHIFT)  /* 0x00020000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DITHER_DOWN_SEL_SHIFT (18U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DITHER_DOWN_SEL_MASK  (0x3U << VOP2_POST0_DSP_POST_DSP_CTRL_DITHER_DOWN_SEL_SHIFT) /* 0x000C0000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DITHER_DOWN_MODE_SHIFT (20U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DITHER_DOWN_MODE_MASK (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DITHER_DOWN_MODE_SHIFT) /* 0x00100000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_POST_LB_MODE_SHIFT    (23U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_POST_LB_MODE_MASK     (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_POST_LB_MODE_SHIFT)    /* 0x00800000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_BLANK_EN_SHIFT    (24U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_BLANK_EN_MASK     (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_BLANK_EN_SHIFT)    /* 0x01000000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_OUT_ZERO_SHIFT    (26U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_OUT_ZERO_MASK     (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_OUT_ZERO_SHIFT)    /* 0x04000000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_BLACK_EN_SHIFT    (27U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_BLACK_EN_MASK     (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_BLACK_EN_SHIFT)    /* 0x08000000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_LUT_EN_SHIFT      (28U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_DSP_LUT_EN_MASK       (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_DSP_LUT_EN_SHIFT)      /* 0x10000000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_VOP_FP_STANDBY_EN_IMD_SHIFT (30U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_VOP_FP_STANDBY_EN_IMD_MASK (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_VOP_FP_STANDBY_EN_IMD_SHIFT) /* 0x40000000 */
+#define VOP2_POST0_DSP_POST_DSP_CTRL_VOP_STANDBY_EN_IMD_SHIFT (31U)
+#define VOP2_POST0_DSP_POST_DSP_CTRL_VOP_STANDBY_EN_IMD_MASK (0x1U << VOP2_POST0_DSP_POST_DSP_CTRL_VOP_STANDBY_EN_IMD_SHIFT) /* 0x80000000 */
+/* POST_MIPI_CTRL */
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_OFFSET               (0x4U)
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_EN_SHIFT (20U)
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_EN_MASK (0x1U << VOP2_POST0_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_EN_SHIFT) /* 0x00100000 */
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_SWAP_SHIFT (21U)
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_SWAP_MASK (0x1U << VOP2_POST0_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_SWAP_SHIFT) /* 0x00200000 */
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_OVERLAP_NUM_SHIFT (24U)
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_OVERLAP_NUM_MASK (0xFU << VOP2_POST0_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_OVERLAP_NUM_SHIFT) /* 0x0F000000 */
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_TE_EN_SHIFT     (28U)
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_TE_EN_MASK      (0x1U << VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_TE_EN_SHIFT)     /* 0x10000000 */
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_TE_MODE_SHIFT   (29U)
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_TE_MODE_MASK    (0x1U << VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_TE_MODE_SHIFT)   /* 0x20000000 */
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_WMS_HOLD_EN_SHIFT (30U)
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_WMS_HOLD_EN_MASK (0x1U << VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_WMS_HOLD_EN_SHIFT) /* 0x40000000 */
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_WMS_FS_SHIFT    (31U)
+#define VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_WMS_FS_MASK     (0x1U << VOP2_POST0_DSP_POST_MIPI_CTRL_EDPI_WMS_FS_SHIFT)    /* 0x80000000 */
+/* POST_COLOR_CTRL */
+#define VOP2_POST0_DSP_POST_COLOR_CTRL_OFFSET              (0x8U)
+#define VOP2_POST0_DSP_POST_COLOR_CTRL_COLOR_BAR_EN_SHIFT  (0U)
+#define VOP2_POST0_DSP_POST_COLOR_CTRL_COLOR_BAR_EN_MASK   (0x1U << VOP2_POST0_DSP_POST_COLOR_CTRL_COLOR_BAR_EN_SHIFT)  /* 0x00000001 */
+#define VOP2_POST0_DSP_POST_COLOR_CTRL_COLOR_BAR_MODE_SHIFT (1U)
+#define VOP2_POST0_DSP_POST_COLOR_CTRL_COLOR_BAR_MODE_MASK (0x1U << VOP2_POST0_DSP_POST_COLOR_CTRL_COLOR_BAR_MODE_SHIFT) /* 0x00000002 */
+/* POST_RESERVED2 */
+#define VOP2_POST0_DSP_POST_RESERVED2_OFFSET               (0xCU)
+#define VOP2_POST0_DSP_POST_RESERVED2_FIELD0000_SHIFT      (0U)
+#define VOP2_POST0_DSP_POST_RESERVED2_FIELD0000_MASK       (0xFFFFFFFFU << VOP2_POST0_DSP_POST_RESERVED2_FIELD0000_SHIFT) /* 0xFFFFFFFF */
+/* POST_3D_LUT_CTRL */
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_OFFSET             (0x10U)
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_EN_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_EN_MASK  (0x1U << VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_EN_SHIFT) /* 0x00000001 */
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_BYPASS_EN_SHIFT (1U)
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_BYPASS_EN_MASK (0x1U << VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_BYPASS_EN_SHIFT) /* 0x00000002 */
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_UPDATE_EN_SHIFT (2U)
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_UPDATE_EN_MASK (0x1U << VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_UPDATE_EN_SHIFT) /* 0x00000004 */
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_MODE_SHIFT (3U)
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_MODE_MASK (0x1U << VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_MODE_SHIFT) /* 0x00000008 */
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_ADDR_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_ADDR_MASK (0xFFFFU << VOP2_POST0_DSP_POST_3D_LUT_CTRL_DSP_3DLUT_ADDR_SHIFT) /* 0xFFFF0000 */
+/* POST_3D_LUT_R */
+#define VOP2_POST0_DSP_POST_3D_LUT_R_OFFSET                (0x14U)
+#define VOP2_POST0_DSP_POST_3D_LUT_R_LUT_3D_R_COMP_SHIFT   (0U)
+#define VOP2_POST0_DSP_POST_3D_LUT_R_LUT_3D_R_COMP_MASK    (0xFFFU << VOP2_POST0_DSP_POST_3D_LUT_R_LUT_3D_R_COMP_SHIFT) /* 0x00000FFF */
+/* POST_3D_LUT_G */
+#define VOP2_POST0_DSP_POST_3D_LUT_G_OFFSET                (0x18U)
+#define VOP2_POST0_DSP_POST_3D_LUT_G_LUT_3D_G_COMP_SHIFT   (0U)
+#define VOP2_POST0_DSP_POST_3D_LUT_G_LUT_3D_G_COMP_MASK    (0xFFFU << VOP2_POST0_DSP_POST_3D_LUT_G_LUT_3D_G_COMP_SHIFT) /* 0x00000FFF */
+/* POST_3D_LUT_B */
+#define VOP2_POST0_DSP_POST_3D_LUT_B_OFFSET                (0x1CU)
+#define VOP2_POST0_DSP_POST_3D_LUT_B_LUT_3D_B_COMP_SHIFT   (0U)
+#define VOP2_POST0_DSP_POST_3D_LUT_B_LUT_3D_B_COMP_MASK    (0xFFFU << VOP2_POST0_DSP_POST_3D_LUT_B_LUT_3D_B_COMP_SHIFT) /* 0x00000FFF */
+/* POST_3DLUT_MST */
+#define VOP2_POST0_DSP_POST_3DLUT_MST_OFFSET               (0x20U)
+#define VOP2_POST0_DSP_POST_3DLUT_MST_POST_3DLUT_MST_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_3DLUT_MST_POST_3DLUT_MST_MASK  (0xFFFFFFFFU << VOP2_POST0_DSP_POST_3DLUT_MST_POST_3DLUT_MST_SHIFT) /* 0xFFFFFFFF */
+/* POST_DSP_BG */
+#define VOP2_POST0_DSP_POST_DSP_BG_OFFSET                  (0x2CU)
+#define VOP2_POST0_DSP_POST_DSP_BG_DSP_BG_GREEN_SHIFT      (0U)
+#define VOP2_POST0_DSP_POST_DSP_BG_DSP_BG_GREEN_MASK       (0x3FFU << VOP2_POST0_DSP_POST_DSP_BG_DSP_BG_GREEN_SHIFT)    /* 0x000003FF */
+#define VOP2_POST0_DSP_POST_DSP_BG_DSP_BG_BLUE_SHIFT       (10U)
+#define VOP2_POST0_DSP_POST_DSP_BG_DSP_BG_BLUE_MASK        (0x3FFU << VOP2_POST0_DSP_POST_DSP_BG_DSP_BG_BLUE_SHIFT)     /* 0x000FFC00 */
+#define VOP2_POST0_DSP_POST_DSP_BG_DSP_BG_RED_SHIFT        (20U)
+#define VOP2_POST0_DSP_POST_DSP_BG_DSP_BG_RED_MASK         (0x3FFU << VOP2_POST0_DSP_POST_DSP_BG_DSP_BG_RED_SHIFT)      /* 0x3FF00000 */
+/* POST_PRE_SCAN_HTIMING */
+#define VOP2_POST0_DSP_POST_PRE_SCAN_HTIMING_OFFSET        (0x30U)
+#define VOP2_POST0_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HBLANK_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HBLANK_MASK (0x1FFFU << VOP2_POST0_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HBLANK_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HACTIVE_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HACTIVE_MASK (0x1FFFU << VOP2_POST0_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HACTIVE_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_HACT_INFO */
+#define VOP2_POST0_DSP_POST_DSP_HACT_INFO_OFFSET           (0x34U)
+#define VOP2_POST0_DSP_POST_DSP_HACT_INFO_DSP_HACT_END_POST_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_DSP_HACT_INFO_DSP_HACT_END_POST_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_HACT_INFO_DSP_HACT_END_POST_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_DSP_HACT_INFO_DSP_HACT_ST_POST_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_HACT_INFO_DSP_HACT_ST_POST_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_HACT_INFO_DSP_HACT_ST_POST_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VACT_INFO */
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_OFFSET           (0x38U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_DSP_VACT_END_POST_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_DSP_VACT_END_POST_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VACT_INFO_DSP_VACT_END_POST_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_DSP_VACT_ST_POST_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_DSP_VACT_ST_POST_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VACT_INFO_DSP_VACT_ST_POST_SHIFT) /* 0x1FFF0000 */
+/* POST_SCL_FACTOR_YRGB */
+#define VOP2_POST0_DSP_POST_SCL_FACTOR_YRGB_OFFSET         (0x3CU)
+#define VOP2_POST0_DSP_POST_SCL_FACTOR_YRGB_POST_HS_FACTOR_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_SCL_FACTOR_YRGB_POST_HS_FACTOR_MASK (0xFFFFU << VOP2_POST0_DSP_POST_SCL_FACTOR_YRGB_POST_HS_FACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_POST0_DSP_POST_SCL_FACTOR_YRGB_POST_VS_FACTOR_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_SCL_FACTOR_YRGB_POST_VS_FACTOR_MASK (0xFFFFU << VOP2_POST0_DSP_POST_SCL_FACTOR_YRGB_POST_VS_FACTOR_SHIFT) /* 0xFFFF0000 */
+/* POST_SCL_CTRL */
+#define VOP2_POST0_DSP_POST_SCL_CTRL_OFFSET                (0x40U)
+#define VOP2_POST0_DSP_POST_SCL_CTRL_POST0_HOR_SD_EN_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_SCL_CTRL_POST0_HOR_SD_EN_MASK  (0x1U << VOP2_POST0_DSP_POST_SCL_CTRL_POST0_HOR_SD_EN_SHIFT) /* 0x00000001 */
+#define VOP2_POST0_DSP_POST_SCL_CTRL_POST0_VER_SD_EN_SHIFT (1U)
+#define VOP2_POST0_DSP_POST_SCL_CTRL_POST0_VER_SD_EN_MASK  (0x1U << VOP2_POST0_DSP_POST_SCL_CTRL_POST0_VER_SD_EN_SHIFT) /* 0x00000002 */
+/* POST_DSP_VACT_INFO_F1 */
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_F1_OFFSET        (0x44U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_END_POST_F1_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_END_POST_F1_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_END_POST_F1_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_ST_POST_F1_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_ST_POST_F1_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_ST_POST_F1_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_HTOTAL_HS_END */
+#define VOP2_POST0_DSP_POST_DSP_HTOTAL_HS_END_OFFSET       (0x48U)
+#define VOP2_POST0_DSP_POST_DSP_HTOTAL_HS_END_DSP_HS_END_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_DSP_HTOTAL_HS_END_DSP_HS_END_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_HTOTAL_HS_END_DSP_HS_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_DSP_HTOTAL_HS_END_DSP_HTOTAL_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_HTOTAL_HS_END_DSP_HTOTAL_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_HTOTAL_HS_END_DSP_HTOTAL_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_HACT_ST_END */
+#define VOP2_POST0_DSP_POST_DSP_HACT_ST_END_OFFSET         (0x4CU)
+#define VOP2_POST0_DSP_POST_DSP_HACT_ST_END_DSP_HACT_END_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_DSP_HACT_ST_END_DSP_HACT_END_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_HACT_ST_END_DSP_HACT_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_DSP_HACT_ST_END_DSP_HACT_ST_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_HACT_ST_END_DSP_HACT_ST_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_HACT_ST_END_DSP_HACT_ST_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VTOTAL_VS_END */
+#define VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_OFFSET       (0x50U)
+#define VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_DSP_VS_END_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_DSP_VS_END_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_DSP_VS_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_SW_DSP_VTOTAL_IMD_SHIFT (15U)
+#define VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_SW_DSP_VTOTAL_IMD_MASK (0x1U << VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_SW_DSP_VTOTAL_IMD_SHIFT) /* 0x00008000 */
+#define VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_DSP_VTOTAL_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_DSP_VTOTAL_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VTOTAL_VS_END_DSP_VTOTAL_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VACT_ST_END */
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_OFFSET         (0x54U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_DSP_VACT_END_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_DSP_VACT_END_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VACT_ST_END_DSP_VACT_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_DSP_VACT_ST_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_DSP_VACT_ST_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VACT_ST_END_DSP_VACT_ST_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VS_ST_END_F1 */
+#define VOP2_POST0_DSP_POST_DSP_VS_ST_END_F1_OFFSET        (0x58U)
+#define VOP2_POST0_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_END_F1_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_END_F1_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_END_F1_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_ST_F1_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_ST_F1_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_ST_F1_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VACT_ST_END_F1 */
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_F1_OFFSET      (0x5CU)
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_END_F1_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_END_F1_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_END_F1_SHIFT) /* 0x00001FFF */
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_ST_F1_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_ST_F1_MASK (0x1FFFU << VOP2_POST0_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_ST_F1_SHIFT) /* 0x1FFF0000 */
+/* POST_BCSH_CTRL */
+#define VOP2_POST0_DSP_POST_BCSH_CTRL_OFFSET               (0x60U)
+#define VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_Y2R_EN_SHIFT    (0U)
+#define VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_Y2R_EN_MASK     (0x1U << VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_Y2R_EN_SHIFT)    /* 0x00000001 */
+#define VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_Y2R_CSC_MODE_SHIFT (2U)
+#define VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_Y2R_CSC_MODE_MASK (0x3U << VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_Y2R_CSC_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_R2Y_EN_SHIFT    (4U)
+#define VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_R2Y_EN_MASK     (0x1U << VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_R2Y_EN_SHIFT)    /* 0x00000010 */
+#define VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_R2Y_CSC_MODE_SHIFT (6U)
+#define VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_R2Y_CSC_MODE_MASK (0x3U << VOP2_POST0_DSP_POST_BCSH_CTRL_BCSH_R2Y_CSC_MODE_SHIFT) /* 0x000000C0 */
+/* POST_BCSH_BCS */
+#define VOP2_POST0_DSP_POST_BCSH_BCS_OFFSET                (0x64U)
+#define VOP2_POST0_DSP_POST_BCSH_BCS_BRIGHTNESS_SHIFT      (0U)
+#define VOP2_POST0_DSP_POST_BCSH_BCS_BRIGHTNESS_MASK       (0xFFU << VOP2_POST0_DSP_POST_BCSH_BCS_BRIGHTNESS_SHIFT)     /* 0x000000FF */
+#define VOP2_POST0_DSP_POST_BCSH_BCS_CONTRAST_SHIFT        (8U)
+#define VOP2_POST0_DSP_POST_BCSH_BCS_CONTRAST_MASK         (0x1FFU << VOP2_POST0_DSP_POST_BCSH_BCS_CONTRAST_SHIFT)      /* 0x0001FF00 */
+#define VOP2_POST0_DSP_POST_BCSH_BCS_SAT_CON_SHIFT         (20U)
+#define VOP2_POST0_DSP_POST_BCSH_BCS_SAT_CON_MASK          (0x3FFU << VOP2_POST0_DSP_POST_BCSH_BCS_SAT_CON_SHIFT)       /* 0x3FF00000 */
+#define VOP2_POST0_DSP_POST_BCSH_BCS_OUT_MODE_SHIFT        (30U)
+#define VOP2_POST0_DSP_POST_BCSH_BCS_OUT_MODE_MASK         (0x3U << VOP2_POST0_DSP_POST_BCSH_BCS_OUT_MODE_SHIFT)        /* 0xC0000000 */
+/* POST_BCSH_H */
+#define VOP2_POST0_DSP_POST_BCSH_H_OFFSET                  (0x68U)
+#define VOP2_POST0_DSP_POST_BCSH_H_SIN_HUE_SHIFT           (0U)
+#define VOP2_POST0_DSP_POST_BCSH_H_SIN_HUE_MASK            (0x1FFU << VOP2_POST0_DSP_POST_BCSH_H_SIN_HUE_SHIFT)         /* 0x000001FF */
+#define VOP2_POST0_DSP_POST_BCSH_H_COS_HUE_SHIFT           (16U)
+#define VOP2_POST0_DSP_POST_BCSH_H_COS_HUE_MASK            (0x1FFU << VOP2_POST0_DSP_POST_BCSH_H_COS_HUE_SHIFT)         /* 0x01FF0000 */
+/* POST_BCSH_COLOR_BAR */
+#define VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_OFFSET          (0x6CU)
+#define VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_Y_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_Y_MASK (0x3FFU << VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_Y_SHIFT) /* 0x000003FF */
+#define VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_U_SHIFT (10U)
+#define VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_U_MASK (0x3FFU << VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_U_SHIFT) /* 0x000FFC00 */
+#define VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_V_SHIFT (20U)
+#define VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_V_MASK (0x3FFU << VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_V_SHIFT) /* 0x3FF00000 */
+#define VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_BCSH_EN_SHIFT   (31U)
+#define VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_BCSH_EN_MASK    (0x1U << VOP2_POST0_DSP_POST_BCSH_COLOR_BAR_BCSH_EN_SHIFT)   /* 0x80000000 */
+/* POST_FRC_LOWER01_0 */
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_0_OFFSET           (0xA0U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_0_LOWER01_FRM0_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_0_LOWER01_FRM0_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER01_0_LOWER01_FRM0_SHIFT) /* 0x0000FFFF */
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_0_LOWER01_FRM1_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_0_LOWER01_FRM1_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER01_0_LOWER01_FRM1_SHIFT) /* 0xFFFF0000 */
+/* POST_FRC_LOWER01_1 */
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_1_OFFSET           (0xA4U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_1_LOWER01_FRM2_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_1_LOWER01_FRM2_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER01_1_LOWER01_FRM2_SHIFT) /* 0x0000FFFF */
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_1_LOWER01_FRM3_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER01_1_LOWER01_FRM3_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER01_1_LOWER01_FRM3_SHIFT) /* 0xFFFF0000 */
+/* POST_FRC_LOWER10_0 */
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_0_OFFSET           (0xA8U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_0_LOWER10_FRM0_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_0_LOWER10_FRM0_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER10_0_LOWER10_FRM0_SHIFT) /* 0x0000FFFF */
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_0_LOWER10_FRM1_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_0_LOWER10_FRM1_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER10_0_LOWER10_FRM1_SHIFT) /* 0xFFFF0000 */
+/* POST_FRC_LOWER10_1 */
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_1_OFFSET           (0xACU)
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_1_LOWER10_FRM2_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_1_LOWER10_FRM2_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER10_1_LOWER10_FRM2_SHIFT) /* 0x0000FFFF */
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_1_LOWER10_FRM3_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER10_1_LOWER10_FRM3_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER10_1_LOWER10_FRM3_SHIFT) /* 0xFFFF0000 */
+/* POST_FRC_LOWER11_0 */
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_0_OFFSET           (0xB0U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_0_LOWER11_FRM0_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_0_LOWER11_FRM0_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER11_0_LOWER11_FRM0_SHIFT) /* 0x0000FFFF */
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_0_LOWER11_FRM1_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_0_LOWER11_FRM1_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER11_0_LOWER11_FRM1_SHIFT) /* 0xFFFF0000 */
+/* POST_FRC_LOWER11_1 */
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_1_OFFSET           (0xB4U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_1_LOWER11_FRM2_SHIFT (0U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_1_LOWER11_FRM2_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER11_1_LOWER11_FRM2_SHIFT) /* 0x0000FFFF */
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_1_LOWER11_FRM3_SHIFT (16U)
+#define VOP2_POST0_DSP_POST_FRC_LOWER11_1_LOWER11_FRM3_MASK (0xFFFFU << VOP2_POST0_DSP_POST_FRC_LOWER11_1_LOWER11_FRM3_SHIFT) /* 0xFFFF0000 */
+/*************************************VOP2_POST1_DSP*************************************/
+/* POST_DSP_CTRL */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_OFFSET                (0x0U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_OUT_MODE_SHIFT    (0U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_OUT_MODE_MASK     (0xFU << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_OUT_MODE_SHIFT)    /* 0x0000000F */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_CORE_DCLK_SEL_SHIFT (4U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_CORE_DCLK_SEL_MASK (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_CORE_DCLK_SEL_SHIFT) /* 0x00000010 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_P2I_EN_SHIFT      (5U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_P2I_EN_MASK       (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_P2I_EN_SHIFT)      /* 0x00000020 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_FILED_POL_SHIFT   (6U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_FILED_POL_MASK    (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_FILED_POL_SHIFT)   /* 0x00000040 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_INTERLACE_SHIFT   (7U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_INTERLACE_MASK    (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_INTERLACE_SHIFT)   /* 0x00000080 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_BG_SWAP_SHIFT     (8U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_BG_SWAP_MASK      (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_BG_SWAP_SHIFT)     /* 0x00000100 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_RB_SWAP_SHIFT     (9U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_RB_SWAP_MASK      (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_RB_SWAP_SHIFT)     /* 0x00000200 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_RG_SWAP_SHIFT     (10U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_RG_SWAP_MASK      (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_RG_SWAP_SHIFT)     /* 0x00000400 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_DELTA_SWAP_SHIFT  (11U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_DELTA_SWAP_MASK   (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_DELTA_SWAP_SHIFT)  /* 0x00000800 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_DUMMY_SWAP_SHIFT  (12U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_DUMMY_SWAP_MASK   (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_DUMMY_SWAP_SHIFT)  /* 0x00001000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_X_MIR_EN_SHIFT    (13U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_X_MIR_EN_MASK     (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_X_MIR_EN_SHIFT)    /* 0x00002000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_Y_MIR_EN_SHIFT    (14U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_Y_MIR_EN_MASK     (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_Y_MIR_EN_SHIFT)    /* 0x00004000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_WIN_BYPASS_SHIFT  (15U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_WIN_BYPASS_MASK   (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_WIN_BYPASS_SHIFT)  /* 0x00008000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_PRE_DITHER_DOWN_EN_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_PRE_DITHER_DOWN_EN_MASK (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_PRE_DITHER_DOWN_EN_SHIFT) /* 0x00010000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DITHER_DOWN_EN_SHIFT  (17U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DITHER_DOWN_EN_MASK   (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DITHER_DOWN_EN_SHIFT)  /* 0x00020000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DITHER_DOWN_SEL_SHIFT (18U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DITHER_DOWN_SEL_MASK  (0x3U << VOP2_POST1_DSP_POST_DSP_CTRL_DITHER_DOWN_SEL_SHIFT) /* 0x000C0000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DITHER_DOWN_MODE_SHIFT (20U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DITHER_DOWN_MODE_MASK (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DITHER_DOWN_MODE_SHIFT) /* 0x00100000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_POST_LB_MODE_SHIFT    (23U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_POST_LB_MODE_MASK     (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_POST_LB_MODE_SHIFT)    /* 0x00800000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_BLANK_EN_SHIFT    (24U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_BLANK_EN_MASK     (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_BLANK_EN_SHIFT)    /* 0x01000000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_OUT_ZERO_SHIFT    (26U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_OUT_ZERO_MASK     (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_OUT_ZERO_SHIFT)    /* 0x04000000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_BLACK_EN_SHIFT    (27U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_BLACK_EN_MASK     (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_BLACK_EN_SHIFT)    /* 0x08000000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_LUT_EN_SHIFT      (28U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_DSP_LUT_EN_MASK       (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_DSP_LUT_EN_SHIFT)      /* 0x10000000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_VOP_FP_STANDBY_EN_IMD_SHIFT (30U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_VOP_FP_STANDBY_EN_IMD_MASK (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_VOP_FP_STANDBY_EN_IMD_SHIFT) /* 0x40000000 */
+#define VOP2_POST1_DSP_POST_DSP_CTRL_VOP_STANDBY_EN_IMD_SHIFT (31U)
+#define VOP2_POST1_DSP_POST_DSP_CTRL_VOP_STANDBY_EN_IMD_MASK (0x1U << VOP2_POST1_DSP_POST_DSP_CTRL_VOP_STANDBY_EN_IMD_SHIFT) /* 0x80000000 */
+/* POST_MIPI_CTRL */
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_OFFSET               (0x4U)
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_EN_SHIFT (20U)
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_EN_MASK (0x1U << VOP2_POST1_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_EN_SHIFT) /* 0x00100000 */
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_SWAP_SHIFT (21U)
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_SWAP_MASK (0x1U << VOP2_POST1_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_SWAP_SHIFT) /* 0x00200000 */
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_OVERLAP_NUM_SHIFT (24U)
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_OVERLAP_NUM_MASK (0xFU << VOP2_POST1_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_OVERLAP_NUM_SHIFT) /* 0x0F000000 */
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_TE_EN_SHIFT     (28U)
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_TE_EN_MASK      (0x1U << VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_TE_EN_SHIFT)     /* 0x10000000 */
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_TE_MODE_SHIFT   (29U)
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_TE_MODE_MASK    (0x1U << VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_TE_MODE_SHIFT)   /* 0x20000000 */
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_WMS_HOLD_EN_SHIFT (30U)
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_WMS_HOLD_EN_MASK (0x1U << VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_WMS_HOLD_EN_SHIFT) /* 0x40000000 */
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_WMS_FS_SHIFT    (31U)
+#define VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_WMS_FS_MASK     (0x1U << VOP2_POST1_DSP_POST_MIPI_CTRL_EDPI_WMS_FS_SHIFT)    /* 0x80000000 */
+/* POST_COLOR_CTRL */
+#define VOP2_POST1_DSP_POST_COLOR_CTRL_OFFSET              (0x8U)
+#define VOP2_POST1_DSP_POST_COLOR_CTRL_COLOR_BAR_EN_SHIFT  (0U)
+#define VOP2_POST1_DSP_POST_COLOR_CTRL_COLOR_BAR_EN_MASK   (0x1U << VOP2_POST1_DSP_POST_COLOR_CTRL_COLOR_BAR_EN_SHIFT)  /* 0x00000001 */
+#define VOP2_POST1_DSP_POST_COLOR_CTRL_COLOR_BAR_MODE_SHIFT (1U)
+#define VOP2_POST1_DSP_POST_COLOR_CTRL_COLOR_BAR_MODE_MASK (0x1U << VOP2_POST1_DSP_POST_COLOR_CTRL_COLOR_BAR_MODE_SHIFT) /* 0x00000002 */
+/* POST_RESERVED2 */
+#define VOP2_POST1_DSP_POST_RESERVED2_OFFSET               (0xCU)
+#define VOP2_POST1_DSP_POST_RESERVED2_FIELD0000_SHIFT      (0U)
+#define VOP2_POST1_DSP_POST_RESERVED2_FIELD0000_MASK       (0xFFFFFFFFU << VOP2_POST1_DSP_POST_RESERVED2_FIELD0000_SHIFT) /* 0xFFFFFFFF */
+/* POST_DSP_BG */
+#define VOP2_POST1_DSP_POST_DSP_BG_OFFSET                  (0x2CU)
+#define VOP2_POST1_DSP_POST_DSP_BG_DSP_BG_GREEN_SHIFT      (0U)
+#define VOP2_POST1_DSP_POST_DSP_BG_DSP_BG_GREEN_MASK       (0x3FFU << VOP2_POST1_DSP_POST_DSP_BG_DSP_BG_GREEN_SHIFT)    /* 0x000003FF */
+#define VOP2_POST1_DSP_POST_DSP_BG_DSP_BG_BLUE_SHIFT       (10U)
+#define VOP2_POST1_DSP_POST_DSP_BG_DSP_BG_BLUE_MASK        (0x3FFU << VOP2_POST1_DSP_POST_DSP_BG_DSP_BG_BLUE_SHIFT)     /* 0x000FFC00 */
+#define VOP2_POST1_DSP_POST_DSP_BG_DSP_BG_RED_SHIFT        (20U)
+#define VOP2_POST1_DSP_POST_DSP_BG_DSP_BG_RED_MASK         (0x3FFU << VOP2_POST1_DSP_POST_DSP_BG_DSP_BG_RED_SHIFT)      /* 0x3FF00000 */
+/* POST_PRE_SCAN_HTIMING */
+#define VOP2_POST1_DSP_POST_PRE_SCAN_HTIMING_OFFSET        (0x30U)
+#define VOP2_POST1_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HBLANK_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HBLANK_MASK (0x1FFFU << VOP2_POST1_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HBLANK_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HACTIVE_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HACTIVE_MASK (0x1FFFU << VOP2_POST1_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HACTIVE_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_HACT_INFO */
+#define VOP2_POST1_DSP_POST_DSP_HACT_INFO_OFFSET           (0x34U)
+#define VOP2_POST1_DSP_POST_DSP_HACT_INFO_DSP_HACT_END_POST_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_DSP_HACT_INFO_DSP_HACT_END_POST_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_HACT_INFO_DSP_HACT_END_POST_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_DSP_HACT_INFO_DSP_HACT_ST_POST_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_HACT_INFO_DSP_HACT_ST_POST_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_HACT_INFO_DSP_HACT_ST_POST_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VACT_INFO */
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_OFFSET           (0x38U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_DSP_VACT_END_POST_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_DSP_VACT_END_POST_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VACT_INFO_DSP_VACT_END_POST_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_DSP_VACT_ST_POST_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_DSP_VACT_ST_POST_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VACT_INFO_DSP_VACT_ST_POST_SHIFT) /* 0x1FFF0000 */
+/* POST_SCL_FACTOR_YRGB */
+#define VOP2_POST1_DSP_POST_SCL_FACTOR_YRGB_OFFSET         (0x3CU)
+#define VOP2_POST1_DSP_POST_SCL_FACTOR_YRGB_POST_HS_FACTOR_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_SCL_FACTOR_YRGB_POST_HS_FACTOR_MASK (0xFFFFU << VOP2_POST1_DSP_POST_SCL_FACTOR_YRGB_POST_HS_FACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_POST1_DSP_POST_SCL_FACTOR_YRGB_POST_VS_FACTOR_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_SCL_FACTOR_YRGB_POST_VS_FACTOR_MASK (0xFFFFU << VOP2_POST1_DSP_POST_SCL_FACTOR_YRGB_POST_VS_FACTOR_SHIFT) /* 0xFFFF0000 */
+/* POST_SCL_CTRL */
+#define VOP2_POST1_DSP_POST_SCL_CTRL_OFFSET                (0x40U)
+#define VOP2_POST1_DSP_POST_SCL_CTRL_POST0_HOR_SD_EN_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_SCL_CTRL_POST0_HOR_SD_EN_MASK  (0x1U << VOP2_POST1_DSP_POST_SCL_CTRL_POST0_HOR_SD_EN_SHIFT) /* 0x00000001 */
+#define VOP2_POST1_DSP_POST_SCL_CTRL_POST0_VER_SD_EN_SHIFT (1U)
+#define VOP2_POST1_DSP_POST_SCL_CTRL_POST0_VER_SD_EN_MASK  (0x1U << VOP2_POST1_DSP_POST_SCL_CTRL_POST0_VER_SD_EN_SHIFT) /* 0x00000002 */
+/* POST_DSP_VACT_INFO_F1 */
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_F1_OFFSET        (0x44U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_END_POST_F1_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_END_POST_F1_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_END_POST_F1_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_ST_POST_F1_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_ST_POST_F1_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_ST_POST_F1_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_HTOTAL_HS_END */
+#define VOP2_POST1_DSP_POST_DSP_HTOTAL_HS_END_OFFSET       (0x48U)
+#define VOP2_POST1_DSP_POST_DSP_HTOTAL_HS_END_DSP_HS_END_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_DSP_HTOTAL_HS_END_DSP_HS_END_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_HTOTAL_HS_END_DSP_HS_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_DSP_HTOTAL_HS_END_DSP_HTOTAL_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_HTOTAL_HS_END_DSP_HTOTAL_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_HTOTAL_HS_END_DSP_HTOTAL_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_HACT_ST_END */
+#define VOP2_POST1_DSP_POST_DSP_HACT_ST_END_OFFSET         (0x4CU)
+#define VOP2_POST1_DSP_POST_DSP_HACT_ST_END_DSP_HACT_END_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_DSP_HACT_ST_END_DSP_HACT_END_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_HACT_ST_END_DSP_HACT_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_DSP_HACT_ST_END_DSP_HACT_ST_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_HACT_ST_END_DSP_HACT_ST_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_HACT_ST_END_DSP_HACT_ST_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VTOTAL_VS_END */
+#define VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_OFFSET       (0x50U)
+#define VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_DSP_VS_END_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_DSP_VS_END_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_DSP_VS_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_SW_DSP_VTOTAL_IMD_SHIFT (15U)
+#define VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_SW_DSP_VTOTAL_IMD_MASK (0x1U << VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_SW_DSP_VTOTAL_IMD_SHIFT) /* 0x00008000 */
+#define VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_DSP_VTOTAL_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_DSP_VTOTAL_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VTOTAL_VS_END_DSP_VTOTAL_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VACT_ST_END */
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_OFFSET         (0x54U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_DSP_VACT_END_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_DSP_VACT_END_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VACT_ST_END_DSP_VACT_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_DSP_VACT_ST_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_DSP_VACT_ST_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VACT_ST_END_DSP_VACT_ST_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VS_ST_END_F1 */
+#define VOP2_POST1_DSP_POST_DSP_VS_ST_END_F1_OFFSET        (0x58U)
+#define VOP2_POST1_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_END_F1_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_END_F1_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_END_F1_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_ST_F1_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_ST_F1_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_ST_F1_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VACT_ST_END_F1 */
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_F1_OFFSET      (0x5CU)
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_END_F1_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_END_F1_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_END_F1_SHIFT) /* 0x00001FFF */
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_ST_F1_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_ST_F1_MASK (0x1FFFU << VOP2_POST1_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_ST_F1_SHIFT) /* 0x1FFF0000 */
+/* POST_BCSH_CTRL */
+#define VOP2_POST1_DSP_POST_BCSH_CTRL_OFFSET               (0x60U)
+#define VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_Y2R_EN_SHIFT    (0U)
+#define VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_Y2R_EN_MASK     (0x1U << VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_Y2R_EN_SHIFT)    /* 0x00000001 */
+#define VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_Y2R_CSC_MODE_SHIFT (2U)
+#define VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_Y2R_CSC_MODE_MASK (0x3U << VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_Y2R_CSC_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_R2Y_EN_SHIFT    (4U)
+#define VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_R2Y_EN_MASK     (0x1U << VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_R2Y_EN_SHIFT)    /* 0x00000010 */
+#define VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_R2Y_CSC_MODE_SHIFT (6U)
+#define VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_R2Y_CSC_MODE_MASK (0x3U << VOP2_POST1_DSP_POST_BCSH_CTRL_BCSH_R2Y_CSC_MODE_SHIFT) /* 0x000000C0 */
+/* POST_BCSH_BCS */
+#define VOP2_POST1_DSP_POST_BCSH_BCS_OFFSET                (0x64U)
+#define VOP2_POST1_DSP_POST_BCSH_BCS_BRIGHTNESS_SHIFT      (0U)
+#define VOP2_POST1_DSP_POST_BCSH_BCS_BRIGHTNESS_MASK       (0x3FU << VOP2_POST1_DSP_POST_BCSH_BCS_BRIGHTNESS_SHIFT)     /* 0x0000003F */
+#define VOP2_POST1_DSP_POST_BCSH_BCS_CONTRAST_SHIFT        (8U)
+#define VOP2_POST1_DSP_POST_BCSH_BCS_CONTRAST_MASK         (0x1FFU << VOP2_POST1_DSP_POST_BCSH_BCS_CONTRAST_SHIFT)      /* 0x0001FF00 */
+#define VOP2_POST1_DSP_POST_BCSH_BCS_SAT_CON_SHIFT         (20U)
+#define VOP2_POST1_DSP_POST_BCSH_BCS_SAT_CON_MASK          (0x3FFU << VOP2_POST1_DSP_POST_BCSH_BCS_SAT_CON_SHIFT)       /* 0x3FF00000 */
+#define VOP2_POST1_DSP_POST_BCSH_BCS_OUT_MODE_SHIFT        (30U)
+#define VOP2_POST1_DSP_POST_BCSH_BCS_OUT_MODE_MASK         (0x3U << VOP2_POST1_DSP_POST_BCSH_BCS_OUT_MODE_SHIFT)        /* 0xC0000000 */
+/* POST_BCSH_H */
+#define VOP2_POST1_DSP_POST_BCSH_H_OFFSET                  (0x68U)
+#define VOP2_POST1_DSP_POST_BCSH_H_SIN_HUE_SHIFT           (0U)
+#define VOP2_POST1_DSP_POST_BCSH_H_SIN_HUE_MASK            (0x1FFU << VOP2_POST1_DSP_POST_BCSH_H_SIN_HUE_SHIFT)         /* 0x000001FF */
+#define VOP2_POST1_DSP_POST_BCSH_H_COS_HUE_SHIFT           (16U)
+#define VOP2_POST1_DSP_POST_BCSH_H_COS_HUE_MASK            (0x1FFU << VOP2_POST1_DSP_POST_BCSH_H_COS_HUE_SHIFT)         /* 0x01FF0000 */
+/* POST_BCSH_COLOR_BAR */
+#define VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_OFFSET          (0x6CU)
+#define VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_Y_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_Y_MASK (0x3FFU << VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_Y_SHIFT) /* 0x000003FF */
+#define VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_U_SHIFT (10U)
+#define VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_U_MASK (0x3FFU << VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_U_SHIFT) /* 0x000FFC00 */
+#define VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_V_SHIFT (20U)
+#define VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_V_MASK (0x3FFU << VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_V_SHIFT) /* 0x3FF00000 */
+#define VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_BCSH_EN_SHIFT   (31U)
+#define VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_BCSH_EN_MASK    (0x1U << VOP2_POST1_DSP_POST_BCSH_COLOR_BAR_BCSH_EN_SHIFT)   /* 0x80000000 */
+/* POST_CABC_CTRL0 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL0_OFFSET              (0x70U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL0_CABC_EN_SHIFT       (0U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL0_CABC_EN_MASK        (0x1U << VOP2_POST1_DSP_POST_CABC_CTRL0_CABC_EN_SHIFT)       /* 0x00000001 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL0_PWM_CONFIG_MODE_SHIFT (1U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL0_PWM_CONFIG_MODE_MASK (0x3U << VOP2_POST1_DSP_POST_CABC_CTRL0_PWM_CONFIG_MODE_SHIFT) /* 0x00000006 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL0_CABC_HANDLE_EN_SHIFT (3U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL0_CABC_HANDLE_EN_MASK (0x1U << VOP2_POST1_DSP_POST_CABC_CTRL0_CABC_HANDLE_EN_SHIFT) /* 0x00000008 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL0_CABC_CALC_PIXEL_NUM_SHIFT (4U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL0_CABC_CALC_PIXEL_NUM_MASK (0x1U << VOP2_POST1_DSP_POST_CABC_CTRL0_CABC_CALC_PIXEL_NUM_SHIFT) /* 0x00000010 */
+/* POST_CABC_CTRL1 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL1_OFFSET              (0x74U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL1_CABC_LUT_EN_SHIFT   (0U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL1_CABC_LUT_EN_MASK    (0x1U << VOP2_POST1_DSP_POST_CABC_CTRL1_CABC_LUT_EN_SHIFT)   /* 0x00000001 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL1_CABC_TOTAL_NUM_SHIFT (4U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL1_CABC_TOTAL_NUM_MASK (0x7FFFFFU << VOP2_POST1_DSP_POST_CABC_CTRL1_CABC_TOTAL_NUM_SHIFT) /* 0x07FFFFF0 */
+/* POST_CABC_CTRL2 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_OFFSET              (0x78U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_CABC_STAGE_DOWN_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_CABC_STAGE_DOWN_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_CTRL2_CABC_STAGE_DOWN_SHIFT) /* 0x000000FF */
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_CABC_STAGE_UP_SHIFT (8U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_CABC_STAGE_UP_MASK  (0x1FFU << VOP2_POST1_DSP_POST_CABC_CTRL2_CABC_STAGE_UP_SHIFT) /* 0x0001FF00 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_CABC_STAGE_UP_MODE_SHIFT (19U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_CABC_STAGE_UP_MODE_MASK (0x1U << VOP2_POST1_DSP_POST_CABC_CTRL2_CABC_STAGE_UP_MODE_SHIFT) /* 0x00080000 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_MAX_SCALE_CFG_VALUE_SHIFT (20U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_MAX_SCALE_CFG_VALUE_MASK (0x1FFU << VOP2_POST1_DSP_POST_CABC_CTRL2_MAX_SCALE_CFG_VALUE_SHIFT) /* 0x1FF00000 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_MAX_SCALE_CFG_ENABLE_SHIFT (31U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL2_MAX_SCALE_CFG_ENABLE_MASK (0x1U << VOP2_POST1_DSP_POST_CABC_CTRL2_MAX_SCALE_CFG_ENABLE_SHIFT) /* 0x80000000 */
+/* POST_CABC_CTRL3 */
+#define VOP2_POST1_DSP_POST_CABC_CTRL3_OFFSET              (0x7CU)
+#define VOP2_POST1_DSP_POST_CABC_CTRL3_CABC_GLOBAL_DN_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL3_CABC_GLOBAL_DN_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_CTRL3_CABC_GLOBAL_DN_SHIFT) /* 0x000000FF */
+#define VOP2_POST1_DSP_POST_CABC_CTRL3_CABC_GLOBAL_DN_LIMIT_EN_SHIFT (8U)
+#define VOP2_POST1_DSP_POST_CABC_CTRL3_CABC_GLOBAL_DN_LIMIT_EN_MASK (0x1U << VOP2_POST1_DSP_POST_CABC_CTRL3_CABC_GLOBAL_DN_LIMIT_EN_SHIFT) /* 0x00000100 */
+/* POST_CABC_GAUSS_LINE0_0 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_OFFSET      (0x80U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_0_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_0_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_0_SHIFT) /* 0x000000FF */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_1_SHIFT (8U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_1_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_1_SHIFT) /* 0x0000FF00 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_2_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_2_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_2_SHIFT) /* 0x00FF0000 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_3_SHIFT (24U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_3_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_0_T_LINE0_3_SHIFT) /* 0xFF000000 */
+/* POST_CABC_GAUSS_LINE0_1 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_OFFSET      (0x84U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_T_LINE0_4_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_T_LINE0_4_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_T_LINE0_4_SHIFT) /* 0x000000FF */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_T_LINE0_5_SHIFT (8U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_T_LINE0_5_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_T_LINE0_5_SHIFT) /* 0x0000FF00 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_T_LINE0_6_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_T_LINE0_6_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE0_1_T_LINE0_6_SHIFT) /* 0x00FF0000 */
+/* POST_CABC_GAUSS_LINE1_0 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_OFFSET      (0x88U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_0_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_0_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_0_SHIFT) /* 0x000000FF */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_1_SHIFT (8U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_1_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_1_SHIFT) /* 0x0000FF00 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_2_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_2_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_2_SHIFT) /* 0x00FF0000 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_3_SHIFT (24U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_3_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_0_T_LINE1_3_SHIFT) /* 0xFF000000 */
+/* POST_CABC_GAUSS_LINE1_1 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_OFFSET      (0x8CU)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_T_LINE1_4_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_T_LINE1_4_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_T_LINE1_4_SHIFT) /* 0x000000FF */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_T_LINE1_5_SHIFT (8U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_T_LINE1_5_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_T_LINE1_5_SHIFT) /* 0x0000FF00 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_T_LINE1_6_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_T_LINE1_6_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE1_1_T_LINE1_6_SHIFT) /* 0x00FF0000 */
+/* POST_CABC_GAUSS_LINE2_0 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_OFFSET      (0x90U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_0_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_0_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_0_SHIFT) /* 0x000000FF */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_1_SHIFT (8U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_1_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_1_SHIFT) /* 0x0000FF00 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_2_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_2_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_2_SHIFT) /* 0x00FF0000 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_3_SHIFT (24U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_3_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_0_T_LINE2_3_SHIFT) /* 0xFF000000 */
+/* POST_CABC_GAUSS_LINE2_1 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_OFFSET      (0x94U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_T_LINE2_4_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_T_LINE2_4_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_T_LINE2_4_SHIFT) /* 0x000000FF */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_T_LINE2_5_SHIFT (8U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_T_LINE2_5_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_T_LINE2_5_SHIFT) /* 0x0000FF00 */
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_T_LINE2_6_SHIFT (16U)
+#define VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_T_LINE2_6_MASK (0xFFU << VOP2_POST1_DSP_POST_CABC_GAUSS_LINE2_1_T_LINE2_6_SHIFT) /* 0x00FF0000 */
+/* POST_PWM_CTRL */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_OFFSET                (0xC0U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_PWM_EN_SHIFT          (0U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_PWM_EN_MASK           (0x1U << VOP2_POST1_DSP_POST_PWM_CTRL_PWM_EN_SHIFT)          /* 0x00000001 */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_PWM_MODE_SHIFT        (1U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_PWM_MODE_MASK         (0x3U << VOP2_POST1_DSP_POST_PWM_CTRL_PWM_MODE_SHIFT)        /* 0x00000006 */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_DUTY_POL_SHIFT        (3U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_DUTY_POL_MASK         (0x1U << VOP2_POST1_DSP_POST_PWM_CTRL_DUTY_POL_SHIFT)        /* 0x00000008 */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_INACTIVE_POL_SHIFT    (4U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_INACTIVE_POL_MASK     (0x1U << VOP2_POST1_DSP_POST_PWM_CTRL_INACTIVE_POL_SHIFT)    /* 0x00000010 */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_OUTPUT_MODE_SHIFT     (5U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_OUTPUT_MODE_MASK      (0x1U << VOP2_POST1_DSP_POST_PWM_CTRL_OUTPUT_MODE_SHIFT)     /* 0x00000020 */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_LP_EN_SHIFT           (8U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_LP_EN_MASK            (0x1U << VOP2_POST1_DSP_POST_PWM_CTRL_LP_EN_SHIFT)           /* 0x00000100 */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_CLK_SEL_SHIFT         (9U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_CLK_SEL_MASK          (0x1U << VOP2_POST1_DSP_POST_PWM_CTRL_CLK_SEL_SHIFT)         /* 0x00000200 */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_PRESCALE_SHIFT        (12U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_PRESCALE_MASK         (0x7U << VOP2_POST1_DSP_POST_PWM_CTRL_PRESCALE_SHIFT)        /* 0x00007000 */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_SCALE_SHIFT           (16U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_SCALE_MASK            (0xFFU << VOP2_POST1_DSP_POST_PWM_CTRL_SCALE_SHIFT)          /* 0x00FF0000 */
+#define VOP2_POST1_DSP_POST_PWM_CTRL_RPT_SHIFT             (24U)
+#define VOP2_POST1_DSP_POST_PWM_CTRL_RPT_MASK              (0xFFU << VOP2_POST1_DSP_POST_PWM_CTRL_RPT_SHIFT)            /* 0xFF000000 */
+/* POST_PWM_PERIOD_HPR */
+#define VOP2_POST1_DSP_POST_PWM_PERIOD_HPR_OFFSET          (0xC4U)
+#define VOP2_POST1_DSP_POST_PWM_PERIOD_HPR_PWM_PERIOD_SHIFT (0U)
+#define VOP2_POST1_DSP_POST_PWM_PERIOD_HPR_PWM_PERIOD_MASK (0xFFFFFFFFU << VOP2_POST1_DSP_POST_PWM_PERIOD_HPR_PWM_PERIOD_SHIFT) /* 0xFFFFFFFF */
+/* POST_PWM_DUTY_LPR */
+#define VOP2_POST1_DSP_POST_PWM_DUTY_LPR_OFFSET            (0xC8U)
+#define VOP2_POST1_DSP_POST_PWM_DUTY_LPR_PWM_DUTY_SHIFT    (0U)
+#define VOP2_POST1_DSP_POST_PWM_DUTY_LPR_PWM_DUTY_MASK     (0xFFFFFFFFU << VOP2_POST1_DSP_POST_PWM_DUTY_LPR_PWM_DUTY_SHIFT) /* 0xFFFFFFFF */
+/* POST_PWM_CNT */
+#define VOP2_POST1_DSP_POST_PWM_CNT_OFFSET                 (0xCCU)
+#define VOP2_POST1_DSP_POST_PWM_CNT_PWM_CNT_SHIFT          (0U)
+#define VOP2_POST1_DSP_POST_PWM_CNT_PWM_CNT_MASK           (0xFFFFFFFFU << VOP2_POST1_DSP_POST_PWM_CNT_PWM_CNT_SHIFT)   /* 0xFFFFFFFF */
+/*************************************VOP2_POST2_DSP*************************************/
+/* POST_DSP_CTRL */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_OFFSET                (0x0U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_OUT_MODE_SHIFT    (0U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_OUT_MODE_MASK     (0xFU << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_OUT_MODE_SHIFT)    /* 0x0000000F */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_CORE_DCLK_SEL_SHIFT (4U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_CORE_DCLK_SEL_MASK (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_CORE_DCLK_SEL_SHIFT) /* 0x00000010 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_P2I_EN_SHIFT      (5U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_P2I_EN_MASK       (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_P2I_EN_SHIFT)      /* 0x00000020 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_FILED_POL_SHIFT   (6U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_FILED_POL_MASK    (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_FILED_POL_SHIFT)   /* 0x00000040 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_INTERLACE_SHIFT   (7U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_INTERLACE_MASK    (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_INTERLACE_SHIFT)   /* 0x00000080 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_BG_SWAP_SHIFT     (8U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_BG_SWAP_MASK      (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_BG_SWAP_SHIFT)     /* 0x00000100 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_RB_SWAP_SHIFT     (9U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_RB_SWAP_MASK      (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_RB_SWAP_SHIFT)     /* 0x00000200 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_RG_SWAP_SHIFT     (10U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_RG_SWAP_MASK      (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_RG_SWAP_SHIFT)     /* 0x00000400 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_DELTA_SWAP_SHIFT  (11U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_DELTA_SWAP_MASK   (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_DELTA_SWAP_SHIFT)  /* 0x00000800 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_DUMMY_SWAP_SHIFT  (12U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_DUMMY_SWAP_MASK   (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_DUMMY_SWAP_SHIFT)  /* 0x00001000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_X_MIR_EN_SHIFT    (13U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_X_MIR_EN_MASK     (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_X_MIR_EN_SHIFT)    /* 0x00002000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_Y_MIR_EN_SHIFT    (14U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_Y_MIR_EN_MASK     (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_Y_MIR_EN_SHIFT)    /* 0x00004000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_WIN_BYPASS_SHIFT  (15U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_WIN_BYPASS_MASK   (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_WIN_BYPASS_SHIFT)  /* 0x00008000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_PRE_DITHER_DOWN_EN_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_PRE_DITHER_DOWN_EN_MASK (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_PRE_DITHER_DOWN_EN_SHIFT) /* 0x00010000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DITHER_DOWN_EN_SHIFT  (17U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DITHER_DOWN_EN_MASK   (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DITHER_DOWN_EN_SHIFT)  /* 0x00020000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DITHER_DOWN_SEL_SHIFT (18U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DITHER_DOWN_SEL_MASK  (0x3U << VOP2_POST2_DSP_POST_DSP_CTRL_DITHER_DOWN_SEL_SHIFT) /* 0x000C0000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DITHER_DOWN_MODE_SHIFT (20U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DITHER_DOWN_MODE_MASK (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DITHER_DOWN_MODE_SHIFT) /* 0x00100000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_POST_LB_MODE_SHIFT    (23U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_POST_LB_MODE_MASK     (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_POST_LB_MODE_SHIFT)    /* 0x00800000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_BLANK_EN_SHIFT    (24U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_BLANK_EN_MASK     (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_BLANK_EN_SHIFT)    /* 0x01000000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_OUT_ZERO_SHIFT    (26U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_OUT_ZERO_MASK     (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_OUT_ZERO_SHIFT)    /* 0x04000000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_BLACK_EN_SHIFT    (27U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_BLACK_EN_MASK     (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_BLACK_EN_SHIFT)    /* 0x08000000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_LUT_EN_SHIFT      (28U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_DSP_LUT_EN_MASK       (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_DSP_LUT_EN_SHIFT)      /* 0x10000000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_VOP_FP_STANDBY_EN_IMD_SHIFT (30U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_VOP_FP_STANDBY_EN_IMD_MASK (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_VOP_FP_STANDBY_EN_IMD_SHIFT) /* 0x40000000 */
+#define VOP2_POST2_DSP_POST_DSP_CTRL_VOP_STANDBY_EN_IMD_SHIFT (31U)
+#define VOP2_POST2_DSP_POST_DSP_CTRL_VOP_STANDBY_EN_IMD_MASK (0x1U << VOP2_POST2_DSP_POST_DSP_CTRL_VOP_STANDBY_EN_IMD_SHIFT) /* 0x80000000 */
+/* POST_MIPI_CTRL */
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_OFFSET               (0x4U)
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_EN_SHIFT (20U)
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_EN_MASK (0x1U << VOP2_POST2_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_EN_SHIFT) /* 0x00100000 */
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_SWAP_SHIFT (21U)
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_SWAP_MASK (0x1U << VOP2_POST2_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_SWAP_SHIFT) /* 0x00200000 */
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_OVERLAP_NUM_SHIFT (24U)
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_OVERLAP_NUM_MASK (0xFU << VOP2_POST2_DSP_POST_MIPI_CTRL_DOUB_CHANNEL_OVERLAP_NUM_SHIFT) /* 0x0F000000 */
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_TE_EN_SHIFT     (28U)
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_TE_EN_MASK      (0x1U << VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_TE_EN_SHIFT)     /* 0x10000000 */
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_TE_MODE_SHIFT   (29U)
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_TE_MODE_MASK    (0x1U << VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_TE_MODE_SHIFT)   /* 0x20000000 */
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_WMS_HOLD_EN_SHIFT (30U)
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_WMS_HOLD_EN_MASK (0x1U << VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_WMS_HOLD_EN_SHIFT) /* 0x40000000 */
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_WMS_FS_SHIFT    (31U)
+#define VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_WMS_FS_MASK     (0x1U << VOP2_POST2_DSP_POST_MIPI_CTRL_EDPI_WMS_FS_SHIFT)    /* 0x80000000 */
+/* POST_COLOR_CTRL */
+#define VOP2_POST2_DSP_POST_COLOR_CTRL_OFFSET              (0x8U)
+#define VOP2_POST2_DSP_POST_COLOR_CTRL_COLOR_BAR_EN_SHIFT  (0U)
+#define VOP2_POST2_DSP_POST_COLOR_CTRL_COLOR_BAR_EN_MASK   (0x1U << VOP2_POST2_DSP_POST_COLOR_CTRL_COLOR_BAR_EN_SHIFT)  /* 0x00000001 */
+#define VOP2_POST2_DSP_POST_COLOR_CTRL_COLOR_BAR_MODE_SHIFT (1U)
+#define VOP2_POST2_DSP_POST_COLOR_CTRL_COLOR_BAR_MODE_MASK (0x1U << VOP2_POST2_DSP_POST_COLOR_CTRL_COLOR_BAR_MODE_SHIFT) /* 0x00000002 */
+/* POST_RESERVED2 */
+#define VOP2_POST2_DSP_POST_RESERVED2_OFFSET               (0xCU)
+#define VOP2_POST2_DSP_POST_RESERVED2_FIELD0000_SHIFT      (0U)
+#define VOP2_POST2_DSP_POST_RESERVED2_FIELD0000_MASK       (0xFFFFFFFFU << VOP2_POST2_DSP_POST_RESERVED2_FIELD0000_SHIFT) /* 0xFFFFFFFF */
+/* POST_DSP_BG */
+#define VOP2_POST2_DSP_POST_DSP_BG_OFFSET                  (0x2CU)
+#define VOP2_POST2_DSP_POST_DSP_BG_DSP_BG_GREEN_SHIFT      (0U)
+#define VOP2_POST2_DSP_POST_DSP_BG_DSP_BG_GREEN_MASK       (0x3FFU << VOP2_POST2_DSP_POST_DSP_BG_DSP_BG_GREEN_SHIFT)    /* 0x000003FF */
+#define VOP2_POST2_DSP_POST_DSP_BG_DSP_BG_BLUE_SHIFT       (10U)
+#define VOP2_POST2_DSP_POST_DSP_BG_DSP_BG_BLUE_MASK        (0x3FFU << VOP2_POST2_DSP_POST_DSP_BG_DSP_BG_BLUE_SHIFT)     /* 0x000FFC00 */
+#define VOP2_POST2_DSP_POST_DSP_BG_DSP_BG_RED_SHIFT        (20U)
+#define VOP2_POST2_DSP_POST_DSP_BG_DSP_BG_RED_MASK         (0x3FFU << VOP2_POST2_DSP_POST_DSP_BG_DSP_BG_RED_SHIFT)      /* 0x3FF00000 */
+/* POST_PRE_SCAN_HTIMING */
+#define VOP2_POST2_DSP_POST_PRE_SCAN_HTIMING_OFFSET        (0x30U)
+#define VOP2_POST2_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HBLANK_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HBLANK_MASK (0x1FFFU << VOP2_POST2_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HBLANK_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HACTIVE_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HACTIVE_MASK (0x1FFFU << VOP2_POST2_DSP_POST_PRE_SCAN_HTIMING_PRE_SCAN_HACTIVE_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_HACT_INFO */
+#define VOP2_POST2_DSP_POST_DSP_HACT_INFO_OFFSET           (0x34U)
+#define VOP2_POST2_DSP_POST_DSP_HACT_INFO_DSP_HACT_END_POST_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_DSP_HACT_INFO_DSP_HACT_END_POST_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_HACT_INFO_DSP_HACT_END_POST_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_DSP_HACT_INFO_DSP_HACT_ST_POST_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_HACT_INFO_DSP_HACT_ST_POST_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_HACT_INFO_DSP_HACT_ST_POST_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VACT_INFO */
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_OFFSET           (0x38U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_DSP_VACT_END_POST_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_DSP_VACT_END_POST_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VACT_INFO_DSP_VACT_END_POST_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_DSP_VACT_ST_POST_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_DSP_VACT_ST_POST_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VACT_INFO_DSP_VACT_ST_POST_SHIFT) /* 0x1FFF0000 */
+/* POST_SCL_FACTOR_YRGB */
+#define VOP2_POST2_DSP_POST_SCL_FACTOR_YRGB_OFFSET         (0x3CU)
+#define VOP2_POST2_DSP_POST_SCL_FACTOR_YRGB_POST_HS_FACTOR_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_SCL_FACTOR_YRGB_POST_HS_FACTOR_MASK (0xFFFFU << VOP2_POST2_DSP_POST_SCL_FACTOR_YRGB_POST_HS_FACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_POST2_DSP_POST_SCL_FACTOR_YRGB_POST_VS_FACTOR_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_SCL_FACTOR_YRGB_POST_VS_FACTOR_MASK (0xFFFFU << VOP2_POST2_DSP_POST_SCL_FACTOR_YRGB_POST_VS_FACTOR_SHIFT) /* 0xFFFF0000 */
+/* POST_SCL_CTRL */
+#define VOP2_POST2_DSP_POST_SCL_CTRL_OFFSET                (0x40U)
+#define VOP2_POST2_DSP_POST_SCL_CTRL_POST0_HOR_SD_EN_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_SCL_CTRL_POST0_HOR_SD_EN_MASK  (0x1U << VOP2_POST2_DSP_POST_SCL_CTRL_POST0_HOR_SD_EN_SHIFT) /* 0x00000001 */
+#define VOP2_POST2_DSP_POST_SCL_CTRL_POST0_VER_SD_EN_SHIFT (1U)
+#define VOP2_POST2_DSP_POST_SCL_CTRL_POST0_VER_SD_EN_MASK  (0x1U << VOP2_POST2_DSP_POST_SCL_CTRL_POST0_VER_SD_EN_SHIFT) /* 0x00000002 */
+/* POST_DSP_VACT_INFO_F1 */
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_F1_OFFSET        (0x44U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_END_POST_F1_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_END_POST_F1_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_END_POST_F1_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_ST_POST_F1_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_ST_POST_F1_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VACT_INFO_F1_DSP_VACT_ST_POST_F1_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_HTOTAL_HS_END */
+#define VOP2_POST2_DSP_POST_DSP_HTOTAL_HS_END_OFFSET       (0x48U)
+#define VOP2_POST2_DSP_POST_DSP_HTOTAL_HS_END_DSP_HS_END_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_DSP_HTOTAL_HS_END_DSP_HS_END_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_HTOTAL_HS_END_DSP_HS_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_DSP_HTOTAL_HS_END_DSP_HTOTAL_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_HTOTAL_HS_END_DSP_HTOTAL_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_HTOTAL_HS_END_DSP_HTOTAL_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_HACT_ST_END */
+#define VOP2_POST2_DSP_POST_DSP_HACT_ST_END_OFFSET         (0x4CU)
+#define VOP2_POST2_DSP_POST_DSP_HACT_ST_END_DSP_HACT_END_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_DSP_HACT_ST_END_DSP_HACT_END_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_HACT_ST_END_DSP_HACT_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_DSP_HACT_ST_END_DSP_HACT_ST_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_HACT_ST_END_DSP_HACT_ST_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_HACT_ST_END_DSP_HACT_ST_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VTOTAL_VS_END */
+#define VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_OFFSET       (0x50U)
+#define VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_DSP_VS_END_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_DSP_VS_END_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_DSP_VS_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_SW_DSP_VTOTAL_IMD_SHIFT (15U)
+#define VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_SW_DSP_VTOTAL_IMD_MASK (0x1U << VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_SW_DSP_VTOTAL_IMD_SHIFT) /* 0x00008000 */
+#define VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_DSP_VTOTAL_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_DSP_VTOTAL_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VTOTAL_VS_END_DSP_VTOTAL_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VACT_ST_END */
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_OFFSET         (0x54U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_DSP_VACT_END_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_DSP_VACT_END_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VACT_ST_END_DSP_VACT_END_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_DSP_VACT_ST_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_DSP_VACT_ST_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VACT_ST_END_DSP_VACT_ST_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VS_ST_END_F1 */
+#define VOP2_POST2_DSP_POST_DSP_VS_ST_END_F1_OFFSET        (0x58U)
+#define VOP2_POST2_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_END_F1_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_END_F1_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_END_F1_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_ST_F1_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_ST_F1_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VS_ST_END_F1_DSP_VS_ST_F1_SHIFT) /* 0x1FFF0000 */
+/* POST_DSP_VACT_ST_END_F1 */
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_F1_OFFSET      (0x5CU)
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_END_F1_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_END_F1_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_END_F1_SHIFT) /* 0x00001FFF */
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_ST_F1_SHIFT (16U)
+#define VOP2_POST2_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_ST_F1_MASK (0x1FFFU << VOP2_POST2_DSP_POST_DSP_VACT_ST_END_F1_DSP_VACT_ST_F1_SHIFT) /* 0x1FFF0000 */
+/* POST_BCSH_CTRL */
+#define VOP2_POST2_DSP_POST_BCSH_CTRL_OFFSET               (0x60U)
+#define VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_Y2R_EN_SHIFT    (0U)
+#define VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_Y2R_EN_MASK     (0x1U << VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_Y2R_EN_SHIFT)    /* 0x00000001 */
+#define VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_Y2R_CSC_MODE_SHIFT (2U)
+#define VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_Y2R_CSC_MODE_MASK (0x3U << VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_Y2R_CSC_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_R2Y_EN_SHIFT    (4U)
+#define VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_R2Y_EN_MASK     (0x1U << VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_R2Y_EN_SHIFT)    /* 0x00000010 */
+#define VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_R2Y_CSC_MODE_SHIFT (6U)
+#define VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_R2Y_CSC_MODE_MASK (0x3U << VOP2_POST2_DSP_POST_BCSH_CTRL_BCSH_R2Y_CSC_MODE_SHIFT) /* 0x000000C0 */
+/* POST_BCSH_BCS */
+#define VOP2_POST2_DSP_POST_BCSH_BCS_OFFSET                (0x64U)
+#define VOP2_POST2_DSP_POST_BCSH_BCS_BRIGHTNESS_SHIFT      (0U)
+#define VOP2_POST2_DSP_POST_BCSH_BCS_BRIGHTNESS_MASK       (0xFFU << VOP2_POST2_DSP_POST_BCSH_BCS_BRIGHTNESS_SHIFT)     /* 0x000000FF */
+#define VOP2_POST2_DSP_POST_BCSH_BCS_CONTRAST_SHIFT        (8U)
+#define VOP2_POST2_DSP_POST_BCSH_BCS_CONTRAST_MASK         (0x1FFU << VOP2_POST2_DSP_POST_BCSH_BCS_CONTRAST_SHIFT)      /* 0x0001FF00 */
+#define VOP2_POST2_DSP_POST_BCSH_BCS_SAT_CON_SHIFT         (20U)
+#define VOP2_POST2_DSP_POST_BCSH_BCS_SAT_CON_MASK          (0x3FFU << VOP2_POST2_DSP_POST_BCSH_BCS_SAT_CON_SHIFT)       /* 0x3FF00000 */
+#define VOP2_POST2_DSP_POST_BCSH_BCS_OUT_MODE_SHIFT        (30U)
+#define VOP2_POST2_DSP_POST_BCSH_BCS_OUT_MODE_MASK         (0x3U << VOP2_POST2_DSP_POST_BCSH_BCS_OUT_MODE_SHIFT)        /* 0xC0000000 */
+/* POST_BCSH_H */
+#define VOP2_POST2_DSP_POST_BCSH_H_OFFSET                  (0x68U)
+#define VOP2_POST2_DSP_POST_BCSH_H_SIN_HUE_SHIFT           (0U)
+#define VOP2_POST2_DSP_POST_BCSH_H_SIN_HUE_MASK            (0x1FFU << VOP2_POST2_DSP_POST_BCSH_H_SIN_HUE_SHIFT)         /* 0x000001FF */
+#define VOP2_POST2_DSP_POST_BCSH_H_COS_HUE_SHIFT           (16U)
+#define VOP2_POST2_DSP_POST_BCSH_H_COS_HUE_MASK            (0x1FFU << VOP2_POST2_DSP_POST_BCSH_H_COS_HUE_SHIFT)         /* 0x01FF0000 */
+/* POST_BCSH_COLOR_BAR */
+#define VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_OFFSET          (0x6CU)
+#define VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_Y_SHIFT (0U)
+#define VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_Y_MASK (0x3FFU << VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_Y_SHIFT) /* 0x000003FF */
+#define VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_U_SHIFT (10U)
+#define VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_U_MASK (0x3FFU << VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_U_SHIFT) /* 0x000FFC00 */
+#define VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_V_SHIFT (20U)
+#define VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_V_MASK (0x3FFU << VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_COLOR_BAR_V_SHIFT) /* 0x3FF00000 */
+#define VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_BCSH_EN_SHIFT   (31U)
+#define VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_BCSH_EN_MASK    (0x1U << VOP2_POST2_DSP_POST_BCSH_COLOR_BAR_BCSH_EN_SHIFT)   /* 0x80000000 */
+/**************************************VOP2_CLUSTER**************************************/
+/* WIN0_CTRL0 */
+#define VOP2_CLUSTER_WIN0_CTRL0_OFFSET                     (0x0U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_EN_SHIFT              (0U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_EN_MASK               (0x1U << VOP2_CLUSTER_WIN0_CTRL0_WIN0_EN_SHIFT)              /* 0x00000001 */
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_DATA_FMT_SHIFT        (1U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_DATA_FMT_MASK         (0x1FU << VOP2_CLUSTER_WIN0_CTRL0_WIN0_DATA_FMT_SHIFT)       /* 0x0000003E */
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_HW_PRE_MUL_EN_SHIFT   (6U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_HW_PRE_MUL_EN_MASK    (0x1U << VOP2_CLUSTER_WIN0_CTRL0_WIN0_HW_PRE_MUL_EN_SHIFT)   /* 0x00000040 */
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_NO_OUTSTANDING_SHIFT  (7U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_NO_OUTSTANDING_MASK   (0x1U << VOP2_CLUSTER_WIN0_CTRL0_WIN0_NO_OUTSTANDING_SHIFT)  /* 0x00000080 */
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_CSC_Y2R_EN_SHIFT      (8U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_CSC_Y2R_EN_MASK       (0x1U << VOP2_CLUSTER_WIN0_CTRL0_WIN0_CSC_Y2R_EN_SHIFT)      /* 0x00000100 */
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_CSC_R2Y_EN_SHIFT      (9U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_CSC_R2Y_EN_MASK       (0x1U << VOP2_CLUSTER_WIN0_CTRL0_WIN0_CSC_R2Y_EN_SHIFT)      /* 0x00000200 */
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_CSC_MODE_SHIFT        (10U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_CSC_MODE_MASK         (0x3U << VOP2_CLUSTER_WIN0_CTRL0_WIN0_CSC_MODE_SHIFT)        /* 0x00000C00 */
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_RB_SWAP_SHIFT         (14U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_RB_SWAP_MASK          (0x1U << VOP2_CLUSTER_WIN0_CTRL0_WIN0_RB_SWAP_SHIFT)         /* 0x00004000 */
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_DITHER_UP_EN_SHIFT    (18U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_DITHER_UP_EN_MASK     (0x1U << VOP2_CLUSTER_WIN0_CTRL0_WIN0_DITHER_UP_EN_SHIFT)    /* 0x00040000 */
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_YUV_CLIP_SHIFT        (19U)
+#define VOP2_CLUSTER_WIN0_CTRL0_WIN0_YUV_CLIP_MASK         (0x1U << VOP2_CLUSTER_WIN0_CTRL0_WIN0_YUV_CLIP_SHIFT)        /* 0x00080000 */
+/* WIN0_CTRL1 */
+#define VOP2_CLUSTER_WIN0_CTRL1_OFFSET                     (0x4U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_AXI_GATHER_EN_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_AXI_GATHER_EN_MASK (0x1U << VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_AXI_GATHER_EN_SHIFT) /* 0x00000001 */
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_BIC_COE_SEL_SHIFT     (2U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_BIC_COE_SEL_MASK      (0x3U << VOP2_CLUSTER_WIN0_CTRL1_WIN0_BIC_COE_SEL_SHIFT)     /* 0x0000000C */
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_HOR_SCL_MODE_SHIFT (12U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_HOR_SCL_MODE_MASK (0x3U << VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_HOR_SCL_MODE_SHIFT) /* 0x00003000 */
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VER_SCL_MODE_SHIFT (14U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VER_SCL_MODE_MASK (0x3U << VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VER_SCL_MODE_SHIFT) /* 0x0000C000 */
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_HSD_MODE_SHIFT   (16U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_HSD_MODE_MASK    (0x1U << VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_HSD_MODE_SHIFT)   /* 0x00010000 */
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSU_MODE_SHIFT   (18U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSU_MODE_MASK    (0x1U << VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSU_MODE_SHIFT)   /* 0x00040000 */
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSD_MODE_SHIFT   (19U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSD_MODE_MASK    (0x1U << VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSD_MODE_SHIFT)   /* 0x00080000 */
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSD_GT2_SHIFT    (28U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSD_GT2_MASK     (0x1U << VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSD_GT2_SHIFT)    /* 0x10000000 */
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSD_GT4_SHIFT    (29U)
+#define VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSD_GT4_MASK     (0x1U << VOP2_CLUSTER_WIN0_CTRL1_WIN0_YRGB_VSD_GT4_SHIFT)    /* 0x20000000 */
+/* WIN0_CTRL2 */
+#define VOP2_CLUSTER_WIN0_CTRL2_OFFSET                     (0x8U)
+#define VOP2_CLUSTER_WIN0_CTRL2_WIN0_RID_YRGB_SHIFT        (0U)
+#define VOP2_CLUSTER_WIN0_CTRL2_WIN0_RID_YRGB_MASK         (0xFU << VOP2_CLUSTER_WIN0_CTRL2_WIN0_RID_YRGB_SHIFT)        /* 0x0000000F */
+#define VOP2_CLUSTER_WIN0_CTRL2_WIN0_RID_CBR_SHIFT         (5U)
+#define VOP2_CLUSTER_WIN0_CTRL2_WIN0_RID_CBR_MASK          (0xFU << VOP2_CLUSTER_WIN0_CTRL2_WIN0_RID_CBR_SHIFT)         /* 0x000001E0 */
+/* WIN0_YRGB_MST */
+#define VOP2_CLUSTER_WIN0_YRGB_MST_OFFSET                  (0x10U)
+#define VOP2_CLUSTER_WIN0_YRGB_MST_WIN0_YRGB_MST_SHIFT     (0U)
+#define VOP2_CLUSTER_WIN0_YRGB_MST_WIN0_YRGB_MST_MASK      (0xFFFFFFFFU << VOP2_CLUSTER_WIN0_YRGB_MST_WIN0_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* WIN0_VIR */
+#define VOP2_CLUSTER_WIN0_VIR_OFFSET                       (0x18U)
+#define VOP2_CLUSTER_WIN0_VIR_WIN0_VIR_STRIDE_SHIFT        (0U)
+#define VOP2_CLUSTER_WIN0_VIR_WIN0_VIR_STRIDE_MASK         (0xFFFFU << VOP2_CLUSTER_WIN0_VIR_WIN0_VIR_STRIDE_SHIFT)     /* 0x0000FFFF */
+/* WIN0_ACT_INFO */
+#define VOP2_CLUSTER_WIN0_ACT_INFO_OFFSET                  (0x20U)
+#define VOP2_CLUSTER_WIN0_ACT_INFO_WIN0_ACT_WIDTH_SHIFT    (0U)
+#define VOP2_CLUSTER_WIN0_ACT_INFO_WIN0_ACT_WIDTH_MASK     (0x1FFFU << VOP2_CLUSTER_WIN0_ACT_INFO_WIN0_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_CLUSTER_WIN0_ACT_INFO_WIN0_ACT_HEIGHT_SHIFT   (16U)
+#define VOP2_CLUSTER_WIN0_ACT_INFO_WIN0_ACT_HEIGHT_MASK    (0x1FFFU << VOP2_CLUSTER_WIN0_ACT_INFO_WIN0_ACT_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* WIN0_DSP_INFO */
+#define VOP2_CLUSTER_WIN0_DSP_INFO_OFFSET                  (0x24U)
+#define VOP2_CLUSTER_WIN0_DSP_INFO_WIN0_DSP_WIDTH_SHIFT    (0U)
+#define VOP2_CLUSTER_WIN0_DSP_INFO_WIN0_DSP_WIDTH_MASK     (0xFFFU << VOP2_CLUSTER_WIN0_DSP_INFO_WIN0_DSP_WIDTH_SHIFT)  /* 0x00000FFF */
+#define VOP2_CLUSTER_WIN0_DSP_INFO_WIN0_DSP_HEIGHT_SHIFT   (16U)
+#define VOP2_CLUSTER_WIN0_DSP_INFO_WIN0_DSP_HEIGHT_MASK    (0xFFFU << VOP2_CLUSTER_WIN0_DSP_INFO_WIN0_DSP_HEIGHT_SHIFT) /* 0x0FFF0000 */
+/* WIN0_DSP_ST */
+#define VOP2_CLUSTER_WIN0_DSP_ST_OFFSET                    (0x28U)
+#define VOP2_CLUSTER_WIN0_DSP_ST_WIN0_DSP_XST_SHIFT        (0U)
+#define VOP2_CLUSTER_WIN0_DSP_ST_WIN0_DSP_XST_MASK         (0x1FFFU << VOP2_CLUSTER_WIN0_DSP_ST_WIN0_DSP_XST_SHIFT)     /* 0x00001FFF */
+#define VOP2_CLUSTER_WIN0_DSP_ST_WIN0_DSP_YST_SHIFT        (16U)
+#define VOP2_CLUSTER_WIN0_DSP_ST_WIN0_DSP_YST_MASK         (0x1FFFU << VOP2_CLUSTER_WIN0_DSP_ST_WIN0_DSP_YST_SHIFT)     /* 0x1FFF0000 */
+/* WIN0_DSP_BG */
+#define VOP2_CLUSTER_WIN0_DSP_BG_OFFSET                    (0x2CU)
+#define VOP2_CLUSTER_WIN0_DSP_BG_WIN0_DSP_BG_BLUE_SHIFT    (0U)
+#define VOP2_CLUSTER_WIN0_DSP_BG_WIN0_DSP_BG_BLUE_MASK     (0x3FFU << VOP2_CLUSTER_WIN0_DSP_BG_WIN0_DSP_BG_BLUE_SHIFT)  /* 0x000003FF */
+#define VOP2_CLUSTER_WIN0_DSP_BG_WIN0_DSP_BG_GREEN_SHIFT   (10U)
+#define VOP2_CLUSTER_WIN0_DSP_BG_WIN0_DSP_BG_GREEN_MASK    (0x3FFU << VOP2_CLUSTER_WIN0_DSP_BG_WIN0_DSP_BG_GREEN_SHIFT) /* 0x000FFC00 */
+#define VOP2_CLUSTER_WIN0_DSP_BG_WIN0_DSP_BG_RED_SHIFT     (20U)
+#define VOP2_CLUSTER_WIN0_DSP_BG_WIN0_DSP_BG_RED_MASK      (0x3FFU << VOP2_CLUSTER_WIN0_DSP_BG_WIN0_DSP_BG_RED_SHIFT)   /* 0x3FF00000 */
+#define VOP2_CLUSTER_WIN0_DSP_BG_WIN0_BG_EN_SHIFT          (31U)
+#define VOP2_CLUSTER_WIN0_DSP_BG_WIN0_BG_EN_MASK           (0x1U << VOP2_CLUSTER_WIN0_DSP_BG_WIN0_BG_EN_SHIFT)          /* 0x80000000 */
+/* WIN0_SCL_FACTOR_YRGB */
+#define VOP2_CLUSTER_WIN0_SCL_FACTOR_YRGB_OFFSET           (0x30U)
+#define VOP2_CLUSTER_WIN0_SCL_FACTOR_YRGB_WIN0_HS_FACTOR_YRGB_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_SCL_FACTOR_YRGB_WIN0_HS_FACTOR_YRGB_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_SCL_FACTOR_YRGB_WIN0_HS_FACTOR_YRGB_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN0_SCL_FACTOR_YRGB_WIN0_VS_FACTOR_YRGB_SHIFT (16U)
+#define VOP2_CLUSTER_WIN0_SCL_FACTOR_YRGB_WIN0_VS_FACTOR_YRGB_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_SCL_FACTOR_YRGB_WIN0_VS_FACTOR_YRGB_SHIFT) /* 0xFFFF0000 */
+/* WIN0_SCL_OFFSET */
+#define VOP2_CLUSTER_WIN0_SCL_OFFSET_OFFSET                (0x38U)
+#define VOP2_CLUSTER_WIN0_SCL_OFFSET_WIN0_HS_OFFSET_YRGB_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_SCL_OFFSET_WIN0_HS_OFFSET_YRGB_MASK (0xFFU << VOP2_CLUSTER_WIN0_SCL_OFFSET_WIN0_HS_OFFSET_YRGB_SHIFT) /* 0x000000FF */
+#define VOP2_CLUSTER_WIN0_SCL_OFFSET_WIN0_VS_OFFSET_YRGB_SHIFT (16U)
+#define VOP2_CLUSTER_WIN0_SCL_OFFSET_WIN0_VS_OFFSET_YRGB_MASK (0xFFU << VOP2_CLUSTER_WIN0_SCL_OFFSET_WIN0_VS_OFFSET_YRGB_SHIFT) /* 0x00FF0000 */
+/* WIN0_AFBCD_MASK_EN */
+#define VOP2_CLUSTER_WIN0_AFBCD_MASK_EN_OFFSET             (0x50U)
+#define VOP2_CLUSTER_WIN0_AFBCD_MASK_EN_WIN0_AFBCD_OUTPUT_MASK_EN_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_AFBCD_MASK_EN_WIN0_AFBCD_OUTPUT_MASK_EN_MASK (0x1U << VOP2_CLUSTER_WIN0_AFBCD_MASK_EN_WIN0_AFBCD_OUTPUT_MASK_EN_SHIFT) /* 0x00000001 */
+#define VOP2_CLUSTER_WIN0_AFBCD_MASK_EN_WIN0_AFBCD_GATING_EN_SHIFT (4U)
+#define VOP2_CLUSTER_WIN0_AFBCD_MASK_EN_WIN0_AFBCD_GATING_EN_MASK (0x1U << VOP2_CLUSTER_WIN0_AFBCD_MASK_EN_WIN0_AFBCD_GATING_EN_SHIFT) /* 0x00000010 */
+/* WIN0_AFBCD_MODE */
+#define VOP2_CLUSTER_WIN0_AFBCD_MODE_OFFSET                (0x54U)
+#define VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_ROT90_EN_SHIFT   (0U)
+#define VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_ROT90_EN_MASK    (0x1U << VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_ROT90_EN_SHIFT)   /* 0x00000001 */
+#define VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_ROT270_EN_SHIFT  (1U)
+#define VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_ROT270_EN_MASK   (0x1U << VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_ROT270_EN_SHIFT)  /* 0x00000002 */
+#define VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_XMIR_EN_SHIFT    (2U)
+#define VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_XMIR_EN_MASK     (0x1U << VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_XMIR_EN_SHIFT)    /* 0x00000004 */
+#define VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_YMIR_EN_SHIFT    (3U)
+#define VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_YMIR_EN_MASK     (0x1U << VOP2_CLUSTER_WIN0_AFBCD_MODE_WIN0_YMIR_EN_SHIFT)    /* 0x00000008 */
+/* WIN0_AFBCD_HDR_PTR */
+#define VOP2_CLUSTER_WIN0_AFBCD_HDR_PTR_OFFSET             (0x58U)
+#define VOP2_CLUSTER_WIN0_AFBCD_HDR_PTR_WIN0_AFBCD_HDR_PTR_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_AFBCD_HDR_PTR_WIN0_AFBCD_HDR_PTR_MASK (0xFFFFFFFFU << VOP2_CLUSTER_WIN0_AFBCD_HDR_PTR_WIN0_AFBCD_HDR_PTR_SHIFT) /* 0xFFFFFFFF */
+/* WIN0_AFBCD_VIR_WIDTH */
+#define VOP2_CLUSTER_WIN0_AFBCD_VIR_WIDTH_OFFSET           (0x5CU)
+#define VOP2_CLUSTER_WIN0_AFBCD_VIR_WIDTH_WIN0_AFBCD_PIC_VIR_WIDTH_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_AFBCD_VIR_WIDTH_WIN0_AFBCD_PIC_VIR_WIDTH_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_AFBCD_VIR_WIDTH_WIN0_AFBCD_PIC_VIR_WIDTH_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN0_AFBCD_VIR_WIDTH_WIN0_AFBCD_TAIL_NUM_SHIFT (16U)
+#define VOP2_CLUSTER_WIN0_AFBCD_VIR_WIDTH_WIN0_AFBCD_TAIL_NUM_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_AFBCD_VIR_WIDTH_WIN0_AFBCD_TAIL_NUM_SHIFT) /* 0xFFFF0000 */
+/* WIN0_AFBCD_SIZE */
+#define VOP2_CLUSTER_WIN0_AFBCD_SIZE_OFFSET                (0x60U)
+#define VOP2_CLUSTER_WIN0_AFBCD_SIZE_WIN0_AFBCD_PIC_WIDTH_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_AFBCD_SIZE_WIN0_AFBCD_PIC_WIDTH_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_AFBCD_SIZE_WIN0_AFBCD_PIC_WIDTH_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN0_AFBCD_SIZE_WIN0_AFBCD_PIC_HEIGHT_SHIFT (16U)
+#define VOP2_CLUSTER_WIN0_AFBCD_SIZE_WIN0_AFBCD_PIC_HEIGHT_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_AFBCD_SIZE_WIN0_AFBCD_PIC_HEIGHT_SHIFT) /* 0xFFFF0000 */
+/* WIN0_AFBCD_PIC_OFFSET */
+#define VOP2_CLUSTER_WIN0_AFBCD_PIC_OFFSET_OFFSET          (0x64U)
+#define VOP2_CLUSTER_WIN0_AFBCD_PIC_OFFSET_WIN0_AFBCD_PIC_XOFFSET_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_AFBCD_PIC_OFFSET_WIN0_AFBCD_PIC_XOFFSET_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_AFBCD_PIC_OFFSET_WIN0_AFBCD_PIC_XOFFSET_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN0_AFBCD_PIC_OFFSET_WIN0_AFBCD_PIC_YOFFSET_SHIFT (16U)
+#define VOP2_CLUSTER_WIN0_AFBCD_PIC_OFFSET_WIN0_AFBCD_PIC_YOFFSET_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_AFBCD_PIC_OFFSET_WIN0_AFBCD_PIC_YOFFSET_SHIFT) /* 0xFFFF0000 */
+/* WIN0_AFBCD_DIS_OFFSET */
+#define VOP2_CLUSTER_WIN0_AFBCD_DIS_OFFSET_OFFSET          (0x68U)
+#define VOP2_CLUSTER_WIN0_AFBCD_DIS_OFFSET_WIN0_AFBCD_DIS_XOFFSET_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_AFBCD_DIS_OFFSET_WIN0_AFBCD_DIS_XOFFSET_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_AFBCD_DIS_OFFSET_WIN0_AFBCD_DIS_XOFFSET_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN0_AFBCD_DIS_OFFSET_WIN0_AFBCD_DIS_YOFFSET_SHIFT (16U)
+#define VOP2_CLUSTER_WIN0_AFBCD_DIS_OFFSET_WIN0_AFBCD_DIS_YOFFSET_MASK (0xFFFFU << VOP2_CLUSTER_WIN0_AFBCD_DIS_OFFSET_WIN0_AFBCD_DIS_YOFFSET_SHIFT) /* 0xFFFF0000 */
+/* WIN0_AFBCD_CTRL */
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_OFFSET                (0x6CU)
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_VIDEO_TOP_CROP_SHIFT (0U)
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_VIDEO_TOP_CROP_MASK (0x3U << VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_VIDEO_TOP_CROP_SHIFT) /* 0x00000003 */
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_PIXEL_PACKING_FMT_SHIFT (2U)
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_PIXEL_PACKING_FMT_MASK (0x1FU << VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_PIXEL_PACKING_FMT_SHIFT) /* 0x0000007C */
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_HALF_BLOCK_SHIFT (7U)
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_HALF_BLOCK_MASK (0x1U << VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_HALF_BLOCK_SHIFT) /* 0x00000080 */
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_BLOCK_SPLIT_SHIFT (8U)
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_BLOCK_SPLIT_MASK (0x1U << VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_BLOCK_SPLIT_SHIFT) /* 0x00000100 */
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_RB_SWAP_EN_SHIFT (9U)
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_RB_SWAP_EN_MASK (0x1U << VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_RB_SWAP_EN_SHIFT) /* 0x00000200 */
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_UV_SWAP_EN_SHIFT (10U)
+#define VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_UV_SWAP_EN_MASK (0x1U << VOP2_CLUSTER_WIN0_AFBCD_CTRL_WIN0_AFBCD_UV_SWAP_EN_SHIFT) /* 0x00000400 */
+/* WIN1_CTRL0 */
+#define VOP2_CLUSTER_WIN1_CTRL0_OFFSET                     (0x80U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_EN_SHIFT              (0U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_EN_MASK               (0x1U << VOP2_CLUSTER_WIN1_CTRL0_WIN1_EN_SHIFT)              /* 0x00000001 */
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_DATA_FMT_SHIFT        (1U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_DATA_FMT_MASK         (0x1FU << VOP2_CLUSTER_WIN1_CTRL0_WIN1_DATA_FMT_SHIFT)       /* 0x0000003E */
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_HW_PRE_MUL_EN_SHIFT   (6U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_HW_PRE_MUL_EN_MASK    (0x1U << VOP2_CLUSTER_WIN1_CTRL0_WIN1_HW_PRE_MUL_EN_SHIFT)   /* 0x00000040 */
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_NO_OUTSTANDING_SHIFT  (7U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_NO_OUTSTANDING_MASK   (0x1U << VOP2_CLUSTER_WIN1_CTRL0_WIN1_NO_OUTSTANDING_SHIFT)  /* 0x00000080 */
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_CSC_Y2R_EN_SHIFT      (8U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_CSC_Y2R_EN_MASK       (0x1U << VOP2_CLUSTER_WIN1_CTRL0_WIN1_CSC_Y2R_EN_SHIFT)      /* 0x00000100 */
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_CSC_R2Y_EN_SHIFT      (9U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_CSC_R2Y_EN_MASK       (0x1U << VOP2_CLUSTER_WIN1_CTRL0_WIN1_CSC_R2Y_EN_SHIFT)      /* 0x00000200 */
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_CSC_MODE_SHIFT        (10U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_CSC_MODE_MASK         (0x3U << VOP2_CLUSTER_WIN1_CTRL0_WIN1_CSC_MODE_SHIFT)        /* 0x00000C00 */
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_RB_SWAP_SHIFT         (14U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_RB_SWAP_MASK          (0x1U << VOP2_CLUSTER_WIN1_CTRL0_WIN1_RB_SWAP_SHIFT)         /* 0x00004000 */
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_DITHER_UP_EN_SHIFT    (18U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_DITHER_UP_EN_MASK     (0x1U << VOP2_CLUSTER_WIN1_CTRL0_WIN1_DITHER_UP_EN_SHIFT)    /* 0x00040000 */
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_YUV_CLIP_SHIFT        (19U)
+#define VOP2_CLUSTER_WIN1_CTRL0_WIN1_YUV_CLIP_MASK         (0x1U << VOP2_CLUSTER_WIN1_CTRL0_WIN1_YUV_CLIP_SHIFT)        /* 0x00080000 */
+/* WIN1_CTRL1 */
+#define VOP2_CLUSTER_WIN1_CTRL1_OFFSET                     (0x84U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_AXI_GATHER_EN_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_AXI_GATHER_EN_MASK (0x1U << VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_AXI_GATHER_EN_SHIFT) /* 0x00000001 */
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_BIC_COE_SEL_SHIFT     (2U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_BIC_COE_SEL_MASK      (0x3U << VOP2_CLUSTER_WIN1_CTRL1_WIN1_BIC_COE_SEL_SHIFT)     /* 0x0000000C */
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_HOR_SCL_MODE_SHIFT (12U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_HOR_SCL_MODE_MASK (0x3U << VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_HOR_SCL_MODE_SHIFT) /* 0x00003000 */
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VER_SCL_MODE_SHIFT (14U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VER_SCL_MODE_MASK (0x3U << VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VER_SCL_MODE_SHIFT) /* 0x0000C000 */
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_HSD_MODE_SHIFT   (16U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_HSD_MODE_MASK    (0x1U << VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_HSD_MODE_SHIFT)   /* 0x00010000 */
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSU_MODE_SHIFT   (18U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSU_MODE_MASK    (0x1U << VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSU_MODE_SHIFT)   /* 0x00040000 */
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSD_MODE_SHIFT   (19U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSD_MODE_MASK    (0x1U << VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSD_MODE_SHIFT)   /* 0x00080000 */
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSD_GT2_SHIFT    (28U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSD_GT2_MASK     (0x1U << VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSD_GT2_SHIFT)    /* 0x10000000 */
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSD_GT4_SHIFT    (29U)
+#define VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSD_GT4_MASK     (0x1U << VOP2_CLUSTER_WIN1_CTRL1_WIN1_YRGB_VSD_GT4_SHIFT)    /* 0x20000000 */
+/* WIN1_CTRL2 */
+#define VOP2_CLUSTER_WIN1_CTRL2_OFFSET                     (0x88U)
+#define VOP2_CLUSTER_WIN1_CTRL2_WIN1_RID_YRGB_SHIFT        (0U)
+#define VOP2_CLUSTER_WIN1_CTRL2_WIN1_RID_YRGB_MASK         (0xFU << VOP2_CLUSTER_WIN1_CTRL2_WIN1_RID_YRGB_SHIFT)        /* 0x0000000F */
+#define VOP2_CLUSTER_WIN1_CTRL2_WIN1_RID_CBR_SHIFT         (5U)
+#define VOP2_CLUSTER_WIN1_CTRL2_WIN1_RID_CBR_MASK          (0xFU << VOP2_CLUSTER_WIN1_CTRL2_WIN1_RID_CBR_SHIFT)         /* 0x000001E0 */
+/* WIN1_YRGB_MST */
+#define VOP2_CLUSTER_WIN1_YRGB_MST_OFFSET                  (0x90U)
+#define VOP2_CLUSTER_WIN1_YRGB_MST_WIN1_YRGB_MST_SHIFT     (0U)
+#define VOP2_CLUSTER_WIN1_YRGB_MST_WIN1_YRGB_MST_MASK      (0xFFFFFFFFU << VOP2_CLUSTER_WIN1_YRGB_MST_WIN1_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* WIN1_VIR */
+#define VOP2_CLUSTER_WIN1_VIR_OFFSET                       (0x98U)
+#define VOP2_CLUSTER_WIN1_VIR_WIN1_VIR_STRIDE_SHIFT        (0U)
+#define VOP2_CLUSTER_WIN1_VIR_WIN1_VIR_STRIDE_MASK         (0xFFFFU << VOP2_CLUSTER_WIN1_VIR_WIN1_VIR_STRIDE_SHIFT)     /* 0x0000FFFF */
+/* WIN1_ACT_INFO */
+#define VOP2_CLUSTER_WIN1_ACT_INFO_OFFSET                  (0xA0U)
+#define VOP2_CLUSTER_WIN1_ACT_INFO_WIN1_ACT_WIDTH_SHIFT    (0U)
+#define VOP2_CLUSTER_WIN1_ACT_INFO_WIN1_ACT_WIDTH_MASK     (0x1FFFU << VOP2_CLUSTER_WIN1_ACT_INFO_WIN1_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_CLUSTER_WIN1_ACT_INFO_WIN1_ACT_HEIGHT_SHIFT   (16U)
+#define VOP2_CLUSTER_WIN1_ACT_INFO_WIN1_ACT_HEIGHT_MASK    (0x1FFFU << VOP2_CLUSTER_WIN1_ACT_INFO_WIN1_ACT_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* WIN1_DSP_INFO */
+#define VOP2_CLUSTER_WIN1_DSP_INFO_OFFSET                  (0xA4U)
+#define VOP2_CLUSTER_WIN1_DSP_INFO_WIN1_DSP_WIDTH_SHIFT    (0U)
+#define VOP2_CLUSTER_WIN1_DSP_INFO_WIN1_DSP_WIDTH_MASK     (0xFFFU << VOP2_CLUSTER_WIN1_DSP_INFO_WIN1_DSP_WIDTH_SHIFT)  /* 0x00000FFF */
+#define VOP2_CLUSTER_WIN1_DSP_INFO_WIN1_DSP_HEIGHT_SHIFT   (16U)
+#define VOP2_CLUSTER_WIN1_DSP_INFO_WIN1_DSP_HEIGHT_MASK    (0xFFFU << VOP2_CLUSTER_WIN1_DSP_INFO_WIN1_DSP_HEIGHT_SHIFT) /* 0x0FFF0000 */
+/* WIN1_DSP_ST */
+#define VOP2_CLUSTER_WIN1_DSP_ST_OFFSET                    (0xA8U)
+#define VOP2_CLUSTER_WIN1_DSP_ST_WIN1_DSP_XST_SHIFT        (0U)
+#define VOP2_CLUSTER_WIN1_DSP_ST_WIN1_DSP_XST_MASK         (0x1FFFU << VOP2_CLUSTER_WIN1_DSP_ST_WIN1_DSP_XST_SHIFT)     /* 0x00001FFF */
+#define VOP2_CLUSTER_WIN1_DSP_ST_WIN1_DSP_YST_SHIFT        (16U)
+#define VOP2_CLUSTER_WIN1_DSP_ST_WIN1_DSP_YST_MASK         (0x1FFFU << VOP2_CLUSTER_WIN1_DSP_ST_WIN1_DSP_YST_SHIFT)     /* 0x1FFF0000 */
+/* WIN1_DSP_BG */
+#define VOP2_CLUSTER_WIN1_DSP_BG_OFFSET                    (0xACU)
+#define VOP2_CLUSTER_WIN1_DSP_BG_WIN1_DSP_BG_BLUE_SHIFT    (0U)
+#define VOP2_CLUSTER_WIN1_DSP_BG_WIN1_DSP_BG_BLUE_MASK     (0x3FFU << VOP2_CLUSTER_WIN1_DSP_BG_WIN1_DSP_BG_BLUE_SHIFT)  /* 0x000003FF */
+#define VOP2_CLUSTER_WIN1_DSP_BG_WIN1_DSP_BG_GREEN_SHIFT   (10U)
+#define VOP2_CLUSTER_WIN1_DSP_BG_WIN1_DSP_BG_GREEN_MASK    (0x3FFU << VOP2_CLUSTER_WIN1_DSP_BG_WIN1_DSP_BG_GREEN_SHIFT) /* 0x000FFC00 */
+#define VOP2_CLUSTER_WIN1_DSP_BG_WIN1_DSP_BG_RED_SHIFT     (20U)
+#define VOP2_CLUSTER_WIN1_DSP_BG_WIN1_DSP_BG_RED_MASK      (0x3FFU << VOP2_CLUSTER_WIN1_DSP_BG_WIN1_DSP_BG_RED_SHIFT)   /* 0x3FF00000 */
+#define VOP2_CLUSTER_WIN1_DSP_BG_WIN1_BG_EN_SHIFT          (31U)
+#define VOP2_CLUSTER_WIN1_DSP_BG_WIN1_BG_EN_MASK           (0x1U << VOP2_CLUSTER_WIN1_DSP_BG_WIN1_BG_EN_SHIFT)          /* 0x80000000 */
+/* WIN1_SCL_FACTOR_YRGB */
+#define VOP2_CLUSTER_WIN1_SCL_FACTOR_YRGB_OFFSET           (0xB0U)
+#define VOP2_CLUSTER_WIN1_SCL_FACTOR_YRGB_WIN1_HS_FACTOR_YRGB_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_SCL_FACTOR_YRGB_WIN1_HS_FACTOR_YRGB_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_SCL_FACTOR_YRGB_WIN1_HS_FACTOR_YRGB_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN1_SCL_FACTOR_YRGB_WIN1_VS_FACTOR_YRGB_SHIFT (16U)
+#define VOP2_CLUSTER_WIN1_SCL_FACTOR_YRGB_WIN1_VS_FACTOR_YRGB_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_SCL_FACTOR_YRGB_WIN1_VS_FACTOR_YRGB_SHIFT) /* 0xFFFF0000 */
+/* WIN1_SCL_OFFSET */
+#define VOP2_CLUSTER_WIN1_SCL_OFFSET_OFFSET                (0xB8U)
+#define VOP2_CLUSTER_WIN1_SCL_OFFSET_WIN1_HS_OFFSET_YRGB_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_SCL_OFFSET_WIN1_HS_OFFSET_YRGB_MASK (0xFFU << VOP2_CLUSTER_WIN1_SCL_OFFSET_WIN1_HS_OFFSET_YRGB_SHIFT) /* 0x000000FF */
+#define VOP2_CLUSTER_WIN1_SCL_OFFSET_WIN1_VS_OFFSET_YRGB_SHIFT (16U)
+#define VOP2_CLUSTER_WIN1_SCL_OFFSET_WIN1_VS_OFFSET_YRGB_MASK (0xFFU << VOP2_CLUSTER_WIN1_SCL_OFFSET_WIN1_VS_OFFSET_YRGB_SHIFT) /* 0x00FF0000 */
+/* WIN1_AFBCD_MASK_EN */
+#define VOP2_CLUSTER_WIN1_AFBCD_MASK_EN_OFFSET             (0xD0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_MASK_EN_WIN1_AFBCD_OUTPUT_MASK_EN_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_MASK_EN_WIN1_AFBCD_OUTPUT_MASK_EN_MASK (0x1U << VOP2_CLUSTER_WIN1_AFBCD_MASK_EN_WIN1_AFBCD_OUTPUT_MASK_EN_SHIFT) /* 0x00000001 */
+#define VOP2_CLUSTER_WIN1_AFBCD_MASK_EN_WIN1_AFBCD_GATING_EN_SHIFT (4U)
+#define VOP2_CLUSTER_WIN1_AFBCD_MASK_EN_WIN1_AFBCD_GATING_EN_MASK (0x1U << VOP2_CLUSTER_WIN1_AFBCD_MASK_EN_WIN1_AFBCD_GATING_EN_SHIFT) /* 0x00000010 */
+/* WIN1_AFBCD_MODE */
+#define VOP2_CLUSTER_WIN1_AFBCD_MODE_OFFSET                (0xD4U)
+#define VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_ROT90_EN_SHIFT   (0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_ROT90_EN_MASK    (0x1U << VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_ROT90_EN_SHIFT)   /* 0x00000001 */
+#define VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_ROT270_EN_SHIFT  (1U)
+#define VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_ROT270_EN_MASK   (0x1U << VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_ROT270_EN_SHIFT)  /* 0x00000002 */
+#define VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_XMIR_EN_SHIFT    (2U)
+#define VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_XMIR_EN_MASK     (0x1U << VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_XMIR_EN_SHIFT)    /* 0x00000004 */
+#define VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_YMIR_EN_SHIFT    (3U)
+#define VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_YMIR_EN_MASK     (0x1U << VOP2_CLUSTER_WIN1_AFBCD_MODE_WIN1_YMIR_EN_SHIFT)    /* 0x00000008 */
+/* WIN1_AFBCD_HDR_PTR */
+#define VOP2_CLUSTER_WIN1_AFBCD_HDR_PTR_OFFSET             (0xD8U)
+#define VOP2_CLUSTER_WIN1_AFBCD_HDR_PTR_WIN1_AFBCD_HDR_PTR_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_HDR_PTR_WIN1_AFBCD_HDR_PTR_MASK (0xFFFFFFFFU << VOP2_CLUSTER_WIN1_AFBCD_HDR_PTR_WIN1_AFBCD_HDR_PTR_SHIFT) /* 0xFFFFFFFF */
+/* WIN1_AFBCD_VIR_WIDTH */
+#define VOP2_CLUSTER_WIN1_AFBCD_VIR_WIDTH_OFFSET           (0xDCU)
+#define VOP2_CLUSTER_WIN1_AFBCD_VIR_WIDTH_WIN1_AFBCD_PIC_VIR_WIDTH_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_VIR_WIDTH_WIN1_AFBCD_PIC_VIR_WIDTH_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_AFBCD_VIR_WIDTH_WIN1_AFBCD_PIC_VIR_WIDTH_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN1_AFBCD_VIR_WIDTH_WIN1_AFBCD_TAIL_NUM_SHIFT (16U)
+#define VOP2_CLUSTER_WIN1_AFBCD_VIR_WIDTH_WIN1_AFBCD_TAIL_NUM_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_AFBCD_VIR_WIDTH_WIN1_AFBCD_TAIL_NUM_SHIFT) /* 0xFFFF0000 */
+/* WIN1_AFBCD_SIZE */
+#define VOP2_CLUSTER_WIN1_AFBCD_SIZE_OFFSET                (0xE0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_SIZE_WIN1_AFBCD_PIC_WIDTH_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_SIZE_WIN1_AFBCD_PIC_WIDTH_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_AFBCD_SIZE_WIN1_AFBCD_PIC_WIDTH_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN1_AFBCD_SIZE_WIN1_AFBCD_PIC_HEIGHT_SHIFT (16U)
+#define VOP2_CLUSTER_WIN1_AFBCD_SIZE_WIN1_AFBCD_PIC_HEIGHT_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_AFBCD_SIZE_WIN1_AFBCD_PIC_HEIGHT_SHIFT) /* 0xFFFF0000 */
+/* WIN1_AFBCD_PIC_OFFSET */
+#define VOP2_CLUSTER_WIN1_AFBCD_PIC_OFFSET_OFFSET          (0xE4U)
+#define VOP2_CLUSTER_WIN1_AFBCD_PIC_OFFSET_WIN1_AFBCD_PIC_XOFFSET_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_PIC_OFFSET_WIN1_AFBCD_PIC_XOFFSET_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_AFBCD_PIC_OFFSET_WIN1_AFBCD_PIC_XOFFSET_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN1_AFBCD_PIC_OFFSET_WIN1_AFBCD_PIC_YOFFSET_SHIFT (16U)
+#define VOP2_CLUSTER_WIN1_AFBCD_PIC_OFFSET_WIN1_AFBCD_PIC_YOFFSET_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_AFBCD_PIC_OFFSET_WIN1_AFBCD_PIC_YOFFSET_SHIFT) /* 0xFFFF0000 */
+/* WIN1_AFBCD_DIS_OFFSET */
+#define VOP2_CLUSTER_WIN1_AFBCD_DIS_OFFSET_OFFSET          (0xE8U)
+#define VOP2_CLUSTER_WIN1_AFBCD_DIS_OFFSET_WIN1_AFBCD_DIS_XOFFSET_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_DIS_OFFSET_WIN1_AFBCD_DIS_XOFFSET_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_AFBCD_DIS_OFFSET_WIN1_AFBCD_DIS_XOFFSET_SHIFT) /* 0x0000FFFF */
+#define VOP2_CLUSTER_WIN1_AFBCD_DIS_OFFSET_WIN1_AFBCD_DIS_YOFFSET_SHIFT (16U)
+#define VOP2_CLUSTER_WIN1_AFBCD_DIS_OFFSET_WIN1_AFBCD_DIS_YOFFSET_MASK (0xFFFFU << VOP2_CLUSTER_WIN1_AFBCD_DIS_OFFSET_WIN1_AFBCD_DIS_YOFFSET_SHIFT) /* 0xFFFF0000 */
+/* WIN1_AFBCD_CTRL */
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_OFFSET                (0xECU)
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_VIDEO_TOP_CROP_SHIFT (0U)
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_VIDEO_TOP_CROP_MASK (0x3U << VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_VIDEO_TOP_CROP_SHIFT) /* 0x00000003 */
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_PIXEL_PACKING_FMT_SHIFT (2U)
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_PIXEL_PACKING_FMT_MASK (0x1FU << VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_PIXEL_PACKING_FMT_SHIFT) /* 0x0000007C */
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_HALF_BLOCK_SHIFT (7U)
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_HALF_BLOCK_MASK (0x1U << VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_HALF_BLOCK_SHIFT) /* 0x00000080 */
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_BLOCK_SPLIT_SHIFT (8U)
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_BLOCK_SPLIT_MASK (0x1U << VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_BLOCK_SPLIT_SHIFT) /* 0x00000100 */
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_RB_SWAP_EN_SHIFT (9U)
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_RB_SWAP_EN_MASK (0x1U << VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_RB_SWAP_EN_SHIFT) /* 0x00000200 */
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_UV_SWAP_EN_SHIFT (10U)
+#define VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_UV_SWAP_EN_MASK (0x1U << VOP2_CLUSTER_WIN1_AFBCD_CTRL_WIN1_AFBCD_UV_SWAP_EN_SHIFT) /* 0x00000400 */
+/* CLUSTER_CTRL */
+#define VOP2_CLUSTER_CLUSTER_CTRL_OFFSET                   (0x100U)
+#define VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_EN_SHIFT         (0U)
+#define VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_EN_MASK          (0x1U << VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_EN_SHIFT)         /* 0x00000001 */
+#define VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_AFBCD_EN_SHIFT   (1U)
+#define VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_AFBCD_EN_MASK    (0x1U << VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_AFBCD_EN_SHIFT)   /* 0x00000002 */
+#define VOP2_CLUSTER_CLUSTER_CTRL_WIN0_EN_STATUS_SHIFT     (2U)
+#define VOP2_CLUSTER_CLUSTER_CTRL_WIN0_EN_STATUS_MASK      (0x1U << VOP2_CLUSTER_CLUSTER_CTRL_WIN0_EN_STATUS_SHIFT)     /* 0x00000004 */
+#define VOP2_CLUSTER_CLUSTER_CTRL_WIN1_EN_STATUS_SHIFT     (3U)
+#define VOP2_CLUSTER_CLUSTER_CTRL_WIN1_EN_STATUS_MASK      (0x1U << VOP2_CLUSTER_CLUSTER_CTRL_WIN1_EN_STATUS_SHIFT)     /* 0x00000008 */
+#define VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_LB_MODE_SHIFT    (4U)
+#define VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_LB_MODE_MASK     (0xFU << VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_LB_MODE_SHIFT)    /* 0x000000F0 */
+#define VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_FILTER_EN_SHIFT  (8U)
+#define VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_FILTER_EN_MASK   (0x1U << VOP2_CLUSTER_CLUSTER_CTRL_CLUSTER_FILTER_EN_SHIFT)  /* 0x00000100 */
+/* CLUSTER_LG_COE0 */
+#define VOP2_CLUSTER_CLUSTER_LG_COE0_OFFSET                (0x110U)
+#define VOP2_CLUSTER_CLUSTER_LG_COE0_CLUSTER_LG_COE0_SHIFT (0U)
+#define VOP2_CLUSTER_CLUSTER_LG_COE0_CLUSTER_LG_COE0_MASK  (0xFFFFFFFFU << VOP2_CLUSTER_CLUSTER_LG_COE0_CLUSTER_LG_COE0_SHIFT) /* 0xFFFFFFFF */
+/* CLUSTER_LG_COE1 */
+#define VOP2_CLUSTER_CLUSTER_LG_COE1_OFFSET                (0x114U)
+#define VOP2_CLUSTER_CLUSTER_LG_COE1_CLUSTER_LG_COE1_SHIFT (0U)
+#define VOP2_CLUSTER_CLUSTER_LG_COE1_CLUSTER_LG_COE1_MASK  (0xFFFFFFFFU << VOP2_CLUSTER_CLUSTER_LG_COE1_CLUSTER_LG_COE1_SHIFT) /* 0xFFFFFFFF */
+/* CLUSTER_LG_COE2 */
+#define VOP2_CLUSTER_CLUSTER_LG_COE2_OFFSET                (0x118U)
+#define VOP2_CLUSTER_CLUSTER_LG_COE2_CLUSTER_LG_COE2_SHIFT (0U)
+#define VOP2_CLUSTER_CLUSTER_LG_COE2_CLUSTER_LG_COE2_MASK  (0xFFFFFFFFU << VOP2_CLUSTER_CLUSTER_LG_COE2_CLUSTER_LG_COE2_SHIFT) /* 0xFFFFFFFF */
+/* CLUSTER_HG_COE0 */
+#define VOP2_CLUSTER_CLUSTER_HG_COE0_OFFSET                (0x120U)
+#define VOP2_CLUSTER_CLUSTER_HG_COE0_CLUSTER_HG_COE0_SHIFT (0U)
+#define VOP2_CLUSTER_CLUSTER_HG_COE0_CLUSTER_HG_COE0_MASK  (0xFFFFFFFFU << VOP2_CLUSTER_CLUSTER_HG_COE0_CLUSTER_HG_COE0_SHIFT) /* 0xFFFFFFFF */
+/* CLUSTER_HG_COE1 */
+#define VOP2_CLUSTER_CLUSTER_HG_COE1_OFFSET                (0x124U)
+#define VOP2_CLUSTER_CLUSTER_HG_COE1_CLUSTER_HG_COE1_SHIFT (0U)
+#define VOP2_CLUSTER_CLUSTER_HG_COE1_CLUSTER_HG_COE1_MASK  (0xFFFFFFFFU << VOP2_CLUSTER_CLUSTER_HG_COE1_CLUSTER_HG_COE1_SHIFT) /* 0xFFFFFFFF */
+/* CLUSTER_HG_COE2 */
+#define VOP2_CLUSTER_CLUSTER_HG_COE2_OFFSET                (0x128U)
+#define VOP2_CLUSTER_CLUSTER_HG_COE2_CLUSTER_HG_COE2_SHIFT (0U)
+#define VOP2_CLUSTER_CLUSTER_HG_COE2_CLUSTER_HG_COE2_MASK  (0xFFFFFFFFU << VOP2_CLUSTER_CLUSTER_HG_COE2_CLUSTER_HG_COE2_SHIFT) /* 0xFFFFFFFF */
+/**************************************VOP2_ESMART***************************************/
+/* ESMART_CTRL0 */
+#define VOP2_ESMART_ESMART_CTRL0_OFFSET                    (0x0U)
+#define VOP2_ESMART_ESMART_CTRL0_ESMART_YUV2RGB_EN_SHIFT   (0U)
+#define VOP2_ESMART_ESMART_CTRL0_ESMART_YUV2RGB_EN_MASK    (0x1U << VOP2_ESMART_ESMART_CTRL0_ESMART_YUV2RGB_EN_SHIFT)   /* 0x00000001 */
+#define VOP2_ESMART_ESMART_CTRL0_ESMART_RGB2YUV_EN_SHIFT   (1U)
+#define VOP2_ESMART_ESMART_CTRL0_ESMART_RGB2YUV_EN_MASK    (0x1U << VOP2_ESMART_ESMART_CTRL0_ESMART_RGB2YUV_EN_SHIFT)   /* 0x00000002 */
+#define VOP2_ESMART_ESMART_CTRL0_ESMART_CSC_MODE_SHIFT     (2U)
+#define VOP2_ESMART_ESMART_CTRL0_ESMART_CSC_MODE_MASK      (0x3U << VOP2_ESMART_ESMART_CTRL0_ESMART_CSC_MODE_SHIFT)     /* 0x0000000C */
+#define VOP2_ESMART_ESMART_CTRL0_ESMART_8BPP_LUT_EN_SHIFT  (4U)
+#define VOP2_ESMART_ESMART_CTRL0_ESMART_8BPP_LUT_EN_MASK   (0x1U << VOP2_ESMART_ESMART_CTRL0_ESMART_8BPP_LUT_EN_SHIFT)  /* 0x00000010 */
+/* ESMART_CTRL1 */
+#define VOP2_ESMART_ESMART_CTRL1_OFFSET                    (0x4U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_ESMART_AXI_RLEN_SHIFT (0U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_ESMART_AXI_RLEN_MASK (0x3U << VOP2_ESMART_ESMART_CTRL1_ESMART_ESMART_AXI_RLEN_SHIFT) /* 0x00000003 */
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_YRGB_GATHER_EN_SHIFT (2U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_YRGB_GATHER_EN_MASK (0x1U << VOP2_ESMART_ESMART_CTRL1_ESMART_YRGB_GATHER_EN_SHIFT) /* 0x00000004 */
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_CBCR_GATHER_EN_SHIFT (3U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_CBCR_GATHER_EN_MASK (0x1U << VOP2_ESMART_ESMART_CTRL1_ESMART_CBCR_GATHER_EN_SHIFT) /* 0x00000008 */
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_YRGB_RID_SHIFT     (4U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_YRGB_RID_MASK      (0xFU << VOP2_ESMART_ESMART_CTRL1_ESMART_YRGB_RID_SHIFT)     /* 0x000000F0 */
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_CBCR_RID_SHIFT     (12U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_CBCR_RID_MASK      (0xFU << VOP2_ESMART_ESMART_CTRL1_ESMART_CBCR_RID_SHIFT)     /* 0x0000F000 */
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_YRGB_GATHER_NUM_SHIFT (20U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_YRGB_GATHER_NUM_MASK (0xFU << VOP2_ESMART_ESMART_CTRL1_ESMART_YRGB_GATHER_NUM_SHIFT) /* 0x00F00000 */
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_CBCR_GATHER_NUM_SHIFT (24U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_CBCR_GATHER_NUM_MASK (0xFU << VOP2_ESMART_ESMART_CTRL1_ESMART_CBCR_GATHER_NUM_SHIFT) /* 0x0F000000 */
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_DMA_RREQ_HURRY_EN_SHIFT (28U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_DMA_RREQ_HURRY_EN_MASK (0x1U << VOP2_ESMART_ESMART_CTRL1_ESMART_DMA_RREQ_HURRY_EN_SHIFT) /* 0x10000000 */
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_DMA_RREQ_THOLD_SHIFT (29U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_DMA_RREQ_THOLD_MASK (0x3U << VOP2_ESMART_ESMART_CTRL1_ESMART_DMA_RREQ_THOLD_SHIFT) /* 0x60000000 */
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_VREV_EN_SHIFT      (31U)
+#define VOP2_ESMART_ESMART_CTRL1_ESMART_VREV_EN_MASK       (0x1U << VOP2_ESMART_ESMART_CTRL1_ESMART_VREV_EN_SHIFT)      /* 0x80000000 */
+/* REGION0_MST_CTL */
+#define VOP2_ESMART_REGION0_MST_CTL_OFFSET                 (0x10U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_MST_EN_SHIFT   (0U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_MST_EN_MASK    (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_MST_EN_SHIFT)   /* 0x00000001 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_DATA_FMT_SHIFT (1U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_DATA_FMT_MASK  (0x1FU << VOP2_ESMART_REGION0_MST_CTL_REGION0_DATA_FMT_SHIFT) /* 0x0000003E */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_YRGB_GT2_SHIFT (8U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_YRGB_GT2_MASK  (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_YRGB_GT2_SHIFT) /* 0x00000100 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_YRGB_GT4_SHIFT (9U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_YRGB_GT4_MASK  (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_YRGB_GT4_SHIFT) /* 0x00000200 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_CBCR_GT2_SHIFT (10U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_CBCR_GT2_MASK  (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_CBCR_GT2_SHIFT) /* 0x00000400 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_CBCR_GT4_SHIFT (11U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_CBCR_GT4_MASK  (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_CBCR_GT4_SHIFT) /* 0x00000800 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_DITHER_UP_EN_SHIFT (12U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_DITHER_UP_EN_MASK (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_DITHER_UP_EN_SHIFT) /* 0x00001000 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_ALPHA_SWAP_SHIFT (13U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_ALPHA_SWAP_MASK (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_ALPHA_SWAP_SHIFT) /* 0x00002000 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_RB_SWAP_SHIFT  (14U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_RB_SWAP_MASK   (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_RB_SWAP_SHIFT)  /* 0x00004000 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_MID_SWAP_SHIFT (15U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_MID_SWAP_MASK  (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_MID_SWAP_SHIFT) /* 0x00008000 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_UV_SWAP_SHIFT  (16U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_UV_SWAP_MASK   (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_UV_SWAP_SHIFT)  /* 0x00010000 */
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_YUV_CLIP_SHIFT (17U)
+#define VOP2_ESMART_REGION0_MST_CTL_REGION0_YUV_CLIP_MASK  (0x1U << VOP2_ESMART_REGION0_MST_CTL_REGION0_YUV_CLIP_SHIFT) /* 0x00020000 */
+/* REGION0_MST_YRGB */
+#define VOP2_ESMART_REGION0_MST_YRGB_OFFSET                (0x14U)
+#define VOP2_ESMART_REGION0_MST_YRGB_REGION0_YRGB_MST_SHIFT (0U)
+#define VOP2_ESMART_REGION0_MST_YRGB_REGION0_YRGB_MST_MASK (0xFFFFFFFFU << VOP2_ESMART_REGION0_MST_YRGB_REGION0_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION0_MST_CBCR */
+#define VOP2_ESMART_REGION0_MST_CBCR_OFFSET                (0x18U)
+#define VOP2_ESMART_REGION0_MST_CBCR_REGION0_CBCR_MST_SHIFT (0U)
+#define VOP2_ESMART_REGION0_MST_CBCR_REGION0_CBCR_MST_MASK (0xFFFFFFFFU << VOP2_ESMART_REGION0_MST_CBCR_REGION0_CBCR_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION0_VIR */
+#define VOP2_ESMART_REGION0_VIR_OFFSET                     (0x1CU)
+#define VOP2_ESMART_REGION0_VIR_REGION0_VIR_STRIDE_SHIFT   (0U)
+#define VOP2_ESMART_REGION0_VIR_REGION0_VIR_STRIDE_MASK    (0xFFFFU << VOP2_ESMART_REGION0_VIR_REGION0_VIR_STRIDE_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION0_VIR_REGION0_VIR_STRIDE_UV_SHIFT (16U)
+#define VOP2_ESMART_REGION0_VIR_REGION0_VIR_STRIDE_UV_MASK (0xFFFFU << VOP2_ESMART_REGION0_VIR_REGION0_VIR_STRIDE_UV_SHIFT) /* 0xFFFF0000 */
+/* REGION0_ACT_INFO */
+#define VOP2_ESMART_REGION0_ACT_INFO_OFFSET                (0x20U)
+#define VOP2_ESMART_REGION0_ACT_INFO_REGION0_ACT_WIDTH_SHIFT (0U)
+#define VOP2_ESMART_REGION0_ACT_INFO_REGION0_ACT_WIDTH_MASK (0x1FFFU << VOP2_ESMART_REGION0_ACT_INFO_REGION0_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION0_ACT_INFO_REGION0_ACT_HEIGTH_SHIFT (16U)
+#define VOP2_ESMART_REGION0_ACT_INFO_REGION0_ACT_HEIGTH_MASK (0x1FFFU << VOP2_ESMART_REGION0_ACT_INFO_REGION0_ACT_HEIGTH_SHIFT) /* 0x1FFF0000 */
+/* REGION0_DSP_INFO */
+#define VOP2_ESMART_REGION0_DSP_INFO_OFFSET                (0x24U)
+#define VOP2_ESMART_REGION0_DSP_INFO_REGION0_DSP_WIDTH_SHIFT (0U)
+#define VOP2_ESMART_REGION0_DSP_INFO_REGION0_DSP_WIDTH_MASK (0x1FFFU << VOP2_ESMART_REGION0_DSP_INFO_REGION0_DSP_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION0_DSP_INFO_REGION0_DSP_HEIGHT_SHIFT (16U)
+#define VOP2_ESMART_REGION0_DSP_INFO_REGION0_DSP_HEIGHT_MASK (0x1FFFU << VOP2_ESMART_REGION0_DSP_INFO_REGION0_DSP_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* REGION0_DSP_OFFSET */
+#define VOP2_ESMART_REGION0_DSP_OFFSET_OFFSET              (0x28U)
+#define VOP2_ESMART_REGION0_DSP_OFFSET_REGION0_DSP_XOFF_SHIFT (0U)
+#define VOP2_ESMART_REGION0_DSP_OFFSET_REGION0_DSP_XOFF_MASK (0x1FFFU << VOP2_ESMART_REGION0_DSP_OFFSET_REGION0_DSP_XOFF_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION0_DSP_OFFSET_REGION0_DSP_YOFF_SHIFT (16U)
+#define VOP2_ESMART_REGION0_DSP_OFFSET_REGION0_DSP_YOFF_MASK (0x1FFFU << VOP2_ESMART_REGION0_DSP_OFFSET_REGION0_DSP_YOFF_SHIFT) /* 0x1FFF0000 */
+/* REGION0_SCL_CTRL */
+#define VOP2_ESMART_REGION0_SCL_CTRL_OFFSET                (0x30U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_XSU_EN_SHIFT (0U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_XSU_EN_MASK (0x1U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_XSU_EN_SHIFT) /* 0x00000001 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_XSD_EN_SHIFT (1U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_XSD_EN_MASK (0x1U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_XSD_EN_SHIFT) /* 0x00000002 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_XSCL_MODE_SHIFT (2U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_XSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_XSCL_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_YSU_EN_SHIFT (4U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_YSU_EN_MASK (0x1U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_YSU_EN_SHIFT) /* 0x00000010 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_YSD_EN_SHIFT (5U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_YSD_EN_MASK (0x1U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_YSD_EN_SHIFT) /* 0x00000020 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_YSCL_MODE_SHIFT (6U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_YSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YRGB_YSCL_MODE_SHIFT) /* 0x000000C0 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_XSU_EN_SHIFT (8U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_XSU_EN_MASK (0x1U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_XSU_EN_SHIFT) /* 0x00000100 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_XSD_EN_SHIFT (9U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_XSD_EN_MASK (0x1U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_XSD_EN_SHIFT) /* 0x00000200 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_XSCL_MODE_SHIFT (10U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_XSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_XSCL_MODE_SHIFT) /* 0x00000C00 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_YSU_EN_SHIFT (12U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_YSU_EN_MASK (0x1U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_YSU_EN_SHIFT) /* 0x00001000 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_YSD_EN_SHIFT (13U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_YSD_EN_MASK (0x1U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_YSD_EN_SHIFT) /* 0x00002000 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_YSCL_MODE_SHIFT (14U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_YSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_CBCR_YSCL_MODE_SHIFT) /* 0x0000C000 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_XSU_BIC_MODE_SHIFT (16U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_XSU_BIC_MODE_MASK (0x3U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_XSU_BIC_MODE_SHIFT) /* 0x00030000 */
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YSU_BIC_MODE_SHIFT (18U)
+#define VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YSU_BIC_MODE_MASK (0x3U << VOP2_ESMART_REGION0_SCL_CTRL_REGION0_YSU_BIC_MODE_SHIFT) /* 0x000C0000 */
+/* REGION0_SCL_FACTOR_YRGB */
+#define VOP2_ESMART_REGION0_SCL_FACTOR_YRGB_OFFSET         (0x34U)
+#define VOP2_ESMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_XFACTOR_SHIFT (0U)
+#define VOP2_ESMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_XFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_YFACTOR_SHIFT (16U)
+#define VOP2_ESMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_YFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION0_SCL_FACTOR_CBCR */
+#define VOP2_ESMART_REGION0_SCL_FACTOR_CBCR_OFFSET         (0x38U)
+#define VOP2_ESMART_REGION0_SCL_FACTOR_CBCR_REGION0_CBCR_XFACTOR_SHIFT (0U)
+#define VOP2_ESMART_REGION0_SCL_FACTOR_CBCR_REGION0_CBCR_XFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION0_SCL_FACTOR_CBCR_REGION0_CBCR_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION0_SCL_FACTOR_CBCR_REGION0_CBCR_YFACTOR_SHIFT (16U)
+#define VOP2_ESMART_REGION0_SCL_FACTOR_CBCR_REGION0_CBCR_YFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION0_SCL_FACTOR_CBCR_REGION0_CBCR_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION0_SCL_OFFSET */
+#define VOP2_ESMART_REGION0_SCL_OFFSET_OFFSET              (0x3CU)
+#define VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_YRGB_XSCL_OFFSET_SHIFT (0U)
+#define VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_YRGB_XSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_YRGB_XSCL_OFFSET_SHIFT) /* 0x000000FF */
+#define VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_YRGB_YSCL_OFFSET_SHIFT (8U)
+#define VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_YRGB_YSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_YRGB_YSCL_OFFSET_SHIFT) /* 0x0000FF00 */
+#define VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_CBCR_XSCL_OFFSET_SHIFT (16U)
+#define VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_CBCR_XSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_CBCR_XSCL_OFFSET_SHIFT) /* 0x00FF0000 */
+#define VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_CBCR_YSCL_OFFSET_SHIFT (24U)
+#define VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_CBCR_YSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION0_SCL_OFFSET_REGION0_CBCR_YSCL_OFFSET_SHIFT) /* 0xFF000000 */
+/* REGION1_MST_CTL */
+#define VOP2_ESMART_REGION1_MST_CTL_OFFSET                 (0x40U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_MST_EN_SHIFT   (0U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_MST_EN_MASK    (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_MST_EN_SHIFT)   /* 0x00000001 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_DATA_FMT_SHIFT (1U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_DATA_FMT_MASK  (0x1FU << VOP2_ESMART_REGION1_MST_CTL_REGION1_DATA_FMT_SHIFT) /* 0x0000003E */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_YRGB_GT2_SHIFT (8U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_YRGB_GT2_MASK  (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_YRGB_GT2_SHIFT) /* 0x00000100 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_YRGB_GT4_SHIFT (9U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_YRGB_GT4_MASK  (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_YRGB_GT4_SHIFT) /* 0x00000200 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_CBCR_GT2_SHIFT (10U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_CBCR_GT2_MASK  (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_CBCR_GT2_SHIFT) /* 0x00000400 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_CBCR_GT4_SHIFT (11U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_CBCR_GT4_MASK  (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_CBCR_GT4_SHIFT) /* 0x00000800 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_DITHER_UP_EN_SHIFT (12U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_DITHER_UP_EN_MASK (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_DITHER_UP_EN_SHIFT) /* 0x00001000 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_ALPHA_SWAP_SHIFT (13U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_ALPHA_SWAP_MASK (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_ALPHA_SWAP_SHIFT) /* 0x00002000 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_RB_SWAP_SHIFT  (14U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_RB_SWAP_MASK   (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_RB_SWAP_SHIFT)  /* 0x00004000 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_MID_SWAP_SHIFT (15U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_MID_SWAP_MASK  (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_MID_SWAP_SHIFT) /* 0x00008000 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_UV_SWAP_SHIFT  (16U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_UV_SWAP_MASK   (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_UV_SWAP_SHIFT)  /* 0x00010000 */
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_YUV_CLIP_SHIFT (17U)
+#define VOP2_ESMART_REGION1_MST_CTL_REGION1_YUV_CLIP_MASK  (0x1U << VOP2_ESMART_REGION1_MST_CTL_REGION1_YUV_CLIP_SHIFT) /* 0x00020000 */
+/* REGION1_MST_YRGB */
+#define VOP2_ESMART_REGION1_MST_YRGB_OFFSET                (0x44U)
+#define VOP2_ESMART_REGION1_MST_YRGB_REGION1_YRGB_MST_SHIFT (0U)
+#define VOP2_ESMART_REGION1_MST_YRGB_REGION1_YRGB_MST_MASK (0xFFFFFFFFU << VOP2_ESMART_REGION1_MST_YRGB_REGION1_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION1_MST_CBCR */
+#define VOP2_ESMART_REGION1_MST_CBCR_OFFSET                (0x48U)
+#define VOP2_ESMART_REGION1_MST_CBCR_REGION1_CBCR_MST_SHIFT (0U)
+#define VOP2_ESMART_REGION1_MST_CBCR_REGION1_CBCR_MST_MASK (0xFFFFFFFFU << VOP2_ESMART_REGION1_MST_CBCR_REGION1_CBCR_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION1_VIR */
+#define VOP2_ESMART_REGION1_VIR_OFFSET                     (0x4CU)
+#define VOP2_ESMART_REGION1_VIR_REGION1_VIR_STRIDE_SHIFT   (0U)
+#define VOP2_ESMART_REGION1_VIR_REGION1_VIR_STRIDE_MASK    (0xFFFFU << VOP2_ESMART_REGION1_VIR_REGION1_VIR_STRIDE_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION1_VIR_REGION1_VIR_STRIDE_UV_SHIFT (16U)
+#define VOP2_ESMART_REGION1_VIR_REGION1_VIR_STRIDE_UV_MASK (0xFFFFU << VOP2_ESMART_REGION1_VIR_REGION1_VIR_STRIDE_UV_SHIFT) /* 0xFFFF0000 */
+/* REGION1_ACT_INFO */
+#define VOP2_ESMART_REGION1_ACT_INFO_OFFSET                (0x50U)
+#define VOP2_ESMART_REGION1_ACT_INFO_REGION1_ACT_WIDTH_SHIFT (0U)
+#define VOP2_ESMART_REGION1_ACT_INFO_REGION1_ACT_WIDTH_MASK (0x1FFFU << VOP2_ESMART_REGION1_ACT_INFO_REGION1_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION1_ACT_INFO_REGION1_ACT_HEIGTH_SHIFT (16U)
+#define VOP2_ESMART_REGION1_ACT_INFO_REGION1_ACT_HEIGTH_MASK (0x1FFFU << VOP2_ESMART_REGION1_ACT_INFO_REGION1_ACT_HEIGTH_SHIFT) /* 0x1FFF0000 */
+/* REGION1_DSP_INFO */
+#define VOP2_ESMART_REGION1_DSP_INFO_OFFSET                (0x54U)
+#define VOP2_ESMART_REGION1_DSP_INFO_REGION1_DSP_WIDTH_SHIFT (0U)
+#define VOP2_ESMART_REGION1_DSP_INFO_REGION1_DSP_WIDTH_MASK (0x1FFFU << VOP2_ESMART_REGION1_DSP_INFO_REGION1_DSP_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION1_DSP_INFO_REGION1_DSP_HEIGHT_SHIFT (16U)
+#define VOP2_ESMART_REGION1_DSP_INFO_REGION1_DSP_HEIGHT_MASK (0x1FFFU << VOP2_ESMART_REGION1_DSP_INFO_REGION1_DSP_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* REGION1_DSP_OFFSET */
+#define VOP2_ESMART_REGION1_DSP_OFFSET_OFFSET              (0x58U)
+#define VOP2_ESMART_REGION1_DSP_OFFSET_REGION1_DSP_XOFF_SHIFT (0U)
+#define VOP2_ESMART_REGION1_DSP_OFFSET_REGION1_DSP_XOFF_MASK (0x1FFFU << VOP2_ESMART_REGION1_DSP_OFFSET_REGION1_DSP_XOFF_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION1_DSP_OFFSET_REGION1_DSP_YOFF_SHIFT (16U)
+#define VOP2_ESMART_REGION1_DSP_OFFSET_REGION1_DSP_YOFF_MASK (0x1FFFU << VOP2_ESMART_REGION1_DSP_OFFSET_REGION1_DSP_YOFF_SHIFT) /* 0x1FFF0000 */
+/* REGION1_SCL_CTRL */
+#define VOP2_ESMART_REGION1_SCL_CTRL_OFFSET                (0x60U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_XSU_EN_SHIFT (0U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_XSU_EN_MASK (0x1U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_XSU_EN_SHIFT) /* 0x00000001 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_XSD_EN_SHIFT (1U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_XSD_EN_MASK (0x1U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_XSD_EN_SHIFT) /* 0x00000002 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_XSCL_MODE_SHIFT (2U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_XSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_XSCL_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_YSU_EN_SHIFT (4U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_YSU_EN_MASK (0x1U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_YSU_EN_SHIFT) /* 0x00000010 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_YSD_EN_SHIFT (5U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_YSD_EN_MASK (0x1U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_YSD_EN_SHIFT) /* 0x00000020 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_YSCL_MODE_SHIFT (6U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_YSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YRGB_YSCL_MODE_SHIFT) /* 0x000000C0 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_XSU_EN_SHIFT (8U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_XSU_EN_MASK (0x1U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_XSU_EN_SHIFT) /* 0x00000100 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_XSD_EN_SHIFT (9U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_XSD_EN_MASK (0x1U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_XSD_EN_SHIFT) /* 0x00000200 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_XSCL_MODE_SHIFT (10U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_XSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_XSCL_MODE_SHIFT) /* 0x00000C00 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_YSU_EN_SHIFT (12U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_YSU_EN_MASK (0x1U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_YSU_EN_SHIFT) /* 0x00001000 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_YSD_EN_SHIFT (13U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_YSD_EN_MASK (0x1U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_YSD_EN_SHIFT) /* 0x00002000 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_YSCL_MODE_SHIFT (14U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_YSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_CBCR_YSCL_MODE_SHIFT) /* 0x0000C000 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_XSU_BIC_MODE_SHIFT (16U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_XSU_BIC_MODE_MASK (0x3U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_XSU_BIC_MODE_SHIFT) /* 0x00030000 */
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YSU_BIC_MODE_SHIFT (18U)
+#define VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YSU_BIC_MODE_MASK (0x3U << VOP2_ESMART_REGION1_SCL_CTRL_REGION1_YSU_BIC_MODE_SHIFT) /* 0x000C0000 */
+/* REGION1_SCL_FACTOR_YRGB */
+#define VOP2_ESMART_REGION1_SCL_FACTOR_YRGB_OFFSET         (0x64U)
+#define VOP2_ESMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_XFACTOR_SHIFT (0U)
+#define VOP2_ESMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_XFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_YFACTOR_SHIFT (16U)
+#define VOP2_ESMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_YFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION1_SCL_FACTOR_CBCR */
+#define VOP2_ESMART_REGION1_SCL_FACTOR_CBCR_OFFSET         (0x68U)
+#define VOP2_ESMART_REGION1_SCL_FACTOR_CBCR_REGION1_CBCR_XFACTOR_SHIFT (0U)
+#define VOP2_ESMART_REGION1_SCL_FACTOR_CBCR_REGION1_CBCR_XFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION1_SCL_FACTOR_CBCR_REGION1_CBCR_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION1_SCL_FACTOR_CBCR_REGION1_CBCR_YFACTOR_SHIFT (16U)
+#define VOP2_ESMART_REGION1_SCL_FACTOR_CBCR_REGION1_CBCR_YFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION1_SCL_FACTOR_CBCR_REGION1_CBCR_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION1_SCL_OFFSET */
+#define VOP2_ESMART_REGION1_SCL_OFFSET_OFFSET              (0x6CU)
+#define VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_YRGB_XSCL_OFFSET_SHIFT (0U)
+#define VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_YRGB_XSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_YRGB_XSCL_OFFSET_SHIFT) /* 0x000000FF */
+#define VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_YRGB_YSCL_OFFSET_SHIFT (8U)
+#define VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_YRGB_YSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_YRGB_YSCL_OFFSET_SHIFT) /* 0x0000FF00 */
+#define VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_CBCR_XSCL_OFFSET_SHIFT (16U)
+#define VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_CBCR_XSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_CBCR_XSCL_OFFSET_SHIFT) /* 0x00FF0000 */
+#define VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_CBCR_YSCL_OFFSET_SHIFT (24U)
+#define VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_CBCR_YSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION1_SCL_OFFSET_REGION1_CBCR_YSCL_OFFSET_SHIFT) /* 0xFF000000 */
+/* REGION2_MST_CTL */
+#define VOP2_ESMART_REGION2_MST_CTL_OFFSET                 (0x70U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_MST_EN_SHIFT   (0U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_MST_EN_MASK    (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_MST_EN_SHIFT)   /* 0x00000001 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_DATA_FMT_SHIFT (1U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_DATA_FMT_MASK  (0x1FU << VOP2_ESMART_REGION2_MST_CTL_REGION2_DATA_FMT_SHIFT) /* 0x0000003E */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_YRGB_GT2_SHIFT (8U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_YRGB_GT2_MASK  (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_YRGB_GT2_SHIFT) /* 0x00000100 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_YRGB_GT4_SHIFT (9U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_YRGB_GT4_MASK  (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_YRGB_GT4_SHIFT) /* 0x00000200 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_CBCR_GT2_SHIFT (10U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_CBCR_GT2_MASK  (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_CBCR_GT2_SHIFT) /* 0x00000400 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_CBCR_GT4_SHIFT (11U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_CBCR_GT4_MASK  (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_CBCR_GT4_SHIFT) /* 0x00000800 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_DITHER_UP_EN_SHIFT (12U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_DITHER_UP_EN_MASK (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_DITHER_UP_EN_SHIFT) /* 0x00001000 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_ALPHA_SWAP_SHIFT (13U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_ALPHA_SWAP_MASK (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_ALPHA_SWAP_SHIFT) /* 0x00002000 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_RB_SWAP_SHIFT  (14U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_RB_SWAP_MASK   (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_RB_SWAP_SHIFT)  /* 0x00004000 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_MID_SWAP_SHIFT (15U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_MID_SWAP_MASK  (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_MID_SWAP_SHIFT) /* 0x00008000 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_UV_SWAP_SHIFT  (16U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_UV_SWAP_MASK   (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_UV_SWAP_SHIFT)  /* 0x00010000 */
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_YUV_CLIP_SHIFT (17U)
+#define VOP2_ESMART_REGION2_MST_CTL_REGION2_YUV_CLIP_MASK  (0x1U << VOP2_ESMART_REGION2_MST_CTL_REGION2_YUV_CLIP_SHIFT) /* 0x00020000 */
+/* REGION2_MST_YRGB */
+#define VOP2_ESMART_REGION2_MST_YRGB_OFFSET                (0x74U)
+#define VOP2_ESMART_REGION2_MST_YRGB_REGION2_YRGB_MST_SHIFT (0U)
+#define VOP2_ESMART_REGION2_MST_YRGB_REGION2_YRGB_MST_MASK (0xFFFFFFFFU << VOP2_ESMART_REGION2_MST_YRGB_REGION2_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION2_MST_CBCR */
+#define VOP2_ESMART_REGION2_MST_CBCR_OFFSET                (0x78U)
+#define VOP2_ESMART_REGION2_MST_CBCR_REGION2_CBCR_MST_SHIFT (0U)
+#define VOP2_ESMART_REGION2_MST_CBCR_REGION2_CBCR_MST_MASK (0xFFFFFFFFU << VOP2_ESMART_REGION2_MST_CBCR_REGION2_CBCR_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION2_VIR */
+#define VOP2_ESMART_REGION2_VIR_OFFSET                     (0x7CU)
+#define VOP2_ESMART_REGION2_VIR_REGION2_VIR_STRIDE_SHIFT   (0U)
+#define VOP2_ESMART_REGION2_VIR_REGION2_VIR_STRIDE_MASK    (0xFFFFU << VOP2_ESMART_REGION2_VIR_REGION2_VIR_STRIDE_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION2_VIR_REGION2_VIR_STRIDE_UV_SHIFT (16U)
+#define VOP2_ESMART_REGION2_VIR_REGION2_VIR_STRIDE_UV_MASK (0xFFFFU << VOP2_ESMART_REGION2_VIR_REGION2_VIR_STRIDE_UV_SHIFT) /* 0xFFFF0000 */
+/* REGION2_ACT_INFO */
+#define VOP2_ESMART_REGION2_ACT_INFO_OFFSET                (0x80U)
+#define VOP2_ESMART_REGION2_ACT_INFO_REGION2_ACT_WIDTH_SHIFT (0U)
+#define VOP2_ESMART_REGION2_ACT_INFO_REGION2_ACT_WIDTH_MASK (0x1FFFU << VOP2_ESMART_REGION2_ACT_INFO_REGION2_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION2_ACT_INFO_REGION2_ACT_HEIGTH_SHIFT (16U)
+#define VOP2_ESMART_REGION2_ACT_INFO_REGION2_ACT_HEIGTH_MASK (0x1FFFU << VOP2_ESMART_REGION2_ACT_INFO_REGION2_ACT_HEIGTH_SHIFT) /* 0x1FFF0000 */
+/* REGION2_DSP_INFO */
+#define VOP2_ESMART_REGION2_DSP_INFO_OFFSET                (0x84U)
+#define VOP2_ESMART_REGION2_DSP_INFO_REGION2_DSP_WIDTH_SHIFT (0U)
+#define VOP2_ESMART_REGION2_DSP_INFO_REGION2_DSP_WIDTH_MASK (0x1FFFU << VOP2_ESMART_REGION2_DSP_INFO_REGION2_DSP_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION2_DSP_INFO_REGION2_DSP_HEIGHT_SHIFT (16U)
+#define VOP2_ESMART_REGION2_DSP_INFO_REGION2_DSP_HEIGHT_MASK (0x1FFFU << VOP2_ESMART_REGION2_DSP_INFO_REGION2_DSP_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* REGION2_DSP_OFFSET */
+#define VOP2_ESMART_REGION2_DSP_OFFSET_OFFSET              (0x88U)
+#define VOP2_ESMART_REGION2_DSP_OFFSET_REGION2_DSP_XOFF_SHIFT (0U)
+#define VOP2_ESMART_REGION2_DSP_OFFSET_REGION2_DSP_XOFF_MASK (0x1FFFU << VOP2_ESMART_REGION2_DSP_OFFSET_REGION2_DSP_XOFF_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION2_DSP_OFFSET_REGION2_DSP_YOFF_SHIFT (16U)
+#define VOP2_ESMART_REGION2_DSP_OFFSET_REGION2_DSP_YOFF_MASK (0x1FFFU << VOP2_ESMART_REGION2_DSP_OFFSET_REGION2_DSP_YOFF_SHIFT) /* 0x1FFF0000 */
+/* REGION2_SCL_CTRL */
+#define VOP2_ESMART_REGION2_SCL_CTRL_OFFSET                (0x90U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_XSU_EN_SHIFT (0U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_XSU_EN_MASK (0x1U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_XSU_EN_SHIFT) /* 0x00000001 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_XSD_EN_SHIFT (1U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_XSD_EN_MASK (0x1U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_XSD_EN_SHIFT) /* 0x00000002 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_XSCL_MODE_SHIFT (2U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_XSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_XSCL_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_YSU_EN_SHIFT (4U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_YSU_EN_MASK (0x1U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_YSU_EN_SHIFT) /* 0x00000010 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_YSD_EN_SHIFT (5U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_YSD_EN_MASK (0x1U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_YSD_EN_SHIFT) /* 0x00000020 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_YSCL_MODE_SHIFT (6U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_YSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YRGB_YSCL_MODE_SHIFT) /* 0x000000C0 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_XSU_EN_SHIFT (8U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_XSU_EN_MASK (0x1U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_XSU_EN_SHIFT) /* 0x00000100 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_XSD_EN_SHIFT (9U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_XSD_EN_MASK (0x1U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_XSD_EN_SHIFT) /* 0x00000200 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_XSCL_MODE_SHIFT (10U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_XSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_XSCL_MODE_SHIFT) /* 0x00000C00 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_YSU_EN_SHIFT (12U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_YSU_EN_MASK (0x1U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_YSU_EN_SHIFT) /* 0x00001000 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_YSD_EN_SHIFT (13U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_YSD_EN_MASK (0x1U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_YSD_EN_SHIFT) /* 0x00002000 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_YSCL_MODE_SHIFT (14U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_YSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_CBCR_YSCL_MODE_SHIFT) /* 0x0000C000 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_XSU_BIC_MODE_SHIFT (16U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_XSU_BIC_MODE_MASK (0x3U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_XSU_BIC_MODE_SHIFT) /* 0x00030000 */
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YSU_BIC_MODE_SHIFT (18U)
+#define VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YSU_BIC_MODE_MASK (0x3U << VOP2_ESMART_REGION2_SCL_CTRL_REGION2_YSU_BIC_MODE_SHIFT) /* 0x000C0000 */
+/* REGION2_SCL_FACTOR_YRGB */
+#define VOP2_ESMART_REGION2_SCL_FACTOR_YRGB_OFFSET         (0x94U)
+#define VOP2_ESMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_XFACTOR_SHIFT (0U)
+#define VOP2_ESMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_XFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_YFACTOR_SHIFT (16U)
+#define VOP2_ESMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_YFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION2_SCL_FACTOR_CBCR */
+#define VOP2_ESMART_REGION2_SCL_FACTOR_CBCR_OFFSET         (0x98U)
+#define VOP2_ESMART_REGION2_SCL_FACTOR_CBCR_REGION2_CBCR_XFACTOR_SHIFT (0U)
+#define VOP2_ESMART_REGION2_SCL_FACTOR_CBCR_REGION2_CBCR_XFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION2_SCL_FACTOR_CBCR_REGION2_CBCR_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION2_SCL_FACTOR_CBCR_REGION2_CBCR_YFACTOR_SHIFT (16U)
+#define VOP2_ESMART_REGION2_SCL_FACTOR_CBCR_REGION2_CBCR_YFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION2_SCL_FACTOR_CBCR_REGION2_CBCR_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION2_SCL_OFFSET */
+#define VOP2_ESMART_REGION2_SCL_OFFSET_OFFSET              (0x9CU)
+#define VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_YRGB_XSCL_OFFSET_SHIFT (0U)
+#define VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_YRGB_XSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_YRGB_XSCL_OFFSET_SHIFT) /* 0x000000FF */
+#define VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_YRGB_YSCL_OFFSET_SHIFT (8U)
+#define VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_YRGB_YSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_YRGB_YSCL_OFFSET_SHIFT) /* 0x0000FF00 */
+#define VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_CBCR_XSCL_OFFSET_SHIFT (16U)
+#define VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_CBCR_XSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_CBCR_XSCL_OFFSET_SHIFT) /* 0x00FF0000 */
+#define VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_CBCR_YSCL_OFFSET_SHIFT (24U)
+#define VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_CBCR_YSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION2_SCL_OFFSET_REGION2_CBCR_YSCL_OFFSET_SHIFT) /* 0xFF000000 */
+/* REGION3_MST_CTL */
+#define VOP2_ESMART_REGION3_MST_CTL_OFFSET                 (0xA0U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_MST_EN_SHIFT   (0U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_MST_EN_MASK    (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_MST_EN_SHIFT)   /* 0x00000001 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_DATA_FMT_SHIFT (1U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_DATA_FMT_MASK  (0x1FU << VOP2_ESMART_REGION3_MST_CTL_REGION3_DATA_FMT_SHIFT) /* 0x0000003E */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_YRGB_GT2_SHIFT (8U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_YRGB_GT2_MASK  (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_YRGB_GT2_SHIFT) /* 0x00000100 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_YRGB_GT4_SHIFT (9U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_YRGB_GT4_MASK  (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_YRGB_GT4_SHIFT) /* 0x00000200 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_CBCR_GT2_SHIFT (10U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_CBCR_GT2_MASK  (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_CBCR_GT2_SHIFT) /* 0x00000400 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_CBCR_GT4_SHIFT (11U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_CBCR_GT4_MASK  (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_CBCR_GT4_SHIFT) /* 0x00000800 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_DITHER_UP_EN_SHIFT (12U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_DITHER_UP_EN_MASK (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_DITHER_UP_EN_SHIFT) /* 0x00001000 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_ALPHA_SWAP_SHIFT (13U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_ALPHA_SWAP_MASK (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_ALPHA_SWAP_SHIFT) /* 0x00002000 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_RB_SWAP_SHIFT  (14U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_RB_SWAP_MASK   (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_RB_SWAP_SHIFT)  /* 0x00004000 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_MID_SWAP_SHIFT (15U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_MID_SWAP_MASK  (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_MID_SWAP_SHIFT) /* 0x00008000 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_UV_SWAP_SHIFT  (16U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_UV_SWAP_MASK   (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_UV_SWAP_SHIFT)  /* 0x00010000 */
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_YUV_CLIP_SHIFT (17U)
+#define VOP2_ESMART_REGION3_MST_CTL_REGION3_YUV_CLIP_MASK  (0x1U << VOP2_ESMART_REGION3_MST_CTL_REGION3_YUV_CLIP_SHIFT) /* 0x00020000 */
+/* REGION3_MST_YRGB */
+#define VOP2_ESMART_REGION3_MST_YRGB_OFFSET                (0xA4U)
+#define VOP2_ESMART_REGION3_MST_YRGB_REGION3_YRGB_MST_SHIFT (0U)
+#define VOP2_ESMART_REGION3_MST_YRGB_REGION3_YRGB_MST_MASK (0xFFFFFFFFU << VOP2_ESMART_REGION3_MST_YRGB_REGION3_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION3_MST_CBCR */
+#define VOP2_ESMART_REGION3_MST_CBCR_OFFSET                (0xA8U)
+#define VOP2_ESMART_REGION3_MST_CBCR_REGION3_CBCR_MST_SHIFT (0U)
+#define VOP2_ESMART_REGION3_MST_CBCR_REGION3_CBCR_MST_MASK (0xFFFFFFFFU << VOP2_ESMART_REGION3_MST_CBCR_REGION3_CBCR_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION3_VIR */
+#define VOP2_ESMART_REGION3_VIR_OFFSET                     (0xACU)
+#define VOP2_ESMART_REGION3_VIR_REGION3_VIR_STRIDE_SHIFT   (0U)
+#define VOP2_ESMART_REGION3_VIR_REGION3_VIR_STRIDE_MASK    (0xFFFFU << VOP2_ESMART_REGION3_VIR_REGION3_VIR_STRIDE_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION3_VIR_REGION3_VIR_STRIDE_UV_SHIFT (16U)
+#define VOP2_ESMART_REGION3_VIR_REGION3_VIR_STRIDE_UV_MASK (0xFFFFU << VOP2_ESMART_REGION3_VIR_REGION3_VIR_STRIDE_UV_SHIFT) /* 0xFFFF0000 */
+/* REGION3_ACT_INFO */
+#define VOP2_ESMART_REGION3_ACT_INFO_OFFSET                (0xB0U)
+#define VOP2_ESMART_REGION3_ACT_INFO_REGION3_ACT_WIDTH_SHIFT (0U)
+#define VOP2_ESMART_REGION3_ACT_INFO_REGION3_ACT_WIDTH_MASK (0x1FFFU << VOP2_ESMART_REGION3_ACT_INFO_REGION3_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION3_ACT_INFO_REGION3_ACT_HEIGTH_SHIFT (16U)
+#define VOP2_ESMART_REGION3_ACT_INFO_REGION3_ACT_HEIGTH_MASK (0x1FFFU << VOP2_ESMART_REGION3_ACT_INFO_REGION3_ACT_HEIGTH_SHIFT) /* 0x1FFF0000 */
+/* REGION3_DSP_INFO */
+#define VOP2_ESMART_REGION3_DSP_INFO_OFFSET                (0xB4U)
+#define VOP2_ESMART_REGION3_DSP_INFO_REGION3_DSP_WIDTH_SHIFT (0U)
+#define VOP2_ESMART_REGION3_DSP_INFO_REGION3_DSP_WIDTH_MASK (0x1FFFU << VOP2_ESMART_REGION3_DSP_INFO_REGION3_DSP_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION3_DSP_INFO_REGION3_DSP_HEIGHT_SHIFT (16U)
+#define VOP2_ESMART_REGION3_DSP_INFO_REGION3_DSP_HEIGHT_MASK (0x1FFFU << VOP2_ESMART_REGION3_DSP_INFO_REGION3_DSP_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* REGION3_DSP_OFFSET */
+#define VOP2_ESMART_REGION3_DSP_OFFSET_OFFSET              (0xB8U)
+#define VOP2_ESMART_REGION3_DSP_OFFSET_REGION3_DSP_XOFF_SHIFT (0U)
+#define VOP2_ESMART_REGION3_DSP_OFFSET_REGION3_DSP_XOFF_MASK (0x1FFFU << VOP2_ESMART_REGION3_DSP_OFFSET_REGION3_DSP_XOFF_SHIFT) /* 0x00001FFF */
+#define VOP2_ESMART_REGION3_DSP_OFFSET_REGION3_DSP_YOFF_SHIFT (16U)
+#define VOP2_ESMART_REGION3_DSP_OFFSET_REGION3_DSP_YOFF_MASK (0x1FFFU << VOP2_ESMART_REGION3_DSP_OFFSET_REGION3_DSP_YOFF_SHIFT) /* 0x1FFF0000 */
+/* REGION3_SCL_CTRL */
+#define VOP2_ESMART_REGION3_SCL_CTRL_OFFSET                (0xC0U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_XSU_EN_SHIFT (0U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_XSU_EN_MASK (0x1U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_XSU_EN_SHIFT) /* 0x00000001 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_XSD_EN_SHIFT (1U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_XSD_EN_MASK (0x1U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_XSD_EN_SHIFT) /* 0x00000002 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_XSCL_MODE_SHIFT (2U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_XSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_XSCL_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_YSU_EN_SHIFT (4U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_YSU_EN_MASK (0x1U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_YSU_EN_SHIFT) /* 0x00000010 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_YSD_EN_SHIFT (5U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_YSD_EN_MASK (0x1U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_YSD_EN_SHIFT) /* 0x00000020 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_YSCL_MODE_SHIFT (6U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_YSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YRGB_YSCL_MODE_SHIFT) /* 0x000000C0 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_XSU_EN_SHIFT (8U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_XSU_EN_MASK (0x1U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_XSU_EN_SHIFT) /* 0x00000100 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_XSD_EN_SHIFT (9U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_XSD_EN_MASK (0x1U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_XSD_EN_SHIFT) /* 0x00000200 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_XSCL_MODE_SHIFT (10U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_XSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_XSCL_MODE_SHIFT) /* 0x00000C00 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_YSU_EN_SHIFT (12U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_YSU_EN_MASK (0x1U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_YSU_EN_SHIFT) /* 0x00001000 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_YSD_EN_SHIFT (13U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_YSD_EN_MASK (0x1U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_YSD_EN_SHIFT) /* 0x00002000 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_YSCL_MODE_SHIFT (14U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_YSCL_MODE_MASK (0x3U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_CBCR_YSCL_MODE_SHIFT) /* 0x0000C000 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_XSU_BIC_MODE_SHIFT (16U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_XSU_BIC_MODE_MASK (0x3U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_XSU_BIC_MODE_SHIFT) /* 0x00030000 */
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YSU_BIC_MODE_SHIFT (18U)
+#define VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YSU_BIC_MODE_MASK (0x3U << VOP2_ESMART_REGION3_SCL_CTRL_REGION3_YSU_BIC_MODE_SHIFT) /* 0x000C0000 */
+/* REGION3_SCL_FACTOR_YRGB */
+#define VOP2_ESMART_REGION3_SCL_FACTOR_YRGB_OFFSET         (0xC4U)
+#define VOP2_ESMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_XFACTOR_SHIFT (0U)
+#define VOP2_ESMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_XFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_YFACTOR_SHIFT (16U)
+#define VOP2_ESMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_YFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION3_SCL_FACTOR_CBCR */
+#define VOP2_ESMART_REGION3_SCL_FACTOR_CBCR_OFFSET         (0xC8U)
+#define VOP2_ESMART_REGION3_SCL_FACTOR_CBCR_REGION3_CBCR_XFACTOR_SHIFT (0U)
+#define VOP2_ESMART_REGION3_SCL_FACTOR_CBCR_REGION3_CBCR_XFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION3_SCL_FACTOR_CBCR_REGION3_CBCR_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_ESMART_REGION3_SCL_FACTOR_CBCR_REGION3_CBCR_YFACTOR_SHIFT (16U)
+#define VOP2_ESMART_REGION3_SCL_FACTOR_CBCR_REGION3_CBCR_YFACTOR_MASK (0xFFFFU << VOP2_ESMART_REGION3_SCL_FACTOR_CBCR_REGION3_CBCR_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION3_SCL_OFFSET */
+#define VOP2_ESMART_REGION3_SCL_OFFSET_OFFSET              (0xCCU)
+#define VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_YRGB_XSCL_OFFSET_SHIFT (0U)
+#define VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_YRGB_XSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_YRGB_XSCL_OFFSET_SHIFT) /* 0x000000FF */
+#define VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_YRGB_YSCL_OFFSET_SHIFT (8U)
+#define VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_YRGB_YSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_YRGB_YSCL_OFFSET_SHIFT) /* 0x0000FF00 */
+#define VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_CBCR_XSCL_OFFSET_SHIFT (16U)
+#define VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_CBCR_XSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_CBCR_XSCL_OFFSET_SHIFT) /* 0x00FF0000 */
+#define VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_CBCR_YSCL_OFFSET_SHIFT (24U)
+#define VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_CBCR_YSCL_OFFSET_MASK (0xFFU << VOP2_ESMART_REGION3_SCL_OFFSET_REGION3_CBCR_YSCL_OFFSET_SHIFT) /* 0xFF000000 */
+/* ESMART_KEY_CTRL */
+#define VOP2_ESMART_ESMART_KEY_CTRL_OFFSET                 (0xD0U)
+#define VOP2_ESMART_ESMART_KEY_CTRL_ESMART_B_KEY_VALUE_SHIFT (0U)
+#define VOP2_ESMART_ESMART_KEY_CTRL_ESMART_B_KEY_VALUE_MASK (0x3FFU << VOP2_ESMART_ESMART_KEY_CTRL_ESMART_B_KEY_VALUE_SHIFT) /* 0x000003FF */
+#define VOP2_ESMART_ESMART_KEY_CTRL_ESMART_G_KEY_VALUE_SHIFT (10U)
+#define VOP2_ESMART_ESMART_KEY_CTRL_ESMART_G_KEY_VALUE_MASK (0x3FFU << VOP2_ESMART_ESMART_KEY_CTRL_ESMART_G_KEY_VALUE_SHIFT) /* 0x000FFC00 */
+#define VOP2_ESMART_ESMART_KEY_CTRL_ESMART_R_KEY_VALUE_SHIFT (20U)
+#define VOP2_ESMART_ESMART_KEY_CTRL_ESMART_R_KEY_VALUE_MASK (0x3FFU << VOP2_ESMART_ESMART_KEY_CTRL_ESMART_R_KEY_VALUE_SHIFT) /* 0x3FF00000 */
+#define VOP2_ESMART_ESMART_KEY_CTRL_ESMART_KEY_EN_SHIFT    (31U)
+#define VOP2_ESMART_ESMART_KEY_CTRL_ESMART_KEY_EN_MASK     (0x1U << VOP2_ESMART_ESMART_KEY_CTRL_ESMART_KEY_EN_SHIFT)    /* 0x80000000 */
+/* ESMART_BG_EN */
+#define VOP2_ESMART_ESMART_BG_EN_OFFSET                    (0xD4U)
+#define VOP2_ESMART_ESMART_BG_EN_ESMART_B_VALUE_SHIFT      (0U)
+#define VOP2_ESMART_ESMART_BG_EN_ESMART_B_VALUE_MASK       (0x3FFU << VOP2_ESMART_ESMART_BG_EN_ESMART_B_VALUE_SHIFT)    /* 0x000003FF */
+#define VOP2_ESMART_ESMART_BG_EN_ESMART_G_VALUE_SHIFT      (10U)
+#define VOP2_ESMART_ESMART_BG_EN_ESMART_G_VALUE_MASK       (0x3FFU << VOP2_ESMART_ESMART_BG_EN_ESMART_G_VALUE_SHIFT)    /* 0x000FFC00 */
+#define VOP2_ESMART_ESMART_BG_EN_ESMART_R_VALUE_SHIFT      (20U)
+#define VOP2_ESMART_ESMART_BG_EN_ESMART_R_VALUE_MASK       (0x3FFU << VOP2_ESMART_ESMART_BG_EN_ESMART_R_VALUE_SHIFT)    /* 0x3FF00000 */
+#define VOP2_ESMART_ESMART_BG_EN_ESMART_BG_EN_SHIFT        (31U)
+#define VOP2_ESMART_ESMART_BG_EN_ESMART_BG_EN_MASK         (0x1U << VOP2_ESMART_ESMART_BG_EN_ESMART_BG_EN_SHIFT)        /* 0x80000000 */
+/***************************************VOP2_SMART***************************************/
+/* ESMART_CTRL0 */
+#define VOP2_SMART_ESMART_CTRL0_OFFSET                     (0x0U)
+#define VOP2_SMART_ESMART_CTRL0_ESMART_RGB2YUV_EN_SHIFT    (1U)
+#define VOP2_SMART_ESMART_CTRL0_ESMART_RGB2YUV_EN_MASK     (0x1U << VOP2_SMART_ESMART_CTRL0_ESMART_RGB2YUV_EN_SHIFT)    /* 0x00000002 */
+#define VOP2_SMART_ESMART_CTRL0_ESMART_CSC_MODE_SHIFT      (2U)
+#define VOP2_SMART_ESMART_CTRL0_ESMART_CSC_MODE_MASK       (0x3U << VOP2_SMART_ESMART_CTRL0_ESMART_CSC_MODE_SHIFT)      /* 0x0000000C */
+#define VOP2_SMART_ESMART_CTRL0_ESMART_8BPP_LUT_EN_SHIFT   (4U)
+#define VOP2_SMART_ESMART_CTRL0_ESMART_8BPP_LUT_EN_MASK    (0x1U << VOP2_SMART_ESMART_CTRL0_ESMART_8BPP_LUT_EN_SHIFT)   /* 0x00000010 */
+/* ESMART_CTRL1 */
+#define VOP2_SMART_ESMART_CTRL1_OFFSET                     (0x4U)
+#define VOP2_SMART_ESMART_CTRL1_ESMART_ESMART_AXI_RLEN_SHIFT (0U)
+#define VOP2_SMART_ESMART_CTRL1_ESMART_ESMART_AXI_RLEN_MASK (0x3U << VOP2_SMART_ESMART_CTRL1_ESMART_ESMART_AXI_RLEN_SHIFT) /* 0x00000003 */
+#define VOP2_SMART_ESMART_CTRL1_ESMART_CBCR_GATHER_EN_SHIFT (3U)
+#define VOP2_SMART_ESMART_CTRL1_ESMART_CBCR_GATHER_EN_MASK (0x1U << VOP2_SMART_ESMART_CTRL1_ESMART_CBCR_GATHER_EN_SHIFT) /* 0x00000008 */
+#define VOP2_SMART_ESMART_CTRL1_ESMART_CBCR_RID_SHIFT      (12U)
+#define VOP2_SMART_ESMART_CTRL1_ESMART_CBCR_RID_MASK       (0xFU << VOP2_SMART_ESMART_CTRL1_ESMART_CBCR_RID_SHIFT)      /* 0x0000F000 */
+#define VOP2_SMART_ESMART_CTRL1_ESMART_CBCR_GATHER_NUM_SHIFT (24U)
+#define VOP2_SMART_ESMART_CTRL1_ESMART_CBCR_GATHER_NUM_MASK (0xFU << VOP2_SMART_ESMART_CTRL1_ESMART_CBCR_GATHER_NUM_SHIFT) /* 0x0F000000 */
+#define VOP2_SMART_ESMART_CTRL1_ESMART_DMA_RREQ_HURRY_EN_SHIFT (28U)
+#define VOP2_SMART_ESMART_CTRL1_ESMART_DMA_RREQ_HURRY_EN_MASK (0x1U << VOP2_SMART_ESMART_CTRL1_ESMART_DMA_RREQ_HURRY_EN_SHIFT) /* 0x10000000 */
+#define VOP2_SMART_ESMART_CTRL1_ESMART_DMA_RREQ_THOLD_SHIFT (29U)
+#define VOP2_SMART_ESMART_CTRL1_ESMART_DMA_RREQ_THOLD_MASK (0x3U << VOP2_SMART_ESMART_CTRL1_ESMART_DMA_RREQ_THOLD_SHIFT) /* 0x60000000 */
+#define VOP2_SMART_ESMART_CTRL1_ESMART_VREV_EN_SHIFT       (31U)
+#define VOP2_SMART_ESMART_CTRL1_ESMART_VREV_EN_MASK        (0x1U << VOP2_SMART_ESMART_CTRL1_ESMART_VREV_EN_SHIFT)       /* 0x80000000 */
+/* REGION0_MST_CTL */
+#define VOP2_SMART_REGION0_MST_CTL_OFFSET                  (0x10U)
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_MST_EN_SHIFT    (0U)
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_MST_EN_MASK     (0x1U << VOP2_SMART_REGION0_MST_CTL_REGION0_MST_EN_SHIFT)    /* 0x00000001 */
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_DATA_FMT_SHIFT  (1U)
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_DATA_FMT_MASK   (0x1FU << VOP2_SMART_REGION0_MST_CTL_REGION0_DATA_FMT_SHIFT) /* 0x0000003E */
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_YRGB_GT2_SHIFT  (8U)
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_YRGB_GT2_MASK   (0x1U << VOP2_SMART_REGION0_MST_CTL_REGION0_YRGB_GT2_SHIFT)  /* 0x00000100 */
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_YRGB_GT4_SHIFT  (9U)
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_YRGB_GT4_MASK   (0x1U << VOP2_SMART_REGION0_MST_CTL_REGION0_YRGB_GT4_SHIFT)  /* 0x00000200 */
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_DITHER_UP_EN_SHIFT (12U)
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_DITHER_UP_EN_MASK (0x1U << VOP2_SMART_REGION0_MST_CTL_REGION0_DITHER_UP_EN_SHIFT) /* 0x00001000 */
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_ALPHA_SWAP_SHIFT (13U)
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_ALPHA_SWAP_MASK (0x1U << VOP2_SMART_REGION0_MST_CTL_REGION0_ALPHA_SWAP_SHIFT) /* 0x00002000 */
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_RB_SWAP_SHIFT   (14U)
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_RB_SWAP_MASK    (0x1U << VOP2_SMART_REGION0_MST_CTL_REGION0_RB_SWAP_SHIFT)   /* 0x00004000 */
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_MID_SWAP_SHIFT  (15U)
+#define VOP2_SMART_REGION0_MST_CTL_REGION0_MID_SWAP_MASK   (0x1U << VOP2_SMART_REGION0_MST_CTL_REGION0_MID_SWAP_SHIFT)  /* 0x00008000 */
+/* REGION0_MST_YRGB */
+#define VOP2_SMART_REGION0_MST_YRGB_OFFSET                 (0x14U)
+#define VOP2_SMART_REGION0_MST_YRGB_REGION0_YRGB_MST_SHIFT (0U)
+#define VOP2_SMART_REGION0_MST_YRGB_REGION0_YRGB_MST_MASK  (0xFFFFFFFFU << VOP2_SMART_REGION0_MST_YRGB_REGION0_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION0_VIR */
+#define VOP2_SMART_REGION0_VIR_OFFSET                      (0x1CU)
+#define VOP2_SMART_REGION0_VIR_REGION0_VIR_STRIDE_SHIFT    (0U)
+#define VOP2_SMART_REGION0_VIR_REGION0_VIR_STRIDE_MASK     (0xFFFFU << VOP2_SMART_REGION0_VIR_REGION0_VIR_STRIDE_SHIFT) /* 0x0000FFFF */
+/* REGION0_ACT_INFO */
+#define VOP2_SMART_REGION0_ACT_INFO_OFFSET                 (0x20U)
+#define VOP2_SMART_REGION0_ACT_INFO_REGION0_ACT_WIDTH_SHIFT (0U)
+#define VOP2_SMART_REGION0_ACT_INFO_REGION0_ACT_WIDTH_MASK (0x1FFFU << VOP2_SMART_REGION0_ACT_INFO_REGION0_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION0_ACT_INFO_REGION0_ACT_HEIGTH_SHIFT (16U)
+#define VOP2_SMART_REGION0_ACT_INFO_REGION0_ACT_HEIGTH_MASK (0x1FFFU << VOP2_SMART_REGION0_ACT_INFO_REGION0_ACT_HEIGTH_SHIFT) /* 0x1FFF0000 */
+/* REGION0_DSP_INFO */
+#define VOP2_SMART_REGION0_DSP_INFO_OFFSET                 (0x24U)
+#define VOP2_SMART_REGION0_DSP_INFO_REGION0_DSP_WIDTH_SHIFT (0U)
+#define VOP2_SMART_REGION0_DSP_INFO_REGION0_DSP_WIDTH_MASK (0x1FFFU << VOP2_SMART_REGION0_DSP_INFO_REGION0_DSP_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION0_DSP_INFO_REGION0_DSP_HEIGHT_SHIFT (16U)
+#define VOP2_SMART_REGION0_DSP_INFO_REGION0_DSP_HEIGHT_MASK (0x1FFFU << VOP2_SMART_REGION0_DSP_INFO_REGION0_DSP_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* REGION0_DSP_OFFSET */
+#define VOP2_SMART_REGION0_DSP_OFFSET_OFFSET               (0x28U)
+#define VOP2_SMART_REGION0_DSP_OFFSET_REGION0_DSP_XOFF_SHIFT (0U)
+#define VOP2_SMART_REGION0_DSP_OFFSET_REGION0_DSP_XOFF_MASK (0x1FFFU << VOP2_SMART_REGION0_DSP_OFFSET_REGION0_DSP_XOFF_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION0_DSP_OFFSET_REGION0_DSP_YOFF_SHIFT (16U)
+#define VOP2_SMART_REGION0_DSP_OFFSET_REGION0_DSP_YOFF_MASK (0x1FFFU << VOP2_SMART_REGION0_DSP_OFFSET_REGION0_DSP_YOFF_SHIFT) /* 0x1FFF0000 */
+/* REGION0_SCL_CTRL */
+#define VOP2_SMART_REGION0_SCL_CTRL_OFFSET                 (0x30U)
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_XSU_EN_SHIFT (0U)
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_XSU_EN_MASK (0x1U << VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_XSU_EN_SHIFT) /* 0x00000001 */
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_XSD_EN_SHIFT (1U)
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_XSD_EN_MASK (0x1U << VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_XSD_EN_SHIFT) /* 0x00000002 */
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_XSCL_MODE_SHIFT (2U)
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_XSCL_MODE_MASK (0x3U << VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_XSCL_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_YSU_EN_SHIFT (4U)
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_YSU_EN_MASK (0x1U << VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_YSU_EN_SHIFT) /* 0x00000010 */
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_YSD_EN_SHIFT (5U)
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_YSD_EN_MASK (0x1U << VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_YSD_EN_SHIFT) /* 0x00000020 */
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_YSCL_MODE_SHIFT (6U)
+#define VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_YSCL_MODE_MASK (0x3U << VOP2_SMART_REGION0_SCL_CTRL_REGION0_YRGB_YSCL_MODE_SHIFT) /* 0x000000C0 */
+/* REGION0_SCL_FACTOR_YRGB */
+#define VOP2_SMART_REGION0_SCL_FACTOR_YRGB_OFFSET          (0x34U)
+#define VOP2_SMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_XFACTOR_SHIFT (0U)
+#define VOP2_SMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_XFACTOR_MASK (0xFFFFU << VOP2_SMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_SMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_YFACTOR_SHIFT (16U)
+#define VOP2_SMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_YFACTOR_MASK (0xFFFFU << VOP2_SMART_REGION0_SCL_FACTOR_YRGB_REGION0_YRGB_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION0_SCL_OFFSET */
+#define VOP2_SMART_REGION0_SCL_OFFSET_OFFSET               (0x3CU)
+#define VOP2_SMART_REGION0_SCL_OFFSET_REGION0_YRGB_XSCL_OFFSET_SHIFT (0U)
+#define VOP2_SMART_REGION0_SCL_OFFSET_REGION0_YRGB_XSCL_OFFSET_MASK (0xFFU << VOP2_SMART_REGION0_SCL_OFFSET_REGION0_YRGB_XSCL_OFFSET_SHIFT) /* 0x000000FF */
+#define VOP2_SMART_REGION0_SCL_OFFSET_REGION0_YRGB_YSCL_OFFSET_SHIFT (8U)
+#define VOP2_SMART_REGION0_SCL_OFFSET_REGION0_YRGB_YSCL_OFFSET_MASK (0xFFU << VOP2_SMART_REGION0_SCL_OFFSET_REGION0_YRGB_YSCL_OFFSET_SHIFT) /* 0x0000FF00 */
+/* REGION1_MST_CTL */
+#define VOP2_SMART_REGION1_MST_CTL_OFFSET                  (0x40U)
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_MST_EN_SHIFT    (0U)
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_MST_EN_MASK     (0x1U << VOP2_SMART_REGION1_MST_CTL_REGION1_MST_EN_SHIFT)    /* 0x00000001 */
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_DATA_FMT_SHIFT  (1U)
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_DATA_FMT_MASK   (0x1FU << VOP2_SMART_REGION1_MST_CTL_REGION1_DATA_FMT_SHIFT) /* 0x0000003E */
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_YRGB_GT2_SHIFT  (8U)
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_YRGB_GT2_MASK   (0x1U << VOP2_SMART_REGION1_MST_CTL_REGION1_YRGB_GT2_SHIFT)  /* 0x00000100 */
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_YRGB_GT4_SHIFT  (9U)
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_YRGB_GT4_MASK   (0x1U << VOP2_SMART_REGION1_MST_CTL_REGION1_YRGB_GT4_SHIFT)  /* 0x00000200 */
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_DITHER_UP_EN_SHIFT (12U)
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_DITHER_UP_EN_MASK (0x1U << VOP2_SMART_REGION1_MST_CTL_REGION1_DITHER_UP_EN_SHIFT) /* 0x00001000 */
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_ALPHA_SWAP_SHIFT (13U)
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_ALPHA_SWAP_MASK (0x1U << VOP2_SMART_REGION1_MST_CTL_REGION1_ALPHA_SWAP_SHIFT) /* 0x00002000 */
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_RB_SWAP_SHIFT   (14U)
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_RB_SWAP_MASK    (0x1U << VOP2_SMART_REGION1_MST_CTL_REGION1_RB_SWAP_SHIFT)   /* 0x00004000 */
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_MID_SWAP_SHIFT  (15U)
+#define VOP2_SMART_REGION1_MST_CTL_REGION1_MID_SWAP_MASK   (0x1U << VOP2_SMART_REGION1_MST_CTL_REGION1_MID_SWAP_SHIFT)  /* 0x00008000 */
+/* REGION1_MST_YRGB */
+#define VOP2_SMART_REGION1_MST_YRGB_OFFSET                 (0x44U)
+#define VOP2_SMART_REGION1_MST_YRGB_REGION1_YRGB_MST_SHIFT (0U)
+#define VOP2_SMART_REGION1_MST_YRGB_REGION1_YRGB_MST_MASK  (0xFFFFFFFFU << VOP2_SMART_REGION1_MST_YRGB_REGION1_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION1_VIR */
+#define VOP2_SMART_REGION1_VIR_OFFSET                      (0x4CU)
+#define VOP2_SMART_REGION1_VIR_REGION1_VIR_STRIDE_SHIFT    (0U)
+#define VOP2_SMART_REGION1_VIR_REGION1_VIR_STRIDE_MASK     (0xFFFFU << VOP2_SMART_REGION1_VIR_REGION1_VIR_STRIDE_SHIFT) /* 0x0000FFFF */
+/* REGION1_ACT_INFO */
+#define VOP2_SMART_REGION1_ACT_INFO_OFFSET                 (0x50U)
+#define VOP2_SMART_REGION1_ACT_INFO_REGION1_ACT_WIDTH_SHIFT (0U)
+#define VOP2_SMART_REGION1_ACT_INFO_REGION1_ACT_WIDTH_MASK (0x1FFFU << VOP2_SMART_REGION1_ACT_INFO_REGION1_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION1_ACT_INFO_REGION1_ACT_HEIGTH_SHIFT (16U)
+#define VOP2_SMART_REGION1_ACT_INFO_REGION1_ACT_HEIGTH_MASK (0x1FFFU << VOP2_SMART_REGION1_ACT_INFO_REGION1_ACT_HEIGTH_SHIFT) /* 0x1FFF0000 */
+/* REGION1_DSP_INFO */
+#define VOP2_SMART_REGION1_DSP_INFO_OFFSET                 (0x54U)
+#define VOP2_SMART_REGION1_DSP_INFO_REGION1_DSP_WIDTH_SHIFT (0U)
+#define VOP2_SMART_REGION1_DSP_INFO_REGION1_DSP_WIDTH_MASK (0x1FFFU << VOP2_SMART_REGION1_DSP_INFO_REGION1_DSP_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION1_DSP_INFO_REGION1_DSP_HEIGHT_SHIFT (16U)
+#define VOP2_SMART_REGION1_DSP_INFO_REGION1_DSP_HEIGHT_MASK (0x1FFFU << VOP2_SMART_REGION1_DSP_INFO_REGION1_DSP_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* REGION1_DSP_OFFSET */
+#define VOP2_SMART_REGION1_DSP_OFFSET_OFFSET               (0x58U)
+#define VOP2_SMART_REGION1_DSP_OFFSET_REGION1_DSP_XOFF_SHIFT (0U)
+#define VOP2_SMART_REGION1_DSP_OFFSET_REGION1_DSP_XOFF_MASK (0x1FFFU << VOP2_SMART_REGION1_DSP_OFFSET_REGION1_DSP_XOFF_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION1_DSP_OFFSET_REGION1_DSP_YOFF_SHIFT (16U)
+#define VOP2_SMART_REGION1_DSP_OFFSET_REGION1_DSP_YOFF_MASK (0x1FFFU << VOP2_SMART_REGION1_DSP_OFFSET_REGION1_DSP_YOFF_SHIFT) /* 0x1FFF0000 */
+/* REGION1_SCL_CTRL */
+#define VOP2_SMART_REGION1_SCL_CTRL_OFFSET                 (0x60U)
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_XSU_EN_SHIFT (0U)
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_XSU_EN_MASK (0x1U << VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_XSU_EN_SHIFT) /* 0x00000001 */
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_XSD_EN_SHIFT (1U)
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_XSD_EN_MASK (0x1U << VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_XSD_EN_SHIFT) /* 0x00000002 */
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_XSCL_MODE_SHIFT (2U)
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_XSCL_MODE_MASK (0x3U << VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_XSCL_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_YSU_EN_SHIFT (4U)
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_YSU_EN_MASK (0x1U << VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_YSU_EN_SHIFT) /* 0x00000010 */
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_YSD_EN_SHIFT (5U)
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_YSD_EN_MASK (0x1U << VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_YSD_EN_SHIFT) /* 0x00000020 */
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_YSCL_MODE_SHIFT (6U)
+#define VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_YSCL_MODE_MASK (0x3U << VOP2_SMART_REGION1_SCL_CTRL_REGION1_YRGB_YSCL_MODE_SHIFT) /* 0x000000C0 */
+/* REGION1_SCL_FACTOR_YRGB */
+#define VOP2_SMART_REGION1_SCL_FACTOR_YRGB_OFFSET          (0x64U)
+#define VOP2_SMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_XFACTOR_SHIFT (0U)
+#define VOP2_SMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_XFACTOR_MASK (0xFFFFU << VOP2_SMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_SMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_YFACTOR_SHIFT (16U)
+#define VOP2_SMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_YFACTOR_MASK (0xFFFFU << VOP2_SMART_REGION1_SCL_FACTOR_YRGB_REGION1_YRGB_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION1_SCL_OFFSET */
+#define VOP2_SMART_REGION1_SCL_OFFSET_OFFSET               (0x6CU)
+#define VOP2_SMART_REGION1_SCL_OFFSET_REGION1_YRGB_XSCL_OFFSET_SHIFT (0U)
+#define VOP2_SMART_REGION1_SCL_OFFSET_REGION1_YRGB_XSCL_OFFSET_MASK (0xFFU << VOP2_SMART_REGION1_SCL_OFFSET_REGION1_YRGB_XSCL_OFFSET_SHIFT) /* 0x000000FF */
+#define VOP2_SMART_REGION1_SCL_OFFSET_REGION1_YRGB_YSCL_OFFSET_SHIFT (8U)
+#define VOP2_SMART_REGION1_SCL_OFFSET_REGION1_YRGB_YSCL_OFFSET_MASK (0xFFU << VOP2_SMART_REGION1_SCL_OFFSET_REGION1_YRGB_YSCL_OFFSET_SHIFT) /* 0x0000FF00 */
+/* REGION2_MST_CTL */
+#define VOP2_SMART_REGION2_MST_CTL_OFFSET                  (0x70U)
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_MST_EN_SHIFT    (0U)
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_MST_EN_MASK     (0x1U << VOP2_SMART_REGION2_MST_CTL_REGION2_MST_EN_SHIFT)    /* 0x00000001 */
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_DATA_FMT_SHIFT  (1U)
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_DATA_FMT_MASK   (0x1FU << VOP2_SMART_REGION2_MST_CTL_REGION2_DATA_FMT_SHIFT) /* 0x0000003E */
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_YRGB_GT2_SHIFT  (8U)
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_YRGB_GT2_MASK   (0x1U << VOP2_SMART_REGION2_MST_CTL_REGION2_YRGB_GT2_SHIFT)  /* 0x00000100 */
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_CBCR_GT2_SHIFT  (10U)
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_CBCR_GT2_MASK   (0x1U << VOP2_SMART_REGION2_MST_CTL_REGION2_CBCR_GT2_SHIFT)  /* 0x00000400 */
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_DITHER_UP_EN_SHIFT (12U)
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_DITHER_UP_EN_MASK (0x1U << VOP2_SMART_REGION2_MST_CTL_REGION2_DITHER_UP_EN_SHIFT) /* 0x00001000 */
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_ALPHA_SWAP_SHIFT (13U)
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_ALPHA_SWAP_MASK (0x1U << VOP2_SMART_REGION2_MST_CTL_REGION2_ALPHA_SWAP_SHIFT) /* 0x00002000 */
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_RB_SWAP_SHIFT   (14U)
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_RB_SWAP_MASK    (0x1U << VOP2_SMART_REGION2_MST_CTL_REGION2_RB_SWAP_SHIFT)   /* 0x00004000 */
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_MID_SWAP_SHIFT  (15U)
+#define VOP2_SMART_REGION2_MST_CTL_REGION2_MID_SWAP_MASK   (0x1U << VOP2_SMART_REGION2_MST_CTL_REGION2_MID_SWAP_SHIFT)  /* 0x00008000 */
+/* REGION2_MST_YRGB */
+#define VOP2_SMART_REGION2_MST_YRGB_OFFSET                 (0x74U)
+#define VOP2_SMART_REGION2_MST_YRGB_REGION2_YRGB_MST_SHIFT (0U)
+#define VOP2_SMART_REGION2_MST_YRGB_REGION2_YRGB_MST_MASK  (0xFFFFFFFFU << VOP2_SMART_REGION2_MST_YRGB_REGION2_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION2_VIR */
+#define VOP2_SMART_REGION2_VIR_OFFSET                      (0x7CU)
+#define VOP2_SMART_REGION2_VIR_REGION2_VIR_STRIDE_SHIFT    (0U)
+#define VOP2_SMART_REGION2_VIR_REGION2_VIR_STRIDE_MASK     (0xFFFFU << VOP2_SMART_REGION2_VIR_REGION2_VIR_STRIDE_SHIFT) /* 0x0000FFFF */
+/* REGION2_ACT_INFO */
+#define VOP2_SMART_REGION2_ACT_INFO_OFFSET                 (0x80U)
+#define VOP2_SMART_REGION2_ACT_INFO_REGION2_ACT_WIDTH_SHIFT (0U)
+#define VOP2_SMART_REGION2_ACT_INFO_REGION2_ACT_WIDTH_MASK (0x1FFFU << VOP2_SMART_REGION2_ACT_INFO_REGION2_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION2_ACT_INFO_REGION2_ACT_HEIGTH_SHIFT (16U)
+#define VOP2_SMART_REGION2_ACT_INFO_REGION2_ACT_HEIGTH_MASK (0x1FFFU << VOP2_SMART_REGION2_ACT_INFO_REGION2_ACT_HEIGTH_SHIFT) /* 0x1FFF0000 */
+/* REGION2_DSP_INFO */
+#define VOP2_SMART_REGION2_DSP_INFO_OFFSET                 (0x84U)
+#define VOP2_SMART_REGION2_DSP_INFO_REGION2_DSP_WIDTH_SHIFT (0U)
+#define VOP2_SMART_REGION2_DSP_INFO_REGION2_DSP_WIDTH_MASK (0x1FFFU << VOP2_SMART_REGION2_DSP_INFO_REGION2_DSP_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION2_DSP_INFO_REGION2_DSP_HEIGHT_SHIFT (16U)
+#define VOP2_SMART_REGION2_DSP_INFO_REGION2_DSP_HEIGHT_MASK (0x1FFFU << VOP2_SMART_REGION2_DSP_INFO_REGION2_DSP_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* REGION2_DSP_OFFSET */
+#define VOP2_SMART_REGION2_DSP_OFFSET_OFFSET               (0x88U)
+#define VOP2_SMART_REGION2_DSP_OFFSET_REGION2_DSP_XOFF_SHIFT (0U)
+#define VOP2_SMART_REGION2_DSP_OFFSET_REGION2_DSP_XOFF_MASK (0x1FFFU << VOP2_SMART_REGION2_DSP_OFFSET_REGION2_DSP_XOFF_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION2_DSP_OFFSET_REGION2_DSP_YOFF_SHIFT (16U)
+#define VOP2_SMART_REGION2_DSP_OFFSET_REGION2_DSP_YOFF_MASK (0x1FFFU << VOP2_SMART_REGION2_DSP_OFFSET_REGION2_DSP_YOFF_SHIFT) /* 0x1FFF0000 */
+/* REGION2_SCL_CTRL */
+#define VOP2_SMART_REGION2_SCL_CTRL_OFFSET                 (0x90U)
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_XSU_EN_SHIFT (0U)
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_XSU_EN_MASK (0x1U << VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_XSU_EN_SHIFT) /* 0x00000001 */
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_XSD_EN_SHIFT (1U)
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_XSD_EN_MASK (0x1U << VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_XSD_EN_SHIFT) /* 0x00000002 */
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_XSCL_MODE_SHIFT (2U)
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_XSCL_MODE_MASK (0x3U << VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_XSCL_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_YSU_EN_SHIFT (4U)
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_YSU_EN_MASK (0x1U << VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_YSU_EN_SHIFT) /* 0x00000010 */
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_YSD_EN_SHIFT (5U)
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_YSD_EN_MASK (0x1U << VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_YSD_EN_SHIFT) /* 0x00000020 */
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_YSCL_MODE_SHIFT (6U)
+#define VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_YSCL_MODE_MASK (0x3U << VOP2_SMART_REGION2_SCL_CTRL_REGION2_YRGB_YSCL_MODE_SHIFT) /* 0x000000C0 */
+/* REGION2_SCL_FACTOR_YRGB */
+#define VOP2_SMART_REGION2_SCL_FACTOR_YRGB_OFFSET          (0x94U)
+#define VOP2_SMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_XFACTOR_SHIFT (0U)
+#define VOP2_SMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_XFACTOR_MASK (0xFFFFU << VOP2_SMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_SMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_YFACTOR_SHIFT (16U)
+#define VOP2_SMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_YFACTOR_MASK (0xFFFFU << VOP2_SMART_REGION2_SCL_FACTOR_YRGB_REGION2_YRGB_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION2_SCL_OFFSET */
+#define VOP2_SMART_REGION2_SCL_OFFSET_OFFSET               (0x9CU)
+#define VOP2_SMART_REGION2_SCL_OFFSET_REGION2_YRGB_XSCL_OFFSET_SHIFT (0U)
+#define VOP2_SMART_REGION2_SCL_OFFSET_REGION2_YRGB_XSCL_OFFSET_MASK (0xFFU << VOP2_SMART_REGION2_SCL_OFFSET_REGION2_YRGB_XSCL_OFFSET_SHIFT) /* 0x000000FF */
+#define VOP2_SMART_REGION2_SCL_OFFSET_REGION2_YRGB_YSCL_OFFSET_SHIFT (8U)
+#define VOP2_SMART_REGION2_SCL_OFFSET_REGION2_YRGB_YSCL_OFFSET_MASK (0xFFU << VOP2_SMART_REGION2_SCL_OFFSET_REGION2_YRGB_YSCL_OFFSET_SHIFT) /* 0x0000FF00 */
+/* REGION3_MST_CTL */
+#define VOP2_SMART_REGION3_MST_CTL_OFFSET                  (0xA0U)
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_MST_EN_SHIFT    (0U)
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_MST_EN_MASK     (0x1U << VOP2_SMART_REGION3_MST_CTL_REGION3_MST_EN_SHIFT)    /* 0x00000001 */
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_DATA_FMT_SHIFT  (1U)
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_DATA_FMT_MASK   (0x1FU << VOP2_SMART_REGION3_MST_CTL_REGION3_DATA_FMT_SHIFT) /* 0x0000003E */
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_YRGB_GT2_SHIFT  (8U)
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_YRGB_GT2_MASK   (0x1U << VOP2_SMART_REGION3_MST_CTL_REGION3_YRGB_GT2_SHIFT)  /* 0x00000100 */
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_YRGB_GT4_SHIFT  (9U)
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_YRGB_GT4_MASK   (0x1U << VOP2_SMART_REGION3_MST_CTL_REGION3_YRGB_GT4_SHIFT)  /* 0x00000200 */
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_DITHER_UP_EN_SHIFT (12U)
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_DITHER_UP_EN_MASK (0x1U << VOP2_SMART_REGION3_MST_CTL_REGION3_DITHER_UP_EN_SHIFT) /* 0x00001000 */
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_ALPHA_SWAP_SHIFT (13U)
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_ALPHA_SWAP_MASK (0x1U << VOP2_SMART_REGION3_MST_CTL_REGION3_ALPHA_SWAP_SHIFT) /* 0x00002000 */
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_RB_SWAP_SHIFT   (14U)
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_RB_SWAP_MASK    (0x1U << VOP2_SMART_REGION3_MST_CTL_REGION3_RB_SWAP_SHIFT)   /* 0x00004000 */
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_MID_SWAP_SHIFT  (15U)
+#define VOP2_SMART_REGION3_MST_CTL_REGION3_MID_SWAP_MASK   (0x1U << VOP2_SMART_REGION3_MST_CTL_REGION3_MID_SWAP_SHIFT)  /* 0x00008000 */
+/* REGION3_MST_YRGB */
+#define VOP2_SMART_REGION3_MST_YRGB_OFFSET                 (0xA4U)
+#define VOP2_SMART_REGION3_MST_YRGB_REGION3_YRGB_MST_SHIFT (0U)
+#define VOP2_SMART_REGION3_MST_YRGB_REGION3_YRGB_MST_MASK  (0xFFFFFFFFU << VOP2_SMART_REGION3_MST_YRGB_REGION3_YRGB_MST_SHIFT) /* 0xFFFFFFFF */
+/* REGION3_VIR */
+#define VOP2_SMART_REGION3_VIR_OFFSET                      (0xACU)
+#define VOP2_SMART_REGION3_VIR_REGION3_VIR_STRIDE_SHIFT    (0U)
+#define VOP2_SMART_REGION3_VIR_REGION3_VIR_STRIDE_MASK     (0xFFFFU << VOP2_SMART_REGION3_VIR_REGION3_VIR_STRIDE_SHIFT) /* 0x0000FFFF */
+/* REGION3_ACT_INFO */
+#define VOP2_SMART_REGION3_ACT_INFO_OFFSET                 (0xB0U)
+#define VOP2_SMART_REGION3_ACT_INFO_REGION3_ACT_WIDTH_SHIFT (0U)
+#define VOP2_SMART_REGION3_ACT_INFO_REGION3_ACT_WIDTH_MASK (0x1FFFU << VOP2_SMART_REGION3_ACT_INFO_REGION3_ACT_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION3_ACT_INFO_REGION3_ACT_HEIGTH_SHIFT (16U)
+#define VOP2_SMART_REGION3_ACT_INFO_REGION3_ACT_HEIGTH_MASK (0x1FFFU << VOP2_SMART_REGION3_ACT_INFO_REGION3_ACT_HEIGTH_SHIFT) /* 0x1FFF0000 */
+/* REGION3_DSP_INFO */
+#define VOP2_SMART_REGION3_DSP_INFO_OFFSET                 (0xB4U)
+#define VOP2_SMART_REGION3_DSP_INFO_REGION3_DSP_WIDTH_SHIFT (0U)
+#define VOP2_SMART_REGION3_DSP_INFO_REGION3_DSP_WIDTH_MASK (0x1FFFU << VOP2_SMART_REGION3_DSP_INFO_REGION3_DSP_WIDTH_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION3_DSP_INFO_REGION3_DSP_HEIGHT_SHIFT (16U)
+#define VOP2_SMART_REGION3_DSP_INFO_REGION3_DSP_HEIGHT_MASK (0x1FFFU << VOP2_SMART_REGION3_DSP_INFO_REGION3_DSP_HEIGHT_SHIFT) /* 0x1FFF0000 */
+/* REGION3_DSP_OFFSET */
+#define VOP2_SMART_REGION3_DSP_OFFSET_OFFSET               (0xB8U)
+#define VOP2_SMART_REGION3_DSP_OFFSET_REGION3_DSP_XOFF_SHIFT (0U)
+#define VOP2_SMART_REGION3_DSP_OFFSET_REGION3_DSP_XOFF_MASK (0x1FFFU << VOP2_SMART_REGION3_DSP_OFFSET_REGION3_DSP_XOFF_SHIFT) /* 0x00001FFF */
+#define VOP2_SMART_REGION3_DSP_OFFSET_REGION3_DSP_YOFF_SHIFT (16U)
+#define VOP2_SMART_REGION3_DSP_OFFSET_REGION3_DSP_YOFF_MASK (0x1FFFU << VOP2_SMART_REGION3_DSP_OFFSET_REGION3_DSP_YOFF_SHIFT) /* 0x1FFF0000 */
+/* REGION3_SCL_CTRL */
+#define VOP2_SMART_REGION3_SCL_CTRL_OFFSET                 (0xC0U)
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_XSU_EN_SHIFT (0U)
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_XSU_EN_MASK (0x1U << VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_XSU_EN_SHIFT) /* 0x00000001 */
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_XSD_EN_SHIFT (1U)
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_XSD_EN_MASK (0x1U << VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_XSD_EN_SHIFT) /* 0x00000002 */
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_XSCL_MODE_SHIFT (2U)
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_XSCL_MODE_MASK (0x3U << VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_XSCL_MODE_SHIFT) /* 0x0000000C */
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_YSU_EN_SHIFT (4U)
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_YSU_EN_MASK (0x1U << VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_YSU_EN_SHIFT) /* 0x00000010 */
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_YSD_EN_SHIFT (5U)
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_YSD_EN_MASK (0x1U << VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_YSD_EN_SHIFT) /* 0x00000020 */
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_YSCL_MODE_SHIFT (6U)
+#define VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_YSCL_MODE_MASK (0x3U << VOP2_SMART_REGION3_SCL_CTRL_REGION3_YRGB_YSCL_MODE_SHIFT) /* 0x000000C0 */
+/* REGION3_SCL_FACTOR_YRGB */
+#define VOP2_SMART_REGION3_SCL_FACTOR_YRGB_OFFSET          (0xC4U)
+#define VOP2_SMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_XFACTOR_SHIFT (0U)
+#define VOP2_SMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_XFACTOR_MASK (0xFFFFU << VOP2_SMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_XFACTOR_SHIFT) /* 0x0000FFFF */
+#define VOP2_SMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_YFACTOR_SHIFT (16U)
+#define VOP2_SMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_YFACTOR_MASK (0xFFFFU << VOP2_SMART_REGION3_SCL_FACTOR_YRGB_REGION3_YRGB_YFACTOR_SHIFT) /* 0xFFFF0000 */
+/* REGION3_SCL_OFFSET */
+#define VOP2_SMART_REGION3_SCL_OFFSET_OFFSET               (0xCCU)
+#define VOP2_SMART_REGION3_SCL_OFFSET_REGION3_YRGB_XSCL_OFFSET_SHIFT (0U)
+#define VOP2_SMART_REGION3_SCL_OFFSET_REGION3_YRGB_XSCL_OFFSET_MASK (0xFFU << VOP2_SMART_REGION3_SCL_OFFSET_REGION3_YRGB_XSCL_OFFSET_SHIFT) /* 0x000000FF */
+#define VOP2_SMART_REGION3_SCL_OFFSET_REGION3_YRGB_YSCL_OFFSET_SHIFT (8U)
+#define VOP2_SMART_REGION3_SCL_OFFSET_REGION3_YRGB_YSCL_OFFSET_MASK (0xFFU << VOP2_SMART_REGION3_SCL_OFFSET_REGION3_YRGB_YSCL_OFFSET_SHIFT) /* 0x0000FF00 */
+/* ESMART_KEY_CTRL */
+#define VOP2_SMART_ESMART_KEY_CTRL_OFFSET                  (0xD0U)
+#define VOP2_SMART_ESMART_KEY_CTRL_ESMART_B_KEY_VALUE_SHIFT (0U)
+#define VOP2_SMART_ESMART_KEY_CTRL_ESMART_B_KEY_VALUE_MASK (0x3FFU << VOP2_SMART_ESMART_KEY_CTRL_ESMART_B_KEY_VALUE_SHIFT) /* 0x000003FF */
+#define VOP2_SMART_ESMART_KEY_CTRL_ESMART_G_KEY_VALUE_SHIFT (10U)
+#define VOP2_SMART_ESMART_KEY_CTRL_ESMART_G_KEY_VALUE_MASK (0x3FFU << VOP2_SMART_ESMART_KEY_CTRL_ESMART_G_KEY_VALUE_SHIFT) /* 0x000FFC00 */
+#define VOP2_SMART_ESMART_KEY_CTRL_ESMART_R_KEY_VALUE_SHIFT (20U)
+#define VOP2_SMART_ESMART_KEY_CTRL_ESMART_R_KEY_VALUE_MASK (0x3FFU << VOP2_SMART_ESMART_KEY_CTRL_ESMART_R_KEY_VALUE_SHIFT) /* 0x3FF00000 */
+#define VOP2_SMART_ESMART_KEY_CTRL_ESMART_KEY_EN_SHIFT     (31U)
+#define VOP2_SMART_ESMART_KEY_CTRL_ESMART_KEY_EN_MASK      (0x1U << VOP2_SMART_ESMART_KEY_CTRL_ESMART_KEY_EN_SHIFT)     /* 0x80000000 */
+/* ESMART_BG_EN */
+#define VOP2_SMART_ESMART_BG_EN_OFFSET                     (0xD4U)
+#define VOP2_SMART_ESMART_BG_EN_ESMART_B_VALUE_SHIFT       (0U)
+#define VOP2_SMART_ESMART_BG_EN_ESMART_B_VALUE_MASK        (0x3FFU << VOP2_SMART_ESMART_BG_EN_ESMART_B_VALUE_SHIFT)     /* 0x000003FF */
+#define VOP2_SMART_ESMART_BG_EN_ESMART_G_VALUE_SHIFT       (10U)
+#define VOP2_SMART_ESMART_BG_EN_ESMART_G_VALUE_MASK        (0x3FFU << VOP2_SMART_ESMART_BG_EN_ESMART_G_VALUE_SHIFT)     /* 0x000FFC00 */
+#define VOP2_SMART_ESMART_BG_EN_ESMART_R_VALUE_SHIFT       (20U)
+#define VOP2_SMART_ESMART_BG_EN_ESMART_R_VALUE_MASK        (0x3FFU << VOP2_SMART_ESMART_BG_EN_ESMART_R_VALUE_SHIFT)     /* 0x3FF00000 */
+#define VOP2_SMART_ESMART_BG_EN_ESMART_BG_EN_SHIFT         (31U)
+#define VOP2_SMART_ESMART_BG_EN_ESMART_BG_EN_MASK          (0x1U << VOP2_SMART_ESMART_BG_EN_ESMART_BG_EN_SHIFT)         /* 0x80000000 */
+/****************************************VOP2_HDR****************************************/
+/* HDR10_LUT_CTRL */
+#define VOP2_HDR_HDR10_LUT_CTRL_OFFSET                     (0x0U)
+#define VOP2_HDR_HDR10_LUT_CTRL_HDR10_LUT_UPDATE_EN_SHIFT  (0U)
+#define VOP2_HDR_HDR10_LUT_CTRL_HDR10_LUT_UPDATE_EN_MASK   (0x1U << VOP2_HDR_HDR10_LUT_CTRL_HDR10_LUT_UPDATE_EN_SHIFT)  /* 0x00000001 */
+#define VOP2_HDR_HDR10_LUT_CTRL_HDR10_LUT_MODE_SHIFT       (1U)
+#define VOP2_HDR_HDR10_LUT_CTRL_HDR10_LUT_MODE_MASK        (0x1U << VOP2_HDR_HDR10_LUT_CTRL_HDR10_LUT_MODE_SHIFT)       /* 0x00000002 */
+/* HDR10_LUT_MST */
+#define VOP2_HDR_HDR10_LUT_MST_OFFSET                      (0x4U)
+#define VOP2_HDR_HDR10_LUT_MST_HDR10_LUT_MST_SHIFT         (0U)
+#define VOP2_HDR_HDR10_LUT_MST_HDR10_LUT_MST_MASK          (0xFFFFFFFFU << VOP2_HDR_HDR10_LUT_MST_HDR10_LUT_MST_SHIFT)  /* 0xFFFFFFFF */
+/* SDR2HDR_CTRL */
+#define VOP2_HDR_SDR2HDR_CTRL_OFFSET                       (0x10U)
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_EOTF_EN_SHIFT        (0U)
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_EOTF_EN_MASK         (0x1U << VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_EOTF_EN_SHIFT)        /* 0x00000001 */
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_R2R_EN_SHIFT         (1U)
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_R2R_EN_MASK          (0x1U << VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_R2R_EN_SHIFT)         /* 0x00000002 */
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_R2R_MODE_SHIFT       (2U)
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_R2R_MODE_MASK        (0x1U << VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_R2R_MODE_SHIFT)       /* 0x00000004 */
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_OETF_EN_SHIFT        (3U)
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_OETF_EN_MASK         (0x1U << VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_OETF_EN_SHIFT)        /* 0x00000008 */
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_BYPASS_EN_SHIFT      (8U)
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_BYPASS_EN_MASK       (0x1U << VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_BYPASS_EN_SHIFT)      /* 0x00000100 */
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_GATING_EN_SHIFT      (9U)
+#define VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_GATING_EN_MASK       (0x1U << VOP2_HDR_SDR2HDR_CTRL_SDR2HDR_GATING_EN_SHIFT)      /* 0x00000200 */
+/* HDR2SDR_CTRL */
+#define VOP2_HDR_HDR2SDR_CTRL_OFFSET                       (0x20U)
+#define VOP2_HDR_HDR2SDR_CTRL_HDR2SDR_EN_SHIFT             (0U)
+#define VOP2_HDR_HDR2SDR_CTRL_HDR2SDR_EN_MASK              (0x1U << VOP2_HDR_HDR2SDR_CTRL_HDR2SDR_EN_SHIFT)             /* 0x00000001 */
+/* HDR2SDR_SRC_RANGE */
+#define VOP2_HDR_HDR2SDR_SRC_RANGE_OFFSET                  (0x24U)
+#define VOP2_HDR_HDR2SDR_SRC_RANGE_SRC_MIN_SHIFT           (0U)
+#define VOP2_HDR_HDR2SDR_SRC_RANGE_SRC_MIN_MASK            (0x3FFFU << VOP2_HDR_HDR2SDR_SRC_RANGE_SRC_MIN_SHIFT)        /* 0x00003FFF */
+#define VOP2_HDR_HDR2SDR_SRC_RANGE_SRC_MAX_SHIFT           (16U)
+#define VOP2_HDR_HDR2SDR_SRC_RANGE_SRC_MAX_MASK            (0x3FFFU << VOP2_HDR_HDR2SDR_SRC_RANGE_SRC_MAX_SHIFT)        /* 0x3FFF0000 */
+/* HDR2SDR_NORFACEETF */
+#define VOP2_HDR_HDR2SDR_NORFACEETF_OFFSET                 (0x28U)
+#define VOP2_HDR_HDR2SDR_NORFACEETF_NORMFACEETF_SHIFT      (0U)
+#define VOP2_HDR_HDR2SDR_NORFACEETF_NORMFACEETF_MASK       (0x7FFU << VOP2_HDR_HDR2SDR_NORFACEETF_NORMFACEETF_SHIFT)    /* 0x000007FF */
+/* HDR2SDR_DST_RANGE */
+#define VOP2_HDR_HDR2SDR_DST_RANGE_OFFSET                  (0x2CU)
+#define VOP2_HDR_HDR2SDR_DST_RANGE_DST_MIN_SHIFT           (0U)
+#define VOP2_HDR_HDR2SDR_DST_RANGE_DST_MIN_MASK            (0xFFFFU << VOP2_HDR_HDR2SDR_DST_RANGE_DST_MIN_SHIFT)        /* 0x0000FFFF */
+#define VOP2_HDR_HDR2SDR_DST_RANGE_DST_MAX_SHIFT           (16U)
+#define VOP2_HDR_HDR2SDR_DST_RANGE_DST_MAX_MASK            (0xFFFFU << VOP2_HDR_HDR2SDR_DST_RANGE_DST_MAX_SHIFT)        /* 0xFFFF0000 */
+/* HDR2SDR_NORMFACCGAMMA */
+#define VOP2_HDR_HDR2SDR_NORMFACCGAMMA_OFFSET              (0x30U)
+#define VOP2_HDR_HDR2SDR_NORMFACCGAMMA_NORMFACCGAMMA_SHIFT (0U)
+#define VOP2_HDR_HDR2SDR_NORMFACCGAMMA_NORMFACCGAMMA_MASK  (0xFFFFU << VOP2_HDR_HDR2SDR_NORMFACCGAMMA_NORMFACCGAMMA_SHIFT) /* 0x0000FFFF */
+/* EETF_OETF0 */
+#define VOP2_HDR_EETF_OETF0_OFFSET                         (0x3CU)
+#define VOP2_HDR_EETF_OETF0_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF0_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF0_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF0_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF0_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF0_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF1 */
+#define VOP2_HDR_EETF_OETF1_OFFSET                         (0x40U)
+#define VOP2_HDR_EETF_OETF1_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF1_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF1_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF1_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF1_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF1_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF2 */
+#define VOP2_HDR_EETF_OETF2_OFFSET                         (0x44U)
+#define VOP2_HDR_EETF_OETF2_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF2_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF2_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF2_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF2_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF2_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF3 */
+#define VOP2_HDR_EETF_OETF3_OFFSET                         (0x48U)
+#define VOP2_HDR_EETF_OETF3_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF3_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF3_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF3_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF3_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF3_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF4 */
+#define VOP2_HDR_EETF_OETF4_OFFSET                         (0x4CU)
+#define VOP2_HDR_EETF_OETF4_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF4_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF4_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF4_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF4_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF4_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF5 */
+#define VOP2_HDR_EETF_OETF5_OFFSET                         (0x50U)
+#define VOP2_HDR_EETF_OETF5_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF5_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF5_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF5_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF5_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF5_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF6 */
+#define VOP2_HDR_EETF_OETF6_OFFSET                         (0x54U)
+#define VOP2_HDR_EETF_OETF6_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF6_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF6_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF6_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF6_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF6_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF7 */
+#define VOP2_HDR_EETF_OETF7_OFFSET                         (0x58U)
+#define VOP2_HDR_EETF_OETF7_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF7_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF7_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF7_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF7_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF7_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF8 */
+#define VOP2_HDR_EETF_OETF8_OFFSET                         (0x5CU)
+#define VOP2_HDR_EETF_OETF8_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF8_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF8_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF8_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF8_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF8_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF9 */
+#define VOP2_HDR_EETF_OETF9_OFFSET                         (0x60U)
+#define VOP2_HDR_EETF_OETF9_EETF_Y_SHIFT                   (0U)
+#define VOP2_HDR_EETF_OETF9_EETF_Y_MASK                    (0x3FFFU << VOP2_HDR_EETF_OETF9_EETF_Y_SHIFT)                /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF9_BT1886OETF_Y_SHIFT             (16U)
+#define VOP2_HDR_EETF_OETF9_BT1886OETF_Y_MASK              (0x3FFFU << VOP2_HDR_EETF_OETF9_BT1886OETF_Y_SHIFT)          /* 0x3FFF0000 */
+/* EETF_OETF10 */
+#define VOP2_HDR_EETF_OETF10_OFFSET                        (0x64U)
+#define VOP2_HDR_EETF_OETF10_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF10_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF10_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF10_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF10_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF10_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF11 */
+#define VOP2_HDR_EETF_OETF11_OFFSET                        (0x68U)
+#define VOP2_HDR_EETF_OETF11_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF11_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF11_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF11_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF11_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF11_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF12 */
+#define VOP2_HDR_EETF_OETF12_OFFSET                        (0x6CU)
+#define VOP2_HDR_EETF_OETF12_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF12_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF12_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF12_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF12_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF12_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF13 */
+#define VOP2_HDR_EETF_OETF13_OFFSET                        (0x70U)
+#define VOP2_HDR_EETF_OETF13_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF13_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF13_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF13_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF13_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF13_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF14 */
+#define VOP2_HDR_EETF_OETF14_OFFSET                        (0x74U)
+#define VOP2_HDR_EETF_OETF14_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF14_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF14_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF14_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF14_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF14_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF15 */
+#define VOP2_HDR_EETF_OETF15_OFFSET                        (0x78U)
+#define VOP2_HDR_EETF_OETF15_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF15_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF15_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF15_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF15_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF15_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF16 */
+#define VOP2_HDR_EETF_OETF16_OFFSET                        (0x7CU)
+#define VOP2_HDR_EETF_OETF16_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF16_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF16_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF16_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF16_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF16_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF17 */
+#define VOP2_HDR_EETF_OETF17_OFFSET                        (0x80U)
+#define VOP2_HDR_EETF_OETF17_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF17_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF17_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF17_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF17_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF17_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF18 */
+#define VOP2_HDR_EETF_OETF18_OFFSET                        (0x84U)
+#define VOP2_HDR_EETF_OETF18_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF18_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF18_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF18_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF18_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF18_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF19 */
+#define VOP2_HDR_EETF_OETF19_OFFSET                        (0x88U)
+#define VOP2_HDR_EETF_OETF19_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF19_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF19_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF19_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF19_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF19_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF20 */
+#define VOP2_HDR_EETF_OETF20_OFFSET                        (0x8CU)
+#define VOP2_HDR_EETF_OETF20_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF20_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF20_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF20_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF20_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF20_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF21 */
+#define VOP2_HDR_EETF_OETF21_OFFSET                        (0x90U)
+#define VOP2_HDR_EETF_OETF21_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF21_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF21_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF21_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF21_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF21_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF22 */
+#define VOP2_HDR_EETF_OETF22_OFFSET                        (0x94U)
+#define VOP2_HDR_EETF_OETF22_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF22_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF22_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF22_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF22_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF22_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF23 */
+#define VOP2_HDR_EETF_OETF23_OFFSET                        (0x98U)
+#define VOP2_HDR_EETF_OETF23_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF23_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF23_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF23_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF23_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF23_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF24 */
+#define VOP2_HDR_EETF_OETF24_OFFSET                        (0x9CU)
+#define VOP2_HDR_EETF_OETF24_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF24_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF24_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF24_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF24_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF24_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF25 */
+#define VOP2_HDR_EETF_OETF25_OFFSET                        (0xA0U)
+#define VOP2_HDR_EETF_OETF25_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF25_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF25_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF25_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF25_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF25_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF26 */
+#define VOP2_HDR_EETF_OETF26_OFFSET                        (0xA4U)
+#define VOP2_HDR_EETF_OETF26_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF26_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF26_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF26_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF26_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF26_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF27 */
+#define VOP2_HDR_EETF_OETF27_OFFSET                        (0xA8U)
+#define VOP2_HDR_EETF_OETF27_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF27_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF27_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF27_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF27_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF27_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF28 */
+#define VOP2_HDR_EETF_OETF28_OFFSET                        (0xACU)
+#define VOP2_HDR_EETF_OETF28_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF28_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF28_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF28_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF28_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF28_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF29 */
+#define VOP2_HDR_EETF_OETF29_OFFSET                        (0xB0U)
+#define VOP2_HDR_EETF_OETF29_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF29_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF29_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF29_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF29_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF29_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF30 */
+#define VOP2_HDR_EETF_OETF30_OFFSET                        (0xB4U)
+#define VOP2_HDR_EETF_OETF30_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF30_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF30_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF30_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF30_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF30_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF31 */
+#define VOP2_HDR_EETF_OETF31_OFFSET                        (0xB8U)
+#define VOP2_HDR_EETF_OETF31_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF31_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF31_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF31_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF31_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF31_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* EETF_OETF32 */
+#define VOP2_HDR_EETF_OETF32_OFFSET                        (0xBCU)
+#define VOP2_HDR_EETF_OETF32_EETF_Y_SHIFT                  (0U)
+#define VOP2_HDR_EETF_OETF32_EETF_Y_MASK                   (0x3FFFU << VOP2_HDR_EETF_OETF32_EETF_Y_SHIFT)               /* 0x00003FFF */
+#define VOP2_HDR_EETF_OETF32_BT1886OETF_Y_SHIFT            (16U)
+#define VOP2_HDR_EETF_OETF32_BT1886OETF_Y_MASK             (0x3FFFU << VOP2_HDR_EETF_OETF32_BT1886OETF_Y_SHIFT)         /* 0x3FFF0000 */
+/* SAT_Y0 */
+#define VOP2_HDR_SAT_Y0_OFFSET                             (0xC0U)
+#define VOP2_HDR_SAT_Y0_SAT_Y_SHIFT                        (0U)
+#define VOP2_HDR_SAT_Y0_SAT_Y_MASK                         (0x3FFFU << VOP2_HDR_SAT_Y0_SAT_Y_SHIFT)                     /* 0x00003FFF */
+/* SAT_Y1 */
+#define VOP2_HDR_SAT_Y1_OFFSET                             (0xC4U)
+#define VOP2_HDR_SAT_Y1_SAT_Y_SHIFT                        (0U)
+#define VOP2_HDR_SAT_Y1_SAT_Y_MASK                         (0x3FFFU << VOP2_HDR_SAT_Y1_SAT_Y_SHIFT)                     /* 0x00003FFF */
+/* SAT_Y2 */
+#define VOP2_HDR_SAT_Y2_OFFSET                             (0xC8U)
+#define VOP2_HDR_SAT_Y2_SAT_Y_SHIFT                        (0U)
+#define VOP2_HDR_SAT_Y2_SAT_Y_MASK                         (0x3FFFU << VOP2_HDR_SAT_Y2_SAT_Y_SHIFT)                     /* 0x00003FFF */
+/* SAT_Y3 */
+#define VOP2_HDR_SAT_Y3_OFFSET                             (0xCCU)
+#define VOP2_HDR_SAT_Y3_SAT_Y_SHIFT                        (0U)
+#define VOP2_HDR_SAT_Y3_SAT_Y_MASK                         (0x3FFFU << VOP2_HDR_SAT_Y3_SAT_Y_SHIFT)                     /* 0x00003FFF */
+/* SAT_Y4 */
+#define VOP2_HDR_SAT_Y4_OFFSET                             (0xD0U)
+#define VOP2_HDR_SAT_Y4_SAT_Y_SHIFT                        (0U)
+#define VOP2_HDR_SAT_Y4_SAT_Y_MASK                         (0x3FFFU << VOP2_HDR_SAT_Y4_SAT_Y_SHIFT)                     /* 0x00003FFF */
+/* SAT_Y5 */
+#define VOP2_HDR_SAT_Y5_OFFSET                             (0xD4U)
+#define VOP2_HDR_SAT_Y5_SAT_Y_SHIFT                        (0U)
+#define VOP2_HDR_SAT_Y5_SAT_Y_MASK                         (0x3FFFU << VOP2_HDR_SAT_Y5_SAT_Y_SHIFT)                     /* 0x00003FFF */
+/* SAT_Y6 */
+#define VOP2_HDR_SAT_Y6_OFFSET                             (0xD8U)
+#define VOP2_HDR_SAT_Y6_SAT_Y_SHIFT                        (0U)
+#define VOP2_HDR_SAT_Y6_SAT_Y_MASK                         (0x3FFFU << VOP2_HDR_SAT_Y6_SAT_Y_SHIFT)                     /* 0x00003FFF */
+/* SAT_Y7 */
+#define VOP2_HDR_SAT_Y7_OFFSET                             (0xDCU)
+#define VOP2_HDR_SAT_Y7_SAT_Y_SHIFT                        (0U)
+#define VOP2_HDR_SAT_Y7_SAT_Y_MASK                         (0x3FFFU << VOP2_HDR_SAT_Y7_SAT_Y_SHIFT)                     /* 0x00003FFF */
+/* SAT_Y8 */
+#define VOP2_HDR_SAT_Y8_OFFSET                             (0xE0U)
+#define VOP2_HDR_SAT_Y8_SAT_Y_SHIFT                        (0U)
+#define VOP2_HDR_SAT_Y8_SAT_Y_MASK                         (0x3FFFU << VOP2_HDR_SAT_Y8_SAT_Y_SHIFT)                     /* 0x00003FFF */
+/* EOTF_OETF_Y0 */
+#define VOP2_HDR_EOTF_OETF_Y0_OFFSET                       (0xF0U)
+#define VOP2_HDR_EOTF_OETF_Y0_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y0_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y0_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y0_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y0_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y0_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y1 */
+#define VOP2_HDR_EOTF_OETF_Y1_OFFSET                       (0xF4U)
+#define VOP2_HDR_EOTF_OETF_Y1_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y1_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y1_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y1_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y1_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y1_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y2 */
+#define VOP2_HDR_EOTF_OETF_Y2_OFFSET                       (0xF8U)
+#define VOP2_HDR_EOTF_OETF_Y2_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y2_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y2_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y2_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y2_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y2_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y3 */
+#define VOP2_HDR_EOTF_OETF_Y3_OFFSET                       (0xFCU)
+#define VOP2_HDR_EOTF_OETF_Y3_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y3_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y3_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y3_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y3_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y3_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y4 */
+#define VOP2_HDR_EOTF_OETF_Y4_OFFSET                       (0x100U)
+#define VOP2_HDR_EOTF_OETF_Y4_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y4_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y4_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y4_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y4_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y4_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y5 */
+#define VOP2_HDR_EOTF_OETF_Y5_OFFSET                       (0x104U)
+#define VOP2_HDR_EOTF_OETF_Y5_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y5_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y5_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y5_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y5_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y5_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y6 */
+#define VOP2_HDR_EOTF_OETF_Y6_OFFSET                       (0x108U)
+#define VOP2_HDR_EOTF_OETF_Y6_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y6_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y6_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y6_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y6_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y6_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y7 */
+#define VOP2_HDR_EOTF_OETF_Y7_OFFSET                       (0x10CU)
+#define VOP2_HDR_EOTF_OETF_Y7_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y7_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y7_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y7_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y7_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y7_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y8 */
+#define VOP2_HDR_EOTF_OETF_Y8_OFFSET                       (0x110U)
+#define VOP2_HDR_EOTF_OETF_Y8_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y8_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y8_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y8_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y8_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y8_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y9 */
+#define VOP2_HDR_EOTF_OETF_Y9_OFFSET                       (0x114U)
+#define VOP2_HDR_EOTF_OETF_Y9_BT1886EOTF_Y_SHIFT           (0U)
+#define VOP2_HDR_EOTF_OETF_Y9_BT1886EOTF_Y_MASK            (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y9_BT1886EOTF_Y_SHIFT)       /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y9_ST2084OETF_Y_SHIFT           (18U)
+#define VOP2_HDR_EOTF_OETF_Y9_ST2084OETF_Y_MASK            (0x3FFFU << VOP2_HDR_EOTF_OETF_Y9_ST2084OETF_Y_SHIFT)        /* 0xFFFC0000 */
+/* EOTF_OETF_Y10 */
+#define VOP2_HDR_EOTF_OETF_Y10_OFFSET                      (0x118U)
+#define VOP2_HDR_EOTF_OETF_Y10_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y10_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y10_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y10_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y10_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y10_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y11 */
+#define VOP2_HDR_EOTF_OETF_Y11_OFFSET                      (0x11CU)
+#define VOP2_HDR_EOTF_OETF_Y11_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y11_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y11_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y11_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y11_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y11_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y12 */
+#define VOP2_HDR_EOTF_OETF_Y12_OFFSET                      (0x120U)
+#define VOP2_HDR_EOTF_OETF_Y12_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y12_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y12_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y12_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y12_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y12_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y13 */
+#define VOP2_HDR_EOTF_OETF_Y13_OFFSET                      (0x124U)
+#define VOP2_HDR_EOTF_OETF_Y13_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y13_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y13_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y13_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y13_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y13_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y14 */
+#define VOP2_HDR_EOTF_OETF_Y14_OFFSET                      (0x128U)
+#define VOP2_HDR_EOTF_OETF_Y14_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y14_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y14_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y14_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y14_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y14_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y15 */
+#define VOP2_HDR_EOTF_OETF_Y15_OFFSET                      (0x12CU)
+#define VOP2_HDR_EOTF_OETF_Y15_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y15_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y15_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y15_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y15_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y15_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y16 */
+#define VOP2_HDR_EOTF_OETF_Y16_OFFSET                      (0x130U)
+#define VOP2_HDR_EOTF_OETF_Y16_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y16_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y16_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y16_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y16_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y16_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y17 */
+#define VOP2_HDR_EOTF_OETF_Y17_OFFSET                      (0x134U)
+#define VOP2_HDR_EOTF_OETF_Y17_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y17_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y17_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y17_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y17_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y17_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y18 */
+#define VOP2_HDR_EOTF_OETF_Y18_OFFSET                      (0x138U)
+#define VOP2_HDR_EOTF_OETF_Y18_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y18_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y18_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y18_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y18_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y18_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y19 */
+#define VOP2_HDR_EOTF_OETF_Y19_OFFSET                      (0x13CU)
+#define VOP2_HDR_EOTF_OETF_Y19_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y19_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y19_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y19_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y19_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y19_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y20 */
+#define VOP2_HDR_EOTF_OETF_Y20_OFFSET                      (0x140U)
+#define VOP2_HDR_EOTF_OETF_Y20_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y20_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y20_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y20_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y20_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y20_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y21 */
+#define VOP2_HDR_EOTF_OETF_Y21_OFFSET                      (0x144U)
+#define VOP2_HDR_EOTF_OETF_Y21_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y21_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y21_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y21_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y21_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y21_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y22 */
+#define VOP2_HDR_EOTF_OETF_Y22_OFFSET                      (0x148U)
+#define VOP2_HDR_EOTF_OETF_Y22_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y22_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y22_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y22_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y22_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y22_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y23 */
+#define VOP2_HDR_EOTF_OETF_Y23_OFFSET                      (0x14CU)
+#define VOP2_HDR_EOTF_OETF_Y23_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y23_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y23_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y23_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y23_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y23_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y24 */
+#define VOP2_HDR_EOTF_OETF_Y24_OFFSET                      (0x150U)
+#define VOP2_HDR_EOTF_OETF_Y24_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y24_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y24_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y24_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y24_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y24_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y25 */
+#define VOP2_HDR_EOTF_OETF_Y25_OFFSET                      (0x154U)
+#define VOP2_HDR_EOTF_OETF_Y25_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y25_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y25_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y25_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y25_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y25_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y26 */
+#define VOP2_HDR_EOTF_OETF_Y26_OFFSET                      (0x158U)
+#define VOP2_HDR_EOTF_OETF_Y26_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y26_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y26_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y26_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y26_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y26_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y27 */
+#define VOP2_HDR_EOTF_OETF_Y27_OFFSET                      (0x15CU)
+#define VOP2_HDR_EOTF_OETF_Y27_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y27_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y27_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y27_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y27_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y27_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y28 */
+#define VOP2_HDR_EOTF_OETF_Y28_OFFSET                      (0x160U)
+#define VOP2_HDR_EOTF_OETF_Y28_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y28_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y28_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y28_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y28_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y28_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y29 */
+#define VOP2_HDR_EOTF_OETF_Y29_OFFSET                      (0x164U)
+#define VOP2_HDR_EOTF_OETF_Y29_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y29_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y29_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y29_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y29_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y29_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y30 */
+#define VOP2_HDR_EOTF_OETF_Y30_OFFSET                      (0x168U)
+#define VOP2_HDR_EOTF_OETF_Y30_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y30_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y30_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y30_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y30_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y30_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y31 */
+#define VOP2_HDR_EOTF_OETF_Y31_OFFSET                      (0x16CU)
+#define VOP2_HDR_EOTF_OETF_Y31_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y31_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y31_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y31_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y31_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y31_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y32 */
+#define VOP2_HDR_EOTF_OETF_Y32_OFFSET                      (0x170U)
+#define VOP2_HDR_EOTF_OETF_Y32_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y32_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y32_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y32_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y32_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y32_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y33 */
+#define VOP2_HDR_EOTF_OETF_Y33_OFFSET                      (0x174U)
+#define VOP2_HDR_EOTF_OETF_Y33_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y33_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y33_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y33_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y33_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y33_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y34 */
+#define VOP2_HDR_EOTF_OETF_Y34_OFFSET                      (0x178U)
+#define VOP2_HDR_EOTF_OETF_Y34_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y34_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y34_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y34_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y34_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y34_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y35 */
+#define VOP2_HDR_EOTF_OETF_Y35_OFFSET                      (0x17CU)
+#define VOP2_HDR_EOTF_OETF_Y35_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y35_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y35_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y35_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y35_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y35_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y36 */
+#define VOP2_HDR_EOTF_OETF_Y36_OFFSET                      (0x180U)
+#define VOP2_HDR_EOTF_OETF_Y36_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y36_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y36_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y36_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y36_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y36_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y37 */
+#define VOP2_HDR_EOTF_OETF_Y37_OFFSET                      (0x184U)
+#define VOP2_HDR_EOTF_OETF_Y37_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y37_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y37_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y37_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y37_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y37_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y38 */
+#define VOP2_HDR_EOTF_OETF_Y38_OFFSET                      (0x188U)
+#define VOP2_HDR_EOTF_OETF_Y38_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y38_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y38_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y38_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y38_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y38_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y39 */
+#define VOP2_HDR_EOTF_OETF_Y39_OFFSET                      (0x18CU)
+#define VOP2_HDR_EOTF_OETF_Y39_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y39_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y39_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y39_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y39_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y39_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y40 */
+#define VOP2_HDR_EOTF_OETF_Y40_OFFSET                      (0x190U)
+#define VOP2_HDR_EOTF_OETF_Y40_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y40_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y40_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y40_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y40_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y40_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y41 */
+#define VOP2_HDR_EOTF_OETF_Y41_OFFSET                      (0x194U)
+#define VOP2_HDR_EOTF_OETF_Y41_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y41_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y41_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y41_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y41_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y41_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y42 */
+#define VOP2_HDR_EOTF_OETF_Y42_OFFSET                      (0x198U)
+#define VOP2_HDR_EOTF_OETF_Y42_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y42_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y42_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y42_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y42_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y42_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y43 */
+#define VOP2_HDR_EOTF_OETF_Y43_OFFSET                      (0x19CU)
+#define VOP2_HDR_EOTF_OETF_Y43_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y43_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y43_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y43_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y43_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y43_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y44 */
+#define VOP2_HDR_EOTF_OETF_Y44_OFFSET                      (0x1A0U)
+#define VOP2_HDR_EOTF_OETF_Y44_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y44_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y44_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y44_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y44_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y44_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y45 */
+#define VOP2_HDR_EOTF_OETF_Y45_OFFSET                      (0x1A4U)
+#define VOP2_HDR_EOTF_OETF_Y45_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y45_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y45_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y45_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y45_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y45_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y46 */
+#define VOP2_HDR_EOTF_OETF_Y46_OFFSET                      (0x1A8U)
+#define VOP2_HDR_EOTF_OETF_Y46_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y46_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y46_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y46_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y46_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y46_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y47 */
+#define VOP2_HDR_EOTF_OETF_Y47_OFFSET                      (0x1ACU)
+#define VOP2_HDR_EOTF_OETF_Y47_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y47_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y47_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y47_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y47_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y47_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y48 */
+#define VOP2_HDR_EOTF_OETF_Y48_OFFSET                      (0x1B0U)
+#define VOP2_HDR_EOTF_OETF_Y48_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y48_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y48_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y48_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y48_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y48_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y49 */
+#define VOP2_HDR_EOTF_OETF_Y49_OFFSET                      (0x1B4U)
+#define VOP2_HDR_EOTF_OETF_Y49_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y49_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y49_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y49_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y49_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y49_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y50 */
+#define VOP2_HDR_EOTF_OETF_Y50_OFFSET                      (0x1B8U)
+#define VOP2_HDR_EOTF_OETF_Y50_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y50_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y50_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y50_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y50_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y50_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y51 */
+#define VOP2_HDR_EOTF_OETF_Y51_OFFSET                      (0x1BCU)
+#define VOP2_HDR_EOTF_OETF_Y51_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y51_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y51_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y51_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y51_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y51_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y52 */
+#define VOP2_HDR_EOTF_OETF_Y52_OFFSET                      (0x1C0U)
+#define VOP2_HDR_EOTF_OETF_Y52_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y52_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y52_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y52_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y52_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y52_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y53 */
+#define VOP2_HDR_EOTF_OETF_Y53_OFFSET                      (0x1C4U)
+#define VOP2_HDR_EOTF_OETF_Y53_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y53_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y53_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y53_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y53_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y53_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y54 */
+#define VOP2_HDR_EOTF_OETF_Y54_OFFSET                      (0x1C8U)
+#define VOP2_HDR_EOTF_OETF_Y54_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y54_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y54_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y54_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y54_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y54_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y55 */
+#define VOP2_HDR_EOTF_OETF_Y55_OFFSET                      (0x1CCU)
+#define VOP2_HDR_EOTF_OETF_Y55_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y55_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y55_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y55_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y55_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y55_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y56 */
+#define VOP2_HDR_EOTF_OETF_Y56_OFFSET                      (0x1D0U)
+#define VOP2_HDR_EOTF_OETF_Y56_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y56_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y56_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y56_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y56_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y56_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y57 */
+#define VOP2_HDR_EOTF_OETF_Y57_OFFSET                      (0x1D4U)
+#define VOP2_HDR_EOTF_OETF_Y57_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y57_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y57_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y57_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y57_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y57_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y58 */
+#define VOP2_HDR_EOTF_OETF_Y58_OFFSET                      (0x1D8U)
+#define VOP2_HDR_EOTF_OETF_Y58_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y58_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y58_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y58_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y58_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y58_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y59 */
+#define VOP2_HDR_EOTF_OETF_Y59_OFFSET                      (0x1DCU)
+#define VOP2_HDR_EOTF_OETF_Y59_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y59_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y59_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y59_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y59_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y59_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y60 */
+#define VOP2_HDR_EOTF_OETF_Y60_OFFSET                      (0x1E0U)
+#define VOP2_HDR_EOTF_OETF_Y60_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y60_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y60_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y60_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y60_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y60_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y61 */
+#define VOP2_HDR_EOTF_OETF_Y61_OFFSET                      (0x1E4U)
+#define VOP2_HDR_EOTF_OETF_Y61_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y61_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y61_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y61_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y61_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y61_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y62 */
+#define VOP2_HDR_EOTF_OETF_Y62_OFFSET                      (0x1E8U)
+#define VOP2_HDR_EOTF_OETF_Y62_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y62_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y62_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y62_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y62_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y62_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y63 */
+#define VOP2_HDR_EOTF_OETF_Y63_OFFSET                      (0x1ECU)
+#define VOP2_HDR_EOTF_OETF_Y63_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y63_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y63_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y63_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y63_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y63_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* EOTF_OETF_Y64 */
+#define VOP2_HDR_EOTF_OETF_Y64_OFFSET                      (0x1F0U)
+#define VOP2_HDR_EOTF_OETF_Y64_BT1886EOTF_Y_SHIFT          (0U)
+#define VOP2_HDR_EOTF_OETF_Y64_BT1886EOTF_Y_MASK           (0x3FFFFU << VOP2_HDR_EOTF_OETF_Y64_BT1886EOTF_Y_SHIFT)      /* 0x0003FFFF */
+#define VOP2_HDR_EOTF_OETF_Y64_ST2084OETF_Y_SHIFT          (18U)
+#define VOP2_HDR_EOTF_OETF_Y64_ST2084OETF_Y_MASK           (0x3FFFU << VOP2_HDR_EOTF_OETF_Y64_ST2084OETF_Y_SHIFT)       /* 0xFFFC0000 */
+/* OETF_DX_DXPOW1 */
+#define VOP2_HDR_OETF_DX_DXPOW1_OFFSET                     (0x200U)
+#define VOP2_HDR_OETF_DX_DXPOW1_OETF_DX_SHIFT              (0U)
+#define VOP2_HDR_OETF_DX_DXPOW1_OETF_DX_MASK               (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW1_OETF_DX_SHIFT)           /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW1_OETF_DXPOW_SHIFT           (16U)
+#define VOP2_HDR_OETF_DX_DXPOW1_OETF_DXPOW_MASK            (0xFU << VOP2_HDR_OETF_DX_DXPOW1_OETF_DXPOW_SHIFT)           /* 0x000F0000 */
+/* OETF_DX_DXPOW2 */
+#define VOP2_HDR_OETF_DX_DXPOW2_OFFSET                     (0x204U)
+#define VOP2_HDR_OETF_DX_DXPOW2_OETF_DX_SHIFT              (0U)
+#define VOP2_HDR_OETF_DX_DXPOW2_OETF_DX_MASK               (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW2_OETF_DX_SHIFT)           /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW2_OETF_DXPOW_SHIFT           (16U)
+#define VOP2_HDR_OETF_DX_DXPOW2_OETF_DXPOW_MASK            (0xFU << VOP2_HDR_OETF_DX_DXPOW2_OETF_DXPOW_SHIFT)           /* 0x000F0000 */
+/* OETF_DX_DXPOW3 */
+#define VOP2_HDR_OETF_DX_DXPOW3_OFFSET                     (0x208U)
+#define VOP2_HDR_OETF_DX_DXPOW3_OETF_DX_SHIFT              (0U)
+#define VOP2_HDR_OETF_DX_DXPOW3_OETF_DX_MASK               (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW3_OETF_DX_SHIFT)           /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW3_OETF_DXPOW_SHIFT           (16U)
+#define VOP2_HDR_OETF_DX_DXPOW3_OETF_DXPOW_MASK            (0xFU << VOP2_HDR_OETF_DX_DXPOW3_OETF_DXPOW_SHIFT)           /* 0x000F0000 */
+/* OETF_DX_DXPOW4 */
+#define VOP2_HDR_OETF_DX_DXPOW4_OFFSET                     (0x20CU)
+#define VOP2_HDR_OETF_DX_DXPOW4_OETF_DX_SHIFT              (0U)
+#define VOP2_HDR_OETF_DX_DXPOW4_OETF_DX_MASK               (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW4_OETF_DX_SHIFT)           /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW4_OETF_DXPOW_SHIFT           (16U)
+#define VOP2_HDR_OETF_DX_DXPOW4_OETF_DXPOW_MASK            (0xFU << VOP2_HDR_OETF_DX_DXPOW4_OETF_DXPOW_SHIFT)           /* 0x000F0000 */
+/* OETF_DX_DXPOW5 */
+#define VOP2_HDR_OETF_DX_DXPOW5_OFFSET                     (0x210U)
+#define VOP2_HDR_OETF_DX_DXPOW5_OETF_DX_SHIFT              (0U)
+#define VOP2_HDR_OETF_DX_DXPOW5_OETF_DX_MASK               (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW5_OETF_DX_SHIFT)           /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW5_OETF_DXPOW_SHIFT           (16U)
+#define VOP2_HDR_OETF_DX_DXPOW5_OETF_DXPOW_MASK            (0xFU << VOP2_HDR_OETF_DX_DXPOW5_OETF_DXPOW_SHIFT)           /* 0x000F0000 */
+/* OETF_DX_DXPOW6 */
+#define VOP2_HDR_OETF_DX_DXPOW6_OFFSET                     (0x214U)
+#define VOP2_HDR_OETF_DX_DXPOW6_OETF_DX_SHIFT              (0U)
+#define VOP2_HDR_OETF_DX_DXPOW6_OETF_DX_MASK               (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW6_OETF_DX_SHIFT)           /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW6_OETF_DXPOW_SHIFT           (16U)
+#define VOP2_HDR_OETF_DX_DXPOW6_OETF_DXPOW_MASK            (0xFU << VOP2_HDR_OETF_DX_DXPOW6_OETF_DXPOW_SHIFT)           /* 0x000F0000 */
+/* OETF_DX_DXPOW7 */
+#define VOP2_HDR_OETF_DX_DXPOW7_OFFSET                     (0x218U)
+#define VOP2_HDR_OETF_DX_DXPOW7_OETF_DX_SHIFT              (0U)
+#define VOP2_HDR_OETF_DX_DXPOW7_OETF_DX_MASK               (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW7_OETF_DX_SHIFT)           /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW7_OETF_DXPOW_SHIFT           (16U)
+#define VOP2_HDR_OETF_DX_DXPOW7_OETF_DXPOW_MASK            (0xFU << VOP2_HDR_OETF_DX_DXPOW7_OETF_DXPOW_SHIFT)           /* 0x000F0000 */
+/* OETF_DX_DXPOW8 */
+#define VOP2_HDR_OETF_DX_DXPOW8_OFFSET                     (0x21CU)
+#define VOP2_HDR_OETF_DX_DXPOW8_OETF_DX_SHIFT              (0U)
+#define VOP2_HDR_OETF_DX_DXPOW8_OETF_DX_MASK               (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW8_OETF_DX_SHIFT)           /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW8_OETF_DXPOW_SHIFT           (16U)
+#define VOP2_HDR_OETF_DX_DXPOW8_OETF_DXPOW_MASK            (0xFU << VOP2_HDR_OETF_DX_DXPOW8_OETF_DXPOW_SHIFT)           /* 0x000F0000 */
+/* OETF_DX_DXPOW9 */
+#define VOP2_HDR_OETF_DX_DXPOW9_OFFSET                     (0x220U)
+#define VOP2_HDR_OETF_DX_DXPOW9_OETF_DX_SHIFT              (0U)
+#define VOP2_HDR_OETF_DX_DXPOW9_OETF_DX_MASK               (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW9_OETF_DX_SHIFT)           /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW9_OETF_DXPOW_SHIFT           (16U)
+#define VOP2_HDR_OETF_DX_DXPOW9_OETF_DXPOW_MASK            (0xFU << VOP2_HDR_OETF_DX_DXPOW9_OETF_DXPOW_SHIFT)           /* 0x000F0000 */
+/* OETF_DX_DXPOW10 */
+#define VOP2_HDR_OETF_DX_DXPOW10_OFFSET                    (0x224U)
+#define VOP2_HDR_OETF_DX_DXPOW10_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW10_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW10_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW10_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW10_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW10_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW11 */
+#define VOP2_HDR_OETF_DX_DXPOW11_OFFSET                    (0x228U)
+#define VOP2_HDR_OETF_DX_DXPOW11_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW11_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW11_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW11_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW11_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW11_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW12 */
+#define VOP2_HDR_OETF_DX_DXPOW12_OFFSET                    (0x22CU)
+#define VOP2_HDR_OETF_DX_DXPOW12_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW12_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW12_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW12_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW12_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW12_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW13 */
+#define VOP2_HDR_OETF_DX_DXPOW13_OFFSET                    (0x230U)
+#define VOP2_HDR_OETF_DX_DXPOW13_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW13_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW13_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW13_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW13_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW13_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW14 */
+#define VOP2_HDR_OETF_DX_DXPOW14_OFFSET                    (0x234U)
+#define VOP2_HDR_OETF_DX_DXPOW14_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW14_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW14_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW14_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW14_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW14_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW15 */
+#define VOP2_HDR_OETF_DX_DXPOW15_OFFSET                    (0x238U)
+#define VOP2_HDR_OETF_DX_DXPOW15_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW15_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW15_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW15_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW15_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW15_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW16 */
+#define VOP2_HDR_OETF_DX_DXPOW16_OFFSET                    (0x23CU)
+#define VOP2_HDR_OETF_DX_DXPOW16_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW16_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW16_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW16_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW16_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW16_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW17 */
+#define VOP2_HDR_OETF_DX_DXPOW17_OFFSET                    (0x240U)
+#define VOP2_HDR_OETF_DX_DXPOW17_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW17_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW17_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW17_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW17_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW17_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW18 */
+#define VOP2_HDR_OETF_DX_DXPOW18_OFFSET                    (0x244U)
+#define VOP2_HDR_OETF_DX_DXPOW18_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW18_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW18_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW18_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW18_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW18_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW19 */
+#define VOP2_HDR_OETF_DX_DXPOW19_OFFSET                    (0x248U)
+#define VOP2_HDR_OETF_DX_DXPOW19_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW19_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW19_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW19_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW19_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW19_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW20 */
+#define VOP2_HDR_OETF_DX_DXPOW20_OFFSET                    (0x24CU)
+#define VOP2_HDR_OETF_DX_DXPOW20_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW20_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW20_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW20_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW20_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW20_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW21 */
+#define VOP2_HDR_OETF_DX_DXPOW21_OFFSET                    (0x250U)
+#define VOP2_HDR_OETF_DX_DXPOW21_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW21_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW21_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW21_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW21_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW21_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW22 */
+#define VOP2_HDR_OETF_DX_DXPOW22_OFFSET                    (0x254U)
+#define VOP2_HDR_OETF_DX_DXPOW22_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW22_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW22_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW22_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW22_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW22_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW23 */
+#define VOP2_HDR_OETF_DX_DXPOW23_OFFSET                    (0x258U)
+#define VOP2_HDR_OETF_DX_DXPOW23_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW23_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW23_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW23_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW23_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW23_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW24 */
+#define VOP2_HDR_OETF_DX_DXPOW24_OFFSET                    (0x25CU)
+#define VOP2_HDR_OETF_DX_DXPOW24_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW24_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW24_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW24_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW24_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW24_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW25 */
+#define VOP2_HDR_OETF_DX_DXPOW25_OFFSET                    (0x260U)
+#define VOP2_HDR_OETF_DX_DXPOW25_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW25_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW25_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW25_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW25_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW25_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW26 */
+#define VOP2_HDR_OETF_DX_DXPOW26_OFFSET                    (0x264U)
+#define VOP2_HDR_OETF_DX_DXPOW26_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW26_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW26_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW26_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW26_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW26_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW27 */
+#define VOP2_HDR_OETF_DX_DXPOW27_OFFSET                    (0x268U)
+#define VOP2_HDR_OETF_DX_DXPOW27_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW27_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW27_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW27_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW27_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW27_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW28 */
+#define VOP2_HDR_OETF_DX_DXPOW28_OFFSET                    (0x26CU)
+#define VOP2_HDR_OETF_DX_DXPOW28_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW28_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW28_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW28_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW28_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW28_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW29 */
+#define VOP2_HDR_OETF_DX_DXPOW29_OFFSET                    (0x270U)
+#define VOP2_HDR_OETF_DX_DXPOW29_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW29_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW29_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW29_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW29_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW29_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW30 */
+#define VOP2_HDR_OETF_DX_DXPOW30_OFFSET                    (0x274U)
+#define VOP2_HDR_OETF_DX_DXPOW30_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW30_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW30_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW30_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW30_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW30_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW31 */
+#define VOP2_HDR_OETF_DX_DXPOW31_OFFSET                    (0x278U)
+#define VOP2_HDR_OETF_DX_DXPOW31_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW31_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW31_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW31_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW31_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW31_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW32 */
+#define VOP2_HDR_OETF_DX_DXPOW32_OFFSET                    (0x27CU)
+#define VOP2_HDR_OETF_DX_DXPOW32_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW32_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW32_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW32_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW32_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW32_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW33 */
+#define VOP2_HDR_OETF_DX_DXPOW33_OFFSET                    (0x280U)
+#define VOP2_HDR_OETF_DX_DXPOW33_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW33_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW33_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW33_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW33_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW33_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW34 */
+#define VOP2_HDR_OETF_DX_DXPOW34_OFFSET                    (0x284U)
+#define VOP2_HDR_OETF_DX_DXPOW34_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW34_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW34_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW34_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW34_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW34_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW35 */
+#define VOP2_HDR_OETF_DX_DXPOW35_OFFSET                    (0x288U)
+#define VOP2_HDR_OETF_DX_DXPOW35_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW35_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW35_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW35_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW35_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW35_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW36 */
+#define VOP2_HDR_OETF_DX_DXPOW36_OFFSET                    (0x28CU)
+#define VOP2_HDR_OETF_DX_DXPOW36_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW36_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW36_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW36_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW36_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW36_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW37 */
+#define VOP2_HDR_OETF_DX_DXPOW37_OFFSET                    (0x290U)
+#define VOP2_HDR_OETF_DX_DXPOW37_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW37_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW37_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW37_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW37_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW37_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW38 */
+#define VOP2_HDR_OETF_DX_DXPOW38_OFFSET                    (0x294U)
+#define VOP2_HDR_OETF_DX_DXPOW38_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW38_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW38_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW38_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW38_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW38_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW39 */
+#define VOP2_HDR_OETF_DX_DXPOW39_OFFSET                    (0x298U)
+#define VOP2_HDR_OETF_DX_DXPOW39_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW39_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW39_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW39_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW39_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW39_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW40 */
+#define VOP2_HDR_OETF_DX_DXPOW40_OFFSET                    (0x29CU)
+#define VOP2_HDR_OETF_DX_DXPOW40_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW40_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW40_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW40_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW40_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW40_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW41 */
+#define VOP2_HDR_OETF_DX_DXPOW41_OFFSET                    (0x2A0U)
+#define VOP2_HDR_OETF_DX_DXPOW41_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW41_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW41_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW41_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW41_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW41_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW42 */
+#define VOP2_HDR_OETF_DX_DXPOW42_OFFSET                    (0x2A4U)
+#define VOP2_HDR_OETF_DX_DXPOW42_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW42_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW42_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW42_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW42_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW42_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW43 */
+#define VOP2_HDR_OETF_DX_DXPOW43_OFFSET                    (0x2A8U)
+#define VOP2_HDR_OETF_DX_DXPOW43_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW43_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW43_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW43_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW43_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW43_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW44 */
+#define VOP2_HDR_OETF_DX_DXPOW44_OFFSET                    (0x2ACU)
+#define VOP2_HDR_OETF_DX_DXPOW44_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW44_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW44_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW44_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW44_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW44_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW45 */
+#define VOP2_HDR_OETF_DX_DXPOW45_OFFSET                    (0x2B0U)
+#define VOP2_HDR_OETF_DX_DXPOW45_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW45_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW45_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW45_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW45_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW45_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW46 */
+#define VOP2_HDR_OETF_DX_DXPOW46_OFFSET                    (0x2B4U)
+#define VOP2_HDR_OETF_DX_DXPOW46_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW46_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW46_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW46_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW46_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW46_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW47 */
+#define VOP2_HDR_OETF_DX_DXPOW47_OFFSET                    (0x2B8U)
+#define VOP2_HDR_OETF_DX_DXPOW47_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW47_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW47_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW47_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW47_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW47_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW48 */
+#define VOP2_HDR_OETF_DX_DXPOW48_OFFSET                    (0x2BCU)
+#define VOP2_HDR_OETF_DX_DXPOW48_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW48_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW48_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW48_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW48_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW48_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW49 */
+#define VOP2_HDR_OETF_DX_DXPOW49_OFFSET                    (0x2C0U)
+#define VOP2_HDR_OETF_DX_DXPOW49_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW49_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW49_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW49_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW49_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW49_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW50 */
+#define VOP2_HDR_OETF_DX_DXPOW50_OFFSET                    (0x2C4U)
+#define VOP2_HDR_OETF_DX_DXPOW50_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW50_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW50_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW50_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW50_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW50_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW51 */
+#define VOP2_HDR_OETF_DX_DXPOW51_OFFSET                    (0x2C8U)
+#define VOP2_HDR_OETF_DX_DXPOW51_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW51_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW51_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW51_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW51_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW51_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW52 */
+#define VOP2_HDR_OETF_DX_DXPOW52_OFFSET                    (0x2CCU)
+#define VOP2_HDR_OETF_DX_DXPOW52_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW52_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW52_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW52_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW52_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW52_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW53 */
+#define VOP2_HDR_OETF_DX_DXPOW53_OFFSET                    (0x2D0U)
+#define VOP2_HDR_OETF_DX_DXPOW53_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW53_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW53_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW53_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW53_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW53_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW54 */
+#define VOP2_HDR_OETF_DX_DXPOW54_OFFSET                    (0x2D4U)
+#define VOP2_HDR_OETF_DX_DXPOW54_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW54_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW54_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW54_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW54_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW54_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW55 */
+#define VOP2_HDR_OETF_DX_DXPOW55_OFFSET                    (0x2D8U)
+#define VOP2_HDR_OETF_DX_DXPOW55_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW55_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW55_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW55_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW55_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW55_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW56 */
+#define VOP2_HDR_OETF_DX_DXPOW56_OFFSET                    (0x2DCU)
+#define VOP2_HDR_OETF_DX_DXPOW56_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW56_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW56_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW56_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW56_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW56_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW57 */
+#define VOP2_HDR_OETF_DX_DXPOW57_OFFSET                    (0x2E0U)
+#define VOP2_HDR_OETF_DX_DXPOW57_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW57_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW57_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW57_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW57_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW57_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW58 */
+#define VOP2_HDR_OETF_DX_DXPOW58_OFFSET                    (0x2E4U)
+#define VOP2_HDR_OETF_DX_DXPOW58_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW58_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW58_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW58_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW58_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW58_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW59 */
+#define VOP2_HDR_OETF_DX_DXPOW59_OFFSET                    (0x2E8U)
+#define VOP2_HDR_OETF_DX_DXPOW59_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW59_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW59_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW59_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW59_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW59_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW60 */
+#define VOP2_HDR_OETF_DX_DXPOW60_OFFSET                    (0x2ECU)
+#define VOP2_HDR_OETF_DX_DXPOW60_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW60_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW60_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW60_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW60_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW60_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW61 */
+#define VOP2_HDR_OETF_DX_DXPOW61_OFFSET                    (0x2F0U)
+#define VOP2_HDR_OETF_DX_DXPOW61_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW61_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW61_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW61_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW61_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW61_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW62 */
+#define VOP2_HDR_OETF_DX_DXPOW62_OFFSET                    (0x2F4U)
+#define VOP2_HDR_OETF_DX_DXPOW62_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW62_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW62_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW62_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW62_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW62_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW63 */
+#define VOP2_HDR_OETF_DX_DXPOW63_OFFSET                    (0x2F8U)
+#define VOP2_HDR_OETF_DX_DXPOW63_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW63_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW63_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW63_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW63_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW63_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_DX_DXPOW64 */
+#define VOP2_HDR_OETF_DX_DXPOW64_OFFSET                    (0x2FCU)
+#define VOP2_HDR_OETF_DX_DXPOW64_OETF_DX_SHIFT             (0U)
+#define VOP2_HDR_OETF_DX_DXPOW64_OETF_DX_MASK              (0xFFFFU << VOP2_HDR_OETF_DX_DXPOW64_OETF_DX_SHIFT)          /* 0x0000FFFF */
+#define VOP2_HDR_OETF_DX_DXPOW64_OETF_DXPOW_SHIFT          (16U)
+#define VOP2_HDR_OETF_DX_DXPOW64_OETF_DXPOW_MASK           (0xFU << VOP2_HDR_OETF_DX_DXPOW64_OETF_DXPOW_SHIFT)          /* 0x000F0000 */
+/* OETF_XN1 */
+#define VOP2_HDR_OETF_XN1_OFFSET                           (0x300U)
+#define VOP2_HDR_OETF_XN1_EOTF_XN_SHIFT                    (0U)
+#define VOP2_HDR_OETF_XN1_EOTF_XN_MASK                     (0xFFFFU << VOP2_HDR_OETF_XN1_EOTF_XN_SHIFT)                 /* 0x0000FFFF */
+/* OETF_XN2 */
+#define VOP2_HDR_OETF_XN2_OFFSET                           (0x304U)
+#define VOP2_HDR_OETF_XN2_EOTF_XN_SHIFT                    (0U)
+#define VOP2_HDR_OETF_XN2_EOTF_XN_MASK                     (0xFFFFU << VOP2_HDR_OETF_XN2_EOTF_XN_SHIFT)                 /* 0x0000FFFF */
+/* OETF_XN3 */
+#define VOP2_HDR_OETF_XN3_OFFSET                           (0x308U)
+#define VOP2_HDR_OETF_XN3_EOTF_XN_SHIFT                    (0U)
+#define VOP2_HDR_OETF_XN3_EOTF_XN_MASK                     (0xFFFFU << VOP2_HDR_OETF_XN3_EOTF_XN_SHIFT)                 /* 0x0000FFFF */
+/* OETF_XN4 */
+#define VOP2_HDR_OETF_XN4_OFFSET                           (0x30CU)
+#define VOP2_HDR_OETF_XN4_EOTF_XN_SHIFT                    (0U)
+#define VOP2_HDR_OETF_XN4_EOTF_XN_MASK                     (0xFFFFU << VOP2_HDR_OETF_XN4_EOTF_XN_SHIFT)                 /* 0x0000FFFF */
+/* OETF_XN5 */
+#define VOP2_HDR_OETF_XN5_OFFSET                           (0x310U)
+#define VOP2_HDR_OETF_XN5_EOTF_XN_SHIFT                    (0U)
+#define VOP2_HDR_OETF_XN5_EOTF_XN_MASK                     (0xFFFFU << VOP2_HDR_OETF_XN5_EOTF_XN_SHIFT)                 /* 0x0000FFFF */
+/* OETF_XN6 */
+#define VOP2_HDR_OETF_XN6_OFFSET                           (0x314U)
+#define VOP2_HDR_OETF_XN6_EOTF_XN_SHIFT                    (0U)
+#define VOP2_HDR_OETF_XN6_EOTF_XN_MASK                     (0xFFFFU << VOP2_HDR_OETF_XN6_EOTF_XN_SHIFT)                 /* 0x0000FFFF */
+/* OETF_XN7 */
+#define VOP2_HDR_OETF_XN7_OFFSET                           (0x318U)
+#define VOP2_HDR_OETF_XN7_EOTF_XN_SHIFT                    (0U)
+#define VOP2_HDR_OETF_XN7_EOTF_XN_MASK                     (0xFFFFU << VOP2_HDR_OETF_XN7_EOTF_XN_SHIFT)                 /* 0x0000FFFF */
+/* OETF_XN8 */
+#define VOP2_HDR_OETF_XN8_OFFSET                           (0x31CU)
+#define VOP2_HDR_OETF_XN8_EOTF_XN_SHIFT                    (0U)
+#define VOP2_HDR_OETF_XN8_EOTF_XN_MASK                     (0xFFFFU << VOP2_HDR_OETF_XN8_EOTF_XN_SHIFT)                 /* 0x0000FFFF */
+/* OETF_XN9 */
+#define VOP2_HDR_OETF_XN9_OFFSET                           (0x320U)
+#define VOP2_HDR_OETF_XN9_EOTF_XN_SHIFT                    (0U)
+#define VOP2_HDR_OETF_XN9_EOTF_XN_MASK                     (0xFFFFU << VOP2_HDR_OETF_XN9_EOTF_XN_SHIFT)                 /* 0x0000FFFF */
+/* OETF_XN10 */
+#define VOP2_HDR_OETF_XN10_OFFSET                          (0x324U)
+#define VOP2_HDR_OETF_XN10_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN10_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN10_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN11 */
+#define VOP2_HDR_OETF_XN11_OFFSET                          (0x328U)
+#define VOP2_HDR_OETF_XN11_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN11_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN11_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN12 */
+#define VOP2_HDR_OETF_XN12_OFFSET                          (0x32CU)
+#define VOP2_HDR_OETF_XN12_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN12_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN12_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN13 */
+#define VOP2_HDR_OETF_XN13_OFFSET                          (0x330U)
+#define VOP2_HDR_OETF_XN13_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN13_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN13_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN14 */
+#define VOP2_HDR_OETF_XN14_OFFSET                          (0x334U)
+#define VOP2_HDR_OETF_XN14_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN14_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN14_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN15 */
+#define VOP2_HDR_OETF_XN15_OFFSET                          (0x338U)
+#define VOP2_HDR_OETF_XN15_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN15_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN15_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN16 */
+#define VOP2_HDR_OETF_XN16_OFFSET                          (0x33CU)
+#define VOP2_HDR_OETF_XN16_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN16_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN16_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN17 */
+#define VOP2_HDR_OETF_XN17_OFFSET                          (0x340U)
+#define VOP2_HDR_OETF_XN17_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN17_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN17_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN18 */
+#define VOP2_HDR_OETF_XN18_OFFSET                          (0x344U)
+#define VOP2_HDR_OETF_XN18_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN18_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN18_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN19 */
+#define VOP2_HDR_OETF_XN19_OFFSET                          (0x348U)
+#define VOP2_HDR_OETF_XN19_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN19_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN19_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN20 */
+#define VOP2_HDR_OETF_XN20_OFFSET                          (0x34CU)
+#define VOP2_HDR_OETF_XN20_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN20_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN20_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN21 */
+#define VOP2_HDR_OETF_XN21_OFFSET                          (0x350U)
+#define VOP2_HDR_OETF_XN21_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN21_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN21_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN22 */
+#define VOP2_HDR_OETF_XN22_OFFSET                          (0x354U)
+#define VOP2_HDR_OETF_XN22_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN22_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN22_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN23 */
+#define VOP2_HDR_OETF_XN23_OFFSET                          (0x358U)
+#define VOP2_HDR_OETF_XN23_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN23_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN23_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN24 */
+#define VOP2_HDR_OETF_XN24_OFFSET                          (0x35CU)
+#define VOP2_HDR_OETF_XN24_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN24_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN24_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN25 */
+#define VOP2_HDR_OETF_XN25_OFFSET                          (0x360U)
+#define VOP2_HDR_OETF_XN25_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN25_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN25_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN26 */
+#define VOP2_HDR_OETF_XN26_OFFSET                          (0x364U)
+#define VOP2_HDR_OETF_XN26_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN26_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN26_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN27 */
+#define VOP2_HDR_OETF_XN27_OFFSET                          (0x368U)
+#define VOP2_HDR_OETF_XN27_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN27_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN27_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN28 */
+#define VOP2_HDR_OETF_XN28_OFFSET                          (0x36CU)
+#define VOP2_HDR_OETF_XN28_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN28_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN28_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN29 */
+#define VOP2_HDR_OETF_XN29_OFFSET                          (0x370U)
+#define VOP2_HDR_OETF_XN29_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN29_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN29_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN30 */
+#define VOP2_HDR_OETF_XN30_OFFSET                          (0x374U)
+#define VOP2_HDR_OETF_XN30_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN30_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN30_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN31 */
+#define VOP2_HDR_OETF_XN31_OFFSET                          (0x378U)
+#define VOP2_HDR_OETF_XN31_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN31_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN31_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN32 */
+#define VOP2_HDR_OETF_XN32_OFFSET                          (0x37CU)
+#define VOP2_HDR_OETF_XN32_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN32_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN32_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN33 */
+#define VOP2_HDR_OETF_XN33_OFFSET                          (0x380U)
+#define VOP2_HDR_OETF_XN33_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN33_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN33_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN34 */
+#define VOP2_HDR_OETF_XN34_OFFSET                          (0x384U)
+#define VOP2_HDR_OETF_XN34_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN34_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN34_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN35 */
+#define VOP2_HDR_OETF_XN35_OFFSET                          (0x388U)
+#define VOP2_HDR_OETF_XN35_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN35_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN35_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN36 */
+#define VOP2_HDR_OETF_XN36_OFFSET                          (0x38CU)
+#define VOP2_HDR_OETF_XN36_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN36_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN36_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN37 */
+#define VOP2_HDR_OETF_XN37_OFFSET                          (0x390U)
+#define VOP2_HDR_OETF_XN37_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN37_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN37_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN38 */
+#define VOP2_HDR_OETF_XN38_OFFSET                          (0x394U)
+#define VOP2_HDR_OETF_XN38_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN38_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN38_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN39 */
+#define VOP2_HDR_OETF_XN39_OFFSET                          (0x398U)
+#define VOP2_HDR_OETF_XN39_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN39_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN39_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN40 */
+#define VOP2_HDR_OETF_XN40_OFFSET                          (0x39CU)
+#define VOP2_HDR_OETF_XN40_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN40_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN40_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN41 */
+#define VOP2_HDR_OETF_XN41_OFFSET                          (0x3A0U)
+#define VOP2_HDR_OETF_XN41_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN41_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN41_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN42 */
+#define VOP2_HDR_OETF_XN42_OFFSET                          (0x3A4U)
+#define VOP2_HDR_OETF_XN42_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN42_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN42_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN43 */
+#define VOP2_HDR_OETF_XN43_OFFSET                          (0x3A8U)
+#define VOP2_HDR_OETF_XN43_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN43_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN43_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN44 */
+#define VOP2_HDR_OETF_XN44_OFFSET                          (0x3ACU)
+#define VOP2_HDR_OETF_XN44_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN44_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN44_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN45 */
+#define VOP2_HDR_OETF_XN45_OFFSET                          (0x3B0U)
+#define VOP2_HDR_OETF_XN45_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN45_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN45_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN46 */
+#define VOP2_HDR_OETF_XN46_OFFSET                          (0x3B4U)
+#define VOP2_HDR_OETF_XN46_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN46_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN46_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN47 */
+#define VOP2_HDR_OETF_XN47_OFFSET                          (0x3B8U)
+#define VOP2_HDR_OETF_XN47_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN47_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN47_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN48 */
+#define VOP2_HDR_OETF_XN48_OFFSET                          (0x3BCU)
+#define VOP2_HDR_OETF_XN48_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN48_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN48_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN49 */
+#define VOP2_HDR_OETF_XN49_OFFSET                          (0x3C0U)
+#define VOP2_HDR_OETF_XN49_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN49_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN49_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN50 */
+#define VOP2_HDR_OETF_XN50_OFFSET                          (0x3C4U)
+#define VOP2_HDR_OETF_XN50_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN50_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN50_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN51 */
+#define VOP2_HDR_OETF_XN51_OFFSET                          (0x3C8U)
+#define VOP2_HDR_OETF_XN51_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN51_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN51_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN52 */
+#define VOP2_HDR_OETF_XN52_OFFSET                          (0x3CCU)
+#define VOP2_HDR_OETF_XN52_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN52_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN52_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN53 */
+#define VOP2_HDR_OETF_XN53_OFFSET                          (0x3D0U)
+#define VOP2_HDR_OETF_XN53_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN53_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN53_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN54 */
+#define VOP2_HDR_OETF_XN54_OFFSET                          (0x3D4U)
+#define VOP2_HDR_OETF_XN54_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN54_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN54_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN55 */
+#define VOP2_HDR_OETF_XN55_OFFSET                          (0x3D8U)
+#define VOP2_HDR_OETF_XN55_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN55_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN55_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN56 */
+#define VOP2_HDR_OETF_XN56_OFFSET                          (0x3DCU)
+#define VOP2_HDR_OETF_XN56_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN56_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN56_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN57 */
+#define VOP2_HDR_OETF_XN57_OFFSET                          (0x3E0U)
+#define VOP2_HDR_OETF_XN57_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN57_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN57_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN58 */
+#define VOP2_HDR_OETF_XN58_OFFSET                          (0x3E4U)
+#define VOP2_HDR_OETF_XN58_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN58_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN58_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN59 */
+#define VOP2_HDR_OETF_XN59_OFFSET                          (0x3E8U)
+#define VOP2_HDR_OETF_XN59_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN59_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN59_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN60 */
+#define VOP2_HDR_OETF_XN60_OFFSET                          (0x3ECU)
+#define VOP2_HDR_OETF_XN60_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN60_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN60_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN61 */
+#define VOP2_HDR_OETF_XN61_OFFSET                          (0x3F0U)
+#define VOP2_HDR_OETF_XN61_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN61_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN61_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN62 */
+#define VOP2_HDR_OETF_XN62_OFFSET                          (0x3F4U)
+#define VOP2_HDR_OETF_XN62_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN62_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN62_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/* OETF_XN63 */
+#define VOP2_HDR_OETF_XN63_OFFSET                          (0x3F8U)
+#define VOP2_HDR_OETF_XN63_EOTF_XN_SHIFT                   (0U)
+#define VOP2_HDR_OETF_XN63_EOTF_XN_MASK                    (0xFFFFU << VOP2_HDR_OETF_XN63_EOTF_XN_SHIFT)                /* 0x0000FFFF */
+/****************************************VOP2_MMU****************************************/
+/* MMU_DTE_ADDR */
+#define VOP2_MMU_MMU_DTE_ADDR_OFFSET                       (0x0U)
+#define VOP2_MMU_MMU_DTE_ADDR_DTE_ADDR_SHIFT               (0U)
+#define VOP2_MMU_MMU_DTE_ADDR_DTE_ADDR_MASK                (0xFFFFFFFFU << VOP2_MMU_MMU_DTE_ADDR_DTE_ADDR_SHIFT)        /* 0xFFFFFFFF */
+/* MMU_STATUS */
+#define VOP2_MMU_MMU_STATUS_OFFSET                         (0x4U)
+#define VOP2_MMU_MMU_STATUS_PAGING_EN_SHIFT                (0U)
+#define VOP2_MMU_MMU_STATUS_PAGING_EN_MASK                 (0x1U << VOP2_MMU_MMU_STATUS_PAGING_EN_SHIFT)                /* 0x00000001 */
+#define VOP2_MMU_MMU_STATUS_PAGE_FAULT_ACTIVE_SHIFT        (1U)
+#define VOP2_MMU_MMU_STATUS_PAGE_FAULT_ACTIVE_MASK         (0x1U << VOP2_MMU_MMU_STATUS_PAGE_FAULT_ACTIVE_SHIFT)        /* 0x00000002 */
+#define VOP2_MMU_MMU_STATUS_STAIL_ACTIVE_SHIFT             (2U)
+#define VOP2_MMU_MMU_STATUS_STAIL_ACTIVE_MASK              (0x1U << VOP2_MMU_MMU_STATUS_STAIL_ACTIVE_SHIFT)             /* 0x00000004 */
+#define VOP2_MMU_MMU_STATUS_MMU_IDLE_SHIFT                 (3U)
+#define VOP2_MMU_MMU_STATUS_MMU_IDLE_MASK                  (0x1U << VOP2_MMU_MMU_STATUS_MMU_IDLE_SHIFT)                 /* 0x00000008 */
+#define VOP2_MMU_MMU_STATUS_REPLAY_BUFFER_EMPTY_SHIFT      (4U)
+#define VOP2_MMU_MMU_STATUS_REPLAY_BUFFER_EMPTY_MASK       (0x1U << VOP2_MMU_MMU_STATUS_REPLAY_BUFFER_EMPTY_SHIFT)      /* 0x00000010 */
+#define VOP2_MMU_MMU_STATUS_PAGE_FAULT_IS_WRITE_SHIFT      (5U)
+#define VOP2_MMU_MMU_STATUS_PAGE_FAULT_IS_WRITE_MASK       (0x1U << VOP2_MMU_MMU_STATUS_PAGE_FAULT_IS_WRITE_SHIFT)      /* 0x00000020 */
+#define VOP2_MMU_MMU_STATUS_PAGE_FAULT_BUS_ID_SHIFT        (6U)
+#define VOP2_MMU_MMU_STATUS_PAGE_FAULT_BUS_ID_MASK         (0x1FU << VOP2_MMU_MMU_STATUS_PAGE_FAULT_BUS_ID_SHIFT)       /* 0x000007C0 */
+/* MMU_COMMAND */
+#define VOP2_MMU_MMU_COMMAND_OFFSET                        (0x8U)
+#define VOP2_MMU_MMU_COMMAND_MMU_CMD_SHIFT                 (0U)
+#define VOP2_MMU_MMU_COMMAND_MMU_CMD_MASK                  (0x7U << VOP2_MMU_MMU_COMMAND_MMU_CMD_SHIFT)                 /* 0x00000007 */
+/* MMU_PAGE_FAULT_ADDR */
+#define VOP2_MMU_MMU_PAGE_FAULT_ADDR_OFFSET                (0xCU)
+#define VOP2_MMU_MMU_PAGE_FAULT_ADDR_PAGE_FAULT_ADDR_SHIFT (0U)
+#define VOP2_MMU_MMU_PAGE_FAULT_ADDR_PAGE_FAULT_ADDR_MASK  (0xFFFFFFFFU << VOP2_MMU_MMU_PAGE_FAULT_ADDR_PAGE_FAULT_ADDR_SHIFT) /* 0xFFFFFFFF */
+/* MMU_ZAP_ONE_LINE */
+#define VOP2_MMU_MMU_ZAP_ONE_LINE_OFFSET                   (0x10U)
+#define VOP2_MMU_MMU_ZAP_ONE_LINE_MMU_ZAP_ONE_LINE_SHIFT   (0U)
+#define VOP2_MMU_MMU_ZAP_ONE_LINE_MMU_ZAP_ONE_LINE_MASK    (0xFFFFFFFFU << VOP2_MMU_MMU_ZAP_ONE_LINE_MMU_ZAP_ONE_LINE_SHIFT) /* 0xFFFFFFFF */
+/* MMU_INT_RAWSTAT */
+#define VOP2_MMU_MMU_INT_RAWSTAT_OFFSET                    (0x14U)
+#define VOP2_MMU_MMU_INT_RAWSTAT_RAWST_PAGE_FAULT_SHIFT    (0U)
+#define VOP2_MMU_MMU_INT_RAWSTAT_RAWST_PAGE_FAULT_MASK     (0x1U << VOP2_MMU_MMU_INT_RAWSTAT_RAWST_PAGE_FAULT_SHIFT)    /* 0x00000001 */
+#define VOP2_MMU_MMU_INT_RAWSTAT_RAWST_BUS_ERROR_SHIFT     (1U)
+#define VOP2_MMU_MMU_INT_RAWSTAT_RAWST_BUS_ERROR_MASK      (0x1U << VOP2_MMU_MMU_INT_RAWSTAT_RAWST_BUS_ERROR_SHIFT)     /* 0x00000002 */
+/* MMU_INT_CLEAR */
+#define VOP2_MMU_MMU_INT_CLEAR_OFFSET                      (0x18U)
+#define VOP2_MMU_MMU_INT_CLEAR_CLR_PAGE_FAULT_SHIFT        (0U)
+#define VOP2_MMU_MMU_INT_CLEAR_CLR_PAGE_FAULT_MASK         (0x1U << VOP2_MMU_MMU_INT_CLEAR_CLR_PAGE_FAULT_SHIFT)        /* 0x00000001 */
+#define VOP2_MMU_MMU_INT_CLEAR_CLR_BUS_ERROR_SHIFT         (1U)
+#define VOP2_MMU_MMU_INT_CLEAR_CLR_BUS_ERROR_MASK          (0x1U << VOP2_MMU_MMU_INT_CLEAR_CLR_BUS_ERROR_SHIFT)         /* 0x00000002 */
+/* MMU_INT_MASK */
+#define VOP2_MMU_MMU_INT_MASK_OFFSET                       (0x1CU)
+#define VOP2_MMU_MMU_INT_MASK_MASK_PAGE_FAULT_SHIFT        (0U)
+#define VOP2_MMU_MMU_INT_MASK_MASK_PAGE_FAULT_MASK         (0x1U << VOP2_MMU_MMU_INT_MASK_MASK_PAGE_FAULT_SHIFT)        /* 0x00000001 */
+#define VOP2_MMU_MMU_INT_MASK_MASK_BUS_ERROR_SHIFT         (1U)
+#define VOP2_MMU_MMU_INT_MASK_MASK_BUS_ERROR_MASK          (0x1U << VOP2_MMU_MMU_INT_MASK_MASK_BUS_ERROR_SHIFT)         /* 0x00000002 */
+/* MMU_INT_STATUS */
+#define VOP2_MMU_MMU_INT_STATUS_OFFSET                     (0x20U)
+#define VOP2_MMU_MMU_INT_STATUS_ST_PAGE_FAULT_SHIFT        (0U)
+#define VOP2_MMU_MMU_INT_STATUS_ST_PAGE_FAULT_MASK         (0x1U << VOP2_MMU_MMU_INT_STATUS_ST_PAGE_FAULT_SHIFT)        /* 0x00000001 */
+#define VOP2_MMU_MMU_INT_STATUS_ST_BUS_ERROR_SHIFT         (1U)
+#define VOP2_MMU_MMU_INT_STATUS_ST_BUS_ERROR_MASK          (0x1U << VOP2_MMU_MMU_INT_STATUS_ST_BUS_ERROR_SHIFT)         /* 0x00000002 */
+/* MMU_AUTO_GATING */
+#define VOP2_MMU_MMU_AUTO_GATING_OFFSET                    (0x24U)
+#define VOP2_MMU_MMU_AUTO_GATING_MMU_AUTO_GATING_SHIFT     (0U)
+#define VOP2_MMU_MMU_AUTO_GATING_MMU_AUTO_GATING_MASK      (0x1U << VOP2_MMU_MMU_AUTO_GATING_MMU_AUTO_GATING_SHIFT)     /* 0x00000001 */
+#define VOP2_MMU_MMU_AUTO_GATING_MMU_CFG_MODE_SHIFT        (1U)
+#define VOP2_MMU_MMU_AUTO_GATING_MMU_CFG_MODE_MASK         (0x1U << VOP2_MMU_MMU_AUTO_GATING_MMU_CFG_MODE_SHIFT)        /* 0x00000002 */
+/************************************GAMMA_LUT_WRADDR************************************/
+/*************************************BPP_LUT_WRADDR*************************************/
 /******************************************MMC*******************************************/
 /* CTRL */
 #define MMC_CTRL_OFFSET                                    (0x0U)
