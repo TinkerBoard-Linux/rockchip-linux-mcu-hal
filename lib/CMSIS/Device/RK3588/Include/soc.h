@@ -841,6 +841,7 @@ typedef enum PD_Id {
 #endif
 
 /****************************************WDT*********************************************/
+#define WDT_CR_WDT_EN_MASK WDT_CR_EN_MASK
 #define GLB_RST_SND_WDT GLB_RST_SND_WDT0
 #define GLB_RST_FST_WDT GLB_RST_FST_WDT0
 
