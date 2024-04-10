@@ -1176,6 +1176,7 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
         break;
 
     case HCLK_VAD:
+    case PCLK_CENTER_ROOT:
         freq = HAL_CRU_MuxGetFreq4(clkMux, _MHZ(200), _MHZ(100), _MHZ(50), PLL_INPUT_OSC_RATE);
         break;
 
@@ -1383,6 +1384,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
         break;
 
     case HCLK_VAD:
+    case PCLK_CENTER_ROOT:
         mux = HAL_CRU_FreqGetMux4(rate, _MHZ(200), _MHZ(100), _MHZ(50), PLL_INPUT_OSC_RATE);
         break;
 
@@ -1528,6 +1530,36 @@ HAL_Status HAL_CRU_Resume(void)
     HAL_CRU_ClkSetMux(HCLK_PMU1_ROOT_I_SEL, hclk_pmu1_root_i_sel);
 
     cru_suspend = 0;
+
+    return HAL_OK;
+}
+
+/**
+ * @brief wdt glbrst enable.
+ * @param  wdtType: wdt reset type.
+ * @return HAL_OK.
+ * @attention these APIs allow direct use in the HAL layer.
+ */
+HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType)
+{
+    uint32_t mask = 0, val = 0;
+
+    switch (wdtType) {
+    case GLB_RST_FST_WDT0:
+        mask = CRU_GLB_RST_CON_WDT_TRIG_GLBRST_SEL_MASK | CRU_GLB_RST_CON_OSC_CHK_TRIG_GLBRST_EN_MASK;
+        val = (1 << CRU_GLB_RST_CON_WDT_TRIG_GLBRST_SEL_SHIFT) | (1 << CRU_GLB_RST_CON_OSC_CHK_TRIG_GLBRST_EN_SHIFT);
+        break;
+    case GLB_RST_SND_WDT0:
+        mask = CRU_GLB_RST_CON_WDT_TRIG_GLBRST_SEL_MASK | CRU_GLB_RST_CON_OSC_CHK_TRIG_GLBRST_EN_MASK;
+        val = (1 << CRU_GLB_RST_CON_OSC_CHK_TRIG_GLBRST_EN_SHIFT);
+        break;
+
+    default:
+
+        return HAL_INVAL;
+    }
+
+    CRU->GLB_RST_CON = VAL_MASK_WE(mask, val);
 
     return HAL_OK;
 }

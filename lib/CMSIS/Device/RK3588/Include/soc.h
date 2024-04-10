@@ -514,6 +514,7 @@ typedef enum
 #endif /* HAL_MCU_CORE */
 
 /******************************************CRU*******************************************/
+#define PCLK_WDT PCLK_CENTER_ROOT
 #define CRU_CLK_USE_CON_BANK
 #define CLK64(mux, div) ((((mux) & 0xffffffffULL) << 32) | ((div) & 0xffffffffULL))
 
@@ -690,6 +691,7 @@ typedef enum CLOCK_Name {
     CLK_AUX16M_1         = CLK64(0U, CLK_AUX16MHZ_1_DIV),
 
     HCLK_PMU_CM0         = CLK64(HCLK_PMU_CM0_ROOT_I_SEL, 0U),
+    PCLK_CENTER_ROOT     = CLK64(PCLK_CENTER_ROOT_SEL, 0U),
 } eCLOCK_Name;
 #endif /* __ASSEMBLY__ */
 /****************************************MBOX********************************************/
