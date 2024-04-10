@@ -350,6 +350,95 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
     return freq;
 }
 
+static HAL_Status HAL_CRU_ClkSetOtherFreq(eCLOCK_Name clockName, uint32_t rate)
+
+{
+    uint32_t clkMux = CLK_GET_MUX(clockName);
+    uint32_t clkDiv = CLK_GET_DIV(clockName);
+    uint32_t pRate = s_gpllFreq, mux = 0, div;
+    uint32_t table[16];
+    uint32_t voiceTable0[14] = { PLL_INPUT_OSC_RATE, s_intVoice0Freq, s_intVoice1Freq, s_intVoice2Freq, s_fracVoice0Freq, s_fracVoice1Freq,
+                                 s_fracCom0Freq, s_fracCom1Freq, s_fracCom2Freq, s_sai0MclkIoIn, s_sai1MclkIoIn, s_sai2MclkIoIn, s_sai3MclkIoIn };
+    uint32_t voiceTable1[14] = { PLL_INPUT_OSC_RATE, s_intVoice0Freq, s_intVoice1Freq, s_intVoice2Freq, s_fracVoice0Freq, s_fracVoice1Freq,
+                                 s_fracCom0Freq, s_fracCom1Freq, s_fracCom2Freq, s_sai4MclkIoIn, s_sai5MclkIoIn, s_sai6MclkIoIn, s_sai7MclkIoIn };
+
+    switch (clockName) {
+    case MCLK_PDM:
+    case CLKOUT_PDM:
+        voiceTable0[13] = s_gpllFreq;
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable0, 14, &pRate, 1);
+        break;
+
+    case SCLK_SAI0:
+        voiceTable0[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI0);
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable0, 14, &pRate, 0);
+        break;
+    case SCLK_SAI1:
+        voiceTable0[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI1);
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable0, 14, &pRate, 0);
+        break;
+    case SCLK_SAI2:
+        voiceTable0[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI2);
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable0, 14, &pRate, 0);
+        break;
+    case SCLK_SAI3:
+        voiceTable0[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI3);
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable0, 14, &pRate, 0);
+        break;
+    case SCLK_SAI4:
+        voiceTable1[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI4);
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable1, 14, &pRate, 0);
+        break;
+    case SCLK_SAI5:
+        voiceTable1[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI5);
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable1, 14, &pRate, 0);
+        break;
+    case SCLK_SAI6:
+        voiceTable1[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI6);
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable1, 14, &pRate, 0);
+        break;
+    case SCLK_SAI7:
+        voiceTable1[13] = HAL_CRU_ClkGetOtherFreq(MCLK_OUT_SAI7);
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable1, 14, &pRate, 0);
+        break;
+    case MCLK_OUT_SAI0:
+    case MCLK_OUT_SAI1:
+    case MCLK_OUT_SAI2:
+    case MCLK_OUT_SAI3:
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable0, 13, &pRate, 1);
+        break;
+    case MCLK_ASRC0:
+    case MCLK_ASRC1:
+    case MCLK_ASRC2:
+    case MCLK_ASRC3:
+    case MCLK_ASRC4:
+    case MCLK_ASRC5:
+    case MCLK_ASRC6:
+    case MCLK_ASRC7:
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable0, 13, &pRate, 0);
+        break;
+    case MCLK_OUT_SAI4:
+    case MCLK_OUT_SAI5:
+    case MCLK_OUT_SAI6:
+    case MCLK_OUT_SAI7:
+    case MCLK_SPDIFTX:
+        mux = HAL_CRU_RoundFreqGetMuxArray(rate, voiceTable1, 13, &pRate, 1);
+        break;
+    default:
+        break;
+    }
+
+    div = HAL_DIV_ROUND_UP(pRate, rate);
+    if (clkMux) {
+        HAL_CRU_ClkSetMux(clkMux, mux);
+    }
+    if (clkDiv) {
+        HAL_CRU_ClkSetDiv(clkDiv, div);
+    }
+
+    return HAL_OK;
+}
+
 /**
  * @brief Set clk freq.
  * @param  clockName: CLOCK_Name id.
@@ -359,8 +448,11 @@ uint32_t HAL_CRU_ClkGetFreq(eCLOCK_Name clockName)
  */
 HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 {
-    /* Do nothing */
-    return HAL_OK;
+    if (!s_gpllFreq) {
+        CRU_Init();
+    }
+
+    return HAL_CRU_ClkSetOtherFreq(clockName, rate);
 }
 
 #elif defined(RKMCU_RK2118) && defined(HAL_CRU_MODULE_ENABLED)
