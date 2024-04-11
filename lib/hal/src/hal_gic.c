@@ -207,17 +207,26 @@ static struct GIC_REDISTRIBUTOR_SGI_REG *pGICRSGI;
 #endif
 /********************* Private Function Definition ***************************/
 #ifndef HAL_GIC_V2
+
 static inline void GIC_WriteNonAtomic(volatile void *addr, uint64_t val)
 {
+#ifdef __aarch64__
+    *(volatile uint64_t *)addr = val;
+#else
     volatile uint32_t *p_32 = addr;
 
     *p_32 = (uint32_t)(val & 0xffffffff);
     p_32++;
     *p_32 = (uint32_t)(val >> 32);
+#endif
 }
 
 static inline uint64_t GIC_ReadNonAtomic(const volatile void *addr)
 {
+#ifdef __aarch64__
+
+    return *(volatile uint64_t *)addr;
+#else
     uint64_t val;
     const volatile uint32_t *p_32 = addr;
 
@@ -225,94 +234,147 @@ static inline uint64_t GIC_ReadNonAtomic(const volatile void *addr)
     val |= (uint64_t)*(p_32 + 1) << 32;
 
     return val;
+#endif
 }
 
 static inline uint32_t GIC_GetIccCtlr(void)
 {
     uint32_t val;
 
+#ifdef __aarch64__
+    __ASM volatile ("mrs %0, S3_0_C12_C12_4" : "=r" (val));
+#else
     __get_CP(15, 0, val, 12, 12, 4);
+#endif
 
     return val;
 }
 
 static inline void GIC_SetIccCtlr(uint32_t val)
 {
+#ifdef __aarch64__
+    __ASM volatile ("msr S3_0_C12_C12_4, %0" : : "r" (val));
+#else
     __set_CP(15, 0, val, 12, 12, 4);
+#endif
 }
 
 static inline void GIC_SetIccDir_EL1(uint32_t val)
 {
+#ifdef __aarch64__
+    __ASM volatile ("msr S3_0_C12_C11_1, %0" : : "r" (val));
+#else
     __set_CP(15, 0, val, 12, 11, 1);
+#endif
 }
 
 static inline uint32_t GIC_GetIccIGrpen1_EL1(void)
 {
     uint32_t val;
 
+#ifdef __aarch64__
+    __ASM volatile ("mrs %0, S3_0_C12_C12_7" : "=r" (val));
+#else
     __get_CP(15, 0, val, 12, 12, 7);
+#endif
 
     return val;
 }
 
 static void GIC_SetIccIGrpen1_EL1(uint32_t val)
 {
+#ifdef __aarch64__
+    __ASM volatile ("msr S3_0_C12_C12_7, %0" : : "r" (val));
+#else
     __set_CP(15, 0, val, 12, 12, 7);
+#endif
 }
 
 static uint32_t GIC_GetIccIar1_EL1(void)
 {
     uint32_t val;
 
+#ifdef __aarch64__
+    __ASM volatile ("mrs %0, S3_0_C12_C12_0" : "=r" (val));
+#else
     __get_CP(15, 0, val, 12, 12, 0);
+#endif
 
     return val;
 }
 
 static void GIC_SetIccEoir1_EL1(uint32_t val)
 {
+#ifdef __aarch64__
+    __ASM volatile ("msr S3_0_C12_C12_1, %0" : : "r" (val));
+#else
     __set_CP(15, 0, val, 12, 12, 1);
+#endif
 }
 
 static inline uint32_t GIC_GetIccPmr_EL1(void)
 {
     uint32_t val;
 
+#ifdef __aarch64__
+    __ASM volatile ("mrs %0, S3_0_C4_C6_0" : "=r" (val));
+#else
     __get_CP(15, 0, val, 4, 6, 0);
+#endif
 
     return val;
 }
 
 static inline void GIC_SetIccPmr_EL1(uint32_t val)
 {
+#ifdef __aarch64__
+    __ASM volatile ("msr S3_0_C4_C6_0, %0" : : "r" (val));
+#else
     __set_CP(15, 0, val, 4, 6, 0);
+#endif
 }
 
 static inline uint32_t GIC_GetIccbpr1(void)
 {
     uint32_t val;
 
+#ifdef __aarch64__
+    __ASM volatile ("mrs %0, S3_0_C12_C12_3" : "=r" (val));
+#else
     __get_CP(15, 0, val, 12, 12, 3);
+#endif
 
     return val;
 }
 static inline void GIC_SetIccbpr1(uint32_t val)
 {
+#ifdef __aarch64__
+    __ASM volatile ("msr S3_0_C12_C12_3, %0" : : "r" (val));
+#else
     __set_CP(15, 0, val, 12, 12, 3);
+#endif
 }
 
 static inline uint32_t GIC_GetIccHppir1_EL1(void)
 {
     uint32_t val;
 
+#ifdef __aarch64__
+    __ASM volatile ("mrs %0, S3_0_C12_C12_2" : "=r" (val));
+#else
     __get_CP(15, 0, val, 12, 12, 2);
+#endif
 
     return val;
 }
 
 static inline void GIC_SetIccSgi1r(uint64_t val)
 {
+#ifdef __aarch64__
+    __ASM volatile ("msr S3_0_C12_C11_5, %0" : : "r" (val));
+#else
     __set_CP64(15, 0, val, 12);
+#endif
 }
 #endif
 
