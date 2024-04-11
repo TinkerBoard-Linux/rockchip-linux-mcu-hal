@@ -711,6 +711,13 @@ HAL_Status HAL_SPI_IrqHandler(struct SPI_HANDLE *pSPI)
     }
 #endif
 
+#ifdef HAL_SPI_SLAVE_FLEXIBLE_LENGTH_ENABLED
+    if (irqStatus & SPI_INT_SSPI) {
+        result = HAL_OK;
+        goto out;
+    }
+#endif
+
     return HAL_BUSY;
 
 out:
@@ -822,10 +829,36 @@ bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI)
 #endif
 
     if (HAL_SPI_IsSlave(pSPI)) {
+#ifdef HAL_SPI_SLAVE_FLEXIBLE_LENGTH_ENABLED
+
+        return true;
+#else
+
         return (pSPI->len > HAL_SPI_FIFO_LENGTH / 2);
+#endif
     } else {
         return (pSPI->len > HAL_SPI_DMA_SIZE_MIN);
     }
+}
+
+/**
+  * @brief  Check SPI cs status.
+  * @param  pSPI: pointer to a SPI_Handle structure that contains
+  *               the configuration information for SPI module.
+  * @return Bool
+  */
+bool HAL_SPI_IsCsInactive(struct SPI_HANDLE *pSPI)
+{
+    HAL_ASSERT(pSPI != NULL);
+
+#if SPI_SR_SSI_MASK
+
+    return READ_REG(pSPI->pReg->SR) & SPI_SR_SSI_MASK;
+#else
+    HAL_ASSERT(0);
+
+    return HAL_FALSE;
+#endif
 }
 
 /**
@@ -981,6 +1014,12 @@ HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, ui
             WRITE_REG(pSPI->pReg->CTRLR[1], (pSPI->len * 2) - 1);
         }
     }
+
+#ifdef HAL_SPI_SLAVE_FLEXIBLE_LENGTH_ENABLED
+    if (pSPI->config.opMode == CR0_OPM_SLAVE) {
+        HAL_SPI_UnmaskIntr(pSPI, SPI_INT_SSPI);
+    }
+#endif
 
     return HAL_OK;
 }

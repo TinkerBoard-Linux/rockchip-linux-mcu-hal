@@ -162,6 +162,7 @@ uint32_t HAL_SPI_CalculateTimeout(struct SPI_HANDLE *pSPI);
 bool HAL_SPI_CanDma(struct SPI_HANDLE *pSPI);
 bool HAL_SPI_IsSlave(struct SPI_HANDLE *pSPI);
 bool HAL_SPI_IsDmaXfer(struct SPI_HANDLE *pSPI);
+bool HAL_SPI_IsCsInactive(struct SPI_HANDLE *pSPI);
 
 /** @} */
 

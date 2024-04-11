@@ -192,6 +192,10 @@
 #endif
 #endif
 
+#ifdef HAL_SPI_MODULE_ENABLED
+//#define HAL_SPI_SLAVE_FLEXIBLE_LENGTH_ENABLED /**< Support stop SPI slave transmission when cs inactive */
+#endif
+
 #ifdef HAL_WDT_MODULE_ENABLED
 #define HAL_WDT_DYNFREQ_FEATURE_ENABLED
 #endif
