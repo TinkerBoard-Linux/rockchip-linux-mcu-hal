@@ -487,7 +487,8 @@ struct PVTPLL_CONFIG {
 
 static struct PVTPLL_CONFIG s_pvtDsp0Table[] = {
     /* rate_hz, ring_sel, length */
-    RK2118_PVTPLL(700000000, 0, 96),
+    RK2118_PVTPLL(700000000, 0, 36),
+    RK2118_PVTPLL(800000000, 0, 36),
     { /* sentinel */ },
 };
 
