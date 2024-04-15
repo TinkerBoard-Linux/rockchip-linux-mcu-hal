@@ -81,6 +81,9 @@
 #define ASRC_RATIO_TRACK_DIV(x)    (x << ASRC_TRACK_PERIOD_RATIO_TRACK_DIV_SHIFT)
 #define ASRC_RATIO_TRACK_PERIOD(x) (x << ASRC_TRACK_PERIOD_RATIO_TRACK_PERIOD_SHIFT)
 
+#define ASRC_SAMPLE_FREQ    200000000
+#define ASRC_REF_LRCK_COUNT 0x48000
+
 /********************* Private Structure Definition **************************/
 /********************* Private Variable Definition ***************************/
 /********************* Private Function Definition ***************************/
@@ -88,7 +91,7 @@ static int HAL_ASRC_CalculateRatio(struct HAL_ASRC_DEV *asrc,
                                    int numerator, int denominator)
 {
     int i, integerPart, remainder, ratio, digit;
-    unsigned int temp = 0;;
+    unsigned int temp = 0;
 
     HAL_ASSERT(asrc != NULL);
     if (denominator == 0) {
@@ -111,6 +114,22 @@ static int HAL_ASRC_CalculateRatio(struct HAL_ASRC_DEV *asrc,
 
     return ratio;
 }
+
+#ifdef RK2118_ASRC_DIFFERENT_GROUPS_LINK
+static int HAL_ASRC_CalculatePeriod(struct HAL_ASRC_DEV *asrc)
+{
+    int period;
+
+    HAL_ASSERT(asrc != NULL);
+    if (asrc->txParams.sampleRate > asrc->rxParams.sampleRate) {
+        period = ASRC_REF_LRCK_COUNT / (ASRC_SAMPLE_FREQ / asrc->txParams.sampleRate) + 1;
+    } else {
+        period = ASRC_REF_LRCK_COUNT / (ASRC_SAMPLE_FREQ / asrc->rxParams.sampleRate) + 1;
+    }
+
+    return period;
+}
+#endif
 
 static void HAL_ASRC_RatioUpdate(struct HAL_ASRC_DEV *asrc)
 {
@@ -243,6 +262,15 @@ HAL_Status HAL_ASRC_Init(struct HAL_ASRC_DEV *asrc, struct AUDIO_INIT_CONFIG *co
         return HAL_INVAL;
     }
 
+#ifdef RK2118_ASRC_DIFFERENT_GROUPS_LINK
+    MODIFY_REG(asrc->pReg->CON,
+               ASRC_CON_MODE_MASK | ASRC_CON_RATIO_FILT_DIS_MASK | ASRC_CON_REAL_TIME_MODE_MASK,
+               ASRC_REAL_TIME | ASRC_CON_RATIO_FILT_DIS_MASK | val);
+    /* Ser track period, the parameter can be calculated. */
+    MODIFY_REG(asrc->pReg->TRACK_PERIOD,
+               ASRC_TRACK_PERIOD_RATIO_TRACK_DIV_MASK | ASRC_TRACK_PERIOD_RATIO_TRACK_PERIOD_MASK,
+               ASRC_RATIO_TRACK_DIV(0x0) | ASRC_RATIO_TRACK_PERIOD(HAL_ASRC_CalculatePeriod(asrc)));
+#else
     MODIFY_REG(asrc->pReg->CON,
                ASRC_CON_MODE_MASK | ASRC_CON_RATIO_TRACK_MODE_MASK | ASRC_CON_REAL_TIME_MODE_MASK,
                ASRC_REAL_TIME | ASRC_CON_RATIO_TRACK_MODE_MASK | val);
@@ -250,6 +278,7 @@ HAL_Status HAL_ASRC_Init(struct HAL_ASRC_DEV *asrc, struct AUDIO_INIT_CONFIG *co
     MODIFY_REG(asrc->pReg->TRACK_PERIOD,
                ASRC_TRACK_PERIOD_RATIO_TRACK_DIV_MASK | ASRC_TRACK_PERIOD_RATIO_TRACK_PERIOD_MASK,
                ASRC_RATIO_TRACK_DIV(0x20) | ASRC_RATIO_TRACK_PERIOD(1024));
+#endif
     asrc->mode = config->asrcMode;
     MODIFY_REG(asrc->pReg->DMA_THRESH, ASRC_DMA_THRESH_DMA_TX_THRESH_MASK, ASRC_DMA_TX_THRESH(3));
     MODIFY_REG(asrc->pReg->DMA_THRESH, ASRC_DMA_THRESH_DMA_RX_THRESH_MASK, ASRC_DMA_RX_THRESH(3));
