@@ -1130,6 +1130,10 @@ struct ASRC_REG {
          uint32_t RESERVED00B8[2];                    /* Address Offset: 0x00B8 */
     __IO uint32_t FIFO_IN_FIXED_DR;                   /* Address Offset: 0x00C0 */
     __I  uint32_t FIFO_OUT_FIXED_DR;                  /* Address Offset: 0x00C4 */
+         uint32_t RESERVED00C8[2];                    /* Address Offset: 0x00C8 */
+    __I  uint32_t SRC_LRCK_PERIOD_ST;                 /* Address Offset: 0x00D0 */
+    __I  uint32_t DST_LRCK_PERIOD_ST;                 /* Address Offset: 0x00D4 */
+    __I  uint32_t RATIO_BIAS_ST;                      /* Address Offset: 0x00D8 */
 };
 /* PDM Register Structure Define */
 struct PDM_REG {
@@ -11352,6 +11356,8 @@ struct IIR_ACC_REG {
 #define ASRC_CON_IN_STOP_MASK                              (0x1U << ASRC_CON_IN_STOP_SHIFT)                             /* 0x00000100 */
 #define ASRC_CON_OUT_STOP_SHIFT                            (9U)
 #define ASRC_CON_OUT_STOP_MASK                             (0x1U << ASRC_CON_OUT_STOP_SHIFT)                            /* 0x00000200 */
+#define ASRC_CON_SERIES_POST_END_SHIFT                     (11U)
+#define ASRC_CON_SERIES_POST_END_MASK                      (0x1U << ASRC_CON_SERIES_POST_END_SHIFT)                     /* 0x00000800 */
 #define ASRC_CON_SERIES_EN_SHIFT                           (12U)
 #define ASRC_CON_SERIES_EN_MASK                            (0x3U << ASRC_CON_SERIES_EN_SHIFT)                           /* 0x00003000 */
 #define ASRC_CON_SERIES_TX_APART_SHIFT                     (14U)
@@ -11439,17 +11445,19 @@ struct IIR_ACC_REG {
 /* LRCK_MARGIN */
 #define ASRC_LRCK_MARGIN_OFFSET                            (0x34U)
 #define ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_SHIFT             (0U)
-#define ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_MASK              (0x1FU << ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_SHIFT)            /* 0x0000001F */
-#define ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_DIS_SHIFT         (7U)
-#define ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_DIS_MASK          (0x1U << ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_DIS_SHIFT)         /* 0x00000080 */
-#define ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_SHIFT             (8U)
-#define ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_MASK              (0x1FU << ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_SHIFT)            /* 0x00001F00 */
-#define ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_DIS_SHIFT         (15U)
-#define ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_DIS_MASK          (0x1U << ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_DIS_SHIFT)         /* 0x00008000 */
+#define ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_MASK              (0x7FFFU << ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_SHIFT)          /* 0x00007FFF */
+#define ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_DIS_SHIFT         (15U)
+#define ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_DIS_MASK          (0x1U << ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_DIS_SHIFT)         /* 0x00008000 */
+#define ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_SHIFT             (16U)
+#define ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_MASK              (0x7FFFU << ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_SHIFT)          /* 0x7FFF0000 */
+#define ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_DIS_SHIFT         (31U)
+#define ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_DIS_MASK          (0x1U << ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_DIS_SHIFT)         /* 0x80000000 */
 /* FETCH_LEN */
 #define ASRC_FETCH_LEN_OFFSET                              (0x40U)
 #define ASRC_FETCH_LEN_FETCH_LENGTH_SHIFT                  (0U)
 #define ASRC_FETCH_LEN_FETCH_LENGTH_MASK                   (0xFFFFFU << ASRC_FETCH_LEN_FETCH_LENGTH_SHIFT)              /* 0x000FFFFF */
+#define ASRC_FETCH_LEN_MEM_FETCH_EXT_CNT_SHIFT             (24U)
+#define ASRC_FETCH_LEN_MEM_FETCH_EXT_CNT_MASK              (0xFFU << ASRC_FETCH_LEN_MEM_FETCH_EXT_CNT_SHIFT)            /* 0xFF000000 */
 /* DMA_THRESH */
 #define ASRC_DMA_THRESH_OFFSET                             (0x50U)
 #define ASRC_DMA_THRESH_DMA_TX_THRESH_SHIFT                (0U)
@@ -11605,6 +11613,21 @@ struct IIR_ACC_REG {
 #define ASRC_FIFO_OUT_FIXED_DR                             (0x0U)
 #define ASRC_FIFO_OUT_FIXED_DR_FIFO_OUT_DATA_SHIFT         (0U)
 #define ASRC_FIFO_OUT_FIXED_DR_FIFO_OUT_DATA_MASK          (0xFFFFFFFFU << ASRC_FIFO_OUT_FIXED_DR_FIFO_OUT_DATA_SHIFT)  /* 0xFFFFFFFF */
+/* SRC_LRCK_PERIOD_ST */
+#define ASRC_SRC_LRCK_PERIOD_ST_OFFSET                     (0xD0U)
+#define ASRC_SRC_LRCK_PERIOD_ST                            (0x0U)
+#define ASRC_SRC_LRCK_PERIOD_ST_SRC_LRCK_PERIOD_ST_SHIFT   (0U)
+#define ASRC_SRC_LRCK_PERIOD_ST_SRC_LRCK_PERIOD_ST_MASK    (0x7FFFFFFFU << ASRC_SRC_LRCK_PERIOD_ST_SRC_LRCK_PERIOD_ST_SHIFT) /* 0x7FFFFFFF */
+/* DST_LRCK_PERIOD_ST */
+#define ASRC_DST_LRCK_PERIOD_ST_OFFSET                     (0xD4U)
+#define ASRC_DST_LRCK_PERIOD_ST                            (0x0U)
+#define ASRC_DST_LRCK_PERIOD_ST_DST_LRCK_PERIOD_ST_SHIFT   (0U)
+#define ASRC_DST_LRCK_PERIOD_ST_DST_LRCK_PERIOD_ST_MASK    (0x7FFFFFFFU << ASRC_DST_LRCK_PERIOD_ST_DST_LRCK_PERIOD_ST_SHIFT) /* 0x7FFFFFFF */
+/* RATIO_BIAS_ST */
+#define ASRC_RATIO_BIAS_ST_OFFSET                          (0xD8U)
+#define ASRC_RATIO_BIAS_ST                                 (0x0U)
+#define ASRC_RATIO_BIAS_ST_RATIO_BIAS_ST_SHIFT             (0U)
+#define ASRC_RATIO_BIAS_ST_RATIO_BIAS_ST_MASK              (0x1FU << ASRC_RATIO_BIAS_ST_RATIO_BIAS_ST_SHIFT)            /* 0x0000001F */
 /******************************************PDM*******************************************/
 /* SYSCONFIG */
 #define PDM_SYSCONFIG_OFFSET                               (0x0U)
