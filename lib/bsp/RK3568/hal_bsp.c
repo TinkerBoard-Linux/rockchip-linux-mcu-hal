@@ -397,6 +397,19 @@ const struct HAL_PWM_DEV g_pwm3Dev =
 };
 #endif
 
+#if defined(HAL_EHCI_MODULE_ENABLED) || defined(HAL_OHCI_MODULE_ENABLED)
+const struct HAL_USBH_DEV g_usbhDev =
+{
+    .ehciReg = USB2HOST0_EHCI,
+    .ohciReg = USB2HOST0_OHCI,
+    .ehciIrqNum = USB2HOST0_EHCI_IRQn,
+    .ohciIrqNum = USB2HOST0_OHCI_IRQn,
+    .usbhGateID = HCLK_USB2HOST0_GATE,
+    .usbhArbGateID = HCLK_USB2HOST0_ARB_GATE,
+    .utmiclkGateID = XIN_OSC0_USBPHY0_GATE,
+};
+#endif
+
 void BSP_Init(void)
 {
 }

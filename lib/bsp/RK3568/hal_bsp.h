@@ -69,6 +69,10 @@ extern const struct HAL_PWM_DEV g_pwm1Dev;
 extern const struct HAL_PWM_DEV g_pwm2Dev;
 extern const struct HAL_PWM_DEV g_pwm3Dev;
 #endif
+
+#if defined(HAL_EHCI_MODULE_ENABLED) || defined(HAL_OHCI_MODULE_ENABLED)
+extern const struct HAL_USBH_DEV g_usbhDev;
+#endif
 /***************************** Function Declare ******************************/
 void BSP_Init(void);
 

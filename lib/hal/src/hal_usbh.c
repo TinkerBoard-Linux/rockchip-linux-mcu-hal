@@ -545,6 +545,12 @@ HAL_Status HAL_USBH_CoreInit(struct USB_HCD_HANDLE *hcdHdl, void * *coherentMem)
         return HAL_INVAL;
     }
 
+#if defined(SOC_RK3568)
+    /* Initialize the USB PHY */
+    WRITE_REG(*(uint32_t *)(USBPHY_U2_GRF_BASE), USB_PHY_RESUME_VAL);
+    WRITE_REG(*(uint32_t *)(USBPHY_U2_GRF_BASE + 0x0004U), USB_PHY_RESUME_VAL);
+#endif
+
     hcdHdl->coherentMem = *coherentMem;
     ret = USBH_MemInit(hcdHdl->coherentMem);
     if (ret) {
