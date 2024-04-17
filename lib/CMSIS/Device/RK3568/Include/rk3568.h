@@ -1527,6 +1527,79 @@ struct VOP2_MMU_REG {
     __IO uint32_t MMU_INT_STATUS;                     /* Address Offset: 0x0020 */
     __IO uint32_t MMU_AUTO_GATING;                    /* Address Offset: 0x0024 */
 };
+/* DSITX Register Structure Define */
+struct DSITX_REG {
+    __IO uint32_t VERSION;                            /* Address Offset: 0x0000 */
+    __IO uint32_t PWR_UP;                             /* Address Offset: 0x0004 */
+    __IO uint32_t CLKMGR_CFG;                         /* Address Offset: 0x0008 */
+    __IO uint32_t DPI_VCID;                           /* Address Offset: 0x000C */
+    __IO uint32_t DPI_COLOR_CODING;                   /* Address Offset: 0x0010 */
+    __IO uint32_t DPI_CFG_POL;                        /* Address Offset: 0x0014 */
+    __IO uint32_t DPI_LP_CMD_TIM;                     /* Address Offset: 0x0018 */
+         uint32_t RESERVED001C[4];                    /* Address Offset: 0x001C */
+    __IO uint32_t PCKHDL_CFG;                         /* Address Offset: 0x002C */
+    __IO uint32_t GEN_VCID;                           /* Address Offset: 0x0030 */
+    __IO uint32_t MODE_CFG;                           /* Address Offset: 0x0034 */
+    __IO uint32_t VID_MODE_CFG;                       /* Address Offset: 0x0038 */
+    __IO uint32_t VID_PKT_SIZE;                       /* Address Offset: 0x003C */
+    __IO uint32_t VID_NUM_CHUNKS;                     /* Address Offset: 0x0040 */
+    __IO uint32_t VID_NULL_SIZE;                      /* Address Offset: 0x0044 */
+    __IO uint32_t VID_HSA_TIME;                       /* Address Offset: 0x0048 */
+    __IO uint32_t VID_HBP_TIME;                       /* Address Offset: 0x004C */
+    __IO uint32_t VID_HLINE_TIME;                     /* Address Offset: 0x0050 */
+    __IO uint32_t VID_VSA_LINES;                      /* Address Offset: 0x0054 */
+    __IO uint32_t VID_VBP_LINES;                      /* Address Offset: 0x0058 */
+    __IO uint32_t VID_VFP_LINES;                      /* Address Offset: 0x005C */
+    __IO uint32_t VID_VACTIVE_LINES;                  /* Address Offset: 0x0060 */
+    __IO uint32_t EDPI_CMD_SIZE;                      /* Address Offset: 0x0064 */
+    __IO uint32_t CMD_MODE_CFG;                       /* Address Offset: 0x0068 */
+    __IO uint32_t GEN_HDR;                            /* Address Offset: 0x006C */
+    __IO uint32_t GEN_PLD_DATA;                       /* Address Offset: 0x0070 */
+    __IO uint32_t CMD_PKT_STATUS;                     /* Address Offset: 0x0074 */
+    __IO uint32_t TO_CNT_CFG;                         /* Address Offset: 0x0078 */
+    __IO uint32_t HS_RD_TO_CNT;                       /* Address Offset: 0x007C */
+    __IO uint32_t LP_RD_TO_CNT;                       /* Address Offset: 0x0080 */
+    __IO uint32_t HS_WR_TO_CNT;                       /* Address Offset: 0x0084 */
+    __IO uint32_t LP_WR_TO_CNT;                       /* Address Offset: 0x0088 */
+    __IO uint32_t BTA_TO_CNT;                         /* Address Offset: 0x008C */
+    __IO uint32_t SDF_3D;                             /* Address Offset: 0x0090 */
+    __IO uint32_t LPCLK_CTRL;                         /* Address Offset: 0x0094 */
+    __IO uint32_t PHY_TMR_LPCLK_CFG;                  /* Address Offset: 0x0098 */
+    __IO uint32_t PHY_TMR_CFG;                        /* Address Offset: 0x009C */
+    __IO uint32_t PHY_RSTZ;                           /* Address Offset: 0x00A0 */
+    __IO uint32_t PHY_IF_CFG;                         /* Address Offset: 0x00A4 */
+         uint32_t RESERVED00A8[2];                    /* Address Offset: 0x00A8 */
+    __I  uint32_t PHY_STATUS;                         /* Address Offset: 0x00B0 */
+         uint32_t RESERVED00B4[2];                    /* Address Offset: 0x00B4 */
+    __IO uint32_t INT_ST0;                            /* Address Offset: 0x00BC */
+    __IO uint32_t INT_ST1;                            /* Address Offset: 0x00C0 */
+    __IO uint32_t INT_MSK0;                           /* Address Offset: 0x00C4 */
+    __IO uint32_t INT_MSK1;                           /* Address Offset: 0x00C8 */
+         uint32_t RESERVED00CC[3];                    /* Address Offset: 0x00CC */
+    __IO uint32_t INT_FORCE0;                         /* Address Offset: 0x00D8 */
+    __IO uint32_t INT_FORCE1;                         /* Address Offset: 0x00DC */
+         uint32_t RESERVED00E0[8];                    /* Address Offset: 0x00E0 */
+    __IO uint32_t VID_SHADOW_CTRL;                    /* Address Offset: 0x0100 */
+         uint32_t RESERVED0104[2];                    /* Address Offset: 0x0104 */
+    __IO uint32_t DPI_VCID_ACT;                       /* Address Offset: 0x010C */
+    __IO uint32_t DPI_COLOR_CODING_ACT;               /* Address Offset: 0x0110 */
+         uint32_t RESERVED0114;                       /* Address Offset: 0x0114 */
+    __I  uint32_t DPI_LP_CMD_TIM_ACT;                 /* Address Offset: 0x0118 */
+         uint32_t RESERVED011C[7];                    /* Address Offset: 0x011C */
+    __IO uint32_t VID_MODE_CFG_ACT;                   /* Address Offset: 0x0138 */
+    __I  uint32_t VID_PKT_SIZE_ACT;                   /* Address Offset: 0x013C */
+    __I  uint32_t VID_NUM_CHUNKS_ACT;                 /* Address Offset: 0x0140 */
+    __IO uint32_t VID_NULL_SIZE_ACT;                  /* Address Offset: 0x0144 */
+    __I  uint32_t VID_HSA_TIME_ACT;                   /* Address Offset: 0x0148 */
+    __IO uint32_t VID_HBP_TIME_ACT;                   /* Address Offset: 0x014C */
+    __I  uint32_t VID_HLINE_TIME_ACT;                 /* Address Offset: 0x0150 */
+    __I  uint32_t VID_VSA_LINES_ACT;                  /* Address Offset: 0x0154 */
+    __IO uint32_t VID_VBP_LINES_ACT;                  /* Address Offset: 0x0158 */
+    __I  uint32_t VID_VFP_LINES_ACT;                  /* Address Offset: 0x015C */
+    __I  uint32_t VID_VACTIVE_LINES_ACT;              /* Address Offset: 0x0160 */
+         uint32_t RESERVED0164[11];                   /* Address Offset: 0x0164 */
+    __IO uint32_t SDF_3D_ACT;                         /* Address Offset: 0x0190 */
+};
 /* MMC Register Structure Define */
 struct MMC_REG {
     __IO uint32_t CTRL;                               /* Address Offset: 0x0000 */
@@ -1852,6 +1925,8 @@ struct INTMUX_REG {
 #define VOP2_MMU1_BASE                 0xFE043F00U /* VOP2_MMU1 base address */
 #define GAMMA_LUT_WRADDR_BASE          0xFE044000U /* GAMMA_LUT_WRADDR base address */
 #define BPP_LUT_WRADDR_BASE            0xFE045000U /* BPP_LUT_WRADDR base address */
+#define DSITX0_BASE                    0xFE060000U /* DSITX0 base address */
+#define DSITX1_BASE                    0xFE070000U /* DSITX1 base address */
 #define GMAC0_BASE                     0xFE2A0000U /* GMAC0 base address */
 #define MMC_BASE                       0xFE2B0000U /* MMC base address */
 #define FSPI_BASE                      0xFE300000U /* FSPI base address */
@@ -1931,6 +2006,8 @@ struct INTMUX_REG {
 #define VOP2_MMU1           ((struct VOP2_MMU_REG *) VOP2_MMU1_BASE)
 #define GAMMA_LUT_WRADDR    ((struct GAMMA_LUT_WRADDR_REG *) GAMMA_LUT_WRADDR_BASE)
 #define BPP_LUT_WRADDR      ((struct BPP_LUT_WRADDR_REG *) BPP_LUT_WRADDR_BASE)
+#define DSITX0              ((struct DSITX_REG *) DSITX0_BASE)
+#define DSITX1              ((struct DSITX_REG *) DSITX1_BASE)
 #define GMAC0               ((struct GMAC_REG *) GMAC0_BASE)
 #define MMC                 ((struct MMC_REG *) MMC_BASE)
 #define FSPI                ((struct FSPI_REG *) FSPI_BASE)
@@ -2005,6 +2082,7 @@ struct INTMUX_REG {
 #define IS_VOP2_SMART_INSTANCE(instance) (((instance) == VOP2_SMART0) || ((instance) == VOP2_SMART1))
 #define IS_VOP2_HDR_INSTANCE(instance) ((instance) == VOP2_HDR10)
 #define IS_VOP2_MMU_INSTANCE(instance) (((instance) == VOP2_MMU0) || ((instance) == VOP2_MMU1))
+#define IS_DSITX_INSTANCE(instance) (((instance) == DSITX0) || ((instance) == DSITX1))
 #define IS_DMA_INSTANCE(instance) (((instance) == DMA0) || ((instance) == DMA1))
 #define IS_CAN_INSTANCE(instance) (((instance) == CAN0) || ((instance) == CAN1) || ((instance) == CAN2))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1) || ((instance) == SPI2) || ((instance) == SPI3))
@@ -17439,6 +17517,680 @@ struct INTMUX_REG {
 #define VOP2_MMU_MMU_AUTO_GATING_MMU_CFG_MODE_MASK         (0x1U << VOP2_MMU_MMU_AUTO_GATING_MMU_CFG_MODE_SHIFT)        /* 0x00000002 */
 /************************************GAMMA_LUT_WRADDR************************************/
 /*************************************BPP_LUT_WRADDR*************************************/
+/*****************************************DSITX******************************************/
+/* VERSION */
+#define DSITX_VERSION_OFFSET                               (0x0U)
+#define DSITX_VERSION_VERSION_SHIFT                        (0U)
+#define DSITX_VERSION_VERSION_MASK                         (0xFFFFFFFFU << DSITX_VERSION_VERSION_SHIFT)                 /* 0xFFFFFFFF */
+/* PWR_UP */
+#define DSITX_PWR_UP_OFFSET                                (0x4U)
+#define DSITX_PWR_UP_SHUTDOWNZ_SHIFT                       (0U)
+#define DSITX_PWR_UP_SHUTDOWNZ_MASK                        (0x1U << DSITX_PWR_UP_SHUTDOWNZ_SHIFT)                       /* 0x00000001 */
+/* CLKMGR_CFG */
+#define DSITX_CLKMGR_CFG_OFFSET                            (0x8U)
+#define DSITX_CLKMGR_CFG_TX_ESC_CLK_DIVISION_SHIFT         (0U)
+#define DSITX_CLKMGR_CFG_TX_ESC_CLK_DIVISION_MASK          (0xFFU << DSITX_CLKMGR_CFG_TX_ESC_CLK_DIVISION_SHIFT)        /* 0x000000FF */
+#define DSITX_CLKMGR_CFG_TO_CLK_DIVISION_SHIFT             (8U)
+#define DSITX_CLKMGR_CFG_TO_CLK_DIVISION_MASK              (0xFFU << DSITX_CLKMGR_CFG_TO_CLK_DIVISION_SHIFT)            /* 0x0000FF00 */
+/* DPI_VCID */
+#define DSITX_DPI_VCID_OFFSET                              (0xCU)
+#define DSITX_DPI_VCID_DPI_VCID_SHIFT                      (0U)
+#define DSITX_DPI_VCID_DPI_VCID_MASK                       (0x3U << DSITX_DPI_VCID_DPI_VCID_SHIFT)                      /* 0x00000003 */
+/* DPI_COLOR_CODING */
+#define DSITX_DPI_COLOR_CODING_OFFSET                      (0x10U)
+#define DSITX_DPI_COLOR_CODING_DPI_COLOR_CODING_SHIFT      (0U)
+#define DSITX_DPI_COLOR_CODING_DPI_COLOR_CODING_MASK       (0xFU << DSITX_DPI_COLOR_CODING_DPI_COLOR_CODING_SHIFT)      /* 0x0000000F */
+#define DSITX_DPI_COLOR_CODING_LOOSELY18_EN_SHIFT          (8U)
+#define DSITX_DPI_COLOR_CODING_LOOSELY18_EN_MASK           (0x1U << DSITX_DPI_COLOR_CODING_LOOSELY18_EN_SHIFT)          /* 0x00000100 */
+/* DPI_CFG_POL */
+#define DSITX_DPI_CFG_POL_OFFSET                           (0x14U)
+#define DSITX_DPI_CFG_POL_DATAEN_ACTIVE_LOW_SHIFT          (0U)
+#define DSITX_DPI_CFG_POL_DATAEN_ACTIVE_LOW_MASK           (0x1U << DSITX_DPI_CFG_POL_DATAEN_ACTIVE_LOW_SHIFT)          /* 0x00000001 */
+#define DSITX_DPI_CFG_POL_VSYNC_ACTIVE_LOW_SHIFT           (1U)
+#define DSITX_DPI_CFG_POL_VSYNC_ACTIVE_LOW_MASK            (0x1U << DSITX_DPI_CFG_POL_VSYNC_ACTIVE_LOW_SHIFT)           /* 0x00000002 */
+#define DSITX_DPI_CFG_POL_HSYNC_ACTIVE_LOW_SHIFT           (2U)
+#define DSITX_DPI_CFG_POL_HSYNC_ACTIVE_LOW_MASK            (0x1U << DSITX_DPI_CFG_POL_HSYNC_ACTIVE_LOW_SHIFT)           /* 0x00000004 */
+#define DSITX_DPI_CFG_POL_SHUTD_ACTIVE_LOW_SHIFT           (3U)
+#define DSITX_DPI_CFG_POL_SHUTD_ACTIVE_LOW_MASK            (0x1U << DSITX_DPI_CFG_POL_SHUTD_ACTIVE_LOW_SHIFT)           /* 0x00000008 */
+#define DSITX_DPI_CFG_POL_COLORM_ACTIVE_LOW_SHIFT          (4U)
+#define DSITX_DPI_CFG_POL_COLORM_ACTIVE_LOW_MASK           (0x1U << DSITX_DPI_CFG_POL_COLORM_ACTIVE_LOW_SHIFT)          /* 0x00000010 */
+/* DPI_LP_CMD_TIM */
+#define DSITX_DPI_LP_CMD_TIM_OFFSET                        (0x18U)
+#define DSITX_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME_SHIFT       (0U)
+#define DSITX_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME_MASK        (0xFFU << DSITX_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME_SHIFT)      /* 0x000000FF */
+#define DSITX_DPI_LP_CMD_TIM_OUTVACT_LPCMD_TIME_SHIFT      (16U)
+#define DSITX_DPI_LP_CMD_TIM_OUTVACT_LPCMD_TIME_MASK       (0xFFU << DSITX_DPI_LP_CMD_TIM_OUTVACT_LPCMD_TIME_SHIFT)     /* 0x00FF0000 */
+/* PCKHDL_CFG */
+#define DSITX_PCKHDL_CFG_OFFSET                            (0x2CU)
+#define DSITX_PCKHDL_CFG_EOTP_TX_EN_SHIFT                  (0U)
+#define DSITX_PCKHDL_CFG_EOTP_TX_EN_MASK                   (0x1U << DSITX_PCKHDL_CFG_EOTP_TX_EN_SHIFT)                  /* 0x00000001 */
+#define DSITX_PCKHDL_CFG_EOTP_RX_EN_SHIFT                  (1U)
+#define DSITX_PCKHDL_CFG_EOTP_RX_EN_MASK                   (0x1U << DSITX_PCKHDL_CFG_EOTP_RX_EN_SHIFT)                  /* 0x00000002 */
+#define DSITX_PCKHDL_CFG_BTA_EN_SHIFT                      (2U)
+#define DSITX_PCKHDL_CFG_BTA_EN_MASK                       (0x1U << DSITX_PCKHDL_CFG_BTA_EN_SHIFT)                      /* 0x00000004 */
+#define DSITX_PCKHDL_CFG_ECC_RX_EN_SHIFT                   (3U)
+#define DSITX_PCKHDL_CFG_ECC_RX_EN_MASK                    (0x1U << DSITX_PCKHDL_CFG_ECC_RX_EN_SHIFT)                   /* 0x00000008 */
+#define DSITX_PCKHDL_CFG_CRC_RX_EN_SHIFT                   (4U)
+#define DSITX_PCKHDL_CFG_CRC_RX_EN_MASK                    (0x1U << DSITX_PCKHDL_CFG_CRC_RX_EN_SHIFT)                   /* 0x00000010 */
+/* GEN_VCID */
+#define DSITX_GEN_VCID_OFFSET                              (0x30U)
+#define DSITX_GEN_VCID_GEN_VCID_RX_SHIFT                   (0U)
+#define DSITX_GEN_VCID_GEN_VCID_RX_MASK                    (0x3U << DSITX_GEN_VCID_GEN_VCID_RX_SHIFT)                   /* 0x00000003 */
+/* MODE_CFG */
+#define DSITX_MODE_CFG_OFFSET                              (0x34U)
+#define DSITX_MODE_CFG_CMD_VIDEO_MODE_SHIFT                (0U)
+#define DSITX_MODE_CFG_CMD_VIDEO_MODE_MASK                 (0x1U << DSITX_MODE_CFG_CMD_VIDEO_MODE_SHIFT)                /* 0x00000001 */
+/* VID_MODE_CFG */
+#define DSITX_VID_MODE_CFG_OFFSET                          (0x38U)
+#define DSITX_VID_MODE_CFG_VID_MODE_TYPE_SHIFT             (0U)
+#define DSITX_VID_MODE_CFG_VID_MODE_TYPE_MASK              (0x3U << DSITX_VID_MODE_CFG_VID_MODE_TYPE_SHIFT)             /* 0x00000003 */
+#define DSITX_VID_MODE_CFG_LP_VSA_EN_SHIFT                 (8U)
+#define DSITX_VID_MODE_CFG_LP_VSA_EN_MASK                  (0x1U << DSITX_VID_MODE_CFG_LP_VSA_EN_SHIFT)                 /* 0x00000100 */
+#define DSITX_VID_MODE_CFG_LP_VBP_EN_SHIFT                 (9U)
+#define DSITX_VID_MODE_CFG_LP_VBP_EN_MASK                  (0x1U << DSITX_VID_MODE_CFG_LP_VBP_EN_SHIFT)                 /* 0x00000200 */
+#define DSITX_VID_MODE_CFG_LP_VFP_EN_SHIFT                 (10U)
+#define DSITX_VID_MODE_CFG_LP_VFP_EN_MASK                  (0x1U << DSITX_VID_MODE_CFG_LP_VFP_EN_SHIFT)                 /* 0x00000400 */
+#define DSITX_VID_MODE_CFG_LP_VACT_EN_SHIFT                (11U)
+#define DSITX_VID_MODE_CFG_LP_VACT_EN_MASK                 (0x1U << DSITX_VID_MODE_CFG_LP_VACT_EN_SHIFT)                /* 0x00000800 */
+#define DSITX_VID_MODE_CFG_LP_HBP_EN_SHIFT                 (12U)
+#define DSITX_VID_MODE_CFG_LP_HBP_EN_MASK                  (0x1U << DSITX_VID_MODE_CFG_LP_HBP_EN_SHIFT)                 /* 0x00001000 */
+#define DSITX_VID_MODE_CFG_LP_HFP_EN_SHIFT                 (13U)
+#define DSITX_VID_MODE_CFG_LP_HFP_EN_MASK                  (0x1U << DSITX_VID_MODE_CFG_LP_HFP_EN_SHIFT)                 /* 0x00002000 */
+#define DSITX_VID_MODE_CFG_FRAME_BTA_ACK_EN_SHIFT          (14U)
+#define DSITX_VID_MODE_CFG_FRAME_BTA_ACK_EN_MASK           (0x1U << DSITX_VID_MODE_CFG_FRAME_BTA_ACK_EN_SHIFT)          /* 0x00004000 */
+#define DSITX_VID_MODE_CFG_LP_CMD_EN_SHIFT                 (15U)
+#define DSITX_VID_MODE_CFG_LP_CMD_EN_MASK                  (0x1U << DSITX_VID_MODE_CFG_LP_CMD_EN_SHIFT)                 /* 0x00008000 */
+#define DSITX_VID_MODE_CFG_VPG_EN_SHIFT                    (16U)
+#define DSITX_VID_MODE_CFG_VPG_EN_MASK                     (0x1U << DSITX_VID_MODE_CFG_VPG_EN_SHIFT)                    /* 0x00010000 */
+#define DSITX_VID_MODE_CFG_VPG_MODE_SHIFT                  (20U)
+#define DSITX_VID_MODE_CFG_VPG_MODE_MASK                   (0x1U << DSITX_VID_MODE_CFG_VPG_MODE_SHIFT)                  /* 0x00100000 */
+#define DSITX_VID_MODE_CFG_VPG_ORIENTATION_SHIFT           (24U)
+#define DSITX_VID_MODE_CFG_VPG_ORIENTATION_MASK            (0x1U << DSITX_VID_MODE_CFG_VPG_ORIENTATION_SHIFT)           /* 0x01000000 */
+/* VID_PKT_SIZE */
+#define DSITX_VID_PKT_SIZE_OFFSET                          (0x3CU)
+#define DSITX_VID_PKT_SIZE_VID_PKT_SIZE_SHIFT              (0U)
+#define DSITX_VID_PKT_SIZE_VID_PKT_SIZE_MASK               (0x3FFFU << DSITX_VID_PKT_SIZE_VID_PKT_SIZE_SHIFT)           /* 0x00003FFF */
+/* VID_NUM_CHUNKS */
+#define DSITX_VID_NUM_CHUNKS_OFFSET                        (0x40U)
+#define DSITX_VID_NUM_CHUNKS_VID_NUM_CHUNKS_SHIFT          (0U)
+#define DSITX_VID_NUM_CHUNKS_VID_NUM_CHUNKS_MASK           (0x1FFFU << DSITX_VID_NUM_CHUNKS_VID_NUM_CHUNKS_SHIFT)       /* 0x00001FFF */
+/* VID_NULL_SIZE */
+#define DSITX_VID_NULL_SIZE_OFFSET                         (0x44U)
+#define DSITX_VID_NULL_SIZE_VID_NULL_SIZE_SHIFT            (0U)
+#define DSITX_VID_NULL_SIZE_VID_NULL_SIZE_MASK             (0x1FFFU << DSITX_VID_NULL_SIZE_VID_NULL_SIZE_SHIFT)         /* 0x00001FFF */
+/* VID_HSA_TIME */
+#define DSITX_VID_HSA_TIME_OFFSET                          (0x48U)
+#define DSITX_VID_HSA_TIME_VID_HSA_TIME_SHIFT              (0U)
+#define DSITX_VID_HSA_TIME_VID_HSA_TIME_MASK               (0xFFFU << DSITX_VID_HSA_TIME_VID_HSA_TIME_SHIFT)            /* 0x00000FFF */
+/* VID_HBP_TIME */
+#define DSITX_VID_HBP_TIME_OFFSET                          (0x4CU)
+#define DSITX_VID_HBP_TIME_VID_HSA_TIME_SHIFT              (0U)
+#define DSITX_VID_HBP_TIME_VID_HSA_TIME_MASK               (0xFFFU << DSITX_VID_HBP_TIME_VID_HSA_TIME_SHIFT)            /* 0x00000FFF */
+/* VID_HLINE_TIME */
+#define DSITX_VID_HLINE_TIME_OFFSET                        (0x50U)
+#define DSITX_VID_HLINE_TIME_VID_HLINE_TIME_SHIFT          (0U)
+#define DSITX_VID_HLINE_TIME_VID_HLINE_TIME_MASK           (0x7FFFU << DSITX_VID_HLINE_TIME_VID_HLINE_TIME_SHIFT)       /* 0x00007FFF */
+/* VID_VSA_LINES */
+#define DSITX_VID_VSA_LINES_OFFSET                         (0x54U)
+#define DSITX_VID_VSA_LINES_VSA_LINES_SHIFT                (0U)
+#define DSITX_VID_VSA_LINES_VSA_LINES_MASK                 (0x3FFU << DSITX_VID_VSA_LINES_VSA_LINES_SHIFT)              /* 0x000003FF */
+/* VID_VBP_LINES */
+#define DSITX_VID_VBP_LINES_OFFSET                         (0x58U)
+#define DSITX_VID_VBP_LINES_VBP_LINES_SHIFT                (0U)
+#define DSITX_VID_VBP_LINES_VBP_LINES_MASK                 (0x3FFU << DSITX_VID_VBP_LINES_VBP_LINES_SHIFT)              /* 0x000003FF */
+/* VID_VFP_LINES */
+#define DSITX_VID_VFP_LINES_OFFSET                         (0x5CU)
+#define DSITX_VID_VFP_LINES_VFP_LINES_SHIFT                (0U)
+#define DSITX_VID_VFP_LINES_VFP_LINES_MASK                 (0x1U << DSITX_VID_VFP_LINES_VFP_LINES_SHIFT)                /* 0x00000001 */
+/* VID_VACTIVE_LINES */
+#define DSITX_VID_VACTIVE_LINES_OFFSET                     (0x60U)
+#define DSITX_VID_VACTIVE_LINES_V_ACTIVE_LINES_SHIFT       (0U)
+#define DSITX_VID_VACTIVE_LINES_V_ACTIVE_LINES_MASK        (0x3FFFU << DSITX_VID_VACTIVE_LINES_V_ACTIVE_LINES_SHIFT)    /* 0x00003FFF */
+/* EDPI_CMD_SIZE */
+#define DSITX_EDPI_CMD_SIZE_OFFSET                         (0x64U)
+#define DSITX_EDPI_CMD_SIZE_EDPI_ALLOWED_CMD_SIZE_SHIFT    (0U)
+#define DSITX_EDPI_CMD_SIZE_EDPI_ALLOWED_CMD_SIZE_MASK     (0xFFFFU << DSITX_EDPI_CMD_SIZE_EDPI_ALLOWED_CMD_SIZE_SHIFT) /* 0x0000FFFF */
+/* CMD_MODE_CFG */
+#define DSITX_CMD_MODE_CFG_OFFSET                          (0x68U)
+#define DSITX_CMD_MODE_CFG_TEAR_FX_EN_SHIFT                (0U)
+#define DSITX_CMD_MODE_CFG_TEAR_FX_EN_MASK                 (0x1U << DSITX_CMD_MODE_CFG_TEAR_FX_EN_SHIFT)                /* 0x00000001 */
+#define DSITX_CMD_MODE_CFG_ACK_RQST_EN_SHIFT               (1U)
+#define DSITX_CMD_MODE_CFG_ACK_RQST_EN_MASK                (0x1U << DSITX_CMD_MODE_CFG_ACK_RQST_EN_SHIFT)               /* 0x00000002 */
+#define DSITX_CMD_MODE_CFG_GEN_SW_0P_TX_SHIFT              (8U)
+#define DSITX_CMD_MODE_CFG_GEN_SW_0P_TX_MASK               (0x1U << DSITX_CMD_MODE_CFG_GEN_SW_0P_TX_SHIFT)              /* 0x00000100 */
+#define DSITX_CMD_MODE_CFG_GEN_SW_1P_TX_SHIFT              (9U)
+#define DSITX_CMD_MODE_CFG_GEN_SW_1P_TX_MASK               (0x1U << DSITX_CMD_MODE_CFG_GEN_SW_1P_TX_SHIFT)              /* 0x00000200 */
+#define DSITX_CMD_MODE_CFG_GEN_SW_2P_TX_SHIFT              (10U)
+#define DSITX_CMD_MODE_CFG_GEN_SW_2P_TX_MASK               (0x1U << DSITX_CMD_MODE_CFG_GEN_SW_2P_TX_SHIFT)              /* 0x00000400 */
+#define DSITX_CMD_MODE_CFG_GEN_SR_0P_TX_SHIFT              (11U)
+#define DSITX_CMD_MODE_CFG_GEN_SR_0P_TX_MASK               (0x1U << DSITX_CMD_MODE_CFG_GEN_SR_0P_TX_SHIFT)              /* 0x00000800 */
+#define DSITX_CMD_MODE_CFG_GEN_SR_1P_TX_SHIFT              (12U)
+#define DSITX_CMD_MODE_CFG_GEN_SR_1P_TX_MASK               (0x1U << DSITX_CMD_MODE_CFG_GEN_SR_1P_TX_SHIFT)              /* 0x00001000 */
+#define DSITX_CMD_MODE_CFG_GEN_SR_2P_TX_SHIFT              (13U)
+#define DSITX_CMD_MODE_CFG_GEN_SR_2P_TX_MASK               (0x1U << DSITX_CMD_MODE_CFG_GEN_SR_2P_TX_SHIFT)              /* 0x00002000 */
+#define DSITX_CMD_MODE_CFG_GEN_LW_TX_SHIFT                 (14U)
+#define DSITX_CMD_MODE_CFG_GEN_LW_TX_MASK                  (0x1U << DSITX_CMD_MODE_CFG_GEN_LW_TX_SHIFT)                 /* 0x00004000 */
+#define DSITX_CMD_MODE_CFG_DCS_SW_0P_TX_SHIFT              (16U)
+#define DSITX_CMD_MODE_CFG_DCS_SW_0P_TX_MASK               (0x1U << DSITX_CMD_MODE_CFG_DCS_SW_0P_TX_SHIFT)              /* 0x00010000 */
+#define DSITX_CMD_MODE_CFG_DCS_SW_1P_TX_SHIFT              (17U)
+#define DSITX_CMD_MODE_CFG_DCS_SW_1P_TX_MASK               (0x1U << DSITX_CMD_MODE_CFG_DCS_SW_1P_TX_SHIFT)              /* 0x00020000 */
+#define DSITX_CMD_MODE_CFG_DCS_SR_0P_TX_SHIFT              (18U)
+#define DSITX_CMD_MODE_CFG_DCS_SR_0P_TX_MASK               (0x1U << DSITX_CMD_MODE_CFG_DCS_SR_0P_TX_SHIFT)              /* 0x00040000 */
+#define DSITX_CMD_MODE_CFG_DCS_LW_TX_SHIFT                 (19U)
+#define DSITX_CMD_MODE_CFG_DCS_LW_TX_MASK                  (0x1U << DSITX_CMD_MODE_CFG_DCS_LW_TX_SHIFT)                 /* 0x00080000 */
+#define DSITX_CMD_MODE_CFG_MAX_RD_PKT_SIZE_SHIFT           (24U)
+#define DSITX_CMD_MODE_CFG_MAX_RD_PKT_SIZE_MASK            (0x1U << DSITX_CMD_MODE_CFG_MAX_RD_PKT_SIZE_SHIFT)           /* 0x01000000 */
+/* GEN_HDR */
+#define DSITX_GEN_HDR_OFFSET                               (0x6CU)
+#define DSITX_GEN_HDR_GEN_DT_SHIFT                         (0U)
+#define DSITX_GEN_HDR_GEN_DT_MASK                          (0x3FU << DSITX_GEN_HDR_GEN_DT_SHIFT)                        /* 0x0000003F */
+#define DSITX_GEN_HDR_GEN_VC_SHIFT                         (6U)
+#define DSITX_GEN_HDR_GEN_VC_MASK                          (0x3U << DSITX_GEN_HDR_GEN_VC_SHIFT)                         /* 0x000000C0 */
+#define DSITX_GEN_HDR_GEN_WC_LSBYTE_SHIFT                  (8U)
+#define DSITX_GEN_HDR_GEN_WC_LSBYTE_MASK                   (0xFFU << DSITX_GEN_HDR_GEN_WC_LSBYTE_SHIFT)                 /* 0x0000FF00 */
+#define DSITX_GEN_HDR_GEN_WC_MSBYTE_SHIFT                  (16U)
+#define DSITX_GEN_HDR_GEN_WC_MSBYTE_MASK                   (0xFFU << DSITX_GEN_HDR_GEN_WC_MSBYTE_SHIFT)                 /* 0x00FF0000 */
+/* GEN_PLD_DATA */
+#define DSITX_GEN_PLD_DATA_OFFSET                          (0x70U)
+#define DSITX_GEN_PLD_DATA_GEN_PLD_B1_SHIFT                (0U)
+#define DSITX_GEN_PLD_DATA_GEN_PLD_B1_MASK                 (0xFFU << DSITX_GEN_PLD_DATA_GEN_PLD_B1_SHIFT)               /* 0x000000FF */
+#define DSITX_GEN_PLD_DATA_GEN_PLD_B2_SHIFT                (8U)
+#define DSITX_GEN_PLD_DATA_GEN_PLD_B2_MASK                 (0xFFU << DSITX_GEN_PLD_DATA_GEN_PLD_B2_SHIFT)               /* 0x0000FF00 */
+#define DSITX_GEN_PLD_DATA_GEN_PLD_B3_SHIFT                (16U)
+#define DSITX_GEN_PLD_DATA_GEN_PLD_B3_MASK                 (0xFFU << DSITX_GEN_PLD_DATA_GEN_PLD_B3_SHIFT)               /* 0x00FF0000 */
+#define DSITX_GEN_PLD_DATA_GEN_PLD_B4_SHIFT                (24U)
+#define DSITX_GEN_PLD_DATA_GEN_PLD_B4_MASK                 (0xFFU << DSITX_GEN_PLD_DATA_GEN_PLD_B4_SHIFT)               /* 0xFF000000 */
+/* CMD_PKT_STATUS */
+#define DSITX_CMD_PKT_STATUS_OFFSET                        (0x74U)
+#define DSITX_CMD_PKT_STATUS_GEN_CMD_EMPTY_SHIFT           (0U)
+#define DSITX_CMD_PKT_STATUS_GEN_CMD_EMPTY_MASK            (0x1U << DSITX_CMD_PKT_STATUS_GEN_CMD_EMPTY_SHIFT)           /* 0x00000001 */
+#define DSITX_CMD_PKT_STATUS_GEN_CMD_FULL_SHIFT            (1U)
+#define DSITX_CMD_PKT_STATUS_GEN_CMD_FULL_MASK             (0x1U << DSITX_CMD_PKT_STATUS_GEN_CMD_FULL_SHIFT)            /* 0x00000002 */
+#define DSITX_CMD_PKT_STATUS_GEN_PLD_W_EMPTY_SHIFT         (2U)
+#define DSITX_CMD_PKT_STATUS_GEN_PLD_W_EMPTY_MASK          (0x1U << DSITX_CMD_PKT_STATUS_GEN_PLD_W_EMPTY_SHIFT)         /* 0x00000004 */
+#define DSITX_CMD_PKT_STATUS_GEN_PLD_W_FULL_SHIFT          (3U)
+#define DSITX_CMD_PKT_STATUS_GEN_PLD_W_FULL_MASK           (0x1U << DSITX_CMD_PKT_STATUS_GEN_PLD_W_FULL_SHIFT)          /* 0x00000008 */
+#define DSITX_CMD_PKT_STATUS_GEN_PLD_R_EMPTY_SHIFT         (4U)
+#define DSITX_CMD_PKT_STATUS_GEN_PLD_R_EMPTY_MASK          (0x1U << DSITX_CMD_PKT_STATUS_GEN_PLD_R_EMPTY_SHIFT)         /* 0x00000010 */
+#define DSITX_CMD_PKT_STATUS_GEN_PLD_R_FULL_SHIFT          (5U)
+#define DSITX_CMD_PKT_STATUS_GEN_PLD_R_FULL_MASK           (0x1U << DSITX_CMD_PKT_STATUS_GEN_PLD_R_FULL_SHIFT)          /* 0x00000020 */
+#define DSITX_CMD_PKT_STATUS_GEN_RD_CMD_BUSY_SHIFT         (6U)
+#define DSITX_CMD_PKT_STATUS_GEN_RD_CMD_BUSY_MASK          (0x1U << DSITX_CMD_PKT_STATUS_GEN_RD_CMD_BUSY_SHIFT)         /* 0x00000040 */
+#define DSITX_CMD_PKT_STATUS_DBI_CMD_EMPY_SHIFT            (8U)
+#define DSITX_CMD_PKT_STATUS_DBI_CMD_EMPY_MASK             (0x1U << DSITX_CMD_PKT_STATUS_DBI_CMD_EMPY_SHIFT)            /* 0x00000100 */
+#define DSITX_CMD_PKT_STATUS_DBI_CMD_FULL_SHIFT            (9U)
+#define DSITX_CMD_PKT_STATUS_DBI_CMD_FULL_MASK             (0x1U << DSITX_CMD_PKT_STATUS_DBI_CMD_FULL_SHIFT)            /* 0x00000200 */
+#define DSITX_CMD_PKT_STATUS_DBI_PLD_W_EMPTY_SHIFT         (10U)
+#define DSITX_CMD_PKT_STATUS_DBI_PLD_W_EMPTY_MASK          (0x1U << DSITX_CMD_PKT_STATUS_DBI_PLD_W_EMPTY_SHIFT)         /* 0x00000400 */
+#define DSITX_CMD_PKT_STATUS_DBI_PLD_W_FULL_SHIFT          (11U)
+#define DSITX_CMD_PKT_STATUS_DBI_PLD_W_FULL_MASK           (0x1U << DSITX_CMD_PKT_STATUS_DBI_PLD_W_FULL_SHIFT)          /* 0x00000800 */
+#define DSITX_CMD_PKT_STATUS_DBI_PLD_R_EMPTY_SHIFT         (12U)
+#define DSITX_CMD_PKT_STATUS_DBI_PLD_R_EMPTY_MASK          (0x1U << DSITX_CMD_PKT_STATUS_DBI_PLD_R_EMPTY_SHIFT)         /* 0x00001000 */
+#define DSITX_CMD_PKT_STATUS_DBI_PLD_R_FULL_SHIFT          (13U)
+#define DSITX_CMD_PKT_STATUS_DBI_PLD_R_FULL_MASK           (0x1U << DSITX_CMD_PKT_STATUS_DBI_PLD_R_FULL_SHIFT)          /* 0x00002000 */
+#define DSITX_CMD_PKT_STATUS_DBI_RD_CMD_BUSY_SHIFT         (14U)
+#define DSITX_CMD_PKT_STATUS_DBI_RD_CMD_BUSY_MASK          (0x1U << DSITX_CMD_PKT_STATUS_DBI_RD_CMD_BUSY_SHIFT)         /* 0x00004000 */
+/* TO_CNT_CFG */
+#define DSITX_TO_CNT_CFG_OFFSET                            (0x78U)
+#define DSITX_TO_CNT_CFG_LPRX_TO_CNT_SHIFT                 (0U)
+#define DSITX_TO_CNT_CFG_LPRX_TO_CNT_MASK                  (0xFFFFU << DSITX_TO_CNT_CFG_LPRX_TO_CNT_SHIFT)              /* 0x0000FFFF */
+#define DSITX_TO_CNT_CFG_HSTX_TO_CNT_SHIFT                 (16U)
+#define DSITX_TO_CNT_CFG_HSTX_TO_CNT_MASK                  (0xFFFFU << DSITX_TO_CNT_CFG_HSTX_TO_CNT_SHIFT)              /* 0xFFFF0000 */
+/* HS_RD_TO_CNT */
+#define DSITX_HS_RD_TO_CNT_OFFSET                          (0x7CU)
+#define DSITX_HS_RD_TO_CNT_HS_RD_TO_CNT_SHIFT              (0U)
+#define DSITX_HS_RD_TO_CNT_HS_RD_TO_CNT_MASK               (0xFFFFU << DSITX_HS_RD_TO_CNT_HS_RD_TO_CNT_SHIFT)           /* 0x0000FFFF */
+/* LP_RD_TO_CNT */
+#define DSITX_LP_RD_TO_CNT_OFFSET                          (0x80U)
+#define DSITX_LP_RD_TO_CNT_LP_RD_TO_CNT_SHIFT              (0U)
+#define DSITX_LP_RD_TO_CNT_LP_RD_TO_CNT_MASK               (0xFFFFU << DSITX_LP_RD_TO_CNT_LP_RD_TO_CNT_SHIFT)           /* 0x0000FFFF */
+/* HS_WR_TO_CNT */
+#define DSITX_HS_WR_TO_CNT_OFFSET                          (0x84U)
+#define DSITX_HS_WR_TO_CNT_HS_WR_TO_CNT_SHIFT              (0U)
+#define DSITX_HS_WR_TO_CNT_HS_WR_TO_CNT_MASK               (0xFFFFU << DSITX_HS_WR_TO_CNT_HS_WR_TO_CNT_SHIFT)           /* 0x0000FFFF */
+#define DSITX_HS_WR_TO_CNT_PRESP_TO_MODE_SHIFT             (24U)
+#define DSITX_HS_WR_TO_CNT_PRESP_TO_MODE_MASK              (0x1U << DSITX_HS_WR_TO_CNT_PRESP_TO_MODE_SHIFT)             /* 0x01000000 */
+/* LP_WR_TO_CNT */
+#define DSITX_LP_WR_TO_CNT_OFFSET                          (0x88U)
+#define DSITX_LP_WR_TO_CNT_LP_WR_TO_CNT_SHIFT              (0U)
+#define DSITX_LP_WR_TO_CNT_LP_WR_TO_CNT_MASK               (0xFFFFU << DSITX_LP_WR_TO_CNT_LP_WR_TO_CNT_SHIFT)           /* 0x0000FFFF */
+/* BTA_TO_CNT */
+#define DSITX_BTA_TO_CNT_OFFSET                            (0x8CU)
+#define DSITX_BTA_TO_CNT_BTA_TO_CNT_SHIFT                  (0U)
+#define DSITX_BTA_TO_CNT_BTA_TO_CNT_MASK                   (0x1U << DSITX_BTA_TO_CNT_BTA_TO_CNT_SHIFT)                  /* 0x00000001 */
+/* SDF_3D */
+#define DSITX_SDF_3D_OFFSET                                (0x90U)
+#define DSITX_SDF_3D_MODE_3D_SHIFT                         (0U)
+#define DSITX_SDF_3D_MODE_3D_MASK                          (0x3U << DSITX_SDF_3D_MODE_3D_SHIFT)                         /* 0x00000003 */
+#define DSITX_SDF_3D_FORMAT_3D_SHIFT                       (2U)
+#define DSITX_SDF_3D_FORMAT_3D_MASK                        (0x3U << DSITX_SDF_3D_FORMAT_3D_SHIFT)                       /* 0x0000000C */
+#define DSITX_SDF_3D_SECOND_VSYNC_SHIFT                    (4U)
+#define DSITX_SDF_3D_SECOND_VSYNC_MASK                     (0x1U << DSITX_SDF_3D_SECOND_VSYNC_SHIFT)                    /* 0x00000010 */
+#define DSITX_SDF_3D_RIGHT_FIRST_SHIFT                     (5U)
+#define DSITX_SDF_3D_RIGHT_FIRST_MASK                      (0x1U << DSITX_SDF_3D_RIGHT_FIRST_SHIFT)                     /* 0x00000020 */
+#define DSITX_SDF_3D_SEND_3D_CFG_SHIFT                     (16U)
+#define DSITX_SDF_3D_SEND_3D_CFG_MASK                      (0x1U << DSITX_SDF_3D_SEND_3D_CFG_SHIFT)                     /* 0x00010000 */
+/* LPCLK_CTRL */
+#define DSITX_LPCLK_CTRL_OFFSET                            (0x94U)
+#define DSITX_LPCLK_CTRL_PHY_TXREQUESTCLKHS_SHIFT          (0U)
+#define DSITX_LPCLK_CTRL_PHY_TXREQUESTCLKHS_MASK           (0x1U << DSITX_LPCLK_CTRL_PHY_TXREQUESTCLKHS_SHIFT)          /* 0x00000001 */
+#define DSITX_LPCLK_CTRL_AUTO_CLKLANE_CTRL_SHIFT           (1U)
+#define DSITX_LPCLK_CTRL_AUTO_CLKLANE_CTRL_MASK            (0x1U << DSITX_LPCLK_CTRL_AUTO_CLKLANE_CTRL_SHIFT)           /* 0x00000002 */
+/* PHY_TMR_LPCLK_CFG */
+#define DSITX_PHY_TMR_LPCLK_CFG_OFFSET                     (0x98U)
+#define DSITX_PHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_SHIFT    (0U)
+#define DSITX_PHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_MASK     (0x3FFU << DSITX_PHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_SHIFT)  /* 0x000003FF */
+#define DSITX_PHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME_SHIFT    (16U)
+#define DSITX_PHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME_MASK     (0x3FFU << DSITX_PHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME_SHIFT)  /* 0x03FF0000 */
+/* PHY_TMR_CFG */
+#define DSITX_PHY_TMR_CFG_OFFSET                           (0x9CU)
+#define DSITX_PHY_TMR_CFG_MAX_RD_TIME_SHIFT                (0U)
+#define DSITX_PHY_TMR_CFG_MAX_RD_TIME_MASK                 (0x7FFFU << DSITX_PHY_TMR_CFG_MAX_RD_TIME_SHIFT)             /* 0x00007FFF */
+#define DSITX_PHY_TMR_CFG_PHY_LP2HS_TIME_SHIFT             (16U)
+#define DSITX_PHY_TMR_CFG_PHY_LP2HS_TIME_MASK              (0xFFU << DSITX_PHY_TMR_CFG_PHY_LP2HS_TIME_SHIFT)            /* 0x00FF0000 */
+#define DSITX_PHY_TMR_CFG_PHY_HS2LP_TIME_SHIFT             (24U)
+#define DSITX_PHY_TMR_CFG_PHY_HS2LP_TIME_MASK              (0xFFU << DSITX_PHY_TMR_CFG_PHY_HS2LP_TIME_SHIFT)            /* 0xFF000000 */
+/* PHY_RSTZ */
+#define DSITX_PHY_RSTZ_OFFSET                              (0xA0U)
+#define DSITX_PHY_RSTZ_PHY_SHUTDOWNZ_SHIFT                 (0U)
+#define DSITX_PHY_RSTZ_PHY_SHUTDOWNZ_MASK                  (0x1U << DSITX_PHY_RSTZ_PHY_SHUTDOWNZ_SHIFT)                 /* 0x00000001 */
+#define DSITX_PHY_RSTZ_PHY_RSTZ_SHIFT                      (1U)
+#define DSITX_PHY_RSTZ_PHY_RSTZ_MASK                       (0x1U << DSITX_PHY_RSTZ_PHY_RSTZ_SHIFT)                      /* 0x00000002 */
+#define DSITX_PHY_RSTZ_PHY_ENABLECLK_SHIFT                 (2U)
+#define DSITX_PHY_RSTZ_PHY_ENABLECLK_MASK                  (0x1U << DSITX_PHY_RSTZ_PHY_ENABLECLK_SHIFT)                 /* 0x00000004 */
+#define DSITX_PHY_RSTZ_PHY_FORCEPLL_SHIFT                  (3U)
+#define DSITX_PHY_RSTZ_PHY_FORCEPLL_MASK                   (0x1U << DSITX_PHY_RSTZ_PHY_FORCEPLL_SHIFT)                  /* 0x00000008 */
+/* PHY_IF_CFG */
+#define DSITX_PHY_IF_CFG_OFFSET                            (0xA4U)
+#define DSITX_PHY_IF_CFG_N_LANES_SHIFT                     (0U)
+#define DSITX_PHY_IF_CFG_N_LANES_MASK                      (0x3U << DSITX_PHY_IF_CFG_N_LANES_SHIFT)                     /* 0x00000003 */
+#define DSITX_PHY_IF_CFG_PHY_STOP_WAIT_TIME_SHIFT          (8U)
+#define DSITX_PHY_IF_CFG_PHY_STOP_WAIT_TIME_MASK           (0xFFU << DSITX_PHY_IF_CFG_PHY_STOP_WAIT_TIME_SHIFT)         /* 0x0000FF00 */
+/* PHY_STATUS */
+#define DSITX_PHY_STATUS_OFFSET                            (0xB0U)
+#define DSITX_PHY_STATUS                                   (0x0U)
+#define DSITX_PHY_STATUS_PHY_LOCK_SHIFT                    (0U)
+#define DSITX_PHY_STATUS_PHY_LOCK_MASK                     (0x1U << DSITX_PHY_STATUS_PHY_LOCK_SHIFT)                    /* 0x00000001 */
+#define DSITX_PHY_STATUS_PHY_DIRECTION_SHIFT               (1U)
+#define DSITX_PHY_STATUS_PHY_DIRECTION_MASK                (0x1U << DSITX_PHY_STATUS_PHY_DIRECTION_SHIFT)               /* 0x00000002 */
+#define DSITX_PHY_STATUS_PHY_STOPSTATECLKLANE_SHIFT        (2U)
+#define DSITX_PHY_STATUS_PHY_STOPSTATECLKLANE_MASK         (0x1U << DSITX_PHY_STATUS_PHY_STOPSTATECLKLANE_SHIFT)        /* 0x00000004 */
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOTCLK_SHIFT        (3U)
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOTCLK_MASK         (0x1U << DSITX_PHY_STATUS_PHY_ULPSACTIVENOTCLK_SHIFT)        /* 0x00000008 */
+#define DSITX_PHY_STATUS_PHY_STOPSTATE0LANE_SHIFT          (4U)
+#define DSITX_PHY_STATUS_PHY_STOPSTATE0LANE_MASK           (0x1U << DSITX_PHY_STATUS_PHY_STOPSTATE0LANE_SHIFT)          /* 0x00000010 */
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOT0LANE_SHIFT      (5U)
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOT0LANE_MASK       (0x1U << DSITX_PHY_STATUS_PHY_ULPSACTIVENOT0LANE_SHIFT)      /* 0x00000020 */
+#define DSITX_PHY_STATUS_PHY_RXULPSESC0LANE_SHIFT          (6U)
+#define DSITX_PHY_STATUS_PHY_RXULPSESC0LANE_MASK           (0x1U << DSITX_PHY_STATUS_PHY_RXULPSESC0LANE_SHIFT)          /* 0x00000040 */
+#define DSITX_PHY_STATUS_PHY_STOPSTATE1LANE_SHIFT          (7U)
+#define DSITX_PHY_STATUS_PHY_STOPSTATE1LANE_MASK           (0x1U << DSITX_PHY_STATUS_PHY_STOPSTATE1LANE_SHIFT)          /* 0x00000080 */
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOT1LANE_SHIFT      (8U)
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOT1LANE_MASK       (0x1U << DSITX_PHY_STATUS_PHY_ULPSACTIVENOT1LANE_SHIFT)      /* 0x00000100 */
+#define DSITX_PHY_STATUS_PHY_STOPSTATE2LANE_SHIFT          (9U)
+#define DSITX_PHY_STATUS_PHY_STOPSTATE2LANE_MASK           (0x1U << DSITX_PHY_STATUS_PHY_STOPSTATE2LANE_SHIFT)          /* 0x00000200 */
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOT2LANE_SHIFT      (10U)
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOT2LANE_MASK       (0x1U << DSITX_PHY_STATUS_PHY_ULPSACTIVENOT2LANE_SHIFT)      /* 0x00000400 */
+#define DSITX_PHY_STATUS_PHY_STOPSTATE3LANE_SHIFT          (11U)
+#define DSITX_PHY_STATUS_PHY_STOPSTATE3LANE_MASK           (0x1U << DSITX_PHY_STATUS_PHY_STOPSTATE3LANE_SHIFT)          /* 0x00000800 */
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOT3LANE_SHIFT      (12U)
+#define DSITX_PHY_STATUS_PHY_ULPSACTIVENOT3LANE_MASK       (0x1U << DSITX_PHY_STATUS_PHY_ULPSACTIVENOT3LANE_SHIFT)      /* 0x00001000 */
+/* INT_ST0 */
+#define DSITX_INT_ST0_OFFSET                               (0xBCU)
+#define DSITX_INT_ST0_ACK_WITH_ERR_0_SHIFT                 (0U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_0_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_0_SHIFT)                 /* 0x00000001 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_1_SHIFT                 (1U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_1_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_1_SHIFT)                 /* 0x00000002 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_2_SHIFT                 (2U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_2_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_2_SHIFT)                 /* 0x00000004 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_3_SHIFT                 (3U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_3_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_3_SHIFT)                 /* 0x00000008 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_4_SHIFT                 (4U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_4_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_4_SHIFT)                 /* 0x00000010 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_5_SHIFT                 (5U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_5_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_5_SHIFT)                 /* 0x00000020 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_6_SHIFT                 (6U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_6_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_6_SHIFT)                 /* 0x00000040 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_7_SHIFT                 (7U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_7_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_7_SHIFT)                 /* 0x00000080 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_8_SHIFT                 (8U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_8_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_8_SHIFT)                 /* 0x00000100 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_9_SHIFT                 (9U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_9_MASK                  (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_9_SHIFT)                 /* 0x00000200 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_10_SHIFT                (10U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_10_MASK                 (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_10_SHIFT)                /* 0x00000400 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_11_SHIFT                (11U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_11_MASK                 (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_11_SHIFT)                /* 0x00000800 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_12_SHIFT                (12U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_12_MASK                 (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_12_SHIFT)                /* 0x00001000 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_13_SHIFT                (13U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_13_MASK                 (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_13_SHIFT)                /* 0x00002000 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_14_SHIFT                (14U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_14_MASK                 (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_14_SHIFT)                /* 0x00004000 */
+#define DSITX_INT_ST0_ACK_WITH_ERR_15_SHIFT                (15U)
+#define DSITX_INT_ST0_ACK_WITH_ERR_15_MASK                 (0x1U << DSITX_INT_ST0_ACK_WITH_ERR_15_SHIFT)                /* 0x00008000 */
+#define DSITX_INT_ST0_DPHY_ERRORS_0_SHIFT                  (16U)
+#define DSITX_INT_ST0_DPHY_ERRORS_0_MASK                   (0x1U << DSITX_INT_ST0_DPHY_ERRORS_0_SHIFT)                  /* 0x00010000 */
+#define DSITX_INT_ST0_DPHY_ERRORS_1_SHIFT                  (17U)
+#define DSITX_INT_ST0_DPHY_ERRORS_1_MASK                   (0x1U << DSITX_INT_ST0_DPHY_ERRORS_1_SHIFT)                  /* 0x00020000 */
+#define DSITX_INT_ST0_DPHY_ERRORS_2_SHIFT                  (18U)
+#define DSITX_INT_ST0_DPHY_ERRORS_2_MASK                   (0x1U << DSITX_INT_ST0_DPHY_ERRORS_2_SHIFT)                  /* 0x00040000 */
+#define DSITX_INT_ST0_DPHY_ERRORS_3_SHIFT                  (19U)
+#define DSITX_INT_ST0_DPHY_ERRORS_3_MASK                   (0x1U << DSITX_INT_ST0_DPHY_ERRORS_3_SHIFT)                  /* 0x00080000 */
+#define DSITX_INT_ST0_DPHY_ERRORS_4_SHIFT                  (20U)
+#define DSITX_INT_ST0_DPHY_ERRORS_4_MASK                   (0x1U << DSITX_INT_ST0_DPHY_ERRORS_4_SHIFT)                  /* 0x00100000 */
+/* INT_ST1 */
+#define DSITX_INT_ST1_OFFSET                               (0xC0U)
+#define DSITX_INT_ST1_TO_HS_TX_SHIFT                       (0U)
+#define DSITX_INT_ST1_TO_HS_TX_MASK                        (0x1U << DSITX_INT_ST1_TO_HS_TX_SHIFT)                       /* 0x00000001 */
+#define DSITX_INT_ST1_TO_LP_RX_SHIFT                       (1U)
+#define DSITX_INT_ST1_TO_LP_RX_MASK                        (0x1U << DSITX_INT_ST1_TO_LP_RX_SHIFT)                       /* 0x00000002 */
+#define DSITX_INT_ST1_ECC_SINGLE_ERR_SHIFT                 (2U)
+#define DSITX_INT_ST1_ECC_SINGLE_ERR_MASK                  (0x1U << DSITX_INT_ST1_ECC_SINGLE_ERR_SHIFT)                 /* 0x00000004 */
+#define DSITX_INT_ST1_ECC_MULTI_ERR_SHIFT                  (3U)
+#define DSITX_INT_ST1_ECC_MULTI_ERR_MASK                   (0x1U << DSITX_INT_ST1_ECC_MULTI_ERR_SHIFT)                  /* 0x00000008 */
+#define DSITX_INT_ST1_CRC_ERR_SHIFT                        (4U)
+#define DSITX_INT_ST1_CRC_ERR_MASK                         (0x1U << DSITX_INT_ST1_CRC_ERR_SHIFT)                        /* 0x00000010 */
+#define DSITX_INT_ST1_PKT_SIZE_ERR_SHIFT                   (5U)
+#define DSITX_INT_ST1_PKT_SIZE_ERR_MASK                    (0x1U << DSITX_INT_ST1_PKT_SIZE_ERR_SHIFT)                   /* 0x00000020 */
+#define DSITX_INT_ST1_EOPT_ERR_SHIFT                       (6U)
+#define DSITX_INT_ST1_EOPT_ERR_MASK                        (0x1U << DSITX_INT_ST1_EOPT_ERR_SHIFT)                       /* 0x00000040 */
+#define DSITX_INT_ST1_DPI_PLD_WR_ERR_SHIFT                 (7U)
+#define DSITX_INT_ST1_DPI_PLD_WR_ERR_MASK                  (0x1U << DSITX_INT_ST1_DPI_PLD_WR_ERR_SHIFT)                 /* 0x00000080 */
+#define DSITX_INT_ST1_GEN_CMD_WR_ERR_SHIFT                 (8U)
+#define DSITX_INT_ST1_GEN_CMD_WR_ERR_MASK                  (0x1U << DSITX_INT_ST1_GEN_CMD_WR_ERR_SHIFT)                 /* 0x00000100 */
+#define DSITX_INT_ST1_GEN_PLD_WR_ERR_SHIFT                 (9U)
+#define DSITX_INT_ST1_GEN_PLD_WR_ERR_MASK                  (0x1U << DSITX_INT_ST1_GEN_PLD_WR_ERR_SHIFT)                 /* 0x00000200 */
+#define DSITX_INT_ST1_GEN_PLD_SEND_ERR_SHIFT               (10U)
+#define DSITX_INT_ST1_GEN_PLD_SEND_ERR_MASK                (0x1U << DSITX_INT_ST1_GEN_PLD_SEND_ERR_SHIFT)               /* 0x00000400 */
+#define DSITX_INT_ST1_GEN_PLD_RD_ERR_SHIFT                 (11U)
+#define DSITX_INT_ST1_GEN_PLD_RD_ERR_MASK                  (0x1U << DSITX_INT_ST1_GEN_PLD_RD_ERR_SHIFT)                 /* 0x00000800 */
+#define DSITX_INT_ST1_GEN_PLD_RECEV_ERR_SHIFT              (12U)
+#define DSITX_INT_ST1_GEN_PLD_RECEV_ERR_MASK               (0x1U << DSITX_INT_ST1_GEN_PLD_RECEV_ERR_SHIFT)              /* 0x00001000 */
+#define DSITX_INT_ST1_DBI_CMD_WR_ERR_SHIFT                 (13U)
+#define DSITX_INT_ST1_DBI_CMD_WR_ERR_MASK                  (0x1U << DSITX_INT_ST1_DBI_CMD_WR_ERR_SHIFT)                 /* 0x00002000 */
+#define DSITX_INT_ST1_DBI_PLD_WR_ERR_SHIFT                 (14U)
+#define DSITX_INT_ST1_DBI_PLD_WR_ERR_MASK                  (0x1U << DSITX_INT_ST1_DBI_PLD_WR_ERR_SHIFT)                 /* 0x00004000 */
+#define DSITX_INT_ST1_DBI_PLD_RD_ERR_SHIFT                 (15U)
+#define DSITX_INT_ST1_DBI_PLD_RD_ERR_MASK                  (0x1U << DSITX_INT_ST1_DBI_PLD_RD_ERR_SHIFT)                 /* 0x00008000 */
+#define DSITX_INT_ST1_DBI_PLD_RECV_ERR_SHIFT               (16U)
+#define DSITX_INT_ST1_DBI_PLD_RECV_ERR_MASK                (0x1U << DSITX_INT_ST1_DBI_PLD_RECV_ERR_SHIFT)               /* 0x00010000 */
+#define DSITX_INT_ST1_DBI_ILEGAL_COMM_ERR_SHIFT            (17U)
+#define DSITX_INT_ST1_DBI_ILEGAL_COMM_ERR_MASK             (0x1U << DSITX_INT_ST1_DBI_ILEGAL_COMM_ERR_SHIFT)            /* 0x00020000 */
+/* INT_MSK0 */
+#define DSITX_INT_MSK0_OFFSET                              (0xC4U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_0_SHIFT                (0U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_0_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_0_SHIFT)                /* 0x00000001 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_1_SHIFT                (1U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_1_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_1_SHIFT)                /* 0x00000002 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_2_SHIFT                (2U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_2_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_2_SHIFT)                /* 0x00000004 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_3_SHIFT                (3U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_3_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_3_SHIFT)                /* 0x00000008 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_4_SHIFT                (4U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_4_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_4_SHIFT)                /* 0x00000010 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_5_SHIFT                (5U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_5_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_5_SHIFT)                /* 0x00000020 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_6_SHIFT                (6U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_6_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_6_SHIFT)                /* 0x00000040 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_7_SHIFT                (7U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_7_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_7_SHIFT)                /* 0x00000080 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_8_SHIFT                (8U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_8_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_8_SHIFT)                /* 0x00000100 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_9_SHIFT                (9U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_9_MASK                 (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_9_SHIFT)                /* 0x00000200 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_10_SHIFT               (10U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_10_MASK                (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_10_SHIFT)               /* 0x00000400 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_11_SHIFT               (11U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_11_MASK                (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_11_SHIFT)               /* 0x00000800 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_12_SHIFT               (12U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_12_MASK                (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_12_SHIFT)               /* 0x00001000 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_13_SHIFT               (13U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_13_MASK                (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_13_SHIFT)               /* 0x00002000 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_14_SHIFT               (14U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_14_MASK                (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_14_SHIFT)               /* 0x00004000 */
+#define DSITX_INT_MSK0_ACK_WITH_ERR_15_SHIFT               (15U)
+#define DSITX_INT_MSK0_ACK_WITH_ERR_15_MASK                (0x1U << DSITX_INT_MSK0_ACK_WITH_ERR_15_SHIFT)               /* 0x00008000 */
+#define DSITX_INT_MSK0_DPHY_ERRORS_0_SHIFT                 (16U)
+#define DSITX_INT_MSK0_DPHY_ERRORS_0_MASK                  (0x1U << DSITX_INT_MSK0_DPHY_ERRORS_0_SHIFT)                 /* 0x00010000 */
+#define DSITX_INT_MSK0_DPHY_ERRORS_1_SHIFT                 (17U)
+#define DSITX_INT_MSK0_DPHY_ERRORS_1_MASK                  (0x1U << DSITX_INT_MSK0_DPHY_ERRORS_1_SHIFT)                 /* 0x00020000 */
+#define DSITX_INT_MSK0_DPHY_ERRORS_2_SHIFT                 (18U)
+#define DSITX_INT_MSK0_DPHY_ERRORS_2_MASK                  (0x1U << DSITX_INT_MSK0_DPHY_ERRORS_2_SHIFT)                 /* 0x00040000 */
+#define DSITX_INT_MSK0_DPHY_ERRORS_3_SHIFT                 (19U)
+#define DSITX_INT_MSK0_DPHY_ERRORS_3_MASK                  (0x1U << DSITX_INT_MSK0_DPHY_ERRORS_3_SHIFT)                 /* 0x00080000 */
+#define DSITX_INT_MSK0_DPHY_ERRORS_4_SHIFT                 (20U)
+#define DSITX_INT_MSK0_DPHY_ERRORS_4_MASK                  (0x1U << DSITX_INT_MSK0_DPHY_ERRORS_4_SHIFT)                 /* 0x00100000 */
+/* INT_MSK1 */
+#define DSITX_INT_MSK1_OFFSET                              (0xC8U)
+#define DSITX_INT_MSK1_TO_HS_TX_SHIFT                      (0U)
+#define DSITX_INT_MSK1_TO_HS_TX_MASK                       (0x1U << DSITX_INT_MSK1_TO_HS_TX_SHIFT)                      /* 0x00000001 */
+#define DSITX_INT_MSK1_TO_LP_RX_SHIFT                      (1U)
+#define DSITX_INT_MSK1_TO_LP_RX_MASK                       (0x1U << DSITX_INT_MSK1_TO_LP_RX_SHIFT)                      /* 0x00000002 */
+#define DSITX_INT_MSK1_ECC_SINGLE_ERR_SHIFT                (2U)
+#define DSITX_INT_MSK1_ECC_SINGLE_ERR_MASK                 (0x1U << DSITX_INT_MSK1_ECC_SINGLE_ERR_SHIFT)                /* 0x00000004 */
+#define DSITX_INT_MSK1_ECC_MULTI_ERR_SHIFT                 (3U)
+#define DSITX_INT_MSK1_ECC_MULTI_ERR_MASK                  (0x1U << DSITX_INT_MSK1_ECC_MULTI_ERR_SHIFT)                 /* 0x00000008 */
+#define DSITX_INT_MSK1_CRC_ERR_SHIFT                       (4U)
+#define DSITX_INT_MSK1_CRC_ERR_MASK                        (0x1U << DSITX_INT_MSK1_CRC_ERR_SHIFT)                       /* 0x00000010 */
+#define DSITX_INT_MSK1_PKT_SIZE_ERR_SHIFT                  (5U)
+#define DSITX_INT_MSK1_PKT_SIZE_ERR_MASK                   (0x1U << DSITX_INT_MSK1_PKT_SIZE_ERR_SHIFT)                  /* 0x00000020 */
+#define DSITX_INT_MSK1_EOPT_ERR_SHIFT                      (6U)
+#define DSITX_INT_MSK1_EOPT_ERR_MASK                       (0x1U << DSITX_INT_MSK1_EOPT_ERR_SHIFT)                      /* 0x00000040 */
+#define DSITX_INT_MSK1_DPI_PLD_WR_ERR_SHIFT                (7U)
+#define DSITX_INT_MSK1_DPI_PLD_WR_ERR_MASK                 (0x1U << DSITX_INT_MSK1_DPI_PLD_WR_ERR_SHIFT)                /* 0x00000080 */
+#define DSITX_INT_MSK1_GEN_CMD_WR_ERR_SHIFT                (8U)
+#define DSITX_INT_MSK1_GEN_CMD_WR_ERR_MASK                 (0x1U << DSITX_INT_MSK1_GEN_CMD_WR_ERR_SHIFT)                /* 0x00000100 */
+#define DSITX_INT_MSK1_GEN_PLD_WR_ERR_SHIFT                (9U)
+#define DSITX_INT_MSK1_GEN_PLD_WR_ERR_MASK                 (0x1U << DSITX_INT_MSK1_GEN_PLD_WR_ERR_SHIFT)                /* 0x00000200 */
+#define DSITX_INT_MSK1_GEN_PLD_SEND_ERR_SHIFT              (10U)
+#define DSITX_INT_MSK1_GEN_PLD_SEND_ERR_MASK               (0x1U << DSITX_INT_MSK1_GEN_PLD_SEND_ERR_SHIFT)              /* 0x00000400 */
+#define DSITX_INT_MSK1_GEN_PLD_RD_ERR_SHIFT                (11U)
+#define DSITX_INT_MSK1_GEN_PLD_RD_ERR_MASK                 (0x1U << DSITX_INT_MSK1_GEN_PLD_RD_ERR_SHIFT)                /* 0x00000800 */
+#define DSITX_INT_MSK1_GEN_PLD_RECEV_ERR_SHIFT             (12U)
+#define DSITX_INT_MSK1_GEN_PLD_RECEV_ERR_MASK              (0x1U << DSITX_INT_MSK1_GEN_PLD_RECEV_ERR_SHIFT)             /* 0x00001000 */
+#define DSITX_INT_MSK1_DBI_CMD_WR_ERR_SHIFT                (13U)
+#define DSITX_INT_MSK1_DBI_CMD_WR_ERR_MASK                 (0x1U << DSITX_INT_MSK1_DBI_CMD_WR_ERR_SHIFT)                /* 0x00002000 */
+#define DSITX_INT_MSK1_DBI_PLD_WR_ERR_SHIFT                (14U)
+#define DSITX_INT_MSK1_DBI_PLD_WR_ERR_MASK                 (0x1U << DSITX_INT_MSK1_DBI_PLD_WR_ERR_SHIFT)                /* 0x00004000 */
+#define DSITX_INT_MSK1_DBI_PLD_RD_ERR_SHIFT                (15U)
+#define DSITX_INT_MSK1_DBI_PLD_RD_ERR_MASK                 (0x1U << DSITX_INT_MSK1_DBI_PLD_RD_ERR_SHIFT)                /* 0x00008000 */
+#define DSITX_INT_MSK1_DBI_PLD_RECV_ERR_SHIFT              (16U)
+#define DSITX_INT_MSK1_DBI_PLD_RECV_ERR_MASK               (0x1U << DSITX_INT_MSK1_DBI_PLD_RECV_ERR_SHIFT)              /* 0x00010000 */
+#define DSITX_INT_MSK1_DBI_ILEGAL_COMM_ERR_SHIFT           (17U)
+#define DSITX_INT_MSK1_DBI_ILEGAL_COMM_ERR_MASK            (0x1U << DSITX_INT_MSK1_DBI_ILEGAL_COMM_ERR_SHIFT)           /* 0x00020000 */
+/* INT_FORCE0 */
+#define DSITX_INT_FORCE0_OFFSET                            (0xD8U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_0_SHIFT              (0U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_0_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_0_SHIFT)              /* 0x00000001 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_1_SHIFT              (1U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_1_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_1_SHIFT)              /* 0x00000002 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_2_SHIFT              (2U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_2_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_2_SHIFT)              /* 0x00000004 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_3_SHIFT              (3U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_3_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_3_SHIFT)              /* 0x00000008 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_4_SHIFT              (4U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_4_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_4_SHIFT)              /* 0x00000010 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_5_SHIFT              (5U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_5_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_5_SHIFT)              /* 0x00000020 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_6_SHIFT              (6U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_6_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_6_SHIFT)              /* 0x00000040 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_7_SHIFT              (7U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_7_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_7_SHIFT)              /* 0x00000080 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_8_SHIFT              (8U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_8_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_8_SHIFT)              /* 0x00000100 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_9_SHIFT              (9U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_9_MASK               (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_9_SHIFT)              /* 0x00000200 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_10_SHIFT             (10U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_10_MASK              (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_10_SHIFT)             /* 0x00000400 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_11_SHIFT             (11U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_11_MASK              (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_11_SHIFT)             /* 0x00000800 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_12_SHIFT             (12U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_12_MASK              (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_12_SHIFT)             /* 0x00001000 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_13_SHIFT             (13U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_13_MASK              (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_13_SHIFT)             /* 0x00002000 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_14_SHIFT             (14U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_14_MASK              (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_14_SHIFT)             /* 0x00004000 */
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_15_SHIFT             (15U)
+#define DSITX_INT_FORCE0_ACK_WITH_ERR_15_MASK              (0x1U << DSITX_INT_FORCE0_ACK_WITH_ERR_15_SHIFT)             /* 0x00008000 */
+#define DSITX_INT_FORCE0_DPHY_ERRORS_0_SHIFT               (16U)
+#define DSITX_INT_FORCE0_DPHY_ERRORS_0_MASK                (0x1U << DSITX_INT_FORCE0_DPHY_ERRORS_0_SHIFT)               /* 0x00010000 */
+#define DSITX_INT_FORCE0_DPHY_ERRORS_1_SHIFT               (17U)
+#define DSITX_INT_FORCE0_DPHY_ERRORS_1_MASK                (0x1U << DSITX_INT_FORCE0_DPHY_ERRORS_1_SHIFT)               /* 0x00020000 */
+#define DSITX_INT_FORCE0_DPHY_ERRORS_2_SHIFT               (18U)
+#define DSITX_INT_FORCE0_DPHY_ERRORS_2_MASK                (0x1U << DSITX_INT_FORCE0_DPHY_ERRORS_2_SHIFT)               /* 0x00040000 */
+#define DSITX_INT_FORCE0_DPHY_ERRORS_3_SHIFT               (19U)
+#define DSITX_INT_FORCE0_DPHY_ERRORS_3_MASK                (0x1U << DSITX_INT_FORCE0_DPHY_ERRORS_3_SHIFT)               /* 0x00080000 */
+#define DSITX_INT_FORCE0_DPHY_ERRORS_4_SHIFT               (20U)
+#define DSITX_INT_FORCE0_DPHY_ERRORS_4_MASK                (0x1U << DSITX_INT_FORCE0_DPHY_ERRORS_4_SHIFT)               /* 0x00100000 */
+/* INT_FORCE1 */
+#define DSITX_INT_FORCE1_OFFSET                            (0xDCU)
+#define DSITX_INT_FORCE1_TO_HS_TX_SHIFT                    (0U)
+#define DSITX_INT_FORCE1_TO_HS_TX_MASK                     (0x1U << DSITX_INT_FORCE1_TO_HS_TX_SHIFT)                    /* 0x00000001 */
+#define DSITX_INT_FORCE1_TO_LP_RX_SHIFT                    (1U)
+#define DSITX_INT_FORCE1_TO_LP_RX_MASK                     (0x1U << DSITX_INT_FORCE1_TO_LP_RX_SHIFT)                    /* 0x00000002 */
+#define DSITX_INT_FORCE1_ECC_SINGLE_ERR_SHIFT              (2U)
+#define DSITX_INT_FORCE1_ECC_SINGLE_ERR_MASK               (0x1U << DSITX_INT_FORCE1_ECC_SINGLE_ERR_SHIFT)              /* 0x00000004 */
+#define DSITX_INT_FORCE1_ECC_MULTI_ERR_SHIFT               (3U)
+#define DSITX_INT_FORCE1_ECC_MULTI_ERR_MASK                (0x1U << DSITX_INT_FORCE1_ECC_MULTI_ERR_SHIFT)               /* 0x00000008 */
+#define DSITX_INT_FORCE1_CRC_ERR_SHIFT                     (4U)
+#define DSITX_INT_FORCE1_CRC_ERR_MASK                      (0x1U << DSITX_INT_FORCE1_CRC_ERR_SHIFT)                     /* 0x00000010 */
+#define DSITX_INT_FORCE1_PKT_SIZE_ERR_SHIFT                (5U)
+#define DSITX_INT_FORCE1_PKT_SIZE_ERR_MASK                 (0x1U << DSITX_INT_FORCE1_PKT_SIZE_ERR_SHIFT)                /* 0x00000020 */
+#define DSITX_INT_FORCE1_EOPT_ERR_SHIFT                    (6U)
+#define DSITX_INT_FORCE1_EOPT_ERR_MASK                     (0x1U << DSITX_INT_FORCE1_EOPT_ERR_SHIFT)                    /* 0x00000040 */
+#define DSITX_INT_FORCE1_DPI_PLD_WR_ERR_SHIFT              (7U)
+#define DSITX_INT_FORCE1_DPI_PLD_WR_ERR_MASK               (0x1U << DSITX_INT_FORCE1_DPI_PLD_WR_ERR_SHIFT)              /* 0x00000080 */
+#define DSITX_INT_FORCE1_GEN_CMD_WR_ERR_SHIFT              (8U)
+#define DSITX_INT_FORCE1_GEN_CMD_WR_ERR_MASK               (0x1U << DSITX_INT_FORCE1_GEN_CMD_WR_ERR_SHIFT)              /* 0x00000100 */
+#define DSITX_INT_FORCE1_GEN_PLD_WR_ERR_SHIFT              (9U)
+#define DSITX_INT_FORCE1_GEN_PLD_WR_ERR_MASK               (0x1U << DSITX_INT_FORCE1_GEN_PLD_WR_ERR_SHIFT)              /* 0x00000200 */
+#define DSITX_INT_FORCE1_GEN_PLD_SEND_ERR_SHIFT            (10U)
+#define DSITX_INT_FORCE1_GEN_PLD_SEND_ERR_MASK             (0x1U << DSITX_INT_FORCE1_GEN_PLD_SEND_ERR_SHIFT)            /* 0x00000400 */
+#define DSITX_INT_FORCE1_GEN_PLD_RD_ERR_SHIFT              (11U)
+#define DSITX_INT_FORCE1_GEN_PLD_RD_ERR_MASK               (0x1U << DSITX_INT_FORCE1_GEN_PLD_RD_ERR_SHIFT)              /* 0x00000800 */
+#define DSITX_INT_FORCE1_GEN_PLD_RECEV_ERR_SHIFT           (12U)
+#define DSITX_INT_FORCE1_GEN_PLD_RECEV_ERR_MASK            (0x1U << DSITX_INT_FORCE1_GEN_PLD_RECEV_ERR_SHIFT)           /* 0x00001000 */
+#define DSITX_INT_FORCE1_DBI_CMD_WR_ERR_SHIFT              (13U)
+#define DSITX_INT_FORCE1_DBI_CMD_WR_ERR_MASK               (0x1U << DSITX_INT_FORCE1_DBI_CMD_WR_ERR_SHIFT)              /* 0x00002000 */
+#define DSITX_INT_FORCE1_DBI_PLD_WR_ERR_SHIFT              (14U)
+#define DSITX_INT_FORCE1_DBI_PLD_WR_ERR_MASK               (0x1U << DSITX_INT_FORCE1_DBI_PLD_WR_ERR_SHIFT)              /* 0x00004000 */
+#define DSITX_INT_FORCE1_DBI_PLD_RD_ERR_SHIFT              (15U)
+#define DSITX_INT_FORCE1_DBI_PLD_RD_ERR_MASK               (0x1U << DSITX_INT_FORCE1_DBI_PLD_RD_ERR_SHIFT)              /* 0x00008000 */
+#define DSITX_INT_FORCE1_DBI_PLD_RECV_ERR_SHIFT            (16U)
+#define DSITX_INT_FORCE1_DBI_PLD_RECV_ERR_MASK             (0x1U << DSITX_INT_FORCE1_DBI_PLD_RECV_ERR_SHIFT)            /* 0x00010000 */
+#define DSITX_INT_FORCE1_DBI_ILEGAL_COMM_ERR_SHIFT         (17U)
+#define DSITX_INT_FORCE1_DBI_ILEGAL_COMM_ERR_MASK          (0x1U << DSITX_INT_FORCE1_DBI_ILEGAL_COMM_ERR_SHIFT)         /* 0x00020000 */
+/* VID_SHADOW_CTRL */
+#define DSITX_VID_SHADOW_CTRL_OFFSET                       (0x100U)
+#define DSITX_VID_SHADOW_CTRL_VID_SHADOW_EN_SHIFT          (0U)
+#define DSITX_VID_SHADOW_CTRL_VID_SHADOW_EN_MASK           (0x1U << DSITX_VID_SHADOW_CTRL_VID_SHADOW_EN_SHIFT)          /* 0x00000001 */
+#define DSITX_VID_SHADOW_CTRL_VID_SHADOW_REQ_SHIFT         (8U)
+#define DSITX_VID_SHADOW_CTRL_VID_SHADOW_REQ_MASK          (0x1U << DSITX_VID_SHADOW_CTRL_VID_SHADOW_REQ_SHIFT)         /* 0x00000100 */
+#define DSITX_VID_SHADOW_CTRL_VID_SHADOW_PIN_REQ_SHIFT     (16U)
+#define DSITX_VID_SHADOW_CTRL_VID_SHADOW_PIN_REQ_MASK      (0x1U << DSITX_VID_SHADOW_CTRL_VID_SHADOW_PIN_REQ_SHIFT)     /* 0x00010000 */
+/* DPI_VCID_ACT */
+#define DSITX_DPI_VCID_ACT_OFFSET                          (0x10CU)
+#define DSITX_DPI_VCID_ACT_DPI_VCID_SHIFT                  (0U)
+#define DSITX_DPI_VCID_ACT_DPI_VCID_MASK                   (0x3U << DSITX_DPI_VCID_ACT_DPI_VCID_SHIFT)                  /* 0x00000003 */
+/* DPI_COLOR_CODING_ACT */
+#define DSITX_DPI_COLOR_CODING_ACT_OFFSET                  (0x110U)
+#define DSITX_DPI_COLOR_CODING_ACT_DPI_COLOR_CODING_SHIFT  (0U)
+#define DSITX_DPI_COLOR_CODING_ACT_DPI_COLOR_CODING_MASK   (0xFU << DSITX_DPI_COLOR_CODING_ACT_DPI_COLOR_CODING_SHIFT)  /* 0x0000000F */
+#define DSITX_DPI_COLOR_CODING_ACT_LOOSELY18_EN_SHIFT      (8U)
+#define DSITX_DPI_COLOR_CODING_ACT_LOOSELY18_EN_MASK       (0x1U << DSITX_DPI_COLOR_CODING_ACT_LOOSELY18_EN_SHIFT)      /* 0x00000100 */
+/* DPI_LP_CMD_TIM_ACT */
+#define DSITX_DPI_LP_CMD_TIM_ACT_OFFSET                    (0x118U)
+#define DSITX_DPI_LP_CMD_TIM_ACT                           (0x0U)
+#define DSITX_DPI_LP_CMD_TIM_ACT_INVACT_LPCMD_TIME_SHIFT   (0U)
+#define DSITX_DPI_LP_CMD_TIM_ACT_INVACT_LPCMD_TIME_MASK    (0xFFU << DSITX_DPI_LP_CMD_TIM_ACT_INVACT_LPCMD_TIME_SHIFT)  /* 0x000000FF */
+#define DSITX_DPI_LP_CMD_TIM_ACT_OUTVACT_LPCMD_TIME_SHIFT  (16U)
+#define DSITX_DPI_LP_CMD_TIM_ACT_OUTVACT_LPCMD_TIME_MASK   (0xFFU << DSITX_DPI_LP_CMD_TIM_ACT_OUTVACT_LPCMD_TIME_SHIFT) /* 0x00FF0000 */
+/* VID_MODE_CFG_ACT */
+#define DSITX_VID_MODE_CFG_ACT_OFFSET                      (0x138U)
+#define DSITX_VID_MODE_CFG_ACT_VID_MODE_TYPE_SHIFT         (0U)
+#define DSITX_VID_MODE_CFG_ACT_VID_MODE_TYPE_MASK          (0x3U << DSITX_VID_MODE_CFG_ACT_VID_MODE_TYPE_SHIFT)         /* 0x00000003 */
+#define DSITX_VID_MODE_CFG_ACT_LP_VSA_EN_SHIFT             (8U)
+#define DSITX_VID_MODE_CFG_ACT_LP_VSA_EN_MASK              (0x1U << DSITX_VID_MODE_CFG_ACT_LP_VSA_EN_SHIFT)             /* 0x00000100 */
+#define DSITX_VID_MODE_CFG_ACT_LP_VBP_EN_SHIFT             (9U)
+#define DSITX_VID_MODE_CFG_ACT_LP_VBP_EN_MASK              (0x1U << DSITX_VID_MODE_CFG_ACT_LP_VBP_EN_SHIFT)             /* 0x00000200 */
+#define DSITX_VID_MODE_CFG_ACT_LP_VFP_EN_SHIFT             (10U)
+#define DSITX_VID_MODE_CFG_ACT_LP_VFP_EN_MASK              (0x1U << DSITX_VID_MODE_CFG_ACT_LP_VFP_EN_SHIFT)             /* 0x00000400 */
+#define DSITX_VID_MODE_CFG_ACT_LP_VACT_EN_SHIFT            (11U)
+#define DSITX_VID_MODE_CFG_ACT_LP_VACT_EN_MASK             (0x1U << DSITX_VID_MODE_CFG_ACT_LP_VACT_EN_SHIFT)            /* 0x00000800 */
+#define DSITX_VID_MODE_CFG_ACT_LP_HBP_EN_SHIFT             (12U)
+#define DSITX_VID_MODE_CFG_ACT_LP_HBP_EN_MASK              (0x1U << DSITX_VID_MODE_CFG_ACT_LP_HBP_EN_SHIFT)             /* 0x00001000 */
+#define DSITX_VID_MODE_CFG_ACT_LP_HFP_EN_SHIFT             (13U)
+#define DSITX_VID_MODE_CFG_ACT_LP_HFP_EN_MASK              (0x1U << DSITX_VID_MODE_CFG_ACT_LP_HFP_EN_SHIFT)             /* 0x00002000 */
+#define DSITX_VID_MODE_CFG_ACT_FRAME_BTA_ACK_EN_SHIFT      (14U)
+#define DSITX_VID_MODE_CFG_ACT_FRAME_BTA_ACK_EN_MASK       (0x1U << DSITX_VID_MODE_CFG_ACT_FRAME_BTA_ACK_EN_SHIFT)      /* 0x00004000 */
+#define DSITX_VID_MODE_CFG_ACT_LP_CMD_EN_SHIFT             (15U)
+#define DSITX_VID_MODE_CFG_ACT_LP_CMD_EN_MASK              (0x1U << DSITX_VID_MODE_CFG_ACT_LP_CMD_EN_SHIFT)             /* 0x00008000 */
+#define DSITX_VID_MODE_CFG_ACT_VPG_EN_SHIFT                (16U)
+#define DSITX_VID_MODE_CFG_ACT_VPG_EN_MASK                 (0x1U << DSITX_VID_MODE_CFG_ACT_VPG_EN_SHIFT)                /* 0x00010000 */
+#define DSITX_VID_MODE_CFG_ACT_VPG_MODE_SHIFT              (20U)
+#define DSITX_VID_MODE_CFG_ACT_VPG_MODE_MASK               (0x1U << DSITX_VID_MODE_CFG_ACT_VPG_MODE_SHIFT)              /* 0x00100000 */
+#define DSITX_VID_MODE_CFG_ACT_VPG_ORIENTATION_SHIFT       (24U)
+#define DSITX_VID_MODE_CFG_ACT_VPG_ORIENTATION_MASK        (0x1U << DSITX_VID_MODE_CFG_ACT_VPG_ORIENTATION_SHIFT)       /* 0x01000000 */
+/* VID_PKT_SIZE_ACT */
+#define DSITX_VID_PKT_SIZE_ACT_OFFSET                      (0x13CU)
+#define DSITX_VID_PKT_SIZE_ACT                             (0x0U)
+#define DSITX_VID_PKT_SIZE_ACT_VID_PKT_SIZE_SHIFT          (0U)
+#define DSITX_VID_PKT_SIZE_ACT_VID_PKT_SIZE_MASK           (0x3FFFU << DSITX_VID_PKT_SIZE_ACT_VID_PKT_SIZE_SHIFT)       /* 0x00003FFF */
+/* VID_NUM_CHUNKS_ACT */
+#define DSITX_VID_NUM_CHUNKS_ACT_OFFSET                    (0x140U)
+#define DSITX_VID_NUM_CHUNKS_ACT                           (0x0U)
+#define DSITX_VID_NUM_CHUNKS_ACT_VID_NUM_CHUNKS_SHIFT      (0U)
+#define DSITX_VID_NUM_CHUNKS_ACT_VID_NUM_CHUNKS_MASK       (0x1FFFU << DSITX_VID_NUM_CHUNKS_ACT_VID_NUM_CHUNKS_SHIFT)   /* 0x00001FFF */
+/* VID_NULL_SIZE_ACT */
+#define DSITX_VID_NULL_SIZE_ACT_OFFSET                     (0x144U)
+#define DSITX_VID_NULL_SIZE_ACT_VID_NULL_SIZE_SHIFT        (0U)
+#define DSITX_VID_NULL_SIZE_ACT_VID_NULL_SIZE_MASK         (0x1FFFU << DSITX_VID_NULL_SIZE_ACT_VID_NULL_SIZE_SHIFT)     /* 0x00001FFF */
+/* VID_HSA_TIME_ACT */
+#define DSITX_VID_HSA_TIME_ACT_OFFSET                      (0x148U)
+#define DSITX_VID_HSA_TIME_ACT                             (0x0U)
+#define DSITX_VID_HSA_TIME_ACT_VID_HSA_TIME_SHIFT          (0U)
+#define DSITX_VID_HSA_TIME_ACT_VID_HSA_TIME_MASK           (0xFFFU << DSITX_VID_HSA_TIME_ACT_VID_HSA_TIME_SHIFT)        /* 0x00000FFF */
+/* VID_HBP_TIME_ACT */
+#define DSITX_VID_HBP_TIME_ACT_OFFSET                      (0x14CU)
+#define DSITX_VID_HBP_TIME_ACT_VID_HSA_TIME_SHIFT          (0U)
+#define DSITX_VID_HBP_TIME_ACT_VID_HSA_TIME_MASK           (0xFFFU << DSITX_VID_HBP_TIME_ACT_VID_HSA_TIME_SHIFT)        /* 0x00000FFF */
+/* VID_HLINE_TIME_ACT */
+#define DSITX_VID_HLINE_TIME_ACT_OFFSET                    (0x150U)
+#define DSITX_VID_HLINE_TIME_ACT                           (0x0U)
+#define DSITX_VID_HLINE_TIME_ACT_VID_HLINE_TIME_SHIFT      (0U)
+#define DSITX_VID_HLINE_TIME_ACT_VID_HLINE_TIME_MASK       (0x7FFFU << DSITX_VID_HLINE_TIME_ACT_VID_HLINE_TIME_SHIFT)   /* 0x00007FFF */
+/* VID_VSA_LINES_ACT */
+#define DSITX_VID_VSA_LINES_ACT_OFFSET                     (0x154U)
+#define DSITX_VID_VSA_LINES_ACT                            (0x0U)
+#define DSITX_VID_VSA_LINES_ACT_VSA_LINES_SHIFT            (0U)
+#define DSITX_VID_VSA_LINES_ACT_VSA_LINES_MASK             (0x3FFU << DSITX_VID_VSA_LINES_ACT_VSA_LINES_SHIFT)          /* 0x000003FF */
+/* VID_VBP_LINES_ACT */
+#define DSITX_VID_VBP_LINES_ACT_OFFSET                     (0x158U)
+#define DSITX_VID_VBP_LINES_ACT_VBP_LINES_SHIFT            (0U)
+#define DSITX_VID_VBP_LINES_ACT_VBP_LINES_MASK             (0x3FFU << DSITX_VID_VBP_LINES_ACT_VBP_LINES_SHIFT)          /* 0x000003FF */
+/* VID_VFP_LINES_ACT */
+#define DSITX_VID_VFP_LINES_ACT_OFFSET                     (0x15CU)
+#define DSITX_VID_VFP_LINES_ACT                            (0x0U)
+#define DSITX_VID_VFP_LINES_ACT_VFP_LINES_SHIFT            (0U)
+#define DSITX_VID_VFP_LINES_ACT_VFP_LINES_MASK             (0x1U << DSITX_VID_VFP_LINES_ACT_VFP_LINES_SHIFT)            /* 0x00000001 */
+/* VID_VACTIVE_LINES_ACT */
+#define DSITX_VID_VACTIVE_LINES_ACT_OFFSET                 (0x160U)
+#define DSITX_VID_VACTIVE_LINES_ACT                        (0x0U)
+#define DSITX_VID_VACTIVE_LINES_ACT_V_ACTIVE_LINES_SHIFT   (0U)
+#define DSITX_VID_VACTIVE_LINES_ACT_V_ACTIVE_LINES_MASK    (0x3FFFU << DSITX_VID_VACTIVE_LINES_ACT_V_ACTIVE_LINES_SHIFT) /* 0x00003FFF */
+/* SDF_3D_ACT */
+#define DSITX_SDF_3D_ACT_OFFSET                            (0x190U)
+#define DSITX_SDF_3D_ACT_MODE_3D_SHIFT                     (0U)
+#define DSITX_SDF_3D_ACT_MODE_3D_MASK                      (0x3U << DSITX_SDF_3D_ACT_MODE_3D_SHIFT)                     /* 0x00000003 */
+#define DSITX_SDF_3D_ACT_FORMAT_3D_SHIFT                   (2U)
+#define DSITX_SDF_3D_ACT_FORMAT_3D_MASK                    (0x3U << DSITX_SDF_3D_ACT_FORMAT_3D_SHIFT)                   /* 0x0000000C */
+#define DSITX_SDF_3D_ACT_SECOND_VSYNC_SHIFT                (4U)
+#define DSITX_SDF_3D_ACT_SECOND_VSYNC_MASK                 (0x1U << DSITX_SDF_3D_ACT_SECOND_VSYNC_SHIFT)                /* 0x00000010 */
+#define DSITX_SDF_3D_ACT_RIGHT_FIRST_SHIFT                 (5U)
+#define DSITX_SDF_3D_ACT_RIGHT_FIRST_MASK                  (0x1U << DSITX_SDF_3D_ACT_RIGHT_FIRST_SHIFT)                 /* 0x00000020 */
+#define DSITX_SDF_3D_ACT_SEND_3D_CFG_SHIFT                 (16U)
+#define DSITX_SDF_3D_ACT_SEND_3D_CFG_MASK                  (0x1U << DSITX_SDF_3D_ACT_SEND_3D_CFG_SHIFT)                 /* 0x00010000 */
 /******************************************MMC*******************************************/
 /* CTRL */
 #define MMC_CTRL_OFFSET                                    (0x0U)
