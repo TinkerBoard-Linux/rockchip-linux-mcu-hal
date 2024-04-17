@@ -733,6 +733,11 @@ HAL_Status HAL_SPI_ItTransfer(struct SPI_HANDLE *pSPI)
 
     HAL_ASSERT(pSPI != NULL);
 
+    /* SPI slave only support transfer DMA or IT in one irq */
+    if (HAL_SPI_IsSlave(pSPI) && (pSPI->len > HAL_SPI_FIFO_LENGTH / 2)) {
+        return HAL_INVAL;
+    }
+
     pSPI->type = SPI_IT;
     if (pSPI->config.xfmMode == CR0_XFM_RO || pSPI->config.xfmMode == CR0_XFM_TR) {
         tempLevel = pSPI->len / pSPI->config.nBytes - 1;
