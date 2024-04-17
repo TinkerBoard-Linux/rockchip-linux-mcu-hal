@@ -339,18 +339,9 @@ HAL_Status HAL_SPI_QueryBusState(struct SPI_HANDLE *pSPI)
             return HAL_OK;
         }
 #else
-#ifdef SPI_BPENR_OFFSET
-
-        /*
-         * When using external clock, tx clk can function normally
-         * without waiting for idle
-         */
-        return HAL_OK;
-#else
         if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_STB_BUSY)) {
             return HAL_OK;
         }
-#endif
 #endif
     } else {
         if (!(READ_REG(pSPI->pReg->SR) & HAL_SPI_SR_BUSY)) {
