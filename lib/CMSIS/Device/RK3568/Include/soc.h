@@ -116,6 +116,10 @@ typedef enum
     UART7_IRQn             = 155,      /*!< UART7  Interrupt            */
     UART8_IRQn             = 156,      /*!< UART8  Interrupt            */
     UART9_IRQn             = 157,      /*!< UART9  Interrupt            */
+    USB2HOST0_EHCI_IRQn    = 162,      /*!< USB2HOST0 EHCI Interrupt    */
+    USB2HOST0_OHCI_IRQn    = 163,      /*!< USB2HOST0 OHCI Interrupt    */
+    USB2HOST1_EHCI_IRQn    = 165,      /*!< USB2HOST1 EHCI Interrupt    */
+    USB2HOST1_OHCI_IRQn    = 166,      /*!< USB2HOST1 OHCI Interrupt    */
     WDT0_IRQn              = 181,      /*!< WDT0  Interrupt             */
     MBOX0_CH0_B2A_IRQn     = 215,      /*!< MBOX0 CH0 B2A Interrupt     */
     MBOX0_CH1_B2A_IRQn     = 216,      /*!< MBOX0 CH1 B2A Interrupt     */
@@ -208,6 +212,10 @@ typedef enum
     UART7_IRQn             = 155,      /*!< UART7  Interrupt            */
     UART8_IRQn             = 156,      /*!< UART8  Interrupt            */
     UART9_IRQn             = 157,      /*!< UART9  Interrupt            */
+    USB2HOST0_EHCI_IRQn    = 162,      /*!< USB2HOST0 EHCI Interrupt    */
+    USB2HOST0_OHCI_IRQn    = 163,      /*!< USB2HOST0 OHCI Interrupt    */
+    USB2HOST1_EHCI_IRQn    = 165,      /*!< USB2HOST1 EHCI Interrupt    */
+    USB2HOST1_OHCI_IRQn    = 166,      /*!< USB2HOST1 OHCI Interrupt    */
     WDT0_IRQn              = 181,      /*!< WDT0  Interrupt             */
     PCIE30x2_LEGACY_IRQn   = 194,      /*!< PCIe3x2_legacy Interrupt    */
     DDR_ECC_CE_IRQn        = 205,      /*!< DDR ECC correctable fault Interrupt */
@@ -290,6 +298,7 @@ typedef enum
 #include "system_rk3568.h"
 #endif /* __ASSEMBLY__ */
 #include "rk3568.h"
+#include "rk3568_usb.h"
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -302,6 +311,22 @@ typedef enum
 #define GIC_REDISTRIBUTOR_BASE  0xFD460000 /* GICR base address */
 #define PCIE3PHY_GRF_BASE       0xFDCB8000 /* S-PHY_GRF base address */
 #define PCIE3X2_APB_BASE        0xFE280000 /* PCIe apb base address */
+#define USB2HOST0_EHCI_BASE     0xFD800000 /* USB2HOST0 EHCI base address */
+#define USB2HOST0_OHCI_BASE     0xFD840000 /* USB2HOST0 OHCI base address */
+#define USB2HOST1_EHCI_BASE     0xFD880000 /* USB2HOST1 EHCI base address */
+#define USB2HOST1_OHCI_BASE     0xFD8C0000 /* USB2HOST1 OHCI base address */
+#define USBPHY_U2_GRF_BASE      0xFDCA8000 /* USBPHY USB2 GRF base address */
+
+/****************************************************************************************/
+/*                                                                                      */
+/*                               Module Variable Section                                */
+/*                                                                                      */
+/****************************************************************************************/
+/* Module Variable Define */
+#define USB2HOST0_EHCI          ((struct EHCI_REG *) USB2HOST0_EHCI_BASE)
+#define USB2HOST0_OHCI          ((struct OHCI_REG *) USB2HOST0_OHCI_BASE)
+#define USB2HOST1_EHCI          ((struct EHCI_REG *) USB2HOST1_EHCI_BASE)
+#define USB2HOST1_OHCI          ((struct OHCI_REG *) USB2HOST1_OHCI_BASE)
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -435,6 +460,9 @@ typedef enum CLOCK_Name {
 typedef enum PD_Id {
     PD_INVALID = 0U,
 } ePD_Id;
+/******************************************USB*******************************************/
+#define USB_PHY_SUSPEND_VAL     0x01FF01D1U
+#define USB_PHY_RESUME_VAL      0x01FF01D2U
 #endif
 /****************************************FSPI********************************************/
 #define FSPI_CHIP_CNT                            (2)
