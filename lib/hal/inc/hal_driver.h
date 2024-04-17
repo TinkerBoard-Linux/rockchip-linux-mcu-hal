@@ -167,6 +167,10 @@
 #include "hal_nvic.h"
 #endif
 
+#ifdef HAL_OTP_MODULE_ENABLED
+#include "hal_otp.h"
+#endif
+
 #ifdef HAL_PCD_MODULE_ENABLED
 #include "hal_pcd.h"
 #endif
