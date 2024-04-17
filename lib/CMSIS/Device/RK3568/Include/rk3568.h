@@ -1890,6 +1890,26 @@ struct INTMUX_REG {
     __IO uint32_t INT_ENABLE_GROUP[32];               /* Address Offset: 0x0000 */
     __I  uint32_t INT_FLAG_GROUP[32];                 /* Address Offset: 0x0080 */
 };
+/* DSI_TX_PHY Register Structure Define */
+struct DSI_TX_PHY_REG {
+    __IO uint32_t ANALOG_REG00;                       /* Address Offset: 0x0000 */
+    __IO uint32_t ANALOG_REG01;                       /* Address Offset: 0x0001 */
+         uint32_t RESERVED0002;                       /* Address Offset: 0x0002 */
+    __IO uint32_t ANALOG_REG03;                       /* Address Offset: 0x0003 */
+    __IO uint32_t ANALOG_REG04;                       /* Address Offset: 0x0004 */
+         uint32_t RESERVED0005;                       /* Address Offset: 0x0005 */
+    __IO uint32_t ANALOG_REG08;                       /* Address Offset: 0x0008 */
+         uint32_t RESERVED0009[5];                    /* Address Offset: 0x0009 */
+    __IO uint32_t DIGITAL_REG00;                      /* Address Offset: 0x0020 */
+    __IO uint32_t DIGITAL_REG01;                      /* Address Offset: 0x0021 */
+         uint32_t RESERVED0022[47];                   /* Address Offset: 0x0022 */
+    __IO uint32_t LVDS_REG00;                         /* Address Offset: 0x00E0 */
+    __IO uint32_t LVDS_REG01;                         /* Address Offset: 0x00E1 */
+         uint32_t RESERVED00E2;                       /* Address Offset: 0x00E2 */
+    __IO uint32_t LVDS_REG03;                         /* Address Offset: 0x00E3 */
+         uint32_t RESERVED00E4;                       /* Address Offset: 0x00E4 */
+    __IO uint32_t LVDS_REG0B;                         /* Address Offset: 0x00EB */
+};
 #endif /*  __ASSEMBLY__  */
 /****************************************************************************************/
 /*                                                                                      */
@@ -1971,6 +1991,8 @@ struct INTMUX_REG {
 #define GPIO4_BASE                     0xFE770000U /* GPIO4 base address */
 #define MBOX0_BASE                     0xFE780000U /* MBOX0 base address */
 #define INTMUX_BASE                    0xFE790000U /* INTMUX base address */
+#define DSI_TX_PHY0_BASE               0xFE850000U /* DSI_TX_PHY0 base address */
+#define DSI_TX_PHY1_BASE               0xFE860000U /* DSI_TX_PHY1 base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -2052,6 +2074,8 @@ struct INTMUX_REG {
 #define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
 #define INTMUX              ((struct INTMUX_REG *) INTMUX_BASE)
+#define DSI_TX_PHY0         ((struct DSI_TX_PHY_REG *) DSI_TX_PHY0_BASE)
+#define DSI_TX_PHY1         ((struct DSI_TX_PHY_REG *) DSI_TX_PHY1_BASE)
 
 #define IS_GRF_INSTANCE(instance) ((instance) == GRF)
 #define IS_PMUCRU_INSTANCE(instance) ((instance) == PMUCRU)
@@ -2087,6 +2111,7 @@ struct INTMUX_REG {
 #define IS_CAN_INSTANCE(instance) (((instance) == CAN0) || ((instance) == CAN1) || ((instance) == CAN2))
 #define IS_SPI_INSTANCE(instance) (((instance) == SPI0) || ((instance) == SPI1) || ((instance) == SPI2) || ((instance) == SPI3))
 #define IS_MBOX_INSTANCE(instance) ((instance) == MBOX0)
+#define IS_DSI_TX_PHY_INSTANCE(instance) (((instance) == DSI_TX_PHY0) || ((instance) == DSI_TX_PHY1))
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
@@ -22644,6 +22669,105 @@ struct INTMUX_REG {
 #define I2S3_MCLKOUT_RX_SEL_XIN_OSC0_HALF    0U
 /********Name=CLKSEL_CON84,Offset=0x250********/
 
+/***************************************DSI_TX_PHY***************************************/
+/* ANALOG_REG00 */
+#define DSI_TX_PHY_ANALOG_REG00_OFFSET                     (0x0U)
+#define DSI_TX_PHY_ANALOG_REG00_POWER_SHIFT                (0U)
+#define DSI_TX_PHY_ANALOG_REG00_POWER_MASK                 (0x3U << DSI_TX_PHY_ANALOG_REG00_POWER_SHIFT)                /* 0x03 */
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_0_SHIFT            (2U)
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_0_MASK             (0x1U << DSI_TX_PHY_ANALOG_REG00_LANE_EN_0_SHIFT)            /* 0x04 */
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_1_SHIFT            (3U)
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_1_MASK             (0x1U << DSI_TX_PHY_ANALOG_REG00_LANE_EN_1_SHIFT)            /* 0x08 */
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_2_SHIFT            (4U)
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_2_MASK             (0x1U << DSI_TX_PHY_ANALOG_REG00_LANE_EN_2_SHIFT)            /* 0x10 */
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_3_SHIFT            (5U)
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_3_MASK             (0x1U << DSI_TX_PHY_ANALOG_REG00_LANE_EN_3_SHIFT)            /* 0x20 */
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_CK_SHIFT           (6U)
+#define DSI_TX_PHY_ANALOG_REG00_LANE_EN_CK_MASK            (0x1U << DSI_TX_PHY_ANALOG_REG00_LANE_EN_CK_SHIFT)           /* 0x40 */
+#define DSI_TX_PHY_ANALOG_REG00_BANDGAP_POWER_SHIFT        (7U)
+#define DSI_TX_PHY_ANALOG_REG00_BANDGAP_POWER_MASK         (0x1U << DSI_TX_PHY_ANALOG_REG00_BANDGAP_POWER_SHIFT)        /* 0x80 */
+/* ANALOG_REG01 */
+#define DSI_TX_PHY_ANALOG_REG01_OFFSET                     (0x1U)
+#define DSI_TX_PHY_ANALOG_REG01_PLLPD_SHIFT                (0U)
+#define DSI_TX_PHY_ANALOG_REG01_PLLPD_MASK                 (0x1U << DSI_TX_PHY_ANALOG_REG01_PLLPD_SHIFT)                /* 0x01 */
+#define DSI_TX_PHY_ANALOG_REG01_LDOPD_SHIFT                (1U)
+#define DSI_TX_PHY_ANALOG_REG01_LDOPD_MASK                 (0x1U << DSI_TX_PHY_ANALOG_REG01_LDOPD_SHIFT)                /* 0x02 */
+#define DSI_TX_PHY_ANALOG_REG01_SYNCRST_SHIFT              (2U)
+#define DSI_TX_PHY_ANALOG_REG01_SYNCRST_MASK               (0x1U << DSI_TX_PHY_ANALOG_REG01_SYNCRST_SHIFT)              /* 0x04 */
+#define DSI_TX_PHY_ANALOG_REG01_RESERVED_SHIFT             (3U)
+#define DSI_TX_PHY_ANALOG_REG01_RESERVED_MASK              (0x1FU << DSI_TX_PHY_ANALOG_REG01_RESERVED_SHIFT)            /* 0xF8 */
+/* ANALOG_REG03 */
+#define DSI_TX_PHY_ANALOG_REG03_OFFSET                     (0x3U)
+#define DSI_TX_PHY_ANALOG_REG03_PLL_PREDIV_SHIFT           (0U)
+#define DSI_TX_PHY_ANALOG_REG03_PLL_PREDIV_MASK            (0x1FU << DSI_TX_PHY_ANALOG_REG03_PLL_PREDIV_SHIFT)          /* 0x1F */
+#define DSI_TX_PHY_ANALOG_REG03_FBDIV_MSB_SHIFT            (5U)
+#define DSI_TX_PHY_ANALOG_REG03_FBDIV_MSB_MASK             (0x1U << DSI_TX_PHY_ANALOG_REG03_FBDIV_MSB_SHIFT)            /* 0x20 */
+#define DSI_TX_PHY_ANALOG_REG03_RESERVED_SHIFT             (6U)
+#define DSI_TX_PHY_ANALOG_REG03_RESERVED_MASK              (0x3U << DSI_TX_PHY_ANALOG_REG03_RESERVED_SHIFT)             /* 0xC0 */
+/* ANALOG_REG04 */
+#define DSI_TX_PHY_ANALOG_REG04_OFFSET                     (0x4U)
+#define DSI_TX_PHY_ANALOG_REG04_PLL_FBDIV_SHIFT            (0U)
+#define DSI_TX_PHY_ANALOG_REG04_PLL_FBDIV_MASK             (0xFFU << DSI_TX_PHY_ANALOG_REG04_PLL_FBDIV_SHIFT)           /* 0xFF */
+/* ANALOG_REG08 */
+#define DSI_TX_PHY_ANALOG_REG08_OFFSET                     (0x8U)
+#define DSI_TX_PHY_ANALOG_REG08_DATA_LANE_VOD_SHIFT        (0U)
+#define DSI_TX_PHY_ANALOG_REG08_DATA_LANE_VOD_MASK         (0xFU << DSI_TX_PHY_ANALOG_REG08_DATA_LANE_VOD_SHIFT)        /* 0x0F */
+#define DSI_TX_PHY_ANALOG_REG08_PLL_POSTDIV_SHIFT          (5U)
+#define DSI_TX_PHY_ANALOG_REG08_PLL_POSTDIV_MASK           (0x1U << DSI_TX_PHY_ANALOG_REG08_PLL_POSTDIV_SHIFT)          /* 0x20 */
+#define DSI_TX_PHY_ANALOG_REG08_RESERVED_SHIFT             (6U)
+#define DSI_TX_PHY_ANALOG_REG08_RESERVED_MASK              (0x1U << DSI_TX_PHY_ANALOG_REG08_RESERVED_SHIFT)             /* 0x40 */
+#define DSI_TX_PHY_ANALOG_REG08_PRE_EMPHASIS_SHIFT         (7U)
+#define DSI_TX_PHY_ANALOG_REG08_PRE_EMPHASIS_MASK          (0x1U << DSI_TX_PHY_ANALOG_REG08_PRE_EMPHASIS_SHIFT)         /* 0x80 */
+/* DIGITAL_REG00 */
+#define DSI_TX_PHY_DIGITAL_REG00_OFFSET                    (0x20U)
+#define DSI_TX_PHY_DIGITAL_REG00_DIG_RSTN_SHIFT            (0U)
+#define DSI_TX_PHY_DIGITAL_REG00_DIG_RSTN_MASK             (0x1U << DSI_TX_PHY_DIGITAL_REG00_DIG_RSTN_SHIFT)            /* 0x01 */
+#define DSI_TX_PHY_DIGITAL_REG00_RESERVED_SHIFT            (1U)
+#define DSI_TX_PHY_DIGITAL_REG00_RESERVED_MASK             (0x7FU << DSI_TX_PHY_DIGITAL_REG00_RESERVED_SHIFT)           /* 0xFE */
+/* DIGITAL_REG01 */
+#define DSI_TX_PHY_DIGITAL_REG01_OFFSET                    (0x21U)
+#define DSI_TX_PHY_DIGITAL_REG01_TXBYTECLK_REVERT_SHIFT    (0U)
+#define DSI_TX_PHY_DIGITAL_REG01_TXBYTECLK_REVERT_MASK     (0x1U << DSI_TX_PHY_DIGITAL_REG01_TXBYTECLK_REVERT_SHIFT)    /* 0x01 */
+#define DSI_TX_PHY_DIGITAL_REG01_TXCLKESC_REVERT_SHIFT     (1U)
+#define DSI_TX_PHY_DIGITAL_REG01_TXCLKESC_REVERT_MASK      (0x1U << DSI_TX_PHY_DIGITAL_REG01_TXCLKESC_REVERT_SHIFT)     /* 0x02 */
+/* LVDS_REG00 */
+#define DSI_TX_PHY_LVDS_REG00_OFFSET                       (0xE0U)
+#define DSI_TX_PHY_LVDS_REG00_MSB_MODE_SHIFT               (0U)
+#define DSI_TX_PHY_LVDS_REG00_MSB_MODE_MASK                (0x1U << DSI_TX_PHY_LVDS_REG00_MSB_MODE_SHIFT)               /* 0x01 */
+#define DSI_TX_PHY_LVDS_REG00_LVDS_DIGITAL_RESET_SHIFT     (2U)
+#define DSI_TX_PHY_LVDS_REG00_LVDS_DIGITAL_RESET_MASK      (0x1U << DSI_TX_PHY_LVDS_REG00_LVDS_DIGITAL_RESET_SHIFT)     /* 0x04 */
+#define DSI_TX_PHY_LVDS_REG00_RESERVED_SHIFT               (3U)
+#define DSI_TX_PHY_LVDS_REG00_RESERVED_MASK                (0x1FU << DSI_TX_PHY_LVDS_REG00_RESERVED_SHIFT)              /* 0xF8 */
+/* LVDS_REG01 */
+#define DSI_TX_PHY_LVDS_REG01_OFFSET                       (0xE1U)
+#define DSI_TX_PHY_LVDS_REG01_RESERVED_SHIFT               (0U)
+#define DSI_TX_PHY_LVDS_REG01_RESERVED_MASK                (0x7FU << DSI_TX_PHY_LVDS_REG01_RESERVED_SHIFT)              /* 0x7F */
+#define DSI_TX_PHY_LVDS_REG01_LVDS_DIG_INTERNAL_ENABLE_SHIFT (7U)
+#define DSI_TX_PHY_LVDS_REG01_LVDS_DIG_INTERNAL_ENABLE_MASK (0x1U << DSI_TX_PHY_LVDS_REG01_LVDS_DIG_INTERNAL_ENABLE_SHIFT) /* 0x80 */
+/* LVDS_REG03 */
+#define DSI_TX_PHY_LVDS_REG03_OFFSET                       (0xE3U)
+#define DSI_TX_PHY_LVDS_REG03_MIPI_MODE_ENABLE_SHIFT       (0U)
+#define DSI_TX_PHY_LVDS_REG03_MIPI_MODE_ENABLE_MASK        (0x1U << DSI_TX_PHY_LVDS_REG03_MIPI_MODE_ENABLE_SHIFT)       /* 0x01 */
+#define DSI_TX_PHY_LVDS_REG03_LVDS_MODE_ENABLE_SHIFT       (1U)
+#define DSI_TX_PHY_LVDS_REG03_LVDS_MODE_ENABLE_MASK        (0x1U << DSI_TX_PHY_LVDS_REG03_LVDS_MODE_ENABLE_SHIFT)       /* 0x02 */
+#define DSI_TX_PHY_LVDS_REG03_TTL_MODE_ENABLE_SHIFT        (2U)
+#define DSI_TX_PHY_LVDS_REG03_TTL_MODE_ENABLE_MASK         (0x1U << DSI_TX_PHY_LVDS_REG03_TTL_MODE_ENABLE_SHIFT)        /* 0x04 */
+#define DSI_TX_PHY_LVDS_REG03_RESERVED_SHIFT               (3U)
+#define DSI_TX_PHY_LVDS_REG03_RESERVED_MASK                (0x1FU << DSI_TX_PHY_LVDS_REG03_RESERVED_SHIFT)              /* 0xF8 */
+/* LVDS_REG0B */
+#define DSI_TX_PHY_LVDS_REG0B_OFFSET                       (0xEBU)
+#define DSI_TX_PHY_LVDS_REG0B_POWER_SHIFT                  (2U)
+#define DSI_TX_PHY_LVDS_REG0B_POWER_MASK                   (0x1U << DSI_TX_PHY_LVDS_REG0B_POWER_SHIFT)                  /* 0x04 */
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_CK_SHIFT             (3U)
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_CK_MASK              (0x1U << DSI_TX_PHY_LVDS_REG0B_LANE_EN_CK_SHIFT)             /* 0x08 */
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_3_SHIFT              (4U)
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_3_MASK               (0x1U << DSI_TX_PHY_LVDS_REG0B_LANE_EN_3_SHIFT)              /* 0x10 */
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_2_SHIFT              (5U)
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_2_MASK               (0x1U << DSI_TX_PHY_LVDS_REG0B_LANE_EN_2_SHIFT)              /* 0x20 */
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_1_SHIFT              (6U)
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_1_MASK               (0x1U << DSI_TX_PHY_LVDS_REG0B_LANE_EN_1_SHIFT)              /* 0x40 */
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_0_SHIFT              (7U)
+#define DSI_TX_PHY_LVDS_REG0B_LANE_EN_0_MASK               (0x1U << DSI_TX_PHY_LVDS_REG0B_LANE_EN_0_SHIFT)              /* 0x80 */
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
