@@ -5,7 +5,7 @@
 
 #include "hal_base.h"
 
-#if defined(HAL_PINCTRL_MODULE_ENABLED) && defined(RKMCU_RK2118)
+#if defined(HAL_PINCTRL_MODULE_ENABLED) && (defined(RKMCU_RK2118) || defined(RK2118_DSP_CORE0) || defined(RK2118_DSP_CORE1) || defined(RK2118_DSP_CORE2))
 
 /** @addtogroup RK_HAL_Driver
  *  @{
