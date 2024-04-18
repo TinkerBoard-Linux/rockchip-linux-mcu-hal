@@ -76,6 +76,8 @@ static HAL_Status HAL_TRNG_GetOnce(const struct HAL_TRNG_DEV *dev, uint8_t *data
         goto exit;
     }
 
+    WRITE_REG(pReg->STATE, TRNG_STATE_SW_DRNG_ACK_MASK);
+
     for (i = 0; i < HAL_ARRAY_SIZE(pReg->DRNG_DATA); i++) {
         buf[i] = READ_REG(pReg->DRNG_DATA[i]);
     }
