@@ -324,6 +324,11 @@ typedef enum {
   MBOX_BB11_IRQn            =  182 + NUM_INTERRUPTS,    /*!< MBOX11 Interrupt               */
   MBOX_BB12_IRQn            =  183 + NUM_INTERRUPTS,    /*!< MBOX12 Interrupt               */
   MBOX_BB13_IRQn            =  184 + NUM_INTERRUPTS,    /*!< MBOX13 Interrup                */
+  GPIO0_EXP2_IRQn           =  187 + NUM_INTERRUPTS,    /*!< GPIO0 EXP2 Interrup            */
+  GPIO1_EXP2_IRQn           =  191 + NUM_INTERRUPTS,    /*!< GPIO1 EXP2 Interrup            */
+  GPIO2_EXP2_IRQn           =  195 + NUM_INTERRUPTS,    /*!< GPIO2 EXP2 Interrup            */
+  GPIO3_EXP2_IRQn           =  199 + NUM_INTERRUPTS,    /*!< GPIO3 EXP2 Interrup            */
+  GPIO4_EXP2_IRQn           =  203 + NUM_INTERRUPTS,    /*!< GPIO4 EXP2 Interrup            */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 
