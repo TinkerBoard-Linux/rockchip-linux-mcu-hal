@@ -189,6 +189,51 @@ typedef enum {
 #ifdef GPIO4_EXP
     GPIO_BANK4_EXP = 9,
 #endif
+#ifdef GPIO0_EXP1
+    GPIO_BANK0_EXP1 = 5,
+#endif
+#ifdef GPIO1_EXP1
+    GPIO_BANK1_EXP1 = 6,
+#endif
+#ifdef GPIO2_EXP1
+    GPIO_BANK2_EXP1 = 7,
+#endif
+#ifdef GPIO3_EXP1
+    GPIO_BANK3_EXP1 = 8,
+#endif
+#ifdef GPIO4_EXP1
+    GPIO_BANK4_EXP1 = 9,
+#endif
+#ifdef GPIO0_EXP2
+    GPIO_BANK0_EXP2 = 10,
+#endif
+#ifdef GPIO1_EXP2
+    GPIO_BANK1_EXP2 = 11,
+#endif
+#ifdef GPIO2_EXP2
+    GPIO_BANK2_EXP2 = 12,
+#endif
+#ifdef GPIO3_EXP2
+    GPIO_BANK3_EXP2 = 13,
+#endif
+#ifdef GPIO4_EXP2
+    GPIO_BANK4_EXP2 = 14,
+#endif
+#ifdef GPIO0_EXP3
+    GPIO_BANK0_EXP3 = 15,
+#endif
+#ifdef GPIO1_EXP3
+    GPIO_BANK1_EXP3 = 16,
+#endif
+#ifdef GPIO2_EXP3
+    GPIO_BANK2_EXP3 = 17,
+#endif
+#ifdef GPIO3_EXP3
+    GPIO_BANK3_EXP3 = 18,
+#endif
+#ifdef GPIO4_EXP3
+    GPIO_BANK4_EXP3 = 19,
+#endif
     GPIO_BANK_NUM
 } eGPIO_bankId;
 
