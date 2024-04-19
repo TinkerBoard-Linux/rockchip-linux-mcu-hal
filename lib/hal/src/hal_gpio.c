@@ -546,21 +546,50 @@ HAL_Status HAL_GPIO_DisableVirtualModel(struct GPIO_REG *pGPIO)
 HAL_Status HAL_GPIO_SetVirtualModel(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, eGPIO_VirtualModel vmodel)
 {
 #if (GPIO_VER_ID >= 0x01000C2BU)
-    uint32_t low_pins, high_pins;
+    uint32_t lowPins, highPins;
 
-    low_pins = pin & 0x0000ffff;
-    high_pins = (pin & 0xffff0000) >> 16;
+    lowPins = pin & 0x0000ffff;
+    highPins = (pin & 0xffff0000) >> 16;
 
+#if defined(GPIO0_EXP)
     /* Support OS_A and OS_B */
     if (vmodel == GPIO_VIRTUAL_MODEL_OS_B) {
-        pGPIO->GPIO_REG_GROUP_L = low_pins << 16;
-        pGPIO->GPIO_REG_GROUP_H = high_pins << 16;
+        pGPIO->GPIO_REG_GROUP_L = lowPins << 16;
+        pGPIO->GPIO_REG_GROUP_H = highPins << 16;
     } else {
-        pGPIO->GPIO_REG_GROUP_L = low_pins | (low_pins << 16);
-        pGPIO->GPIO_REG_GROUP_H = high_pins | (high_pins << 16);
+        pGPIO->GPIO_REG_GROUP_L = lowPins | (lowPins << 16);
+        pGPIO->GPIO_REG_GROUP_H = highPins | (highPins << 16);
     }
 
     return HAL_OK;
+#elif defined(GPIO0_EXP3)
+    /* Support 4 OS */
+    switch (vmodel) {
+    case GPIO_VIRTUAL_MODEL_OS_A:
+        pGPIO->GPIO_REG_GROUP_L = lowPins | (lowPins << 16);
+        pGPIO->GPIO_REG_GROUP_H = highPins | (highPins << 16);
+        break;
+    case GPIO_VIRTUAL_MODEL_OS_B:
+        pGPIO->GPIO_REG_GROUP1_L = lowPins | (lowPins << 16);
+        pGPIO->GPIO_REG_GROUP1_H = highPins | (highPins << 16);
+        break;
+    case GPIO_VIRTUAL_MODEL_OS_C:
+        pGPIO->GPIO_REG_GROUP2_L = lowPins | (lowPins << 16);
+        pGPIO->GPIO_REG_GROUP2_H = highPins | (highPins << 16);
+        break;
+    case GPIO_VIRTUAL_MODEL_OS_D:
+        pGPIO->GPIO_REG_GROUP3_L = lowPins | (lowPins << 16);
+        pGPIO->GPIO_REG_GROUP3_H = highPins | (highPins << 16);
+        break;
+    default:
+        HAL_DBG("unknown gpio virtual model-%d\n", vmodel);
+        break;
+    }
+
+    return HAL_OK;
+#else
+#error missing GPIO EXP register definition!
+#endif
 #endif
 
     return HAL_ERROR;
