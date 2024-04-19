@@ -781,6 +781,9 @@ struct INTMUX_REG {
 #define CCICRU_BASE                    (0x27248000U + MCU_OFFSET) /* CCICRU base address */
 #define UART1_BASE                     (0x27310000U + MCU_OFFSET) /* UART1 base address */
 #define GPIO0_BASE                     (0x27320000U + MCU_OFFSET) /* GPIO0 base address */
+#define GPIO0_EXP1_BASE                (0x27321000U + MCU_OFFSET) /* GPIO0_EXP1 base address */
+#define GPIO0_EXP2_BASE                (0x27322000U + MCU_OFFSET) /* GPIO0_EXP2 base address */
+#define GPIO0_EXP3_BASE                (0x27323000U + MCU_OFFSET) /* GPIO0_EXP3 base address */
 #define TIMER0_BASE                    (0x2ACC0000U + MCU_OFFSET) /* TIMER0 base address */
 #define TIMER1_BASE                    (0x2ACC1000U + MCU_OFFSET) /* TIMER1 base address */
 #define TIMER2_BASE                    (0x2ACC2000U + MCU_OFFSET) /* TIMER2 base address */
@@ -804,9 +807,21 @@ struct INTMUX_REG {
 #define UART8_BASE                     (0x2ADB0000U + MCU_OFFSET) /* UART8 base address */
 #define UART9_BASE                     (0x2ADC0000U + MCU_OFFSET) /* UART9 base address */
 #define GPIO1_BASE                     (0x2AE10000U + MCU_OFFSET) /* GPIO1 base address */
+#define GPIO1_EXP1_BASE                (0x2AE11000U + MCU_OFFSET) /* GPIO1_EXP1 base address */
+#define GPIO1_EXP2_BASE                (0x2AE12000U + MCU_OFFSET) /* GPIO1_EXP2 base address */
+#define GPIO1_EXP3_BASE                (0x2AE13000U + MCU_OFFSET) /* GPIO1_EXP3 base address */
 #define GPIO2_BASE                     (0x2AE20000U + MCU_OFFSET) /* GPIO2 base address */
+#define GPIO2_EXP1_BASE                (0x2AE21000U + MCU_OFFSET) /* GPIO2_EXP1 base address */
+#define GPIO2_EXP2_BASE                (0x2AE22000U + MCU_OFFSET) /* GPIO2_EXP2 base address */
+#define GPIO2_EXP3_BASE                (0x2AE23000U + MCU_OFFSET) /* GPIO2_EXP3 base address */
 #define GPIO3_BASE                     (0x2AE30000U + MCU_OFFSET) /* GPIO3 base address */
+#define GPIO3_EXP1_BASE                (0x2AE31000U + MCU_OFFSET) /* GPIO3_EXP1 base address */
+#define GPIO3_EXP2_BASE                (0x2AE32000U + MCU_OFFSET) /* GPIO3_EXP2 base address */
+#define GPIO3_EXP3_BASE                (0x2AE33000U + MCU_OFFSET) /* GPIO3_EXP3 base address */
 #define GPIO4_BASE                     (0x2AE40000U + MCU_OFFSET) /* GPIO4 base address */
+#define GPIO4_EXP1_BASE                (0x2AE41000U + MCU_OFFSET) /* GPIO4_EXP1 base address */
+#define GPIO4_EXP2_BASE                (0x2AE42000U + MCU_OFFSET) /* GPIO4_EXP2 base address */
+#define GPIO4_EXP3_BASE                (0x2AE43000U + MCU_OFFSET) /* GPIO4_EXP3 base address */
 #define MBOX0_BASE                     (0x2AE50000U + MCU_OFFSET) /* MBOX0 base address */
 #define MBOX1_BASE                     (0x2AE51000U + MCU_OFFSET) /* MBOX1 base address */
 #define MBOX2_BASE                     (0x2AE52000U + MCU_OFFSET) /* MBOX2 base address */
@@ -853,6 +868,9 @@ struct INTMUX_REG {
 #define CCICRU              ((struct CCICRU_REG *) CCICRU_BASE)
 #define UART1               ((struct UART_REG *) UART1_BASE)
 #define GPIO0               ((struct GPIO_REG *) GPIO0_BASE)
+#define GPIO0_EXP1          ((struct GPIO0_EXP_REG *) GPIO0_EXP1_BASE)
+#define GPIO0_EXP2          ((struct GPIO0_EXP_REG *) GPIO0_EXP2_BASE)
+#define GPIO0_EXP3          ((struct GPIO0_EXP_REG *) GPIO0_EXP3_BASE)
 #define TIMER0              ((struct TIMER_REG *) TIMER0_BASE)
 #define TIMER1              ((struct TIMER_REG *) TIMER1_BASE)
 #define TIMER2              ((struct TIMER_REG *) TIMER2_BASE)
@@ -876,9 +894,21 @@ struct INTMUX_REG {
 #define UART8               ((struct UART_REG *) UART8_BASE)
 #define UART9               ((struct UART_REG *) UART9_BASE)
 #define GPIO1               ((struct GPIO_REG *) GPIO1_BASE)
+#define GPIO1_EXP1          ((struct GPIO1_EXP_REG *) GPIO1_EXP1_BASE)
+#define GPIO1_EXP2          ((struct GPIO1_EXP_REG *) GPIO1_EXP2_BASE)
+#define GPIO1_EXP3          ((struct GPIO1_EXP_REG *) GPIO1_EXP3_BASE)
 #define GPIO2               ((struct GPIO_REG *) GPIO2_BASE)
+#define GPIO2_EXP1          ((struct GPIO2_EXP_REG *) GPIO2_EXP1_BASE)
+#define GPIO2_EXP2          ((struct GPIO2_EXP_REG *) GPIO2_EXP2_BASE)
+#define GPIO2_EXP3          ((struct GPIO2_EXP_REG *) GPIO2_EXP3_BASE)
 #define GPIO3               ((struct GPIO_REG *) GPIO3_BASE)
+#define GPIO3_EXP1          ((struct GPIO3_EXP_REG *) GPIO3_EXP1_BASE)
+#define GPIO3_EXP2          ((struct GPIO3_EXP_REG *) GPIO3_EXP2_BASE)
+#define GPIO3_EXP3          ((struct GPIO3_EXP_REG *) GPIO3_EXP3_BASE)
 #define GPIO4               ((struct GPIO_REG *) GPIO4_BASE)
+#define GPIO4_EXP1          ((struct GPIO4_EXP_REG *) GPIO4_EXP1_BASE)
+#define GPIO4_EXP2          ((struct GPIO4_EXP_REG *) GPIO4_EXP2_BASE)
+#define GPIO4_EXP3          ((struct GPIO4_EXP_REG *) GPIO4_EXP3_BASE)
 #define MBOX0               ((struct MBOX_REG *) MBOX0_BASE)
 #define MBOX1               ((struct MBOX_REG *) MBOX1_BASE)
 #define MBOX2               ((struct MBOX_REG *) MBOX2_BASE)
@@ -917,7 +947,12 @@ struct INTMUX_REG {
 #define IS_INTMUX_INSTANCE(instance) ((instance) == INTMUX)
 #define IS_UART_INSTANCE(instance) (((instance) == UART1) || ((instance) == UART0) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4) || ((instance) == UART5) || ((instance) == UART6) || ((instance) == UART7) || ((instance) == UART8) || ((instance) == UART9) || ((instance) == UART10) || ((instance) == UART11))
 #define IS_GPIO_INSTANCE(instance) (((instance) == GPIO0) || ((instance) == GPIO1) || ((instance) == GPIO2) || ((instance) == GPIO3) || ((instance) == GPIO4))
+#define IS_GPIO0_EXP_INSTANCE(instance) (((instance) == GPIO0_EXP1) || ((instance) == GPIO0_EXP2) || ((instance) == GPIO0_EXP3))
 #define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER8) || ((instance) == TIMER9) || ((instance) == TIMER10) || ((instance) == TIMER11))
+#define IS_GPIO1_EXP_INSTANCE(instance) (((instance) == GPIO1_EXP1) || ((instance) == GPIO1_EXP2) || ((instance) == GPIO1_EXP3))
+#define IS_GPIO2_EXP_INSTANCE(instance) (((instance) == GPIO2_EXP1) || ((instance) == GPIO2_EXP2) || ((instance) == GPIO2_EXP3))
+#define IS_GPIO3_EXP_INSTANCE(instance) (((instance) == GPIO3_EXP1) || ((instance) == GPIO3_EXP2) || ((instance) == GPIO3_EXP3))
+#define IS_GPIO4_EXP_INSTANCE(instance) (((instance) == GPIO4_EXP1) || ((instance) == GPIO4_EXP2) || ((instance) == GPIO4_EXP3))
 #define IS_MBOX_INSTANCE(instance) (((instance) == MBOX0) || ((instance) == MBOX1) || ((instance) == MBOX2) || ((instance) == MBOX3) || ((instance) == MBOX4) || ((instance) == MBOX5) || ((instance) == MBOX6) || ((instance) == MBOX7) || ((instance) == MBOX8) || ((instance) == MBOX9) || ((instance) == MBOX10) || ((instance) == MBOX11) || ((instance) == MBOX12) || ((instance) == MBOX13))
 /****************************************************************************************/
 /*                                                                                      */
