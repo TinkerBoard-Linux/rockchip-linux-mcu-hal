@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 /********************* Private MACRO Definition ******************************/
+//#define GPIO_VIRTUAL_MODEL_TEST
 //#define PERF_TEST
 //#define SOFTIRQ_TEST
 //#define SYSTICK_TEST
@@ -28,6 +29,74 @@
 /************************************************/
 
 /* TODO: Set Module IOMUX Function Here */
+
+/************************************************/
+/*                                              */
+/*          GPIO_VIRTUAL_MODEL_TEST             */
+/*                                              */
+/************************************************/
+#ifdef GPIO_VIRTUAL_MODEL_TEST
+static void gpio0_exp3_isr(uint32_t irq, void *args)
+{
+    HAL_GPIO_IRQHandler(GPIO0_EXP3, GPIO_BANK0_EXP3);
+}
+
+static HAL_Status c3_call_back(eGPIO_bankId bank, uint32_t pin, void *args)
+{
+    printf("GPIO0C3 exp callback!\n");
+
+    return HAL_OK;
+}
+
+static void gpio_virtual_model_test(void)
+{
+    uint32_t level;
+
+    /* set pinctrl function */
+    HAL_PINCTRL_SetParam(GPIO_BANK0,
+                         GPIO_PIN_C3,
+                         PIN_CONFIG_MUX_FUNC0);
+
+    /* set pin group configuration */
+    HAL_GPIO_EnableVirtualModel(GPIO0);
+    HAL_GPIO_SetVirtualModel(GPIO0,
+                             GPIO_PIN_A0 | GPIO_PIN_A1 | GPIO_PIN_A2 | GPIO_PIN_A3 |
+                             GPIO_PIN_A4 | GPIO_PIN_A5 | GPIO_PIN_A6 | GPIO_PIN_A7 |
+                             GPIO_PIN_B0 | GPIO_PIN_B1 | GPIO_PIN_B2 | GPIO_PIN_B3 |
+                             GPIO_PIN_B4 | GPIO_PIN_B5 | GPIO_PIN_B6 | GPIO_PIN_B7 |
+                             GPIO_PIN_C0 | GPIO_PIN_C1 | GPIO_PIN_C2 |
+                             GPIO_PIN_C4 | GPIO_PIN_C5 | GPIO_PIN_C6 | GPIO_PIN_C7 |
+                             GPIO_PIN_D0 | GPIO_PIN_D1 | GPIO_PIN_D2 | GPIO_PIN_D3 |
+                             GPIO_PIN_D4 | GPIO_PIN_D5 | GPIO_PIN_D6 | GPIO_PIN_D7,
+                             GPIO_VIRTUAL_MODEL_OS_A);
+    HAL_GPIO_SetVirtualModel(GPIO0,
+                             GPIO_PIN_C3,
+                             GPIO_VIRTUAL_MODEL_OS_D);
+
+    /* Test GPIO output */
+    HAL_GPIO_SetPinDirection(GPIO0_EXP3, GPIO_PIN_C3, GPIO_OUT);
+    level = HAL_GPIO_GetPinLevel(GPIO0_EXP3, GPIO_PIN_C3);
+    printf("test gpio 0c3 level = %ld\n", level);
+    HAL_DelayMs(3000);
+    HAL_GPIO_SetPinLevel(GPIO0_EXP3, GPIO_PIN_C3, GPIO_HIGH);
+    level = HAL_GPIO_GetPinLevel(GPIO0_EXP3, GPIO_PIN_C3);
+    printf("test_gpio 0c3 output high level = %ld\n", level);
+    HAL_DelayMs(3000);
+    HAL_GPIO_SetPinLevel(GPIO0_EXP3, GPIO_PIN_C3, GPIO_LOW);
+    level = HAL_GPIO_GetPinLevel(GPIO0_EXP3, GPIO_PIN_C3);
+    printf("test_gpio 0c3 output low level = %ld\n", level);
+    HAL_DelayMs(3000);
+
+    /* Test GPIO interrupt */
+    HAL_GPIO_SetPinDirection(GPIO0_EXP3, GPIO_PIN_C3, GPIO_IN);
+    HAL_NVIC_SetIRQHandler(GPIO0_EXP3_IRQn, gpio0_exp3_isr);
+    HAL_IRQ_HANDLER_SetGpioIRQHandler(GPIO_BANK0_EXP3, GPIO_PIN_C3, c3_call_back, NULL);
+    HAL_NVIC_EnableIRQ(GPIO0_EXP3_IRQn);
+    HAL_GPIO_SetIntType(GPIO0_EXP3, GPIO_PIN_C3, GPIO_INT_TYPE_EDGE_BOTH);
+    HAL_GPIO_EnableIRQ(GPIO0_EXP3, GPIO_PIN_C3);
+    printf("test gpio exp interrupt ready\n");
+}
+#endif
 
 /************************************************/
 /*                                              */
@@ -277,6 +346,10 @@ static void timer_test(void)
 
 void test_demo(void)
 {
+#ifdef GPIO_VIRTUAL_MODEL_TEST
+    gpio_virtual_model_test();
+#endif
+
 #ifdef PERF_TEST
     perf_test();
 #endif
