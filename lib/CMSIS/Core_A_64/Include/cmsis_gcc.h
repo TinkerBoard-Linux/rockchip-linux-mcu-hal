@@ -205,6 +205,30 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
     return __builtin_clz(value);
 }
 
+/**
+  \brief   Enable IRQ Interrupts
+  \details Enables IRQ interrupts by clearing special-purpose register PRIMASK.
+           Can only be executed in Privileged modes.
+ */
+__STATIC_FORCEINLINE void __enable_irq(void)
+{
+  __ASM volatile ("msr daifclr, #1<<1\n"
+                  "isb");
+}
+
+/**
+  \brief   Disable IRQ Interrupts
+  \details Disables IRQ interrupts by setting special-purpose register PRIMASK.
+           Can only be executed in Privileged modes.
+ */
+__STATIC_FORCEINLINE void __disable_irq(void)
+{
+  __ASM volatile ("msr daifset, #1<<1\n"
+                  "isb");
+}
+
+#include "cmsis_cp15.h"
+
 #pragma GCC diagnostic pop
 
 #endif /* __CMSIS_GCC_H */
