@@ -71,9 +71,8 @@ static HAL_Status HAL_TRNG_GetOnce(const struct HAL_TRNG_DEV *dev, uint8_t *data
         ;
     }
 
-    if (!(READ_REG(pReg->STATE) & TRNG_CTRL_SW_DRNG_REQ_MASK)) {
-        ret = HAL_ERROR;
-        goto exit;
+    while (!(READ_REG(pReg->STATE) & TRNG_STATE_SW_DRNG_ACK_MASK)) {
+        ;
     }
 
     WRITE_REG(pReg->STATE, TRNG_STATE_SW_DRNG_ACK_MASK);
@@ -84,7 +83,6 @@ static HAL_Status HAL_TRNG_GetOnce(const struct HAL_TRNG_DEV *dev, uint8_t *data
 
     memcpy(data, buf, len);
 
-exit:
     /* close TRNG */
     WRITE_REG_MASK_WE(pReg->CTRL, TRNG_WRITE_MASK_ALL, 0);
 
