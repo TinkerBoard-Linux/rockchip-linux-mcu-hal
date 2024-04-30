@@ -11,32 +11,25 @@ struct HAL_ASRC_DEV g_asrc0Dev =
     .pReg = ASRC0,
     .mclk = MCLK_ASRC0,
     .mclkGate = MCLK_ASRC0_GATE,
-    .channels = 8,
-    .txParams =
+    .lrckTX = LRCK_ASRC0_DST,
+    .lrckRX = LRCK_ASRC0_SRC,
+    .maxChannels = 8,
+    .spinLockId = ASRC0_LOCK_ID,
+    .txDmaData =
     {
-        .lrck = LRCK_ASRC0_DST,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC0->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC0_TX,
-            .dmac = DMA1,
-        },
+        .addr = (uint32_t)&(ASRC0->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA1_REQ_AUDIO0_ASRC0_TX,
+        .dmac = DMA1,
     },
-    .rxParams =
+    .rxDmaData =
     {
-        .lrck = LRCK_ASRC0_SRC,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC0->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC0_RX,
-            .dmac = DMA1,
-        }
+        .addr = (uint32_t)&(ASRC0->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA1_REQ_AUDIO0_ASRC0_RX,
+        .dmac = DMA1,
     },
 };
 
@@ -45,32 +38,25 @@ struct HAL_ASRC_DEV g_asrc1Dev =
     .pReg = ASRC1,
     .mclk = MCLK_ASRC1,
     .mclkGate = MCLK_ASRC1_GATE,
-    .channels = 8,
-    .txParams =
+    .lrckTX = LRCK_ASRC1_DST,
+    .lrckRX = LRCK_ASRC1_SRC,
+    .maxChannels = 4,
+    .spinLockId = ASRC1_LOCK_ID,
+    .txDmaData =
     {
-        .lrck = LRCK_ASRC1_DST,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC1->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC1_TX,
-            .dmac = DMA1,
-        },
+        .addr = (uint32_t)&(ASRC1->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA1_REQ_AUDIO0_ASRC1_TX,
+        .dmac = DMA1,
     },
-    .rxParams =
+    .rxDmaData =
     {
-        .lrck = LRCK_ASRC1_SRC,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC1->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC1_RX,
-            .dmac = DMA1,
-        }
+        .addr = (uint32_t)&(ASRC1->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA1_REQ_AUDIO0_ASRC1_RX,
+        .dmac = DMA1,
     },
 };
 
@@ -79,32 +65,25 @@ struct HAL_ASRC_DEV g_asrc2Dev =
     .pReg = ASRC2,
     .mclk = MCLK_ASRC2,
     .mclkGate = MCLK_ASRC2_GATE,
-    .channels = 8,
-    .txParams =
+    .lrckTX = LRCK_ASRC2_DST,
+    .lrckRX = LRCK_ASRC2_SRC,
+    .maxChannels = 4,
+    .spinLockId = ASRC2_LOCK_ID,
+    .txDmaData =
     {
-        .lrck = LRCK_ASRC2_DST,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC2->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC2_TX,
-            .dmac = DMA1,
-        },
+        .addr = (uint32_t)&(ASRC2->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA1_REQ_AUDIO0_ASRC2_TX,
+        .dmac = DMA1,
     },
-    .rxParams =
+    .rxDmaData =
     {
-        .lrck = LRCK_ASRC2_SRC,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC2->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC2_RX,
-            .dmac = DMA1,
-        }
+        .addr = (uint32_t)&(ASRC2->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA1_REQ_AUDIO0_ASRC2_RX,
+        .dmac = DMA1,
     },
 };
 
@@ -113,32 +92,25 @@ struct HAL_ASRC_DEV g_asrc3Dev =
     .pReg = ASRC3,
     .mclk = MCLK_ASRC3,
     .mclkGate = MCLK_ASRC3_GATE,
-    .channels = 8,
-    .txParams =
+    .lrckTX = LRCK_ASRC3_DST,
+    .lrckRX = LRCK_ASRC3_SRC,
+    .maxChannels = 4,
+    .spinLockId = ASRC3_LOCK_ID,
+    .txDmaData =
     {
-        .lrck = LRCK_ASRC3_DST,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC3->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC3_TX,
-            .dmac = DMA1,
-        },
+        .addr = (uint32_t)&(ASRC3->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA1_REQ_AUDIO0_ASRC3_TX,
+        .dmac = DMA1,
     },
-    .rxParams =
+    .rxDmaData =
     {
-        .lrck = LRCK_ASRC3_SRC,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC3->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA1_REQ_AUDIO0_ASRC3_RX,
-            .dmac = DMA1,
-        }
+        .addr = (uint32_t)&(ASRC3->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA1_REQ_AUDIO0_ASRC3_RX,
+        .dmac = DMA1,
     },
 };
 
@@ -147,32 +119,25 @@ struct HAL_ASRC_DEV g_asrc4Dev =
     .pReg = ASRC4,
     .mclk = MCLK_ASRC4,
     .mclkGate = MCLK_ASRC4_GATE,
-    .channels = 8,
-    .txParams =
+    .lrckTX = LRCK_ASRC4_DST,
+    .lrckRX = LRCK_ASRC4_SRC,
+    .maxChannels = 8,
+    .spinLockId = ASRC4_LOCK_ID,
+    .txDmaData =
     {
-        .lrck = LRCK_ASRC4_DST,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC4->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC4_TX,
-            .dmac = DMA3,
-        },
+        .addr = (uint32_t)&(ASRC4->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA3_REQ_AUDIO1_ASRC4_TX,
+        .dmac = DMA3,
     },
-    .rxParams =
+    .rxDmaData =
     {
-        .lrck = LRCK_ASRC4_SRC,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC4->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC4_RX,
-            .dmac = DMA3,
-        }
+        .addr = (uint32_t)&(ASRC4->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA3_REQ_AUDIO1_ASRC4_RX,
+        .dmac = DMA3,
     },
 };
 
@@ -181,32 +146,25 @@ struct HAL_ASRC_DEV g_asrc5Dev =
     .pReg = ASRC5,
     .mclk = MCLK_ASRC5,
     .mclkGate = MCLK_ASRC5_GATE,
-    .channels = 8,
-    .txParams =
+    .lrckTX = LRCK_ASRC5_DST,
+    .lrckRX = LRCK_ASRC5_SRC,
+    .maxChannels = 4,
+    .spinLockId = ASRC5_LOCK_ID,
+    .txDmaData =
     {
-        .lrck = LRCK_ASRC5_DST,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC5->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC5_TX,
-            .dmac = DMA3,
-        },
+        .addr = (uint32_t)&(ASRC5->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA3_REQ_AUDIO1_ASRC5_TX,
+        .dmac = DMA3,
     },
-    .rxParams =
+    .rxDmaData =
     {
-        .lrck = LRCK_ASRC5_SRC,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC5->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC5_RX,
-            .dmac = DMA3,
-        }
+        .addr = (uint32_t)&(ASRC5->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA3_REQ_AUDIO1_ASRC5_RX,
+        .dmac = DMA3,
     },
 };
 
@@ -215,32 +173,25 @@ struct HAL_ASRC_DEV g_asrc6Dev =
     .pReg = ASRC6,
     .mclk = MCLK_ASRC6,
     .mclkGate = MCLK_ASRC6_GATE,
-    .channels = 8,
-    .txParams =
+    .lrckTX = LRCK_ASRC6_DST,
+    .lrckRX = LRCK_ASRC6_SRC,
+    .maxChannels = 4,
+    .spinLockId = ASRC6_LOCK_ID,
+    .txDmaData =
     {
-        .lrck = LRCK_ASRC6_DST,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC6->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC6_TX,
-            .dmac = DMA3,
-        },
+        .addr = (uint32_t)&(ASRC6->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA3_REQ_AUDIO1_ASRC6_TX,
+        .dmac = DMA3,
     },
-    .rxParams =
+    .rxDmaData =
     {
-        .lrck = LRCK_ASRC6_SRC,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC6->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC6_RX,
-            .dmac = DMA3,
-        }
+        .addr = (uint32_t)&(ASRC6->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA3_REQ_AUDIO1_ASRC6_RX,
+        .dmac = DMA3,
     },
 };
 
@@ -249,32 +200,25 @@ struct HAL_ASRC_DEV g_asrc7Dev =
     .pReg = ASRC7,
     .mclk = MCLK_ASRC7,
     .mclkGate = MCLK_ASRC7_GATE,
-    .channels = 8,
-    .txParams =
+    .lrckTX = LRCK_ASRC7_DST,
+    .lrckRX = LRCK_ASRC7_SRC,
+    .maxChannels = 4,
+    .spinLockId = ASRC7_LOCK_ID,
+    .txDmaData =
     {
-        .lrck = LRCK_ASRC7_DST,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC7->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC7_TX,
-            .dmac = DMA3,
-        },
+        .addr = (uint32_t)&(ASRC7->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA3_REQ_AUDIO1_ASRC7_TX,
+        .dmac = DMA3,
     },
-    .rxParams =
+    .rxDmaData =
     {
-        .lrck = LRCK_ASRC7_SRC,
-        .sampleRate = 48000,
-        .dmaData =
-        {
-            .addr = (uint32_t)&(ASRC7->FIFO_IN_FIXED_DR),
-            .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
-            .maxBurst = 4,
-            .dmaReqCh = DMA3_REQ_AUDIO1_ASRC7_RX,
-            .dmac = DMA3,
-        }
+        .addr = (uint32_t)&(ASRC7->FIFO_IN_FIXED_DR),
+        .addrWidth = DMA_SLAVE_BUSWIDTH_4_BYTES,
+        .maxBurst = 4,
+        .dmaReqCh = DMA3_REQ_AUDIO1_ASRC7_RX,
+        .dmac = DMA3,
     },
 };
 #endif
