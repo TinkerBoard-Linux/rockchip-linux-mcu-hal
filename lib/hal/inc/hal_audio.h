@@ -24,6 +24,74 @@
 /***************************** Structure Definition **************************/
 
 /**
+ * enum eAUDIO_daiID - unique digital audio interface ID.
+ */
+typedef enum {
+    DAI_ID_SAI0 = 0,
+    DAI_ID_SAI1,
+    DAI_ID_SAI2,
+    DAI_ID_SAI3,
+    DAI_ID_SAI4,
+    DAI_ID_SAI5,
+    DAI_ID_SAI6,
+    DAI_ID_SAI7,
+    DAI_ID_SAI8,
+    DAI_ID_SAI9,
+    DAI_ID_SAI10,
+    DAI_ID_SAI11,
+    DAI_ID_SAI12,
+    DAI_ID_SAI13,
+    DAI_ID_SAI14,
+    DAI_ID_SAI15,
+    DAI_ID_SAIMAX,
+    DAI_ID_ASRC0,
+    DAI_ID_ASRC1,
+    DAI_ID_ASRC2,
+    DAI_ID_ASRC3,
+    DAI_ID_ASRC4,
+    DAI_ID_ASRC5,
+    DAI_ID_ASRC6,
+    DAI_ID_ASRC7,
+    DAI_ID_ASRC8,
+    DAI_ID_ASRC9,
+    DAI_ID_ASRC10,
+    DAI_ID_ASRC11,
+    DAI_ID_ASRC12,
+    DAI_ID_ASRC13,
+    DAI_ID_ASRC14,
+    DAI_ID_ASRC15,
+    DAI_ID_ASRCMAX,
+    DAI_ID_PDM0,
+    DAI_ID_PDM1,
+    DAI_ID_PDM2,
+    DAI_ID_PDM3,
+    DAI_ID_PDM4,
+    DAI_ID_PDM5,
+    DAI_ID_PDM6,
+    DAI_ID_PDM7,
+    DAI_ID_PDMMAX,
+    DAI_ID_SPDIFTX0,
+    DAI_ID_SPDIFTX1,
+    DAI_ID_SPDIFTX2,
+    DAI_ID_SPDIFTX3,
+    DAI_ID_SPDIFTX4,
+    DAI_ID_SPDIFTX5,
+    DAI_ID_SPDIFTX6,
+    DAI_ID_SPDIFTX7,
+    DAI_ID_SPDIFTXMAX,
+    DAI_ID_SPDIFRX0,
+    DAI_ID_SPDIFRX1,
+    DAI_ID_SPDIFRX2,
+    DAI_ID_SPDIFRX3,
+    DAI_ID_SPDIFRX4,
+    DAI_ID_SPDIFRX5,
+    DAI_ID_SPDIFRX6,
+    DAI_ID_SPDIFRX7,
+    DAI_ID_SPDIFRXMAX,
+    DAI_ID_NONE,
+} eAUDIO_daiID;
+
+/**
  * enum AUDIO_sampleRate - audio samplerate: up to 192k.
  */
 typedef enum {
@@ -203,6 +271,54 @@ struct AUDIO_DB_CONFIG {
 /** @defgroup AUDIO_Public_Function_Declare Public Function Declare
  *  @{
  */
+
+/**
+ * @brief  Get dai type name of id
+ * @param  id: eAUDIO_daiID
+ * @return name.
+ */
+__STATIC_INLINE char *HAL_AUDIO_GetDaiTypeName(eAUDIO_daiID id)
+{
+    switch (id) {
+    case DAI_ID_SAI0... DAI_ID_SAIMAX:
+        return "SAI";
+    case DAI_ID_ASRC0... DAI_ID_ASRCMAX:
+        return "ASRC";
+    case DAI_ID_PDM0... DAI_ID_PDMMAX:
+        return "PDM";
+    case DAI_ID_SPDIFTX0... DAI_ID_SPDIFTXMAX:
+        return "SPDIFTX";
+    case DAI_ID_SPDIFRX0... DAI_ID_SPDIFRXMAX:
+        return "SPDIFRX";
+    case DAI_ID_NONE:
+        return "NONE";
+    default:
+        return "INVAL";
+    }
+}
+
+/**
+ * @brief  Convert to idx of the dai
+ * @param  id: eAUDIO_daiID
+ * @return idx.
+ */
+__STATIC_INLINE int HAL_AUDIO_GetDaiIdx(eAUDIO_daiID id)
+{
+    switch (id) {
+    case DAI_ID_SAI0... DAI_ID_SAIMAX:
+        return id - DAI_ID_SAI0;
+    case DAI_ID_ASRC0... DAI_ID_ASRCMAX:
+        return id - DAI_ID_ASRC0;
+    case DAI_ID_PDM0... DAI_ID_PDMMAX:
+        return id - DAI_ID_PDM0;
+    case DAI_ID_SPDIFTX0... DAI_ID_SPDIFTXMAX:
+        return id - DAI_ID_SPDIFTX0;
+    case DAI_ID_SPDIFRX0... DAI_ID_SPDIFRXMAX:
+        return id - DAI_ID_SPDIFRX0;
+    default:
+        return -1;
+    }
+}
 
 /** @} */
 
