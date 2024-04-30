@@ -21,6 +21,9 @@
  *  @{
  */
 
+#define AUDIO_FRAMES_TO_BYTES(frames, channels, width) \
+    ((frames) * (channels) * (width) / 8)
+
 /***************************** Structure Definition **************************/
 
 /**
@@ -317,6 +320,28 @@ __STATIC_INLINE int HAL_AUDIO_GetDaiIdx(eAUDIO_daiID id)
         return id - DAI_ID_SPDIFRX0;
     default:
         return -1;
+    }
+}
+
+/**
+ * @brief  Convert sample bits to physical bits
+ * @param  bits: eAUDIO_sampleBits
+ * @return physical bits.
+ */
+__STATIC_INLINE uint8_t HAL_AUDIO_GetPhysicalWidth(eAUDIO_sampleBits bits)
+{
+    switch (bits) {
+    case AUDIO_SAMPLEBITS_8:
+        return 8;
+    case AUDIO_SAMPLEBITS_16:
+        return 16;
+    case AUDIO_SAMPLEBITS_18:
+    case AUDIO_SAMPLEBITS_20:
+    case AUDIO_SAMPLEBITS_24:
+    case AUDIO_SAMPLEBITS_32:
+        return 32;
+    default:
+        return 32;
     }
 }
 
