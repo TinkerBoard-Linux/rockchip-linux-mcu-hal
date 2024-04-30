@@ -2,9 +2,9 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V3.2.0
+发布版本：V3.2.1
 
-日期：2023-12-19
+日期：2024-04-30
 
 文件密级：□绝密   □秘密   □内部资料   ■公开
 
@@ -20,7 +20,7 @@
 
 本文档可能提及的其他所有注册商标或商标，由其各自拥有者所有。
 
-**版权所有 © 2023 瑞芯微电子股份有限公司**
+**版权所有 © 2024 瑞芯微电子股份有限公司**
 
 超越合理使用范畴，非经本公司书面许可，任何单位和个人不得擅自摘抄、复制本文档内容的部分或全部，并不得以任何形式传播。
 
@@ -67,28 +67,29 @@ Rockchip Electronics Co., Ltd.
 
 **修订记录**
 
-| **版本号** | **作者** | **修改日期** | **修改说明**                           |
-| ---------- | -------- | ------------ | -------------------------------------- |
-| V0.0.1     | 2018.11  | Jon Lin      | 提供基础代码结构说明和基本规范         |
-| V1.0.0     | 2018.11  | Kever Yang   | 重构文档并确定编程规范                 |
-| V1.0.1     | 2019.03  | Kever Yang   | 新增和完善目录结构，代码规范，单元测试 |
-| V2.0.0     | 2019.04  | Jon Lin      | 新增代码兼容性规范                     |
-| V2.0.1     | 2019.05  | Jon Lin      | 新增 BSP 库规范                        |
-| V2.0.2     | 2019.12  | Jon Lin      | 新增 hal_conf.h.template 文件规范      |
-| V2.1.0     | 2020.01  | Jon Lin      | 修改文档规范                           |
-| V2.2.0     | 2020.01  | Jon Lin      | 新增固件库裸系统移植说明               |
-| V2.3.0     | 2020.06  | Tao Huang    | 调整格式                               |
-| V2.3.1     | 2020.07  | Tao Huang    | 调整格式                               |
-| V2.4.0     | 2020.07  | Tao Huang    | 强调排版风格遵守 MISRA-C               |
-| V2.5.0     | 2021.03  | Jon Lin      | 增加 SOC 支持、修改 Doxygen 规范       |
-| V2.6.0     | 2021.03  | Jon Lin      | 增加 middleware 目录       |
-| V2.7.0     | 2021.03  | Jon Lin      | demo 示例由 RK2106 更改为 RK2108，优化文件布局章节 |
-| V2.8.0     | 2021.05  | Jon Lin      | 增加 test_conf.h 说明、增加和修正模块缩写 |
-| V2.9.0     | 2021.06  | Jon Lin      | 增加 Doxygen 中文注释规范，增加用户指南扩展，调整裸系统 Main 函数格式，优化单元测试章节说明，添加扩展开发包说明 |
-| V3.0.0 | 2021.06 | Jon Lin | 增加多核相关编程规范 |
-| V3.0.1 | 2023.06 | Cliff | 修改打印调试配置说明 |
-| V3.1.0 | 2023.08 | Steven Liu | 增加芯片差异兼容性处理补充规范 |
-| V3.2.0 | 2023.12 | Cliff | 增加HAL_DSP_CORE定义 |
+| **版本号** | **作者**   | **修改日期** | **修改说明**                                                 |
+| ---------- | ---------- | ------------ | ------------------------------------------------------------ |
+| V0.0.1     | Jon Lin    | 2018.11      | 提供基础代码结构说明和基本规范                               |
+| V1.0.0     | Kever Yang | 2018.11      | 重构文档并确定编程规范                                       |
+| V1.0.1     | Kever Yang | 2019.03      | 新增和完善目录结构，代码规范，单元测试                       |
+| V2.0.0     | Jon Lin    | 2019.04      | 新增代码兼容性规范                                           |
+| V2.0.1     | Jon Lin    | 2019.05      | 新增 BSP 库规范                                              |
+| V2.0.2     | Jon Lin    | 2019.12      | 新增 hal_conf.h.template 文件规范                            |
+| V2.1.0     | Jon Lin    | 2020.01      | 修改文档规范                                                 |
+| V2.2.0     | Jon Lin    | 2020.01      | 新增固件库裸系统移植说明                                     |
+| V2.3.0     | Tao Huang  | 2020.06      | 调整格式                                                     |
+| V2.3.1     | Tao Huang  | 2020.07      | 调整格式                                                     |
+| V2.4.0     | Tao Huang  | 2020.07      | 强调排版风格遵守 MISRA-C                                     |
+| V2.5.0     | Jon Lin    | 2021.03      | 增加 SOC 支持、修改 Doxygen 规范                             |
+| V2.6.0     | Jon Lin    | 2021.03      | 增加 middleware 目录                                         |
+| V2.7.0     | Jon Lin    | 2021.03      | demo 示例由 RK2106 更改为 RK2108，优化文件布局章节           |
+| V2.8.0     | Jon Lin    | 2021.05      | 增加 test_conf.h 说明、增加和修正模块缩写                    |
+| V2.9.0     | Jon Lin    | 2021.06      | 增加 Doxygen 中文注释规范，<br />增加用户指南扩展，<br />调整裸系统 Main 函数格式，<br />优化单元测试章节说明，<br />添加扩展开发包说明。 |
+| V3.0.0     | Jon Lin    | 2021.06      | 增加多核相关编程规范                                         |
+| V3.0.1     | Cliff      | 2023.06      | 修改打印调试配置说明                                         |
+| V3.1.0     | Steven Liu | 2023.08      | 增加芯片差异兼容性处理补充规范                               |
+| V3.2.0     | Cliff      | 2023.12      | 增加HAL_DSP_CORE定义                                         |
+| V3.2.1     | Tao Huang  | 2024.04      | 调整格式，修订处理器系列说明                                 |
 
 ---
 
@@ -188,15 +189,15 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 
 ```
 
-| 目录      | 内容                                             |
-| --------- | ------------------------------------------------ |
-| doc       | 项目相关文档                                     |
-| lib       | 用于集成到 rt-thread, zephyr 等 RTOS 的 lib 目录 |
-| lib/CMSIS | 以 ARM CMSIS5 为 base, 加上 Rockchip SoC 定义    |
-| lib/hal   | MCU 的 HAL 驱动库代码                            |
-| lib/bsp   | MCU 的芯片公共 BSP 配置的代码                    |
-| test      | HAL 驱动的驱动测试代码                           |
-| middleware | 扩展开发包                             |
+| 目录       | 内容                                             |
+| ---------- | ------------------------------------------------ |
+| doc        | 项目相关文档                                     |
+| lib        | 用于集成到 rt-thread, zephyr 等 RTOS 的 lib 目录 |
+| lib/CMSIS  | 以 ARM CMSIS5 为 base, 加上 Rockchip SoC 定义    |
+| lib/hal    | MCU 的 HAL 驱动库代码                            |
+| lib/bsp    | MCU 的芯片公共 BSP 配置的代码                    |
+| test       | HAL 驱动的驱动测试代码                           |
+| middleware | 扩展开发包                                       |
 
 ### 库组成预览
 
@@ -206,11 +207,11 @@ HAL 固件库中涉及核内外设访问层—CPAL(Core Peripheral Access Layer)
 
 ### SOC 目录文件
 
-lib/CMSIS/Device 目录存放 SoC 相关的硬件信息,寄存器定义文件以及芯片启动相关代码.
+lib/CMSIS/Device 目录存放 SoC 相关的硬件信息，寄存器定义文件以及芯片启动相关代码.
 
 | 文件               | 描述                                                         |
 | ------------------ | ------------------------------------------------------------ |
-| startup_rk2108.S   | 包含重置处理程序和异常向量的工具链特定文件,根据需求调整堆栈大小。 |
+| startup_rk2108.S   | 包含重置处理程序和异常向量的工具链特定文件，根据需求调整堆栈大小。 |
 | system_rk2108.c/.h | 包含：系统 start up 汇编文件中在跳转 main 前调用的 SystemInit()。 |
 | gcc_arm.ld         | 链接脚本                                                     |
 | soc.h              | 存放中断号、模块基地址、寄存器结构体、位宏信息的头文件，HAL 库统一引用 |
@@ -219,7 +220,7 @@ lib/CMSIS/Device 目录存放 SoC 相关的硬件信息,寄存器定义文件以
 
 ### HAL 目录文件
 
-lib/hal 目录包含 HAL 库的代码主体，其中 src 目录直接包含所有模块的 C 代码, inc 目录包含对外 API 函数声明, 由于模块寄存器结构体和 BIT 定义都已包含在 SOC 头文件中, 各模块不再使用私有头文件, 如需要定义私有的宏或结构体, 可在 C 文件中直接定义。
+lib/hal 目录包含 HAL 库的代码主体，其中 src 目录直接包含所有模块的 C 代码，inc 目录包含对外 API 函数声明，由于模块寄存器结构体和 BIT 定义都已包含在 SOC 头文件中，各模块不再使用私有头文件，如需要定义私有的宏或结构体，可在 C 文件中直接定义。
 
 | 文件                | 描述                                                         |
 | ------------------- | ------------------------------------------------------------ |
@@ -234,7 +235,7 @@ lib/hal 目录包含 HAL 库的代码主体，其中 src 目录直接包含所�
 
 ### BSP 目录文件
 
-bsp 库用来存放某个芯片公共的板级配置和 dev 资源，代码路径为./lib/bsp/project_name/hal_bsp.c/h。
+bsp 库用来存放某个芯片公共的板级配置和 dev 资源，代码路径为 lib/bsp/project_name/hal_bsp.c/h。
 
 | 文件      | 描述                                                         |
 | --------- | ------------------------------------------------------------ |
@@ -250,7 +251,7 @@ test_runner.c: 测试骨架程序，用于用户主程序调用
 
 ### project 目录文件
 
-project 目录基于板子或者项目建立工程，包含可运行的用户代码, 主要用于提供 main 函数调用各模块接口. 如 project/rk2108 是针对该板子的工程，里面需要实现所有板子特有的软硬件初始化和模块定义。
+project 目录基于板子或者项目建立工程，包含可运行的用户代码，主要用于提供 main 函数调用各模块接口. 如 project/rk2108 是针对该板子的工程，里面需要实现所有板子特有的软硬件初始化和模块定义。
 
 | 文件       | 描述                                                         |
 | ---------- | ------------------------------------------------------------ |
@@ -350,37 +351,37 @@ hal_conf.h:
 
 系统编译主要分析以下几个内容：
 
-**头文件依赖**
+**头文件目录**
 
 ```c
 . /* 根目录下的 hal_conf.h 文件 */
-./hal/lib/hal/inc /* 模块驱动头文件，包括所需的 uart 模块 */
-./hal/lib/bsp/RK2206 /* HAL 提供的芯片级 bsp 支持头文件，详见 BSP 目录文件章节说明 */
-./hal/lib/CMSIS/Device/RK2206/Include /* 基于 CMSIS 开发的 core 层头文件，详见 SOC 目录文件章节说明 */
-./hal/lib/CMSIS/Core/Include  /* CMSIS 头文件 */
+hal/lib/hal/inc /* 模块驱动头文件，包括所需的 uart 模块 */
+hal/lib/bsp/RK2206 /* HAL 提供的芯片级 bsp 支持头文件，详见 BSP 目录文件章节说明 */
+hal/lib/CMSIS/Device/RK2206/Include /* 基于 CMSIS 开发的 core 层头文件，详见 SOC 目录文件章节说明 */
+hal/lib/CMSIS/Core/Include  /* CMSIS 头文件 */
 ```
 
-**源代码目录**
+**源代码**
 
 ```c
-./hal/lib/hal/src/hal_base.c /* HAL 库初始化及基础支持包源码 */
-./hal/lib/hal/src/hal_debug.c  /* HAL debug 支持源码 */
-./hal/lib/hal/src/hal_uart.c /* HAL uart 模块驱动源码，如有其他模块开发需求，同理添加 */
-./hal/lib/bsp/RK2206/hal_bsp.c /* HAL 提供的芯片级 bsp 支持源码 */
-./hal/lib/CMSIS/Device/RK2206/Source/Templates/GCC/startup_rk2206.S /* start up 模板源码 */
-./hal/lib/CMSIS/Device/RK2206/Source/Templates/system_rk2206.c /* CMSIS system_init 实现源码 */
-./main.c /* uart 测试程序 */
+hal/lib/hal/src/hal_base.c /* HAL 库初始化及基础支持包源码 */
+hal/lib/hal/src/hal_debug.c  /* HAL debug 支持源码 */
+hal/lib/hal/src/hal_uart.c /* HAL uart 模块驱动源码，如有其他模块开发需求，同理添加 */
+hal/lib/bsp/RK2206/hal_bsp.c /* HAL 提供的芯片级 bsp 支持源码 */
+hal/lib/CMSIS/Device/RK2206/Source/Templates/GCC/startup_rk2206.S /* start up 模板源码 */
+hal/lib/CMSIS/Device/RK2206/Source/Templates/system_rk2206.c /* CMSIS system_init 实现源码 */
+main.c /* uart 测试程序 */
 ```
 
 **链接脚本**
 
 ```c
-./hal/lib/CMSIS/Device/RK2206/Source/Templates/GCC/gcc_arm.ld /* HAL 开发包提供的链接脚本模板 */
+hal/lib/CMSIS/Device/RK2206/Source/Templates/GCC/gcc_arm.ld /* HAL 开发包提供的链接脚本模板 */
 ```
 
 **编译命令范例**
 
-简单分析所需的编译要素后，就可以确定相应的编译命令了，以下为 GCC 交叉编译工具链下的简单编译命令，MDK 工程相近,编译选项中添加相应文件即可：
+简单分析所需的编译要素后，就可以确定相应的编译命令了，以下为 GCC 交叉编译工具链下的简单编译命令，MDK 工程相近，编译选项中添加相应文件即可：
 
 ```shell
 arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -std=c99 -I"." -I"./hal/lib/hal/inc" -I"./hal/lib/bsp/RK2206" -I"./hal/lib/CMSIS/Device/RK2206/Include" -I"./hal/lib/CMSIS/Core/Include"  -c -o ./hal_base.o hal/lib/hal/src/hal_base.c
@@ -418,22 +419,22 @@ arm-none-eabi-objcopy -O binary TestDemo.elf TestDemo.bin
 
 ### 命名规则
 
-芯片相关的以芯片型号为关键字标识,如 start up 汇编“*startup_rk2108.S*”，驱动相关的硬件抽象层文件以模块简写开头，如“*hal_uart.c*”.
+芯片相关的以芯片型号为关键字标识，如 start up 汇编“*startup_rk2108.S*”，驱动相关的硬件抽象层文件以模块简写开头，如“*hal_uart.c*”.
 
 #### 函数命名
 
-**函数名：**每一个函数命名以驼峰式为基础, 加上以下划线分隔的全大写前缀或后缀, 包括以下部分：
+**函数名：**每一个函数命名以驼峰式为基础，加上以下划线分隔的全大写前缀或后缀，包括以下部分：
 
 ```c
 int PRE_MODULE_FuncFeature_SUB(void)
 ```
 
-- 前缀：'PRE_', 全大写
-- HAL 库对外提供的函数接口，应以"*HAL_*"开头，例如：*HAL_UART_ReadByte()*；
-    - HAL 库对外提供的宏定义函数接口，应以"\_\__HAL\__"开头，例如："*\_\_HAL_UART_SetIntEnabled*"；
-- 模块名缩写：'MODULE_'；
+- 前缀：'PRE\_'，全大写
+- HAL 库对外提供的函数接口，应以 'HAL\_' 开头，例如：`HAL_UART_ReadByte()`；
+    - HAL 库对外提供的宏定义函数接口，应以 '\_\_HAL\_' 开头，例如：`__HAL_UART_SetIntEnabled`；
+- 模块名缩写：'MODULE\_'；
 - 功能组合缩写：FuncFeature：按首字母大写区分单词的**驼峰式**组合；
-- 后缀：'_SUB()'：如果接口定义相近，但需要区分方式，可以添加后缀，例如，“_IT”中断模式。
+- 后缀：'\_SUB'：如果接口定义相近，但需要区分方式，可以添加后缀，例如，'\_IT' 中断模式。
 
 合法函数命名示例:
 
@@ -453,7 +454,7 @@ HAL_Status USB_StartTransfer();
 变量的命名尽量在有意义的前提下尽量简写，如：
 推荐用 clk, cnt, msg, 而不推荐 clock, count, message．
 
-变量和函数参数使用驼峰式间隔, 但第一个单词仍使用小写, 以便与函数区别,同时便于书写简单变量, 如 tmp, ret 等.
+变量和函数参数使用驼峰式间隔，但第一个单词仍使用小写，以便与函数区别，同时便于书写简单变量，如 tmp, ret 等.
 
 ```c
 int i, j;
@@ -474,7 +475,7 @@ int retValue, varNum;
 
 指针变量需要以'p'为前缀。
 
-#### 宏定义, 枚举类型命名
+#### 宏定义及枚举类型命名
 
 所有宏定义及枚举类型使用全大写，下划线分隔单词．
 
@@ -489,7 +490,7 @@ int retValue, varNum;
 
 #### 使用 SPDX 格式 License
 
-在所有文件第一行, 加入如下 Licnse 信息, MCU-HAL 主体使用 BSD3-Clause 授权.
+在所有文件第一行，加入如下 License 信息，MCU-HAL 主体使用 BSD3-Clause 授权.
 
 ```c
 /* SPDX-License-Identifier: BSD-3-Clause */
@@ -505,7 +506,7 @@ int retValue, varNum;
 
 ### 排版
 
-项目使用 uncrustify 工具辅助排版, 整体排版风格包括空行，空格，括号等的使用参考 Linux kernel 的 coding style, 但如果和 MISRA-C 标准冲突，则使用 MISRA-C 标准的要求。本文档仅单独说明不一样的部分.
+项目使用 uncrustify 工具辅助排版，整体排版风格包括空行，空格，括号等的使用参考 Linux kernel 的 coding style，但如果和 MISRA-C 标准冲突，则使用 MISRA-C 标准的要求。本文档仅单独说明不一样的部分.
 
 ```shell
 # Ubuntu/Debian下面直接安装
@@ -534,11 +535,11 @@ Jenkins 也会使用以上命令进行校验，原则上需要通过校验才合
 
 #### 缩进
 
-全文不使用 TAB 分隔, 默认使用 4 个空格取代 TAB.
+全文不使用 TAB 分隔，默认使用 4 个空格取代 TAB.
 
 ### 注释及文档
 
-项目将使用 Doxygen 工具来自动化生成文档, 文件及 HAL API 函数的注释需要按照 Doxygen 的要求来写.
+项目将使用 Doxygen 工具来自动化生成文档，文件及 HAL API 函数的注释需要按照 Doxygen 的要求来写.
 
 所有需要详细注释的内容，应出现在定义处，如函数 API 注释在 C 文件内，宏 API 注释在头文件内，两边都出现的只需要定义处详细注释即可。
 
@@ -894,7 +895,7 @@ I2C/I2S/SPI/UART/PWM/ADC/DMA 建议使用这种模式。
 
 #### 出错码
 
-所有函数调用, 返回值使用有效出错码, 请不要自定义出错码, 出错码的值和含义参考自 Linux kernel.
+所有函数调用，返回值使用有效出错码，请不要自定义出错码，出错码的值和含义参考自 Linux kernel.
 无特定返回值时使用 0 表示函数执行成功.
 
 ```c
@@ -940,7 +941,7 @@ HAL_Status HAL_CRU_ClkSetFreq(eCLOCK_Name clockName, uint32_t rate)
 
 #### 数据类型
 
-编码请使用位数明确的数据类型, 不推荐使用 long, short 等可能产生不同结果的类型, 一律使用 stdint 的*_t 类型，如下:
+编码请使用位数明确的数据类型，不推荐使用 long, short 等可能产生不同结果的类型，一律使用 stdint 的*_t 类型，如下:
 
 ```c
 typedef	unsigned char            uint8_t
@@ -1032,7 +1033,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 
 #### 寄存器位宏定义
 
-寄存器 BIT 定义包括 SHIFT, MASK, 以及对应的数值定义，格式为：
+寄存器 BIT 定义包括 SHIFT, MASK，以及对应的数值定义，格式为：
 
 ```c
 #define UART_RBR_DATA_INPUT_SHIFT                          (0U)
@@ -1043,7 +1044,7 @@ struct CRU_REG * const pCRU = (struct CRU_REG *)CRU_BASE;
 
 #### C 代码源文件
 
-驱动代码要求私有宏, 结构体, 变量等定义放 C 代码开头部分, 然后是私有函数, 然后是公共的 API 函数。
+驱动代码要求私有宏，结构体，变量等定义放 C 代码开头部分，然后是私有函数，然后是公共的 API 函数。
 
 参考文件 hal_demo.c：
 
@@ -1218,7 +1219,7 @@ HAL_Status HAL_DEMO_CommonFunction(uint32_t inputTest)
 
 #### 头文件
 
-模块头文件 lib/hal/inc/hal_ppp.h 作为对外 API 头文件声明, 应包含对外 API 函数声明, 及其需要使用的结构提和枚举类型，不可包含私有变量，宏或结构体。
+模块头文件 lib/hal/inc/hal_ppp.h 作为对外 API 头文件声明，应包含对外 API 函数声明，及其需要使用的结构提和枚举类型，不可包含私有变量，宏或结构体。
 
 参考文件 hal_demo.h：
 
@@ -1303,8 +1304,8 @@ HAL_Status HAL_DEMO_CommonFunction(uint32_t inputTest);
 覆盖模块硬件所有功能(以公司发布 TRM 为准)，如有暂未覆盖内容，请填写 todo list；
 模块驱动使用的设备 ID 由外部提供，驱动内部不设定义或限制，仅做合法性检查；
 模块本身独立存在，除 base 内容(delay, 开关中断等)，不依赖任何其他模块
-跨模块调用内容，属于 OS 适配层, 如 clock 初始化，中断注册，互斥锁等，
-OS 支持(如 RT-Thread)部分，利用控制器状态防重入，原子操作可关中断，锁由 OS 适配层提供, HAL 层不提供。
+跨模块调用内容，属于 OS 适配层，如 clock 初始化，中断注册，互斥锁等，
+OS 支持(如 RT-Thread)部分，利用控制器状态防重入，原子操作可关中断，锁由 OS 适配层提供，HAL 层不提供。
 
 #### API 接口内容要求
 
@@ -1319,7 +1320,7 @@ OS 支持(如 RT-Thread)部分，利用控制器状态防重入，原子操作�
 
 #### 注释
 
-使用 doxygen 的分组功能，对内容进行分组并分别提供文档，详细参考 [注释及文档](#注释及文档) 章节, 每个驱动提供以下注释：
+使用 doxygen 的分组功能，对内容进行分组并分别提供文档，详细参考 [注释及文档](#注释及文档) 章节，每个驱动提供以下注释：
 
 - 驱动使用指南(how to use this driver)
 - 初始化反初始化流程
@@ -1330,7 +1331,7 @@ OS 支持(如 RT-Thread)部分，利用控制器状态防重入，原子操作�
 #### 中断 callback
 
 由于中断是由上一层代码做注册，所以 HAL 层不提供 callback(需要记录函数指针和参数)，需要 callback 的实现形式为：
-上层(如 rt-thread driver)须实现一个 IrqHandler, 注册到对应模块中断，该 IrqHandler 包含 HAL 的 IrqHandler 用于硬件相关处理，另外加入软件逻辑完成锁，完成量，重复操作等功能。
+上层(如 rt-thread driver)须实现一个 IrqHandler，注册到对应模块中断，该 IrqHandler 包含 HAL 的 IrqHandler 用于硬件相关处理，另外加入软件逻辑完成锁，完成量，重复操作等功能。
 
 #### 外部引用 HAL 代码
 
@@ -1406,20 +1407,20 @@ RK HAL 支持 CMSIS 标准的 CPAL 库，所以芯片级定义沿用或参考 CM
 
 处理器系列宏定义，主要用以区分 ARM A core、ARM M core 与 RISC-V，应用于 CMSIS 标准库函数及HAL 层库函数编写。
 
-| 处理器系列 | 宏定义     | 定义处                                  | 规范来源          |
-| ---------- | ---------- | --------------------------------------- | ----------------- |
-| Cortex-A   | __CORTEX_A | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | CMSIS             |
-| Cortex-M   | __CORTEX_M | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | CMSIS             |
-| RISC-V     | __RISC_V   | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | HAL（参考 CMSIS） |
+| 处理器系列 | 宏定义     | 定义处                           | 规范来源          |
+| ---------- | ---------- | -------------------------------- | ----------------- |
+| Cortex-A   | __CORTEX_A | lib/CMSIS/Device/*/Include/soc.h | CMSIS             |
+| Cortex-M   | __CORTEX_M | lib/CMSIS/Core/Include/core_*.h  | CMSIS             |
+| RISC-V     | __RISC_V   | lib/CMSIS/Device/*/Include/soc.h | HAL（参考 CMSIS） |
 
 ##### 处理器
 
 处理器宏定义，主要用以区分同一处理器系列下的不同处理器型号，与"处理器系列"宏为同一处定义。
 
-| 处理器                 | 宏定义                                | 定义处                                  | 规范来源 |
-| ---------------------- | ------------------------------------- | --------------------------------------- | -------- |
-| Cortex-A55、 Cortex-A7 | \_\_CORTEX_A = 55U、\_\_CORTEX_A = 7U | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | CMSIS    |
-| Cortex-M4、Cortex-M3   | \_\_CORTEX_M = 4U、\_\_CORTEX_M = 3U  | ./lib/CMSIS/Device/RKxxxx/Include/soc.h | CMSIS    |
+| 处理器                    | 宏定义                                    | 定义处                           | 规范来源 |
+| ------------------------- | ----------------------------------------- | -------------------------------- | -------- |
+| Cortex-A55<br />Cortex-A7 | \_\_CORTEX_A = 55U<br />\_\_CORTEX_A = 7U | lib/CMSIS/Device/*/Include/soc.h | CMSIS    |
+| Cortex-M4<br />Cortex-M3  | \_\_CORTEX_M = 4U<br />\_\_CORTEX_M = 3U  | lib/CMSIS/Device/*/Include/soc.h | CMSIS    |
 
 #### 核间差异兼容性处理默认规范
 
@@ -1906,7 +1907,7 @@ index 00000000..93791078
     - HAL driver 的所有 API
     - 部分驱动可作为 driver 参考代码
 - 测试代码存放在 test/hal/目录，'test_'作为前缀对应驱动测试代码
-- test_main.c 中引用每个模块的测试入口函数，test_main() 由板级流程调用，例如 ./project/rk2108/src/main.c
+- test_main.c 中引用每个模块的测试入口函数，test_main() 由板级流程调用，例如 project/rk2108/src/main.c
 
 - 标准宏开关 HAL_DEMO_MODULE_ENABLED，通过与 HAL 模块一致的宏开关来自动添加相应测试项
 - 扩展宏开关 UNITY_HAL_DEMO，开关在对应工程的 test_conf.h 文件中定义，由 unity_config.h 引用，通过扩展宏开关来达到以下目的：
