@@ -1646,6 +1646,32 @@ struct SPI2APB_REG {
          uint32_t RESERVED004C;                       /* Address Offset: 0x004C */
     __IO uint32_t QUICK_REG[3];                       /* Address Offset: 0x0050 */
 };
+/* OTPC Register Structure Define */
+struct OTPC_REG {
+         uint32_t RESERVED0000[8];                    /* Address Offset: 0x0000 */
+    __IO uint32_t SBPI_CTRL;                          /* Address Offset: 0x0020 */
+    __IO uint32_t SBPI_CMD_VALID_PRELOAD;             /* Address Offset: 0x0024 */
+    __IO uint32_t SBPI_CS_VALID_PRELOAD;              /* Address Offset: 0x0028 */
+    __I  uint32_t SBPI_STATUS;                        /* Address Offset: 0x002C */
+         uint32_t RESERVED0030[52];                   /* Address Offset: 0x0030 */
+    __IO uint32_t USER_CTRL;                          /* Address Offset: 0x0100 */
+    __IO uint32_t USER_ADDR;                          /* Address Offset: 0x0104 */
+    __IO uint32_t USER_ENABLE;                        /* Address Offset: 0x0108 */
+         uint32_t RESERVED010C;                       /* Address Offset: 0x010C */
+    __I  uint32_t USER_STATUS;                        /* Address Offset: 0x0110 */
+         uint32_t RESERVED0114[3];                    /* Address Offset: 0x0114 */
+    __IO uint32_t USER_QP;                            /* Address Offset: 0x0120 */
+    __IO uint32_t USER_Q;                             /* Address Offset: 0x0124 */
+    __IO uint32_t USER_QSR;                           /* Address Offset: 0x0128 */
+    __IO uint32_t USER_QRR;                           /* Address Offset: 0x012C */
+         uint32_t RESERVED0130[116];                  /* Address Offset: 0x0130 */
+    __IO uint32_t INT_CON;                            /* Address Offset: 0x0300 */
+    __IO uint32_t INT_STATUS;                         /* Address Offset: 0x0304 */
+         uint32_t RESERVED0308[830];                  /* Address Offset: 0x0308 */
+    __IO uint32_t SBPI_CMD_BASE;                      /* Address Offset: 0x1000 */
+         uint32_t RESERVED1004[1023];                 /* Address Offset: 0x1004 */
+    __IO uint32_t SBPI_READ_DATA_BASE;                /* Address Offset: 0x2000 */
+};
 /* SARADC Register Structure Define */
 struct SARADC_REG {
     __IO uint32_t CONV_CON;                           /* Address Offset: 0x0000 */
@@ -2292,6 +2318,7 @@ struct IIR_ACC_REG {
 #define FSPI0_BASE                     0x50A10000U /* FSPI0 base address */
 #define GMAC_BASE                      0x50A40000U /* GMAC base address */
 #define SPI2APB_BASE                   0x50A50000U /* SPI2APB base address */
+#define OTPC_BASE                      0x50A60000U /* OTPC base address */
 #define SARADC0_BASE                   0x50A70000U /* SARADC0 base address */
 #define GPIO1_IOC_BASE                 0x50A80000U /* GPIO1_IOC base address */
 #define GPIO2_IOC_BASE                 0x50A80000U /* GPIO2_IOC base address */
@@ -2440,6 +2467,7 @@ struct IIR_ACC_REG {
 #define FSPI0               ((struct FSPI_REG *) FSPI0_BASE)
 #define GMAC                ((struct GMAC_REG *) GMAC_BASE)
 #define SPI2APB             ((struct SPI2APB_REG *) SPI2APB_BASE)
+#define OTPC                ((struct OTPC_REG *) OTPC_BASE)
 #define SARADC0             ((struct SARADC_REG *) SARADC0_BASE)
 #define GPIO1_IOC           ((struct GPIO1_IOC_REG *) GPIO1_IOC_BASE)
 #define GPIO2_IOC           ((struct GPIO2_IOC_REG *) GPIO2_IOC_BASE)
@@ -2475,6 +2503,7 @@ struct IIR_ACC_REG {
 #define IS_RM4_IO_INSTANCE(instance) ((instance) == RM4_IO)
 #define IS_GMAC_INSTANCE(instance) ((instance) == GMAC)
 #define IS_SPI2APB_INSTANCE(instance) ((instance) == SPI2APB)
+#define IS_OTPC_INSTANCE(instance) ((instance) == OTPC)
 #define IS_GPIO1_IOC_INSTANCE(instance) ((instance) == GPIO1_IOC)
 #define IS_GPIO2_IOC_INSTANCE(instance) ((instance) == GPIO2_IOC)
 #define IS_RM2_IO_INSTANCE(instance) ((instance) == RM2_IO)
@@ -15195,6 +15224,115 @@ struct IIR_ACC_REG {
 #define SPI2APB_QUICK_REG2_OFFSET                          (0x58U)
 #define SPI2APB_QUICK_REG2_QRV_SHIFT                       (0U)
 #define SPI2APB_QUICK_REG2_QRV_MASK                        (0xFFFFFFFFU << SPI2APB_QUICK_REG2_QRV_SHIFT)                /* 0xFFFFFFFF */
+/******************************************OTPC******************************************/
+/* SBPI_CTRL */
+#define OTPC_SBPI_CTRL_OFFSET                              (0x20U)
+#define OTPC_SBPI_CTRL_SBPI_ENABLE_SHIFT                   (0U)
+#define OTPC_SBPI_CTRL_SBPI_ENABLE_MASK                    (0x1U << OTPC_SBPI_CTRL_SBPI_ENABLE_SHIFT)                   /* 0x00000001 */
+#define OTPC_SBPI_CTRL_SBPI_SP_SHIFT                       (1U)
+#define OTPC_SBPI_CTRL_SBPI_SP_MASK                        (0x1U << OTPC_SBPI_CTRL_SBPI_SP_SHIFT)                       /* 0x00000002 */
+#define OTPC_SBPI_CTRL_SBPI_CS_AUTO_SHIFT                  (2U)
+#define OTPC_SBPI_CTRL_SBPI_CS_AUTO_MASK                   (0x1U << OTPC_SBPI_CTRL_SBPI_CS_AUTO_SHIFT)                  /* 0x00000004 */
+#define OTPC_SBPI_CTRL_SBPI_CS_DEASSERT_SHIFT              (3U)
+#define OTPC_SBPI_CTRL_SBPI_CS_DEASSERT_MASK               (0x1U << OTPC_SBPI_CTRL_SBPI_CS_DEASSERT_SHIFT)              /* 0x00000008 */
+#define OTPC_SBPI_CTRL_SBPI_DEVICE_ID_SHIFT                (8U)
+#define OTPC_SBPI_CTRL_SBPI_DEVICE_ID_MASK                 (0xFFU << OTPC_SBPI_CTRL_SBPI_DEVICE_ID_SHIFT)               /* 0x0000FF00 */
+/* SBPI_CMD_VALID_PRELOAD */
+#define OTPC_SBPI_CMD_VALID_PRELOAD_OFFSET                 (0x24U)
+#define OTPC_SBPI_CMD_VALID_PRELOAD_OTPC_SBPI_CMD_VALID_PRELOAD_SHIFT (0U)
+#define OTPC_SBPI_CMD_VALID_PRELOAD_OTPC_SBPI_CMD_VALID_PRELOAD_MASK (0xFFFFU << OTPC_SBPI_CMD_VALID_PRELOAD_OTPC_SBPI_CMD_VALID_PRELOAD_SHIFT) /* 0x0000FFFF */
+/* SBPI_CS_VALID_PRELOAD */
+#define OTPC_SBPI_CS_VALID_PRELOAD_OFFSET                  (0x28U)
+#define OTPC_SBPI_CS_VALID_PRELOAD_OTPC_SBPI_CS_VALID_PRELOAD_SHIFT (0U)
+#define OTPC_SBPI_CS_VALID_PRELOAD_OTPC_SBPI_CS_VALID_PRELOAD_MASK (0xFFFFU << OTPC_SBPI_CS_VALID_PRELOAD_OTPC_SBPI_CS_VALID_PRELOAD_SHIFT) /* 0x0000FFFF */
+/* SBPI_STATUS */
+#define OTPC_SBPI_STATUS_OFFSET                            (0x2CU)
+#define OTPC_SBPI_STATUS                                   (0x0U)
+#define OTPC_SBPI_STATUS_SBPI_BUSY_SHIFT                   (0U)
+#define OTPC_SBPI_STATUS_SBPI_BUSY_MASK                    (0x1U << OTPC_SBPI_STATUS_SBPI_BUSY_SHIFT)                   /* 0x00000001 */
+#define OTPC_SBPI_STATUS_SBPI_CURRENT_STATE_SHIFT          (1U)
+#define OTPC_SBPI_STATUS_SBPI_CURRENT_STATE_MASK           (0x7U << OTPC_SBPI_STATUS_SBPI_CURRENT_STATE_SHIFT)          /* 0x0000000E */
+#define OTPC_SBPI_STATUS_FLAG_SHIFT                        (4U)
+#define OTPC_SBPI_STATUS_FLAG_MASK                         (0x1U << OTPC_SBPI_STATUS_FLAG_SHIFT)                        /* 0x00000010 */
+#define OTPC_SBPI_STATUS_MISO_SHIFT                        (5U)
+#define OTPC_SBPI_STATUS_MISO_MASK                         (0xFFU << OTPC_SBPI_STATUS_MISO_SHIFT)                       /* 0x00001FE0 */
+#define OTPC_SBPI_STATUS_MOSI_SHIFT                        (13U)
+#define OTPC_SBPI_STATUS_MOSI_MASK                         (0xFFU << OTPC_SBPI_STATUS_MOSI_SHIFT)                       /* 0x001FE000 */
+#define OTPC_SBPI_STATUS_CS_SHIFT                          (21U)
+#define OTPC_SBPI_STATUS_CS_MASK                           (0x1U << OTPC_SBPI_STATUS_CS_SHIFT)                          /* 0x00200000 */
+#define OTPC_SBPI_STATUS_SP_SHIFT                          (22U)
+#define OTPC_SBPI_STATUS_SP_MASK                           (0x1U << OTPC_SBPI_STATUS_SP_SHIFT)                          /* 0x00400000 */
+/* USER_CTRL */
+#define OTPC_USER_CTRL_OFFSET                              (0x100U)
+#define OTPC_USER_CTRL_USER_DCTRL_SHIFT                    (0U)
+#define OTPC_USER_CTRL_USER_DCTRL_MASK                     (0x1U << OTPC_USER_CTRL_USER_DCTRL_SHIFT)                    /* 0x00000001 */
+#define OTPC_USER_CTRL_USER_PD_SHIFT                       (1U)
+#define OTPC_USER_CTRL_USER_PD_MASK                        (0x1U << OTPC_USER_CTRL_USER_PD_SHIFT)                       /* 0x00000002 */
+/* USER_ADDR */
+#define OTPC_USER_ADDR_OFFSET                              (0x104U)
+#define OTPC_USER_ADDR_OTPC_USER_ADDR_SHIFT                (0U)
+#define OTPC_USER_ADDR_OTPC_USER_ADDR_MASK                 (0xFFFFU << OTPC_USER_ADDR_OTPC_USER_ADDR_SHIFT)             /* 0x0000FFFF */
+/* USER_ENABLE */
+#define OTPC_USER_ENABLE_OFFSET                            (0x108U)
+#define OTPC_USER_ENABLE_OTPC_USER_ENABLE_SHIFT            (0U)
+#define OTPC_USER_ENABLE_OTPC_USER_ENABLE_MASK             (0x1U << OTPC_USER_ENABLE_OTPC_USER_ENABLE_SHIFT)            /* 0x00000001 */
+/* USER_STATUS */
+#define OTPC_USER_STATUS_OFFSET                            (0x110U)
+#define OTPC_USER_STATUS                                   (0x0U)
+#define OTPC_USER_STATUS_USER_BUSY_SHIFT                   (0U)
+#define OTPC_USER_STATUS_USER_BUSY_MASK                    (0x1U << OTPC_USER_STATUS_USER_BUSY_SHIFT)                   /* 0x00000001 */
+#define OTPC_USER_STATUS_USER_CURRENT_STATE_SHIFT          (1U)
+#define OTPC_USER_STATUS_USER_CURRENT_STATE_MASK           (0x7U << OTPC_USER_STATUS_USER_CURRENT_STATE_SHIFT)          /* 0x0000000E */
+#define OTPC_USER_STATUS_SEL_SHIFT                         (4U)
+#define OTPC_USER_STATUS_SEL_MASK                          (0x1U << OTPC_USER_STATUS_SEL_SHIFT)                         /* 0x00000010 */
+#define OTPC_USER_STATUS_PD_SHIFT                          (6U)
+#define OTPC_USER_STATUS_PD_MASK                           (0x1U << OTPC_USER_STATUS_PD_SHIFT)                          /* 0x00000040 */
+#define OTPC_USER_STATUS_A_SHIFT                           (7U)
+#define OTPC_USER_STATUS_A_MASK                            (0xFFFFU << OTPC_USER_STATUS_A_SHIFT)                        /* 0x007FFF80 */
+#define OTPC_USER_STATUS_DCTRL_SHIFT                       (23U)
+#define OTPC_USER_STATUS_DCTRL_MASK                        (0x1U << OTPC_USER_STATUS_DCTRL_SHIFT)                       /* 0x00800000 */
+/* USER_QP */
+#define OTPC_USER_QP_OFFSET                                (0x120U)
+#define OTPC_USER_QP_QP_SHIFT                              (0U)
+#define OTPC_USER_QP_QP_MASK                               (0xFFU << OTPC_USER_QP_QP_SHIFT)                             /* 0x000000FF */
+/* USER_Q */
+#define OTPC_USER_Q_OFFSET                                 (0x124U)
+#define OTPC_USER_Q_Q_SHIFT                                (0U)
+#define OTPC_USER_Q_Q_MASK                                 (0xFFFFU << OTPC_USER_Q_Q_SHIFT)                             /* 0x0000FFFF */
+/* USER_QSR */
+#define OTPC_USER_QSR_OFFSET                               (0x128U)
+#define OTPC_USER_QSR_QSR_SHIFT                            (0U)
+#define OTPC_USER_QSR_QSR_MASK                             (0xFFFFFFU << OTPC_USER_QSR_QSR_SHIFT)                       /* 0x00FFFFFF */
+/* USER_QRR */
+#define OTPC_USER_QRR_OFFSET                               (0x12CU)
+#define OTPC_USER_QRR_QRR_SHIFT                            (0U)
+#define OTPC_USER_QRR_QRR_MASK                             (0xFFFFFFU << OTPC_USER_QRR_QRR_SHIFT)                       /* 0x00FFFFFF */
+/* INT_CON */
+#define OTPC_INT_CON_OFFSET                                (0x300U)
+#define OTPC_INT_CON_SBPI_FLAG_DETECT_INT_ENABLE_SHIFT     (0U)
+#define OTPC_INT_CON_SBPI_FLAG_DETECT_INT_ENABLE_MASK      (0x1U << OTPC_INT_CON_SBPI_FLAG_DETECT_INT_ENABLE_SHIFT)     /* 0x00000001 */
+#define OTPC_INT_CON_SBPI_DONE_INT_ENABLE_SHIFT            (1U)
+#define OTPC_INT_CON_SBPI_DONE_INT_ENABLE_MASK             (0x1U << OTPC_INT_CON_SBPI_DONE_INT_ENABLE_SHIFT)            /* 0x00000002 */
+#define OTPC_INT_CON_USER_DONE_INT_ENABLE_SHIFT            (2U)
+#define OTPC_INT_CON_USER_DONE_INT_ENABLE_MASK             (0x1U << OTPC_INT_CON_USER_DONE_INT_ENABLE_SHIFT)            /* 0x00000004 */
+#define OTPC_INT_CON_OTPC_GLOBAL_INT_ENABLE_SHIFT          (15U)
+#define OTPC_INT_CON_OTPC_GLOBAL_INT_ENABLE_MASK           (0x1U << OTPC_INT_CON_OTPC_GLOBAL_INT_ENABLE_SHIFT)          /* 0x00008000 */
+/* INT_STATUS */
+#define OTPC_INT_STATUS_OFFSET                             (0x304U)
+#define OTPC_INT_STATUS_SBPI_FLAG_DETECT_INT_STATUS_SHIFT  (0U)
+#define OTPC_INT_STATUS_SBPI_FLAG_DETECT_INT_STATUS_MASK   (0x1U << OTPC_INT_STATUS_SBPI_FLAG_DETECT_INT_STATUS_SHIFT)  /* 0x00000001 */
+#define OTPC_INT_STATUS_SBPI_DONE_INT_STATUS_SHIFT         (1U)
+#define OTPC_INT_STATUS_SBPI_DONE_INT_STATUS_MASK          (0x1U << OTPC_INT_STATUS_SBPI_DONE_INT_STATUS_SHIFT)         /* 0x00000002 */
+#define OTPC_INT_STATUS_USER_DONE_INT_STATUS_SHIFT         (2U)
+#define OTPC_INT_STATUS_USER_DONE_INT_STATUS_MASK          (0x1U << OTPC_INT_STATUS_USER_DONE_INT_STATUS_SHIFT)         /* 0x00000004 */
+/* SBPI_CMD_BASE */
+#define OTPC_SBPI_CMD_BASE_OFFSET                          (0x1000U)
+#define OTPC_SBPI_CMD_BASE_COMMAND_VALUE_SHIFT             (0U)
+#define OTPC_SBPI_CMD_BASE_COMMAND_VALUE_MASK              (0xFFU << OTPC_SBPI_CMD_BASE_COMMAND_VALUE_SHIFT)            /* 0x000000FF */
+/* SBPI_READ_DATA_BASE */
+#define OTPC_SBPI_READ_DATA_BASE_OFFSET                    (0x2000U)
+#define OTPC_SBPI_READ_DATA_BASE_SBPI_READ_DATA_SHIFT      (0U)
+#define OTPC_SBPI_READ_DATA_BASE_SBPI_READ_DATA_MASK       (0xFFU << OTPC_SBPI_READ_DATA_BASE_SBPI_READ_DATA_SHIFT)     /* 0x000000FF */
 /*****************************************SARADC*****************************************/
 /* CONV_CON */
 #define SARADC_CONV_CON_OFFSET                             (0x0U)
