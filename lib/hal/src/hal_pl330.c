@@ -1181,7 +1181,17 @@ static uint32_t PL330_ToBurstSizeBits(uint32_t burstSize)
  */
 static uint32_t _Prepare_CCR(struct PL330_REQCFG *rqc)
 {
+    uint32_t brstLen = rqc->brstLen;
+    uint32_t brstLenN;
     uint32_t ccr = 0;
+
+    if (brstLen > PL330_MAX_BURST) {
+        brstLenN = HAL_DIV_ROUND_UP(brstLen, PL330_MAX_BURST);
+        brstLen = brstLen / brstLenN;
+
+        rqc->brstLen = brstLen;
+        rqc->brstLenN = brstLenN;
+    }
 
     if (rqc->srcInc) {
         ccr |= CC_SRCINC;
@@ -1336,16 +1346,6 @@ static int PL330_BuildDmaProg(uint8_t dryRun, struct HAL_PL330_DEV *pl330,
     char *buf = (char *)pxs->desc->mcBuf;
     struct PL330_XFER *x;
     struct PL330_CHAN *pchan = &pl330->chans[channel];
-    uint32_t brstLen = pxs->desc->rqcfg.brstLen;
-    uint32_t brstLenN;
-
-    if (brstLen > PL330_MAX_BURST) {
-        brstLenN = HAL_DIV_ROUND_UP(brstLen, PL330_MAX_BURST);
-        brstLen = brstLen / brstLenN;
-
-        pxs->desc->rqcfg.brstLen = brstLen;
-        pxs->desc->rqcfg.brstLenN = brstLenN;
-    }
 
     /* DMAMOV CCR, ccr */
     *off += PL330_Instr_DMAMOV(dryRun, &buf[*off], CCR, pxs->ccr);
