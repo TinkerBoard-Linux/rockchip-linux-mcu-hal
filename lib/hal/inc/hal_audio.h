@@ -194,7 +194,8 @@ typedef enum {
  * enum eASRC_mode - ASRC modes
  */
 typedef enum {
-    ASRC_REAL_TIME_M2M_MODE = 0,
+    ASRC_REAL_TIME_INV_MODE = 0,
+    ASRC_REAL_TIME_M2M_MODE,
     ASRC_REAL_TIME_S2M_MODE,
     ASRC_REAL_TIME_M2D_MODE,
     ASRC_REAL_TIME_S2D_MODE,
