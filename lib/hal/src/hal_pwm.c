@@ -1090,7 +1090,7 @@ HAL_Status HAL_PWM_SetWaveTable(struct PWM_HANDLE *pPWM, uint8_t channel, struct
 
     pPWM->scaler = HAL_DivU64(pPWM->freq, clkRate * 2);
     if (pPWM->scaler > 256) {
-        HAL_DBG_ERR("unsupported scale factor %d(max: 512) for for channel%d\n", pPWM->scaler * 2, channel);
+        HAL_DBG_ERR("unsupported scale factor %ld(max: 512) for for channel%d\n", pPWM->scaler * 2, channel);
 
         return HAL_INVAL;
     }
