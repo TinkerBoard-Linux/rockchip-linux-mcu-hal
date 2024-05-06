@@ -305,7 +305,9 @@ __STATIC_INLINE int PL330_Instr_DMAADDH(uint8_t dryRun, char *buf,
 
     *buf = CMD_DMAADDH;
     *buf |= (da << 1);
-    *((uint16_t *)(buf + 1)) = val;
+
+    *(buf + 1) = val;
+    *(buf + 2) = val >> 8;
 
     PL330_DBGCMD_DUMP(buf, "\tDMAADDH %s %u\n",
                       da == DST ? "DA" : "SA", val);
