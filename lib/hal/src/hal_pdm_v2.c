@@ -69,6 +69,9 @@
 #define PDM_FIFO_CTRL_RDE_DIS    (0x0U << PDM_FIFO_CTRL_RDE_SHIFT)
 #define PDM_FIFO_CTRL_DMA_RDL(x) ((x - 1) << PDM_FIFO_CTRL_RDL_SHIFT)
 
+/* GAIN_CTRL */
+#define PDM_GAIN_24dB 239
+
 /********************* Private Structure Definition **************************/
 /********************* Private Variable Definition ***************************/
 /********************* Private Function Definition ***************************/
@@ -195,7 +198,21 @@ HAL_Status HAL_PDM_Resume(struct HAL_PDM_DEV *pdm)
  */
 HAL_Status HAL_PDM_Init(struct HAL_PDM_DEV *pdm, struct AUDIO_INIT_CONFIG *config)
 {
+    struct PDM_REG *reg = pdm->pReg;
+
+    HAL_ASSERT(IS_PDM_INSTANCE(reg));
     pdm->mode = config->pdmMode;
+
+    /* Set the default gain 24dB, this parameter can get better
+     * performance if the voice energy is lower. In other words this
+      * can improve PDM IP SNR.
+     *
+     * So the applicable range of this is for sound intensity below 100dB.
+     * If you want to record stronger sound intensity, you must set
+     * PDM gain register but not soft gain-controler.
+     */
+    MODIFY_REG(reg->GAIN_CTRL, PDM_GAIN_CTRL_GAIN_CTRL_MASK,
+               PDM_GAIN_24dB << PDM_GAIN_CTRL_GAIN_CTRL_SHIFT);
 
     return HAL_OK;
 }
