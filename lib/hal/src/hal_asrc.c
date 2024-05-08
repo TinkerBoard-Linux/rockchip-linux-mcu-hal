@@ -136,7 +136,7 @@ static HAL_Status HAL_ASRC_RefineLrckDiv(struct HAL_ASRC_DEV *asrc, struct ASRC_
         return HAL_OK;
     }
 
-    if (params->sampleRate % 8000 == 0) {
+    if (params->sampleRate % 8000 == 0 || params->sampleRate % 12000 == 0) {
         mclkReqRate = 49152000;
     } else if (params->sampleRate % 11025 == 0) {
         mclkReqRate = 45158400;
