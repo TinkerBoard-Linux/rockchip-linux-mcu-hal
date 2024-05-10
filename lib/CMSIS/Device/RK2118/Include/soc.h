@@ -756,10 +756,17 @@ typedef enum CLOCK_Name {
 } eCLOCK_Name;
 
 /******************************************RMIO******************************************/
-/** @defgroup eRMIO_Name RMIO Function Definition
+/** @addtogroup RK_HAL_Driver
  *  @{
  */
-typedef enum RMIO_Name {
+/** @addtogroup PINCTRL
+ *  @{
+ */
+/** @addtogroup PINCTRL_Exported_Definition_Group1
+ *  @{
+ */
+/** RMIO Function Definition */
+typedef enum {
     RMIO_NO_FUNCTION = 0,
     /* RM0_IO GPIO0A0~0B2 */
     RMIO_I2C0_SCL = 1,
@@ -920,6 +927,8 @@ typedef enum RMIO_Name {
     RMIO_SAI4_LRCKXN_0 = 35,
     RMIO_SAI4_LRCKXN_1 = 36,
 } eRMIO_Name;
+/** @} */
+/** @} */
 /** @} */
 
 typedef enum PD_Id {
