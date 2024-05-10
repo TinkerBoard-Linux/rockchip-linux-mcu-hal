@@ -135,6 +135,8 @@
 #define CLEAR_IN_EP_INTR(__EPNUM__, __INTERRUPT__)        (USB_INEP(__EPNUM__)->DIEPINT = (__INTERRUPT__))
 #define CLEAR_OUT_EP_INTR(__EPNUM__, __INTERRUPT__)       (USB_OUTEP(__EPNUM__)->DOEPINT = (__INTERRUPT__))
 
+#define DWC2_USB_DMA_ALIGN 4
+
 /***************************** Structure Definition **************************/
 /** OTG Mode definition */
 typedef enum {

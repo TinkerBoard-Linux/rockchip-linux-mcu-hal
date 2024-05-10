@@ -815,6 +815,10 @@ HAL_Status HAL_PCD_EPReceive(struct PCD_HANDLE *pPCD, uint8_t epAddr, uint8_t *p
 
     if (pPCD->cfg.dmaEnable == 1) {
         pEP->dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pBuf);
+
+        if ((uint32_t)pEP->dmaAddr & (DWC2_USB_DMA_ALIGN - 1)) {
+            HAL_SYSLOG("%s: Non-aligned addr 0x%08lx for USB DWC2!\n", __func__, pEP->dmaAddr);
+        }
     }
 
     if ((epAddr & 0x7F) == 0) {
@@ -861,6 +865,10 @@ HAL_Status HAL_PCD_EPTransmit(struct PCD_HANDLE *pPCD, uint8_t epAddr,
 
     if (pPCD->cfg.dmaEnable == 1) {
         pEP->dmaAddr = HAL_CpuAddrToDmaAddr((uint32_t)pBuf);
+
+        if ((uint32_t)pEP->dmaAddr & (DWC2_USB_DMA_ALIGN - 1)) {
+            HAL_SYSLOG("%s: Non-aligned addr 0x%08lx for USB DWC2!\n", __func__, pEP->dmaAddr);
+        }
     }
 
     if ((epAddr & 0x7F) == 0) {
