@@ -1554,11 +1554,9 @@ struct GMAC_REG {
     __IO uint32_t MAC_SYSTEM_TIME_NS;                 /* Address Offset: 0x0B0C */
     __IO uint32_t MAC_SYS_TIME_SECS_UPDATE;           /* Address Offset: 0x0B10 */
     __IO uint32_t MAC_SYS_TIME_NS_UPDATE;             /* Address Offset: 0x0B14 */
-         uint32_t RESERVED0B18[2];                    /* Address Offset: 0x0B18 */
-    union {
-        __IO uint32_t MAC_TIMESTAMP_ADDEND;               /* Address Offset: 0x0B20 */
-        __I  uint32_t MAC_TIMESTAMP_STATUS;               /* Address Offset: 0x0B20 */
-    };
+    __IO uint32_t MAC_TIMESTAMP_ADDEND;               /* Address Offset: 0x0B18 */
+    uint32_t RESERVED0B1C;                            /* Address Offset: 0x0B1C */
+    __I  uint32_t MAC_TIMESTAMP_STATUS;               /* Address Offset: 0x0B20 */
          uint32_t RESERVED0B24[3];                    /* Address Offset: 0x0B24 */
     __I  uint32_t MAC_TX_TS_STATUS_NS;                /* Address Offset: 0x0B30 */
     __I  uint32_t MAC_TX_TS_STATUS_SECS;              /* Address Offset: 0x0B34 */
@@ -14688,7 +14686,7 @@ struct IIR_ACC_REG {
 #define GMAC_MAC_SYS_TIME_NS_UPDATE_ADDSUB_SHIFT           (31U)
 #define GMAC_MAC_SYS_TIME_NS_UPDATE_ADDSUB_MASK            (0x1U << GMAC_MAC_SYS_TIME_NS_UPDATE_ADDSUB_SHIFT)           /* 0x80000000 */
 /* MAC_TIMESTAMP_ADDEND */
-#define GMAC_MAC_TIMESTAMP_ADDEND_OFFSET                   (0xB20U)
+#define GMAC_MAC_TIMESTAMP_ADDEND_OFFSET                   (0xB18U)
 #define GMAC_MAC_TIMESTAMP_ADDEND_TSAR_SHIFT               (0U)
 #define GMAC_MAC_TIMESTAMP_ADDEND_TSAR_MASK                (0xFFFFFFFFU << GMAC_MAC_TIMESTAMP_ADDEND_TSAR_SHIFT)        /* 0xFFFFFFFF */
 /* MAC_TIMESTAMP_STATUS */
