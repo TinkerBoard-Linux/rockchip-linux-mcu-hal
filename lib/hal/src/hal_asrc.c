@@ -415,22 +415,28 @@ HAL_Status HAL_ASRC_Init(struct HAL_ASRC_DEV *asrc, struct AUDIO_INIT_CONFIG *co
 
     mask = ASRC_CON_MODE_MASK | ASRC_CON_REAL_TIME_MODE_MASK;
 
-    switch (config->asrcMode) {
-    case ASRC_REAL_TIME_M2M_MODE:
-        val = ASRC_M2M | ASRC_REAL_TIME;
-        break;
-    case ASRC_REAL_TIME_S2M_MODE:
-        val = ASRC_S2M | ASRC_REAL_TIME;
-        break;
-    case ASRC_REAL_TIME_M2D_MODE:
-        val = ASRC_M2D | ASRC_REAL_TIME;
-        break;
-    case ASRC_REAL_TIME_S2D_MODE:
-        val = ASRC_S2D | ASRC_REAL_TIME;
-        break;
-    default:
+    if (config->asrcMode == ASRC_FILE_MODE) {
+        val |= ASRC_MEMORY_FETCH;
+        MODIFY_REG(asrc->pReg->FETCH_LEN,
+                   ASRC_FETCH_LEN_FETCH_LENGTH_MASK, asrc->fetchLength);
+    } else {
+        switch (config->asrcMode) {
+        case ASRC_REAL_TIME_M2M_MODE:
+            val = ASRC_M2M | ASRC_REAL_TIME;
+            break;
+        case ASRC_REAL_TIME_S2M_MODE:
+            val = ASRC_S2M | ASRC_REAL_TIME;
+            break;
+        case ASRC_REAL_TIME_M2D_MODE:
+            val = ASRC_M2D | ASRC_REAL_TIME;
+            break;
+        case ASRC_REAL_TIME_S2D_MODE:
+            val = ASRC_S2D | ASRC_REAL_TIME;
+            break;
+        default:
 
-        return HAL_INVAL;
+            return HAL_INVAL;
+        }
     }
 
     MODIFY_REG(asrc->pReg->CON, mask, val);
