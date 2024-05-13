@@ -446,12 +446,16 @@ HAL_Status HAL_ASRC_Init(struct HAL_ASRC_DEV *asrc, struct AUDIO_INIT_CONFIG *co
     mask = ASRC_DMA_THRESH_DMA_TX_THRESH_MASK |
            ASRC_DMA_THRESH_DMA_RX_THRESH_MASK |
            ASRC_DMA_THRESH_ASRC_IN_THRESH_MASK |
-           ASRC_DMA_THRESH_ASRC_OUT_THRESH_MASK;
+           ASRC_DMA_THRESH_ASRC_OUT_THRESH_MASK |
+           ASRC_DMA_THRESH_ASRC_NEG_THRESH_MASK |
+           ASRC_DMA_THRESH_ASRC_POS_THRESH_MASK;
 
-    val = ASRC_DMA_TX_THRESH(3) |
-          ASRC_DMA_RX_THRESH(3) |
-          ASRC_IN_THRESH(3) |
-          ASRC_OUT_THRESH(12);
+    val = ASRC_DMA_TX_THRESH(0x3) |
+          ASRC_DMA_RX_THRESH(0x3) |
+          ASRC_IN_THRESH(0x3) |
+          ASRC_OUT_THRESH(0x10) |
+          ASRC_NEG_THRESH(0x10) |
+          ASRC_POS_THRESH(0x2f);
 
     MODIFY_REG(asrc->pReg->DMA_THRESH, mask, val);
 
