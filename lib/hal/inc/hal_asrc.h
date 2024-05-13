@@ -80,6 +80,7 @@ struct HAL_ASRC_DEV {
     eCLOCK_Name lrckTX;
     eASRC_seriesMode series;
     eASRC_mode mode;
+    IRQn_Type irqNum;
     uint32_t fetchLength;
     uint32_t spinLockId;
     uint32_t mclkGate;
