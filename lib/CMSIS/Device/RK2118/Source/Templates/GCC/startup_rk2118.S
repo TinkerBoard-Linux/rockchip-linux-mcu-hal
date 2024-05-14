@@ -68,6 +68,8 @@ Reset_Handler:
                 msr      msplim, r0
                 msr      psplim, r0
 
+                bl       CacheInit
+
                 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
                 ldr      r0, =__STACK_SEAL
                 ldr      r1, =0xFEF5EDA5U
@@ -116,9 +118,7 @@ Reset_Handler:
                 adds     r3, #8
                 b        .L_loop2
 .L_loop2_done:
-
                 bl       SystemInit
-                bl       CacheInit
                 bl       _start
 
                 .fnend

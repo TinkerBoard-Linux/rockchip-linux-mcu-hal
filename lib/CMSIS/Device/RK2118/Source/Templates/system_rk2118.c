@@ -31,12 +31,12 @@ uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
 
 void CacheInit(void)
 {
-#if defined(HAL_DCACHE_MODULE_ENABLED)
-    SCB_EnableDCache();
-#endif
-
 #if defined(HAL_ICACHE_MODULE_ENABLED)
     SCB_EnableICache();
+#endif
+
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+    SCB_EnableDCache();
 #endif
 }
 
@@ -57,6 +57,10 @@ void SystemCoreClockUpdate(void)
  *----------------------------------------------------------------------------*/
 void SystemInit(void)
 {
+#if defined(HAL_DCACHE_MODULE_ENABLED)
+    SCB_CleanDCache();
+#endif
+
     if (GRF_PMU->OS_REG8 == 3)
         g_oscRate = 24576000;
 
