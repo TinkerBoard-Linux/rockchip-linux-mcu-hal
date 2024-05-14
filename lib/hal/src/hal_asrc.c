@@ -77,6 +77,8 @@
 #define ASRC_DATA_FMT_IFMT_32 (0x0 << ASRC_DATA_FMT_IFMT_SHIFT)
 #define ASRC_DATA_FMT_OFMT_16 (0x1 << ASRC_DATA_FMT_OFMT_SHIFT)
 #define ASRC_DATA_FMT_OFMT_32 (0x0 << ASRC_DATA_FMT_OFMT_SHIFT)
+#define ASRC_DATA_FMT_ISJM(x) ((x) << ASRC_DATA_FMT_ISJM_SHIFT)
+#define ASRC_DATA_FMT_OSJM(x) ((x) << ASRC_DATA_FMT_OSJM_SHIFT)
 
 /* DMA_THRESH */
 #define ASRC_DMA_TX_THRESH(x) (x << ASRC_DMA_THRESH_DMA_TX_THRESH_SHIFT)
@@ -559,20 +561,33 @@ HAL_Status HAL_ASRC_Config(struct HAL_ASRC_DEV *asrc, struct ASRC_PARAMS *rxPara
     MODIFY_REG(asrc->pReg->CON, ASRC_CON_CHAN_NUM_MASK, ASRC_CHAN_NUM(asrc->channels));
 
     switch (rxParams->sampleBits) {
+    case 32:
+        val = ASRC_DATA_FMT_OSJM(8) | ASRC_DATA_FMT_ISJM(8) |
+              ASRC_OWL_24BIT | ASRC_IWL_24BIT |
+              ASRC_DATA_FMT_OFMT_32 | ASRC_DATA_FMT_IFMT_32;
+        break;
     case 24:
-        val = ASRC_OWL_24BIT | ASRC_IWL_24BIT |
+        val = ASRC_DATA_FMT_OSJM(0) | ASRC_DATA_FMT_ISJM(0) |
+              ASRC_OWL_24BIT | ASRC_IWL_24BIT |
               ASRC_DATA_FMT_OFMT_32 | ASRC_DATA_FMT_IFMT_32;
         break;
     case 16:
-        val = ASRC_IWL_16BIT | ASRC_OWL_16BIT |
+        val = ASRC_DATA_FMT_OSJM(0) | ASRC_DATA_FMT_ISJM(0) |
+              ASRC_IWL_16BIT | ASRC_OWL_16BIT |
               ASRC_DATA_FMT_IFMT_16 | ASRC_DATA_FMT_OFMT_16;
         break;
     default:
 
+        HAL_DBG_ERR("asrc-%p: %s: Invalid samplebits: %d\n",
+                    asrc->pReg, __func__, rxParams->sampleBits);
+
         return HAL_INVAL;
     }
 
-    MODIFY_REG(asrc->pReg->DATA_FMT, ASRC_DATA_FMT_IWL_MASK | ASRC_DATA_FMT_OWL_MASK, val);
+    MODIFY_REG(asrc->pReg->DATA_FMT,
+               ASRC_DATA_FMT_OSJM_MASK | ASRC_DATA_FMT_ISJM_MASK |
+               ASRC_DATA_FMT_IWL_MASK | ASRC_DATA_FMT_OWL_MASK,
+               val);
 
     return HAL_OK;
 }
