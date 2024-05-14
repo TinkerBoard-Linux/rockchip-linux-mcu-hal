@@ -1194,6 +1194,10 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
         nor->eraseOpcodeBlk = nor->opcode->eraseBlk;
         nor->wrenOpcode = nor->opcode->wren;
         nor->rdsrOpcode = nor->opcode->rdsr;
+        if (((info->extention & EXT_DTR_OPCODE_MASK) >> EXT_DTR_OPCODE_SHIFT) == 0x1) {
+            nor->swap = true;
+        }
+
         /* Clear the Quad SPI attribute to simplify logic  */
         spiMode &= ~(HAL_SPI_TX_QUAD | HAL_SPI_RX_QUAD);
         SNOR_WaitBusy(nor, 1000);
@@ -1271,10 +1275,6 @@ HAL_Status HAL_SNOR_Init(struct SPI_NOR *nor)
             nor->readOpcode = SPINOR_OP_READ_EC;
             nor->programOpcode = SPINOR_OP_PP;
             nor->qpi = true;
-        }
-
-        if (((info->extention & EXT_DTR_OPCODE_MASK) >> EXT_DTR_OPCODE_SHIFT) == 0x1) {
-            nor->swap = true;
         }
 
         /*
