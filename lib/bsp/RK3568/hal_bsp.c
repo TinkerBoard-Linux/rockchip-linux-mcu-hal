@@ -330,6 +330,10 @@ const struct HAL_GMAC_DEV g_gmac0Dev =
     .clkGateID50M = CLK_MAC0_2TOP_GATE,
     .pclkID = PCLK_PHP,
     .pclkGateID = PCLK_GMAC0_GATE,
+#ifdef HAL_GMAC_PTP_FEATURE_ENABLED
+    .ptpClkID = CLK_GMAC0_PTP_REF,
+    .ptpClkGateID = CLK_GMAC0_PTP_REF_GATE,
+#endif
     .irqNum = GMAC0_IRQn,
 };
 
@@ -342,6 +346,10 @@ const struct HAL_GMAC_DEV g_gmac1Dev =
     .clkGateID50M = CLK_MAC1_2TOP_GATE,
     .pclkID = PCLK_USB,
     .pclkGateID = PCLK_GMAC1_GATE,
+#ifdef HAL_GMAC_PTP_FEATURE_ENABLED
+    .ptpClkID = CLK_GMAC1_PTP_REF,
+    .ptpClkGateID = CLK_GMAC1_PTP_REF_GATE,
+#endif
     .irqNum = GMAC1_IRQn,
 };
 #endif
