@@ -1710,7 +1710,7 @@ HAL_Status HAL_PL330_Start(struct PL330_CHAN *pchan)
     /* enable the interrupt */
     SET_BIT(reg->INTEN, 0x01 << channel);
 
-    mcBufDmaAddr = (uint32_t)pchan->mcBuf;
+    mcBufDmaAddr = (uintptr_t)pchan->mcBuf;
 
     if (pchan->toDmaAddrFunc) {
         mcBufDmaAddr = pchan->toDmaAddrFunc(mcBufDmaAddr);
