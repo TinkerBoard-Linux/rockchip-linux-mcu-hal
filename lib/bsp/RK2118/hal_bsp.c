@@ -298,6 +298,10 @@ const struct HAL_GMAC_DEV g_gmac0Dev =
     .clkGateID50M = CLK_MAC_ROOT_GATE,
     .pclkID = ACLK_HSPERI,
     .pclkGateID = PCLK_MAC_GATE,
+#ifdef HAL_GMAC_PTP_FEATURE_ENABLED
+    .ptpClkID = CLK_MAC_PTP_ROOT,
+    .ptpClkGateID = CLK_MAC_PTP_ROOT_GATE,
+#endif
     .irqNum = MAC_SBD_IRQn,
 };
 #endif
