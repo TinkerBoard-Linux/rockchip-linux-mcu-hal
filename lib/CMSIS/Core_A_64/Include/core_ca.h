@@ -14,6 +14,23 @@ extern "C" {
 
 #include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
 
+/* ##########################  MMU functions  ###################################### */
+
+/* Region type attributes */
+typedef enum
+{
+   NORMAL,
+   SHARED_NORMAL,
+   UNCACHE_NORMAL,
+   DEVICE,
+} mmu_memory_Type;
+
+void MMU_Enable(void);
+void MMU_Disable(void);
+// ttb must be 4KB align
+void MMU_InitTable(uint64_t *ttb);
+void MMU_Map(uint64_t *ttb, uint64_t base_address, uint64_t bytes_count, mmu_memory_Type type);
+
 /* ##########################  Cache functions  ###################################### */
 #define SCTLR_I_Pos 12U                                                         /*!< \brief SCTLR: I Position */
 #define SCTLR_I_Msk (1UL << SCTLR_I_Pos)                                        /*!< \brief SCTLR: I Mask */

@@ -62,6 +62,7 @@ INCLUDES += \
 
 SRC_DIRS += \
     ../src \
+    $(ROOT_PATH)/lib/CMSIS/Core_A_64/Source \
     $(ROOT_PATH)/lib/CMSIS/Device/$(SOC)/Source/Templates/GCC \
 
 export HAL_PATH := $(ROOT_PATH)
