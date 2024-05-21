@@ -768,6 +768,41 @@ struct SAI_REG {
          uint32_t RESERVED006C;                       /* Address Offset: 0x006C */
     __I  uint32_t VERSION;                            /* Address Offset: 0x0070 */
 };
+/* ACDCDIG_DSM Register Structure Define */
+struct ACDCDIG_DSM_REG {
+    __IO uint32_t VUCTL;                              /* Address Offset: 0x0000 */
+    __IO uint32_t VUCTIME;                            /* Address Offset: 0x0004 */
+    __IO uint32_t DIGEN;                              /* Address Offset: 0x0008 */
+    __IO uint32_t CLKCTRL;                            /* Address Offset: 0x000C */
+         uint32_t RESERVED0010;                       /* Address Offset: 0x0010 */
+    __IO uint32_t INTMOD_DIV;                         /* Address Offset: 0x0014 */
+         uint32_t RESERVED0018[2];                    /* Address Offset: 0x0018 */
+    __IO uint32_t INTSCLK_DIV;                        /* Address Offset: 0x0020 */
+    __IO uint32_t DIV;                                /* Address Offset: 0x0024 */
+    __IO uint32_t CTRL;                               /* Address Offset: 0x0028 */
+         uint32_t RESERVED002C[6];                    /* Address Offset: 0x002C */
+    __IO uint32_t CFG1;                               /* Address Offset: 0x0044 */
+    __IO uint32_t MUTE;                               /* Address Offset: 0x0048 */
+    __I  uint32_t MUTEST;                             /* Address Offset: 0x004C */
+    __IO uint32_t VOLL[4];                            /* Address Offset: 0x0050 */
+    __IO uint32_t VOLR[4];                            /* Address Offset: 0x0060 */
+    __IO uint32_t VOGP;                               /* Address Offset: 0x0070 */
+    __IO uint32_t RVOLL[4];                           /* Address Offset: 0x0074 */
+    __IO uint32_t RVOLR[4];                           /* Address Offset: 0x0084 */
+    __IO uint32_t LTM[3];                             /* Address Offset: 0x0094 */
+    __IO uint32_t MIXCTRLL;                           /* Address Offset: 0x00A0 */
+    __IO uint32_t MIXCTRLR;                           /* Address Offset: 0x00A4 */
+    __IO uint32_t HPF;                                /* Address Offset: 0x00A8 */
+         uint32_t RESERVED00AC[24];                   /* Address Offset: 0x00AC */
+    __IO uint32_t I2S_RXCR0;                          /* Address Offset: 0x010C */
+    __IO uint32_t I2S_RXCR1;                          /* Address Offset: 0x0110 */
+    __IO uint32_t I2S_CKR0;                           /* Address Offset: 0x0114 */
+    __IO uint32_t I2S_CKR1;                           /* Address Offset: 0x0118 */
+    __IO uint32_t I2S_XFER;                           /* Address Offset: 0x011C */
+    __IO uint32_t I2S_CLR;                            /* Address Offset: 0x0120 */
+         uint32_t RESERVED0124[7];                    /* Address Offset: 0x0124 */
+    __I  uint32_t VERSION;                            /* Address Offset: 0x0140 */
+};
 /* FSPI Register Structure Define */
 struct FSPI_REG {
     __IO uint32_t CTRL0;                              /* Address Offset: 0x0000 */
@@ -1190,6 +1225,7 @@ struct INTMUX_REG {
 #define SAI0_BASE                      0xFF800000U /* SAI0 base address */
 #define SAI1_BASE                      0xFF810000U /* SAI1 base address */
 #define SAI2_BASE                      0xFF820000U /* SAI2 base address */
+#define ACDCDIG_DSM_BASE               0xFF850000U /* ACDCDIG_DSM base address */
 #define FSPI_BASE                      0xFF860000U /* FSPI base address */
 #define DMA_BASE                       0xFF990000U /* DMA base address */
 #define SPINLOCK_BASE                  0xFF9E0000U /* SPINLOCK base address */
@@ -1263,6 +1299,7 @@ struct INTMUX_REG {
 #define SAI0                ((struct SAI_REG *) SAI0_BASE)
 #define SAI1                ((struct SAI_REG *) SAI1_BASE)
 #define SAI2                ((struct SAI_REG *) SAI2_BASE)
+#define ACDCDIG_DSM         ((struct ACDCDIG_DSM_REG *) ACDCDIG_DSM_BASE)
 #define FSPI                ((struct FSPI_REG *) FSPI_BASE)
 #define DMA                 ((struct DMA_REG *) DMA_BASE)
 #define SPINLOCK            ((struct SPINLOCK_REG *) SPINLOCK_BASE)
@@ -1302,6 +1339,7 @@ struct INTMUX_REG {
 #define IS_DDRCRU_INSTANCE(instance) ((instance) == DDRCRU)
 #define IS_SUBDDRCRU_INSTANCE(instance) ((instance) == SUBDDRCRU)
 #define IS_PERICRU_INSTANCE(instance) ((instance) == PERICRU)
+#define IS_ACDCDIG_DSM_INSTANCE(instance) ((instance) == ACDCDIG_DSM)
 #define IS_FSPI_INSTANCE(instance) ((instance) == FSPI)
 #define IS_DMA_INSTANCE(instance) ((instance) == DMA)
 #define IS_SPINLOCK_INSTANCE(instance) ((instance) == SPINLOCK)
@@ -9562,6 +9600,225 @@ struct INTMUX_REG {
 #define SAI_VERSION                                        (0x20200520U)
 #define SAI_VERSION_SAI_VERTION_SHIFT                      (0U)
 #define SAI_VERSION_SAI_VERTION_MASK                       (0xFFFFFFFFU << SAI_VERSION_SAI_VERTION_SHIFT)               /* 0xFFFFFFFF */
+/**************************************ACDCDIG_DSM***************************************/
+/* VUCTL */
+#define ACDCDIG_DSM_VUCTL_OFFSET                           (0x0U)
+#define ACDCDIG_DSM_VUCTL_DACZDT_SHIFT                     (0U)
+#define ACDCDIG_DSM_VUCTL_DACZDT_MASK                      (0x1U << ACDCDIG_DSM_VUCTL_DACZDT_SHIFT)                     /* 0x00000001 */
+#define ACDCDIG_DSM_VUCTL_DACFADE_SHIFT                    (1U)
+#define ACDCDIG_DSM_VUCTL_DACFADE_MASK                     (0x1U << ACDCDIG_DSM_VUCTL_DACFADE_SHIFT)                    /* 0x00000002 */
+#define ACDCDIG_DSM_VUCTL_DAC_BYPS_SHIFT                   (2U)
+#define ACDCDIG_DSM_VUCTL_DAC_BYPS_MASK                    (0x1U << ACDCDIG_DSM_VUCTL_DAC_BYPS_SHIFT)                   /* 0x00000004 */
+/* VUCTIME */
+#define ACDCDIG_DSM_VUCTIME_OFFSET                         (0x4U)
+#define ACDCDIG_DSM_VUCTIME_DACVUCT_SHIFT                  (0U)
+#define ACDCDIG_DSM_VUCTIME_DACVUCT_MASK                   (0xFFU << ACDCDIG_DSM_VUCTIME_DACVUCT_SHIFT)                 /* 0x000000FF */
+/* DIGEN */
+#define ACDCDIG_DSM_DIGEN_OFFSET                           (0x8U)
+#define ACDCDIG_DSM_DIGEN_DACEN_L0R1_SHIFT                 (0U)
+#define ACDCDIG_DSM_DIGEN_DACEN_L0R1_MASK                  (0x1U << ACDCDIG_DSM_DIGEN_DACEN_L0R1_SHIFT)                 /* 0x00000001 */
+#define ACDCDIG_DSM_DIGEN_DACGLBEN_SHIFT                   (4U)
+#define ACDCDIG_DSM_DIGEN_DACGLBEN_MASK                    (0x1U << ACDCDIG_DSM_DIGEN_DACGLBEN_SHIFT)                   /* 0x00000010 */
+/* CLKCTRL */
+#define ACDCDIG_DSM_CLKCTRL_OFFSET                         (0xCU)
+#define ACDCDIG_DSM_CLKCTRL_DAC_MOD_ATTENU_EN_SHIFT        (0U)
+#define ACDCDIG_DSM_CLKCTRL_DAC_MOD_ATTENU_EN_MASK         (0x1U << ACDCDIG_DSM_CLKCTRL_DAC_MOD_ATTENU_EN_SHIFT)        /* 0x00000001 */
+#define ACDCDIG_DSM_CLKCTRL_DAC_SYNC_STATUS_SHIFT          (1U)
+#define ACDCDIG_DSM_CLKCTRL_DAC_SYNC_STATUS_MASK           (0x1U << ACDCDIG_DSM_CLKCTRL_DAC_SYNC_STATUS_SHIFT)          /* 0x00000002 */
+#define ACDCDIG_DSM_CLKCTRL_DAC_SYNC_ENA_SHIFT             (2U)
+#define ACDCDIG_DSM_CLKCTRL_DAC_SYNC_ENA_MASK              (0x1U << ACDCDIG_DSM_CLKCTRL_DAC_SYNC_ENA_SHIFT)             /* 0x00000004 */
+#define ACDCDIG_DSM_CLKCTRL_CKE_BCLKRX_SHIFT               (3U)
+#define ACDCDIG_DSM_CLKCTRL_CKE_BCLKRX_MASK                (0x1U << ACDCDIG_DSM_CLKCTRL_CKE_BCLKRX_SHIFT)               /* 0x00000008 */
+#define ACDCDIG_DSM_CLKCTRL_I2SRX_CKE_SHIFT                (4U)
+#define ACDCDIG_DSM_CLKCTRL_I2SRX_CKE_MASK                 (0x1U << ACDCDIG_DSM_CLKCTRL_I2SRX_CKE_SHIFT)                /* 0x00000010 */
+#define ACDCDIG_DSM_CLKCTRL_DAC_CKE_SHIFT                  (5U)
+#define ACDCDIG_DSM_CLKCTRL_DAC_CKE_MASK                   (0x1U << ACDCDIG_DSM_CLKCTRL_DAC_CKE_SHIFT)                  /* 0x00000020 */
+/* INTMOD_DIV */
+#define ACDCDIG_DSM_INTMOD_DIV_OFFSET                      (0x14U)
+#define ACDCDIG_DSM_INTMOD_DIV_INT_DIV_CON_SHIFT           (0U)
+#define ACDCDIG_DSM_INTMOD_DIV_INT_DIV_CON_MASK            (0xFFU << ACDCDIG_DSM_INTMOD_DIV_INT_DIV_CON_SHIFT)          /* 0x000000FF */
+/* INTSCLK_DIV */
+#define ACDCDIG_DSM_INTSCLK_DIV_OFFSET                     (0x20U)
+#define ACDCDIG_DSM_INTSCLK_DIV_SCKRXDIV_SHIFT             (0U)
+#define ACDCDIG_DSM_INTSCLK_DIV_SCKRXDIV_MASK              (0xFFU << ACDCDIG_DSM_INTSCLK_DIV_SCKRXDIV_SHIFT)            /* 0x000000FF */
+/* DIV */
+#define ACDCDIG_DSM_DIV_OFFSET                             (0x24U)
+#define ACDCDIG_DSM_DIV_AUDIO_DSM_DIV_SHIFT                (0U)
+#define ACDCDIG_DSM_DIV_AUDIO_DSM_DIV_MASK                 (0xFFU << ACDCDIG_DSM_DIV_AUDIO_DSM_DIV_SHIFT)               /* 0x000000FF */
+/* CTRL */
+#define ACDCDIG_DSM_CTRL_OFFSET                            (0x28U)
+#define ACDCDIG_DSM_CTRL_DITH_SEL_SHIFT                    (0U)
+#define ACDCDIG_DSM_CTRL_DITH_SEL_MASK                     (0x7U << ACDCDIG_DSM_CTRL_DITH_SEL_SHIFT)                    /* 0x00000007 */
+#define ACDCDIG_DSM_CTRL_DSM_EN_SHIFT                      (3U)
+#define ACDCDIG_DSM_CTRL_DSM_EN_MASK                       (0x1U << ACDCDIG_DSM_CTRL_DSM_EN_SHIFT)                      /* 0x00000008 */
+#define ACDCDIG_DSM_CTRL_DSM_MODE_SHIFT                    (4U)
+#define ACDCDIG_DSM_CTRL_DSM_MODE_MASK                     (0x3U << ACDCDIG_DSM_CTRL_DSM_MODE_SHIFT)                    /* 0x00000030 */
+#define ACDCDIG_DSM_CTRL_DSM_MODE_CKE_SHIFT                (6U)
+#define ACDCDIG_DSM_CTRL_DSM_MODE_CKE_MASK                 (0x1U << ACDCDIG_DSM_CTRL_DSM_MODE_CKE_SHIFT)                /* 0x00000040 */
+/* CFG1 */
+#define ACDCDIG_DSM_CFG1_OFFSET                            (0x44U)
+#define ACDCDIG_DSM_CFG1_DACSRT_SHIFT                      (2U)
+#define ACDCDIG_DSM_CFG1_DACSRT_MASK                       (0x7U << ACDCDIG_DSM_CFG1_DACSRT_SHIFT)                      /* 0x0000001C */
+/* MUTE */
+#define ACDCDIG_DSM_MUTE_OFFSET                            (0x48U)
+#define ACDCDIG_DSM_MUTE_DACMT_SHIFT                       (0U)
+#define ACDCDIG_DSM_MUTE_DACMT_MASK                        (0x1U << ACDCDIG_DSM_MUTE_DACMT_SHIFT)                       /* 0x00000001 */
+#define ACDCDIG_DSM_MUTE_DACUNMT_SHIFT                     (1U)
+#define ACDCDIG_DSM_MUTE_DACUNMT_MASK                      (0x1U << ACDCDIG_DSM_MUTE_DACUNMT_SHIFT)                     /* 0x00000002 */
+/* MUTEST */
+#define ACDCDIG_DSM_MUTEST_OFFSET                          (0x4CU)
+#define ACDCDIG_DSM_MUTEST                                 (0x0U)
+#define ACDCDIG_DSM_MUTEST_MUTEST_L0R1_SHIFT               (0U)
+#define ACDCDIG_DSM_MUTEST_MUTEST_L0R1_MASK                (0x1U << ACDCDIG_DSM_MUTEST_MUTEST_L0R1_SHIFT)               /* 0x00000001 */
+#define ACDCDIG_DSM_MUTEST_UNMUTEST_L0R1_SHIFT             (4U)
+#define ACDCDIG_DSM_MUTEST_UNMUTEST_L0R1_MASK              (0x1U << ACDCDIG_DSM_MUTEST_UNMUTEST_L0R1_SHIFT)             /* 0x00000010 */
+/* VOLL0 */
+#define ACDCDIG_DSM_VOLL0_OFFSET                           (0x50U)
+#define ACDCDIG_DSM_VOLL0_DACLV0_SHIFT                     (0U)
+#define ACDCDIG_DSM_VOLL0_DACLV0_MASK                      (0xFFU << ACDCDIG_DSM_VOLL0_DACLV0_SHIFT)                    /* 0x000000FF */
+/* VOLL1 */
+#define ACDCDIG_DSM_VOLL1_OFFSET                           (0x54U)
+#define ACDCDIG_DSM_VOLL1_DACLV1_SHIFT                     (0U)
+#define ACDCDIG_DSM_VOLL1_DACLV1_MASK                      (0xFFU << ACDCDIG_DSM_VOLL1_DACLV1_SHIFT)                    /* 0x000000FF */
+/* VOLL2 */
+#define ACDCDIG_DSM_VOLL2_OFFSET                           (0x58U)
+#define ACDCDIG_DSM_VOLL2_DACLV2_SHIFT                     (0U)
+#define ACDCDIG_DSM_VOLL2_DACLV2_MASK                      (0x1U << ACDCDIG_DSM_VOLL2_DACLV2_SHIFT)                     /* 0x00000001 */
+/* VOLL3 */
+#define ACDCDIG_DSM_VOLL3_OFFSET                           (0x5CU)
+#define ACDCDIG_DSM_VOLL3_DACLV3_SHIFT                     (0U)
+#define ACDCDIG_DSM_VOLL3_DACLV3_MASK                      (0x1U << ACDCDIG_DSM_VOLL3_DACLV3_SHIFT)                     /* 0x00000001 */
+/* VOLR0 */
+#define ACDCDIG_DSM_VOLR0_OFFSET                           (0x60U)
+#define ACDCDIG_DSM_VOLR0_DACRV0_SHIFT                     (0U)
+#define ACDCDIG_DSM_VOLR0_DACRV0_MASK                      (0xFFU << ACDCDIG_DSM_VOLR0_DACRV0_SHIFT)                    /* 0x000000FF */
+/* VOLR1 */
+#define ACDCDIG_DSM_VOLR1_OFFSET                           (0x64U)
+#define ACDCDIG_DSM_VOLR1_DACRV1_SHIFT                     (0U)
+#define ACDCDIG_DSM_VOLR1_DACRV1_MASK                      (0x1U << ACDCDIG_DSM_VOLR1_DACRV1_SHIFT)                     /* 0x00000001 */
+/* VOLR2 */
+#define ACDCDIG_DSM_VOLR2_OFFSET                           (0x68U)
+#define ACDCDIG_DSM_VOLR2_DACRV2_SHIFT                     (0U)
+#define ACDCDIG_DSM_VOLR2_DACRV2_MASK                      (0x1U << ACDCDIG_DSM_VOLR2_DACRV2_SHIFT)                     /* 0x00000001 */
+/* VOLR3 */
+#define ACDCDIG_DSM_VOLR3_OFFSET                           (0x6CU)
+#define ACDCDIG_DSM_VOLR3_DACRV3_SHIFT                     (0U)
+#define ACDCDIG_DSM_VOLR3_DACRV3_MASK                      (0x1U << ACDCDIG_DSM_VOLR3_DACRV3_SHIFT)                     /* 0x00000001 */
+/* VOGP */
+#define ACDCDIG_DSM_VOGP_OFFSET                            (0x70U)
+#define ACDCDIG_DSM_VOGP_VOLGPL0_SHIFT                     (0U)
+#define ACDCDIG_DSM_VOGP_VOLGPL0_MASK                      (0x1U << ACDCDIG_DSM_VOGP_VOLGPL0_SHIFT)                     /* 0x00000001 */
+#define ACDCDIG_DSM_VOGP_VOLGPR1_SHIFT                     (1U)
+#define ACDCDIG_DSM_VOGP_VOLGPR1_MASK                      (0x1U << ACDCDIG_DSM_VOGP_VOLGPR1_SHIFT)                     /* 0x00000002 */
+/* RVOLL0 */
+#define ACDCDIG_DSM_RVOLL0_OFFSET                          (0x74U)
+#define ACDCDIG_DSM_RVOLL0                                 (0xFFU)
+#define ACDCDIG_DSM_RVOLL0_RVOLL0_SHIFT                    (0U)
+#define ACDCDIG_DSM_RVOLL0_RVOLL0_MASK                     (0xFFU << ACDCDIG_DSM_RVOLL0_RVOLL0_SHIFT)                   /* 0x000000FF */
+/* RVOLL1 */
+#define ACDCDIG_DSM_RVOLL1_OFFSET                          (0x78U)
+#define ACDCDIG_DSM_RVOLL1_RVOLL1_SHIFT                    (0U)
+#define ACDCDIG_DSM_RVOLL1_RVOLL1_MASK                     (0x1U << ACDCDIG_DSM_RVOLL1_RVOLL1_SHIFT)                    /* 0x00000001 */
+/* RVOLL2 */
+#define ACDCDIG_DSM_RVOLL2_OFFSET                          (0x7CU)
+#define ACDCDIG_DSM_RVOLL2_RVOLL2_SHIFT                    (0U)
+#define ACDCDIG_DSM_RVOLL2_RVOLL2_MASK                     (0x1U << ACDCDIG_DSM_RVOLL2_RVOLL2_SHIFT)                    /* 0x00000001 */
+/* RVOLL3 */
+#define ACDCDIG_DSM_RVOLL3_OFFSET                          (0x80U)
+#define ACDCDIG_DSM_RVOLL3_RVOLL3_SHIFT                    (0U)
+#define ACDCDIG_DSM_RVOLL3_RVOLL3_MASK                     (0x1U << ACDCDIG_DSM_RVOLL3_RVOLL3_SHIFT)                    /* 0x00000001 */
+/* RVOLR0 */
+#define ACDCDIG_DSM_RVOLR0_OFFSET                          (0x84U)
+#define ACDCDIG_DSM_RVOLR0                                 (0xFFU)
+#define ACDCDIG_DSM_RVOLR0_RVOLR0_SHIFT                    (0U)
+#define ACDCDIG_DSM_RVOLR0_RVOLR0_MASK                     (0xFFU << ACDCDIG_DSM_RVOLR0_RVOLR0_SHIFT)                   /* 0x000000FF */
+/* RVOLR1 */
+#define ACDCDIG_DSM_RVOLR1_OFFSET                          (0x88U)
+#define ACDCDIG_DSM_RVOLR1_RVOLR1_SHIFT                    (0U)
+#define ACDCDIG_DSM_RVOLR1_RVOLR1_MASK                     (0x1U << ACDCDIG_DSM_RVOLR1_RVOLR1_SHIFT)                    /* 0x00000001 */
+/* RVOLR2 */
+#define ACDCDIG_DSM_RVOLR2_OFFSET                          (0x8CU)
+#define ACDCDIG_DSM_RVOLR2_RVOLR2_SHIFT                    (0U)
+#define ACDCDIG_DSM_RVOLR2_RVOLR2_MASK                     (0x1U << ACDCDIG_DSM_RVOLR2_RVOLR2_SHIFT)                    /* 0x00000001 */
+/* RVOLR3 */
+#define ACDCDIG_DSM_RVOLR3_OFFSET                          (0x90U)
+#define ACDCDIG_DSM_RVOLR3_RVOLR3_SHIFT                    (0U)
+#define ACDCDIG_DSM_RVOLR3_RVOLR3_MASK                     (0x1U << ACDCDIG_DSM_RVOLR3_RVOLR3_SHIFT)                    /* 0x00000001 */
+/* LMT0 */
+#define ACDCDIG_DSM_LMT0_OFFSET                            (0x94U)
+#define ACDCDIG_DSM_LMT0_LIMDCT_SHIFT                      (0U)
+#define ACDCDIG_DSM_LMT0_LIMDCT_MASK                       (0x1U << ACDCDIG_DSM_LMT0_LIMDCT_SHIFT)                      /* 0x00000001 */
+#define ACDCDIG_DSM_LMT0_LIMEN_SHIFT                       (1U)
+#define ACDCDIG_DSM_LMT0_LIMEN_MASK                        (0x1U << ACDCDIG_DSM_LMT0_LIMEN_SHIFT)                       /* 0x00000002 */
+/* LMT1 */
+#define ACDCDIG_DSM_LMT1_OFFSET                            (0x98U)
+#define ACDCDIG_DSM_LMT1_RLS_RATE_SHIFT                    (0U)
+#define ACDCDIG_DSM_LMT1_RLS_RATE_MASK                     (0xFU << ACDCDIG_DSM_LMT1_RLS_RATE_SHIFT)                    /* 0x0000000F */
+#define ACDCDIG_DSM_LMT1_ATK_RATE_SHIFT                    (4U)
+#define ACDCDIG_DSM_LMT1_ATK_RATE_MASK                     (0xFU << ACDCDIG_DSM_LMT1_ATK_RATE_SHIFT)                    /* 0x000000F0 */
+/* LMT2 */
+#define ACDCDIG_DSM_LMT2_OFFSET                            (0x9CU)
+#define ACDCDIG_DSM_LMT2_MIN_LILMT_SHIFT                   (0U)
+#define ACDCDIG_DSM_LMT2_MIN_LILMT_MASK                    (0x7U << ACDCDIG_DSM_LMT2_MIN_LILMT_SHIFT)                   /* 0x00000007 */
+#define ACDCDIG_DSM_LMT2_MAX_LILMT_SHIFT                   (4U)
+#define ACDCDIG_DSM_LMT2_MAX_LILMT_MASK                    (0x7U << ACDCDIG_DSM_LMT2_MAX_LILMT_SHIFT)                   /* 0x00000070 */
+/* MIXCTRLL */
+#define ACDCDIG_DSM_MIXCTRLL_OFFSET                        (0xA0U)
+#define ACDCDIG_DSM_MIXCTRLL_MIXMODE_L0_SHIFT              (0U)
+#define ACDCDIG_DSM_MIXCTRLL_MIXMODE_L0_MASK               (0x3U << ACDCDIG_DSM_MIXCTRLL_MIXMODE_L0_SHIFT)              /* 0x00000003 */
+/* MIXCTRLR */
+#define ACDCDIG_DSM_MIXCTRLR_OFFSET                        (0xA4U)
+#define ACDCDIG_DSM_MIXCTRLR_MIXMODE_R0_SHIFT              (0U)
+#define ACDCDIG_DSM_MIXCTRLR_MIXMODE_R0_MASK               (0x3U << ACDCDIG_DSM_MIXCTRLR_MIXMODE_R0_SHIFT)              /* 0x00000003 */
+/* HPF */
+#define ACDCDIG_DSM_HPF_OFFSET                             (0xA8U)
+#define ACDCDIG_DSM_HPF_HPFEN_L0R1_SHIFT                   (0U)
+#define ACDCDIG_DSM_HPF_HPFEN_L0R1_MASK                    (0x1U << ACDCDIG_DSM_HPF_HPFEN_L0R1_SHIFT)                   /* 0x00000001 */
+#define ACDCDIG_DSM_HPF_HPFCF_SHIFT                        (4U)
+#define ACDCDIG_DSM_HPF_HPFCF_MASK                         (0x3U << ACDCDIG_DSM_HPF_HPFCF_SHIFT)                        /* 0x00000030 */
+/* I2S_RXCR0 */
+#define ACDCDIG_DSM_I2S_RXCR0_OFFSET                       (0x10CU)
+#define ACDCDIG_DSM_I2S_RXCR0_VDW_SHIFT                    (0U)
+#define ACDCDIG_DSM_I2S_RXCR0_VDW_MASK                     (0x1FU << ACDCDIG_DSM_I2S_RXCR0_VDW_SHIFT)                   /* 0x0000001F */
+#define ACDCDIG_DSM_I2S_RXCR0_TFS_SHIFT                    (5U)
+#define ACDCDIG_DSM_I2S_RXCR0_TFS_MASK                     (0x1U << ACDCDIG_DSM_I2S_RXCR0_TFS_SHIFT)                    /* 0x00000020 */
+#define ACDCDIG_DSM_I2S_RXCR0_PBM_SHIFT                    (6U)
+#define ACDCDIG_DSM_I2S_RXCR0_PBM_MASK                     (0x3U << ACDCDIG_DSM_I2S_RXCR0_PBM_SHIFT)                    /* 0x000000C0 */
+/* I2S_RXCR1 */
+#define ACDCDIG_DSM_I2S_RXCR1_OFFSET                       (0x110U)
+#define ACDCDIG_DSM_I2S_RXCR1_IBM_SHIFT                    (0U)
+#define ACDCDIG_DSM_I2S_RXCR1_IBM_MASK                     (0x3U << ACDCDIG_DSM_I2S_RXCR1_IBM_SHIFT)                    /* 0x00000003 */
+#define ACDCDIG_DSM_I2S_RXCR1_FBM_SHIFT                    (2U)
+#define ACDCDIG_DSM_I2S_RXCR1_FBM_MASK                     (0x1U << ACDCDIG_DSM_I2S_RXCR1_FBM_SHIFT)                    /* 0x00000004 */
+#define ACDCDIG_DSM_I2S_RXCR1_CEX_SHIFT                    (4U)
+#define ACDCDIG_DSM_I2S_RXCR1_CEX_MASK                     (0x1U << ACDCDIG_DSM_I2S_RXCR1_CEX_SHIFT)                    /* 0x00000010 */
+#define ACDCDIG_DSM_I2S_RXCR1_RCSR_SHIFT                   (6U)
+#define ACDCDIG_DSM_I2S_RXCR1_RCSR_MASK                    (0x3U << ACDCDIG_DSM_I2S_RXCR1_RCSR_SHIFT)                   /* 0x000000C0 */
+/* I2S_CKR0 */
+#define ACDCDIG_DSM_I2S_CKR0_OFFSET                        (0x114U)
+#define ACDCDIG_DSM_I2S_CKR0_RSD_SHIFT                     (2U)
+#define ACDCDIG_DSM_I2S_CKR0_RSD_MASK                      (0x3U << ACDCDIG_DSM_I2S_CKR0_RSD_SHIFT)                     /* 0x0000000C */
+/* I2S_CKR1 */
+#define ACDCDIG_DSM_I2S_CKR1_OFFSET                        (0x118U)
+#define ACDCDIG_DSM_I2S_CKR1_RLP_SHIFT                     (1U)
+#define ACDCDIG_DSM_I2S_CKR1_RLP_MASK                      (0x1U << ACDCDIG_DSM_I2S_CKR1_RLP_SHIFT)                     /* 0x00000002 */
+#define ACDCDIG_DSM_I2S_CKR1_CKP_SHIFT                     (2U)
+#define ACDCDIG_DSM_I2S_CKR1_CKP_MASK                      (0x1U << ACDCDIG_DSM_I2S_CKR1_CKP_SHIFT)                     /* 0x00000004 */
+#define ACDCDIG_DSM_I2S_CKR1_MSS_SHIFT                     (3U)
+#define ACDCDIG_DSM_I2S_CKR1_MSS_MASK                      (0x1U << ACDCDIG_DSM_I2S_CKR1_MSS_SHIFT)                     /* 0x00000008 */
+/* I2S_XFER */
+#define ACDCDIG_DSM_I2S_XFER_OFFSET                        (0x11CU)
+#define ACDCDIG_DSM_I2S_XFER_RXS_SHIFT                     (1U)
+#define ACDCDIG_DSM_I2S_XFER_RXS_MASK                      (0x1U << ACDCDIG_DSM_I2S_XFER_RXS_SHIFT)                     /* 0x00000002 */
+/* I2S_CLR */
+#define ACDCDIG_DSM_I2S_CLR_OFFSET                         (0x120U)
+#define ACDCDIG_DSM_I2S_CLR_RXC_SHIFT                      (1U)
+#define ACDCDIG_DSM_I2S_CLR_RXC_MASK                       (0x1U << ACDCDIG_DSM_I2S_CLR_RXC_SHIFT)                      /* 0x00000002 */
+/* VERSION */
+#define ACDCDIG_DSM_VERSION_OFFSET                         (0x140U)
+#define ACDCDIG_DSM_VERSION                                (0x10U)
+#define ACDCDIG_DSM_VERSION_VER_SHIFT                      (0U)
+#define ACDCDIG_DSM_VERSION_VER_MASK                       (0xFFU << ACDCDIG_DSM_VERSION_VER_SHIFT)                     /* 0x000000FF */
 /******************************************FSPI******************************************/
 /* CTRL0 */
 #define FSPI_CTRL0_OFFSET                                  (0x0U)
