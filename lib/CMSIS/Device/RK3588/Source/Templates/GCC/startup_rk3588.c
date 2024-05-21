@@ -142,8 +142,124 @@ void IRQ_Handler(void)
     );
 #endif /* HAL_GIC_PREEMPT_FEATURE_ENABLED */
 }
+
+#if defined(__GNUC__) && ! defined(__ARMCC_VERSION)
+#pragma GCC pop_options
+#elif defined(__ARMCC_VERSION)
+#pragma pop
+#endif
+
 #endif /* HAL_GIC_MODULE_ENABLED */
 
+#ifdef __aarch64__
+#define vector_table_align .align 11    /* Vector tables must be placed at a 2KB-aligned address */
+#define vector_entry_align .align 7     /* Each entry is 128B */
+
+void Sync_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
+void SError_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
+
+/*----------------------------------------------------------------------------
+  Exception / Interrupt Vector Table
+ *----------------------------------------------------------------------------*/
+void Vectors(void)
+{
+    __ASM volatile(
+    ".align 11                                        \n"
+    // Current EL with SP0
+    ".align 7                                         \n"
+    "B      Reset_Handler                             \n" // Synchronous
+    ".align 7                                         \n"
+    "B      IRQ_Handler                               \n" // IRQ/vIRQ
+    ".align 7                                         \n"
+    "B      FIQ_Handler                               \n" // FIQ/vFIQ
+    ".align 7                                         \n"
+    "B      SError_Handler                            \n" // SError
+
+    // Current EL with SPx
+    ".align 7                                         \n"
+    "B      Sync_Handler                              \n" // Synchronous
+    ".align 7                                         \n"
+    "B      IRQ_Handler                               \n" // IRQ/vIRQ
+    ".align 7                                         \n"
+    "B      FIQ_Handler                               \n" // FIQ/vFIQ
+    ".align 7                                         \n"
+    "B      SError_Handler                            \n" // SError
+
+    // Lower EL using AArch64
+    ".align 7                                         \n"
+    "B      .                                         \n" // Synchronous
+    ".align 7                                         \n"
+    "B      .                                         \n" // IRQ/vIRQ
+    ".align 7                                         \n"
+    "B      .                                         \n" // FIQ/vFIQ
+    ".align 7                                         \n"
+    "B      .                                         \n" // SError
+
+    // Lower EL using AArch32
+    ".align 7                                         \n"
+    "B      .                                         \n" // Synchronous
+    ".align 7                                         \n"
+    "B      .                                         \n" // IRQ/vIRQ
+    ".align 7                                         \n"
+    "B      .                                         \n" // FIQ/vFIQ
+    ".align 7                                         \n"
+    "B      .                                         \n" // SError
+    );
+}
+
+/*----------------------------------------------------------------------------
+  Reset Handler called on controller reset
+ *----------------------------------------------------------------------------*/
+void Reset_Handler(void)
+{
+    __ASM volatile(
+
+    // Mask interrupts
+    "MSR     DAIFSet, #3                             \n"
+
+    // Check exception level, only support EL1
+    "MRS     x0, CurrentEL                          \n"
+    "AND     x0, x0, #(3 << 2)                      \n"
+    "CMP     x0, #(1 << 2)                          \n"
+    "BNE     hang                                   \n"
+
+    // Reset SCTLR Settings
+    "MRS     x0, SCTLR_EL1                           \n" // Read SCTLR_EL1 System Control register
+    "BIC     x0, x0, #(1 << 12)                      \n" // Clear I bit 12 to disable I Cache
+    "BIC     x0, x0, #(1 << 2)                       \n" // Clear C bit 2 to disable D Cache
+    "BIC     x0, x0, #1                              \n" // Clear M bit 0 to disable MMU
+    "BIC     x0, x0, #(1 << 11)                      \n" // Clear Z bit 11 to disable branch prediction
+    "BIC     x0, x0, #(1 << 13)                      \n" // Clear V bit 13 to disable hives
+    "MSR     SCTLR_EL1, x0                           \n" // Write value back to SCTLR_EL1 System Control register
+    "ISB                                             \n" // Ensure changes take effect
+
+    // Set Vector Base Address Register (VBAR) to point to this application's vector table
+    "LDR     x0, =Vectors                            \n"
+    "MSR     VBAR_EL1, x0                            \n"
+
+    // Setup Stack for EL1
+    "LDR     x1, =__StackTop                         \n"
+    "MOV     SP, x1                                  \n"
+
+    // Call DataInit
+    "BL     DataInit                                 \n"
+
+    // Call SystemInit
+    "BL     SystemInit                               \n"
+
+    // Unmask interrupts
+    "MSR    DAIFClr, #3                              \n"
+
+    // Call _start
+    "BL     _start                                   \n"
+
+    // Hang
+    "hang:                                           \n"
+    "WFI                                             \n"
+    "B      hang                                     \n"
+    );
+}
+#else
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector Table
  *----------------------------------------------------------------------------*/
@@ -218,6 +334,7 @@ void Reset_Handler(void)
     "BL     _start                                   \n"
     );
 }
+#endif
 
 /*----------------------------------------------------------------------------
   Default Handler for Exceptions / Interrupts
@@ -226,11 +343,5 @@ void Default_Handler(void)
 {
     while(1);
 }
-
-#if defined(__GNUC__) && ! defined(__ARMCC_VERSION)
-#pragma GCC pop_options
-#elif defined(__ARMCC_VERSION)
-#pragma pop
-#endif
 
 #endif /* HAL_AP_CORE */
