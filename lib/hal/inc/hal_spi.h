@@ -104,6 +104,7 @@ struct SPI_CONFIG {
                                   used to configure the transmit and receive SCK clock. */
     uint32_t ssiType;          /**< Specifies if the TI mode is enabled or not.*/
     uint32_t csm;              /**< Specifies Motorola SPI Master SS_N high cycles for each frame data is transfer. */
+    bool configured;           /**< Indicate the configure status. */
 };
 
 /* We have 2 DMA channels per SPI, one for RX and one for TX */
