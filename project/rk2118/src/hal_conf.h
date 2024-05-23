@@ -53,4 +53,8 @@
 #define HAL_DBG_ERR_ON
 #define HAL_ASSERT_ON
 
+#ifdef HAL_GMAC_MODULE_ENABLED
+#define HAL_GMAC_PTP_FEATURE_ENABLED
+#endif
+
 #endif
