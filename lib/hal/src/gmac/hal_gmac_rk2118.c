@@ -130,4 +130,4 @@ void HAL_GMAC_SetRMIISpeed(struct GMAC_HANDLE *pGMAC, int32_t speed)
 
 /** @} */
 
-#endif /* SOC_RK2118 && HAL_GMAC_MODULE_ENABLED */
+#endif /* RKMCU_RK2118 && HAL_GMAC_MODULE_ENABLED */
