@@ -573,7 +573,7 @@ HAL_Status HAL_CANFD_Receive(struct CAN_REG *pReg, struct CANFD_MSG *RxMsg)
  * @param  isr: can interrupt status
  * @return HAL_OK.
  */
-HAL_Status HAL_CANFD_BusOffRcy(struct CAN_REG *pReg, uint32_t isr)
+static HAL_Status HAL_CANFD_BusOffRcy(struct CAN_REG *pReg, uint32_t isr)
 {
     WRITE_REG(pReg->INT_MASK, 0xffff);
     WRITE_REG(pReg->BUSOFF_RCY_CFG, CAN_BUSOFF_RCY_CFG_RCY_SCLR_MASK);
