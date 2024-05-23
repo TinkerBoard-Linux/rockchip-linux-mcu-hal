@@ -21,12 +21,14 @@
 //#define RKMCU_PISCES
 //#define RKMCU_RK2106
 //#define RKMCU_RK2108
+//#define RKMCU_RK2118
 //#define RKMCU_RK2206
 //#define SOC_RK1808
 //#define SOC_RK3308
 //#define SOC_RK3358
 //#define SOC_RK3562
 //#define SOC_RK3568
+//#define SOC_RK3576
 //#define SOC_RK3588
 //#define SOC_RV1106
 //#define SOC_RV1108
