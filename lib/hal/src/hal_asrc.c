@@ -220,27 +220,11 @@ static HAL_Status HAL_ASRC_ConfigPeriod(struct HAL_ASRC_DEV *asrc, struct ASRC_P
     int div = 0, period = 0;
 
     HAL_ASSERT(asrc != NULL);
-    HAL_ASSERT(rxParams != NULL);
-    HAL_ASSERT(txParams != NULL);
-    HAL_ASSERT(rxParams->sampleRate != 0);
-    HAL_ASSERT(txParams->sampleRate != 0);
 
-    if (asrc->groupLink) {
-        MODIFY_REG(asrc->pReg->CON, ASRC_CON_RATIO_FILT_DIS_MASK, ASRC_CON_RATIO_FILT_DIS_MASK);
+    MODIFY_REG(asrc->pReg->CON, ASRC_CON_RATIO_TRACK_MODE_MASK, ASRC_CON_RATIO_TRACK_MODE_MASK);
 
-        div = 0x0;
-
-        if (txParams->sampleRate > rxParams->sampleRate) {
-            period = ASRC_REF_LRCK_COUNT / (ASRC_SAMPLE_FREQ / txParams->sampleRate) + 1;
-        } else {
-            period = ASRC_REF_LRCK_COUNT / (ASRC_SAMPLE_FREQ / rxParams->sampleRate) + 1;
-        }
-    } else {
-        MODIFY_REG(asrc->pReg->CON, ASRC_CON_RATIO_TRACK_MODE_MASK, ASRC_CON_RATIO_TRACK_MODE_MASK);
-
-        div = 0x20;
-        period = 1024;
-    }
+    div = 0x3;
+    period = 1024;
 
     MODIFY_REG(asrc->pReg->TRACK_PERIOD,
                ASRC_TRACK_PERIOD_RATIO_TRACK_DIV_MASK | ASRC_TRACK_PERIOD_RATIO_TRACK_PERIOD_MASK,
