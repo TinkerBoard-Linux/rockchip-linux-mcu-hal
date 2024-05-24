@@ -571,7 +571,7 @@ HAL_Status HAL_USBH_CoreInit(struct USB_HCD_HANDLE *hcdHdl, void * *coherentMem)
  * @brief  Pool Memory alloc
  * @return pool memory pointer
  */
-void *HAL_USBH_AllocPool()
+void *HAL_USBH_AllocPool(void)
 {
     int i;
     void *pool;
@@ -620,7 +620,7 @@ HAL_Status HAL_USBH_FreePool(void *pool)
  * @brief  Assign EHCI PF List Memory address
  * @return pf list memory address
  */
-uint32_t *HAL_USBH_AssignEhciPfList()
+uint32_t *HAL_USBH_AssignEhciPfList(void)
 {
     return (uint32_t *)g_usbMem.pfListAddr;
 }
@@ -629,7 +629,7 @@ uint32_t *HAL_USBH_AssignEhciPfList()
  * @brief  Assign OHCI HCCA Memory address
  * @return HCCA memory address
  */
-uint8_t *HAL_USBH_AssignOhciHcca()
+uint8_t *HAL_USBH_AssignOhciHcca(void)
 {
     return (uint8_t *)g_usbMem.hccaAddr;
 }
