@@ -64,6 +64,7 @@ struct HAL_SAI_DEV {
     uint16_t bclkFs;
     uint8_t txLanes;
     uint8_t rxLanes;
+    uint8_t maxLanes;
     uint8_t fwRatio;
     bool isClkAuto;
     bool isTdm;

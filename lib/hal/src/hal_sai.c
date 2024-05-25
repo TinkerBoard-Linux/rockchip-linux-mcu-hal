@@ -32,7 +32,8 @@
 
 #define CLK_SHIFT_RATE_HZ_MAX 5
 
-#define SAI_DMA_BURST_SIZE (8) /* size * width: 8*4 = 32 bytes */
+#define SAI_DMA_BURST_SIZE     (8)/* size * width: 8*4 = 32 bytes */
+#define SAI_DMA_BURST_SIZE_MAX (16)
 
 /* XCR Transmit / Receive Control Register */
 #define SAI_XCR_CTL_MASK       HAL_BIT(23)
@@ -120,8 +121,8 @@
 #define SAI_DMACR_RDL(x)   ((x - 1) << SAI_DMACR_RDL_SHIFT)
 #define SAI_DMACR_RDL_V(v) ((((v) & SAI_DMACR_RDL_MASK) >> SAI_DMACR_RDL_SHIFT) + 1)
 #define SAI_DMACR_TDE(x)   ((x) << SAI_DMACR_TDE_SHIFT)
-#define SAI_DMACR_TDL(x)   ((x) << SAI_DMACR_TDL_SHIFT)
-#define SAI_DMACR_TDL_V(v) (((v) & SAI_DMACR_TDL_MASK) >> SAI_DMACR_TDL_SHIFT)
+#define SAI_DMACR_TDL(x)   ((x - 1) << SAI_DMACR_TDL_SHIFT)
+#define SAI_DMACR_TDL_V(v) ((((v) & SAI_DMACR_TDL_MASK) >> SAI_DMACR_TDL_SHIFT) + 1)
 
 /* INTCR Interrupt Ctrl Register */
 #ifdef  SAI_INTCR_FSLOSTC_SHIFT
@@ -866,6 +867,69 @@ HAL_Status HAL_SAI_DevDisable(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream)
     return HAL_OK;
 }
 
+static HAL_Status HAL_SAI_SetWaterLevel(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
+                                        uint8_t lanes, struct AUDIO_PARAMS *params)
+{
+#ifdef HAL_AUDIO_LOW_LATENCY
+    uint32_t frameWord;
+    uint8_t dl = SAI_DMA_BURST_SIZE;
+
+    HAL_ASSERT(sai != NULL);
+    HAL_ASSERT(params != NULL);
+    HAL_ASSERT(lanes != 0);
+
+    /*
+     * One frame latency, e.g. 20us@48kHz situation
+     * note: dma burst len should use one frame at the same time.
+     */
+    frameWord = HAL_AUDIO_GetPhysicalWidth(params->sampleBits) * params->channels / 32;
+    if (!frameWord) {
+        HAL_DBG_ERR("SAI-%p: %s: Invalid frameWord: %d\n",
+                    sai->pReg, __func__, frameWord);
+
+        return HAL_INVAL;
+    }
+
+    dl = frameWord / lanes;
+
+    /*
+     * Align the real WL for all lanes case
+     *
+     * Currently, 1 Lane case use all FIFOs, the real WL is expanded maxLanes times.
+     * so, here to align latency for all cases.
+     */
+    if (sai->maxLanes) {
+        dl = lanes > 1 ? dl : dl / sai->maxLanes;
+    }
+
+    /* min value should be 1 */
+    dl = dl < 1 ? 1 : dl;
+
+    /*
+     * WA for 1 lanes rx, need one more to cover it, because REQ triggered by
+     * FIFO0 WL, but use all FIFOs space. there is a misalignment.
+     */
+    if (lanes == 1 && stream == AUDIO_STREAM_CAPTURE) {
+        if (params->channels <= 2) {
+            dl = 1;
+        } else {
+            dl++;
+        }
+    }
+
+    dl = dl > SAI_DMA_BURST_SIZE_MAX ? SAI_DMA_BURST_SIZE_MAX : dl;
+
+    if (stream == AUDIO_STREAM_PLAYBACK) {
+        MODIFY_REG(sai->pReg->DMACR, SAI_DMACR_TDL_MASK, SAI_DMACR_TDL(dl));
+    } else {
+        MODIFY_REG(sai->pReg->DMACR, SAI_DMACR_RDL_MASK, SAI_DMACR_RDL(dl));
+    }
+
+#endif
+
+    return HAL_OK;
+}
+
 /**
  * @brief  Config sai controller.
  * @param  sai: the handle of sai.
@@ -919,6 +983,8 @@ HAL_Status HAL_SAI_DevConfig(struct HAL_SAI_DEV *sai, eAUDIO_streamType stream,
         MODIFY_REG(sai->pReg->RXCR, SAI_XCR_VDW_MASK | SAI_XCR_LANE_MASK |
                    SAI_XCR_SNB_MASK, val);
     }
+
+    HAL_SAI_SetWaterLevel(sai, stream, lanes, params);
 
     fscr = SAI_FSCR_FW(sai->fwRatio * slotWidth * chPerLane);
 
