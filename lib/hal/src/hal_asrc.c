@@ -434,10 +434,10 @@ HAL_Status HAL_ASRC_Init(struct HAL_ASRC_DEV *asrc, struct AUDIO_INIT_CONFIG *co
            ASRC_DMA_THRESH_ASRC_NEG_THRESH_MASK |
            ASRC_DMA_THRESH_ASRC_POS_THRESH_MASK;
 
-    val = ASRC_DMA_TX_THRESH(0x3) |
-          ASRC_DMA_RX_THRESH(0x3) |
-          ASRC_IN_THRESH(0x3) |
-          ASRC_OUT_THRESH(0x10) |
+    val = ASRC_DMA_TX_THRESH(0x1) |
+          ASRC_DMA_RX_THRESH(0x1) |
+          ASRC_IN_THRESH(0x1) |
+          ASRC_OUT_THRESH(0x17) |
           ASRC_NEG_THRESH(0x10) |
           ASRC_POS_THRESH(0x2f);
 
