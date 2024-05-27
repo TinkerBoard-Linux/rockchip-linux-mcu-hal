@@ -11,7 +11,7 @@
 
 	images {
 		mcu {
-			description  = "mcu";
+			description  = "bus_mcu";       // bus_mcu or pmu_mcu
 			data         = /incbin/("./mcu.bin");
 			type         = "standalone";	// must be "standalone"
 			compression  = "none";
