@@ -938,6 +938,8 @@ static HAL_Status HAL_SPI_ConfigureTransferMode(struct SPI_HANDLE *pSPI)
 #ifdef SPI_BPENR_OFFSET
     if (HAL_SPI_IsSlave(pSPI)) {
         WRITE_REG(pSPI->pReg->BYPASS, SPI_BYPASS_TXFIE_MASK | SPI_BYPASS_BYEN_MASK);
+    } else {
+        WRITE_REG(pSPI->pReg->BYPASS, 0);
     }
 #endif
 
