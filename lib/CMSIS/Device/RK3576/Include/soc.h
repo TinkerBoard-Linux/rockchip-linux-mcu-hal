@@ -23,6 +23,7 @@
 /* ================================================================================ */
 /* ================                    DMA REQ                      =============== */
 /* ================================================================================ */
+#ifndef __ASSEMBLY__
 typedef enum {
     DMA_REQ_SAI0_TX = 0,
     DMA_REQ_SAI2_TX = 0,
@@ -104,6 +105,7 @@ typedef enum {
     DMA_REQ_DSMC_DMA0 = 30,
     DMA_REQ_DSMC_DMA1 = 31,
 } DMA_REQ_Type;
+#endif /* __ASSEMBLY__ */
 
 /* ================================================================================ */
 /* ================                       IRQ                      ================ */
@@ -137,6 +139,7 @@ typedef enum {
 
 #define NUM_EXT_INTERRUPTS        416
 
+#ifndef __ASSEMBLY__
 typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
   NonMaskableInt_IRQn       = -14,     /*  2 Non Maskable Interrupt */
@@ -218,6 +221,7 @@ typedef enum {
   MBOX_BB13_IRQn            =  184 + NUM_INTERRUPTS,    /*!< MBOX13 Interrup                */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
+#endif /* __ASSEMBLY__ */
 
 #elif defined(RKMCU_RK3576_PMU)
 
@@ -246,6 +250,7 @@ typedef enum {
 
 #define NUM_EXT_INTERRUPTS        416
 
+#ifndef __ASSEMBLY__
 typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
   NonMaskableInt_IRQn       = -14,     /*  2 Non Maskable Interrupt */
@@ -331,10 +336,12 @@ typedef enum {
   GPIO4_EXP2_IRQn           =  203 + NUM_INTERRUPTS,    /*!< GPIO4 EXP2 Interrup            */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
+#endif /* __ASSEMBLY__ */
 
 #elif defined(RKMCU_RK3576_NPU)
 #define __RISC_V
 
+#ifndef __ASSEMBLY__
 typedef enum {
     NPU_EXT0_IRQn            =  0,      /*!< NPU EXT0 Interrupt          */
     NPU_EXT1_IRQn            =  1,      /*!< NPU EXT1 Interrupt          */
@@ -347,6 +354,7 @@ typedef enum {
     TIMER_INTER_IRQn         =  8,      /*!< TIMER_INTER Interrupt       */
     SOFT_IRQn                =  9,      /*!< SOFT Interrupt              */
 } IRQn_Type;
+#endif /* __ASSEMBLY__ */
 #else
 #error missing IRQn_Type define for interrupt
 #endif
@@ -355,6 +363,7 @@ typedef enum {
 
 #else /* HAL_AP_CORE */
 
+#ifndef __ASSEMBLY__
 typedef enum {
 /* When IPI_SGIs are used in AMP mode, you need to pay attention to whether it conflicts
  * with SMP mode. Especially in the case of Linux OS as The Master Core.
@@ -386,6 +395,7 @@ typedef enum {
   RSVD0_IRQn                =  421,     /*!< RSVD0 Interrupt               */
   NUM_INTERRUPTS            =  512,
 } IRQn_Type;
+#endif /* __ASSEMBLY__ */
 
 #define RSVD_IRQn(_N)               (RSVD0_IRQn + (_N))
 

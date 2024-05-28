@@ -3,7 +3,7 @@
  * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
  */
 
-#include "hal_conf.h"
+#include "soc.h"
 
 #if defined(HAL_MCU_CORE) && defined(__CORTEX_M)
 
