@@ -97,7 +97,7 @@ typedef enum {
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
 #if defined(HAL_MCU_CORE)
-#if defined(RKMCU_RK3588_PMU)
+#if defined(HAL_PMU_MCU_CORE)
 #define INTMUX_NUM_INT_PER_CON    256
 #define INTMUX_NUM_OUT_PER_CON    4
 #define INTMUX_NUM_INT_PER_OUT    64
@@ -216,7 +216,7 @@ typedef enum {
   SARADC_IRQn               =  430 + NUM_INTERRUPTS,     /*!< SARADC Interrupt              */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
-#elif defined(RKMCU_RK3588_NPU)
+#elif defined(HAL_NPU_MCU_CORE)
 typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
   NonMaskableInt_IRQn       = -14,     /*  2 Non Maskable Interrupt */
@@ -249,7 +249,7 @@ typedef enum {
   NUM_INTERRUPTS            =  16,     /*!< Number of internal IRQ        */
   DUMMY_IRQn                =  256,    /*!< Avoid compile warning: overflow in conversion   */
 } IRQn_Type;
-#elif defined(RKMCU_RK3588_DDR)
+#elif defined(HAL_DDR_MCU_CORE)
 typedef enum
 {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
@@ -284,7 +284,7 @@ typedef enum
 #error missing IRQn_Type define for interrupt
 #endif
 
-#if defined(RKMCU_RK3588_PMU) || defined(RKMCU_RK3588_DDR)
+#if defined(HAL_PMU_MCU_CORE) || defined(HAL_DDR_MCU_CORE)
 #define HAS_CUSTOME_INTC
 #endif
 #endif /* HAL_MCU_CORE */
@@ -710,10 +710,10 @@ struct INTMUX_REG {
     __IO uint32_t INT_FLAG_GROUP[32];                 /* Address Offset: 0x0080 */
 };
 
-#if defined(RKMCU_RK3588_PMU)
+#if defined(HAL_PMU_MCU_CORE)
 #define INTMUX0             ((struct INTMUX_REG *) INTMUX0_PMU_BASE)
 #define INTMUX1             ((struct INTMUX_REG *) INTMUX1_PMU_BASE)
-#elif defined(RKMCU_RK3588_DDR)
+#elif defined(HAL_DDR_MCU_CORE)
 #define INTMUX0             ((struct INTMUX_REG *) INTMUX0_DDR_BASE)
 #define INTMUX1             ((struct INTMUX_REG *) INTMUX1_DDR_BASE)
 #endif
@@ -735,12 +735,12 @@ struct INTMUX_REG {
 
 #if defined(HAL_MCU_CORE)
 
-#if defined(RKMCU_RK3588_PMU)
+#if defined(HAL_PMU_MCU_CORE)
 #undef TIMER0_BASE
 #undef TIMER1_BASE
 #define TIMER0_BASE                    0xFD8F0000U /* TIMER0 base address */
 #define TIMER1_BASE                    0xFD8F0020U /* TIMER1 base address */
-#elif defined(RKMCU_RK3588_DDR)
+#elif defined(HAL_DDR_MCU_CORE)
 #undef DCACHE
 #undef ICACHE
 #undef MBOX0_BASE
@@ -751,7 +751,7 @@ struct INTMUX_REG {
 #undef TIMER1_BASE
 #define TIMER0_BASE                    0xFE118000U /* TIMER0_BASE*/
 #define TIMER1_BASE                    0xFE118020U /* TIMER1_BASE*/
-#elif defined(RKMCU_RK3588_NPU)
+#elif defined(HAL_NPU_MCU_CORE)
 #undef MBOX0_BASE
 #define MBOX0_BASE                     0xFECE0000U /* MBOX0 base address */
 #undef WDT_BASE

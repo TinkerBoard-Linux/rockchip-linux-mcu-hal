@@ -42,7 +42,7 @@ const struct HAL_I2C_DEV g_i2c0Dev =
     .pclkGateID = CLK_PMU0_I2C0_GATE,
 };
 
-#if defined(RKMCU_RK3562_BUS) || defined(HAL_AP_CORE)
+#if defined(HAL_BUS_MCU_CORE) || defined(HAL_AP_CORE)
 const struct HAL_I2C_DEV g_i2c1Dev =
 {
     .pReg = I2C1,
@@ -87,7 +87,7 @@ const struct HAL_I2C_DEV g_i2c5Dev =
     .clkGateID = CLK_I2C5_GATE,
     .pclkGateID = PCLK_I2C5_GATE,
 };
-#endif /* RKMCU_RK3562_BUS || HAL_AP_CORE */
+#endif /* HAL_BUS_MCU_CORE || HAL_AP_CORE */
 #endif /* HAL_I2C_MODULE_ENABLED */
 
 #ifdef HAL_SAI_MODULE_ENABLED
@@ -184,7 +184,7 @@ const struct HAL_SPI_DEV g_spi0Dev = {
     },
 };
 
-#if defined(RKMCU_RK3562_BUS) || defined(HAL_AP_CORE)
+#if defined(HAL_BUS_MCU_CORE) || defined(HAL_AP_CORE)
 const struct HAL_SPI_DEV g_spi1Dev = {
     .base = SPI1_BASE,
     .clkId = CLK_SPI1,
@@ -222,10 +222,10 @@ const struct HAL_SPI_DEV g_spi2Dev = {
         .addr = SPI2_BASE + 0x800,
     },
 };
-#endif /* RKMCU_RK3562_BUS || HAL_AP_CORE */
+#endif /* HAL_BUS_MCU_CORE || HAL_AP_CORE */
 #endif /* HAL_SPI_MODULE_ENABLED */
 
-#if defined(RKMCU_RK3562_BUS) || defined(HAL_AP_CORE)
+#if defined(HAL_BUS_MCU_CORE) || defined(HAL_AP_CORE)
 
 #ifdef HAL_FSPI_MODULE_ENABLED
 struct HAL_FSPI_HOST g_fspi0Dev =
@@ -347,9 +347,9 @@ const struct HAL_UART_DEV g_uart9Dev =
 };
 #endif
 
-#endif /* RKMCU_RK3562_BUS || HAL_AP_CORE */
+#endif /* HAL_BUS_MCU_CORE || HAL_AP_CORE */
 
-#ifdef RKMCU_RK3562_PMU
+#ifdef HAL_PMU_MCU_CORE
 
 #ifdef HAL_UART_MODULE_ENABLED
 const struct HAL_UART_DEV g_uart0Dev =
@@ -363,7 +363,7 @@ const struct HAL_UART_DEV g_uart0Dev =
 };
 #endif
 
-#endif /* RKMCU_RK3562_PMU */
+#endif /* HAL_PMU_MCU_CORE */
 
 #ifdef HAL_PWM_MODULE_ENABLED
 const struct HAL_PWM_DEV g_pwm0Dev =

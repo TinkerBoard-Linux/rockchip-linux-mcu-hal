@@ -112,7 +112,7 @@ typedef enum {
 /* ================================================================================ */
 #ifdef HAL_MCU_CORE
 
-#if defined(RKMCU_RK3576_BUS)
+#if defined(HAL_BUS_MCU_CORE)
 
 #define INTMUX_NUM_INT_PER_CON    416
 #define INTMUX_NUM_OUT_PER_CON    13
@@ -223,7 +223,7 @@ typedef enum {
 } IRQn_Type;
 #endif /* __ASSEMBLY__ */
 
-#elif defined(RKMCU_RK3576_PMU)
+#elif defined(HAL_PMU_MCU_CORE)
 
 #define INTMUX_NUM_INT_PER_CON    416
 #define INTMUX_NUM_OUT_PER_CON    13
@@ -338,7 +338,7 @@ typedef enum {
 } IRQn_Type;
 #endif /* __ASSEMBLY__ */
 
-#elif defined(RKMCU_RK3576_NPU)
+#elif defined(HAL_NPU_MCU_CORE)
 #define __RISC_V
 
 #ifndef __ASSEMBLY__

@@ -10,8 +10,8 @@
 #define SOC_RK3576
 #define HAL_MCU_CORE
 
-#define RKMCU_RK3576_BUS
-//#define RKMCU_RK3576_PMU
+#define HAL_BUS_MCU_CORE
+//#define HAL_PMU_MCU_CORE
 
 /* TODO: Cache maintain need the decoded addr,
  * it must be matched with pre-loader!
@@ -21,7 +21,7 @@
 /* System timer designation (RK TIMER) */
 #define SYS_TIMER TIMER11
 
-#ifdef RKMCU_RK3576_BUS
+#ifdef HAL_BUS_MCU_CORE
 #define HAL_DBG_ON
 #endif
 

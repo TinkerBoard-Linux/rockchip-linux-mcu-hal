@@ -7,9 +7,9 @@
 
 #ifdef HAL_MCU_CORE
 
-#ifdef RKMCU_RK3576_BUS
+#ifdef HAL_BUS_MCU_CORE
 uint32_t SystemCoreClock = 400000000; /* 400MHz */
-#else /* RKMCU_RK3576_PMU */
+#else /* HAL_PMU_MCU_CORE */
 uint32_t SystemCoreClock = 200000000; /* 200MHz */
 #endif
 

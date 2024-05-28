@@ -69,7 +69,7 @@ __USED int _write(int fd, char *ptr, int len)
     return i;
 }
 
-#ifdef RKMCU_RK3576_PMU
+#ifdef HAL_PMU_MCU_CORE
 __USED int _read(void)
 {
     return -1;
@@ -155,7 +155,7 @@ int main(void)
     HAL_UART_Init(&g_uart0Dev, &hal_uart_config);
 #endif
 
-#ifdef RKMCU_RK3576_BUS
+#ifdef HAL_BUS_MCU_CORE
     printf("Hello RK3576 mcu\n");
 #else
     HAL_UART_SerialOutChar(pUart, 'R');

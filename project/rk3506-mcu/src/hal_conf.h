@@ -10,10 +10,10 @@
 #define SOC_RK3506
 #define HAL_MCU_CORE
 
-#define RKMCU_RK3506_BUS
-//#define RKMCU_RK3506_PMU
+#define HAL_BUS_MCU_CORE
+//#define HAL_PMU_MCU_CORE
 
-#if defined(RKMCU_RK3506_BUS)
+#if defined(HAL_BUS_MCU_CORE)
 
 /* TODO: Cache maintain need the decoded addr,
  * it must be matched with pre-loader!
@@ -25,14 +25,14 @@
 
 #define HAL_DBG_ON
 
-#endif /* RKMCU_RK3506_BUS */
+#endif /* HAL_BUS_MCU_CORE */
 
 /* HAL Driver Config */
 #define HAL_NVIC_MODULE_ENABLED
 #define HAL_SYSTICK_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 
-#if defined(RKMCU_RK3506_BUS)
+#if defined(HAL_BUS_MCU_CORE)
 
 #define HAL_TIMER_MODULE_ENABLED
 
@@ -40,7 +40,7 @@
 //#define HAL_INTMUX_CUSTOM_DISTRIBUTION_FEATURE_ENABLED
 #endif
 
-#endif /* RKMCU_RK3506_BUS */
+#endif /* HAL_BUS_MCU_CORE */
 
 /* HAL_DBG SUB CONFIG */
 

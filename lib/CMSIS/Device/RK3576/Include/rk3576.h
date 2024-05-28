@@ -910,7 +910,7 @@ struct INTMUX_REG {
 #define MBOX11_BASE                    (0x2AE5B000U + MCU_OFFSET) /* MBOX11 base address */
 #define MBOX12_BASE                    (0x2AE5C000U + MCU_OFFSET) /* MBOX12 base address */
 #define MBOX13_BASE                    (0x2AE5D000U + MCU_OFFSET) /* MBOX13 base address */
-#ifdef RKMCU_RK3576_PMU
+#ifdef HAL_PMU_MCU_CORE
 #define INTMUX_BASE                    (0x2AE90000U + MCU_OFFSET) /* INTMUX base address */
 #else
 #define INTMUX_BASE                    (0x2AEC0000U + MCU_OFFSET) /* INTMUX base address */

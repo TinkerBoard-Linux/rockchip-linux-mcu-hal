@@ -72,7 +72,7 @@ typedef enum {
 /* ================                       IRQ                      ================ */
 /* ================================================================================ */
 #ifdef HAL_MCU_CORE
-#if defined(RKMCU_RK3562_BUS)
+#if defined(HAL_BUS_MCU_CORE)
 
 #define INTMUX_NUM_INT_PER_CON    256
 #define INTMUX_NUM_OUT_PER_CON    4
@@ -159,7 +159,7 @@ typedef enum {
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 
-#elif defined(RKMCU_RK3562_PMU)
+#elif defined(HAL_PMU_MCU_CORE)
 
 typedef enum {
 /* -------------------  Processor Exceptions Numbers  ----------------------------- */
@@ -188,7 +188,7 @@ typedef enum {
 #error missing IRQn_Type define for interrupt
 #endif
 
-#if defined(RKMCU_RK3562_BUS)
+#if defined(HAL_BUS_MCU_CORE)
 
 #define RSVD_MCU_IRQn(_N)               (RSVD0_MCU_IRQn + (_N))
 #define HAS_CUSTOME_INTC
@@ -378,7 +378,7 @@ typedef enum {
 #define CACHE_M_INVALID_ALL             0x6U
 #define CACHE_REVISION                  (0x00000100U)
 
-#if defined(RKMCU_RK3562_BUS) && !defined(HAL_CACHE_DECODED_ADDR_BASE)
+#if defined(HAL_BUS_MCU_CORE) && !defined(HAL_CACHE_DECODED_ADDR_BASE)
 #error "Please define HAL_CACHE_DECODED_ADDR_BASE on hal_conf.h"
 #endif
 
