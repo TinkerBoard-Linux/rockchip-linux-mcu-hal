@@ -82,10 +82,16 @@ struct TIMER_REG {
 #define UART4_BASE                     0xFF0E0000U /* UART4 base address */
 #define TIMER0_BASE                    0xFF250000U /* TIMER0 base address */
 #define TIMER1_BASE                    0xFF251000U /* TIMER1 base address */
-#define TIMER2_BASE                    0xFF251000U /* TIMER2 base address */
-#define TIMER3_BASE                    0xFF251000U /* TIMER3 base address */
-#define TIMER4_BASE                    0xFF251000U /* TIMER4 base address */
-#define TIMER5_BASE                    0xFF251000U /* TIMER5 base address */
+#define TIMER2_BASE                    0xFF252000U /* TIMER2 base address */
+#define TIMER3_BASE                    0xFF253000U /* TIMER3 base address */
+#define TIMER4_BASE                    0xFF254000U /* TIMER4 base address */
+#define TIMER5_BASE                    0xFF255000U /* TIMER5 base address */
+#define TIMER6_BASE                    0xFF258000U /* TIMER6 base address */
+#define TIMER7_BASE                    0xFF259000U /* TIMER7 base address */
+#define TIMER8_BASE                    0xFF25A000U /* TIMER8 base address */
+#define TIMER9_BASE                    0xFF25B000U /* TIMER9 base address */
+#define TIMER10_BASE                   0xFF25C000U /* TIMER10 base address */
+#define TIMER11_BASE                   0xFF25D000U /* TIMER11 base address */
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Module Variable Section                                */
@@ -104,9 +110,15 @@ struct TIMER_REG {
 #define TIMER3              ((struct TIMER_REG *) TIMER3_BASE)
 #define TIMER4              ((struct TIMER_REG *) TIMER4_BASE)
 #define TIMER5              ((struct TIMER_REG *) TIMER5_BASE)
+#define TIMER6              ((struct TIMER_REG *) TIMER6_BASE)
+#define TIMER7              ((struct TIMER_REG *) TIMER7_BASE)
+#define TIMER8              ((struct TIMER_REG *) TIMER8_BASE)
+#define TIMER9              ((struct TIMER_REG *) TIMER9_BASE)
+#define TIMER10             ((struct TIMER_REG *) TIMER10_BASE)
+#define TIMER11             ((struct TIMER_REG *) TIMER11_BASE)
 
 #define IS_UART_INSTANCE(instance) (((instance) == UART0) || ((instance) == UART1) || ((instance) == UART2) || ((instance) == UART3) || ((instance) == UART4))
-#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5))
+#define IS_TIMER_INSTANCE(instance) (((instance) == TIMER0) || ((instance) == TIMER1) || ((instance) == TIMER2) || ((instance) == TIMER3) || ((instance) == TIMER4) || ((instance) == TIMER5) || ((instance) == TIMER6) || ((instance) == TIMER7) || ((instance) == TIMER8) || ((instance) == TIMER9) || ((instance) == TIMER10) || ((instance) == TIMER11))
 /****************************************************************************************/
 /*                                                                                      */
 /*                               Register Bitmap Section                                */
