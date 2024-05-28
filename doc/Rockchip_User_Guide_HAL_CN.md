@@ -2,9 +2,9 @@
 
 文件标识：RK-YH-YF-070
 
-发布版本：V3.2.1
+发布版本：V3.3.0
 
-日期：2024-04-30
+日期：2024-05-28
 
 文件密级：□绝密   □秘密   □内部资料   ■公开
 
@@ -90,6 +90,7 @@ Rockchip Electronics Co., Ltd.
 | V3.1.0     | Steven Liu | 2023.08      | 增加芯片差异兼容性处理补充规范                               |
 | V3.2.0     | Cliff      | 2023.12      | 增加HAL_DSP_CORE定义                                         |
 | V3.2.1     | Tao Huang  | 2024.04      | 调整格式，修订处理器系列说明                                 |
+| V3.3.0     | Cliff      | 2024.05      | 增加同构MCU核间差异补充规范                                  |
 
 ---
 
@@ -1574,6 +1575,19 @@ start_rk3568.S
 #error "Please define HAL_AP_CORE or HAL_MCU_CORE on hal_conf.h"
 #endif
 ```
+
+#### 同构MCU核核间差异兼容性处理补充规范
+
+有些SOC内部会存在多个同构的MCU核，但是他们之间又存在差异，例如RK3576的PMU_MCU、DDR_MCU和BUS_MCU等都是Cortex-M0的内核，但是他们之间的中断连接又有差异，此时用前面的处理器宏定义就无法区分了，所以增加相关宏定义：HAL_XXX_MCU_CORE，其中XXX是MCU的名字，以该芯片的TRM文档的定义为准，例如PMU、DDR和BUS等，下面是一些例子：
+
+| 应用 | 宏定义           | 定义处     | 规范来源 |
+| ---- | ---------------- | ---------- | -------- |
+| MCU  | HAL_PMU_MCU_CORE | hal_conf.h | HAL      |
+| MCU  | HAL_DDR_MCU_CORE | hal_conf.h | HAL      |
+| MCU  | HAL_BUS_MCU_CORE | hal_conf.h | HAL      |
+| MCU  | HAL_NPU_MCU_CORE | hal_conf.h | HAL      |
+| MCU  | HAL_HP_MCU_CORE  | hal_conf.h | HAL      |
+| MCU  | HAL_LP_MCU_CORE  | hal_conf.h | HAL      |
 
 #### 芯片差异兼容性处理补充规范
 
