@@ -401,6 +401,14 @@ typedef enum
     UART7_IRQn             = 370,      /*!< UART7  Interrupt            */
     UART8_IRQn             = 371,      /*!< UART8  Interrupt            */
     UART9_IRQn             = 372,      /*!< UART9  Interrupt            */
+    PWM0_IRQn              = 376,      /*!< PWM0 Interrupt              */
+    PWM0_PWR_IRQn          = 377,      /*!< PWM0 PWR Interrupt          */
+    PWM1_IRQn              = 378,      /*!< PWM1 Interrupt              */
+    PWM1_PWR_IRQn          = 379,      /*!< PWM1 PWR Interrupt          */
+    PWM2_IRQn              = 380,      /*!< PWM2 Interrupt              */
+    PWM2_PWR_IRQn          = 381,      /*!< PWM2 PWR Interrupt          */
+    PWM3_IRQn              = 382,      /*!< PWM3 Interrupt              */
+    PWM3_PWR_IRQn          = 383,      /*!< PWM3 PWR Interrupt          */
     SARADC_IRQn            = 430,      /*!< SARADC Interrupt            */
     RSVD0_IRQn             = 454,      /*!< RSVD0  Interrupt            */
     NUM_INTERRUPTS         = 512,
