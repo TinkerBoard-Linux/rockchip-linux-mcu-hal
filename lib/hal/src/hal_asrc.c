@@ -485,6 +485,10 @@ HAL_Status HAL_ASRC_Start(struct HAL_ASRC_DEV *asrc)
     MODIFY_REG(asrc->pReg->CON, ASRC_CON_EN_MASK, ASRC_EN);
     MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_CONV_ERROR_EN_MASK,
                ASRC_INT_CON_CONV_ERROR_EN_MASK);
+    MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_SRC_LRCK_UNLOCK_EN_MASK,
+               ASRC_INT_CON_SRC_LRCK_UNLOCK_EN_MASK);
+    MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_DST_LRCK_UNLOCK_EN_MASK,
+               ASRC_INT_CON_DST_LRCK_UNLOCK_EN_MASK);
 #ifdef ASRC_DEBUG
     /* Enable all interrupts for debug. */
     MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_OUT_START_EN_MASK, ASRC_INT_CON_OUT_START_EN_MASK);
@@ -518,6 +522,8 @@ HAL_Status HAL_ASRC_Stop(struct HAL_ASRC_DEV *asrc)
                ASRC_IN_STOP | ASRC_OUT_STOP);
     MODIFY_REG(asrc->pReg->CON, ASRC_CON_EN_MASK, ASRC_DIS);
     MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_CONV_ERROR_EN_MASK, 0);
+    MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_SRC_LRCK_UNLOCK_EN_MASK, 0);
+    MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_DST_LRCK_UNLOCK_EN_MASK, 0);
 
     return HAL_OK;
 }
@@ -574,6 +580,15 @@ HAL_Status HAL_ASRC_Config(struct HAL_ASRC_DEV *asrc, struct ASRC_PARAMS *rxPara
                ASRC_DATA_FMT_OSJM_MASK | ASRC_DATA_FMT_ISJM_MASK |
                ASRC_DATA_FMT_IWL_MASK | ASRC_DATA_FMT_OWL_MASK,
                val);
+
+    /*
+     * Calculate lrck margin, the margin need less than
+     * (ASRC_SAMPLE_FREQ / sampleRate) / 4
+     */
+    MODIFY_REG(asrc->pReg->LRCK_MARGIN, ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_MASK,
+               ((ASRC_SAMPLE_FREQ / rxParams->sampleRate) / 4) << ASRC_LRCK_MARGIN_SRC_LRCK_MARGIN_SHIFT);
+    MODIFY_REG(asrc->pReg->LRCK_MARGIN, ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_MASK,
+               ((ASRC_SAMPLE_FREQ / txParams->sampleRate) / 4) << ASRC_LRCK_MARGIN_DST_LRCK_MARGIN_SHIFT);
 
     return HAL_OK;
 }
