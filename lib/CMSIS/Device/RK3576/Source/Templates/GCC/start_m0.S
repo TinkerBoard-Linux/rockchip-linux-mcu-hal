@@ -5,7 +5,7 @@
 
 #include "soc.h"
 
-#if defined(HAL_MCU_CORE) && defined(__CORTEX_M)
+#if defined(HAL_MCU_CORE) && !defined(__RISC_V)
 
 /*
 ;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
@@ -145,4 +145,4 @@ Default_Handler:
 
                 .end
 
-#endif /* defined(HAL_MCU_CORE) && defined(__CORTEX_M) */
+#endif /* defined(HAL_MCU_CORE) && !defined(__RISC_V) */
