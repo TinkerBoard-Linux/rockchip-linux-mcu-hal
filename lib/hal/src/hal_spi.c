@@ -143,6 +143,11 @@
                                  ((__NCYCLES__) == CR0_CSM_2CYCLES) || \
                                  ((__NCYCLES__) == CR0_CSM_3CYCLES))
 
+#define IS_SPI_RSD(__NCYCLES__) (((__NCYCLES__) == CR0_CSM_0CYCLE) ||  \
+                                 ((__NCYCLES__) == CR0_CSM_1CYCLE) ||  \
+                                 ((__NCYCLES__) == CR0_CSM_2CYCLES) || \
+                                 ((__NCYCLES__) == CR0_CSM_3CYCLES))
+
 /*
  * About 200us cost for calling DMA function in each SPI DMA xfer in whtch it
  * can transfer 10Kbps in 50MHz IO rate. Unless DMA large data, or it's CPU waste.
@@ -972,6 +977,7 @@ HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, ui
     HAL_ASSERT(IS_SPI_APBTRANSFORM(pSPI->config.apbTransform));
     HAL_ASSERT(IS_SPI_SSD_BIT(pSPI->config.ssd));
     HAL_ASSERT(IS_SPI_CSM(pSPI->config.csm));
+    HAL_ASSERT(IS_SPI_RSD(pSPI->config.rsd));
 
     /* Controller configuration */
     cr0 |= pSPI->config.xfmMode;
@@ -980,6 +986,7 @@ HAL_Status HAL_SPI_Configure(struct SPI_HANDLE *pSPI, const uint8_t *pTxData, ui
     cr0 |= pSPI->config.nBytes;
     cr0 |= pSPI->config.clkPolarity | pSPI->config.clkPhase | pSPI->config.firstBit;
     cr0 |= pSPI->config.csm;
+    cr0 |= pSPI->config.rsd;
     WRITE_REG(pSPI->pReg->CTRLR[0], cr0);
 
     /* Fifo configuration */

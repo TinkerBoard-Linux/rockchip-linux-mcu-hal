@@ -73,6 +73,12 @@
 #define CR0_CSM_2CYCLES  CR0_CSM(2)
 #define CR0_CSM_3CYCLES  CR0_CSM(3)
 
+#define CR0_RSD(nCycles) (((nCycles) << SPI_CTRLR0_RSD_SHIFT) & SPI_CTRLR0_RSD_MASK)
+#define CR0_RSD_0CYCLE   CR0_RSD(0)
+#define CR0_RSD_1CYCLE   CR0_RSD(1)
+#define CR0_RSD_2CYCLES  CR0_RSD(2)
+#define CR0_RSD_3CYCLES  CR0_RSD(3)
+
 /***************************** Structure Definition **************************/
 
 /** @brief  SPI Type definition */
@@ -104,6 +110,7 @@ struct SPI_CONFIG {
                                   used to configure the transmit and receive SCK clock. */
     uint32_t ssiType;          /**< Specifies if the TI mode is enabled or not.*/
     uint32_t csm;              /**< Specifies Motorola SPI Master SS_N high cycles for each frame data is transfer. */
+    uint32_t rsd;              /**< Specifies rx sample delay number. */
     bool configured;           /**< Indicate the configure status. */
 };
 
