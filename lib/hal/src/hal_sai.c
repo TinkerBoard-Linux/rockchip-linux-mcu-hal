@@ -871,7 +871,7 @@ static HAL_Status HAL_SAI_SetWaterLevel(struct HAL_SAI_DEV *sai, eAUDIO_streamTy
                                         uint8_t lanes, struct AUDIO_PARAMS *params)
 {
 #ifdef HAL_AUDIO_LOW_LATENCY
-    uint32_t frameWord;
+    uint32_t frameWord, width;
     uint8_t dl = SAI_DMA_BURST_SIZE;
 
     HAL_ASSERT(sai != NULL);
@@ -882,7 +882,8 @@ static HAL_Status HAL_SAI_SetWaterLevel(struct HAL_SAI_DEV *sai, eAUDIO_streamTy
      * One frame latency, e.g. 20us@48kHz situation
      * note: dma burst len should use one frame at the same time.
      */
-    frameWord = HAL_AUDIO_GetPhysicalWidth(params->sampleBits) * params->channels / 32;
+    width = HAL_AUDIO_GetPhysicalWidth(params->sampleBits);
+    frameWord = width * params->channels / 32;
     if (!frameWord) {
         HAL_DBG_ERR("SAI-%p: %s: Invalid frameWord: %d\n",
                     sai->pReg, __func__, frameWord);
@@ -890,7 +891,19 @@ static HAL_Status HAL_SAI_SetWaterLevel(struct HAL_SAI_DEV *sai, eAUDIO_streamTy
         return HAL_INVAL;
     }
 
-    dl = frameWord / lanes;
+    /*
+     * 16bits: 1 word L/R interleaved per lanes
+     * 32bits: 2 word L/R interleaved per lanes
+     *
+     * Normalization:
+     * 16bits: 1 / 1 = 1
+     * 32bits: 2 / 2 = 1
+     */
+    if (width == 32) {
+        frameWord /= 2;
+    }
+
+    dl = HAL_DIV_ROUND_UP(frameWord, lanes);
 
     /*
      * Align the real WL for all lanes case
@@ -898,23 +911,21 @@ static HAL_Status HAL_SAI_SetWaterLevel(struct HAL_SAI_DEV *sai, eAUDIO_streamTy
      * Currently, 1 Lane case use all FIFOs, the real WL is expanded maxLanes times.
      * so, here to align latency for all cases.
      */
-    if (sai->maxLanes) {
-        dl = lanes > 1 ? dl : dl / sai->maxLanes;
+    if (sai->maxLanes && lanes == 1) {
+        dl = HAL_DIV_ROUND_UP(dl, sai->maxLanes);
     }
 
-    /* min value should be 1 */
-    dl = dl < 1 ? 1 : dl;
+    /* Inverse-normalization */
+    if (width == 32) {
+        dl *= 2;
+    }
 
     /*
      * WA for 1 lanes rx, need one more to cover it, because REQ triggered by
      * FIFO0 WL, but use all FIFOs space. there is a misalignment.
      */
-    if (lanes == 1 && stream == AUDIO_STREAM_CAPTURE) {
-        if (params->channels <= 2) {
-            dl = 1;
-        } else {
-            dl++;
-        }
+    if (lanes == 1 && stream == AUDIO_STREAM_CAPTURE && params->channels > 2) {
+        dl++;
     }
 
     dl = dl > SAI_DMA_BURST_SIZE_MAX ? SAI_DMA_BURST_SIZE_MAX : dl;
