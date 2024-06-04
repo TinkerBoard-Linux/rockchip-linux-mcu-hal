@@ -277,7 +277,7 @@ static HAL_Status FSPI_PollingEnable(struct HAL_FSPI_HOST *host, struct HAL_SPI_
 {
     HAL_Status ret = HAL_OK;
 
-#ifdef FSPI_HRDYMASK_XIP_HUP_STATE_MASK
+#if defined(FSPI_HRDYMASK_XIP_HUP_STATE_MASK) && defined(FSPI_POLLDLY_CTRL_OFFSET)
     int32_t timeout = 0;
 
     if (READ_REG(host->instance->MODE) & FSPI_MODE_XMMC_MODE_EN_MASK) {
