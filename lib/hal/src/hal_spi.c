@@ -177,7 +177,7 @@ HAL_Status HAL_SPI_Init(struct SPI_HANDLE *pSPI, uint32_t base, bool slave)
     /* Check the SPI handle allocation */
     HAL_ASSERT(pSPI != NULL);
 
-    pSPI->pReg = (struct SPI_REG *)base;
+    pSPI->pReg = (struct SPI_REG *)(uintptr_t)base;
     HAL_ASSERT(IS_SPI_INSTANCE(pSPI->pReg));
 
     if (slave) {

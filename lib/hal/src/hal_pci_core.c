@@ -35,12 +35,12 @@
 
 /********************* Private Function Definition ***************************/
 
-static inline void writel(uint32_t address, uint32_t value)
+static inline void writel(uintptr_t address, uint32_t value)
 {
     *((volatile uint32_t *)address) = value;
 }
 
-static inline uint32_t readl(uint32_t address)
+static inline uint32_t readl(uintptr_t address)
 {
     return *((volatile uint32_t *)address);
 }
