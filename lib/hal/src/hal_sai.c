@@ -100,7 +100,8 @@
 
 /* CLR Clear Logic Register */
 #ifdef  SAI_CLR_FCR_SHIFT
-#define SAI_CLR_FCR HAL_BIT(SAI_CLR_FCR_SHIFT)
+#define SAI_CLR_FCR_EN  HAL_BIT(SAI_CLR_FCR_SHIFT)
+#define SAI_CLR_FCR_DIS 0
 #endif
 #define SAI_CLR_FSC HAL_BIT(SAI_CLR_FSC_SHIFT)
 #define SAI_CLR_RXC HAL_BIT(SAI_CLR_RXC_SHIFT)
@@ -333,6 +334,20 @@ static HAL_Status SAI_SetBclkDivAuto(struct HAL_SAI_DEV *sai, uint32_t slotWidth
     return HAL_OK;
 }
 
+static void SAI_ForceClear(struct SAI_REG *pReg, uint32_t clr)
+{
+#ifdef  SAI_CLR_FCR_SHIFT
+    HAL_ASSERT(IS_SAI_INSTANCE(pReg));
+
+    HAL_DelayUs(10);
+    if (READ_REG(pReg->CLR) & clr) {
+        MODIFY_REG(pReg->CLR, SAI_CLR_FCR_MASK, SAI_CLR_FCR_EN);
+        HAL_DelayUs(10);
+        MODIFY_REG(pReg->CLR, SAI_CLR_FCR_MASK, SAI_CLR_FCR_DIS);
+    }
+#endif
+}
+
 /** @} */
 /********************* Public Function Definition ****************************/
 /** @defgroup SAI_Exported_Functions_Group1 Suspend and Resume Functions
@@ -484,6 +499,7 @@ HAL_Status HAL_SAI_DisableTX(struct SAI_REG *pReg)
     MODIFY_REG(pReg->XFER, SAI_XFER_TXS_MASK, SAI_XFER_TXS_DIS);
     HAL_DelayUs(150);
     MODIFY_REG(pReg->CLR, SAI_CLR_TXC_MASK, SAI_CLR_TXC);
+    SAI_ForceClear(pReg, SAI_CLR_TXC);
 
     return HAL_OK;
 }
@@ -503,6 +519,7 @@ HAL_Status HAL_SAI_DisableRX(struct SAI_REG *pReg)
     MODIFY_REG(pReg->XFER, SAI_XFER_RXS_MASK, SAI_XFER_RXS_DIS);
     HAL_DelayUs(150);
     MODIFY_REG(pReg->CLR, SAI_CLR_RXC_MASK, SAI_CLR_RXC);
+    SAI_ForceClear(pReg, SAI_CLR_RXC);
 
     return HAL_OK;
 }
