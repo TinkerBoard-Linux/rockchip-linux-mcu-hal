@@ -364,7 +364,7 @@ HAL_Status HAL_PCIE_DeInit(struct HAL_PCIE_HANDLE *pcie)
 HAL_Status HAL_PCIE_InboundConfig(struct HAL_PCIE_HANDLE *pcie, int32_t index, int32_t bar, uint64_t cpuAddr)
 {
     uint32_t val, off;
-    char i;
+    int32_t i;
 
     off = PCIE_ATU_OFFSET + 0x200 * index + 0x100;
     HAL_PCIE_DbiWritel(pcie, off + PCIE_ATU_UNR_LOWER_TARGET, cpuAddr & 0xFFFFFFFF);
