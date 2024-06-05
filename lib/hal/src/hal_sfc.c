@@ -322,7 +322,7 @@ static HAL_Status SFC_XferDone(struct HAL_SFC_HOST *host)
 HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
     struct HAL_SFC_HOST *host = (struct HAL_SFC_HOST *)spi->userdata;
-    uint32_t ret = HAL_OK;
+    HAL_Status ret = HAL_OK;
     uint32_t dir = op->data.dir;
     void *pData = NULL;
 
@@ -336,7 +336,7 @@ HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
     if (pData) {
         ret = SFC_XferData(host, op->data.nbytes, pData, dir);
         if (ret) {
-            HAL_DBG("%s xfer data failed ret %ld\n", __func__, ret);
+            HAL_DBG("%s xfer data failed ret %d\n", __func__, ret);
 
             return ret;
         }
@@ -356,7 +356,7 @@ HAL_Status HAL_SFC_SpiXfer(struct SNOR_HOST *spi, struct HAL_SPI_MEM_OP *op)
 HAL_Status HAL_SFC_SPINandSpiXfer(struct SPI_NAND_HOST *spi, struct HAL_SPI_MEM_OP *op)
 {
     struct HAL_SFC_HOST *host = (struct HAL_SFC_HOST *)spi->userdata;
-    uint32_t ret = HAL_OK;
+    HAL_Status ret = HAL_OK;
     uint32_t dir = op->data.dir;
     void *pData = NULL;
 
@@ -370,7 +370,7 @@ HAL_Status HAL_SFC_SPINandSpiXfer(struct SPI_NAND_HOST *spi, struct HAL_SPI_MEM_
     if (pData) {
         ret = SFC_XferData(host, op->data.nbytes, pData, dir);
         if (ret) {
-            HAL_DBG("%s xfer data failed ret %ld\n", __func__, ret);
+            HAL_DBG("%s xfer data failed ret %d\n", __func__, ret);
 
             return ret;
         }
