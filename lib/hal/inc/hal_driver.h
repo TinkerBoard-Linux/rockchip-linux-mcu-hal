@@ -248,6 +248,10 @@
 #include "hal_spdiftx.h"
 #endif
 
+#ifdef HAL_SPI2AHB_MODULE_ENABLED
+#include "hal_spi2ahb.h"
+#endif
+
 #ifdef HAL_SPI2APB_MODULE_ENABLED
 #include "hal_spi2apb.h"
 #endif
