@@ -24,6 +24,72 @@ const struct HAL_CRU_DEV g_cruDev = {
 };
 #endif
 
+#ifdef HAL_FSPI_MODULE_ENABLED
+struct HAL_FSPI_HOST g_fspi0Dev =
+{
+    .instance = FSPI0,
+    .sclkGate = SCLK_FSPI_X2_GATE,
+    .hclkGate = HCLK_FSPI_GATE,
+    .xipClkGate = 0,
+    .sclkID = SCLK_FSPI_X2,
+    .irqNum = FSPI0_IRQn,
+    .xipMemCode = 0,
+    .xipMemData = 0,
+    .xmmcDev[0] =
+    {
+        .type = DEV_NOR,
+    },
+};
+
+struct HAL_FSPI_HOST g_fspi1Dev =
+{
+    .instance = FSPI1,
+    .sclkGate = SCLK_FSPI1_X2_GATE,
+    .hclkGate = HCLK_FSPI1_GATE,
+    .xipClkGate = 0,
+    .sclkID = SCLK_FSPI1_X2,
+    .irqNum = FSPI1_IRQn,
+    .xipMemCode = 0,
+    .xipMemData = 0,
+    .xmmcDev[0] =
+    {
+        .type = DEV_NOR,
+    },
+};
+#endif
+
+#ifdef HAL_PCIE_MODULE_ENABLED
+struct HAL_PCIE_DEV g_pcie0Dev =
+{
+    .apbBase = PCIE0_APB_BASE,
+    .dbiBase = PCIE0_DBI_BASE,
+    .cfgBase = 0x20000000,
+    .lanes = 1,
+    .gen = 2,
+    .firstBusNo = 0x0,
+#if defined(HAL_AP_CORE)
+    .legacyIrqNum = PCIE0_LEGACY_IRQn,
+#else
+    .legacyIrqNum = 0,
+#endif
+};
+
+struct HAL_PCIE_DEV g_pcie1Dev =
+{
+    .apbBase = PCIE1_APB_BASE,
+    .dbiBase = PCIE1_DBI_BASE,
+    .cfgBase = 0x21000000,
+    .lanes = 1,
+    .gen = 2,
+    .firstBusNo = 0x20,
+#if defined(HAL_AP_CORE)
+    .legacyIrqNum = PCIE1_LEGACY_IRQn,
+#else
+    .legacyIrqNum = 0,
+#endif
+};
+#endif
+
 #ifdef HAL_PWM_MODULE_ENABLED
 const struct HAL_PWM_DEV g_pwm0Dev =
 {
@@ -71,6 +137,118 @@ const struct HAL_PWM_DEV g_pwm2Dev =
     .irqNum[7] = PWM2_CH7_IRQn,
 };
 #endif
+#endif
+
+#ifdef HAL_SPI_MODULE_ENABLED
+const struct HAL_SPI_DEV g_spi0Dev = {
+    .base = SPI0_BASE,
+    .clkId = CLK_SPI0,
+    .clkGateID = CLK_SPI0_GATE,
+    .pclkGateID = PCLK_SPI0_GATE,
+    .maxFreq = 300000000,
+    .irqNum = SPI0_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI0_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI0_BASE + 0x400,
+        .dmac = DMA0,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI0_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI0_BASE + 0x800,
+        .dmac = DMA0,
+    },
+};
+
+const struct HAL_SPI_DEV g_spi1Dev = {
+    .base = SPI1_BASE,
+    .clkId = CLK_SPI1,
+    .clkGateID = CLK_SPI1_GATE,
+    .pclkGateID = PCLK_SPI1_GATE,
+    .maxFreq = 300000000,
+    .irqNum = SPI1_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI1_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI1_BASE + 0x400,
+        .dmac = DMA0,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI1_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI1_BASE + 0x800,
+        .dmac = DMA0,
+    },
+};
+
+const struct HAL_SPI_DEV g_spi2Dev = {
+    .base = SPI2_BASE,
+    .clkId = CLK_SPI2,
+    .clkGateID = CLK_SPI2_GATE,
+    .pclkGateID = PCLK_SPI2_GATE,
+    .maxFreq = 300000000,
+    .irqNum = SPI2_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI2_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI2_BASE + 0x400,
+        .dmac = DMA1,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI2_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI2_BASE + 0x800,
+        .dmac = DMA1,
+    },
+};
+
+const struct HAL_SPI_DEV g_spi3Dev = {
+    .base = SPI3_BASE,
+    .clkId = CLK_SPI3,
+    .clkGateID = CLK_SPI3_GATE,
+    .pclkGateID = PCLK_SPI3_GATE,
+    .maxFreq = 300000000,
+    .irqNum = SPI3_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI3_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI3_BASE + 0x400,
+        .dmac = DMA1,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI3_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI3_BASE + 0x800,
+        .dmac = DMA1,
+    },
+};
+
+const struct HAL_SPI_DEV g_spi4Dev = {
+    .base = SPI4_BASE,
+    .clkId = CLK_SPI4,
+    .clkGateID = CLK_SPI4_GATE,
+    .pclkGateID = PCLK_SPI4_GATE,
+    .maxFreq = 300000000,
+    .irqNum = SPI4_IRQn,
+    .isSlave = false,
+    .txDma = {
+        .channel = DMA_REQ_SPI4_TX,
+        .direction = DMA_MEM_TO_DEV,
+        .addr = SPI4_BASE + 0x400,
+        .dmac = DMA2,
+    },
+    .rxDma = {
+        .channel = DMA_REQ_SPI4_RX,
+        .direction = DMA_DEV_TO_MEM,
+        .addr = SPI4_BASE + 0x800,
+        .dmac = DMA2,
+    },
+};
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED

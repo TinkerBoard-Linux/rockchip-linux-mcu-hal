@@ -222,6 +222,10 @@ typedef enum {
   PWM2_CH5_IRQn             =  145 + NUM_INTERRUPTS,    /*!< PWM2_CH5 Interrupt             */
   PWM2_CH6_IRQn             =  146 + NUM_INTERRUPTS,    /*!< PWM2_CH6 Interrupt             */
   PWM2_CH7_IRQn             =  147 + NUM_INTERRUPTS,    /*!< PWM2_CH7 Interrupt             */
+  SPI0_IRQn                 =  148 + NUM_INTERRUPTS,    /*!< SPI0 Interrupt                 */
+  SPI1_IRQn                 =  149 + NUM_INTERRUPTS,    /*!< SPI1 Interrupt                 */
+  SPI2_IRQn                 =  150 + NUM_INTERRUPTS,    /*!< SPI2 Interrupt                 */
+  SPI3_IRQn                 =  151 + NUM_INTERRUPTS,    /*!< SPI3 Interrupt                 */
   MBOX_BB1_IRQn             =  172 + NUM_INTERRUPTS,    /*!< MBOX1 Interrupt                */
   MBOX_BB2_IRQn             =  173 + NUM_INTERRUPTS,    /*!< MBOX2 Interrupt                */
   MBOX_BB3_IRQn             =  174 + NUM_INTERRUPTS,    /*!< MBOX3 Interrupt                */
@@ -245,6 +249,8 @@ typedef enum {
   GPIO3_EXP_IRQn            =  198 + NUM_INTERRUPTS,    /*!< GPIO1 EXP Interrupt            */
   GPIO4_IRQn                =  201 + NUM_INTERRUPTS,    /*!< GPIO0 Interrupt                */
   GPIO4_EXP_IRQn            =  202 + NUM_INTERRUPTS,    /*!< GPIO1 EXP Interrupt            */
+  FSPI0_IRQn                =  286 + NUM_INTERRUPTS,    /*!< FSPI0 Interrupt                */
+  FSPI1_IRQn                =  287 + NUM_INTERRUPTS,    /*!< FSPI1 Interrupt                */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 #endif /* __ASSEMBLY__ */
@@ -342,6 +348,11 @@ typedef enum {
   UART9_IRQn                =  117 + NUM_INTERRUPTS,    /*!< UART9 Interrupt                */
   UART10_IRQn               =  118 + NUM_INTERRUPTS,    /*!< UART10 Interrupt               */
   UART11_IRQn               =  119 + NUM_INTERRUPTS,    /*!< UART11 Interrupt               */
+  SPI0_IRQn                 =  148 + NUM_INTERRUPTS,    /*!< SPI0 Interrupt                 */
+  SPI1_IRQn                 =  149 + NUM_INTERRUPTS,    /*!< SPI1 Interrupt                 */
+  SPI2_IRQn                 =  150 + NUM_INTERRUPTS,    /*!< SPI2 Interrupt                 */
+  SPI3_IRQn                 =  151 + NUM_INTERRUPTS,    /*!< SPI3 Interrupt                 */
+  SPI4_IRQn                 =  152 + NUM_INTERRUPTS,    /*!< SPI4 Interrupt                 */
   MBOX_BB0_IRQn             =  171 + NUM_INTERRUPTS,    /*!< MBOX0 Interrupt                */
   MBOX_BB1_IRQn             =  172 + NUM_INTERRUPTS,    /*!< MBOX1 Interrupt                */
   MBOX_BB2_IRQn             =  173 + NUM_INTERRUPTS,    /*!< MBOX2 Interrupt                */
@@ -360,6 +371,8 @@ typedef enum {
   GPIO2_EXP2_IRQn           =  195 + NUM_INTERRUPTS,    /*!< GPIO2 EXP2 Interrup            */
   GPIO3_EXP2_IRQn           =  199 + NUM_INTERRUPTS,    /*!< GPIO3 EXP2 Interrup            */
   GPIO4_EXP2_IRQn           =  203 + NUM_INTERRUPTS,    /*!< GPIO4 EXP2 Interrup            */
+  FSPI0_IRQn                =  286 + NUM_INTERRUPTS,    /*!< FSPI0 Interrupt                */
+  FSPI1_IRQn                =  287 + NUM_INTERRUPTS,    /*!< FSPI1 Interrupt                */
   TOTAL_INTERRUPTS          =  (INTMUX_IRQ_START_NUM + NUM_INTERRUPTS + NUM_EXT_INTERRUPTS),
 } IRQn_Type;
 #endif /* __ASSEMBLY__ */
@@ -485,6 +498,10 @@ typedef enum {
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
+#define PCIE0_DBI_BASE                  (0x22000000U + MCU_OFFSET) /* PCIE0 DBI base address */
+#define PCIE1_DBI_BASE                  (0x22400000U + MCU_OFFSET) /* PCIE1 DBI base address */
+#define PCIE0_APB_BASE                  (0x2A200000U + MCU_OFFSET) /* PCIE0 APB base address */
+#define PCIE1_APB_BASE                  (0x2A210000U + MCU_OFFSET) /* PCIE1 APB base address */
 #define GIC_DISTRIBUTOR_BASE            (0x2A701000) /* GICD base address */
 #define GIC_CPU_INTERFACE_BASE          (0x2A702000) /* GICC base address */
 
@@ -685,7 +702,8 @@ typedef enum CLOCK_Name {
     CLK_PMU1PWM = CLK64(CLK_PMU1PWM_SEL, 0U),
 } eCLOCK_Name;
 #endif /* __ASSEMBLY__ */
-
+/****************************************FSPI********************************************/
+#define FSPI_CHIP_CNT                            (2)
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

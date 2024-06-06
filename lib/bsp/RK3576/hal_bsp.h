@@ -12,12 +12,25 @@
 
 /***************************** Structure Definition **************************/
 
+#ifdef HAL_PCIE_MODULE_ENABLED
+extern struct HAL_PCIE_DEV g_pcie0Dev;
+extern struct HAL_PCIE_DEV g_pcie1Dev;
+#endif
+
 #ifdef HAL_PWM_MODULE_ENABLED
 extern const struct HAL_PWM_DEV g_pwm0Dev;
 #if defined(HAL_AP_CORE) || defined(HAL_BUS_MCU_CORE)
 extern const struct HAL_PWM_DEV g_pwm1Dev;
 extern const struct HAL_PWM_DEV g_pwm2Dev;
 #endif
+#endif
+
+#ifdef HAL_SPI_MODULE_ENABLED
+extern const struct HAL_SPI_DEV g_spi0Dev;
+extern const struct HAL_SPI_DEV g_spi1Dev;
+extern const struct HAL_SPI_DEV g_spi2Dev;
+extern const struct HAL_SPI_DEV g_spi3Dev;
+extern const struct HAL_SPI_DEV g_spi4Dev;
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED
