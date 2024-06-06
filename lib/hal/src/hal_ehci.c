@@ -363,7 +363,7 @@ static void EHCI_AppendQtdToQhList(struct EHCI_QH *qh, struct EHCI_QTD *qtd)
 static void EHCI_WriteQh(struct USB_DEV *udev, struct USB_EP_INFO *ep,
                          struct EHCI_QH *qh)
 {
-    uint32_t chrst, cap;
+    uint32_t chrst;
     uint8_t ep0MaxPacketSize; /* should be global? */
 
     /* Write QH DWord 1 - Endpoint Characteristics */
@@ -394,10 +394,8 @@ static void EHCI_WriteQh(struct USB_DEV *udev, struct USB_EP_INFO *ep,
 
     /* Write QH DWord 2 - Endpoint Capabilities */
     if (udev->speed == USB_SPEED_HIGH) {
-        cap = 1U << QH_MULT_SHIFT;
+        qh->cap = 1U << QH_MULT_SHIFT;
     }
-
-    qh->cap = cap;
 }
 
 static void EHCI_WriteQtdBufPage(struct EHCI_QTD *qtd, uint32_t bufAddr,
@@ -455,10 +453,27 @@ static HAL_Status EHCI_CtrlXfer(struct UTR *utr)
 
     /* Allocate qTDs */
     qtdSetup = (struct EHCI_QTD *)HAL_USBH_AllocPool();
+    if (!qtdSetup) {
+        if (isNewQh) {
+            HAL_USBH_FreePool(qh);
+            udev->ep0.hwPipe = NULL;
+        }
+
+        return HAL_ERROR;
+    }
     EHCI_QTD_INIT(qtdSetup, utr);
 
     if (utr->dataLen > 0) {
         qtdData = (struct EHCI_QTD *)HAL_USBH_AllocPool();
+        if (!qtdData) {
+            HAL_USBH_FreePool(qtdSetup);
+            if (isNewQh) {
+                HAL_USBH_FreePool(qh);
+                udev->ep0.hwPipe = NULL;
+            }
+
+            return HAL_ERROR;
+        }
         EHCI_QTD_INIT(qtdData, utr);
     } else {
         qtdData = NULL;
@@ -467,11 +482,15 @@ static HAL_Status EHCI_CtrlXfer(struct UTR *utr)
     qtdStatus = (struct EHCI_QTD *)HAL_USBH_AllocPool();
     if (qtdStatus == NULL) {
         /* out of memory? */
-        if (qtdSetup) {
-            HAL_USBH_FreePool(qtdSetup);
-        }
+        HAL_USBH_FreePool(qtdSetup);
+
         if (qtdData) {
             HAL_USBH_FreePool(qtdData);
+        }
+
+        if (isNewQh) {
+            HAL_USBH_FreePool(qh);
+            udev->ep0.hwPipe = NULL;
         }
 
         return HAL_ERROR; /* out of memory */

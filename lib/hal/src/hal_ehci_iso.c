@@ -297,7 +297,7 @@ static void EHCI_WriteSitdInfo(struct UTR *utr, struct EHCI_SITD *sitd)
         sitd->bufPage[1] |= scnt; /* Transaction count (T-Count) */
     }
 
-    if (sitd->fIdx == IF_PER_UTR) {
+    if (sitd->fIdx + 1 == IF_PER_UTR) {
         sitd->sched |= SITD_IOC;
     }
 
@@ -348,7 +348,8 @@ static HAL_Status EHCI_IsoSplitXfer(struct UTR *utr, struct ECHI_ISO_EP *isoEp)
     int fidx; /* Index to the 8 iso frames of UTR */
 
 /*    if (utr->udev->parent == NULL) */
-    {
+    // TODO: split xfer need to further debug.
+    if (utr->udev->speed == USB_SPEED_FULL) {
         HAL_DBG_ERR("siso xfer - parent lost!\n");
 
         return HAL_INVAL;
@@ -648,7 +649,7 @@ HAL_Status HAL_EHCI_QuitIsoXfer(struct UTR *utr, struct USB_EP_INFO *ep)
             ehci->pfList[frameIdx] = itd->nextLink;
         } else {
             p = ITD_PTR(ehci->pfList[frameIdx]); /* find the preceding iTD */
-            while ((ITD_PTR(p->nextLink) != itd) && (p != NULL)) {
+            while ((p != NULL) && (ITD_PTR(p->nextLink) != itd)) {
                 p = ITD_PTR(p->nextLink);
             }
 
@@ -712,7 +713,7 @@ HAL_Status HAL_EHCI_ScanIsochronousList(struct EHCI_HCD *ehci)
                     ehci->pfList[frameIdx] = itd->nextLink;
                 } else {
                     p = ITD_PTR(ehci->pfList[frameIdx]); /* Find the preceding iTD */
-                    while ((ITD_PTR(p->nextLink) != itd) && (p != NULL)) {
+                    while ((p != NULL) && (ITD_PTR(p->nextLink) != itd)) {
                         p = ITD_PTR(p->nextLink);
                     }
 
@@ -750,7 +751,7 @@ HAL_Status HAL_EHCI_ScanIsochronousList(struct EHCI_HCD *ehci)
                     ehci->pfList[frameIdx] = sitd->nextLink;
                 } else {
                     sp = SITD_PTR(ehci->pfList[frameIdx]); /* Find the preceding siTD */
-                    while ((SITD_PTR(sp->nextLink) != sitd) && (sp != NULL)) {
+                    while ((sp != NULL) && (SITD_PTR(sp->nextLink) != sitd)) {
                         sp = SITD_PTR(sp->nextLink);
                     }
 
