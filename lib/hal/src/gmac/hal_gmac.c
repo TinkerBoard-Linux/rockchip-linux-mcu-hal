@@ -1285,12 +1285,6 @@ HAL_Status HAL_GMAC_PTPSetTime(struct GMAC_HANDLE *pGMAC, struct PTP_TIME *times
     HAL_ASSERT(pGMAC != NULL);
     HAL_ASSERT(timestamp != NULL);
 
-    if (timestamp->sec < 0 || (timestamp->sec == 0 && timestamp->nsec < 0)) {
-        HAL_DBG("ptp timetamp is invalid\n");
-
-        return HAL_ERROR;
-    }
-
     GMAC_PTPUpdateTimestamp(pGMAC, 0, timestamp->sec, timestamp->nsec);
     if (GMAC_PTPInitTimestamp(pGMAC)) {
         HAL_DBG("GMAC_PTPInitTimestamp: failed\n");
