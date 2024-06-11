@@ -1733,6 +1733,17 @@ HAL_Status HAL_CRU_SetGlbSrst(eCRU_GlbSrstType type)
     }
 #endif
 
+#ifdef TOPCRU_GLB_SRST_FST_OFFSET
+    if (type == GLB_SRST_FST) {
+        TOPCRU->GLB_SRST_FST = GLB_SRST_FST;
+    }
+#endif
+#ifdef TOPCRU_GLB_SRST_SND_OFFSET
+    if (type == GLB_SRST_SND) {
+        TOPCRU->GLB_SRST_SND = GLB_SRST_SND;
+    }
+#endif
+
     return HAL_INVAL;
 }
 
