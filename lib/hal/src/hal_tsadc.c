@@ -139,6 +139,18 @@ static const struct TSADC_TABLE s_tsadcTable[] =
     { 672, 125000 },
     { 783, MAX_TEMP },
 };
+#elif defined(SOC_RK3576)
+static const struct TSADC_TABLE s_tsadcTable[] =
+{
+    { 0, MIN_TEMP },
+    { 194, MIN_TEMP },
+    { 215, -40000 },
+    { 285, 25000 },
+    { 350, 85000 },
+    { 395, 125000 },
+    { 455, MAX_TEMP },
+    { TSADC_DATA_MASK, MAX_TEMP },
+};
 #endif
 
 static const struct TSADC_CONFIG s_tsadcConfig =
@@ -395,6 +407,17 @@ static void TSADC_Config(eTSADC_tshutPolarity polarity)
 
     /* set q_max */
     TSADC->Q_MAX = TSADC_Q_MAX_Q_MAX_MASK & TSADC_Q_MAX_VALUE;
+
+    TSADC->AUTO_PERIOD = TSADC_AUTO_PERIOD_TIME;
+    TSADC->HIGH_INT_DEBOUNCE = TSADC_HIGHT_INT_DEBOUNCE_COUNT;
+    TSADC->AUTO_PERIOD_HT = TSADC_AUTO_PERIOD_HT_TIME;
+    TSADC->HIGH_TSHUT_DEBOUNCE = TSADC_HIGHT_TSHUT_DEBOUNCE_COUNT;
+}
+#elif defined(SOC_RK3576)
+static void TSADC_Config(eTSADC_tshutPolarity polarity)
+{
+    /* set tshut_polarity 0: Low active , 1: High active */
+    WRITE_REG_MASK_WE(TSADC->AUTO_CON, TSADC_AUTO_CON_TSHUT_POLARITY_MASK, polarity << TSADC_AUTO_CON_TSHUT_POLARITY_SHIFT);
 
     TSADC->AUTO_PERIOD = TSADC_AUTO_PERIOD_TIME;
     TSADC->HIGH_INT_DEBOUNCE = TSADC_HIGHT_INT_DEBOUNCE_COUNT;
