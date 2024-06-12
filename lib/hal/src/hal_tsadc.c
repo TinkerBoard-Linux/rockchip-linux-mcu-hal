@@ -295,6 +295,8 @@ static uint32_t TSADC_TempToCode(const struct TSADC_CONFIG *config, int temp)
 
 #ifdef TSADC_NONLINEAR
     uint32_t mid = (low + high) / 2;
+    uint32_t num;
+    int32_t denom;
 
     while (low <= high) {
         HAL_ASSERT(mid >= 0 && mid <= (config->length - 1));
@@ -308,18 +310,25 @@ static uint32_t TSADC_TempToCode(const struct TSADC_CONFIG *config, int temp)
         mid = (low + high) / 2;
     }
 
-    return error;
+    num = abs(config->table[mid + 1].code - config->table[mid].code);
+    num *= temp - config->table[mid].temp;
+    denom = config->table[mid + 1].temp - config->table[mid].temp;
+#ifdef TSADC_SORT_MODE_DECREMENT
+    error = config->table[mid].code - HAL_DIV_ROUND_UP(num, denom);
+#else
+    error = config->table[mid].code + HAL_DIV_ROUND_UP(num, denom);
+#endif
 #else
     int code;
 
     HAL_ASSERT(kNum != 0);
-    code = (temp - bNum) / kNum;
+    code = HAL_DIV_ROUND_UP(temp - bNum, kNum);
     if (code > 0) {
         error = code;
     }
+#endif
 
     return error;
-#endif
 }
 
 /**
