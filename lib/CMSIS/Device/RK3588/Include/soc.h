@@ -480,8 +480,8 @@ typedef enum
 /*                                                                                      */
 /****************************************************************************************/
 /* Memory Base */
-#define GIC_DISTRIBUTOR_BASE    0xFE600000 /* GICD base address */
-#define GIC_REDISTRIBUTOR_BASE  0xFE660000 /* GICR base address */
+#define GIC_DISTRIBUTOR_BASE    (0xFE600000UL) /* GICD base address */
+#define GIC_REDISTRIBUTOR_BASE  (0xFE680000UL) /* GICR base address */
 
 /****************************************************************************************/
 /*                                                                                      */
