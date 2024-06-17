@@ -226,6 +226,7 @@ typedef enum {
   SPI1_IRQn                 =  149 + NUM_INTERRUPTS,    /*!< SPI1 Interrupt                 */
   SPI2_IRQn                 =  150 + NUM_INTERRUPTS,    /*!< SPI2 Interrupt                 */
   SPI3_IRQn                 =  151 + NUM_INTERRUPTS,    /*!< SPI3 Interrupt                 */
+  TSADC_IRQn                =  155 + NUM_INTERRUPTS,    /*!< TSADC Interrupt                */
   MBOX_BB1_IRQn             =  172 + NUM_INTERRUPTS,    /*!< MBOX1 Interrupt                */
   MBOX_BB2_IRQn             =  173 + NUM_INTERRUPTS,    /*!< MBOX2 Interrupt                */
   MBOX_BB3_IRQn             =  174 + NUM_INTERRUPTS,    /*!< MBOX3 Interrupt                */
