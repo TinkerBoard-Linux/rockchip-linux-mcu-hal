@@ -706,7 +706,7 @@ struct GPIO_REG {
     __IO uint32_t STORE_ST_H;                         /* Address Offset: 0x0084 */
          uint32_t RESERVED0088[30];                   /* Address Offset: 0x0088 */
     __IO uint32_t GPIO_REG_GROUP_L;                   /* Address Offset: 0x0100 */
-    __IO uint32_t GPIO_REG_GROUP_H ;                  /* Address Offset: 0x0104 */
+    __IO uint32_t GPIO_REG_GROUP_H;                   /* Address Offset: 0x0104 */
     __IO uint32_t GPIO_VIRTUAL_EN;                    /* Address Offset: 0x0108 */
          uint32_t RESERVED010C;                       /* Address Offset: 0x010C */
     __IO uint32_t GPIO_REG_GROUP1_L;                  /* Address Offset: 0x0110 */
@@ -10045,7 +10045,7 @@ struct INTMUX_REG {
 #define GPIO_GPIO_REG_GROUP_L_OFFSET                       (0x100U)
 #define GPIO_GPIO_REG_GROUP_L_GPIO_REG_GROUP_LOW_SHIFT     (0U)
 #define GPIO_GPIO_REG_GROUP_L_GPIO_REG_GROUP_LOW_MASK      (0xFFFFU << GPIO_GPIO_REG_GROUP_L_GPIO_REG_GROUP_LOW_SHIFT)  /* 0x0000FFFF */
-/* GPIO_REG_GROUP_H  */
+/* GPIO_REG_GROUP_H */
 #define GPIO_GPIO_REG_GROUP_H_OFFSET                       (0x104U)
 #define GPIO_GPIO_REG_GROUP_H_GPIO_REG_GROUP_HIGH_SHIFT    (0U)
 #define GPIO_GPIO_REG_GROUP_H_GPIO_REG_GROUP_HIGH_MASK     (0xFFFFU << GPIO_GPIO_REG_GROUP_H_GPIO_REG_GROUP_HIGH_SHIFT) /* 0x0000FFFF */
