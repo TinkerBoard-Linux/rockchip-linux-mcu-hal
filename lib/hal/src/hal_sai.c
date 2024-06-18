@@ -341,7 +341,11 @@ static void SAI_ForceClear(struct SAI_REG *pReg, uint32_t clr)
 
     HAL_DelayUs(10);
     if (READ_REG(pReg->CLR) & clr) {
-        MODIFY_REG(pReg->CLR, SAI_CLR_FCR_MASK, SAI_CLR_FCR_EN);
+        HAL_SAI_DisableFIFOXrunDetect(pReg, AUDIO_STREAM_PLAYBACK);
+        HAL_SAI_DisableFIFOXrunDetect(pReg, AUDIO_STREAM_CAPTURE);
+        MODIFY_REG(pReg->CLR,
+                   SAI_CLR_FCR_MASK | SAI_CLR_RXC_MASK | SAI_CLR_TXC_MASK,
+                   SAI_CLR_FCR_EN | SAI_CLR_RXC | SAI_CLR_TXC);
         HAL_DelayUs(10);
         MODIFY_REG(pReg->CLR, SAI_CLR_FCR_MASK, SAI_CLR_FCR_DIS);
     }
