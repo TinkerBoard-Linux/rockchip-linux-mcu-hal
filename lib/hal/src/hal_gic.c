@@ -44,8 +44,8 @@
  */
 /********************* Private MACRO Definition ******************************/
 #define RESERVED(N, T)         T RESERVED##N;
-#define GICR_CPU_BASE(cpu)     (GIC_REDISTRIBUTOR_BASE + (0x20000 * (cpu)))
-#define GICR_SGI_CPU_BASE(cpu) (GICR_CPU_BASE(cpu) + 0x10000)
+#define GICR_CPU_BASE(cpu)     (GIC_REDISTRIBUTOR_BASE + (0x20000UL * (cpu)))
+#define GICR_SGI_CPU_BASE(cpu) (GICR_CPU_BASE(cpu) + 0x10000UL)
 
 #define ICC_SGI1R_TARGET_LIST_SHIFT    0
 #define ICC_SGI1R_TARGET_LIST_MASK     (0xffff << ICC_SGI1R_TARGET_LIST_SHIFT)
@@ -1282,7 +1282,7 @@ HAL_Status HAL_GIC_Enable(uint32_t irq)
 #else
     if (!GIC_AMP_CheckCurIRouter(irq)) {
         GIC_WRN("HAL_GIC_Enable irq-%" PRId32 " invalid router %" PRIx32 " != %" PRIx32 " \n",
-                irq, GET_CUR_MPIDR_AFF(), GIC_GetITargetRouter(irq));
+                irq, (uint32_t)GET_CUR_MPIDR_AFF(), GIC_GetITargetRouter(irq));
 
         return HAL_ERROR;
     }
