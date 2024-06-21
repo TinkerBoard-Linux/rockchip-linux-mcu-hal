@@ -232,6 +232,13 @@ __STATIC_FORCEINLINE void __disable_irq(void)
 
 #include "cmsis_cp15.h"
 
+__STATIC_INLINE void __FPU_Enable(void)
+{
+  __ASM volatile ("mov     x1, #0x00300000\n"
+                  "msr     cpacr_el1, x1\n"
+                  "isb");
+}
+
 #pragma GCC diagnostic pop
 
 #endif /* __CMSIS_GCC_H */
