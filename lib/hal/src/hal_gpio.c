@@ -539,8 +539,8 @@ HAL_Status HAL_GPIO_DisableVirtualModel(struct GPIO_REG *pGPIO)
 /**
  * @brief  GPIO Configure pins for virtual model.
  * @param  pGPIO: The pointer of GPIO struct.
- * @param  pins: The pin bit defined in @ref ePINCTRL_GPIO_PINS.
- * @param  vmode: The value defined in @ref eGPIO_VirtualModel.
+ * @param  pin: The pin bit defined in @ref ePINCTRL_GPIO_PINS.
+ * @param  vmodel: The value defined in @ref eGPIO_VirtualModel.
  * @return HAL_Status.
  */
 HAL_Status HAL_GPIO_SetVirtualModel(struct GPIO_REG *pGPIO, ePINCTRL_GPIO_PINS pin, eGPIO_VirtualModel vmodel)
