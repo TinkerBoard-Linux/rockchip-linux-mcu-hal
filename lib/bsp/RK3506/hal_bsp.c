@@ -56,6 +56,7 @@ const struct HAL_SPI_DEV g_spi0Dev = {
     .clkId = CLK_PMU1_SPI0,
     .clkGateID = CLK_PMU1_SPI0_GATE,
     .pclkGateID = PCLK_PMU1_SPI0_GATE,
+    .maxFreq = 200000000,
     .irqNum = SPI0_IRQn,
     .isSlave = false,
     .txDma = {
