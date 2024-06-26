@@ -962,6 +962,4 @@ HAL_Status HAL_CRU_WdtGlbRstEnable(eCRU_WdtRstType wdtType)
 
 /** @} */
 
-/** @} */
-
 #endif /* SOC_RK3562 && HAL_CRU_MODULE_ENABLED */
