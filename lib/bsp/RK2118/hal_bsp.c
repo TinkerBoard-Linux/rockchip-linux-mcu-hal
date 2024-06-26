@@ -16,6 +16,7 @@ struct HAL_ASRC_DEV g_asrc0Dev =
     .maxChannels = 8,
     .spinLockId = ASRC0_LOCK_ID,
     .irqNum = ASRC0_IRQn,
+    .hrst = SRST_HRESETN_ASRC0,
     .txDmaData =
     {
         .addr = (uint32_t)&(ASRC0->FIFO_IN_FIXED_DR),
@@ -44,6 +45,7 @@ struct HAL_ASRC_DEV g_asrc1Dev =
     .maxChannels = 4,
     .spinLockId = ASRC1_LOCK_ID,
     .irqNum = ASRC1_IRQn,
+    .hrst = SRST_HRESETN_ASRC1,
     .txDmaData =
     {
         .addr = (uint32_t)&(ASRC1->FIFO_IN_FIXED_DR),
@@ -72,6 +74,7 @@ struct HAL_ASRC_DEV g_asrc2Dev =
     .maxChannels = 4,
     .spinLockId = ASRC2_LOCK_ID,
     .irqNum = ASRC2_IRQn,
+    .hrst = SRST_HRESETN_ASRC2,
     .txDmaData =
     {
         .addr = (uint32_t)&(ASRC2->FIFO_IN_FIXED_DR),
@@ -100,6 +103,7 @@ struct HAL_ASRC_DEV g_asrc3Dev =
     .maxChannels = 4,
     .spinLockId = ASRC3_LOCK_ID,
     .irqNum = ASRC3_IRQn,
+    .hrst = SRST_HRESETN_ASRC3,
     .txDmaData =
     {
         .addr = (uint32_t)&(ASRC3->FIFO_IN_FIXED_DR),
@@ -128,6 +132,7 @@ struct HAL_ASRC_DEV g_asrc4Dev =
     .maxChannels = 8,
     .spinLockId = ASRC4_LOCK_ID,
     .irqNum = ASRC4_IRQn,
+    .hrst = SRST_HRESETN_ASRC4,
     .txDmaData =
     {
         .addr = (uint32_t)&(ASRC4->FIFO_IN_FIXED_DR),
@@ -156,6 +161,7 @@ struct HAL_ASRC_DEV g_asrc5Dev =
     .maxChannels = 4,
     .spinLockId = ASRC5_LOCK_ID,
     .irqNum = ASRC5_IRQn,
+    .hrst = SRST_HRESETN_ASRC5,
     .txDmaData =
     {
         .addr = (uint32_t)&(ASRC5->FIFO_IN_FIXED_DR),
@@ -184,6 +190,7 @@ struct HAL_ASRC_DEV g_asrc6Dev =
     .maxChannels = 4,
     .spinLockId = ASRC6_LOCK_ID,
     .irqNum = ASRC6_IRQn,
+    .hrst = SRST_HRESETN_ASRC6,
     .txDmaData =
     {
         .addr = (uint32_t)&(ASRC6->FIFO_IN_FIXED_DR),
@@ -212,6 +219,7 @@ struct HAL_ASRC_DEV g_asrc7Dev =
     .maxChannels = 4,
     .spinLockId = ASRC7_LOCK_ID,
     .irqNum = ASRC7_IRQn,
+    .hrst = SRST_HRESETN_ASRC7,
     .txDmaData =
     {
         .addr = (uint32_t)&(ASRC7->FIFO_IN_FIXED_DR),
