@@ -524,6 +524,13 @@ HAL_Status HAL_ASRC_Stop(struct HAL_ASRC_DEV *asrc)
     MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_CONV_ERROR_EN_MASK, 0);
     MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_SRC_LRCK_UNLOCK_EN_MASK, 0);
     MODIFY_REG(asrc->pReg->INT_CON, ASRC_INT_CON_DST_LRCK_UNLOCK_EN_MASK, 0);
+#ifdef HAL_CRU_MODULE_ENABLED
+    HAL_DelayUs(10);
+    HAL_CRU_ClkResetAssert(asrc->hrst);
+    HAL_DelayUs(10);
+    HAL_CRU_ClkResetDeassert(asrc->hrst);
+    HAL_DelayUs(10);
+#endif
 
     return HAL_OK;
 }

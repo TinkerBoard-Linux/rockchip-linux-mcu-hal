@@ -85,6 +85,7 @@ struct HAL_ASRC_DEV {
     uint32_t spinLockId;
     uint32_t mclkGate;
     uint32_t mclkRate;
+    uint32_t hrst;
     uint16_t maxChannels;
     uint16_t channels;
     bool groupLink;
